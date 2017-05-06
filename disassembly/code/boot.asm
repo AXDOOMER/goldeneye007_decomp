@@ -248,18 +248,20 @@ addu v0, a0, a1
 jr ra
 addiu v0, -8
 
+insert boot_raw_to_tlb_entries, "boot.bin", (origin() - $1000), ($70001B60 - $700006FC)
+
 base $70001B60
 tlb_entries:
-// dw $40802800
-// dw $00000000
-// dw $401A2000
-// dw $3C1B8006
-// dw $277BE4A4
-// dw $8F7B0000
-// dw $035BD021
-// dw $8F5B0000
-// dw $409B1000
-// dw $00000000
+ dw $40802800
+ dw $00000000
+ dw $401A2000
+ dw $3C1B8006
+ dw $277BE4A4
+ dw $8F7B0000
+ dw $035BD021
+ dw $8F5B0000
+ dw $409B1000
+ dw $00000000
 
 include "../lib/libultra_rom.asm"
 insert binarybootcode, "boot.bin", (origin() - $1000)

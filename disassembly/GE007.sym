@@ -303,6 +303,16 @@
 7020141c decompressfile
 7f000000 tlb_code_start
 7f0e2d50 tlb_code_end
+00117880 unknown_rom_start
+00117880 unknown_start
+00117880 unknown1_start
+0024eb30 unknown2_start
+00296565 unknown3_start
+00298587 unknown4_start
+002bf2d0 unknown_end
+002bf2d0 ramrom_rom_start
+002bf2d0 ramrom_start
+002e63f0 ramrom_end
 8005d2e0 bss_start
 8008e360 bss_end
 80300000 decompression_buffer
