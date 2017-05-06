@@ -261,63 +261,6 @@ tlb_entries:
 // dw $409B1000
 // dw $00000000
 
-base $7000CF90    
-osPiRawStartDma:
 
-base $7000D320
-osWritebackDCacheAll:
 
-base $7000D350
-osInvalICache:
 
-base $7000D3D0
-osUnmapTLB:
-
-base $7000D410
-__osGetFpcCsr:
-
-base $7000D420
-__osSetFpcCsr:
-
-base $7000D430
-osCreateThread:
-
-base $7000D580
-osStartThread:
-
-base $70200000
-RareZip_vaddr:
-
-base $7020141C
-decompressfile:
-
-base $80020D90
-rodata_start:
-
-base $8005D2E0
-rodata_end:
-bss_start:
-
-base $8008E360
-bss_end:
-
-base $80300000
-decompression_buffer:
-
-base $803AB400
-sp_boot:
-
-base $803AB410
-sp_rmon:
-
-base $803AB710
-sp_idle:
-
-base $803AB750
-sp_shed:
-
-base $803AB950
-sp_main:
-
-base $803B3950
-sp_audi:
