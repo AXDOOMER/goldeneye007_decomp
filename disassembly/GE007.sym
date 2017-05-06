@@ -296,10 +296,13 @@
 70020c50 ldiv
 70020ce0 __osResetGlobalIntMask
 70020d40 osEPiRawWriteIo
+00021990 rodata_rom_offset
 80020d90 rodata_start
 8005d2e0 rodata_end
 70200000 RareZip_vaddr
 7020141c decompressfile
+7f000000 tlb_code_start
+7f0e2d50 tlb_code_end
 8005d2e0 bss_start
 8008e360 bss_end
 80300000 decompression_buffer

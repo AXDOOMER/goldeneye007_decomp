@@ -56,9 +56,9 @@ jr ra
 addiu v0, v0, rodata_start
 
 set_rodata_rom_start:
-lui v0, $0002
+lui v0, (rodata_rom_offset >> 16)
 jr ra
-addiu v0, v0, $1990 //v0=21990
+addiu v0, v0, rodata_rom_offset //v0=21990
 
 set_rodata_rom_end:
 lui v0, $0003
@@ -261,7 +261,7 @@ tlb_entries:
 // dw $409B1000
 // dw $00000000
 
-include "libultra_rom.asm"
+include "../lib/libultra_rom.asm"
 insert binarybootcode, "boot.bin", (origin() - $1000)
 
 
