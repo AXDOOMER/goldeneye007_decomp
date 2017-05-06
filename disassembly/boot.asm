@@ -261,6 +261,7 @@ tlb_entries:
 // dw $409B1000
 // dw $00000000
 
-
+include "libultra_rom.asm"
+insert binarybootcode, "boot.bin", (origin() - $1000)
 
 
