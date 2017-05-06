@@ -8,7 +8,7 @@ This will eventually make compilation a multi step process to have relocation:
 
 3) build rodata.asm into rodata.bin using vaddrs exported from roms symbols, then compress rodata.bin into rodata.rz
 
-4) rebuild code with new compressed rodata
+4) rebuild code with new compressed rodata.rz and rodata.inc
 
 As long as the new compressed rodata.rz isn't bigger than space allocated this approach should work fine.
 
