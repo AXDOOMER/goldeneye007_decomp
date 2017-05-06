@@ -12,7 +12,7 @@ This will eventually make compilation a multi step process to have relocation:
 
 As long as the new compressed rodata.rz isn't bigger than space allocated this approach should work fine.
 
-
+Ignore elf related files for now, eventually I intend to make an elf build to use with retdec to maybe eventually decompile this back to C. 
 
 To build:
 
