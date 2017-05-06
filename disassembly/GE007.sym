@@ -329,6 +329,8 @@
 0089e760 brief_rom_start
 0089e9e0 brief_rom_end
 0089e9e0 mp_setup_rom_start
+008ab210 mp_setup_rom_end
+008ab210 setup_rom_start
 008e7410 setup_rom_end
 008e7410 text_rom_start
 008f7de0 text_rom_end

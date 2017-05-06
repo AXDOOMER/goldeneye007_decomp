@@ -18,6 +18,9 @@ insert Ump_setupoatZ, "Ump_setupoatZ", (origin() - $008a8920)
 insert Ump_setuprefZ, "Ump_setuprefZ", (origin() - $008a8c70)
 insert Ump_setupsevbZ, "Ump_setupsevbZ", (origin() - $008a9080)
 insert Ump_setupstatueZ, "Ump_setupstatueZ", (origin() - $008aa390)
+mp_setup_rom_end:
+
+setup_rom_start:
 insert UsetuparchZ, "UsetuparchZ", (origin() - $008ab210)
 insert UsetuparkZ, "UsetuparkZ", (origin() - $008af820)
 insert UsetupaztZ, "UsetupaztZ", (origin() - $008b33b0)
