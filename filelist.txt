@@ -242,7 +242,7 @@
 0x00777130 g_view/GgaskeyringZ
 0x00777b60 g_view/GgoldbarZ
 0x00777eb0 g_view/GgoldeneyekeyZ
-0x00778860 props/PgoldengunZ
+0x00778860 g_view/GgoldengunZ
 0x0077a040 g_view/GgoldwppkZ
 0x0077b9a0 g_view/GgrenadeZ
 0x0077c3d0 g_view/GgrenadelaunchZ

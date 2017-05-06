@@ -1,6 +1,6 @@
 base $80000400
 Start:
- lui t0, (bss_start >> 16)+1
+ lui t0, ((bss_start >> 16) + 1)
  lui t1, ((bss_end - bss_start) >> 16)
  addiu t0, t0, bss_start
  ori t1, t1, (bss_end - bss_start)
@@ -13,11 +13,10 @@ looptillclear:
  addi t0, t0, $0008
 
  lui t2, (establishrootTLB >> 16)
- lui sp, $803B // 
+ lui sp, ((sp_rmon >> 16) + 1) // 
  addiu t2, t2, establishrootTLB
- jr t2               
- addiu sp, sp, $B410 //setup sp
-
+ jr t2 //jr establishrootTLB
+ addiu sp, sp, sp_rmon
  nop; nop; nop; nop; nop; nop;
 
 establishrootTLB:
@@ -46,8 +45,8 @@ establishrootTLB:
  tlbwi
 
  lui	t2, (init >> 16)
- addiu	t2, t2, init //t2=70000510
- jr	t2
+ addiu	t2, t2, init
+ jr	t2 //jr init
  nop
 
 base $700004BC
@@ -145,10 +144,13 @@ lui a2, $7010
 addiu a2, a2, $0400 //a2=70100400
 addiu a1, a1, $1000 //a1=101000
 addu a3, v0, at //a3= difference - FFFB0
-jal $7000CF90 //read (a0) a3 bytes from ROM a1 to a2
+
+jal osPiRawStartDma //read (a0) a3 bytes from ROM a1 to a2
 or a0, r0, r0 //a0=0 (read)
+
 jal $7000D070 //v0=PI status
 nop
+
 andi t5, v0, $0001
 beqz t5, init_memory_tlb //branch if ready
 nop
@@ -215,8 +217,9 @@ jal __osSetFpcCsr //v0=COP1 Control, replacing with a0
 ori a0, v0, $0E80 //a0= v0 | E80: enable all but underflow
 
 //70000698:
-lui a0, $803B
-addiu a0, a0, $B950 //a0=803AB950: (base sp+540)
+lui a0, ((sp_main >>16) +1)
+addiu a0, a0, sp_main 
+
 jal stack_init //v0= new stack pointer
 ori a1, r0, $8000 //a1=8000
 
@@ -258,7 +261,7 @@ tlb_entries:
 // dw $409B1000
 // dw $00000000
 
-base $7000CF90     
+base $7000CF90    
 osPiRawStartDma:
 
 base $7000D320
@@ -300,3 +303,21 @@ bss_end:
 
 base $80300000
 decompression_buffer:
+
+base $803AB400
+sp_boot:
+
+base $803AB410
+sp_rmon:
+
+base $803AB710
+sp_idle:
+
+base $803AB750
+sp_shed:
+
+base $803AB950
+sp_main:
+
+base $803B3950
+sp_audi:
