@@ -30,3 +30,6 @@ I use vbindiff while developing to see what changes where if I have somethign wr
 vbindiff GE007.n64 /path/to/retail_ntsc_rom.z64
 
 then press enter
+
+
+SPECIAL THANKS TO: Subdrag, Wreck, Zoinkity and everyone else on http://www.shootersforever.com/forums_message_boards/. Without your hard work documenting this game, this project wouldn't exist.
