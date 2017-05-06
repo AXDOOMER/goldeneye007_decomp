@@ -10,7 +10,7 @@ This will eventually make compilation a multi step process to have relocation:
 
 4) rebuild code with new compressed rodata.rz and rodata.inc
 
-As long as the new compressed rodata.rz isn't bigger than space allocated this approach should work fine.
+As long as the new compressed rodata.rz isn't bigger than space allocated (currently 944 bytes extra) this approach should work fine.
 
 Ignore elf related files for now, eventually I intend to make an elf build to use with retdec to maybe eventually decompile this back to C. 
 
@@ -32,4 +32,4 @@ vbindiff GE007.n64 /path/to/retail_ntsc_rom.z64
 then press enter
 
 
-SPECIAL THANKS TO: Subdrag, Wreck, Zoinkity and everyone else on http://www.shootersforever.com/forums_message_boards/. Without your hard work documenting this game, this project wouldn't exist.
+SPECIAL THANKS TO: Subdrag, Wreck, and Zoinkity. Without your hard work documenting this game, this project wouldn't exist.

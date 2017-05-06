@@ -298,6 +298,10 @@
 70020d40 osEPiRawWriteIo
 00021990 rodata_rom_offset
 80020d90 rodata_start
+80020d90 rspcode_start
+8002303c rspcode_end
+80023044 dword_80023044
+80023048 cart_hw_address
 8005d2e0 rodata_end
 70200000 RareZip_vaddr
 7020141c decompressfile
