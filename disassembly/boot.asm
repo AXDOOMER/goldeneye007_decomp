@@ -84,7 +84,6 @@ jr a3
 
 nop; nop; nop;
 
-base $70000510
 init:
 //decompress main compressed block, initialize memory, TLB and its interrupts,
 // then execute main game thread
