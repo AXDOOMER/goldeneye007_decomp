@@ -5,7 +5,7 @@ The first goal was to split the rom into code segments and files. Thats now comp
 
 The current goal is to turn code binaries into assembly one function at a time, at the same time look into a tool to mass disassemble into a bass friendly syntax. The tool would greatly speed up development as it becomes more of a labeling game.
 
-To build:
+To build use https://github.com/ARM9/bass and:
 
 
 cd disassembly 
