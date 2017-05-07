@@ -15,7 +15,7 @@ bass -sym GE007.sym GE007.rom.asm
 
 
 
-I use vbindiff while developing to quickly see what changes where if have a typo.
+I use vbindiff while developing to quickly see what changes where if I have a typo.
 
 
 vbindiff GE007.n64 /path/to/retail_ntsc_rom.z64
