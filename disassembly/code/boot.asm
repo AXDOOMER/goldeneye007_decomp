@@ -2,13 +2,14 @@ base $80000400
 Start:;scope {
  define start(t0)
  define size(t1)
+ define jumptarget(t2)
 
  lui {start}, ((bss_start >> 16) + 1)
  lui {size}, ((bss_end - bss_start) >> 16)
  addiu {start}, {start}, bss_start
  ori {size}, {size}, (bss_end - bss_start)
 
- clearmem:
+ clearmem:;scope {
   define pos({start})
   define sizeleft({size})
 
@@ -17,15 +18,19 @@ Start:;scope {
   sw $0, 4({pos})
   bnez {sizeleft}, clearmem
   addi {pos}, {pos}, 8
+ }
 
- define target(t2)
-
- lui {target}, (establishrootTLB >> 16)
+ lui {jumptarget}, (establishrootTLB >> 16)
  lui sp, ((sp_rmon >> 16) + 1) // 
- addiu {target}, {target}, establishrootTLB
- jr {target} //jr establishrootTLB
+ addiu {jumptarget}, {jumptarget}, establishrootTLB
+ jr {jumptarget} //jr establishrootTLB
  addiu sp, sp, sp_rmon
- nop; nop; nop; nop; nop; nop;
+ nop;
+ nop;
+ nop;
+ nop;
+ nop;
+ nop;
 }
 
 
@@ -102,14 +107,17 @@ setRareZip_end:;scope {
 }
 
 redirecttodecompressfile:;scope {
- define target(a3)
+ define jumptarget(a3)
 
  //decompress file accepts:
  //a0=p->source, a1=p->target, a2=p->buffer
- lui {target},(decompressfile >> 16)
- addiu {target}, {target}, decompressfile
- jr {target}
- nop; nop; nop;
+ lui {jumptarget},(decompressfile >> 16)
+ addiu {jumptarget}, {jumptarget}, decompressfile
+ jr {jumptarget}
+ nop;
+
+ nop;
+ nop;
 }
 
 
