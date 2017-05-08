@@ -1,25 +1,37 @@
 base $80000400
 Start:
- lui t0, ((bss_start >> 16) + 1)
- lui t1, ((bss_end - bss_start) >> 16)
- addiu t0, t0, bss_start
- ori t1, t1, (bss_end - bss_start)
+scope {
+ define start(t0)
+ define size(t1)
 
-looptillclear:
- addi t1, t1, -8
- sw $0, 0(t0)
- sw $0, 4(t0)
- bnez t1, looptillclear
- addi t0, t0, $0008
+ lui {start}, ((bss_start >> 16) + 1)
+ lui {size}, ((bss_end - bss_start) >> 16)
+ addiu {start}, {start}, bss_start
+ ori {size}, {size}, (bss_end - bss_start)
 
- lui t2, (establishrootTLB >> 16)
+loop:
+ define pos({start})
+ define sizeleft({size})
+
+ addi {sizeleft}, {sizeleft}, -8
+ sw $0, 0({pos})
+ sw $0, 4({pos})
+ bnez {sizeleft}, loop
+ addi {pos}, {pos}, $0008
+
+ define target(t2)
+
+ lui {target}, (establishrootTLB >> 16)
  lui sp, ((sp_rmon >> 16) + 1) // 
- addiu t2, t2, establishrootTLB
- jr t2 //jr establishrootTLB
+ addiu {target}, {target}, establishrootTLB
+ jr {target} //jr establishrootTLB
  addiu sp, sp, sp_rmon
+}
  nop; nop; nop; nop; nop; nop;
 
+
 establishrootTLB:
+scope {
  addiu	v0, r0, $0001
  addiu	v1, r0, $0000
  addiu	a0, r0, $0000
@@ -48,12 +60,15 @@ establishrootTLB:
  addiu	t2, t2, init
  jr	t2 //jr init
  nop
+}
 
 base $700004BC
 set_rodata_vaddr:
+scope {
 lui v0, (rodata_start >> 16)
 jr ra
 addiu v0, v0, rodata_start
+}
 
 set_rodata_rom_start:
 lui v0, (rodata_rom_start >> 16)
@@ -253,7 +268,7 @@ jr ra
 addiu v0, -8
 
 base $700006FC
-BOOT_700006FC:
+function_700006FC:
 addiu t6, $0, 0x1
 lui at, 0x8002
 sw t6, 0x3044 ( at )
@@ -1695,9 +1710,9 @@ sll $0, $0, 0x0
 sll $0, $0, 0x0
 
 base $70001B10
-BOOT_70001B10:
+function_70001B10:
 
-insert boot_raw_to_tlb_entries, "boot.bin", (origin() - $1000), ($70001B60 - $70001B10)
+insert function_raw_to_tlb_entries, "boot.bin", (origin() - $1000), ($70001B60 - $70001B10)
 
 base $70001B60
 tlb_entries:
@@ -1713,3145 +1728,3145 @@ tlb_entries:
  dw $00000000
 
 base $70001B88
-BOOT_70001B88:
+function_70001B88:
 
 base $70001BB0
-BOOT_70001BB0:
+function_70001BB0:
 
 base $70001BD0
-BOOT_70001BD0:
+function_70001BD0:
 
 base $70001C94
-BOOT_70001C94:
+function_70001C94:
 
 base $70001C9C
-BOOT_70001C9C:
+function_70001C9C:
 
 base $70001CAC
-BOOT_70001CAC:
+function_70001CAC:
 
 base $70001CD4
-BOOT_70001CD4:
+function_70001CD4:
 
 base $70001CEC
-BOOT_70001CEC:
+function_70001CEC:
 
 base $70001D04
-BOOT_70001D04:
+function_70001D04:
 
 base $70001D40
-BOOT_70001D40:
+function_70001D40:
 
 base $70001D90
-BOOT_70001D90:
+function_70001D90:
 
 base $70001D98
-BOOT_70001D98:
+function_70001D98:
 
 base $70001DA8
-BOOT_70001DA8:
+function_70001DA8:
 
 base $70001E68
-BOOT_70001E68:
+function_70001E68:
 
 base $70001ED8
-BOOT_70001ED8:
+function_70001ED8:
 
 base $70001F58
-BOOT_70001F58:
+function_70001F58:
 
 base $70001F7C
-BOOT_70001F7C:
+function_70001F7C:
 
 base $7000200C
-BOOT_7000200C:
+function_7000200C:
 
 base $70002044
-BOOT_70002044:
+function_70002044:
 
 base $7000215C
-BOOT_7000215C:
+function_7000215C:
 
 base $7000219C
-BOOT_7000219C:
+function_7000219C:
 
 base $700021CC
-BOOT_700021CC:
+function_700021CC:
 
 base $700021D4
-BOOT_700021D4:
+function_700021D4:
 
 base $700021F4
-BOOT_700021F4:
+function_700021F4:
 
 base $70002200
-BOOT_70002200:
+function_70002200:
 
 base $70002244
-BOOT_70002244:
+function_70002244:
 
 base $70002288
-BOOT_70002288:
+function_70002288:
 
 base $700022D8
-BOOT_700022D8:
+function_700022D8:
 
 base $700023E4
-BOOT_700023E4:
+function_700023E4:
 
 base $70002414
-BOOT_70002414:
+function_70002414:
 
 base $70002418
-BOOT_70002418:
+function_70002418:
 
 base $70002424
-BOOT_70002424:
+function_70002424:
 
 base $7000245C
-BOOT_7000245C:
+function_7000245C:
 
 base $7000249C
-BOOT_7000249C:
+function_7000249C:
 
 base $700024A8
-BOOT_700024A8:
+function_700024A8:
 
 base $700024C4
-BOOT_700024C4:
+function_700024C4:
 
 base $700024D8
-BOOT_700024D8:
+function_700024D8:
 
 base $70002518
-BOOT_70002518:
+function_70002518:
 
 base $7000253C
-BOOT_7000253C:
+function_7000253C:
 
 base $70002544
-BOOT_70002544:
+function_70002544:
 
 base $700025C4
-BOOT_700025C4:
+function_700025C4:
 
 base $700025C8
-BOOT_700025C8:
+function_700025C8:
 
 base $700025D8
-BOOT_700025D8:
+function_700025D8:
 
 base $70002608
-BOOT_70002608:
+function_70002608:
 
 base $70002610
-BOOT_70002610:
+function_70002610:
 
 base $70002654
-BOOT_70002654:
+function_70002654:
 
 base $70002674
-BOOT_70002674:
+function_70002674:
 
 base $70002690
-BOOT_70002690:
+function_70002690:
 
 base $700026BC
-BOOT_700026BC:
+function_700026BC:
 
 base $700026E4
-BOOT_700026E4:
+function_700026E4:
 
 base $700026EC
-BOOT_700026EC:
+function_700026EC:
 
 base $700026F4
-BOOT_700026F4:
+function_700026F4:
 
 base $70002730
-BOOT_70002730:
+function_70002730:
 
 base $70002778
-BOOT_70002778:
+function_70002778:
 
 base $700027A4
-BOOT_700027A4:
+function_700027A4:
 
 base $700027D4
-BOOT_700027D4:
+function_700027D4:
 
 base $700027F8
-BOOT_700027F8:
+function_700027F8:
 
 base $70002810
-BOOT_70002810:
+function_70002810:
 
 base $70002838
-BOOT_70002838:
+function_70002838:
 
 base $70002854
-BOOT_70002854:
+function_70002854:
 
 base $700028B0
-BOOT_700028B0:
+function_700028B0:
 
 base $700028D0
-BOOT_700028D0:
+function_700028D0:
 
 base $700028D4
-BOOT_700028D4:
+function_700028D4:
 
 base $7000293C
-BOOT_7000293C:
+function_7000293C:
 
 base $70002958
-BOOT_70002958:
+function_70002958:
 
 base $70002990
-BOOT_70002990:
+function_70002990:
 
 base $700029B4
-BOOT_700029B4:
+function_700029B4:
 
 base $700029C8
-BOOT_700029C8:
+function_700029C8:
 
 base $70002A44
-BOOT_70002A44:
+function_70002A44:
 
 base $70002A70
-BOOT_70002A70:
+function_70002A70:
 
 base $70002AD8
-BOOT_70002AD8:
+function_70002AD8:
 
 base $70002AFC
-BOOT_70002AFC:
+function_70002AFC:
 
 base $70002B58
-BOOT_70002B58:
+function_70002B58:
 
 base $70002B84
-BOOT_70002B84:
+function_70002B84:
 
 base $70002BD0
-BOOT_70002BD0:
+function_70002BD0:
 
 base $70002BE4
-BOOT_70002BE4:
+function_70002BE4:
 
 base $70002BFC
-BOOT_70002BFC:
+function_70002BFC:
 
 base $70002C70
-BOOT_70002C70:
+function_70002C70:
 
 base $70002C78
-BOOT_70002C78:
+function_70002C78:
 
 base $70002C8C
-BOOT_70002C8C:
+function_70002C8C:
 
 base $70002CD8
-BOOT_70002CD8:
+function_70002CD8:
 
 base $70002D50
-BOOT_70002D50:
+function_70002D50:
 
 base $70002DAC
-BOOT_70002DAC:
+function_70002DAC:
 
 base $70002DCC
-BOOT_70002DCC:
+function_70002DCC:
 
 base $70002E04
-BOOT_70002E04:
+function_70002E04:
 
 base $70002E40
-BOOT_70002E40:
+function_70002E40:
 
 base $70002E68
-BOOT_70002E68:
+function_70002E68:
 
 base $70002E80
-BOOT_70002E80:
+function_70002E80:
 
 base $70002ED4
-BOOT_70002ED4:
+function_70002ED4:
 
 base $70002EDC
-BOOT_70002EDC:
+function_70002EDC:
 
 base $70002EFC
-BOOT_70002EFC:
+function_70002EFC:
 
 base $70002F14
-BOOT_70002F14:
+function_70002F14:
 
 base $70002F60
-BOOT_70002F60:
+function_70002F60:
 
 base $70002F74
-BOOT_70002F74:
+function_70002F74:
 
 base $70002F94
-BOOT_70002F94:
+function_70002F94:
 
 base $70002F9C
-BOOT_70002F9C:
+function_70002F9C:
 
 base $70002FB8
-BOOT_70002FB8:
+function_70002FB8:
 
 base $70003024
-BOOT_70003024:
+function_70003024:
 
 base $70003060
-BOOT_70003060:
+function_70003060:
 
 base $70003124
-BOOT_70003124:
+function_70003124:
 
 base $70003150
-BOOT_70003150:
+function_70003150:
 
 base $70003190
-BOOT_70003190:
+function_70003190:
 
 base $700031A0
-BOOT_700031A0:
+function_700031A0:
 
 base $700031D0
-BOOT_700031D0:
+function_700031D0:
 
 base $70003270
-BOOT_70003270:
+function_70003270:
 
 base $70003298
-BOOT_70003298:
+function_70003298:
 
 base $700032EC
-BOOT_700032EC:
+function_700032EC:
 
 base $70003308
-BOOT_70003308:
+function_70003308:
 
 base $70003348
-BOOT_70003348:
+function_70003348:
 
 base $70003380
-BOOT_70003380:
+function_70003380:
 
 base $7000338C
-BOOT_7000338C:
+function_7000338C:
 
 base $700033C4
-BOOT_700033C4:
+function_700033C4:
 
 base $700033EC
-BOOT_700033EC:
+function_700033EC:
 
 base $70003424
-BOOT_70003424:
+function_70003424:
 
 base $70003430
-BOOT_70003430:
+function_70003430:
 
 base $70003464
-BOOT_70003464:
+function_70003464:
 
 base $700034A4
-BOOT_700034A4:
+function_700034A4:
 
 base $700034D0
-BOOT_700034D0:
+function_700034D0:
 
 base $700034DC
-BOOT_700034DC:
+function_700034DC:
 
 base $7000350C
-BOOT_7000350C:
+function_7000350C:
 
 base $7000352C
-BOOT_7000352C:
+function_7000352C:
 
 base $70003580
-BOOT_70003580:
+function_70003580:
 
 base $70003604
-BOOT_70003604:
+function_70003604:
 
 base $7000363C
-BOOT_7000363C:
+function_7000363C:
 
 base $7000365C
-BOOT_7000365C:
+function_7000365C:
 
 base $70003694
-BOOT_70003694:
+function_70003694:
 
 base $700036CC
-BOOT_700036CC:
+function_700036CC:
 
 base $70003704
-BOOT_70003704:
+function_70003704:
 
 base $7000372C
-BOOT_7000372C:
+function_7000372C:
 
 base $70003760
-BOOT_70003760:
+function_70003760:
 
 base $700037B8
-BOOT_700037B8:
+function_700037B8:
 
 base $700037D0
-BOOT_700037D0:
+function_700037D0:
 
 base $700037F0
-BOOT_700037F0:
+function_700037F0:
 
 base $70003808
-BOOT_70003808:
+function_70003808:
 
 base $7000383C
-BOOT_7000383C:
+function_7000383C:
 
 base $70003854
-BOOT_70003854:
+function_70003854:
 
 base $70003874
-BOOT_70003874:
+function_70003874:
 
 base $7000388C
-BOOT_7000388C:
+function_7000388C:
 
 base $700038C4
-BOOT_700038C4:
+function_700038C4:
 
 base $700038DC
-BOOT_700038DC:
+function_700038DC:
 
 base $700038FC
-BOOT_700038FC:
+function_700038FC:
 
 base $70003914
-BOOT_70003914:
+function_70003914:
 
 base $70003948
-BOOT_70003948:
+function_70003948:
 
 base $70003960
-BOOT_70003960:
+function_70003960:
 
 base $70003984
-BOOT_70003984:
+function_70003984:
 
 base $7000399C
-BOOT_7000399C:
+function_7000399C:
 
 base $700039C0
-BOOT_700039C0:
+function_700039C0:
 
 base $700039D4
-BOOT_700039D4:
+function_700039D4:
 
 base $700039EC
-BOOT_700039EC:
+function_700039EC:
 
 base $70003A0C
-BOOT_70003A0C:
+function_70003A0C:
 
 base $70003A20
-BOOT_70003A20:
+function_70003A20:
 
 base $70003A64
-BOOT_70003A64:
+function_70003A64:
 
 base $70003A80
-BOOT_70003A80:
+function_70003A80:
 
 base $70003B04
-BOOT_70003B04:
+function_70003B04:
 
 base $70003B28
-BOOT_70003B28:
+function_70003B28:
 
 base $70003B44
-BOOT_70003B44:
+function_70003B44:
 
 base $70003B64
-BOOT_70003B64:
+function_70003B64:
 
 base $70003B84
-BOOT_70003B84:
+function_70003B84:
 
 base $70003BB0
-BOOT_70003BB0:
+function_70003BB0:
 
 base $70003C00
-BOOT_70003C00:
+function_70003C00:
 
 base $70003C10
-BOOT_70003C10:
+function_70003C10:
 
 base $70003C1C
 setptr_video2buf:
 
 base $70003C2C
-BOOT_70003C2C:
+function_70003C2C:
 
 base $70003C3C
-BOOT_70003C3C:
+function_70003C3C:
 
 base $70003C4C
-BOOT_70003C4C:
+function_70003C4C:
 
 base $70003C58
-BOOT_70003C58:
+function_70003C58:
 
 base $70003D20
-BOOT_70003D20:
+function_70003D20:
 
 base $70003E78
-BOOT_70003E78:
+function_70003E78:
 
 base $70003E9C
-BOOT_70003E9C:
+function_70003E9C:
 
 base $70003EB4
-BOOT_70003EB4:
+function_70003EB4:
 
 base $70003EE8
-BOOT_70003EE8:
+function_70003EE8:
 
 base $70003EF8
-BOOT_70003EF8:
+function_70003EF8:
 
 base $70003F64
-BOOT_70003F64:
+function_70003F64:
 
 base $7000409C
-BOOT_7000409C:
+function_7000409C:
 
 base $700040B0
-BOOT_700040B0:
+function_700040B0:
 
 base $7000416C
-BOOT_7000416C:
+function_7000416C:
 
 base $70004260
-BOOT_70004260:
+function_70004260:
 
 base $700042F0
-BOOT_700042F0:
+function_700042F0:
 
 base $7000436C
-BOOT_7000436C:
+function_7000436C:
 
 base $70004370
-BOOT_70004370:
+function_70004370:
 
 base $70004384
-BOOT_70004384:
+function_70004384:
 
 base $70004390
-BOOT_70004390:
+function_70004390:
 
 base $7000439C
-BOOT_7000439C:
+function_7000439C:
 
 base $700043A8
-BOOT_700043A8:
+function_700043A8:
 
 base $700043B4
-BOOT_700043B4:
+function_700043B4:
 
 base $700043D8
-BOOT_700043D8:
+function_700043D8:
 
 base $700043E8
-BOOT_700043E8:
+function_700043E8:
 
 base $700043F8
 set_video2_text_clip_size:
 
 base $7000441C
-BOOT_7000441C:
+function_7000441C:
 
 base $7000442C
-BOOT_7000442C:
+function_7000442C:
 
 base $7000443C
 set_video2_width_height:
 
 base $7000449C
-BOOT_7000449C:
+function_7000449C:
 
 base $700044AC
-BOOT_700044AC:
+function_700044AC:
 
 base $700044BC
 set_video2_ulx_uly:
 
 base $70004514
-BOOT_70004514:
+function_70004514:
 
 base $70004524
-BOOT_70004524:
+function_70004524:
 
 base $70004534
-BOOT_70004534:
+function_70004534:
 
 base $70004544
-BOOT_70004544:
+function_70004544:
 
 base $70004580
-BOOT_70004580:
+function_70004580:
 
 base $70004590
-BOOT_70004590:
+function_70004590:
 
 base $700045CC
-BOOT_700045CC:
+function_700045CC:
 
 base $700045DC
-BOOT_700045DC:
+function_700045DC:
 
 base $700045EC
-BOOT_700045EC:
+function_700045EC:
 
 base $70004640
-BOOT_70004640:
+function_70004640:
 
 base $70004650
-BOOT_70004650:
+function_70004650:
 
 base $7000469C
-BOOT_7000469C:
+function_7000469C:
 
 base $700046AC
-BOOT_700046AC:
+function_700046AC:
 
 base $700046D0
-BOOT_700046D0:
+function_700046D0:
 
 base $70004730
-BOOT_70004730:
+function_70004730:
 
 base $70004758
-BOOT_70004758:
+function_70004758:
 
 base $7000477C
-BOOT_7000477C:
+function_7000477C:
 
 base $700047B8
-BOOT_700047B8:
+function_700047B8:
 
 base $700048D4
-BOOT_700048D4:
+function_700048D4:
 
 base $700048FC
-BOOT_700048FC:
+function_700048FC:
 
 base $70004938
-BOOT_70004938:
+function_70004938:
 
 base $70004A60
-BOOT_70004A60:
+function_70004A60:
 
 base $70004A84
-BOOT_70004A84:
+function_70004A84:
 
 base $70004AC0
-BOOT_70004AC0:
+function_70004AC0:
 
 base $70004BB4
-BOOT_70004BB4:
+function_70004BB4:
 
 base $70004BDC
-BOOT_70004BDC:
+function_70004BDC:
 
 base $70004C18
-BOOT_70004C18:
+function_70004C18:
 
 base $70004D18
-BOOT_70004D18:
+function_70004D18:
 
 base $70004D20
-BOOT_70004D20:
+function_70004D20:
 
 base $70004D44
-BOOT_70004D44:
+function_70004D44:
 
 base $70004D60
-BOOT_70004D60:
+function_70004D60:
 
 base $70004D68
-BOOT_70004D68:
+function_70004D68:
 
 base $70004D6C
-BOOT_70004D6C:
+function_70004D6C:
 
 base $70004D80
-BOOT_70004D80:
+function_70004D80:
 
 base $70004DC4
-BOOT_70004DC4:
+function_70004DC4:
 
 base $70004DD4
-BOOT_70004DD4:
+function_70004DD4:
 
 base $70004DE0
-BOOT_70004DE0:
+function_70004DE0:
 
 base $70004E2C
-BOOT_70004E2C:
+function_70004E2C:
 
 base $70004E60
-BOOT_70004E60:
+function_70004E60:
 
 base $70004E88
-BOOT_70004E88:
+function_70004E88:
 
 base $70004E98
-BOOT_70004E98:
+function_70004E98:
 
 base $70004EAC
-BOOT_70004EAC:
+function_70004EAC:
 
 base $70004EB4
-BOOT_70004EB4:
+function_70004EB4:
 
 base $70004EBC
-BOOT_70004EBC:
+function_70004EBC:
 
 base $70004EC4
-BOOT_70004EC4:
+function_70004EC4:
 
 base $70004EE0
-BOOT_70004EE0:
+function_70004EE0:
 
 base $70004F54
-BOOT_70004F54:
+function_70004F54:
 
 base $70004FC0
-BOOT_70004FC0:
+function_70004FC0:
 
 base $70004FC4
-BOOT_70004FC4:
+function_70004FC4:
 
 base $7000505C
-BOOT_7000505C:
+function_7000505C:
 
 base $70005064
-BOOT_70005064:
+function_70005064:
 
 base $70005080
-BOOT_70005080:
+function_70005080:
 
 base $700050AC
-BOOT_700050AC:
+function_700050AC:
 
 base $700050D4
-BOOT_700050D4:
+function_700050D4:
 
 base $7000511C
-BOOT_7000511C:
+function_7000511C:
 
 base $70005158
-BOOT_70005158:
+function_70005158:
 
 base $70005190
-BOOT_70005190:
+function_70005190:
 
 base $700051A8
-BOOT_700051A8:
+function_700051A8:
 
 base $700051B0
-BOOT_700051B0:
+function_700051B0:
 
 base $700051B8
-BOOT_700051B8:
+function_700051B8:
 
 base $700051D0
-BOOT_700051D0:
+function_700051D0:
 
 base $700051D4
-BOOT_700051D4:
+function_700051D4:
 
 base $700051E0
-BOOT_700051E0:
+function_700051E0:
 
 base $70005234
-BOOT_70005234:
+function_70005234:
 
 base $7000524C
-BOOT_7000524C:
+function_7000524C:
 
 base $70005250
-BOOT_70005250:
+function_70005250:
 
 base $70005258
-BOOT_70005258:
+function_70005258:
 
 base $70005270
-BOOT_70005270:
+function_70005270:
 
 base $7000528C
-BOOT_7000528C:
+function_7000528C:
 
 base $70005294
-BOOT_70005294:
+function_70005294:
 
 base $70005334
-BOOT_70005334:
+function_70005334:
 
 base $70005340
-BOOT_70005340:
+function_70005340:
 
 base $70005370
-BOOT_70005370:
+function_70005370:
 
 base $70005398
-BOOT_70005398:
+function_70005398:
 
 base $700053A0
-BOOT_700053A0:
+function_700053A0:
 
 base $700053AC
-BOOT_700053AC:
+function_700053AC:
 
 base $700053C8
-BOOT_700053C8:
+function_700053C8:
 
 base $700053FC
-BOOT_700053FC:
+function_700053FC:
 
 base $70005404
-BOOT_70005404:
+function_70005404:
 
 base $7000540C
-BOOT_7000540C:
+function_7000540C:
 
 base $70005414
-BOOT_70005414:
+function_70005414:
 
 base $70005420
-BOOT_70005420:
+function_70005420:
 
 base $700054A0
-BOOT_700054A0:
+function_700054A0:
 
 base $700054A8
-BOOT_700054A8:
+function_700054A8:
 
 base $700054CC
-BOOT_700054CC:
+function_700054CC:
 
 base $700054DC
-BOOT_700054DC:
+function_700054DC:
 
 base $700054E4
-BOOT_700054E4:
+function_700054E4:
 
 base $7000552C
-BOOT_7000552C:
+function_7000552C:
 
 base $70005534
-BOOT_70005534:
+function_70005534:
 
 base $70005550
-BOOT_70005550:
+function_70005550:
 
 base $70005558
-BOOT_70005558:
+function_70005558:
 
 base $70005560
-BOOT_70005560:
+function_70005560:
 
 base $7000559C
-BOOT_7000559C:
+function_7000559C:
 
 base $700055A4
-BOOT_700055A4:
+function_700055A4:
 
 base $700055C8
-BOOT_700055C8:
+function_700055C8:
 
 base $70005618
-BOOT_70005618:
+function_70005618:
 
 base $70005628
-BOOT_70005628:
+function_70005628:
 
 base $70005630
-BOOT_70005630:
+function_70005630:
 
 base $70005654
-BOOT_70005654:
+function_70005654:
 
 base $7000565C
-BOOT_7000565C:
+function_7000565C:
 
 base $70005668
-BOOT_70005668:
+function_70005668:
 
 base $70005674
-BOOT_70005674:
+function_70005674:
 
 base $70005678
-BOOT_70005678:
+function_70005678:
 
 base $700056B4
-BOOT_700056B4:
+function_700056B4:
 
 base $700056BC
-BOOT_700056BC:
+function_700056BC:
 
 base $700056E8
-BOOT_700056E8:
+function_700056E8:
 
 base $70005708
-BOOT_70005708:
+function_70005708:
 
 base $70005730
-BOOT_70005730:
+function_70005730:
 
 base $70005774
-BOOT_70005774:
+function_70005774:
 
 base $700057B8
-BOOT_700057B8:
+function_700057B8:
 
 base $700057BC
-BOOT_700057BC:
+function_700057BC:
 
 base $700057CC
-BOOT_700057CC:
+function_700057CC:
 
 base $700057E4
-BOOT_700057E4:
+function_700057E4:
 
 base $700057F0
-BOOT_700057F0:
+function_700057F0:
 
 base $70005810
-BOOT_70005810:
+function_70005810:
 
 base $70005854
-BOOT_70005854:
+function_70005854:
 
 base $7000585C
-BOOT_7000585C:
+function_7000585C:
 
 base $70005888
-BOOT_70005888:
+function_70005888:
 
 base $700058E4
-BOOT_700058E4:
+function_700058E4:
 
 base $700058F8
-BOOT_700058F8:
+function_700058F8:
 
 base $700058FC
-BOOT_700058FC:
+function_700058FC:
 
 base $70005914
-BOOT_70005914:
+function_70005914:
 
 base $70005918
-BOOT_70005918:
+function_70005918:
 
 base $70005934
-BOOT_70005934:
+function_70005934:
 
 base $70005938
-BOOT_70005938:
+function_70005938:
 
 base $70005954
-BOOT_70005954:
+function_70005954:
 
 base $70005958
-BOOT_70005958:
+function_70005958:
 
 base $70005974
-BOOT_70005974:
+function_70005974:
 
 base $70005984
-BOOT_70005984:
+function_70005984:
 
 base $700059A4
-BOOT_700059A4:
+function_700059A4:
 
 base $700059D0
-BOOT_700059D0:
+function_700059D0:
 
 base $70005A2C
-BOOT_70005A2C:
+function_70005A2C:
 
 base $70005A5C
-BOOT_70005A5C:
+function_70005A5C:
 
 base $70005A9C
-BOOT_70005A9C:
+function_70005A9C:
 
 base $70005AC0
-BOOT_70005AC0:
+function_70005AC0:
 
 base $70005AD8
-BOOT_70005AD8:
+function_70005AD8:
 
 base $70005ADC
-BOOT_70005ADC:
+function_70005ADC:
 
 base $70005B10
-BOOT_70005B10:
+function_70005B10:
 
 base $70005B18
-BOOT_70005B18:
+function_70005B18:
 
 base $70005B44
-BOOT_70005B44:
+function_70005B44:
 
 base $70005B50
-BOOT_70005B50:
+function_70005B50:
 
 base $70005B60
-BOOT_70005B60:
+function_70005B60:
 
 base $70005B90
-BOOT_70005B90:
+function_70005B90:
 
 base $70005BF0
-BOOT_70005BF0:
+function_70005BF0:
 
 base $70005C1C
-BOOT_70005C1C:
+function_70005C1C:
 
 base $70005C44
-BOOT_70005C44:
+function_70005C44:
 
 base $70005CA8
-BOOT_70005CA8:
+function_70005CA8:
 
 base $70005D08
-BOOT_70005D08:
+function_70005D08:
 
 base $70005D20
-BOOT_70005D20:
+function_70005D20:
 
 base $70005D30
-BOOT_70005D30:
+function_70005D30:
 
 base $70005DDC
-BOOT_70005DDC:
+function_70005DDC:
 
 base $70005E68
-BOOT_70005E68:
+function_70005E68:
 
 base $70005E7C
-BOOT_70005E7C:
+function_70005E7C:
 
 base $70005EA8
-BOOT_70005EA8:
+function_70005EA8:
 
 base $70005ED0
-BOOT_70005ED0:
+function_70005ED0:
 
 base $70005F10
-BOOT_70005F10:
+function_70005F10:
 
 base $70005FF4
-BOOT_70005FF4:
+function_70005FF4:
 
 base $70006004
-BOOT_70006004:
+function_70006004:
 
 base $7000601C
-BOOT_7000601C:
+function_7000601C:
 
 base $7000603C
-BOOT_7000603C:
+function_7000603C:
 
 base $70006050
-BOOT_70006050:
+function_70006050:
 
 base $70006060
 mainloop:
 
 base $7000618C
-BOOT_7000618C:
+function_7000618C:
 
 base $700063F4
-BOOT_700063F4:
+function_700063F4:
 
 base $70006410
-BOOT_70006410:
+function_70006410:
 
 base $7000641C
-BOOT_7000641C:
+function_7000641C:
 
 base $70006464
-BOOT_70006464:
+function_70006464:
 
 base $700064D8
-BOOT_700064D8:
+function_700064D8:
 
 base $70006700
-BOOT_70006700:
+function_70006700:
 
 base $70006724
-BOOT_70006724:
+function_70006724:
 
 base $7000674C
-BOOT_7000674C:
+function_7000674C:
 
 base $700067A8
-BOOT_700067A8:
+function_700067A8:
 
 base $700067C0
-BOOT_700067C0:
+function_700067C0:
 
 base $70006808
-BOOT_70006808:
+function_70006808:
 
 base $70006844
-BOOT_70006844:
+function_70006844:
 
 base $70006854
-BOOT_70006854:
+function_70006854:
 
 base $70006890
-BOOT_70006890:
+function_70006890:
 
 base $7000689C
-BOOT_7000689C:
+function_7000689C:
 
 base $700068B4
-BOOT_700068B4:
+function_700068B4:
 
 base $70006930
 run_title_stage:
 
 base $70006950
-BOOT_70006950:
+function_70006950:
 
 base $7000695C
 get_stage_num:
 
 base $70006968
-BOOT_70006968:
+function_70006968:
 
 base $700069A4
-BOOT_700069A4:
+function_700069A4:
 
 base $700069B4
-BOOT_700069B4:
+function_700069B4:
 
 base $700069C0
-BOOT_700069C0:
+function_700069C0:
 
 base $700069F0
-BOOT_700069F0:
+function_700069F0:
 
 base $70006A08
-BOOT_70006A08:
+function_70006A08:
 
 base $70006A28
-BOOT_70006A28:
+function_70006A28:
 
 base $70006A30
-BOOT_70006A30:
+function_70006A30:
 
 base $70006A6C
-BOOT_70006A6C:
+function_70006A6C:
 
 base $70006C88
-BOOT_70006C88:
+function_70006C88:
 
 base $70006CB4
-BOOT_70006CB4:
+function_70006CB4:
 
 base $70006E68
-BOOT_70006E68:
+function_70006E68:
 
 base $70006E7C
-BOOT_70006E7C:
+function_70006E7C:
 
 base $70006EB4
-BOOT_70006EB4:
+function_70006EB4:
 
 base $70006ED4
-BOOT_70006ED4:
+function_70006ED4:
 
 base $70006EE4
-BOOT_70006EE4:
+function_70006EE4:
 
 base $70006F28
-BOOT_70006F28:
+function_70006F28:
 
 base $70006FBC
-BOOT_70006FBC:
+function_70006FBC:
 
 base $70006FC0
-BOOT_70006FC0:
+function_70006FC0:
 
 base $70006FD0
-BOOT_70006FD0:
+function_70006FD0:
 
 base $70007018
-BOOT_70007018:
+function_70007018:
 
 base $70007020
-BOOT_70007020:
+function_70007020:
 
 base $70007030
-BOOT_70007030:
+function_70007030:
 
 base $7000703C
-BOOT_7000703C:
+function_7000703C:
 
 base $700070A0
-BOOT_700070A0:
+function_700070A0:
 
 base $700070E4
-BOOT_700070E4:
+function_700070E4:
 
 base $700070F0
-BOOT_700070F0:
+function_700070F0:
 
 base $700070F8
-BOOT_700070F8:
+function_700070F8:
 
 base $70007158
-BOOT_70007158:
+function_70007158:
 
 base $70007168
-BOOT_70007168:
+function_70007168:
 
 base $700071B4
-BOOT_700071B4:
+function_700071B4:
 
 base $700071BC
-BOOT_700071BC:
+function_700071BC:
 
 base $700071F4
-BOOT_700071F4:
+function_700071F4:
 
 base $70007204
-BOOT_70007204:
+function_70007204:
 
 base $7000723C
-BOOT_7000723C:
+function_7000723C:
 
 base $7000725C
-BOOT_7000725C:
+function_7000725C:
 
 base $7000726C
-BOOT_7000726C:
+function_7000726C:
 
 base $700072B0
-BOOT_700072B0:
+function_700072B0:
 
 base $70007344
-BOOT_70007344:
+function_70007344:
 
 base $70007348
-BOOT_70007348:
+function_70007348:
 
 base $70007358
-BOOT_70007358:
+function_70007358:
 
 base $700073A0
-BOOT_700073A0:
+function_700073A0:
 
 base $700073A8
-BOOT_700073A8:
+function_700073A8:
 
 base $700073B8
-BOOT_700073B8:
+function_700073B8:
 
 base $700073C4
-BOOT_700073C4:
+function_700073C4:
 
 base $70007428
-BOOT_70007428:
+function_70007428:
 
 base $7000746C
-BOOT_7000746C:
+function_7000746C:
 
 base $70007478
-BOOT_70007478:
+function_70007478:
 
 base $70007480
-BOOT_70007480:
+function_70007480:
 
 base $700074E0
-BOOT_700074E0:
+function_700074E0:
 
 base $700074F0
-BOOT_700074F0:
+function_700074F0:
 
 base $7000753C
-BOOT_7000753C:
+function_7000753C:
 
 base $70007544
-BOOT_70007544:
+function_70007544:
 
 base $7000757C
-BOOT_7000757C:
+function_7000757C:
 
 base $7000758C
-BOOT_7000758C:
+function_7000758C:
 
 base $700075C4
-BOOT_700075C4:
+function_700075C4:
 
 base $700075E4
-BOOT_700075E4:
+function_700075E4:
 
 base $700075F4
-BOOT_700075F4:
+function_700075F4:
 
 base $70007638
-BOOT_70007638:
+function_70007638:
 
 base $700076CC
-BOOT_700076CC:
+function_700076CC:
 
 base $700076D0
-BOOT_700076D0:
+function_700076D0:
 
 base $700076E0
-BOOT_700076E0:
+function_700076E0:
 
 base $70007728
-BOOT_70007728:
+function_70007728:
 
 base $70007730
-BOOT_70007730:
+function_70007730:
 
 base $70007740
-BOOT_70007740:
+function_70007740:
 
 base $7000774C
-BOOT_7000774C:
+function_7000774C:
 
 base $700077B0
-BOOT_700077B0:
+function_700077B0:
 
 base $700077F4
-BOOT_700077F4:
+function_700077F4:
 
 base $70007800
-BOOT_70007800:
+function_70007800:
 
 base $70007808
-BOOT_70007808:
+function_70007808:
 
 base $70007868
-BOOT_70007868:
+function_70007868:
 
 base $70007878
-BOOT_70007878:
+function_70007878:
 
 base $700078C4
-BOOT_700078C4:
+function_700078C4:
 
 base $700078CC
-BOOT_700078CC:
+function_700078CC:
 
 base $70007904
-BOOT_70007904:
+function_70007904:
 
 base $70007914
-BOOT_70007914:
+function_70007914:
 
 base $700079B4
-BOOT_700079B4:
+function_700079B4:
 
 base $700079C0
-BOOT_700079C0:
+function_700079C0:
 
 base $70007A58
-BOOT_70007A58:
+function_70007A58:
 
 base $70007A64
-BOOT_70007A64:
+function_70007A64:
 
 base $70007AFC
-BOOT_70007AFC:
+function_70007AFC:
 
 base $70007B08
-BOOT_70007B08:
+function_70007B08:
 
 base $70007B0C
-BOOT_70007B0C:
+function_70007B0C:
 
 base $70007B20
-BOOT_70007B20:
+function_70007B20:
 
 base $70007BEC
-BOOT_70007BEC:
+function_70007BEC:
 
 base $70007C18
-BOOT_70007C18:
+function_70007C18:
 
 base $70007DDC
-BOOT_70007DDC:
+function_70007DDC:
 
 base $70007E0C
-BOOT_70007E0C:
+function_70007E0C:
 
 base $70007E38
-BOOT_70007E38:
+function_70007E38:
 
 base $70007E44
-BOOT_70007E44:
+function_70007E44:
 
 base $70007E80
-BOOT_70007E80:
+function_70007E80:
 
 base $70007ED0
-BOOT_70007ED0:
+function_70007ED0:
 
 base $70007EF4
-BOOT_70007EF4:
+function_70007EF4:
 
 base $70007F10
-BOOT_70007F10:
+function_70007F10:
 
 base $70007F58
-BOOT_70007F58:
+function_70007F58:
 
 base $70007F7C
-BOOT_70007F7C:
+function_70007F7C:
 
 base $70007F9C
-BOOT_70007F9C:
+function_70007F9C:
 
 base $70007FBC
-BOOT_70007FBC:
+function_70007FBC:
 
 base $70007FD8
-BOOT_70007FD8:
+function_70007FD8:
 
 base $70008018
-BOOT_70008018:
+function_70008018:
 
 base $7000802C
-BOOT_7000802C:
+function_7000802C:
 
 base $70008054
-BOOT_70008054:
+function_70008054:
 
 base $7000807C
-BOOT_7000807C:
+function_7000807C:
 
 base $70008098
-BOOT_70008098:
+function_70008098:
 
 base $700080F8
-BOOT_700080F8:
+function_700080F8:
 
 base $70008108
-BOOT_70008108:
+function_70008108:
 
 base $7000812C
-BOOT_7000812C:
+function_7000812C:
 
 base $7000813C
-BOOT_7000813C:
+function_7000813C:
 
 base $7000814C
-BOOT_7000814C:
+function_7000814C:
 
 base $70008230
-BOOT_70008230:
+function_70008230:
 
 base $70008284
-BOOT_70008284:
+function_70008284:
 
 base $700082A0
-BOOT_700082A0:
+function_700082A0:
 
 base $700082A8
-BOOT_700082A8:
+function_700082A8:
 
 base $700082F8
-BOOT_700082F8:
+function_700082F8:
 
 base $700082FC
-BOOT_700082FC:
+function_700082FC:
 
 base $70008310
-BOOT_70008310:
+function_70008310:
 
 base $70008320
-BOOT_70008320:
+function_70008320:
 
 base $70008324
-BOOT_70008324:
+function_70008324:
 
 base $70008388
-BOOT_70008388:
+function_70008388:
 
 base $7000838C
-BOOT_7000838C:
+function_7000838C:
 
 base $700083A8
-BOOT_700083A8:
+function_700083A8:
 
 base $700083D4
-BOOT_700083D4:
+function_700083D4:
 
 base $70008444
-BOOT_70008444:
+function_70008444:
 
 base $7000844C
-BOOT_7000844C:
+function_7000844C:
 
 base $70008454
-BOOT_70008454:
+function_70008454:
 
 base $70008460
-BOOT_70008460:
+function_70008460:
 
 base $70008464
-BOOT_70008464:
+function_70008464:
 
 base $70008474
-BOOT_70008474:
+function_70008474:
 
 base $7000847C
-BOOT_7000847C:
+function_7000847C:
 
 base $700084B4
-BOOT_700084B4:
+function_700084B4:
 
 base $700084D0
-BOOT_700084D0:
+function_700084D0:
 
 base $700084D8
-BOOT_700084D8:
+function_700084D8:
 
 base $700084E0
-BOOT_700084E0:
+function_700084E0:
 
 base $700084F0
-BOOT_700084F0:
+function_700084F0:
 
 base $70008538
-BOOT_70008538:
+function_70008538:
 
 base $7000853C
-BOOT_7000853C:
+function_7000853C:
 
 base $7000854C
-BOOT_7000854C:
+function_7000854C:
 
 base $70008580
-BOOT_70008580:
+function_70008580:
 
 base $70008584
-BOOT_70008584:
+function_70008584:
 
 base $70008598
-BOOT_70008598:
+function_70008598:
 
 base $700085A8
-BOOT_700085A8:
+function_700085A8:
 
 base $700085AC
-BOOT_700085AC:
+function_700085AC:
 
 base $700085B8
-BOOT_700085B8:
+function_700085B8:
 
 base $700085C8
-BOOT_700085C8:
+function_700085C8:
 
 base $7000866C
-BOOT_7000866C:
+function_7000866C:
 
 base $70008680
-BOOT_70008680:
+function_70008680:
 
 base $70008690
-BOOT_70008690:
+function_70008690:
 
 base $70008748
-BOOT_70008748:
+function_70008748:
 
 base $70008764
-BOOT_70008764:
+function_70008764:
 
 base $70008770
-BOOT_70008770:
+function_70008770:
 
 base $7000880C
-BOOT_7000880C:
+function_7000880C:
 
 base $70008884
-BOOT_70008884:
+function_70008884:
 
 base $70008890
-BOOT_70008890:
+function_70008890:
 
 base $700088A8
-BOOT_700088A8:
+function_700088A8:
 
 base $700088CC
-BOOT_700088CC:
+function_700088CC:
 
 base $700088D4
 def_70007FB4:
 
 base $700088D8
-BOOT_700088D8:
+function_700088D8:
 
 base $700088F8
-BOOT_700088F8:
+function_700088F8:
 
 base $700088FC
-BOOT_700088FC:
+function_700088FC:
 
 base $7000891C
-BOOT_7000891C:
+function_7000891C:
 
 base $70008948
-BOOT_70008948:
+function_70008948:
 
 base $70008994
-BOOT_70008994:
+function_70008994:
 
 base $700089C4
-BOOT_700089C4:
+function_700089C4:
 
 base $70008A30
-BOOT_70008A30:
+function_70008A30:
 
 base $70008A74
-BOOT_70008A74:
+function_70008A74:
 
 base $70008AAC
-BOOT_70008AAC:
+function_70008AAC:
 
 base $70008AC0
-BOOT_70008AC0:
+function_70008AC0:
 
 base $70008AC8
-BOOT_70008AC8:
+function_70008AC8:
 
 base $70008AF0
-BOOT_70008AF0:
+function_70008AF0:
 
 base $70008B10
-BOOT_70008B10:
+function_70008B10:
 
 base $70008B24
-BOOT_70008B24:
+function_70008B24:
 
 base $70008B2C
-BOOT_70008B2C:
+function_70008B2C:
 
 base $70008B40
-BOOT_70008B40:
+function_70008B40:
 
 base $70008B48
-BOOT_70008B48:
+function_70008B48:
 
 base $70008B5C
-BOOT_70008B5C:
+function_70008B5C:
 
 base $70008B70
-BOOT_70008B70:
+function_70008B70:
 
 base $70008BF4
-BOOT_70008BF4:
+function_70008BF4:
 
 base $70008C00
-BOOT_70008C00:
+function_70008C00:
 
 base $70008C94
-BOOT_70008C94:
+function_70008C94:
 
 base $70008CC8
-BOOT_70008CC8:
+function_70008CC8:
 
 base $70008CE0
-BOOT_70008CE0:
+function_70008CE0:
 
 base $70008CF0
-BOOT_70008CF0:
+function_70008CF0:
 
 base $70008D04
-BOOT_70008D04:
+function_70008D04:
 
 base $70008D2C
-BOOT_70008D2C:
+function_70008D2C:
 
 base $70008D3C
-BOOT_70008D3C:
+function_70008D3C:
 
 base $70008D78
-BOOT_70008D78:
+function_70008D78:
 
 base $70008D80
-BOOT_70008D80:
+function_70008D80:
 
 base $70008DA8
-BOOT_70008DA8:
+function_70008DA8:
 
 base $70008DC8
-BOOT_70008DC8:
+function_70008DC8:
 
 base $70008DCC
-BOOT_70008DCC:
+function_70008DCC:
 
 base $70008DD8
-BOOT_70008DD8:
+function_70008DD8:
 
 base $70008DE8
-BOOT_70008DE8:
+function_70008DE8:
 
 base $70008DF0
-BOOT_70008DF0:
+function_70008DF0:
 
 base $70008E00
-BOOT_70008E00:
+function_70008E00:
 
 base $70008E08
-BOOT_70008E08:
+function_70008E08:
 
 base $70008E6C
-BOOT_70008E6C:
+function_70008E6C:
 
 base $70008E7C
-BOOT_70008E7C:
+function_70008E7C:
 
 base $70008E8C
-BOOT_70008E8C:
+function_70008E8C:
 
 base $70008F34
-BOOT_70008F34:
+function_70008F34:
 
 base $70008F44
-BOOT_70008F44:
+function_70008F44:
 
 base $70008F48
-BOOT_70008F48:
+function_70008F48:
 
 base $70008F80
-BOOT_70008F80:
+function_70008F80:
 
 base $70008FE0
-BOOT_70008FE0:
+function_70008FE0:
 
 base $70008FF0
-BOOT_70008FF0:
+function_70008FF0:
 
 base $70009020
-BOOT_70009020:
+function_70009020:
 
 base $7000905C
-BOOT_7000905C:
+function_7000905C:
 
 base $7000906C
-BOOT_7000906C:
+function_7000906C:
 
 base $700090C0
-BOOT_700090C0:
+function_700090C0:
 
 base $700090F0
-BOOT_700090F0:
+function_700090F0:
 
 base $700090FC
-BOOT_700090FC:
+function_700090FC:
 
 base $70009124
-BOOT_70009124:
+function_70009124:
 
 base $70009134
-BOOT_70009134:
+function_70009134:
 
 base $70009144
-BOOT_70009144:
+function_70009144:
 
 base $70009154
-BOOT_70009154:
+function_70009154:
 
 base $70009164
-BOOT_70009164:
+function_70009164:
 
 base $70009174
-BOOT_70009174:
+function_70009174:
 
 base $70009184
-BOOT_70009184:
+function_70009184:
 
 base $700091B8
-BOOT_700091B8:
+function_700091B8:
 
 base $700091C8
-BOOT_700091C8:
+function_700091C8:
 
 base $700091E8
-BOOT_700091E8:
+function_700091E8:
 
 base $70009204
-BOOT_70009204:
+function_70009204:
 
 base $70009238
-BOOT_70009238:
+function_70009238:
 
 base $70009254
-BOOT_70009254:
+function_70009254:
 
 base $70009264
-BOOT_70009264:
+function_70009264:
 
 base $70009284
-BOOT_70009284:
+function_70009284:
 
 base $700092E4
-BOOT_700092E4:
+function_700092E4:
 
 base $7000931C
-BOOT_7000931C:
+function_7000931C:
 
 base $7000935C
-BOOT_7000935C:
+function_7000935C:
 
 base $70009364
-BOOT_70009364:
+function_70009364:
 
 base $70009380
-BOOT_70009380:
+function_70009380:
 
 base $700093AC
-BOOT_700093AC:
+function_700093AC:
 
 base $70009450
-BOOT_70009450:
+function_70009450:
 
 base $70009488
-BOOT_70009488:
+function_70009488:
 
 base $700094C0
-BOOT_700094C0:
+function_700094C0:
 
 base $700094EC
-BOOT_700094EC:
+function_700094EC:
 
 base $700094FC
-BOOT_700094FC:
+function_700094FC:
 
 base $70009514
-BOOT_70009514:
+function_70009514:
 
 base $7000958C
-BOOT_7000958C:
+function_7000958C:
 
 base $700095B0
-BOOT_700095B0:
+function_700095B0:
 
 base $700095F8
-BOOT_700095F8:
+function_700095F8:
 
 base $70009638
-BOOT_70009638:
+function_70009638:
 
 base $70009720
 allocate_viewport_bytes:
 
 base $70009748
-BOOT_70009748:
+function_70009748:
 
 base $70009764
-BOOT_70009764:
+function_70009764:
 
 base $7000976C
-BOOT_7000976C:
+function_7000976C:
 
 base $70009788
-BOOT_70009788:
+function_70009788:
 
 base $70009794
-BOOT_70009794:
+function_70009794:
 
 base $700097D4
-BOOT_700097D4:
+function_700097D4:
 
 base $700097DC
-BOOT_700097DC:
+function_700097DC:
 
 base $700097E8
-BOOT_700097E8:
+function_700097E8:
 
 base $70009804
-BOOT_70009804:
+function_70009804:
 
 base $70009840
-BOOT_70009840:
+function_70009840:
 
 base $7000985C
-BOOT_7000985C:
+function_7000985C:
 
 base $70009868
-BOOT_70009868:
+function_70009868:
 
 base $70009880
-BOOT_70009880:
+function_70009880:
 
 base $70009898
-BOOT_70009898:
+function_70009898:
 
 base $700098B4
-BOOT_700098B4:
+function_700098B4:
 
 base $700098C0
-BOOT_700098C0:
+function_700098C0:
 
 base $700098D0
-BOOT_700098D0:
+function_700098D0:
 
 base $700098D8
-BOOT_700098D8:
+function_700098D8:
 
 base $700098E0
-BOOT_700098E0:
+function_700098E0:
 
 base $700098F0
-BOOT_700098F0:
+function_700098F0:
 
 base $700098F4
-BOOT_700098F4:
+function_700098F4:
 
 base $70009910
-BOOT_70009910:
+function_70009910:
 
 base $7000992C
-BOOT_7000992C:
+function_7000992C:
 
 base $70009950
-BOOT_70009950:
+function_70009950:
 
 base $70009970
-BOOT_70009970:
+function_70009970:
 
 base $7000998C
-BOOT_7000998C:
+function_7000998C:
 
 base $7000999C
 reset_mem_bank_a0:
 
 base $700099C4
-BOOT_700099C4:
+function_700099C4:
 
 base $700099FC
-BOOT_700099FC:
+function_700099FC:
 
 base $70009A10
-BOOT_70009A10:
+function_70009A10:
 
 base $70009A34
-BOOT_70009A34:
+function_70009A34:
 
 base $70009A50
-BOOT_70009A50:
+function_70009A50:
 
 base $70009A8C
-BOOT_70009A8C:
+function_70009A8C:
 
 base $70009AB8
-BOOT_70009AB8:
+function_70009AB8:
 
 base $70009AE0
-BOOT_70009AE0:
+function_70009AE0:
 
 base $70009AE8
-BOOT_70009AE8:
+function_70009AE8:
 
 base $70009AF4
-BOOT_70009AF4:
+function_70009AF4:
 
 base $70009B18
-BOOT_70009B18:
+function_70009B18:
 
 base $70009B3C
-BOOT_70009B3C:
+function_70009B3C:
 
 base $70009B50
-BOOT_70009B50:
+function_70009B50:
 
 base $70009B60
-BOOT_70009B60:
+function_70009B60:
 
 base $70009B8C
-BOOT_70009B8C:
+function_70009B8C:
 
 base $70009B94
-BOOT_70009B94:
+function_70009B94:
 
 base $70009BB0
-BOOT_70009BB0:
+function_70009BB0:
 
 base $70009BD8
-BOOT_70009BD8:
+function_70009BD8:
 
 base $70009BFC
-BOOT_70009BFC:
+function_70009BFC:
 
 base $70009C10
-BOOT_70009C10:
+function_70009C10:
 
 base $70009C30
-BOOT_70009C30:
+function_70009C30:
 
 base $70009C48
-BOOT_70009C48:
+function_70009C48:
 
 base $70009C54
-BOOT_70009C54:
+function_70009C54:
 
 base $70009C58
-BOOT_70009C58:
+function_70009C58:
 
 base $70009C74
-BOOT_70009C74:
+function_70009C74:
 
 base $70009CD4
-BOOT_70009CD4:
+function_70009CD4:
 
 base $70009CEC
-BOOT_70009CEC:
+function_70009CEC:
 
 base $70009CFC
-BOOT_70009CFC:
+function_70009CFC:
 
 base $70009D0C
-BOOT_70009D0C:
+function_70009D0C:
 
 base $70009D24
-BOOT_70009D24:
+function_70009D24:
 
 base $70009D30
-BOOT_70009D30:
+function_70009D30:
 
 base $70009D50
-BOOT_70009D50:
+function_70009D50:
 
 base $70009D6C
-BOOT_70009D6C:
+function_70009D6C:
 
 base $70009D98
 reset_memtable_base_allocation:
 
 base $70009DD8
-BOOT_70009DD8:
+function_70009DD8:
 
 base $70009E10
-BOOT_70009E10:
+function_70009E10:
 
 base $70009E34
-BOOT_70009E34:
+function_70009E34:
 
 base $70009E74
-BOOT_70009E74:
+function_70009E74:
 
 base $70009EBC
-BOOT_70009EBC:
+function_70009EBC:
 
 base $70009EC4
-BOOT_70009EC4:
+function_70009EC4:
 
 base $70009EE8
-BOOT_70009EE8:
+function_70009EE8:
 
 base $70009EF8
-BOOT_70009EF8:
+function_70009EF8:
 
 base $70009F10
-BOOT_70009F10:
+function_70009F10:
 
 base $70009F38
-BOOT_70009F38:
+function_70009F38:
 
 base $70009F4C
-BOOT_70009F4C:
+function_70009F4C:
 
 base $70009F60
-BOOT_70009F60:
+function_70009F60:
 
 base $70009F64
-BOOT_70009F64:
+function_70009F64:
 
 base $70009F80
-BOOT_70009F80:
+function_70009F80:
 
 base $70009F84
-BOOT_70009F84:
+function_70009F84:
 
 base $70009FA8
-BOOT_70009FA8:
+function_70009FA8:
 
 base $70009FCC
-BOOT_70009FCC:
+function_70009FCC:
 
 base $70009FE8
-BOOT_70009FE8:
+function_70009FE8:
 
 base $70009FF4
-BOOT_70009FF4:
+function_70009FF4:
 
 base $7000A000
-BOOT_7000A000:
+function_7000A000:
 
 base $7000A014
-BOOT_7000A014:
+function_7000A014:
 
 base $7000A020
-BOOT_7000A020:
+function_7000A020:
 
 base $7000A040
-BOOT_7000A040:
+function_7000A040:
 
 base $7000A054
-BOOT_7000A054:
+function_7000A054:
 
 base $7000A064
-BOOT_7000A064:
+function_7000A064:
 
 base $7000A088
-BOOT_7000A088:
+function_7000A088:
 
 base $7000A098
-BOOT_7000A098:
+function_7000A098:
 
 base $7000A0A8
-BOOT_7000A0A8:
+function_7000A0A8:
 
 base $7000A0BC
-BOOT_7000A0BC:
+function_7000A0BC:
 
 base $7000A0DC
-BOOT_7000A0DC:
+function_7000A0DC:
 
 base $7000A0F4
-BOOT_7000A0F4:
+function_7000A0F4:
 
 base $7000A100
-BOOT_7000A100:
+function_7000A100:
 
 base $7000A150
-BOOT_7000A150:
+function_7000A150:
 
 base $7000A16C
-BOOT_7000A16C:
+function_7000A16C:
 
 base $7000A18C
-BOOT_7000A18C:
+function_7000A18C:
 
 base $7000A198
-BOOT_7000A198:
+function_7000A198:
 
 base $7000A1B4
-BOOT_7000A1B4:
+function_7000A1B4:
 
 base $7000A1B8
-BOOT_7000A1B8:
+function_7000A1B8:
 
 base $7000A1C4
-BOOT_7000A1C4:
+function_7000A1C4:
 
 base $7000A1DC
-BOOT_7000A1DC:
+function_7000A1DC:
 
 base $7000A20C
-BOOT_7000A20C:
+function_7000A20C:
 
 base $7000A220
-BOOT_7000A220:
+function_7000A220:
 
 base $7000A228
-BOOT_7000A228:
+function_7000A228:
 
 base $7000A244
-BOOT_7000A244:
+function_7000A244:
 
 base $7000A250
-BOOT_7000A250:
+function_7000A250:
 
 base $7000A26C
-BOOT_7000A26C:
+function_7000A26C:
 
 base $7000A29C
-BOOT_7000A29C:
+function_7000A29C:
 
 base $7000A2C4
-BOOT_7000A2C4:
+function_7000A2C4:
 
 base $7000A2F8
-BOOT_7000A2F8:
+function_7000A2F8:
 
 base $7000A338
-BOOT_7000A338:
+function_7000A338:
 
 base $7000A354
-BOOT_7000A354:
+function_7000A354:
 
 base $7000A370
-BOOT_7000A370:
+function_7000A370:
 
 base $7000A3A0
-BOOT_7000A3A0:
+function_7000A3A0:
 
 base $7000A3B4
-BOOT_7000A3B4:
+function_7000A3B4:
 
 base $7000A3C0
-BOOT_7000A3C0:
+function_7000A3C0:
 
 base $7000A3D0
-BOOT_7000A3D0:
+function_7000A3D0:
 
 base $7000A3D4
-BOOT_7000A3D4:
+function_7000A3D4:
 
 base $7000A3DC
-BOOT_7000A3DC:
+function_7000A3DC:
 
 base $7000A410
-BOOT_7000A410:
+function_7000A410:
 
 base $7000A418
-BOOT_7000A418:
+function_7000A418:
 
 base $7000A430
-BOOT_7000A430:
+function_7000A430:
 
 base $7000A434
-BOOT_7000A434:
+function_7000A434:
 
 base $7000A450
-BOOT_7000A450:
+function_7000A450:
 
 base $7000A498
 increment_random_num:
 
 base $7000A4AC
-BOOT_7000A4AC:
+function_7000A4AC:
 
 base $7000A4F0
-BOOT_7000A4F0:
+function_7000A4F0:
 
 base $7000A524
-BOOT_7000A524:
+function_7000A524:
 
 base $7000A530
-BOOT_7000A530:
+function_7000A530:
 
 base $7000A544
-BOOT_7000A544:
+function_7000A544:
 
 base $7000A56C
-BOOT_7000A56C:
+function_7000A56C:
 
 base $7000A57C
-BOOT_7000A57C:
+function_7000A57C:
 
 base $7000A584
-BOOT_7000A584:
+function_7000A584:
 
 base $7000A58C
 strtok:
 
 base $7000A5C0
-BOOT_7000A5C0:
+function_7000A5C0:
 
 base $7000A5F8
-BOOT_7000A5F8:
+function_7000A5F8:
 
 base $7000A604
-BOOT_7000A604:
+function_7000A604:
 
 base $7000A61C
-BOOT_7000A61C:
+function_7000A61C:
 
 base $7000A648
-BOOT_7000A648:
+function_7000A648:
 
 base $7000A668
-BOOT_7000A668:
+function_7000A668:
 
 base $7000A684
-BOOT_7000A684:
+function_7000A684:
 
 base $7000A6A0
 check_token:
 
 base $7000A6F8
-BOOT_7000A6F8:
+function_7000A6F8:
 
 base $7000A728
-BOOT_7000A728:
+function_7000A728:
 
 base $7000A73C
-BOOT_7000A73C:
+function_7000A73C:
 
 base $7000A740
-BOOT_7000A740:
+function_7000A740:
 
 base $7000A770
-BOOT_7000A770:
+function_7000A770:
 
 base $7000A784
-BOOT_7000A784:
+function_7000A784:
 
 base $7000A798
-BOOT_7000A798:
+function_7000A798:
 
 base $7000A7A0
-BOOT_7000A7A0:
+function_7000A7A0:
 
 base $7000A7B4
-BOOT_7000A7B4:
+function_7000A7B4:
 
 base $7000A7D4
-BOOT_7000A7D4:
+function_7000A7D4:
 
 base $7000A7D8
-BOOT_7000A7D8:
+function_7000A7D8:
 
 base $7000A7E0
-BOOT_7000A7E0:
+function_7000A7E0:
 
 base $7000A7F4
-BOOT_7000A7F4:
+function_7000A7F4:
 
 base $7000A7FC
-BOOT_7000A7FC:
+function_7000A7FC:
 
 base $7000A810
-BOOT_7000A810:
+function_7000A810:
 
 base $7000A820
-BOOT_7000A820:
+function_7000A820:
 
 base $7000A830
-BOOT_7000A830:
+function_7000A830:
 
 base $7000A844
-BOOT_7000A844:
+function_7000A844:
 
 base $7000A84C
-BOOT_7000A84C:
+function_7000A84C:
 
 base $7000A870
-BOOT_7000A870:
+function_7000A870:
 
 base $7000A878
-BOOT_7000A878:
+function_7000A878:
 
 base $7000A888
-BOOT_7000A888:
+function_7000A888:
 
 base $7000A890
-BOOT_7000A890:
+function_7000A890:
 
 base $7000A898
-BOOT_7000A898:
+function_7000A898:
 
 base $7000A8AC
-BOOT_7000A8AC:
+function_7000A8AC:
 
 base $7000A8D0
-BOOT_7000A8D0:
+function_7000A8D0:
 
 base $7000A8D8
-BOOT_7000A8D8:
+function_7000A8D8:
 
 base $7000A8E8
-BOOT_7000A8E8:
+function_7000A8E8:
 
 base $7000A8F0
-BOOT_7000A8F0:
+function_7000A8F0:
 
 base $7000A8F8
-BOOT_7000A8F8:
+function_7000A8F8:
 
 base $7000A924
-BOOT_7000A924:
+function_7000A924:
 
 base $7000A930
-BOOT_7000A930:
+function_7000A930:
 
 base $7000A948
-BOOT_7000A948:
+function_7000A948:
 
 base $7000A950
-BOOT_7000A950:
+function_7000A950:
 
 base $7000A970
-BOOT_7000A970:
+function_7000A970:
 
 base $7000A984
-BOOT_7000A984:
+function_7000A984:
 
 base $7000A98C
-BOOT_7000A98C:
+function_7000A98C:
 
 base $7000A9D8
-BOOT_7000A9D8:
+function_7000A9D8:
 
 base $7000A9E0
 strtol:
 
 base $7000AA20
-BOOT_7000AA20:
+function_7000AA20:
 
 base $7000AA28
-BOOT_7000AA28:
+function_7000AA28:
 
 base $7000AA40
-BOOT_7000AA40:
+function_7000AA40:
 
 base $7000AA54
-BOOT_7000AA54:
+function_7000AA54:
 
 base $7000AA74
-BOOT_7000AA74:
+function_7000AA74:
 
 base $7000AA90
-BOOT_7000AA90:
+function_7000AA90:
 
 base $7000AAC4
-BOOT_7000AAC4:
+function_7000AAC4:
 
 base $7000AAF8
-BOOT_7000AAF8:
+function_7000AAF8:
 
 base $7000AB00
-BOOT_7000AB00:
+function_7000AB00:
 
 base $7000AB1C
-BOOT_7000AB1C:
+function_7000AB1C:
 
 base $7000AB40
-BOOT_7000AB40:
+function_7000AB40:
 
 base $7000AB64
-BOOT_7000AB64:
+function_7000AB64:
 
 base $7000AB88
-BOOT_7000AB88:
+function_7000AB88:
 
 base $7000ABB0
-BOOT_7000ABB0:
+function_7000ABB0:
 
 base $7000ABB8
-BOOT_7000ABB8:
+function_7000ABB8:
 
 base $7000ABC0
-BOOT_7000ABC0:
+function_7000ABC0:
 
 base $7000ABD0
-BOOT_7000ABD0:
+function_7000ABD0:
 
 base $7000ABE0
-BOOT_7000ABE0:
+function_7000ABE0:
 
 base $7000ABE4
-BOOT_7000ABE4:
+function_7000ABE4:
 
 base $7000AC00
-BOOT_7000AC00:
+function_7000AC00:
 
 base $7000AC14
-BOOT_7000AC14:
+function_7000AC14:
 
 base $7000AC24
-BOOT_7000AC24:
+function_7000AC24:
 
 base $7000AC30
-BOOT_7000AC30:
+function_7000AC30:
 
 base $7000AC44
-BOOT_7000AC44:
+function_7000AC44:
 
 base $7000AC70
-BOOT_7000AC70:
+function_7000AC70:
 
 base $7000AC94
 sprintf:
 
 base $7000ACD8
-BOOT_7000ACD8:
+function_7000ACD8:
 
 base $7000ACF0
-BOOT_7000ACF0:
+function_7000ACF0:
 
 base $7000AD30
-BOOT_7000AD30:
+function_7000AD30:
 
 base $7000AD38
-BOOT_7000AD38:
+function_7000AD38:
 
 base $7000AD80
-BOOT_7000AD80:
+function_7000AD80:
 
 base $7000AD90
-BOOT_7000AD90:
+function_7000AD90:
 
 base $7000ADA0
-BOOT_7000ADA0:
+function_7000ADA0:
 
 base $7000ADA8
-BOOT_7000ADA8:
+function_7000ADA8:
 
 base $7000ADB0
-BOOT_7000ADB0:
+function_7000ADB0:
 
 base $7000ADD0
-BOOT_7000ADD0:
+function_7000ADD0:
 
 base $7000AE08
-BOOT_7000AE08:
+function_7000AE08:
 
 base $7000AE30
-BOOT_7000AE30:
+function_7000AE30:
 
 base $7000AE9C
-BOOT_7000AE9C:
+function_7000AE9C:
 
 base $7000AEA8
-BOOT_7000AEA8:
+function_7000AEA8:
 
 base $7000AEDC
-BOOT_7000AEDC:
+function_7000AEDC:
 
 base $7000AF00
-BOOT_7000AF00:
+function_7000AF00:
 
 base $7000AF28
-BOOT_7000AF28:
+function_7000AF28:
 
 base $7000AF2C
-BOOT_7000AF2C:
+function_7000AF2C:
 
 base $7000AF84
-BOOT_7000AF84:
+function_7000AF84:
 
 base $7000AF98
-BOOT_7000AF98:
+function_7000AF98:
 
 base $7000AFBC
-BOOT_7000AFBC:
+function_7000AFBC:
 
 base $7000AFD0
-BOOT_7000AFD0:
+function_7000AFD0:
 
 base $7000AFF4
-BOOT_7000AFF4:
+function_7000AFF4:
 
 base $7000AFFC
-BOOT_7000AFFC:
+function_7000AFFC:
 
 base $7000B018
-BOOT_7000B018:
+function_7000B018:
 
 base $7000B040
-BOOT_7000B040:
+function_7000B040:
 
 base $7000B06C
-BOOT_7000B06C:
+function_7000B06C:
 
 base $7000B098
-BOOT_7000B098:
+function_7000B098:
 
 base $7000B0C4
-BOOT_7000B0C4:
+function_7000B0C4:
 
 base $7000B0E8
-BOOT_7000B0E8:
+function_7000B0E8:
 
 base $7000B120
-BOOT_7000B120:
+function_7000B120:
 
 base $7000B148
-BOOT_7000B148:
+function_7000B148:
 
 base $7000B184
-BOOT_7000B184:
+function_7000B184:
 
 base $7000B1B0
-BOOT_7000B1B0:
+function_7000B1B0:
 
 base $7000B1B4
-BOOT_7000B1B4:
+function_7000B1B4:
 
 base $7000B1C0
-BOOT_7000B1C0:
+function_7000B1C0:
 
 base $7000B1D8
-BOOT_7000B1D8:
+function_7000B1D8:
 
 base $7000B1E8
-BOOT_7000B1E8:
+function_7000B1E8:
 
 base $7000B208
-BOOT_7000B208:
+function_7000B208:
 
 base $7000B21C
-BOOT_7000B21C:
+function_7000B21C:
 
 base $7000B230
-BOOT_7000B230:
+function_7000B230:
 
 base $7000B254
-BOOT_7000B254:
+function_7000B254:
 
 base $7000B268
-BOOT_7000B268:
+function_7000B268:
 
 base $7000B27C
-BOOT_7000B27C:
+function_7000B27C:
 
 base $7000B2C4
-BOOT_7000B2C4:
+function_7000B2C4:
 
 base $7000B2D0
-BOOT_7000B2D0:
+function_7000B2D0:
 
 base $7000B2F8
-BOOT_7000B2F8:
+function_7000B2F8:
 
 base $7000B32C
-BOOT_7000B32C:
+function_7000B32C:
 
 base $7000B340
-BOOT_7000B340:
+function_7000B340:
 
 base $7000B360
-BOOT_7000B360:
+function_7000B360:
 
 base $7000B378
-BOOT_7000B378:
+function_7000B378:
 
 base $7000B38C
-BOOT_7000B38C:
+function_7000B38C:
 
 base $7000B398
-BOOT_7000B398:
+function_7000B398:
 
 base $7000B39C
-BOOT_7000B39C:
+function_7000B39C:
 
 base $7000B3D0
-BOOT_7000B3D0:
+function_7000B3D0:
 
 base $7000B3E4
-BOOT_7000B3E4:
+function_7000B3E4:
 
 base $7000B42C
-BOOT_7000B42C:
+function_7000B42C:
 
 base $7000B500
-BOOT_7000B500:
+function_7000B500:
 
 base $7000B504
-BOOT_7000B504:
+function_7000B504:
 
 base $7000B528
-BOOT_7000B528:
+function_7000B528:
 
 base $7000B560
-BOOT_7000B560:
+function_7000B560:
 
 base $7000B63C
-BOOT_7000B63C:
+function_7000B63C:
 
 base $7000B6AC
-BOOT_7000B6AC:
+function_7000B6AC:
 
 base $7000B718
-BOOT_7000B718:
+function_7000B718:
 
 base $7000B728
-BOOT_7000B728:
+function_7000B728:
 
 base $7000B734
-BOOT_7000B734:
+function_7000B734:
 
 base $7000B7D4
-BOOT_7000B7D4:
+function_7000B7D4:
 
 base $7000B7F8
-BOOT_7000B7F8:
+function_7000B7F8:
 
 base $7000B800
-BOOT_7000B800:
+function_7000B800:
 
 base $7000B804
-BOOT_7000B804:
+function_7000B804:
 
 base $7000B810
-BOOT_7000B810:
+function_7000B810:
 
 base $7000B85C
-BOOT_7000B85C:
+function_7000B85C:
 
 base $7000B8AC
-BOOT_7000B8AC:
+function_7000B8AC:
 
 base $7000B8C4
-BOOT_7000B8C4:
+function_7000B8C4:
 
 base $7000B8D8
-BOOT_7000B8D8:
+function_7000B8D8:
 
 base $7000B8EC
-BOOT_7000B8EC:
+function_7000B8EC:
 
 base $7000B8F0
-BOOT_7000B8F0:
+function_7000B8F0:
 
 base $7000B8F8
-BOOT_7000B8F8:
+function_7000B8F8:
 
 base $7000B920
-BOOT_7000B920:
+function_7000B920:
 
 base $7000B980
-BOOT_7000B980:
+function_7000B980:
 
 base $7000B9A4
-BOOT_7000B9A4:
+function_7000B9A4:
 
 base $7000B9B0
-BOOT_7000B9B0:
+function_7000B9B0:
 
 base $7000B9B4
-BOOT_7000B9B4:
+function_7000B9B4:
 
 base $7000B9CC
-BOOT_7000B9CC:
+function_7000B9CC:
 
 base $7000B9F8
-BOOT_7000B9F8:
+function_7000B9F8:
 
 base $7000BA20
-BOOT_7000BA20:
+function_7000BA20:
 
 base $7000BA38
-BOOT_7000BA38:
+function_7000BA38:
 
 base $7000BA48
-BOOT_7000BA48:
+function_7000BA48:
 
 base $7000BA58
-BOOT_7000BA58:
+function_7000BA58:
 
 base $7000BA68
-BOOT_7000BA68:
+function_7000BA68:
 
 base $7000BA70
-BOOT_7000BA70:
+function_7000BA70:
 
 base $7000BA7C
-BOOT_7000BA7C:
+function_7000BA7C:
 
 base $7000BAC8
-BOOT_7000BAC8:
+function_7000BAC8:
 
 base $7000BB10
-BOOT_7000BB10:
+function_7000BB10:
 
 base $7000BB20
-BOOT_7000BB20:
+function_7000BB20:
 
 base $7000BB38
-BOOT_7000BB38:
+function_7000BB38:
 
 base $7000BB44
-BOOT_7000BB44:
+function_7000BB44:
 
 base $7000BB60
-BOOT_7000BB60:
+function_7000BB60:
 
 base $7000BB74
-BOOT_7000BB74:
+function_7000BB74:
 
 base $7000BBA8
-BOOT_7000BBA8:
+function_7000BBA8:
 
 base $7000BBBC
-BOOT_7000BBBC:
+function_7000BBBC:
 
 base $7000BBC8
-BOOT_7000BBC8:
+function_7000BBC8:
 
 base $7000BBE4
-BOOT_7000BBE4:
+function_7000BBE4:
 
 base $7000BC1C
-BOOT_7000BC1C:
+function_7000BC1C:
 
 base $7000BC34
-BOOT_7000BC34:
+function_7000BC34:
 
 base $7000BC38
-BOOT_7000BC38:
+function_7000BC38:
 
 base $7000BC84
-BOOT_7000BC84:
+function_7000BC84:
 
 base $7000BC9C
-BOOT_7000BC9C:
+function_7000BC9C:
 
 base $7000BCCC
-BOOT_7000BCCC:
+function_7000BCCC:
 
 base $7000BCE4
-BOOT_7000BCE4:
+function_7000BCE4:
 
 base $7000BCEC
-BOOT_7000BCEC:
+function_7000BCEC:
 
 base $7000BCF0
-BOOT_7000BCF0:
+function_7000BCF0:
 
 base $7000BD0C
 redirect_to_ramrom_replay_and_record_handlers_if_set:
 
 base $7000BD48
-BOOT_7000BD48:
+function_7000BD48:
 
 base $7000BD7C
-BOOT_7000BD7C:
+function_7000BD7C:
 
 base $7000BD88
-BOOT_7000BD88:
+function_7000BD88:
 
 base $7000BDD0
-BOOT_7000BDD0:
+function_7000BDD0:
 
 base $7000BDFC
-BOOT_7000BDFC:
+function_7000BDFC:
 
 base $7000BE58
-BOOT_7000BE58:
+function_7000BE58:
 
 base $7000BEC8
-BOOT_7000BEC8:
+function_7000BEC8:
 
 base $7000BF38
-BOOT_7000BF38:
+function_7000BF38:
 
 base $7000BF50
-BOOT_7000BF50:
+function_7000BF50:
 
 base $7000BF8C
-BOOT_7000BF8C:
+function_7000BF8C:
 
 base $7000BFB8
-BOOT_7000BFB8:
+function_7000BFB8:
 
 base $7000BFC8
-BOOT_7000BFC8:
+function_7000BFC8:
 
 base $7000BFCC
-BOOT_7000BFCC:
+function_7000BFCC:
 
 base $7000BFDC
-BOOT_7000BFDC:
+function_7000BFDC:
 
 base $7000C040
-BOOT_7000C040:
+function_7000C040:
 
 base $7000C074
-BOOT_7000C074:
+function_7000C074:
 
 base $7000C084
-BOOT_7000C084:
+function_7000C084:
 
 base $7000C0B4
-BOOT_7000C0B4:
+function_7000C0B4:
 
 base $7000C0C4
-BOOT_7000C0C4:
+function_7000C0C4:
 
 base $7000C0DC
-BOOT_7000C0DC:
+function_7000C0DC:
 
 base $7000C0E0
-BOOT_7000C0E0:
+function_7000C0E0:
 
 base $7000C0EC
 get_cur.controller_horz.stick.pos:
 
 base $7000C144
-BOOT_7000C144:
+function_7000C144:
 
 base $7000C174
-BOOT_7000C174:
+function_7000C174:
 
 base $7000C1CC
-BOOT_7000C1CC:
+function_7000C1CC:
 
 base $7000C1FC
 get_cur.controller_vert.stick.pos:
 
 base $7000C254
-BOOT_7000C254:
+function_7000C254:
 
 base $7000C284
-BOOT_7000C284:
+function_7000C284:
 
 base $7000C2DC
-BOOT_7000C2DC:
+function_7000C2DC:
 
 base $7000C30C
 get_controller_buttons_held:
 
 base $7000C370
-BOOT_7000C370:
+function_7000C370:
 
 base $7000C3AC
 get_controller_buttons_pressed:
 
 base $7000C410
-BOOT_7000C410:
+function_7000C410:
 
 base $7000C430
-BOOT_7000C430:
+function_7000C430:
 
 base $7000C440
-BOOT_7000C440:
+function_7000C440:
 
 base $7000C470
-BOOT_7000C470:
+function_7000C470:
 
 base $7000C48C
-BOOT_7000C48C:
+function_7000C48C:
 
 base $7000C4A4
-BOOT_7000C4A4:
+function_7000C4A4:
 
 base $7000C4B4
-BOOT_7000C4B4:
+function_7000C4B4:
 
 base $7000C4E8
-BOOT_7000C4E8:
+function_7000C4E8:
 
 base $7000C4F4
-BOOT_7000C4F4:
+function_7000C4F4:
 
 base $7000C528
-BOOT_7000C528:
+function_7000C528:
 
 base $7000C55C
-BOOT_7000C55C:
+function_7000C55C:
 
 base $7000C568
-BOOT_7000C568:
+function_7000C568:
 
 base $7000C59C
-BOOT_7000C59C:
+function_7000C59C:
 
 base $7000C5D0
-BOOT_7000C5D0:
+function_7000C5D0:
 
 base $7000C5E0
-BOOT_7000C5E0:
+function_7000C5E0:
 
 base $7000C60C
-BOOT_7000C60C:
+function_7000C60C:
 
 base $7000C640
-BOOT_7000C640:
+function_7000C640:
 
 base $7000C650
-BOOT_7000C650:
+function_7000C650:
 
 base $7000C67C
-BOOT_7000C67C:
+function_7000C67C:
 
 base $7000C6BC
-BOOT_7000C6BC:
+function_7000C6BC:
 
 base $7000C6FC
-BOOT_7000C6FC:
+function_7000C6FC:
 
 base $7000C728
-BOOT_7000C728:
+function_7000C728:
 
 base $7000C734
-BOOT_7000C734:
+function_7000C734:
 
 base $7000C76C
-BOOT_7000C76C:
+function_7000C76C:
 
 base $7000C778
-BOOT_7000C778:
+function_7000C778:
 
 base $7000C7B0
-BOOT_7000C7B0:
+function_7000C7B0:
 
 base $7000C7BC
-BOOT_7000C7BC:
+function_7000C7BC:
 
 base $7000C7FC
-BOOT_7000C7FC:
+function_7000C7FC:
 
 base $7000C808
-BOOT_7000C808:
+function_7000C808:
 
 base $7000C848
-BOOT_7000C848:
+function_7000C848:
 
 base $7000C854
-BOOT_7000C854:
+function_7000C854:
 
 base $7000C8BC
-BOOT_7000C8BC:
+function_7000C8BC:
 
 base $7000C8D4
-BOOT_7000C8D4:
+function_7000C8D4:
 
 base $7000C8DC
 reset_cont_rumble_detect:
 
 base $7000C930
-BOOT_7000C930:
+function_7000C930:
 
 base $7000C954
-BOOT_7000C954:
+function_7000C954:
 
 base $7000C980
 send_rumble_off_to_PIF:
 
 base $7000CA18
-BOOT_7000CA18:
+function_7000CA18:
 
 base $7000CA28
-BOOT_7000CA28:
+function_7000CA28:
 
 base $7000CA2C
-BOOT_7000CA2C:
+function_7000CA2C:
 
 base $7000CA30
-BOOT_7000CA30:
+function_7000CA30:
 
 base $7000CA90
-BOOT_7000CA90:
+function_7000CA90:
 
 base $7000CAAC
-BOOT_7000CAAC:
+function_7000CAAC:
 
 base $7000CB44
-BOOT_7000CB44:
+function_7000CB44:
 
 base $7000CB54
-BOOT_7000CB54:
+function_7000CB54:
 
 base $7000CB58
-BOOT_7000CB58:
+function_7000CB58:
 
 base $7000CB5C
-BOOT_7000CB5C:
+function_7000CB5C:
 
 base $7000CBC0
-BOOT_7000CBC0:
+function_7000CBC0:
 
 base $7000CBDC
-BOOT_7000CBDC:
+function_7000CBDC:
 
 base $7000CBFC
-BOOT_7000CBFC:
+function_7000CBFC:
 
 base $7000CC70
-BOOT_7000CC70:
+function_7000CC70:
 
 base $7000CCA4
-BOOT_7000CCA4:
+function_7000CCA4:
 
 base $7000CCB8
-BOOT_7000CCB8:
+function_7000CCB8:
 
 base $7000CCD4
-BOOT_7000CCD4:
+function_7000CCD4:
 
 base $7000CCDC
-BOOT_7000CCDC:
+function_7000CCDC:
 
 base $7000CD38
-BOOT_7000CD38:
+function_7000CD38:
 
 base $7000CD64
-BOOT_7000CD64:
+function_7000CD64:
 
 base $7000CDB4
-BOOT_7000CDB4:
+function_7000CDB4:
 
 base $7000CDC4
-BOOT_7000CDC4:
+function_7000CDC4:
 
 base $7000CDE4
-BOOT_7000CDE4:
+function_7000CDE4:
 
 base $7000CDF8
-BOOT_7000CDF8:
+function_7000CDF8:
 
 base $7000CE10
-BOOT_7000CE10:
+function_7000CE10:
 
 base $7000CE8C
-BOOT_7000CE8C:
+function_7000CE8C:
 
 base $7000CE90
-BOOT_7000CE90:
+function_7000CE90:
 
 base $7000CEA0
-BOOT_7000CEA0:
+function_7000CEA0:
 
 base $7000CEA8
-BOOT_7000CEA8:
+function_7000CEA8:
 
 base $7000CEB0
-BOOT_7000CEB0:
+function_7000CEB0:
 
 base $7000CEB8
-BOOT_7000CEB8:
+function_7000CEB8:
 
 base $7000CEC0
-BOOT_7000CEC0:
+function_7000CEC0:
 
 base $7000CEC8
-BOOT_7000CEC8:
+function_7000CEC8:
 
 base $7000CED0
-BOOT_7000CED0:
+function_7000CED0:
 
 base $7000CED8
-BOOT_7000CED8:
+function_7000CED8:
 
 base $7000CEE0
-BOOT_7000CEE0:
+function_7000CEE0:
 
 base $7000CEE8
-BOOT_7000CEE8:
+function_7000CEE8:
 
 base $7000CF14
-BOOT_7000CF14:
+function_7000CF14:
 
 base $7000CF28
-BOOT_7000CF28:
+function_7000CF28:
 
 base $7000CF44
-BOOT_7000CF44:
+function_7000CF44:
 
 include "../lib/libultra_rom.asm"
 insert binarybootcode, "boot.bin", (origin() - $1000)
