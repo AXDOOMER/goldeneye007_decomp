@@ -1,15 +1,19 @@
 base $80000400
 Start:;scope {
+//Start inits bss then jumps to establishrootTLB
  define start(t0)
  define size(t1)
  define jumptarget(t2)
 
+ //set {start} to bss_start
+ //and {size} to (bss_end - bss_start)
  lui {start}, ((bss_start >> 16) + 1)
  lui {size}, ((bss_end - bss_start) >> 16)
  addiu {start}, {start}, bss_start
  ori {size}, {size}, (bss_end - bss_start)
 
  clearmem:;scope {
+ //blanks mem at {start} for {size}
   define pos({start})
   define sizeleft({size})
 
@@ -20,6 +24,8 @@ Start:;scope {
   addi {pos}, {pos}, 8
  }
 
+ //sets {jumptarget} to address of establishrootTLB
+ //then jumps setting sp to address of sp_rom via delayslot
  lui {jumptarget}, (establishrootTLB >> 16)
  lui sp, ((sp_rmon >> 16) + 1) // 
  addiu {jumptarget}, {jumptarget}, establishrootTLB
@@ -32,8 +38,6 @@ Start:;scope {
  nop;
  nop;
 }
-
-
 
 establishrootTLB:;scope {
  addiu	v0, r0, $0001
