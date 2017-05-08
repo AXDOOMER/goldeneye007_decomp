@@ -1,5 +1,5 @@
 80000400 Start
-80000410 .loop
+80000410 .clearmem
 80000450 establishrootTLB
 700004bc set_rodata_vaddr
 700004c8 set_rodata_rom_start
@@ -8,12 +8,12 @@
 700004ec setRareZip_end
 700004f8 redirecttodecompressfile
 70000510 init
-70000574 loop
-7000058c do_decompress
-700005f0 wait_pi_ready
-70000604 init_memory_tlb
-7000062c copy_TLB_InvalidHit_handler
-70000674 init_TLB_indicie_2_to_20
+70000574 .loop
+7000058c .do_decompress
+700005f0 .wait_pi_ready
+70000604 .init_memory_tlb
+7000062c .copy_TLB_InvalidHit_handler
+70000674 .init_TLB_indicie_2_to_20
 700006f0 stack_init
 700006fc function_700006FC
 70000718 function_70000718

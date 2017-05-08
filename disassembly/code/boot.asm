@@ -1,6 +1,5 @@
 base $80000400
-Start:
-scope {
+Start:;scope {
  define start(t0)
  define size(t1)
 
@@ -9,15 +8,15 @@ scope {
  addiu {start}, {start}, bss_start
  ori {size}, {size}, (bss_end - bss_start)
 
-loop:
- define pos({start})
- define sizeleft({size})
+ clearmem:
+  define pos({start})
+  define sizeleft({size})
 
- addi {sizeleft}, {sizeleft}, -8
- sw $0, 0({pos})
- sw $0, 4({pos})
- bnez {sizeleft}, loop
- addi {pos}, {pos}, $0008
+  addi {sizeleft}, {sizeleft}, -8
+  sw $0, 0({pos})
+  sw $0, 4({pos})
+  bnez {sizeleft}, clearmem
+  addi {pos}, {pos}, 8
 
  define target(t2)
 
@@ -26,12 +25,12 @@ loop:
  addiu {target}, {target}, establishrootTLB
  jr {target} //jr establishrootTLB
  addiu sp, sp, sp_rmon
-}
  nop; nop; nop; nop; nop; nop;
+}
 
 
-establishrootTLB:
-scope {
+
+establishrootTLB:;scope {
  addiu	v0, r0, $0001
  addiu	v1, r0, $0000
  addiu	a0, r0, $0000
@@ -55,7 +54,6 @@ scope {
  mtc0	t0,PageMask //COP0 PageMask= 007FE000: mask for 2000byte entries up to 4MB
  nop
  tlbwi
-
  lui	t2, (init >> 16)
  addiu	t2, t2, init
  jr	t2 //jr init
@@ -63,204 +61,223 @@ scope {
 }
 
 base $700004BC
-set_rodata_vaddr:
-scope {
-lui v0, (rodata_start >> 16)
-jr ra
-addiu v0, v0, rodata_start
+set_rodata_vaddr:;scope {
+ define return(v0)
+
+ lui {return}, (rodata_start >> 16)
+ jr ra
+ addiu {return}, {return}, rodata_start
 }
 
-set_rodata_rom_start:
-lui v0, (rodata_rom_start >> 16)
-jr ra
-addiu v0, v0, rodata_rom_start //v0=21990
+set_rodata_rom_start:;scope {
+ define return(v0)
 
-set_rodata_rom_end:
-lui v0, (rodata_rom_end >> 16)
-jr ra
-addiu v0, v0, rodata_rom_end //v0=33590
+ lui {return}, (rodata_rom_start >> 16)
+ jr ra
+ addiu {return}, {return}, rodata_rom_start //v0=21990
+}
 
-setRareZip_start:
-lui v0, (rarezip_rom_start >> 16)
-jr ra
-addiu v0, v0, rarezip_rom_start //v0=33590
+set_rodata_rom_end:;scope {
+ define return(v0)
 
-setRareZip_end:
-lui v0, (rarezip_rom_end >> 16)
-jr ra
-addiu v0, v0, rarezip_rom_end //v0=34B30
+ lui {return}, (rodata_rom_end >> 16)
+ jr ra
+ addiu {return}, {return}, rodata_rom_end //v0=33590
+}
 
-redirecttodecompressfile:
-//accepts: a0=p->source, a1=p->target, a2=p->buffer
-lui a3,(decompressfile >> 16)
-addiu a3, a3, decompressfile
-jr a3
+setRareZip_start:;scope {
+ define return(v0)
 
-nop; nop; nop;
+ lui {return}, (rarezip_rom_start >> 16)
+ jr ra
+ addiu {return}, {return}, rarezip_rom_start //v0=33590
+}
 
-init:
-//decompress main compressed block, initialize memory, TLB and its interrupts,
-// then execute main game thread
-addiu sp, sp, $FFC0
-sw ra, $0024(sp)
-sw s1, $0020(sp)
-jal set_rodata_vaddr //v0=80020D90: target address for main compressed block (21990)
-sw s0, $001C(sp)
+setRareZip_end:;scope {
+ define return(v0)
 
-jal set_rodata_rom_start //v0=21990: ROM address of main compressed block
-or s0, v0, r0 //s0=v0: 80020D90
+ lui {return}, (rarezip_rom_end >> 16)
+ jr ra
+ addiu {return}, {return}, rarezip_rom_end //v0=34B30
+}
 
-jal set_rodata_rom_end //v0=33590: ROM endpoint of main compressed block
-sw v0, $0034(sp) //sp+34= main.pos
+redirecttodecompressfile:;scope {
+ define target(a3)
 
-lw t6, $0034(sp)
-jal setRareZip_start
-subu s1, v0, t6 //s1=v0-t6: compressed size of main compressed block
+ //decompress file accepts:
+ //a0=p->source, a1=p->target, a2=p->buffer
+ lui {target},(decompressfile >> 16)
+ addiu {target}, {target}, decompressfile
+ jr {target}
+ nop; nop; nop;
+}
 
-jal setRareZip_end
-sw v0, $0028(sp) //sp+28= RareZip.pos
 
-lw t7, $0028(sp)
-lui t2, (RareZip_vaddr >> 16)	 //t2=70200000: target vaddress for RareZip
-or a1, s0, r0 //a1=s0: target address for main.bin
-subu t8, v0, t7 //t8=v0-t7: RareZip.sz = RareZip.end - RareZip.pos
-addu a0, s1, t8 //a0=s1+t8: main.cmp_sz + RareZip.sz
-addiu v1, a0, -1 //v1= total size - 1
-bltz v1, do_decompress //skip if nothing to copy
-lui a2, (decompression_buffer >> 16)	 //a2=80300000: buffer for decompression tables
-lui t9, (RareZip_vaddr >> 16)
-subu a0, t9, s1 //a0=70200000 - main.cmp_sz: vaddr for main
-addu v0, s0, v1 //v0=s0+v1: target address + total size
+init:;scope {
+ //decompress main compressed block, initialize memory, TLB and its interrupts,
+ // then execute main game thread
+ addiu sp, sp, $FFC0
+ sw ra, $0024(sp)
+ sw s1, $0020(sp)
+ jal set_rodata_vaddr //v0=80020D90: target address for main compressed block (21990)
+ sw s0, $001C(sp)
 
-loop:	
-//loop to copy from source to virtual target instead of mapping...
-lbu t0, $0000(v0)
-addu t1, a0, v1
-addiu v1, v1, $FFFF
-addiu v0, v0, $FFFF
-bgez v1, loop
-sb t0, $0000(t1)
+ jal set_rodata_rom_start //v0=21990: ROM address of main compressed block
+ or s0, v0, r0 //s0=v0: 80020D90
 
-do_decompress:
-//decompress main compressed block
-jal redirecttodecompressfile //redirect to 7020141C: decompress a0 to a1// a2=buffer
-subu a0, t2, s1 //a0=p->source: RareZip.vaddr - main.cmp_sz
-//70000594:
-lui t3, (rarezip_rom_start >> 16)
-lui t4, $0000
-addiu t4, t4, $1050 //t4=1050
-addiu t3, t3, rarezip_rom_start //t3=33590: ROM address of 70200000 RareZip ASM [33590-34B30 ROM]
-lui at, $000F
-ori at, at, $FFB1 //at=FFFB1
-subu v0, t3, t4 //v0=33590 - 1050: 32550
-slt at, v0, at
-bnez at, init_memory_tlb //branch if 32550 < FFFB1, which it always will be...
-lui at, $FFF0
-//700005BC:	on failure, presumes 64bit mapping, which would place exception handler at 100400, not 400
-ori at, at, $0050 //at= -FFFB0
-lui a1, $0010
-lui a2, $7010
-addiu a2, a2, $0400 //a2=70100400
-addiu a1, a1, $1000 //a1=101000
-addu a3, v0, at //a3= difference - FFFB0
+ jal set_rodata_rom_end //v0=33590: ROM endpoint of main compressed block
+ sw v0, $0034(sp) //sp+34= main.pos
 
-jal osPiRawStartDma //read (a0) a3 bytes from ROM a1 to a2
-or a0, r0, r0 //a0=0 (read)
+ lw t6, $0034(sp)
+ jal setRareZip_start
+ subu s1, v0, t6 //s1=v0-t6: compressed size of main compressed block
 
-jal $7000D070 //v0=PI status
-nop
+ jal setRareZip_end
+ sw v0, $0028(sp) //sp+28= RareZip.pos
 
-andi t5, v0, $0001
-beqz t5, init_memory_tlb //branch if ready
-nop
+ lw t7, $0028(sp)
+ lui t2, (RareZip_vaddr >> 16)	 //t2=70200000: target vaddress for RareZip
+ or a1, s0, r0 //a1=s0: target address for main.bin
+ subu t8, v0, t7 //t8=v0-t7: RareZip.sz = RareZip.end - RareZip.pos
+ addu a0, s1, t8 //a0=s1+t8: main.cmp_sz + RareZip.sz
+ addiu v1, a0, -1 //v1= total size - 1
+ bltz v1, do_decompress //skip if nothing to copy
+ lui a2, (decompression_buffer >> 16)	 //a2=80300000: buffer for decompression tables
+ lui t9, (RareZip_vaddr >> 16)
+ subu a0, t9, s1 //a0=70200000 - main.cmp_sz: vaddr for main
+ addu v0, s0, v1 //v0=s0+v1: target address + total size
 
-wait_pi_ready:
-// wait until PI ready
-jal $7000D070 //v0=PI status
-nop
-andi t6, v0, 0001
-bnez t6, wait_pi_ready
-nop
+ loop:
+  //loop to copy from source to virtual target instead of mapping...
+  lbu t0, $0000(v0)
+  addu t1, a0, v1
+  addiu v1, v1, $FFFF
+  addiu v0, v0, $FFFF
+  bgez v1, loop
+  sb t0, $0000(t1)
 
-init_memory_tlb:
-// initialize memory and TLB
-jal $7000D080 //initialize PIF, interrupt handlers, C0- and 7F- TLB segments, init NMIbuffer if cold run, init 64DD if present
-nop
 
-jal $70001BB0 //sets #hardwired TLB entries to 2
-nop
+ do_decompress:
+  //decompress main compressed block
+  jal redirecttodecompressfile //redirect to 7020141C: decompress a0 to a1// a2=buffer
+  subu a0, t2, s1 //a0=p->source: RareZip.vaddr - main.cmp_sz
+  //70000594:
+  lui t3, (rarezip_rom_start >> 16)
+  lui t4, $0000
+  addiu t4, t4, $1050 //t4=1050
+  addiu t3, t3, rarezip_rom_start //t3=33590: ROM address of 70200000 RareZip ASM [33590-34B30 ROM]
+  lui at, $000F
+  ori at, at, $FFB1 //at=FFFB1
+  subu v0, t3, t4 //v0=33590 - 1050: 32550
+  slt at, v0, at
+  bnez at, init_memory_tlb //branch if 32550 < FFFB1, which it always will be...
+  lui at, $FFF0
+  //700005BC:	on failure, presumes 64bit mapping, which would place exception handler at 100400, not 400
+  ori at, at, $0050 //at= -FFFB0
+  lui a1, $0010
+  lui a2, $7010
+  addiu a2, a2, $0400 //a2=70100400
+  addiu a1, a1, $1000 //a1=101000
+  addu a3, v0, at //a3= difference - FFFB0
 
-lui s0, $8000
-lui v0, (tlb_entries >> 16)
-lui a0, $8000
-addiu v0, v0, tlb_entries //v0= 70001B60
-or v1, s0, r0 //v1=s0: 80000000
-ori a0, a0, $0080 //a0=80000080
+  jal osPiRawStartDma //read (a0) a3 bytes from ROM a1 to a2
+  or a0, r0, r0 //a0=0 (read)
 
-copy_TLB_InvalidHit_handler:
-// copy TLB InvalidHit handler to 80000080
-lw t7, $0000(v0)
-addiu v1, v1, $0010
-addiu v0, v0, $0010
-sw t7, $FFF0(v1)
-lw t8, $FFF4(v0)
-sw t8, $FFF4(v1)
-lw t9, $FFF8(v0)
-sw t9, $FFF8(v1)
-lw t0, $FFFC(v0)
-bne v1,a0,copy_TLB_InvalidHit_handler
-sw t0, $FFFC(v1)
+  jal $7000D070 //v0=PI status
+  nop
 
-//70000658:
-jal osWritebackDCacheAll //set Cache index writeback invalidate for 2000 bytes at 80000000
-nop
-or a0, s0, r0 //a0=s0: 80000000
-jal osInvalICache //invalidate Cache for a1 bytes at a0
-addiu a1, r0, $4000 //a1=4000
-addiu s0, r0, $0002
-addiu s1, r0, $0020
+  andi t5, v0, $0001
+  beqz t5, init_memory_tlb //branch if ready
+  nop
 
-init_TLB_indicie_2_to_20:	
-//init all TLB indices from 2-20
-jal osUnmapTLB //remove TLB index a0
-or a0, s0, r0 //a0=s0
-addiu s0, s0, $0001 //s0++
-bne s0, s1, init_TLB_indicie_2_to_20 //loop 15 times
-nop
+ wait_pi_ready:
+  // wait until PI ready
+  jal $7000D070 //v0=PI status
+  nop
+  andi t6, v0, 0001
+  bnez t6, wait_pi_ready
+  nop
 
-//70000688:	enable all but underflow in FPU
-jal __osGetFpcCsr //v0= COP1 Control
-nop
+ init_memory_tlb:
+  // initialize memory and TLB
+  jal $7000D080 //initialize PIF, interrupt handlers, C0- and 7F- TLB segments, init NMIbuffer if cold run, init 64DD if present
+  nop
 
-jal __osSetFpcCsr //v0=COP1 Control, replacing with a0
-ori a0, v0, $0E80 //a0= v0 | E80: enable all but underflow
+  jal $70001BB0 //sets #hardwired TLB entries to 2
+  nop
 
-//70000698:
-lui a0, ((sp_main >>16) +1)
-addiu a0, a0, sp_main 
+  lui s0, $8000
+  lui v0, (tlb_entries >> 16)
+  lui a0, $8000
+  addiu v0, v0, tlb_entries //v0= 70001B60
+  or v1, s0, r0 //v1=s0: 80000000
+  ori a0, a0, $0080 //a0=80000080
 
-jal stack_init //v0= new stack pointer
-ori a1, r0, $8000 //a1=8000
+ copy_TLB_InvalidHit_handler:
+  // copy TLB InvalidHit handler to 80000080
+  lw t7, $0000(v0)
+  addiu v1, v1, $0010
+  addiu v0, v0, $0010
+  sw t7, $FFF0(v1)
+  lw t8, $FFF4(v0)
+  sw t8, $FFF4(v1)
+  lw t9, $FFF8(v0)
+  sw t9, $FFF8(v1)
+  lw t0, $FFFC(v0)
+  bne v1,a0,copy_TLB_InvalidHit_handler
+  sw t0, $FFFC(v1)
 
-//700006A8:	generate main game thread
-lui s0, ((mainthread >> 16) + 1)
-addiu s0, s0, mainthread //s0= 8005D640
-lui a2, (main >> 16)
-addiu t4, r0, $000A
-sw t4, $0014(sp) //sp+14= A
-addiu a2, a2, main //a2= 7000089C: main game loop
-or a0, s0, r0 //a0=s0: 8005D640: p->thread
-addiu a1, r0, 0003 //a1=3
-or a3, r0, r0 //a3=0
-jal osCreateThread //initialize thread entry at a0 with values
-sw v0, $0010(sp) //sp+10= stack pointer
-jal osStartThread //insert thread and execute if no thread currently running
-or a0, s0, r0 //a0=s0: 8005D640: p->table
-lw ra, $0024(sp)
-lw s0, $001C(sp)
-lw s1, $0020(sp)
-jr ra
-addiu sp, sp, $0040
+  //70000658:
+  jal osWritebackDCacheAll //set Cache index writeback invalidate for 2000 bytes at 80000000
+  nop
+  or a0, s0, r0 //a0=s0: 80000000
+  jal osInvalICache //invalidate Cache for a1 bytes at a0
+  addiu a1, r0, $4000 //a1=4000
+  addiu s0, r0, $0002
+  addiu s1, r0, $0020
+
+ init_TLB_indicie_2_to_20:
+ //init all TLB indices from 2-20
+ jal osUnmapTLB //remove TLB index a0
+ or a0, s0, r0 //a0=s0
+ addiu s0, s0, $0001 //s0++
+ bne s0, s1, init_TLB_indicie_2_to_20 //loop 15 times
+ nop
+
+ //70000688:	enable all but underflow in FPU
+ jal __osGetFpcCsr //v0= COP1 Control
+ nop
+
+ jal __osSetFpcCsr //v0=COP1 Control, replacing with a0
+ ori a0, v0, $0E80 //a0= v0 | E80: enable all but underflow
+
+ //70000698:
+ lui a0, ((sp_main >>16) +1)
+ addiu a0, a0, sp_main
+
+ jal stack_init //v0= new stack pointer
+ ori a1, r0, $8000 //a1=8000
+
+ //700006A8:	generate main game thread
+ lui s0, ((mainthread >> 16) + 1)
+ addiu s0, s0, mainthread //s0= 8005D640
+ lui a2, (main >> 16)
+ addiu t4, r0, $000A
+ sw t4, $0014(sp) //sp+14= A
+ addiu a2, a2, main //a2= 7000089C: main game loop
+ or a0, s0, r0 //a0=s0: 8005D640: p->thread
+ addiu a1, r0, 0003 //a1=3
+ or a3, r0, r0 //a3=0
+ jal osCreateThread //initialize thread entry at a0 with values
+ sw v0, $0010(sp) //sp+10= stack pointer
+ jal osStartThread //insert thread and execute if no thread currently running
+ or a0, s0, r0 //a0=s0: 8005D640: p->table
+ lw ra, $0024(sp)
+ lw s0, $001C(sp)
+ lw s1, $0020(sp)
+ jr ra
+ addiu sp, sp, $0040
+}
 
 stack_init:
 addu v0, a0, a1
