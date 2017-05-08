@@ -254,374 +254,1450 @@ addiu v0, -8
 
 base $700006FC
 BOOT_700006FC:
+addiu t6, $0, 0x1
+lui at, 0x8002
+sw t6, 0x3044 ( at )
+lui at, 0x8002
+lui t7, 0x1000
+jr ra
+sw t7, 0x3048 ( at )
+
+
 
 base $70000718
-BOOT_70000718:
-
-base $7000071C
-BOOT_7000071C:
-
-base $70000730
-nullsub_51:
+function_70000718:
+//0x70000718 -- 0x70000737
+sw a0, 0x0 (sp)
+b $7000071C //infinite loop
+sll $0, $0, 0x0
+sll $0, $0, 0x0
+sll $0, $0, 0x0
+sll $0, $0, 0x0
+jr ra
+sll $0, $0, 0x0
 
 base $70000738
 makebootthread:
+//0x70000738 -- 0x7000078f
+addiu sp, sp, 0xffffffe0
+sw ra, 0x1c (sp)
+lui a0, 0x803b
+addiu a0, a0, 0xffffb710
+jal 0x700006f0 //(function_700006f0)
+addiu a1, $0, 0x40
+lui a0, 0x8006
+lui a2, 0x7000
+addiu a2, a2, 0x718
+addiu a0, a0, 0xffffd490
+addiu a1, $0, 0x1
+or a3, $0, $0
+sw v0, 0x10 (sp)
+jal 0x7000d430 //(function_7000d430)
+sw $0, 0x14 (sp)
+lui a0, 0x8006
+jal 0x7000d580 //(function_7000d580)
+addiu a0, a0, 0xffffd490
+lw ra, 0x1c (sp)
+addiu sp, sp, 0x20
+jr ra
+sll $0, $0, 0x0
 
 base $70000790
-indiboarddetectionthread:
+indiboard_thread:
+//0x70000790 -- 0x700007eb
+addiu sp, sp, 0xffffffe0
+sw ra, 0x1c (sp)
+lui a0, 0x803b
+addiu a0, a0, 0xffffb410
+jal 0x700006f0 //(function_700006f0)
+addiu a1, $0, 0x300
+lui a0, 0x8006
+lui a2, 0x7001
+addiu t6, $0, 0xfa
+sw t6, 0x14 (sp)
+addiu a2, a2, 0xffffcea0
+addiu a0, a0, 0xffffd2e0
+or a1, $0, $0
+or a3, $0, $0
+jal 0x7000d430 //(function_7000d430)
+sw v0, 0x10 (sp)
+lui a0, 0x8006
+jal 0x7000d580 //(function_7000d580)
+addiu a0, a0, 0xffffd2e0
+lw ra, 0x1c (sp)
+addiu sp, sp, 0x20
+jr ra
+sll $0, $0, 0x0
 
-base $700007EC
-BOOT_700007EC:
+base $700007ec
+function_700007ec:
+//0x700007ec -- 0x7000089b
+addiu sp, sp, 0xffffffe8
+sw ra, 0x14 (sp)
+lui a0, 0x8006
+lui a1, 0x8006
+addiu a1, a1, 0xffffd9b8
+addiu a0, a0, 0xffffd9a0
+jal 0x7000d6d0 //(function_7000d6d0)
+addiu a2, $0, 0x20
+lui t6, 0x8000
+lw t6, 0x300 (t6)
+addiu at, $0, 0x2
+lui a0, 0x8006
+bne t6, at, 0x70000848 //(function_700007ec+0x5c)
+addiu a0, a0, 0xffffda40
+lui a0, 0x8006
+lui a1, 0x8006
+addiu a1, a1, 0xffffd7f0
+addiu a0, a0, 0xffffda40
+addiu a2, $0, 0x1e
+jal 0x70000aac //(scheduler)
+addiu a3, $0, 0x1
+beq $0, $0, 0x7000085c //(function_700007ec+0x70)
+sll $0, $0, 0x0
+lui a1, 0x8006
+addiu a1, a1, 0xffffd7f0
+addiu a2, $0, 0x2
+jal 0x70000aac //(scheduler)
+addiu a3, $0, 0x1
+lui a0, 0x8006
+lui a1, 0x8006
+lui a2, 0x8006
+addiu a2, a2, 0xffffd9a0
+addiu a1, a1, 0xffffdb18
+addiu a0, a0, 0xffffda40
+jal 0x70000c14 //(function_70000c14)
+or a3, $0, $0
+lui a0, 0x8006
+jal 0x70000cf8 //(function_70000cf8)
+addiu a0, a0, 0xffffda40
+lw ra, 0x14 (sp)
+lui at, 0x8006
+sw v0, 0xffffda38 (at)
+jr ra
+addiu sp, sp, 0x18
 
-base $70000848
-BOOT_70000848:
-
-base $7000085C
-BOOT_7000085C:
-
-base $7000089C
+base $7000089c
 main:
-
-base $700008E0
-BOOT_700008E0:
+//0x7000089c -- 0x70000907
+addiu sp, sp, 0xffffffe8
+sw ra, 0x14 (sp)
+jal 0x70000738 //(makebootthread)
+sw a0, 0x18 (sp)
+jal 0x7000ad30 //(function_7000ad30)
+sll $0, $0, 0x0
+jal 0x7000acf0 //(function_7000acf0)
+sll $0, $0, 0x0
+jal 0x70000790 //(indiboard_thread)
+sll $0, $0, 0x0
+jal 0x7000a5c0 //(function_7000a5c0)
+sll $0, $0, 0x0
+beql v0, r0, 0x700008E0 //(main+0x44)
+or a0, $0, $0
+jal 0x7000d740 //(function_7000d740)
+or a0, $0, $0
+or a0, $0, $0
+jal 0x7000d800 //(function_7000d800)
+addiu a1, $0, 0xa
+jal 0x700007ec //(function_700007ec)
+sll $0, $0, 0x0
+jal 0x7000601c //(function_7000601c)
+sll $0, $0, 0x0
+lw ra, 0x14 (sp)
+addiu sp, sp, 0x18
+jr ra
+sll $0, $0, 0x0
 
 base $70000908
 setuplastentryofdebughandler:
-
-base $70000920
-BOOT_70000920:
-
-base $7000095C
-BOOT_7000095C:
+//0x70000908 -- 0x7000096f
+addiu sp, sp, 0xffffffc0
+lui t6, 0x8002
+addiu v1, sp, 0x8
+addiu t6, t6, 0x304c
+addiu t9, t6, 0x30
+or t0, v1, $0
+lw at, 0x0 (t6)
+addiu t6, t6, 0xc
+addiu t0, t0, 0xc
+sw at, 0xfffffff4 (t0)
+lw at, 0xfffffff8 (t6)
+sw at, 0xfffffff8 (t0)
+lw at, 0xfffffffc (t6)
+bne t6, t9, 0x70000920 //(setuplastentryofdebughandler+0x18)
+sw at, 0xfffffffc (t0)
+lw at, 0x0 (t6)
+or v0, v1, $0
+sw at, 0x0 (t0)
+lw t9, 0x4 (t6)
+sw t9, 0x4 (t0)
+lw t1, 0x8 (v0)
+addiu v0, v0, 0x8
+bnel t1, r0, 0x7000095c //(setuplastentryofdebughandler+0x54)
+lw t1, 0x8 (v0)
+jr ra
+addiu sp, sp, 0x40
 
 base $70000970
 stderr.activated:
+//0x70000970 -- 0x7000097b
+lui at, 0x8002
+jr ra
+sw a0, 0x3098 (at)
 
-base $7000097C
+base $7000097c
 stderr.enable:
+//0x7000097c -- 0x70000987
+lui at, 0x8002
+jr ra
+sw a0, 0x3094 (at)
 
 base $70000988
 stderr.permitted:
+//0x70000988 -- 0x70000993
+lui at, 0x8002
+jr ra
+sw a0, 0x309c (at)
 
 base $70000994
-user.Compare:
+user.compare:
+//0x70000994 -- 0x7000099f
+lui at, 0x8002
+jr ra
+sw a0, 0x30a0 (at)
 
-base $700009A0
+base $700009a0
 testtodisplaystderrandupdatecount:
+//0x700009a0 -- 0x700009f7
+lui t6, 0x8002
+lw t6, 0x309c (t6)
+addiu sp, sp, 0xffffffe8
+sw ra, 0x14 (sp)
+beq t6, r0, 0x700009c0 //(testtodisplaystderrandupdatecount+0x20)
+lui t7, 0x8002
+lw t7, 0x3098 (t7)
+bne t7, r0, 0x700009d0 //(testtodisplaystderrandupdatecount+0x30)
+lui t8, 0x8002
+lw t8, 0x3094 (t8)
+beql t8, r0, 0x700009ec //(testtodisplaystderrandupdatecount+0x4c)
+lw ra, 0x14 (sp)
+jal 0x700059d0 //(function_700059d0)
+sll $0, $0, 0x0
+jal 0x7000d8e0 //(function_7000d8e0)
+sll $0, $0, 0x0
+lui at, 0x8002
+sw v0, 0x30a4 (at)
+lw ra, 0x14 (sp)
+addiu sp, sp, 0x18
+jr ra
+sll $0, $0, 0x0
 
-base $700009C0
-BOOT_700009C0:
-
-base $700009D0
-BOOT_700009D0:
-
-base $700009EC
-BOOT_700009EC:
-
-base $700009F8
+base $700009f8
 testtodisplaystderrorevery16thframe:
+//0x700009f8 -- 0x70000a87
+addiu sp, sp, 0xffffffe8
+andi t6, a0, 0xf
+bne t6, r0, 0x70000a78 //(testtodisplaystderrorevery16thframe+0x80)
+sw ra, 0x14 (sp)
+lui t7, 0x8002
+lw t7, 0x309c (t7)
+lui t8, 0x8002
+lui t9, 0x8002
+beq t7, r0, 0x70000a2c //(testtodisplaystderrorevery16thframe+0x34)
+sll $0, $0, 0x0
+lw t8, 0x3098 (t8)
+bne t8, r0, 0x70000a38 //(testtodisplaystderrorevery16thframe+0x40)
+sll $0, $0, 0x0
+lw t9, 0x3094 (t9)
+beql t9, r0, 0x70000a7c //(testtodisplaystderrorevery16thframe+0x84)
+lw ra, 0x14 (sp)
+jal 0x7000d8e0 //(function_7000d8e0)
+sll $0, $0, 0x0
+lui t1, 0x8002
+lw t1, 0x30a4 (t1)
+lui t0, 0x8002
+lw t0, 0x30a0 (t0)
+subu t2, v0, t1
+lui a0, 0x803b
+sltu at, t0, t2
+beql at, r0, 0x70000a7c //(testtodisplaystderrorevery16thframe+0x84)
+lw ra, 0x14 (sp)
+jal 0x700059d0 //(function_700059d0)
+addiu a0, a0, 0x5000
+lui a0, 0x803e
+jal 0x700059d0 //(function_700059d0)
+addiu a0, a0, 0xffffa800
+lw ra, 0x14 (sp)
+addiu sp, sp, 0x18
+jr ra
+sll $0, $0, 0x0
 
-base $70000A2C
-BOOT_70000A2C:
-
-base $70000A38
-BOOT_70000A38:
-
-base $70000A78
-BOOT_70000A78:
-
-base $70000A7C
-BOOT_70000A7C:
-
-base $70000A88
+base $70000a88
 storecurrentcountto800230a4:
+//0x70000a88 -- 0x70000aab
+addiu sp, sp, 0xffffffe8
+sw ra, 0x14 (sp)
+jal 0x7000d8e0 //(function_7000d8e0)
+sll $0, $0, 0x0
+lw ra, 0x14 (sp)
+lui at, 0x8002
+sw v0, 0x30a4 (at)
+jr ra
+addiu sp, sp, 0x18
 
-base $70000AAC
+base $70000aac
 scheduler:
+//0x70000aac -- 0x70000c13
+addiu sp, sp, 0xffffffd8
+sw ra, 0x24 (sp)
+sw s1, 0x20 (sp)
+sw s0, 0x1c (sp)
+sw a1, 0x2c (sp)
+sw a2, 0x30 (sp)
+sw a3, 0x34 (sp)
+addiu t6, $0, 0x1
+addiu t7, $0, 0x5
+sw $0, 0xc8 (a0)
+sw $0, 0xcc (a0)
+sw $0, 0xb4 (a0)
+sw $0, 0xd0 (a0)
+sw $0, 0xb8 (a0)
+sw $0, 0xbc (a0)
+sw $0, 0xc0 (a0)
+sw $0, 0xc4 (a0)
+sh t6, 0x0 (a0)
+sh t7, 0x20 (a0)
+lw t8, 0x2c (sp)
+or s0, a0, $0
+addiu s1, a0, 0x40
+sw t8, 0xb0 (a0)
+or a0, s1, $0
+addiu a1, s0, 0x58
+jal 0x7000d6d0 //(function_7000d6d0)
+addiu a2, $0, 0x8
+addiu a0, s0, 0x78
+addiu a1, s0, 0x90
+jal 0x7000d6d0 //(function_7000d6d0)
+addiu a2, $0, 0x8
+jal 0x7000d8f0 //(function_7000d8f0)
+addiu a0, $0, 0xfe
+lbu t9, 0x33 (sp)
+lui t1, 0x8002
+lui v1, 0x8006
+sll t0, t9, 0x2
+addu t0, t0, t9
+sll t0, t0, 0x4
+addiu t1, t1, 0x69c0
+addiu v1, v1, 0x87c
+addu t2, t0, t1
+sw t2, 0x0 (v1)
+lw t3, 0x1c (t2)
+lui at, 0x8006
+addiu a0, $0, 0x4
+sw t3, 0x880 (at)
+lw t4, 0x30 (t2)
+lui at, 0x8006
+or a1, s1, $0
+sw t4, 0x884 (at)
+lw t5, 0x44 (t2)
+lui at, 0x8006
+addiu a2, $0, 0x29b
+jal 0x7000dc50 //(function_7000dc50)
+sw t5, 0x888 (at)
+addiu a0, $0, 0x9
+or a1, s1, $0
+jal 0x7000dc50 //(function_7000dc50)
+addiu a2, $0, 0x29c
+addiu a0, $0, 0xe
+or a1, s1, $0
+jal 0x7000dc50 //(function_7000dc50)
+addiu a2, $0, 0x29d
+or a0, s1, $0
+addiu a1, $0, 0x29a
+jal 0x7000dcc0 //(function_7000dcc0)
+lw a2, 0x34 (sp)
+jal 0x70000a88 //(storecurrentcountto800230a4)
+sll $0, $0, 0x0
+lui a0, 0x803b
+addiu a0, a0, 0xffffb750
+jal 0x700006f0 //(function_700006f0)
+addiu a1, $0, 0x200
+lw a0, 0xb0 (s0)
+lui a2, 0x7000
+addiu t6, $0, 0x1e
+sw t6, 0x14 (sp)
+addiu a2, a2, 0xd00
+sw v0, 0x10 (sp)
+addiu a1, $0, 0x2
+jal 0x7000d430 //(function_7000d430)
+or a3, s0, $0
+jal 0x7000d580 //(function_7000d580)
+lw a0, 0xb0 (s0)
+lw ra, 0x24 (sp)
+lw s0, 0x1c (sp)
+lw s1, 0x20 (sp)
+jr ra
+addiu sp, sp, 0x28
 
-base $70000C14
-BOOT_70000C14:
+base $70000c14
+function_70000c14:
+//0x70000c14 -- 0x70000c6f
+addiu sp, sp, 0xffffffe8
+sw ra, 0x14 (sp)
+sw a0, 0x18 (sp)
+sw a2, 0x20 (sp)
+sw a3, 0x24 (sp)
+addiu a0, $0, 0x1
+jal 0x7000dd30 //(function_7000dd30)
+sw a1, 0x1c (sp)
+lw a1, 0x1c (sp)
+lw t6, 0x20 (sp)
+lw v1, 0x18 (sp)
+or a0, v0, $0
+sw t6, 0x4 (a1)
+lw t7, 0x24 (sp)
+sw t7, 0x8 (a1)
+lw t8, 0xb4 (v1)
+sw t8, 0x0 (a1)
+jal 0x7000dd30 //(function_7000dd30)
+sw a1, 0xb4 (v1)
+lw ra, 0x14 (sp)
+addiu sp, sp, 0x18
+jr ra
+sll $0, $0, 0x0
 
-base $70000C70
-BOOT_70000C70:
+base $70000c70
+function_70000c70:
+//0x70000c70 -- 0x70000cf7
+addiu sp, sp, 0xffffffe0
+sw ra, 0x14 (sp)
+sw a0, 0x20 (sp)
+lw v1, 0xb4 (a0)
+sw $0, 0x18 (sp)
+sw a1, 0x24 (sp)
+addiu a0, $0, 0x1
+jal 0x7000dd30 //(function_7000dd30)
+sw v1, 0x1c (sp)
+lw v1, 0x1c (sp)
+lw a1, 0x24 (sp)
+lw a2, 0x18 (sp)
+beq v1, r0, 0x70000ce0 //(function_70000c70+0x70)
+or a0, v0, $0
+bnel v1, a1, 0x70000cd4 //(function_70000c70+0x64)
+or a2, v1, $0
+beq a2, r0, 0x70000cc4 //(function_70000c70+0x54)
+lw t9, 0x20 (sp)
+lw t7, 0x0 (a1)
+beq $0, $0, 0x70000ce0 //(function_70000c70+0x70)
+sw t7, 0x0 (a2)
+lw t8, 0x0 (a1)
+beq $0, $0, 0x70000ce0 //(function_70000c70+0x70)
+sw t8, 0xb4 (t9)
+or a2, v1, $0
+lw v1, 0x0 (v1)
+bne v1, r0, 0x70000ca8 //(function_70000c70+0x38)
+sll $0, $0, 0x0
+jal 0x7000dd30 //(function_7000dd30)
+sll $0, $0, 0x0
+lw ra, 0x14 (sp)
+addiu sp, sp, 0x20
+jr ra
+sll $0, $0, 0x0
 
-base $70000CA8
-BOOT_70000CA8:
+base $70000cf8
+function_70000cf8:
+//0x70000cf8 -- 0x70000cff
+jr ra
+addiu v0, a0, 0x78
 
-base $70000CC4
-BOOT_70000CC4:
+base $70000d00
+function_70000d00:
+//0x70000d00 -- 0x70000eb3
+addiu sp, sp, 0xffffffb0
+sw s5, 0x28 (sp)
+sw s4, 0x24 (sp)
+sw s3, 0x20 (sp)
+sw s2, 0x1c (sp)
+sw s0, 0x14 (sp)
+or s2, a0, $0
+sw ra, 0x2c (sp)
+sw s1, 0x18 (sp)
+sw $0, 0x4c (sp)
+or s0, $0, $0
+addiu s3, a0, 0x40
+addiu s4, sp, 0x4c
+addiu s5, $0, 0x29a
+or a0, s3, $0
+or a1, s4, $0
+jal 0x7000ddd0 //(function_7000ddd0)
+addiu a2, $0, 0x1
+lw t6, 0x4c (sp)
+addiu at, $0, 0x29b
+beq t6, s5, 0x70000d78 //(function_70000d00+0x78)
+sll $0, $0, 0x0
+beq t6, at, 0x70000d88 //(function_70000d00+0x88)
+addiu at, $0, 0x29c
+beq t6, at, 0x70000d98 //(function_70000d00+0x98)
+addiu at, $0, 0x29d
+beq t6, at, 0x70000da8 //(function_70000d00+0xa8)
+sll $0, $0, 0x0
+beq $0, $0, 0x70000de0 //(function_70000d00+0xe0)
+sll $0, $0, 0x0
+jal 0x70000eb4 //(function_70000eb4)
+or a0, s2, $0
+beq $0, $0, 0x70000de0 //(function_70000d00+0xe0)
+sll $0, $0, 0x0
+jal 0x70001014 //(function_70001014)
+or a0, s2, $0
+beq $0, $0, 0x70000de0 //(function_70000d00+0xe0)
+sll $0, $0, 0x0
+jal 0x70001128 //(function_70001128)
+or a0, s2, $0
+beq $0, $0, 0x70000de0 //(function_70000d00+0xe0)
+sll $0, $0, 0x0
+jal 0x7000c8dc //(function_7000c8dc)
+sll $0, $0, 0x0
+lw s0, 0xb4 (s2)
+addiu s1, s2, 0x20
+beql s0, r0, 0x70000de0 //(function_70000d00+0xe0)
+addiu s0, $0, 0x1
+lw a0, 0x4 (s0)
+or a1, s1, $0
+jal 0x7000df10 //(function_7000df10)
+or a2, $0, $0
+lw s0, 0x0 (s0)
+bnel s0, r0, 0x70000dc4 //(function_70000d00+0xc4)
+lw a0, 0x4 (s0)
+addiu s0, $0, 0x1
+beql s0, $0, 0x70000d3c
+or a0, s3, $0
+lui t7, 0x8000
+lw t7, 0x300 (t7)
+addiu at, $0, 0x2
+lui a0, 0x8002
+bne t7, at, 0x70000e14 //(function_70000d00+0x114)
+sll $0, $0, 0x0
+lui a0, 0x8002
+jal 0x7000e060 //(function_7000e060)
+addiu a0, a0, 0x7320
+beq $0, $0, 0x70000e20 //(function_70000d00+0x120)
+lui at, 0x3f80
+jal 0x7000e060 //(function_7000e060)
+addiu a0, a0, 0x6a60
+lui at, 0x3f80
+mtc1 at, f12
+jal 0x7000e0d0 //(function_7000e0d0)
+sll $0, $0, 0x0
+lui at, 0x3f80
+mtc1 at, f12
+jal 0x7000e200 //(function_7000e200)
+sll $0, $0, 0x0
+jal 0x7000e260 //(function_7000e260)
+or a0, $0, $0
+jal 0x7000e2d0 //(function_7000e2d0)
+addiu a0, $0, 0x1
+or a0, s3, $0
+or a1, s4, $0
+jal 0x7000ddd0 //(function_7000ddd0)
+addiu a2, $0, 0x1
+lw t8, 0x4c (sp)
+bnel t8, s5, 0x70000e50 //(function_70000d00+0x150)
+or a0, s3, $0
+jal 0x7000bd88 //(function_7000bd88)
+sll $0, $0, 0x0
+beq $0, $0, 0x70000e50 //(function_70000d00+0x150)
+or a0, s3, $0
+sll $0, $0, 0x0
+sll $0, $0, 0x0
+sll $0, $0, 0x0
+sll $0, $0, 0x0
+sll $0, $0, 0x0
+sll $0, $0, 0x0
+lw ra, 0x2c (sp)
+lw s0, 0x14 (sp)
+lw s1, 0x18 (sp)
+lw s2, 0x1c (sp)
+lw s3, 0x20 (sp)
+lw s4, 0x24 (sp)
+lw s5, 0x28 (sp)
+jr ra
+addiu sp, sp, 0x50
 
-base $70000CD4
-BOOT_70000CD4:
-
-base $70000CE0
-BOOT_70000CE0:
-
-base $70000CEC
-BOOT_70000CEC:
-
-base $70000CF8
-BOOT_70000CF8:
-
-base $70000D00
-BOOT_70000D00:
-
-base $70000D3C
-BOOT_70000D3C:
-
-base $70000D78
-BOOT_70000D78:
-
-base $70000D88
-BOOT_70000D88:
-
-base $70000D98
-BOOT_70000D98:
-
-base $70000DA8
-BOOT_70000DA8:
-
-base $70000DC4
-BOOT_70000DC4:
-
-base $70000DE0
-BOOT_70000DE0:
-
-base $70000E14
-BOOT_70000E14:
-
-base $70000E20
-BOOT_70000E20:
-
-base $70000E50
-BOOT_70000E50:
-
-base $70000E90
-BOOT_70000E90:
-
-base $70000EB4
-BOOT_70000EB4:
-
-base $70000F24
-BOOT_70000F24:
-
-base $70000F44
-BOOT_70000F44:
-
-base $70000F78
-BOOT_70000F78:
-
-base $70000FAC
-BOOT_70000FAC:
-
-base $70000FB0
-BOOT_70000FB0:
-
-base $70000FBC
-BOOT_70000FBC:
-
-base $70000FDC
-BOOT_70000FDC:
-
-base $70000FE8
-BOOT_70000FE8:
-
-base $70000FF0
-BOOT_70000FF0:
+base $70000eb4
+function_70000eb4:
+//0x70000eb4 -- 0x70001013
+addiu sp, sp, 0xffffffc0
+sw ra, 0x24 (sp)
+sw s1, 0x18 (sp)
+or s1, a0, $0
+sw s3, 0x20 (sp)
+sw s2, 0x1c (sp)
+sw s0, 0x14 (sp)
+sw $0, 0x3c (sp)
+sw $0, 0x30 (sp)
+jal 0x700027a4 //(function_700027a4)
+sw $0, 0x2c (sp)
+lw t6, 0xd0 (s1)
+addiu t7, t6, 0x1
+jal 0x700031a0 //(function_700031a0)
+sw t7, 0xd0 (s1)
+jal 0x7000bd88 //(function_7000bd88)
+sll $0, $0, 0x0
+jal 0x70007914 //(function_70007914)
+sll $0, $0, 0x0
+addiu s3, sp, 0x3c
+addiu s2, s1, 0x78
+or a0, s2, $0
+or a1, s3, $0
+jal 0x7000ddd0 //(function_7000ddd0)
+or a2, $0, $0
+addiu s0, $0, 0xffffffff
+beq v0, s0, 0x70000f44 //(function_70000eb4+0x90)
+or a0, s1, $0
+jal 0x700013d8 //(function_700013d8)
+lw a1, 0x3c (sp)
+or a0, s2, $0
+or a1, s3, $0
+jal 0x7000ddd0 //(function_7000ddd0)
+or a2, $0, $0
+bnel v0, s0, 0x70000f24 //(function_70000eb4+0x70)
+or a0, s1, $0
+lw t8, 0xd4 (s1)
+or a0, s1, $0
+addiu a1, sp, 0x30
+beql t8, r0, 0x70000f78 //(function_70000eb4+0xc4)
+lw t0, 0xc8 (s1)
+lw t9, 0xc8 (s1)
+beql t9, r0, 0x70000f78 //(function_70000eb4+0xc4)
+lw t0, 0xc8 (s1)
+jal 0x70001560 //(function_70001560)
+or a0, s1, $0
+beq $0, $0, 0x70000fb0 //(function_70000eb4+0xfc)
+lw s0, 0xb4 (s1)
+lw t0, 0xc8 (s1)
+lw t3, 0xcc (s1)
+addiu a2, sp, 0x2c
+sltiu t1, t0, 0x1
+sll t2, t1, 0x1
+sltiu t4, t3, 0x1
+or s0, t2, t4
+jal 0x7000159c //(function_7000159c)
+or a3, s0, $0
+beq v0, s0, 0x70000fac //(function_70000eb4+0xf8)
+or a0, s1, $0
+lw a1, 0x30 (sp)
+jal 0x70001440 //(dpc_fill)
+lw a2, 0x2c (sp)
+lw s0, 0xb4 (s1)
+beq s0, r0, 0x70000ff0 //(function_70000eb4+0x13c)
+sll $0, $0, 0x0
+lw t5, 0x8 (s0)
+or a1, s1, $0
+or a2, $0, $0
+beq t5, r0, 0x70000fdc //(function_70000eb4+0x128)
+sll $0, $0, 0x0
+lw t6, 0xd0 (s1)
+andi t7, t6, 0x1
+bnel t7, r0, 0x70000fe8 //(function_70000eb4+0x134)
+lw s0, 0x0 (s0)
+jal 0x7000df10 //(function_7000df10)
+lw a0, 0x4 (s0)
+lw s0, 0x0 (s0)
+bnel s0, r0, 0x70000fbc //(function_70000eb4+0x108)
+lw t5, 0x8 (s0)
+jal 0x700009f8 //(testtodisplaystderrorevery16thframe)
+lw a0, 0xd0 (s1)
+lw ra, 0x24 (sp)
+lw s0, 0x14 (sp)
+lw s1, 0x18 (sp)
+lw s2, 0x1c (sp)
+lw s3, 0x20 (sp)
+jr ra
+addiu sp, sp, 0x40
 
 base $70001014
-BOOT_70001014:
+function_70001014:
+//0x70001014 -- 0x7000111b
+addiu sp, sp, 0xffffffd0
+sw ra, 0x1c (sp)
+sw s0, 0x18 (sp)
+sw $0, 0x28 (sp)
+sw $0, 0x24 (sp)
+lw a1, 0xc8 (a0)
+or s0, a0, $0
+sw $0, 0xc8 (a0)
+lui a0, 0x1
+ori a0, a0, 0x1
+jal 0x70002854 //(function_70002854)
+sw a1, 0x2c (sp)
+lw a1, 0x2c (sp)
+lw t6, 0x4 (a1)
+addiu a0, a1, 0x10
+andi t7, t6, 0x10
+beql t7, r0, 0x700010ac //(function_70001014+0x98)
+lw t4, 0x4 (a1)
+jal 0x7000e340 //(function_7000e340)
+sw a1, 0x2c (sp)
+beq v0, r0, 0x700010a8 //(function_70001014+0x94)
+lw a1, 0x2c (sp)
+lw t8, 0x4 (a1)
+lw t0, 0x8 (a1)
+addiu at, $0, 0x3
+ori t9, t8, 0x20
+andi t1, t0, 0x7
+bne t1, at, 0x700010c0 //(function_70001014+0xac)
+sw t9, 0x4 (a1)
+lw t2, 0xbc (s0)
+sw t2, 0x0 (a1)
+lw t3, 0xc4 (s0)
+sw a1, 0xbc (s0)
+bnel t3, r0, 0x700010c4 //(function_70001014+0xb0)
+lw t6, 0xc8 (s0)
+beq $0, $0, 0x700010c0 //(function_70001014+0xac)
+sw a1, 0xc4 (s0)
+lw t4, 0x4 (a1)
+addiu at, $0, 0xfffffffd
+or a0, s0, $0
+and t5, t4, at
+jal 0x70001230 //(function_70001230)
+sw t5, 0x4 (a1)
+lw t6, 0xc8 (s0)
+lw t9, 0xcc (s0)
+or a0, s0, $0
+sltiu t7, t6, 0x1
+sll t8, t7, 0x1
+sltiu t0, t9, 0x1
+or a3, t8, t0
+sw a3, 0x20 (sp)
+addiu a1, sp, 0x28
+jal 0x7000159c //(function_7000159c)
+addiu a2, sp, 0x24
+lw a3, 0x20 (sp)
+or a0, s0, $0
+lw a1, 0x28 (sp)
+beql v0, a3, 0x7000110c //(function_70001014+0xf8)
+lw ra, 0x1c (sp)
+jal 0x70001440 //(dpc_fill)
+lw a2, 0x24 (sp)
+lw ra, 0x1c (sp)
+lw s0, 0x18 (sp)
+addiu sp, sp, 0x30
+jr ra
+sll $0, $0, 0x0
 
-base $700010A8
-BOOT_700010A8:
-
-base $700010AC
-BOOT_700010AC:
-
-base $700010C0
-BOOT_700010C0:
-
-base $700010C4
-BOOT_700010C4:
-
-base $7000110C
-BOOT_7000110C:
-
-base $7000111C
+base $7000111c
 setcountertarget:
+//0x7000111c -- 0x70001127
+lui v0, 0x8006
+jr ra
+addiu v0, v0, 0xffffdb30
 
 base $70001128
-BOOT_70001128:
+function_70001128:
+//0x70001128 -- 0x700011df
+addiu sp, sp, 0xffffffd0
+sw ra, 0x1c (sp)
+sw s0, 0x18 (sp)
+sw $0, 0x28 (sp)
+sw $0, 0x24 (sp)
+lw t6, 0xcc (a0)
+or s0, a0, $0
+lui a0, 0x1
+beql t6, r0, 0x700011d0 //(function_70001128+0xa8)
+lw ra, 0x1c (sp)
+jal 0x70002854 //(function_70002854)
+ori a0, a0, 0x2
+lui a0, 0x8006
+jal 0x7000e3c0 //(function_7000e3c0)
+addiu a0, a0, 0xffffdb30
+lw a1, 0xcc (s0)
+sw $0, 0xcc (s0)
+addiu at, $0, 0xfffffffe
+lw t7, 0x4 (a1)
+or a0, s0, $0
+and t8, t7, at
+jal 0x70001230 //(function_70001230)
+sw t8, 0x4 (a1)
+lw t9, 0xc8 (s0)
+lw t2, 0xcc (s0)
+or a0, s0, $0
+sltiu t0, t9, 0x1
+sll t1, t0, 0x1
+sltiu t3, t2, 0x1
+or a3, t1, t3
+sw a3, 0x20 (sp)
+addiu a1, sp, 0x28
+jal 0x7000159c //(function_7000159c)
+addiu a2, sp, 0x24
+lw a3, 0x20 (sp)
+or a0, s0, $0
+lw a1, 0x28 (sp)
+beql v0, a3, 0x700011d0 //(function_70001128+0xa8)
+lw ra, 0x1c (sp)
+jal 0x70001440 //(dpc_fill)
+lw a2, 0x24 (sp)
+lw ra, 0x1c (sp)
+lw s0, 0x18 (sp)
+addiu sp, sp, 0x30
+jr ra
+sll $0, $0, 0x0
 
-base $700011D0
-BOOT_700011D0:
-
-base $700011E0
-BOOT_700011E0:
-
-base $70001214
-BOOT_70001214:
-
-base $7000121C
-BOOT_7000121C:
-
-base $70001220
-BOOT_70001220:
+base $700011e0
+function_700011e0:
+//0x700011e0 -- 0x7000122f
+addiu sp, sp, 0xffffffd8
+sw ra, 0x14 (sp)
+beq a0, r0, 0x7000121c //(function_700011e0+0x3c)
+sw a0, 0x28 (sp)
+jal 0x7000e410 //(function_7000e410)
+sll $0, $0, 0x0
+jal 0x7000e450 //(function_7000e450)
+sw v0, 0x1c (sp)
+lw t7, 0x1c (sp)
+beq v0, t7, 0x70001214 //(function_700011e0+0x34)
+sll $0, $0, 0x0
+beq $0, $0, 0x70001220 //(function_700011e0+0x40)
+or v0, $0, $0
+beq $0, $0, 0x70001220 //(function_700011e0+0x40)
+lw v0, 0x28 (sp)
+or v0, $0, $0
+lw ra, 0x14 (sp)
+addiu sp, sp, 0x28
+jr ra
+sll $0, $0, 0x0
 
 base $70001230
-BOOT_70001230:
+function_70001230:
+//0x70001230 -- 0x700013d7
+addiu sp, sp, 0xffffffe0
+sw ra, 0x1c (sp)
+sw s0, 0x18 (sp)
+sw a0, 0x20 (sp)
+lw t6, 0x4 (a1)
+or s0, a1, $0
+addiu a2, $0, 0x1
+andi t7, t6, 0x3
+bne t7, r0, 0x700013c4 //(function_70001230+0x194)
+or v0, $0, $0
+lw a0, 0x50 (a1)
+jal 0x7000df10 //(function_7000df10)
+lw a1, 0x54 (a1)
+lw t8, 0x10 (s0)
+addiu at, $0, 0x1
+bne t8, at, 0x700013bc //(function_70001230+0x18c)
+sll $0, $0, 0x0
+lw v0, 0x8 (s0)
+andi t9, v0, 0x40
+beq t9, r0, 0x700013bc //(function_70001230+0x18c)
+andi t0, v0, 0x20
+beq t0, r0, 0x700013bc //(function_70001230+0x18c)
+lui t1, 0x8002
+lw t1, 0x30cc (t1)
+beq t1, r0, 0x700012a8 //(function_70001230+0x78)
+sll $0, $0, 0x0
+jal 0x7000e2d0 //(function_7000e2d0)
+or a0, $0, $0
+lui at, 0x8002
+sw $0, 0x30cc (at)
+lui v1, 0x8002
+lw v1, 0x30b0 (v1)
+lui t3, 0x8002
+lui a0, 0x8
+sll t2, v1, 0x2
+addu t3, t3, t2
+lw t3, 0x30c4 (t3)
+or v1, t2, $0
+beq t3, r0, 0x70001358 //(function_70001230+0x128)
+sll $0, $0, 0x0
+jal 0x7000dd30 //(function_7000dd30)
+ori a0, a0, 0x401
+lui v1, 0x8002
+lw v1, 0x30b0 (v1)
+lui t7, 0x8006
+addiu t7, t7, 0xffffdb40
+sll t6, v1, 0x2
+addu t6, t6, v1
+sll t6, t6, 0x4
+lui t5, 0x8006
+sll t4, v1, 0x2
+addu t5, t5, t4
+addu t8, t6, t7
+addiu t1, t8, 0x48
+lw t5, 0xffffdbe0 (t5)
+lw at, 0x0 (t8)
+addiu t8, t8, 0xc
+addiu t5, t5, 0xc
+sw at, 0xfffffff4 (t5)
+lw at, 0xfffffff8 (t8)
+sw at, 0xfffffff8 (t5)
+lw at, 0xfffffffc (t8)
+bne t8, t1, 0x7000130c //(function_70001230+0xdc)
+sw at, 0xfffffffc (t5)
+lw at, 0x0 (t8)
+or a0, v0, $0
+sw at, 0x0 (t5)
+lw t1, 0x4 (t8)
+jal 0x7000dd30 //(function_7000dd30)
+sw t1, 0x4 (t5)
+lui v1, 0x8002
+lw v1, 0x30b0 (v1)
+sll t2, v1, 0x2
+or v1, t2, $0
+lui at, 0x8002
+addu at, at, v1
+jal 0x7000e0d0 //(function_7000e0d0)
+lwc1 f12, 0x30b4 (at)
+lui t3, 0x8002
+lw t3, 0x30b0 (t3)
+lui at, 0x8002
+sll t4, t3, 0x2
+addu at, at, t4
+jal 0x7000e200 //(function_7000e200)
+lwc1 f12, 0x30bc (at)
+lui t6, 0x8002
+lw t6, 0x30b0 (t6)
+lui at, 0x8002
+addiu t7, t6, 0x1
+bgez t7, 0x700013a8 //(function_70001230+0x178)
+andi t0, t7, 0x1
+beq t0, r0, 0x700013a8 //(function_70001230+0x178)
+sll $0, $0, 0x0
+addiu t0, t0, 0xfffffffe
+sw t0, 0x30b0 (at)
+jal 0x700009a0 //(testtodisplaystderrandupdatecount)
+lw a0, 0xc (s0)
+jal 0x7000e490 //(function_7000e490)
+lw a0, 0xc (s0)
+beq $0, $0, 0x700013c4 //(function_70001230+0x194)
+addiu v0, $0, 0x1
+lw ra, 0x1c (sp)
+lw s0, 0x18 (sp)
+addiu sp, sp, 0x20
+jr ra
+sll $0, $0, 0x0
 
-base $700012A8
-BOOT_700012A8:
-
-base $7000130C
-BOOT_7000130C:
-
-base $70001358
-BOOT_70001358:
-
-base $700013A8
-BOOT_700013A8:
-
-base $700013BC
-BOOT_700013BC:
-
-base $700013C4
-BOOT_700013C4:
-
-base $700013D8
-BOOT_700013D8:
-
-base $70001404
-BOOT_70001404:
-
-base $70001414
-BOOT_70001414:
-
-base $70001428
-BOOT_70001428:
-
-base $7000142C
-BOOT_7000142C:
+base $700013d8
+function_700013d8:
+//0x700013d8 -- 0x7000143f
+lw v0, 0x10 (a1)
+addiu at, $0, 0x2
+addiu t6, $0, 0x1
+bnel v0, at, 0x70001414 //(function_700013d8+0x3c)
+lw v0, 0xc4 (a0)
+lw v0, 0xc0 (a0)
+beql v0, r0, 0x70001404 //(function_700013d8+0x2c)
+sw a1, 0xb8 (a0)
+beq $0, $0, 0x70001404 //(function_700013d8+0x2c)
+sw a1, 0x0 (v0)
+sw a1, 0xb8 (a0)
+sw a1, 0xc0 (a0)
+beq $0, $0, 0x7000142c //(function_700013d8+0x54)
+sw t6, 0xd4 (a0)
+lw v0, 0xc4 (a0)
+beql v0, r0, 0x70001428 //(function_700013d8+0x50)
+sw a1, 0xbc (a0)
+beq $0, $0, 0x70001428 //(function_700013d8+0x50)
+sw a1, 0x0 (v0)
+sw a1, 0xbc (a0)
+sw a1, 0xc4 (a0)
+lw t7, 0x8 (a1)
+sw $0, 0x0 (a1)
+andi t8, t7, 0x3
+jr ra
+sw t8, 0x4 (a1)
 
 base $70001440
-DPCFill:
-
-base $70001480
-BOOT_70001480:
-
-base $700014A8
-BOOT_700014A8:
-
-base $700014C4
-BOOT_700014C4:
-
-base $700014DC
-BOOT_700014DC:
-
-base $7000150C
-BOOT_7000150C:
-
-base $70001550
-BOOT_70001550:
+dpc_fill:
+//0x70001440 -- 0x7000155f
+addiu sp, sp, 0xffffffd8
+sw s1, 0x18 (sp)
+sw s0, 0x14 (sp)
+or s0, a1, $0
+or s1, a2, $0
+sw ra, 0x1c (sp)
+beq a1, r0, 0x7000150c //(dpc_fill+0xcc)
+sw a0, 0x28 (sp)
+lw v0, 0x10 (a1)
+addiu at, $0, 0x2
+bnel v0, at, 0x70001480 //(dpc_fill+0x40)
+addiu at, $0, 0x2
+jal 0x7000d320 //(osWritebackDCacheAll)
+sll $0, $0, 0x0
+lw v0, 0x10 (s0)
+addiu at, $0, 0x2
+beql v0, at, 0x700014a8 //(dpc_fill+0x68)
+addiu at, $0, 0x2
+lw t6, 0x4 (s0)
+andi t7, t6, 0x10
+bnel t7, r0, 0x700014a8 //(dpc_fill+0x68)
+addiu at, $0, 0x2
+jal 0x7000e4e0 //(function_7000e4e0)
+addiu a0, $0, 0x3c0
+lw v0, 0x10 (s0)
+addiu at, $0, 0x2
+bne v0, at, 0x700014c4 //(dpc_fill+0x84)
+lui a0, 0x4
+lui a0, 0x3
+jal 0x70002854 //(function_70002854)
+ori a0, a0, 0x1
+beq $0, $0, 0x700014dc //(dpc_fill+0x9c)
+lw t8, 0x4 (s0)
+jal 0x70002854 //(function_70002854)
+ori a0, a0, 0x1
+lui a0, 0x2
+jal 0x70002854 //(function_70002854)
+ori a0, a0, 0x2
+lw t8, 0x4 (s0)
+addiu at, $0, 0xffffffcf
+addiu a0, s0, 0x10
+and t9, t8, at
+sw t9, 0x4 (s0)
+jal 0x7000e60c //(function_7000e60c)
+sw a0, 0x20 (sp)
+jal 0x7000e76c //(function_7000e76c)
+lw a0, 0x20 (sp)
+lw t0, 0x28 (sp)
+bne s0, s1, 0x7000150c //(dpc_fill+0xcc)
+sw s0, 0xc8 (t0)
+sw s1, 0xcc (t0)
+beql s1, r0, 0x70001550 //(dpc_fill+0x110)
+lw ra, 0x1c (sp)
+beql s1, s0, 0x70001550 //(dpc_fill+0x110)
+lw ra, 0x1c (sp)
+lw t1, 0x3c (s1)
+lw a0, 0x38 (s1)
+lw a2, 0x0 (t1)
+jal 0x7000e7b0 //(function_7000e7b0)
+lw a3, 0x4 (t1)
+addiu t2, $0, 0x1
+lui at, 0x8002
+lw t3, 0x28 (sp)
+sw t2, 0x30a8 (at)
+lui at, 0x8002
+sw $0, 0x30ac (at)
+sw s1, 0xcc (t3)
+lw ra, 0x1c (sp)
+lw s0, 0x14 (sp)
+lw s1, 0x18 (sp)
+jr ra
+addiu sp, sp, 0x28
 
 base $70001560
-BOOT_70001560:
+function_70001560:
+//0x70001560 -- 0x7000159b
+addiu sp, sp, 0xffffffe8
+sw ra, 0x14 (sp)
+lw v0, 0xc8 (a0)
+addiu at, $0, 0x1
+lw t6, 0x10 (v0)
+bnel t6, at, 0x70001590 //(function_70001560+0x30)
+lw ra, 0x14 (sp)
+lw t7, 0x4 (v0)
+ori t8, t7, 0x10
+jal 0x7000e860 //(function_7000e860)
+sw t8, 0x4 (v0)
+lw ra, 0x14 (sp)
+addiu sp, sp, 0x18
+jr ra
+sll $0, $0, 0x0
 
-base $70001590
-BOOT_70001590:
-
-base $7000159C
-BOOT_7000159C:
-
-base $700015B4
-BOOT_700015B4:
-
-base $700015FC
-BOOT_700015FC:
-
-base $7000161C
-BOOT_7000161C:
-
-base $70001620
-BOOT_70001620:
-
-base $7000167C
-BOOT_7000167C:
-
-base $700016C0
-BOOT_700016C0:
-
-base $700016D4
-BOOT_700016D4:
-
-base $70001704
-BOOT_70001704:
-
-base $7000172C
-BOOT_7000172C:
-
-base $70001758
-def_70001674:
-
-base $7000176C
-BOOT_7000176C:
+base $7000159c
+function_7000159c:
+//0x7000159c -- 0x7000177f
+addiu sp, sp, 0xffffffd8
+sw s1, 0x18 (sp)
+or s1, a0, $0
+sw ra, 0x1c (sp)
+sw s0, 0x14 (sp)
+addiu t0, $0, 0xfffffffd
+lw t6, 0xd4 (s1)
+or v1, a3, $0
+lw s0, 0xbc (s1)
+beq t6, r0, 0x7000161c //(function_7000159c+0x80)
+lw v0, 0xb8 (s1)
+andi t7, a3, 0x2
+beql t7, r0, 0x70001620 //(function_7000159c+0x84)
+or a0, s0, $0
+beql s0, r0, 0x700015fc //(function_7000159c+0x60)
+sw v0, 0x0 (a1)
+lw t8, 0x8 (s0)
+and v1, a3, t0
+andi t9, t8, 0x10
+beql t9, r0, 0x700015fc //(function_7000159c+0x60)
+sw v0, 0x0 (a1)
+beq $0, $0, 0x70001758 //(function_7000159c+0x1bc)
+sw s0, 0x0 (a1)
+sw v0, 0x0 (a1)
+lw t2, 0xb8 (s1)
+sw $0, 0xd4 (s1)
+and v1, a3, t0
+lw t3, 0x0 (t2)
+bne t3, r0, 0x70001758 //(function_7000159c+0x1bc)
+sw t3, 0xb8 (s1)
+beq $0, $0, 0x70001758 //(function_7000159c+0x1bc)
+sw $0, 0xc0 (s1)
+or a0, s0, $0
+sw v1, 0x24 (sp)
+sw a1, 0x2c (sp)
+sw a2, 0x30 (sp)
+jal 0x700011e0 //(function_700011e0)
+sw a3, 0x34 (sp)
+lw v1, 0x24 (sp)
+lw a1, 0x2c (sp)
+lw a2, 0x30 (sp)
+lw a3, 0x34 (sp)
+addiu t0, $0, 0xfffffffd
+beq v0, r0, 0x70001758 //(function_7000159c+0x1bc)
+addiu t1, $0, 0xfffffffe
+lw t5, 0x8 (s0)
+andi t6, t5, 0x7
+addiu t7, t6, 0xffffffff
+sltiu at, t7, 0x7
+beq at, r0, 0x70001758 //(function_7000159c+0x1bc)
+sll t7, t7, 0x2
+lui at, 0x8003
+addu at, at, t7
+lw t7, 0xffff8400 (at)
+jr t7
+sll $0, $0, 0x0
+lw t8, 0x4 (s0)
+andi t2, a3, 0x2
+addiu at, $0, 0x3
+andi t9, t8, 0x20
+beq t9, r0, 0x700016d4 //(function_7000159c+0x138)
+sll $0, $0, 0x0
+beq t2, r0, 0x70001758 //(function_7000159c+0x1bc)
+sll $0, $0, 0x0
+sw s0, 0x0 (a1)
+lw t3, 0x4 (s0)
+and v1, a3, t0
+andi t4, t3, 0x1
+beql t4, r0, 0x700016c0 //(function_7000159c+0x124)
+lw t5, 0xbc (s1)
+sw s0, 0x0 (a2)
+and v1, v1, t1
+lw t5, 0xbc (s1)
+lw t6, 0x0 (t5)
+bne t6, r0, 0x70001758 //(function_7000159c+0x1bc)
+sw t6, 0xbc (s1)
+beq $0, $0, 0x70001758 //(function_7000159c+0x1bc)
+sw $0, 0xc4 (s1)
+bne a3, at, 0x70001758 //(function_7000159c+0x1bc)
+sll $0, $0, 0x0
+sw s0, 0x0 (a2)
+sw s0, 0x0 (a1)
+lw t8, 0xbc (s1)
+addiu at, $0, 0xfffffffc
+and v1, a3, at
+lw t9, 0x0 (t8)
+bne t9, r0, 0x70001758 //(function_7000159c+0x1bc)
+sw t9, 0xbc (s1)
+beq $0, $0, 0x70001758 //(function_7000159c+0x1bc)
+sw $0, 0xc4 (s1)
+lw v0, 0x4 (s0)
+andi t4, a3, 0x2
+andi t3, v0, 0x2
+beq t3, r0, 0x7000172c //(function_7000159c+0x190)
+andi t5, v0, 0x1
+beq t4, r0, 0x70001758 //(function_7000159c+0x1bc)
+sll $0, $0, 0x0
+sw s0, 0x0 (a1)
+beq $0, $0, 0x70001758 //(function_7000159c+0x1bc)
+and v1, a3, t0
+beq t5, r0, 0x70001758 //(function_7000159c+0x1bc)
+andi t6, a3, 0x1
+beq t6, r0, 0x70001758 //(function_7000159c+0x1bc)
+sll $0, $0, 0x0
+sw s0, 0x0 (a2)
+lw t7, 0xbc (s1)
+and v1, a3, t1
+lw t8, 0x0 (t7)
+bne t8, r0, 0x70001758 //(function_7000159c+0x1bc)
+sw t8, 0xbc (s1)
+sw $0, 0xc4 (s1)
+beql v1, a3, 0x7000176c //(function_7000159c+0x1d0)
+lw ra, 0x1c (sp)
+beq $0, $0, 0x700015b4 //(function_7000159c+0x18)
+or a3, v1, $0
+lw ra, 0x1c (sp)
+lw s0, 0x14 (sp)
+lw s1, 0x18 (sp)
+addiu sp, sp, 0x28
+jr ra
+or v0, v1, $0
 
 base $70001780
-BOOT_70001780:
+function_70001780:
+//0x70001780 -- 0x700017d7
+mfc0 t0, EntryHi
+addiu t1, $0, 0x0
+mtc0 t1, Index
+mtc0 $0, PageMask
+addiu t2, $0, 0x17
+lui t1, 0xc000
+mtc0 t1, EntryHi
+lui t1, 0x8000
+srl t3, t1, 0x6
+or t3, t3, t2
+mtc0 t3, EntryLo0 
+addiu t1, $0, 0x1
+mtc0 t1, EntryLo1
+sll $0, $0, 0x0
+tlbwi
+sll $0, $0, 0x0
+sll $0, $0, 0x0
+sll $0, $0, 0x0
+sll $0, $0, 0x0
+mtc0 t0, EntryHi
+jr ra
+sll $0, $0, 0x0
 
-base $700017E0
-BOOT_700017E0:
+base $700017d8
+function_700017d8:
+//0x700017d8 -- 0x700017df
+sll $0, $0, 0x0
+sll $0, $0, 0x0
 
-base $700017F4
-BOOT_700017F4:
-
-base $7000182C
-BOOT_7000182C:
+base $700017e0
+function_700017e0:
+//0x700017e0 -- 0x70001897
+lui v1, 0x8006
+lui v0, 0x8006
+addiu v0, v0, 0xffffe3f0
+addiu v1, v1, 0xffffdbf0
+addiu a0, $0, 0x1
+addiu v1, v1, 0x10
+sltu at, v1, v0
+sw a0, 0xfffffff0 (v1)
+bne at, r0, 0x700017f4 //(function_700017e0+0x14)
+sw $0, 0xfffffff4 (v1)
+lui at, 0x8006
+lui v1, 0x8006
+lui v0, 0x8006
+addiu v0, v0, 0xffffe4a4
+addiu v1, v1, 0xffffe3f4
+sb $0, 0xffffe3f1 (at)
+sb a0, 0xffffe3f0 (at)
+sb $0, 0xffffe3f3 (at)
+sb a0, 0xffffe3f2 (at)
+addiu v1, v1, 0x8
+sb $0, 0xfffffffb (v1)
+sb a0, 0xfffffffa (v1)
+sb $0, 0xfffffffd (v1)
+sb a0, 0xfffffffc (v1)
+sb $0, 0xffffffff (v1)
+sb a0, 0xfffffffe (v1)
+sb $0, 0xfffffff9 (v1)
+bne v1, v0, 0x7000182c //(function_700017e0+0x4c)
+sb a0, 0xfffffff8 (v1)
+lui t6, 0x803b
+addiu t6, t6, 0xffffb400
+addiu at, $0, 0xffffe000
+and t7, t6, at
+lui at, 0xfff4
+ori at, at, 0xc000
+addu t8, t7, at
+lui at, 0x8006
+sw t8, 0xffffe4a8 (at)
+lui at, 0xffc0
+lui t9, 0x8006
+addiu t9, t9, 0xffffdbf0
+ori at, at, 0x8000
+addu t0, t9, at
+lui at, 0x8006
+jr ra
+sw t0, 0xffffe4a4 (at)
 
 base $70001898
-BOOT_70001898:
+function_70001898:
+//0x70001898 -- 0x700018bf
+lui v1, 0x8002
+addiu v1, v1, 0x30d0
+lw v0, 0x0 (v1)
+slti at, v0, 0x33
+beq at, r0, 0x700018b8 //(function_70001898+0x20)
+slti at, v0, 0x1a
+beq at, r0, 0x700018b8 //(function_70001898+0x20)
+sll $0, $0, 0x0
+jr ra
+sw $0, 0x0 (v1)
 
-base $700018B8
-BOOT_700018B8:
-
-base $700018C0
-BOOT_700018C0:
-
-base $700018E0
-BOOT_700018E0:
-
-base $700018FC
-BOOT_700018FC:
-
-base $70001908
-BOOT_70001908:
+base $700018c0
+function_700018c0:
+//0x700018c0 -- 0x7000191f
+addiu sp, sp, 0xffffffd8
+sw s2, 0x20 (sp)
+sw s1, 0x1c (sp)
+sw s0, 0x18 (sp)
+or s1, a0, $0
+sw ra, 0x24 (sp)
+or s0, $0, $0
+addiu s2, $0, 0x20
+jal 0x7000e880 //(function_7000e880)
+or a0, s0, $0
+bnel v0, s1, 0x700018fc //(function_700018c0+0x3c)
+addiu s0, s0, 0x1
+beq $0, $0, 0x70001908 //(function_700018c0+0x48)
+or v0, s0, $0
+addiu s0, s0, 0x1
+bne s0, s2, 0x700018e0 //(function_700018c0+0x20)
+sll $0, $0, 0x0
+lui v0, 0x8000
+lw ra, 0x24 (sp)
+lw s0, 0x18 (sp)
+lw s1, 0x1c (sp)
+lw s2, 0x20 (sp)
+jr ra
+addiu sp, sp, 0x28
 
 base $70001920
-BOOT_70001920:
-
-base $70001944
-BOOT_70001944:
+function_70001920:
+//0x70001920 -- 0x70001953
+addiu sp, sp, 0xffffffe8
+sw ra, 0x14 (sp)
+jal 0x700018c0 //(function_700018c0)
+sll $0, $0, 0x0
+sll t6, v0, 0x0
+bltz t6, 0x70001944 //(function_70001920+0x24)
+or a0, v0, $0
+jal 0x7000d3d0 //(function_7000d3d0)
+sll $0, $0, 0x0
+lw ra, 0x14 (sp)
+addiu sp, sp, 0x18
+jr ra
+sll $0, $0, 0x0
 
 base $70001954
-BOOT_70001954:
+function_70001954:
+//0x70001954 -- 0x700019d7
+lui t7, 0x8006
+addiu t7, t7, 0xffffe3f0
+sll t6, a0, 0x1
+addu v1, t6, t7
+lbu t8, 0x0 (v1)
+addiu sp, sp, 0xffffffe0
+sw ra, 0x14 (sp)
+bnel t8, r0, 0x700019cc //(function_70001954+0x78)
+lw ra, 0x14 (sp)
+lbu a0, 0x1 (v1)
+lui at, 0x7f00
+sw v1, 0x18 (sp)
+sll t9, a0, 0xd
+jal 0x700018c0 //(function_700018c0)
+or a0, t9, at
+sll t1, v0, 0x0
+lw v1, 0x18 (sp)
+bltz t1, 0x700019ac //(function_70001954+0x58)
+or a0, v0, $0
+jal 0x7000d3d0 //(function_7000d3d0)
+sw v1, 0x18 (sp)
+lw v1, 0x18 (sp)
+lbu t2, 0x1 (v1)
+lui at, 0x8006
+addiu v0, $0, 0x1
+sll t3, t2, 0x4
+addu at, at, t3
+sw v0, 0xffffdbf0 (at)
+sb v0, 0x0 (v1)
+lw ra, 0x14 (sp)
+addiu sp, sp, 0x20
+jr ra
+sll $0, $0, 0x0
 
-base $700019AC
-BOOT_700019AC:
+base $700019d8
+function_700019d8:
+//0x700019d8 -- 0x70001af7
+lui v0, 0x8002
+addiu v0, v0, 0x30d0
+lw t6, 0x0 (v0)
+lui at, 0x7fff
+addiu sp, sp, 0xffffffb0
+ori at, at, 0xe000
+sw ra, 0x1c (sp)
+and a0, a0, at
+addiu t7, t6, 0x1
+sw s0, 0x18 (sp)
+sw t7, 0x0 (v0)
+jal 0x70001920 //(function_70001920)
+sw a0, 0x28 (sp)
+jal 0x70001b10 //(function_70001b10)
+sll $0, $0, 0x0
+addiu at, $0, 0x5a
+divu v0, at
+mfhi a0
+lui v1, 0x8002
+addiu v1, v1, 0x30d4
+sw a0, 0x0 (v1)
+jal 0x70001954 //(function_70001954)
+or s0, a0, $0
+lw v0, 0x28 (sp)
+lui t9, 0x8006
+lw t9, 0xffffe4a8 (t9)
+lui at, 0xff
+ori at, at, 0xe000
+sll t0, s0, 0xd
+lui t2, 0x3
+and t1, v0, at
+addiu t2, t2, 0x4b30
+addu a0, t9, t0
+sw a0, 0x34 (sp)
+addu a1, t1, t2
+or v0, t1, $0
+sw t1, 0x24 (sp)
+jal 0x70005c1c //(function_70005c1c)
+addiu a2, $0, 0x2000
+lui a0, 0x4000
+jal 0x7000d350 //(function_7000d350)
+lui a1, 0x4000
+lui a0, 0x8000
+jal 0x7000d350 //(function_7000d350)
+lui a1, 0x1000
+lw a1, 0x24 (sp)
+lui t5, 0x8006
+addiu t5, t5, 0xffffdbf0
+srl t3, a1, 0xd
+sll t4, t3, 0x4
+addu a2, t4, t5
+sw s0, 0x4 (a2)
+sw a2, 0x20 (sp)
+sw t3, 0x28 (sp)
+jal 0x7000e8b0 //(function_7000e8b0)
+lw a0, 0x34 (sp)
+lw ra, 0x1c (sp)
+srl t6, v0, 0xc
+sll t9, s0, 0x1
+lui t0, 0x8006
+lw a1, 0x28 (sp)
+lw a2, 0x20 (sp)
+sll t7, t6, 0x6
+addiu t0, t0, 0xffffe3f0
+ori t8, t7, 0x1f
+addu v1, t9, t0
+lw s0, 0x18 (sp)
+sb $0, 0x0 (v1)
+addiu sp, sp, 0x50
+sb a1, 0x1 (v1)
+jr ra
+sw t8, 0x0 (a2)
 
-base $700019CC
-BOOT_700019CC:
+base $70001af8
+function_70001af8:
+//0x70001af8 -- 0x70001b03
+lui v0, 0x8006
+jr ra
+lw v0, 0xffffe4a8 (v0)
 
-base $700019D8
-BOOT_700019D8:
-
-base $70001AF8
-BOOT_70001AF8:
+base $70001b04
+function_70001b04:
+//0x70001b04 -- 0x70001b0f
+sll $0, $0, 0x0
+sll $0, $0, 0x0
+sll $0, $0, 0x0
 
 base $70001B10
 BOOT_70001B10:
 
-insert boot_raw_to_tlb_entries, "boot.bin", (origin() - $1000), ($70001B60 - $700006FC)
+insert boot_raw_to_tlb_entries, "boot.bin", (origin() - $1000), ($70001B60 - $70001B10)
 
 base $70001B60
 tlb_entries:
