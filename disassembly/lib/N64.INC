@@ -126,7 +126,7 @@ constant TagLo($1C)
 constant TagHi($1D)
 constant Error_Epc($1E)
 
-constant OS_PM_4M($07fe000)
+constant PM_4M($07fe000)
 
 // Memory Map
 constant RDRAM($A000) // $00000000..$003FFFFF RDRAM Memory 4MB ($00000000..$007FFFFF 8MB With Expansion Pak)
