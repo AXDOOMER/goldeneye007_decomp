@@ -1,16 +1,18 @@
+base origin()
+seg_boot_start:
+
 base $80000400
 Start:;scope {
 //Start inits bss then jumps to establishrootTLB
  define address(t0)
  define sizeleft(t1)
  define jumptarget(t2)
- variable bss_size(bss_end-bss_start)
 
  //set {address} to bss_start and {sizeleft} to bss_size
- lui {address}, ((bss_start>>16)+1) //+1 is due to sign extension 
- lui {sizeleft}, (bss_size>>16)
- addiu {address}, {address}, bss_start
- ori {sizeleft}, {sizeleft}, bss_size
+ lui {address}, ((seg_bss_start>>16)+1) //+1 is due to sign extension 
+ lui {sizeleft}, (seg_bss_size>>16)
+ addiu {address}, {address}, seg_bss_start
+ ori {sizeleft}, {sizeleft}, seg_bss_size
 
  clearmem:;scope {
   //blanks mem at {address} for {sizeleft}
@@ -21,7 +23,7 @@ Start:;scope {
   addi {address}, {address}, 8 //delayslot
  }
 
- //sets {jumptarget} to address of establishrootTLB
+ //sets {jumptarget} to establishrootTLB
  lui {jumptarget}, (establishrootTLB>>16)
  lui sp, ((sp_rmon>>16)+1) //+1 is due to sign extension
  addiu {jumptarget}, {jumptarget}, establishrootTLB
@@ -37,6 +39,7 @@ establishrootTLB:;scope {
  define index(v0)
  define entrylo0(v1)
  define entrylo1(a0)
+ define entryhi({entrylo1}) //re-use {entrylo1} as {entryhi}
  define entryhi_flags(a1)
  define entrylo0_flags(a2)
  define entrylo1_flags(a3)
@@ -65,9 +68,6 @@ establishrootTLB:;scope {
  addu	{entrylo1}, {entrylo1}, {entrylo1_flags} //a0=a3
  mtc0	{entrylo1}, EntryLo1 //COP0 EntryLo1 = 1: global
 
- //re-use {entrylo1} as {entryhi}
- define entryhi({entrylo1})
-
  srl	{entryhi}, {entryhi_flags}, 0xD
  sll	{entryhi}, {entryhi}, 0xD //a0=a1
  mtc0	{entryhi}, EntryHi //COP0 EntryHi = 70000000: address space 0, VPN 70000
@@ -82,50 +82,50 @@ establishrootTLB:;scope {
 }
 
 base $700004BC
-set_rodata_vaddr:;scope {
+get_rodata_vaddr:;scope {
  define return(v0)
 
- lui {return}, (rodata_start >> 16)
+ lui {return}, (seg_rodata_vaddr_start >> 16)
  jr ra
- addiu {return}, {return}, rodata_start
+ addiu {return}, {return}, seg_rodata_vaddr_start
 }
 
-set_rodata_rom_start:;scope {
+get_rodata_rom_start:;scope {
  define return(v0)
 
- lui {return}, (rodata_rom_start >> 16)
+ lui {return}, (seg_rodata_rom_start >> 16)
  jr ra
- addiu {return}, {return}, rodata_rom_start //v0=21990
+ addiu {return}, {return}, seg_rodata_rom_start //v0=21990
 }
 
-set_rodata_rom_end:;scope {
+get_rodata_rom_end:;scope {
  define return(v0)
 
- lui {return}, (rodata_rom_end >> 16)
+ lui {return}, (seg_rodata_rom_end >> 16)
  jr ra
- addiu {return}, {return}, rodata_rom_end //v0=33590
+ addiu {return}, {return}, seg_rodata_rom_end //v0=33590
 }
 
-setRareZip_start:;scope {
+getRareZip_start:;scope {
  define return(v0)
 
- lui {return}, (rarezip_rom_start >> 16)
+ lui {return}, (seg_rarezip_rom_start >> 16)
  jr ra
- addiu {return}, {return}, rarezip_rom_start //v0=33590
+ addiu {return}, {return}, seg_rarezip_rom_start //v0=33590
 }
 
-setRareZip_end:;scope {
+getRareZip_end:;scope {
  define return(v0)
 
- lui {return}, (rarezip_rom_end >> 16)
+ lui {return}, (seg_rarezip_rom_end >> 16)
  jr ra
- addiu {return}, {return}, rarezip_rom_end //v0=34B30
+ addiu {return}, {return}, seg_rarezip_rom_end //v0=34B30
 }
 
-redirecttodecompressfile:;scope {
+jump_decompressfile:;scope {
  define jumptarget(a3)
 
- //decompress file accepts:
+ //decompressfile accepts:
  //a0=p->source, a1=p->target, a2=p->buffer
  lui {jumptarget},(decompressfile >> 16)
  addiu {jumptarget}, {jumptarget}, decompressfile
@@ -140,36 +140,55 @@ redirecttodecompressfile:;scope {
 init:;scope {
  //decompress main compressed block, initialize memory, TLB and its interrupts,
  // then execute main game thread
- addiu sp, sp, $FFC0
- sw ra, $0024(sp)
- sw s1, $0020(sp)
- jal set_rodata_vaddr //v0=80020D90: target address for main compressed block (21990)
- sw s0, $001C(sp)
+ define returnval(v0)
+ define totalsize(v1)
+ define rodata_vaddr(s0)
+ define rodata_rom_size(s1)
+ define rarezip_vaddr(t2)
+ define rodata_rom_start(t6)
+ define rarezip_rom_start(t7)
+ define rarezip_size(t8)
 
- jal set_rodata_rom_start //v0=21990: ROM address of main compressed block
- or s0, v0, r0 //s0=v0: 80020D90
+ addiu sp, sp, (sp_init - sp_rmon)//$FFC0 //sp_rmon - 0x40
+ sw ra, {sp_init.sp_init_ra}(sp) //store old ra
+ sw s1, {sp_init.sp_init_s1}(sp) //store old s1
+ jal get_rodata_vaddr //v0=80020D90: target address for main compressed block (21990)
+ sw s0, {sp_init.sp_init_s0}(sp) //store old s0
 
- jal set_rodata_rom_end //v0=33590: ROM endpoint of main compressed block
- sw v0, $0034(sp) //sp+34= main.pos
+ jal get_rodata_rom_start //v0=21990: ROM address of main compressed block
+ or {rodata_vaddr}, {returnval}, $0 //s0=v0: 80020D90
 
- lw t6, $0034(sp)
- jal setRareZip_start
- subu s1, v0, t6 //s1=v0-t6: compressed size of main compressed block
+ jal get_rodata_rom_end //v0=33590: ROM endpoint of main compressed block
+ sw {returnval}, {sp_init.rodata_pos}(sp) //sp+34= main.pos
 
- jal setRareZip_end
- sw v0, $0028(sp) //sp+28= RareZip.pos
+ lw {rodata_rom_start}, {sp_init.rodata_pos}(sp)
+ jal getRareZip_start
+ subu {rodata_rom_size}, {returnval}, {rodata_rom_start} //s1=v0-t6: compressed size of main compressed block
 
- lw t7, $0028(sp)
- lui t2, (RareZip_vaddr >> 16)	 //t2=70200000: target vaddress for RareZip
- or a1, s0, r0 //a1=s0: target address for main.bin
- subu t8, v0, t7 //t8=v0-t7: RareZip.sz = RareZip.end - RareZip.pos
- addu a0, s1, t8 //a0=s1+t8: main.cmp_sz + RareZip.sz
- addiu v1, a0, -1 //v1= total size - 1
- bltz v1, do_decompress //skip if nothing to copy
- lui a2, (decompression_buffer >> 16)	 //a2=80300000: buffer for decompression tables
- lui t9, (RareZip_vaddr >> 16)
- subu a0, t9, s1 //a0=70200000 - main.cmp_sz: vaddr for main
- addu v0, s0, v1 //v0=s0+v1: target address + total size
+ jal getRareZip_end
+ sw {returnval}, {sp_init.rarezip_pos}(sp) //sp+28= RareZip.pos
+
+ lw {rarezip_rom_start}, {sp_init.rarezip_pos}(sp)
+ lui {rarezip_vaddr}, (seg_rarezip_vaddr_start >> 16)	 //t2=70200000: target vaddress for RareZip
+
+ //decompressfile parameters
+ //reuse register a0 {decompress_source} for {decompress_size} during setup
+ define decompress_source(a0)
+ define decompress_size({decompress_source})
+ define decompress_target(a1)
+ define decompress_buffer(a2)
+
+ or {decompress_target}, {rodata_vaddr}, $0 //a1=s0: target address for main.bin
+ subu {rarezip_size}, {returnval}, {rarezip_rom_start} //t8=v0-t7: RareZip.sz = RareZip.end - RareZip.pos
+ addu {decompress_size}, {rodata_rom_size}, {rarezip_size} //a0=s1+t8: main.cmp_sz + RareZip.sz
+ addiu {totalsize}, {decompress_size}, -1 //v1= total size - 1
+
+ bltz {totalsize}, do_decompress //skip if nothing to copy
+ lui {decompress_buffer}, (decompression_buffer >> 16)	 //a2=80300000: buffer for decompression tables
+
+ lui t9, (seg_rarezip_vaddr_start >> 16)
+ subu a0, t9, {rodata_rom_size} //a0=70200000 - main.cmp_sz: vaddr for main
+ addu v0, {rodata_vaddr}, {totalsize} //v0=s0+v1: target address + total size
 
  loop:
   //loop to copy from source to virtual target instead of mapping...
@@ -183,13 +202,14 @@ init:;scope {
 
  do_decompress:
   //decompress main compressed block
-  jal redirecttodecompressfile //redirect to 7020141C: decompress a0 to a1// a2=buffer
-  subu a0, t2, s1 //a0=p->source: RareZip.vaddr - main.cmp_sz
+  jal jump_decompressfile //call decompressfile{{decompress_source}, {decompress_target}, {decompress_buffer})
+  subu {decompress_source}, {rarezip_vaddr}, {rodata_rom_size} //a0=p->source: RareZip.vaddr - main.cmp_sz
+
   //70000594:
-  lui t3, (rarezip_rom_start >> 16)
+  lui t3, (seg_rarezip_rom_start >> 16)
   lui t4, $0000
   addiu t4, t4, $1050 //t4=1050
-  addiu t3, t3, rarezip_rom_start //t3=33590: ROM address of 70200000 RareZip ASM [33590-34B30 ROM]
+  addiu t3, t3, seg_rarezip_rom_start //t3=33590: ROM address of 70200000 RareZip ASM [33590-34B30 ROM]
   lui at, $000F
   ori at, at, $FFB1 //at=FFFB1
   subu v0, t3, t4 //v0=33590 - 1050: 32550
@@ -4912,4 +4932,5 @@ function_7000CF44:
 include "../lib/libultra_rom.asm"
 insert binarybootcode, "boot.bin", (origin() - $1000)
 
-
+base origin()
+seg_boot_end:
