@@ -12,7 +12,8 @@
 803ab750 sp_shed
 803ab950 sp_main
 803b3950 sp_audi
-803b3950 seg_sp_end
+803b4950 sp_unknown
+803b4950 seg_sp_end
 00001000 seg_boot_rom_start
 80000400 boot.start
 80000410 boot.start.clearmem

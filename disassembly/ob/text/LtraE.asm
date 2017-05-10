@@ -1,6 +1,6 @@
 arch n64.cpu
 endian msb
-include "../lib/N64.INC"
+include "../../lib/N64.INC"
 output "LtraE.bin", create
 
 base $00000000
