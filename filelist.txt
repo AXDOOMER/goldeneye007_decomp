@@ -640,7 +640,7 @@
 0x008246f0 props/PwppkmagZ
 0x00824830 bg/Tbg_ame_all_p_stanZ
 0x00826160 bg/Tbg_arch_all_p_stanZ
-0x0083be50 bg/Tbg_arec_all_p_stanZ
+0x0082be50 bg/Tbg_arec_all_p_stanZ
 0x008341a0 bg/Tbg_ark_all_p_stanZ
 0x0083d160 bg/Tbg_ash_all_p_stanZ
 0x0083ea90 bg/Tbg_azt_all_p_stanZ

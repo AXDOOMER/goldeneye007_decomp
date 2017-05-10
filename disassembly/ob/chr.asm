@@ -5,85 +5,85 @@ chr_rom_start:
 //base $vaddr
 //chr_vaddr:
 
-insert CarmourguardZ, "chr/CarmourguardZ", (origin() - $006ecb90)
-insert CbaronsamediZ, "chr/CbaronsamediZ", (origin() - $006ef010)
-insert CbluecamguardZ, "chr/CbluecamguardZ", (origin() - $006f2700)
-insert CbluemanZ, "chr/CbluemanZ", (origin() - $006f4df0)
-insert CbluewomanZ, "chr/CbluewomanZ", (origin() - $006f6c00)
-insert CboilerbondZ, "chr/CboilerbondZ", (origin() - $006f8ac0)
-insert CboilertrevZ, "chr/CboilertrevZ", (origin() - $006fb6d0)
-insert CborisZ, "chr/CborisZ", (origin() - $006fed50)
-insert CcamguardZ, "chr/CcamguardZ", (origin() - $00701e70)
-insert CcardimanZ, "chr/CcardimanZ", (origin() - $00704550)
-insert CcheckmanZ, "chr/CcheckmanZ", (origin() - $00706350)
-insert CcommguardZ, "chr/CcommguardZ", (origin() - $007081d0)
-insert CdjbondZ, "chr/CdjbondZ", (origin() - $0070a7d0)
-insert CfattechwomanZ, "chr/CfattechwomanZ", (origin() - $0070d660)
-insert Cgreatguard2Z, "chr/Cgreatguard2Z", (origin() - $0070f580)
-insert CgreatguardZ, "chr/CgreatguardZ", (origin() - $00711ca0)
-insert CgreyguardZ, "chr/CgreyguardZ", (origin() - $00714320)
-insert CgreymanZ, "chr/CgreymanZ", (origin() - $007169f0)
-insert CheadalanZ, "chr/CheadalanZ", (origin() - $007187b0)
-insert CheadbZ, "chr/CheadbZ", (origin() - $00718d80)
-insert CheadbalaclaZ, "chr/CheadbalaclaZ", (origin() - $007192f0)
-insert CheadbikeZ, "chr/CheadbikeZ", (origin() - $007196c0)
-insert CheadbrosnanZ, "chr/CheadbrosnanZ", (origin() - $00719d60)
-insert CheadbrosnanboilerZ, "chr/CheadbrosnanboilerZ", (origin() - $0071aab0)
-insert CheadbrosnansnowZ, "chr/CheadbrosnansnowZ", (origin() - $0071b650)
-insert CheadbrosnansuitZ, "chr/CheadbrosnansuitZ", (origin() - $0071c4d0)
-insert CheadbrosnantimberZ, "chr/CheadbrosnantimberZ", (origin() - $0071d250)
-insert CheadchrisZ, "chr/CheadchrisZ", (origin() - $0071de10)
-insert CheaddaveZ, "chr/CheaddaveZ", (origin() - $0071e350)
-insert CheaddesZ, "chr/CheaddesZ", (origin() - $0071e8d0)
-insert CheadduncanZ, "chr/CheadduncanZ", (origin() - $0071ee00)
-insert CheaddwayneZ, "chr/CheaddwayneZ", (origin() - $0071f320)
-insert CheadgrahamZ, "chr/CheadgrahamZ", (origin() - $0071f8a0)
-insert CheadgrantZ, "chr/CheadgrantZ", (origin() - $0071fe10)
-insert CheadjimZ, "chr/CheadjimZ", (origin() - $00720340)
-insert Cheadjoe2Z, "chr/Cheadjoe2Z", (origin() - $00720870)
-insert CheadjoeZ, "chr/CheadjoeZ", (origin() - $00720c90)
-insert CheadjoelZ, "chr/CheadjoelZ", (origin() - $00721200)
-insert CheadkarlZ, "chr/CheadkarlZ", (origin() - $00721710)
-insert CheadkenZ, "chr/CheadkenZ", (origin() - $00721c70)
-insert CheadleeZ, "chr/CheadleeZ", (origin() - $007221c0)
-insert CheadmandyZ, "chr/CheadmandyZ", (origin() - $00722740)
-insert CheadmarionZ, "chr/CheadmarionZ", (origin() - $00722b30)
-insert CheadmarkZ, "chr/CheadmarkZ", (origin() - $00722f40)
-insert CheadmartinZ, "chr/CheadmartinZ", (origin() - $00723470)
-insert CheadmishkinZ, "chr/CheadmishkinZ", (origin() - $007239d0)
-insert CheadneilZ, "chr/CheadneilZ", (origin() - $00723f30)
-insert CheadpeteZ, "chr/CheadpeteZ", (origin() - $00724450)
-insert CheadrobinZ, "chr/CheadrobinZ", (origin() - $007249e0)
-insert CheadsallyZ, "chr/CheadsallyZ", (origin() - $00724ef0)
-insert CheadscottZ, "chr/CheadscottZ", (origin() - $007252f0)
-insert CheadshaunZ, "chr/CheadshaunZ", (origin() - $00725870)
-insert CheadsteveeZ, "chr/CheadsteveeZ", (origin() - $00725e50)
-insert CheadstevehZ, "chr/CheadstevehZ", (origin() - $007263a0)
-insert CheadvivienZ, "chr/CheadvivienZ", (origin() - $007268f0)
-insert CjawsZ, "chr/CjawsZ", (origin() - $00726d80)
-insert CjeanwomanZ, "chr/CjeanwomanZ", (origin() - $007299c0)
-insert CmaydayZ, "chr/CmaydayZ", (origin() - $0072b9d0)
-insert CmoonfemaleZ, "chr/CmoonfemaleZ", (origin() - $0072e570)
-insert CmoonguardZ, "chr/CmoonguardZ", (origin() - $007306c0)
-insert CnatalayaZ, "chr/CnatalayaZ", (origin() - $00732cb0)
-insert CnavyguardZ, "chr/CnavyguardZ", (origin() - $00736570)
-insert CoddjobZ, "chr/CoddjobZ", (origin() - $00738c50)
-insert ColiveguardZ, "chr/ColiveguardZ", (origin() - $0073bd80)
-insert CorumovZ, "chr/CorumovZ", (origin() - $0073e3d0)
-insert CpilotZ, "chr/CpilotZ", (origin() - $00741800)
-insert CredmanZ, "chr/CredmanZ", (origin() - $00744880)
-insert CrusguardZ, "chr/CrusguardZ", (origin() - $00746fb0)
-insert CsnowbondZ, "chr/CsnowbondZ", (origin() - $00748be0)
-insert CsnowguardZ, "chr/CsnowguardZ", (origin() - $0074bf10)
-insert CspicebondZ, "chr/CspicebondZ", (origin() - $0074eb90)
-insert Csuit_lf_handZ, "chr/Csuit_lf_handZ", (origin() - $007524b0)
-insert CsuitbondZ, "chr/CsuitbondZ", (origin() - $007556d0)
-insert CtechmanZ, "chr/CtechmanZ", (origin() - $00758460)
-insert CtechwomanZ, "chr/CtechwomanZ", (origin() - $0075ab10)
-insert CtimberbondZ, "chr/CtimberbondZ", (origin() - $0075cb00)
-insert CtreveleanZ, "chr/CtreveleanZ", (origin() - $0075f830)
-insert CtrevguardZ, "chr/CtrevguardZ", (origin() - $00763000)
-insert CvalentinZ, "chr/CvalentinZ", (origin() - $00765610)
-insert CxeniaZ, "chr/CxeniaZ", (origin() - $00768580)
+insert CarmourguardZ, "chr/CarmourguardZ"
+insert CbaronsamediZ, "chr/CbaronsamediZ"
+insert CbluecamguardZ, "chr/CbluecamguardZ"
+insert CbluemanZ, "chr/CbluemanZ"
+insert CbluewomanZ, "chr/CbluewomanZ"
+insert CboilerbondZ, "chr/CboilerbondZ"
+insert CboilertrevZ, "chr/CboilertrevZ"
+insert CborisZ, "chr/CborisZ"
+insert CcamguardZ, "chr/CcamguardZ"
+insert CcardimanZ, "chr/CcardimanZ"
+insert CcheckmanZ, "chr/CcheckmanZ"
+insert CcommguardZ, "chr/CcommguardZ"
+insert CdjbondZ, "chr/CdjbondZ"
+insert CfattechwomanZ, "chr/CfattechwomanZ"
+insert Cgreatguard2Z, "chr/Cgreatguard2Z"
+insert CgreatguardZ, "chr/CgreatguardZ"
+insert CgreyguardZ, "chr/CgreyguardZ"
+insert CgreymanZ, "chr/CgreymanZ"
+insert CheadalanZ, "chr/CheadalanZ"
+insert CheadbZ, "chr/CheadbZ"
+insert CheadbalaclaZ, "chr/CheadbalaclaZ"
+insert CheadbikeZ, "chr/CheadbikeZ"
+insert CheadbrosnanZ, "chr/CheadbrosnanZ"
+insert CheadbrosnanboilerZ, "chr/CheadbrosnanboilerZ"
+insert CheadbrosnansnowZ, "chr/CheadbrosnansnowZ"
+insert CheadbrosnansuitZ, "chr/CheadbrosnansuitZ"
+insert CheadbrosnantimberZ, "chr/CheadbrosnantimberZ"
+insert CheadchrisZ, "chr/CheadchrisZ"
+insert CheaddaveZ, "chr/CheaddaveZ"
+insert CheaddesZ, "chr/CheaddesZ"
+insert CheadduncanZ, "chr/CheadduncanZ"
+insert CheaddwayneZ, "chr/CheaddwayneZ"
+insert CheadgrahamZ, "chr/CheadgrahamZ"
+insert CheadgrantZ, "chr/CheadgrantZ"
+insert CheadjimZ, "chr/CheadjimZ"
+insert Cheadjoe2Z, "chr/Cheadjoe2Z"
+insert CheadjoeZ, "chr/CheadjoeZ"
+insert CheadjoelZ, "chr/CheadjoelZ"
+insert CheadkarlZ, "chr/CheadkarlZ"
+insert CheadkenZ, "chr/CheadkenZ"
+insert CheadleeZ, "chr/CheadleeZ"
+insert CheadmandyZ, "chr/CheadmandyZ"
+insert CheadmarionZ, "chr/CheadmarionZ"
+insert CheadmarkZ, "chr/CheadmarkZ"
+insert CheadmartinZ, "chr/CheadmartinZ"
+insert CheadmishkinZ, "chr/CheadmishkinZ"
+insert CheadneilZ, "chr/CheadneilZ"
+insert CheadpeteZ, "chr/CheadpeteZ"
+insert CheadrobinZ, "chr/CheadrobinZ"
+insert CheadsallyZ, "chr/CheadsallyZ"
+insert CheadscottZ, "chr/CheadscottZ"
+insert CheadshaunZ, "chr/CheadshaunZ"
+insert CheadsteveeZ, "chr/CheadsteveeZ"
+insert CheadstevehZ, "chr/CheadstevehZ"
+insert CheadvivienZ, "chr/CheadvivienZ"
+insert CjawsZ, "chr/CjawsZ"
+insert CjeanwomanZ, "chr/CjeanwomanZ"
+insert CmaydayZ, "chr/CmaydayZ"
+insert CmoonfemaleZ, "chr/CmoonfemaleZ"
+insert CmoonguardZ, "chr/CmoonguardZ"
+insert CnatalayaZ, "chr/CnatalayaZ"
+insert CnavyguardZ, "chr/CnavyguardZ"
+insert CoddjobZ, "chr/CoddjobZ"
+insert ColiveguardZ, "chr/ColiveguardZ"
+insert CorumovZ, "chr/CorumovZ"
+insert CpilotZ, "chr/CpilotZ"
+insert CredmanZ, "chr/CredmanZ"
+insert CrusguardZ, "chr/CrusguardZ"
+insert CsnowbondZ, "chr/CsnowbondZ"
+insert CsnowguardZ, "chr/CsnowguardZ"
+insert CspicebondZ, "chr/CspicebondZ"
+insert Csuit_lf_handZ, "chr/Csuit_lf_handZ"
+insert CsuitbondZ, "chr/CsuitbondZ"
+insert CtechmanZ, "chr/CtechmanZ"
+insert CtechwomanZ, "chr/CtechwomanZ"
+insert CtimberbondZ, "chr/CtimberbondZ"
+insert CtreveleanZ, "chr/CtreveleanZ"
+insert CtrevguardZ, "chr/CtrevguardZ"
+insert CvalentinZ, "chr/CvalentinZ"
+insert CxeniaZ, "chr/CxeniaZ"
 
 chr_rom_end:

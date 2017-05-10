@@ -1431,6 +1431,7 @@
 002ebde0 font_rom_end
 002ebde0 music_rom_start
 00438660 music_rom_end
+00438660 ob_start
 00438660 bg_rom_start
 006ecb90 bg_rom_end
 006ecb90 chr_rom_start

@@ -5,93 +5,93 @@ text_rom_start:
 //base $vaddr
 //text_vaddr:
 
-insert LameE, "text/LameE", (origin() - $008e7410)
-insert LameJ, "text/LameJ", (origin() - $008e7420)
-insert LarchE, "text/LarchE", (origin() - $008e7430)
-insert LarchJ, "text/LarchJ", (origin() - $008e7a60)
-insert LarecE, "text/LarecE", (origin() - $008e80c0)
-insert LarecJ, "text/LarecJ", (origin() - $008e8690)
-insert LarkE, "text/LarkE", (origin() - $008e8c20)
-insert LarkJ, "text/LarkJ", (origin() - $008e92c0)
-insert LashE, "text/LashE", (origin() - $008e9970)
-insert LashJ, "text/LashJ", (origin() - $008e9980)
-insert LaztE, "text/LaztE", (origin() - $008e9990)
-insert LaztJ, "text/LaztJ", (origin() - $008e9dd0)
-insert LcatE, "text/LcatE", (origin() - $008ea280)
-insert LcatJ, "text/LcatJ", (origin() - $008ea290)
-insert LcaveE, "text/LcaveE", (origin() - $008ea2a0)
-insert LcaveJ, "text/LcaveJ", (origin() - $008ea6a0)
-insert LcradE, "text/LcradE", (origin() - $008eab00)
-insert LcradJ, "text/LcradJ", (origin() - $008eafd0)
-insert LcrypE, "text/LcrypE", (origin() - $008eb480)
-insert LcrypJ, "text/LcrypJ", (origin() - $008eb6d0)
-insert LdamE, "text/LdamE", (origin() - $008eb990)
-insert LdamJ, "text/LdamJ", (origin() - $008ebde0)
-insert LdepoE, "text/LdepoE", (origin() - $008ec250)
-insert LdepoJ, "text/LdepoJ", (origin() - $008ec5c0)
-insert LdestE, "text/LdestE", (origin() - $008ec900)
-insert LdestJ, "text/LdestJ", (origin() - $008ecd90)
-insert LdishE, "text/LdishE", (origin() - $008ed1f0)
-insert LdishJ, "text/LdishJ", (origin() - $008ed200)
-insert LearE, "text/LearE", (origin() - $008ed210)
-insert LearJ, "text/LearJ", (origin() - $008ed220)
-insert LeldE, "text/LeldE", (origin() - $008ed230)
-insert LeldJ, "text/LeldJ", (origin() - $008ed240)
-insert LgunE, "text/LgunE", (origin() - $008ed250)
-insert LgunJ, "text/LgunJ", (origin() - $008ed970)
-insert LimpE, "text/LimpE", (origin() - $008ee0c0)
-insert LimpJ, "text/LimpJ", (origin() - $008ee0d0)
-insert LjunE, "text/LjunE", (origin() - $008ee0e0)
-insert LjunJ, "text/LjunJ", (origin() - $008ee600)
-insert LleeE, "text/LleeE", (origin() - $008eeb40)
-insert LleeJ, "text/LleeJ", (origin() - $008eeb50)
-insert LlenE, "text/LlenE", (origin() - $008eeb60)
-insert LlenJ, "text/LlenJ", (origin() - $008ef1a0)
-insert LlipE, "text/LlipE", (origin() - $008ef450)
-insert LlipJ, "text/LlipJ", (origin() - $008ef460)
-insert LlueE, "text/LlueE", (origin() - $008ef470)
-insert LlueJ, "text/LlueJ", (origin() - $008ef480)
-insert LmiscE, "text/LmiscE", (origin() - $008ef490)
-insert LmiscJ, "text/LmiscJ", (origin() - $008ef730)
-insert LmpmenuE, "text/LmpmenuE", (origin() - $008efa10)
-insert LmpmenuJ, "text/LmpmenuJ", (origin() - $008efbb0)
-insert LmpweaponsE, "text/LmpweaponsE", (origin() - $008efd40)
-insert LmpweaponsJ, "text/LmpweaponsJ", (origin() - $008efe00)
-insert LoatE, "text/LoatE", (origin() - $008efee0) //
-insert LoatJ, "text/LoatJ", (origin() - $008efef0)
-insert LoptionsE, "text/LoptionsE", (origin() - $008eff00)
-insert LoptionsJ, "text/LoptionsJ", (origin() - $008f0130)
-insert LpamE, "text/LpamE", (origin() - $008f0380)
-insert LpamJ, "text/LpamJ", (origin() - $008f0390)
-insert LpeteE, "text/LpeteE", (origin() - $008f03a0)
-insert LpeteJ, "text/LpeteJ", (origin() - $008f0820)
-insert LpropobjE, "text/LpropobjE", (origin() - $008f0c90)
-insert LpropobjJ, "text/LpropobjJ", (origin() - $008f0f30)
-insert LrefE, "text/LrefE", (origin() - $008f11f0)
-insert LrefJ, "text/LrefJ", (origin() - $008f1200)
-insert LritE, "text/LritE", (origin() - $008f1210)
-insert LritJ, "text/LritJ", (origin() - $008f1220)
-insert LrunE, "text/LrunE", (origin() - $008f1230)
-insert LrunJ, "text/LrunJ", (origin() - $008f14a0)
-insert LsevE, "text/LsevE", (origin() - $008f1730)
-insert LsevJ, "text/LsevJ", (origin() - $008f1c90)
-insert LsevbE, "text/LsevbE", (origin() - $008f21a0)
-insert LsevbJ, "text/LsevbJ", (origin() - $008f28f0)
-insert LsevxE, "text/LsevxE", (origin() - $008f30e0)
-insert LsevxJ, "text/LsevxJ", (origin() - $008f3540)
-insert LsevxbE, "text/LsevxbE", (origin() - $008f3900)
-insert LsevxbJ, "text/LsevxbJ", (origin() - $008f3d90)
-insert LshoE, "text/LshoE", (origin() - $008f41e0)
-insert LshoJ, "text/LshoJ", (origin() - $008f41f0)
-insert LsiloE, "text/LsiloE", (origin() - $008f4200)
-insert LsiloJ, "text/LsiloJ", (origin() - $008f47b0)
-insert LstatE, "text/LstatE", (origin() - $008f4d90)
-insert LstatJ, "text/LstatJ", (origin() - $008f56b0)
-insert LtitleE, "text/LtitleE", (origin() - $008f5f20)
-insert LtitleJ, "text/LtitleJ", (origin() - $008f69e0)
-insert LtraE, "text/LtraE", (origin() - $008f7570)
-insert LtraJ, "text/LtraJ", (origin() - $008f79a0)
-insert LwaxE, "text/LwaxE", (origin() - $008f7dc0)
-insert LwaxJ, "text/LwaxJ", (origin() - $008f7dd0)
+insert LameE, "text/LameE"
+insert LameJ, "text/LameJ"
+insert LarchE, "text/LarchE"
+insert LarchJ, "text/LarchJ"
+insert LarecE, "text/LarecE"
+insert LarecJ, "text/LarecJ"
+insert LarkE, "text/LarkE"
+insert LarkJ, "text/LarkJ"
+insert LashE, "text/LashE"
+insert LashJ, "text/LashJ"
+insert LaztE, "text/LaztE"
+insert LaztJ, "text/LaztJ"
+insert LcatE, "text/LcatE"
+insert LcatJ, "text/LcatJ"
+insert LcaveE, "text/LcaveE"
+insert LcaveJ, "text/LcaveJ"
+insert LcradE, "text/LcradE"
+insert LcradJ, "text/LcradJ"
+insert LcrypE, "text/LcrypE"
+insert LcrypJ, "text/LcrypJ"
+insert LdamE, "text/LdamE"
+insert LdamJ, "text/LdamJ"
+insert LdepoE, "text/LdepoE"
+insert LdepoJ, "text/LdepoJ"
+insert LdestE, "text/LdestE"
+insert LdestJ, "text/LdestJ"
+insert LdishE, "text/LdishE"
+insert LdishJ, "text/LdishJ"
+insert LearE, "text/LearE"
+insert LearJ, "text/LearJ"
+insert LeldE, "text/LeldE"
+insert LeldJ, "text/LeldJ"
+insert LgunE, "text/LgunE"
+insert LgunJ, "text/LgunJ"
+insert LimpE, "text/LimpE"
+insert LimpJ, "text/LimpJ"
+insert LjunE, "text/LjunE"
+insert LjunJ, "text/LjunJ"
+insert LleeE, "text/LleeE"
+insert LleeJ, "text/LleeJ"
+insert LlenE, "text/LlenE"
+insert LlenJ, "text/LlenJ"
+insert LlipE, "text/LlipE"
+insert LlipJ, "text/LlipJ"
+insert LlueE, "text/LlueE"
+insert LlueJ, "text/LlueJ"
+insert LmiscE, "text/LmiscE"
+insert LmiscJ, "text/LmiscJ"
+insert LmpmenuE, "text/LmpmenuE"
+insert LmpmenuJ, "text/LmpmenuJ"
+insert LmpweaponsE, "text/LmpweaponsE"
+insert LmpweaponsJ, "text/LmpweaponsJ"
+insert LoatE, "text/LoatE"
+insert LoatJ, "text/LoatJ"
+insert LoptionsE, "text/LoptionsE"
+insert LoptionsJ, "text/LoptionsJ"
+insert LpamE, "text/LpamE"
+insert LpamJ, "text/LpamJ"
+insert LpeteE, "text/LpeteE"
+insert LpeteJ, "text/LpeteJ"
+insert LpropobjE, "text/LpropobjE"
+insert LpropobjJ, "text/LpropobjJ"
+insert LrefE, "text/LrefE"
+insert LrefJ, "text/LrefJ"
+insert LritE, "text/LritE"
+insert LritJ, "text/LritJ"
+insert LrunE, "text/LrunE"
+insert LrunJ, "text/LrunJ"
+insert LsevE, "text/LsevE"
+insert LsevJ, "text/LsevJ"
+insert LsevbE, "text/LsevbE"
+insert LsevbJ, "text/LsevbJ"
+insert LsevxE, "text/LsevxE"
+insert LsevxJ, "text/LsevxJ"
+insert LsevxbE, "text/LsevxbE"
+insert LsevxbJ, "text/LsevxbJ"
+insert LshoE, "text/LshoE"
+insert LshoJ, "text/LshoJ"
+insert LsiloE, "text/LsiloE"
+insert LsiloJ, "text/LsiloJ"
+insert LstatE, "text/LstatE"
+insert LstatJ, "text/LstatJ"
+insert LtitleE, "text/LtitleE"
+insert LtitleJ, "text/LtitleJ"
+insert LtraE, "text/LtraE"
+insert LtraJ, "text/LtraJ"
+insert LwaxE, "text/LwaxE"
+insert LwaxJ, "text/LwaxJ"
 
 text_rom_end:
