@@ -126,6 +126,16 @@ constant TagLo($1C)
 constant TagHi($1D)
 constant Error_Epc($1E)
 
+constant OS_ROM_PARAMS_BASE($8000)
+constant OS_TV_TYPE($0300)
+constant OS_ROM_TYPE($0304)
+constant OS_ROM_BASE($0308)
+constant OS_RESET_TYPE($030C)
+constant OS_CIC_ID($0310)
+constant OS_VERSION($0314)
+constant OS_MEM_SIZE($0318)
+constant OS_APP_NMI_BUFFER($031C)
+
 constant PM_4M($07fe000)
 
 // Memory Map

@@ -3,6 +3,7 @@
 8005d2e0 seg_bss_start
 8005d640 mainthread
 8008e360 seg_bss_end
+80300000 seg_sp_start
 80300000 decompression_buffer
 803ab400 sp_boot
 803ab3d0 sp_init
@@ -11,10 +12,11 @@
 803ab750 sp_shed
 803ab950 sp_main
 803b3950 sp_audi
-00001000 seg_boot_start
-80000400 Start
-80000410 .clearmem
-80000450 establishrootTLB
+803b3950 seg_sp_end
+00001000 seg_boot_rom_start
+80000400 boot.start
+80000410 boot.start.clearmem
+80000450 boot.start.establishrootTLB
 700004bc get_rodata_vaddr
 700004c8 get_rodata_rom_start
 700004d4 get_rodata_rom_end
@@ -1397,7 +1399,7 @@
 70020c50 ldiv
 70020ce0 __osResetGlobalIntMask
 70020d40 osEPiRawWriteIo
-00021990 seg_boot_end
+00021990 seg_boot_rom_end
 00021990 seg_rodata_rom_start
 80020d90 seg_rodata_vaddr_start
 80020d90 rspcode_start
@@ -1411,10 +1413,10 @@
 7020141c decompressfile
 702029bc seg_rarezip_vaddr_end
 00034b30 seg_rarezip_rom_end
-00034b30 seg_tlbcode_start
+00034b30 seg_tlbcode_rom_start
 7f000000 tlb_code_vaddr_start
 7f0e2d50 tlb_code_vaddr_end
-00117880 seg_tlbcode_end
+00117880 seg_tlbcode_rom_end
 00117880 unknown_rom_start
 00117880 unknown_start
 00117880 unknown1_start

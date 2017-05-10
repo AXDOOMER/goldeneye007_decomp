@@ -773,7 +773,7 @@
 0x008efe00 text/LmpweaponsJ
 0x008efee0 text/LoatE
 0x008efef0 text/LoatJ
-0x008e0080 text/LoptionsE
+0x008eff00 text/LoptionsE
 0x008f0130 text/LoptionsJ
 0x008f0380 text/LpamE
 0x008f0390 text/LpamJ
