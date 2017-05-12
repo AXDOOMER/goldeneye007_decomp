@@ -1,30 +1,25 @@
 #!/bin/bash
-DIRS="bg
-brief
-chr
-g_items
-props
-setup
-Tbg
-text"
- 
+shopt -s extglob
+DIRS="text"
 for DIRNAME in $DIRS ; do
 	rm $DIRNAME.inc
-	rm $DIRNAME.rz.asm
-	echo "base origin()" >> $DIRNAME.rz.asm
-	echo "seg_"$DIRNAME"_rom_start:" >> $DIRNAME.rz.asm
-	echo "" >> $DIRNAME.rz.asm
-	for FILENAME in $DIRNAME/*.asm ; do
+
+	for FILENAME in $DIRNAME/!(*.rz).asm ; do
 		echo "parsing $FILENAME"
 		FILENAME=$(echo "$FILENAME" | cut -d "." -f1)
+		rm $FILENAME.rz.asm
 		bass -sym $FILENAME.sym $FILENAME.asm
-
-		#TODO compress $FILENAME.bin here to $FILENAME.rz to include
-
+		#compress to zlib headerless format,
+		#using zpipe as it makes byte exact output
+        ../tools/zpipe < $FILENAME.bin > $FILENAME.rz
 		#make include and asm for .rz
 		BASENAME=$(echo "$FILENAME" | cut -d "/" -f2)
-		echo "insert $BASENAME, \"$FILENAME.rz\"">>$DIRNAME.rz.asm
-
+		echo "seg_"$BASENAME"_rom_start:">>$FILENAME.rz.asm
+		echo "db 0x11, 0x72">>$FILENAME.rz.asm
+		echo "insert $BASENAME, \"$BASENAME.rz\"">>$FILENAME.rz.asm
+		echo "align(16)">>$FILENAME.rz.asm
+		echo "seg_"$BASENAME"_rom_end:">>$FILENAME.rz.asm
+		echo "">>$FILENAME.rz.asm
 
 		rm $FILENAME.inc
 		declare -i LINENUM=1
@@ -38,6 +33,4 @@ for DIRNAME in $DIRS ; do
 		rm $FILENAME.sym
 		rm $FILENAME.bin
 	done
-	echo "" >> $DIRNAME.rz.asm
-	echo "seg_"$DIRNAME"_rom_end:" >> $DIRNAME.rz.asm
 done
