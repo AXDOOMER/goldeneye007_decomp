@@ -11,7 +11,7 @@ for DIRNAME in $DIRS ; do
 		bass -sym $FILENAME.sym $FILENAME.asm
 		#compress to zlib headerless format,
 		#using zpipe as it makes byte exact output
-        ../tools/zpipe < $FILENAME.bin > $FILENAME.rz
+        cat $FILENAME.bin| gzip --no-name | tail --bytes=+11 | head --bytes=-8 > $FILENAME.rz
 		#make include and asm for .rz
 		BASENAME=$(echo "$FILENAME" | cut -d "/" -f2)
 		echo "seg_"$BASENAME"_rom_start:">>$FILENAME.rz.asm
