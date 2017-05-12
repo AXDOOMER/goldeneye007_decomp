@@ -1519,6 +1519,8 @@
 008f41f0 seg_LshoE_rom_end
 008f4200 seg_LsiloE_rom_start
 008f47b0 seg_LsiloE_rom_end
+008f7570 seg_LtraE_rom_start
+008f79a0 seg_LtraE_rom_end
 008f7dc0 seg_LwaxE_rom_start
 008f7dd0 seg_LwaxE_rom_end
 008f7de0 text_rom_end
