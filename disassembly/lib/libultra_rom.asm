@@ -1,6 +1,12 @@
 base $7000CF90    
 osPiRawStartDma:
 
+base $7000D070
+osPiGetStatus:
+
+base $7000D080
+osInitialize:
+
 base $7000D320
 osWritebackDCacheAll:
 
@@ -72,6 +78,12 @@ osSpTaskYielded:
 
 base $7000E3C0
 osDpGetCounters:
+
+base $7000E410
+osViGetCurrentFramebuffer:
+
+base $7000E450
+osViGetNextFramebuffer:
 
 base $7000E490
 osViSwapBuffer:

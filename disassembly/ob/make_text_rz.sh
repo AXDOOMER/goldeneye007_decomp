@@ -10,13 +10,16 @@ for DIRNAME in $DIRS ; do
 		rm $FILENAME.rz.asm
 		bass -sym $FILENAME.sym $FILENAME.asm
 		#compress to zlib headerless format,
-		#using zpipe as it makes byte exact output
+		#gotta love *nix and pipes
         cat $FILENAME.bin| gzip --no-name | tail --bytes=+11 | head --bytes=-8 > $FILENAME.rz
 		#make include and asm for .rz
 		BASENAME=$(echo "$FILENAME" | cut -d "/" -f2)
+
+		#theres no 1172 header so lets fix that
 		echo "seg_"$BASENAME"_rom_start:">>$FILENAME.rz.asm
 		echo "db 0x11, 0x72">>$FILENAME.rz.asm
 		echo "insert $BASENAME, \"$BASENAME.rz\"">>$FILENAME.rz.asm
+		#nor is data aligned
 		echo "align(16)">>$FILENAME.rz.asm
 		echo "seg_"$BASENAME"_rom_end:">>$FILENAME.rz.asm
 		echo "">>$FILENAME.rz.asm

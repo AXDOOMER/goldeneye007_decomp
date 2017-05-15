@@ -107,7 +107,7 @@ init:;scope {
   jal osPiRawStartDma //read (a0) a3 bytes from ROM a1 to a2
   or a0, r0, r0 //a0=0 (read)
 
-  jal $7000D070 //v0=PI status
+  jal osPiGetStatus //v0=PI status
   nop
 
   andi t5, v0, $0001
@@ -116,7 +116,7 @@ init:;scope {
 
  wait_pi_ready:
   // wait until PI ready
-  jal $7000D070 //v0=PI status
+  jal osPiGetStatus //v0=PI status
   nop
   andi t6, v0, 0001
   bnez t6, wait_pi_ready
@@ -124,16 +124,16 @@ init:;scope {
 
  init_memory_tlb:
   // initialize memory and TLB
-  jal $7000D080 //initialize PIF, interrupt handlers, C0- and 7F- TLB segments, init NMIbuffer if cold run, init 64DD if present
+  jal osInitialize //initialize PIF, interrupt handlers, C0- and 7F- TLB segments, init NMIbuffer if cold run, init 64DD if present
   nop
 
-  jal $70001BB0 //sets #hardwired TLB entries to 2
+  jal function_70001BB0 //sets #hardwired TLB entries to 2
   nop
 
   lui s0, $8000
-  lui v0, (tlb_entries >> 16)
+  lui v0, (tlb_70001B60 >> 16)
   lui a0, $8000
-  addiu v0, v0, tlb_entries //v0= 70001B60
+  addiu v0, v0, tlb_70001B60 //v0= 70001B60
   or v1, s0, r0 //v1=s0: 80000000
   ori a0, a0, $0080 //a0=80000080
 
@@ -237,7 +237,7 @@ addiu sp, sp, 0xffffffe0
 sw ra, 0x1c (sp)
 lui a0, 0x803b
 addiu a0, a0, 0xffffb710
-jal 0x700006f0 //(function_700006f0)
+jal stack_init //(function_700006f0)
 addiu a1, $0, 0x40
 lui a0, 0x8006
 lui a2, 0x7000
@@ -246,10 +246,10 @@ addiu a0, a0, 0xffffd490
 addiu a1, $0, 0x1
 or a3, $0, $0
 sw v0, 0x10 (sp)
-jal 0x7000d430 //(function_7000d430)
+jal osCreateThread //(function_7000d430)
 sw $0, 0x14 (sp)
 lui a0, 0x8006
-jal 0x7000d580 //(function_7000d580)
+jal osStartThread //(function_7000d580)
 addiu a0, a0, 0xffffd490
 lw ra, 0x1c (sp)
 addiu sp, sp, 0x20
@@ -263,7 +263,7 @@ addiu sp, sp, 0xffffffe0
 sw ra, 0x1c (sp)
 lui a0, 0x803b
 addiu a0, a0, 0xffffb410
-jal 0x700006f0 //(function_700006f0)
+jal stack_init //(function_700006f0)
 addiu a1, $0, 0x300
 lui a0, 0x8006
 lui a2, 0x7001
@@ -273,10 +273,10 @@ addiu a2, a2, 0xffffcea0
 addiu a0, a0, 0xffffd2e0
 or a1, $0, $0
 or a3, $0, $0
-jal 0x7000d430 //(function_7000d430)
+jal osCreateThread //(function_7000d430)
 sw v0, 0x10 (sp)
 lui a0, 0x8006
-jal 0x7000d580 //(function_7000d580)
+jal osStartThread //(function_7000d580)
 addiu a0, a0, 0xffffd2e0
 lw ra, 0x1c (sp)
 addiu sp, sp, 0x20
@@ -284,7 +284,7 @@ jr ra
 sll $0, $0, 0x0
 
 base $700007ec
-function_700007ec:
+function_700007EC:
 //0x700007ec -- 0x7000089b
 addiu sp, sp, 0xffffffe8
 sw ra, 0x14 (sp)
@@ -292,7 +292,7 @@ lui a0, 0x8006
 lui a1, 0x8006
 addiu a1, a1, 0xffffd9b8
 addiu a0, a0, 0xffffd9a0
-jal 0x7000d6d0 //(function_7000d6d0)
+jal osCreateMesgQueue //(function_7000d6d0)
 addiu a2, $0, 0x20
 lui t6, 0x8000
 lw t6, 0x300 (t6)
@@ -305,14 +305,14 @@ lui a1, 0x8006
 addiu a1, a1, 0xffffd7f0
 addiu a0, a0, 0xffffda40
 addiu a2, $0, 0x1e
-jal 0x70000aac //(scheduler)
+jal scheduler //(function_70000aac)
 addiu a3, $0, 0x1
 beq $0, $0, 0x7000085c //(function_700007ec+0x70)
 sll $0, $0, 0x0
 lui a1, 0x8006
 addiu a1, a1, 0xffffd7f0
 addiu a2, $0, 0x2
-jal 0x70000aac //(scheduler)
+jal scheduler //(function_70000aac)
 addiu a3, $0, 0x1
 lui a0, 0x8006
 lui a1, 0x8006
@@ -320,10 +320,10 @@ lui a2, 0x8006
 addiu a2, a2, 0xffffd9a0
 addiu a1, a1, 0xffffdb18
 addiu a0, a0, 0xffffda40
-jal 0x70000c14 //(function_70000c14)
+jal function_70000c14 //(function_70000c14)
 or a3, $0, $0
 lui a0, 0x8006
-jal 0x70000cf8 //(function_70000cf8)
+jal function_70000cf8 //(function_70000cf8)
 addiu a0, a0, 0xffffda40
 lw ra, 0x14 (sp)
 lui at, 0x8006
@@ -336,26 +336,26 @@ main:
 //0x7000089c -- 0x70000907
 addiu sp, sp, 0xffffffe8
 sw ra, 0x14 (sp)
-jal 0x70000738 //(makebootthread)
+jal makebootthread //(function_70000738)
 sw a0, 0x18 (sp)
-jal 0x7000ad30 //(function_7000ad30)
+jal function_7000AD30 //(function_7000ad30)
 sll $0, $0, 0x0
-jal 0x7000acf0 //(function_7000acf0)
+jal function_7000ACF0 //(function_7000acf0)
 sll $0, $0, 0x0
-jal 0x70000790 //(indiboard_thread)
+jal indiboard_thread //(function_70000790)
 sll $0, $0, 0x0
-jal 0x7000a5c0 //(function_7000a5c0)
+jal function_7000A5C0 //(function_7000a5c0)
 sll $0, $0, 0x0
 beql v0, r0, 0x700008E0 //(main+0x44)
 or a0, $0, $0
-jal 0x7000d740 //(function_7000d740)
+jal osStopThread //(function_7000d740)
 or a0, $0, $0
 or a0, $0, $0
-jal 0x7000d800 //(function_7000d800)
+jal osSetThreadPri //(function_7000d800)
 addiu a1, $0, 0xa
-jal 0x700007ec //(function_700007ec)
+jal function_700007EC //(function_700007ec)
 sll $0, $0, 0x0
-jal 0x7000601c //(function_7000601c)
+jal function_7000601C //(function_7000601c)
 sll $0, $0, 0x0
 lw ra, 0x14 (sp)
 addiu sp, sp, 0x18
@@ -435,9 +435,9 @@ lui t8, 0x8002
 lw t8, 0x3094 (t8)
 beql t8, r0, 0x700009ec //(testtodisplaystderrandupdatecount+0x4c)
 lw ra, 0x14 (sp)
-jal 0x700059d0 //(function_700059d0)
+jal function_700059D0 //(function_700059D0)
 sll $0, $0, 0x0
-jal 0x7000d8e0 //(function_7000d8e0)
+jal osGetCount //(function_7000d8e0)
 sll $0, $0, 0x0
 lui at, 0x8002
 sw v0, 0x30a4 (at)
@@ -465,7 +465,7 @@ sll $0, $0, 0x0
 lw t9, 0x3094 (t9)
 beql t9, r0, 0x70000a7c //(testtodisplaystderrorevery16thframe+0x84)
 lw ra, 0x14 (sp)
-jal 0x7000d8e0 //(function_7000d8e0)
+jal osGetCount //(function_7000d8e0)
 sll $0, $0, 0x0
 lui t1, 0x8002
 lw t1, 0x30a4 (t1)
@@ -476,10 +476,10 @@ lui a0, 0x803b
 sltu at, t0, t2
 beql at, r0, 0x70000a7c //(testtodisplaystderrorevery16thframe+0x84)
 lw ra, 0x14 (sp)
-jal 0x700059d0 //(function_700059d0)
+jal function_700059D0 //(function_700059D0)
 addiu a0, a0, 0x5000
 lui a0, 0x803e
-jal 0x700059d0 //(function_700059d0)
+jal function_700059D0 //(function_700059D0)
 addiu a0, a0, 0xffffa800
 lw ra, 0x14 (sp)
 addiu sp, sp, 0x18
@@ -491,7 +491,7 @@ storecurrentcountto800230a4:
 //0x70000a88 -- 0x70000aab
 addiu sp, sp, 0xffffffe8
 sw ra, 0x14 (sp)
-jal 0x7000d8e0 //(function_7000d8e0)
+jal osGetCount //(function_7000d8e0)
 sll $0, $0, 0x0
 lw ra, 0x14 (sp)
 lui at, 0x8002
@@ -527,13 +527,13 @@ addiu s1, a0, 0x40
 sw t8, 0xb0 (a0)
 or a0, s1, $0
 addiu a1, s0, 0x58
-jal 0x7000d6d0 //(function_7000d6d0)
+jal osCreateMesgQueue //(function_7000d6d0)
 addiu a2, $0, 0x8
 addiu a0, s0, 0x78
 addiu a1, s0, 0x90
-jal 0x7000d6d0 //(function_7000d6d0)
+jal osCreateMesgQueue //(function_7000d6d0)
 addiu a2, $0, 0x8
-jal 0x7000d8f0 //(function_7000d8f0)
+jal osCreateViManager //(function_7000d8f0)
 addiu a0, $0, 0xfe
 lbu t9, 0x33 (sp)
 lui t1, 0x8002
@@ -556,25 +556,25 @@ sw t4, 0x884 (at)
 lw t5, 0x44 (t2)
 lui at, 0x8006
 addiu a2, $0, 0x29b
-jal 0x7000dc50 //(function_7000dc50)
+jal osSetEventMesg //(function_7000dc50)
 sw t5, 0x888 (at)
 addiu a0, $0, 0x9
 or a1, s1, $0
-jal 0x7000dc50 //(function_7000dc50)
+jal osSetEventMesg //(function_7000dc50)
 addiu a2, $0, 0x29c
 addiu a0, $0, 0xe
 or a1, s1, $0
-jal 0x7000dc50 //(function_7000dc50)
+jal osSetEventMesg //(function_7000dc50)
 addiu a2, $0, 0x29d
 or a0, s1, $0
 addiu a1, $0, 0x29a
-jal 0x7000dcc0 //(function_7000dcc0)
+jal osViSetEvent //(function_7000dcc0)
 lw a2, 0x34 (sp)
-jal 0x70000a88 //(storecurrentcountto800230a4)
+jal storecurrentcountto800230a4 //(function_70000A88)
 sll $0, $0, 0x0
 lui a0, 0x803b
 addiu a0, a0, 0xffffb750
-jal 0x700006f0 //(function_700006f0)
+jal stack_init //(function_700006f0)
 addiu a1, $0, 0x200
 lw a0, 0xb0 (s0)
 lui a2, 0x7000
@@ -583,9 +583,9 @@ sw t6, 0x14 (sp)
 addiu a2, a2, 0xd00
 sw v0, 0x10 (sp)
 addiu a1, $0, 0x2
-jal 0x7000d430 //(function_7000d430)
+jal osCreateThread //(function_7000d430)
 or a3, s0, $0
-jal 0x7000d580 //(function_7000d580)
+jal osStartThread //(function_7000d580)
 lw a0, 0xb0 (s0)
 lw ra, 0x24 (sp)
 lw s0, 0x1c (sp)
@@ -602,7 +602,7 @@ sw a0, 0x18 (sp)
 sw a2, 0x20 (sp)
 sw a3, 0x24 (sp)
 addiu a0, $0, 0x1
-jal 0x7000dd30 //(function_7000dd30)
+jal osSetIntMask //(function_7000dd30)
 sw a1, 0x1c (sp)
 lw a1, 0x1c (sp)
 lw t6, 0x20 (sp)
@@ -613,7 +613,7 @@ lw t7, 0x24 (sp)
 sw t7, 0x8 (a1)
 lw t8, 0xb4 (v1)
 sw t8, 0x0 (a1)
-jal 0x7000dd30 //(function_7000dd30)
+jal osSetIntMask //(function_7000dd30)
 sw a1, 0xb4 (v1)
 lw ra, 0x14 (sp)
 addiu sp, sp, 0x18
@@ -630,7 +630,7 @@ lw v1, 0xb4 (a0)
 sw $0, 0x18 (sp)
 sw a1, 0x24 (sp)
 addiu a0, $0, 0x1
-jal 0x7000dd30 //(function_7000dd30)
+jal osSetIntMask //(function_7000dd30)
 sw v1, 0x1c (sp)
 lw v1, 0x1c (sp)
 lw a1, 0x24 (sp)
@@ -651,7 +651,7 @@ or a2, v1, $0
 lw v1, 0x0 (v1)
 bne v1, r0, 0x70000ca8 //(function_70000c70+0x38)
 sll $0, $0, 0x0
-jal 0x7000dd30 //(function_7000dd30)
+jal osSetIntMask //(function_7000dd30)
 sll $0, $0, 0x0
 lw ra, 0x14 (sp)
 addiu sp, sp, 0x20
@@ -683,7 +683,7 @@ addiu s4, sp, 0x4c
 addiu s5, $0, 0x29a
 or a0, s3, $0
 or a1, s4, $0
-jal 0x7000ddd0 //(function_7000ddd0)
+jal osRecvMesg //(function_7000ddd0)
 addiu a2, $0, 0x1
 lw t6, 0x4c (sp)
 addiu at, $0, 0x29b
@@ -697,19 +697,19 @@ beq t6, at, 0x70000da8 //(function_70000d00+0xa8)
 sll $0, $0, 0x0
 beq $0, $0, 0x70000de0 //(function_70000d00+0xe0)
 sll $0, $0, 0x0
-jal 0x70000eb4 //(function_70000eb4)
+jal function_70000eb4 //(function_70000eb4)
 or a0, s2, $0
 beq $0, $0, 0x70000de0 //(function_70000d00+0xe0)
 sll $0, $0, 0x0
-jal 0x70001014 //(function_70001014)
+jal function_70001014 //(function_70001014)
 or a0, s2, $0
 beq $0, $0, 0x70000de0 //(function_70000d00+0xe0)
 sll $0, $0, 0x0
-jal 0x70001128 //(function_70001128)
+jal function_70001128 //(function_70001128)
 or a0, s2, $0
 beq $0, $0, 0x70000de0 //(function_70000d00+0xe0)
 sll $0, $0, 0x0
-jal 0x7000c8dc //(function_7000c8dc)
+jal reset_cont_rumble_detect //(function_7000c8dc)
 sll $0, $0, 0x0
 lw s0, 0xb4 (s2)
 addiu s1, s2, 0x20
@@ -717,7 +717,7 @@ beql s0, r0, 0x70000de0 //(function_70000d00+0xe0)
 addiu s0, $0, 0x1
 lw a0, 0x4 (s0)
 or a1, s1, $0
-jal 0x7000df10 //(function_7000df10)
+jal osSendMesg //(function_7000df10)
 or a2, $0, $0
 lw s0, 0x0 (s0)
 bnel s0, r0, 0x70000dc4 //(function_70000d00+0xc4)
@@ -732,32 +732,32 @@ lui a0, 0x8002
 bne t7, at, 0x70000e14 //(function_70000d00+0x114)
 sll $0, $0, 0x0
 lui a0, 0x8002
-jal 0x7000e060 //(function_7000e060)
+jal osViSetMode //(function_7000e060)
 addiu a0, a0, 0x7320
 beq $0, $0, 0x70000e20 //(function_70000d00+0x120)
 lui at, 0x3f80
-jal 0x7000e060 //(function_7000e060)
+jal osViSetMode //(function_7000e060)
 addiu a0, a0, 0x6a60
 lui at, 0x3f80
 mtc1 at, f12
-jal 0x7000e0d0 //(function_7000e0d0)
+jal osViSetXScale //(function_7000e0d0)
 sll $0, $0, 0x0
 lui at, 0x3f80
 mtc1 at, f12
-jal 0x7000e200 //(function_7000e200)
+jal osViSetYScale //(function_7000e200)
 sll $0, $0, 0x0
-jal 0x7000e260 //(function_7000e260)
+jal osViRepeatLine //(function_7000e260)
 or a0, $0, $0
-jal 0x7000e2d0 //(function_7000e2d0)
+jal osViBlack //(function_7000e2d0)
 addiu a0, $0, 0x1
 or a0, s3, $0
 or a1, s4, $0
-jal 0x7000ddd0 //(function_7000ddd0)
+jal osRecvMesg //(function_7000ddd0)
 addiu a2, $0, 0x1
 lw t8, 0x4c (sp)
 bnel t8, s5, 0x70000e50 //(function_70000d00+0x150)
 or a0, s3, $0
-jal 0x7000bd88 //(function_7000bd88)
+jal function_7000BD88 //(function_7000bd88)
 sll $0, $0, 0x0
 beq $0, $0, 0x70000e50 //(function_70000d00+0x150)
 or a0, s3, $0
@@ -789,30 +789,30 @@ sw s2, 0x1c (sp)
 sw s0, 0x14 (sp)
 sw $0, 0x3c (sp)
 sw $0, 0x30 (sp)
-jal 0x700027a4 //(function_700027a4)
+jal function_700027A4 //(function_700027a4)
 sw $0, 0x2c (sp)
 lw t6, 0xd0 (s1)
 addiu t7, t6, 0x1
-jal 0x700031a0 //(function_700031a0)
+jal  function_700031A0 //(function_700031a0)
 sw t7, 0xd0 (s1)
-jal 0x7000bd88 //(function_7000bd88)
+jal function_7000BD88 //(function_7000bd88)
 sll $0, $0, 0x0
-jal 0x70007914 //(function_70007914)
+jal function_70007914 //(function_70007914)
 sll $0, $0, 0x0
 addiu s3, sp, 0x3c
 addiu s2, s1, 0x78
 or a0, s2, $0
 or a1, s3, $0
-jal 0x7000ddd0 //(function_7000ddd0)
+jal osRecvMesg //(function_7000ddd0)
 or a2, $0, $0
 addiu s0, $0, 0xffffffff
 beq v0, s0, 0x70000f44 //(function_70000eb4+0x90)
 or a0, s1, $0
-jal 0x700013d8 //(function_700013d8)
+jal function_700013d8 //(function_700013d8)
 lw a1, 0x3c (sp)
 or a0, s2, $0
 or a1, s3, $0
-jal 0x7000ddd0 //(function_7000ddd0)
+jal osRecvMesg //(function_7000ddd0)
 or a2, $0, $0
 bnel v0, s0, 0x70000f24 //(function_70000eb4+0x70)
 or a0, s1, $0
@@ -824,7 +824,7 @@ lw t0, 0xc8 (s1)
 lw t9, 0xc8 (s1)
 beql t9, r0, 0x70000f78 //(function_70000eb4+0xc4)
 lw t0, 0xc8 (s1)
-jal 0x70001560 //(function_70001560)
+jal function_70001560 //(function_70001560)
 or a0, s1, $0
 beq $0, $0, 0x70000fb0 //(function_70000eb4+0xfc)
 lw s0, 0xb4 (s1)
@@ -835,12 +835,12 @@ sltiu t1, t0, 0x1
 sll t2, t1, 0x1
 sltiu t4, t3, 0x1
 or s0, t2, t4
-jal 0x7000159c //(function_7000159c)
+jal function_7000159c //(function_7000159c)
 or a3, s0, $0
 beq v0, s0, 0x70000fac //(function_70000eb4+0xf8)
 or a0, s1, $0
 lw a1, 0x30 (sp)
-jal 0x70001440 //(dpc_fill)
+jal dpc_fill //(dpc_fill)
 lw a2, 0x2c (sp)
 lw s0, 0xb4 (s1)
 beq s0, r0, 0x70000ff0 //(function_70000eb4+0x13c)
@@ -854,12 +854,12 @@ lw t6, 0xd0 (s1)
 andi t7, t6, 0x1
 bnel t7, r0, 0x70000fe8 //(function_70000eb4+0x134)
 lw s0, 0x0 (s0)
-jal 0x7000df10 //(function_7000df10)
+jal osSendMesg //(function_7000df10)
 lw a0, 0x4 (s0)
 lw s0, 0x0 (s0)
 bnel s0, r0, 0x70000fbc //(function_70000eb4+0x108)
 lw t5, 0x8 (s0)
-jal 0x700009f8 //(testtodisplaystderrorevery16thframe)
+jal testtodisplaystderrorevery16thframe //(function_700009f8)
 lw a0, 0xd0 (s1)
 lw ra, 0x24 (sp)
 lw s0, 0x14 (sp)
@@ -882,7 +882,7 @@ or s0, a0, $0
 sw $0, 0xc8 (a0)
 lui a0, 0x1
 ori a0, a0, 0x1
-jal 0x70002854 //(function_70002854)
+jal function_70002854 //(function_70002854)
 sw a1, 0x2c (sp)
 lw a1, 0x2c (sp)
 lw t6, 0x4 (a1)
@@ -890,7 +890,7 @@ addiu a0, a1, 0x10
 andi t7, t6, 0x10
 beql t7, r0, 0x700010ac //(function_70001014+0x98)
 lw t4, 0x4 (a1)
-jal 0x7000e340 //(function_7000e340)
+jal osSpTaskYielded //(function_7000e340)
 sw a1, 0x2c (sp)
 beq v0, r0, 0x700010a8 //(function_70001014+0x94)
 lw a1, 0x2c (sp)
@@ -913,7 +913,7 @@ lw t4, 0x4 (a1)
 addiu at, $0, 0xfffffffd
 or a0, s0, $0
 and t5, t4, at
-jal 0x70001230 //(function_70001230)
+jal function_70001230 //(function_70001230)
 sw t5, 0x4 (a1)
 lw t6, 0xc8 (s0)
 lw t9, 0xcc (s0)
@@ -924,14 +924,14 @@ sltiu t0, t9, 0x1
 or a3, t8, t0
 sw a3, 0x20 (sp)
 addiu a1, sp, 0x28
-jal 0x7000159c //(function_7000159c)
+jal function_7000159c //(function_7000159c)
 addiu a2, sp, 0x24
 lw a3, 0x20 (sp)
 or a0, s0, $0
 lw a1, 0x28 (sp)
 beql v0, a3, 0x7000110c //(function_70001014+0xf8)
 lw ra, 0x1c (sp)
-jal 0x70001440 //(dpc_fill)
+jal dpc_fill //(dpc_fill)
 lw a2, 0x24 (sp)
 lw ra, 0x1c (sp)
 lw s0, 0x18 (sp)
@@ -959,10 +959,10 @@ or s0, a0, $0
 lui a0, 0x1
 beql t6, r0, 0x700011d0 //(function_70001128+0xa8)
 lw ra, 0x1c (sp)
-jal 0x70002854 //(function_70002854)
+jal function_70002854 //(function_70002854)
 ori a0, a0, 0x2
 lui a0, 0x8006
-jal 0x7000e3c0 //(function_7000e3c0)
+jal osDpGetCounters //(function_7000e3c0)
 addiu a0, a0, 0xffffdb30
 lw a1, 0xcc (s0)
 sw $0, 0xcc (s0)
@@ -970,7 +970,7 @@ addiu at, $0, 0xfffffffe
 lw t7, 0x4 (a1)
 or a0, s0, $0
 and t8, t7, at
-jal 0x70001230 //(function_70001230)
+jal function_70001230 //(function_70001230)
 sw t8, 0x4 (a1)
 lw t9, 0xc8 (s0)
 lw t2, 0xcc (s0)
@@ -981,14 +981,14 @@ sltiu t3, t2, 0x1
 or a3, t1, t3
 sw a3, 0x20 (sp)
 addiu a1, sp, 0x28
-jal 0x7000159c //(function_7000159c)
+jal function_7000159c //(function_7000159c)
 addiu a2, sp, 0x24
 lw a3, 0x20 (sp)
 or a0, s0, $0
 lw a1, 0x28 (sp)
 beql v0, a3, 0x700011d0 //(function_70001128+0xa8)
 lw ra, 0x1c (sp)
-jal 0x70001440 //(dpc_fill)
+jal dpc_fill //(dpc_fill)
 lw a2, 0x24 (sp)
 lw ra, 0x1c (sp)
 lw s0, 0x18 (sp)
@@ -1003,9 +1003,9 @@ addiu sp, sp, 0xffffffd8
 sw ra, 0x14 (sp)
 beq a0, r0, 0x7000121c //(function_700011e0+0x3c)
 sw a0, 0x28 (sp)
-jal 0x7000e410 //(function_7000e410)
+jal osViGetCurrentFramebuffer //(function_7000e410)
 sll $0, $0, 0x0
-jal 0x7000e450 //(function_7000e450)
+jal osViGetNextFramebuffer //(function_7000e450)
 sw v0, 0x1c (sp)
 lw t7, 0x1c (sp)
 beq v0, t7, 0x70001214 //(function_700011e0+0x34)
@@ -1034,7 +1034,7 @@ andi t7, t6, 0x3
 bne t7, r0, 0x700013c4 //(function_70001230+0x194)
 or v0, $0, $0
 lw a0, 0x50 (a1)
-jal 0x7000df10 //(function_7000df10)
+jal osSendMesg //(function_7000df10)
 lw a1, 0x54 (a1)
 lw t8, 0x10 (s0)
 addiu at, $0, 0x1
@@ -1049,7 +1049,7 @@ lui t1, 0x8002
 lw t1, 0x30cc (t1)
 beq t1, r0, 0x700012a8 //(function_70001230+0x78)
 sll $0, $0, 0x0
-jal 0x7000e2d0 //(function_7000e2d0)
+jal osViBlack //(function_7000e2d0)
 or a0, $0, $0
 lui at, 0x8002
 sw $0, 0x30cc (at)
@@ -1063,7 +1063,7 @@ lw t3, 0x30c4 (t3)
 or v1, t2, $0
 beq t3, r0, 0x70001358 //(function_70001230+0x128)
 sll $0, $0, 0x0
-jal 0x7000dd30 //(function_7000dd30)
+jal osSetIntMask //(function_7000dd30)
 ori a0, a0, 0x401
 lui v1, 0x8002
 lw v1, 0x30b0 (v1)
@@ -1091,7 +1091,7 @@ lw at, 0x0 (t8)
 or a0, v0, $0
 sw at, 0x0 (t5)
 lw t1, 0x4 (t8)
-jal 0x7000dd30 //(function_7000dd30)
+jal osSetIntMask //(function_7000dd30)
 sw t1, 0x4 (t5)
 lui v1, 0x8002
 lw v1, 0x30b0 (v1)
@@ -1099,14 +1099,14 @@ sll t2, v1, 0x2
 or v1, t2, $0
 lui at, 0x8002
 addu at, at, v1
-jal 0x7000e0d0 //(function_7000e0d0)
+jal osViSetXScale //(function_7000e0d0)
 lwc1 f12, 0x30b4 (at)
 lui t3, 0x8002
 lw t3, 0x30b0 (t3)
 lui at, 0x8002
 sll t4, t3, 0x2
 addu at, at, t4
-jal 0x7000e200 //(function_7000e200)
+jal osViSetYScale //(function_7000e200)
 lwc1 f12, 0x30bc (at)
 lui t6, 0x8002
 lw t6, 0x30b0 (t6)
@@ -1118,9 +1118,9 @@ beq t0, r0, 0x700013a8 //(function_70001230+0x178)
 sll $0, $0, 0x0
 addiu t0, t0, 0xfffffffe
 sw t0, 0x30b0 (at)
-jal 0x700009a0 //(testtodisplaystderrandupdatecount)
+jal testtodisplaystderrandupdatecount //(function_700009a0)
 lw a0, 0xc (s0)
-jal 0x7000e490 //(function_7000e490)
+jal osViSwapBuffer //(function_7000e490)
 lw a0, 0xc (s0)
 beq $0, $0, 0x700013c4 //(function_70001230+0x194)
 addiu v0, $0, 0x1
@@ -1175,7 +1175,7 @@ lw v0, 0x10 (a1)
 addiu at, $0, 0x2
 bnel v0, at, 0x70001480 //(dpc_fill+0x40)
 addiu at, $0, 0x2
-jal 0x7000d320 //(osWritebackDCacheAll)
+jal osWritebackDCacheAll //(function_7000d320)
 sll $0, $0, 0x0
 lw v0, 0x10 (s0)
 addiu at, $0, 0x2
@@ -1185,30 +1185,30 @@ lw t6, 0x4 (s0)
 andi t7, t6, 0x10
 bnel t7, r0, 0x700014a8 //(dpc_fill+0x68)
 addiu at, $0, 0x2
-jal 0x7000e4e0 //(function_7000e4e0)
+jal osDpSetStatus //(function_7000e4e0)
 addiu a0, $0, 0x3c0
 lw v0, 0x10 (s0)
 addiu at, $0, 0x2
 bne v0, at, 0x700014c4 //(dpc_fill+0x84)
 lui a0, 0x4
 lui a0, 0x3
-jal 0x70002854 //(function_70002854)
+jal function_70002854 //(function_70002854)
 ori a0, a0, 0x1
 beq $0, $0, 0x700014dc //(dpc_fill+0x9c)
 lw t8, 0x4 (s0)
-jal 0x70002854 //(function_70002854)
+jal function_70002854 //(function_70002854)
 ori a0, a0, 0x1
 lui a0, 0x2
-jal 0x70002854 //(function_70002854)
+jal function_70002854 //(function_70002854)
 ori a0, a0, 0x2
 lw t8, 0x4 (s0)
 addiu at, $0, 0xffffffcf
 addiu a0, s0, 0x10
 and t9, t8, at
 sw t9, 0x4 (s0)
-jal 0x7000e60c //(function_7000e60c)
+jal osSpTaskLoad //(function_7000e60c)
 sw a0, 0x20 (sp)
-jal 0x7000e76c //(function_7000e76c)
+jal osSpTaskStartGo //(function_7000e76c)
 lw a0, 0x20 (sp)
 lw t0, 0x28 (sp)
 bne s0, s1, 0x7000150c //(dpc_fill+0xcc)
@@ -1221,7 +1221,7 @@ lw ra, 0x1c (sp)
 lw t1, 0x3c (s1)
 lw a0, 0x38 (s1)
 lw a2, 0x0 (t1)
-jal 0x7000e7b0 //(function_7000e7b0)
+jal osDpSetNextBuffer //(function_7000e7b0)
 lw a3, 0x4 (t1)
 addiu t2, $0, 0x1
 lui at, 0x8002
@@ -1248,7 +1248,7 @@ bnel t6, at, 0x70001590 //(function_70001560+0x30)
 lw ra, 0x14 (sp)
 lw t7, 0x4 (v0)
 ori t8, t7, 0x10
-jal 0x7000e860 //(function_7000e860)
+jal osSpTaskYield //(function_7000e860)
 sw t8, 0x4 (v0)
 lw ra, 0x14 (sp)
 addiu sp, sp, 0x18
@@ -1294,7 +1294,7 @@ or a0, s0, $0
 sw v1, 0x24 (sp)
 sw a1, 0x2c (sp)
 sw a2, 0x30 (sp)
-jal 0x700011e0 //(function_700011e0)
+jal function_700011e0 //(function_700011e0)
 sw a3, 0x34 (sp)
 lw v1, 0x24 (sp)
 lw a1, 0x2c (sp)
@@ -1487,7 +1487,7 @@ or s1, a0, $0
 sw ra, 0x24 (sp)
 or s0, $0, $0
 addiu s2, $0, 0x20
-jal 0x7000e880 //(function_7000e880)
+jal __osGetTLBHi //(function_7000e880)
 or a0, s0, $0
 bnel v0, s1, 0x700018fc //(function_700018c0+0x3c)
 addiu s0, s0, 0x1
@@ -1509,12 +1509,12 @@ function_70001920:
 //0x70001920 -- 0x70001953
 addiu sp, sp, 0xffffffe8
 sw ra, 0x14 (sp)
-jal 0x700018c0 //(function_700018c0)
+jal function_700018c0 //(function_700018c0)
 sll $0, $0, 0x0
 sll t6, v0, 0x0
 bltz t6, 0x70001944 //(function_70001920+0x24)
 or a0, v0, $0
-jal 0x7000d3d0 //(function_7000d3d0)
+jal osUnmapTLB //(function_7000d3d0)
 sll $0, $0, 0x0
 lw ra, 0x14 (sp)
 addiu sp, sp, 0x18
@@ -1537,13 +1537,13 @@ lbu a0, 0x1 (v1)
 lui at, 0x7f00
 sw v1, 0x18 (sp)
 sll t9, a0, 0xd
-jal 0x700018c0 //(function_700018c0)
+jal function_700018c0 //(function_700018c0)
 or a0, t9, at
 sll t1, v0, 0x0
 lw v1, 0x18 (sp)
 bltz t1, 0x700019ac //(function_70001954+0x58)
 or a0, v0, $0
-jal 0x7000d3d0 //(function_7000d3d0)
+jal osUnmapTLB //(function_7000d3d0)
 sw v1, 0x18 (sp)
 lw v1, 0x18 (sp)
 lbu t2, 0x1 (v1)
@@ -1572,9 +1572,9 @@ and a0, a0, at
 addiu t7, t6, 0x1
 sw s0, 0x18 (sp)
 sw t7, 0x0 (v0)
-jal 0x70001920 //(function_70001920)
+jal function_70001920 //(function_70001920)
 sw a0, 0x28 (sp)
-jal 0x70001b10 //(function_70001b10)
+jal function_70001B10 //(function_70001b10)
 sll $0, $0, 0x0
 addiu at, $0, 0x5a
 divu v0, at
@@ -1582,7 +1582,7 @@ mfhi a0
 lui v1, 0x8002
 addiu v1, v1, 0x30d4
 sw a0, 0x0 (v1)
-jal 0x70001954 //(function_70001954)
+jal function_70001954 //(function_70001954)
 or s0, a0, $0
 lw v0, 0x28 (sp)
 lui t9, 0x8006
@@ -1598,13 +1598,13 @@ sw a0, 0x34 (sp)
 addu a1, t1, t2
 or v0, t1, $0
 sw t1, 0x24 (sp)
-jal 0x70005c1c //(function_70005c1c)
+jal function_70005C1C //(function_70005c1c)
 addiu a2, $0, 0x2000
 lui a0, 0x4000
-jal 0x7000d350 //(function_7000d350)
+jal osInvalICache //(function_7000d350)
 lui a1, 0x4000
 lui a0, 0x8000
-jal 0x7000d350 //(function_7000d350)
+jal osInvalICache //(function_7000d350)
 lui a1, 0x1000
 lw a1, 0x24 (sp)
 lui t5, 0x8006
@@ -1615,7 +1615,7 @@ addu a2, t4, t5
 sw s0, 0x4 (a2)
 sw a2, 0x20 (sp)
 sw t3, 0x28 (sp)
-jal 0x7000e8b0 //(function_7000e8b0)
+jal osVirtualToPhysical //(function_7000e8b0)
 lw a0, 0x34 (sp)
 lw ra, 0x1c (sp)
 srl t6, v0, 0xc
@@ -1654,7 +1654,7 @@ function_70001B10:
 insert function_raw_to_tlb_entries, "boot.bin", (origin() - $1000), ($70001B60 - $70001B10)
 
 base $70001B60
-tlb_entries:
+tlb_70001B60:
  dw $40802800
  dw $00000000
  dw $401A2000

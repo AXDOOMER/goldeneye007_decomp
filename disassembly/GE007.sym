@@ -36,7 +36,7 @@
 70000718 function_70000718
 70000738 makebootthread
 70000790 indiboard_thread
-700007ec function_700007ec
+700007ec function_700007EC
 7000089c main
 70000908 setuplastentryofdebughandler
 70000970 stderr.activated
@@ -72,7 +72,7 @@
 70001af8 function_70001af8
 70001b04 function_70001b04
 70001b10 function_70001B10
-70001b60 tlb_entries
+70001b60 tlb_70001B60
 70001b88 function_70001B88
 70001bb0 function_70001BB0
 70001bd0 function_70001BD0
@@ -1121,6 +1121,8 @@
 7000cf28 function_7000CF28
 7000cf44 function_7000CF44
 7000cf90 osPiRawStartDma
+7000d070 osPiGetStatus
+7000d080 osInitialize
 7000d320 osWritebackDCacheAll
 7000d350 osInvalICache
 7000d3d0 osUnmapTLB
@@ -1145,6 +1147,8 @@
 7000e2d0 osViBlack
 7000e340 osSpTaskYielded
 7000e3c0 osDpGetCounters
+7000e410 osViGetCurrentFramebuffer
+7000e450 osViGetNextFramebuffer
 7000e490 osViSwapBuffer
 7000e4e0 osDpSetStatus
 7000e60c osSpTaskLoad
