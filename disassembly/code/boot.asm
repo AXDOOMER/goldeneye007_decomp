@@ -203,146 +203,153 @@ init:;scope {
  addiu sp, sp, $0040
 }
 
-stack_init:
-addu v0, a0, a1
-jr ra
-addiu v0, -8
+stack_init:;scope {
+ addu v0, a0, a1
+ jr ra
+ addiu v0, -8
+}
 
 base $700006FC
-function_700006FC:
-addiu t6, $0, 0x1
-lui at, 0x8002
-sw t6, 0x3044 ( at )
-lui at, 0x8002
-lui t7, 0x1000
-jr ra
-sw t7, 0x3048 ( at )
+function_700006FC:;scope {
+ addiu t6, $0, 0x1
+ lui at, (rodata_80023044>>16)
+ sw t6, rodata_80023044 ( at )
+ lui at, (cart_hw_address>>16)
+ lui t7, 0x1000
+ jr ra
+ sw t7, cart_hw_address ( at )
+}
 
 base $70000718
-function_70000718:
+idle_entry:;scope {
 //0x70000718 -- 0x70000737
-sw a0, 0x0 (sp)
-b $7000071C //infinite loop
-sll $0, $0, 0x0
-sll $0, $0, 0x0
-sll $0, $0, 0x0
-sll $0, $0, 0x0
-jr ra
-sll $0, $0, 0x0
+ sw a0, 0x0 (sp)
+ infiniteloop:
+ b infiniteloop //infinite loop
+ nop
+ nop
+ nop
+ nop
+ jr ra
+ nop
+}
 
 base $70000738
-makebootthread:
+start_idle_thread:;scope {
 //0x70000738 -- 0x7000078f
-addiu sp, sp, 0xffffffe0
-sw ra, 0x1c (sp)
-lui a0, 0x803b
-addiu a0, a0, 0xffffb710
-jal stack_init //(function_700006f0)
-addiu a1, $0, 0x40
-lui a0, 0x8006
-lui a2, 0x7000
-addiu a2, a2, 0x718
-addiu a0, a0, 0xffffd490
-addiu a1, $0, 0x1
-or a3, $0, $0
-sw v0, 0x10 (sp)
-jal osCreateThread //(function_7000d430)
-sw $0, 0x14 (sp)
-lui a0, 0x8006
-jal osStartThread //(function_7000d580)
-addiu a0, a0, 0xffffd490
-lw ra, 0x1c (sp)
-addiu sp, sp, 0x20
-jr ra
-sll $0, $0, 0x0
+ addiu sp, sp, 0xffffffe0
+ sw ra, 0x1c (sp)
+ lui a0, ((sp_idle>>16)+1)
+ addiu a0, a0, sp_idle
+ jal stack_init //(function_700006f0)
+ addiu a1, $0, 0x40
+ lui a0, ((idlethread>>16)+1)
+ lui a2, (idle_entry>>16)
+ addiu a2, a2, idle_entry
+ addiu a0, a0, idlethread
+ addiu a1, $0, 0x1
+ or a3, $0, $0
+ sw v0, 0x10 (sp)
+ jal osCreateThread //(function_7000d430)
+ sw $0, 0x14 (sp)
+ lui a0, ((idlethread>>16)+1)
+ jal osStartThread //(function_7000d580)
+ addiu a0, a0, idlethread
+ lw ra, 0x1c (sp)
+ addiu sp, sp, 0x20
+ jr ra
+ nop
+}
 
 base $70000790
-indiboard_thread:
+start_rmon_thread:;scope {
 //0x70000790 -- 0x700007eb
-addiu sp, sp, 0xffffffe0
-sw ra, 0x1c (sp)
-lui a0, 0x803b
-addiu a0, a0, 0xffffb410
-jal stack_init //(function_700006f0)
-addiu a1, $0, 0x300
-lui a0, 0x8006
-lui a2, 0x7001
-addiu t6, $0, 0xfa
-sw t6, 0x14 (sp)
-addiu a2, a2, 0xffffcea0
-addiu a0, a0, 0xffffd2e0
-or a1, $0, $0
-or a3, $0, $0
-jal osCreateThread //(function_7000d430)
-sw v0, 0x10 (sp)
-lui a0, 0x8006
-jal osStartThread //(function_7000d580)
-addiu a0, a0, 0xffffd2e0
-lw ra, 0x1c (sp)
-addiu sp, sp, 0x20
-jr ra
-sll $0, $0, 0x0
+ addiu sp, sp, 0xffffffe0
+ sw ra, 0x1c (sp)
+ lui a0, ((sp_rmon>>16)+1)
+ addiu a0, a0, sp_rmon
+ jal stack_init //(function_700006f0)
+ addiu a1, $0, 0x300
+ lui a0, ((rmonthread>>16)+1)
+ lui a2, ((rmon_entry>>16)+1)
+ addiu t6, $0, 0xfa
+ sw t6, 0x14 (sp)
+ addiu a2, a2, rmon_entry
+ addiu a0, a0, rmonthread
+ or a1, $0, $0
+ or a3, $0, $0
+ jal osCreateThread //(function_7000d430)
+ sw v0, 0x10 (sp)
+ lui a0, ((rmonthread>>16)+1)
+ jal osStartThread //(function_7000d580)
+ addiu a0, a0, rmonthread
+ lw ra, 0x1c (sp)
+ addiu sp, sp, 0x20
+ jr ra
+ sll $0, $0, 0x0
+}
 
 base $700007ec
-function_700007EC:
+function_700007EC:;scope {
 //0x700007ec -- 0x7000089b
-addiu sp, sp, 0xffffffe8
-sw ra, 0x14 (sp)
-lui a0, 0x8006
-lui a1, 0x8006
-addiu a1, a1, 0xffffd9b8
-addiu a0, a0, 0xffffd9a0
-jal osCreateMesgQueue //(function_7000d6d0)
-addiu a2, $0, 0x20
-lui t6, 0x8000
-lw t6, 0x300 (t6)
-addiu at, $0, 0x2
-lui a0, 0x8006
-bne t6, at, 0x70000848 //(function_700007ec+0x5c)
-addiu a0, a0, 0xffffda40
-lui a0, 0x8006
-lui a1, 0x8006
-addiu a1, a1, 0xffffd7f0
-addiu a0, a0, 0xffffda40
-addiu a2, $0, 0x1e
-jal scheduler //(function_70000aac)
-addiu a3, $0, 0x1
-beq $0, $0, 0x7000085c //(function_700007ec+0x70)
-sll $0, $0, 0x0
-lui a1, 0x8006
-addiu a1, a1, 0xffffd7f0
-addiu a2, $0, 0x2
-jal scheduler //(function_70000aac)
-addiu a3, $0, 0x1
-lui a0, 0x8006
-lui a1, 0x8006
-lui a2, 0x8006
-addiu a2, a2, 0xffffd9a0
-addiu a1, a1, 0xffffdb18
-addiu a0, a0, 0xffffda40
-jal function_70000c14 //(function_70000c14)
-or a3, $0, $0
-lui a0, 0x8006
-jal function_70000cf8 //(function_70000cf8)
-addiu a0, a0, 0xffffda40
-lw ra, 0x14 (sp)
-lui at, 0x8006
-sw v0, 0xffffda38 (at)
-jr ra
-addiu sp, sp, 0x18
+ addiu sp, sp, 0xffffffe8
+ sw ra, 0x14 (sp)
+ lui a0, 0x8006
+ lui a1, 0x8006
+ addiu a1, a1, 0xffffd9b8
+ addiu a0, a0, 0xffffd9a0
+ jal osCreateMesgQueue //(function_7000d6d0)
+ addiu a2, $0, 0x20
+ lui t6, OS_ROM_PARAMS_BASE
+ lw t6, OS_TV_TYPE(t6)
+ addiu at, $0, 0x2
+ lui a0, 0x8006
+ bne t6, at, 0x70000848 //(function_700007ec+0x5c)
+ addiu a0, a0, 0xffffda40
+ lui a0, 0x8006
+ lui a1, 0x8006
+ addiu a1, a1, 0xffffd7f0
+ addiu a0, a0, 0xffffda40
+ addiu a2, $0, 0x1e
+ jal scheduler //(function_70000aac)
+ addiu a3, $0, 0x1
+ beq $0, $0, 0x7000085c //(function_700007ec+0x70)
+ sll $0, $0, 0x0
+ lui a1, 0x8006
+ addiu a1, a1, 0xffffd7f0
+ addiu a2, $0, 0x2
+ jal scheduler //(function_70000aac)
+ addiu a3, $0, 0x1
+ lui a0, 0x8006
+ lui a1, 0x8006
+ lui a2, 0x8006
+ addiu a2, a2, 0xffffd9a0
+ addiu a1, a1, 0xffffdb18
+ addiu a0, a0, 0xffffda40
+ jal function_70000c14 //(function_70000c14)
+ or a3, $0, $0
+ lui a0, 0x8006
+ jal function_70000cf8 //(function_70000cf8)
+ addiu a0, a0, 0xffffda40
+ lw ra, 0x14 (sp)
+ lui at, 0x8006
+ sw v0, 0xffffda38 (at)
+ jr ra
+ addiu sp, sp, 0x18
+}
 
 base $7000089c
 main:
 //0x7000089c -- 0x70000907
 addiu sp, sp, 0xffffffe8
 sw ra, 0x14 (sp)
-jal makebootthread //(function_70000738)
+jal start_idle_thread //(function_70000738)
 sw a0, 0x18 (sp)
 jal function_7000AD30 //(function_7000ad30)
 sll $0, $0, 0x0
 jal function_7000ACF0 //(function_7000acf0)
 sll $0, $0, 0x0
-jal indiboard_thread //(function_70000790)
+jal start_rmon_thread //(function_70000790)
 sll $0, $0, 0x0
 jal function_7000A5C0 //(function_7000a5c0)
 sll $0, $0, 0x0
@@ -4769,7 +4776,7 @@ base $7000CE90
 function_7000CE90:
 
 base $7000CEA0
-function_7000CEA0:
+rmon_entry:
 
 base $7000CEA8
 function_7000CEA8:

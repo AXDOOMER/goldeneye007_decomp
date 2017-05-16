@@ -1,7 +1,12 @@
 00000000 rom_file_start
 00000000 rom_start
 8005d2e0 seg_bss_start
+8005d2e0 rmonthread
+8005d490 idlethread
 8005d640 mainthread
+8005d7f0 shedthread
+8005e530 audithread
+80060c90 debugthread
 8008e360 seg_bss_end
 80300000 seg_sp_start
 80300000 decompression_buffer
@@ -33,9 +38,10 @@
 70000674 .init_TLB_indicie_2_to_20
 700006f0 stack_init
 700006fc function_700006FC
-70000718 function_70000718
-70000738 makebootthread
-70000790 indiboard_thread
+70000718 idle_entry
+7000071c .infiniteloop
+70000738 start_idle_thread
+70000790 start_rmon_thread
 700007ec function_700007EC
 7000089c main
 70000908 setuplastentryofdebughandler
@@ -1107,7 +1113,7 @@
 7000ce10 function_7000CE10
 7000ce8c function_7000CE8C
 7000ce90 function_7000CE90
-7000cea0 function_7000CEA0
+7000cea0 rmon_entry
 7000cea8 function_7000CEA8
 7000ceb0 function_7000CEB0
 7000ceb8 function_7000CEB8
