@@ -1657,21 +1657,41 @@ sll $0, $0, 0x0
 
 base $70001B10
 function_70001B10:
+ lui    a0, $8002
+ ld     a0, $30e0(a0)
+ lui    at, $8002
+ dsll32   a2, a0, 63
+ dsll   a1, a0, 31
+ dsrl   a2, a2, 31
+ dsrl32   a1, a1, 32
+ dsll32   a0, a0, 44
+ or     a2, a2, a1
+ dsrl32   a0, a0, 32
+ xor    a2, a2, a0
+ dsrl   a0, a2, 20
+ andi   a0, a0, $0fff
+ xor    a0, a0, a2
+ dsll32   v0, a0, 32
+ sd     a0, $30e0(at)
+ jr     ra
+ dsra32   v0, v0, 32
 
-insert function_raw_to_tlb_entries, "boot.bin", (origin() - $1000), ($70001B60 - $70001B10)
+ nop
+ nop
+
 
 base $70001B60
 tlb_70001B60:
- dw $40802800
- dw $00000000
- dw $401A2000
- dw $3C1B8006
- dw $277BE4A4
- dw $8F7B0000
- dw $035BD021
- dw $8F5B0000
- dw $409B1000
- dw $00000000
+ mtc0   $0, PageMask
+ nop
+ mfc0   k0, Context
+ lui    k1, $8006
+ addiu  k1, k1, -$1b5c
+ lw     k1, $0(k1)
+ addu   k0, k0, k1
+ lw     k1, $0(k0)
+ mtc0   k1, EntryLo0
+ nop
 
 base $70001B88
 function_70001B88:
@@ -4813,9 +4833,9 @@ function_7000CF28:
 
 base $7000CF44
 function_7000CF44:
-
+insert boot_before_libultra, "boot.bin", (origin() - $1000), ($7000CF90 - $70001B88)
 include "../lib/libultra_rom.asm"
-insert binarybootcode, "boot.bin", (origin() - $1000)
+//insert binarybootcode, "boot.bin", (origin() - $1000)
 
 base origin()
 seg_boot_rom_end:

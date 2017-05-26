@@ -849,4 +849,4 @@ __osResetGlobalIntMask:
 
 base $70020D40
 osEPiRawWriteIo:
-
+insert undisassembled_libultra, "../code/boot.bin", (origin() - $1000), ($70020D90 - $7000CF90)
