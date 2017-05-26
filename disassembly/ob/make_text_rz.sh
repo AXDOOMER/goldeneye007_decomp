@@ -11,7 +11,7 @@ for DIRNAME in $DIRS ; do
 		bass -sym $FILENAME.sym $FILENAME.asm
 		#compress to zlib headerless format,
 		#gotta love *nix and pipes
-        cat $FILENAME.bin| gzip --no-name | tail --bytes=+11 | head --bytes=-8 > $FILENAME.rz
+        cat $FILENAME.bin| gzip --no-name --best | tail --bytes=+11 | head --bytes=-8 > $FILENAME.rz
 		#make include and asm for .rz
 		BASENAME=$(echo "$FILENAME" | cut -d "/" -f2)
 

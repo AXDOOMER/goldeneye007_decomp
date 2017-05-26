@@ -7,16 +7,16 @@ include "../code/bss.inc"
 include "../lib/N64.INC"
 include "../lib/enums.inc"
 base $80020D90
-rodata_start:
+seg_rodata_vaddr_start:
 
 rspcode_start:
 insert rsp.bin, "rsp.bin"
 rspcode_end:
 
- dword_80023040:
+rodata_80023040:
  dw $00
 
- dword_80023044:
+rodata_80023044:
  dw $02
 
 cart_hw_address:
@@ -43,7 +43,7 @@ debug_handler_table:
  debughandler(dh_main, sp_main, aMain)
  debughandler(dh_audi, sp_audi, aAudi)
 
- dword_8002307C:
+rodata_8002307C:
  dw $00
 
  dw $00, $00, $00, $00, $00
@@ -57,19 +57,19 @@ stderr_event_enabled:
 display_stderr_event:
  dw 0
 
- dword_800230A0:
+rodata_800230A0:
  dw 0x2AEA540
 
- dword_800230A4:
+rodata_800230A4:
  dw 0
 
- dword_800230A8:
+rodata_800230A8:
  dw 0
 
- dword_800230AC:
+rodata_800230AC:
  dw 0
 
- dword_800230B0:
+rodata_800230B0:
  dw 0
 
  float32 1.0
@@ -81,10 +81,10 @@ flt_800230BC:
  dw 0
  dw 0
 
- dword_800230CC:
+rodata_800230CC:
  dw 1
 
- dword_800230D0:
+rodata_800230D0:
  dw 0
 
 tlb_segment_num:
@@ -98,16 +98,16 @@ qword_800230E0:
  dw 0
  dw 0
 
- dword_800230F4:
+rodata_800230F4:
  dw 0
 
- dword_800230F8:
+rodata_800230F8:
  dw 0
 
- dword_800230FC:
+rodata_800230FC:
  dw 0
 
- dword_80023100:
+rodata_80023100:
  dw 6
  dw 0x00001900, 0x00000000, 0xA0, 0x2666, 0xFFFFD99A, 0x0, 0x0, 0x0
  dw 0x0, 0xA0, 0x140, 0x2666, 0xFFFFD99A, 0x2B84, 0x0, 0x0
@@ -119,7 +119,7 @@ stru_800231A4:
  dw 0x4000, 0, 0x1720, 0x32C8, 0xFFFFCD38, 0, 0x17C, 0xA
  dw 0x4500
 
- dword_800231C8:
+rodata_800231C8:
  dw 1
  dw 0
  dw 0
@@ -136,19 +136,19 @@ stru_800231D4:
  dw 4, 0xDB000000
  dw 4, 0xFFFFFFFF
 
- dword_80023224:
+rodata_80023224:
  dw 0
 
- dword_80023228:
+rodata_80023228:
  dw 0
 
- dword_8002322C:
+rodata_8002322C:
  dw 0
 
 counterforframes:
  dw 0
 
- dword_80023234:
+rodata_80023234:
  dw 1
  dw 0
  dw 0
@@ -3551,5 +3551,5 @@ rodata_80031F00:
 
 
 base $8005D2E0
-rodata_end:
+seg_rodata_vaddr_end:
 
