@@ -308,7 +308,6 @@ music_endoftheme:
 music_endoftheme_end:
 
 .include "obseg/ob_seg.s"
-
 .include "images/images.s"
 
 # PADDING region BE6D10-C00000 [192F0]
