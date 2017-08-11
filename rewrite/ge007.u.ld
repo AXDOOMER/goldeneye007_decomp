@@ -113,11 +113,11 @@ SECTIONS
       * (.framebuffer_1);
    }
 
-   /*move em to end, out of the way*/
    .framebuffer_2 0x803DA800 : {
       * (.framebuffer_2);
    }
 
+   /*move em to end, out of the way*/
    .MIPS.abiflags : {
       * (.MIPS.abiflags);
    }
