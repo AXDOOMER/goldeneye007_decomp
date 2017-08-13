@@ -13,7 +13,10 @@
 
 .section .c_data, "a"
 Compressedrodata:
-.incbin "bin/ge007.u.021990.Compressedrodata.bin"
+ # for now include existing compressed data
+ # when compress script works replace this with
+ #.space 0x11C00
+ .incbin "bin/ge007.u.021990.Compressedrodata.bin"
 Compressedrodata_end:
 
 .include "src/rarezip.s"
@@ -39,48 +42,9 @@ unknown2_end:
 unknown3:
 .incbin "bin/ge007.u.2AE280.unknown3.bin"
 unknown3_end:
-ramromusic_Dam_1:
-.incbin "bin/ge007.u.2AE840.ramromusic_Dam_1.bin"
-ramromusic_Dam_1_end:
-ramromusic_Dam_2:
-.incbin "bin/ge007.u.2C44D0.ramromusic_Dam_2.bin"
-ramromusic_Dam_2_end:
-ramromusic_Facility_1:
-.incbin "bin/ge007.u.2C64A0.ramromusic_Facility_1.bin"
-ramromusic_Facility_1_end:
-ramromusic_Facility_2:
-.incbin "bin/ge007.u.2C7F50.ramromusic_Facility_2.bin"
-ramromusic_Facility_2_end:
-ramromusic_Facility_3:
-.incbin "bin/ge007.u.2CA330.ramromusic_Facility_3.bin"
-ramromusic_Facility_3_end:
-ramromusic_Runway_1:
-.incbin "bin/ge007.u.2CBFA0.ramromusic_Runway_1.bin"
-ramromusic_Runway_1_end:
-ramromusic_Runway_2:
-.incbin "bin/ge007.u.2CE6F0.ramromusic_Runway_2.bin"
-ramromusic_Runway_2_end:
-ramromusic_BunkerI_1:
-.incbin "bin/ge007.u.2D1000.ramromusic_BunkerI_1.bin"
-ramromusic_BunkerI_1_end:
-ramromusic_BunkerI_2:
-.incbin "bin/ge007.u.2D4390.ramromusic_BunkerI_2.bin"
-ramromusic_BunkerI_2_end:
-ramromusic_Silo_1:
-.incbin "bin/ge007.u.2D9610.ramromusic_Silo_1.bin"
-ramromusic_Silo_1_end:
-ramromusic_Silo_2:
-.incbin "bin/ge007.u.2DB7A0.ramromusic_Silo_2.bin"
-ramromusic_Silo_2_end:
-ramromusic_Frigate_1:
-.incbin "bin/ge007.u.2DD770.ramromusic_Frigate_1.bin"
-ramromusic_Frigate_1_end:
-ramromusic_Frigate_2:
-.incbin "bin/ge007.u.2DF120.ramromusic_Frigate_2.bin"
-ramromusic_Frigate_2_end:
-ramromusic_Train:
-.incbin "bin/ge007.u.2E2600.ramromusic_Train.bin"
-ramromusic_Train_end:
+
+.include "ramrom/ramrom.s"
+
 font_first_font_table_controller_small:
 .incbin "bin/ge007.u.2E63F0.font_first_font_table_controller_small.bin"
 font_first_font_table_controller_small_end:
