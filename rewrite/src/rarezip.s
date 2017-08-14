@@ -4,7 +4,7 @@
 decompress.buildtable:
 /* 033590 70200000 27BDFA10 */  addiu $sp, $sp, -0x5f0
 /* 033594 70200004 AFB20010 */  sw    $s2, 0x10($sp)
-/* 033598 70200008 00809025 */  move  $s2, $a0
+/* 033598 70200008 00809025 */  or    $s2, $a0, $zero
 /* 03359C 7020000C AFBF002C */  sw    $ra, 0x2c($sp)
 /* 0335A0 70200010 AFBE0028 */  sw    $fp, 0x28($sp)
 /* 0335A4 70200014 AFB70024 */  sw    $s7, 0x24($sp)
@@ -28,9 +28,9 @@ decompress.buildtable:
 /* 0335E8 70200058 AC60FFF0 */  sw    $zero, -0x10($v1)
 /* 0335EC 7020005C 30A20003 */  andi  $v0, $a1, 3
 /* 0335F0 70200060 00021023 */  negu  $v0, $v0
-/* 0335F4 70200064 0240F825 */  move  $ra, $s2
+/* 0335F4 70200064 0240F825 */  or    $ra, $s2, $zero
 /* 0335F8 70200068 1040000D */  beqz  $v0, .Ldecompress.buildtable_A0
-/* 0335FC 7020006C 00A08025 */  move  $s0, $a1
+/* 0335FC 7020006C 00A08025 */  or    $s0, $a1, $zero
 /* 033600 70200070 00451821 */  addu  $v1, $v0, $a1
 /* 033604 70200074 27A405A8 */  addiu $a0, $sp, 0x5a8
 .Ldecompress.buildtable_78:
@@ -82,7 +82,7 @@ decompress.buildtable:
 /* 0336B0 70200120 27A805AC */  addiu $t0, $sp, 0x5ac
 /* 0336B4 70200124 8FB60604 */  lw    $s6, 0x604($sp)
 /* 0336B8 70200128 8FA60608 */  lw    $a2, 0x608($sp)
-/* 0336BC 7020012C 00001025 */  move  $v0, $zero
+/* 0336BC 7020012C 00001025 */  or    $v0, $zero, $zero
 /* 0336C0 70200130 AEC00000 */  sw    $zero, ($s6)
 /* 0336C4 70200134 1000013B */  b     .Ldecompress.buildtable_624
 /* 0336C8 70200138 ACC00000 */  sw    $zero, ($a2)
@@ -99,8 +99,8 @@ decompress.buildtable:
 /* 0336EC 7020015C 0227082B */  sltu  $at, $s1, $a3
 .Ldecompress.buildtable_160:
 /* 0336F0 70200160 10200002 */  beqz  $at, .Ldecompress.buildtable_16C
-/* 0336F4 70200164 00E0A825 */  move  $s5, $a3
-/* 0336F8 70200168 00E08825 */  move  $s1, $a3
+/* 0336F4 70200164 00E0A825 */  or    $s5, $a3, $zero
+/* 0336F8 70200168 00E08825 */  or    $s1, $a3, $zero
 .Ldecompress.buildtable_16C:
 /* 0336FC 7020016C 24100010 */  addiu $s0, $zero, 0x10
 /* 033700 70200170 27A205E8 */  addiu $v0, $sp, 0x5e8
@@ -115,7 +115,7 @@ decompress.buildtable:
 .Ldecompress.buildtable_190:
 /* 033720 70200190 10200002 */  beqz  $at, .Ldecompress.buildtable_19C
 /* 033724 70200194 AFB005A0 */  sw    $s0, 0x5a0($sp)
-/* 033728 70200198 02008825 */  move  $s1, $s0
+/* 033728 70200198 02008825 */  or    $s1, $s0, $zero
 .Ldecompress.buildtable_19C:
 /* 03372C 7020019C 24190001 */  addiu $t9, $zero, 1
 /* 033730 702001A0 00F0082B */  sltu  $at, $a3, $s0
@@ -132,11 +132,11 @@ decompress.buildtable:
 /* 033758 702001C8 00781823 */  subu  $v1, $v1, $t8
 /* 03375C 702001CC 0003C840 */  sll   $t9, $v1, 1
 /* 033760 702001D0 1420FFFA */  bnez  $at, .Ldecompress.buildtable_1BC
-/* 033764 702001D4 03201825 */  move  $v1, $t9
+/* 033764 702001D4 03201825 */  or    $v1, $t9, $zero
 .Ldecompress.buildtable_1D8:
 /* 033768 702001D8 8C480000 */  lw    $t0, ($v0)
 /* 03376C 702001DC 2610FFFF */  addiu $s0, $s0, -1
-/* 033770 702001E0 00003825 */  move  $a3, $zero
+/* 033770 702001E0 00003825 */  or    $a3, $zero, $zero
 /* 033774 702001E4 00681823 */  subu  $v1, $v1, $t0
 /* 033778 702001E8 01037021 */  addu  $t6, $t0, $v1
 /* 03377C 702001EC AC4E0000 */  sw    $t6, ($v0)
@@ -185,8 +185,8 @@ decompress.buildtable:
 /* 03381C 7020028C ACC7FFFC */  sw    $a3, -4($a2)
 .Ldecompress.buildtable_290:
 /* 033820 70200290 8FAB05F4 */  lw    $t3, 0x5f4($sp)
-/* 033824 70200294 0240F825 */  move  $ra, $s2
-/* 033828 70200298 00008025 */  move  $s0, $zero
+/* 033824 70200294 0240F825 */  or    $ra, $s2, $zero
+/* 033828 70200298 00008025 */  or    $s0, $zero, $zero
 /* 03382C 7020029C 27A900BC */  addiu $t1, $sp, 0xbc
 /* 033830 702002A0 27A60074 */  addiu $a2, $sp, 0x74
 /* 033834 702002A4 8FE70000 */  lw    $a3, ($ra)
@@ -208,16 +208,16 @@ decompress.buildtable:
 /* 03386C 702002DC 8FE70000 */  lw    $a3, ($ra)
 /* 033870 702002E0 8FB905A0 */  lw    $t9, 0x5a0($sp)
 /* 033874 702002E4 AFA3006C */  sw    $v1, 0x6c($sp)
-/* 033878 702002E8 00008025 */  move  $s0, $zero
+/* 033878 702002E8 00008025 */  or    $s0, $zero, $zero
 /* 03387C 702002EC 0335082A */  slt   $at, $t9, $s5
 /* 033880 702002F0 AFA00074 */  sw    $zero, 0x74($sp)
-/* 033884 702002F4 0120F825 */  move  $ra, $t1
+/* 033884 702002F4 0120F825 */  or    $ra, $t1, $zero
 /* 033888 702002F8 240CFFFF */  addiu $t4, $zero, -1
 /* 03388C 702002FC 00115023 */  negu  $t2, $s1
 /* 033890 70200300 AFA0053C */  sw    $zero, 0x53c($sp)
-/* 033894 70200304 00003025 */  move  $a2, $zero
+/* 033894 70200304 00003025 */  or    $a2, $zero, $zero
 /* 033898 70200308 142000BF */  bnez  $at, .Ldecompress.buildtable_608
-/* 03389C 7020030C 00004025 */  move  $t0, $zero
+/* 03389C 7020030C 00004025 */  or    $t0, $zero, $zero
 /* 0338A0 70200310 00157080 */  sll   $t6, $s5, 2
 /* 0338A4 70200314 27AF05A8 */  addiu $t7, $sp, 0x5a8
 /* 0338A8 70200318 01CFC021 */  addu  $t8, $t6, $t7
@@ -235,7 +235,7 @@ decompress.buildtable:
 /* 0338D4 70200344 8F370000 */  lw    $s7, ($t9)
 /* 0338D8 70200348 27AE0074 */  addiu $t6, $sp, 0x74
 /* 0338DC 7020034C 000FC080 */  sll   $t8, $t7, 2
-/* 0338E0 70200350 02E02825 */  move  $a1, $s7
+/* 0338E0 70200350 02E02825 */  or    $a1, $s7, $zero
 /* 0338E4 70200354 12E000A4 */  beqz  $s7, .Ldecompress.buildtable_5E8
 /* 0338E8 70200358 26F7FFFF */  addiu $s7, $s7, -1
 /* 0338EC 7020035C 01AE5821 */  addu  $t3, $t5, $t6
@@ -262,15 +262,15 @@ decompress.buildtable:
 /* 033938 702003A8 25290004 */  addiu $t1, $t1, 4
 /* 03393C 702003AC 256B0004 */  addiu $t3, $t3, 4
 /* 033940 702003B0 10200002 */  beqz  $at, .Ldecompress.buildtable_3BC
-/* 033944 702003B4 00605025 */  move  $t2, $v1
-/* 033948 702003B8 02204025 */  move  $t0, $s1
+/* 033944 702003B4 00605025 */  or    $t2, $v1, $zero
+/* 033948 702003B8 02204025 */  or    $t0, $s1, $zero
 .Ldecompress.buildtable_3BC:
 /* 03394C 702003BC 02AA1023 */  subu  $v0, $s5, $t2
 /* 033950 702003C0 240F0001 */  addiu $t7, $zero, 1
 /* 033954 702003C4 004F2004 */  sllv  $a0, $t7, $v0
 /* 033958 702003C8 0244082B */  sltu  $at, $s2, $a0
 /* 03395C 702003CC 10200013 */  beqz  $at, .Ldecompress.buildtable_41C
-/* 033960 702003D0 00403825 */  move  $a3, $v0
+/* 033960 702003D0 00403825 */  or    $a3, $v0, $zero
 /* 033964 702003D4 24470001 */  addiu $a3, $v0, 1
 /* 033968 702003D8 00971823 */  subu  $v1, $a0, $s7
 /* 03396C 702003DC 0015C880 */  sll   $t9, $s5, 2
@@ -305,7 +305,7 @@ decompress.buildtable:
 /* 0339D4 70200444 AEC40000 */  sw    $a0, ($s6)
 /* 0339D8 70200448 ACC00004 */  sw    $zero, 4($a2)
 /* 0339DC 7020044C 24D60004 */  addiu $s6, $a2, 4
-/* 0339E0 70200450 00803025 */  move  $a2, $a0
+/* 0339E0 70200450 00803025 */  or    $a2, $a0, $zero
 /* 0339E4 70200454 1180000F */  beqz  $t4, .Ldecompress.buildtable_494
 /* 0339E8 70200458 AD240000 */  sw    $a0, ($t1)
 /* 0339EC 7020045C AD700000 */  sw    $s0, ($t3)
@@ -400,12 +400,12 @@ decompress.buildtable:
 /* 033B28 70200598 02078026 */  xor   $s0, $s0, $a3
 /* 033B2C 7020059C 0219C024 */  and   $t8, $s0, $t9
 /* 033B30 702005A0 1700FFFC */  bnez  $t8, .Ldecompress.buildtable_594
-/* 033B34 702005A4 03203825 */  move  $a3, $t9
+/* 033B34 702005A4 03203825 */  or    $a3, $t9, $zero
 .Ldecompress.buildtable_5A8:
 /* 033B38 702005A8 02078026 */  xor   $s0, $s0, $a3
 /* 033B3C 702005AC 02057024 */  and   $t6, $s0, $a1
 /* 033B40 702005B0 11C2000B */  beq   $t6, $v0, .Ldecompress.buildtable_5E0
-/* 033B44 702005B4 02E02825 */  move  $a1, $s7
+/* 033B44 702005B4 02E02825 */  or    $a1, $s7, $zero
 .Ldecompress.buildtable_5B8:
 /* 033B48 702005B8 01515023 */  subu  $t2, $t2, $s1
 /* 033B4C 702005BC 240F0001 */  addiu $t7, $zero, 1
@@ -433,7 +433,7 @@ decompress.buildtable:
 /* 033B98 70200608 8FA2006C */  lw    $v0, 0x6c($sp)
 /* 033B9C 7020060C 0002782B */  sltu  $t7, $zero, $v0
 /* 033BA0 70200610 11E00004 */  beqz  $t7, .Ldecompress.buildtable_624
-/* 033BA4 70200614 01E01025 */  move  $v0, $t7
+/* 033BA4 70200614 01E01025 */  or    $v0, $t7, $zero
 /* 033BA8 70200618 8FA205A0 */  lw    $v0, 0x5a0($sp)
 /* 033BAC 7020061C 38590001 */  xori  $t9, $v0, 1
 /* 033BB0 70200620 0019102B */  sltu  $v0, $zero, $t9
@@ -460,8 +460,8 @@ decompress.inflate:
 /* 033BF4 70200664 AFB00004 */  sw    $s0, 4($sp)
 /* 033BF8 70200668 00067040 */  sll   $t6, $a2, 1
 /* 033BFC 7020066C 0007C040 */  sll   $t8, $a3, 1
-/* 033C00 70200670 00C08025 */  move  $s0, $a2
-/* 033C04 70200674 00E08825 */  move  $s1, $a3
+/* 033C00 70200670 00C08025 */  or    $s0, $a2, $zero
+/* 033C04 70200674 00E08825 */  or    $s1, $a3, $zero
 /* 033C08 70200678 3C097020 */  lui   $t1, 0x7020
 /* 033C0C 7020067C 3C087020 */  lui   $t0, 0x7020
 /* 033C10 70200680 3C037020 */  lui   $v1, 0x7020
@@ -662,12 +662,12 @@ decompress.inflate:
 /* 033ED0 70200940 01E97024 */  and   $t6, $t7, $t1
 /* 033ED4 70200944 032E1023 */  subu  $v0, $t9, $t6
 /* 033ED8 70200948 00894806 */  srlv  $t1, $t1, $a0
-/* 033EDC 7020094C 01402025 */  move  $a0, $t2
+/* 033EDC 7020094C 01402025 */  or    $a0, $t2, $zero
 .Ldecompress.inflate_2FC:
 /* 033EE0 70200950 30920003 */  andi  $s2, $a0, 3
 /* 033EE4 70200954 00129023 */  negu  $s2, $s2
 /* 033EE8 70200958 1240000D */  beqz  $s2, .Ldecompress.inflate_33C
-/* 033EEC 7020095C 00005025 */  move  $t2, $zero
+/* 033EEC 7020095C 00005025 */  or    $t2, $zero, $zero
 /* 033EF0 70200960 02442821 */  addu  $a1, $s2, $a0
 .Ldecompress.inflate_310:
 /* 033EF4 70200964 8CD20000 */  lw    $s2, ($a2)
@@ -714,7 +714,7 @@ decompress.inflate:
 /* 033F94 70200A04 A32F0000 */  sb    $t7, ($t9)
 .Ldecompress.inflate_3B4:
 /* 033F98 70200A08 5540FFD1 */  bnezl $t2, .Ldecompress.inflate_2FC
-/* 033F9C 70200A0C 01402025 */  move  $a0, $t2
+/* 033F9C 70200A0C 01402025 */  or    $a0, $t2, $zero
 /* 033FA0 70200A10 1000FF2B */  b     .Ldecompress.inflate_6C
 /* 033FA4 70200A14 0110082B */  sltu  $at, $t0, $s0
 .Ldecompress.inflate_3C4:
@@ -729,7 +729,7 @@ decompress.inflate:
 /* 033FC8 70200A38 AC281568 */  sw    $t0, %lo(0x70201568)($at) # $t0, 0x1568($at)
 /* 033FCC 70200A3C 27BD0010 */  addiu $sp, $sp, 0x10
 /* 033FD0 70200A40 03E00008 */  jr    $ra
-/* 033FD4 70200A44 00001025 */  move  $v0, $zero
+/* 033FD4 70200A44 00001025 */  or    $v0, $zero, $zero
 # end decompress.inflate
 
 decompress.type0:
@@ -770,7 +770,7 @@ decompress.type0:
 /* 034058 70200AC8 2C810010 */  sltiu $at, $a0, 0x10
 /* 03405C 70200ACC 256B1488 */  addiu $t3, $t3, 0x1488
 /* 034060 70200AD0 1020000D */  beqz  $at, .Ldecompress.type0_C0
-/* 034064 70200AD4 01A01825 */  move  $v1, $t5
+/* 034064 70200AD4 01A01825 */  or    $v1, $t5, $zero
 /* 034068 70200AD8 3C067020 */  lui   $a2, 0x7020
 /* 03406C 70200ADC 8CC61480 */  lw    $a2, 0x1480($a2)
 .Ldecompress.type0_98:
@@ -785,9 +785,9 @@ decompress.type0:
 /* 034090 70200B00 1420FFF7 */  bnez  $at, .Ldecompress.type0_98
 /* 034094 70200B04 00781825 */  or    $v1, $v1, $t8
 .Ldecompress.type0_C0:
-/* 034098 70200B08 00403025 */  move  $a2, $v0
+/* 034098 70200B08 00403025 */  or    $a2, $v0, $zero
 /* 03409C 70200B0C 00036C02 */  srl   $t5, $v1, 0x10
-/* 0340A0 70200B10 01A01825 */  move  $v1, $t5
+/* 0340A0 70200B10 01A01825 */  or    $v1, $t5, $zero
 /* 0340A4 70200B14 2484FFF0 */  addiu $a0, $a0, -0x10
 /* 0340A8 70200B18 1040001B */  beqz  $v0, .Ldecompress.type0_140
 /* 0340AC 70200B1C 2442FFFF */  addiu $v0, $v0, -1
@@ -811,12 +811,12 @@ decompress.type0:
 /* 0340EC 70200B5C 00781825 */  or    $v1, $v1, $t8
 .Ldecompress.type0_118:
 /* 0340F0 70200B60 8D8D0000 */  lw    $t5, ($t4)
-/* 0340F4 70200B64 00403025 */  move  $a2, $v0
+/* 0340F4 70200B64 00403025 */  or    $a2, $v0, $zero
 /* 0340F8 70200B68 00037A02 */  srl   $t7, $v1, 8
 /* 0340FC 70200B6C 01A57021 */  addu  $t6, $t5, $a1
 /* 034100 70200B70 A1C30000 */  sb    $v1, ($t6)
 /* 034104 70200B74 24A50001 */  addiu $a1, $a1, 1
-/* 034108 70200B78 01E01825 */  move  $v1, $t7
+/* 034108 70200B78 01E01825 */  or    $v1, $t7, $zero
 /* 03410C 70200B7C 2484FFF8 */  addiu $a0, $a0, -8
 /* 034110 70200B80 1440FFE9 */  bnez  $v0, .Ldecompress.type0_E0
 /* 034114 70200B84 2442FFFF */  addiu $v0, $v0, -1
@@ -825,7 +825,7 @@ decompress.type0:
 /* 03411C 70200B8C AD030000 */  sw    $v1, ($t0)
 /* 034120 70200B90 AD240000 */  sw    $a0, ($t1)
 /* 034124 70200B94 03E00008 */  jr    $ra
-/* 034128 70200B98 00001025 */  move  $v0, $zero
+/* 034128 70200B98 00001025 */  or    $v0, $zero, $zero
 # end decompress.type0
 
 decompress.type1:
@@ -916,7 +916,7 @@ decompress.type1:
 /* 03425C 70200CCC 27A4002C */  addiu $a0, $sp, 0x2c
 /* 034260 70200CD0 2405001E */  addiu $a1, $zero, 0x1e
 /* 034264 70200CD4 0C080000 */  jal   decompress.buildtable
-/* 034268 70200CD8 00003025 */  move  $a2, $zero
+/* 034268 70200CD8 00003025 */  or    $a2, $zero, $zero
 /* 03426C 70200CDC 8FA404B8 */  lw    $a0, 0x4b8($sp)
 /* 034270 70200CE0 8FA504B4 */  lw    $a1, 0x4b4($sp)
 /* 034274 70200CE4 8FA604B0 */  lw    $a2, 0x4b0($sp)
@@ -924,7 +924,7 @@ decompress.type1:
 /* 03427C 70200CEC 8FA704AC */  lw    $a3, 0x4ac($sp)
 /* 034280 70200CF0 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 034284 70200CF4 27BD04C0 */  addiu $sp, $sp, 0x4c0
-/* 034288 70200CF8 00001025 */  move  $v0, $zero
+/* 034288 70200CF8 00001025 */  or    $v0, $zero, $zero
 /* 03428C 70200CFC 03E00008 */  jr    $ra
 /* 034290 70200D00 00000000 */  nop   
 # end decompress.type1
@@ -964,7 +964,7 @@ decompress.type2:
 /* 034308 70200D78 254A1488 */  addiu $t2, $t2, 0x1488
 /* 03430C 70200D7C AFAF053C */  sw    $t7, 0x53c($sp)
 /* 034310 70200D80 1020000D */  beqz  $at, .Ldecompress.type2_B4
-/* 034314 70200D84 03004825 */  move  $t1, $t8
+/* 034314 70200D84 03004825 */  or    $t1, $t8, $zero
 /* 034318 70200D88 3C037020 */  lui   $v1, 0x7020
 /* 03431C 70200D8C 8C631480 */  lw    $v1, 0x1480($v1)
 .Ldecompress.type2_8C:
@@ -986,7 +986,7 @@ decompress.type2:
 /* 034358 70200DC8 2D010004 */  sltiu $at, $t0, 4
 /* 03435C 70200DCC AFAE0538 */  sw    $t6, 0x538($sp)
 /* 034360 70200DD0 1020000D */  beqz  $at, .Ldecompress.type2_104
-/* 034364 70200DD4 01E04825 */  move  $t1, $t7
+/* 034364 70200DD4 01E04825 */  or    $t1, $t7, $zero
 /* 034368 70200DD8 3C037020 */  lui   $v1, 0x7020
 /* 03436C 70200DDC 8C631480 */  lw    $v1, 0x1480($v1)
 .Ldecompress.type2_DC:
@@ -1004,10 +1004,10 @@ decompress.type2:
 /* 034398 70200E08 3126000F */  andi  $a2, $t1, 0xf
 /* 03439C 70200E0C 24C60004 */  addiu $a2, $a2, 4
 /* 0343A0 70200E10 0009C102 */  srl   $t8, $t1, 4
-/* 0343A4 70200E14 03004825 */  move  $t1, $t8
+/* 0343A4 70200E14 03004825 */  or    $t1, $t8, $zero
 /* 0343A8 70200E18 2508FFFC */  addiu $t0, $t0, -4
 /* 0343AC 70200E1C 10C0001D */  beqz  $a2, .Ldecompress.type2_190
-/* 0343B0 70200E20 00002025 */  move  $a0, $zero
+/* 0343B0 70200E20 00002025 */  or    $a0, $zero, $zero
 /* 0343B4 70200E24 3C057020 */  lui   $a1, 0x7020
 /* 0343B8 70200E28 24A51494 */  addiu $a1, $a1, 0x1494
 /* 0343BC 70200E2C 27B00040 */  addiu $s0, $sp, 0x40
@@ -1036,7 +1036,7 @@ decompress.type2:
 /* 03440C 70200E7C 020FC021 */  addu  $t8, $s0, $t7
 /* 034410 70200E80 000970C2 */  srl   $t6, $t1, 3
 /* 034414 70200E84 AF190000 */  sw    $t9, ($t8)
-/* 034418 70200E88 01C04825 */  move  $t1, $t6
+/* 034418 70200E88 01C04825 */  or    $t1, $t6, $zero
 /* 03441C 70200E8C 1486FFE8 */  bne   $a0, $a2, .Ldecompress.type2_12C
 /* 034420 70200E90 2508FFFD */  addiu $t0, $t0, -3
 .Ldecompress.type2_190:
@@ -1063,10 +1063,10 @@ decompress.type2:
 /* 03446C 70200EDC AFAF0548 */  sw    $t7, 0x548($sp)
 /* 034470 70200EE0 AFB80018 */  sw    $t8, 0x18($sp)
 /* 034474 70200EE4 AFB90014 */  sw    $t9, 0x14($sp)
-/* 034478 70200EE8 02002025 */  move  $a0, $s0
+/* 034478 70200EE8 02002025 */  or    $a0, $s0, $zero
 /* 03447C 70200EEC 24050013 */  addiu $a1, $zero, 0x13
 /* 034480 70200EF0 24060013 */  addiu $a2, $zero, 0x13
-/* 034484 70200EF4 00003825 */  move  $a3, $zero
+/* 034484 70200EF4 00003825 */  or    $a3, $zero, $zero
 /* 034488 70200EF8 AFA00010 */  sw    $zero, 0x10($sp)
 /* 03448C 70200EFC AFA80534 */  sw    $t0, 0x534($sp)
 /* 034490 70200F00 0C080000 */  jal   decompress.buildtable
@@ -1083,9 +1083,9 @@ decompress.type2:
 /* 0344BC 70200F2C 8FA80534 */  lw    $t0, 0x534($sp)
 /* 0344C0 70200F30 8FA90530 */  lw    $t1, 0x530($sp)
 /* 0344C4 70200F34 956B156C */  lhu   $t3, 0x156c($t3)
-/* 0344C8 70200F38 00003025 */  move  $a2, $zero
+/* 0344C8 70200F38 00003025 */  or    $a2, $zero, $zero
 /* 0344CC 70200F3C 10E0008A */  beqz  $a3, .Ldecompress.type2_464
-/* 0344D0 70200F40 00002825 */  move  $a1, $zero
+/* 0344D0 70200F40 00002825 */  or    $a1, $zero, $zero
 /* 0344D4 70200F44 240D0011 */  addiu $t5, $zero, 0x11
 /* 0344D8 70200F48 240C0010 */  addiu $t4, $zero, 0x10
 /* 0344DC 70200F4C 8FAE0548 */  lw    $t6, 0x548($sp)
@@ -1122,7 +1122,7 @@ decompress.type2:
 /* 03454C 70200FBC 2C810010 */  sltiu $at, $a0, 0x10
 /* 034550 70200FC0 10200005 */  beqz  $at, .Ldecompress.type2_2D4
 /* 034554 70200FC4 00000000 */  nop   
-/* 034558 70200FC8 00803025 */  move  $a2, $a0
+/* 034558 70200FC8 00803025 */  or    $a2, $a0, $zero
 /* 03455C 70200FCC AF040000 */  sw    $a0, ($t8)
 /* 034560 70200FD0 10000062 */  b     .Ldecompress.type2_458
 /* 034564 70200FD4 24A50001 */  addiu $a1, $a1, 1
@@ -1146,16 +1146,16 @@ decompress.type2:
 .Ldecompress.type2_310:
 /* 0345A4 70201014 31240003 */  andi  $a0, $t1, 3
 /* 0345A8 70201018 24840003 */  addiu $a0, $a0, 3
-/* 0345AC 7020101C 00801825 */  move  $v1, $a0
+/* 0345AC 7020101C 00801825 */  or    $v1, $a0, $zero
 /* 0345B0 70201020 00097082 */  srl   $t6, $t1, 2
-/* 0345B4 70201024 01C04825 */  move  $t1, $t6
+/* 0345B4 70201024 01C04825 */  or    $t1, $t6, $zero
 /* 0345B8 70201028 2508FFFE */  addiu $t0, $t0, -2
 /* 0345BC 7020102C 1080004B */  beqz  $a0, .Ldecompress.type2_458
 /* 0345C0 70201030 2484FFFF */  addiu $a0, $a0, -1
 /* 0345C4 70201034 00057880 */  sll   $t7, $a1, 2
 /* 0345C8 70201038 020F1021 */  addu  $v0, $s0, $t7
 .Ldecompress.type2_338:
-/* 0345CC 7020103C 00801825 */  move  $v1, $a0
+/* 0345CC 7020103C 00801825 */  or    $v1, $a0, $zero
 /* 0345D0 70201040 AC460000 */  sw    $a2, ($v0)
 /* 0345D4 70201044 24A50001 */  addiu $a1, $a1, 1
 /* 0345D8 70201048 24420004 */  addiu $v0, $v0, 4
@@ -1165,7 +1165,7 @@ decompress.type2:
 /* 0345E8 70201058 00A7082B */  sltu  $at, $a1, $a3
 .Ldecompress.type2_358:
 /* 0345EC 7020105C 148D0021 */  bne   $a0, $t5, .Ldecompress.type2_3E0
-/* 0345F0 70201060 00003025 */  move  $a2, $zero
+/* 0345F0 70201060 00003025 */  or    $a2, $zero, $zero
 /* 0345F4 70201064 2D010003 */  sltiu $at, $t0, 3
 /* 0345F8 70201068 1020000C */  beqz  $at, .Ldecompress.type2_398
 /* 0345FC 7020106C 3C037020 */  lui   $v1, 0x7020
@@ -1184,16 +1184,16 @@ decompress.type2:
 .Ldecompress.type2_398:
 /* 03462C 7020109C 31240007 */  andi  $a0, $t1, 7
 /* 034630 702010A0 24840003 */  addiu $a0, $a0, 3
-/* 034634 702010A4 00801825 */  move  $v1, $a0
+/* 034634 702010A4 00801825 */  or    $v1, $a0, $zero
 /* 034638 702010A8 0009C8C2 */  srl   $t9, $t1, 3
-/* 03463C 702010AC 03204825 */  move  $t1, $t9
+/* 03463C 702010AC 03204825 */  or    $t1, $t9, $zero
 /* 034640 702010B0 2508FFFD */  addiu $t0, $t0, -3
 /* 034644 702010B4 10800029 */  beqz  $a0, .Ldecompress.type2_458
 /* 034648 702010B8 2484FFFF */  addiu $a0, $a0, -1
 /* 03464C 702010BC 0005C080 */  sll   $t8, $a1, 2
 /* 034650 702010C0 02181021 */  addu  $v0, $s0, $t8
 .Ldecompress.type2_3C0:
-/* 034654 702010C4 00801825 */  move  $v1, $a0
+/* 034654 702010C4 00801825 */  or    $v1, $a0, $zero
 /* 034658 702010C8 AC400000 */  sw    $zero, ($v0)
 /* 03465C 702010CC 24A50001 */  addiu $a1, $a1, 1
 /* 034660 702010D0 24420004 */  addiu $v0, $v0, 4
@@ -1220,16 +1220,16 @@ decompress.type2:
 .Ldecompress.type2_418:
 /* 0346AC 7020111C 3124007F */  andi  $a0, $t1, 0x7f
 /* 0346B0 70201120 2484000B */  addiu $a0, $a0, 0xb
-/* 0346B4 70201124 00801825 */  move  $v1, $a0
+/* 0346B4 70201124 00801825 */  or    $v1, $a0, $zero
 /* 0346B8 70201128 000971C2 */  srl   $t6, $t1, 7
-/* 0346BC 7020112C 01C04825 */  move  $t1, $t6
+/* 0346BC 7020112C 01C04825 */  or    $t1, $t6, $zero
 /* 0346C0 70201130 2508FFF9 */  addiu $t0, $t0, -7
 /* 0346C4 70201134 10800009 */  beqz  $a0, .Ldecompress.type2_458
 /* 0346C8 70201138 2484FFFF */  addiu $a0, $a0, -1
 /* 0346CC 7020113C 00057880 */  sll   $t7, $a1, 2
 /* 0346D0 70201140 020F1021 */  addu  $v0, $s0, $t7
 .Ldecompress.type2_440:
-/* 0346D4 70201144 00801825 */  move  $v1, $a0
+/* 0346D4 70201144 00801825 */  or    $v1, $a0, $zero
 /* 0346D8 70201148 AC400000 */  sw    $zero, ($v0)
 /* 0346DC 7020114C 24A50001 */  addiu $a1, $a1, 1
 /* 0346E0 70201150 24420004 */  addiu $v0, $v0, 4
@@ -1256,7 +1256,7 @@ decompress.type2:
 /* 034728 70201198 AFAE0014 */  sw    $t6, 0x14($sp)
 /* 03472C 7020119C 24E714A8 */  addiu $a3, $a3, 0x14a8
 /* 034730 702011A0 AFB80010 */  sw    $t8, 0x10($sp)
-/* 034734 702011A4 02002025 */  move  $a0, $s0
+/* 034734 702011A4 02002025 */  or    $a0, $s0, $zero
 /* 034738 702011A8 8FA5053C */  lw    $a1, 0x53c($sp)
 /* 03473C 702011AC 24060101 */  addiu $a2, $zero, 0x101
 /* 034740 702011B0 0C080000 */  jal   decompress.buildtable
@@ -1278,7 +1278,7 @@ decompress.type2:
 /* 034780 702011F0 020E2021 */  addu  $a0, $s0, $t6
 /* 034784 702011F4 8FA50538 */  lw    $a1, 0x538($sp)
 /* 034788 702011F8 0C080000 */  jal   decompress.buildtable
-/* 03478C 702011FC 00003025 */  move  $a2, $zero
+/* 03478C 702011FC 00003025 */  or    $a2, $zero, $zero
 /* 034790 70201200 8FA40550 */  lw    $a0, 0x550($sp)
 /* 034794 70201204 8FA5054C */  lw    $a1, 0x54c($sp)
 /* 034798 70201208 8FA60548 */  lw    $a2, 0x548($sp)
@@ -1288,7 +1288,7 @@ decompress.type2:
 /* 0347A8 70201218 8FB00028 */  lw    $s0, 0x28($sp)
 /* 0347AC 7020121C 27BD0568 */  addiu $sp, $sp, 0x568
 /* 0347B0 70201220 03E00008 */  jr    $ra
-/* 0347B4 70201224 00001025 */  move  $v0, $zero
+/* 0347B4 70201224 00001025 */  or    $v0, $zero, $zero
 # end decompress.type2
 
 decompress.table:
@@ -1299,7 +1299,7 @@ decompress.table:
 /* 0347C8 70201238 25081564 */  addiu $t0, $t0, 0x1564
 /* 0347CC 7020123C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0347D0 70201240 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0347D4 70201244 00803825 */  move  $a3, $a0
+/* 0347D4 70201244 00803825 */  or    $a3, $a0, $zero
 /* 0347D8 70201248 1460000E */  bnez  $v1, .Ldecompress.table_5C
 /* 0347DC 7020124C 8D050000 */  lw    $a1, ($t0)
 /* 0347E0 70201250 3C067020 */  lui   $a2, 0x7020
@@ -1325,7 +1325,7 @@ decompress.table:
 /* 034828 70201298 24841488 */  addiu $a0, $a0, 0x1488
 /* 03482C 7020129C ACEA0000 */  sw    $t2, ($a3)
 /* 034830 702012A0 1020000D */  beqz  $at, .Ldecompress.table_B0
-/* 034834 702012A4 01602825 */  move  $a1, $t3
+/* 034834 702012A4 01602825 */  or    $a1, $t3, $zero
 /* 034838 702012A8 3C067020 */  lui   $a2, 0x7020
 /* 03483C 702012AC 8CC61480 */  lw    $a2, 0x1480($a2)
 .Ldecompress.table_88:
@@ -1389,13 +1389,13 @@ decompress.start:
 /* 034904 70201374 3C107020 */  lui   $s0, 0x7020
 /* 034908 70201378 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 03490C 7020137C AC201564 */  sw    $zero, %lo(0x70201564)($at) # $zero, 0x1564($at)
-/* 034910 70201380 00008825 */  move  $s1, $zero
+/* 034910 70201380 00008825 */  or    $s1, $zero, $zero
 /* 034914 70201384 26101598 */  addiu $s0, $s0, 0x1598
 /* 034918 70201388 27B30034 */  addiu $s3, $sp, 0x34
 /* 03491C 7020138C AE000000 */  sw    $zero, ($s0)
 .Ldecompress.start_48:
 /* 034920 70201390 0C08048A */  jal   decompress.table
-/* 034924 70201394 02602025 */  move  $a0, $s3
+/* 034924 70201394 02602025 */  or    $a0, $s3, $zero
 /* 034928 70201398 10400003 */  beqz  $v0, .Ldecompress.start_60
 /* 03492C 7020139C 8FAE0034 */  lw    $t6, 0x34($sp)
 /* 034930 702013A0 10000018 */  b     .Ldecompress.start_BC
@@ -1405,7 +1405,7 @@ decompress.start:
 /* 03493C 702013AC 0222082B */  sltu  $at, $s1, $v0
 /* 034940 702013B0 10200002 */  beqz  $at, .Ldecompress.start_74
 /* 034944 702013B4 00000000 */  nop   
-/* 034948 702013B8 00408825 */  move  $s1, $v0
+/* 034948 702013B8 00408825 */  or    $s1, $v0, $zero
 .Ldecompress.start_74:
 /* 03494C 702013BC 51C0FFF4 */  beql  $t6, $zero, .Ldecompress.start_48
 /* 034950 702013C0 AE000000 */  sw    $zero, ($s0)
@@ -1414,7 +1414,7 @@ decompress.start:
 /* 03495C 702013CC 24421488 */  addiu $v0, $v0, 0x1488
 /* 034960 702013D0 2C610008 */  sltiu $at, $v1, 8
 /* 034964 702013D4 5420000A */  bnezl $at, .Ldecompress.start_B8
-/* 034968 702013D8 00001025 */  move  $v0, $zero
+/* 034968 702013D8 00001025 */  or    $v0, $zero, $zero
 .Ldecompress.start_94:
 /* 03496C 702013DC 8C580000 */  lw    $t8, ($v0)
 /* 034970 702013E0 246FFFF8 */  addiu $t7, $v1, -8
@@ -1423,8 +1423,8 @@ decompress.start:
 /* 03497C 702013EC AE4F0000 */  sw    $t7, ($s2)
 /* 034980 702013F0 AC590000 */  sw    $t9, ($v0)
 /* 034984 702013F4 1020FFF9 */  beqz  $at, .Ldecompress.start_94
-/* 034988 702013F8 01E01825 */  move  $v1, $t7
-/* 03498C 702013FC 00001025 */  move  $v0, $zero
+/* 034988 702013F8 01E01825 */  or    $v1, $t7, $zero
+/* 03498C 702013FC 00001025 */  or    $v0, $zero, $zero
 .Ldecompress.start_B8:
 /* 034990 70201400 8FBF0024 */  lw    $ra, 0x24($sp)
 .Ldecompress.start_BC:

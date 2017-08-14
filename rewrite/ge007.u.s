@@ -57,6 +57,7 @@ font_first_font_table_controller_large_end:
 font_second_font_table_controller_large:
 .incbin "bin/ge007.u.2E8B44.font_second_font_table_controller_large.bin"
 font_second_font_table_controller_large_end:
+
 music_sfx.ptr:
 .incbin "bin/ge007.u.2EBDE0.music_sfx.ptr.bin"
 music_sfx.ptr_end:

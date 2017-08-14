@@ -39,6 +39,8 @@ SECTIONS
 
    .romfiles 0x117880 : AT(0x117880) {
       * (.romfiles);
+      * (.ramrom);
+
    }
 
    .ob_seg 0x438660 : AT(0x438660) {
