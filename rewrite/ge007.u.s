@@ -15,8 +15,8 @@
 Compressedrodata:
  # for now include existing compressed data
  # when compress script works replace this with
- #.space 0x11C00
- .incbin "bin/ge007.u.021990.Compressedrodata.bin"
+ .space 0x11C00
+ #.incbin "bin/ge007.u.021990.Compressedrodata.bin"
 Compressedrodata_end:
 
 .include "src/rarezip.s"

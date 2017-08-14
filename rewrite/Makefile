@@ -20,7 +20,7 @@ LDFLAGS = -T $(LD_SCRIPT) -Map $(BUILD_DIR)/ge007.map
 
 # N64 tools
 TOOLS_DIR = ./tools
-COMPRESS_1172 = $(TOOLS_DIR)/comp_1172
+DATASEG_COMP = $(TOOLS_DIR)/data_compress.sh
 N64CKSUM = $(TOOLS_DIR)/n64cksum
 EMULATOR = mupen64plus
 EMU_FLAGS = --noosd
@@ -62,6 +62,7 @@ $(BUILD_DIR)/$(TARGET).bin: $(BUILD_DIR)/$(TARGET).elf
 
 # final z64 updates checksum
 $(TARGET).z64: $(BUILD_DIR)/$(TARGET).bin
+	$(DATASEG_COMP) $<
 	$(N64CKSUM) $< $@
 
 $(BUILD_DIR)/$(TARGET).hex: $(TARGET).z64

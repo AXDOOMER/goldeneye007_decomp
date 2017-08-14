@@ -18,4 +18,4 @@ KNOWN BUGS: (once these are completed, this will replace old disasm)
 Also, still need to take the big series of includes making a single object, and split to many objects linked to right spot. Deconstruction of individual files in ob_seg will happened during or as a result of this.
 
 
-This dissassembly rewrite was made possible thanks to queueram's sm64tools. I still need to add 1172 support to it, then I will submit my changes.
+This dissassembly rewrite was made possible thanks to queueRAM's sm64tools. I still need to add 1172 support to it, then I will submit a PR with my changes.
