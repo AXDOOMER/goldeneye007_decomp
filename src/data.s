@@ -2,27 +2,30 @@
 rspcode:
 .incbin "bin/rspcode.bin"
 rspcode_end:
-dword_80023044:
+
+#referenced by proc_700006FC
+unknown_init_val:
 .word 0x00000002
 
+#referenced by proc_700006FC
 cart_hw_address:
 .word 0x10000000
 
+
+#referenced by setuplastentryofdebughandler
 debug_handler_table:
-.word 0x803AB400
-.word 0x800283D0
-.word 0x803AB410
-.word 0x800283D8
-.word 0x803AB710
-.word 0x800283E0
-.word 0x803AB750
-.word 0x800283E8
-.word 0x803AB950
-.word 0x800283F0
-.word 0x803B3950
-.word 0x800283F8
-
+.macro debug_handler_table_entry sp, string
+.word \sp
+.word \string
+.endm
+debug_handler_table_entry 0x803AB400, aBoot
+debug_handler_table_entry 0x803AB410, aRmon
+debug_handler_table_entry 0x803AB710, aIdle
+debug_handler_table_entry 0x803AB750, aShed
+debug_handler_table_entry 0x803AB950, aMain
+debug_handler_table_entry 0x803B3950, aAudi
 debug_handler_table_end:
+
 .word 0x00000000
 .word 0x00000000
 .word 0x00000000
@@ -30,13 +33,16 @@ debug_handler_table_end:
 .word 0x00000000
 .word 0x00000000
 
-display_stderror:
+stderr.enable:
+#referenced by set_stderr_enable, testtodisplaystderrandupdatecount, testtodisplaystderrorevery16thframe
 .word 0x00000000
 
-stderr_event_enabled:
+stderr.activated:
+#referenced by set_stderr_activated, testtodisplaystderrandupdatecount, testtodisplaystderrorevery16thframe
 .word 0x00000000
 
-display_stderr_event:
+stderr.permitted:
+#referenced by set_stderr_permitted, testtodisplaystderrandupdatecount, testtodisplaystderrorevery16thframe
 .word 0x00000000
 
 display_usercompare:

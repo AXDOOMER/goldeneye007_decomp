@@ -178,12 +178,12 @@ stack_init:
 
 proc_700006FC:
 /* 0012FC 700006FC 240E0001 */  addiu $t6, $zero, 1
-/* 001300 70000700 3C018002 */  lui   $at, 0x8002
-/* 001304 70000704 AC2E3044 */  sw    $t6, %lo(0x80023044)($at) # $t6, 0x3044($at)
-/* 001308 70000708 3C018002 */  lui   $at, 0x8002
+/* 001300 70000700 3C018002 */  lui   $at, %hi(unknown_init_val)
+/* 001304 70000704 AC2E3044 */  sw    $t6, %lo(unknown_init_val)($at) # $t6, 0x3044($at)
+/* 001308 70000708 3C018002 */  lui   $at, %hi(cart_hw_address)
 /* 00130C 7000070C 3C0F1000 */  lui   $t7, 0x1000
 /* 001310 70000710 03E00008 */  jr    $ra
-/* 001314 70000714 AC2F3048 */  sw    $t7, %lo(0x80023048)($at) # $t7, 0x3048($at)
+/* 001314 70000714 AC2F3048 */  sw    $t7, %lo(cart_hw_address)($at) # $t7, 0x3048($at)
 # end proc_700006FC
 
 idle_entry:
@@ -334,10 +334,10 @@ main_entry:
 
 setuplastentryofdebughandler:
 /* 001508 70000908 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 00150C 7000090C 3C0E8002 */  lui   $t6, 0x8002
+/* 00150C 7000090C 3C0E8002 */  lui   $t6, %hi(debug_handler_table)
 /* 001510 70000910 27A30008 */  addiu $v1, $sp, 8
-/* 001514 70000914 25CE304C */  addiu $t6, $t6, 0x304c
-/* 001518 70000918 25D90030 */  addiu $t9, $t6, 0x30
+/* 001514 70000914 25CE304C */  addiu $t6, $t6, %lo(debug_handler_table)
+/* 001518 70000918 25D90030 */  addiu $t9, $t6, (debug_handler_table_end-debug_handler_table)
 /* 00151C 7000091C 00604025 */  or    $t0, $v1, $zero
 .Lsetuplastentryofdebughandler_18:
 /* 001520 70000920 8DC10000 */  lw    $at, ($t6)
@@ -363,23 +363,23 @@ setuplastentryofdebughandler:
 /* 00156C 7000096C 27BD0040 */  addiu $sp, $sp, 0x40
 # end setuplastentryofdebughandler
 
-stderr.activated:
-/* 001570 70000970 3C018002 */  lui   $at, 0x8002
+set_stderr_activated:
+/* 001570 70000970 3C018002 */  lui   $at, %hi(stderr.activated)
 /* 001574 70000974 03E00008 */  jr    $ra
-/* 001578 70000978 AC243098 */  sw    $a0, %lo(0x80023098)($at) # $a0, 0x3098($at)
-# end stderr.activated
+/* 001578 70000978 AC243098 */  sw    $a0, %lo(stderr.activated)($at) # $a0, 0x3098($at)
+# end set_stderr_activated
 
-stderr.enable:
-/* 00157C 7000097C 3C018002 */  lui   $at, 0x8002
+set_stderr_enable:
+/* 00157C 7000097C 3C018002 */  lui   $at, %hi(stderr.enable)
 /* 001580 70000980 03E00008 */  jr    $ra
-/* 001584 70000984 AC243094 */  sw    $a0, %lo(0x80023094)($at) # $a0, 0x3094($at)
-# end stderr.enable
+/* 001584 70000984 AC243094 */  sw    $a0, %lo(stderr.enable)($at) # $a0, 0x3094($at)
+# end set_stderr_enable
 
-stderr.permitted:
-/* 001588 70000988 3C018002 */  lui   $at, 0x8002
+set_stderr_permitted:
+/* 001588 70000988 3C018002 */  lui   $at, %hi(stderr.permitted)
 /* 00158C 7000098C 03E00008 */  jr    $ra
-/* 001590 70000990 AC24309C */  sw    $a0, %lo(0x8002309C)($at) # $a0, 0x309c($at)
-# end stderr.permitted
+/* 001590 70000990 AC24309C */  sw    $a0, %lo(stderr.permitted)($at) # $a0, 0x309c($at)
+# end set_stderr_permitted
 
 user.Compare:
 /* 001594 70000994 3C018002 */  lui   $at, 0x8002
@@ -388,17 +388,17 @@ user.Compare:
 # end user.Compare
 
 testtodisplaystderrandupdatecount:
-/* 0015A0 700009A0 3C0E8002 */  lui   $t6, 0x8002
-/* 0015A4 700009A4 8DCE309C */  lw    $t6, 0x309c($t6)
+/* 0015A0 700009A0 3C0E8002 */  lui   $t6, %hi(stderr.permitted)
+/* 0015A4 700009A4 8DCE309C */  lw    $t6, %lo(stderr.permitted)($t6)
 /* 0015A8 700009A8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0015AC 700009AC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0015B0 700009B0 11C00003 */  beqz  $t6, .Ltesttodisplaystderrandupdatecount_20
-/* 0015B4 700009B4 3C0F8002 */  lui   $t7, 0x8002
-/* 0015B8 700009B8 8DEF3098 */  lw    $t7, 0x3098($t7)
+/* 0015B4 700009B4 3C0F8002 */  lui   $t7, %hi(stderr.activated)
+/* 0015B8 700009B8 8DEF3098 */  lw    $t7, %lo(stderr.activated)($t7)
 /* 0015BC 700009BC 15E00004 */  bnez  $t7, .Ltesttodisplaystderrandupdatecount_30
 .Ltesttodisplaystderrandupdatecount_20:
-/* 0015C0 700009C0 3C188002 */  lui   $t8, 0x8002
-/* 0015C4 700009C4 8F183094 */  lw    $t8, 0x3094($t8)
+/* 0015C0 700009C0 3C188002 */  lui   $t8, %hi(stderr.enable)
+/* 0015C4 700009C4 8F183094 */  lw    $t8, %lo(stderr.enable)($t8)
 /* 0015C8 700009C8 53000008 */  beql  $t8, $zero, .Ltesttodisplaystderrandupdatecount_4C
 /* 0015CC 700009CC 8FBF0014 */  lw    $ra, 0x14($sp)
 .Ltesttodisplaystderrandupdatecount_30:
@@ -406,8 +406,8 @@ testtodisplaystderrandupdatecount:
 /* 0015D4 700009D4 00000000 */  nop   
 /* 0015D8 700009D8 0C003638 */  jal   osGetCount
 /* 0015DC 700009DC 00000000 */  nop   
-/* 0015E0 700009E0 3C018002 */  lui   $at, 0x8002
-/* 0015E4 700009E4 AC2230A4 */  sw    $v0, %lo(0x800230A4)($at) # $v0, 0x30a4($at)
+/* 0015E0 700009E0 3C018002 */  lui   $at, %hi(currentcount)
+/* 0015E4 700009E4 AC2230A4 */  sw    $v0, %lo(currentcount)($at) # $v0, 0x30a4($at)
 /* 0015E8 700009E8 8FBF0014 */  lw    $ra, 0x14($sp)
 .Ltesttodisplaystderrandupdatecount_4C:
 /* 0015EC 700009EC 27BD0018 */  addiu $sp, $sp, 0x18
@@ -420,26 +420,26 @@ testtodisplaystderrorevery16thframe:
 /* 0015FC 700009FC 308E000F */  andi  $t6, $a0, 0xf
 /* 001600 70000A00 15C0001D */  bnez  $t6, .Ltesttodisplaystderrorevery16thframe_80
 /* 001604 70000A04 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 001608 70000A08 3C0F8002 */  lui   $t7, 0x8002
-/* 00160C 70000A0C 8DEF309C */  lw    $t7, 0x309c($t7)
-/* 001610 70000A10 3C188002 */  lui   $t8, 0x8002
-/* 001614 70000A14 3C198002 */  lui   $t9, 0x8002
+/* 001608 70000A08 3C0F8002 */  lui   $t7, %hi(stderr.permitted)
+/* 00160C 70000A0C 8DEF309C */  lw    $t7, %lo(stderr.permitted)($t7)
+/* 001610 70000A10 3C188002 */  lui   $t8, %hi(stderr.activated)
+/* 001614 70000A14 3C198002 */  lui   $t9, %hi(stderr.enable)
 /* 001618 70000A18 11E00004 */  beqz  $t7, .Ltesttodisplaystderrorevery16thframe_34
 /* 00161C 70000A1C 00000000 */  nop   
-/* 001620 70000A20 8F183098 */  lw    $t8, 0x3098($t8)
+/* 001620 70000A20 8F183098 */  lw    $t8, %lo(stderr.activated)($t8)
 /* 001624 70000A24 17000004 */  bnez  $t8, .Ltesttodisplaystderrorevery16thframe_40
 /* 001628 70000A28 00000000 */  nop   
 .Ltesttodisplaystderrorevery16thframe_34:
-/* 00162C 70000A2C 8F393094 */  lw    $t9, 0x3094($t9)
+/* 00162C 70000A2C 8F393094 */  lw    $t9, %lo(stderr.enable)($t9)
 /* 001630 70000A30 53200012 */  beql  $t9, $zero, .Ltesttodisplaystderrorevery16thframe_84
 /* 001634 70000A34 8FBF0014 */  lw    $ra, 0x14($sp)
 .Ltesttodisplaystderrorevery16thframe_40:
 /* 001638 70000A38 0C003638 */  jal   osGetCount
 /* 00163C 70000A3C 00000000 */  nop   
-/* 001640 70000A40 3C098002 */  lui   $t1, 0x8002
-/* 001644 70000A44 8D2930A4 */  lw    $t1, 0x30a4($t1)
-/* 001648 70000A48 3C088002 */  lui   $t0, 0x8002
-/* 00164C 70000A4C 8D0830A0 */  lw    $t0, 0x30a0($t0)
+/* 001640 70000A40 3C098002 */  lui   $t1, %hi(currentcount)
+/* 001644 70000A44 8D2930A4 */  lw    $t1, %lo(currentcount)($t1)
+/* 001648 70000A48 3C088002 */  lui   $t0, %hi(display_usercompare)
+/* 00164C 70000A4C 8D0830A0 */  lw    $t0, %lo(display_usercompare)($t0)
 /* 001650 70000A50 00495023 */  subu  $t2, $v0, $t1
 /* 001654 70000A54 3C04803B */  lui   $a0, 0x803b
 /* 001658 70000A58 010A082B */  sltu  $at, $t0, $t2
@@ -6987,7 +6987,7 @@ mainloop:
 /* 0070EC 700064EC 3C040002 */  lui   $a0, 2
 /* 0070F0 700064F0 0C002F43 */  jal   redirect_to_ramrom_replay_and_record_handlers_if_set
 /* 0070F4 700064F4 00000000 */  nop   
-/* 0070F8 700064F8 0C000262 */  jal   stderr.permitted
+/* 0070F8 700064F8 0C000262 */  jal   set_stderr_permitted
 /* 0070FC 700064FC 00002025 */  or    $a0, $zero, $zero
 /* 007100 70006500 0FC2F59D */  jal   get_ptr_displaylist
 /* 007104 70006504 00000000 */  nop   
