@@ -381,11 +381,11 @@ set_stderr_permitted:
 /* 001590 70000990 AC24309C */  sw    $a0, %lo(stderr.permitted)($at) # $a0, 0x309c($at)
 # end set_stderr_permitted
 
-user.Compare:
-/* 001594 70000994 3C018002 */  lui   $at, 0x8002
+set_user_compare:
+/* 001594 70000994 3C018002 */  lui   $at, %hi(user.compare)
 /* 001598 70000998 03E00008 */  jr    $ra
-/* 00159C 7000099C AC2430A0 */  sw    $a0, %lo(0x800230A0)($at) # $a0, 0x30a0($at)
-# end user.Compare
+/* 00159C 7000099C AC2430A0 */  sw    $a0, %lo(user.compare)($at) # $a0, 0x30a0($at)
+# end set_user_compare
 
 testtodisplaystderrandupdatecount:
 /* 0015A0 700009A0 3C0E8002 */  lui   $t6, %hi(stderr.permitted)
@@ -438,8 +438,8 @@ testtodisplaystderrorevery16thframe:
 /* 00163C 70000A3C 00000000 */  nop   
 /* 001640 70000A40 3C098002 */  lui   $t1, %hi(currentcount)
 /* 001644 70000A44 8D2930A4 */  lw    $t1, %lo(currentcount)($t1)
-/* 001648 70000A48 3C088002 */  lui   $t0, %hi(display_usercompare)
-/* 00164C 70000A4C 8D0830A0 */  lw    $t0, %lo(display_usercompare)($t0)
+/* 001648 70000A48 3C088002 */  lui   $t0, %hi(user.compare)
+/* 00164C 70000A4C 8D0830A0 */  lw    $t0, %lo(user.compare)($t0)
 /* 001650 70000A50 00495023 */  subu  $t2, $v0, $t1
 /* 001654 70000A54 3C04803B */  lui   $a0, 0x803b
 /* 001658 70000A58 010A082B */  sltu  $at, $t0, $t2
@@ -458,17 +458,17 @@ testtodisplaystderrorevery16thframe:
 /* 001684 70000A84 00000000 */  nop   
 # end testtodisplaystderrorevery16thframe
 
-storecurrentcountto800230a4:
+storecurrentcount:
 /* 001688 70000A88 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00168C 70000A8C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 001690 70000A90 0C003638 */  jal   osGetCount
 /* 001694 70000A94 00000000 */  nop   
 /* 001698 70000A98 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00169C 70000A9C 3C018002 */  lui   $at, 0x8002
-/* 0016A0 70000AA0 AC2230A4 */  sw    $v0, %lo(0x800230A4)($at) # $v0, 0x30a4($at)
+/* 00169C 70000A9C 3C018002 */  lui   $at, %hi(currentcount)
+/* 0016A0 70000AA0 AC2230A4 */  sw    $v0, %lo(currentcount)($at) # $v0, 0x30a4($at)
 /* 0016A4 70000AA4 03E00008 */  jr    $ra
 /* 0016A8 70000AA8 27BD0018 */  addiu $sp, $sp, 0x18
-# end storecurrentcountto800230a4
+# end storecurrentcount
 
 scheduler:
 /* 0016AC 70000AAC 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -539,7 +539,7 @@ scheduler:
 /* 0017B0 70000BB0 2405029A */  addiu $a1, $zero, 0x29a
 /* 0017B4 70000BB4 0C003730 */  jal   osViSetEvent
 /* 0017B8 70000BB8 8FA60034 */  lw    $a2, 0x34($sp)
-/* 0017BC 70000BBC 0C0002A2 */  jal   storecurrentcountto800230a4
+/* 0017BC 70000BBC 0C0002A2 */  jal   storecurrentcount
 /* 0017C0 70000BC0 00000000 */  nop   
 /* 0017C4 70000BC4 3C04803B */  lui   $a0, 0x803b
 /* 0017C8 70000BC8 2484B750 */  addiu $a0, $a0, -0x48b0
@@ -1229,11 +1229,11 @@ DPCFill:
 /* 002128 70001528 0C0039EC */  jal   osDpSetNextBuffer
 /* 00212C 7000152C 8D270004 */  lw    $a3, 4($t1)
 /* 002130 70001530 240A0001 */  addiu $t2, $zero, 1
-/* 002134 70001534 3C018002 */  lui   $at, 0x8002
+/* 002134 70001534 3C018002 */  lui   $at, %hi(setby_DPCfill_0)
 /* 002138 70001538 8FAB0028 */  lw    $t3, 0x28($sp)
-/* 00213C 7000153C AC2A30A8 */  sw    $t2, %lo(0x800230A8)($at) # $t2, 0x30a8($at)
-/* 002140 70001540 3C018002 */  lui   $at, 0x8002
-/* 002144 70001544 AC2030AC */  sw    $zero, %lo(0x800230AC)($at) # $zero, 0x30ac($at)
+/* 00213C 7000153C AC2A30A8 */  sw    $t2, %lo(setby_DPCfill_0)($at) # $t2, 0x30a8($at)
+/* 002140 70001540 3C018002 */  lui   $at, %hi(setby_DPCfill_1)
+/* 002144 70001544 AC2030AC */  sw    $zero, %lo(setby_DPCfill_1)($at) # $zero, 0x30ac($at)
 /* 002148 70001548 AD7100CC */  sw    $s1, 0xcc($t3)
 /* 00214C 7000154C 8FBF001C */  lw    $ra, 0x1c($sp)
 .LDPCFill_110:

@@ -45,16 +45,20 @@ stderr.permitted:
 #referenced by set_stderr_permitted, testtodisplaystderrandupdatecount, testtodisplaystderrorevery16thframe
 .word 0x00000000
 
-display_usercompare:
+user.compare:
+#referenced by set_user_compare, testtodisplaystderrorevery16thframe
 .word 0x02AEA540
 
 currentcount:
+#referenced by testtodisplaystderrandupdatecount, testtodisplaystderrorevery16thframe, storecurrentcount
 .word 0x00000000
 
-dword_800230A8:
+setby_DPCfill_0:
+#referenced by DPCfill
 .word 0x00000000
 
-dword_800230AC:
+setby_DPCfill_1:
+#referenced by DPCfill
 .word 0x00000000
 
 dword_800230B0:
