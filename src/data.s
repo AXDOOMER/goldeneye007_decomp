@@ -1,4 +1,6 @@
 .section .data
+.global _DATA_START
+_DATA_START:
 rspcode:
 .incbin "bin/rspcode.bin"
 rspcode_end:
@@ -14,10 +16,6 @@ cart_hw_address:
 
 #referenced by setuplastentryofdebughandler
 debug_handler_table:
-.macro debug_handler_table_entry sp, string
-.word \sp
-.word \string
-.endm
 debug_handler_table_entry 0x803AB400, aBoot
 debug_handler_table_entry 0x803AB410, aRmon
 debug_handler_table_entry 0x803AB710, aIdle
@@ -65590,4 +65588,5 @@ word_8005D020:
 .word 0x66960B39
 .word 0xFFDF0D46
 .word 0x66AD0C39
-
+.global _DATA_END
+_DATA_END:

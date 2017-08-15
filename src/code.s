@@ -1,42 +1,22 @@
 .section .text, "ax"
 
+/*
+use macro get_value name value 
+makes a function called
+get_name returning value in $v0
+*/
+get_value rodata_vaddr _DATA_START
+get_value rodata_rom_start Compressedrodata
+get_value rodata_rom_end Compressedrodata_end
+get_value RareZipASMRomstart 0x33590
+get_value RareZipASMRomend 0x34b30
 
-get_rodata_vaddr:
-/* 0010BC 700004BC 3C028002 */  lui   $v0, 0x8002
-/* 0010C0 700004C0 03E00008 */  jr    $ra
-/* 0010C4 700004C4 24420D90 */  addiu $v0, $v0, 0xd90
-# end get_rodata_vaddr
-
-get_rodata_rom_start:
-/* 0010C8 700004C8 3C020002 */  lui   $v0, 2
-/* 0010CC 700004CC 03E00008 */  jr    $ra
-/* 0010D0 700004D0 24421990 */  addiu $v0, $v0, 0x1990
-# end get_rodata_rom_start
-
-get_rodata_rom_end:
-/* 0010D4 700004D4 3C020003 */  lui   $v0, 3
-/* 0010D8 700004D8 03E00008 */  jr    $ra
-/* 0010DC 700004DC 24423590 */  addiu $v0, $v0, 0x3590
-# end get_rodata_rom_end
-
-getRareZipASMRomstart:
-/* 0010E0 700004E0 3C020003 */  lui   $v0, 3
-/* 0010E4 700004E4 03E00008 */  jr    $ra
-/* 0010E8 700004E8 24423590 */  addiu $v0, $v0, 0x3590
-# end getRareZipASMRomstart
-
-getRareZipASMRomend:
-/* 0010EC 700004EC 3C020003 */  lui   $v0, 3
-/* 0010F0 700004F0 03E00008 */  jr    $ra
-/* 0010F4 700004F4 24424B30 */  addiu $v0, $v0, 0x4b30
-# end getRareZipASMRomend
-
-jump_decompressfile:
-/* 0010F8 700004F8 3C077020 */  lui   $a3, 0x7020
-/* 0010FC 700004FC 24E7141C */  addiu $a3, $a3, 0x141c
-/* 001100 70000500 00E00008 */  jr    $a3
-/* 001104 70000504 00000000 */  nop   
-# end jump_decompressfile
+/*
+use macro jump_via_reg location register
+makes a function called jump_location
+which jumps using register for location
+*/
+jump_via_reg decompress.entry
 
 # alignment
 .word 0x00000000, 0x00000000
@@ -52,9 +32,9 @@ init:
 /* 00112C 7000052C 0C000135 */  jal   get_rodata_rom_end
 /* 001130 70000530 AFA20034 */  sw    $v0, 0x34($sp)
 /* 001134 70000534 8FAE0034 */  lw    $t6, 0x34($sp)
-/* 001138 70000538 0C000138 */  jal   getRareZipASMRomstart
+/* 001138 70000538 0C000138 */  jal   get_RareZipASMRomstart
 /* 00113C 7000053C 004E8823 */  subu  $s1, $v0, $t6
-/* 001140 70000540 0C00013B */  jal   getRareZipASMRomend
+/* 001140 70000540 0C00013B */  jal   get_RareZipASMRomend
 /* 001144 70000544 AFA20028 */  sw    $v0, 0x28($sp)
 /* 001148 70000548 8FAF0028 */  lw    $t7, 0x28($sp)
 /* 00114C 7000054C 3C0A7020 */  lui   $t2, 0x7020
@@ -75,7 +55,7 @@ init:
 /* 001184 70000584 0461FFFB */  bgez  $v1, .Linit_64
 /* 001188 70000588 A1280000 */  sb    $t0, ($t1)
 .Linit_7C:
-/* 00118C 7000058C 0C00013E */  jal   jump_decompressfile
+/* 00118C 7000058C 0C00013E */  jal   jump_decompress.entry
 /* 001190 70000590 01512023 */  subu  $a0, $t2, $s1
 /* 001194 70000594 3C0B0003 */  lui   $t3, 3
 /* 001198 70000598 3C0C0000 */  lui   $t4, 0
@@ -148,14 +128,14 @@ init:
 /* 001294 70000694 34440E80 */  ori   $a0, $v0, 0xe80
 /* 001298 70000698 3C04803B */  lui   $a0, 0x803b
 /* 00129C 7000069C 2484B950 */  addiu $a0, $a0, -0x46b0
-/* 0012A0 700006A0 0C0001BC */  jal   stack_init
+/* 0012A0 700006A0 0C0001BC */  jal   grow_stack
 /* 0012A4 700006A4 34058000 */  ori   $a1, $zero, 0x8000
 /* 0012A8 700006A8 3C108006 */  lui   $s0, 0x8006
 /* 0012AC 700006AC 2610D640 */  addiu $s0, $s0, -0x29c0
-/* 0012B0 700006B0 3C067000 */  lui   $a2, 0x7000
+/* 0012B0 700006B0 3C067000 */  lui   $a2, %hi(main_entry)
 /* 0012B4 700006B4 240C000A */  addiu $t4, $zero, 0xa
 /* 0012B8 700006B8 AFAC0014 */  sw    $t4, 0x14($sp)
-/* 0012BC 700006BC 24C6089C */  addiu $a2, $a2, 0x89c
+/* 0012BC 700006BC 24C6089C */  addiu $a2, $a2, %lo(main_entry)
 /* 0012C0 700006C0 02002025 */  or    $a0, $s0, $zero
 /* 0012C4 700006C4 24050003 */  addiu $a1, $zero, 3
 /* 0012C8 700006C8 00003825 */  or    $a3, $zero, $zero
@@ -170,18 +150,18 @@ init:
 /* 0012EC 700006EC 27BD0040 */  addiu $sp, $sp, 0x40
 # end init
 
-stack_init:
+grow_stack:
 /* 0012F0 700006F0 00851021 */  addu  $v0, $a0, $a1
 /* 0012F4 700006F4 03E00008 */  jr    $ra
 /* 0012F8 700006F8 2442FFF8 */  addiu $v0, $v0, -8
-# end stack_init
+# end grow_stack
 
 proc_700006FC:
 /* 0012FC 700006FC 240E0001 */  addiu $t6, $zero, 1
 /* 001300 70000700 3C018002 */  lui   $at, %hi(unknown_init_val)
 /* 001304 70000704 AC2E3044 */  sw    $t6, %lo(unknown_init_val)($at) # $t6, 0x3044($at)
 /* 001308 70000708 3C018002 */  lui   $at, %hi(cart_hw_address)
-/* 00130C 7000070C 3C0F1000 */  lui   $t7, 0x1000
+/* 00130C 7000070C 3C0F1000 */  lui   $t7, %hi(0x10000000)
 /* 001310 70000710 03E00008 */  jr    $ra
 /* 001314 70000714 AC2F3048 */  sw    $t7, %lo(cart_hw_address)($at) # $t7, 0x3048($at)
 # end proc_700006FC
@@ -206,11 +186,11 @@ start_idle_thread:
 /* 00133C 7000073C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 001340 70000740 3C04803B */  lui   $a0, 0x803b
 /* 001344 70000744 2484B710 */  addiu $a0, $a0, -0x48f0
-/* 001348 70000748 0C0001BC */  jal   stack_init
+/* 001348 70000748 0C0001BC */  jal   grow_stack
 /* 00134C 7000074C 24050040 */  addiu $a1, $zero, 0x40
 /* 001350 70000750 3C048006 */  lui   $a0, 0x8006
-/* 001354 70000754 3C067000 */  lui   $a2, 0x7000
-/* 001358 70000758 24C60718 */  addiu $a2, $a2, 0x718
+/* 001354 70000754 3C067000 */  lui   $a2, %hi(idle_entry)
+/* 001358 70000758 24C60718 */  addiu $a2, $a2, %lo(idle_entry)
 /* 00135C 7000075C 2484D490 */  addiu $a0, $a0, -0x2b70
 /* 001360 70000760 24050001 */  addiu $a1, $zero, 1
 /* 001364 70000764 00003825 */  or    $a3, $zero, $zero
@@ -231,13 +211,13 @@ start_rmon_thread:
 /* 001394 70000794 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 001398 70000798 3C04803B */  lui   $a0, 0x803b
 /* 00139C 7000079C 2484B410 */  addiu $a0, $a0, -0x4bf0
-/* 0013A0 700007A0 0C0001BC */  jal   stack_init
+/* 0013A0 700007A0 0C0001BC */  jal   grow_stack
 /* 0013A4 700007A4 24050300 */  addiu $a1, $zero, 0x300
 /* 0013A8 700007A8 3C048006 */  lui   $a0, 0x8006
-/* 0013AC 700007AC 3C067001 */  lui   $a2, 0x7001
+/* 0013AC 700007AC 3C067001 */  lui   $a2, %hi(rmon_entry)
 /* 0013B0 700007B0 240E00FA */  addiu $t6, $zero, 0xfa
 /* 0013B4 700007B4 AFAE0014 */  sw    $t6, 0x14($sp)
-/* 0013B8 700007B8 24C6CEA0 */  addiu $a2, $a2, -0x3160
+/* 0013B8 700007B8 24C6CEA0 */  addiu $a2, $a2, %lo(rmon_entry)
 /* 0013BC 700007BC 2484D2E0 */  addiu $a0, $a0, -0x2d20
 /* 0013C0 700007C0 00002825 */  or    $a1, $zero, $zero
 /* 0013C4 700007C4 00003825 */  or    $a3, $zero, $zero
@@ -543,7 +523,7 @@ scheduler:
 /* 0017C0 70000BC0 00000000 */  nop   
 /* 0017C4 70000BC4 3C04803B */  lui   $a0, 0x803b
 /* 0017C8 70000BC8 2484B750 */  addiu $a0, $a0, -0x48b0
-/* 0017CC 70000BCC 0C0001BC */  jal   stack_init
+/* 0017CC 70000BCC 0C0001BC */  jal   grow_stack
 /* 0017D0 70000BD0 24050200 */  addiu $a1, $zero, 0x200
 /* 0017D4 70000BD4 8E0400B0 */  lw    $a0, 0xb0($s0)
 /* 0017D8 70000BD8 3C067000 */  lui   $a2, 0x7000
@@ -1937,7 +1917,7 @@ init_audi:
 /* 002AFC 70001EFC AE02FFFC */  sw    $v0, %lo(0x8005FFFC)($s0) # $v0, -4($s0)
 /* 002B00 70001F00 3C04803B */  lui   $a0, 0x803b
 /* 002B04 70001F04 24843950 */  addiu $a0, $a0, 0x3950
-/* 002B08 70001F08 0C0001BC */  jal   stack_init
+/* 002B08 70001F08 0C0001BC */  jal   grow_stack
 /* 002B0C 70001F0C 24051000 */  addiu $a1, $zero, 0x1000
 /* 002B10 70001F10 3C048006 */  lui   $a0, 0x8006
 /* 002B14 70001F14 3C067000 */  lui   $a2, 0x7000
