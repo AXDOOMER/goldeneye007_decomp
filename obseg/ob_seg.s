@@ -66,6 +66,15 @@ bg_cat_all_p.seg_end:
 bg_crad_all_p.seg:
 .incbin "obseg/bg/bg_crad_all_p.seg"
 bg_crad_all_p.seg_end:
+
+bg_imp_all_p.seg:
+.incbin "obseg/bg/bg_imp_all_p.seg"
+bg_imp_all_p.seg_end:
+bg_ash_all_p.seg:
+.incbin "obseg/bg/bg_ash_all_p.seg"
+bg_ash_all_p.seg_end:
+
+
 bg_ame_all_p.seg:
 .incbin "obseg/bg/bg_ame_all_p.seg"
 bg_ame_all_p.seg_end:

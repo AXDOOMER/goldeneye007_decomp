@@ -3,6 +3,7 @@
 /*
 here we setup and clear stack, then jump to establish root tlb
 */
+.global entry
 entry:
 /* 001000 80000400 3C088006 */  lui   $t0, %hi(_BSS_START)+1
 /* 001004 80000404 3C090003 */  lui   $t1, %hi(_BSS_END-_BSS_START)
@@ -28,6 +29,7 @@ entry:
 /*
 here we set tlb and jump to init
 */
+.global establishrootTLB
 establishrootTLB:
 /* 001050 80000450 24020001 */  addiu $v0, $zero, 1
 /* 001054 80000454 24030000 */  addiu $v1, $zero, 0
