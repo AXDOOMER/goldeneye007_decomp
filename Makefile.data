@@ -2,3 +2,51 @@ TARGET = ge007.u
 LD_SCRIPT = $(TARGET).ld
 OBSEG_DIR = obseg
 
+$(OBSEG_DIR)/text/%.bin: $(OBSEG_DIR)/text/%.asm
+	$(BASS) -o $@ $<
+
+TEXT_RZ_FILES = \
+    $(OBSEG_DIR)/text/LameE.rz \
+    $(OBSEG_DIR)/text/LarchE.rz \
+    $(OBSEG_DIR)/text/LarecE.rz \
+    $(OBSEG_DIR)/text/LarkE.rz \
+    $(OBSEG_DIR)/text/LashE.rz \
+    $(OBSEG_DIR)/text/LaztE.rz \
+    $(OBSEG_DIR)/text/LcatE.rz \
+    $(OBSEG_DIR)/text/LcaveE.rz \
+    $(OBSEG_DIR)/text/LcradE.rz \
+    $(OBSEG_DIR)/text/LcrypE.rz \
+    $(OBSEG_DIR)/text/LdamE.rz \
+    $(OBSEG_DIR)/text/LdepoE.rz \
+    $(OBSEG_DIR)/text/LdestE.rz \
+    $(OBSEG_DIR)/text/LdishE.rz \
+    $(OBSEG_DIR)/text/LearE.rz \
+    $(OBSEG_DIR)/text/LeldE.rz \
+    $(OBSEG_DIR)/text/LgunE.rz \
+    $(OBSEG_DIR)/text/LimpE.rz \
+    $(OBSEG_DIR)/text/LjunE.rz \
+    $(OBSEG_DIR)/text/LleeE.rz \
+    $(OBSEG_DIR)/text/LlenE.rz \
+    $(OBSEG_DIR)/text/LlipE.rz \
+    $(OBSEG_DIR)/text/LlueE.rz \
+    $(OBSEG_DIR)/text/LmiscE.rz \
+    $(OBSEG_DIR)/text/LmpmenuE.rz \
+    $(OBSEG_DIR)/text/LmpweaponsE.rz \
+    $(OBSEG_DIR)/text/LoatE.rz \
+    $(OBSEG_DIR)/text/LoptionsE.rz \
+    $(OBSEG_DIR)/text/LpamE.rz \
+    $(OBSEG_DIR)/text/LpeteE.rz \
+    $(OBSEG_DIR)/text/LpropobjE.rz \
+    $(OBSEG_DIR)/text/LrefE.rz \
+    $(OBSEG_DIR)/text/LritE.rz \
+    $(OBSEG_DIR)/text/LrunE.rz \
+    $(OBSEG_DIR)/text/LsevbE.rz \
+    $(OBSEG_DIR)/text/LsevE.rz \
+    $(OBSEG_DIR)/text/LsevxbE.rz \
+    $(OBSEG_DIR)/text/LsevxE.rz \
+    $(OBSEG_DIR)/text/LshoE.rz \
+    $(OBSEG_DIR)/text/LsiloE.rz \
+    $(OBSEG_DIR)/text/LstatE.rz \
+    $(OBSEG_DIR)/text/LtitleE.rz \
+    $(OBSEG_DIR)/text/LtraE.rz \
+    $(OBSEG_DIR)/text/LwaxE.rz

@@ -1864,265 +1864,309 @@ UsetuptraZ:
 .incbin "obseg/setup/UsetuptraZ"
 UsetuptraZ_end:
 LameE:
-.incbin "obseg/text/LameE"
+.incbin "obseg/text/LameE.rz"
+.balign 16
 LameE_end:
 LameJ:
 .incbin "obseg/text/LameJ"
 LameJ_end:
 LarchE:
-.incbin "obseg/text/LarchE"
+.incbin "obseg/text/LarchE.rz"
+.balign 16
 LarchE_end:
 LarchJ:
 .incbin "obseg/text/LarchJ"
 LarchJ_end:
 LarecE:
-.incbin "obseg/text/LarecE"
+.incbin "obseg/text/LarecE.rz"
+.balign 16
 LarecE_end:
 LarecJ:
 .incbin "obseg/text/LarecJ"
 LarecJ_end:
 LarkE:
-.incbin "obseg/text/LarkE"
+.incbin "obseg/text/LarkE.rz"
+.balign 16
 LarkE_end:
 LarkJ:
 .incbin "obseg/text/LarkJ"
 LarkJ_end:
 LashE:
-.incbin "obseg/text/LashE"
+.incbin "obseg/text/LashE.rz"
+.balign 16
 LashE_end:
 LashJ:
 .incbin "obseg/text/LashJ"
 LashJ_end:
 LaztE:
-.incbin "obseg/text/LaztE"
+.incbin "obseg/text/LaztE.rz"
+.balign 16
 LaztE_end:
 LaztJ:
 .incbin "obseg/text/LaztJ"
 LaztJ_end:
 LcatE:
-.incbin "obseg/text/LcatE"
+.incbin "obseg/text/LcatE.rz"
+.balign 16
 LcatE_end:
 LcatJ:
 .incbin "obseg/text/LcatJ"
 LcatJ_end:
 LcaveE:
-.incbin "obseg/text/LcaveE"
+.incbin "obseg/text/LcaveE.rz"
+.balign 16
 LcaveE_end:
 LcaveJ:
 .incbin "obseg/text/LcaveJ"
 LcaveJ_end:
 LcradE:
-.incbin "obseg/text/LcradE"
+.incbin "obseg/text/LcradE.rz"
+.balign 16
 LcradE_end:
 LcradJ:
 .incbin "obseg/text/LcradJ"
 LcradJ_end:
 LcrypE:
-.incbin "obseg/text/LcrypE"
+.incbin "obseg/text/LcrypE.rz"
+.balign 16
 LcrypE_end:
 LcrypJ:
 .incbin "obseg/text/LcrypJ"
 LcrypJ_end:
 LdamE:
-.incbin "obseg/text/LdamE"
+.incbin "obseg/text/LdamE.rz"
+.balign 16
 LdamE_end:
 LdamJ:
 .incbin "obseg/text/LdamJ"
 LdamJ_end:
 LdepoE:
-.incbin "obseg/text/LdepoE"
+.incbin "obseg/text/LdepoE.rz"
+.balign 16
 LdepoE_end:
 LdepoJ:
 .incbin "obseg/text/LdepoJ"
 LdepoJ_end:
 LdestE:
-.incbin "obseg/text/LdestE"
+.incbin "obseg/text/LdestE.rz"
+.balign 16
 LdestE_end:
 LdestJ:
 .incbin "obseg/text/LdestJ"
 LdestJ_end:
 LdishE:
-.incbin "obseg/text/LdishE"
+.incbin "obseg/text/LdishE.rz"
+.balign 16
 LdishE_end:
 LdishJ:
 .incbin "obseg/text/LdishJ"
 LdishJ_end:
 LearE:
-.incbin "obseg/text/LearE"
+.incbin "obseg/text/LearE.rz"
+.balign 16
 LearE_end:
 LearJ:
 .incbin "obseg/text/LearJ"
 LearJ_end:
 LeldE:
-.incbin "obseg/text/LeldE"
+.incbin "obseg/text/LeldE.rz"
+.balign 16
 LeldE_end:
 LeldJ:
 .incbin "obseg/text/LeldJ"
 LeldJ_end:
 LgunE:
-.incbin "obseg/text/LgunE"
+.incbin "obseg/text/LgunE.rz"
+.balign 16
 LgunE_end:
 LgunJ:
 .incbin "obseg/text/LgunJ"
 LgunJ_end:
 LimpE:
-.incbin "obseg/text/LimpE"
+.incbin "obseg/text/LimpE.rz"
+.balign 16
 LimpE_end:
 LimpJ:
 .incbin "obseg/text/LimpJ"
 LimpJ_end:
 LjunE:
-.incbin "obseg/text/LjunE"
+.incbin "obseg/text/LjunE.rz"
+.balign 16
 LjunE_end:
 LjunJ:
 .incbin "obseg/text/LjunJ"
 LjunJ_end:
 LleeE:
-.incbin "obseg/text/LleeE"
+.incbin "obseg/text/LleeE.rz"
+.balign 16
 LleeE_end:
 LleeJ:
 .incbin "obseg/text/LleeJ"
 LleeJ_end:
 LlenE:
-.incbin "obseg/text/LlenE"
+.incbin "obseg/text/LlenE.rz"
+.balign 16
 LlenE_end:
 LlenJ:
 .incbin "obseg/text/LlenJ"
 LlenJ_end:
 LlipE:
-.incbin "obseg/text/LlipE"
+.incbin "obseg/text/LlipE.rz"
+.balign 16
 LlipE_end:
 LlipJ:
 .incbin "obseg/text/LlipJ"
 LlipJ_end:
 LlueE:
-.incbin "obseg/text/LlueE"
+.incbin "obseg/text/LlueE.rz"
+.balign 16
 LlueE_end:
 LlueJ:
 .incbin "obseg/text/LlueJ"
 LlueJ_end:
 LmiscE:
-.incbin "obseg/text/LmiscE"
+.incbin "obseg/text/LmiscE.rz"
+.balign 16
 LmiscE_end:
 LmiscJ:
 .incbin "obseg/text/LmiscJ"
 LmiscJ_end:
 LmpmenuE:
-.incbin "obseg/text/LmpmenuE"
+.incbin "obseg/text/LmpmenuE.rz"
+.balign 16
 LmpmenuE_end:
 LmpmenuJ:
 .incbin "obseg/text/LmpmenuJ"
 LmpmenuJ_end:
 LmpweaponsE:
-.incbin "obseg/text/LmpweaponsE"
+.incbin "obseg/text/LmpweaponsE.rz"
+.balign 16
 LmpweaponsE_end:
 LmpweaponsJ:
 .incbin "obseg/text/LmpweaponsJ"
 LmpweaponsJ_end:
 LoatE:
-.incbin "obseg/text/LoatE"
+.incbin "obseg/text/LoatE.rz"
+.balign 16
 LoatE_end:
 LoatJ:
 .incbin "obseg/text/LoatJ"
 LoatJ_end:
 LoptionsE:
-.incbin "obseg/text/LoptionsE"
+.incbin "obseg/text/LoptionsE.rz"
+.balign 16
 LoptionsE_end:
 LoptionsJ:
 .incbin "obseg/text/LoptionsJ"
 LoptionsJ_end:
 LpamE:
-.incbin "obseg/text/LpamE"
+.incbin "obseg/text/LpamE.rz"
+.balign 16
 LpamE_end:
 LpamJ:
 .incbin "obseg/text/LpamJ"
 LpamJ_end:
 LpeteE:
-.incbin "obseg/text/LpeteE"
+.incbin "obseg/text/LpeteE.rz"
+.balign 16
 LpeteE_end:
 LpeteJ:
 .incbin "obseg/text/LpeteJ"
 LpeteJ_end:
 LpropobjE:
-.incbin "obseg/text/LpropobjE"
+.incbin "obseg/text/LpropobjE.rz"
+.balign 16
 LpropobjE_end:
 LpropobjJ:
 .incbin "obseg/text/LpropobjJ"
 LpropobjJ_end:
 LrefE:
-.incbin "obseg/text/LrefE"
+.incbin "obseg/text/LrefE.rz"
+.balign 16
 LrefE_end:
 LrefJ:
 .incbin "obseg/text/LrefJ"
 LrefJ_end:
 LritE:
-.incbin "obseg/text/LritE"
+.incbin "obseg/text/LritE.rz"
+.balign 16
 LritE_end:
 LritJ:
 .incbin "obseg/text/LritJ"
 LritJ_end:
 LrunE:
-.incbin "obseg/text/LrunE"
+.incbin "obseg/text/LrunE.rz"
+.balign 16
 LrunE_end:
 LrunJ:
 .incbin "obseg/text/LrunJ"
 LrunJ_end:
 LsevE:
-.incbin "obseg/text/LsevE"
+.incbin "obseg/text/LsevE.rz"
+.balign 16
 LsevE_end:
 LsevJ:
 .incbin "obseg/text/LsevJ"
 LsevJ_end:
 LsevbE:
-.incbin "obseg/text/LsevbE"
+.incbin "obseg/text/LsevbE.rz"
+.balign 16
 LsevbE_end:
 LsevbJ:
 .incbin "obseg/text/LsevbJ"
 LsevbJ_end:
 LsevxE:
-.incbin "obseg/text/LsevxE"
+.incbin "obseg/text/LsevxE.rz"
+.balign 16
 LsevxE_end:
 LsevxJ:
 .incbin "obseg/text/LsevxJ"
 LsevxJ_end:
 LsevxbE:
-.incbin "obseg/text/LsevxbE"
+.incbin "obseg/text/LsevxbE.rz"
+.balign 16
 LsevxbE_end:
 LsevxbJ:
 .incbin "obseg/text/LsevxbJ"
 LsevxbJ_end:
 LshoE:
-.incbin "obseg/text/LshoE"
+.incbin "obseg/text/LshoE.rz"
+.balign 16
 LshoE_end:
 LshoJ:
 .incbin "obseg/text/LshoJ"
 LshoJ_end:
 LsiloE:
-.incbin "obseg/text/LsiloE"
+.incbin "obseg/text/LsiloE.rz"
+.balign 16
 LsiloE_end:
 LsiloJ:
 .incbin "obseg/text/LsiloJ"
 LsiloJ_end:
 LstatE:
-.incbin "obseg/text/LstatE"
+.incbin "obseg/text/LstatE.rz"
+.balign 16
 LstatE_end:
 LstatJ:
 .incbin "obseg/text/LstatJ"
 LstatJ_end:
 LtitleE:
-.incbin "obseg/text/LtitleE"
+.incbin "obseg/text/LtitleE.rz"
+.balign 16
 LtitleE_end:
 LtitleJ:
 .incbin "obseg/text/LtitleJ"
 LtitleJ_end:
 LtraE:
-.incbin "obseg/text/LtraE"
+.incbin "obseg/text/LtraE.rz"
+.balign 16
 LtraE_end:
 LtraJ:
 .incbin "obseg/text/LtraJ"
 LtraJ_end:
 LwaxE:
-.incbin "obseg/text/LwaxE"
+.incbin "obseg/text/LwaxE.rz"
+.balign 16
 LwaxE_end:
 LwaxJ:
 .incbin "obseg/text/LwaxJ"

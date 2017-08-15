@@ -20,7 +20,9 @@ LDFLAGS = -T $(LD_SCRIPT) -Map $(BUILD_DIR)/ge007.map
 
 # N64 tools
 TOOLS_DIR = ./tools
+BASS = bass
 DATASEG_COMP = $(TOOLS_DIR)/data_compress.sh
+RZ_COMP = $(TOOLS_DIR)/1172compress.sh
 N64CKSUM = $(TOOLS_DIR)/n64cksum
 EMULATOR = mupen64plus
 EMU_FLAGS = --noosd
@@ -42,13 +44,13 @@ all: $(TARGET).z64
 clean:
 	rm $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).o $(BUILD_DIR)/$(TARGET).bin $(BUILD_DIR)/ge007.map $(TARGET).z64
 
-#$(OBSEG_DIR)/%.1172: $(OBSEG_DIR)/%.bin
-#	$(COMPRESS_1172) $< $@
+$(OBSEG_DIR)/text/%.rz: $(OBSEG_DIR)/text/%.bin
+	$(RZ_COMP) $< $@
 
 $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
 
-$(BUILD_DIR)/$(TARGET).o: $(TARGET).s Makefile $(MAKEFILE_SPLIT) $(OBSEG_FILES)| $(BUILD_DIR)
+$(BUILD_DIR)/$(TARGET).o: $(TARGET).s Makefile $(MAKEFILE_DATA) $(TEXT_RZ_FILES)| $(BUILD_DIR)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.o: %.c Makefile.as | $(BUILD_DIR)
