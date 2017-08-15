@@ -13,10 +13,8 @@
 
 .section .c_data, "a"
 Compressedrodata:
- # for now include existing compressed data
- # when compress script works replace this with
+ # make a hole for when we compress .data segment
  .space 0x11C00
- #.incbin "bin/ge007.u.021990.Compressedrodata.bin"
 Compressedrodata_end:
 
 .include "src/rarezip.s"

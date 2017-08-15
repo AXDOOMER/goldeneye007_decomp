@@ -1,6 +1,6 @@
 .section .data
 rspcode:
-.incbin "rspcode.bin"
+.incbin "bin/rspcode.bin"
 rspcode_end:
 dword_80023044:
 .word 0x00000002

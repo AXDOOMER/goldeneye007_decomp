@@ -40,7 +40,7 @@ include $(MAKEFILE_DATA)
 all: $(TARGET).z64
 
 clean:
-	del /Q $(call FixPath,$(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).o $(BUILD_DIR)/$(TARGET).bin $(BUILD_DIR)/$(TARGET).map $(TARGET).z64)
+	rm $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).o $(BUILD_DIR)/$(TARGET).bin $(BUILD_DIR)/ge007.map $(TARGET).z64
 
 #$(OBSEG_DIR)/%.1172: $(OBSEG_DIR)/%.bin
 #	$(COMPRESS_1172) $< $@
