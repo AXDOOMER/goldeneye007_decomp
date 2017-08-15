@@ -1612,512 +1612,512 @@ PwppkmagZ:
 .incbin "obseg/prop/PwppkmagZ"
 PwppkmagZ_end:
 Tbg_ame_all_p_stanZ:
-.incbin "bin/ge007.u.824830.Tbg_ame_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_ame_all_p_stanZ"
 Tbg_ame_all_p_stanZ_end:
 Tbg_arch_all_p_stanZ:
-.incbin "bin/ge007.u.826160.Tbg_arch_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_arch_all_p_stanZ"
 Tbg_arch_all_p_stanZ_end:
 Tbg_arec_all_p_stanZ:
-.incbin "bin/ge007.u.82BE50.Tbg_arec_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_arec_all_p_stanZ"
 Tbg_arec_all_p_stanZ_end:
 Tbg_ark_all_p_stanZ:
-.incbin "bin/ge007.u.8341A0.Tbg_ark_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_ark_all_p_stanZ"
 Tbg_ark_all_p_stanZ_end:
 Tbg_ash_all_p_stanZ:
-.incbin "bin/ge007.u.83D160.Tbg_ash_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_ash_all_p_stanZ"
 Tbg_ash_all_p_stanZ_end:
 Tbg_azt_all_p_stanZ:
-.incbin "bin/ge007.u.83EA90.Tbg_azt_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_azt_all_p_stanZ"
 Tbg_azt_all_p_stanZ_end:
 Tbg_cat_all_p_stanZ:
-.incbin "bin/ge007.u.844010.Tbg_cat_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_cat_all_p_stanZ"
 Tbg_cat_all_p_stanZ_end:
 Tbg_cave_all_p_stanZ:
-.incbin "bin/ge007.u.846740.Tbg_cave_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_cave_all_p_stanZ"
 Tbg_cave_all_p_stanZ_end:
 Tbg_crad_all_p_stanZ:
-.incbin "bin/ge007.u.84B630.Tbg_crad_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_crad_all_p_stanZ"
 Tbg_crad_all_p_stanZ_end:
 Tbg_cryp_all_p_stanZ:
-.incbin "bin/ge007.u.84DF40.Tbg_cryp_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_cryp_all_p_stanZ"
 Tbg_cryp_all_p_stanZ_end:
 Tbg_dam_all_p_stanZ:
-.incbin "bin/ge007.u.850FB0.Tbg_dam_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_dam_all_p_stanZ"
 Tbg_dam_all_p_stanZ_end:
 Tbg_depo_all_p_stanZ:
-.incbin "bin/ge007.u.85B390.Tbg_depo_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_depo_all_p_stanZ"
 Tbg_depo_all_p_stanZ_end:
 Tbg_dest_all_p_stanZ:
-.incbin "bin/ge007.u.8622D0.Tbg_dest_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_dest_all_p_stanZ"
 Tbg_dest_all_p_stanZ_end:
 Tbg_dish_all_p_stanZ:
-.incbin "bin/ge007.u.868BC0.Tbg_dish_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_dish_all_p_stanZ"
 Tbg_dish_all_p_stanZ_end:
 Tbg_imp_all_p_stanZ:
-.incbin "bin/ge007.u.8696D0.Tbg_imp_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_imp_all_p_stanZ"
 Tbg_imp_all_p_stanZ_end:
 Tbg_jun_all_p_stanZ:
-.incbin "bin/ge007.u.86B000.Tbg_jun_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_jun_all_p_stanZ"
 Tbg_jun_all_p_stanZ_end:
 Tbg_len_all_p_stanZ:
-.incbin "bin/ge007.u.872150.Tbg_len_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_len_all_p_stanZ"
 Tbg_len_all_p_stanZ_end:
 Tbg_oat_all_p_stanZ:
-.incbin "bin/ge007.u.872C10.Tbg_oat_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_oat_all_p_stanZ"
 Tbg_oat_all_p_stanZ_end:
 Tbg_pete_all_p_stanZ:
-.incbin "bin/ge007.u.874510.Tbg_pete_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_pete_all_p_stanZ"
 Tbg_pete_all_p_stanZ_end:
 Tbg_ref_all_p_stanZ:
-.incbin "bin/ge007.u.878BA0.Tbg_ref_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_ref_all_p_stanZ"
 Tbg_ref_all_p_stanZ_end:
 Tbg_run_all_p_stanZ:
-.incbin "bin/ge007.u.87A970.Tbg_run_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_run_all_p_stanZ"
 Tbg_run_all_p_stanZ_end:
 Tbg_sev_all_p_stanZ:
-.incbin "bin/ge007.u.87C3F0.Tbg_sev_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_sev_all_p_stanZ"
 Tbg_sev_all_p_stanZ_end:
 Tbg_sevb_all_p_stanZ:
-.incbin "bin/ge007.u.8801C0.Tbg_sevb_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_sevb_all_p_stanZ"
 Tbg_sevb_all_p_stanZ_end:
 Tbg_sevx_all_p_stanZ:
-.incbin "bin/ge007.u.885100.Tbg_sevx_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_sevx_all_p_stanZ"
 Tbg_sevx_all_p_stanZ_end:
 Tbg_silo_all_p_stanZ:
-.incbin "bin/ge007.u.88E430.Tbg_silo_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_silo_all_p_stanZ"
 Tbg_silo_all_p_stanZ_end:
 Tbg_stat_all_p_stanZ:
-.incbin "bin/ge007.u.8974D0.Tbg_stat_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_stat_all_p_stanZ"
 Tbg_stat_all_p_stanZ_end:
 Tbg_tra_all_p_stanZ:
-.incbin "bin/ge007.u.89C390.Tbg_tra_all_p_stanZ.bin"
+.incbin "obseg/bg/stan/Tbg_tra_all_p_stanZ"
 Tbg_tra_all_p_stanZ_end:
 UbriefarchZ:
-.incbin "bin/ge007.u.89E760.UbriefarchZ.bin"
+.incbin "obseg/brief/UbriefarchZ"
 UbriefarchZ_end:
 UbriefarkZ:
-.incbin "bin/ge007.u.89E780.UbriefarkZ.bin"
+.incbin "obseg/brief/UbriefarkZ"
 UbriefarkZ_end:
 UbriefaztZ:
-.incbin "bin/ge007.u.89E7A0.UbriefaztZ.bin"
+.incbin "obseg/brief/UbriefaztZ"
 UbriefaztZ_end:
 UbriefcaveZ:
-.incbin "bin/ge007.u.89E7C0.UbriefcaveZ.bin"
+.incbin "obseg/brief/UbriefcaveZ"
 UbriefcaveZ_end:
 UbriefcontrolZ:
-.incbin "bin/ge007.u.89E7E0.UbriefcontrolZ.bin"
+.incbin "obseg/brief/UbriefcontrolZ"
 UbriefcontrolZ_end:
 UbriefcradZ:
-.incbin "bin/ge007.u.89E800.UbriefcradZ.bin"
+.incbin "obseg/brief/UbriefcradZ"
 UbriefcradZ_end:
 UbriefcrypZ:
-.incbin "bin/ge007.u.89E820.UbriefcrypZ.bin"
+.incbin "obseg/brief/UbriefcrypZ"
 UbriefcrypZ_end:
 UbriefdamZ:
-.incbin "bin/ge007.u.89E840.UbriefdamZ.bin"
+.incbin "obseg/brief/UbriefdamZ"
 UbriefdamZ_end:
 UbriefdepoZ:
-.incbin "bin/ge007.u.89E860.UbriefdepoZ.bin"
+.incbin "obseg/brief/UbriefdepoZ"
 UbriefdepoZ_end:
 UbriefdestZ:
-.incbin "bin/ge007.u.89E880.UbriefdestZ.bin"
+.incbin "obseg/brief/UbriefdestZ"
 UbriefdestZ_end:
 UbriefjunZ:
-.incbin "bin/ge007.u.89E8A0.UbriefjunZ.bin"
+.incbin "obseg/brief/UbriefjunZ"
 UbriefjunZ_end:
 UbriefpeteZ:
-.incbin "bin/ge007.u.89E8C0.UbriefpeteZ.bin"
+.incbin "obseg/brief/UbriefpeteZ"
 UbriefpeteZ_end:
 UbriefrunZ:
-.incbin "bin/ge007.u.89E8E0.UbriefrunZ.bin"
+.incbin "obseg/brief/UbriefrunZ"
 UbriefrunZ_end:
 UbriefsevbZ:
-.incbin "bin/ge007.u.89E900.UbriefsevbZ.bin"
+.incbin "obseg/brief/UbriefsevbZ"
 UbriefsevbZ_end:
 UbriefsevbunkerZ:
-.incbin "bin/ge007.u.89E920.UbriefsevbunkerZ.bin"
+.incbin "obseg/brief/UbriefsevbunkerZ"
 UbriefsevbunkerZ_end:
 UbriefsevxZ:
-.incbin "bin/ge007.u.89E940.UbriefsevxZ.bin"
+.incbin "obseg/brief/UbriefsevxZ"
 UbriefsevxZ_end:
 UbriefsevxbZ:
-.incbin "bin/ge007.u.89E960.UbriefsevxbZ.bin"
+.incbin "obseg/brief/UbriefsevxbZ"
 UbriefsevxbZ_end:
 UbriefsiloZ:
-.incbin "bin/ge007.u.89E980.UbriefsiloZ.bin"
+.incbin "obseg/brief/UbriefsiloZ"
 UbriefsiloZ_end:
 UbriefstatueZ:
-.incbin "bin/ge007.u.89E9A0.UbriefstatueZ.bin"
+.incbin "obseg/brief/UbriefstatueZ"
 UbriefstatueZ_end:
 UbrieftraZ:
-.incbin "bin/ge007.u.89E9C0.UbrieftraZ.bin"
+.incbin "obseg/brief/UbrieftraZ"
 UbrieftraZ_end:
 Ump_setupameZ:
-.incbin "bin/ge007.u.89E9E0.Ump_setupameZ.bin"
+.incbin "obseg/setup/mp/Ump_setupameZ"
 Ump_setupameZ_end:
 Ump_setuparchZ:
-.incbin "bin/ge007.u.89F100.Ump_setuparchZ.bin"
+.incbin "obseg/setup/mp/Ump_setuparchZ"
 Ump_setuparchZ_end:
 Ump_setuparkZ:
-.incbin "bin/ge007.u.8A1EA0.Ump_setuparkZ.bin"
+.incbin "obseg/setup/mp/Ump_setuparkZ"
 Ump_setuparkZ_end:
 Ump_setupashZ:
-.incbin "bin/ge007.u.8A3BE0.Ump_setupashZ.bin"
+.incbin "obseg/setup/mp/Ump_setupashZ"
 Ump_setupashZ_end:
 Ump_setupcaveZ:
-.incbin "bin/ge007.u.8A42D0.Ump_setupcaveZ.bin"
+.incbin "obseg/setup/mp/Ump_setupcaveZ"
 Ump_setupcaveZ_end:
 Ump_setupcradZ:
-.incbin "bin/ge007.u.8A6830.Ump_setupcradZ.bin"
+.incbin "obseg/setup/mp/Ump_setupcradZ"
 Ump_setupcradZ_end:
 Ump_setupcrypZ:
-.incbin "bin/ge007.u.8A7190.Ump_setupcrypZ.bin"
+.incbin "obseg/setup/mp/Ump_setupcrypZ"
 Ump_setupcrypZ_end:
 Ump_setupdishZ:
-.incbin "bin/ge007.u.8A7EF0.Ump_setupdishZ.bin"
+.incbin "obseg/setup/mp/Ump_setupdishZ"
 Ump_setupdishZ_end:
 Ump_setupimpZ:
-.incbin "bin/ge007.u.8A82E0.Ump_setupimpZ.bin"
+.incbin "obseg/setup/mp/Ump_setupimpZ"
 Ump_setupimpZ_end:
 Ump_setupoatZ:
-.incbin "bin/ge007.u.8A8920.Ump_setupoatZ.bin"
+.incbin "obseg/setup/mp/Ump_setupoatZ"
 Ump_setupoatZ_end:
 Ump_setuprefZ:
-.incbin "bin/ge007.u.8A8C70.Ump_setuprefZ.bin"
+.incbin "obseg/setup/mp/Ump_setuprefZ"
 Ump_setuprefZ_end:
 Ump_setupsevbZ:
-.incbin "bin/ge007.u.8A9080.Ump_setupsevbZ.bin"
+.incbin "obseg/setup/mp/Ump_setupsevbZ"
 Ump_setupsevbZ_end:
 Ump_setupstatueZ:
-.incbin "bin/ge007.u.8AA390.Ump_setupstatueZ.bin"
+.incbin "obseg/setup/mp/Ump_setupstatueZ"
 Ump_setupstatueZ_end:
 UsetuparchZ:
-.incbin "bin/ge007.u.8AB210.UsetuparchZ.bin"
+.incbin "obseg/setup/UsetuparchZ"
 UsetuparchZ_end:
 UsetuparkZ:
-.incbin "bin/ge007.u.8AF820.UsetuparkZ.bin"
+.incbin "obseg/setup/UsetuparkZ"
 UsetuparkZ_end:
 UsetupaztZ:
-.incbin "bin/ge007.u.8B33B0.UsetupaztZ.bin"
+.incbin "obseg/setup/UsetupaztZ"
 UsetupaztZ_end:
 UsetupcaveZ:
-.incbin "bin/ge007.u.8B5CB0.UsetupcaveZ.bin"
+.incbin "obseg/setup/UsetupcaveZ"
 UsetupcaveZ_end:
 UsetupcontrolZ:
-.incbin "bin/ge007.u.8B9B10.UsetupcontrolZ.bin"
+.incbin "obseg/setup/UsetupcontrolZ"
 UsetupcontrolZ_end:
 UsetupcradZ:
-.incbin "bin/ge007.u.8BD610.UsetupcradZ.bin"
+.incbin "obseg/setup/UsetupcradZ"
 UsetupcradZ_end:
 UsetupcrypZ:
-.incbin "bin/ge007.u.8BF240.UsetupcrypZ.bin"
+.incbin "obseg/setup/UsetupcrypZ"
 UsetupcrypZ_end:
 UsetupdamZ:
-.incbin "bin/ge007.u.8C10D0.UsetupdamZ.bin"
+.incbin "obseg/setup/UsetupdamZ"
 UsetupdamZ_end:
 UsetupdepoZ:
-.incbin "bin/ge007.u.8C53A0.UsetupdepoZ.bin"
+.incbin "obseg/setup/UsetupdepoZ"
 UsetupdepoZ_end:
 UsetupdestZ:
-.incbin "bin/ge007.u.8C8330.UsetupdestZ.bin"
+.incbin "obseg/setup/UsetupdestZ"
 UsetupdestZ_end:
 UsetupjunZ:
-.incbin "bin/ge007.u.8CA680.UsetupjunZ.bin"
+.incbin "obseg/setup/UsetupjunZ"
 UsetupjunZ_end:
 UsetuplenZ:
-.incbin "bin/ge007.u.8CDD80.UsetuplenZ.bin"
+.incbin "obseg/setup/UsetuplenZ"
 UsetuplenZ_end:
 UsetuppeteZ:
-.incbin "bin/ge007.u.8CE350.UsetuppeteZ.bin"
+.incbin "obseg/setup/UsetuppeteZ"
 UsetuppeteZ_end:
 UsetuprunZ:
-.incbin "bin/ge007.u.8D12D0.UsetuprunZ.bin"
+.incbin "obseg/setup/UsetuprunZ"
 UsetuprunZ_end:
 UsetupsevbZ:
-.incbin "bin/ge007.u.8D2B30.UsetupsevbZ.bin"
+.incbin "obseg/setup/UsetupsevbZ"
 UsetupsevbZ_end:
 UsetupsevbunkerZ:
-.incbin "bin/ge007.u.8D5190.UsetupsevbunkerZ.bin"
+.incbin "obseg/setup/UsetupsevbunkerZ"
 UsetupsevbunkerZ_end:
 UsetupsevxZ:
-.incbin "bin/ge007.u.8D6BC0.UsetupsevxZ.bin"
+.incbin "obseg/setup/UsetupsevxZ"
 UsetupsevxZ_end:
 UsetupsevxbZ:
-.incbin "bin/ge007.u.8DAED0.UsetupsevxbZ.bin"
+.incbin "obseg/setup/UsetupsevxbZ"
 UsetupsevxbZ_end:
 UsetupsiloZ:
-.incbin "bin/ge007.u.8DEFC0.UsetupsiloZ.bin"
+.incbin "obseg/setup/UsetupsiloZ"
 UsetupsiloZ_end:
 UsetupstatueZ:
-.incbin "bin/ge007.u.8E1A10.UsetupstatueZ.bin"
+.incbin "obseg/setup/UsetupstatueZ"
 UsetupstatueZ_end:
 UsetuptraZ:
-.incbin "bin/ge007.u.8E41E0.UsetuptraZ.bin"
+.incbin "obseg/setup/UsetuptraZ"
 UsetuptraZ_end:
 LameE:
-.incbin "bin/ge007.u.8E7410.LameE.bin"
+.incbin "obseg/text/LameE"
 LameE_end:
 LameJ:
-.incbin "bin/ge007.u.8E7420.LameJ.bin"
+.incbin "obseg/text/LameJ"
 LameJ_end:
 LarchE:
-.incbin "bin/ge007.u.8E7430.LarchE.bin"
+.incbin "obseg/text/LarchE"
 LarchE_end:
 LarchJ:
-.incbin "bin/ge007.u.8E7A60.LarchJ.bin"
+.incbin "obseg/text/LarchJ"
 LarchJ_end:
 LarecE:
-.incbin "bin/ge007.u.8E80C0.LarecE.bin"
+.incbin "obseg/text/LarecE"
 LarecE_end:
 LarecJ:
-.incbin "bin/ge007.u.8E8690.LarecJ.bin"
+.incbin "obseg/text/LarecJ"
 LarecJ_end:
 LarkE:
-.incbin "bin/ge007.u.8E8C20.LarkE.bin"
+.incbin "obseg/text/LarkE"
 LarkE_end:
 LarkJ:
-.incbin "bin/ge007.u.8E92C0.LarkJ.bin"
+.incbin "obseg/text/LarkJ"
 LarkJ_end:
 LashE:
-.incbin "bin/ge007.u.8E9970.LashE.bin"
+.incbin "obseg/text/LashE"
 LashE_end:
 LashJ:
-.incbin "bin/ge007.u.8E9980.LashJ.bin"
+.incbin "obseg/text/LashJ"
 LashJ_end:
 LaztE:
-.incbin "bin/ge007.u.8E9990.LaztE.bin"
+.incbin "obseg/text/LaztE"
 LaztE_end:
 LaztJ:
-.incbin "bin/ge007.u.8E9DD0.LaztJ.bin"
+.incbin "obseg/text/LaztJ"
 LaztJ_end:
 LcatE:
-.incbin "bin/ge007.u.8EA280.LcatE.bin"
+.incbin "obseg/text/LcatE"
 LcatE_end:
 LcatJ:
-.incbin "bin/ge007.u.8EA290.LcatJ.bin"
+.incbin "obseg/text/LcatJ"
 LcatJ_end:
 LcaveE:
-.incbin "bin/ge007.u.8EA2A0.LcaveE.bin"
+.incbin "obseg/text/LcaveE"
 LcaveE_end:
 LcaveJ:
-.incbin "bin/ge007.u.8EA6A0.LcaveJ.bin"
+.incbin "obseg/text/LcaveJ"
 LcaveJ_end:
 LcradE:
-.incbin "bin/ge007.u.8EAB00.LcradE.bin"
+.incbin "obseg/text/LcradE"
 LcradE_end:
 LcradJ:
-.incbin "bin/ge007.u.8EAFD0.LcradJ.bin"
+.incbin "obseg/text/LcradJ"
 LcradJ_end:
 LcrypE:
-.incbin "bin/ge007.u.8EB480.LcrypE.bin"
+.incbin "obseg/text/LcrypE"
 LcrypE_end:
 LcrypJ:
-.incbin "bin/ge007.u.8EB6D0.LcrypJ.bin"
+.incbin "obseg/text/LcrypJ"
 LcrypJ_end:
 LdamE:
-.incbin "bin/ge007.u.8EB990.LdamE.bin"
+.incbin "obseg/text/LdamE"
 LdamE_end:
 LdamJ:
-.incbin "bin/ge007.u.8EBDE0.LdamJ.bin"
+.incbin "obseg/text/LdamJ"
 LdamJ_end:
 LdepoE:
-.incbin "bin/ge007.u.8EC250.LdepoE.bin"
+.incbin "obseg/text/LdepoE"
 LdepoE_end:
 LdepoJ:
-.incbin "bin/ge007.u.8EC5C0.LdepoJ.bin"
+.incbin "obseg/text/LdepoJ"
 LdepoJ_end:
 LdestE:
-.incbin "bin/ge007.u.8EC900.LdestE.bin"
+.incbin "obseg/text/LdestE"
 LdestE_end:
 LdestJ:
-.incbin "bin/ge007.u.8ECD90.LdestJ.bin"
+.incbin "obseg/text/LdestJ"
 LdestJ_end:
 LdishE:
-.incbin "bin/ge007.u.8ED1F0.LdishE.bin"
+.incbin "obseg/text/LdishE"
 LdishE_end:
 LdishJ:
-.incbin "bin/ge007.u.8ED200.LdishJ.bin"
+.incbin "obseg/text/LdishJ"
 LdishJ_end:
 LearE:
-.incbin "bin/ge007.u.8ED210.LearE.bin"
+.incbin "obseg/text/LearE"
 LearE_end:
 LearJ:
-.incbin "bin/ge007.u.8ED220.LearJ.bin"
+.incbin "obseg/text/LearJ"
 LearJ_end:
 LeldE:
-.incbin "bin/ge007.u.8ED230.LeldE.bin"
+.incbin "obseg/text/LeldE"
 LeldE_end:
 LeldJ:
-.incbin "bin/ge007.u.8ED240.LeldJ.bin"
+.incbin "obseg/text/LeldJ"
 LeldJ_end:
 LgunE:
-.incbin "bin/ge007.u.8ED250.LgunE.bin"
+.incbin "obseg/text/LgunE"
 LgunE_end:
 LgunJ:
-.incbin "bin/ge007.u.8ED970.LgunJ.bin"
+.incbin "obseg/text/LgunJ"
 LgunJ_end:
 LimpE:
-.incbin "bin/ge007.u.8EE0C0.LimpE.bin"
+.incbin "obseg/text/LimpE"
 LimpE_end:
 LimpJ:
-.incbin "bin/ge007.u.8EE0D0.LimpJ.bin"
+.incbin "obseg/text/LimpJ"
 LimpJ_end:
 LjunE:
-.incbin "bin/ge007.u.8EE0E0.LjunE.bin"
+.incbin "obseg/text/LjunE"
 LjunE_end:
 LjunJ:
-.incbin "bin/ge007.u.8EE600.LjunJ.bin"
+.incbin "obseg/text/LjunJ"
 LjunJ_end:
 LleeE:
-.incbin "bin/ge007.u.8EEB40.LleeE.bin"
+.incbin "obseg/text/LleeE"
 LleeE_end:
 LleeJ:
-.incbin "bin/ge007.u.8EEB50.LleeJ.bin"
+.incbin "obseg/text/LleeJ"
 LleeJ_end:
 LlenE:
-.incbin "bin/ge007.u.8EEB60.LlenE.bin"
+.incbin "obseg/text/LlenE"
 LlenE_end:
 LlenJ:
-.incbin "bin/ge007.u.8EF1A0.LlenJ.bin"
+.incbin "obseg/text/LlenJ"
 LlenJ_end:
 LlipE:
-.incbin "bin/ge007.u.8EF450.LlipE.bin"
+.incbin "obseg/text/LlipE"
 LlipE_end:
 LlipJ:
-.incbin "bin/ge007.u.8EF460.LlipJ.bin"
+.incbin "obseg/text/LlipJ"
 LlipJ_end:
 LlueE:
-.incbin "bin/ge007.u.8EF470.LlueE.bin"
+.incbin "obseg/text/LlueE"
 LlueE_end:
 LlueJ:
-.incbin "bin/ge007.u.8EF480.LlueJ.bin"
+.incbin "obseg/text/LlueJ"
 LlueJ_end:
 LmiscE:
-.incbin "bin/ge007.u.8EF490.LmiscE.bin"
+.incbin "obseg/text/LmiscE"
 LmiscE_end:
 LmiscJ:
-.incbin "bin/ge007.u.8EF730.LmiscJ.bin"
+.incbin "obseg/text/LmiscJ"
 LmiscJ_end:
 LmpmenuE:
-.incbin "bin/ge007.u.8EFA10.LmpmenuE.bin"
+.incbin "obseg/text/LmpmenuE"
 LmpmenuE_end:
 LmpmenuJ:
-.incbin "bin/ge007.u.8EFBB0.LmpmenuJ.bin"
+.incbin "obseg/text/LmpmenuJ"
 LmpmenuJ_end:
 LmpweaponsE:
-.incbin "bin/ge007.u.8EFD40.LmpweaponsE.bin"
+.incbin "obseg/text/LmpweaponsE"
 LmpweaponsE_end:
 LmpweaponsJ:
-.incbin "bin/ge007.u.8EFE00.LmpweaponsJ.bin"
+.incbin "obseg/text/LmpweaponsJ"
 LmpweaponsJ_end:
 LoatE:
-.incbin "bin/ge007.u.8EFEE0.LoatE.bin"
+.incbin "obseg/text/LoatE"
 LoatE_end:
 LoatJ:
-.incbin "bin/ge007.u.8EFEF0.LoatJ.bin"
+.incbin "obseg/text/LoatJ"
 LoatJ_end:
 LoptionsE:
-.incbin "bin/ge007.u.8EFF00.LoptionsE.bin"
+.incbin "obseg/text/LoptionsE"
 LoptionsE_end:
 LoptionsJ:
-.incbin "bin/ge007.u.8F0130.LoptionsJ.bin"
+.incbin "obseg/text/LoptionsJ"
 LoptionsJ_end:
 LpamE:
-.incbin "bin/ge007.u.8F0380.LpamE.bin"
+.incbin "obseg/text/LpamE"
 LpamE_end:
 LpamJ:
-.incbin "bin/ge007.u.8F0390.LpamJ.bin"
+.incbin "obseg/text/LpamJ"
 LpamJ_end:
 LpeteE:
-.incbin "bin/ge007.u.8F03A0.LpeteE.bin"
+.incbin "obseg/text/LpeteE"
 LpeteE_end:
 LpeteJ:
-.incbin "bin/ge007.u.8F0820.LpeteJ.bin"
+.incbin "obseg/text/LpeteJ"
 LpeteJ_end:
 LpropobjE:
-.incbin "bin/ge007.u.8F0C90.LpropobjE.bin"
+.incbin "obseg/text/LpropobjE"
 LpropobjE_end:
 LpropobjJ:
-.incbin "bin/ge007.u.8F0F30.LpropobjJ.bin"
+.incbin "obseg/text/LpropobjJ"
 LpropobjJ_end:
 LrefE:
-.incbin "bin/ge007.u.8F11F0.LrefE.bin"
+.incbin "obseg/text/LrefE"
 LrefE_end:
 LrefJ:
-.incbin "bin/ge007.u.8F1200.LrefJ.bin"
+.incbin "obseg/text/LrefJ"
 LrefJ_end:
 LritE:
-.incbin "bin/ge007.u.8F1210.LritE.bin"
+.incbin "obseg/text/LritE"
 LritE_end:
 LritJ:
-.incbin "bin/ge007.u.8F1220.LritJ.bin"
+.incbin "obseg/text/LritJ"
 LritJ_end:
 LrunE:
-.incbin "bin/ge007.u.8F1230.LrunE.bin"
+.incbin "obseg/text/LrunE"
 LrunE_end:
 LrunJ:
-.incbin "bin/ge007.u.8F14A0.LrunJ.bin"
+.incbin "obseg/text/LrunJ"
 LrunJ_end:
 LsevE:
-.incbin "bin/ge007.u.8F1730.LsevE.bin"
+.incbin "obseg/text/LsevE"
 LsevE_end:
 LsevJ:
-.incbin "bin/ge007.u.8F1C90.LsevJ.bin"
+.incbin "obseg/text/LsevJ"
 LsevJ_end:
 LsevbE:
-.incbin "bin/ge007.u.8F21A0.LsevbE.bin"
+.incbin "obseg/text/LsevbE"
 LsevbE_end:
 LsevbJ:
-.incbin "bin/ge007.u.8F28F0.LsevbJ.bin"
+.incbin "obseg/text/LsevbJ"
 LsevbJ_end:
 LsevxE:
-.incbin "bin/ge007.u.8F30E0.LsevxE.bin"
+.incbin "obseg/text/LsevxE"
 LsevxE_end:
 LsevxJ:
-.incbin "bin/ge007.u.8F3540.LsevxJ.bin"
+.incbin "obseg/text/LsevxJ"
 LsevxJ_end:
 LsevxbE:
-.incbin "bin/ge007.u.8F3900.LsevxbE.bin"
+.incbin "obseg/text/LsevxbE"
 LsevxbE_end:
 LsevxbJ:
-.incbin "bin/ge007.u.8F3D90.LsevxbJ.bin"
+.incbin "obseg/text/LsevxbJ"
 LsevxbJ_end:
 LshoE:
-.incbin "bin/ge007.u.8F41E0.LshoE.bin"
+.incbin "obseg/text/LshoE"
 LshoE_end:
 LshoJ:
-.incbin "bin/ge007.u.8F41F0.LshoJ.bin"
+.incbin "obseg/text/LshoJ"
 LshoJ_end:
 LsiloE:
-.incbin "bin/ge007.u.8F4200.LsiloE.bin"
+.incbin "obseg/text/LsiloE"
 LsiloE_end:
 LsiloJ:
-.incbin "bin/ge007.u.8F47B0.LsiloJ.bin"
+.incbin "obseg/text/LsiloJ"
 LsiloJ_end:
 LstatE:
-.incbin "bin/ge007.u.8F4D90.LstatE.bin"
+.incbin "obseg/text/LstatE"
 LstatE_end:
 LstatJ:
-.incbin "bin/ge007.u.8F56B0.LstatJ.bin"
+.incbin "obseg/text/LstatJ"
 LstatJ_end:
 LtitleE:
-.incbin "bin/ge007.u.8F5F20.LtitleE.bin"
+.incbin "obseg/text/LtitleE"
 LtitleE_end:
 LtitleJ:
-.incbin "bin/ge007.u.8F69E0.LtitleJ.bin"
+.incbin "obseg/text/LtitleJ"
 LtitleJ_end:
 LtraE:
-.incbin "bin/ge007.u.8F7570.LtraE.bin"
+.incbin "obseg/text/LtraE"
 LtraE_end:
 LtraJ:
-.incbin "bin/ge007.u.8F79A0.LtraJ.bin"
+.incbin "obseg/text/LtraJ"
 LtraJ_end:
 LwaxE:
-.incbin "bin/ge007.u.8F7DC0.LwaxE.bin"
+.incbin "obseg/text/LwaxE"
 LwaxE_end:
 LwaxJ:
-.incbin "bin/ge007.u.8F7DD0.LwaxJ.bin"
+.incbin "obseg/text/LwaxJ"
 LwaxJ_end:
 ob__ob_end.seg:
-.incbin "bin/ge007.u.8F7DE0.ob__ob_end.seg.bin"
+.incbin "obseg/ob__ob_end.seg"
 ob__ob_end.seg_end:

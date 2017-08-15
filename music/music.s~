@@ -1,0 +1,285 @@
+.section .music
+
+music_sfx.ptr:
+.incbin "bin/ge007.u.2EBDE0.music_sfx.ptr.bin"
+music_sfx.ptr_end:
+
+music_sfx.bnk:
+.incbin "bin/ge007.u.2F19A0.music_sfx.bnk.bin"
+music_sfx.bnk_end:
+
+music_somethinginmusic:
+.incbin "bin/ge007.u.392BBD.music_somethinginmusic.bin"
+music_somethinginmusic_end:
+
+music_moresomethinginmusic:
+.incbin "bin/ge007.u.3A045B.music_moresomethinginmusic.bin"
+music_moresomethinginmusic_end:
+
+music_sounds.ptr:
+.incbin "bin/ge007.u.3B4450.music_sounds.ptr.bin"
+music_sounds.ptr_end:
+
+music_sounds.bnk:
+.incbin "bin/ge007.u.3B87F0.music_sounds.bnk.bin"
+music_sounds.bnk_end:
+
+music_number_music_samples:
+.incbin "bin/ge007.u.419790.music_number_music_samples.bin"
+music_number_music_samples_end:
+
+music_table_music_data:
+.incbin "bin/ge007.u.419794.music_table_music_data.bin"
+music_table_music_data_end:
+
+music_no_music:
+.incbin "bin/ge007.u.41998C.music_no_music.bin"
+music_no_music_end:
+
+music_solo_death_abrev:
+.incbin "bin/ge007.u.4199B6.music_solo_death_abrev.bin"
+music_solo_death_abrev_end:
+
+music_intro_eye:
+.incbin "bin/ge007.u.419B8C.music_intro_eye.bin"
+music_intro_eye_end:
+
+music_train:
+.incbin "bin/ge007.u.41A43A.music_train.bin"
+music_train_end:
+
+music_depot:
+.incbin "bin/ge007.u.41B024.music_depot.bin"
+music_depot_end:
+
+music_MultiplayerTheme:
+.incbin "bin/ge007.u.41BDC4.music_MultiplayerTheme.bin"
+music_MultiplayerTheme_end:
+
+music_citadel:
+.incbin "bin/ge007.u.41CB5C.music_citadel.bin"
+music_citadel_end:
+
+music_facility:
+.incbin "bin/ge007.u.41D91C.music_facility.bin"
+music_facility_end:
+
+music_control:
+.incbin "bin/ge007.u.41E3EA.music_control.bin"
+music_control_end:
+
+music_dam:
+.incbin "bin/ge007.u.41EF48.music_dam.bin"
+music_dam_end:
+
+music_frigate:
+.incbin "bin/ge007.u.41FD4C.music_frigate.bin"
+music_frigate_end:
+
+music_archives:
+.incbin "bin/ge007.u.420B2C.music_archives.bin"
+music_archives_end:
+
+music_silo:
+.incbin "bin/ge007.u.421480.music_silo.bin"
+music_silo_end:
+
+music_unk4222f0:
+.incbin "bin/ge007.u.4222F0.music_unk4222f0.bin"
+music_unk4222f0_end:
+
+music_streets:
+.incbin "bin/ge007.u.42325C.music_streets.bin"
+music_streets_end:
+
+music_bunker1:
+.incbin "bin/ge007.u.423F5E.music_bunker1.bin"
+music_bunker1_end:
+
+music_bunker2:
+.incbin "bin/ge007.u.4245D0.music_bunker2.bin"
+music_bunker2_end:
+
+music_statue:
+.incbin "bin/ge007.u.424C50.music_statue.bin"
+music_statue_end:
+
+music_elevator_control:
+.incbin "bin/ge007.u.4255E8.music_elevator_control.bin"
+music_elevator_control_end:
+
+music_cradle:
+.incbin "bin/ge007.u.425FC2.music_cradle.bin"
+music_cradle_end:
+
+music_unk426d22:
+.incbin "bin/ge007.u.426D22.music_unk426d22.bin"
+music_unk426d22_end:
+
+music_elevator_wc:
+.incbin "bin/ge007.u.426D4C.music_elevator_wc.bin"
+music_elevator_wc_end:
+
+music_egyptian:
+.incbin "bin/ge007.u.427392.music_egyptian.bin"
+music_egyptian_end:
+
+music_folders:
+.incbin "bin/ge007.u.42812C.music_folders.bin"
+music_folders_end:
+
+music_watchmusic:
+.incbin "bin/ge007.u.42850E.music_watchmusic.bin"
+music_watchmusic_end:
+
+music_aztec:
+.incbin "bin/ge007.u.428700.music_aztec.bin"
+music_aztec_end:
+
+music_watercaverns:
+.incbin "bin/ge007.u.429372.music_watercaverns.bin"
+music_watercaverns_end:
+
+music_deathsolo:
+.incbin "bin/ge007.u.42A19E.music_deathsolo.bin"
+music_deathsolo_end:
+
+music_surface2:
+.incbin "bin/ge007.u.42A504.music_surface2.bin"
+music_surface2_end:
+
+music_trainx:
+.incbin "bin/ge007.u.42B2BA.music_trainx.bin"
+music_trainx_end:
+
+music_unk42bb5a:
+.incbin "bin/ge007.u.42BB5A.music_unk42bb5a.bin"
+music_unk42bb5a_end:
+
+music_facilityx:
+.incbin "bin/ge007.u.42BB84.music_facilityx.bin"
+music_facilityx_end:
+
+music_depotx:
+.incbin "bin/ge007.u.42C4DC.music_depotx.bin"
+music_depotx_end:
+
+music_controlx:
+.incbin "bin/ge007.u.42CC98.music_controlx.bin"
+music_controlx_end:
+
+music_watercavernsx:
+.incbin "bin/ge007.u.42D1E0.music_watercavernsx.bin"
+music_watercavernsx_end:
+
+music_damx:
+.incbin "bin/ge007.u.42D934.music_damx.bin"
+music_damx_end:
+
+music_frigatex:
+.incbin "bin/ge007.u.42DE54.music_frigatex.bin"
+music_frigatex_end:
+
+music_archivesx:
+.incbin "bin/ge007.u.42E416.music_archivesx.bin"
+music_archivesx_end:
+
+music_silox:
+.incbin "bin/ge007.u.42EB3A.music_silox.bin"
+music_silox_end:
+
+music_egyptianx:
+.incbin "bin/ge007.u.42F42E.music_egyptianx.bin"
+music_egyptianx_end:
+
+music_streetsx:
+.incbin "bin/ge007.u.42F458.music_streetsx.bin"
+music_streetsx_end:
+
+music_bunker1x:
+.incbin "bin/ge007.u.42FAC4.music_bunker1x.bin"
+music_bunker1x_end:
+
+music_bunker2x:
+.incbin "bin/ge007.u.43026A.music_bunker2x.bin"
+music_bunker2x_end:
+
+music_unk4308b8:
+.incbin "bin/ge007.u.4308B8.music_unk4308b8.bin"
+music_unk4308b8_end:
+
+music_introswoosh_drone:
+.incbin "bin/ge007.u.4310CE.music_introswoosh_drone.bin"
+music_introswoosh_drone_end:
+
+music_statuex:
+.incbin "bin/ge007.u.431500.music_statuex.bin"
+music_statuex_end:
+
+music_aztecx:
+.incbin "bin/ge007.u.431BB8.music_aztecx.bin"
+music_aztecx_end:
+
+music_unk43248e:
+.incbin "bin/ge007.u.43248E.music_unk43248e.bin"
+music_unk43248e_end:
+
+music_cradlex:
+.incbin "bin/ge007.u.432D3E.music_cradlex.bin"
+music_cradlex_end:
+
+music_cuba:
+.incbin "bin/ge007.u.433408.music_cuba.bin"
+music_cuba_end:
+
+music_runway:
+.incbin "bin/ge007.u.433C52.music_runway.bin"
+music_runway_end:
+
+music_runway_plane:
+.incbin "bin/ge007.u.434970.music_runway_plane.bin"
+music_runway_plane_end:
+
+music_unk434c40:
+.incbin "bin/ge007.u.434C40.music_unk434c40.bin"
+music_unk434c40_end:
+
+music_windblowing_surface2:
+.incbin "bin/ge007.u.435372.music_windblowing_surface2.bin"
+music_windblowing_surface2_end:
+
+music_guitargliss_multideath:
+.incbin "bin/ge007.u.435894.music_guitargliss_multideath.bin"
+music_guitargliss_multideath_end:
+
+music_jungle:
+.incbin "bin/ge007.u.435AA0.music_jungle.bin"
+music_jungle_end:
+
+music_runwayx:
+.incbin "bin/ge007.u.436228.music_runwayx.bin"
+music_runwayx_end:
+
+music_surface1:
+.incbin "bin/ge007.u.43684A.music_surface1.bin"
+music_surface1_end:
+
+music_multiplayerdeath:
+.incbin "bin/ge007.u.4375B2.music_multiplayerdeath.bin"
+music_multiplayerdeath_end:
+
+music_surface2x:
+.incbin "bin/ge007.u.43787A.music_surface2x.bin"
+music_surface2x_end:
+
+music_surface2_ending:
+.incbin "bin/ge007.u.437FA2.music_surface2_ending.bin"
+music_surface2_ending_end:
+
+music_partofstatuetheme:
+.incbin "bin/ge007.u.43823E.music_partofstatuetheme.bin"
+music_partofstatuetheme_end:
+
+music_endoftheme:
+.incbin "bin/ge007.u.4383A4.music_endoftheme.bin"
+music_endoftheme_end:

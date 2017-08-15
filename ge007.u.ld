@@ -40,6 +40,8 @@ SECTIONS
    .romfiles 0x117880 : AT(0x117880) {
       * (.romfiles);
       * (.ramrom);
+      * (.font);
+      * (.music);
 
    }
 
