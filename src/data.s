@@ -39636,47 +39636,49 @@ dword_800483C0:
 .word 0x00000000
 .word 0x00000000
 
-dword_800483F0:
-.word 0x002BF2D0
+ramrom_table:
+.word ramrom_Dam_1
 .word 0x00000000
-.word 0x002C44D0
+.word ramrom_Dam_2
 .word 0x00000000
-.word 0x002C64A0
+.word ramrom_Facility_1
 .word 0x00000000
-.word 0x002C7F50
+.word ramrom_Facility_2
 .word 0x00000000
-.word 0x002CA330
+.word ramrom_Facility_3
 .word 0x00000000
-.word 0x002CBFA0
+.word ramrom_Runway_1
 .word 0x00000000
-.word 0x002CE6F0
+.word ramrom_Runway_2
 .word 0x00000000
-.word 0x002D1000
+.word ramrom_BunkerI_1
 .word 0x00000000
-.word 0x002D4390
+.word ramrom_BunkerI_2
 .word 0x00000000
-.word 0x002D9610
+.word ramrom_Silo_1
 .word 0x00000000
-.word 0x002DB7A0
+.word ramrom_Silo_2
 .word 0x00000000
-.word 0x002DD770
+.word ramrom_Frigate_1
 .word 0x00000000
-.word 0x002DF120
+.word ramrom_Frigate_2
+.word 0x00000000
+.word ramrom_Train
+.word 0x00000000
+.word 0x00000000
+.word 0x00000000
+ramrom_table_end:
+
+.word 0x00000000
+.word 0x00000000
+.word 0x00000000
+.word 0x00000000
+.word 0x00000000
+.word 0x00000000
+.word 0x00000000
 .word 0x00000000
 
-dword_80048458:
-.word 0x002E2600
-.word 0x00000000
-.word 0x00000000
-.word 0x00000000
-.word 0x00000000
-.word 0x00000000
-.word 0x00000000
-.word 0x00000000
-.word 0x00000000
-.word 0x00000000
-.word 0x00000000
-.word 0x00000000
+flag_to_record_ramrom:
 .word 0x00000000
 .word 0x00000000
 
