@@ -1,4 +1,9 @@
-.section .text_rarezip, "ax"
+# assembler directives
+.set noat      # allow manual use of $at
+.set noreorder # don't insert nops after branches
+
+
+.section .text, "ax"
 
 
 .global decompress.buildtable
@@ -1445,26 +1450,26 @@ decompress.start:
 
 .global decompress.entry
 decompress.entry:
-/* 0349AC 7020141C 3C027020 */  lui   $v0, 0x7020
-/* 0349B0 70201420 24421480 */  addiu $v0, $v0, 0x1480
+/* 0349AC 7020141C 3C027020 */  lui   $v0, %hi(rarezip.ptr_source)
+/* 0349B0 70201420 24421480 */  addiu $v0, $v0, %lo(rarezip.ptr_source)
 /* 0349B4 70201424 AC440000 */  sw    $a0, ($v0)
-/* 0349B8 70201428 3C017020 */  lui   $at, 0x7020
-/* 0349BC 7020142C AC251484 */  sw    $a1, %lo(0x70201484)($at) # $a1, 0x1484($at)
-/* 0349C0 70201430 3C017020 */  lui   $at, 0x7020
-/* 0349C4 70201434 AC261490 */  sw    $a2, %lo(0x70201490)($at) # $a2, 0x1490($at)
+/* 0349B8 70201428 3C017020 */  lui   $at, %hi(rarezip.ptr_target)
+/* 0349BC 7020142C AC251484 */  sw    $a1, %lo(rarezip.ptr_target)($at) # $a1, 0x1484($at)
+/* 0349C0 70201430 3C017020 */  lui   $at, %hi(rarezip.ptrbuffer)
+/* 0349C4 70201434 AC261490 */  sw    $a2, %lo(rarezip.ptrbuffer)($at) # $a2, 0x1490($at)
 /* 0349C8 70201438 8C4E0000 */  lw    $t6, ($v0)
-/* 0349CC 7020143C 3C017020 */  lui   $at, 0x7020
+/* 0349CC 7020143C 3C017020 */  lui   $at, %hi(rarezip.decompressed_count)
 /* 0349D0 70201440 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0349D4 70201444 25CF0002 */  addiu $t7, $t6, 2
 /* 0349D8 70201448 AC4F0000 */  sw    $t7, ($v0)
-/* 0349DC 7020144C AC20148C */  sw    $zero, %lo(0x7020148C)($at) # $zero, 0x148c($at)
+/* 0349DC 7020144C AC20148C */  sw    $zero, %lo(rarezip.decompressed_count)($at) # $zero, 0x148c($at)
 /* 0349E0 70201450 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0349E4 70201454 3C017020 */  lui   $at, 0x7020
+/* 0349E4 70201454 3C017020 */  lui   $at, %hi(rarezip.curoffset)
 /* 0349E8 70201458 0C0804D2 */  jal   decompress.start
-/* 0349EC 7020145C AC201488 */  sw    $zero, %lo(0x70201488)($at) # $zero, 0x1488($at)
+/* 0349EC 7020145C AC201488 */  sw    $zero, %lo(rarezip.curoffset)($at) # $zero, 0x1488($at)
 /* 0349F0 70201460 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0349F4 70201464 3C027020 */  lui   $v0, 0x7020
-/* 0349F8 70201468 8C42148C */  lw    $v0, 0x148c($v0)
+/* 0349F4 70201464 3C027020 */  lui   $v0, %hi(rarezip.decompressed_count)
+/* 0349F8 70201468 8C42148C */  lw    $v0, %lo(rarezip.decompressed_count)($v0)
 /* 0349FC 7020146C 03E00008 */  jr    $ra
 /* 034A00 70201470 27BD0018 */  addiu $sp, $sp, 0x18
 # end decompress.entry
@@ -1474,7 +1479,7 @@ decompress.entry:
 .word 0x00000000
 .word 0x00000000
 
-.section .data_rarezip
+.section .data
 rarezip.ptr_source:
 .word 0x00000000
 

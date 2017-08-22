@@ -14,12 +14,12 @@ SECTIONS
 
    /* (0x700004BC, 0x70020D90, 0x6FFFF400), // 0010BC-021991 [208D5] */
    .text_entry 0x80000400 : AT(0x001000) {
-      * (.text_entry);
+      build/entry.o (.text);
    }
 
    /* (0x700004BC, 0x70020D90, 0x6FFFF400), // 0010BC-021991 [208D5] */
    .text 0x700004BC : AT(0x0010BC) {
-      * (.text);
+      build/code.o (.text);
    }
 
    .c_data 0x021990 : AT(0x021990) {
@@ -28,8 +28,8 @@ SECTIONS
 
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
    .text_rarezip 0x70200000 : AT(0x033590) {
-      * (.text_rarezip);
-      * (.data_rarezip);
+      build/rarezip.o (.text);
+      build/rarezip.o (.data);
    }
 
    /* (0x7F000000, 0x7F0E2D50, 0x7EFCB4D0), // 034B30-117881 [E2D51] */
@@ -54,7 +54,7 @@ SECTIONS
    }
 
    .data 0x80020D90 : AT(0xC00000){
-      * (.data);
+      build/code.o (.data);
    }
 
    .bss 0x8005D2E0 : {

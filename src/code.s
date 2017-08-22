@@ -1,4 +1,20 @@
+# assembler directives
+.set noat      # allow manual use of $at
+.set noreorder # don't insert nops after branches
+
+
 .section .text, "ax"
+.equ Compressedrodata, 0x21990
+.equ Compressedrodata_end, 0x33590
+
+.macro get_value name, value
+.global get_\name
+get_\name:
+ lui   $v0, %hi(\value)
+ jr    $ra
+ addiu $v0, $v0, %lo(\value)
+.endm
+
 
 /*
 use macro get_value name value 
@@ -10,6 +26,17 @@ get_value rodata_rom_start Compressedrodata
 get_value rodata_rom_end Compressedrodata_end
 get_value RareZipASMRomstart 0x33590
 get_value RareZipASMRomend 0x34b30
+
+
+.macro jump_via_reg location, register=$a3
+.global jump_\location
+jump_\location:
+ lui   \register, %hi(\location)
+ addiu \register, \register, %lo(\location)
+ jr    \register
+ nop
+.endm
+
 
 /*
 use macro jump_via_reg location register
@@ -38329,3 +38356,11 @@ osEPiRawWriteIo:
 # end osEPiRawWriteIo
 
 
+.include "src/data.s"
+
+
+.section .c_data, "a"
+Compressedrodata:
+ # make a hole for when we compress .data segment
+ .space 0x11C00
+Compressedrodata_end:

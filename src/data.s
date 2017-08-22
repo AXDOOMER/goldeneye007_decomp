@@ -13,6 +13,10 @@ unknown_init_val:
 cart_hw_address:
 .word 0x10000000
 
+.macro debug_handler_table_entry sp, string
+.word \sp
+.word \string
+.endm
 
 #referenced by setuplastentryofdebughandler
 debug_handler_table:
@@ -38766,6 +38770,12 @@ dword_80046030:
 dword_80046050:
 .word 0x00000000
 
+
+.macro file_entry index, string, file
+.word \index
+.word \string
+.word \file
+.endm
 
 file_resource_table:
 file_entry 0, aBgBg_NaBgBg_NULLall_p_seg_0, 0

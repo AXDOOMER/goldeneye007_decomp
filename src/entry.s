@@ -1,5 +1,10 @@
-.section .text_entry, "ax"
+# assembler directives
+.set noat      # allow manual use of $at
+.set noreorder # don't insert nops after branches
 
+.section .text, "ax"
+.equ _BSS_START, 0x8005d2e0
+.equ _BSS_END, 0x8008e360
 /*
 here we setup and clear stack, then jump to establish root tlb
 */
