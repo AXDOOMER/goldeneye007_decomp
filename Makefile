@@ -53,7 +53,7 @@ $(BUILD_DIR):
 $(BUILD_DIR)/$(TARGET).o: $(TARGET).s Makefile $(MAKEFILE_DATA) $(TEXT_RZ_FILES) | $(BUILD_DIR)
 	$(AS) $(ASFLAGS) -o $@ $<
 
-$(BUILD_DIR)/%.o: src/%.s Makefile $(MAKEFILE_DATA) $(TEXT_RZ_FILES) | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: src/%.s Makefile | $(BUILD_DIR)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.o: %.c Makefile.as | $(BUILD_DIR)

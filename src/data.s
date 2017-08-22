@@ -1,17 +1,4 @@
 .section .data
-.global _DATA_START
-_DATA_START:
-rspcode:
-.incbin "bin/rspcode.bin"
-rspcode_end:
-
-#referenced by proc_700006FC
-unknown_init_val:
-.word 0x00000002
-
-#referenced by proc_700006FC
-cart_hw_address:
-.word 0x10000000
 
 .macro debug_handler_table_entry sp, string
 .word \sp
@@ -854,7 +841,7 @@ memallocstringtable:
 loadedstage:
 .word 0xFFFFFFFF
 
-activate_debug_feature_parsing:
+debug_feature_flag:
 .word 0x00000000
 
 dword_80024304:

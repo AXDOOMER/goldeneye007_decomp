@@ -21,7 +21,7 @@ byte_8005E3F2:  .space 1
 byte_8005E3F3:  .space 1
 dword_8005E3F4: .space 0xB0
 dword_8005E4A4: .space 4
-dword_8005E4A8: .space 4
+ptr_nextbitmemopen: .space 4
                 .space 0xC
 dword_8005E4B8: .space 8
 dword_8005E4C0: .space 4
@@ -977,6 +977,6 @@ word_8008E350:  .space 2
 word_8008E352:  .space 2
 word_8008E354:  .space 2
                 .align 4
-
+.global _BSS_END
 _BSS_END:
 

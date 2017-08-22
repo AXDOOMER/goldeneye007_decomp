@@ -5,15 +5,16 @@
 .section .text, "ax"
 .equ _BSS_START, 0x8005d2e0
 .equ _BSS_END, 0x8008e360
+.set _BSS_SIZE, (_BSS_END-_BSS_START)
 /*
-here we setup and clear stack, then jump to establish root tlb
+here we setup and clear bss, then jump to establish root tlb
 */
 .global entry
 entry:
 /* 001000 80000400 3C088006 */  lui   $t0, %hi(_BSS_START)+1
-/* 001004 80000404 3C090003 */  lui   $t1, %hi(_BSS_END-_BSS_START)
+/* 001004 80000404 3C090003 */  lui   $t1, %hi(_BSS_SIZE)
 /* 001008 80000408 2508D2E0 */  addiu $t0, $t0, %lo(_BSS_START)
-/* 00100C 8000040C 35291080 */  ori   $t1, $t1, %lo(_BSS_END-_BSS_START)
+/* 00100C 8000040C 35291080 */  ori   $t1, $t1, %lo(_BSS_SIZE)
 .Lentry_10:
 /* 001010 80000410 2129FFF8 */  addi  $t1, $t1, -8
 /* 001014 80000414 AD000000 */  sw    $zero, 0($t0)
@@ -24,7 +25,7 @@ entry:
 /* 001028 80000428 3C1D803B */  lui   $sp, 0x803b
 /* 00102C 8000042C 254A0450 */  addiu $t2, $t2, %lo(establishrootTLB)
 /* 001030 80000430 01400008 */  jr    $t2
-/* 001034 80000434 27BDB410 */  addiu $sp, $sp, -0x4bf0
+/* 001034 80000434 27BDB410 */  addiu $sp, $sp, -0x4bf0 #set stack to 0x803AB410 (sp_rmon)
 # end entry
 
 # alignment
