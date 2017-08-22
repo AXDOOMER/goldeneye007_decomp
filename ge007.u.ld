@@ -34,7 +34,7 @@ SECTIONS
 
    /* (0x7F000000, 0x7F0E2D50, 0x7EFCB4D0), // 034B30-117881 [E2D51] */
    .text_tlbcode 0x7F000000 : AT(0x034B30) {
-      * (.text_tlbcode);
+      build/tlbcode.o (.text);
    }
 
    .romfiles 0x117880 : AT(0x117880) {

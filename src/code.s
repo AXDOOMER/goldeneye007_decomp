@@ -4,8 +4,6 @@
 
 
 .section .text, "ax"
-.equ Compressedrodata, 0x21990
-.equ Compressedrodata_end, 0x33590
 
 .macro get_value name, value
 .global get_\name

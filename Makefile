@@ -42,7 +42,7 @@ include $(MAKEFILE_DATA)
 all: $(TARGET).z64
 
 clean:
-	rm -f $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).o $(BUILD_DIR)/$(TARGET).bin $(BUILD_DIR)/ge007.map $(TARGET).z64 $(BUILD_DIR)/entry.o $(BUILD_DIR)/code.o $(BUILD_DIR)/rarezip.o
+	rm -f $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).o $(BUILD_DIR)/$(TARGET).bin $(BUILD_DIR)/ge007.map $(TARGET).z64 $(BUILD_DIR)/entry.o $(BUILD_DIR)/code.o $(BUILD_DIR)/rarezip.o $(BUILD_DIR)/tlbcode.o
 
 $(OBSEG_DIR)/text/%.rz: $(OBSEG_DIR)/text/%.bin
 	$(RZ_COMP) $< $@
@@ -59,7 +59,7 @@ $(BUILD_DIR)/%.o: src/%.s Makefile $(MAKEFILE_DATA) $(TEXT_RZ_FILES) | $(BUILD_D
 $(BUILD_DIR)/%.o: %.c Makefile.as | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
 
-$(BUILD_DIR)/$(TARGET).elf: $(BUILD_DIR)/$(TARGET).o $(BUILD_DIR)/entry.o $(BUILD_DIR)/code.o $(BUILD_DIR)/rarezip.o $(LD_SCRIPT)
+$(BUILD_DIR)/$(TARGET).elf: $(BUILD_DIR)/$(TARGET).o $(BUILD_DIR)/entry.o $(BUILD_DIR)/code.o $(BUILD_DIR)/rarezip.o $(BUILD_DIR)/tlbcode.o $(LD_SCRIPT)
 	$(LD) $(LDFLAGS) -o $@ $< $(LIBS)
 
 $(BUILD_DIR)/$(TARGET).bin: $(BUILD_DIR)/$(TARGET).elf
