@@ -65,10 +65,10 @@ music_depot:
 .incbin "music/music_depot.bin"
 music_depot_end:
 
-.global music_MultiplayerTheme
-music_MultiplayerTheme:
-.incbin "music/music_MultiplayerTheme.bin"
-music_MultiplayerTheme_end:
+.global music_jungle_unused
+music_jungle_unused:
+.incbin "music/music_jungle_unused.bin"
+music_jungle_unused_end:
 
 .global music_citadel
 music_citadel:
@@ -105,10 +105,10 @@ music_silo:
 .incbin "music/music_silo.bin"
 music_silo_end:
 
-.global music_unk4222f0
-music_unk4222f0:
-.incbin "music/music_unk4222f0.bin"
-music_unk4222f0_end:
+.global music_jungle_perimeter_unused
+music_jungle_perimeter_unused:
+.incbin "music/music_jungle_perimeter_unused.bin"
+music_jungle_perimeter_unused_end:
 
 .global music_streets
 music_streets:
@@ -140,10 +140,10 @@ music_cradle:
 .incbin "music/music_cradle.bin"
 music_cradle_end:
 
-.global music_unk426d22
-music_unk426d22:
-.incbin "music/music_unk426d22.bin"
-music_unk426d22_end:
+.global music_null1
+music_null1:
+.incbin "music/music_null.bin"
+music_null1_end:
 
 .global music_elevator_wc
 music_elevator_wc:
@@ -190,10 +190,10 @@ music_trainx:
 .incbin "music/music_trainx.bin"
 music_trainx_end:
 
-.global music_unk42bb5a
-music_unk42bb5a:
-.incbin "music/music_unk42bb5a.bin"
-music_unk42bb5a_end:
+.global music_null2
+music_null2:
+.incbin "music/music_null.bin"
+music_null2_end:
 
 .global music_facilityx
 music_facilityx:
@@ -255,15 +255,15 @@ music_bunker2x:
 .incbin "music/music_bunker2x.bin"
 music_bunker2x_end:
 
-.global music_unk4308b8
-music_unk4308b8:
-.incbin "music/music_unk4308b8.bin"
-music_unk4308b8_end:
+.global music_junglex
+music_junglex:
+.incbin "music/music_junglex.bin"
+music_junglex_end:
 
-.global music_introswoosh_drone
-music_introswoosh_drone:
-.incbin "music/music_introswoosh_drone.bin"
-music_introswoosh_drone_end:
+.global music_nint_rare_logo
+music_nint_rare_logo:
+.incbin "music/music_nint_rare_logo.bin"
+music_nint_rare_logo_end:
 
 .global music_statuex
 music_statuex:
@@ -275,10 +275,10 @@ music_aztecx:
 .incbin "music/music_aztecx.bin"
 music_aztecx_end:
 
-.global music_unk43248e
-music_unk43248e:
-.incbin "music/music_unk43248e.bin"
-music_unk43248e_end:
+.global music_eqyptionx
+music_eqyptionx:
+.incbin "music/music_eqyptionx.bin"
+music_eqyptionx_end:
 
 .global music_cradlex
 music_cradlex:
@@ -300,20 +300,20 @@ music_runway_plane:
 .incbin "music/music_runway_plane.bin"
 music_runway_plane_end:
 
-.global music_unk434c40
-music_unk434c40:
-.incbin "music/music_unk434c40.bin"
-music_unk434c40_end:
+.global music_surface2x
+music_surface2x:
+.incbin "music/music_surface2x.bin"
+music_surface2x_end:
 
-.global music_windblowing_surface2
-music_windblowing_surface2:
-.incbin "music/music_windblowing_surface2.bin"
-music_windblowing_surface2_end:
+.global music_windblowing
+music_windblowing:
+.incbin "music/music_windblowing.bin"
+music_windblowing_end:
 
-.global music_guitargliss_multideath
-music_guitargliss_multideath:
-.incbin "music/music_guitargliss_multideath.bin"
-music_guitargliss_multideath_end:
+.global music_multideath_alt
+music_multideath_alt:
+.incbin "music/music_multideath_alt.bin"
+music_multideath_alt_end:
 
 .global music_jungle
 music_jungle:
@@ -335,22 +335,22 @@ music_multiplayerdeath:
 .incbin "music/music_multiplayerdeath.bin"
 music_multiplayerdeath_end:
 
-.global music_surface2x
-music_surface2x:
-.incbin "music/music_surface2x.bin"
-music_surface2x_end:
+.global music_surface1x
+music_surface1x:
+.incbin "music/music_surface1x.bin"
+music_surface1x_end:
 
 .global music_surface2_ending
 music_surface2_ending:
 .incbin "music/music_surface2_ending.bin"
 music_surface2_ending_end:
 
-.global music_partofstatuetheme
-music_partofstatuetheme:
-.incbin "music/music_partofstatuetheme.bin"
-music_partofstatuetheme_end:
+.global music_statue_ending
+music_statue_ending:
+.incbin "music/music_statue_ending.bin"
+music_statue_ending_end:
 
-.global music_endoftheme
-music_endoftheme:
-.incbin "music/music_endoftheme.bin"
-music_endoftheme_end:
+.global music_frigate_outro
+music_frigate_outro:
+.incbin "music/music_frigate_outro.bin"
+music_frigate_outro_end:
