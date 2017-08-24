@@ -45,18 +45,21 @@ clean:
 	rm -f $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).o $(BUILD_DIR)/$(TARGET).bin $(BUILD_DIR)/ge007.map $(TARGET).z64 $(BUILD_DIR)/entry.o $(BUILD_DIR)/code.o $(BUILD_DIR)/rarezip.o $(BUILD_DIR)/tlbcode.o
 
 cleandata:
-	rm -f $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).o $(BUILD_DIR)/$(TARGET).bin $(BUILD_DIR)/ge007.map $(TARGET).z64 $(BUILD_DIR)/entry.o $(BUILD_DIR)/code.o $(BUILD_DIR)/rarezip.o $(BUILD_DIR)/tlbcode.o $(TEXT_RZ_FILES) $(MUSIC_RZ_FILES)
+	rm -f $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).o $(BUILD_DIR)/$(TARGET).bin $(BUILD_DIR)/ge007.map $(TARGET).z64 $(BUILD_DIR)/entry.o $(BUILD_DIR)/code.o $(BUILD_DIR)/rarezip.o $(BUILD_DIR)/tlbcode.o $(TEXT_RZ_FILES) $(MUSIC_RZ_FILES) $(BRIEF_RZ_FILES)
 
 $(OBSEG_DIR)/text/%.rz: $(OBSEG_DIR)/text/%.bin
 	$(RZ_COMP) $< $@
 
-music/%.rz: music/%.bin
+$(OBSEG_DIR)/brief/%.rz: $(OBSEG_DIR)/brief/%.bin
+	$(RZ_COMP) $< $@
+
+$(MUSIC_DIR)/%.rz: $(MUSIC_DIR)/%.bin
 	$(RZ_COMP) $< $@
 
 $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
 
-$(BUILD_DIR)/$(TARGET).o: $(TARGET).s Makefile $(MAKEFILE_DATA) $(TEXT_RZ_FILES) $(MUSIC_RZ_FILES) | $(BUILD_DIR)
+$(BUILD_DIR)/$(TARGET).o: $(TARGET).s Makefile $(MAKEFILE_DATA) $(TEXT_RZ_FILES) $(MUSIC_RZ_FILES) $(BRIEF_RZ_FILES) | $(BUILD_DIR)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.o: src/%.s Makefile | $(BUILD_DIR)

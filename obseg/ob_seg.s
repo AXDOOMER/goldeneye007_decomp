@@ -2833,102 +2833,122 @@ Tbg_tra_all_p_stanZ_end:
 
 .global UbriefarchZ
 UbriefarchZ:
-.incbin "obseg/brief/UbriefarchZ"
+.incbin "obseg/brief/UbriefarchZ.rz"
+.balign 16
 UbriefarchZ_end:
 
 .global UbriefarkZ
 UbriefarkZ:
-.incbin "obseg/brief/UbriefarkZ"
+.incbin "obseg/brief/UbriefarkZ.rz"
+.balign 16
 UbriefarkZ_end:
 
 .global UbriefaztZ
 UbriefaztZ:
-.incbin "obseg/brief/UbriefaztZ"
+.incbin "obseg/brief/UbriefaztZ.rz"
+.balign 16
 UbriefaztZ_end:
 
 .global UbriefcaveZ
 UbriefcaveZ:
-.incbin "obseg/brief/UbriefcaveZ"
+.incbin "obseg/brief/UbriefcaveZ.rz"
+.balign 16
 UbriefcaveZ_end:
 
 .global UbriefcontrolZ
 UbriefcontrolZ:
-.incbin "obseg/brief/UbriefcontrolZ"
+.incbin "obseg/brief/UbriefcontrolZ.rz"
+.balign 16
 UbriefcontrolZ_end:
 
 .global UbriefcradZ
 UbriefcradZ:
-.incbin "obseg/brief/UbriefcradZ"
+.incbin "obseg/brief/UbriefcradZ.rz"
+.balign 16
 UbriefcradZ_end:
 
 .global UbriefcrypZ
 UbriefcrypZ:
-.incbin "obseg/brief/UbriefcrypZ"
+.incbin "obseg/brief/UbriefcrypZ.rz"
+.balign 16
 UbriefcrypZ_end:
 
 .global UbriefdamZ
 UbriefdamZ:
-.incbin "obseg/brief/UbriefdamZ"
+.incbin "obseg/brief/UbriefdamZ.rz"
+.balign 16
 UbriefdamZ_end:
 
 .global UbriefdepoZ
 UbriefdepoZ:
-.incbin "obseg/brief/UbriefdepoZ"
+.incbin "obseg/brief/UbriefdepoZ.rz"
+.balign 16
 UbriefdepoZ_end:
 
 .global UbriefdestZ
 UbriefdestZ:
-.incbin "obseg/brief/UbriefdestZ"
+.incbin "obseg/brief/UbriefdestZ.rz"
+.balign 16
 UbriefdestZ_end:
 
 .global UbriefjunZ
 UbriefjunZ:
-.incbin "obseg/brief/UbriefjunZ"
+.incbin "obseg/brief/UbriefjunZ.rz"
+.balign 16
 UbriefjunZ_end:
 
 .global UbriefpeteZ
 UbriefpeteZ:
-.incbin "obseg/brief/UbriefpeteZ"
+.incbin "obseg/brief/UbriefpeteZ.rz"
+.balign 16
 UbriefpeteZ_end:
 
 .global UbriefrunZ
 UbriefrunZ:
-.incbin "obseg/brief/UbriefrunZ"
+.incbin "obseg/brief/UbriefrunZ.rz"
+.balign 16
 UbriefrunZ_end:
 
 .global UbriefsevbZ
 UbriefsevbZ:
-.incbin "obseg/brief/UbriefsevbZ"
+.incbin "obseg/brief/UbriefsevbZ.rz"
+.balign 16
 UbriefsevbZ_end:
 
 .global UbriefsevbunkerZ
 UbriefsevbunkerZ:
-.incbin "obseg/brief/UbriefsevbunkerZ"
+.incbin "obseg/brief/UbriefsevbunkerZ.rz"
+.balign 16
 UbriefsevbunkerZ_end:
 
 .global UbriefsevxZ
 UbriefsevxZ:
-.incbin "obseg/brief/UbriefsevxZ"
+.incbin "obseg/brief/UbriefsevxZ.rz"
+.balign 16
 UbriefsevxZ_end:
 
 .global UbriefsevxbZ
 UbriefsevxbZ:
-.incbin "obseg/brief/UbriefsevxbZ"
+.incbin "obseg/brief/UbriefsevxbZ.rz"
+.balign 16
 UbriefsevxbZ_end:
 
 .global UbriefsiloZ
 UbriefsiloZ:
-.incbin "obseg/brief/UbriefsiloZ"
+.incbin "obseg/brief/UbriefsiloZ.rz"
+.balign 16
 UbriefsiloZ_end:
 
 .global UbriefstatueZ
 UbriefstatueZ:
-.incbin "obseg/brief/UbriefstatueZ"
+.incbin "obseg/brief/UbriefstatueZ.rz"
+.balign 16
 UbriefstatueZ_end:
 
 .global UbrieftraZ
 UbrieftraZ:
-.incbin "obseg/brief/UbrieftraZ"
+.incbin "obseg/brief/UbrieftraZ.rz"
+.balign 16
 UbrieftraZ_end:
 
 .global Ump_setupameZ

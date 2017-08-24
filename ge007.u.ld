@@ -50,7 +50,7 @@ SECTIONS
       * (.ob_seg);
    }
 
-   .images 0x8f7df0 : AT(0x8f7df0) {
+   .images  :  {
       * (.images);
    }
 
