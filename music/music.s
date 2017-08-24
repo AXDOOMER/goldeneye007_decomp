@@ -1,14 +1,14 @@
 .section .music
 
-.global music_sfx.ptr
-music_sfx.ptr:
- .incbin "music/music_sfx.ptr.bin"
-music_sfx.ptr_end:
+.global sfx.ctl
+sfx.ctl:
+ .incbin "music/sfx.ctl"
+sfx.ctl_end:
 
-.global music_sfx.bnk
-music_sfx.bnk:
- .incbin "music/music_sfx.bnk.bin"
-music_sfx.bnk_end:
+.global sfx.tbl
+sfx.tbl:
+ .incbin "music/sfx.tbl"
+sfx.tbl_end:
 
 .global music_sounds.ptr
 music_sounds.ptr:
@@ -100,351 +100,87 @@ music_table_music_data:
  music_table_entry music_frigate_outro
 music_table_music_data_end:
 
-.global music_no_music
-music_no_music:
- .incbin "music/music_no_music.rz"
-end_music_no_music:
 
-.global music_solo_death_abrev
-music_solo_death_abrev:
- .incbin "music/music_solo_death_abrev.rz"
-.byte 0xA
-end_music_solo_death_abrev:
+.macro music_file name
+\name:
+ .incbin "music\/\name\.rz"
+end_\name:
+.endm
 
-.global music_intro_eye
-music_intro_eye:
- .incbin "music/music_intro_eye.rz"
-end_music_intro_eye:
+/*
+music_fileA is used for the entries that end with A....the A doesn't seem to be from compression
+*/
 
-.global music_train
-music_train:
- .incbin "music/music_train.rz"
-.byte 0xA
-end_music_train:
+.macro music_fileA name
+\name:
+ .incbin "music\/\name\.rz"
+ .byte 0xA
+end_\name:
+.endm
 
-.global music_depot
-music_depot:
- .incbin "music/music_depot.rz"
-.byte 0xA
-end_music_depot:
-
-.global music_jungle_unused
-music_jungle_unused:
- .incbin "music/music_jungle_unused.rz"
-end_music_jungle_unused:
-
-.global music_citadel
-music_citadel:
- .incbin "music/music_citadel.rz"
-.byte 0xA
-end_music_citadel:
-
-.global music_facility
-music_facility:
- .incbin "music/music_facility.rz"
-end_music_facility:
-
-.global music_control
-music_control:
- .incbin "music/music_control.rz"
-end_music_control:
-
-.global music_dam
-music_dam:
- .incbin "music/music_dam.rz"
-.byte 0xA
-end_music_dam:
-
-.global music_frigate
-music_frigate:
- .incbin "music/music_frigate.rz"
-end_music_frigate:
-
-.global music_archives
-music_archives:
- .incbin "music/music_archives.rz"
-end_music_archives:
-
-.global music_silo
-music_silo:
- .incbin "music/music_silo.rz"
-end_music_silo:
-
-.global music_jungle_perimeter_unused
-music_jungle_perimeter_unused:
- .incbin "music/music_jungle_perimeter_unused.rz"
-.byte 0xA
-end_music_jungle_perimeter_unused:
-
-.global music_streets
-music_streets:
- .incbin "music/music_streets.rz"
-.byte 0xA
-end_music_streets:
-
-.global music_bunker1
-music_bunker1:
- .incbin "music/music_bunker1.rz"
-.byte 0xA
-end_music_bunker1:
-
-.global music_bunker2
-music_bunker2:
- .incbin "music/music_bunker2.rz"
-.byte 0xA
-end_music_bunker2:
-
-.global music_statue
-music_statue:
- .incbin "music/music_statue.rz"
-end_music_statue:
-
-.global music_elevator_control
-music_elevator_control:
- .incbin "music/music_elevator_control.rz"
-.byte 0xA
-end_music_elevator_control:
-
-.global music_cradle
-music_cradle:
- .incbin "music/music_cradle.rz"
-.byte 0xA
-end_music_cradle:
-
-.global music_null1
-music_null1:
- .incbin "music/music_null1.rz"
-.byte 0xA
-end_music_null1:
-
-.global music_elevator_wc
-music_elevator_wc:
- .incbin "music/music_elevator_wc.rz"
-.byte 0xA
-end_music_elevator_wc:
-
-.global music_egyptian
-music_egyptian:
- .incbin "music/music_egyptian.rz"
-end_music_egyptian:
-
-.global music_folders
-music_folders:
- .incbin "music/music_folders.rz"
-end_music_folders:
-
-.global music_watchmusic
-music_watchmusic:
- .incbin "music/music_watchmusic.rz"
-.byte 0xA
-end_music_watchmusic:
-
-.global music_aztec
-music_aztec:
- .incbin "music/music_aztec.rz"
-end_music_aztec:
-
-.global music_watercaverns
-music_watercaverns:
- .incbin "music/music_watercaverns.rz"
-.byte 0xA
-end_music_watercaverns:
-
-.global music_deathsolo
-music_deathsolo:
- .incbin "music/music_deathsolo.rz"
-.byte 0xA
-end_music_deathsolo:
-
-.global music_surface2
-music_surface2:
- .incbin "music/music_surface2.rz"
-.byte 0xA
-end_music_surface2:
-
-.global music_trainx
-music_trainx:
- .incbin "music/music_trainx.rz"
-.byte 0xA
-end_music_trainx:
-
-.global music_null2
-music_null2:
- .incbin "music/music_null2.rz"
-.byte 0xA
-end_music_null2:
-
-.global music_facilityx
-music_facilityx:
- .incbin "music/music_facilityx.rz"
-end_music_facilityx:
-
-.global music_depotx
-music_depotx:
- .incbin "music/music_depotx.rz"
-end_music_depotx:
-
-.global music_controlx
-music_controlx:
- .incbin "music/music_controlx.rz"
-end_music_controlx:
-
-.global music_watercavernsx
-music_watercavernsx:
- .incbin "music/music_watercavernsx.rz"
-end_music_watercavernsx:
-
-.global music_damx
-music_damx:
- .incbin "music/music_damx.rz"
-.byte 0xA
-end_music_damx:
-
-.global music_frigatex
-music_frigatex:
- .incbin "music/music_frigatex.rz"
-end_music_frigatex:
-
-.global music_archivesx
-music_archivesx:
- .incbin "music/music_archivesx.rz"
-.byte 0xA
-end_music_archivesx:
-
-.global music_silox
-music_silox:
- .incbin "music/music_silox.rz"
-end_music_silox:
-
-.global music_null3
-music_null3:
- .incbin "music/music_null3.rz"
-.byte 0xA
-end_music_null3:
-
-.global music_streetsx
-music_streetsx:
- .incbin "music/music_streetsx.rz"
-end_music_streetsx:
-
-.global music_bunker1x
-music_bunker1x:
- .incbin "music/music_bunker1x.rz"
-end_music_bunker1x:
-
-.global music_bunker2x
-music_bunker2x:
- .incbin "music/music_bunker2x.rz"
-.byte 0xA
-end_music_bunker2x:
-
-.global music_junglex
-music_junglex:
- .incbin "music/music_junglex.rz"
-.byte 0xA
-end_music_junglex:
-
-.global music_nint_rare_logo
-music_nint_rare_logo:
- .incbin "music/music_nint_rare_logo.rz"
-end_music_nint_rare_logo:
-
-.global music_statuex
-music_statuex:
- .incbin "music/music_statuex.rz"
-.byte 0xA
-end_music_statuex:
-
-.global music_aztecx
-music_aztecx:
- .incbin "music/music_aztecx.rz"
-end_music_aztecx:
-
-.global music_egyptianx
-music_egyptianx:
- .incbin "music/music_egyptianx.rz"
-end_music_egyptianx:
-
-.global music_cradlex
-music_cradlex:
- .incbin "music/music_cradlex.rz"
-.byte 0xA
-end_music_cradlex:
-
-.global music_cuba
-music_cuba:
- .incbin "music/music_cuba.rz"
-.byte 0xA
-end_music_cuba:
-
-.global music_runway
-music_runway:
- .incbin "music/music_runway.rz"
-end_music_runway:
-
-.global music_runway_plane
-music_runway_plane:
- .incbin "music/music_runway_plane.rz"
-end_music_runway_plane:
-
-.global music_surface2x
-music_surface2x:
- .incbin "music/music_surface2x.rz"
-end_music_surface2x:
-
-.global music_windblowing
-music_windblowing:
- .incbin "music/music_windblowing.rz"
-.byte 0xA
-end_music_windblowing:
-
-.global music_multideath_alt
-music_multideath_alt:
- .incbin "music/music_multideath_alt.rz"
-end_music_multideath_alt:
-
-.global music_jungle
-music_jungle:
- .incbin "music/music_jungle.rz"
-end_music_jungle:
-
-.global music_runwayx
-music_runwayx:
- .incbin "music/music_runwayx.rz"
-end_music_runwayx:
-
-.global music_surface1
-music_surface1:
- .incbin "music/music_surface1.rz"
-.byte 0xA
-end_music_surface1:
-
-.global music_multiplayerdeath
-music_multiplayerdeath:
- .incbin "music/music_multiplayerdeath.rz"
-end_music_multiplayerdeath:
-
-.global music_surface1x
-music_surface1x:
- .incbin "music/music_surface1x.rz"
-end_music_surface1x:
-
-.global music_surface2_ending
-music_surface2_ending:
- .incbin "music/music_surface2_ending.rz"
-.byte 0xA
-end_music_surface2_ending:
-
-.global music_statue_ending
-music_statue_ending:
- .incbin "music/music_statue_ending.rz"
-end_music_statue_ending:
-
-.global music_frigate_outro
-music_frigate_outro:
- .incbin "music/music_frigate_outro.rz"
-.byte 0xA
-end_music_frigate_outro:
+music_file music_no_music
+music_fileA music_solo_death_abrev
+music_file music_intro_eye
+music_fileA music_train
+music_fileA music_depot
+music_file music_jungle_unused
+music_fileA music_citadel
+music_file music_facility
+music_file music_control
+music_fileA music_dam
+music_file music_frigate
+music_file music_archives
+music_file music_silo
+music_fileA music_jungle_perimeter_unused
+music_fileA music_streets
+music_fileA music_bunker1
+music_fileA music_bunker2
+music_file music_statue
+music_fileA music_elevator_control
+music_fileA music_cradle
+music_fileA music_null1
+music_fileA music_elevator_wc
+music_file music_egyptian
+music_file music_folders
+music_fileA music_watchmusic
+music_file music_aztec
+music_fileA music_watercaverns
+music_fileA music_deathsolo
+music_fileA music_surface2
+music_fileA music_trainx
+music_fileA music_null2
+music_file music_facilityx
+music_file music_depotx
+music_file music_controlx
+music_file music_watercavernsx
+music_fileA music_damx
+music_file music_frigatex
+music_fileA music_archivesx
+music_file music_silox
+music_fileA music_null3
+music_file music_streetsx
+music_file music_bunker1x
+music_fileA music_bunker2x
+music_fileA music_junglex
+music_file music_nint_rare_logo
+music_fileA music_statuex
+music_file music_aztecx
+music_file music_egyptianx
+music_fileA music_cradlex
+music_fileA music_cuba
+music_file music_runway
+music_file music_runway_plane
+music_file music_surface2x
+music_fileA music_windblowing
+music_file music_multideath_alt
+music_file music_jungle
+music_file music_runwayx
+music_fileA music_surface1
+music_file music_multiplayerdeath
+music_file music_surface1x
+music_fileA music_surface2_ending
+music_file music_statue_ending
+music_fileA music_frigate_outro
 
 .half 0
 .word 0
