@@ -107,17 +107,16 @@ table_music_data_end:
 
 
 .macro music_file name
-.section .musiccompressed
-.global \name
-\name:
- .incbin "music\/\name\.rz"
-end_\name:
+  .section .musiccompressed
+  .global \name
+  \name:
+    .incbin "music\/\name\.rz"
+  end_\name:
 
-.section .musicdecompressed
-.global d_\name
-d_\name:
- .incbin "music\/\name\.bin"
-end_d_\name:
+  .section .musicdecompressed
+  d_\name:
+    .incbin "music\/\name\.bin"
+  end_d_\name:
 .endm
 
 
@@ -126,18 +125,17 @@ music_fileA is used for the entries that end with A....the A doesn't seem to be 
 */
 
 .macro music_fileA name
-.section .musiccompressed
-.global \name
-\name:
- .incbin "music\/\name\.rz"
- .byte 0xA
-end_\name:
+  .section .musiccompressed
+  .global \name
+  \name:
+    .incbin "music\/\name\.rz"
+    .byte 0xA
+  end_\name:
 
-.section .musicdecompressed
-.global d_\name
-d_\name:
- .incbin "music\/\name\.bin"
-end_d_\name:
+  .section .musicdecompressed
+  d_\name:
+    .incbin "music\/\name\.bin"
+  end_d_\name:
 .endm
 
 music_file Mno_music
