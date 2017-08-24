@@ -42,6 +42,7 @@ SECTIONS
       * (.ramrom);
       * (.font);
       * (.music);
+      * (.musiccompressed);
 
    }
 
@@ -124,6 +125,6 @@ SECTIONS
    /*move em to end, out of the way*/
    /DISCARD/ : {
       * (.MIPS.abiflags);
-      * (.musicdiscard);
+      * (.musicdecompressed);
    }
 }
