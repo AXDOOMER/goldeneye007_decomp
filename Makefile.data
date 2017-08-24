@@ -50,3 +50,68 @@ TEXT_RZ_FILES = \
     $(OBSEG_DIR)/text/LtitleE.rz \
     $(OBSEG_DIR)/text/LtraE.rz \
     $(OBSEG_DIR)/text/LwaxE.rz
+
+
+MUSIC_RZ_FILES = \
+    $(OBSEG_DIR)/music/music_archives.rz \
+    $(OBSEG_DIR)/music/music_archivesx.rz \
+    $(OBSEG_DIR)/music/music_aztec.rz \
+    $(OBSEG_DIR)/music/music_aztecx.rz \
+    $(OBSEG_DIR)/music/music_bunker1.rz \
+    $(OBSEG_DIR)/music/music_bunker1x.rz \
+    $(OBSEG_DIR)/music/music_bunker2.rz \
+    $(OBSEG_DIR)/music/music_bunker2x.rz \
+    $(OBSEG_DIR)/music/music_citadel.rz \
+    $(OBSEG_DIR)/music/music_control.rz \
+    $(OBSEG_DIR)/music/music_controlx.rz \
+    $(OBSEG_DIR)/music/music_cradle.rz \
+    $(OBSEG_DIR)/music/music_cradlex.rz \
+    $(OBSEG_DIR)/music/music_cuba.rz \
+    $(OBSEG_DIR)/music/music_dam.rz \
+    $(OBSEG_DIR)/music/music_damx.rz \
+    $(OBSEG_DIR)/music/music_deathsolo.rz \
+    $(OBSEG_DIR)/music/music_depot.rz \
+    $(OBSEG_DIR)/music/music_depotx.rz \
+    $(OBSEG_DIR)/music/music_egyptian.rz \
+    $(OBSEG_DIR)/music/music_egyptianx.rz \
+    $(OBSEG_DIR)/music/music_elevator_control.rz \
+    $(OBSEG_DIR)/music/music_elevator_wc.rz \
+    $(OBSEG_DIR)/music/music_eqyptionx.rz \
+    $(OBSEG_DIR)/music/music_facility.rz \
+    $(OBSEG_DIR)/music/music_facilityx.rz \
+    $(OBSEG_DIR)/music/music_folders.rz \
+    $(OBSEG_DIR)/music/music_frigate.rz \
+    $(OBSEG_DIR)/music/music_frigate_outro.rz \
+    $(OBSEG_DIR)/music/music_frigatex.rz \
+    $(OBSEG_DIR)/music/music_intro_eye.rz \
+    $(OBSEG_DIR)/music/music_jungle.rz \
+    $(OBSEG_DIR)/music/music_jungle_perimeter_unused.rz \
+    $(OBSEG_DIR)/music/music_jungle_unused.rz \
+    $(OBSEG_DIR)/music/music_junglex.rz \
+    $(OBSEG_DIR)/music/music_multideath_alt.rz \
+    $(OBSEG_DIR)/music/music_multiplayerdeath.rz \
+    $(OBSEG_DIR)/music/music_nint_rare_logo.rz \
+    $(OBSEG_DIR)/music/music_no_music.rz \
+    $(OBSEG_DIR)/music/music_null.rz \
+    $(OBSEG_DIR)/music/music_runway.rz \
+    $(OBSEG_DIR)/music/music_runway_plane.rz \
+    $(OBSEG_DIR)/music/music_runwayx.rz \
+    $(OBSEG_DIR)/music/music_silo.rz \
+    $(OBSEG_DIR)/music/music_silox.rz \
+    $(OBSEG_DIR)/music/music_solo_death_abrev.rz \
+    $(OBSEG_DIR)/music/music_statue.rz \
+    $(OBSEG_DIR)/music/music_statue_ending.rz \
+    $(OBSEG_DIR)/music/music_statuex.rz \
+    $(OBSEG_DIR)/music/music_streets.rz \
+    $(OBSEG_DIR)/music/music_streetsx.rz \
+    $(OBSEG_DIR)/music/music_surface1.rz \
+    $(OBSEG_DIR)/music/music_surface1x.rz \
+    $(OBSEG_DIR)/music/music_surface2.rz \
+    $(OBSEG_DIR)/music/music_surface2_ending.rz \
+    $(OBSEG_DIR)/music/music_surface2x.rz \
+    $(OBSEG_DIR)/music/music_train.rz \
+    $(OBSEG_DIR)/music/music_trainx.rz \
+    $(OBSEG_DIR)/music/music_watchmusic.rz \
+    $(OBSEG_DIR)/music/music_watercaverns.rz \
+    $(OBSEG_DIR)/music/music_watercavernsx.rz \
+    $(OBSEG_DIR)/music/music_windblowing.rz

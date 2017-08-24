@@ -44,6 +44,9 @@ all: $(TARGET).z64
 clean:
 	rm -f $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).o $(BUILD_DIR)/$(TARGET).bin $(BUILD_DIR)/ge007.map $(TARGET).z64 $(BUILD_DIR)/entry.o $(BUILD_DIR)/code.o $(BUILD_DIR)/rarezip.o $(BUILD_DIR)/tlbcode.o
 
+cleandata:
+	rm -f $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).o $(BUILD_DIR)/$(TARGET).bin $(BUILD_DIR)/ge007.map $(TARGET).z64 $(BUILD_DIR)/entry.o $(BUILD_DIR)/code.o $(BUILD_DIR)/rarezip.o $(BUILD_DIR)/tlbcode.o $(TEXT_RZ_FILES)
+
 $(OBSEG_DIR)/text/%.rz: $(OBSEG_DIR)/text/%.bin
 	$(RZ_COMP) $< $@
 
@@ -82,4 +85,4 @@ test: $(TARGET).z64
 load: $(TARGET).z64
 	$(LOADER) $(LOADER_FLAGS) $<
 
-.PHONY: all clean default diff test
+.PHONY: all clean default diff test cleandata

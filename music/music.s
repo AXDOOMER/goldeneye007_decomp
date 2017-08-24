@@ -235,10 +235,10 @@ music_silox:
 .incbin "music/music_silox.bin"
 music_silox_end:
 
-.global music_egyptianx
-music_egyptianx:
-.incbin "music/music_egyptianx.bin"
-music_egyptianx_end:
+.global music_null3
+music_null3:
+.incbin "music/music_null.bin"
+music_null3_end:
 
 .global music_streetsx
 music_streetsx:
@@ -275,10 +275,10 @@ music_aztecx:
 .incbin "music/music_aztecx.bin"
 music_aztecx_end:
 
-.global music_eqyptionx
-music_eqyptionx:
-.incbin "music/music_eqyptionx.bin"
-music_eqyptionx_end:
+.global music_egyptianx
+music_egyptianx:
+.incbin "music/music_egyptianx.bin"
+music_egyptianx_end:
 
 .global music_cradlex
 music_cradlex:
