@@ -122,7 +122,8 @@ SECTIONS
    }
 
    /*move em to end, out of the way*/
-   .MIPS.abiflags : {
+   /DISCARD/ : {
       * (.MIPS.abiflags);
+      * (.musicdiscard);
    }
 }

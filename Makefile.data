@@ -91,7 +91,9 @@ MUSIC_RZ_FILES = \
     music/music_multiplayerdeath.rz \
     music/music_nint_rare_logo.rz \
     music/music_no_music.rz \
-    music/music_null.rz \
+    music/music_null1.rz \
+    music/music_null2.rz \
+    music/music_null3.rz \
     music/music_runway_plane.rz \
     music/music_runway.rz \
     music/music_runwayx.rz \
@@ -106,7 +108,8 @@ MUSIC_RZ_FILES = \
     music/music_surface1.rz \
     music/music_surface2_ending.rz \
     music/music_surface2.rz \
-    music/music_surfacex.rz \
+    music/music_surface1x.rz \
+    music/music_surface2x.rz \
     music/music_train.rz \
     music/music_trainx.rz \
     music/music_watchmusic.rz \
