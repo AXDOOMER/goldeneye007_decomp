@@ -62,7 +62,8 @@ SECTIONS
    }
 
    .bss 0x8005D2E0 : {
-      * (.bss);
+      build/code.o (.bss);
+      build/tlbcode.o (.bss);
    }
 
    .room_model_buffer 0x8008E360 : {

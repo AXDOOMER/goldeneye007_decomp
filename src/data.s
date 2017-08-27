@@ -1,7 +1,5 @@
 .section .data
 
-
-
 dword_80023224:
  .word 0x00000000
 
@@ -3158,29 +3156,6 @@ OS_VI_PAL_LAN1:
 
  .section .rdata
 
-aBoot:
- .asciiz "boot"
- .align 2
-
-aRmon:
- .asciiz "rmon"
- .align 2
-
-aIdle:
- .asciiz "idle"
- .align 2
-
-aShed:
- .asciiz "shed"
- .align 2
-
-aMain:
- .asciiz "main"
- .align 2
-
-aAudi:
- .asciiz "audi"
- .align 2
 
 jpt_80001674:
  .word 0x70001758

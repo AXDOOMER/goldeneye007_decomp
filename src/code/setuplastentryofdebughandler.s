@@ -39,18 +39,18 @@ setuplastentryofdebughandler:
 .section .data
 
 .macro debug_handler_table_entry sp, string
-.word \sp
-.word \string
+ .word \sp
+ .word \string
 .endm
 
 #referenced by setuplastentryofdebughandler
 debug_handler_table:
-debug_handler_table_entry 0x803AB400, aBoot
-debug_handler_table_entry 0x803AB410, aRmon
-debug_handler_table_entry 0x803AB710, aIdle
-debug_handler_table_entry 0x803AB750, aShed
-debug_handler_table_entry 0x803AB950, aMain
-debug_handler_table_entry 0x803B3950, aAudi
+ debug_handler_table_entry 0x803AB400, aBoot
+ debug_handler_table_entry 0x803AB410, aRmon
+ debug_handler_table_entry 0x803AB710, aIdle
+ debug_handler_table_entry 0x803AB750, aShed
+ debug_handler_table_entry 0x803AB950, aMain
+ debug_handler_table_entry 0x803B3950, aAudi
 debug_handler_table_end:
 
 .word 0x00000000
@@ -59,3 +59,23 @@ debug_handler_table_end:
 .word 0x00000000
 .word 0x00000000
 .word 0x00000000
+
+.section .rdata
+
+aBoot: .asciiz "boot"
+ .align 2
+
+aRmon: .asciiz "rmon"
+ .align 2
+
+aIdle: .asciiz "idle"
+ .align 2
+
+aShed: .asciiz "shed"
+ .align 2
+
+aMain: .asciiz "main"
+ .align 2
+
+aAudi: .asciiz "audi"
+ .align 2

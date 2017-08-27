@@ -39553,9 +39553,7 @@ dword_8004ED54:
  .word 0x00000000
  .word 0xFF000000
  .word 0xFF000000
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 
 .section .rdata
@@ -39568,13 +39566,11 @@ flt_8004ED74:
 
 flt_8004ED78:
  .word 0x3DCCCCCE
- .word 0x00000000
+ .balign 16
 
 default_gu_scale:
  .word 0x3DCCCCCD
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 aNochr:
  .asciiz "-nochr"
@@ -39832,8 +39828,7 @@ flt_8004F0E0:
 
 fl_neg_pi:
  .word 0xC0490FDB
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 off_8004F0F0:
  .word 0x7F005740
@@ -39911,9 +39906,7 @@ flt_8004F1DC:
 
 flt_8004F1E0:
  .word 0x3DCCCCD0
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 flt_8004F1F0:
  .word 0x3DCCCCCE
@@ -39923,7 +39916,7 @@ flt_8004F1F4:
 
 flt_8004F1F8:
  .word 0x3F6E147B
- .word 0x00000000
+ .balign 16
 
 flt_8004F200:
  .word 0x2D6D7400
@@ -39981,7 +39974,7 @@ jpt_7003B478:
  .word 0x7F007550
  .word 0x7F00755C
  .word 0x7F007550
- .word 0x00000000
+ .balign 16
 
 flt_8004F2D0:
  .word 0x3F68F5C3
@@ -40012,8 +40005,7 @@ flt_8004F300:
 
 flt_8004F304:
  .word 0x40BA2FBD
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 asc_8004F310:
  .asciiz "1"
@@ -43044,19 +43036,15 @@ jpt_menu_constructor:
  .word 0x7F01AF44
  .word 0x7F01B0A4
  .word 0x7F01B0B4
- .word 0x00000000
+ .balign 16
 
 flt_80051CF0:
  .word 0x43958000
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 flt_80051D00:
  .word 0x40490FDB
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 flt_80051D10:
  .word 0x3DCCCCD0
@@ -43150,15 +43138,14 @@ flt_80051D84:
 
 flt_80051D88:
  .word 0x41AA6666
- .word 0x00000000
+ .balign 16
 
 flt_80051D90:
  .word 0x3DCCCCCE
 
 flt_80051D94:
  .word 0x3F4CCCCD
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 flt_80051DA0:
  .word 0x3E32B8C3
@@ -44282,7 +44269,7 @@ flt_80052974:
 
 flt_80052978:
  .word 0x3E955555
- .word 0x00000000
+ .balign 16
 
 jpt_7007045C:
  .word 0x7F03C534
@@ -44309,8 +44296,7 @@ flt_800529C0:
 
 flt_800529C4:
  .word 0x3F533333
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 dword_800529D0:
  .word 0x0A000000
@@ -45493,8 +45479,7 @@ jpt_7008AE0C:
  .word 0x7F056EE4
  .word 0x7F056EEC
  .word 0x7F056EE4
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 dword_80053610:
  .word 0x00000000
@@ -45514,7 +45499,7 @@ dword_80053640:
  .word 0x00000000
 
 aSAC:
- .byte 0x25, 0x73, 0x20, 0x80, 0x25, 0x63, 0x20, 0x00
+ .byte 0x25, 0x73, 0x20, 0x80, 0x25, 0x63, 0x20, 0x00 
 
 aSC:
  .asciiz "%s %c: "
@@ -45533,9 +45518,7 @@ jpt_7008B1EC:
  .word 0x7F0573FC
  .word 0x7F057410
  .word 0x7F057424
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 flt_80053690:
  .word 0x40C90FDB
@@ -45611,9 +45594,7 @@ flt_800536EC:
 
 flt_800536F0:
  .word 0x42652EE0
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 flt_80053700:
  .word 0x40490FDB
@@ -45635,7 +45616,8 @@ flt_80053714:
 
 flt_80053718:
  .word 0x40C90FDB
- .word 0x00000000
+ .balign 16
+
 
 flt_80053720:
  .word 0x46FFFE00
@@ -45654,8 +45636,7 @@ flt_80053730:
 
 flt_80053734:
  .word 0x477FFF00
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 flt_80053740:
  .word 0x38C90FDB
@@ -45671,9 +45652,7 @@ flt_8005374C:
 
 flt_80053750:
  .word 0x3F7FFF58
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 aGcartridgez:
  .asciiz "GcartridgeZ"
@@ -46869,9 +46848,7 @@ flt_8005440C:
 
 flt_80054410:
  .word 0x46EA6000
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 aDrawjointlistNoGfxlist:
  .asciiz "drawjointlist: no gfxlist!\n"
@@ -46982,8 +46959,7 @@ jpt_7009FE1C:
  .word 0x7F06BFC8
  .word 0x7F06BFBC
  .word 0x7F06BFC8
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 aGetsubmatrixNoObjinst:
  .asciiz "getsubmatrix: no objinst!\n"
@@ -47523,8 +47499,7 @@ jpt_700AA050:
  .word 0x7F076188
  .word 0x7F0761CC
  .word 0x7F076158
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 flt_80054F90:
  .word 0x3F7FFFEF
@@ -47555,8 +47530,7 @@ flt_80054FB0:
 
 flt_80054FB4:
  .word 0x40490FDB
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 a8s:
  .asciiz "%8s"
@@ -48085,9 +48059,7 @@ flt_800552CC:
 
 flt_800552D0:
  .word 0x40C90FDB
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 flt_800552E0:
  .word 0x3CA3D70A
@@ -48163,7 +48135,7 @@ flt_8005533C:
 
 aMenu_cErrorTriedToCallFont_makegt:.ascii "menu.c: ERROR! Tried to call font_makegt\n"
  .align 2
- .word 0x00000000
+ .balign 16
 
 aMoveView:
  .asciiz "move view"
@@ -48557,9 +48529,7 @@ jpt_700C4DD8:
  .word 0x7F090EB0
  .word 0x7F090EB0
  .word 0x7F090EB0
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 flt_80055850:
  .word 0x3C8EFA35
@@ -48575,9 +48545,7 @@ flt_8005585C:
 
 flt_80055860:
  .word 0x40C90FDB
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 aUsetupsevbunkerz:
  .asciiz "UsetupsevbunkerZ"
@@ -48730,9 +48698,13 @@ aUsetupwaxz:
 aUsetuppamz:
  .asciiz "UsetuppamZ"
  .align 2
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+
+ .balign 16
+
+
+
+
+
 
 aPalarm1z:
  .asciiz "Palarm1Z"
@@ -50094,10 +50066,19 @@ aPbollardz:
  .asciiz "PbollardZ"
  .align 2
 
-aPnullZ:.word 0x00000000
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+aPnullZ:.word 0x0
+ .align 2
+
+ .balign 16
+
+
+
+
+
+
+
+
+
 
 aCcamguardz:
  .asciiz "CcamguardZ"
@@ -50419,8 +50400,7 @@ aCspicebondz:
  .asciiz "CspicebondZ"
  .align 2
 
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 jpt_700C5B38:
  .word 0x7F091C10
@@ -50579,8 +50559,7 @@ jpt_700C6400:
 
 flt_80057504:
  .word 0x3F4CCCCD
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 flt_80057510:
  .word 0x3DCCCCCD
@@ -50762,7 +50741,7 @@ jpt_700CF1AC:
  .word 0x7F09B2E4
  .word 0x7F09B360
  .word 0x7F09B360
- .word 0x00000000
+ .balign 16
 
 flt_800576B0:
  .word 0x497423FE
@@ -50862,13 +50841,10 @@ flt_8005772C:
 
 flt_80057730:
  .word 0x3DCCCCCD
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 dbl_80057740:
- .word 0x4061D000
- .word 0x00000000
+ .double 142.5 
 
 flt_80057748:
  .word 0x40490FDB
@@ -50881,8 +50857,7 @@ flt_80057750:
 
 flt_80057754:
  .word 0x3FB501E2
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 aDD:
  .asciiz "%d, %d\n"
@@ -51443,8 +51418,6 @@ asc_800577C0:
  .word 0x00000000
  .word 0x00000000
  .word 0x00000000
-
-dword_80057FC0:
  .word 0x00000000
  .word 0x00000000
  .word 0x00000000
@@ -51951,8 +51924,7 @@ jpt_700E09F8:
  .word 0x7F0ACAF8
  .word 0x7F0ACB0C
  .word 0x7F0ACB20
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 aCDCC:
  .asciiz "%c%d%c%c"
@@ -51986,8 +51958,7 @@ flt_800585E0:
 
 flt_800585E4:
  .word 0x7F7FFFFF
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 aBgBg_sev_all_p_seg:
  .asciiz "bg/bg_sev_all_p.seg"
@@ -52387,17 +52358,14 @@ flt_80058D5C:
 
 flt_80058D60:
  .word 0x7F7FFFFF
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 default_near_fog:
  .word 0x7F7FFFFF
 
 flt_80058D74:
  .word 0x461C4000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 jpt_700EF63C:
  .word 0x7F0BB714
@@ -52405,9 +52373,7 @@ jpt_700EF63C:
  .word 0x7F0BB7EC
  .word 0x7F0BB818
  .word 0x7F0BB844
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 aBgBg_NaBgBg_NULLall_p_seg_0:
  .word 0x00000000
@@ -55410,9 +55376,7 @@ aReplayDemo_load:
  .asciiz "replay/demo.load"
  .align 2
 
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 jpt_700F4B9C:
  .word 0x7F0C0C74
@@ -55488,9 +55452,7 @@ jpt_700F50A4:
  .word 0x7F0C11E4
  .word 0x7F0C11E4
  .word 0x7F0C11CC
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 aLamee:
  .asciiz "LameE"
@@ -55891,8 +55853,7 @@ jpt_stage_text:
  .word 0x7F0C16DC
  .word 0x7F0C16DC
  .word 0x7F0C16D4
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 ascii_MP_watch_menu_percentd:
  .asciiz "%d"
@@ -55996,8 +55957,7 @@ flt_8005BD20:
 
 flt_8005BD24:
  .word 0x3C8EFA35
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 jpt_700FBF84:
  .word 0x7F0C805C
@@ -56151,9 +56111,7 @@ aHit_chr:
 
 aHit_glass_xlu:
  .asciiz "HIT_GLASS_XLU"
- .align 2
-
- .word 0x00000000
+ .balign 16
 
 tlb_ptr_DL_type_B1toC0:
  .word 0x7F0CE66C
@@ -56179,9 +56137,7 @@ tlb_ptr_C0_image_recall_types:
  .word 0x7F0CE4B8
  .word 0x7F0CE584
  .word 0x7F0CE5BC
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 dword_8005BF80:
  .word 0x11720000
@@ -56198,30 +56154,23 @@ dword_8005BF98:
  .word 0x11720000
  .word 0x11720000
  .word 0x11720000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 aRsp_c_debug:
  .asciiz "rsp_c_debug"
- .align 2
- .word 0x00000000
+ .balign 16
 
 aSleep5EtcKillallGhostGload:
  .asciiz "sleep 5; /etc/killall ghost gload"
- .align 2
- .word 0x00000000
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 aGame_c_debug:
  .asciiz "game_c_debug"
- .align 2
+ .balign 16
 
 build_date:
  .asciiz "Jun 29 1997 20:46:05"
- .align 2
- .word 0x00000000
- .word 0x00000000
+ .balign 16
 
 aEmDataSabre_seg_rz:
  .asciiz "em/data/sabre.seg.rz"

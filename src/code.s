@@ -12235,11 +12235,11 @@ start_pi_manager:
 # alignment
 .word 0x00000000, 0x00000000, 0x00000000
 
-.global proc_7000AD30
-proc_7000AD30:
+.global start_nulled_entry
+start_nulled_entry:
 /* 00B930 7000AD30 03E00008 */  jr    $ra
 /* 00B934 7000AD34 00000000 */  nop   
-# end proc_7000AD30
+# end start_nulled_entry
 
 .global something_with_vi_c_debug
 something_with_vi_c_debug:
@@ -38042,6 +38042,6 @@ osEPiRawWriteIo:
 
 
 .include "src/data.s"
-
+.include "src/bss.s"
 
 

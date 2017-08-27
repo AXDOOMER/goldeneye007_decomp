@@ -10,7 +10,7 @@ main_entry:
 /* 0014A0 700008A0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0014A4 700008A4 0C0001CE */  jal   start_idle_thread
 /* 0014A8 700008A8 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0014AC 700008AC 0C002B4C */  jal   proc_7000AD30
+/* 0014AC 700008AC 0C002B4C */  jal   start_nulled_entry
 /* 0014B0 700008B0 00000000 */  nop   
 /* 0014B4 700008B4 0C002B3C */  jal   start_pi_manager
 /* 0014B8 700008B8 00000000 */  nop   
