@@ -1,11 +1,5 @@
 .section .bss   
-.global _BSS_START   
-_BSS_START:    
-/*.space 0x31080*/   
-rmonthread: .space 0x1B0 #0x8005D2E0
-idlethread: .space 0x1B0 #0x8005D490
-mainthread: .space 0x1B0 #0x8005D640
-shedthread: .space 0x1B0 #0x8005D7F0
+
 msgQ_Q_8005D9A0: .space 0x18 #0x8005D9A0
 msgQ_buf_8005D9B8: .space 0x80 #0x8005D9B8
 dword_8005DA38: .space 4 #0x8005DA38

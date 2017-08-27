@@ -2,15 +2,10 @@
 .set noat      # allow manual use of $at
 .set noreorder # don't insert nops after branches
 
+.include "src/code/init.inc"
 .section .text, "ax"
 
-.macro get_value name, value
-.global get_\name
-get_\name:
- lui   $v0, %hi(\value)
- jr    $ra
- addiu $v0, $v0, %lo(\value)
-.endm
+
 
 
 /*
@@ -23,16 +18,6 @@ get_value rodata_rom_start Compressedrodata
 get_value rodata_rom_end Compressedrodata_end
 get_value RareZipASMRomstart 0x33590
 get_value RareZipASMRomend 0x34b30
-
-
-.macro jump_via_reg location, register=$a3
-.global jump_\location
-jump_\location:
- lui   \register, %hi(\location)
- addiu \register, \register, %lo(\location)
- jr    \register
- nop
-.endm
 
 
 /*
@@ -175,9 +160,230 @@ init:
 /* 0012EC 700006EC 27BD0040 */  addiu $sp, $sp, 0x40
 # end init
 
-.section .data
-.global _DATA_START
-_DATA_START:
-rspcode:
-.incbin "bin/rspcode.bin"
-rspcode_end:
+.section .text, "ax"
+
+/*
+ int __cdecl grow_stack(int baseaddress, int stacksize)
+*/
+.global grow_stack
+grow_stack:
+
+.equ baseaddress, $a0
+.equ stacksize, $a1
+
+/* 0012F0 700006F0 00851021 */  addu  $v0, baseaddress, stacksize
+/* 0012F4 700006F4 03E00008 */  jr    $ra
+/* 0012F8 700006F8 2442FFF8 */  addiu $v0, $v0, -8
+# end grow_stack
+
+.global proc_700006FC
+proc_700006FC:
+/* 0012FC 700006FC 240E0001 */  addiu $t6, $zero, 1
+/* 001300 70000700 3C018002 */  lui   $at, %hi(unknown_init_val)
+/* 001304 70000704 AC2E3044 */  sw    $t6, %lo(unknown_init_val)($at) # $t6, 0x3044($at)
+/* 001308 70000708 3C018002 */  lui   $at, %hi(cart_hw_address)
+/* 00130C 7000070C 3C0F1000 */  lui   $t7, %hi(0x10000000)
+/* 001310 70000710 03E00008 */  jr    $ra
+/* 001314 70000714 AC2F3048 */  sw    $t7, %lo(cart_hw_address)($at) # $t7, 0x3048($at)
+# end proc_700006FC
+
+
+
+.section .text, "ax"
+
+.global idle_entry
+idle_entry:
+/* 001318 70000718 AFA40000 */  sw    $a0, ($sp)
+.Lidle_entry_4:
+/* 00131C 7000071C 1000FFFF */  b     .Lidle_entry_4
+/* 001320 70000720 00000000 */  nop   
+# end idle_entry
+
+# alignment
+.word 0x00000000, 0x00000000, 0x00000000
+
+.global dummy_70000730
+dummy_70000730:
+/* 001330 70000730 03E00008 */  jr    $ra
+/* 001334 70000734 00000000 */  nop   
+# end dummy_70000730
+
+.global start_idle_thread
+start_idle_thread:
+/* 001338 70000738 27BDFFE0 */  addiu $sp, $sp, -0x20
+/* 00133C 7000073C AFBF001C */  sw    $ra, 0x1c($sp)
+/* 001340 70000740 3C04803B */  lui   $a0, 0x803b
+/* 001344 70000744 2484B710 */  addiu $a0, $a0, -0x48f0
+/* 001348 70000748 0C0001BC */  jal   grow_stack
+/* 00134C 7000074C 24050040 */  addiu $a1, $zero, 0x40
+/* 001350 70000750 3C048006 */  lui   $a0, 0x8006
+/* 001354 70000754 3C067000 */  lui   $a2, %hi(idle_entry)
+/* 001358 70000758 24C60718 */  addiu $a2, $a2, %lo(idle_entry)
+/* 00135C 7000075C 2484D490 */  addiu $a0, $a0, -0x2b70
+/* 001360 70000760 24050001 */  addiu $a1, $zero, 1
+/* 001364 70000764 00003825 */  or    $a3, $zero, $zero
+/* 001368 70000768 AFA20010 */  sw    $v0, 0x10($sp)
+/* 00136C 7000076C 0C00350C */  jal   osCreateThread
+/* 001370 70000770 AFA00014 */  sw    $zero, 0x14($sp)
+/* 001374 70000774 3C048006 */  lui   $a0, 0x8006
+/* 001378 70000778 0C003560 */  jal   osStartThread
+/* 00137C 7000077C 2484D490 */  addiu $a0, $a0, -0x2b70
+/* 001380 70000780 8FBF001C */  lw    $ra, 0x1c($sp)
+/* 001384 70000784 27BD0020 */  addiu $sp, $sp, 0x20
+/* 001388 70000788 03E00008 */  jr    $ra
+/* 00138C 7000078C 00000000 */  nop   
+# end start_idle_thread
+
+.section .text, "ax"
+
+.global start_rmon_thread
+start_rmon_thread:
+/* 001390 70000790 27BDFFE0 */  addiu $sp, $sp, -0x20
+/* 001394 70000794 AFBF001C */  sw    $ra, 0x1c($sp)
+/* 001398 70000798 3C04803B */  lui   $a0, 0x803b
+/* 00139C 7000079C 2484B410 */  addiu $a0, $a0, -0x4bf0
+/* 0013A0 700007A0 0C0001BC */  jal   grow_stack
+/* 0013A4 700007A4 24050300 */  addiu $a1, $zero, 0x300
+/* 0013A8 700007A8 3C048006 */  lui   $a0, 0x8006
+/* 0013AC 700007AC 3C067001 */  lui   $a2, %hi(rmon_entry)
+/* 0013B0 700007B0 240E00FA */  addiu $t6, $zero, 0xfa
+/* 0013B4 700007B4 AFAE0014 */  sw    $t6, 0x14($sp)
+/* 0013B8 700007B8 24C6CEA0 */  addiu $a2, $a2, %lo(rmon_entry)
+/* 0013BC 700007BC 2484D2E0 */  addiu $a0, $a0, -0x2d20
+/* 0013C0 700007C0 00002825 */  or    $a1, $zero, $zero
+/* 0013C4 700007C4 00003825 */  or    $a3, $zero, $zero
+/* 0013C8 700007C8 0C00350C */  jal   osCreateThread
+/* 0013CC 700007CC AFA20010 */  sw    $v0, 0x10($sp)
+/* 0013D0 700007D0 3C048006 */  lui   $a0, 0x8006
+/* 0013D4 700007D4 0C003560 */  jal   osStartThread
+/* 0013D8 700007D8 2484D2E0 */  addiu $a0, $a0, -0x2d20
+/* 0013DC 700007DC 8FBF001C */  lw    $ra, 0x1c($sp)
+/* 0013E0 700007E0 27BD0020 */  addiu $sp, $sp, 0x20
+/* 0013E4 700007E4 03E00008 */  jr    $ra
+/* 0013E8 700007E8 00000000 */  nop   
+# end start_rmon_thread
+
+.section .text, "ax"
+
+.global setup_message_queue_for_scheduler
+setup_message_queue_for_scheduler:
+/* 0013EC 700007EC 27BDFFE8 */  addiu $sp, $sp, -0x18
+/* 0013F0 700007F0 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 0013F4 700007F4 3C048006 */  lui   $a0, 0x8006
+/* 0013F8 700007F8 3C058006 */  lui   $a1, 0x8006
+/* 0013FC 700007FC 24A5D9B8 */  addiu $a1, $a1, -0x2648
+/* 001400 70000800 2484D9A0 */  addiu $a0, $a0, -0x2660
+/* 001404 70000804 0C0035B4 */  jal   osCreateMesgQueue
+/* 001408 70000808 24060020 */  addiu $a2, $zero, 0x20
+/* 00140C 7000080C 3C0E8000 */  lui   $t6, 0x8000
+/* 001410 70000810 8DCE0300 */  lw    $t6, 0x300($t6)
+/* 001414 70000814 24010002 */  addiu $at, $zero, 2
+/* 001418 70000818 3C048006 */  lui   $a0, 0x8006
+/* 00141C 7000081C 15C1000A */  bne   $t6, $at, .Lsetup_message_queue_for_scheduler_5C
+/* 001420 70000820 2484DA40 */  addiu $a0, $a0, -0x25c0
+/* 001424 70000824 3C048006 */  lui   $a0, 0x8006
+/* 001428 70000828 3C058006 */  lui   $a1, 0x8006
+/* 00142C 7000082C 24A5D7F0 */  addiu $a1, $a1, -0x2810
+/* 001430 70000830 2484DA40 */  addiu $a0, $a0, -0x25c0
+/* 001434 70000834 2406001E */  addiu $a2, $zero, 0x1e
+/* 001438 70000838 0C0002AB */  jal   scheduler
+/* 00143C 7000083C 24070001 */  addiu $a3, $zero, 1
+/* 001440 70000840 10000006 */  b     .Lsetup_message_queue_for_scheduler_70
+/* 001444 70000844 00000000 */  nop   
+.Lsetup_message_queue_for_scheduler_5C:
+/* 001448 70000848 3C058006 */  lui   $a1, 0x8006
+/* 00144C 7000084C 24A5D7F0 */  addiu $a1, $a1, -0x2810
+/* 001450 70000850 24060002 */  addiu $a2, $zero, 2
+/* 001454 70000854 0C0002AB */  jal   scheduler
+/* 001458 70000858 24070001 */  addiu $a3, $zero, 1
+.Lsetup_message_queue_for_scheduler_70:
+/* 00145C 7000085C 3C048006 */  lui   $a0, 0x8006
+/* 001460 70000860 3C058006 */  lui   $a1, 0x8006
+/* 001464 70000864 3C068006 */  lui   $a2, 0x8006
+/* 001468 70000868 24C6D9A0 */  addiu $a2, $a2, -0x2660
+/* 00146C 7000086C 24A5DB18 */  addiu $a1, $a1, -0x24e8
+/* 001470 70000870 2484DA40 */  addiu $a0, $a0, -0x25c0
+/* 001474 70000874 0C000305 */  jal   proc_70000C14
+/* 001478 70000878 00003825 */  or    $a3, $zero, $zero
+/* 00147C 7000087C 3C048006 */  lui   $a0, 0x8006
+/* 001480 70000880 0C00033E */  jal   proc_70000CF8
+/* 001484 70000884 2484DA40 */  addiu $a0, $a0, -0x25c0
+/* 001488 70000888 8FBF0014 */  lw    $ra, 0x14($sp)
+/* 00148C 7000088C 3C018006 */  lui   $at, 0x8006
+/* 001490 70000890 AC22DA38 */  sw    $v0, %lo(0x8005DA38)($at) # $v0, -0x25c8($at)
+/* 001494 70000894 03E00008 */  jr    $ra
+/* 001498 70000898 27BD0018 */  addiu $sp, $sp, 0x18
+# end setup_message_queue_for_scheduler
+
+.section .text, "ax"
+
+.global main_entry
+main_entry:
+/* 00149C 7000089C 27BDFFE8 */  addiu $sp, $sp, -0x18
+/* 0014A0 700008A0 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 0014A4 700008A4 0C0001CE */  jal   start_idle_thread
+/* 0014A8 700008A8 AFA40018 */  sw    $a0, 0x18($sp)
+/* 0014AC 700008AC 0C002B4C */  jal   start_nulled_entry
+/* 0014B0 700008B0 00000000 */  nop   
+/* 0014B4 700008B4 0C002B3C */  jal   start_pi_manager
+/* 0014B8 700008B8 00000000 */  nop   
+/* 0014BC 700008BC 0C0001E4 */  jal   start_rmon_thread
+/* 0014C0 700008C0 00000000 */  nop   
+/* 0014C4 700008C4 0C002970 */  jal   check_boot_switches
+/* 0014C8 700008C8 00000000 */  nop   
+/* 0014CC 700008CC 50400004 */  beql  $v0, $zero, .Lmain_entry_44
+/* 0014D0 700008D0 00002025 */  or    $a0, $zero, $zero
+/* 0014D4 700008D4 0C0035D0 */  jal   osStopThread
+/* 0014D8 700008D8 00002025 */  or    $a0, $zero, $zero
+/* 0014DC 700008DC 00002025 */  or    $a0, $zero, $zero
+.Lmain_entry_44:
+/* 0014E0 700008E0 0C003600 */  jal   osSetThreadPri
+/* 0014E4 700008E4 2405000A */  addiu $a1, $zero, 0xa
+/* 0014E8 700008E8 0C0001FB */  jal   setup_message_queue_for_scheduler
+/* 0014EC 700008EC 00000000 */  nop   
+/* 0014F0 700008F0 0C001807 */  jal   setup_gamevalues_and_launchmainloop
+/* 0014F4 700008F4 00000000 */  nop   
+/* 0014F8 700008F8 8FBF0014 */  lw    $ra, 0x14($sp)
+/* 0014FC 700008FC 27BD0018 */  addiu $sp, $sp, 0x18
+/* 001500 70000900 03E00008 */  jr    $ra
+/* 001504 70000904 00000000 */  nop   
+# end main_entry
+
+.section .text, "ax"
+
+.global setuplastentryofdebughandler
+setuplastentryofdebughandler:
+/* 001508 70000908 27BDFFC0 */  addiu $sp, $sp, -0x40
+/* 00150C 7000090C 3C0E8002 */  lui   $t6, %hi(debug_handler_table)
+/* 001510 70000910 27A30008 */  addiu $v1, $sp, 8
+/* 001514 70000914 25CE304C */  addiu $t6, $t6, %lo(debug_handler_table)
+/* 001518 70000918 25D90030 */  addiu $t9, $t6, (debug_handler_table_end-debug_handler_table)
+/* 00151C 7000091C 00604025 */  or    $t0, $v1, $zero
+.Lsetuplastentryofdebughandler_18:
+/* 001520 70000920 8DC10000 */  lw    $at, ($t6)
+/* 001524 70000924 25CE000C */  addiu $t6, $t6, 0xc
+/* 001528 70000928 2508000C */  addiu $t0, $t0, 0xc
+/* 00152C 7000092C AD01FFF4 */  sw    $at, -0xc($t0)
+/* 001530 70000930 8DC1FFF8 */  lw    $at, -8($t6)
+/* 001534 70000934 AD01FFF8 */  sw    $at, -8($t0)
+/* 001538 70000938 8DC1FFFC */  lw    $at, -4($t6)
+/* 00153C 7000093C 15D9FFF8 */  bne   $t6, $t9, .Lsetuplastentryofdebughandler_18
+/* 001540 70000940 AD01FFFC */  sw    $at, -4($t0)
+/* 001544 70000944 8DC10000 */  lw    $at, ($t6)
+/* 001548 70000948 00601025 */  or    $v0, $v1, $zero
+/* 00154C 7000094C AD010000 */  sw    $at, ($t0)
+/* 001550 70000950 8DD90004 */  lw    $t9, 4($t6)
+/* 001554 70000954 AD190004 */  sw    $t9, 4($t0)
+/* 001558 70000958 8C490008 */  lw    $t1, 8($v0)
+.Lsetuplastentryofdebughandler_54:
+/* 00155C 7000095C 24420008 */  addiu $v0, $v0, 8
+/* 001560 70000960 5520FFFE */  bnezl $t1, .Lsetuplastentryofdebughandler_54
+/* 001564 70000964 8C490008 */  lw    $t1, 8($v0)
+/* 001568 70000968 03E00008 */  jr    $ra
+/* 00156C 7000096C 27BD0040 */  addiu $sp, $sp, 0x40
+# end setuplastentryofdebughandler
+
+
+
+
+
