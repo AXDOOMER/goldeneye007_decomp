@@ -56,6 +56,9 @@ SECTIONS
 
    .data 0x80020D90 : AT(0xC00000){
       build/code.o (.data);
+      build/code.o (.rdata);
+      build/tlbcode.o (.data);
+      build/tlbcode.o (.rdata);
    }
 
    .bss 0x8005D2E0 : {
