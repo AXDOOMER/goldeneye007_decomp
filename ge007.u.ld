@@ -115,7 +115,7 @@ SECTIONS
    }
 
    .stack 0x80300000 : {
-      * (.stack);
+      build/code.o (.stack);
    }
 
    .framebuffer_1 0x803B5000 : {

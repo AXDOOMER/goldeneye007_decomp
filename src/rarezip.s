@@ -4,7 +4,8 @@
 
 
 .section .text, "ax"
-
+.global rarezip_start
+rarezip_start:
 
 .global decompress.buildtable
 decompress.buildtable:
