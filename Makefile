@@ -53,9 +53,6 @@ $(OBSEG_DIR)/text/%.rz: $(OBSEG_DIR)/text/%.bin
 $(OBSEG_DIR)/brief/%.rz: $(OBSEG_DIR)/brief/%.bin
 	$(RZ_COMP) $< $@
 
-$(OBSEG_DIR)/text/%.rz: $(OBSEG_DIR)/text/%.bin
-	$(RZ_COMP) $< $@
-
 $(OBSEG_DIR)/chr/%.rz: $(OBSEG_DIR)/chr/%.bin
 	$(RZ_COMP) $< $@
 
