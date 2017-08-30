@@ -1,5 +1,27 @@
 .section .data
 
+stru_800231D4:
+.word 0x00000000
+.word 0x00000000
+.word 0x00000002
+.word 0x00000000
+.word 0x00000001
+.word 0x00000000
+.word 0x00000002
+.word 0x00000000
+.word 0x00000002
+.word 0xFF000000
+.word 0x00000002
+.word 0x00000000
+.word 0x00000003
+.word 0x00009200
+.word 0x00000004
+.word 0xFFFFFFFF
+.word 0x00000004
+.word 0xDB000000
+.word 0x00000004
+.word 0xFFFFFFFF
+
 dword_80023224:
  .word 0x00000000
 
