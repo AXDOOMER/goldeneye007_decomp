@@ -73,8 +73,7 @@ aAudi: .asciiz "audi"
 
 .section .bss   
 .global _BSS_START   
-_BSS_START:    
-/*.space 0x31080*/   
+_BSS_START:      
 .comm rmonthread, 0x1B0 #0x8005D2E0
 .comm idlethread, 0x1B0 #0x8005D490
 .comm mainthread, 0x1B0 #0x8005D640

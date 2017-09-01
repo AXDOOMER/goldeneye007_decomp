@@ -1587,4 +1587,6 @@ rarezip.data3:
 # Unknown region 034B2C-034B30 [4]
 .byte 0x00, 0x00, 0x00, 0x00
 
+.global rarezip_end
+rarezip_end:
 

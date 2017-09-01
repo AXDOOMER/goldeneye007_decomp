@@ -16,7 +16,7 @@ get_name returning value in $v0
 get_value rodata_vaddr _DATA_START
 get_value rodata_rom_start Compressedrodata
 get_value rodata_rom_end Compressedrodata_end
-get_value RareZipASMRomstart 0x33590
+get_value RareZipASMRomstart Compressedrodata_end
 get_value RareZipASMRomend 0x34b30
 
 
@@ -102,9 +102,9 @@ init:
 /* 00120C 7000060C 0C0006EC */  jal   set_hardwire_TLB_to_2
 /* 001210 70000610 00000000 */  nop   
 /* 001214 70000614 3C108000 */  lui   $s0, 0x8000
-/* 001218 70000618 3C027000 */  lui   $v0, 0x7000
+/* 001218 70000618 3C027000 */  lui   $v0, %hi(tlb_entries)
 /* 00121C 7000061C 3C048000 */  lui   $a0, 0x8000
-/* 001220 70000620 24421B60 */  addiu $v0, $v0, 0x1b60
+/* 001220 70000620 24421B60 */  addiu $v0, $v0, %lo(tlb_entries)
 /* 001224 70000624 02001825 */  or    $v1, $s0, $zero
 /* 001228 70000628 34840080 */  ori   $a0, $a0, 0x80
 .Linit_11C:
@@ -136,12 +136,12 @@ init:
 /* 00128C 7000068C 00000000 */  nop   
 /* 001290 70000690 0C003508 */  jal   __osSetFpcCsr
 /* 001294 70000694 34440E80 */  ori   $a0, $v0, 0xe80
-/* 001298 70000698 3C04803B */  lui   $a0, 0x803b
-/* 00129C 7000069C 2484B950 */  addiu $a0, $a0, -0x46b0
+/* 001298 70000698 3C04803B */  lui   $a0, 0x803b #sp_main
+/* 00129C 7000069C 2484B950 */  addiu $a0, $a0, -0x46b0 #sp_main
 /* 0012A0 700006A0 0C0001BC */  jal   grow_stack
 /* 0012A4 700006A4 34058000 */  ori   $a1, $zero, 0x8000
-/* 0012A8 700006A8 3C108006 */  lui   $s0, 0x8006
-/* 0012AC 700006AC 2610D640 */  addiu $s0, $s0, -0x29c0
+/* 0012A8 700006A8 3C108006 */  lui   $s0, 0x8006 #mainthread
+/* 0012AC 700006AC 2610D640 */  addiu $s0, $s0, -0x29c0 #mainthread
 /* 0012B0 700006B0 3C067000 */  lui   $a2, %hi(main_entry)
 /* 0012B4 700006B4 240C000A */  addiu $t4, $zero, 0xa
 /* 0012B8 700006B8 AFAC0014 */  sw    $t4, 0x14($sp)
@@ -212,22 +212,22 @@ dummy_70000730:
 start_idle_thread:
 /* 001338 70000738 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00133C 7000073C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 001340 70000740 3C04803B */  lui   $a0, 0x803b
-/* 001344 70000744 2484B710 */  addiu $a0, $a0, -0x48f0
+/* 001340 70000740 3C04803B */  lui   $a0, 0x803b #sp_idle
+/* 001344 70000744 2484B710 */  addiu $a0, $a0, -0x48f0 #sp_idle
 /* 001348 70000748 0C0001BC */  jal   grow_stack
 /* 00134C 7000074C 24050040 */  addiu $a1, $zero, 0x40
-/* 001350 70000750 3C048006 */  lui   $a0, 0x8006
+/* 001350 70000750 3C048006 */  lui   $a0, %hi(idlethread-0x30810) #why 30810????
 /* 001354 70000754 3C067000 */  lui   $a2, %hi(idle_entry)
 /* 001358 70000758 24C60718 */  addiu $a2, $a2, %lo(idle_entry)
-/* 00135C 7000075C 2484D490 */  addiu $a0, $a0, -0x2b70
+/* 00135C 7000075C 2484D490 */  addiu $a0, $a0, %lo(idlethread-0x30810) #why 30810????
 /* 001360 70000760 24050001 */  addiu $a1, $zero, 1
 /* 001364 70000764 00003825 */  or    $a3, $zero, $zero
 /* 001368 70000768 AFA20010 */  sw    $v0, 0x10($sp)
 /* 00136C 7000076C 0C00350C */  jal   osCreateThread
 /* 001370 70000770 AFA00014 */  sw    $zero, 0x14($sp)
-/* 001374 70000774 3C048006 */  lui   $a0, 0x8006
+/* 001374 70000774 3C048006 */  lui   $a0, %hi(idlethread-0x30810) #why 30810????
 /* 001378 70000778 0C003560 */  jal   osStartThread
-/* 00137C 7000077C 2484D490 */  addiu $a0, $a0, -0x2b70
+/* 00137C 7000077C 2484D490 */  addiu $a0, $a0, %lo(idlethread-0x30810) #why 30810????
 /* 001380 70000780 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 001384 70000784 27BD0020 */  addiu $sp, $sp, 0x20
 /* 001388 70000788 03E00008 */  jr    $ra
@@ -240,23 +240,23 @@ start_idle_thread:
 start_rmon_thread:
 /* 001390 70000790 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 001394 70000794 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 001398 70000798 3C04803B */  lui   $a0, 0x803b
-/* 00139C 7000079C 2484B410 */  addiu $a0, $a0, -0x4bf0
+/* 001398 70000798 3C04803B */  lui   $a0, 0x803b #sp_rmon
+/* 00139C 7000079C 2484B410 */  addiu $a0, $a0, -0x4bf0 #sp_rmon
 /* 0013A0 700007A0 0C0001BC */  jal   grow_stack
 /* 0013A4 700007A4 24050300 */  addiu $a1, $zero, 0x300
-/* 0013A8 700007A8 3C048006 */  lui   $a0, 0x8006
+/* 0013A8 700007A8 3C048006 */  lui   $a0, %hi(rmonthread-0x30B70) #why 30B70????
 /* 0013AC 700007AC 3C067001 */  lui   $a2, %hi(rmon_entry)
 /* 0013B0 700007B0 240E00FA */  addiu $t6, $zero, 0xfa
 /* 0013B4 700007B4 AFAE0014 */  sw    $t6, 0x14($sp)
 /* 0013B8 700007B8 24C6CEA0 */  addiu $a2, $a2, %lo(rmon_entry)
-/* 0013BC 700007BC 2484D2E0 */  addiu $a0, $a0, -0x2d20
+/* 0013BC 700007BC 2484D2E0 */  addiu $a0, $a0, %lo(rmonthread-0x30B70) #why 30B70????
 /* 0013C0 700007C0 00002825 */  or    $a1, $zero, $zero
 /* 0013C4 700007C4 00003825 */  or    $a3, $zero, $zero
 /* 0013C8 700007C8 0C00350C */  jal   osCreateThread
 /* 0013CC 700007CC AFA20010 */  sw    $v0, 0x10($sp)
-/* 0013D0 700007D0 3C048006 */  lui   $a0, 0x8006
+/* 0013D0 700007D0 3C048006 */  lui   $a0, %hi(rmonthread-0x30B70) #why 30B70????
 /* 0013D4 700007D4 0C003560 */  jal   osStartThread
-/* 0013D8 700007D8 2484D2E0 */  addiu $a0, $a0, -0x2d20
+/* 0013D8 700007D8 2484D2E0 */  addiu $a0, $a0, %lo(rmonthread-0x30B70) #why 30B70????
 /* 0013DC 700007DC 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 0013E0 700007E0 27BD0020 */  addiu $sp, $sp, 0x20
 /* 0013E4 700007E4 03E00008 */  jr    $ra
