@@ -16,7 +16,7 @@ get_name returning value in $v0
 get_value rodata_vaddr _DATA_START
 get_value rodata_rom_start Compressedrodata
 get_value rodata_rom_end Compressedrodata_end
-get_value RareZipASMRomstart Compressedrodata_end
+get_value RareZipASMRomstart rarezip_rom_start
 get_value RareZipASMRomend 0x34b30
 
 
@@ -67,10 +67,10 @@ init:
 .Linit_7C:
 /* 00118C 7000058C 0C00013E */  jal   jump_decompress.entry
 /* 001190 70000590 01512023 */  subu  $a0, $t2, $s1
-/* 001194 70000594 3C0B0003 */  lui   $t3, 3
+/* 001194 70000594 3C0B0003 */  lui   $t3, %hi(rarezip_rom_start)
 /* 001198 70000598 3C0C0000 */  lui   $t4, 0
 /* 00119C 7000059C 258C1050 */  addiu $t4, $t4, 0x1050
-/* 0011A0 700005A0 256B3590 */  addiu $t3, $t3, 0x3590
+/* 0011A0 700005A0 256B3590 */  addiu $t3, $t3, %lo(rarezip_rom_start)
 /* 0011A4 700005A4 3C01000F */  lui   $at, 0xf
 /* 0011A8 700005A8 3421FFB1 */  ori   $at, $at, 0xffb1
 /* 0011AC 700005AC 016C1023 */  subu  $v0, $t3, $t4
@@ -78,13 +78,13 @@ init:
 /* 0011B4 700005B4 14200013 */  bnez  $at, .Linit_F4
 /* 0011B8 700005B8 3C01FFF0 */  lui   $at, 0xfff0
 /* 0011BC 700005BC 34210050 */  ori   $at, $at, 0x50
-/* 0011C0 700005C0 3C050010 */  lui   $a1, 0x10
-/* 0011C4 700005C4 3C067010 */  lui   $a2, 0x7010
-/* 0011C8 700005C8 24C60400 */  addiu $a2, $a2, 0x400
-/* 0011CC 700005CC 24A51000 */  addiu $a1, $a1, 0x1000
+/* 0011C0 700005C0 3C050010 */  lui   $a1, %hi(0x101000)
+/* 0011C4 700005C4 3C067010 */  lui   $a2, %hi(0x70100400)
+/* 0011C8 700005C8 24C60400 */  addiu $a2, $a2, %lo(0x70100400) #dramAddr
+/* 0011CC 700005CC 24A51000 */  addiu $a1, $a1, %lo(0x101000) #devAddr
 /* 0011D0 700005D0 00413821 */  addu  $a3, $v0, $at
 /* 0011D4 700005D4 0C0033E4 */  jal   osPiRawStartDma
-/* 0011D8 700005D8 00002025 */  or    $a0, $zero, $zero
+/* 0011D8 700005D8 00002025 */  or    $a0, $zero, $zero  #direction
 /* 0011DC 700005DC 0C00341C */  jal   osPiGetStatus
 /* 0011E0 700005E0 00000000 */  nop   
 /* 0011E4 700005E4 304D0001 */  andi  $t5, $v0, 1
