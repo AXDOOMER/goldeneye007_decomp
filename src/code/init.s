@@ -14,9 +14,9 @@ makes a function called
 get_name returning value in $v0
 */
 get_value rodata_vaddr _DATA_START
-get_value rodata_rom_start Compressedrodata
-get_value rodata_rom_end Compressedrodata_end
-get_value RareZipASMRomstart rarezip_rom_start
+get_value rodata_rom_start ROM_cdata_start
+get_value rodata_rom_end ROM_cdata_end
+get_value RareZipASMRomstart ROM_rarezip_start
 get_value RareZipASMRomend 0x34b30
 
 
@@ -32,45 +32,64 @@ jump_via_reg decompress.entry
 
 .global init
 init:
-/* 001110 70000510 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 001114 70000514 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 001118 70000518 AFB10020 */  sw    $s1, 0x20($sp)
-/* 00111C 7000051C 0C00012F */  jal   get_rodata_vaddr
-/* 001120 70000520 AFB0001C */  sw    $s0, 0x1c($sp) 
-/* 001124 70000524 0C000132 */  jal   get_rodata_rom_start
-/* 001128 70000528 00408025 */  or    $s0, $v0, $zero #store rodata_vaddr to $s0
-/* 00112C 7000052C 0C000135 */  jal   get_rodata_rom_end
-/* 001130 70000530 AFA20034 */  sw    $v0, 0x34($sp) 
-/* 001134 70000534 8FAE0034 */  lw    $t6, 0x34($sp)
-/* 001138 70000538 0C000138 */  jal   get_RareZipASMRomstart
-/* 00113C 7000053C 004E8823 */  subu  $s1, $v0, $t6
+
+.equ s_cdata_rom_start, 0x34
+.equ s_rarezip_rom_start, 0x28
+.equ saved_ra, 0x24
+.equ saved_s1, 0x20
+.equ saved_s0, 0x1C
+
+.equ r_rodata_vaddr, $s0
+.equ r_rodata_rom_size, $s1
+.equ r_rarezip_vaddr, $t2
+.equ r_rarezip_rom_addr, $t3
+.equ r_rodata_rom_start, $t6
+.equ r_rarezip_rom_start, $t7
+.equ r_rarezip_rom_size, $t8
+.equ r_buffer_addr, $t9
+.equ r_returnval, $v0
+.equ r_totalsize, $v1
+
+
+/* 001110 70000510 27BDFFC0 */  addiu $sp, $sp, -0x40          #set sp to 0x803AB3D0
+/* 001114 70000514 AFBF0024 */  sw    $ra, saved_ra($sp)           #save $ra
+/* 001118 70000518 AFB10020 */  sw    $s1, saved_s1($sp)           #save $s1
+/* 00111C 7000051C 0C00012F */  jal   get_rodata_vaddr         #put rodata_vaddr in $v0
+/* 001120 70000520 AFB0001C */  sw    $s0, saved_s0($sp)           #save $s0
+/* 001124 70000524 0C000132 */  jal   get_rodata_rom_start     #put rodata_rom_start in $v0
+/* 001128 70000528 00408025 */  or    r_rodata_vaddr, r_returnval, $zero #DELAYSLOT store rodata_vaddr to rodata_vaddr ($s0)
+/* 00112C 7000052C 0C000135 */  jal   get_rodata_rom_end       #put rodata_rom_end in $v0
+/* 001130 70000530 AFA20034 */  sw    r_returnval, s_cdata_rom_start($sp) #store start address of cdata
+/* 001134 70000534 8FAE0034 */  lw    r_rodata_rom_start, s_cdata_rom_start($sp)
+/* 001138 70000538 0C000138 */  jal   get_RareZipASMRomstart                        #
+/* 00113C 7000053C 004E8823 */  subu  r_rodata_rom_size, r_returnval, r_rodata_rom_start  #DELAYSLOT
 /* 001140 70000540 0C00013B */  jal   get_RareZipASMRomend
-/* 001144 70000544 AFA20028 */  sw    $v0, 0x28($sp)
-/* 001148 70000548 8FAF0028 */  lw    $t7, 0x28($sp)
-/* 00114C 7000054C 3C0A7020 */  lui   $t2, %hi(rarezip_start)
-/* 001150 70000550 02002825 */  or    $a1, $s0, $zero
-/* 001154 70000554 004FC023 */  subu  $t8, $v0, $t7
-/* 001158 70000558 02382021 */  addu  $a0, $s1, $t8
-/* 00115C 7000055C 2483FFFF */  addiu $v1, $a0, -1
-/* 001160 70000560 0460000A */  bltz  $v1, .Linit_7C
-/* 001164 70000564 3C068030 */  lui   $a2, %hi(rarezip_buffer)
-/* 001168 70000568 3C197020 */  lui   $t9, %hi(rarezip_start)
-/* 00116C 7000056C 03312023 */  subu  $a0, $t9, $s1
-/* 001170 70000570 02031021 */  addu  $v0, $s0, $v1
-.Linit_64:
+/* 001144 70000544 AFA20028 */  sw    r_returnval, s_rarezip_rom_start($sp)         #DELAYSLOT
+/* 001148 70000548 8FAF0028 */  lw    r_rarezip_rom_start, s_rarezip_rom_start($sp)
+/* 00114C 7000054C 3C0A7020 */  lui   r_rarezip_vaddr, %hi(rarezip_start)
+/* 001150 70000550 02002825 */  or    $a1, r_rodata_vaddr, $zero  #a1=target
+/* 001154 70000554 004FC023 */  subu  r_rarezip_rom_size, r_returnval, r_rarezip_rom_start #r_returnval is rarezip_rom_end address
+/* 001158 70000558 02382021 */  addu  $a0, r_rodata_rom_size, r_rarezip_rom_size  #a0=source
+/* 00115C 7000055C 2483FFFF */  addiu r_totalsize, $a0, -1  #totalsize = source-1
+/* 001160 70000560 0460000A */  bltz  r_totalsize, .decompress
+/* 001164 70000564 3C068030 */  lui   $a2, %hi(rarezip_buffer)  #a2=buffer
+/* 001168 70000568 3C197020 */  lui   r_buffer_addr, %hi(rarezip_start)
+/* 00116C 7000056C 03312023 */  subu  $a0, r_buffer_addr, r_rodata_rom_size   #source=rarezip_start-rodata_romsize (start buffer rodata_rom_size bytes before rarezip start address)
+/* 001170 70000570 02031021 */  addu  $v0, r_rodata_vaddr, r_totalsize
+.loop:
 /* 001174 70000574 90480000 */  lbu   $t0, ($v0)
 /* 001178 70000578 00834821 */  addu  $t1, $a0, $v1
 /* 00117C 7000057C 2463FFFF */  addiu $v1, $v1, -1
 /* 001180 70000580 2442FFFF */  addiu $v0, $v0, -1
-/* 001184 70000584 0461FFFB */  bgez  $v1, .Linit_64
+/* 001184 70000584 0461FFFB */  bgez  $v1, .loop
 /* 001188 70000588 A1280000 */  sb    $t0, ($t1)
-.Linit_7C:
+.decompress:
 /* 00118C 7000058C 0C00013E */  jal   jump_decompress.entry
 /* 001190 70000590 01512023 */  subu  $a0, $t2, $s1
-/* 001194 70000594 3C0B0003 */  lui   $t3, %hi(rarezip_rom_start)
+/* 001194 70000594 3C0B0003 */  lui   $t3, %hi(ROM_rarezip_start)
 /* 001198 70000598 3C0C0000 */  lui   $t4, 0
 /* 00119C 7000059C 258C1050 */  addiu $t4, $t4, 0x1050
-/* 0011A0 700005A0 256B3590 */  addiu $t3, $t3, %lo(rarezip_rom_start)
+/* 0011A0 700005A0 256B3590 */  addiu $t3, $t3, %lo(ROM_rarezip_start)
 /* 0011A4 700005A4 3C01000F */  lui   $at, 0xf
 /* 0011A8 700005A8 3421FFB1 */  ori   $at, $at, 0xffb1
 /* 0011AC 700005AC 016C1023 */  subu  $v0, $t3, $t4
@@ -101,12 +120,12 @@ init:
 /* 001208 70000608 00000000 */  nop   
 /* 00120C 7000060C 0C0006EC */  jal   set_hardwire_TLB_to_2
 /* 001210 70000610 00000000 */  nop   
-/* 001214 70000614 3C108000 */  lui   $s0, 0x8000
+/* 001214 70000614 3C108000 */  lui   $s0,0x8000
 /* 001218 70000618 3C027000 */  lui   $v0, %hi(tlb_entries)
-/* 00121C 7000061C 3C048000 */  lui   $a0, 0x8000
+/* 00121C 7000061C 3C048000 */  lui   $a0, %hi(0x80000080)
 /* 001220 70000620 24421B60 */  addiu $v0, $v0, %lo(tlb_entries)
 /* 001224 70000624 02001825 */  or    $v1, $s0, $zero
-/* 001228 70000628 34840080 */  ori   $a0, $a0, 0x80
+/* 001228 70000628 34840080 */  ori   $a0, $a0, %lo(0x80000080)
 .Linit_11C:
 /* 00122C 7000062C 8C4F0000 */  lw    $t7, ($v0)
 /* 001230 70000630 24630010 */  addiu $v1, $v1, 0x10
