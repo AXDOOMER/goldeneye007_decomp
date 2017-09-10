@@ -7,6 +7,8 @@
 .section .text
 
 .global osMapTLBRdb
+.ent osMapTLBRdb
+.type osMapTLBRdb, @function
 osMapTLBRdb:
 /* 002380 70001780 40085000 */  mfc0  $t0, $10 # 40085000 $t0, $t2, 0
 /* 002384 70001784 24090000 */  addiu $t1, $zero, 0
@@ -31,11 +33,14 @@ osMapTLBRdb:
 /* 0023D0 700017D0 03E00008 */  jr    $ra
 /* 0023D4 700017D4 00000000 */  nop   
 # end osMapTLBRdb
+.end osMapTLBRdb
 
 # alignment
 .word 0x00000000, 0x00000000
 
 .global proc_700017E0
+.ent proc_700017E0
+.type proc_700017E0, @function
 proc_700017E0:
 /* 0023E0 700017E0 3C038006 */  lui   $v1, 0x8006
 /* 0023E4 700017E4 3C028006 */  lui   $v0, 0x8006
@@ -86,8 +91,11 @@ proc_700017E0:
 /* 002490 70001890 03E00008 */  jr    $ra
 /* 002494 70001894 AC28E4A4 */  sw    $t0, %lo(0x8005E4A4)($at) # $t0, -0x1b5c($at)
 # end proc_700017E0
+.end proc_700017E0
 
 .global proc_70001898
+.ent proc_70001898
+.type proc_70001898, @function
 proc_70001898:
 /* 002498 70001898 3C038002 */  lui   $v1, 0x8002
 /* 00249C 7000189C 246330D0 */  addiu $v1, $v1, 0x30d0
@@ -101,8 +109,11 @@ proc_70001898:
 /* 0024B8 700018B8 03E00008 */  jr    $ra
 /* 0024BC 700018BC AC600000 */  sw    $zero, ($v1)
 # end proc_70001898
+.end proc_70001898
 
 .global proc_700018C0
+.ent proc_700018C0
+.type proc_700018C0, @function
 proc_700018C0:
 /* 0024C0 700018C0 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0024C4 700018C4 AFB20020 */  sw    $s2, 0x20($sp)
@@ -132,8 +143,11 @@ proc_700018C0:
 /* 002518 70001918 03E00008 */  jr    $ra
 /* 00251C 7000191C 27BD0028 */  addiu $sp, $sp, 0x28
 # end proc_700018C0
+.end proc_700018C0
 
 .global proc_70001920
+.ent proc_70001920
+.type proc_70001920, @function
 proc_70001920:
 /* 002520 70001920 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 002524 70001924 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -150,8 +164,11 @@ proc_70001920:
 /* 00254C 7000194C 03E00008 */  jr    $ra
 /* 002550 70001950 00000000 */  nop   
 # end proc_70001920
+.end proc_70001920
 
 .global proc_70001954
+.ent proc_70001954
+.type proc_70001954, @function
 proc_70001954:
 /* 002554 70001954 3C0F8006 */  lui   $t7, 0x8006
 /* 002558 70001958 25EFE3F0 */  addiu $t7, $t7, -0x1c10
@@ -189,8 +206,11 @@ proc_70001954:
 /* 0025D0 700019D0 03E00008 */  jr    $ra
 /* 0025D4 700019D4 00000000 */  nop   
 # end proc_70001954
+.end proc_70001954
 
 .global proc_700019D8
+.ent proc_700019D8
+.type proc_700019D8, @function
 proc_700019D8:
 /* 0025D8 700019D8 3C028002 */  lui   $v0, 0x8002
 /* 0025DC 700019DC 244230D0 */  addiu $v0, $v0, 0x30d0
@@ -265,22 +285,28 @@ proc_700019D8:
 /* 0026F0 70001AF0 03E00008 */  jr    $ra
 /* 0026F4 70001AF4 ACD80000 */  sw    $t8, ($a2)
 # end proc_700019D8
+.end proc_700019D8
 
 
 .section .text
 
 
 .global proc_70001AF8
+.ent proc_70001AF8
+.type proc_70001AF8, @function
 proc_70001AF8:
 /* 0026F8 70001AF8 3C028006 */  lui   $v0, 0x8006
 /* 0026FC 70001AFC 03E00008 */  jr    $ra
 /* 002700 70001B00 8C42E4A8 */  lw    $v0, -0x1b58($v0)
 # end proc_70001AF8
+.end proc_70001AF8
 
 # alignment
 .word 0x00000000, 0x00000000, 0x00000000
 
 .global proc_70001B10
+.ent proc_70001B10
+.type proc_70001B10, @function
 proc_70001B10:
 /* 002710 70001B10 3C048002 */  lui   $a0, 0x8002
 /* 002714 70001B14 DC8430E0 */  ld    $a0, 0x30e0($a0)
@@ -301,6 +327,7 @@ proc_70001B10:
 /* 002750 70001B50 03E00008 */  jr    $ra
 /* 002754 70001B54 0002103F */  dsra32 $v0, $v0, 0
 # end proc_70001B10
+.end proc_70001B10
 
 # alignment
 .word 0x00000000, 0x00000000
@@ -310,6 +337,8 @@ proc_70001B10:
 
 
 .global tlb_entries
+.ent tlb_entries
+.type tlb_entries, @function
 tlb_entries:
 /* 002760 70001B60 40802800 */  mtc0  $zero, $5 # 40802800 $zero, $a1, 0
 /* 002764 70001B64 00000000 */  nop   
@@ -331,11 +360,14 @@ tlb_entries:
 /* 0027A4 70001BA4 00000000 */  nop   
 /* 0027A8 70001BA8 42000018 */  eret  
 # end tlb_entries
+.end tlb_entries
 
 # alignment
 .word 0x00000000
 
 .global set_hardwire_TLB_to_2
+.ent set_hardwire_TLB_to_2
+.type set_hardwire_TLB_to_2, @function
 set_hardwire_TLB_to_2:
 /* 0027B0 70001BB0 24080002 */  addiu $t0, $zero, 2
 /* 0027B4 70001BB4 40883000 */  mtc0  $t0, $6 # 40883000 $t0, $a2, 0
@@ -344,6 +376,7 @@ set_hardwire_TLB_to_2:
 /* 0027C0 70001BC0 03E00008 */  jr    $ra
 /* 0027C4 70001BC4 00000000 */  nop   
 # end set_hardwire_TLB_to_2
+.end set_hardwire_TLB_to_2
 
 # alignment
 .word 0x00000000, 0x00000000

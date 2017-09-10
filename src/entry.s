@@ -10,6 +10,8 @@
 here we setup and clear bss, then jump to establish root tlb
 */
 .global entry
+.ent entry
+.type entry, @function
 entry:
 /* 001000 80000400 3C088006 */  lui   $t0, %hi(_BSS_START)+1
 /* 001004 80000404 3C090003 */  lui   $t1, %hi(_BSS_SIZE)
@@ -21,13 +23,13 @@ entry:
 /* 001018 80000418 AD000004 */  sw    $zero, 4($t0)
 /* 00101C 8000041C 1520FFFC */  bnez  $t1, .Lentry_10
 /* 001020 80000420 21080008 */  addi  $t0, $t0, 8
-/* 001024 80000424 3C0A8000 */  lui   $t2, %hi(establishrootTLB)
+/* 001024 80000424 3C0A8000 */  lui   $t2, %hi(boot)
 /* 001028 80000428 3C1D803B */  lui   $sp, 0x803b
-/* 00102C 8000042C 254A0450 */  addiu $t2, $t2, %lo(establishrootTLB)
+/* 00102C 8000042C 254A0450 */  addiu $t2, $t2, %lo(boot)
 /* 001030 80000430 01400008 */  jr    $t2
 /* 001034 80000434 27BDB410 */  addiu $sp, $sp, -0x4bf0 #set stack to 0x803AB410 (sp_rmon)
 # end entry
-
+.end entry
 # alignment
 .word 0x00000000, 0x00000000, 0x00000000, 0x00000000
 .word 0x00000000, 0x00000000
@@ -35,8 +37,10 @@ entry:
 /*
 here we set tlb and jump to init
 */
-.global establishrootTLB
-establishrootTLB:
+.global boot
+.ent boot
+.type boot, @function
+boot:
 /* 001050 80000450 24020001 */  addiu $v0, $zero, 1
 /* 001054 80000454 24030000 */  addiu $v1, $zero, 0
 /* 001058 80000458 24040000 */  addiu $a0, $zero, 0
@@ -64,7 +68,8 @@ establishrootTLB:
 /* 0010B0 800004B0 254A0510 */  addiu $t2, $t2, %lo(init)
 /* 0010B4 800004B4 01400008 */  jr    $t2
 /* 0010B8 800004B8 00000000 */  nop   
-# end establishrootTLB
+# end boot
+.end boot
 
 
 

@@ -8,6 +8,8 @@
 rarezip_start:
 
 .global decompress.buildtable
+.ent decompress.buildtable
+.type decompress.buildtable, @function
 decompress.buildtable:
 /* 033590 70200000 27BDFA10 */  addiu $sp, $sp, -0x5f0
 /* 033594 70200004 AFB20010 */  sw    $s2, 0x10($sp)
@@ -458,8 +460,11 @@ decompress.buildtable:
 /* 033BDC 7020064C 03E00008 */  jr    $ra
 /* 033BE0 70200650 27BD05F0 */  addiu $sp, $sp, 0x5f0
 # end decompress.buildtable
+.end decompress.buildtable
 
 .global decompress.inflate
+.ent decompress.inflate
+.type decompress.inflate, @function
 decompress.inflate:
 /* 033BE4 70200654 27BDFFF0 */  addiu $sp, $sp, -0x10
 /* 033BE8 70200658 3C0B7020 */  lui   $t3, 0x7020
@@ -739,8 +744,11 @@ decompress.inflate:
 /* 033FD0 70200A40 03E00008 */  jr    $ra
 /* 033FD4 70200A44 00001025 */  or    $v0, $zero, $zero
 # end decompress.inflate
+.end decompress.inflate
 
 .global decompress.type0
+.ent decompress.type0
+.type decompress.type0, @function
 decompress.type0:
 /* 033FD8 70200A48 3C097020 */  lui   $t1, 0x7020
 /* 033FDC 70200A4C 25291568 */  addiu $t1, $t1, 0x1568
@@ -836,8 +844,11 @@ decompress.type0:
 /* 034124 70200B94 03E00008 */  jr    $ra
 /* 034128 70200B98 00001025 */  or    $v0, $zero, $zero
 # end decompress.type0
+.end decompress.type0
 
 .global decompress.type1
+.ent decompress.type1
+.type decompress.type1, @function
 decompress.type1:
 /* 03412C 70200B9C 27BDFB40 */  addiu $sp, $sp, -0x4c0
 /* 034130 70200BA0 AFBF0024 */  sw    $ra, 0x24($sp)
@@ -938,8 +949,11 @@ decompress.type1:
 /* 03428C 70200CFC 03E00008 */  jr    $ra
 /* 034290 70200D00 00000000 */  nop   
 # end decompress.type1
+.end decompress.type1
 
 .global decompress.type2
+.ent decompress.type2
+.type decompress.type2, @function
 decompress.type2:
 /* 034294 70200D04 3C087020 */  lui   $t0, 0x7020
 /* 034298 70200D08 8D081568 */  lw    $t0, 0x1568($t0)
@@ -1301,8 +1315,11 @@ decompress.type2:
 /* 0347B0 70201220 03E00008 */  jr    $ra
 /* 0347B4 70201224 00001025 */  or    $v0, $zero, $zero
 # end decompress.type2
+.end decompress.type2
 
 .global decompress.table
+.ent decompress.table
+.type decompress.table, @function
 decompress.table:
 /* 0347B8 70201228 3C097020 */  lui   $t1, 0x7020
 /* 0347BC 7020122C 25291568 */  addiu $t1, $t1, 0x1568
@@ -1385,8 +1402,11 @@ decompress.table:
 /* 0348D0 70201340 03E00008 */  jr    $ra
 /* 0348D4 70201344 00000000 */  nop   
 # end decompress.table
+.end decompress.table
 
 .global decompress.start
+.ent decompress.start
+.type decompress.start, @function
 decompress.start:
 /* 0348D8 70201348 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 0348DC 7020134C AFB2001C */  sw    $s2, 0x1c($sp)
@@ -1448,8 +1468,11 @@ decompress.start:
 /* 0349A4 70201414 03E00008 */  jr    $ra
 /* 0349A8 70201418 27BD0038 */  addiu $sp, $sp, 0x38
 # end decompress.start
+.end decompress.start
 
 .global decompress.entry
+.ent decompress.entry
+.type decompress.entry, @function
 decompress.entry:
 /* 0349AC 7020141C 3C027020 */  lui   $v0, %hi(rarezip.ptr_source)
 /* 0349B0 70201420 24421480 */  addiu $v0, $v0, %lo(rarezip.ptr_source)
@@ -1474,6 +1497,7 @@ decompress.entry:
 /* 0349FC 7020146C 03E00008 */  jr    $ra
 /* 034A00 70201470 27BD0018 */  addiu $sp, $sp, 0x18
 # end decompress.entry
+.end decompress.entry
 
 # alignment
 .word 0x00000000

@@ -7,34 +7,48 @@
 .section .text, "ax"
 
 .global set_stderr_activated
+.ent set_stderr_activated
+.type set_stderr_activated, @function
 set_stderr_activated:
 /* 001570 70000970 3C018002 */  lui   $at, %hi(stderr.activated)
 /* 001574 70000974 03E00008 */  jr    $ra
 /* 001578 70000978 AC243098 */  sw    $a0, %lo(stderr.activated)($at) # $a0, 0x3098($at)
 # end set_stderr_activated
+.end set_stderr_activated
 
 .global set_stderr_enable
+.ent set_stderr_enable
+.type set_stderr_enable, @function
 set_stderr_enable:
 /* 00157C 7000097C 3C018002 */  lui   $at, %hi(stderr.enable)
 /* 001580 70000980 03E00008 */  jr    $ra
 /* 001584 70000984 AC243094 */  sw    $a0, %lo(stderr.enable)($at) # $a0, 0x3094($at)
 # end set_stderr_enable
+.end set_stderr_enable
 
 .global set_stderr_permitted
+.ent set_stderr_permitted
+.type set_stderr_permitted, @function
 set_stderr_permitted:
 /* 001588 70000988 3C018002 */  lui   $at, %hi(stderr.permitted)
 /* 00158C 7000098C 03E00008 */  jr    $ra
 /* 001590 70000990 AC24309C */  sw    $a0, %lo(stderr.permitted)($at) # $a0, 0x309c($at)
 # end set_stderr_permitted
+.end set_stderr_permitted
 
 .global set_user_compare
+.ent set_user_compare
+.type set_user_compare, @function
 set_user_compare:
 /* 001594 70000994 3C018002 */  lui   $at, %hi(user.compare)
 /* 001598 70000998 03E00008 */  jr    $ra
 /* 00159C 7000099C AC2430A0 */  sw    $a0, %lo(user.compare)($at) # $a0, 0x30a0($at)
 # end set_user_compare
+.end set_user_compare
 
 .global testtodisplaystderrandupdatecount
+.ent testtodisplaystderrandupdatecount
+.type testtodisplaystderrandupdatecount, @function
 testtodisplaystderrandupdatecount:
 /* 0015A0 700009A0 3C0E8002 */  lui   $t6, %hi(stderr.permitted)
 /* 0015A4 700009A4 8DCE309C */  lw    $t6, %lo(stderr.permitted)($t6)
@@ -62,8 +76,11 @@ testtodisplaystderrandupdatecount:
 /* 0015F0 700009F0 03E00008 */  jr    $ra
 /* 0015F4 700009F4 00000000 */  nop   
 # end testtodisplaystderrandupdatecount
+.end testtodisplaystderrandupdatecount
 
 .global testtodisplaystderrorevery16thframe
+.ent testtodisplaystderrorevery16thframe
+.type testtodisplaystderrorevery16thframe, @function
 testtodisplaystderrorevery16thframe:
 /* 0015F8 700009F8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0015FC 700009FC 308E000F */  andi  $t6, $a0, 0xf
@@ -106,11 +123,14 @@ testtodisplaystderrorevery16thframe:
 /* 001680 70000A80 03E00008 */  jr    $ra
 /* 001684 70000A84 00000000 */  nop   
 # end testtodisplaystderrorevery16thframe
+.end testtodisplaystderrorevery16thframe
 
 
 
 
 .global storecurrentcount
+.ent storecurrentcount
+.type storecurrentcount, @function
 storecurrentcount:
 /* 001688 70000A88 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00168C 70000A8C AFBF0014 */  sw    $ra, 0x14($sp)
@@ -122,8 +142,11 @@ storecurrentcount:
 /* 0016A4 70000AA4 03E00008 */  jr    $ra
 /* 0016A8 70000AA8 27BD0018 */  addiu $sp, $sp, 0x18
 # end storecurrentcount
+.end storecurrentcount
 
 .global scheduler
+.ent scheduler
+.type scheduler, @function
 scheduler:
 /* 0016AC 70000AAC 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0016B0 70000AB0 AFBF0024 */  sw    $ra, 0x24($sp)
@@ -216,8 +239,11 @@ scheduler:
 /* 00180C 70000C0C 03E00008 */  jr    $ra
 /* 001810 70000C10 27BD0028 */  addiu $sp, $sp, 0x28
 # end scheduler
+.end scheduler
 
 .global proc_70000C14
+.ent proc_70000C14
+.type proc_70000C14, @function
 proc_70000C14:
 /* 001814 70000C14 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 001818 70000C18 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -243,8 +269,11 @@ proc_70000C14:
 /* 001868 70000C68 03E00008 */  jr    $ra
 /* 00186C 70000C6C 00000000 */  nop   
 # end proc_70000C14
+.end proc_70000C14
 
 .global proc_70000C70
+.ent proc_70000C70
+.type proc_70000C70, @function
 proc_70000C70:
 /* 001870 70000C70 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 001874 70000C74 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -285,14 +314,20 @@ proc_70000C70:
 /* 0018F0 70000CF0 03E00008 */  jr    $ra
 /* 0018F4 70000CF4 00000000 */  nop   
 # end proc_70000C70
+.end proc_70000C70
 
 .global proc_70000CF8
+.ent proc_70000CF8
+.type proc_70000CF8, @function
 proc_70000CF8:
 /* 0018F8 70000CF8 03E00008 */  jr    $ra
 /* 0018FC 70000CFC 24820078 */  addiu $v0, $a0, 0x78
 # end proc_70000CF8
+.end proc_70000CF8
 
 .global shed_entry
+.ent shed_entry
+.type shed_entry, @function
 shed_entry:
 /* 001900 70000D00 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 001904 70000D04 AFB50028 */  sw    $s5, 0x28($sp)
@@ -399,12 +434,15 @@ shed_entry:
 /* 001A70 70000E70 1000FFF7 */  b     .Lshed_entry_150
 /* 001A74 70000E74 02602025 */  or    $a0, $s3, $zero
 # end shed_entry
+.end shed_entry
 
 # alignment
 .word 0x00000000, 0x00000000, 0x00000000, 0x00000000
 .word 0x00000000, 0x00000000
 
 .global proc_70000E90
+.ent proc_70000E90
+.type proc_70000E90, @function
 proc_70000E90:
 /* 001A90 70000E90 8FBF002C */  lw    $ra, 0x2c($sp)
 /* 001A94 70000E94 8FB00014 */  lw    $s0, 0x14($sp)
@@ -416,8 +454,11 @@ proc_70000E90:
 /* 001AAC 70000EAC 03E00008 */  jr    $ra
 /* 001AB0 70000EB0 27BD0050 */  addiu $sp, $sp, 0x50
 # end proc_70000E90
+.end proc_70000E90
 
 .global proc_70000EB4
+.ent proc_70000EB4
+.type proc_70000EB4, @function
 proc_70000EB4:
 /* 001AB4 70000EB4 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 001AB8 70000EB8 AFBF0024 */  sw    $ra, 0x24($sp)
@@ -517,8 +558,11 @@ proc_70000EB4:
 /* 001C0C 7000100C 03E00008 */  jr    $ra
 /* 001C10 70001010 27BD0040 */  addiu $sp, $sp, 0x40
 # end proc_70000EB4
+.end proc_70000EB4
 
 .global proc_70001014
+.ent proc_70001014
+.type proc_70001014, @function
 proc_70001014:
 /* 001C14 70001014 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 001C18 70001018 AFBF001C */  sw    $ra, 0x1c($sp)
@@ -592,15 +636,21 @@ proc_70001014:
 /* 001D14 70001114 03E00008 */  jr    $ra
 /* 001D18 70001118 00000000 */  nop   
 # end proc_70001014
+.end proc_70001014
 
 .global setcountertarget
+.ent setcountertarget
+.type setcountertarget, @function
 setcountertarget:
 /* 001D1C 7000111C 3C028006 */  lui   $v0, 0x8006
 /* 001D20 70001120 03E00008 */  jr    $ra
 /* 001D24 70001124 2442DB30 */  addiu $v0, $v0, -0x24d0
 # end setcountertarget
+.end setcountertarget
 
 .global proc_70001128
+.ent proc_70001128
+.type proc_70001128, @function
 proc_70001128:
 /* 001D28 70001128 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 001D2C 7000112C AFBF001C */  sw    $ra, 0x1c($sp)
@@ -650,8 +700,11 @@ proc_70001128:
 /* 001DD8 700011D8 03E00008 */  jr    $ra
 /* 001DDC 700011DC 00000000 */  nop   
 # end proc_70001128
+.end proc_70001128
 
 .global proc_700011E0
+.ent proc_700011E0
+.type proc_700011E0, @function
 proc_700011E0:
 /* 001DE0 700011E0 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 001DE4 700011E4 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -677,8 +730,11 @@ proc_700011E0:
 /* 001E28 70001228 03E00008 */  jr    $ra
 /* 001E2C 7000122C 00000000 */  nop   
 # end proc_700011E0
+.end proc_700011E0
 
 .global proc_70001230
+.ent proc_70001230
+.type proc_70001230, @function
 proc_70001230:
 /* 001E30 70001230 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 001E34 70001234 AFBF001C */  sw    $ra, 0x1c($sp)
@@ -793,8 +849,11 @@ proc_70001230:
 /* 001FD0 700013D0 03E00008 */  jr    $ra
 /* 001FD4 700013D4 00000000 */  nop   
 # end proc_70001230
+.end proc_70001230
 
 .global proc_700013D8
+.ent proc_700013D8
+.type proc_700013D8, @function
 proc_700013D8:
 /* 001FD8 700013D8 8CA20010 */  lw    $v0, 0x10($a1)
 /* 001FDC 700013DC 24010002 */  addiu $at, $zero, 2
@@ -827,8 +886,11 @@ proc_700013D8:
 /* 002038 70001438 03E00008 */  jr    $ra
 /* 00203C 7000143C ACB80004 */  sw    $t8, 4($a1)
 # end proc_700013D8
+.end proc_700013D8
 
 .global DPCFill
+.ent DPCFill
+.type DPCFill, @function
 DPCFill:
 /* 002040 70001440 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 002044 70001444 AFB10018 */  sw    $s1, 0x18($sp)
@@ -909,11 +971,14 @@ DPCFill:
 /* 002158 70001558 03E00008 */  jr    $ra
 /* 00215C 7000155C 27BD0028 */  addiu $sp, $sp, 0x28
 # end DPCFill
+.end DPCFill
 
 
 
 
 .global proc_70001560
+.ent proc_70001560
+.type proc_70001560, @function
 proc_70001560:
 /* 002160 70001560 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 002164 70001564 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -932,8 +997,11 @@ proc_70001560:
 /* 002194 70001594 03E00008 */  jr    $ra
 /* 002198 70001598 00000000 */  nop   
 # end proc_70001560
+.end proc_70001560
 
 .global proc_7000159C
+.ent proc_7000159C
+.type proc_7000159C, @function
 proc_7000159C:
 /* 00219C 7000159C 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0021A0 700015A0 AFB10018 */  sw    $s1, 0x18($sp)
@@ -1066,3 +1134,4 @@ proc_7000159C:
 /* 002378 70001778 03E00008 */  jr    $ra
 /* 00237C 7000177C 00601025 */  or    $v0, $v1, $zero
 # end proc_7000159C
+.end proc_7000159C

@@ -31,6 +31,8 @@ jump_via_reg decompress.entry
 .word 0x00000000, 0x00000000
 
 .global init
+.ent init
+.type init, @function
 init:
 
 .equ s_cdata_rom_start, 0x34
@@ -178,6 +180,7 @@ init:
 /* 0012E8 700006E8 03E00008 */  jr    $ra
 /* 0012EC 700006EC 27BD0040 */  addiu $sp, $sp, 0x40
 # end init
+.end init
 
 .section .text, "ax"
 
@@ -185,6 +188,8 @@ init:
  int __cdecl grow_stack(int baseaddress, int stacksize)
 */
 .global grow_stack
+.ent grow_stack
+.type grow_stack, @function
 grow_stack:
 
 .equ baseaddress, $a0
@@ -194,8 +199,11 @@ grow_stack:
 /* 0012F4 700006F4 03E00008 */  jr    $ra
 /* 0012F8 700006F8 2442FFF8 */  addiu $v0, $v0, -8
 # end grow_stack
+.end grow_stack
 
 .global proc_700006FC
+.ent proc_700006FC
+.type proc_700006FC, @function
 proc_700006FC:
 /* 0012FC 700006FC 240E0001 */  addiu $t6, $zero, 1
 /* 001300 70000700 3C018002 */  lui   $at, %hi(unknown_init_val)
@@ -205,29 +213,38 @@ proc_700006FC:
 /* 001310 70000710 03E00008 */  jr    $ra
 /* 001314 70000714 AC2F3048 */  sw    $t7, %lo(cart_hw_address)($at) # $t7, 0x3048($at)
 # end proc_700006FC
+.end proc_700006FC
 
 
 
 .section .text, "ax"
 
 .global idle_entry
+.ent idle_entry
+.type idle_entry, @function
 idle_entry:
 /* 001318 70000718 AFA40000 */  sw    $a0, ($sp)
 .Lidle_entry_4:
 /* 00131C 7000071C 1000FFFF */  b     .Lidle_entry_4
 /* 001320 70000720 00000000 */  nop   
 # end idle_entry
+.end idle_entry
 
 # alignment
 .word 0x00000000, 0x00000000, 0x00000000
 
 .global dummy_70000730
+.ent dummy_70000730
+.type dummy_70000730, @function
 dummy_70000730:
 /* 001330 70000730 03E00008 */  jr    $ra
 /* 001334 70000734 00000000 */  nop   
 # end dummy_70000730
+.end dummy_70000730
 
 .global start_idle_thread
+.ent start_idle_thread
+.type start_idle_thread, @function
 start_idle_thread:
 /* 001338 70000738 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00133C 7000073C AFBF001C */  sw    $ra, 0x1c($sp)
@@ -252,10 +269,13 @@ start_idle_thread:
 /* 001388 70000788 03E00008 */  jr    $ra
 /* 00138C 7000078C 00000000 */  nop   
 # end start_idle_thread
+.end start_idle_thread
 
 .section .text, "ax"
 
 .global start_rmon_thread
+.ent start_rmon_thread
+.type start_rmon_thread, @function
 start_rmon_thread:
 /* 001390 70000790 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 001394 70000794 AFBF001C */  sw    $ra, 0x1c($sp)
@@ -281,10 +301,13 @@ start_rmon_thread:
 /* 0013E4 700007E4 03E00008 */  jr    $ra
 /* 0013E8 700007E8 00000000 */  nop   
 # end start_rmon_thread
+.end start_rmon_thread
 
 .section .text, "ax"
 
 .global setup_message_queue_for_scheduler
+.ent setup_message_queue_for_scheduler
+.type setup_message_queue_for_scheduler, @function
 setup_message_queue_for_scheduler:
 /* 0013EC 700007EC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0013F0 700007F0 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -333,10 +356,13 @@ setup_message_queue_for_scheduler:
 /* 001494 70000894 03E00008 */  jr    $ra
 /* 001498 70000898 27BD0018 */  addiu $sp, $sp, 0x18
 # end setup_message_queue_for_scheduler
+.end setup_message_queue_for_scheduler
 
 .section .text, "ax"
 
 .global main_entry
+.ent main_entry
+.type main_entry, @function
 main_entry:
 /* 00149C 7000089C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0014A0 700008A0 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -367,10 +393,13 @@ main_entry:
 /* 001500 70000900 03E00008 */  jr    $ra
 /* 001504 70000904 00000000 */  nop   
 # end main_entry
+.end main_entry
 
 .section .text, "ax"
 
 .global setuplastentryofdebughandler
+.ent setuplastentryofdebughandler
+.type setuplastentryofdebughandler, @function
 setuplastentryofdebughandler:
 /* 001508 70000908 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 00150C 7000090C 3C0E8002 */  lui   $t6, %hi(debug_handler_table)
@@ -401,6 +430,7 @@ setuplastentryofdebughandler:
 /* 001568 70000968 03E00008 */  jr    $ra
 /* 00156C 7000096C 27BD0040 */  addiu $sp, $sp, 0x40
 # end setuplastentryofdebughandler
+.end setuplastentryofdebughandler
 
 
 

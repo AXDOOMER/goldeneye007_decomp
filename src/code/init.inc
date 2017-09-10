@@ -1,27 +1,41 @@
 .macro get_value name, value
 .global get_\name
+.ent get_\name
+.type get_\name, @function
 get_\name:
  lui   $v0, %hi(\value)
  jr    $ra
  addiu $v0, $v0, %lo(\value)
+.end get_\name
 .endm
 
 .macro jump_via_reg location, register=$a3
 .global jump_\location
+.ent jump_\location
+.type jump_\location, @function
 jump_\location:
  lui   \register, %hi(\location)
  addiu \register, \register, %lo(\location)
  jr    \register
  nop
+.end jump_\location
 .endm
 
 .section .data
 
 #referenced by proc_700006FC
+  .globl unknown_init_val
+  .align 2
+  .type unknown_init_val, @object
+  .size unknown_init_val, 4
 unknown_init_val:
-.word 0x00000002
+  .word 2
 
 #referenced by proc_700006FC
+  .globl cart_hw_address
+  .align 2
+  .type cart_hw_address, @object
+  .size cart_hw_address, 4
 cart_hw_address:
 .word 0x10000000
 
@@ -33,6 +47,10 @@ cart_hw_address:
 .endm
 
 #referenced by setuplastentryofdebughandler
+  .globl debug_handler_table
+  .align 2
+  .type debug_handler_table, @object
+  .size debug_handler_table, 0x30
 debug_handler_table:
  debug_handler_table_entry sp_boot, aBoot
  debug_handler_table_entry sp_rmon, aRmon
