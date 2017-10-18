@@ -91,7 +91,7 @@ init:
 ################################################################################
 # t_cdata_rom_start = s_cdata_rom_start
 # r_cdata_rom_size = (v_addr - t_cdata_rom_start)
-# t_rarezip_rom_start = get_RareZipASMRomstart()
+# v_addr = get_RareZipASMRomstart()
 ################################################################################
 /* 001134 70000534 8FAE0034 */  lw    t_cdata_rom_start, s_cdata_rom_start($sp)
 /* 001138 70000538 0C000138 */  jal   get_RareZipASMRomstart
