@@ -1,20 +1,35 @@
 This is a working Goldeneye 007 disassembly!
 
 
+To compile you will need a mips gcc compiler, I use n64 chain from https://cen64.com/
+You will also need ARM9's fork of bass, https://github.com/ARM9/bass 
+
+
 All code is disassembled!
-Known functions are labeled. Addresses in .data have not been symbolically represented yet.
+Known functions are labeled with meaningful names.
+Not all raw addresses in code have been converted to labels.
 
-All of 21990 compressed data segment is decompressed and assigned to .data.
+
 I think all strings are now represented by .asciiz statements.
-Alot of labels made. Still have to do formatting and structuring of data.
+Alot of the compressed data has meaningful names, just have to organize it now.
 
-Started Makefile and linker scripts.
+
+Makefile and linker scripts are hacky but they work.
+
+
 
 KNOWN BUGS:
-NONE!!!!
+In playing with C conversion, I've discovered that gcc likes to be different than the SGI compiler Rare originally used.
+This means that gcc will never be able to produce byte identicle code, which won't stop, just slow down the C decompile.
+If you know of a way to make gcc produce exact code, please tell me, or submit a pr when I start pushing C code.
 
 
-Also, still need to take the big series of includes making a single object, and split to many objects linked to right spot. Deconstruction of individual files in ob_seg will happened during or as a result of this.
+Side note: I am on the hunt for a reasonably priced (or remotely accessible) SGI Indy to be able to test C code on original compilers.
 
 
-This dissassembly was made possible by a ton of people who will all be listed later when I make a proper readme.
+
+This dissassembly was only made possible thanks to Zoinkity's awesome documentation, and Subdrag's wonderful GEedit.
+
+
+
+Not sure how to license the actual disassembled/decompiled code side of this project, but anything I am able to put a license on in this repo is public domain.
