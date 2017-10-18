@@ -13,12 +13,12 @@ SECTIONS
    }
 
    /* (0x700004BC, 0x70020D90, 0x6FFFF400), // 0010BC-021991 [208D5] */
-   .text_entry 0x80000400 : AT(0x001000) {
+   .text 0x80000400 : AT(0x001000) {
       build/entry.o (.text);
    }
 
    /* (0x700004BC, 0x70020D90, 0x6FFFF400), // 0010BC-021991 [208D5] */
-   .text 0x700004BC : AT(0x0010BC) {
+   .text_main 0x700004BC : AT(0x0010BC) {
       build/code.o (.text);
    }
 

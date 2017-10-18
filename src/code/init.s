@@ -13,9 +13,9 @@ use macro get_value name value
 makes a function called
 get_name returning value in $v0
 */
-get_value rodata_vaddr _DATA_START
-get_value rodata_rom_start ROM_cdata_start
-get_value rodata_rom_end ROM_cdata_end
+get_value cdata_vaddr _DATA_START
+get_value cdata_rom_start ROM_cdata_start
+get_value cdata_rom_end ROM_cdata_end
 get_value RareZipASMRomstart ROM_rarezip_start
 get_value RareZipASMRomend 0x34b30
 
@@ -34,100 +34,185 @@ jump_via_reg decompress.entry
 .ent init
 .type init, @function
 init:
-
+/* stack */
 .equ s_cdata_rom_start, 0x34
 .equ s_rarezip_rom_start, 0x28
 .equ saved_ra, 0x24
 .equ saved_s1, 0x20
 .equ saved_s0, 0x1C
 
-.equ r_rodata_vaddr, $s0
-.equ r_rodata_rom_size, $s1
-.equ r_rarezip_vaddr, $t2
-.equ r_rarezip_rom_addr, $t3
-.equ r_rodata_rom_start, $t6
-.equ r_rarezip_rom_start, $t7
-.equ r_rarezip_rom_size, $t8
-.equ r_buffer_addr, $t9
-.equ r_returnval, $v0
-.equ r_totalsize, $v1
+
+.equ r_cdata_vaddr, $s0
+.equ r_cdata_rom_size, $s1
+
+.equ t_source, $t0
+.equ t_target, $t1
+.equ t_rarezip_vaddr, $t2
+.equ t_rarezip_rom_addr, $t3
+.equ t_, $t4
+.equ t_cdata_rom_start, $t6
+.equ t_rarezip_rom_start, $t7
+.equ t_rarezip_rom_size, $t8
+.equ t_buffer_addr, $t9
+
+.equ v_addr, $v0
+.equ v_size, $v1
+
+.equ a_source, $a0
+.equ a_target, $a1
+.equ a_buffer, $a2
 
 
-/* 001110 70000510 27BDFFC0 */  addiu $sp, $sp, -0x40          #set sp to 0x803AB3D0
-/* 001114 70000514 AFBF0024 */  sw    $ra, saved_ra($sp)           #save $ra
-/* 001118 70000518 AFB10020 */  sw    $s1, saved_s1($sp)           #save $s1
-/* 00111C 7000051C 0C00012F */  jal   get_rodata_vaddr         #put rodata_vaddr in $v0
-/* 001120 70000520 AFB0001C */  sw    $s0, saved_s0($sp)           #save $s0
-/* 001124 70000524 0C000132 */  jal   get_rodata_rom_start     #put rodata_rom_start in $v0
-/* 001128 70000528 00408025 */  or    r_rodata_vaddr, r_returnval, $zero #DELAYSLOT store rodata_vaddr to rodata_vaddr ($s0)
-/* 00112C 7000052C 0C000135 */  jal   get_rodata_rom_end       #put rodata_rom_end in $v0
-/* 001130 70000530 AFA20034 */  sw    r_returnval, s_cdata_rom_start($sp) #store start address of cdata
-/* 001134 70000534 8FAE0034 */  lw    r_rodata_rom_start, s_cdata_rom_start($sp)
-/* 001138 70000538 0C000138 */  jal   get_RareZipASMRomstart                        #
-/* 00113C 7000053C 004E8823 */  subu  r_rodata_rom_size, r_returnval, r_rodata_rom_start  #DELAYSLOT
+################################################################################
+# set sp to 0x803AB3D0
+# entry crap...save $ra, $s0, $s1 
+# v_addr = get_cdata_vaddr()
+################################################################################
+/* 001110 70000510 27BDFFC0 */  addiu $sp, $sp, -0x40
+/* 001114 70000514 AFBF0024 */  sw    $ra, saved_ra($sp)
+/* 001118 70000518 AFB10020 */  sw    $s1, saved_s1($sp)
+/* 00111C 7000051C 0C00012F */  jal   get_cdata_vaddr
+/* 001120 70000520 AFB0001C */  sw    $s0, saved_s0($sp)
+
+################################################################################
+# r_cdata_vaddr = v_addr
+# v_addr = get_cdata_rom_start()
+################################################################################
+/* 001124 70000524 0C000132 */  jal   get_cdata_rom_start
+/* 001128 70000528 00408025 */  or    r_cdata_vaddr, v_addr, $zero
+
+################################################################################
+# s_cdata_rom_start = v_addr
+# v_addr = get_cdata_rom_end()
+################################################################################
+/* 00112C 7000052C 0C000135 */  jal   get_cdata_rom_end
+/* 001130 70000530 AFA20034 */  sw    v_addr, s_cdata_rom_start($sp)
+
+################################################################################
+# t_cdata_rom_start = s_cdata_rom_start
+# r_cdata_rom_size = (v_addr - t_cdata_rom_start)
+# t_rarezip_rom_start = get_RareZipASMRomstart()
+################################################################################
+/* 001134 70000534 8FAE0034 */  lw    t_cdata_rom_start, s_cdata_rom_start($sp)
+/* 001138 70000538 0C000138 */  jal   get_RareZipASMRomstart
+/* 00113C 7000053C 004E8823 */  subu  r_cdata_rom_size, v_addr, t_cdata_rom_start
+
+################################################################################
+# s_rarezip_rom_start = v_addr
+# v_addr = get_RareZipASMRomend()
+################################################################################
 /* 001140 70000540 0C00013B */  jal   get_RareZipASMRomend
-/* 001144 70000544 AFA20028 */  sw    r_returnval, s_rarezip_rom_start($sp)         #DELAYSLOT
-/* 001148 70000548 8FAF0028 */  lw    r_rarezip_rom_start, s_rarezip_rom_start($sp)
-/* 00114C 7000054C 3C0A7020 */  lui   r_rarezip_vaddr, %hi(rarezip_start)
-/* 001150 70000550 02002825 */  or    $a1, r_rodata_vaddr, $zero  #a1=target
-/* 001154 70000554 004FC023 */  subu  r_rarezip_rom_size, r_returnval, r_rarezip_rom_start #r_returnval is rarezip_rom_end address
-/* 001158 70000558 02382021 */  addu  $a0, r_rodata_rom_size, r_rarezip_rom_size  #a0=source
-/* 00115C 7000055C 2483FFFF */  addiu r_totalsize, $a0, -1  #totalsize = source-1
-/* 001160 70000560 0460000A */  bltz  r_totalsize, .decompress
-/* 001164 70000564 3C068030 */  lui   $a2, %hi(rarezip_buffer)  #a2=buffer
-/* 001168 70000568 3C197020 */  lui   r_buffer_addr, %hi(rarezip_start)
-/* 00116C 7000056C 03312023 */  subu  $a0, r_buffer_addr, r_rodata_rom_size   #source=rarezip_start-rodata_romsize (start buffer rodata_rom_size bytes before rarezip start address)
-/* 001170 70000570 02031021 */  addu  $v0, r_rodata_vaddr, r_totalsize
+/* 001144 70000544 AFA20028 */  sw    v_addr, s_rarezip_rom_start($sp)
+
+
+.equ a_buffersize, $a0
+.equ a_bufferptr, $a0
+################################################################################
+# t_rarezip_rom_start = s_rarezip_rom_start
+# t_rarezip_vaddr = rarezip_seg_start (0x70200000)
+# a_target = r_cdata_vaddr
+# t_rarezip_rom_size = (v_addr - t_rarezip_rom_start)
+# a_buffersize = (r_cdata_rom_size + t_rarezip_rom_size)
+# v_size = (a_buffersize + (-1))
+# if (vsize >0) {
+#    t_buffer_addr = rarezip_seg_start (0x70200000)
+#    a_bufferptr = (t_buffer_addr - r_cdata_rom_size)
+#    v_addr = (r_cdata_vaddr + v_size)
+#    while (v_size >=0) {
+#        t_source = v_addr
+#        t_target = (a_bufferptr + v_size)
+#        v_size = (v_size + (-1))
+#        v_addr = (v_addr + (-1))
+#        t_target = t_source
+#    }
+# }
+################################################################################
+/* 001148 70000548 8FAF0028 */  lw    t_rarezip_rom_start, s_rarezip_rom_start($sp)       #load t_rarezip_rom_start from s_rarezip_rom_start
+/* 00114C 7000054C 3C0A7020 */  lui   t_rarezip_vaddr, %hi(rarezip_seg_start)                 #load high bytes of rarezip_vaddr to t_rarezip_vaddr 0x70200000
+/* 001150 70000550 02002825 */  or    a_target, r_cdata_vaddr, $zero                           #a1=target
+/* 001154 70000554 004FC023 */  subu  t_rarezip_rom_size, v_addr, t_rarezip_rom_start #r_returnval is rarezip_rom_end address
+/* 001158 70000558 02382021 */  addu  a_buffersize, r_cdata_rom_size, t_rarezip_rom_size           #a0=source
+/* 00115C 7000055C 2483FFFF */  addiu v_size, a_buffersize, -1                                #totalsize = source-1
+/* 001160 70000560 0460000A */  bltz  v_size, .decompress
+/* 001164 70000564 3C068030 */  lui   a_buffer, %hi(rarezip_buffer)                            #DELAYSLOT a2=buffer 0x80300000
+
+/* 001168 70000568 3C197020 */  lui   t_buffer_addr, %hi(rarezip_seg_start)
+/* 00116C 7000056C 03312023 */  subu  a_bufferptr, t_buffer_addr, r_cdata_rom_size                #source=rarezip_start-cdata_romsize (start buffer cdata_rom_size bytes before rarezip start address)
+/* 001170 70000570 02031021 */  addu  v_addr, r_cdata_vaddr, v_size
 .loop:
-/* 001174 70000574 90480000 */  lbu   $t0, ($v0)
-/* 001178 70000578 00834821 */  addu  $t1, $a0, $v1
-/* 00117C 7000057C 2463FFFF */  addiu $v1, $v1, -1
-/* 001180 70000580 2442FFFF */  addiu $v0, $v0, -1
-/* 001184 70000584 0461FFFB */  bgez  $v1, .loop
-/* 001188 70000588 A1280000 */  sb    $t0, ($t1)
+/* 001174 70000574 90480000 */  lbu   t_source, (v_addr)
+/* 001178 70000578 00834821 */  addu  t_target, a_bufferptr, v_size
+/* 00117C 7000057C 2463FFFF */  addiu v_size, v_size, -1
+/* 001180 70000580 2442FFFF */  addiu v_addr, v_addr, -1
+/* 001184 70000584 0461FFFB */  bgez  v_size, .loop
+/* 001188 70000588 A1280000 */  sb    t_source, (t_target)
+
+################################################################################
+# a_buffer = rarezip_buffer (0x80300000)
+# a_source = (t_rarezip_vaddr - r_cdata_rom_size)
+# jump_decompress_entry(a_source, a_target, a_buffer)
+# 
+# 
+# 
+# 
+# 
+################################################################################
 .decompress:
 /* 00118C 7000058C 0C00013E */  jal   jump_decompress.entry
-/* 001190 70000590 01512023 */  subu  $a0, $t2, $s1
-/* 001194 70000594 3C0B0003 */  lui   $t3, %hi(ROM_rarezip_start)
+/* 001190 70000590 01512023 */  subu  a_source, t_rarezip_vaddr, r_cdata_rom_size
+
+/* 001194 70000594 3C0B0003 */  lui   t_rarezip_rom_addr, %hi(ROM_rarezip_start)
 /* 001198 70000598 3C0C0000 */  lui   $t4, 0
 /* 00119C 7000059C 258C1050 */  addiu $t4, $t4, 0x1050
-/* 0011A0 700005A0 256B3590 */  addiu $t3, $t3, %lo(ROM_rarezip_start)
+/* 0011A0 700005A0 256B3590 */  addiu t_rarezip_rom_addr, t_rarezip_rom_addr, %lo(ROM_rarezip_start)
 /* 0011A4 700005A4 3C01000F */  lui   $at, 0xf
 /* 0011A8 700005A8 3421FFB1 */  ori   $at, $at, 0xffb1
-/* 0011AC 700005AC 016C1023 */  subu  $v0, $t3, $t4
+/* 0011AC 700005AC 016C1023 */  subu  $v0, t_rarezip_rom_addr, $t4
 /* 0011B0 700005B0 0041082A */  slt   $at, $v0, $at
 /* 0011B4 700005B4 14200013 */  bnez  $at, .Linit_F4
 /* 0011B8 700005B8 3C01FFF0 */  lui   $at, 0xfff0
+
 /* 0011BC 700005BC 34210050 */  ori   $at, $at, 0x50
-/* 0011C0 700005C0 3C050010 */  lui   $a1, %hi(0x101000)
-/* 0011C4 700005C4 3C067010 */  lui   $a2, %hi(0x70100400)
+/* 0011C0 700005C0 3C050010 */  lui   $a1, %hi(0x101000)        #devAddr
+/* 0011C4 700005C4 3C067010 */  lui   $a2, %hi(0x70100400)      #dramAddr
 /* 0011C8 700005C8 24C60400 */  addiu $a2, $a2, %lo(0x70100400) #dramAddr
-/* 0011CC 700005CC 24A51000 */  addiu $a1, $a1, %lo(0x101000) #devAddr
-/* 0011D0 700005D0 00413821 */  addu  $a3, $v0, $at
+/* 0011CC 700005CC 24A51000 */  addiu $a1, $a1, %lo(0x101000)   #devAddr
+/* 0011D0 700005D0 00413821 */  addu  $a3, $v0, $at             #size
 /* 0011D4 700005D4 0C0033E4 */  jal   osPiRawStartDma
-/* 0011D8 700005D8 00002025 */  or    $a0, $zero, $zero  #direction
+/* 0011D8 700005D8 00002025 */  or    $a0, $zero, $zero         #direction
+
 /* 0011DC 700005DC 0C00341C */  jal   osPiGetStatus
 /* 0011E0 700005E0 00000000 */  nop   
+
 /* 0011E4 700005E4 304D0001 */  andi  $t5, $v0, 1
 /* 0011E8 700005E8 11A00006 */  beqz  $t5, .Linit_F4
 /* 0011EC 700005EC 00000000 */  nop   
-.Linit_E0:
+
+
+.wait_pi_ready:
 /* 0011F0 700005F0 0C00341C */  jal   osPiGetStatus
 /* 0011F4 700005F4 00000000 */  nop   
+
 /* 0011F8 700005F8 304E0001 */  andi  $t6, $v0, 1
-/* 0011FC 700005FC 15C0FFFC */  bnez  $t6, .Linit_E0
+/* 0011FC 700005FC 15C0FFFC */  bnez  $t6, .wait_pi_ready
 /* 001200 70000600 00000000 */  nop   
+
+
 .Linit_F4:
 /* 001204 70000604 0C003420 */  jal   osInitialize
 /* 001208 70000608 00000000 */  nop   
+
 /* 00120C 7000060C 0C0006EC */  jal   set_hardwire_TLB_to_2
 /* 001210 70000610 00000000 */  nop   
+
 /* 001214 70000614 3C108000 */  lui   $s0,0x8000
 /* 001218 70000618 3C027000 */  lui   $v0, %hi(tlb_entries)
 /* 00121C 7000061C 3C048000 */  lui   $a0, %hi(0x80000080)
 /* 001220 70000620 24421B60 */  addiu $v0, $v0, %lo(tlb_entries)
 /* 001224 70000624 02001825 */  or    $v1, $s0, $zero
 /* 001228 70000628 34840080 */  ori   $a0, $a0, %lo(0x80000080)
+
+
 .Linit_11C:
 /* 00122C 7000062C 8C4F0000 */  lw    $t7, ($v0)
 /* 001230 70000630 24630010 */  addiu $v1, $v1, 0x10
@@ -140,27 +225,35 @@ init:
 /* 00124C 7000064C 8C48FFFC */  lw    $t0, -4($v0)
 /* 001250 70000650 1464FFF6 */  bne   $v1, $a0, .Linit_11C
 /* 001254 70000654 AC68FFFC */  sw    $t0, -4($v1)
+
 /* 001258 70000658 0C0034C8 */  jal   osWritebackDCacheAll
 /* 00125C 7000065C 00000000 */  nop   
-/* 001260 70000660 02002025 */  or    $a0, $s0, $zero
+
+/* 001260 70000660 02002025 */  or    $a0, $s0, $zero #addr
 /* 001264 70000664 0C0034D4 */  jal   osInvalICache
-/* 001268 70000668 24054000 */  addiu $a1, $zero, 0x4000
+/* 001268 70000668 24054000 */  addiu $a1, $zero, 0x4000 #nbytes
+
 /* 00126C 7000066C 24100002 */  addiu $s0, $zero, 2
 /* 001270 70000670 24110020 */  addiu $s1, $zero, 0x20
 .Linit_164:
 /* 001274 70000674 0C0034F4 */  jal   osUnmapTLB
-/* 001278 70000678 02002025 */  or    $a0, $s0, $zero
+/* 001278 70000678 02002025 */  or    $a0, $s0, $zero #index
+
 /* 00127C 7000067C 26100001 */  addiu $s0, $s0, 1
 /* 001280 70000680 1611FFFC */  bne   $s0, $s1, .Linit_164
 /* 001284 70000684 00000000 */  nop   
+
 /* 001288 70000688 0C003504 */  jal   __osGetFpcCsr
 /* 00128C 7000068C 00000000 */  nop   
+
 /* 001290 70000690 0C003508 */  jal   __osSetFpcCsr
-/* 001294 70000694 34440E80 */  ori   $a0, $v0, 0xe80
+/* 001294 70000694 34440E80 */  ori   $a0, $v0, 0xe80 #statusreg
+
 /* 001298 70000698 3C04803B */  lui   $a0, 0x803b #sp_main
 /* 00129C 7000069C 2484B950 */  addiu $a0, $a0, -0x46b0 #sp_main
 /* 0012A0 700006A0 0C0001BC */  jal   grow_stack
 /* 0012A4 700006A4 34058000 */  ori   $a1, $zero, 0x8000
+
 /* 0012A8 700006A8 3C108006 */  lui   $s0, 0x8006 #mainthread
 /* 0012AC 700006AC 2610D640 */  addiu $s0, $s0, -0x29c0 #mainthread
 /* 0012B0 700006B0 3C067000 */  lui   $a2, %hi(main_entry)
@@ -172,8 +265,10 @@ init:
 /* 0012C8 700006C8 00003825 */  or    $a3, $zero, $zero
 /* 0012CC 700006CC 0C00350C */  jal   osCreateThread
 /* 0012D0 700006D0 AFA20010 */  sw    $v0, 0x10($sp)
+
 /* 0012D4 700006D4 0C003560 */  jal   osStartThread
 /* 0012D8 700006D8 02002025 */  or    $a0, $s0, $zero
+
 /* 0012DC 700006DC 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 0012E0 700006E0 8FB0001C */  lw    $s0, 0x1c($sp)
 /* 0012E4 700006E4 8FB10020 */  lw    $s1, 0x20($sp)
