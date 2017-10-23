@@ -56,7 +56,8 @@ init:
 .equ t_buffer_addr, $t9
 
 .equ v_addr, $v0
-.equ v_size, $v1
+.equ copy_addr, $v0
+.equ copy_size, $v1
 
 .equ a_source, $a0
 .equ a_target, $a1
@@ -113,16 +114,16 @@ init:
 # a_target = r_cdata_vaddr
 # t_rarezip_rom_size = (v_addr - t_rarezip_rom_start)
 # a_buffersize = (r_cdata_rom_size + t_rarezip_rom_size)
-# v_size = (a_buffersize + (-1))
-# if (vsize >0) {
+# copy_size = (a_buffersize + (-1))
+# if (copy_size > 0) {
 #    t_buffer_addr = rarezip_seg_start (0x70200000)
 #    a_bufferptr = (t_buffer_addr - r_cdata_rom_size)
-#    v_addr = (r_cdata_vaddr + v_size)
-#    while (v_size >=0) {
-#        t_source = v_addr
-#        t_target = (a_bufferptr + v_size)
-#        v_size = (v_size + (-1))
-#        v_addr = (v_addr + (-1))
+#    copy_addr = (r_cdata_vaddr + copy_size)
+#    while (copy_size >=0) {
+#        t_source = copy_addr
+#        t_target = (a_bufferptr + copy_size)
+#        copy_size = (copy_size + (-1))
+#        copy_addr = (copy_addr + (-1))
 #        t_target = t_source
 #    }
 # }
@@ -132,19 +133,19 @@ init:
 /* 001150 70000550 02002825 */  or    a_target, r_cdata_vaddr, $zero                           #a1=target
 /* 001154 70000554 004FC023 */  subu  t_rarezip_rom_size, v_addr, t_rarezip_rom_start #r_returnval is rarezip_rom_end address
 /* 001158 70000558 02382021 */  addu  a_buffersize, r_cdata_rom_size, t_rarezip_rom_size           #a0=source
-/* 00115C 7000055C 2483FFFF */  addiu v_size, a_buffersize, -1                                #totalsize = source-1
-/* 001160 70000560 0460000A */  bltz  v_size, .decompress
+/* 00115C 7000055C 2483FFFF */  addiu copy_size, a_buffersize, -1                                #totalsize = source-1
+/* 001160 70000560 0460000A */  bltz  copy_size, .skip
 /* 001164 70000564 3C068030 */  lui   a_buffer, %hi(rarezip_buffer)                            #DELAYSLOT a2=buffer 0x80300000
 
 /* 001168 70000568 3C197020 */  lui   t_buffer_addr, %hi(rarezip_seg_start)
 /* 00116C 7000056C 03312023 */  subu  a_bufferptr, t_buffer_addr, r_cdata_rom_size                #source=rarezip_start-cdata_romsize (start buffer cdata_rom_size bytes before rarezip start address)
-/* 001170 70000570 02031021 */  addu  v_addr, r_cdata_vaddr, v_size
+/* 001170 70000570 02031021 */  addu  copy_addr, r_cdata_vaddr, copy_size
 .loop:
-/* 001174 70000574 90480000 */  lbu   t_source, (v_addr)
-/* 001178 70000578 00834821 */  addu  t_target, a_bufferptr, v_size
-/* 00117C 7000057C 2463FFFF */  addiu v_size, v_size, -1
-/* 001180 70000580 2442FFFF */  addiu v_addr, v_addr, -1
-/* 001184 70000584 0461FFFB */  bgez  v_size, .loop
+/* 001174 70000574 90480000 */  lbu   t_source, (copy_addr)
+/* 001178 70000578 00834821 */  addu  t_target, a_bufferptr, copy_size
+/* 00117C 7000057C 2463FFFF */  addiu copy_size, copy_size, -1
+/* 001180 70000580 2442FFFF */  addiu copy_addr, copy_addr, -1
+/* 001184 70000584 0461FFFB */  bgez  copy_size, .loop
 /* 001188 70000588 A1280000 */  sb    t_source, (t_target)
 
 ################################################################################
@@ -157,7 +158,7 @@ init:
 # 
 # 
 ################################################################################
-.decompress:
+.skip:
 /* 00118C 7000058C 0C00013E */  jal   jump_decompress.entry
 /* 001190 70000590 01512023 */  subu  a_source, t_rarezip_vaddr, r_cdata_rom_size
 
