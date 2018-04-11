@@ -2,7 +2,7 @@
 .set noat      # allow manual use of $at
 .set noreorder # don't insert nops after branches
 
-.section .text80000400, "ax"
+.section .text, "ax"
 
 _start:
 /* 001000 80000400 3C088006 */  lui   $t0, %hi(_DATA_END) # $t0, 0x8006
@@ -25,4 +25,5 @@ _start:
 /* 001040 80000440 00000000 */  nop   
 /* 001044 80000444 00000000 */  nop   
 /* 001048 80000448 00000000 */  nop   
-/* 00104C 8000044C 00000000 */  nop  
+/* 00104C 8000044C 00000000 */  nop 
+ 

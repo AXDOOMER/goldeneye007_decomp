@@ -29,7 +29,7 @@ SPEC := spec
 include baserom_files.mk
 
 SRC_DIRS := src src/libultra
-ASM_DIRS := asm
+ASM_DIRS := asm asm/code asm/game
 TEXTURE_DIRS = textures
 
 # source code
