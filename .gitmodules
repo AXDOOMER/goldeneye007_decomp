@@ -1,6 +1,4 @@
 [submodule "tools/sm64tools"]
 	path = tools/sm64tools
 	url = https://github.com/kholdfuzion/sm64tools.git
-[submodule "tools/irixemu"]
-	path = tools/irixemu
-	url = https://github.com/camthesaxman/irixemu.git
+
