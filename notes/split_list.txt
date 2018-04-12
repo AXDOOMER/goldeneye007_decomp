@@ -1,3 +1,5 @@
+   # once this list is complete, ill integrate into the yaml and script the split
+   # i guess i could do a yaml per address range for file....
    ###############################
    # created by makerom
    - [0x80000400, "_start"]
@@ -768,22 +770,22 @@
    - [0x70201348, "decompress.start"]
    - [0x7020141C, "decompress.entry"]
    #.data
-   - [0x70201480, "ptrsource"]
-   - [0x70201484, "ptrtarget"]
-   - [0x70201488, "curoffset"]
-   - [0x7020148C, "decompressed_count"]
-   - [0x70201490, "ptrbuffer"]
-   - [0x70201494, "order"]
-   - [0x702014A8, "lbase"]
-   - [0x702014E8, "lextra"]
-   - [0x70201508, "dbase"]
-   - [0x70201544, "dextra"]
-   - [0x70201564, "sample"]
-   - [0x70201568, "bits_in_sample"]
-   - [0x7020156C, "masks"]
-   - [0x70201590, "RAREZIP_data_70201590"]
-   - [0x70201594, "RAREZIP_data_70201594"]
-   - [0x70201598, "RAREZIP_data_70201598"]
+   - [0x70201480, "rarezip.ptrsource"]
+   - [0x70201484, "rarezip.ptrtarget"]
+   - [0x70201488, "rarezip.curoffset"]
+   - [0x7020148C, "rarezip.decompressed_count"]
+   - [0x70201490, "rarezip.ptrbuffer"]
+   - [0x70201494, "rarezip.order"]
+   - [0x702014A8, "rarezip.lbase"]
+   - [0x702014E8, "rarezip.lextra"]
+   - [0x70201508, "rarezip.dbase"]
+   - [0x70201544, "rarezip.dextra"]
+   - [0x70201564, "rarezip.sample"]
+   - [0x70201568, "rarezip.bitsinsample"]
+   - [0x7020156C, "rarezip.masks"]
+   - [0x70201590, "rarezip.data1"]
+   - [0x70201594, "rarezip.data2"]
+   - [0x70201598, "rarezip.data3"]
    
    
    ###############################

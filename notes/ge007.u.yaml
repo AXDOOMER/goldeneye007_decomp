@@ -1,6 +1,7 @@
 #  ROM splitter configuration file
 
 ## to use you need to append the decompressed data segment to end of rom
+## and to decompress make sure its my repo of sm64tools
 name: "Goldeneye 007"
 
 #  checksums from ROM header offsets 0x10 and 0x14
