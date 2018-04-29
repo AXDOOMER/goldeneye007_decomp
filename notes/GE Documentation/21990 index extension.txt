@@ -985,7 +985,8 @@ Note, offsets below only refer to USA offsets.  These +will+ differ in the other
 
 31D04	[float] 62500.0	proximity mine detonation distance (characters), squared	250: saves SQRTing the distance
 
-31D14	[float]	projectile gravity modifier
+31D08	[float]	0.277778 rocket inital gravity modifier
+31D14	[float]	0.277778 prop/projectile gravity modifier
 
 31E08-31ED8	TLB	set addresses for monitor animation command lists
 31ED8	[float]	???
@@ -1016,6 +1017,8 @@ Note, offsets below only refer to USA offsets.  These +will+ differ in the other
 328B4-328BC	"%s [0x80]%c "	japanese "objective x: status" message
 328BC-328C4	"%s %c: "	english "objective x: status" message
 
+3292C	[float]	0.277778 NPC gravity modifier
+
 32E64-32E70	ammo display	%d	%s: %d
 32E70-32E7C	died x times	%s %d %s
 32E7C-32E84	suicide count: x	%s: %d
@@ -1038,7 +1041,9 @@ Note, offsets below only refer to USA offsets.  These +will+ differ in the other
 33500	[float] 0.698132	1st person weapon reload speed
 33504-335FC	TLB	inhibits reload sound for items
 
-33674	[float]	expended shell gravity modifier
+33648	[float]	0.277778 expended shell inital gravity modifier (pistol)
+33670	[float]	0.277778 expended shell inital gravity modifier (non-pistols)
+33674	[float]	0.277778 expended shell gravity modifier (all)
 33678	[float]	expended shell scale multiplier
 3367C	[float]	far clipping for expended shells	note: clipping values hide the DL from view unless within range
 33680	[float]	near clipping for expended shells; closer than 20.0 will usually clip shells on ejection
@@ -1081,6 +1086,9 @@ Note, offsets below only refer to USA offsets.  These +will+ differ in the other
 342F8	[float] 0.1	multiplied by scale value for watch to make final (0.01)
 342FC	[float] 1.7	maximum watch transition speed
 34300	[float] 1.1	watch transition multiplier
+
+34360	[float]	0.277778 player gravity modifier
+34364	[float]	0.277778 player view (suspension) gravity modifier
 
 34344	[float] 1st person weapon vertical movement restrictor
 34348	[float] 1st person weapon horizontal movement restrictor
