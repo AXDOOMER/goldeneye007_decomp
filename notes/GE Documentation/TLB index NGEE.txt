@@ -1717,10 +1717,10 @@ conversion factor	+7EFCB4D0
 		7F01D02C
 		7F01D16C
 		7F01D1C0
-		7F01D2B0
-		7F01D2E8
-		7F01D324
-		7F01D360
+		7F01D2B0	F0= reaction speed 007 modifier
+		7F01D2E8	F0= health 007 modifier
+		7F01D324	F0= damage 007 modifier
+		7F01D360	F0= accuracy 007 modifier
 		7F01D39C
 		???
 		probably saves current completion time to eeprom
