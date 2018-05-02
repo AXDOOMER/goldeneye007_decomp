@@ -55,7 +55,6 @@ beginseg
     include "build/baserom/unknown123040.o"
     //address 0x004bf790
 endseg
-\\\
 
 beginseg
 	name "animation_table"
