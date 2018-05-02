@@ -6238,14 +6238,24 @@ ranges:
 
 
 labels:
+   ###############################
+   # created by makerom
    - [0x80000400, "_start"]
-   - [0x80000450, "boot0"]
+   
+   ###############################
+   # codesegment.o
+   # boot0.s
+   # .text
+   - [0x80000450, "boot"]
    - [0x700004BC, "get_rodata_vaddr"]
    - [0x700004C8, "get_rodata_rom_start"]
    - [0x700004D4, "get_rodata_rom_end"]
    - [0x700004E0, "getRareZipASMRomstart"]
    - [0x700004EC, "getRareZipASMRomend"]
    - [0x700004F8, "jump_decompressfile"]
+
+   # boot1.s
+   # .text
    - [0x70000510, "boot1"]
    - [0x700006A8, "generate_main_thread"]
    - [0x700006F0, "grow_stack"]
@@ -6256,10 +6266,14 @@ labels:
    - [0x700007EC, "setup_message_queue_for_scheduler"]
    - [0x7000089C, "main_entry"]
    - [0x70000908, "setuplastentryofdebughandler"]
-   - [0x70000970, "set_stderr_activated"]
-   - [0x7000097C, "set_stderr_enable"]
-   - [0x70000988, "set_stderr_permitted"]
-   - [0x70000994, "user_Compare"]
+
+   # std_err_flags.s
+   # .text
+   - [0x70000970, "set_stderr.activated"]
+   - [0x7000097C, "set_stderr.enable"]
+   - [0x70000988, "set_stderr.permitted"]
+   - [0x70000994, "set_user.Compare"]
+
    - [0x700009A0, "testtodisplaystderrandupdatecount"]
    - [0x700009F8, "testtodisplaystderrorevery16thframe"]
    - [0x70000A88, "storecurrentcount"]

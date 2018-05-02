@@ -1408,10 +1408,10 @@
    
    # .s
    # .text
-   - [0x7F01D2B0, "sub_CODE_7F01D2B0"]
-   - [0x7F01D2E8, "sub_CODE_7F01D2E8"]
-   - [0x7F01D324, "sub_CODE_7F01D324"]
-   - [0x7F01D360, "sub_CODE_7F01D360"]
+   - [0x7F01D2B0, "get_007_reaction_speed"]
+   - [0x7F01D2E8, "get_007_health_mod"]
+   - [0x7F01D324, "get_007_damage_mod"]
+   - [0x7F01D360, "get_007_accuracy_mod"]
    - [0x7F01D39C, "end_of_mission_briefing"]
    - [0x7F01D500, "sub_CODE_7F01D500"]
    - [0x7F01D524, "sub_CODE_7F01D524"]
