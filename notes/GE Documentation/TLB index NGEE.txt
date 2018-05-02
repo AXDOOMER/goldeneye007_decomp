@@ -1717,10 +1717,10 @@ conversion factor	+7EFCB4D0
 		7F01D02C
 		7F01D16C
 		7F01D1C0
-		7F01D2B0
-		7F01D2E8
-		7F01D324
-		7F01D360
+		7F01D2B0	F0= reaction speed 007 modifier
+		7F01D2E8	F0= health 007 modifier
+		7F01D324	F0= damage 007 modifier
+		7F01D360	F0= accuracy 007 modifier
 		7F01D39C
 		???
 		probably saves current completion time to eeprom
@@ -2432,262 +2432,262 @@ conversion factor	+7EFCB4D0
 		
 	69F64	7F035434	V0= p->path #A0; fries V1,A1,T6,T7,T8,T9
 	69FB4	7F035484	parses and handles action blocks, command by command
-			7F0355B4	action 00
-			7F0355D0	action 01
-			7F0355EC	action 02
-			7F0355F8	action 03
-			7F03563C	action 05
-			7F0356B0	action 06
-			7F03570C	action 07
-			7F035768	action 08
-			7F03577C	action 09
-			7F035790	action 0A
-			7F03589C	action 0B
-			7F0358D0	action 0C
-			7F0358E4	action 0D
-			7F0358F8	action 2F
-			7F03592C	action 30
-			7F035974	action 31
-			7F0359B4	action 32
-			7F0359E8	action 0E
-			7F035A1C	action 0F
-			7F035A50	action 10
-			7F035A84	action 11
-			7F035AB8	action 12
-			7F035AEC	action 13
-			7F035B20	action 14
-			7F035B74	action 15
-			7F035BC8	action E7
-			7F035C1C	action E8
-			7F035C50	action 16
-			7F035CA4	action 17
-			7F035CF8	action 18
-			7F035D5C	action 19
-		6A9A8	7F035E78	action 1A.rr	throw grenade
-			7F035EAC	action 1B.xxxx.yy.rr	drop armed weapon y
-			7F035EF8	action 21
-			7F035F0C	action 22
-			7F035F20	action 23
-			7F035F54	action 24
-			7F035F9C	action 25
-			7F035FB0	action 26
-			7F035FC4	action 27
-			7F035FF8	action 28
+			7F0355B4	action 00 Return Value Loop [2]
+			7F0355D0	action 01 Go To Beginning, Then Return Value Loop [2]
+			7F0355EC	action 02 Resume If Return Value Loop Met [2]
+			7F0355F8	action 03 Leave The Routine, But When Return Continue From Spot [1]
+			7F03563C	action 05 Jump To Function [4]
+			7F0356B0	action 06 Set Return Subroutine (for 0007 Command) [3]
+			7F03570C	action 07 Jump to Return Subroutine [1]
+			7F035768	action 08 Reset Animation [1]
+			7F03577C	action 09 Guard Kneels [1]
+			7F035790	action 0A Animation [9]
+			7F03589C	action 0B If Guard Wasting Time (Swatting Flies), Return Value Loop [2]
+			7F0358D0	action 0C Guard Gestures [1]
+			7F0358E4	action 0D Guard Looks Around When Shot At [1]
+			7F0358F8	action 2F When Guard Stops Moving, Return Value Loop [2]
+			7F03592C	action 30 Detect If Guard Killed, Return Value Loop If So [3]
+			7F035974	action 31 If Guard ID Finished Death Animation, Return Value Loop [3]
+			7F0359B4	action 32 If Bond In Sight, Return Value Loop [2]
+			7F0359E8	action 0E Guard Steps Sideways, Return Value Loop [2]
+			7F035A1C	action 0F Guard Hops Sideways, Return Value Loop [2]
+			7F035A50	action 10 Guard Runs Sideways, Return Value Loop [2]
+			7F035A84	action 11 Guard Walks Firing, Return Value Loop [2]
+			7F035AB8	action 12 Guard Runs Firing, Return Value Loop [2]
+			7F035AEC	action 13 Guard Rolls On Ground Then Fires Crouched, Return Value Loop [2]
+			7F035B20	action 14 Guard Aims, Shoots at Bond/Guard/Pad, Return Value Loop [6]
+			7F035B74	action 15 Guard Kneels/Aims, Shoots at Bond/Guard/Pad, Return Value Loop [6]
+			7F035BC8	action E7 If Guard Moving And Shooting, Return Value Loop [2]
+			7F035C1C	action E8 If Guard Is Shooting, Return Value Loop [2]
+			7F035C50	action 16 Guard Shoots Guards (Without Animation Change), Return Value Loop [6]
+			7F035CA4	action 17 Guard Constantly Angles To Face, Return Value Loop [6]
+			7F035CF8	action 18 Shoot Guard ID In Style With Weapon Type # [4]
+			7F035D5C	action 19 Guard ID1 Shoots Guard ID2 In Style [4]
+		6A9A8	7F035E78	action 1A Guard Throws Grenade, Return Value Loop [2]
+			7F035EAC	action 1B Drop Weapon Inventory #, Return Value Loop [5]
+			7F035EF8	action 21 Guard Surrenders [1]
+			7F035F0C	action 22 Guard Set To Move Fades And Disappear [1]
+			7F035F20	action 23 Eliminate Guard ID [2]
+			7F035F54	action 24 Activate Object At Preset, Return Value Loop If Successful [4]
+			7F035F9C	action 25 Sound Alarm [1]
+			7F035FB0	action 26 Turn Off Alarm [1]
+			7F035FC4	action 27 Return False (Invalid Type) [2]
+			7F035FF8	action 28 Jog To Bond, Return Loop When Reached Bond [2]
  6AB30:	7F036000
-			7F036030	action 29
-			7F036068	action 2A
-			7F0360A0	action 2B
-			7F0360D4	action 2C
-			7F036110	action 2D
-			7F03614C	action 2E
-			7F036188	action 33
-			7F0361A0	action 34
-			7F0361DC	action 35
-			7F036218	action 1C
-			7F036244	action 1D
-			7F036260	action 1E
-			7F03628C	action 1F
-			7F0362B8	action 20
-			7F0362D8	action 36
-			7F03630C	action 37
-			7F036340	action 38
-			7F036374	action 39
-			7F0363A8	action 3A
-			7F0363DC	action 3B
-			7F036410	action 3C
-			7F036444	action 3D
-			7F036478	action 3E
-			7F0364AC	action 3F
-			7F0364E0	action 40
-			7F036540	action 41
-			7F036578	action 42
-			7F0365B4	action 43
-			7F0365F4	action 44
-			7F03663C	action 45
-			7F036670	action 46
-			7F0366A4	action 47
-			7F036718	action 48
-			7F03678C	action 49
-			7F036800	action 4A
-			7F036874	action 4B
-			7F0368DC	action 4C
-			7F036944	action 4D
-			7F0369D4	action 4E
-			7F036A64	action 4F
-			7F036AD0	action 50
-			7F036B3C	action 51
-			7F036B98	action 52
-			7F036C10	action 53
-			7F036C88	action 54
-			7F036CD4	action 55
-			7F036D1C	action 56
-			7F036D6C	action 57
-			7F036DA0	action 58
-			7F036E2C	action 59
-			7F036E78	action 5A
-			7F036EBC	action 5B
-			7F036F0C	action 5C
-			7F036F70	action 5D
-			7F036FD0	action 5E
-			7F037038	action 5F
-			7F0370B4	action 60
-			7F037118	action 61
-			7F03714C	action 62
-			7F0371BC	action 63
-			7F0371FC	action 64
-			7F0372A0	action 65
-			7F0373BC	action 66
-			7F037400	action 67
-			7F037444	action 68
-			7F037518	action 69
-			7F03757C	action 6A
-			7F0375C0	action 6B
-			7F037608	action 6C
-			7F037678	action 6D
-			7F0376C8	action 6E
-			7F037700	action 6F
-			7F037738	action 78
-			7F037778	action 79
-			7F0377B8	action 7A
-			7F0377F8	action 7B
-			7F037838	action 7C
-			7F0378C4	action 7D
-			7F037950	action 7E
-			7F0379AC	action 7F
-			7F037A20	action 80
-			7F037A94	action 70
-			7F037AD4	action 71
-			7F037B14	action 72
-			7F037B74	action 73
-			7F037BD4	action 74
-			7F037C38	action 75
-			7F037C9C	action 76
-			7F037CDC	action 77
-			7F037D1C	action 81
-			7F037D30	action 82
-			7F037D70	action 83
-			7F037DA4	action 84
-			7F037DE0	action 85
-			7F037E1C	action 86
-			7F037E30	action 87
-			7F037E70	action 88
-			7F037EA4	action 89
-			7F037EE0	action 8A
-			7F037F1C	action 8B
-			7F037F50	action 8C
-			7F037F80	action 8D
-			7F037F94	action 8E
-			7F037FA8	action 8F
-			7F037FE8	action 90
+			7F036030	action 29 Walk To Bond, Return Loop When Reached Bond [2]
+			7F036068	action 2A Run To Bond, Return Loop When Reached Bond [2]
+			7F0360A0	action 2B Return False (Invalid Type) [2]
+			7F0360D4	action 2C Jog To Character Position, Return Value Loop On Arrival [3]
+			7F036110	action 2D Walk To Character Position, Return Value Loop On Arrival [3]
+			7F03614C	action 2E Run To Character Position, Return Value Loop On Arrival [3]
+			7F036188	action 33 Seed Random Byte [1]
+			7F0361A0	action 34 If Seeded Byte < Value, Go Into Return Value Loop [3]
+			7F0361DC	action 35 If Seeded Byte > Value, Go Into Return Value Loop [3]
+			7F036218	action 1C Guard Jogs To Preset [3]
+			7F036244	action 1D Guard Jogs To Predefined Preset (2328) [1]
+			7F036260	action 1E Guard Walks To Preset [3]
+			7F03628C	action 1F Guard Runs  To Preset [3]
+			7F0362B8	action 20 Activate Path [2]
+			7F0362D8	action 36 If Alarm Activated, Return Value Loop (Plus Stack) [2]
+			7F03630C	action 37 If Alarm Activated, Return Value Loop [2]
+			7F036340	action 38 If Toxic Gas Released, Return Value Loop [2]
+			7F036374	action 39 If Guard Heard Gunfire, Return Value Loop [2]
+			7F0363A8	action 3A If Bond Shoots Another Guard, Return Value Loop [2]
+			7F0363DC	action 3B If Guard Killed In Front Of Guard, Return Value Loop [2]
+			7F036410	action 3C If Guard Within Firing Range, Return Value Loop [2]
+			7F036444	action 3D <<< Unused / Unknown >>> [2]
+			7F036478	action 3E If Shot Current Guard, Return Value Loop [2]
+			7F0364AC	action 3F If Heard Bond, Return Value Loop [2]
+			7F0364E0	action 40 If Another Guard In Same Room As Guard ID, Return Value Loop [3]
+			7F036540	action 41 If Guard Has Been On Screen, Return Value Loop [2]
+			7F036578	action 42 If Current Guard On Screen In Loaded Room, Return Value Loop [2]
+			7F0365B4	action 43 If Guard In A Room Currently Loaded, Return Value Loop [2]
+			7F0365F4	action 44 If Room Containing Preset Is Loaded, Return Value Loop [4]
+			7F03663C	action 45 Go To Return Value Loop, If Bond Has Guard At Gunpoint [2]
+			7F036670	action 46 If Fired A Shot, Return Value Loop [2]
+			7F0366A4	action 47 If Distance Between Bond And Guard < Value, Return Value Loop [3]
+			7F036718	action 48 If Distance Between Bond And Guard > Value, Return Value Loop [3]
+			7F03678C	action 49 Test if Actor and Player CCW Angle Less Than Value, Return Value Loop (Unused) [3]
+			7F036800	action 4A Test if Actor and Player CCW Angle Greater Than Value, Return Value Loop (Unused) [3]
+			7F036874	action 4B Return Value Loop If Within Proximity Of Bond [4]
+			7F0368DC	action 4C Return Value Loop If Not Within Proximity Of Bond [4]
+			7F036944	action 4D When Guard Within Proximity Of Preset, Return Value Loop [7]
+			7F0369D4	action 4E When Guard Not Within Proximity Of Preset, Return Value Loop [7]
+			7F036A64	action 4F If Current Guard Is Within Units Of Guard ID, Return Value Loop [5]
+			7F036AD0	action 50 If Current Guard Is Not Within Units Of Guard ID, Return Value Loop [5]
+			7F036B3C	action 51 Set Closest Guard Within Units As Guard ID FC, Then Return Value Loop If Successful [4]
+			7F036B98	action 52 Go Into Return Value Loop If Within Units Of Preset [6]
+			7F036C10	action 53 Go Into Return Value Loop If Not Within Units Of Preset [6]
+			7F036C88	action 54 Go Into Return Value Loop If Guard Is At Preset [5]
+			7F036CD4	action 55 Go Into Return Value Loop If Entered Room with Preset [4]
+			7F036D1C	action 56 Go Into Return Value Loop If 16 Object # Collected [3]
+			7F036D6C	action 57 Go Into Return Value Loop If Specified Weapon Deposited [3]
+			7F036DA0	action 58 Go Into Return Value Loop If Specified Weapon Deposited On 16-Object [4]
+			7F036E2C	action 59 Go Into Return Value Loop If Specified Weapon Is Out [3]
+			7F036E78	action 5A Go Into Return Value Loop If Type 16 Object # Loaded [3]
+			7F036EBC	action 5B Go Into Return Value Loop If 16 Object # Not Destroyed [3]
+			7F036F0C	action 5C Go Into Return Value Loop If 16 Object # Activated [3]
+			7F036F70	action 5D Go Into Return Value Loop If Gadget Used On 16 Object # [3]
+			7F036FD0	action 5E 16 Object Activates [2]
+			7F037038	action 5F 16 Object Explodes [2]
+			7F0370B4	action 60 Guard Drops 16 Object # [2]
+			7F037118	action 61 Kill Guard # [2]
+			7F03714C	action 62 Guard # Throws Equipment [2]
+			7F0371BC	action 63 Guard Gives Bond 16 Object # [2]
+			7F0371FC	action 64 Type 16 Object Equipped On Guard [3]
+			7F0372A0	action 65 Object Moved To Preset [4]
+			7F0373BC	action 66 Open Door [2]
+			7F037400	action 67 Close Door [2]
+			7F037444	action 68 Check Door Status, Return Value Loop If Met [4]
+			7F037518	action 69 If 16 Object Is Valid Door, Return Value Loop [3]
+			7F03757C	action 6A Set Bits To Lock On Type 16 Door [3]
+			7F0375C0	action 6B Unset Bits To Lock On Type 16 Door [3]
+			7F037608	action 6C If Tagged Locked Door 16 Objects Toggled, Return Value Loop [4]
+			7F037678	action 6D If Objective # Complete, Return Value Loop [3]
+			7F0376C8	action 6E If Guard 2328 Preset, Return Value Loop [3]
+			7F037700	action 6F If Guard 2328 Preset Set, Return Value Loop [3]
+			7F037738	action 78 Go To Return Value Loop, If Guard Shot < Amount [3]
+			7F037778	action 79 Go To Return Value Loop, If Guard Shot > Amount [3]
+			7F0377B8	action 7A Go To Return Value Loop, If Number Near-Miss Gunshots < Value [3]
+			7F0377F8	action 7B Go To Return Value Loop, If Number Near-Miss Gunshots > Value [3]
+			7F037838	action 7C If Guard Health Below Value, Return Value Loop [4]
+			7F0378C4	action 7D If Guard Health Above Value, Return Value Loop [4]
+			7F037950	action 7E If Guard #'s Bitflag 01000000 Set, Return Value Loop [3]
+			7F0379AC	action 7F If Health Below Value, Return Value Loop [3]
+			7F037A20	action 80 If Health Above Value, Return Value Loop [3]
+			7F037A94	action 70 Go Into Return Value Loop Difficulty < Value [3]
+			7F037AD4	action 71 Go Into Return Value Loop If Difficulty > Value [3]
+			7F037B14	action 72 Go To Return Value Loop, If Time < Value [4]
+			7F037B74	action 73 Go To Return Value Loop, If Time > Value [4]
+			7F037BD4	action 74 Go To Return Value Loop, If Power On Time < Value [4]
+			7F037C38	action 75 Go To Return Value Loop, If Power On Time > Value [4]
+			7F037C9C	action 76 Go To Return Value Loop, If Stage Number < Value [3]
+			7F037CDC	action 77 Go To Return Value Loop, If Stage Number > Value [3]
+			7F037D1C	action 81 Set User Byte #1 [2]
+			7F037D30	action 82 Add Value To User Byte #1 (Max To FF) [2]
+			7F037D70	action 83 Subtract Value To User Byte #1 (Min To 0) [2]
+			7F037DA4	action 84 If Value > User Byte #1, Return Value Loop [3]
+			7F037DE0	action 85 If User Byte #1 < Random Value, Return Value Loop [2]
+			7F037E1C	action 86 Set User Byte #2 [2]
+			7F037E30	action 87 Add Value To User Byte #2 (Max To FF) [2]
+			7F037E70	action 88 Subtract Value To User Byte #2 (Min To 0) [2]
+			7F037EA4	action 89 If Value > User Byte #2, Return Value Loop [3]
+			7F037EE0	action 8A If User Byte #2 < Random Value, Return Value Loop [2]
+			7F037F1C	action 8B Set Guard Hearing Distance [3]
+			7F037F50	action 8C Set Guard Visible Distance [2]
+			7F037F80	action 8D Set Guard Grenade Probability [2]
+			7F037F94	action 8E Set Guard ID [2]
+			7F037FA8	action 8F Set Guard Health [3]
+			7F037FE8	action 90 Set Guard Armor Amount [3]
  6CB30:	7F038000
-			7F038028	action 91
-			7F03803C	action 92
-			7F038050	action 93
-			7F038064	action 94
-			7F03807C	action 95
-			7F038094	action 96
-			7F0380CC	action 97
-			7F0380E8	action 98
-			7F038104	action 99
-			7F038140	action 9A
-			7F03817C	action 9B
-			7F0381B8	action 9C
-			7F038214	action 9D
-			7F038254	action 9E
-			7F038298	action 9F
-			7F0382F4	action A0
-			7F038344	action A1
-			7F038398	action A2
-			7F03840C	action A3
-			7F038464	action A4
-			7F0384C0	action A5
-			7F03853C	action A6
-			7F038594	action A7
-			7F0385F0	action A8
-			7F03866C	action A9
-			7F038684	action AA
-			7F0386A0	action AB
-			7F0386EC	action AC
-			7F038718	action AD
-			7F038730	action AE
-			7F038744	action AF
-			7F038754	action B0
-		6D29C	7F03876C	action B1	enable loop counter
-		6D2B4	7F038784	action B2.rr	if loop counter enabled, return
-		6D2EC	7F0387BC	action B3.xxxxxx.rr	if counter > x, return
-			7F038840	action B4
-			7F0388C4	action B5
-			7F0388DC	action B6
-			7F0388F4	action B7
-			7F038928	action B8
-			7F03893C	action B9
-			7F038950	action BA
-			7F038984	action BB
-			7F0389E8	action BC
-		6D57C	7F038A4C	action BD.bb.hh.pppp.aaaa.xxxxxxxx.rr	spawn guard
-		6D624	7F038AF4	action BE.bb.hh.##.aaaa.xxxxxxxx.rr	respawn guard...
-		6D6AC	7F038B7C	action BF
-		6D7B0	7F038C80	action C0
-			7F038D10	action C1
-			7F038EC8	action C2
-			7F038EF0	action C3
-			7F038F18	action C4
-			7F038F44	action C9
-			7F038F58	action C7
-			7F039008	action C8
-			7F0390C4	action C5
-			7F039160	action C6
-		6DD90	7F039260	action CA
-			7F0392D4	action CB
-			7F0392FC	action CC
-			7F039360	action CD
-			7F0393BC	action CE
-			7F039408	action CF
-			7F039440	action D0
-		6DFFC	7F0394CC	action D1
-		6E034	7F039504	action D2	exit level
-		6E080	7F039550	action D3
-		6E094	7F039564	action D4
-		6E120	7F0395F0	action D5
-			7F039670	action D6
-		6E20C	7F0396DC	action D7
-			7F039750	action D8
-		6E2CC	7F03979C	action D9
-			7F039964	action DA
-			7F0399A4	action DB
-			7F0399E0	action DC
-			7F039A24	action DD
-			7F039A80	action DE
-			7F039AD4	action DF
-			7F039B30	action E0
-			7F039B58	action E1
-			7F039B98	action E2
-		6E708	7F039BD8	action E3
-		6E72C	7F039BFC	action E4
-		6E750	7F039C20	action E5
-		6E78C	7F039C5C	action E6
-		6E85C	7F039D2C	action E9	instantly switch to solo sky 2
-		6E878	7F039D48	action EA	stop time
-		6E89C	7F039D6C	action EB.rr	return if button pressed
-		6E8D8	7F039DA8	action EC	disable player pickups
-		6E8F0	7F039DC0	action ED	hide 1st person display
-		6E90C	7F039DDC	action EE	circular camera
-		6EA18	7F039EE8	action EF	start credits
-		6EA30	7F039F00	action F0.rr	return when credits finished
-		6EA68	7F039F38	action F1.rr	if objectives complete, return
-		6EA9C	7F039F6C	action F2.##.rr	if selected Bond# (0-3), return
-		6EAD8	7F039FA8	action F3.rr	if player pickups disabled, return
-		6EB10	7F039FE0	action F4.ss.xx.yy	plays X-theme in slot# =0-3 for x/y seconds
+			7F038028	action 91 Set Character Reaction Speed [2]
+			7F03803C	action 92 Set Character Injury Recovery Speed [2]
+			7F038050	action 93 Set Character Accuracy [2]
+			7F038064	action 94 Mask Guard Type With Value [2]
+			7F03807C	action 95 Unmask Guard Type With Value [2]
+			7F038094	action 96 If Guard Type Value Is Set, Return Value Loop [3]
+			7F0380CC	action 97 Mask Guard Type Flags With Value [3]
+			7F0380E8	action 98 Unmask Guard Type Flags With Value [3]
+			7F038104	action 99 If Guard Type Flags Set, Return Value Loop [4]
+			7F038140	action 9A Set Objective Bits [5]
+			7F03817C	action 9B Unset Objective Value [5]
+			7F0381B8	action 9C Check If Objective Value, Return Loop If So [6]
+			7F038214	action 9D Set Guard Bit Tags [5]
+			7F038254	action 9E Unset Guard Bit Tags [5]
+			7F038298	action 9F Check Guard Bits, If Same Return Value Loop [6]
+			7F0382F4	action A0 Set Guard ID Bits [6]
+			7F038344	action A1 Unset Guard ID Bits [6]
+			7F038398	action A2 Check Guard Bits, If Same Return Value Loop [7]
+			7F03840C	action A3 Set State Bits 16 Type Object [6]
+			7F038464	action A4 Unset State Bits 16 Type Object [6]
+			7F0384C0	action A5 Check State Bits 16 Type Object, If Same Return Value Loop [7]
+			7F03853C	action A6 Set 16-Object States More [6]
+			7F038594	action A7 Unset 16-Object States More [6]
+			7F0385F0	action A8 Check 16-Object States More, If Same Return Value Loop [7]
+			7F03866C	action A9 Sets To Guard ID Fc Current Guard [2]
+			7F038684	action AA Sets FC Value For Guard ID To Guard ID [3]
+			7F0386A0	action AB Set Current Guard's 2328 Value To Preset [3]
+			7F0386EC	action AC Set Guard ID #'S 2328 Value To Preset [4]
+			7F038718	action AD Debug Comment [20]
+			7F038730	action AE Reset Cycle Counter And Enable It [1]
+			7F038744	action AF Reset Cycle Counter [1]
+			7F038754	action B0 Disable Cycle Counter [1]
+		6D29C	7F03876C	action B1 Enable Cycle Counter [1]
+		6D2B4	7F038784	action B2 Check Cycle Counter Enable Status [2]
+		6D2EC	7F0387BC	action B3 If Cycle Counter < Value, Return Value Loop [5]
+			7F038840	action B4 If Cycle Counter > Value, Return Value Loop [5]
+			7F0388C4	action B5 Show Timer [1]
+			7F0388DC	action B6 Hide Timer (Silent Countdown!) [1]
+			7F0388F4	action B7 Set Timer X Seconds  (Doesn't Show Timer Yet) [3]
+			7F038928	action B8 Stop Timer [1]
+			7F03893C	action B9 Start Timer [1]
+			7F038950	action BA Check Timer Enabled Status, Return Value Loop If Enabled [2]
+			7F038984	action BB Detect If Timer Below Certain Point (Return Value Loop If So) [4]
+			7F0389E8	action BC Detect If Timer Above Certain Point (Return Value Loop If So) [4]
+		6D57C	7F038A4C	action BD Spawn Guard [C]
+		6D624	7F038AF4	action BE Respawn Guard with ID [B]
+		6D6AC	7F038B7C	action BF Spawn Weapon [9]
+		6D7B0	7F038C80	action C0 Spawn Hat [8]
+			7F038D10	action C1 Guard ID Does Action Value If Heard A Lot Of Gunfire, Return Value Loop When Complete [5]
+			7F038EC8	action C2 Display Text Preset Bottom Screen [3]
+			7F038EF0	action C3 Display Text Preset Top Screen [3]
+			7F038F18	action C4 Play Sound Effect # In Slot # (0-7) [4]
+			7F038F44	action C9 Shut Off Sound In Slot Number [2]
+			7F038F58	action C7 Sound In Slot # Crecendos To Volume Over Milliseconds [6]
+			7F039008	action C8 Sound In Slot # Fades To Volume Over Milliseconds [6]
+			7F0390C4	action C5 Emanate Sound In Slot # From 16 Object, With Audible Range Value [5]
+			7F039160	action C6 Emanate Sound In Slot # From Preset, With Audible Range Value [6]
+		6DD90	7F039260	action CA If Value > Volume (7FFF Max), Return Value Loop [5]
+			7F0392D4	action CB Set Object Path (27 Type Object) [2]
+			7F0392FC	action CC Set Speed Moving Vehicle (27 Type Object) [5]
+			7F039360	action CD Set Speed Aircraft Rotor [5]
+			7F0393BC	action CE Detect If Currently In Intro Camera, Return Value Loop If So [2]
+			7F039408	action CF Detect If Currently In Intro Swirl, Return Value Loop If So [2]
+			7F039440	action D0 Change Animation Type Of Type 16 Monitor [4]
+		6DFFC	7F0394CC	action D1 If Bond In Tank, Return Value Loop [2]
+		6E034	7F039504	action D2 Exit Level [1]
+		6E080	7F039550	action D3 Return From Camera Scene [1]
+		6E094	7F039564	action D4 Camera Looks At Bond From Preset [3]
+		6E120	7F0395F0	action D5 Go To Camera Position [6]
+			7F039670	action D6 If Less Than Elevation, Return Value Loop [4]
+		6E20C	7F0396DC	action D7 Disable Text (Variable) [2]
+			7F039750	action D8 Enable All On-Screen Displays [1]
+		6E2CC	7F03979C	action D9 Guard ID Moved To Preset (Return Loop If Successful) [5]
+			7F039964	action DA Fade Out From Cut-Scene [1]
+			7F0399A4	action DB Fade In From Black (Reset DA) [1]
+			7F0399E0	action DC Return Value Loop When Fade Complete [2]
+			7F039A24	action DD Remove All Guards [1]
+			7F039A80	action DE Bring Removed Guards Back [1]
+			7F039AD4	action DF Open Type-16 Door (Used Cut-Scenes) [2]
+			7F039B30	action E0 Guard ID Draws Weapon # [3]
+			7F039B58	action E1 If Fewer than This Many Players Playing, Return Value Loop [3]
+			7F039B98	action E2 If Ammo Value In Type Is Less Than Value, Return Value Loop [4]
+		6E708	7F039BD8	action E3 Draw Weapon From Inventory (In-Game) [2]
+		6E72C	7F039BFC	action E4 Draw Weapon From Inventory (Cut-Scene) [2]
+		6E750	7F039C20	action E5 Set Bond's Speed [3]
+		6E78C	7F039C5C	action E6 If 16-Object And Preset Are In Same Room, Return Value Loop [5]
+		6E85C	7F039D2C	action E9 Instantly Switch Sky To Sky 2 [1]
+		6E878	7F039D48	action EA Stop Game Time [1]
+		6E89C	7F039D6C	action EB If Key Pressed, Return Value Loop [2]
+		6E8D8	7F039DA8	action EC Disable Player Pickups [1]
+		6E8F0	7F039DC0	action ED Hide First Person Display [1]
+		6E90C	7F039DDC	action EE Cuba Circular Camera Aim [D]
+		6EA18	7F039EE8	action EF Trigger Credits [1]
+		6EA30	7F039F00	action F0 Return Value Loop If Credits Completed [2]
+		6EA68	7F039F38	action F1 If All Objectives Complete, Return Value Loop [2]
+		6EA9C	7F039F6C	action F2 Check Current Folder Bond, Return Value Loop [3]
+		6EAD8	7F039FA8	action F3 If Player Pickups Disabled, Return Value Loop [2]
+		6EB10	7F039FE0	action F4 Plays Value #1-Theme Slot (0-3) For Value #2 Seconds [4]
  6EB30:	7F03A000
-		6EB34	7F03A004	action F5.xx	turn off music in slot -1 - 3
-		6EB50	7F03A020	action F6	trigger explosions around players
-		6EB64	7F03A034	action F7.##.rr	if # < civilian deaths, return
-		6EBA4	7F03A074	action F8.##.rr	if guardID# shot at, unset flag and return
-		6EC04	7F03A0D4	action F9	set "Killed in Action"
-		6EC1C	7F03A0EC	action FA	use "fawn on shoulder" animation
-		6EC30	7F03A100	action FB	switch to x-sky
-		6EC64	7F03A134	action FC
-		6ED30	7F03A200	action 04	end
+		6EB34	7F03A004	action F5 Turn Off Music In Slot # (0-3) [2]
+		6EB50	7F03A020	action F6 Trigger Explosions Around Bond [1]
+		6EB64	7F03A034	action F7 If Number Of Hostages/Scientists Killed, Return Value Loop [3]
+		6EBA4	7F03A074	action F8 If Guard ID 00200000 Flag Set, Unset And Return [3]
+		6EC04	7F03A0D4	action F9 Set Killed In Action, Automatic Mission Failure [1]
+		6EC1C	7F03A0EC	action FA Guard Fawns On Shoulder [1]
+		6EC30	7F03A100	action FB Switch To Sky Value # And Activate Gas Containers If Exist [1]
+		6EC64	7F03A134	action FC Launch Shuttle [2]
+		6ED30	7F03A200	action 04 Terminator [1]
 	6ED70	7F03A240
 		???
 	6EF34	7F03A404	set 0x4 state flag for position data at A0 [A0+1|=4]; fries T6,T7
