@@ -12,7 +12,7 @@ basename: "ge007_u"
 
 ranges:
    - [0x00000000, 0x00000040, "header", "header"]
-   - [0x00000040, 0x00001000, "bin",    "boot"]
+   - [0x00000040, 0x00001000, "bin",    "bootcode"]
    - [0x00001000, 0x00001050, "asm", "_start", 0x80000400]
    #even though this gets tlb mapped to 0x70000000, most of it uses relative
    #addresses so I disassemble as 0x80000000 to make eventual linking easier
@@ -47,6 +47,7 @@ labels:
    - [0x00034b30, "_rarezipSegmentRomEnd"]
 #the following KSEG_name names are for absolute addressed functions in codesegment that get TLB mapped
 #theres probably a better way to do this, but i'm unaware of any.
+#there will be more...every jumptable...
    - [0x70000450, "KSEG_boot"]
    - [0x70000510, "KSEG_boot1"]
    - [0x70000718, "KSEG_idle_entry"]
@@ -92,11 +93,12 @@ labels:
 
    ###############################
    # created by makerom
+   # asm/_start.s
    - [0x80000400, "_start"]
 
    ###############################
-   # codesegment.o
-   # boot0.s
+   # object codesegment.o
+   # file asm/code/boot0.s
    - [0x80000450, "boot"]
    - [0x800004BC, "get_rodata_vaddr"]
    - [0x800004C8, "get_rodata_rom_start"]
@@ -104,7 +106,7 @@ labels:
    - [0x800004E0, "getRareZipASMRomstart"]
    - [0x800004EC, "getRareZipASMRomend"]
    - [0x800004F8, "jump_decompressfile"]
-   # boot1.s
+   # file asm/code/boot1.s
    - [0x80000510, "boot1"]
    - [0x800006A8, "generate_main_thread"]
    - [0x800006F0, "grow_stack"]
@@ -115,12 +117,12 @@ labels:
    - [0x800007EC, "setup_message_queue_for_scheduler"]
    - [0x8000089C, "main_entry"]
    - [0x80000908, "setuplastentryofdebughandler"]
-   # std_err_flags.s
+   # file asm/code/std_err_flags.s
    - [0x80000970, "set_stderr_activated"]
    - [0x8000097C, "set_stderr_enable"]
    - [0x80000988, "set_stderr_permitted"]
    - [0x80000994, "set_user_Compare"]
-   # scheduler.s
+   # file asm/code/scheduler.s
    - [0x800009A0, "testtodisplaystderrandupdatecount"]
    - [0x800009F8, "testtodisplaystderrorevery16thframe"]
    - [0x80000A88, "osCreateLog"]
@@ -139,25 +141,25 @@ labels:
    - [0x80001440, "__scExec"]
    - [0x80001560, "__scYield"]
    - [0x8000159C, "__scSchedule"]
-   # osMapTLBRdb.s
+   # file asm/code/osMapTLBRdb.s
    - [0x80001780, "osMapTLBRdb"]
-   # tlb_buffer_management.s
+   # file asm/code/tlb_buffer_management.s
    - [0x800017E0, "establish_TLB_buffer_management_table"]
    - [0x80001898, "mp_tlb_related"]
-   # tlb_index.s
+   # file asm/code/tlb_index.s
    - [0x800018C0, "return_TLB_index_for_entry"]
-   # tlb_load_remove.s
+   # file asm/code/tlb_load_remove.s
    - [0x80001920, "find_remove_TLB_entry"]
    - [0x80001954, "remove_TLB_entry_from_table"]
    - [0x800019D8, "translate_load_rom_from_TLBaddress"]
    - [0x80001AF8, "return_ptr_TLBmemory"]
-   #tlb_random.s
+   # file asm/code/tlb_random.s
    - [0x80001B10, "return_tlb_random_value"]
-   #tlb_resolve.s
+   # file asm/code/tlb_resolve.s
    - [0x80001B60, "resolve_TLBaddress_for_InvalidHit"]
-   #tlb_set_hardwire.s
+   # file asm/code/tlb_set_hardwire.s
    - [0x80001BB0, "set_hardwire_TLB_to_2"]
-   #init_audi.s
+   # file asm/code/init_audi.s
    - [0x80001BD0, "init_audi"]
    - [0x80001F58, "startaudithread"]
    - [0x80001F7C, "audi_entry"]
@@ -166,14 +168,14 @@ labels:
    - [0x80002424, "audi_related_2"]
    - [0x800025D8, "audi_related_3"]
    - [0x80002610, "audi_related_4"]
-   #speed_graph.s
+   # file asm/code/speed_graph.s
    - [0x80002730, "displaylist_related"]
    - [0x800027A4, "video_related_1"]
    - [0x80002810, "video_related_2"]
    - [0x80002854, "video_related_3"]
    - [0x80002958, "display_speed_graph"]
    - [0x80002CD8, "video_DL_related_4"]
-   #video.s
+   # file asm/code/video.s
    - [0x80003060, "init_video_settings"]
    - [0x80003124, "init_both_video_buffers"]
    - [0x80003190, "video_related_6"]
@@ -220,7 +222,7 @@ labels:
    - [0x800048D4, "indy_grab_jpg_32bit"]
    - [0x80004A60, "indy_grab_rgb_16bit"]
    - [0x80004BB4, "indy_grab_rgb_32bit"]
-   #debug_notice_list_handler.s
+   # file asm/code/debug_notice_list_handler.s
    - [0x80004D20, "return_match_in_debug_notice_list"]
    - [0x80004D80, "get_entry_of_size_in_debug_notice_list"]
    - [0x80004DE0, "add_new_entry_to_debug_notice_list"]
@@ -228,11 +230,11 @@ labels:
    - [0x80004E60, "get_ptr_debug_notice_list_entry"]
    - [0x80004E98, "scan_debug_notice_list_till_NULL"]
    - [0x80004EC4, "debug_removed"]
-   #tlb_init_indy_load.s
+   # file asm/code/tlb_init_indy_load.s
    - [0x80004EE0, "init_tlb"]
    - [0x80004F54, "translate_7F_address"]
    - [0x800050AC, "debug_related_8"]
-   - [0x800051E0, "was_opcode_within_70000450_70020D90"]
+   - [0x800051E0, "was_opcode_In_70000450_70020D90"]
    - [0x80005258, "return_strlen"]
    - [0x80005294, "indy_file_get_address_subsequent_data"]
    - [0x80005340, "scan_load_resourceID_from_indy_read_buf"]
@@ -241,14 +243,14 @@ labels:
    - [0x80005404, "debug_indy_stub_0"]
    - [0x8000540C, "debug_indy_stub_1"]
    - [0x80005414, "return_indy_read_buf_resourceID"]
-   #debug_sp_related.s
+   # file asm/code/debug_sp_related.s
    - [0x80005420, "debug_sp_related_11"]
    - [0x800054E4, "debug_sp_related_12"]
-   #normal_float_handler.s
+   # file asm/code/normal_float_handler.s
    - [0x80005560, "_is_normal_single_precision_float"]
    - [0x800055A4, "is_normal_single_precision_float"]
    - [0x800055C8, "set_normality_of_single_precision_floats"]
-   #std_err_handler.s
+   # file asm/code/std_err_handler.s
    - [0x80005630, "write_char_to_pos_stderr"]
    - [0x800056BC, "__osRdbSend"]
    - [0x800057CC, "scroll_stderr_oneline"]
@@ -256,9 +258,9 @@ labels:
    - [0x80005984, "set_ptr_video_buffers"]
    - [0x800059A4, "set_video_buffer_pointers"]
    - [0x800059D0, "write_stderr_to_buffer"]
-   #error_handler_last_ra_on_stack.s
+   # file asm/code/error_handler_last_ra_on_stack.s
    - [0x80005B10, "return_last_RA_saved_to_stack"]
-   #load_file.s
+   # file asm/code/load_file.s
    - [0x80005B60, "creates_a_message_queue_for_memory"]
    - [0x80005B90, "read_bytes_from_hw_to_rdram"]
    - [0x80005BF0, "receive_memoryMesg"]
@@ -266,7 +268,7 @@ labels:
    - [0x80005C44, "load_ramrom_file"]
    - [0x80005CA8, "write_rdram_to_hw"]
    - [0x80005D08, "load_rdram_to_hw"]
-   #main.s
+   # file asm/code/main.s
    - [0x80005D30, "init_mainthread_data"]
    - [0x80005FF4, "enable_show_mem_use_flag"]
    - [0x80006004, "mem_bars_flag_toggle"]
@@ -278,7 +280,7 @@ labels:
    - [0x80006968, "return_to_title_from_level_end"]
    - [0x800069B4, "get_debug_parse_flag"]
    - [0x800069C0, "something_with_boss_c_debug"]
-   #music1.s
+   # file asm/code/music1.s
    - [0x800069F0, "audio_related"]
    - [0x80006A30, "setupaudio"]
    - [0x80006E7C, "music_track_related"]
@@ -303,7 +305,7 @@ labels:
    - [0x80007808, "music_related_11"]
    - [0x80007878, "music_related_13"]
    - [0x80007914, "music_related_15"]
-   #music2.s
+   # file asm/code/music2.s
    - [0x80007B20, "music_related_16"]
    - [0x80007DDC, "music_related_17"]
    - [0x80007E80, "music_related_18"]
@@ -327,7 +329,7 @@ labels:
    - [0x80009238, "music_related_39"]
    - [0x80009264, "music_related_41"]
    - [0x80009284, "music_related_42"]
-   #memp.s
+   # file asm/code/memp.s
    - [0x80009380, "something_with_memp_c_debug"]
    - [0x800093AC, "check_memflag_tokens"]
    - [0x80009514, "memp_related_0"]
@@ -338,7 +340,7 @@ labels:
    - [0x80009970, "memp_related_4"]
    - [0x8000999C, "reset_mem_bank_a0"]
    - [0x800099C4, "memp_related_6"]
-   #mema.s
+   # file asm/code/mema.s
    - [0x80009A10, "swap_entries"]
    - [0x80009A34, "merge_alloc_entries"]
    - [0x80009A50, "sort_merge_entries_in_alloc_table"]
@@ -358,16 +360,16 @@ labels:
    - [0x8000A2F8, "mem_related_something_first_related_0"]
    - [0x8000A370, "mem_related_0"]
    - [0x8000A3DC, "mem_related_1"]
-   #random.s
+   # file asm/code/random.s
    - [0x8000A450, "random_related"]
    - [0x8000A498, "increment_random_num"]
-   - [0x8000A4AC, "lotsa_shifting_random_related"]
-   #checktoken.s
+   - [0x8000A4AC, "lotsa_shifting_randomizer_related"]
+   # file asm/code/checktoken.s
    - [0x8000A4F0, "check_string_something"]
    - [0x8000A58C, "strtok"]
    - [0x8000A5C0, "check_boot_switches"]
    - [0x8000A6A0, "check_token"]
-   #string_stuff.s
+   # file asm/code/string_stuff.s
    - [0x8000A770, "textpointer_load_parse_something"]
    - [0x8000A7A0, "something_with_strings"]
    - [0x8000A7FC, "string_load_parse_something"]
@@ -378,19 +380,19 @@ labels:
    - [0x8000A950, "strtol_related_1"]
    - [0x8000A98C, "strtol_related_2"]
    - [0x8000A9E0, "strtol"]
-   #sprintf.s
+   # file asm/code/sprintf.s
    - [0x8000AC70, "proutSprintf"]
    - [0x8000AC94, "sprintf"]
-   #vi_c.s
+   # file asm/code/vi_c.s
    - [0x8000ACF0, "start_pi_manager"]
    - [0x8000AD30, "start_nulled_entry"]
    - [0x8000AD38, "something_with_vi_c_debug"]
-   #dummied_7000AD80.s
+   # file asm/code/dummied_7000AD80.s
    - [0x8000AD80, "dummied_function"]
    - [0x8000AD90, "dummied_function_0"]
    - [0x8000ADA0, "null_function"]
    - [0x8000ADA8, "null_init_main_0"]
-   #debug.s
+   # file asm/code/debug.s
    - [0x8000ADB0, "debug_text_related_2"]
    - [0x8000ADD0, "display_text_to_coord"]
    - [0x8000AEDC, "debug_menu_text_related"]
@@ -405,7 +407,7 @@ labels:
    - [0x8000B1E8, "write_string_stdout"]
    - [0x8000B230, "debug_text_related"]
    - [0x8000B27C, "read_screen_display_block_and_write_chars"]
-   #joy_c.s
+   # file asm/code/joy_c.s
    - [0x8000B560, "something_with_joy_c_debug"]
    - [0x8000B6AC, "test_controller_presence"]
    - [0x8000B728, "osPfsChecker"]
@@ -442,12 +444,12 @@ labels:
    - [0x8000C8DC, "reset_cont_rumble_detect"]
    - [0x8000C930, "controller_7000C930"]
    - [0x8000C954, "controller_7000C954"]
-   #rumble.s
+   # file asm/code/rumble.s
    - [0x8000C980, "send_rumble_off_to_PIF"]
    - [0x8000CAAC, "controller_7000CAAC"]
    - [0x8000CBDC, "controller_7000CBDC"]
    - [0x8000CD38, "controller_7000CD38"]
-   #rmon.s
+   # file asm/code/rmon.s
    - [0x8000CEA0, "rmonMain"]
    - [0x8000CEA8, "rmon_debug_is_final_build"]
    - [0x8000CEB0, "rmon_debug_returns_neg_1"]
@@ -459,7 +461,7 @@ labels:
    - [0x8000CEE0, "rmon_debug_stub_4"]
    - [0x8000CEE8, "proutSyncPrintf"]
    - [0x8000CF44, "osSyncPrintf"]
-   #libultra
+   # file asm/libultra/libultra.s
    - [0x8000CF90, "osPiRawStartDma"]
    - [0x8000D070, "osPiGetStatus"]
    - [0x8000D080, "osInitialize"]
@@ -792,7 +794,7 @@ labels:
    - [0x80020568, "readVarLen"]
    - [0x800205B4, "alSeqNextEvent"]
    - [0x80020738, "alSeqNewMarker"]
-   - [0x80020858, "alSeqSecToTicks:"]
+   - [0x80020858, "alSeqSecToTicks"]
    - [0x8002093C, "alSeqTicksToSec"]
    - [0x80020990, "__alSeqNextDelta"]
    - [0x800209E8, "read32"]
@@ -805,8 +807,9 @@ labels:
    - [0x80020D40, "osEPiRawWriteIo"]
 
    ###############################
-   #rarezipsegment.o
-   #rarezipsegment.s
+   # object rarezipsegment.o
+   # .text
+   # file asm/rarezip/rarezipsegment.s
    - [0x70200000, "decompress.buildtable"]
    - [0x70200654, "decompress.inflate"]
    - [0x70200A48, "decompress.type0"]
@@ -815,7 +818,7 @@ labels:
    - [0x70201228, "decompress.table"]
    - [0x70201348, "decompress.start"]
    - [0x7020141C, "decompress.entry"]
-   #.data
+   # .data
    - [0x70201480, "rarezip.ptr_source"]
    - [0x70201484, "rarezip.ptr_target"]
    - [0x70201488, "rarezip.curoffset"]
@@ -832,13 +835,15 @@ labels:
    - [0x70201590, "rarezip.data1"]
    - [0x70201594, "rarezip.data2"]
    - [0x70201598, "rarezip.data3"]
+
    ###############################
-   #gamesegment.o
-   #initdata.s
+   # object gamesegment.o
+   # .text
+   # file asm/game/initdata.s
    - [0x7F000000, "zero_basic_data"]
-   #init_weapon_anim_groups.s
+   # file asm/game/init_weapon_anim_groups.s
    - [0x7F0000E0, "init_weapon_animation_groups_maybe"]
-   #.s
+   # file asm/game/7F000110.s
    - [0x7F000110, "reset_counter_rand_body_head"]
    - [0x7F0001F0, "sub_GAME_7F0001F0"]
    - [0x7F000290, "sub_GAME_7F000290"]
@@ -848,36 +853,35 @@ labels:
    - [0x7F000518, "somethingwith_weapon_animation_groups"]
    - [0x7F000980, "sub_GAME_7F000980"]
    - [0x7F0009A0, "sub_GAME_7F0009A0"]
-   #.s
+   # file asm/game/7F0009D0.s
    - [0x7F0009D0, "null_init_main_3"]
-   #.s
+   # file asm/game/7F0009E0.s
    - [0x7F0009E0, "sub_GAME_7F0009E0"]
-   #prep_ani_table.s
+   # file asm/game/prep_ani_table.s
    - [0x7F000A00, "expand_ani_table_entries"]
    - [0x7F000AAC, "alloc_load_expand_ani_table"]
-   #.s
+   # file asm/game/7F000B60.s
    - [0x7F000B60, "sub_GAME_7F000B60"]
-   #gu_scale.s
+   # file asm/game/gu_scale.s
    - [0x7F000B80, "set_gu_scale"]
-   #.s
+   # file asm/game/7F000BC0.s
    - [0x7F000BC0, "null_init_main_2"]
-   #image_related.s
+   # file asm/game/image_related.s
    - [0x7F000BD0, "image_entries_load"]
-   #alloc_intro_matrices.s
+   # file asm/game/alloc_intro_matrices.s
    - [0x7F000C70, "alloc_intro_matrices"]
-   #init_menus.s
+   # file asm/game/init_menus.s
    - [0x7F000D20, "init_menus_or_reset"]
-   #init_guards.s
+   # file asm/game/init_guards.s
    - [0x7F000E40, "init_guards"]
    - [0x7F000EB8, "alloc_init_GUARDdata_entries"]
    - [0x7F000F50, "set_new_rand_head_bodies"]
-   #init_objectives_and_models.s
+   # file asm/game/init_objectives_and_models.s
    - [0x7F001020, "init_obj_register_difficulty_vals"]
    - [0x7F00105C, "alloc_false_GUARDdata_to_exec_global_action"]
    - [0x7F001258, "debug_object_load_all_models"]
    - [0x7F00140C, "debug_weapon_load_table"]
-   #level_init_stuff.s
-   #this is probably a few files
+   # file asm/game/level_init_stuff.s
    - [0x7F0014B0, "init_sound_effects_registers"]
    - [0x7F0014E0, "init_load_objpos_table"]
    - [0x7F0015D0, "alloc_lookup_buffers"]
@@ -887,8 +891,7 @@ labels:
    - [0x7F001940, "sub_GAME_7F001940"]
    - [0x7F001958, "write_monitor_ani_control_blocks"]
    - [0x7F001B08, "initialize_80071E00_to_80071E78"]
-   #loadmorestuff.s
-   #this is probably a few files
+   # file asm/game/loadmorestuff.s
    - [0x7F001B50, "load_proptype"]
    - [0x7F001BD4, "sub_GAME_7F001BD4"]
    - [0x7F001D9C, "prepare_load_objects"]
@@ -932,7 +935,7 @@ labels:
    - [0x7F004AE4, "type21_subobjective_expand"]
    - [0x7F004AF4, "type1E_subobjective_expand"]
    - [0x7F004AFC, "other_obj_expand"]
-   #objective_related.s
+   # file asm/game/objective_related.s
    - [0x7F004EC0, "something_with_stage_objectives"]
    - [0x7F004F88, "set_parent_cur_tag_entry"]
    - [0x7F004FA0, "setup_briefing_text_entry_parent"]
@@ -940,18 +943,18 @@ labels:
    - [0x7F004FF4, "set_parent_cur_obj_enter_room"]
    - [0x7F00500C, "set_parent_cur_obj_deposited_in_room"]
    - [0x7F005024, "set_parent_cur_obj_photograph"]
-   #ejected_cartridges.s
+   # file asm/game/ejected_cartridges.s
    - [0x7F005040, "something_with_ejected_cartridges"]
-   #init_BONDdata.s
+   # file asm/game/init_BONDdata.s
    - [0x7F0050D0, "init_player_BONDdata_stats"]
-   #7F005450.s
+   # file asm/game/7F005450.s
    - [0x7F005450, "sub_GAME_7F005450"]
-   #level_load_stuff.s
+   # file asm/game/level_load_stuff.s
    - [0x7F005520, "zero_contents_of_80036070_74"]
    - [0x7F005534, "set_contents_of_80036078"]
    - [0x7F005540, "sub_GAME_7F005540"]
    - [0x7F005624, "sub_GAME_7F005624"]
-   #generate_launched_object.s
+   # file asm/game/generate_launched_object.s
    - [0x7F005710, "set_weapon_model_generated_thrown_object"]
    - [0x7F005740, "throwingknife"]
    - [0x7F005748, "grenade_launch_round"]
@@ -977,48 +980,48 @@ labels:
    - [0x7F005D14, "watch_time"]
    - [0x7F005D8C, "credits"]
    - [0x7F005DE0, "def_7F005A74"]
-   #alloc_item_slots.s
+   # file asm/game/alloc_item_slots.s
    - [0x7F0061F0, "sub_GAME_7F0061F0"]
    - [0x7F00625C, "alloc_additional_item_slots"]
-   #default_BONDdata_stuff.s
+   # file asm/game/default_BONDdata_stuff.s
    - [0x7F0062C0, "sub_GAME_7F0062C0"]
    - [0x7F00638C, "sets_a_bunch_of_BONDdata_values_to_default"]
-   #load_init_path_table.s
+   # file asm/game/load_init_path_table.s
    - [0x7F0067C0, "sub_GAME_7F0067C0"]
    - [0x7F006890, "init_path_table_links"]
-   #
+   # file asm/game/7F006D90.s
    - [0x7F006D90, "alloc_explosion_smoke_casing_scorch_impact_buffers"]
-   #
+   # file asm/game/7F007180.s
    - [0x7F007180, "sub_GAME_7F007180"]
-   #
+   # file asm/game/7F007290.s
    - [0x7F007290, "sub_GAME_7F007290"]
-   #
+   # file asm/game/7F0072B0.s
    - [0x7F0072B0, "sub_GAME_7F0072B0"]
    - [0x7F0072F8, "disable_onscreen_text"]
-   #
+   # file asm/game/7F007320.s
    - [0x7F007320, "set_mt_tex_alloc"]
-   #.s
+   # file asm/game/7F0073B0.s
    - [0x7F0073B0, "sub_GAME_7F0073B0"]
-   #.s
+   # file asm/game/7F007460.s
    - [0x7F007460, "sub_GAME_7F007460"]
-   #.s
+   # file asm/game/7F0074D0.s
    - [0x7F0074D0, "sub_GAME_7F0074D0"]
-   #.s
+   # file asm/game/7F007500.s
    - [0x7F007500, "sub_GAME_7F007500"]
    - [0x7F007590, "sub_GAME_7F007590"]
-   #.s
+   # file asm/game/7F007700.s
    - [0x7F007700, "sub_GAME_7F007700"]
-   #.s
+   # file asm/game/7F007770.s
    - [0x7F007770, "sub_GAME_7F007770"]
-   #.s
+   # file asm/game/7F007800.s
    - [0x7F007800, "sub_GAME_7F007800"]
-   #.s
+   # file asm/game/7F007920.s
    - [0x7F007920, "sub_GAME_7F007920"]
-   #.s
+   # file asm/game/7F007970.s
    - [0x7F007970, "sub_GAME_7F007970"]
-   #.s
+   # file asm/game/7F007980.s
    - [0x7F007980, "sub_GAME_7F007980"]
-   #intro_logos.s
+   # file asm/game/intro_logos.s
    - [0x7F007A40, "something_with_gunbarrel_and_rareware_logo_matrix_manip"]
    - [0x7F007B94, "insert_sight_backdrop_eye_intro"]
    - [0x7F007CC8, "sub_GAME_7F007CC8"]
@@ -1036,7 +1039,7 @@ labels:
    - [0x7F009254, "sub_GAME_7F009254"]
    - [0x7F009730, "def_7F00929C"]
    - [0x7F009744, "sub_GAME_7F009744"]
-   #menus.s
+   # file asm/game/menus.s
    - [0x7F009760, "write_text_at_abs_coord"]
    - [0x7F009848, "check_if_cheat_available"]
    - [0x7F009874, "default_nonmenucheats"]
@@ -1333,27 +1336,27 @@ labels:
    - [0x7F01B0A4, "menu18_displaycast_constructor"]
    - [0x7F01B0B4, "menu19_spectrum_constructor"]
    - [0x7F01B0C0, "menu0B_runstage_constructor"]
-   #.s
+   # file asm/game/7F01B0E0.s
    - [0x7F01B0E0, "sub_GAME_7F01B0E0"]
    - [0x7F01B134, "sub_GAME_7F01B134"]
    - [0x7F01B1C8, "sub_GAME_7F01B1C8"]
    - [0x7F01B230, "sub_GAME_7F01B230"]
-   #.s
+   # file asm/game/7F01B240.s
    - [0x7F01B240, "sub_GAME_7F01B240"]
    - [0x7F01B6E0, "sub_GAME_7F01B6E0"]
-   #.s
+   # file asm/game/7F01BAE0.s
    - [0x7F01BAE0, "sub_GAME_7F01BAE0"]
    - [0x7F01BFF8, "sub_GAME_7F01BFF8"]
-   #.s
+   # file asm/game/7F01C0D0.s
    - [0x7F01C0D0, "insert_imageDL"]
    - [0x7F01C1A4, "sub_GAME_7F01C1A4"]
    - [0x7F01C284, "die_blood_image_routine"]
-   #.s
+   # file asm/game/7F01C400.s
    - [0x7F01C400, "sub_GAME_7F01C400"]
-   #.s
+   # file asm/game/7F01C670.s
    - [0x7F01C670, "sub_GAME_7F01C670"]
    - [0x7F01CA18, "sub_GAME_7F01CA18"]
-   #decrypt_bleeding_animation.s
+   # file asm/game/decrypt_bleeding_animation.s
    - [0x7F01CAE0, "decrypt_bleeding_animation_data"]
    - [0x7F01CC94, "sub_GAME_7F01CC94"]
    - [0x7F01CCEC, "sub_GAME_7F01CCEC"]
@@ -1361,29 +1364,29 @@ labels:
    - [0x7F01D02C, "sub_GAME_7F01D02C"]
    - [0x7F01D16C, "sub_GAME_7F01D16C"]
    - [0x7F01D1C0, "sub_GAME_7F01D1C0"]
-   #.s
+   # file asm/game/7F01D2B0.s
    - [0x7F01D2B0, "get_007_reaction_speed"]
    - [0x7F01D2E8, "get_007_health_mod"]
    - [0x7F01D324, "get_007_damage_mod"]
    - [0x7F01D360, "get_007_accuracy_mod"]
    - [0x7F01D39C, "end_of_mission_briefing"]
-   #init_watch.s
+   # file asm/game/init_watch.s
    - [0x7F01D500, "sub_GAME_7F01D500"]
    - [0x7F01D524, "sub_GAME_7F01D524"]
    - [0x7F01D548, "sub_GAME_7F01D548"]
    - [0x7F01D56C, "would_have_returned_bond_for_folder_num"]
-   #maybe
+   # file asm/game/7F01D590.s
    - [0x7F01D590, "get_selected_folder_num"]
    - [0x7F01D59C, "get_difficulty"]
    - [0x7F01D5EC, "set_solo_and_ptr_briefing"]
    - [0x7F01D61C, "sub_GAME_7F01D61C"]
    - [0x7F01D644, "sub_GAME_7F01D644"]
-   #maybe
+   # file asm/game/7F01D680.s
    - [0x7F01D680, "store_favorite_weapon_current_player"]
    - [0x7F01D6C0, "sub_GAME_7F01D6C0"]
    - [0x7F01D6E0, "sub_GAME_7F01D6E0"]
    - [0x7F01D758, "sub_GAME_7F01D758"]
-   #eeprom_stuff.s
+   # file asm/game/eeprom_stuff.s
    - [0x7F01D7A0, "sub_GAME_7F01D7A0"]
    - [0x7F01D840, "sub_GAME_7F01D840"]
    - [0x7F01D8C8, "get_foldernum_of_eeprom"]
@@ -1432,7 +1435,7 @@ labels:
    - [0x7F01F394, "copy_eeprom_from_to"]
    - [0x7F01F45C, "copy_eepromfile_a0_from_a1_to_buffer"]
    - [0x7F01F4A0, "check_for_007_mode_unlocked"]
-
+   # file asm/game/7F01F530.s
    - [0x7F01F530, "get_numguards"]
    - [0x7F01F53C, "get_ptr_allocated_block_for_vertices"]
    - [0x7F01F55C, "set_show_patrols_flag"]
@@ -1449,7 +1452,7 @@ labels:
    - [0x7F0200BC, "init_GUARDdata_with_set_values"]
    - [0x7F0203B8, "replace_GUARDdata_with_actual_values"]
    - [0x7F020414, "disable_sounds_attached_to_player_then_something"]
-
+   # file asm/game/7F020540.s
    - [0x7F020540, "animation_speed_related"]
    - [0x7F0205E4, "get_animation_rate"]
    - [0x7F0205F0, "sub_GAME_7F0205F0"]
@@ -1711,7 +1714,7 @@ labels:
    - [0x7F034514, "sub_GAME_7F034514"]
    - [0x7F03457C, "actor_draws_throws_grenade_at_player_if_possible"]
    - [0x7F0346FC, "actor_drops_itemtype_setting_timer"]
-   #.s
+   # file asm/game/7F0347A0.s
    - [0x7F0347A0, "set_sound_effect_source_to_location"]
    - [0x7F0348E4, "loop_set_sound_effect_all_slots"]
    - [0x7F034924, "set_sound_effect_to_slot"]
@@ -1727,43 +1730,43 @@ labels:
    - [0x7F035398, "sub_GAME_7F035398"]
    - [0x7F035434, "get_ptr_path_for_pathnum"]
    - [0x7F035484, "parse_handle_actionblocks"]
-   - [0x7F0355B4, "action00_Return_Value_Loop_2"]
-   - [0x7F0355D0, "action01_Go_To_Beginning_Then_Return_Value_Loop_2"]
-   - [0x7F0355EC, "action02_Resume_If_Return_Value_Loop_Met_2"]
-   - [0x7F0355F8, "action03_Leave_The_Routine_But_When_Return_Continue_From_Spot_1"]
+   - [0x7F0355B4, "action00_RVL_2"]
+   - [0x7F0355D0, "action01_Go_To_Beginning_Then_RVL_2"]
+   - [0x7F0355EC, "action02_Resume_If_RVL_Met_2"]
+   - [0x7F0355F8, "action03_Leave_The_Routine_When_Return_Continue_From_Spot_1"]
    - [0x7F03563C, "action05_Jump_To_Function_4"]
    - [0x7F0356B0, "action06_Set_Return_Subroutine_for_0007_Command_3"]
    - [0x7F03570C, "action07_Jump_to_Return_Subroutine_1"]
    - [0x7F035768, "action08_Reset_Animation_1"]
    - [0x7F03577C, "action09_Guard_Kneels_1"]
    - [0x7F035790, "action0A_Animation_9"]
-   - [0x7F03589C, "action0B_If_Guard_Wasting_Time_Swatting_Flies_Return_Value_Loop_2"]
+   - [0x7F03589C, "action0B_If_Guard_WastingTime_SwatFlies_RVL_2"]
    - [0x7F0358D0, "action0C_Guard_Gestures_1"]
    - [0x7F0358E4, "action0D_Guard_Looks_Around_When_Shot_At_1"]
-   - [0x7F0358F8, "action2F_When_Guard_Stops_Moving_Return_Value_Loop_2"]
-   - [0x7F03592C, "action30_Detect_If_Guard_Killed_Return_Value_Loop_If_So_3"]
-   - [0x7F035974, "action31_If_Guard_ID_Finished_Death_Animation_Return_Value_Loop_3"]
-   - [0x7F0359B4, "action32_If_Bond_In_Sight_Return_Value_Loop_2"]
-   - [0x7F0359E8, "action0E_Guard_Steps_Sideways_Return_Value_Loop_2"]
-   - [0x7F035A1C, "action0F_Guard_Hops_Sideways_Return_Value_Loop_2"]
-   - [0x7F035A50, "action10_Guard_Runs_Sideways_Return_Value_Loop_2"]
-   - [0x7F035A84, "action11_Guard_Walks_Firing_Return_Value_Loop_2"]
-   - [0x7F035AB8, "action12_Guard_Runs_Firing_Return_Value_Loop_2"]
-   - [0x7F035AEC, "action13_Guard_Rolls_On_Ground_Then_Fires_Crouched_Return_Value_Loop_2"]
-   - [0x7F035B20, "action14_Guard_Aims_Shoots_at_Bond_Guard_Pad_Return_Value_Loop_6"]
-   - [0x7F035B74, "action15_Guard_Kneels_Aims_Shoots_at_Bond_Guard_Pad_Return_Value_Loop_6"]
-   - [0x7F035BC8, "actionE7_If_Guard_Moving_And_Shooting_Return_Value_Loop_2"]
-   - [0x7F035C1C, "actionE8_If_Guard_Is_Shooting_Return_Value_Loop_2"]
-   - [0x7F035C50, "action16_Guard_Shoots_Guards_Without_Animation_Change_Return_Value_Loop_6"]
-   - [0x7F035CA4, "action17_Guard_Constantly_Angles_To_Face_Return_Value_Loop_6"]
+   - [0x7F0358F8, "action2F_When_Guard_Stops_Moving_RVL_2"]
+   - [0x7F03592C, "action30_Detect_If_Guard_Killed_RVL_If_So_3"]
+   - [0x7F035974, "action31_If_GuardID_Finish_DeathAnimation_RVL_3"]
+   - [0x7F0359B4, "action32_If_Bond_In_Sight_RVL_2"]
+   - [0x7F0359E8, "action0E_Guard_Steps_Sideways_RVL_2"]
+   - [0x7F035A1C, "action0F_Guard_Hops_Sideways_RVL_2"]
+   - [0x7F035A50, "action10_Guard_Runs_Sideways_RVL_2"]
+   - [0x7F035A84, "action11_Guard_Walks_Firing_RVL_2"]
+   - [0x7F035AB8, "action12_Guard_Runs_Firing_RVL_2"]
+   - [0x7F035AEC, "action13_Guard_Rolls_On_Ground_Then_Fires_Crouched_RVL_2"]
+   - [0x7F035B20, "action14_Guard_Aims_Shoots_at_Bond_Guard_Pad_RVL_6"]
+   - [0x7F035B74, "action15_Guard_Kneels_Aims_Shoots_at_Bond_Guard_Pad_RVL_6"]
+   - [0x7F035BC8, "actionE7_If_Guard_Moving_And_Shooting_RVL_2"]
+   - [0x7F035C1C, "actionE8_If_Guard_Is_Shooting_RVL_2"]
+   - [0x7F035C50, "action16_Guard_Shoots_Guards_Without_Animation_Change_RVL_6"]
+   - [0x7F035CA4, "action17_Guard_Constantly_Angles_To_Face_RVL_6"]
    - [0x7F035CF8, "action18_Shoot_Guard_ID_In_Style_With_Weapon_Type_num_4"]
    - [0x7F035D5C, "action19_Guard_ID1_Shoots_Guard_ID2_In_Style_4"]
-   - [0x7F035E78, "action1A_Guard_Throws_Grenade_Return_Value_Loop_2"]
-   - [0x7F035EAC, "action1B_Drop_Weapon_Inventory_num_Return_Value_Loop_5"]
+   - [0x7F035E78, "action1A_Guard_Throws_Grenade_RVL_2"]
+   - [0x7F035EAC, "action1B_Drop_Weapon_Inventory_num_RVL_5"]
    - [0x7F035EF8, "action21_Guard_Surrenders_1"]
    - [0x7F035F0C, "action22_Guard_Set_To_Move_Fades_And_Disappear_1"]
    - [0x7F035F20, "action23_Eliminate_Guard_ID_2"]
-   - [0x7F035F54, "action24_Activate_Object_At_Preset_Return_Value_Loop_If_Successful_4"]
+   - [0x7F035F54, "action24_Activate_Object_At_Preset_RVL_If_Successful_4"]
    - [0x7F035F9C, "action25_Sound_Alarm_1"]
    - [0x7F035FB0, "action26_Turn_Off_Alarm_1"]
    - [0x7F035FC4, "action27_Return_False_Invalid_Type_2"]
@@ -1771,57 +1774,57 @@ labels:
    - [0x7F036030, "action29_Walk_To_Bond_Return_Loop_When_Reached_Bond_2"]
    - [0x7F036068, "action2A_Run_To_Bond_Return_Loop_When_Reached_Bond_2"]
    - [0x7F0360A0, "action2B_Return_False_Invalid_Type_2"]
-   - [0x7F0360D4, "action2C_Jog_To_Character_Position_Return_Value_Loop_On_Arrival_3"]
-   - [0x7F036110, "action2D_Walk_To_Character_Position_Return_Value_Loop_On_Arrival_3"]
-   - [0x7F03614C, "action2E_Run_To_Character_Position_Return_Value_Loop_On_Arrival_3"]
+   - [0x7F0360D4, "action2C_Jog_To_Character_Position_RVL_On_Arrival_3"]
+   - [0x7F036110, "action2D_Walk_To_Character_Position_RVL_On_Arrival_3"]
+   - [0x7F03614C, "action2E_Run_To_Character_Position_RVL_On_Arrival_3"]
    - [0x7F036188, "action33_Seed_Random_Byte_1"]
-   - [0x7F0361A0, "action34_If_Seeded_Byte_LessThan_Value_Go_Into_Return_Value_Loop_3"]
-   - [0x7F0361DC, "action35_If_Seeded_Byte_GreaterThan_Value_Go_Into_Return_Value_Loop_3"]
+   - [0x7F0361A0, "action34_If_Seeded_Byte_LTV_Go_Into_RVL_3"]
+   - [0x7F0361DC, "action35_If_Seeded_Byte_GTV_Go_Into_RVL_3"]
    - [0x7F036218, "action1C_Guard_Jogs_To_Preset_3"]
    - [0x7F036244, "action1D_Guard_Jogs_To_Predefined_Preset_2328_1"]
    - [0x7F036260, "action1E_Guard_Walks_To_Preset_3"]
    - [0x7F03628C, "action1F_Guard_Runs__To_Preset_3"]
    - [0x7F0362B8, "action20_Activate_Path_2"]
-   - [0x7F0362D8, "action36_If_Alarm_Activated_Return_Value_Loop_Plus_Stack_2"]
-   - [0x7F03630C, "action37_If_Alarm_Activated_Return_Value_Loop_2"]
-   - [0x7F036340, "action38_If_Toxic_Gas_Released_Return_Value_Loop_2"]
-   - [0x7F036374, "action39_If_Guard_Heard_Gunfire_Return_Value_Loop_2"]
-   - [0x7F0363A8, "action3A_If_Bond_Shoots_Another_Guard_Return_Value_Loop_2"]
-   - [0x7F0363DC, "action3B_If_Guard_Killed_In_Front_Of_Guard_Return_Value_Loop_2"]
-   - [0x7F036410, "action3C_If_Guard_Within_Firing_Range_Return_Value_Loop_2"]
+   - [0x7F0362D8, "action36_If_Alarm_Activated_RVL_Plus_Stack_2"]
+   - [0x7F03630C, "action37_If_Alarm_Activated_RVL_2"]
+   - [0x7F036340, "action38_If_Toxic_Gas_Released_RVL_2"]
+   - [0x7F036374, "action39_If_Guard_Heard_Gunfire_RVL_2"]
+   - [0x7F0363A8, "action3A_If_Bond_Shoots_Another_Guard_RVL_2"]
+   - [0x7F0363DC, "action3B_If_Guard_Killed_In_Front_Of_Guard_RVL_2"]
+   - [0x7F036410, "action3C_If_Guard_In_Firing_Range_RVL_2"]
    - [0x7F036444, "action3D___Unused___Unknown___2"]
-   - [0x7F036478, "action3E_If_Shot_Current_Guard_Return_Value_Loop_2"]
-   - [0x7F0364AC, "action3F_If_Heard_Bond_Return_Value_Loop_2"]
-   - [0x7F0364E0, "action40_If_Another_Guard_In_Same_Room_As_Guard_ID_Return_Value_Loop_3"]
-   - [0x7F036540, "action41_If_Guard_Has_Been_On_Screen_Return_Value_Loop_2"]
-   - [0x7F036578, "action42_If_Current_Guard_On_Screen_In_Loaded_Room_Return_Value_Loop_2"]
-   - [0x7F0365B4, "action43_If_Guard_In_A_Room_Currently_Loaded_Return_Value_Loop_2"]
-   - [0x7F0365F4, "action44_If_Room_Containing_Preset_Is_Loaded_Return_Value_Loop_4"]
-   - [0x7F03663C, "action45_Go_To_Return_Value_Loop_If_Bond_Has_Guard_At_Gunpoint_2"]
-   - [0x7F036670, "action46_If_Fired_A_Shot_Return_Value_Loop_2"]
-   - [0x7F0366A4, "action47_If_Distance_Between_Bond_And_Guard_LessThan_Value_Return_Value_Loop_3"]
-   - [0x7F036718, "action48_If_Distance_Between_Bond_And_Guard_GreaterThan_Value_Return_Value_Loop_3"]
-   - [0x7F03678C, "action49_Test_if_Actor_and_Player_CCW_Angle_Less_Than_Value_Return_Value_Loop_Unused_3"]
-   - [0x7F036800, "action4A_Test_if_Actor_and_Player_CCW_Angle_Greater_Than_Value_Return_Value_Loop_Unused_3"]
-   - [0x7F036874, "action4B_Return_Value_Loop_If_Within_Proximity_Of_Bond_4"]
-   - [0x7F0368DC, "action4C_Return_Value_Loop_If_Not_Within_Proximity_Of_Bond_4"]
-   - [0x7F036944, "action4D_When_Guard_Within_Proximity_Of_Preset_Return_Value_Loop_7"]
-   - [0x7F0369D4, "action4E_When_Guard_Not_Within_Proximity_Of_Preset_Return_Value_Loop_7"]
-   - [0x7F036A64, "action4F_If_Current_Guard_Is_Within_Units_Of_Guard_ID_Return_Value_Loop_5"]
-   - [0x7F036AD0, "action50_If_Current_Guard_Is_Not_Within_Units_Of_Guard_ID_Return_Value_Loop_5"]
-   - [0x7F036B3C, "action51_Set_Closest_Guard_Within_Units_As_Guard_ID_FC_Then_Return_Value_Loop_If_Successful_4"]
-   - [0x7F036B98, "action52_Go_Into_Return_Value_Loop_If_Within_Units_Of_Preset_6"]
-   - [0x7F036C10, "action53_Go_Into_Return_Value_Loop_If_Not_Within_Units_Of_Preset_6"]
-   - [0x7F036C88, "action54_Go_Into_Return_Value_Loop_If_Guard_Is_At_Preset_5"]
-   - [0x7F036CD4, "action55_Go_Into_Return_Value_Loop_If_Entered_Room_with_Preset_4"]
-   - [0x7F036D1C, "action56_Go_Into_Return_Value_Loop_If_16_Object_num_Collected_3"]
-   - [0x7F036D6C, "action57_Go_Into_Return_Value_Loop_If_Specified_Weapon_Deposited_3"]
-   - [0x7F036DA0, "action58_Go_Into_Return_Value_Loop_If_Specified_Weapon_Deposited_On_16_Object_4"]
-   - [0x7F036E2C, "action59_Go_Into_Return_Value_Loop_If_Specified_Weapon_Is_Out_3"]
-   - [0x7F036E78, "action5A_Go_Into_Return_Value_Loop_If_Type_16_Object_num_Loaded_3"]
-   - [0x7F036EBC, "action5B_Go_Into_Return_Value_Loop_If_16_Object_num_Not_Destroyed_3"]
-   - [0x7F036F0C, "action5C_Go_Into_Return_Value_Loop_If_16_Object_num_Activated_3"]
-   - [0x7F036F70, "action5D_Go_Into_Return_Value_Loop_If_Gadget_Used_On_16_Object_num_3"]
+   - [0x7F036478, "action3E_If_Shot_Current_Guard_RVL_2"]
+   - [0x7F0364AC, "action3F_If_Heard_Bond_RVL_2"]
+   - [0x7F0364E0, "action40_If_Another_Guard_In_Same_Room_As_Guard_ID_RVL_3"]
+   - [0x7F036540, "action41_If_Guard_Has_Been_On_Screen_RVL_2"]
+   - [0x7F036578, "action42_If_Current_Guard_On_Screen_In_Loaded_Room_RVL_2"]
+   - [0x7F0365B4, "action43_If_Guard_In_A_Room_Currently_Loaded_RVL_2"]
+   - [0x7F0365F4, "action44_If_Room_Containing_Preset_Is_Loaded_RVL_4"]
+   - [0x7F03663C, "action45_Go_To_RVL_If_Bond_Has_Guard_At_Gunpoint_2"]
+   - [0x7F036670, "action46_If_Fired_A_Shot_RVL_2"]
+   - [0x7F0366A4, "action47_If_Distance_Between_Bond_And_Guard_LTV_RVL_3"]
+   - [0x7F036718, "action48_If_Distance_Between_Bond_And_Guard_GTV_RVL_3"]
+   - [0x7F03678C, "action49_Test_if_Actor_and_Player_CCWAngle_LTV_RVL_Unused_3"]
+   - [0x7F036800, "action4A_Test_if_Actor_and_Player_CCWAngle_GTV_RVL_Unused_3"]
+   - [0x7F036874, "action4B_RVL_If_In_Proximity_Of_Bond_4"]
+   - [0x7F0368DC, "action4C_RVL_If_Not_In_Proximity_Of_Bond_4"]
+   - [0x7F036944, "action4D_When_Guard_In_Proximity_Of_Preset_RVL_7"]
+   - [0x7F0369D4, "action4E_When_Guard_Not_In_Proximity_Of_Preset_RVL_7"]
+   - [0x7F036A64, "action4F_If_Current_Guard_Is_In_Units_Of_Guard_ID_RVL_5"]
+   - [0x7F036AD0, "action50_If_Current_Guard_Is_Not_In_Units_Of_Guard_ID_RVL_5"]
+   - [0x7F036B3C, "action51_SetClosestGuardUnitsGuardID_Then_RVL_IfSuccess_4"]
+   - [0x7F036B98, "action52_GoIntoRVLIf_In_Units_Of_Preset_6"]
+   - [0x7F036C10, "action53_GoIntoRVLIf_Not_In_Units_Of_Preset_6"]
+   - [0x7F036C88, "action54_GoIntoRVLIf_Guard_Is_At_Preset_5"]
+   - [0x7F036CD4, "action55_GoIntoRVLIf_Entered_Room_with_Preset_4"]
+   - [0x7F036D1C, "action56_GoIntoRVLIf_16_Object_num_Collected_3"]
+   - [0x7F036D6C, "action57_GoIntoRVLIf_Specified_Weapon_Deposited_3"]
+   - [0x7F036DA0, "action58_GoIntoRVLIf_SpecifiedWeaponDeposited_On16Object_4"]
+   - [0x7F036E2C, "action59_GoIntoRVLIf_Specified_Weapon_Is_Out_3"]
+   - [0x7F036E78, "action5A_GoIntoRVLIf_Type_16_Object_num_Loaded_3"]
+   - [0x7F036EBC, "action5B_GoIntoRVLIf_16_Object_num_Not_Destroyed_3"]
+   - [0x7F036F0C, "action5C_GoIntoRVLIf_16_Object_num_Activated_3"]
+   - [0x7F036F70, "action5D_GoIntoRVLIf_Gadget_Used_On_16_Object_num_3"]
    - [0x7F036FD0, "action5E_16_Object_Activates_2"]
    - [0x7F037038, "action5F_16_Object_Explodes_2"]
    - [0x7F0370B4, "action60_Guard_Drops_16_Object_num_2"]
@@ -1832,41 +1835,41 @@ labels:
    - [0x7F0372A0, "action65_Object_Moved_To_Preset_4"]
    - [0x7F0373BC, "action66_Open_Door_2"]
    - [0x7F037400, "action67_Close_Door_2"]
-   - [0x7F037444, "action68_Check_Door_Status_Return_Value_Loop_If_Met_4"]
-   - [0x7F037518, "action69_If_16_Object_Is_Valid_Door_Return_Value_Loop_3"]
+   - [0x7F037444, "action68_Check_Door_Status_RVL_If_Met_4"]
+   - [0x7F037518, "action69_If_16_Object_Is_Valid_Door_RVL_3"]
    - [0x7F03757C, "action6A_Set_Bits_To_Lock_On_Type_16_Door_3"]
    - [0x7F0375C0, "action6B_Unset_Bits_To_Lock_On_Type_16_Door_3"]
-   - [0x7F037608, "action6C_If_Tagged_Locked_Door_16_Objects_Toggled_Return_Value_Loop_4"]
-   - [0x7F037678, "action6D_If_Objective_num_Complete_Return_Value_Loop_3"]
-   - [0x7F0376C8, "action6E_If_Guard_2328_Preset_Return_Value_Loop_3"]
-   - [0x7F037700, "action6F_If_Guard_2328_Preset_Set_Return_Value_Loop_3"]
-   - [0x7F037738, "action78_Go_To_Return_Value_Loop_If_Guard_Shot_LessThan_Amount_3"]
-   - [0x7F037778, "action79_Go_To_Return_Value_Loop_If_Guard_Shot_GreaterThan_Amount_3"]
-   - [0x7F0377B8, "action7A_Go_To_Return_Value_Loop_If_Number_Near-Miss_Gunshots_LessThan_Value_3"]
-   - [0x7F0377F8, "action7B_Go_To_Return_Value_Loop_If_Number_Near-Miss_Gunshots_GreaterThan_Value_3"]
-   - [0x7F037838, "action7C_If_Guard_Health_Below_Value_Return_Value_Loop_4"]
-   - [0x7F0378C4, "action7D_If_Guard_Health_Above_Value_Return_Value_Loop_4"]
-   - [0x7F037950, "action7E_If_Guard_nums_Bitflag_01000000_Set_Return_Value_Loop_3"]
-   - [0x7F0379AC, "action7F_If_Health_Below_Value_Return_Value_Loop_3"]
-   - [0x7F037A20, "action80_If_Health_Above_Value_Return_Value_Loop_3"]
-   - [0x7F037A94, "action70_Go_Into_Return_Value_Loop_Difficulty_LessThan_Value_3"]
-   - [0x7F037AD4, "action71_Go_Into_Return_Value_Loop_If_Difficulty_GreaterThan_Value_3"]
-   - [0x7F037B14, "action72_Go_To_Return_Value_Loop_If_Time_LessThan_Value_4"]
-   - [0x7F037B74, "action73_Go_To_Return_Value_Loop_If_Time_GreaterThan_Value_4"]
-   - [0x7F037BD4, "action74_Go_To_Return_Value_Loop_If_Power_On_Time_LessThan_Value_4"]
-   - [0x7F037C38, "action75_Go_To_Return_Value_Loop_If_Power_On_Time_GreaterThan_Value_4"]
-   - [0x7F037C9C, "action76_Go_To_Return_Value_Loop_If_Stage_Number_LessThan_Value_3"]
-   - [0x7F037CDC, "action77_Go_To_Return_Value_Loop_If_Stage_Number_GreaterThan_Value_3"]
+   - [0x7F037608, "action6C_If_Tagged_Locked_Door_16_Objects_Toggled_RVL_4"]
+   - [0x7F037678, "action6D_If_Objective_num_Complete_RVL_3"]
+   - [0x7F0376C8, "action6E_If_Guard_2328_Preset_RVL_3"]
+   - [0x7F037700, "action6F_If_Guard_2328_Preset_Set_RVL_3"]
+   - [0x7F037738, "action78_Go_To_RVL_If_Guard_Shot_LTV_3"]
+   - [0x7F037778, "action79_Go_To_RVL_If_Guard_Shot_GTV_3"]
+   - [0x7F0377B8, "action7A_Go_To_RVL_If_Number_Near_Miss_Gunshots_LTV_3"]
+   - [0x7F0377F8, "action7B_Go_To_RVL_If_Number_Near_Miss_Gunshots_GTV_3"]
+   - [0x7F037838, "action7C_If_Guard_Health_Below_Value_RVL_4"]
+   - [0x7F0378C4, "action7D_If_Guard_Health_Above_Value_RVL_4"]
+   - [0x7F037950, "action7E_If_Guard_nums_Bitflag_01000000_Set_RVL_3"]
+   - [0x7F0379AC, "action7F_If_Health_Below_Value_RVL_3"]
+   - [0x7F037A20, "action80_If_Health_Above_Value_RVL_3"]
+   - [0x7F037A94, "action70_Go_Into_RVL_Difficulty_LTV_3"]
+   - [0x7F037AD4, "action71_GoIntoRVLIf_Difficulty_GTV_3"]
+   - [0x7F037B14, "action72_Go_To_RVL_If_Time_LTV_4"]
+   - [0x7F037B74, "action73_Go_To_RVL_If_Time_GTV_4"]
+   - [0x7F037BD4, "action74_Go_To_RVL_If_Power_On_Time_LTV_4"]
+   - [0x7F037C38, "action75_Go_To_RVL_If_Power_On_Time_GTV_4"]
+   - [0x7F037C9C, "action76_Go_To_RVL_If_Stage_Number_LTV_3"]
+   - [0x7F037CDC, "action77_Go_To_RVL_If_Stage_Number_GTV_3"]
    - [0x7F037D1C, "action81_Set_User_Byte_num1_2"]
    - [0x7F037D30, "action82_Add_Value_To_User_Byte_num1_Max_To_FF_2"]
    - [0x7F037D70, "action83_Subtract_Value_To_User_Byte_num1_Min_To_0_2"]
-   - [0x7F037DA4, "action84_If_Value_GreaterThan_User_Byte_num1_Return_Value_Loop_3"]
-   - [0x7F037DE0, "action85_If_User_Byte_num1_LessThan_Random_Value_Return_Value_Loop_2"]
+   - [0x7F037DA4, "action84_If_Value_GreaterThan_User_Byte_num1_RVL_3"]
+   - [0x7F037DE0, "action85_If_User_Byte_num1_LessThan_Random_Value_RVL_2"]
    - [0x7F037E1C, "action86_Set_User_Byte_num2_2"]
    - [0x7F037E30, "action87_Add_Value_To_User_Byte_num2_Max_To_FF_2"]
    - [0x7F037E70, "action88_Subtract_Value_To_User_Byte_num2_Min_To_0_2"]
-   - [0x7F037EA4, "action89_If_Value_GreaterThan_User_Byte_num2_Return_Value_Loop_3"]
-   - [0x7F037EE0, "action8A_If_User_Byte_num2_LessThan_Random_Value_Return_Value_Loop_2"]
+   - [0x7F037EA4, "action89_If_Value_GreaterThan_User_Byte_num2_RVL_3"]
+   - [0x7F037EE0, "action8A_If_User_Byte_num2_LessThan_Random_Value_RVL_2"]
    - [0x7F037F1C, "action8B_Set_Guard_Hearing_Distance_3"]
    - [0x7F037F50, "action8C_Set_Guard_Visible_Distance_2"]
    - [0x7F037F80, "action8D_Set_Guard_Grenade_Probability_2"]
@@ -1878,25 +1881,25 @@ labels:
    - [0x7F038050, "action93_Set_Character_Accuracy_2"]
    - [0x7F038064, "action94_Mask_Guard_Type_With_Value_2"]
    - [0x7F03807C, "action95_Unmask_Guard_Type_With_Value_2"]
-   - [0x7F038094, "action96_If_Guard_Type_Value_Is_Set_Return_Value_Loop_3"]
+   - [0x7F038094, "action96_If_Guard_Type_Value_Is_Set_RVL_3"]
    - [0x7F0380CC, "action97_Mask_Guard_Type_Flags_With_Value_3"]
    - [0x7F0380E8, "action98_Unmask_Guard_Type_Flags_With_Value_3"]
-   - [0x7F038104, "action99_If_Guard_Type_Flags_Set_Return_Value_Loop_4"]
+   - [0x7F038104, "action99_If_Guard_Type_Flags_Set_RVL_4"]
    - [0x7F038140, "action9A_Set_Objective_Bits_5"]
    - [0x7F03817C, "action9B_Unset_Objective_Value_5"]
    - [0x7F0381B8, "action9C_Check_If_Objective_Value_Return_Loop_If_So_6"]
    - [0x7F038214, "action9D_Set_Guard_Bit_Tags_5"]
    - [0x7F038254, "action9E_Unset_Guard_Bit_Tags_5"]
-   - [0x7F038298, "action9F_Check_Guard_Bits_If_Same_Return_Value_Loop_6"]
+   - [0x7F038298, "action9F_Check_Guard_Bits_If_Same_RVL_6"]
    - [0x7F0382F4, "actionA0_Set_Guard_ID_Bits_6"]
    - [0x7F038344, "actionA1_Unset_Guard_ID_Bits_6"]
-   - [0x7F038398, "actionA2_Check_Guard_Bits_If_Same_Return_Value_Loop_7"]
+   - [0x7F038398, "actionA2_Check_Guard_Bits_If_Same_RVL_7"]
    - [0x7F03840C, "actionA3_Set_State_Bits_16_Type_Object_6"]
    - [0x7F038464, "actionA4_Unset_State_Bits_16_Type_Object_6"]
-   - [0x7F0384C0, "actionA5_Check_State_Bits_16_Type_Object_If_Same_Return_Value_Loop_7"]
-   - [0x7F03853C, "actionA6_Set_16-Object_States_More_6"]
-   - [0x7F038594, "actionA7_Unset_16-Object_States_More_6"]
-   - [0x7F0385F0, "actionA8_Check_16-Object_States_More_If_Same_Return_Value_Loop_7"]
+   - [0x7F0384C0, "actionA5_Check_State_Bits_16_Type_Object_If_Same_RVL_7"]
+   - [0x7F03853C, "actionA6_Set_16_Object_States_More_6"]
+   - [0x7F038594, "actionA7_Unset_16_Object_States_More_6"]
+   - [0x7F0385F0, "actionA8_Check_16_Object_States_More_If_Same_RVL_7"]
    - [0x7F03866C, "actionA9_Sets_To_Guard_ID_Fc_Current_Guard_2"]
    - [0x7F038684, "actionAA_Sets_FC_Value_For_Guard_ID_To_Guard_ID_3"]
    - [0x7F0386A0, "actionAB_Set_Current_Guards_2328_Value_To_Preset_3"]
@@ -1907,80 +1910,80 @@ labels:
    - [0x7F038754, "actionB0_Disable_Cycle_Counter_1"]
    - [0x7F03876C, "actionB1_Enable_Cycle_Counter_1"]
    - [0x7F038784, "actionB2_Check_Cycle_Counter_Enable_Status_2"]
-   - [0x7F0387BC, "actionB3_If_Cycle_Counter_LessThan_Value_Return_Value_Loop_5"]
-   - [0x7F038840, "actionB4_If_Cycle_Counter_GreaterThan_Value_Return_Value_Loop_5"]
+   - [0x7F0387BC, "actionB3_If_Cycle_Counter_LTV_RVL_5"]
+   - [0x7F038840, "actionB4_If_Cycle_Counter_GTV_RVL_5"]
    - [0x7F0388C4, "actionB5_Show_Timer_1"]
-   - [0x7F0388DC, "actionB6_Hide_Timer_Silent_Countdown!_1"]
+   - [0x7F0388DC, "actionB6_Hide_Timer_Silent_Countdown_1"]
    - [0x7F0388F4, "actionB7_Set_Timer_X_Seconds__Doesnt_Show_Timer_Yet_3"]
    - [0x7F038928, "actionB8_Stop_Timer_1"]
    - [0x7F03893C, "actionB9_Start_Timer_1"]
-   - [0x7F038950, "actionBA_Check_Timer_Enabled_Status_Return_Value_Loop_If_Enabled_2"]
-   - [0x7F038984, "actionBB_Detect_If_Timer_Below_Certain_Point_Return_Value_Loop_If_So_4"]
-   - [0x7F0389E8, "actionBC_Detect_If_Timer_Above_Certain_Point_Return_Value_Loop_If_So_4"]
+   - [0x7F038950, "actionBA_Check_Timer_Enabled_Status_RVL_If_Enabled_2"]
+   - [0x7F038984, "actionBB_Detect_If_Timer_Below_Certain_Point_RVL_If_So_4"]
+   - [0x7F0389E8, "actionBC_Detect_If_Timer_Above_Certain_Point_RVL_If_So_4"]
    - [0x7F038A4C, "actionBD_Spawn_Guard_C"]
    - [0x7F038AF4, "actionBE_Respawn_Guard_with_ID_B"]
    - [0x7F038B7C, "actionBF_Spawn_Weapon_9"]
    - [0x7F038C80, "actionC0_Spawn_Hat_8"]
-   - [0x7F038D10, "actionC1_Guard_ID_Does_Action_Value_If_Heard_A_Lot_Of_Gunfire_Return_Value_Loop_When_Complete_5"]
+   - [0x7F038D10, "actionC1_GuardIDDoesAV_If_Gunfire_RVL_WhenComplete_5"]
    - [0x7F038EC8, "actionC2_Display_Text_Preset_Bottom_Screen_3"]
    - [0x7F038EF0, "actionC3_Display_Text_Preset_Top_Screen_3"]
-   - [0x7F038F18, "actionC4_Play_Sound_Effect_num_In_Slot_num_0-7_4"]
+   - [0x7F038F18, "actionC4_Play_Sound_Effect_num_In_Slot_num_0_7_4"]
    - [0x7F038F44, "actionC9_Shut_Off_Sound_In_Slot_Number_2"]
-   - [0x7F038F58, "actionC7_Sound_In_Slot_num_Crecendos_To_Volume_Over_Milliseconds_6"]
-   - [0x7F039008, "actionC8_Sound_In_Slot_num_Fades_To_Volume_Over_Milliseconds_6"]
-   - [0x7F0390C4, "actionC5_Emanate_Sound_In_Slot_num_From_16_Object_With_Audible_Range_Value_5"]
-   - [0x7F039160, "actionC6_Emanate_Sound_In_Slot_num_From_Preset_With_Audible_Range_Value_6"]
-   - [0x7F039260, "actionCA_If_Value_GreaterThan_Volume_7FFF_Max_Return_Value_Loop_5"]
+   - [0x7F038F58, "actionC7_Sound_In_Slot_num_Crecendos_To_Volume_Over_ms_6"]
+   - [0x7F039008, "actionC8_Sound_In_Slot_num_Fades_To_Volume_Over_ms_6"]
+   - [0x7F0390C4, "actionC5_EmanateSoundSlotnumFrom16ObjectWithAudibleRV_5"]
+   - [0x7F039160, "actionC6_EmanateSoundSlotnumFromPresetWithAudibleRV_6"]
+   - [0x7F039260, "actionCA_If_Value_GreaterThan_Volume_7FFF_Max_RVL_5"]
    - [0x7F0392D4, "actionCB_Set_Object_Path_27_Type_Object_2"]
    - [0x7F0392FC, "actionCC_Set_Speed_Moving_Vehicle_27_Type_Object_5"]
    - [0x7F039360, "actionCD_Set_Speed_Aircraft_Rotor_5"]
-   - [0x7F0393BC, "actionCE_Detect_If_Currently_In_Intro_Camera_Return_Value_Loop_If_So_2"]
-   - [0x7F039408, "actionCF_Detect_If_Currently_In_Intro_Swirl_Return_Value_Loop_If_So_2"]
+   - [0x7F0393BC, "actionCE_Detect_If_Currently_In_Intro_Camera_RVL_If_So_2"]
+   - [0x7F039408, "actionCF_Detect_If_Currently_In_Intro_Swirl_RVL_If_So_2"]
    - [0x7F039440, "actionD0_Change_Animation_Type_Of_Type_16_Monitor_4"]
-   - [0x7F0394CC, "actionD1_If_Bond_In_Tank_Return_Value_Loop_2"]
+   - [0x7F0394CC, "actionD1_If_Bond_In_Tank_RVL_2"]
    - [0x7F039504, "actionD2_Exit_Level_1"]
    - [0x7F039550, "actionD3_Return_From_Camera_Scene_1"]
    - [0x7F039564, "actionD4_Camera_Looks_At_Bond_From_Preset_3"]
    - [0x7F0395F0, "actionD5_Go_To_Camera_Position_6"]
-   - [0x7F039670, "actionD6_If_Less_Than_Elevation_Return_Value_Loop_4"]
+   - [0x7F039670, "actionD6_If_Less_Than_Elevation_RVL_4"]
    - [0x7F0396DC, "actionD7_Disable_Text_Variable_2"]
-   - [0x7F039750, "actionD8_Enable_All_On-Screen_Displays_1"]
-   - [0x7F03979C, "actionD9_Guard_ID_Moved_To_Preset_Return_Loop_If_Successful_5"]
-   - [0x7F039964, "actionDA_Fade_Out_From_Cut-Scene_1"]
+   - [0x7F039750, "actionD8_Enable_All_On_Screen_Displays_1"]
+   - [0x7F03979C, "actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5"]
+   - [0x7F039964, "actionDA_Fade_Out_From_Cut_Scene_1"]
    - [0x7F0399A4, "actionDB_Fade_In_From_Black_Reset_DA_1"]
-   - [0x7F0399E0, "actionDC_Return_Value_Loop_When_Fade_Complete_2"]
+   - [0x7F0399E0, "actionDC_RVL_When_Fade_Complete_2"]
    - [0x7F039A24, "actionDD_Remove_All_Guards_1"]
    - [0x7F039A80, "actionDE_Bring_Removed_Guards_Back_1"]
-   - [0x7F039AD4, "actionDF_Open_Type_16_Door_Used_Cut-Scenes_2"]
+   - [0x7F039AD4, "actionDF_Open_Type_16_Door_Used_Cut_Scenes_2"]
    - [0x7F039B30, "actionE0_Guard_ID_Draws_Weapon_num_3"]
-   - [0x7F039B58, "actionE1_If_Fewer_than_This_Many_Players_Playing_Return_Value_Loop_3"]
-   - [0x7F039B98, "actionE2_If_Ammo_Value_In_Type_Is_Less_Than_Value_Return_Value_Loop_4"]
+   - [0x7F039B58, "actionE1_If_Fewer_than_This_Many_Players_Playing_RVL_3"]
+   - [0x7F039B98, "actionE2_If_Ammo_Value_In_Type_Is_LTV_RVL_4"]
    - [0x7F039BD8, "actionE3_Draw_Weapon_From_Inventory_In_Game_2"]
    - [0x7F039BFC, "actionE4_Draw_Weapon_From_Inventory_Cut_Scene_2"]
    - [0x7F039C20, "actionE5_Set_Bonds_Speed_3"]
-   - [0x7F039C5C, "actionE6_If_16_Object_And_Preset_Are_In_Same_Room_Return_Value_Loop_5"]
+   - [0x7F039C5C, "actionE6_If_16_Object_And_Preset_Are_In_Same_Room_RVL_5"]
    - [0x7F039D2C, "actionE9_Instantly_Switch_Sky_To_Sky_2_1"]
    - [0x7F039D48, "actionEA_Stop_Game_Time_1"]
-   - [0x7F039D6C, "actionEB_If_Key_Pressed_Return_Value_Loop_2"]
+   - [0x7F039D6C, "actionEB_If_Key_Pressed_RVL_2"]
    - [0x7F039DA8, "actionEC_Disable_Player_Pickups_1"]
    - [0x7F039DC0, "actionED_Hide_First_Person_Display_1"]
    - [0x7F039DDC, "actionEE_Cuba_Circular_Camera_Aim_D"]
    - [0x7F039EE8, "actionEF_Trigger_Credits_1"]
-   - [0x7F039F00, "actionF0_Return_Value_Loop_If_Credits_Completed_2"]
-   - [0x7F039F38, "actionF1_If_All_Objectives_Complete_Return_Value_Loop_2"]
-   - [0x7F039F6C, "actionF2_Check_Current_Folder_Bond_Return_Value_Loop_3"]
-   - [0x7F039FA8, "actionF3_If_Player_Pickups_Disabled_Return_Value_Loop_2"]
-   - [0x7F039FE0, "actionF4_Plays_Value_num1_Theme_Slot_0_3_For_Value_num2_Seconds_4"]
+   - [0x7F039F00, "actionF0_RVL_If_Credits_Completed_2"]
+   - [0x7F039F38, "actionF1_If_All_Objectives_Complete_RVL_2"]
+   - [0x7F039F6C, "actionF2_Check_Current_Folder_Bond_RVL_3"]
+   - [0x7F039FA8, "actionF3_If_Player_Pickups_Disabled_RVL_2"]
+   - [0x7F039FE0, "actionF4_PlaysValuenum1ThemeSlot03ForValuenum2Seconds_4"]
    - [0x7F03A004, "actionF5_Turn_Off_Music_In_Slot_num_0_3_2"]
    - [0x7F03A020, "actionF6_Trigger_Explosions_Around_Bond_1"]
-   - [0x7F03A034, "actionF7_If_Number_Of_Hostages_Scientists_Killed_Return_Value_Loop_3"]
+   - [0x7F03A034, "actionF7_If_Number_Of_Hostages_Scientists_Killed_RVL_3"]
    - [0x7F03A074, "actionF8_If_Guard_ID_00200000_Flag_Set_Unset_And_Return_3"]
    - [0x7F03A0D4, "actionF9_Set_Killed_In_Action_Automatic_Mission_Failure_1"]
    - [0x7F03A0EC, "actionFA_Guard_Fawns_On_Shoulder_1"]
-   - [0x7F03A100, "actionFB_Switch_To_Sky_Value_num_And_Activate_Gas_Containers_If_Exist_1"]
+   - [0x7F03A100, "actionFB_SwitchToSkyValuenumAndActivateGasContainersIfExist_1"]
    - [0x7F03A134, "actionFC_Launch_Shuttle_2"]
    - [0x7F03A200, "action04_Terminator_1"]
-
+   # file asm/game/7F03A240.s
    - [0x7F03A240, "sub_GAME_7F03A240"]
    - [0x7F03A404, "set_stateflag_0x04_for_posdata"]
    - [0x7F03A414, "unset_stateflag_0x04_for_posdata"]
@@ -2285,7 +2288,7 @@ labels:
    - [0x7F051AEC, "check_if_item_deposited"]
    - [0x7F051B5C, "add_obj_to_temp_proxmine_table"]
    - [0x7F051B94, "remove_obj_from_temp_proxmine_table"]
-   - [0x7F051BCC, "detonate_proxmine_within_range"]
+   - [0x7F051BCC, "detonate_proxmine_In_range"]
    - [0x7F051CC8, "sub_GAME_7F051CC8"]
    - [0x7F051D74, "link_objects"]
    - [0x7F051D90, "complete_object_data_block_return_position_entry"]
@@ -2371,7 +2374,7 @@ labels:
    - [0x7F0565F0, "sub_GAME_7F0565F0"]
    - [0x7F056690, "sub_GAME_7F056690"]
    - [0x7F05677C, "drop_inventory"]
-   #.s
+   # file asm/game/7F056850.s
    - [0x7F056850, "sub_GAME_7F056850"]
    - [0x7F0568F4, "get_size_of_setup_object_type"]
    - [0x7F05691C, "object_size_type_09"]
@@ -2427,7 +2430,7 @@ labels:
    - [0x7F056EA0, "sub_GAME_7F056EA0"]
    - [0x7F056EF4, "def_7F056EDC"]
    - [0x7F056F08, "sub_GAME_7F056F08"]
-   #.s
+   # file asm/game/7F057080.s
    - [0x7F057080, "sub_GAME_7F057080"]
    - [0x7F0570C0, "get_handle_to_tagged_object"]
    - [0x7F057104, "get_ptr_text_for_watch_breifing_page"]
@@ -2458,7 +2461,7 @@ labels:
    - [0x7F057E58, "sub_GAME_7F057E58"]
    - [0x7F057EA0, "cosf"]
    - [0x7F057EAC, "sinf"]
-   #.s
+   # file asm/game/7F057FD0.s
    - [0x7F057FD0, "init_0x40_bytes_data_at_address_last_word_1_0"]
    - [0x7F058020, "sub_GAME_7F058020"]
    - [0x7F058068, "sub_GAME_7F058068"]
@@ -2514,24 +2517,24 @@ labels:
    - [0x7F05A774, "sub_GAME_7F05A774"]
    - [0x7F05A928, "sub_GAME_7F05A928"]
    - [0x7F05A9B8, "sub_GAME_7F05A9B8"]
-   #.s
+   # file asm/game/7F05A9E0.s
    - [0x7F05A9E0, "sub_GAME_7F05A9E0"]
-   #.s
+   # file asm/game/7F05AA30.s
    - [0x7F05AA30, "convert_angle_using_inverse"]
-   #.s
+   # file asm/game/7F05AB70.s
    - [0x7F05AB70, "sub_GAME_7F05AB70"]
    - [0x7F05ABF0, "sub_GAME_7F05ABF0"]
    - [0x7F05AC44, "sub_GAME_7F05AC44"]
-   #.s
+   # file asm/game/7F05ACB0.s
    - [0x7F05ACB0, "sub_GAME_7F05ACB0"]
    - [0x7F05AD5C, "sub_GAME_7F05AD5C"]
-   #.s
+   # file asm/game/7F05AE00.s
    - [0x7F05AE00, "sub_GAME_7F05AE00"]
    - [0x7F05AE50, "sub_GAME_7F05AE50"]
    - [0x7F05AEFC, "sub_GAME_7F05AEFC"]
    - [0x7F05B024, "sub_GAME_7F05B024"]
    - [0x7F05B154, "sub_GAME_7F05B154"]
-   #.s
+   # file asm/game/7F05B1E0.s
    - [0x7F05B1E0, "sub_GAME_7F05B1E0"]
    - [0x7F05B3F4, "sub_GAME_7F05B3F4"]
    - [0x7F05B528, "sub_GAME_7F05B528"]
@@ -2550,13 +2553,13 @@ labels:
    - [0x7F05C138, "sub_GAME_7F05C138"]
    - [0x7F05C250, "sub_GAME_7F05C250"]
    - [0x7F05C2F0, "sub_GAME_7F05C2F0"]
-   #.s
+   # file asm/game/7F05C360.s
    - [0x7F05C360, "truncf"]
    - [0x7F05C3D8, "sub_GAME_7F05C3D8"]
-   #.s
+   # file asm/game/7F05C440.s
    - [0x7F05C440, "sub_GAME_7F05C440"]
    - [0x7F05C4B8, "sub_GAME_7F05C4B8"]
-   #.s
+   # file asm/game/7F05C520.s
    - [0x7F05C520, "sub_GAME_7F05C520"]
    - [0x7F05C52C, "sub_GAME_7F05C52C"]
    - [0x7F05C538, "nullsub_73"]
@@ -2763,7 +2766,7 @@ labels:
    - [0x7F06ABA0, "get_curplayer_numsuicides"]
    - [0x7F06ABB0, "sub_GAME_7F06ABB0"]
    - [0x7F06AFE8, "display_image_at_on_screen_coord"]
-   #.s
+   # file asm/game/7F06B120.s
    - [0x7F06B120, "sub_GAME_7F06B120"]
    - [0x7F06B188, "def_7F06B16C"]
    - [0x7F06B248, "sub_GAME_7F06B248"]
@@ -2875,7 +2878,7 @@ labels:
    - [0x7F072784, "sub_GAME_7F072784"]
    - [0x7F072984, "sub_GAME_7F072984"]
    - [0x7F072C10, "sub_GAME_7F072C10"]
-   - [0x7F072C20, "dorottex:"]
+   - [0x7F072C20, "dorottex"]
    - [0x7F073038, "sub_GAME_7F073038"]
    - [0x7F07306C, "sub_GAME_7F07306C"]
    - [0x7F07307C, "dotube"]
@@ -2917,7 +2920,7 @@ labels:
    - [0x7F0764A4, "load_object_fill_header"]
    - [0x7F07654C, "load_object_into_memory"]
    - [0x7F076574, "load_object_into_memory_unused_maybe"]
-   #.s
+   # file asm/game/7F0765A0.s
    - [0x7F0765A0, "is_less_than_certain_power_of_2"]
    - [0x7F076648, "ceil8000"]
    - [0x7F0766AC, "ceil4000"]
@@ -2930,7 +2933,7 @@ labels:
    - [0x7F076998, "generate_microcode_for_othermode_setting"]
    - [0x7F076D68, "likely_generate_DL_for_image_declaration"]
    - [0x7F077BB8, "sub_GAME_7F077BB8"]
-   #.s
+   # file asm/game/7F077BD0.s
    - [0x7F077BD0, "nullsub_75"]
    - [0x7F077BD8, "set_BONDdata_screensize"]
    - [0x7F077C14, "sub_GAME_7F077C14"]
@@ -3183,7 +3186,7 @@ labels:
    - [0x7F08BFC4, "trigger_explosions_around_player"]
    - [0x7F08BFF0, "reinit_BONDdata_inventory"]
    - [0x7F08C054, "sub_GAME_7F08C054"]
-   - [0x7F08C194, "add_additional_weapon_slot_to_player_inventory_documentation_guess"]
+   - [0x7F08C194, "add_additional_weapon_slot_to_player_inventory_guess"]
    - [0x7F08C1FC, "reorder_inventory_ptrs_based_on_id_code"]
    - [0x7F08C244, "get_ptr_next_available_weapon"]
    - [0x7F08C29C, "set_BONDdata_allguns_flag"]
@@ -3234,7 +3237,7 @@ labels:
    - [0x7F08D9A4, "sub_GAME_7F08D9A4"]
    - [0x7F08D9EC, "sub_GAME_7F08D9EC"]
    - [0x7F08DB08, "sub_GAME_7F08DB08"]
-   #.s
+   # file asm/game/7F08DBB0.s
    - [0x7F08DBB0, "sub_GAME_7F08DBB0"]
    - [0x7F08DBC8, "sub_GAME_7F08DBC8"]
    - [0x7F08DE48, "sub_GAME_7F08DE48"]
@@ -3266,7 +3269,7 @@ labels:
    - [0x7F08F908, "sub_GAME_7F08F908"]
    - [0x7F08FB90, "sub_GAME_7F08FB90"]
    - [0x7F08FD1C, "sub_GAME_7F08FD1C"]
-   #.s
+   # file asm/game/7F08FE00.s
    - [0x7F08FE00, "nullsub_32"]
    - [0x7F08FE08, "sub_GAME_7F08FE08"]
    - [0x7F08FE14, "init_debug_menu_values"]
@@ -3278,7 +3281,7 @@ labels:
    - [0x7F090248, "sub_GAME_7F090248"]
    - [0x7F0902C0, "sub_GAME_7F0902C0"]
    - [0x7F09039C, "sub_GAME_7F09039C"]
-   #.s
+   # file asm/game/7F090490.s
    - [0x7F090490, "display_debug_menu_text_onscreen"]
    - [0x7F0904C4, "sub_GAME_7F0904C4"]
    - [0x7F090508, "sub_GAME_7F090508"]
@@ -3385,14 +3388,14 @@ labels:
    - [0x7F091054, "get_debug_gunwatchpos_flag"]
    - [0x7F091060, "get_debug_profile_flag"]
    - [0x7F09106C, "get_debug_taskgrab_val"]
-   #.s
+   # file asm/game/7F091080.s
    - [0x7F091080, "sub_GAME_7F091080"]
    - [0x7F091580, "sub_GAME_7F091580"]
    - [0x7F0915BC, "sub_GAME_7F0915BC"]
    - [0x7F091618, "sub_GAME_7F091618"]
    - [0x7F09166C, "sub_GAME_7F09166C"]
    - [0x7F0916F4, "sub_GAME_7F0916F4"]
-   #.s
+   # file asm/game/7F091740.s
    - [0x7F091740, "sub_GAME_7F091740"]
    - [0x7F09177C, "sub_GAME_7F09177C"]
    - [0x7F09193C, "sub_GAME_7F09193C"]
@@ -3451,13 +3454,13 @@ labels:
    - [0x7F092774, "sub_GAME_7F092774"]
    - [0x7F0927BC, "sub_GAME_7F0927BC"]
    - [0x7F0927F4, "sub_GAME_7F0927F4"]
-   #.s
+   # file asm/game/7F092890.s
    - [0x7F092890, "sub_GAME_7F092890"]
-   #.s
+   # file asm/game/7F092E50.s
    - [0x7F092E50, "sub_GAME_7F092E50"]
    - [0x7F09343C, "sub_GAME_7F09343C"]
    - [0x7F09365C, "sub_GAME_7F09365C"]
-   #.s
+   # file asm/game/7F093880.s
    - [0x7F093880, "sub_GAME_7F093880"]
    - [0x7F0938FC, "sub_GAME_7F0938FC"]
    - [0x7F093A78, "sub_GAME_7F093A78"]
@@ -3523,12 +3526,12 @@ labels:
    - [0x7F09B41C, "sub_GAME_7F09B41C"]
    - [0x7F09B4D8, "sub_GAME_7F09B4D8"]
    - [0x7F09B528, "sub_GAME_7F09B528"]
-   #.s
+   # file asm/game/7F09B600.s
    - [0x7F09B600, "sub_GAME_7F09B600"]
-   #.s
+   # file asm/game/7F09B740.s
    - [0x7F09B740, "sub_GAME_7F09B740"]
    - [0x7F09B788, "sub_GAME_7F09B788"]
-   #.s
+   # file asm/game/7F09B7A0.s
    - [0x7F09B7A0, "null_init_main_1"]
    - [0x7F09B7A8, "sub_GAME_7F09B7A8"]
    - [0x7F09B7E4, "sub_GAME_7F09B7E4"]
@@ -3537,7 +3540,7 @@ labels:
    - [0x7F09BBBC, "sub_GAME_7F09BBBC"]
    - [0x7F09BE4C, "sub_GAME_7F09BE4C"]
    - [0x7F09C044, "sub_GAME_7F09C044"]
-   #.s
+   # file asm/game/7F09C250.s
    - [0x7F09C250, "sub_GAME_7F09C250"]
    - [0x7F09C7AC, "sub_GAME_7F09C7AC"]
    - [0x7F09C7C4, "sub_GAME_7F09C7C4"]
@@ -3563,7 +3566,7 @@ labels:
    - [0x7F0A108C, "sub_GAME_7F0A108C"]
    - [0x7F0A1A94, "sub_GAME_7F0A1A94"]
    - [0x7F0A1D78, "sub_GAME_7F0A1D78"]
-   #.s
+   # file asm/game/7F0A1DA0.s
    - [0x7F0A1DA0, "sub_GAME_7F0A1DA0"]
    - [0x7F0A2160, "sub_GAME_7F0A2160"]
    - [0x7F0A28D4, "sub_GAME_7F0A28D4"]
@@ -3590,7 +3593,7 @@ labels:
    - [0x7F0A47D4, "sub_GAME_7F0A47D4"]
    - [0x7F0A47FC, "sub_GAME_7F0A47FC"]
    - [0x7F0A4824, "sub_GAME_7F0A4824"]
-   #.s
+   # file asm/game/7F0A4860.s
    - [0x7F0A4860, "nullsub_46"]
    - [0x7F0A4868, "init_watch_at_start_of_stage"]
    - [0x7F0A4A98, "sub_GAME_7F0A4A98"]
@@ -3724,7 +3727,7 @@ labels:
    - [0x7F0AEB64, "sub_GAME_7F0AEB64"]
    - [0x7F0AEF0C, "sub_GAME_7F0AEF0C"]
    - [0x7F0AEF20, "sub_GAME_7F0AEF20"]
-   #.s
+   # file asm/game/7F0AEF30.s
    - [0x7F0AEF30, "sub_GAME_7F0AEF30"]
    - [0x7F0AEF3C, "sub_GAME_7F0AEF3C"]
    - [0x7F0AEFE0, "sub_GAME_7F0AEFE0"]
@@ -3812,7 +3815,7 @@ labels:
    - [0x7F0B3200, "sub_GAME_7F0B3200"]
    - [0x7F0B32D8, "sub_GAME_7F0B32D8"]
    - [0x7F0B33DC, "sub_GAME_7F0B33DC"]
-   #.s
+   # file asm/game/7F0B37C0.s
    - [0x7F0B37C0, "something_with_bg_c_debug"]
    - [0x7F0B37EC, "sub_GAME_7F0B37EC"]
    - [0x7F0B38B4, "sub_GAME_7F0B38B4"]
@@ -3943,7 +3946,7 @@ labels:
    - [0x7F0BA2D4, "sub_GAME_7F0BA2D4"]
    - [0x7F0BA5C0, "sub_GAME_7F0BA5C0"]
    - [0x7F0BA640, "sub_GAME_7F0BA640"]
-   #.s
+   # file asm/game/7F0BA720.s
    - [0x7F0BA720, "sub_GAME_7F0BA720"]
    - [0x7F0BA72C, "sub_GAME_7F0BA72C"]
    - [0x7F0BA738, "sub_GAME_7F0BA738"]
@@ -3958,7 +3961,7 @@ labels:
    - [0x7F0BB2C8, "sub_GAME_7F0BB2C8"]
    - [0x7F0BB398, "return_nearfog_values"]
    - [0x7F0BB3A4, "if_sky_present_convert_values"]
-   #.s
+   # file asm/game/7F0BB4D0.s
    - [0x7F0BB4D0, "init_lightfixture_tables"]
    - [0x7F0BB524, "get_index_of_current_entry_in_init_lightfixture_table"]
    - [0x7F0BB59C, "add_entry_to_init_lightfixture_table"]
@@ -3976,7 +3979,7 @@ labels:
    - [0x7F0BBCCC, "sub_GAME_7F0BBCCC"]
    - [0x7F0BBE0C, "sub_GAME_7F0BBE0C"]
    - [0x7F0BC4C4, "sub_GAME_7F0BC4C4"]
-   #.s
+   # file asm/game/7F0BC530.s
    - [0x7F0BC530, "sub_GAME_7F0BC530"]
    - [0x7F0BC624, "sub_GAME_7F0BC624"]
    - [0x7F0BC634, "sub_GAME_7F0BC634"]
@@ -3988,9 +3991,9 @@ labels:
    - [0x7F0BC9C4, "sub_GAME_7F0BC9C4"]
    - [0x7F0BCA14, "sub_GAME_7F0BCA14"]
    - [0x7F0BCA34, "sub_GAME_7F0BCA34"]
-   #.s
+   # file asm/game/7F0BCAA0.s
    - [0x7F0BCAA0, "load_resource"]
-   - [0x7F0BCB34, "load_resource_from_indy"]
+   - [0x7F0BCB34, "resource_load_from_indy"]
    - [0x7F0BCC28, "ob_c_debug_setup"]
    - [0x7F0BCCBC, "_load_rom_index_to_membank"]
    - [0x7F0BCCE4, "_load_resource_index_to_membank"]
@@ -4024,7 +4027,7 @@ labels:
    - [0x7F0BD7A4, "sub_GAME_7F0BD7A4"]
    - [0x7F0BD7CC, "compute_membar_display_string"]
    - [0x7F0BD810, "draw_membars"]
-   #.s
+   # file asm/game/7F0BD8F0.s
    - [0x7F0BD8F0, "sub_GAME_7F0BD8F0"]
    - [0x7F0BD8FC, "sub_GAME_7F0BD8FC"]
    - [0x7F0BD908, "something_with_lvl_c_debug"]
@@ -4072,7 +4075,7 @@ labels:
    - [0x7F0C08FC, "stop_demo_playback"]
    - [0x7F0C0970, "select_ramrom_to_play"]
    - [0x7F0C0A20, "check_ramrom_flags"]
-   #.s
+   # file asm/game/7F0C0A70.s
    - [0x7F0C0A70, "store_osgetcount"]
    - [0x7F0C0AA0, "sub_GAME_7F0C0AA0"]
    - [0x7F0C0B4C, "sub_GAME_7F0C0B4C"]
@@ -4091,7 +4094,7 @@ labels:
    - [0x7F0C13C8, "reset_all_music_slots"]
    - [0x7F0C14FC, "set_musicslot_time"]
    - [0x7F0C1558, "reset_music_in_slot"]
-   #.s
+   # file asm/game/7F0C15E0.s
    - [0x7F0C15E0, "get_textbank_number_for_stagenum"]
    - [0x7F0C16DC, "stagetext_loop"]
    - [0x7F0C16EC, "init_LnameX"]
@@ -4101,7 +4104,7 @@ labels:
    - [0x7F0C1D64, "load_briefing_text_bank"]
    - [0x7F0C1DC4, "blank_text_bank"]
    - [0x7F0C1DD8, "get_textptr_for_textID"]
-   #.s
+   # file asm/game/7F0C1E20.s
    - [0x7F0C1E20, "check_can_advance_right_on_mpmenu"]
    - [0x7F0C1E50, "page_adv_right_yes"]
    - [0x7F0C1E58, "page_adv_right_no"]
@@ -4155,17 +4158,17 @@ labels:
    - [0x7F0C4190, "def_7F0C40C0"]
    - [0x7F0C6048, "sub_GAME_7F0C6048"]
    - [0x7F0C6080, "sub_GAME_7F0C6080"]
-   #.s
+   # file asm/game/7F0C6090.s
    - [0x7F0C6090, "display_red_blue_on_radar"]
-   #.s
+   # file asm/game/7F0C65D0.s
    - [0x7F0C65D0, "advance_mp_weapon_set_by_one_save_value"]
    - [0x7F0C65F8, "get_ptr_current_mp_weapon_set_text_code"]
    - [0x7F0C6614, "get_ptr_mp_weapon_set_data"]
    - [0x7F0C6630, "set_mp_weapon_set"]
    - [0x7F0C663C, "get_mp_weapon_set"]
-   #.s
+   # file asm/game/7F0C6650.s
    - [0x7F0C6650, "nullsub_41"]
-   - [0x7F0C6658, "image_related_calls_decompressdata"]
+   - [0x7F0C6658, "image_related_calls_decompressdata_function"]
    - [0x7F0C6BC8, "copy_loaded_image_to_final_mem_location"]
    - [0x7F0C6C70, "sub_GAME_7F0C6C70"]
    - [0x7F0C77AC, "sub_GAME_7F0C77AC"]
@@ -4208,11 +4211,11 @@ labels:
    - [0x7F0CBC18, "load_image_to_buffer"]
    - [0x7F0CBE50, "sub_GAME_7F0CBE50"]
    - [0x7F0CBEE8, "sub_GAME_7F0CBEE8"]
-   #.s
+   # file asm/game/7F0CBF10.s
    - [0x7F0CBF10, "sub_GAME_7F0CBF10"]
    - [0x7F0CBF2C, "sub_GAME_7F0CBF2C"]
    - [0x7F0CBFB0, "load_prepare_global_image_bank"]
-   #.s
+   # file asm/game/7F0CC4C0.s
    - [0x7F0CC4C0, "nullsub_47"]
    - [0x7F0CC4C8, "sub_GAME_7F0CC4C8"]
    - [0x7F0CC51C, "sub_GAME_7F0CC51C"]
@@ -4242,10 +4245,10 @@ labels:
    - [0x7F0CE118, "process_microcode_sort_display_modes_expand_image_calls"]
    - [0x7F0CE5F0, "def_7F0CE2B4"]
    - [0x7F0CE794, "sub_GAME_7F0CE794"]
-   #.s
+   # file asm/game/7F0CE7F0.s
    - [0x7F0CE7F0, "decompressdata"]
    - [0x7F0CE894, "sub_GAME_7F0CE894"]
-   #.s
+   # file asm/game/7F0CE8B0.s
    - [0x7F0CE8B0, "sub_GAME_7F0CE8B0"]
    - [0x7F0CEEF0, "sub_GAME_7F0CEEF0"]
    - [0x7F0CF38C, "zlib_decompressor_type0"]
@@ -4253,15 +4256,15 @@ labels:
    - [0x7F0CF690, "zlib_decompressor_type2"]
    - [0x7F0CFBB4, "select_zlib_decompression_routine"]
    - [0x7F0CFCD4, "loop_to_decompress_entire_file"]
-   #.s
+   # file asm/game/7F0CFDB0.s
    - [0x7F0CFDB0, "something_with_rsp_c_debug"]
    - [0x7F0CFDDC, "allocate_init_rsp_buffers"]
    - [0x7F0CFE18, "load_rsp_microcode"]
-   #.s
+   # file asm/game/7F0CFF30.s
    - [0x7F0CFF30, "init_indy_if_not_ready"]
    - [0x7F0CFF64, "nullsub_48"]
    - [0x7F0CFF6C, "init_indy_if_ready"]
-   - [0x7F0CFF9C, "indy_load_resource"]
+   - [0x7F0CFF9C, "load_resource_on_indy"]
    - [0x7F0CFFE0, "indy_send_capture_data"]
    - [0x7F0D001C, "indy_load_ramrom_file"]
    - [0x7F0D005C, "check_file_exported"]
@@ -4270,7 +4273,7 @@ labels:
    - [0x7F0D0124, "sub_GAME_7F0D0124"]
    - [0x7F0D0154, "send_indy_close_port_cmd"]
    - [0x7F0D0170, "nullsub_49"]
-   #.s
+   # file asm/game/7F0D0180.s
    - [0x7F0D0180, "sub_GAME_7F0D0180"]
    - [0x7F0D01D0, "sub_GAME_7F0D01D0"]
    - [0x7F0D0220, "sub_GAME_7F0D0220"]
@@ -4328,13 +4331,13 @@ labels:
    - [0x7F0D1908, "sub_GAME_7F0D1908"]
    - [0x7F0D1950, "sub_GAME_7F0D1950"]
    - [0x7F0D1998, "sub_GAME_7F0D1998"]
-   #_text
+   # file asm/game/7F0D1A20.s
    - [0x7F0D1A20, "something_game_c_debug_related"]
    - [0x7F0D1A4C, "reset_mem_bank_5"]
    - [0x7F0D1A7C, "sub_GAME_7F0D1A7C"]
-   #.s
+   # file asm/game/compiletime.s
    - [0x7F0D1AB0, "get_compile_time"]
-   #.s
+   # file asm/game/7F0D1AC0.s
    - [0x7F0D1AC0, "sub_GAME_7F0D1AC0"]
    - [0x7F0D1B94, "sub_GAME_7F0D1B94"]
    - [0x7F0D1BD0, "sub_GAME_7F0D1BD0"]
@@ -4343,17 +4346,17 @@ labels:
    - [0x7F0D1E44, "sub_GAME_7F0D1E44"]
    - [0x7F0D1E98, "sub_GAME_7F0D1E98"]
    - [0x7F0D2320, "sub_GAME_7F0D2320"]
-   #.s
+   # file asm/game/7F0D2380.s
    - [0x7F0D2380, "remove_viewport_buffer"]
    - [0x7F0D238C, "allocate_viewport_buffer"]
    - [0x7F0D2448, "sub_GAME_7F0D2448"]
    - [0x7F0D2464, "sub_GAME_7F0D2464"]
    - [0x7F0D2518, "sub_GAME_7F0D2518"]
-   #.s
+   # file asm/game/7F0D2720.s
    - [0x7F0D2720, "sub_GAME_7F0D2720"]
    - [0x7F0D2848, "sub_GAME_7F0D2848"]
    - [0x7F0D2890, "sub_GAME_7F0D2890"]
-   #.s
+   # file asm/game/spectrum.s
    - [0x7F0D28E0, "sub_GAME_7F0D28E0"]
    - [0x7F0D2A84, "sub_GAME_7F0D2A84"]
    - [0x7F0D2C84, "spectrum_p1controller_to_kempston"]
@@ -4363,8 +4366,17 @@ labels:
    - [0x7F0D36D8, "spectrum_input_handling"]
    - [0x7F0D37D4, "nullsub_50"]
    - [0x7F0D37DC, "sub_GAME_7F0D37DC"]
-   #rodata
-   #.data
+   
+   # for script sanity
+   # file asm/end.s
+   - [0x7F0E2D48, "endofcode"]
+   ##########################
+   # object compresseddata.rz
+   # .text
+   - [0x80020D90, "rspbootTextStart"]
+   - [0x80020E60, "gsp3DTextStart"]
+   - [0x80022280, "aspMainTextStart"]
+   # .data
    - [0x80023044, "unknown_init_val"]
    - [0x80023048,	"cart_hw_address"]
    - [0x8002304C,	"debug_handler_table"]

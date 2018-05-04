@@ -1,4 +1,0 @@
-[submodule "tools/sm64tools"]
-	path = tools/sm64tools
-	url = https://github.com/kholdfuzion/sm64tools.git
-
