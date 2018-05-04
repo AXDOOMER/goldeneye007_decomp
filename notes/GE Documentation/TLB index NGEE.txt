@@ -3433,6 +3433,7 @@ conversion factor	+7EFCB4D0
 	9BEE4	7F0673B4
 		??? - looks at hand A0 (0-R,1-L)
 	9BF50	7F067420
+	9C6C4	7F067B94	calculate crosshair position/gun rotation
 	
  9CB30:	7F068000
  
@@ -3892,7 +3893,7 @@ conversion factor	+7EFCB4D0
 		???	initialize player data?
 		7F0798B8
 		7F079988
-		7F0799AC
+		7F0799AC	change crouch position (used for aiming)
 		7F0799F0
 		7F079A1C
 	AE580	7F079A50
