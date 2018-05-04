@@ -11,14 +11,34 @@ basename: "ge007_u"
 
 
 ranges:
-   - [0x00001000, 0x001050, "asm", "_start", 0x80000400]
+   - [0x00000000, 0x00000040, "header", "header"]
+   - [0x00000040, 0x00001000, "bin",    "boot"]
+   - [0x00001000, 0x00001050, "asm", "_start", 0x80000400]
    #even though this gets tlb mapped to 0x70000000, most of it uses relative
    #addresses so I disassemble as 0x80000000 to make eventual linking easier
-   - [0x00001050, 0x021990, "asm", "code", 0x80000450]
+   - [0x00001050, 0x00021990, "asm", "code", 0x80000450]
+   #rz compressed, change bin to rz and use with my branch of n64spit to auto decompress
+   - [0x00021990, 0x033590, "bin", "Compressedrodata"]
 #   - [0x00001050, 0x0010bc, "asm", "boot0", 0x80000450]
 #   - [0x000010BC, 0x021990, "asm", "code", 0x700004BC]
-   - [0x00033590, 0x034A10, "asm", "rarezip", 0x70200000]
-   - [0x00034b30, 0x117880, "asm", "game", 0x7F000000]
+   - [0x033590, 0x00034A10, "asm", "rarezip", 0x70200000]
+   - [0x034A10, 0x034A14, "ptr", "rarezip.ptr_source"]
+   - [0x034A14, 0x034A18, "ptr", "rarezip.ptr_target"]
+   - [0x034A18, 0x034A1C, "ptr", "rarezip.curoffset"]
+   - [0x034A1C, 0x034A20, "ptr", "rarezip.decompressed_count"]
+   - [0x034A20, 0x034A24, "ptr", "rarezip.ptrbuffer"]
+   - [0x034A24, 0x034A38, "ptr", "rarezip.order"]
+   - [0x034A38, 0x034A78, "ptr", "rarezip.lbase"]
+   - [0x034A78, 0x034A98, "ptr", "rarezip.lextra"]
+   - [0x034A98, 0x034AD4, "ptr", "rarezip.dbase"]
+   - [0x034AD4, 0x034AF4, "ptr", "rarezip.dextra"]
+   - [0x034AF4, 0x034AF8, "ptr", "rarezip.sample"]
+   - [0x034AF8, 0x034AFC, "ptr", "rarezip.bitsinsample"]
+   - [0x034AFC, 0x034B20, "ptr", "rarezip.masks"]
+   - [0x034B20, 0x034B24, "ptr", "rarezip.data1"]
+   - [0x034B24, 0x034B28, "ptr", "rarezip.data2"]
+   - [0x034B28, 0x034B2C, "ptr", "rarezip.data3"]
+   - [0x00034b30, 0x00117880, "asm", "game", 0x7F000000]
 #   - [0x, ""]
 labels:
    - [0x00001050, "_codeSegmentRomStart"]
@@ -920,16 +940,18 @@ labels:
    - [0x7F004FF4, "set_parent_cur_obj_enter_room"]
    - [0x7F00500C, "set_parent_cur_obj_deposited_in_room"]
    - [0x7F005024, "set_parent_cur_obj_photograph"]
-   #_text
+   #ejected_cartridges.s
    - [0x7F005040, "something_with_ejected_cartridges"]
+   #init_BONDdata.s
    - [0x7F0050D0, "init_player_BONDdata_stats"]
-   #_text
+   #7F005450.s
    - [0x7F005450, "sub_GAME_7F005450"]
-   #_text
+   #level_load_stuff.s
    - [0x7F005520, "zero_contents_of_80036070_74"]
    - [0x7F005534, "set_contents_of_80036078"]
    - [0x7F005540, "sub_GAME_7F005540"]
    - [0x7F005624, "sub_GAME_7F005624"]
+   #generate_launched_object.s
    - [0x7F005710, "set_weapon_model_generated_thrown_object"]
    - [0x7F005740, "throwingknife"]
    - [0x7F005748, "grenade_launch_round"]
@@ -955,19 +977,27 @@ labels:
    - [0x7F005D14, "watch_time"]
    - [0x7F005D8C, "credits"]
    - [0x7F005DE0, "def_7F005A74"]
-   #_text
+   #alloc_item_slots.s
    - [0x7F0061F0, "sub_GAME_7F0061F0"]
-   - [0x7F00625C, "alloc_init_1EplusA0_inventroy_entries"]
+   - [0x7F00625C, "alloc_additional_item_slots"]
+   #default_BONDdata_stuff.s
    - [0x7F0062C0, "sub_GAME_7F0062C0"]
    - [0x7F00638C, "sets_a_bunch_of_BONDdata_values_to_default"]
+   #load_init_path_table.s
    - [0x7F0067C0, "sub_GAME_7F0067C0"]
    - [0x7F006890, "init_path_table_links"]
+   #
    - [0x7F006D90, "alloc_explosion_smoke_casing_scorch_impact_buffers"]
+   #
    - [0x7F007180, "sub_GAME_7F007180"]
+   #
    - [0x7F007290, "sub_GAME_7F007290"]
+   #
    - [0x7F0072B0, "sub_GAME_7F0072B0"]
    - [0x7F0072F8, "disable_onscreen_text"]
+   #
    - [0x7F007320, "set_mt_tex_alloc"]
+   #.s
    - [0x7F0073B0, "sub_GAME_7F0073B0"]
    #.s
    - [0x7F007460, "sub_GAME_7F007460"]
@@ -988,7 +1018,7 @@ labels:
    - [0x7F007970, "sub_GAME_7F007970"]
    #.s
    - [0x7F007980, "sub_GAME_7F007980"]
-   #.s
+   #intro_logos.s
    - [0x7F007A40, "something_with_gunbarrel_and_rareware_logo_matrix_manip"]
    - [0x7F007B94, "insert_sight_backdrop_eye_intro"]
    - [0x7F007CC8, "sub_GAME_7F007CC8"]
@@ -1006,7 +1036,7 @@ labels:
    - [0x7F009254, "sub_GAME_7F009254"]
    - [0x7F009730, "def_7F00929C"]
    - [0x7F009744, "sub_GAME_7F009744"]
-   #.s
+   #menus.s
    - [0x7F009760, "write_text_at_abs_coord"]
    - [0x7F009848, "check_if_cheat_available"]
    - [0x7F009874, "default_nonmenucheats"]
@@ -1314,13 +1344,16 @@ labels:
    #.s
    - [0x7F01BAE0, "sub_GAME_7F01BAE0"]
    - [0x7F01BFF8, "sub_GAME_7F01BFF8"]
+   #.s
    - [0x7F01C0D0, "insert_imageDL"]
    - [0x7F01C1A4, "sub_GAME_7F01C1A4"]
    - [0x7F01C284, "die_blood_image_routine"]
+   #.s
    - [0x7F01C400, "sub_GAME_7F01C400"]
+   #.s
    - [0x7F01C670, "sub_GAME_7F01C670"]
    - [0x7F01CA18, "sub_GAME_7F01CA18"]
-   #.s
+   #decrypt_bleeding_animation.s
    - [0x7F01CAE0, "decrypt_bleeding_animation_data"]
    - [0x7F01CC94, "sub_GAME_7F01CC94"]
    - [0x7F01CCEC, "sub_GAME_7F01CCEC"]
