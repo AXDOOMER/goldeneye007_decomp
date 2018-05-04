@@ -866,7 +866,7 @@ Note, offsets below only refer to USA offsets.  These +will+ differ in the other
 2E358
 2E35C
 2E360-2E418	TLB	models assigned to thrown objects of particular types
-2E418
+2E418	[float] 0.909091 default zoom speed (used for 15818/800365A8)
 2E41C-2E440	TLB	execute intro block commands
 
 2E480-2E53C	TLB	...should know this.  tied to objects
