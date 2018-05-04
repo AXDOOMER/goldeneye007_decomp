@@ -1571,8 +1571,3 @@ rarezip.data3:
 
 # Unknown region 034B2C-034B30 [4]
 .byte 0x00, 0x00, 0x00, 0x00
-
-
-.section .text7F000000, "ax"
-
-

@@ -22427,7 +22427,3 @@ osEPiRawWriteIo:
 Compressedrodata:
 .incbin "bin/ge007_u.021990.Compressedrodata.bin"
 Compressedrodata_end:
-
-.section .text70200000, "ax"
-
-

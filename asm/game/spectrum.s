@@ -17468,5 +17468,3 @@ func_7F0D382C:
 /* 11786C 7F0E2D3C 27BD02B0 */  addiu $sp, $sp, 0x2b0
 /* 117870 7F0E2D40 03E00008 */  jr    $ra
 /* 117874 7F0E2D44 A438E354 */   sh    $t8, -0x1cac($at)
-
-
