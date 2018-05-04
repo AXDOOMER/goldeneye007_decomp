@@ -1367,19 +1367,23 @@ labels:
    - [0x7F01D324, "get_007_damage_mod"]
    - [0x7F01D360, "get_007_accuracy_mod"]
    - [0x7F01D39C, "end_of_mission_briefing"]
+   #init_watch.s
    - [0x7F01D500, "sub_GAME_7F01D500"]
    - [0x7F01D524, "sub_GAME_7F01D524"]
    - [0x7F01D548, "sub_GAME_7F01D548"]
    - [0x7F01D56C, "would_have_returned_bond_for_folder_num"]
+   #maybe
    - [0x7F01D590, "get_selected_folder_num"]
    - [0x7F01D59C, "get_difficulty"]
    - [0x7F01D5EC, "set_solo_and_ptr_briefing"]
    - [0x7F01D61C, "sub_GAME_7F01D61C"]
    - [0x7F01D644, "sub_GAME_7F01D644"]
+   #maybe
    - [0x7F01D680, "store_favorite_weapon_current_player"]
    - [0x7F01D6C0, "sub_GAME_7F01D6C0"]
    - [0x7F01D6E0, "sub_GAME_7F01D6E0"]
    - [0x7F01D758, "sub_GAME_7F01D758"]
+   #eeprom_stuff.s
    - [0x7F01D7A0, "sub_GAME_7F01D7A0"]
    - [0x7F01D840, "sub_GAME_7F01D840"]
    - [0x7F01D8C8, "get_foldernum_of_eeprom"]
@@ -1428,6 +1432,7 @@ labels:
    - [0x7F01F394, "copy_eeprom_from_to"]
    - [0x7F01F45C, "copy_eepromfile_a0_from_a1_to_buffer"]
    - [0x7F01F4A0, "check_for_007_mode_unlocked"]
+
    - [0x7F01F530, "get_numguards"]
    - [0x7F01F53C, "get_ptr_allocated_block_for_vertices"]
    - [0x7F01F55C, "set_show_patrols_flag"]
@@ -1444,6 +1449,7 @@ labels:
    - [0x7F0200BC, "init_GUARDdata_with_set_values"]
    - [0x7F0203B8, "replace_GUARDdata_with_actual_values"]
    - [0x7F020414, "disable_sounds_attached_to_player_then_something"]
+
    - [0x7F020540, "animation_speed_related"]
    - [0x7F0205E4, "get_animation_rate"]
    - [0x7F0205F0, "sub_GAME_7F0205F0"]
@@ -1974,6 +1980,7 @@ labels:
    - [0x7F03A100, "actionFB_Switch_To_Sky_Value_num_And_Activate_Gas_Containers_If_Exist_1"]
    - [0x7F03A134, "actionFC_Launch_Shuttle_2"]
    - [0x7F03A200, "action04_Terminator_1"]
+
    - [0x7F03A240, "sub_GAME_7F03A240"]
    - [0x7F03A404, "set_stateflag_0x04_for_posdata"]
    - [0x7F03A414, "unset_stateflag_0x04_for_posdata"]
@@ -2708,7 +2715,7 @@ labels:
    - [0x7F067AA4, "sub_GAME_7F067AA4"]
    - [0x7F067AB4, "sub_GAME_7F067AB4"]
    - [0x7F067B4C, "sub_GAME_7F067B4C"]
-   - [0x7F067B94, "sub_GAME_7F067B94"]
+   - [0x7F067B94, "caclulate_gun_crosshair_position_rotation"]
    - [0x7F067F58, "sub_GAME_7F067F58"]
    - [0x7F067FBC, "sub_GAME_7F067FBC"]
    - [0x7F068008, "sub_GAME_7F068008"]
@@ -2981,7 +2988,7 @@ labels:
    - [0x7F0793EC, "init_player_BONDdata"]
    - [0x7F0798B8, "sub_GAME_7F0798B8"]
    - [0x7F079988, "sub_GAME_7F079988"]
-   - [0x7F0799AC, "sub_GAME_7F0799AC"]
+   - [0x7F0799AC, "change_crouch_position"]
    - [0x7F0799F0, "sub_GAME_7F0799F0"]
    - [0x7F079A1C, "sub_GAME_7F079A1C"]
    - [0x7F079A50, "sub_GAME_7F079A50"]
@@ -5789,6 +5796,7 @@ labels:
    - [0x8004F02C,	"jpt_7F004B64"]
    - [0x8004F0E4,	"fl_neg_pi"]
    - [0x8004F0F0,	"jpt_7F005738"]
+   - [0x8004F1A8, "default_zoom_speed"]
    - [0x8004F1AC,	"jpt_7F005A74"]
    - [0x8004F210,	"jpt_7F007548"]
    - [0x8004F2E0,	"jpt_7F00929C"]
