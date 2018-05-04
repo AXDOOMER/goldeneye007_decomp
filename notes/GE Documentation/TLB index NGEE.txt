@@ -2028,6 +2028,8 @@ conversion factor	+7EFCB4D0
 		accepts: A0=p->GUARDdata, A1=p->path
 		7F02AD98
 		
+	602A4	7F02B774	manage guard fade on death
+		
  60B30:	7F02C000
  
 	61CB4	7F02D184
@@ -3968,7 +3970,7 @@ conversion factor	+7EFCB4D0
 	B19B4	7F07CE84	V0= p->8006 for object if player in tank; fry AT,T6
 		7F07CEB0
 		7F07CF80	F0= [8003646C]
-		7F07CF8C
+		7F07CF8C	calculate player collision?
 		7F07D234
 		7F07D2B4
 		7F07D4C0
