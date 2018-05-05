@@ -3091,7 +3091,7 @@ labels:
    - [0x7F08088C, "check_if_fade_to_black_complete"]
    - [0x7F0808BC, "sub_GAME_7F0808BC"]
    - [0x7F080A10, "set_curplayer_fade"]
-   - [0x7F080A80, "sub_GAME_7F080A80"]
+   - [0x7F080A80, "update_curplayer_fade"]
    - [0x7F080B34, "sub_GAME_7F080B34"]
    - [0x7F080D60, "sub_GAME_7F080D60"]
    - [0x7F080DF8, "sub_GAME_7F080DF8"]
