@@ -4018,7 +4018,7 @@ conversion factor	+7EFCB4D0
 		7F0808BC
 		
 	B5540	7F080A10	set cur. player fade; F12=timer (ms), F14=final level (1.00=100%)
-		7F080A80	manage cur. player fade until invisible; F16=player invisible (120.00)
+		7F080A80	update cur. player fade until invisible; F16=player invisible (120.00=100%)
 	
 	B64A4	7F081974	player motion and view interface
  B6B30:	7F082000
