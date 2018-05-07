@@ -12,7 +12,8 @@ basename: "ge007_u"
 
 ranges:
    - [0x00000000, 0x00000040, "header", "header"]
-   - [0x00000040, 0x00001000, "bin",    "bootcode"]
+   - [0x00000040, 0x00000B30, "asm",    "bootcode", 0x04000040]
+   - [0x00000B30, 0x00001000, "bin",    "bootcode_font"]
    - [0x00001000, 0x00001050, "asm", "_start", 0x80000400]
    #even though this gets tlb mapped to 0x70000000, most of it uses relative
    #addresses so I disassemble as 0x80000000 to make eventual linking easier
@@ -43,7 +44,7 @@ ranges:
 labels:
    - [0x00001050, "_codeSegmentRomStart"]
    - [0x00021990, "_compresseddataSegmentRomStart"]
-   - [0x00033590, "_rareziprSegmentRomStart"]
+   - [0x00033590, "_rarezipSegmentRomStart"]
    - [0x00034b30, "_rarezipSegmentRomEnd"]
 #the following KSEG_name names are for absolute addressed functions in codesegment that get TLB mapped
 #theres probably a better way to do this, but i'm unaware of any.
@@ -100,7 +101,7 @@ labels:
    # object codesegment.o
    # file asm/code/boot0.s
    - [0x80000450, "boot"]
-   - [0x800004BC, "get_rodata_vaddr"]
+   - [0x800004BC, "get_cdata_vaddr_start"]
    - [0x800004C8, "get_rodata_rom_start"]
    - [0x800004D4, "get_rodata_rom_end"]
    - [0x800004E0, "getRareZipASMRomstart"]

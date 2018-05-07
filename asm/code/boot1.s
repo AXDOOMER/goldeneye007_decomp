@@ -15,7 +15,7 @@ boot1:
 /* 001110 80000510 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 001114 80000514 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 001118 80000518 AFB10020 */  sw    $s1, 0x20($sp)
-/* 00111C 8000051C 0C00012F */  jal   get_rodata_vaddr
+/* 00111C 8000051C 0C00012F */  jal   get_cdata_vaddr_start
 /* 001120 80000520 AFB0001C */   sw    $s0, 0x1c($sp)
 /* 001124 80000524 0C000132 */  jal   get_rodata_rom_start
 /* 001128 80000528 00408025 */   move  $s0, $v0
@@ -47,10 +47,10 @@ boot1:
 .L8000058C:
 /* 00118C 8000058C 0C00013E */  jal   jump_decompressfile
 /* 001190 80000590 01512023 */   subu  $a0, $t2, $s1
-/* 001194 80000594 3C0B0003 */  lui   $t3, %hi(_rareziprSegmentRomStart) # $t3, 3
+/* 001194 80000594 3C0B0003 */  lui   $t3, %hi(_rarezipSegmentRomStart) # $t3, 3
 /* 001198 80000598 3C0C0000 */  lui   $t4, %hi(_codeSegmentRomStart) # $t4, 0
 /* 00119C 8000059C 258C1050 */  addiu $t4, %lo(_codeSegmentRomStart) # addiu $t4, $t4, 0x1050
-/* 0011A0 800005A0 256B3590 */  addiu $t3, %lo(_rareziprSegmentRomStart) # addiu $t3, $t3, 0x3590
+/* 0011A0 800005A0 256B3590 */  addiu $t3, %lo(_rarezipSegmentRomStart) # addiu $t3, $t3, 0x3590
 /* 0011A4 800005A4 3C01000F */  lui   $at, (0x000FFFB1 >> 16) # lui $at, 0xf
 /* 0011A8 800005A8 3421FFB1 */  ori   $at, (0x000FFFB1 & 0xFFFF) # ori $at, $at, 0xffb1
 /* 0011AC 800005AC 016C1023 */  subu  $v0, $t3, $t4

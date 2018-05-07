@@ -39,7 +39,7 @@ boot:
 /* 0010B0 800004B0 254A0510 */  addiu $t2, %lo(KSEG_boot1) # addiu $t2, $t2, 0x510
 /* 0010B4 800004B4 01400008 */  jr    $t2
 /* 0010B8 800004B8 00000000 */   nop   
-get_rodata_vaddr:
+get_cdata_vaddr_start:
 /* 0010BC 800004BC 3C028002 */  lui   $v0, 0x8002
 /* 0010C0 800004C0 03E00008 */  jr    $ra
 /* 0010C4 800004C4 24420D90 */   addiu $v0, $v0, 0xd90
