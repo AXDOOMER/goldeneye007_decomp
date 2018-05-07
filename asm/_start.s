@@ -3,8 +3,9 @@
 .set noreorder # don't insert nops after branches
 
 .section .text, "ax"
+.include "macros.inc"
 
-_start:
+glabel _start
 /* 001000 80000400 3C088006 */  lui   $t0, %hi(_DATA_END) # $t0, 0x8006
 /* 001004 80000404 3C090003 */  lui   $t1, (0x00031080 >> 16) # lui $t1, 3
 /* 001008 80000408 2508D2E0 */  addiu $t0, %lo(_DATA_END) # addiu $t0, $t0, -0x2d20
@@ -28,4 +29,4 @@ _start:
 /* 00104C 8000044C 00000000 */  nop 
  _start_end:
 
- .section .data
+.section .data

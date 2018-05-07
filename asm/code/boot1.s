@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-boot1:
+glabel boot1
 /* 001110 70000510 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 001114 70000514 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 001118 70000518 AFB10020 */  sw    $s1, 0x20($sp)
@@ -120,7 +120,7 @@ boot1:
 /* 00129C 7000069C 2484B950 */  addiu $a0, %lo(sp_main) # addiu $a0, $a0, -0x46b0
 /* 0012A0 700006A0 0C0001BC */  jal   grow_stack
 /* 0012A4 700006A4 34058000 */   li    $a1, 32768
-generate_main_thread:
+glabel generate_main_thread
 /* 0012A8 700006A8 3C108006 */  lui   $s0, %hi(mainthread) # $s0, 0x8006
 /* 0012AC 700006AC 2610D640 */  addiu $s0, %lo(mainthread) # addiu $s0, $s0, -0x29c0
 /* 0012B0 700006B0 3C067000 */  lui   $a2, %hi(main_entry) # $a2, 0x7000
@@ -140,12 +140,12 @@ generate_main_thread:
 /* 0012E8 700006E8 03E00008 */  jr    $ra
 /* 0012EC 700006EC 27BD0040 */   addiu $sp, $sp, 0x40
 
-grow_stack:
+glabel grow_stack
 /* 0012F0 700006F0 00851021 */  addu  $v0, $a0, $a1
 /* 0012F4 700006F4 03E00008 */  jr    $ra
 /* 0012F8 700006F8 2442FFF8 */   addiu $v0, $v0, -8
 
-set_hw_address_and_unknown:
+glabel set_hw_address_and_unknown
 /* 0012FC 700006FC 240E0001 */  li    $t6, 1
 /* 001300 70000700 3C018002 */  lui   $at, %hi(unknown_init_val) # $at, 0x8002
 /* 001304 70000704 AC2E3044 */  sw    $t6, %lo(unknown_init_val)($at)
@@ -154,7 +154,7 @@ set_hw_address_and_unknown:
 /* 001310 70000710 03E00008 */  jr    $ra
 /* 001314 70000714 AC2F3048 */   sw    $t7, 0x3048($at)
 
-idle_entry:
+glabel idle_entry
 /* 001318 70000718 AFA40000 */  sw    $a0, ($sp)
 .L7000071C:
 /* 00131C 7000071C 1000FFFF */  b     .L7000071C
@@ -165,7 +165,7 @@ idle_entry:
 /* 001330 70000730 03E00008 */  jr    $ra
 /* 001334 70000734 00000000 */   nop   
 
-start_idle_thread:
+glabel start_idle_thread
 /* 001338 70000738 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00133C 7000073C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 001340 70000740 3C04803B */  lui   $a0, %hi(sp_idle) # $a0, 0x803b
@@ -189,7 +189,7 @@ start_idle_thread:
 /* 001388 70000788 03E00008 */  jr    $ra
 /* 00138C 7000078C 00000000 */   nop   
 
-start_rmon_thread:
+glabel start_rmon_thread
 /* 001390 70000790 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 001394 70000794 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 001398 70000798 3C04803B */  lui   $a0, %hi(sp_rmon) # $a0, 0x803b
@@ -214,7 +214,7 @@ start_rmon_thread:
 /* 0013E4 700007E4 03E00008 */  jr    $ra
 /* 0013E8 700007E8 00000000 */   nop   
 
-setup_message_queue_for_scheduler:
+glabel setup_message_queue_for_scheduler
 /* 0013EC 700007EC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0013F0 700007F0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0013F4 700007F4 3C048006 */  lui   $a0, %hi(msgQ_Q_fast3d) # $a0, 0x8006
@@ -262,7 +262,7 @@ setup_message_queue_for_scheduler:
 /* 001494 70000894 03E00008 */  jr    $ra
 /* 001498 70000898 27BD0018 */   addiu $sp, $sp, 0x18
 
-main_entry:
+glabel main_entry
 /* 00149C 7000089C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0014A0 700008A0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0014A4 700008A4 0C0001CE */  jal   start_idle_thread
@@ -292,7 +292,7 @@ main_entry:
 /* 001500 70000900 03E00008 */  jr    $ra
 /* 001504 70000904 00000000 */   nop   
 
-setuplastentryofdebughandler:
+glabel setuplastentryofdebughandler
 /* 001508 70000908 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 00150C 7000090C 3C0E8002 */  lui   $t6, %hi(debug_handler_table) # $t6, 0x8002
 /* 001510 70000910 27A30008 */  addiu $v1, $sp, 8
