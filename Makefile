@@ -1,6 +1,42 @@
-.SUFFIXES:
+# Makefile to rebuild Goldeneye 007 split image
+# Modified from sm64tools generated buildfile
 
-PROJECT_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+# BUILD_DIR is location where all build artifacts are placed
+BUILD_DIR := build
+
+# Directories containing source files
+SRC_DIRS := src src/libultra
+ASM_DIRS := asm asm/code asm/game asm/rarezip asm/libultra
+
+# If COMPARE is 1, check the output sha1sum when building 'all'
+COMPARE = 1
+
+# source code
+C_FILES       := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+S_FILES       := $(foreach dir,$(ASM_DIRS),$(wildcard $(dir)/*.s))
+
+#Objects
+O_FILES       := $(foreach f,$(S_FILES:.s=.o),build/$f) \
+                 $(foreach f,$(C_FILES:.c=.o),build/$f) \
+                 $(foreach f,$(BASEROM_FILES),build/$f.o)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### Tools ####
 AS         := $(MIPS_BINUTILS_PREFIX)as
@@ -17,8 +53,6 @@ OPTIMIZATION := -O2
 ASFLAGS := -march=vr4300 -32 -I include
 CFLAGS  := -mips2 -G 0 -non_shared -Xfullwarn -Xcpluscomm -I include
 
-#### Files ####
-
 # ROM image
 ROM := goldeneye007.u.z64
 ELF := $(ROM:.z64=.elf)
@@ -28,18 +62,8 @@ SPEC := spec
 # baserom files
 include baserom_files.mk
 
-SRC_DIRS := src src/libultra
-ASM_DIRS := asm asm/code asm/game asm/rarezip
-TEXTURE_DIRS = textures
 
-# source code
-C_FILES       := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
-S_FILES       := $(foreach dir,$(ASM_DIRS),$(wildcard $(dir)/*.s))
-TEXTURE_FILES := $(foreach dir,$(TEXTURE_DIRS),$(wildcard $(dir)/*.xml))
-O_FILES       := $(foreach f,$(S_FILES:.s=.o),build/$f) \
-                 $(foreach f,$(C_FILES:.c=.o),build/$f) \
-                 $(foreach f,$(BASEROM_FILES),build/$f.o) \
-		         $(foreach f,$(TEXTURE_FILES:.xml=.o),build/$f)
+
 
 # create build directories
 $(shell mkdir -p build/baserom)
@@ -56,8 +80,8 @@ compare: $(ROM)
 $(ROM): $(ELF)
 	$(ELF2ROM) -cic 6102 $< $@
 
-$(ELF): $(O_FILES) build/ldscript.txt
-	$(LD) -T undefined_syms.txt -T build/ldscript.txt --no-check-sections --accept-unknown-input-arch -o $@
+$(ELF): $(O_FILES) ./ge007.u.ld
+	$(LD) -T undefined_syms.txt -T ./ge007.u.ld --no-check-sections --accept-unknown-input-arch -o $@
 
 build/ldscript.txt: $(SPEC)
 	$(CPP) -P $< > build/spec

@@ -22424,6 +22424,4 @@ osEPiRawWriteIo:
 /* 021988 80020D88 00001025 */   move  $v0, $zero
 
 /* 02198C 80020D8C 00000000 */  nop   
-Compressedrodata:
-.incbin "bin/ge007_u.021990.Compressedrodata.bin"
-Compressedrodata_end:
+
