@@ -55,7 +55,7 @@ allocate_viewport_buffer:
 /* 106F3C 7F0D240C 014B0019 */  multu $t2, $t3
 /* 106F40 7F0D2410 00002012 */  mflo  $a0
 /* 106F44 7F0D2414 00046040 */  sll   $t4, $a0, 1
-/* 106F48 7F0D2418 0C0025C8 */  jal   func_70009720
+/* 106F48 7F0D2418 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 106F4C 7F0D241C 25840040 */   addiu $a0, $t4, 0x40
 /* 106F50 7F0D2420 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 106F54 7F0D2424 3C038005 */  lui   $v1, %hi(viewport.img) # $v1, 0x8005
@@ -174,9 +174,9 @@ sub_GAME_7F0D2518:
 /* 1070F0 7F0D25C0 3C18ED00 */  lui   $t8, 0xed00
 /* 1070F4 7F0D25C4 AC580000 */  sw    $t8, ($v0)
 /* 1070F8 7F0D25C8 AFA20030 */  sw    $v0, 0x30($sp)
-/* 1070FC 7F0D25CC 0C001107 */  jal   func_7000441C
+/* 1070FC 7F0D25CC 0C001107 */  jal   get_video2_settings_txtClipW
 /* 107100 7F0D25D0 26100008 */   addiu $s0, $s0, 8
-/* 107104 7F0D25D4 0C00110B */  jal   func_7000442C
+/* 107104 7F0D25D4 0C00110B */  jal   get_video2_settings_txtClipH
 /* 107108 7F0D25D8 A7A20026 */   sh    $v0, 0x26($sp)
 /* 10710C 7F0D25DC 44822000 */  mtc1  $v0, $f4
 /* 107110 7F0D25E0 87AA0026 */  lh    $t2, 0x26($sp)
@@ -202,7 +202,7 @@ sub_GAME_7F0D2518:
 /* 107160 7F0D2630 28410003 */  slti  $at, $v0, 3
 /* 107164 7F0D2634 10200005 */  beqz  $at, .L7F0D264C
 /* 107168 7F0D2638 00000000 */   nop   
-/* 10716C 7F0D263C 0C001107 */  jal   func_7000441C
+/* 10716C 7F0D263C 0C001107 */  jal   get_video2_settings_txtClipW
 /* 107170 7F0D2640 AFA0004C */   sw    $zero, 0x4c($sp)
 /* 107174 7F0D2644 1000001B */  b     .L7F0D26B4
 /* 107178 7F0D2648 2445FFFF */   addiu $a1, $v0, -1
@@ -217,7 +217,7 @@ sub_GAME_7F0D2518:
 /* 107198 7F0D2668 14410009 */  bne   $v0, $at, .L7F0D2690
 /* 10719C 7F0D266C 00000000 */   nop   
 .L7F0D2670:
-/* 1071A0 7F0D2670 0C001107 */  jal   func_7000441C
+/* 1071A0 7F0D2670 0C001107 */  jal   get_video2_settings_txtClipW
 /* 1071A4 7F0D2674 AFA0004C */   sw    $zero, 0x4c($sp)
 /* 1071A8 7F0D2678 04410003 */  bgez  $v0, .L7F0D2688
 /* 1071AC 7F0D267C 00022843 */   sra   $a1, $v0, 1
@@ -227,14 +227,14 @@ sub_GAME_7F0D2518:
 /* 1071B8 7F0D2688 1000000A */  b     .L7F0D26B4
 /* 1071BC 7F0D268C 24A5FFFF */   addiu $a1, $a1, -1
 .L7F0D2690:
-/* 1071C0 7F0D2690 0C001107 */  jal   func_7000441C
+/* 1071C0 7F0D2690 0C001107 */  jal   get_video2_settings_txtClipW
 /* 1071C4 7F0D2694 00000000 */   nop   
 /* 1071C8 7F0D2698 04410003 */  bgez  $v0, .L7F0D26A8
 /* 1071CC 7F0D269C 0002C843 */   sra   $t9, $v0, 1
 /* 1071D0 7F0D26A0 24410001 */  addiu $at, $v0, 1
 /* 1071D4 7F0D26A4 0001C843 */  sra   $t9, $at, 1
 .L7F0D26A8:
-/* 1071D8 7F0D26A8 0C001107 */  jal   func_7000441C
+/* 1071D8 7F0D26A8 0C001107 */  jal   get_video2_settings_txtClipW
 /* 1071DC 7F0D26AC AFB9004C */   sw    $t9, 0x4c($sp)
 /* 1071E0 7F0D26B0 2445FFFF */  addiu $a1, $v0, -1
 .L7F0D26B4:

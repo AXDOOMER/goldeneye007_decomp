@@ -93,7 +93,7 @@ alloc_lookup_buffers:
 /* 036100 7F0015D0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 036104 7F0015D4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 036108 7F0015D8 24040400 */  li    $a0, 1024
-/* 03610C 7F0015DC 0C0025C8 */  jal   func_70009720
+/* 03610C 7F0015DC 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 036110 7F0015E0 24050004 */   li    $a1, 4
 /* 036114 7F0015E4 3C068004 */  lui   $a2, %hi(max_num_rooms) # $a2, 0x8004
 /* 036118 7F0015E8 3C018007 */  lui   $at, %hi(ptr_list_object_lookup_indices) # $at, 0x8007
@@ -104,13 +104,13 @@ alloc_lookup_buffers:
 /* 03612C 7F0015FC 00047080 */  sll   $t6, $a0, 2
 /* 036130 7F001600 25C4000F */  addiu $a0, $t6, 0xf
 /* 036134 7F001604 348F000F */  ori   $t7, $a0, 0xf
-/* 036138 7F001608 0C0025C8 */  jal   func_70009720
+/* 036138 7F001608 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 03613C 7F00160C 39E4000F */   xori  $a0, $t7, 0xf
 /* 036140 7F001610 3C078007 */  lui   $a3, %hi(ptr_room_lookup_buffer_maybe) # $a3, 0x8007
 /* 036144 7F001614 24E71618 */  addiu $a3, %lo(ptr_room_lookup_buffer_maybe) # addiu $a3, $a3, 0x1618
 /* 036148 7F001618 ACE20000 */  sw    $v0, ($a3)
 /* 03614C 7F00161C 24042000 */  li    $a0, 8192
-/* 036150 7F001620 0C0025C8 */  jal   func_70009720
+/* 036150 7F001620 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 036154 7F001624 24050004 */   li    $a1, 4
 /* 036158 7F001628 3C048007 */  lui   $a0, %hi(dword_CODE_bss_8007161C) # $a0, 0x8007
 /* 03615C 7F00162C 2484161C */  addiu $a0, %lo(dword_CODE_bss_8007161C) # addiu $a0, $a0, 0x161c

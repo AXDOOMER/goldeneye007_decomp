@@ -69,7 +69,7 @@ alloc_load_expand_ani_table:
 /* 0355E8 7F000AB8 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80069518) # $a1, 0x8007
 /* 0355EC 7F000ABC 24A59518 */  addiu $a1, %lo(dword_CODE_bss_80069518) # addiu $a1, $a1, -0x6ae8
 /* 0355F0 7F000AC0 24849440 */  addiu $a0, %lo(dword_CODE_bss_80069440) # addiu $a0, $a0, -0x6bc0
-/* 0355F4 7F000AC4 0C0035B4 */  jal   func_7000D6D0
+/* 0355F4 7F000AC4 0C0035B4 */  jal   osCreateMesgQueue
 /* 0355F8 7F000AC8 24060008 */   li    $a2, 8
 /* 0355FC 7F000ACC 3C048003 */  lui   $a0, %hi(D_80029D60) # $a0, 0x8003
 /* 035600 7F000AD0 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80069440) # $a1, 0x8007
@@ -85,7 +85,7 @@ alloc_load_expand_ani_table:
 /* 035628 7F000AF8 01CF3023 */  subu  $a2, $t6, $t7
 /* 03562C 7F000AFC 00C02025 */  move  $a0, $a2
 /* 035630 7F000B00 AFA60018 */  sw    $a2, 0x18($sp)
-/* 035634 7F000B04 0C0025C8 */  jal   func_70009720
+/* 035634 7F000B04 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 035638 7F000B08 24050006 */   li    $a1, 6
 /* 03563C 7F000B0C 3C038007 */  lui   $v1, %hi(ptr_animation_table) # $v1, 0x8007
 /* 035640 7F000B10 24639538 */  addiu $v1, %lo(ptr_animation_table) # addiu $v1, $v1, -0x6ac8
@@ -93,7 +93,7 @@ alloc_load_expand_ani_table:
 /* 035648 7F000B18 AC620000 */  sw    $v0, ($v1)
 /* 03564C 7F000B1C 8FA60018 */  lw    $a2, 0x18($sp)
 /* 035650 7F000B20 24A5E980 */  addiu $a1, %lo(D_0028E980) # addiu $a1, $a1, -0x1680
-/* 035654 7F000B24 0C001707 */  jal   func_70005C1C
+/* 035654 7F000B24 0C001707 */  jal   load_bytes_from_hw_to_rdram
 /* 035658 7F000B28 00402025 */   move  $a0, $v0
 /* 03565C 7F000B2C 3C048003 */  lui   $a0, %hi(animation_table_ptrs1) # $a0, 0x8003
 /* 035660 7F000B30 0FC00280 */  jal   expand_ani_table_entries

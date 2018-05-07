@@ -167,14 +167,14 @@ sub_GAME_7F09193C:
 /* 0C647C 7F09194C 00022600 */  sll   $a0, $v0, 0x18
 /* 0C6480 7F091950 00047603 */  sra   $t6, $a0, 0x18
 /* 0C6484 7F091954 01C02025 */  move  $a0, $t6
-/* 0C6488 7F091958 0C0030C3 */  jal   func_7000C30C
+/* 0C6488 7F091958 0C0030C3 */  jal   get_controller_buttons_held
 /* 0C648C 7F09195C 3405FFFF */   li    $a1, 65535
 /* 0C6490 7F091960 0FC26C54 */  jal   get_cur_playernum
 /* 0C6494 7F091964 A7A20026 */   sh    $v0, 0x26($sp)
 /* 0C6498 7F091968 00022600 */  sll   $a0, $v0, 0x18
 /* 0C649C 7F09196C 00047E03 */  sra   $t7, $a0, 0x18
 /* 0C64A0 7F091970 01E02025 */  move  $a0, $t7
-/* 0C64A4 7F091974 0C0030EB */  jal   func_7000C3AC
+/* 0C64A4 7F091974 0C0030EB */  jal   get_controller_buttons_pressed
 /* 0C64A8 7F091978 3405FFFF */   li    $a1, 65535
 /* 0C64AC 7F09197C 97A30026 */  lhu   $v1, 0x26($sp)
 /* 0C64B0 7F091980 30780030 */  andi  $t8, $v1, 0x30
@@ -437,7 +437,7 @@ cheats_cheat_deactivate_invincibility:
 /* 0C683C 7F091D0C 2405009F */  li    $a1, 159
 /* 0C6840 7F091D10 11C001C5 */  beqz  $t6, .L7F092428
 /* 0C6844 7F091D14 00003025 */   move  $a2, $zero
-/* 0C6848 7F091D18 0C002382 */  jal   func_70008E08
+/* 0C6848 7F091D18 0C002382 */  jal   play_sfx_a1
 /* 0C684C 7F091D1C 8C843720 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0C6850 7F091D20 100001C2 */  b     .L7F09242C
 /* 0C6854 7F091D24 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -873,7 +873,7 @@ cheats_debug_unlockcheat:
 /* 0C6E94 7F092364 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0C6E98 7F092368 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0C6E9C 7F09236C 2405009F */  li    $a1, 159
-/* 0C6EA0 7F092370 0C002382 */  jal   func_70008E08
+/* 0C6EA0 7F092370 0C002382 */  jal   play_sfx_a1
 /* 0C6EA4 7F092374 00003025 */   move  $a2, $zero
 /* 0C6EA8 7F092378 1000002C */  b     .L7F09242C
 /* 0C6EAC 7F09237C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -921,7 +921,7 @@ cheats_debug_unlocklevel:
 /* 0C6F44 7F092414 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0C6F48 7F092418 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0C6F4C 7F09241C 2405009F */  li    $a1, 159
-/* 0C6F50 7F092420 0C002382 */  jal   func_70008E08
+/* 0C6F50 7F092420 0C002382 */  jal   play_sfx_a1
 /* 0C6F54 7F092424 00003025 */   move  $a2, $zero
 cheats_debug_return_saved_ra:
 .L7F092428:

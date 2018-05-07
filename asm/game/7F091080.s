@@ -443,7 +443,7 @@ sub_GAME_7F09166C:
 /* 0C61DC 7F0916AC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C61E0 7F0916B0 460E7282 */  mul.s $f10, $f14, $f14
 /* 0C61E4 7F0916B4 46062200 */  add.s $f8, $f4, $f6
-/* 0C61E8 7F0916B8 0C007DF8 */  jal   func_7001F7E0
+/* 0C61E8 7F0916B8 0C007DF8 */  jal   sqrtf
 /* 0C61EC 7F0916BC 460A4300 */   add.s $f12, $f8, $f10
 /* 0C61F0 7F0916C0 3C028003 */  lui   $v0, %hi(D_80037014) # $v0, 0x8003
 /* 0C61F4 7F0916C4 24427014 */  addiu $v0, %lo(D_80037014) # addiu $v0, $v0, 0x7014

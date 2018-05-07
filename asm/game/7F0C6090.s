@@ -60,14 +60,14 @@ display_red_blue_on_radar:
 /* 0FAC68 7F0C6138 10000113 */  b     .L7F0C6588
 /* 0FAC6C 7F0C613C 8FA20088 */   lw    $v0, 0x88($sp)
 .L7F0C6140:
-/* 0FAC70 7F0C6140 0C001145 */  jal   func_70004514
+/* 0FAC70 7F0C6140 0C001145 */  jal   get_video2_settings_ulx
 /* 0FAC74 7F0C6144 00000000 */   nop   
 /* 0FAC78 7F0C6148 00028400 */  sll   $s0, $v0, 0x10
 /* 0FAC7C 7F0C614C 0010C403 */  sra   $t8, $s0, 0x10
-/* 0FAC80 7F0C6150 0C001127 */  jal   func_7000449C
+/* 0FAC80 7F0C6150 0C001127 */  jal   get_video2_settings_width
 /* 0FAC84 7F0C6154 03008025 */   move  $s0, $t8
 /* 0FAC88 7F0C6158 0050A821 */  addu  $s5, $v0, $s0
-/* 0FAC8C 7F0C615C 0C001149 */  jal   func_70004524
+/* 0FAC8C 7F0C615C 0C001149 */  jal   get_video2_settings_uly
 /* 0FAC90 7F0C6160 26B5FFD7 */   addiu $s5, $s5, -0x29
 /* 0FAC94 7F0C6164 8FB90074 */  lw    $t9, 0x74($sp)
 /* 0FAC98 7F0C6168 2456001A */  addiu $s6, $v0, 0x1a
@@ -249,7 +249,7 @@ display_red_blue_on_radar:
 /* 0FAF38 7F0C6408 4616B182 */  mul.s $f6, $f22, $f22
 /* 0FAF3C 7F0C640C 46062300 */  add.s $f12, $f4, $f6
 /* 0FAF40 7F0C6410 46105480 */  add.s $f18, $f10, $f16
-/* 0FAF44 7F0C6414 0C007DF8 */  jal   func_7001F7E0
+/* 0FAF44 7F0C6414 0C007DF8 */  jal   sqrtf
 /* 0FAF48 7F0C6418 461E9700 */   add.s $f28, $f18, $f30
 /* 0FAF4C 7F0C641C 461A0082 */  mul.s $f2, $f0, $f26
 /* 0FAF50 7F0C6420 24010005 */  li    $at, 5

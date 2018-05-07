@@ -18,16 +18,16 @@ set_mt_tex_alloc:
 /* 03BE5C 7F00732C 3C058005 */  lui   $a1, %hi(D_8004F200) # $a1, 0x8005
 /* 03BE60 7F007330 AC20D090 */  sw    $zero, %lo(dword_CODE_bss_8008D090)($at)
 /* 03BE64 7F007334 24A5F200 */  addiu $a1, %lo(D_8004F200) # addiu $a1, $a1, -0xe00
-/* 03BE68 7F007338 0C0029A8 */  jal   func_7000A6A0
+/* 03BE68 7F007338 0C0029A8 */  jal   check_token
 /* 03BE6C 7F00733C 24040001 */   li    $a0, 1
 /* 03BE70 7F007340 1040000B */  beqz  $v0, .L7F007370
 /* 03BE74 7F007344 24040001 */   li    $a0, 1
 /* 03BE78 7F007348 3C058005 */  lui   $a1, %hi(D_8004F204) # $a1, 0x8005
-/* 03BE7C 7F00734C 0C0029A8 */  jal   func_7000A6A0
+/* 03BE7C 7F00734C 0C0029A8 */  jal   check_token
 /* 03BE80 7F007350 24A5F204 */   addiu $a1, %lo(D_8004F204) # addiu $a1, $a1, -0xdfc
 /* 03BE84 7F007354 00402025 */  move  $a0, $v0
 /* 03BE88 7F007358 00002825 */  move  $a1, $zero
-/* 03BE8C 7F00735C 0C002A78 */  jal   func_7000A9E0
+/* 03BE8C 7F00735C 0C002A78 */  jal   strtol
 /* 03BE90 7F007360 00003025 */   move  $a2, $zero
 /* 03BE94 7F007364 00027280 */  sll   $t6, $v0, 0xa
 /* 03BE98 7F007368 3C018005 */  lui   $at, %hi(bytes) # $at, 0x8005
@@ -35,7 +35,7 @@ set_mt_tex_alloc:
 .L7F007370:
 /* 03BEA0 7F007370 3C048005 */  lui   $a0, %hi(bytes) # $a0, 0x8005
 /* 03BEA4 7F007374 8C849170 */  lw    $a0, %lo(bytes)($a0)
-/* 03BEA8 7F007378 0C0025C8 */  jal   func_70009720
+/* 03BEA8 7F007378 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 03BEAC 7F00737C 24050004 */   li    $a1, 4
 /* 03BEB0 7F007380 3C048009 */  lui   $a0, %hi(ptr_texture_alloc_start) # $a0, 0x8009
 /* 03BEB4 7F007384 3C068005 */  lui   $a2, %hi(bytes) # $a2, 0x8005

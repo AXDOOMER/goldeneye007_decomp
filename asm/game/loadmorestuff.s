@@ -97,7 +97,7 @@ sub_GAME_7F001BD4:
 /* 0367B0 7F001C80 46042202 */  mul.s $f8, $f4, $f4
 /* 0367B4 7F001C84 46085100 */  add.s $f4, $f10, $f8
 /* 0367B8 7F001C88 46063282 */  mul.s $f10, $f6, $f6
-/* 0367BC 7F001C8C 0C007DF8 */  jal   func_7001F7E0
+/* 0367BC 7F001C8C 0C007DF8 */  jal   sqrtf
 /* 0367C0 7F001C90 46045300 */   add.s $f12, $f10, $f4
 /* 0367C4 7F001C94 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0367C8 7F001C98 44819000 */  mtc1  $at, $f18
@@ -1238,7 +1238,7 @@ expand_type_0D_object_autoturret:
 /* 03784C 7F002D1C 460C4282 */  mul.s $f10, $f8, $f12
 /* 037850 7F002D20 46025403 */  div.s $f16, $f10, $f2
 /* 037854 7F002D24 E6040088 */  swc1  $f4, 0x88($s0)
-/* 037858 7F002D28 0C0025C8 */  jal   func_70009720
+/* 037858 7F002D28 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 03785C 7F002D2C E610008C */   swc1  $f16, 0x8c($s0)
 /* 037860 7F002D30 2403FFFF */  li    $v1, -1
 /* 037864 7F002D34 AE0200CC */  sw    $v0, 0xcc($s0)
@@ -1290,7 +1290,7 @@ expand_type_0D_object_autoturret:
 /* 037914 7F002DE4 46021102 */  mul.s $f4, $f2, $f2
 /* 037918 7F002DE8 00000000 */  nop   
 /* 03791C 7F002DEC 460E7182 */  mul.s $f6, $f14, $f14
-/* 037920 7F002DF0 0C007DF8 */  jal   func_7001F7E0
+/* 037920 7F002DF0 0C007DF8 */  jal   sqrtf
 /* 037924 7F002DF4 46062300 */   add.s $f12, $f4, $f6
 /* 037928 7F002DF8 C7AC0028 */  lwc1  $f12, 0x28($sp)
 /* 03792C 7F002DFC 0FC16A8C */  jal   convert_angle_using_inverse
@@ -1653,7 +1653,7 @@ sub_GAME_7F00324C:
 /* 037E60 7F003330 E7B20048 */  swc1  $f18, 0x48($sp)
 /* 037E64 7F003334 46129402 */  mul.s $f16, $f18, $f18
 /* 037E68 7F003338 46082280 */  add.s $f10, $f4, $f8
-/* 037E6C 7F00333C 0C007DF8 */  jal   func_7001F7E0
+/* 037E6C 7F00333C 0C007DF8 */  jal   sqrtf
 /* 037E70 7F003340 460A8300 */   add.s $f12, $f16, $f10
 /* 037E74 7F003344 3C014248 */  li    $at, 0x42480000 # 50.000000
 /* 037E78 7F003348 44816000 */  mtc1  $at, $f12
@@ -2258,26 +2258,26 @@ stage_loading_setup_objparse_cleanupafter:
 /* 038750 7F003C20 AFB00020 */  sw    $s0, 0x20($sp)
 /* 038754 7F003C24 F7B40018 */  sdc1  $f20, 0x18($sp)
 /* 038758 7F003C28 24A5ED90 */  addiu $a1, %lo(aNochr) # addiu $a1, $a1, -0x1270
-/* 03875C 7F003C2C 0C0029A8 */  jal   func_7000A6A0
+/* 03875C 7F003C2C 0C0029A8 */  jal   check_token
 /* 038760 7F003C30 24040001 */   li    $a0, 1
 /* 038764 7F003C34 2C460001 */  sltiu $a2, $v0, 1
 /* 038768 7F003C38 10C00005 */  beqz  $a2, .L7F003C50
 /* 03876C 7F003C3C 24040001 */   li    $a0, 1
 /* 038770 7F003C40 3C058005 */  lui   $a1, %hi(aNoprop) # $a1, 0x8005
-/* 038774 7F003C44 0C0029A8 */  jal   func_7000A6A0
+/* 038774 7F003C44 0C0029A8 */  jal   check_token
 /* 038778 7F003C48 24A5ED98 */   addiu $a1, %lo(aNoprop) # addiu $a1, $a1, -0x1268
 /* 03877C 7F003C4C 2C460001 */  sltiu $a2, $v0, 1
 .L7F003C50:
 /* 038780 7F003C50 3C058005 */  lui   $a1, %hi(aNoobj) # $a1, 0x8005
 /* 038784 7F003C54 AFA60278 */  sw    $a2, 0x278($sp)
 /* 038788 7F003C58 24A5EDA0 */  addiu $a1, %lo(aNoobj) # addiu $a1, $a1, -0x1260
-/* 03878C 7F003C5C 0C0029A8 */  jal   func_7000A6A0
+/* 03878C 7F003C5C 0C0029A8 */  jal   check_token
 /* 038790 7F003C60 24040001 */   li    $a0, 1
 /* 038794 7F003C64 2C430001 */  sltiu $v1, $v0, 1
 /* 038798 7F003C68 10600005 */  beqz  $v1, .L7F003C80
 /* 03879C 7F003C6C 24040001 */   li    $a0, 1
 /* 0387A0 7F003C70 3C058005 */  lui   $a1, %hi(aNoprop_0) # $a1, 0x8005
-/* 0387A4 7F003C74 0C0029A8 */  jal   func_7000A6A0
+/* 0387A4 7F003C74 0C0029A8 */  jal   check_token
 /* 0387A8 7F003C78 24A5EDA8 */   addiu $a1, %lo(aNoprop_0) # addiu $a1, $a1, -0x1258
 /* 0387AC 7F003C7C 2C430001 */  sltiu $v1, $v0, 1
 .L7F003C80:
@@ -2331,12 +2331,12 @@ stage_loading_setup_objparse_cleanupafter:
 /* 038864 7F003D34 14200004 */  bnez  $at, .L7F003D48
 /* 038868 7F003D38 3C058005 */   lui   $a1, %hi(aMp_) # $a1, 0x8005
 /* 03886C 7F003D3C 24A5EEB0 */  addiu $a1, %lo(aMp_) # addiu $a1, $a1, -0x1150
-/* 038870 7F003D40 0C0029FF */  jal   func_7000A7FC
+/* 038870 7F003D40 0C0029FF */  jal   string_load_parse_something
 /* 038874 7F003D44 02202025 */   move  $a0, $s1
 .L7F003D48:
 /* 038878 7F003D48 8E050000 */  lw    $a1, ($s0)
 /* 03887C 7F003D4C 02202025 */  move  $a0, $s1
-/* 038880 7F003D50 0C0029FF */  jal   func_7000A7FC
+/* 038880 7F003D50 0C0029FF */  jal   string_load_parse_something
 /* 038884 7F003D54 24A50001 */   addiu $a1, $a1, 1
 /* 038888 7F003D58 02202025 */  move  $a0, $s1
 /* 03888C 7F003D5C 24050001 */  li    $a1, 1

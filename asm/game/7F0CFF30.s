@@ -171,7 +171,7 @@ sub_GAME_7F0D0124:
 /* 104C60 7F0D0130 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 104C64 7F0D0134 51C00004 */  beql  $t6, $zero, .L7F0D0148
 /* 104C68 7F0D0138 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 104C6C 7F0D013C 0C0033AC */  jal   func_7000CEB0
+/* 104C6C 7F0D013C 0C0033AC */  jal   rmon_debug_returns_neg_1
 /* 104C70 7F0D0140 00000000 */   nop   
 /* 104C74 7F0D0144 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F0D0148:

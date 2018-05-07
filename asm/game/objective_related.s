@@ -14,7 +14,7 @@
 something_with_stage_objectives:
 /* 0399F0 7F004EC0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0399F4 7F004EC4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0399F8 7F004EC8 0C001A57 */  jal   func_7000695C
+/* 0399F8 7F004EC8 0C001A57 */  jal   get_stage_num
 /* 0399FC 7F004ECC 00000000 */   nop   
 /* 039A00 7F004ED0 2401005A */  li    $at, 90
 /* 039A04 7F004ED4 10410011 */  beq   $v0, $at, .L7F004F1C

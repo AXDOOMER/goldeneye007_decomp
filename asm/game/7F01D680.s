@@ -32,7 +32,7 @@ store_favorite_weapon_current_player:
 sub_GAME_7F01D6C0:
 /* 0521F0 7F01D6C0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0521F4 7F01D6C4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0521F8 7F01D6C8 0C0031BF */  jal   func_7000C6FC
+/* 0521F8 7F01D6C8 0C0031BF */  jal   save_7000C6FC
 /* 0521FC 7F01D6CC 00000000 */   nop   
 /* 052200 7F01D6D0 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 052204 7F01D6D4 27BD0018 */  addiu $sp, $sp, 0x18
@@ -86,7 +86,7 @@ sub_GAME_7F01D758:
 /* 0522AC 7F01D77C 00E03025 */   move  $a2, $a3
 /* 0522B0 7F01D780 8FA50018 */  lw    $a1, 0x18($sp)
 /* 0522B4 7F01D784 00002025 */  move  $a0, $zero
-/* 0522B8 7F01D788 0C003202 */  jal   func_7000C808
+/* 0522B8 7F01D788 0C003202 */  jal   save_7000C808
 /* 0522BC 7F01D78C 24060020 */   li    $a2, 32
 .L7F01D790:
 /* 0522C0 7F01D790 8FBF0014 */  lw    $ra, 0x14($sp)

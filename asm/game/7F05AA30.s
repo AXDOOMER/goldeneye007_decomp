@@ -48,7 +48,7 @@ convert_angle_using_inverse:
 /* 08F5D4 7F05AAA4 4614A102 */  mul.s $f4, $f20, $f20
 /* 08F5D8 7F05AAA8 E7AE0024 */  swc1  $f14, 0x24($sp)
 /* 08F5DC 7F05AAAC 460E7182 */  mul.s $f6, $f14, $f14
-/* 08F5E0 7F05AAB0 0C007DF8 */  jal   func_7001F7E0
+/* 08F5E0 7F05AAB0 0C007DF8 */  jal   sqrtf
 /* 08F5E4 7F05AAB4 46062300 */   add.s $f12, $f4, $f6
 /* 08F5E8 7F05AAB8 C7AE0024 */  lwc1  $f14, 0x24($sp)
 /* 08F5EC 7F05AABC 46000086 */  mov.s $f2, $f0

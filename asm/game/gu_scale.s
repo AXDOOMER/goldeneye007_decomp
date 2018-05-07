@@ -20,7 +20,7 @@ set_gu_scale:
 /* 0356C4 7F000B94 44050000 */  mfc1  $a1, $f0
 /* 0356C8 7F000B98 44060000 */  mfc1  $a2, $f0
 /* 0356CC 7F000B9C 44070000 */  mfc1  $a3, $f0
-/* 0356D0 7F000BA0 0C005BB9 */  jal   func_70016EE4
+/* 0356D0 7F000BA0 0C005BB9 */  jal   guScale
 /* 0356D4 7F000BA4 2484A100 */   addiu $a0, %lo(dword_CODE_bss_8007A100) # addiu $a0, $a0, -0x5f00
 /* 0356D8 7F000BA8 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0356DC 7F000BAC 27BD0018 */  addiu $sp, $sp, 0x18

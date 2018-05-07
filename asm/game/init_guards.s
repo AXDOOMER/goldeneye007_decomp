@@ -58,7 +58,7 @@ alloc_init_GUARDdata_entries:
 /* 035A14 7F000EE4 3498000F */  ori   $t8, $a0, 0xf
 /* 035A18 7F000EE8 ACCE0000 */  sw    $t6, ($a2)
 /* 035A1C 7F000EEC 3B04000F */  xori  $a0, $t8, 0xf
-/* 035A20 7F000EF0 0C0025C8 */  jal   func_70009720
+/* 035A20 7F000EF0 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 035A24 7F000EF4 24050004 */   li    $a1, 4
 /* 035A28 7F000EF8 3C068003 */  lui   $a2, %hi(D_8002CC68) # $a2, 0x8003
 /* 035A2C 7F000EFC 24C6CC68 */  addiu $a2, %lo(D_8002CC68) # addiu $a2, $a2, -0x3398
@@ -102,7 +102,7 @@ set_new_rand_head_bodies:
 /* 035AB0 7F000F80 5460FFFD */  bnezl $v1, .L7F000F78
 /* 035AB4 7F000F84 AC600000 */   sw    $zero, ($v1)
 .L7F000F88:
-/* 035AB8 7F000F88 0C002914 */  jal   func_7000A450
+/* 035AB8 7F000F88 0C002914 */  jal   random_related
 /* 035ABC 7F000F8C 00000000 */   nop   
 /* 035AC0 7F000F90 3C188003 */  lui   $t8, %hi(num_male_heads) # $t8, 0x8003
 /* 035AC4 7F000F94 8F18CD04 */  lw    $t8, %lo(num_male_heads)($t8)
@@ -114,7 +114,7 @@ set_new_rand_head_bodies:
 /* 035ADC 7F000FAC 00000000 */   nop   
 /* 035AE0 7F000FB0 0007000D */  break 7
 .L7F000FB4:
-/* 035AE4 7F000FB4 0C002914 */  jal   func_7000A450
+/* 035AE4 7F000FB4 0C002914 */  jal   random_related
 /* 035AE8 7F000FB8 00000000 */   nop   
 /* 035AEC 7F000FBC 3C088003 */  lui   $t0, %hi(num_female_heads) # $t0, 0x8003
 /* 035AF0 7F000FC0 8D08CD08 */  lw    $t0, %lo(num_female_heads)($t0)
@@ -126,7 +126,7 @@ set_new_rand_head_bodies:
 /* 035B08 7F000FD8 00000000 */   nop   
 /* 035B0C 7F000FDC 0007000D */  break 7
 .L7F000FE0:
-/* 035B10 7F000FE0 0C002914 */  jal   func_7000A450
+/* 035B10 7F000FE0 0C002914 */  jal   random_related
 /* 035B14 7F000FE4 00000000 */   nop   
 /* 035B18 7F000FE8 3C0A8003 */  lui   $t2, %hi(num_bodies) # $t2, 0x8003
 /* 035B1C 7F000FEC 8D4ACD00 */  lw    $t2, %lo(num_bodies)($t2)

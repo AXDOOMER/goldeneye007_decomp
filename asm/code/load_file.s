@@ -12,133 +12,133 @@
 .section .text, "ax"
 
 creates_a_message_queue_for_memory:
-/* 006760 80005B60 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 006764 80005B64 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 006768 80005B68 3C048006 */  lui   $a0, %hi(memoryMesgQueue) # $a0, 0x8006
-/* 00676C 80005B6C 3C058006 */  lui   $a1, %hi(ptr_memorymsg) # $a1, 0x8006
-/* 006770 80005B70 24A536E8 */  addiu $a1, %lo(ptr_memorymsg) # addiu $a1, $a1, 0x36e8
-/* 006774 80005B74 248436F0 */  addiu $a0, %lo(memoryMesgQueue) # addiu $a0, $a0, 0x36f0
-/* 006778 80005B78 0C0035B4 */  jal   osCreateMesgQueue
-/* 00677C 80005B7C 24060001 */   li    $a2, 1
-/* 006780 80005B80 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 006784 80005B84 27BD0018 */  addiu $sp, $sp, 0x18
-/* 006788 80005B88 03E00008 */  jr    $ra
-/* 00678C 80005B8C 00000000 */   nop   
+/* 006760 70005B60 27BDFFE8 */  addiu $sp, $sp, -0x18
+/* 006764 70005B64 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 006768 70005B68 3C048006 */  lui   $a0, %hi(memoryMesgQueue) # $a0, 0x8006
+/* 00676C 70005B6C 3C058006 */  lui   $a1, %hi(ptr_memorymsg) # $a1, 0x8006
+/* 006770 70005B70 24A536E8 */  addiu $a1, %lo(ptr_memorymsg) # addiu $a1, $a1, 0x36e8
+/* 006774 70005B74 248436F0 */  addiu $a0, %lo(memoryMesgQueue) # addiu $a0, $a0, 0x36f0
+/* 006778 70005B78 0C0035B4 */  jal   osCreateMesgQueue
+/* 00677C 70005B7C 24060001 */   li    $a2, 1
+/* 006780 70005B80 8FBF0014 */  lw    $ra, 0x14($sp)
+/* 006784 70005B84 27BD0018 */  addiu $sp, $sp, 0x18
+/* 006788 70005B88 03E00008 */  jr    $ra
+/* 00678C 70005B8C 00000000 */   nop   
 
 read_bytes_from_hw_to_rdram:
-/* 006790 80005B90 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 006794 80005B94 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 006798 80005B98 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 00679C 80005B9C AFA40028 */  sw    $a0, 0x28($sp)
-/* 0067A0 80005BA0 AFA60030 */  sw    $a2, 0x30($sp)
-/* 0067A4 80005BA4 0C0042C8 */  jal   osInvalDCache
-/* 0067A8 80005BA8 00C02825 */   move  $a1, $a2
-/* 0067AC 80005BAC 8FAE0028 */  lw    $t6, 0x28($sp)
-/* 0067B0 80005BB0 8FAF0030 */  lw    $t7, 0x30($sp)
-/* 0067B4 80005BB4 3C188006 */  lui   $t8, %hi(memoryMesgQueue) # $t8, 0x8006
-/* 0067B8 80005BB8 271836F0 */  addiu $t8, %lo(memoryMesgQueue) # addiu $t8, $t8, 0x36f0
-/* 0067BC 80005BBC 3C048006 */  lui   $a0, %hi(memoryMesgMB) # $a0, 0x8006
-/* 0067C0 80005BC0 248436D0 */  addiu $a0, %lo(memoryMesgMB) # addiu $a0, $a0, 0x36d0
-/* 0067C4 80005BC4 AFB80018 */  sw    $t8, 0x18($sp)
-/* 0067C8 80005BC8 00002825 */  move  $a1, $zero
-/* 0067CC 80005BCC 00003025 */  move  $a2, $zero
-/* 0067D0 80005BD0 8FA7002C */  lw    $a3, 0x2c($sp)
-/* 0067D4 80005BD4 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0067D8 80005BD8 0C003DA8 */  jal   osPiStartDma
-/* 0067DC 80005BDC AFAF0014 */   sw    $t7, 0x14($sp)
-/* 0067E0 80005BE0 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0067E4 80005BE4 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0067E8 80005BE8 03E00008 */  jr    $ra
-/* 0067EC 80005BEC 00000000 */   nop   
+/* 006790 70005B90 27BDFFD8 */  addiu $sp, $sp, -0x28
+/* 006794 70005B94 AFBF0024 */  sw    $ra, 0x24($sp)
+/* 006798 70005B98 AFA5002C */  sw    $a1, 0x2c($sp)
+/* 00679C 70005B9C AFA40028 */  sw    $a0, 0x28($sp)
+/* 0067A0 70005BA0 AFA60030 */  sw    $a2, 0x30($sp)
+/* 0067A4 70005BA4 0C0042C8 */  jal   osInvalDCache
+/* 0067A8 70005BA8 00C02825 */   move  $a1, $a2
+/* 0067AC 70005BAC 8FAE0028 */  lw    $t6, 0x28($sp)
+/* 0067B0 70005BB0 8FAF0030 */  lw    $t7, 0x30($sp)
+/* 0067B4 70005BB4 3C188006 */  lui   $t8, %hi(memoryMesgQueue) # $t8, 0x8006
+/* 0067B8 70005BB8 271836F0 */  addiu $t8, %lo(memoryMesgQueue) # addiu $t8, $t8, 0x36f0
+/* 0067BC 70005BBC 3C048006 */  lui   $a0, %hi(memoryMesgMB) # $a0, 0x8006
+/* 0067C0 70005BC0 248436D0 */  addiu $a0, %lo(memoryMesgMB) # addiu $a0, $a0, 0x36d0
+/* 0067C4 70005BC4 AFB80018 */  sw    $t8, 0x18($sp)
+/* 0067C8 70005BC8 00002825 */  move  $a1, $zero
+/* 0067CC 70005BCC 00003025 */  move  $a2, $zero
+/* 0067D0 70005BD0 8FA7002C */  lw    $a3, 0x2c($sp)
+/* 0067D4 70005BD4 AFAE0010 */  sw    $t6, 0x10($sp)
+/* 0067D8 70005BD8 0C003DA8 */  jal   osPiStartDma
+/* 0067DC 70005BDC AFAF0014 */   sw    $t7, 0x14($sp)
+/* 0067E0 70005BE0 8FBF0024 */  lw    $ra, 0x24($sp)
+/* 0067E4 70005BE4 27BD0028 */  addiu $sp, $sp, 0x28
+/* 0067E8 70005BE8 03E00008 */  jr    $ra
+/* 0067EC 70005BEC 00000000 */   nop   
 
 receive_memoryMesg:
-/* 0067F0 80005BF0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0067F4 80005BF4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0067F8 80005BF8 3C048006 */  lui   $a0, %hi(memoryMesgQueue) # $a0, 0x8006
-/* 0067FC 80005BFC 248436F0 */  addiu $a0, %lo(memoryMesgQueue) # addiu $a0, $a0, 0x36f0
-/* 006800 80005C00 00002825 */  move  $a1, $zero
-/* 006804 80005C04 0C003774 */  jal   osRecvMesg
-/* 006808 80005C08 24060001 */   li    $a2, 1
-/* 00680C 80005C0C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 006810 80005C10 27BD0018 */  addiu $sp, $sp, 0x18
-/* 006814 80005C14 03E00008 */  jr    $ra
-/* 006818 80005C18 00000000 */   nop   
+/* 0067F0 70005BF0 27BDFFE8 */  addiu $sp, $sp, -0x18
+/* 0067F4 70005BF4 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 0067F8 70005BF8 3C048006 */  lui   $a0, %hi(memoryMesgQueue) # $a0, 0x8006
+/* 0067FC 70005BFC 248436F0 */  addiu $a0, %lo(memoryMesgQueue) # addiu $a0, $a0, 0x36f0
+/* 006800 70005C00 00002825 */  move  $a1, $zero
+/* 006804 70005C04 0C003774 */  jal   osRecvMesg
+/* 006808 70005C08 24060001 */   li    $a2, 1
+/* 00680C 70005C0C 8FBF0014 */  lw    $ra, 0x14($sp)
+/* 006810 70005C10 27BD0018 */  addiu $sp, $sp, 0x18
+/* 006814 70005C14 03E00008 */  jr    $ra
+/* 006818 70005C18 00000000 */   nop   
 
 load_bytes_from_hw_to_rdram:
-/* 00681C 80005C1C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 006820 80005C20 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 006824 80005C24 0C0016E4 */  jal   read_bytes_from_hw_to_rdram
-/* 006828 80005C28 00000000 */   nop   
-/* 00682C 80005C2C 0C0016FC */  jal   receive_memoryMesg
-/* 006830 80005C30 00000000 */   nop   
-/* 006834 80005C34 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 006838 80005C38 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00683C 80005C3C 03E00008 */  jr    $ra
-/* 006840 80005C40 00000000 */   nop   
+/* 00681C 70005C1C 27BDFFE8 */  addiu $sp, $sp, -0x18
+/* 006820 70005C20 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 006824 70005C24 0C0016E4 */  jal   read_bytes_from_hw_to_rdram
+/* 006828 70005C28 00000000 */   nop   
+/* 00682C 70005C2C 0C0016FC */  jal   receive_memoryMesg
+/* 006830 70005C30 00000000 */   nop   
+/* 006834 70005C34 8FBF0014 */  lw    $ra, 0x14($sp)
+/* 006838 70005C38 27BD0018 */  addiu $sp, $sp, 0x18
+/* 00683C 70005C3C 03E00008 */  jr    $ra
+/* 006840 70005C40 00000000 */   nop   
 
 load_ramrom_file:
-/* 006844 80005C44 00A03825 */  move  $a3, $a1
-/* 006848 80005C48 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 00684C 80005C4C 34A50001 */  ori   $a1, $a1, 1
-/* 006850 80005C50 38B80001 */  xori  $t8, $a1, 1
-/* 006854 80005C54 AFA40030 */  sw    $a0, 0x30($sp)
-/* 006858 80005C58 AFA60038 */  sw    $a2, 0x38($sp)
-/* 00685C 80005C5C 00F81823 */  subu  $v1, $a3, $t8
-/* 006860 80005C60 00663021 */  addu  $a2, $v1, $a2
-/* 006864 80005C64 2484000F */  addiu $a0, $a0, 0xf
-/* 006868 80005C68 348E000F */  ori   $t6, $a0, 0xf
-/* 00686C 80005C6C 24C6000F */  addiu $a2, $a2, 0xf
-/* 006870 80005C70 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 006874 80005C74 34C8000F */  ori   $t0, $a2, 0xf
-/* 006878 80005C78 39C4000F */  xori  $a0, $t6, 0xf
-/* 00687C 80005C7C AFA4001C */  sw    $a0, 0x1c($sp)
-/* 006880 80005C80 3906000F */  xori  $a2, $t0, 0xf
-/* 006884 80005C84 AFA30018 */  sw    $v1, 0x18($sp)
-/* 006888 80005C88 0C001707 */  jal   load_bytes_from_hw_to_rdram
-/* 00688C 80005C8C 03002825 */   move  $a1, $t8
-/* 006890 80005C90 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 006894 80005C94 8FA30018 */  lw    $v1, 0x18($sp)
-/* 006898 80005C98 8FA4001C */  lw    $a0, 0x1c($sp)
-/* 00689C 80005C9C 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0068A0 80005CA0 03E00008 */  jr    $ra
-/* 0068A4 80005CA4 00831021 */   addu  $v0, $a0, $v1
+/* 006844 70005C44 00A03825 */  move  $a3, $a1
+/* 006848 70005C48 27BDFFD0 */  addiu $sp, $sp, -0x30
+/* 00684C 70005C4C 34A50001 */  ori   $a1, $a1, 1
+/* 006850 70005C50 38B80001 */  xori  $t8, $a1, 1
+/* 006854 70005C54 AFA40030 */  sw    $a0, 0x30($sp)
+/* 006858 70005C58 AFA60038 */  sw    $a2, 0x38($sp)
+/* 00685C 70005C5C 00F81823 */  subu  $v1, $a3, $t8
+/* 006860 70005C60 00663021 */  addu  $a2, $v1, $a2
+/* 006864 70005C64 2484000F */  addiu $a0, $a0, 0xf
+/* 006868 70005C68 348E000F */  ori   $t6, $a0, 0xf
+/* 00686C 70005C6C 24C6000F */  addiu $a2, $a2, 0xf
+/* 006870 70005C70 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 006874 70005C74 34C8000F */  ori   $t0, $a2, 0xf
+/* 006878 70005C78 39C4000F */  xori  $a0, $t6, 0xf
+/* 00687C 70005C7C AFA4001C */  sw    $a0, 0x1c($sp)
+/* 006880 70005C80 3906000F */  xori  $a2, $t0, 0xf
+/* 006884 70005C84 AFA30018 */  sw    $v1, 0x18($sp)
+/* 006888 70005C88 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 00688C 70005C8C 03002825 */   move  $a1, $t8
+/* 006890 70005C90 8FBF0014 */  lw    $ra, 0x14($sp)
+/* 006894 70005C94 8FA30018 */  lw    $v1, 0x18($sp)
+/* 006898 70005C98 8FA4001C */  lw    $a0, 0x1c($sp)
+/* 00689C 70005C9C 27BD0030 */  addiu $sp, $sp, 0x30
+/* 0068A0 70005CA0 03E00008 */  jr    $ra
+/* 0068A4 70005CA4 00831021 */   addu  $v0, $a0, $v1
 
 write_rdram_to_hw:
-/* 0068A8 80005CA8 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0068AC 80005CAC AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0068B0 80005CB0 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 0068B4 80005CB4 AFA40028 */  sw    $a0, 0x28($sp)
-/* 0068B8 80005CB8 AFA60030 */  sw    $a2, 0x30($sp)
-/* 0068BC 80005CBC 0C0042F4 */  jal   osWritebackDCache
-/* 0068C0 80005CC0 00C02825 */   move  $a1, $a2
-/* 0068C4 80005CC4 8FAE0028 */  lw    $t6, 0x28($sp)
-/* 0068C8 80005CC8 8FAF0030 */  lw    $t7, 0x30($sp)
-/* 0068CC 80005CCC 3C188006 */  lui   $t8, %hi(memoryMesgQueue) # $t8, 0x8006
-/* 0068D0 80005CD0 271836F0 */  addiu $t8, %lo(memoryMesgQueue) # addiu $t8, $t8, 0x36f0
-/* 0068D4 80005CD4 3C048006 */  lui   $a0, %hi(memoryMesgMB) # $a0, 0x8006
-/* 0068D8 80005CD8 248436D0 */  addiu $a0, %lo(memoryMesgMB) # addiu $a0, $a0, 0x36d0
-/* 0068DC 80005CDC AFB80018 */  sw    $t8, 0x18($sp)
-/* 0068E0 80005CE0 00002825 */  move  $a1, $zero
-/* 0068E4 80005CE4 24060001 */  li    $a2, 1
-/* 0068E8 80005CE8 8FA7002C */  lw    $a3, 0x2c($sp)
-/* 0068EC 80005CEC AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0068F0 80005CF0 0C003DA8 */  jal   osPiStartDma
-/* 0068F4 80005CF4 AFAF0014 */   sw    $t7, 0x14($sp)
-/* 0068F8 80005CF8 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0068FC 80005CFC 27BD0028 */  addiu $sp, $sp, 0x28
-/* 006900 80005D00 03E00008 */  jr    $ra
-/* 006904 80005D04 00000000 */   nop   
+/* 0068A8 70005CA8 27BDFFD8 */  addiu $sp, $sp, -0x28
+/* 0068AC 70005CAC AFBF0024 */  sw    $ra, 0x24($sp)
+/* 0068B0 70005CB0 AFA5002C */  sw    $a1, 0x2c($sp)
+/* 0068B4 70005CB4 AFA40028 */  sw    $a0, 0x28($sp)
+/* 0068B8 70005CB8 AFA60030 */  sw    $a2, 0x30($sp)
+/* 0068BC 70005CBC 0C0042F4 */  jal   osWritebackDCache
+/* 0068C0 70005CC0 00C02825 */   move  $a1, $a2
+/* 0068C4 70005CC4 8FAE0028 */  lw    $t6, 0x28($sp)
+/* 0068C8 70005CC8 8FAF0030 */  lw    $t7, 0x30($sp)
+/* 0068CC 70005CCC 3C188006 */  lui   $t8, %hi(memoryMesgQueue) # $t8, 0x8006
+/* 0068D0 70005CD0 271836F0 */  addiu $t8, %lo(memoryMesgQueue) # addiu $t8, $t8, 0x36f0
+/* 0068D4 70005CD4 3C048006 */  lui   $a0, %hi(memoryMesgMB) # $a0, 0x8006
+/* 0068D8 70005CD8 248436D0 */  addiu $a0, %lo(memoryMesgMB) # addiu $a0, $a0, 0x36d0
+/* 0068DC 70005CDC AFB80018 */  sw    $t8, 0x18($sp)
+/* 0068E0 70005CE0 00002825 */  move  $a1, $zero
+/* 0068E4 70005CE4 24060001 */  li    $a2, 1
+/* 0068E8 70005CE8 8FA7002C */  lw    $a3, 0x2c($sp)
+/* 0068EC 70005CEC AFAE0010 */  sw    $t6, 0x10($sp)
+/* 0068F0 70005CF0 0C003DA8 */  jal   osPiStartDma
+/* 0068F4 70005CF4 AFAF0014 */   sw    $t7, 0x14($sp)
+/* 0068F8 70005CF8 8FBF0024 */  lw    $ra, 0x24($sp)
+/* 0068FC 70005CFC 27BD0028 */  addiu $sp, $sp, 0x28
+/* 006900 70005D00 03E00008 */  jr    $ra
+/* 006904 70005D04 00000000 */   nop   
 
 load_rdram_to_hw:
-/* 006908 80005D08 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00690C 80005D0C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 006910 80005D10 0C00172A */  jal   write_rdram_to_hw
-/* 006914 80005D14 00000000 */   nop   
-/* 006918 80005D18 0C0016FC */  jal   receive_memoryMesg
-/* 00691C 80005D1C 00000000 */   nop   
-/* 006920 80005D20 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 006924 80005D24 27BD0018 */  addiu $sp, $sp, 0x18
-/* 006928 80005D28 03E00008 */  jr    $ra
-/* 00692C 80005D2C 00000000 */   nop   
+/* 006908 70005D08 27BDFFE8 */  addiu $sp, $sp, -0x18
+/* 00690C 70005D0C AFBF0014 */  sw    $ra, 0x14($sp)
+/* 006910 70005D10 0C00172A */  jal   write_rdram_to_hw
+/* 006914 70005D14 00000000 */   nop   
+/* 006918 70005D18 0C0016FC */  jal   receive_memoryMesg
+/* 00691C 70005D1C 00000000 */   nop   
+/* 006920 70005D20 8FBF0014 */  lw    $ra, 0x14($sp)
+/* 006924 70005D24 27BD0018 */  addiu $sp, $sp, 0x18
+/* 006928 70005D28 03E00008 */  jr    $ra
+/* 00692C 70005D2C 00000000 */   nop   
 
 

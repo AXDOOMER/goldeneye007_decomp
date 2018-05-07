@@ -98,9 +98,9 @@ sub_GAME_7F01C400:
 /* 05107C 7F01C54C AC400044 */  sw    $zero, 0x44($v0)
 /* 051080 7F01C550 244D0068 */  addiu $t5, $v0, 0x68
 /* 051084 7F01C554 AFAD0030 */  sw    $t5, 0x30($sp)
-/* 051088 7F01C558 0C001107 */  jal   func_7000441C
+/* 051088 7F01C558 0C001107 */  jal   get_video2_settings_txtClipW
 /* 05108C 7F01C55C 24500070 */   addiu $s0, $v0, 0x70
-/* 051090 7F01C560 0C00110B */  jal   func_7000442C
+/* 051090 7F01C560 0C00110B */  jal   get_video2_settings_txtClipH
 /* 051094 7F01C564 A7A20026 */   sh    $v0, 0x26($sp)
 /* 051098 7F01C568 87A80026 */  lh    $t0, 0x26($sp)
 /* 05109C 7F01C56C 00027080 */  sll   $t6, $v0, 2
@@ -125,9 +125,9 @@ sub_GAME_7F01C400:
 /* 0510E8 7F01C5B8 3C0FB300 */  lui   $t7, 0xb300
 /* 0510EC 7F01C5BC AC8F0000 */  sw    $t7, ($a0)
 /* 0510F0 7F01C5C0 AFA40028 */  sw    $a0, 0x28($sp)
-/* 0510F4 7F01C5C4 0C001107 */  jal   func_7000441C
+/* 0510F4 7F01C5C4 0C001107 */  jal   get_video2_settings_txtClipW
 /* 0510F8 7F01C5C8 26100008 */   addiu $s0, $s0, 8
-/* 0510FC 7F01C5CC 0C00110B */  jal   func_7000442C
+/* 0510FC 7F01C5CC 0C00110B */  jal   get_video2_settings_txtClipH
 /* 051100 7F01C5D0 A7A20026 */   sh    $v0, 0x26($sp)
 /* 051104 7F01C5D4 3C180001 */  lui   $t8, (0x00014000 >> 16) # lui $t8, 1
 /* 051108 7F01C5D8 37184000 */  ori   $t8, (0x00014000 & 0xFFFF) # ori $t8, $t8, 0x4000

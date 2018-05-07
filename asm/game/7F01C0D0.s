@@ -22,16 +22,16 @@ insert_imageDL:
 /* 050C1C 7F01C0EC AC8E0000 */  sw    $t6, ($a0)
 /* 050C20 7F01C0F0 24900008 */  addiu $s0, $a0, 8
 /* 050C24 7F01C0F4 AFB00030 */  sw    $s0, 0x30($sp)
-/* 050C28 7F01C0F8 0C001107 */  jal   func_7000441C
+/* 050C28 7F01C0F8 0C001107 */  jal   get_video2_settings_txtClipW
 /* 050C2C 7F01C0FC 26100008 */   addiu $s0, $s0, 8
 /* 050C30 7F01C100 2458FFFF */  addiu $t8, $v0, -1
 /* 050C34 7F01C104 8FA90030 */  lw    $t1, 0x30($sp)
 /* 050C38 7F01C108 33190FFF */  andi  $t9, $t8, 0xfff
 /* 050C3C 7F01C10C 3C01FF10 */  lui   $at, 0xff10
 /* 050C40 7F01C110 03214025 */  or    $t0, $t9, $at
-/* 050C44 7F01C114 0C000F07 */  jal   func_70003C1C
+/* 050C44 7F01C114 0C000F07 */  jal   get_video2buf_offset28
 /* 050C48 7F01C118 AD280000 */   sw    $t0, ($t1)
-/* 050C4C 7F01C11C 0C003A2C */  jal   func_7000E8B0
+/* 050C4C 7F01C11C 0C003A2C */  jal   osVirtualToPhysical
 /* 050C50 7F01C120 00402025 */   move  $a0, $v0
 /* 050C54 7F01C124 8FAA0030 */  lw    $t2, 0x30($sp)
 /* 050C58 7F01C128 02001825 */  move  $v1, $s0
@@ -43,9 +43,9 @@ insert_imageDL:
 /* 050C70 7F01C140 AC6C0004 */  sw    $t4, 4($v1)
 /* 050C74 7F01C144 26100008 */  addiu $s0, $s0, 8
 /* 050C78 7F01C148 AFB00028 */  sw    $s0, 0x28($sp)
-/* 050C7C 7F01C14C 0C001107 */  jal   func_7000441C
+/* 050C7C 7F01C14C 0C001107 */  jal   get_video2_settings_txtClipW
 /* 050C80 7F01C150 26100008 */   addiu $s0, $s0, 8
-/* 050C84 7F01C154 0C00110B */  jal   func_7000442C
+/* 050C84 7F01C154 0C00110B */  jal   get_video2_settings_txtClipH
 /* 050C88 7F01C158 A7A20022 */   sh    $v0, 0x22($sp)
 /* 050C8C 7F01C15C 87B90022 */  lh    $t9, 0x22($sp)
 /* 050C90 7F01C160 244DFFFF */  addiu $t5, $v0, -1
@@ -77,7 +77,7 @@ sub_GAME_7F01C1A4:
 /* 050CF0 7F01C1C0 3C048007 */  lui   $a0, %hi(matrix_buffer_gunbarrel_0) # $a0, 0x8007
 /* 050CF4 7F01C1C4 8C84955C */  lw    $a0, %lo(matrix_buffer_gunbarrel_0)($a0)
 /* 050CF8 7F01C1C8 AFA50020 */  sw    $a1, 0x20($sp)
-/* 050CFC 7F01C1CC 0C003A2C */  jal   func_7000E8B0
+/* 050CFC 7F01C1CC 0C003A2C */  jal   osVirtualToPhysical
 /* 050D00 7F01C1D0 AFA3001C */   sw    $v1, 0x1c($sp)
 /* 050D04 7F01C1D4 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 050D08 7F01C1D8 8FA80020 */  lw    $t0, 0x20($sp)
@@ -93,7 +93,7 @@ sub_GAME_7F01C1A4:
 /* 050D30 7F01C200 0018C980 */  sll   $t9, $t8, 6
 /* 050D34 7F01C204 AFA50020 */  sw    $a1, 0x20($sp)
 /* 050D38 7F01C208 AFA80018 */  sw    $t0, 0x18($sp)
-/* 050D3C 7F01C20C 0C003A2C */  jal   func_7000E8B0
+/* 050D3C 7F01C20C 0C003A2C */  jal   osVirtualToPhysical
 /* 050D40 7F01C210 03292021 */   addu  $a0, $t9, $t1
 /* 050D44 7F01C214 8FA30020 */  lw    $v1, 0x20($sp)
 /* 050D48 7F01C218 8FA80018 */  lw    $t0, 0x18($sp)

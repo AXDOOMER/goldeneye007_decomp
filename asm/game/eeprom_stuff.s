@@ -46,7 +46,7 @@ sub_GAME_7F01D7A0:
 /* 05234C 7F01D81C 25240004 */  addiu $a0, $t1, 4
 /* 052350 7F01D820 308A00FF */  andi  $t2, $a0, 0xff
 /* 052354 7F01D824 01402025 */  move  $a0, $t2
-/* 052358 7F01D828 0C003202 */  jal   func_7000C808
+/* 052358 7F01D828 0C003202 */  jal   save_7000C808
 /* 05235C 7F01D82C 24060060 */   li    $a2, 96
 .L7F01D830:
 /* 052360 7F01D830 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -618,7 +618,7 @@ sub_GAME_7F01DF90:
 /* 052AF8 7F01DFC8 24100001 */  li    $s0, 1
 /* 052AFC 7F01DFCC 00002025 */  move  $a0, $zero
 /* 052B00 7F01DFD0 02202825 */  move  $a1, $s1
-/* 052B04 7F01DFD4 0C0031EF */  jal   func_7000C7BC
+/* 052B04 7F01DFD4 0C0031EF */  jal   save_7000C7BC
 /* 052B08 7F01DFD8 24060020 */   li    $a2, 32
 /* 052B0C 7F01DFDC 93AE009C */  lbu   $t6, 0x9c($sp)
 /* 052B10 7F01DFE0 24010042 */  li    $at, 66
@@ -681,7 +681,7 @@ sub_GAME_7F01DF90:
 /* 052BE4 7F01E0B4 3C058007 */  lui   $a1, %hi(save1) # $a1, 0x8007
 /* 052BE8 7F01E0B8 24A59920 */  addiu $a1, %lo(save1) # addiu $a1, $a1, -0x66e0
 /* 052BEC 7F01E0BC 24040004 */  li    $a0, 4
-/* 052BF0 7F01E0C0 0C0031EF */  jal   func_7000C7BC
+/* 052BF0 7F01E0C0 0C0031EF */  jal   save_7000C7BC
 /* 052BF4 7F01E0C4 240601E0 */   li    $a2, 480
 /* 052BF8 7F01E0C8 3C108007 */  lui   $s0, %hi(save1) # $s0, 0x8007
 /* 052BFC 7F01E0CC 3C138007 */  lui   $s3, %hi(D_80069928) # $s3, 0x8007
@@ -1985,7 +1985,7 @@ delete_update_eeprom_file:
 /* 053D98 7F01F268 00000000 */   nop   
 /* 053D9C 7F01F26C 27A4001C */  addiu $a0, $sp, 0x1c
 /* 053DA0 7F01F270 27A5007C */  addiu $a1, $sp, 0x7c
-/* 053DA4 7F01F274 0C005B5C */  jal   func_70016D70
+/* 053DA4 7F01F274 0C005B5C */  jal   _bcmp
 /* 053DA8 7F01F278 24060060 */   li    $a2, 96
 /* 053DAC 7F01F27C 10400003 */  beqz  $v0, .L7F01F28C
 /* 053DB0 7F01F280 8FA400DC */   lw    $a0, 0xdc($sp)

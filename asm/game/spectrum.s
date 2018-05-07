@@ -285,20 +285,20 @@ spectrum_p1controller_to_kempston:
 /* 1077C0 7F0D2C90 AFA00030 */  sw    $zero, 0x30($sp)
 /* 1077C4 7F0D2C94 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 1077C8 7F0D2C98 AFA00028 */  sw    $zero, 0x28($sp)
-/* 1077CC 7F0D2C9C 0C002F43 */  jal   func_7000BD0C
+/* 1077CC 7F0D2C9C 0C002F43 */  jal   redirect_to_ramrom_replay_and_record_handlers_if_set
 /* 1077D0 7F0D2CA0 AFA00024 */   sw    $zero, 0x24($sp)
 /* 1077D4 7F0D2CA4 00002025 */  move  $a0, $zero
-/* 1077D8 7F0D2CA8 0C0030C3 */  jal   func_7000C30C
+/* 1077D8 7F0D2CA8 0C0030C3 */  jal   get_controller_buttons_held
 /* 1077DC 7F0D2CAC 3405FFFF */   li    $a1, 65535
 /* 1077E0 7F0D2CB0 00002025 */  move  $a0, $zero
 /* 1077E4 7F0D2CB4 2405FFFD */  li    $a1, -3
 /* 1077E8 7F0D2CB8 24060003 */  li    $a2, 3
-/* 1077EC 7F0D2CBC 0C00312D */  jal   func_7000C4B4
+/* 1077EC 7F0D2CBC 0C00312D */  jal   get_controller_3dstick_L_R
 /* 1077F0 7F0D2CC0 AFA20020 */   sw    $v0, 0x20($sp)
 /* 1077F4 7F0D2CC4 00002025 */  move  $a0, $zero
 /* 1077F8 7F0D2CC8 2405FFFD */  li    $a1, -3
 /* 1077FC 7F0D2CCC 24060003 */  li    $a2, 3
-/* 107800 7F0D2CD0 0C00314A */  jal   func_7000C528
+/* 107800 7F0D2CD0 0C00314A */  jal   get_controller_3dstick_U_D
 /* 107804 7F0D2CD4 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 107808 7F0D2CD8 240E00FF */  li    $t6, 255
 /* 10780C 7F0D2CDC 3C018005 */  lui   $at, %hi(D_8004EC34) # $at, 0x8005
@@ -528,7 +528,7 @@ init_spectrum_game:
 /* 107AF8 7F0D2FC8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 107AFC 7F0D2FCC AFA40018 */  sw    $a0, 0x18($sp)
 /* 107B00 7F0D2FD0 24040100 */  li    $a0, 256
-/* 107B04 7F0D2FD4 0C0025C8 */  jal   func_70009720
+/* 107B04 7F0D2FD4 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 107B08 7F0D2FD8 24050004 */   li    $a1, 4
 /* 107B0C 7F0D2FDC 3C068009 */  lui   $a2, %hi(ptr_pc_keyboard_table_alloc) # $a2, 0x8009
 /* 107B10 7F0D2FE0 24C6E334 */  addiu $a2, %lo(ptr_pc_keyboard_table_alloc) # addiu $a2, $a2, -0x1ccc
@@ -565,12 +565,12 @@ init_spectrum_game:
 /* 107B78 7F0D3048 5420FFEB */  bnezl $at, .L7F0D2FF8
 /* 107B7C 7F0D304C 00001825 */   move  $v1, $zero
 /* 107B80 7F0D3050 24046000 */  li    $a0, 24576
-/* 107B84 7F0D3054 0C0025C8 */  jal   func_70009720
+/* 107B84 7F0D3054 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 107B88 7F0D3058 24050004 */   li    $a1, 4
 /* 107B8C 7F0D305C 3C018009 */  lui   $at, %hi(ptr_6000alloc) # $at, 0x8009
 /* 107B90 7F0D3060 AC22E330 */  sw    $v0, %lo(ptr_6000alloc)($at)
 /* 107B94 7F0D3064 24040300 */  li    $a0, 768
-/* 107B98 7F0D3068 0C0025C8 */  jal   func_70009720
+/* 107B98 7F0D3068 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 107B9C 7F0D306C 24050004 */   li    $a1, 4
 /* 107BA0 7F0D3070 3C038009 */  lui   $v1, %hi(ptr_300alloc) # $v1, 0x8009
 /* 107BA4 7F0D3074 2463E32C */  addiu $v1, %lo(ptr_300alloc) # addiu $v1, $v1, -0x1cd4
@@ -585,7 +585,7 @@ init_spectrum_game:
 /* 107BC4 7F0D3094 1420FFFB */  bnez  $at, .L7F0D3084
 /* 107BC8 7F0D3098 A1A20000 */   sb    $v0, ($t5)
 /* 107BCC 7F0D309C 3C040001 */  lui   $a0, 1
-/* 107BD0 7F0D30A0 0C0025C8 */  jal   func_70009720
+/* 107BD0 7F0D30A0 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 107BD4 7F0D30A4 24050004 */   li    $a1, 4
 /* 107BD8 7F0D30A8 3C088009 */  lui   $t0, %hi(ptr_spectrum_roms) # $t0, 0x8009
 /* 107BDC 7F0D30AC 2508E328 */  addiu $t0, %lo(ptr_spectrum_roms) # addiu $t0, $t0, -0x1cd8
@@ -17468,3 +17468,5 @@ func_7F0D382C:
 /* 11786C 7F0E2D3C 27BD02B0 */  addiu $sp, $sp, 0x2b0
 /* 117870 7F0E2D40 03E00008 */  jr    $ra
 /* 117874 7F0E2D44 A438E354 */   sh    $t8, -0x1cac($at)
+
+

@@ -19,7 +19,7 @@ sub_GAME_7F007800:
 /* 03C340 7F007810 AFB20020 */  sw    $s2, 0x20($sp)
 /* 03C344 7F007814 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 03C348 7F007818 AFB00018 */  sw    $s0, 0x18($sp)
-/* 03C34C 7F00781C 0C000EC1 */  jal   func_70003B04
+/* 03C34C 7F00781C 0C000EC1 */  jal   video_related_9
 /* 03C350 7F007820 AC200170 */   sw    $zero, %lo(D_80040170)($at)
 /* 03C354 7F007824 3C118008 */  lui   $s1, %hi(ptr_explosion_buf) # $s1, 0x8008
 /* 03C358 7F007828 2631A144 */  addiu $s1, %lo(ptr_explosion_buf) # addiu $s1, $s1, -0x5ebc

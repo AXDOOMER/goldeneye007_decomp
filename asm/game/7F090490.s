@@ -106,12 +106,12 @@ debug_menu_processor:
 /* 0C50FC 7F0905CC 3C018003 */  lui   $at, %hi(D_80036FFC) # $at, 0x8003
 /* 0C5100 7F0905D0 14400008 */  bnez  $v0, .L7F0905F4
 /* 0C5104 7F0905D4 AC236FFC */   sw    $v1, %lo(D_80036FFC)($at)
-/* 0C5108 7F0905D8 0C0012ED */  jal   func_70004BB4
+/* 0C5108 7F0905D8 0C0012ED */  jal   indy_grab_rgb_32bit
 /* 0C510C 7F0905DC 00000000 */   nop   
 /* 0C5110 7F0905E0 3C018003 */  lui   $at, %hi(D_80036FFC) # $at, 0x8003
-/* 0C5114 7F0905E4 0C000F00 */  jal   func_70003C00
+/* 0C5114 7F0905E4 0C000F00 */  jal   coloroutputmode_1
 /* 0C5118 7F0905E8 AC206FFC */   sw    $zero, %lo(D_80036FFC)($at)
-/* 0C511C 7F0905EC 0C0038B4 */  jal   func_7000E2D0
+/* 0C511C 7F0905EC 0C0038B4 */  jal   osViBlack
 /* 0C5120 7F0905F0 00002025 */   move  $a0, $zero
 .L7F0905F4:
 /* 0C5124 7F0905F4 3C038003 */  lui   $v1, %hi(D_80037000) # $v1, 0x8003
@@ -122,12 +122,12 @@ debug_menu_processor:
 /* 0C5138 7F090608 24630001 */  addiu $v1, $v1, 1
 /* 0C513C 7F09060C 14400008 */  bnez  $v0, .L7F090630
 /* 0C5140 7F090610 AC237000 */   sw    $v1, %lo(D_80037000)($at)
-/* 0C5144 7F090614 0C001235 */  jal   func_700048D4
+/* 0C5144 7F090614 0C001235 */  jal   indy_grab_jpg_32bit
 /* 0C5148 7F090618 00000000 */   nop   
 /* 0C514C 7F09061C 3C018003 */  lui   $at, %hi(D_80037000) # $at, 0x8003
-/* 0C5150 7F090620 0C000F00 */  jal   func_70003C00
+/* 0C5150 7F090620 0C000F00 */  jal   coloroutputmode_1
 /* 0C5154 7F090624 AC207000 */   sw    $zero, %lo(D_80037000)($at)
-/* 0C5158 7F090628 0C0038B4 */  jal   func_7000E2D0
+/* 0C5158 7F090628 0C0038B4 */  jal   osViBlack
 /* 0C515C 7F09062C 00002025 */   move  $a0, $zero
 .L7F090630:
 /* 0C5160 7F090630 3C0E8003 */  lui   $t6, %hi(D_80036FF8) # $t6, 0x8003
@@ -381,7 +381,7 @@ debug_displayspeed:
 /* 0C54CC 7F09099C 3B190001 */  xori  $t9, $t8, 1
 /* 0C54D0 7F0909A0 17200134 */  bnez  $t9, .L7F090E74
 /* 0C54D4 7F0909A4 AC590000 */   sw    $t9, ($v0)
-/* 0C54D8 7F0909A8 0C002BC0 */  jal   func_7000AF00
+/* 0C54D8 7F0909A8 0C002BC0 */  jal   debug_text_related_1
 /* 0C54DC 7F0909AC 00000000 */   nop   
 /* 0C54E0 7F0909B0 10000131 */  b     .L7F090E78
 /* 0C54E4 7F0909B4 8FB80018 */   lw    $t8, 0x18($sp)
@@ -435,7 +435,7 @@ debug_testingmanpos:
 /* 0C5588 7F090A58 10000106 */  b     .L7F090E74
 /* 0C558C 7F090A5C AC4C0000 */   sw    $t4, ($v0)
 debug_playtitle:
-/* 0C5590 7F090A60 0C001A54 */  jal   func_70006950
+/* 0C5590 7F090A60 0C001A54 */  jal   set_loaded_stage
 /* 0C5594 7F090A64 2404005A */   li    $a0, 90
 /* 0C5598 7F090A68 10000103 */  b     .L7F090E78
 /* 0C559C 7F090A6C 8FB80018 */   lw    $t8, 0x18($sp)
@@ -452,12 +452,12 @@ debug_prroomloads:
 /* 0C55C0 7F090A90 100000F8 */  b     .L7F090E74
 /* 0C55C4 7F090A94 AC4E0000 */   sw    $t6, ($v0)
 debug_showmemuse:
-/* 0C55C8 7F090A98 0C0017FD */  jal   func_70005FF4
+/* 0C55C8 7F090A98 0C0017FD */  jal   enable_show_mem_use_flag
 /* 0C55CC 7F090A9C 00000000 */   nop   
 /* 0C55D0 7F090AA0 100000F5 */  b     .L7F090E78
 /* 0C55D4 7F090AA4 8FB80018 */   lw    $t8, 0x18($sp)
 debug_showmembars:
-/* 0C55D8 7F090AA8 0C001801 */  jal   func_70006004
+/* 0C55D8 7F090AA8 0C001801 */  jal   mem_bars_flag_toggle
 /* 0C55DC 7F090AAC 00000000 */   nop   
 /* 0C55E0 7F090AB0 100000F1 */  b     .L7F090E78
 /* 0C55E4 7F090AB4 8FB80018 */   lw    $t8, 0x18($sp)
@@ -465,9 +465,9 @@ debug_grabrgb:
 /* 0C55E8 7F090AB8 24030001 */  li    $v1, 1
 /* 0C55EC 7F090ABC 3C018003 */  lui   $at, %hi(D_80036FFC) # $at, 0x8003
 /* 0C55F0 7F090AC0 AC236FFC */  sw    $v1, %lo(D_80036FFC)($at)
-/* 0C55F4 7F090AC4 0C0038B4 */  jal   func_7000E2D0
+/* 0C55F4 7F090AC4 0C0038B4 */  jal   osViBlack
 /* 0C55F8 7F090AC8 24040001 */   li    $a0, 1
-/* 0C55FC 7F090ACC 0C000F04 */  jal   func_70003C10
+/* 0C55FC 7F090ACC 0C000F04 */  jal   coloroutputmode_0
 /* 0C5600 7F090AD0 00000000 */   nop   
 /* 0C5604 7F090AD4 100000E8 */  b     .L7F090E78
 /* 0C5608 7F090AD8 8FB80018 */   lw    $t8, 0x18($sp)
@@ -475,9 +475,9 @@ debug_grabjpeg:
 /* 0C560C 7F090ADC 24030001 */  li    $v1, 1
 /* 0C5610 7F090AE0 3C018003 */  lui   $at, %hi(D_80037000) # $at, 0x8003
 /* 0C5614 7F090AE4 AC237000 */  sw    $v1, %lo(D_80037000)($at)
-/* 0C5618 7F090AE8 0C0038B4 */  jal   func_7000E2D0
+/* 0C5618 7F090AE8 0C0038B4 */  jal   osViBlack
 /* 0C561C 7F090AEC 24040001 */   li    $a0, 1
-/* 0C5620 7F090AF0 0C000F04 */  jal   func_70003C10
+/* 0C5620 7F090AF0 0C000F04 */  jal   coloroutputmode_0
 /* 0C5624 7F090AF4 00000000 */   nop   
 /* 0C5628 7F090AF8 100000DF */  b     .L7F090E78
 /* 0C562C 7F090AFC 8FB80018 */   lw    $t8, 0x18($sp)
@@ -623,7 +623,7 @@ debug_worldpos:
 /* 0C580C 7F090CDC 46021182 */  mul.s $f6, $f2, $f2
 /* 0C5810 7F090CE0 46062200 */  add.s $f8, $f4, $f6
 /* 0C5814 7F090CE4 460E7282 */  mul.s $f10, $f14, $f14
-/* 0C5818 7F090CE8 0C007DF8 */  jal   func_7001F7E0
+/* 0C5818 7F090CE8 0C007DF8 */  jal   sqrtf
 /* 0C581C 7F090CEC 460A4300 */   add.s $f12, $f8, $f10
 /* 0C5820 7F090CF0 8FA30050 */  lw    $v1, 0x50($sp)
 /* 0C5824 7F090CF4 3C028003 */  lui   $v0, %hi(D_80037004) # $v0, 0x8003
@@ -768,7 +768,7 @@ def_7F090EA8:
 /* 0C59F8 7F090EC8 24010001 */  li    $at, 1
 /* 0C59FC 7F090ECC 15610003 */  bne   $t3, $at, .L7F090EDC
 /* 0C5A00 7F090ED0 00000000 */   nop   
-/* 0C5A04 7F090ED4 0C002BC0 */  jal   func_7000AF00
+/* 0C5A04 7F090ED4 0C002BC0 */  jal   debug_text_related_1
 /* 0C5A08 7F090ED8 00000000 */   nop   
 .L7F090EDC:
 /* 0C5A0C 7F090EDC 3C018003 */  lui   $at, %hi(D_80036FF8) # $at, 0x8003

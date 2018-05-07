@@ -17,7 +17,7 @@ something_with_rsp_c_debug:
 /* 1048E8 7F0CFDB8 3C048005 */  lui   $a0, %hi(D_8004E9E0) # $a0, 0x8005
 /* 1048EC 7F0CFDBC 3C058006 */  lui   $a1, %hi(aRsp_c_debug) # $a1, 0x8006
 /* 1048F0 7F0CFDC0 24A5BFB0 */  addiu $a1, %lo(aRsp_c_debug) # addiu $a1, $a1, -0x4050
-/* 1048F4 7F0CFDC4 0C001398 */  jal   func_70004E60
+/* 1048F4 7F0CFDC4 0C001398 */  jal   get_ptr_debug_notice_list_entry
 /* 1048F8 7F0CFDC8 2484E9E0 */   addiu $a0, %lo(D_8004E9E0) # addiu $a0, $a0, -0x1620
 /* 1048FC 7F0CFDCC 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 104900 7F0CFDD0 27BD0018 */  addiu $sp, $sp, 0x18
@@ -28,7 +28,7 @@ allocate_init_rsp_buffers:
 /* 10490C 7F0CFDDC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 104910 7F0CFDE0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 104914 7F0CFDE4 3404A000 */  li    $a0, 40960
-/* 104918 7F0CFDE8 0C0025C8 */  jal   func_70009720
+/* 104918 7F0CFDE8 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 10491C 7F0CFDEC 24050006 */   li    $a1, 6
 /* 104920 7F0CFDF0 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 104924 7F0CFDF4 3C038005 */  lui   $v1, %hi(D_8004E9E8) # $v1, 0x8005
@@ -88,12 +88,12 @@ load_rsp_microcode:
 /* 1049F4 7F0CFEC4 AE070054 */  sw    $a3, 0x54($s0)
 /* 1049F8 7F0CFEC8 8C790000 */  lw    $t9, ($v1)
 /* 1049FC 7F0CFECC 8F280058 */  lw    $t0, 0x58($t9)
-/* 104A00 7F0CFED0 0C0034C8 */  jal   func_7000D320
+/* 104A00 7F0CFED0 0C0034C8 */  jal   osWritebackDCacheAll
 /* 104A04 7F0CFED4 AE08000C */   sw    $t0, 0xc($s0)
 /* 104A08 7F0CFED8 3C048006 */  lui   $a0, %hi(mq) # $a0, 0x8006
 /* 104A0C 7F0CFEDC 8C84DA38 */  lw    $a0, %lo(mq)($a0)
 /* 104A10 7F0CFEE0 02002825 */  move  $a1, $s0
-/* 104A14 7F0CFEE4 0C0037C4 */  jal   func_7000DF10
+/* 104A14 7F0CFEE4 0C0037C4 */  jal   osSendMesg
 /* 104A18 7F0CFEE8 24060001 */   li    $a2, 1
 /* 104A1C 7F0CFEEC 3C028005 */  lui   $v0, %hi(D_8004EAB0) # $v0, 0x8005
 /* 104A20 7F0CFEF0 2442EAB0 */  addiu $v0, %lo(D_8004EAB0) # addiu $v0, $v0, -0x1550

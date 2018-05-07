@@ -6123,10 +6123,10 @@ load_image_to_buffer:
 /* 100790 7F0CBC60 27A30067 */  addiu $v1, $sp, 0x67
 /* 100794 7F0CBC64 0003C902 */  srl   $t9, $v1, 4
 /* 100798 7F0CBC68 00194100 */  sll   $t0, $t9, 4
-/* 10079C 7F0CBC6C 0C0034C8 */  jal   func_7000D320
+/* 10079C 7F0CBC6C 0C0034C8 */  jal   osWritebackDCacheAll
 /* 1007A0 7F0CBC70 AFA8002C */   sw    $t0, 0x2c($sp)
 /* 1007A4 7F0CBC74 8FA4002C */  lw    $a0, 0x2c($sp)
-/* 1007A8 7F0CBC78 0C0042C8 */  jal   func_70010B20
+/* 1007A8 7F0CBC78 0C0042C8 */  jal   osInvalDCache
 /* 1007AC 7F0CBC7C 24052000 */   li    $a1, 8192
 /* 1007B0 7F0CBC80 3C098009 */  lui   $t1, %hi(dword_CODE_bss_8008D094) # $t1, 0x8009
 /* 1007B4 7F0CBC84 8D29D094 */  lw    $t1, %lo(dword_CODE_bss_8008D094)($t1)
@@ -6150,7 +6150,7 @@ load_image_to_buffer:
 /* 1007FC 7F0CBCCC 00183100 */  sll   $a2, $t8, 4
 /* 100800 7F0CBCD0 01CF2821 */  addu  $a1, $t6, $t7
 /* 100804 7F0CBCD4 AFAC003C */  sw    $t4, 0x3c($sp)
-/* 100808 7F0CBCD8 0C001707 */  jal   func_70005C1C
+/* 100808 7F0CBCD8 0C001707 */  jal   load_bytes_from_hw_to_rdram
 /* 10080C 7F0CBCDC 8FA4002C */   lw    $a0, 0x2c($sp)
 /* 100810 7F0CBCE0 8FA3003C */  lw    $v1, 0x3c($sp)
 /* 100814 7F0CBCE4 8FA8002C */  lw    $t0, 0x2c($sp)
@@ -6191,7 +6191,7 @@ load_image_to_buffer:
 /* 10089C 7F0CBD6C 10200006 */  beqz  $at, .L7F0CBD88
 /* 1008A0 7F0CBD70 8FA70048 */   lw    $a3, 0x48($sp)
 .L7F0CBD74:
-/* 1008A4 7F0CBD74 0C003A2C */  jal   func_7000E8B0
+/* 1008A4 7F0CBD74 0C003A2C */  jal   osVirtualToPhysical
 /* 1008A8 7F0CBD78 8E040000 */   lw    $a0, ($s0)
 /* 1008AC 7F0CBD7C 8FAE0FF8 */  lw    $t6, 0xff8($sp)
 /* 1008B0 7F0CBD80 1000002E */  b     .L7F0CBE3C
@@ -6241,7 +6241,7 @@ load_image_to_buffer:
 /* 100954 7F0CBE24 AFA30044 */   sw    $v1, 0x44($sp)
 /* 100958 7F0CBE28 8FA30044 */  lw    $v1, 0x44($sp)
 .L7F0CBE2C:
-/* 10095C 7F0CBE2C 0C003A2C */  jal   func_7000E8B0
+/* 10095C 7F0CBE2C 0C003A2C */  jal   osVirtualToPhysical
 /* 100960 7F0CBE30 8C640004 */   lw    $a0, 4($v1)
 /* 100964 7F0CBE34 8FAB0FF8 */  lw    $t3, 0xff8($sp)
 /* 100968 7F0CBE38 AD620000 */  sw    $v0, ($t3)

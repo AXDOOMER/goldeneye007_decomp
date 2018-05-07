@@ -70,7 +70,7 @@ load_prepare_global_image_bank:
 /* 100B04 7F0CBFD4 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 100B08 7F0CBFD8 AFB10018 */  sw    $s1, 0x18($sp)
 /* 100B0C 7F0CBFDC 26041000 */  addiu $a0, $s0, 0x1000
-/* 100B10 7F0CBFE0 0C0025C8 */  jal   func_70009720
+/* 100B10 7F0CBFE0 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 100B14 7F0CBFE4 24050004 */   li    $a1, 4
 /* 100B18 7F0CBFE8 3C118009 */  lui   $s1, %hi(ptr_explosionDL) # $s1, 0x8009
 /* 100B1C 7F0CBFEC 2631D0B4 */  addiu $s1, %lo(ptr_explosionDL) # addiu $s1, $s1, -0x2f4c
@@ -81,7 +81,7 @@ load_prepare_global_image_bank:
 /* 100B30 7F0CC000 3C05002A */  lui   $a1, %hi(D_0029D160) # $a1, 0x2a
 /* 100B34 7F0CC004 AE240000 */  sw    $a0, ($s1)
 /* 100B38 7F0CC008 24A5D160 */  addiu $a1, %lo(D_0029D160) # addiu $a1, $a1, -0x2ea0
-/* 100B3C 7F0CC00C 0C001707 */  jal   func_70005C1C
+/* 100B3C 7F0CC00C 0C001707 */  jal   load_bytes_from_hw_to_rdram
 /* 100B40 7F0CC010 02003025 */   move  $a2, $s0
 /* 100B44 7F0CC014 8E290000 */  lw    $t1, ($s1)
 /* 100B48 7F0CC018 3C01FE00 */  lui   $at, 0xfe00

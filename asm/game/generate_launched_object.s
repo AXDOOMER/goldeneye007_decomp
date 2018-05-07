@@ -109,13 +109,13 @@ load_camera_intro_type_values:
 /* 03A370 7F005840 3C018003 */  lui   $at, %hi(camera_80036434) # $at, 0x8003
 /* 03A374 7F005844 AFA0007C */  sw    $zero, 0x7c($sp)
 /* 03A378 7F005848 AC206434 */  sw    $zero, %lo(camera_80036434)($at)
-/* 03A37C 7F00584C 0C001A57 */  jal   func_7000695C
+/* 03A37C 7F00584C 0C001A57 */  jal   get_stage_num
 /* 03A380 7F005850 E7A40088 */   swc1  $f4, 0x88($sp)
 /* 03A384 7F005854 24010036 */  li    $at, 54
 /* 03A388 7F005858 1441000B */  bne   $v0, $at, .L7F005888
 /* 03A38C 7F00585C 3C040004 */   lui   $a0, (0x00046EA0 >> 16) # lui $a0, 4
 /* 03A390 7F005860 34846EA0 */  ori   $a0, (0x00046EA0 & 0xFFFF) # ori $a0, $a0, 0x6ea0
-/* 03A394 7F005864 0C0025C8 */  jal   func_70009720
+/* 03A394 7F005864 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 03A398 7F005868 24050004 */   li    $a1, 4
 /* 03A39C 7F00586C 244A003F */  addiu $t2, $v0, 0x3f
 /* 03A3A0 7F005870 2401FFC0 */  li    $at, -64
@@ -503,7 +503,7 @@ def_7F005A74:
 /* 03A930 7F005E00 2652A0B0 */  addiu $s2, %lo(ptr_BONDdata) # addiu $s2, $s2, -0x5f50
 /* 03A934 7F005E04 10400012 */  beqz  $v0, .L7F005E50
 /* 03A938 7F005E08 3C018003 */   lui   $at, %hi(D_800364C0) # $at, 0x8003
-/* 03A93C 7F005E0C 0C002914 */  jal   func_7000A450
+/* 03A93C 7F005E0C 0C002914 */  jal   random_related
 /* 03A940 7F005E10 AC2264C0 */   sw    $v0, %lo(D_800364C0)($at)
 /* 03A944 7F005E14 3C0B8003 */  lui   $t3, %hi(D_800364BC) # $t3, 0x8003
 /* 03A948 7F005E18 8D6B64BC */  lw    $t3, %lo(D_800364BC)($t3)

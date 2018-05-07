@@ -12,87 +12,87 @@
 .section .text, "ax"
 
 rmonMain:
-/* 00DAA0 8000CEA0 03E00008 */  jr    $ra
-/* 00DAA4 8000CEA4 00000000 */   nop   
+/* 00DAA0 7000CEA0 03E00008 */  jr    $ra
+/* 00DAA4 7000CEA4 00000000 */   nop   
 
 rmon_debug_is_final_build:
-/* 00DAA8 8000CEA8 03E00008 */  jr    $ra
-/* 00DAAC 8000CEAC 24020001 */   li    $v0, 1
+/* 00DAA8 7000CEA8 03E00008 */  jr    $ra
+/* 00DAAC 7000CEAC 24020001 */   li    $v0, 1
 
 rmon_debug_returns_neg_1:
-/* 00DAB0 8000CEB0 03E00008 */  jr    $ra
-/* 00DAB4 8000CEB4 2402FFFF */   li    $v0, -1
+/* 00DAB0 7000CEB0 03E00008 */  jr    $ra
+/* 00DAB4 7000CEB4 2402FFFF */   li    $v0, -1
 
 rmon_debug_stub:
-/* 00DAB8 8000CEB8 03E00008 */  jr    $ra
-/* 00DABC 8000CEBC 00000000 */   nop   
+/* 00DAB8 7000CEB8 03E00008 */  jr    $ra
+/* 00DABC 7000CEBC 00000000 */   nop   
 
 rmon_debug_stub_0:
-/* 00DAC0 8000CEC0 03E00008 */  jr    $ra
-/* 00DAC4 8000CEC4 00000000 */   nop   
+/* 00DAC0 7000CEC0 03E00008 */  jr    $ra
+/* 00DAC4 7000CEC4 00000000 */   nop   
 
 rmon_debug_stub_1:
-/* 00DAC8 8000CEC8 03E00008 */  jr    $ra
-/* 00DACC 8000CECC 00000000 */   nop   
+/* 00DAC8 7000CEC8 03E00008 */  jr    $ra
+/* 00DACC 7000CECC 00000000 */   nop   
 
 rmon_debug_stub_2:
-/* 00DAD0 8000CED0 03E00008 */  jr    $ra
-/* 00DAD4 8000CED4 00000000 */   nop   
+/* 00DAD0 7000CED0 03E00008 */  jr    $ra
+/* 00DAD4 7000CED4 00000000 */   nop   
 
 rmon_debug_stub_3:
-/* 00DAD8 8000CED8 03E00008 */  jr    $ra
-/* 00DADC 8000CEDC 00000000 */   nop   
+/* 00DAD8 7000CED8 03E00008 */  jr    $ra
+/* 00DADC 7000CEDC 00000000 */   nop   
 
 rmon_debug_stub_4:
-/* 00DAE0 8000CEE0 03E00008 */  jr    $ra
-/* 00DAE4 8000CEE4 00000000 */   nop   
+/* 00DAE0 7000CEE0 03E00008 */  jr    $ra
+/* 00DAE4 7000CEE4 00000000 */   nop   
 
 proutSyncPrintf:
-/* 00DAE8 8000CEE8 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 00DAEC 8000CEEC AFB20020 */  sw    $s2, 0x20($sp)
-/* 00DAF0 8000CEF0 AFB00018 */  sw    $s0, 0x18($sp)
-/* 00DAF4 8000CEF4 00C09025 */  move  $s2, $a2
-/* 00DAF8 8000CEF8 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 00DAFC 8000CEFC AFB1001C */  sw    $s1, 0x1c($sp)
-/* 00DB00 8000CF00 AFA40028 */  sw    $a0, 0x28($sp)
-/* 00DB04 8000CF04 10C00008 */  beqz  $a2, .L8000CF28
-/* 00DB08 8000CF08 00008025 */   move  $s0, $zero
-/* 00DB0C 8000CF0C 00A08825 */  move  $s1, $a1
-/* 00DB10 8000CF10 92240000 */  lbu   $a0, ($s1)
-.L8000CF14:
-/* 00DB14 8000CF14 26100001 */  addiu $s0, $s0, 1
-/* 00DB18 8000CF18 0C0015AF */  jal   __osRdbSend
-/* 00DB1C 8000CF1C 26310001 */   addiu $s1, $s1, 1
-/* 00DB20 8000CF20 5612FFFC */  bnel  $s0, $s2, .L8000CF14
-/* 00DB24 8000CF24 92240000 */   lbu   $a0, ($s1)
-.L8000CF28:
-/* 00DB28 8000CF28 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 00DB2C 8000CF2C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 00DB30 8000CF30 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 00DB34 8000CF34 8FB20020 */  lw    $s2, 0x20($sp)
-/* 00DB38 8000CF38 27BD0028 */  addiu $sp, $sp, 0x28
-/* 00DB3C 8000CF3C 03E00008 */  jr    $ra
-/* 00DB40 8000CF40 24020001 */   li    $v0, 1
+/* 00DAE8 7000CEE8 27BDFFD8 */  addiu $sp, $sp, -0x28
+/* 00DAEC 7000CEEC AFB20020 */  sw    $s2, 0x20($sp)
+/* 00DAF0 7000CEF0 AFB00018 */  sw    $s0, 0x18($sp)
+/* 00DAF4 7000CEF4 00C09025 */  move  $s2, $a2
+/* 00DAF8 7000CEF8 AFBF0024 */  sw    $ra, 0x24($sp)
+/* 00DAFC 7000CEFC AFB1001C */  sw    $s1, 0x1c($sp)
+/* 00DB00 7000CF00 AFA40028 */  sw    $a0, 0x28($sp)
+/* 00DB04 7000CF04 10C00008 */  beqz  $a2, .L7000CF28
+/* 00DB08 7000CF08 00008025 */   move  $s0, $zero
+/* 00DB0C 7000CF0C 00A08825 */  move  $s1, $a1
+/* 00DB10 7000CF10 92240000 */  lbu   $a0, ($s1)
+.L7000CF14:
+/* 00DB14 7000CF14 26100001 */  addiu $s0, $s0, 1
+/* 00DB18 7000CF18 0C0015AF */  jal   __osRdbSend
+/* 00DB1C 7000CF1C 26310001 */   addiu $s1, $s1, 1
+/* 00DB20 7000CF20 5612FFFC */  bnel  $s0, $s2, .L7000CF14
+/* 00DB24 7000CF24 92240000 */   lbu   $a0, ($s1)
+.L7000CF28:
+/* 00DB28 7000CF28 8FBF0024 */  lw    $ra, 0x24($sp)
+/* 00DB2C 7000CF2C 8FB00018 */  lw    $s0, 0x18($sp)
+/* 00DB30 7000CF30 8FB1001C */  lw    $s1, 0x1c($sp)
+/* 00DB34 7000CF34 8FB20020 */  lw    $s2, 0x20($sp)
+/* 00DB38 7000CF38 27BD0028 */  addiu $sp, $sp, 0x28
+/* 00DB3C 7000CF3C 03E00008 */  jr    $ra
+/* 00DB40 7000CF40 24020001 */   li    $v0, 1
 
 osSyncPrintf:
-/* 00DB44 8000CF44 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 00DB48 8000CF48 AFA40020 */  sw    $a0, 0x20($sp)
-/* 00DB4C 8000CF4C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00DB50 8000CF50 AFA50024 */  sw    $a1, 0x24($sp)
-/* 00DB54 8000CF54 AFA60028 */  sw    $a2, 0x28($sp)
-/* 00DB58 8000CF58 AFA7002C */  sw    $a3, 0x2c($sp)
-/* 00DB5C 8000CF5C 3C047001 */  lui   $a0, %hi(KSEG_proutSyncPrintf) # $a0, 0x7001
-/* 00DB60 8000CF60 2484CEE8 */  addiu $a0, %lo(KSEG_proutSyncPrintf) # addiu $a0, $a0, -0x3118
-/* 00DB64 8000CF64 27A70024 */  addiu $a3, $sp, 0x24
-/* 00DB68 8000CF68 8FA60020 */  lw    $a2, 0x20($sp)
-/* 00DB6C 8000CF6C 0C004FD8 */  jal   _Printf
-/* 00DB70 8000CF70 00002825 */   move  $a1, $zero
-/* 00DB74 8000CF74 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00DB78 8000CF78 27BD0020 */  addiu $sp, $sp, 0x20
-/* 00DB7C 8000CF7C 03E00008 */  jr    $ra
-/* 00DB80 8000CF80 00000000 */   nop   
+/* 00DB44 7000CF44 27BDFFE0 */  addiu $sp, $sp, -0x20
+/* 00DB48 7000CF48 AFA40020 */  sw    $a0, 0x20($sp)
+/* 00DB4C 7000CF4C AFBF0014 */  sw    $ra, 0x14($sp)
+/* 00DB50 7000CF50 AFA50024 */  sw    $a1, 0x24($sp)
+/* 00DB54 7000CF54 AFA60028 */  sw    $a2, 0x28($sp)
+/* 00DB58 7000CF58 AFA7002C */  sw    $a3, 0x2c($sp)
+/* 00DB5C 7000CF5C 3C047001 */  lui   $a0, %hi(proutSyncPrintf) # $a0, 0x7001
+/* 00DB60 7000CF60 2484CEE8 */  addiu $a0, %lo(proutSyncPrintf) # addiu $a0, $a0, -0x3118
+/* 00DB64 7000CF64 27A70024 */  addiu $a3, $sp, 0x24
+/* 00DB68 7000CF68 8FA60020 */  lw    $a2, 0x20($sp)
+/* 00DB6C 7000CF6C 0C004FD8 */  jal   _Printf
+/* 00DB70 7000CF70 00002825 */   move  $a1, $zero
+/* 00DB74 7000CF74 8FBF0014 */  lw    $ra, 0x14($sp)
+/* 00DB78 7000CF78 27BD0020 */  addiu $sp, $sp, 0x20
+/* 00DB7C 7000CF7C 03E00008 */  jr    $ra
+/* 00DB80 7000CF80 00000000 */   nop   
 
-/* 00DB84 8000CF84 00000000 */  nop   
-/* 00DB88 8000CF88 00000000 */  nop   
-/* 00DB8C 8000CF8C 00000000 */  nop   
+/* 00DB84 7000CF84 00000000 */  nop   
+/* 00DB88 7000CF88 00000000 */  nop   
+/* 00DB8C 7000CF8C 00000000 */  nop   
 

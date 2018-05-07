@@ -31,7 +31,7 @@ init_player_BONDdata_stats:
 /* 039C3C 7F00510C ADC1FFFC */   sw    $at, -4($t6)
 /* 039C40 7F005110 3C048003 */  lui   $a0, %hi(allocation_size_0) # $a0, 0x8003
 /* 039C44 7F005114 8C84245C */  lw    $a0, %lo(allocation_size_0)($a0)
-/* 039C48 7F005118 0C0025C8 */  jal   func_70009720
+/* 039C48 7F005118 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 039C4C 7F00511C 24050004 */   li    $a1, 4
 /* 039C50 7F005120 3C108008 */  lui   $s0, %hi(ptr_BONDdata) # $s0, 0x8008
 /* 039C54 7F005124 2610A0B0 */  addiu $s0, %lo(ptr_BONDdata) # addiu $s0, $s0, -0x5f50
@@ -42,7 +42,7 @@ init_player_BONDdata_stats:
 /* 039C68 7F005138 14410006 */  bne   $v0, $at, .L7F005154
 /* 039C6C 7F00513C 3C048003 */   lui   $a0, %hi(allocation_size_1) # $a0, 0x8003
 /* 039C70 7F005140 8C842460 */  lw    $a0, %lo(allocation_size_1)($a0)
-/* 039C74 7F005144 0C0025C8 */  jal   func_70009720
+/* 039C74 7F005144 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 039C78 7F005148 24050004 */   li    $a1, 4
 /* 039C7C 7F00514C 8E0A0000 */  lw    $t2, ($s0)
 /* 039C80 7F005150 AD42080C */  sw    $v0, 0x80c($t2)

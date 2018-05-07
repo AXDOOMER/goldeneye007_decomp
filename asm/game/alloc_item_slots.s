@@ -57,7 +57,7 @@ alloc_additional_item_slots:
 /* 03ADBC 7F00628C 0019C880 */  sll   $t9, $t9, 2
 /* 03ADC0 7F006290 2724000F */  addiu $a0, $t9, 0xf
 /* 03ADC4 7F006294 3488000F */  ori   $t0, $a0, 0xf
-/* 03ADC8 7F006298 0C0025C8 */  jal   func_70009720
+/* 03ADC8 7F006298 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 03ADCC 7F00629C 3904000F */   xori  $a0, $t0, 0xf
 /* 03ADD0 7F0062A0 3C0A8008 */  lui   $t2, %hi(ptr_BONDdata) # $t2, 0x8008
 /* 03ADD4 7F0062A4 8D4AA0B0 */  lw    $t2, %lo(ptr_BONDdata)($t2)

@@ -24,7 +24,7 @@ set_sound_effect_source_to_location:
 /* 0692F4 7F0347C4 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0692F8 7F0347C8 50A00041 */  beql  $a1, $zero, .L7F0348D0
 /* 0692FC 7F0347CC AE000004 */   sw    $zero, 4($s0)
-/* 069300 7F0347D0 0C00237C */  jal   func_70008DF0
+/* 069300 7F0347D0 0C00237C */  jal   music_related_26
 /* 069304 7F0347D4 00A02025 */   move  $a0, $a1
 /* 069308 7F0347D8 5040003D */  beql  $v0, $zero, .L7F0348D0
 /* 06930C 7F0347DC AE000004 */   sw    $zero, 4($s0)
@@ -89,7 +89,7 @@ set_sound_effect_source_to_location:
 /* 0693DC 7F0348AC 50CB0009 */  beql  $a2, $t3, .L7F0348D4
 /* 0693E0 7F0348B0 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 0693E4 7F0348B4 8E040000 */  lw    $a0, ($s0)
-/* 0693E8 7F0348B8 0C002461 */  jal   func_70009184
+/* 0693E8 7F0348B8 0C002461 */  jal   music_related_36
 /* 0693EC 7F0348BC AFA60024 */   sw    $a2, 0x24($sp)
 /* 0693F0 7F0348C0 8FA60024 */  lw    $a2, 0x24($sp)
 /* 0693F4 7F0348C4 10000002 */  b     .L7F0348D0
@@ -140,7 +140,7 @@ set_sound_effect_to_slot:
 /* 06948C 7F03495C 10A00007 */  beqz  $a1, .L7F03497C
 /* 069490 7F034960 00A02025 */   move  $a0, $a1
 /* 069494 7F034964 AFA30018 */  sw    $v1, 0x18($sp)
-/* 069498 7F034968 0C00237C */  jal   func_70008DF0
+/* 069498 7F034968 0C00237C */  jal   music_related_26
 /* 06949C 7F03496C AFA0001C */   sw    $zero, 0x1c($sp)
 /* 0694A0 7F034970 8FA30018 */  lw    $v1, 0x18($sp)
 /* 0694A4 7F034974 14400009 */  bnez  $v0, .L7F03499C
@@ -157,7 +157,7 @@ set_sound_effect_to_slot:
 .L7F03499C:
 /* 0694CC 7F03499C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0694D0 7F0349A0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
-/* 0694D4 7F0349A4 0C002382 */  jal   func_70008E08
+/* 0694D4 7F0349A4 0C002382 */  jal   play_sfx_a1
 /* 0694D8 7F0349A8 87A50026 */   lh    $a1, 0x26($sp)
 /* 0694DC 7F0349AC 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0694E0 7F0349B0 27BD0020 */  addiu $sp, $sp, 0x20
@@ -175,7 +175,7 @@ sub_GAME_7F0349BC:
 /* 069508 7F0349D8 000E70C0 */  sll   $t6, $t6, 3
 /* 06950C 7F0349DC 3C048007 */  lui   $a0, 0x8007
 /* 069510 7F0349E0 008E2021 */  addu  $a0, $a0, $t6
-/* 069514 7F0349E4 0C002408 */  jal   func_70009020
+/* 069514 7F0349E4 0C002408 */  jal   music_related_28
 /* 069518 7F0349E8 8C849B70 */   lw    $a0, -0x6490($a0)
 .L7F0349EC:
 /* 06951C 7F0349EC 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -1853,7 +1853,7 @@ action19_Guard_ID1_Shoots_Guard_ID2_In_Style_4:
 /* 06A968 7F035E38 C5920010 */  lwc1  $f18, 0x10($t4)
 /* 06A96C 7F035E3C AFA306E4 */  sw    $v1, 0x6e4($sp)
 /* 06A970 7F035E40 46049181 */  sub.s $f6, $f18, $f4
-/* 06A974 7F035E44 0C007DD4 */  jal   func_7001F750
+/* 06A974 7F035E44 0C007DD4 */  jal   guNormalize
 /* 06A978 7F035E48 E7A606DC */   swc1  $f6, 0x6dc($sp)
 /* 06A97C 7F035E4C 8FA306E4 */  lw    $v1, 0x6e4($sp)
 /* 06A980 7F035E50 82250003 */  lb    $a1, 3($s1)
@@ -2093,7 +2093,7 @@ action2E_Run_To_Character_Position_RVL_On_Arrival_3:
 /* 06ACB0 7F036180 1000FD02 */  b     .L7F03558C
 /* 06ACB4 7F036184 26310003 */   addiu $s1, $s1, 3
 action33_Seed_Random_Byte_1:
-/* 06ACB8 7F036188 0C002914 */  jal   func_7000A450
+/* 06ACB8 7F036188 0C002914 */  jal   random_related
 /* 06ACBC 7F03618C 00000000 */   nop   
 /* 06ACC0 7F036190 A2E2010F */  sb    $v0, 0x10f($s7)
 /* 06ACC4 7F036194 26520001 */  addiu $s2, $s2, 1
@@ -4023,7 +4023,7 @@ action75_Go_To_RVL_If_Power_On_Time_GTV_4:
 /* 06C7C4 7F037C94 1000F63D */  b     .L7F03558C
 /* 06C7C8 7F037C98 26310004 */   addiu $s1, $s1, 4
 action76_Go_To_RVL_If_Stage_Number_LTV_3:
-/* 06C7CC 7F037C9C 0C001A57 */  jal   func_7000695C
+/* 06C7CC 7F037C9C 0C001A57 */  jal   get_stage_num
 /* 06C7D0 7F037CA0 00000000 */   nop   
 /* 06C7D4 7F037CA4 92290001 */  lbu   $t1, 1($s1)
 /* 06C7D8 7F037CA8 02C02025 */  move  $a0, $s6
@@ -4041,7 +4041,7 @@ action76_Go_To_RVL_If_Stage_Number_LTV_3:
 /* 06C804 7F037CD4 1000F62D */  b     .L7F03558C
 /* 06C808 7F037CD8 26310003 */   addiu $s1, $s1, 3
 action77_Go_To_RVL_If_Stage_Number_GTV_3:
-/* 06C80C 7F037CDC 0C001A57 */  jal   func_7000695C
+/* 06C80C 7F037CDC 0C001A57 */  jal   get_stage_num
 /* 06C810 7F037CE0 00000000 */   nop   
 /* 06C814 7F037CE4 922A0001 */  lbu   $t2, 1($s1)
 /* 06C818 7F037CE8 02C02025 */  move  $a0, $s6
@@ -5754,7 +5754,7 @@ actionD2_Exit_Level_1:
 /* 06E064 7F039534 1000F015 */  b     .L7F03558C
 /* 06E068 7F039538 26310001 */   addiu $s1, $s1, 1
 .L7F03953C:
-/* 06E06C 7F03953C 0C001A5A */  jal   func_70006968
+/* 06E06C 7F03953C 0C001A5A */  jal   return_to_title_from_level_end
 /* 06E070 7F039540 00000000 */   nop   
 /* 06E074 7F039544 26520001 */  addiu $s2, $s2, 1
 .L7F039548:

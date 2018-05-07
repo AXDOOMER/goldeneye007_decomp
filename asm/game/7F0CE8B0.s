@@ -29,7 +29,7 @@ sub_GAME_7F0CE8B0:
 /* 103418 7F0CE8E8 AFA60600 */  sw    $a2, 0x600($sp)
 /* 10341C 7F0CE8EC AFA70604 */  sw    $a3, 0x604($sp)
 /* 103420 7F0CE8F0 24050044 */  li    $a1, 68
-/* 103424 7F0CE8F4 0C005F10 */  jal   func_70017C40
+/* 103424 7F0CE8F4 0C005F10 */  jal   _blkclr
 /* 103428 7F0CE8F8 02202025 */   move  $a0, $s1
 /* 10342C 7F0CE8FC 8FAE05FC */  lw    $t6, 0x5fc($sp)
 /* 103430 7F0CE900 0240F025 */  move  $fp, $s2
@@ -718,7 +718,7 @@ sub_GAME_7F0CEEF0:
 /* 103DC8 7F0CF298 AFAA0058 */  sw    $t2, 0x58($sp)
 /* 103DCC 7F0CF29C AFAB0054 */  sw    $t3, 0x54($sp)
 /* 103DD0 7F0CF2A0 AFAC0044 */  sw    $t4, 0x44($sp)
-/* 103DD4 7F0CF2A4 0C004E14 */  jal   func_70013850
+/* 103DD4 7F0CF2A4 0C004E14 */  jal   memcpy
 /* 103DD8 7F0CF2A8 AFAD0040 */   sw    $t5, 0x40($sp)
 /* 103DDC 7F0CF2AC 3C098005 */  lui   $t1, %hi(D_8004E9B0) # $t1, 0x8005
 /* 103DE0 7F0CF2B0 2529E9B0 */  addiu $t1, %lo(D_8004E9B0) # addiu $t1, $t1, -0x1650
