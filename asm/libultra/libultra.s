@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-osPiRawStartDma:
+glabel osPiRawStartDma
 /* 00DB90 7000CF90 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00DB94 7000CF94 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 00DB98 7000CF98 AFA40028 */  sw    $a0, 0x28($sp)
@@ -76,13 +76,14 @@ osPiRawStartDma:
 /* 00DC68 7000D068 03E00008 */  jr    $ra
 /* 00DC6C 7000D06C 27BD0028 */   addiu $sp, $sp, 0x28
 
-osPiGetStatus:
+glabel osPiGetStatus
 /* 00DC70 7000D070 3C0EA460 */  lui   $t6, 0xa460
 /* 00DC74 7000D074 03E00008 */  jr    $ra
 /* 00DC78 7000D078 8DC20010 */   lw    $v0, 0x10($t6)
 
 /* 00DC7C 7000D07C 00000000 */  nop   
-osInitialize:
+
+glabel osInitialize
 /* 00DC80 7000D080 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 00DC84 7000D084 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 00DC88 7000D088 240E0001 */  li    $t6, 1
@@ -262,7 +263,7 @@ osInitialize:
 /* 00DF18 7000D318 03E00008 */  jr    $ra
 /* 00DF1C 7000D31C 00000000 */   nop   
 
-osWritebackDCacheAll:
+glabel osWritebackDCacheAll
 /* 00DF20 7000D320 3C088000 */  lui   $t0, %hi(D_80000010) # $t0, 0x8000
 /* 00DF24 7000D324 240A2000 */  li    $t2, 8192
 /* 00DF28 7000D328 010A4821 */  addu  $t1, $t0, $t2

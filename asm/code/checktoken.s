@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-check_string_something:
+glabel check_string_something
 /* 00B0F0 7000A4F0 3C058002 */  lui   $a1, %hi(strstr_ptrcurrent_string) # $a1, 0x8002
 /* 00B0F4 7000A4F4 3C068002 */  lui   $a2, %hi(strstr_numstings) # $a2, 0x8002
 /* 00B0F8 7000A4F8 3C0E8003 */  lui   $t6, %hi(D_800291F0) # $t6, 0x8003
@@ -58,7 +58,7 @@ check_string_something:
 /* 00B184 7000A584 03E00008 */  jr    $ra
 /* 00B188 7000A588 00801025 */   move  $v0, $a0
 
-strtok:
+glabel strtok
 /* 00B18C 7000A58C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00B190 7000A590 00802825 */  move  $a1, $a0
 /* 00B194 7000A594 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -73,7 +73,7 @@ strtok:
 /* 00B1B8 7000A5B8 03E00008 */  jr    $ra
 /* 00B1BC 7000A5BC 00000000 */   nop   
 
-check_boot_switches:
+glabel check_boot_switches
 /* 00B1C0 7000A5C0 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 00B1C4 7000A5C4 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 00B1C8 7000A5C8 AFBF0024 */  sw    $ra, 0x24($sp)
@@ -137,7 +137,7 @@ check_boot_switches:
 /* 00B298 7000A698 03E00008 */  jr    $ra
 /* 00B29C 7000A69C 27BD0038 */   addiu $sp, $sp, 0x38
 
-check_token:
+glabel check_token
 /* 00B2A0 7000A6A0 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 00B2A4 7000A6A4 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 00B2A8 7000A6A8 00809025 */  move  $s2, $a0
@@ -196,3 +196,4 @@ check_token:
 /* 00B368 7000A768 00000000 */  nop   
 /* 00B36C 7000A76C 00000000 */  nop   
 
+.section .data

@@ -58,10 +58,10 @@ glabel boot1
 /* 0011B4 700005B4 14200013 */  bnez  $at, .L70000604
 /* 0011B8 700005B8 3C01FFF0 */   lui   $at, (0xFFF00050 >> 16) # lui $at, 0xfff0
 /* 0011BC 700005BC 34210050 */  ori   $at, (0xFFF00050 & 0xFFFF) # ori $at, $at, 0x50
-/* 0011C0 700005C0 3C050010 */  lui   $a1, %hi(D_00101000) # $a1, 0x10
-/* 0011C4 700005C4 3C067010 */  lui   $a2, %hi(D_70100400) # $a2, 0x7010
-/* 0011C8 700005C8 24C60400 */  addiu $a2, %lo(D_70100400) # addiu $a2, $a2, 0x400
-/* 0011CC 700005CC 24A51000 */  addiu $a1, %lo(D_00101000) # addiu $a1, $a1, 0x1000
+/* 0011C0 700005C0 3C050010 */  lui   $a1, %hi(0x00101000) # $a1, 0x10
+/* 0011C4 700005C4 3C067010 */  lui   $a2, %hi(0x70100400) # $a2, 0x7010
+/* 0011C8 700005C8 24C60400 */  addiu $a2, %lo(0x70100400) # addiu $a2, $a2, 0x400
+/* 0011CC 700005CC 24A51000 */  addiu $a1, %lo(0x00101000) # addiu $a1, $a1, 0x1000
 /* 0011D0 700005D0 00413821 */  addu  $a3, $v0, $at
 /* 0011D4 700005D4 0C0033E4 */  jal   osPiRawStartDma
 /* 0011D8 700005D8 00002025 */   move  $a0, $zero
@@ -322,4 +322,4 @@ glabel setuplastentryofdebughandler
 /* 001568 70000968 03E00008 */  jr    $ra
 /* 00156C 7000096C 27BD0040 */   addiu $sp, $sp, 0x40
 
-
+.section .data

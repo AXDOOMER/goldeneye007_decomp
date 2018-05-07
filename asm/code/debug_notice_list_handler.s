@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-return_match_in_debug_notice_list:
+glabel return_match_in_debug_notice_list
 /* 005920 70004D20 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 005924 70004D24 AFB00014 */  sw    $s0, 0x14($sp)
 /* 005928 70004D28 3C108002 */  lui   $s0, %hi(D_800232E8) # $s0, 0x8002
@@ -41,7 +41,7 @@ return_match_in_debug_notice_list:
 /* 005978 70004D78 03E00008 */  jr    $ra
 /* 00597C 70004D7C 27BD0020 */   addiu $sp, $sp, 0x20
 
-get_entry_of_size_in_debug_notice_list:
+glabel get_entry_of_size_in_debug_notice_list
 /* 005980 70004D80 3C028002 */  lui   $v0, %hi(D_800232F8) # $v0, 0x8002
 /* 005984 70004D84 8C4232F8 */  lw    $v0, %lo(D_800232F8)($v0)
 /* 005988 70004D88 3C0E8006 */  lui   $t6, %hi(thread_video_manager_debugthread) # $t6, 0x8006
@@ -69,7 +69,7 @@ get_entry_of_size_in_debug_notice_list:
 /* 0059D8 70004DD8 03E00008 */  jr    $ra
 /* 0059DC 70004DDC 00000000 */   nop   
 
-add_new_entry_to_debug_notice_list:
+glabel add_new_entry_to_debug_notice_list
 /* 0059E0 70004DE0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0059E4 70004DE4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0059E8 70004DE8 AFA40018 */  sw    $a0, 0x18($sp)
@@ -90,7 +90,7 @@ add_new_entry_to_debug_notice_list:
 /* 005A24 70004E24 03E00008 */  jr    $ra
 /* 005A28 70004E28 00000000 */   nop   
 
-add_debug_notice_deb_c_debug:
+glabel add_debug_notice_deb_c_debug
 /* 005A2C 70004E2C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 005A30 70004E30 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 005A34 70004E34 3C048002 */  lui   $a0, %hi(D_800232E0) # $a0, 0x8002
@@ -105,7 +105,7 @@ add_debug_notice_deb_c_debug:
 /* 005A58 70004E58 03E00008 */  jr    $ra
 /* 005A5C 70004E5C 00000000 */   nop   
 
-get_ptr_debug_notice_list_entry:
+glabel get_ptr_debug_notice_list_entry
 /* 005A60 70004E60 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 005A64 70004E64 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 005A68 70004E68 AFA40018 */  sw    $a0, 0x18($sp)
@@ -122,7 +122,7 @@ get_ptr_debug_notice_list_entry:
 /* 005A90 70004E90 03E00008 */  jr    $ra
 /* 005A94 70004E94 00000000 */   nop   
 
-scan_debug_notice_list_till_NULL:
+glabel scan_debug_notice_list_till_NULL
 /* 005A98 70004E98 3C028002 */  lui   $v0, %hi(D_800232E8) # $v0, 0x8002
 /* 005A9C 70004E9C 8C4232E8 */  lw    $v0, %lo(D_800232E8)($v0)
 /* 005AA0 70004EA0 10400004 */  beqz  $v0, .L70004EB4
@@ -138,7 +138,7 @@ scan_debug_notice_list_till_NULL:
 /* 005ABC 70004EBC 03E00008 */  jr    $ra
 /* 005AC0 70004EC0 00000000 */   nop   
 
-debug_removed:
+glabel debug_removed
 /* 005AC4 70004EC4 AFA40000 */  sw    $a0, ($sp)
 /* 005AC8 70004EC8 AFA50004 */  sw    $a1, 4($sp)
 /* 005ACC 70004ECC 03E00008 */  jr    $ra
@@ -148,3 +148,4 @@ debug_removed:
 /* 005AD8 70004ED8 00000000 */  nop   
 /* 005ADC 70004EDC 00000000 */  nop   
 
+.section .data
