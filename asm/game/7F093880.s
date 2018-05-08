@@ -7164,7 +7164,7 @@ init_player_data_ptrs_construct_viewports:
 /* 0CEF8C 7F09A45C 03E00008 */  jr    $ra
 /* 0CEF90 7F09A460 27BD0020 */   addiu $sp, $sp, 0x20
 
-get_num_players:
+glabel get_num_players
 /* 0CEF94 7F09A464 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata_p1) # $t6, 0x8008
 /* 0CEF98 7F09A468 8DCE9EE0 */  lw    $t6, %lo(ptr_BONDdata_p1)($t6)
 /* 0CEF9C 7F09A46C 00001825 */  move  $v1, $zero
@@ -8005,7 +8005,7 @@ set_cur_player:
 /* 0CFC78 7F09B148 03E00008 */  jr    $ra
 /* 0CFC7C 7F09B14C AC28A0B4 */   sw    $t0, -0x5f4c($at)
 
-get_cur_playernum:
+glabel get_cur_playernum
 /* 0CFC80 7F09B150 3C028008 */  lui   $v0, 0x8008
 /* 0CFC84 7F09B154 03E00008 */  jr    $ra
 /* 0CFC88 7F09B158 8C42A0B8 */   lw    $v0, -0x5f48($v0)
@@ -8322,7 +8322,7 @@ sub_GAME_7F09B41C:
 /* 0D0000 7F09B4D0 03E00008 */  jr    $ra
 /* 0D0004 7F09B4D4 27BD0030 */   addiu $sp, $sp, 0x30
 
-sub_GAME_7F09B4D8:
+glabel sub_GAME_7F09B4D8
 /* 0D0008 7F09B4D8 3C058008 */  lui   $a1, %hi(dword_CODE_bss_8007A0C0) # $a1, 0x8008
 /* 0D000C 7F09B4DC 3C078008 */  lui   $a3, %hi(dword_CODE_bss_8007A0D0) # $a3, 0x8008
 /* 0D0010 7F09B4E0 3C068008 */  lui   $a2, %hi(ptr_BONDdata_p1) # $a2, 0x8008

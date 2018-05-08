@@ -66,7 +66,7 @@ load_resource_on_indy:
 /* 104B08 7F0CFFD8 03E00008 */  jr    $ra
 /* 104B0C 7F0CFFDC 00000000 */   nop   
 
-indy_send_capture_data:
+glabel indy_send_capture_data
 /* 104B10 7F0CFFE0 3C0E8005 */  lui   $t6, %hi(indy_ready) # $t6, 0x8005
 /* 104B14 7F0CFFE4 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
 /* 104B18 7F0CFFE8 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -121,7 +121,7 @@ check_file_exported:
 /* 104BC0 7F0D0090 03E00008 */  jr    $ra
 /* 104BC4 7F0D0094 00000000 */   nop   
 
-check_file_found_on_indy:
+glabel check_file_found_on_indy
 /* 104BC8 7F0D0098 3C0E8005 */  lui   $t6, %hi(indy_ready) # $t6, 0x8005
 /* 104BCC 7F0D009C 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
 /* 104BD0 7F0D00A0 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -143,7 +143,7 @@ check_file_found_on_indy:
 /* 104C08 7F0D00D8 03E00008 */  jr    $ra
 /* 104C0C 7F0D00DC 00000000 */   nop   
 
-response_from_command_string:
+glabel response_from_command_string
 /* 104C10 7F0D00E0 3C0E8005 */  lui   $t6, %hi(indy_ready) # $t6, 0x8005
 /* 104C14 7F0D00E4 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
 /* 104C18 7F0D00E8 27BDFFE0 */  addiu $sp, $sp, -0x20

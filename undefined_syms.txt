@@ -9,6 +9,8 @@ _gameSegmentRomEnd      = 0x00117880;
 _cdataSegmentVaddrStart = 0x80020D90;
 _cdataSegmentVaddrEnd   = 0x8005D2E0;
 
+D_003B5000 = 0x003B5000;
+
 osTvType = 0x80000300;
 osRomBase = 0x80000308;
 osResetType = 0x8000030C;

@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-remove_viewport_buffer:
+glabel remove_viewport_buffer
 /* 106EB0 7F0D2380 3C018005 */  lui   $at, 0x8005
 /* 106EB4 7F0D2384 03E00008 */  jr    $ra
 /* 106EB8 7F0D2388 AC20EB00 */   sw    $zero, -0x1500($at)
@@ -77,7 +77,7 @@ sub_GAME_7F0D2448:
 /* 106F8C 7F0D245C 03E00008 */  jr    $ra
 /* 106F90 7F0D2460 AC26E314 */   sw    $a2, -0x1cec($at)
 
-sub_GAME_7F0D2464:
+glabel sub_GAME_7F0D2464
 /* 106F94 7F0D2464 3C0E8005 */  lui   $t6, %hi(viewport.img) # $t6, 0x8005
 /* 106F98 7F0D2468 8DCEEB00 */  lw    $t6, %lo(viewport.img)($t6)
 /* 106F9C 7F0D246C 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -128,7 +128,7 @@ sub_GAME_7F0D2464:
 /* 107040 7F0D2510 03E00008 */  jr    $ra
 /* 107044 7F0D2514 00000000 */   nop   
 
-sub_GAME_7F0D2518:
+glabel sub_GAME_7F0D2518
 /* 107048 7F0D2518 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 10704C 7F0D251C AFB00018 */  sw    $s0, 0x18($sp)
 /* 107050 7F0D2520 AFBF001C */  sw    $ra, 0x1c($sp)

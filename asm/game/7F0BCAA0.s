@@ -899,7 +899,7 @@ sub_GAME_7F0BD6C4:
 /* 0F2208 7F0BD6D8 03E00008 */  jr    $ra
 /* 0F220C 7F0BD6DC ACCF0000 */   sw    $t7, ($a2)
 
-sub_GAME_7F0BD6E0:
+glabel sub_GAME_7F0BD6E0
 /* 0F2210 7F0BD6E0 3C058009 */  lui   $a1, %hi(ptr_mvtx_cur_pos) # $a1, 0x8009
 /* 0F2214 7F0BD6E4 24A5C24C */  addiu $a1, %lo(ptr_mvtx_cur_pos) # addiu $a1, $a1, -0x3db4
 /* 0F2218 7F0BD6E8 8CA20000 */  lw    $v0, ($a1)

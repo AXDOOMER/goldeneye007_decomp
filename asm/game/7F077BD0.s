@@ -15,7 +15,7 @@ nullsub_75:
 /* 0AC700 7F077BD0 03E00008 */  jr    $ra
 /* 0AC704 7F077BD4 00000000 */   nop   
 
-set_BONDdata_screensize:
+glabel set_BONDdata_screensize
 /* 0AC708 7F077BD8 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
 /* 0AC70C 7F077BDC 2442A0B0 */  addiu $v0, %lo(ptr_BONDdata) # addiu $v0, $v0, -0x5f50
 /* 0AC710 7F077BE0 8C4E0000 */  lw    $t6, ($v0)
@@ -32,7 +32,7 @@ set_BONDdata_screensize:
 /* 0AC73C 7F077C0C 03E00008 */  jr    $ra
 /* 0AC740 7F077C10 E72610B0 */   swc1  $f6, 0x10b0($t9)
 
-sub_GAME_7F077C14:
+glabel sub_GAME_7F077C14
 /* 0AC744 7F077C14 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
 /* 0AC748 7F077C18 2442A0B0 */  addiu $v0, %lo(ptr_BONDdata) # addiu $v0, $v0, -0x5f50
 /* 0AC74C 7F077C1C 8C4E0000 */  lw    $t6, ($v0)
@@ -41,7 +41,7 @@ sub_GAME_7F077C14:
 /* 0AC758 7F077C28 03E00008 */  jr    $ra
 /* 0AC75C 7F077C2C E5EE109C */   swc1  $f14, 0x109c($t7)
 
-sub_GAME_7F077C30:
+glabel sub_GAME_7F077C30
 /* 0AC760 7F077C30 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
 /* 0AC764 7F077C34 2442A0B0 */  addiu $v0, %lo(ptr_BONDdata) # addiu $v0, $v0, -0x5f50
 /* 0AC768 7F077C38 8C4E0000 */  lw    $t6, ($v0)
@@ -54,7 +54,7 @@ sub_GAME_7F077C30:
 /* 0AC784 7F077C54 03E00008 */  jr    $ra
 /* 0AC788 7F077C58 E70410A8 */   swc1  $f4, 0x10a8($t8)
 
-sub_GAME_7F077C5C:
+glabel sub_GAME_7F077C5C
 /* 0AC78C 7F077C5C 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 0AC790 7F077C60 AFB00020 */  sw    $s0, 0x20($sp)
 /* 0AC794 7F077C64 3C108008 */  lui   $s0, %hi(ptr_BONDdata) # $s0, 0x8008
@@ -535,7 +535,7 @@ get_BONDdata_field_10C8:
 /* 0ACE8C 7F07835C 03E00008 */  jr    $ra
 /* 0ACE90 7F078360 8DC210C8 */   lw    $v0, 0x10c8($t6)
 
-set_BONDdata_field_10D8:
+glabel set_BONDdata_field_10D8
 /* 0ACE94 7F078364 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008
 /* 0ACE98 7F078368 8DCEA0B0 */  lw    $t6, %lo(ptr_BONDdata)($t6)
 /* 0ACE9C 7F07836C 03E00008 */  jr    $ra
@@ -575,7 +575,7 @@ get_BONDdata_field_10CC:
 /* 0ACEFC 7F0783CC 03E00008 */  jr    $ra
 /* 0ACF00 7F0783D0 8DC210CC */   lw    $v0, 0x10cc($t6)
 
-set_BONDdata_field_10DC:
+glabel set_BONDdata_field_10DC
 /* 0ACF04 7F0783D4 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008
 /* 0ACF08 7F0783D8 8DCEA0B0 */  lw    $t6, %lo(ptr_BONDdata)($t6)
 /* 0ACF0C 7F0783DC 03E00008 */  jr    $ra

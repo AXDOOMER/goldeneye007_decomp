@@ -141,9 +141,9 @@ glabel video_related_7
 /* 003E38 70003238 AF380044 */  sw    $t8, 0x44($t9)
 /* 003E3C 7000323C 0C003818 */  jal   osViSetMode
 /* 003E40 70003240 8CA40000 */   lw    $a0, ($a1)
-/* 003E44 70003244 3C048002 */  lui   $a0, %hi(D_800232BF) # $a0, 0x8002
+/* 003E44 70003244 3C048002 */  lui   $a0, %hi(D_800232BC + 3) # $a0, 0x8002
 /* 003E48 70003248 0C0038B4 */  jal   osViBlack
-/* 003E4C 7000324C 908432BF */   lbu   $a0, %lo(D_800232BF)($a0)
+/* 003E4C 7000324C 908432BF */   lbu   $a0, %lo(D_800232BC + 3)($a0)
 /* 003E50 70003250 3C038002 */  lui   $v1, %hi(D_800232BC) # $v1, 0x8002
 /* 003E54 70003254 246332BC */  addiu $v1, %lo(D_800232BC) # addiu $v1, $v1, 0x32bc
 /* 003E58 70003258 8C620000 */  lw    $v0, ($v1)
@@ -2018,5 +2018,79 @@ glabel indy_grab_rgb_32bit
 /* 00591C 70004D1C 00000000 */  nop   
 
 .section .data
+video1.settings:
+video2.settings:
+D_8002329C: .word 0
+D_800232A0: .word 0
+ptr_video_settings1: .word video1.settings
+ptr_video_settings2: .word video1.settings
+coloroutputmode: .word 1
+D_800232B0: .word 1
+D_800232B4: .word 0
+D_800232B8: .word 0
+D_800232BC: .word 3
+D_800232C0: .word 0
+jpg_16bit_grabnum:.word 1
+jpg_32bit_grabnum:.word 1
+rgb_16bit_grabnum:.word 1
+rgb_32bit_grabnum:.word 1
+
 .section .rodata
+D_80028480:
+.word 0x1400140
+.word 0x2800000
+.word 0xF000F0
+.word 0x1E00000
+aGrab_D_jpeg_1: .asciiz "grab.%d.jpeg"
+.align 4
+aGrab_D_temp_uix: .asciiz "grab.%d.temp.uix"
+.align 4
+aUix2pixGrab_D_temp_uix: .asciiz "uix2pix grab.%d.temp.uix"
+.align 4
+aFromaliasGrab_D_temp_pixGrab_D_tem: .asciiz "fromalias grab.%d.temp.pix grab.%d.temp.rgb"
+.align 4
+aImgcopyFjfifGrab_D_temp_rgbGrab_D_: .asciiz "imgcopy -fjfif grab.%d.temp.rgb grab.%d.jpeg"
+.align 4
+aRmGrab_D_temp_uixGrab_D_temp_pixGr: .asciiz "rm grab.%d.temp.uix grab.%d.temp.pix grab.%d.temp.rgb"
+.align 4
+aImgviewGrab_D_jpeg: .asciiz "imgview grab.%d.jpeg"
+.align 4
+aGrab_D_jpeg: .asciiz "grab.%d.jpeg"
+.align 4
+aGrab_D_temp_uix_0: .asciiz "grab.%d.temp.Uix"
+.align 4
+aUix2pixXsDGrab_D_temp_uix: .asciiz "Uix2pix -xs%d grab.%d.temp.Uix"
+.align 4
+aFromaliasGrab_D_temp_pixGrab_D_t_0: .asciiz "fromalias grab.%d.temp.pix grab.%d.temp.rgb"
+.align 4
+aImgcopyFjfifGrab_D_temp_rgbGrab__0: .asciiz "imgcopy -fjfif grab.%d.temp.rgb grab.%d.jpeg"
+.align 4
+aRmGrab_D_temp_uixGrab_D_temp_pix_0: .asciiz "rm grab.%d.temp.Uix grab.%d.temp.pix grab.%d.temp.rgb"
+.align 4
+aImgviewGrab_D_jpeg_0: .asciiz "imgview grab.%d.jpeg"
+.align 4
+aGrab_D_rgb: .asciiz "grab.%d.rgb"
+.align 4
+aGrab_D_temp_uix_1: .asciiz "grab.%d.temp.uix"
+.align 4
+aUix2pixGrab_D_temp_uix_0: .asciiz "uix2pix grab.%d.temp.uix"
+.align 4
+aFromaliasGrab_D_temp_pixGrab_D_rgb: .asciiz "fromalias grab.%d.temp.pix grab.%d.rgb"
+.align 4
+aRmGrab_D_temp_uixGrab_D_temp_pix: .asciiz "rm grab.%d.temp.uix grab.%d.temp.pix"
+.align 4
+aImgviewGrab_D_rgb: .asciiz "imgview grab.%d.rgb"
+.align 4
+aGrab_D_rgb_0: .asciiz "grab.%d.rgb"
+.align 4
+aGrab_D_temp_uix_2: .asciiz "grab.%d.temp.Uix"
+.align 4
+aUix2pixXsDGrab_D_temp_uix_0: .asciiz "Uix2pix -xs%d grab.%d.temp.Uix"
+.align 4
+aFromaliasGrab_D_temp_pixGrab_D_r_0: .asciiz "fromalias grab.%d.temp.pix grab.%d.rgb"
+.align 4
+aRmGrab_D_temp_uixGrab_D_temp_pix_1: .asciiz "rm grab.%d.temp.Uix grab.%d.temp.pix"
+.align 4
+aImgviewGrab_D_rgb_0: .asciiz "imgview grab.%d.rgb"
+.align 4
 .section .bss
