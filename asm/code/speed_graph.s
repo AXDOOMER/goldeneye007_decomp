@@ -653,7 +653,7 @@ glabel video_DL_related_4
 /* 003C5C 7000305C 00000000 */  nop   
 
 .section .data
-stru_D_800231D4:
+D_800231D4:
 .word 0
 .word 2, 0
 .word 1, 0
