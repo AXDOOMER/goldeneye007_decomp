@@ -38,37 +38,39 @@ glabel boot
 /* 0010AC 700004AC 3C0A7000 */  lui   $t2, %hi(boot1) # $t2, 0x7000
 /* 0010B0 700004B0 254A0510 */  addiu $t2, %lo(boot1) # addiu $t2, $t2, 0x510
 /* 0010B4 700004B4 01400008 */  jr    $t2
-/* 0010B8 700004B8 00000000 */   nop   
+/* 0010B8 700004B8 00000000 */   nop
+   
 glabel get_cdata_vaddr_start
 /* 0010BC 700004BC 3C028002 */  lui   $v0, %hi(_cdataSegmentVaddrStart) # $v0, 0x8002
 /* 0010C0 700004C0 03E00008 */  jr    $ra
 /* 0010C4 700004C4 24420D90 */   addiu $v0, $v0, %lo(_cdataSegmentVaddrStart) # addiu $v0, $v0, 0xd90
 
 glabel get_rodata_rom_start
-/* 0010C8 700004C8 3C020002 */  lui   $v0, 2
+/* 0010C8 700004C8 3C020002 */  lui   $v0, %hi(_cdataSegmentRomStart) # $v0, 2
 /* 0010CC 700004CC 03E00008 */  jr    $ra
-/* 0010D0 700004D0 24421990 */   addiu $v0, $v0, 0x1990
+/* 0010D0 700004D0 24421990 */   addiu $v0, $v0, %lo(_cdataSegmentRomStart) # addiu $v0, $v0, 0x1990
 
 glabel get_rodata_rom_end
-/* 0010D4 700004D4 3C020003 */  lui   $v0, 3
+/* 0010D4 700004D4 3C020003 */  lui   $v0, %hi(_cdataSegmentRomEnd) # $v0, 3
 /* 0010D8 700004D8 03E00008 */  jr    $ra
-/* 0010DC 700004DC 24423590 */   addiu $v0, $v0, 0x3590
+/* 0010DC 700004DC 24423590 */   addiu $v0, $v0, %lo(_cdataSegmentRomEnd) # addiu $v0, $v0, 0x3590
 
 glabel getRareZipASMRomstart
-/* 0010E0 700004E0 3C020003 */  lui   $v0, 3
+/* 0010E0 700004E0 3C020003 */  lui   $v0, %hi(_rarezipSegmentRomStart) # $v0, 3
 /* 0010E4 700004E4 03E00008 */  jr    $ra
-/* 0010E8 700004E8 24423590 */   addiu $v0, $v0, 0x3590
+/* 0010E8 700004E8 24423590 */   addiu $v0, $v0, %lo(_rarezipSegmentRomStart) # addiu $v0, $v0, 0x3590
 
 glabel getRareZipASMRomend
-/* 0010EC 700004EC 3C020003 */  lui   $v0, 3
+/* 0010EC 700004EC 3C020003 */  lui   $v0, %hi(_rarezipSegmentRomEnd) # $v0, 3
 /* 0010F0 700004F0 03E00008 */  jr    $ra
-/* 0010F4 700004F4 24424B30 */   addiu $v0, $v0, 0x4b30
+/* 0010F4 700004F4 24424B30 */   addiu $v0, $v0, %lo(_rarezipSegmentRomEnd) # addiu $v0, $v0, 0x4b30
 
 glabel jump_decompressfile
 /* 0010F8 700004F8 3C077020 */  lui   $a3, %hi(decompress.entry) # $a3, 0x7020
 /* 0010FC 700004FC 24E7141C */  addiu $a3, %lo(decompress.entry) # addiu $a3, $a3, 0x141c
 /* 001100 70000500 00E00008 */  jr    $a3
-/* 001104 70000504 00000000 */   nop   
+/* 001104 70000504 00000000 */   nop
+
 /* 001108 70000508 00000000 */  nop   
 /* 00110C 7000050C 00000000 */  nop   
 

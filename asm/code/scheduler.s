@@ -656,8 +656,8 @@ glabel __scTaskComplete
 /* 001EA0 700012A0 3C018002 */  lui   $at, %hi(D_800230CC) # $at, 0x8002
 /* 001EA4 700012A4 AC2030CC */  sw    $zero, %lo(D_800230CC)($at)
 .L700012A8:
-/* 001EA8 700012A8 3C038002 */  lui   $v1, %hi(D_800230B0) # $v1, 0x8002
-/* 001EAC 700012AC 8C6330B0 */  lw    $v1, %lo(D_800230B0)($v1)
+/* 001EA8 700012A8 3C038002 */  lui   $v1, %hi(something_with_osVI) # $v1, 0x8002
+/* 001EAC 700012AC 8C6330B0 */  lw    $v1, %lo(something_with_osVI)($v1)
 /* 001EB0 700012B0 3C0B8002 */  lui   $t3, 0x8002
 /* 001EB4 700012B4 3C040008 */  lui   $a0, (0x00080401 >> 16) # lui $a0, 8
 /* 001EB8 700012B8 00035080 */  sll   $t2, $v1, 2
@@ -668,8 +668,8 @@ glabel __scTaskComplete
 /* 001ECC 700012CC 00000000 */   nop   
 /* 001ED0 700012D0 0C00374C */  jal   osSetIntMask
 /* 001ED4 700012D4 34840401 */   ori   $a0, (0x00080401 & 0xFFFF) # ori $a0, $a0, 0x401
-/* 001ED8 700012D8 3C038002 */  lui   $v1, %hi(D_800230B0) # $v1, 0x8002
-/* 001EDC 700012DC 8C6330B0 */  lw    $v1, %lo(D_800230B0)($v1)
+/* 001ED8 700012D8 3C038002 */  lui   $v1, %hi(something_with_osVI) # $v1, 0x8002
+/* 001EDC 700012DC 8C6330B0 */  lw    $v1, %lo(something_with_osVI)($v1)
 /* 001EE0 700012E0 3C0F8006 */  lui   $t7, %hi(dword_CODE_bss_8005DB40) # $t7, 0x8006
 /* 001EE4 700012E4 25EFDB40 */  addiu $t7, %lo(dword_CODE_bss_8005DB40) # addiu $t7, $t7, -0x24c0
 /* 001EE8 700012E8 00037080 */  sll   $t6, $v1, 2
@@ -697,8 +697,8 @@ glabel __scTaskComplete
 /* 001F3C 7000133C 8F090004 */  lw    $t1, 4($t8)
 /* 001F40 70001340 0C00374C */  jal   osSetIntMask
 /* 001F44 70001344 ADA90004 */   sw    $t1, 4($t5)
-/* 001F48 70001348 3C038002 */  lui   $v1, %hi(D_800230B0) # $v1, 0x8002
-/* 001F4C 7000134C 8C6330B0 */  lw    $v1, %lo(D_800230B0)($v1)
+/* 001F48 70001348 3C038002 */  lui   $v1, %hi(something_with_osVI) # $v1, 0x8002
+/* 001F4C 7000134C 8C6330B0 */  lw    $v1, %lo(something_with_osVI)($v1)
 /* 001F50 70001350 00035080 */  sll   $t2, $v1, 2
 /* 001F54 70001354 01401825 */  move  $v1, $t2
 .L70001358:
@@ -706,16 +706,16 @@ glabel __scTaskComplete
 /* 001F5C 7000135C 00230821 */  addu  $at, $at, $v1
 /* 001F60 70001360 0C003834 */  jal   osViSetXScale
 /* 001F64 70001364 C42C30B4 */   lwc1  $f12, 0x30b4($at)
-/* 001F68 70001368 3C0B8002 */  lui   $t3, %hi(D_800230B0) # $t3, 0x8002
-/* 001F6C 7000136C 8D6B30B0 */  lw    $t3, %lo(D_800230B0)($t3)
+/* 001F68 70001368 3C0B8002 */  lui   $t3, %hi(something_with_osVI) # $t3, 0x8002
+/* 001F6C 7000136C 8D6B30B0 */  lw    $t3, %lo(something_with_osVI)($t3)
 /* 001F70 70001370 3C018002 */  lui   $at, 0x8002
 /* 001F74 70001374 000B6080 */  sll   $t4, $t3, 2
 /* 001F78 70001378 002C0821 */  addu  $at, $at, $t4
 /* 001F7C 7000137C 0C003880 */  jal   osViSetYScale
 /* 001F80 70001380 C42C30BC */   lwc1  $f12, 0x30bc($at)
-/* 001F84 70001384 3C0E8002 */  lui   $t6, %hi(D_800230B0) # $t6, 0x8002
-/* 001F88 70001388 8DCE30B0 */  lw    $t6, %lo(D_800230B0)($t6)
-/* 001F8C 7000138C 3C018002 */  lui   $at, %hi(D_800230B0) # $at, 0x8002
+/* 001F84 70001384 3C0E8002 */  lui   $t6, %hi(something_with_osVI) # $t6, 0x8002
+/* 001F88 70001388 8DCE30B0 */  lw    $t6, %lo(something_with_osVI)($t6)
+/* 001F8C 7000138C 3C018002 */  lui   $at, %hi(something_with_osVI) # $at, 0x8002
 /* 001F90 70001390 25CF0001 */  addiu $t7, $t6, 1
 /* 001F94 70001394 05E10004 */  bgez  $t7, .L700013A8
 /* 001F98 70001398 31E80001 */   andi  $t0, $t7, 1
@@ -723,7 +723,7 @@ glabel __scTaskComplete
 /* 001FA0 700013A0 00000000 */   nop   
 /* 001FA4 700013A4 2508FFFE */  addiu $t0, $t0, -2
 .L700013A8:
-/* 001FA8 700013A8 AC2830B0 */  sw    $t0, %lo(D_800230B0)($at)
+/* 001FA8 700013A8 AC2830B0 */  sw    $t0, %lo(something_with_osVI)($at)
 /* 001FAC 700013AC 0C000268 */  jal   testtodisplaystderrandupdatecount
 /* 001FB0 700013B0 8E04000C */   lw    $a0, 0xc($s0)
 /* 001FB4 700013B4 0C003924 */  jal   osViSwapBuffer
@@ -1002,5 +1002,12 @@ glabel __scSchedule
 
 
 .section .data
+setby_DPCfill_0:
+.word 0
+setby_DPCfill_1:
+.word 0
+something_with_osVI:
+.word 0,0x3F800000,0x3F800000,0x3F800000,0x3F800000,0,0
+
 .section .rodata
 .section .bss
