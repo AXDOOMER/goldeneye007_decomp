@@ -36,8 +36,8 @@ glabel osPiRawStartDma
 /* 00DBDC 7000CFDC 8FA40030 */   lw    $a0, 0x30($sp)
 /* 00DBE0 7000CFE0 3C08A460 */  lui   $t0, 0xa460
 /* 00DBE4 7000CFE4 AD020000 */  sw    $v0, ($t0)
-/* 00DBE8 7000CFE8 3C098000 */  lui   $t1, %hi(D_80000308) # $t1, 0x8000
-/* 00DBEC 7000CFEC 8D290308 */  lw    $t1, %lo(D_80000308)($t1)
+/* 00DBE8 7000CFE8 3C098000 */  lui   $t1, %hi(osRomBase) # $t1, 0x8000
+/* 00DBEC 7000CFEC 8D290308 */  lw    $t1, %lo(osRomBase)($t1)
 /* 00DBF0 7000CFF0 8FAA002C */  lw    $t2, 0x2c($sp)
 /* 00DBF4 7000CFF4 3C011FFF */  lui   $at, (0x1FFFFFFF >> 16) # lui $at, 0x1fff
 /* 00DBF8 7000CFF8 3421FFFF */  ori   $at, (0x1FFFFFFF & 0xFFFF) # ori $at, $at, 0xffff
@@ -214,8 +214,8 @@ glabel osInitialize
 /* 00DE68 7000D268 24060000 */  li    $a2, 0
 /* 00DE6C 7000D26C 0C003B2A */  jal   ull_div
 /* 00DE70 7000D270 24070004 */   li    $a3, 4
-/* 00DE74 7000D274 3C098000 */  lui   $t1, %hi(D_8000030C) # $t1, 0x8000
-/* 00DE78 7000D278 8D29030C */  lw    $t1, %lo(D_8000030C)($t1)
+/* 00DE74 7000D274 3C098000 */  lui   $t1, %hi(osResetType) # $t1, 0x8000
+/* 00DE78 7000D278 8D29030C */  lw    $t1, %lo(osResetType)($t1)
 /* 00DE7C 7000D27C 3C018002 */  lui   $at, %hi(D_80026984) # $at, 0x8002
 /* 00DE80 7000D280 AC226980 */  sw    $v0, %lo(osClockRate)($at)
 /* 00DE84 7000D284 15200005 */  bnez  $t1, .L7000D29C
@@ -12192,8 +12192,8 @@ glabel osPiRawReadIo
 /* 018804 70017C04 1720FFFC */  bnez  $t9, .L70017BF8
 /* 018808 70017C08 00000000 */   nop   
 .L70017C0C:
-/* 01880C 70017C0C 3C088000 */  lui   $t0, %hi(D_80000308) # $t0, 0x8000
-/* 018810 70017C10 8D080308 */  lw    $t0, %lo(D_80000308)($t0)
+/* 01880C 70017C0C 3C088000 */  lui   $t0, %hi(osRomBase) # $t0, 0x8000
+/* 018810 70017C10 8D080308 */  lw    $t0, %lo(osRomBase)($t0)
 /* 018814 70017C14 3C01A000 */  lui   $at, 0xa000
 /* 018818 70017C18 00001025 */  move  $v0, $zero
 /* 01881C 70017C1C 01044825 */  or    $t1, $t0, $a0

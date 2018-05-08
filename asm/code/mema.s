@@ -783,3 +783,6 @@ glabel mem_related_1
 /* 00B048 7000A448 00000000 */  nop   
 /* 00B04C 7000A44C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

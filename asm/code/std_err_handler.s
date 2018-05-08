@@ -272,11 +272,11 @@ glabel set_ptr_video_buffers
 glabel set_video_buffer_pointers
 /* 0065A4 700059A4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0065A8 700059A8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0065AC 700059AC 3C04803B */  lui   $a0, %hi(D_803B5000) # $a0, 0x803b
-/* 0065B0 700059B0 3C05803E */  lui   $a1, %hi(D_803DA800) # $a1, 0x803e
-/* 0065B4 700059B4 24A5A800 */  addiu $a1, %lo(D_803DA800) # addiu $a1, $a1, -0x5800
+/* 0065AC 700059AC 3C04803B */  lui   $a0, %hi(vid_buff_1) # $a0, 0x803b
+/* 0065B0 700059B0 3C05803E */  lui   $a1, %hi(vid_buff_2) # $a1, 0x803e
+/* 0065B4 700059B4 24A5A800 */  addiu $a1, %lo(vid_buff_2) # addiu $a1, $a1, -0x5800
 /* 0065B8 700059B8 0C001661 */  jal   set_ptr_video_buffers
-/* 0065BC 700059BC 24845000 */   addiu $a0, %lo(D_803B5000) # addiu $a0, $a0, 0x5000
+/* 0065BC 700059BC 24845000 */   addiu $a0, %lo(vid_buff_1) # addiu $a0, $a0, 0x5000
 /* 0065C0 700059C0 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0065C4 700059C4 27BD0018 */  addiu $sp, $sp, 0x18
 /* 0065C8 700059C8 03E00008 */  jr    $ra
@@ -371,3 +371,6 @@ glabel write_stderr_to_buffer
 /* 006708 70005B08 00000000 */  nop   
 /* 00670C 70005B0C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

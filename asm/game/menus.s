@@ -18561,8 +18561,8 @@ menu_init:
 /* 04F174 7F01A644 00000000 */   nop   
 /* 04F178 7F01A648 0C000F07 */  jal   get_video2buf_offset28
 /* 04F17C 7F01A64C 00000000 */   nop   
-/* 04F180 7F01A650 3C18803E */  lui   $t8, %hi(D_803DA800) # $t8, 0x803e
-/* 04F184 7F01A654 2718A800 */  addiu $t8, %lo(D_803DA800) # addiu $t8, $t8, -0x5800
+/* 04F180 7F01A650 3C18803E */  lui   $t8, %hi(vid_buff_2) # $t8, 0x803e
+/* 04F184 7F01A654 2718A800 */  addiu $t8, %lo(vid_buff_2) # addiu $t8, $t8, -0x5800
 /* 04F188 7F01A658 14580012 */  bne   $v0, $t8, .L7F01A6A4
 /* 04F18C 7F01A65C 24190001 */   li    $t9, 1
 /* 04F190 7F01A660 3C018003 */  lui   $at, %hi(screen_size) # $at, 0x8003
@@ -18576,8 +18576,8 @@ menu_init:
 /* 04F1AC 7F01A67C 00000000 */   nop   
 /* 04F1B0 7F01A680 0C000F07 */  jal   get_video2buf_offset28
 /* 04F1B4 7F01A684 00000000 */   nop   
-/* 04F1B8 7F01A688 3C09803B */  lui   $t1, %hi(D_803B5000) # $t1, 0x803b
-/* 04F1BC 7F01A68C 25295000 */  addiu $t1, %lo(D_803B5000) # addiu $t1, $t1, 0x5000
+/* 04F1B8 7F01A688 3C09803B */  lui   $t1, %hi(vid_buff_1) # $t1, 0x803b
+/* 04F1BC 7F01A68C 25295000 */  addiu $t1, %lo(vid_buff_1) # addiu $t1, $t1, 0x5000
 /* 04F1C0 7F01A690 14490004 */  bne   $v0, $t1, .L7F01A6A4
 /* 04F1C4 7F01A694 3C018003 */   lui   $at, %hi(screen_size) # $at, 0x8003
 /* 04F1C8 7F01A698 AC20A940 */  sw    $zero, %lo(screen_size)($at)
@@ -18591,8 +18591,8 @@ menu_init:
 /* 04F1E4 7F01A6B4 00000000 */   nop   
 /* 04F1E8 7F01A6B8 0C000F07 */  jal   get_video2buf_offset28
 /* 04F1EC 7F01A6BC 00000000 */   nop   
-/* 04F1F0 7F01A6C0 3C0B803E */  lui   $t3, %hi(D_803DA800) # $t3, 0x803e
-/* 04F1F4 7F01A6C4 256BA800 */  addiu $t3, %lo(D_803DA800) # addiu $t3, $t3, -0x5800
+/* 04F1F0 7F01A6C0 3C0B803E */  lui   $t3, %hi(vid_buff_2) # $t3, 0x803e
+/* 04F1F4 7F01A6C4 256BA800 */  addiu $t3, %lo(vid_buff_2) # addiu $t3, $t3, -0x5800
 /* 04F1F8 7F01A6C8 144B0003 */  bne   $v0, $t3, .L7F01A6D8
 /* 04F1FC 7F01A6CC 3C048003 */   lui   $a0, %hi(ptr_menu_videobuffer) # $a0, 0x8003
 /* 04F200 7F01A6D0 0C000F0F */  jal   set_video2buf_offset28

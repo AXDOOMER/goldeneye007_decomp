@@ -96,3 +96,6 @@ glabel osSyncPrintf
 /* 00DB88 7000CF88 00000000 */  nop   
 /* 00DB8C 7000CF8C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

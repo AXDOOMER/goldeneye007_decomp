@@ -149,3 +149,5 @@ glabel debug_removed
 /* 005ADC 70004EDC 00000000 */  nop   
 
 .section .data
+.section .rodata
+.section .bss

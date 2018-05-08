@@ -31,4 +31,21 @@ glabel set_user_Compare
 /* 001598 70000998 03E00008 */  jr    $ra
 /* 00159C 7000099C AC2430A0 */   sw    $a0, 0x30a0($at)
 
+.section .data
+glabel stderr.enable
+.word 0
 
+glabel stderr.activated
+.word 0
+
+glabel stderr.permitted
+.word 0
+
+glabel user.compare
+.word 0x2AEA540
+
+glabel currentcount
+.word 0
+
+.section .rodata
+.section .bss

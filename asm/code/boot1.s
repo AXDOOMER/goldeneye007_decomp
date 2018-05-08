@@ -81,7 +81,7 @@ glabel boot1
 /* 001208 70000608 00000000 */   nop   
 /* 00120C 7000060C 0C0006EC */  jal   set_hardwire_TLB_to_2
 /* 001210 70000610 00000000 */   nop   
-/* 001214 70000614 3C108000 */  lui   $s0, %hi(D_80000001) # $s0, 0x8000
+/* 001214 70000614 3C108000 */  lui   $s0, %hi(0x80000001) # $s0, 0x8000
 /* 001218 70000618 3C027000 */  lui   $v0, %hi(resolve_TLBaddress_for_InvalidHit) # $v0, 0x7000
 /* 00121C 7000061C 3C048000 */  lui   $a0, (0x80000080 >> 16) # lui $a0, 0x8000
 /* 001220 70000620 24421B60 */  addiu $v0, %lo(resolve_TLBaddress_for_InvalidHit) # addiu $v0, $v0, 0x1b60
@@ -109,7 +109,7 @@ glabel boot1
 .L70000674:
 /* 001274 70000674 0C0034F4 */  jal   osUnmapTLB
 /* 001278 70000678 02002025 */   move  $a0, $s0
-/* 00127C 7000067C 26100001 */  addiu $s0, %lo(D_80000001) # addiu $s0, $s0, 1
+/* 00127C 7000067C 26100001 */  addiu $s0, %lo(0x80000001) # addiu $s0, $s0, 1
 /* 001280 70000680 1611FFFC */  bne   $s0, $s1, .L70000674
 /* 001284 70000684 00000000 */   nop   
 /* 001288 70000688 0C003504 */  jal   __osGetFpcCsr
@@ -223,8 +223,8 @@ glabel setup_message_queue_for_scheduler
 /* 001400 70000800 2484D9A0 */  addiu $a0, %lo(msgQ_Q_fast3d) # addiu $a0, $a0, -0x2660
 /* 001404 70000804 0C0035B4 */  jal   osCreateMesgQueue
 /* 001408 70000808 24060020 */   li    $a2, 32
-/* 00140C 7000080C 3C0E8000 */  lui   $t6, %hi(D_80000300) # $t6, 0x8000
-/* 001410 70000810 8DCE0300 */  lw    $t6, %lo(D_80000300)($t6)
+/* 00140C 7000080C 3C0E8000 */  lui   $t6, %hi(osTvType) # $t6, 0x8000
+/* 001410 70000810 8DCE0300 */  lw    $t6, %lo(osTvType)($t6)
 /* 001414 70000814 24010002 */  li    $at, 2
 /* 001418 70000818 3C048006 */  lui   $a0, %hi(D_8005DA40) # $a0, 0x8006
 /* 00141C 7000081C 15C1000A */  bne   $t6, $at, .L70000848
@@ -323,3 +323,50 @@ glabel setuplastentryofdebughandler
 /* 00156C 7000096C 27BD0040 */   addiu $sp, $sp, 0x40
 
 .section .data
+unknown_init_val:
+  .word 2
+
+cart_hw_address:
+  .word 0x10000000
+
+.macro debug_handler_table_entry sp, string
+ .word \sp
+ .word \string
+.endm
+
+#referenced by setuplastentryofdebughandler
+.globl debug_handler_table
+.type debug_handler_table, @object
+.size debug_handler_table, 0x30
+debug_handler_table:
+  debug_handler_table_entry sp_boot, aBoot
+  debug_handler_table_entry sp_rmon, aRmon
+  debug_handler_table_entry sp_idle, aIdle
+  debug_handler_table_entry sp_shed, aShed
+  debug_handler_table_entry sp_main, aMain
+  debug_handler_table_entry sp_audi, aAudi
+debug_handler_table_end:
+
+
+
+
+.section .rodata
+aBoot: .asciiz "boot"
+.align 2
+
+aRmon: .asciiz "rmon"
+.align 2
+
+aIdle: .asciiz "idle"
+.align 2
+
+aShed: .asciiz "shed"
+.align 2
+
+aMain: .asciiz "main"
+.align 2
+
+aAudi: .asciiz "audi"
+.align 2
+
+.section .bss

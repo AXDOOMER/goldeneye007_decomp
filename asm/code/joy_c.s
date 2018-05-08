@@ -1463,3 +1463,6 @@ glabel controller_7000C954
 
 /* 00D57C 7000C97C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

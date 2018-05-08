@@ -49,3 +49,6 @@ glabel sprintf
 
 /* 00B8EC 7000ACEC 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

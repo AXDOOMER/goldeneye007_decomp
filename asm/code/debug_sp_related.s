@@ -103,4 +103,6 @@ glabel debug_sp_related_12
 /* 006158 70005558 03E00008 */  jr    $ra
 /* 00615C 7000555C 27BD0018 */   addiu $sp, $sp, 0x18
 
-
+.section .data
+.section .rodata
+.section .bss

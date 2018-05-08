@@ -40,9 +40,9 @@ glabel boot
 /* 0010B4 700004B4 01400008 */  jr    $t2
 /* 0010B8 700004B8 00000000 */   nop   
 glabel get_cdata_vaddr_start
-/* 0010BC 700004BC 3C028002 */  lui   $v0, 0x8002
+/* 0010BC 700004BC 3C028002 */  lui   $v0, %hi(_cdataSegmentVaddrStart) # $v0, 0x8002
 /* 0010C0 700004C0 03E00008 */  jr    $ra
-/* 0010C4 700004C4 24420D90 */   addiu $v0, $v0, 0xd90
+/* 0010C4 700004C4 24420D90 */   addiu $v0, $v0, %lo(_cdataSegmentVaddrStart) # addiu $v0, $v0, 0xd90
 
 glabel get_rodata_rom_start
 /* 0010C8 700004C8 3C020002 */  lui   $v0, 2
@@ -72,3 +72,6 @@ glabel jump_decompressfile
 /* 001108 70000508 00000000 */  nop   
 /* 00110C 7000050C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

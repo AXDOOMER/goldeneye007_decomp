@@ -4,3 +4,4 @@
     .global \label
     \label:
 .endm
+

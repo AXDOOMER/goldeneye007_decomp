@@ -75,3 +75,6 @@ glabel mp_tlb_related
 /* 0024BC 700018BC AC600000 */   sw    $zero, ($v1)
 
 
+.section .data
+.section .rodata
+.section .bss

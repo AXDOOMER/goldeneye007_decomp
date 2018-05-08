@@ -372,3 +372,6 @@ glabel controller_7000CD38
 /* 00DA9C 7000CE9C 00000000 */   nop   
 
 
+.section .data
+.section .rodata
+.section .bss

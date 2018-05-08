@@ -1215,3 +1215,6 @@ glabel music_related_15
 /* 008718 70007B18 00000000 */  nop   
 /* 00871C 70007B1C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

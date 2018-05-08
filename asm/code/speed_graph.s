@@ -652,3 +652,6 @@ glabel video_DL_related_4
 
 /* 003C5C 7000305C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

@@ -1734,3 +1734,6 @@ glabel music_related_42
 /* 009F7C 7000937C 27BD0048 */   addiu $sp, $sp, 0x48
 
 
+.section .data
+.section .rodata
+.section .bss

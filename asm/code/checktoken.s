@@ -197,3 +197,5 @@ glabel check_token
 /* 00B36C 7000A76C 00000000 */  nop   
 
 .section .data
+.section .rodata
+.section .bss

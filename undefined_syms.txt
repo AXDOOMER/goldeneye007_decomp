@@ -1,0 +1,37 @@
+_codeSegmentRomStart    = 0x00001050;
+_rarezipSegmentRomStart = 0x00033590;
+_cdataSegmentVaddrStart = 0x80020D90;
+_cdataSegmentVaddrEnd   = 0x8005D2E0;
+
+osTvType = 0x80000300;
+osRomBase = 0x80000308;
+osResetType = 0x8000030C;
+
+/* .bss */
+rmonthread = 0x8005D2E0;
+idlethread = 0x8005D490;
+mainthread = 0x8005D640;
+shedthread = 0x8005D7F0;
+msgQ_Q_fast3d = 0x8005D9A0;
+msgQ_buf_8005D9B8 = 0x8005D9B8;
+mq = 0x8005DA38;
+D_8005DA40 = 0x8005DA40;
+dword_CODE_bss_8005DB18 = 0x8005DB18;
+
+/* stack */
+sp_boot  = 0x803AB400;
+sp_rmon  = 0x803AB410;
+sp_idle  = 0x803AB710;
+sp_shed  = 0x803AB750;
+sp_main  = 0x803AB950;
+sp_audi  = 0x803B3950;
+sp_debug = 0x803B4950;
+
+/*buffers*/
+vid_buff_1 = 0x803B5000;
+vid_buff_2 = 0x803DA800;
+
+
+
+
+

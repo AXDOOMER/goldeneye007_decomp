@@ -397,3 +397,6 @@ glabel return_indy_read_buf_resourceID
 /* 00601C 7000541C 8C423664 */   lw    $v0, 0x3664($v0)
 
 
+.section .data
+.section .rodata
+.section .bss

@@ -483,3 +483,6 @@ glabel memp_related_6
 /* 00A608 70009A08 00000000 */  nop   
 /* 00A60C 70009A0C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

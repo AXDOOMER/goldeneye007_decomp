@@ -64,15 +64,15 @@ glabel testtodisplaystderrorevery16thframe
 /* 001648 70000A48 3C088002 */  lui   $t0, %hi(user.compare) # $t0, 0x8002
 /* 00164C 70000A4C 8D0830A0 */  lw    $t0, %lo(user.compare)($t0)
 /* 001650 70000A50 00495023 */  subu  $t2, $v0, $t1
-/* 001654 70000A54 3C04803B */  lui   $a0, %hi(D_803B5000) # $a0, 0x803b
+/* 001654 70000A54 3C04803B */  lui   $a0, %hi(vid_buff_1) # $a0, 0x803b
 /* 001658 70000A58 010A082B */  sltu  $at, $t0, $t2
 /* 00165C 70000A5C 50200007 */  beql  $at, $zero, .L70000A7C
 /* 001660 70000A60 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 001664 70000A64 0C001674 */  jal   write_stderr_to_buffer
-/* 001668 70000A68 24845000 */   addiu $a0, %lo(D_803B5000) # addiu $a0, $a0, 0x5000
-/* 00166C 70000A6C 3C04803E */  lui   $a0, %hi(D_803DA800) # $a0, 0x803e
+/* 001668 70000A68 24845000 */   addiu $a0, %lo(vid_buff_1) # addiu $a0, $a0, 0x5000
+/* 00166C 70000A6C 3C04803E */  lui   $a0, %hi(vid_buff_2) # $a0, 0x803e
 /* 001670 70000A70 0C001674 */  jal   write_stderr_to_buffer
-/* 001674 70000A74 2484A800 */   addiu $a0, %lo(D_803DA800) # addiu $a0, $a0, -0x5800
+/* 001674 70000A74 2484A800 */   addiu $a0, %lo(vid_buff_2) # addiu $a0, $a0, -0x5800
 .L70000A78:
 /* 001678 70000A78 8FBF0014 */  lw    $ra, 0x14($sp)
 .L70000A7C:
@@ -318,8 +318,8 @@ glabel __scMain
 .L70000DE0:
 /* 0019E0 70000DE0 5200FFD6 */  beql  $s0, $zero, .L70000D3C
 /* 0019E4 70000DE4 02602025 */   move  $a0, $s3
-/* 0019E8 70000DE8 3C0F8000 */  lui   $t7, %hi(D_80000300) # $t7, 0x8000
-/* 0019EC 70000DEC 8DEF0300 */  lw    $t7, %lo(D_80000300)($t7)
+/* 0019E8 70000DE8 3C0F8000 */  lui   $t7, %hi(osTvType) # $t7, 0x8000
+/* 0019EC 70000DEC 8DEF0300 */  lw    $t7, %lo(osTvType)($t7)
 /* 0019F0 70000DF0 24010002 */  li    $at, 2
 /* 0019F4 70000DF4 3C048002 */  lui   $a0, 0x8002
 /* 0019F8 70000DF8 15E10006 */  bne   $t7, $at, .L70000E14
@@ -1001,3 +1001,6 @@ glabel __scSchedule
 /* 00237C 7000177C 00601025 */   move  $v0, $v1
 
 
+.section .data
+.section .rodata
+.section .bss

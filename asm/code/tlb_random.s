@@ -34,3 +34,6 @@ glabel return_tlb_random_value
 /* 002758 70001B58 00000000 */  nop   
 /* 00275C 70001B5C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

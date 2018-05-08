@@ -33,3 +33,6 @@ glabel resolve_TLBaddress_for_InvalidHit
 /* 0027A8 70001BA8 42000018 */  eret  
 /* 0027AC 70001BAC 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

@@ -54,3 +54,6 @@ glabel something_with_vi_c_debug
 
 /* 00B97C 7000AD7C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

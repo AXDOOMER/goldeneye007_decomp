@@ -41,3 +41,6 @@ glabel return_TLB_index_for_entry
 /* 00251C 7000191C 27BD0028 */   addiu $sp, $sp, 0x28
 
 
+.section .data
+.section .rodata
+.section .bss

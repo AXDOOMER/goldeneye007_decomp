@@ -38,3 +38,6 @@ glabel osMapTLBRdb
 /* 0023D8 700017D8 00000000 */  nop   
 /* 0023DC 700017DC 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

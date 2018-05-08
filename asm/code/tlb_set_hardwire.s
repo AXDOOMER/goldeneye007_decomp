@@ -22,3 +22,6 @@ glabel set_hardwire_TLB_to_2
 /* 0027C8 70001BC8 00000000 */  nop   
 /* 0027CC 70001BCC 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

@@ -38,3 +38,6 @@ glabel func_70005B18
 /* 006758 70005B58 00000000 */  nop   
 /* 00675C 70005B5C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

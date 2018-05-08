@@ -798,3 +798,6 @@ glabel audi_related_4
 
 /* 00332C 7000272C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

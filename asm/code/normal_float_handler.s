@@ -72,3 +72,6 @@ glabel set_normality_of_single_precision_floats
 /* 00622C 7000562C 00000000 */   nop   
 
 
+.section .data
+.section .rodata
+.section .bss

@@ -58,3 +58,6 @@ glabel lotsa_shifting_randomizer_related
 
 /* 00B0EC 7000A4EC 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

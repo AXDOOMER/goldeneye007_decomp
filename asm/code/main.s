@@ -893,3 +893,6 @@ glabel something_with_boss_c_debug
 
 /* 0075EC 700069EC 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

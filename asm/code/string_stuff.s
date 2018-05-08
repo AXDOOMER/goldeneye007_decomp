@@ -409,3 +409,6 @@ glabel strtol
 /* 00B868 7000AC68 00000000 */  nop   
 /* 00B86C 7000AC6C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

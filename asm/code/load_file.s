@@ -142,3 +142,6 @@ glabel load_rdram_to_hw
 /* 00692C 70005D2C 00000000 */   nop   
 
 
+.section .data
+.section .rodata
+.section .bss

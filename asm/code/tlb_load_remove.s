@@ -147,3 +147,6 @@ glabel return_ptr_TLBmemory
 /* 002708 70001B08 00000000 */  nop   
 /* 00270C 70001B0C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

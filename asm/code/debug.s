@@ -569,3 +569,6 @@ glabel read_screen_display_block_and_write_chars
 /* 00C158 7000B558 00000000 */  nop   
 /* 00C15C 7000B55C 00000000 */  nop   
 
+.section .data
+.section .rodata
+.section .bss

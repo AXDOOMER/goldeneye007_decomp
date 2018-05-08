@@ -32,3 +32,6 @@ glabel null_init_main_0
 /* 00B9AC 7000ADAC 00000000 */   nop   
 
 
+.section .data
+.section .rodata
+.section .bss
