@@ -65,8 +65,8 @@ glabel remove_TLB_entry_from_table
 /* 0025D4 700019D4 00000000 */   nop   
 
 glabel translate_load_rom_from_TLBaddress
-/* 0025D8 700019D8 3C028002 */  lui   $v0, %hi(D_800230D0) # $v0, 0x8002
-/* 0025DC 700019DC 244230D0 */  addiu $v0, %lo(D_800230D0) # addiu $v0, $v0, 0x30d0
+/* 0025D8 700019D8 3C028002 */  lui   $v0, %hi(maybe_cur_TLB_entries) # $v0, 0x8002
+/* 0025DC 700019DC 244230D0 */  addiu $v0, %lo(maybe_cur_TLB_entries) # addiu $v0, $v0, 0x30d0
 /* 0025E0 700019E0 8C4E0000 */  lw    $t6, ($v0)
 /* 0025E4 700019E4 3C017FFF */  lui   $at, (0x7FFFE000 >> 16) # lui $at, 0x7fff
 /* 0025E8 700019E8 27BDFFB0 */  addiu $sp, $sp, -0x50

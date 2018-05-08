@@ -523,13 +523,13 @@ glabel process_audio_packet
 /* 002F50 70002350 00EA5821 */  addu  $t3, $a3, $t2
 /* 002F54 70002354 8D6C0000 */  lw    $t4, ($t3)
 /* 002F58 70002358 3C088002 */  lui   $t0, %hi(aspMainTextStart) # $t0, 0x8002
-/* 002F5C 7000235C 3C098006 */  lui   $t1, %hi(D_8005D020) # $t1, 0x8006
+/* 002F5C 7000235C 3C098006 */  lui   $t1, %hi(aspMainDataStart) # $t1, 0x8006
 /* 002F60 70002360 004C6823 */  subu  $t5, $v0, $t4
 /* 002F64 70002364 000D70C3 */  sra   $t6, $t5, 3
 /* 002F68 70002368 000E78C0 */  sll   $t7, $t6, 3
 /* 002F6C 7000236C 0305C823 */  subu  $t9, $t8, $a1
 /* 002F70 70002370 25082280 */  addiu $t0, %lo(aspMainTextStart) # addiu $t0, $t0, 0x2280
-/* 002F74 70002374 2529D020 */  addiu $t1, %lo(D_8005D020) # addiu $t1, $t1, -0x2fe0
+/* 002F74 70002374 2529D020 */  addiu $t1, %lo(aspMainDataStart) # addiu $t1, $t1, -0x2fe0
 /* 002F78 70002378 240A0800 */  li    $t2, 2048
 /* 002F7C 7000237C 3C048006 */  lui   $a0, %hi(D_8005DA40) # $a0, 0x8006
 /* 002F80 70002380 AE0F004C */  sw    $t7, 0x4c($s0)
@@ -798,6 +798,32 @@ glabel audi_related_4
 
 /* 00332C 7000272C 00000000 */  nop   
 
-.section .data
+.macro struct_10 name arg1 arg2 arg3 arg4 arg5 arg6 arg7 arg8 arg9
+\name:
+ .word \arg1
+ .word \arg2
+ .word \arg3
+ .half \arg4
+ .half \arg5
+ .word \arg6
+ .word \arg7
+ .word \arg8
+ .word \arg9
+.endm
+
+D_800230F4:.word 0
+D_800230F8:.word 0
+D_800230FC:.word 0
+D_80023100:.word 6
+           .word 0x1900
+           struct_10 stru_D_80023108, 0, 0xA0, 0x2666, 0xFFFF, 0xD99A, 0, 0, 0, 0
+           struct_10 stru_D_80023128, 0xA0, 0x140, 0x2666, 0xFFFF, 0xD99A, 0x2B84, 0, 0, 0x2500
+           struct_10 stru_D_80023148, 0x320, 0xA00, 0x4000, 0xFFFF, 0xC000, 0x11EB, 0, 0, 0x3000
+           struct_10 stru_D_80023168, 0xC80, 0x15E0, 0x4000, 0xFFFF, 0xC000, 0x11EB, 0, 0, 0x3500
+           struct_10 stru_D_80023188, 0xD20, 0x12C0, 0x2000, 0xFFFF, 0xE000, 0, 0, 0, 0x4000
+           struct_10 stru_D_800231A8, 0, 0x1720, 0x32C8, 0xFFFF, 0xCD38, 0, 0x17C, 0xA, 0x4500
+D_800231C8:.word 1
+           .word 0
+           .word 0
 .section .rodata
 .section .bss

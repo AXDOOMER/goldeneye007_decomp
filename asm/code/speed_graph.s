@@ -653,5 +653,45 @@ glabel video_DL_related_4
 /* 003C5C 7000305C 00000000 */  nop   
 
 .section .data
+stru_D_800231D4:
+.word 0
+.word 2, 0
+.word 1, 0
+.word 2, 0
+.word 2, 0xFF000000
+.word 2, 0
+.word 3, 0x9200
+.word 4, 0xFFFFFFFF
+.word 4, 0xDB000000
+.word 4, 0xFFFFFFFF
+D_80023224:
+.word 0
+D_80023228:
+.word 0
+D_8002322C:
+.word 0
+counterforframes:
+.word 0
+D_80023234:
+.word 1
+.word 0
+.word 0
+.word 0
 .section .rodata
+aUtz2_0f: .asciiz "utz %2.0f%%\n"
+.align 4
+aRsp2_0f: .asciiz "rsp %2.0f%%\n"
+.align 4
+aTex2_0f: .asciiz "tex %2.0f%%"
+.align 4
+a2dHz: .asciiz "%2d hz"
+.align 4
+a2dFrames: .asciiz "%2d frames"
+.align 4
+a2d: .asciiz " [%2d]"
+.align 4
+asc_D_80028468: .asciiz "     "
+.align 4
+aIL0: .asciiz "I=l0"
+.align 4
 .section .bss

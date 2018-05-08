@@ -15,6 +15,8 @@ osResetType = 0x8000030C;
 
 /* .rodata that hasn't been placed yet
 osViModeTable = 0x800269C0;
+osViModeTable.mode1E = 0x80027320;
+D_80048498 = 0x80048498;
 
 /* .bss */
 rmonthread = 0x8005D2E0;

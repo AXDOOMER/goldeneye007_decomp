@@ -224,6 +224,9 @@ SECTIONS
    __csegtempPos = 0xC00000;
    __ramPos += 0x80000000;
    .csegment __ramPos : AT(__csegtempPos){
+      build/asm/rspboot.o (.text);
+      build/asm/gspboot.o (.text);
+      build/asm/aspboot.o (.text);
       build/asm/code/boot0.o (.data);
       build/asm/code/boot1.o (.data);
       build/asm/code/std_err_flags.o (.data);
@@ -524,6 +527,8 @@ SECTIONS
       build/asm/game/7F0D2380.o (.rdata);
       build/asm/game/7F0D2720.o (.rdata);
       build/asm/game/spectrum.o (.rdata);
+      build/asm/gspboot.o (.data) ;
+      build/asm/aspboot.o (.data) ;
    }
    __ramPos += SIZEOF(.csegment);
    __csegtempPos += SIZEOF(.csegment);

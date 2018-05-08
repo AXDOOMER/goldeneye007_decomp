@@ -23,15 +23,15 @@ glabel establish_TLB_buffer_management_table
 /* 0023FC 700017FC AC64FFF0 */  sw    $a0, -0x10($v1)
 /* 002400 70001800 1420FFFC */  bnez  $at, .L700017F4
 /* 002404 70001804 AC60FFF4 */   sw    $zero, -0xc($v1)
-/* 002408 70001808 3C018006 */  lui   $at, %hi(D_8005E3F2) # $at, 0x8006
-/* 00240C 7000180C 3C038006 */  lui   $v1, %hi(D_8005E3F4) # $v1, 0x8006
+/* 002408 70001808 3C018006 */  lui   $at, %hi(TLB_manager_mapping_table_start + 2) # $at, 0x8006
+/* 00240C 7000180C 3C038006 */  lui   $v1, %hi(TLB_manager_mapping_table_start + 4) # $v1, 0x8006
 /* 002410 70001810 3C028006 */  lui   $v0, %hi(TLB_manager_mapping_table_end) # $v0, 0x8006
 /* 002414 70001814 2442E4A4 */  addiu $v0, %lo(TLB_manager_mapping_table_end) # addiu $v0, $v0, -0x1b5c
-/* 002418 70001818 2463E3F4 */  addiu $v1, %lo(D_8005E3F4) # addiu $v1, $v1, -0x1c0c
-/* 00241C 7000181C A020E3F1 */  sb    $zero, %lo(D_8005E3F1)($at)
+/* 002418 70001818 2463E3F4 */  addiu $v1, %lo(TLB_manager_mapping_table_start + 4) # addiu $v1, $v1, -0x1c0c
+/* 00241C 7000181C A020E3F1 */  sb    $zero, %lo(TLB_manager_mapping_table_start + 1)($at)
 /* 002420 70001820 A024E3F0 */  sb    $a0, %lo(TLB_manager_mapping_table_start)($at)
-/* 002424 70001824 A020E3F3 */  sb    $zero, %lo(D_8005E3F3)($at)
-/* 002428 70001828 A024E3F2 */  sb    $a0, %lo(D_8005E3F2)($at)
+/* 002424 70001824 A020E3F3 */  sb    $zero, %lo(TLB_manager_mapping_table_start + 3)($at)
+/* 002428 70001828 A024E3F2 */  sb    $a0, %lo(TLB_manager_mapping_table_start + 2)($at)
 .L7000182C:
 /* 00242C 7000182C 24630008 */  addiu $v1, $v1, 8
 /* 002430 70001830 A060FFFB */  sb    $zero, -5($v1)
@@ -62,8 +62,8 @@ glabel establish_TLB_buffer_management_table
 /* 002494 70001894 AC28E4A4 */   sw    $t0, -0x1b5c($at)
 
 glabel mp_tlb_related
-/* 002498 70001898 3C038002 */  lui   $v1, %hi(D_800230D0) # $v1, 0x8002
-/* 00249C 7000189C 246330D0 */  addiu $v1, %lo(D_800230D0) # addiu $v1, $v1, 0x30d0
+/* 002498 70001898 3C038002 */  lui   $v1, %hi(maybe_cur_TLB_entries) # $v1, 0x8002
+/* 00249C 7000189C 246330D0 */  addiu $v1, %lo(maybe_cur_TLB_entries) # addiu $v1, $v1, 0x30d0
 /* 0024A0 700018A0 8C620000 */  lw    $v0, ($v1)
 /* 0024A4 700018A4 28410033 */  slti  $at, $v0, 0x33
 /* 0024A8 700018A8 10200003 */  beqz  $at, .L700018B8
@@ -76,5 +76,10 @@ glabel mp_tlb_related
 
 
 .section .data
+glabel maybe_cur_TLB_entries
+.word 0
+glabel tlb_segment_num
+.word 0
 .section .rodata
 .section .bss
+

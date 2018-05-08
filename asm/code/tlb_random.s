@@ -12,9 +12,9 @@
 .section .text, "ax"
 
 glabel return_tlb_random_value
-/* 002710 70001B10 3C048002 */  lui   $a0, %hi(D_800230E0) # $a0, 0x8002
-/* 002714 70001B14 DC8430E0 */  ld    $a0, %lo(D_800230E0)($a0)
-/* 002718 70001B18 3C018002 */  lui   $at, %hi(D_800230E0) # $at, 0x8002
+/* 002710 70001B10 3C048002 */  lui   $a0, %hi(tlb_random_seed) # $a0, 0x8002
+/* 002714 70001B14 DC8430E0 */  ld    $a0, %lo(tlb_random_seed)($a0)
+/* 002718 70001B18 3C018002 */  lui   $at, %hi(tlb_random_seed) # $at, 0x8002
 /* 00271C 70001B1C 000437FC */  dsll32 $a2, $a0, 0x1f
 /* 002720 70001B20 00042FF8 */  dsll  $a1, $a0, 0x1f
 /* 002724 70001B24 000637FA */  dsrl  $a2, $a2, 0x1f
@@ -27,7 +27,7 @@ glabel return_tlb_random_value
 /* 002740 70001B40 30840FFF */  andi  $a0, $a0, 0xfff
 /* 002744 70001B44 00862026 */  xor   $a0, $a0, $a2
 /* 002748 70001B48 0004103C */  dsll32 $v0, $a0, 0
-/* 00274C 70001B4C FC2430E0 */  sd    $a0, %lo(D_800230E0)($at)
+/* 00274C 70001B4C FC2430E0 */  sd    $a0, %lo(tlb_random_seed)($at)
 /* 002750 70001B50 03E00008 */  jr    $ra
 /* 002754 70001B54 0002103F */   dsra32 $v0, $v0, 0
 
@@ -35,5 +35,10 @@ glabel return_tlb_random_value
 /* 00275C 70001B5C 00000000 */  nop   
 
 .section .data
+tlb_random_seed:
+.dword 0xAB8D9F7781280783
+.word 0
+.word 0
+.word 0
 .section .rodata
 .section .bss
