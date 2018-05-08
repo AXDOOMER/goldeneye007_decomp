@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-write_char_to_pos_stderr:
+glabel write_char_to_pos_stderr
 /* 006230 70005630 30CE00FF */  andi  $t6, $a2, 0xff
 /* 006234 70005634 AFA60008 */  sw    $a2, 8($sp)
 /* 006238 70005638 24010009 */  li    $at, 9
@@ -54,7 +54,7 @@ write_char_to_pos_stderr:
 /* 0062B4 700056B4 03E00008 */  jr    $ra
 /* 0062B8 700056B8 00000000 */   nop   
 
-__osRdbSend:
+glabel __osRdbSend
 /* 0062BC 700056BC 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0062C0 700056C0 308600FF */  andi  $a2, $a0, 0xff
 /* 0062C4 700056C4 AFBF001C */  sw    $ra, 0x1c($sp)
@@ -130,7 +130,7 @@ __osRdbSend:
 /* 0063C4 700057C4 03E00008 */  jr    $ra
 /* 0063C8 700057C8 00000000 */   nop   
 
-scroll_stderr_oneline:
+glabel scroll_stderr_oneline
 /* 0063CC 700057CC 0004102A */  slt   $v0, $zero, $a0
 /* 0063D0 700057D0 10400020 */  beqz  $v0, .L70005854
 /* 0063D4 700057D4 2484FFFF */   addiu $a0, $a0, -1
@@ -172,7 +172,7 @@ scroll_stderr_oneline:
 /* 006454 70005854 03E00008 */  jr    $ra
 /* 006458 70005858 00000000 */   nop   
 
-print_to_vidbuff1:
+glabel print_to_vidbuff1
 /* 00645C 7000585C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 006460 70005860 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 006464 70005864 AFA40018 */  sw    $a0, 0x18($sp)
@@ -259,7 +259,7 @@ print_to_vidbuff1:
 /* 00657C 7000597C 03E00008 */  jr    $ra
 /* 006580 70005980 00000000 */   nop   
 
-set_ptr_video_buffers:
+glabel set_ptr_video_buffers
 /* 006584 70005984 3C02A000 */  lui   $v0, 0xa000
 /* 006588 70005988 00827025 */  or    $t6, $a0, $v0
 /* 00658C 7000598C 3C018002 */  lui   $at, %hi(ptr_videobuffer1) # $at, 0x8002
@@ -269,7 +269,7 @@ set_ptr_video_buffers:
 /* 00659C 7000599C 03E00008 */  jr    $ra
 /* 0065A0 700059A0 AC2F4180 */   sw    $t7, 0x4180($at)
 
-set_video_buffer_pointers:
+glabel set_video_buffer_pointers
 /* 0065A4 700059A4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0065A8 700059A8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0065AC 700059AC 3C04803B */  lui   $a0, %hi(D_803B5000) # $a0, 0x803b
@@ -282,7 +282,7 @@ set_video_buffer_pointers:
 /* 0065C8 700059C8 03E00008 */  jr    $ra
 /* 0065CC 700059CC 00000000 */   nop   
 
-write_stderr_to_buffer:
+glabel write_stderr_to_buffer
 /* 0065D0 700059D0 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 0065D4 700059D4 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0065D8 700059D8 AFB00018 */  sw    $s0, 0x18($sp)

@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-init_tlb:
+glabel init_tlb
 /* 005AE0 70004EE0 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 005AE4 70004EE4 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 005AE8 70004EE8 0C001669 */  jal   set_video_buffer_pointers
@@ -42,7 +42,7 @@ init_tlb:
 /* 005B4C 70004F4C 03E00008 */  jr    $ra
 /* 005B50 70004F50 00000000 */   nop   
 
-translate_7F_address:
+glabel translate_7F_address
 /* 005B54 70004F54 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 005B58 70004F58 AFB70030 */  sw    $s7, 0x30($sp)
 /* 005B5C 70004F5C 3C178006 */  lui   $s7, %hi(interrupt_entry_c_buffer) # $s7, 0x8006
@@ -134,7 +134,7 @@ translate_7F_address:
 /* 005CA4 700050A4 03E00008 */  jr    $ra
 /* 005CA8 700050A8 27BD0040 */   addiu $sp, $sp, 0x40
 
-debug_related_8:
+glabel debug_related_8
 /* 005CAC 700050AC 27BDFFF0 */  addiu $sp, $sp, -0x10
 /* 005CB0 700050B0 AFA40010 */  sw    $a0, 0x10($sp)
 /* 005CB4 700050B4 AFB1000C */  sw    $s1, 0xc($sp)
@@ -222,7 +222,7 @@ debug_related_8:
 /* 005DD8 700051D8 03E00008 */  jr    $ra
 /* 005DDC 700051DC 27BD0010 */   addiu $sp, $sp, 0x10
 
-was_opcode_In_70000450_70020D90:
+glabel was_opcode_In_70000450_70020D90
 /* 005DE0 700051E0 308E0003 */  andi  $t6, $a0, 3
 /* 005DE4 700051E4 15C00019 */  bnez  $t6, .L7000524C
 /* 005DE8 700051E8 3C0F7000 */   lui   $t7, %hi(boot) # $t7, 0x7000
@@ -259,7 +259,7 @@ was_opcode_In_70000450_70020D90:
 /* 005E50 70005250 03E00008 */  jr    $ra
 /* 005E54 70005254 00000000 */   nop   
 
-return_strlen:
+glabel return_strlen
 /* 005E58 70005258 90820000 */  lbu   $v0, ($a0)
 /* 005E5C 7000525C 00001825 */  move  $v1, $zero
 /* 005E60 70005260 24840001 */  addiu $a0, $a0, 1
@@ -278,7 +278,7 @@ return_strlen:
 /* 005E8C 7000528C 03E00008 */  jr    $ra
 /* 005E90 70005290 00601025 */   move  $v0, $v1
 
-indy_file_get_address_subsequent_data:
+glabel indy_file_get_address_subsequent_data
 /* 005E94 70005294 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 005E98 70005298 AFA40020 */  sw    $a0, 0x20($sp)
 /* 005E9C 7000529C AFBF0014 */  sw    $ra, 0x14($sp)
@@ -324,7 +324,7 @@ indy_file_get_address_subsequent_data:
 /* 005F38 70005338 03E00008 */  jr    $ra
 /* 005F3C 7000533C 27BD0020 */   addiu $sp, $sp, 0x20
 
-scan_load_resourceID_from_indy_read_buf:
+glabel scan_load_resourceID_from_indy_read_buf
 /* 005F40 70005340 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 005F44 70005344 AFB30020 */  sw    $s3, 0x20($sp)
 /* 005F48 70005348 AFB2001C */  sw    $s2, 0x1c($sp)
@@ -364,7 +364,7 @@ scan_load_resourceID_from_indy_read_buf:
 /* 005FC0 700053C0 03E00008 */  jr    $ra
 /* 005FC4 700053C4 27BD0028 */   addiu $sp, $sp, 0x28
 
-is_valid_indy_read_buf_resourceID:
+glabel is_valid_indy_read_buf_resourceID
 /* 005FC8 700053C8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 005FCC 700053CC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 005FD0 700053D0 0C0014A5 */  jal   indy_file_get_address_subsequent_data
@@ -379,19 +379,19 @@ is_valid_indy_read_buf_resourceID:
 /* 005FF4 700053F4 03E00008 */  jr    $ra
 /* 005FF8 700053F8 27BD0018 */   addiu $sp, $sp, 0x18
 
-debug_indy_stub:
+glabel debug_indy_stub
 /* 005FFC 700053FC 03E00008 */  jr    $ra
 /* 006000 70005400 00000000 */   nop   
 
-debug_indy_stub_0:
+glabel debug_indy_stub_0
 /* 006004 70005404 03E00008 */  jr    $ra
 /* 006008 70005408 00000000 */   nop   
 
-debug_indy_stub_1:
+glabel debug_indy_stub_1
 /* 00600C 7000540C 03E00008 */  jr    $ra
 /* 006010 70005410 00000000 */   nop   
 
-return_indy_read_buf_resourceID:
+glabel return_indy_read_buf_resourceID
 /* 006014 70005414 3C028006 */  lui   $v0, 0x8006
 /* 006018 70005418 03E00008 */  jr    $ra
 /* 00601C 7000541C 8C423664 */   lw    $v0, 0x3664($v0)

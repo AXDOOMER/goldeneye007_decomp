@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-send_rumble_off_to_PIF:
+glabel send_rumble_off_to_PIF
 /* 00D580 7000C980 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 00D584 7000C984 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D588 7000C988 0C005798 */  jal   __osSiGetAccess
@@ -93,7 +93,7 @@ send_rumble_off_to_PIF:
 /* 00D6A4 7000CAA4 03E00008 */  jr    $ra
 /* 00D6A8 7000CAA8 00000000 */   nop   
 
-controller_7000CAAC:
+glabel controller_7000CAAC
 /* 00D6AC 7000CAAC 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 00D6B0 7000CAB0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D6B4 7000CAB4 0C005798 */  jal   __osSiGetAccess
@@ -176,7 +176,7 @@ controller_7000CAAC:
 /* 00D7D4 7000CBD4 03E00008 */  jr    $ra
 /* 00D7D8 7000CBD8 00000000 */   nop   
 
-controller_7000CBDC:
+glabel controller_7000CBDC
 /* 00D7DC 7000CBDC 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 00D7E0 7000CBE0 AFB00018 */  sw    $s0, 0x18($sp)
 /* 00D7E4 7000CBE4 00808025 */  move  $s0, $a0
@@ -271,7 +271,7 @@ controller_7000CBDC:
 /* 00D930 7000CD30 03E00008 */  jr    $ra
 /* 00D934 7000CD34 00000000 */   nop   
 
-controller_7000CD38:
+glabel controller_7000CD38
 /* 00D938 7000CD38 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 00D93C 7000CD3C AFB00020 */  sw    $s0, 0x20($sp)
 /* 00D940 7000CD40 AFBF0024 */  sw    $ra, 0x24($sp)

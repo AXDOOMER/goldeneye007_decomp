@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-swap_entries:
+glabel swap_entries
 /* 00A610 70009A10 8CAE0000 */  lw    $t6, ($a1)
 /* 00A614 70009A14 8C820000 */  lw    $v0, ($a0)
 /* 00A618 70009A18 8C830004 */  lw    $v1, 4($a0)
@@ -22,7 +22,7 @@ swap_entries:
 /* 00A62C 70009A2C 03E00008 */  jr    $ra
 /* 00A630 70009A30 ACA30004 */   sw    $v1, 4($a1)
 
-merge_alloc_entries:
+glabel merge_alloc_entries
 /* 00A634 70009A34 8C8E0004 */  lw    $t6, 4($a0)
 /* 00A638 70009A38 8CAF0004 */  lw    $t7, 4($a1)
 /* 00A63C 70009A3C 01CFC021 */  addu  $t8, $t6, $t7
@@ -31,7 +31,7 @@ merge_alloc_entries:
 /* 00A648 70009A48 03E00008 */  jr    $ra
 /* 00A64C 70009A4C ACA00004 */   sw    $zero, 4($a1)
 
-sort_merge_entries_in_alloc_table:
+glabel sort_merge_entries_in_alloc_table
 /* 00A650 70009A50 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 00A654 70009A54 AFB40028 */  sw    $s4, 0x28($sp)
 /* 00A658 70009A58 AFB00018 */  sw    $s0, 0x18($sp)
@@ -88,7 +88,7 @@ sort_merge_entries_in_alloc_table:
 /* 00A710 70009B10 03E00008 */  jr    $ra
 /* 00A714 70009B14 27BD0030 */   addiu $sp, $sp, 0x30
 
-memp_related_7:
+glabel memp_related_7
 /* 00A718 70009B18 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00A71C 70009B1C AFB00018 */  sw    $s0, 0x18($sp)
 /* 00A720 70009B20 3C108006 */  lui   $s0, %hi(ptr_table_allocated_mem_blocks) # $s0, 0x8006
@@ -110,7 +110,7 @@ memp_related_7:
 /* 00A758 70009B58 03E00008 */  jr    $ra
 /* 00A75C 70009B5C 00000000 */   nop   
 
-mem_related:
+glabel mem_related
 /* 00A760 70009B60 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00A764 70009B64 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 00A768 70009B68 AFB30020 */  sw    $s3, 0x20($sp)
@@ -191,7 +191,7 @@ mem_related:
 /* 00A86C 70009C6C 03E00008 */  jr    $ra
 /* 00A870 70009C70 27BD0028 */   addiu $sp, $sp, 0x28
 
-mem_related_model_room_buffers:
+glabel mem_related_model_room_buffers
 /* 00A874 70009C74 3C0F8006 */  lui   $t7, %hi(ptr_model_room_buf_secondary) # $t7, 0x8006
 /* 00A878 70009C78 8DEF3C20 */  lw    $t7, %lo(ptr_model_room_buf_secondary)($t7)
 /* 00A87C 70009C7C 3C098006 */  lui   $t1, %hi(size_modelroom_buf) # $t1, 0x8006
@@ -262,7 +262,7 @@ mem_related_model_room_buffers:
 /* 00A964 70009D64 03E00008 */  jr    $ra
 /* 00A968 70009D68 00000000 */   nop   
 
-something_with_mema_c_debug:
+glabel something_with_mema_c_debug
 /* 00A96C 70009D6C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00A970 70009D70 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00A974 70009D74 3C048002 */  lui   $a0, %hi(D_80024450) # $a0, 0x8002
@@ -275,7 +275,7 @@ something_with_mema_c_debug:
 /* 00A990 70009D90 03E00008 */  jr    $ra
 /* 00A994 70009D94 00000000 */   nop   
 
-reset_memtable_base_allocation:
+glabel reset_memtable_base_allocation
 /* 00A998 70009D98 3C038006 */  lui   $v1, %hi(ptr_table_allocated_mem_blocks) # $v1, 0x8006
 /* 00A99C 70009D9C 24633C28 */  addiu $v1, %lo(ptr_table_allocated_mem_blocks) # addiu $v1, $v1, 0x3c28
 /* 00A9A0 70009DA0 2406FFFF */  li    $a2, -1
@@ -308,7 +308,7 @@ reset_memtable_base_allocation:
 /* 00AA08 70009E08 03E00008 */  jr    $ra
 /* 00AA0C 70009E0C AC650014 */   sw    $a1, 0x14($v1)
 
-mem_related_calls_sort_merge_entries:
+glabel mem_related_calls_sort_merge_entries
 /* 00AA10 70009E10 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00AA14 70009E14 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00AA18 70009E18 3C048006 */  lui   $a0, %hi(ptr_table_allocated_mem_blocks) # $a0, 0x8006
@@ -319,7 +319,7 @@ mem_related_calls_sort_merge_entries:
 /* 00AA2C 70009E2C 03E00008 */  jr    $ra
 /* 00AA30 70009E30 00000000 */   nop   
 
-mem_related_something_find_first:
+glabel mem_related_something_find_first
 /* 00AA34 70009E34 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 00AA38 70009E38 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 00AA3C 70009E3C AFB10018 */  sw    $s1, 0x18($sp)
@@ -426,7 +426,7 @@ mem_related_something_find_first:
 /* 00ABA0 70009FA0 03E00008 */  jr    $ra
 /* 00ABA4 70009FA4 27BD0030 */   addiu $sp, $sp, 0x30
 
-mem_related_something_find_first_0:
+glabel mem_related_something_find_first_0
 /* 00ABA8 70009FA8 3C198006 */  lui   $t9, %hi(ptr_first_entry_in_alloc_table) # $t9, 0x8006
 /* 00ABAC 70009FAC 8F393C38 */  lw    $t9, %lo(ptr_first_entry_in_alloc_table)($t9)
 /* 00ABB0 70009FB0 3C188006 */  lui   $t8, %hi(ptr_first_entry_in_alloc_table) # $t8, 0x8006
@@ -464,7 +464,7 @@ mem_related_something_find_first_0:
 /* 00AC18 7000A018 03E00008 */  jr    $ra
 /* 00AC1C 7000A01C 00000000 */   nop   
 
-mem_related_model_room_buffers_0:
+glabel mem_related_model_room_buffers_0
 /* 00AC20 7000A020 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00AC24 7000A024 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00AC28 7000A028 0C00271D */  jal   mem_related_model_room_buffers
@@ -474,7 +474,7 @@ mem_related_model_room_buffers_0:
 /* 00AC38 7000A038 03E00008 */  jr    $ra
 /* 00AC3C 7000A03C 00000000 */   nop   
 
-mem_related_allocated_table_related:
+glabel mem_related_allocated_table_related
 /* 00AC40 7000A040 3C038006 */  lui   $v1, %hi(ptr_table_allocated_mem_blocks) # $v1, 0x8006
 /* 00AC44 7000A044 3C028006 */  lui   $v0, %hi(dword_CODE_bss_80064C08) # $v0, 0x8006
 /* 00AC48 7000A048 24424C08 */  addiu $v0, %lo(dword_CODE_bss_80064C08) # addiu $v0, $v0, 0x4c08
@@ -486,7 +486,7 @@ mem_related_allocated_table_related:
 /* 00AC5C 7000A05C 03E00008 */  jr    $ra
 /* 00AC60 7000A060 00000000 */   nop   
 
-mem_related_something_first_related:
+glabel mem_related_something_first_related
 /* 00AC64 7000A064 3C0E8006 */  lui   $t6, %hi(ptr_first_entry_in_alloc_table) # $t6, 0x8006
 /* 00AC68 7000A068 8DCE3C38 */  lw    $t6, %lo(ptr_first_entry_in_alloc_table)($t6)
 /* 00AC6C 7000A06C 2406FFFF */  li    $a2, -1
@@ -534,7 +534,7 @@ mem_related_something_first_related:
 /* 00ACF8 7000A0F8 03E00008 */  jr    $ra
 /* 00ACFC 7000A0FC 00000000 */   nop   
 
-generate_list_alloc_mem:
+glabel generate_list_alloc_mem
 /* 00AD00 7000A100 27BDEF98 */  addiu $sp, $sp, -0x1068
 /* 00AD04 7000A104 3C048006 */  lui   $a0, %hi(ptr_first_entry_in_alloc_table) # $a0, 0x8006
 /* 00AD08 7000A108 8C843C38 */  lw    $a0, %lo(ptr_first_entry_in_alloc_table)($a0)
@@ -653,7 +653,7 @@ generate_list_alloc_mem:
 /* 00AE94 7000A294 03E00008 */  jr    $ra
 /* 00AE98 7000A298 27BD1068 */   addiu $sp, $sp, 0x1068
 
-generate_lists_before_after_mem_merge:
+glabel generate_lists_before_after_mem_merge
 /* 00AE9C 7000A29C 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00AEA0 7000A2A0 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 00AEA4 7000A2A4 AFB20020 */  sw    $s2, 0x20($sp)
@@ -679,7 +679,7 @@ generate_lists_before_after_mem_merge:
 /* 00AEF0 7000A2F0 03E00008 */  jr    $ra
 /* 00AEF4 7000A2F4 27BD0028 */   addiu $sp, $sp, 0x28
 
-mem_related_something_first_related_0:
+glabel mem_related_something_first_related_0
 /* 00AEF8 7000A2F8 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00AEFC 7000A2FC 3C0F8006 */  lui   $t7, %hi(ptr_first_entry_in_alloc_table) # $t7, 0x8006
 /* 00AF00 7000A300 8DEF3C38 */  lw    $t7, %lo(ptr_first_entry_in_alloc_table)($t7)
@@ -713,7 +713,7 @@ mem_related_something_first_related_0:
 /* 00AF68 7000A368 03E00008 */  jr    $ra
 /* 00AF6C 7000A36C 27BD0028 */   addiu $sp, $sp, 0x28
 
-mem_related_0:
+glabel mem_related_0
 /* 00AF70 7000A370 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00AF74 7000A374 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00AF78 7000A378 0C0026C6 */  jal   memp_related_7
@@ -747,7 +747,7 @@ mem_related_0:
 /* 00AFD4 7000A3D4 03E00008 */  jr    $ra
 /* 00AFD8 7000A3D8 27BD0020 */   addiu $sp, $sp, 0x20
 
-mem_related_1:
+glabel mem_related_1
 /* 00AFDC 7000A3DC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00AFE0 7000A3E0 00A6082B */  sltu  $at, $a1, $a2
 /* 00AFE4 7000A3E4 AFBF0014 */  sw    $ra, 0x14($sp)

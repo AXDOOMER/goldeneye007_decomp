@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-return_TLB_index_for_entry:
+glabel return_TLB_index_for_entry
 /* 0024C0 700018C0 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0024C4 700018C4 AFB20020 */  sw    $s2, 0x20($sp)
 /* 0024C8 700018C8 AFB1001C */  sw    $s1, 0x1c($sp)

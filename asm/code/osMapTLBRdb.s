@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-osMapTLBRdb:
+glabel osMapTLBRdb
 /* 002380 70001780 40085000 */  mfc0  $t0, $10
 /* 002384 70001784 24090000 */  li    $t1, 0
 /* 002388 70001788 40890000 */  mtc0  $t1, $0

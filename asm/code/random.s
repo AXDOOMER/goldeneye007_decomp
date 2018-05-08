@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-random_related:
+glabel random_related
 /* 00B050 7000A450 3C048002 */  lui   $a0, %hi(randseed) # $a0, 0x8002
 /* 00B054 7000A454 DC844460 */  ld    $a0, %lo(randseed)($a0)
 /* 00B058 7000A458 3C018002 */  lui   $at, %hi(randseed) # $at, 0x8002
@@ -31,14 +31,14 @@ random_related:
 /* 00B090 7000A490 03E00008 */  jr    $ra
 /* 00B094 7000A494 0002103F */   dsra32 $v0, $v0, 0
 
-increment_random_num:
+glabel increment_random_num
 /* 00B098 7000A498 64840001 */  daddiu $a0, $a0, 1
 /* 00B09C 7000A49C 3C018002 */  lui   $at, %hi(randseed) # $at, 0x8002
 /* 00B0A0 7000A4A0 FC244460 */  sd    $a0, %lo(randseed)($at)
 /* 00B0A4 7000A4A4 03E00008 */  jr    $ra
 /* 00B0A8 7000A4A8 24040000 */   li    $a0, 0
 
-lotsa_shifting_randomizer_related:
+glabel lotsa_shifting_randomizer_related
 /* 00B0AC 7000A4AC DC870000 */  ld    $a3, ($a0)
 /* 00B0B0 7000A4B0 000737FC */  dsll32 $a2, $a3, 0x1f
 /* 00B0B4 7000A4B4 00072FF8 */  dsll  $a1, $a3, 0x1f

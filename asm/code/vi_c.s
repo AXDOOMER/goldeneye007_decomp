@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-start_pi_manager:
+glabel start_pi_manager
 /* 00B8F0 7000ACF0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00B8F4 7000ACF4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00B8F8 7000ACF8 3C058006 */  lui   $a1, %hi(dword_CODE_bss_80064ED0) # $a1, 0x8006
@@ -29,11 +29,11 @@ start_pi_manager:
 /* 00B924 7000AD24 00000000 */  nop   
 /* 00B928 7000AD28 00000000 */  nop   
 /* 00B92C 7000AD2C 00000000 */  nop   
-start_nulled_entry:
+glabel start_nulled_entry
 /* 00B930 7000AD30 03E00008 */  jr    $ra
 /* 00B934 7000AD34 00000000 */   nop   
 
-something_with_vi_c_debug:
+glabel something_with_vi_c_debug
 /* 00B938 7000AD38 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00B93C 7000AD3C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00B940 7000AD40 3C048002 */  lui   $a0, %hi(D_80024500) # $a0, 0x8002

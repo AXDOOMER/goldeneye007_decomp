@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-set_hardwire_TLB_to_2:
+glabel set_hardwire_TLB_to_2
 /* 0027B0 70001BB0 24080002 */  li    $t0, 2
 /* 0027B4 70001BB4 40883000 */  mtc0  $t0, $6
 /* 0027B8 70001BB8 24080000 */  li    $t0, 0

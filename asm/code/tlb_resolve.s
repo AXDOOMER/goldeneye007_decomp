@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-resolve_TLBaddress_for_InvalidHit:
+glabel resolve_TLBaddress_for_InvalidHit
 /* 002760 70001B60 40802800 */  mtc0  $zero, $5
 /* 002764 70001B64 00000000 */  nop   
 /* 002768 70001B68 401A2000 */  mfc0  $k0, $4

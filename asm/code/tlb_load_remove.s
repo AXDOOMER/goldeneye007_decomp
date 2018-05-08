@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-find_remove_TLB_entry:
+glabel find_remove_TLB_entry
 /* 002520 70001920 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 002524 70001924 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 002528 70001928 0C000630 */  jal   return_TLB_index_for_entry
@@ -27,7 +27,7 @@ find_remove_TLB_entry:
 /* 00254C 7000194C 03E00008 */  jr    $ra
 /* 002550 70001950 00000000 */   nop   
 
-remove_TLB_entry_from_table:
+glabel remove_TLB_entry_from_table
 /* 002554 70001954 3C0F8006 */  lui   $t7, %hi(TLB_manager_mapping_table_start) # $t7, 0x8006
 /* 002558 70001958 25EFE3F0 */  addiu $t7, %lo(TLB_manager_mapping_table_start) # addiu $t7, $t7, -0x1c10
 /* 00255C 7000195C 00047040 */  sll   $t6, $a0, 1
@@ -64,7 +64,7 @@ remove_TLB_entry_from_table:
 /* 0025D0 700019D0 03E00008 */  jr    $ra
 /* 0025D4 700019D4 00000000 */   nop   
 
-translate_load_rom_from_TLBaddress:
+glabel translate_load_rom_from_TLBaddress
 /* 0025D8 700019D8 3C028002 */  lui   $v0, %hi(D_800230D0) # $v0, 0x8002
 /* 0025DC 700019DC 244230D0 */  addiu $v0, %lo(D_800230D0) # addiu $v0, $v0, 0x30d0
 /* 0025E0 700019E0 8C4E0000 */  lw    $t6, ($v0)
@@ -138,7 +138,7 @@ translate_load_rom_from_TLBaddress:
 /* 0026F0 70001AF0 03E00008 */  jr    $ra
 /* 0026F4 70001AF4 ACD80000 */   sw    $t8, ($a2)
 
-return_ptr_TLBmemory:
+glabel return_ptr_TLBmemory
 /* 0026F8 70001AF8 3C028006 */  lui   $v0, 0x8006
 /* 0026FC 70001AFC 03E00008 */  jr    $ra
 /* 002700 70001B00 8C42E4A8 */   lw    $v0, -0x1b58($v0)

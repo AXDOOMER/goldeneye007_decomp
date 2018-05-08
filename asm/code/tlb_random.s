@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-return_tlb_random_value:
+glabel return_tlb_random_value
 /* 002710 70001B10 3C048002 */  lui   $a0, %hi(D_800230E0) # $a0, 0x8002
 /* 002714 70001B14 DC8430E0 */  ld    $a0, %lo(D_800230E0)($a0)
 /* 002718 70001B18 3C018002 */  lui   $at, %hi(D_800230E0) # $at, 0x8002

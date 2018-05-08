@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-proutSprintf:
+glabel proutSprintf
 /* 00B870 7000AC70 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00B874 7000AC74 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00B878 7000AC78 0C004E14 */  jal   memcpy
@@ -22,7 +22,7 @@ proutSprintf:
 /* 00B88C 7000AC8C 03E00008 */  jr    $ra
 /* 00B890 7000AC90 004E1021 */   addu  $v0, $v0, $t6
 
-sprintf:
+glabel sprintf
 /* 00B894 7000AC94 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00B898 7000AC98 AFA40020 */  sw    $a0, 0x20($sp)
 /* 00B89C 7000AC9C AFBF0014 */  sw    $ra, 0x14($sp)

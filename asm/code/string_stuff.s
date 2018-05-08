@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-textpointer_load_parse_something:
+glabel textpointer_load_parse_something
 /* 00B370 7000A770 90A20000 */  lbu   $v0, ($a1)
 /* 00B374 7000A774 24830001 */  addiu $v1, $a0, 1
 /* 00B378 7000A778 24A50001 */  addiu $a1, $a1, 1
@@ -27,7 +27,7 @@ textpointer_load_parse_something:
 /* 00B398 7000A798 03E00008 */  jr    $ra
 /* 00B39C 7000A79C 00801025 */   move  $v0, $a0
 
-something_with_strings:
+glabel something_with_strings
 /* 00B3A0 7000A7A0 90A20000 */  lbu   $v0, ($a1)
 /* 00B3A4 7000A7A4 24830001 */  addiu $v1, $a0, 1
 /* 00B3A8 7000A7A8 24A50001 */  addiu $a1, $a1, 1
@@ -57,7 +57,7 @@ something_with_strings:
 /* 00B3F4 7000A7F4 03E00008 */  jr    $ra
 /* 00B3F8 7000A7F8 00801025 */   move  $v0, $a0
 
-string_load_parse_something:
+glabel string_load_parse_something
 /* 00B3FC 7000A7FC 908E0000 */  lbu   $t6, ($a0)
 /* 00B400 7000A800 00801025 */  move  $v0, $a0
 /* 00B404 7000A804 51C00006 */  beql  $t6, $zero, .L7000A820
@@ -83,7 +83,7 @@ string_load_parse_something:
 /* 00B444 7000A844 03E00008 */  jr    $ra
 /* 00B448 7000A848 00801025 */   move  $v0, $a0
 
-something_with_strings_0:
+glabel something_with_strings_0
 .L7000A84C:
 /* 00B44C 7000A84C 90820000 */  lbu   $v0, ($a0)
 /* 00B450 7000A850 90A30000 */  lbu   $v1, ($a1)
@@ -111,7 +111,7 @@ something_with_strings_0:
 /* 00B490 7000A890 03E00008 */  jr    $ra
 /* 00B494 7000A894 00000000 */   nop   
 
-string_related:
+glabel string_related
 .L7000A898:
 /* 00B498 7000A898 54C00004 */  bnezl $a2, .L7000A8AC
 /* 00B49C 7000A89C 90820000 */   lbu   $v0, ($a0)
@@ -146,7 +146,7 @@ string_related:
 /* 00B4F0 7000A8F0 03E00008 */  jr    $ra
 /* 00B4F4 7000A8F4 00000000 */   nop   
 
-strtol_related:
+glabel strtol_related
 /* 00B4F8 7000A8F8 308E00FF */  andi  $t6, $a0, 0xff
 /* 00B4FC 7000A8FC AFA40000 */  sw    $a0, ($sp)
 /* 00B500 7000A900 29C10061 */  slti  $at, $t6, 0x61
@@ -164,7 +164,7 @@ strtol_related:
 /* 00B528 7000A928 03E00008 */  jr    $ra
 /* 00B52C 7000A92C 00000000 */   nop   
 
-strtol_related_0:
+glabel strtol_related_0
 /* 00B530 7000A930 308E00FF */  andi  $t6, $a0, 0xff
 /* 00B534 7000A934 29C20030 */  slti  $v0, $t6, 0x30
 /* 00B538 7000A938 38420001 */  xori  $v0, $v0, 1
@@ -175,7 +175,7 @@ strtol_related_0:
 /* 00B548 7000A948 03E00008 */  jr    $ra
 /* 00B54C 7000A94C 00000000 */   nop   
 
-strtol_related_1:
+glabel strtol_related_1
 /* 00B550 7000A950 308E00FF */  andi  $t6, $a0, 0xff
 /* 00B554 7000A954 29C20061 */  slti  $v0, $t6, 0x61
 /* 00B558 7000A958 AFA40000 */  sw    $a0, ($sp)
@@ -194,7 +194,7 @@ strtol_related_1:
 /* 00B584 7000A984 03E00008 */  jr    $ra
 /* 00B588 7000A988 00000000 */   nop   
 
-strtol_related_2:
+glabel strtol_related_2
 /* 00B58C 7000A98C 308E00FF */  andi  $t6, $a0, 0xff
 /* 00B590 7000A990 39C20020 */  xori  $v0, $t6, 0x20
 /* 00B594 7000A994 2C420001 */  sltiu $v0, $v0, 1
@@ -218,7 +218,7 @@ strtol_related_2:
 /* 00B5D8 7000A9D8 03E00008 */  jr    $ra
 /* 00B5DC 7000A9DC 00000000 */   nop   
 
-strtol:
+glabel strtol
 /* 00B5E0 7000A9E0 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 00B5E4 7000A9E4 AFB30024 */  sw    $s3, 0x24($sp)
 /* 00B5E8 7000A9E8 00C09825 */  move  $s3, $a2

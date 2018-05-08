@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-testtodisplaystderrandupdatecount:
+glabel testtodisplaystderrandupdatecount
 /* 0015A0 700009A0 3C0E8002 */  lui   $t6, %hi(stderr.permitted) # $t6, 0x8002
 /* 0015A4 700009A4 8DCE309C */  lw    $t6, %lo(stderr.permitted)($t6)
 /* 0015A8 700009A8 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -38,7 +38,7 @@ testtodisplaystderrandupdatecount:
 /* 0015F0 700009F0 03E00008 */  jr    $ra
 /* 0015F4 700009F4 00000000 */   nop   
 
-testtodisplaystderrorevery16thframe:
+glabel testtodisplaystderrorevery16thframe
 /* 0015F8 700009F8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0015FC 700009FC 308E000F */  andi  $t6, $a0, 0xf
 /* 001600 70000A00 15C0001D */  bnez  $t6, .L70000A78
@@ -80,7 +80,7 @@ testtodisplaystderrorevery16thframe:
 /* 001680 70000A80 03E00008 */  jr    $ra
 /* 001684 70000A84 00000000 */   nop   
 
-osCreateLog:
+glabel osCreateLog
 /* 001688 70000A88 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00168C 70000A8C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 001690 70000A90 0C003638 */  jal   osGetCount
@@ -91,7 +91,7 @@ osCreateLog:
 /* 0016A4 70000AA4 03E00008 */  jr    $ra
 /* 0016A8 70000AA8 27BD0018 */   addiu $sp, $sp, 0x18
 
-osCreateScheduler:
+glabel osCreateScheduler
 /* 0016AC 70000AAC 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0016B0 70000AB0 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 0016B4 70000AB4 AFB10020 */  sw    $s1, 0x20($sp)
@@ -183,7 +183,7 @@ osCreateScheduler:
 /* 00180C 70000C0C 03E00008 */  jr    $ra
 /* 001810 70000C10 27BD0028 */   addiu $sp, $sp, 0x28
 
-osScAddClient:
+glabel osScAddClient
 /* 001814 70000C14 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 001818 70000C18 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00181C 70000C1C AFA40018 */  sw    $a0, 0x18($sp)
@@ -208,7 +208,7 @@ osScAddClient:
 /* 001868 70000C68 03E00008 */  jr    $ra
 /* 00186C 70000C6C 00000000 */   nop   
 
-osScRemoveClient:
+glabel osScRemoveClient
 /* 001870 70000C70 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 001874 70000C74 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 001878 70000C78 AFA40020 */  sw    $a0, 0x20($sp)
@@ -248,11 +248,11 @@ osScRemoveClient:
 /* 0018F0 70000CF0 03E00008 */  jr    $ra
 /* 0018F4 70000CF4 00000000 */   nop   
 
-osScGetCmdQ:
+glabel osScGetCmdQ
 /* 0018F8 70000CF8 03E00008 */  jr    $ra
 /* 0018FC 70000CFC 24820078 */   addiu $v0, $a0, 0x78
 
-__scMain:
+glabel __scMain
 /* 001900 70000D00 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 001904 70000D04 AFB50028 */  sw    $s5, 0x28($sp)
 /* 001908 70000D08 AFB40024 */  sw    $s4, 0x24($sp)
@@ -373,7 +373,7 @@ __scMain:
 /* 001AAC 70000EAC 03E00008 */  jr    $ra
 /* 001AB0 70000EB0 27BD0050 */   addiu $sp, $sp, 0x50
 
-__scHandleRetrace:
+glabel __scHandleRetrace
 /* 001AB4 70000EB4 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 001AB8 70000EB8 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 001ABC 70000EBC AFB10018 */  sw    $s1, 0x18($sp)
@@ -472,7 +472,7 @@ __scHandleRetrace:
 /* 001C0C 7000100C 03E00008 */  jr    $ra
 /* 001C10 70001010 27BD0040 */   addiu $sp, $sp, 0x40
 
-__scHandleRSP:
+glabel __scHandleRSP
 /* 001C14 70001014 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 001C18 70001018 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 001C1C 7000101C AFB00018 */  sw    $s0, 0x18($sp)
@@ -545,12 +545,12 @@ __scHandleRSP:
 /* 001D14 70001114 03E00008 */  jr    $ra
 /* 001D18 70001118 00000000 */   nop   
 
-setcountertarget:
+glabel setcountertarget
 /* 001D1C 7000111C 3C028006 */  lui   $v0, 0x8006
 /* 001D20 70001120 03E00008 */  jr    $ra
 /* 001D24 70001124 2442DB30 */   addiu $v0, $v0, -0x24d0
 
-__scHandleRDP:
+glabel __scHandleRDP
 /* 001D28 70001128 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 001D2C 7000112C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 001D30 70001130 AFB00018 */  sw    $s0, 0x18($sp)
@@ -599,7 +599,7 @@ __scHandleRDP:
 /* 001DD8 700011D8 03E00008 */  jr    $ra
 /* 001DDC 700011DC 00000000 */   nop   
 
-__scTaskReady:
+glabel __scTaskReady
 /* 001DE0 700011E0 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 001DE4 700011E4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 001DE8 700011E8 1080000C */  beqz  $a0, .L7000121C
@@ -624,7 +624,7 @@ __scTaskReady:
 /* 001E28 70001228 03E00008 */  jr    $ra
 /* 001E2C 7000122C 00000000 */   nop   
 
-__scTaskComplete:
+glabel __scTaskComplete
 /* 001E30 70001230 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 001E34 70001234 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 001E38 70001238 AFB00018 */  sw    $s0, 0x18($sp)
@@ -738,7 +738,7 @@ __scTaskComplete:
 /* 001FD0 700013D0 03E00008 */  jr    $ra
 /* 001FD4 700013D4 00000000 */   nop   
 
-__scAppendList:
+glabel __scAppendList
 /* 001FD8 700013D8 8CA20010 */  lw    $v0, 0x10($a1)
 /* 001FDC 700013DC 24010002 */  li    $at, 2
 /* 001FE0 700013E0 240E0001 */  li    $t6, 1
@@ -770,7 +770,7 @@ __scAppendList:
 /* 002038 70001438 03E00008 */  jr    $ra
 /* 00203C 7000143C ACB80004 */   sw    $t8, 4($a1)
 
-__scExec:
+glabel __scExec
 /* 002040 70001440 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 002044 70001444 AFB10018 */  sw    $s1, 0x18($sp)
 /* 002048 70001448 AFB00014 */  sw    $s0, 0x14($sp)
@@ -850,7 +850,7 @@ __scExec:
 /* 002158 70001558 03E00008 */  jr    $ra
 /* 00215C 7000155C 27BD0028 */   addiu $sp, $sp, 0x28
 
-__scYield:
+glabel __scYield
 /* 002160 70001560 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 002164 70001564 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 002168 70001568 8C8200C8 */  lw    $v0, 0xc8($a0)
@@ -868,7 +868,7 @@ __scYield:
 /* 002194 70001594 03E00008 */  jr    $ra
 /* 002198 70001598 00000000 */   nop   
 
-__scSchedule:
+glabel __scSchedule
 /* 00219C 7000159C 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0021A0 700015A0 AFB10018 */  sw    $s1, 0x18($sp)
 /* 0021A4 700015A4 00808825 */  move  $s1, $a0

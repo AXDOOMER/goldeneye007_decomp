@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-something_with_memp_c_debug:
+glabel something_with_memp_c_debug
 /* 009F80 70009380 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 009F84 70009384 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 009F88 70009388 3C048002 */  lui   $a0, %hi(D_80024400) # $a0, 0x8002
@@ -24,7 +24,7 @@ something_with_memp_c_debug:
 /* 009FA4 700093A4 03E00008 */  jr    $ra
 /* 009FA8 700093A8 00000000 */   nop   
 
-check_memflag_tokens:
+glabel check_memflag_tokens
 /* 009FAC 700093AC 3C028006 */  lui   $v0, %hi(memory_bank_ptrs) # $v0, 0x8006
 /* 009FB0 700093B0 24423BB0 */  addiu $v0, %lo(memory_bank_ptrs) # addiu $v0, $v0, 0x3bb0
 /* 009FB4 700093B4 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -121,7 +121,7 @@ check_memflag_tokens:
 /* 00A10C 7000950C 03E00008 */  jr    $ra
 /* 00A110 70009510 00000000 */   nop   
 
-memp_related_0:
+glabel memp_related_0
 /* 00A114 70009514 27BDFF80 */  addiu $sp, $sp, -0x80
 /* 00A118 70009518 3C0E8002 */  lui   $t6, %hi(D_80024434) # $t6, 0x8002
 /* 00A11C 7000951C AFBF0024 */  sw    $ra, 0x24($sp)
@@ -258,7 +258,7 @@ memp_related_0:
 /* 00A318 70009718 03E00008 */  jr    $ra
 /* 00A31C 7000971C 27BD0080 */   addiu $sp, $sp, 0x80
 
-allocate_bytes_in_bank:
+glabel allocate_bytes_in_bank
 /* 00A320 70009720 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00A324 70009724 AFA5001C */  sw    $a1, 0x1c($sp)
 /* 00A328 70009728 30A700FF */  andi  $a3, $a1, 0xff
@@ -325,7 +325,7 @@ allocate_bytes_in_bank:
 /* 00A3FC 700097FC 03E00008 */  jr    $ra
 /* 00A400 70009800 00000000 */   nop   
 
-memp_related_1:
+glabel memp_related_1
 /* 00A404 70009804 3C0F8002 */  lui   $t7, %hi(tied_to_mem_management) # $t7, 0x8002
 /* 00A408 70009808 8DEF4404 */  lw    $t7, %lo(tied_to_mem_management)($t7)
 /* 00A40C 7000980C 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -396,7 +396,7 @@ memp_related_1:
 /* 00A4E8 700098E8 03E00008 */  jr    $ra
 /* 00A4EC 700098EC 00000000 */   nop   
 
-nulled_list_all8_mem_alloc_banks_sizes:
+glabel nulled_list_all8_mem_alloc_banks_sizes
 /* 00A4F0 700098F0 24020001 */  li    $v0, 1
 .L700098F4:
 /* 00A4F4 700098F4 24420001 */  addiu $v0, $v0, 1
@@ -407,7 +407,7 @@ nulled_list_all8_mem_alloc_banks_sizes:
 /* 00A508 70009908 03E00008 */  jr    $ra
 /* 00A50C 7000990C 00000000 */   nop   
 
-memp_related_3:
+glabel memp_related_3
 /* 00A510 70009910 3C0F8002 */  lui   $t7, %hi(tied_to_mem_management) # $t7, 0x8002
 /* 00A514 70009914 8DEF4404 */  lw    $t7, %lo(tied_to_mem_management)($t7)
 /* 00A518 70009918 AFA40000 */  sw    $a0, ($sp)
@@ -435,7 +435,7 @@ memp_related_3:
 /* 00A568 70009968 03E00008 */  jr    $ra
 /* 00A56C 7000996C 012A1023 */   subu  $v0, $t1, $t2
 
-memp_related_4:
+glabel memp_related_4
 /* 00A570 70009970 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00A574 70009974 00802825 */  move  $a1, $a0
 /* 00A578 70009978 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -448,7 +448,7 @@ memp_related_4:
 /* 00A594 70009994 03E00008 */  jr    $ra
 /* 00A598 70009998 00000000 */   nop   
 
-reset_mem_bank_a0:
+glabel reset_mem_bank_a0
 /* 00A59C 7000999C 308E00FF */  andi  $t6, $a0, 0xff
 /* 00A5A0 700099A0 3C188006 */  lui   $t8, %hi(memory_bank_ptrs) # $t8, 0x8006
 /* 00A5A4 700099A4 27183BB0 */  addiu $t8, %lo(memory_bank_ptrs) # addiu $t8, $t8, 0x3bb0
@@ -460,7 +460,7 @@ reset_mem_bank_a0:
 /* 00A5BC 700099BC 03E00008 */  jr    $ra
 /* 00A5C0 700099C0 AC590004 */   sw    $t9, 4($v0)
 
-memp_related_6:
+glabel memp_related_6
 /* 00A5C4 700099C4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00A5C8 700099C8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00A5CC 700099CC 0C00263C */  jal   nulled_list_all8_mem_alloc_banks_sizes

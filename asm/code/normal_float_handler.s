@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-_is_normal_single_precision_float:
+glabel _is_normal_single_precision_float
 /* 006160 70005560 E7AC0000 */  swc1  $f12, ($sp)
 /* 006164 70005564 8FA40000 */  lw    $a0, ($sp)
 /* 006168 70005568 3C01007F */  lui   $at, (0x007FFFFF >> 16) # lui $at, 0x7f
@@ -31,7 +31,7 @@ _is_normal_single_precision_float:
 /* 00619C 7000559C 03E00008 */  jr    $ra
 /* 0061A0 700055A0 00000000 */   nop   
 
-is_normal_single_precision_float:
+glabel is_normal_single_precision_float
 /* 0061A4 700055A4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0061A8 700055A8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0061AC 700055AC 44856000 */  mtc1  $a1, $f12
@@ -42,7 +42,7 @@ is_normal_single_precision_float:
 /* 0061C0 700055C0 03E00008 */  jr    $ra
 /* 0061C4 700055C4 00000000 */   nop   
 
-set_normality_of_single_precision_floats:
+glabel set_normality_of_single_precision_floats
 /* 0061C8 700055C8 44856000 */  mtc1  $a1, $f12
 /* 0061CC 700055CC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0061D0 700055D0 AFBF0014 */  sw    $ra, 0x14($sp)

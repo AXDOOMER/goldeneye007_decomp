@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-establish_TLB_buffer_management_table:
+glabel establish_TLB_buffer_management_table
 /* 0023E0 700017E0 3C038006 */  lui   $v1, %hi(TLB_managment_table) # $v1, 0x8006
 /* 0023E4 700017E4 3C028006 */  lui   $v0, %hi(TLB_manager_mapping_table_start) # $v0, 0x8006
 /* 0023E8 700017E8 2442E3F0 */  addiu $v0, %lo(TLB_manager_mapping_table_start) # addiu $v0, $v0, -0x1c10
@@ -61,7 +61,7 @@ establish_TLB_buffer_management_table:
 /* 002490 70001890 03E00008 */  jr    $ra
 /* 002494 70001894 AC28E4A4 */   sw    $t0, -0x1b5c($at)
 
-mp_tlb_related:
+glabel mp_tlb_related
 /* 002498 70001898 3C038002 */  lui   $v1, %hi(D_800230D0) # $v1, 0x8002
 /* 00249C 7000189C 246330D0 */  addiu $v1, %lo(D_800230D0) # addiu $v1, $v1, 0x30d0
 /* 0024A0 700018A0 8C620000 */  lw    $v0, ($v1)

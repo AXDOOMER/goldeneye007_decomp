@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-audio_related:
+glabel audio_related
 /* 0075F0 700069F0 948E0000 */  lhu   $t6, ($a0)
 /* 0075F4 700069F4 00001025 */  move  $v0, $zero
 /* 0075F8 700069F8 00801825 */  move  $v1, $a0
@@ -31,7 +31,7 @@ audio_related:
 /* 007628 70006A28 03E00008 */  jr    $ra
 /* 00762C 70006A2C 00000000 */   nop   
 
-setupaudio:
+glabel setupaudio
 /* 007630 70006A30 3C0E8002 */  lui   $t6, %hi(bootswitch_sound) # $t6, 0x8002
 /* 007634 70006A34 81CE43F8 */  lb    $t6, %lo(bootswitch_sound)($t6)
 /* 007638 70006A38 27BDFF18 */  addiu $sp, $sp, -0xe8
@@ -312,7 +312,7 @@ setupaudio:
 /* 007A74 70006E74 03E00008 */  jr    $ra
 /* 007A78 70006E78 00000000 */   nop   
 
-music_track_related:
+glabel music_track_related
 /* 007A7C 70006E7C 3C0E8002 */  lui   $t6, %hi(bootswitch_sound) # $t6, 0x8002
 /* 007A80 70006E80 81CE43F8 */  lb    $t6, %lo(bootswitch_sound)($t6)
 /* 007A84 70006E84 27BDDEB8 */  addiu $sp, $sp, -0x2148
@@ -405,7 +405,7 @@ music_track_related:
 /* 007BC8 70006FC8 03E00008 */  jr    $ra
 /* 007BCC 70006FCC 00000000 */   nop   
 
-music_related_1st_block:
+glabel music_related_1st_block
 /* 007BD0 70006FD0 3C0E8002 */  lui   $t6, %hi(bootswitch_sound) # $t6, 0x8002
 /* 007BD4 70006FD4 81CE43F8 */  lb    $t6, %lo(bootswitch_sound)($t6)
 /* 007BD8 70006FD8 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -433,12 +433,12 @@ music_related_1st_block:
 /* 007C28 70007028 03E00008 */  jr    $ra
 /* 007C2C 7000702C 00000000 */   nop   
 
-get_music1len:
+glabel get_music1len
 /* 007C30 70007030 3C028002 */  lui   $v0, 0x8002
 /* 007C34 70007034 03E00008 */  jr    $ra
 /* 007C38 70007038 94424338 */   lhu   $v0, 0x4338($v0)
 
-music_related:
+glabel music_related
 /* 007C3C 7000703C 3C0E8002 */  lui   $t6, %hi(music1_track_num) # $t6, 0x8002
 /* 007C40 70007040 8DCE4334 */  lw    $t6, %lo(music1_track_num)($t6)
 /* 007C44 70007044 3C188002 */  lui   $t8, 0x8002
@@ -465,7 +465,7 @@ music_related:
 /* 007C98 70007098 03E00008 */  jr    $ra
 /* 007C9C 7000709C 00000000 */   nop   
 
-music_related_0:
+glabel music_related_0
 /* 007CA0 700070A0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 007CA4 700070A4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 007CA8 700070A8 0C001C0C */  jal   get_music1len
@@ -491,7 +491,7 @@ music_related_0:
 /* 007CF0 700070F0 03E00008 */  jr    $ra
 /* 007CF4 700070F4 27BD0018 */   addiu $sp, $sp, 0x18
 
-music_related_1:
+glabel music_related_1
 /* 007CF8 700070F8 3C0E8002 */  lui   $t6, %hi(D_8002434C) # $t6, 0x8002
 /* 007CFC 700070FC 8DCE434C */  lw    $t6, %lo(D_8002434C)($t6)
 /* 007D00 70007100 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -522,7 +522,7 @@ music_related_1:
 /* 007D60 70007160 03E00008 */  jr    $ra
 /* 007D64 70007164 00000000 */   nop   
 
-music_related_3:
+glabel music_related_3
 /* 007D68 70007168 3C0E8002 */  lui   $t6, %hi(D_8002434C) # $t6, 0x8002
 /* 007D6C 7000716C 8DCE434C */  lw    $t6, %lo(D_8002434C)($t6)
 /* 007D70 70007170 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -566,7 +566,7 @@ music_related_3:
 /* 007DFC 700071FC 03E00008 */  jr    $ra
 /* 007E00 70007200 00000000 */   nop   
 
-music_related_2nd_block:
+glabel music_related_2nd_block
 /* 007E04 70007204 3C0E8002 */  lui   $t6, %hi(bootswitch_sound) # $t6, 0x8002
 /* 007E08 70007208 81CE43F8 */  lb    $t6, %lo(bootswitch_sound)($t6)
 /* 007E0C 7000720C 27BDDEB8 */  addiu $sp, $sp, -0x2148
@@ -659,7 +659,7 @@ music_related_2nd_block:
 /* 007F50 70007350 03E00008 */  jr    $ra
 /* 007F54 70007354 00000000 */   nop   
 
-music_related_2nd_block_0:
+glabel music_related_2nd_block_0
 /* 007F58 70007358 3C0E8002 */  lui   $t6, %hi(bootswitch_sound) # $t6, 0x8002
 /* 007F5C 7000735C 81CE43F8 */  lb    $t6, %lo(bootswitch_sound)($t6)
 /* 007F60 70007360 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -687,12 +687,12 @@ music_related_2nd_block_0:
 /* 007FB0 700073B0 03E00008 */  jr    $ra
 /* 007FB4 700073B4 00000000 */   nop   
 
-get_music2len:
+glabel get_music2len
 /* 007FB8 700073B8 3C028002 */  lui   $v0, 0x8002
 /* 007FBC 700073BC 03E00008 */  jr    $ra
 /* 007FC0 700073C0 94424340 */   lhu   $v0, 0x4340($v0)
 
-music_related_2nd_block_1:
+glabel music_related_2nd_block_1
 /* 007FC4 700073C4 3C0E8002 */  lui   $t6, %hi(music2_track_num) # $t6, 0x8002
 /* 007FC8 700073C8 8DCE433C */  lw    $t6, %lo(music2_track_num)($t6)
 /* 007FCC 700073CC 3C188002 */  lui   $t8, 0x8002
@@ -719,7 +719,7 @@ music_related_2nd_block_1:
 /* 008020 70007420 03E00008 */  jr    $ra
 /* 008024 70007424 00000000 */   nop   
 
-music_related_5:
+glabel music_related_5
 /* 008028 70007428 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00802C 7000742C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 008030 70007430 0C001CEE */  jal   get_music2len
@@ -745,7 +745,7 @@ music_related_5:
 /* 008078 70007478 03E00008 */  jr    $ra
 /* 00807C 7000747C 27BD0018 */   addiu $sp, $sp, 0x18
 
-music_related_6:
+glabel music_related_6
 /* 008080 70007480 3C0E8002 */  lui   $t6, %hi(D_80024350) # $t6, 0x8002
 /* 008084 70007484 8DCE4350 */  lw    $t6, %lo(D_80024350)($t6)
 /* 008088 70007488 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -776,7 +776,7 @@ music_related_6:
 /* 0080E8 700074E8 03E00008 */  jr    $ra
 /* 0080EC 700074EC 00000000 */   nop   
 
-music_related_8:
+glabel music_related_8
 /* 0080F0 700074F0 3C0E8002 */  lui   $t6, %hi(D_80024350) # $t6, 0x8002
 /* 0080F4 700074F4 8DCE4350 */  lw    $t6, %lo(D_80024350)($t6)
 /* 0080F8 700074F8 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -820,7 +820,7 @@ music_related_8:
 /* 008184 70007584 03E00008 */  jr    $ra
 /* 008188 70007588 00000000 */   nop   
 
-music_related_3rd_block:
+glabel music_related_3rd_block
 /* 00818C 7000758C 3C0E8002 */  lui   $t6, %hi(bootswitch_sound) # $t6, 0x8002
 /* 008190 70007590 81CE43F8 */  lb    $t6, %lo(bootswitch_sound)($t6)
 /* 008194 70007594 27BDDEB8 */  addiu $sp, $sp, -0x2148
@@ -913,7 +913,7 @@ music_related_3rd_block:
 /* 0082D8 700076D8 03E00008 */  jr    $ra
 /* 0082DC 700076DC 00000000 */   nop   
 
-music_related_3rd_block_0:
+glabel music_related_3rd_block_0
 /* 0082E0 700076E0 3C0E8002 */  lui   $t6, %hi(bootswitch_sound) # $t6, 0x8002
 /* 0082E4 700076E4 81CE43F8 */  lb    $t6, %lo(bootswitch_sound)($t6)
 /* 0082E8 700076E8 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -941,12 +941,12 @@ music_related_3rd_block_0:
 /* 008338 70007738 03E00008 */  jr    $ra
 /* 00833C 7000773C 00000000 */   nop   
 
-get_music3len:
+glabel get_music3len
 /* 008340 70007740 3C028002 */  lui   $v0, 0x8002
 /* 008344 70007744 03E00008 */  jr    $ra
 /* 008348 70007748 94424348 */   lhu   $v0, 0x4348($v0)
 
-music_related_3rd_block_1:
+glabel music_related_3rd_block_1
 /* 00834C 7000774C 3C0E8002 */  lui   $t6, %hi(music3_track_num) # $t6, 0x8002
 /* 008350 70007750 8DCE4344 */  lw    $t6, %lo(music3_track_num)($t6)
 /* 008354 70007754 3C188002 */  lui   $t8, 0x8002
@@ -973,7 +973,7 @@ music_related_3rd_block_1:
 /* 0083A8 700077A8 03E00008 */  jr    $ra
 /* 0083AC 700077AC 00000000 */   nop   
 
-music_related_10:
+glabel music_related_10
 /* 0083B0 700077B0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0083B4 700077B4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0083B8 700077B8 0C001DD0 */  jal   get_music3len
@@ -999,7 +999,7 @@ music_related_10:
 /* 008400 70007800 03E00008 */  jr    $ra
 /* 008404 70007804 27BD0018 */   addiu $sp, $sp, 0x18
 
-music_related_11:
+glabel music_related_11
 /* 008408 70007808 3C0E8002 */  lui   $t6, %hi(D_80024354) # $t6, 0x8002
 /* 00840C 7000780C 8DCE4354 */  lw    $t6, %lo(D_80024354)($t6)
 /* 008410 70007810 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -1030,7 +1030,7 @@ music_related_11:
 /* 008470 70007870 03E00008 */  jr    $ra
 /* 008474 70007874 00000000 */   nop   
 
-music_related_13:
+glabel music_related_13
 /* 008478 70007878 3C0E8002 */  lui   $t6, %hi(D_80024354) # $t6, 0x8002
 /* 00847C 7000787C 8DCE4354 */  lw    $t6, %lo(D_80024354)($t6)
 /* 008480 70007880 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -1074,7 +1074,7 @@ music_related_13:
 /* 00850C 7000790C 03E00008 */  jr    $ra
 /* 008510 70007910 00000000 */   nop   
 
-music_related_15:
+glabel music_related_15
 /* 008514 70007914 3C0E8002 */  lui   $t6, %hi(D_8002434C) # $t6, 0x8002
 /* 008518 70007918 8DCE434C */  lw    $t6, %lo(D_8002434C)($t6)
 /* 00851C 7000791C 27BDFFD0 */  addiu $sp, $sp, -0x30

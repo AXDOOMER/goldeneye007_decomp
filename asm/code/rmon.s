@@ -11,43 +11,43 @@
 
 .section .text, "ax"
 
-rmonMain:
+glabel rmonMain
 /* 00DAA0 7000CEA0 03E00008 */  jr    $ra
 /* 00DAA4 7000CEA4 00000000 */   nop   
 
-rmon_debug_is_final_build:
+glabel rmon_debug_is_final_build
 /* 00DAA8 7000CEA8 03E00008 */  jr    $ra
 /* 00DAAC 7000CEAC 24020001 */   li    $v0, 1
 
-rmon_debug_returns_neg_1:
+glabel rmon_debug_returns_neg_1
 /* 00DAB0 7000CEB0 03E00008 */  jr    $ra
 /* 00DAB4 7000CEB4 2402FFFF */   li    $v0, -1
 
-rmon_debug_stub:
+glabel rmon_debug_stub
 /* 00DAB8 7000CEB8 03E00008 */  jr    $ra
 /* 00DABC 7000CEBC 00000000 */   nop   
 
-rmon_debug_stub_0:
+glabel rmon_debug_stub_0
 /* 00DAC0 7000CEC0 03E00008 */  jr    $ra
 /* 00DAC4 7000CEC4 00000000 */   nop   
 
-rmon_debug_stub_1:
+glabel rmon_debug_stub_1
 /* 00DAC8 7000CEC8 03E00008 */  jr    $ra
 /* 00DACC 7000CECC 00000000 */   nop   
 
-rmon_debug_stub_2:
+glabel rmon_debug_stub_2
 /* 00DAD0 7000CED0 03E00008 */  jr    $ra
 /* 00DAD4 7000CED4 00000000 */   nop   
 
-rmon_debug_stub_3:
+glabel rmon_debug_stub_3
 /* 00DAD8 7000CED8 03E00008 */  jr    $ra
 /* 00DADC 7000CEDC 00000000 */   nop   
 
-rmon_debug_stub_4:
+glabel rmon_debug_stub_4
 /* 00DAE0 7000CEE0 03E00008 */  jr    $ra
 /* 00DAE4 7000CEE4 00000000 */   nop   
 
-proutSyncPrintf:
+glabel proutSyncPrintf
 /* 00DAE8 7000CEE8 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00DAEC 7000CEEC AFB20020 */  sw    $s2, 0x20($sp)
 /* 00DAF0 7000CEF0 AFB00018 */  sw    $s0, 0x18($sp)
@@ -74,7 +74,7 @@ proutSyncPrintf:
 /* 00DB3C 7000CF3C 03E00008 */  jr    $ra
 /* 00DB40 7000CF40 24020001 */   li    $v0, 1
 
-osSyncPrintf:
+glabel osSyncPrintf
 /* 00DB44 7000CF44 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00DB48 7000CF48 AFA40020 */  sw    $a0, 0x20($sp)
 /* 00DB4C 7000CF4C AFBF0014 */  sw    $ra, 0x14($sp)

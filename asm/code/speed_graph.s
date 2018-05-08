@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-displaylist_related:
+glabel displaylist_related
 /* 003330 70002730 3C048006 */  lui   $a0, %hi(displaylist_0) # $a0, 0x8006
 /* 003334 70002734 2484F400 */  addiu $a0, %lo(displaylist_0) # addiu $a0, $a0, -0xc00
 /* 003338 70002738 3C06B800 */  lui   $a2, 0xb800
@@ -43,7 +43,7 @@ displaylist_related:
 /* 00339C 7000279C 03E00008 */  jr    $ra
 /* 0033A0 700027A0 00000000 */   nop   
 
-video_related_1:
+glabel video_related_1
 /* 0033A4 700027A4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0033A8 700027A8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0033AC 700027AC 0C003638 */  jal   osGetCount
@@ -74,7 +74,7 @@ video_related_1:
 /* 003408 70002808 03E00008 */  jr    $ra
 /* 00340C 7000280C 00000000 */   nop   
 
-video_related_2:
+glabel video_related_2
 /* 003410 70002810 3C0E8006 */  lui   $t6, %hi(dword_CODE_bss_800604A8) # $t6, 0x8006
 /* 003414 70002814 8DCE04A8 */  lw    $t6, %lo(dword_CODE_bss_800604A8)($t6)
 /* 003418 70002818 3C018006 */  lui   $at, %hi(dword_CODE_bss_800604A4) # $at, 0x8006
@@ -94,7 +94,7 @@ video_related_2:
 /* 00344C 7000284C 03E00008 */  jr    $ra
 /* 003450 70002850 00000000 */   nop   
 
-video_related_3:
+glabel video_related_3
 /* 003454 70002854 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 003458 70002858 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00345C 7000285C AFA40040 */  sw    $a0, 0x40($sp)
@@ -165,7 +165,7 @@ video_related_3:
 /* 003550 70002950 03E00008 */  jr    $ra
 /* 003554 70002954 00000000 */   nop   
 
-display_speed_graph:
+glabel display_speed_graph
 /* 003558 70002958 3C038005 */  lui   $v1, %hi(D_80048498) # $v1, 0x8005
 /* 00355C 7000295C 3C0E8002 */  lui   $t6, %hi(D_80023228) # $t6, 0x8002
 /* 003560 70002960 8C638498 */  lw    $v1, %lo(D_80048498)($v1)
@@ -406,7 +406,7 @@ display_speed_graph:
 /* 0038D0 70002CD0 03E00008 */  jr    $ra
 /* 0038D4 70002CD4 27BD0048 */   addiu $sp, $sp, 0x48
 
-video_DL_related_4:
+glabel video_DL_related_4
 /* 0038D8 70002CD8 27BDFF30 */  addiu $sp, $sp, -0xd0
 /* 0038DC 70002CDC 3C028002 */  lui   $v0, %hi(counterforframes) # $v0, 0x8002
 /* 0038E0 70002CE0 3C0E8005 */  lui   $t6, %hi(D_80048498) # $t6, 0x8005
