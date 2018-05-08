@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-debug_sp_related_11:
+glabel debug_sp_related_11
 /* 006020 70005420 3C0E8002 */  lui   $t6, %hi(ptr_sp_rmon_0) # $t6, 0x8002
 /* 006024 70005424 25CE36DC */  addiu $t6, %lo(ptr_sp_rmon_0) # addiu $t6, $t6, 0x36dc
 /* 006028 70005428 8DC10000 */  lw    $at, ($t6)
@@ -66,7 +66,7 @@ debug_sp_related_11:
 /* 0060DC 700054DC 03E00008 */  jr    $ra
 /* 0060E0 700054E0 27BD0030 */   addiu $sp, $sp, 0x30
 
-debug_sp_related_12:
+glabel debug_sp_related_12
 /* 0060E4 700054E4 3C0E8002 */  lui   $t6, %hi(ptr_sp_rmon_1) # $t6, 0x8002
 /* 0060E8 700054E8 25CE3704 */  addiu $t6, %lo(ptr_sp_rmon_1) # addiu $t6, $t6, 0x3704
 /* 0060EC 700054EC 8DC10000 */  lw    $at, ($t6)

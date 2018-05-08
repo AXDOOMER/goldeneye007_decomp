@@ -11,10 +11,10 @@
 
 .section .text, "ax"
 
-return_last_RA_saved_to_stack:
+glabel return_last_RA_saved_to_stack
 /* 006710 70005B10 03E02025 */  move  $a0, $ra
 /* 006714 70005B14 2402FFFF */  li    $v0, -1
-func_70005B18:
+glabel func_70005B18
 /* 006718 70005B18 8C880000 */  lw    $t0, ($a0)
 /* 00671C 70005B1C 240A27BD */  li    $t2, 10173
 /* 006720 70005B20 00084C02 */  srl   $t1, $t0, 0x10

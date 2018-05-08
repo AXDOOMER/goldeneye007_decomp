@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-init_mainthread_data:
+glabel init_mainthread_data
 /* 006930 70005D30 27BDFF60 */  addiu $sp, $sp, -0xa0
 /* 006934 70005D34 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 006938 70005D38 AFB20030 */  sw    $s2, 0x30($sp)
@@ -196,13 +196,13 @@ init_mainthread_data:
 /* 006BEC 70005FEC 03E00008 */  jr    $ra
 /* 006BF0 70005FF0 27BD00A0 */   addiu $sp, $sp, 0xa0
 
-enable_show_mem_use_flag:
+glabel enable_show_mem_use_flag
 /* 006BF4 70005FF4 240E0001 */  li    $t6, 1
 /* 006BF8 70005FF8 3C018002 */  lui   $at, 0x8002
 /* 006BFC 70005FFC 03E00008 */  jr    $ra
 /* 006C00 70006000 AC2E41B4 */   sw    $t6, 0x41b4($at)
 
-mem_bars_flag_toggle:
+glabel mem_bars_flag_toggle
 /* 006C04 70006004 3C028002 */  lui   $v0, %hi(show_mem_bars_flag) # $v0, 0x8002
 /* 006C08 70006008 244241B8 */  addiu $v0, %lo(show_mem_bars_flag) # addiu $v0, $v0, 0x41b8
 /* 006C0C 7000600C 8C4E0000 */  lw    $t6, ($v0)
@@ -210,7 +210,7 @@ mem_bars_flag_toggle:
 /* 006C14 70006014 03E00008 */  jr    $ra
 /* 006C18 70006018 AC4F0000 */   sw    $t7, ($v0)
 
-setup_gamevalues_and_launchmainloop:
+glabel setup_gamevalues_and_launchmainloop
 /* 006C1C 7000601C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 006C20 70006020 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 006C24 70006024 0C00174C */  jal   init_mainthread_data
@@ -230,7 +230,7 @@ setup_gamevalues_and_launchmainloop:
 /* 006C58 70006058 03E00008 */  jr    $ra
 /* 006C5C 7000605C 00000000 */   nop   
 
-mainloop:
+glabel mainloop
 /* 006C60 70006060 27BDFE20 */  addiu $sp, $sp, -0x1e0
 /* 006C64 70006064 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 006C68 70006068 AFBE0038 */  sw    $fp, 0x38($sp)
@@ -831,7 +831,7 @@ mainloop:
 /* 007528 70006928 03E00008 */  jr    $ra
 /* 00752C 7000692C 27BD01E0 */   addiu $sp, $sp, 0x1e0
 
-run_title_stage:
+glabel run_title_stage
 /* 007530 70006930 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 007534 70006934 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 007538 70006938 0C001A54 */  jal   set_loaded_stage
@@ -841,17 +841,17 @@ run_title_stage:
 /* 007548 70006948 03E00008 */  jr    $ra
 /* 00754C 7000694C 00000000 */   nop   
 
-set_loaded_stage:
+glabel set_loaded_stage
 /* 007550 70006950 3C018002 */  lui   $at, 0x8002
 /* 007554 70006954 03E00008 */  jr    $ra
 /* 007558 70006958 AC2442FC */   sw    $a0, 0x42fc($at)
 
-get_stage_num:
+glabel get_stage_num
 /* 00755C 7000695C 3C028002 */  lui   $v0, 0x8002
 /* 007560 70006960 03E00008 */  jr    $ra
 /* 007564 70006964 8C4241A8 */   lw    $v0, 0x41a8($v0)
 
-return_to_title_from_level_end:
+glabel return_to_title_from_level_end
 /* 007568 70006968 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00756C 7000696C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 007570 70006970 0C001A57 */  jal   get_stage_num
@@ -873,12 +873,12 @@ return_to_title_from_level_end:
 /* 0075AC 700069AC 03E00008 */  jr    $ra
 /* 0075B0 700069B0 00000000 */   nop   
 
-get_debug_parse_flag:
+glabel get_debug_parse_flag
 /* 0075B4 700069B4 3C028002 */  lui   $v0, 0x8002
 /* 0075B8 700069B8 03E00008 */  jr    $ra
 /* 0075BC 700069BC 8C424300 */   lw    $v0, 0x4300($v0)
 
-something_with_boss_c_debug:
+glabel something_with_boss_c_debug
 /* 0075C0 700069C0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0075C4 700069C4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0075C8 700069C8 3C048002 */  lui   $a0, %hi(D_800241A0) # $a0, 0x8002

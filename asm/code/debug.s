@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-debug_text_related_2:
+glabel debug_text_related_2
 /* 00B9B0 7000ADB0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00B9B4 7000ADB4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00B9B8 7000ADB8 0C002BC0 */  jal   debug_text_related_1
@@ -21,7 +21,7 @@ debug_text_related_2:
 /* 00B9C8 7000ADC8 03E00008 */  jr    $ra
 /* 00B9CC 7000ADCC 00000000 */   nop   
 
-display_text_to_coord:
+glabel display_text_to_coord
 /* 00B9D0 7000ADD0 AFA60008 */  sw    $a2, 8($sp)
 /* 00B9D4 7000ADD4 30CE00FF */  andi  $t6, $a2, 0xff
 /* 00B9D8 7000ADD8 3C038002 */  lui   $v1, %hi(stdout_environment_color) # $v1, 0x8002
@@ -94,7 +94,7 @@ display_text_to_coord:
 /* 00BAD4 7000AED4 03E00008 */  jr    $ra
 /* 00BAD8 7000AED8 A0620001 */   sb    $v0, 1($v1)
 
-debug_menu_text_related:
+glabel debug_menu_text_related
 /* 00BADC 7000AEDC 3C0E8002 */  lui   $t6, %hi(debug_menu_x_pos_offset) # $t6, 0x8002
 /* 00BAE0 7000AEE0 8DCE4FA0 */  lw    $t6, %lo(debug_menu_x_pos_offset)($t6)
 /* 00BAE4 7000AEE4 3C018002 */  lui   $at, %hi(debug_menu_x_text_pos) # $at, 0x8002
@@ -105,7 +105,7 @@ debug_menu_text_related:
 /* 00BAF8 7000AEF8 03E00008 */  jr    $ra
 /* 00BAFC 7000AEFC AC2F4FAC */   sw    $t7, 0x4fac($at)
 
-debug_text_related_1:
+glabel debug_text_related_1
 /* 00BB00 7000AF00 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00BB04 7000AF04 AFB30020 */  sw    $s3, 0x20($sp)
 /* 00BB08 7000AF08 AFB2001C */  sw    $s2, 0x1c($sp)
@@ -142,14 +142,14 @@ debug_text_related_1:
 /* 00BB7C 7000AF7C 03E00008 */  jr    $ra
 /* 00BB80 7000AF80 27BD0028 */   addiu $sp, $sp, 0x28
 
-stubbed_function:
+glabel stubbed_function
 /* 00BB84 7000AF84 AFA40000 */  sw    $a0, ($sp)
 /* 00BB88 7000AF88 AFA50004 */  sw    $a1, 4($sp)
 /* 00BB8C 7000AF8C AFA60008 */  sw    $a2, 8($sp)
 /* 00BB90 7000AF90 03E00008 */  jr    $ra
 /* 00BB94 7000AF94 AFA7000C */   sw    $a3, 0xc($sp)
 
-something_debug_info_related:
+glabel something_debug_info_related
 /* 00BB98 7000AF98 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00BB9C 7000AF9C AFB30020 */  sw    $s3, 0x20($sp)
 /* 00BBA0 7000AFA0 AFB2001C */  sw    $s2, 0x1c($sp)
@@ -198,7 +198,7 @@ something_debug_info_related:
 /* 00BC38 7000B038 03E00008 */  jr    $ra
 /* 00BC3C 7000B03C 27BD0028 */   addiu $sp, $sp, 0x28
 
-set_final_debug_text_positions:
+glabel set_final_debug_text_positions
 /* 00BC40 7000B040 3C0E8002 */  lui   $t6, %hi(debug_menu_x_pos_offset) # $t6, 0x8002
 /* 00BC44 7000B044 8DCE4FA0 */  lw    $t6, %lo(debug_menu_x_pos_offset)($t6)
 /* 00BC48 7000B048 3C0F8002 */  lui   $t7, %hi(debug_menu_y_pos_offset) # $t7, 0x8002
@@ -211,7 +211,7 @@ set_final_debug_text_positions:
 /* 00BC64 7000B064 03E00008 */  jr    $ra
 /* 00BC68 7000B068 AC254FAC */   sw    $a1, 0x4fac($at)
 
-set_debug_text_color:
+glabel set_debug_text_color
 /* 00BC6C 7000B06C 00047600 */  sll   $t6, $a0, 0x18
 /* 00BC70 7000B070 00057C00 */  sll   $t7, $a1, 0x10
 /* 00BC74 7000B074 01CFC025 */  or    $t8, $t6, $t7
@@ -224,7 +224,7 @@ set_debug_text_color:
 /* 00BC90 7000B090 03E00008 */  jr    $ra
 /* 00BC94 7000B094 AC2B68AC */   sw    $t3, 0x68ac($at)
 
-set_color_speedgraph:
+glabel set_color_speedgraph
 /* 00BC98 7000B098 00047600 */  sll   $t6, $a0, 0x18
 /* 00BC9C 7000B09C 00057C00 */  sll   $t7, $a1, 0x10
 /* 00BCA0 7000B0A0 01CFC025 */  or    $t8, $t6, $t7
@@ -237,7 +237,7 @@ set_color_speedgraph:
 /* 00BCBC 7000B0BC 03E00008 */  jr    $ra
 /* 00BCC0 7000B0C0 AC2B68B4 */   sw    $t3, 0x68b4($at)
 
-write_char_to_screen:
+glabel write_char_to_screen
 /* 00BCC4 7000B0C4 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00BCC8 7000B0C8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00BCCC 7000B0CC 0C001107 */  jal   get_video2_settings_txtClipW
@@ -308,7 +308,7 @@ write_char_to_screen:
 /* 00BDB8 7000B1B8 03E00008 */  jr    $ra
 /* 00BDBC 7000B1BC 00000000 */   nop   
 
-debug_text_related_0:
+glabel debug_text_related_0
 /* 00BDC0 7000B1C0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00BDC4 7000B1C4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00BDC8 7000B1C8 0C002C10 */  jal   set_final_debug_text_positions
@@ -320,7 +320,7 @@ debug_text_related_0:
 /* 00BDE0 7000B1E0 03E00008 */  jr    $ra
 /* 00BDE4 7000B1E4 00000000 */   nop   
 
-write_string_stdout:
+glabel write_string_stdout
 /* 00BDE8 7000B1E8 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00BDEC 7000B1EC AFBF001C */  sw    $ra, 0x1c($sp)
 /* 00BDF0 7000B1F0 AFB10018 */  sw    $s1, 0x18($sp)
@@ -342,7 +342,7 @@ write_string_stdout:
 /* 00BE28 7000B228 03E00008 */  jr    $ra
 /* 00BE2C 7000B22C 27BD0020 */   addiu $sp, $sp, 0x20
 
-debug_text_related:
+glabel debug_text_related
 /* 00BE30 7000B230 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00BE34 7000B234 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 00BE38 7000B238 AFB10018 */  sw    $s1, 0x18($sp)
@@ -365,7 +365,7 @@ debug_text_related:
 /* 00BE74 7000B274 03E00008 */  jr    $ra
 /* 00BE78 7000B278 27BD0020 */   addiu $sp, $sp, 0x20
 
-read_screen_display_block_and_write_chars:
+glabel read_screen_display_block_and_write_chars
 /* 00BE7C 7000B27C 27BDFF78 */  addiu $sp, $sp, -0x88
 /* 00BE80 7000B280 AFB5002C */  sw    $s5, 0x2c($sp)
 /* 00BE84 7000B284 AFB1001C */  sw    $s1, 0x1c($sp)

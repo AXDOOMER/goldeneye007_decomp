@@ -11,23 +11,23 @@
 
 .section .text, "ax"
 
-dummied_function:
+glabel dummied_function
 /* 00B980 7000AD80 AFA40000 */  sw    $a0, ($sp)
 /* 00B984 7000AD84 AFA50004 */  sw    $a1, 4($sp)
 /* 00B988 7000AD88 03E00008 */  jr    $ra
 /* 00B98C 7000AD8C 00001025 */   move  $v0, $zero
 
-dummied_function_0:
+glabel dummied_function_0
 /* 00B990 7000AD90 AFA40000 */  sw    $a0, ($sp)
 /* 00B994 7000AD94 AFA50004 */  sw    $a1, 4($sp)
 /* 00B998 7000AD98 03E00008 */  jr    $ra
 /* 00B99C 7000AD9C 00001025 */   move  $v0, $zero
 
-null_function:
+glabel null_function
 /* 00B9A0 7000ADA0 03E00008 */  jr    $ra
 /* 00B9A4 7000ADA4 00000000 */   nop   
 
-null_init_main_0:
+glabel null_init_main_0
 /* 00B9A8 7000ADA8 03E00008 */  jr    $ra
 /* 00B9AC 7000ADAC 00000000 */   nop   
 

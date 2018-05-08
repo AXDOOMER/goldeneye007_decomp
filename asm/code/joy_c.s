@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-something_with_joy_c_debug:
+glabel something_with_joy_c_debug
 /* 00C160 7000B560 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00C164 7000B564 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00C168 7000B568 3C048002 */  lui   $a0, %hi(D_800268C0) # $a0, 0x8002
@@ -97,7 +97,7 @@ something_with_joy_c_debug:
 /* 00C2A4 7000B6A4 03E00008 */  jr    $ra
 /* 00C2A8 7000B6A8 00000000 */   nop   
 
-test_controller_presence:
+glabel test_controller_presence
 /* 00C2AC 7000B6AC 3C0E8002 */  lui   $t6, %hi(D_80026918) # $t6, 0x8002
 /* 00C2B0 7000B6B0 8DCE6918 */  lw    $t6, %lo(D_80026918)($t6)
 /* 00C2B4 7000B6B4 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -131,12 +131,12 @@ test_controller_presence:
 /* 00C320 7000B720 03E00008 */  jr    $ra
 /* 00C324 7000B724 00000000 */   nop   
 
-osPfsChecker:
+glabel osPfsChecker
 /* 00C328 7000B728 AFA40000 */  sw    $a0, ($sp)
 /* 00C32C 7000B72C 03E00008 */  jr    $ra
 /* 00C330 7000B730 24020003 */   li    $v0, 3
 
-controller_7000B734:
+glabel controller_7000B734
 /* 00C334 7000B734 3C0E8002 */  lui   $t6, %hi(controller_1_rumble_inserted) # $t6, 0x8002
 /* 00C338 7000B738 25CE68D8 */  addiu $t6, %lo(controller_1_rumble_inserted) # addiu $t6, $t6, 0x68d8
 /* 00C33C 7000B73C 00041080 */  sll   $v0, $a0, 2
@@ -197,7 +197,7 @@ controller_7000B734:
 /* 00C408 7000B808 03E00008 */  jr    $ra
 /* 00C40C 7000B80C 00000000 */   nop   
 
-controller_check_for_rumble_maybe:
+glabel controller_check_for_rumble_maybe
 /* 00C410 7000B810 3C028002 */  lui   $v0, %hi(D_8002692C) # $v0, 0x8002
 /* 00C414 7000B814 2442692C */  addiu $v0, %lo(D_8002692C) # addiu $v0, $v0, 0x692c
 /* 00C418 7000B818 8C4E0000 */  lw    $t6, ($v0)
@@ -334,7 +334,7 @@ controller_check_for_rumble_maybe:
 /* 00C5F0 7000B9F0 03E00008 */  jr    $ra
 /* 00C5F4 7000B9F4 00000000 */   nop   
 
-controller_finding_controller_maybe:
+glabel controller_finding_controller_maybe
 /* 00C5F8 7000B9F8 3C0E8002 */  lui   $t6, %hi(ptr_current_point_in_controller_input_index) # $t6, 0x8002
 /* 00C5FC 7000B9FC 8DCE68C4 */  lw    $t6, %lo(ptr_current_point_in_controller_input_index)($t6)
 /* 00C600 7000BA00 3C028002 */  lui   $v0, 0x8002
@@ -376,12 +376,12 @@ controller_finding_controller_maybe:
 /* 00C668 7000BA68 03E00008 */  jr    $ra
 /* 00C66C 7000BA6C 00000000 */   nop   
 
-get_num_controllers_plugged_in:
+glabel get_num_controllers_plugged_in
 /* 00C670 7000BA70 3C028002 */  lui   $v0, 0x8002
 /* 00C674 7000BA74 03E00008 */  jr    $ra
 /* 00C678 7000BA78 904268D0 */   lbu   $v0, 0x68d0($v0)
 
-controller_rumble_related:
+glabel controller_rumble_related
 /* 00C67C 7000BA7C 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 00C680 7000BA80 AFB40028 */  sw    $s4, 0x28($sp)
 /* 00C684 7000BA84 AFB1001C */  sw    $s1, 0x1c($sp)
@@ -465,19 +465,19 @@ controller_rumble_related:
 /* 00C7A0 7000BBA0 03E00008 */  jr    $ra
 /* 00C7A4 7000BBA4 27BD0038 */   addiu $sp, $sp, 0x38
 
-set_disable_all_rumble_and_something:
+glabel set_disable_all_rumble_and_something
 /* 00C7A8 7000BBA8 3C018002 */  lui   $at, %hi(disable_all_rumble) # $at, 0x8002
 /* 00C7AC 7000BBAC AC246924 */  sw    $a0, %lo(disable_all_rumble)($at)
 /* 00C7B0 7000BBB0 3C018006 */  lui   $at, 0x8006
 /* 00C7B4 7000BBB4 03E00008 */  jr    $ra
 /* 00C7B8 7000BBB8 AC255324 */   sw    $a1, 0x5324($at)
 
-set_ptr_tlb_ramrom_record:
+glabel set_ptr_tlb_ramrom_record
 /* 00C7BC 7000BBBC 3C018002 */  lui   $at, 0x8002
 /* 00C7C0 7000BBC0 03E00008 */  jr    $ra
 /* 00C7C4 7000BBC4 AC246928 */   sw    $a0, 0x6928($at)
 
-probably_ramrom_related:
+glabel probably_ramrom_related
 /* 00C7C8 7000BBC8 8C8E01E0 */  lw    $t6, 0x1e0($a0)
 /* 00C7CC 7000BBCC 8C8F01E8 */  lw    $t7, 0x1e8($a0)
 /* 00C7D0 7000BBD0 00001025 */  move  $v0, $zero
@@ -570,7 +570,7 @@ probably_ramrom_related:
 /* 00C904 7000BD04 03E00008 */  jr    $ra
 /* 00C908 7000BD08 00000000 */   nop   
 
-redirect_to_ramrom_replay_and_record_handlers_if_set:
+glabel redirect_to_ramrom_replay_and_record_handlers_if_set
 /* 00C90C 7000BD0C 3C028002 */  lui   $v0, %hi(disable_all_rumble) # $v0, 0x8002
 /* 00C910 7000BD10 8C426924 */  lw    $v0, %lo(disable_all_rumble)($v0)
 /* 00C914 7000BD14 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -605,7 +605,7 @@ redirect_to_ramrom_replay_and_record_handlers_if_set:
 /* 00C980 7000BD80 03E00008 */  jr    $ra
 /* 00C984 7000BD84 00000000 */   nop   
 
-controller_7000BD88:
+glabel controller_7000BD88
 /* 00C988 7000BD88 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 00C98C 7000BD8C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00C990 7000BD90 3C048006 */  lui   $a0, %hi(dword_CODE_bss_80065370) # $a0, 0x8006
@@ -842,7 +842,7 @@ controller_7000BD88:
 /* 00CCE4 7000C0E4 03E00008 */  jr    $ra
 /* 00CCE8 7000C0E8 00000000 */   nop   
 
-get_cur_controller_horz_stick_pos:
+glabel get_cur_controller_horz_stick_pos
 /* 00CCEC 7000C0EC 3C038002 */  lui   $v1, %hi(ptr_current_point_in_controller_input_index) # $v1, 0x8002
 /* 00CCF0 7000C0F0 8C6368C4 */  lw    $v1, %lo(ptr_current_point_in_controller_input_index)($v1)
 /* 00CCF4 7000C0F4 AFA40000 */  sw    $a0, ($sp)
@@ -880,7 +880,7 @@ get_cur_controller_horz_stick_pos:
 /* 00CD6C 7000C16C 03E00008 */  jr    $ra
 /* 00CD70 7000C170 00000000 */   nop   
 
-controller_7000C174:
+glabel controller_7000C174
 /* 00CD74 7000C174 3C038002 */  lui   $v1, %hi(ptr_current_point_in_controller_input_index) # $v1, 0x8002
 /* 00CD78 7000C178 8C6368C4 */  lw    $v1, %lo(ptr_current_point_in_controller_input_index)($v1)
 /* 00CD7C 7000C17C AFA40000 */  sw    $a0, ($sp)
@@ -918,7 +918,7 @@ controller_7000C174:
 /* 00CDF4 7000C1F4 03E00008 */  jr    $ra
 /* 00CDF8 7000C1F8 00000000 */   nop   
 
-get_cur_controller_vert_stick_pos:
+glabel get_cur_controller_vert_stick_pos
 /* 00CDFC 7000C1FC 3C038002 */  lui   $v1, %hi(ptr_current_point_in_controller_input_index) # $v1, 0x8002
 /* 00CE00 7000C200 8C6368C4 */  lw    $v1, %lo(ptr_current_point_in_controller_input_index)($v1)
 /* 00CE04 7000C204 AFA40000 */  sw    $a0, ($sp)
@@ -956,7 +956,7 @@ get_cur_controller_vert_stick_pos:
 /* 00CE7C 7000C27C 03E00008 */  jr    $ra
 /* 00CE80 7000C280 00000000 */   nop   
 
-controller_7000C284:
+glabel controller_7000C284
 /* 00CE84 7000C284 3C038002 */  lui   $v1, %hi(ptr_current_point_in_controller_input_index) # $v1, 0x8002
 /* 00CE88 7000C288 8C6368C4 */  lw    $v1, %lo(ptr_current_point_in_controller_input_index)($v1)
 /* 00CE8C 7000C28C AFA40000 */  sw    $a0, ($sp)
@@ -994,7 +994,7 @@ controller_7000C284:
 /* 00CF04 7000C304 03E00008 */  jr    $ra
 /* 00CF08 7000C308 00000000 */   nop   
 
-get_controller_buttons_held:
+glabel get_controller_buttons_held
 /* 00CF0C 7000C30C 3C038002 */  lui   $v1, %hi(ptr_current_point_in_controller_input_index) # $v1, 0x8002
 /* 00CF10 7000C310 8C6368C4 */  lw    $v1, %lo(ptr_current_point_in_controller_input_index)($v1)
 /* 00CF14 7000C314 AFA40000 */  sw    $a0, ($sp)
@@ -1038,7 +1038,7 @@ get_controller_buttons_held:
 /* 00CFA4 7000C3A4 03E00008 */  jr    $ra
 /* 00CFA8 7000C3A8 00000000 */   nop   
 
-get_controller_buttons_pressed:
+glabel get_controller_buttons_pressed
 /* 00CFAC 7000C3AC 3C038002 */  lui   $v1, %hi(ptr_current_point_in_controller_input_index) # $v1, 0x8002
 /* 00CFB0 7000C3B0 8C6368C4 */  lw    $v1, %lo(ptr_current_point_in_controller_input_index)($v1)
 /* 00CFB4 7000C3B4 AFA40000 */  sw    $a0, ($sp)
@@ -1075,7 +1075,7 @@ get_controller_buttons_pressed:
 /* 00D028 7000C428 03E00008 */  jr    $ra
 /* 00D02C 7000C42C 00000000 */   nop   
 
-controller_7000C430:
+glabel controller_7000C430
 /* 00D030 7000C430 AFA50004 */  sw    $a1, 4($sp)
 /* 00D034 7000C434 30A3FFFF */  andi  $v1, $a1, 0xffff
 /* 00D038 7000C438 24050011 */  li    $a1, 17
@@ -1094,7 +1094,7 @@ controller_7000C430:
 /* 00D068 7000C468 03E00008 */  jr    $ra
 /* 00D06C 7000C46C 00000000 */   nop   
 
-controller_7000C470:
+glabel controller_7000C470
 /* 00D070 7000C470 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D074 7000C474 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 00D078 7000C478 AFB00018 */  sw    $s0, 0x18($sp)
@@ -1115,7 +1115,7 @@ controller_7000C470:
 /* 00D0AC 7000C4AC 03E00008 */  jr    $ra
 /* 00D0B0 7000C4B0 00000000 */   nop   
 
-get_controller_3dstick_L_R:
+glabel get_controller_3dstick_L_R
 /* 00D0B4 7000C4B4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00D0B8 7000C4B8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D0BC 7000C4BC AFA40018 */  sw    $a0, 0x18($sp)
@@ -1148,7 +1148,7 @@ get_controller_3dstick_L_R:
 /* 00D120 7000C520 03E00008 */  jr    $ra
 /* 00D124 7000C524 00000000 */   nop   
 
-get_controller_3dstick_U_D:
+glabel get_controller_3dstick_U_D
 /* 00D128 7000C528 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00D12C 7000C52C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D130 7000C530 AFA40018 */  sw    $a0, 0x18($sp)
@@ -1181,7 +1181,7 @@ get_controller_3dstick_U_D:
 /* 00D194 7000C594 03E00008 */  jr    $ra
 /* 00D198 7000C598 00000000 */   nop   
 
-controller_7000C59C:
+glabel controller_7000C59C
 /* 00D19C 7000C59C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00D1A0 7000C5A0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D1A4 7000C5A4 AFA40018 */  sw    $a0, 0x18($sp)
@@ -1213,7 +1213,7 @@ controller_7000C59C:
 /* 00D204 7000C604 03E00008 */  jr    $ra
 /* 00D208 7000C608 46022000 */   add.s $f0, $f4, $f2
 
-controller_7000C60C:
+glabel controller_7000C60C
 /* 00D20C 7000C60C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00D210 7000C610 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D214 7000C614 AFA40018 */  sw    $a0, 0x18($sp)
@@ -1245,7 +1245,7 @@ controller_7000C60C:
 /* 00D274 7000C674 03E00008 */  jr    $ra
 /* 00D278 7000C678 46022000 */   add.s $f0, $f4, $f2
 
-controller_7000C67C:
+glabel controller_7000C67C
 /* 00D27C 7000C67C 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D280 7000C680 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D284 7000C684 3C048006 */  lui   $a0, %hi(dword_CODE_bss_80065370) # $a0, 0x8006
@@ -1263,7 +1263,7 @@ controller_7000C67C:
 /* 00D2B4 7000C6B4 03E00008 */  jr    $ra
 /* 00D2B8 7000C6B8 00000000 */   nop   
 
-controller_7000C6BC:
+glabel controller_7000C6BC
 /* 00D2BC 7000C6BC 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D2C0 7000C6C0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D2C4 7000C6C4 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800653B0) # $a0, 0x8006
@@ -1281,7 +1281,7 @@ controller_7000C6BC:
 /* 00D2F4 7000C6F4 03E00008 */  jr    $ra
 /* 00D2F8 7000C6F8 00000000 */   nop   
 
-save_7000C6FC:
+glabel save_7000C6FC
 /* 00D2FC 7000C6FC 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D300 7000C700 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D304 7000C704 0C00319F */  jal   controller_7000C67C
@@ -1297,7 +1297,7 @@ save_7000C6FC:
 /* 00D32C 7000C72C 03E00008 */  jr    $ra
 /* 00D330 7000C730 00000000 */   nop   
 
-save_7000C734:
+glabel save_7000C734
 /* 00D334 7000C734 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D338 7000C738 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D33C 7000C73C AFA40020 */  sw    $a0, 0x20($sp)
@@ -1316,7 +1316,7 @@ save_7000C734:
 /* 00D370 7000C770 03E00008 */  jr    $ra
 /* 00D374 7000C774 00000000 */   nop   
 
-save_7000C778:
+glabel save_7000C778
 /* 00D378 7000C778 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D37C 7000C77C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D380 7000C780 AFA40020 */  sw    $a0, 0x20($sp)
@@ -1335,7 +1335,7 @@ save_7000C778:
 /* 00D3B4 7000C7B4 03E00008 */  jr    $ra
 /* 00D3B8 7000C7B8 00000000 */   nop   
 
-save_7000C7BC:
+glabel save_7000C7BC
 /* 00D3BC 7000C7BC 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D3C0 7000C7C0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D3C4 7000C7C4 AFA40020 */  sw    $a0, 0x20($sp)
@@ -1356,7 +1356,7 @@ save_7000C7BC:
 /* 00D400 7000C800 03E00008 */  jr    $ra
 /* 00D404 7000C804 00000000 */   nop   
 
-save_7000C808:
+glabel save_7000C808
 /* 00D408 7000C808 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D40C 7000C80C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D410 7000C810 AFA40020 */  sw    $a0, 0x20($sp)
@@ -1377,7 +1377,7 @@ save_7000C808:
 /* 00D44C 7000C84C 03E00008 */  jr    $ra
 /* 00D450 7000C850 00000000 */   nop   
 
-controller_7000C854:
+glabel controller_7000C854
 /* 00D454 7000C854 3C0E8002 */  lui   $t6, %hi(disable_all_rumble) # $t6, 0x8002
 /* 00D458 7000C858 8DCE6924 */  lw    $t6, %lo(disable_all_rumble)($t6)
 /* 00D45C 7000C85C 44856000 */  mtc1  $a1, $f12
@@ -1415,7 +1415,7 @@ controller_7000C854:
 /* 00D4D4 7000C8D4 03E00008 */  jr    $ra
 /* 00D4D8 7000C8D8 00000000 */   nop   
 
-reset_cont_rumble_detect:
+glabel reset_cont_rumble_detect
 /* 00D4DC 7000C8DC 240E0001 */  li    $t6, 1
 /* 00D4E0 7000C8E0 3C018002 */  lui   $at, %hi(controller_1_rumble_state) # $at, 0x8002
 /* 00D4E4 7000C8E4 AC2E68E8 */  sw    $t6, %lo(controller_1_rumble_state)($at)
@@ -1438,7 +1438,7 @@ reset_cont_rumble_detect:
 /* 00D528 7000C928 03E00008 */  jr    $ra
 /* 00D52C 7000C92C AC206914 */   sw    $zero, 0x6914($at)
 
-controller_7000C930:
+glabel controller_7000C930
 /* 00D530 7000C930 000471C0 */  sll   $t6, $a0, 7
 /* 00D534 7000C934 01C47023 */  subu  $t6, $t6, $a0
 /* 00D538 7000C938 3C0F8006 */  lui   $t7, %hi(controller_input_index) # $t7, 0x8006
@@ -1449,7 +1449,7 @@ controller_7000C930:
 /* 00D54C 7000C94C 03E00008 */  jr    $ra
 /* 00D550 7000C950 AC3868C4 */   sw    $t8, 0x68c4($at)
 
-controller_7000C954:
+glabel controller_7000C954
 /* 00D554 7000C954 3C0E8002 */  lui   $t6, %hi(ptr_current_point_in_controller_input_index) # $t6, 0x8002
 /* 00D558 7000C958 8DCE68C4 */  lw    $t6, %lo(ptr_current_point_in_controller_input_index)($t6)
 /* 00D55C 7000C95C 3C0F8006 */  lui   $t7, %hi(controller_input_index) # $t7, 0x8006

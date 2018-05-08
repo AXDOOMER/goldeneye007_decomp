@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-init_audi:
+glabel init_audi
 /* 0027D0 70001BD0 27BDFEE8 */  addiu $sp, $sp, -0x118
 /* 0027D4 70001BD4 AFB3002C */  sw    $s3, 0x2c($sp)
 /* 0027D8 70001BD8 3C0E7000 */  lui   $t6, %hi(audi_related_3) # $t6, 0x7000
@@ -251,7 +251,7 @@ init_audi:
 /* 002B50 70001F50 03E00008 */  jr    $ra
 /* 002B54 70001F54 27BD0118 */   addiu $sp, $sp, 0x118
 
-startaudithread:
+glabel startaudithread
 /* 002B58 70001F58 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 002B5C 70001F5C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 002B60 70001F60 3C048006 */  lui   $a0, %hi(audithread) # $a0, 0x8006
@@ -262,7 +262,7 @@ startaudithread:
 /* 002B74 70001F74 03E00008 */  jr    $ra
 /* 002B78 70001F78 00000000 */   nop   
 
-audi_entry:
+glabel audi_entry
 /* 002B7C 70001F7C 27BDFF90 */  addiu $sp, $sp, -0x70
 /* 002B80 70001F80 AFB60030 */  sw    $s6, 0x30($sp)
 /* 002B84 70001F84 3C168006 */  lui   $s6, %hi(dword_CODE_bss_8005E6E0) # $s6, 0x8006
@@ -450,7 +450,7 @@ audi_entry:
 /* 002E3C 7000223C 03E00008 */  jr    $ra
 /* 002E40 70002240 27BD0070 */   addiu $sp, $sp, 0x70
 
-process_audio_packet:
+glabel process_audio_packet
 /* 002E44 70002244 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 002E48 70002248 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 002E4C 7000224C AFB00018 */  sw    $s0, 0x18($sp)
@@ -558,7 +558,7 @@ process_audio_packet:
 /* 002FDC 700023DC 03E00008 */  jr    $ra
 /* 002FE0 700023E0 27BD0028 */   addiu $sp, $sp, 0x28
 
-audi_length_related:
+glabel audi_length_related
 /* 002FE4 700023E4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 002FE8 700023E8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 002FEC 700023EC 0C003BEC */  jal   osAiGetLength
@@ -578,7 +578,7 @@ audi_length_related:
 /* 00301C 7000241C 03E00008 */  jr    $ra
 /* 003020 70002420 00000000 */   nop   
 
-audi_related_2:
+glabel audi_related_2
 /* 003024 70002424 3C098006 */  lui   $t1, %hi(off_CODE_bss_8005E7B0) # $t1, 0x8006
 /* 003028 70002428 2529E7B0 */  addiu $t1, %lo(off_CODE_bss_8005E7B0) # addiu $t1, $t1, -0x1850
 /* 00302C 7000242C 8D280004 */  lw    $t0, 4($t1)
@@ -699,7 +699,7 @@ audi_related_2:
 /* 0031D0 700025D0 03E00008 */  jr    $ra
 /* 0031D4 700025D4 00000000 */   nop   
 
-audi_related_3:
+glabel audi_related_3
 /* 0031D8 700025D8 3C038006 */  lui   $v1, %hi(off_CODE_bss_8005E7B0) # $v1, 0x8006
 /* 0031DC 700025DC 2463E7B0 */  addiu $v1, %lo(off_CODE_bss_8005E7B0) # addiu $v1, $v1, -0x1850
 /* 0031E0 700025E0 906E0000 */  lbu   $t6, ($v1)
@@ -716,7 +716,7 @@ audi_related_3:
 /* 003208 70002608 03E00008 */  jr    $ra
 /* 00320C 7000260C AC830000 */   sw    $v1, ($a0)
 
-audi_related_4:
+glabel audi_related_4
 /* 003210 70002610 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 003214 70002614 AFB40028 */  sw    $s4, 0x28($sp)
 /* 003218 70002618 3C148002 */  lui   $s4, %hi(D_800230F8) # $s4, 0x8002

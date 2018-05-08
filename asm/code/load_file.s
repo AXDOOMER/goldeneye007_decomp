@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-creates_a_message_queue_for_memory:
+glabel creates_a_message_queue_for_memory
 /* 006760 70005B60 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 006764 70005B64 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 006768 70005B68 3C048006 */  lui   $a0, %hi(memoryMesgQueue) # $a0, 0x8006
@@ -25,7 +25,7 @@ creates_a_message_queue_for_memory:
 /* 006788 70005B88 03E00008 */  jr    $ra
 /* 00678C 70005B8C 00000000 */   nop   
 
-read_bytes_from_hw_to_rdram:
+glabel read_bytes_from_hw_to_rdram
 /* 006790 70005B90 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 006794 70005B94 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 006798 70005B98 AFA5002C */  sw    $a1, 0x2c($sp)
@@ -51,7 +51,7 @@ read_bytes_from_hw_to_rdram:
 /* 0067E8 70005BE8 03E00008 */  jr    $ra
 /* 0067EC 70005BEC 00000000 */   nop   
 
-receive_memoryMesg:
+glabel receive_memoryMesg
 /* 0067F0 70005BF0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0067F4 70005BF4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0067F8 70005BF8 3C048006 */  lui   $a0, %hi(memoryMesgQueue) # $a0, 0x8006
@@ -64,7 +64,7 @@ receive_memoryMesg:
 /* 006814 70005C14 03E00008 */  jr    $ra
 /* 006818 70005C18 00000000 */   nop   
 
-load_bytes_from_hw_to_rdram:
+glabel load_bytes_from_hw_to_rdram
 /* 00681C 70005C1C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 006820 70005C20 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 006824 70005C24 0C0016E4 */  jal   read_bytes_from_hw_to_rdram
@@ -76,7 +76,7 @@ load_bytes_from_hw_to_rdram:
 /* 00683C 70005C3C 03E00008 */  jr    $ra
 /* 006840 70005C40 00000000 */   nop   
 
-load_ramrom_file:
+glabel load_ramrom_file
 /* 006844 70005C44 00A03825 */  move  $a3, $a1
 /* 006848 70005C48 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 00684C 70005C4C 34A50001 */  ori   $a1, $a1, 1
@@ -103,7 +103,7 @@ load_ramrom_file:
 /* 0068A0 70005CA0 03E00008 */  jr    $ra
 /* 0068A4 70005CA4 00831021 */   addu  $v0, $a0, $v1
 
-write_rdram_to_hw:
+glabel write_rdram_to_hw
 /* 0068A8 70005CA8 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0068AC 70005CAC AFBF0024 */  sw    $ra, 0x24($sp)
 /* 0068B0 70005CB0 AFA5002C */  sw    $a1, 0x2c($sp)
@@ -129,7 +129,7 @@ write_rdram_to_hw:
 /* 006900 70005D00 03E00008 */  jr    $ra
 /* 006904 70005D04 00000000 */   nop   
 
-load_rdram_to_hw:
+glabel load_rdram_to_hw
 /* 006908 70005D08 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00690C 70005D0C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 006910 70005D10 0C00172A */  jal   write_rdram_to_hw
