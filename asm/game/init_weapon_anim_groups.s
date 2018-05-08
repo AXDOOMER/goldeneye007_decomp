@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-init_weapon_animation_groups_maybe:
+glabel init_weapon_animation_groups_maybe
 /* 034C10 7F0000E0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 034C14 7F0000E4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 034C18 7F0000E8 3C047F02 */  lui   $a0, %hi(get_ptr_allocated_block_for_vertices) # $a0, 0x7f02

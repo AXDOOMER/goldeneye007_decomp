@@ -109,7 +109,7 @@ stagetext_loop:
 /* 0F6214 7F0C16E4 03E00008 */  jr    $ra
 /* 0F6218 7F0C16E8 00601025 */   move  $v0, $v1
 
-init_LnameX:
+glabel init_LnameX
 /* 0F621C 7F0C16EC 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0F6220 7F0C16F0 AFB20020 */  sw    $s2, 0x20($sp)
 /* 0F6224 7F0C16F4 3C128005 */  lui   $s2, %hi(j_text_trigger) # $s2, 0x8005

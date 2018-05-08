@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-zero_basic_data:
+glabel zero_basic_data
 /* 034B30 7F000000 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 034B34 7F000004 44810000 */  mtc1  $at, $f0
 /* 034B38 7F000008 2402FFFF */  li    $v0, -1

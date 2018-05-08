@@ -600,7 +600,7 @@ sub_GAME_7F01DEB4:
 /* 052AB8 7F01DF88 03E00008 */  jr    $ra
 /* 052ABC 7F01DF8C 00000000 */   nop   
 
-sub_GAME_7F01DF90:
+glabel sub_GAME_7F01DF90
 /* 052AC0 7F01DF90 27BDFF48 */  addiu $sp, $sp, -0xb8
 /* 052AC4 7F01DF94 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 052AC8 7F01DF98 AFBE0038 */  sw    $fp, 0x38($sp)

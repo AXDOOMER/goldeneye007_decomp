@@ -21,7 +21,7 @@ sub_GAME_7F0BD8FC:
 /* 0F2430 7F0BD900 03E00008 */  jr    $ra
 /* 0F2434 7F0BD904 AC2483C0 */   sw    $a0, -0x7c40($at)
 
-something_with_lvl_c_debug:
+glabel something_with_lvl_c_debug
 /* 0F2438 7F0BD908 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0F243C 7F0BD90C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F2440 7F0BD910 3C048005 */  lui   $a0, %hi(D_80048360) # $a0, 0x8005
@@ -2475,7 +2475,7 @@ get_poweron_time_sec:
 /* 0F4798 7F0BFC68 03E00008 */  jr    $ra
 /* 0F479C 7F0BFC6C C42083BC */   lwc1  $f0, -0x7c44($at)
 
-clear_ramrom_block_buffer_heading_ptrs:
+glabel clear_ramrom_block_buffer_heading_ptrs
 /* 0F47A0 7F0BFC70 3C018005 */  lui   $at, %hi(ramrom_table_end) # $at, 0x8005
 /* 0F47A4 7F0BFC74 AC208468 */  sw    $zero, %lo(ramrom_table_end)($at)
 /* 0F47A8 7F0BFC78 3C018005 */  lui   $at, %hi(D_8004846C) # $at, 0x8005

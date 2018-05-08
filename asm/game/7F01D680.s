@@ -39,7 +39,7 @@ sub_GAME_7F01D6C0:
 /* 052208 7F01D6D8 03E00008 */  jr    $ra
 /* 05220C 7F01D6DC 00000000 */   nop   
 
-sub_GAME_7F01D6E0:
+glabel sub_GAME_7F01D6E0
 /* 052210 7F01D6E0 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 052214 7F01D6E4 3C0E8003 */  lui   $t6, %hi(D_8002C520) # $t6, 0x8003
 /* 052218 7F01D6E8 27A20000 */  addiu $v0, $sp, 0

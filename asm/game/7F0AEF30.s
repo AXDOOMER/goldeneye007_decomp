@@ -76,7 +76,7 @@ sub_GAME_7F0AF000:
 /* 0E3B34 7F0AF004 03E00008 */  jr    $ra
 /* 0E3B38 7F0AF008 00001025 */   move  $v0, $zero
 
-something_stan_c_debug_related:
+glabel something_stan_c_debug_related
 /* 0E3B3C 7F0AF00C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0E3B40 7F0AF010 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0E3B44 7F0AF014 3C048004 */  lui   $a0, %hi(D_80040F40) # $a0, 0x8004

@@ -7057,7 +7057,7 @@ sub_GAME_7F098A2C:
 /* 0CEE08 7F09A2D8 03E00008 */  jr    $ra
 /* 0CEE0C 7F09A2DC 27BD04D0 */   addiu $sp, $sp, 0x4d0
 
-default_player_perspective_and_height:
+glabel default_player_perspective_and_height
 /* 0CEE10 7F09A2E0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0CEE14 7F09A2E4 44810000 */  mtc1  $at, $f0
 /* 0CEE18 7F09A2E8 3C018008 */  lui   $at, %hi(D_80079F54) # $at, 0x8008

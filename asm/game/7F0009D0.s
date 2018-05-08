@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-null_init_main_3:
+glabel null_init_main_3
 /* 035500 7F0009D0 03E00008 */  jr    $ra
 /* 035504 7F0009D4 00000000 */   nop   
 

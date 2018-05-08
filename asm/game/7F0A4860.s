@@ -9121,7 +9121,7 @@ def_7F0ACAC8:
 /* 0E1698 7F0ACB68 03E00008 */  jr    $ra
 /* 0E169C 7F0ACB6C 27BD0020 */   addiu $sp, $sp, 0x20
 
-null_init_main:
+glabel null_init_main
 /* 0E16A0 7F0ACB70 03E00008 */  jr    $ra
 /* 0E16A4 7F0ACB74 00000000 */   nop   
 

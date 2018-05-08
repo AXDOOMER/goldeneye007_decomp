@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-sub_GAME_7F000B60:
+glabel sub_GAME_7F000B60
 /* 035690 7F000B60 3C0E8004 */  lui   $t6, %hi(D_8003C580) # $t6, 0x8004
 /* 035694 7F000B64 25CEC580 */  addiu $t6, %lo(D_8003C580) # addiu $t6, $t6, -0x3a80
 /* 035698 7F000B68 3C018004 */  lui   $at, 0x8004

@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-set_gu_scale:
+glabel set_gu_scale
 /* 0356B0 7F000B80 3C018005 */  lui   $at, %hi(default_gu_scale) # $at, 0x8005
 /* 0356B4 7F000B84 C420ED80 */  lwc1  $f0, %lo(default_gu_scale)($at)
 /* 0356B8 7F000B88 27BDFFE8 */  addiu $sp, $sp, -0x18

@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-init_indy_if_not_ready:
+glabel init_indy_if_not_ready
 /* 104A60 7F0CFF30 3C038005 */  lui   $v1, %hi(indy_ready) # $v1, 0x8005
 /* 104A64 7F0CFF34 2463EAC8 */  addiu $v1, %lo(indy_ready) # addiu $v1, $v1, -0x1538
 /* 104A68 7F0CFF38 8C6E0000 */  lw    $t6, ($v1)

@@ -6,6 +6,8 @@ _rarezipSegmentRomStart = 0x00033590;
 _rarezipSegmentRomEnd   = 0x00034B30;
 _gameSegmentRomStart    = 0x00034B30;
 _gameSegmentRomEnd      = 0x00117880;
+_codeSegmentVaddrStart  = 0x70000450;
+_codeSegmentVaddrEnd    = 0x70020D90;
 _cdataSegmentVaddrStart = 0x80020D90;
 _cdataSegmentVaddrEnd   = 0x8005D2E0;
 

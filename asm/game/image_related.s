@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-image_entries_load:
+glabel image_entries_load
 /* 035700 7F000BD0 3C048005 */  lui   $a0, 0x8005
 /* 035704 7F000BD4 24829300 */  addiu $v0, $a0, -0x6d00
 /* 035708 7F000BD8 8C4E0000 */  lw    $t6, ($v0)

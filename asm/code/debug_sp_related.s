@@ -104,5 +104,435 @@ glabel debug_sp_related_12
 /* 00615C 7000555C 27BD0018 */   addiu $sp, $sp, 0x18
 
 .section .data
+.macro exception f1 f2 f3
+    .word \f1
+    .word \f2
+    .word \f3
+.endm
+
+debug_processor_error_table:
+exception 0x80000000, 0x80000000, aBd
+exception 0x8000, 0x8000, aIp8
+exception 0x4000, 0x4000, aIp7
+exception 0x2000, 0x2000, aIp6
+exception 0x1000, 0x1000, aIp5
+exception 0x800, 0x800, aIp4
+exception 0x400, 0x400, aIp3
+exception 0x200, 0x200, aIp2
+exception 0x100, 0x100, aIp1
+exception 0x7C, 0, aInt
+exception 0x7C, 4, aTlbmod
+exception 0x7C, 8, aTlbload
+exception 0x7C, 0xC, aTlbstore
+exception 0x7C, 0x10, aAddressErrorOnLoadOrInstructionFet
+exception 0x7C, 0x14, aAddressErrorOnStore
+exception 0x7C, 0x18, aBusErrorExceptionOnInstructionFetc
+exception 0x7C, 0x1C, aBusErrorExceptionOnDataReference
+exception 0x7C, 0x20, aSyscall
+exception 0x7C, 0x24, aBrk
+exception 0x7C, 0x28, aReservedInstruction
+exception 0x7C, 0x2C, aCopUnusable
+exception 0x7C, 0x30, aOverflow
+exception 0x7C, 0x34, aTrap
+exception 0x7C, 0x38, aVirtualCoherencyExceptionOnIntruct
+exception 0x7C, 0x3C, aFpException
+exception 0x7C, 0x5C, aWatchpoint
+exception 0x7C, 0x7C, aVirtualCoherencyExceptionOnDataRef
+exception 0, 0, aExceptionNULL_0
+exception 0x80000000, 0x80000000, aCu3
+exception 0x40000000, 0x40000000, aCu2
+exception 0x20000000, 0x20000000, aCu1
+exception 0x10000000, 0x10000000, aCu0
+exception 0x8000000, 0x8000000, aRp
+exception 0x4000000, 0x4000000, aFr
+exception 0x2000000, 0x2000000, aRe
+exception 0x400000, 0x400000, aBev
+exception 0x200000, 0x200000, aTs
+exception 0x100000, 0x100000, aSr
+exception 0x40000, 0x40000, aCh
+exception 0x20000, 0x20000, aCe
+exception 0x10000, 0x10000, aDe
+exception 0x8000, 0x8000, aIm8
+exception 0x4000, 0x4000, aIm7
+exception 0x2000, 0x2000, aIm6
+exception 0x1000, 0x1000, aIm5
+exception 0x800, 0x800, aIm4
+exception 0x400, 0x400, aIm3
+exception 0x200, 0x200, aIm2
+exception 0x100, 0x100, aIm1
+exception 0x80, 0x80, aKx
+exception 0x40, 0x40, aSx
+exception 0x20, 0x20, aUx
+exception 0x18, 0x10, aUsr
+exception 0x18, 8, aSup
+exception 0x18, 0, aKer
+exception 4, 4, aErl
+exception 2, 2, aExl
+exception 1, 1, aIe
+exception 0, 0, aExceptionNULL_1
+exception 0x1000000, 0x1000000, aFs
+exception 0x800000, 0x800000, aC_1
+exception 0x20000, 0x20000, aUnimplemented
+exception 0x10000, 0x10000, aInvalidOp
+exception 0x8000, 0x8000, aBy0_0
+exception 0x4000, 0x4000, aOverflow_0
+exception 0x2000, 0x2000, aUnderflow
+exception 0x1000, 0x1000, aInexactOp
+exception 0x800, 0x800, aEv
+exception 0x400, 0x400, aEz
+exception 0x200, 0x200, aEo
+exception 0x100, 0x100, aEu
+exception 0x80, 0x80, aEi
+exception 0x40, 0x40, aFv
+exception 0x20, 0x20, aFz
+exception 0x10, 0x10, aFo
+exception 8, 8, aFu
+exception 4, 4, aFi
+exception 3, 0, aRn
+exception 3, 1, aRz
+exception 3, 2, aRp_1
+exception 3, 3, aRm
+exception 0, 0, aExceptionNULL
+
+ptr_sp_rmon_0:  .word sp_rmon
+ptr_sp_idle_0:  .word sp_idle
+ptr_sp_shed_0:  .word sp_shed
+ptr_sp_main_0:  .word sp_main
+ptr_sp_audi_0:  .word sp_audi
+ptr_sp_idle_1:  .word sp_idle
+ptr_sp_shed_1:  .word sp_shed
+ptr_sp_main_1:  .word sp_main
+ptr_sp_audi_1:  .word sp_audi
+ptr_sp_debug_0: .word sp_debug
+ptr_sp_rmon_1:  .word sp_rmon
+ptr_sp_idle_2:  .word sp_idle
+ptr_sp_shed_2:  .word sp_shed
+ptr_sp_main_2:  .word sp_main
+ptr_sp_audi_2:  .word sp_audi
+
+glabel stderr_buffer
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+.word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
+
+glabel std_error_font_bitcode
+.word 0,0x22220200,0x55000000,0x5F5F500,0x27427200,0x5124500,0x34255300,0x22000000,0x24444420,0x42222240
+.word 0x6F6F600,0x272000,0x240,0x70000,0x200,0x11224480,0x25555200,0x26222700,0x25125700,0x61211600
+.word 0x33557300,0x64611600,0x24655200,0x71112200,0x25755200,0x25531600,0x200200,0x200640,0x1242100,0x707000
+.word 0x4212400,0x7120200,0x25FF5700,0x2557D00,0x6575E00,0x7445300,0x7555600,0x7565700,0x7564400,0x7C95700
+.word 0x5575500,0x7222700,0x3111600,0x5665500,0x4445F00,0xDFF9D00,0xF777D00,0x7DD5700,0x7564600,0x7995770
+.word 0x7565500,0x7461E00,0x7222200,0xD999600,0xD552200,0xDF77500,0xD625500,0x5622600,0x7125700,0x32222230
+.word 0x44222110,0x62222260,0x25000000,0x700,0x42200000,0x67D700,0x44755700,0x788600,0x117DD700,0x6FC700
+.word 0x32722700,0x7DD730,0x44755500,0x2622700,0x2711130,0x44766500,0x62222700,0xFFFF00,0x755D00,0x6DD600
+.word 0x755740,0x799710,0x744600,0x775700,0x2722300,0x555700,0x552200,0x577500,0x562500,0x552220
+.word 0x703700,0x12242210,0x2222220,0x42212240,0x5A0000
+
+glabel ptr_videobuffer1
+.word 0                 
+
+glabel ptr_videobuffer2
+.word 0    
+
 .section .rodata
+aBd: .asciiz "BD"
+.align 4
+
+aIp8: .asciiz "IP8"
+.align 4
+
+aIp7: .asciiz "IP7"
+.align 4
+
+aIp6: .asciiz "IP6"
+.align 4
+
+aIp5: .asciiz "IP5"
+.align 4
+
+aIp4: .asciiz "IP4"
+.align 4
+
+aIp3: .asciiz "IP3"
+.align 4
+
+aIp2: .asciiz "IP2"
+.align 4
+
+aIp1: .asciiz "IP1"
+.align 4
+
+aInt: .asciiz "Int"
+.align 4
+
+aTlbmod: .asciiz "TLBmod"
+.align 4
+
+aTlbload: .asciiz "TLBload"
+.align 4
+
+aTlbstore: .asciiz "TLBstore"
+.align 4
+
+aAddressErrorOnLoadOrInstructionFet: .asciiz "Address error on load or instruction fetch"
+.align 4
+
+aAddressErrorOnStore: .asciiz "Address error on store"
+.align 4
+
+aBusErrorExceptionOnInstructionFetc: .asciiz "Bus error exception on instruction fetch"
+.align 4
+
+aBusErrorExceptionOnDataReference: .asciiz "Bus error exception on data reference"
+.align 4
+
+aSyscall: .asciiz "Syscall"
+.align 4
+
+aBrk: .asciiz "Brk"
+.align 4
+
+aReservedInstruction: .asciiz "Reserved instruction"
+.align 4
+
+aCopUnusable: .asciiz "Cop unusable"
+.align 4
+
+aOverflow: .asciiz "Overflow"
+.align 4
+
+aTrap: .asciiz "Trap"
+.align 4
+
+aVirtualCoherencyExceptionOnIntruct: .asciiz "Virtual coherency exception on intruction fetch"
+.align 4
+
+aFpException: .asciiz "Fp exception"
+.align 4
+
+aWatchpoint: .asciiz "Watchpoint"
+.align 4
+
+aVirtualCoherencyExceptionOnDataRef: .asciiz "Virtual coherency exception on data reference"
+.align 4
+
+aExceptionNULL_0: .word 0
+.align 4
+
+aCu3: .asciiz "CU3"
+.align 4
+
+aCu2: .asciiz "CU2"
+.align 4
+
+aCu1: .asciiz "CU1"
+.align 4
+
+aCu0: .asciiz "CU0"
+.align 4
+
+aRp: .asciiz "RP"
+.align 4
+
+aFr: .asciiz "FR"
+.align 4
+
+aRe: .asciiz "RE"
+.align 4
+
+aBev: .asciiz "BEV"
+.align 4
+
+aTs: .asciiz "TS"
+.align 4
+
+aSr: .asciiz "SR"
+.align 4
+
+aCh: .asciiz "CH"
+.align 4
+
+aCe: .asciiz "CE"
+.align 4
+
+aDe: .asciiz "DE"
+.align 4
+
+aIm8: .asciiz "IM8"
+.align 4
+
+aIm7: .asciiz "IM7"
+.align 4
+
+aIm6: .asciiz "IM6"
+.align 4
+
+aIm5: .asciiz "IM5"
+.align 4
+
+aIm4: .asciiz "IM4"
+.align 4
+
+aIm3: .asciiz "IM3"
+.align 4
+
+aIm2: .asciiz "IM2"
+.align 4
+
+aIm1: .asciiz "IM1"
+.align 4
+
+aKx: .asciiz "KX"
+.align 4
+
+aSx: .asciiz "SX"
+.align 4
+
+aUx: .asciiz "UX"
+.align 4
+
+aUsr: .asciiz "USR"
+.align 4
+
+aSup: .asciiz "SUP"
+.align 4
+
+aKer: .asciiz "KER"
+.align 4
+
+aErl: .asciiz "ERL"
+.align 4
+
+aExl: .asciiz "EXL"
+.align 4
+
+aIe: .asciiz "IE"
+.align 4
+
+aExceptionNULL_1: .word 0
+.align 4
+
+aFs: .asciiz "FS"
+.align 4
+
+aC_1: .asciiz "C"
+.align 4
+
+aUnimplemented: .asciiz "Unimplemented"
+.align 4
+
+aInvalidOp: .asciiz "Invalid op"
+.align 4
+
+aBy0_0: .asciiz "/ by 0.0"
+.align 4
+
+aOverflow_0: .asciiz "Overflow"
+.align 4
+
+aUnderflow: .asciiz "Underflow"
+.align 4
+
+aInexactOp: .asciiz "Inexact op"
+.align 4
+
+aEv: .asciiz "EV"
+.align 4
+
+aEz: .asciiz "EZ"
+.align 4
+
+aEo: .asciiz "EO"
+.align 4
+
+aEu: .asciiz "EU"
+.align 4
+
+aEi: .asciiz "EI"
+.align 4
+
+aFv: .asciiz "FV"
+.align 4
+
+aFz: .asciiz "FZ"
+.align 4
+
+aFo: .asciiz "FO"
+.align 4
+
+aFu: .asciiz "FU"
+.align 4
+
+aFi: .asciiz "FI"
+.align 4
+
+aRn: .asciiz "RN"
+.align 4
+
+aRz: .asciiz "RZ"
+.align 4
+
+aRp_1: .asciiz "RP"
+.align 4
+
+aRm: .asciiz "RM"
+.align 4
+
+aExceptionNULL: .word 0
+.align 4
+
+
 .section .bss

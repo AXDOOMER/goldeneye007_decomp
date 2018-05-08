@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-reset_counter_rand_body_head:
+glabel reset_counter_rand_body_head
 /* 034C40 7F000110 3C048003 */  lui   $a0, %hi(list_of_bodies) # $a0, 0x8003
 /* 034C44 7F000114 2484CD0C */  addiu $a0, %lo(list_of_bodies) # addiu $a0, $a0, -0x32f4
 /* 034C48 7F000118 00007080 */  sll   $t6, $zero, 2
@@ -598,7 +598,7 @@ somethingwith_weapon_animation_groups:
 /* 0354A8 7F000978 03E00008 */  jr    $ra
 /* 0354AC 7F00097C E42809A4 */   swc1  $f8, 0x9a4($at)
 
-sub_GAME_7F000980:
+glabel sub_GAME_7F000980
 /* 0354B0 7F000980 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0354B4 7F000984 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0354B8 7F000988 0FC00268 */  jal   sub_GAME_7F0009A0

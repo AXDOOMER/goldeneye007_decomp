@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-something_game_c_debug_related:
+glabel something_game_c_debug_related
 /* 106550 7F0D1A20 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 106554 7F0D1A24 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 106558 7F0D1A28 3C048005 */  lui   $a0, %hi(D_8004EAE0) # $a0, 0x8005
@@ -24,7 +24,7 @@ something_game_c_debug_related:
 /* 106574 7F0D1A44 03E00008 */  jr    $ra
 /* 106578 7F0D1A48 00000000 */   nop   
 
-reset_mem_bank_5:
+glabel reset_mem_bank_5
 /* 10657C 7F0D1A4C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 106580 7F0D1A50 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 106584 7F0D1A54 0FC2F48D */  jal   sub_GAME_7F0BD234

@@ -62,7 +62,7 @@ expand_ani_table_entries:
 /* 0355D4 7F000AA4 03E00008 */  jr    $ra
 /* 0355D8 7F000AA8 00000000 */   nop   
 
-alloc_load_expand_ani_table:
+glabel alloc_load_expand_ani_table
 /* 0355DC 7F000AAC 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0355E0 7F000AB0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0355E4 7F000AB4 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80069440) # $a0, 0x8007

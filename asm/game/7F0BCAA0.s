@@ -123,7 +123,7 @@ resource_load_from_indy:
 /* 0F1750 7F0BCC20 03E00008 */  jr    $ra
 /* 0F1754 7F0BCC24 27BD2128 */   addiu $sp, $sp, 0x2128
 
-ob_c_debug_setup:
+glabel ob_c_debug_setup
 /* 0F1758 7F0BCC28 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F175C 7F0BCC2C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F1760 7F0BCC30 3C048004 */  lui   $a0, %hi(D_80046050) # $a0, 0x8004
@@ -726,8 +726,9 @@ sub_GAME_7F0BD410:
 /* 0F1F84 7F0BD454 00000000 */   nop   
 
 /* 0F1F88 7F0BD458 00000000 */  nop   
-/* 0F1F8C 7F0BD45C 00000000 */  nop   
-something_with_dyn_c_debug:
+/* 0F1F8C 7F0BD45C 00000000 */  nop
+ 
+glabel something_with_dyn_c_debug
 /* 0F1F90 7F0BD460 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F1F94 7F0BD464 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F1F98 7F0BD468 3C048005 */  lui   $a0, %hi(D_800482E0) # $a0, 0x8005

@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-store_osgetcount:
+glabel store_osgetcount
 /* 0F55A0 7F0C0A70 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F55A4 7F0C0A74 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F55A8 7F0C0A78 0C003638 */  jal   osGetCount

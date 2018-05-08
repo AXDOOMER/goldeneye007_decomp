@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-something_with_bg_c_debug:
+glabel something_with_bg_c_debug
 /* 0E82F0 7F0B37C0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0E82F4 7F0B37C4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0E82F8 7F0B37C8 3C048004 */  lui   $a0, %hi(D_800413F0) # $a0, 0x8004

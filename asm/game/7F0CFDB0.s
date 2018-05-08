@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-something_with_rsp_c_debug:
+glabel something_with_rsp_c_debug
 /* 1048E0 7F0CFDB0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 1048E4 7F0CFDB4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 1048E8 7F0CFDB8 3C048005 */  lui   $a0, %hi(D_8004E9E0) # $a0, 0x8005
@@ -24,7 +24,7 @@ something_with_rsp_c_debug:
 /* 104904 7F0CFDD4 03E00008 */  jr    $ra
 /* 104908 7F0CFDD8 00000000 */   nop   
 
-allocate_init_rsp_buffers:
+glabel allocate_init_rsp_buffers
 /* 10490C 7F0CFDDC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 104910 7F0CFDE0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 104914 7F0CFDE4 3404A000 */  li    $a0, 40960
