@@ -126,12 +126,12 @@ glabel osCreateScheduler
 /* 001728 70000B28 0C00363C */  jal   osCreateViManager
 /* 00172C 70000B2C 240400FE */   li    $a0, 254
 /* 001730 70000B30 93B90033 */  lbu   $t9, 0x33($sp)
-/* 001734 70000B34 3C098002 */  lui   $t1, %hi(D_800269C0) # $t1, 0x8002
+/* 001734 70000B34 3C098002 */  lui   $t1, %hi(osViModeTable) # $t1, 0x8002
 /* 001738 70000B38 3C038006 */  lui   $v1, %hi(dword_CODE_bss_8006087C) # $v1, 0x8006
 /* 00173C 70000B3C 00194080 */  sll   $t0, $t9, 2
 /* 001740 70000B40 01194021 */  addu  $t0, $t0, $t9
 /* 001744 70000B44 00084100 */  sll   $t0, $t0, 4
-/* 001748 70000B48 252969C0 */  addiu $t1, %lo(D_800269C0) # addiu $t1, $t1, 0x69c0
+/* 001748 70000B48 252969C0 */  addiu $t1, %lo(osViModeTable) # addiu $t1, $t1, 0x69c0
 /* 00174C 70000B4C 2463087C */  addiu $v1, %lo(dword_CODE_bss_8006087C) # addiu $v1, $v1, 0x87c
 /* 001750 70000B50 01095021 */  addu  $t2, $t0, $t1
 /* 001754 70000B54 AC6A0000 */  sw    $t2, ($v1)
