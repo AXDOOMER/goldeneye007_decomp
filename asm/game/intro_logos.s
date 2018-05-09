@@ -1162,9 +1162,9 @@ sub_GAME_7F008B58:
 /* 03D6DC 7F008BAC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 03D6E0 7F008BB0 AC20A8A0 */  sw    $zero, %lo(intro_eye_counter)($at)
 /* 03D6E4 7F008BB4 34D8003F */  ori   $t8, $a2, 0x3f
-/* 03D6E8 7F008BB8 3C05002A */  lui   $a1, %hi(D_0029E560) # $a1, 0x2a
+/* 03D6E8 7F008BB8 3C05002A */  lui   $a1, %hi(_GlobalimagetablecmdblkSegmentRomStart) # $a1, 0x2a
 /* 03D6EC 7F008BBC AC440000 */  sw    $a0, ($v0)
-/* 03D6F0 7F008BC0 24A5E560 */  addiu $a1, %lo(D_0029E560) # addiu $a1, $a1, -0x1aa0
+/* 03D6F0 7F008BC0 24A5E560 */  addiu $a1, %lo(_GlobalimagetablecmdblkSegmentRomStart) # addiu $a1, $a1, -0x1aa0
 /* 03D6F4 7F008BC4 0C001707 */  jal   load_bytes_from_hw_to_rdram
 /* 03D6F8 7F008BC8 3B06003F */   xori  $a2, $t8, 0x3f
 /* 03D6FC 7F008BCC 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -1333,10 +1333,10 @@ sub_GAME_7F008DE4:
 /* 03D93C 7F008E0C 0301C821 */  addu  $t9, $t8, $at
 /* 03D940 7F008E10 ACB90000 */  sw    $t9, ($a1)
 /* 03D944 7F008E14 8C880000 */  lw    $t0, ($a0)
-/* 03D948 7F008E18 3C0B002C */  lui   $t3, %hi(D_002BF2D0) # $t3, 0x2c
+/* 03D948 7F008E18 3C0B002C */  lui   $t3, %hi(_ramromDam1SegmentRomStart) # $t3, 0x2c
 /* 03D94C 7F008E1C 24634D50 */  addiu $v1, %lo(D_002A4D50) # addiu $v1, $v1, 0x4d50
 /* 03D950 7F008E20 3C010004 */  lui   $at, (0x00040400 >> 16) # lui $at, 4
-/* 03D954 7F008E24 256BF2D0 */  addiu $t3, %lo(D_002BF2D0) # addiu $t3, $t3, -0xd30
+/* 03D954 7F008E24 256BF2D0 */  addiu $t3, %lo(_ramromDam1SegmentRomStart) # addiu $t3, $t3, -0xd30
 /* 03D958 7F008E28 34210400 */  ori   $at, (0x00040400 & 0xFFFF) # ori $at, $at, 0x400
 /* 03D95C 7F008E2C 01633023 */  subu  $a2, $t3, $v1
 /* 03D960 7F008E30 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80069588) # $v0, 0x8007

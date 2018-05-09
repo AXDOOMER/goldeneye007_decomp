@@ -44,8 +44,8 @@ expand_ani_table_entries:
 .L7F000A6C:
 /* 03559C 7F000A6C 1060000D */  beqz  $v1, .L7F000AA4
 /* 0355A0 7F000A70 24050001 */   li    $a1, 1
-/* 0355A4 7F000A74 3C040012 */  lui   $a0, %hi(D_00124AC0) # $a0, 0x12
-/* 0355A8 7F000A78 24844AC0 */  addiu $a0, %lo(D_00124AC0) # addiu $a0, $a0, 0x4ac0
+/* 0355A4 7F000A74 3C040012 */  lui   $a0, %hi(_animation_tableSegmentRomStart) # $a0, 0x12
+/* 0355A8 7F000A78 24844AC0 */  addiu $a0, %lo(_animation_tableSegmentRomStart) # addiu $a0, $a0, 0x4ac0
 /* 0355AC 7F000A7C 8C430000 */  lw    $v1, ($v0)
 .L7F000A80:
 /* 0355B0 7F000A80 50A30005 */  beql  $a1, $v1, .L7F000A98
@@ -89,10 +89,10 @@ glabel alloc_load_expand_ani_table
 /* 035638 7F000B08 24050006 */   li    $a1, 6
 /* 03563C 7F000B0C 3C038007 */  lui   $v1, %hi(ptr_animation_table) # $v1, 0x8007
 /* 035640 7F000B10 24639538 */  addiu $v1, %lo(ptr_animation_table) # addiu $v1, $v1, -0x6ac8
-/* 035644 7F000B14 3C050029 */  lui   $a1, %hi(D_0028E980) # $a1, 0x29
+/* 035644 7F000B14 3C050029 */  lui   $a1, %hi(_animation_dataSegmentRomStart) # $a1, 0x29
 /* 035648 7F000B18 AC620000 */  sw    $v0, ($v1)
 /* 03564C 7F000B1C 8FA60018 */  lw    $a2, 0x18($sp)
-/* 035650 7F000B20 24A5E980 */  addiu $a1, %lo(D_0028E980) # addiu $a1, $a1, -0x1680
+/* 035650 7F000B20 24A5E980 */  addiu $a1, %lo(_animation_dataSegmentRomStart) # addiu $a1, $a1, -0x1680
 /* 035654 7F000B24 0C001707 */  jal   load_bytes_from_hw_to_rdram
 /* 035658 7F000B28 00402025 */   move  $a0, $v0
 /* 03565C 7F000B2C 3C048003 */  lui   $a0, %hi(animation_table_ptrs1) # $a0, 0x8003

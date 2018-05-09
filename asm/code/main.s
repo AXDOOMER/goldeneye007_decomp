@@ -542,7 +542,7 @@ glabel mainloop
 /* 0070E0 700064E0 0C000A04 */  jal   video_related_2
 /* 0070E4 700064E4 00000000 */   nop   
 /* 0070E8 700064E8 0C000A15 */  jal   video_related_3
-/* 0070EC 700064EC 3C040002 */   lui   $a0, %hi(D_00020004) # $a0, 2
+/* 0070EC 700064EC 3C040002 */   lui   $a0, 2
 /* 0070F0 700064F0 0C002F43 */  jal   redirect_to_ramrom_replay_and_record_handlers_if_set
 /* 0070F4 700064F4 00000000 */   nop   
 /* 0070F8 700064F8 0C000262 */  jal   set_stderr_permitted
@@ -640,8 +640,8 @@ glabel mainloop
 /* 00725C 7000665C 02602825 */  move  $a1, $s3
 /* 007260 70006660 3C0DF900 */  lui   $t5, 0xf900
 /* 007264 70006664 26730008 */  addiu $s3, $s3, 8
-/* 007268 70006668 AC8D0000 */  sw    $t5, ($a0)
-/* 00726C 7000666C AC870004 */  sw    $a3, %lo(D_00020004)($a0)
+/* 007268 70006668 AC8D0000 */  sw    $t5, 0($a0)
+/* 00726C 7000666C AC870004 */  sw    $a3, 4($a0)
 /* 007270 70006670 02603025 */  move  $a2, $s3
 /* 007274 70006674 3C0CEE00 */  lui   $t4, 0xee00
 /* 007278 70006678 26730008 */  addiu $s3, $s3, 8

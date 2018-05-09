@@ -58,10 +58,10 @@ glabel setupaudio
 /* 007688 70006A88 34C6E000 */  ori   $a2, (0x0002E000 & 0xFFFF) # ori $a2, $a2, 0xe000
 /* 00768C 70006A8C 0C00434C */  jal   alHeapInit
 /* 007690 70006A90 02002025 */   move  $a0, $s0
-/* 007694 70006A94 3C0F002F */  lui   $t7, %hi(D_002F19A0) # $t7, 0x2f
-/* 007698 70006A98 3C18002F */  lui   $t8, %hi(D_002EBDE0) # $t8, 0x2f
-/* 00769C 70006A9C 2718BDE0 */  addiu $t8, %lo(D_002EBDE0) # addiu $t8, $t8, -0x4220
-/* 0076A0 70006AA0 25EF19A0 */  addiu $t7, %lo(D_002F19A0) # addiu $t7, $t7, 0x19a0
+/* 007694 70006A94 3C0F002F */  lui   $t7, %hi(_sfxtblSegmentRomStart) # $t7, 0x2f
+/* 007698 70006A98 3C18002F */  lui   $t8, %hi(_sfxctlSegmentRomStart) # $t8, 0x2f
+/* 00769C 70006A9C 2718BDE0 */  addiu $t8, %lo(_sfxctlSegmentRomStart) # addiu $t8, $t8, -0x4220
+/* 0076A0 70006AA0 25EF19A0 */  addiu $t7, %lo(_sfxtblSegmentRomStart) # addiu $t7, $t7, 0x19a0
 /* 0076A4 70006AA4 01F81023 */  subu  $v0, $t7, $t8
 /* 0076A8 70006AA8 AFA20010 */  sw    $v0, 0x10($sp)
 /* 0076AC 70006AAC AFA20038 */  sw    $v0, 0x38($sp)
@@ -70,22 +70,22 @@ glabel setupaudio
 /* 0076B8 70006AB8 02003025 */  move  $a2, $s0
 /* 0076BC 70006ABC 0C003AD4 */  jal   alHeapDBAlloc
 /* 0076C0 70006AC0 24070001 */   li    $a3, 1
-/* 0076C4 70006AC4 3C05002F */  lui   $a1, %hi(D_002EBDE0) # $a1, 0x2f
+/* 0076C4 70006AC4 3C05002F */  lui   $a1, %hi(_sfxctlSegmentRomStart) # $a1, 0x2f
 /* 0076C8 70006AC8 AFA200D4 */  sw    $v0, 0xd4($sp)
-/* 0076CC 70006ACC 24A5BDE0 */  addiu $a1, %lo(D_002EBDE0) # addiu $a1, $a1, -0x4220
+/* 0076CC 70006ACC 24A5BDE0 */  addiu $a1, %lo(_sfxctlSegmentRomStart) # addiu $a1, $a1, -0x4220
 /* 0076D0 70006AD0 00402025 */  move  $a0, $v0
 /* 0076D4 70006AD4 0C001707 */  jal   load_bytes_from_hw_to_rdram
 /* 0076D8 70006AD8 8FA60038 */   lw    $a2, 0x38($sp)
-/* 0076DC 70006ADC 3C05002F */  lui   $a1, %hi(D_002F19A0) # $a1, 0x2f
-/* 0076E0 70006AE0 24A519A0 */  addiu $a1, %lo(D_002F19A0) # addiu $a1, $a1, 0x19a0
+/* 0076DC 70006ADC 3C05002F */  lui   $a1, %hi(_sfxtblSegmentRomStart) # $a1, 0x2f
+/* 0076E0 70006AE0 24A519A0 */  addiu $a1, %lo(_sfxtblSegmentRomStart) # addiu $a1, $a1, 0x19a0
 /* 0076E4 70006AE4 0C00439D */  jal   alBnkfNew
 /* 0076E8 70006AE8 8FA400D4 */   lw    $a0, 0xd4($sp)
 /* 0076EC 70006AEC 8FB900D4 */  lw    $t9, 0xd4($sp)
-/* 0076F0 70006AF0 3C09003C */  lui   $t1, %hi(D_003B87F0) # $t1, 0x3c
-/* 0076F4 70006AF4 3C0A003B */  lui   $t2, %hi(D_003B4450) # $t2, 0x3b
+/* 0076F0 70006AF0 3C09003C */  lui   $t1, %hi(_instrumentstblSegmentRomStart) # $t1, 0x3c
+/* 0076F4 70006AF4 3C0A003B */  lui   $t2, %hi(_instrumentsctlSegmentRomStart) # $t2, 0x3b
 /* 0076F8 70006AF8 8F280004 */  lw    $t0, 4($t9)
-/* 0076FC 70006AFC 254A4450 */  addiu $t2, %lo(D_003B4450) # addiu $t2, $t2, 0x4450
-/* 007700 70006B00 252987F0 */  addiu $t1, %lo(D_003B87F0) # addiu $t1, $t1, -0x7810
+/* 0076FC 70006AFC 254A4450 */  addiu $t2, %lo(_instrumentsctlSegmentRomStart) # addiu $t2, $t2, 0x4450
+/* 007700 70006B00 252987F0 */  addiu $t1, %lo(_instrumentstblSegmentRomStart) # addiu $t1, $t1, -0x7810
 /* 007704 70006B04 3C018006 */  lui   $at, %hi(ptr_sfx_buf) # $at, 0x8006
 /* 007708 70006B08 012A1023 */  subu  $v0, $t1, $t2
 /* 00770C 70006B0C AFA20010 */  sw    $v0, 0x10($sp)
@@ -96,14 +96,14 @@ glabel setupaudio
 /* 007720 70006B20 24070001 */  li    $a3, 1
 /* 007724 70006B24 0C003AD4 */  jal   alHeapDBAlloc
 /* 007728 70006B28 AC283720 */   sw    $t0, %lo(ptr_sfx_buf)($at)
-/* 00772C 70006B2C 3C05003B */  lui   $a1, %hi(D_003B4450) # $a1, 0x3b
+/* 00772C 70006B2C 3C05003B */  lui   $a1, %hi(_instrumentsctlSegmentRomStart) # $a1, 0x3b
 /* 007730 70006B30 AFA200CC */  sw    $v0, 0xcc($sp)
-/* 007734 70006B34 24A54450 */  addiu $a1, %lo(D_003B4450) # addiu $a1, $a1, 0x4450
+/* 007734 70006B34 24A54450 */  addiu $a1, %lo(_instrumentsctlSegmentRomStart) # addiu $a1, $a1, 0x4450
 /* 007738 70006B38 00402025 */  move  $a0, $v0
 /* 00773C 70006B3C 0C001707 */  jal   load_bytes_from_hw_to_rdram
 /* 007740 70006B40 8FA60038 */   lw    $a2, 0x38($sp)
-/* 007744 70006B44 3C05003C */  lui   $a1, %hi(D_003B87F0) # $a1, 0x3c
-/* 007748 70006B48 24A587F0 */  addiu $a1, %lo(D_003B87F0) # addiu $a1, $a1, -0x7810
+/* 007744 70006B44 3C05003C */  lui   $a1, %hi(_instrumentstblSegmentRomStart) # $a1, 0x3c
+/* 007748 70006B48 24A587F0 */  addiu $a1, %lo(_instrumentstblSegmentRomStart) # addiu $a1, $a1, -0x7810
 /* 00774C 70006B4C 0C00439D */  jal   alBnkfNew
 /* 007750 70006B50 8FA400CC */   lw    $a0, 0xcc($sp)
 /* 007754 70006B54 8FAB00CC */  lw    $t3, 0xcc($sp)
@@ -118,9 +118,9 @@ glabel setupaudio
 /* 007778 70006B78 0C003AD4 */  jal   alHeapDBAlloc
 /* 00777C 70006B7C AC2C3724 */   sw    $t4, %lo(dword_CODE_bss_80063724)($at)
 /* 007780 70006B80 3C038006 */  lui   $v1, %hi(ptr_musicdatatable) # $v1, 0x8006
-/* 007784 70006B84 3C050042 */  lui   $a1, %hi(D_00419790) # $a1, 0x42
+/* 007784 70006B84 3C050042 */  lui   $a1, %hi(_musicsampletblSegmentRomStart) # $a1, 0x42
 /* 007788 70006B88 24633734 */  addiu $v1, %lo(ptr_musicdatatable) # addiu $v1, $v1, 0x3734
-/* 00778C 70006B8C 24A59790 */  addiu $a1, %lo(D_00419790) # addiu $a1, $a1, -0x6870
+/* 00778C 70006B8C 24A59790 */  addiu $a1, %lo(_musicsampletblSegmentRomStart) # addiu $a1, $a1, -0x6870
 /* 007790 70006B90 AC620000 */  sw    $v0, ($v1)
 /* 007794 70006B94 AFA50038 */  sw    $a1, 0x38($sp)
 /* 007798 70006B98 00402025 */  move  $a0, $v0
@@ -149,8 +149,8 @@ glabel setupaudio
 /* 0077F4 70006BF4 0C001707 */  jal   load_bytes_from_hw_to_rdram
 /* 0077F8 70006BF8 8FA50038 */   lw    $a1, 0x38($sp)
 /* 0077FC 70006BFC 3C048006 */  lui   $a0, %hi(ptr_musicdatatable) # $a0, 0x8006
-/* 007800 70006C00 3C050042 */  lui   $a1, %hi(D_00419790) # $a1, 0x42
-/* 007804 70006C04 24A59790 */  addiu $a1, %lo(D_00419790) # addiu $a1, $a1, -0x6870
+/* 007800 70006C00 3C050042 */  lui   $a1, %hi(_musicsampletblSegmentRomStart) # $a1, 0x42
+/* 007804 70006C04 24A59790 */  addiu $a1, %lo(_musicsampletblSegmentRomStart) # addiu $a1, $a1, -0x6870
 /* 007808 70006C08 0C001A7C */  jal   audio_related
 /* 00780C 70006C0C 8C843734 */   lw    $a0, %lo(ptr_musicdatatable)($a0)
 /* 007810 70006C10 240818C8 */  li    $t0, 6344

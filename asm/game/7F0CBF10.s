@@ -78,9 +78,9 @@ load_prepare_global_image_bank:
 /* 100B24 7F0CBFF4 2401F000 */  li    $at, -4096
 /* 100B28 7F0CBFF8 AE220000 */  sw    $v0, ($s1)
 /* 100B2C 7F0CBFFC 03212024 */  and   $a0, $t9, $at
-/* 100B30 7F0CC000 3C05002A */  lui   $a1, %hi(D_0029D160) # $a1, 0x2a
+/* 100B30 7F0CC000 3C05002A */  lui   $a1, %hi(_GlobalimagetableSegmentRomStart) # $a1, 0x2a
 /* 100B34 7F0CC004 AE240000 */  sw    $a0, ($s1)
-/* 100B38 7F0CC008 24A5D160 */  addiu $a1, %lo(D_0029D160) # addiu $a1, $a1, -0x2ea0
+/* 100B38 7F0CC008 24A5D160 */  addiu $a1, %lo(_GlobalimagetableSegmentRomStart) # addiu $a1, $a1, -0x2ea0
 /* 100B3C 7F0CC00C 0C001707 */  jal   load_bytes_from_hw_to_rdram
 /* 100B40 7F0CC010 02003025 */   move  $a2, $s0
 /* 100B44 7F0CC014 8E290000 */  lw    $t1, ($s1)
