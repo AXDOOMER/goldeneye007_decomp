@@ -336,7 +336,7 @@ objective_microcode_type_17_18_1F_default:
 /* 08BFE0 7F0574B0 03E00008 */  jr    $ra
 /* 08BFE4 7F0574B4 27BD0030 */   addiu $sp, $sp, 0x30
 
-check_objectives_complete:
+glabel check_objectives_complete
 /* 08BFE8 7F0574B8 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 08BFEC 7F0574BC AFBF0024 */  sw    $ra, 0x24($sp)
 /* 08BFF0 7F0574C0 AFB00018 */  sw    $s0, 0x18($sp)

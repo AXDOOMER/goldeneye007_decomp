@@ -48,7 +48,7 @@ init_debug_menu_values:
 /* 0C499C 7F08FE6C 03E00008 */  jr    $ra
 /* 0C49A0 7F08FE70 AC226B80 */   sw    $v0, 0x6b80($at)
 
-print_debug_mcm_to_stdout:
+glabel print_debug_mcm_to_stdout
 /* 0C49A4 7F08FE74 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 0C49A8 7F08FE78 3C028003 */  lui   $v0, %hi(D_80036B88) # $v0, 0x8003
 /* 0C49AC 7F08FE7C 8C426B88 */  lw    $v0, %lo(D_80036B88)($v0)

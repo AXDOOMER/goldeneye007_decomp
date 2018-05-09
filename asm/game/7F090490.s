@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-display_debug_menu_text_onscreen:
+glabel display_debug_menu_text_onscreen
 /* 0C4FC0 7F090490 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0C4FC4 7F090494 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C4FC8 7F090498 3C048003 */  lui   $a0, %hi(mcm_strings) # $a0, 0x8003
@@ -91,7 +91,7 @@ nullsub_35:
 /* 0C50C8 7F090598 03E00008 */  jr    $ra
 /* 0C50CC 7F09059C 00000000 */   nop   
 
-debug_menu_processor:
+glabel debug_menu_processor
 /* 0C50D0 7F0905A0 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0C50D4 7F0905A4 3C038003 */  lui   $v1, %hi(D_80036FFC) # $v1, 0x8003
 /* 0C50D8 7F0905A8 8C636FFC */  lw    $v1, %lo(D_80036FFC)($v1)
@@ -804,7 +804,7 @@ set_debug_limit_controller_input:
 /* 0C5A5C 7F090F2C 03E00008 */  jr    $ra
 /* 0C5A60 7F090F30 AC2E6F6C */   sw    $t6, 0x6f6c($at)
 
-get_memusage_display_flag:
+glabel get_memusage_display_flag
 /* 0C5A64 7F090F34 3C028003 */  lui   $v0, 0x8003
 /* 0C5A68 7F090F38 03E00008 */  jr    $ra
 /* 0C5A6C 7F090F3C 8C426F74 */   lw    $v0, 0x6f74($v0)
@@ -874,7 +874,7 @@ get_debug_prroomloads_flag:
 /* 0C5B04 7F090FD4 03E00008 */  jr    $ra
 /* 0C5B08 7F090FD8 8C426F94 */   lw    $v0, 0x6f94($v0)
 
-get_linemode_flag:
+glabel get_linemode_flag
 /* 0C5B0C 7F090FDC 3C028003 */  lui   $v0, 0x8003
 /* 0C5B10 7F090FE0 03E00008 */  jr    $ra
 /* 0C5B14 7F090FE4 8C426FA8 */   lw    $v0, 0x6fa8($v0)
@@ -934,7 +934,7 @@ get_debug_profile_flag:
 /* 0C5B94 7F091064 03E00008 */  jr    $ra
 /* 0C5B98 7F091068 8C426FC0 */   lw    $v0, 0x6fc0($v0)
 
-get_debug_taskgrab_val:
+glabel get_debug_taskgrab_val
 /* 0C5B9C 7F09106C 3C028003 */  lui   $v0, 0x8003
 /* 0C5BA0 7F091070 03E00008 */  jr    $ra
 /* 0C5BA4 7F091074 8C426FC4 */   lw    $v0, 0x6fc4($v0)

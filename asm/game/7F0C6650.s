@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-nullsub_41:
+glabel nullsub_41
 /* 0FB180 7F0C6650 03E00008 */  jr    $ra
 /* 0FB184 7F0C6654 00000000 */   nop   
 

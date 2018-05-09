@@ -528,7 +528,7 @@ sub_GAME_7F0BD188:
 /* 0F1CE4 7F0BD1B4 03E00008 */  jr    $ra
 /* 0F1CE8 7F0BD1B8 27BD0018 */   addiu $sp, $sp, 0x18
 
-something_mem_bank_a0:
+glabel something_mem_bank_a0
 /* 0F1CEC 7F0BD1BC 3C038005 */  lui   $v1, %hi(file_entry_max) # $v1, 0x8005
 /* 0F1CF0 7F0BD1C0 8C6382D4 */  lw    $v1, %lo(file_entry_max)($v1)
 /* 0F1CF4 7F0BD1C4 308E00FF */  andi  $t6, $a0, 0xff
@@ -741,7 +741,7 @@ glabel something_with_dyn_c_debug
 /* 0F1FB4 7F0BD484 03E00008 */  jr    $ra
 /* 0F1FB8 7F0BD488 00000000 */   nop   
 
-set_vtx_gfx_mem_alloc:
+glabel set_vtx_gfx_mem_alloc
 /* 0F1FBC 7F0BD48C 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0F1FC0 7F0BD490 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F1FC4 7F0BD494 3C058006 */  lui   $a1, %hi(aMgfx) # $a1, 0x8006
@@ -867,7 +867,7 @@ set_vtx_gfx_mem_alloc:
 /* 0F219C 7F0BD66C 03E00008 */  jr    $ra
 /* 0F21A0 7F0BD670 AC2AC24C */   sw    $t2, -0x3db4($at)
 
-get_ptr_displaylist:
+glabel get_ptr_displaylist
 /* 0F21A4 7F0BD674 3C0F8009 */  lui   $t7, %hi(bank_in_mgfx_alloc_table) # $t7, 0x8009
 /* 0F21A8 7F0BD678 91EFC250 */  lbu   $t7, %lo(bank_in_mgfx_alloc_table)($t7)
 /* 0F21AC 7F0BD67C 3C028009 */  lui   $v0, 0x8009
@@ -879,7 +879,7 @@ get_ptr_displaylist:
 /* 0F21C4 7F0BD694 03E00008 */  jr    $ra
 /* 0F21C8 7F0BD698 8C42C230 */   lw    $v0, -0x3dd0($v0)
 
-allocate_something_in_mgfx:
+glabel allocate_something_in_mgfx
 /* 0F21CC 7F0BD69C 3C0E8009 */  lui   $t6, %hi(bank_in_mgfx_alloc_table) # $t6, 0x8009
 /* 0F21D0 7F0BD6A0 91CEC250 */  lbu   $t6, %lo(bank_in_mgfx_alloc_table)($t6)
 /* 0F21D4 7F0BD6A4 3C188009 */  lui   $t8, 0x8009
@@ -928,7 +928,7 @@ sub_GAME_7F0BD714:
 /* 0F2260 7F0BD730 03E00008 */  jr    $ra
 /* 0F2264 7F0BD734 ACD80000 */   sw    $t8, ($a2)
 
-allocate_something_in_mvtx:
+glabel allocate_something_in_mvtx
 /* 0F2268 7F0BD738 3C028009 */  lui   $v0, %hi(bank_in_mgfx_alloc_table) # $v0, 0x8009
 /* 0F226C 7F0BD73C 2442C250 */  addiu $v0, %lo(bank_in_mgfx_alloc_table) # addiu $v0, $v0, -0x3db0
 /* 0F2270 7F0BD740 904E0000 */  lbu   $t6, ($v0)
@@ -945,7 +945,7 @@ allocate_something_in_mvtx:
 /* 0F229C 7F0BD76C 03E00008 */  jr    $ra
 /* 0F22A0 7F0BD770 AC28C24C */   sw    $t0, -0x3db4($at)
 
-removed_debug_routine:
+glabel removed_debug_routine
 /* 0F22A4 7F0BD774 03E00008 */  jr    $ra
 /* 0F22A8 7F0BD778 AFA40000 */   sw    $a0, ($sp)
 
@@ -993,7 +993,7 @@ compute_membar_display_string:
 /* 0F2338 7F0BD808 03E00008 */  jr    $ra
 /* 0F233C 7F0BD80C 27BD0018 */   addiu $sp, $sp, 0x18
 
-draw_membars:
+glabel draw_membars
 /* 0F2340 7F0BD810 3C028009 */  lui   $v0, %hi(bank_in_mgfx_alloc_table) # $v0, 0x8009
 /* 0F2344 7F0BD814 9042C250 */  lbu   $v0, %lo(bank_in_mgfx_alloc_table)($v0)
 /* 0F2348 7F0BD818 3C088009 */  lui   $t0, %hi(ptr_mgfx0_alloc_start) # $t0, 0x8009

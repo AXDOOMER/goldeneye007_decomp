@@ -86,7 +86,7 @@ get_007_accuracy_mod:
 /* 051EC4 7F01D394 03E00008 */  jr    $ra
 /* 051EC8 7F01D398 27BD0018 */   addiu $sp, $sp, 0x18
 
-end_of_mission_briefing:
+glabel end_of_mission_briefing
 /* 051ECC 7F01D39C 3C028003 */  lui   $v0, %hi(ptr_briefingdata) # $v0, 0x8003
 /* 051ED0 7F01D3A0 8C42A8F8 */  lw    $v0, %lo(ptr_briefingdata)($v0)
 /* 051ED4 7F01D3A4 27BDFFE0 */  addiu $sp, $sp, -0x20

@@ -7078,7 +7078,7 @@ glabel default_player_perspective_and_height
 /* 0CEE54 7F09A324 03E00008 */  jr    $ra
 /* 0CEE58 7F09A328 E420A09C */   swc1  $f0, -0x5f64($at)
 
-reset_play_data_ptrs:
+glabel reset_play_data_ptrs
 /* 0CEE5C 7F09A32C 3C028008 */  lui   $v0, %hi(ptr_BONDdata_p1) # $v0, 0x8008
 /* 0CEE60 7F09A330 24429EE0 */  addiu $v0, %lo(ptr_BONDdata_p1) # addiu $v0, $v0, -0x6120
 /* 0CEE64 7F09A334 AC400000 */  sw    $zero, ($v0)
@@ -7104,7 +7104,7 @@ reset_play_data_ptrs:
 /* 0CEEB4 7F09A384 03E00008 */  jr    $ra
 /* 0CEEB8 7F09A388 AC78000C */   sw    $t8, 0xc($v1)
 
-init_player_data_ptrs_construct_viewports:
+glabel init_player_data_ptrs_construct_viewports
 /* 0CEEBC 7F09A38C 3C028008 */  lui   $v0, %hi(ptr_BONDdata_p1) # $v0, 0x8008
 /* 0CEEC0 7F09A390 24429EE0 */  addiu $v0, %lo(ptr_BONDdata_p1) # addiu $v0, $v0, -0x6120
 /* 0CEEC4 7F09A394 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -7986,7 +7986,7 @@ sub_GAME_7F09A4BC:
 /* 0CFC34 7F09B104 03E00008 */  jr    $ra
 /* 0CFC38 7F09B108 27BD03D0 */   addiu $sp, $sp, 0x3d0
 
-set_cur_player:
+glabel set_cur_player
 /* 0CFC3C 7F09B10C 00047080 */  sll   $t6, $a0, 2
 /* 0CFC40 7F09B110 3C0F8008 */  lui   $t7, 0x8008
 /* 0CFC44 7F09B114 01EE7821 */  addu  $t7, $t7, $t6
@@ -8270,7 +8270,7 @@ sub_GAME_7F09B398:
 /* 0CFF44 7F09B414 03E00008 */  jr    $ra
 /* 0CFF48 7F09B418 00000000 */   nop   
 
-sub_GAME_7F09B41C:
+glabel sub_GAME_7F09B41C
 /* 0CFF4C 7F09B41C 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 0CFF50 7F09B420 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 0CFF54 7F09B424 AFB00018 */  sw    $s0, 0x18($sp)
@@ -8347,7 +8347,7 @@ glabel sub_GAME_7F09B4D8
 /* 0D0050 7F09B520 03E00008 */  jr    $ra
 /* 0D0054 7F09B524 00601025 */   move  $v0, $v1
 
-sub_GAME_7F09B528:
+glabel sub_GAME_7F09B528
 /* 0D0058 7F09B528 3C038008 */  lui   $v1, %hi(dword_CODE_bss_8007A0C0) # $v1, 0x8008
 /* 0D005C 7F09B52C 8C63A0C0 */  lw    $v1, %lo(dword_CODE_bss_8007A0C0)($v1)
 /* 0D0060 7F09B530 3C028008 */  lui   $v0, %hi(ptr_BONDdata_p1) # $v0, 0x8008

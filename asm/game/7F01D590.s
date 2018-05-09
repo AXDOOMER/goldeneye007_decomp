@@ -11,12 +11,12 @@
 
 .section .text, "ax"
 
-get_selected_folder_num:
+glabel get_selected_folder_num
 /* 0520C0 7F01D590 3C018003 */  lui   $at, 0x8003
 /* 0520C4 7F01D594 03E00008 */  jr    $ra
 /* 0520C8 7F01D598 AC24A8E8 */   sw    $a0, -0x5718($at)
 
-get_difficulty:
+glabel get_difficulty
 /* 0520CC 7F01D59C 10800009 */  beqz  $a0, .L7F01D5C4
 /* 0520D0 7F01D5A0 24020001 */   li    $v0, 1
 /* 0520D4 7F01D5A4 1082000A */  beq   $a0, $v0, .L7F01D5D0
@@ -45,7 +45,7 @@ get_difficulty:
 /* 052114 7F01D5E4 03E00008 */  jr    $ra
 /* 052118 7F01D5E8 00000000 */   nop   
 
-set_solo_and_ptr_briefing:
+glabel set_solo_and_ptr_briefing
 /* 05211C 7F01D5EC 3C018003 */  lui   $at, %hi(gamemode) # $at, 0x8003
 /* 052120 7F01D5F0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 052124 7F01D5F4 AC20A8F0 */  sw    $zero, %lo(gamemode)($at)

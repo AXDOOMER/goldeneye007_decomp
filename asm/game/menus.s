@@ -7376,7 +7376,7 @@ unlock_all_mp_chars:
 /* 044DB8 7F010288 03E00008 */  jr    $ra
 /* 044DBC 7F01028C AC2EB194 */   sw    $t6, -0x4e6c($at)
 
-get_selected_num_players:
+glabel get_selected_num_players
 /* 044DC0 7F010290 3C0E8003 */  lui   $t6, %hi(gamemode) # $t6, 0x8003
 /* 044DC4 7F010294 8DCEA8F0 */  lw    $t6, %lo(gamemode)($t6)
 /* 044DC8 7F010298 24010001 */  li    $at, 1

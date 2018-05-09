@@ -41,7 +41,7 @@ glabel allocate_init_rsp_buffers
 /* 104940 7F0CFE10 03E00008 */  jr    $ra
 /* 104944 7F0CFE14 27BD0018 */   addiu $sp, $sp, 0x18
 
-load_rsp_microcode:
+glabel load_rsp_microcode
 /* 104948 7F0CFE18 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 10494C 7F0CFE1C 3C038005 */  lui   $v1, %hi(D_8004EAB0) # $v1, 0x8005
 /* 104950 7F0CFE20 2463EAB0 */  addiu $v1, %lo(D_8004EAB0) # addiu $v1, $v1, -0x1550

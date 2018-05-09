@@ -38,7 +38,7 @@ glabel reset_mem_bank_5
 /* 1065A4 7F0D1A74 03E00008 */  jr    $ra
 /* 1065A8 7F0D1A78 00000000 */   nop   
 
-sub_GAME_7F0D1A7C:
+glabel sub_GAME_7F0D1A7C
 /* 1065AC 7F0D1A7C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 1065B0 7F0D1A80 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 1065B4 7F0D1A84 0C002671 */  jal   memp_related_6

@@ -141,7 +141,7 @@ sub_GAME_7F0BDA84:
 /* 0F25D8 7F0BDAA8 03E00008 */  jr    $ra
 /* 0F25DC 7F0BDAAC 00000000 */   nop   
 
-stage_load:
+glabel stage_load
 /* 0F25E0 7F0BDAB0 3C018005 */  lui   $at, %hi(stagenum) # $at, 0x8005
 /* 0F25E4 7F0BDAB4 AC248364 */  sw    $a0, %lo(stagenum)($at)
 /* 0F25E8 7F0BDAB8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -712,7 +712,7 @@ sub_GAME_7F0BDF10:
 /* 0F2E34 7F0BE304 03E00008 */  jr    $ra
 /* 0F2E38 7F0BE308 00000000 */   nop   
 
-sub_GAME_7F0BE30C:
+glabel sub_GAME_7F0BE30C
 /* 0F2E3C 7F0BE30C 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0F2E40 7F0BE310 AFA40060 */  sw    $a0, 0x60($sp)
 /* 0F2E44 7F0BE314 248F0008 */  addiu $t7, $a0, 8
@@ -1282,7 +1282,7 @@ sub_GAME_7F0BE8D0:
 /* 0F36B0 7F0BEB80 03E00008 */  jr    $ra
 /* 0F36B4 7F0BEB84 00000000 */   nop   
 
-manage_mp_game:
+glabel manage_mp_game
 /* 0F36B8 7F0BEB88 27BDFE68 */  addiu $sp, $sp, -0x198
 /* 0F36BC 7F0BEB8C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F36C0 7F0BEB90 0C000626 */  jal   mp_tlb_related
@@ -2150,7 +2150,7 @@ manage_mp_game:
 /* 0F4328 7F0BF7F8 03E00008 */  jr    $ra
 /* 0F432C 7F0BF7FC 00000000 */   nop   
 
-sub_GAME_7F0BF800:
+glabel sub_GAME_7F0BF800
 /* 0F4330 7F0BF800 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 0F4334 7F0BF804 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F4338 7F0BF808 0FC26C54 */  jal   get_cur_playernum
@@ -2367,7 +2367,7 @@ sub_GAME_7F0BF800:
 /* 0F4648 7F0BFB18 03E00008 */  jr    $ra
 /* 0F464C 7F0BFB1C 00000000 */   nop   
 
-unload_stage_text_data:
+glabel unload_stage_text_data
 /* 0F4650 7F0BFB20 3C048005 */  lui   $a0, %hi(D_800483A0) # $a0, 0x8005
 /* 0F4654 7F0BFB24 8C8483A0 */  lw    $a0, %lo(D_800483A0)($a0)
 /* 0F4658 7F0BFB28 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -2435,12 +2435,12 @@ get_controls_locked_flag:
 /* 0F4738 7F0BFC08 03E00008 */  jr    $ra
 /* 0F473C 7F0BFC0C 8C428370 */   lw    $v0, -0x7c90($v0)
 
-get_current_difficulty:
+glabel get_current_difficulty
 /* 0F4740 7F0BFC10 3C028005 */  lui   $v0, 0x8005
 /* 0F4744 7F0BFC14 03E00008 */  jr    $ra
 /* 0F4748 7F0BFC18 8C428384 */   lw    $v0, -0x7c7c($v0)
 
-set_difficulty:
+glabel set_difficulty
 /* 0F474C 7F0BFC1C 3C018005 */  lui   $at, 0x8005
 /* 0F4750 7F0BFC20 03E00008 */  jr    $ra
 /* 0F4754 7F0BFC24 AC248384 */   sw    $a0, -0x7c7c($at)
@@ -2484,7 +2484,7 @@ glabel clear_ramrom_block_buffer_heading_ptrs
 /* 0F47B4 7F0BFC84 03E00008 */  jr    $ra
 /* 0F47B8 7F0BFC88 AC208470 */   sw    $zero, -0x7b90($at)
 
-get_is_ramrom_flag:
+glabel get_is_ramrom_flag
 /* 0F47BC 7F0BFC8C 3C028005 */  lui   $v0, 0x8005
 /* 0F47C0 7F0BFC90 03E00008 */  jr    $ra
 /* 0F47C4 7F0BFC94 8C428474 */   lw    $v0, -0x7b8c($v0)
@@ -2896,7 +2896,7 @@ ramrom_replay_handler:
 /* 0F4D90 7F0C0260 03E00008 */  jr    $ra
 /* 0F4D94 7F0C0264 27BD0038 */   addiu $sp, $sp, 0x38
 
-iterate_ramrom_entries_handle_camera_out:
+glabel iterate_ramrom_entries_handle_camera_out
 /* 0F4D98 7F0C0268 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F4D9C 7F0C026C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F4DA0 7F0C0270 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C468) # $a0, 0x8009
@@ -3152,7 +3152,7 @@ copy_recorded_ramrom_registers_to_proper_place_ingame:
 /* 0F5168 7F0C0638 03E00008 */  jr    $ra
 /* 0F516C 7F0C063C 00000000 */   nop   
 
-test_if_recording_demos_this_stage_load:
+glabel test_if_recording_demos_this_stage_load
 /* 0F5170 7F0C0640 3C0E8005 */  lui   $t6, %hi(flag_to_record_ramrom) # $t6, 0x8005
 /* 0F5174 7F0C0644 8DCE8488 */  lw    $t6, %lo(flag_to_record_ramrom)($t6)
 /* 0F5178 7F0C0648 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -3343,7 +3343,7 @@ check_set_cameramode_to_A:
 /* 0F5424 7F0C08F4 03E00008 */  jr    $ra
 /* 0F5428 7F0C08F8 00000000 */   nop   
 
-stop_demo_playback:
+glabel stop_demo_playback
 /* 0F542C 7F0C08FC 3C0E8005 */  lui   $t6, %hi(D_80048484) # $t6, 0x8005
 /* 0F5430 7F0C0900 8DCE8484 */  lw    $t6, %lo(D_80048484)($t6)
 /* 0F5434 7F0C0904 27BDFFE8 */  addiu $sp, $sp, -0x18

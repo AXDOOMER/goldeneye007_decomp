@@ -71,7 +71,7 @@ sub_GAME_7F0C0AA0:
 /* 0F5674 7F0C0B44 03E00008 */  jr    $ra
 /* 0F5678 7F0C0B48 27BD0018 */   addiu $sp, $sp, 0x18
 
-sub_GAME_7F0C0B4C:
+glabel sub_GAME_7F0C0B4C
 /* 0F567C 7F0C0B4C 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0F5680 7F0C0B50 AFB30020 */  sw    $s3, 0x20($sp)
 /* 0F5684 7F0C0B54 AFB2001C */  sw    $s2, 0x1c($sp)
