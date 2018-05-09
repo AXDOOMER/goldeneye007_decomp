@@ -11,7 +11,7 @@
 
 .section .text, "ax"
 
-decompressdata:
+glabel decompressdata
 /* 103320 7F0CE7F0 3C078009 */  lui   $a3, %hi(dword_CODE_bss_8008D350) # $a3, 0x8009
 /* 103324 7F0CE7F4 24E7D350 */  addiu $a3, %lo(dword_CODE_bss_8008D350) # addiu $a3, $a3, -0x2cb0
 /* 103328 7F0CE7F8 ACE40000 */  sw    $a0, ($a3)
