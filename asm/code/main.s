@@ -351,8 +351,8 @@ glabel mainloop
 /* 006E28 70006228 00000000 */   nop   
 /* 006E2C 7000622C 28410002 */  slti  $at, $v0, 2
 /* 006E30 70006230 14200018 */  bnez  $at, .L70006294
-/* 006E34 70006234 3C058002 */   lui   $a1, %hi(D_800241BC) # $a1, 0x8002
-/* 006E38 70006238 24A541BC */  addiu $a1, %lo(D_800241BC) # addiu $a1, $a1, 0x41bc
+/* 006E34 70006234 3C058002 */   lui   $a1, %hi(memallocstringtable) # $a1, 0x8002
+/* 006E38 70006238 24A541BC */  addiu $a1, %lo(memallocstringtable) # addiu $a1, $a1, 0x41bc
 /* 006E3C 7000623C 8CB90000 */  lw    $t9, ($a1)
 /* 006E40 70006240 00008025 */  move  $s0, $zero
 /* 006E44 70006244 3C048002 */  lui   $a0, %hi(current_stage_num) # $a0, 0x8002
@@ -379,9 +379,9 @@ glabel mainloop
 /* 006E8C 7000628C 00000000 */   nop   
 /* 006E90 70006290 2410FFFF */  li    $s0, -1
 .L70006294:
-/* 006E94 70006294 3C058002 */  lui   $a1, %hi(D_800241BC) # $a1, 0x8002
+/* 006E94 70006294 3C058002 */  lui   $a1, %hi(memallocstringtable) # $a1, 0x8002
 /* 006E98 70006298 06010010 */  bgez  $s0, .L700062DC
-/* 006E9C 7000629C 24A541BC */   addiu $a1, %lo(D_800241BC) # addiu $a1, $a1, 0x41bc
+/* 006E9C 7000629C 24A541BC */   addiu $a1, %lo(memallocstringtable) # addiu $a1, $a1, 0x41bc
 /* 006EA0 700062A0 8CAA0000 */  lw    $t2, ($a1)
 /* 006EA4 700062A4 00008025 */  move  $s0, $zero
 /* 006EA8 700062A8 3C048002 */  lui   $a0, %hi(current_stage_num) # $a0, 0x8002
@@ -894,5 +894,123 @@ glabel something_with_boss_c_debug
 /* 0075EC 700069EC 00000000 */  nop   
 
 .section .data
+D_800241A0: .word 0
+debug_and_update_stage_flag: .word 0
+current_stage_num: .word 0x5A
+current_m_malloc_value: .word 0x234800
+current_ma_malloc_value: .word 0x4B000
+show_mem_use_flag: .word 0
+show_mem_bars_flag: .word 0
+
+memallocstringtable:
+.macro memoryallocation num strptr
+    .word \num
+    .word \strptr
+.endm
+
+memoryallocation 0x21, aMl0Me0Mgfx70Mvtx50Mt625Ma275
+memoryallocation 0x22, aMl0Me0Mgfx70Mvtx50Mt650Ma160
+memoryallocation 0x23, aMl0Me0Mgfx100Mvtx50Mt610Ma300
+memoryallocation 0x24, aMl0Me0Mgfx70Mvtx50Mt600Ma300
+memoryallocation 9, aMl0Me0Mgfx100Mvtx50Mt700Ma150
+memoryallocation 0x14, aMl0Me0Mgfx70Mvtx50Mt660Ma150
+memoryallocation 0x1A, aMl0Me0Mgfx70Mvtx50Mt750Ma225
+memoryallocation 0x2B, aMl0Me0Mgfx100Mvtx50Mt550Ma350
+memoryallocation 0x1B, aMl0Me0Mgfx100Mvtx50Mt725Ma150
+memoryallocation 0x16, aMl0Me0Mgfx70Mvtx50Mt750Ma220
+memoryallocation 0x18, aMl0Me0Mgfx70Mvtx50Mt600Ma250
+memoryallocation 0x1D, aMl0Me0Mgfx60Mvtx40Mt635Ma290
+memoryallocation 0x1E, aMl0Me0Mgfx60Mvtx50Mt710Ma300
+memoryallocation 0x19, aMl0Me0Mgfx100Mvtx50Mt600Ma200
+memoryallocation 0x25, aMl0Me0Mgfx70Mvtx50Mt500Ma200
+memoryallocation 0x17, aMl0Me0Mgfx70Mvtx50Mt671Ma200
+memoryallocation 0x29, aMl0Me0Mgfx100Mvtx50Mt650Ma250
+memoryallocation 0x27, aMl0Me0Mgfx100Mvtx50Mt530Ma250
+memoryallocation 0x1C, aMl0Me0Mgfx60Mvtx40Mt855Ma135
+memoryallocation 0x20, aMl0Me0Mgfx100Mvtx50Mt600Ma250
+memoryallocation 0x28, aMl0Me0Mgfx100Mvtx50Mt650Ma150
+memoryallocation 0x36, aMl0Me0Mgfx100Mvtx50Mt300Ma300
+memoryallocation 0x5A, aMl0Me0Mgfx80Mvtx20Mt646Ma001
+memoryallocation 0x5B, aMl0Me0Mgfx60Mvtx20Mt500Ma001
+memoryallocation 0x63, aMl0Me0Mgfx60Mvtx20Mt500Ma001_0
+memoryallocation 0x26, aMl0Me0Mgfx130Mvtx100Mt390Ma100
+memoryallocation 0x1F, aMl0Me0Mgfx130Mvtx100Mt400Ma100
+memoryallocation 0x30, aMl0Me0Mgfx130Mvtx100Mt400Ma100_0
+memoryallocation 0x2D, aMl0Me0Mgfx130Mvtx100Mt400Ma100_1
+memoryallocation 0x2E, aMl0Me0Mgfx130Mvtx100Mt400Ma100_2
+memoryallocation 0x32, aMl0Me0Mgfx130Mvtx100Mt400Ma300
+memoryallocation 0x1AB, aMl0Me0Mgfx130Mvtx100Mt550Ma170
+memoryallocation 0x1A8, aMl0Me0Mgfx80Mvtx100Mt550Ma250
+memoryallocation 0x1B7, aMl0Me0Mgfx130Mvtx100Mt440Ma220
+memoryallocation 0x1B2, aMl0Me0Mgfx90Mvtx100Mt550Ma230
+memoryallocation 0x1B0, aMl0Me0Mgfx110Mvtx100Mt350Ma400
+memoryallocation 0, aMl0Me0Mgfx100Mvtx50Mt700Ma400
+memoryallocation 0, 0
+memoryallocation 0, 0
+memoryallocation 0, 0
+
+loadedstage: .word 0xFFFFFFFF
+debug_feature_flag: .word 0
+D_80024304: .word 0x20000           # DATA XREF: mainloop+134o
+D_80024308: .word 0                 # DATA XREF: mainloop+13Cr
+D_8002430C: .word 0                 # DATA XREF: mainloop+150r
+D_80024310: .word 0                 # DATA XREF: mainloop+14Cr
+D_80024314: .word 0                 # DATA XREF: mainloop+160r
+D_80024318: .word 0                 # DATA XREF: mainloop+164r
+D_8002431C: .word 0                 # DATA XREF: mainloop+178r
+D_80024320: .word 0                 # DATA XREF: mainloop+174r
+u64.taskgrab.num.core_ramdump_num: .word 1
+
 .section .rodata
+aMl0Me0Mgfx70Mvtx50Mt625Ma275: .asciiz "-ml0 -me0 -mgfx70  -mvtx50 -mt625 -ma275"
+aMl0Me0Mgfx70Mvtx50Mt650Ma160: .asciiz "-ml0 -me0 -mgfx70  -mvtx50 -mt650 -ma160"
+aMl0Me0Mgfx100Mvtx50Mt610Ma300: .asciiz "-ml0 -me0 -mgfx100 -mvtx50 -mt610 -ma300"
+aMl0Me0Mgfx70Mvtx50Mt600Ma300: .asciiz "-ml0 -me0 -mgfx70  -mvtx50 -mt600 -ma300"
+aMl0Me0Mgfx100Mvtx50Mt700Ma150: .asciiz "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma150"
+aMl0Me0Mgfx70Mvtx50Mt660Ma150: .asciiz "-ml0 -me0 -mgfx70  -mvtx50 -mt660 -ma150"
+aMl0Me0Mgfx70Mvtx50Mt750Ma225: .asciiz "-ml0 -me0 -mgfx70  -mvtx50 -mt750 -ma225"
+aMl0Me0Mgfx100Mvtx50Mt550Ma350: .asciiz "-ml0 -me0 -mgfx100 -mvtx50 -mt550 -ma350"
+aMl0Me0Mgfx100Mvtx50Mt725Ma150: .asciiz "-ml0 -me0 -mgfx100 -mvtx50 -mt725 -ma150"
+aMl0Me0Mgfx70Mvtx50Mt750Ma220: .asciiz "-ml0 -me0 -mgfx70  -mvtx50 -mt750 -ma220"
+aMl0Me0Mgfx70Mvtx50Mt600Ma250: .asciiz "-ml0 -me0 -mgfx70  -mvtx50 -mt600 -ma250"
+aMl0Me0Mgfx60Mvtx40Mt635Ma290: .asciiz "-ml0 -me0 -mgfx60  -mvtx40 -mt635 -ma290"
+aMl0Me0Mgfx60Mvtx50Mt710Ma300: .asciiz "-ml0 -me0 -mgfx60  -mvtx50 -mt710 -ma300"
+aMl0Me0Mgfx100Mvtx50Mt600Ma200: .asciiz "-ml0 -me0 -mgfx100 -mvtx50 -mt600 -ma200"
+aMl0Me0Mgfx70Mvtx50Mt500Ma200: .asciiz "-ml0 -me0 -mgfx70  -mvtx50 -mt500 -ma200"
+aMl0Me0Mgfx70Mvtx50Mt671Ma200: .asciiz "-ml0 -me0 -mgfx70  -mvtx50 -mt671 -ma200"
+aMl0Me0Mgfx100Mvtx50Mt650Ma250: .asciiz "-ml0 -me0 -mgfx100 -mvtx50 -mt650 -ma250"
+aMl0Me0Mgfx100Mvtx50Mt530Ma250: .asciiz "-ml0 -me0 -mgfx100 -mvtx50 -mt530 -ma250"
+aMl0Me0Mgfx60Mvtx40Mt855Ma135: .asciiz "-ml0 -me0 -mgfx60  -mvtx40 -mt855 -ma135"
+aMl0Me0Mgfx100Mvtx50Mt600Ma250: .asciiz "-ml0 -me0 -mgfx100 -mvtx50 -mt600 -ma250"
+aMl0Me0Mgfx100Mvtx50Mt650Ma150: .asciiz "-ml0 -me0 -mgfx100 -mvtx50 -mt650 -ma150"
+aMl0Me0Mgfx100Mvtx50Mt300Ma300: .asciiz "-ml0 -me0 -mgfx100 -mvtx50 -mt300 -ma300"
+aMl0Me0Mgfx80Mvtx20Mt646Ma001: .asciiz "-ml0 -me0 -mgfx80 -mvtx20 -mt646 -ma001"
+aMl0Me0Mgfx60Mvtx20Mt500Ma001: .asciiz "-ml0 -me0 -mgfx60 -mvtx20 -mt500 -ma001"
+aMl0Me0Mgfx60Mvtx20Mt500Ma001_0: .asciiz "-ml0 -me0 -mgfx60 -mvtx20 -mt500 -ma001"
+aMl0Me0Mgfx130Mvtx100Mt390Ma100: .asciiz "-ml0 -me0 -mgfx130 -mvtx100 -mt390 -ma100"
+aMl0Me0Mgfx130Mvtx100Mt400Ma100: .asciiz "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"
+aMl0Me0Mgfx130Mvtx100Mt400Ma100_0: .asciiz "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"
+aMl0Me0Mgfx130Mvtx100Mt400Ma100_1: .asciiz "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"
+aMl0Me0Mgfx130Mvtx100Mt400Ma100_2: .asciiz "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"
+aMl0Me0Mgfx130Mvtx100Mt400Ma300: .asciiz "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma300"
+aMl0Me0Mgfx130Mvtx100Mt550Ma170: .asciiz "-ml0 -me0 -mgfx130 -mvtx100 -mt550 -ma170"
+aMl0Me0Mgfx80Mvtx100Mt550Ma250: .asciiz "-ml0 -me0 -mgfx80  -mvtx100 -mt550 -ma250"
+aMl0Me0Mgfx130Mvtx100Mt440Ma220: .asciiz "-ml0 -me0 -mgfx130 -mvtx100 -mt440 -ma220"
+aMl0Me0Mgfx90Mvtx100Mt550Ma230: .asciiz "-ml0 -me0 -mgfx90  -mvtx100 -mt550 -ma230"
+aMl0Me0Mgfx110Mvtx100Mt350Ma400: .asciiz "-ml0 -me0 -mgfx110 -mvtx100 -mt350 -ma400"
+aMl0Me0Mgfx100Mvtx50Mt700Ma400: .asciiz "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"
+aLevel_: .asciiz "-level_"
+aMl0Me0Mgfx100Mvtx50Mt700Ma400_1: .asciiz "          -ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"
+aM: .asciiz "-m"
+aM_1: .asciiz "-m"
+aLevel__0: .asciiz "-level_"
+aLevel__1: .asciiz "-level_"
+aHard: .asciiz "-hard"
+aHard_1: .asciiz "-hard"
+aHard_2: .asciiz "-hard"
+aMa: .asciiz "-ma"
+aMa_0: .asciiz "-ma"
+aU64_taskgrab_D_core: .asciiz "u64.taskgrab.%d.core"
+aBoss_c_debug: .asciiz "boss_c_debug"
+
 .section .bss
