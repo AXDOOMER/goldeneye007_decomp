@@ -890,6 +890,7 @@ sp_audi  = 0x803B3950;
 sp_debug = 0x803B4950;
 
 /*buffers*/
+room_model_buffer = 0x8008E360;
 vid_buff_1 = 0x803B5000;
 vid_buff_2 = 0x803DA800;
 

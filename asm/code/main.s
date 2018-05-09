@@ -138,9 +138,9 @@ glabel init_mainthread_data
 /* 006B08 70005F08 3C018002 */  lui   $at, %hi(current_m_malloc_value) # $at, 0x8002
 /* 006B0C 70005F0C AC2841AC */  sw    $t0, %lo(current_m_malloc_value)($at)
 .L70005F10:
-/* 006B10 70005F10 3C048009 */  lui   $a0, %hi(D_8008E360) # $a0, 0x8009
+/* 006B10 70005F10 3C048009 */  lui   $a0, %hi(room_model_buffer) # $a0, 0x8009
 /* 006B14 70005F14 0C003A2C */  jal   osVirtualToPhysical
-/* 006B18 70005F18 2484E360 */   addiu $a0, %lo(D_8008E360) # addiu $a0, $a0, -0x1ca0
+/* 006B18 70005F18 2484E360 */   addiu $a0, %lo(room_model_buffer) # addiu $a0, $a0, -0x1ca0
 /* 006B1C 70005F1C 3C018000 */  lui   $at, 0x8000
 /* 006B20 70005F20 0C0006BE */  jal   return_ptr_TLBmemory
 /* 006B24 70005F24 00418025 */   or    $s0, $v0, $at
@@ -951,14 +951,14 @@ memoryallocation 0, 0
 
 loadedstage: .word 0xFFFFFFFF
 debug_feature_flag: .word 0
-D_80024304: .word 0x20000           # DATA XREF: mainloop+134o
-D_80024308: .word 0                 # DATA XREF: mainloop+13Cr
-D_8002430C: .word 0                 # DATA XREF: mainloop+150r
-D_80024310: .word 0                 # DATA XREF: mainloop+14Cr
-D_80024314: .word 0                 # DATA XREF: mainloop+160r
-D_80024318: .word 0                 # DATA XREF: mainloop+164r
-D_8002431C: .word 0                 # DATA XREF: mainloop+178r
-D_80024320: .word 0                 # DATA XREF: mainloop+174r
+D_80024304: .word 0x20000
+D_80024308: .word 0
+D_8002430C: .word 0
+D_80024310: .word 0
+D_80024314: .word 0
+D_80024318: .word 0
+D_8002431C: .word 0
+D_80024320: .word 0
 u64.taskgrab.num.core_ramdump_num: .word 1
 
 .section .rodata
