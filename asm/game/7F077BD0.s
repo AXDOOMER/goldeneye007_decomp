@@ -9895,7 +9895,7 @@ set_curplayer_fade:
 /* 0B55A8 7F080A78 03E00008 */  jr    $ra
 /* 0B55AC 7F080A7C 00000000 */   nop   
 
-sub_GAME_7F080A80:
+update_curplayer_fade:
 /* 0B55B0 7F080A80 3C048008 */  lui   $a0, %hi(ptr_BONDdata) # $a0, 0x8008
 /* 0B55B4 7F080A84 2484A0B0 */  addiu $a0, %lo(ptr_BONDdata) # addiu $a0, $a0, -0x5f50
 /* 0B55B8 7F080A88 8C820000 */  lw    $v0, ($a0)
@@ -17100,7 +17100,7 @@ possibly_reset_viewport_options_for_player:
 /* 0BBDB8 7F087288 87A4001C */   lh    $a0, 0x1c($sp)
 /* 0BBDBC 7F08728C 0FC2022F */  jal   sub_GAME_7F0808BC
 /* 0BBDC0 7F087290 00000000 */   nop   
-/* 0BBDC4 7F087294 0FC202A0 */  jal   sub_GAME_7F080A80
+/* 0BBDC4 7F087294 0FC202A0 */  jal   update_curplayer_fade
 /* 0BBDC8 7F087298 00000000 */   nop   
 /* 0BBDCC 7F08729C 0FC29394 */  jal   cur_player_get_autoaim
 /* 0BBDD0 7F0872A0 00000000 */   nop   
