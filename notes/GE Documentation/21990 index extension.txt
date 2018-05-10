@@ -412,7 +412,7 @@ Note, offsets below only refer to USA offsets.  These +will+ differ in the other
  A870-AB2C	intros	0x14 each	condense!
 	long body, long head, short text, short text, short text, short RESERVED, long flag
  AB2C-AC9C	random intro animation table
-	long value, float or 0, float scale?,  long value 0,1,2
+	animation ID, [float] start frame offset , [float] playback speed, camera movement preset (0-2)
  AC9C	
  ACA0	
  ACA4	
