@@ -149,10 +149,10 @@ glabel set_hw_address_and_unknown
 /* 0012FC 700006FC 240E0001 */  li    $t6, 1
 /* 001300 70000700 3C018002 */  lui   $at, %hi(unknown_init_val) # $at, 0x8002
 /* 001304 70000704 AC2E3044 */  sw    $t6, %lo(unknown_init_val)($at)
-/* 001308 70000708 3C018002 */  lui   $at, 0x8002
+/* 001308 70000708 3C018002 */  lui   $at, %hi(cart_hw_address) # $at, 0x8002
 /* 00130C 7000070C 3C0F1000 */  lui   $t7, 0x1000
 /* 001310 70000710 03E00008 */  jr    $ra
-/* 001314 70000714 AC2F3048 */   sw    $t7, 0x3048($at)
+/* 001314 70000714 AC2F3048 */   sw    $t7, %lo(cart_hw_address)($at) # sw    $t7, 0x3048($at)
 
 glabel idle_entry
 /* 001318 70000718 AFA40000 */  sw    $a0, ($sp)

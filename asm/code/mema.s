@@ -265,11 +265,11 @@ glabel mem_related_model_room_buffers
 glabel something_with_mema_c_debug
 /* 00A96C 70009D6C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00A970 70009D70 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00A974 70009D74 3C048002 */  lui   $a0, %hi(D_80024450) # $a0, 0x8002
+/* 00A974 70009D74 3C048002 */  lui   $a0, %hi(ptr_mema_c_debug_notice_list) # $a0, 0x8002
 /* 00A978 70009D78 3C058003 */  lui   $a1, %hi(aMema_c_debug) # $a1, 0x8003
 /* 00A97C 70009D7C 24A591D0 */  addiu $a1, %lo(aMema_c_debug) # addiu $a1, $a1, -0x6e30
 /* 00A980 70009D80 0C001398 */  jal   get_ptr_debug_notice_list_entry
-/* 00A984 70009D84 24844450 */   addiu $a0, %lo(D_80024450) # addiu $a0, $a0, 0x4450
+/* 00A984 70009D84 24844450 */   addiu $a0, %lo(ptr_mema_c_debug_notice_list) # addiu $a0, $a0, 0x4450
 /* 00A988 70009D88 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 00A98C 70009D8C 27BD0018 */  addiu $sp, $sp, 0x18
 /* 00A990 70009D90 03E00008 */  jr    $ra
@@ -784,5 +784,8 @@ glabel mem_related_1
 /* 00B04C 7000A44C 00000000 */  nop   
 
 .section .data
+ptr_mema_c_debug_notice_list:.word 0
+
 .section .rodata
+
 .section .bss

@@ -14,11 +14,11 @@
 glabel something_with_memp_c_debug
 /* 009F80 70009380 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 009F84 70009384 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 009F88 70009388 3C048002 */  lui   $a0, %hi(D_80024400) # $a0, 0x8002
+/* 009F88 70009388 3C048002 */  lui   $a0, %hi(ptr_memp_c_debug_debug_notice_list) # $a0, 0x8002
 /* 009F8C 7000938C 3C058003 */  lui   $a1, %hi(aMemp_c_debug) # $a1, 0x8003
 /* 009F90 70009390 24A591A0 */  addiu $a1, %lo(aMemp_c_debug) # addiu $a1, $a1, -0x6e60
 /* 009F94 70009394 0C001398 */  jal   get_ptr_debug_notice_list_entry
-/* 009F98 70009398 24844400 */   addiu $a0, %lo(D_80024400) # addiu $a0, $a0, 0x4400
+/* 009F98 70009398 24844400 */   addiu $a0, %lo(ptr_memp_c_debug_debug_notice_list) # addiu $a0, $a0, 0x4400
 /* 009F9C 7000939C 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 009FA0 700093A0 27BD0018 */  addiu $sp, $sp, 0x18
 /* 009FA4 700093A4 03E00008 */  jr    $ra
@@ -484,5 +484,34 @@ glabel memp_related_6
 /* 00A60C 70009A0C 00000000 */  nop   
 
 .section .data
+ptr_memp_c_debug_debug_notice_list:.word 0
+tied_to_mem_management:.word 0
+.word 0
+.word 0
+.word 0
+D_80024414:.word 2
+D_80024418:.word 0
+D_8002441C:.word 4
+D_80024420:.word 0x52
+D_80024424:.word 6
+D_80024428:.word 0xF
+D_8002442C:.word 0
+D_80024430:.word 0
+D_80024434:.word 0
+D_80024438:.word 0
+D_8002443C:.word 0
+D_80024440:.word 0
+D_80024444:.word 0
+D_80024448:.word 0
+D_8002444C:.word 0
+
 .section .rodata
+aMemp_c_debug: .asciiz "memp_c_debug"
+aMf: .asciiz "-mf"
+aMf_0: .asciiz "-mf"
+aMl: .asciiz "-ml"
+aMl_0: .asciiz "-ml"
+aMe: .asciiz "-me"
+aMe_0: .asciiz "-me"
+
 .section .bss
