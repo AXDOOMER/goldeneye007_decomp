@@ -1,3 +1,4 @@
+/*ROM Addresses*/
 _codeSegmentRomStart      = 0x00001050;
 _codeSegmentRomEnd        = 0x00021990;
 _cdataSegmentRomStart     = 0x00021990;
@@ -68,26 +69,39 @@ _instrumentstblSegmentRomStart = 0x003b87f0;
 _instrumentstblSegmentRomEnd   = 0x00419790;
 _musicsampletblSegmentRomStart = 0x00419790;
 
+/*RAM Addresses */
+osTvType = 0x80000300;
+osRomBase = 0x80000308;
+osResetType = 0x8000030C;
 _codeSegmentVaddrStart    = 0x70000450;
 _codeSegmentVaddrEnd      = 0x70020D90;
 _cdataSegmentVaddrStart   = 0x80020D90;
 _cdataSegmentVaddrEnd     = 0x8005D2E0;
+_bssSegmentVaddrStart     = 0x8005D2E0;
+room_model_buffer = 0x8008E360;
 _rarezipSegmentVaddrStart = 0x70200000;
+sp_base  = 0x803AB000;
+sp_boot  = 0x803AB400;
+sp_rmon  = 0x803AB410;
+sp_idle  = 0x803AB710;
+sp_shed  = 0x803AB750;
+sp_main  = 0x803AB950;
+sp_audi  = 0x803B3950;
+sp_debug = 0x803B4950;
+vid_buff_1 = 0x803B5000;
+vid_buff_2 = 0x803DA800;
 _gameSegmentVaddrStart  = 0x7F000000;
 
+PIDMA_RAMP = 0xA4600000;
+PIDMA_ROMP = 0xA4600004;
+PIDMA_RAMROMS = 0xA4600008;
+PIDMA_ROMRAMS = 0xA460000C;
+PIDMA_STATUS = 0xA4600010;
 
 
-
+/* unsure */
 D_003B5000 = 0x003B5000;
 
-osTvType = 0x80000300;
-osRomBase = 0x80000308;
-osResetType = 0x8000030C;
-
-/* .rodata that hasn't been placed yet
-osViModeTable = 0x800269C0;
-osViModeTable.mode1E = 0x80027320;
-D_80048498 = 0x80048498;
 
 /* .bss */
 rmonthread = 0x8005D2E0;
@@ -183,7 +197,33 @@ ptr_1st_music_ctrl_block = 0x80063728;
 ptr_2nd_music_ctrl_block = 0x8006372C;
 ptr_3rd_music_ctrl_block = 0x80063730;
 ptr_musicdatatable = 0x80063734;
+D_80063738 = 0x80063738;
+D_800637B8 = 0x800637B8;
+D_80063836  = 0x80063836;
+D_80063838 = 0x80063838;
+D_8006383C = 0x8006383C;
+D_80063840 = 0x80063840;
+D_80063844 = 0x80063844;
+D_80063846  = 0x80063846;
+D_80063848 = 0x80063848;
+D_8006384A  = 0x8006384A;
+D_8006384C = 0x8006384C;
+D_8006384E = 0x8006384E;
+D_80063850 = 0x80063850;
+D_80063854 = 0x80063854;
+D_80063858 = 0x80063858;
+D_80063860 = 0x80063860;
+D_80063958 = 0x80063958;
+D_80063A50 = 0x80063A50;
+D_80063BA4 = 0x80063BA4;
+D_80063BA8 = 0x80063BA8;
 memory_bank_ptrs = 0x80063BB0;
+D_80063BC0 = 0x80063BC0;
+D_80063BC4 = 0x80063BC4;
+D_80063BC8 = 0x80063BC8;
+D_80063BD0 = 0x80063BD0;
+D_80063BD4 = 0x80063BD4;
+D_80063BD8 = 0x80063BD8;
 ptr_model_room_buf_pri = 0x80063BF0;
 dword_CODE_bss_80063BF8 = 0x80063BF8;
 dword_CODE_bss_80063C1C = 0x80063C1C;
@@ -947,19 +987,6 @@ spec_SP = 0x8008E352;
 spec_PC = 0x8008E354;
 
 
-/* stack */
-sp_boot  = 0x803AB400;
-sp_rmon  = 0x803AB410;
-sp_idle  = 0x803AB710;
-sp_shed  = 0x803AB750;
-sp_main  = 0x803AB950;
-sp_audi  = 0x803B3950;
-sp_debug = 0x803B4950;
-
-/*buffers*/
-room_model_buffer = 0x8008E360;
-vid_buff_1 = 0x803B5000;
-vid_buff_2 = 0x803DA800;
 
 
 
