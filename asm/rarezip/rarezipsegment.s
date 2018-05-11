@@ -472,7 +472,7 @@ glabel decompress.inflate
 /* 033C00 70200670 00C08025 */  move  $s0, $a2
 /* 033C04 70200674 00E08825 */  move  $s1, $a3
 /* 033C08 70200678 3C097020 */  lui   $t1, %hi(rarezip.sample) # $t1, 0x7020
-/* 033C0C 7020067C 3C087020 */  lui   $t0, %hi(rarezip.bits_in_sample) # $t0, 0x7020
+/* 033C0C 7020067C 3C087020 */  lui   $t0, %hi(rarezip.bitsinsample) # $t0, 0x7020
 /* 033C10 70200680 3C037020 */  lui   $v1, %hi(rarezip.decompressed_count) # $v1, 0x7020
 /* 033C14 70200684 016E7821 */  addu  $t7, $t3, $t6
 /* 033C18 70200688 0178C821 */  addu  $t9, $t3, $t8
@@ -482,7 +482,7 @@ glabel decompress.inflate
 /* 033C28 70200698 AFA40010 */  sw    $a0, 0x10($sp)
 /* 033C2C 7020069C AFA50014 */  sw    $a1, 0x14($sp)
 /* 033C30 702006A0 8D291564 */  lw    $t1, %lo(rarezip.sample)($t1)
-/* 033C34 702006A4 8D081568 */  lw    $t0, %lo(rarezip.bits_in_sample)($t0)
+/* 033C34 702006A4 8D081568 */  lw    $t0, %lo(rarezip.bitsinsample)($t0)
 /* 033C38 702006A8 8C63148C */  lw    $v1, %lo(rarezip.decompressed_count)($v1)
 /* 033C3C 702006AC 95EC0000 */  lhu   $t4, ($t7)
 /* 033C40 702006B0 972D0000 */  lhu   $t5, ($t9)
@@ -731,18 +731,18 @@ glabel decompress.inflate
 /* 033FAC 70200A1C AC23148C */  sw    $v1, %lo(rarezip.decompressed_count)($at)
 /* 033FB0 70200A20 3C017020 */  lui   $at, %hi(rarezip.sample) # $at, 0x7020
 /* 033FB4 70200A24 AC291564 */  sw    $t1, %lo(rarezip.sample)($at)
-/* 033FB8 70200A28 3C017020 */  lui   $at, %hi(rarezip.bits_in_sample) # $at, 0x7020
+/* 033FB8 70200A28 3C017020 */  lui   $at, %hi(rarezip.bitsinsample) # $at, 0x7020
 /* 033FBC 70200A2C 8FB00004 */  lw    $s0, 4($sp)
 /* 033FC0 70200A30 8FB10008 */  lw    $s1, 8($sp)
 /* 033FC4 70200A34 8FB2000C */  lw    $s2, 0xc($sp)
-/* 033FC8 70200A38 AC281568 */  sw    $t0, %lo(rarezip.bits_in_sample)($at)
+/* 033FC8 70200A38 AC281568 */  sw    $t0, %lo(rarezip.bitsinsample)($at)
 /* 033FCC 70200A3C 27BD0010 */  addiu $sp, $sp, 0x10
 /* 033FD0 70200A40 03E00008 */  jr    $ra
 /* 033FD4 70200A44 00001025 */   move  $v0, $zero
 
 glabel decompress.type0
-/* 033FD8 70200A48 3C097020 */  lui   $t1, %hi(rarezip.bits_in_sample) # $t1, 0x7020
-/* 033FDC 70200A4C 25291568 */  addiu $t1, %lo(rarezip.bits_in_sample) # addiu $t1, $t1, 0x1568
+/* 033FD8 70200A48 3C097020 */  lui   $t1, %hi(rarezip.bitsinsample) # $t1, 0x7020
+/* 033FDC 70200A4C 25291568 */  addiu $t1, %lo(rarezip.bitsinsample) # addiu $t1, $t1, 0x1568
 /* 033FE0 70200A50 8D240000 */  lw    $a0, ($t1)
 /* 033FE4 70200A54 3C087020 */  lui   $t0, %hi(rarezip.sample) # $t0, 0x7020
 /* 033FE8 70200A58 25081564 */  addiu $t0, %lo(rarezip.sample) # addiu $t0, $t0, 0x1564
@@ -936,8 +936,8 @@ glabel decompress.type1
 /* 034290 70200D00 00000000 */   nop   
 
 glabel decompress.type2
-/* 034294 70200D04 3C087020 */  lui   $t0, %hi(rarezip.bits_in_sample) # $t0, 0x7020
-/* 034298 70200D08 8D081568 */  lw    $t0, %lo(rarezip.bits_in_sample)($t0)
+/* 034294 70200D04 3C087020 */  lui   $t0, %hi(rarezip.bitsinsample) # $t0, 0x7020
+/* 034298 70200D08 8D081568 */  lw    $t0, %lo(rarezip.bitsinsample)($t0)
 /* 03429C 70200D0C 27BDFA98 */  addiu $sp, $sp, -0x568
 /* 0342A0 70200D10 3C097020 */  lui   $t1, %hi(rarezip.sample) # $t1, 0x7020
 /* 0342A4 70200D14 2D010005 */  sltiu $at, $t0, 5
@@ -1051,8 +1051,8 @@ glabel decompress.type2
 /* 03442C 70200E9C 27B00040 */   addiu $s0, $sp, 0x40
 /* 034430 70200EA0 3C0F7020 */  lui   $t7, %hi(rarezip.order) # $t7, 0x7020
 /* 034434 70200EA4 25EF1494 */  addiu $t7, %lo(rarezip.order) # addiu $t7, $t7, 0x1494
-/* 034438 70200EA8 3C027020 */  lui   $v0, %hi(D_702014A7) # $v0, 0x7020
-/* 03443C 70200EAC 244214A7 */  addiu $v0, %lo(D_702014A7) # addiu $v0, $v0, 0x14a7
+/* 034438 70200EA8 3C027020 */  lui   $v0, %hi(rarezip.order + 0x13) # $v0, 0x7020
+/* 03443C 70200EAC 244214A7 */  addiu $v0, %lo(rarezip.order + 0x13) # addiu $v0, $v0, 0x14a7
 /* 034440 70200EB0 008F2821 */  addu  $a1, $a0, $t7
 .L70200EB4:
 /* 034444 70200EB4 90B90000 */  lbu   $t9, ($a1)
@@ -1252,12 +1252,12 @@ glabel decompress.type2
 /* 034700 70201170 8F391590 */  lw    $t9, %lo(rarezip.data1)($t9)
 /* 034704 70201174 AC291564 */  sw    $t1, %lo(rarezip.sample)($at)
 /* 034708 70201178 3C187020 */  lui   $t8, %hi(rarezip.lextra) # $t8, 0x7020
-/* 03470C 7020117C 3C017020 */  lui   $at, %hi(rarezip.bits_in_sample) # $at, 0x7020
+/* 03470C 7020117C 3C017020 */  lui   $at, %hi(rarezip.bitsinsample) # $at, 0x7020
 /* 034710 70201180 271814E8 */  addiu $t8, %lo(rarezip.lextra) # addiu $t8, $t8, 0x14e8
 /* 034714 70201184 3C077020 */  lui   $a3, %hi(rarezip.lbase) # $a3, 0x7020
 /* 034718 70201188 27AE0550 */  addiu $t6, $sp, 0x550
 /* 03471C 7020118C 27AF0548 */  addiu $t7, $sp, 0x548
-/* 034720 70201190 AC281568 */  sw    $t0, %lo(rarezip.bits_in_sample)($at)
+/* 034720 70201190 AC281568 */  sw    $t0, %lo(rarezip.bitsinsample)($at)
 /* 034724 70201194 AFAF0018 */  sw    $t7, 0x18($sp)
 /* 034728 70201198 AFAE0014 */  sw    $t6, 0x14($sp)
 /* 03472C 7020119C 24E714A8 */  addiu $a3, %lo(rarezip.lbase) # addiu $a3, $a3, 0x14a8
@@ -1297,8 +1297,8 @@ glabel decompress.type2
 /* 0347B4 70201224 00001025 */   move  $v0, $zero
 
 glabel decompress.table
-/* 0347B8 70201228 3C097020 */  lui   $t1, %hi(rarezip.bits_in_sample) # $t1, 0x7020
-/* 0347BC 7020122C 25291568 */  addiu $t1, %lo(rarezip.bits_in_sample) # addiu $t1, $t1, 0x1568
+/* 0347B8 70201228 3C097020 */  lui   $t1, %hi(rarezip.bitsinsample) # $t1, 0x7020
+/* 0347BC 7020122C 25291568 */  addiu $t1, %lo(rarezip.bitsinsample) # addiu $t1, $t1, 0x1568
 /* 0347C0 70201230 8D230000 */  lw    $v1, ($t1)
 /* 0347C4 70201234 3C087020 */  lui   $t0, %hi(rarezip.sample) # $t0, 0x7020
 /* 0347C8 70201238 25081564 */  addiu $t0, %lo(rarezip.sample) # addiu $t0, $t0, 0x1564
@@ -1382,9 +1382,9 @@ glabel decompress.start
 /* 0348D8 70201348 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 0348DC 7020134C AFB2001C */  sw    $s2, 0x1c($sp)
 /* 0348E0 70201350 3C017020 */  lui   $at, %hi(rarezip.decompressed_count) # $at, 0x7020
-/* 0348E4 70201354 3C127020 */  lui   $s2, %hi(rarezip.bits_in_sample) # $s2, 0x7020
+/* 0348E4 70201354 3C127020 */  lui   $s2, %hi(rarezip.bitsinsample) # $s2, 0x7020
 /* 0348E8 70201358 AC20148C */  sw    $zero, %lo(rarezip.decompressed_count)($at)
-/* 0348EC 7020135C 26521568 */  addiu $s2, %lo(rarezip.bits_in_sample) # addiu $s2, $s2, 0x1568
+/* 0348EC 7020135C 26521568 */  addiu $s2, %lo(rarezip.bitsinsample) # addiu $s2, $s2, 0x1568
 /* 0348F0 70201360 AFB00014 */  sw    $s0, 0x14($sp)
 /* 0348F4 70201364 AFB30020 */  sw    $s3, 0x20($sp)
 /* 0348F8 70201368 AFB10018 */  sw    $s1, 0x18($sp)
