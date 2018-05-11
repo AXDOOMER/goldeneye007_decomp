@@ -324,9 +324,9 @@ glabel __scMain
 /* 0019F4 70000DF4 3C048002 */  lui   $a0, 0x8002
 /* 0019F8 70000DF8 15E10006 */  bne   $t7, $at, .L70000E14
 /* 0019FC 70000DFC 00000000 */   nop   
-/* 001A00 70000E00 3C048002 */  lui   $a0, %hi(osViModeTable.mode1E) # $a0, 0x8002
+/* 001A00 70000E00 3C048002 */  lui   $a0, %hi(osViModeTable.osViModeMpalLan1) # $a0, 0x8002
 /* 001A04 70000E04 0C003818 */  jal   osViSetMode
-/* 001A08 70000E08 24847320 */   addiu $a0, %lo(osViModeTable.mode1E) # addiu $a0, $a0, 0x7320
+/* 001A08 70000E08 24847320 */   addiu $a0, %lo(osViModeTable.osViModeMpalLan1) # addiu $a0, $a0, 0x7320
 /* 001A0C 70000E0C 10000004 */  b     .L70000E20
 /* 001A10 70000E10 3C013F80 */   lui   $at, 0x3f80
 .L70000E14:
