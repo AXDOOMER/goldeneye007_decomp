@@ -17,7 +17,7 @@ SECTIONS
 
    /* boot */
    .boot 0x04000040 : AT(__romPos) {
-      build/asm/boot.o(.text);
+      build/asm/bootcode.o(.text);
    }
    __romPos += SIZEOF(.boot);
 
