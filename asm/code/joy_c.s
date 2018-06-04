@@ -1464,6 +1464,55 @@ glabel controller_7000C954
 /* 00D57C 7000C97C 00000000 */  nop   
 
 .section .data
+D_800268C0:.word 0
+ptr_current_point_in_controller_input_index:.word controller_input_index
+D_800268C8:.word 0
+D_800268CC:.word 0
+num_controller_plugged_in_flags:.word 0
+num_controller_plugged_in_flags_0:.word 0
+controller_1_rumble_inserted:.word 0
+controller_2_rumble_inserted:.word 0
+controller_3_rumble_inserted:.word 0
+controller_4_rumble_inserted:.word 0
+controller_1_rumble_state:.word 0
+controller_2_rumble_state:.word 0
+controller_3_rumble_state:.word 0
+controller_4_rumble_state:.word 0
+controller_1_rumble_duration:.word 0
+controller_2_rumble_duration:.word 0
+controller_3_rumble_duration:.word 0
+controller_4_rumble_duration:.word 0
+controller_1_rumble_pulse:.word 0
+controller_2_rumble_pulse:.word 0
+controller_3_rumble_pulse:.word 0
+controller_4_rumble_pulse:.word 0
+D_80026918:.word 0
+D_8002691C:.word 0
+D_80026920:.word 0
+disable_all_rumble:.word 0
+ptr_to_tlb_ramrom_record:.word 0
+D_8002692C:.word 1
+pl1_controller_failure_lr:.word 0
+pl2_controller_failure_lr:.word 0
+pl3_controller_failure_lr:.word 0
+pl4_controller_failure_lr:.word 0
+pl1_controller_failure_ud:.word 0
+pl2_controller_failure_ud:.word 0
+pl3_controller_failure_ud:.word 0
+pl4_controller_failure_ud:.word 0
+pl1_controller_failure_held:.word 0
+pl2_controller_failure_held:.word 0
+pl3_controller_failure_held:.word 0
+pl4_controller_failure_held:.word 0
+pl1_controller_failure_pressed:.word 0
+pl2_controller_failure_pressed:.word 0
+pl3_controller_failure_pressed:.word 0
+pl4_controller_failure_pressed:.word 0
+D_80026970:.word 0
+.word 0
+.word 0
+.word 0
+
 .section .rodata
 aJoy_c_debug: .asciiz "joy_c_debug"
 .align 4

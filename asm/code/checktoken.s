@@ -77,12 +77,12 @@ glabel check_boot_switches
 /* 00B1C0 7000A5C0 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 00B1C4 7000A5C4 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 00B1C8 7000A5C8 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 00B1CC 7000A5CC 3C1100FF */  lui   $s1, %hi(D_00FF0004) # $s1, 0xff
+/* 00B1CC 7000A5CC 3C1100FF */  lui   $s1, 0xff
 /* 00B1D0 7000A5D0 AFB20020 */  sw    $s2, 0x20($sp)
 /* 00B1D4 7000A5D4 AFB00018 */  sw    $s0, 0x18($sp)
 /* 00B1D8 7000A5D8 AFA00028 */  sw    $zero, 0x28($sp)
 /* 00B1DC 7000A5DC 0C0033AA */  jal   rmon_debug_is_final_build
-/* 00B1E0 7000A5E0 3631B000 */   ori   $s1, (0x00FFB000 & 0xFFFF) # ori $s1, $s1, 0xb000
+/* 00B1E0 7000A5E0 3631B000 */   ori $s1, $s1, 0xb000
 /* 00B1E4 7000A5E4 10400004 */  beqz  $v0, .L7000A5F8
 /* 00B1E8 7000A5E8 3C108006 */   lui   $s0, %hi(boot_token_from_indy) # $s0, 0x8006
 /* 00B1EC 7000A5EC 3C018006 */  lui   $at, %hi(boot_token_from_indy) # $at, 0x8006
@@ -98,7 +98,7 @@ glabel check_boot_switches
 /* 00B20C 7000A60C 02002825 */   move  $a1, $s0
 /* 00B210 7000A610 26100004 */  addiu $s0, $s0, 4
 /* 00B214 7000A614 1612FFFB */  bne   $s0, $s2, .L7000A604
-/* 00B218 7000A618 26310004 */   addiu $s1, %lo(D_00FF0004) # addiu $s1, $s1, 4
+/* 00B218 7000A618 26310004 */   addiu $s1, $s1, 4
 .L7000A61C:
 /* 00B21C 7000A61C 3C048006 */  lui   $a0, %hi(boot_token_from_indy) # $a0, 0x8006
 /* 00B220 7000A620 0C00293C */  jal   check_string_something
@@ -197,8 +197,21 @@ glabel check_token
 /* 00B36C 7000A76C 00000000 */  nop   
 
 .section .data
+strstr_numstings:.word 1
+strstr_ptrcurrent_string:.word 0
+D_80024478:
+ .word          0,         0,         0,         0
+ .word          0,         0,         0,         0
+ .word          0,         0,         0,         0
+ .word          0,         0,         0,         0
+ .word          0,         0,         0,         0
+ .word          0,         0,         0,         0
+ .word          0,         0,         0,         0
+ .word          0,         0,         0,         0
+ .word          0,         0
+
 .section .rodata
-asc_D_800291F0: .word 0
+D_800291F0: .word 0
 aD_6: .asciiz "-d"
 aS_2: .asciiz "-s"
 aJ: .asciiz "-j"
