@@ -1465,4 +1465,6 @@ glabel controller_7000C954
 
 .section .data
 .section .rodata
+aJoy_c_debug: .asciiz "joy_c_debug"
+.align 4
 .section .bss

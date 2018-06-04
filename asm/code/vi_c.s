@@ -56,4 +56,6 @@ glabel something_with_vi_c_debug
 
 .section .data
 .section .rodata
+aVi_c_debug: .asciiz "vi_c_debug"
+.align 4
 .section .bss

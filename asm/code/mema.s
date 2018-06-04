@@ -787,5 +787,10 @@ glabel mem_related_1
 ptr_mema_c_debug_notice_list:.word 0
 
 .section .rodata
+aMema_c_debug:  .asciiz "mema_c_debug"
+aD_3:           .asciiz "%d "
+a___:           .asciiz "..."
+aD_5:           .asciiz "[%d]"
+.align 4
 
 .section .bss
