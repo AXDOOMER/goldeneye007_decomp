@@ -4411,7 +4411,7 @@ labels:
    - [0x80026898,	"end_displaylist_command"]
    - [0x800268A0,	"blank_C0_command"]
    - [0x800268A8,	"stdout_primary_color"]
-   - [0x800268AC,	"stdout_environment_color"]
+   - [0x800268AC,	"debug_text_color"]
    - [0x800268C4,	"ptr_current_point_in_controller_input_index"]
    - [0x800268D0,	"num_controller_plugged_in_flags"]
    - [0x800268D4,	"num_controller_plugged_in_flags_0"]

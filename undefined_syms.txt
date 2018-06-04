@@ -73,6 +73,8 @@ _musicsampletblSegmentRomStart = 0x00419790;
 osTvType = 0x80000300;
 osRomBase = 0x80000308;
 osResetType = 0x8000030C;
+osAppNMIBuffer = 0x8000031C;
+
 _codeSegmentVaddrStart    = 0x70000450;
 _codeSegmentVaddrEnd      = 0x70020D90;
 _cdataSegmentVaddrStart   = 0x80020D90;
@@ -92,6 +94,7 @@ vid_buff_1 = 0x803B5000;
 vid_buff_2 = 0x803DA800;
 _gameSegmentVaddrStart  = 0x7F000000;
 
+ASIC_STATUS = 0xA5000508;
 PIDMA_RAMP = 0xA4600000;
 PIDMA_ROMP = 0xA4600004;
 PIDMA_RAMROMS = 0xA4600008;

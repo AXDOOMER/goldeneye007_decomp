@@ -24,7 +24,7 @@ glabel debug_text_related_2
 glabel display_text_to_coord
 /* 00B9D0 7000ADD0 AFA60008 */  sw    $a2, 8($sp)
 /* 00B9D4 7000ADD4 30CE00FF */  andi  $t6, $a2, 0xff
-/* 00B9D8 7000ADD8 3C038002 */  lui   $v1, %hi(stdout_environment_color) # $v1, 0x8002
+/* 00B9D8 7000ADD8 3C038002 */  lui   $v1, %hi(debug_text_color) # $v1, 0x8002
 /* 00B9DC 7000ADDC 3C088002 */  lui   $t0, %hi(stdout_primary_color_table) # $t0, 0x8002
 /* 00B9E0 7000ADE0 3C0A8002 */  lui   $t2, %hi(stdout_environment_color_table) # $t2, 0x8002
 /* 00B9E4 7000ADE4 3C098002 */  lui   $t1, %hi(debug_text_bg_color) # $t1, 0x8002
@@ -33,7 +33,7 @@ glabel display_text_to_coord
 /* 00B9F0 7000ADF0 252968B0 */  addiu $t1, %lo(debug_text_bg_color) # addiu $t1, $t1, 0x68b0
 /* 00B9F4 7000ADF4 254A6710 */  addiu $t2, %lo(stdout_environment_color_table) # addiu $t2, $t2, 0x6710
 /* 00B9F8 7000ADF8 25086610 */  addiu $t0, %lo(stdout_primary_color_table) # addiu $t0, $t0, 0x6610
-/* 00B9FC 7000ADFC 8C6368AC */  lw    $v1, %lo(stdout_environment_color)($v1)
+/* 00B9FC 7000ADFC 8C6368AC */  lw    $v1, %lo(debug_text_color)($v1)
 /* 00BA00 7000AE00 00001025 */  move  $v0, $zero
 /* 00BA04 7000AE04 00003825 */  move  $a3, $zero
 .L7000AE08:
