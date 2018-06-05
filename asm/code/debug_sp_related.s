@@ -289,248 +289,86 @@ glabel ptr_videobuffer2
 
 .section .rodata
 aBd: .asciiz "BD"
-.align 4
-
 aIp8: .asciiz "IP8"
-.align 4
-
 aIp7: .asciiz "IP7"
-.align 4
-
 aIp6: .asciiz "IP6"
-.align 4
-
 aIp5: .asciiz "IP5"
-.align 4
-
 aIp4: .asciiz "IP4"
-.align 4
-
 aIp3: .asciiz "IP3"
-.align 4
-
 aIp2: .asciiz "IP2"
-.align 4
-
 aIp1: .asciiz "IP1"
-.align 4
-
 aInt: .asciiz "Int"
-.align 4
-
 aTlbmod: .asciiz "TLBmod"
-.align 4
-
 aTlbload: .asciiz "TLBload"
-.align 4
-
 aTlbstore: .asciiz "TLBstore"
-.align 4
-
 aAddressErrorOnLoadOrInstructionFet: .asciiz "Address error on load or instruction fetch"
-.align 4
-
 aAddressErrorOnStore: .asciiz "Address error on store"
-.align 4
-
 aBusErrorExceptionOnInstructionFetc: .asciiz "Bus error exception on instruction fetch"
-.align 4
-
 aBusErrorExceptionOnDataReference: .asciiz "Bus error exception on data reference"
-.align 4
-
 aSyscall: .asciiz "Syscall"
-.align 4
-
 aBrk: .asciiz "Brk"
-.align 4
-
 aReservedInstruction: .asciiz "Reserved instruction"
-.align 4
-
 aCopUnusable: .asciiz "Cop unusable"
-.align 4
-
 aOverflow: .asciiz "Overflow"
-.align 4
-
 aTrap: .asciiz "Trap"
-.align 4
-
 aVirtualCoherencyExceptionOnIntruct: .asciiz "Virtual coherency exception on intruction fetch"
-.align 4
-
 aFpException: .asciiz "Fp exception"
-.align 4
-
 aWatchpoint: .asciiz "Watchpoint"
-.align 4
-
 aVirtualCoherencyExceptionOnDataRef: .asciiz "Virtual coherency exception on data reference"
-.align 4
-
 aExceptionNULL_0: .word 0
-.align 4
-
 aCu3: .asciiz "CU3"
-.align 4
-
 aCu2: .asciiz "CU2"
-.align 4
-
 aCu1: .asciiz "CU1"
-.align 4
-
 aCu0: .asciiz "CU0"
-.align 4
-
 aRp: .asciiz "RP"
-.align 4
-
 aFr: .asciiz "FR"
-.align 4
-
 aRe: .asciiz "RE"
-.align 4
-
 aBev: .asciiz "BEV"
-.align 4
-
 aTs: .asciiz "TS"
-.align 4
-
 aSr: .asciiz "SR"
-.align 4
-
 aCh: .asciiz "CH"
-.align 4
-
 aCe: .asciiz "CE"
-.align 4
-
 aDe: .asciiz "DE"
-.align 4
-
 aIm8: .asciiz "IM8"
-.align 4
-
 aIm7: .asciiz "IM7"
-.align 4
-
 aIm6: .asciiz "IM6"
-.align 4
-
 aIm5: .asciiz "IM5"
-.align 4
-
 aIm4: .asciiz "IM4"
-.align 4
-
 aIm3: .asciiz "IM3"
-.align 4
-
 aIm2: .asciiz "IM2"
-.align 4
-
 aIm1: .asciiz "IM1"
-.align 4
-
 aKx: .asciiz "KX"
-.align 4
-
 aSx: .asciiz "SX"
-.align 4
-
 aUx: .asciiz "UX"
-.align 4
-
 aUsr: .asciiz "USR"
-.align 4
-
 aSup: .asciiz "SUP"
-.align 4
-
 aKer: .asciiz "KER"
-.align 4
-
 aErl: .asciiz "ERL"
-.align 4
-
 aExl: .asciiz "EXL"
-.align 4
-
 aIe: .asciiz "IE"
-.align 4
-
 aExceptionNULL_1: .word 0
-.align 4
-
 aFs: .asciiz "FS"
-.align 4
-
 aC_1: .asciiz "C"
-.align 4
-
 aUnimplemented: .asciiz "Unimplemented"
-.align 4
-
 aInvalidOp: .asciiz "Invalid op"
-.align 4
-
 aBy0_0: .asciiz "/ by 0.0"
-.align 4
-
 aOverflow_0: .asciiz "Overflow"
-.align 4
-
 aUnderflow: .asciiz "Underflow"
-.align 4
-
 aInexactOp: .asciiz "Inexact op"
-.align 4
-
 aEv: .asciiz "EV"
-.align 4
-
 aEz: .asciiz "EZ"
-.align 4
-
 aEo: .asciiz "EO"
-.align 4
-
 aEu: .asciiz "EU"
-.align 4
-
 aEi: .asciiz "EI"
-.align 4
-
 aFv: .asciiz "FV"
-.align 4
-
 aFz: .asciiz "FZ"
-.align 4
-
 aFo: .asciiz "FO"
-.align 4
-
 aFu: .asciiz "FU"
-.align 4
-
 aFi: .asciiz "FI"
-.align 4
-
 aRn: .asciiz "RN"
-.align 4
-
 aRz: .asciiz "RZ"
-.align 4
-
 aRp_1: .asciiz "RP"
-.align 4
-
 aRm: .asciiz "RM"
-.align 4
-
 aExceptionNULL: .word 0
 .align 4
 

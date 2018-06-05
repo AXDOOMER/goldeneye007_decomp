@@ -797,7 +797,7 @@ glabel audi_related_4
 /* 003328 70002728 27BD0048 */   addiu $sp, $sp, 0x48
 
 /* 00332C 7000272C 00000000 */  nop   
-
+.section .data
 .macro struct_10 name arg1 arg2 arg3 arg4 arg5 arg6 arg7 arg8 arg9
 \name:
  .word \arg1

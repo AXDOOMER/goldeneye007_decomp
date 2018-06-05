@@ -11,6 +11,10 @@
 
 .section .text, "ax"
 
+# Due to the manipulation of tlb, this file was likely
+# assembly to begin with, so I won't be attempting it. 
+# Feel free to prove me wrong and decompile it.
+
 glabel boot
 /* 001050 70000450 24020001 */  li    $v0, 1
 /* 001054 70000454 24030000 */  li    $v1, 0

@@ -370,3 +370,1767 @@ aAudi: .asciiz "audi"
 .align 2
 
 .section .bss
+glabel rmonthread
+ .space 0x1B0
+glabel idlethread
+ .space 0x1B0
+glabel mainthread
+ .space 0x1B0
+glabel shedthread
+ .space 0x1B0
+
+# these should probably be moved to better homes
+glabel msgQ_Q_fast3d
+  .space 0x18
+glabel msgQ_buf_8005D9B8
+  .space 0x80
+glabel mq
+  .space 0x8
+glabel D_8005DA40
+  .space 0xD8
+glabel dword_CODE_bss_8005DB18
+  .space 0x18
+glabel target_for_counters_maybe
+  .space 0x10
+glabel dword_CODE_bss_8005DB40
+  .space 0xB0
+glabel TLB_managment_table
+  .space 0x800
+glabel TLB_manager_mapping_table_start
+  .space 0xB4
+glabel TLB_manager_mapping_table_end
+  .space 0x4
+glabel ptr_TLBallocatedblock
+  .space 0x10
+glabel dword_CODE_bss_8005E4B8
+  .space 0x8
+glabel dword_CODE_bss_8005E4C0
+  .space 0x4
+glabel dword_CODE_bss_8005E4C4
+  .space 0x4
+glabel dword_CODE_bss_8005E4C8
+  .space 0x4
+glabel dword_CODE_bss_8005E4CC
+  .space 0x4
+glabel dword_CODE_bss_8005E4D0
+  .space 0x8
+glabel dword_CODE_bss_8005E4D8
+  .space 0x8
+glabel dword_CODE_bss_8005E4E0
+  .space 0x38
+glabel dword_CODE_bss_8005E518
+  .space 0x8
+glabel dword_CODE_bss_8005E520
+  .space 0x4
+glabel dword_CODE_bss_8005E524
+  .space 0xC
+glabel audithread
+  .space 0x1B0
+glabel dword_CODE_bss_8005E6E0
+  .space 0x18
+glabel dword_CODE_bss_8005E6F8
+  .space 0x20
+glabel msgQ_Q_8005E718
+  .space 0x18
+glabel msgQ_buf_8005E730
+  .space 0x20
+glabel dword_CODE_bss_8005E750
+  .space 0x50
+glabel dword_CODE_bss_8005E7A0
+  .space 0x10
+glabel off_CODE_bss_8005E7B0
+  .space 0x4
+glabel dword_CODE_bss_8005E7B4
+  .space 0x4
+glabel dword_CODE_bss_8005E7B8
+  .space 0x8
+glabel dword_CODE_bss_8005E7C0
+  .space 0x4
+glabel dword_CODE_bss_8005E7C4
+  .space 0x10
+glabel dword_CODE_bss_8005E7D4
+  .space 0x4EC
+glabel dword_CODE_bss_8005ECC0
+  .space 0x4
+glabel dword_CODE_bss_8005ECC4
+  .space 0x4
+glabel dword_CODE_bss_8005ECC8
+  .space 0x4
+glabel dword_CODE_bss_8005ECCC
+  .space 0x4
+glabel dword_CODE_bss_8005ECD0
+  .space 0x600
+glabel audDMAMessageQ
+  .space 0x18
+glabel audDMAMessageBUF
+  .space 0x108
+glabel dword_CODE_bss_8005F3F0
+  .space 0x10
+glabel displaylist_0
+  .space 0x850
+glabel displaylist_1
+  .space 0x850
+glabel displaylist_bank
+  .space 0x4
+glabel dword_CODE_bss_800604A4
+  .space 0x4
+glabel dword_CODE_bss_800604A8
+  .space 0x8
+glabel dword_CODE_bss_800604B0
+  .space 0x300
+glabel dword_CODE_bss_800607B0
+  .space 0x10
+glabel dword_CODE_bss_800607C0
+  .space 0xC
+glabel dword_CODE_bss_800607CC
+  .space 0x4
+glabel dword_CODE_bss_800607D0
+  .space 0xC
+glabel dword_CODE_bss_800607DC
+  .space 0x4
+glabel dword_CODE_bss_800607E0
+  .space 0x40
+glabel m
+  .space 0x4
+glabel word_CODE_bss_80060824
+  .space 0x4
+glabel dword_CODE_bss_80060828
+  .space 0x1C
+glabel dword_CODE_bss_80060844
+  .space 0x14
+glabel dword_CODE_bss_80060858
+  .space 0x14
+glabel dword_CODE_bss_8006086C
+  .space 0xC
+glabel off_CODE_bss_80060878
+  .space 0x1
+glabel byte_CODE_bss_80060879
+  .space 0x3
+glabel dword_CODE_bss_8006087C
+  .space 0x4
+glabel dword_CODE_bss_80060880
+  .space 0x4
+glabel dword_CODE_bss_80060884
+  .space 0x4
+glabel dword_CODE_bss_80060888
+  .space 0x4
+glabel dword_CODE_bss_8006088C
+  .space 0x4
+glabel dword_CODE_bss_80060890
+  .space 0x400
+glabel thread_video_manager_debugthread
+  .space 0x6B0
+glabel dword_CODE_bss_80061340
+  .space 0x2300
+glabel interrupt_entry_c_buffer
+  .space 0x18
+glabel dword_CODE_bss_80063658
+  .space 0x4
+glabel ptr_tlbthread_maybe
+  .space 0x4
+glabel dword_CODE_bss_80063660
+  .space 0x4
+glabel current_indy_read_buf_resourceID
+  .space 0x4
+glabel ptr_indy_read_buf_string1
+  .space 0x4
+glabel ptr_indy_read_buf_string2
+  .space 0x4
+glabel indy_read_buffer
+  .space 0x60
+glabel memoryMesgMB
+  .space 0x18
+glabel ptr_memorymsg
+  .space 0x8
+glabel memoryMesgQueue
+  .space 0x20
+glabel dword_CODE_bss_80063710
+  .space 0x10
+glabel ptr_sfx_buf
+  .space 0x4
+glabel dword_CODE_bss_80063724
+  .space 0x4
+glabel ptr_1st_music_ctrl_block
+  .space 0x4
+glabel ptr_2nd_music_ctrl_block
+  .space 0x4
+glabel ptr_3rd_music_ctrl_block
+  .space 0x4
+glabel ptr_musicdatatable
+  .space 0x4
+glabel D_80063738
+  .space 0x80
+glabel D_800637B8
+  .space 0x7E
+glabel D_80063836
+  .space 0x2
+glabel D_80063838
+  .space 0x4
+glabel D_8006383C
+  .space 0x4
+glabel D_80063840
+  .space 0x4
+glabel D_80063844
+  .space 0x2
+glabel D_80063846
+  .space 0x2
+glabel D_80063848
+  .space 0x2
+glabel D_8006384A
+  .space 0x2
+glabel D_8006384C
+  .space 0x2
+glabel D_8006384E
+  .space 0x2
+glabel D_80063850
+  .space 0x4
+glabel D_80063854
+  .space 0x4
+glabel D_80063858
+  .space 0x8
+glabel D_80063860
+  .space 0xF8
+glabel D_80063958
+  .space 0xF8
+glabel D_80063A50
+  .space 0x154
+glabel D_80063BA4
+  .space 0x4
+glabel D_80063BA8
+  .space 0x8
+glabel memory_bank_ptrs
+  .space 0x10
+glabel D_80063BC0
+  .space 0x4
+glabel D_80063BC4
+  .space 0x4
+glabel D_80063BC8
+  .space 0x8
+glabel D_80063BD0
+  .space 0x4
+glabel D_80063BD4
+  .space 0x4
+glabel D_80063BD8
+  .space 0x18
+glabel ptr_model_room_buf_pri
+  .space 0x8
+glabel dword_CODE_bss_80063BF8
+  .space 0x24
+glabel dword_CODE_bss_80063C1C
+  .space 0x4
+glabel ptr_model_room_buf_secondary
+  .space 0x4
+glabel size_modelroom_buf
+  .space 0x4
+glabel ptr_table_allocated_mem_blocks
+  .space 0x4
+glabel dword_CODE_bss_80063C2C
+  .space 0x4
+glabel index_for_loadedroom
+  .space 0x4
+glabel dword_CODE_bss_80063C34
+  .space 0x4
+glabel ptr_first_entry_in_alloc_table
+  .space 0x4
+glabel dword_CODE_bss_80063C3C
+  .space 0xC
+glabel dword_CODE_bss_80063C48
+  .space 0xFC0
+glabel dword_CODE_bss_80064C08
+  .space 0x8
+glabel dword_CODE_bss_80064C10
+  .space 0x8
+glabel dword_CODE_bss_80064C18
+  .space 0x4
+glabel dword_CODE_bss_80064C1C
+  .space 0x4
+glabel dword_CODE_bss_80064C20
+  .space 0x4
+glabel dword_CODE_bss_80064C24
+  .space 0xC
+glabel boot_token_from_indy
+  .space 0x280
+glabel dword_CODE_bss_80064EB0
+  .space 0x20
+glabel dword_CODE_bss_80064ED0
+  .space 0x20
+glabel vi_c_debug_MSG
+  .space 0x20
+glabel vi_c_debug_MQ
+  .space 0x20
+glabel controller_input_index
+  .space 0x1E0
+glabel dword_CODE_bss_80065110
+  .space 0x4
+glabel dword_CODE_bss_80065114
+  .space 0x4
+glabel dword_CODE_bss_80065118
+  .space 0x4
+glabel dword_CODE_bss_8006511C
+  .space 0x10
+glabel dword_CODE_bss_8006512C
+  .space 0x1E0
+glabel dword_CODE_bss_8006530C
+  .space 0x8
+glabel dword_CODE_bss_80065314
+  .space 0x10
+glabel dword_CODE_bss_80065324
+  .space 0x4
+glabel dword_CODE_bss_80065328
+  .space 0x28
+glabel interrupt5_thread_list_buf
+  .space 0x18
+glabel dword_CODE_bss_80065368
+  .space 0x8
+glabel dword_CODE_bss_80065370
+  .space 0x18
+glabel dword_CODE_bss_80065388
+  .space 0x8
+glabel dword_CODE_bss_80065390
+  .space 0x18
+glabel dword_CODE_bss_800653A8
+  .space 0x8
+glabel dword_CODE_bss_800653B0
+  .space 0x18
+glabel dword_CODE_bss_800653C8
+  .space 0x8
+glabel dword_CODE_bss_800653D0
+  .space 0x18
+glabel player1_controllerstatus
+  .space 0x4
+glabel player2_controllerstatus
+  .space 0x4
+glabel player3_controllerstatus
+  .space 0x4
+glabel player4_controllerstatus
+  .space 0x4
+glabel player1_controller_packet
+  .space 0x1A8
+glabel rumble_off_player1_packet_buffer
+  .space 0x100
+glabel rumble_on_player_packet_buffers
+  .space 0x100
+glabel rumble_on_buffer
+  .space 0x20
+glabel rumble_off_buffer
+  .space 0x20
+glabel __osFinalRom
+  .space 0x10
+glabel vi_thread
+  .space 0x1B0
+glabel vi_thread_sp_maybe
+  .space 0x1000
+glabel interrupt_entry_buffer
+  .space 0x18
+glabel dword_CODE_bss_800669B8
+  .space 0x18
+glabel word_CODE_bss_800669D0
+  .space 0x2
+glabel byte_CODE_bss_800669D2
+  .space 0x2
+glabel dword_CODE_bss_800669D4
+  .space 0x14
+glabel word_CODE_bss_800669E8
+  .space 0x2
+glabel byte_CODE_bss_800669EA
+  .space 0x2
+glabel dword_CODE_bss_800669EC
+  .space 0x14
+glabel word_CODE_bss_80066A00
+  .space 0x10
+glabel __osEventStateTab
+  .space 0x40
+glabel dword_CODE_bss_80066A50
+  .space 0x40
+glabel dword_CODE_bss_80066A90
+  .space 0x40
+glabel piThread
+  .space 0x1B0
+glabel cmdBuf
+  .space 0x1000
+glabel pieventQueue
+  .space 0x18
+glabel piEventBuf
+  .space 0x8
+glabel __osContPifRam
+  .space 0x3C
+glabel dword_CODE_bss_80067CDC
+  .space 0x4
+glabel __osContLastCmd
+  .space 0x1
+glabel __osMaxControllers
+  .space 0x7
+glabel __osEepromTimer
+  .space 0x20
+glabel __osEepromTimerQ
+  .space 0x18
+glabel __osEepromTimerMsg
+  .space 0x10
+glabel __osEepPifRam
+  .space 0x3C
+glabel __osEepPifRam_end
+  .space 0x4
+glabel __osPfsPifRam
+  .space 0x3C
+glabel __osPfsPifRam_end
+  .space 0x4
+glabel dword_CODE_bss_80067DB0
+  .space 0x8
+glabel dword_CODE_bss_80067DB8
+  .space 0x18
+glabel flt_CODE_bss_80067DD0
+  .space 0x10
+glabel flt_CODE_bss_80067DE0
+  .space 0x10
+glabel leoDiskStack
+  .space 0x1000
+glabel __osBaseTimer
+  .space 0x20
+glabel __osCurrentTime
+  .space 0x8
+glabel __osBaseCounter
+  .space 0x4
+glabel __osViIntrCount
+  .space 0x4
+glabel __osTimerCounter
+  .space 0x10
+glabel __osThreadSave
+  .space 0x18
+glabel __osFaultedThread
+  .space 0x8
+glabel T_CONTEXT_AT
+  .space 0x38
+glabel T_CONTEXT_T0
+  .space 0x8
+glabel T_CONTEXT_T1
+  .space 0x8
+glabel T_CONTEXT_T2
+  .space 0xB0
+glabel T_CONTEXT_SR
+  .space 0x98
+glabel dword_CODE_bss_80068FE0
+  .space 0x8
+glabel __osPiAccessQueue
+  .space 0x18
+glabel LeoDiskHandle
+  .space 0x74
+glabel __osDiskHandle
+  .space 0x4
+glabel dword_CODE_bss_80069078
+  .space 0xF8
+glabel dword_CODE_bss_80069170
+  .space 0x2D0
+glabel dword_CODE_bss_80069440
+  .space 0x18
+glabel dword_CODE_bss_80069458
+  .space 0xC0
+glabel dword_CODE_bss_80069518
+  .space 0x20
+glabel ptr_animation_table
+  .space 0x8
+glabel if_positive_last_mp_weapon_set_num
+  .space 0x10
+glabel dword_CODE_bss_80069550
+  .space 0x4
+glabel dword_CODE_bss_80069554
+  .space 0x4
+glabel matrix_buffer_rarelogo_0
+  .space 0x4
+glabel matrix_buffer_gunbarrel_0
+  .space 0x4
+glabel matrix_buffer_rarelogo_1
+  .space 0x4
+glabel matrix_buffer_rarelogo_2
+  .space 0x4
+glabel matrix_buffer_gunbarrel_1
+  .space 0x4
+glabel matrix_buffer_intro_backdrop
+  .space 0x4
+glabel matrix_buffer_intro_bond
+  .space 0x4
+glabel x
+  .space 0x4
+glabel y
+  .space 0x4
+glabel dword_CODE_bss_8006957C
+  .space 0x4
+glabel dword_CODE_bss_80069580
+  .space 0x4
+glabel word_CODE_bss_80069584
+  .space 0x4
+glabel dword_CODE_bss_80069588
+  .space 0x4
+glabel dword_CODE_bss_8006958C
+  .space 0x4
+glabel virtualaddress
+  .space 0x4
+glabel dword_CODE_bss_80069594
+  .space 0xC
+glabel flt_CODE_bss_800695A0
+  .space 0x4
+glabel flt_CODE_bss_800695A4
+  .space 0x4
+glabel flt_CODE_bss_800695A8
+  .space 0x4
+glabel flt_CODE_bss_800695AC
+  .space 0x4
+glabel flt_CODE_bss_800695B0
+  .space 0x4
+glabel flt_CODE_bss_800695B4
+  .space 0x4
+glabel flt_CODE_bss_800695B8
+  .space 0x4
+glabel flt_CODE_bss_800695BC
+  .space 0x4
+glabel flt_CODE_bss_800695C0
+  .space 0x8
+glabel flt_CODE_bss_800695C8
+  .space 0x4
+glabel flt_CODE_bss_800695CC
+  .space 0x4
+glabel flt_CODE_bss_800695D0
+  .space 0x8
+glabel flt_CODE_bss_800695D8
+  .space 0x4
+glabel flt_CODE_bss_800695DC
+  .space 0x4
+glabel flt_CODE_bss_800695E0
+  .space 0x4
+glabel flt_CODE_bss_800695E4
+  .space 0x4
+glabel flt_CODE_bss_800695E8
+  .space 0x4
+glabel flt_CODE_bss_800695EC
+  .space 0x4
+glabel flt_CODE_bss_800695F0
+  .space 0x8
+glabel flt_CODE_bss_800695F8
+  .space 0x4
+glabel flt_CODE_bss_800695FC
+  .space 0x4
+glabel flt_CODE_bss_80069600
+  .space 0x8
+glabel flt_CODE_bss_80069608
+  .space 0x4
+glabel flt_CODE_bss_8006960C
+  .space 0x4
+glabel flt_CODE_bss_80069610
+  .space 0x4
+glabel flt_CODE_bss_80069614
+  .space 0x4
+glabel flt_CODE_bss_80069618
+  .space 0x8
+glabel dword_CODE_bss_80069620
+  .space 0x31
+glabel cheat_available
+  .space 0x1
+glabel CHEAT_AVAILABLE_INVINCIBLE
+  .space 0x1
+glabel CHEAT_AVAILABLE_ALLGUNS
+  .space 0x4
+glabel CHEAT_AVAILABLE_LINEMODE
+  .space 0x1
+glabel CHEAT_AVAILABLE_2X_HEALTH
+  .space 0x1
+glabel CHEAT_AVAILABLE_2X_ARMOR
+  .space 0x1
+glabel CHEAT_AVAILABLE_BOND_INVIS
+  .space 0x1
+glabel CHEAT_AVAILABLE_INFINITE_AMMO
+  .space 0x1
+glabel CHEAT_AVAILABLE_DK_MODE
+  .space 0x1
+glabel CHEAT_AVAILABLE_EXTRA_WEAPONS
+  .space 0x1
+glabel CHEAT_AVAILABLE_TINY_BOND
+  .space 0x1
+glabel CHEAT_AVAILABLE_PAINTBALL
+  .space 0x1
+glabel CHEAT_AVAILABLE_10X_HEALTH
+  .space 0x1
+glabel CHEAT_AVAILABLE_MAGNUM
+  .space 0x1
+glabel CHEAT_AVAILABLE_LASER
+  .space 0x1
+glabel CHEAT_AVAILABLE_GOLDENGUN
+  .space 0x1
+glabel CHEAT_AVAILABLE_SILVERPP7
+  .space 0x1
+glabel CHEAT_AVAILABLE_GOLDPP7
+  .space 0x1
+glabel CHEAT_AVAILABLE_MP_INVINCIBILITY
+  .space 0x1
+glabel CHEAT_AVAILABLE_NO_MP_RADAR
+  .space 0x1
+glabel CHEAT_AVAILABLE_TURBO
+  .space 0x1
+glabel CHEAT_AVAILABLE_DEBUG_MODE
+  .space 0x1
+glabel CHEAT_AVAILABLE_FAST_ANI
+  .space 0x1
+glabel CHEAT_AVAILABLE_SLOW_ANI
+  .space 0x1
+glabel CHEAT_AVAILABLE_ENMY_ROCKETS
+  .space 0x1
+glabel CHEAT_AVAILABLE_2X_ROCKET
+  .space 0x1
+glabel CHEAT_AVAILABLE_2X_GRENADE_LAUNCHER
+  .space 0x1
+glabel CHEAT_AVAILABLE_2X_RCP90
+  .space 0x1
+glabel CHEAT_AVAILABLE_2X_THROWING_KNIVES
+  .space 0x1
+glabel CHEAT_AVAILABLE_2X_HUNTING_KNIVES
+  .space 0x1
+glabel CHEAT_AVAILABLE_2X_LASER
+  .space 0x2E
+glabel cheat_activated
+  .space 0x1
+glabel CHEAT_AVAILABLE_EXTRA_CHARS
+  .space 0x1
+glabel cheat_activated_1
+  .space 0x1
+glabel cheat_activated_2
+  .space 0x1
+glabel CHEAT_AVAILABLE_MAX_AMMO
+  .space 0x1
+glabel cheat_activated_4
+  .space 0x1
+glabel cheat_activated_5
+  .space 0x1
+glabel cheat_activated_6
+  .space 0x1
+glabel cheat_activated_7
+  .space 0x1
+glabel cheat_activated_8
+  .space 0x1
+glabel cheat_activated_9
+  .space 0x1
+glabel cheat_activated_10
+  .space 0x1
+glabel cheat_activated_11
+  .space 0x1
+glabel cheat_activated_12
+  .space 0x1
+glabel cheat_activated_13
+  .space 0x1
+glabel cheat_activated_14
+  .space 0x1
+glabel cheat_activated_15
+  .space 0x1
+glabel cheat_activated_16
+  .space 0x1
+glabel cheat_activated_17
+  .space 0x1
+glabel cheat_activated_18
+  .space 0x1
+glabel cheat_activated_19
+  .space 0x1
+glabel cheat_activated_20
+  .space 0x1
+glabel cheat_activated_21
+  .space 0x1
+glabel cheat_activated_22
+  .space 0x1
+glabel cheat_activated_23
+  .space 0x1
+glabel cheat_activated_24
+  .space 0x1
+glabel cheat_activated_25
+  .space 0x1
+glabel cheat_activated_26
+  .space 0x1
+glabel cheat_activated_27
+  .space 0x1
+glabel cheat_activated_28
+  .space 0x1
+glabel cheat_activated_29
+  .space 0x1
+glabel cheat_activated_30
+  .space 0x1
+glabel cheat_activated_31
+  .space 0x1
+glabel cheat_activated_32
+  .space 0x1
+glabel cheat_activated_33
+  .space 0x1
+glabel cheat_activated_34
+  .space 0x1
+glabel cheat_activated_35
+  .space 0x1
+glabel cheat_activated_36
+  .space 0x1
+glabel cheat_activated_37
+  .space 0x1
+glabel cheat_activated_38
+  .space 0x1
+glabel cheat_activated_39
+  .space 0x1
+glabel cheat_activated_40
+  .space 0x1
+glabel cheat_activated_41
+  .space 0x1
+glabel cheat_activated_42
+  .space 0x1
+glabel cheat_activated_43
+  .space 0x1
+glabel cheat_activated_44
+  .space 0x1
+glabel cheat_activated_45
+  .space 0x1
+glabel cheat_activated_46
+  .space 0x1
+glabel cheat_activated_47
+  .space 0x1
+glabel cheat_activated_48
+  .space 0x1
+glabel cheat_activated_49
+  .space 0x1
+glabel cheat_activated_50
+  .space 0x1
+glabel cheat_activated_51
+  .space 0x1
+glabel cheat_activated_52
+  .space 0x1
+glabel cheat_activated_53
+  .space 0x1
+glabel cheat_activated_54
+  .space 0x1
+glabel cheat_activated_55
+  .space 0x1
+glabel cheat_activated_56
+  .space 0x1
+glabel cheat_activated_57
+  .space 0x1
+glabel cheat_activated_58
+  .space 0x1
+glabel cheat_activated_59
+  .space 0x1
+glabel cheat_activated_60
+  .space 0x1
+glabel cheat_activated_61
+  .space 0x1
+glabel cheat_activated_62
+  .space 0x1
+glabel cheat_activated_63
+  .space 0x1
+glabel cheat_activated_64
+  .space 0x1
+glabel cheat_activated_65
+  .space 0x1
+glabel cheat_activated_66
+  .space 0x1
+glabel cheat_activated_67
+  .space 0x1
+glabel cheat_activated_68
+  .space 0x1
+glabel cheat_activated_69
+  .space 0x1
+glabel cheat_activated_70
+  .space 0x1
+glabel cheat_activated_71
+  .space 0x1
+glabel cheat_activated_72
+  .space 0x1
+glabel cheat_activated_73
+  .space 0x1
+glabel cheat_activated_74
+  .space 0x1
+glabel cheat_activated_75
+  .space 0x1
+glabel cheat_activated_76
+  .space 0x1
+glabel cheat_activated_77
+  .space 0x1
+glabel cheat_activated_78
+  .space 0x1
+glabel fav_weapon_right_player1
+  .space 0x4
+glabel fav_weapon_left_player1
+  .space 0x4
+glabel fav_weapon_right_player2
+  .space 0x4
+glabel fav_weapon_left_player2
+  .space 0x4
+glabel fav_weapon_right_player3
+  .space 0x4
+glabel fav_weapon_left_player3
+  .space 0x4
+glabel fav_weapon_right_player4
+  .space 0x4
+glabel fav_weapon_left_player4
+  .space 0x4
+glabel mp_char_cur_select_player1
+  .space 0x4
+glabel mp_char_cur_select_player2
+  .space 0x4
+glabel mp_char_cur_select_player3
+  .space 0x4
+glabel mp_char_cur_select_player4
+  .space 0x4
+glabel mp_char_prev_select_player1
+  .space 0x4
+glabel mp_char_prev_select_player2
+  .space 0x4
+glabel mp_char_prev_select_player3
+  .space 0x4
+glabel mp_char_prev_select_player4
+  .space 0x4
+glabel dword_CODE_bss_80069730
+  .space 0x4
+glabel dword_CODE_bss_80069734
+  .space 0x4
+glabel dword_CODE_bss_80069738
+  .space 0x4
+glabel dword_CODE_bss_8006973C
+  .space 0x4
+glabel has_selected_char_player1
+  .space 0x4
+glabel has_selected_char_player2
+  .space 0x4
+glabel has_selected_char_player3
+  .space 0x4
+glabel has_selected_char_player4
+  .space 0x4
+glabel size_mp_select_image_player1
+  .space 0x4
+glabel size_mp_select_image_player2
+  .space 0x4
+glabel size_mp_select_image_player3
+  .space 0x4
+glabel size_mp_select_image_player4
+  .space 0x4
+glabel dword_CODE_bss_80069760
+  .space 0x4
+glabel dword_CODE_bss_80069764
+  .space 0x4
+glabel dword_CODE_bss_80069768
+  .space 0x4
+glabel dword_CODE_bss_8006976C
+  .space 0x4
+glabel dword_CODE_bss_80069770
+  .space 0x4
+glabel dword_CODE_bss_80069774
+  .space 0x4
+glabel dword_CODE_bss_80069778
+  .space 0x4
+glabel current_mp_stage_highlighted
+  .space 0x4
+glabel dword_CODE_bss_80069780
+  .space 0x4
+glabel mission_difficulty_highlighted
+  .space 0x4
+glabel dword_CODE_bss_80069788
+  .space 0x4
+glabel dword_CODE_bss_8006978C
+  .space 0x4
+glabel dword_CODE_bss_80069790
+  .space 0x4
+glabel highlight_enemy_reaction
+  .space 0x4
+glabel highlight_enemy_health
+  .space 0x4
+glabel highlight_enemy_accuracy
+  .space 0x4
+glabel highlight_enemy_damage
+  .space 0x8
+glabel handicap_player1
+  .space 0x4
+glabel handicap_player2
+  .space 0x4
+glabel handicap_player3
+  .space 0x4
+glabel handicap_player4
+  .space 0x4
+glabel controlstyle_player1
+  .space 0x4
+glabel controlstyle_player2
+  .space 0x4
+glabel controlstyle_player3
+  .space 0x4
+glabel controlstyle_player4
+  .space 0x4
+glabel highlight_players
+  .space 0x4
+glabel highlight_scenario
+  .space 0x4
+glabel highlight_gameselect
+  .space 0x4
+glabel highlight_gamelength
+  .space 0x4
+glabel highlight_character
+  .space 0x4
+glabel highlight_weaponselect
+  .space 0x4
+glabel highlight_health
+  .space 0x4
+glabel highlight_controlstyle
+  .space 0x4
+glabel highlight_aimadjustment
+  .space 0x8
+glabel dword_CODE_bss_800697F0
+  .space 0x130
+glabel save1
+  .space 0x60
+glabel save2
+  .space 0x60
+glabel save3
+  .space 0x60
+glabel save4
+  .space 0x60
+glabel save5
+  .space 0x60
+glabel save6
+  .space 0x60
+glabel dword_CODE_bss_80069B60
+  .space 0x10
+glabel sfx_related
+  .space 0x4
+glabel dword_CODE_bss_80069B74
+  .space 0x4
+glabel dword_CODE_bss_80069B78
+  .space 0xB8
+glabel ptr_list_object_lookup_indices
+  .space 0x4
+glabel num_obj_position_data_entries
+  .space 0x4
+glabel pos_data_entry
+  .space 0x24
+glabel dword_CODE_bss_80069C5C
+  .space 0x10
+glabel dword_CODE_bss_80069C6C
+  .space 0x24
+glabel dword_CODE_bss_80069C90
+  .space 0x10
+glabel dword_CODE_bss_80069CA0
+  .space 0x24
+glabel dword_CODE_bss_80069CC4
+  .space 0x10
+glabel dword_CODE_bss_80069CD4
+  .space 0x34
+glabel dword_CODE_bss_80069D08
+  .space 0x34
+glabel dword_CODE_bss_80069D3C
+  .space 0x34
+glabel dword_CODE_bss_80069D70
+  .space 0x34
+glabel dword_CODE_bss_80069DA4
+  .space 0x7874
+glabel ptr_room_lookup_buffer_maybe
+  .space 0x4
+glabel dword_CODE_bss_8007161C
+  .space 0x4
+glabel dword_CODE_bss_80071620
+  .space 0x94
+glabel dword_CODE_bss_800716B4
+  .space 0x73C
+glabel dword_CODE_bss_80071DF0
+  .space 0x4
+glabel dword_CODE_bss_80071DF4
+  .space 0x4
+glabel dword_CODE_bss_80071DF8
+  .space 0x8
+glabel dword_CODE_bss_80071E00
+  .space 0x4
+glabel dword_CODE_bss_80071E04
+  .space 0x4
+glabel dword_CODE_bss_80071E08
+  .space 0x70
+glabel gas_damage_flag
+  .space 0x4
+glabel gas_cutoff_flag
+  .space 0x4
+glabel autogenerated_weapons
+  .space 0xFF0
+glabel dword_CODE_bss_80072E70
+  .space 0x500
+glabel dword_CODE_bss_80073370
+  .space 0xA50
+glabel dword_CODE_bss_80073DC0
+  .space 0x1270
+glabel dword_CODE_bss_80075030
+  .space 0xB40
+glabel objinst
+  .space 0x4
+glabel dword_CODE_bss_80075B74
+  .space 0x4
+glabel flt_CODE_bss_80075B78
+  .space 0x4
+glabel flt_CODE_bss_80075B7C
+  .space 0x4
+glabel flt_CODE_bss_80075B80
+  .space 0x8
+glabel flt_CODE_bss_80075B88
+  .space 0x4
+glabel flt_CODE_bss_80075B8C
+  .space 0x4
+glabel flt_CODE_bss_80075B90
+  .space 0x8
+glabel dword_CODE_bss_80075B98
+  .space 0x6C
+glabel dword_CODE_bss_80075C04
+  .space 0xC
+glabel dword_CODE_bss_80075C10
+  .space 0x78
+glabel dword_CODE_bss_80075C88
+  .space 0x78
+glabel ptr_setup_path_tbl
+  .space 0x4
+glabel ptr_setup_path_link
+  .space 0x4
+glabel ptr_setup_intro
+  .space 0x4
+glabel ptr_setup_objects
+  .space 0x4
+glabel ptr_setup_path_sets
+  .space 0x4
+glabel ptr_setup_actions
+  .space 0x4
+glabel ptr_0xxxpresets
+  .space 0x4
+glabel ptr_2xxxpresets
+  .space 0x4
+glabel dword_CODE_bss_80075D20
+  .space 0x4
+glabel dword_CODE_bss_80075D24
+  .space 0x4
+glabel dword_CODE_bss_80075D28
+  .space 0x8
+glabel objective_ptrs
+  .space 0x4
+glabel dword_CODE_bss_80075D34
+  .space 0x4
+glabel dword_CODE_bss_80075D38
+  .space 0x20
+glabel dword_CODE_bss_80075D58
+  .space 0x4
+glabel dword_CODE_bss_80075D5C
+  .space 0x4
+glabel dword_CODE_bss_80075D60
+  .space 0x20
+glabel ptr_last_tag_entry_type16
+  .space 0x4
+glabel ptr_last_briefing_setup_entry_type23
+  .space 0x4
+glabel ptr_last_enter_room_subobject_entry_type20
+  .space 0x4
+glabel ptr_last_deposit_in_room_subobject_entry_type21
+  .space 0x4
+glabel ptr_last_photo_obj_in_room_subobject_entry_type1E
+  .space 0x10
+glabel flt_CODE_bss_80075DA0
+  .space 0x10
+glabel dword_CODE_bss_80075DB0
+  .space 0x8
+glabel dword_CODE_bss_80075DB8
+  .space 0x4
+glabel dword_CODE_bss_80075DBC
+  .space 0x4
+glabel dword_CODE_bss_80075DC0
+  .space 0x4
+glabel dword_CODE_bss_80075DC4
+  .space 0x4
+glabel dword_CODE_bss_80075DC8
+  .space 0x9C
+glabel dword_CODE_bss_80075E64
+  .space 0x4
+glabel dword_CODE_bss_80075E68
+  .space 0xBE0
+glabel dword_CODE_bss_80076A48
+  .space 0x8
+glabel dword_CODE_bss_80076A50
+  .space 0xC
+glabel dword_CODE_bss_80076A5C
+  .space 0x8
+glabel dword_CODE_bss_80076A64
+  .space 0xC
+glabel dword_CODE_bss_80076A70
+  .space 0x4
+glabel dword_CODE_bss_80076A74
+  .space 0x4
+glabel dword_CODE_bss_80076A78
+  .space 0xC
+glabel dword_CODE_bss_80076A84
+  .space 0x4
+glabel dword_CODE_bss_80076A88
+  .space 0x4
+glabel dword_CODE_bss_80076A8C
+  .space 0x14
+glabel dword_CODE_bss_80076AA0
+  .space 0x14
+glabel dword_CODE_bss_80076AB4
+  .space 0x14
+glabel dword_CODE_bss_80076AC8
+  .space 0x14
+glabel dword_CODE_bss_80076ADC
+  .space 0x2E2C
+glabel dword_CODE_bss_80079908
+  .space 0x28
+glabel ptr_allocation_0
+  .space 0x4
+glabel ptr_allocation_1
+  .space 0xC
+glabel flt_CODE_bss_80079940
+  .space 0x4
+glabel flt_CODE_bss_80079944
+  .space 0x4
+glabel flt_CODE_bss_80079948
+  .space 0x4
+glabel flt_CODE_bss_8007994C
+  .space 0x4
+glabel flt_CODE_bss_80079950
+  .space 0x4
+glabel flt_CODE_bss_80079954
+  .space 0x4
+glabel flt_CODE_bss_80079958
+  .space 0x4
+glabel flt_CODE_bss_8007995C
+  .space 0x4
+glabel flt_CODE_bss_80079960
+  .space 0x4
+glabel flt_CODE_bss_80079964
+  .space 0x4
+glabel flt_CODE_bss_80079968
+  .space 0x4
+glabel flt_CODE_bss_8007996C
+  .space 0x4
+glabel flt_CODE_bss_80079970
+  .space 0x4
+glabel flt_CODE_bss_80079974
+  .space 0x4
+glabel flt_CODE_bss_80079978
+  .space 0x4
+glabel flt_CODE_bss_8007997C
+  .space 0x4
+glabel flt_CODE_bss_80079980
+  .space 0x10
+glabel flt_CODE_bss_80079990
+  .space 0x4
+glabel flt_CODE_bss_80079994
+  .space 0x4
+glabel flt_CODE_bss_80079998
+  .space 0x4
+glabel dword_CODE_bss_8007999C
+  .space 0x4
+glabel dword_CODE_bss_800799A0
+  .space 0x8
+glabel flt_CODE_bss_800799A8
+  .space 0x4
+glabel flt_CODE_bss_800799AC
+  .space 0x4
+glabel flt_CODE_bss_800799B0
+  .space 0x4
+glabel dword_CODE_bss_800799B4
+  .space 0x4
+glabel dword_CODE_bss_800799B8
+  .space 0x4
+glabel flt_CODE_bss_800799BC
+  .space 0x4
+glabel flt_CODE_bss_800799C0
+  .space 0x4
+glabel flt_CODE_bss_800799C4
+  .space 0x4
+glabel flt_CODE_bss_800799C8
+  .space 0x8
+glabel flt_CODE_bss_800799D0
+  .space 0x4
+glabel flt_CODE_bss_800799D4
+  .space 0x4
+glabel flt_CODE_bss_800799D8
+  .space 0x8
+glabel starting_right_weapon
+  .space 0x4
+glabel starting_left_weapon
+  .space 0x4
+glabel flt_CODE_bss_800799E8
+  .space 0x4
+glabel flt_CODE_bss_800799EC
+  .space 0x4
+glabel flt_CODE_bss_800799F0
+  .space 0x4
+glabel dword_CODE_bss_800799F4
+  .space 0x4
+glabel dword_CODE_bss_800799F8
+  .space 0x4
+glabel dword_CODE_bss_800799FC
+  .space 0x4
+glabel flt_CODE_bss_80079A00
+  .space 0x4
+glabel flt_CODE_bss_80079A04
+  .space 0x4
+glabel flt_CODE_bss_80079A08
+  .space 0x4
+glabel flt_CODE_bss_80079A0C
+  .space 0x4
+glabel flt_CODE_bss_80079A10
+  .space 0x4
+glabel dword_CODE_bss_80079A14
+  .space 0x4
+glabel dword_CODE_bss_80079A18
+  .space 0x4
+glabel dword_CODE_bss_80079A1C
+  .space 0x4
+glabel dword_CODE_bss_80079A20
+  .space 0x4
+glabel watch_time_0
+  .space 0x4
+glabel dword_CODE_bss_80079A28
+  .space 0x200
+glabel dword_CODE_bss_80079C28
+  .space 0x40
+glabel dword_CODE_bss_80079C68
+  .space 0x8
+glabel dword_CODE_bss_80079C70
+  .space 0x130
+glabel dword_CODE_bss_80079DA0
+  .space 0x4
+glabel dword_CODE_bss_80079DA4
+  .space 0x4
+glabel dword_CODE_bss_80079DA8
+  .space 0x20
+glabel dword_CODE_bss_80079DC8
+  .space 0x3C
+glabel flt_CODE_bss_80079E04
+  .space 0x4
+glabel flt_CODE_bss_80079E08
+  .space 0x4
+glabel flt_CODE_bss_80079E0C
+  .space 0x4
+glabel flt_CODE_bss_80079E10
+  .space 0x10
+glabel dword_CODE_bss_80079E20
+  .space 0x10
+glabel off_CODE_bss_80079E30
+  .space 0x1
+glabel byte_CODE_bss_80079E31
+  .space 0x1
+glabel byte_CODE_bss_80079E32
+  .space 0x1
+glabel byte_CODE_bss_80079E33
+  .space 0x48
+glabel byte_CODE_bss_80079E7B
+  .space 0x5
+glabel flt_CODE_bss_80079E80
+  .space 0x4
+glabel flt_CODE_bss_80079E84
+  .space 0x4
+glabel flt_CODE_bss_80079E88
+  .space 0x8
+glabel dword_CODE_bss_80079E90
+  .space 0x8
+glabel dword_CODE_bss_80079E98
+  .space 0x48
+glabel ptr_BONDdata_p1
+  .space 0x4
+glabel ptr_BONDdata_p2
+  .space 0x4
+glabel ptr_BONDdata_p3
+  .space 0x4
+glabel ptr_BONDdata_p4
+  .space 0x4
+glabel player1_playerdata
+  .space 0x70
+glabel player2_player_data
+  .space 0x70
+glabel player3_player_data
+  .space 0x70
+glabel player4_player_data
+  .space 0x70
+glabel ptr_BONDdata
+  .space 0x4
+glabel cur_player_stat_ptr
+  .space 0x4
+glabel player_num
+  .space 0x4
+glabel random_byte
+  .space 0x4
+glabel dword_CODE_bss_8007A0C0
+  .space 0x4
+glabel dword_CODE_bss_8007A0C4
+  .space 0x4
+glabel dword_CODE_bss_8007A0C8
+  .space 0x4
+glabel dword_CODE_bss_8007A0CC
+  .space 0x4
+glabel dword_CODE_bss_8007A0D0
+  .space 0x4
+glabel dword_CODE_bss_8007A0D4
+  .space 0x4
+glabel dword_CODE_bss_8007A0D8
+  .space 0x4
+glabel dword_CODE_bss_8007A0DC
+  .space 0x4
+glabel dword_CODE_bss_8007A0E0
+  .space 0x4
+glabel dword_CODE_bss_8007A0E4
+  .space 0x4
+glabel dword_CODE_bss_8007A0E8
+  .space 0x4
+glabel dword_CODE_bss_8007A0EC
+  .space 0x4
+glabel word_CODE_bss_8007A0F0
+  .space 0x2
+glabel word_CODE_bss_8007A0F2
+  .space 0xE
+glabel dword_CODE_bss_8007A100
+  .space 0x40
+glabel ptr_smoke_buf
+  .space 0x4
+glabel ptr_explosion_buf
+  .space 0x4
+glabel max_casings
+  .space 0x4
+glabel ptr_ejected_casing_buf
+  .space 0x4
+glabel ptr_scorch_buf
+  .space 0x4
+glabel ptr_bullet_impact_buf
+  .space 0xC
+glabel dword_CODE_bss_8007A160
+  .space 0x4
+glabel dword_CODE_bss_8007A164
+  .space 0xC
+glabel dword_CODE_bss_8007A170
+  .space 0x4
+glabel word_CODE_bss_8007A174
+  .space 0x36C
+glabel dword_CODE_bss_8007A4E0
+  .space 0x4
+glabel word_CODE_bss_8007A4E4
+  .space 0xBB4
+glabel dword_CODE_bss_8007B098
+  .space 0x8
+glabel dword_CODE_bss_8007B0A0
+  .space 0x40
+glabel dword_CODE_bss_8007B0E0
+  .space 0x40
+glabel clippingfile
+  .space 0x4
+glabel ptr_firstroom
+  .space 0x4
+glabel dword_CODE_bss_8007B128
+  .space 0x4
+glabel dword_CODE_bss_8007B12C
+  .space 0x4
+glabel dword_CODE_bss_8007B130
+  .space 0x4
+glabel dword_CODE_bss_8007B134
+  .space 0x220
+glabel dword_CODE_bss_8007B354
+  .space 0x4
+glabel dword_CODE_bss_8007B358
+  .space 0x684
+glabel dword_CODE_bss_8007B9DC
+  .space 0x8
+glabel dword_CODE_bss_8007B9E4
+  .space 0x4
+glabel dword_CODE_bss_8007B9E8
+  .space 0x8
+glabel flt_CODE_bss_8007B9F0
+  .space 0x4
+glabel flt_CODE_bss_8007B9F4
+  .space 0x4
+glabel flt_CODE_bss_8007B9F8
+  .space 0x4
+glabel flt_CODE_bss_8007B9FC
+  .space 0x4
+glabel flt_CODE_bss_8007BA00
+  .space 0x4
+glabel dword_CODE_bss_8007BA04
+  .space 0x8
+glabel dword_CODE_bss_8007BA0C
+  .space 0x4
+glabel dword_CODE_bss_8007BA10
+  .space 0x580
+glabel ptr_bg_data
+  .space 0x4
+glabel ptr_clipping
+  .space 0x4
+glabel dword_CODE_bss_8007BF98
+  .space 0x8
+glabel list_visible_rooms_in_cur_global_vis_packet
+  .space 0x98
+glabel num_visible_rooms_in_cur_global_vis_packet
+  .space 0x8
+glabel dword_CODE_bss_8007C040
+  .space 0x60
+glabel dword_CODE_bss_8007C0A0
+  .space 0x60
+glabel dword_CODE_bss_8007C100
+  .space 0x3E80
+glabel ptr_bgdata_portals
+  .space 0x4
+glabel ptr_bgdata_offsets
+  .space 0x4
+glabel dword_CODE_bss_8007FF88
+  .space 0x4
+glabel ptr_bgdata_room_fileposition_list
+  .space 0x4
+glabel dword_CODE_bss_8007FF90
+  .space 0x4
+glabel dword_CODE_bss_8007FF94
+  .space 0x4
+glabel dword_CODE_bss_8007FF98
+  .space 0x8
+glabel dword_CODE_bss_8007FFA0
+  .space 0x4
+glabel dword_CODE_bss_8007FFA4
+  .space 0x165C
+glabel dword_CODE_bss_80081600
+  .space 0x10
+glabel dword_CODE_bss_80081610
+  .space 0x8
+glabel table_for_portals
+  .space 0xFA0
+glabel dword_CODE_bss_800825B8
+  .space 0x8
+glabel sky_enabled
+  .space 0x4
+glabel ptr_nearfog_enviroment_values
+  .space 0x4
+glabel buffer_far_pervasiveness
+  .space 0x4
+glabel far_fog
+  .space 0xC
+glabel flt_CODE_bss_800825D8
+  .space 0x4
+glabel flt_CODE_bss_800825DC
+  .space 0x4
+glabel buffer_far_ambiant
+  .space 0x4
+glabel bg_dif_light
+  .space 0x4
+glabel env_table_hit
+  .space 0x4
+glabel env_table_match_start
+  .space 0x4
+glabel env_table_match_end
+  .space 0x8
+glabel dword_CODE_bss_800825F8
+  .space 0x4
+glabel flt_CODE_bss_800825FC
+  .space 0x4
+glabel flt_CODE_bss_80082600
+  .space 0x18
+glabel dword_CODE_bss_80082618
+  .space 0x4
+glabel dword_CODE_bss_8008261C
+  .space 0x4
+glabel off_CODE_bss_80082620
+  .space 0x1
+glabel byte_CODE_bss_80082621
+  .space 0x1
+glabel byte_CODE_bss_80082622
+  .space 0x3E
+glabel light_fixture_table
+  .space 0x4B0
+glabel cur_entry_lightfixture_table
+  .space 0x2
+glabel index_of_cur_entry_lightfixture_table
+  .space 0x6
+glabel word_CODE_bss_80082B18
+  .space 0x800
+glabel dword_CODE_bss_80083318
+  .space 0x8
+glabel dword_CODE_bss_80083320
+  .space 0x130
+glabel dword_CODE_bss_80083450
+  .space 0x4B0
+glabel dword_CODE_bss_80083900
+  .space 0x4B0
+glabel dword_CODE_bss_80083DB0
+  .space 0x4B00
+glabel ptr_resource_data
+  .space 0x14
+glabel ptr_res_data_next
+  .space 0x14
+glabel dword_CODE_bss_800888D8
+  .space 0x3958
+glabel ptr_mgfx0_alloc_start
+  .space 0x4
+glabel ptr_mgfx1_alloc_start
+  .space 0x4
+glabel ptr_mgfx_end
+  .space 0x8
+glabel ptr_mvtx0_alloc_start
+  .space 0x4
+glabel ptr_mvtx1_alloc_start
+  .space 0x4
+glabel ptr_mvtx_end
+  .space 0x4
+glabel ptr_mvtx_cur_pos
+  .space 0x4
+glabel bank_in_mgfx_alloc_table
+  .space 0x4
+glabel dword_CODE_bss_8008C254
+  .space 0xC
+glabel ptr_jfont_DL
+  .space 0x10
+glabel ramrom_data_target
+  .space 0xF
+glabel byte_CODE_bss_8008C27F
+  .space 0x101
+glabel dword_CODE_bss_8008C380
+  .space 0xE8
+glabel dword_CODE_bss_8008C468
+  .space 0xF
+glabel byte_CODE_bss_8008C477
+  .space 0x17
+glabel word_CODE_bss_8008C48E
+  .space 0x162
+glabel record_slot_num
+  .space 0x4
+glabel addres_demo_loaded
+  .space 0x4
+glabel dword_CODE_bss_8008C5F8
+  .space 0x8
+glabel dword_CODE_bss_8008C600
+  .space 0x4
+glabel dword_CODE_bss_8008C604
+  .space 0x4
+glabel dword_CODE_bss_8008C608
+  .space 0x4
+glabel dword_CODE_bss_8008C60C
+  .space 0x4
+glabel dword_CODE_bss_8008C610
+  .space 0x4
+glabel dword_CODE_bss_8008C614
+  .space 0x4
+glabel dword_CODE_bss_8008C618
+  .space 0x4
+glabel dword_CODE_bss_8008C61C
+  .space 0x4
+glabel dword_CODE_bss_8008C620
+  .space 0x4
+glabel dword_CODE_bss_8008C624
+  .space 0x4
+glabel dword_CODE_bss_8008C628
+  .space 0x4
+glabel dword_CODE_bss_8008C62C
+  .space 0x4
+glabel dword_CODE_bss_8008C630
+  .space 0x4
+glabel dword_CODE_bss_8008C634
+  .space 0xC
+glabel ptr_text
+  .space 0x4
+glabel table_text_pointers
+  .space 0x94
+glabel dword_CODE_bss_8008C6D8
+  .space 0x4
+glabel dword_CODE_bss_8008C6DC
+  .space 0x4
+glabel dword_CODE_bss_8008C6E0
+  .space 0x4
+glabel dword_CODE_bss_8008C6E4
+  .space 0x4
+glabel dword_CODE_bss_8008C6E8
+  .space 0x4
+glabel dword_CODE_bss_8008C6EC
+  .space 0x4
+glabel dword_CODE_bss_8008C6F0
+  .space 0x4
+glabel ptr_j_char_data_buf
+  .space 0x4
+glabel ptr_j_char_registry
+  .space 0x8
+glabel stop_play_flag
+  .space 0x4
+glabel is_gameover_flag
+  .space 0x4
+glabel dword_CODE_bss_8008C708
+  .space 0x4
+glabel dword_CODE_bss_8008C70C
+  .space 0x4
+glabel time_trigger_alt_gameover_msg
+  .space 0x4
+glabel dword_CODE_bss_8008C714
+  .space 0x4
+glabel is_paused
+  .space 0x4
+glabel who_paused
+  .space 0x4
+glabel ptr_texture_alloc_start
+  .space 0x4
+glabel ptr_texture_alloc_end
+  .space 0x4
+glabel ptr_next_available_space
+  .space 0x4
+glabel ptr_last_entry_facemapping
+  .space 0x4
+glabel word_CODE_bss_8008C730
+  .space 0x960
+glabel dword_CODE_bss_8008D090
+  .space 0x4
+glabel dword_CODE_bss_8008D094
+  .space 0xC
+glabel dword_CODE_bss_8008D0A0
+  .space 0x4
+glabel dword_CODE_bss_8008D0A4
+  .space 0x4
+glabel dword_CODE_bss_8008D0A8
+  .space 0x8
+glabel globalbank_rdram_offset
+  .space 0x4
+glabel ptr_explosionDL
+  .space 0x4
+glabel image
+  .space 0x4
+glabel dword_CODE_bss_8008D0BC
+  .space 0x4
+glabel dword_CODE_bss_8008D0C0
+  .space 0x4
+glabel dword_CODE_bss_8008D0C4
+  .space 0x4
+glabel dword_CODE_bss_8008D0C8
+  .space 0x4
+glabel dword_CODE_bss_8008D0CC
+  .space 0x4
+glabel dword_CODE_bss_8008D0D0
+  .space 0x4
+glabel dword_CODE_bss_8008D0D4
+  .space 0x4
+glabel dword_CODE_bss_8008D0D8
+  .space 0x4
+glabel dword_CODE_bss_8008D0DC
+  .space 0x4
+glabel dword_CODE_bss_8008D0E0
+  .space 0x4
+glabel dword_CODE_bss_8008D0E4
+  .space 0x4
+glabel dword_CODE_bss_8008D0E8
+  .space 0x4
+glabel dword_CODE_bss_8008D0EC
+  .space 0x4
+glabel dword_CODE_bss_8008D0F0
+  .space 0x4
+glabel dword_CODE_bss_8008D0F4
+  .space 0x4
+glabel dword_CODE_bss_8008D0F8
+  .space 0x4
+glabel dword_CODE_bss_8008D0FC
+  .space 0x4
+glabel dword_CODE_bss_8008D100
+  .space 0x4
+glabel dword_CODE_bss_8008D104
+  .space 0x4
+glabel dword_CODE_bss_8008D108
+  .space 0x4
+glabel dword_CODE_bss_8008D10C
+  .space 0x4
+glabel dword_CODE_bss_8008D110
+  .space 0x4
+glabel imgcall
+  .space 0x4
+glabel dword_CODE_bss_8008D118
+  .space 0x4
+glabel dword_CODE_bss_8008D11C
+  .space 0x4
+glabel dword_CODE_bss_8008D120
+  .space 0x4
+glabel dword_CODE_bss_8008D124
+  .space 0x4
+glabel dword_CODE_bss_8008D128
+  .space 0x4
+glabel dword_CODE_bss_8008D12C
+  .space 0x4
+glabel dword_CODE_bss_8008D130
+  .space 0x4
+glabel dword_CODE_bss_8008D134
+  .space 0xC
+glabel dword_CODE_bss_8008D140
+  .space 0x8
+glabel dword_CODE_bss_8008D148
+  .space 0x160
+glabel dword_CODE_bss_8008D2A8
+  .space 0xA0
+glabel dword_CODE_bss_8008D348
+  .space 0x8
+glabel dword_CODE_bss_8008D350
+  .space 0x4
+glabel dword_CODE_bss_8008D354
+  .space 0x4
+glabel dword_CODE_bss_8008D358
+  .space 0x4
+glabel dword_CODE_bss_8008D35C
+  .space 0x4
+glabel dword_CODE_bss_8008D360
+  .space 0x4
+glabel dword_CODE_bss_8008D364
+  .space 0x4
+glabel dword_CODE_bss_8008D368
+  .space 0x4
+glabel dword_CODE_bss_8008D36C
+  .space 0x4
+glabel dword_CODE_bss_8008D370
+  .space 0x400
+glabel dword_CODE_bss_8008D770
+  .space 0xBA0
+glabel viewport_img_width
+  .space 0x4
+glabel viewport_img_height
+  .space 0xC
+glabel ptr_sectrum_monitor_data_temp_buf
+  .space 0x4
+glabel ptr_sectrum_game_data_temp_buf
+  .space 0x4
+glabel ptr_spectrum_roms
+  .space 0x4
+glabel ptr_300alloc
+  .space 0x4
+glabel ptr_6000alloc
+  .space 0x4
+glabel ptr_pc_keyboard_table_alloc
+  .space 0x4
+glabel spectrum_header16_15
+  .space 0x1
+glabel byte_CODE_bss_8008E339
+  .space 0x1
+glabel byte_CODE_bss_8008E33A
+  .space 0x1
+glabel byte_CODE_bss_8008E33B
+  .space 0x1
+glabel off_CODE_bss_8008E33C
+  .space 0x1
+glabel byte_CODE_bss_8008E33D
+  .space 0x1
+glabel byte_CODE_bss_8008E33E
+  .space 0x1
+glabel byte_CODE_bss_8008E33F
+  .space 0x1
+glabel off_CODE_bss_8008E340
+  .space 0x1
+glabel byte_CODE_bss_8008E341
+  .space 0x1
+glabel byte_CODE_bss_8008E342
+  .space 0x1
+glabel byte_CODE_bss_8008E343
+  .space 0x1
+glabel off_CODE_bss_8008E344
+  .space 0x1
+glabel byte_CODE_bss_8008E345
+  .space 0x1
+glabel byte_CODE_bss_8008E346
+  .space 0x1
+glabel byte_CODE_bss_8008E347
+  .space 0x1
+glabel spec_I
+  .space 0x1
+glabel byte_CODE_bss_8008E349
+  .space 0x1
+glabel spec_IFF2_lower
+  .space 0x1
+glabel spec_IFF2_upper
+  .space 0x1
+glabel spec_IM
+  .space 0x1
+glabel byte_CODE_bss_8008E34D
+  .space 0x1
+glabel spec_IX
+  .space 0x2
+glabel spec_IY
+  .space 0x2
+glabel spec_SP
+  .space 0x2
+glabel spec_PC
+  .space 0x2

@@ -1028,11 +1028,11 @@ sub_GAME_7F057E58:
 /* 08C9C8 7F057E98 03E00008 */  jr    $ra
 /* 08C9CC 7F057E9C 00000000 */   nop   
 
-cosf:
+glabel cosf
 /* 08C9D0 7F057EA0 3C018005 */  lui   $at, %hi(D_800536C0) # $at, 0x8005
 /* 08C9D4 7F057EA4 C42A36C0 */  lwc1  $f10, %lo(D_800536C0)($at)
 /* 08C9D8 7F057EA8 460A6300 */  add.s $f12, $f12, $f10
-sinf:
+glabel sinf
 /* 08C9DC 7F057EAC 44086000 */  mfc1  $t0, $f12
 /* 08C9E0 7F057EB0 00000000 */  nop   
 /* 08C9E4 7F057EB4 00084583 */  sra   $t0, $t0, 0x16
