@@ -1,9 +1,5 @@
 glabel _gameSegmentRodataStart
 .section .rodata
-    F32_8004F1F0: .float 0.10000001        # DATA XREF: sets_a_bunch_of_BONDdata_values_to_default+5Cr
-    F32_8004F1F4: .float 14.285716         # DATA XREF: sets_a_bunch_of_BONDdata_values_to_default+80r
-    F32_8004F1F8: .float 0.93000001        # DATA XREF: sets_a_bunch_of_BONDdata_values_to_default+8Cr
-                    .word 0
     F32_8004F200: .float 1.3497647e-11     # DATA XREF: set_mt_tex_alloc+14o
     F32_8004F204: .float 1.3497647e-11     # DATA XREF: set_mt_tex_alloc+30o
                     .word 0

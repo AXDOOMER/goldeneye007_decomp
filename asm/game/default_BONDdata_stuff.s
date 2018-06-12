@@ -340,4 +340,9 @@ sets_a_bunch_of_BONDdata_values_to_default:
 /* 03B2E8 7F0067B8 03E00008 */  jr    $ra
 /* 03B2EC 7F0067BC 27BD00E0 */   addiu $sp, $sp, 0xe0
 
+.section .rodata
+F32_8004F1F0: .float 0.10000001
+F32_8004F1F4: .float 14.285716
+F32_8004F1F8: .float 0.93000001
+.word 0
 
