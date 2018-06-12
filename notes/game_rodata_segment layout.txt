@@ -1,53 +1,6 @@
 glabel _gameSegmentRodataStart
 .section .rodata
-    jpt_7003B478:   .word .L7F007550  # DATA XREF: sub_CODE_7F007500+3Cr
-                    .word .L7F00755C  # jump table for switch statement
-                    .word .L7F007550
-                    .word .L7F007550
-                    .word .L7F007550
-                    .word .L7F007550
-                    .word .L7F007550
-                    .word .L7F007550
-                    .word .L7F00755C
-                    .word .L7F007550
-                    .word .L7F007550
-                    .word .L7F007550
-                    .word .L7F007550
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F007550
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F007550
-                    .word .L7F007550
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F007550
-                    .word .L7F00755C
-                    .word .L7F00755C
-                    .word .L7F007550
-                    .word .L7F007550
-                    .word .L7F007550
-                    .word .L7F007550
-                    .word .L7F007550
-                    .word .L7F00755C
-                    .word .L7F007550
-                    .word .L7F00755C
-                    .word .L7F007550
-                    .align 4
+
     F32_8004F2D0: .float 0.91000003        # DATA XREF: sub_CODE_7F007F30+ACr
     F32_8004F2D4: .float 10000.0           # DATA XREF: insert_bond_eye_intro+50r
     F32_8004F2D8: .float 5000.0            # DATA XREF: load_display_rare_logo+58r
