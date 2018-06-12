@@ -30,3 +30,8 @@ glabel set_gu_scale
 /* 0356E8 7F000BB8 00000000 */  nop   
 /* 0356EC 7F000BBC 00000000 */  nop   
 
+.section .rodata
+default_gu_scale: .float 0.1
+.word 0
+.word 0
+.word 0
