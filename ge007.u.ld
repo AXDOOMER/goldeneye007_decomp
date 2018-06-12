@@ -141,7 +141,6 @@ SECTIONS
       build/asm/game/7F01D680.o (.text);
       build/asm/game/eeprom_stuff.o (.text);
       build/asm/game/7F01F530.o (.text);
-      build/asm/game/7F020540.o (.text);
       build/asm/game/7F0347A0.o (.text);
       build/asm/game/7F03A240.o (.text);
       build/asm/game/7F056850.o (.text);
@@ -357,7 +356,6 @@ SECTIONS
       build/asm/game/7F01D680.o (.data);
       build/asm/game/eeprom_stuff.o (.data);
       build/asm/game/7F01F530.o (.data);
-      build/asm/game/7F020540.o (.data);
       build/asm/game/7F0347A0.o (.data);
       build/asm/game/7F03A240.o (.data);
       build/asm/game/7F056850.o (.data);
@@ -471,7 +469,6 @@ SECTIONS
       build/asm/game/7F01D680.o (.rodata);
       build/asm/game/eeprom_stuff.o (.rodata);
       build/asm/game/7F01F530.o (.rodata);
-      build/asm/game/7F020540.o (.rodata);
       build/asm/game/7F0347A0.o (.rodata);
       build/asm/game/7F03A240.o (.rodata);
       build/asm/game/7F056850.o (.rodata);
@@ -628,7 +625,6 @@ SECTIONS
       build/asm/game/7F01D680.o (.bss);
       build/asm/game/eeprom_stuff.o (.bss);
       build/asm/game/7F01F530.o (.bss);
-      build/asm/game/7F020540.o (.bss);
       build/asm/game/7F0347A0.o (.bss);
       build/asm/game/7F03A240.o (.bss);
       build/asm/game/7F056850.o (.bss);

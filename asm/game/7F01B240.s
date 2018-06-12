@@ -590,3 +590,8 @@ sub_GAME_7F01B6E0:
 /* 050608 7F01BAD8 00000000 */  nop   
 /* 05060C 7F01BADC 00000000 */  nop   
 
+.section .rodata
+F32_80051CF0: .float 299.0
+.word 0
+.word 0
+.word 0

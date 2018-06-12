@@ -421,3 +421,8 @@ sub_GAME_7F01BFF8:
 /* 050BFC 7F01C0CC AC800004 */   sw    $zero, 4($a0)
 
 
+.section .rodata
+F32_80051D00: .float 3.1415927
+.word 0
+.word 0
+.word 0
