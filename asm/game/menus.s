@@ -19359,3 +19359,436 @@ menu0B_runstage_constructor:
 /* 04FC08 7F01B0D8 00000000 */  nop   
 /* 04FC0C 7F01B0DC 00000000 */  nop   
 
+.section .rodata
+str_1: .asciiz "1"
+aI_0: .asciiz "i"
+aUbriefdamz_1: .asciiz "UbriefdamZ"
+aIi: .asciiz "ii"
+aUbriefarkz_1: .asciiz "UbriefarkZ"
+aIii: .asciiz "iii"
+aUbriefrunz_1: .asciiz "UbriefrunZ"
+
+asc_D_8004F344: .asciiz "2"
+aI_2: .asciiz "i"
+aUbriefsevxz_0: .asciiz "UbriefsevxZ"
+aIi_1: .asciiz "ii"
+aUbriefsevbunkerz_1: .asciiz "UbriefsevbunkerZ"
+
+asc_D_8004F370: .asciiz "3"
+aI_1: .asciiz "i"
+aUbriefsiloz_0: .asciiz "UbriefsiloZ"
+
+a4: .asciiz "4"
+aI_3: .asciiz "i"
+aUbriefdestz_0: .asciiz "UbriefdestZ"
+
+a5: .asciiz "5"
+aI_4: .asciiz "i"
+aUbriefsevxbz_0: .asciiz "UbriefsevxbZ"
+aIi_0: .asciiz "ii"
+aUbriefsevbz_0: .asciiz "UbriefsevbZ"
+
+a6: .asciiz "6"
+aI_5: .asciiz "i"
+aUbriefstatuez_0: .asciiz "UbriefstatueZ"
+aIi_2: .asciiz "ii"
+aUbriefarchz_0: .asciiz "UbriefarchZ"
+aIii_0: .asciiz "iii"
+aUbriefpetez_0: .asciiz "UbriefpeteZ"
+aIv: .asciiz "iv"
+aUbriefdepoz_0: .asciiz "UbriefdepoZ"
+aV: .asciiz "v"
+aUbrieftraz_0: .asciiz "UbrieftraZ"
+
+a7: .asciiz "7"
+aI_6: .asciiz "i"
+aUbriefjunz_0: .asciiz "UbriefjunZ"
+aIi_3: .asciiz "ii"
+aUbriefcontrolz_0: .asciiz "UbriefcontrolZ"
+aIii_1: .asciiz "iii"
+aUbriefcavez_0: .asciiz "UbriefcaveZ"
+aIv_0: .asciiz "iv"
+aUbriefcradz_0: .asciiz "UbriefcradZ"
+
+a8: .asciiz "8"
+aI_7: .asciiz "i"
+aUbriefaztz_0: .asciiz "UbriefaztZ"
+
+a9: .asciiz "9"
+aI_8: .asciiz "i"
+aUbriefcrypz_0: .asciiz "UbriefcrypZ"
+
+asc_D_8004F488: .asciiz "\n"
+a_: .asciiz "."
+asc_D_8004F490: .asciiz "\n"
+a1_: .asciiz "1.\n"
+a2_: .asciiz "2.\n"
+a3_: .asciiz "3.\n"
+asc_D_8004F4A0: .asciiz "\n"
+asc_D_8004F4A4: .asciiz ": "
+asc_D_8004F4A8: .asciiz "\n"
+asc_D_8004F4AC: .asciiz ": "
+asc_D_8004F4B0: .asciiz "\n"
+asc_D_8004F4B4: .asciiz "\n"
+                .half 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0
+aD_: .asciiz "%d.\n"
+asc_D_80050074: .asciiz "\n"
+ .ascii <0><0><0>
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0
+aD: .asciiz "%d%%\n"
+aD_0: .asciiz "%d%%\n"
+aD_1: .asciiz "%d%%\n"
+aD_2: .asciiz "%d%%\n"
+aD_7: .asciiz "%d"
+aA_: .asciiz "a.\n"
+asc_D_80050C54: .asciiz "\n"
+ .ascii <0><0><0>
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+a02d02d: .asciiz "%02d:%02d"
+aS: .asciiz "     [%s]"
+a02d02d_0: .asciiz "%02d:%02d"
+aS02d02d: .asciiz "     (%s  %02d:%02d)"
+D_80051848:.word 0
+a02d02d_1: .asciiz "%02d:%02d"
+a_1f: .asciiz "%.1f%%"
+aX2: .asciiz " x 2\n"
+aD_8: .asciiz "%d"
+aDD_0: .asciiz "%d (%d%%)"
+aDD_1: .asciiz "%d (%d%%)"
+aDD_2: .asciiz "%d (%d%%)"
+aDD_3: .asciiz "%d (%d%%)"
+aD_10: .asciiz "%d"
+
+cheat_available_table:
+ .word default_nonmenucheats, cheat_invincible, cheat_allguns, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats  # jump table for switch statement
+ .word default_nonmenucheats, default_nonmenucheats, cheat_invisible, cheat_infinite_ammo
+ .word cheat_dk_mode, default_nonmenucheats, cheat_tinybond, cheat_paintball
+ .word default_nonmenucheats, cheat_unlockcradle, cheat_unlockaztec, cheat_unlockegypt
+ .word cheat_silverpp7, cheat_goldpp7, default_nonmenucheats, cheat_noradar
+ .word cheat_turbo, default_nonmenucheats, cheat_fast, cheat_slow, cheat_enemyrockets
+ .word cheat_2xrocket, cheat_2xgrenadelauncher, cheat_2xrcp90, cheat_2xthrowingknife
+ .word cheat_2xhuntingknife, cheat_2xlaser, default_nonmenucheats, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
+ .word default_nonmenucheats, default_nonmenucheats
+folder_menu_x_dim:.float 0.075000003
+folder_menu_z_dim:.float 0.075000003
+F32_800519D0: .float 0.075000003
+F32_800519D4: .float 0.075000003
+F32_800519D8: .float 130.5
+F32_800519DC: .float 399.0
+F32_800519E0: .float 130.5
+F32_800519E4: .float 1.3333334
+F32_800519E8: .float 10000.0
+F32_800519EC: .float 1.3333334
+F32_800519F0: .float 10000.0
+F32_800519F4: .float -1.3962635
+F32_800519F8: .float 0.018333333
+F32_800519FC: .float 1.3333334
+F32_80051A00: .float 10000.0
+F32_80051A04: .float 0.017453292
+F32_80051A08: .float 1.1
+F32_80051A0C: .float 1.07977
+F32_80051A10: .float 1.3333334
+F32_80051A14: .float 10000.0
+F32_80051A18: .float 1.2
+F32_80051A1C: .float 1.3333334
+F32_80051A20: .float 10000.0
+F32_80051A24: .float 0.37
+F32_80051A28: .float 285.0
+F32_80051A2C: .float 335.0
+F32_80051A30: .float 285.0
+F32_80051A34: .float 285.0
+F32_80051A38: .float 1.3333334
+F32_80051A3C: .float 10000.0
+F32_80051A40: .float 275.0
+F32_80051A44: .float 1.3333334
+F32_80051A48: .float 10000.0
+F32_80051A4C: .float 1.3333334
+F32_80051A50: .float 10000.0
+F32_80051A54: .float 275.0
+F32_80051A58: .float 1.3333334
+F32_80051A5C: .float 10000.0
+
+jpt_scenario_specific_settings_mp:
+ .word .L7F0104DC
+ .word .L7F01051C
+ .word .L7F010550
+ .word .L7F010594
+ .word .L7F0105C8
+ .word .L7F0104DC
+ .word .L7F0104DC
+ .word .L7F0104DC
+F32_80051A80: .float 1.3333334
+F32_80051A84: .float 10000.0
+F32_80051A88: .float 1.3333334
+F32_80051A8C: .float 10000.0
+F32_80051A90: .float 1.3333334
+F32_80051A94: .float 10000.0
+F32_80051A98: .float 1.3333334
+F32_80051A9C: .float 10000.0
+F32_80051AA0: .float 1.3333334
+F32_80051AA4: .float 10000.0
+F32_80051AA8: .float 1.3333334
+F32_80051AAC: .float 10000.0
+F32_80051AB0: .float 1.3333334
+F32_80051AB4: .float 10000.0
+F32_80051AB8: .float 1.3333334
+F32_80051ABC: .float 10000.0
+jpt_briefingpage_name:
+ .word .L7F015E14
+ .word .L7F015E24
+ .word .L7F015E34
+ .word .L7F015E44
+ .word .L7F015E54
+F32_80051AD4: .float 1.3333334
+F32_80051AD8: .float 10000.0
+F32_80051ADC: .float 1.3333334
+F32_80051AE0: .float 10000.0
+F32_80051AE4: .float 1.3333334
+F32_80051AE8: .float 10000.0
+jpt_intro_bond_head:
+ .word set_body_mp_choice_maybe
+ .word set_body_default
+ .word set_body_jungle
+ .word set_body_snowsuit
+ .word set_body_5
+F32_80051B00: .float 6.2831855
+F32_80051B04: .float 2.5132742
+F32_80051B08: .float 1.3333334
+F32_80051B0C: .float 6.2831855
+F32_80051B10: .float 0.2
+F32_80051B14: .float 0.2
+F32_80051B18: .float 0.2
+F32_80051B1C: .float 0.2
+F32_80051B20: .float 0.050000012
+F32_80051B24: .float 0.050000012
+F32_80051B28: .float 0.94999999
+                .float 0.94999999
+F32_80051B30: .float 0.94999999
+F32_80051B34: .float 0.050000012
+F32_80051B38: .float 3.1415927
+F32_80051B3C: .float 1.3333334
+F32_80051B40: .float 10000.0
+F32_80051B44: .float 1.3333334
+F32_80051B48: .float 1.3333334
+jpt_menu_update:
+ .word menu_legal_screen_update
+ .word menu_nintendo_logo_update
+ .word menu_rareware_logo_update
+ .word menu_eye_intro_update
+ .word menu_goldeneye_logo_update
+ .word menu_file_select_update
+ .word menu_mode_select_update
+ .word menu_mission_select_update
+ .word menu_difficulty_update
+ .word menu_007_options_update
+ .word menu_briefing_update
+ .word menu_switch_screen_update
+ .word menu_mission_failed_update
+ .word menu_mission_complete_update
+ .word menu_mp_options_update
+ .word menu_mp_char_select_update
+ .word menu_mp_handicap_update
+ .word menu_mp_control_style_update
+ .word menu_mp_stage_select_update
+ .word menu_mp_scenario_select_update
+ .word menu_mp_teams_update
+ .word menu_cheat_update
+ .word menu_no_controllers_update
+ .word menu_switch_screen_update
+ .word menu_display_cast_update
+ .word menu_spectrum_emu_update
+jpt_menu_init:
+ .word menu_legal_screen_init
+ .word menu_nintendo_logo_init
+ .word menu_rareware_logo_init
+ .word menu_eye_intro_init
+ .word menu_goldeneye_logo_init
+ .word menu_file_select_init
+ .word menu_mode_select_init
+ .word menu_mission_select_init
+ .word menu_difficulty_init
+ .word menu_007_options_init
+ .word menu_briefing_init
+ .word menu_runstage_init
+ .word menu_mission_failed_init
+ .word menu_mission_complete_init
+ .word menu_mp_options_init
+ .word menu_mp_char_select_init
+ .word menu_mp_handicap_init
+ .word menu_mp_control_style_init
+ .word menu_mp_stage_select_init
+ .word menu_mp_scenario_select_init
+ .word menu_mp_teams_init
+ .word menu_cheat_init
+ .word menu_no_controllers_init
+ .word menu_switch_screens_init
+ .word menu_display_cast_init
+ .word menu_spectrum_emu_init
+jpt_menu_interface:
+ .word menu00_legal_interface
+ .word menu01_nintendo_interface
+ .word menu02_rareware_interface
+ .word menu03_eye_interface
+ .word menu04_goldeneye_interface
+ .word menu05_filesel_interface
+ .word menu06_modesel_interface
+ .word menu07_missionsel_interface
+ .word menu08_difficulty_interface
+ .word menu09_007options_interface
+ .word menu0A_briefing_interface
+ .word menu0B_runstage_interface
+ .word menu0C_missionfailed_interface
+ .word menu0D_missioncomplete_interface
+ .word menu0E_mpoptions_interface
+ .word menu0F_mpcharsel_interface
+ .word menu10_mphandicap_interface
+ .word menu11_mpcontrol_interface
+ .word menu12_mpstage_interface
+ .word menu13_mpscenario_interface
+ .word menu14_mpteams_interface
+ .word menu15_cheat_interface
+ .word menu16_nocontrollers_interface
+ .word menu17_switchscreen_interface
+ .word menu18_displaycast_interface
+ .word menu19_spectrum_interface
+jpt_menu_constructor:
+ .word menu00_legal_constructor
+ .word menu01_nintendo_constructor  # jump table for switch statement
+ .word menu02_rareware_constructor
+ .word menu03_eyeintro_constructor
+ .word menu04_goldeneye_constructor
+ .word menu05_fileselect_constructor
+ .word menu06_modesel_constructor
+ .word menu07_missionsel_constructor
+ .word menu08_difficulty_constructor
+ .word menu09_007options_constructor
+ .word menu0A_briefing_constructor
+ .word menu0B_runstage_constructor
+ .word menu0C_missionfailed_constructor
+ .word menu0D_missioncomplete_constructor
+ .word menu0E_mpoptions_constructor
+ .word menu0F_mpcharsel_constructor
+ .word menu10_mphandicap_constructor
+ .word menu11_mpcontrol_constructor
+ .word menu12_mpstage_constructor
+ .word menu13_mpscenario_constructor
+ .word menu14_mpteams_constructor
+ .word menu15_cheat_constructor
+ .word menu16_nocontrollers_constructor
+ .word menu17_switchscreens_constructor
+ .word menu18_displaycast_constructor
+ .word menu19_spectrum_constructor
+.align 4
