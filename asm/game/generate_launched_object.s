@@ -767,3 +767,67 @@ def_7F005A74:
 
 /* 03AD1C 7F0061EC 00000000 */  nop   
 
+.section .rodata
+projectile_ptr_table:.word throwingknife
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word grenade_launch_round
+.word rocket
+.word grenade
+.word timed_mine
+.word prox_mine
+.word remote_mine
+.word default
+.word default
+.word rocket_0
+.word bombcase
+.word plastique
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word bug
+.word microcamera
+default_zoom_speed:.float 0.90909088
+jpt_700399A4:
+.word spawn_point
+.word weapon
+.word ammo
+.word swirling_intro_cam
+.word intro_ani
+.word cuff_char
+.word fixed_cam
+.word watch_time
+.word credits
+F32_8004F1D0: .float -0.000099999997
+F32_8004F1D4: .float 6.2831855
+F32_8004F1D8: .float 6.2831855
+F32_8004F1DC: .float 0.17000002
+F32_8004F1E0: .float 0.10000002
+.align 4

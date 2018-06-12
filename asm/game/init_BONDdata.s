@@ -243,3 +243,7 @@ init_player_BONDdata_stats:
 /* 039F78 7F005448 00000000 */  nop   
 /* 039F7C 7F00544C 00000000 */  nop   
 
+.section .rodata
+F32_8004F0E0: .float 0.89999998
+fl_neg_pi: .float -3.1415927
+.align 4
