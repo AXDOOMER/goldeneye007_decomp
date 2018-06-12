@@ -51,3 +51,9 @@ set_mt_tex_alloc:
 /* 03BED8 7F0073A8 00000000 */  nop   
 /* 03BEDC 7F0073AC 00000000 */  nop   
 
+.section .rodata
+F32_8004F200: .float 1.3497647e-11
+F32_8004F204: .float 1.3497647e-11
+.word 0
+.word 0
+

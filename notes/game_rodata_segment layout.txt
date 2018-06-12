@@ -1,9 +1,5 @@
 glabel _gameSegmentRodataStart
 .section .rodata
-    F32_8004F200: .float 1.3497647e-11     # DATA XREF: set_mt_tex_alloc+14o
-    F32_8004F204: .float 1.3497647e-11     # DATA XREF: set_mt_tex_alloc+30o
-                    .word 0
-                    .word 0
     jpt_7003B478:   .word .L7F007550  # DATA XREF: sub_CODE_7F007500+3Cr
                     .word .L7F00755C  # jump table for switch statement
                     .word .L7F007550
