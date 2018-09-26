@@ -2,3 +2,5 @@
 build/*
 .*~
 *.rz
+.vscode/settings.json
+
