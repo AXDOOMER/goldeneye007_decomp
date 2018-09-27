@@ -17,7 +17,7 @@
 #define	OS_TV_NTSC		1
 #define	OS_TV_MPAL		2
 
-#define OS_VI_NTSC_LPN1		0	/* NTSC */
+#define OS_VI_NTSC_LPN1		0
 #define OS_VI_NTSC_LPF1		1
 #define OS_VI_NTSC_LAN1		2
 #define OS_VI_NTSC_LAF1		3
@@ -31,7 +31,7 @@
 #define OS_VI_NTSC_HAF1		11
 #define OS_VI_NTSC_HPN2		12
 #define OS_VI_NTSC_HPF2		13
-#define OS_VI_PAL_LPN1		14	/* PAL */
+#define OS_VI_PAL_LPN1		14
 #define OS_VI_PAL_LPF1		15
 #define OS_VI_PAL_LAN1		16
 #define OS_VI_PAL_LAF1		17
@@ -45,7 +45,7 @@
 #define OS_VI_PAL_HAF1		25
 #define OS_VI_PAL_HPN2		26
 #define OS_VI_PAL_HPF2		27
-#define OS_VI_MPAL_LPN1		28	/* MPAL - mainly Brazil */
+#define OS_VI_MPAL_LPN1		28
 #define OS_VI_MPAL_LPF1		29
 #define OS_VI_MPAL_LAN1		30
 #define OS_VI_MPAL_LAF1		31
