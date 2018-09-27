@@ -33,4 +33,6 @@ typedef union
     long long int forc_structure_alignment;
 } Mtx;
 
+extern s32 	osTvType;
+
 #endif
