@@ -45,18 +45,10 @@ void CheckDisplayErrorBufferEvery16Frames(u32 framecount) {
 	}
 }
 
-GLOBAL_ASM(
-glabel osCreateLog
-/* 001688 70000A88 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00168C 70000A8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 001690 70000A90 0C003638 */  jal   osGetCount
-/* 001694 70000A94 00000000 */   nop   
-/* 001698 70000A98 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00169C 70000A9C 3C018002 */  lui   $at, %hi(currentcount) # $at, 0x8002
-/* 0016A0 70000AA0 AC2230A4 */  sw    $v0, %lo(currentcount)($at)
-/* 0016A4 70000AA4 03E00008 */  jr    $ra
-/* 0016A8 70000AA8 27BD0018 */   addiu $sp, $sp, 0x18
-)
+/* Not 100% on name, came from osInitialize's call to function*/
+void osCreateLog(void){
+	currentcount=osGetCount();
+}
 
 GLOBAL_ASM(
 glabel osCreateScheduler
