@@ -27,14 +27,14 @@ void setUserCompareValue(int value) {
 	userCompareValue = value;
 }
 
-void CheckDisplayErrorBuffer(buffer) {
+void CheckDisplayErrorBuffer(u32 *buffer) {
 	if ((stderr_permitted && stderr_active) || stderr_enabled ){
 		write_stderr_to_buffer(buffer);
 		currentcount = osGetCount();
 	}
 }
 
-void CheckDisplayErrorBufferEvery16Frames(framecount) {
+void CheckDisplayErrorBufferEvery16Frames(u32 framecount) {
 	if (framecount&0xf) {
 		if ((stderr_permitted && stderr_active) || stderr_enabled){
 			if (userCompareValue < (osGetCount()-currentcount)){
