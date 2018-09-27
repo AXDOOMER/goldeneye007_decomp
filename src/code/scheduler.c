@@ -6,24 +6,28 @@ u32 stderr_enabled = 0;
 u32 stderr_active = 0;
 u32 stderr_permitted = 0;
 u32 userCompareValue = 45000000;
-u32 currentcount =0;
+u32 currentcount = 0;
+u32 setby_DPCfill_0 = 0;
+u32 setby_DPCfill_1 = 0;
+f32 somthing_with_osVI[7] = {0.0,1.0,1.0,1.0,1.0,0.0,0.0};
+u32 D_800230CC = 1;
 
 extern u32* vid_buff_1;
 extern u32* vid_buff_2;
 
-void activate_stderr(int flag) {
+void activate_stderr(u32 flag) {
 	stderr_active = flag;
 }
 
-void enable_stderr(int flag) {
+void enable_stderr(u32 flag) {
 	stderr_enabled = flag;
 }
 
-void permit_stderr(int flag) {
+void permit_stderr(u32 flag) {
 	stderr_permitted = flag;
 }
 
-void setUserCompareValue(int value) {
+void setUserCompareValue(u32 value) {
 	userCompareValue = value;
 }
 
@@ -124,7 +128,7 @@ glabel osCreateScheduler
 /* 0017C0 70000BC0 00000000 */   nop   
 /* 0017C4 70000BC4 3C04803B */  lui   $a0, %hi(sp_shed) # $a0, 0x803b
 /* 0017C8 70000BC8 2484B750 */  addiu $a0, %lo(sp_shed) # addiu $a0, $a0, -0x48b0
-/* 0017CC 70000BCC 0C0001BC */  jal   grow_stack
+/* 0017CC 70000BCC 0C0001BC */  jal   set_stack_entry
 /* 0017D0 70000BD0 24050200 */   li    $a1, 512
 /* 0017D4 70000BD4 8E0400B0 */  lw    $a0, 0xb0($s0)
 /* 0017D8 70000BD8 3C067000 */  lui   $a2, %hi(__scMain) # $a2, 0x7000
@@ -432,7 +436,7 @@ glabel __scHandleRetrace
 /* 001BE8 70000FE8 5600FFF4 */  bnezl $s0, .L70000FBC
 /* 001BEC 70000FEC 8E0D0008 */   lw    $t5, 8($s0)
 .L70000FF0:
-/* 001BF0 70000FF0 0C00027E */  jal   testtodisplaystderrorevery16thframe
+/* 001BF0 70000FF0 0C00027E */  jal   CheckDisplayErrorBufferEvery16Frames
 /* 001BF4 70000FF4 8E2400D0 */   lw    $a0, 0xd0($s1)
 /* 001BF8 70000FF8 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 001BFC 70000FFC 8FB00014 */  lw    $s0, 0x14($sp)
@@ -704,7 +708,7 @@ glabel __scTaskComplete
 /* 001FA4 700013A4 2508FFFE */  addiu $t0, $t0, -2
 .L700013A8:
 /* 001FA8 700013A8 AC2830B0 */  sw    $t0, %lo(something_with_osVI)($at)
-/* 001FAC 700013AC 0C000268 */  jal   testtodisplaystderrandupdatecount
+/* 001FAC 700013AC 0C000268 */  jal   CheckDisplayErrorBuffer
 /* 001FB0 700013B0 8E04000C */   lw    $a0, 0xc($s0)
 /* 001FB4 700013B4 0C003924 */  jal   osViSwapBuffer
 /* 001FB8 700013B8 8E04000C */   lw    $a0, 0xc($s0)
