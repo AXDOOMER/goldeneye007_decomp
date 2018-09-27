@@ -35,27 +35,27 @@ glabel boot
 /* 0010B8 700004B8 00000000 */   nop
 )
 
-static u32 get_cdata_vaddr_start(void)
+u32 get_cdata_vaddr_start(void)
 {
 	return *_cdataSegmentVaddrStart;
 }
 
-static u32 get_rodata_rom_start(void)
+u32 get_rodata_rom_start(void)
 {
 	return *_cdataSegmentRomStart;
 }
 
-static u32 get_rodata_rom_end(void)
+u32 get_rodata_rom_end(void)
 {
 	return *_cdataSegmentRomEnd;
 }
 
-static u32 getRareZipASMRomstart(void)
+u32 getRareZipASMRomstart(void)
 {
 	return *_rarezipSegmentRomStart;
 }
 
-static u32 getRareZipASMRomend(void)
+u32 getRareZipASMRomend(void)
 {
 	return *_rarezipSegmentRomEnd;
 }
