@@ -1,9 +1,15 @@
+#include <ultra64.h>
+#include "scheduler.h"
 
-int stderr_unused = 0;
-int stderr_enabled = 0;
-int stderr_active = 0;
-int stderr_permitted = 0;
-int userCompareValue = 45000000;
+u32 stderr_unused = 0;
+u32 stderr_enabled = 0;
+u32 stderr_active = 0;
+u32 stderr_permitted = 0;
+u32 userCompareValue = 45000000;
+u32 currentcount =0;
+
+extern u32* vid_buff_1;
+extern u32* vid_buff_2;
 
 void activate_stderr(int flag) {
 	stderr_active = flag;
@@ -28,49 +34,16 @@ void CheckDisplayErrorBuffer(buffer) {
 	}
 }
 
-GLOBAL_ASM(
-glabel testtodisplaystderrorevery16thframe
-/* 0015F8 700009F8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0015FC 700009FC 308E000F */  andi  $t6, $a0, 0xf
-/* 001600 70000A00 15C0001D */  bnez  $t6, .L70000A78
-/* 001604 70000A04 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 001608 70000A08 3C0F8002 */  lui   $t7, %hi(stderr_permitted) # $t7, 0x8002
-/* 00160C 70000A0C 8DEF309C */  lw    $t7, %lo(stderr_permitted)($t7)
-/* 001610 70000A10 3C188002 */  lui   $t8, %hi(stderr_activated) # $t8, 0x8002
-/* 001614 70000A14 3C198002 */  lui   $t9, %hi(stderr_enable) # $t9, 0x8002
-/* 001618 70000A18 11E00004 */  beqz  $t7, .L70000A2C
-/* 00161C 70000A1C 00000000 */   nop   
-/* 001620 70000A20 8F183098 */  lw    $t8, %lo(stderr_activated)($t8)
-/* 001624 70000A24 17000004 */  bnez  $t8, .L70000A38
-/* 001628 70000A28 00000000 */   nop   
-.L70000A2C:
-/* 00162C 70000A2C 8F393094 */  lw    $t9, %lo(stderr_enable)($t9)
-/* 001630 70000A30 53200012 */  beql  $t9, $zero, .L70000A7C
-/* 001634 70000A34 8FBF0014 */   lw    $ra, 0x14($sp)
-.L70000A38:
-/* 001638 70000A38 0C003638 */  jal   osGetCount
-/* 00163C 70000A3C 00000000 */   nop   
-/* 001640 70000A40 3C098002 */  lui   $t1, %hi(currentcount) # $t1, 0x8002
-/* 001644 70000A44 8D2930A4 */  lw    $t1, %lo(currentcount)($t1)
-/* 001648 70000A48 3C088002 */  lui   $t0, %hi(user_compare) # $t0, 0x8002
-/* 00164C 70000A4C 8D0830A0 */  lw    $t0, %lo(user_compare)($t0)
-/* 001650 70000A50 00495023 */  subu  $t2, $v0, $t1
-/* 001654 70000A54 3C04803B */  lui   $a0, %hi(vid_buff_1) # $a0, 0x803b
-/* 001658 70000A58 010A082B */  sltu  $at, $t0, $t2
-/* 00165C 70000A5C 50200007 */  beql  $at, $zero, .L70000A7C
-/* 001660 70000A60 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 001664 70000A64 0C001674 */  jal   write_stderr_to_buffer
-/* 001668 70000A68 24845000 */   addiu $a0, %lo(vid_buff_1) # addiu $a0, $a0, 0x5000
-/* 00166C 70000A6C 3C04803E */  lui   $a0, %hi(vid_buff_2) # $a0, 0x803e
-/* 001670 70000A70 0C001674 */  jal   write_stderr_to_buffer
-/* 001674 70000A74 2484A800 */   addiu $a0, %lo(vid_buff_2) # addiu $a0, $a0, -0x5800
-.L70000A78:
-/* 001678 70000A78 8FBF0014 */  lw    $ra, 0x14($sp)
-.L70000A7C:
-/* 00167C 70000A7C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 001680 70000A80 03E00008 */  jr    $ra
-/* 001684 70000A84 00000000 */   nop   
-)
+void CheckDisplayErrorBufferEvery16Frames(framecount) {
+	if (framecount&0xf) {
+		if ((stderr_permitted && stderr_active) || stderr_enabled){
+			if (userCompareValue < (osGetCount()-currentcount)){
+				write_stderr_to_buffer(vid_buff_1);
+				write_stderr_to_buffer(vid_buff_2);
+			}
+		}
+	}
+}
 
 GLOBAL_ASM(
 glabel osCreateLog
