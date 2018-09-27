@@ -3,7 +3,7 @@
 #include "boot.h"
 #include "bond.h"
 
-
+/* This will likely always be asm as it manipulates tlb directly*/
 GLOBAL_ASM(
 glabel boot
 /* 001050 70000450 24020001 */  li    $v0, 1

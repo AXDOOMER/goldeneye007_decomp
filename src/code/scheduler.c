@@ -21,34 +21,12 @@ void setUserCompareValue(int value) {
 	userCompareValue = value;
 }
 
-GLOBAL_ASM(
-glabel testtodisplaystderrandupdatecount
-/* 0015A0 700009A0 3C0E8002 */  lui   $t6, %hi(stderr_permitted) # $t6, 0x8002
-/* 0015A4 700009A4 8DCE309C */  lw    $t6, %lo(stderr_permitted)($t6)
-/* 0015A8 700009A8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0015AC 700009AC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0015B0 700009B0 11C00003 */  beqz  $t6, .L700009C0
-/* 0015B4 700009B4 3C0F8002 */   lui   $t7, %hi(stderr_activated) # $t7, 0x8002
-/* 0015B8 700009B8 8DEF3098 */  lw    $t7, %lo(stderr_activated)($t7)
-/* 0015BC 700009BC 15E00004 */  bnez  $t7, .L700009D0
-.L700009C0:
-/* 0015C0 700009C0 3C188002 */   lui   $t8, %hi(stderr_enable) # $t8, 0x8002
-/* 0015C4 700009C4 8F183094 */  lw    $t8, %lo(stderr_enable)($t8)
-/* 0015C8 700009C8 53000008 */  beql  $t8, $zero, .L700009EC
-/* 0015CC 700009CC 8FBF0014 */   lw    $ra, 0x14($sp)
-.L700009D0:
-/* 0015D0 700009D0 0C001674 */  jal   write_stderr_to_buffer
-/* 0015D4 700009D4 00000000 */   nop   
-/* 0015D8 700009D8 0C003638 */  jal   osGetCount
-/* 0015DC 700009DC 00000000 */   nop   
-/* 0015E0 700009E0 3C018002 */  lui   $at, %hi(currentcount) # $at, 0x8002
-/* 0015E4 700009E4 AC2230A4 */  sw    $v0, %lo(currentcount)($at)
-/* 0015E8 700009E8 8FBF0014 */  lw    $ra, 0x14($sp)
-.L700009EC:
-/* 0015EC 700009EC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0015F0 700009F0 03E00008 */  jr    $ra
-/* 0015F4 700009F4 00000000 */   nop   
-)
+void CheckDisplayErrorBuffer(buffer) {
+	if ((stderr_permitted && stderr_active) || stderr_enabled ){
+		write_stderr_to_buffer(buffer);
+		currentcount = osGetCount();
+	}
+}
 
 GLOBAL_ASM(
 glabel testtodisplaystderrorevery16thframe

@@ -12,12 +12,13 @@ OSThread mainThread;
 OSThread shedThread;
 OSMesgQueue gfxFrameMsgQ;
 OSMesg gfxFrameMsgBuf[32];
-OSMesgQueue		*sched_cmdQ;
-OSSched         sc;
-OSScClient      gfxClient;
+OSMesgQueue *sched_cmdQ;
+OSSched sc;
+OSScClient gfxClient;
 
 u32 unknown_init_val = 2;
 u32 cart_hw_address = 0x10000000;
+
 struct debug_handler_entry
 {
   void *address;
@@ -140,14 +141,14 @@ glabel boot1
 /* 001294 70000694 34440E80 */   ori   $a0, $v0, 0xe80
 /* 001298 70000698 3C04803B */  lui   $a0, %hi(sp_main) # $a0, 0x803b
 /* 00129C 7000069C 2484B950 */  addiu $a0, %lo(sp_main) # addiu $a0, $a0, -0x46b0
-/* 0012A0 700006A0 0C0001BC */  jal   grow_stack
+/* 0012A0 700006A0 0C0001BC */  jal   set_stack_entry
 /* 0012A4 700006A4 34058000 */   li    $a1, 32768
 /* 0012A8 700006A8 3C108006 */  lui   $s0, %hi(mainthread) # $s0, 0x8006
 /* 0012AC 700006AC 2610D640 */  addiu $s0, %lo(mainthread) # addiu $s0, $s0, -0x29c0
-/* 0012B0 700006B0 3C067000 */  lui   $a2, %hi(main_entry) # $a2, 0x7000
+/* 0012B0 700006B0 3C067000 */  lui   $a2, %hi(thread3_main) # $a2, 0x7000
 /* 0012B4 700006B4 240C000A */  li    $t4, 10
 /* 0012B8 700006B8 AFAC0014 */  sw    $t4, 0x14($sp)
-/* 0012BC 700006BC 24C6089C */  addiu $a2, %lo(main_entry) # addiu $a2, $a2, 0x89c
+/* 0012BC 700006BC 24C6089C */  addiu $a2, %lo(thread3_main) # addiu $a2, $a2, 0x89c
 /* 0012C0 700006C0 02002025 */  move  $a0, $s0
 /* 0012C4 700006C4 24050003 */  li    $a1, 3
 /* 0012C8 700006C8 00003825 */  move  $a3, $zero
@@ -163,7 +164,7 @@ glabel boot1
 )
 
 
-u32 grow_stack(u32 stack, u32 size) 
+u32 set_stack_entry(u32 stack, u32 size) 
 {
     return ((stack + size) -8);
 }
@@ -174,20 +175,21 @@ void set_hw_address_and_unknown(void)
     cart_hw_address = 0x10000000;
 }
 
-void idle_entry(void *arg) 
+void thread1_idle(void *arg) 
 {
 	for (;;);
 }
 
 void start_idle_thread(void) 
 {
-    osCreateThread(&idleThread, (OSId)1, idle_entry, 0, grow_stack(&sp_idle, 0x40), (OSPri)0);
+    osCreateThread(&idleThread, (OSId)1, thread1_idle, 0, set_stack_entry(&sp_idle, 0x40), (OSPri)0);
     osStartThread(&idleThread);
 }
-extern void rmonMain(void);
+
+extern void thread0_rmon(void);
 void start_rmon_thread(void) 
 {
-    osCreateThread(&rmonThread, (OSId)0, rmonMain, 0, grow_stack(&sp_rmon, 0x300), (OSPri)250);
+    osCreateThread(&rmonThread, (OSId)0, thread0_rmon, 0, set_stack_entry(&sp_rmon, 0x300), (OSPri)250);
     osStartThread(&rmonThread);
 }
 
@@ -202,7 +204,7 @@ void init_scheduler(void) {
     sched_cmdQ = osScGetCmdQ(&sc);
 }
 
-void main_entry(void *args) {
+void thread3_main(void *args) {
 	start_idle_thread();
 	start_nulled_entry();
 	start_pi_manager();
