@@ -104,7 +104,7 @@ glabel return_TLB_index_for_entry
 
 
 void find_remove_TLB_entry(u32 entry) {
-    s32 temp_ret = return_TLB_index_for_entry(entry);
+    u32 temp_ret = return_TLB_index_for_entry(entry);
 
     if ((temp_ret & 0x80000000))
         return;
