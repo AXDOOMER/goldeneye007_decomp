@@ -1,3 +1,4 @@
+//FIXME i still need data/bss love.
 #include "ultra64.h"
 
 u32 audFrameCt = 0;
