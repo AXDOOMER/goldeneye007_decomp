@@ -7,7 +7,12 @@ u32 D_800232E0[] = {0, 0};
 u32 debug_notice_list[] = {0, 0, 0, 0};
 u32 debug_notice_list_data[] = {&dword_CODE_bss_80060890, 0, 0};
 
-u32 debug_processor_error_table[] = { 
+struct debug_processor_error_entry
+{
+  u32 val1;
+  u32 val2;
+  void *string
+} debug_processor_error_table[] = { 
 {0x80000000, 0x80000000, "BD"},
 {0x8000, 0x8000, "IP8"},
 {0x4000, 0x4000, "IP7"},

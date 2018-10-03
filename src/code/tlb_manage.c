@@ -3,12 +3,17 @@
 u32 maybe_cur_TLB_entries = 0;
 u32 tlb_segment_num = 0;
 
+u32 TLB_managment_table_start[0x800];
+u32 TLB_manager_mapping_table_start[0xB4];
+u32 TLB_manager_mapping_table_end[4];
+u32 ptr_TLBallocatedblock[4];
+
 GLOBAL_ASM(
 glabel establish_TLB_buffer_management_table
-/* 0023E0 700017E0 3C038006 */  lui   $v1, %hi(TLB_managment_table) # $v1, 0x8006
+/* 0023E0 700017E0 3C038006 */  lui   $v1, %hi(TLB_managment_table_start_start) # $v1, 0x8006
 /* 0023E4 700017E4 3C028006 */  lui   $v0, %hi(TLB_manager_mapping_table_start) # $v0, 0x8006
 /* 0023E8 700017E8 2442E3F0 */  addiu $v0, %lo(TLB_manager_mapping_table_start) # addiu $v0, $v0, -0x1c10
-/* 0023EC 700017EC 2463DBF0 */  addiu $v1, %lo(TLB_managment_table) # addiu $v1, $v1, -0x2410
+/* 0023EC 700017EC 2463DBF0 */  addiu $v1, %lo(TLB_managment_table_start) # addiu $v1, $v1, -0x2410
 /* 0023F0 700017F0 24040001 */  li    $a0, 1
 .L700017F4:
 /* 0023F4 700017F4 24630010 */  addiu $v1, $v1, 0x10
@@ -46,8 +51,8 @@ glabel establish_TLB_buffer_management_table
 /* 002470 70001870 3C018006 */  lui   $at, %hi(ptr_TLBallocatedblock) # $at, 0x8006
 /* 002474 70001874 AC38E4A8 */  sw    $t8, %lo(ptr_TLBallocatedblock)($at)
 /* 002478 70001878 3C01FFC0 */  lui   $at, (0xFFC08000 >> 16) # lui $at, 0xffc0
-/* 00247C 7000187C 3C198006 */  lui   $t9, %hi(TLB_managment_table) # $t9, 0x8006
-/* 002480 70001880 2739DBF0 */  addiu $t9, %lo(TLB_managment_table) # addiu $t9, $t9, -0x2410
+/* 00247C 7000187C 3C198006 */  lui   $t9, %hi(TLB_managment_table_start) # $t9, 0x8006
+/* 002480 70001880 2739DBF0 */  addiu $t9, %lo(TLB_managment_table_start) # addiu $t9, $t9, -0x2410
 /* 002484 70001884 34218000 */  ori   $at, (0xFFC08000 & 0xFFFF) # ori $at, $at, 0x8000
 /* 002488 70001888 03214021 */  addu  $t0, $t9, $at
 /* 00248C 7000188C 3C018006 */  lui   $at, 0x8006
@@ -200,8 +205,8 @@ glabel translate_load_rom_from_TLBaddress
 /* 002684 70001A84 0C0034D4 */  jal   osInvalICache
 /* 002688 70001A88 3C051000 */   lui   $a1, 0x1000
 /* 00268C 70001A8C 8FA50024 */  lw    $a1, 0x24($sp)
-/* 002690 70001A90 3C0D8006 */  lui   $t5, %hi(TLB_managment_table) # $t5, 0x8006
-/* 002694 70001A94 25ADDBF0 */  addiu $t5, %lo(TLB_managment_table) # addiu $t5, $t5, -0x2410
+/* 002690 70001A90 3C0D8006 */  lui   $t5, %hi(TLB_managment_table_start) # $t5, 0x8006
+/* 002694 70001A94 25ADDBF0 */  addiu $t5, %lo(TLB_managment_table_start) # addiu $t5, $t5, -0x2410
 /* 002698 70001A98 00055B42 */  srl   $t3, $a1, 0xd
 /* 00269C 70001A9C 000B6100 */  sll   $t4, $t3, 4
 /* 0026A0 70001AA0 018D3021 */  addu  $a2, $t4, $t5
