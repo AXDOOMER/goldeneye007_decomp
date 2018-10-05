@@ -32,6 +32,13 @@ music_related_array:
 .section .rodata
 
 .section .bss
+hp:             .space 0x10
+ptr_sfx_buf:    .space 4
+dword_CODE_bss_80063724:.space 4
+ptr_1st_music_ctrl_block:.space 4
+ptr_2nd_music_ctrl_block:.space 4
+ptr_3rd_music_ctrl_block:.space 4
+ptr_musicdatatable:.space 0x47C  
 
 
 

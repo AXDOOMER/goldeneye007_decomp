@@ -1,5 +1,9 @@
 #include "ultra64.h"
 
+s32 rumble_off_player1_packet_buffer[256];
+s32 rumble_on_player_packet_buffers[256];
+s32 rumble_on_buffer[32];
+s32 rumble_off_buffer[32];
 
 GLOBAL_ASM(
 glabel send_rumble_off_to_PIF

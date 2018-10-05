@@ -20,7 +20,9 @@ aD_6: .asciiz "-d"
 aS_2: .asciiz "-s"
 aJ: .asciiz "-j"
 .align 4
+
 .section .bss
+boot_token_from_indy:.space 0x280
 
 GLOBAL_ASM(
 glabel check_string_something

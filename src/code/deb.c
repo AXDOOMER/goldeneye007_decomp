@@ -138,10 +138,6 @@ u32 *current_indy_read_buf_resourceID;
 u32 *ptr_indy_read_buf_string1;
 u32 *ptr_indy_read_buf_string2;
 u32 indy_read_buffer[0x60];
-OSIoMesg *memoryMesgMB;
-OSMesg *memoryMesg;
-OSMesgQueue memoryMesgQueue;
-
 
 
 

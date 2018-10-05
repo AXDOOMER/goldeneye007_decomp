@@ -32,7 +32,10 @@ aMe: .asciiz "-me"
 aMe_0: .asciiz "-me"
 
 .section .bss
-
+memory_bank_ptrs:.space 0x40
+ptr_model_room_buf_pri:.space 8
+dword_CODE_bss_80063BF8:.space 0x24
+dword_CODE_bss_80063C1C:.space 4
 
 
 GLOBAL_ASM(

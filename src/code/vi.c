@@ -94,6 +94,8 @@ aVi_c_debug: .asciiz "vi_c_debug"
 .align 4
 .section .bss
 
+OSMesg vi_c_debug_MSG;
+OSMesgQueue *vi_c_debug_MQ;
 
 GLOBAL_ASM(
 glabel start_nulled_entry

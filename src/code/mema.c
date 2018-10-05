@@ -11,6 +11,22 @@ aD_5:           .asciiz "[%d]"
 .align 4
 
 .section .bss
+ptr_model_room_buf_secondary:.space 4
+size_modelroom_buf:.space 4
+ptr_table_allocated_mem_blocks:.space 4
+dword_CODE_bss_80063C2C:.space 4
+index_for_loadedroom:.space 4
+dword_CODE_bss_80063C34:.space 4
+dword_CODE_bss_80063C38:.space 4
+dword_CODE_bss_80063C3C:.space 0xC
+dword_CODE_bss_80063C48:.space 0xFC0
+dword_CODE_bss_80064C08:.space 8
+dword_CODE_bss_80064C10:.space 8
+dword_CODE_bss_80064C18:.space 4
+dword_CODE_bss_80064C1C:.space 4
+dword_CODE_bss_80064C20:.space 4
+dword_CODE_bss_80064C24:.space 4
+
 
 GLOBAL_ASM(
 glabel swap_entries

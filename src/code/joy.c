@@ -54,8 +54,34 @@ D_80026970:.word 0
 .section .rodata
 aJoy_c_debug: .asciiz "joy_c_debug"
 .align 4
-.section .bss
 
+.section .bss
+controller_input_index:.space 0x1E0
+dword_CODE_bss_80065110:.space 4
+dword_CODE_bss_80065114:.space 4
+dword_CODE_bss_80065118:.space 4
+dword_CODE_bss_8006511C:.space 0x10
+dword_CODE_bss_8006512C:.space 0x1E0
+dword_CODE_bss_8006530C:.space 8
+dword_CODE_bss_80065314:.space 0x10
+dword_CODE_bss_80065324:.space 4
+contdemoMesg:   .space 0x28
+
+OSMesgQueue contdemoMesgMQ;
+OSMesg cont1Mesg;
+OSMesgQueue cont1MesgMQ;
+OSMesg cont2Mesg;
+OSMesgQueue cont2MesgMQ;
+OSMesg cont3Mesg;
+OSMesgQueue cont3MesgMQ;
+OSMesg cont4Mesg;
+OSMesgQueue cont4MesgMQ;
+s32 player1_controllerstatus;
+s32 player2_controllerstatus;
+s32 player3_controllerstatus;
+s32 player4_controllerstatus;
+
+player1_controller_packet:.space 0x1A8
 
 
 

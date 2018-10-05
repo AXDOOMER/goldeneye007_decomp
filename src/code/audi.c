@@ -1,5 +1,6 @@
 //FIXME i still need data/bss love.
 #include "ultra64.h"
+#include "scheduler.h"
 
 u32 audFrameCt = 0;
 u32 nextDMA = 0;
@@ -32,8 +33,49 @@ u64 qword_D_80023100[]= {
  {0x000A00004500},
 };
 
-u32 firstTime = 1;
-extern OSThread audiThread;
+s32 firstTime = 1;
+
+
+/*bss needs fixing */
+s32 dword_CODE_bss_8005E4B0[2];
+s32 dword_CODE_bss_8005E4B8[2];
+s32 dword_CODE_bss_8005E4C0;
+s32 dword_CODE_bss_8005E4C4;
+s32 dword_CODE_bss_8005E4C8;
+s32 dword_CODE_bss_8005E4CC;
+s32 dword_CODE_bss_8005E4D0[2];
+s32 dword_CODE_bss_8005E4D8[2];
+s32 dword_CODE_bss_8005E4E0[0xE];
+s32 dword_CODE_bss_8005E518[2];
+s32 dword_CODE_bss_8005E520;
+s32 dword_CODE_bss_8005E524[3];
+
+OSThread audiThread;
+OSMesgQueue audioFrameMsgQ;
+OSMesg audioFrameMsgBuf[4];
+OSMesgQueue msgQ_Q_8005E718;
+OSMesg msgQ_buf_8005E730[4];
+
+u32 dword_CODE_bss_8005E750[0x14];
+
+OSScClient audi_client[2];
+
+s32 dmaState_initialized;
+s32 dmaState_firstUsed;
+s32 dmaState_firstFree[2];
+s32 dmaBuffs;
+s32 dword_CODE_bss_8005E7C4[4];
+s32 dword_CODE_bss_8005E7D4[0x13B];
+s32 minFrameSize;
+s32 frameSize;
+s32 maxFrameSize;
+s16 cmdLen;
+
+OSIoMesg audDMAIOMesgBuf[0x40];
+OSMesgQueue audDMAMessageQ;
+OSMesg audDMAMessageBuf[0x12];
+
+
 GLOBAL_ASM(
 glabel amCreateAudioMgr
 /* 0027D0 70001BD0 27BDFEE8 */  addiu $sp, $sp, -0x118
