@@ -1,7 +1,10 @@
-
 #include <ultra64.h>
 #include "boot.h"
 #include "bond.h"
+#include "rarezip.h"
+
+/* This file sets up initial tlb mapping then jumps to boot1 */
+
 
 /* This will likely always be asm as it manipulates tlb directly*/
 GLOBAL_ASM(
@@ -35,29 +38,34 @@ glabel boot
 /* 0010B8 700004B8 00000000 */   nop
 )
 
-u32 get_cdata_vaddr_start(void)
+/* Due to alignments the following functions are included here */
+/* these could have been assembly originally, or more likely part */
+/* of the code inserted by the custom makerom rare created*/
+
+
+u32 *get_cdata_vaddr_start(void)
 {
-	return *_cdataSegmentVaddrStart;
+	return _cdataSegmentVaddrStart;
 }
 
-u32 get_rodata_rom_start(void)
+u32 *get_rodata_rom_start(void)
 {
-	return *_cdataSegmentRomStart;
+	return _cdataSegmentRomStart;
 }
 
-u32 get_rodata_rom_end(void)
+u32 *get_rodata_rom_end(void)
 {
-	return *_cdataSegmentRomEnd;
+	return _cdataSegmentRomEnd;
 }
 
-u32 getRareZipASMRomstart(void)
+u32 *getRareZipASMRomstart(void)
 {
-	return *_rarezipSegmentRomStart;
+	return _rarezipSegmentRomStart;
 }
 
-u32 getRareZipASMRomend(void)
+u32 *getRareZipASMRomend(void)
 {
-	return *_rarezipSegmentRomEnd;
+	return _rarezipSegmentRomEnd;
 }
 
 GLOBAL_ASM(

@@ -21,4 +21,13 @@ extern u32 *_gameSegmentVaddrEnd;
 extern u32 *_gameSegmentRomStart;
 extern u32 *_gameSegmentRomEnd;
 
+
+extern u8 sp_boot[];
+extern u8 sp_rmon[];
+extern u8 sp_idle[];
+extern u8 sp_shed[];
+extern u8 sp_main[];
+extern u8 sp_audi[];
+extern u8 sp_debug[];
+
 #endif

@@ -32,6 +32,12 @@ struct debug_handler_entry
 	{&sp_audi, "Audi"},
 };
 
+
+#ifdef NONMATCHING
+void boot1(void) {
+    
+}
+#else
 GLOBAL_ASM(
 .section .text
 glabel boot1
@@ -162,11 +168,11 @@ glabel boot1
 /* 0012E8 700006E8 03E00008 */  jr    $ra
 /* 0012EC 700006EC 27BD0040 */   addiu $sp, $sp, 0x40
 )
+#endif
 
-
-u32 set_stack_entry(u32 stack, u32 size) 
+void *set_stack_entry(u8 *stack, u32 size) 
 {
-    return ((stack + size) -8);
+    return &stack[size-8];
 }
 
 void set_hw_address_and_unknown(void) 
@@ -219,6 +225,12 @@ void thread3_main(void *args) {
     setup_gamevalues_and_launchmainloop();
 }
 
+
+#ifdef NONMATCHING
+void setuplastentryofdebughandler(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel setuplastentryofdebughandler
 /* 001508 70000908 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -250,3 +262,4 @@ glabel setuplastentryofdebughandler
 /* 001568 70000968 03E00008 */  jr    $ra
 /* 00156C 7000096C 27BD0040 */   addiu $sp, $sp, 0x40
 )
+#endif

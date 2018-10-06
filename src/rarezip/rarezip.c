@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "rarezip.h"
 
 u32 rz_ptr_source = 0x00000000;
 u32 rz_ptr_target = 0x00000000;
