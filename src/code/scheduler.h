@@ -62,8 +62,14 @@ typedef struct {
     s32         doAudio;
 } OSSched;
 
+void activate_stderr(u32 flag);
+void enable_stderr(u32 flag);
+void permit_stderr(u32 flag);
+void setUserCompareValue(u32 value);
 void CheckDisplayErrorBuffer(u32 *buffer);
 void CheckDisplayErrorBufferEvery16Frames(u32 framecount);
+void osCreateLog(void);
+
 
 void            osCreateScheduler(OSSched *s, void *stack, u8 mode, u8 numFields);
 void            osScAddClient(OSSched *s, OSScClient *c, OSMesgQueue *msgQ);

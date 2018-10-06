@@ -57,6 +57,13 @@ void osCreateLog(void){
 	currentcount=osGetCount();
 }
 
+
+
+#ifdef NONMATCHING
+void osCreateScheduler(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel osCreateScheduler
 /* 0016AC 70000AAC 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -150,7 +157,16 @@ glabel osCreateScheduler
 /* 00180C 70000C0C 03E00008 */  jr    $ra
 /* 001810 70000C10 27BD0028 */   addiu $sp, $sp, 0x28
 )
+#endif
 
+
+
+
+#ifdef NONMATCHING
+void osScAddClient(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel osScAddClient
 /* 001814 70000C14 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -177,7 +193,17 @@ glabel osScAddClient
 /* 001868 70000C68 03E00008 */  jr    $ra
 /* 00186C 70000C6C 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void osScRemoveClient(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel osScRemoveClient
 /* 001870 70000C70 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -219,13 +245,34 @@ glabel osScRemoveClient
 /* 0018F0 70000CF0 03E00008 */  jr    $ra
 /* 0018F4 70000CF4 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void osScGetCmdQ(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel osScGetCmdQ
 /* 0018F8 70000CF8 03E00008 */  jr    $ra
 /* 0018FC 70000CFC 24820078 */   addiu $v0, $a0, 0x78
 )
+#endif
 
+
+
+
+
+
+#ifdef NONMATCHING
+void __scMain(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel __scMain
 /* 001900 70000D00 27BDFFB0 */  addiu $sp, $sp, -0x50
@@ -348,7 +395,17 @@ glabel __scMain
 /* 001AAC 70000EAC 03E00008 */  jr    $ra
 /* 001AB0 70000EB0 27BD0050 */   addiu $sp, $sp, 0x50
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void __scHandleRetrace(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel __scHandleRetrace
 /* 001AB4 70000EB4 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -449,7 +506,17 @@ glabel __scHandleRetrace
 /* 001C0C 7000100C 03E00008 */  jr    $ra
 /* 001C10 70001010 27BD0040 */   addiu $sp, $sp, 0x40
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void __scHandleRSP(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel __scHandleRSP
 /* 001C14 70001014 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -524,14 +591,35 @@ glabel __scHandleRSP
 /* 001D14 70001114 03E00008 */  jr    $ra
 /* 001D18 70001118 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void get_counters(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel get_counters
 /* 001D1C 7000111C 3C028006 */  lui   $v0, 0x8006
 /* 001D20 70001120 03E00008 */  jr    $ra
 /* 001D24 70001124 2442DB30 */   addiu $v0, $v0, -0x24d0
 )
+#endif
 
+
+
+
+
+
+#ifdef NONMATCHING
+void __scHandleRDP(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel __scHandleRDP
 /* 001D28 70001128 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -582,7 +670,17 @@ glabel __scHandleRDP
 /* 001DD8 700011D8 03E00008 */  jr    $ra
 /* 001DDC 700011DC 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void __scTaskReady(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel __scTaskReady
 /* 001DE0 700011E0 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -609,7 +707,17 @@ glabel __scTaskReady
 /* 001E28 70001228 03E00008 */  jr    $ra
 /* 001E2C 7000122C 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void __scTaskComplete(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel __scTaskComplete
 /* 001E30 70001230 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -725,7 +833,17 @@ glabel __scTaskComplete
 /* 001FD0 700013D0 03E00008 */  jr    $ra
 /* 001FD4 700013D4 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void __scAppendList(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel __scAppendList
 /* 001FD8 700013D8 8CA20010 */  lw    $v0, 0x10($a1)
@@ -759,7 +877,17 @@ glabel __scAppendList
 /* 002038 70001438 03E00008 */  jr    $ra
 /* 00203C 7000143C ACB80004 */   sw    $t8, 4($a1)
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void __scExec(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel __scExec
 /* 002040 70001440 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -841,7 +969,17 @@ glabel __scExec
 /* 002158 70001558 03E00008 */  jr    $ra
 /* 00215C 7000155C 27BD0028 */   addiu $sp, $sp, 0x28
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void __scYield(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel __scYield
 /* 002160 70001560 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -861,7 +999,17 @@ glabel __scYield
 /* 002194 70001594 03E00008 */  jr    $ra
 /* 002198 70001598 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void __scSchedule(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel __scSchedule
 /* 00219C 7000159C 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -997,4 +1145,5 @@ glabel __scSchedule
 /* 002378 70001778 03E00008 */  jr    $ra
 /* 00237C 7000177C 00601025 */   move  $v0, $v1
 )
+#endif
 

@@ -1,8 +1,8 @@
 #include <ultra64.h>
 #include "bond.h"
+#include "init.h"
 #include "boot.h"
 #include "scheduler.h"
-#include "init.h"
 
 #define NUM_FIELDS  1
 
@@ -34,13 +34,13 @@ struct debug_handler_entry
 
 
 #ifdef NONMATCHING
-void boot1(void) {
+void init(void) {
     
 }
 #else
 GLOBAL_ASM(
 .section .text
-glabel boot1
+glabel init
 /* 001110 70000510 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 001114 70000514 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 001118 70000518 AFB10020 */  sw    $s1, 0x20($sp)
@@ -192,7 +192,6 @@ void start_idle_thread(void)
     osStartThread(&idleThread);
 }
 
-extern void thread0_rmon(void);
 void start_rmon_thread(void) 
 {
     osCreateThread(&rmonThread, (OSId)0, thread0_rmon, 0, set_stack_entry(&sp_rmon, 0x300), (OSPri)250);
