@@ -3,6 +3,7 @@
 #this is mostly a reference for file order, most of these won't compile properly yet
 #or don't exist
 tools/asmpreproc/compile.sh src/boot.c
+
 tools/asmpreproc/compile.sh src/code/init.c
 tools/asmpreproc/compile.sh src/code/scheduler.c
 #tools/asmpreproc/compile.sh src/code/osMapTLB.s
@@ -30,3 +31,5 @@ tools/asmpreproc/compile.sh src/code/debugmenu.c
 tools/asmpreproc/compile.sh src/code/joy.c
 tools/asmpreproc/compile.sh src/code/joy_rumble.c
 tools/asmpreproc/compile.sh src/code/rmon.c
+
+tools/asmpreproc/compile.sh src/rarezip/rarezip.c

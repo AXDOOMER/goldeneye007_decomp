@@ -1,8 +1,9 @@
 #include <ultra64.h>
 #include "bond.h"
-#include "init.h"
 #include "boot.h"
 #include "scheduler.h"
+#include "rmon.h"
+#include "init.h"
 
 #define NUM_FIELDS  1
 
@@ -32,14 +33,7 @@ struct debug_handler_entry
 	{&sp_audi, "Audi"},
 };
 
-
-#ifdef NONMATCHING
-void init(void) {
-    
-}
-#else
 GLOBAL_ASM(
-.section .text
 glabel init
 /* 001110 70000510 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 001114 70000514 AFBF0024 */  sw    $ra, 0x24($sp)
@@ -168,7 +162,7 @@ glabel init
 /* 0012E8 700006E8 03E00008 */  jr    $ra
 /* 0012EC 700006EC 27BD0040 */   addiu $sp, $sp, 0x40
 )
-#endif
+
 
 void *set_stack_entry(u8 *stack, u32 size) 
 {
@@ -225,11 +219,6 @@ void thread3_main(void *args) {
 }
 
 
-#ifdef NONMATCHING
-void setuplastentryofdebughandler(void) {
-    
-}
-#else
 GLOBAL_ASM(
 glabel setuplastentryofdebughandler
 /* 001508 70000908 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -261,4 +250,4 @@ glabel setuplastentryofdebughandler
 /* 001568 70000968 03E00008 */  jr    $ra
 /* 00156C 7000096C 27BD0040 */   addiu $sp, $sp, 0x40
 )
-#endif
+

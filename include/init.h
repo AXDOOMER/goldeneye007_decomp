@@ -23,6 +23,6 @@ void start_idle_thread(void);
 void start_rmon_thread(void);
 void init_scheduler(void);
 void thread3_main(void *args);
-void setuplastentryofdebughandler(void)
+void setuplastentryofdebughandler(void);
 
 #endif

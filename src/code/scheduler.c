@@ -12,6 +12,8 @@ u32 setby_DPCfill_1 = 0;
 f32 somthing_with_osVI[7] = {0.0,1.0,1.0,1.0,1.0,0.0,0.0};
 u32 D_800230CC = 1;
 
+OSSched sc;
+OSScClient gfxClient;
 s32 dword_CODE_bss_8005DB30[0x10];
 s32 dword_CODE_bss_8005DB40[0xB0];
 
