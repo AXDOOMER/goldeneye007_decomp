@@ -335,7 +335,7 @@ void startaudithread(void) {
 
 
 #ifdef NONMATCHING
-void _amMain(void) {
+void _amMain(void *arg) {
 
 }
 #else
