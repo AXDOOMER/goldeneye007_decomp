@@ -7,8 +7,8 @@ s32 displaylist_0[0x214];
 s32 displaylist_1[0x214];
 s32 displaylist_bank;
 s32 dword_CODE_bss_800604A4;
-s32 dword_CODE_bss_800604A8;
-s32 dword_CODE_bss_800604AC;
+u32 dword_CODE_bss_800604A8;
+u32 dword_CODE_bss_800604AC;
 s32 dword_CODE_bss_800604B0[0xC0];
 s32 dword_CODE_bss_800607B0[4];
 s32 dword_CODE_bss_800607C0[4];
@@ -81,10 +81,11 @@ glabel displaylist_related
 
 
 
+#ifdef NONMATCHING
 void video_related_1(void) {
-    dword_CODE_bss_800604A8 = osGetCount();
-}
 
+}
+#else
 GLOBAL_ASM(
 .text
 glabel video_related_1
@@ -118,7 +119,7 @@ glabel video_related_1
 /* 003408 70002808 03E00008 */  jr    $ra
 /* 00340C 7000280C 00000000 */   nop   
 )
-
+#endif
 
 
 
