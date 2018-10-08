@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "ramrom.h"
 
 /* data */
 u32 D_800241A0 = 0;
@@ -92,7 +93,7 @@ glabel init_mainthread_data
 /* 00693C 70005D3C AFB1002C */  sw    $s1, 0x2c($sp)
 /* 006940 70005D40 0C00138B */  jal   add_debug_notice_deb_c_debug
 /* 006944 70005D44 AFB00028 */   sw    $s0, 0x28($sp)
-/* 006948 70005D48 0C0016D8 */  jal   creates_a_message_queue_for_memory
+/* 006948 70005D48 0C0016D8 */  jal   romCreateMesgQueue
 /* 00694C 70005D4C 00000000 */   nop   
 /* 006950 70005D50 0C0005F8 */  jal   establish_TLB_buffer_management_table
 /* 006954 70005D54 00000000 */   nop   

@@ -15,6 +15,12 @@ extern OSScClient gfxClient;
 extern u32 unknown_init_val;
 extern u32 cart_hw_address;
 
+struct debug_handler_entry
+{
+  void *address;
+  void *ptr_name;
+};
+
 void init(void);
 void *set_stack_entry(u8 *stack, u32 size);
 void set_hw_address_and_unknown(void);

@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "ramrom.h"
 
 u32 maybe_cur_TLB_entries = 0;
 u32 tlb_segment_num = 0;
@@ -196,7 +197,7 @@ glabel translate_load_rom_from_TLBaddress
 /* 002660 70001A60 012A2821 */  addu  $a1, $t1, $t2
 /* 002664 70001A64 01201025 */  move  $v0, $t1
 /* 002668 70001A68 AFA90024 */  sw    $t1, 0x24($sp)
-/* 00266C 70001A6C 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 00266C 70001A6C 0C001707 */  jal   romCopy
 /* 002670 70001A70 24062000 */   li    $a2, 8192
 /* 002674 70001A74 3C044000 */  lui   $a0, 0x4000
 /* 002678 70001A78 0C0034D4 */  jal   osInvalICache

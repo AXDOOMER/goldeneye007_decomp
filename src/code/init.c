@@ -20,11 +20,8 @@ OSScClient gfxClient;
 u32 unknown_init_val = 2;
 u32 cart_hw_address = 0x10000000;
 
-struct debug_handler_entry
+struct debug_handler_entry debug_handler_table[] = 
 {
-  void *address;
-  void *ptr_name;
-} debug_handler_table[] = {
 	{&sp_boot, "Boot"},
 	{&sp_rmon, "Rmon"},
 	{&sp_idle, "Idle"},

@@ -1,5 +1,5 @@
 #include "ultra64.h"
-
+#include "ramrom.h"
 
 
 
@@ -108,7 +108,7 @@ glabel setupaudio
 /* 0076C8 70006AC8 AFA200D4 */  sw    $v0, 0xd4($sp)
 /* 0076CC 70006ACC 24A5BDE0 */  addiu $a1, %lo(_sfxctlSegmentRomStart) # addiu $a1, $a1, -0x4220
 /* 0076D0 70006AD0 00402025 */  move  $a0, $v0
-/* 0076D4 70006AD4 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 0076D4 70006AD4 0C001707 */  jal   romCopy
 /* 0076D8 70006AD8 8FA60038 */   lw    $a2, 0x38($sp)
 /* 0076DC 70006ADC 3C05002F */  lui   $a1, %hi(_sfxtblSegmentRomStart) # $a1, 0x2f
 /* 0076E0 70006AE0 24A519A0 */  addiu $a1, %lo(_sfxtblSegmentRomStart) # addiu $a1, $a1, 0x19a0
@@ -134,7 +134,7 @@ glabel setupaudio
 /* 007730 70006B30 AFA200CC */  sw    $v0, 0xcc($sp)
 /* 007734 70006B34 24A54450 */  addiu $a1, %lo(_instrumentsctlSegmentRomStart) # addiu $a1, $a1, 0x4450
 /* 007738 70006B38 00402025 */  move  $a0, $v0
-/* 00773C 70006B3C 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 00773C 70006B3C 0C001707 */  jal   romCopy
 /* 007740 70006B40 8FA60038 */   lw    $a2, 0x38($sp)
 /* 007744 70006B44 3C05003C */  lui   $a1, %hi(_instrumentstblSegmentRomStart) # $a1, 0x3c
 /* 007748 70006B48 24A587F0 */  addiu $a1, %lo(_instrumentstblSegmentRomStart) # addiu $a1, $a1, -0x7810
@@ -158,7 +158,7 @@ glabel setupaudio
 /* 007790 70006B90 AC620000 */  sw    $v0, ($v1)
 /* 007794 70006B94 AFA50038 */  sw    $a1, 0x38($sp)
 /* 007798 70006B98 00402025 */  move  $a0, $v0
-/* 00779C 70006B9C 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 00779C 70006B9C 0C001707 */  jal   romCopy
 /* 0077A0 70006BA0 24060010 */   li    $a2, 16
 /* 0077A4 70006BA4 3C0E8006 */  lui   $t6, %hi(ptr_musicdatatable) # $t6, 0x8006
 /* 0077A8 70006BA8 8DCE3734 */  lw    $t6, %lo(ptr_musicdatatable)($t6)
@@ -180,7 +180,7 @@ glabel setupaudio
 /* 0077E8 70006BE8 ACE20000 */  sw    $v0, ($a3)
 /* 0077EC 70006BEC 3B06000F */  xori  $a2, $t8, 0xf
 /* 0077F0 70006BF0 00402025 */  move  $a0, $v0
-/* 0077F4 70006BF4 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 0077F4 70006BF4 0C001707 */  jal   romCopy
 /* 0077F8 70006BF8 8FA50038 */   lw    $a1, 0x38($sp)
 /* 0077FC 70006BFC 3C048006 */  lui   $a0, %hi(ptr_musicdatatable) # $a0, 0x8006
 /* 007800 70006C00 3C050042 */  lui   $a1, %hi(_musicsampletblSegmentRomStart) # $a1, 0x42
@@ -412,7 +412,7 @@ glabel music_track_related
 /* 007B5C 70006F5C 01037821 */  addu  $t7, $t0, $v1
 /* 007B60 70006F60 01E62023 */  subu  $a0, $t7, $a2
 /* 007B64 70006F64 AFA40028 */  sw    $a0, 0x28($sp)
-/* 007B68 70006F68 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 007B68 70006F68 0C001707 */  jal   romCopy
 /* 007B6C 70006F6C AFA82140 */   sw    $t0, 0x2140($sp)
 /* 007B70 70006F70 8FA40028 */  lw    $a0, 0x28($sp)
 /* 007B74 70006F74 8FA52140 */  lw    $a1, 0x2140($sp)
@@ -764,7 +764,7 @@ glabel music_related_2nd_block
 /* 007EE4 700072E4 01037821 */  addu  $t7, $t0, $v1
 /* 007EE8 700072E8 01E62023 */  subu  $a0, $t7, $a2
 /* 007EEC 700072EC AFA40028 */  sw    $a0, 0x28($sp)
-/* 007EF0 700072F0 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 007EF0 700072F0 0C001707 */  jal   romCopy
 /* 007EF4 700072F4 AFA82140 */   sw    $t0, 0x2140($sp)
 /* 007EF8 700072F8 8FA40028 */  lw    $a0, 0x28($sp)
 /* 007EFC 700072FC 8FA52140 */  lw    $a1, 0x2140($sp)
@@ -1116,7 +1116,7 @@ glabel music_related_3rd_block
 /* 00826C 7000766C 01037821 */  addu  $t7, $t0, $v1
 /* 008270 70007670 01E62023 */  subu  $a0, $t7, $a2
 /* 008274 70007674 AFA40028 */  sw    $a0, 0x28($sp)
-/* 008278 70007678 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 008278 70007678 0C001707 */  jal   romCopy
 /* 00827C 7000767C AFA82140 */   sw    $t0, 0x2140($sp)
 /* 008280 70007680 8FA40028 */  lw    $a0, 0x28($sp)
 /* 008284 70007684 8FA52140 */  lw    $a1, 0x2140($sp)

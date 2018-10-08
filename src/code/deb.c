@@ -1,6 +1,7 @@
 //FIXME my c code is modtly copy/paste from mips_to_c
 #include "ultra64.h"
 #include "bond.h"
+#include "ramrom.h"
 
 /* data */
 u32 D_800232E0[] = {0, 0};
@@ -670,7 +671,7 @@ glabel indy_file_get_address_subsequent_data
 /* 005EA0 700052A0 3C048006 */  lui   $a0, %hi(indy_read_buffer) # $a0, 0x8006
 /* 005EA4 700052A4 24843670 */  addiu $a0, %lo(indy_read_buffer) # addiu $a0, $a0, 0x3670
 /* 005EA8 700052A8 8FA50020 */  lw    $a1, 0x20($sp)
-/* 005EAC 700052AC 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 005EAC 700052AC 0C001707 */  jal   romCopy
 /* 005EB0 700052B0 24060060 */   li    $a2, 96
 /* 005EB4 700052B4 3C0E8006 */  lui   $t6, %hi(indy_read_buffer) # $t6, 0x8006
 /* 005EB8 700052B8 8DCE3670 */  lw    $t6, %lo(indy_read_buffer)($t6)
@@ -714,7 +715,7 @@ s32 indy_file_get_address_subsequent_data(s32 arg0) {
     s32 sp18;
 
     // Node 0
-    load_bytes_from_hw_to_rdram(&indy_read_buffer, arg0, 0x60);
+    romCopy(&indy_read_buffer, arg0, 0x60);
     current_indy_read_buf_resourceID = (u32) indy_read_buffer;
     ptr_indy_read_buf_string1 = &indy_read_buffer;
     ptr_indy_read_buf_string2 = (s32) ((return_strlen(&indy_read_buffer) + ptr_indy_read_buf_string1) + 1);
@@ -1476,4 +1477,3 @@ glabel write_stderr_to_buffer
 /* 006700 70005B00 03E00008 */  jr    $ra
 /* 006704 70005B04 27BD0040 */   addiu $sp, $sp, 0x40
 )
-
