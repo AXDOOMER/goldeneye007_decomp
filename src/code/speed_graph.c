@@ -1,63 +1,39 @@
 #include "ultra64.h"
 
 
-.section .data
-D_800231D4:
-.word 0
-.word 2, 0
-.word 1, 0
-.word 2, 0
-.word 2, 0xFF000000
-.word 2, 0
-.word 3, 0x9200
-.word 4, 0xFFFFFFFF
-.word 4, 0xDB000000
-.word 4, 0xFFFFFFFF
-D_80023224:
-.word 0
-D_80023228:
-.word 0
-D_8002322C:
-.word 0
-counterforframes:
-.word 0
-D_80023234:
-.word 1
-.word 0
-.word 0
-.word 0
-
-.section .rodata
-aUtz2_0f: .asciiz "utz %2.0f%%\n"
-.align 4
-aRsp2_0f: .asciiz "rsp %2.0f%%\n"
-.align 4
-aTex2_0f: .asciiz "tex %2.0f%%"
-.align 4
-a2dHz: .asciiz "%2d hz"
-.align 4
-a2dFrames: .asciiz "%2d frames"
-.align 4
-a2d: .asciiz " [%2d]"
-.align 4
-asc_D_80028468: .asciiz "     "
-.align 4
-aIL0: .asciiz "I=l0"
-.align 4
-
-.section .bss
-dword_CODE_bss_8005F3F0[0x10];
-displaylist_0[0x850];
-displaylist_1[0x850];
-displaylist_bank[4];
+/* tempory types confirm me */
+s32 dword_CODE_bss_8005F3F0[4];
+s32 displaylist_0[0x214];
+s32 displaylist_1[0x214];
+s32 displaylist_bank;
 s32 dword_CODE_bss_800604A4;
-dword_CODE_bss_800604A8[8];
-dword_CODE_bss_800604B0[0x300];
-dword_CODE_bss_800607B0[0x10];
-dword_CODE_bss_800607C0[0xC];
-s32 dword_CODE_bss_800607CC;
-dword_CODE_bss_800607D0[0xC];
-s32 dword_CODE_bss_800607DC;
+s32 dword_CODE_bss_800604A8;
+s32 dword_CODE_bss_800604AC;
+s32 dword_CODE_bss_800604B0[0xC0];
+s32 dword_CODE_bss_800607B0[4];
+s32 dword_CODE_bss_800607C0[4];
+s32 dword_CODE_bss_800607D0[4];
+
+s32 D_800231D0[] = { 0, 0, 2, 0, 1, 0, 2, 0, 2, 0xFF000000, 2, 0, 3, 0x9200, 4, 0xFFFFFFFF, 4, 0xDB000000, 4, 0xFFFFFFFF };
+
+s32 D_80023224 = 0;
+s32 D_80023228 = 0;
+s32 D_8002322C = 0;
+s32 counterforframes = 0;
+s32 D_80023234[] = { 1, 0, 0, 0 };
+
+
+//GLOBAL_ASM(
+//    .rodata
+//    aUtz2_0f: .asciiz "utz %2.0f%%\n"
+//    aRsp2_0f: .asciiz "rsp %2.0f%%\n"
+//    aTex2_0f: .asciiz "tex %2.0f%%"
+//    a2dHz: .asciiz "%2d hz"
+//    a2dFrames: .asciiz "%2d frames"
+//    a2d: .asciiz " [%2d]"
+//    asc_D_80028468: .asciiz "     "
+//    aIL0: .asciiz "I=l0"
+//)
 
 
 
@@ -67,7 +43,7 @@ void displaylist_related(void) {
 }
 #else
 GLOBAL_ASM(
-.section .text
+.text
 glabel displaylist_related
 /* 003330 70002730 3C048006 */  lui   $a0, %hi(displaylist_0) # $a0, 0x8006
 /* 003334 70002734 2484F400 */  addiu $a0, %lo(displaylist_0) # addiu $a0, $a0, -0xc00
@@ -104,13 +80,13 @@ glabel displaylist_related
 
 
 
-#ifdef NONMATCHING
-void video_related_1(void) {
 
+void video_related_1(void) {
+    dword_CODE_bss_800604A8 = osGetCount();
 }
-#else
+
 GLOBAL_ASM(
-.section .text
+.text
 glabel video_related_1
 /* 0033A4 700027A4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0033A8 700027A8 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -142,7 +118,7 @@ glabel video_related_1
 /* 003408 70002808 03E00008 */  jr    $ra
 /* 00340C 7000280C 00000000 */   nop   
 )
-#endif
+
 
 
 
@@ -152,7 +128,7 @@ void video_related_2(void) {
 }
 #else
 GLOBAL_ASM(
-.section .text
+.text
 glabel video_related_2
 /* 003410 70002810 3C0E8006 */  lui   $t6, %hi(dword_CODE_bss_800604A8) # $t6, 0x8006
 /* 003414 70002814 8DCE04A8 */  lw    $t6, %lo(dword_CODE_bss_800604A8)($t6)
@@ -183,7 +159,7 @@ void video_related_3(void) {
 }
 #else
 GLOBAL_ASM(
-.section .text
+.text
 glabel video_related_3
 /* 003454 70002854 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 003458 70002858 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -265,7 +241,7 @@ void display_speed_graph(void) {
 }
 #else
 GLOBAL_ASM(
-.section .text
+.text
 glabel display_speed_graph
 /* 003558 70002958 3C038005 */  lui   $v1, %hi(D_80048498) # $v1, 0x8005
 /* 00355C 7000295C 3C0E8002 */  lui   $t6, %hi(D_80023228) # $t6, 0x8002
@@ -517,7 +493,7 @@ void video_DL_related_4(void) {
 }
 #else
 GLOBAL_ASM(
-.section .text
+.text
 glabel video_DL_related_4
 /* 0038D8 70002CD8 27BDFF30 */  addiu $sp, $sp, -0xd0
 /* 0038DC 70002CDC 3C028002 */  lui   $v0, %hi(counterforframes) # $v0, 0x8002
