@@ -50,15 +50,24 @@ dword_CODE_bss_8005F3F0[0x10];
 displaylist_0[0x850];
 displaylist_1[0x850];
 displaylist_bank[4];
-dword_CODE_bss_800604A4[4];
+s32 dword_CODE_bss_800604A4;
 dword_CODE_bss_800604A8[8];
 dword_CODE_bss_800604B0[0x300];
 dword_CODE_bss_800607B0[0x10];
 dword_CODE_bss_800607C0[0xC];
-dword_CODE_bss_800607CC[4];
+s32 dword_CODE_bss_800607CC;
 dword_CODE_bss_800607D0[0xC];
-dword_CODE_bss_800607DC[4];
+s32 dword_CODE_bss_800607DC;
 
+
+
+#ifdef NONMATCHING
+void displaylist_related(void) {
+
+}
+#else
+GLOBAL_ASM(
+.section .text
 glabel displaylist_related
 /* 003330 70002730 3C048006 */  lui   $a0, %hi(displaylist_0) # $a0, 0x8006
 /* 003334 70002734 2484F400 */  addiu $a0, %lo(displaylist_0) # addiu $a0, $a0, -0xc00
@@ -90,7 +99,18 @@ glabel displaylist_related
 /* 003398 70002798 27BD0018 */  addiu $sp, $sp, 0x18
 /* 00339C 7000279C 03E00008 */  jr    $ra
 /* 0033A0 700027A0 00000000 */   nop   
+)
+#endif
 
+
+
+#ifdef NONMATCHING
+void video_related_1(void) {
+
+}
+#else
+GLOBAL_ASM(
+.section .text
 glabel video_related_1
 /* 0033A4 700027A4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0033A8 700027A8 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -121,7 +141,18 @@ glabel video_related_1
 /* 003404 70002804 27BD0018 */  addiu $sp, $sp, 0x18
 /* 003408 70002808 03E00008 */  jr    $ra
 /* 00340C 7000280C 00000000 */   nop   
+)
+#endif
 
+
+
+#ifdef NONMATCHING
+void video_related_2(void) {
+
+}
+#else
+GLOBAL_ASM(
+.section .text
 glabel video_related_2
 /* 003410 70002810 3C0E8006 */  lui   $t6, %hi(dword_CODE_bss_800604A8) # $t6, 0x8006
 /* 003414 70002814 8DCE04A8 */  lw    $t6, %lo(dword_CODE_bss_800604A8)($t6)
@@ -141,7 +172,18 @@ glabel video_related_2
 /* 003448 70002848 AC6FFFFC */   sw    $t7, -4($v1)
 /* 00344C 7000284C 03E00008 */  jr    $ra
 /* 003450 70002850 00000000 */   nop   
+)
+#endif
 
+
+
+#ifdef NONMATCHING
+void video_related_3(void) {
+
+}
+#else
+GLOBAL_ASM(
+.section .text
 glabel video_related_3
 /* 003454 70002854 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 003458 70002858 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -212,7 +254,18 @@ glabel video_related_3
 /* 00354C 7000294C 27BD0040 */  addiu $sp, $sp, 0x40
 /* 003550 70002950 03E00008 */  jr    $ra
 /* 003554 70002954 00000000 */   nop   
+)
+#endif
 
+
+
+#ifdef NONMATCHING
+void display_speed_graph(void) {
+
+}
+#else
+GLOBAL_ASM(
+.section .text
 glabel display_speed_graph
 /* 003558 70002958 3C038005 */  lui   $v1, %hi(D_80048498) # $v1, 0x8005
 /* 00355C 7000295C 3C0E8002 */  lui   $t6, %hi(D_80023228) # $t6, 0x8002
@@ -453,7 +506,18 @@ glabel display_speed_graph
 /* 0038CC 70002CCC 24820008 */  addiu $v0, $a0, 8
 /* 0038D0 70002CD0 03E00008 */  jr    $ra
 /* 0038D4 70002CD4 27BD0048 */   addiu $sp, $sp, 0x48
+)
+#endif
 
+
+
+#ifdef NONMATCHING
+void video_DL_related_4(void) {
+
+}
+#else
+GLOBAL_ASM(
+.section .text
 glabel video_DL_related_4
 /* 0038D8 70002CD8 27BDFF30 */  addiu $sp, $sp, -0xd0
 /* 0038DC 70002CDC 3C028002 */  lui   $v0, %hi(counterforframes) # $v0, 0x8002
@@ -697,6 +761,5 @@ glabel video_DL_related_4
 /* 003C50 70003050 8FBE0058 */  lw    $fp, 0x58($sp)
 /* 003C54 70003054 03E00008 */  jr    $ra
 /* 003C58 70003058 27BD00D0 */   addiu $sp, $sp, 0xd0
-
-/* 003C5C 7000305C 00000000 */  nop   
-
+)
+#endif
