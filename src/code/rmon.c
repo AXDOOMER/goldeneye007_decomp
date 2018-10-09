@@ -5,11 +5,11 @@ void thread0_rmon(void) {
     // (function likely void)
 }
 
-void rmon_debug_is_final_build(void) {
+s32 rmon_debug_is_final_build(void) {
     return 1;
 }
 
-void rmon_debug_returns_neg_1(void) {
+s32 rmon_debug_returns_neg_1(void) {
     return -1;
 }
 
@@ -40,7 +40,14 @@ void rmon_debug_stub_4(void) {
 }
 
 
+
+#ifdef NONMATCHING
+void proutSyncPrintf(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel proutSyncPrintf
 /* 00DAE8 7000CEE8 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00DAEC 7000CEEC AFB20020 */  sw    $s2, 0x20($sp)
@@ -68,8 +75,20 @@ glabel proutSyncPrintf
 /* 00DB3C 7000CF3C 03E00008 */  jr    $ra
 /* 00DB40 7000CF40 24020001 */   li    $v0, 1
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void osSyncPrintf(s32 arg0, s32 arg1, ? arg2, ? arg3, ? arg8, ? arg9) {
+    // Node 0
+    _Printf(&proutSyncPrintf, 0, arg8, &arg9);
+    return;
+    // (possible return value: _Printf(&proutSyncPrintf, 0, arg8, &arg9))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel osSyncPrintf
 /* 00DB44 7000CF44 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00DB48 7000CF48 AFA40020 */  sw    $a0, 0x20($sp)
@@ -88,12 +107,8 @@ glabel osSyncPrintf
 /* 00DB7C 7000CF7C 03E00008 */  jr    $ra
 /* 00DB80 7000CF80 00000000 */   nop  
 )
+#endif
 
-void osSyncPrintf(s32 arg0, s32 arg1, ? arg2, ? arg3, ? arg8, ? arg9) {
-    // Node 0
-    _Printf(&proutSyncPrintf, 0, arg8, &arg9);
-    return;
-    // (possible return value: _Printf(&proutSyncPrintf, 0, arg8, &arg9))
-}
+
 
 
