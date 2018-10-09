@@ -1,34 +1,51 @@
 #include "ultra64.h"
 
-.section .data
-ptr_mema_c_debug_notice_list:.word 0
-
-.section .rodata
-aMema_c_debug:  .asciiz "mema_c_debug"
-aD_3:           .asciiz "%d "
-a___:           .asciiz "..."
-aD_5:           .asciiz "[%d]"
-.align 4
-
-.section .bss
-ptr_model_room_buf_secondary:.space 4
-size_modelroom_buf:.space 4
-ptr_table_allocated_mem_blocks:.space 4
-dword_CODE_bss_80063C2C:.space 4
-index_for_loadedroom:.space 4
-dword_CODE_bss_80063C34:.space 4
-dword_CODE_bss_80063C38:.space 4
-dword_CODE_bss_80063C3C:.space 0xC
-dword_CODE_bss_80063C48:.space 0xFC0
-dword_CODE_bss_80064C08:.space 8
-dword_CODE_bss_80064C10:.space 8
-dword_CODE_bss_80064C18:.space 4
-dword_CODE_bss_80064C1C:.space 4
-dword_CODE_bss_80064C20:.space 4
-dword_CODE_bss_80064C24:.space 4
+void *ptr_model_room_buf_secondary;
+u32 size_modelroom_buf;
+void *ptr_table_allocated_mem_blocks;
+s32 dword_CODE_bss_80063C2C;
+s32 index_for_loadedroom;
+s32 dword_CODE_bss_80063C34;
+s32 dword_CODE_bss_80063C38;
+char dword_CODE_bss_80063C3C[0xC];
+char dword_CODE_bss_80063C48[0xFC0];
+char dword_CODE_bss_80064C08[8];
+char dword_CODE_bss_80064C10[8];
+s32 dword_CODE_bss_80064C18;
+s32 dword_CODE_bss_80064C1C;
+s32 dword_CODE_bss_80064C20;
+s32 dword_CODE_bss_80064C24;
 
 
+void *ptr_mema_c_debug_notice_list = 0;
+
+
+const char aMema_c_debug[] = "mema_c_debug";
+const char aD_3[] = "%d ";
+const char a___[] = "...";
+const char aD_5[] = "[%d]";
+
+
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+?32 swap_entries(void *arg0, void *arg1) {
+    // Node 0
+    *arg0 = (?32) *arg1;
+    arg0->unk4 = (?32) arg1->unk4;
+    *arg1 = (?32) *arg0;
+    arg1->unk4 = (?32) arg0->unk4;
+    return;
+    // (possible return value: *arg0)
+}
+#else
 GLOBAL_ASM(
+.text
 glabel swap_entries
 /* 00A610 70009A10 8CAE0000 */  lw    $t6, ($a1)
 /* 00A614 70009A14 8C820000 */  lw    $v0, ($a0)
@@ -40,19 +57,24 @@ glabel swap_entries
 /* 00A62C 70009A2C 03E00008 */  jr    $ra
 /* 00A630 70009A30 ACA30004 */   sw    $v1, 4($a1)
 )
+#endif
 
-?32 swap_entries(void *arg0, void *arg1) {
+
+
+
+
+#ifdef NONMATCHING
+void merge_alloc_entries(void *arg0, void *arg1) {
     // Node 0
-    *arg0 = (?32) *arg1;
-    arg0->unk4 = (?32) arg1->unk4;
-    *arg1 = (?32) *arg0;
-    arg1->unk4 = (?32) arg0->unk4;
+    arg0->unk4 = (s32) (arg0->unk4 + arg1->unk4);
+    *arg1 = 0;
+    arg1->unk4 = 0;
     return;
-    // (possible return value: *arg0)
+    // (function likely void)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel merge_alloc_entries
 /* 00A634 70009A34 8C8E0004 */  lw    $t6, 4($a0)
 /* 00A638 70009A38 8CAF0004 */  lw    $t7, 4($a1)
@@ -62,18 +84,19 @@ glabel merge_alloc_entries
 /* 00A648 70009A48 03E00008 */  jr    $ra
 /* 00A64C 70009A4C ACA00004 */   sw    $zero, 4($a1)
 )
+#endif
 
-void merge_alloc_entries(void *arg0, void *arg1) {
-    // Node 0
-    arg0->unk4 = (s32) (arg0->unk4 + arg1->unk4);
-    *arg1 = 0;
-    arg1->unk4 = 0;
-    return;
-    // (function likely void)
+
+
+
+
+#ifdef NONMATCHING
+void sort_merge_entries_in_alloc_table(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel sort_merge_entries_in_alloc_table
 /* 00A650 70009A50 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 00A654 70009A54 AFB40028 */  sw    $s4, 0x28($sp)
@@ -131,8 +154,17 @@ glabel sort_merge_entries_in_alloc_table
 /* 00A710 70009B10 03E00008 */  jr    $ra
 /* 00A714 70009B14 27BD0030 */   addiu $sp, $sp, 0x30
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void memp_related_7(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel memp_related_7
 /* 00A718 70009B18 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00A71C 70009B1C AFB00018 */  sw    $s0, 0x18($sp)
@@ -155,8 +187,17 @@ glabel memp_related_7
 /* 00A758 70009B58 03E00008 */  jr    $ra
 /* 00A75C 70009B5C 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void mem_related(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel mem_related
 /* 00A760 70009B60 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00A764 70009B64 AFB2001C */  sw    $s2, 0x1c($sp)
@@ -238,8 +279,17 @@ glabel mem_related
 /* 00A86C 70009C6C 03E00008 */  jr    $ra
 /* 00A870 70009C70 27BD0028 */   addiu $sp, $sp, 0x28
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void mem_related_model_room_buffers(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel mem_related_model_room_buffers
 /* 00A874 70009C74 3C0F8006 */  lui   $t7, %hi(ptr_model_room_buf_secondary) # $t7, 0x8006
 /* 00A878 70009C78 8DEF3C20 */  lw    $t7, %lo(ptr_model_room_buf_secondary)($t7)
@@ -311,8 +361,20 @@ glabel mem_related_model_room_buffers
 /* 00A964 70009D64 03E00008 */  jr    $ra
 /* 00A968 70009D68 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void something_with_mema_c_debug(void) {
+    // Node 0
+    get_ptr_debug_notice_list_entry(&ptr_mema_c_debug_notice_list, &aMema_c_debug);
+    return;
+    // (possible return value: get_ptr_debug_notice_list_entry(&ptr_mema_c_debug_notice_list, &aMema_c_debug))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel something_with_mema_c_debug
 /* 00A96C 70009D6C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00A970 70009D70 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -326,16 +388,20 @@ glabel something_with_mema_c_debug
 /* 00A990 70009D90 03E00008 */  jr    $ra
 /* 00A994 70009D94 00000000 */   nop   
 )
+#endif
 
-void something_with_mema_c_debug(void) {
-    // Node 0
-    get_ptr_debug_notice_list_entry(&ptr_mema_c_debug_notice_list, &aMema_c_debug);
-    return;
-    // (possible return value: get_ptr_debug_notice_list_entry(&ptr_mema_c_debug_notice_list, &aMema_c_debug))
+
+
+
+
+
+#ifdef NONMATCHING
+void reset_memtable_base_allocation(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel reset_memtable_base_allocation
 /* 00A998 70009D98 3C038006 */  lui   $v1, %hi(ptr_table_allocated_mem_blocks) # $v1, 0x8006
 /* 00A99C 70009D9C 24633C28 */  addiu $v1, %lo(ptr_table_allocated_mem_blocks) # addiu $v1, $v1, 0x3c28
@@ -369,8 +435,20 @@ glabel reset_memtable_base_allocation
 /* 00AA08 70009E08 03E00008 */  jr    $ra
 /* 00AA0C 70009E0C AC650014 */   sw    $a1, 0x14($v1)
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void mem_related_calls_sort_merge_entries(void) {
+    // Node 0
+    sort_merge_entries_in_alloc_table(&ptr_table_allocated_mem_blocks);
+    return;
+    // (possible return value: sort_merge_entries_in_alloc_table(&ptr_table_allocated_mem_blocks))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel mem_related_calls_sort_merge_entries
 /* 00AA10 70009E10 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00AA14 70009E14 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -382,16 +460,19 @@ glabel mem_related_calls_sort_merge_entries
 /* 00AA2C 70009E2C 03E00008 */  jr    $ra
 /* 00AA30 70009E30 00000000 */   nop   
 )
+#endif
 
-void mem_related_calls_sort_merge_entries(void) {
-    // Node 0
-    sort_merge_entries_in_alloc_table(&ptr_table_allocated_mem_blocks);
-    return;
-    // (possible return value: sort_merge_entries_in_alloc_table(&ptr_table_allocated_mem_blocks))
+
+
+
+
+#ifdef NONMATCHING
+void memp_related_1(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel mem_related_something_find_first
 /* 00AA34 70009E34 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 00AA38 70009E38 AFB2001C */  sw    $s2, 0x1c($sp)
@@ -499,8 +580,17 @@ glabel mem_related_something_find_first
 /* 00ABA0 70009FA0 03E00008 */  jr    $ra
 /* 00ABA4 70009FA4 27BD0030 */   addiu $sp, $sp, 0x30
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void mem_related_something_find_first_0(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel mem_related_something_find_first_0
 /* 00ABA8 70009FA8 3C198006 */  lui   $t9, %hi(ptr_first_entry_in_alloc_table) # $t9, 0x8006
 /* 00ABAC 70009FAC 8F393C38 */  lw    $t9, %lo(ptr_first_entry_in_alloc_table)($t9)
@@ -539,8 +629,20 @@ glabel mem_related_something_find_first_0
 /* 00AC18 7000A018 03E00008 */  jr    $ra
 /* 00AC1C 7000A01C 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void mem_related_model_room_buffers_0(void) {
+    // Node 0
+    mem_related_model_room_buffers();
+    return;
+    // (possible return value: mem_related_model_room_buffers())
+}
+#else
 GLOBAL_ASM(
+.text
 glabel mem_related_model_room_buffers_0
 /* 00AC20 7000A020 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00AC24 7000A024 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -551,16 +653,18 @@ glabel mem_related_model_room_buffers_0
 /* 00AC38 7000A038 03E00008 */  jr    $ra
 /* 00AC3C 7000A03C 00000000 */   nop   
 )
+#endif
 
-void mem_related_model_room_buffers_0(void) {
-    // Node 0
-    mem_related_model_room_buffers();
-    return;
-    // (possible return value: mem_related_model_room_buffers())
+
+
+
+#ifdef NONMATCHING
+void mem_related_allocated_table_related(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel mem_related_allocated_table_related
 /* 00AC40 7000A040 3C038006 */  lui   $v1, %hi(ptr_table_allocated_mem_blocks) # $v1, 0x8006
 /* 00AC44 7000A044 3C028006 */  lui   $v0, %hi(dword_CODE_bss_80064C08) # $v0, 0x8006
@@ -573,8 +677,17 @@ glabel mem_related_allocated_table_related
 /* 00AC5C 7000A05C 03E00008 */  jr    $ra
 /* 00AC60 7000A060 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void mem_related_something_first_related(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel mem_related_something_first_related
 /* 00AC64 7000A064 3C0E8006 */  lui   $t6, %hi(ptr_first_entry_in_alloc_table) # $t6, 0x8006
 /* 00AC68 7000A068 8DCE3C38 */  lw    $t6, %lo(ptr_first_entry_in_alloc_table)($t6)
@@ -623,8 +736,17 @@ glabel mem_related_something_first_related
 /* 00ACF8 7000A0F8 03E00008 */  jr    $ra
 /* 00ACFC 7000A0FC 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void generate_list_alloc_mem(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel generate_list_alloc_mem
 /* 00AD00 7000A100 27BDEF98 */  addiu $sp, $sp, -0x1068
 /* 00AD04 7000A104 3C048006 */  lui   $a0, %hi(ptr_first_entry_in_alloc_table) # $a0, 0x8006
@@ -744,8 +866,17 @@ glabel generate_list_alloc_mem
 /* 00AE94 7000A294 03E00008 */  jr    $ra
 /* 00AE98 7000A298 27BD1068 */   addiu $sp, $sp, 0x1068
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void generate_lists_before_after_mem_merge(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel generate_lists_before_after_mem_merge
 /* 00AE9C 7000A29C 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00AEA0 7000A2A0 AFBF0024 */  sw    $ra, 0x24($sp)
@@ -772,8 +903,17 @@ glabel generate_lists_before_after_mem_merge
 /* 00AEF0 7000A2F0 03E00008 */  jr    $ra
 /* 00AEF4 7000A2F4 27BD0028 */   addiu $sp, $sp, 0x28
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void mem_related_something_first_related_0(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel mem_related_something_first_related_0
 /* 00AEF8 7000A2F8 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00AEFC 7000A2FC 3C0F8006 */  lui   $t7, %hi(ptr_first_entry_in_alloc_table) # $t7, 0x8006
@@ -808,8 +948,17 @@ glabel mem_related_something_first_related_0
 /* 00AF68 7000A368 03E00008 */  jr    $ra
 /* 00AF6C 7000A36C 27BD0028 */   addiu $sp, $sp, 0x28
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void mem_related_0(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel mem_related_0
 /* 00AF70 7000A370 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00AF74 7000A374 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -844,8 +993,17 @@ glabel mem_related_0
 /* 00AFD4 7000A3D4 03E00008 */  jr    $ra
 /* 00AFD8 7000A3D8 27BD0020 */   addiu $sp, $sp, 0x20
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void mem_related_1(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel mem_related_1
 /* 00AFDC 7000A3DC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00AFE0 7000A3E0 00A6082B */  sltu  $at, $a1, $a2
@@ -878,3 +1036,4 @@ glabel mem_related_1
 /* 00B03C 7000A43C 03E00008 */  jr    $ra
 /* 00B040 7000A440 00000000 */   nop   
 )
+#endif
