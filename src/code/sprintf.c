@@ -1,6 +1,18 @@
 #include "ultra64.h"
 
+
+
+
+#ifdef NONMATCHING
+s32 proutSprintf(? arg2, s32 arg8) {
+    // Node 0
+    memcpy();
+    return;
+    // (possible return value: (memcpy() + arg8))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel proutSprintf
 /* 00B870 7000AC70 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00B874 7000AC74 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -12,15 +24,30 @@ glabel proutSprintf
 /* 00B88C 7000AC8C 03E00008 */  jr    $ra
 /* 00B890 7000AC90 004E1021 */   addu  $v0, $v0, $t6
 )
+#endif
 
-s32 proutSprintf(? arg2, s32 arg8) {
+
+
+
+
+#ifdef NONMATCHING
+s32 sprintf(s32 arg0, s32 arg1, ? arg2, ? arg3, s32 arg8, ? arg9, ? argA) {
+    ? temp_ret;
+
     // Node 0
-    memcpy();
-    return;
-    // (possible return value: (memcpy() + arg8))
+    temp_ret = _Printf(&proutSprintf, arg8, arg9, &argA);
+    if (temp_ret >= 0)
+    {
+        // Node 1
+        *(arg8 + temp_ret) = (u8)0;
+        return;
+        // (possible return value: (temp_ret + -1))
+    }
+    // (possible return value: (temp_ret + -1))
 }
-
+#else
 GLOBAL_ASM(
+.text
 glabel sprintf
 /* 00B894 7000AC94 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00B898 7000AC98 AFA40020 */  sw    $a0, 0x20($sp)
@@ -46,19 +73,7 @@ glabel sprintf
 /* 00B8E4 7000ACE4 03E00008 */  jr    $ra
 /* 00B8E8 7000ACE8 00000000 */   nop   
 )
+#endif
 
-s32 sprintf(s32 arg0, s32 arg1, ? arg2, ? arg3, s32 arg8, ? arg9, ? argA) {
-    ? temp_ret;
 
-    // Node 0
-    temp_ret = _Printf(&proutSprintf, arg8, arg9, &argA);
-    if (temp_ret >= 0)
-    {
-        // Node 1
-        *(arg8 + temp_ret) = (u8)0;
-        return;
-        // (possible return value: (temp_ret + -1))
-    }
-    // (possible return value: (temp_ret + -1))
-}
 
