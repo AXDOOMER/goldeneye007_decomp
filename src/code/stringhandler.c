@@ -1,7 +1,16 @@
 #include "ultra64.h"
 
 
+
+
+
+#ifdef NONMATCHING
+void textpointer_load_parse_something(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel textpointer_load_parse_something
 /* 00B370 7000A770 90A20000 */  lbu   $v0, ($a1)
 /* 00B374 7000A774 24830001 */  addiu $v1, $a0, 1
@@ -18,8 +27,17 @@ glabel textpointer_load_parse_something
 /* 00B398 7000A798 03E00008 */  jr    $ra
 /* 00B39C 7000A79C 00801025 */   move  $v0, $a0
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void something_with_strings(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel something_with_strings
 /* 00B3A0 7000A7A0 90A20000 */  lbu   $v0, ($a1)
 /* 00B3A4 7000A7A4 24830001 */  addiu $v1, $a0, 1
@@ -50,8 +68,17 @@ glabel something_with_strings
 /* 00B3F4 7000A7F4 03E00008 */  jr    $ra
 /* 00B3F8 7000A7F8 00801025 */   move  $v0, $a0
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void string_load_parse_something(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel string_load_parse_something
 /* 00B3FC 7000A7FC 908E0000 */  lbu   $t6, ($a0)
 /* 00B400 7000A800 00801025 */  move  $v0, $a0
@@ -78,8 +105,17 @@ glabel string_load_parse_something
 /* 00B444 7000A844 03E00008 */  jr    $ra
 /* 00B448 7000A848 00801025 */   move  $v0, $a0
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void something_with_strings_0(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel something_with_strings_0
 .L7000A84C:
 /* 00B44C 7000A84C 90820000 */  lbu   $v0, ($a0)
@@ -108,8 +144,17 @@ glabel something_with_strings_0
 /* 00B490 7000A890 03E00008 */  jr    $ra
 /* 00B494 7000A894 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void string_related(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel string_related
 .L7000A898:
 /* 00B498 7000A898 54C00004 */  bnezl $a2, .L7000A8AC
@@ -145,8 +190,31 @@ glabel string_related
 /* 00B4F0 7000A8F0 03E00008 */  jr    $ra
 /* 00B4F4 7000A8F4 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+s32 strtol_related(s32 arg0) {
+    s32 temp_t6;
+
+    // Node 0
+    temp_t6 = (arg0 & 0xff);
+    if (temp_t6 >= 0x61)
+    {
+        // Node 1
+        if (temp_t6 < 0x7b)
+        {
+            // Node 2
+            return;
+            // (possible return value: temp_t6)
+        }
+    }
+    // (possible return value: temp_t6)
+}
+#else
 GLOBAL_ASM(
+.text
 glabel strtol_related
 /* 00B4F8 7000A8F8 308E00FF */  andi  $t6, $a0, 0xff
 /* 00B4FC 7000A8FC AFA40000 */  sw    $a0, ($sp)
@@ -165,27 +233,26 @@ glabel strtol_related
 /* 00B528 7000A928 03E00008 */  jr    $ra
 /* 00B52C 7000A92C 00000000 */   nop   
 )
+#endif
 
-s32 strtol_related(s32 arg0) {
-    s32 temp_t6;
 
+
+
+
+#ifdef NONMATCHING
+s32 strtol_related_0(s32 arg0) {
     // Node 0
-    temp_t6 = (arg0 & 0xff);
-    if (temp_t6 >= 0x61)
+    if ((((arg0 & 0xff) < 0x30) ^ 1) != 0)
     {
         // Node 1
-        if (temp_t6 < 0x7b)
-        {
-            // Node 2
-            return;
-            // (possible return value: temp_t6)
-        }
+        return;
+        // (possible return value: ((arg0 & 0xff) < 0x3a))
     }
-    // (possible return value: temp_t6)
+    // (possible return value: (((arg0 & 0xff) < 0x30) ^ 1))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel strtol_related_0
 /* 00B530 7000A930 308E00FF */  andi  $t6, $a0, 0xff
 /* 00B534 7000A934 29C20030 */  slti  $v0, $t6, 0x30
@@ -197,40 +264,13 @@ glabel strtol_related_0
 /* 00B548 7000A948 03E00008 */  jr    $ra
 /* 00B54C 7000A94C 00000000 */   nop   
 )
-
-s32 strtol_related_0(s32 arg0) {
-    // Node 0
-    if ((((arg0 & 0xff) < 0x30) ^ 1) != 0)
-    {
-        // Node 1
-        return;
-        // (possible return value: ((arg0 & 0xff) < 0x3a))
-    }
-    // (possible return value: (((arg0 & 0xff) < 0x30) ^ 1))
-}
+#endif
 
 
-GLOBAL_ASM(
-glabel strtol_related_1
-/* 00B550 7000A950 308E00FF */  andi  $t6, $a0, 0xff
-/* 00B554 7000A954 29C20061 */  slti  $v0, $t6, 0x61
-/* 00B558 7000A958 AFA40000 */  sw    $a0, ($sp)
-/* 00B55C 7000A95C 14400004 */  bnez  $v0, .L7000A970
-/* 00B560 7000A960 01C01825 */   move  $v1, $t6
-/* 00B564 7000A964 29C2007B */  slti  $v0, $t6, 0x7b
-/* 00B568 7000A968 14400006 */  bnez  $v0, .L7000A984
-/* 00B56C 7000A96C 00000000 */   nop   
-.L7000A970:
-/* 00B570 7000A970 28620041 */  slti  $v0, $v1, 0x41
-/* 00B574 7000A974 38420001 */  xori  $v0, $v0, 1
-/* 00B578 7000A978 10400002 */  beqz  $v0, .L7000A984
-/* 00B57C 7000A97C 00000000 */   nop   
-/* 00B580 7000A980 2862005B */  slti  $v0, $v1, 0x5b
-.L7000A984:
-/* 00B584 7000A984 03E00008 */  jr    $ra
-/* 00B588 7000A988 00000000 */   nop   
-)
 
+
+
+#ifdef NONMATCHING
 s32 strtol_related_1(s32 arg0) {
     s32 temp_t6;
 
@@ -252,34 +292,35 @@ s32 strtol_related_1(s32 arg0) {
     }
     // (possible return value: ((temp_t6 < 0x41) ^ 1))
 }
-
-
+#else
 GLOBAL_ASM(
-glabel strtol_related_2
-/* 00B58C 7000A98C 308E00FF */  andi  $t6, $a0, 0xff
-/* 00B590 7000A990 39C20020 */  xori  $v0, $t6, 0x20
-/* 00B594 7000A994 2C420001 */  sltiu $v0, $v0, 1
-/* 00B598 7000A998 1440000F */  bnez  $v0, .L7000A9D8
-/* 00B59C 7000A99C AFA40000 */   sw    $a0, ($sp)
-/* 00B5A0 7000A9A0 39C20009 */  xori  $v0, $t6, 9
-/* 00B5A4 7000A9A4 2C420001 */  sltiu $v0, $v0, 1
-/* 00B5A8 7000A9A8 1440000B */  bnez  $v0, .L7000A9D8
-/* 00B5AC 7000A9AC 00000000 */   nop   
-/* 00B5B0 7000A9B0 39C2000A */  xori  $v0, $t6, 0xa
-/* 00B5B4 7000A9B4 2C420001 */  sltiu $v0, $v0, 1
-/* 00B5B8 7000A9B8 14400007 */  bnez  $v0, .L7000A9D8
-/* 00B5BC 7000A9BC 00000000 */   nop   
-/* 00B5C0 7000A9C0 39C2000C */  xori  $v0, $t6, 0xc
-/* 00B5C4 7000A9C4 2C420001 */  sltiu $v0, $v0, 1
-/* 00B5C8 7000A9C8 14400003 */  bnez  $v0, .L7000A9D8
-/* 00B5CC 7000A9CC 00000000 */   nop   
-/* 00B5D0 7000A9D0 39C2000B */  xori  $v0, $t6, 0xb
-/* 00B5D4 7000A9D4 2C420001 */  sltiu $v0, $v0, 1
-.L7000A9D8:
-/* 00B5D8 7000A9D8 03E00008 */  jr    $ra
-/* 00B5DC 7000A9DC 00000000 */   nop   
+.text
+glabel strtol_related_1
+/* 00B550 7000A950 308E00FF */  andi  $t6, $a0, 0xff
+/* 00B554 7000A954 29C20061 */  slti  $v0, $t6, 0x61
+/* 00B558 7000A958 AFA40000 */  sw    $a0, ($sp)
+/* 00B55C 7000A95C 14400004 */  bnez  $v0, .L7000A970
+/* 00B560 7000A960 01C01825 */   move  $v1, $t6
+/* 00B564 7000A964 29C2007B */  slti  $v0, $t6, 0x7b
+/* 00B568 7000A968 14400006 */  bnez  $v0, .L7000A984
+/* 00B56C 7000A96C 00000000 */   nop   
+.L7000A970:
+/* 00B570 7000A970 28620041 */  slti  $v0, $v1, 0x41
+/* 00B574 7000A974 38420001 */  xori  $v0, $v0, 1
+/* 00B578 7000A978 10400002 */  beqz  $v0, .L7000A984
+/* 00B57C 7000A97C 00000000 */   nop   
+/* 00B580 7000A980 2862005B */  slti  $v0, $v1, 0x5b
+.L7000A984:
+/* 00B584 7000A984 03E00008 */  jr    $ra
+/* 00B588 7000A988 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
 s32 strtol_related_2(s32 arg0) {
     s32 temp_t6;
 
@@ -305,9 +346,46 @@ s32 strtol_related_2(s32 arg0) {
     }
     // (possible return value: ((u32) (temp_t6 ^ 0x20) < 1U))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
+glabel strtol_related_2
+/* 00B58C 7000A98C 308E00FF */  andi  $t6, $a0, 0xff
+/* 00B590 7000A990 39C20020 */  xori  $v0, $t6, 0x20
+/* 00B594 7000A994 2C420001 */  sltiu $v0, $v0, 1
+/* 00B598 7000A998 1440000F */  bnez  $v0, .L7000A9D8
+/* 00B59C 7000A99C AFA40000 */   sw    $a0, ($sp)
+/* 00B5A0 7000A9A0 39C20009 */  xori  $v0, $t6, 9
+/* 00B5A4 7000A9A4 2C420001 */  sltiu $v0, $v0, 1
+/* 00B5A8 7000A9A8 1440000B */  bnez  $v0, .L7000A9D8
+/* 00B5AC 7000A9AC 00000000 */   nop   
+/* 00B5B0 7000A9B0 39C2000A */  xori  $v0, $t6, 0xa
+/* 00B5B4 7000A9B4 2C420001 */  sltiu $v0, $v0, 1
+/* 00B5B8 7000A9B8 14400007 */  bnez  $v0, .L7000A9D8
+/* 00B5BC 7000A9BC 00000000 */   nop   
+/* 00B5C0 7000A9C0 39C2000C */  xori  $v0, $t6, 0xc
+/* 00B5C4 7000A9C4 2C420001 */  sltiu $v0, $v0, 1
+/* 00B5C8 7000A9C8 14400003 */  bnez  $v0, .L7000A9D8
+/* 00B5CC 7000A9CC 00000000 */   nop   
+/* 00B5D0 7000A9D0 39C2000B */  xori  $v0, $t6, 0xb
+/* 00B5D4 7000A9D4 2C420001 */  sltiu $v0, $v0, 1
+.L7000A9D8:
+/* 00B5D8 7000A9D8 03E00008 */  jr    $ra
+/* 00B5DC 7000A9DC 00000000 */   nop   
+)
+#endif
+
+
+
+
+
+#ifdef NONMATCHING
+void strtol(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
 glabel strtol
 /* 00B5E0 7000A9E0 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 00B5E4 7000A9E4 AFB30024 */  sw    $s3, 0x24($sp)
@@ -495,3 +573,4 @@ glabel strtol
 /* 00B85C 7000AC5C 03E00008 */  jr    $ra
 /* 00B860 7000AC60 27BD0060 */   addiu $sp, $sp, 0x60
 )
+#endif
