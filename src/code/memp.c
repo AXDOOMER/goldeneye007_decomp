@@ -1,44 +1,53 @@
-include "ultra64.h"
-
-.section .data
-ptr_memp_c_debug_debug_notice_list:.word 0
-tied_to_mem_management:.word 0
-.word 0
-.word 0
-.word 0
-D_80024414:.word 2
-D_80024418:.word 0
-D_8002441C:.word 4
-D_80024420:.word 0x52
-D_80024424:.word 6
-D_80024428:.word 0xF
-D_8002442C:.word 0
-D_80024430:.word 0
-D_80024434:.word 0
-D_80024438:.word 0
-D_8002443C:.word 0
-D_80024440:.word 0
-D_80024444:.word 0
-D_80024448:.word 0
-D_8002444C:.word 0
-
-.section .rodata
-aMemp_c_debug: .asciiz "memp_c_debug"
-aMf: .asciiz "-mf"
-aMf_0: .asciiz "-mf"
-aMl: .asciiz "-ml"
-aMl_0: .asciiz "-ml"
-aMe: .asciiz "-me"
-aMe_0: .asciiz "-me"
-
-.section .bss
-memory_bank_ptrs:.space 0x40
-ptr_model_room_buf_pri:.space 8
-dword_CODE_bss_80063BF8:.space 0x24
-dword_CODE_bss_80063C1C:.space 4
+#include "ultra64.h"
 
 
+char memory_bank_ptrs[0x40];
+void *ptr_model_room_buf_pri;
+char dword_CODE_bss_80063BF8[0x24];
+s32 dword_CODE_bss_80063C1C;
+
+void *ptr_memp_c_debug_debug_notice_list = 0;
+s32 tied_to_mem_management[] = {0, 0, 0, 0};
+s32 D_80024414 = 2;
+s32 D_80024418 = 0;
+s32 D_8002441C = 4;
+s32 D_80024420 = 0x52;
+s32 D_80024424 = 6;
+s32 D_80024428 = 0xF;
+s32 D_8002442C = 0;
+s32 D_80024430 = 0;
+s32 D_80024434 = 0;
+s32 D_80024438 = 0;
+s32 D_8002443C = 0;
+s32 D_80024440 = 0;
+s32 D_80024444 = 0;
+s32 D_80024448 = 0;
+s32 D_8002444C = 0;
+
+const char aMemp_c_debug[] = "memp_c_debug";
+const char aMf[] = "-mf";
+const char aMf_0[] = "-mf";
+const char aMl[] = "-ml";
+const char aMl_0[] = "-ml";
+const char aMe[] = "-me";
+const char aMe_0[] = "-me";
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void something_with_memp_c_debug(void) {
+    // Node 0
+    get_ptr_debug_notice_list_entry(&ptr_memp_c_debug_debug_notice_list, "memp_c_debug");
+    return;
+    // (possible return value: get_ptr_debug_notice_list_entry(&ptr_memp_c_debug_debug_notice_list, &aMemp_c_debug))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel something_with_memp_c_debug
 /* 009F80 70009380 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 009F84 70009384 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -52,16 +61,70 @@ glabel something_with_memp_c_debug
 /* 009FA4 700093A4 03E00008 */  jr    $ra
 /* 009FA8 700093A8 00000000 */   nop   
 )
+#endif
 
-void something_with_memp_c_debug(void) {
+
+
+
+
+#ifdef NONMATCHING
+void check_memflag_tokens(s32 arg0, s32 arg1, s32 arg11) {
+    ? sp20;
+    s32 sp24;
+    s32 sp2C;
+    s32 sp34;
+    s32 temp_v1;
+
     // Node 0
-    get_ptr_debug_notice_list_entry(&ptr_memp_c_debug_debug_notice_list, &aMemp_c_debug);
+    memory_bank_ptrs = arg0;
+    memory_bank_ptrs.unk8 = (s32) (arg0 + arg1);
+    sp20 = (?32) D_80024414;
+    sp20.unk4 = (?32) D_80024414.unk4;
+    sp20.unkC = (?32) D_80024414.unkC;
+    sp20.unk8 = (?32) D_80024414.unk8;
+    sp20.unk10 = (?32) D_80024414.unk10;
+    sp20.unk14 = (?32) D_80024414.unk14;
+    sp20.unk1C = (?32) D_80024414.unk1C;
+    sp20.unk18 = (?32) D_80024414.unk18;
+    if (check_token(1, &aMf) != 0)
+    {
+        // Node 1
+        sp24 = strtol(check_token(1, &aMf_0), 0, 0);
+    }
+    // Node 2
+    if (check_token(1, &aMl) != 0)
+    {
+        // Node 3
+        sp2C = strtol(check_token(1, &aMl_0), 0, 0);
+    }
+    // Node 4
+    if (check_token(1, &aMe) != 0)
+    {
+        // Node 5
+        sp34 = strtol(check_token(1, &aMe_0), 0, 0);
+    }
+    // Node 6
+    if (sp34 == 0)
+    {
+        // Node 7
+        sp24 = 0;
+        if (j_text_trigger != 0)
+        {
+            // Node 8
+        }
+        // Node 9
+        temp_v1 = (0x128 << 0xa);
+        sp2C = (s32) (arg11 - temp_v1);
+        sp34 = temp_v1;
+    }
+    // Node 10
+    memp_related_0(&sp20);
     return;
-    // (possible return value: get_ptr_debug_notice_list_entry(&ptr_memp_c_debug_debug_notice_list, &aMemp_c_debug))
+    // (possible return value: memp_related_0(&sp20))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel check_memflag_tokens
 /* 009FAC 700093AC 3C028006 */  lui   $v0, %hi(memory_bank_ptrs) # $v0, 0x8006
 /* 009FB0 700093B0 24423BB0 */  addiu $v0, %lo(memory_bank_ptrs) # addiu $v0, $v0, 0x3bb0
@@ -159,64 +222,19 @@ glabel check_memflag_tokens
 /* 00A10C 7000950C 03E00008 */  jr    $ra
 /* 00A110 70009510 00000000 */   nop   
 )
+#endif
 
-void check_memflag_tokens(s32 arg0, s32 arg1, s32 arg11) {
-    ? sp20;
-    s32 sp24;
-    s32 sp2C;
-    s32 sp34;
-    s32 temp_v1;
 
-    // Node 0
-    memory_bank_ptrs = arg0;
-    memory_bank_ptrs.unk8 = (s32) (arg0 + arg1);
-    sp20 = (?32) D_80024414;
-    sp20.unk4 = (?32) D_80024414.unk4;
-    sp20.unkC = (?32) D_80024414.unkC;
-    sp20.unk8 = (?32) D_80024414.unk8;
-    sp20.unk10 = (?32) D_80024414.unk10;
-    sp20.unk14 = (?32) D_80024414.unk14;
-    sp20.unk1C = (?32) D_80024414.unk1C;
-    sp20.unk18 = (?32) D_80024414.unk18;
-    if (check_token(1, &aMf) != 0)
-    {
-        // Node 1
-        sp24 = strtol(check_token(1, &aMf_0), 0, 0);
-    }
-    // Node 2
-    if (check_token(1, &aMl) != 0)
-    {
-        // Node 3
-        sp2C = strtol(check_token(1, &aMl_0), 0, 0);
-    }
-    // Node 4
-    if (check_token(1, &aMe) != 0)
-    {
-        // Node 5
-        sp34 = strtol(check_token(1, &aMe_0), 0, 0);
-    }
-    // Node 6
-    if (sp34 == 0)
-    {
-        // Node 7
-        sp24 = 0;
-        if (j_text_trigger != 0)
-        {
-            // Node 8
-        }
-        // Node 9
-        temp_v1 = (0x128 << 0xa);
-        sp2C = (s32) (arg11 - temp_v1);
-        sp34 = temp_v1;
-    }
-    // Node 10
-    memp_related_0(&sp20);
-    return;
-    // (possible return value: memp_related_0(&sp20))
+
+
+
+#ifdef NONMATCHING
+void memp_related_0(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel memp_related_0
 /* 00A114 70009514 27BDFF80 */  addiu $sp, $sp, -0x80
 /* 00A118 70009518 3C0E8002 */  lui   $t6, %hi(D_80024434) # $t6, 0x8002
@@ -354,8 +372,17 @@ glabel memp_related_0
 /* 00A318 70009718 03E00008 */  jr    $ra
 /* 00A31C 7000971C 27BD0080 */   addiu $sp, $sp, 0x80
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void allocate_bytes_in_bank(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel allocate_bytes_in_bank
 /* 00A320 70009720 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00A324 70009724 AFA5001C */  sw    $a1, 0x1c($sp)
@@ -423,8 +450,17 @@ glabel allocate_bytes_in_bank
 /* 00A3FC 700097FC 03E00008 */  jr    $ra
 /* 00A400 70009800 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void memp_related_1(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel memp_related_1
 /* 00A404 70009804 3C0F8002 */  lui   $t7, %hi(tied_to_mem_management) # $t7, 0x8002
 /* 00A408 70009808 8DEF4404 */  lw    $t7, %lo(tied_to_mem_management)($t7)
@@ -496,8 +532,17 @@ glabel memp_related_1
 /* 00A4E8 700098E8 03E00008 */  jr    $ra
 /* 00A4EC 700098EC 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void nulled_list_all8_mem_alloc_banks_sizes(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel nulled_list_all8_mem_alloc_banks_sizes
 /* 00A4F0 700098F0 24020001 */  li    $v0, 1
 .L700098F4:
@@ -509,8 +554,33 @@ glabel nulled_list_all8_mem_alloc_banks_sizes
 /* 00A508 70009908 03E00008 */  jr    $ra
 /* 00A50C 7000990C 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+s32 memp_related_3(s32 arg0) {
+    // Node 0
+    if (tied_to_mem_management != 0)
+    {
+        // Node 1
+    }
+    // Node 2
+    if ((arg0 & 0xff) == 4)
+    {
+        // Node 3
+        if (memory_bank_ptrs.unk40 == memory_bank_ptrs.unk48)
+        {
+            // Node 4
+            return;
+            // (possible return value: ((&memory_bank_ptrs + ((arg0 & 0xff) * 0x10))->unk8 - (&memory_bank_ptrs + ((arg0 & 0xff) * 0x10))->unk4))
+        }
+    }
+    // (possible return value: ((&memory_bank_ptrs + ((arg0 & 0xff) * 0x10))->unk8 - (&memory_bank_ptrs + ((arg0 & 0xff) * 0x10))->unk4))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel memp_related_3
 /* 00A510 70009910 3C0F8002 */  lui   $t7, %hi(tied_to_mem_management) # $t7, 0x8002
 /* 00A514 70009914 8DEF4404 */  lw    $t7, %lo(tied_to_mem_management)($t7)
@@ -539,29 +609,22 @@ glabel memp_related_3
 /* 00A568 70009968 03E00008 */  jr    $ra
 /* 00A56C 7000996C 012A1023 */   subu  $v0, $t1, $t2
 )
+#endif
 
-s32 memp_related_3(s32 arg0) {
+
+
+
+
+#ifdef NONMATCHING
+void memp_related_4(u32 arg0) {
     // Node 0
-    if (tied_to_mem_management != 0)
-    {
-        // Node 1
-    }
-    // Node 2
-    if ((arg0 & 0xff) == 4)
-    {
-        // Node 3
-        if (memory_bank_ptrs.unk40 == memory_bank_ptrs.unk48)
-        {
-            // Node 4
-            return;
-            // (possible return value: ((&memory_bank_ptrs + ((arg0 & 0xff) * 0x10))->unk8 - (&memory_bank_ptrs + ((arg0 & 0xff) * 0x10))->unk4))
-        }
-    }
-    // (possible return value: ((&memory_bank_ptrs + ((arg0 & 0xff) * 0x10))->unk8 - (&memory_bank_ptrs + ((arg0 & 0xff) * 0x10))->unk4))
+    allocate_bytes_in_bank((arg0 >> 3), (arg0 & 7));
+    return;
+    // (possible return value: allocate_bytes_in_bank((arg0 >> 3), (arg0 & 7)))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel memp_related_4
 /* 00A570 70009970 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00A574 70009974 00802825 */  move  $a1, $a0
@@ -575,16 +638,26 @@ glabel memp_related_4
 /* 00A594 70009994 03E00008 */  jr    $ra
 /* 00A598 70009998 00000000 */   nop   
 )
+#endif
 
-void memp_related_4(u32 arg0) {
+
+
+
+
+#ifdef NONMATCHING
+void *reset_mem_bank_a0(s32 arg0) {
+    void *temp_v0;
+
     // Node 0
-    allocate_bytes_in_bank((arg0 >> 3), (arg0 & 7));
+    temp_v0 = (((arg0 & 0xff) * 0x10) + &memory_bank_ptrs);
+    temp_v0->unkC = 0;
+    temp_v0->unk4 = (?32) *temp_v0;
     return;
-    // (possible return value: allocate_bytes_in_bank((arg0 >> 3), (arg0 & 7)))
+    // (possible return value: temp_v0)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel reset_mem_bank_a0
 /* 00A59C 7000999C 308E00FF */  andi  $t6, $a0, 0xff
 /* 00A5A0 700099A0 3C188006 */  lui   $t8, %hi(memory_bank_ptrs) # $t8, 0x8006
@@ -597,20 +670,31 @@ glabel reset_mem_bank_a0
 /* 00A5BC 700099BC 03E00008 */  jr    $ra
 /* 00A5C0 700099C0 AC590004 */   sw    $t9, 4($v0)
 )
+#endif
 
-void *reset_mem_bank_a0(s32 arg0) {
+
+
+
+
+#ifdef NONMATCHING
+void *memp_related_6(s32 arg0, s32 arg6) {
     void *temp_v0;
 
     // Node 0
-    temp_v0 = (((arg0 & 0xff) * 0x10) + &memory_bank_ptrs);
-    temp_v0->unkC = 0;
-    temp_v0->unk4 = (?32) *temp_v0;
-    return;
+    nulled_list_all8_mem_alloc_banks_sizes();
+    temp_v0 = ((arg6 * 0x10) + &memory_bank_ptrs);
+    if (temp_v0->unk4 != 0)
+    {
+        // Node 1
+        temp_v0->unk4 = 0;
+        return;
+        // (possible return value: temp_v0)
+    }
     // (possible return value: temp_v0)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel memp_related_6
 /* 00A5C4 700099C4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00A5C8 700099C8 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -631,21 +715,8 @@ glabel memp_related_6
 /* 00A600 70009A00 03E00008 */  jr    $ra
 /* 00A604 70009A04 00000000 */   nop   
 )
+#endif
 
-void *memp_related_6(s32 arg0, s32 arg6) {
-    void *temp_v0;
 
-    // Node 0
-    nulled_list_all8_mem_alloc_banks_sizes();
-    temp_v0 = ((arg6 * 0x10) + &memory_bank_ptrs);
-    if (temp_v0->unk4 != 0)
-    {
-        // Node 1
-        temp_v0->unk4 = 0;
-        return;
-        // (possible return value: temp_v0)
-    }
-    // (possible return value: temp_v0)
-}
 
 
