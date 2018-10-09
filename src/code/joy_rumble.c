@@ -5,7 +5,16 @@ s32 rumble_on_player_packet_buffers[256];
 s32 rumble_on_buffer[32];
 s32 rumble_off_buffer[32];
 
+
+
+
+#ifdef NONMATCHING
+void send_rumble_off_to_PIF(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel send_rumble_off_to_PIF
 /* 00D580 7000C980 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 00D584 7000C984 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -88,8 +97,17 @@ glabel send_rumble_off_to_PIF
 /* 00D6A4 7000CAA4 03E00008 */  jr    $ra
 /* 00D6A8 7000CAA8 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void controller_7000CAAC(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000CAAC
 /* 00D6AC 7000CAAC 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 00D6B0 7000CAB0 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -173,8 +191,17 @@ glabel controller_7000CAAC
 /* 00D7D4 7000CBD4 03E00008 */  jr    $ra
 /* 00D7D8 7000CBD8 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void controller_7000CBDC(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000CBDC
 /* 00D7DC 7000CBDC 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 00D7E0 7000CBE0 AFB00018 */  sw    $s0, 0x18($sp)
@@ -270,8 +297,17 @@ glabel controller_7000CBDC
 /* 00D930 7000CD30 03E00008 */  jr    $ra
 /* 00D934 7000CD34 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void controller_7000CD38(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000CD38
 /* 00D938 7000CD38 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 00D93C 7000CD3C AFB00020 */  sw    $s0, 0x20($sp)
@@ -372,3 +408,4 @@ glabel controller_7000CD38
 /* 00DA98 7000CE98 03E00008 */  jr    $ra
 /* 00DA9C 7000CE9C 00000000 */   nop   
 )
+#endif
