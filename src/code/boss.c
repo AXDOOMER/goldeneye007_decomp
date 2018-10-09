@@ -264,7 +264,7 @@ glabel init_mainthread_data
 /* 006BB8 70005FB8 00000000 */   nop   
 /* 006BBC 70005FBC 0FC002D8 */  jal   sub_GAME_7F000B60
 /* 006BC0 70005FC0 00000000 */   nop   
-/* 006BC4 70005FC4 0FC00000 */  jal   zero_basic_data
+/* 006BC4 70005FC4 0FC00000 */  jal   initGameData
 /* 006BC8 70005FC8 00000000 */   nop   
 /* 006BCC 70005FCC 0FC075B8 */  jal   sub_GAME_7F01D6E0
 /* 006BD0 70005FD0 00000000 */   nop   
