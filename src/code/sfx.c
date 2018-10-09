@@ -1,43 +1,28 @@
 #include "ultra64.h"
+#include "music.h"
+
+s32 D_800243E4 = 0;
+s32 D_800243E8 = 0;
+s32 D_800243EC = 0;
+void *D_800243F0 = &D_80063B50;
+s32 D_800243F4 = 0;
+s32 bootswitch_sound = 0;
+f32 F32_800243FC = 1.0;
 
 
 
-.section .data
-D_800243E4:.word 0
-D_800243E8:.word 0
-D_800243EC:.word 0
-D_800243F0: .word ptr_musicdatatable+0x41C
-D_800243F4:.word 0
-
-glabel bootswitch_sound
-.word 0
-
-F32_800243FC: .float 1.0
-
-.section .rodata
-J_80029160:
-.word .L70007FBC
-.word .L70008388
-.word .L700088D4
-.word .L7000847C
-.word .L700088D4
-.word .L700088D4
-.word .L700088D4
-.word .L700085C8
-.word .L700088D4
-.word .L700088D4
-.word .L700088D4
-.word .L700088D4
-.word .L700088D4
-.word .L700088D4
-.word .L700088D4
-.word .L700084F0
-
-.section .bss
 
 
 
+
+
+#ifdef NONMATCHING
+void music_related_16(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_16
 /* 008720 70007B20 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 008724 70007B24 AFB20028 */  sw    $s2, 0x28($sp)
@@ -217,8 +202,21 @@ glabel music_related_16
 /* 0089D4 70007DD4 03E00008 */  jr    $ra
 /* 0089D8 70007DD8 27BD0050 */   addiu $sp, $sp, 0x50
 )
+#endif
 
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_17(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_17
 /* 0089DC 70007DDC 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 0089E0 70007DE0 AFB40028 */  sw    $s4, 0x28($sp)
@@ -265,8 +263,21 @@ glabel music_related_17
 /* 008A78 70007E78 03E00008 */  jr    $ra
 /* 008A7C 70007E7C 27BD0050 */   addiu $sp, $sp, 0x50
 )
+#endif
 
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_18(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_18
 /* 008A80 70007E80 27BDFF30 */  addiu $sp, $sp, -0xd0
 /* 008A84 70007E84 AFBE0038 */  sw    $fp, 0x38($sp)
@@ -1027,9 +1038,53 @@ glabel music_related_18
 /* 00953C 7000893C 8FBE0038 */  lw    $fp, 0x38($sp)
 /* 009540 70008940 03E00008 */  jr    $ra
 /* 009544 70008944 27BD00D0 */   addiu $sp, $sp, 0xd0
-)
 
+.late_rodata
+glabel J_80029160
+ .word .L70007FBC
+ .word .L70008388
+ .word .L700088D4
+ .word .L7000847C
+ .word .L700088D4
+ .word .L700088D4
+ .word .L700088D4
+ .word .L700085C8
+ .word .L700088D4
+ .word .L700088D4
+ .word .L700088D4
+ .word .L700088D4
+ .word .L700088D4
+ .word .L700088D4
+ .word .L700088D4
+ .word .L700084F0
+ 
+)
+#endif
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_19(void *arg0, ? arg8) {
+    // Node 0
+    if ((arg0->unk3E & 4) != 0)
+    {
+        // Node 1
+        alSynStopVoice(D_800243F0->unk38, (arg0 + 0xc));
+        alSynFreeVoice(D_800243F0->unk38, sp1C);
+    }
+    // Node 2
+    music_related_24(arg8);
+    music_related_21((D_800243F0 + 0x14), arg8, 0xffff);
+    return;
+    // (possible return value: music_related_21((D_800243F0 + 0x14), arg8, 0xffff))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_19
 /* 009548 70008948 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00954C 7000894C AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1064,24 +1119,35 @@ glabel music_related_19
 /* 0095BC 700089BC 03E00008 */  jr    $ra
 /* 0095C0 700089C0 00000000 */   nop   
 )
+#endif
 
-void music_related_19(void *arg0, ? arg8) {
+
+
+
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_20(void *arg0, void *argC) {
+    f32 sp1C;
+    s16 sp20;
+    f32 sp28;
+
     // Node 0
-    if ((arg0->unk3E & 4) != 0)
-    {
-        // Node 1
-        alSynStopVoice(D_800243F0->unk38, (arg0 + 0xc));
-        alSynFreeVoice(D_800243F0->unk38, sp1C);
-    }
-    // Node 2
-    music_related_24(arg8);
-    music_related_21((D_800243F0 + 0x14), arg8, 0xffff);
+    sp20 = (u16)0x10;
+    sp1C = (f32) (alCents2Ratio(arg0->unk8->unk4->unk5, arg0) * argC->unk2C);
+    sp28 = sp1C;
+    alEvtqPostEvent((D_800243F0 + 0x14), &sp20, 0x8235, argC);
     return;
-    // (possible return value: music_related_21((D_800243F0 + 0x14), arg8, 0xffff))
+    // (possible return value: alEvtqPostEvent((D_800243F0 + 0x14), &sp20, 0x8235, argC))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_20
 /* 0095C4 700089C4 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 0095C8 700089C8 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1111,23 +1177,25 @@ glabel music_related_20
 /* 009628 70008A28 03E00008 */  jr    $ra
 /* 00962C 70008A2C 00000000 */   nop   
 )
+#endif
 
-void music_related_20(void *arg0, void *argC) {
-    f32 sp1C;
-    s16 sp20;
-    f32 sp28;
 
-    // Node 0
-    sp20 = (u16)0x10;
-    sp1C = (f32) (alCents2Ratio(arg0->unk8->unk4->unk5, arg0) * argC->unk2C);
-    sp28 = sp1C;
-    alEvtqPostEvent((D_800243F0 + 0x14), &sp20, 0x8235, argC);
-    return;
-    // (possible return value: alEvtqPostEvent((D_800243F0 + 0x14), &sp20, 0x8235, argC))
+
+
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_21(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_21
 /* 009630 70008A30 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 009634 70008A34 AFB20020 */  sw    $s2, 0x20($sp)
@@ -1182,8 +1250,21 @@ glabel music_related_21
 /* 0096E8 70008AE8 03E00008 */  jr    $ra
 /* 0096EC 70008AEC 27BD0048 */   addiu $sp, $sp, 0x48
 )
+#endif
 
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_22(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_22
 /* 0096F0 70008AF0 3C088002 */  lui   $t0, %hi(D_800243E4) # $t0, 0x8002
 /* 0096F4 70008AF4 250843E4 */  addiu $t0, %lo(D_800243E4) # addiu $t0, $t0, 0x43e4
@@ -1224,8 +1305,82 @@ glabel music_related_22
 /* 009768 70008B68 03E00008 */  jr    $ra
 /* 00976C 70008B6C A4A70000 */   sh    $a3, ($a1)
 )
+#endif
 
+
+
+
+
+
+
+#ifdef NONMATCHING
+void *music_related_23(s32 arg0, void *arg1, void *argF) {
+    s32 sp28;
+    s8 temp_a1;
+    s8 temp_t5;
+
+    // Node 0
+    if (D_800243E4.unk8 != 0)
+    {
+        // Node 1
+        sp28 = osSetIntMask(1, arg1->unk4);
+        D_800243E4.unk8 = (void *) *D_800243E4.unk8;
+        alUnlink(D_800243E4.unk8);
+        if (D_800243E4 != 0)
+        {
+            // Node 2
+            *D_800243E4.unk8 = (void *) D_800243E4;
+            D_800243E4.unk8->unk4 = 0;
+            D_800243E4->unk4 = (void *) D_800243E4.unk8;
+            D_800243E4 = (void *) D_800243E4.unk8;
+        }
+        else
+        {
+            // Node 3
+            D_800243E4.unk8->unk4 = 0;
+            *D_800243E4.unk8 = NULL;
+            D_800243E4 = (void *) D_800243E4.unk8;
+            D_800243E4.unk4 = (void *) D_800243E4.unk8;
+        }
+        // Node 4
+        osSetIntMask(sp28, sp30);
+        D_800243E4.unk8->unk3F = (u8)5;
+        temp_a1 = (((u32) (*argF->unk4 + 1) < 1U) + 0x40);
+        D_800243E4.unk8->unk36 = temp_a1;
+        D_800243E4.unk8->unk38 = 2;
+        D_800243E4.unk8->unk8 = argF;
+        D_800243E4.unk8->unk2C = 1.0f;
+        D_800243E4.unk8->unk30 = 0;
+        temp_t5 = (sp30->unk3 & 0xf0);
+        D_800243E4.unk8->unk3E = temp_t5;
+        if ((temp_t5 & 0x20) != 0)
+        {
+            // Node 5
+            D_800243E4.unk8->unk28 = alCents2Ratio(((sp30->unk4 * 0x64) + -0x1770), temp_a1, sp30);
+        }
+        else
+        {
+            // Node 6
+            D_800243E4.unk8->unk28 = alCents2Ratio((((sp30->unk4 * 0x64) + sp30->unk5) + -0x1770), temp_a1, sp30);
+        }
+        // Node 7
+        if (sp24 != 0x40)
+        {
+            // Node 8
+            D_800243E4.unk8->unk3E = (s8) (D_800243E4.unk8->unk3E | 2);
+        }
+        // Node 9
+        D_800243E4.unk8->unk3D = (u8)0;
+        D_800243E4.unk8->unk3C = (u8)0x40;
+        D_800243E4.unk8->unk34 = (u16)0x7fff;
+        return;
+        // (possible return value: D_800243E4.unk8)
+    }
+    // (possible return value: D_800243E4.unk8)
+}
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_23
 /* 009770 70008B70 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 009774 70008B74 3C038002 */  lui   $v1, %hi(D_800243E4) # $v1, 0x8002
@@ -1335,74 +1490,75 @@ glabel music_related_23
 /* 0098FC 70008CFC 03E00008 */  jr    $ra
 /* 009900 70008D00 27BD0038 */   addiu $sp, $sp, 0x38
 )
+#endif
 
-void *music_related_23(s32 arg0, void *arg1, void *argF) {
-    s32 sp28;
-    s8 temp_a1;
-    s8 temp_t5;
 
+
+
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void *music_related_24(void *arg0, void *arg6) {
     // Node 0
-    if (D_800243E4.unk8 != 0)
+    if (arg0 == D_800243E4)
     {
         // Node 1
-        sp28 = osSetIntMask(1, arg1->unk4);
-        D_800243E4.unk8 = (void *) *D_800243E4.unk8;
-        alUnlink(D_800243E4.unk8);
-        if (D_800243E4 != 0)
-        {
-            // Node 2
-            *D_800243E4.unk8 = (void *) D_800243E4;
-            D_800243E4.unk8->unk4 = 0;
-            D_800243E4->unk4 = (void *) D_800243E4.unk8;
-            D_800243E4 = (void *) D_800243E4.unk8;
-        }
-        else
-        {
-            // Node 3
-            D_800243E4.unk8->unk4 = 0;
-            *D_800243E4.unk8 = NULL;
-            D_800243E4 = (void *) D_800243E4.unk8;
-            D_800243E4.unk4 = (void *) D_800243E4.unk8;
-        }
-        // Node 4
-        osSetIntMask(sp28, sp30);
-        D_800243E4.unk8->unk3F = (u8)5;
-        temp_a1 = (((u32) (*argF->unk4 + 1) < 1U) + 0x40);
-        D_800243E4.unk8->unk36 = temp_a1;
-        D_800243E4.unk8->unk38 = 2;
-        D_800243E4.unk8->unk8 = argF;
-        D_800243E4.unk8->unk2C = 1.0f;
-        D_800243E4.unk8->unk30 = 0;
-        temp_t5 = (sp30->unk3 & 0xf0);
-        D_800243E4.unk8->unk3E = temp_t5;
-        if ((temp_t5 & 0x20) != 0)
-        {
-            // Node 5
-            D_800243E4.unk8->unk28 = alCents2Ratio(((sp30->unk4 * 0x64) + -0x1770), temp_a1, sp30);
-        }
-        else
-        {
-            // Node 6
-            D_800243E4.unk8->unk28 = alCents2Ratio((((sp30->unk4 * 0x64) + sp30->unk5) + -0x1770), temp_a1, sp30);
-        }
-        // Node 7
-        if (sp24 != 0x40)
-        {
-            // Node 8
-            D_800243E4.unk8->unk3E = (s8) (D_800243E4.unk8->unk3E | 2);
-        }
-        // Node 9
-        D_800243E4.unk8->unk3D = (u8)0;
-        D_800243E4.unk8->unk3C = (u8)0x40;
-        D_800243E4.unk8->unk34 = (u16)0x7fff;
-        return;
-        // (possible return value: D_800243E4.unk8)
+        D_800243E4 = (s32) *arg0;
     }
-    // (possible return value: D_800243E4.unk8)
+    // Node 2
+    if (arg0 == D_800243E4.unk4)
+    {
+        // Node 3
+        D_800243E4.unk4 = (s32) arg0->unk4;
+    }
+    // Node 4
+    alUnlink();
+    if (D_800243E4.unk8 != 0)
+    {
+        // Node 5
+        *arg6 = (void *) D_800243E4.unk8;
+        arg6->unk4 = 0;
+        D_800243E4.unk8->unk4 = arg6;
+        D_800243E4.unk8 = arg6;
+    }
+    else
+    {
+        // Node 6
+        arg6->unk4 = 0;
+        *arg6 = NULL;
+        D_800243E4.unk8 = arg6;
+    }
+    // Node 7
+    if ((arg6->unk3E & 4) != 0)
+    {
+        // Node 8
+        D_800243F4 = (s16) (D_800243F4 + -1);
+    }
+    // Node 9
+    arg6->unk3F = (u8)0;
+    if (arg6->unk30 != 0)
+    {
+        // Node 10
+        if (arg6 == *arg6->unk30)
+        {
+            // Node 11
+            *arg6->unk30 = 0;
+        }
+        // Node 12
+        arg6->unk30 = NULL;
+        return;
+        // (possible return value: arg6->unk30)
+    }
+    // (possible return value: arg6->unk30)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_24
 /* 009904 70008D04 3C028002 */  lui   $v0, %hi(D_800243E4) # $v0, 0x8002
 /* 009908 70008D08 244243E4 */  addiu $v0, %lo(D_800243E4) # addiu $v0, $v0, 0x43e4
@@ -1465,73 +1621,18 @@ glabel music_related_24
 /* 0099D0 70008DD0 03E00008 */  jr    $ra
 /* 0099D4 70008DD4 00000000 */   nop   
 )
-
-void *music_related_24(void *arg0, void *arg6) {
-    // Node 0
-    if (arg0 == D_800243E4)
-    {
-        // Node 1
-        D_800243E4 = (s32) *arg0;
-    }
-    // Node 2
-    if (arg0 == D_800243E4.unk4)
-    {
-        // Node 3
-        D_800243E4.unk4 = (s32) arg0->unk4;
-    }
-    // Node 4
-    alUnlink();
-    if (D_800243E4.unk8 != 0)
-    {
-        // Node 5
-        *arg6 = (void *) D_800243E4.unk8;
-        arg6->unk4 = 0;
-        D_800243E4.unk8->unk4 = arg6;
-        D_800243E4.unk8 = arg6;
-    }
-    else
-    {
-        // Node 6
-        arg6->unk4 = 0;
-        *arg6 = NULL;
-        D_800243E4.unk8 = arg6;
-    }
-    // Node 7
-    if ((arg6->unk3E & 4) != 0)
-    {
-        // Node 8
-        D_800243F4 = (s16) (D_800243F4 + -1);
-    }
-    // Node 9
-    arg6->unk3F = (u8)0;
-    if (arg6->unk30 != 0)
-    {
-        // Node 10
-        if (arg6 == *arg6->unk30)
-        {
-            // Node 11
-            *arg6->unk30 = 0;
-        }
-        // Node 12
-        arg6->unk30 = NULL;
-        return;
-        // (possible return value: arg6->unk30)
-    }
-    // (possible return value: arg6->unk30)
-}
+#endif
 
 
-GLOBAL_ASM(
-glabel music_related_25
-/* 0099D8 70008DD8 AFA50004 */  sw    $a1, 4($sp)
-/* 0099DC 70008DDC 10800002 */  beqz  $a0, .L70008DE8
-/* 0099E0 70008DE0 30AE00FF */   andi  $t6, $a1, 0xff
-/* 0099E4 70008DE4 A08E0036 */  sb    $t6, 0x36($a0)
-.L70008DE8:
-/* 0099E8 70008DE8 03E00008 */  jr    $ra
-/* 0099EC 70008DEC 00000000 */   nop   
-)
 
+
+
+
+
+
+
+
+#ifdef NONMATCHING
 void music_related_25(void *arg0, s32 arg1) {
     // Node 0
     if (arg0 != 0)
@@ -1543,20 +1644,30 @@ void music_related_25(void *arg0, s32 arg1) {
     }
     // (function likely void)
 }
-
-
+#else
 GLOBAL_ASM(
-glabel music_related_26
-/* 0099F0 70008DF0 10800003 */  beqz  $a0, .L70008E00
-/* 0099F4 70008DF4 00001025 */   move  $v0, $zero
-/* 0099F8 70008DF8 03E00008 */  jr    $ra
-/* 0099FC 70008DFC 9082003F */   lbu   $v0, 0x3f($a0)
-
-.L70008E00:
-/* 009A00 70008E00 03E00008 */  jr    $ra
-/* 009A04 70008E04 00000000 */   nop   
+.text
+glabel music_related_25
+/* 0099D8 70008DD8 AFA50004 */  sw    $a1, 4($sp)
+/* 0099DC 70008DDC 10800002 */  beqz  $a0, .L70008DE8
+/* 0099E0 70008DE0 30AE00FF */   andi  $t6, $a1, 0xff
+/* 0099E4 70008DE4 A08E0036 */  sb    $t6, 0x36($a0)
+.L70008DE8:
+/* 0099E8 70008DE8 03E00008 */  jr    $ra
+/* 0099EC 70008DEC 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+
+
+
+
+
+#ifdef NONMATCHING
 void music_related_26(void *arg0) {
     // Node 0
     if (arg0 != 0)
@@ -1567,9 +1678,36 @@ void music_related_26(void *arg0) {
     }
     // (possible return value: 0)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
+glabel music_related_26
+/* 0099F0 70008DF0 10800003 */  beqz  $a0, .L70008E00
+/* 0099F4 70008DF4 00001025 */   move  $v0, $zero
+/* 0099F8 70008DF8 03E00008 */  jr    $ra
+/* 0099FC 70008DFC 9082003F */   lbu   $v0, 0x3f($a0)
+
+.L70008E00:
+/* 009A00 70008E00 03E00008 */  jr    $ra
+/* 009A04 70008E04 00000000 */   nop   
+)
+#endif
+
+
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void play_sfx_a1(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
 glabel play_sfx_a1
 /* 009A08 70008E08 27BDFF80 */  addiu $sp, $sp, -0x80
 /* 009A0C 70008E0C 3C0F8002 */  lui   $t7, %hi(bootswitch_sound) # $t7, 0x8002
@@ -1715,8 +1853,33 @@ glabel play_sfx_a1
 /* 009C18 70009018 03E00008 */  jr    $ra
 /* 009C1C 7000901C 27BD0080 */   addiu $sp, $sp, 0x80
 )
+#endif
 
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_28(void *arg0) {
+    s16 sp18;
+
+    // Node 0
+    sp18 = (u16)0x400;
+    if (arg0 != 0)
+    {
+        // Node 1
+        arg0->unk3E = (s8) (arg0->unk3E & 0xffef);
+        alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0);
+        return;
+        // (possible return value: alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0))
+    }
+    // (function likely void)
+}
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_28
 /* 009C20 70009020 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 009C24 70009024 240E0400 */  li    $t6, 1024
@@ -1739,25 +1902,23 @@ glabel music_related_28
 /* 009C64 70009064 03E00008 */  jr    $ra
 /* 009C68 70009068 00000000 */   nop   
 )
+#endif
 
-void music_related_28(void *arg0) {
-    s16 sp18;
 
-    // Node 0
-    sp18 = (u16)0x400;
-    if (arg0 != 0)
-    {
-        // Node 1
-        arg0->unk3E = (s8) (arg0->unk3E & 0xffef);
-        alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0);
-        return;
-        // (possible return value: alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0))
-    }
-    // (function likely void)
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_29(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_29
 /* 009C6C 7000906C 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 009C70 70009070 AFB20020 */  sw    $s2, 0x20($sp)
@@ -1809,8 +1970,24 @@ glabel music_related_29
 /* 009D1C 7000911C 03E00008 */  jr    $ra
 /* 009D20 70009120 27BD0050 */   addiu $sp, $sp, 0x50
 )
+#endif
 
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_30(void) {
+    // Node 0
+    music_related_29(1);
+    return;
+    // (possible return value: music_related_29(1))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_30
 /* 009D24 70009124 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 009D28 70009128 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1821,16 +1998,26 @@ glabel music_related_30
 /* 009D3C 7000913C 03E00008 */  jr    $ra
 /* 009D40 70009140 00000000 */   nop   
 )
+#endif
 
-void music_related_30(void) {
+
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_32(void) {
     // Node 0
-    music_related_29(1);
+    music_related_29(0x11);
     return;
-    // (possible return value: music_related_29(1))
+    // (possible return value: music_related_29(0x11))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_32
 /* 009D44 70009144 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 009D48 70009148 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1841,16 +2028,26 @@ glabel music_related_32
 /* 009D5C 7000915C 03E00008 */  jr    $ra
 /* 009D60 70009160 00000000 */   nop   
 )
+#endif
 
-void music_related_32(void) {
+
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_34(void) {
     // Node 0
-    music_related_29(0x11);
+    music_related_29(3);
     return;
-    // (possible return value: music_related_29(0x11))
+    // (possible return value: music_related_29(3))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_34
 /* 009D64 70009164 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 009D68 70009168 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1861,16 +2058,33 @@ glabel music_related_34
 /* 009D7C 7000917C 03E00008 */  jr    $ra
 /* 009D80 70009180 00000000 */   nop   
 )
+#endif
 
-void music_related_34(void) {
+
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_36(s32 arg0, s32 arg1, ? arg2) {
+    ? sp18;
+
     // Node 0
-    music_related_29(3);
-    return;
-    // (possible return value: music_related_29(3))
+    if (arg0 != 0)
+    {
+        // Node 1
+        alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0);
+        return;
+        // (possible return value: alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0))
+    }
+    // (function likely void)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_36
 /* 009D84 70009184 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 009D88 70009188 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1891,23 +2105,26 @@ glabel music_related_36
 /* 009DC0 700091C0 03E00008 */  jr    $ra
 /* 009DC4 700091C4 00000000 */   nop   
 )
+#endif
 
-void music_related_36(s32 arg0, s32 arg1, ? arg2) {
-    ? sp18;
 
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_37(void) {
     // Node 0
-    if (arg0 != 0)
-    {
-        // Node 1
-        alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0);
-        return;
-        // (possible return value: alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0))
-    }
-    // (function likely void)
+    music_related_41(0);
+    return;
+    // (possible return value: music_related_41(0))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_37
 /* 009DC8 700091C8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 009DCC 700091CC AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1918,16 +2135,23 @@ glabel music_related_37
 /* 009DE0 700091E0 03E00008 */  jr    $ra
 /* 009DE4 700091E4 00000000 */   nop   
 )
+#endif
 
-void music_related_37(void) {
-    // Node 0
-    music_related_41(0);
-    return;
-    // (possible return value: music_related_41(0))
+
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_38(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_38
 /* 009DE8 700091E8 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 009DEC 700091EC AFB10018 */  sw    $s1, 0x18($sp)
@@ -1951,8 +2175,25 @@ glabel music_related_38
 /* 009E30 70009230 03E00008 */  jr    $ra
 /* 009E34 70009234 27BD0020 */   addiu $sp, $sp, 0x20
 )
+#endif
 
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_39(f32 arg0) {
+    // Node 0
+    F32_800243FC = arg0;
+    music_related_38((music_related_37() & 0xffff));
+    return;
+    // (possible return value: music_related_38((music_related_37() & 0xffff)))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_39
 /* 009E38 70009238 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 009E3C 7000923C AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1966,17 +2207,25 @@ glabel music_related_39
 /* 009E5C 7000925C 03E00008 */  jr    $ra
 /* 009E60 70009260 00000000 */   nop   
 )
+#endif
 
-void music_related_39(f32 arg0) {
+
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_41(s32 arg0) {
     // Node 0
-    F32_800243FC = arg0;
-    music_related_38((music_related_37() & 0xffff));
     return;
-    // (possible return value: music_related_38((music_related_37() & 0xffff)))
+    // (possible return value: *(D_80063BA8 + ((arg0 & 0xff) * 2)))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_41
 /* 009E64 70009264 3C0F8006 */  lui   $t7, %hi(D_80063BA8) # $t7, 0x8006
 /* 009E68 70009268 8DEF3BA8 */  lw    $t7, %lo(D_80063BA8)($t7)
@@ -1987,15 +2236,23 @@ glabel music_related_41
 /* 009E7C 7000927C 03E00008 */  jr    $ra
 /* 009E80 70009280 97220000 */   lhu   $v0, ($t9)
 )
+#endif
 
-void music_related_41(s32 arg0) {
-    // Node 0
-    return;
-    // (possible return value: *(D_80063BA8 + ((arg0 & 0xff) * 2)))
+
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void music_related_42(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel music_related_42
 /* 009E84 70009284 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 009E88 70009288 3C0F8006 */  lui   $t7, %hi(D_80063BA8) # $t7, 0x8006
@@ -2065,4 +2322,5 @@ glabel music_related_42
 /* 009F78 70009378 03E00008 */  jr    $ra
 /* 009F7C 7000937C 27BD0048 */   addiu $sp, $sp, 0x48
 )
+#endif
 
