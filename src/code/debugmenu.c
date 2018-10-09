@@ -1,6 +1,142 @@
 #include "ultra64.h"
 
+
+s32 debug_menu_x_pos_offset = 5;
+s32 debug_menu_y_pos_offset = 1;
+s32 debug_menu_x_text_pos = 0x18;
+s32 debug_menu_y_text_pos = 0x10;
+
+u32 stdout_display_list[] = {
+0xE7000000,         0,
+0xBA001402,         0,
+0xBA000602,      0xC0,
+0xB900031D,0x500A4240,
+0xFC30B261,0x5566DB6D,
+0xBA001301,         0,
+0xB9000002,         0,
+0xFD700000,0x80024520,
+0xF5700000, 0x7000000,
+0xE6000000,         0,
+0xF3000000, 0x753F080,
+0xE7000000,         0,
+0xF5682000,         0,
+0xF2000000,  0x1FC050,
+0xE6000000,         0,
+0xB8000000,         0};
+
+u32 stdout_debug_menu_screen_buffer[1400] = {0};
+u32 stdout_primary_color_table[64] = {0};
+u32 stdout_environment_color_table[64] = {0};
+
+u32 *string_formatting[] = {0,
+"\x1B[31m\x1B[40m", "\x1B[37m\x1B[40m",
+"\x1B[32m\x1B[40m", "\x1B[33m\x1B[40m",
+"\x1B[34m\x1B[40m", "\x1B[35m\x1B[40m",
+"\x1B[36m\x1B[40m", "\x1B[37m\x1B[44m",
+"\x1B[31m\x1B[44m", "\x1B[32m\x1B[44m",
+"\x1B[33m\x1B[44m", "\x1B[30m\x1B[44m",
+"\x1B[35m\x1B[44m", "\x1B[36m\x1B[44m",
+"\x1B[37m\x1B[41m", "\x1B[30m\x1B[41m",
+"\x1B[32m\x1B[41m", "\x1B[33m\x1B[41m",
+"\x1B[34m\x1B[41m", "\x1B[35m\x1B[41m",
+"\x1B[36m\x1B[41m", "\x1B[37m\x1B[45m",
+"\x1B[31m\x1B[45m", "\x1B[32m\x1B[45m",
+"\x1B[33m\x1B[45m", "\x1B[34m\x1B[45m",
+"\x1B[30m\x1B[45m", "\x1B[36m\x1B[45m",
+"\x1B[37m\x1B[42m", "\x1B[31m\x1B[42m",
+"\x1B[30m\x1B[42m", "\x1B[33m\x1B[42m"};
+
+
+
+u64 end_displaylist_command = 0xB800000000000000;
+u64 blank_C0_command =0xC000000000000000;
+u32 stdout_primary_color = 0xFA000000;
+u32 debug_text_color = 0xFFFFFF00;
+u32 debug_text_bg_color = 0xFB000000;
+u32 speedgraph_color = 0;
+u32 D_800268B8 = 0xFF;
+
+
+
+
+
+
+
+
+#ifdef NONMATCHING
+void dummied_function(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
+glabel dummied_function
+/* 00B980 7000AD80 AFA40000 */  sw    $a0, ($sp)
+/* 00B984 7000AD84 AFA50004 */  sw    $a1, 4($sp)
+/* 00B988 7000AD88 03E00008 */  jr    $ra
+/* 00B98C 7000AD8C 00001025 */   move  $v0, $zero
+)
+#endif
+
+
+
+#ifdef NONMATCHING
+void dummied_function_0(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
+glabel dummied_function_0
+/* 00B990 7000AD90 AFA40000 */  sw    $a0, ($sp)
+/* 00B994 7000AD94 AFA50004 */  sw    $a1, 4($sp)
+/* 00B998 7000AD98 03E00008 */  jr    $ra
+/* 00B99C 7000AD9C 00001025 */   move  $v0, $zero
+)
+#endif
+
+
+
+#ifdef NONMATCHING
+void null_function(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
+glabel null_function
+/* 00B9A0 7000ADA0 03E00008 */  jr    $ra
+/* 00B9A4 7000ADA4 00000000 */   nop   
+)
+#endif
+
+
+
+#ifdef NONMATCHING
+void null_init_main_0(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
+glabel null_init_main_0
+/* 00B9A8 7000ADA8 03E00008 */  jr    $ra
+/* 00B9AC 7000ADAC 00000000 */   nop   
+)
+#endif
+
+
+
+#ifdef NONMATCHING
+void debug_text_related_2(void) {
+    // Node 0
+    debug_text_related_1();
+    return;
+    // (possible return value: debug_text_related_1())
+}
+#else
+GLOBAL_ASM(
+.text
 glabel debug_text_related_2
 /* 00B9B0 7000ADB0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00B9B4 7000ADB4 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -11,16 +147,19 @@ glabel debug_text_related_2
 /* 00B9C8 7000ADC8 03E00008 */  jr    $ra
 /* 00B9CC 7000ADCC 00000000 */   nop   
 )
+#endif
 
-void debug_text_related_2(void) {
-    // Node 0
-    debug_text_related_1();
-    return;
-    // (possible return value: debug_text_related_1())
+
+
+
+
+#ifdef NONMATCHING
+void display_text_to_coord(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel display_text_to_coord
 /* 00B9D0 7000ADD0 AFA60008 */  sw    $a2, 8($sp)
 /* 00B9D4 7000ADD4 30CE00FF */  andi  $t6, $a2, 0xff
@@ -94,8 +233,21 @@ glabel display_text_to_coord
 /* 00BAD4 7000AED4 03E00008 */  jr    $ra
 /* 00BAD8 7000AED8 A0620001 */   sb    $v0, 1($v1)
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void debug_menu_text_related(void) {
+    // Node 0
+    debug_menu_x_text_pos = (?32) debug_menu_x_pos_offset;
+    debug_menu_y_text_pos = (?32) debug_menu_y_pos_offset;
+    return;
+    // (function likely void)
+}
+#else
 GLOBAL_ASM(
+.text
 glabel debug_menu_text_related
 /* 00BADC 7000AEDC 3C0E8002 */  lui   $t6, %hi(debug_menu_x_pos_offset) # $t6, 0x8002
 /* 00BAE0 7000AEE0 8DCE4FA0 */  lw    $t6, %lo(debug_menu_x_pos_offset)($t6)
@@ -107,17 +259,19 @@ glabel debug_menu_text_related
 /* 00BAF8 7000AEF8 03E00008 */  jr    $ra
 /* 00BAFC 7000AEFC AC2F4FAC */   sw    $t7, 0x4fac($at)
 )
+#endif
 
-void debug_menu_text_related(void) {
-    // Node 0
-    debug_menu_x_text_pos = (?32) debug_menu_x_pos_offset;
-    debug_menu_y_text_pos = (?32) debug_menu_y_pos_offset;
-    return;
-    // (function likely void)
+
+
+
+
+#ifdef NONMATCHING
+void debug_text_related_1(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel debug_text_related_1
 /* 00BB00 7000AF00 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00BB04 7000AF04 AFB30020 */  sw    $s3, 0x20($sp)
@@ -155,8 +309,19 @@ glabel debug_text_related_1
 /* 00BB7C 7000AF7C 03E00008 */  jr    $ra
 /* 00BB80 7000AF80 27BD0028 */   addiu $sp, $sp, 0x28
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void stubbed_function(s32 arg0, s32 arg1, ? arg2, ? arg3) {
+    // Node 0
+    return;
+    // (function likely void)
+}
+#else
 GLOBAL_ASM(
+.text
 glabel stubbed_function
 /* 00BB84 7000AF84 AFA40000 */  sw    $a0, ($sp)
 /* 00BB88 7000AF88 AFA50004 */  sw    $a1, 4($sp)
@@ -164,15 +329,19 @@ glabel stubbed_function
 /* 00BB90 7000AF90 03E00008 */  jr    $ra
 /* 00BB94 7000AF94 AFA7000C */   sw    $a3, 0xc($sp)
 )
+#endif
 
-void stubbed_function(s32 arg0, s32 arg1, ? arg2, ? arg3) {
-    // Node 0
-    return;
-    // (function likely void)
+
+
+
+
+#ifdef NONMATCHING
+void something_debug_info_related(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel something_debug_info_related
 /* 00BB98 7000AF98 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00BB9C 7000AF9C AFB30020 */  sw    $s3, 0x20($sp)
@@ -222,8 +391,21 @@ glabel something_debug_info_related
 /* 00BC38 7000B038 03E00008 */  jr    $ra
 /* 00BC3C 7000B03C 27BD0028 */   addiu $sp, $sp, 0x28
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void set_final_debug_text_positions(s32 arg0, s32 arg1) {
+    // Node 0
+    debug_menu_x_text_pos = (s32) (arg0 + debug_menu_x_pos_offset);
+    debug_menu_y_text_pos = (s32) (arg1 + debug_menu_y_pos_offset);
+    return;
+    // (function likely void)
+}
+#else
 GLOBAL_ASM(
+.text
 glabel set_final_debug_text_positions
 /* 00BC40 7000B040 3C0E8002 */  lui   $t6, %hi(debug_menu_x_pos_offset) # $t6, 0x8002
 /* 00BC44 7000B044 8DCE4FA0 */  lw    $t6, %lo(debug_menu_x_pos_offset)($t6)
@@ -237,17 +419,22 @@ glabel set_final_debug_text_positions
 /* 00BC64 7000B064 03E00008 */  jr    $ra
 /* 00BC68 7000B068 AC254FAC */   sw    $a1, 0x4fac($at)
 )
+#endif
 
-void set_final_debug_text_positions(s32 arg0, s32 arg1) {
+
+
+
+
+#ifdef NONMATCHING
+void set_debug_text_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     // Node 0
-    debug_menu_x_text_pos = (s32) (arg0 + debug_menu_x_pos_offset);
-    debug_menu_y_text_pos = (s32) (arg1 + debug_menu_y_pos_offset);
+    (void *)0x80020000->unk68AC = (s32) ((((arg0 << 0x18) | (arg1 << 0x10)) | (arg2 << 8)) | (0xff - arg3));
     return;
     // (function likely void)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel set_debug_text_color
 /* 00BC6C 7000B06C 00047600 */  sll   $t6, $a0, 0x18
 /* 00BC70 7000B070 00057C00 */  sll   $t7, $a1, 0x10
@@ -261,16 +448,22 @@ glabel set_debug_text_color
 /* 00BC90 7000B090 03E00008 */  jr    $ra
 /* 00BC94 7000B094 AC2B68AC */   sw    $t3, 0x68ac($at)
 )
+#endif
 
-void set_debug_text_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+
+
+
+
+#ifdef NONMATCHING
+void set_color_speedgraph(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     // Node 0
-    (void *)0x80020000->unk68AC = (s32) ((((arg0 << 0x18) | (arg1 << 0x10)) | (arg2 << 8)) | (0xff - arg3));
+    (void *)0x80020000->unk68B4 = (s32) ((((arg0 << 0x18) | (arg1 << 0x10)) | (arg2 << 8)) | (0xff - arg3));
     return;
     // (function likely void)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel set_color_speedgraph
 /* 00BC98 7000B098 00047600 */  sll   $t6, $a0, 0x18
 /* 00BC9C 7000B09C 00057C00 */  sll   $t7, $a1, 0x10
@@ -284,16 +477,18 @@ glabel set_color_speedgraph
 /* 00BCBC 7000B0BC 03E00008 */  jr    $ra
 /* 00BCC0 7000B0C0 AC2B68B4 */   sw    $t3, 0x68b4($at)
 )
+#endif
 
-void set_color_speedgraph(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    // Node 0
-    (void *)0x80020000->unk68B4 = (s32) ((((arg0 << 0x18) | (arg1 << 0x10)) | (arg2 << 8)) | (0xff - arg3));
-    return;
-    // (function likely void)
+
+
+
+#ifdef NONMATCHING
+void write_char_to_screen(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel write_char_to_screen
 /* 00BCC4 7000B0C4 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00BCC8 7000B0C8 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -365,8 +560,21 @@ glabel write_char_to_screen
 /* 00BDB8 7000B1B8 03E00008 */  jr    $ra
 /* 00BDBC 7000B1BC 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void debug_text_related_0(? arg2, ? arg8) {
+    // Node 0
+    set_final_debug_text_positions();
+    write_char_to_screen(arg8);
+    return;
+    // (possible return value: write_char_to_screen(arg8))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel debug_text_related_0
 /* 00BDC0 7000B1C0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00BDC4 7000B1C4 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -379,17 +587,19 @@ glabel debug_text_related_0
 /* 00BDE0 7000B1E0 03E00008 */  jr    $ra
 /* 00BDE4 7000B1E4 00000000 */   nop   
 )
+#endif
 
-void debug_text_related_0(? arg2, ? arg8) {
-    // Node 0
-    set_final_debug_text_positions();
-    write_char_to_screen(arg8);
-    return;
-    // (possible return value: write_char_to_screen(arg8))
+
+
+
+
+#ifdef NONMATCHING
+void write_string_stdout(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel write_string_stdout
 /* 00BDE8 7000B1E8 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00BDEC 7000B1EC AFBF001C */  sw    $ra, 0x1c($sp)
@@ -412,8 +622,17 @@ glabel write_string_stdout
 /* 00BE28 7000B228 03E00008 */  jr    $ra
 /* 00BE2C 7000B22C 27BD0020 */   addiu $sp, $sp, 0x20
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void debug_text_related(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel debug_text_related
 /* 00BE30 7000B230 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00BE34 7000B234 AFBF001C */  sw    $ra, 0x1c($sp)
@@ -437,8 +656,17 @@ glabel debug_text_related
 /* 00BE74 7000B274 03E00008 */  jr    $ra
 /* 00BE78 7000B278 27BD0020 */   addiu $sp, $sp, 0x20
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void read_screen_display_block_and_write_chars(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel read_screen_display_block_and_write_chars
 /* 00BE7C 7000B27C 27BDFF78 */  addiu $sp, $sp, -0x88
 /* 00BE80 7000B280 AFB5002C */  sw    $s5, 0x2c($sp)
@@ -639,240 +867,5 @@ glabel read_screen_display_block_and_write_chars
 /* 00C14C 7000B54C 8FBE0038 */  lw    $fp, 0x38($sp)
 /* 00C150 7000B550 03E00008 */  jr    $ra
 /* 00C154 7000B554 27BD0088 */   addiu $sp, $sp, 0x88
-)  
-
-.section .data
-debug_menu_x_pos_offset:.word 5
-debug_menu_y_pos_offset:.word 1
-debug_menu_x_text_pos:.word 0x18
-debug_menu_y_text_pos:.word 0x10
-stdout_display_list:
- .word 0xE7000000,         0
- .word 0xBA001402,         0
- .word 0xBA000602,      0xC0
- .word 0xB900031D,0x500A4240
- .word 0xFC30B261,0x5566DB6D
- .word 0xBA001301,         0
- .word 0xB9000002,         0
- .word 0xFD700000,0x80024520
- .word 0xF5700000, 0x7000000
- .word 0xE6000000,         0
- .word 0xF3000000, 0x753F080
- .word 0xE7000000,         0
- .word 0xF5682000,         0
- .word 0xF2000000,  0x1FC050
- .word 0xE6000000,         0
- .word 0xB8000000,         0
-stdout_debug_menu_screen_buffer:
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0,         0,         0,         0
-stdout_primary_color_table:
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0
-stdout_environment_color_table:
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0,         0,         0,         0,         0,         0,         0
- .word          0
-string_formatting:
-.word 0,a31m40m,a37m40m,a32m40m,a33m40m,a34m40m,a35m40m,a36m40m,a37m44m,a31m44m
- .word a32m44m,a33m44m,a30m44m,a35m44m,a36m44m,a37m41m,a30m41m,a32m41m,a33m41m  # "\x1B[31m\x1B[40m"
- .word a34m41m,a35m41m,a36m41m,a37m45m,a31m45m,a32m45m,a33m45m,a34m45m,a30m45m
- .word a36m45m,a37m42m,a31m42m,a30m42m,a33m42m,0
-end_displaylist_command:.dword 0xB800000000000000
-blank_C0_command:.dword 0xC000000000000000
-stdout_primary_color:.word 0xFA000000
-debug_text_color:.word 0xFFFFFF00
-debug_text_bg_color:.word 0xFB000000
-speedgraph_color:.word 0
-D_800268B8:.word 0xFF
- .word 0
-
-
-.section .rodata
- a31m40m: .asciiz "\x1B[31m\x1B[40m"
- a37m40m: .asciiz "\x1B[37m\x1B[40m"
- a32m40m: .asciiz "\x1B[32m\x1B[40m"
- a33m40m: .asciiz "\x1B[33m\x1B[40m"
- a34m40m: .asciiz "\x1B[34m\x1B[40m"
- a35m40m: .asciiz "\x1B[35m\x1B[40m"
- a36m40m: .asciiz "\x1B[36m\x1B[40m"
- a37m44m: .asciiz "\x1B[37m\x1B[44m"
- a31m44m: .asciiz "\x1B[31m\x1B[44m"
- a32m44m: .asciiz "\x1B[32m\x1B[44m"
- a33m44m: .asciiz "\x1B[33m\x1B[44m"
- a30m44m: .asciiz "\x1B[30m\x1B[44m"
- a35m44m: .asciiz "\x1B[35m\x1B[44m"
- a36m44m: .asciiz "\x1B[36m\x1B[44m"
- a37m41m: .asciiz "\x1B[37m\x1B[41m"
- a30m41m: .asciiz "\x1B[30m\x1B[41m"
- a32m41m: .asciiz "\x1B[32m\x1B[41m"
- a33m41m: .asciiz "\x1B[33m\x1B[41m"
- a34m41m: .asciiz "\x1B[34m\x1B[41m"
- a35m41m: .asciiz "\x1B[35m\x1B[41m"
- a36m41m: .asciiz "\x1B[36m\x1B[41m"
- a37m45m: .asciiz "\x1B[37m\x1B[45m"
- a31m45m: .asciiz "\x1B[31m\x1B[45m"
- a32m45m: .asciiz "\x1B[32m\x1B[45m"
- a33m45m: .asciiz "\x1B[33m\x1B[45m"
- a34m45m: .asciiz "\x1B[34m\x1B[45m"
- a30m45m: .asciiz "\x1B[30m\x1B[45m"
- a36m45m: .asciiz "\x1B[36m\x1B[45m"
- a37m42m: .asciiz "\x1B[37m\x1B[42m"
- a31m42m: .asciiz "\x1B[31m\x1B[42m"
- a30m42m: .asciiz "\x1B[30m\x1B[42m"
- a33m42m: .asciiz "\x1B[33m\x1B[42m"
-.align 4
-.section .bss
+)
+#endif
