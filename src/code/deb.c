@@ -3,6 +3,20 @@
 #include "bond.h"
 #include "ramrom.h"
 
+/* bss */
+u32 dword_CODE_bss_80060890[0x400];
+OSThread thread_video_manager_debugthread[0x6B0];
+u32 tlbStack[0x2300];
+OSMesgQueue tlbMesgQ;
+u32 tlbMesgBuf;
+OSThread *ptr_tlbthread_maybe;
+u32 dword_CODE_bss_80063660;
+u32 *current_indy_read_buf_resourceID;
+u32 *ptr_indy_read_buf_string1;
+u32 *ptr_indy_read_buf_string2;
+u32 indy_read_buffer[0x60];
+
+
 /* data */
 u32 D_800232E0[] = {0, 0};
 u32 debug_notice_list[] = {0, 0, 0, 0};
@@ -127,22 +141,17 @@ u32 std_error_font_bitcode[] = {
 void *ptr_videobuffer1 = 0;
 void *ptr_videobuffer2 = 0;
 
-/* bss */
-u32 dword_CODE_bss_80060890[0x400];
-OSThread thread_video_manager_debugthread[0x6B0];
-u32 tlbStack[0x2300];
-OSMesgQueue tlbMesgQ;
-u32 tlbMesgBuf;
-OSThread *ptr_tlbthread_maybe;
-u32 dword_CODE_bss_80063660;
-u32 *current_indy_read_buf_resourceID;
-u32 *ptr_indy_read_buf_string1;
-u32 *ptr_indy_read_buf_string2;
-u32 indy_read_buffer[0x60];
 
 
 
+
+#ifdef NONMATCHING
+void return_match_in_debug_notice_list(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel return_match_in_debug_notice_list
 /* 005920 70004D20 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 005924 70004D24 AFB00014 */  sw    $s0, 0x14($sp)
@@ -173,8 +182,30 @@ glabel return_match_in_debug_notice_list
 /* 005978 70004D78 03E00008 */  jr    $ra
 /* 00597C 70004D7C 27BD0020 */   addiu $sp, $sp, 0x20
 )
+#endif
 
+#ifdef NONMATCHING
+u32 get_entry_of_size_in_debug_notice_list(s32 arg0) {
+    u32 temp_v0;
+
+    // Node 0
+    temp_v0 = (debug_notice_list_data + arg0);
+    if (&thread_video_manager_debugthread < temp_v0)
+    {
+        // Node 1
+        debug_notice_list_data = (u32) (temp_v0 - arg0);
+        allocate_bytes_in_bank(6);
+        return;
+        // (possible return value: allocate_bytes_in_bank(6))
+    }
+    // Node 2
+    debug_notice_list_data = temp_v0;
+    return;
+    // (possible return value: debug_notice_list_data)
+}
+#else
 GLOBAL_ASM(
+.text
 glabel get_entry_of_size_in_debug_notice_list
 /* 005980 70004D80 3C028002 */  lui   $v0, %hi(debug_notice_list_data) # $v0, 0x8002
 /* 005984 70004D84 8C4232F8 */  lw    $v0, %lo(debug_notice_list_data)($v0)
@@ -203,28 +234,28 @@ glabel get_entry_of_size_in_debug_notice_list
 /* 0059D8 70004DD8 03E00008 */  jr    $ra
 /* 0059DC 70004DDC 00000000 */   nop   
 )
+#endif
 
-u32 get_entry_of_size_in_debug_notice_list(s32 arg0) {
-    u32 temp_v0;
+
+
+
+
+#ifdef NONMATCHING
+void add_new_entry_to_debug_notice_list(s32 arg0, s32 arg1, ?32 arg6, ?32 arg7) {
+    ? temp_ret;
 
     // Node 0
-    temp_v0 = (debug_notice_list_data + arg0);
-    if (&thread_video_manager_debugthread < temp_v0)
-    {
-        // Node 1
-        debug_notice_list_data = (u32) (temp_v0 - arg0);
-        allocate_bytes_in_bank(6);
-        return;
-        // (possible return value: allocate_bytes_in_bank(6))
-    }
-    // Node 2
-    debug_notice_list_data = temp_v0;
+    temp_ret = get_entry_of_size_in_debug_notice_list(0x10);
+    *temp_ret = (s32) debug_notice_list;
+    temp_ret->unk4 = arg7;
+    temp_ret->unk8 = arg6;
+    debug_notice_list = temp_ret;
     return;
-    // (possible return value: debug_notice_list_data)
+    // (possible return value: temp_ret)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel add_new_entry_to_debug_notice_list
 /* 0059E0 70004DE0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0059E4 70004DE4 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -246,22 +277,20 @@ glabel add_new_entry_to_debug_notice_list
 /* 005A24 70004E24 03E00008 */  jr    $ra
 /* 005A28 70004E28 00000000 */   nop   
 )
+#endif
 
-void add_new_entry_to_debug_notice_list(s32 arg0, s32 arg1, ?32 arg6, ?32 arg7) {
-    ? temp_ret;
 
-    // Node 0
-    temp_ret = get_entry_of_size_in_debug_notice_list(0x10);
-    *temp_ret = (s32) debug_notice_list;
-    temp_ret->unk4 = arg7;
-    temp_ret->unk8 = arg6;
-    debug_notice_list = temp_ret;
-    return;
-    // (possible return value: temp_ret)
+
+
+
+#ifdef NONMATCHING
+void add_debug_notice_deb_c_debug(void) {
+    get_ptr_debug_notice_list_entry(&D_800232E0, "deb_c_debug");
+    init_tlb();
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel add_debug_notice_deb_c_debug
 /* 005A2C 70004E2C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 005A30 70004E30 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -277,14 +306,25 @@ glabel add_debug_notice_deb_c_debug
 /* 005A58 70004E58 03E00008 */  jr    $ra
 /* 005A5C 70004E5C 00000000 */   nop   
 )
+#endif
 
-void add_debug_notice_deb_c_debug(void) {
-    get_ptr_debug_notice_list_entry(&D_800232E0, "deb_c_debug");
-    init_tlb();
+
+
+
+
+#ifdef NONMATCHING
+void get_ptr_debug_notice_list_entry(s32 arg0, char *string) {
+    // Node 0
+    if (return_match_in_debug_notice_list(&string) == 0)
+    {
+        // Node 1
+        add_new_entry_to_debug_notice_list(&string, arg0);
+        return;
+    }
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel get_ptr_debug_notice_list_entry
 /* 005A60 70004E60 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 005A64 70004E64 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -302,19 +342,19 @@ glabel get_ptr_debug_notice_list_entry
 /* 005A90 70004E90 03E00008 */  jr    $ra
 /* 005A94 70004E94 00000000 */   nop   
 )
+#endif
 
-void get_ptr_debug_notice_list_entry(s32 arg0, char *string) {
-    // Node 0
-    if (return_match_in_debug_notice_list(&string) == 0)
-    {
-        // Node 1
-        add_new_entry_to_debug_notice_list(&string, arg0);
-        return;
-    }
+
+
+
+
+#ifdef NONMATCHING
+void scan_debug_notice_list_till_NULL(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel scan_debug_notice_list_till_NULL
 /* 005A98 70004E98 3C028002 */  lui   $v0, %hi(debug_notice_list) # $v0, 0x8002
 /* 005A9C 70004E9C 8C4232E8 */  lw    $v0, %lo(debug_notice_list)($v0)
@@ -331,10 +371,15 @@ glabel scan_debug_notice_list_till_NULL
 /* 005ABC 70004EBC 03E00008 */  jr    $ra
 /* 005AC0 70004EC0 00000000 */   nop   
 )
+#endif
 
+#ifdef NONMATCHING
+void debug_removed(s32 arg0, s32 arg1, ? arg2) {
 
-
+}
+#else
 GLOBAL_ASM(
+.text
 glabel debug_removed
 /* 005AC4 70004EC4 AFA40000 */  sw    $a0, ($sp)
 /* 005AC8 70004EC8 AFA50004 */  sw    $a1, 4($sp)
@@ -344,12 +389,21 @@ glabel debug_removed
 /* 005AD8 70004ED8 00000000 */  nop
 /* 005ADC 70004EDC 00000000 */  nop
 )
+#endif
 
-void debug_removed(s32 arg0, s32 arg1, ? arg2) {
 
+
+
+#ifdef NONMATCHING
+void init_tlb(void) {
+    set_video_buffer_pointers();
+    osCreateMesgQueue(&tlbMesgQ, &tlbMesgBuf, 1);
+    osCreateThread(&thread_video_manager_debugthread, 5, &thread5_tlb, 0, &tlbStack, 0x28);
+    osStartThread(&thread_video_manager_debugthread);
 }
-
+#else
 GLOBAL_ASM(
+.text
 glabel init_tlb
 /* 005AE0 70004EE0 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 005AE4 70004EE4 AFBF001C */  sw    $ra, 0x1c($sp)
@@ -381,16 +435,19 @@ glabel init_tlb
 /* 005B4C 70004F4C 03E00008 */  jr    $ra
 /* 005B50 70004F50 00000000 */   nop   
 )
+#endif
 
-void init_tlb(void) {
-    set_video_buffer_pointers();
-    osCreateMesgQueue(&tlbMesgQ, &tlbMesgBuf, 1);
-    osCreateThread(&thread_video_manager_debugthread, 5, &thread5_tlb, 0, &tlbStack, 0x28);
-    osStartThread(&thread_video_manager_debugthread);
+
+
+
+
+#ifdef NONMATCHING
+void thread5_tlb(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel thread5_tlb
 /* 005B54 70004F54 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 005B58 70004F58 AFB70030 */  sw    $s7, 0x30($sp)
@@ -483,8 +540,15 @@ glabel thread5_tlb
 /* 005CA4 700050A4 03E00008 */  jr    $ra
 /* 005CA8 700050A8 27BD0040 */   addiu $sp, $sp, 0x40
 )
+#endif
 
+#ifdef NONMATCHING
+void debug_related_8(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel debug_related_8
 /* 005CAC 700050AC 27BDFFF0 */  addiu $sp, $sp, -0x10
 /* 005CB0 700050B0 AFA40010 */  sw    $a0, 0x10($sp)
@@ -573,8 +637,39 @@ glabel debug_related_8
 /* 005DD8 700051D8 03E00008 */  jr    $ra
 /* 005DDC 700051DC 27BD0010 */   addiu $sp, $sp, 0x10
 )
+#endif
 
+#ifdef NONMATCHING
+void was_opcode_In_70000450_70020D90(u32 arg0) {
+    // Node 0
+    if ((arg0 & 3) == 0)
+    {
+        // Node 1
+        if (arg0 >= &_codeSegmentVaddrStart)
+        {
+            // Node 2
+            if (&_codeSegmentVaddrEnd >= arg0)
+            {
+                // Node 3
+                if ((arg0->unk-8 & 0xfc00003c) == 9)
+                {
+                    // Node 4
+                }
+                // Node 5
+                if ((arg0->unk-8 & 0xfc000000) == 0xc000000)
+                {
+                    // Node 6
+                    return;
+                    // (possible return value: 0)
+                }
+            }
+        }
+    }
+    // (possible return value: 0)
+}
+#else
 GLOBAL_ASM(
+.text
 glabel was_opcode_In_70000450_70020D90
 /* 005DE0 700051E0 308E0003 */  andi  $t6, $a0, 3
 /* 005DE4 700051E4 15C00019 */  bnez  $t6, .L7000524C
@@ -612,37 +707,19 @@ glabel was_opcode_In_70000450_70020D90
 /* 005E50 70005250 03E00008 */  jr    $ra
 /* 005E54 70005254 00000000 */   nop   
 )
+#endif
 
-void was_opcode_In_70000450_70020D90(u32 arg0) {
-    // Node 0
-    if ((arg0 & 3) == 0)
-    {
-        // Node 1
-        if (arg0 >= &_codeSegmentVaddrStart)
-        {
-            // Node 2
-            if (&_codeSegmentVaddrEnd >= arg0)
-            {
-                // Node 3
-                if ((arg0->unk-8 & 0xfc00003c) == 9)
-                {
-                    // Node 4
-                }
-                // Node 5
-                if ((arg0->unk-8 & 0xfc000000) == 0xc000000)
-                {
-                    // Node 6
-                    return;
-                    // (possible return value: 0)
-                }
-            }
-        }
-    }
-    // (possible return value: 0)
+
+
+
+
+#ifdef NONMATCHING
+void return_strlen(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel return_strlen
 /* 005E58 70005258 90820000 */  lbu   $v0, ($a0)
 /* 005E5C 7000525C 00001825 */  move  $v1, $zero
@@ -662,8 +739,32 @@ glabel return_strlen
 /* 005E8C 7000528C 03E00008 */  jr    $ra
 /* 005E90 70005290 00601025 */   move  $v0, $v1
 )
+#endif
 
+
+
+
+#ifdef NONMATCHING
+s32 indy_file_get_address_subsequent_data(s32 arg0) {
+    s32 sp18;
+
+    // Node 0
+    romCopy(&indy_read_buffer, arg0, 0x60);
+    current_indy_read_buf_resourceID = (u32) indy_read_buffer;
+    ptr_indy_read_buf_string1 = &indy_read_buffer;
+    ptr_indy_read_buf_string2 = (s32) ((return_strlen(&indy_read_buffer) + ptr_indy_read_buf_string1) + 1);
+    sp18 = return_strlen(ptr_indy_read_buf_string1);
+    if (((((return_strlen(ptr_indy_read_buf_string2) + arg0) + sp18) + 6) & 3) != 0)
+    {
+        // Node 1
+        return;
+        // (possible return value: (((return_strlen(ptr_indy_read_buf_string2) + arg0) + sp18) + 6))
+    }
+    // (possible return value: (((return_strlen(ptr_indy_read_buf_string2) + arg0) + sp18) + 6))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel indy_file_get_address_subsequent_data
 /* 005E94 70005294 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 005E98 70005298 AFA40020 */  sw    $a0, 0x20($sp)
@@ -710,26 +811,18 @@ glabel indy_file_get_address_subsequent_data
 /* 005F38 70005338 03E00008 */  jr    $ra
 /* 005F3C 7000533C 27BD0020 */   addiu $sp, $sp, 0x20
 )
+#endif
 
-s32 indy_file_get_address_subsequent_data(s32 arg0) {
-    s32 sp18;
 
-    // Node 0
-    romCopy(&indy_read_buffer, arg0, 0x60);
-    current_indy_read_buf_resourceID = (u32) indy_read_buffer;
-    ptr_indy_read_buf_string1 = &indy_read_buffer;
-    ptr_indy_read_buf_string2 = (s32) ((return_strlen(&indy_read_buffer) + ptr_indy_read_buf_string1) + 1);
-    sp18 = return_strlen(ptr_indy_read_buf_string1);
-    if (((((return_strlen(ptr_indy_read_buf_string2) + arg0) + sp18) + 6) & 3) != 0)
-    {
-        // Node 1
-        return;
-        // (possible return value: (((return_strlen(ptr_indy_read_buf_string2) + arg0) + sp18) + 6))
-    }
-    // (possible return value: (((return_strlen(ptr_indy_read_buf_string2) + arg0) + sp18) + 6))
+
+
+#ifdef NONMATCHING
+void scan_load_resourceID_from_indy_read_buf(void) {
+
 }
-
+#else
 GLOBAL_ASM(
+.text
 glabel scan_load_resourceID_from_indy_read_buf
 /* 005F40 70005340 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 005F44 70005344 AFB30020 */  sw    $s3, 0x20($sp)
@@ -770,8 +863,22 @@ glabel scan_load_resourceID_from_indy_read_buf
 /* 005FC0 700053C0 03E00008 */  jr    $ra
 /* 005FC4 700053C4 27BD0028 */   addiu $sp, $sp, 0x28
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+s32 is_valid_indy_read_buf_resourceID(void) {
+    // Node 0
+    indy_file_get_address_subsequent_data(0xe00000);
+    return;
+    // (possible return value: ((u32) (current_indy_read_buf_resourceID ^ 0x826475be) < 1U))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel is_valid_indy_read_buf_resourceID
 /* 005FC8 700053C8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 005FCC 700053CC AFBF0014 */  sw    $ra, 0x14($sp)
@@ -787,41 +894,109 @@ glabel is_valid_indy_read_buf_resourceID
 /* 005FF4 700053F4 03E00008 */  jr    $ra
 /* 005FF8 700053F8 27BD0018 */   addiu $sp, $sp, 0x18
 )
+#endif
 
-s32 is_valid_indy_read_buf_resourceID(void) {
-    // Node 0
-    indy_file_get_address_subsequent_data(0xe00000);
-    return;
-    // (possible return value: ((u32) (current_indy_read_buf_resourceID ^ 0x826475be) < 1U))
+
+
+
+
+
+#ifdef NONMATCHING
+void debug_indy_stub(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel debug_indy_stub
 /* 005FFC 700053FC 03E00008 */  jr    $ra
 /* 006000 70005400 00000000 */   nop   
 )
+#endif
 
+#ifdef NONMATCHING
+void debug_indy_stub_0(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel debug_indy_stub_0
 /* 006004 70005404 03E00008 */  jr    $ra
 /* 006008 70005408 00000000 */   nop   
 )
+#endif
 
+#ifdef NONMATCHING
+void debug_indy_stub_1(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel debug_indy_stub_1
 /* 00600C 7000540C 03E00008 */  jr    $ra
 /* 006010 70005410 00000000 */   nop   
 )
+#endif
 
+#ifdef NONMATCHING
+void return_indy_read_buf_resourceID(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel return_indy_read_buf_resourceID
 /* 006014 70005414 3C028006 */  lui   $v0, 0x8006
 /* 006018 70005418 03E00008 */  jr    $ra
 /* 00601C 7000541C 8C423664 */   lw    $v0, 0x3664($v0)
 )
+#endif
 
+#ifdef NONMATCHING
+s32 debug_sp_related_11(u32 arg0, u32 arg1) {
+    ? sp8;
+    ? sp1C;
+
+    // Node 0
+    sp1C = (?32) ptr_sp_rmon_0;
+    sp1C.unk4 = (?32) ptr_sp_rmon_0.unk4;
+    sp1C.unk8 = (?32) ptr_sp_rmon_0.unk8;
+    sp1C.unkC = (?32) ptr_sp_rmon_0.unkC;
+    sp1C.unk10 = (?32) ptr_sp_rmon_0.unk10;
+    sp8 = (?32) ptr_sp_idle_1;
+    sp8.unk4 = (?32) ptr_sp_idle_1.unk4;
+    sp8.unk8 = (?32) ptr_sp_idle_1.unk8;
+    sp8.unkC = (?32) ptr_sp_idle_1.unkC;
+    sp8.unk10 = (?32) ptr_sp_idle_1.unk10;
+    if (arg1 <= 0)
+    {
+        // Node 2
+        return;
+        // (possible return value: 0)
+    }
+    // Node 1
+    if (arg1 >= 6U)
+    {
+        // Node 2
+        return;
+        // (possible return value: 0)
+    }
+    // Node 3
+    if (arg0 >= 0x80000000U)
+    {
+        // Node 4
+        return;
+        // (possible return value: *(&sp8 + (arg1 * 4)))
+    }
+    // Node 5
+    return;
+    // (possible return value: ((arg0 & 0xf0000000) | (*(&sp8 + (arg1 * 4)) - *(&sp1C + (arg1 * 4)))))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel debug_sp_related_11
 /* 006020 70005420 3C0E8002 */  lui   $t6, %hi(ptr_sp_rmon_0) # $t6, 0x8002
 /* 006024 70005424 25CE36DC */  addiu $t6, %lo(ptr_sp_rmon_0) # addiu $t6, $t6, 0x36dc
@@ -877,22 +1052,23 @@ glabel debug_sp_related_11
 /* 0060DC 700054DC 03E00008 */  jr    $ra
 /* 0060E0 700054E0 27BD0030 */   addiu $sp, $sp, 0x30
 )
+#endif
 
-s32 debug_sp_related_11(u32 arg0, u32 arg1) {
-    ? sp8;
-    ? sp1C;
+
+
+
+
+
+#ifdef NONMATCHING
+s32 debug_sp_related_12(u32 arg0, u32 arg1) {
+    u32 sp4;
 
     // Node 0
-    sp1C = (?32) ptr_sp_rmon_0;
-    sp1C.unk4 = (?32) ptr_sp_rmon_0.unk4;
-    sp1C.unk8 = (?32) ptr_sp_rmon_0.unk8;
-    sp1C.unkC = (?32) ptr_sp_rmon_0.unkC;
-    sp1C.unk10 = (?32) ptr_sp_rmon_0.unk10;
-    sp8 = (?32) ptr_sp_idle_1;
-    sp8.unk4 = (?32) ptr_sp_idle_1.unk4;
-    sp8.unk8 = (?32) ptr_sp_idle_1.unk8;
-    sp8.unkC = (?32) ptr_sp_idle_1.unkC;
-    sp8.unk10 = (?32) ptr_sp_idle_1.unk10;
+    sp4 = (?32) ptr_sp_rmon_1;
+    sp4.unk4 = (?32) ptr_sp_rmon_1.unk4;
+    sp4.unk8 = (?32) ptr_sp_rmon_1.unk8;
+    sp4.unkC = (?32) ptr_sp_rmon_1.unkC;
+    sp4.unk10 = (?32) ptr_sp_rmon_1.unk10;
     if (arg1 <= 0)
     {
         // Node 2
@@ -911,15 +1087,15 @@ s32 debug_sp_related_11(u32 arg0, u32 arg1) {
     {
         // Node 4
         return;
-        // (possible return value: *(&sp8 + (arg1 * 4)))
+        // (possible return value: *(&sp4 + (arg1 * 4)))
     }
     // Node 5
     return;
-    // (possible return value: ((arg0 & 0xf0000000) | (*(&sp8 + (arg1 * 4)) - *(&sp1C + (arg1 * 4)))))
+    // (possible return value: (arg0 & 0xf0000000))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel debug_sp_related_12
 /* 0060E4 700054E4 3C0E8002 */  lui   $t6, %hi(ptr_sp_rmon_1) # $t6, 0x8002
 /* 0060E8 700054E8 25CE3704 */  addiu $t6, %lo(ptr_sp_rmon_1) # addiu $t6, $t6, 0x3704
@@ -957,42 +1133,29 @@ glabel debug_sp_related_12
 /* 006158 70005558 03E00008 */  jr    $ra
 /* 00615C 7000555C 27BD0018 */   addiu $sp, $sp, 0x18
 )
+#endif
 
-s32 debug_sp_related_12(u32 arg0, u32 arg1) {
-    u32 sp4;
 
+
+
+#ifdef NONMATCHING
+s32 _is_normal_single_precision_float(f32 arg0) {
     // Node 0
-    sp4 = (?32) ptr_sp_rmon_1;
-    sp4.unk4 = (?32) ptr_sp_rmon_1.unk4;
-    sp4.unk8 = (?32) ptr_sp_rmon_1.unk8;
-    sp4.unkC = (?32) ptr_sp_rmon_1.unkC;
-    sp4.unk10 = (?32) ptr_sp_rmon_1.unk10;
-    if (arg1 <= 0)
+    if ((u32) (arg0 & 0x7fffff) >= 1U)
     {
-        // Node 2
-        return;
-        // (possible return value: 0)
+        // Node 1
+        if (0U < (u32) ((arg0 >> 0x17) & 0xff))
+        {
+            // Node 2
+            return;
+            // (possible return value: (0U < (u32) (((arg0 >> 0x17) & 0xff) ^ 0xff)))
+        }
     }
-    // Node 1
-    if (arg1 >= 6U)
-    {
-        // Node 2
-        return;
-        // (possible return value: 0)
-    }
-    // Node 3
-    if (arg0 >= 0x80000000U)
-    {
-        // Node 4
-        return;
-        // (possible return value: *(&sp4 + (arg1 * 4)))
-    }
-    // Node 5
-    return;
-    // (possible return value: (arg0 & 0xf0000000))
+    // (possible return value: ((u32) (arg0 & 0x7fffff) < 1U))
 }
-
+#else
 GLOBAL_ASM(
+.text
 glabel _is_normal_single_precision_float
 /* 006160 70005560 E7AC0000 */  swc1  $f12, ($sp)
 /* 006164 70005564 8FA40000 */  lw    $a0, ($sp)
@@ -1013,24 +1176,22 @@ glabel _is_normal_single_precision_float
 /* 00619C 7000559C 03E00008 */  jr    $ra
 /* 0061A0 700055A0 00000000 */   nop   
 )
+#endif
 
-s32 _is_normal_single_precision_float(f32 arg0) {
+
+
+
+
+#ifdef NONMATCHING
+void is_normal_single_precision_float(s32 arg0, s32 arg1) {
     // Node 0
-    if ((u32) (arg0 & 0x7fffff) >= 1U)
-    {
-        // Node 1
-        if (0U < (u32) ((arg0 >> 0x17) & 0xff))
-        {
-            // Node 2
-            return;
-            // (possible return value: (0U < (u32) (((arg0 >> 0x17) & 0xff) ^ 0xff)))
-        }
-    }
-    // (possible return value: ((u32) (arg0 & 0x7fffff) < 1U))
+    _is_normal_single_precision_float(arg1);
+    return;
+    // (possible return value: _is_normal_single_precision_float(arg1))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel is_normal_single_precision_float
 /* 0061A4 700055A4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0061A8 700055A8 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1042,16 +1203,26 @@ glabel is_normal_single_precision_float
 /* 0061C0 700055C0 03E00008 */  jr    $ra
 /* 0061C4 700055C4 00000000 */   nop   
 )
+#endif
 
-void is_normal_single_precision_float(s32 arg0, s32 arg1) {
+
+
+
+
+
+#ifdef NONMATCHING
+void set_normality_of_single_precision_floats(s32 arg0, s32 arg1, ? arg2, ? arg3, s32 arg6, ? arg8, ? arg9, ? argA) {
     // Node 0
-    _is_normal_single_precision_float(arg1);
+    is_normal_single_precision_float(arg1, arg1);
+    is_normal_single_precision_float((arg6 + 2), arg8);
+    is_normal_single_precision_float((arg6 + 4), arg9);
+    is_normal_single_precision_float((arg6 + 6), argA);
     return;
-    // (possible return value: _is_normal_single_precision_float(arg1))
+    // (possible return value: is_normal_single_precision_float((arg6 + 6), argA))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel set_normality_of_single_precision_floats
 /* 0061C8 700055C8 44856000 */  mtc1  $a1, $f12
 /* 0061CC 700055CC 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -1078,24 +1249,36 @@ glabel set_normality_of_single_precision_floats
 /* 006220 70005620 03E00008 */  jr    $ra
 /* 006224 70005624 00000000 */   nop   
 )
+#endif
 
-void set_normality_of_single_precision_floats(s32 arg0, s32 arg1, ? arg2, ? arg3, s32 arg6, ? arg8, ? arg9, ? argA) {
-    // Node 0
-    is_normal_single_precision_float(arg1, arg1);
-    is_normal_single_precision_float((arg6 + 2), arg8);
-    is_normal_single_precision_float((arg6 + 4), arg9);
-    is_normal_single_precision_float((arg6 + 6), argA);
-    return;
-    // (possible return value: is_normal_single_precision_float((arg6 + 6), argA))
+
+
+
+
+#ifdef NONMATCHING
+void debug_indy_stub_2(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
+glabel debug_indy_stub_2
 /* 006228 70005628 03E00008 */  jr    $ra
 /* 00622C 7000562C 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void write_char_to_pos_stderr(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel write_char_to_pos_stderr
 /* 006230 70005630 30CE00FF */  andi  $t6, $a2, 0xff
 /* 006234 70005634 AFA60008 */  sw    $a2, 8($sp)
@@ -1139,8 +1322,19 @@ glabel write_char_to_pos_stderr
 /* 0062B4 700056B4 03E00008 */  jr    $ra
 /* 0062B8 700056B8 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void __osRdbSend(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel __osRdbSend
 /* 0062BC 700056BC 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0062C0 700056C0 308600FF */  andi  $a2, $a0, 0xff
@@ -1217,8 +1411,19 @@ glabel __osRdbSend
 /* 0063C4 700057C4 03E00008 */  jr    $ra
 /* 0063C8 700057C8 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void scroll_stderr_oneline(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel scroll_stderr_oneline
 /* 0063CC 700057CC 0004102A */  slt   $v0, $zero, $a0
 /* 0063D0 700057D0 10400020 */  beqz  $v0, .L70005854
@@ -1261,8 +1466,19 @@ glabel scroll_stderr_oneline
 /* 006454 70005854 03E00008 */  jr    $ra
 /* 006458 70005858 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void print_to_vidbuff1(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel print_to_vidbuff1
 /* 00645C 7000585C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 006460 70005860 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1350,8 +1566,21 @@ glabel print_to_vidbuff1
 /* 00657C 7000597C 03E00008 */  jr    $ra
 /* 006580 70005980 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void set_ptr_video_buffers(s32 arg0, s32 arg1) {
+    ptr_videobuffer1 = (s32) (arg0 | 0xa0000000);
+    ptr_videobuffer2 = (s32) (arg1 | 0xa0000000);
+}
+
+#else
 GLOBAL_ASM(
+.text
 glabel set_ptr_video_buffers
 /* 006584 70005984 3C02A000 */  lui   $v0, 0xa000
 /* 006588 70005988 00827025 */  or    $t6, $a0, $v0
@@ -1362,15 +1591,20 @@ glabel set_ptr_video_buffers
 /* 00659C 7000599C 03E00008 */  jr    $ra
 /* 0065A0 700059A0 AC2F4180 */   sw    $t7, %lo(ptr_videobuffer2)($at)
 )
+#endif
 
-void set_ptr_video_buffers(s32 arg0, s32 arg1) {
-    ptr_videobuffer1 = (s32) (arg0 | 0xa0000000);
-    ptr_videobuffer2 = (s32) (arg1 | 0xa0000000);
+
+
+
+
+
+#ifdef NONMATCHING
+void set_video_buffer_pointers(void) {
+    set_ptr_video_buffers(&vid_buff_1, &vid_buff_2);
 }
-
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel set_video_buffer_pointers
 /* 0065A4 700059A4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0065A8 700059A8 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1384,13 +1618,19 @@ glabel set_video_buffer_pointers
 /* 0065C8 700059C8 03E00008 */  jr    $ra
 /* 0065CC 700059CC 00000000 */   nop   
 )
+#endif
 
-void set_video_buffer_pointers(void) {
-    set_ptr_video_buffers(&vid_buff_1, &vid_buff_2);
+
+
+
+
+#ifdef NONMATCHING
+void write_stderr_to_buffer(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel write_stderr_to_buffer
 /* 0065D0 700059D0 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 0065D4 700059D4 AFBF003C */  sw    $ra, 0x3c($sp)
@@ -1477,3 +1717,4 @@ glabel write_stderr_to_buffer
 /* 006700 70005B00 03E00008 */  jr    $ra
 /* 006704 70005B04 27BD0040 */   addiu $sp, $sp, 0x40
 )
+#endif

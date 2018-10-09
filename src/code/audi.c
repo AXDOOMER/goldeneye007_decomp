@@ -84,7 +84,7 @@ void amCreateAudioMgr(void) {
 }
 #else
 GLOBAL_ASM(
-.section .text
+.text
 glabel amCreateAudioMgr
 /* 0027D0 70001BD0 27BDFEE8 */  addiu $sp, $sp, -0x118
 /* 0027D4 70001BD4 AFB3002C */  sw    $s3, 0x2c($sp)
@@ -341,7 +341,7 @@ void _amMain(void *arg) {
 }
 #else
 GLOBAL_ASM(
-.section .text
+.text
 glabel _amMain
 /* 002B7C 70001F7C 27BDFF90 */  addiu $sp, $sp, -0x70
 /* 002B80 70001F80 AFB60030 */  sw    $s6, 0x30($sp)
@@ -541,7 +541,7 @@ void _amHandleFrameMsg(void) {
 }
 #else
 GLOBAL_ASM(
-.section .text
+.text
 glabel _amHandleFrameMsg
 /* 002E44 70002244 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 002E48 70002248 AFBF001C */  sw    $ra, 0x1c($sp)
@@ -661,7 +661,7 @@ void __amHandleDoneMsg(void) {
 }
 #else
 GLOBAL_ASM(
-.section .text
+.text
 glabel __amHandleDoneMsg
 /* 002FE4 700023E4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 002FE8 700023E8 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -693,7 +693,7 @@ void __amDMA(void) {
 }
 #else
 GLOBAL_ASM(
-.section .text
+.text
 glabel __amDMA
 /* 003024 70002424 3C098006 */  lui   $t1, %hi(off_CODE_bss_8005E7B0) # $t1, 0x8006
 /* 003028 70002428 2529E7B0 */  addiu $t1, %lo(off_CODE_bss_8005E7B0) # addiu $t1, $t1, -0x1850
@@ -826,7 +826,7 @@ void __amDmaNew(void) {
 }
 #else
 GLOBAL_ASM(
-.section .text
+.text
 glabel __amDmaNew
 /* 0031D8 700025D8 3C038006 */  lui   $v1, %hi(off_CODE_bss_8005E7B0) # $v1, 0x8006
 /* 0031DC 700025DC 2463E7B0 */  addiu $v1, %lo(off_CODE_bss_8005E7B0) # addiu $v1, $v1, -0x1850
@@ -855,7 +855,7 @@ void __clearAudioDMA(void) {
 }
 #else
 GLOBAL_ASM(
-.section .text
+.text
 glabel __clearAudioDMA
 /* 003210 70002610 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 003214 70002614 AFB40028 */  sw    $s4, 0x28($sp)
