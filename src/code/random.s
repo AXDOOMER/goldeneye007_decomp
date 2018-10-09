@@ -59,6 +59,7 @@ glabel lotsa_shifting_randomizer_related
 /* 00B0EC 7000A4EC 00000000 */  nop   
 
 .section .data
-randseed: .dword 0xAB8D9F7781280783
+glabel randseed
+ .dword 0xAB8D9F7781280783
 .section .rodata
 .section .bss
