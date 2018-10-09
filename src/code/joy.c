@@ -1,71 +1,18 @@
 #include "ultra64.h"
 
+const char aJoy_c_debug[] = "joy_c_debug";
 
-.section .data
-D_800268C0:.word 0
-ptr_current_point_in_controller_input_index:.word controller_input_index
-D_800268C8:.word 0
-D_800268CC:.word 0
-num_controller_plugged_in_flags:.word 0
-num_controller_plugged_in_flags_0:.word 0
-controller_1_rumble_inserted:.word 0
-controller_2_rumble_inserted:.word 0
-controller_3_rumble_inserted:.word 0
-controller_4_rumble_inserted:.word 0
-controller_1_rumble_state:.word 0
-controller_2_rumble_state:.word 0
-controller_3_rumble_state:.word 0
-controller_4_rumble_state:.word 0
-controller_1_rumble_duration:.word 0
-controller_2_rumble_duration:.word 0
-controller_3_rumble_duration:.word 0
-controller_4_rumble_duration:.word 0
-controller_1_rumble_pulse:.word 0
-controller_2_rumble_pulse:.word 0
-controller_3_rumble_pulse:.word 0
-controller_4_rumble_pulse:.word 0
-D_80026918:.word 0
-D_8002691C:.word 0
-D_80026920:.word 0
-disable_all_rumble:.word 0
-ptr_to_tlb_ramrom_record:.word 0
-D_8002692C:.word 1
-pl1_controller_failure_lr:.word 0
-pl2_controller_failure_lr:.word 0
-pl3_controller_failure_lr:.word 0
-pl4_controller_failure_lr:.word 0
-pl1_controller_failure_ud:.word 0
-pl2_controller_failure_ud:.word 0
-pl3_controller_failure_ud:.word 0
-pl4_controller_failure_ud:.word 0
-pl1_controller_failure_held:.word 0
-pl2_controller_failure_held:.word 0
-pl3_controller_failure_held:.word 0
-pl4_controller_failure_held:.word 0
-pl1_controller_failure_pressed:.word 0
-pl2_controller_failure_pressed:.word 0
-pl3_controller_failure_pressed:.word 0
-pl4_controller_failure_pressed:.word 0
-D_80026970:.word 0
-.word 0
-.word 0
-.word 0
 
-.section .rodata
-aJoy_c_debug: .asciiz "joy_c_debug"
-.align 4
-
-.section .bss
-controller_input_index:.space 0x1E0
-dword_CODE_bss_80065110:.space 4
-dword_CODE_bss_80065114:.space 4
-dword_CODE_bss_80065118:.space 4
-dword_CODE_bss_8006511C:.space 0x10
-dword_CODE_bss_8006512C:.space 0x1E0
-dword_CODE_bss_8006530C:.space 8
-dword_CODE_bss_80065314:.space 0x10
-dword_CODE_bss_80065324:.space 4
-contdemoMesg:   .space 0x28
+char controller_input_index[0x1E0];
+s32 dword_CODE_bss_80065110;
+s32 dword_CODE_bss_80065114;
+s32 dword_CODE_bss_80065118;
+char dword_CODE_bss_8006511C[0x10];
+char dword_CODE_bss_8006512C[0x1E0];
+char dword_CODE_bss_8006530C[8];
+char dword_CODE_bss_80065314[0x10];
+s32 dword_CODE_bss_80065324;
+char contdemoMesg[0x28];
 
 OSMesgQueue contdemoMesgMQ;
 OSMesg cont1Mesg;
@@ -81,11 +28,69 @@ s32 player2_controllerstatus;
 s32 player3_controllerstatus;
 s32 player4_controllerstatus;
 
-player1_controller_packet:.space 0x1A8
+char player1_controller_packet[0x1A8];
+
+
+s32 D_800268C0 = 0;
+void *ptr_current_point_in_controller_input_index = controller_input_index;
+s32 D_800268C8 = 0;
+s32 D_800268CC = 0;
+s32 num_controller_plugged_in_flags = 0;
+s32 num_controller_plugged_in_flags_0 = 0;
+s32 controller_1_rumble_inserted = 0;
+s32 controller_2_rumble_inserted = 0;
+s32 controller_3_rumble_inserted = 0;
+s32 controller_4_rumble_inserted = 0;
+s32 controller_1_rumble_state = 0;
+s32 controller_2_rumble_state = 0;
+s32 controller_3_rumble_state = 0;
+s32 controller_4_rumble_state = 0;
+s32 controller_1_rumble_duration = 0;
+s32 controller_2_rumble_duration = 0;
+s32 controller_3_rumble_duration = 0;
+s32 controller_4_rumble_duration = 0;
+s32 controller_1_rumble_pulse = 0;
+s32 controller_2_rumble_pulse = 0;
+s32 controller_3_rumble_pulse = 0;
+s32 controller_4_rumble_pulse = 0;
+s32 D_80026918 = 0;
+s32 D_8002691C = 0;
+s32 D_80026920 = 0;
+s32 disable_all_rumble = 0;
+s32 ptr_to_tlb_ramrom_record = 0;
+s32 D_8002692C = 1;
+s32 pl1_controller_failure_lr = 0;
+s32 pl2_controller_failure_lr = 0;
+s32 pl3_controller_failure_lr = 0;
+s32 pl4_controller_failure_lr = 0;
+s32 pl1_controller_failure_ud = 0;
+s32 pl2_controller_failure_ud = 0;
+s32 pl3_controller_failure_ud = 0;
+s32 pl4_controller_failure_ud = 0;
+s32 pl1_controller_failure_held = 0;
+s32 pl2_controller_failure_held = 0;
+s32 pl3_controller_failure_held = 0;
+s32 pl4_controller_failure_held = 0;
+s32 pl1_controller_failure_pressed = 0;
+s32 pl2_controller_failure_pressed = 0;
+s32 pl3_controller_failure_pressed = 0;
+s32 pl4_controller_failure_pressed = 0;
+s32 D_80026970 = 0;
 
 
 
+
+
+
+
+
+#ifdef NONMATCHING
+void something_with_joy_c_debug(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel something_with_joy_c_debug
 /* 00C160 7000B560 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00C164 7000B564 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -172,8 +177,31 @@ glabel something_with_joy_c_debug
 /* 00C2A4 7000B6A4 03E00008 */  jr    $ra
 /* 00C2A8 7000B6A8 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void test_controller_presence(void) {
+    ? sp1C;
+
+    // Node 0
+    if (D_80026918 != 0)
+    {
+        // Node 1
+        osSendMesg(&dword_CODE_bss_80065370, &sp1C, 0);
+        osRecvMesg(&dword_CODE_bss_80065390, &sp1C, 1);
+        controller_check_for_rumble_maybe();
+        osSendMesg(&dword_CODE_bss_800653B0, &sp1C, 0);
+        osRecvMesg(&dword_CODE_bss_800653D0, &sp1C, 1);
+        return;
+        // (possible return value: osRecvMesg(&dword_CODE_bss_800653D0, &sp1C, 1))
+    }
+    // (function likely void)
+}
+#else
 GLOBAL_ASM(
+.text
 glabel test_controller_presence
 /* 00C2AC 7000B6AC 3C0E8002 */  lui   $t6, %hi(D_80026918) # $t6, 0x8002
 /* 00C2B0 7000B6B0 8DCE6918 */  lw    $t6, %lo(D_80026918)($t6)
@@ -208,41 +236,39 @@ glabel test_controller_presence
 /* 00C320 7000B720 03E00008 */  jr    $ra
 /* 00C324 7000B724 00000000 */   nop   
 )
-
-void test_controller_presence(void) {
-    ? sp1C;
-
-    // Node 0
-    if (D_80026918 != 0)
-    {
-        // Node 1
-        osSendMesg(&dword_CODE_bss_80065370, &sp1C, 0);
-        osRecvMesg(&dword_CODE_bss_80065390, &sp1C, 1);
-        controller_check_for_rumble_maybe();
-        osSendMesg(&dword_CODE_bss_800653B0, &sp1C, 0);
-        osRecvMesg(&dword_CODE_bss_800653D0, &sp1C, 1);
-        return;
-        // (possible return value: osRecvMesg(&dword_CODE_bss_800653D0, &sp1C, 1))
-    }
-    // (function likely void)
-}
+#endif
 
 
-GLOBAL_ASM(
-glabel osPfsChecker
-/* 00C328 7000B728 AFA40000 */  sw    $a0, ($sp)
-/* 00C32C 7000B72C 03E00008 */  jr    $ra
-/* 00C330 7000B730 24020003 */   li    $v0, 3
-)
 
+
+
+#ifdef NONMATCHING
 void osPfsChecker(s32 arg0) {
     // Node 0
     return;
     // (possible return value: 3)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
+glabel osPfsChecker
+/* 00C328 7000B728 AFA40000 */  sw    $a0, ($sp)
+/* 00C32C 7000B72C 03E00008 */  jr    $ra
+/* 00C330 7000B730 24020003 */   li    $v0, 3
+)
+#endif
+
+
+
+
+
+#ifdef NONMATCHING
+void controller_7000B734(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
 glabel controller_7000B734
 /* 00C334 7000B734 3C0E8002 */  lui   $t6, %hi(controller_1_rumble_inserted) # $t6, 0x8002
 /* 00C338 7000B738 25CE68D8 */  addiu $t6, %lo(controller_1_rumble_inserted) # addiu $t6, $t6, 0x68d8
@@ -304,8 +330,17 @@ glabel controller_7000B734
 /* 00C408 7000B808 03E00008 */  jr    $ra
 /* 00C40C 7000B80C 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void controller_check_for_rumble_maybe(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel controller_check_for_rumble_maybe
 /* 00C410 7000B810 3C028002 */  lui   $v0, %hi(D_8002692C) # $v0, 0x8002
 /* 00C414 7000B814 2442692C */  addiu $v0, %lo(D_8002692C) # addiu $v0, $v0, 0x692c
@@ -443,8 +478,44 @@ glabel controller_check_for_rumble_maybe
 /* 00C5F0 7000B9F0 03E00008 */  jr    $ra
 /* 00C5F4 7000B9F4 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void controller_finding_controller_maybe(void) {
+    // Node 0
+    if (ptr_current_point_in_controller_input_index->unk1F8 >= 0)
+    {
+        // Node 1
+    }
+    // Node 2
+    if (((void *)0x80020000->unk68D0 & 1) == 0)
+    {
+        // Node 3
+    }
+    // Node 4
+    if (((void *)0x80020000->unk68D0 & 2) == 0)
+    {
+        // Node 5
+    }
+    // Node 6
+    if (((void *)0x80020000->unk68D0 & 4) == 0)
+    {
+        // Node 7
+    }
+    // Node 8
+    if (((void *)0x80020000->unk68D0 & 8) == 0)
+    {
+        // Node 9
+        return;
+        // (possible return value: 3)
+    }
+    // (possible return value: 4)
+}
+#else
 GLOBAL_ASM(
+.text
 glabel controller_finding_controller_maybe
 /* 00C5F8 7000B9F8 3C0E8002 */  lui   $t6, %hi(ptr_current_point_in_controller_input_index) # $t6, 0x8002
 /* 00C5FC 7000B9FC 8DCE68C4 */  lw    $t6, %lo(ptr_current_point_in_controller_input_index)($t6)
@@ -487,53 +558,39 @@ glabel controller_finding_controller_maybe
 /* 00C668 7000BA68 03E00008 */  jr    $ra
 /* 00C66C 7000BA6C 00000000 */   nop   
 )
+#endif
 
-void controller_finding_controller_maybe(void) {
-    // Node 0
-    if (ptr_current_point_in_controller_input_index->unk1F8 >= 0)
-    {
-        // Node 1
-    }
-    // Node 2
-    if (((void *)0x80020000->unk68D0 & 1) == 0)
-    {
-        // Node 3
-    }
-    // Node 4
-    if (((void *)0x80020000->unk68D0 & 2) == 0)
-    {
-        // Node 5
-    }
-    // Node 6
-    if (((void *)0x80020000->unk68D0 & 4) == 0)
-    {
-        // Node 7
-    }
-    // Node 8
-    if (((void *)0x80020000->unk68D0 & 8) == 0)
-    {
-        // Node 9
-        return;
-        // (possible return value: 3)
-    }
-    // (possible return value: 4)
+
+
+
+
+
+#ifdef NONMATCHING
+void get_num_controllers_plugged_in(void) {
+    // (possible return value: (void *)0x80020000->unk68D0)
 }
-
-
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel get_num_controllers_plugged_in
 /* 00C670 7000BA70 3C028002 */  lui   $v0, 0x8002
 /* 00C674 7000BA74 03E00008 */  jr    $ra
 /* 00C678 7000BA78 904268D0 */   lbu   $v0, 0x68d0($v0)
 )
+#endif
 
-void get_num_controllers_plugged_in(void) {
-    // (possible return value: (void *)0x80020000->unk68D0)
+
+
+
+
+
+#ifdef NONMATCHING
+void controller_rumble_related(void) {
+
 }
-
+#else
 GLOBAL_ASM(
+.text
 glabel controller_rumble_related
 /* 00C67C 7000BA7C 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 00C680 7000BA80 AFB40028 */  sw    $s4, 0x28($sp)
@@ -618,16 +675,11 @@ glabel controller_rumble_related
 /* 00C7A0 7000BBA0 03E00008 */  jr    $ra
 /* 00C7A4 7000BBA4 27BD0038 */   addiu $sp, $sp, 0x38
 )
+#endif
 
-GLOBAL_ASM(
-glabel set_disable_all_rumble_and_something
-/* 00C7A8 7000BBA8 3C018002 */  lui   $at, %hi(disable_all_rumble) # $at, 0x8002
-/* 00C7AC 7000BBAC AC246924 */  sw    $a0, %lo(disable_all_rumble)($at)
-/* 00C7B0 7000BBB0 3C018006 */  lui   $at, 0x8006
-/* 00C7B4 7000BBB4 03E00008 */  jr    $ra
-/* 00C7B8 7000BBB8 AC255324 */   sw    $a1, 0x5324($at)
-)
 
+
+#ifdef NONMATCHING
 void set_disable_all_rumble_and_something(s32 arg0, s32 arg1) {
     // Node 0
     disable_all_rumble = arg0;
@@ -635,24 +687,50 @@ void set_disable_all_rumble_and_something(s32 arg0, s32 arg1) {
     return;
     // (function likely void)
 }
-
-
+#else
 GLOBAL_ASM(
-glabel set_ptr_tlb_ramrom_record
-/* 00C7BC 7000BBBC 3C018002 */  lui   $at, 0x8002
-/* 00C7C0 7000BBC0 03E00008 */  jr    $ra
-/* 00C7C4 7000BBC4 AC246928 */   sw    $a0, 0x6928($at)
+.text
+glabel set_disable_all_rumble_and_something
+/* 00C7A8 7000BBA8 3C018002 */  lui   $at, %hi(disable_all_rumble) # $at, 0x8002
+/* 00C7AC 7000BBAC AC246924 */  sw    $a0, %lo(disable_all_rumble)($at)
+/* 00C7B0 7000BBB0 3C018006 */  lui   $at, 0x8006
+/* 00C7B4 7000BBB4 03E00008 */  jr    $ra
+/* 00C7B8 7000BBB8 AC255324 */   sw    $a1, 0x5324($at)
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
 void set_ptr_tlb_ramrom_record(s32 arg0) {
     // Node 0
     (void *)0x80020000->unk6928 = arg0;
     return;
     // (function likely void)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
+glabel set_ptr_tlb_ramrom_record
+/* 00C7BC 7000BBBC 3C018002 */  lui   $at, 0x8002
+/* 00C7C0 7000BBC0 03E00008 */  jr    $ra
+/* 00C7C4 7000BBC4 AC246928 */   sw    $a0, 0x6928($at)
+)
+#endif
+
+
+
+
+
+#ifdef NONMATCHING
+void probably_ramrom_related(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
 glabel probably_ramrom_related
 /* 00C7C8 7000BBC8 8C8E01E0 */  lw    $t6, 0x1e0($a0)
 /* 00C7CC 7000BBCC 8C8F01E8 */  lw    $t7, 0x1e8($a0)
@@ -746,8 +824,32 @@ glabel probably_ramrom_related
 /* 00C904 7000BD04 03E00008 */  jr    $ra
 /* 00C908 7000BD08 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+s32 redirect_to_ramrom_replay_and_record_handlers_if_set(void) {
+    // Node 0
+    if (disable_all_rumble != 0)
+    {
+        // Node 1
+        // Error: I don't know how to handle jalr!
+    }
+    // Node 2
+    probably_ramrom_related(&controller_input_index);
+    if (ptr_to_tlb_ramrom_record != 0)
+    {
+        // Node 3
+        // Error: I don't know how to handle jalr!
+        return;
+        // (function likely void)
+    }
+    // (possible return value: ptr_to_tlb_ramrom_record)
+}
+#else
 GLOBAL_ASM(
+.text
 glabel redirect_to_ramrom_replay_and_record_handlers_if_set
 /* 00C90C 7000BD0C 3C028002 */  lui   $v0, %hi(disable_all_rumble) # $v0, 0x8002
 /* 00C910 7000BD10 8C426924 */  lw    $v0, %lo(disable_all_rumble)($v0)
@@ -783,28 +885,19 @@ glabel redirect_to_ramrom_replay_and_record_handlers_if_set
 /* 00C980 7000BD80 03E00008 */  jr    $ra
 /* 00C984 7000BD84 00000000 */   nop   
 )
+#endif
 
-s32 redirect_to_ramrom_replay_and_record_handlers_if_set(void) {
-    // Node 0
-    if (disable_all_rumble != 0)
-    {
-        // Node 1
-        // Error: I don't know how to handle jalr!
-    }
-    // Node 2
-    probably_ramrom_related(&controller_input_index);
-    if (ptr_to_tlb_ramrom_record != 0)
-    {
-        // Node 3
-        // Error: I don't know how to handle jalr!
-        return;
-        // (function likely void)
-    }
-    // (possible return value: ptr_to_tlb_ramrom_record)
+
+
+
+
+#ifdef NONMATCHING
+void controller_7000BD88(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000BD88
 /* 00C988 7000BD88 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 00C98C 7000BD8C AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1042,8 +1135,34 @@ glabel controller_7000BD88
 /* 00CCE4 7000C0E4 03E00008 */  jr    $ra
 /* 00CCE8 7000C0E8 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void get_cur_controller_horz_stick_pos(s32 arg0) {
+    s32 temp_t7;
+    void *temp_v1;
+
+    // Node 0
+    temp_t7 = ((s32) (arg0 << 0x18) >> 0x18);
+    if (ptr_current_point_in_controller_input_index->unk1F8 < 0)
+    {
+        // Node 1
+        if ((((s32) num_controller_plugged_in_flags >> temp_t7) & 1) == 0)
+        {
+            // Node 2
+            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_lr);
+            *temp_v1 = (s32) (*temp_v1 + 1);
+            return;
+            // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6))->unk2)
+        }
+    }
+    // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6))->unk2)
+}
+#else
 GLOBAL_ASM(
+.text
 glabel get_cur_controller_horz_stick_pos
 /* 00CCEC 7000C0EC 3C038002 */  lui   $v1, %hi(ptr_current_point_in_controller_input_index) # $v1, 0x8002
 /* 00CCF0 7000C0F0 8C6368C4 */  lw    $v1, %lo(ptr_current_point_in_controller_input_index)($v1)
@@ -1082,8 +1201,14 @@ glabel get_cur_controller_horz_stick_pos
 /* 00CD6C 7000C16C 03E00008 */  jr    $ra
 /* 00CD70 7000C170 00000000 */   nop   
 )
+#endif
 
-void get_cur_controller_horz_stick_pos(s32 arg0) {
+
+
+
+
+#ifdef NONMATCHING
+void controller_7000C174(s32 arg0) {
     s32 temp_t7;
     void *temp_v1;
 
@@ -1098,14 +1223,14 @@ void get_cur_controller_horz_stick_pos(s32 arg0) {
             temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_lr);
             *temp_v1 = (s32) (*temp_v1 + 1);
             return;
-            // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6))->unk2)
+            // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E4 * 0x18)) + (temp_t7 * 6))->unk2)
         }
     }
-    // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6))->unk2)
+    // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E4 * 0x18)) + (temp_t7 * 6))->unk2)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000C174
 /* 00CD74 7000C174 3C038002 */  lui   $v1, %hi(ptr_current_point_in_controller_input_index) # $v1, 0x8002
 /* 00CD78 7000C178 8C6368C4 */  lw    $v1, %lo(ptr_current_point_in_controller_input_index)($v1)
@@ -1144,8 +1269,14 @@ glabel controller_7000C174
 /* 00CDF4 7000C1F4 03E00008 */  jr    $ra
 /* 00CDF8 7000C1F8 00000000 */   nop   
 )
+#endif
 
-void controller_7000C174(s32 arg0) {
+
+
+
+
+#ifdef NONMATCHING
+void get_cur_controller_vert_stick_pos(s32 arg0) {
     s32 temp_t7;
     void *temp_v1;
 
@@ -1157,17 +1288,17 @@ void controller_7000C174(s32 arg0) {
         if ((((s32) num_controller_plugged_in_flags >> temp_t7) & 1) == 0)
         {
             // Node 2
-            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_lr);
+            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_ud);
             *temp_v1 = (s32) (*temp_v1 + 1);
             return;
-            // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E4 * 0x18)) + (temp_t7 * 6))->unk2)
+            // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6))->unk3)
         }
     }
-    // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E4 * 0x18)) + (temp_t7 * 6))->unk2)
+    // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6))->unk3)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel get_cur_controller_vert_stick_pos
 /* 00CDFC 7000C1FC 3C038002 */  lui   $v1, %hi(ptr_current_point_in_controller_input_index) # $v1, 0x8002
 /* 00CE00 7000C200 8C6368C4 */  lw    $v1, %lo(ptr_current_point_in_controller_input_index)($v1)
@@ -1206,8 +1337,14 @@ glabel get_cur_controller_vert_stick_pos
 /* 00CE7C 7000C27C 03E00008 */  jr    $ra
 /* 00CE80 7000C280 00000000 */   nop   
 )
+#endif
 
-void get_cur_controller_vert_stick_pos(s32 arg0) {
+
+
+
+
+#ifdef NONMATCHING
+void controller_7000C284(s32 arg0) {
     s32 temp_t7;
     void *temp_v1;
 
@@ -1222,14 +1359,14 @@ void get_cur_controller_vert_stick_pos(s32 arg0) {
             temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_ud);
             *temp_v1 = (s32) (*temp_v1 + 1);
             return;
-            // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6))->unk3)
+            // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E4 * 0x18)) + (temp_t7 * 6))->unk3)
         }
     }
-    // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6))->unk3)
+    // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E4 * 0x18)) + (temp_t7 * 6))->unk3)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000C284
 /* 00CE84 7000C284 3C038002 */  lui   $v1, %hi(ptr_current_point_in_controller_input_index) # $v1, 0x8002
 /* 00CE88 7000C288 8C6368C4 */  lw    $v1, %lo(ptr_current_point_in_controller_input_index)($v1)
@@ -1268,8 +1405,14 @@ glabel controller_7000C284
 /* 00CF04 7000C304 03E00008 */  jr    $ra
 /* 00CF08 7000C308 00000000 */   nop   
 )
+#endif
 
-void controller_7000C284(s32 arg0) {
+
+
+
+
+#ifdef NONMATCHING
+s32 get_controller_buttons_held(s32 arg0, s32 arg1) {
     s32 temp_t7;
     void *temp_v1;
 
@@ -1281,17 +1424,17 @@ void controller_7000C284(s32 arg0) {
         if ((((s32) num_controller_plugged_in_flags >> temp_t7) & 1) == 0)
         {
             // Node 2
-            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_ud);
+            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_held);
             *temp_v1 = (s32) (*temp_v1 + 1);
             return;
-            // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E4 * 0x18)) + (temp_t7 * 6))->unk3)
+            // (possible return value: ((*((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6)) & (arg1 & 0xffff)) & 0xffff))
         }
     }
-    // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E4 * 0x18)) + (temp_t7 * 6))->unk3)
+    // (possible return value: ((*((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6)) & (arg1 & 0xffff)) & 0xffff))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel get_controller_buttons_held
 /* 00CF0C 7000C30C 3C038002 */  lui   $v1, %hi(ptr_current_point_in_controller_input_index) # $v1, 0x8002
 /* 00CF10 7000C310 8C6368C4 */  lw    $v1, %lo(ptr_current_point_in_controller_input_index)($v1)
@@ -1336,8 +1479,14 @@ glabel get_controller_buttons_held
 /* 00CFA4 7000C3A4 03E00008 */  jr    $ra
 /* 00CFA8 7000C3A8 00000000 */   nop   
 )
+#endif
 
-s32 get_controller_buttons_held(s32 arg0, s32 arg1) {
+
+
+
+
+#ifdef NONMATCHING
+s32 get_controller_buttons_pressed(s32 arg0, s32 arg1) {
     s32 temp_t7;
     void *temp_v1;
 
@@ -1349,17 +1498,17 @@ s32 get_controller_buttons_held(s32 arg0, s32 arg1) {
         if ((((s32) num_controller_plugged_in_flags >> temp_t7) & 1) == 0)
         {
             // Node 2
-            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_held);
+            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_pressed);
             *temp_v1 = (s32) (*temp_v1 + 1);
             return;
-            // (possible return value: ((*((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6)) & (arg1 & 0xffff)) & 0xffff))
+            // (possible return value: (((ptr_current_point_in_controller_input_index + (temp_t7 * 2))->unk1F0 & (arg1 & 0xffff)) & 0xffff))
         }
     }
-    // (possible return value: ((*((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6)) & (arg1 & 0xffff)) & 0xffff))
+    // (possible return value: (((ptr_current_point_in_controller_input_index + (temp_t7 * 2))->unk1F0 & (arg1 & 0xffff)) & 0xffff))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel get_controller_buttons_pressed
 /* 00CFAC 7000C3AC 3C038002 */  lui   $v1, %hi(ptr_current_point_in_controller_input_index) # $v1, 0x8002
 /* 00CFB0 7000C3B0 8C6368C4 */  lw    $v1, %lo(ptr_current_point_in_controller_input_index)($v1)
@@ -1397,30 +1546,19 @@ glabel get_controller_buttons_pressed
 /* 00D028 7000C428 03E00008 */  jr    $ra
 /* 00D02C 7000C42C 00000000 */   nop   
 )
+#endif
 
-s32 get_controller_buttons_pressed(s32 arg0, s32 arg1) {
-    s32 temp_t7;
-    void *temp_v1;
 
-    // Node 0
-    temp_t7 = ((s32) (arg0 << 0x18) >> 0x18);
-    if (ptr_current_point_in_controller_input_index->unk1F8 < 0)
-    {
-        // Node 1
-        if ((((s32) num_controller_plugged_in_flags >> temp_t7) & 1) == 0)
-        {
-            // Node 2
-            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_pressed);
-            *temp_v1 = (s32) (*temp_v1 + 1);
-            return;
-            // (possible return value: (((ptr_current_point_in_controller_input_index + (temp_t7 * 2))->unk1F0 & (arg1 & 0xffff)) & 0xffff))
-        }
-    }
-    // (possible return value: (((ptr_current_point_in_controller_input_index + (temp_t7 * 2))->unk1F0 & (arg1 & 0xffff)) & 0xffff))
+
+
+
+#ifdef NONMATCHING
+void controller_7000C430(void) {
+
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000C430
 /* 00D030 7000C430 AFA50004 */  sw    $a1, 4($sp)
 /* 00D034 7000C434 30A3FFFF */  andi  $v1, $a1, 0xffff
@@ -1440,8 +1578,17 @@ glabel controller_7000C430
 /* 00D068 7000C468 03E00008 */  jr    $ra
 /* 00D06C 7000C46C 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void controller_7000C470(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000C470
 /* 00D070 7000C470 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D074 7000C474 AFBF001C */  sw    $ra, 0x1c($sp)
@@ -1463,8 +1610,32 @@ glabel controller_7000C470
 /* 00D0AC 7000C4AC 03E00008 */  jr    $ra
 /* 00D0B0 7000C4B0 00000000 */   nop   
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+s32 get_controller_3dstick_L_R(s32 arg0, s32 arg1, ? arg2, s32 arg7, s32 arg8) {
+    s32 temp_a0;
+
+    // Node 0
+    temp_a0 = (get_cur_controller_horz_stick_pos(((s32) (arg0 << 0x18) >> 0x18)) + 0x3c);
+    if (temp_a0 >= 0x79)
+    {
+        // Node 1
+    }
+    // Node 2
+    if (temp_a0 < 0)
+    {
+        // Node 3
+        return;
+        // (possible return value: (((s32) (temp_a0 * (arg8 - arg7)) / 0x78) + arg7))
+    }
+    // (possible return value: (((s32) (temp_a0 * (arg8 - arg7)) / 0x78) + arg7))
+}
+#else
 GLOBAL_ASM(
+.text
 glabel get_controller_3dstick_L_R
 /* 00D0B4 7000C4B4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00D0B8 7000C4B8 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1498,12 +1669,18 @@ glabel get_controller_3dstick_L_R
 /* 00D120 7000C520 03E00008 */  jr    $ra
 /* 00D124 7000C524 00000000 */   nop   
 )
+#endif
 
-s32 get_controller_3dstick_L_R(s32 arg0, s32 arg1, ? arg2, s32 arg7, s32 arg8) {
+
+
+
+
+#ifdef NONMATCHING
+s32 get_controller_3dstick_U_D(s32 arg0, s32 arg1, ? arg2, s32 arg7, s32 arg8) {
     s32 temp_a0;
 
     // Node 0
-    temp_a0 = (get_cur_controller_horz_stick_pos(((s32) (arg0 << 0x18) >> 0x18)) + 0x3c);
+    temp_a0 = (get_cur_controller_vert_stick_pos(((s32) (arg0 << 0x18) >> 0x18)) + 0x3c);
     if (temp_a0 >= 0x79)
     {
         // Node 1
@@ -1517,9 +1694,9 @@ s32 get_controller_3dstick_L_R(s32 arg0, s32 arg1, ? arg2, s32 arg7, s32 arg8) {
     }
     // (possible return value: (((s32) (temp_a0 * (arg8 - arg7)) / 0x78) + arg7))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel get_controller_3dstick_U_D
 /* 00D128 7000C528 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00D12C 7000C52C AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1553,12 +1730,18 @@ glabel get_controller_3dstick_U_D
 /* 00D194 7000C594 03E00008 */  jr    $ra
 /* 00D198 7000C598 00000000 */   nop   
 )
+#endif
 
-s32 get_controller_3dstick_U_D(s32 arg0, s32 arg1, ? arg2, s32 arg7, s32 arg8) {
+
+
+
+
+#ifdef NONMATCHING
+f32 controller_7000C59C(s32 arg0, s32 arg1, ? arg2, f32 arg7, f32 arg8) {
     s32 temp_a0;
 
     // Node 0
-    temp_a0 = (get_cur_controller_vert_stick_pos(((s32) (arg0 << 0x18) >> 0x18)) + 0x3c);
+    temp_a0 = (get_cur_controller_horz_stick_pos(((s32) (arg0 << 0x18) >> 0x18)) + 0x3c);
     if (temp_a0 >= 0x79)
     {
         // Node 1
@@ -1568,13 +1751,13 @@ s32 get_controller_3dstick_U_D(s32 arg0, s32 arg1, ? arg2, s32 arg7, s32 arg8) {
     {
         // Node 3
         return;
-        // (possible return value: (((s32) (temp_a0 * (arg8 - arg7)) / 0x78) + arg7))
+        // (possible return value: ((((f32) temp_a0 / 120.0f) * (arg8 - arg7)) + arg7))
     }
-    // (possible return value: (((s32) (temp_a0 * (arg8 - arg7)) / 0x78) + arg7))
+    // (possible return value: ((((f32) temp_a0 / 120.0f) * (arg8 - arg7)) + arg7))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000C59C
 /* 00D19C 7000C59C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00D1A0 7000C5A0 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1607,12 +1790,18 @@ glabel controller_7000C59C
 /* 00D204 7000C604 03E00008 */  jr    $ra
 /* 00D208 7000C608 46022000 */   add.s $f0, $f4, $f2
 )
+#endif
 
-f32 controller_7000C59C(s32 arg0, s32 arg1, ? arg2, f32 arg7, f32 arg8) {
+
+
+
+
+#ifdef NONMATCHING
+f32 controller_7000C60C(s32 arg0, s32 arg1, ? arg2, f32 arg7, f32 arg8) {
     s32 temp_a0;
 
     // Node 0
-    temp_a0 = (get_cur_controller_horz_stick_pos(((s32) (arg0 << 0x18) >> 0x18)) + 0x3c);
+    temp_a0 = (get_cur_controller_vert_stick_pos(((s32) (arg0 << 0x18) >> 0x18)) + 0x3c);
     if (temp_a0 >= 0x79)
     {
         // Node 1
@@ -1626,9 +1815,9 @@ f32 controller_7000C59C(s32 arg0, s32 arg1, ? arg2, f32 arg7, f32 arg8) {
     }
     // (possible return value: ((((f32) temp_a0 / 120.0f) * (arg8 - arg7)) + arg7))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000C60C
 /* 00D20C 7000C60C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00D210 7000C610 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1661,28 +1850,25 @@ glabel controller_7000C60C
 /* 00D274 7000C674 03E00008 */  jr    $ra
 /* 00D278 7000C678 46022000 */   add.s $f0, $f4, $f2
 )
+#endif
 
-f32 controller_7000C60C(s32 arg0, s32 arg1, ? arg2, f32 arg7, f32 arg8) {
-    s32 temp_a0;
+
+
+
+
+#ifdef NONMATCHING
+void controller_7000C67C(void) {
+    ? sp1C;
 
     // Node 0
-    temp_a0 = (get_cur_controller_vert_stick_pos(((s32) (arg0 << 0x18) >> 0x18)) + 0x3c);
-    if (temp_a0 >= 0x79)
-    {
-        // Node 1
-    }
-    // Node 2
-    if (temp_a0 < 0)
-    {
-        // Node 3
-        return;
-        // (possible return value: ((((f32) temp_a0 / 120.0f) * (arg8 - arg7)) + arg7))
-    }
-    // (possible return value: ((((f32) temp_a0 / 120.0f) * (arg8 - arg7)) + arg7))
+    osSendMesg(&dword_CODE_bss_80065370, &sp1C, 0);
+    osRecvMesg(&dword_CODE_bss_80065390, &sp1C, 1);
+    return;
+    // (possible return value: osRecvMesg(&dword_CODE_bss_80065390, &sp1C, 1))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000C67C
 /* 00D27C 7000C67C 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D280 7000C680 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1701,19 +1887,25 @@ glabel controller_7000C67C
 /* 00D2B4 7000C6B4 03E00008 */  jr    $ra
 /* 00D2B8 7000C6B8 00000000 */   nop   
 )
+#endif
 
-void controller_7000C67C(void) {
+
+
+
+
+#ifdef NONMATCHING
+void controller_7000C6BC(void) {
     ? sp1C;
 
     // Node 0
-    osSendMesg(&dword_CODE_bss_80065370, &sp1C, 0);
-    osRecvMesg(&dword_CODE_bss_80065390, &sp1C, 1);
+    osSendMesg(&dword_CODE_bss_800653B0, &sp1C, 0);
+    osRecvMesg(&dword_CODE_bss_800653D0, &sp1C, 1);
     return;
-    // (possible return value: osRecvMesg(&dword_CODE_bss_80065390, &sp1C, 1))
+    // (possible return value: osRecvMesg(&dword_CODE_bss_800653D0, &sp1C, 1))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000C6BC
 /* 00D2BC 7000C6BC 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D2C0 7000C6C0 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1732,19 +1924,26 @@ glabel controller_7000C6BC
 /* 00D2F4 7000C6F4 03E00008 */  jr    $ra
 /* 00D2F8 7000C6F8 00000000 */   nop   
 )
+#endif
 
-void controller_7000C6BC(void) {
-    ? sp1C;
+
+
+
+
+#ifdef NONMATCHING
+s32 save_7000C6FC(void) {
+    s32 sp1C;
 
     // Node 0
-    osSendMesg(&dword_CODE_bss_800653B0, &sp1C, 0);
-    osRecvMesg(&dword_CODE_bss_800653D0, &sp1C, 1);
+    controller_7000C67C();
+    sp1C = osEepromProbe(&interrupt5_thread_list_buf);
+    controller_7000C6BC();
     return;
-    // (possible return value: osRecvMesg(&dword_CODE_bss_800653D0, &sp1C, 1))
+    // (possible return value: sp1C)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel save_7000C6FC
 /* 00D2FC 7000C6FC 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D300 7000C700 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1761,20 +1960,26 @@ glabel save_7000C6FC
 /* 00D32C 7000C72C 03E00008 */  jr    $ra
 /* 00D330 7000C730 00000000 */   nop   
 )
+#endif
 
-s32 save_7000C6FC(void) {
+
+
+
+
+#ifdef NONMATCHING
+s32 save_7000C734(s32 arg0, s32 arg1, ? arg8, ? arg9) {
     s32 sp1C;
 
     // Node 0
     controller_7000C67C();
-    sp1C = osEepromProbe(&interrupt5_thread_list_buf);
+    sp1C = osEepromRead(&interrupt5_thread_list_buf, arg8, arg9);
     controller_7000C6BC();
     return;
     // (possible return value: sp1C)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel save_7000C734
 /* 00D334 7000C734 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D338 7000C738 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1794,20 +1999,26 @@ glabel save_7000C734
 /* 00D370 7000C770 03E00008 */  jr    $ra
 /* 00D374 7000C774 00000000 */   nop   
 )
+#endif
 
-s32 save_7000C734(s32 arg0, s32 arg1, ? arg8, ? arg9) {
+
+
+
+
+#ifdef NONMATCHING
+s32 save_7000C778(s32 arg0, s32 arg1, ? arg8, ? arg9) {
     s32 sp1C;
 
     // Node 0
     controller_7000C67C();
-    sp1C = osEepromRead(&interrupt5_thread_list_buf, arg8, arg9);
+    sp1C = osEepromWrite(&interrupt5_thread_list_buf, arg8, arg9);
     controller_7000C6BC();
     return;
     // (possible return value: sp1C)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel save_7000C778
 /* 00D378 7000C778 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D37C 7000C77C AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1827,20 +2038,26 @@ glabel save_7000C778
 /* 00D3B4 7000C7B4 03E00008 */  jr    $ra
 /* 00D3B8 7000C7B8 00000000 */   nop   
 )
+#endif
 
-s32 save_7000C778(s32 arg0, s32 arg1, ? arg8, ? arg9) {
+
+
+
+
+#ifdef NONMATCHING
+s32 save_7000C7BC(s32 arg0, s32 arg1, ? arg2, ? arg8, ? arg9, ? argA) {
     s32 sp1C;
 
     // Node 0
     controller_7000C67C();
-    sp1C = osEepromWrite(&interrupt5_thread_list_buf, arg8, arg9);
+    sp1C = osEepromLongRead(&interrupt5_thread_list_buf, arg8, arg9, argA);
     controller_7000C6BC();
     return;
     // (possible return value: sp1C)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel save_7000C7BC
 /* 00D3BC 7000C7BC 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D3C0 7000C7C0 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1862,20 +2079,26 @@ glabel save_7000C7BC
 /* 00D400 7000C800 03E00008 */  jr    $ra
 /* 00D404 7000C804 00000000 */   nop   
 )
+#endif
 
-s32 save_7000C7BC(s32 arg0, s32 arg1, ? arg2, ? arg8, ? arg9, ? argA) {
+
+
+
+
+#ifdef NONMATCHING
+s32 save_7000C808(s32 arg0, s32 arg1, ? arg2, ? arg8, ? arg9, ? argA) {
     s32 sp1C;
 
     // Node 0
     controller_7000C67C();
-    sp1C = osEepromLongRead(&interrupt5_thread_list_buf, arg8, arg9, argA);
+    sp1C = osEepromLongWrite(&interrupt5_thread_list_buf, arg8, arg9, argA);
     controller_7000C6BC();
     return;
     // (possible return value: sp1C)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel save_7000C808
 /* 00D408 7000C808 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D40C 7000C80C AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1897,20 +2120,48 @@ glabel save_7000C808
 /* 00D44C 7000C84C 03E00008 */  jr    $ra
 /* 00D450 7000C850 00000000 */   nop   
 )
+#endif
 
-s32 save_7000C808(s32 arg0, s32 arg1, ? arg2, ? arg8, ? arg9, ? argA) {
-    s32 sp1C;
+
+
+
+
+#ifdef NONMATCHING
+s32 controller_7000C854(s32 arg0, s32 arg1) {
+    s32 temp_v1;
+    void *temp_a0;
+    s32 temp_f8;
 
     // Node 0
-    controller_7000C67C();
-    sp1C = osEepromLongWrite(&interrupt5_thread_list_buf, arg8, arg9, argA);
-    controller_7000C6BC();
-    return;
-    // (possible return value: sp1C)
+    temp_v1 = (arg0 * 4);
+    if (disable_all_rumble == 0)
+    {
+        // Node 1
+        if ((0x80020000 + temp_v1)->unk68D8 > 0)
+        {
+            // Node 2
+            temp_a0 = (temp_v1 + &controller_1_rumble_duration);
+            temp_f8 = (s32) (arg1 * 60.0f);
+            if (*temp_a0 < temp_f8)
+            {
+                // Node 3
+                *temp_a0 = temp_f8;
+            }
+            // Node 4
+            if ((0x80020000 + temp_v1)->unk68E8 == 0)
+            {
+                // Node 5
+                (0x80020000 + temp_v1)->unk6908 = 1;
+                return;
+                // (possible return value: temp_f8)
+            }
+        }
+    }
+    // (function likely void)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000C854
 /* 00D454 7000C854 3C0E8002 */  lui   $t6, %hi(disable_all_rumble) # $t6, 0x8002
 /* 00D458 7000C858 8DCE6924 */  lw    $t6, %lo(disable_all_rumble)($t6)
@@ -1949,42 +2200,29 @@ glabel controller_7000C854
 /* 00D4D4 7000C8D4 03E00008 */  jr    $ra
 /* 00D4D8 7000C8D8 00000000 */   nop   
 )
+#endif
 
-s32 controller_7000C854(s32 arg0, s32 arg1) {
-    s32 temp_v1;
-    void *temp_a0;
-    s32 temp_f8;
 
+
+
+
+#ifdef NONMATCHING
+void reset_cont_rumble_detect(void) {
     // Node 0
-    temp_v1 = (arg0 * 4);
-    if (disable_all_rumble == 0)
-    {
-        // Node 1
-        if ((0x80020000 + temp_v1)->unk68D8 > 0)
-        {
-            // Node 2
-            temp_a0 = (temp_v1 + &controller_1_rumble_duration);
-            temp_f8 = (s32) (arg1 * 60.0f);
-            if (*temp_a0 < temp_f8)
-            {
-                // Node 3
-                *temp_a0 = temp_f8;
-            }
-            // Node 4
-            if ((0x80020000 + temp_v1)->unk68E8 == 0)
-            {
-                // Node 5
-                (0x80020000 + temp_v1)->unk6908 = 1;
-                return;
-                // (possible return value: temp_f8)
-            }
-        }
-    }
+    controller_1_rumble_state = 1;
+    controller_1_rumble_pulse = 0;
+    controller_2_rumble_state = 1;
+    controller_2_rumble_pulse = 0;
+    controller_3_rumble_state = 1;
+    controller_3_rumble_pulse = 0;
+    controller_4_rumble_state = 1;
+    (void *)0x80020000->unk6914 = 0;
+    return;
     // (function likely void)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel reset_cont_rumble_detect
 /* 00D4DC 7000C8DC 240E0001 */  li    $t6, 1
 /* 00D4E0 7000C8E0 3C018002 */  lui   $at, %hi(controller_1_rumble_state) # $at, 0x8002
@@ -2008,23 +2246,22 @@ glabel reset_cont_rumble_detect
 /* 00D528 7000C928 03E00008 */  jr    $ra
 /* 00D52C 7000C92C AC206914 */   sw    $zero, 0x6914($at)
 )
+#endif
 
-void reset_cont_rumble_detect(void) {
+
+
+
+
+#ifdef NONMATCHING
+void controller_7000C930(s32 arg0) {
     // Node 0
-    controller_1_rumble_state = 1;
-    controller_1_rumble_pulse = 0;
-    controller_2_rumble_state = 1;
-    controller_2_rumble_pulse = 0;
-    controller_3_rumble_state = 1;
-    controller_3_rumble_pulse = 0;
-    controller_4_rumble_state = 1;
-    (void *)0x80020000->unk6914 = 0;
+    (void *)0x80020000->unk68C4 = (s32) ((arg0 * 0x1fc) + &controller_input_index);
     return;
     // (function likely void)
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000C930
 /* 00D530 7000C930 000471C0 */  sll   $t6, $a0, 7
 /* 00D534 7000C934 01C47023 */  subu  $t6, $t6, $a0
@@ -2036,16 +2273,19 @@ glabel controller_7000C930
 /* 00D54C 7000C94C 03E00008 */  jr    $ra
 /* 00D550 7000C950 AC3868C4 */   sw    $t8, 0x68c4($at)
 )
+#endif
 
-void controller_7000C930(s32 arg0) {
-    // Node 0
-    (void *)0x80020000->unk68C4 = (s32) ((arg0 * 0x1fc) + &controller_input_index);
-    return;
-    // (function likely void)
+
+
+
+
+#ifdef NONMATCHING
+s32 controller_7000C954(void) {
+    // (possible return value: ((s32) (ptr_current_point_in_controller_input_index - &controller_input_index) / 0x1fc))
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel controller_7000C954
 /* 00D554 7000C954 3C0E8002 */  lui   $t6, %hi(ptr_current_point_in_controller_input_index) # $t6, 0x8002
 /* 00D558 7000C958 8DCE68C4 */  lw    $t6, %lo(ptr_current_point_in_controller_input_index)($t6)
@@ -2058,9 +2298,8 @@ glabel controller_7000C954
 /* 00D574 7000C974 03E00008 */  jr    $ra
 /* 00D578 7000C978 00000000 */   nop   
 )  
+#endif
 
-s32 controller_7000C954(void) {
-    // (possible return value: ((s32) (ptr_current_point_in_controller_input_index - &controller_input_index) / 0x1fc))
-}
+
 
 
