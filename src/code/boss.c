@@ -63,29 +63,35 @@ s32 D_80024314 = 0;
 s32 D_80024318 = 0;
 s32 D_8002431C = 0;
 s32 D_80024320 = 0;
-s32 taskgrab_ramdump_num = 1
+s32 taskgrab_ramdump_num = 1;
 
 /* rodata */
-/*
-aLevel_: .asciiz "-level_"
-aMl0Me0Mgfx100Mvtx50Mt700Ma400_1: .asciiz "          -ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"
-aM: .asciiz "-m"
-aM_1: .asciiz "-m"
-aLevel__0: .asciiz "-level_"
-aLevel__1: .asciiz "-level_"
-aHard: .asciiz "-hard"
-aHard_1: .asciiz "-hard"
-aHard_2: .asciiz "-hard"
-aMa: .asciiz "-ma"
-aMa_0: .asciiz "-ma"
-aU64_taskgrab_D_core: .asciiz "u64.taskgrab.%d.core"
-aBoss_c_debug: .asciiz "boss_c_debug"
-*/
+
+const char aLevel_[] = "-level_";
+const char aMl0Me0Mgfx100Mvtx50Mt700Ma400_1[] = "          -ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400";
+const char aM[] = "-m";
+const char aM_1[] = "-m";
+const char aLevel__0[] = "-level_";
+const char aLevel__1[] = "-level_";
+const char aHard[] = "-hard";
+const char aHard_1[] = "-hard";
+const char aHard_2[] = "-hard";
+const char aMa[] = "-ma";
+const char aMa_0[] = "-ma";
+const char aU64_taskgrab_D_core[] = "u64.taskgrab.%d.core";
+const char aBoss_c_debug[] = "boss_c_debug";
+
 
 /* .bss */
 
 
+#ifdef NONMATCHING
+void init_mainthread_data(void) {
+
+}
+#else
 GLOBAL_ASM(
+.text
 glabel init_mainthread_data
 /* 006930 70005D30 27BDFF60 */  addiu $sp, $sp, -0xa0
 /* 006934 70005D34 AFBF0034 */  sw    $ra, 0x34($sp)
@@ -271,20 +277,37 @@ glabel init_mainthread_data
 /* 006BEC 70005FEC 03E00008 */  jr    $ra
 /* 006BF0 70005FF0 27BD00A0 */   addiu $sp, $sp, 0xa0
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void enable_show_mem_use_flag(void) {
+    show_mem_use_flag=1;
+}
+#else
 GLOBAL_ASM(
+.text
 glabel enable_show_mem_use_flag
 /* 006BF4 70005FF4 240E0001 */  li    $t6, 1
 /* 006BF8 70005FF8 3C018002 */  lui   $at, 0x8002
 /* 006BFC 70005FFC 03E00008 */  jr    $ra
 /* 006C00 70006000 AC2E41B4 */   sw    $t6, 0x41b4($at)
 )
+#endif
 
-void enable_show_mem_use_flag(void) {
-    show_mem_use_flag=1;
+
+
+
+
+
+#ifdef NONMATCHING
+void *mem_bars_flag_toggle(void) {
+    show_mem_bars_flag = (s32) (show_mem_bars_flag ^ 1);
 }
-
+#else
 GLOBAL_ASM(
+.text
 glabel mem_bars_flag_toggle
 /* 006C04 70006004 3C028002 */  lui   $v0, %hi(show_mem_bars_flag) # $v0, 0x8002
 /* 006C08 70006008 244241B8 */  addiu $v0, %lo(show_mem_bars_flag) # addiu $v0, $v0, 0x41b8
@@ -293,13 +316,26 @@ glabel mem_bars_flag_toggle
 /* 006C14 70006014 03E00008 */  jr    $ra
 /* 006C18 70006018 AC4F0000 */   sw    $t7, ($v0)
 )
+#endif
 
-void *mem_bars_flag_toggle(void) {
-    show_mem_bars_flag = (s32) (show_mem_bars_flag ^ 1);
+
+
+
+
+
+
+#ifdef NONMATCHING
+void setup_gamevalues_and_launchmainloop(void) {
+    init_mainthread_data();
+    allocate_init_rsp_buffers();
+    setupaudio();
+    while(1){
+       mainloop();
+    }    
 }
-
-
+#else
 GLOBAL_ASM(
+.text
 glabel setup_gamevalues_and_launchmainloop
 /* 006C1C 7000601C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 006C20 70006020 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -320,17 +356,20 @@ glabel setup_gamevalues_and_launchmainloop
 /* 006C58 70006058 03E00008 */  jr    $ra
 /* 006C5C 7000605C 00000000 */   nop   
 )
+#endif
 
-void setup_gamevalues_and_launchmainloop(void) {
-    init_mainthread_data();
-    allocate_init_rsp_buffers();
-    setupaudio();
-    while(1){
-       mainloop();
-    }    
+
+
+
+
+
+#ifdef NONMATCHING
+void mainloop(void) {
+
 }
-
+#else
 GLOBAL_ASM(
+.text
 glabel mainloop
 /* 006C60 70006060 27BDFE20 */  addiu $sp, $sp, -0x1e0
 /* 006C64 70006064 AFBF003C */  sw    $ra, 0x3c($sp)
@@ -932,8 +971,17 @@ glabel mainloop
 /* 007528 70006928 03E00008 */  jr    $ra
 /* 00752C 7000692C 27BD01E0 */   addiu $sp, $sp, 0x1e0
 )
+#endif
 
+
+
+#ifdef NONMATCHING
+void run_title_stage(void) {
+    set_loaded_stage(0x5A);
+}
+#else
 GLOBAL_ASM(
+.text
 glabel run_title_stage
 /* 007530 70006930 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 007534 70006934 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -944,34 +992,65 @@ glabel run_title_stage
 /* 007548 70006948 03E00008 */  jr    $ra
 /* 00754C 7000694C 00000000 */   nop   
 )
+#endif
 
-void run_title_stage(void) {
-    set_loaded_stage(0x5A);
+
+
+
+
+
+#ifdef NONMATCHING
+void set_loaded_stage(s32 stage){
+    loadedstage = stage;
 }
-
+#else
 GLOBAL_ASM(
+.text
 glabel set_loaded_stage
 /* 007550 70006950 3C018002 */  lui   $at, 0x8002
 /* 007554 70006954 03E00008 */  jr    $ra
 /* 007558 70006958 AC2442FC */   sw    $a0, 0x42fc($at)
 )
+#endif
 
-void set_loaded_stage(s32 stage){
-    loadedstage = stage;
+
+
+
+
+
+#ifdef NONMATCHING
+s32 get_stage_num(){
+    return current_stage_num;
 }
-
+#else
 GLOBAL_ASM(
+.text
 glabel get_stage_num
 /* 00755C 7000695C 3C028002 */  lui   $v0, 0x8002
 /* 007560 70006960 03E00008 */  jr    $ra
 /* 007564 70006964 8C4241A8 */   lw    $v0, 0x41a8($v0)
 )
+#endif
 
-s32 get_stage_num(){
-    return current_stage_num;
+
+
+
+
+
+#ifdef NONMATCHING
+void return_to_title_from_level_end(void) {
+    if ((get_stage_num() != 0x36))
+    {
+        if ((check_objectives_complete() != 0x0))
+        {
+            end_of_mission_briefing();
+        }
+    }
+    run_title_stage();
 }
-
+#else
 GLOBAL_ASM(
+.text
 glabel return_to_title_from_level_end
 /* 007568 70006968 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00756C 7000696C AFBF0014 */  sw    $ra, 0x14($sp)
@@ -994,30 +1073,39 @@ glabel return_to_title_from_level_end
 /* 0075AC 700069AC 03E00008 */  jr    $ra
 /* 0075B0 700069B0 00000000 */   nop   
 )
+#endif
 
-void return_to_title_from_level_end(void) {
-    if ((get_stage_num() != 0x36))
-    {
-        if ((check_objectives_complete() != 0x0))
-        {
-            end_of_mission_briefing();
-        }
-    }
-    run_title_stage();
+
+
+
+
+
+#ifdef NONMATCHING
+s32 get_debug_parse_flag(void) {
+    return debug_feature_flag;
 }
-
+#else
 GLOBAL_ASM(
+.text
 glabel get_debug_parse_flag
 /* 0075B4 700069B4 3C028002 */  lui   $v0, 0x8002
 /* 0075B8 700069B8 03E00008 */  jr    $ra
 /* 0075BC 700069BC 8C424300 */   lw    $v0, 0x4300($v0)
 )
+#endif
 
-s32 get_debug_parse_flag(void) {
-    return debug_feature_flag;
+
+
+
+
+
+#ifdef NONMATCHING
+void something_with_boss_c_debug(void) {
+    get_ptr_debug_notice_list_entry(D_800241A0, "boss_c_debug");
 }
-
+#else
 GLOBAL_ASM(
+.text
 glabel something_with_boss_c_debug
 /* 0075C0 700069C0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0075C4 700069C4 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -1031,7 +1119,5 @@ glabel something_with_boss_c_debug
 /* 0075E4 700069E4 03E00008 */  jr    $ra
 /* 0075E8 700069E8 00000000 */   nop   
 )
+#endif
 
-void something_with_boss_c_debug(void) {
-    get_ptr_debug_notice_list_entry(D_800241A0, "boss_c_debug");
-}
