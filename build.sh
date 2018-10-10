@@ -33,3 +33,6 @@ tools/asmpreproc/compile.sh src/code/joy_rumble.c
 tools/asmpreproc/compile.sh src/code/rmon.c
 
 tools/asmpreproc/compile.sh src/rarezip/rarezip.c
+
+tools/asmpreproc/compile.sh src/game/initgamedata.c
+tools/asmpreproc/compile.sh src/game/initweaponanigroups.c
