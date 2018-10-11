@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "ramrom.h"
+#include "boss.h"
 
 /* data */
 u32 D_800241A0 = 0;
@@ -79,7 +80,7 @@ const char aHard_2[] = "-hard";
 const char aMa[] = "-ma";
 const char aMa_0[] = "-ma";
 const char aU64_taskgrab_D_core[] = "u64.taskgrab.%d.core";
-const char aBoss_c_debug[] = "boss_c_debug";
+//const char aBoss_c_debug[] = "boss_c_debug";
 
 
 /* .bss */
@@ -281,50 +282,16 @@ glabel init_mainthread_data
 
 
 
-#ifdef NONMATCHING
 void enable_show_mem_use_flag(void) {
     show_mem_use_flag=1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel enable_show_mem_use_flag
-/* 006BF4 70005FF4 240E0001 */  li    $t6, 1
-/* 006BF8 70005FF8 3C018002 */  lui   $at, 0x8002
-/* 006BFC 70005FFC 03E00008 */  jr    $ra
-/* 006C00 70006000 AC2E41B4 */   sw    $t6, 0x41b4($at)
-)
-#endif
 
 
-
-
-
-
-#ifdef NONMATCHING
-void *mem_bars_flag_toggle(void) {
+void mem_bars_flag_toggle(void) {
     show_mem_bars_flag = (s32) (show_mem_bars_flag ^ 1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel mem_bars_flag_toggle
-/* 006C04 70006004 3C028002 */  lui   $v0, %hi(show_mem_bars_flag) # $v0, 0x8002
-/* 006C08 70006008 244241B8 */  addiu $v0, %lo(show_mem_bars_flag) # addiu $v0, $v0, 0x41b8
-/* 006C0C 7000600C 8C4E0000 */  lw    $t6, ($v0)
-/* 006C10 70006010 39CF0001 */  xori  $t7, $t6, 1
-/* 006C14 70006014 03E00008 */  jr    $ra
-/* 006C18 70006018 AC4F0000 */   sw    $t7, ($v0)
-)
-#endif
 
 
-
-
-
-
-
-#ifdef NONMATCHING
 void setup_gamevalues_and_launchmainloop(void) {
     init_mainthread_data();
     allocate_init_rsp_buffers();
@@ -333,32 +300,6 @@ void setup_gamevalues_and_launchmainloop(void) {
        mainloop();
     }    
 }
-#else
-GLOBAL_ASM(
-.text
-glabel setup_gamevalues_and_launchmainloop
-/* 006C1C 7000601C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 006C20 70006020 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 006C24 70006024 0C00174C */  jal   init_mainthread_data
-/* 006C28 70006028 00000000 */   nop   
-/* 006C2C 7000602C 0FC33F77 */  jal   allocate_init_rsp_buffers
-/* 006C30 70006030 00000000 */   nop   
-/* 006C34 70006034 0C001A8C */  jal   setupaudio
-/* 006C38 70006038 00000000 */   nop   
-.L7000603C:
-/* 006C3C 7000603C 0C001818 */  jal   mainloop
-/* 006C40 70006040 00000000 */   nop   
-/* 006C44 70006044 1000FFFD */  b     .L7000603C
-/* 006C48 70006048 00000000 */   nop   
-/* 006C4C 7000604C 00000000 */  nop   
-/* 006C50 70006050 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 006C54 70006054 27BD0018 */  addiu $sp, $sp, 0x18
-/* 006C58 70006058 03E00008 */  jr    $ra
-/* 006C5C 7000605C 00000000 */   nop   
-)
-#endif
-
-
 
 
 
@@ -975,69 +916,22 @@ glabel mainloop
 
 
 
-#ifdef NONMATCHING
+
 void run_title_stage(void) {
     set_loaded_stage(0x5A);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel run_title_stage
-/* 007530 70006930 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 007534 70006934 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 007538 70006938 0C001A54 */  jal   set_loaded_stage
-/* 00753C 7000693C 2404005A */   li    $a0, 90
-/* 007540 70006940 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 007544 70006944 27BD0018 */  addiu $sp, $sp, 0x18
-/* 007548 70006948 03E00008 */  jr    $ra
-/* 00754C 7000694C 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-
-#ifdef NONMATCHING
 void set_loaded_stage(s32 stage){
     loadedstage = stage;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_loaded_stage
-/* 007550 70006950 3C018002 */  lui   $at, 0x8002
-/* 007554 70006954 03E00008 */  jr    $ra
-/* 007558 70006958 AC2442FC */   sw    $a0, 0x42fc($at)
-)
-#endif
 
 
-
-
-
-
-#ifdef NONMATCHING
 s32 get_stage_num(){
     return current_stage_num;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_stage_num
-/* 00755C 7000695C 3C028002 */  lui   $v0, 0x8002
-/* 007560 70006960 03E00008 */  jr    $ra
-/* 007564 70006964 8C4241A8 */   lw    $v0, 0x41a8($v0)
-)
-#endif
 
 
-
-
-
-
-#ifdef NONMATCHING
 void return_to_title_from_level_end(void) {
     if ((get_stage_num() != 0x36))
     {
@@ -1048,76 +942,14 @@ void return_to_title_from_level_end(void) {
     }
     run_title_stage();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel return_to_title_from_level_end
-/* 007568 70006968 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00756C 7000696C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 007570 70006970 0C001A57 */  jal   get_stage_num
-/* 007574 70006974 00000000 */   nop   
-/* 007578 70006978 24010036 */  li    $at, 54
-/* 00757C 7000697C 10410007 */  beq   $v0, $at, .L7000699C
-/* 007580 70006980 00000000 */   nop   
-/* 007584 70006984 0FC15D2E */  jal   check_objectives_complete
-/* 007588 70006988 00000000 */   nop   
-/* 00758C 7000698C 10400003 */  beqz  $v0, .L7000699C
-/* 007590 70006990 00000000 */   nop   
-/* 007594 70006994 0FC074E7 */  jal   end_of_mission_briefing
-/* 007598 70006998 00000000 */   nop   
-.L7000699C:
-/* 00759C 7000699C 0C001A4C */  jal   run_title_stage
-/* 0075A0 700069A0 00000000 */   nop   
-/* 0075A4 700069A4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0075A8 700069A8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0075AC 700069AC 03E00008 */  jr    $ra
-/* 0075B0 700069B0 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-
-#ifdef NONMATCHING
 s32 get_debug_parse_flag(void) {
     return debug_feature_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_parse_flag
-/* 0075B4 700069B4 3C028002 */  lui   $v0, 0x8002
-/* 0075B8 700069B8 03E00008 */  jr    $ra
-/* 0075BC 700069BC 8C424300 */   lw    $v0, 0x4300($v0)
-)
-#endif
 
-
-
-
-
-
-#ifdef NONMATCHING
 void something_with_boss_c_debug(void) {
     get_ptr_debug_notice_list_entry(D_800241A0, "boss_c_debug");
 }
-#else
-GLOBAL_ASM(
-.text
-glabel something_with_boss_c_debug
-/* 0075C0 700069C0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0075C4 700069C4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0075C8 700069C8 3C048002 */  lui   $a0, %hi(D_800241A0) # $a0, 0x8002
-/* 0075CC 700069CC 3C058003 */  lui   $a1, %hi(aBoss_c_debug) # $a1, 0x8003
-/* 0075D0 700069D0 24A5914C */  addiu $a1, %lo(aBoss_c_debug) # addiu $a1, $a1, -0x6eb4
-/* 0075D4 700069D4 0C001398 */  jal   get_ptr_debug_notice_list_entry
-/* 0075D8 700069D8 248441A0 */   addiu $a0, %lo(D_800241A0) # addiu $a0, $a0, 0x41a0
-/* 0075DC 700069DC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0075E0 700069E0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0075E4 700069E4 03E00008 */  jr    $ra
-/* 0075E8 700069E8 00000000 */   nop   
-)
-#endif
+
 
