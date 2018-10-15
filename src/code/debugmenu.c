@@ -240,8 +240,8 @@ glabel display_text_to_coord
 #ifdef NONMATCHING
 void debug_menu_text_related(void) {
     // Node 0
-    debug_menu_x_text_pos = (?32) debug_menu_x_pos_offset;
-    debug_menu_y_text_pos = (?32) debug_menu_y_pos_offset;
+    debug_menu_x_text_pos = (s32) debug_menu_x_pos_offset;
+    debug_menu_y_text_pos = (s32) debug_menu_y_pos_offset;
     return;
     // (function likely void)
 }

@@ -374,7 +374,7 @@ glabel scan_debug_notice_list_till_NULL
 #endif
 
 #ifdef NONMATCHING
-void debug_removed(s32 arg0, s32 arg1, ? arg2) {
+void debug_removed(s32 arg0, s32 arg1, s32 arg2) {
 
 }
 #else
