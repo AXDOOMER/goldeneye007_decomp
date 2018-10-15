@@ -74,36 +74,10 @@ glabel check_string_something
 #endif
 
 
-
-#ifdef NONMATCHING
 void strtok(s32 arg0) {
-    // Node 0
     textpointer_load_parse_something(&boot_token_from_indy, arg0);
     check_string_something(&boot_token_from_indy);
-    return;
-    // (possible return value: check_string_something(&boot_token_from_indy))
 }
-#else
-GLOBAL_ASM(
-.text
-glabel strtok
-/* 00B18C 7000A58C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00B190 7000A590 00802825 */  move  $a1, $a0
-/* 00B194 7000A594 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00B198 7000A598 3C048006 */  lui   $a0, %hi(boot_token_from_indy) # $a0, 0x8006
-/* 00B19C 7000A59C 0C0029DC */  jal   textpointer_load_parse_something
-/* 00B1A0 7000A5A0 24844C30 */   addiu $a0, %lo(boot_token_from_indy) # addiu $a0, $a0, 0x4c30
-/* 00B1A4 7000A5A4 3C048006 */  lui   $a0, %hi(boot_token_from_indy) # $a0, 0x8006
-/* 00B1A8 7000A5A8 0C00293C */  jal   check_string_something
-/* 00B1AC 7000A5AC 24844C30 */   addiu $a0, %lo(boot_token_from_indy) # addiu $a0, $a0, 0x4c30
-/* 00B1B0 7000A5B0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00B1B4 7000A5B4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00B1B8 7000A5B8 03E00008 */  jr    $ra
-/* 00B1BC 7000A5BC 00000000 */   nop   
-)
-#endif
-
-
 
 
 
