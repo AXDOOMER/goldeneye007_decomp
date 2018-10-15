@@ -2137,7 +2137,7 @@ s32 controller_7000C854(s32 arg0, s32 arg1) {
     if (disable_all_rumble == 0)
     {
         // Node 1
-        if ((0x80020000 + temp_v1)->unk68D8 > 0)
+        if (*(&controller_1_rumble_inserted + temp_v1) > 0)
         {
             // Node 2
             temp_a0 = (temp_v1 + &controller_1_rumble_duration);
@@ -2148,10 +2148,10 @@ s32 controller_7000C854(s32 arg0, s32 arg1) {
                 *temp_a0 = temp_f8;
             }
             // Node 4
-            if ((0x80020000 + temp_v1)->unk68E8 == 0)
+            if (*(&controller_1_rumble_state + temp_v1) == 0)
             {
                 // Node 5
-                (0x80020000 + temp_v1)->unk6908 = 1;
+                *(&controller_1_rumble_pulse + temp_v1) = 1;
                 return;
                 // (possible return value: temp_f8)
             }
@@ -2159,6 +2159,7 @@ s32 controller_7000C854(s32 arg0, s32 arg1) {
     }
     // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2168,10 +2169,10 @@ glabel controller_7000C854
 /* 00D45C 7000C85C 44856000 */  mtc1  $a1, $f12
 /* 00D460 7000C860 00041880 */  sll   $v1, $a0, 2
 /* 00D464 7000C864 15C0001B */  bnez  $t6, .L7000C8D4
-/* 00D468 7000C868 3C0F8002 */   lui   $t7, 0x8002
+/* 00D468 7000C868 3C0F8002 */   lui   $t7, %hi(controller_1_rumble_inserted)
 /* 00D46C 7000C86C 01E37821 */  addu  $t7, $t7, $v1
-/* 00D470 7000C870 8DEF68D8 */  lw    $t7, 0x68d8($t7)
-/* 00D474 7000C874 3C098002 */  lui   $t1, 0x8002
+/* 00D470 7000C870 8DEF68D8 */  lw    $t7, %lo(controller_1_rumble_inserted)($t7)
+/* 00D474 7000C874 3C098002 */  lui   $t1, %hi(controller_1_rumble_state)
 /* 00D478 7000C878 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 00D47C 7000C87C 19E00015 */  blez  $t7, .L7000C8D4
 /* 00D480 7000C880 01234821 */   addu  $t1, $t1, $v1
@@ -2190,12 +2191,12 @@ glabel controller_7000C854
 /* 00D4B4 7000C8B4 00000000 */   nop   
 /* 00D4B8 7000C8B8 AC820000 */  sw    $v0, ($a0)
 .L7000C8BC:
-/* 00D4BC 7000C8BC 8D2968E8 */  lw    $t1, 0x68e8($t1)
-/* 00D4C0 7000C8C0 3C018002 */  lui   $at, 0x8002
+/* 00D4BC 7000C8BC 8D2968E8 */  lw    $t1, %lo(controller_1_rumble_state)($t1)
+/* 00D4C0 7000C8C0 3C018002 */  lui   $at, %hi(controller_1_rumble_pulse)
 /* 00D4C4 7000C8C4 00230821 */  addu  $at, $at, $v1
 /* 00D4C8 7000C8C8 15200002 */  bnez  $t1, .L7000C8D4
 /* 00D4CC 7000C8CC 00000000 */   nop   
-/* 00D4D0 7000C8D0 AC2A6908 */  sw    $t2, 0x6908($at)
+/* 00D4D0 7000C8D0 AC2A6908 */  sw    $t2, %lo(controller_1_rumble_pulse)($at)
 .L7000C8D4:
 /* 00D4D4 7000C8D4 03E00008 */  jr    $ra
 /* 00D4D8 7000C8D8 00000000 */   nop   
