@@ -1,6 +1,19 @@
 #include "ultra64.h"
 
-
+objective_ptrs: .space 4
+dword_CODE_bss_80075D34:.space 4
+dword_CODE_bss_80075D38:.space 0x20
+dword_CODE_bss_80075D58:.space 4
+dword_CODE_bss_80075D5C:.space 4
+dword_CODE_bss_80075D60:.space 0x20
+ptr_last_tag_entry_type16:.space 4
+ptr_last_briefing_setup_entry_type23:.space 4
+ptr_last_enter_room_subobject_entry_type20:.space 4
+ptr_last_deposit_in_room_subobject_entry_type21:.space 4
+ptr_last_photo_obj_in_room_subobject_entry_type1E:.space 4
+                .align 4
+flt_CODE_bss_80075DA0:.space 4           # DATA XREF: sub_CODE_7F058C64+Cw
+                                         # sub_CODE_7F058C88r
 
 
 #ifdef NONMATCHING

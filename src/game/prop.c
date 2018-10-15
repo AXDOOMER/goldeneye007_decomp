@@ -1,5 +1,6 @@
 #include "ultra64.h"
 
+s32 if_positive_last_mp_weapon_set_num;
 
 //.section .rodata
 /*
