@@ -3,7 +3,7 @@
 
 
 #ifdef NONMATCHING
-void something_with_stage_objectives(void) {
+void sub_GAME_7F007920(void) {
 
 }
 #else
