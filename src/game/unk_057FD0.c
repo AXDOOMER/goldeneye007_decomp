@@ -10,7 +10,7 @@
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void init_0x40_bytes_data_at_address_last_word_1_0(void) {
 
 }
 #else
@@ -45,7 +45,7 @@ glabel init_0x40_bytes_data_at_address_last_word_1_0
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058020(void) {
 
 }
 #else
@@ -79,7 +79,7 @@ glabel sub_GAME_7F058020
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058068(void) {
 
 }
 #else
@@ -106,7 +106,7 @@ glabel sub_GAME_7F058068
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058098(void) {
 
 }
 #else
@@ -133,7 +133,7 @@ glabel sub_GAME_7F058098
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F0580C8(void) {
 
 }
 #else
@@ -199,7 +199,7 @@ glabel sub_GAME_7F0580C8
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F05818C(void) {
 
 }
 #else
@@ -276,7 +276,7 @@ glabel sub_GAME_7F05818C
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058274(void) {
 
 }
 #else
@@ -358,7 +358,7 @@ glabel sub_GAME_7F058274
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058380(void) {
 
 }
 #else
@@ -396,7 +396,7 @@ glabel sub_GAME_7F058380
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F0583D8(void) {
 
 }
 #else
@@ -427,7 +427,7 @@ glabel sub_GAME_7F0583D8
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058418(void) {
 
 }
 #else
@@ -465,7 +465,7 @@ glabel sub_GAME_7F058418
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058474(void) {
 
 }
 #else
@@ -503,7 +503,7 @@ glabel sub_GAME_7F058474
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F0584D0(void) {
 
 }
 #else
@@ -558,7 +558,7 @@ glabel sub_GAME_7F0584D0
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058570(void) {
 
 }
 #else
@@ -608,7 +608,7 @@ glabel sub_GAME_7F058570
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F0585FC(void) {
 
 }
 #else
@@ -658,7 +658,7 @@ glabel sub_GAME_7F0585FC
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058688(void) {
 
 }
 #else
@@ -708,7 +708,7 @@ glabel sub_GAME_7F058688
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058714(void) {
 
 }
 #else
@@ -806,7 +806,7 @@ glabel sub_GAME_7F058714
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058860(void) {
 
 }
 #else
@@ -874,7 +874,7 @@ glabel sub_GAME_7F058860
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F05892C(void) {
 
 }
 #else
@@ -903,7 +903,7 @@ glabel sub_GAME_7F05892C
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void init_something_copy_posdata_to_it(void) {
 
 }
 #else
@@ -931,7 +931,7 @@ glabel init_something_copy_posdata_to_it
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void copies_first_3_floats_from_a0_to_a1_plus_0x30(void) {
 
 }
 #else
@@ -953,7 +953,7 @@ glabel copies_first_3_floats_from_a0_to_a1_plus_0x30
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F0589B4(void) {
 
 }
 #else
@@ -980,7 +980,7 @@ glabel sub_GAME_7F0589B4
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F0589E4(void) {
 
 }
 #else
@@ -1007,7 +1007,7 @@ glabel sub_GAME_7F0589E4
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058A14(void) {
 
 }
 #else
@@ -1036,7 +1036,7 @@ glabel sub_GAME_7F058A14
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058A4C(void) {
 
 }
 #else
@@ -1063,7 +1063,7 @@ glabel sub_GAME_7F058A4C
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void matrix_multiply_A1_by_F12(void) {
 
 }
 #else
@@ -1115,7 +1115,7 @@ glabel matrix_multiply_A1_by_F12
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058B10(void) {
 
 }
 #else
@@ -1158,7 +1158,7 @@ glabel sub_GAME_7F058B10
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058B80(void) {
 
 }
 #else
@@ -1187,7 +1187,7 @@ glabel sub_GAME_7F058B80
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058BB8(void) {
 
 }
 #else
@@ -1239,7 +1239,7 @@ glabel sub_GAME_7F058BB8
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058C4C(void) {
 
 }
 #else
@@ -1260,7 +1260,7 @@ glabel sub_GAME_7F058C4C
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058C64(void) {
 
 }
 #else
@@ -1284,7 +1284,7 @@ glabel sub_GAME_7F058C64
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058C88(void) {
 
 }
 #else
@@ -1304,7 +1304,7 @@ glabel sub_GAME_7F058C88
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058C9C(void) {
 
 }
 #else
@@ -1439,7 +1439,7 @@ glabel sub_GAME_7F058C9C
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F058E78(void) {
 
 }
 #else
@@ -1570,7 +1570,7 @@ glabel sub_GAME_7F058E78
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059044(void) {
 
 }
 #else
@@ -1653,7 +1653,7 @@ glabel sub_GAME_7F059044
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F05914C(void) {
 
 }
 #else
@@ -1732,7 +1732,7 @@ glabel sub_GAME_7F05914C
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059244(void) {
 
 }
 #else
@@ -1808,7 +1808,7 @@ glabel sub_GAME_7F059244
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059334(void) {
 
 }
 #else
@@ -1884,7 +1884,7 @@ glabel sub_GAME_7F059334
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059424(void) {
 
 }
 #else
@@ -2055,7 +2055,7 @@ glabel sub_GAME_7F059424
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059694(void) {
 
 }
 #else
@@ -2099,7 +2099,7 @@ glabel sub_GAME_7F059694
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059708(void) {
 
 }
 #else
@@ -2242,7 +2242,7 @@ glabel sub_GAME_7F059708
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059908(void) {
 
 }
 #else
@@ -2286,7 +2286,7 @@ glabel sub_GAME_7F059908
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F05997C(void) {
 
 }
 #else
@@ -2358,7 +2358,7 @@ glabel sub_GAME_7F05997C
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059A48(void) {
 
 }
 #else
@@ -2442,7 +2442,7 @@ glabel sub_GAME_7F059A48
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059B58(void) {
 
 }
 #else
@@ -2559,7 +2559,7 @@ glabel sub_GAME_7F059B58
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059CE8(void) {
 
 }
 #else
@@ -2592,7 +2592,7 @@ glabel sub_GAME_7F059CE8
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059D30(void) {
 
 }
 #else
@@ -2609,7 +2609,7 @@ glabel sub_GAME_7F059D30
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059D38(void) {
 
 }
 #else
@@ -2653,7 +2653,7 @@ glabel sub_GAME_7F059D38
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059DAC(void) {
 
 }
 #else
@@ -2714,7 +2714,7 @@ glabel sub_GAME_7F059DAC
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059E64(void) {
 
 }
 #else
@@ -2814,7 +2814,7 @@ glabel sub_GAME_7F059E64
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F059FB8(void) {
 
 }
 #else
@@ -2995,7 +2995,7 @@ glabel sub_GAME_7F059FB8
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F05A250(void) {
 
 }
 #else
@@ -3060,7 +3060,7 @@ glabel sub_GAME_7F05A250
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F05A310(void) {
 
 }
 #else
@@ -3356,7 +3356,7 @@ glabel sub_GAME_7F05A310
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F05A774(void) {
 
 }
 #else
@@ -3480,7 +3480,7 @@ glabel sub_GAME_7F05A774
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F05A928(void) {
 
 }
 #else
@@ -3531,7 +3531,7 @@ glabel sub_GAME_7F05A928
 
 
 #ifdef NONMATCHING
-void replacemedummy(void) {
+void sub_GAME_7F05A9B8(void) {
 
 }
 #else
