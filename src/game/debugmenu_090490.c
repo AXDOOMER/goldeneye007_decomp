@@ -1,8 +1,348 @@
 #include "ultra64.h"
 
 
-
-
+/* data
+D:80036BA4     ptr_mcm_groupings:.word          8,      0x13,      0x1E,      0x2B,      0x32,      0x39,      0x45
+D:80036BA4                                              # DATA XREF: display_debug_menu_text_onscreen+10o
+D:80036BA4                     .word       0x4D,0xFFFFFFFF
+D:80036BC8     ptr_mcm_positions:mcm_layout <8, 5>      # DATA XREF: display_debug_menu_text_onscreen+18o
+D:80036BD0                     mcm_layout <8, 6>
+D:80036BD8                     mcm_layout <8, 7>
+D:80036BE0                     mcm_layout <8, 8>
+D:80036BE8                     mcm_layout <8, 9>
+D:80036BF0                     mcm_layout <8, 0xA>
+D:80036BF8                     mcm_layout <8, 0xB>
+D:80036C00                     mcm_layout <8, 0xC>
+D:80036C08                     mcm_layout <0x19, 5>
+D:80036C10                     mcm_layout <0x19, 6>
+D:80036C18                     mcm_layout <0x19, 7>
+D:80036C20                     mcm_layout <0x19, 8>
+D:80036C28                     mcm_layout <0x19, 9>
+D:80036C30                     mcm_layout <0x19, 0xA>
+D:80036C38                     mcm_layout <0x19, 0xB>
+D:80036C40                     mcm_layout <0x19, 0xC>
+D:80036C48                     mcm_layout <0x19, 0xD>
+D:80036C50                     mcm_layout <0x19, 0xE>
+D:80036C58                     mcm_layout <0x19, 0xF>
+D:80036C60                     mcm_layout <0x28, 5>
+D:80036C68                     mcm_layout <0x28, 6>
+D:80036C70                     mcm_layout <0x28, 7>
+D:80036C78                     mcm_layout <0x28, 8>
+D:80036C80                     mcm_layout <0x28, 9>
+D:80036C88                     mcm_layout <0x28, 0xA>
+D:80036C90                     mcm_layout <0x28, 0xB>
+D:80036C98                     mcm_layout <0x28, 0xC>
+D:80036CA0                     mcm_layout <0x28, 0xD>
+D:80036CA8                     mcm_layout <0x28, 0xE>
+D:80036CB0                     mcm_layout <0x28, 0xF>
+D:80036CB8                     mcm_layout <0x39, 5>
+D:80036CC0                     mcm_layout <0x39, 6>
+D:80036CC8                     mcm_layout <0x39, 7>
+D:80036CD0                     mcm_layout <0x39, 8>
+D:80036CD8                     mcm_layout <0x39, 9>
+D:80036CE0                     mcm_layout <0x39, 0xA>
+D:80036CE8                     mcm_layout <0x39, 0xB>
+D:80036CF0                     mcm_layout <0x39, 0xC>
+D:80036CF8                     mcm_layout <0x39, 0xD>
+D:80036D00                     mcm_layout <0x39, 0xE>
+D:80036D08                     mcm_layout <0x39, 0xF>
+D:80036D10                     mcm_layout <0x39, 0x10>
+D:80036D18                     mcm_layout <0x39, 0x11>
+D:80036D20                     mcm_layout <8, 0x14>
+D:80036D28                     mcm_layout <8, 0x15>
+D:80036D30                     mcm_layout <8, 0x16>
+D:80036D38                     mcm_layout <8, 0x17>
+D:80036D40                     mcm_layout <8, 0x18>
+D:80036D48                     mcm_layout <8, 0x19>
+D:80036D50                     mcm_layout <8, 0x1A>
+D:80036D58                     mcm_layout <0x19, 0x14>
+D:80036D60                     mcm_layout <0x19, 0x15>
+D:80036D68                     mcm_layout <0x19, 0x16>
+D:80036D70                     mcm_layout <0x19, 0x17>
+D:80036D78                     mcm_layout <0x19, 0x18>
+D:80036D80                     mcm_layout <0x19, 0x19>
+D:80036D88                     mcm_layout <0x19, 0x1A>
+D:80036D90                     mcm_layout <0x28, 0x14>
+D:80036D98                     mcm_layout <0x28, 0x15>
+D:80036DA0                     mcm_layout <0x28, 0x16>
+D:80036DA8                     mcm_layout <0x28, 0x17>
+D:80036DB0                     mcm_layout <0x28, 0x18>
+D:80036DB8                     mcm_layout <0x28, 0x19>
+D:80036DC0                     mcm_layout <0x28, 0x1A>
+D:80036DC8                     mcm_layout <0x28, 0x1B>
+D:80036DD0                     mcm_layout <0x28, 0x1C>
+D:80036DD8                     mcm_layout <0x28, 0x1D>
+D:80036DE0                     mcm_layout <0x28, 0x1E>
+D:80036DE8                     mcm_layout <0x28, 0x1F>
+D:80036DF0                     mcm_layout <0x39, 0x14>
+D:80036DF8                     mcm_layout <0x39, 0x15>
+D:80036E00                     mcm_layout <0x39, 0x16>
+D:80036E08                     mcm_layout <0x39, 0x17>
+D:80036E10                     mcm_layout <0x39, 0x18>
+D:80036E18                     mcm_layout <0x39, 0x19>
+D:80036E20                     mcm_layout <0x39, 0x1A>
+D:80036E28                     mcm_layout <0x39, 0x1B>
+D:80036E30     mcm_strings:    .word aMoveView          # DATA XREF: display_debug_menu_text_onscreen+20o
+D:80036E30                                              # "move view"
+D:80036E34                     .word aStanView          # "stan view"
+D:80036E38                     .word aBondView          # "bond view"
+D:80036E3C                     .word aLevel             # "level"
+D:80036E40                     .word aRegion            # "region"
+D:80036E44                     .word aScale             # "scale"
+D:80036E48                     .word aPlayTitle         # "play title"
+D:80036E4C                     .word aBondDie           # "bond die"
+D:80036E50                     .word aSelectAnim        # "select anim"
+D:80036E54                     .word aGunPos            # "gun pos"
+D:80036E58                     .word aFlashColour       # "flash colour"
+D:80036E5C                     .word aHitColour         # "hit colour"
+D:80036E60                     .word aMusic             # "music"
+D:80036E64                     .word aSfx               # "sfx"
+D:80036E68                     .word aInvincible        # "invincible"
+D:80036E6C                     .word aVisible           # "visible"
+D:80036E70                     .word aCollisions        # "collisions"
+D:80036E74                     .word aAllGuns           # "all guns"
+D:80036E78                     .word aMaxAmmo           # "max ammo"
+D:80036E7C                     .word aDisplaySpeed      # "display speed"
+D:80036E80                     .word aBackground        # "background"
+D:80036E84                     .word aProps             # "props"
+D:80036E88                     .word aStanHit           # "stan hit"
+D:80036E8C                     .word aStanRegion        # "stan region"
+D:80036E90                     .word aStanProblems      # "stan problems"
+D:80036E94                     .word aPrintManPos       # "print man pos"
+D:80036E98                     .word aPortClose         # "port close"
+D:80036E9C                     .word aPortInf           # "port inf"
+D:80036EA0                     .word aPortApprox        # "port approx"
+D:80036EA4                     .word aPrRoomLoads       # "pr room loads"
+D:80036EA8                     .word aShowMemUse        # "show mem use"
+D:80036EAC                     .word aShowMemBars       # "show mem bars"
+D:80036EB0                     .word aGrabRgb           # "grab rgb"
+D:80036EB4                     .word aGrabJpeg          # "grab jpeg"
+D:80036EB8                     .word aGrabTask          # "grab task"
+D:80036EBC                     .word aRndWalk           # "rnd walk"
+D:80036EC0                     .word aRecordRamrom      # "record ramrom"
+D:80036EC4                     .word aRecord1           # "record 1"
+D:80036EC8                     .word aRecord2           # "record 2"
+D:80036ECC                     .word aRecord3           # "record 3"
+D:80036ED0                     .word aReplayRamrom      # "replay ramrom"
+D:80036ED4                     .word aSaveRamrom        # "save ramrom"
+D:80036ED8                     .word aLoadRamrom        # "load ramrom"
+D:80036EDC                     .word aAutoYAim          # "auto y aim"
+D:80036EE0                     .word aAutoXAim          # "auto x aim"
+D:80036EE4                     .word a007               # "007"
+D:80036EE8                     .word aAgent             # "agent"
+D:80036EEC                     .word aAll               # "all"
+D:80036EF0                     .word aFast              # "fast"
+D:80036EF4                     .word aObjectives        # "objectives"
+D:80036EF8                     .word aMargTop           # "marg top"
+D:80036EFC                     .word aMargBot           # "marg bot"
+D:80036F00                     .word aMargLeft          # "marg left"
+D:80036F04                     .word aMargRight         # "marg right"
+D:80036F08                     .word aMargReset         # "marg reset"
+D:80036F0C                     .word aScreenSize        # "screen size"
+D:80036F10                     .word aScreenPos         # "screen pos"
+D:80036F14                     .word aShowPatrols       # "show patrols"
+D:80036F18                     .word aIntro             # "intro"
+D:80036F1C                     .word aIntroEdit         # "intro edit"
+D:80036F20                     .word aIntroPos          # "intro pos"
+D:80036F24                     .word aWorldPos          # "world pos"
+D:80036F28                     .word aGunKeyPos         # "gun key pos"
+D:80036F2C                     .word aVisCvg            # "vis cvg"
+D:80036F30                     .word aChrNum            # "chr num"
+D:80036F34                     .word aRoomBlocks        # "room blocks"
+D:80036F38                     .word aProfile           # "profile"
+D:80036F3C                     .word aObjLoad           # "obj load"
+D:80036F40                     .word aWeaponLoad        # "weapon load"
+D:80036F44                     .word aJoy2SkyEdit       # "joy2 sky edit"
+D:80036F48                     .word aJoy2HitsEdit      # "joy2 hits edit"
+D:80036F4C                     .word aJoy2DetailEdit    # "joy2 detail edit"
+D:80036F50                     .word aExplosionInfo     # "explosion info"
+D:80036F54                     .word aMagicFog          # "magic fog"
+D:80036F58                     .word aGunWatchPos       # "gun watch pos"
+D:80036F5C                     .word aTestingManPos     # "testing man pos"
+D:80036F60                     .word aFog               # "fog"
+D:80036F64     debug_render_raster:.word 2              # DATA XREF: sub_CODE_7F0904C4+34w
+D:80036F64                                              # sub_CODE_7F090508+34w
+D:80036F64                                              # sub_CODE_7F09054C+34w
+D:80036F64                                              # debug_menu_processor:debug_introposr
+D:80036F64                                              # debug_menu_processor:debug_worldposr
+D:80036F64                                              # get_debug_render_raster+8r
+D:80036F68     debug_freeze_processing:.word 2          # DATA XREF: sub_CODE_7F0904C4+20o
+D:80036F68                                              # sub_CODE_7F0904C4+30w
+D:80036F68                                              # sub_CODE_7F090508+20o
+D:80036F68                                              # sub_CODE_7F090508+30w
+D:80036F68                                              # sub_CODE_7F09054C+20o
+D:80036F68                                              # sub_CODE_7F09054C+30w
+D:80036F68                                              # get_debug_freeze_processing+8r
+D:80036F6C     debug_limit_controller_input:.word 2     # DATA XREF: debug_menu_processor+A4o
+D:80036F6C                                              # debug_menu_processor:loc_CODE_7F090684r
+D:80036F6C                                              # debug_menu_processor+FCw
+D:80036F6C                                              # debug_menu_processor+118o
+D:80036F6C                                              # debug_menu_processor+124w
+D:80036F6C                                              # debug_menu_processor+140o
+D:80036F6C                                              # debug_menu_processor+14Cw
+D:80036F6C                                              # debug_menu_processor+168o
+D:80036F6C                                              # debug_menu_processor+174w
+D:80036F6C                                              # debug_menu_processor+190o
+D:80036F6C                                              # debug_menu_processor+19Cw
+D:80036F6C                                              # get_debug_limit_controller_input+8r
+D:80036F6C                                              # set_debug_limit_controller_input+10w
+D:80036F70     debug_unknown:  .word 2                  # DATA XREF: sub_CODE_7F0904C4+28o
+D:80036F70                                              # sub_CODE_7F0904C4+2Cw
+D:80036F70                                              # sub_CODE_7F090508+28o
+D:80036F70                                              # sub_CODE_7F090508+2Cw
+D:80036F70                                              # sub_CODE_7F09054C+28o
+D:80036F70                                              # sub_CODE_7F09054C+2Cw
+D:80036F70                                              # debug_menu_processor+F8w
+D:80036F70                                              # debug_menu_processor+218w
+D:80036F70                                              # debug_menu_processor+22Cw
+D:80036F70                                              # debug_menu_processor+240w
+D:80036F70                                              # debug_menu_processor+254w
+D:80036F70                                              # debug_menu_processor+268w
+D:80036F70                                              # debug_menu_processor+27Cw
+D:80036F70                                              # debug_menu_processor+290w
+D:80036F70                                              # debug_menu_processor+2A4w
+D:80036F70                                              # debug_menu_processor+2B8w
+D:80036F70                                              # debug_menu_processor+2CCw
+D:80036F70                                              # debug_menu_processor+2F8w
+D:80036F70                                              # debug_menu_processor+788w
+D:80036F70                                              # debug_menu_processor+82Cw
+D:80036F70                                              # debug_menu_processor+840w
+D:80036F70                                              # debug_menu_processor+8CCw
+D:80036F70                                              # set_debug_limit_controller_inputr
+D:80036F74     memusage_display_flag:.word FALSE        # DATA XREF: debug_menu_processor:debug_displayspeedo
+D:80036F74                                              # debug_menu_processor+3F8r
+D:80036F74                                              # debug_menu_processor+404w
+D:80036F74                                              # get_memusage_display_flag+8r
+D:80036F78     debug_do_draw_bg:.word TRUE              # DATA XREF: debug_menu_processor:debug_dodrawbgo
+D:80036F78                                              # debug_menu_processor+420r
+D:80036F78                                              # debug_menu_processor+42Cw
+D:80036F78                                              # get_debug_do_draw_bg+8r
+D:80036F7C     debug_do_draw_obj:.word TRUE             # DATA XREF: debug_menu_processor:debug_dodrawobjo
+D:80036F7C                                              # debug_menu_processor+438r
+D:80036F7C                                              # debug_menu_processor+444w
+D:80036F7C                                              # get_debug_do_draw_obj+8r
+D:80036F80     debug_unknown2: .word 1
+D:80036F84     debug_stanhit_flag:.word FALSE           # DATA XREF: debug_menu_processor:debug_stanhito
+D:80036F84                                              # debug_menu_processor+450r
+D:80036F84                                              # debug_menu_processor+45Cw
+D:80036F84                                              # get_debug_stanhit_flag+8r
+D:80036F88     debug_stanregion_flag:.word FALSE        # DATA XREF: debug_menu_processor:debug_stanregiono
+D:80036F88                                              # debug_menu_processor+468r
+D:80036F88                                              # debug_menu_processor+474w
+D:80036F88                                              # get_debug_stanregion_flag+8r
+D:80036F8C     turbo_mode_flag:.word FALSE              # DATA XREF: debug_menu_processor:debug_turboo
+D:80036F8C                                              # debug_menu_processor+480r
+D:80036F8C                                              # debug_menu_processor+48Cw
+D:80036F8C                                              # get_turbo_mode_flag+8r
+D:80036F90     debug_man_pos_flag:.word 0               # DATA XREF: debug_menu_processor:debug_printmanposo
+D:80036F90                                              # debug_menu_processor+498r
+D:80036F90                                              # debug_menu_processor+4A4w
+D:80036F90                                              # get_debug_man_pos_flag+8r
+D:80036F94     debug_prroomloads_flag:.word 0           # DATA XREF: debug_menu_processor:debug_prroomloadso
+D:80036F94                                              # debug_menu_processor+4E8r
+D:80036F94                                              # debug_menu_processor+4F4w
+D:80036F94                                              # get_debug_prroomloads_flag+8r
+D:80036F98     debug_joy2skyedit_flag:.word 0           # DATA XREF: debug_menu_processor:debug_joy2skyedito
+D:80036F98                                              # debug_menu_processor+7C4r
+D:80036F98                                              # debug_menu_processor+7D0w
+D:80036F98                                              # get_debug_joy2skyedit_flag+8r
+D:80036F9C     debug_joy2hitsedit_flag:.word 0          # DATA XREF: debug_menu_processor:debug_joy2hitsedito
+D:80036F9C                                              # debug_menu_processor+7DCr
+D:80036F9C                                              # debug_menu_processor+7E8w
+D:80036F9C                                              # get_debug_joy2hitsedit_flag+8r
+D:80036FA0     debug_joy2detailedit_flag:.word 0        # DATA XREF: debug_menu_processor:debug_joy2detailedito
+D:80036FA0                                              # debug_menu_processor+7F4r
+D:80036FA0                                              # debug_menu_processor+800w
+D:80036FA0                                              # get_debug_joy2detailedit_flag+8r
+D:80036FA4     debug_explosioninfo_flag:.word 0         # DATA XREF: debug_menu_processor:debug_explosioninfoo
+D:80036FA4                                              # debug_menu_processor+80Cr
+D:80036FA4                                              # debug_menu_processor+818w
+D:80036FA4                                              # get_debug_explosioninfo_flag+8r
+D:80036FA8     linemode_flag:  .word 0                  # DATA XREF: debug_menu_processor:debug_viscvco
+D:80036FA8                                              # debug_menu_processor+7ACr
+D:80036FA8                                              # debug_menu_processor+7B8w
+D:80036FA8                                              # get_linemode_flag+8r
+D:80036FA8                                              # set_linemode_flag+8w
+D:80036FAC     debug_007_unlock_flag:.word 0            # DATA XREF: debug_menu_processor:debug_007o
+D:80036FAC                                              # debug_menu_processor+620r
+D:80036FAC                                              # debug_menu_processor+62Cw
+D:80036FAC                                              # get_debug_007_unlock_flag+8r
+D:80036FB0     debug_enable_agent_levels_flag:.word 0   # DATA XREF: debug_menu_processor:debug_agento
+D:80036FB0                                              # debug_menu_processor+638r
+D:80036FB0                                              # debug_menu_processor+644w
+D:80036FB0                                              # get_debug_enable_agent_levels_flag+8r
+D:80036FB4     debug_enable_all_levels_flag:.word 0     # DATA XREF: debug_menu_processor:debug_allo
+D:80036FB4                                              # debug_menu_processor+650r
+D:80036FB4                                              # debug_menu_processor+65Cw
+D:80036FB4                                              # get_debug_enable_all_levels_flag+8r
+D:80036FB8     debug_chrnum_flag:.word 0                # DATA XREF: debug_menu_processor:debug_chrnumo
+D:80036FB8                                              # debug_menu_processor+794r
+D:80036FB8                                              # debug_menu_processor+7A0w
+D:80036FB8                                              # get_debug_chrnum_flag+8r
+D:80036FBC     debug_gunwatchpos_flag:.byte 0           # DATA XREF: debug_menu_processor:debug_gunwatchposo
+D:80036FBC                                              # debug_menu_processor+84Cr
+D:80036FBC                                              # debug_menu_processor+858w
+D:80036FBC                                              # get_debug_gunwatchpos_flag+8r
+D:80036FBD                     .byte 0, 0
+D:80036FBF     move_watch_item_preview_flag:.byte 0
+D:80036FC0     debug_profile_flag:.word 0               # DATA XREF: debug_menu_processor:debug_profileo
+D:80036FC0                                              # debug_menu_processor+874r
+D:80036FC0                                              # debug_menu_processor+880w
+D:80036FC0                                              # get_debug_profile_flag+8r
+D:80036FC4     debug_enable_taskgrab_flag:.word 0       # DATA XREF: debug_menu_processor:debug_taskgrabo
+D:80036FC4                                              # debug_menu_processor+568r
+D:80036FC4                                              # debug_menu_processor+574w
+D:80036FC4                                              # get_debug_taskgrab_val+8r
+D:80036FC8     debug_testingmanpos_flag:.word 0         # DATA XREF: debug_menu_processor:debug_testingmanposo
+D:80036FC8                                              # debug_menu_processor+4B0r
+D:80036FC8                                              # debug_menu_processor+4BCw
+D:80036FC8                                              # get_debug_testingmanpos_flag+8r
+D:80036FC8                                              # set_debug_testingmanpos_flag+8w
+D:80036FCC     debug_fast_bond_flag:.word 0             # DATA XREF: debug_menu_processor:fast_bond_debugo
+D:80036FCC                                              # debug_menu_processor+668r
+D:80036FCC                                              # debug_menu_processor+674w
+D:80036FCC                                              # get_debug_fast_bond_flag+8r
+D:80036FCC                                              # set_debug_fast_bond_flag+8w
+D:80036FD0     debug_all_obj_complete_flag:.word 0      # DATA XREF: debug_menu_processor:debug_objectiveso
+D:80036FD0                                              # debug_menu_processor+680r
+D:80036FD0                                              # debug_menu_processor+68Cw
+D:80036FD0                                              # get_debug_all_obj_complete_flag+8r
+D:80036FD4     debug_portal_flag:.word 0                # DATA XREF: debug_menu_processor:portal_close_inf_approxo
+D:80036FD4                                              # debug_menu_processor+2D8r
+D:80036FD4                                              # debug_menu_processor+2E4w
+D:80036FD4                                              # getdebug_portal_flag+8r
+D:80036FD8     dword_D_80036FD8:.word 0x80500000
+D:80036FDC                     .word 0x40000
+D:80036FE0                     .word initGameData
+D:80036FE4                     .word 0x7F100000
+D:80036FE8                     .word 0x80600000
+D:80036FEC                     .word 0x40000
+D:80036FF0                     .word 0x70000000
+D:80036FF4                     .word 0x70100000
+D:80036FF8     dword_D_80036FF8:.word 0                 # DATA XREF: debug_menu_processor:loc_CODE_7F090630r
+D:80036FF8                                              # debug_menu_processor+CCw
+D:80036FF8                                              # debug_menu_processor+E0r
+D:80036FF8                                              # debug_menu_processor+924r
+D:80036FF8                                              # debug_menu_processor:loc_CODE_7F090EDCw
+D:80036FF8                                              # debug_menu_processor:loc_CODE_7F090EE4r
+D:80036FFC     grab_rgb_screenshot_flag:.word 0         # DATA XREF: debug_menu_processor+4r
+D:80036FFC                                              # debug_menu_processor+34w
+D:80036FFC                                              # debug_menu_processor+48w
+D:80036FFC                                              # debug_menu_processor+51Cw
+D:80037000     grab_jpeg_screenshot_flag:.word 0        # DATA XREF: debug_menu_processor:loc_CODE_7F0905F4r
+D:80037000                                              # debug_menu_processor+70w
+D:80037000                                              # debug_menu_processor+84w
+D:80037000                                              # debug_menu_processor+540w
+D:80037004     dword_D_80037004:.word 0                 # DATA XREF: debug_menu_processor+708o
+D:80037004                                              # debug_menu_processor+710r
+D:80037004                                              # debug_menu_processor+754o
+D:80037004                                              # debug_menu_processor+760w
+D:80037008     dword_D_80037008:.word 0                 # DATA XREF: debug_menu_processor+718r
+D:80037008                                              # debug_menu_processor+768w
+D:8003700C     dword_D_8003700C:.word 0                 # DATA XREF: debug_menu_processor+724r
+D:8003700C                                              # debug_menu_processor+774w
+D:80037010                     .word 0
+*/
 
 
 #ifdef NONMATCHING

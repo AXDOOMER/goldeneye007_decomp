@@ -1,7 +1,16 @@
 #include "ultra64.h"
 
 
-
+/* data
+D:8004EB00     viewport_img:   .word 0                  # DATA XREF: remove_viewport_buffer+8w
+D:8004EB00                                              # allocate_viewport_buffer+98o
+D:8004EB00                                              # allocate_viewport_buffer+A8w
+D:8004EB00                                              # allocate_viewport_buffer+B0w
+D:8004EB00                                              # sub_CODE_7F0D2448w
+D:8004EB00                                              # sub_CODE_7F0D2464r
+D:8004EB00                                              # sub_CODE_7F0D2464:loc_CODE_7F0D24D4r
+D:8004EB00                                              # sub_CODE_7F0D2518+54r
+*/
 
 
 #ifdef NONMATCHING

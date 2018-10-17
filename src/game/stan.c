@@ -1,7 +1,107 @@
 #include "ultra64.h"
 
 
-
+/* data
+D:80040F30     dword_D_80040F30:.word 0x8D8604C5, 0x9DA40000, 0, 0, 0
+D:80040F30                                              # DATA XREF: sub_CODE_7F0B2274+38o
+D:80040F30                                              # sub_CODE_7F0B2420+58o
+D:80040F44     flt_D_80040F44: .float 1.0               # DATA XREF: sub_CODE_7F0AF20C+54r
+D:80040F44                                              # sub_CODE_7F0AFFCC+8r
+D:80040F44                                              # sub_CODE_7F0B0018+8r
+D:80040F44                                              # sub_CODE_7F0B00C4+20r
+D:80040F44                                              # sub_CODE_7F0B0140+Cr
+D:80040F44                                              # sub_CODE_7F0B0518+10r
+D:80040F44                                              # sub_CODE_7F0B0914+10r
+D:80040F44                                              # sub_CODE_7F0B1DDC+10r
+D:80040F44                                              # sub_CODE_7F0B26B8+4r
+D:80040F44                                              # sub_CODE_7F0B2950w
+D:80040F44                                              # sub_CODE_7F0B2970+8r
+D:80040F48     flt_D_80040F48: .float 1.0               # DATA XREF: sub_CODE_7F0AF924+58o
+D:80040F48                                              # sub_CODE_7F0AF924+68r
+D:80040F48                                              # sub_CODE_7F0AF924+A4r
+D:80040F48                                              # sub_CODE_7F0AF924+E0r
+D:80040F48                                              # sub_CODE_7F0AFA1C+2Co
+D:80040F48                                              # sub_CODE_7F0AFA1C+38r
+D:80040F48                                              # sub_CODE_7F0AFA1C+50r
+D:80040F48                                              # sub_CODE_7F0AFA1C+6Cr
+D:80040F48                                              # sub_CODE_7F0AFFCC+30r
+D:80040F48                                              # sub_CODE_7F0B0018+30r
+D:80040F48                                              # sub_CODE_7F0B00C4+60r
+D:80040F48                                              # sub_CODE_7F0B0140+40r
+D:80040F48                                              # sub_CODE_7F0B0E24+164r
+D:80040F48                                              # sub_CODE_7F0B1CF8+Cr
+D:80040F48                                              # sub_CODE_7F0B23AC+24r
+D:80040F48                                              # sub_CODE_7F0B2950+1Cw
+D:80040F48                                              # sub_CODE_7F0B2970+208r
+D:80040F48                                              # sub_CODE_7F0B2970+290r
+D:80040F48                                              # sub_CODE_7F0B2C74+4o
+D:80040F48                                              # sub_CODE_7F0B2C74+7Cr
+D:80040F48                                              # sub_CODE_7F0B2C74+84r
+D:80040F48                                              # sub_CODE_7F0B2C74+90r
+D:80040F4C     list_of_tilesizes:.word 0x20202020,0x28303840,0x48505800
+D:80040F4C                                              # DATA XREF: sub_CODE_7F0AF038+70o
+D:80040F4C                                              # sub_CODE_7F0AF20C+78o
+D:80040F4C                                              # sub_CODE_7F0AF808+4Co
+D:80040F4C                                              # sub_CODE_7F0B2E58+30o
+D:80040F4C                                              # load_stan+40o
+D:80040F58     base_ptr_connection_vals:.word 0         # DATA XREF: sub_CODE_7F07D960+468r
+D:80040F58                                              # sub_CODE_7F0AF5B8+30w
+D:80040F58                                              # sub_CODE_7F0AF638+40o
+D:80040F58                                              # sub_CODE_7F0B0914+1BCr
+D:80040F58                                              # sub_CODE_7F0B1DDC+1D4r
+D:80040F58                                              # sub_CODE_7F0B2274+24r
+D:80040F58                                              # sub_CODE_7F0B2420+60r
+D:80040F58                                              # sub_CODE_7F0B2718+5Co
+D:80040F58                                              # load_stan+20w
+D:80040F5C     ptr_firstroom_0:.word 0                  # DATA XREF: load_stan+34w
+D:80040F60                     .word 0
+D:80040F64     dword_D_80040F64:.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80040F64                                              # DATA XREF: sub_CODE_7F0AEF3C+14o
+D:80040FAC     dword_D_80040FAC:.word 0                 # DATA XREF: sub_CODE_7F0AEF3Cr
+D:80040FAC                                              # sub_CODE_7F0AEF3C+58w
+D:80040FB0     dword_D_80040FB0:.word 0                 # DATA XREF: sub_CODE_7F0AF5B8+14w
+D:80040FB4     stanlinelog_flag:.word 0                 # DATA XREF: sub_CODE_7F081478:loc_CODE_7F081564o
+D:80040FB4                                              # sub_CODE_7F081478:loc_CODE_7F081608r
+D:80040FB4                                              # sub_CODE_7F081478+194w
+D:80040FB4                                              # sub_CODE_7F081478+1C8w
+D:80040FB4                                              # sub_CODE_7F0AF5B8+48w
+D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80040FB8                     .word 0, 0, 0, 0
+D:800413BC     dword_D_800413BC:.word 0                 # DATA XREF: sub_CODE_7F0B0E24:loc_CODE_7F0B0F7Cw
+D:800413BC                                              # sub_CODE_7F0B0E24+4C0w
+D:800413BC                                              # sub_CODE_7F0B18B8+134o
+D:800413BC                                              # sub_CODE_7F0B1CC4+18w
+D:800413BC                                              # sub_CODE_7F0B28B0:loc_CODE_7F0B28E8r
+D:800413C0     flt_D_800413C0: .float 0.0               # DATA XREF: sub_CODE_7F0B3044+38o
+D:800413C0                                              # sub_CODE_7F0B3044+54w
+D:800413C0                                              # sub_CODE_7F0B3044+80o
+D:800413C0                                              # sub_CODE_7F0B3044+9Cr
+D:800413C0                                              # sub_CODE_7F0B3044+A4w
+D:800413C0                                              # sub_CODE_7F0B3044+A8r
+D:800413C0                                              # sub_CODE_7F0B3044+C8w
+D:800413C4     flt_D_800413C4: .float 0.0               # DATA XREF: sub_CODE_7F0B3044+5Cw
+D:800413C4                                              # sub_CODE_7F0B3044+94r
+D:800413C8     dword_D_800413C8:.word 1                 # DATA XREF: sub_CODE_7F0B3044+60w
+D:800413CC     dword_D_800413CC:.word 1                 # DATA XREF: sub_CODE_7F0B3044+58r
+D:800413CC                                              # sub_CODE_7F0B3044+88r
+D:800413CC                                              # sub_CODE_7F0B3044+DCw
+D:800413D0     dword_D_800413D0:.word 0                 # DATA XREF: sub_CODE_7F0B3044+30o
+D:800413D0                                              # sub_CODE_7F0B3044+34r
+D:800413D0                                              # sub_CODE_7F0B3044+68w
+D:800413D0                                              # sub_CODE_7F0B3044:loc_CODE_7F0B30B0o
+D:800413D0                                              # sub_CODE_7F0B3044+74r
+D:800413D4                     .word 0, 0, 0, 0, 0, 0, 0
+*/
 
 
 

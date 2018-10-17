@@ -1,7 +1,15 @@
 #include "ultra64.h"
 
 
+/* data
+D:80048640     loaded_text_index:.half 0xA000,0xA001,0xA002,0xA003,0xA004,0xA005,0xA006,0xA007,0xA008,0xA009 # 0
+D:80048640                                              # DATA XREF: sub_CODE_7F0C2530+7E4o
+D:80048640                     .half 0xA00A,0xA00B,0xA00C,0xA00D,0xA00E,0xA00F,0xA010,     0 # 0xA
+D:80048664                     .word 0
+D:80048668                     .word 0
+D:8004866C                     .word 0
 
+*/
 
 
 

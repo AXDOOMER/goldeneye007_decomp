@@ -1,7 +1,76 @@
 #include "ultra64.h"
 
 
-
+/* data
+D:8004EC30                     .word 0
+D:8004EC34     off_D_8004EC34: .byte 0xFF               # DATA XREF: spectrum_p1controller_to_kempston+74w
+D:8004EC34                                              # spectrum_p1controller_to_kempston+184o
+D:8004EC34                                              # spectrum_p1controller_to_kempston+19Co
+D:8004EC34                                              # spectrum_p1controller_to_kempston+208r
+D:8004EC34                                              # spectrum_p1controller_to_kempston+210w
+D:8004EC34                                              # spectrum_p1controller_to_kempston+268r
+D:8004EC34                                              # spectrum_p1controller_to_kempston+270w
+D:8004EC34                                              # spectrum_input_handling+28o
+D:8004EC35     byte_D_8004EC35:.byte 0xFF, 0xFF         # DATA XREF: spectrum_p1controller_to_kempston+70o
+D:8004EC37     byte_D_8004EC37:.byte 0xFF               # DATA XREF: spectrum_p1controller_to_kempston+1B4r
+D:8004EC37                                              # spectrum_p1controller_to_kempston+1BCw
+D:8004EC37                                              # spectrum_p1controller_to_kempston+1D4r
+D:8004EC37                                              # spectrum_p1controller_to_kempston+1DCw
+D:8004EC37                                              # spectrum_p1controller_to_kempston+27Cr
+D:8004EC37                                              # spectrum_p1controller_to_kempston+284w
+D:8004EC37                                              # spectrum_p1controller_to_kempston+290r
+D:8004EC37                                              # spectrum_p1controller_to_kempston+298w
+D:8004EC38     off_D_8004EC38: .byte 0xFF               # DATA XREF: spectrum_p1controller_to_kempston+188r
+D:8004EC38                                              # spectrum_p1controller_to_kempston+190w
+D:8004EC38                                              # spectrum_p1controller_to_kempston+1F4r
+D:8004EC38                                              # spectrum_p1controller_to_kempston+1FCw
+D:8004EC38                                              # spectrum_p1controller_to_kempston+2A4r
+D:8004EC38                                              # spectrum_p1controller_to_kempston+2ACw
+D:8004EC39                     .byte 0xFF, 0xFF
+D:8004EC3B     byte_D_8004EC3B:.byte 0xFF               # DATA XREF: spectrum_p1controller_to_kempston+21Cr
+D:8004EC3B                                              # spectrum_p1controller_to_kempston+224w
+D:8004EC3B                                              # spectrum_p1controller_to_kempston+248r
+D:8004EC3B                                              # spectrum_p1controller_to_kempston+250w
+D:8004EC3C                     .byte 0xFF
+D:8004EC3D     byte_D_8004EC3D:.byte 0, 0, 0            # DATA XREF: spectrum_p1controller_to_kempston+6Co
+D:8004EC40     off_D_8004EC40: .byte 0                  # DATA XREF: spectrum_input_handling+ECr
+D:8004EC41                     .align 2
+D:8004EC44     dword_D_8004EC44:.word 0x7FE03FE, 0x3FD03FB, 0x3F703EF, 0x4F703FD, 0x4FD04FE, 0x4FB06FB, 0x7F706F7
+D:8004EC44                     .word 0x8FB00EF, 0x4FE03FE, 0x3FD03FB, 0x3F703EF, 0x4EF04F7, 0x4FB04FD, 0xFD05FD
+D:8004EC44                     .word 0x7F706FB, 0x8FB00EF, 0x3FD01FE, 0x7EF00F7, 0x1FB02FB, 0x1F701EF, 0x6EF05FB
+D:8004EC44                     .word 0x6F706FB, 0x6FD07FB, 0x7F705FD, 0x5FE02FE, 0x2F701FD, 0x2EF05F7, 0xEF02FD
+D:8004EC44                     .word 0xFB05EF, 0xFD08FF, 0x8FF08FF, 0x4EF06F7, 0x8FF01FE, 0x7EF00F7, 0x1FB02FB
+D:8004EC44                     .word 0x1F701EF, 0x6EF05FB, 0x6F706FB, 0x6FD07FB, 0x7F705FD, 0x5FE02FE, 0x2F701FD
+D:8004EC44                     .word 0x2EF05F7, 0xEF02FD, 0xFB05EF, 0xFD08FF, 0x8FF08FF, 0x8FF08FF, 0, 0
+D:8004ED0C     dword_D_8004ED0C:.word 0x10021           # DATA XREF: spectrum_draw_screen+44o
+D:8004ED10                     .word 0x80018021
+D:8004ED14                     .word 0x4010421
+D:8004ED18                     .word 0x84018421
+D:8004ED1C                     .word 0x1003F
+D:8004ED20                     .word 0xF801F83F
+D:8004ED24                     .word 0x7C107FF
+D:8004ED28                     .word 0xFFC1FFFF
+D:8004ED2C     aEmDataSabre_seg_rz_ptr:.word aEmDataSabre_seg_rz
+D:8004ED2C                                              # DATA XREF: init_spectrum_game+16Cr
+D:8004ED2C                                              # "em/data/sabre.seg.rz"
+D:8004ED30                     .word aEmDataAtic_seg_rz  # "em/data/atic.seg.rz"
+D:8004ED34                     .word aEmDataJetpac_seg_rz  # "em/data/jetpac.seg.rz"
+D:8004ED38                     .word aEmDataJetman_seg_rz  # "em/data/jetman.seg.rz"
+D:8004ED3C                     .word aEmDataAlien8_seg_rz  # "em/data/alien8.seg.rz"
+D:8004ED40                     .word aEmDataGunfright_seg_rz  # "em/data/gunfright.seg.rz"
+D:8004ED44                     .word aEmDataUnder_seg_rz  # "em/data/under.seg.rz"
+D:8004ED48                     .word aEmDataKnightlore_seg_rz  # "em/data/knightlore.seg.rz"
+D:8004ED4C                     .word aEmDataPssst_seg_rz  # "em/data/pssst.seg.rz"
+D:8004ED50                     .word aEmDataCookie_seg_rz  # "em/data/cookie.seg.rz"
+D:8004ED54     dword_D_8004ED54:.word 0x7000000         # DATA XREF: sub_CODE_7F0D37DC+20r
+D:8004ED54                                              # sub_CODE_7F0D37DC+38w
+D:8004ED58                     .word 0
+D:8004ED5C                     .word 0xFF000000
+D:8004ED60                     .word 0xFF000000
+D:8004ED64                     .word 0
+D:8004ED68                     .word 0
+D:8004ED6C                     .word 0
+*/
 
 
 

@@ -1,7 +1,17 @@
 #include "ultra64.h"
 
 
-
+/* data
+D:80046030     dword_D_80046030:.word 0                 # DATA XREF: init_lightfixture_tables+50w
+D:80046030                                              # sub_CODE_7F0BBA20+2Co
+D:80046030                                              # sub_CODE_7F0BBA20+38r
+D:80046030                                              # sub_CODE_7F0BBA20+94r
+D:80046030                                              # sub_CODE_7F0BBA20+A4w
+D:80046030                                              # sub_CODE_7F0BBA20+A8w
+D:80046034                     .word 0
+D:80046038                     .word 0
+D:8004603C                     .word 0, 0, 0, 0, 0
+*/
 
 
 

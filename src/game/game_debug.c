@@ -1,7 +1,9 @@
 #include "ultra64.h"
 
 
-
+/* data
+D:8004EAE0     dword_D_8004EAE0:.word 0, 0, 0, 0        # DATA XREF: something_game_c_debug_related+18o
+*/
 
 
 

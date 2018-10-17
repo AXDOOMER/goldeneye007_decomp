@@ -1,7 +1,104 @@
 #include "ultra64.h"
 
 
+/* data
+D:80037014     dword_D_80037014:.word 0                 # DATA XREF: sub_CODE_7F091080+118o
+D:80037014                                              # sub_CODE_7F091080+124r
+D:80037014                                              # sub_CODE_7F091080+158w
+D:80037014                                              # sub_CODE_7F091080+188r
+D:80037014                                              # sub_CODE_7F091080+1ACw
+D:80037014                                              # sub_CODE_7F091080+1D8r
+D:80037014                                              # sub_CODE_7F091080+1F4w
+D:80037014                                              # sub_CODE_7F091580+24o
+D:80037014                                              # sub_CODE_7F0915BC+Co
+D:80037014                                              # sub_CODE_7F0915BC+18r
+D:80037014                                              # sub_CODE_7F0915BC+44w
+D:80037014                                              # sub_CODE_7F09166C+Co
+D:80037014                                              # sub_CODE_7F09166C+10r
+D:80037014                                              # sub_CODE_7F09166C+54o
+D:80037014                                              # sub_CODE_7F09166C+64r
+D:80037014                                              # sub_CODE_7F0916F4+14o
+D:80037014                                              # sub_CODE_7F0916F4+1Cw
+D:80037018     dword_D_80037018:.word 0                 # DATA XREF: sub_CODE_7F091080+280r
+D:80037018                                              # sub_CODE_7F091080+28Cw
+D:80037018                                              # sub_CODE_7F091080+29Cr
+D:80037018                                              # sub_CODE_7F091080+2ACw
+D:80037018                                              # sub_CODE_7F0915BC+20r
+D:80037018                                              # sub_CODE_7F0915BC+48w
+D:80037018                                              # sub_CODE_7F09166C+18r
+D:80037018                                              # sub_CODE_7F09166C+68r
+D:80037018                                              # sub_CODE_7F0916F4+2Cw
+D:8003701C     dword_D_8003701C:.word 0                 # DATA XREF: sub_CODE_7F091080+14Cr
+D:8003701C                                              # sub_CODE_7F091080+180w
+D:8003701C                                              # sub_CODE_7F091080+1A0r
+D:8003701C                                              # sub_CODE_7F091080+1C0w
+D:8003701C                                              # sub_CODE_7F091080+1E8r
+D:8003701C                                              # sub_CODE_7F091080+208w
+D:8003701C                                              # sub_CODE_7F0915BC+24r
+D:8003701C                                              # sub_CODE_7F0915BC+50w
+D:8003701C                                              # sub_CODE_7F09166C+24r
+D:8003701C                                              # sub_CODE_7F09166C+6Cr
+D:8003701C                                              # sub_CODE_7F0916F4+38w
+D:80037020     dword_D_80037020:.word 0                 # DATA XREF: sub_CODE_7F091080+42Co
+D:80037020                                              # sub_CODE_7F091080+464w
+D:80037020                                              # sub_CODE_7F091580+1Co
+D:80037024     dword_D_80037024:.word 0                 # DATA XREF: sub_CODE_7F091080+438w
+D:80037028     flt_D_80037028: .float -1.0              # DATA XREF: sub_CODE_7F091080+488w
+D:8003702C     dword_D_8003702C:.word 0                 # DATA XREF: sub_CODE_7F091080+458o
+D:8003702C                                              # sub_CODE_7F091080+48Cw
+D:8003702C                                              # sub_CODE_7F091580+14o
+D:80037030     flt_D_80037030: .float 1.0               # DATA XREF: sub_CODE_7F091080+470w
+D:80037034     dword_D_80037034:.word 0                 # DATA XREF: sub_CODE_7F091080+490w
+D:80037038     dword_D_80037038:.word 0                 # DATA XREF: sub_CODE_7F091080+21Co
+D:80037038                                              # sub_CODE_7F091080+234r
+D:80037038                                              # sub_CODE_7F091080+244w
+D:80037038                                              # sub_CODE_7F091080:loc_CODE_7F091334o
+D:80037038                                              # sub_CODE_7F091080+2C0r
+D:80037038                                              # sub_CODE_7F091080+3ACo
+D:80037038                                              # sub_CODE_7F091080+3BCr
+D:8003703C     flt_D_8003703C: .float 1.0               # DATA XREF: sub_CODE_7F091080+15Cr
+D:8003703C                                              # sub_CODE_7F091080+3A4w
+D:8003703C                                              # sub_CODE_7F091080+468r
+D:80037040     dword_D_80037040:.word 0                 # DATA XREF: sub_CODE_7F091080:loc_CODE_7F091190r
+D:80037040                                              # sub_CODE_7F091080+3CCw
+D:80037040                                              # sub_CODE_7F091080+440r
+D:80037044     dword_D_80037044:.word 0                 # DATA XREF: sub_CODE_7F091080+130o
+D:80037044                                              # sub_CODE_7F091080+24Cr
+D:80037044                                              # sub_CODE_7F091080+254w
+D:80037044                                              # sub_CODE_7F091080+260o
+D:80037044                                              # sub_CODE_7F091080+268r
+D:80037044                                              # sub_CODE_7F091080+270w
+D:80037044                                              # sub_CODE_7F091080+2C4o
+D:80037044                                              # sub_CODE_7F091080+3D4o
+D:80037044                                              # sub_CODE_7F091080+3E4r
+D:80037044                                              # sub_CODE_7F091080+3FCo
+D:80037044                                              # sub_CODE_7F091080+40Cr
+D:80037048     flt_D_80037048: .float 1.0               # DATA XREF: sub_CODE_7F091080+3F4w
+D:80037048                                              # sub_CODE_7F091080+43Cr
+D:8003704C     dword_D_8003704C:.word 0                 # DATA XREF: sub_CODE_7F091080+41Co
+D:8003704C                                              # sub_CODE_7F091080+424w
+D:8003704C                                              # sub_CODE_7F091080+428r
+D:80037050     flt_D_80037050: .float 1.0               # DATA XREF: sub_CODE_7F091080+E0r
+D:80037050                                              # sub_CODE_7F091080+ECw
+D:80037050                                              # sub_CODE_7F091080+F8r
+D:80037050                                              # sub_CODE_7F091080+294w
+D:80037050                                              # sub_CODE_7F091080+2B0w
+D:80037054     dword_D_80037054:.word 0                 # DATA XREF: sub_CODE_7F091080:loc_CODE_7F09113Cr
+D:80037054                                              # sub_CODE_7F091080+494w
+D:80037058     flt_D_80037058: .float 1.0               # DATA XREF: sub_CODE_7F0915BCo
+D:80037058                                              # sub_CODE_7F0915BC+8r
+D:80037058                                              # sub_CODE_7F0915BC+28w
+D:8003705C     flt_D_8003705C: .float 1.0               # DATA XREF: sub_CODE_7F0915BC+58w
+D:80037060     dword_D_80037060:.word 0                 # DATA XREF: sub_CODE_7F09166C+4o
+D:80037060                                              # sub_CODE_7F09166C+14r
+D:80037060                                              # sub_CODE_7F09166C+70o
+D:80037060                                              # sub_CODE_7F09166C+78w
+D:80037064     dword_D_80037064:.word 0                 # DATA XREF: sub_CODE_7F09166C+1Cr
+D:80037064                                              # sub_CODE_7F09166C+7Cw
+D:80037068     dword_D_80037068:.word 0                 # DATA XREF: sub_CODE_7F09166C+28r
+D:80037068                                              # sub_CODE_7F09166C+84w
 
+*/
 
 
 

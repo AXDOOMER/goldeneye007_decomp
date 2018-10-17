@@ -1,8 +1,25 @@
 #include "ultra64.h"
 
 
-
-
+/* data
+D:8004E8E0     dword_D_8004E8E0:.word 0x10111200, 0x8070906, 0xA050B04, 0xC030D02, 0xE010F00, 0x30004, 0x50006
+D:8004E8E0                                              # DATA XREF: zlib_decompressor_type2+120o
+D:8004E8E0                                              # zlib_decompressor_type2+19Co
+D:8004E8E0                     .word 0x70008, 0x9000A, 0xB000D, 0xF0011, 0x130017, 0x1B001F, 0x23002B, 0x33003B
+D:8004E8E0                     .word 0x430053, 0x630073, 0x8300A3, 0xC300E3, 0x1020000, 0, 0, 0
+D:8004E93C     dword_D_8004E93C:.word 0x1010101, 0x2020202, 0x3030303, 0x4040404, 0x5050505, 0x636300, 0x10002
+D:8004E93C                     .word 0x30004, 0x50007, 0x9000D, 0x110019, 0x210031, 0x410061, 0x8100C1, 0x1010181
+D:8004E93C                     .word 0x2010301, 0x4010601, 0x8010C01, 0x10011801, 0x20013001, 0x40016001
+D:8004E93C                     .word 0
+D:8004E994     dword_D_8004E994:.word 0x1010202
+D:8004E998                     .word 0x3030404, 0x5050606, 0x7070808, 0x9090A0A, 0xB0B0C0C, 0xD0D0000
+D:8004E9B0     dword_D_8004E9B0:.word 1, 0x30007, 0xF001F, 0x3F007F, 0xFF01FF, 0x3FF07FF, 0xFFF1FFF, 0x3FFF7FFF
+D:8004E9B0                                              # DATA XREF: sub_CODE_7F0CEEF0+4o
+D:8004E9B0                                              # sub_CODE_7F0CEEF0+3BCo
+D:8004E9B0                     .word 0xFFFF0000
+D:8004E9D4     dword_D_8004E9D4:.word 9                 # DATA XREF: zlib_decompressor_type2+468r
+D:8004E9D8     dword_D_8004E9D8:.word 6                 # DATA XREF: zlib_decompressor_type2+4B4r
+*/
 
 
 #ifdef NONMATCHING

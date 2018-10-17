@@ -1,5 +1,23 @@
 #include "ultra64.h"
 
+/* data
+D:800322F0     num_objectives: .word 0xFFFFFFFF         # DATA XREF: something_with_stage_objectives+1Cw
+D:800322F0                                              # add_ptr_to_objective+18o
+D:800322F0                                              # add_ptr_to_objective+1Cr
+D:800322F0                                              # add_ptr_to_objective+30w
+D:800322F0                                              # add_objectiver
+D:800322F0                                              # display_objective_status_text_on_status_change+20o
+D:800322F4                     .word 0
+D:800322F8                     .word 0
+D:800322FC                     .word 0
+//file possibly split at sub_CODE_7F057AC0
+
+D:80032300     dword_D_80032300:.word 0                 # DATA XREF: sub_CODE_7F057AC0+10o
+D:80032300                                              # sub_CODE_7F057AC0+14r
+D:80032304     dword_D_80032304:.word 0                 # DATA XREF: sub_CODE_7F057AC0+1Cr
+D:80032308     dword_D_80032308:.word 0                 # DATA XREF: sub_CODE_7F057AC0+24r
+*/
+
 objective_ptrs: .space 4
 dword_CODE_bss_80075D34:.space 4
 dword_CODE_bss_80075D38:.space 0x20

@@ -1,7 +1,12 @@
 #include "ultra64.h"
 
 
-
+/* data
+D:80032430     dword_D_80032430:.word 1, 2, 0, 0        # DATA XREF: sub_CODE_7F05B798+34o
+D:80032430                                              # sub_CODE_7F05B798+48r
+D:80032430                                              # sub_CODE_7F05B798+BCr
+D:80032430                                              # sub_CODE_7F05B798+C4r
+*/
 
 
 

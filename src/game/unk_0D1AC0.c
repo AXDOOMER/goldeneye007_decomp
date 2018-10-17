@@ -1,7 +1,28 @@
 #include "ultra64.h"
 
 
-
+/* data
+D:8004EAF0     flt_D_8004EAF0: .float 0.0               # DATA XREF: sub_CODE_7F0D1AC0+20w
+D:8004EAF0                                              # sub_CODE_7F0D1DFC+8r
+D:8004EAF0                                              # sub_CODE_7F0D1E44+8r
+D:8004EAF0                                              # sub_CODE_7F0D2320+50w
+D:8004EAF4     flt_D_8004EAF4: .float 0.0               # DATA XREF: sub_CODE_7F0D1AC0+4o
+D:8004EAF4                                              # sub_CODE_7F0D1AC0+Cw
+D:8004EAF4                                              # sub_CODE_7F0D1AC0+10r
+D:8004EAF4                                              # sub_CODE_7F0D1BD0+28o
+D:8004EAF4                                              # sub_CODE_7F0D1BD0+38r
+D:8004EAF4                                              # sub_CODE_7F0D1DCC+4o
+D:8004EAF4                                              # sub_CODE_7F0D1DCC+1Cr
+D:8004EAF4                                              # sub_CODE_7F0D1DCC+24w
+D:8004EAF4                                              # sub_CODE_7F0D1DFC+Cr
+D:8004EAF4                                              # sub_CODE_7F0D1E44+Cr
+D:8004EAF4                                              # sub_CODE_7F0D1E98+8r
+D:8004EAF4                                              # sub_CODE_7F0D2320o
+D:8004EAF4                                              # sub_CODE_7F0D2320+10r
+D:8004EAF4                                              # sub_CODE_7F0D2320+44w
+D:8004EAF4                                              # sub_CODE_7F0D2320+48r
+D:8004EAF8                     .align 4
+*/
 
 
 

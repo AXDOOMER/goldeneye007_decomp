@@ -1,7 +1,718 @@
 #include "ultra64.h"
 
 
-
+/* data
+D:80036424     camera_80036424:.word 0                  # DATA XREF: load_camera_intro_type_values+54w
+D:80036424                                              # maybe_solo_intro_camera_handler+6Cw
+D:80036424                                              # controller_gameplay_interaction+134r
+D:80036424                                              # MoveBond:loc_CODE_7F0846E8o
+D:80036424                                              # MoveBond+A8r
+D:80036424                                              # MoveBond+BCw
+D:80036424                                              # MoveBond+CCw
+D:80036428     resolution:     .word 0                  # DATA XREF: load_camera_intro_type_values+58o
+D:80036428                                              # load_camera_intro_type_values+60w
+D:80036428                                              # load_camera_intro_type_values+B0w
+D:80036428                                              # load_camera_intro_type_values+BCw
+D:80036428                                              # possibly_reset_viewport_options_for_player+4Cr
+D:80036428                                              # possibly_reset_viewport_options_for_player+118r
+D:80036428                                              # allocate_viewport_bufferr
+D:8003642C     camera_8003642C:.word 0                  # DATA XREF: load_camera_intro_type_values+6Cw
+D:8003642C                                              # parse_handle_actionblocks:action_D2_exit_levelr
+D:8003642C                                              # sub_CODE_7F086BF8r
+D:8003642C                                              # sub_CODE_7F086C1Cr
+D:8003642C                                              # get_curplayer_viewport_width:loc_CODE_7F086C64r
+D:8003642C                                              # get_curplayer_viewport_height:loc_CODE_7F086D48r
+D:8003642C                                              # get_curplayer_viewport_uly:loc_CODE_7F086EACr
+D:8003642C                                              # possibly_reset_viewport_options_for_player+78w
+D:8003642C                                              # possibly_reset_viewport_options_for_player+D0w
+D:8003642C                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F087088r
+D:8003642C                                              # sub_CODE_7F08AAE8+D8r
+D:80036430     camera_80036430:.word 0                  # DATA XREF: load_camera_intro_type_values+74o
+D:80036430                                              # load_camera_intro_type_values+78w
+D:80036430                                              # load_camera_intro_type_values+C0w
+D:80036430                                              # sub_CODE_7F0804E0+10r
+D:80036430                                              # possibly_reset_viewport_options_for_player+30o
+D:80036430                                              # possibly_reset_viewport_options_for_player+38r
+D:80036430                                              # possibly_reset_viewport_options_for_player+54r
+D:80036430                                              # possibly_reset_viewport_options_for_player+70o
+D:80036430                                              # possibly_reset_viewport_options_for_player+84w
+D:80036430                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F087024r
+D:80036430                                              # possibly_reset_viewport_options_for_player+94w
+D:80036434     camera_80036434:.word 0                  # DATA XREF: load_camera_intro_type_values+84w
+D:80036434                                              # parse_handle_actionblocks+4094r
+D:80036434                                              # parse_handle_actionblocks+40A8w
+D:80036434                                              # sub_CODE_7F0804E0+34r
+D:80036434                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F087034o
+D:80036434                                              # possibly_reset_viewport_options_for_player+A0r
+D:80036434                                              # possibly_reset_viewport_options_for_player+B0r
+D:80036434                                              # possibly_reset_viewport_options_for_player+CCo
+D:80036434                                              # possibly_reset_viewport_options_for_player+DCw
+D:80036434                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F08707Cr
+D:80036434                                              # possibly_reset_viewport_options_for_player+E8w
+D:80036438     camera_80036438:.word 0                  # DATA XREF: load_camera_intro_type_values:loc_CODE_7F005888w
+D:80036438                                              # sub_CODE_7F088CD8+5Co
+D:80036438                                              # sub_CODE_7F088CD8+6Cr
+D:80036438                                              # sub_CODE_7F088CD8+80w
+D:8003643C     dword_D_8003643C:.word 0                 # DATA XREF: load_camera_intro_type_values+CCw
+D:8003643C                                              # parse_handle_actionblocks+4A68w
+D:8003643C                                              # parse_handle_actionblocks:actionF0_return_when_credits_finishedr
+D:8003643C                                              # sub_CODE_7F088CD8+40o
+D:8003643C                                              # sub_CODE_7F088CD8+44r
+D:80036440     dword_D_80036440:.word 0                 # DATA XREF: load_camera_intro_type_values+DCw
+D:80036440                                              # load_camera_intro_type_values+5DCw
+D:80036440                                              # sub_CODE_7F088CD8+58r
+D:80036440                                              # sub_CODE_7F088CD8+E4r
+D:80036440                                              # sub_CODE_7F088CD8+18Cr
+D:80036440                                              # sub_CODE_7F088CD8+1DCr
+D:80036440                                              # sub_CODE_7F088CD8+334r
+D:80036440                                              # sub_CODE_7F088CD8+35Cr
+D:80036440                                              # sub_CODE_7F088CD8+4D0r
+D:80036444     dword_D_80036444:.word 0                 # DATA XREF: load_camera_intro_type_values+100w
+D:80036444                                              # sub_CODE_7F084360+1Cr
+D:80036444                                              # trigger_explosions_around_player+Cw
+D:80036448     in_tank_flag:   .word 0                  # DATA XREF: load_camera_intro_type_values+10Cw
+D:80036448                                              # set_camera_mode:loc_CODE_7F07ADDCw
+D:80036448                                              # get_intank_flag+8r
+D:80036448                                              # get_ptr_for_players_tankr
+D:80036448                                              # sub_CODE_7F07CF8Cr
+D:80036448                                              # sub_CODE_7F07D960+8Cr
+D:80036448                                              # sub_CODE_7F07D960+12Cr
+D:80036448                                              # sub_CODE_7F07D960:loc_CODE_7F07DAF4r
+D:80036448                                              # sub_CODE_7F080DF8r
+D:80036448                                              # controller_gameplay_interaction:loc_CODE_7F081CD8r
+D:80036448                                              # controller_gameplay_interaction:loc_CODE_7F0821CCr
+D:80036448                                              # controller_gameplay_interaction+A90r
+D:80036448                                              # controller_gameplay_interaction+AD4r
+D:80036448                                              # controller_gameplay_interaction:loc_CODE_7F0828C4r
+D:80036448                                              # controller_gameplay_interaction+1068r
+D:80036448                                              # controller_gameplay_interaction+10ECw
+D:80036448                                              # controller_gameplay_interaction+121Cw
+D:80036448                                              # controller_gameplay_interaction:loc_CODE_7F082DD0r
+D:80036448                                              # controller_gameplay_interaction:loc_CODE_7F0836B4r
+D:80036448                                              # controller_gameplay_interaction+1ED8r
+D:80036448                                              # controller_gameplay_interaction+2188r
+D:80036448                                              # controller_gameplay_interaction:loc_CODE_7F083C50r
+D:80036448                                              # MoveBond:loc_CODE_7F0847B8r
+D:80036448                                              # MoveBond:loc_CODE_7F08497Cr
+D:80036448                                              # MoveBond:loc_CODE_7F085318r
+D:80036448                                              # MoveBond+1E38r
+D:80036448                                              # record_damage_kills+B4r
+D:80036448                                              # sub_CODE_7F08A19Cr
+D:8003644C     dword_D_8003644C:.word 0                 # DATA XREF: load_camera_intro_type_values+114w
+D:8003644C                                              # sub_CODE_7F07CF8C+8Cr
+D:8003644C                                              # sub_CODE_7F07CF8C+26Cw
+D:8003644C                                              # sub_CODE_7F07CF8C+27Cr
+D:8003644C                                              # sub_CODE_7F07D960+78r
+D:8003644C                                              # sub_CODE_7F07D960:loc_CODE_7F07DA3Cr
+D:8003644C                                              # sub_CODE_7F07D960+284w
+D:80036450     dword_D_80036450:.word 0                 # DATA XREF: load_camera_intro_type_values+120w
+D:80036450                                              # set_camera_mode+40Cr
+D:80036450                                              # set_camera_mode+598r
+D:80036450                                              # set_camera_mode+690r
+D:80036450                                              # set_camera_mode+6A4r
+D:80036450                                              # sub_CODE_7F07C7B4r
+D:80036450                                              # sub_CODE_7F07C888+4r
+D:80036450                                              # sub_CODE_7F07CAC8+2Cr
+D:80036450                                              # sub_CODE_7F07CAC8+164r
+D:80036450                                              # sub_CODE_7F07CAC8:loc_CODE_7F07CD7Cr
+D:80036450                                              # get_ptr_for_players_tank+20r
+D:80036450                                              # sub_CODE_7F07CF8C:loc_CODE_7F07D1B4r
+D:80036450                                              # sub_CODE_7F07D960+E4o
+D:80036450                                              # sub_CODE_7F07D960+11Cw
+D:80036450                                              # sub_CODE_7F07D960:loc_CODE_7F07DBC8o
+D:80036450                                              # sub_CODE_7F07D960+26Cr
+D:80036450                                              # sub_CODE_7F07D960+288w
+D:80036450                                              # sub_CODE_7F080D60r
+D:80036450                                              # controller_gameplay_interaction+107Cr
+D:80036450                                              # controller_gameplay_interaction:loc_CODE_7F082AA4r
+D:80036450                                              # MoveBond:loc_CODE_7F084F9Cr
+D:80036450                                              # MoveBond+CF4r
+D:80036450                                              # MoveBond+1E24r
+D:80036450                                              # kill_current_player+ACr
+D:80036450                                              # sub_CODE_7F08A03C:loc_CODE_7F08A06Cr
+D:80036454     dword_D_80036454:.word 0                 # DATA XREF: load_camera_intro_type_values+130w
+D:80036454                                              # sub_CODE_7F07D960+19Co
+D:80036454                                              # sub_CODE_7F07D960+1ACr
+D:80036454                                              # sub_CODE_7F07D960+1D8w
+D:80036454                                              # sub_CODE_7F07D960+1DCr
+D:80036454                                              # sub_CODE_7F07D960+1F4w
+D:80036454                                              # sub_CODE_7F07D960:loc_CODE_7F07DB58o
+D:80036454                                              # sub_CODE_7F07D960+200w
+D:80036454                                              # sub_CODE_7F07D960+21Cr
+D:80036454                                              # sub_CODE_7F07D960+23Cr
+D:80036454                                              # sub_CODE_7F07D960+24Cw
+D:80036454                                              # sub_CODE_7F07D960+264w
+D:80036454                                              # sub_CODE_7F07D960+270o
+D:80036454                                              # sub_CODE_7F07D960+28Cw
+D:80036454                                              # sub_CODE_7F080D60+34r
+D:80036458     dword_D_80036458:.word 0                 # DATA XREF: load_camera_intro_type_values+138o
+D:80036458                                              # load_camera_intro_type_values+140w
+D:80036458                                              # sub_CODE_7F007700r
+D:80036458                                              # sub_CODE_7F007700+2Cr
+D:80036458                                              # sub_CODE_7F07EAF0+70o
+D:80036458                                              # sub_CODE_7F07EAF0+74r
+D:80036458                                              # MoveBond+CC0o
+D:80036458                                              # MoveBond+FFCo
+D:80036458                                              # MoveBond+1004r
+D:80036458                                              # MoveBond+100Cr
+D:80036458                                              # MoveBond:loc_CODE_7F085678r
+D:80036458                                              # MoveBond+10CCo
+D:80036458                                              # MoveBond+1138r
+D:80036458                                              # MoveBond:loc_CODE_7F085818o
+D:80036458                                              # MoveBond+11E0r
+D:80036458                                              # MoveBond:loc_CODE_7F08584Cr
+D:80036458                                              # MoveBond+120Cr
+D:80036458                                              # MoveBond:loc_CODE_7F085884r
+D:80036458                                              # MoveBond:loc_CODE_7F085B48r
+D:80036458                                              # MoveBond+154Cr
+D:80036458                                              # MoveBond+1564r
+D:8003645C     dword_D_8003645C:.word 0                 # DATA XREF: load_camera_intro_type_values+144w
+D:8003645C                                              # sub_CODE_7F007700:loc_CODE_7F007730r
+D:8003645C                                              # sub_CODE_7F007700+54r
+D:8003645C                                              # MoveBond+10E0r
+D:8003645C                                              # MoveBond+10ECr
+D:8003645C                                              # MoveBond+10F4r
+D:8003645C                                              # MoveBond+110Co
+D:8003645C                                              # MoveBond:loc_CODE_7F085770r
+D:8003645C                                              # MoveBond+11D8r
+D:8003645C                                              # MoveBond+11F4r
+D:8003645C                                              # MoveBond+1508r
+D:8003645C                                              # MoveBond+155Cr
+D:8003645C                                              # MoveBond:loc_CODE_7F085BB0r
+D:8003645C                                              # MoveBond+1588r
+D:80036460     dword_D_80036460:.word 0                 # DATA XREF: load_camera_intro_type_values+148w
+D:80036460                                              # sub_CODE_7F07EAF0+68o
+D:80036460                                              # controller_gameplay_interaction+1214w
+D:80036460                                              # controller_gameplay_interaction+23A4o
+D:80036460                                              # controller_gameplay_interaction+23B0r
+D:80036460                                              # controller_gameplay_interaction:loc_CODE_7F083D64o
+D:80036460                                              # controller_gameplay_interaction+2400r
+D:80036464     dword_D_80036464:.word 0                 # DATA XREF: load_camera_intro_type_values+154w
+D:80036464                                              # sub_CODE_7F07CEB0+8r
+D:80036464                                              # sub_CODE_7F07CF8C+40r
+D:80036464                                              # controller_gameplay_interaction+120Cw
+D:80036464                                              # MoveBond+380r
+D:80036464                                              # MoveBond+3E4w
+D:80036464                                              # MoveBond+708w
+D:80036464                                              # MoveBond+918r
+D:80036464                                              # MoveBond+9DCr
+D:80036464                                              # MoveBond+AECr
+D:80036464                                              # MoveBond+D0Cr
+D:80036464                                              # MoveBond+D9Cr
+D:80036464                                              # MoveBond+13F8r
+D:80036464                                              # MoveBond+1434r
+D:80036464                                              # MoveBond+1EC8r
+D:80036464                                              # MoveBond+1ED8r
+D:80036464                                              # MoveBond+2080r
+D:80036464                                              # sub_CODE_7F08A19C+24r
+D:80036468     dword_D_80036468:.word 0                 # DATA XREF: load_camera_intro_type_values+160w
+D:8003646C     dword_D_8003646C:.word 0                 # DATA XREF: load_camera_intro_type_values+16Cw
+D:8003646C                                              # sub_CODE_7F07CEB0+60r
+D:8003646C                                              # sub_CODE_7F07CEB0+8Cr
+D:8003646C                                              # sub_CODE_7F07CEB0+A0r
+D:8003646C                                              # sub_CODE_7F07CF80+8r
+D:8003646C                                              # controller_gameplay_interaction+1190o
+D:8003646C                                              # controller_gameplay_interaction+11A4w
+D:8003646C                                              # controller_gameplay_interaction+11ACr
+D:8003646C                                              # MoveBond:loc_CODE_7F085920r
+D:8003646C                                              # MoveBond+1394w
+D:8003646C                                              # MoveBond:loc_CODE_7F0864F0r
+D:80036470     dword_D_80036470:.word 0                 # DATA XREF: load_camera_intro_type_values+178w
+D:80036470                                              # controller_gameplay_interaction+11D0w
+D:80036470                                              # MoveBond+132Co
+D:80036470                                              # MoveBond+1338r
+D:80036470                                              # MoveBond:loc_CODE_7F0859C0o
+D:80036470                                              # MoveBond+1388r
+D:80036474     dword_D_80036474:.word 0                 # DATA XREF: load_camera_intro_type_values+184w
+D:80036474                                              # sub_CODE_7F07C7B4+28r
+D:80036474                                              # sub_CODE_7F07CAC8+1E0r
+D:80036474                                              # sub_CODE_7F07CEB0+10r
+D:80036474                                              # controller_gameplay_interaction+11BCo
+D:80036474                                              # controller_gameplay_interaction+11E8w
+D:80036474                                              # controller_gameplay_interaction+11F0r
+D:80036474                                              # MoveBond+738o
+D:80036474                                              # MoveBond+744r
+D:80036474                                              # MoveBond+934w
+D:80036474                                              # MoveBond+93Cr
+D:80036474                                              # MoveBond+A2Cr
+D:80036474                                              # MoveBond+DA8r
+D:80036474                                              # MoveBond+1EBCr
+D:80036478     dword_D_80036478:.word 0                 # DATA XREF: load_camera_intro_type_values+190w
+D:80036478                                              # controller_gameplay_interaction+11FCw
+D:80036478                                              # MoveBond+850o
+D:80036478                                              # MoveBond+854r
+D:80036478                                              # MoveBond:loc_CODE_7F084EDCo
+D:80036478                                              # MoveBond+8A4r
+D:80036478                                              # MoveBond+8E4w
+D:80036478                                              # MoveBond+908w
+D:80036478                                              # MoveBond+950w
+D:8003647C     dword_D_8003647C:.word 0                 # DATA XREF: load_camera_intro_type_values+198w
+D:8003647C                                              # controller_gameplay_interaction+1200w
+D:8003647C                                              # MoveBond+A54o
+D:8003647C                                              # MoveBond+A60r
+D:8003647C                                              # MoveBond+AA8o
+D:8003647C                                              # MoveBond+AB8r
+D:80036480     dword_D_80036480:.word 0                 # DATA XREF: load_camera_intro_type_values+1A4w
+D:80036480                                              # sub_CODE_7F07D960+68w
+D:80036480                                              # sub_CODE_7F07D960+188w
+D:80036484     dword_D_80036484:.word 0                 # DATA XREF: load_camera_intro_type_values+1B0w
+D:80036484                                              # controller_gameplay_interaction+11D8w
+D:80036484                                              # MoveBond+724o
+D:80036484                                              # MoveBond+734r
+D:80036484                                              # MoveBond+750w
+D:80036484                                              # MoveBond+754r
+D:80036484                                              # MoveBond+774w
+D:80036484                                              # MoveBond+778r
+D:80036484                                              # MoveBond+790w
+D:80036484                                              # MoveBond+794r
+D:80036484                                              # MoveBond+928o
+D:80036484                                              # MoveBond+948w
+D:80036488     dword_D_80036488:.word 0                 # DATA XREF: load_camera_intro_type_values+1B8w
+D:80036488                                              # controller_gameplay_interaction+1474o
+D:80036488                                              # controller_gameplay_interaction+1478w
+D:80036488                                              # controller_gameplay_interaction+14BCr
+D:80036488                                              # controller_gameplay_interaction+14CCw
+D:80036488                                              # controller_gameplay_interaction+14F4r
+D:80036488                                              # controller_gameplay_interaction+1504w
+D:80036488                                              # controller_gameplay_interaction+1580r
+D:80036488                                              # controller_gameplay_interaction+158Cw
+D:80036488                                              # MoveBond+72Cr
+D:80036488                                              # MoveBond+A44r
+D:8003648C     dword_D_8003648C:.word 0                 # DATA XREF: load_camera_intro_type_values+1C0w
+D:8003648C                                              # set_camera_mode+3F4r
+D:8003648C                                              # set_camera_mode+588r
+D:8003648C                                              # set_camera_mode:loc_CODE_7F07B034r
+D:8003648C                                              # kill_current_player+B8w
+D:80036490     dword_D_80036490:.word 0                 # DATA XREF: controller_gameplay_interaction+12A0w
+D:80036490                                              # controller_gameplay_interaction+1640o
+D:80036490                                              # controller_gameplay_interaction+164Cr
+D:80036490                                              # controller_gameplay_interaction+1674w
+D:80036490                                              # MoveBond+22CCw
+D:80036494     cameramode:     .word 0                  # DATA XREF: load_camera_intro_type_values+1DCw
+D:80036494                                              # solo_char_load:loc_CODE_7F079F84r
+D:80036494                                              # get_camera_mode+8r
+D:80036494                                              # set_camera_mode+8o
+D:80036494                                              # set_camera_mode+10w
+D:80036494                                              # set_camera_mode+1Cr
+D:80036494                                              # set_camera_mode+768w
+D:80036494                                              # sub_CODE_7F07B1A4o
+D:80036494                                              # sub_CODE_7F07B1A4+8r
+D:80036494                                              # sub_CODE_7F07B1A4+Cw
+D:80036494                                              # sub_CODE_7F07B56C+4r
+D:80036494                                              # sub_CODE_7F081478+94r
+D:80036494                                              # sub_CODE_7F086990+1D8r
+D:80036494                                              # possibly_reset_viewport_options_for_player+39Cr
+D:80036494                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F087598r
+D:80036498     dword_D_80036498:.word 0                 # DATA XREF: load_camera_intro_type_values+1E4w
+D:80036498                                              # set_camera_mode+14w
+D:80036498                                              # sub_CODE_7F07B1A4+10w
+D:80036498                                              # sub_CODE_7F07B56C+144w
+D:80036498                                              # sub_CODE_7F07B56C+160w
+D:80036498                                              # sub_CODE_7F07B56C+198w
+D:80036498                                              # sub_CODE_7F07B56C+1C0w
+D:80036498                                              # sub_CODE_7F07B56C+5B4w
+D:80036498                                              # sub_CODE_7F07B56C+730w
+D:80036498                                              # sub_CODE_7F07B56C+978w
+D:80036498                                              # sub_CODE_7F07B56C+9A0w
+D:80036498                                              # sub_CODE_7F07B56C+9ECw
+D:80036498                                              # sub_CODE_7F07B56C+A48w
+D:80036498                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F08750Cr
+D:8003649C     dword_D_8003649C:.word 0                 # DATA XREF: load_camera_intro_type_values+1ECw
+D:8003649C                                              # set_camera_mode+164w
+D:8003649C                                              # set_camera_mode:loc_CODE_7F07ACCCr
+D:8003649C                                              # sub_CODE_7F07B56C:loc_CODE_7F07BC68r
+D:8003649C                                              # sub_CODE_7F07B56C+754r
+D:8003649C                                              # sub_CODE_7F07B56C+7A0w
+D:800364A0     stop_time_flag: .word 0                  # DATA XREF: load_camera_intro_type_values+1F8w
+D:800364A0                                              # parse_handle_actionblocks:loc_CODE_7F039964r
+D:800364A0                                              # parse_handle_actionblocks:loc_CODE_7F0399A4r
+D:800364A0                                              # parse_handle_actionblocks:action_EA_stop_timer
+D:800364A0                                              # parse_handle_actionblocks+48DCw
+D:800364A0                                              # set_camera_mode+3ACw
+D:800364A0                                              # possibly_reset_viewport_options_for_player+450r
+D:800364A0                                              # possibly_reset_viewport_options_for_player+498w
+D:800364A0                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F0874C0r
+D:800364A4     dword_D_800364A4:.word 0                 # DATA XREF: load_camera_intro_type_values+200w
+D:800364A4                                              # set_camera_mode+78w
+D:800364A4                                              # set_camera_mode+1E0w
+D:800364A4                                              # set_camera_mode+3C8w
+D:800364A4                                              # sub_CODE_7F07B56C+3Co
+D:800364A4                                              # sub_CODE_7F07B56C+4Cr
+D:800364A4                                              # sub_CODE_7F07B56C+A0o
+D:800364A4                                              # sub_CODE_7F07B56C+A8r
+D:800364A4                                              # sub_CODE_7F07B56C+108o
+D:800364A4                                              # sub_CODE_7F07B56C+118r
+D:800364A4                                              # sub_CODE_7F07B56C+168w
+D:800364A4                                              # sub_CODE_7F07B56C+5C4o
+D:800364A4                                              # sub_CODE_7F07B56C+5D4r
+D:800364A4                                              # sub_CODE_7F07B56C+5F0w
+D:800364A4                                              # sub_CODE_7F07B56C+5FCr
+D:800364A4                                              # sub_CODE_7F07B56C+6ECo
+D:800364A4                                              # sub_CODE_7F07B56C+718o
+D:800364A4                                              # sub_CODE_7F07B56C+76Co
+D:800364A4                                              # sub_CODE_7F07B56C+7F0o
+D:800364A4                                              # sub_CODE_7F07B56C+818o
+D:800364A4                                              # sub_CODE_7F07B56C+904o
+D:800364A4                                              # sub_CODE_7F07B56C+910r
+D:800364A4                                              # sub_CODE_7F07B56C+928w
+D:800364A4                                              # sub_CODE_7F07B56C+934r
+D:800364A4                                              # sub_CODE_7F07B56C+A08o
+D:800364A4                                              # sub_CODE_7F07B56C+A14r
+D:800364A4                                              # sub_CODE_7F07B56C+A30w
+D:800364A8     dword_D_800364A8:.word 1                 # DATA XREF: load_camera_intro_type_values+210w
+D:800364A8                                              # set_camera_mode+1E4w
+D:800364A8                                              # set_camera_mode+3CCw
+D:800364A8                                              # sub_CODE_7F07B56C+5D8o
+D:800364A8                                              # sub_CODE_7F07B56C+5E4r
+D:800364A8                                              # sub_CODE_7F07B56C+6F4o
+D:800364A8                                              # sub_CODE_7F07B56C+720o
+D:800364A8                                              # sub_CODE_7F07B56C+774o
+D:800364A8                                              # sub_CODE_7F07B56C+7FCo
+D:800364A8                                              # sub_CODE_7F07B56C+820o
+D:800364A8                                              # sub_CODE_7F07B56C:loc_CODE_7F07BD90r
+D:800364A8                                              # sub_CODE_7F07B56C+838o
+D:800364A8                                              # sub_CODE_7F07B56C+840r
+D:800364AC     dword_D_800364AC:.word 0                 # DATA XREF: load_camera_intro_type_values+214w
+D:800364AC                                              # load_camera_intro_type_values:swirling_intro_camr
+D:800364AC                                              # load_camera_intro_type_values+3F4w
+D:800364AC                                              # set_camera_mode+1A4r
+D:800364AC                                              # sub_CODE_7F07B2A0r
+D:800364AC                                              # sub_CODE_7F07B2A0+1ECr
+D:800364AC                                              # sub_CODE_7F07B56C+5F4r
+D:800364AC                                              # sub_CODE_7F07B56C+844r
+D:800364B0     dword_D_800364B0:.word 1                 # DATA XREF: load_camera_intro_type_values+1D0w
+D:800364B0                                              # parse_handle_actionblocks:loc_CODE_7F03973Cw
+D:800364B0                                              # parse_handle_actionblocks+4304w
+D:800364B0                                              # possibly_reset_viewport_options_for_player+3B8r
+D:800364B4     disable_player_pickups_flag:.word 0      # DATA XREF: load_camera_intro_type_values+1D4w
+D:800364B4                                              # parse_handle_actionblocks+4928w
+D:800364B4                                              # parse_handle_actionblocks:actionF3_if_player_pickups_disabled_returnr
+D:800364B4                                              # sub_CODE_7F03D0D4+1Cr
+D:800364B4                                              # sub_CODE_7F055F64+7Cr
+D:800364B4                                              # handle_weapon_id_values_possibly_1st_person_animation+12E4r
+D:800364B4                                              # handle_weapon_id_values_possibly_1st_person_animation+163Cr
+D:800364B4                                              # sub_CODE_7F084360+30r
+D:800364B4                                              # record_damage_kills+1B4r
+D:800364B8     dword_D_800364B8:.word 0                 # DATA XREF: load_camera_intro_type_values+224w
+D:800364B8                                              # load_camera_intro_type_values+49Cr
+D:800364B8                                              # load_camera_intro_type_values+4B0w
+D:800364B8                                              # load_camera_intro_type_values:loc_CODE_7F005DF4r
+D:800364BC     dword_D_800364BC:.word 0                 # DATA XREF: load_camera_intro_type_values+22Cw
+D:800364BC                                              # load_camera_intro_type_values+4ACr
+D:800364BC                                              # load_camera_intro_type_values+4BCw
+D:800364BC                                              # load_camera_intro_type_values+650r
+D:800364C0     dword_D_800364C0:.word 0                 # DATA XREF: load_camera_intro_type_values+21Cw
+D:800364C0                                              # load_camera_intro_type_values+64Cw
+D:800364C0                                              # load_camera_intro_type_values+674r
+D:800364C0                                              # load_camera_intro_type_values+688w
+D:800364C0                                              # set_camera_mode+30r
+D:800364C0                                              # sub_CODE_7F07B56C+90r
+D:800364C0                                              # sub_CODE_7F07B56C:loc_CODE_7F07B61Cr
+D:800364C0                                              # sub_CODE_7F07B56C:loc_CODE_7F07B730o
+D:800364C0                                              # sub_CODE_7F07B56C+1CCr
+D:800364C0                                              # sub_CODE_7F07B56C+1DCr
+D:800364C0                                              # sub_CODE_7F07B56C+1E8r
+D:800364C0                                              # sub_CODE_7F07B56C+1F4r
+D:800364C0                                              # sub_CODE_7F07B56C+200r
+D:800364C0                                              # sub_CODE_7F07B56C+234r
+D:800364C0                                              # sub_CODE_7F07B56C+258r
+D:800364C0                                              # sub_CODE_7F07B56C+264r
+D:800364C0                                              # sub_CODE_7F07B56C+2A0r
+D:800364C4     invisible_to_guards_flag:.word 1         # DATA XREF: set_invisible_to_guards_flag+8w
+D:800364C4                                              # get_invisible_to_guards_flag+8r
+D:800364C4                                              # sub_CODE_7F09A4BC+C3Cw
+D:800364C8     obj_collision_flag:.word 1               # DATA XREF: sub_CODE_7F07CF8C+54r
+D:800364C8                                              # set_obj_collision_flag+8w
+D:800364C8                                              # get_obj_collision_flag+8r
+D:800364C8                                              # sub_CODE_7F09A4BC+C40w
+D:800364CC     flt_D_800364CC: .float 1.0               # DATA XREF: sub_CODE_7F0876C4+84r
+D:800364CC                                              # sub_CODE_7F088618+98r
+D:800364CC                                              # sub_CODE_7F08976C+8w
+D:800364D0     flt_D_800364D0: .float 1.0               # DATA XREF: load_camera_intro_type_values+854r
+D:800364D0                                              # sub_CODE_7F089718o
+D:800364D0                                              # sub_CODE_7F089718+8r
+D:800364D0                                              # sub_CODE_7F089718+48w
+D:800364D4     flt_D_800364D4: .float 1.0               # DATA XREF: sub_CODE_7F089718+50w
+D:800364D8     dword_D_800364D8:.word 0x30B8            # DATA XREF: load_camera_intro_type_values:loc_CODE_7F006160o
+D:800364D8                                              # sub_CODE_7F08B0F0+2D4o
+D:800364D8                                              # sub_CODE_7F08B0F0+2ECr
+D:800364DC                     .word 0x31DC, 0x32C8, 0x33AC, 0x34D4, 0x35C8, 0x36D8, 0x384C, 0x39C0, 0x3AF0
+D:800364DC                     .word 0x3C10, 0x3D04, 0
+D:8003650C     dword_D_8003650C:.word 0                 # DATA XREF: load_camera_intro_type_values+9B0o
+D:8003650C                                              # load_camera_intro_type_values+9B8w
+D:8003650C                                              # sub_CODE_7F080B34+98r
+D:8003650C                                              # sub_CODE_7F08B0F0+2C0r
+D:8003650C                                              # sub_CODE_7F08B0F0+330r
+D:80036510     dword_D_80036510:.word 0                 # DATA XREF: load_camera_intro_type_values+A1Cw
+D:80036510                                              # set_camera_mode+658r
+D:80036510                                              # sub_CODE_7F07B1A4+CCo
+D:80036510                                              # sub_CODE_7F07B1A4+D0r
+D:80036510                                              # sub_CODE_7F07B1A4+E0w
+D:80036510                                              # sub_CODE_7F07B56C+9F8w
+D:80036510                                              # sub_CODE_7F07B56C+A90w
+D:80036510                                              # possibly_reset_viewport_options_for_player+5E4r
+D:80036514     dword_D_80036514:.word 0                 # DATA XREF: load_camera_intro_type_values+248w
+D:80036514                                              # load_camera_intro_type_values+474w
+D:80036514                                              # set_camera_mode+204r
+D:80036518     stru_D_80036518:struct_4 <0x5744, 95.0, -1.0, 0.02>
+D:80036518                                              # DATA XREF: set_camera_mode+214o
+D:80036528                     struct_4 <0x6254, 7.0, 40.0, 0.5>
+D:80036538                     struct_4 <0x78C8, 0.0, -1.0, 0.5>
+D:80036548                     struct_4 <0x7AA8, 0.0, -1.0, 0.5>
+D:80036558                     struct_4 <0x7C4C, 0.0, -1.0, 0.5>
+D:80036568                     struct_4 <0x7D04, 0.0, -1.0, 0.5>
+D:80036578                     struct_4 <0x7F0C, 0.0, -1.0, 0.5>
+D:80036588                     struct_4 <0x7FB4, 0.0, -1.0, 0.5>
+D:80036598                     struct_4 <0xD89C, 0.0, -1.0, 0.5>
+D:800365A8     flt_D_800365A8: .float 0.90909088        # DATA XREF: load_camera_intro_type_values+258w
+D:800365A8                                              # sub_CODE_7F07E090+30r
+D:800365A8                                              # sub_CODE_7F07E090+FCr
+D:800365A8                                              # sub_CODE_7F07E62C+68r
+D:800365A8                                              # sub_CODE_7F07E7CC+84r
+D:800365A8                                              # sub_CODE_7F07E964+40r
+D:800365A8                                              # sub_CODE_7F07E964+A0r
+D:800365A8                                              # trigger_solo_watch_menu+48o
+D:800365A8                                              # trigger_solo_watch_menu+54r
+D:800365A8                                              # trigger_solo_watch_menu+5Cw
+D:800365A8                                              # trigger_solo_watch_menu+60r
+D:800365A8                                              # trigger_solo_watch_menu+74w
+D:800365AC     dummy_08_pp7_obj:.word 0x1000008         # DATA XREF: solo_char_load+5Co
+D:800365B0                     .word 0xBF4000
+D:800365B4                     .word 0, 0, 0, 0
+D:800365C4                     .byte 0x3F
+D:800365C5                     .byte 0x80, 0, 0
+D:800365C8                     .word 0, 0, 0, 0
+D:800365D8                     .byte 0x3F
+D:800365D9                     .byte 0x80, 0, 0
+D:800365DC                     .word 0, 0, 0, 0
+D:800365EC                     .byte 0x3F
+D:800365ED                     .byte 0x80, 0, 0
+D:800365F0                     .align 5
+D:80036600                     .byte 0x3F
+D:80036601                     .byte 0x80, 0, 0
+D:80036604                     .align 5
+D:80036620                     .byte 0x44
+D:80036621                     .byte 0x7A, 0, 0
+D:80036624                     .word 0xFFFFFF00, 0xFFFFFF00, 0x4FFFFFF
+D:80036630     dword_D_80036630:.word 0                 # DATA XREF: solo_char_load+68o
+D:80036634     dword_D_80036634:.word 0                 # DATA XREF: sub_CODE_7F083FC8:loc_CODE_7F084070o
+D:80036638                     .byte 0
+D:80036639                     .byte 0, 0, 0xA
+D:8003663C                     .word 0x3C, 0x3F19999A, 0
+D:80036648                     .byte 0
+D:80036649                     .byte 0, 0, 5
+D:8003664C                     .word 0x28, 0x3F800000, 0xFF, 0xFF, 0xFF, 0
+D:80036664                     .byte 0
+D:80036665                     .byte 0, 0, 0xA
+D:80036668                     .word 0x3C, 0x3F19999A, 0
+D:80036674                     .byte 0
+D:80036675                     .byte 0, 0, 5
+D:80036678                     .word 0x28, 0x3F800000, 0xFF, 0xFF, 0xFF, 0
+D:80036690                     .byte 0
+D:80036691                     .byte 0, 0, 0xA
+D:80036694                     .word 0x32, 0x3F19999A, 0
+D:800366A0                     .word 5, 0x1E, 0x3F4CCCCD, 0xFF, 0xFF, 0xFF, 0
+D:800366BC                     .byte 0
+D:800366BD                     .byte 0, 0, 0xA
+D:800366C0                     .word 0x28, 0x3F19999A, 0
+D:800366CC                     .byte 0
+D:800366CD                     .byte 0, 0, 5
+D:800366D0                     .word 0x19, 0x3F19999A, 0xFF, 0xFF, 0xFF, 0
+D:800366E8                     .byte 0
+D:800366E9                     .byte 0, 0, 0xA
+D:800366EC                     .word 0x23, 0x3F19999A, 0
+D:800366F8                     .byte 0
+D:800366F9                     .byte 0, 0, 5
+D:800366FC                     .word 0x16, 0x3F0CCCCD, 0xFF, 0xFF, 0xFF, 0
+D:80036714                     .byte 0
+D:80036715                     .byte 0, 0, 0xA
+D:80036718                     .word 0x1E, 0x3F19999A, 0
+D:80036724                     .word 5, 0x13, 0x3F000000, 0xFF, 0xFF, 0xFF, 0
+D:80036740                     .byte 0
+D:80036741                     .byte 0, 0, 0xA
+D:80036744                     .word 0x1E, 0x3F19999A, 0
+D:80036750                     .word 5, 0x11, 0x3EE66666, 0xFF, 0xFF, 0xFF, 0
+D:8003676C                     .byte 0
+D:8003676D                     .byte 0, 0, 0xA
+D:80036770                     .word 0x1E, 0x3F19999A, 0
+D:8003677C                     .word 5, 0xF, 0x3ECCCCCD, 0xFF, 0xFF, 0xFF
+D:80036794     dword_D_80036794:.word 0                 # DATA XREF: sub_CODE_7F083FC8+2B8o
+D:80036798                     .byte 0
+D:80036799                     .byte 0, 0, 0x28
+D:8003679C                     .word 0x64, 0
+D:800367A4                     .byte 0
+D:800367A5                     .byte 0, 0, 0x1E
+D:800367A8                     .word 0x50, 0
+D:800367B0                     .byte 0
+D:800367B1                     .byte 0, 0, 0x14
+D:800367B4                     .word 0x3C, 0
+D:800367BC                     .byte 0
+D:800367BD                     .byte 0, 0, 0x14
+D:800367C0                     .word 0x3C, 0
+D:800367C8                     .byte 0
+D:800367C9                     .byte 0, 0, 0x14
+D:800367CC                     .word 0x3C, 0
+D:800367D4                     .byte 0
+D:800367D5                     .byte 0, 0, 0x14
+D:800367D8                     .word 0x32, 0
+D:800367E0                     .word 0x14, 0x32, 0
+D:800367EC                     .byte 0
+D:800367ED                     .byte 0, 0, 0x14
+D:800367F0                     .word 0x32
+D:800367F4     dword_D_800367F4:.word 0                 # DATA XREF: MoveBond+28o
+D:800367F4                                              # MoveBond+2Cr
+D:800367F8     dword_D_800367F8:.word 0                 # DATA XREF: MoveBond+34r
+D:800367FC     dword_D_800367FC:.word 0                 # DATA XREF: MoveBond+3Cr
+D:80036800     dword_D_80036800:.word 0                 # DATA XREF: sub_CODE_7F086990+1Co
+D:80036800                                              # sub_CODE_7F086990+20r
+D:80036804     dword_D_80036804:.word 0                 # DATA XREF: sub_CODE_7F086990+28r
+D:80036808     dword_D_80036808:.word 0                 # DATA XREF: sub_CODE_7F086990+30r
+D:8003680C     dword_D_8003680C:.word 0                 # DATA XREF: sub_CODE_7F086990+34o
+D:8003680C                                              # sub_CODE_7F086990+44r
+D:80036810     dword_D_80036810:.word 0                 # DATA XREF: sub_CODE_7F086990+4Cr
+D:80036814     dword_D_80036814:.word 0x3F800000        # DATA XREF: sub_CODE_7F086990+54r
+D:80036818     dword_D_80036818:.word 0                 # DATA XREF: sub_CODE_7F086990+58o
+D:80036818                                              # sub_CODE_7F086990+68r
+D:8003681C     dword_D_8003681C:.word 0x3F800000        # DATA XREF: sub_CODE_7F086990+70r
+D:80036820     dword_D_80036820:.word 0                 # DATA XREF: sub_CODE_7F086990+78r
+D:80036824     dword_D_80036824:.word 0                 # DATA XREF: sub_CODE_7F086990+7Co
+D:80036824                                              # sub_CODE_7F086990+8Cr
+D:80036828     dword_D_80036828:.word 0                 # DATA XREF: sub_CODE_7F086990+94r
+D:8003682C     dword_D_8003682C:.word 0                 # DATA XREF: sub_CODE_7F086990+9Cr
+D:80036830     dword_D_80036830:.word 0                 # DATA XREF: sub_CODE_7F087A08+24o
+D:80036830                                              # sub_CODE_7F087A08:loc_CODE_7F087A94r
+D:80036834     dword_D_80036834:.word 0                 # DATA XREF: sub_CODE_7F087A08+9Cr
+D:80036838     dword_D_80036838:.word 0                 # DATA XREF: sub_CODE_7F087A08+ACr
+D:8003683C     dword_D_8003683C:.word 0                 # DATA XREF: sub_CODE_7F087E74+24o
+D:80036840                     .word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80036878     dword_D_80036878:.word 0                 # DATA XREF: sub_CODE_7F087E74+34o
+D:8003687C     dword_D_8003687C:.word 0                 # DATA XREF: sub_CODE_7F087E74+60o
+D:8003687C                                              # sub_CODE_7F087E74+6Cr
+D:80036880     dword_D_80036880:.word 0                 # DATA XREF: sub_CODE_7F087E74+74r
+D:80036884     dword_D_80036884:.word 0                 # DATA XREF: sub_CODE_7F087E74+7Cr
+D:80036888                     .word 0
+D:8003688C     dword_D_8003688C:.word 0                 # DATA XREF: mp_respawn_handler+14o
+D:8003688C                                              # mp_respawn_handler+18r
+D:80036890     dword_D_80036890:.word 0                 # DATA XREF: mp_respawn_handler+20r
+D:80036894     dword_D_80036894:.word 0                 # DATA XREF: mp_respawn_handler+28r
+D:80036898     dword_D_80036898:.word 0                 # DATA XREF: reset_intro_camera_message_dialogs_for_BONDdata+30w
+D:80036898                                              # display_string_in_lower_left_corner+38r
+D:80036898                                              # sub_CODE_7F08A4E4+64o
+D:80036898                                              # sub_CODE_7F08A4E4+6Cr
+D:80036898                                              # sub_CODE_7F08A4E4+84w
+D:80036898                                              # sub_CODE_7F08A5FC+4Cr
+D:80036898                                              # sub_CODE_7F08A5FC+A4w
+D:80036898                                              # sub_CODE_7F08A5FC+C0r
+D:80036898                                              # sub_CODE_7F08A5FC+268r
+D:8003689C     dword_D_8003689C:.word 0                 # DATA XREF: reset_intro_camera_message_dialogs_for_BONDdata+28w
+D:8003689C                                              # display_string_in_lower_left_corner+1Co
+D:8003689C                                              # display_string_in_lower_left_corner+20r
+D:8003689C                                              # display_string_in_lower_left_corner+78o
+D:8003689C                                              # display_string_in_lower_left_corner+80r
+D:8003689C                                              # display_string_in_lower_left_corner+8Cw
+D:8003689C                                              # sub_CODE_7F08A4E4+88r
+D:8003689C                                              # sub_CODE_7F08A4E4+98w
+D:8003689C                                              # sub_CODE_7F08A4E4:loc_CODE_7F08A580r
+D:8003689C                                              # sub_CODE_7F08A4E4+E4r
+D:800368A0     dword_D_800368A0:.word 0                 # DATA XREF: reset_intro_camera_message_dialogs_for_BONDdata+40w
+D:800368A0                                              # sub_CODE_7F08A3B4+10w
+D:800368A0                                              # sub_CODE_7F08A5FC+C8r
+D:800368A0                                              # sub_CODE_7F08A5FC+288r
+D:800368A4     dword_D_800368A4:.word 0                 # DATA XREF: reset_intro_camera_message_dialogs_for_BONDdata+4Cw
+D:800368A4                                              # sub_CODE_7F08A3B4w
+D:800368A4                                              # sub_CODE_7F08A5FC+104r
+D:800368A4                                              # sub_CODE_7F08A5FC+28Cr
+D:800368A8     dword_D_800368A8:.word 0                 # DATA XREF: sub_CODE_7F08A900+14w
+D:800368A8                                              # display_string_at_top_of_screen+20r
+D:800368A8                                              # sub_CODE_7F08A9F8+40o
+D:800368A8                                              # sub_CODE_7F08A9F8+58r
+D:800368A8                                              # sub_CODE_7F08A9F8+84w
+D:800368A8                                              # sub_CODE_7F08AAE8+30r
+D:800368A8                                              # sub_CODE_7F08AAE8+7Cr
+D:800368A8                                              # sub_CODE_7F08AAE8+1B4r
+D:800368AC     dword_D_800368AC:.word 0                 # DATA XREF: sub_CODE_7F08A900+Cw
+D:800368AC                                              # display_string_at_top_of_screeno
+D:800368AC                                              # display_string_at_top_of_screen+8r
+D:800368AC                                              # display_string_at_top_of_screen+70o
+D:800368AC                                              # display_string_at_top_of_screen+78r
+D:800368AC                                              # display_string_at_top_of_screen+84w
+D:800368AC                                              # sub_CODE_7F08A9F8+5Co
+D:800368AC                                              # sub_CODE_7F08A9F8+64r
+D:800368AC                                              # sub_CODE_7F08A9F8+8Cw
+D:800368AC                                              # sub_CODE_7F08A9F8:loc_CODE_7F08AA88o
+D:800368AC                                              # sub_CODE_7F08A9F8+98r
+D:800368AC                                              # sub_CODE_7F08A9F8+C0o
+D:800368AC                                              # sub_CODE_7F08A9F8+C4r
+D:800368B0     dword_D_800368B0:.word 0xFFFFFFFF, 0     # DATA XREF: sub_CODE_7F08A900+4w
+D:800368B0                                              # sub_CODE_7F08A9F8+18o
+D:800368B0                                              # sub_CODE_7F08A9F8+2Cr
+D:800368B0                                              # sub_CODE_7F08A9F8+4Cw
+D:800368B0                                              # sub_CODE_7F08A9F8+B4w
+D:800368B0                                              # sub_CODE_7F08A9F8+E0w
+D:800368B0                                              # sub_CODE_7F08A9F8:loc_CODE_7F08AADCw
+D:800368B0                                              # sub_CODE_7F08AAE8+1Cr
+D:800368B0                                              # sub_CODE_7F08A900+24w
+D:800368B0                                              # sub_CODE_7F08A928o
+D:800368B0                                              # sub_CODE_7F08A928+8r
+D:800368B0                                              # sub_CODE_7F08A928+18w
+D:800368B0                                              # sub_CODE_7F08A944o
+D:800368B0                                              # sub_CODE_7F08A944+8r
+D:800368B0                                              # sub_CODE_7F08A944+14w
+D:800368B0                                              # sub_CODE_7F08A9F8r
+D:800368B0                                              # sub_CODE_7F08AAE8r
+D:800368B8     dword_D_800368B8:.word 0x6E00006E, 0x65006500, 0x736500, 0x73000073, 0x77007700, 0x6E7700, 0x6E000000
+D:800368B8                                              # DATA XREF: sub_CODE_7F08AAE8+26Co
+D:800368B8                                              # sub_CODE_7F08AAE8+290r
+D:800368B8                                              # sub_CODE_7F08AAE8+294r
+D:800368B8                                              # sub_CODE_7F08AAE8+29Cr
+D:800368B8                                              # sub_CODE_7F08AAE8+2A4r
+D:800368B8                     .word 0
+D:800368D8     pistol_firing_animation_group1_ptr:.word pistol_firing_animation_group1
+D:800368D8                                              # DATA XREF: sub_CODE_7F08B0F0+720o
+D:800368DC                     .word 0
+D:800368E0                     .word 0x3DCCCCCD, 0x429E0000, 0x42AE0000, 0x800306F0, 0
+D:800368F4                     .word 0x3F000000, 0
+D:800368FC                     .word 0xBF800000, 0x80030738, 0
+D:80036908                     .word 0x3F000000, 0
+D:80036910                     .word 0xBF800000, 0x800308A0, 0
+D:8003691C                     .word 0x3F000000, 0
+D:80036924                     .word 0xBF800000, 0x800308E8, 0
+D:80036930                     .word 0x3F000000, 0
+D:80036938                     .word 0xBF800000, 0x8002F9F0, 0
+D:80036944                     .word 0x3DCCCCCD, 0x42600000, 0x42880000, 0x8002E9A0, 0
+D:80036958                     .word 0x3D4CCCCD, 0x420C0000, 0x42200000, 0x80030660, 0
+D:8003696C                     .word 0x3F000000, 0
+D:80036974                     .word 0xBF800000, 0x800306A8, 0
+D:80036980                     .word 0x3F000000, 0
+D:80036988                     .word 0xBF800000, 0x800308A0, 0
+D:80036994                     .word 0x3F000000, 0
+D:8003699C                     .word 0xBF800000, 0x800308E8, 0
+D:800369A8                     .word 0x3F000000, 0
+D:800369B0                     .word 0xBF800000, 0x8002F7A8, 0
+D:800369BC                     .word 0x3DCCCCCD, 0x42340000, 0x425C0000, 0
+D:800369CC                     .word 0x8194, 0x3E800000, 0
+D:800369D8                     .word 0xBF800000, 0
+D:800369E0                     .word 0x8204, 0x3F000000, 0
+D:800369EC                     .word 0xBF800000, 0
+D:800369F4                     .word 0x777C, 0x3F000000, 0
+D:80036A00                     .word 0xBF800000, 0x800308A0, 0
+D:80036A0C                     .word 0x3F000000, 0
+D:80036A14                     .word 0xBF800000, 0x800308E8, 0
+D:80036A20                     .word 0x3F000000, 0
+D:80036A28                     .word 0xBF800000, 0
+D:80036A30                     .word 0x6C18, 0x3D4CCCCD, 0x41E00000, 0x41E80000, 0x8002F488, 0
+D:80036A48                     .word 0x3DCCCCCD, 0x42000000, 0x42280000, 0x80030780, 0
+D:80036A5C                     .word 0x3F000000, 0
+D:80036A64                     .word 0xBF800000, 0x800307C8, 0
+D:80036A70                     .word 0x3F000000, 0
+D:80036A78                     .word 0xBF800000, 0x800308A0, 0
+D:80036A84                     .word 0x3F000000, 0
+D:80036A8C                     .word 0xBF800000, 0x800308A0, 0
+D:80036A98                     .word 0x3F000000, 0
+D:80036AA0                     .word 0xBF800000, 0x8002FD58, 0
+D:80036AAC     dword_D_80036AAC:.word 0x3DCCCCCD, 0x42140000, 0x423C0000, 2, 0xFFFFFFFF, 0x3F800000, 0x3DCCCCCD
+D:80036AAC                     .word 0, 0
+*/
 
 
 

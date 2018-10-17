@@ -2,7 +2,16 @@
 
 
 
-
+/* data
+D:80032310     flt_D_80032310: .float 65536.0           # DATA XREF: sub_CODE_7F058C4C+14w
+D:80032310                                              # sub_CODE_7F058C64o
+D:80032310                                              # sub_CODE_7F058C64+8r
+D:80032310                                              # sub_CODE_7F058C64+20w
+D:80032310                                              # sub_CODE_7F058C88+10w
+D:80032310                                              # sub_CODE_7F058C9C+18o
+D:80032310                                              # sub_CODE_7F058E78+18o
+D:80032314                     .float 65536.0
+*/
 
 
 

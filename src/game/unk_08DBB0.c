@@ -1,8 +1,42 @@
 #include "ultra64.h"
 
+/* data
+D:80036AD0     dword_D_80036AD0:.word 0x4144, 0x41180000, 0x41D80000, 0, 0
+D:80036AD0                                              # DATA XREF: sets_a_bunch_of_BONDdata_values_to_default+CCo
+D:80036AD0                                              # sets_a_bunch_of_BONDdata_values_to_default+33Co
+D:80036AD0                                              # sub_CODE_7F08E8BCo
+D:80036AD0                                              # sub_CODE_7F08E8BC+20o
+D:80036AD0                                              # sub_CODE_7F08EAF8+70o
+D:80036AE4     dword_D_80036AE4:.word 0x3FC00000, 0x4070, 0x40F00000, 0x41880000, 0
+D:80036AF8                     .word 0x3FC00000
+D:80036AFC                     .word 0x42C80000
+D:80036B00     dword_D_80036B00:.word 0                 # DATA XREF: sets_a_bunch_of_BONDdata_values_to_default+B8o
+D:80036B00                                              # sub_CODE_7F08E240+18o
+D:80036B00                                              # sub_CODE_7F08E240+1Cr
+D:80036B04     dword_D_80036B04:.word 0                 # DATA XREF: sub_CODE_7F08E240+24r
+D:80036B08     dword_D_80036B08:.word 0                 # DATA XREF: sub_CODE_7F08E240+2Cr
+D:80036B0C     dword_D_80036B0C:.word 0                 # DATA XREF: sub_CODE_7F08E240+30o
+D:80036B0C                                              # sub_CODE_7F08E240+40r
+D:80036B10     dword_D_80036B10:.word 0                 # DATA XREF: sub_CODE_7F08E240+48r
+D:80036B14     flt_D_80036B14: .float 1.0               # DATA XREF: sub_CODE_7F08E240+50r
+D:80036B18     dword_D_80036B18:.word 0                 # DATA XREF: sub_CODE_7F08E240+54o
+D:80036B18                                              # sub_CODE_7F08E240+64r
+D:80036B1C     flt_D_80036B1C: .float 1.0               # DATA XREF: sub_CODE_7F08E240+6Cr
+D:80036B20     dword_D_80036B20:.word 0                 # DATA XREF: sub_CODE_7F08E240+74r
+D:80036B24     dword_D_80036B24:.word 0                 # DATA XREF: sub_CODE_7F08E240+A4o
+D:80036B24                                              # sub_CODE_7F08E240:loc_CODE_7F08E3C4r
+D:80036B28     dword_D_80036B28:.word 1                 # DATA XREF: sub_CODE_7F08E240+194r
+D:80036B2C     dword_D_80036B2C:.word 3                 # DATA XREF: sub_CODE_7F08E240+19Cr
+D:80036B30     dword_D_80036B30:.word 0                 # DATA XREF: sub_CODE_7F08E240+188o
+D:80036B30                                              # sub_CODE_7F08E240+1A8r
+D:80036B34                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80036B60     dword_D_80036B60:.word 0                 # DATA XREF: sub_CODE_7F08E240+A8o
+D:80036B64     dword_D_80036B64:.word 0                 # DATA XREF: sub_CODE_7F08E240+1ACo
+D:80036B64                                              # sub_CODE_7F08E240+1B8r
+D:80036B68     dword_D_80036B68:.word 0                 # DATA XREF: sub_CODE_7F08E240+1C0r
+D:80036B6C     dword_D_80036B6C:.word 0                 # DATA XREF: sub_CODE_7F08E240+1C8r
 
-
-
+*/
 
 
 

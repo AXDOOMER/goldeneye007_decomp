@@ -1,8 +1,30 @@
 #include "ultra64.h"
 
 
-
-
+/* data
+D:8004E9E0     dword_D_8004E9E0:.word 0                 # DATA XREF: something_with_rsp_c_debug+18o
+D:8004E9E4     dword_D_8004E9E4:.word 0                 # DATA XREF: allocate_init_rsp_buffers+2Cw
+D:8004E9E4                                              # load_rsp_microcode+68r
+D:8004E9E8     dword_D_8004E9E8:.word 0                 # DATA XREF: allocate_init_rsp_buffers+20o
+D:8004E9E8                                              # allocate_init_rsp_buffers+28w
+D:8004E9E8                                              # load_rsp_microcode+54r
+D:8004E9EC                     .align 4
+D:8004E9F0     fast3d_related: struct_22 <         0, 0, 0, 0, 1, 2, 0, 0, 0, 0x1000, 0, 0x800, dword_CODE_bss_8008D370, \
+D:8004E9F0                                              # DATA XREF: load_rsp_microcode+E8o
+D:8004E9F0                                              # D:fast3d_related_arrayo
+D:8004E9F0                                0x400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+D:8004EA50     fast3d_related_0:struct_22 <         0, 0, 0, 0, 1, 2, 0, 0, 0, 0x1000, 0, 0x800, dword_CODE_bss_8008D370, \
+D:8004EA50                                              # DATA XREF: load_rsp_microcode+ECo
+D:8004EA50                                0x400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+D:8004EAB0     fast3d_related_array:.word fast3d_related  # DATA XREF: video_related_8+760r
+D:8004EAB0                                              # video_related_8:loc_CODE_70003A0Cr
+D:8004EAB0                                              # load_rsp_microcode+4o
+D:8004EAB0                                              # load_rsp_microcode+10r
+D:8004EAB0                                              # load_rsp_microcode+B0r
+D:8004EAB0                                              # load_rsp_microcode+D4o
+D:8004EAB0                                              # load_rsp_microcode+DCr
+D:8004EAB0                                              # load_rsp_microcode+100w
+*/
 
 
 #ifdef NONMATCHING

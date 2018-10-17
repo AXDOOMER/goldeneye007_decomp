@@ -1,7 +1,67 @@
 #include "ultra64.h"
 
 
-
+/* data
+D:800484D0     j_text_trigger: .word 0                  # DATA XREF: check_memflag_tokens+124r
+D:800484D0                                              # check_boot_switches+BCw
+D:800484D0                                              # write_text_at_abs_coordr
+D:800484D0                                              # constructor_menu05_fileselect+4F0r
+D:800484D0                                              # constructor_menu07_missionsel:loc_CODE_7F00E57Cr
+D:800484D0                                              # constructor_menu08_difficulty+170r
+D:800484D0                                              # constructor_menu08_difficulty+1E0r
+D:800484D0                                              # constructor_menu08_difficulty+298r
+D:800484D0                                              # display_ammo_type_collection_text+18r
+D:800484D0                                              # generate_language_specific_text_for_weaponr
+D:800484D0                                              # generate_language_specific_text_for_weapon:continuer
+D:800484D0                                              # display_objective_status_text_on_status_change+94o
+D:800484D0                                              # init_watch_at_start_of_stage+84r
+D:800484D0                                              # cur_player_set_control_type+30r
+D:800484D0                                              # sub_CODE_7F0A5B80:loc_CODE_7F0A5F88r
+D:800484D0                                              # sub_CODE_7F0A77C8+48r
+D:800484D0                                              # sub_CODE_7F0A7C18+E8r
+D:800484D0                                              # sub_CODE_7F0A7DC4+14r
+D:800484D0                                              # debug_gun_watch_move_related2+38Cr
+D:800484D0                                              # debug_gun_watch_move_related2+3C4r
+D:800484D0                                              # debug_gun_watch_move_related2+400r
+D:800484D0                                              # debug_gun_watch_move_related2+444r
+D:800484D0                                              # debug_gun_watch_move_related2+4C4r
+D:800484D0                                              # debug_gun_watch_move_related2+5B0r
+D:800484D0                                              # debug_gun_watch_move_related2+5D8r
+D:800484D0                                              # sub_CODE_7F0A97D0+98o
+D:800484D0                                              # sub_CODE_7F0A97D0+A8r
+D:800484D0                                              # sub_CODE_7F0A97D0:loc_CODE_7F0A98C4o
+D:800484D0                                              # sub_CODE_7F0A97D0+FCr
+D:800484D0                                              # sub_CODE_7F0A97D0+140r
+D:800484D0                                              # sub_CODE_7F0A97D0+1ECr
+D:800484D0                                              # sub_CODE_7F0A97D0+224r
+D:800484D0                                              # sub_CODE_7F0A97D0+26Cr
+D:800484D0                                              # sub_CODE_7F0AB908r
+D:800484D0                                              # sub_CODE_7F0AB908+1BCr
+D:800484D0                                              # sub_CODE_7F0AC168+3C8r
+D:800484D0                                              # sub_CODE_7F0AC168+4C8r
+D:800484D0                                              # sub_CODE_7F0AC168+670r
+D:800484D0                                              # sub_CODE_7F0AC168+6BCr
+D:800484D0                                              # en_text_write_stuff:loc_CODE_7F0ADB30r
+D:800484D0                                              # jp_text_write_stuff:loc_CODE_7F0AE760r
+D:800484D0                                              # sub_CODE_7F0AE98C:loc_CODE_7F0AE9C4r
+D:800484D0                                              # init_LnameX+8o
+D:800484D0                                              # init_LnameX+10r
+D:800484D0                                              # something_with_LnameJr
+D:800484D0                                              # load_mission_text_bankr
+D:800484D0                                              # load_briefing_text_bankr
+D:800484D0                                              # mp_watch_menu_display+18CCr
+D:800484D4     LnameX_lookuptable:.word 0,0,aLamee,aLamej,aLarche,aLarchj,aLarke,aLarkj,aLashe,aLashj,aLazte
+D:800484D4                                              # DATA XREF: init_LnameX+134o
+D:800484D4                     .word aLaztj,aLcate,aLcatj,aLcavee,aLcavej,aLarece,aLarecj,aLcrade,aLcradj  # "LameE"
+D:800484D4                     .word aLcrype,aLcrypj,aLdame,aLdamj,aLdepoe,aLdepoj,aLdeste,aLdestj,aLdishe
+D:800484D4                     .word aLdishj,aLeare,aLearj,aLelde,aLeldj,aLimpe,aLimpj,aLjune,aLjunj,aLleee
+D:800484D4                     .word aLleej,aLlene,aLlenj,aLlipe,aLlipj,aLluee,aLluej,aLoate,aLoatj,aLpame
+D:800484D4                     .word aLpamj,aLpetee,aLpetej,aLrefe,aLrefj,aLrite,aLritj,aLrune,aLrunj,aLsevbe
+D:800484D4                     .word aLsevbj,aLseve,aLsevj,aLsevxe,aLsevxj,aLsevxbe,aLsevxbj,aLshoe,aLshoj
+D:800484D4                     .word aLsiloe,aLsiloj,aLstate,aLstatj,aLtrae,aLtraj,aLwaxe,aLwaxj,aLgune,aLgunj
+D:800484D4                     .word aLtitlee,aLtitlej,aLmpmenue,aLmpmenuj,aLpropobje,aLpropobjj,aLmpweaponse
+D:800484D4                     .word aLmpweaponsj,aLoptionse,aLoptionsj,aLmisce,aLmiscj,0
+*/
 
 
 

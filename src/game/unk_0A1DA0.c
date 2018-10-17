@@ -1,7 +1,26 @@
 #include "ultra64.h"
 
 
-
+/* data
+D:80040940     dword_D_80040940:.word          0,         0,         0,         0
+D:80040940                                              # DATA XREF: sub_CODE_7F007180+F4w
+D:80040940                                              # sub_CODE_7F0A2160+ACo
+D:80040940                                              # sub_CODE_7F0A2160+B4r
+D:80040940                                              # sub_CODE_7F0A2160+F4r
+D:80040940                                              # sub_CODE_7F0A2160+110r
+D:80040940                                              # sub_CODE_7F0A2160+12Cr
+D:80040940                                              # sub_CODE_7F0A2160+14Cr
+D:80040940                                              # sub_CODE_7F0A2160+168r
+D:80040940                                              # sub_CODE_7F0A2160+1A0r
+D:80040940                                              # sub_CODE_7F0A2160+1F4r
+D:80040940                                              # sub_CODE_7F0A2160+248r
+D:80040940                     .word          0,         0,         0,         0
+D:80040960     dword_D_80040960:.word 0xFFFFFFFF, 0xFFFFC8FF, 0xFF0000FF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF
+D:80040960                                              # DATA XREF: sub_CODE_7F0A3B70o
+D:80040960                                              # sub_CODE_7F0A3BA4+4o
+D:80040960                                              # sub_CODE_7F0A3C08:loc_CODE_7F0A3D44o
+D:80040960                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+*/
 
 
 

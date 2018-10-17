@@ -1,8 +1,29 @@
 #include "ultra64.h"
 
 
-
-
+/* data
+D:80049170      # int *bytes
+D:80049170     bytes:          .word 0x6DDD0            # DATA XREF: set_mt_tex_alloc+48w
+D:80049170                                              # set_mt_tex_alloc:loc_CODE_7F007370r
+D:80049170                                              # set_mt_tex_alloc+64r
+D:80049174                     .word 0
+D:80049178     dword_D_80049178:.word 4, 3, 3, 3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 0
+D:80049178                                              # DATA XREF: process_huffman_compressed_images+328o
+D:80049178                                              # process_huffman_compressed_images+5A4o
+D:80049178                                              # process_huffman_compressed_images+67Co
+D:800491B0                     .word 1, 0, 0, 0, 0
+D:800491C4                     .word 1, 0, 0, 0, 0, 0, 0
+D:800491E0     dword_D_800491E0:.word 0x100, 0x20, 0x100, 0x20, 0x100, 0x10, 8, 0x100, 0x10, 0x100, 0x10, 0x100
+D:800491E0                                              # DATA XREF: process_huffman_compressed_images+34Co
+D:800491E0                                              # process_huffman_compressed_images+5B4o
+D:800491E0                     .word 0x10, 0x20, 0x10, 0x18, 0xF, 0x10, 8, 4, 8, 4, 0x10, 0x10, 0x10, 0x10
+D:800491E0                     .word 0, 0, 0, 0
+D:80049258                     .word 3, 3, 3, 4, 4, 2, 2, 2, 2, 3, 2, 3, 2, 2, 1, 0
+D:80049298                     .word 1, 0
+D:800492A0                     .word 1, 0
+D:800492A8                     .word 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:800492D4                     .word 0x8000, 0x8000, 0xC000, 0xC000, 0, 0, 0, 0, 0, 0, 0
+*/
 
 
 #ifdef NONMATCHING

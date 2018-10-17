@@ -1,7 +1,539 @@
 #include "ultra64.h"
 
 
+/* data
+D:800413F0      # int *ptr_bg_c_debug_debug_notice_list
+D:800413F0     ptr_bg_c_debug_debug_notice_list:.word 0
+D:800413F0                                              # DATA XREF: something_with_bg_c_debug+18o
+D:800413F4     flt_D_800413F4: .float 1.0               # DATA XREF: sub_CODE_7F0B4810w
+D:800413F4                                              # sub_CODE_7F0B483C+8r
+D:800413F4                                              # sub_CODE_7F0B7A78+40r
+D:800413F4                                              # sub_CODE_7F0B7F84+FCr
+D:800413F4                                              # sub_CODE_7F0B9F14+38r
+D:800413F4                                              # sub_CODE_7F0BA2D4+30r
+D:800413F8     flt_D_800413F8: .float 1.0               # DATA XREF: sub_CODE_7F0B4810+1Cw
+D:800413F8                                              # sub_CODE_7F0B4830+8r
+D:800413F8                                              # sub_CODE_7F0B5488+1Co
+D:800413F8                                              # sub_CODE_7F0B5488+24r
+D:800413F8                                              # sub_CODE_7F0B5488+3Cr
+D:800413F8                                              # sub_CODE_7F0B5488+4Cr
+D:800413F8                                              # sub_CODE_7F0B5528+ACo
+D:800413F8                                              # sub_CODE_7F0BC85C+C8r
+D:800413F8                                              # sub_CODE_7F0BCA34+1Co
+D:800413F8                                              # sub_CODE_7F0BCA34+28r
+D:800413F8                                              # sub_CODE_7F0BCA34+38r
+D:800413F8                                              # sub_CODE_7F0BCA34+50r
+D:800413FC     flt_D_800413FC: .float 1.0               # DATA XREF: sub_CODE_7F0B4124+1F0o
+D:800413FC                                              # sub_CODE_7F0B4124+208w
+D:800413FC                                              # sub_CODE_7F0B4124+210r
+D:800413FC                                              # sub_CODE_7F0B4124+218r
+D:800413FC                                              # sub_CODE_7F0B4878+8r
+D:800413FC                                              # sub_CODE_7F0B5208+4Cr
+D:800413FC                                              # sub_CODE_7F0B5528+58r
+D:80041400     dword_D_80041400:.word 1                 # DATA XREF: sub_CODE_7F0B37EC+18o
+D:80041400                                              # sub_CODE_7F0B37EC+24r
+D:80041400                                              # sub_CODE_7F0B4124+10o
+D:80041400                                              # sub_CODE_7F0B4124+3Cw
+D:80041400                                              # sub_CODE_7F0B4848r
+D:80041400                                              # sub_CODE_7F0B5FAC+64r
+D:80041400                                              # sub_CODE_7F0B609C+6Cr
+D:80041400                                              # sub_CODE_7F0B61DC+6Cr
+D:80041400                                              # sub_CODE_7F0B8A6C+DCr
+D:80041400                                              # sub_CODE_7F0B8D78r
+D:80041404     dword_D_80041404:.word 1                 # DATA XREF: sub_CODE_7F0B9040o
+D:80041404                                              # sub_CODE_7F0B908Co
+D:80041404                                              # sub_CODE_7F0B908C+8r
+D:80041408     dword_D_80041408:.word 1                 # DATA XREF: sub_CODE_7F0B908C+Cr
+D:8004140C     dword_D_8004140C:.word 0xFFFFFFFF        # DATA XREF: sub_CODE_7F0B908C+34r
+D:80041410     dword_D_80041410:.word 0xFFFFFFFF        # DATA XREF: sub_CODE_7F0B908C+58r
+D:80041414     off_D_80041414: .byte 0, 0, 0            # DATA XREF: sub_CODE_7F03A97C+8o
+D:80041414                                              # sub_CODE_7F0B39BC+8o
+D:80041414                                              # sub_CODE_7F0B4124+44o
+D:80041414                                              # sub_CODE_7F0B5208+70o
+D:80041414                                              # sub_CODE_7F0B5FAC+8o
+D:80041414                                              # sub_CODE_7F0B609C+8o
+D:80041414                                              # sub_CODE_7F0B61DC+8o
+D:80041414                                              # sub_CODE_7F0B6314+8o
+D:80041414                                              # sub_CODE_7F0B6368+28o
+D:80041414                                              # sub_CODE_7F0B65C4+14o
+D:80041414                                              # sub_CODE_7F0B677C+54o
+D:80041414                                              # sub_CODE_7F0B6898+2Co
+D:80041414                                              # sub_CODE_7F0B6994+8o
+D:80041414                                              # sub_CODE_7F0B7010+4Co
+D:80041414                                              # sub_CODE_7F0B7A78+58o
+D:80041414                                              # sub_CODE_7F0B7DA8+8o
+D:80041414                                              # parse_global_vis_command_list+43Co
+D:80041414                                              # sub_CODE_7F0B8A6C+50o
+D:80041414                                              # sub_CODE_7F0B8A6C+274o
+D:80041414                                              # sub_CODE_7F0B92B4+10o
+D:80041414                                              # sub_CODE_7F0B9338+38o
+D:80041414                                              # sub_CODE_7F0B9338+80o
+D:80041414                                              # sub_CODE_7F0B95D8+58o
+D:80041414                                              # sub_CODE_7F0BBCCC+50o
+D:80041414                                              # sub_CODE_7F0BC530+B0o
+D:80041417     byte_D_80041417:.byte 0                  # DATA XREF: sub_CODE_7F0B3B20r
+D:80041417                                              # sub_CODE_7F0B3BC4+8w
+D:80041418     dword_D_80041418:.word 0                 # DATA XREF: sub_CODE_7F0BBADC+Cr
+D:8004141C                     .word 0, 0
+D:80041424     room_information:room_index <0>
+D:80041474     stru_D_80041474:room_index <0>
+D:800414C4                     room_index <0>
+D:80041514                     room_index <0>
+D:80041564                     room_index <0>
+D:800415B4                     room_index <0>
+D:80041604                     room_index <0>
+D:80041654                     room_index <0>
+D:800416A4                     room_index <0>
+D:800416F4                     room_index <0>
+D:80041744                     room_index <0>
+D:80041794                     room_index <0>
+D:800417E4                     room_index <0>
+D:80041834                     room_index <0>
+D:80041884                     room_index <0>
+D:800418D4                     room_index <0>
+D:80041924                     room_index <0>
+D:80041974                     room_index <0>
+D:800419C4                     room_index <0>
+D:80041A14                     room_index <0>
+D:80041A64                     room_index <0>
+D:80041AB4                     room_index <0>
+D:80041B04                     room_index <0>
+D:80041B54                     room_index <0>
+D:80041BA4                     room_index <0>
+D:80041BF4                     room_index <0>
+D:80041C44                     room_index <0>
+D:80041C94                     room_index <0>
+D:80041CE4                     room_index <0>
+D:80041D34                     room_index <0>
+D:80041D84                     room_index <0>
+D:80041DD4                     room_index <0>
+D:80041E24                     room_index <0>
+D:80041E74                     room_index <0>
+D:80041EC4                     room_index <0>
+D:80041F14                     room_index <0>
+D:80041F64                     room_index <0>
+D:80041FB4                     room_index <0>
+D:80042004                     room_index <0>
+D:80042054                     room_index <0>
+D:800420A4                     room_index <0>
+D:800420F4                     room_index <0>
+D:80042144                     room_index <0>
+D:80042194                     room_index <0>
+D:800421E4                     room_index <0>
+D:80042234                     room_index <0>
+D:80042284                     room_index <0>
+D:800422D4                     room_index <0>
+D:80042324                     room_index <0>
+D:80042374                     room_index <0>
+D:800423C4                     room_index <0>
+D:80042414                     room_index <0>
+D:80042464                     room_index <0>
+D:800424B4                     room_index <0>
+D:80042504                     room_index <0>
+D:80042554                     room_index <0>
+D:800425A4                     room_index <0>
+D:800425F4                     room_index <0>
+D:80042644                     room_index <0>
+D:80042694                     room_index <0>
+D:800426E4                     room_index <0>
+D:80042734                     room_index <0>
+D:80042784                     room_index <0>
+D:800427D4                     room_index <0>
+D:80042824                     room_index <0>
+D:80042874                     room_index <0>
+D:800428C4                     room_index <0>
+D:80042914                     room_index <0>
+D:80042964                     room_index <0>
+D:800429B4                     room_index <0>
+D:80042A04                     room_index <0>
+D:80042A54                     room_index <0>
+D:80042AA4                     room_index <0>
+D:80042AF4                     room_index <0>
+D:80042B44                     room_index <0>
+D:80042B94                     room_index <0>
+D:80042BE4                     room_index <0>
+D:80042C34                     room_index <0>
+D:80042C84                     room_index <0>
+D:80042CD4                     room_index <0>
+D:80042D24                     room_index <0>
+D:80042D74                     room_index <0>
+D:80042DC4                     room_index <0>
+D:80042E14                     room_index <0>
+D:80042E64                     room_index <0>
+D:80042EB4                     room_index <0>
+D:80042F04                     room_index <0>
+D:80042F54                     room_index <0>
+D:80042FA4                     room_index <0>
+D:80042FF4                     room_index <0>
+D:80043044                     room_index <0>
+D:80043094                     room_index <0>
+D:800430E4                     room_index <0>
+D:80043134                     room_index <0>
+D:80043184                     room_index <0>
+D:800431D4                     room_index <0>
+D:80043224                     room_index <0>
+D:80043274                     room_index <0>
+D:800432C4                     room_index <0>
+D:80043314                     room_index <0>
+D:80043364                     room_index <0>
+D:800433B4                     room_index <0>
+D:80043404                     room_index <0>
+D:80043454                     room_index <0>
+D:800434A4                     room_index <0>
+D:800434F4                     room_index <0>
+D:80043544                     room_index <0>
+D:80043594                     room_index <0>
+D:800435E4                     room_index <0>
+D:80043634                     room_index <0>
+D:80043684                     room_index <0>
+D:800436D4                     room_index <0>
+D:80043724                     room_index <0>
+D:80043774                     room_index <0>
+D:800437C4                     room_index <0>
+D:80043814                     room_index <0>
+D:80043864                     room_index <0>
+D:800438B4                     room_index <0>
+D:80043904                     room_index <0>
+D:80043954                     room_index <0>
+D:800439A4                     room_index <0>
+D:800439F4                     room_index <0>
+D:80043A44                     room_index <0>
+D:80043A94                     room_index <0>
+D:80043AE4                     room_index <0>
+D:80043B34                     room_index <0>
+D:80043B84                     room_index <0>
+D:80043BD4                     room_index <0>
+D:80043C24                     room_index <0>
+D:80043C74                     room_index <0>
+D:80043CC4                     room_index <0>
+D:80043D14                     room_index <0>
+D:80043D64                     room_index <0>
+D:80043DB4                     room_index <0>
+D:80043E04                     room_index <0>
+D:80043E54                     room_index <0>
+D:80043EA4                     room_index <0>
+D:80043EF4                     room_index <0>
+D:80043F44                     room_index <0>
+D:80043F94                     room_index <0>
+D:80043FE4                     room_index <0>
+D:80044034                     room_index <0>
+D:80044084                     room_index <0>
+D:800440D4                     room_index <0>
+D:80044124                     room_index <0>
+D:80044174                     room_index <0>
+D:800441C4                     room_index <0>
+D:80044214                     room_index <0>
+D:80044264                     room_index <0>
+D:800442B4                     .word 0
+D:800442B8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:800442F4     max_num_rooms:  .word 0x96               # DATA XREF: alloc_lookup_buffers+20o
+D:800442F4                                              # alloc_lookup_buffers+24r
+D:800442F4                                              # alloc_lookup_buffers+70o
+D:800442F4                                              # alloc_lookup_buffers+7Cr
+D:800442F4                                              # sub_CODE_7F03E4F0r
+D:800442F4                                              # sub_CODE_7F03E4F0+17Cr
+D:800442F4                                              # sub_CODE_7F0B3BC4+18o
+D:800442F4                                              # sub_CODE_7F0B4124+40o
+D:800442F4                                              # sub_CODE_7F0B4124+254o
+D:800442F4                                              # sub_CODE_7F0B4124+268w
+D:800442F4                                              # sub_CODE_7F0B4124+27Cr
+D:800442F4                                              # sub_CODE_7F0B5E44+8r
+D:800442F4                                              # generate_room_load_string+18r
+D:800442F4                                              # sub_CODE_7F0B6368r
+D:800442F4                                              # sub_CODE_7F0B667Cr
+D:800442F4                                              # sub_CODE_7F0B667C+40r
+D:800442F4                                              # sub_CODE_7F0B66E8r
+D:800442F4                                              # sub_CODE_7F0B66E8+5Cr
+D:800442F4                                              # sub_CODE_7F0B677Cr
+D:800442F4                                              # sub_CODE_7F0B6898r
+D:800442F4                                              # sub_CODE_7F0B8A6C+48o
+D:800442F4                                              # sub_CODE_7F0B8A6C:loc_CODE_7F0B8B8Cr
+D:800442F4                                              # sub_CODE_7F0B8A6C:loc_CODE_7F0B8BD0r
+D:800442F8     dword_D_800442F8:.word 0                 # DATA XREF: sub_CODE_7F0B4124+6B0w
+D:800442F8                                              # sub_CODE_7F0B4884+64o
+D:800442F8                                              # sub_CODE_7F0B4884+74w
+D:800442F8                                              # sub_CODE_7F0B4884+94w
+D:800442F8                                              # sub_CODE_7F0B677C+68o
+D:800442F8                                              # sub_CODE_7F0B677C+78r
+D:800442F8                                              # sub_CODE_7F0B677C+88w
+D:800442FC     dword_D_800442FC:.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:800442FC                                              # DATA XREF: sub_CODE_7F0B7F84+94o
+D:800442FC                                              # sub_CODE_7F0B8A6C+78o
+D:800442FC                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:800442FC                     .word 0, 0, 0, 0
+D:800443C4     dword_D_800443C4:.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:800443C4                                              # DATA XREF: sub_CODE_7F0B4124:loc_CODE_7F0B46A8o
+D:800443C4                                              # sub_CODE_7F0B4884:loc_CODE_7F0B4954o
+D:800443C4                                              # sub_CODE_7F0B8A6C+70o
+D:800443C4                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:800443C4                     .word 0, 0, 0, 0
+D:8004448C     levelinfostruct:levelentry <LEVELID_BUNKER1, aBgBg_sev_all_p_seg, aTbg_sev_all_p_stanz, 0.53931433, 1.0, \
+D:8004448C                                              # DATA XREF: sub_CODE_7F0B4124+58o
+D:8004448C                                              # sub_CODE_7F0B4124+9Co
+D:8004448C                                              # sub_CODE_7F0B4848+8o
+D:8004448C                                 23.148148>   # "bg/bg_sev_all_p.seg"
+D:800444A4                     levelentry <LEVELID_SILO, aBgBg_silo_all_p_seg, aTbg_silo_all_p_stanz, 0.47256002, 1.0, \  # "bg/bg_silo_all_p.seg"
+D:800444A4                                 29.069>
+D:800444BC                     levelentry <LEVELID_STATUE, aBgBg_stat_all_p_seg, aTbg_stat_all_p_stanz, 0.10720287, 1.0, \  # "bg/bg_stat_all_p.seg"
+D:800444BC                                 0.0801>
+D:800444D4                     levelentry <LEVELID_CONTROL, aBgBg_arec_all_p_seg, aTbg_arec_all_p_stanz, 0.49886572, 1.0,\  # "bg/bg_arec_all_p.seg"
+D:800444D4                                 80.645164>
+D:800444EC                     levelentry <LEVELID_ARCHIVES, aBgBg_arch_all_p_seg, aTbg_arch_all_p_stanz, 0.50678575, \  # "bg/bg_arch_all_p.seg"
+D:800444EC                                 1.0, 54.347824>
+D:80044504                     levelentry <LEVELID_TRAIN, aBgBg_tra_all_p_seg, aTbg_tra_all_p_stanz, 0.15019713, 1.0, \  # "bg/bg_tra_all_p.seg"
+D:80044504                                 19.53125>
+D:8004451C                     levelentry <LEVELID_FRIGATE, aBgBg_dest_all_p_seg, aTbg_dest_all_p_stanz, 0.44757429, 1.0,\  # "bg/bg_dest_all_p.seg"
+D:8004451C                                 36.764706>
+D:80044534                     levelentry <LEVELID_BUNKER2, aBgBg_sevb_all_p_seg, aTbg_sevb_all_p_stanz, 0.53931433, 1.0,\  # "bg/bg_sevb_all_p.seg"
+D:80044534                                 23.148148>
+D:8004454C                     levelentry <LEVELID_AZTEC, aBgBg_azt_all_p_seg, aTbg_azt_all_p_stanz, 0.35300568, 1.0, \  # "bg/bg_azt_all_p.seg"
+D:8004454C                                 52.083332>
+D:80044564                     levelentry <LEVELID_STREETS, aBgBg_pete_all_p_seg, aTbg_pete_all_p_stanz, 0.34187999, 1.0,\  # "bg/bg_pete_all_p.seg"
+D:80044564                                 42.372883>
+D:8004457C                     levelentry <LEVELID_DEPOT, aBgBg_depo_all_p_seg, aTbg_depo_all_p_stanz, 0.21847887, 1.0, \  # "bg/bg_depo_all_p.seg"
+D:8004457C                                 17.605633>
+D:80044594                     levelentry <LEVELID_COMPLEX, aBgBg_ref_all_p_seg, aTbg_ref_all_p_stanz, 0.94285715, 1.0, \  # "bg/bg_ref_all_p.seg"
+D:80044594                                 37.878788>
+D:800445AC                     levelentry <LEVELID_EGYPT, aBgBg_cryp_all_p_seg, aTbg_cryp_all_p_stanz, 0.25608, 1.0, \  # "bg/bg_cryp_all_p.seg"
+D:800445AC                                 23.584906>
+D:800445C4                     levelentry <LEVELID_DAM, aBgBg_dam_all_p_seg, aTbg_dam_all_p_stanz, 0.23363999, 0.2, \  # "bg/bg_dam_all_p.seg"
+D:800445C4                                 100.0>
+D:800445DC                     levelentry <LEVELID_FACILITY, aBgBg_ark_all_p_seg, aTbg_ark_all_p_stanz, 1.20648, 1.0, \  # "bg/bg_ark_all_p.seg"
+D:800445DC                                 64.102562>
+D:800445F4                     levelentry <LEVELID_RUNWAY, aBgBg_run_all_p_seg, aTbg_run_all_p_stanz, 0.089571431, 1.0, \  # "bg/bg_run_all_p.seg"
+D:800445F4                                 4.5537338>
+D:8004460C                     levelentry <LEVELID_SURFACE, aBgBg_sevx_all_p_seg, aTbg_sevx_all_p_stanz, 0.45445713, 0.2,\  # "bg/bg_sevx_all_p.seg"
+D:8004460C                                 22.603975>
+D:80044624                     levelentry <LEVELID_JUNGLE, aBgBg_jun_all_p_seg, aTbg_jun_all_p_stanz, 0.094662853, 1.0, \  # "bg/bg_jun_all_p.seg"
+D:80044624                                 6.6844921>
+D:8004463C                     levelentry <LEVELID_TEMPLE, aBgBg_dish_all_p_seg, aTbg_dish_all_p_stanz, 0.47142857, 1.0, \  # "bg/bg_dish_all_p.seg"
+D:8004463C                                 147.05882>
+D:80044654                     levelentry <LEVELID_CAVERNS, aBgBg_cave_all_p_seg, aTbg_cave_all_p_stanz, 0.26824287, 1.0,\  # "bg/bg_cave_all_p.seg"
+D:80044654                                 13.44086>
+D:8004466C                     levelentry <LEVELID_CITADEL, aBgBg_cat_all_p_seg, aTbg_cat_all_p_stanz, 0.76852286, 1.0, \  # "bg/bg_cat_all_p.seg"
+D:8004466C                                 38.461536>
+D:80044684                     levelentry <LEVELID_CRADLE, aBgBg_crad_all_p_seg, aTbg_crad_all_p_stanz, 0.23571429, 1.0, \  # "bg/bg_crad_all_p.seg"
+D:80044684                                 43.103451>
+D:8004469C                     levelentry <LEVELID_SHO, aBgBg_sho_all_p_seg, aTbg_sho_all_p_stanz, 0.528, 1.0, 21.18644>  # "bg/bg_sho_all_p.seg"
+D:800446B4                     levelentry <LEVELID_SURFACE2, aBgBg_sevx_all_p_seg_0, aTbg_sevx_all_p_stanz_0, 0.45445713,\  # "bg/bg_sevx_all_p.seg"
+D:800446B4                                 0.2, 22.603975>
+D:800446CC                     levelentry <LEVELID_ELD, aBgBg_eld_all_p_seg, aTbg_eld_all_p_stanz, 0.94285715, 1.0, \  # "bg/bg_eld_all_p.seg"
+D:800446CC                                 10.123456>
+D:800446E4                     levelentry <LEVELID_BASEMENT, aBgBg_ame_all_p_seg, aTbg_ame_all_p_stanz, 0.65999997, 1.0, \  # "bg/bg_ame_all_p.seg"
+D:800446E4                                 37.878788>
+D:800446FC                     levelentry <LEVELID_STACK, aBgBg_ame_all_p_seg_0, aTbg_ame_all_p_stanz_0, 0.65999997, 1.0,\  # "bg/bg_ame_all_p.seg"
+D:800446FC                                 37.878788>
+D:80044714                     levelentry <LEVELID_LUE, aBgBg_lue_all_p_seg, aTbg_lue_all_p_stanz, 0.94285715, 1.0, \  # "bg/bg_lue_all_p.seg"
+D:80044714                                 10.123456>
+D:8004472C                     levelentry <LEVELID_LIBRARY, aBgBg_ame_all_p_seg_1, aTbg_ame_all_p_stanz_1, 0.65999997, \  # "bg/bg_ame_all_p.seg"
+D:8004472C                                 1.0, 37.878788>
+D:80044744                     levelentry <LEVELID_RIT, aBgBg_rit_all_p_seg, aTbg_rit_all_p_stanz, 0.94285715, 1.0, \  # "bg/bg_rit_all_p.seg"
+D:80044744                                 10.123456>
+D:8004475C                     levelentry <LEVELID_CAVES, aBgBg_oat_all_p_seg, aTbg_oat_all_p_stanz, 0.14142857, 1.0, \  # "bg/bg_oat_all_p.seg"
+D:8004475C                                 10.123456>
+D:80044774                     levelentry <LEVELID_EAR, aBgBg_ear_all_p_seg, aTbg_ear_all_p_stanz, 0.94285715, 1.0, \  # "bg/bg_ear_all_p.seg"
+D:80044774                                 10.123456>
+D:8004478C                     levelentry <LEVELID_LEE, aBgBg_lee_all_p_seg, aTbg_lee_all_p_stanz, 0.94285715, 1.0, \  # "bg/bg_lee_all_p.seg"
+D:8004478C                                 10.123456>
+D:800447A4                     levelentry <LEVELID_LIP, aBgBg_lip_all_p_seg, aTbg_lip_all_p_stanz, 0.94285715, 1.0, \  # "bg/bg_lip_all_p.seg"
+D:800447A4                                 10.123456>
+D:800447BC                     levelentry <LEVELID_CUBA, aBgBg_len_all_p_seg, aTbg_len_all_p_stanz, 0.094662853, 1.0, \  # "bg/bg_len_all_p.seg"
+D:800447BC                                 6.6844921>
+D:800447D4                     levelentry <LEVELID_WAX, aBgBg_wax_all_p_seg, aTbg_wax_all_p_stanz, 0.94285715, 1.0, \  # "bg/bg_wax_all_p.seg"
+D:800447D4                                 10.123456>
+D:800447EC                     levelentry <LEVELID_PAM, aBgBg_pam_all_p_seg, aTbg_pam_all_p_stanz, 0.94285715, 1.0, \  # "bg/bg_pam_all_p.seg"
+D:800447EC                                 10.123456>
+D:80044804                     levelentry <LEVELID_MAX, aBgBgx_seg, aTbgxz, 0.94285715, 1.0, 1.0>  # "bg/bgx.seg"
+D:8004481C                     .word 0x1000100, 0
+D:80044824     dword_D_80044824:.word 0x32C2E32         # DATA XREF: sub_CODE_7F0B37EC+10o
+D:80044828                     .word 0x373E3F4E
+D:8004482C                     .word 0x56595D72
+D:80044830                     .word 0x76797AFF
+D:80044834                     .word 0x11003AFF
+D:80044838     current_room_maybe:.word 1               # DATA XREF: sub_CODE_7F0B37EC+14o
+D:80044838                                              # sub_CODE_7F0B4884+ACw
+D:80044838                                              # sub_CODE_7F0B4884+198w
+D:80044838                                              # parse_global_vis_command_list+1C4r
+D:80044838                                              # sub_CODE_7F0B8A6C+1ACr
+D:80044838                                              # sub_CODE_7F0B8A6C+1E4r
+D:8004483C     dword_D_8004483C:.word 0                 # DATA XREF: sub_CODE_7F0B39BC:loc_CODE_7F0B3A00o
+D:8004483C                                              # sub_CODE_7F0B39BC+4Cr
+D:8004483C                                              # sub_CODE_7F0B3BC4w
+D:8004483C                                              # sub_CODE_7F0B3C0Cr
+D:8004483C                                              # sub_CODE_7F0B3C8C+4r
+D:8004483C                                              # sub_CODE_7F0B3C8C:loc_CODE_7F0B3E6Cr
+D:8004483C                                              # sub_CODE_7F0B3C8C+264r
+D:8004483C                                              # sub_CODE_7F0B3C8C:loc_CODE_7F0B3FE0r
+D:8004483C                                              # sub_CODE_7F0B8D78+1Cr
+D:80044840     dword_D_80044840:.word 0x96969600        # DATA XREF: sub_CODE_7F0B4E40+48o
+D:80044844                     .word 0x96969600
+D:80044848     dword_D_80044848:.word 0xFFFFFF00        # DATA XREF: sub_CODE_7F0B4E40+2Co
+D:8004484C                     .word 0xFFFFFF00
+D:80044850                     .word 0x4D4D2E00
+D:80044854                     .word 0
+D:80044858     dword_D_80044858:.word 0                 # DATA XREF: sub_CODE_7F0B677C+44r
+D:80044858                                              # sub_CODE_7F0B6898+6Cr
+D:80044858                                              # sub_CODE_7F0B8A6C+94o
+D:80044858                                              # sub_CODE_7F0B8A6C+9Cr
+D:80044858                                              # sub_CODE_7F0B8A6C+B0w
+D:8004485C     dword_D_8004485C:.word 1                 # DATA XREF: sub_CODE_7F0B677C:loc_CODE_7F0B67A4r
+D:8004485C                                              # sub_CODE_7F0B6898:loc_CODE_7F0B68ECr
+D:80044860     dword_D_80044860:.word 0                 # DATA XREF: sub_CODE_7F0B5D7Cr
+D:80044860                                              # sub_CODE_7F0B5D7C+4Cw
+D:80044864     dword_D_80044864:.word 0                 # DATA XREF: sub_CODE_7F0B5DE0r
+D:80044864                                              # sub_CODE_7F0B5DE0+4Cw
+D:80044868     dword_D_80044868:.word 0x7FFF            # DATA XREF: sub_CODE_7F0B7010+CCo
+D:80044868                                              # sub_CODE_7F0B7010+D0r
+D:8004486C     dword_D_8004486C:.word 0x7FFF            # DATA XREF: sub_CODE_7F0B7010+E0r
+D:80044870     dword_D_80044870:.word 0x7FFF            # DATA XREF: sub_CODE_7F0B7010+F0r
+D:80044874     dword_D_80044874:.word 0xFFFF8000        # DATA XREF: sub_CODE_7F0B7010+E4o
+D:80044874                                              # sub_CODE_7F0B7010+100r
+D:80044878     dword_D_80044878:.word 0xFFFF8000        # DATA XREF: sub_CODE_7F0B7010+10Cr
+D:8004487C     dword_D_8004487C:.word 0xFFFF8000        # DATA XREF: sub_CODE_7F0B7010+114r
+D:80044880     dword_D_80044880:.word 0x7FFF            # DATA XREF: sub_CODE_7F0B7010:loc_CODE_7F0B7574o
+D:80044880                                              # sub_CODE_7F0B7010+56Cr
+D:80044884     dword_D_80044884:.word 0x7FFF            # DATA XREF: sub_CODE_7F0B7010+574r
+D:80044888     dword_D_80044888:.word 0x7FFF            # DATA XREF: sub_CODE_7F0B7010+57Cr
+D:8004488C     dword_D_8004488C:.word 0xFFFF8000        # DATA XREF: sub_CODE_7F0B7010+580o
+D:8004488C                                              # sub_CODE_7F0B7010+590r
+D:80044890     dword_D_80044890:.word 0xFFFF8000        # DATA XREF: sub_CODE_7F0B7010+598r
+D:80044894     dword_D_80044894:.word 0xFFFF8000        # DATA XREF: sub_CODE_7F0B7010+5A0r
+D:80044898     dword_D_80044898:.word 0                 # DATA XREF: sub_CODE_7F0B7F84+4o
+D:80044898                                              # sub_CODE_7F0B7F84+Cr
+D:80044898                                              # sub_CODE_7F0B7F84+44w
+D:80044898                                              # sub_CODE_7F0B8A6C+C4w
+D:8004489C     dword_D_8004489C:.word 0xF               # DATA XREF: sub_CODE_7F0B7F84:loc_CODE_7F0B7FD4r
+D:800448A0     dword_D_800448A0:.word 0                 # DATA XREF: sub_CODE_7F0B7D94w
+D:800448A0                                              # sub_CODE_7F0B7DE4o
+D:800448A0                                              # sub_CODE_7F0B7DE4+8r
+D:800448A0                                              # sub_CODE_7F0B7DE4+6Co
+D:800448A0                                              # sub_CODE_7F0B7DE4+C4r
+D:800448A0                                              # sub_CODE_7F0B7DE4+D0w
+D:800448A0                                              # sub_CODE_7F0B7DE4+D4w
+D:800448A0                                              # sub_CODE_7F0B7DE4+ECw
+D:800448A0                                              # sub_CODE_7F0B7EE4+Cr
+D:800448A4     off_D_800448A4: .word 0                  # DATA XREF: sub_CODE_7F0B7D94+10w
+D:800448A4                                              # sub_CODE_7F0B7DE4:loc_CODE_7F0B7EC0r
+D:800448A4                                              # sub_CODE_7F0B7EE4+4o
+D:800448A4                                              # sub_CODE_7F0B7EE4+14r
+D:800448A4                                              # sub_CODE_7F0B7EE4+60o
+D:800448A4                                              # sub_CODE_7F0B7EE4+68r
+D:800448A4                                              # sub_CODE_7F0B7EE4+7Cw
+D:800448A4                                              # sub_CODE_7F0B7EE4+80w
+D:800448A8                     .word 0
+D:800448AC                     .word 0
+D:800448B0                     .word 0
+D:800448B4                     .word 0
+D:800448B8                     .word 0
+D:800448BC                     .word 0
+D:800448C0                     .word 0
+D:800448C4                     .word 0
+D:800448C8                     .word 0
+D:800448CC                     .word 0
+D:800448D0                     .word 0
+D:800448D4                     .word 0
+D:800448D8                     .word 0
+D:800448DC                     .word 0
+D:800448E0                     .word 0
+D:800448E4                     .word 0
+D:800448E8                     .word 0
+D:800448EC                     .word 0
+D:800448F0                     .word 0
+D:800448F4                     .word 0
+D:800448F8     off_D_800448F8: .word 0                  # DATA XREF: push_arg_to_tableo
+D:800448F8                                              # push_arg_to_table+8r
+D:800448F8                                              # push_arg_to_table+30w
+D:800448F8                                              # pull_arg_from_stacko
+D:800448F8                                              # pull_arg_from_stack+8r
+D:800448F8                                              # pull_arg_from_stack+28w
+D:800448F8                                              # sub_CODE_7F0B83E4r
+D:800448FC     current_visibility:.word 0               # DATA XREF: parse_global_vis_command_list+54o
+D:800448FC                                              # sub_CODE_7F0B8A24+14w
+D:80044900     off_D_80044900: .word 0                  # DATA XREF: sub_CODE_7F0B9E04+68o
+D:80044900                                              # sub_CODE_7F0B9F14+148w
+D:80044904     dword_D_80044904:.word 0x7F7FFFFF, 0x7F7FFFFF, 0x7F7FFFFF, 0xFF7FFFFF, 0xFF7FFFFF, 0xFF7FFFFF
+D:80044904                                              # DATA XREF: sub_CODE_7F0BA2D4+50o
+D:80044904                                              # sub_CODE_7F0BA2D4+11Co
+D:80044904                                              # sub_CODE_7F0BA2D4+128r
+D:80044904                     .word 0, 0, 0
+D:80044928     dword_D_80044928:.word 0xFC26A004, 0x1F1093FF, 0xFC232DFF, 0xFFFFFE38, 0, 0
+D:80044928                                              # DATA XREF: D:off_D_80044D88o
+D:80044940     dword_D_80044940:.word 0xB900031D, 0xC192078, 0xB900031D, 0xC8112078, 0xB900031D, 0xC182078
+D:80044940                                              # DATA XREF: sub_CODE_7F0BA5C0+Co
+D:80044940                                              # sub_CODE_7F0BA5C0+14r
+D:80044940                                              # sub_CODE_7F0BA5C0:loc_CODE_7F0BA5D8o
+D:80044940                                              # sub_CODE_7F0BA5C0+28r
+D:80044940                                              # D:80044D8Co
+D:80044940                     .word 0xB900031D, 0xC8102078, 0xB900031D, 0xC192D58, 0xB900031D, 0xC8112D58
+D:80044940                     .word 0xB900031D, 0xC184DD8, 0xB900031D, 0xC8104DD8, 0xB900031D, 0xC1849D8
+D:80044940                     .word 0xB900031D, 0xC81049D8, 0xB900031D, 0xC193078, 0xB900031D, 0xC8113078
+D:80044940                     .word 0xB900031D, 0xC192048, 0xB900031D, 0xC8112048, 0xB900031D, 0xC182048
+D:80044940                     .word 0xB900031D, 0xC8102048, 0, 0
+D:800449C8     dword_D_800449C8:.word 0xB900031D, 0xC184DD8, 0xB900031D, 0xC8104DD8, 0xB900031D, 0xC1849D8
+D:800449C8                                              # DATA XREF: D:80044D9Co
+D:800449C8                     .word 0xB900031D, 0xC81049D8, 0xB900031D, 0xC193078, 0xB900031D, 0xC8113078
+D:800449C8                     .word 0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF
+D:800449C8                     .word 0xFC121A24, 0xFF37FFFF, 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD
+D:800449C8                     .word 0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD, 0xFC26A004, 0x1F1093FF
+D:800449C8                     .word 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF
+D:800449C8                     .word 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD, 0xFC127E24, 0xFFFFF9FC
+D:800449C8                     .word 0xFC127E24, 0xFFFFFBFD, 0xFCFFFFFF, 0xFFFE7838, 0xFCFFFFFF, 0xFFFE7A38
+D:800449C8                     .word 0xFCFFFFFF, 0xFFFE793C, 0xFCFFFFFF, 0xFFFE7B3D, 0xFC26E404, 0x1F10FFFF
+D:800449C8                     .word 0xFC26E404, 0x1F14FFFF, 0, 0
+D:80044AB0     dword_D_80044AB0:.word 0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF
+D:80044AB0                                              # DATA XREF: D:80044DA0o
+D:80044AB0                     .word 0xFC121A24, 0xFF37FFFF, 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD
+D:80044AB0                     .word 0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD, 0xFC26A004, 0x1F1093FF
+D:80044AB0                     .word 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF
+D:80044AB0                     .word 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD, 0xFC127E24, 0xFFFFF9FC
+D:80044AB0                     .word 0xFC127E24, 0xFFFFFBFD, 0xFCFFFFFF, 0xFFFE7838, 0xFCFFFFFF, 0xFFFE7A38
+D:80044AB0                     .word 0xFCFFFFFF, 0xFFFE793C, 0xFCFFFFFF, 0xFFFE7B3D, 0, 0
+D:80044B58     dword_D_80044B58:.word 0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF
+D:80044B58                                              # DATA XREF: D:80044DA4o
+D:80044B58                     .word 0xFC121A24, 0xFF37FFFF, 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD
+D:80044B58                     .word 0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD, 0xFC26A004, 0x1F1093FF
+D:80044B58                     .word 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF
+D:80044B58                     .word 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD, 0xFC127E24, 0xFFFFF9FC
+D:80044B58                     .word 0xFC127E24, 0xFFFFFBFD, 0xFCFFFFFF, 0xFFFE7838, 0xFCFFFFFF, 0xFFFE7A38
+D:80044B58                     .word 0xFCFFFFFF, 0xFFFE793C, 0xFCFFFFFF, 0xFFFE7B3D, 0, 0
+D:80044C00     dword_D_80044C00:.word 0xB900031D, 0x5049D8, 0xB900031D, 0x553078, 0xB900031D, 0xC1849D8, 0xB900031D
+D:80044C00                                              # DATA XREF: D:80044D90o
+D:80044C00                     .word 0xC193078, 0, 0
+D:80044C28     dword_D_80044C28:.word 0xB900031D, 0x552078, 0xB900031D, 0x502078, 0xB900031D, 0xC192078, 0xB900031D
+D:80044C28                                              # DATA XREF: D:80044D94o
+D:80044C28                     .word 0xC182078, 0, 0
+D:80044C50     dword_D_80044C50:.word 0xB900031D, 0xC1849D8, 0xB900031D, 0xC184B50, 0, 0
+D:80044C50                                              # DATA XREF: D:80044D98o
+D:80044C68     dword_D_80044C68:.word 0xBA001402, 0     # DATA XREF: D:80044DA8o
+D:80044C70                     .word 0xBA001402, 0x100000, 0xB900031D, 0x502048, 0xB900031D, 0x8D02048, 0xFC127E24
+D:80044C70                     .word 0xFFFFF9FC, 0xFC127FFF, 0xFFFFF838, 0, 0
+D:80044CA0     dword_D_80044CA0:.word 0xFC127E24, 0xFFFFF9FC, 0xFC137E26, 0xFFFFFBFD, 0xFC121824, 0xFF33FFFF
+D:80044CA0                                              # DATA XREF: D:80044DACo
+D:80044CA0                     .word 0xFC131A26, 0xFF37FFFF, 0xFC127E24, 0xFFFFF9FC, 0xFC137E26, 0xFFFFFBFD
+D:80044CA0                     .word 0xFC121824, 0xFF33FFFF, 0xFC131A26, 0xFF37FFFF, 0xFCFFFFFF, 0xFFFE793C
+D:80044CA0                     .word 0xFC637EC6, 0xFFFFFBFD, 0xFC26A004, 0x1FFC93FC, 0xFC26A006, 0x1FFC93FD
+D:80044CA0                     .word 0xFC26A004, 0x1F1093FF, 0xFC26A006, 0x1F1493FF, 0xFC26A004, 0x1FFC93FC
+D:80044CA0                     .word 0xFC26A006, 0x1FFC93FD, 0xFC26A004, 0x1F1093FF, 0xFC26A006, 0x1F1493FF
+D:80044CA0                     .word 0xFC26E404, 0x1FFCFFFC, 0xFC26E406, 0x1FFCFFFD, 0xFC26E404, 0x1F10FFFF
+D:80044CA0                     .word 0xFC26E406, 0x1F14FFFF, 0xFC26E404, 0x1FFCFFFC, 0xFC26E406, 0x1FFCFFFD
+D:80044CA0                     .word 0xFC26E404, 0x1F10FFFF, 0xFC26E406, 0x1F14FFFF, 0xFCFFFFFF, 0xFFFE7838
+D:80044CA0                     .word 0xFC637FFF, 0xFFFFFA38, 0, 0
+D:80044D88     off_D_80044D88: .word dword_D_80044928   # DATA XREF: sub_CODE_7F0BA640+2Co
+D:80044D8C                     .word dword_D_80044940
+D:80044D90                     .word dword_D_80044C00
+D:80044D94                     .word dword_D_80044C28
+D:80044D98                     .word dword_D_80044C50
+D:80044D9C                     .word dword_D_800449C8
+D:80044DA0                     .word dword_D_80044AB0
+D:80044DA4                     .word dword_D_80044B58
+D:80044DA8                     .word dword_D_80044C68
+D:80044DAC                     .word dword_D_80044CA0
+D:80044DB0     dword_D_80044DB0:.word 0                 # DATA XREF: sub_CODE_7F0BA640+3Cr
+D:80044DB0                                              # sub_CODE_7F0BA640+9Cw
+D:80044DB0                                              # sub_CODE_7F0BA640+B8w
+D:80044DB0                                              # sub_CODE_7F0BA640+BCw
 
+*/
 
 
 

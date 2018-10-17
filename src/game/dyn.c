@@ -1,7 +1,25 @@
 #include "ultra64.h"
 
 
-
+/* data
+D:800482E0     dword_D_800482E0:.word 0                 # DATA XREF: something_with_dyn_c_debug+18o
+D:800482E0                                              # set_vtx_gfx_mem_alloc+CCr
+D:800482E4     dword_D_800482E4:.word 0x10000
+D:800482E8                     .word 0x18000
+D:800482EC                     .word 0x20000
+D:800482F0     dword_D_800482F0:.word 0x28000           # DATA XREF: set_vtx_gfx_mem_alloc+148r
+D:800482F4                     .word 0x10000
+D:800482F8                     .word 0x18000
+D:800482FC                     .word 0x20000
+D:80048300                     .word 0x28000
+D:80048304                     .ascii ">>>>>>>>>>>>>>>>>>>>>>>>>"<0><0><0>
+D:80048320     membars_string: .ascii "========================="<0><0><0>
+D:80048320                                              # DATA XREF: draw_membars+50o
+D:80048320                                              # draw_membars+B0o
+D:8004833C                     .ascii "-------------------------"<0><0><0>
+D:80048358                     .word 0
+D:8004835C                     .word 0
+*/
 
 
 

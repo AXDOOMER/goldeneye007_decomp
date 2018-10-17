@@ -1,7 +1,17 @@
 #include "ultra64.h"
 
 
-
+/* data
+D:80040160     qword_D_80040160:.dword 0xAB8D9F7781280783  # DATA XREF: sub_CODE_7F09B740r
+D:80040160                                              # sub_CODE_7F09B740+3Cw
+D:80040160                                              # sub_CODE_7F09B788+4w
+D:80040160                                              # copy_current_ingame_registers_before_ramrom_playback+30r
+D:80040160                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+2Cw
+D:80040160                                              # copy_current_ingame_registers_before_ramrom_playback+28r
+D:80040160                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+34w
+D:80040168                     .word 0
+D:8004016C                     .word 0
+*/
 
 
 
