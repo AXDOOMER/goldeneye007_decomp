@@ -100,7 +100,13 @@ D:80037068                                              # sub_CODE_7F09166C+84w
 
 */
 
-
+/* rodata
+D:80055850     flt_D_80055850: .float 0.017453292
+D:80055854     flt_D_80055854: .float 0.017453292       # DATA XREF: sub_CODE_7F091080+3B4r
+D:80055858     flt_D_80055858: .float 0.017453292       # DATA XREF: sub_CODE_7F091080+3DCr
+D:8005585C     flt_D_8005585C: .float 0.017453292       # DATA XREF: sub_CODE_7F091080+404r
+D:80055860     flt_D_80055860: .float 6.2831855         # DATA XREF: sub_CODE_7F091618+18r
+*/
 
 
 #ifdef NONMATCHING

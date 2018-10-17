@@ -344,6 +344,137 @@ D:8003700C                                              # debug_menu_processor+7
 D:80037010                     .word 0
 */
 
+/* rodata
+D:80055370     aMoveView:      .ascii "move view"<0><0><0>  # DATA XREF: D:mcm_stringso
+D:8005537C     aStanView:      .ascii "stan view"<0><0><0>  # DATA XREF: D:80036E34o
+D:80055388     aBondView:      .ascii "bond view"<0><0><0>  # DATA XREF: D:80036E38o
+D:80055394     aLevel:         .ascii "level"<0><0><0>  # DATA XREF: D:80036E3Co
+D:8005539C     aRegion:        .ascii "region"<0><0>    # DATA XREF: D:80036E40o
+D:800553A4     aScale:         .ascii "scale"<0><0><0>  # DATA XREF: D:80036E44o
+D:800553AC     aPlayTitle:     .ascii "play title"<0><0>  # DATA XREF: D:80036E48o
+D:800553B8     aBondDie:       .ascii "bond die"<0><0><0><0>  # DATA XREF: D:80036E4Co
+D:800553C4     aSelectAnim:    .ascii "select anim"<0>  # DATA XREF: D:80036E50o
+D:800553D0     aGunPos:        .ascii "gun pos"<0>      # DATA XREF: D:80036E54o
+D:800553D8     aFlashColour:   .ascii "flash colour"<0><0><0><0>  # DATA XREF: D:80036E58o
+D:800553E8     aHitColour:     .ascii "hit colour"<0><0>  # DATA XREF: D:80036E5Co
+D:800553F4     aMusic:         .ascii "music"<0>        # DATA XREF: D:80036E60o
+D:800553FA                     .half 0
+D:800553FC     aSfx:           .ascii "sfx"<0>          # DATA XREF: D:80036E64o
+D:80055400     aInvincible:    .ascii "invincible"<0><0>  # DATA XREF: D:80036E68o
+D:8005540C     aVisible:       .ascii "visible"<0>      # DATA XREF: D:80036E6Co
+D:80055414     aCollisions:    .ascii "collisions"<0><0>  # DATA XREF: D:80036E70o
+D:80055420     aAllGuns:       .ascii "all guns"<0><0><0><0>  # DATA XREF: D:80036E74o
+D:8005542C     aMaxAmmo:       .ascii "max ammo"<0><0><0><0>  # DATA XREF: D:80036E78o
+D:80055438     aDisplaySpeed:  .ascii "display speed"<0><0><0>  # DATA XREF: D:80036E7Co
+D:80055448     aBackground:    .ascii "background"<0><0>  # DATA XREF: D:80036E80o
+D:80055454     aProps:         .ascii "props"<0><0><0>  # DATA XREF: D:80036E84o
+D:8005545C     aStanHit:       .ascii "stan hit"<0><0><0><0>  # DATA XREF: D:80036E88o
+D:80055468     aStanRegion:    .ascii "stan region"<0>  # DATA XREF: D:80036E8Co
+D:80055474     aStanProblems:  .ascii "stan problems"<0><0><0>  # DATA XREF: D:80036E90o
+D:80055484     aPrintManPos:   .ascii "print man pos"<0><0><0>  # DATA XREF: D:80036E94o
+D:80055494     aPortClose:     .ascii "port close"<0><0>  # DATA XREF: D:80036E98o
+D:800554A0     aPortInf:       .ascii "port inf"<0><0><0><0>  # DATA XREF: D:80036E9Co
+D:800554AC     aPortApprox:    .ascii "port approx"<0>  # DATA XREF: D:80036EA0o
+D:800554B8     aPrRoomLoads:   .ascii "pr room loads"<0><0><0>  # DATA XREF: D:80036EA4o
+D:800554C8     aShowMemUse:    .ascii "show mem use"<0><0><0><0>  # DATA XREF: D:80036EA8o
+D:800554D8     aShowMemBars:   .ascii "show mem bars"<0><0><0>  # DATA XREF: D:80036EACo
+D:800554E8     aGrabRgb:       .ascii "grab rgb"<0><0><0><0>  # DATA XREF: D:80036EB0o
+D:800554F4     aGrabJpeg:      .ascii "grab jpeg"<0><0><0>  # DATA XREF: D:80036EB4o
+D:80055500     aGrabTask:      .ascii "grab task"<0><0><0>  # DATA XREF: D:80036EB8o
+D:8005550C     aRndWalk:       .ascii "rnd walk"<0><0><0><0>  # DATA XREF: D:80036EBCo
+D:80055518     aRecordRamrom:  .ascii "record ramrom"<0><0><0>  # DATA XREF: D:80036EC0o
+D:80055528     aRecord1:       .ascii "record 1"<0><0><0><0>  # DATA XREF: D:80036EC4o
+D:80055534     aRecord2:       .ascii "record 2"<0><0><0><0>  # DATA XREF: D:80036EC8o
+D:80055540     aRecord3:       .ascii "record 3"<0>     # DATA XREF: D:80036ECCo
+D:80055549                     .byte 0, 0, 0
+D:8005554C     aReplayRamrom:  .ascii "replay ramrom"<0>  # DATA XREF: D:80036ED0o
+D:8005555A                     .half 0
+D:8005555C     aSaveRamrom:    .ascii "save ramrom"<0>  # DATA XREF: D:80036ED4o
+D:80055568     aLoadRamrom:    .ascii "load ramrom"<0>  # DATA XREF: D:80036ED8o
+D:80055574     aAutoYAim:      .ascii "auto y aim"<0>   # DATA XREF: D:80036EDCo
+D:8005557F                     .byte 0
+D:80055580     aAutoXAim:      .ascii "auto x aim"<0>   # DATA XREF: D:80036EE0o
+D:8005558B                     .byte 0
+D:8005558C     a007:           .ascii "007"<0>          # DATA XREF: D:80036EE4o
+D:80055590     aAgent:         .ascii "agent"<0>        # DATA XREF: D:80036EE8o
+D:80055596                     .half 0
+D:80055598     aAll:           .ascii "all"<0>          # DATA XREF: D:80036EECo
+D:8005559C     aFast:          .ascii "fast"<0>         # DATA XREF: D:80036EF0o
+D:800555A1                     .byte 0, 0, 0
+D:800555A4     aObjectives:    .ascii "objectives"<0>   # DATA XREF: D:80036EF4o
+D:800555AF                     .byte 0
+D:800555B0     aMargTop:       .ascii "marg top"<0>     # DATA XREF: D:80036EF8o
+D:800555B9                     .byte 0, 0, 0
+D:800555BC     aMargBot:       .ascii "marg bot"<0>     # DATA XREF: D:80036EFCo
+D:800555C5                     .byte 0, 0, 0
+D:800555C8     aMargLeft:      .ascii "marg left"<0>    # DATA XREF: D:80036F00o
+D:800555D2                     .half 0
+D:800555D4     aMargRight:     .ascii "marg right"<0>   # DATA XREF: D:80036F04o
+D:800555DF                     .byte 0
+D:800555E0     aMargReset:     .ascii "marg reset"<0>   # DATA XREF: D:80036F08o
+D:800555EB                     .byte 0
+D:800555EC     aScreenSize:    .ascii "screen size"<0>  # DATA XREF: D:80036F0Co
+D:800555F8     aScreenPos:     .ascii "screen pos"<0>   # DATA XREF: D:80036F10o
+D:80055603                     .byte 0
+D:80055604     aShowPatrols:   .ascii "show patrols"<0>  # DATA XREF: D:80036F14o
+D:80055611                     .byte 0, 0, 0
+D:80055614     aIntro:         .ascii "intro"<0>        # DATA XREF: D:80036F18o
+D:8005561A                     .half 0
+D:8005561C     aIntroEdit:     .ascii "intro edit"<0>   # DATA XREF: D:80036F1Co
+D:80055627                     .byte 0
+D:80055628     aIntroPos:      .ascii "intro pos"<0>    # DATA XREF: D:80036F20o
+D:80055632                     .half 0
+D:80055634     aWorldPos:      .ascii "world pos"<0>    # DATA XREF: D:80036F24o
+D:8005563E                     .half 0
+D:80055640     aGunKeyPos:     .ascii "gun key pos"<0>  # DATA XREF: D:80036F28o
+D:8005564C     aVisCvg:        .ascii "vis cvg"<0>      # DATA XREF: D:80036F2Co
+D:80055654     aChrNum:        .ascii "chr num"<0>      # DATA XREF: D:80036F30o
+D:8005565C     aRoomBlocks:    .ascii "room blocks"<0>  # DATA XREF: D:80036F34o
+D:80055668     aProfile:       .ascii "profile"<0>      # DATA XREF: D:80036F38o
+D:80055670     aObjLoad:       .ascii "obj load"<0>     # DATA XREF: D:80036F3Co
+D:80055679                     .byte 0, 0, 0
+D:8005567C     aWeaponLoad:    .ascii "weapon load"<0>  # DATA XREF: D:80036F40o
+D:80055688     aJoy2SkyEdit:   .ascii "joy2 sky edit"<0>  # DATA XREF: D:80036F44o
+D:80055696                     .half 0
+D:80055698     aJoy2HitsEdit:  .ascii "joy2 hits edit"<0>  # DATA XREF: D:80036F48o
+D:800556A7                     .byte 0
+D:800556A8     aJoy2DetailEdit:.ascii "joy2 detail edit"<0>  # DATA XREF: D:80036F4Co
+D:800556B9                     .byte 0, 0, 0
+D:800556BC     aExplosionInfo: .ascii "explosion info"<0>  # DATA XREF: D:80036F50o
+D:800556CB                     .byte 0
+D:800556CC     aMagicFog:      .ascii "magic fog"<0>    # DATA XREF: D:80036F54o
+D:800556D6                     .half 0
+D:800556D8     aGunWatchPos:   .ascii "gun watch pos"<0>  # DATA XREF: D:80036F58o
+D:800556E6                     .half 0
+D:800556E8     aTestingManPos: .ascii "testing man pos"<0>  # DATA XREF: D:80036F5Co
+D:800556F8     aFog:           .ascii "fog"<0>          # DATA XREF: D:80036F60o
+D:800556FC     jpt_700C46A0:   .word debug_stanview, debug_bondview, loc_CODE_7F090798, debug_level, loc_CODE_7F0907BC
+D:800556FC                                              # DATA XREF: debug_menu_processor+1C4r
+D:800556FC                     .word debug_scale, debug_playtitle, debug_bonddie, debug_selectanim, debug_gunpos  # jump table for switch statement
+D:800556FC                     .word debug_flashcolor, debug_hitcolor, debug_music, debug_sfx, debug_invincible
+D:800556FC                     .word debug_visible, debug_collisions, debug_allguns, debug_maxammo, debug_displayspeed
+D:800556FC                     .word debug_dodrawbg, debug_dodrawobj, debug_stanhit, debug_stanregion, debug_turbo
+D:800556FC                     .word debug_printmanpos, portal_close_inf_approx, portal_close_inf_approx
+D:800556FC                     .word portal_close_inf_approx, debug_prroomloads, debug_showmemuse, debug_showmembars
+D:800556FC                     .word debug_grabrgb, debug_grabjpeg, debug_taskgrab, def_7F090770, debug_recordramrom
+D:800556FC                     .word debug_ramrom_record1, debug_ramrom_record2, debug_ramrom_record3, debug_replayramrom
+D:800556FC                     .word debug_saveramrom, debug_loadramrom, debug_autoyaim, debug_autoxaim, debug_007
+D:800556FC                     .word debug_agent, debug_all, fast_bond_debug, debug_objectives, def_7F090770
+D:800556FC                     .word def_7F090770, def_7F090770, def_7F090770, def_7F090770, loc_CODE_7F090834
+D:800556FC                     .word debug_screenpos, debug_showpatrols, debug_intro, debug_introedit, debug_intropos
+D:800556FC                     .word debug_worldpos, debug_chrkeypos, debug_viscvc, debug_chrnum, debug_roomblocks
+D:800556FC                     .word debug_profile, debug_objload, debug_weaponload, debug_joy2skyedit, debug_joy2hitsedit
+D:800556FC                     .word debug_joy2detailedit, debug_explosioninfo, debug_magicfog, debug_gunwatchpos
+D:800556FC                     .word debug_testingmanpos, debug_fog
+D:80055830     jpt_700C4DD8:   .word def_7F090EA8       # DATA XREF: debug_menu_processor+8FCr
+D:80055830                     .word def_7F090EA8       # jump table for switch statement
+D:80055830                     .word def_7F090EA8
+D:80055830                     .word def_7F090EA8
+D:80055830                     .word def_7F090EA8
+D:80055844                     .word 0
+D:80055848                     .word 0
+D:8005584C                     .word 0
+*/
 
 #ifdef NONMATCHING
 void display_debug_menu_text_onscreen(void) {

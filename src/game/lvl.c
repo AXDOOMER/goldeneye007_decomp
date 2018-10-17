@@ -615,7 +615,34 @@ D:80048488                                              # record_next_movie_to_s
 D:8004848C                     .align 4
 */
 
-
+/* rodata
+D:8005B6B0     aLv_c_debug:    .ascii "lv_c_debug"<0><0>
+D:8005B6B0                                              # DATA XREF: something_with_lvl_c_debug+Co
+D:8005B6BC     aStanshow_:     .ascii "-stanshow_"<0><0>
+D:8005B6BC                                              # DATA XREF: sub_CODE_7F0BE30C:loc_CODE_7F0BE694o
+D:8005B6C8     aStanshow__5:   .ascii "-stanshow_"<0><0>  # DATA XREF: sub_CODE_7F0BE30C+3A8o
+D:8005B6D4     aStanshow__0:   .ascii "-stanshow_"<0><0>
+D:8005B6D4                                              # DATA XREF: sub_CODE_7F0BE30C:loc_CODE_7F0BE6ECo
+D:8005B6E0     aStanshow__1:   .ascii "-stanshow_"<0><0>  # DATA XREF: sub_CODE_7F0BE30C+400o
+D:8005B6EC     aStanshow__2:   .ascii "-stanshow_"<0><0>
+D:8005B6EC                                              # DATA XREF: sub_CODE_7F0BE30C:loc_CODE_7F0BE744o
+D:8005B6F8     aStanshow__3:   .ascii "-stanshow_"<0><0>  # DATA XREF: sub_CODE_7F0BE30C+458o
+D:8005B704     aOneMinuteLeft: .ascii "One minute left"<0>  # DATA XREF: manage_mp_game+258o
+D:8005B714     aSetdetailDDDDDDDDD:.ascii "setdetail %d %d %d %d %d %d %d %d %d"<0>
+D:8005B739                     .byte 0, 0, 0
+D:8005B73C     flt_D_8005B73C: .float 0.60000002        # DATA XREF: sub_CODE_7F0BE8D0:loc_CODE_7F0BE934r
+D:8005B740     flt_D_8005B740: .float 0.47500002        # DATA XREF: sub_CODE_7F0BE8D0+84r
+D:8005B744     flt_D_8005B744: .float 0.60000002        # DATA XREF: sub_CODE_7F0BE8D0+D4r
+D:8005B748     flt_D_8005B748: .float 0.2               # DATA XREF: sub_CODE_7F0BE8D0+120r
+D:8005B74C     flt_D_8005B74C: .float 0.2               # DATA XREF: sub_CODE_7F0BE8D0+214r
+D:8005B750     aReplayDemo_D:  .ascii "replay/demo.%d"<0><0>
+D:8005B750                                              # DATA XREF: save_ramrom_to_devtool+1Co
+D:8005B760     aReplayDemo_D_1:.ascii "replay/demo.%d"<0><0>
+D:8005B760                                              # DATA XREF: save_ramrom_to_devtool:loc_CODE_7F0BFDB8o
+D:8005B770     aReplayDemo_load:.ascii "replay/demo.load"<0><0><0><0>
+D:8005B770                                              # DATA XREF: load_ramrom_from_devtool+8o
+D:8005B770                                              # load_ramrom_from_devtool+20o
+*/
 
 
 #ifdef NONMATCHING

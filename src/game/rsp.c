@@ -26,6 +26,9 @@ D:8004EAB0                                              # load_rsp_microcode+DC
 D:8004EAB0                                              # load_rsp_microcode+100w
 */
 
+/* rodata
+D:8005BFB0     aRsp_c_debug:   .ascii "rsp_c_debug"<0>  # DATA XREF: something_with_rsp_c_debug+Co
+*/
 
 #ifdef NONMATCHING
 void something_with_rsp_c_debug(void) {

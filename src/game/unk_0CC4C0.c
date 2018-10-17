@@ -2813,6 +2813,45 @@ D:8004E8D8                     .word 0
 D:8004E8DC                     .word 0
 */
 
+/* rodata
+D:8005BE80     aHit_default:   .ascii "HIT_DEFAULT"<0>  # DATA XREF: D:8004E8A0o
+D:8005BE8C     aHit_stone:     .ascii "HIT_STONE"<0><0><0>  # DATA XREF: D:8004E8A4o
+D:8005BE98     aHit_wood:      .ascii "HIT_WOOD"<0><0><0><0>  # DATA XREF: D:8004E8A8o
+D:8005BEA4     aHit_metal:     .ascii "HIT_METAL"<0><0><0>  # DATA XREF: D:8004E8ACo
+D:8005BEB0     aHit_glass:     .ascii "HIT_GLASS"<0><0><0>  # DATA XREF: D:8004E8B0o
+D:8005BEBC     aHit_water:     .ascii "HIT_WATER"<0><0><0>  # DATA XREF: D:8004E8B4o
+D:8005BEC8     aHit_snow:      .ascii "HIT_SNOW"<0><0><0><0>  # DATA XREF: D:8004E8B8o
+D:8005BED4     aHit_dirt:      .ascii "HIT_DIRT"<0><0><0><0>  # DATA XREF: D:8004E8BCo
+D:8005BEE0     aHit_mud:       .ascii "HIT_MUD"<0>      # DATA XREF: D:8004E8C0o
+D:8005BEE8     aHit_tile:      .ascii "HIT_TILE"<0><0><0><0>  # DATA XREF: D:8004E8C4o
+D:8005BEF4     aHit_metalobj:  .ascii "HIT_METALOBJ"<0><0><0><0>  # DATA XREF: D:8004E8C8o
+D:8005BF04     aHit_chr:       .ascii "HIT_CHR"<0>      # DATA XREF: D:8004E8CCo
+D:8005BF0C     aHit_glass_xlu: .ascii "HIT_GLASS_XLU"<0><0><0>  # DATA XREF: D:8004E8D0o
+D:8005BF1C                     .align 4
+D:8005BF20     tlb_ptr_DL_type_B1toC0:.word loc_CODE_7F0CE66C
+D:8005BF20                                              # DATA XREF: process_microcode_sort_display_modes_expand_image_calls+ACr
+D:8005BF20                     .word loc_CODE_7F0CE720  # jump table for switch statement
+D:8005BF20                     .word loc_CODE_7F0CE720
+D:8005BF20                     .word loc_CODE_7F0CE720
+D:8005BF20                     .word loc_CODE_7F0CE720
+D:8005BF20                     .word loc_CODE_7F0CE720
+D:8005BF20                     .word loc_CODE_7F0CE720
+D:8005BF20                     .word loc_CODE_7F0CE720
+D:8005BF20                     .word loc_CODE_7F0CE720
+D:8005BF20                     .word loc_CODE_7F0CE6B8
+D:8005BF20                     .word loc_CODE_7F0CE694
+D:8005BF20                     .word loc_CODE_7F0CE720
+D:8005BF20                     .word loc_CODE_7F0CE720
+D:8005BF20                     .word loc_CODE_7F0CE720
+D:8005BF20                     .word loc_CODE_7F0CE66C
+D:8005BF20                     .word loc_CODE_7F0CE1D8
+D:8005BF60     tlb_ptr_C0_image_recall_types:.word loc_CODE_7F0CE2BC
+D:8005BF60                                              # DATA XREF: process_microcode_sort_display_modes_expand_image_calls+190r
+D:8005BF60                     .word loc_CODE_7F0CE428  # jump table for switch statement
+D:8005BF60                     .word loc_CODE_7F0CE4B8
+D:8005BF60                     .word loc_CODE_7F0CE584
+D:8005BF60                     .word loc_CODE_7F0CE5BC
+*/
 
 
 #ifdef NONMATCHING

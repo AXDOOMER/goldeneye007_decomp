@@ -54,7 +54,10 @@ D:80036BA0                     .word 0
 
 */
 
-
+/* rodata
+D:80055340     aMenu_cErrorTriedToCallFont_makegt:.ascii "menu.c: ERROR! Tried to call font_makegt\n"
+D:80055340                                              # DATA XREF: sub_CODE_7F09000C+158o
+*/
 
 
 #ifdef NONMATCHING

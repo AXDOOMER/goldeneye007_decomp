@@ -1,7 +1,7 @@
 #include "ultra64.h"
 
 
-//late rodata 
+//rodata 
 const f32 F32_8004ED70 = 6.2831855;
 const f32 F32_8004ED74 = 0.000095873802;
 const f32 F32_8004ED78 = 0.10000001;

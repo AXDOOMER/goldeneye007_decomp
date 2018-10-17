@@ -1,7 +1,10 @@
 #include "ultra64.h"
 
 
-
+/* rodata
+D:8005BD20     flt_D_8005BD20: .float 3.1415927         # DATA XREF: display_red_blue_on_radar+360r
+D:8005BD24     flt_D_8005BD24: .float 0.017453292       # DATA XREF: display_red_blue_on_radar:loc_CODE_7F0C64E0r
+*/
 
 
 

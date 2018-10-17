@@ -163,7 +163,32 @@ D:80040938     dword_D_80040938:.word 0                 # DATA XREF: sub_CODE_7F
 D:8004093C     dword_D_8004093C:.word 0xDC              # DATA XREF: sub_CODE_7F0A108C+5Cr
 */
 
-
+/* rodata
+D:800576B0     flt_D_800576B0: .float 999999.88         # DATA XREF: sub_CODE_7F09C250:loc_CODE_7F09C4F8r
+D:800576B4     flt_D_800576B4: .float 6.2831855         # DATA XREF: sub_CODE_7F09C250+32Cr
+D:800576B8     flt_D_800576B8: .float 0.80000001        # DATA XREF: sub_CODE_7F09C7C4:loc_CODE_7F09C814r
+D:800576BC     flt_D_800576BC: .float 6.2831855         # DATA XREF: sub_CODE_7F09CEE8+2E8r
+D:800576C0     flt_D_800576C0: .float 30000.0           # DATA XREF: sub_CODE_7F09DDA4+320r
+D:800576C4     flt_D_800576C4: .float 30000.0           # DATA XREF: sub_CODE_7F09DDA4+4ECr
+D:800576C8     flt_D_800576C8: .float -30000.0          # DATA XREF: sub_CODE_7F09DDA4+51Cr
+D:800576CC     flt_D_800576CC: .float 0.15000001        # DATA XREF: sub_CODE_7F09E8AC+A8r
+D:800576D0     flt_D_800576D0: .float 0.30000001        # DATA XREF: sub_CODE_7F09E8AC+ACr
+D:800576D4     flt_D_800576D4: .float 0.0099999998      # DATA XREF: sub_CODE_7F09E8AC+B4r
+D:800576D8     flt_D_800576D8: .float 0.02              # DATA XREF: sub_CODE_7F09E8AC+BCr
+D:800576DC     flt_D_800576DC: .float 6.2831855         # DATA XREF: sub_CODE_7F09E8AC+348r
+D:800576E0     flt_D_800576E0: .float 1.12              # DATA XREF: sub_CODE_7F09F254+8Cr
+D:800576E4     flt_D_800576E4: .float 0.12              # DATA XREF: sub_CODE_7F09F254+94r
+D:800576E8     flt_D_800576E8: .float 6.2831855         # DATA XREF: sub_CODE_7F09F254+91Cr
+D:800576EC     flt_D_800576EC: .float 0.1               # DATA XREF: sub_CODE_7F09F254+9E4r
+D:800576F0     flt_D_800576F0: .float 30000.0           # DATA XREF: sub_CODE_7F09FD3C+74r
+D:800576F4     flt_D_800576F4: .float -30000.0          # DATA XREF: sub_CODE_7F09FD3C+78r
+D:800576F8     flt_D_800576F8: .float 0.2               # DATA XREF: sub_CODE_7F09FD3C+80r
+D:800576FC     flt_D_800576FC: .float -20000.0          # DATA XREF: sub_CODE_7F0A0034+BCr
+D:80057700     flt_D_80057700: .float 20000.0           # DATA XREF: sub_CODE_7F0A0034+E0r
+D:80057704     flt_D_80057704: .float 6.2831855         # DATA XREF: sub_CODE_7F0A027C+80r
+D:80057708     flt_D_80057708: .float 0.2               # DATA XREF: sub_CODE_7F0A027C+118r
+D:8005770C     flt_D_8005770C: .float 0.80000001        # DATA XREF: sub_CODE_7F0A027C+124r
+*/
 
 #ifdef NONMATCHING
 void sub_GAME_7F09C250(void) {

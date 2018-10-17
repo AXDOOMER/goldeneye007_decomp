@@ -631,6 +631,788 @@ dword_D_800322A4:.word 0                 # DATA XREF: sub_CODE_7F0523F8+4Co
 dword_D_800322A8:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 */
 
+/*rodata
+D:80052100     jpt_7006894C:   .word action00_length, action01_length, locret_CODE_7F034A34, locret_CODE_7F034A3C
+D:80052100                                              # DATA XREF: get_length_of_action_block+14r
+D:80052100                     .word locret_CODE_7F034A44, locret_CODE_7F034A4C, locret_CODE_7F034A54, locret_CODE_7F034A5C  # jump table for switch statement
+D:80052100                     .word locret_CODE_7F034A64, locret_CODE_7F034A6C, locret_CODE_7F034A74, locret_CODE_7F034A7C
+D:80052100                     .word locret_CODE_7F034A84, locret_CODE_7F034A8C, locret_CODE_7F034A94, locret_CODE_7F034A9C
+D:80052100                     .word locret_CODE_7F034AA4, locret_CODE_7F034AAC, locret_CODE_7F034AB4, locret_CODE_7F034ABC
+D:80052100                     .word locret_CODE_7F034AC4, locret_CODE_7F034ACC, locret_CODE_7F034AE4, locret_CODE_7F034AEC
+D:80052100                     .word locret_CODE_7F034AF4, locret_CODE_7F034AFC, locret_CODE_7F034B04, locret_CODE_7F034B0C
+D:80052100                     .word locret_CODE_7F034B14, locret_CODE_7F034B1C, locret_CODE_7F034B24, locret_CODE_7F034B2C
+D:80052100                     .word locret_CODE_7F034B34, locret_CODE_7F034B3C, locret_CODE_7F034B44, locret_CODE_7F034B4C
+D:80052100                     .word locret_CODE_7F034B54, locret_CODE_7F034B5C, locret_CODE_7F034B64, locret_CODE_7F034B6C
+D:80052100                     .word locret_CODE_7F034B74, locret_CODE_7F034B7C, locret_CODE_7F034B84, locret_CODE_7F034B8C
+D:80052100                     .word locret_CODE_7F034B94, locret_CODE_7F034B9C, locret_CODE_7F034BA4, locret_CODE_7F034BAC
+D:80052100                     .word locret_CODE_7F034BB4, locret_CODE_7F034BBC, locret_CODE_7F034BC4, locret_CODE_7F034BCC
+D:80052100                     .word locret_CODE_7F034BD4, locret_CODE_7F034BDC, locret_CODE_7F034BE4, locret_CODE_7F034BEC
+D:80052100                     .word locret_CODE_7F034BF4, locret_CODE_7F034BFC, locret_CODE_7F034C04, locret_CODE_7F034C0C
+D:80052100                     .word locret_CODE_7F034C14, locret_CODE_7F034C1C, locret_CODE_7F034C24, locret_CODE_7F034C2C
+D:80052100                     .word locret_CODE_7F034C34, locret_CODE_7F034C3C, locret_CODE_7F034C44, locret_CODE_7F034C4C
+D:80052100                     .word locret_CODE_7F034C54, locret_CODE_7F034C5C, locret_CODE_7F034C64, locret_CODE_7F034C6C
+D:80052100                     .word locret_CODE_7F034C74, locret_CODE_7F034C7C, locret_CODE_7F034C84, locret_CODE_7F034C8C
+D:80052100                     .word locret_CODE_7F034C94, locret_CODE_7F034C9C, locret_CODE_7F034CA4, locret_CODE_7F034CAC
+D:80052100                     .word locret_CODE_7F034CB4, locret_CODE_7F034CBC, locret_CODE_7F034CC4, locret_CODE_7F034CCC
+D:80052100                     .word locret_CODE_7F034CD4, locret_CODE_7F034CDC, locret_CODE_7F034CE4, locret_CODE_7F034CEC
+D:80052100                     .word locret_CODE_7F034CF4, locret_CODE_7F034CFC, locret_CODE_7F034D04, locret_CODE_7F034D0C
+D:80052100                     .word locret_CODE_7F034D14, locret_CODE_7F034D1C, locret_CODE_7F034D24, locret_CODE_7F034D2C
+D:80052100                     .word locret_CODE_7F034D34, locret_CODE_7F034D3C, locret_CODE_7F034D44, locret_CODE_7F034D4C
+D:80052100                     .word locret_CODE_7F034D54, locret_CODE_7F034D5C, locret_CODE_7F034D64, locret_CODE_7F034D6C
+D:80052100                     .word locret_CODE_7F034D74, locret_CODE_7F034D7C, locret_CODE_7F034D84, locret_CODE_7F034D8C
+D:80052100                     .word locret_CODE_7F034D94, locret_CODE_7F034D9C, locret_CODE_7F034DA4, locret_CODE_7F034DAC
+D:80052100                     .word locret_CODE_7F034DB4, locret_CODE_7F034DBC, locret_CODE_7F034DC4, locret_CODE_7F034DCC
+D:80052100                     .word locret_CODE_7F034DD4, locret_CODE_7F034DDC, locret_CODE_7F034DE4, locret_CODE_7F034DEC
+D:80052100                     .word locret_CODE_7F034DF4, locret_CODE_7F034DFC, locret_CODE_7F034E04, locret_CODE_7F034E0C
+D:80052100                     .word locret_CODE_7F034E14, locret_CODE_7F034E1C, locret_CODE_7F034E24, locret_CODE_7F034E2C
+D:80052100                     .word locret_CODE_7F034E34, locret_CODE_7F034E3C, locret_CODE_7F034E44, locret_CODE_7F034E4C
+D:80052100                     .word locret_CODE_7F034E54, locret_CODE_7F034E5C, locret_CODE_7F034E64, locret_CODE_7F034E6C
+D:80052100                     .word locret_CODE_7F034E74, locret_CODE_7F034E7C, locret_CODE_7F034E84, locret_CODE_7F034E8C
+D:80052100                     .word locret_CODE_7F034E94, locret_CODE_7F034E9C, locret_CODE_7F034EA4, locret_CODE_7F034EAC
+D:80052100                     .word locret_CODE_7F034EB4, locret_CODE_7F034EBC, locret_CODE_7F034EC4, locret_CODE_7F034ECC
+D:80052100                     .word locret_CODE_7F034ED4, locret_CODE_7F034EDC, locret_CODE_7F034EE4, locret_CODE_7F034EEC
+D:80052100                     .word locret_CODE_7F034EF4, locret_CODE_7F034EFC, locret_CODE_7F034F04, locret_CODE_7F034F0C
+D:80052100                     .word locret_CODE_7F034F14, locret_CODE_7F034F1C, locret_CODE_7F034F24, locret_CODE_7F034F2C
+D:80052100                     .word locret_CODE_7F034F34, locret_CODE_7F034F3C, locret_CODE_7F034F44, locret_CODE_7F034F4C
+D:80052100                     .word locret_CODE_7F034F54, locret_CODE_7F034F5C, locret_CODE_7F034F64, locret_CODE_7F034F6C
+D:80052100                     .word locret_CODE_7F034F74, locret_CODE_7F034F7C, locret_CODE_7F034F84, locret_CODE_7F034F8C
+D:80052100                     .word locret_CODE_7F034F94, actionAD_length, locret_CODE_7F034F9C, locret_CODE_7F034FA4
+D:80052100                     .word locret_CODE_7F034FAC, locret_CODE_7F034FB4, locret_CODE_7F034FBC, locret_CODE_7F034FC4
+D:80052100                     .word locret_CODE_7F034FCC, locret_CODE_7F034FD4, locret_CODE_7F034FDC, locret_CODE_7F034FE4
+D:80052100                     .word locret_CODE_7F034FEC, locret_CODE_7F034FF4, locret_CODE_7F034FFC, locret_CODE_7F035004
+D:80052100                     .word locret_CODE_7F03500C, locret_CODE_7F035014, locret_CODE_7F03501C, locret_CODE_7F035024
+D:80052100                     .word locret_CODE_7F03502C, locret_CODE_7F035034, locret_CODE_7F03503C, locret_CODE_7F035044
+D:80052100                     .word locret_CODE_7F03504C, locret_CODE_7F035054, locret_CODE_7F03505C, locret_CODE_7F035064
+D:80052100                     .word locret_CODE_7F03506C, locret_CODE_7F035074, locret_CODE_7F03507C, locret_CODE_7F035084
+D:80052100                     .word locret_CODE_7F03508C, locret_CODE_7F035094, locret_CODE_7F03509C, locret_CODE_7F0350A4
+D:80052100                     .word locret_CODE_7F0350AC, locret_CODE_7F0350B4, locret_CODE_7F0350BC, locret_CODE_7F0350C4
+D:80052100                     .word locret_CODE_7F0350CC, locret_CODE_7F0350D4, locret_CODE_7F0350DC, locret_CODE_7F0350E4
+D:80052100                     .word locret_CODE_7F0350EC, locret_CODE_7F0350F4, locret_CODE_7F0350FC, locret_CODE_7F035104
+D:80052100                     .word locret_CODE_7F03510C, locret_CODE_7F035114, locret_CODE_7F03511C, locret_CODE_7F035124
+D:80052100                     .word locret_CODE_7F03512C, locret_CODE_7F035134, locret_CODE_7F03513C, locret_CODE_7F035144
+D:80052100                     .word locret_CODE_7F03514C, locret_CODE_7F035154, locret_CODE_7F03515C, locret_CODE_7F034ADC
+D:80052100                     .word locret_CODE_7F034AD4, locret_CODE_7F035164, locret_CODE_7F03516C, locret_CODE_7F035174
+D:80052100                     .word locret_CODE_7F03517C, locret_CODE_7F035184, locret_CODE_7F03518C, locret_CODE_7F035194
+D:80052100                     .word locret_CODE_7F03519C, locret_CODE_7F0351A4, locret_CODE_7F0351AC, locret_CODE_7F0351B4
+D:80052100                     .word locret_CODE_7F0351BC, locret_CODE_7F0351C4, locret_CODE_7F0351CC, locret_CODE_7F0351D4
+D:80052100                     .word locret_CODE_7F0351DC, locret_CODE_7F0351E4, locret_CODE_7F0351EC, locret_CODE_7F0351F4
+D:80052100                     .word actionFC_length
+D:800524F4     flt_D_800524F4: .float 6.2831855         # DATA XREF: parse_handle_actionblocks+DCr
+D:800524F8     jpt_700694DC:   .word action00_return, action01_goto_beginning_then_return, loc_CODE_7F0355EC
+D:800524F8                                              # DATA XREF: parse_handle_actionblocks+11Cr
+D:800524F8                     .word loc_CODE_7F0355F8, action04_end, loc_CODE_7F03563C, loc_CODE_7F0356B0  # jump table for switch statement
+D:800524F8                     .word loc_CODE_7F03570C, loc_CODE_7F035768, loc_CODE_7F03577C, loc_CODE_7F035790
+D:800524F8                     .word loc_CODE_7F03589C, loc_CODE_7F0358D0, loc_CODE_7F0358E4, loc_CODE_7F0359E8
+D:800524F8                     .word loc_CODE_7F035A1C, loc_CODE_7F035A50, loc_CODE_7F035A84, loc_CODE_7F035AB8
+D:800524F8                     .word loc_CODE_7F035AEC, loc_CODE_7F035B20, loc_CODE_7F035B74, loc_CODE_7F035C50
+D:800524F8                     .word loc_CODE_7F035CA4, loc_CODE_7F035CF8, loc_CODE_7F035D5C, action1A_throw_grenade
+D:800524F8                     .word action1B_drop_armed_weapon, loc_CODE_7F036218, loc_CODE_7F036244, loc_CODE_7F036260
+D:800524F8                     .word loc_CODE_7F03628C, loc_CODE_7F0362B8, loc_CODE_7F035EF8, loc_CODE_7F035F0C
+D:800524F8                     .word loc_CODE_7F035F20, loc_CODE_7F035F54, loc_CODE_7F035F9C, loc_CODE_7F035FB0
+D:800524F8                     .word loc_CODE_7F035FC4, loc_CODE_7F035FF8, loc_CODE_7F036030, loc_CODE_7F036068
+D:800524F8                     .word loc_CODE_7F0360A0, loc_CODE_7F0360D4, loc_CODE_7F036110, loc_CODE_7F03614C
+D:800524F8                     .word loc_CODE_7F0358F8, loc_CODE_7F03592C, loc_CODE_7F035974, loc_CODE_7F0359B4
+D:800524F8                     .word loc_CODE_7F036188, loc_CODE_7F0361A0, loc_CODE_7F0361DC, loc_CODE_7F0362D8
+D:800524F8                     .word loc_CODE_7F03630C, loc_CODE_7F036340, loc_CODE_7F036374, loc_CODE_7F0363A8
+D:800524F8                     .word loc_CODE_7F0363DC, loc_CODE_7F036410, loc_CODE_7F036444, loc_CODE_7F036478
+D:800524F8                     .word loc_CODE_7F0364AC, loc_CODE_7F0364E0, loc_CODE_7F036540, loc_CODE_7F036578
+D:800524F8                     .word loc_CODE_7F0365B4, loc_CODE_7F0365F4, loc_CODE_7F03663C, loc_CODE_7F036670
+D:800524F8                     .word loc_CODE_7F0366A4, loc_CODE_7F036718, loc_CODE_7F03678C, loc_CODE_7F036800
+D:800524F8                     .word loc_CODE_7F036874, loc_CODE_7F0368DC, loc_CODE_7F036944, loc_CODE_7F0369D4
+D:800524F8                     .word loc_CODE_7F036A64, loc_CODE_7F036AD0, loc_CODE_7F036B3C, loc_CODE_7F036B98
+D:800524F8                     .word loc_CODE_7F036C10, loc_CODE_7F036C88, loc_CODE_7F036CD4, loc_CODE_7F036D1C
+D:800524F8                     .word loc_CODE_7F036D6C, loc_CODE_7F036DA0, loc_CODE_7F036E2C, loc_CODE_7F036E78
+D:800524F8                     .word loc_CODE_7F036EBC, loc_CODE_7F036F0C, loc_CODE_7F036F70, loc_CODE_7F036FD0
+D:800524F8                     .word loc_CODE_7F037038, loc_CODE_7F0370B4, loc_CODE_7F037118, loc_CODE_7F03714C
+D:800524F8                     .word loc_CODE_7F0371BC, loc_CODE_7F0371FC, loc_CODE_7F0372A0, loc_CODE_7F0373BC
+D:800524F8                     .word loc_CODE_7F037400, loc_CODE_7F037444, loc_CODE_7F037518, loc_CODE_7F03757C
+D:800524F8                     .word loc_CODE_7F0375C0, loc_CODE_7F037608, loc_CODE_7F037678, loc_CODE_7F0376C8
+D:800524F8                     .word loc_CODE_7F037700, loc_CODE_7F037A94, loc_CODE_7F037AD4, loc_CODE_7F037B14
+D:800524F8                     .word loc_CODE_7F037B74, loc_CODE_7F037BD4, loc_CODE_7F037C38, loc_CODE_7F037C9C
+D:800524F8                     .word loc_CODE_7F037CDC, loc_CODE_7F037738, loc_CODE_7F037778, loc_CODE_7F0377B8
+D:800524F8                     .word loc_CODE_7F0377F8, loc_CODE_7F037838, loc_CODE_7F0378C4, loc_CODE_7F037950
+D:800524F8                     .word loc_CODE_7F0379AC, loc_CODE_7F037A20, loc_CODE_7F037D1C, loc_CODE_7F037D30
+D:800524F8                     .word loc_CODE_7F037D70, loc_CODE_7F037DA4, loc_CODE_7F037DE0, loc_CODE_7F037E1C
+D:800524F8                     .word loc_CODE_7F037E30, loc_CODE_7F037E70, loc_CODE_7F037EA4, loc_CODE_7F037EE0
+D:800524F8                     .word loc_CODE_7F037F1C, loc_CODE_7F037F50, loc_CODE_7F037F80, loc_CODE_7F037F94
+D:800524F8                     .word loc_CODE_7F037FA8, loc_CODE_7F037FE8, loc_CODE_7F038028, loc_CODE_7F03803C
+D:800524F8                     .word loc_CODE_7F038050, loc_CODE_7F038064, loc_CODE_7F03807C, loc_CODE_7F038094
+D:800524F8                     .word loc_CODE_7F0380CC, loc_CODE_7F0380E8, loc_CODE_7F038104, loc_CODE_7F038140
+D:800524F8                     .word loc_CODE_7F03817C, loc_CODE_7F0381B8, loc_CODE_7F038214, loc_CODE_7F038254
+D:800524F8                     .word loc_CODE_7F038298, loc_CODE_7F0382F4, loc_CODE_7F038344, loc_CODE_7F038398
+D:800524F8                     .word loc_CODE_7F03840C, loc_CODE_7F038464, loc_CODE_7F0384C0, loc_CODE_7F03853C
+D:800524F8                     .word loc_CODE_7F038594, loc_CODE_7F0385F0, loc_CODE_7F03866C, loc_CODE_7F038684
+D:800524F8                     .word loc_CODE_7F0386A0, loc_CODE_7F0386EC, loc_CODE_7F038718, loc_CODE_7F038730
+D:800524F8                     .word loc_CODE_7F038744, loc_CODE_7F038754, actionB1_enable_loop_counter, actionB2_if_loop_counter_enabled_return
+D:800524F8                     .word actionB3_if_loop_counter_greater_than_x_return, loc_CODE_7F038840, loc_CODE_7F0388C4
+D:800524F8                     .word loc_CODE_7F0388DC, loc_CODE_7F0388F4, loc_CODE_7F038928, loc_CODE_7F03893C
+D:800524F8                     .word loc_CODE_7F038950, loc_CODE_7F038984, loc_CODE_7F0389E8, actionBD_spawn_guard
+D:800524F8                     .word actionBE_respawn_guard, loc_CODE_7F038B7C, loc_CODE_7F038C80, loc_CODE_7F038D10
+D:800524F8                     .word loc_CODE_7F038EC8, loc_CODE_7F038EF0, loc_CODE_7F038F18, loc_CODE_7F0390C4
+D:800524F8                     .word loc_CODE_7F039160, loc_CODE_7F038F58, loc_CODE_7F039008, loc_CODE_7F038F44
+D:800524F8                     .word loc_CODE_7F039260, loc_CODE_7F0392D4, loc_CODE_7F0392FC, loc_CODE_7F039360
+D:800524F8                     .word loc_CODE_7F0393BC, loc_CODE_7F039408, loc_CODE_7F039440, loc_CODE_7F0394CC
+D:800524F8                     .word action_D2_exit_level, loc_CODE_7F039550, loc_CODE_7F039564, loc_CODE_7F0395F0
+D:800524F8                     .word loc_CODE_7F039670, loc_CODE_7F0396DC, loc_CODE_7F039750, loc_CODE_7F03979C
+D:800524F8                     .word loc_CODE_7F039964, loc_CODE_7F0399A4, loc_CODE_7F0399E0, loc_CODE_7F039A24
+D:800524F8                     .word loc_CODE_7F039A80, loc_CODE_7F039AD4, loc_CODE_7F039B30, loc_CODE_7F039B58
+D:800524F8                     .word loc_CODE_7F039B98, loc_CODE_7F039BD8, loc_CODE_7F039BFC, loc_CODE_7F039C20
+D:800524F8                     .word loc_CODE_7F039C5C, loc_CODE_7F035BC8, loc_CODE_7F035C1C, actionE9_instantly_switch_to_solosky2
+D:800524F8                     .word action_EA_stop_time, actionEB_return_if_button_pressed, actionEC_disable_player_pickups
+D:800524F8                     .word actionED_hide_1st_person_display, actionEE_circular_camera, actionEF_start_credits
+D:800524F8                     .word actionF0_return_when_credits_finished, actionF1_if_objectives_complete_return
+D:800524F8                     .word actionF2_if_selected_bond_num_return, actionF3_if_player_pickups_disabled_return
+D:800524F8                     .word actionF4_play_xtheme_in_slot_for_seconds, actionF5_turn_off_music_in_slot
+D:800524F8                     .word actionF6_trigger_explosions_around_players, actionF7_if_num_less_than_civilian_deaths_return
+D:800524F8                     .word actionF8_if_guardID_shot_at_unset_flag_and_return, actionF9_set_killed_in_action_flag
+D:800524F8                     .word action_FA_use_fawn_on_shoulder_animation, actionFB_switch_to_xsky, loc_CODE_7F03A134
+D:800528EC     flt_D_800528EC: .float 0.1               # DATA XREF: parse_handle_actionblocks:loc_CODE_7F037858r
+D:800528F0     flt_D_800528F0: .float 0.1               # DATA XREF: parse_handle_actionblocks:loc_CODE_7F0378E4r
+D:800528F4     flt_D_800528F4: .float 0.1               # DATA XREF: parse_handle_actionblocks+2B3Cr
+D:800528F8     flt_D_800528F8: .float 0.1               # DATA XREF: parse_handle_actionblocks+2B7Cr
+D:800528FC     jpt_7006CB34:   .word loc_CODE_7F038C0C  # DATA XREF: parse_handle_actionblocks+3774r
+D:800528FC                     .word loc_CODE_7F038C0C  # jump table for switch statement
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word def_7F038C04
+D:800528FC                     .word def_7F038C04
+D:800528FC                     .word def_7F038C04
+D:800528FC                     .word def_7F038C04
+D:800528FC                     .word def_7F038C04
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
+D:80052974     flt_D_80052974: .float 0.016666666       # DATA XREF: parse_handle_actionblocks+4D28r
+D:80052978     flt_D_80052978: .float 0.29166666        # DATA XREF: parse_handle_actionblocks+4D48r
+//probably multiple files
+D:80052980     jpt_7007045C:   .word loc_CODE_7F03C534  # DATA XREF: sub_CODE_7F03C4F0+30r
+D:80052980                     .word loc_CODE_7F03C544  # jump table for switch statement
+D:80052980                     .word def_7F03C52C
+D:80052980                     .word loc_CODE_7F03C534
+D:80052980                     .word def_7F03C52C
+D:80052980                     .word def_7F03C52C
+D:80052980                     .word def_7F03C52C
+D:80052980                     .word def_7F03C52C
+D:800529A0     jpt_7007106C:   .word loc_CODE_7F03D144  # DATA XREF: sub_CODE_7F03D0D4+5Cr
+D:800529A0                     .word def_7F03D13C       # jump table for switch statement
+D:800529A0                     .word def_7F03D13C
+D:800529A0                     .word loc_CODE_7F03D154
+D:800529A0                     .word def_7F03D13C
+D:800529A0                     .word def_7F03D13C
+D:800529A0                     .word def_7F03D13C
+D:800529A0                     .word def_7F03D13C
+D:800529C0     flt_D_800529C0: .float 0.175             # DATA XREF: sub_CODE_7F03D188+24r
+D:800529C4     flt_D_800529C4: .float 0.82499999        # DATA XREF: sub_CODE_7F03D188+48r
+D:800529C8                     .align 4
+D:800529D0     dword_D_800529D0:.word 0xA000000         # DATA XREF: display_ammo_type_collection_text:loc_CODE_7F04F978o
+D:800529D4     dword_D_800529D4:.word 0x2E0A0000        # DATA XREF: display_ammo_type_collection_text+B0o
+D:800529D8     dword_D_800529D8:.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:800529D8                                              # DATA XREF: display_text_when_ammo_collected+14o
+D:800529D8                     .word 0
+D:80052A38     dword_D_80052A38:.word 0                 # DATA XREF: display_text_when_ammo_collected+20o
+D:80052A3C     dword_D_80052A3C:.word 0                 # DATA XREF: generate_language_specific_text_for_weapon+2Co
+D:80052A40     dword_D_80052A40:.word 0xA000000         # DATA XREF: generate_language_specific_text_for_weapon+420o
+D:80052A44     flt_D_80052A44: .float 0.00052642822     # DATA XREF: sub_CODE_7F056210+1F0o
+D:80052A44                                              # sub_CODE_7F056210+2F0o
+D:80052A48     flt_D_80052A48: .float 0.050000001       # DATA XREF: sub_CODE_7F03FBFC+38r
+D:80052A4C     flt_D_80052A4C: .float 3.1415927         # DATA XREF: sub_CODE_7F04088C+6Cr
+D:80052A50     flt_D_80052A50: .float 4.712389          # DATA XREF: sub_CODE_7F040BA0+3Cr
+D:80052A54     flt_D_80052A54: .float 3.1415927         # DATA XREF: sub_CODE_7F040BA0+4Cr
+D:80052A58     flt_D_80052A58: .float 0.1               # DATA XREF: handles_projectile_motion+42Cr
+D:80052A5C     flt_D_80052A5C: .float 0.99000001        # DATA XREF: sub_CODE_7F042A0C+374r
+D:80052A60     flt_D_80052A60: .float -3.1415927        # DATA XREF: sub_CODE_7F04310C+10r
+D:80052A64     flt_D_80052A64: .float 6.2831855         # DATA XREF: sub_CODE_7F04310C+38r
+D:80052A68     flt_D_80052A68: .float 3.1415927         # DATA XREF: sub_CODE_7F04310C:loc_CODE_7F043154r
+D:80052A6C     flt_D_80052A6C: .float 6.2831855         # DATA XREF: sub_CODE_7F04310C+60r
+D:80052A70     flt_D_80052A70: .float 6.2831855         # DATA XREF: sub_CODE_7F04310C+90r
+D:80052A74     flt_D_80052A74: .float 6.2831855         # DATA XREF: sub_CODE_7F0431E4+300r
+D:80052A78     flt_D_80052A78: .float 0.050000001       # DATA XREF: sub_CODE_7F0431E4+30Cr
+D:80052A7C     flt_D_80052A7C: .float 6.2831855         # DATA XREF: sub_CODE_7F0431E4+35Cr
+D:80052A80     flt_D_80052A80: .float 0.050000001       # DATA XREF: sub_CODE_7F0431E4+368r
+D:80052A84     flt_D_80052A84: .float 0.029999999       # DATA XREF: sub_CODE_7F0431E4:loc_CODE_7F043604r
+D:80052A88     flt_D_80052A88: .float 0.15000001        # DATA XREF: sub_CODE_7F0431E4:loc_CODE_7F043624r
+D:80052A8C     flt_D_80052A8C: .float -1.5707964        # DATA XREF: sub_CODE_7F043838+12Cr
+D:80052A90     flt_D_80052A90: .float -1.5707964        # DATA XREF: sub_CODE_7F043838+148r
+D:80052A94     flt_D_80052A94: .float 62500.0           # DATA XREF: handle_thrown_explosive_detonation+400r
+D:80052A98     rocket_initial_gravity_modifier:.float 0.27777779
+D:80052A98                                              # DATA XREF: object_interaction+2ECr
+D:80052A9C     flt_D_80052A9C: .float 0.011111111       # DATA XREF: object_interaction+344r
+D:80052AA0     flt_D_80052AA0: .float 0.07              # DATA XREF: object_interaction+3C4r
+D:80052AA4     prop_projectile_gravity_modifier:.float 0.27777779
+D:80052AA4                                              # DATA XREF: object_interaction+424r
+D:80052AA8     flt_D_80052AA8: .float 2.2222223         # DATA XREF: object_interaction+C9Cr
+D:80052AAC     flt_D_80052AAC: .float 27777.773         # DATA XREF: object_interaction+D78r
+D:80052AB0                     .float 1.1
+D:80052AB4     flt_D_80052AB4: .float 0.89999998        # DATA XREF: object_interaction+111Cr
+D:80052AB8     flt_D_80052AB8: .float 0.89999998        # DATA XREF: object_interaction+1190r
+D:80052ABC     flt_D_80052ABC: .float 0.1               # DATA XREF: object_interaction+127Cr
+D:80052AC0     flt_D_80052AC0: .float -0.1              # DATA XREF: object_interaction+12B4r
+D:80052AC4     flt_D_80052AC4: .float -0.1              # DATA XREF: object_interaction+12E0r
+D:80052AC8     flt_D_80052AC8: .float 6.2831855         # DATA XREF: object_interaction+15B8r
+D:80052ACC     flt_D_80052ACC: .float 6.2831855         # DATA XREF: object_interaction:loc_CODE_7F04689Cr
+D:80052AD0     flt_D_80052AD0: .float 3.1415927         # DATA XREF: object_interaction:loc_CODE_7F0468E8r
+D:80052AD4     flt_D_80052AD4: .float 0.78539819        # DATA XREF: object_interaction:loc_CODE_7F04691Cr
+D:80052AD8     flt_D_80052AD8: .float -0.78539819       # DATA XREF: object_interaction+1660r
+D:80052ADC                     .float 6.2831855
+D:80052AE0     flt_D_80052AE0: .float 0.00065449846     # DATA XREF: object_interaction+1764r
+D:80052AE4     flt_D_80052AE4: .float 0.00065449846     # DATA XREF: object_interaction:loc_CODE_7F046B4Cr
+D:80052AE8     flt_D_80052AE8: .float 6.2831855         # DATA XREF: object_interaction+1A2Cr
+D:80052AEC     flt_D_80052AEC: .float 0.000011635529    # DATA XREF: object_interaction:loc_CODE_7F046D98r
+D:80052AF0                     .float 6.2831855
+D:80052AF4     flt_D_80052AF4: .float 0.00069813174     # DATA XREF: object_interaction+1ACCr
+D:80052AF8     flt_D_80052AF8: .float 0.0000058177643   # DATA XREF: object_interaction+1AF0r
+D:80052AFC     flt_D_80052AFC: .float 0.00034906587     # DATA XREF: object_interaction+1AF8r
+D:80052B00     flt_D_80052B00: .float 6.2831855         # DATA XREF: object_interaction:loc_CODE_7F046EF4r
+D:80052B04     flt_D_80052B04: .float 6.2831855         # DATA XREF: object_interaction+1C4Cr
+D:80052B08     flt_D_80052B08: .float 6.2831855         # DATA XREF: object_interaction:loc_CODE_7F046F28r
+D:80052B0C     flt_D_80052B0C: .float 3.1415927         # DATA XREF: object_interaction+1C5Cr
+D:80052B10     flt_D_80052B10: .float 1.2217306         # DATA XREF: object_interaction:loc_CODE_7F046F68r
+D:80052B14     flt_D_80052B14: .float -1.2217306        # DATA XREF: object_interaction+1CACr
+D:80052B18     flt_D_80052B18: .float -3.1415927        # DATA XREF: object_interaction+1CE0r
+D:80052B1C     flt_D_80052B1C: .float 3.1415927         # DATA XREF: object_interaction:loc_CODE_7F046FE0r
+D:80052B20     flt_D_80052B20: .float 6.2831855         # DATA XREF: object_interaction:loc_CODE_7F047104r
+D:80052B24     flt_D_80052B24: .float 0.80000001        # DATA XREF: object_interaction+1E90r
+D:80052B28     flt_D_80052B28: .float -3.1415927        # DATA XREF: object_interaction:loc_CODE_7F0471B0r
+D:80052B2C     flt_D_80052B2C: .float 3.1415927         # DATA XREF: object_interaction:loc_CODE_7F0471D8r
+D:80052B30     flt_D_80052B30: .float 0.00087266468     # DATA XREF: object_interaction:loc_CODE_7F047254r
+D:80052B34     flt_D_80052B34: .float 0.00087266468     # DATA XREF: object_interaction+1FA4r
+D:80052B38     flt_D_80052B38: .float 3.1415927         # DATA XREF: object_interaction:loc_CODE_7F0472C8r
+D:80052B3C     flt_D_80052B3C: .float 0.59839863        # DATA XREF: object_interaction+2174r
+D:80052B40     flt_D_80052B40: .float 0.0099733109      # DATA XREF: object_interaction+2178r
+D:80052B44     flt_D_80052B44: .float 0.99000001        # DATA XREF: object_interaction+21E4r
+D:80052B48     flt_D_80052B48: .float 0.000099999997    # DATA XREF: object_interaction:loc_CODE_7F0474E4r
+D:80052B4C     flt_D_80052B4C: .float 0.00021816617     # DATA XREF: object_interaction:loc_CODE_7F04783Cr
+D:80052B50     flt_D_80052B50: .float 0.0065449849      # DATA XREF: object_interaction+2570r
+D:80052B54     flt_D_80052B54: .float 6.2831855         # DATA XREF: object_interaction+259Cr
+D:80052B58                     .float 0.00021816617
+D:80052B5C     flt_D_80052B5C: .float -0.00021816617    # DATA XREF: object_interaction+2638r
+D:80052B60                     .float 6.2831855
+D:80052B64     flt_D_80052B64: .float 6.2831855         # DATA XREF: object_interaction:loc_CODE_7F048230r
+D:80052B68     flt_D_80052B68: .float 0.30000001        # DATA XREF: object_interaction+3294r
+D:80052B6C     flt_D_80052B6C: .float 1.5707964         # DATA XREF: object_interaction+355Cr
+D:80052B70     flt_D_80052B70: .float 1.5707964         # DATA XREF: object_interaction+3E44r
+D:80052B74     flt_D_80052B74: .float 0.16              # DATA XREF: object_interaction+44C0r
+D:80052B78     flt_D_80052B78: .float 10000.0           # DATA XREF: object_interaction+4658r
+D:80052B7C     flt_D_80052B7C: .float 3000.0            # DATA XREF: object_interaction+46D8r
+D:80052B80     flt_D_80052B80: .float 0.60000002        # DATA XREF: object_interaction+46F0r
+D:80052B84     flt_D_80052B84: .float 0.30000001        # DATA XREF: object_interaction+4744r
+D:80052B88     flt_D_80052B88: .float -0.1              # DATA XREF: object_interaction+4750r
+D:80052B8C     flt_D_80052B8C: .float 0.2               # DATA XREF: object_interaction:loc_CODE_7F049A40r
+D:80052B90     flt_D_80052B90: .float 3000.0            # DATA XREF: object_interaction+4784r
+D:80052B94     flt_D_80052B94: .float 3000.0            # DATA XREF: object_interaction+479Cr
+D:80052B98     jpt_7007DBF0:   .word def_7F049CC0, loc_CODE_7F049CC8, loc_CODE_7F049CD4, loc_CODE_7F049CE0
+D:80052B98                                              # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+1Cr
+D:80052B98                     .word loc_CODE_7F049CEC, loc_CODE_7F049CF8, loc_CODE_7F049D04, loc_CODE_7F049D10  # jump table for switch statement
+D:80052B98                     .word loc_CODE_7F049D1C, loc_CODE_7F049D28, loc_CODE_7F049D34, loc_CODE_7F049D40
+D:80052B98                     .word loc_CODE_7F049D4C, loc_CODE_7F049D58, loc_CODE_7F049D64, loc_CODE_7F049D70
+D:80052B98                     .word loc_CODE_7F049D7C, loc_CODE_7F049D88, loc_CODE_7F049D94, loc_CODE_7F049DA0
+D:80052B98                     .word loc_CODE_7F049DAC, loc_CODE_7F049DB8, loc_CODE_7F049DC4, loc_CODE_7F049DD0
+D:80052B98                     .word loc_CODE_7F049DDC, loc_CODE_7F049DE8, loc_CODE_7F049DF4, loc_CODE_7F049E00
+D:80052B98                     .word loc_CODE_7F049E0C, loc_CODE_7F049E18, loc_CODE_7F049E24, loc_CODE_7F049E30
+D:80052B98                     .word loc_CODE_7F049E3C, loc_CODE_7F049E48, loc_CODE_7F049E54, loc_CODE_7F049E60
+D:80052B98                     .word loc_CODE_7F049E6C, loc_CODE_7F049E78, loc_CODE_7F049E84, loc_CODE_7F049E90
+D:80052B98                     .word loc_CODE_7F049E9C, loc_CODE_7F049EA8, loc_CODE_7F049EB4, loc_CODE_7F049EC0
+D:80052B98                     .word loc_CODE_7F049ECC, loc_CODE_7F049ED8, loc_CODE_7F049EE4, loc_CODE_7F049EF0
+D:80052B98                     .word loc_CODE_7F049EFC, loc_CODE_7F049F08, loc_CODE_7F049F14, loc_CODE_7F049F20
+D:80052C68     flt_D_80052C68: .float 6.2831855         # DATA XREF: process_monitor_animation_microcode+7Cr
+D:80052C6C     jpt_7007DF4C:   .word command00_reset_scroll_shift
+D:80052C6C                                              # DATA XREF: process_monitor_animation_microcode+C8r
+D:80052C6C                     .word command01_horizontal_scroll  # jump table for switch statement
+D:80052C6C                     .word command02_vertical_scroll
+D:80052C6C                     .word command03_horizontal_pos
+D:80052C6C                     .word command04_vertical_pos
+D:80052C6C                     .word command05_zoomx
+D:80052C6C                     .word command06_zoomy
+D:80052C6C                     .word command07_use_image_from_global_monitor_table
+D:80052C6C                     .word command08_halt_processing_for_time
+D:80052C6C                     .word command09_jump
+D:80052C6C                     .word command0A_jump_conditional
+D:80052C6C                     .word command0B_restart
+D:80052C6C                     .word command0C_break
+D:80052C6C                     .word command0D_colour_transition
+D:80052C6C                     .word command0E_set_rotation
+D:80052C6C                     .word command0F_rotate
+D:80052CAC                     .float 1.5707964
+D:80052CB0     flt_D_80052CB0: .float 1.4141999         # DATA XREF: process_monitor_animation_microcode+8E8r
+D:80052CB4     flt_D_80052CB4: .float 0.85000002        # DATA XREF: sub_CODE_7F04B610:loc_CODE_7F04B894r
+D:80052CB8     flt_D_80052CB8: .float 0.15000001        # DATA XREF: sub_CODE_7F04B610+2E0r
+D:80052CBC     flt_D_80052CBC: .float 0.15000001        # DATA XREF: sub_CODE_7F04B610+30Cr
+D:80052CC0     flt_D_80052CC0: .float 0.89999998        # DATA XREF: sub_CODE_7F04B610+3E8r
+D:80052CC4     flt_D_80052CC4: .float 1.6666666         # DATA XREF: sub_CODE_7F04BCDC+B0r
+D:80052CC8     flt_D_80052CC8: .float 3.3333333         # DATA XREF: sub_CODE_7F04BCDC+C0r
+D:80052CCC     flt_D_80052CCC: .float 1.6666666         # DATA XREF: sub_CODE_7F04BCDC+100r
+D:80052CD0     flt_D_80052CD0: .float 3.3333333         # DATA XREF: sub_CODE_7F04BCDC+108r
+D:80052CD4     flt_D_80052CD4: .float 1.6666666         # DATA XREF: sub_CODE_7F04BCDC+144r
+D:80052CD8     flt_D_80052CD8: .float 3.3333333         # DATA XREF: sub_CODE_7F04BCDC+154r
+D:80052CDC     flt_D_80052CDC: .float 6.2831855         # DATA XREF: sub_CODE_7F04BCDC+194r
+D:80052CE0     flt_D_80052CE0: .float 0.049087387       # DATA XREF: sub_CODE_7F04BCDC+1A4r
+D:80052CE4     flt_D_80052CE4: .float 6.2831855         # DATA XREF: sub_CODE_7F04BCDC+1E4r
+D:80052CE8     flt_D_80052CE8: .float 0.049087387       # DATA XREF: sub_CODE_7F04BCDC+1F4r
+D:80052CEC     flt_D_80052CEC: .float 6.2831855         # DATA XREF: sub_CODE_7F04BCDC+234r
+D:80052CF0     flt_D_80052CF0: .float 0.049087387       # DATA XREF: sub_CODE_7F04BCDC+244r
+D:80052CF4     flt_D_80052CF4: .float 3.3333333         # DATA XREF: sub_CODE_7F04BCDC+2A0r
+D:80052CF8     flt_D_80052CF8: .float 1.6666666         # DATA XREF: sub_CODE_7F04C130+108r
+D:80052CFC     flt_D_80052CFC: .float 1.6666666         # DATA XREF: sub_CODE_7F04C130+140r
+D:80052D00     flt_D_80052D00: .float 1.6666666         # DATA XREF: sub_CODE_7F04C130+170r
+D:80052D04     flt_D_80052D04: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+1A8r
+D:80052D08     flt_D_80052D08: .float 0.024543693       # DATA XREF: sub_CODE_7F04C130+1BCr
+D:80052D0C     flt_D_80052D0C: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+200r
+D:80052D10     flt_D_80052D10: .float 0.024543693       # DATA XREF: sub_CODE_7F04C130+214r
+D:80052D14     flt_D_80052D14: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+258r
+D:80052D18     flt_D_80052D18: .float 0.024543693       # DATA XREF: sub_CODE_7F04C130+26Cr
+D:80052D1C     flt_D_80052D1C: .float 13.333333         # DATA XREF: sub_CODE_7F04C130+2ECr
+D:80052D20     flt_D_80052D20: .float 6.6666665         # DATA XREF: sub_CODE_7F04C130+300r
+D:80052D24     flt_D_80052D24: .float 13.333333         # DATA XREF: sub_CODE_7F04C130+310r
+D:80052D28     flt_D_80052D28: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+348r
+D:80052D2C     flt_D_80052D2C: .float 0.024543693       # DATA XREF: sub_CODE_7F04C130+35Cr
+D:80052D30     flt_D_80052D30: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+3A0r
+D:80052D34     flt_D_80052D34: .float 0.024543693       # DATA XREF: sub_CODE_7F04C130+3B4r
+D:80052D38     flt_D_80052D38: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+3F8r
+D:80052D3C     flt_D_80052D3C: .float 0.024543693       # DATA XREF: sub_CODE_7F04C130+40Cr
+D:80052D40     flt_D_80052D40: .float 1.6666666         # DATA XREF: sub_CODE_7F04C130+4D4r
+D:80052D44     flt_D_80052D44: .float 3.3333333         # DATA XREF: sub_CODE_7F04C130+4E0r
+D:80052D48     flt_D_80052D48: .float 1.6666666         # DATA XREF: sub_CODE_7F04C130+524r
+D:80052D4C     flt_D_80052D4C: .float 1.6666666         # DATA XREF: sub_CODE_7F04C130+578r
+D:80052D50     flt_D_80052D50: .float 3.3333333         # DATA XREF: sub_CODE_7F04C130+584r
+D:80052D54     flt_D_80052D54: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+5C8r
+D:80052D58     flt_D_80052D58: .float 0.098174773       # DATA XREF: sub_CODE_7F04C130+5DCr
+D:80052D5C     flt_D_80052D5C: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+620r
+D:80052D60     flt_D_80052D60: .float 0.098174773       # DATA XREF: sub_CODE_7F04C130+634r
+D:80052D64     flt_D_80052D64: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+678r
+D:80052D68     flt_D_80052D68: .float 0.098174773       # DATA XREF: sub_CODE_7F04C130+68Cr
+D:80052D6C     flt_D_80052D6C: .float 1.6666666         # DATA XREF: sub_CODE_7F04CA44+D8r
+D:80052D70     flt_D_80052D70: .float 0.83333331        # DATA XREF: sub_CODE_7F04CA44+E0r
+D:80052D74     flt_D_80052D74: .float 1.6666666         # DATA XREF: sub_CODE_7F04CA44+FCr
+D:80052D78     flt_D_80052D78: .float 1.6666666         # DATA XREF: sub_CODE_7F04CA44+158r
+D:80052D7C     flt_D_80052D7C: .float 0.83333331        # DATA XREF: sub_CODE_7F04CA44+160r
+D:80052D80     flt_D_80052D80: .float 6.2831855         # DATA XREF: sub_CODE_7F04CA44+1ACr
+D:80052D84     flt_D_80052D84: .float 0.0098174773      # DATA XREF: sub_CODE_7F04CA44+1BCr
+D:80052D88     flt_D_80052D88: .float 6.2831855         # DATA XREF: sub_CODE_7F04CA44+1F8r
+D:80052D8C     flt_D_80052D8C: .float 0.0098174773      # DATA XREF: sub_CODE_7F04CA44+208r
+D:80052D90     flt_D_80052D90: .float 6.2831855         # DATA XREF: sub_CODE_7F04CA44+244r
+D:80052D94     flt_D_80052D94: .float 0.0098174773      # DATA XREF: sub_CODE_7F04CA44+254r
+D:80052D98     flt_D_80052D98: .float 32767.0           # DATA XREF: sub_CODE_7F04D9B0+60r
+D:80052D9C     jpt_70081970:   .word loc_CODE_7F04DAA4  # DATA XREF: sub_CODE_7F04D9B0+84r
+D:80052D9C                     .word def_7F04DA40       # jump table for switch statement
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word loc_CODE_7F04DAD8
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word loc_CODE_7F04DAEC
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word def_7F04DA40
+D:80052D9C                     .word loc_CODE_7F04DB00
+D:80052D9C                     .word loc_CODE_7F04DA48
+D:80052DF0     jpt_70081F20:   .word destroyable_object
+D:80052DF0                                              # DATA XREF: check_if_destroyable_object_type+14r
+D:80052DF0                     .word nondestroyable_object  # jump table for switch statement
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052DF0                     .word nondestroyable_object
+D:80052DF0                     .word destroyable_object
+D:80052EAC     jpt_70081F5C:   .word collectable_object
+D:80052EAC                                              # DATA XREF: check_if_collectable_object+14r
+D:80052EAC                     .word notcollectable_object  # jump table for switch statement
+D:80052EAC                     .word notcollectable_object
+D:80052EAC                     .word collectable_object
+D:80052EAC                     .word collectable_object
+D:80052EAC                     .word notcollectable_object
+D:80052EAC                     .word notcollectable_object
+D:80052EAC                     .word notcollectable_object
+D:80052EAC                     .word notcollectable_object
+D:80052EAC                     .word notcollectable_object
+D:80052EAC                     .word notcollectable_object
+D:80052EAC                     .word notcollectable_object
+D:80052EAC                     .word notcollectable_object
+D:80052EAC                     .word collectable_object
+D:80052EAC                     .word notcollectable_object
+D:80052EAC                     .word notcollectable_object
+D:80052EAC                     .word collectable_object
+D:80052EAC                     .word collectable_object
+D:80052EF4     flt_D_80052EF4: .float 160000.0          # DATA XREF: sub_CODE_7F04EF58+E4r
+D:80052EF8     flt_D_80052EF8: .float 2.0943952         # DATA XREF: sub_CODE_7F04EF58+F4r
+D:80052EFC     flt_D_80052EFC: .float 40000.0           # DATA XREF: sub_CODE_7F04EF58+100r
+D:80052F00     flt_D_80052F00: .float 0.39269909        # DATA XREF: sub_CODE_7F04EF58+108r
+D:80052F04     flt_D_80052F04: .float 6.2831855         # DATA XREF: sub_CODE_7F04EF58+184r
+D:80052F08     flt_D_80052F08: .float 3.1415927         # DATA XREF: sub_CODE_7F04EF58:loc_CODE_7F04F0E4r
+D:80052F0C     flt_D_80052F0C: .float 6.2831855         # DATA XREF: sub_CODE_7F04EF58+1A8r
+D:80052F10     jpt_70083244:   .word text_some          # DATA XREF: append_text_ammo_amount_word+1Cr
+D:80052F10                     .word text_some          # jump table for switch statement
+D:80052F10                     .word text_some
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_an
+D:80052F10                     .word text_an
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_a
+D:80052F10                     .word text_the
+D:80052F10                     .word text_some
+D:80052F10                     .word text_NONE
+D:80052F10                     .word text_NONE
+D:80052F10                     .word text_NONE
+D:80052F10                     .word text_NONE
+D:80052F10                     .word text_NONE
+D:80052F10                     .word text_the
+D:80052F84     jpt_7008346C:   .word text_pickup_shotgun_cartridge
+D:80052F84                                              # DATA XREF: apped_text_ammotype+124r
+D:80052F84                     .word text_pickup_hand_grenade  # jump table for switch statement
+D:80052F84                     .word text_pickup_rocket
+D:80052F84                     .word text_pickup_remote_mine
+D:80052F84                     .word text_pickup_proximity_mine
+D:80052F84                     .word text_pickup_timed_mine
+D:80052F84                     .word pluralize_multiples
+D:80052F84                     .word text_pickup_grenade_round
+D:80052F84                     .word text_pickup_magnum_bullet
+D:80052F84                     .word text_pickup_golden_bullet
+D:80052F84                     .word text_pickup_dart
+D:80052F84                     .word text_pickup_explosive_pen
+D:80052F84                     .word text_pickup_explosive_case
+D:80052F84                     .word text_pickup_flare
+D:80052F84                     .word text_pickup_piton
+D:80052F84                     .word pluralize_multiples
+D:80052F84                     .word text_pickup_bug
+D:80052F84                     .word text_pickup_micro_camera
+D:80052F84                     .word text_pickup_goldeneye_key
+D:80052F84                     .word text_pickup_plastique
+D:80052F84                     .word pluralize_multiples
+D:80052F84                     .word pluralize_multiples
+D:80052F84                     .word pluralize_multiples
+D:80052F84                     .word pluralize_multiples
+D:80052F84                     .word pluralize_multiples
+D:80052F84                     .word text_pickup_token
+D:80052FEC     jpt_700836DC:   .word ammo_sfx_pickup_firearm
+D:80052FEC                                              # DATA XREF: set_sound_effect_for_ammo_collection+18r
+D:80052FEC                     .word ammo_sfx_pickup_firearm  # jump table for switch statement
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80052FEC                     .word ammo_sfx_pickup_mine
+D:80052FEC                     .word ammo_sfx_pickup_mine
+D:80052FEC                     .word ammo_sfx_pickup_mine
+D:80052FEC                     .word ammo_sfx_pickup_knife
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80052FEC                     .word ammo_sfx_pickup_mine
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80052FEC                     .word ammo_sfx_pickup_mine
+D:80052FEC                     .word ammo_sfx_pickup_mine
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80052FEC                     .word ammo_sfx_pickup_mine
+D:80052FEC                     .word ammo_sfx_pickup_default
+D:80052FEC                     .word ammo_sfx_pickup_default
+D:80052FEC                     .word ammo_sfx_pickup_default
+D:80052FEC                     .word ammo_sfx_pickup_default
+D:80052FEC                     .word ammo_sfx_pickup_default
+D:80052FEC                     .word ammo_sfx_pickup_firearm
+D:80053060     ammo_collected_from_magazine:.word magazine_has_10_rounds_type1
+D:80053060                                              # DATA XREF: get_ammo_in_magazine+20r
+D:80053060                     .word magazine_has_10_rounds_type2  # jump table for switch statement
+D:80053060                     .word magazine_has_10_rounds_type3
+D:80053060                     .word magazine_has_5_rounds_type4
+D:80053060                     .word magazine_has_default_ammo_rounds
+D:80053060                     .word magazine_has_default_ammo_rounds
+D:80053060                     .word magazine_has_default_ammo_rounds
+D:80053060                     .word magazine_has_default_ammo_rounds
+D:80053060                     .word magazine_has_default_ammo_rounds
+D:80053060                     .word magazine_has_default_ammo_rounds
+D:80053060                     .word magazine_has_default_ammo_rounds
+D:80053060                     .word magazine_has_5_rounds_typeC
+D:80053060                     .word magazine_has_3_rounds_typeD
+D:80053060                     .word magazine_has_4_rounds_typeE
+D:80053098     ammo_in_weapon: .word weapon_has_10_rounds_type1
+D:80053098                                              # DATA XREF: ammo_collected_from_weapon+44r
+D:80053098                     .word weapon_has_10_rounds_type2  # jump table for switch statement
+D:80053098                     .word weapon_has_10_rounds_type3
+D:80053098                     .word weapon_has_5_rounds_type4
+D:80053098                     .word weapon_has_default_ammo
+D:80053098                     .word weapon_has_default_ammo
+D:80053098                     .word weapon_has_default_ammo
+D:80053098                     .word weapon_has_default_ammo
+D:80053098                     .word weapon_has_default_ammo
+D:80053098                     .word weapon_has_default_ammo
+D:80053098                     .word weapon_has_3_rounds_typeB
+D:80053098                     .word weapon_has_5_rounds_typeC
+D:80053098                     .word weapon_has_3_rounds_typeD
+D:80053098                     .word weapon_has_4_rounds_typeE
+D:800530D0     jpt_70083DA4:   .word weapon_collect_msg_a_hunting_knife, weapon_collect_msg_BLANK, weapon_collect_msg_a_pp7
+D:800530D0                                              # DATA XREF: generate_language_specific_text_for_weapon+88r
+D:800530D0                     .word weapon_collect_msg_a_silenced_pp7, weapon_collect_msg_a_dd44, weapon_collect_msg_a_klobb  # jump table for switch statement
+D:800530D0                     .word weapon_collect_msg_a_kf7, weapon_collect_msg_a_zmg, weapon_collect_msg_a_d5k
+D:800530D0                     .word weapon_collect_msg_a_silenced_d5k, weapon_collect_msg_a_phantom, weapon_collect_msg_a_ar33
+D:800530D0                     .word weapon_collect_msg_a_rcp90, weapon_collect_msg_a_shotgun, weapon_collect_msg_an_auto_shotgun
+D:800530D0                     .word weapon_collect_msg_a_sniper, weapon_collect_msg_a_cougar_magnum, weapon_collect_msg_a_golden_gun
+D:800530D0                     .word weapon_collect_msg_a_silver_pp7, weapon_collect_msg_a_gold_pp7, weapon_collect_msg_a_moonraker_laser
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_grenade_launcher
+D:800530D0                     .word weapon_collect_msg_a_rocket_launcher, weapon_collect_msg_BLANK, weapon_collect_msg_BLANK
+D:800530D0                     .word weapon_collect_msg_BLANK, weapon_collect_msg_BLANK, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_BLANK
+D:800530D0                     .word weapon_collect_msg_BLANK, weapon_collect_msg_a_flare_pistol, weapon_collect_msg_a_piton_gun
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_BLANK, weapon_collect_msg_BLANK
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_BLANK, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_keycard
+D:800530D0                     .word weapon_collect_msg_a_yale_key, weapon_collect_msg_a_bolt_key, weapon_collect_msg_a_new_weapon
+D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_BLANK, weapon_collect_msg_BLANK
+D:800530D0                     .word weapon_collect_msg_BLANK
+D:8005322C     object_interaction_table:.word interact_default_object
+D:8005322C                                              # DATA XREF: collect_or_interact_object+60r
+D:8005322C                     .word interact_key_object  # jump table for switch statement
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_magazine_object
+D:8005322C                     .word interact_weapon_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_ammobox_object
+D:8005322C                     .word interact_bodyarmor_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:8005322C                     .word interact_default_object
+D:800532E0     flt_D_800532E0: .float -0.78539819       # DATA XREF: object_collectability_routines+41Cr
+D:800532E4     flt_D_800532E4: .float 122500.0          # DATA XREF: object_collectability_routines+49Cr
+D:800532E8     flt_D_800532E8: .float 10000.0           # DATA XREF: object_collectability_routines+520r
+D:800532EC     flt_D_800532EC: .float 62500.0           # DATA XREF: detonate_proxmine_within_range+14r
+D:800532F0     flt_D_800532F0: .float 3.1415927         # DATA XREF: sub_CODE_7F0523F8+CCr
+D:800532F4     jpt_hat_worn:   .word model_hat_fur      # DATA XREF: get_hat_model+1Cr
+D:800532F4                     .word model_hat_fur      # jump table for switch statement
+D:800532F4                     .word model_hat_fur
+D:800532F4                     .word model_hat_greencap
+D:800532F4                     .word model_hat_greencap
+D:800532F4                     .word model_hat_combat_helmet
+D:800532F4                     .word model_hat_combat_helmet
+D:800532F4                     .word model_hat_moonraker_headgear
+D:800532F4                     .word model_hat_beret
+D:800532F4                     .word model_hat_beret
+D:800532F4                     .word model_hat_beret
+D:800532F4                     .word model_hat_officerhat
+D:80053324     flt_D_80053324: .float 6.2831855         # DATA XREF: sub_CODE_7F0526EC+264r
+D:80053328     flt_D_80053328: .float 6.2831855         # DATA XREF: sub_CODE_7F0526EC:loc_CODE_7F052980r
+D:8005332C     flt_D_8005332C: .float 6.2831855         # DATA XREF: sub_CODE_7F0526EC+2D0r
+D:80053330     flt_D_80053330: .float 6.2831855         # DATA XREF: sub_CODE_7F0526EC:loc_CODE_7F0529ECr
+D:80053334     flt_D_80053334: .float 10000.0           # DATA XREF: sub_CODE_7F052B00+140r
+D:80053338     flt_D_80053338: .float 0.40000001        # DATA XREF: sub_CODE_7F052B00+1ACr
+D:8005333C     flt_D_8005333C: .float 0.40000001        # DATA XREF: sub_CODE_7F052B00+1D4r
+D:80053340     flt_D_80053340: .float 10000.0           # DATA XREF: sub_CODE_7F0537B8+60r
+D:80053344     flt_D_80053344: .float 22767.0           # DATA XREF: sub_CODE_7F0537B8+A4r
+D:80053348     flt_D_80053348: .float 5000.0            # DATA XREF: sub_CODE_7F0539B8+18r
+D:8005334C     door_opening_sound_table_0:.word loc_CODE_7F053BEC
+D:8005334C                                              # DATA XREF: play_door_opening_soundeffect_0+60r
+D:8005334C                     .word loc_CODE_7F053C2C  # jump table for switch statement
+D:8005334C                     .word loc_CODE_7F053C6C
+D:8005334C                     .word loc_CODE_7F053CAC
+D:8005334C                     .word loc_CODE_7F053CEC
+D:8005334C                     .word loc_CODE_7F053D08
+D:8005334C                     .word loc_CODE_7F053D24
+D:8005334C                     .word loc_CODE_7F053D64
+D:8005334C                     .word loc_CODE_7F053DA4
+D:8005334C                     .word loc_CODE_7F053DC4
+D:8005334C                     .word loc_CODE_7F053DE0
+D:8005334C                     .word loc_CODE_7F053DFC
+D:8005334C                     .word loc_CODE_7F053E18
+D:8005334C                     .word loc_CODE_7F053E58
+D:8005334C                     .word loc_CODE_7F053E78
+D:8005334C                     .word loc_CODE_7F053E98
+D:8005334C                     .word loc_CODE_7F053EB4
+D:80053390     door_opening_sound_table_1:.word loc_CODE_7F053FD8
+D:80053390                                              # DATA XREF: play_door_opening_soundeffect_1+60r
+D:80053390                     .word loc_CODE_7F054018  # jump table for switch statement
+D:80053390                     .word loc_CODE_7F054058
+D:80053390                     .word loc_CODE_7F054098
+D:80053390                     .word def_7F053FD0
+D:80053390                     .word def_7F053FD0
+D:80053390                     .word loc_CODE_7F0540D8
+D:80053390                     .word loc_CODE_7F054118
+D:80053390                     .word loc_CODE_7F054158
+D:80053390                     .word def_7F053FD0
+D:80053390                     .word def_7F053FD0
+D:80053390                     .word def_7F053FD0
+D:80053390                     .word loc_CODE_7F054178
+D:80053390                     .word loc_CODE_7F0541B8
+D:80053390                     .word loc_CODE_7F0541D8
+D:80053390                     .word loc_CODE_7F0541F8
+D:80053390                     .word loc_CODE_7F054214
+D:800533D4     door_closing_sound_table_0:.word loc_CODE_7F054308
+D:800533D4                                              # DATA XREF: play_door_closing_soundeffect_0+30r
+D:800533D4                     .word loc_CODE_7F054328  # jump table for switch statement
+D:800533D4                     .word loc_CODE_7F054348
+D:800533D4                     .word loc_CODE_7F054368
+D:800533D4                     .word def_7F054300
+D:800533D4                     .word def_7F054300
+D:800533D4                     .word loc_CODE_7F054388
+D:800533D4                     .word loc_CODE_7F0543A8
+D:800533D4                     .word loc_CODE_7F0543C8
+D:800533D4                     .word def_7F054300
+D:800533D4                     .word def_7F054300
+D:800533D4                     .word def_7F054300
+D:800533D4                     .word loc_CODE_7F0543E8
+D:800533D4                     .word loc_CODE_7F054408
+D:800533D4                     .word loc_CODE_7F054428
+D:800533D4                     .word loc_CODE_7F054448
+D:800533D4                     .word loc_CODE_7F054468
+D:80053418     door_closing_sound_table_1:.word loc_CODE_7F0544FC
+D:80053418                                              # DATA XREF: play_door_closing_soundeffect_1+30r
+D:80053418                     .word loc_CODE_7F05451C  # jump table for switch statement
+D:80053418                     .word loc_CODE_7F05453C
+D:80053418                     .word loc_CODE_7F05455C
+D:80053418                     .word loc_CODE_7F05457C
+D:80053418                     .word loc_CODE_7F05459C
+D:80053418                     .word loc_CODE_7F0545BC
+D:80053418                     .word loc_CODE_7F0545DC
+D:80053418                     .word loc_CODE_7F0545FC
+D:80053418                     .word loc_CODE_7F05461C
+D:80053418                     .word loc_CODE_7F05463C
+D:80053418                     .word loc_CODE_7F05465C
+D:80053418                     .word loc_CODE_7F05467C
+D:80053418                     .word loc_CODE_7F05469C
+D:80053418                     .word loc_CODE_7F0546BC
+D:80053418                     .word loc_CODE_7F0546DC
+D:80053418                     .word loc_CODE_7F0546FC
+D:8005345C     flt_D_8005345C: .float 1.024e9           # DATA XREF: sub_CODE_7F054D6C+ECr
+D:80053460     flt_D_80053460: .float 6.2831855         # DATA XREF: sub_CODE_7F05522C+1B0r
+D:80053464     flt_D_80053464: .float 6.2831855         # DATA XREF: sub_CODE_7F05522C:loc_CODE_7F0553E4r
+D:80053468     flt_D_80053468: .float 3.1415927         # DATA XREF: sub_CODE_7F05522C+1C0r
+D:8005346C     flt_D_8005346C: .float 6.2831855         # DATA XREF: sub_CODE_7F05522C+2D4r
+D:80053470     flt_D_80053470: .float 3.1415927         # DATA XREF: sub_CODE_7F05522C:loc_CODE_7F055508r
+D:80053474     flt_D_80053474: .float 6.2831855         # DATA XREF: sub_CODE_7F05522C+2F8r
+D:80053478     flt_D_80053478: .float 6.2831855         # DATA XREF: sub_CODE_7F05522C+358r
+D:8005347C     flt_D_8005347C: .float 3.1415927         # DATA XREF: sub_CODE_7F05522C:loc_CODE_7F05558Cr
+D:80053480     flt_D_80053480: .float 6.2831855         # DATA XREF: sub_CODE_7F05522C+37Cr
+D:80053484     flt_D_80053484: .float 0.34906587        # DATA XREF: sub_CODE_7F0555F8+4Cr
+D:80053488     flt_D_80053488: .float 3.1415927         # DATA XREF: sub_CODE_7F0555F8+194r
+D:8005348C     flt_D_8005348C: .float 40000.0           # DATA XREF: sub_CODE_7F055804+90r
+*/
+
+
 
 #ifdef NONMATCHING
 void set_sound_effect_source_to_location(void) {

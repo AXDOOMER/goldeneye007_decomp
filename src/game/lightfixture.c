@@ -13,7 +13,13 @@ D:80046038                     .word 0
 D:8004603C                     .word 0, 0, 0, 0, 0
 */
 
-
+/* rodata
+D:80058D80     jpt_700EF63C:   .word loc_CODE_7F0BB714  # DATA XREF: sub_CODE_7F0BB6F4+Cr
+D:80058D80                     .word loc_CODE_7F0BB7C0  # jump table for switch statement
+D:80058D80                     .word loc_CODE_7F0BB7EC
+D:80058D80                     .word loc_CODE_7F0BB818
+D:80058D80                     .word loc_CODE_7F0BB844
+*/
 
 #ifdef NONMATCHING
 void init_lightfixture_tables(void) {

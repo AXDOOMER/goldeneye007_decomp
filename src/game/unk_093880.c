@@ -1,7 +1,107 @@
 #include "ultra64.h"
 
 
-
+/* rodata
+D:80057520     flt_D_80057520: .float 0.000099999997    # DATA XREF: sub_CODE_7F0938FC+30r
+D:80057524     flt_D_80057524: .float 0.0099999998      # DATA XREF: sub_CODE_7F0938FC+A0r
+D:80057528     flt_D_80057528: .float 300000.0          # DATA XREF: sub_CODE_7F0938FC+F8r
+D:8005752C     flt_D_8005752C: .float 0.000099999997    # DATA XREF: sub_CODE_7F093A78+30r
+D:80057530     flt_D_80057530: .float -0.0099999998     # DATA XREF: sub_CODE_7F093A78+A8r
+D:80057534     flt_D_80057534: .float 300000.0          # DATA XREF: sub_CODE_7F093A78+100r
+D:80057538     flt_D_80057538: .float 32767.9           # DATA XREF: sub_CODE_7F094298r
+D:8005753C     flt_D_8005753C: .float -32767.9          # DATA XREF: sub_CODE_7F094298:loc_CODE_7F0942BCr
+D:80057540     flt_D_80057540: .float 0.1               # DATA XREF: sub_CODE_7F094488+26Cr
+D:80057544     jpt_700C8968:   .word loc_CODE_7F094A48  # DATA XREF: sub_CODE_7F094488+5A4r
+D:80057544                     .word loc_CODE_7F095284  # jump table for switch statement
+D:80057544                     .word loc_CODE_7F0953CC
+D:80057544                     .word loc_CODE_7F094B4C
+D:80057544                     .word loc_CODE_7F095514
+D:80057544                     .word loc_CODE_7F094E60
+D:80057544                     .word def_7F094A38
+D:80057544                     .word loc_CODE_7F0951BC
+D:80057544                     .word loc_CODE_7F09565C
+D:80057544                     .word def_7F094A38
+D:80057544                     .word loc_CODE_7F094D5C
+D:80057544                     .word loc_CODE_7F0950F4
+D:80057544                     .word loc_CODE_7F094C50
+D:80057544                     .word loc_CODE_7F09502C
+D:80057544                     .word loc_CODE_7F094F64
+D:80057544                     .word loc_CODE_7F094A40
+D:80057584     flt_D_80057584: .float 65535.0           # DATA XREF: sub_CODE_7F094488:loc_CODE_7F09582Cr
+D:80057588     flt_D_80057588: .float 1279.0            # DATA XREF: sub_CODE_7F094488+14E0r
+D:8005758C     flt_D_8005758C: .float 959.0             # DATA XREF: sub_CODE_7F094488+14E8r
+D:80057590     jpt_700C9D3C:   .word loc_CODE_7F095E14  # DATA XREF: sub_CODE_7F094488+1978r
+D:80057590                     .word loc_CODE_7F09643C  # jump table for switch statement
+D:80057590                     .word loc_CODE_7F09652C
+D:80057590                     .word loc_CODE_7F096094
+D:80057590                     .word loc_CODE_7F09661C
+D:80057590                     .word loc_CODE_7F0961CC
+D:80057590                     .word def_7F095E0C
+D:80057590                     .word loc_CODE_7F096C98
+D:80057590                     .word loc_CODE_7F09670C
+D:80057590                     .word def_7F095E0C
+D:80057590                     .word loc_CODE_7F096304
+D:80057590                     .word loc_CODE_7F096B10
+D:80057590                     .word loc_CODE_7F095F58
+D:80057590                     .word loc_CODE_7F096984
+D:80057590                     .word loc_CODE_7F0967FC
+D:80057590                     .word loc_CODE_7F095E1C
+D:800575D0     flt_D_800575D0: .float 65535.0           # DATA XREF: sub_CODE_7F094488:loc_CODE_7F096F5Cr
+D:800575D4     flt_D_800575D4: .float 32767.0           # DATA XREF: sub_CODE_7F097388+17Cr
+D:800575D8     flt_D_800575D8: .float 32767.0           # DATA XREF: sub_CODE_7F097388+1A4r
+D:800575DC     flt_D_800575DC: .float 511.0             # DATA XREF: sub_CODE_7F097388+24Cr
+D:800575E0     flt_D_800575E0: .float -4090.0           # DATA XREF: sub_CODE_7F097388+284r
+D:800575E4     flt_D_800575E4: .float -4090.0           # DATA XREF: sub_CODE_7F097388+2DCr
+D:800575E8     flt_D_800575E8: .float -1878.0           # DATA XREF: sub_CODE_7F097818+324r
+D:800575EC     flt_D_800575EC: .float -1878.0           # DATA XREF: sub_CODE_7F097818+39Cr
+D:800575F0     flt_D_800575F0: .float -1878.0           # DATA XREF: sub_CODE_7F097818+3B8r
+D:800575F4     flt_D_800575F4: .float 32767.0           # DATA XREF: sub_CODE_7F097818:loc_CODE_7F097E84r
+D:800575F8     flt_D_800575F8: .float -1878.0           # DATA XREF: sub_CODE_7F098A2C+308r
+D:800575FC     flt_D_800575FC: .float -1878.0           # DATA XREF: sub_CODE_7F098A2C+380r
+D:80057600     flt_D_80057600: .float -1878.0           # DATA XREF: sub_CODE_7F098A2C+39Cr
+D:80057604     flt_D_80057604: .float -1878.0           # DATA XREF: sub_CODE_7F098A2C+408r
+D:80057608     flt_D_80057608: .float 1877.0            # DATA XREF: sub_CODE_7F098A2C+608r
+D:8005760C     flt_D_8005760C: .float 32767.0           # DATA XREF: sub_CODE_7F098A2C:loc_CODE_7F09926Cr
+D:80057610                     .float -229.18311
+D:80057614     flt_D_80057614: .float 9.9999981         # DATA XREF: sub_CODE_7F09A4BC+480r
+D:80057618     flt_D_80057618: .float 0.93000001        # DATA XREF: sub_CODE_7F09A4BC+57Cr
+D:8005761C     flt_D_8005761C: .float 14.285716         # DATA XREF: sub_CODE_7F09A4BC+5BCr
+D:80057620     flt_D_80057620: .float 0.89999998        # DATA XREF: sub_CODE_7F09A4BC+848r
+D:80057624     flt_D_80057624: .float -3.1415927        # DATA XREF: sub_CODE_7F09A4BC+908r
+D:80057628                     .float 1.3333334
+D:8005762C     jpt_700CF1AC:   .word weapon_multi_none  # DATA XREF: sub_CODE_7F09B244+2Cr
+D:8005762C                     .word weapon_multi_none  # jump table for switch statement
+D:8005762C                     .word weapon_multi_hunting_knife
+D:8005762C                     .word weapon_multi_throwing_knife
+D:8005762C                     .word weapon_multi_pp7
+D:8005762C                     .word weapon_multi_pp7_silent
+D:8005762C                     .word weapon_multi_dd44
+D:8005762C                     .word weapon_multi_klobb
+D:8005762C                     .word weapon_multi_kf7
+D:8005762C                     .word weapon_multi_zmg
+D:8005762C                     .word weapon_multi_d5k
+D:8005762C                     .word weapon_multi_d5k_silent
+D:8005762C                     .word weapon_multi_phantom
+D:8005762C                     .word weapon_multi_ar33
+D:8005762C                     .word weapon_multi_rcp90
+D:8005762C                     .word weapon_multi_shotgun
+D:8005762C                     .word weapon_multi_auto_shot
+D:8005762C                     .word weapon_multi_sniper
+D:8005762C                     .word weapon_multi_cougar
+D:8005762C                     .word weapon_multi_goldengun
+D:8005762C                     .word weapon_multi_pp7_special1
+D:8005762C                     .word weapon_multi_pp7_special2
+D:8005762C                     .word weapon_multi_moonraker
+D:8005762C                     .word weapon_multi_none
+D:8005762C                     .word weapon_multi_grenade_laun
+D:8005762C                     .word weapon_multi_rocket_launch
+D:8005762C                     .word weapon_multi_hand
+D:8005762C                     .word weapon_multi_timed
+D:8005762C                     .word weapon_multi_prox
+D:8005762C                     .word weapon_multi_remote
+D:8005762C                     .word weapon_multi_none
+D:8005762C                     .word weapon_multi_none
+*/
 
 
 

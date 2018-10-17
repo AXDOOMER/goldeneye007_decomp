@@ -11,7 +11,81 @@ D:8004866C                     .word 0
 
 */
 
-
+/* rodata
+D:8005BC20     ascii_MP_watch_menu_percentd:.ascii "%d"<0><0>
+D:8005BC20                                              # DATA XREF: display_text_for_playerdata_on_MP_menu+1Co
+D:8005BC24     ascii_MP_watch_menu_BLANK:.word 0        # DATA XREF: mp_watch_menu_display:text_blanko
+D:8005BC28     ascii_MP_watch_menu_left_chevron:.ascii "<"<0><0><0>
+D:8005BC28                                              # DATA XREF: mp_watch_menu_display+360o
+D:8005BC28                                              # mp_watch_menu_display+3D4o
+D:8005BC2C     ascii_MP_watch_menu_right_chevron:.ascii ">"<0><0><0>
+D:8005BC2C                                              # DATA XREF: mp_watch_menu_display+4C4o
+D:8005BC2C                                              # mp_watch_menu_display+538o
+D:8005BC30     ascii_pnum_KILLS:.ascii "%s%d %s"<0>     # DATA XREF: mp_watch_menu_display+D58o
+D:8005BC38     ascii_pnum_LOSSES:.ascii "%s%d %s"<0>    # DATA XREF: mp_watch_menu_display+11D0o
+D:8005BC40     jpt_MP_menu_page_adv_right:.word page_adv_right_yes
+D:8005BC40                                              # DATA XREF: check_can_advance_right_on_mpmenu+1Cr
+D:8005BC40                     .word page_adv_right_yes  # jump table for switch statement
+D:8005BC40                     .word page_adv_right_yes
+D:8005BC40                     .word page_adv_right_gameover
+D:8005BC40                     .word page_adv_right_yes
+D:8005BC40                     .word page_adv_right_no
+D:8005BC40                     .word page_adv_right_no
+D:8005BC40                     .word page_adv_right_no
+D:8005BC60     jpt_MP_menu_page_adv_left:.word page_adv_left_no
+D:8005BC60                                              # DATA XREF: check_can_advance_left_on_mpmenu+1Cr
+D:8005BC60                     .word page_adv_left_gameover  # jump table for switch statement
+D:8005BC60                     .word page_adv_left_yes
+D:8005BC60                     .word page_adv_left_yes
+D:8005BC60                     .word page_adv_left_yes
+D:8005BC60                     .word page_adv_left_yes
+D:8005BC60                     .word page_adv_left_no
+D:8005BC60                     .word page_adv_left_no
+D:8005BC80     flt_D_8005BC80: .float 216000.0          # DATA XREF: sub_CODE_7F0C2530+D4r
+D:8005BC84     flt_D_8005BC84: .float 100000.0          # DATA XREF: sub_CODE_7F0C2530+27Cr
+D:8005BC88     jpt_MP_overlays_scoring_scenario_0:.word green_text_normal
+D:8005BC88                                              # DATA XREF: display_text_for_playerdata_on_MP_menu+80r
+D:8005BC88                     .word green_text_highlighted  # jump table for switch statement
+D:8005BC88                     .word red_text_normal
+D:8005BC88                     .word red_text_highlighted
+D:8005BC88                     .word blue_text_normal
+D:8005BC88                     .word blue_text_highlighted
+D:8005BCA0     jpt_MP_overlays_scoring:.word num_player_kills
+D:8005BCA0                                              # DATA XREF: get_points_for_mp_player+68r
+D:8005BCA0                     .word num_deaths         # jump table for switch statement
+D:8005BCA0                     .word time_with_flag
+D:8005BCA0                     .word num_player_kills
+D:8005BCA0                     .word num_player_kills
+D:8005BCA0                     .word team_player_kills
+D:8005BCA0                     .word team_player_kills
+D:8005BCA0                     .word team_player_kills
+D:8005BCC0     jpt_MP_overlays_scoring_scenario_1:.word not_yolt
+D:8005BCC0                                              # DATA XREF: true_if_displaying_rank_in_mp+1Cr
+D:8005BCC0                     .word yolt               # jump table for switch statement
+D:8005BCC0                     .word not_yolt
+D:8005BCC0                     .word not_yolt
+D:8005BCC0                     .word not_yolt
+D:8005BCC0                     .word not_yolt
+D:8005BCC0                     .word not_yolt
+D:8005BCC0                     .word not_yolt
+D:8005BCE0     jpt_MP_overlays_scoring_scenario_2:.word not_yolt_tld
+D:8005BCE0                                              # DATA XREF: true_if_displaying_score_in_mp+1Cr
+D:8005BCE0                     .word yolt_tld           # jump table for switch statement
+D:8005BCE0                     .word yolt_tld
+D:8005BCE0                     .word not_yolt_tld
+D:8005BCE0                     .word not_yolt_tld
+D:8005BCE0                     .word not_yolt_tld
+D:8005BCE0                     .word not_yolt_tld
+D:8005BCE0                     .word not_yolt_tld
+D:8005BD00     jpt_MP_menu_window_text:.word text_play  # DATA XREF: mp_watch_menu_display+90r
+D:8005BD00                     .word text_play          # jump table for switch statement
+D:8005BD00                     .word text_play
+D:8005BD00                     .word text_play
+D:8005BD00                     .word text_pause_unpause
+D:8005BD00                     .word text_exit
+D:8005BD00                     .word text_exit
+D:8005BD00                     .word text_blank
+*/
 
 #ifdef NONMATCHING
 void check_can_advance_right_on_mpmenu(void) {

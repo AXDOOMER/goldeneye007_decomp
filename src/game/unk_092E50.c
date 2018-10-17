@@ -50,7 +50,11 @@ D:8003FD28                     .dword                  0,                 0,    
 D:8003FD28                     .dword                  0,                 0,                 0
 */
 
-
+/* rodate
+D:80057510     flt_D_80057510: .float 0.1               # DATA XREF: sub_CODE_7F092E50:loc_CODE_7F092ED8r
+D:80057514     flt_D_80057514: .float 6.2831802         # DATA XREF: sub_CODE_7F092E50:loc_CODE_7F092F34r
+D:80057518     flt_D_80057518: .float 0.039999999       # DATA XREF: sub_CODE_7F092E50+E8r
+*/
 
 
 #ifdef NONMATCHING

@@ -22,7 +22,25 @@ D:80040960                                              # sub_CODE_7F0A3C08:loc_
 D:80040960                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 */
 
-
+/* rodata
+D:80057710     flt_D_80057710: .float 0.1               # DATA XREF: sub_CODE_7F0A1DA0+27Cr
+D:80057714     flt_D_80057714: .float 0.69999999        # DATA XREF: sub_CODE_7F0A1DA0+280r
+D:80057718     flt_D_80057718: .float 1.12              # DATA XREF: sub_CODE_7F0A2160+8Cr
+D:8005771C     flt_D_8005771C: .float 0.12              # DATA XREF: sub_CODE_7F0A2160+94r
+D:80057720     flt_D_80057720: .float 6.2831855         # DATA XREF: sub_CODE_7F0A2160+64Cr
+D:80057724     flt_D_80057724: .float 0.1               # DATA XREF: sub_CODE_7F0A2160+66Cr
+D:80057728     flt_D_80057728: .float 30000.0           # DATA XREF: sub_CODE_7F0A28D4+48r
+D:8005772C     flt_D_8005772C: .float -30000.0          # DATA XREF: sub_CODE_7F0A28D4+4Cr
+D:80057730     flt_D_80057730: .float 0.1               # DATA XREF: sub_CODE_7F0A28D4+54r
+D:80057734                     .word 0
+D:80057738                     .word 0
+D:8005773C                     .word 0
+D:80057740     dbl_D_80057740: .double 142.5            # DATA XREF: sub_CODE_7F0A2F30+A0r
+D:80057748     flt_D_80057748: .float 3.1415927         # DATA XREF: sub_CODE_7F0A2F30+BCr
+D:8005774C     flt_D_8005774C: .float 3.1415927         # DATA XREF: sub_CODE_7F0A33F8:loc_CODE_7F0A34C4r
+D:80057750     flt_D_80057750: .float 6.2831855         # DATA XREF: sub_CODE_7F0A3C08+50r
+D:80057754     flt_D_80057754: .float 1.41412           # DATA XREF: sub_CODE_7F0A3C08+1C0r
+*/
 
 #ifdef NONMATCHING
 void sub_GAME_7F0A1DA0(void) {

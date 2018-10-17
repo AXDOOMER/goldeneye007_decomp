@@ -25,6 +25,92 @@ D:800492A8                     .word 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:800492D4                     .word 0x8000, 0x8000, 0xC000, 0xC000, 0, 0, 0, 0, 0, 0, 0
 */
 
+/* rodata
+D:8005BD30     jpt_700FBF84:   .word huffman_type0_1    # DATA XREF: process_huffman_compressed_images+254r
+D:8005BD30                     .word huffman_type0_1    # jump table for switch statement
+D:8005BD30                     .word huffman_type2
+D:8005BD30                     .word huffman_type3
+D:8005BD30                     .word huffman_type4
+D:8005BD30                     .word huffman_type5
+D:8005BD30                     .word huffman_type6
+D:8005BD30                     .word huffman_type7
+D:8005BD30                     .word huffman_type8
+D:8005BD30                     .word huffman_type9
+D:8005BD58     jpt_700FC6F4:   .word loc_CODE_7F0C87CC  # DATA XREF: image_decompresion_related+64r
+D:8005BD58                     .word loc_CODE_7F0C87F0  # jump table for switch statement
+D:8005BD58                     .word loc_CODE_7F0C87CC
+D:8005BD58                     .word loc_CODE_7F0C87F0
+D:8005BD58                     .word loc_CODE_7F0C87F0
+D:8005BD58                     .word loc_CODE_7F0C8814
+D:8005BD58                     .word loc_CODE_7F0C8838
+D:8005BD58                     .word loc_CODE_7F0C8814
+D:8005BD58                     .word loc_CODE_7F0C8838
+D:8005BD7C     jpt_700FC7A4:   .word loc_CODE_7F0C887C  # DATA XREF: image_decompresion_related+114r
+D:8005BD7C                     .word loc_CODE_7F0C8A2C  # jump table for switch statement
+D:8005BD7C                     .word loc_CODE_7F0C887C
+D:8005BD7C                     .word loc_CODE_7F0C8A2C
+D:8005BD7C                     .word loc_CODE_7F0C8BE0
+D:8005BD7C                     .word loc_CODE_7F0C8D1C
+D:8005BD7C                     .word loc_CODE_7F0C8F00
+D:8005BD7C                     .word loc_CODE_7F0C8E34
+D:8005BD7C                     .word loc_CODE_7F0C9090
+D:8005BDA0     jpt_700FDA34:   .word loc_CODE_7F0C9B0C  # DATA XREF: image_compression0_expand+5Cr
+D:8005BDA0                     .word loc_CODE_7F0C9BEC  # jump table for switch statement
+D:8005BDA0                     .word loc_CODE_7F0C9B84
+D:8005BDA0                     .word loc_CODE_7F0C9C4C
+D:8005BDA0                     .word loc_CODE_7F0C9BEC
+D:8005BDA0                     .word loc_CODE_7F0C9CB4
+D:8005BDA0                     .word loc_CODE_7F0C9D10
+D:8005BDA0                     .word loc_CODE_7F0C9CB4
+D:8005BDA0                     .word loc_CODE_7F0C9D10
+D:8005BDC4     jpt_700FDD20:   .word loc_CODE_7F0C9DF8  # DATA XREF: generate_link_final_image+40r
+D:8005BDC4                     .word loc_CODE_7F0CA138  # jump table for switch statement
+D:8005BDC4                     .word loc_CODE_7F0C9FAC
+D:8005BDC4                     .word loc_CODE_7F0CA400
+D:8005BDC4                     .word loc_CODE_7F0CA2EC
+D:8005BDC4                     .word loc_CODE_7F0CA58C
+D:8005BDC4                     .word loc_CODE_7F0CA738
+D:8005BDC4                     .word loc_CODE_7F0CA68C
+D:8005BDC4                     .word loc_CODE_7F0CA7F0
+D:8005BDE8     jpt_700FE830:   .word loc_CODE_7F0CA908  # DATA XREF: type5_generate_link_final_image+64r
+D:8005BDE8                     .word loc_CODE_7F0CA9FC  # jump table for switch statement
+D:8005BDE8                     .word loc_CODE_7F0CA97C
+D:8005BDE8                     .word loc_CODE_7F0CAA78
+D:8005BDE8                     .word loc_CODE_7F0CA9FC
+D:8005BDE8                     .word loc_CODE_7F0CAAFC
+D:8005BDE8                     .word loc_CODE_7F0CAB74
+D:8005BDE8                     .word loc_CODE_7F0CAAFC
+D:8005BDE8                     .word loc_CODE_7F0CAB74
+D:8005BE0C     jpt_700FEBEC:   .word loc_CODE_7F0CACC4  # DATA XREF: type6_7_generate_link_final_image+58r
+D:8005BE0C                     .word loc_CODE_7F0CB0AC  # jump table for switch statement
+D:8005BE0C                     .word loc_CODE_7F0CAE90
+D:8005BE0C                     .word loc_CODE_7F0CB26C
+D:8005BE0C                     .word loc_CODE_7F0CB0AC
+D:8005BE0C                     .word loc_CODE_7F0CB3C4
+D:8005BE0C                     .word loc_CODE_7F0CB584
+D:8005BE0C                     .word loc_CODE_7F0CB3C4
+D:8005BE0C                     .word loc_CODE_7F0CB584
+D:8005BE30     jpt_700FF5D0:   .word loc_CODE_7F0CB6A8  # DATA XREF: sub_CODE_7F0CB67C+18r
+D:8005BE30                     .word loc_CODE_7F0CB6BC  # jump table for switch statement
+D:8005BE30                     .word loc_CODE_7F0CB6A8
+D:8005BE30                     .word loc_CODE_7F0CB6BC
+D:8005BE30                     .word loc_CODE_7F0CB6BC
+D:8005BE30                     .word loc_CODE_7F0CB6D4
+D:8005BE30                     .word loc_CODE_7F0CB6EC
+D:8005BE30                     .word loc_CODE_7F0CB6D4
+D:8005BE30                     .word loc_CODE_7F0CB6EC
+D:8005BE30                     .word loc_CODE_7F0CB6D4
+D:8005BE30                     .word loc_CODE_7F0CB6EC
+D:8005BE30                     .word loc_CODE_7F0CB6D4
+D:8005BE30                     .word loc_CODE_7F0CB6EC
+D:8005BE64     jpt_700FF7D0:   .word loc_CODE_7F0CB8A8  # DATA XREF: type8_9_doohick+B4r
+D:8005BE64                     .word loc_CODE_7F0CB8EC  # jump table for switch statement
+D:8005BE64                     .word loc_CODE_7F0CB930
+D:8005BE64                     .word loc_CODE_7F0CB974
+D:8005BE64                     .word loc_CODE_7F0CB9C0
+D:8005BE64                     .word loc_CODE_7F0CBA1C
+D:8005BE64                     .word loc_CODE_7F0CBA78
+*/
 
 #ifdef NONMATCHING
 void nullsub_41(void) {

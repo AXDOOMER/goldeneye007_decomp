@@ -1,7 +1,10 @@
 #include "ultra64.h"
 
 
-
+/* rodata
+D:8005BFC0     aSleep5EtcKillallGhostGload:.ascii "sleep 5; /etc/killall ghost gload"<0><0><0>
+D:8005BFC0                                              # DATA XREF: send_indy_close_port_cmd+10o
+*/
 
 
 

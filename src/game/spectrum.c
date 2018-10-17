@@ -72,6 +72,179 @@ D:8004ED68                     .word 0
 D:8004ED6C                     .word 0
 */
 
+/* rodata
+D:8005C020     aEmDataSabre_seg_rz:.ascii "em/data/sabre.seg.rz"<0><0><0><0>
+D:8005C020                                              # DATA XREF: D:aEmDataSabre_seg_rz_ptro
+D:8005C038     aEmDataAtic_seg_rz:.ascii "em/data/atic.seg.rz"<0>  # DATA XREF: D:8004ED30o
+D:8005C04C     aEmDataJetpac_seg_rz:.ascii "em/data/jetpac.seg.rz"<0><0><0>
+D:8005C04C                                              # DATA XREF: D:8004ED34o
+D:8005C064     aEmDataJetman_seg_rz:.ascii "em/data/jetman.seg.rz"<0><0><0>
+D:8005C064                                              # DATA XREF: D:8004ED38o
+D:8005C07C     aEmDataAlien8_seg_rz:.ascii "em/data/alien8.seg.rz"<0><0><0>
+D:8005C07C                                              # DATA XREF: D:8004ED3Co
+D:8005C094     aEmDataGunfright_seg_rz:.ascii "em/data/gunfright.seg.rz"<0><0><0><0>
+D:8005C094                                              # DATA XREF: D:8004ED40o
+D:8005C0B0     aEmDataUnder_seg_rz:.ascii "em/data/under.seg.rz"<0><0><0><0>
+D:8005C0B0                                              # DATA XREF: D:8004ED44o
+D:8005C0C8     aEmDataKnightlore_seg_rz:.ascii "em/data/knightlore.seg.rz"<0><0><0>
+D:8005C0C8                                              # DATA XREF: D:8004ED48o
+D:8005C0E4     aEmDataPssst_seg_rz:.ascii "em/data/pssst.seg.rz"<0><0><0><0>
+D:8005C0E4                                              # DATA XREF: D:8004ED4Co
+D:8005C0FC     aEmDataCookie_seg_rz:.ascii "em/data/cookie.seg.rz"<0><0><0>
+D:8005C0FC                                              # DATA XREF: D:8004ED50o
+D:8005C114     aEmDataSpec_rom_seg_rz:.ascii "em/data/spec_rom.seg.rz"<0>
+D:8005C114                                              # DATA XREF: init_spectrum_game+F4o
+D:8005C12C     spectrum_op_table:.word spectrum_op_00, spectrum_op_01, spectrum_op_02, spectrum_op_03, spectrum_op_04
+D:8005C12C                                              # DATA XREF: spectrum_hw_emulation+1FCr
+D:8005C12C                     .word spectrum_op_05, spectrum_op_06, spectrum_op_07, spectrum_op_08, spectrum_op_09  # jump table for switch statement
+D:8005C12C                     .word spectrum_op_0A, spectrum_op_0B, spectrum_op_0C, spectrum_op_0D, spectrum_op_0E
+D:8005C12C                     .word spectrum_op_0F, spectrum_op_10, spectrum_op_11, spectrum_op_12, spectrum_op_13
+D:8005C12C                     .word spectrum_op_14, spectrum_op_15, spectrum_op_16, spectrum_op_17, spectrum_op_18
+D:8005C12C                     .word spectrum_op_19, spectrum_op_1A, spectrum_op_1B, spectrum_op_1C, spectrum_op_1D
+D:8005C12C                     .word spectrum_op_1E, spectrum_op_1F, spectrum_op_20, spectrum_op_21, spectrum_op_22
+D:8005C12C                     .word spectrum_op_23, spectrum_op_24, spectrum_op_25, spectrum_op_26, spectrum_op_27
+D:8005C12C                     .word spectrum_op_28, spectrum_op_29, spectrum_op_2A, spectrum_op_2B, spectrum_op_2C
+D:8005C12C                     .word spectrum_op_2D, spectrum_op_2E, spectrum_op_2F, spectrum_op_30, spectrum_op_31
+D:8005C12C                     .word spectrum_op_32, spectrum_op_33, spectrum_op_34, spectrum_op_35, spectrum_op_36
+D:8005C12C                     .word spectrum_op_37, spectrum_op_38, spectrum_op_39, spectrum_op_3A, spectrum_op_3B
+D:8005C12C                     .word spectrum_op_3C, spectrum_op_3D, spectrum_op_3E, spectrum_op_3F, spectrum_op_40
+D:8005C12C                     .word spectrum_op_41, spectrum_op_42, spectrum_op_43, spectrum_op_44, spectrum_op_45
+D:8005C12C                     .word spectrum_op_46, spectrum_op_47, spectrum_op_48, spectrum_op_49, spectrum_op_4A
+D:8005C12C                     .word spectrum_op_4B, spectrum_op_4C, spectrum_op_4D, spectrum_op_4E, spectrum_op_4F
+D:8005C12C                     .word spectrum_op_50, spectrum_op_51, spectrum_op_52, spectrum_op_53, spectrum_op_54
+D:8005C12C                     .word spectrum_op_55, spectrum_op_56, spectrum_op_57, spectrum_op_58, spectrum_op_59
+D:8005C12C                     .word spectrum_op_5A, spectrum_op_5B, spectrum_op_5C, spectrum_op_5D, spectrum_op_5E
+D:8005C12C                     .word spectrum_op_5F, spectrum_op_60, spectrum_op_61, spectrum_op_62, spectrum_op_63
+D:8005C12C                     .word spectrum_op_64, spectrum_op_65, spectrum_op_66, spectrum_op_67, spectrum_op_68
+D:8005C12C                     .word spectrum_op_69, spectrum_op_6A, spectrum_op_6B, spectrum_op_6C, spectrum_op_6D
+D:8005C12C                     .word spectrum_op_6E, spectrum_op_6F, spectrum_op_70, spectrum_op_71, spectrum_op_72
+D:8005C12C                     .word spectrum_op_73, spectrum_op_74, spectrum_op_75, spectrum_op_76, spectrum_op_77
+D:8005C12C                     .word spectrum_op_78, spectrum_op_79, spectrum_op_7A, spectrum_op_7B, spectrum_op_7C
+D:8005C12C                     .word spectrum_op_7D, spectrum_op_7E, spectrum_op_7F, spectrum_op_80, spectrum_op_81
+D:8005C12C                     .word spectrum_op_82, spectrum_op_83, spectrum_op_84, spectrum_op_85, spectrum_op_86
+D:8005C12C                     .word spectrum_op_87, spectrum_op_88, spectrum_op_89, spectrum_op_8A, spectrum_op_8B
+D:8005C12C                     .word spectrum_op_8C, spectrum_op_8D, spectrum_op_8E, spectrum_op_8F, spectrum_op_90
+D:8005C12C                     .word spectrum_op_91, spectrum_op_92, spectrum_op_93, spectrum_op_94, spectrum_op_95
+D:8005C12C                     .word spectrum_op_96, spectrum_op_97, spectrum_op_98, spectrum_op_99, spectrum_op_9A
+D:8005C12C                     .word spectrum_op_9B, spectrum_op_9C, spectrum_op_9D, spectrum_op_9E, spectrum_op_9F
+D:8005C12C                     .word spectrum_op_A0, spectrum_op_A1, spectrum_op_A2, spectrum_op_A3, spectrum_op_A4
+D:8005C12C                     .word spectrum_op_A5, spectrum_op_A6, spectrum_op_A7, spectrum_op_A8, spectrum_op_A9
+D:8005C12C                     .word spectrum_op_AA, spectrum_op_AB, spectrum_op_AC, spectrum_op_AD, spectrum_op_AE
+D:8005C12C                     .word spectrum_op_AF, spectrum_op_B0, spectrum_op_B1, spectrum_op_B2, spectrum_op_B3
+D:8005C12C                     .word spectrum_op_B4, spectrum_op_B5, spectrum_op_B6, spectrum_op_B7, spectrum_op_B8
+D:8005C12C                     .word spectrum_op_B9, spectrum_op_BA, spectrum_op_BB, spectrum_op_BC, spectrum_op_BD
+D:8005C12C                     .word spectrum_op_BE, spectrum_op_BF, spectrum_op_C0, spectrum_op_C1, spectrum_op_C2
+D:8005C12C                     .word spectrum_op_C3, spectrum_op_C4, spectrum_op_C5, spectrum_op_C6, spectrum_op_C7
+D:8005C12C                     .word spectrum_op_C8, spectrum_op_C9, spectrum_op_CA, spectrum_op_CB, spectrum_op_CC
+D:8005C12C                     .word spectrum_op_CD, spectrum_op_CE, spectrum_op_CF, spectrum_op_D0, spectrum_op_D1
+D:8005C12C                     .word spectrum_op_D2, spectrum_op_D3, spectrum_op_D4, spectrum_op_D5, spectrum_op_D6
+D:8005C12C                     .word spectrum_op_D7, spectrum_op_D8, spectrum_op_D9, spectrum_op_DA, spectrum_op_DB
+D:8005C12C                     .word spectrum_op_DC, spectrum_op_DD, spectrum_op_DE, spectrum_op_DF, spectrum_op_E0
+D:8005C12C                     .word spectrum_op_E1, spectrum_op_E2, spectrum_op_E3, spectrum_op_E4, spectrum_op_E5
+D:8005C12C                     .word spectrum_op_E6, spectrum_op_E7, spectrum_op_E8, spectrum_op_E9, spectrum_op_EA
+D:8005C12C                     .word spectrum_op_EB, spectrum_op_EC, spectrum_op_ED, spectrum_op_EE, spectrum_op_EF
+D:8005C12C                     .word spectrum_op_F0, spectrum_op_F1, spectrum_op_F2, spectrum_op_F3, spectrum_op_F4
+D:8005C12C                     .word spectrum_op_F5, spectrum_op_F6, spectrum_op_F7, spectrum_op_F8, spectrum_op_F9
+D:8005C12C                     .word spectrum_op_FA, spectrum_op_FB, spectrum_op_FC, spectrum_op_FD, spectrum_op_FE
+D:8005C12C                     .word spectrum_op_FF
+D:8005C52C     jpt_7010E33C:   .word spectrum_op_CB_00, spectrum_op_CB_01, spectrum_op_CB_02, spectrum_op_CB_03
+D:8005C52C                                              # DATA XREF: spectrum_hw_emulation+6BD4r
+D:8005C52C                     .word spectrum_op_CB_04, spectrum_op_CB_05, spectrum_op_CB_06, spectrum_op_CB_07  # jump table for switch statement
+D:8005C52C                     .word spectrum_op_CB_08, spectrum_op_CB_09, spectrum_op_CB_0A, spectrum_op_CB_0B
+D:8005C52C                     .word spectrum_op_CB_0C, spectrum_op_CB_0D, spectrum_op_CB_0E, spectrum_op_CB_0F
+D:8005C52C                     .word spectrum_op_CB_10, spectrum_op_CB_11, spectrum_op_CB_12, spectrum_op_CB_13
+D:8005C52C                     .word spectrum_op_CB_14, spectrum_op_CB_15, spectrum_op_CB_16, spectrum_op_CB_17
+D:8005C52C                     .word spectrum_op_CB_18, spectrum_op_CB_19, spectrum_op_CB_1A, spectrum_op_CB_1B
+D:8005C52C                     .word spectrum_op_CB_1C, spectrum_op_CB_1D, spectrum_op_CB_1E, spectrum_op_CB_1F
+D:8005C52C                     .word spectrum_op_CB_20, spectrum_op_CB_21, spectrum_op_CB_22, spectrum_op_CB_23
+D:8005C52C                     .word spectrum_op_CB_24, spectrum_op_CB_25, spectrum_op_CB_26, spectrum_op_CB_27
+D:8005C52C                     .word spectrum_op_CB_28, spectrum_op_CB_29, spectrum_op_CB_2A, spectrum_op_CB_2B
+D:8005C52C                     .word spectrum_op_CB_2C, spectrum_op_CB_2D, spectrum_op_CB_2E, spectrum_op_CB_2F
+D:8005C52C                     .word spectrum_op_CB_30, spectrum_op_CB_31, spectrum_op_CB_32, spectrum_op_CB_33
+D:8005C52C                     .word spectrum_op_CB_34, spectrum_op_CB_35, spectrum_op_CB_36, spectrum_op_CB_37
+D:8005C52C                     .word spectrum_op_CB_38, spectrum_op_CB_39, spectrum_op_CB_3A, spectrum_op_CB_3B
+D:8005C52C                     .word spectrum_op_CB_3C, spectrum_op_CB_3D, spectrum_op_CB_3E, spectrum_op_CB_3F
+D:8005C62C     jpt_7010FDE8:   .word spectrum_op_SET_x_B
+D:8005C62C                                              # DATA XREF: spectrum_hw_emulation+8680r
+D:8005C62C                     .word spectrum_op_SET_x_C  # jump table for switch statement
+D:8005C62C                     .word spectrum_op_SET_x_D
+D:8005C62C                     .word spectrum_op_SET_x_E
+D:8005C62C                     .word spectrum_op_SET_x_H
+D:8005C62C                     .word spectrum_op_SET_x_L
+D:8005C62C                     .word spectrum_op_SET_x_HL
+D:8005C62C                     .word spectrum_op_SET_x_A
+D:8005C64C     jpt_7010FE20:   .word spectrum_op_RES_x_B
+D:8005C64C                                              # DATA XREF: spectrum_hw_emulation+86B8r
+D:8005C64C                     .word spectrum_op_RES_x_C  # jump table for switch statement
+D:8005C64C                     .word spectrum_op_RES_x_D
+D:8005C64C                     .word spectrum_op_RES_x_E
+D:8005C64C                     .word spectrum_op_RES_x_H
+D:8005C64C                     .word spectrum_op_RES_x_L
+D:8005C64C                     .word spectrum_op_RES_x_HL
+D:8005C64C                     .word spectrum_op_RES_x_A
+D:8005C66C     jpt_7010FE40:   .word spectrum_op_BIT_x_B
+D:8005C66C                                              # DATA XREF: spectrum_hw_emulation+86D8r
+D:8005C66C                     .word spectrum_op_BIT_x_C  # jump table for switch statement
+D:8005C66C                     .word spectrum_op_BIT_x_D
+D:8005C66C                     .word spectrum_op_BIT_x_E
+D:8005C66C                     .word spectrum_op_BIT_x_H
+D:8005C66C                     .word spectrum_op_BIT_x_L
+D:8005C66C                     .word spectrum_op_BIT_x_HL
+D:8005C66C                     .word spectrum_op_BIT_x_A
+D:8005C68C     jpt_701104EC:   .word loc_CODE_7F0DC5C4  # DATA XREF: spectrum_hw_emulation+8D84r
+D:8005C68C                     .word loc_CODE_7F0DC5CC  # jump table for switch statement
+D:8005C68C                     .word loc_CODE_7F0DC5D4
+D:8005C68C                     .word loc_CODE_7F0DC5DC
+D:8005C68C                     .word loc_CODE_7F0DC5E4
+D:8005C68C                     .word loc_CODE_7F0DC5EC
+D:8005C68C                     .word def_7F0DC5BC
+D:8005C68C                     .word loc_CODE_7F0DC5F4
+D:8005C6AC     jpt_70112968:   .word spectrum_op_ED_A0  # DATA XREF: spectrum_hw_emulation+B200r
+D:8005C6AC                     .word spectrum_op_ED_A1  # jump table for switch statement
+D:8005C6AC                     .word spectrum_op_ED_A2
+D:8005C6AC                     .word spectrum_op_ED_A3
+D:8005C6AC                     .word loc_CODE_7F0E1A6C
+D:8005C6AC                     .word loc_CODE_7F0E1A6C
+D:8005C6AC                     .word loc_CODE_7F0E1A6C
+D:8005C6AC                     .word loc_CODE_7F0E1A6C
+D:8005C6AC                     .word spectrum_op_ED_A8
+D:8005C6AC                     .word spectrum_op_ED_A9
+D:8005C6AC                     .word spectrum_op_ED_AA
+D:8005C6AC                     .word spectrum_op_ED_AB
+D:8005C6AC                     .word loc_CODE_7F0E1A6C
+D:8005C6AC                     .word loc_CODE_7F0E1A6C
+D:8005C6AC                     .word loc_CODE_7F0E1A6C
+D:8005C6AC                     .word loc_CODE_7F0E1A6C
+D:8005C6AC                     .word spectrum_op_ED_B0
+D:8005C6AC                     .word spectrum_op_ED_B1
+D:8005C6AC                     .word spectrum_op_ED_B2
+D:8005C6AC                     .word spectrum_op_ED_B3
+D:8005C6AC                     .word loc_CODE_7F0E1A6C
+D:8005C6AC                     .word loc_CODE_7F0E1A6C
+D:8005C6AC                     .word loc_CODE_7F0E1A6C
+D:8005C6AC                     .word loc_CODE_7F0E1A6C
+D:8005C6AC                     .word spectrum_op_ED_B8
+D:8005C6AC                     .word spectrum_op_ED_B9
+D:8005C6AC                     .word spectrum_op_ED_BA
+D:8005C6AC                     .word spectrum_op_ED_BB
+D:8005C71C     jpt_70112990:   .word spectrum_op_ED_40, spectrum_op_ED_41, spectrum_op_ED_42, spectrum_op_ED_43
+D:8005C71C                                              # DATA XREF: spectrum_hw_emulation+B228r
+D:8005C71C                     .word spectrum_op_ED_44, spectrum_op_ED_45, spectrum_op_ED_46, spectrum_op_ED_47  # jump table for switch statement
+D:8005C71C                     .word spectrum_op_ED_48, spectrum_op_ED_49, spectrum_op_ED_4A, spectrum_op_ED_4B
+D:8005C71C                     .word spectrum_op_ED_4C, spectrum_op_ED_4D, spectrum_op_ED_4E, spectrum_op_ED_4F
+D:8005C71C                     .word spectrum_op_ED_50, spectrum_op_ED_51, spectrum_op_ED_52, spectrum_op_ED_53
+D:8005C71C                     .word spectrum_op_ED_54, spectrum_op_ED_55, spectrum_op_ED_56, spectrum_op_ED_57
+D:8005C71C                     .word spectrum_op_ED_58, spectrum_op_ED_59, spectrum_op_ED_5A, spectrum_op_ED_5B
+D:8005C71C                     .word spectrum_op_ED_5C, spectrum_op_ED_5D, spectrum_op_ED_5E, spectrum_op_ED_5F
+D:8005C71C                     .word spectrum_op_ED_60, spectrum_op_ED_61, spectrum_op_ED_62, spectrum_op_ED_63
+D:8005C71C                     .word spectrum_op_ED_64, spectrum_op_ED_65, spectrum_op_ED_66, spectrum_op_ED_67
+D:8005C71C                     .word spectrum_op_ED_68, spectrum_op_ED_69, spectrum_op_ED_6A, spectrum_op_ED_6B
+D:8005C71C                     .word spectrum_op_ED_6C, spectrum_op_ED_6D, spectrum_op_ED_6E, spectrum_op_ED_6F
+D:8005C71C                     .word spectrum_op_ED_70, spectrum_op_ED_71, spectrum_op_ED_72, spectrum_op_ED_73
+D:8005C71C                     .word spectrum_op_ED_74, spectrum_op_ED_75, spectrum_op_ED_76, loc_CODE_7F0E1A6C
+D:8005C71C                     .word spectrum_op_ED_78, spectrum_op_ED_79, spectrum_op_ED_7A, spectrum_op_ED_7B
+D:8005C71C                     .word spectrum_op_ED_7C, spectrum_op_ED_7D, spectrum_op_ED_7E
+*/
 
 
 #ifdef NONMATCHING

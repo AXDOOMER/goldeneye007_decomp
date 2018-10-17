@@ -63,7 +63,149 @@ D:800484D4                     .word aLtitlee,aLtitlej,aLmpmenue,aLmpmenuj,aLpro
 D:800484D4                     .word aLmpweaponsj,aLoptionse,aLoptionsj,aLmisce,aLmiscj,0
 */
 
-
+/* rodata
+D:8005B880     aLamee:         .ascii "LameE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B888     aLamej:         .ascii "LameJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B890     aLarche:        .ascii "LarchE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B898     aLarchj:        .ascii "LarchJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B8A0     aLarke:         .ascii "LarkE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B8A8     aLarkj:         .ascii "LarkJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B8B0     aLashe:         .ascii "LashE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B8B8     aLashj:         .ascii "LashJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B8C0     aLazte:         .ascii "LaztE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B8C8     aLaztj:         .ascii "LaztJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B8D0     aLcate:         .ascii "LcatE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B8D8     aLcatj:         .ascii "LcatJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B8E0     aLcavee:        .ascii "LcaveE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B8E8     aLcavej:        .ascii "LcaveJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B8F0     aLarece:        .ascii "LarecE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B8F8     aLarecj:        .ascii "LarecJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B900     aLcrade:        .ascii "LcradE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B908     aLcradj:        .ascii "LcradJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B910     aLcrype:        .ascii "LcrypE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B918     aLcrypj:        .ascii "LcrypJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B920     aLdame:         .ascii "LdamE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B928     aLdamj:         .ascii "LdamJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B930     aLdepoe:        .ascii "LdepoE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B938     aLdepoj:        .ascii "LdepoJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B940     aLdeste:        .ascii "LdestE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B948     aLdestj:        .ascii "LdestJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B950     aLdishe:        .ascii "LdishE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B958     aLdishj:        .ascii "LdishJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005B960     aLeare:         .ascii "LearE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B968     aLearj:         .ascii "LearJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B970     aLelde:         .ascii "LeldE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B978     aLeldj:         .ascii "LeldJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B980     aLimpe:         .ascii "LimpE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B988     aLimpj:         .ascii "LimpJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B990     aLjune:         .ascii "LjunE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B998     aLjunj:         .ascii "LjunJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B9A0     aLleee:         .ascii "LleeE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B9A8     aLleej:         .ascii "LleeJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B9B0     aLlene:         .ascii "LlenE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B9B8     aLlenj:         .ascii "LlenJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B9C0     aLlipe:         .ascii "LlipE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B9C8     aLlipj:         .ascii "LlipJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B9D0     aLluee:         .ascii "LlueE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B9D8     aLluej:         .ascii "LlueJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B9E0     aLoate:         .ascii "LoatE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B9E8     aLoatj:         .ascii "LoatJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B9F0     aLpame:         .ascii "LpamE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005B9F8     aLpamj:         .ascii "LpamJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BA00     aLpetee:        .ascii "LpeteE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005BA08     aLpetej:        .ascii "LpeteJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005BA10     aLrefe:         .ascii "LrefE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BA18     aLrefj:         .ascii "LrefJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BA20     aLrite:         .ascii "LritE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BA28     aLritj:         .ascii "LritJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BA30     aLrune:         .ascii "LrunE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BA38     aLrunj:         .ascii "LrunJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BA40     aLsevbe:        .ascii "LsevbE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005BA48     aLsevbj:        .ascii "LsevbJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005BA50     aLseve:         .ascii "LsevE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BA58     aLsevj:         .ascii "LsevJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BA60     aLsevxe:        .ascii "LsevxE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005BA68     aLsevxj:        .ascii "LsevxJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005BA70     aLsevxbe:       .ascii "LsevxbE"<0>      # DATA XREF: D:LnameX_lookuptableo
+D:8005BA78     aLsevxbj:       .ascii "LsevxbJ"<0>      # DATA XREF: D:LnameX_lookuptableo
+D:8005BA80     aLshoe:         .ascii "LshoE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BA88     aLshoj:         .ascii "LshoJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BA90     aLsiloe:        .ascii "LsiloE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005BA98     aLsiloj:        .ascii "LsiloJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005BAA0     aLstate:        .ascii "LstatE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005BAA8     aLstatj:        .ascii "LstatJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005BAB0     aLtrae:         .ascii "LtraE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BAB8     aLtraj:         .ascii "LtraJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BAC0     aLwaxe:         .ascii "LwaxE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BAC8     aLwaxj:         .ascii "LwaxJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BAD0     aLgune:         .ascii "LgunE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BAD8     aLgunj:         .ascii "LgunJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BAE0     aLtitlee:       .ascii "LtitleE"<0>      # DATA XREF: D:LnameX_lookuptableo
+D:8005BAE8     aLtitlej:       .ascii "LtitleJ"<0>      # DATA XREF: D:LnameX_lookuptableo
+D:8005BAF0     aLmpmenue:      .ascii "LmpmenuE"<0><0><0><0>
+D:8005BAF0                                              # DATA XREF: D:LnameX_lookuptableo
+D:8005BAFC     aLmpmenuj:      .ascii "LmpmenuJ"<0><0><0><0>
+D:8005BAFC                                              # DATA XREF: D:LnameX_lookuptableo
+D:8005BB08     aLpropobje:     .ascii "LpropobjE"<0><0><0>
+D:8005BB08                                              # DATA XREF: D:LnameX_lookuptableo
+D:8005BB14     aLpropobjj:     .ascii "LpropobjJ"<0><0><0>
+D:8005BB14                                              # DATA XREF: D:LnameX_lookuptableo
+D:8005BB20     aLmpweaponse:   .ascii "LmpweaponsE"<0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BB2C     aLmpweaponsj:   .ascii "LmpweaponsJ"<0>  # DATA XREF: D:LnameX_lookuptableo
+D:8005BB38     aLoptionse:     .ascii "LoptionsE"<0><0><0>
+D:8005BB38                                              # DATA XREF: D:LnameX_lookuptableo
+D:8005BB44     aLoptionsj:     .ascii "LoptionsJ"<0><0><0>
+D:8005BB44                                              # DATA XREF: D:LnameX_lookuptableo
+D:8005BB50     aLmisce:        .ascii "LmiscE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005BB58     aLmiscj:        .ascii "LmiscJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+D:8005BB60     jpt_stage_text: .word locret_CODE_7F0C1624
+D:8005BB60                                              # DATA XREF: get_textbank_number_for_stagenum+10r
+D:8005BB60                     .word stagetext_loop     # jump table for switch statement
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word locret_CODE_7F0C162C
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word locret_CODE_7F0C164C
+D:8005BB60                     .word locret_CODE_7F0C167C
+D:8005BB60                     .word locret_CODE_7F0C1654
+D:8005BB60                     .word locret_CODE_7F0C166C
+D:8005BB60                     .word locret_CODE_7F0C1634
+D:8005BB60                     .word locret_CODE_7F0C1644
+D:8005BB60                     .word locret_CODE_7F0C1694
+D:8005BB60                     .word locret_CODE_7F0C165C
+D:8005BB60                     .word locret_CODE_7F0C1664
+D:8005BB60                     .word locret_CODE_7F0C16AC
+D:8005BB60                     .word locret_CODE_7F0C169C
+D:8005BB60                     .word locret_CODE_7F0C1604
+D:8005BB60                     .word locret_CODE_7F0C160C
+D:8005BB60                     .word locret_CODE_7F0C1614
+D:8005BB60                     .word locret_CODE_7F0C161C
+D:8005BB60                     .word locret_CODE_7F0C1674
+D:8005BB60                     .word locret_CODE_7F0C16A4
+D:8005BB60                     .word locret_CODE_7F0C1684
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word locret_CODE_7F0C168C
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word locret_CODE_7F0C163C
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word locret_CODE_7F0C16BC
+D:8005BB60                     .word locret_CODE_7F0C16C4
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word locret_CODE_7F0C16B4
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word locret_CODE_7F0C16CC
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word stagetext_loop
+D:8005BB60                     .word locret_CODE_7F0C16D4
+*/
 
 #ifdef NONMATCHING
 void get_textbank_number_for_stagenum(void) {

@@ -1,7 +1,10 @@
 #include "ultra64.h"
 
 
-
+/* rodata
+D:800585E0     flt_D_800585E0: .float 3.4028235e38      # DATA XREF: sub_CODE_7F0B32D8+7Cr
+D:800585E4     flt_D_800585E4: .float 3.4028235e38      # DATA XREF: sub_CODE_7F0B32D8+E8r
+*/
 
 
 

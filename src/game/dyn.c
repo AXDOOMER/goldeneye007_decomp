@@ -21,7 +21,13 @@ D:80048358                     .word 0
 D:8004835C                     .word 0
 */
 
-
+/* rodata
+D:8005B680     aDyn_c_debug:   .ascii "dyn_c_debug"<0>  # DATA XREF: something_with_dyn_c_debug+Co
+D:8005B68C     aMgfx:          .ascii "-mgfx"<0><0><0>  # DATA XREF: set_vtx_gfx_mem_alloc+8o
+D:8005B694     aMgfx_1:        .ascii "-mgfx"<0><0><0>  # DATA XREF: set_vtx_gfx_mem_alloc+28o
+D:8005B69C     aMvtx:          .ascii "-mvtx"<0><0><0>  # DATA XREF: set_vtx_gfx_mem_alloc:loc_CODE_7F0BD4F0o
+D:8005B6A4     aMvtx_0:        .ascii "-mvtx"<0>        # DATA XREF: set_vtx_gfx_mem_alloc+84o
+*/
 
 #ifdef NONMATCHING
 void something_with_dyn_c_debug(void) {

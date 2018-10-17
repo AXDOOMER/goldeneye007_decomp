@@ -103,7 +103,20 @@ D:800413D0                                              # sub_CODE_7F0B3044+74r
 D:800413D4                     .word 0, 0, 0, 0, 0, 0, 0
 */
 
-
+/* rodata
+D:800585A0     aCDCC:          .ascii "%c%d%c%c"<0>     # DATA XREF: sub_CODE_7F0AEF3C+7Co
+D:800585A9                     .byte 0, 0, 0
+D:800585AC     aStan_c_debug:  .ascii "stan_c_debug"<0>
+D:800585AC                                              # DATA XREF: something_stan_c_debug_related+Co
+D:800585B9                     .byte 0, 0, 0
+D:800585BC     aStanlinelog:   .ascii "-stanlinelog"<0>  # DATA XREF: sub_CODE_7F0AF5B8+34o
+D:800585C9                     .byte 0, 0, 0
+D:800585CC     flt_D_800585CC: .float 32767.0           # DATA XREF: sub_CODE_7F0AF20C+4r
+D:800585D0     flt_D_800585D0: .float -3.4028235e38     # DATA XREF: sub_CODE_7F0AF20C+10r
+D:800585D4     flt_D_800585D4: .float -32767.0          # DATA XREF: sub_CODE_7F0AF20C:loc_CODE_7F0AF2C8r
+D:800585D8     flt_D_800585D8: .float 0.1               # DATA XREF: sub_CODE_7F0AFA1C+8Cr
+D:800585DC     flt_D_800585DC: .float 0.89999998        # DATA XREF: sub_CODE_7F0AFA1C+9Cr
+*/
 
 #ifdef NONMATCHING
 void sub_GAME_7F0AEF30(void) {

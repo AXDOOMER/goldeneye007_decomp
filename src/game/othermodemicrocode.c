@@ -1,8 +1,12 @@
 #include "ultra64.h"
 
 
-
-
+/* rodata
+D:80054F90     flt_D_80054F90: .float 0.99999899        # DATA XREF: ceil8000+30r
+D:80054F94     flt_D_80054F94: .float 0.99999899        # DATA XREF: ceil4000+30r
+D:80054F98     flt_D_80054F98: .float 0.99999899        # DATA XREF: ceil2000+30r
+D:80054F9C     flt_D_80054F9C: .float 0.99999899        # DATA XREF: ceil1000+30r
+*/
 
 
 #ifdef NONMATCHING

@@ -1,7 +1,20 @@
 #include "ultra64.h"
 
 
-
+/* rodata
+D:8005BF80     dword_D_8005BF80:.word 0x11720000        # DATA XREF: decompressdata+24r
+D:8005BF84     dword_D_8005BF84:.word 0x11720000        # DATA XREF: decompressdata+44r
+D:8005BF88     dword_D_8005BF88:.word 0x11720000        # DATA XREF: decompressdata+54r
+D:8005BF8C                     .word 0x11720000
+D:8005BF90                     .word 0x11720000
+D:8005BF94                     .word 0x11720000
+D:8005BF98     dword_D_8005BF98:.word 0x11720000        # DATA XREF: decompressdata:loc_CODE_7F0CE854r
+D:8005BF9C                     .word 0x11720000
+D:8005BFA0                     .word 0x11720000
+D:8005BFA4                     .word 0x11720000
+D:8005BFA8                     .word 0
+D:8005BFAC                     .word 0
+*/
 
 
 

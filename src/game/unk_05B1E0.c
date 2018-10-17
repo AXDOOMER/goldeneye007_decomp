@@ -8,7 +8,13 @@ D:80032430                                              # sub_CODE_7F05B798+BCr
 D:80032430                                              # sub_CODE_7F05B798+C4r
 */
 
-
+/* rodata
+D:80053740     flt_D_80053740: .float 0.000095873802    # DATA XREF: sub_CODE_7F05B1E0+1Cr
+D:80053744     flt_D_80053744: .float -0.99998999       # DATA XREF: sub_CODE_7F05BA08+48r
+D:80053748     flt_D_80053748: .float 0.99998999        # DATA XREF: sub_CODE_7F05BA08:loc_CODE_7F05BAE8r
+D:8005374C     flt_D_8005374C: .float -0.99998999       # DATA XREF: sub_CODE_7F05BC68:loc_CODE_7F05BCA0r
+D:80053750     flt_D_80053750: .float 0.99998999        # DATA XREF: sub_CODE_7F05BC68:loc_CODE_7F05BCF8r
+*/
 
 
 

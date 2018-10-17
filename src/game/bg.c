@@ -535,7 +535,221 @@ D:80044DB0                                              # sub_CODE_7F0BA640+BCw
 
 */
 
-
+/* rodata
+D:800585F0     aBgBg_sev_all_p_seg:.ascii "bg/bg_sev_all_p.seg"<0>
+D:800585F0                                              # DATA XREF: D:levelinfostructo
+D:80058604     aTbg_sev_all_p_stanz:.ascii "Tbg_sev_all_p_stanZ"<0>
+D:80058604                                              # DATA XREF: D:levelinfostructo
+D:80058618     aBgBg_silo_all_p_seg:.ascii "bg/bg_silo_all_p.seg"<0>
+D:80058618                                              # DATA XREF: D:800444A4o
+D:8005862D                     .byte 0, 0, 0
+D:80058630     aTbg_silo_all_p_stanz:.ascii "Tbg_silo_all_p_stanZ"<0>
+D:80058630                                              # DATA XREF: D:800444A4o
+D:80058645                     .byte 0, 0, 0
+D:80058648     aBgBg_stat_all_p_seg:.ascii "bg/bg_stat_all_p.seg"<0>
+D:80058648                                              # DATA XREF: D:800444BCo
+D:8005865D                     .byte 0, 0, 0
+D:80058660     aTbg_stat_all_p_stanz:.ascii "Tbg_stat_all_p_stanZ"<0>
+D:80058660                                              # DATA XREF: D:800444BCo
+D:80058675                     .byte 0, 0, 0
+D:80058678     aBgBg_arec_all_p_seg:.ascii "bg/bg_arec_all_p.seg"<0>
+D:80058678                                              # DATA XREF: D:800444D4o
+D:8005868D                     .byte 0, 0, 0
+D:80058690     aTbg_arec_all_p_stanz:.ascii "Tbg_arec_all_p_stanZ"<0>
+D:80058690                                              # DATA XREF: D:800444D4o
+D:800586A5                     .byte 0, 0, 0
+D:800586A8     aBgBg_arch_all_p_seg:.ascii "bg/bg_arch_all_p.seg"<0>
+D:800586A8                                              # DATA XREF: D:800444ECo
+D:800586BD                     .byte 0, 0, 0
+D:800586C0     aTbg_arch_all_p_stanz:.ascii "Tbg_arch_all_p_stanZ"<0>
+D:800586C0                                              # DATA XREF: D:800444ECo
+D:800586D5                     .byte 0, 0, 0
+D:800586D8     aBgBg_tra_all_p_seg:.ascii "bg/bg_tra_all_p.seg"<0>  # DATA XREF: D:80044504o
+D:800586EC     aTbg_tra_all_p_stanz:.ascii "Tbg_tra_all_p_stanZ"<0>  # DATA XREF: D:80044504o
+D:80058700     aBgBg_dest_all_p_seg:.ascii "bg/bg_dest_all_p.seg"<0>
+D:80058700                                              # DATA XREF: D:8004451Co
+D:80058715                     .byte 0, 0, 0
+D:80058718     aTbg_dest_all_p_stanz:.ascii "Tbg_dest_all_p_stanZ"<0>
+D:80058718                                              # DATA XREF: D:8004451Co
+D:8005872D                     .byte 0, 0, 0
+D:80058730     aBgBg_sevb_all_p_seg:.ascii "bg/bg_sevb_all_p.seg"<0>
+D:80058730                                              # DATA XREF: D:80044534o
+D:80058745                     .byte 0, 0, 0
+D:80058748     aTbg_sevb_all_p_stanz:.ascii "Tbg_sevb_all_p_stanZ"<0>
+D:80058748                                              # DATA XREF: D:80044534o
+D:8005875D                     .byte 0, 0, 0
+D:80058760     aBgBg_azt_all_p_seg:.ascii "bg/bg_azt_all_p.seg"<0>  # DATA XREF: D:8004454Co
+D:80058774     aTbg_azt_all_p_stanz:.ascii "Tbg_azt_all_p_stanZ"<0>  # DATA XREF: D:8004454Co
+D:80058788     aBgBg_pete_all_p_seg:.ascii "bg/bg_pete_all_p.seg"<0>
+D:80058788                                              # DATA XREF: D:80044564o
+D:8005879D                     .byte 0, 0, 0
+D:800587A0     aTbg_pete_all_p_stanz:.ascii "Tbg_pete_all_p_stanZ"<0>
+D:800587A0                                              # DATA XREF: D:80044564o
+D:800587B5                     .byte 0, 0, 0
+D:800587B8     aBgBg_depo_all_p_seg:.ascii "bg/bg_depo_all_p.seg"<0>
+D:800587B8                                              # DATA XREF: D:8004457Co
+D:800587CD                     .byte 0, 0, 0
+D:800587D0     aTbg_depo_all_p_stanz:.ascii "Tbg_depo_all_p_stanZ"<0>
+D:800587D0                                              # DATA XREF: D:8004457Co
+D:800587E5                     .byte 0, 0, 0
+D:800587E8     aBgBg_ref_all_p_seg:.ascii "bg/bg_ref_all_p.seg"<0>  # DATA XREF: D:80044594o
+D:800587FC     aTbg_ref_all_p_stanz:.ascii "Tbg_ref_all_p_stanZ"<0>  # DATA XREF: D:80044594o
+D:80058810     aBgBg_cryp_all_p_seg:.ascii "bg/bg_cryp_all_p.seg"<0>
+D:80058810                                              # DATA XREF: D:800445ACo
+D:80058825                     .byte 0, 0, 0
+D:80058828     aTbg_cryp_all_p_stanz:.ascii "Tbg_cryp_all_p_stanZ"<0>
+D:80058828                                              # DATA XREF: D:800445ACo
+D:8005883D                     .byte 0, 0, 0
+D:80058840     aBgBg_dam_all_p_seg:.ascii "bg/bg_dam_all_p.seg"<0>  # DATA XREF: D:800445C4o
+D:80058854     aTbg_dam_all_p_stanz:.ascii "Tbg_dam_all_p_stanZ"<0>  # DATA XREF: D:800445C4o
+D:80058868     aBgBg_ark_all_p_seg:.ascii "bg/bg_ark_all_p.seg"<0>  # DATA XREF: D:800445DCo
+D:8005887C     aTbg_ark_all_p_stanz:.ascii "Tbg_ark_all_p_stanZ"<0>  # DATA XREF: D:800445DCo
+D:80058890     aBgBg_run_all_p_seg:.ascii "bg/bg_run_all_p.seg"<0>  # DATA XREF: D:800445F4o
+D:800588A4     aTbg_run_all_p_stanz:.ascii "Tbg_run_all_p_stanZ"<0>  # DATA XREF: D:800445F4o
+D:800588B8     aBgBg_sevx_all_p_seg:.ascii "bg/bg_sevx_all_p.seg"<0>
+D:800588B8                                              # DATA XREF: D:8004460Co
+D:800588CD                     .byte 0, 0, 0
+D:800588D0     aTbg_sevx_all_p_stanz:.ascii "Tbg_sevx_all_p_stanZ"<0>
+D:800588D0                                              # DATA XREF: D:8004460Co
+D:800588E5                     .byte 0, 0, 0
+D:800588E8     aBgBg_jun_all_p_seg:.ascii "bg/bg_jun_all_p.seg"<0>  # DATA XREF: D:80044624o
+D:800588FC     aTbg_jun_all_p_stanz:.ascii "Tbg_jun_all_p_stanZ"<0>  # DATA XREF: D:80044624o
+D:80058910     aBgBg_dish_all_p_seg:.ascii "bg/bg_dish_all_p.seg"<0>
+D:80058910                                              # DATA XREF: D:8004463Co
+D:80058925                     .byte 0, 0, 0
+D:80058928     aTbg_dish_all_p_stanz:.ascii "Tbg_dish_all_p_stanZ"<0>
+D:80058928                                              # DATA XREF: D:8004463Co
+D:8005893D                     .byte 0, 0, 0
+D:80058940     aBgBg_cave_all_p_seg:.ascii "bg/bg_cave_all_p.seg"<0>
+D:80058940                                              # DATA XREF: D:80044654o
+D:80058955                     .byte 0, 0, 0
+D:80058958     aTbg_cave_all_p_stanz:.ascii "Tbg_cave_all_p_stanZ"<0>
+D:80058958                                              # DATA XREF: D:80044654o
+D:8005896D                     .byte 0, 0, 0
+D:80058970     aBgBg_cat_all_p_seg:.ascii "bg/bg_cat_all_p.seg"<0>  # DATA XREF: D:8004466Co
+D:80058984     aTbg_cat_all_p_stanz:.ascii "Tbg_cat_all_p_stanZ"<0>  # DATA XREF: D:8004466Co
+D:80058998     aBgBg_crad_all_p_seg:.ascii "bg/bg_crad_all_p.seg"<0>
+D:80058998                                              # DATA XREF: D:80044684o
+D:800589AD                     .byte 0, 0, 0
+D:800589B0     aTbg_crad_all_p_stanz:.ascii "Tbg_crad_all_p_stanZ"<0>
+D:800589B0                                              # DATA XREF: D:80044684o
+D:800589C5                     .byte 0, 0, 0
+D:800589C8     aBgBg_sho_all_p_seg:.ascii "bg/bg_sho_all_p.seg"<0>  # DATA XREF: D:8004469Co
+D:800589DC     aTbg_sho_all_p_stanz:.ascii "Tbg_sho_all_p_stanZ"<0>  # DATA XREF: D:8004469Co
+D:800589F0     aBgBg_sevx_all_p_seg_0:.ascii "bg/bg_sevx_all_p.seg"<0>
+D:800589F0                                              # DATA XREF: D:800446B4o
+D:80058A05                     .byte 0, 0, 0
+D:80058A08     aTbg_sevx_all_p_stanz_0:.ascii "Tbg_sevx_all_p_stanZ"<0>
+D:80058A08                                              # DATA XREF: D:800446B4o
+D:80058A1D                     .byte 0, 0, 0
+D:80058A20     aBgBg_eld_all_p_seg:.ascii "bg/bg_eld_all_p.seg"<0>  # DATA XREF: D:800446CCo
+D:80058A34     aTbg_eld_all_p_stanz:.ascii "Tbg_eld_all_p_stanZ"<0>  # DATA XREF: D:800446CCo
+D:80058A48     aBgBg_ame_all_p_seg:.ascii "bg/bg_ame_all_p.seg"<0>  # DATA XREF: D:800446E4o
+D:80058A5C     aTbg_ame_all_p_stanz:.ascii "Tbg_ame_all_p_stanZ"<0>  # DATA XREF: D:800446E4o
+D:80058A70     aBgBg_ame_all_p_seg_0:.ascii "bg/bg_ame_all_p.seg"<0>
+D:80058A70                                              # DATA XREF: D:800446FCo
+D:80058A84     aTbg_ame_all_p_stanz_0:.ascii "Tbg_ame_all_p_stanZ"<0>
+D:80058A84                                              # DATA XREF: D:800446FCo
+D:80058A98     aBgBg_lue_all_p_seg:.ascii "bg/bg_lue_all_p.seg"<0>  # DATA XREF: D:80044714o
+D:80058AAC     aTbg_lue_all_p_stanz:.ascii "Tbg_lue_all_p_stanZ"<0>  # DATA XREF: D:80044714o
+D:80058AC0     aBgBg_ame_all_p_seg_1:.ascii "bg/bg_ame_all_p.seg"<0>
+D:80058AC0                                              # DATA XREF: D:8004472Co
+D:80058AD4     aTbg_ame_all_p_stanz_1:.ascii "Tbg_ame_all_p_stanZ"<0>
+D:80058AD4                                              # DATA XREF: D:8004472Co
+D:80058AE8     aBgBg_rit_all_p_seg:.ascii "bg/bg_rit_all_p.seg"<0>  # DATA XREF: D:80044744o
+D:80058AFC     aTbg_rit_all_p_stanz:.ascii "Tbg_rit_all_p_stanZ"<0>  # DATA XREF: D:80044744o
+D:80058B10     aBgBg_oat_all_p_seg:.ascii "bg/bg_oat_all_p.seg"<0>  # DATA XREF: D:8004475Co
+D:80058B24     aTbg_oat_all_p_stanz:.ascii "Tbg_oat_all_p_stanZ"<0>  # DATA XREF: D:8004475Co
+D:80058B38     aBgBg_ear_all_p_seg:.ascii "bg/bg_ear_all_p.seg"<0>  # DATA XREF: D:80044774o
+D:80058B4C     aTbg_ear_all_p_stanz:.ascii "Tbg_ear_all_p_stanZ"<0>  # DATA XREF: D:80044774o
+D:80058B60     aBgBg_lee_all_p_seg:.ascii "bg/bg_lee_all_p.seg"<0>  # DATA XREF: D:8004478Co
+D:80058B74     aTbg_lee_all_p_stanz:.ascii "Tbg_lee_all_p_stanZ"<0>  # DATA XREF: D:8004478Co
+D:80058B88     aBgBg_lip_all_p_seg:.ascii "bg/bg_lip_all_p.seg"<0>  # DATA XREF: D:800447A4o
+D:80058B9C     aTbg_lip_all_p_stanz:.ascii "Tbg_lip_all_p_stanZ"<0>  # DATA XREF: D:800447A4o
+D:80058BB0     aBgBg_len_all_p_seg:.ascii "bg/bg_len_all_p.seg"<0>  # DATA XREF: D:800447BCo
+D:80058BC4     aTbg_len_all_p_stanz:.ascii "Tbg_len_all_p_stanZ"<0>  # DATA XREF: D:800447BCo
+D:80058BD8     aBgBg_wax_all_p_seg:.ascii "bg/bg_wax_all_p.seg"<0>  # DATA XREF: D:800447D4o
+D:80058BEC     aTbg_wax_all_p_stanz:.ascii "Tbg_wax_all_p_stanZ"<0>  # DATA XREF: D:800447D4o
+D:80058C00     aBgBg_pam_all_p_seg:.ascii "bg/bg_pam_all_p.seg"<0>  # DATA XREF: D:800447ECo
+D:80058C14     aTbg_pam_all_p_stanz:.ascii "Tbg_pam_all_p_stanZ"<0>  # DATA XREF: D:800447ECo
+D:80058C28     aBgBgx_seg:     .ascii "bg/bgx.seg"<0>   # DATA XREF: D:80044804o
+D:80058C33                     .byte 0
+D:80058C34     aTbgxz:         .ascii "TbgxZ"<0>        # DATA XREF: D:80044804o
+D:80058C3A                     .half 0
+D:80058C3C     aBg_c_debug:    .ascii "bg_c_debug"<0>   # DATA XREF: something_with_bg_c_debug+Co
+D:80058C47                     .byte 0
+D:80058C48     aPortD:         .ascii "PORT%d"<0>       # DATA XREF: sub_CODE_7F0B5D7C+44o
+D:80058C4F                     .byte 0
+D:80058C50     aRoomD:         .ascii "ROOM%d"<0>       # DATA XREF: sub_CODE_7F0B5DE0+44o
+D:80058C57                     .byte 0
+D:80058C58     jpt_700E883C:   .word loc_CODE_7F0B4914  # DATA XREF: sub_CODE_7F0B4884+7Cr
+D:80058C58                     .word loc_CODE_7F0B4914  # jump table for switch statement
+D:80058C58                     .word loc_CODE_7F0B4914
+D:80058C58                     .word def_7F0B490C
+D:80058C58                     .word def_7F0B490C
+D:80058C58                     .word def_7F0B490C
+D:80058C58                     .word loc_CODE_7F0B4914
+D:80058C58                     .word def_7F0B490C
+D:80058C58                     .word loc_CODE_7F0B4914
+D:80058C7C     flt_D_80058C7C: .float 0.89999998        # DATA XREF: sub_CODE_7F0B5528+B0r
+D:80058C80     jpt_700EC3D8:   .word if_statement       # DATA XREF: parse_global_vis_command_list+88r
+D:80058C80                     .word dont_exec_commands_even_on_return  # jump table for switch statement
+D:80058C80                     .word endif_continue_exec
+D:80058C80                     .word invalid_type_terminate
+D:80058C80                     .word invalid_type_terminate
+D:80058C80                     .word invalid_type_terminate
+D:80058C80                     .word invalid_type_terminate
+D:80058C80                     .word invalid_type_terminate
+D:80058C80                     .word invalid_type_terminate
+D:80058C80                     .word invalid_type_terminate
+D:80058C80                     .word if_statement_pull_from_stack
+D:80058C80                     .word toggle_exec_vs_ro
+D:80058C80                     .word endif
+D:80058CB4     vis_command_jpt:.word break              # DATA XREF: parse_global_vis_command_list+A8r
+D:80058CB4                     .word push_to_stack      # jump table for switch statement
+D:80058CB4                     .word pull_from_stack
+D:80058CB4                     .word and_merge_last_two_on_stack
+D:80058CB4                     .word or_merge_last_two_on_stack
+D:80058CB4                     .word not_merge_last_two_on_stack
+D:80058CB4                     .word carrot_merge_last_two_on_stack
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word push_tf_if_in_range_rooms
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word invalid_type_terminate
+D:80058CB4                     .word force_visible
+D:80058CB4                     .word match_portal_vis
+D:80058CB4                     .word add_visible_room
+D:80058CB4                     .word remove_vis
+D:80058CB4                     .word visible_if_seen_through_portal
+D:80058CB4                     .word not_visible_if_seen_through_portal
+D:80058CB4                     .word disable_room
+D:80058CB4                     .word disable_room_range
+D:80058CB4                     .word preload_room
+D:80058CB4                     .word preload_room_range
+D:80058D54     flt_D_80058D54: .float 3.4028235e38      # DATA XREF: sub_CODE_7F0B96CC+1C4r
+D:80058D58     flt_D_80058D58: .float -3.4028235e38     # DATA XREF: sub_CODE_7F0B96CC+1D4r
+D:80058D5C     flt_D_80058D5C: .float 0.99900001        # DATA XREF: sub_CODE_7F0B993C+20r
+D:80058D60     flt_D_80058D60: .float 3.4028235e38      # DATA XREF: sub_CODE_7F0B9E04+54r
+*/
 
 #ifdef NONMATCHING
 void something_with_bg_c_debug(void) {

@@ -221,7 +221,10 @@ D:80046000                     .word 0
 D:80046004                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 */
 
-
+/* rodata
+D:80058D70     default_near_fog:.float 3.4028235e38     # DATA XREF: load_enviroment:set_default_enviromentr
+D:80058D74     flt_D_80058D74: .float 10000.0           # DATA XREF: load_enviroment+1B4r
+*/
 
 #ifdef NONMATCHING
 void sub_GAME_7F0BA720(void) {

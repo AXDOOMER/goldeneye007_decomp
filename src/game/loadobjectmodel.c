@@ -1,7 +1,104 @@
 #include "ultra64.h"
 
 
-
+/* rodata
+D:80053490     jpt_object_setup_size:.word object_size_type_01
+D:80053490                                              # DATA XREF: get_size_of_setup_object_type+14r
+D:80053490                     .word object_size_type_02  # jump table for switch statement
+D:80053490                     .word object_size_type_03
+D:80053490                     .word object_size_type_04
+D:80053490                     .word object_size_type_05
+D:80053490                     .word object_size_type_06
+D:80053490                     .word object_size_type_07
+D:80053490                     .word object_size_type_08
+D:80053490                     .word object_size_type_09
+D:80053490                     .word object_size_type_0A
+D:80053490                     .word object_size_type_0B
+D:80053490                     .word object_size_type_0C
+D:80053490                     .word object_size_type_0D
+D:80053490                     .word object_size_type_0E
+D:80053490                     .word object_size_type_default
+D:80053490                     .word object_size_type_default
+D:80053490                     .word object_size_type_11
+D:80053490                     .word object_size_type_12
+D:80053490                     .word object_size_type_13
+D:80053490                     .word object_size_type_14
+D:80053490                     .word object_size_type_15
+D:80053490                     .word object_size_type_16
+D:80053490                     .word object_size_type_17
+D:80053490                     .word object_size_type_18
+D:80053490                     .word object_size_type_19
+D:80053490                     .word object_size_type_1A
+D:80053490                     .word object_size_type_1B
+D:80053490                     .word object_size_type_1C
+D:80053490                     .word object_size_type_1D
+D:80053490                     .word object_size_type_1E
+D:80053490                     .word object_size_type_1F
+D:80053490                     .word object_size_type_20
+D:80053490                     .word object_size_type_21
+D:80053490                     .word object_size_type_22
+D:80053490                     .word object_size_type_23
+D:80053490                     .word object_size_type_24
+D:80053490                     .word object_size_type_25
+D:80053490                     .word object_size_type_26
+D:80053490                     .word object_size_type_27
+D:80053490                     .word object_size_type_28
+D:80053490                     .word object_size_type_default
+D:80053490                     .word object_size_type_2A
+D:80053490                     .word object_size_type_2B
+D:80053490                     .word object_size_type_2C
+D:80053490                     .word object_size_type_2D
+D:80053490                     .word object_size_type_2E
+D:80053490                     .word object_size_type_2F
+D:8005354C     jpt_7008AE0C:   .word loc_CODE_7F056EE4  # DATA XREF: sub_CODE_7F056EA0+30r
+D:8005354C                     .word loc_CODE_7F056EEC  # jump table for switch statement
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word def_7F056EDC
+D:8005354C                     .word def_7F056EDC
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EE4
+D:8005354C                     .word loc_CODE_7F056EEC
+D:8005354C                     .word loc_CODE_7F056EE4
+D:80053608                     .align 4
+*/
 
 
 

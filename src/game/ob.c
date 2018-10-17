@@ -761,7 +761,1212 @@ D:800482D8                     .word 0
 D:800482DC                     .word 0
 */
 
-
+/* rodata
+D:80058DA0     aBgBg_NULLall_p_seg_0:.word 0            # DATA XREF: D:resource_tableo
+D:80058DA4     aBgBg_sev_all_p_seg_0:.ascii "bg/bg_sev_all_p.seg"<0>
+D:80058DA4                                              # DATA XREF: D:file_entry_offseto
+D:80058DB8     aBgBg_silo_all_p_seg_0:.ascii "bg/bg_silo_all_p.seg"<0>
+D:80058DB8                                              # DATA XREF: D:8004606Co
+D:80058DCD                     .align 4
+D:80058DD0     aBgBg_stat_all_p_seg_0:.ascii "bg/bg_stat_all_p.seg"<0>
+D:80058DD0                                              # DATA XREF: D:80046078o
+D:80058DE5                     .align 2
+D:80058DE8     aBgBg_arec_all_p_seg_0:.ascii "bg/bg_arec_all_p.seg"<0>
+D:80058DE8                                              # DATA XREF: D:80046084o
+D:80058DFD                     .align 4
+D:80058E00     aBgBg_arch_all_p_seg_0:.ascii "bg/bg_arch_all_p.seg"<0>
+D:80058E00                                              # DATA XREF: D:80046090o
+D:80058E15                     .align 2
+D:80058E18     aBgBg_tra_all_p_seg_0:.ascii "bg/bg_tra_all_p.seg"<0>
+D:80058E18                                              # DATA XREF: D:8004609Co
+D:80058E2C     aBgBg_dest_all_p_seg_0:.ascii "bg/bg_dest_all_p.seg"<0>
+D:80058E2C                                              # DATA XREF: D:800460A8o
+D:80058E41                     .align 2
+D:80058E44     aBgBg_sevb_all_p_seg_0:.ascii "bg/bg_sevb_all_p.seg"<0>
+D:80058E44                                              # DATA XREF: D:800460B4o
+D:80058E59                     .align 2
+D:80058E5C     aBgBg_azt_all_p_seg_0:.ascii "bg/bg_azt_all_p.seg"<0>
+D:80058E5C                                              # DATA XREF: D:800460C0o
+D:80058E70     aBgBg_pete_all_p_seg_0:.ascii "bg/bg_pete_all_p.seg"<0><0><0><0>
+D:80058E70                                              # DATA XREF: D:800460CCo
+D:80058E88     aBgBg_depo_all_p_seg_0:.ascii "bg/bg_depo_all_p.seg"<0>
+D:80058E88                                              # DATA XREF: D:800460D8o
+D:80058E9D                     .byte 0, 0, 0
+D:80058EA0     aBgBg_ref_all_p_seg_0:.ascii "bg/bg_ref_all_p.seg"<0>
+D:80058EA0                                              # DATA XREF: D:800460E4o
+D:80058EB4     aBgBg_cryp_all_p_seg_0:.ascii "bg/bg_cryp_all_p.seg"<0>
+D:80058EB4                                              # DATA XREF: D:800460F0o
+D:80058EC9                     .byte 0, 0, 0
+D:80058ECC     aBgBg_dam_all_p_seg_0:.ascii "bg/bg_dam_all_p.seg"<0>
+D:80058ECC                                              # DATA XREF: D:800460FCo
+D:80058EE0     aBgBg_ark_all_p_seg_0:.ascii "bg/bg_ark_all_p.seg"<0>
+D:80058EE0                                              # DATA XREF: D:80046108o
+D:80058EF4     aBgBg_run_all_p_seg_0:.ascii "bg/bg_run_all_p.seg"<0>
+D:80058EF4                                              # DATA XREF: D:80046114o
+D:80058F08     aBgBg_sevx_all_p_seg_1:.ascii "bg/bg_sevx_all_p.seg"<0>
+D:80058F08                                              # DATA XREF: D:80046120o
+D:80058F1D                     .byte 0, 0, 0
+D:80058F20     aBgBg_jun_all_p_seg_0:.ascii "bg/bg_jun_all_p.seg"<0>
+D:80058F20                                              # DATA XREF: D:8004612Co
+D:80058F34     aBgBg_dish_all_p_seg_0:.ascii "bg/bg_dish_all_p.seg"<0>
+D:80058F34                                              # DATA XREF: D:80046138o
+D:80058F49                     .byte 0, 0, 0
+D:80058F4C     aBgBg_cave_all_p_seg_0:.ascii "bg/bg_cave_all_p.seg"<0>
+D:80058F4C                                              # DATA XREF: D:80046144o
+D:80058F61                     .byte 0, 0, 0
+D:80058F64     aBgBg_cat_all_p_seg_0:.ascii "bg/bg_cat_all_p.seg"<0>
+D:80058F64                                              # DATA XREF: D:80046150o
+D:80058F78     aBgBg_crad_all_p_seg_0:.ascii "bg/bg_crad_all_p.seg"<0>
+D:80058F78                                              # DATA XREF: D:8004615Co
+D:80058F8D                     .byte 0, 0, 0
+D:80058F90     aBgBg_sho_all_p_seg_0:.ascii "bg/bg_sho_all_p.seg"<0>
+D:80058F90                                              # DATA XREF: D:80046168o
+D:80058FA4     aBgBg_eld_all_p_seg_0:.ascii "bg/bg_eld_all_p.seg"<0>
+D:80058FA4                                              # DATA XREF: D:80046174o
+D:80058FB8     aBgBg_imp_all_p_seg:.ascii "bg/bg_imp_all_p.seg"<0>  # DATA XREF: D:80046180o
+D:80058FCC     aBgBg_ash_all_p_seg:.ascii "bg/bg_ash_all_p.seg"<0>  # DATA XREF: D:8004618Co
+D:80058FE0     aBgBg_lue_all_p_seg_0:.ascii "bg/bg_lue_all_p.seg"<0>
+D:80058FE0                                              # DATA XREF: D:80046198o
+D:80058FF4     aBgBg_ame_all_p_seg_2:.ascii "bg/bg_ame_all_p.seg"<0>
+D:80058FF4                                              # DATA XREF: D:800461A4o
+D:80059008     aBgBg_rit_all_p_seg_0:.ascii "bg/bg_rit_all_p.seg"<0>
+D:80059008                                              # DATA XREF: D:800461B0o
+D:8005901C     aBgBg_oat_all_p_seg_0:.ascii "bg/bg_oat_all_p.seg"<0>
+D:8005901C                                              # DATA XREF: D:800461BCo
+D:80059030     aBgBg_ear_all_p_seg_0:.ascii "bg/bg_ear_all_p.seg"<0>
+D:80059030                                              # DATA XREF: D:800461C8o
+D:80059044     aBgBg_lee_all_p_seg_0:.ascii "bg/bg_lee_all_p.seg"<0>
+D:80059044                                              # DATA XREF: D:800461D4o
+D:80059058     aBgBg_lip_all_p_seg_0:.ascii "bg/bg_lip_all_p.seg"<0>
+D:80059058                                              # DATA XREF: D:800461E0o
+D:8005906C     aBgBg_len_all_p_seg_0:.ascii "bg/bg_len_all_p.seg"<0>
+D:8005906C                                              # DATA XREF: D:800461ECo
+D:80059080     aBgBg_wax_all_p_seg_0:.ascii "bg/bg_wax_all_p.seg"<0>
+D:80059080                                              # DATA XREF: D:800461F8o
+D:80059094     aBgBg_pam_all_p_seg_0:.ascii "bg/bg_pam_all_p.seg"<0>
+D:80059094                                              # DATA XREF: D:80046204o
+D:800590A8     aCarmourguardz_0:.ascii "CarmourguardZ"<0>  # DATA XREF: D:80046210o
+D:800590B6                     .half 0
+D:800590B8     aCbaronsamediz_0:.ascii "CbaronsamediZ"<0>  # DATA XREF: D:8004621Co
+D:800590C6                     .half 0
+D:800590C8     aCbluecamguardz_0:.ascii "CbluecamguardZ"<0>  # DATA XREF: D:80046228o
+D:800590D7                     .byte 0
+D:800590D8     aCbluemanz_0:   .ascii "CbluemanZ"<0>    # DATA XREF: D:80046234o
+D:800590E2                     .half 0
+D:800590E4     aCbluewomanz_0: .ascii "CbluewomanZ"<0>  # DATA XREF: D:80046240o
+D:800590F0     aCboilerbondz_0:.ascii "CboilerbondZ"<0>  # DATA XREF: D:8004624Co
+D:800590FD                     .byte 0, 0, 0
+D:80059100     aCboilertrevz_0:.ascii "CboilertrevZ"<0>  # DATA XREF: D:80046258o
+D:8005910D                     .byte 0, 0, 0
+D:80059110     aCborisz_0:     .ascii "CborisZ"<0>      # DATA XREF: D:80046264o
+D:80059118     aCcamguardz_0:  .ascii "CcamguardZ"<0>   # DATA XREF: D:80046270o
+D:80059123                     .byte 0
+D:80059124     aCcardimanz_0:  .ascii "CcardimanZ"<0>   # DATA XREF: D:8004627Co
+D:8005912F                     .byte 0
+D:80059130     aCcheckmanz_0:  .ascii "CcheckmanZ"<0>   # DATA XREF: D:80046288o
+D:8005913B                     .byte 0
+D:8005913C     aCcommguardz_0: .ascii "CcommguardZ"<0>  # DATA XREF: D:80046294o
+D:80059148     aCdjbondz_0:    .ascii "CdjbondZ"<0>     # DATA XREF: D:800462A0o
+D:80059151                     .byte 0, 0, 0
+D:80059154     aCfattechwomanz_1:.ascii "CfattechwomanZ"<0><0>  # DATA XREF: D:800462ACo
+D:80059164     aCgreatguard2z_0:.ascii "Cgreatguard2Z"<0>  # DATA XREF: D:800462B8o
+D:80059172                     .half 0
+D:80059174     aCgreatguardz_0:.ascii "CgreatguardZ"<0>  # DATA XREF: D:800462C4o
+D:80059181                     .byte 0, 0, 0
+D:80059184     aCgreyguardz_0: .ascii "CgreyguardZ"<0>  # DATA XREF: D:800462D0o
+D:80059190     aCgreymanz_0:   .ascii "CgreymanZ"<0>    # DATA XREF: D:800462DCo
+D:8005919A                     .half 0
+D:8005919C     aCheadalanz_0:  .ascii "CheadalanZ"<0>   # DATA XREF: D:800462E8o
+D:800591A7                     .byte 0
+D:800591A8     aCheadbz_0:     .ascii "CheadbZ"<0>      # DATA XREF: D:800462F4o
+D:800591B0     aCheadbalaclavaz_0:.ascii "CheadbalaclavaZ"<0>  # DATA XREF: D:80046300o
+D:800591C0     aCheadbikez_0:  .ascii "CheadbikeZ"<0>   # DATA XREF: D:8004630Co
+D:800591CB                     .byte 0
+D:800591CC     aCheadbrosnanz_0:.ascii "CheadbrosnanZ"<0>  # DATA XREF: D:80046318o
+D:800591DA                     .half 0
+D:800591DC     aCheadbrosnanboilerz_0:.ascii "CheadbrosnanboilerZ"<0>
+D:800591DC                                              # DATA XREF: D:80046324o
+D:800591F0     aCheadbrosnansnowz_0:.ascii "CheadbrosnansnowZ"<0>  # DATA XREF: D:80046330o
+D:80059202                     .half 0
+D:80059204     aCheadbrosnansuitz_0:.ascii "CheadbrosnansuitZ"<0>  # DATA XREF: D:8004633Co
+D:80059216                     .half 0
+D:80059218     aCheadbrosnantimberz_0:.ascii "CheadbrosnantimberZ"<0>
+D:80059218                                              # DATA XREF: D:80046348o
+D:8005922C     aCheadchrisz_0: .ascii "CheadchrisZ"<0>  # DATA XREF: D:80046354o
+D:80059238     aCheaddavez_0:  .ascii "CheaddaveZ"<0>   # DATA XREF: D:80046360o
+D:80059243                     .byte 0
+D:80059244     aCheaddesz_0:   .ascii "CheaddesZ"<0>    # DATA XREF: D:8004636Co
+D:8005924E                     .half 0
+D:80059250     aCheadduncanz_0:.ascii "CheadduncanZ"<0>  # DATA XREF: D:80046378o
+D:8005925D                     .byte 0, 0, 0
+D:80059260     aCheaddwaynez_0:.ascii "CheaddwayneZ"<0>  # DATA XREF: D:80046384o
+D:8005926D                     .byte 0, 0, 0
+D:80059270     aCheadgrahamz_0:.ascii "CheadgrahamZ"<0>  # DATA XREF: D:80046390o
+D:8005927D                     .byte 0, 0, 0
+D:80059280     aCheadgrantz_0: .ascii "CheadgrantZ"<0>  # DATA XREF: D:8004639Co
+D:8005928C     aCheadjimz_0:   .ascii "CheadjimZ"<0>    # DATA XREF: D:800463A8o
+D:80059296                     .half 0
+D:80059298     aCheadjoe2z_0:  .ascii "Cheadjoe2Z"<0>   # DATA XREF: D:800463B4o
+D:800592A3                     .byte 0
+D:800592A4     aCheadjoez_0:   .ascii "CheadjoeZ"<0>    # DATA XREF: D:800463C0o
+D:800592AE                     .half 0
+D:800592B0     aCheadjoelz_0:  .ascii "CheadjoelZ"<0>   # DATA XREF: D:800463CCo
+D:800592BB                     .byte 0
+D:800592BC     aCheadkarlz_0:  .ascii "CheadkarlZ"<0>   # DATA XREF: D:800463D8o
+D:800592C7                     .byte 0
+D:800592C8     aCheadkenz_0:   .ascii "CheadkenZ"<0>    # DATA XREF: D:800463E4o
+D:800592D2                     .half 0
+D:800592D4     aCheadleez_0:   .ascii "CheadleeZ"<0>    # DATA XREF: D:800463F0o
+D:800592DE                     .half 0
+D:800592E0     aCheadmandyz_0: .ascii "CheadmandyZ"<0>  # DATA XREF: D:800463FCo
+D:800592EC     aCheadmarionz_0:.ascii "CheadmarionZ"<0>  # DATA XREF: D:80046408o
+D:800592F9                     .byte 0, 0, 0
+D:800592FC     aCheadmarkz_0:  .ascii "CheadmarkZ"<0>   # DATA XREF: D:80046414o
+D:80059307                     .byte 0
+D:80059308     aCheadmartinz_0:.ascii "CheadmartinZ"<0>  # DATA XREF: D:80046420o
+D:80059315                     .byte 0, 0, 0
+D:80059318     aCheadmishkinz_0:.ascii "CheadmishkinZ"<0>  # DATA XREF: D:8004642Co
+D:80059326                     .half 0
+D:80059328     aCheadneilz_0:  .ascii "CheadneilZ"<0>   # DATA XREF: D:80046438o
+D:80059333                     .byte 0
+D:80059334     aCheadpetez_0:  .ascii "CheadpeteZ"<0>   # DATA XREF: D:80046444o
+D:8005933F                     .byte 0
+D:80059340     aCheadrobinz_0: .ascii "CheadrobinZ"<0>  # DATA XREF: D:80046450o
+D:8005934C     aCheadsallyz_0: .ascii "CheadsallyZ"<0>  # DATA XREF: D:8004645Co
+D:80059358     aCheadscottz_0: .ascii "CheadscottZ"<0>  # DATA XREF: D:80046468o
+D:80059364     aCheadshaunz_0: .ascii "CheadshaunZ"<0>  # DATA XREF: D:80046474o
+D:80059370     aCheadsteveez_0:.ascii "CheadsteveeZ"<0>  # DATA XREF: D:80046480o
+D:8005937D                     .byte 0, 0, 0
+D:80059380     aCheadstevehz_0:.ascii "CheadstevehZ"<0>  # DATA XREF: D:8004648Co
+D:8005938D                     .byte 0, 0, 0
+D:80059390     aCheadvivienz_0:.ascii "CheadvivienZ"<0>  # DATA XREF: D:80046498o
+D:8005939D                     .byte 0, 0, 0
+D:800593A0     aCjawsz_0:      .ascii "CjawsZ"<0>       # DATA XREF: D:800464A4o
+D:800593A7                     .byte 0
+D:800593A8     aCjeanwomanz_0: .ascii "CjeanwomanZ"<0>  # DATA XREF: D:800464B0o
+D:800593B4     aCmaydayz_0:    .ascii "CmaydayZ"<0>     # DATA XREF: D:800464BCo
+D:800593BD                     .byte 0, 0, 0
+D:800593C0     aCmoonfemalez_0:.ascii "CmoonfemaleZ"<0>  # DATA XREF: D:800464C8o
+D:800593CD                     .byte 0, 0, 0
+D:800593D0     aCmoonguardz_0: .ascii "CmoonguardZ"<0>  # DATA XREF: D:800464D4o
+D:800593DC     aCnatalyaz_0:   .ascii "CnatalyaZ"<0>    # DATA XREF: D:800464E0o
+D:800593E6                     .half 0
+D:800593E8     aCnavyguardz_0: .ascii "CnavyguardZ"<0>  # DATA XREF: D:800464ECo
+D:800593F4     aCoddjobz_0:    .ascii "CoddjobZ"<0>     # DATA XREF: D:800464F8o
+D:800593FD                     .byte 0, 0, 0
+D:80059400     aColiveguardz_0:.ascii "ColiveguardZ"<0>  # DATA XREF: D:80046504o
+D:8005940D                     .byte 0, 0, 0
+D:80059410     aCorumovz_0:    .ascii "CorumovZ"<0>     # DATA XREF: D:80046510o
+D:80059419                     .byte 0, 0, 0
+D:8005941C     aCpilotz_0:     .ascii "CpilotZ"<0>      # DATA XREF: D:8004651Co
+D:80059424     aCredmanz_0:    .ascii "CredmanZ"<0>     # DATA XREF: D:80046528o
+D:8005942D                     .byte 0, 0, 0
+D:80059430     aCrusguardz_0:  .ascii "CrusguardZ"<0>   # DATA XREF: D:80046534o
+D:8005943B                     .byte 0
+D:8005943C     aCsnowbondz_0:  .ascii "CsnowbondZ"<0>   # DATA XREF: D:80046540o
+D:80059447                     .byte 0
+D:80059448     aCsnowguardz_0: .ascii "CsnowguardZ"<0>  # DATA XREF: D:8004654Co
+D:80059454     aCspicebondz_0: .ascii "CspicebondZ"<0>  # DATA XREF: D:80046558o
+D:80059460     aCsuit_lf_handz_1:.ascii "Csuit_lf_handZ"<0>  # DATA XREF: D:80046564o
+D:8005946F                     .byte 0
+D:80059470     aCsuitbondz_0:  .ascii "CsuitbondZ"<0>   # DATA XREF: D:80046570o
+D:8005947B                     .byte 0
+D:8005947C     aCtechmanz_0:   .ascii "CtechmanZ"<0>    # DATA XREF: D:8004657Co
+D:80059486                     .half 0
+D:80059488     aCtechwomanz_0: .ascii "CtechwomanZ"<0>  # DATA XREF: D:80046588o
+D:80059494     aCtimberbondz_0:.ascii "CtimberbondZ"<0>  # DATA XREF: D:80046594o
+D:800594A1                     .byte 0, 0, 0
+D:800594A4     aCtrevelyanz_0: .ascii "CtrevelyanZ"<0>  # DATA XREF: D:800465A0o
+D:800594B0     aCtrevguardz_0: .ascii "CtrevguardZ"<0>  # DATA XREF: D:800465ACo
+D:800594BC     aCvalentinz_0:  .ascii "CvalentinZ"<0>   # DATA XREF: D:800465B8o
+D:800594C7                     .byte 0
+D:800594C8     aCxeniaz_0:     .ascii "CxeniaZ"<0>      # DATA XREF: D:800465C4o
+D:800594D0     aGak47z_0:      .ascii "Gak47Z"<0>       # DATA XREF: D:800465D0o
+D:800594D7                     .byte 0
+D:800594D8     aGaudiotapez_0: .ascii "GaudiotapeZ"<0>  # DATA XREF: D:800465DCo
+D:800594E4     aGautoshotz_0:  .ascii "GautoshotZ"<0>   # DATA XREF: D:800465E8o
+D:800594EF                     .byte 0
+D:800594F0     aGblackboxz_0:  .ascii "GblackboxZ"<0>   # DATA XREF: D:800465F4o
+D:800594FB                     .byte 0
+D:800594FC     aGblueprintsz_0:.ascii "GblueprintsZ"<0>  # DATA XREF: D:80046600o
+D:80059509                     .byte 0, 0, 0
+D:8005950C     aGbombcasez_0:  .ascii "GbombcaseZ"<0>   # DATA XREF: D:8004660Co
+D:80059517                     .byte 0
+D:80059518     aGbombdefuserz_0:.ascii "GbombdefuserZ"<0>  # DATA XREF: D:80046618o
+D:80059526                     .half 0
+D:80059528     aGbriefcasez_0: .ascii "GbriefcaseZ"<0>  # DATA XREF: D:80046624o
+D:80059534     aGbugz_0:       .ascii "GbugZ"<0>        # DATA XREF: D:80046630o
+D:8005953A                     .half 0
+D:8005953C     aGbugdetectorz_0:.ascii "GbugdetectorZ"<0>  # DATA XREF: D:8004663Co
+D:8005954A                     .half 0
+D:8005954C     aGbungeez_0:    .ascii "GbungeeZ"<0>     # DATA XREF: D:80046648o
+D:80059555                     .byte 0, 0, 0
+D:80059558     aGcameraz_0:    .ascii "GcameraZ"<0>     # DATA XREF: D:80046654o
+D:80059561                     .byte 0, 0, 0
+D:80059564     aGcartbluez_0:  .ascii "GcartblueZ"<0>   # DATA XREF: D:80046660o
+D:8005956F                     .byte 0
+D:80059570     aGcartridgez_0: .ascii "GcartridgeZ"<0>  # DATA XREF: D:8004666Co
+D:8005957C     aGcartriflez_0: .ascii "GcartrifleZ"<0>  # DATA XREF: D:80046678o
+D:80059588     aGcartshellz_0: .ascii "GcartshellZ"<0>  # DATA XREF: D:80046684o
+D:80059594     aGcircuitboardz_0:.ascii "GcircuitboardZ"<0>  # DATA XREF: D:80046690o
+D:800595A3                     .byte 0
+D:800595A4     aGclipboardz_0: .ascii "GclipboardZ"<0>  # DATA XREF: D:8004669Co
+D:800595B0     aGcreditcardz_0:.ascii "GcreditcardZ"<0>  # DATA XREF: D:800466A8o
+D:800595BD                     .byte 0, 0, 0
+D:800595C0     aGdarkglassesz_0:.ascii "GdarkglassesZ"<0>  # DATA XREF: D:800466B4o
+D:800595CE                     .half 0
+D:800595D0     aGdatathiefz_0: .ascii "GdatathiefZ"<0>  # DATA XREF: D:800466C0o
+D:800595DC     aGdattapez_0:   .ascii "GdattapeZ"<0>    # DATA XREF: D:800466CCo
+D:800595E6                     .half 0
+D:800595E8     aGdoordecoderz_0:.ascii "GdoordecoderZ"<0>  # DATA XREF: D:800466D8o
+D:800595F6                     .half 0
+D:800595F8     aGdoorexploderz_0:.ascii "GdoorexploderZ"<0>  # DATA XREF: D:800466E4o
+D:80059607                     .byte 0
+D:80059608     aGdossierredz_0:.ascii "GdossierredZ"<0>  # DATA XREF: D:800466F0o
+D:80059615                     .byte 0, 0, 0
+D:80059618     aGdynamitez:    .ascii "GdynamiteZ"<0>   # DATA XREF: D:800466FCo
+D:80059623                     .byte 0
+D:80059624     aGexplosivefloppyz_0:.ascii "GexplosivefloppyZ"<0>  # DATA XREF: D:80046708o
+D:80059636                     .half 0
+D:80059638     aGexplosivepenz:.ascii "GexplosivepenZ"<0>  # DATA XREF: D:80046714o
+D:80059647                     .byte 0
+D:80059648     aGextinguisherz:.ascii "GextinguisherZ"<0>  # DATA XREF: D:80046720o
+D:80059657                     .byte 0
+D:80059658     aGfingergunz:   .ascii "GfingergunZ"<0>  # DATA XREF: D:8004672Co
+D:80059664     aGfistz_0:      .ascii "GfistZ"<0>       # DATA XREF: D:80046738o
+D:8005966B                     .byte 0
+D:8005966C     aGflarepistolz_0:.ascii "GflarepistolZ"<0>  # DATA XREF: D:80046744o
+D:8005967A                     .half 0
+D:8005967C     aGfnp90z_0:     .ascii "Gfnp90Z"<0>      # DATA XREF: D:80046750o
+D:80059684     aGgaskeyringz_0:.ascii "GgaskeyringZ"<0>  # DATA XREF: D:8004675Co
+D:80059691                     .byte 0, 0, 0
+D:80059694     aGgoldbarz_0:   .ascii "GgoldbarZ"<0>    # DATA XREF: D:80046768o
+D:8005969E                     .half 0
+D:800596A0     aGgoldeneyekeyz_0:.ascii "GgoldeneyekeyZ"<0>  # DATA XREF: D:80046774o
+D:800596AF                     .byte 0
+D:800596B0     aGgoldengunz_0: .ascii "GgoldengunZ"<0>  # DATA XREF: D:80046780o
+D:800596BC     aGgoldwppkz_0:  .ascii "GgoldwppkZ"<0>   # DATA XREF: D:8004678Co
+D:800596C7                     .byte 0
+D:800596C8     aGgrenadez_0:   .ascii "GgrenadeZ"<0>    # DATA XREF: D:80046798o
+D:800596D2                     .half 0
+D:800596D4     aGgrenadelaunchz_0:.ascii "GgrenadelaunchZ"<0>  # DATA XREF: D:800467A4o
+D:800596E4     aGheroinz_0:    .ascii "GheroinZ"<0>     # DATA XREF: D:800467B0o
+D:800596ED                     .byte 0, 0, 0
+D:800596F0     aGjoypadz_0:    .ascii "GjoypadZ"<0>     # DATA XREF: D:800467BCo
+D:800596F9                     .byte 0, 0, 0
+D:800596FC     aGkeyanalysercasez_0:.ascii "GkeyanalysercaseZ"<0>  # DATA XREF: D:800467C8o
+D:8005970E                     .half 0
+D:80059710     aGkeyboltz_0:   .ascii "GkeyboltZ"<0>    # DATA XREF: D:800467D4o
+D:8005971A                     .half 0
+D:8005971C     aGkeycardz_0:   .ascii "GkeycardZ"<0>    # DATA XREF: D:800467E0o
+D:80059726                     .half 0
+D:80059728     aGkeyyalez_0:   .ascii "GkeyyaleZ"<0>    # DATA XREF: D:800467ECo
+D:80059732                     .half 0
+D:80059734     aGknifez_0:     .ascii "GknifeZ"<0>      # DATA XREF: D:800467F8o
+D:8005973C     aGlaserz_0:     .ascii "GlaserZ"<0>      # DATA XREF: D:80046804o
+D:80059744     aGlectrez_0:    .ascii "GlectreZ"<0>     # DATA XREF: D:80046810o
+D:8005974D                     .byte 0, 0, 0
+D:80059750     aGlockexploderz_0:.ascii "GlockexploderZ"<0>  # DATA XREF: D:8004681Co
+D:8005975F                     .byte 0
+D:80059760     aGm16z_0:       .ascii "Gm16Z"<0>        # DATA XREF: D:80046828o
+D:80059766                     .half 0
+D:80059768     aGmapz_0:       .ascii "GmapZ"<0>        # DATA XREF: D:80046834o
+D:8005976E                     .half 0
+D:80059770     aGmicrocameraz_0:.ascii "GmicrocameraZ"<0>  # DATA XREF: D:80046840o
+D:8005977E                     .half 0
+D:80059780     aGmicrocodez_0: .ascii "GmicrocodeZ"<0>  # DATA XREF: D:8004684Co
+D:8005978C     aGmicrofilmz_0: .ascii "GmicrofilmZ"<0>  # DATA XREF: D:80046858o
+D:80059798     aGmoneyz_0:     .ascii "GmoneyZ"<0>      # DATA XREF: D:80046864o
+D:800597A0     aGmp5kz_0:      .ascii "Gmp5kZ"<0>       # DATA XREF: D:80046870o
+D:800597A7                     .byte 0
+D:800597A8     aGmp5ksilz_0:   .ascii "Gmp5ksilZ"<0>    # DATA XREF: D:8004687Co
+D:800597B2                     .half 0
+D:800597B4     aGpitongunz_0:  .ascii "GpitongunZ"<0>   # DATA XREF: D:80046888o
+D:800597BF                     .byte 0
+D:800597C0     aGplansz_0:     .ascii "GplansZ"<0>      # DATA XREF: D:80046894o
+D:800597C8     aGplastiquez_0: .ascii "GplastiqueZ"<0>  # DATA XREF: D:800468A0o
+D:800597D4     aGpolarizedglassesz_0:.ascii "GpolarizedglassesZ"<0>  # DATA XREF: D:800468ACo
+D:800597E7                     .byte 0
+D:800597E8     aGproximityminez_0:.ascii "GproximitymineZ"<0>  # DATA XREF: D:800468B8o
+D:800597F8     aGremoteminez_0:.ascii "GremotemineZ"<0>  # DATA XREF: D:800468C4o
+D:80059805                     .byte 0, 0, 0
+D:80059808     aGrocketlaunchz_0:.ascii "GrocketlaunchZ"<0>  # DATA XREF: D:800468D0o
+D:80059817                     .byte 0
+D:80059818     aGrugerz_0:     .ascii "GrugerZ"<0>      # DATA XREF: D:800468DCo
+D:80059820     aGsafecrackercasez_0:.ascii "GsafecrackercaseZ"<0>  # DATA XREF: D:800468E8o
+D:80059832                     .half 0
+D:80059834     aGshotgunz_0:   .ascii "GshotgunZ"<0>    # DATA XREF: D:800468F4o
+D:8005983E                     .half 0
+D:80059840     aGsilverwppkz_0:.ascii "GsilverwppkZ"<0>  # DATA XREF: D:80046900o
+D:8005984D                     .byte 0, 0, 0
+D:80059850     aGskorpionz_0:  .ascii "GskorpionZ"<0>   # DATA XREF: D:8004690Co
+D:8005985B                     .byte 0
+D:8005985C     aGsniperriflez_0:.ascii "GsniperrifleZ"<0>  # DATA XREF: D:80046918o
+D:8005986A                     .half 0
+D:8005986C     aGspectrez_0:   .ascii "GspectreZ"<0>    # DATA XREF: D:80046924o
+D:80059876                     .half 0
+D:80059878     aGspooltapez_0: .ascii "GspooltapeZ"<0>  # DATA XREF: D:80046930o
+D:80059884     aGspyfilez_0:   .ascii "GspyfileZ"<0>    # DATA XREF: D:8004693Co
+D:8005988E                     .half 0
+D:80059890     aGstafflistz_0: .ascii "GstafflistZ"<0>  # DATA XREF: D:80046948o
+D:8005989C     aGtaserz_0:     .ascii "GtaserZ"<0>      # DATA XREF: D:80046954o
+D:800598A4     aGthrowknifez_0:.ascii "GthrowknifeZ"<0>  # DATA XREF: D:80046960o
+D:800598B1                     .byte 0, 0, 0
+D:800598B4     aGtimedminez_0: .ascii "GtimedmineZ"<0>  # DATA XREF: D:8004696Co
+D:800598C0     aGtriggerz_0:   .ascii "GtriggerZ"<0>    # DATA XREF: D:80046978o
+D:800598CA                     .half 0
+D:800598CC     aGtt33z_0:      .ascii "Gtt33Z"<0>       # DATA XREF: D:80046984o
+D:800598D3                     .byte 0
+D:800598D4     aGuziz_0:       .ascii "GuziZ"<0>        # DATA XREF: D:80046990o
+D:800598DA                     .half 0
+D:800598DC     aGvideotapez_0: .ascii "GvideotapeZ"<0>  # DATA XREF: D:8004699Co
+D:800598E8     aGwatchcommunicatorz_0:.ascii "GwatchcommunicatorZ"<0>
+D:800598E8                                              # DATA XREF: D:800469A8o
+D:800598FC     aGwatchgeigercounterz_0:.ascii "GwatchgeigercounterZ"<0>
+D:800598FC                                              # DATA XREF: D:800469B4o
+D:80059911                     .byte 0, 0, 0
+D:80059914     aGwatchidentifierz_0:.ascii "GwatchidentifierZ"<0>  # DATA XREF: D:800469C0o
+D:80059926                     .half 0
+D:80059928     aGwatchlaserz_0:.ascii "GwatchlaserZ"<0>  # DATA XREF: D:800469CCo
+D:80059935                     .byte 0, 0, 0
+D:80059938     aGwatchmagnetattractz_0:.ascii "GwatchmagnetattractZ"<0>
+D:80059938                                              # DATA XREF: D:800469D8o
+D:8005994D                     .byte 0, 0, 0
+D:80059950     aGwatchmagnetrepelz_0:.ascii "GwatchmagnetrepelZ"<0>  # DATA XREF: D:800469E4o
+D:80059963                     .byte 0
+D:80059964     aGweaponcasez_0:.ascii "GweaponcaseZ"<0>  # DATA XREF: D:800469F0o
+D:80059971                     .byte 0, 0, 0
+D:80059974     aGwppkz_0:      .ascii "GwppkZ"<0>       # DATA XREF: D:800469FCo
+D:8005997B                     .byte 0
+D:8005997C     aGwppksilz_0:   .ascii "GwppksilZ"<0>    # DATA XREF: D:80046A08o
+D:80059986                     .half 0
+D:80059988     aGwristdartz:   .ascii "GwristdartZ"<0>  # DATA XREF: D:80046A14o
+D:80059994     aPicbmz_0:      .ascii "PICBMZ"<0>       # DATA XREF: D:80046A20o
+D:8005999B                     .byte 0
+D:8005999C     aPicbm_nosez_0: .ascii "PICBM_noseZ"<0>  # DATA XREF: D:80046A2Co
+D:800599A8     aPak47magz_0:   .ascii "Pak47magZ"<0>    # DATA XREF: D:80046A38o
+D:800599B2                     .half 0
+D:800599B4     aPalarm1z_0:    .ascii "Palarm1Z"<0>     # DATA XREF: D:80046A44o
+D:800599BD                     .byte 0, 0, 0
+D:800599C0     aPalarm2z_0:    .ascii "Palarm2Z"<0>     # DATA XREF: D:80046A50o
+D:800599C9                     .byte 0, 0, 0
+D:800599CC     aPammo_crate1z_0:.ascii "Pammo_crate1Z"<0>  # DATA XREF: D:80046A5Co
+D:800599DA                     .half 0
+D:800599DC     aPammo_crate2z_0:.ascii "Pammo_crate2Z"<0>  # DATA XREF: D:80046A68o
+D:800599EA                     .half 0
+D:800599EC     aPammo_crate3z_0:.ascii "Pammo_crate3Z"<0>  # DATA XREF: D:80046A74o
+D:800599FA                     .half 0
+D:800599FC     aPammo_crate4z_0:.ascii "Pammo_crate4Z"<0>  # DATA XREF: D:80046A80o
+D:80059A0A                     .half 0
+D:80059A0C     aPammo_crate5z_0:.ascii "Pammo_crate5Z"<0>  # DATA XREF: D:80046A8Co
+D:80059A1A                     .half 0
+D:80059A1C     aPapcz_0:       .ascii "PapcZ"<0>        # DATA XREF: D:80046A98o
+D:80059A22                     .half 0
+D:80059A24     aParchsecdoor1z_0:.ascii "Parchsecdoor1Z"<0>  # DATA XREF: D:80046AA4o
+D:80059A33                     .byte 0
+D:80059A34     aParchsecdoor2z_0:.ascii "Parchsecdoor2Z"<0>  # DATA XREF: D:80046AB0o
+D:80059A43                     .byte 0
+D:80059A44     aParticz_0:     .ascii "ParticZ"<0>      # DATA XREF: D:80046ABCo
+D:80059A4C     aPartictrailerz_0:.ascii "PartictrailerZ"<0>  # DATA XREF: D:80046AC8o
+D:80059A5B                     .byte 0
+D:80059A5C     aPbarricadez_0: .ascii "PbarricadeZ"<0>  # DATA XREF: D:80046AD4o
+D:80059A68     aPbin1z_0:      .ascii "Pbin1Z"<0>       # DATA XREF: D:80046AE0o
+D:80059A6F                     .byte 0
+D:80059A70     aPblotter1z_0:  .ascii "Pblotter1Z"<0>   # DATA XREF: D:80046AECo
+D:80059A7B                     .byte 0
+D:80059A7C     aPbodyarmourz_0:.ascii "PbodyarmourZ"<0>  # DATA XREF: D:80046AF8o
+D:80059A89                     .byte 0, 0, 0
+D:80059A8C     aPbodyarmourvestz_0:.ascii "PbodyarmourvestZ"<0>  # DATA XREF: D:80046B04o
+D:80059A9D                     .byte 0, 0, 0
+D:80059AA0     aPbollardz_0:   .ascii "PbollardZ"<0>    # DATA XREF: D:80046B10o
+D:80059AAA                     .half 0
+D:80059AAC     aPbombz_0:      .ascii "PbombZ"<0>       # DATA XREF: D:80046B1Co
+D:80059AB3                     .byte 0
+D:80059AB4     aPbook1z_0:     .ascii "Pbook1Z"<0>      # DATA XREF: D:80046B28o
+D:80059ABC     aPbookshelf1z_0:.ascii "Pbookshelf1Z"<0>  # DATA XREF: D:80046B34o
+D:80059AC9                     .byte 0, 0, 0
+D:80059ACC     aPborg_cratez_0:.ascii "Pborg_crateZ"<0>  # DATA XREF: D:80046B40o
+D:80059AD9                     .byte 0, 0, 0
+D:80059ADC     aPboxcartridgesz_0:.ascii "PboxcartridgesZ"<0>  # DATA XREF: D:80046B4Co
+D:80059AEC     aPboxes2x4z_0:  .ascii "Pboxes2x4Z"<0>   # DATA XREF: D:80046B58o
+D:80059AF7                     .byte 0
+D:80059AF8     aPboxes3x4z_0:  .ascii "Pboxes3x4Z"<0>   # DATA XREF: D:80046B64o
+D:80059B03                     .byte 0
+D:80059B04     aPboxes4x4z_0:  .ascii "Pboxes4x4Z"<0>   # DATA XREF: D:80046B70o
+D:80059B0F                     .byte 0
+D:80059B10     aPbrakeunitz_0: .ascii "PbrakeunitZ"<0>  # DATA XREF: D:80046B7Co
+D:80059B1C     aPbridge_console1az_0:.ascii "Pbridge_console1aZ"<0>  # DATA XREF: D:80046B88o
+D:80059B2F                     .byte 0
+D:80059B30     aPbridge_console1bz_0:.ascii "Pbridge_console1bZ"<0>  # DATA XREF: D:80046B94o
+D:80059B43                     .byte 0
+D:80059B44     aPbridge_console2az_0:.ascii "Pbridge_console2aZ"<0>  # DATA XREF: D:80046BA0o
+D:80059B57                     .byte 0
+D:80059B58     aPbridge_console2bz_0:.ascii "Pbridge_console2bZ"<0>  # DATA XREF: D:80046BACo
+D:80059B6B                     .byte 0
+D:80059B6C     aPbridge_console3az_0:.ascii "Pbridge_console3aZ"<0>  # DATA XREF: D:80046BB8o
+D:80059B7F                     .byte 0
+D:80059B80     aPbridge_console3bz_0:.ascii "Pbridge_console3bZ"<0>  # DATA XREF: D:80046BC4o
+D:80059B93                     .byte 0
+D:80059B94     aPcarbmwz_0:    .ascii "PcarbmwZ"<0>     # DATA XREF: D:80046BD0o
+D:80059B9D                     .byte 0, 0, 0
+D:80059BA0     aPcard_box1z_0: .ascii "Pcard_box1Z"<0>  # DATA XREF: D:80046BDCo
+D:80059BAC     aPcard_box2z_0: .ascii "Pcard_box2Z"<0>  # DATA XREF: D:80046BE8o
+D:80059BB8     aPcard_box3z_0: .ascii "Pcard_box3Z"<0>  # DATA XREF: D:80046BF4o
+D:80059BC4     aPcard_box4_lgz_0:.ascii "Pcard_box4_lgZ"<0>  # DATA XREF: D:80046C00o
+D:80059BD3                     .byte 0
+D:80059BD4     aPcard_box5_lgz_0:.ascii "Pcard_box5_lgZ"<0>  # DATA XREF: D:80046C0Co
+D:80059BE3                     .byte 0
+D:80059BE4     aPcard_box6_lgz_0:.ascii "Pcard_box6_lgZ"<0>  # DATA XREF: D:80046C18o
+D:80059BF3                     .byte 0
+D:80059BF4     aPcarescortz_0: .ascii "PcarescortZ"<0>  # DATA XREF: D:80046C24o
+D:80059C00     aPcargolfz_0:   .ascii "PcargolfZ"<0>    # DATA XREF: D:80046C30o
+D:80059C0A                     .half 0
+D:80059C0C     aPcarweirdz_0:  .ascii "PcarweirdZ"<0>   # DATA XREF: D:80046C3Co
+D:80059C17                     .byte 0
+D:80059C18     aPcarzilz_0:    .ascii "PcarzilZ"<0>     # DATA XREF: D:80046C48o
+D:80059C21                     .byte 0, 0, 0
+D:80059C24     aPcctvz_0:      .ascii "PcctvZ"<0>       # DATA XREF: D:80046C54o
+D:80059C2B                     .byte 0
+D:80059C2C     aPchraudiotapez_0:.ascii "PchraudiotapeZ"<0>  # DATA XREF: D:80046C60o
+D:80059C3B                     .byte 0
+D:80059C3C     aPchrautoshotz_0:.ascii "PchrautoshotZ"<0>  # DATA XREF: D:80046C6Co
+D:80059C4A                     .half 0
+D:80059C4C     aPchrblackboxz_0:.ascii "PchrblackboxZ"<0>  # DATA XREF: D:80046C78o
+D:80059C5A                     .half 0
+D:80059C5C     aPchrblueprintsz_0:.ascii "PchrblueprintsZ"<0>  # DATA XREF: D:80046C84o
+D:80059C6C     aPchrbombcasez_0:.ascii "PchrbombcaseZ"<0>  # DATA XREF: D:80046C90o
+D:80059C7A                     .half 0
+D:80059C7C     aPchrbombdefuserz_0:.ascii "PchrbombdefuserZ"<0>  # DATA XREF: D:80046C9Co
+D:80059C8D                     .byte 0, 0, 0
+D:80059C90     aPchrbriefcasez_0:.ascii "PchrbriefcaseZ"<0>  # DATA XREF: D:80046CA8o
+D:80059C9F                     .byte 0
+D:80059CA0     aPchrbugz_0:    .ascii "PchrbugZ"<0>     # DATA XREF: D:80046CB4o
+D:80059CA9                     .byte 0, 0, 0
+D:80059CAC     aPchrbugdetectorz_0:.ascii "PchrbugdetectorZ"<0>  # DATA XREF: D:80046CC0o
+D:80059CBD                     .byte 0, 0, 0
+D:80059CC0     aPchrbungeez_0: .ascii "PchrbungeeZ"<0>  # DATA XREF: D:80046CCCo
+D:80059CCC     aPchrcameraz_0: .ascii "PchrcameraZ"<0>  # DATA XREF: D:80046CD8o
+D:80059CD8     aPchrcircuitboardz_0:.ascii "PchrcircuitboardZ"<0>  # DATA XREF: D:80046CE4o
+D:80059CEA                     .half 0
+D:80059CEC     aPchrclipboardz_0:.ascii "PchrclipboardZ"<0>  # DATA XREF: D:80046CF0o
+D:80059CFB                     .byte 0
+D:80059CFC     aPchrcreditcardz_0:.ascii "PchrcreditcardZ"<0>  # DATA XREF: D:80046CFCo
+D:80059D0C     aPchrdarkglassesz_0:.ascii "PchrdarkglassesZ"<0>  # DATA XREF: D:80046D08o
+D:80059D1D                     .byte 0, 0, 0
+D:80059D20     aPchrdatathiefz_0:.ascii "PchrdatathiefZ"<0>  # DATA XREF: D:80046D14o
+D:80059D2F                     .byte 0
+D:80059D30     aPchrdattapez_0:.ascii "PchrdattapeZ"<0>  # DATA XREF: D:80046D20o
+D:80059D3D                     .byte 0, 0, 0
+D:80059D40     aPchrdoordecoderz_0:.ascii "PchrdoordecoderZ"<0>  # DATA XREF: D:80046D2Co
+D:80059D51                     .byte 0, 0, 0
+D:80059D54     aPchrdoorexploderz_0:.ascii "PchrdoorexploderZ"<0>  # DATA XREF: D:80046D38o
+D:80059D66                     .half 0
+D:80059D68     aPchrdossierredz_0:.ascii "PchrdossierredZ"<0>  # DATA XREF: D:80046D44o
+D:80059D78     aPchrdynamitez_0:.ascii "PchrdynamiteZ"<0>  # DATA XREF: D:80046D50o
+D:80059D86                     .half 0
+D:80059D88     aPchrexplosivepenz_0:.ascii "PchrexplosivepenZ"<0>  # DATA XREF: D:80046D5Co
+D:80059D9A                     .half 0
+D:80059D9C     aPchrextinguisherz_0:.ascii "PchrextinguisherZ"<0>  # DATA XREF: D:80046D68o
+D:80059DAE                     .half 0
+D:80059DB0     aPchrfingergunz_0:.ascii "PchrfingergunZ"<0>  # DATA XREF: D:80046D74o
+D:80059DBF                     .byte 0
+D:80059DC0     aPchrflarepistolz_0:.ascii "PchrflarepistolZ"<0>  # DATA XREF: D:80046D80o
+D:80059DD1                     .byte 0, 0, 0
+D:80059DD4     aPchrfnp90z_0:  .ascii "Pchrfnp90Z"<0>   # DATA XREF: D:80046D8Co
+D:80059DDF                     .byte 0
+D:80059DE0     aPchrgaskeyringz_0:.ascii "PchrgaskeyringZ"<0>  # DATA XREF: D:80046D98o
+D:80059DF0     aPchrgoldbarz_0:.ascii "PchrgoldbarZ"<0>  # DATA XREF: D:80046DA4o
+D:80059DFD                     .byte 0, 0, 0
+D:80059E00     aPchrgoldenz_0: .ascii "PchrgoldenZ"<0>  # DATA XREF: D:80046DB0o
+D:80059E0C     aPchrgoldeneyekeyz_0:.ascii "PchrgoldeneyekeyZ"<0>  # DATA XREF: D:80046DBCo
+D:80059E1E                     .half 0
+D:80059E20     aPchrgoldwppkz_0:.ascii "PchrgoldwppkZ"<0>  # DATA XREF: D:80046DC8o
+D:80059E2E                     .half 0
+D:80059E30     aPchrgrenadez_0:.ascii "PchrgrenadeZ"<0>  # DATA XREF: D:80046DD4o
+D:80059E3D                     .byte 0, 0, 0
+D:80059E40     aPchrgrenadelaunchz_0:.ascii "PchrgrenadelaunchZ"<0>  # DATA XREF: D:80046DE0o
+D:80059E53                     .byte 0
+D:80059E54     aPchrgrenaderoundz_0:.ascii "PchrgrenaderoundZ"<0>  # DATA XREF: D:80046DECo
+D:80059E66                     .half 0
+D:80059E68     aPchrheroinz_0: .ascii "PchrheroinZ"<0>  # DATA XREF: D:80046DF8o
+D:80059E74     aPchrkalashz_0: .ascii "PchrkalashZ"<0>  # DATA XREF: D:80046E04o
+D:80059E80     aPchrkeyanalysercasez_0:.ascii "PchrkeyanalysercaseZ"<0>
+D:80059E80                                              # DATA XREF: D:80046E10o
+D:80059E95                     .byte 0, 0, 0
+D:80059E98     aPchrkeyboltz_0:.ascii "PchrkeyboltZ"<0>  # DATA XREF: D:80046E1Co
+D:80059EA5                     .byte 0, 0, 0
+D:80059EA8     aPchrkeyyalez_0:.ascii "PchrkeyyaleZ"<0>  # DATA XREF: D:80046E28o
+D:80059EB5                     .byte 0, 0, 0
+D:80059EB8     aPchrknifez_0:  .ascii "PchrknifeZ"<0>   # DATA XREF: D:80046E34o
+D:80059EC3                     .byte 0
+D:80059EC4     aPchrlaserz_0:  .ascii "PchrlaserZ"<0>   # DATA XREF: D:80046E40o
+D:80059ECF                     .byte 0
+D:80059ED0     aPchrlectrez_0: .ascii "PchrlectreZ"<0>  # DATA XREF: D:80046E4Co
+D:80059EDC     aPchrlockexploderz_0:.ascii "PchrlockexploderZ"<0>  # DATA XREF: D:80046E58o
+D:80059EEE                     .half 0
+D:80059EF0     aPchrm16z_0:    .ascii "Pchrm16Z"<0>     # DATA XREF: D:80046E64o
+D:80059EF9                     .byte 0, 0, 0
+D:80059EFC     aPchrmapz_0:    .ascii "PchrmapZ"<0>     # DATA XREF: D:80046E70o
+D:80059F05                     .byte 0, 0, 0
+D:80059F08     aPchrmicrocameraz_0:.ascii "PchrmicrocameraZ"<0>  # DATA XREF: D:80046E7Co
+D:80059F19                     .byte 0, 0, 0
+D:80059F1C     aPchrmicrocodez_0:.ascii "PchrmicrocodeZ"<0>  # DATA XREF: D:80046E88o
+D:80059F2B                     .byte 0
+D:80059F2C     aPchrmicrofilmz_0:.ascii "PchrmicrofilmZ"<0>  # DATA XREF: D:80046E94o
+D:80059F3B                     .byte 0
+D:80059F3C     aPchrmoneyz_0:  .ascii "PchrmoneyZ"<0>   # DATA XREF: D:80046EA0o
+D:80059F47                     .byte 0
+D:80059F48     aPchrmp5kz_0:   .ascii "Pchrmp5kZ"<0>    # DATA XREF: D:80046EACo
+D:80059F52                     .half 0
+D:80059F54     aPchrmp5ksilz_0:.ascii "Pchrmp5ksilZ"<0>  # DATA XREF: D:80046EB8o
+D:80059F61                     .byte 0, 0, 0
+D:80059F64     aPchrpitongunz_0:.ascii "PchrpitongunZ"<0>  # DATA XREF: D:80046EC4o
+D:80059F72                     .half 0
+D:80059F74     aPchrplansz_0:  .ascii "PchrplansZ"<0>   # DATA XREF: D:80046ED0o
+D:80059F7F                     .byte 0
+D:80059F80     aPchrplastiquez_0:.ascii "PchrplastiqueZ"<0>  # DATA XREF: D:80046EDCo
+D:80059F8F                     .byte 0
+D:80059F90     aPchrpolarizedglassesz_0:.ascii "PchrpolarizedglassesZ"<0>
+D:80059F90                                              # DATA XREF: D:80046EE8o
+D:80059FA6                     .half 0
+D:80059FA8     aPchrproximityminez_0:.ascii "PchrproximitymineZ"<0>  # DATA XREF: D:80046EF4o
+D:80059FBB                     .byte 0
+D:80059FBC     aPchrremoteminez_0:.ascii "PchrremotemineZ"<0>  # DATA XREF: D:80046F00o
+D:80059FCC     aPchrrocketz_0: .ascii "PchrrocketZ"<0>  # DATA XREF: D:80046F0Co
+D:80059FD8     aPchrrocketlaunchz_0:.ascii "PchrrocketlaunchZ"<0>  # DATA XREF: D:80046F18o
+D:80059FEA                     .half 0
+D:80059FEC     aPchrrugerz_0:  .ascii "PchrrugerZ"<0>   # DATA XREF: D:80046F24o
+D:80059FF7                     .byte 0
+D:80059FF8     aPchrsafecrackercasez_0:.ascii "PchrsafecrackercaseZ"<0>
+D:80059FF8                                              # DATA XREF: D:80046F30o
+D:8005A00D                     .byte 0, 0, 0
+D:8005A010     aPchrshotgunz_0:.ascii "PchrshotgunZ"<0>  # DATA XREF: D:80046F3Co
+D:8005A01D                     .byte 0, 0, 0
+D:8005A020     aPchrsilverwppkz_0:.ascii "PchrsilverwppkZ"<0>  # DATA XREF: D:80046F48o
+D:8005A030     aPchrskorpionz_0:.ascii "PchrskorpionZ"<0>  # DATA XREF: D:80046F54o
+D:8005A03E                     .half 0
+D:8005A040     aPchrsniperriflez_0:.ascii "PchrsniperrifleZ"<0>  # DATA XREF: D:80046F60o
+D:8005A051                     .byte 0, 0, 0
+D:8005A054     aPchrspectrez_0:.ascii "PchrspectreZ"<0>  # DATA XREF: D:80046F6Co
+D:8005A061                     .byte 0, 0, 0
+D:8005A064     aPchrspooltapez_0:.ascii "PchrspooltapeZ"<0>  # DATA XREF: D:80046F78o
+D:8005A073                     .byte 0
+D:8005A074     aPchrspyfilez_0:.ascii "PchrspyfileZ"<0>  # DATA XREF: D:80046F84o
+D:8005A081                     .byte 0, 0, 0
+D:8005A084     aPchrstafflistz_0:.ascii "PchrstafflistZ"<0>  # DATA XREF: D:80046F90o
+D:8005A093                     .byte 0
+D:8005A094     aPchrtesttubez_0:.ascii "PchrtesttubeZ"<0>  # DATA XREF: D:80046F9Co
+D:8005A0A2                     .half 0
+D:8005A0A4     aPchrthrowknifez_0:.ascii "PchrthrowknifeZ"<0>  # DATA XREF: D:80046FA8o
+D:8005A0B4     aPchrtimedminez_0:.ascii "PchrtimedmineZ"<0>  # DATA XREF: D:80046FB4o
+D:8005A0C3                     .byte 0
+D:8005A0C4     aPchrtt33z_0:   .ascii "Pchrtt33Z"<0>    # DATA XREF: D:80046FC0o
+D:8005A0CE                     .half 0
+D:8005A0D0     aPchruziz_0:    .ascii "PchruziZ"<0>     # DATA XREF: D:80046FCCo
+D:8005A0D9                     .byte 0, 0, 0
+D:8005A0DC     aPchrvideotapez_0:.ascii "PchrvideotapeZ"<0>  # DATA XREF: D:80046FD8o
+D:8005A0EB                     .byte 0
+D:8005A0EC     aPchrweaponcasez_0:.ascii "PchrweaponcaseZ"<0>  # DATA XREF: D:80046FE4o
+D:8005A0FC     aPchrwppkz_0:   .ascii "PchrwppkZ"<0>    # DATA XREF: D:80046FF0o
+D:8005A106                     .half 0
+D:8005A108     aPchrwppksilz_0:.ascii "PchrwppksilZ"<0>  # DATA XREF: D:80046FFCo
+D:8005A115                     .byte 0, 0, 0
+D:8005A118     aPchrwristdartz_0:.ascii "PchrwristdartZ"<0>  # DATA XREF: D:80047008o
+D:8005A127                     .byte 0
+D:8005A128     aPconsole1z_0:  .ascii "Pconsole1Z"<0>   # DATA XREF: D:80047014o
+D:8005A133                     .byte 0
+D:8005A134     aPconsole2z_0:  .ascii "Pconsole2Z"<0>   # DATA XREF: D:80047020o
+D:8005A13F                     .byte 0
+D:8005A140     aPconsole3z_0:  .ascii "Pconsole3Z"<0>   # DATA XREF: D:8004702Co
+D:8005A14B                     .byte 0
+D:8005A14C     aPconsole_sev2az_0:.ascii "Pconsole_sev2aZ"<0>  # DATA XREF: D:80047038o
+D:8005A15C     aPconsole_sev2bz_0:.ascii "Pconsole_sev2bZ"<0>  # DATA XREF: D:80047044o
+D:8005A16C     aPconsole_sev2cz_0:.ascii "Pconsole_sev2cZ"<0>  # DATA XREF: D:80047050o
+D:8005A17C     aPconsole_sev2dz_0:.ascii "Pconsole_sev2dZ"<0>  # DATA XREF: D:8004705Co
+D:8005A18C     aPconsole_sev_geaz_0:.ascii "Pconsole_sev_GEaZ"<0>  # DATA XREF: D:80047068o
+D:8005A19E                     .half 0
+D:8005A1A0     aPconsole_sev_gebz_0:.ascii "Pconsole_sev_GEbZ"<0>  # DATA XREF: D:80047074o
+D:8005A1B2                     .half 0
+D:8005A1B4     aPconsole_sevaz_0:.ascii "Pconsole_sevaZ"<0>  # DATA XREF: D:80047080o
+D:8005A1C3                     .byte 0
+D:8005A1C4     aPconsole_sevbz_0:.ascii "Pconsole_sevbZ"<0>  # DATA XREF: D:8004708Co
+D:8005A1D3                     .byte 0
+D:8005A1D4     aPconsole_sevcz_0:.ascii "Pconsole_sevcZ"<0>  # DATA XREF: D:80047098o
+D:8005A1E3                     .byte 0
+D:8005A1E4     aPconsole_sevdz_0:.ascii "Pconsole_sevdZ"<0>  # DATA XREF: D:800470A4o
+D:8005A1F3                     .byte 0
+D:8005A1F4     aPcryptdoor1az_0:.ascii "Pcryptdoor1aZ"<0>  # DATA XREF: D:800470B0o
+D:8005A202                     .half 0
+D:8005A204     aPcryptdoor1bz_0:.ascii "Pcryptdoor1bZ"<0>  # DATA XREF: D:800470BCo
+D:8005A212                     .half 0
+D:8005A214     aPcryptdoor2az_0:.ascii "Pcryptdoor2aZ"<0>  # DATA XREF: D:800470C8o
+D:8005A222                     .half 0
+D:8005A224     aPcryptdoor2bz_0:.ascii "Pcryptdoor2bZ"<0>  # DATA XREF: D:800470D4o
+D:8005A232                     .half 0
+D:8005A234     aPcryptdoor3z_0:.ascii "Pcryptdoor3Z"<0>  # DATA XREF: D:800470E0o
+D:8005A241                     .byte 0, 0, 0
+D:8005A244     aPcryptdoor4z_0:.ascii "Pcryptdoor4Z"<0>  # DATA XREF: D:800470ECo
+D:8005A251                     .byte 0, 0, 0
+D:8005A254     aPdamchaindoorz_0:.ascii "PdamchaindoorZ"<0>  # DATA XREF: D:800470F8o
+D:8005A263                     .byte 0
+D:8005A264     aPdamgatedoorz_0:.ascii "PdamgatedoorZ"<0>  # DATA XREF: D:80047104o
+D:8005A272                     .half 0
+D:8005A274     aPdamtundoorz_0:.ascii "PdamtundoorZ"<0>  # DATA XREF: D:80047110o
+D:8005A281                     .byte 0, 0, 0
+D:8005A284     aPdepot_door_steelz_0:.ascii "Pdepot_door_steelZ"<0>  # DATA XREF: D:8004711Co
+D:8005A297                     .byte 0
+D:8005A298     aPdepot_gate_entryz_0:.ascii "Pdepot_gate_entryZ"<0>  # DATA XREF: D:80047128o
+D:8005A2AB                     .byte 0
+D:8005A2AC     aPdesk1z_0:     .ascii "Pdesk1Z"<0>      # DATA XREF: D:80047134o
+D:8005A2B4     aPdesk2z_0:     .ascii "Pdesk2Z"<0>      # DATA XREF: D:80047140o
+D:8005A2BC     aPdesk_arecibo1z_0:.ascii "Pdesk_arecibo1Z"<0>  # DATA XREF: D:8004714Co
+D:8005A2CC     aPdesk_lamp2z_0:.ascii "Pdesk_lamp2Z"<0>  # DATA XREF: D:80047158o
+D:8005A2D9                     .byte 0, 0, 0
+D:8005A2DC     aPdest_enginez_0:.ascii "Pdest_engineZ"<0>  # DATA XREF: D:80047164o
+D:8005A2EA                     .half 0
+D:8005A2EC     aPdest_exocetz_0:.ascii "Pdest_exocetZ"<0>  # DATA XREF: D:80047170o
+D:8005A2FA                     .half 0
+D:8005A2FC     aPdest_gunz_0:  .ascii "Pdest_gunZ"<0>   # DATA XREF: D:8004717Co
+D:8005A307                     .byte 0
+D:8005A308     aPdest_harpoonz_0:.ascii "Pdest_harpoonZ"<0>  # DATA XREF: D:80047188o
+D:8005A317                     .byte 0
+D:8005A318     aPdest_seawolfz_0:.ascii "Pdest_seawolfZ"<0>  # DATA XREF: D:80047194o
+D:8005A327                     .byte 0
+D:8005A328     aPdisc_readerz_0:.ascii "Pdisc_readerZ"<0>  # DATA XREF: D:800471A0o
+D:8005A336                     .half 0
+D:8005A338     aPdisk_drive1z_0:.ascii "Pdisk_drive1Z"<0>  # DATA XREF: D:800471ACo
+D:8005A346                     .half 0
+D:8005A348     aPdoor_azt_chairz_0:.ascii "Pdoor_azt_chairZ"<0>  # DATA XREF: D:800471B8o
+D:8005A359                     .byte 0, 0, 0
+D:8005A35C     aPdoor_azt_deskz_0:.ascii "Pdoor_azt_deskZ"<0>  # DATA XREF: D:800471C4o
+D:8005A36C     aPdoor_azt_desk_topz_0:.ascii "Pdoor_azt_desk_topZ"<0>
+D:8005A36C                                              # DATA XREF: D:800471D0o
+D:8005A380     aPdoor_aztecz_0:.ascii "Pdoor_aztecZ"<0>  # DATA XREF: D:800471DCo
+D:8005A38D                     .byte 0, 0, 0
+D:8005A390     aPdoor_dest1z_0:.ascii "Pdoor_dest1Z"<0>  # DATA XREF: D:800471E8o
+D:8005A39D                     .byte 0, 0, 0
+D:8005A3A0     aPdoor_dest2z_0:.ascii "Pdoor_dest2Z"<0>  # DATA XREF: D:800471F4o
+D:8005A3AD                     .byte 0, 0, 0
+D:8005A3B0     aPdoor_eyelidz_0:.ascii "Pdoor_eyelidZ"<0>  # DATA XREF: D:80047200o
+D:8005A3BE                     .half 0
+D:8005A3C0     aPdoor_irisz_0: .ascii "Pdoor_irisZ"<0>  # DATA XREF: D:8004720Co
+D:8005A3CC     aPdoor_mfz_0:   .ascii "Pdoor_mfZ"<0>    # DATA XREF: D:80047218o
+D:8005A3D6                     .half 0
+D:8005A3D8     aPdoor_roller1z_0:.ascii "Pdoor_roller1Z"<0>  # DATA XREF: D:80047224o
+D:8005A3E7                     .byte 0
+D:8005A3E8     aPdoor_roller2z_0:.ascii "Pdoor_roller2Z"<0>  # DATA XREF: D:80047230o
+D:8005A3F7                     .byte 0
+D:8005A3F8     aPdoor_roller3z_0:.ascii "Pdoor_roller3Z"<0>  # DATA XREF: D:8004723Co
+D:8005A407                     .byte 0
+D:8005A408     aPdoor_roller4z_0:.ascii "Pdoor_roller4Z"<0>  # DATA XREF: D:80047248o
+D:8005A417                     .byte 0
+D:8005A418     aPdoor_rollertrainz_0:.ascii "Pdoor_rollertrainZ"<0>  # DATA XREF: D:80047254o
+D:8005A42B                     .byte 0
+D:8005A42C     aPdoor_st_arec1z_0:.ascii "Pdoor_st_arec1Z"<0>  # DATA XREF: D:80047260o
+D:8005A43C     aPdoor_st_arec2z_0:.ascii "Pdoor_st_arec2Z"<0>  # DATA XREF: D:8004726Co
+D:8005A44C     aPdoor_winz_0:  .ascii "Pdoor_winZ"<0>   # DATA XREF: D:80047278o
+D:8005A457                     .byte 0
+D:8005A458     aPdoorconsolez_0:.ascii "PdoorconsoleZ"<0>  # DATA XREF: D:80047284o
+D:8005A466                     .half 0
+D:8005A468     aPdoorpanelz_0: .ascii "PdoorpanelZ"<0>  # DATA XREF: D:80047290o
+D:8005A474     aPdoorprison1z_0:.ascii "Pdoorprison1Z"<0>  # DATA XREF: D:8004729Co
+D:8005A482                     .half 0
+D:8005A484     aPdoorstatgatez_0:.ascii "PdoorstatgateZ"<0>  # DATA XREF: D:800472A8o
+D:8005A493                     .byte 0
+D:8005A494     aPexplosionbitz_0:.ascii "PexplosionbitZ"<0>  # DATA XREF: D:800472B4o
+D:8005A4A3                     .byte 0
+D:8005A4A4     aPfiling_cabinet1z_0:.ascii "Pfiling_cabinet1Z"<0>  # DATA XREF: D:800472C0o
+D:8005A4B6                     .half 0
+D:8005A4B8     aPflagz_0:      .ascii "PflagZ"<0>       # DATA XREF: D:800472CCo
+D:8005A4BF                     .byte 0
+D:8005A4C0     aPfloppyz_0:    .ascii "PfloppyZ"<0>     # DATA XREF: D:800472D8o
+D:8005A4C9                     .byte 0, 0, 0
+D:8005A4CC     aPfnp90magz_0:  .ascii "Pfnp90magZ"<0>   # DATA XREF: D:800472E4o
+D:8005A4D7                     .byte 0
+D:8005A4D8     aPgas_plant_met1_do1z_0:.ascii "Pgas_plant_met1_do1Z"<0>
+D:8005A4D8                                              # DATA XREF: D:800472F0o
+D:8005A4ED                     .byte 0, 0, 0
+D:8005A4F0     aPgas_plant_sw2_do1z_0:.ascii "Pgas_plant_sw2_do1Z"<0>
+D:8005A4F0                                              # DATA XREF: D:800472FCo
+D:8005A504     aPgas_plant_sw3_do1z_0:.ascii "Pgas_plant_sw3_do1Z"<0>
+D:8005A504                                              # DATA XREF: D:80047308o
+D:8005A518     aPgas_plant_sw4_do1z_0:.ascii "Pgas_plant_sw4_do1Z"<0>
+D:8005A518                                              # DATA XREF: D:80047314o
+D:8005A52C     aPgas_plant_sw_do1z_0:.ascii "Pgas_plant_sw_do1Z"<0>  # DATA XREF: D:80047320o
+D:8005A53F                     .byte 0
+D:8005A540     aPgas_plant_wc_cub1z_0:.ascii "Pgas_plant_wc_cub1Z"<0>
+D:8005A540                                              # DATA XREF: D:8004732Co
+D:8005A554     aPgasbarrelz_0: .ascii "PgasbarrelZ"<0>  # DATA XREF: D:80047338o
+D:8005A560     aPgasbarrelsz_0:.ascii "PgasbarrelsZ"<0>  # DATA XREF: D:80047344o
+D:8005A56D                     .byte 0, 0, 0
+D:8005A570     aPgasplant_clear_doorz_0:.ascii "Pgasplant_clear_doorZ"<0>
+D:8005A570                                              # DATA XREF: D:80047350o
+D:8005A586                     .half 0
+D:8005A588     aPgastankz_0:   .ascii "PgastankZ"<0>    # DATA XREF: D:8004735Co
+D:8005A592                     .half 0
+D:8005A594     aPglassware1z_0:.ascii "Pglassware1Z"<0>  # DATA XREF: D:80047368o
+D:8005A5A1                     .byte 0, 0, 0
+D:8005A5A4     aPglassware2z_0:.ascii "Pglassware2Z"<0>  # DATA XREF: D:80047374o
+D:8005A5B1                     .byte 0, 0, 0
+D:8005A5B4     aPglassware3z_0:.ascii "Pglassware3Z"<0>  # DATA XREF: D:80047380o
+D:8005A5C1                     .byte 0, 0, 0
+D:8005A5C4     aPglassware4z_0:.ascii "Pglassware4Z"<0>  # DATA XREF: D:8004738Co
+D:8005A5D1                     .byte 0, 0, 0
+D:8005A5D4     aPgoldeneyelogoz_0:.ascii "PgoldeneyelogoZ"<0>  # DATA XREF: D:80047398o
+D:8005A5E4     aPgoldenshellsz_0:.ascii "PgoldenshellsZ"<0>  # DATA XREF: D:800473A4o
+D:8005A5F3                     .byte 0
+D:8005A5F4     aPgroundgunz_0: .ascii "PgroundgunZ"<0>  # DATA XREF: D:800473B0o
+D:8005A600     aPgun_runway1z_0:.ascii "Pgun_runway1Z"<0>  # DATA XREF: D:800473BCo
+D:8005A60E                     .half 0
+D:8005A610     aPhatberetz_0:  .ascii "PhatberetZ"<0>   # DATA XREF: D:800473C8o
+D:8005A61B                     .byte 0
+D:8005A61C     aPhatberetbluez_0:.ascii "PhatberetblueZ"<0>  # DATA XREF: D:800473D4o
+D:8005A62B                     .byte 0
+D:8005A62C     aPhatberetredz_0:.ascii "PhatberetredZ"<0>  # DATA XREF: D:800473E0o
+D:8005A63A                     .half 0
+D:8005A63C     aPhatchboltz_0: .ascii "PhatchboltZ"<0>  # DATA XREF: D:800473ECo
+D:8005A648     aPhatchdoorz_0: .ascii "PhatchdoorZ"<0>  # DATA XREF: D:800473F8o
+D:8005A654     aPhatchsevxz_0: .ascii "PhatchsevxZ"<0>  # DATA XREF: D:80047404o
+D:8005A660     aPhatfurryz_0:  .ascii "PhatfurryZ"<0>   # DATA XREF: D:80047410o
+D:8005A66B                     .byte 0
+D:8005A66C     aPhatfurryblackz_0:.ascii "PhatfurryblackZ"<0>  # DATA XREF: D:8004741Co
+D:8005A67C     aPhatfurrybrownz_0:.ascii "PhatfurrybrownZ"<0>  # DATA XREF: D:80047428o
+D:8005A68C     aPhathelmetz_0: .ascii "PhathelmetZ"<0>  # DATA XREF: D:80047434o
+D:8005A698     aPhathelmetgreyz_0:.ascii "PhathelmetgreyZ"<0>  # DATA XREF: D:80047440o
+D:8005A6A8     aPhatmoonz_0:   .ascii "PhatmoonZ"<0>    # DATA XREF: D:8004744Co
+D:8005A6B2                     .half 0
+D:8005A6B4     aPhatpeakedz_0: .ascii "PhatpeakedZ"<0>  # DATA XREF: D:80047458o
+D:8005A6C0     aPhattbirdz_0:  .ascii "PhattbirdZ"<0>   # DATA XREF: D:80047464o
+D:8005A6CB                     .byte 0
+D:8005A6CC     aPhattbirdbrownz_0:.ascii "PhattbirdbrownZ"<0>  # DATA XREF: D:80047470o
+D:8005A6DC     aPhelicopterz_0:.ascii "PhelicopterZ"<0>  # DATA XREF: D:8004747Co
+D:8005A6E9                     .byte 0, 0, 0
+D:8005A6EC     aPhindz_0:      .ascii "PhindZ"<0>       # DATA XREF: D:80047488o
+D:8005A6F3                     .byte 0
+D:8005A6F4     aPjeepz_0:      .ascii "PjeepZ"<0>       # DATA XREF: D:80047494o
+D:8005A6FB                     .byte 0
+D:8005A6FC     aPjerry_can1z_0:.ascii "Pjerry_can1Z"<0>  # DATA XREF: D:800474A0o
+D:8005A709                     .byte 0, 0, 0
+D:8005A70C     aPjungle3_treez_0:.ascii "Pjungle3_treeZ"<0>  # DATA XREF: D:800474ACo
+D:8005A71B                     .byte 0
+D:8005A71C     aPjungle5_treez_0:.ascii "Pjungle5_treeZ"<0>  # DATA XREF: D:800474B8o
+D:8005A72B                     .byte 0
+D:8005A72C     aPkey_holderz_0:.ascii "Pkey_holderZ"<0>  # DATA XREF: D:800474C4o
+D:8005A739                     .byte 0, 0, 0
+D:8005A73C     aPkeyboard1z_0: .ascii "Pkeyboard1Z"<0>  # DATA XREF: D:800474D0o
+D:8005A748     aPkit_units1z_0:.ascii "Pkit_units1Z"<0>  # DATA XREF: D:800474DCo
+D:8005A755                     .byte 0, 0, 0
+D:8005A758     aPlabbenchz_0:  .ascii "PlabbenchZ"<0>   # DATA XREF: D:800474E8o
+D:8005A763                     .byte 0
+D:8005A764     aPlandminez_0:  .ascii "PlandmineZ"<0>   # DATA XREF: D:800474F4o
+D:8005A76F                     .byte 0
+D:8005A770     aPlegalpagez_0: .ascii "PlegalpageZ"<0>  # DATA XREF: D:80047500o
+D:8005A77C     aPletter_tray1z_0:.ascii "Pletter_tray1Z"<0>  # DATA XREF: D:8004750Co
+D:8005A78B                     .byte 0
+D:8005A78C     aPlocker3z_0:   .ascii "Plocker3Z"<0>    # DATA XREF: D:80047518o
+D:8005A796                     .half 0
+D:8005A798     aPlocker4z_0:   .ascii "Plocker4Z"<0>    # DATA XREF: D:80047524o
+D:8005A7A2                     .half 0
+D:8005A7A4     aPm16magz_0:    .ascii "Pm16magZ"<0>     # DATA XREF: D:80047530o
+D:8005A7AD                     .byte 0, 0, 0
+D:8005A7B0     aPmagnumshellsz_0:.ascii "PmagnumshellsZ"<0>  # DATA XREF: D:8004753Co
+D:8005A7BF                     .byte 0
+D:8005A7C0     aPmainframe1z_0:.ascii "Pmainframe1Z"<0>  # DATA XREF: D:80047548o
+D:8005A7CD                     .byte 0, 0, 0
+D:8005A7D0     aPmainframe2z_0:.ascii "Pmainframe2Z"<0>  # DATA XREF: D:80047554o
+D:8005A7DD                     .byte 0, 0, 0
+D:8005A7E0     aPmetal_chair1z_0:.ascii "Pmetal_chair1Z"<0>  # DATA XREF: D:80047560o
+D:8005A7EF                     .byte 0
+D:8005A7F0     aPmetal_crate1z_0:.ascii "Pmetal_crate1Z"<0>  # DATA XREF: D:8004756Co
+D:8005A7FF                     .byte 0
+D:8005A800     aPmetal_crate2z_0:.ascii "Pmetal_crate2Z"<0>  # DATA XREF: D:80047578o
+D:8005A80F                     .byte 0
+D:8005A810     aPmetal_crate3z_0:.ascii "Pmetal_crate3Z"<0>  # DATA XREF: D:80047584o
+D:8005A81F                     .byte 0
+D:8005A820     aPmetal_crate4z_0:.ascii "Pmetal_crate4Z"<0>  # DATA XREF: D:80047590o
+D:8005A82F                     .byte 0
+D:8005A830     aPmilcopterz_0: .ascii "PmilcopterZ"<0>  # DATA XREF: D:8004759Co
+D:8005A83C     aPmiltruckz_0:  .ascii "PmiltruckZ"<0>   # DATA XREF: D:800475A8o
+D:8005A847                     .byte 0
+D:8005A848     aPmissile_rack2z_0:.ascii "Pmissile_rack2Z"<0>  # DATA XREF: D:800475B4o
+D:8005A858     aPmissile_rackz_0:.ascii "Pmissile_rackZ"<0>  # DATA XREF: D:800475C0o
+D:8005A867                     .byte 0
+D:8005A868     aPmodemboxz_0:  .ascii "PmodemboxZ"<0>   # DATA XREF: D:800475CCo
+D:8005A873                     .byte 0
+D:8005A874     aPmotorbikez_0: .ascii "PmotorbikeZ"<0>  # DATA XREF: D:800475D8o
+D:8005A880     aPmp5kmagz_0:   .ascii "Pmp5kmagZ"<0>    # DATA XREF: D:800475E4o
+D:8005A88A                     .half 0
+D:8005A88C     aPnintendologoz_0:.ascii "PnintendologoZ"<0>  # DATA XREF: D:800475F0o
+D:8005A89B                     .byte 0
+D:8005A89C     aPoil_drum1z_0: .ascii "Poil_drum1Z"<0>  # DATA XREF: D:800475FCo
+D:8005A8A8     aPoil_drum2z_0: .ascii "Poil_drum2Z"<0>  # DATA XREF: D:80047608o
+D:8005A8B4     aPoil_drum3z_0: .ascii "Poil_drum3Z"<0>  # DATA XREF: D:80047614o
+D:8005A8C0     aPoil_drum5z_0: .ascii "Poil_drum5Z"<0>  # DATA XREF: D:80047620o
+D:8005A8CC     aPoil_drum6z_0: .ascii "Poil_drum6Z"<0>  # DATA XREF: D:8004762Co
+D:8005A8D8     aPoil_drum7z_0: .ascii "Poil_drum7Z"<0>  # DATA XREF: D:80047638o
+D:8005A8E4     aPpadlockz_0:   .ascii "PpadlockZ"<0>    # DATA XREF: D:80047644o
+D:8005A8EE                     .half 0
+D:8005A8F0     aPpalmz_0:      .ascii "PpalmZ"<0>       # DATA XREF: D:80047650o
+D:8005A8F7                     .byte 0
+D:8005A8F8     aPpalmtreez_0:  .ascii "PpalmtreeZ"<0>   # DATA XREF: D:8004765Co
+D:8005A903                     .byte 0
+D:8005A904     aPphone1z_0:    .ascii "Pphone1Z"<0>     # DATA XREF: D:80047668o
+D:8005A90D                     .byte 0, 0, 0
+D:8005A910     aPplanez_0:     .ascii "PplaneZ"<0>      # DATA XREF: D:80047674o
+D:8005A918     aPplant11z_0:   .ascii "Pplant11Z"<0>    # DATA XREF: D:80047680o
+D:8005A922                     .half 0
+D:8005A924     aPplant1z_0:    .ascii "Pplant1Z"<0>     # DATA XREF: D:8004768Co
+D:8005A92D                     .byte 0, 0, 0
+D:8005A930     aPplant2z_0:    .ascii "Pplant2Z"<0>     # DATA XREF: D:80047698o
+D:8005A939                     .byte 0, 0, 0
+D:8005A93C     aPplant2bz_0:   .ascii "Pplant2bZ"<0>    # DATA XREF: D:800476A4o
+D:8005A946                     .half 0
+D:8005A948     aPplant3z_0:    .ascii "Pplant3Z"<0>     # DATA XREF: D:800476B0o
+D:8005A951                     .byte 0, 0, 0
+D:8005A954     aPradio_unit1z_0:.ascii "Pradio_unit1Z"<0>  # DATA XREF: D:800476BCo
+D:8005A962                     .half 0
+D:8005A964     aPradio_unit2z_0:.ascii "Pradio_unit2Z"<0>  # DATA XREF: D:800476C8o
+D:8005A972                     .half 0
+D:8005A974     aPradio_unit3z_0:.ascii "Pradio_unit3Z"<0>  # DATA XREF: D:800476D4o
+D:8005A982                     .half 0
+D:8005A984     aPradio_unit4z_0:.ascii "Pradio_unit4Z"<0>  # DATA XREF: D:800476E0o
+D:8005A992                     .half 0
+D:8005A994     aProofgunz_0:   .ascii "ProofgunZ"<0>    # DATA XREF: D:800476ECo
+D:8005A99E                     .half 0
+D:8005A9A0     aPsafez_0:      .ascii "PsafeZ"<0>       # DATA XREF: D:800476F8o
+D:8005A9A7                     .byte 0
+D:8005A9A8     aPsafedoorz_0:  .ascii "PsafedoorZ"<0>   # DATA XREF: D:80047704o
+D:8005A9B3                     .byte 0
+D:8005A9B4     aPsat1_reflectz_0:.ascii "Psat1_reflectZ"<0>  # DATA XREF: D:80047710o
+D:8005A9C3                     .byte 0
+D:8005A9C4     aPsatboxz_0:    .ascii "PsatboxZ"<0>     # DATA XREF: D:8004771Co
+D:8005A9CD                     .byte 0, 0, 0
+D:8005A9D0     aPsatdishz_0:   .ascii "PsatdishZ"<0>    # DATA XREF: D:80047728o
+D:8005A9DA                     .half 0
+D:8005A9DC     aPsec_panelz_0: .ascii "Psec_panelZ"<0>  # DATA XREF: D:80047734o
+D:8005A9E8     aPsev_door3z_0: .ascii "Psev_door3Z"<0>  # DATA XREF: D:80047740o
+D:8005A9F4     aPsev_door3_windz_0:.ascii "Psev_door3_windZ"<0>  # DATA XREF: D:8004774Co
+D:8005AA05                     .byte 0, 0, 0
+D:8005AA08     aPsev_door4_windz_0:.ascii "Psev_door4_windZ"<0>  # DATA XREF: D:80047758o
+D:8005AA19                     .byte 0, 0, 0
+D:8005AA1C     aPsev_doorz_0:  .ascii "Psev_doorZ"<0>   # DATA XREF: D:80047764o
+D:8005AA27                     .byte 0
+D:8005AA28     aPsev_door_v1z_0:.ascii "Psev_door_v1Z"<0>  # DATA XREF: D:80047770o
+D:8005AA36                     .half 0
+D:8005AA38     aPsev_trislidez_0:.ascii "Psev_trislideZ"<0>  # DATA XREF: D:8004777Co
+D:8005AA47                     .byte 0
+D:8005AA48     aPsevdishz_0:   .ascii "PsevdishZ"<0>    # DATA XREF: D:80047788o
+D:8005AA52                     .half 0
+D:8005AA54     aPsevdoormetslidez_0:.ascii "PsevdoormetslideZ"<0>  # DATA XREF: D:80047794o
+D:8005AA66                     .half 0
+D:8005AA68     aPsevdoornowindz_0:.ascii "PsevdoornowindZ"<0>  # DATA XREF: D:800477A0o
+D:8005AA78     aPsevdoorwindz_0:.ascii "PsevdoorwindZ"<0>  # DATA XREF: D:800477ACo
+D:8005AA86                     .half 0
+D:8005AA88     aPsevdoorwoodz_0:.ascii "PsevdoorwoodZ"<0>  # DATA XREF: D:800477B8o
+D:8005AA96                     .half 0
+D:8005AA98     aPshuttlez_0:   .ascii "PshuttleZ"<0>    # DATA XREF: D:800477C4o
+D:8005AAA2                     .half 0
+D:8005AAA4     aPshuttle_door_lz_0:.ascii "Pshuttle_door_lZ"<0>  # DATA XREF: D:800477D0o
+D:8005AAB5                     .byte 0, 0, 0
+D:8005AAB8     aPshuttle_door_rz_0:.ascii "Pshuttle_door_rZ"<0>  # DATA XREF: D:800477DCo
+D:8005AAC9                     .byte 0, 0, 0
+D:8005AACC     aPsilencerz_0:  .ascii "PsilencerZ"<0>   # DATA XREF: D:800477E8o
+D:8005AAD7                     .byte 0
+D:8005AAD8     aPsilo_lift_doorz_0:.ascii "Psilo_lift_doorZ"<0>  # DATA XREF: D:800477F4o
+D:8005AAE9                     .byte 0, 0, 0
+D:8005AAEC     aPsilotopdoorz_0:.ascii "PsilotopdoorZ"<0>  # DATA XREF: D:80047800o
+D:8005AAFA                     .half 0
+D:8005AAFC     aPskorpionmagz_0:.ascii "PskorpionmagZ"<0>  # DATA XREF: D:8004780Co
+D:8005AB0A                     .half 0
+D:8005AB0C     aPspectremagz_0:.ascii "PspectremagZ"<0>  # DATA XREF: D:80047818o
+D:8005AB19                     .byte 0, 0, 0
+D:8005AB1C     aPspeedboatz_0: .ascii "PspeedboatZ"<0>  # DATA XREF: D:80047824o
+D:8005AB28     aPst_pete_room_1iz_0:.ascii "Pst_pete_room_1iZ"<0>  # DATA XREF: D:80047830o
+D:8005AB3A                     .half 0
+D:8005AB3C     aPst_pete_room_2iz_0:.ascii "Pst_pete_room_2iZ"<0>  # DATA XREF: D:8004783Co
+D:8005AB4E                     .half 0
+D:8005AB50     aPst_pete_room_3tz_0:.ascii "Pst_pete_room_3tZ"<0>  # DATA XREF: D:80047848o
+D:8005AB62                     .half 0
+D:8005AB64     aPst_pete_room_5cz_0:.ascii "Pst_pete_room_5cZ"<0>  # DATA XREF: D:80047854o
+D:8005AB76                     .half 0
+D:8005AB78     aPst_pete_room_6cz_0:.ascii "Pst_pete_room_6cZ"<0>  # DATA XREF: D:80047860o
+D:8005AB8A                     .half 0
+D:8005AB8C     aPsteel_door1z_0:.ascii "Psteel_door1Z"<0>  # DATA XREF: D:8004786Co
+D:8005AB9A                     .half 0
+D:8005AB9C     aPsteel_door2z_0:.ascii "Psteel_door2Z"<0>  # DATA XREF: D:80047878o
+D:8005ABAA                     .half 0
+D:8005ABAC     aPsteel_door2bz_0:.ascii "Psteel_door2bZ"<0>  # DATA XREF: D:80047884o
+D:8005ABBB                     .byte 0
+D:8005ABBC     aPsteel_door3z_0:.ascii "Psteel_door3Z"<0>  # DATA XREF: D:80047890o
+D:8005ABCA                     .half 0
+D:8005ABCC     aPstool1z_0:    .ascii "Pstool1Z"<0>     # DATA XREF: D:8004789Co
+D:8005ABD5                     .byte 0, 0, 0
+D:8005ABD8     aPswipe_card2z_0:.ascii "Pswipe_card2Z"<0>  # DATA XREF: D:800478A8o
+D:8005ABE6                     .half 0
+D:8005ABE8     aPswivel_chair1z_0:.ascii "Pswivel_chair1Z"<0>  # DATA XREF: D:800478B4o
+D:8005ABF8     aPtankz_0:      .ascii "PtankZ"<0>       # DATA XREF: D:800478C0o
+D:8005ABFF                     .byte 0
+D:8005AC00     aPtigerz_0:     .ascii "PtigerZ"<0>      # DATA XREF: D:800478CCo
+D:8005AC08     aPtorpedo_rackz_0:.ascii "Ptorpedo_rackZ"<0>  # DATA XREF: D:800478D8o
+D:8005AC17                     .byte 0
+D:8005AC18     aPtrain_door2z_0:.ascii "Ptrain_door2Z"<0>  # DATA XREF: D:800478E4o
+D:8005AC26                     .half 0
+D:8005AC28     aPtrain_door3z_0:.ascii "Ptrain_door3Z"<0>  # DATA XREF: D:800478F0o
+D:8005AC36                     .half 0
+D:8005AC38     aPtrain_doorz_0:.ascii "Ptrain_doorZ"<0>  # DATA XREF: D:800478FCo
+D:8005AC45                     .byte 0, 0, 0
+D:8005AC48     aPtrainextdoorz_0:.ascii "PtrainextdoorZ"<0>  # DATA XREF: D:80047908o
+D:8005AC57                     .byte 0
+D:8005AC58     aPtt33magz_0:   .ascii "Ptt33magZ"<0>    # DATA XREF: D:80047914o
+D:8005AC62                     .half 0
+D:8005AC64     aPtuning_console1z_0:.ascii "Ptuning_console1Z"<0><0><0>
+D:8005AC64                                              # DATA XREF: D:80047920o
+D:8005AC78     aPtv1z_0:       .ascii "Ptv1Z"<0><0><0>  # DATA XREF: D:8004792Co
+D:8005AC80     aPtv4screenz_0: .ascii "Ptv4screenZ"<0>  # DATA XREF: D:80047938o
+D:8005AC8C     aPtv_holderz_0: .ascii "Ptv_holderZ"<0>  # DATA XREF: D:80047944o
+D:8005AC98     aPtvscreenz_1:  .ascii "PtvscreenZ"<0><0>  # DATA XREF: D:80047950o
+D:8005ACA4     aPuzimagz_0:    .ascii "PuzimagZ"<0><0><0><0>  # DATA XREF: D:8004795Co
+D:8005ACB0     aPvertdoorz_1:  .ascii "PvertdoorZ"<0><0>  # DATA XREF: D:80047968o
+D:8005ACBC     aPwalletbondz_0:.ascii "PwalletbondZ"<0><0><0><0>  # DATA XREF: D:80047974o
+D:8005ACCC     aPwindowz_0:    .ascii "PwindowZ"<0><0><0><0>  # DATA XREF: D:80047980o
+D:8005ACD8     aPwindow_cor11z_1:.ascii "Pwindow_cor11Z"<0><0>  # DATA XREF: D:8004798Co
+D:8005ACE8     aPwindow_lib_lg1z_0:.ascii "Pwindow_lib_lg1Z"<0><0><0><0>
+D:8005ACE8                                              # DATA XREF: D:80047998o
+D:8005ACFC     aPwindow_lib_sm1z_0:.ascii "Pwindow_lib_sm1Z"<0><0><0><0>
+D:8005ACFC                                              # DATA XREF: D:800479A4o
+D:8005AD10     aPwood_lg_crate1z_0:.ascii "Pwood_lg_crate1Z"<0><0><0><0>
+D:8005AD10                                              # DATA XREF: D:800479B0o
+D:8005AD24     aPwood_lg_crate2z_0:.ascii "Pwood_lg_crate2Z"<0><0><0><0>
+D:8005AD24                                              # DATA XREF: D:800479BCo
+D:8005AD38     aPwood_md_crate3z_0:.ascii "Pwood_md_crate3Z"<0><0><0><0>
+D:8005AD38                                              # DATA XREF: D:800479C8o
+D:8005AD4C     aPwood_sm_crate4z_0:.ascii "Pwood_sm_crate4Z"<0><0><0><0>
+D:8005AD4C                                              # DATA XREF: D:800479D4o
+D:8005AD60     aPwood_sm_crate5z_0:.ascii "Pwood_sm_crate5Z"<0><0><0><0>
+D:8005AD60                                              # DATA XREF: D:800479E0o
+D:8005AD74     aPwood_sm_crate6z_0:.ascii "Pwood_sm_crate6Z"<0><0><0><0>
+D:8005AD74                                              # DATA XREF: D:800479ECo
+D:8005AD88     aPwooden_table1z_0:.ascii "Pwooden_table1Z"<0>  # DATA XREF: D:800479F8o
+D:8005AD98     aPwppkmagz_0:   .ascii "PwppkmagZ"<0><0><0>  # DATA XREF: D:80047A04o
+D:8005ADA4     aTbg_ame_all_p_stanz_2:.ascii "Tbg_ame_all_p_stanZ"<0>
+D:8005ADA4                                              # DATA XREF: D:80047A10o
+D:8005ADB8     aTbg_arch_all_p_stanz_0:.ascii "Tbg_arch_all_p_stanZ"<0><0><0><0>
+D:8005ADB8                                              # DATA XREF: D:80047A1Co
+D:8005ADD0     aTbg_arec_all_p_stanz_0:.ascii "Tbg_arec_all_p_stanZ"<0><0><0><0>
+D:8005ADD0                                              # DATA XREF: D:80047A28o
+D:8005ADE8     aTbg_ark_all_p_stanz_0:.ascii "Tbg_ark_all_p_stanZ"<0>
+D:8005ADE8                                              # DATA XREF: D:80047A34o
+D:8005ADFC     aTbg_ash_all_p_stanz:.ascii "Tbg_ash_all_p_stanZ"<0>  # DATA XREF: D:80047A40o
+D:8005AE10     aTbg_azt_all_p_stanz_0:.ascii "Tbg_azt_all_p_stanZ"<0>
+D:8005AE10                                              # DATA XREF: D:80047A4Co
+D:8005AE24     aTbg_cat_all_p_stanz_0:.ascii "Tbg_cat_all_p_stanZ"<0>
+D:8005AE24                                              # DATA XREF: D:80047A58o
+D:8005AE38     aTbg_cave_all_p_stanz_0:.ascii "Tbg_cave_all_p_stanZ"<0><0><0><0>
+D:8005AE38                                              # DATA XREF: D:80047A64o
+D:8005AE50     aTbg_crad_all_p_stanz_0:.ascii "Tbg_crad_all_p_stanZ"<0><0><0><0>
+D:8005AE50                                              # DATA XREF: D:80047A70o
+D:8005AE68     aTbg_cryp_all_p_stanz_0:.ascii "Tbg_cryp_all_p_stanZ"<0><0><0><0>
+D:8005AE68                                              # DATA XREF: D:80047A7Co
+D:8005AE80     aTbg_dam_all_p_stanz_0:.ascii "Tbg_dam_all_p_stanZ"<0>
+D:8005AE80                                              # DATA XREF: D:80047A88o
+D:8005AE94     aTbg_depo_all_p_stanz_0:.ascii "Tbg_depo_all_p_stanZ"<0><0><0><0>
+D:8005AE94                                              # DATA XREF: D:80047A94o
+D:8005AEAC     aTbg_dest_all_p_stanz_0:.ascii "Tbg_dest_all_p_stanZ"<0><0><0><0>
+D:8005AEAC                                              # DATA XREF: D:80047AA0o
+D:8005AEC4     aTbg_dish_all_p_stanz_0:.ascii "Tbg_dish_all_p_stanZ"<0><0><0><0>
+D:8005AEC4                                              # DATA XREF: D:80047AACo
+D:8005AEDC     aTbg_ear_all_p_stanz_0:.ascii "Tbg_ear_all_p_stanZ"<0>
+D:8005AEDC                                              # DATA XREF: D:80047AB8o
+D:8005AEF0     aTbg_eld_all_p_stanz_0:.ascii "Tbg_eld_all_p_stanZ"<0>
+D:8005AEF0                                              # DATA XREF: D:80047AC4o
+D:8005AF04     aTbg_imp_all_p_stanz:.ascii "Tbg_imp_all_p_stanZ"<0>  # DATA XREF: D:80047AD0o
+D:8005AF18     aTbg_jun_all_p_stanz_0:.ascii "Tbg_jun_all_p_stanZ"<0>
+D:8005AF18                                              # DATA XREF: D:80047ADCo
+D:8005AF2C     aTbg_lee_all_p_stanz_0:.ascii "Tbg_lee_all_p_stanZ"<0>
+D:8005AF2C                                              # DATA XREF: D:80047AE8o
+D:8005AF40     aTbg_len_all_p_stanz_0:.ascii "Tbg_len_all_p_stanZ"<0>
+D:8005AF40                                              # DATA XREF: D:80047AF4o
+D:8005AF54     aTbg_lip_all_p_stanz_0:.ascii "Tbg_lip_all_p_stanZ"<0>
+D:8005AF54                                              # DATA XREF: D:80047B00o
+D:8005AF68     aTbg_lue_all_p_stanz_0:.ascii "Tbg_lue_all_p_stanZ"<0>
+D:8005AF68                                              # DATA XREF: D:80047B0Co
+D:8005AF7C     aTbg_oat_all_p_stanz_0:.ascii "Tbg_oat_all_p_stanZ"<0>
+D:8005AF7C                                              # DATA XREF: D:80047B18o
+D:8005AF90     aTbg_pam_all_p_stanz_0:.ascii "Tbg_pam_all_p_stanZ"<0>
+D:8005AF90                                              # DATA XREF: D:80047B24o
+D:8005AFA4     aTbg_pete_all_p_stanz_0:.ascii "Tbg_pete_all_p_stanZ"<0><0><0><0>
+D:8005AFA4                                              # DATA XREF: D:80047B30o
+D:8005AFBC     aTbg_ref_all_p_stanz_0:.ascii "Tbg_ref_all_p_stanZ"<0>
+D:8005AFBC                                              # DATA XREF: D:80047B3Co
+D:8005AFD0     aTbg_rit_all_p_stanz_0:.ascii "Tbg_rit_all_p_stanZ"<0>
+D:8005AFD0                                              # DATA XREF: D:80047B48o
+D:8005AFE4     aTbg_run_all_p_stanz_0:.ascii "Tbg_run_all_p_stanZ"<0>
+D:8005AFE4                                              # DATA XREF: D:80047B54o
+D:8005AFF8     aTbg_sev_all_p_stanz_0:.ascii "Tbg_sev_all_p_stanZ"<0>
+D:8005AFF8                                              # DATA XREF: D:80047B60o
+D:8005B00C     aTbg_sevb_all_p_stanz_0:.ascii "Tbg_sevb_all_p_stanZ"<0><0><0><0>
+D:8005B00C                                              # DATA XREF: D:80047B6Co
+D:8005B024     aTbg_sevx_all_p_stanz_1:.ascii "Tbg_sevx_all_p_stanZ"<0><0><0><0>
+D:8005B024                                              # DATA XREF: D:80047B78o
+D:8005B03C     aTbg_silo_all_p_stanz_0:.ascii "Tbg_silo_all_p_stanZ"<0><0><0><0>
+D:8005B03C                                              # DATA XREF: D:80047B84o
+D:8005B054     aTbg_stat_all_p_stanz_0:.ascii "Tbg_stat_all_p_stanZ"<0><0><0><0>
+D:8005B054                                              # DATA XREF: D:80047B90o
+D:8005B06C     aTbg_tra_all_p_stanz_0:.ascii "Tbg_tra_all_p_stanZ"<0>
+D:8005B06C                                              # DATA XREF: D:80047B9Co
+D:8005B080     aTbg_wax_all_p_stanz_0:.ascii "Tbg_wax_all_p_stanZ"<0>
+D:8005B080                                              # DATA XREF: D:80047BA8o
+D:8005B094     aUbriefarchz:   .ascii "UbriefarchZ"<0>  # DATA XREF: D:80047BB4o
+D:8005B0A0     aUbriefarkz:    .ascii "UbriefarkZ"<0><0>  # DATA XREF: D:80047BC0o
+D:8005B0AC     aUbriefaztz:    .ascii "UbriefaztZ"<0><0>  # DATA XREF: D:80047BCCo
+D:8005B0B8     aUbriefcavez:   .ascii "UbriefcaveZ"<0>  # DATA XREF: D:80047BD8o
+D:8005B0C4     aUbriefcontrolz:.ascii "UbriefcontrolZ"<0><0>  # DATA XREF: D:80047BE4o
+D:8005B0D4     aUbriefcradz:   .ascii "UbriefcradZ"<0>  # DATA XREF: D:80047BF0o
+D:8005B0E0     aUbriefcrypz:   .ascii "UbriefcrypZ"<0>  # DATA XREF: D:80047BFCo
+D:8005B0EC     aUbriefdamz:    .ascii "UbriefdamZ"<0><0>  # DATA XREF: D:80047C08o
+D:8005B0F8     aUbriefdepoz:   .ascii "UbriefdepoZ"<0>  # DATA XREF: D:80047C14o
+D:8005B104     aUbriefdestz:   .ascii "UbriefdestZ"<0>  # DATA XREF: D:80047C20o
+D:8005B110     aUbriefjunz:    .ascii "UbriefjunZ"<0><0>  # DATA XREF: D:80047C2Co
+D:8005B11C     aUbriefpetez:   .ascii "UbriefpeteZ"<0>  # DATA XREF: D:80047C38o
+D:8005B128     aUbriefrunz:    .ascii "UbriefrunZ"<0><0>  # DATA XREF: D:80047C44o
+D:8005B134     aUbriefsevbz:   .ascii "UbriefsevbZ"<0>  # DATA XREF: D:80047C50o
+D:8005B140     aUbriefsevbunkerz:.ascii "UbriefsevbunkerZ"<0><0><0><0>
+D:8005B140                                              # DATA XREF: D:80047C5Co
+D:8005B154     aUbriefsevxz:   .ascii "UbriefsevxZ"<0>  # DATA XREF: D:80047C68o
+D:8005B160     aUbriefsevxbz:  .ascii "UbriefsevxbZ"<0><0><0><0>  # DATA XREF: D:80047C74o
+D:8005B170     aUbriefsiloz:   .ascii "UbriefsiloZ"<0>  # DATA XREF: D:80047C80o
+D:8005B17C     aUbriefstatuez: .ascii "UbriefstatueZ"<0><0><0>  # DATA XREF: D:80047C8Co
+D:8005B18C     aUbrieftraz:    .ascii "UbrieftraZ"<0><0>  # DATA XREF: D:80047C98o
+D:8005B198     aUmp_setupamez: .ascii "Ump_setupameZ"<0><0><0>  # DATA XREF: D:80047CA4o
+D:8005B1A8     aUmp_setuparchz:.ascii "Ump_setuparchZ"<0><0>  # DATA XREF: D:80047CB0o
+D:8005B1B8     aUmp_setuparkz: .ascii "Ump_setuparkZ"<0><0><0>  # DATA XREF: D:80047CBCo
+D:8005B1C8     aUmp_setupashz: .ascii "Ump_setupashZ"<0><0><0>  # DATA XREF: D:80047CC8o
+D:8005B1D8     aUmp_setupcavez:.ascii "Ump_setupcaveZ"<0><0>  # DATA XREF: D:80047CD4o
+D:8005B1E8     aUmp_setupcradz:.ascii "Ump_setupcradZ"<0><0>  # DATA XREF: D:80047CE0o
+D:8005B1F8     aUmp_setupcrypz:.ascii "Ump_setupcrypZ"<0><0>  # DATA XREF: D:80047CECo
+D:8005B208     aUmp_setupdishz:.ascii "Ump_setupdishZ"<0><0>  # DATA XREF: D:80047CF8o
+D:8005B218     aUmp_setupimpz: .ascii "Ump_setupimpZ"<0><0><0>  # DATA XREF: D:80047D04o
+D:8005B228     aUmp_setupoatz: .ascii "Ump_setupoatZ"<0><0><0>  # DATA XREF: D:80047D10o
+D:8005B238     aUmp_setuprefz: .ascii "Ump_setuprefZ"<0><0><0>  # DATA XREF: D:80047D1Co
+D:8005B248     aUmp_setupsevbz:.ascii "Ump_setupsevbZ"<0><0>  # DATA XREF: D:80047D28o
+D:8005B258     aUmp_setupstatuez:.ascii "Ump_setupstatueZ"<0><0><0><0>
+D:8005B258                                              # DATA XREF: D:80047D34o
+D:8005B26C     aUsetuparchz_0: .ascii "UsetuparchZ"<0>  # DATA XREF: D:80047D40o
+D:8005B278     aUsetuparkz_1:  .ascii "UsetuparkZ"<0><0>  # DATA XREF: D:80047D4Co
+D:8005B284     aUsetupaztz_1:  .ascii "UsetupaztZ"<0><0>  # DATA XREF: D:80047D58o
+D:8005B290     aUsetupcavez_0: .ascii "UsetupcaveZ"<0>  # DATA XREF: D:80047D64o
+D:8005B29C     aUsetupcontrolz_1:.ascii "UsetupcontrolZ"<0><0>  # DATA XREF: D:80047D70o
+D:8005B2AC     aUsetupcradz_0: .ascii "UsetupcradZ"<0>  # DATA XREF: D:80047D7Co
+D:8005B2B8     aUsetupcrypz_0: .ascii "UsetupcrypZ"<0>  # DATA XREF: D:80047D88o
+D:8005B2C4     aUsetupdamz_1:  .ascii "UsetupdamZ"<0><0>  # DATA XREF: D:80047D94o
+D:8005B2D0     aUsetupdepoz_0: .ascii "UsetupdepoZ"<0>  # DATA XREF: D:80047DA0o
+D:8005B2DC     aUsetupdestz_0: .ascii "UsetupdestZ"<0>  # DATA XREF: D:80047DACo
+D:8005B2E8     aUsetupjunz_1:  .ascii "UsetupjunZ"<0><0>  # DATA XREF: D:80047DB8o
+D:8005B2F4     aUsetuplenz_1:  .ascii "UsetuplenZ"<0><0>  # DATA XREF: D:80047DC4o
+D:8005B300     aUsetuppetez_0: .ascii "UsetuppeteZ"<0>  # DATA XREF: D:80047DD0o
+D:8005B30C     aUsetuprunz_1:  .ascii "UsetuprunZ"<0><0>  # DATA XREF: D:80047DDCo
+D:8005B318     aUsetupsevbz_0: .ascii "UsetupsevbZ"<0>  # DATA XREF: D:80047DE8o
+D:8005B324     aUsetupsevbunkerz_1:.ascii "UsetupsevbunkerZ"<0><0><0><0>
+D:8005B324                                              # DATA XREF: D:80047DF4o
+D:8005B338     aUsetupsevxz_0: .ascii "UsetupsevxZ"<0>  # DATA XREF: D:80047E00o
+D:8005B344     aUsetupsevxbz_0:.ascii "UsetupsevxbZ"<0><0><0><0>  # DATA XREF: D:80047E0Co
+D:8005B354     aUsetupsiloz_0: .ascii "UsetupsiloZ"<0>  # DATA XREF: D:80047E18o
+D:8005B360     aUsetupstatuez_0:.ascii "UsetupstatueZ"<0><0><0>  # DATA XREF: D:80047E24o
+D:8005B370     aUsetuptraz_1:  .ascii "UsetuptraZ"<0><0>  # DATA XREF: D:80047E30o
+D:8005B37C     aLamee_0:       .ascii "LameE"<0><0><0>  # DATA XREF: D:80047E3Co
+D:8005B384     aLamej_0:       .ascii "LameJ"<0><0><0>  # DATA XREF: D:80047E48o
+D:8005B38C     aLarche_1:      .ascii "LarchE"<0><0>    # DATA XREF: D:80047E54o
+D:8005B394     aLarchj_1:      .ascii "LarchJ"<0><0>    # DATA XREF: D:80047E60o
+D:8005B39C     aLarece_1:      .ascii "LarecE"<0><0>    # DATA XREF: D:80047E6Co
+D:8005B3A4     aLarecj_1:      .ascii "LarecJ"<0><0>    # DATA XREF: D:80047E78o
+D:8005B3AC     aLarke_0:       .ascii "LarkE"<0><0><0>  # DATA XREF: D:80047E84o
+D:8005B3B4     aLarkj_0:       .ascii "LarkJ"<0><0><0>  # DATA XREF: D:80047E90o
+D:8005B3BC     aLashe_0:       .ascii "LashE"<0><0><0>  # DATA XREF: D:80047E9Co
+D:8005B3C4     aLashj_0:       .ascii "LashJ"<0><0><0>  # DATA XREF: D:80047EA8o
+D:8005B3CC     aLazte_0:       .ascii "LaztE"<0><0><0>  # DATA XREF: D:80047EB4o
+D:8005B3D4     aLaztj_0:       .ascii "LaztJ"<0><0><0>  # DATA XREF: D:80047EC0o
+D:8005B3DC     aLcate_0:       .ascii "LcatE"<0><0><0>  # DATA XREF: D:80047ECCo
+D:8005B3E4     aLcatj_0:       .ascii "LcatJ"<0><0><0>  # DATA XREF: D:80047ED8o
+D:8005B3EC     aLcavee_1:      .ascii "LcaveE"<0><0>    # DATA XREF: D:80047EE4o
+D:8005B3F4     aLcavej_1:      .ascii "LcaveJ"<0><0>    # DATA XREF: D:80047EF0o
+D:8005B3FC     aLcrade_1:      .ascii "LcradE"<0><0>    # DATA XREF: D:80047EFCo
+D:8005B404     aLcradj_1:      .ascii "LcradJ"<0><0>    # DATA XREF: D:80047F08o
+D:8005B40C     aLcrype_1:      .ascii "LcrypE"<0><0>    # DATA XREF: D:80047F14o
+D:8005B414     aLcrypj_1:      .ascii "LcrypJ"<0><0>    # DATA XREF: D:80047F20o
+D:8005B41C     aLdame_0:       .ascii "LdamE"<0><0><0>  # DATA XREF: D:80047F2Co
+D:8005B424     aLdamj_0:       .ascii "LdamJ"<0><0><0>  # DATA XREF: D:80047F38o
+D:8005B42C     aLdepoe_1:      .ascii "LdepoE"<0><0>    # DATA XREF: D:80047F44o
+D:8005B434     aLdepoj_1:      .ascii "LdepoJ"<0><0>    # DATA XREF: D:80047F50o
+D:8005B43C     aLdeste_1:      .ascii "LdestE"<0><0>    # DATA XREF: D:80047F5Co
+D:8005B444     aLdestj_1:      .ascii "LdestJ"<0><0>    # DATA XREF: D:80047F68o
+D:8005B44C     aLdishe_1:      .ascii "LdishE"<0><0>    # DATA XREF: D:80047F74o
+D:8005B454     aLdishj_1:      .ascii "LdishJ"<0><0>    # DATA XREF: D:80047F80o
+D:8005B45C     aLeare_0:       .ascii "LearE"<0><0><0>  # DATA XREF: D:80047F8Co
+D:8005B464     aLearj_0:       .ascii "LearJ"<0><0><0>  # DATA XREF: D:80047F98o
+D:8005B46C     aLelde_0:       .ascii "LeldE"<0><0><0>  # DATA XREF: D:80047FA4o
+D:8005B474     aLeldj_0:       .ascii "LeldJ"<0><0><0>  # DATA XREF: D:80047FB0o
+D:8005B47C     aLgune_0:       .ascii "LgunE"<0><0><0>  # DATA XREF: D:80047FBCo
+D:8005B484     aLgunj_0:       .ascii "LgunJ"<0><0><0>  # DATA XREF: D:80047FC8o
+D:8005B48C     aLimpe_0:       .ascii "LimpE"<0><0><0>  # DATA XREF: D:80047FD4o
+D:8005B494     aLimpj_0:       .ascii "LimpJ"<0><0><0>  # DATA XREF: D:80047FE0o
+D:8005B49C     aLjune_0:       .ascii "LjunE"<0><0><0>  # DATA XREF: D:80047FECo
+D:8005B4A4     aLjunj_0:       .ascii "LjunJ"<0><0><0>  # DATA XREF: D:80047FF8o
+D:8005B4AC     aLleee_0:       .ascii "LleeE"<0><0><0>  # DATA XREF: D:80048004o
+D:8005B4B4     aLleej_0:       .ascii "LleeJ"<0><0><0>  # DATA XREF: D:80048010o
+D:8005B4BC     aLlene_0:       .ascii "LlenE"<0><0><0>  # DATA XREF: D:8004801Co
+D:8005B4C4     aLlenj_0:       .ascii "LlenJ"<0><0><0>  # DATA XREF: D:80048028o
+D:8005B4CC     aLlipe_0:       .ascii "LlipE"<0><0><0>  # DATA XREF: D:80048034o
+D:8005B4D4     aLlipj_0:       .ascii "LlipJ"<0><0><0>  # DATA XREF: D:80048040o
+D:8005B4DC     aLluee_0:       .ascii "LlueE"<0><0><0>  # DATA XREF: D:8004804Co
+D:8005B4E4     aLluej_0:       .ascii "LlueJ"<0><0><0>  # DATA XREF: D:80048058o
+D:8005B4EC     aLmisce_1:      .ascii "LmiscE"<0><0>    # DATA XREF: D:80048064o
+D:8005B4F4     aLmiscj_1:      .ascii "LmiscJ"<0><0>    # DATA XREF: D:80048070o
+D:8005B4FC     aLmpmenue_0:    .ascii "LmpmenuE"<0><0><0><0>  # DATA XREF: D:8004807Co
+D:8005B508     aLmpmenuj_0:    .ascii "LmpmenuJ"<0><0><0><0>  # DATA XREF: D:80048088o
+D:8005B514     aLmpweaponse_0: .ascii "LmpweaponsE"<0>  # DATA XREF: D:80048094o
+D:8005B520     aLmpweaponsj_0: .ascii "LmpweaponsJ"<0>  # DATA XREF: D:800480A0o
+D:8005B52C     aLoate_0:       .ascii "LoatE"<0><0><0>  # DATA XREF: D:800480ACo
+D:8005B534     aLoatj_0:       .ascii "LoatJ"<0><0><0>  # DATA XREF: D:800480B8o
+D:8005B53C     aLoptionse_0:   .ascii "LoptionsE"<0><0><0>  # DATA XREF: D:800480C4o
+D:8005B548     aLoptionsj_0:   .ascii "LoptionsJ"<0><0><0>  # DATA XREF: D:800480D0o
+D:8005B554     aLpame_0:       .ascii "LpamE"<0><0><0>  # DATA XREF: D:800480DCo
+D:8005B55C     aLpamj_0:       .ascii "LpamJ"<0><0><0>  # DATA XREF: D:800480E8o
+D:8005B564     aLpetee_1:      .ascii "LpeteE"<0><0>    # DATA XREF: D:800480F4o
+D:8005B56C     aLpetej_1:      .ascii "LpeteJ"<0><0>    # DATA XREF: D:80048100o
+D:8005B574     aLpropobje_0:   .ascii "LpropobjE"<0><0><0>  # DATA XREF: D:8004810Co
+D:8005B580     aLpropobjj_0:   .ascii "LpropobjJ"<0><0><0>  # DATA XREF: D:80048118o
+D:8005B58C     aLrefe_0:       .ascii "LrefE"<0><0><0>  # DATA XREF: D:80048124o
+D:8005B594     aLrefj_0:       .ascii "LrefJ"<0><0><0>  # DATA XREF: D:80048130o
+D:8005B59C     aLrite_0:       .ascii "LritE"<0><0><0>  # DATA XREF: D:8004813Co
+D:8005B5A4     aLritj_0:       .ascii "LritJ"<0><0><0>  # DATA XREF: D:80048148o
+D:8005B5AC     aLrune_0:       .ascii "LrunE"<0><0><0>  # DATA XREF: D:80048154o
+D:8005B5B4     aLrunj_0:       .ascii "LrunJ"<0><0><0>  # DATA XREF: D:80048160o
+D:8005B5BC     aLseve_0:       .ascii "LsevE"<0><0><0>  # DATA XREF: D:8004816Co
+D:8005B5C4     aLsevj_0:       .ascii "LsevJ"<0><0><0>  # DATA XREF: D:80048178o
+D:8005B5CC     aLsevbe_1:      .ascii "LsevbE"<0><0>    # DATA XREF: D:80048184o
+D:8005B5D4     aLsevbj_1:      .ascii "LsevbJ"<0><0>    # DATA XREF: D:80048190o
+D:8005B5DC     aLsevxe_1:      .ascii "LsevxE"<0><0>    # DATA XREF: D:8004819Co
+D:8005B5E4     aLsevxj_1:      .ascii "LsevxJ"<0><0>    # DATA XREF: D:800481A8o
+D:8005B5EC     aLsevxbe_0:     .ascii "LsevxbE"<0>      # DATA XREF: D:800481B4o
+D:8005B5F4     aLsevxbj_0:     .ascii "LsevxbJ"<0>      # DATA XREF: D:800481C0o
+D:8005B5FC     aLshoe_0:       .ascii "LshoE"<0><0><0>  # DATA XREF: D:800481CCo
+D:8005B604     aLshoj_0:       .ascii "LshoJ"<0><0><0>  # DATA XREF: D:800481D8o
+D:8005B60C     aLsiloe_1:      .ascii "LsiloE"<0><0>    # DATA XREF: D:800481E4o
+D:8005B614     aLsiloj_1:      .ascii "LsiloJ"<0><0>    # DATA XREF: D:800481F0o
+D:8005B61C     aLstate_1:      .ascii "LstatE"<0><0>    # DATA XREF: D:800481FCo
+D:8005B624     aLstatj_1:      .ascii "LstatJ"<0><0>    # DATA XREF: D:80048208o
+D:8005B62C     aLtitlee_0:     .ascii "LtitleE"<0>      # DATA XREF: D:80048214o
+D:8005B634     aLtitlej_0:     .ascii "LtitleJ"<0>      # DATA XREF: D:80048220o
+D:8005B63C     aLtrae_0:       .ascii "LtraE"<0><0><0>  # DATA XREF: D:8004822Co
+D:8005B644     aLtraj_0:       .ascii "LtraJ"<0><0><0>  # DATA XREF: D:80048238o
+D:8005B64C     aLwaxe_0:       .ascii "LwaxE"<0><0><0>  # DATA XREF: D:80048244o
+D:8005B654     aLwaxj_0:       .ascii "LwaxJ"<0><0><0>  # DATA XREF: D:80048250o
+D:8005B65C     aObOb_end_seg:  .ascii "ob/ob_end.seg"<0>  # DATA XREF: D:8004825Co
+D:8005B66A                     .half 0
+D:8005B66C     rz_header_1:    .word 0x11720000         # DATA XREF: load_resource_from_indy+8Cr
+D:8005B670     rz_header_2:    .word 0x11720000         # DATA XREF: load_resource_from_indy+ACr
+D:8005B674     aOb_c_debug:    .ascii "ob_c_debug"<0><0>  # DATA XREF: ob_c_debug_setup+Co
+*/
 
 #ifdef NONMATCHING
 void load_resource(void) {

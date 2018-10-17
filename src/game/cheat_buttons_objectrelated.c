@@ -1,4 +1,4 @@
-
+#include "ultra64.h"
 
 /* data
 D:80037070     dword_D_80037070:.word 0x14002100        # DATA XREF: D:stru_D_8003744Co
@@ -3136,6 +3136,2020 @@ D:8003FC9C                     struct_15 <0x4A, 0xA, 0, 0, dword_D_8003F660, 0, 
 D:8003FCAC                     struct_15 <0>
 D:8003FCBC                     .word 0
 */
+
+/* rodata
+D:80055870     aUsetupsevbunkerz:.ascii "UsetupsevbunkerZ"<0><0><0><0>
+D:80055870                                              # DATA XREF: D:setup_text_pointerso
+D:80055884     aUsetupsiloz:   .ascii "UsetupsiloZ"<0>  # DATA XREF: D:setup_text_pointerso
+D:80055890     aUsetupsevbunkerz_0:.ascii "UsetupsevbunkerZ"<0><0><0><0>
+D:80055890                                              # DATA XREF: D:setup_text_pointerso
+D:800558A4     aUsetupstatuez: .ascii "UsetupstatueZ"<0><0><0>
+D:800558A4                                              # DATA XREF: D:setup_text_pointerso
+D:800558B4     aUsetupcontrolz:.ascii "UsetupcontrolZ"<0><0>
+D:800558B4                                              # DATA XREF: D:setup_text_pointerso
+D:800558C4     aUsetuparchz:   .ascii "UsetuparchZ"<0>  # DATA XREF: D:setup_text_pointerso
+D:800558D0     aUsetuptraz:    .ascii "UsetuptraZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:800558DC     aUsetupdestz:   .ascii "UsetupdestZ"<0>  # DATA XREF: D:setup_text_pointerso
+D:800558E8     aUsetupsevbz:   .ascii "UsetupsevbZ"<0>  # DATA XREF: D:setup_text_pointerso
+D:800558F4     aUsetupaztz:    .ascii "UsetupaztZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:80055900     aUsetuppetez:   .ascii "UsetuppeteZ"<0>  # DATA XREF: D:setup_text_pointerso
+D:8005590C     aUsetupdepoz:   .ascii "UsetupdepoZ"<0>  # DATA XREF: D:setup_text_pointerso
+D:80055918     aUsetuprefz:    .ascii "UsetuprefZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:80055924     aUsetupcrypz:   .ascii "UsetupcrypZ"<0>  # DATA XREF: D:setup_text_pointerso
+D:80055930     aUsetupdamz:    .ascii "UsetupdamZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:8005593C     aUsetuparkz:    .ascii "UsetuparkZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:80055948     aUsetuprunz:    .ascii "UsetuprunZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:80055954     aUsetupsevxz:   .ascii "UsetupsevxZ"<0>  # DATA XREF: D:setup_text_pointerso
+D:80055960     aUsetupjunz:    .ascii "UsetupjunZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:8005596C     aUsetupdishz:   .ascii "UsetupdishZ"<0>  # DATA XREF: D:setup_text_pointerso
+D:80055978     aUsetupcavez:   .ascii "UsetupcaveZ"<0>  # DATA XREF: D:setup_text_pointerso
+D:80055984     aUsetupcatz:    .ascii "UsetupcatZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:80055990     aUsetupcradz:   .ascii "UsetupcradZ"<0>  # DATA XREF: D:setup_text_pointerso
+D:8005599C     aUsetupshoz:    .ascii "UsetupshoZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:800559A8     aUsetupsevxbz:  .ascii "UsetupsevxbZ"<0><0><0><0>
+D:800559A8                                              # DATA XREF: D:setup_text_pointerso
+D:800559B8     aUsetupeldz:    .ascii "UsetupeldZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:800559C4     aUsetupimpz:    .ascii "UsetupimpZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:800559D0     aUsetupashz:    .ascii "UsetupashZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:800559DC     aUsetupluez:    .ascii "UsetuplueZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:800559E8     aUsetupamez:    .ascii "UsetupameZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:800559F4     aUsetupritz:    .ascii "UsetupritZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:80055A00     aUsetupoatz:    .ascii "UsetupoatZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:80055A0C     aUsetupearz:    .ascii "UsetupearZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:80055A18     aUsetupleez:    .ascii "UsetupleeZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:80055A24     aUsetuplipz:    .ascii "UsetuplipZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:80055A30     aUsetuplenz:    .ascii "UsetuplenZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:80055A3C     aUsetupwaxz:    .ascii "UsetupwaxZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:80055A48     aUsetuppamz:    .ascii "UsetuppamZ"<0><0>  # DATA XREF: D:setup_text_pointerso
+D:80055A54                     .align 4
+D:80055A60     aPalarm1z:      .ascii "Palarm1Z"<0><0><0><0>  # DATA XREF: D:PitemZ_entrieso
+D:80055A6C     aPalarm2z:      .ascii "Palarm2Z"<0><0><0><0>  # DATA XREF: D:8003A234o
+D:80055A78     aPexplosionbitz:.ascii "PexplosionbitZ"<0><0>  # DATA XREF: D:8003A240o
+D:80055A88     aPammo_crate1z: .ascii "Pammo_crate1Z"<0><0><0>  # DATA XREF: D:8003A24Co
+D:80055A98     aPammo_crate2z: .ascii "Pammo_crate2Z"<0><0><0>  # DATA XREF: D:8003A258o
+D:80055AA8     aPammo_crate3z: .ascii "Pammo_crate3Z"<0><0><0>  # DATA XREF: D:8003A264o
+D:80055AB8     aPammo_crate4z: .ascii "Pammo_crate4Z"<0><0><0>  # DATA XREF: D:8003A270o
+D:80055AC8     aPammo_crate5z: .ascii "Pammo_crate5Z"<0><0><0>  # DATA XREF: D:8003A27Co
+D:80055AD8     aPbin1z:        .ascii "Pbin1Z"<0><0>    # DATA XREF: D:8003A288o
+D:80055AE0     aPblotter1z:    .ascii "Pblotter1Z"<0><0>  # DATA XREF: D:8003A294o
+D:80055AEC     aPbook1z:       .ascii "Pbook1Z"<0>      # DATA XREF: D:8003A2A0o
+D:80055AF4     aPbookshelf1z:  .ascii "Pbookshelf1Z"<0><0><0><0>  # DATA XREF: D:8003A2ACo
+D:80055B04     aPbridge_console1az:.ascii "Pbridge_console1aZ"<0><0>
+D:80055B04                                              # DATA XREF: D:8003A2B8o
+D:80055B18     aPbridge_console1bz:.ascii "Pbridge_console1bZ"<0><0>
+D:80055B18                                              # DATA XREF: D:8003A2C4o
+D:80055B2C     aPbridge_console2az:.ascii "Pbridge_console2aZ"<0><0>
+D:80055B2C                                              # DATA XREF: D:8003A2D0o
+D:80055B40     aPbridge_console2bz:.ascii "Pbridge_console2bZ"<0><0>
+D:80055B40                                              # DATA XREF: D:8003A2DCo
+D:80055B54     aPbridge_console3az:.ascii "Pbridge_console3aZ"<0><0>
+D:80055B54                                              # DATA XREF: D:8003A2E8o
+D:80055B68     aPbridge_console3bz:.ascii "Pbridge_console3bZ"<0><0>
+D:80055B68                                              # DATA XREF: D:8003A2F4o
+D:80055B7C     aPcard_box1z:   .ascii "Pcard_box1Z"<0>  # DATA XREF: D:8003A300o
+D:80055B88     aPcard_box2z:   .ascii "Pcard_box2Z"<0>  # DATA XREF: D:8003A30Co
+D:80055B94     aPcard_box3z:   .ascii "Pcard_box3Z"<0>  # DATA XREF: D:8003A318o
+D:80055BA0     aPcard_box4_lgz:.ascii "Pcard_box4_lgZ"<0><0>  # DATA XREF: D:8003A324o
+D:80055BB0     aPcard_box5_lgz:.ascii "Pcard_box5_lgZ"<0><0>  # DATA XREF: D:8003A330o
+D:80055BC0     aPcard_box6_lgz:.ascii "Pcard_box6_lgZ"<0><0>  # DATA XREF: D:8003A33Co
+D:80055BD0     aPcctvz:        .ascii "PcctvZ"<0><0>    # DATA XREF: D:8003A348o
+D:80055BD8     aPconsole1z:    .ascii "Pconsole1Z"<0><0>  # DATA XREF: D:8003A354o
+D:80055BE4     aPconsole2z:    .ascii "Pconsole2Z"<0><0>  # DATA XREF: D:8003A360o
+D:80055BF0     aPconsole3z:    .ascii "Pconsole3Z"<0><0>  # DATA XREF: D:8003A36Co
+D:80055BFC     aPconsole_sevaz:.ascii "Pconsole_sevaZ"<0><0>  # DATA XREF: D:8003A378o
+D:80055C0C     aPconsole_sevbz:.ascii "Pconsole_sevbZ"<0><0>  # DATA XREF: D:8003A384o
+D:80055C1C     aPconsole_sevcz:.ascii "Pconsole_sevcZ"<0><0>  # DATA XREF: D:8003A390o
+D:80055C2C     aPconsole_sevdz:.ascii "Pconsole_sevdZ"<0><0>  # DATA XREF: D:8003A39Co
+D:80055C3C     aPconsole_sev2az:.ascii "Pconsole_sev2aZ"<0>  # DATA XREF: D:8003A3A8o
+D:80055C4C     aPconsole_sev2bz:.ascii "Pconsole_sev2bZ"<0>  # DATA XREF: D:8003A3B4o
+D:80055C5C     aPconsole_sev2cz:.ascii "Pconsole_sev2cZ"<0>  # DATA XREF: D:8003A3C0o
+D:80055C6C     aPconsole_sev2dz:.ascii "Pconsole_sev2dZ"<0>  # DATA XREF: D:8003A3CCo
+D:80055C7C     aPconsole_sev_geaz:.ascii "Pconsole_sev_GEaZ"<0><0><0>
+D:80055C7C                                              # DATA XREF: D:8003A3D8o
+D:80055C90     aPconsole_sev_gebz:.ascii "Pconsole_sev_GEbZ"<0><0><0>
+D:80055C90                                              # DATA XREF: D:8003A3E4o
+D:80055CA4     aPdesk1z:       .ascii "Pdesk1Z"<0>      # DATA XREF: D:8003A3F0o
+D:80055CAC     aPdesk2z:       .ascii "Pdesk2Z"<0>      # DATA XREF: D:8003A3FCo
+D:80055CB4     aPdesk_lamp2z:  .ascii "Pdesk_lamp2Z"<0>  # DATA XREF: D:8003A408o
+D:80055CC1                     .byte 0, 0, 0
+D:80055CC4     aPdisc_readerz: .ascii "Pdisc_readerZ"<0>  # DATA XREF: D:8003A414o
+D:80055CD2                     .half 0
+D:80055CD4     aPdisk_drive1z: .ascii "Pdisk_drive1Z"<0>  # DATA XREF: D:8003A420o
+D:80055CE2                     .half 0
+D:80055CE4     aPfiling_cabinet1z:.ascii "Pfiling_cabinet1Z"<0>  # DATA XREF: D:8003A42Co
+D:80055CF6                     .half 0
+D:80055CF8     aPjerry_can1z:  .ascii "Pjerry_can1Z"<0>  # DATA XREF: D:8003A438o
+D:80055D05                     .byte 0, 0, 0
+D:80055D08     aPkeyboard1z:   .ascii "Pkeyboard1Z"<0>  # DATA XREF: D:8003A444o
+D:80055D14     aPkit_units1z:  .ascii "Pkit_units1Z"<0>  # DATA XREF: D:8003A450o
+D:80055D21                     .byte 0, 0, 0
+D:80055D24     aPletter_tray1z:.ascii "Pletter_tray1Z"<0><0>  # DATA XREF: D:8003A45Co
+D:80055D34     aPmainframe1z:  .ascii "Pmainframe1Z"<0>  # DATA XREF: D:8003A468o
+D:80055D41                     .byte 0, 0, 0
+D:80055D44     aPmainframe2z:  .ascii "Pmainframe2Z"<0>  # DATA XREF: D:8003A474o
+D:80055D51                     .byte 0, 0, 0
+D:80055D54     aPmetal_chair1z:.ascii "Pmetal_chair1Z"<0><0>  # DATA XREF: D:8003A480o
+D:80055D64     aPmetal_crate1z:.ascii "Pmetal_crate1Z"<0><0>  # DATA XREF: D:8003A48Co
+D:80055D74     aPmetal_crate2z:.ascii "Pmetal_crate2Z"<0><0>  # DATA XREF: D:8003A498o
+D:80055D84     aPmetal_crate3z:.ascii "Pmetal_crate3Z"<0><0>  # DATA XREF: D:8003A4A4o
+D:80055D94     aPmetal_crate4z:.ascii "Pmetal_crate4Z"<0><0>  # DATA XREF: D:8003A4B0o
+D:80055DA4     aPmissile_rackz:.ascii "Pmissile_rackZ"<0><0>  # DATA XREF: D:8003A4BCo
+D:80055DB4     aPmissile_rack2z:.ascii "Pmissile_rack2Z"<0>  # DATA XREF: D:8003A4C8o
+D:80055DC4     aPoil_drum1z:   .ascii "Poil_drum1Z"<0>  # DATA XREF: D:8003A4D4o
+D:80055DD0     aPoil_drum2z:   .ascii "Poil_drum2Z"<0>  # DATA XREF: D:8003A4E0o
+D:80055DDC     aPoil_drum3z:   .ascii "Poil_drum3Z"<0>  # DATA XREF: D:8003A4ECo
+D:80055DE8     aPoil_drum5z:   .ascii "Poil_drum5Z"<0>  # DATA XREF: D:8003A4F8o
+D:80055DF4     aPoil_drum6z:   .ascii "Poil_drum6Z"<0>  # DATA XREF: D:8003A504o
+D:80055E00     aPoil_drum7z:   .ascii "Poil_drum7Z"<0>  # DATA XREF: D:8003A510o
+D:80055E0C     aPpadlockz:     .ascii "PpadlockZ"<0>    # DATA XREF: D:8003A51Co
+D:80055E16                     .half 0
+D:80055E18     aPphone1z:      .ascii "Pphone1Z"<0>     # DATA XREF: D:8003A528o
+D:80055E21                     .byte 0, 0, 0
+D:80055E24     aPradio_unit1z: .ascii "Pradio_unit1Z"<0>  # DATA XREF: D:8003A534o
+D:80055E32                     .half 0
+D:80055E34     aPradio_unit2z: .ascii "Pradio_unit2Z"<0>  # DATA XREF: D:8003A540o
+D:80055E42                     .half 0
+D:80055E44     aPradio_unit3z: .ascii "Pradio_unit3Z"<0>  # DATA XREF: D:8003A54Co
+D:80055E52                     .half 0
+D:80055E54     aPradio_unit4z: .ascii "Pradio_unit4Z"<0>  # DATA XREF: D:8003A558o
+D:80055E62                     .half 0
+D:80055E64     aPsat1_reflectz:.ascii "Psat1_reflectZ"<0><0>  # DATA XREF: D:8003A564o
+D:80055E74     aPsatdishz:     .ascii "PsatdishZ"<0>    # DATA XREF: D:8003A570o
+D:80055E7E                     .half 0
+D:80055E80     aPsatboxz:      .ascii "PsatboxZ"<0>     # DATA XREF: D:8003A57Co
+D:80055E89                     .byte 0, 0, 0
+D:80055E8C     aPstool1z:      .ascii "Pstool1Z"<0>     # DATA XREF: D:8003A588o
+D:80055E95                     .byte 0, 0, 0
+D:80055E98     aPswivel_chair1z:.ascii "Pswivel_chair1Z"<0>  # DATA XREF: D:8003A594o
+D:80055EA8     aPtorpedo_rackz:.ascii "Ptorpedo_rackZ"<0><0>  # DATA XREF: D:8003A5A0o
+D:80055EB8     aPtv1z:         .ascii "Ptv1Z"<0>        # DATA XREF: D:8003A5ACo
+D:80055EBE                     .half 0
+D:80055EC0     aPtv_holderz:   .ascii "Ptv_holderZ"<0>  # DATA XREF: D:8003A5B8o
+D:80055ECC     aPtvscreenz:    .ascii "PtvscreenZ"<0><0>  # DATA XREF: D:8003A5C4o
+D:80055ED8     aPtv4screenz:   .ascii "Ptv4screenZ"<0>  # DATA XREF: D:8003A5D0o
+D:80055EE4     aPwood_lg_crate1z:.ascii "Pwood_lg_crate1Z"<0>  # DATA XREF: D:8003A5DCo
+D:80055EF5                     .byte 0, 0, 0
+D:80055EF8     aPwood_lg_crate2z:.ascii "Pwood_lg_crate2Z"<0>  # DATA XREF: D:8003A5E8o
+D:80055F09                     .byte 0, 0, 0
+D:80055F0C     aPwood_md_crate3z:.ascii "Pwood_md_crate3Z"<0>  # DATA XREF: D:8003A5F4o
+D:80055F1D                     .byte 0, 0, 0
+D:80055F20     aPwood_sm_crate4z:.ascii "Pwood_sm_crate4Z"<0>  # DATA XREF: D:8003A600o
+D:80055F31                     .byte 0, 0, 0
+D:80055F34     aPwood_sm_crate5z:.ascii "Pwood_sm_crate5Z"<0>  # DATA XREF: D:8003A60Co
+D:80055F45                     .byte 0, 0, 0
+D:80055F48     aPwood_sm_crate6z:.ascii "Pwood_sm_crate6Z"<0>  # DATA XREF: D:8003A618o
+D:80055F59                     .byte 0, 0, 0
+D:80055F5C     aPwooden_table1z:.ascii "Pwooden_table1Z"<0>  # DATA XREF: D:8003A624o
+D:80055F6C     aPswipe_card2z: .ascii "Pswipe_card2Z"<0>  # DATA XREF: D:8003A630o
+D:80055F7A                     .half 0
+D:80055F7C     aPborg_cratez:  .ascii "Pborg_crateZ"<0>  # DATA XREF: D:8003A63Co
+D:80055F89                     .byte 0, 0, 0
+D:80055F8C     aPboxes4x4z:    .ascii "Pboxes4x4Z"<0><0>  # DATA XREF: D:8003A648o
+D:80055F98     aPboxes3x4z:    .ascii "Pboxes3x4Z"<0><0>  # DATA XREF: D:8003A654o
+D:80055FA4     aPboxes2x4z:    .ascii "Pboxes2x4Z"<0><0>  # DATA XREF: D:8003A660o
+D:80055FB0     aPsec_panelz:   .ascii "Psec_panelZ"<0>  # DATA XREF: D:8003A66Co
+D:80055FBC     aPicbm_nosez:   .ascii "PICBM_noseZ"<0>  # DATA XREF: D:8003A678o
+D:80055FC8     aPicbmz:        .ascii "PICBMZ"<0><0>    # DATA XREF: D:8003A684o
+D:80055FD0     aPtuning_console1z:.ascii "Ptuning_console1Z"<0>  # DATA XREF: D:8003A690o
+D:80055FE2                     .half 0
+D:80055FE4     aPdesk_arecibo1z:.ascii "Pdesk_arecibo1Z"<0>  # DATA XREF: D:8003A69Co
+D:80055FF4     aPlocker3z:     .ascii "Plocker3Z"<0>    # DATA XREF: D:8003A6A8o
+D:80055FFE                     .half 0
+D:80056000     aPlocker4z:     .ascii "Plocker4Z"<0>    # DATA XREF: D:8003A6B4o
+D:8005600A                     .half 0
+D:8005600C     aProofgunz:     .ascii "ProofgunZ"<0>    # DATA XREF: D:8003A6C0o
+D:80056016                     .half 0
+D:80056018     aPdest_enginez: .ascii "Pdest_engineZ"<0>  # DATA XREF: D:8003A6CCo
+D:80056026                     .half 0
+D:80056028     aPdest_exocetz: .ascii "Pdest_exocetZ"<0>  # DATA XREF: D:8003A6D8o
+D:80056036                     .half 0
+D:80056038     aPdest_gunz:    .ascii "Pdest_gunZ"<0>   # DATA XREF: D:8003A6E4o
+D:80056043                     .byte 0
+D:80056044     aPdest_harpoonz:.ascii "Pdest_harpoonZ"<0>  # DATA XREF: D:8003A6F0o
+D:80056053                     .byte 0
+D:80056054     aPdest_seawolfz:.ascii "Pdest_seawolfZ"<0>  # DATA XREF: D:8003A6FCo
+D:80056063                     .byte 0
+D:80056064     aPwindowz:      .ascii "PwindowZ"<0>     # DATA XREF: D:8003A708o
+D:8005606D                     .byte 0, 0, 0
+D:80056070     aPwindow_lib_lg1z:.ascii "Pwindow_lib_lg1Z"<0>  # DATA XREF: D:8003A714o
+D:80056081                     .byte 0, 0, 0
+D:80056084     aPwindow_lib_sm1z:.ascii "Pwindow_lib_sm1Z"<0>  # DATA XREF: D:8003A720o
+D:80056095                     .byte 0, 0, 0
+D:80056098     aPwindow_cor11z:.ascii "Pwindow_cor11Z"<0>  # DATA XREF: D:8003A72Co
+D:800560A7                     .byte 0
+D:800560A8     aPjungle3_treez:.ascii "Pjungle3_treeZ"<0>  # DATA XREF: D:8003A738o
+D:800560B7                     .byte 0
+D:800560B8     aPpalmz:        .ascii "PpalmZ"<0>       # DATA XREF: D:8003A744o
+D:800560BF                     .byte 0
+D:800560C0     aPpalmtreez:    .ascii "PpalmtreeZ"<0>   # DATA XREF: D:8003A750o
+D:800560CB                     .byte 0
+D:800560CC     aPplant2bz:     .ascii "Pplant2bZ"<0>    # DATA XREF: D:8003A75Co
+D:800560D6                     .half 0
+D:800560D8     aPlabbenchz:    .ascii "PlabbenchZ"<0>   # DATA XREF: D:8003A768o
+D:800560E3                     .byte 0
+D:800560E4     aPgasbarrelz:   .ascii "PgasbarrelZ"<0>  # DATA XREF: D:8003A774o
+D:800560F0     aPgasbarrelsz:  .ascii "PgasbarrelsZ"<0>  # DATA XREF: D:8003A780o
+D:800560FD                     .byte 0, 0, 0
+D:80056100     aPbodyarmourz:  .ascii "PbodyarmourZ"<0>  # DATA XREF: D:8003A78Co
+D:8005610D                     .byte 0, 0, 0
+D:80056110     aPbodyarmourvestz:.ascii "PbodyarmourvestZ"<0>  # DATA XREF: D:8003A798o
+D:80056121                     .byte 0, 0, 0
+D:80056124     aPgastankz:     .ascii "PgastankZ"<0>    # DATA XREF: D:8003A7A4o
+D:8005612E                     .half 0
+D:80056130     aPglassware1z:  .ascii "Pglassware1Z"<0>  # DATA XREF: D:8003A7B0o
+D:8005613D                     .byte 0, 0, 0
+D:80056140     aPhatchboltz:   .ascii "PhatchboltZ"<0>  # DATA XREF: D:8003A7BCo
+D:8005614C     aPbrakeunitz:   .ascii "PbrakeunitZ"<0>  # DATA XREF: D:8003A7C8o
+D:80056158     aPak47magz:     .ascii "Pak47magZ"<0>    # DATA XREF: D:8003A7D4o
+D:80056162                     .half 0
+D:80056164     aPm16magz:      .ascii "Pm16magZ"<0>     # DATA XREF: D:8003A7E0o
+D:8005616D                     .byte 0, 0, 0
+D:80056170     aPmp5kmagz:     .ascii "Pmp5kmagZ"<0>    # DATA XREF: D:8003A7ECo
+D:8005617A                     .half 0
+D:8005617C     aPskorpionmagz: .ascii "PskorpionmagZ"<0>  # DATA XREF: D:8003A7F8o
+D:8005618A                     .half 0
+D:8005618C     aPspectremagz:  .ascii "PspectremagZ"<0>  # DATA XREF: D:8003A804o
+D:80056199                     .byte 0, 0, 0
+D:8005619C     aPuzimagz:      .ascii "PuzimagZ"<0>     # DATA XREF: D:8003A810o
+D:800561A5                     .byte 0, 0, 0
+D:800561A8     aPsilencerz:    .ascii "PsilencerZ"<0>   # DATA XREF: D:8003A81Co
+D:800561B3                     .byte 0
+D:800561B4     aPchrextinguisherz:.ascii "PchrextinguisherZ"<0>  # DATA XREF: D:8003A828o
+D:800561C6                     .half 0
+D:800561C8     aPboxcartridgesz:.ascii "PboxcartridgesZ"<0>  # DATA XREF: D:8003A834o
+D:800561D8     aPfnp90magz:    .ascii "Pfnp90magZ"<0>   # DATA XREF: D:8003A840o
+D:800561E3                     .byte 0
+D:800561E4     aPgoldenshellsz:.ascii "PgoldenshellsZ"<0>  # DATA XREF: D:8003A84Co
+D:800561F3                     .byte 0
+D:800561F4     aPmagnumshellsz:.ascii "PmagnumshellsZ"<0>  # DATA XREF: D:8003A858o
+D:80056203                     .byte 0
+D:80056204     aPwppkmagz:     .ascii "PwppkmagZ"<0>    # DATA XREF: D:8003A864o
+D:8005620E                     .half 0
+D:80056210     aPtt33magz:     .ascii "Ptt33magZ"<0>    # DATA XREF: D:8003A870o
+D:8005621A                     .half 0
+D:8005621C     aPsev_doorz:    .ascii "Psev_doorZ"<0>   # DATA XREF: D:8003A87Co
+D:80056227                     .byte 0
+D:80056228     aPsev_door3z:   .ascii "Psev_door3Z"<0>  # DATA XREF: D:8003A888o
+D:80056234     aPsev_door3_windz:.ascii "Psev_door3_windZ"<0>  # DATA XREF: D:8003A894o
+D:80056245                     .byte 0, 0, 0
+D:80056248     aPsev_door4_windz:.ascii "Psev_door4_windZ"<0>  # DATA XREF: D:8003A8A0o
+D:80056259                     .byte 0, 0, 0
+D:8005625C     aPsev_trislidez:.ascii "Psev_trislideZ"<0>  # DATA XREF: D:8003A8ACo
+D:8005626B                     .byte 0
+D:8005626C     aPsev_door_v1z: .ascii "Psev_door_v1Z"<0>  # DATA XREF: D:8003A8B8o
+D:8005627A                     .half 0
+D:8005627C     aPsteel_door1z: .ascii "Psteel_door1Z"<0>  # DATA XREF: D:8003A8C4o
+D:8005628A                     .half 0
+D:8005628C     aPsteel_door2z: .ascii "Psteel_door2Z"<0>  # DATA XREF: D:8003A8D0o
+D:8005629A                     .half 0
+D:8005629C     aPsteel_door3z: .ascii "Psteel_door3Z"<0>  # DATA XREF: D:8003A8DCo
+D:800562AA                     .half 0
+D:800562AC     aPsilo_lift_doorz:.ascii "Psilo_lift_doorZ"<0>  # DATA XREF: D:8003A8E8o
+D:800562BD                     .byte 0, 0, 0
+D:800562C0     aPsteel_door2bz:.ascii "Psteel_door2bZ"<0>  # DATA XREF: D:8003A8F4o
+D:800562CF                     .byte 0
+D:800562D0     aPdoor_roller1z:.ascii "Pdoor_roller1Z"<0>  # DATA XREF: D:8003A900o
+D:800562DF                     .byte 0
+D:800562E0     aPdoor_roller2z:.ascii "Pdoor_roller2Z"<0>  # DATA XREF: D:8003A90Co
+D:800562EF                     .byte 0
+D:800562F0     aPdoor_roller3z:.ascii "Pdoor_roller3Z"<0>  # DATA XREF: D:8003A918o
+D:800562FF                     .byte 0
+D:80056300     aPdoor_roller4z:.ascii "Pdoor_roller4Z"<0>  # DATA XREF: D:8003A924o
+D:8005630F                     .byte 0
+D:80056310     aPdoor_st_arec1z:.ascii "Pdoor_st_arec1Z"<0>  # DATA XREF: D:8003A930o
+D:80056320     aPdoor_st_arec2z:.ascii "Pdoor_st_arec2Z"<0>  # DATA XREF: D:8003A93Co
+D:80056330     aPdoor_dest1z:  .ascii "Pdoor_dest1Z"<0>  # DATA XREF: D:8003A948o
+D:8005633D                     .byte 0, 0, 0
+D:80056340     aPdoor_dest2z:  .ascii "Pdoor_dest2Z"<0>  # DATA XREF: D:8003A954o
+D:8005634D                     .byte 0, 0, 0
+D:80056350     aPgas_plant_sw_do1z:.ascii "Pgas_plant_sw_do1Z"<0>  # DATA XREF: D:8003A960o
+D:80056363                     .byte 0
+D:80056364     aPgas_plant_sw2_do1z:.ascii "Pgas_plant_sw2_do1Z"<0>  # DATA XREF: D:8003A96Co
+D:80056378     aPgas_plant_sw3_do1z:.ascii "Pgas_plant_sw3_do1Z"<0>  # DATA XREF: D:8003A978o
+D:8005638C     aPgas_plant_sw4_do1z:.ascii "Pgas_plant_sw4_do1Z"<0>  # DATA XREF: D:8003A984o
+D:800563A0     aPgas_plant_met1_do1z:.ascii "Pgas_plant_met1_do1Z"<0>
+D:800563A0                                              # DATA XREF: D:8003A990o
+D:800563B5                     .byte 0, 0, 0
+D:800563B8     aPgas_plant_wc_cub1z:.ascii "Pgas_plant_wc_cub1Z"<0>  # DATA XREF: D:8003A99Co
+D:800563CC     aPgasplant_clear_doorz:.ascii "Pgasplant_clear_doorZ"<0>
+D:800563CC                                              # DATA XREF: D:8003A9A8o
+D:800563E2                     .half 0
+D:800563E4     aPtrain_doorz:  .ascii "Ptrain_doorZ"<0>  # DATA XREF: D:8003A9B4o
+D:800563F1                     .byte 0, 0, 0
+D:800563F4     aPtrain_door2z: .ascii "Ptrain_door2Z"<0>  # DATA XREF: D:8003A9C0o
+D:80056402                     .half 0
+D:80056404     aPtrain_door3z: .ascii "Ptrain_door3Z"<0>  # DATA XREF: D:8003A9CCo
+D:80056412                     .half 0
+D:80056414     aPdoor_eyelidz: .ascii "Pdoor_eyelidZ"<0>  # DATA XREF: D:8003A9D8o
+D:80056422                     .half 0
+D:80056424     aPdoor_irisz:   .ascii "Pdoor_irisZ"<0>  # DATA XREF: D:8003A9E4o
+D:80056430     aPsevdoorwoodz: .ascii "PsevdoorwoodZ"<0>  # DATA XREF: D:8003A9F0o
+D:8005643E                     .half 0
+D:80056440     aPsevdoorwindz: .ascii "PsevdoorwindZ"<0>  # DATA XREF: D:8003A9FCo
+D:8005644E                     .half 0
+D:80056450     aPsevdoornowindz:.ascii "PsevdoornowindZ"<0>  # DATA XREF: D:8003AA08o
+D:80056460     aPsevdoormetslidez:.ascii "PsevdoormetslideZ"<0>  # DATA XREF: D:8003AA14o
+D:80056472                     .half 0
+D:80056474     aPcryptdoor1az: .ascii "Pcryptdoor1aZ"<0>  # DATA XREF: D:8003AA20o
+D:80056482                     .half 0
+D:80056484     aPcryptdoor1bz: .ascii "Pcryptdoor1bZ"<0>  # DATA XREF: D:8003AA2Co
+D:80056492                     .half 0
+D:80056494     aPcryptdoor2az: .ascii "Pcryptdoor2aZ"<0>  # DATA XREF: D:8003AA38o
+D:800564A2                     .half 0
+D:800564A4     aPcryptdoor2bz: .ascii "Pcryptdoor2bZ"<0>  # DATA XREF: D:8003AA44o
+D:800564B2                     .half 0
+D:800564B4     aPcryptdoor3z:  .ascii "Pcryptdoor3Z"<0>  # DATA XREF: D:8003AA50o
+D:800564C1                     .byte 0, 0, 0
+D:800564C4     aPcryptdoor4z:  .ascii "Pcryptdoor4Z"<0>  # DATA XREF: D:8003AA5Co
+D:800564D1                     .byte 0, 0, 0
+D:800564D4     aPvertdoorz:    .ascii "PvertdoorZ"<0>   # DATA XREF: D:8003AA68o
+D:800564DF                     .byte 0
+D:800564E0     aPhatchdoorz:   .ascii "PhatchdoorZ"<0>  # DATA XREF: D:8003AA74o
+D:800564EC     aPdamgatedoorz: .ascii "PdamgatedoorZ"<0>  # DATA XREF: D:8003AA80o
+D:800564FA                     .half 0
+D:800564FC     aPdamtundoorz:  .ascii "PdamtundoorZ"<0>  # DATA XREF: D:8003AA8Co
+D:80056509                     .byte 0, 0, 0
+D:8005650C     aPdamchaindoorz:.ascii "PdamchaindoorZ"<0>  # DATA XREF: D:8003AA98o
+D:8005651B                     .byte 0
+D:8005651C     aPsilotopdoorz: .ascii "PsilotopdoorZ"<0>  # DATA XREF: D:8003AAA4o
+D:8005652A                     .half 0
+D:8005652C     aPdoorprison1z: .ascii "Pdoorprison1Z"<0>  # DATA XREF: D:8003AAB0o
+D:8005653A                     .half 0
+D:8005653C     aPdoorstatgatez:.ascii "PdoorstatgateZ"<0>  # DATA XREF: D:8003AABCo
+D:8005654B                     .byte 0
+D:8005654C     aPchrkalashz:   .ascii "PchrkalashZ"<0>  # DATA XREF: D:8003AAC8o
+D:80056558     aPchrgrenadelaunchz:.ascii "PchrgrenadelaunchZ"<0>  # DATA XREF: D:8003AAD4o
+D:8005656B                     .byte 0
+D:8005656C     aPchrknifez:    .ascii "PchrknifeZ"<0>   # DATA XREF: D:8003AAE0o
+D:80056577                     .byte 0
+D:80056578     aPchrlaserz:    .ascii "PchrlaserZ"<0>   # DATA XREF: D:8003AAECo
+D:80056583                     .byte 0
+D:80056584     aPchrm16z:      .ascii "Pchrm16Z"<0>     # DATA XREF: D:8003AAF8o
+D:8005658D                     .byte 0, 0, 0
+D:80056590     aPchrmp5kz:     .ascii "Pchrmp5kZ"<0>    # DATA XREF: D:8003AB04o
+D:8005659A                     .half 0
+D:8005659C     aPchrrugerz:    .ascii "PchrrugerZ"<0>   # DATA XREF: D:8003AB10o
+D:800565A7                     .byte 0
+D:800565A8     aPchrwppkz:     .ascii "PchrwppkZ"<0>    # DATA XREF: D:PchrwppkZ_entryo
+D:800565B2                     .half 0
+D:800565B4     aPchrshotgunz:  .ascii "PchrshotgunZ"<0>  # DATA XREF: D:8003AB28o
+D:800565C1                     .byte 0, 0, 0
+D:800565C4     aPchrskorpionz: .ascii "PchrskorpionZ"<0>  # DATA XREF: D:8003AB34o
+D:800565D2                     .half 0
+D:800565D4     aPchrspectrez:  .ascii "PchrspectreZ"<0>  # DATA XREF: D:8003AB40o
+D:800565E1                     .byte 0, 0, 0
+D:800565E4     aPchruziz:      .ascii "PchruziZ"<0>     # DATA XREF: D:8003AB4Co
+D:800565ED                     .byte 0, 0, 0
+D:800565F0     aPchrgrenadez:  .ascii "PchrgrenadeZ"<0>  # DATA XREF: D:8003AB58o
+D:800565FD                     .byte 0, 0, 0
+D:80056600     aPchrfnp90z:    .ascii "Pchrfnp90Z"<0>   # DATA XREF: D:8003AB64o
+D:8005660B                     .byte 0
+D:8005660C     aPchrbriefcasez:.ascii "PchrbriefcaseZ"<0>  # DATA XREF: D:8003AB70o
+D:8005661B                     .byte 0
+D:8005661C     aPchrremoteminez:.ascii "PchrremotemineZ"<0>  # DATA XREF: D:8003AB7Co
+D:8005662C     aPchrproximityminez:.ascii "PchrproximitymineZ"<0>  # DATA XREF: D:8003AB88o
+D:8005663F                     .byte 0
+D:80056640     aPchrtimedminez:.ascii "PchrtimedmineZ"<0>  # DATA XREF: D:8003AB94o
+D:8005664F                     .byte 0
+D:80056650     aPchrrocketz:   .ascii "PchrrocketZ"<0>  # DATA XREF: D:8003ABA0o
+D:8005665C     aPchrgrenaderoundz:.ascii "PchrgrenaderoundZ"<0>  # DATA XREF: D:8003ABACo
+D:8005666E                     .half 0
+D:80056670     aPchrwppksilz:  .ascii "PchrwppksilZ"<0>  # DATA XREF: D:8003ABB8o
+D:8005667D                     .byte 0, 0, 0
+D:80056680     aPchrtt33z:     .ascii "Pchrtt33Z"<0>    # DATA XREF: D:8003ABC4o
+D:8005668A                     .half 0
+D:8005668C     aPchrmp5ksilz:  .ascii "Pchrmp5ksilZ"<0>  # DATA XREF: D:8003ABD0o
+D:80056699                     .byte 0, 0, 0
+D:8005669C     aPchrautoshotz: .ascii "PchrautoshotZ"<0>  # DATA XREF: D:8003ABDCo
+D:800566AA                     .half 0
+D:800566AC     aPchrgoldenz:   .ascii "PchrgoldenZ"<0>  # DATA XREF: D:8003ABE8o
+D:800566B8     aPchrthrowknifez:.ascii "PchrthrowknifeZ"<0>  # DATA XREF: D:8003ABF4o
+D:800566C8     aPchrsniperriflez:.ascii "PchrsniperrifleZ"<0>  # DATA XREF: D:8003AC00o
+D:800566D9                     .byte 0, 0, 0
+D:800566DC     aPchrrocketlaunchz:.ascii "PchrrocketlaunchZ"<0>  # DATA XREF: D:8003AC0Co
+D:800566EE                     .half 0
+D:800566F0     aPhatfurryz:    .ascii "PhatfurryZ"<0>   # DATA XREF: D:8003AC18o
+D:800566FB                     .byte 0
+D:800566FC     aPhatfurrybrownz:.ascii "PhatfurrybrownZ"<0>  # DATA XREF: D:8003AC24o
+D:8005670C     aPhatfurryblackz:.ascii "PhatfurryblackZ"<0>  # DATA XREF: D:8003AC30o
+D:8005671C     aPhattbirdz:    .ascii "PhattbirdZ"<0>   # DATA XREF: D:8003AC3Co
+D:80056727                     .byte 0
+D:80056728     aPhattbirdbrownz:.ascii "PhattbirdbrownZ"<0>  # DATA XREF: D:8003AC48o
+D:80056738     aPhathelmetz:   .ascii "PhathelmetZ"<0>  # DATA XREF: D:8003AC54o
+D:80056744     aPhathelmetgreyz:.ascii "PhathelmetgreyZ"<0>  # DATA XREF: D:8003AC60o
+D:80056754     aPhatmoonz:     .ascii "PhatmoonZ"<0>    # DATA XREF: D:8003AC6Co
+D:8005675E                     .half 0
+D:80056760     aPhatberetz:    .ascii "PhatberetZ"<0>   # DATA XREF: D:8003AC78o
+D:8005676B                     .byte 0
+D:8005676C     aPhatberetbluez:.ascii "PhatberetblueZ"<0>  # DATA XREF: D:8003AC84o
+D:8005677B                     .byte 0
+D:8005677C     aPhatberetredz: .ascii "PhatberetredZ"<0>  # DATA XREF: D:8003AC90o
+D:8005678A                     .half 0
+D:8005678C     aPhatpeakedz:   .ascii "PhatpeakedZ"<0>  # DATA XREF: D:8003AC9Co
+D:80056798     aPchrwristdartz:.ascii "PchrwristdartZ"<0>  # DATA XREF: D:8003ACA8o
+D:800567A7                     .byte 0
+D:800567A8     aPchrexplosivepenz:.ascii "PchrexplosivepenZ"<0>  # DATA XREF: D:8003ACB4o
+D:800567BA                     .half 0
+D:800567BC     aPchrbombcasez: .ascii "PchrbombcaseZ"<0>  # DATA XREF: D:8003ACC0o
+D:800567CA                     .half 0
+D:800567CC     aPchrflarepistolz:.ascii "PchrflarepistolZ"<0>  # DATA XREF: D:8003ACCCo
+D:800567DD                     .byte 0, 0, 0
+D:800567E0     aPchrpitongunz: .ascii "PchrpitongunZ"<0>  # DATA XREF: D:8003ACD8o
+D:800567EE                     .half 0
+D:800567F0     aPchrfingergunz:.ascii "PchrfingergunZ"<0>  # DATA XREF: D:8003ACE4o
+D:800567FF                     .byte 0
+D:80056800     aPchrsilverwppkz:.ascii "PchrsilverwppkZ"<0>  # DATA XREF: D:8003ACF0o
+D:80056810     aPchrgoldwppkz: .ascii "PchrgoldwppkZ"<0>  # DATA XREF: D:8003ACFCo
+D:8005681E                     .half 0
+D:80056820     aPchrdynamitez: .ascii "PchrdynamiteZ"<0>  # DATA XREF: D:8003AD08o
+D:8005682E                     .half 0
+D:80056830     aPchrbungeez:   .ascii "PchrbungeeZ"<0>  # DATA XREF: D:8003AD14o
+D:8005683C     aPchrdoordecoderz:.ascii "PchrdoordecoderZ"<0>  # DATA XREF: D:8003AD20o
+D:8005684D                     .byte 0, 0, 0
+D:80056850     aPchrbombdefuserz:.ascii "PchrbombdefuserZ"<0>  # DATA XREF: D:8003AD2Co
+D:80056861                     .byte 0, 0, 0
+D:80056864     aPchrbugdetectorz:.ascii "PchrbugdetectorZ"<0>  # DATA XREF: D:8003AD38o
+D:80056875                     .byte 0, 0, 0
+D:80056878     aPchrsafecrackercasez:.ascii "PchrsafecrackercaseZ"<0>
+D:80056878                                              # DATA XREF: D:8003AD44o
+D:8005688D                     .byte 0, 0, 0
+D:80056890     aPchrcameraz:   .ascii "PchrcameraZ"<0>  # DATA XREF: D:8003AD50o
+D:8005689C     aPchrlockexploderz:.ascii "PchrlockexploderZ"<0>  # DATA XREF: D:8003AD5Co
+D:800568AE                     .half 0
+D:800568B0     aPchrdoorexploderz:.ascii "PchrdoorexploderZ"<0>  # DATA XREF: D:8003AD68o
+D:800568C2                     .half 0
+D:800568C4     aPchrkeyanalysercasez:.ascii "PchrkeyanalysercaseZ"<0>
+D:800568C4                                              # DATA XREF: D:8003AD74o
+D:800568D9                     .byte 0, 0, 0
+D:800568DC     aPchrweaponcasez:.ascii "PchrweaponcaseZ"<0>  # DATA XREF: D:8003AD80o
+D:800568EC     aPchrkeyyalez:  .ascii "PchrkeyyaleZ"<0>  # DATA XREF: D:8003AD8Co
+D:800568F9                     .byte 0, 0, 0
+D:800568FC     aPchrkeyboltz:  .ascii "PchrkeyboltZ"<0>  # DATA XREF: D:8003AD98o
+D:80056909                     .byte 0, 0, 0
+D:8005690C     aPchrbugz:      .ascii "PchrbugZ"<0>     # DATA XREF: D:8003ADA4o
+D:80056915                     .byte 0, 0, 0
+D:80056918     aPchrmicrocameraz:.ascii "PchrmicrocameraZ"<0>  # DATA XREF: D:8003ADB0o
+D:80056929                     .byte 0, 0, 0
+D:8005692C     aPfloppyz:      .ascii "PfloppyZ"<0>     # DATA XREF: D:8003ADBCo
+D:80056935                     .byte 0, 0, 0
+D:80056938     aPchrgoldeneyekeyz:.ascii "PchrgoldeneyekeyZ"<0>  # DATA XREF: D:8003ADC8o
+D:8005694A                     .half 0
+D:8005694C     aPchrpolarizedglassesz:.ascii "PchrpolarizedglassesZ"<0>
+D:8005694C                                              # DATA XREF: D:8003ADD4o
+D:80056962                     .half 0
+D:80056964     aPchrcreditcardz:.ascii "PchrcreditcardZ"<0>  # DATA XREF: D:8003ADE0o
+D:80056974     aPchrdarkglassesz:.ascii "PchrdarkglassesZ"<0>  # DATA XREF: D:8003ADECo
+D:80056985                     .byte 0, 0, 0
+D:80056988     aPchrgaskeyringz:.ascii "PchrgaskeyringZ"<0>  # DATA XREF: D:8003ADF8o
+D:80056998     aPchrdatathiefz:.ascii "PchrdatathiefZ"<0>  # DATA XREF: D:8003AE04o
+D:800569A7                     .byte 0
+D:800569A8     aPsafez:        .ascii "PsafeZ"<0>       # DATA XREF: D:8003AE10o
+D:800569AF                     .byte 0
+D:800569B0     aPbombz:        .ascii "PbombZ"<0>       # DATA XREF: D:8003AE1Co
+D:800569B7                     .byte 0
+D:800569B8     aPchrplansz:    .ascii "PchrplansZ"<0>   # DATA XREF: D:8003AE28o
+D:800569C3                     .byte 0
+D:800569C4     aPchrspyfilez:  .ascii "PchrspyfileZ"<0>  # DATA XREF: D:8003AE34o
+D:800569D1                     .byte 0, 0, 0
+D:800569D4     aPchrblueprintsz:.ascii "PchrblueprintsZ"<0>  # DATA XREF: D:8003AE40o
+D:800569E4     aPchrcircuitboardz:.ascii "PchrcircuitboardZ"<0>  # DATA XREF: D:8003AE4Co
+D:800569F6                     .half 0
+D:800569F8     aPchrmapz:      .ascii "PchrmapZ"<0>     # DATA XREF: D:8003AE58o
+D:80056A01                     .byte 0, 0, 0
+D:80056A04     aPchrspooltapez:.ascii "PchrspooltapeZ"<0>  # DATA XREF: D:8003AE64o
+D:80056A13                     .byte 0
+D:80056A14     aPchraudiotapez:.ascii "PchraudiotapeZ"<0>  # DATA XREF: D:8003AE70o
+D:80056A23                     .byte 0
+D:80056A24     aPchrmicrofilmz:.ascii "PchrmicrofilmZ"<0>  # DATA XREF: D:8003AE7Co
+D:80056A33                     .byte 0
+D:80056A34     aPchrmicrocodez:.ascii "PchrmicrocodeZ"<0>  # DATA XREF: D:8003AE88o
+D:80056A43                     .byte 0
+D:80056A44     aPchrlectrez:   .ascii "PchrlectreZ"<0>  # DATA XREF: D:8003AE94o
+D:80056A50     aPchrmoneyz:    .ascii "PchrmoneyZ"<0>   # DATA XREF: D:8003AEA0o
+D:80056A5B                     .byte 0
+D:80056A5C     aPchrgoldbarz:  .ascii "PchrgoldbarZ"<0>  # DATA XREF: D:8003AEACo
+D:80056A69                     .byte 0, 0, 0
+D:80056A6C     aPchrheroinz:   .ascii "PchrheroinZ"<0>  # DATA XREF: D:8003AEB8o
+D:80056A78     aPchrclipboardz:.ascii "PchrclipboardZ"<0>  # DATA XREF: D:8003AEC4o
+D:80056A87                     .byte 0
+D:80056A88     aPchrdossierredz:.ascii "PchrdossierredZ"<0>  # DATA XREF: D:8003AED0o
+D:80056A98     aPchrstafflistz:.ascii "PchrstafflistZ"<0>  # DATA XREF: D:8003AEDCo
+D:80056AA7                     .byte 0
+D:80056AA8     aPchrdattapez:  .ascii "PchrdattapeZ"<0>  # DATA XREF: D:8003AEE8o
+D:80056AB5                     .byte 0, 0, 0
+D:80056AB8     aPchrplastiquez:.ascii "PchrplastiqueZ"<0>  # DATA XREF: D:8003AEF4o
+D:80056AC7                     .byte 0
+D:80056AC8     aPchrblackboxz: .ascii "PchrblackboxZ"<0>  # DATA XREF: D:8003AF00o
+D:80056AD6                     .half 0
+D:80056AD8     aPchrvideotapez:.ascii "PchrvideotapeZ"<0>  # DATA XREF: D:8003AF0Co
+D:80056AE7                     .byte 0
+D:80056AE8     aPnintendologoz:.ascii "PnintendologoZ"<0>
+D:80056AE8                                              # DATA XREF: D:PnintendologoZ_entryo
+D:80056AF7                     .byte 0
+D:80056AF8     aPgoldeneyelogoz:.ascii "PgoldeneyelogoZ"<0>
+D:80056AF8                                              # DATA XREF: D:PgoldeneyelogoZ_entryo
+D:80056B08     aPwalletbondz:  .ascii "PwalletbondZ"<0>  # DATA XREF: D:PwalletbondZ_entryo
+D:80056B15                     .byte 0, 0, 0
+D:80056B18     aPmiltruckz:    .ascii "PmiltruckZ"<0>   # DATA XREF: D:8003AF3Co
+D:80056B23                     .byte 0
+D:80056B24     aPjeepz:        .ascii "PjeepZ"<0>       # DATA XREF: D:8003AF48o
+D:80056B2B                     .byte 0
+D:80056B2C     aParticz:       .ascii "ParticZ"<0>      # DATA XREF: D:8003AF54o
+D:80056B34     aPhelicopterz:  .ascii "PhelicopterZ"<0>  # DATA XREF: D:8003AF60o
+D:80056B41                     .byte 0, 0, 0
+D:80056B44     aPtigerz:       .ascii "PtigerZ"<0>      # DATA XREF: D:8003AF6Co
+D:80056B4C     aPmilcopterz:   .ascii "PmilcopterZ"<0>  # DATA XREF: D:8003AF78o
+D:80056B58     aPhindz:        .ascii "PhindZ"<0>       # DATA XREF: D:8003AF84o
+D:80056B5F                     .byte 0
+D:80056B60     aPartictrailerz:.ascii "PartictrailerZ"<0>  # DATA XREF: D:8003AF90o
+D:80056B6F                     .byte 0
+D:80056B70     aPmotorbikez:   .ascii "PmotorbikeZ"<0>  # DATA XREF: D:8003AF9Co
+D:80056B7C     aPtankz:        .ascii "PtankZ"<0>       # DATA XREF: D:8003AFA8o
+D:80056B83                     .byte 0
+D:80056B84     aPapcz:         .ascii "PapcZ"<0>        # DATA XREF: D:8003AFB4o
+D:80056B8A                     .half 0
+D:80056B8C     aPspeedboatz:   .ascii "PspeedboatZ"<0>  # DATA XREF: D:8003AFC0o
+D:80056B98     aPplanez:       .ascii "PplaneZ"<0>      # DATA XREF: D:8003AFCCo
+D:80056BA0     aPgun_runway1z: .ascii "Pgun_runway1Z"<0>  # DATA XREF: D:8003AFD8o
+D:80056BAE                     .half 0
+D:80056BB0     aPsafedoorz:    .ascii "PsafedoorZ"<0>   # DATA XREF: D:8003AFE4o
+D:80056BBB                     .byte 0
+D:80056BBC     aPkey_holderz:  .ascii "Pkey_holderZ"<0>  # DATA XREF: D:8003AFF0o
+D:80056BC9                     .byte 0, 0, 0
+D:80056BCC     aPhatchsevxz:   .ascii "PhatchsevxZ"<0>  # DATA XREF: D:8003AFFCo
+D:80056BD8     aPsevdishz:     .ascii "PsevdishZ"<0>    # DATA XREF: D:8003B008o
+D:80056BE2                     .half 0
+D:80056BE4     aParchsecdoor1z:.ascii "Parchsecdoor1Z"<0>  # DATA XREF: D:8003B014o
+D:80056BF3                     .byte 0
+D:80056BF4     aParchsecdoor2z:.ascii "Parchsecdoor2Z"<0>  # DATA XREF: D:8003B020o
+D:80056C03                     .byte 0
+D:80056C04     aPgroundgunz:   .ascii "PgroundgunZ"<0>  # DATA XREF: D:8003B02Co
+D:80056C10     aPtrainextdoorz:.ascii "PtrainextdoorZ"<0>  # DATA XREF: D:8003B038o
+D:80056C1F                     .byte 0
+D:80056C20     aPcarbmwz:      .ascii "PcarbmwZ"<0>     # DATA XREF: D:8003B044o
+D:80056C29                     .byte 0, 0, 0
+D:80056C2C     aPcarescortz:   .ascii "PcarescortZ"<0>  # DATA XREF: D:8003B050o
+D:80056C38     aPcargolfz:     .ascii "PcargolfZ"<0>    # DATA XREF: D:8003B05Co
+D:80056C42                     .half 0
+D:80056C44     aPcarweirdz:    .ascii "PcarweirdZ"<0>   # DATA XREF: D:8003B068o
+D:80056C4F                     .byte 0
+D:80056C50     aPcarzilz:      .ascii "PcarzilZ"<0>     # DATA XREF: D:8003B074o
+D:80056C59                     .byte 0, 0, 0
+D:80056C5C     aPshuttle_door_lz:.ascii "Pshuttle_door_lZ"<0>  # DATA XREF: D:8003B080o
+D:80056C6D                     .byte 0, 0, 0
+D:80056C70     aPshuttle_door_rz:.ascii "Pshuttle_door_rZ"<0>  # DATA XREF: D:8003B08Co
+D:80056C81                     .byte 0, 0, 0
+D:80056C84     aPdepot_gate_entryz:.ascii "Pdepot_gate_entryZ"<0>  # DATA XREF: D:8003B098o
+D:80056C97                     .byte 0
+D:80056C98     aPdepot_door_steelz:.ascii "Pdepot_door_steelZ"<0>  # DATA XREF: D:8003B0A4o
+D:80056CAB                     .byte 0
+D:80056CAC     aPglassware2z:  .ascii "Pglassware2Z"<0>  # DATA XREF: D:8003B0B0o
+D:80056CB9                     .byte 0, 0, 0
+D:80056CBC     aPglassware3z:  .ascii "Pglassware3Z"<0>  # DATA XREF: D:8003B0BCo
+D:80056CC9                     .byte 0, 0, 0
+D:80056CCC     aPglassware4z:  .ascii "Pglassware4Z"<0>  # DATA XREF: D:8003B0C8o
+D:80056CD9                     .byte 0, 0, 0
+D:80056CDC     aPlandminez:    .ascii "PlandmineZ"<0>   # DATA XREF: D:8003B0D4o
+D:80056CE7                     .byte 0
+D:80056CE8     aPplant1z:      .ascii "Pplant1Z"<0>     # DATA XREF: D:8003B0E0o
+D:80056CF1                     .byte 0, 0, 0
+D:80056CF4     aPplant11z:     .ascii "Pplant11Z"<0>    # DATA XREF: D:8003B0ECo
+D:80056CFE                     .half 0
+D:80056D00     aPplant2z:      .ascii "Pplant2Z"<0>     # DATA XREF: D:8003B0F8o
+D:80056D09                     .byte 0, 0, 0
+D:80056D0C     aPplant3z:      .ascii "Pplant3Z"<0>     # DATA XREF: D:8003B104o
+D:80056D15                     .byte 0, 0, 0
+D:80056D18     aPjungle5_treez:.ascii "Pjungle5_treeZ"<0>  # DATA XREF: D:8003B110o
+D:80056D27                     .byte 0
+D:80056D28     aPlegalpagez:   .ascii "PlegalpageZ"<0>  # DATA XREF: D:PlegalpageZ_entryo
+D:80056D34     aPst_pete_room_1iz:.ascii "Pst_pete_room_1iZ"<0>  # DATA XREF: D:8003B128o
+D:80056D46                     .half 0
+D:80056D48     aPst_pete_room_2iz:.ascii "Pst_pete_room_2iZ"<0>  # DATA XREF: D:8003B134o
+D:80056D5A                     .half 0
+D:80056D5C     aPst_pete_room_3tz:.ascii "Pst_pete_room_3tZ"<0>  # DATA XREF: D:8003B140o
+D:80056D6E                     .half 0
+D:80056D70     aPst_pete_room_5cz:.ascii "Pst_pete_room_5cZ"<0>  # DATA XREF: D:8003B14Co
+D:80056D82                     .half 0
+D:80056D84     aPst_pete_room_6cz:.ascii "Pst_pete_room_6cZ"<0>  # DATA XREF: D:8003B158o
+D:80056D96                     .half 0
+D:80056D98     aPdoor_rollertrainz:.ascii "Pdoor_rollertrainZ"<0>  # DATA XREF: D:8003B164o
+D:80056DAB                     .byte 0
+D:80056DAC     aPdoor_winz:    .ascii "Pdoor_winZ"<0>   # DATA XREF: D:8003B170o
+D:80056DB7                     .byte 0
+D:80056DB8     aPdoor_aztecz:  .ascii "Pdoor_aztecZ"<0>  # DATA XREF: D:8003B17Co
+D:80056DC5                     .byte 0, 0, 0
+D:80056DC8     aPshuttlez:     .ascii "PshuttleZ"<0>    # DATA XREF: D:8003B188o
+D:80056DD2                     .half 0
+D:80056DD4     aPdoor_azt_deskz:.ascii "Pdoor_azt_deskZ"<0>  # DATA XREF: D:8003B194o
+D:80056DE4     aPdoor_azt_desk_topz:.ascii "Pdoor_azt_desk_topZ"<0>  # DATA XREF: D:8003B1A0o
+D:80056DF8     aPdoor_azt_chairz:.ascii "Pdoor_azt_chairZ"<0><0><0><0>
+D:80056DF8                                              # DATA XREF: D:8003B1ACo
+D:80056E0C     aPdoor_mfz:     .ascii "Pdoor_mfZ"<0>    # DATA XREF: D:8003B1B8o
+D:80056E16                     .half 0
+D:80056E18     aPflagz:        .ascii "PflagZ"<0>       # DATA XREF: D:8003B1C4o
+D:80056E1F                     .byte 0
+D:80056E20     aPbarricadez:   .ascii "PbarricadeZ"<0>  # DATA XREF: D:8003B1D0o
+D:80056E2C     aPmodemboxz:    .ascii "PmodemboxZ"<0>   # DATA XREF: D:8003B1DCo
+D:80056E37                     .byte 0
+D:80056E38     aPdoorpanelz:   .ascii "PdoorpanelZ"<0>  # DATA XREF: D:8003B1E8o
+D:80056E44     aPdoorconsolez: .ascii "PdoorconsoleZ"<0>  # DATA XREF: D:8003B1F4o
+D:80056E52                     .half 0
+D:80056E54     aPchrtesttubez: .ascii "PchrtesttubeZ"<0>  # DATA XREF: D:8003B200o
+D:80056E62                     .half 0
+D:80056E64     aPbollardz:     .ascii "PbollardZ"<0><0><0>  # DATA XREF: D:8003B20Co
+D:80056E70     aPnullZ:        .ascii <0><0><0><0><0><0><0><0><0><0><0><0><0><0><0><0>
+D:80056E70                                              # DATA XREF: D:PitemZ_entry_endo
+D:80056E80     aCcamguardz:    .ascii "CcamguardZ"<0><0>  # DATA XREF: D:c_item_entrieso
+D:80056E8C     aCgreyguardz:   .ascii "CgreyguardZ"<0>  # DATA XREF: D:8003DE24o
+D:80056E98     aColiveguardz:  .ascii "ColiveguardZ"<0><0><0><0>  # DATA XREF: D:8003DE38o
+D:80056EA8     aCrusguardz:    .ascii "CrusguardZ"<0>   # DATA XREF: D:8003DE4Co
+D:80056EB3                     .byte 0
+D:80056EB4     aCtrevguardz:   .ascii "CtrevguardZ"<0>  # DATA XREF: D:8003DE60o
+D:80056EC0     aCdjbondz:      .ascii "CdjbondZ"<0>     # DATA XREF: D:stru_D_8003DE74o
+D:80056EC9                     .byte 0, 0, 0
+D:80056ECC     aCborisz:       .ascii "CborisZ"<0>      # DATA XREF: D:8003DE88o
+D:80056ED4     aCorumovz:      .ascii "CorumovZ"<0>     # DATA XREF: D:8003DE9Co
+D:80056EDD                     .byte 0, 0, 0
+D:80056EE0     aCtrevelyanz:   .ascii "CtrevelyanZ"<0>  # DATA XREF: D:8003DEB0o
+D:80056EEC     aCboilertrevz:  .ascii "CboilertrevZ"<0>  # DATA XREF: D:8003DEC4o
+D:80056EF9                     .byte 0, 0, 0
+D:80056EFC     aCvalentinz:    .ascii "CvalentinZ"<0>   # DATA XREF: D:8003DED8o
+D:80056F07                     .byte 0
+D:80056F08     aCxeniaz:       .ascii "CxeniaZ"<0>      # DATA XREF: D:8003DEECo
+D:80056F10     aCbaronsamediz: .ascii "CbaronsamediZ"<0>  # DATA XREF: D:8003DF00o
+D:80056F1E                     .half 0
+D:80056F20     aCjawsz:        .ascii "CjawsZ"<0>       # DATA XREF: D:8003DF14o
+D:80056F27                     .byte 0
+D:80056F28     aCmaydayz:      .ascii "CmaydayZ"<0>     # DATA XREF: D:8003DF28o
+D:80056F31                     .byte 0, 0, 0
+D:80056F34     aCoddjobz:      .ascii "CoddjobZ"<0>     # DATA XREF: D:8003DF3Co
+D:80056F3D                     .byte 0, 0, 0
+D:80056F40     aCnatalyaz:     .ascii "CnatalyaZ"<0>    # DATA XREF: D:8003DF50o
+D:80056F4A                     .half 0
+D:80056F4C     aCarmourguardz: .ascii "CarmourguardZ"<0>  # DATA XREF: D:8003DF64o
+D:80056F5A                     .half 0
+D:80056F5C     aCcommguardz:   .ascii "CcommguardZ"<0>  # DATA XREF: D:8003DF78o
+D:80056F68     aCgreatguardz:  .ascii "CgreatguardZ"<0>  # DATA XREF: D:8003DF8Co
+D:80056F75                     .byte 0, 0, 0
+D:80056F78     aCnavyguardz:   .ascii "CnavyguardZ"<0>  # DATA XREF: D:8003DFA0o
+D:80056F84     aCsnowguardz:   .ascii "CsnowguardZ"<0>  # DATA XREF: D:8003DFB4o
+D:80056F90     aCboilerbondz:  .ascii "CboilerbondZ"<0>  # DATA XREF: D:8003DFC8o
+D:80056F9D                     .byte 0, 0, 0
+D:80056FA0     aCsuitbondz:    .ascii "CsuitbondZ"<0>   # DATA XREF: D:8003DFDCo
+D:80056FAB                     .byte 0
+D:80056FAC     aCtimberbondz:  .ascii "CtimberbondZ"<0>  # DATA XREF: D:8003DFF0o
+D:80056FB9                     .byte 0, 0, 0
+D:80056FBC     aCsnowbondz:    .ascii "CsnowbondZ"<0>   # DATA XREF: D:8003E004o
+D:80056FC7                     .byte 0
+D:80056FC8     aCbluewomanz:   .ascii "CbluewomanZ"<0>  # DATA XREF: D:8003E018o
+D:80056FD4     aCfattechwomanz:.ascii "CfattechwomanZ"<0>  # DATA XREF: D:8003E02Co
+D:80056FE3                     .byte 0
+D:80056FE4     aCtechwomanz:   .ascii "CtechwomanZ"<0>  # DATA XREF: D:8003E040o
+D:80056FF0     aCjeanwomanz:   .ascii "CjeanwomanZ"<0>  # DATA XREF: D:8003E054o
+D:80056FFC     aCgreymanz:     .ascii "CgreymanZ"<0>    # DATA XREF: D:8003E068o
+D:80057006                     .half 0
+D:80057008     aCbluemanz:     .ascii "CbluemanZ"<0>    # DATA XREF: D:8003E07Co
+D:80057012                     .half 0
+D:80057014     aCredmanz:      .ascii "CredmanZ"<0>     # DATA XREF: D:8003E090o
+D:8005701D                     .byte 0, 0, 0
+D:80057020     aCcardimanz:    .ascii "CcardimanZ"<0>   # DATA XREF: D:8003E0A4o
+D:8005702B                     .byte 0
+D:8005702C     aCcheckmanz:    .ascii "CcheckmanZ"<0>   # DATA XREF: D:8003E0B8o
+D:80057037                     .byte 0
+D:80057038     aCtechmanz:     .ascii "CtechmanZ"<0>    # DATA XREF: D:8003E0CCo
+D:80057042                     .half 0
+D:80057044     aCpilotz:       .ascii "CpilotZ"<0>      # DATA XREF: D:8003E0E0o
+D:8005704C     aCgreatguard2z: .ascii "Cgreatguard2Z"<0>  # DATA XREF: D:8003E0F4o
+D:8005705A                     .half 0
+D:8005705C     aCbluecamguardz:.ascii "CbluecamguardZ"<0>  # DATA XREF: D:8003E108o
+D:8005706B                     .byte 0
+D:8005706C     aCmoonguardz:   .ascii "CmoonguardZ"<0>  # DATA XREF: D:8003E11Co
+D:80057078     aCmoonfemalez:  .ascii "CmoonfemaleZ"<0>  # DATA XREF: D:8003E130o
+D:80057085                     .byte 0, 0, 0
+D:80057088     aCsuit_lf_handz_0:.ascii "Csuit_lf_handZ"<0>  # DATA XREF: D:stru_D_8003E144o
+D:80057097                     .byte 0
+D:80057098     aCheadkarlz:    .ascii "CheadkarlZ"<0>   # DATA XREF: D:8003E158o
+D:800570A3                     .byte 0
+D:800570A4     aCheadalanz:    .ascii "CheadalanZ"<0>   # DATA XREF: D:8003E16Co
+D:800570AF                     .byte 0
+D:800570B0     aCheadpetez:    .ascii "CheadpeteZ"<0>   # DATA XREF: D:8003E180o
+D:800570BB                     .byte 0
+D:800570BC     aCheadmartinz:  .ascii "CheadmartinZ"<0>  # DATA XREF: D:8003E194o
+D:800570C9                     .byte 0, 0, 0
+D:800570CC     aCheadmarkz:    .ascii "CheadmarkZ"<0>   # DATA XREF: D:8003E1A8o
+D:800570D7                     .byte 0
+D:800570D8     aCheadduncanz:  .ascii "CheadduncanZ"<0>  # DATA XREF: D:8003E1BCo
+D:800570E5                     .byte 0, 0, 0
+D:800570E8     aCheadshaunz:   .ascii "CheadshaunZ"<0>  # DATA XREF: D:8003E1D0o
+D:800570F4     aCheaddwaynez:  .ascii "CheaddwayneZ"<0>  # DATA XREF: D:8003E1E4o
+D:80057101                     .byte 0, 0, 0
+D:80057104     aCheadbz:       .ascii "CheadbZ"<0>      # DATA XREF: D:8003E1F8o
+D:8005710C     aCheaddavez:    .ascii "CheaddaveZ"<0>   # DATA XREF: D:8003E20Co
+D:80057117                     .byte 0
+D:80057118     aCheadgrantz:   .ascii "CheadgrantZ"<0>  # DATA XREF: D:8003E220o
+D:80057124     aCheaddesz:     .ascii "CheaddesZ"<0>    # DATA XREF: D:8003E234o
+D:8005712E                     .half 0
+D:80057130     aCheadchrisz:   .ascii "CheadchrisZ"<0>  # DATA XREF: D:8003E248o
+D:8005713C     aCheadleez:     .ascii "CheadleeZ"<0>    # DATA XREF: D:8003E25Co
+D:80057146                     .half 0
+D:80057148     aCheadneilz:    .ascii "CheadneilZ"<0>   # DATA XREF: D:8003E270o
+D:80057153                     .byte 0
+D:80057154     aCheadjimz:     .ascii "CheadjimZ"<0>    # DATA XREF: D:8003E284o
+D:8005715E                     .half 0
+D:80057160     aCheadrobinz:   .ascii "CheadrobinZ"<0>  # DATA XREF: D:8003E298o
+D:8005716C     aCheadstevehz:  .ascii "CheadstevehZ"<0>  # DATA XREF: D:8003E2ACo
+D:80057179                     .byte 0, 0, 0
+D:8005717C     aCheadbalaclavaz:.ascii "CheadbalaclavaZ"<0>  # DATA XREF: D:8003E2C0o
+D:8005718C     aCheadbikez:    .ascii "CheadbikeZ"<0>   # DATA XREF: D:8003E2D4o
+D:80057197                     .byte 0
+D:80057198     aCheadgrahamz:  .ascii "CheadgrahamZ"<0>  # DATA XREF: D:8003E2E8o
+D:800571A5                     .byte 0, 0, 0
+D:800571A8     aCheadsteveez:  .ascii "CheadsteveeZ"<0>  # DATA XREF: D:8003E2FCo
+D:800571B5                     .byte 0, 0, 0
+D:800571B8     aCheadjoelz:    .ascii "CheadjoelZ"<0>   # DATA XREF: D:8003E310o
+D:800571C3                     .byte 0
+D:800571C4     aCheadscottz:   .ascii "CheadscottZ"<0>  # DATA XREF: D:8003E324o
+D:800571D0     aCheadjoez:     .ascii "CheadjoeZ"<0>    # DATA XREF: D:8003E338o
+D:800571DA                     .half 0
+D:800571DC     aCheadkenz:     .ascii "CheadkenZ"<0>    # DATA XREF: D:8003E34Co
+D:800571E6                     .half 0
+D:800571E8     aCheadjoe2z:    .ascii "Cheadjoe2Z"<0>   # DATA XREF: D:8003E360o
+D:800571F3                     .byte 0
+D:800571F4     aCheadmishkinz: .ascii "CheadmishkinZ"<0>  # DATA XREF: D:8003E374o
+D:80057202                     .half 0
+D:80057204     aCheadsallyz:   .ascii "CheadsallyZ"<0>  # DATA XREF: D:8003E388o
+D:80057210     aCheadmarionz:  .ascii "CheadmarionZ"<0>  # DATA XREF: D:8003E39Co
+D:8005721D                     .byte 0, 0, 0
+D:80057220     aCheadmandyz:   .ascii "CheadmandyZ"<0>  # DATA XREF: D:8003E3B0o
+D:8005722C     aCheadvivienz:  .ascii "CheadvivienZ"<0>  # DATA XREF: D:8003E3C4o
+D:80057239                     .byte 0, 0, 0
+D:8005723C     aCheadbrosnanboilerz:.ascii "CheadbrosnanboilerZ"<0>  # DATA XREF: D:8003E3D8o
+D:80057250     aCheadbrosnansuitz:.ascii "CheadbrosnansuitZ"<0>  # DATA XREF: D:8003E3ECo
+D:80057262                     .half 0
+D:80057264     aCheadbrosnantimberz:.ascii "CheadbrosnantimberZ"<0>  # DATA XREF: D:8003E400o
+D:80057278     aCheadbrosnansnowz:.ascii "CheadbrosnansnowZ"<0>  # DATA XREF: D:8003E414o
+D:8005728A                     .half 0
+D:8005728C     aCheadbrosnanz: .ascii "CheadbrosnanZ"<0>  # DATA XREF: D:stru_D_8003E428o
+D:8005729A                     .half 0
+D:8005729C     aCspicebondz:   .ascii "CspicebondZ"<0>  # DATA XREF: D:8003E43Co
+D:800572A8                     .align 4
+D:800572B0     jpt_700C5B38:   .word cheats_cheat_extra_mp_chars, cheats_cheat_invincibility, cheats_cheat_allguns
+D:800572B0                                              # DATA XREF: sub_CODE_7F091B64+98r
+D:800572B0                     .word cheats_cheat_max_ammo, cheats_debug_return_saved_ra, cheats_cheat_deactivate_invincibility  # jump table for switch statement
+D:800572B0                     .word cheats_cheat_linemode, cheats_cheat_2x_health, cheats_cheat_2x_armor
+D:800572B0                     .word cheats_cheat_invisibility, cheats_cheat_infinite_ammo, cheats_cheat_dk_mode
+D:800572B0                     .word cheats_cheat_extra_weapons, cheats_cheat_tiny_bond, cheats_cheat_paintball
+D:800572B0                     .word cheats_cheat_10x_health, cheats_cheat_magnum, cheats_cheat_laser, cheats_cheat_goldengun
+D:800572B0                     .word cheats_cheat_silverpp7, cheats_cheat_goldpp7, cheats_cheat_invisibility_mp
+D:800572B0                     .word cheats_debug_return_saved_ra, cheats_cheat_fast, cheats_debug_pos, cheats_debug_fast_ani
+D:800572B0                     .word cheats_debug_slow_ani, cheats_debug_return_saved_ra, cheats_debug_2x_rockets
+D:800572B0                     .word cheats_debug_2x_grenade_launch, cheats_debug_2x_rcp90, cheats_debug_2x_throwing_knife
+D:800572B0                     .word cheats_debug_2x_hunting_knife, cheats_debug_2x_laser, cheats_debug_unlockcheat
+D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
+D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
+D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
+D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
+D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
+D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
+D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlocklevel, cheats_debug_unlocklevel
+D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
+D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
+D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
+D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
+D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
+D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
+D:800573D8      # f32 finalamount
+D:800573D8     finalamount:    .float 0.050000001       # DATA XREF: sub_CODE_7F091B64+5F0r
+D:800573DC     jpt_700C6400:   .word cheat_button_default, cheat_button_invincibility, cheat_button_all_guns
+D:800573DC                                              # DATA XREF: sub_CODE_7F092438+8Cr
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_line_mode  # jump table for switch statement
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_unknown, cheat_button_infinite_ammo
+D:800573DC                     .word cheat_button_dkmode, cheat_button_default, cheat_button_unknown_0, cheat_button_paintball
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_mp_invis, cheat_button_default
+D:800573DC                     .word cheat_button_fast_mode, cheat_button_debug_mode, cheat_button_default
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
+D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
+D:80057504     flt_D_80057504: .float 0.80000001        # DATA XREF: sub_CODE_7F0927F4+38r
+*/
+
+
+
+
+
+#ifdef NONMATCHING
+void sub_GAME_7F091740(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F091740
+/* 0C6270 7F091740 AFA40000 */  sw    $a0, ($sp)
+/* 0C6274 7F091744 308EFFFF */  andi  $t6, $a0, 0xffff
+/* 0C6278 7F091748 01C02025 */  move  $a0, $t6
+/* 0C627C 7F09174C 11C00009 */  beqz  $t6, .L7F091774
+/* 0C6280 7F091750 00001825 */   move  $v1, $zero
+.L7F091754:
+/* 0C6284 7F091754 308F0001 */  andi  $t7, $a0, 1
+/* 0C6288 7F091758 11E00002 */  beqz  $t7, .L7F091764
+/* 0C628C 7F09175C 00801025 */   move  $v0, $a0
+/* 0C6290 7F091760 24630001 */  addiu $v1, $v1, 1
+.L7F091764:
+/* 0C6294 7F091764 00022042 */  srl   $a0, $v0, 1
+/* 0C6298 7F091768 3098FFFF */  andi  $t8, $a0, 0xffff
+/* 0C629C 7F09176C 1700FFF9 */  bnez  $t8, .L7F091754
+/* 0C62A0 7F091770 03002025 */   move  $a0, $t8
+.L7F091774:
+/* 0C62A4 7F091774 03E00008 */  jr    $ra
+/* 0C62A8 7F091778 00601025 */   move  $v0, $v1
+)
+#endif
+
+
+
+
+
+#ifdef NONMATCHING
+void sub_GAME_7F09177C(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F09177C
+/* 0C62AC 7F09177C 27BDFFD0 */  addiu $sp, $sp, -0x30
+/* 0C62B0 7F091780 AFB1001C */  sw    $s1, 0x1c($sp)
+/* 0C62B4 7F091784 AFBF002C */  sw    $ra, 0x2c($sp)
+/* 0C62B8 7F091788 AFB40028 */  sw    $s4, 0x28($sp)
+/* 0C62BC 7F09178C 3C118004 */  lui   $s1, %hi(D_8003F80C) # $s1, 0x8004
+/* 0C62C0 7F091790 AFB30024 */  sw    $s3, 0x24($sp)
+/* 0C62C4 7F091794 AFB20020 */  sw    $s2, 0x20($sp)
+/* 0C62C8 7F091798 AFB00018 */  sw    $s0, 0x18($sp)
+/* 0C62CC 7F09179C 2631F80C */  addiu $s1, %lo(D_8003F80C) # addiu $s1, $s1, -0x7f4
+/* 0C62D0 7F0917A0 0FC2F7C1 */  jal   sub_GAME_7F0BDF04
+/* 0C62D4 7F0917A4 0000A025 */   move  $s4, $zero
+/* 0C62D8 7F0917A8 2401005A */  li    $at, 90
+/* 0C62DC 7F0917AC 14410003 */  bne   $v0, $at, .L7F0917BC
+/* 0C62E0 7F0917B0 00000000 */   nop   
+/* 0C62E4 7F0917B4 10000008 */  b     .L7F0917D8
+/* 0C62E8 7F0917B8 24130001 */   li    $s3, 1
+.L7F0917BC:
+/* 0C62EC 7F0917BC 0FC26919 */  jal   get_num_players
+/* 0C62F0 7F0917C0 00000000 */   nop   
+/* 0C62F4 7F0917C4 24010001 */  li    $at, 1
+/* 0C62F8 7F0917C8 14410003 */  bne   $v0, $at, .L7F0917D8
+/* 0C62FC 7F0917CC 24130004 */   li    $s3, 4
+/* 0C6300 7F0917D0 10000001 */  b     .L7F0917D8
+/* 0C6304 7F0917D4 24130002 */   li    $s3, 2
+.L7F0917D8:
+/* 0C6308 7F0917D8 3C0E8004 */  lui   $t6, %hi(D_8003F80C) # $t6, 0x8004
+/* 0C630C 7F0917DC 91CEF80C */  lbu   $t6, %lo(D_8003F80C)($t6)
+/* 0C6310 7F0917E0 3C128008 */  lui   $s2, %hi(ptr_BONDdata) # $s2, 0x8008
+/* 0C6314 7F0917E4 2652A0B0 */  addiu $s2, %lo(ptr_BONDdata) # addiu $s2, $s2, -0x5f50
+/* 0C6318 7F0917E8 11C0004C */  beqz  $t6, .L7F09191C
+/* 0C631C 7F0917EC 24100014 */   li    $s0, 20
+/* 0C6320 7F0917F0 92250001 */  lbu   $a1, 1($s1)
+.L7F0917F4:
+/* 0C6324 7F0917F4 58A00044 */  blezl $a1, .L7F091908
+/* 0C6328 7F0917F8 92280010 */   lbu   $t0, 0x10($s1)
+/* 0C632C 7F0917FC 8E460000 */  lw    $a2, ($s2)
+/* 0C6330 7F091800 90CF12B5 */  lbu   $t7, 0x12b5($a2)
+/* 0C6334 7F091804 01E5082A */  slt   $at, $t7, $a1
+/* 0C6338 7F091808 5420003F */  bnezl $at, .L7F091908
+/* 0C633C 7F09180C 92280010 */   lbu   $t0, 0x10($s1)
+/* 0C6340 7F091810 8E38000C */  lw    $t8, 0xc($s1)
+/* 0C6344 7F091814 0313C824 */  and   $t9, $t8, $s3
+/* 0C6348 7F091818 5320003B */  beql  $t9, $zero, .L7F091908
+/* 0C634C 7F09181C 92280010 */   lbu   $t0, 0x10($s1)
+/* 0C6350 7F091820 90C812B4 */  lbu   $t0, 0x12b4($a2)
+/* 0C6354 7F091824 00002025 */  move  $a0, $zero
+/* 0C6358 7F091828 01054823 */  subu  $t1, $t0, $a1
+/* 0C635C 7F09182C 252A0014 */  addiu $t2, $t1, 0x14
+/* 0C6360 7F091830 0150001A */  div   $zero, $t2, $s0
+/* 0C6364 7F091834 00001010 */  mfhi  $v0
+/* 0C6368 7F091838 16000002 */  bnez  $s0, .L7F091844
+/* 0C636C 7F09183C 00000000 */   nop   
+/* 0C6370 7F091840 0007000D */  break 7
+.L7F091844:
+/* 0C6374 7F091844 2401FFFF */  li    $at, -1
+/* 0C6378 7F091848 16010004 */  bne   $s0, $at, .L7F09185C
+/* 0C637C 7F09184C 3C018000 */   lui   $at, 0x8000
+/* 0C6380 7F091850 15410002 */  bne   $t2, $at, .L7F09185C
+/* 0C6384 7F091854 00000000 */   nop   
+/* 0C6388 7F091858 0006000D */  break 6
+.L7F09185C:
+/* 0C638C 7F09185C 18A00018 */  blez  $a1, .L7F0918C0
+/* 0C6390 7F091860 00000000 */   nop   
+/* 0C6394 7F091864 8E230004 */  lw    $v1, 4($s1)
+.L7F091868:
+/* 0C6398 7F091868 00025840 */  sll   $t3, $v0, 1
+/* 0C639C 7F09186C 00CB6021 */  addu  $t4, $a2, $t3
+/* 0C63A0 7F091870 958D128C */  lhu   $t5, 0x128c($t4)
+/* 0C63A4 7F091874 946E0000 */  lhu   $t6, ($v1)
+/* 0C63A8 7F091878 244F0001 */  addiu $t7, $v0, 1
+/* 0C63AC 7F09187C 15AE0010 */  bne   $t5, $t6, .L7F0918C0
+/* 0C63B0 7F091880 00000000 */   nop   
+/* 0C63B4 7F091884 01F0001A */  div   $zero, $t7, $s0
+/* 0C63B8 7F091888 16000002 */  bnez  $s0, .L7F091894
+/* 0C63BC 7F09188C 00000000 */   nop   
+/* 0C63C0 7F091890 0007000D */  break 7
+.L7F091894:
+/* 0C63C4 7F091894 2401FFFF */  li    $at, -1
+/* 0C63C8 7F091898 16010004 */  bne   $s0, $at, .L7F0918AC
+/* 0C63CC 7F09189C 3C018000 */   lui   $at, 0x8000
+/* 0C63D0 7F0918A0 15E10002 */  bne   $t7, $at, .L7F0918AC
+/* 0C63D4 7F0918A4 00000000 */   nop   
+/* 0C63D8 7F0918A8 0006000D */  break 6
+.L7F0918AC:
+/* 0C63DC 7F0918AC 24840001 */  addiu $a0, $a0, 1
+/* 0C63E0 7F0918B0 00001010 */  mfhi  $v0
+/* 0C63E4 7F0918B4 0085082A */  slt   $at, $a0, $a1
+/* 0C63E8 7F0918B8 1420FFEB */  bnez  $at, .L7F091868
+/* 0C63EC 7F0918BC 24630002 */   addiu $v1, $v1, 2
+.L7F0918C0:
+/* 0C63F0 7F0918C0 54850011 */  bnel  $a0, $a1, .L7F091908
+/* 0C63F4 7F0918C4 92280010 */   lbu   $t0, 0x10($s1)
+/* 0C63F8 7F0918C8 A0C012B5 */  sb    $zero, 0x12b5($a2)
+/* 0C63FC 7F0918CC 0FC249EF */  jal   sub_GAME_7F0927BC
+/* 0C6400 7F0918D0 92240000 */   lbu   $a0, ($s1)
+/* 0C6404 7F0918D4 10400005 */  beqz  $v0, .L7F0918EC
+/* 0C6408 7F0918D8 00000000 */   nop   
+/* 0C640C 7F0918DC 8E38000C */  lw    $t8, 0xc($s1)
+/* 0C6410 7F0918E0 33190010 */  andi  $t9, $t8, 0x10
+/* 0C6414 7F0918E4 13200005 */  beqz  $t9, .L7F0918FC
+/* 0C6418 7F0918E8 00000000 */   nop   
+.L7F0918EC:
+/* 0C641C 7F0918EC 0FC246D9 */  jal   sub_GAME_7F091B64
+/* 0C6420 7F0918F0 92240000 */   lbu   $a0, ($s1)
+/* 0C6424 7F0918F4 10000004 */  b     .L7F091908
+/* 0C6428 7F0918F8 92280010 */   lbu   $t0, 0x10($s1)
+.L7F0918FC:
+/* 0C642C 7F0918FC 0FC2490E */  jal   sub_GAME_7F092438
+/* 0C6430 7F091900 92240000 */   lbu   $a0, ($s1)
+/* 0C6434 7F091904 92280010 */  lbu   $t0, 0x10($s1)
+.L7F091908:
+/* 0C6438 7F091908 26310010 */  addiu $s1, $s1, 0x10
+/* 0C643C 7F09190C 51000004 */  beql  $t0, $zero, .L7F091920
+/* 0C6440 7F091910 8FBF002C */   lw    $ra, 0x2c($sp)
+/* 0C6444 7F091914 5280FFB7 */  beql  $s4, $zero, .L7F0917F4
+/* 0C6448 7F091918 92250001 */   lbu   $a1, 1($s1)
+.L7F09191C:
+/* 0C644C 7F09191C 8FBF002C */  lw    $ra, 0x2c($sp)
+.L7F091920:
+/* 0C6450 7F091920 8FB00018 */  lw    $s0, 0x18($sp)
+/* 0C6454 7F091924 8FB1001C */  lw    $s1, 0x1c($sp)
+/* 0C6458 7F091928 8FB20020 */  lw    $s2, 0x20($sp)
+/* 0C645C 7F09192C 8FB30024 */  lw    $s3, 0x24($sp)
+/* 0C6460 7F091930 8FB40028 */  lw    $s4, 0x28($sp)
+/* 0C6464 7F091934 03E00008 */  jr    $ra
+/* 0C6468 7F091938 27BD0030 */   addiu $sp, $sp, 0x30
+)
+#endif
+
+
+
+
+
+#ifdef NONMATCHING
+void sub_GAME_7F09193C(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F09193C
+/* 0C646C 7F09193C 27BDFFD8 */  addiu $sp, $sp, -0x28
+/* 0C6470 7F091940 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 0C6474 7F091944 0FC26C54 */  jal   get_cur_playernum
+/* 0C6478 7F091948 00000000 */   nop   
+/* 0C647C 7F09194C 00022600 */  sll   $a0, $v0, 0x18
+/* 0C6480 7F091950 00047603 */  sra   $t6, $a0, 0x18
+/* 0C6484 7F091954 01C02025 */  move  $a0, $t6
+/* 0C6488 7F091958 0C0030C3 */  jal   get_controller_buttons_held
+/* 0C648C 7F09195C 3405FFFF */   li    $a1, 65535
+/* 0C6490 7F091960 0FC26C54 */  jal   get_cur_playernum
+/* 0C6494 7F091964 A7A20026 */   sh    $v0, 0x26($sp)
+/* 0C6498 7F091968 00022600 */  sll   $a0, $v0, 0x18
+/* 0C649C 7F09196C 00047E03 */  sra   $t7, $a0, 0x18
+/* 0C64A0 7F091970 01E02025 */  move  $a0, $t7
+/* 0C64A4 7F091974 0C0030EB */  jal   get_controller_buttons_pressed
+/* 0C64A8 7F091978 3405FFFF */   li    $a1, 65535
+/* 0C64AC 7F09197C 97A30026 */  lhu   $v1, 0x26($sp)
+/* 0C64B0 7F091980 30780030 */  andi  $t8, $v1, 0x30
+/* 0C64B4 7F091984 3306FFFF */  andi  $a2, $t8, 0xffff
+/* 0C64B8 7F091988 00C04827 */  not   $t1, $a2
+/* 0C64BC 7F09198C 0300C827 */  not   $t9, $t8
+/* 0C64C0 7F091990 00492824 */  and   $a1, $v0, $t1
+/* 0C64C4 7F091994 30AAFFFF */  andi  $t2, $a1, 0xffff
+/* 0C64C8 7F091998 00794024 */  and   $t0, $v1, $t9
+/* 0C64CC 7F09199C A7A80026 */  sh    $t0, 0x26($sp)
+/* 0C64D0 7F0919A0 11400028 */  beqz  $t2, .L7F091A44
+/* 0C64D4 7F0919A4 A7A50024 */   sh    $a1, 0x24($sp)
+/* 0C64D8 7F0919A8 30A4FFFF */  andi  $a0, $a1, 0xffff
+/* 0C64DC 7F0919AC 0FC245D0 */  jal   sub_GAME_7F091740
+/* 0C64E0 7F0919B0 AFA60018 */   sw    $a2, 0x18($sp)
+/* 0C64E4 7F0919B4 24010001 */  li    $at, 1
+/* 0C64E8 7F0919B8 1441001E */  bne   $v0, $at, .L7F091A34
+/* 0C64EC 7F0919BC 8FA70018 */   lw    $a3, 0x18($sp)
+/* 0C64F0 7F0919C0 97A40026 */  lhu   $a0, 0x26($sp)
+/* 0C64F4 7F0919C4 0FC245D0 */  jal   sub_GAME_7F091740
+/* 0C64F8 7F0919C8 AFA70018 */   sw    $a3, 0x18($sp)
+/* 0C64FC 7F0919CC 24010001 */  li    $at, 1
+/* 0C6500 7F0919D0 14410018 */  bne   $v0, $at, .L7F091A34
+/* 0C6504 7F0919D4 8FA70018 */   lw    $a3, 0x18($sp)
+/* 0C6508 7F0919D8 3C048008 */  lui   $a0, %hi(ptr_BONDdata) # $a0, 0x8008
+/* 0C650C 7F0919DC 2484A0B0 */  addiu $a0, %lo(ptr_BONDdata) # addiu $a0, $a0, -0x5f50
+/* 0C6510 7F0919E0 8C820000 */  lw    $v0, ($a0)
+/* 0C6514 7F0919E4 97AB0024 */  lhu   $t3, 0x24($sp)
+/* 0C6518 7F0919E8 24010014 */  li    $at, 20
+/* 0C651C 7F0919EC 904D12B4 */  lbu   $t5, 0x12b4($v0)
+/* 0C6520 7F0919F0 01676025 */  or    $t4, $t3, $a3
+/* 0C6524 7F0919F4 000D7040 */  sll   $t6, $t5, 1
+/* 0C6528 7F0919F8 004E7821 */  addu  $t7, $v0, $t6
+/* 0C652C 7F0919FC A5EC128C */  sh    $t4, 0x128c($t7)
+/* 0C6530 7F091A00 8C820000 */  lw    $v0, ($a0)
+/* 0C6534 7F091A04 905812B4 */  lbu   $t8, 0x12b4($v0)
+/* 0C6538 7F091A08 27190001 */  addiu $t9, $t8, 1
+/* 0C653C 7F091A0C 0321001A */  div   $zero, $t9, $at
+/* 0C6540 7F091A10 00004010 */  mfhi  $t0
+/* 0C6544 7F091A14 A04812B4 */  sb    $t0, 0x12b4($v0)
+/* 0C6548 7F091A18 8C820000 */  lw    $v0, ($a0)
+/* 0C654C 7F091A1C 904312B5 */  lbu   $v1, 0x12b5($v0)
+/* 0C6550 7F091A20 28610014 */  slti  $at, $v1, 0x14
+/* 0C6554 7F091A24 10200007 */  beqz  $at, .L7F091A44
+/* 0C6558 7F091A28 24690001 */   addiu $t1, $v1, 1
+/* 0C655C 7F091A2C 10000005 */  b     .L7F091A44
+/* 0C6560 7F091A30 A04912B5 */   sb    $t1, 0x12b5($v0)
+.L7F091A34:
+/* 0C6564 7F091A34 3C048008 */  lui   $a0, %hi(ptr_BONDdata) # $a0, 0x8008
+/* 0C6568 7F091A38 2484A0B0 */  addiu $a0, %lo(ptr_BONDdata) # addiu $a0, $a0, -0x5f50
+/* 0C656C 7F091A3C 8C8A0000 */  lw    $t2, ($a0)
+/* 0C6570 7F091A40 A14012B5 */  sb    $zero, 0x12b5($t2)
+.L7F091A44:
+/* 0C6574 7F091A44 0FC245DF */  jal   sub_GAME_7F09177C
+/* 0C6578 7F091A48 00000000 */   nop   
+/* 0C657C 7F091A4C 8FBF0014 */  lw    $ra, 0x14($sp)
+/* 0C6580 7F091A50 27BD0028 */  addiu $sp, $sp, 0x28
+/* 0C6584 7F091A54 03E00008 */  jr    $ra
+/* 0C6588 7F091A58 00000000 */   nop   
+)
+#endif
+
+
+
+
+
+#ifdef NONMATCHING
+void sub_GAME_7F091A5C(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F091A5C
+/* 0C658C 7F091A5C 2401001C */  li    $at, 28
+/* 0C6590 7F091A60 14810003 */  bne   $a0, $at, .L7F091A70
+/* 0C6594 7F091A64 00001025 */   move  $v0, $zero
+/* 0C6598 7F091A68 03E00008 */  jr    $ra
+/* 0C659C 7F091A6C 24020001 */   li    $v0, 1
+
+.L7F091A70:
+/* 0C65A0 7F091A70 03E00008 */  jr    $ra
+/* 0C65A4 7F091A74 00000000 */   nop   
+)
+#endif
+
+
+
+
+
+#ifdef NONMATCHING
+void sub_GAME_7F091A78(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F091A78
+/* 0C65A8 7F091A78 00047100 */  sll   $t6, $a0, 4
+/* 0C65AC 7F091A7C 3C0F8004 */  lui   $t7, 0x8004
+/* 0C65B0 7F091A80 01EE7821 */  addu  $t7, $t7, $t6
+/* 0C65B4 7F091A84 8DEFF808 */  lw    $t7, -0x7f8($t7)
+/* 0C65B8 7F091A88 24010004 */  li    $at, 4
+/* 0C65BC 7F091A8C 00001025 */  move  $v0, $zero
+/* 0C65C0 7F091A90 31F80004 */  andi  $t8, $t7, 4
+/* 0C65C4 7F091A94 17010003 */  bne   $t8, $at, .L7F091AA4
+/* 0C65C8 7F091A98 00000000 */   nop   
+/* 0C65CC 7F091A9C 03E00008 */  jr    $ra
+/* 0C65D0 7F091AA0 24020001 */   li    $v0, 1
+
+.L7F091AA4:
+/* 0C65D4 7F091AA4 03E00008 */  jr    $ra
+/* 0C65D8 7F091AA8 00000000 */   nop   
+)
+#endif
+
+
+
+
+
+#ifdef NONMATCHING
+void sub_GAME_7F091AAC(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F091AAC
+/* 0C65DC 7F091AAC 27BDFFD0 */  addiu $sp, $sp, -0x30
+/* 0C65E0 7F091AB0 AFB00018 */  sw    $s0, 0x18($sp)
+/* 0C65E4 7F091AB4 3C108004 */  lui   $s0, 0x8004
+/* 0C65E8 7F091AB8 00047100 */  sll   $t6, $a0, 4
+/* 0C65EC 7F091ABC AFBF0024 */  sw    $ra, 0x24($sp)
+/* 0C65F0 7F091AC0 AFB20020 */  sw    $s2, 0x20($sp)
+/* 0C65F4 7F091AC4 020E8021 */  addu  $s0, $s0, $t6
+/* 0C65F8 7F091AC8 00809025 */  move  $s2, $a0
+/* 0C65FC 7F091ACC AFB1001C */  sw    $s1, 0x1c($sp)
+/* 0C6600 7F091AD0 0FC26C54 */  jal   get_cur_playernum
+/* 0C6604 7F091AD4 8E10F808 */   lw    $s0, -0x7f8($s0)
+/* 0C6608 7F091AD8 0FC26919 */  jal   get_num_players
+/* 0C660C 7F091ADC AFA20028 */   sw    $v0, 0x28($sp)
+/* 0C6610 7F091AE0 24010001 */  li    $at, 1
+/* 0C6614 7F091AE4 14410005 */  bne   $v0, $at, .L7F091AFC
+/* 0C6618 7F091AE8 00408825 */   move  $s1, $v0
+/* 0C661C 7F091AEC 0FC246D9 */  jal   sub_GAME_7F091B64
+/* 0C6620 7F091AF0 02402025 */   move  $a0, $s2
+/* 0C6624 7F091AF4 10000016 */  b     .L7F091B50
+/* 0C6628 7F091AF8 8FBF0024 */   lw    $ra, 0x24($sp)
+.L7F091AFC:
+/* 0C662C 7F091AFC 320F0004 */  andi  $t7, $s0, 4
+/* 0C6630 7F091B00 11E00012 */  beqz  $t7, .L7F091B4C
+/* 0C6634 7F091B04 32180020 */   andi  $t8, $s0, 0x20
+/* 0C6638 7F091B08 13000005 */  beqz  $t8, .L7F091B20
+/* 0C663C 7F091B0C 00000000 */   nop   
+/* 0C6640 7F091B10 0FC246D9 */  jal   sub_GAME_7F091B64
+/* 0C6644 7F091B14 02402025 */   move  $a0, $s2
+/* 0C6648 7F091B18 1000000D */  b     .L7F091B50
+/* 0C664C 7F091B1C 8FBF0024 */   lw    $ra, 0x24($sp)
+.L7F091B20:
+/* 0C6650 7F091B20 18400008 */  blez  $v0, .L7F091B44
+/* 0C6654 7F091B24 00008025 */   move  $s0, $zero
+.L7F091B28:
+/* 0C6658 7F091B28 0FC26C43 */  jal   set_cur_player
+/* 0C665C 7F091B2C 02002025 */   move  $a0, $s0
+/* 0C6660 7F091B30 0FC246D9 */  jal   sub_GAME_7F091B64
+/* 0C6664 7F091B34 02402025 */   move  $a0, $s2
+/* 0C6668 7F091B38 26100001 */  addiu $s0, $s0, 1
+/* 0C666C 7F091B3C 1611FFFA */  bne   $s0, $s1, .L7F091B28
+/* 0C6670 7F091B40 00000000 */   nop   
+.L7F091B44:
+/* 0C6674 7F091B44 0FC26C43 */  jal   set_cur_player
+/* 0C6678 7F091B48 8FA40028 */   lw    $a0, 0x28($sp)
+.L7F091B4C:
+/* 0C667C 7F091B4C 8FBF0024 */  lw    $ra, 0x24($sp)
+.L7F091B50:
+/* 0C6680 7F091B50 8FB00018 */  lw    $s0, 0x18($sp)
+/* 0C6684 7F091B54 8FB1001C */  lw    $s1, 0x1c($sp)
+/* 0C6688 7F091B58 8FB20020 */  lw    $s2, 0x20($sp)
+/* 0C668C 7F091B5C 03E00008 */  jr    $ra
+/* 0C6690 7F091B60 27BD0030 */   addiu $sp, $sp, 0x30
+)
+#endif
+
+
+
+
+
+#ifdef NONMATCHING
+void sub_GAME_7F091B64(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F091B64
+/* 0C6694 7F091B64 00047100 */  sll   $t6, $a0, 4
+/* 0C6698 7F091B68 3C0F8004 */  lui   $t7, 0x8004
+/* 0C669C 7F091B6C 01EE7821 */  addu  $t7, $t7, $t6
+/* 0C66A0 7F091B70 8DEFF808 */  lw    $t7, -0x7f8($t7)
+/* 0C66A4 7F091B74 27BDFFC0 */  addiu $sp, $sp, -0x40
+/* 0C66A8 7F091B78 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 0C66AC 7F091B7C AFA40040 */  sw    $a0, 0x40($sp)
+/* 0C66B0 7F091B80 0FC26C54 */  jal   get_cur_playernum
+/* 0C66B4 7F091B84 AFAF003C */   sw    $t7, 0x3c($sp)
+/* 0C66B8 7F091B88 0FC26919 */  jal   get_num_players
+/* 0C66BC 7F091B8C AFA20038 */   sw    $v0, 0x38($sp)
+/* 0C66C0 7F091B90 8FA3003C */  lw    $v1, 0x3c($sp)
+/* 0C66C4 7F091B94 8FA60040 */  lw    $a2, 0x40($sp)
+/* 0C66C8 7F091B98 AFA20034 */  sw    $v0, 0x34($sp)
+/* 0C66CC 7F091B9C 30780010 */  andi  $t8, $v1, 0x10
+/* 0C66D0 7F091BA0 17000012 */  bnez  $t8, .L7F091BEC
+/* 0C66D4 7F091BA4 30790020 */   andi  $t9, $v1, 0x20
+/* 0C66D8 7F091BA8 1720000A */  bnez  $t9, .L7F091BD4
+/* 0C66DC 7F091BAC 8FA50038 */   lw    $a1, 0x38($sp)
+/* 0C66E0 7F091BB0 3C098008 */  lui   $t1, %hi(off_CODE_bss_80079E30) # $t1, 0x8008
+/* 0C66E4 7F091BB4 25299E30 */  addiu $t1, %lo(off_CODE_bss_80079E30) # addiu $t1, $t1, -0x61d0
+/* 0C66E8 7F091BB8 00C91821 */  addu  $v1, $a2, $t1
+/* 0C66EC 7F091BBC 906A0000 */  lbu   $t2, ($v1)
+/* 0C66F0 7F091BC0 240B0001 */  li    $t3, 1
+/* 0C66F4 7F091BC4 00AB6004 */  sllv  $t4, $t3, $a1
+/* 0C66F8 7F091BC8 014C6825 */  or    $t5, $t2, $t4
+/* 0C66FC 7F091BCC 10000007 */  b     .L7F091BEC
+/* 0C6700 7F091BD0 A06D0000 */   sb    $t5, ($v1)
+.L7F091BD4:
+/* 0C6704 7F091BD4 240E0001 */  li    $t6, 1
+/* 0C6708 7F091BD8 004E7804 */  sllv  $t7, $t6, $v0
+/* 0C670C 7F091BDC 3C018008 */  lui   $at, 0x8008
+/* 0C6710 7F091BE0 00260821 */  addu  $at, $at, $a2
+/* 0C6714 7F091BE4 25F8FFFF */  addiu $t8, $t7, -1
+/* 0C6718 7F091BE8 A0389E30 */  sb    $t8, -0x61d0($at)
+.L7F091BEC:
+/* 0C671C 7F091BEC 24D9FFFF */  addiu $t9, $a2, -1
+/* 0C6720 7F091BF0 2F21004A */  sltiu $at, $t9, 0x4a
+/* 0C6724 7F091BF4 1020020C */  beqz  $at, .L7F092428
+/* 0C6728 7F091BF8 0019C880 */   sll   $t9, $t9, 2
+/* 0C672C 7F091BFC 3C018005 */  lui   $at, 0x8005
+/* 0C6730 7F091C00 00390821 */  addu  $at, $at, $t9
+/* 0C6734 7F091C04 8C3972B0 */  lw    $t9, 0x72b0($at)
+/* 0C6738 7F091C08 03200008 */  jr    $t9
+/* 0C673C 7F091C0C 00000000 */   nop   
+cheats_cheat_extra_mp_chars:
+/* 0C6740 7F091C10 0FC040A0 */  jal   unlock_all_mp_chars
+/* 0C6744 7F091C14 00000000 */   nop   
+/* 0C6748 7F091C18 10000204 */  b     .L7F09242C
+/* 0C674C 7F091C1C 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_invincibility:
+/* 0C6750 7F091C20 0FC227D6 */  jal   get_bondata_invincible_flag
+/* 0C6754 7F091C24 00000000 */   nop   
+/* 0C6758 7F091C28 54400200 */  bnezl $v0, .L7F09242C
+/* 0C675C 7F091C2C 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6760 7F091C30 0FC30776 */  jal   get_textptr_for_textID
+/* 0C6764 7F091C34 3404B00F */   li    $a0, 45071
+/* 0C6768 7F091C38 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C676C 7F091C3C 00402025 */   move  $a0, $v0
+/* 0C6770 7F091C40 0FC227D2 */  jal   set_bondata_invincible_flag
+/* 0C6774 7F091C44 24040001 */   li    $a0, 1
+/* 0C6778 7F091C48 100001F8 */  b     .L7F09242C
+/* 0C677C 7F091C4C 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_allguns:
+/* 0C6780 7F091C50 0FC230AB */  jal   get_BONDdata_allguns_flag
+/* 0C6784 7F091C54 00000000 */   nop   
+/* 0C6788 7F091C58 544001F4 */  bnezl $v0, .L7F09242C
+/* 0C678C 7F091C5C 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6790 7F091C60 0FC30776 */  jal   get_textptr_for_textID
+/* 0C6794 7F091C64 3404B010 */   li    $a0, 45072
+/* 0C6798 7F091C68 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C679C 7F091C6C 00402025 */   move  $a0, $v0
+/* 0C67A0 7F091C70 0FC230A7 */  jal   set_BONDdata_allguns_flag
+/* 0C67A4 7F091C74 24040001 */   li    $a0, 1
+/* 0C67A8 7F091C78 100001EC */  b     .L7F09242C
+/* 0C67AC 7F091C7C 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_max_ammo:
+/* 0C67B0 7F091C80 0FC30776 */  jal   get_textptr_for_textID
+/* 0C67B4 7F091C84 3404B011 */   li    $a0, 45073
+/* 0C67B8 7F091C88 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C67BC 7F091C8C 00402025 */   move  $a0, $v0
+/* 0C67C0 7F091C90 0FC1A4BC */  jal   set_max_ammo_for_cur_player
+/* 0C67C4 7F091C94 00000000 */   nop   
+/* 0C67C8 7F091C98 100001E4 */  b     .L7F09242C
+/* 0C67CC 7F091C9C 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_deactivate_invincibility:
+/* 0C67D0 7F091CA0 28410002 */  slti  $at, $v0, 2
+/* 0C67D4 7F091CA4 142001E0 */  bnez  $at, .L7F092428
+/* 0C67D8 7F091CA8 AFA0002C */   sw    $zero, 0x2c($sp)
+/* 0C67DC 7F091CAC 18400015 */  blez  $v0, .L7F091D04
+/* 0C67E0 7F091CB0 AFA00030 */   sw    $zero, 0x30($sp)
+.L7F091CB4:
+/* 0C67E4 7F091CB4 8FA50038 */  lw    $a1, 0x38($sp)
+/* 0C67E8 7F091CB8 8FA90030 */  lw    $t1, 0x30($sp)
+/* 0C67EC 7F091CBC 1125000A */  beq   $t1, $a1, .L7F091CE8
+/* 0C67F0 7F091CC0 00000000 */   nop   
+/* 0C67F4 7F091CC4 0FC26C43 */  jal   set_cur_player
+/* 0C67F8 7F091CC8 01202025 */   move  $a0, $t1
+/* 0C67FC 7F091CCC 0FC227D6 */  jal   get_bondata_invincible_flag
+/* 0C6800 7F091CD0 00000000 */   nop   
+/* 0C6804 7F091CD4 10400004 */  beqz  $v0, .L7F091CE8
+/* 0C6808 7F091CD8 00002025 */   move  $a0, $zero
+/* 0C680C 7F091CDC 240B0001 */  li    $t3, 1
+/* 0C6810 7F091CE0 0FC227D2 */  jal   set_bondata_invincible_flag
+/* 0C6814 7F091CE4 AFAB002C */   sw    $t3, 0x2c($sp)
+.L7F091CE8:
+/* 0C6818 7F091CE8 0FC26C43 */  jal   set_cur_player
+/* 0C681C 7F091CEC 8FA40038 */   lw    $a0, 0x38($sp)
+/* 0C6820 7F091CF0 8FAA0030 */  lw    $t2, 0x30($sp)
+/* 0C6824 7F091CF4 8FAD0034 */  lw    $t5, 0x34($sp)
+/* 0C6828 7F091CF8 254C0001 */  addiu $t4, $t2, 1
+/* 0C682C 7F091CFC 158DFFED */  bne   $t4, $t5, .L7F091CB4
+/* 0C6830 7F091D00 AFAC0030 */   sw    $t4, 0x30($sp)
+.L7F091D04:
+/* 0C6834 7F091D04 8FAE002C */  lw    $t6, 0x2c($sp)
+/* 0C6838 7F091D08 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
+/* 0C683C 7F091D0C 2405009F */  li    $a1, 159
+/* 0C6840 7F091D10 11C001C5 */  beqz  $t6, .L7F092428
+/* 0C6844 7F091D14 00003025 */   move  $a2, $zero
+/* 0C6848 7F091D18 0C002382 */  jal   play_sfx_a1
+/* 0C684C 7F091D1C 8C843720 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0C6850 7F091D20 100001C2 */  b     .L7F09242C
+/* 0C6854 7F091D24 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_linemode:
+/* 0C6858 7F091D28 0FC243FA */  jal   set_linemode_flag
+/* 0C685C 7F091D2C 24040001 */   li    $a0, 1
+/* 0C6860 7F091D30 100001BE */  b     .L7F09242C
+/* 0C6864 7F091D34 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_2x_health:
+/* 0C6868 7F091D38 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
+/* 0C686C 7F091D3C 8C42A0B0 */  lw    $v0, %lo(ptr_BONDdata)($v0)
+/* 0C6870 7F091D40 3C013F80 */  li    $at, 0x3F800000 # 1.000000
+/* 0C6874 7F091D44 44812000 */  mtc1  $at, $f4
+/* 0C6878 7F091D48 C4462A3C */  lwc1  $f6, 0x2a3c($v0)
+/* 0C687C 7F091D4C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
+/* 0C6880 7F091D50 46062032 */  c.eq.s $f4, $f6
+/* 0C6884 7F091D54 00000000 */  nop   
+/* 0C6888 7F091D58 45010008 */  bc1t  .L7F091D7C
+/* 0C688C 7F091D5C 00000000 */   nop   
+/* 0C6890 7F091D60 C44800DC */  lwc1  $f8, 0xdc($v0)
+/* 0C6894 7F091D64 44815000 */  mtc1  $at, $f10
+/* 0C6898 7F091D68 00000000 */  nop   
+/* 0C689C 7F091D6C 460A403C */  c.lt.s $f8, $f10
+/* 0C68A0 7F091D70 00000000 */  nop   
+/* 0C68A4 7F091D74 450201AD */  bc1fl .L7F09242C
+/* 0C68A8 7F091D78 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F091D7C:
+/* 0C68AC 7F091D7C 0FC30776 */  jal   get_textptr_for_textID
+/* 0C68B0 7F091D80 3404B012 */   li    $a0, 45074
+/* 0C68B4 7F091D84 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C68B8 7F091D88 00402025 */   move  $a0, $v0
+/* 0C68BC 7F091D8C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
+/* 0C68C0 7F091D90 3C0F8008 */  lui   $t7, %hi(ptr_BONDdata) # $t7, 0x8008
+/* 0C68C4 7F091D94 8DEFA0B0 */  lw    $t7, %lo(ptr_BONDdata)($t7)
+/* 0C68C8 7F091D98 44818000 */  mtc1  $at, $f16
+/* 0C68CC 7F091D9C 3C014000 */  li    $at, 0x40000000 # 2.000000
+/* 0C68D0 7F091DA0 3C188008 */  lui   $t8, %hi(ptr_BONDdata) # $t8, 0x8008
+/* 0C68D4 7F091DA4 E5F000DC */  swc1  $f16, 0xdc($t7)
+/* 0C68D8 7F091DA8 8F18A0B0 */  lw    $t8, %lo(ptr_BONDdata)($t8)
+/* 0C68DC 7F091DAC 44819000 */  mtc1  $at, $f18
+/* 0C68E0 7F091DB0 1000019D */  b     .L7F092428
+/* 0C68E4 7F091DB4 E7122A3C */   swc1  $f18, 0x2a3c($t8)
+cheats_cheat_2x_armor:
+/* 0C68E8 7F091DB8 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
+/* 0C68EC 7F091DBC 8C42A0B0 */  lw    $v0, %lo(ptr_BONDdata)($v0)
+/* 0C68F0 7F091DC0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
+/* 0C68F4 7F091DC4 44810000 */  mtc1  $at, $f0
+/* 0C68F8 7F091DC8 C4442A40 */  lwc1  $f4, 0x2a40($v0)
+/* 0C68FC 7F091DCC 46040032 */  c.eq.s $f0, $f4
+/* 0C6900 7F091DD0 00000000 */  nop   
+/* 0C6904 7F091DD4 45010006 */  bc1t  .L7F091DF0
+/* 0C6908 7F091DD8 00000000 */   nop   
+/* 0C690C 7F091DDC C44600E0 */  lwc1  $f6, 0xe0($v0)
+/* 0C6910 7F091DE0 4600303C */  c.lt.s $f6, $f0
+/* 0C6914 7F091DE4 00000000 */  nop   
+/* 0C6918 7F091DE8 45020190 */  bc1fl .L7F09242C
+/* 0C691C 7F091DEC 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F091DF0:
+/* 0C6920 7F091DF0 0FC30776 */  jal   get_textptr_for_textID
+/* 0C6924 7F091DF4 3404B013 */   li    $a0, 45075
+/* 0C6928 7F091DF8 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C692C 7F091DFC 00402025 */   move  $a0, $v0
+/* 0C6930 7F091E00 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
+/* 0C6934 7F091E04 2442A0B0 */  addiu $v0, %lo(ptr_BONDdata) # addiu $v0, $v0, -0x5f50
+/* 0C6938 7F091E08 3C013F80 */  li    $at, 0x3F800000 # 1.000000
+/* 0C693C 7F091E0C 44814000 */  mtc1  $at, $f8
+/* 0C6940 7F091E10 8C590000 */  lw    $t9, ($v0)
+/* 0C6944 7F091E14 3C014000 */  li    $at, 0x40000000 # 2.000000
+/* 0C6948 7F091E18 44815000 */  mtc1  $at, $f10
+/* 0C694C 7F091E1C E72800E0 */  swc1  $f8, 0xe0($t9)
+/* 0C6950 7F091E20 8C490000 */  lw    $t1, ($v0)
+/* 0C6954 7F091E24 10000180 */  b     .L7F092428
+/* 0C6958 7F091E28 E52A2A40 */   swc1  $f10, 0x2a40($t1)
+cheats_cheat_invisibility:
+/* 0C695C 7F091E2C 0FC227DD */  jal   get_invisible_to_guards_flag
+/* 0C6960 7F091E30 00000000 */   nop   
+/* 0C6964 7F091E34 5040017D */  beql  $v0, $zero, .L7F09242C
+/* 0C6968 7F091E38 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C696C 7F091E3C 0FC30776 */  jal   get_textptr_for_textID
+/* 0C6970 7F091E40 3404B014 */   li    $a0, 45076
+/* 0C6974 7F091E44 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C6978 7F091E48 00402025 */   move  $a0, $v0
+/* 0C697C 7F091E4C 0FC227DA */  jal   set_invisible_to_guards_flag
+/* 0C6980 7F091E50 00002025 */   move  $a0, $zero
+/* 0C6984 7F091E54 10000175 */  b     .L7F09242C
+/* 0C6988 7F091E58 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_infinite_ammo:
+/* 0C698C 7F091E5C 0FC30776 */  jal   get_textptr_for_textID
+/* 0C6990 7F091E60 3404B016 */   li    $a0, 45078
+/* 0C6994 7F091E64 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C6998 7F091E68 00402025 */   move  $a0, $v0
+/* 0C699C 7F091E6C 1000016F */  b     .L7F09242C
+/* 0C69A0 7F091E70 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_dk_mode:
+/* 0C69A4 7F091E74 0FC30776 */  jal   get_textptr_for_textID
+/* 0C69A8 7F091E78 3404B017 */   li    $a0, 45079
+/* 0C69AC 7F091E7C 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C69B0 7F091E80 00402025 */   move  $a0, $v0
+/* 0C69B4 7F091E84 0FC249FD */  jal   sub_GAME_7F0927F4
+/* 0C69B8 7F091E88 24040001 */   li    $a0, 1
+/* 0C69BC 7F091E8C 10000167 */  b     .L7F09242C
+/* 0C69C0 7F091E90 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_extra_weapons:
+/* 0C69C4 7F091E94 24010001 */  li    $at, 1
+/* 0C69C8 7F091E98 54410164 */  bnel  $v0, $at, .L7F09242C
+/* 0C69CC 7F091E9C 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C69D0 7F091EA0 0FC23122 */  jal   add_item_to_inventory
+/* 0C69D4 7F091EA4 24040012 */   li    $a0, 18
+/* 0C69D8 7F091EA8 AFA20028 */  sw    $v0, 0x28($sp)
+/* 0C69DC 7F091EAC 0FC23122 */  jal   add_item_to_inventory
+/* 0C69E0 7F091EB0 24040016 */   li    $a0, 22
+/* 0C69E4 7F091EB4 8FAB0028 */  lw    $t3, 0x28($sp)
+/* 0C69E8 7F091EB8 24040013 */  li    $a0, 19
+/* 0C69EC 7F091EBC 01625021 */  addu  $t2, $t3, $v0
+/* 0C69F0 7F091EC0 0FC23122 */  jal   add_item_to_inventory
+/* 0C69F4 7F091EC4 AFAA0028 */   sw    $t2, 0x28($sp)
+/* 0C69F8 7F091EC8 8FAC0028 */  lw    $t4, 0x28($sp)
+/* 0C69FC 7F091ECC 24040014 */  li    $a0, 20
+/* 0C6A00 7F091ED0 01826821 */  addu  $t5, $t4, $v0
+/* 0C6A04 7F091ED4 0FC23122 */  jal   add_item_to_inventory
+/* 0C6A08 7F091ED8 AFAD0028 */   sw    $t5, 0x28($sp)
+/* 0C6A0C 7F091EDC 8FAE0028 */  lw    $t6, 0x28($sp)
+/* 0C6A10 7F091EE0 24040015 */  li    $a0, 21
+/* 0C6A14 7F091EE4 01C27821 */  addu  $t7, $t6, $v0
+/* 0C6A18 7F091EE8 0FC23122 */  jal   add_item_to_inventory
+/* 0C6A1C 7F091EEC AFAF0028 */   sw    $t7, 0x28($sp)
+/* 0C6A20 7F091EF0 8FB80028 */  lw    $t8, 0x28($sp)
+/* 0C6A24 7F091EF4 2404000C */  li    $a0, 12
+/* 0C6A28 7F091EF8 0302C821 */  addu  $t9, $t8, $v0
+/* 0C6A2C 7F091EFC 0FC1A4B5 */  jal   get_max_ammo_for_type
+/* 0C6A30 7F091F00 AFB90028 */   sw    $t9, 0x28($sp)
+/* 0C6A34 7F091F04 2404000C */  li    $a0, 12
+/* 0C6A38 7F091F08 0FC1A44C */  jal   give_cur_player_ammo
+/* 0C6A3C 7F091F0C 00402825 */   move  $a1, $v0
+/* 0C6A40 7F091F10 0FC1A4B5 */  jal   get_max_ammo_for_type
+/* 0C6A44 7F091F14 2404000D */   li    $a0, 13
+/* 0C6A48 7F091F18 2404000D */  li    $a0, 13
+/* 0C6A4C 7F091F1C 0FC1A44C */  jal   give_cur_player_ammo
+/* 0C6A50 7F091F20 00402825 */   move  $a1, $v0
+/* 0C6A54 7F091F24 0FC1A4B5 */  jal   get_max_ammo_for_type
+/* 0C6A58 7F091F28 24040001 */   li    $a0, 1
+/* 0C6A5C 7F091F2C 24040001 */  li    $a0, 1
+/* 0C6A60 7F091F30 0FC1A44C */  jal   give_cur_player_ammo
+/* 0C6A64 7F091F34 00402825 */   move  $a1, $v0
+/* 0C6A68 7F091F38 8FA90028 */  lw    $t1, 0x28($sp)
+/* 0C6A6C 7F091F3C 5920013B */  blezl $t1, .L7F09242C
+/* 0C6A70 7F091F40 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6A74 7F091F44 0FC30776 */  jal   get_textptr_for_textID
+/* 0C6A78 7F091F48 3404B018 */   li    $a0, 45080
+/* 0C6A7C 7F091F4C 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C6A80 7F091F50 00402025 */   move  $a0, $v0
+/* 0C6A84 7F091F54 10000135 */  b     .L7F09242C
+/* 0C6A88 7F091F58 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_tiny_bond:
+/* 0C6A8C 7F091F5C 24010001 */  li    $at, 1
+/* 0C6A90 7F091F60 14410131 */  bne   $v0, $at, .L7F092428
+/* 0C6A94 7F091F64 3C0B8008 */   lui   $t3, %hi(cur_player_stat_ptr) # $t3, 0x8008
+/* 0C6A98 7F091F68 8D6BA0B4 */  lw    $t3, %lo(cur_player_stat_ptr)($t3)
+/* 0C6A9C 7F091F6C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
+/* 0C6AA0 7F091F70 44818000 */  mtc1  $at, $f16
+/* 0C6AA4 7F091F74 C5720064 */  lwc1  $f18, 0x64($t3)
+/* 0C6AA8 7F091F78 46128032 */  c.eq.s $f16, $f18
+/* 0C6AAC 7F091F7C 00000000 */  nop   
+/* 0C6AB0 7F091F80 4502012A */  bc1fl .L7F09242C
+/* 0C6AB4 7F091F84 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6AB8 7F091F88 0FC30776 */  jal   get_textptr_for_textID
+/* 0C6ABC 7F091F8C 3404B019 */   li    $a0, 45081
+/* 0C6AC0 7F091F90 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C6AC4 7F091F94 00402025 */   move  $a0, $v0
+/* 0C6AC8 7F091F98 3C013F00 */  li    $at, 0x3F000000 # 0.500000
+/* 0C6ACC 7F091F9C 3C0A8008 */  lui   $t2, %hi(cur_player_stat_ptr) # $t2, 0x8008
+/* 0C6AD0 7F091FA0 44810000 */  mtc1  $at, $f0
+/* 0C6AD4 7F091FA4 8D4AA0B4 */  lw    $t2, %lo(cur_player_stat_ptr)($t2)
+/* 0C6AD8 7F091FA8 3C0C8008 */  lui   $t4, %hi(ptr_BONDdata) # $t4, 0x8008
+/* 0C6ADC 7F091FAC E5400064 */  swc1  $f0, 0x64($t2)
+/* 0C6AE0 7F091FB0 8D8CA0B0 */  lw    $t4, %lo(ptr_BONDdata)($t4)
+/* 0C6AE4 7F091FB4 8D8400D4 */  lw    $a0, 0xd4($t4)
+/* 0C6AE8 7F091FB8 5080011C */  beql  $a0, $zero, .L7F09242C
+/* 0C6AEC 7F091FBC 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6AF0 7F091FC0 C4840014 */  lwc1  $f4, 0x14($a0)
+/* 0C6AF4 7F091FC4 46002182 */  mul.s $f6, $f4, $f0
+/* 0C6AF8 7F091FC8 44053000 */  mfc1  $a1, $f6
+/* 0C6AFC 7F091FCC 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 0C6B00 7F091FD0 00000000 */   nop   
+/* 0C6B04 7F091FD4 10000115 */  b     .L7F09242C
+/* 0C6B08 7F091FD8 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_paintball:
+/* 0C6B0C 7F091FDC 0FC30776 */  jal   get_textptr_for_textID
+/* 0C6B10 7F091FE0 3404B01A */   li    $a0, 45082
+/* 0C6B14 7F091FE4 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C6B18 7F091FE8 00402025 */   move  $a0, $v0
+/* 0C6B1C 7F091FEC 1000010F */  b     .L7F09242C
+/* 0C6B20 7F091FF0 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_10x_health:
+/* 0C6B24 7F091FF4 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
+/* 0C6B28 7F091FF8 8C42A0B0 */  lw    $v0, %lo(ptr_BONDdata)($v0)
+/* 0C6B2C 7F091FFC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
+/* 0C6B30 7F092000 44810000 */  mtc1  $at, $f0
+/* 0C6B34 7F092004 C4482A3C */  lwc1  $f8, 0x2a3c($v0)
+/* 0C6B38 7F092008 46080032 */  c.eq.s $f0, $f8
+/* 0C6B3C 7F09200C 00000000 */  nop   
+/* 0C6B40 7F092010 45010006 */  bc1t  .L7F09202C
+/* 0C6B44 7F092014 00000000 */   nop   
+/* 0C6B48 7F092018 C44A00DC */  lwc1  $f10, 0xdc($v0)
+/* 0C6B4C 7F09201C 4600503C */  c.lt.s $f10, $f0
+/* 0C6B50 7F092020 00000000 */  nop   
+/* 0C6B54 7F092024 45020101 */  bc1fl .L7F09242C
+/* 0C6B58 7F092028 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F09202C:
+/* 0C6B5C 7F09202C 0FC30776 */  jal   get_textptr_for_textID
+/* 0C6B60 7F092030 3404B01B */   li    $a0, 45083
+/* 0C6B64 7F092034 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C6B68 7F092038 00402025 */   move  $a0, $v0
+/* 0C6B6C 7F09203C 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
+/* 0C6B70 7F092040 2442A0B0 */  addiu $v0, %lo(ptr_BONDdata) # addiu $v0, $v0, -0x5f50
+/* 0C6B74 7F092044 3C013F80 */  li    $at, 0x3F800000 # 1.000000
+/* 0C6B78 7F092048 44818000 */  mtc1  $at, $f16
+/* 0C6B7C 7F09204C 8C4D0000 */  lw    $t5, ($v0)
+/* 0C6B80 7F092050 3C014120 */  li    $at, 0x41200000 # 10.000000
+/* 0C6B84 7F092054 44819000 */  mtc1  $at, $f18
+/* 0C6B88 7F092058 E5B000DC */  swc1  $f16, 0xdc($t5)
+/* 0C6B8C 7F09205C 8C4E0000 */  lw    $t6, ($v0)
+/* 0C6B90 7F092060 100000F1 */  b     .L7F092428
+/* 0C6B94 7F092064 E5D22A3C */   swc1  $f18, 0x2a3c($t6)
+cheats_cheat_magnum:
+/* 0C6B98 7F092068 24010001 */  li    $at, 1
+/* 0C6B9C 7F09206C 544100EF */  bnel  $v0, $at, .L7F09242C
+/* 0C6BA0 7F092070 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6BA4 7F092074 0FC23122 */  jal   add_item_to_inventory
+/* 0C6BA8 7F092078 24040012 */   li    $a0, 18
+/* 0C6BAC 7F09207C 0FC1A4B5 */  jal   get_max_ammo_for_type
+/* 0C6BB0 7F092080 2404000C */   li    $a0, 12
+/* 0C6BB4 7F092084 2404000C */  li    $a0, 12
+/* 0C6BB8 7F092088 0FC1A44C */  jal   give_cur_player_ammo
+/* 0C6BBC 7F09208C 00402825 */   move  $a1, $v0
+/* 0C6BC0 7F092090 100000E6 */  b     .L7F09242C
+/* 0C6BC4 7F092094 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_laser:
+/* 0C6BC8 7F092098 24010001 */  li    $at, 1
+/* 0C6BCC 7F09209C 544100E3 */  bnel  $v0, $at, .L7F09242C
+/* 0C6BD0 7F0920A0 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6BD4 7F0920A4 0FC23122 */  jal   add_item_to_inventory
+/* 0C6BD8 7F0920A8 24040016 */   li    $a0, 22
+/* 0C6BDC 7F0920AC 100000DF */  b     .L7F09242C
+/* 0C6BE0 7F0920B0 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_goldengun:
+/* 0C6BE4 7F0920B4 24010001 */  li    $at, 1
+/* 0C6BE8 7F0920B8 544100DC */  bnel  $v0, $at, .L7F09242C
+/* 0C6BEC 7F0920BC 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6BF0 7F0920C0 0FC23122 */  jal   add_item_to_inventory
+/* 0C6BF4 7F0920C4 24040013 */   li    $a0, 19
+/* 0C6BF8 7F0920C8 0FC1A4B5 */  jal   get_max_ammo_for_type
+/* 0C6BFC 7F0920CC 2404000D */   li    $a0, 13
+/* 0C6C00 7F0920D0 2404000D */  li    $a0, 13
+/* 0C6C04 7F0920D4 0FC1A44C */  jal   give_cur_player_ammo
+/* 0C6C08 7F0920D8 00402825 */   move  $a1, $v0
+/* 0C6C0C 7F0920DC 100000D3 */  b     .L7F09242C
+/* 0C6C10 7F0920E0 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_silverpp7:
+/* 0C6C14 7F0920E4 24010001 */  li    $at, 1
+/* 0C6C18 7F0920E8 544100D0 */  bnel  $v0, $at, .L7F09242C
+/* 0C6C1C 7F0920EC 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6C20 7F0920F0 0FC23122 */  jal   add_item_to_inventory
+/* 0C6C24 7F0920F4 24040014 */   li    $a0, 20
+/* 0C6C28 7F0920F8 0FC1A4B5 */  jal   get_max_ammo_for_type
+/* 0C6C2C 7F0920FC 24040001 */   li    $a0, 1
+/* 0C6C30 7F092100 24040001 */  li    $a0, 1
+/* 0C6C34 7F092104 0FC1A44C */  jal   give_cur_player_ammo
+/* 0C6C38 7F092108 00402825 */   move  $a1, $v0
+/* 0C6C3C 7F09210C 100000C7 */  b     .L7F09242C
+/* 0C6C40 7F092110 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_goldpp7:
+/* 0C6C44 7F092114 24010001 */  li    $at, 1
+/* 0C6C48 7F092118 544100C4 */  bnel  $v0, $at, .L7F09242C
+/* 0C6C4C 7F09211C 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6C50 7F092120 0FC23122 */  jal   add_item_to_inventory
+/* 0C6C54 7F092124 24040015 */   li    $a0, 21
+/* 0C6C58 7F092128 0FC1A4B5 */  jal   get_max_ammo_for_type
+/* 0C6C5C 7F09212C 24040001 */   li    $a0, 1
+/* 0C6C60 7F092130 24040001 */  li    $a0, 1
+/* 0C6C64 7F092134 0FC1A44C */  jal   give_cur_player_ammo
+/* 0C6C68 7F092138 00402825 */   move  $a1, $v0
+/* 0C6C6C 7F09213C 100000BB */  b     .L7F09242C
+/* 0C6C70 7F092140 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_invisibility_mp:
+/* 0C6C74 7F092144 3C014396 */  li    $at, 0x43960000 # 300.000000
+/* 0C6C78 7F092148 44816000 */  mtc1  $at, $f12
+/* 0C6C7C 7F09214C 3C018005 */  lui   $at, %hi(D_800573D8) # $at, 0x8005
+/* 0C6C80 7F092150 0FC20284 */  jal   set_curplayer_fade
+/* 0C6C84 7F092154 C42E73D8 */   lwc1  $f14, %lo(D_800573D8)($at)
+/* 0C6C88 7F092158 100000B4 */  b     .L7F09242C
+/* 0C6C8C 7F09215C 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_cheat_fast:
+/* 0C6C90 7F092160 0FC24406 */  jal   get_debug_fast_bond_flag
+/* 0C6C94 7F092164 00000000 */   nop   
+/* 0C6C98 7F092168 544000B0 */  bnezl $v0, .L7F09242C
+/* 0C6C9C 7F09216C 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6CA0 7F092170 0FC30776 */  jal   get_textptr_for_textID
+/* 0C6CA4 7F092174 3404B01D */   li    $a0, 45085
+/* 0C6CA8 7F092178 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C6CAC 7F09217C 00402025 */   move  $a0, $v0
+/* 0C6CB0 7F092180 0FC24409 */  jal   set_debug_fast_bond_flag
+/* 0C6CB4 7F092184 24040001 */   li    $a0, 1
+/* 0C6CB8 7F092188 100000A8 */  b     .L7F09242C
+/* 0C6CBC 7F09218C 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_debug_pos:
+/* 0C6CC0 7F092190 0FC243E2 */  jal   get_debug_testingmanpos_flag
+/* 0C6CC4 7F092194 00000000 */   nop   
+/* 0C6CC8 7F092198 544000A4 */  bnezl $v0, .L7F09242C
+/* 0C6CCC 7F09219C 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6CD0 7F0921A0 0FC243E5 */  jal   set_debug_testingmanpos_flag
+/* 0C6CD4 7F0921A4 24040001 */   li    $a0, 1
+/* 0C6CD8 7F0921A8 100000A0 */  b     .L7F09242C
+/* 0C6CDC 7F0921AC 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_debug_fast_ani:
+/* 0C6CE0 7F0921B0 0FC08179 */  jal   get_animation_rate
+/* 0C6CE4 7F0921B4 00000000 */   nop   
+/* 0C6CE8 7F0921B8 3C014080 */  li    $at, 0x40800000 # 4.000000
+/* 0C6CEC 7F0921BC 44812000 */  mtc1  $at, $f4
+/* 0C6CF0 7F0921C0 00000000 */  nop   
+/* 0C6CF4 7F0921C4 4604003C */  c.lt.s $f0, $f4
+/* 0C6CF8 7F0921C8 00000000 */  nop   
+/* 0C6CFC 7F0921CC 45020097 */  bc1fl .L7F09242C
+/* 0C6D00 7F0921D0 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6D04 7F0921D4 0FC30776 */  jal   get_textptr_for_textID
+/* 0C6D08 7F0921D8 3404B034 */   li    $a0, 45108
+/* 0C6D0C 7F0921DC 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C6D10 7F0921E0 00402025 */   move  $a0, $v0
+/* 0C6D14 7F0921E4 3C014080 */  li    $at, 0x40800000 # 4.000000
+/* 0C6D18 7F0921E8 44816000 */  mtc1  $at, $f12
+/* 0C6D1C 7F0921EC 0FC08150 */  jal   animation_speed_related
+/* 0C6D20 7F0921F0 00000000 */   nop   
+/* 0C6D24 7F0921F4 1000008D */  b     .L7F09242C
+/* 0C6D28 7F0921F8 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_debug_slow_ani:
+/* 0C6D2C 7F0921FC 0FC08179 */  jal   get_animation_rate
+/* 0C6D30 7F092200 00000000 */   nop   
+/* 0C6D34 7F092204 3C013E80 */  li    $at, 0x3E800000 # 0.250000
+/* 0C6D38 7F092208 44813000 */  mtc1  $at, $f6
+/* 0C6D3C 7F09220C 00000000 */  nop   
+/* 0C6D40 7F092210 4600303C */  c.lt.s $f6, $f0
+/* 0C6D44 7F092214 00000000 */  nop   
+/* 0C6D48 7F092218 45020084 */  bc1fl .L7F09242C
+/* 0C6D4C 7F09221C 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6D50 7F092220 0FC30776 */  jal   get_textptr_for_textID
+/* 0C6D54 7F092224 3404B032 */   li    $a0, 45106
+/* 0C6D58 7F092228 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C6D5C 7F09222C 00402025 */   move  $a0, $v0
+/* 0C6D60 7F092230 3C013E80 */  li    $at, 0x3E800000 # 0.250000
+/* 0C6D64 7F092234 44816000 */  mtc1  $at, $f12
+/* 0C6D68 7F092238 0FC08150 */  jal   animation_speed_related
+/* 0C6D6C 7F09223C 00000000 */   nop   
+/* 0C6D70 7F092240 1000007A */  b     .L7F09242C
+/* 0C6D74 7F092244 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_debug_2x_rockets:
+/* 0C6D78 7F092248 24010001 */  li    $at, 1
+/* 0C6D7C 7F09224C 14410076 */  bne   $v0, $at, .L7F092428
+/* 0C6D80 7F092250 24040019 */   li    $a0, 25
+/* 0C6D84 7F092254 0FC23143 */  jal   add_doubles_item_to_inventory
+/* 0C6D88 7F092258 24050019 */   li    $a1, 25
+/* 0C6D8C 7F09225C 0FC1A4B5 */  jal   get_max_ammo_for_type
+/* 0C6D90 7F092260 24040006 */   li    $a0, 6
+/* 0C6D94 7F092264 24040006 */  li    $a0, 6
+/* 0C6D98 7F092268 0FC1A44C */  jal   give_cur_player_ammo
+/* 0C6D9C 7F09226C 00402825 */   move  $a1, $v0
+/* 0C6DA0 7F092270 1000006E */  b     .L7F09242C
+/* 0C6DA4 7F092274 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_debug_2x_grenade_launch:
+/* 0C6DA8 7F092278 24010001 */  li    $at, 1
+/* 0C6DAC 7F09227C 1441006A */  bne   $v0, $at, .L7F092428
+/* 0C6DB0 7F092280 24040018 */   li    $a0, 24
+/* 0C6DB4 7F092284 0FC23143 */  jal   add_doubles_item_to_inventory
+/* 0C6DB8 7F092288 24050018 */   li    $a1, 24
+/* 0C6DBC 7F09228C 0FC1A4B5 */  jal   get_max_ammo_for_type
+/* 0C6DC0 7F092290 2404000B */   li    $a0, 11
+/* 0C6DC4 7F092294 2404000B */  li    $a0, 11
+/* 0C6DC8 7F092298 0FC1A44C */  jal   give_cur_player_ammo
+/* 0C6DCC 7F09229C 00402825 */   move  $a1, $v0
+/* 0C6DD0 7F0922A0 10000062 */  b     .L7F09242C
+/* 0C6DD4 7F0922A4 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_debug_2x_rcp90:
+/* 0C6DD8 7F0922A8 24010001 */  li    $at, 1
+/* 0C6DDC 7F0922AC 1441005E */  bne   $v0, $at, .L7F092428
+/* 0C6DE0 7F0922B0 2404000E */   li    $a0, 14
+/* 0C6DE4 7F0922B4 0FC23143 */  jal   add_doubles_item_to_inventory
+/* 0C6DE8 7F0922B8 2405000E */   li    $a1, 14
+/* 0C6DEC 7F0922BC 0FC1A4B5 */  jal   get_max_ammo_for_type
+/* 0C6DF0 7F0922C0 24040001 */   li    $a0, 1
+/* 0C6DF4 7F0922C4 24040001 */  li    $a0, 1
+/* 0C6DF8 7F0922C8 0FC1A44C */  jal   give_cur_player_ammo
+/* 0C6DFC 7F0922CC 00402825 */   move  $a1, $v0
+/* 0C6E00 7F0922D0 10000056 */  b     .L7F09242C
+/* 0C6E04 7F0922D4 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_debug_2x_throwing_knife:
+/* 0C6E08 7F0922D8 24010001 */  li    $at, 1
+/* 0C6E0C 7F0922DC 14410052 */  bne   $v0, $at, .L7F092428
+/* 0C6E10 7F0922E0 24040003 */   li    $a0, 3
+/* 0C6E14 7F0922E4 0FC23143 */  jal   add_doubles_item_to_inventory
+/* 0C6E18 7F0922E8 24050003 */   li    $a1, 3
+/* 0C6E1C 7F0922EC 0FC1A4B5 */  jal   get_max_ammo_for_type
+/* 0C6E20 7F0922F0 2404000A */   li    $a0, 10
+/* 0C6E24 7F0922F4 2404000A */  li    $a0, 10
+/* 0C6E28 7F0922F8 0FC1A44C */  jal   give_cur_player_ammo
+/* 0C6E2C 7F0922FC 00402825 */   move  $a1, $v0
+/* 0C6E30 7F092300 1000004A */  b     .L7F09242C
+/* 0C6E34 7F092304 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_debug_2x_hunting_knife:
+/* 0C6E38 7F092308 24010001 */  li    $at, 1
+/* 0C6E3C 7F09230C 14410046 */  bne   $v0, $at, .L7F092428
+/* 0C6E40 7F092310 24040002 */   li    $a0, 2
+/* 0C6E44 7F092314 0FC23143 */  jal   add_doubles_item_to_inventory
+/* 0C6E48 7F092318 24050002 */   li    $a1, 2
+/* 0C6E4C 7F09231C 10000043 */  b     .L7F09242C
+/* 0C6E50 7F092320 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_debug_2x_laser:
+/* 0C6E54 7F092324 24010001 */  li    $at, 1
+/* 0C6E58 7F092328 1441003F */  bne   $v0, $at, .L7F092428
+/* 0C6E5C 7F09232C 24040016 */   li    $a0, 22
+/* 0C6E60 7F092330 0FC23143 */  jal   add_doubles_item_to_inventory
+/* 0C6E64 7F092334 24050016 */   li    $a1, 22
+/* 0C6E68 7F092338 1000003C */  b     .L7F09242C
+/* 0C6E6C 7F09233C 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_debug_unlockcheat:
+/* 0C6E70 7F092340 3C048003 */  lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
+/* 0C6E74 7F092344 8C84A8E8 */  lw    $a0, %lo(selected_folder_num)($a0)
+/* 0C6E78 7F092348 24C5FFDD */  addiu $a1, $a2, -0x23
+/* 0C6E7C 7F09234C 04800036 */  bltz  $a0, .L7F092428
+/* 0C6E80 7F092350 28810004 */   slti  $at, $a0, 4
+/* 0C6E84 7F092354 50200035 */  beql  $at, $zero, .L7F09242C
+/* 0C6E88 7F092358 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C6E8C 7F09235C 0FC079D8 */  jal   sub_GAME_7F01E760
+/* 0C6E90 7F092360 00000000 */   nop   
+/* 0C6E94 7F092364 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
+/* 0C6E98 7F092368 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0C6E9C 7F09236C 2405009F */  li    $a1, 159
+/* 0C6EA0 7F092370 0C002382 */  jal   play_sfx_a1
+/* 0C6EA4 7F092374 00003025 */   move  $a2, $zero
+/* 0C6EA8 7F092378 1000002C */  b     .L7F09242C
+/* 0C6EAC 7F09237C 8FBF0014 */   lw    $ra, 0x14($sp)
+cheats_debug_unlocklevel:
+/* 0C6EB0 7F092380 3C028003 */  lui   $v0, %hi(selected_folder_num) # $v0, 0x8003
+/* 0C6EB4 7F092384 2442A8E8 */  addiu $v0, %lo(selected_folder_num) # addiu $v0, $v0, -0x5718
+/* 0C6EB8 7F092388 8C440000 */  lw    $a0, ($v0)
+/* 0C6EBC 7F09238C 24C8FFC9 */  addiu $t0, $a2, -0x37
+/* 0C6EC0 7F092390 04800025 */  bltz  $a0, .L7F092428
+/* 0C6EC4 7F092394 28810004 */   slti  $at, $a0, 4
+/* 0C6EC8 7F092398 10200023 */  beqz  $at, .L7F092428
+/* 0C6ECC 7F09239C 00001825 */   move  $v1, $zero
+/* 0C6ED0 7F0923A0 19000014 */  blez  $t0, .L7F0923F4
+/* 0C6ED4 7F0923A4 00002825 */   move  $a1, $zero
+.L7F0923A8:
+/* 0C6ED8 7F0923A8 3C028003 */  lui   $v0, %hi(selected_folder_num) # $v0, 0x8003
+/* 0C6EDC 7F0923AC 2442A8E8 */  addiu $v0, %lo(selected_folder_num) # addiu $v0, $v0, -0x5718
+/* 0C6EE0 7F0923B0 8C440000 */  lw    $a0, ($v0)
+/* 0C6EE4 7F0923B4 00003025 */  move  $a2, $zero
+/* 0C6EE8 7F0923B8 AFA30018 */  sw    $v1, 0x18($sp)
+/* 0C6EEC 7F0923BC AFA5001C */  sw    $a1, 0x1c($sp)
+/* 0C6EF0 7F0923C0 0FC078B0 */  jal   check_unlock_complete_for_eeprom_stagecomplete_difficulty
+/* 0C6EF4 7F0923C4 AFA80020 */   sw    $t0, 0x20($sp)
+/* 0C6EF8 7F0923C8 24010003 */  li    $at, 3
+/* 0C6EFC 7F0923CC 8FA30018 */  lw    $v1, 0x18($sp)
+/* 0C6F00 7F0923D0 8FA5001C */  lw    $a1, 0x1c($sp)
+/* 0C6F04 7F0923D4 14410002 */  bne   $v0, $at, .L7F0923E0
+/* 0C6F08 7F0923D8 8FA80020 */   lw    $t0, 0x20($sp)
+/* 0C6F0C 7F0923DC 24630001 */  addiu $v1, $v1, 1
+.L7F0923E0:
+/* 0C6F10 7F0923E0 24A50001 */  addiu $a1, $a1, 1
+/* 0C6F14 7F0923E4 14A8FFF0 */  bne   $a1, $t0, .L7F0923A8
+/* 0C6F18 7F0923E8 00000000 */   nop   
+/* 0C6F1C 7F0923EC 3C028003 */  lui   $v0, %hi(selected_folder_num) # $v0, 0x8003
+/* 0C6F20 7F0923F0 2442A8E8 */  addiu $v0, %lo(selected_folder_num) # addiu $v0, $v0, -0x5718
+.L7F0923F4:
+/* 0C6F24 7F0923F4 246F0001 */  addiu $t7, $v1, 1
+/* 0C6F28 7F0923F8 150F000B */  bne   $t0, $t7, .L7F092428
+/* 0C6F2C 7F0923FC 2505FFFF */   addiu $a1, $t0, -1
+/* 0C6F30 7F092400 3C0705F5 */  lui   $a3, (0x05F5E0FF >> 16) # lui $a3, 0x5f5
+/* 0C6F34 7F092404 34E7E0FF */  ori   $a3, (0x05F5E0FF & 0xFFFF) # ori $a3, $a3, 0xe0ff
+/* 0C6F38 7F092408 8C440000 */  lw    $a0, ($v0)
+/* 0C6F3C 7F09240C 0FC0797E */  jal   unlock_stage_in_folder_on_difficulty
+/* 0C6F40 7F092410 00003025 */   move  $a2, $zero
+/* 0C6F44 7F092414 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
+/* 0C6F48 7F092418 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0C6F4C 7F09241C 2405009F */  li    $a1, 159
+/* 0C6F50 7F092420 0C002382 */  jal   play_sfx_a1
+/* 0C6F54 7F092424 00003025 */   move  $a2, $zero
+cheats_debug_return_saved_ra:
+.L7F092428:
+/* 0C6F58 7F092428 8FBF0014 */  lw    $ra, 0x14($sp)
+.L7F09242C:
+/* 0C6F5C 7F09242C 27BD0040 */  addiu $sp, $sp, 0x40
+/* 0C6F60 7F092430 03E00008 */  jr    $ra
+/* 0C6F64 7F092434 00000000 */   nop   
+)
+#endif
+
+
+
+
+
+#ifdef NONMATCHING
+void sub_GAME_7F092438(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F092438
+/* 0C6F68 7F092438 00047100 */  sll   $t6, $a0, 4
+/* 0C6F6C 7F09243C 3C0F8004 */  lui   $t7, 0x8004
+/* 0C6F70 7F092440 01EE7821 */  addu  $t7, $t7, $t6
+/* 0C6F74 7F092444 8DEFF808 */  lw    $t7, -0x7f8($t7)
+/* 0C6F78 7F092448 27BDFFE0 */  addiu $sp, $sp, -0x20
+/* 0C6F7C 7F09244C AFBF0014 */  sw    $ra, 0x14($sp)
+/* 0C6F80 7F092450 AFA40020 */  sw    $a0, 0x20($sp)
+/* 0C6F84 7F092454 0FC26C54 */  jal   get_cur_playernum
+/* 0C6F88 7F092458 AFAF001C */   sw    $t7, 0x1c($sp)
+/* 0C6F8C 7F09245C 0FC26919 */  jal   get_num_players
+/* 0C6F90 7F092460 AFA20018 */   sw    $v0, 0x18($sp)
+/* 0C6F94 7F092464 8FA3001C */  lw    $v1, 0x1c($sp)
+/* 0C6F98 7F092468 8FA40020 */  lw    $a0, 0x20($sp)
+/* 0C6F9C 7F09246C 30780010 */  andi  $t8, $v1, 0x10
+/* 0C6FA0 7F092470 17000010 */  bnez  $t8, .L7F0924B4
+/* 0C6FA4 7F092474 30790020 */   andi  $t9, $v1, 0x20
+/* 0C6FA8 7F092478 1720000B */  bnez  $t9, .L7F0924A8
+/* 0C6FAC 7F09247C 3C088008 */   lui   $t0, %hi(off_CODE_bss_80079E30) # $t0, 0x8008
+/* 0C6FB0 7F092480 8FAA0018 */  lw    $t2, 0x18($sp)
+/* 0C6FB4 7F092484 25089E30 */  addiu $t0, %lo(off_CODE_bss_80079E30) # addiu $t0, $t0, -0x61d0
+/* 0C6FB8 7F092488 00881821 */  addu  $v1, $a0, $t0
+/* 0C6FBC 7F09248C 90690000 */  lbu   $t1, ($v1)
+/* 0C6FC0 7F092490 240B0001 */  li    $t3, 1
+/* 0C6FC4 7F092494 014B6004 */  sllv  $t4, $t3, $t2
+/* 0C6FC8 7F092498 01806827 */  not   $t5, $t4
+/* 0C6FCC 7F09249C 012D7024 */  and   $t6, $t1, $t5
+/* 0C6FD0 7F0924A0 10000004 */  b     .L7F0924B4
+/* 0C6FD4 7F0924A4 A06E0000 */   sb    $t6, ($v1)
+.L7F0924A8:
+/* 0C6FD8 7F0924A8 3C018008 */  lui   $at, 0x8008
+/* 0C6FDC 7F0924AC 00240821 */  addu  $at, $at, $a0
+/* 0C6FE0 7F0924B0 A0209E30 */  sb    $zero, -0x61d0($at)
+.L7F0924B4:
+/* 0C6FE4 7F0924B4 248FFFFF */  addiu $t7, $a0, -1
+/* 0C6FE8 7F0924B8 2DE1004A */  sltiu $at, $t7, 0x4a
+/* 0C6FEC 7F0924BC 1020007C */  beqz  $at, .L7F0926B0
+/* 0C6FF0 7F0924C0 000F7880 */   sll   $t7, $t7, 2
+/* 0C6FF4 7F0924C4 3C018005 */  lui   $at, 0x8005
+/* 0C6FF8 7F0924C8 002F0821 */  addu  $at, $at, $t7
+/* 0C6FFC 7F0924CC 8C2F73DC */  lw    $t7, 0x73dc($at)
+/* 0C7000 7F0924D0 01E00008 */  jr    $t7
+/* 0C7004 7F0924D4 00000000 */   nop   
+cheat_button_invincibility:
+/* 0C7008 7F0924D8 0FC227D6 */  jal   get_bondata_invincible_flag
+/* 0C700C 7F0924DC 00000000 */   nop   
+/* 0C7010 7F0924E0 50400074 */  beql  $v0, $zero, .L7F0926B4
+/* 0C7014 7F0924E4 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C7018 7F0924E8 0FC30776 */  jal   get_textptr_for_textID
+/* 0C701C 7F0924EC 3404B01E */   li    $a0, 45086
+/* 0C7020 7F0924F0 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C7024 7F0924F4 00402025 */   move  $a0, $v0
+/* 0C7028 7F0924F8 0FC227D2 */  jal   set_bondata_invincible_flag
+/* 0C702C 7F0924FC 00002025 */   move  $a0, $zero
+/* 0C7030 7F092500 1000006C */  b     .L7F0926B4
+/* 0C7034 7F092504 8FBF0014 */   lw    $ra, 0x14($sp)
+cheat_button_all_guns:
+/* 0C7038 7F092508 0FC230AB */  jal   get_BONDdata_allguns_flag
+/* 0C703C 7F09250C 00000000 */   nop   
+/* 0C7040 7F092510 50400068 */  beql  $v0, $zero, .L7F0926B4
+/* 0C7044 7F092514 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C7048 7F092518 0FC30776 */  jal   get_textptr_for_textID
+/* 0C704C 7F09251C 3404B01F */   li    $a0, 45087
+/* 0C7050 7F092520 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C7054 7F092524 00402025 */   move  $a0, $v0
+/* 0C7058 7F092528 0FC230A7 */  jal   set_BONDdata_allguns_flag
+/* 0C705C 7F09252C 00002025 */   move  $a0, $zero
+/* 0C7060 7F092530 10000060 */  b     .L7F0926B4
+/* 0C7064 7F092534 8FBF0014 */   lw    $ra, 0x14($sp)
+cheat_button_line_mode:
+/* 0C7068 7F092538 0FC243FA */  jal   set_linemode_flag
+/* 0C706C 7F09253C 00002025 */   move  $a0, $zero
+/* 0C7070 7F092540 1000005C */  b     .L7F0926B4
+/* 0C7074 7F092544 8FBF0014 */   lw    $ra, 0x14($sp)
+cheat_button_unknown:
+/* 0C7078 7F092548 0FC227DD */  jal   get_invisible_to_guards_flag
+/* 0C707C 7F09254C 00000000 */   nop   
+/* 0C7080 7F092550 54400058 */  bnezl $v0, .L7F0926B4
+/* 0C7084 7F092554 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C7088 7F092558 0FC30776 */  jal   get_textptr_for_textID
+/* 0C708C 7F09255C 3404B020 */   li    $a0, 45088
+/* 0C7090 7F092560 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C7094 7F092564 00402025 */   move  $a0, $v0
+/* 0C7098 7F092568 0FC227DA */  jal   set_invisible_to_guards_flag
+/* 0C709C 7F09256C 24040001 */   li    $a0, 1
+/* 0C70A0 7F092570 10000050 */  b     .L7F0926B4
+/* 0C70A4 7F092574 8FBF0014 */   lw    $ra, 0x14($sp)
+cheat_button_infinite_ammo:
+/* 0C70A8 7F092578 0FC30776 */  jal   get_textptr_for_textID
+/* 0C70AC 7F09257C 3404B022 */   li    $a0, 45090
+/* 0C70B0 7F092580 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C70B4 7F092584 00402025 */   move  $a0, $v0
+/* 0C70B8 7F092588 1000004A */  b     .L7F0926B4
+/* 0C70BC 7F09258C 8FBF0014 */   lw    $ra, 0x14($sp)
+cheat_button_dkmode:
+/* 0C70C0 7F092590 0FC30776 */  jal   get_textptr_for_textID
+/* 0C70C4 7F092594 3404B023 */   li    $a0, 45091
+/* 0C70C8 7F092598 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C70CC 7F09259C 00402025 */   move  $a0, $v0
+/* 0C70D0 7F0925A0 0FC249FD */  jal   sub_GAME_7F0927F4
+/* 0C70D4 7F0925A4 00002025 */   move  $a0, $zero
+/* 0C70D8 7F0925A8 10000042 */  b     .L7F0926B4
+/* 0C70DC 7F0925AC 8FBF0014 */   lw    $ra, 0x14($sp)
+cheat_button_unknown_0:
+/* 0C70E0 7F0925B0 24010001 */  li    $at, 1
+/* 0C70E4 7F0925B4 1441003E */  bne   $v0, $at, .L7F0926B0
+/* 0C70E8 7F0925B8 3C188008 */   lui   $t8, %hi(cur_player_stat_ptr) # $t8, 0x8008
+/* 0C70EC 7F0925BC 8F18A0B4 */  lw    $t8, %lo(cur_player_stat_ptr)($t8)
+/* 0C70F0 7F0925C0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
+/* 0C70F4 7F0925C4 44812000 */  mtc1  $at, $f4
+/* 0C70F8 7F0925C8 C7060064 */  lwc1  $f6, 0x64($t8)
+/* 0C70FC 7F0925CC 46062032 */  c.eq.s $f4, $f6
+/* 0C7100 7F0925D0 00000000 */  nop   
+/* 0C7104 7F0925D4 45030037 */  bc1tl .L7F0926B4
+/* 0C7108 7F0925D8 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C710C 7F0925DC 0FC30776 */  jal   get_textptr_for_textID
+/* 0C7110 7F0925E0 3404B024 */   li    $a0, 45092
+/* 0C7114 7F0925E4 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C7118 7F0925E8 00402025 */   move  $a0, $v0
+/* 0C711C 7F0925EC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
+/* 0C7120 7F0925F0 3C198008 */  lui   $t9, %hi(cur_player_stat_ptr) # $t9, 0x8008
+/* 0C7124 7F0925F4 8F39A0B4 */  lw    $t9, %lo(cur_player_stat_ptr)($t9)
+/* 0C7128 7F0925F8 44814000 */  mtc1  $at, $f8
+/* 0C712C 7F0925FC 3C088008 */  lui   $t0, %hi(ptr_BONDdata) # $t0, 0x8008
+/* 0C7130 7F092600 E7280064 */  swc1  $f8, 0x64($t9)
+/* 0C7134 7F092604 8D08A0B0 */  lw    $t0, %lo(ptr_BONDdata)($t0)
+/* 0C7138 7F092608 8D0400D4 */  lw    $a0, 0xd4($t0)
+/* 0C713C 7F09260C 50800029 */  beql  $a0, $zero, .L7F0926B4
+/* 0C7140 7F092610 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C7144 7F092614 C4800014 */  lwc1  $f0, 0x14($a0)
+/* 0C7148 7F092618 46000280 */  add.s $f10, $f0, $f0
+/* 0C714C 7F09261C 44055000 */  mfc1  $a1, $f10
+/* 0C7150 7F092620 0FC1B39E */  jal   set_obj_instance_controller_scale
+/* 0C7154 7F092624 00000000 */   nop   
+/* 0C7158 7F092628 10000022 */  b     .L7F0926B4
+/* 0C715C 7F09262C 8FBF0014 */   lw    $ra, 0x14($sp)
+cheat_button_paintball:
+/* 0C7160 7F092630 0FC30776 */  jal   get_textptr_for_textID
+/* 0C7164 7F092634 3404B025 */   li    $a0, 45093
+/* 0C7168 7F092638 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C716C 7F09263C 00402025 */   move  $a0, $v0
+/* 0C7170 7F092640 1000001C */  b     .L7F0926B4
+/* 0C7174 7F092644 8FBF0014 */   lw    $ra, 0x14($sp)
+cheat_button_mp_invis:
+/* 0C7178 7F092648 3C014396 */  li    $at, 0x43960000 # 300.000000
+/* 0C717C 7F09264C 44816000 */  mtc1  $at, $f12
+/* 0C7180 7F092650 3C013F80 */  li    $at, 0x3F800000 # 1.000000
+/* 0C7184 7F092654 44817000 */  mtc1  $at, $f14
+/* 0C7188 7F092658 0FC20284 */  jal   set_curplayer_fade
+/* 0C718C 7F09265C 00000000 */   nop   
+/* 0C7190 7F092660 10000014 */  b     .L7F0926B4
+/* 0C7194 7F092664 8FBF0014 */   lw    $ra, 0x14($sp)
+cheat_button_fast_mode:
+/* 0C7198 7F092668 0FC24406 */  jal   get_debug_fast_bond_flag
+/* 0C719C 7F09266C 00000000 */   nop   
+/* 0C71A0 7F092670 50400010 */  beql  $v0, $zero, .L7F0926B4
+/* 0C71A4 7F092674 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C71A8 7F092678 0FC30776 */  jal   get_textptr_for_textID
+/* 0C71AC 7F09267C 3404B027 */   li    $a0, 45095
+/* 0C71B0 7F092680 0FC228F2 */  jal   display_string_in_lower_left_corner
+/* 0C71B4 7F092684 00402025 */   move  $a0, $v0
+/* 0C71B8 7F092688 0FC24409 */  jal   set_debug_fast_bond_flag
+/* 0C71BC 7F09268C 00002025 */   move  $a0, $zero
+/* 0C71C0 7F092690 10000008 */  b     .L7F0926B4
+/* 0C71C4 7F092694 8FBF0014 */   lw    $ra, 0x14($sp)
+cheat_button_debug_mode:
+/* 0C71C8 7F092698 0FC243E2 */  jal   get_debug_testingmanpos_flag
+/* 0C71CC 7F09269C 00000000 */   nop   
+/* 0C71D0 7F0926A0 50400004 */  beql  $v0, $zero, .L7F0926B4
+/* 0C71D4 7F0926A4 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 0C71D8 7F0926A8 0FC243E5 */  jal   set_debug_testingmanpos_flag
+/* 0C71DC 7F0926AC 00002025 */   move  $a0, $zero
+cheat_button_default:
+.L7F0926B0:
+/* 0C71E0 7F0926B0 8FBF0014 */  lw    $ra, 0x14($sp)
+.L7F0926B4:
+/* 0C71E4 7F0926B4 27BD0020 */  addiu $sp, $sp, 0x20
+/* 0C71E8 7F0926B8 03E00008 */  jr    $ra
+/* 0C71EC 7F0926BC 00000000 */   nop   
+)
+#endif
+
+
+
+
 
 #ifdef NONMATCHING
 void sub_GAME_7F0926C0(void) {

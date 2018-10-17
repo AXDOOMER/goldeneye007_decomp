@@ -111,10 +111,499 @@ D:80036414                                              # sub_CODE_7F0755B0+8r
 D:80036414                                              # sub_CODE_7F0755B0+1Cr
 D:80036418     dword_D_80036418:.word 0                 # DATA XREF: sub_CODE_7F0009E0+8w
 D:8003641C     dword_D_8003641C:.word 0                 # DATA XREF: sub_CODE_7F0009E0+18w
-
 */
 
-
+/* rodata
+D:80054420     aDrawjointlistNoGfxlist:.ascii "drawjointlist: no gfxlist!\n"<0>
+D:80054420                                              # DATA XREF: drawjointlist+34o
+D:8005443C     aDrawjointlistNoObject0xX:.ascii "drawjointlist: no object! (0x%X)\n"<0>
+D:8005443C                                              # DATA XREF: drawjointlist+58o
+D:8005445E                     .half 0
+D:80054460     aDrawjointlistObjectNotInitialised0:.ascii "drawjointlist: object not initialised! (0x%X)\n"<0>
+D:80054460                                              # DATA XREF: drawjointlist+94o
+D:8005448F                     .byte 0
+D:80054490     jpt_7009F09C:   .word loc_CODE_7F06B174  # DATA XREF: sub_CODE_7F06B120+40r
+D:80054490                     .word loc_CODE_7F06B174  # jump table for switch statement
+D:80054490                     .word loc_CODE_7F06B174
+D:80054490                     .word def_7F06B16C
+D:80054490                     .word def_7F06B16C
+D:80054490                     .word def_7F06B16C
+D:80054490                     .word def_7F06B16C
+D:80054490                     .word def_7F06B16C
+D:80054490                     .word def_7F06B16C
+D:80054490                     .word def_7F06B16C
+D:80054490                     .word loc_CODE_7F06B174
+D:80054490                     .word loc_CODE_7F06B174
+D:80054490                     .word loc_CODE_7F06B174
+D:80054490                     .word loc_CODE_7F06B174
+D:80054490                     .word loc_CODE_7F06B174
+D:80054490                     .word loc_CODE_7F06B174
+D:80054490                     .word def_7F06B16C
+D:80054490                     .word def_7F06B16C
+D:80054490                     .word def_7F06B16C
+D:80054490                     .word def_7F06B16C
+D:80054490                     .word loc_CODE_7F06B174
+D:800544E4     jpt_7009F224:   .word loc_CODE_7F06B2FC  # DATA XREF: sub_CODE_7F06B29C+4Cr
+D:800544E4                     .word loc_CODE_7F06B360  # jump table for switch statement
+D:800544E4                     .word loc_CODE_7F06B3C4
+D:800544E4                     .word def_7F06B2F4
+D:800544E4                     .word def_7F06B2F4
+D:800544E4                     .word def_7F06B2F4
+D:800544E4                     .word def_7F06B2F4
+D:800544E4                     .word def_7F06B2F4
+D:800544E4                     .word def_7F06B2F4
+D:800544E4                     .word def_7F06B2F4
+D:800544E4                     .word loc_CODE_7F06B588
+D:800544E4                     .word loc_CODE_7F06B5DC
+D:800544E4                     .word loc_CODE_7F06B630
+D:800544E4                     .word loc_CODE_7F06B448
+D:800544E4                     .word loc_CODE_7F06B49C
+D:800544E4                     .word loc_CODE_7F06B530
+D:800544E4                     .word def_7F06B2F4
+D:800544E4                     .word def_7F06B2F4
+D:800544E4                     .word def_7F06B2F4
+D:800544E4                     .word def_7F06B2F4
+D:800544E4                     .word loc_CODE_7F06B428
+D:80054538     obj_table_jointlist:.word loc_CODE_7F06BD44  # DATA XREF: drawjointlist+124r
+D:80054538                     .word loc_CODE_7F06BD44  # jump table for switch statement
+D:80054538                     .word loc_CODE_7F06BD44
+D:80054538                     .word def_7F06BD3C
+D:80054538                     .word def_7F06BD3C
+D:80054538                     .word def_7F06BD3C
+D:80054538                     .word def_7F06BD3C
+D:80054538                     .word def_7F06BD3C
+D:80054538                     .word def_7F06BD3C
+D:80054538                     .word def_7F06BD3C
+D:80054538                     .word loc_CODE_7F06BD44
+D:80054538                     .word loc_CODE_7F06BD44
+D:80054538                     .word loc_CODE_7F06BD44
+D:80054538                     .word loc_CODE_7F06BD44
+D:80054538                     .word loc_CODE_7F06BD44
+D:80054538                     .word loc_CODE_7F06BD44
+D:80054538                     .word def_7F06BD3C
+D:80054538                     .word def_7F06BD3C
+D:80054538                     .word def_7F06BD3C
+D:80054538                     .word def_7F06BD3C
+D:80054538                     .word loc_CODE_7F06BD44
+D:80054538                     .word def_7F06BD3C
+D:80054538                     .word def_7F06BD3C
+D:80054538                     .word def_7F06BD3C
+D:80054598     jpt_damage_detail:.word loc_CODE_7F06BEF4
+D:80054598                                              # DATA XREF: probably_damage_detail_blood_effect_related+E0r
+D:80054598                     .word loc_CODE_7F06BEF4  # jump table for switch statement
+D:80054598                     .word loc_CODE_7F06BEF4
+D:80054598                     .word def_7F06BEEC
+D:80054598                     .word def_7F06BEEC
+D:80054598                     .word def_7F06BEEC
+D:80054598                     .word def_7F06BEEC
+D:80054598                     .word loc_CODE_7F06BF94
+D:80054598                     .word def_7F06BEEC
+D:80054598                     .word loc_CODE_7F06BF04
+D:80054598                     .word loc_CODE_7F06BEFC
+D:80054598                     .word loc_CODE_7F06BEFC
+D:80054598                     .word loc_CODE_7F06BEFC
+D:80054598                     .word loc_CODE_7F06BEFC
+D:80054598                     .word loc_CODE_7F06BEFC
+D:80054598                     .word loc_CODE_7F06BEFC
+D:80054598                     .word loc_CODE_7F06BF4C
+D:80054598                     .word loc_CODE_7F06BFA8
+D:80054598                     .word def_7F06BEEC
+D:80054598                     .word def_7F06BEEC
+D:80054598                     .word loc_CODE_7F06BEF4
+D:80054598                     .word def_7F06BEEC
+D:80054598                     .word loc_CODE_7F06BFBC
+D:80054598                     .word def_7F06BEEC
+D:800545F8                     .align 4
+D:80054600     aGetsubmatrixNoObjinst:.ascii "getsubmatrix: no objinst!\n"
+D:80054600                                              # DATA XREF: getsubmatrix+18o
+D:80054600                     .ascii <0><0>
+D:8005461C     aGetsubmatrixObjinstHasNoObject:.ascii "getsubmatrix: objinst has no object!\n"
+D:8005461C                     .ascii <0><0><0>
+D:80054644     aGetpartoffsetNoObjinst:.ascii "getpartoffset: no objinst!"<0><0>
+D:80054644                                              # DATA XREF: getpartoffset+10o
+D:80054660     aGetpartoffsetNoPartdesc:.ascii "getpartoffset: no partdesc!"<0>
+D:80054660                                              # DATA XREF: getpartoffset+3Co
+D:8005467C     aSetpartoffsetNoObjinst:.ascii "setpartoffset: no objinst!"<0><0>
+D:8005467C                                              # DATA XREF: setpartoffset+10o
+D:80054698     aSetpartoffsetNoPartdesc:.ascii "setpartoffset: no partdesc!"<0>
+D:80054698                                              # DATA XREF: setpartoffset+3Co
+D:800546B4     aGetsuboffsetNoObjinst:.ascii "getsuboffset: no objinst!"<0><0><0>
+D:800546B4                                              # DATA XREF: getsuboffset+1Co
+D:800546D0     aGetsuboffsetObjinstHasNoObject:.ascii "getsuboffset: objinst has no object!"<0><0><0><0>
+D:800546F8     aSetsuboffsetNoObjinst:.ascii "setsuboffset: no objinst!"<0><0><0>
+D:800546F8                                              # DATA XREF: setsuboffset+1Co
+D:80054714     aSetsuboffsetObjinstHasNoObject:.ascii "setsuboffset: objinst has no object!"<0><0><0><0>
+D:8005473C     aGetsubrotyNoObjinst:.ascii "getsubroty: no objinst!"<0>
+D:8005473C                                              # DATA XREF: getsubroty+18o
+D:80054754     aGetsubrotyObjinstHasNoObject:.ascii "getsubroty: objinst has no object!"<0><0>
+D:80054754                                              # DATA XREF: getsubroty+3Co
+D:80054778     aGetsubrotyObjinstHasNoRootPart:.ascii "getsubroty: objinst has no root part!"<0><0><0>
+D:80054778                                              # DATA XREF: getsubroty+64o
+D:800547A0     aSetsubrotyNoObjinst:.ascii "setsubroty: no objinst!"<0>
+D:800547A0                                              # DATA XREF: setsubroty+1Co
+D:800547B8     aSetsubrotyObjinstHasNoObject:.ascii "setsubroty: objinst has no object!"<0><0>
+D:800547B8                                              # DATA XREF: setsubroty+40o
+D:800547DC     aSetsubrotyObjinstHasNoRootPart:.ascii "setsubroty: objinst has no root part!"<0><0><0>
+D:800547DC                                              # DATA XREF: setsubroty+68o
+D:80054804     aGetjointsizeNoObjinst:.ascii "getjointsize: no objinst!\n"
+D:80054804                                              # DATA XREF: getjointsize+10o
+D:80054804                     .ascii <0><0>
+D:80054820     aGetinstsizeNoObjinst:.ascii "getinstsize: no objinst!\n"
+D:80054820                                              # DATA XREF: getinstsize+18o
+D:80054820                     .ascii <0><0><0>
+D:8005483C     aGetinstsizeNoObjdesc:.ascii "getinstsize: no objdesc!\n"
+D:8005483C                                              # DATA XREF: getinstsize+3Co
+D:8005483C                     .ascii <0><0><0>
+D:80054858     aSubcalcposNoObjanim:.ascii "subcalcpos: no objanim!\n"
+D:80054858                                              # DATA XREF: subcalcpos+18o
+D:80054858                     .ascii <0><0><0><0>
+D:80054874     aSubcalcposNoObjdesc:.ascii "subcalcpos: no objdesc!\n"
+D:80054874                                              # DATA XREF: subcalcpos+3Co
+D:80054874                     .ascii <0><0><0><0>
+D:80054890     aInstcalcmatricesNoObjinst:.ascii "instcalcmatrices: no objinst!\n"
+D:80054890                                              # DATA XREF: instcalcmatrices+20o
+D:80054890                     .ascii <0><0>
+D:800548B0     aInstcalcmatricesNoBasemtx:.ascii "instcalcmatrices: no basemtx!\n"
+D:800548B0                                              # DATA XREF: instcalcmatrices+40o
+D:800548B0                     .ascii <0><0>
+D:800548D0     aInstcalcmatricesNoMtxlist:.ascii "instcalcmatrices: no mtxlist!\n"<0>
+D:800548D0                                              # DATA XREF: instcalcmatrices+60o
+D:800548EF                     .byte 0
+D:800548F0     aSubcalcmatricesNoObjanim:.ascii "subcalcmatrices: no objanim!\n"<0>
+D:800548F0                                              # DATA XREF: subcalcmatrices+20o
+D:8005490E                     .half 0
+D:80054910     aSubcalcmatricesNoBasemtx:.ascii "subcalcmatrices: no basemtx!\n"<0>
+D:80054910                                              # DATA XREF: subcalcmatrices+44o
+D:8005492E                     .half 0
+D:80054930     aSubcalcmatricesNoMtxlist:.ascii "subcalcmatrices: no mtxlist!\n"<0>
+D:80054930                                              # DATA XREF: subcalcmatrices+68o
+D:8005494E                     .half 0
+D:80054950     aSubcalcmatricesNoAttachForObjinst:.ascii "subcalcmatrices: no attach for objinst!\n"<0>
+D:80054950                                              # DATA XREF: subcalcmatrices+A0o
+D:80054979                     .byte 0, 0, 0
+D:8005497C     aSubcalcmatricesFrameaOutOfRange:.ascii "subcalcmatrices: framea out of range!\n"<0>
+D:8005497C                                              # DATA XREF: subcalcmatrices+D4o
+D:800549A3                     .byte 0
+D:800549A4     aSubcalcmatricesFramebOutOfRange:.ascii "subcalcmatrices: frameb out of range!\n"<0>
+D:800549A4                                              # DATA XREF: subcalcmatrices+108o
+D:800549CB                     .byte 0
+D:800549CC     aSubcalcmatricesNoAnim2:.ascii "subcalcmatrices: no anim2!\n"<0>
+D:800549CC                                              # DATA XREF: subcalcmatrices+154o
+D:800549E8     aSubcalcmatricesFrame2aOutOfRange:.ascii "subcalcmatrices: frame2a out of range!\n"<0>
+D:800549E8                                              # DATA XREF: subcalcmatrices+198o
+D:80054A10     aSubcalcmatricesFrame2bOutOfRange:.ascii "subcalcmatrices: frame2b out of range!\n"<0>
+D:80054A10                                              # DATA XREF: subcalcmatrices+1E8o
+D:80054A38     aDorottexNoVtxAllocator:.ascii "dorottex: no vtx allocator!\n"<0>
+D:80054A38                                              # DATA XREF: dorottex_+70o
+D:80054A55                     .byte 0, 0, 0
+D:80054A58     aDotubeNoVtxAllocator:.ascii "dotube: no vtx allocator!\n"<0>
+D:80054A58                                              # DATA XREF: dotube+368o
+D:80054A73                     .byte 0
+D:80054A74     aDogfnegxNoVtxAllocator:.ascii "dogfnegx: no vtx allocator!\n"<0>
+D:80054A74                                              # DATA XREF: dogfnegx+32Co
+D:80054A91                     .byte 0, 0, 0
+D:80054A94     aDoshadowNoVtxAllocator:.ascii "doshadow: no vtx allocator!\n"<0>
+D:80054A94                                              # DATA XREF: doshadow+1A0o
+D:80054AB1                     .byte 0, 0, 0
+D:80054AB4     aSubdrawNoGfxlist:.ascii "subdraw: no gfxlist!\n"<0>  # DATA XREF: subdraw+34o
+D:80054ACA                     .half 0
+D:80054ACC     aSubdrawObjectNotInitialised0xX:.ascii "subdraw: object not initialised! (0x%X)\n"<0>
+D:80054ACC                                              # DATA XREF: subdraw+48o
+D:80054AF5                     .byte 0, 0, 0
+D:80054AF8     jpt_obj_struct_microcode_id:.word loc_CODE_7F06C7D8
+D:80054AF8                                              # DATA XREF: extract_id_from_object_structure_microcode+28r
+D:80054AF8                     .word def_7F06C7D0       # jump table for switch statement
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word loc_CODE_7F06C7F0
+D:80054AF8                     .word loc_CODE_7F06C7FC
+D:80054AF8                     .word loc_CODE_7F06C814
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word loc_CODE_7F06C820
+D:80054AF8                     .word loc_CODE_7F06C82C
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word loc_CODE_7F06C808
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word def_7F06C7D0
+D:80054AF8                     .word loc_CODE_7F06C838
+D:80054AF8                     .word loc_CODE_7F06C7E4
+D:80054B58     flt_D_80054B58: .float 6.2831855         # DATA XREF: setsubroty+C4r
+D:80054B5C     flt_D_80054B5C: .float 6.2831855         # DATA XREF: setsubroty:loc_CODE_7F06CE0Cr
+D:80054B60     jpt_getjointsize:.word loc_CODE_7F06CEF8  # DATA XREF: getjointsize+54r
+D:80054B60                     .word loc_CODE_7F06CF10  # jump table for switch statement
+D:80054B60                     .word loc_CODE_7F06CF28
+D:80054B60                     .word def_7F06CEF0
+D:80054B60                     .word def_7F06CEF0
+D:80054B60                     .word def_7F06CEF0
+D:80054B60                     .word def_7F06CEF0
+D:80054B60                     .word def_7F06CEF0
+D:80054B60                     .word def_7F06CEF0
+D:80054B60                     .word def_7F06CEF0
+D:80054B60                     .word loc_CODE_7F06CF58
+D:80054B60                     .word loc_CODE_7F06CF70
+D:80054B60                     .word loc_CODE_7F06CF88
+D:80054B60                     .word loc_CODE_7F06CFA0
+D:80054B60                     .word loc_CODE_7F06CFB8
+D:80054B60                     .word loc_CODE_7F06CFD0
+D:80054B60                     .word def_7F06CEF0
+D:80054B60                     .word def_7F06CEF0
+D:80054B60                     .word def_7F06CEF0
+D:80054B60                     .word def_7F06CEF0
+D:80054B60                     .word loc_CODE_7F06CF40
+D:80054BB4     flt_D_80054BB4: .float 6.2831855         # DATA XREF: sub_CODE_7F06D0CC+1Cr
+D:80054BB8     flt_D_80054BB8: .float 6.2831855         # DATA XREF: sub_CODE_7F06D0CC:loc_CODE_7F06D0F0r
+D:80054BBC     flt_D_80054BBC: .float 3.1415927         # DATA XREF: sub_CODE_7F06D0CC+2Cr
+D:80054BC0     flt_D_80054BC0: .float 6.2831855         # DATA XREF: sub_CODE_7F06D3F4:loc_CODE_7F06D46Cr
+D:80054BC4     flt_D_80054BC4: .float 3.1415927         # DATA XREF: sub_CODE_7F06D8B0+1A4r
+D:80054BC8     flt_D_80054BC8: .float 6.2831855         # DATA XREF: sub_CODE_7F06D8B0:loc_CODE_7F06DA90r
+D:80054BCC     flt_D_80054BCC: .float 6.2831855         # DATA XREF: sub_CODE_7F06D8B0+1F0r
+D:80054BD0     flt_D_80054BD0: .float 3.1415927         # DATA XREF: sub_CODE_7F06D8B0+210r
+D:80054BD4     flt_D_80054BD4: .float 6.2831855         # DATA XREF: sub_CODE_7F06D8B0+228r
+D:80054BD8     flt_D_80054BD8: .float 0.890118          # DATA XREF: sub_CODE_7F06D8B0:loc_CODE_7F06DAE0r
+D:80054BDC     flt_D_80054BDC: .float 3.1415927         # DATA XREF: sub_CODE_7F06DB5C+1A4r
+D:80054BE0     flt_D_80054BE0: .float 6.2831855         # DATA XREF: sub_CODE_7F06DB5C:loc_CODE_7F06DD38r
+D:80054BE4     flt_D_80054BE4: .float 6.2831855         # DATA XREF: sub_CODE_7F06DB5C+1ECr
+D:80054BE8     flt_D_80054BE8: .float 3.1415927         # DATA XREF: sub_CODE_7F06DB5C+20Cr
+D:80054BEC     flt_D_80054BEC: .float 6.2831855         # DATA XREF: sub_CODE_7F06DB5C+224r
+D:80054BF0     flt_D_80054BF0: .float 0.890118          # DATA XREF: sub_CODE_7F06DB5C:loc_CODE_7F06DD88r
+D:80054BF4     flt_D_80054BF4: .float 6.2831855         # DATA XREF: sub_CODE_7F06DEC0+B8r
+D:80054BF8     flt_D_80054BF8: .float 3.1415927         # DATA XREF: sub_CODE_7F06E2B8:loc_CODE_7F06E3A4r
+D:80054BFC     flt_D_80054BFC: .float 6.2831855         # DATA XREF: sub_CODE_7F06E2B8:loc_CODE_7F06E3DCr
+D:80054C00     flt_D_80054C00: .float 6.2831855         # DATA XREF: sub_CODE_7F06E2B8+134r
+D:80054C04     flt_D_80054C04: .float 3.1415927         # DATA XREF: sub_CODE_7F06E2B8+1E4r
+D:80054C08     flt_D_80054C08: .float 6.2831855         # DATA XREF: sub_CODE_7F06E2B8+200r
+D:80054C0C     flt_D_80054C0C: .float 0.890118          # DATA XREF: sub_CODE_7F06E2B8:loc_CODE_7F06E4C0r
+D:80054C10     flt_D_80054C10: .float 6.2831855         # DATA XREF: sub_CODE_7F06E540+B0r
+D:80054C14     flt_D_80054C14: .float 6.2831855         # DATA XREF: sub_CODE_7F06E540:loc_CODE_7F06E62Cr
+D:80054C18     flt_D_80054C18: .float 6.2831855         # DATA XREF: process_07_unknown+10Cr
+D:80054C1C     flt_D_80054C1C: .float 6.2831855         # DATA XREF: process_07_unknown:loc_CODE_7F06EE0Cr
+D:80054C20     jpt_700A2E24:   .word loc_CODE_7F06EEFC  # DATA XREF: sub_CODE_7F06EEA4+44r
+D:80054C20                     .word loc_CODE_7F06EEFC  # jump table for switch statement
+D:80054C20                     .word loc_CODE_7F06EEFC
+D:80054C20                     .word def_7F06EEF4
+D:80054C20                     .word def_7F06EEF4
+D:80054C20                     .word def_7F06EEF4
+D:80054C20                     .word loc_CODE_7F06EF2C
+D:80054C20                     .word loc_CODE_7F06EF04
+D:80054C20                     .word loc_CODE_7F06EF18
+D:80054C20                     .word def_7F06EEF4
+D:80054C20                     .word loc_CODE_7F06EEFC
+D:80054C20                     .word loc_CODE_7F06EEFC
+D:80054C20                     .word loc_CODE_7F06EEFC
+D:80054C20                     .word loc_CODE_7F06EEFC
+D:80054C20                     .word loc_CODE_7F06EEFC
+D:80054C20                     .word loc_CODE_7F06EEFC
+D:80054C20                     .word def_7F06EEF4
+D:80054C20                     .word def_7F06EEF4
+D:80054C20                     .word def_7F06EEF4
+D:80054C20                     .word def_7F06EEF4
+D:80054C20                     .word loc_CODE_7F06EEFC
+D:80054C20                     .word def_7F06EEF4
+D:80054C20                     .word loc_CODE_7F06EF40
+D:80054C20                     .word def_7F06EEF4
+D:80054C80     jpt_700A2F3C:   .word def_7F06F00C       # DATA XREF: sub_CODE_7F06EFC4+3Cr
+D:80054C80                     .word def_7F06F00C       # jump table for switch statement
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word loc_CODE_7F06F03C
+D:80054C80                     .word loc_CODE_7F06F014
+D:80054C80                     .word loc_CODE_7F06F028
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word loc_CODE_7F06F050
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word def_7F06F00C
+D:80054C80                     .word loc_CODE_7F06F064
+D:80054C80                     .word def_7F06F00C
+D:80054CE0     jpt_700A3050:   .word loc_CODE_7F06F128  # DATA XREF: sub_CODE_7F06F0D0+44r
+D:80054CE0                     .word loc_CODE_7F06F140  # jump table for switch statement
+D:80054CE0                     .word loc_CODE_7F06F158
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word loc_CODE_7F06F1B0
+D:80054CE0                     .word loc_CODE_7F06F188
+D:80054CE0                     .word loc_CODE_7F06F19C
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word loc_CODE_7F06F1C4
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word loc_CODE_7F06F170
+D:80054CE0                     .word def_7F06F120
+D:80054CE0                     .word loc_CODE_7F06F1D8
+D:80054CE0                     .word def_7F06F120
+D:80054D40     flt_D_80054D40: .float 6.2831855         # DATA XREF: sub_CODE_7F06F878+234r
+D:80054D44     flt_D_80054D44: .float 6.2831855         # DATA XREF: sub_CODE_7F06F878+34Cr
+D:80054D48     flt_D_80054D48: .float 6.2831855         # DATA XREF: sub_CODE_7F06F878+364r
+D:80054D4C     flt_D_80054D4C: .float 6.2831855         # DATA XREF: sub_CODE_7F0701EC+198r
+D:80054D50     flt_D_80054D50: .float 6.2831855         # DATA XREF: dogfnegx+29Cr
+D:80054D54     jpt_700A8494:   .word def_7F074564       # DATA XREF: sub_CODE_7F074534+24r
+D:80054D54                     .word def_7F074564       # jump table for switch statement
+D:80054D54                     .word def_7F074564
+D:80054D54                     .word loc_CODE_7F07460C
+D:80054D54                     .word loc_CODE_7F07464C
+D:80054D54                     .word loc_CODE_7F07466C
+D:80054D54                     .word loc_CODE_7F07465C
+D:80054D54                     .word loc_CODE_7F07456C
+D:80054D54                     .word loc_CODE_7F0745A8
+D:80054D54                     .word loc_CODE_7F0745EC
+D:80054D54                     .word loc_CODE_7F0745BC
+D:80054D54                     .word loc_CODE_7F0745CC
+D:80054D54                     .word loc_CODE_7F0745DC
+D:80054D54                     .word def_7F074564
+D:80054D54                     .word def_7F074564
+D:80054D54                     .word def_7F074564
+D:80054D54                     .word loc_CODE_7F0745FC
+D:80054D54                     .word loc_CODE_7F074580
+D:80054D54                     .word def_7F074564
+D:80054D54                     .word loc_CODE_7F07462C
+D:80054D54                     .word def_7F074564
+D:80054D54                     .word loc_CODE_7F07463C
+D:80054D54                     .word loc_CODE_7F074594
+D:80054D54                     .word loc_CODE_7F07461C
+D:80054DB4     jpt_700A92F4:   .word def_7F0753C4       # DATA XREF: sub_CODE_7F0752FC+BCr
+D:80054DB4                     .word def_7F0753C4       # jump table for switch statement
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word loc_CODE_7F07543C
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word loc_CODE_7F0753CC
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word loc_CODE_7F075404
+D:80054DB4                     .word loc_CODE_7F075450
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word def_7F0753C4
+D:80054DB4                     .word loc_CODE_7F075464
+D:80054DB4                     .word def_7F0753C4
+D:80054E14     jpt_700A95A0:   .word loc_CODE_7F075678  # DATA XREF: convert_obj_microcode_offset_to_rdram_addr+90r
+D:80054E14                     .word loc_CODE_7F075698  # jump table for switch statement
+D:80054E14                     .word loc_CODE_7F0756B8
+D:80054E14                     .word loc_CODE_7F0756D8
+D:80054E14                     .word loc_CODE_7F0757AC
+D:80054E14                     .word loc_CODE_7F0758F4
+D:80054E14                     .word loc_CODE_7F07583C
+D:80054E14                     .word loc_CODE_7F075904
+D:80054E14                     .word loc_CODE_7F07594C
+D:80054E14                     .word def_7F075670
+D:80054E14                     .word loc_CODE_7F0759A0
+D:80054E14                     .word loc_CODE_7F0759C4
+D:80054E14                     .word loc_CODE_7F0759E8
+D:80054E14                     .word def_7F075670
+D:80054E14                     .word def_7F075670
+D:80054E14                     .word def_7F075670
+D:80054E14                     .word loc_CODE_7F075980
+D:80054E14                     .word loc_CODE_7F07592C
+D:80054E14                     .word def_7F075670
+D:80054E14                     .word loc_CODE_7F07578C
+D:80054E14                     .word def_7F075670
+D:80054E14                     .word loc_CODE_7F075A20
+D:80054E14                     .word def_7F075670
+D:80054E14                     .word loc_CODE_7F0756FC
+D:80054E74     jpt_700A9A90:   .word loc_CODE_7F075B68  # DATA XREF: set_microcode_entry_numbers+38r
+D:80054E74                     .word def_7F075B60       # jump table for switch statement
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word loc_CODE_7F075B84
+D:80054E74                     .word loc_CODE_7F075BA0
+D:80054E74                     .word loc_CODE_7F075C00
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word loc_CODE_7F075C30
+D:80054E74                     .word loc_CODE_7F075C4C
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word loc_CODE_7F075BC0
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word def_7F075B60
+D:80054E74                     .word loc_CODE_7F075BE0
+D:80054E74                     .word loc_CODE_7F075C68
+D:80054ED4     jpt_700A9CB0:   .word loc_CODE_7F075D88  # DATA XREF: unknown_object_microcode_handler+48r
+D:80054ED4                     .word def_7F075D80       # jump table for switch statement
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word loc_CODE_7F075E00
+D:80054ED4                     .word loc_CODE_7F075E18
+D:80054ED4                     .word loc_CODE_7F075E78
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word loc_CODE_7F075E9C
+D:80054ED4                     .word loc_CODE_7F075EB4
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word loc_CODE_7F075E38
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word def_7F075D80
+D:80054ED4                     .word loc_CODE_7F075E5C
+D:80054ED4                     .word loc_CODE_7F075ECC
+D:80054F34     jpt_700AA050:   .word loc_CODE_7F076128  # DATA XREF: sub_CODE_7F0760C4+50r
+D:80054F34                     .word def_7F076120       # jump table for switch statement
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word loc_CODE_7F0761A0
+D:80054F34                     .word loc_CODE_7F0761C0
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word loc_CODE_7F0761B0
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word loc_CODE_7F076188
+D:80054F34                     .word def_7F076120
+D:80054F34                     .word loc_CODE_7F076158
+*/
 
 
 #ifdef NONMATCHING

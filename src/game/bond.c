@@ -714,6 +714,213 @@ D:80036AAC     dword_D_80036AAC:.word 0x3DCCCCCD, 0x42140000, 0x423C0000, 2, 0xF
 D:80036AAC                     .word 0, 0
 */
 
+/* rodata
+D:80054FA0     flt_D_80054FA0: .float 3.1415927         # DATA XREF: sub_CODE_7F077C5C+1Cr
+D:80054FA4     flt_D_80054FA4: .float 0.52359879        # DATA XREF: sub_CODE_7F077C5C+D4r
+D:80054FA8     flt_D_80054FA8: .float 0.52359879        # DATA XREF: sub_CODE_7F077C5C+D8r
+D:80054FAC     flt_D_80054FAC: .float -1.0e20           # DATA XREF: sub_CODE_7F078060+24r
+D:80054FB0     flt_D_80054FB0: .float 3.1415927         # DATA XREF: sub_CODE_7F078140+8r
+D:80054FB4     flt_D_80054FB4: .float 3.1415927         # DATA XREF: sub_CODE_7F078258+8r
+D:80054FB8                     .word 0
+D:80054FBC                     .word 0
+D:80054FC0     a8s:            .ascii "%8s"<0>          # DATA XREF: sub_CODE_7F08AAE8+2D8o
+D:80054FC4     aX4_0f:         .ascii "x %4.0f"<0>      # DATA XREF: sub_CODE_7F08AAE8+2F4o
+D:80054FCC     aY4_0f:         .ascii "y %4.0f"<0>      # DATA XREF: sub_CODE_7F08AAE8+320o
+D:80054FD4     aZ4_0f:         .ascii "z %4.0f"<0>      # DATA XREF: sub_CODE_7F08AAE8+34Co
+D:80054FDC     aS3d:           .ascii "%s %3d"<0><0>    # DATA XREF: sub_CODE_7F08AAE8+398o
+D:80054FE4     jpt_700ADD28:   .word loc_CODE_7F079EA4  # DATA XREF: solo_char_load+FCr
+D:80054FE4                     .word cuff_1_brosnan     # jump table for switch statement
+D:80054FE4                     .word cuff_2_jungle
+D:80054FE4                     .word cuff_3_boiler
+D:80054FE4                     .word cuff_4_snowsuit
+D:80054FE4                     .word cuff_5_connery
+D:80054FE4                     .word cuff_6_moore
+D:80054FE4                     .word cuff_7_dalton
+D:80054FE4                     .word cuff_8_variable_bond_head
+D:80055008     jpt_700ADE1C:   .word loc_CODE_7F079F84  # DATA XREF: solo_char_load+1F0r
+D:80055008                     .word brosnan_tux_head_set  # jump table for switch statement
+D:80055008                     .word jungle_head_set
+D:80055008                     .word boiler_bond_head_set
+D:80055008                     .word loc_CODE_7F079F84
+D:80055008                     .word connery_head_set
+D:80055008                     .word moore_head_set
+D:80055008                     .word dalton_head_set
+D:80055008                     .word variable_body_head
+D:8005502C     flt_D_8005502C: .float 0.97000003        # DATA XREF: solo_char_load+578r
+D:80055030     flt_D_80055030: .float 6.2831855         # DATA XREF: sub_CODE_7F07A534+78r
+D:80055034     flt_D_80055034: .float 1500.0            # DATA XREF: sub_CODE_7F07A534+8Cr
+D:80055038     flt_D_80055038: .float 6.2831855         # DATA XREF: sub_CODE_7F07A534:loc_CODE_7F07A61Cr
+D:8005503C     flt_D_8005503C: .float 0.39269909        # DATA XREF: sub_CODE_7F07A534+F8r
+D:80055040     flt_D_80055040: .float 6.2831855         # DATA XREF: sub_CODE_7F07A534:loc_CODE_7F07A94Cr
+D:80055044     flt_D_80055044: .float 179.5             # DATA XREF: sub_CODE_7F07B56C+328r
+D:80055048     flt_D_80055048: .float 0.1               # DATA XREF: sub_CODE_7F07B56C+354r
+D:8005504C     flt_D_8005504C: .float 0.015             # DATA XREF: sub_CODE_7F07B56C:loc_CODE_7F07B988r
+D:80055050     flt_D_80055050: .float 3.1415927         # DATA XREF: sub_CODE_7F07B56C+470r
+D:80055054     flt_D_80055054: .float 0.079999998       # DATA XREF: sub_CODE_7F07B56C+4C8r
+D:80055058     flt_D_80055058: .float 0.079999998       # DATA XREF: sub_CODE_7F07B56C+56Cr
+D:8005505C     flt_D_8005505C: .float 6.2831855         # DATA XREF: sub_CODE_7F07B56C+F10r
+D:80055060     flt_D_80055060: .float 6.2831855         # DATA XREF: sub_CODE_7F07C7B4+1Cr
+D:80055064     flt_D_80055064: .float 6.2831855         # DATA XREF: sub_CODE_7F07CAC8+188r
+D:80055068     flt_D_80055068: .float 6.2831855         # DATA XREF: sub_CODE_7F07CEB0r
+D:8005506C     flt_D_8005506C: .float 6.2831855         # DATA XREF: sub_CODE_7F07E090+68r
+D:80055070     flt_D_80055070: .float 6.2831855         # DATA XREF: sub_CODE_7F07E090+134r
+D:80055074     flt_D_80055074: .float -0.69999999       # DATA XREF: sub_CODE_7F07E090:loc_CODE_7F07E324r
+D:80055078     flt_D_80055078: .float 0.69999999        # DATA XREF: sub_CODE_7F07E090:loc_CODE_7F07E360r
+D:8005507C      # f32 final
+D:8005507C     final:          .float 5.9000001         # DATA XREF: zoom_to_watch_on_open+10r
+D:80055080     flt_D_80055080: .float -54.099998        # DATA XREF: zoom_to_watch_on_open+28r
+D:80055084     flt_D_80055084: .float -54.099998        # DATA XREF: zoom_from_watch_on_exit+28r
+D:80055088     flt_D_80055088: .float 0.10000001        # DATA XREF: sub_CODE_7F07E7CC+58r
+D:8005508C     flt_D_8005508C: .float 1.7               # DATA XREF: trigger_solo_watch_menu+40r
+D:80055090     flt_D_80055090: .float 1.1               # DATA XREF: trigger_solo_watch_menu+4Cr
+D:80055094     flt_D_80055094: .float -0.69999999       # DATA XREF: sub_CODE_7F07FF74+28r
+D:80055098     flt_D_80055098: .float 0.69999999        # DATA XREF: sub_CODE_7F07FF74+64r
+D:8005509C     flt_D_8005509C: .float 0.050000001       # DATA XREF: sub_CODE_7F080010+64r
+D:800550A0     flt_D_800550A0: .float 0.0125            # DATA XREF: sub_CODE_7F080010:loc_CODE_7F08009Cr
+D:800550A4     flt_D_800550A4: .float 0.050000001       # DATA XREF: sub_CODE_7F080010+104r
+D:800550A8     flt_D_800550A8: .float 0.0125            # DATA XREF: sub_CODE_7F080010:loc_CODE_7F08013Cr
+D:800550AC     flt_D_800550AC: .float 0.050000001       # DATA XREF: sub_CODE_7F080010+188r
+D:800550B0     flt_D_800550B0: .float 0.050000001       # DATA XREF: sub_CODE_7F080010:loc_CODE_7F0801DCr
+D:800550B4     flt_D_800550B4: .float -0.69999999       # DATA XREF: sub_CODE_7F080228+28r
+D:800550B8     flt_D_800550B8: .float 0.69999999        # DATA XREF: sub_CODE_7F080228+64r
+D:800550BC     flt_D_800550BC: .float 0.050000001       # DATA XREF: sub_CODE_7F0802C4+64r
+D:800550C0     flt_D_800550C0: .float 0.0125            # DATA XREF: sub_CODE_7F0802C4:loc_CODE_7F080350r
+D:800550C4     flt_D_800550C4: .float 0.050000001       # DATA XREF: sub_CODE_7F0802C4+108r
+D:800550C8     flt_D_800550C8: .float 0.0125            # DATA XREF: sub_CODE_7F0802C4:loc_CODE_7F0803F4r
+D:800550CC     flt_D_800550CC: .float 0.050000001       # DATA XREF: sub_CODE_7F0802C4+18Cr
+D:800550D0     flt_D_800550D0: .float 0.050000001       # DATA XREF: sub_CODE_7F0802C4:loc_CODE_7F080494r
+D:800550D4     firstperson_weapon_movement_restrictor:.float 0.017453292
+D:800550D4                                              # DATA XREF: sub_CODE_7F080B34+11Cr
+D:800550D8     flt_D_800550D8: .float 0.017453292       # DATA XREF: sub_CODE_7F080B34+1A8r
+D:800550DC     flt_D_800550DC: .float 0.17000002        # DATA XREF: sub_CODE_7F080DF8+48r
+D:800550E0     flt_D_800550E0: .float 0.82999998        # DATA XREF: sub_CODE_7F080DF8+80r
+D:800550E4     flt_D_800550E4: .float 0.17000002        # DATA XREF: sub_CODE_7F080DF8+254r
+D:800550E8     flt_D_800550E8: .float 0.82999998        # DATA XREF: sub_CODE_7F080DF8+27Cr
+D:800550EC     flt_D_800550EC: .float 1.388889          # DATA XREF: sub_CODE_7F080DF8+360r
+D:800550F0     player_gravity_modifier:.float 0.27777779
+D:800550F0                                              # DATA XREF: sub_CODE_7F080DF8:loc_CODE_7F081164r
+D:800550F4     player_view_gravity_modifier:.float 0.27777779
+D:800550F4                                              # DATA XREF: sub_CODE_7F080DF8+3C8r
+D:800550F8     flt_D_800550F8: .float -13.333333        # DATA XREF: sub_CODE_7F080DF8+494r
+D:800550FC     flt_D_800550FC: .float 8.333333          # DATA XREF: sub_CODE_7F080DF8+500r
+D:80055100     flt_D_80055100: .float 0.80000001        # DATA XREF: sub_CODE_7F080DF8+5B0r
+D:80055104     flt_D_80055104: .float 0.19999999        # DATA XREF: sub_CODE_7F080DF8+658r
+D:80055108     flt_D_80055108: .float 0.89999998        # DATA XREF: sub_CODE_7F081478+270r
+D:8005510C     flt_D_8005510C: .float 0.10000002        # DATA XREF: sub_CODE_7F081478:loc_CODE_7F08174Cr
+D:80055110     flt_D_80055110: .float 0.017453292       # DATA XREF: sub_CODE_7F081790:loc_CODE_7F081874r
+D:80055114     flt_D_80055114: .float 0.017453292       # DATA XREF: sub_CODE_7F081790+10Cr
+D:80055118     flt_D_80055118: .float 0.017453292       # DATA XREF: sub_CODE_7F081790:loc_CODE_7F0818FCr
+D:8005511C     flt_D_8005511C: .float 0.017453292       # DATA XREF: sub_CODE_7F081790+18Cr
+D:80055120     flt_D_80055120: .float 0.060000002       # DATA XREF: controller_gameplay_interaction+11A8r
+D:80055124     flt_D_80055124: .float 0.079999983       # DATA XREF: controller_gameplay_interaction+11ECr
+D:80055128     flt_D_80055128: .float 0.017453292       # DATA XREF: controller_gameplay_interaction+14B0r
+D:8005512C     flt_D_8005512C: .float 0.017453292       # DATA XREF: controller_gameplay_interaction+14E8r
+D:80055130     flt_D_80055130: .float 0.017453292       # DATA XREF: controller_gameplay_interaction:loc_CODE_7F082EE0r
+D:80055134     flt_D_80055134: .float 1.08              # DATA XREF: controller_gameplay_interaction:loc_CODE_7F0832D8r
+D:80055138     flt_D_80055138: .float 0.0099999998      # DATA XREF: controller_gameplay_interaction+1A4Cr
+D:8005513C                     .float 0.0099999998
+D:80055140     flt_D_80055140: .float 6.2831855         # DATA XREF: controller_gameplay_interaction+1CB4r
+D:80055144     flt_D_80055144: .float 0.86666667        # DATA XREF: controller_gameplay_interaction+1D00r
+D:80055148     flt_D_80055148: .float 0.050000001       # DATA XREF: controller_gameplay_interaction+1EF4r
+D:8005514C     flt_D_8005514C: .float 0.30000001        # DATA XREF: controller_gameplay_interaction+2314r
+D:80055150     flt_D_80055150: .float 0.30000001        # DATA XREF: controller_gameplay_interaction+234Cr
+D:80055154     flt_D_80055154: .float 0.30000001        # DATA XREF: controller_gameplay_interaction+237Cr
+D:80055158     flt_D_80055158: .float 0.92000002        # DATA XREF: controller_gameplay_interaction+23ACr
+D:8005515C     flt_D_8005515C: .float 0.079999983       # DATA XREF: controller_gameplay_interaction+23F8r
+D:80055160     flt_D_80055160: .float 0.30000001        # DATA XREF: controller_gameplay_interaction:loc_CODE_7F083EC4r
+D:80055164     flt_D_80055164: .float 0.1               # DATA XREF: controller_gameplay_interaction:loc_CODE_7F083F30r
+D:80055168     flt_D_80055168: .float 0.64999998        # DATA XREF: controller_gameplay_interaction+2614r
+D:8005516C     flt_D_8005516C: .float 0.06666667        # DATA XREF: MoveBond+26Cr
+D:80055170     flt_D_80055170: .float 6.2831855         # DATA XREF: MoveBond+358r
+D:80055174     flt_D_80055174: .float 0.017453292       # DATA XREF: MoveBond+364r
+D:80055178     flt_D_80055178: .float 1.01              # DATA XREF: MoveBond+69Cr
+D:8005517C     flt_D_8005517C: .float 1.01              # DATA XREF: MoveBond+6B8r
+D:80055180     flt_D_80055180: .float 6.2831855         # DATA XREF: MoveBond:loc_CODE_7F084D64r
+D:80055184     flt_D_80055184: .float 0.017453292       # DATA XREF: MoveBond:loc_CODE_7F084DE4r
+D:80055188     flt_D_80055188: .float 3.1415927         # DATA XREF: MoveBond:loc_CODE_7F084E38r
+D:8005518C     flt_D_8005518C: .float 6.2831855         # DATA XREF: MoveBond+808r
+D:80055190     flt_D_80055190: .float -3.1415927        # DATA XREF: MoveBond:loc_CODE_7F084E60r
+D:80055194     flt_D_80055194: .float 6.2831855         # DATA XREF: MoveBond+830r
+D:80055198     flt_D_80055198: .float 0.92000002        # DATA XREF: MoveBond+84Cr
+D:8005519C     flt_D_8005519C: .float 0.079999983       # DATA XREF: MoveBond+89Cr
+D:800551A0     flt_D_800551A0: .float 6.2831855         # DATA XREF: MoveBond+8A8r
+D:800551A4                     .float 0.92000002
+D:800551A8     flt_D_800551A8: .float 0.92000002        # DATA XREF: MoveBond+920r
+D:800551AC     flt_D_800551AC: .float 0.079999983       # DATA XREF: MoveBond+940r
+D:800551B0                     .float 0.92000002
+D:800551B4                     .float 0.92000002
+D:800551B8                     .float 0.92000002
+D:800551BC     flt_D_800551BC: .float 6.2831855         # DATA XREF: MoveBond+9D8r
+D:800551C0                     .float 0.92000002
+D:800551C4                     .float 0.92000002
+D:800551C8                     .float 0.92000002
+D:800551CC     flt_D_800551CC: .float 0.92000002        # DATA XREF: MoveBond+A1Cr
+D:800551D0     flt_D_800551D0: .float 0.079999983       # DATA XREF: MoveBond+AB0r
+D:800551D4     flt_D_800551D4: .float 0.017453292       # DATA XREF: MoveBond+AD0r
+D:800551D8     flt_D_800551D8: .float 6.2831855         # DATA XREF: MoveBond+B10r
+D:800551DC     flt_D_800551DC: .float 6.2831855         # DATA XREF: MoveBond+D08r
+D:800551E0     flt_D_800551E0: .float 6.2831855         # DATA XREF: MoveBond+DBCr
+D:800551E4     flt_D_800551E4: .float 6.2831855         # DATA XREF: MoveBond:loc_CODE_7F08546Cr
+D:800551E8     flt_D_800551E8: .float 0.30000001        # DATA XREF: MoveBond+1068r
+D:800551EC     flt_D_800551EC: .float 0.15000001        # DATA XREF: MoveBond+113Cr
+D:800551F0     flt_D_800551F0: .float 20000.0           # DATA XREF: MoveBond+1158r
+D:800551F4     flt_D_800551F4: .float 0.89999998        # DATA XREF: MoveBond:loc_CODE_7F0857C0r
+D:800551F8     flt_D_800551F8: .float 12767.0           # DATA XREF: MoveBond+1194r
+D:800551FC     flt_D_800551FC: .float 20000.0           # DATA XREF: MoveBond+11A4r
+D:80055200     flt_D_80055200: .float 0.89999998        # DATA XREF: MoveBond+1254r
+D:80055204     flt_D_80055204: .float 7767.0            # DATA XREF: MoveBond+1274r
+D:80055208     flt_D_80055208: .float 0.89999998        # DATA XREF: MoveBond+1278r
+D:8005520C     flt_D_8005520C: .float 25000.0           # DATA XREF: MoveBond+1284r
+D:80055210     flt_D_80055210: .float 0.17453294        # DATA XREF: MoveBond+12C4r
+D:80055214     flt_D_80055214: .float 0.43633232        # DATA XREF: MoveBond:loc_CODE_7F08592Cr
+D:80055218     flt_D_80055218: .float -0.087266468      # DATA XREF: MoveBond:loc_CODE_7F08594Cr
+D:8005521C     flt_D_8005521C: .float 0.94              # DATA XREF: MoveBond+1334r
+D:80055220     flt_D_80055220: .float 0.060000002       # DATA XREF: MoveBond+1380r
+D:80055224     flt_D_80055224: .float 2700.0            # DATA XREF: MoveBond+13A8r
+D:80055228     flt_D_80055228: .float 6.2831855         # DATA XREF: MoveBond+13F0r
+D:8005522C     flt_D_8005522C: .float 6.2831855         # DATA XREF: MoveBond+1428r
+D:80055230     flt_D_80055230: .float 0.60000002        # DATA XREF: MoveBond+1628r
+D:80055234     flt_D_80055234: .float 0.80000001        # DATA XREF: MoveBond:loc_CODE_7F085C8Cr
+D:80055238     flt_D_80055238: .float 0.1               # DATA XREF: MoveBond:loc_CODE_7F085D10r
+D:8005523C     flt_D_8005523C: .float 2700.0            # DATA XREF: MoveBond:loc_CODE_7F085D80r
+D:80055240     flt_D_80055240: .float 1.16              # DATA XREF: MoveBond+1904r
+D:80055244     flt_D_80055244: .float 1.01              # DATA XREF: MoveBond+194Cr
+D:80055248     flt_D_80055248: .float 0.99009901        # DATA XREF: MoveBond+19BCr
+D:8005524C     flt_D_8005524C: .float 0.69999999        # DATA XREF: MoveBond:loc_CODE_7F0863ACr
+D:80055250     flt_D_80055250: .float 1.2               # DATA XREF: MoveBond+1DF4r
+D:80055254     flt_D_80055254: .float 0.017453292       # DATA XREF: MoveBond+1E0Cr
+D:80055258     flt_D_80055258: .float 6.2831855         # DATA XREF: MoveBond+1ED4r
+D:8005525C     flt_D_8005525C: .float 0.82999998        # DATA XREF: MoveBond+1FC8r
+D:80055260     flt_D_80055260: .float 0.17000002        # DATA XREF: MoveBond:loc_CODE_7F086638r
+D:80055264     flt_D_80055264: .float 1.7777778         # DATA XREF: possibly_reset_viewport_options_for_player+158r
+D:80055268     flt_D_80055268: .float 1.7777778         # DATA XREF: possibly_reset_viewport_options_for_player+1A4r
+D:8005526C     flt_D_8005526C: .float 3.1415927         # DATA XREF: sub_CODE_7F087A08+180r
+D:80055270     flt_D_80055270: .float 6.2831855         # DATA XREF: sub_CODE_7F087A08+1A4r
+D:80055274     flt_D_80055274: .float 3.1415927         # DATA XREF: sub_CODE_7F087A08+1C8r
+D:80055278     flt_D_80055278: .float 6.2831855         # DATA XREF: sub_CODE_7F087A08+1E8r
+D:8005527C     flt_D_8005527C: .float 0.017453292       # DATA XREF: sub_CODE_7F087E74+1E0r
+D:80055280     flt_D_80055280: .float 6.2831855         # DATA XREF: sub_CODE_7F087E74+400r
+D:80055284     flt_D_80055284: .float 6.2831855         # DATA XREF: mp_respawn_handler+134r
+D:80055288     flt_D_80055288: .float 0.17000002        # DATA XREF: mp_respawn_handler+198r
+D:8005528C     flt_D_8005528C: .float 0.10000002        # DATA XREF: mp_respawn_handler+1E4r
+D:80055290     jpt_700BCB10:   .word mp_spawntype_spawn  # DATA XREF: mp_respawn_handler+2ECr
+D:80055290                     .word mp_spawntype_weapon  # jump table for switch statement
+D:80055290                     .word mp_spawntype_ammo
+D:80055290                     .word mp_spawntype_intro_swirly
+D:80055290                     .word mp_spawntype_intro_anim
+D:80055290                     .word mp_spawntype_handcuff
+D:80055290                     .word mp_spawntype_intro_camera
+D:800552AC     flt_D_800552AC: .float -0.000099999997   # DATA XREF: mp_respawn_handler+3B8r
+D:800552B0     flt_D_800552B0: .float 3.1415927         # DATA XREF: record_damage_kills+250r
+D:800552B4     twopi_800552B4: .float 6.2831855         # DATA XREF: get_curplay_horizontal_rotation_in_degrees+14r
+D:800552B8     flt_D_800552B8: .float 6.2831855         # DATA XREF: get_curplay_vertical_rotation_in_degrees+8r
+D:800552BC     flt_D_800552BC: .float 3.1415927         # DATA XREF: sub_CODE_7F08AAE8+260r
+D:800552C0     flt_D_800552C0: .float -0.050000001      # DATA XREF: sub_CODE_7F08B0F0:loc_CODE_7F08B680r
+D:800552C4     flt_D_800552C4: .float -0.40000001       # DATA XREF: sub_CODE_7F08B0F0+5D0r
+D:800552C8     flt_D_800552C8: .float 0.050000001       # DATA XREF: sub_CODE_7F08B0F0:loc_CODE_7F08B708r
+D:800552CC     flt_D_800552CC: .float 0.40000001        # DATA XREF: sub_CODE_7F08B0F0+65Cr
+D:800552D0     flt_D_800552D0: .float 6.2831855         # DATA XREF: sub_CODE_7F08B0F0+A0Cr
+*/
 
 
 #ifdef NONMATCHING

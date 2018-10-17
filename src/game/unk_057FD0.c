@@ -13,6 +13,9 @@ D:80032310                                              # sub_CODE_7F058E78+18o
 D:80032314                     .float 65536.0
 */
 
+/* rodata
+D:800536F0     flt_D_800536F0: .float 57.295776         # DATA XREF: sub_CODE_7F059CE8+8r
+*/
 
 
 

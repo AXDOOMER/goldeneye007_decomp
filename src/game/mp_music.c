@@ -9,6 +9,67 @@ D:800484C0                                              # sub_CODE_7F0C11FC+30w
 D:800484C0                                              # sub_CODE_7F0C1310r
 */
 
+/* rodata
+D:8005B790     jpt_700F4B9C:   .word loc_CODE_7F0C0C74  # DATA XREF: sub_CODE_7F0C0C3C+24r
+D:8005B790                     .word loc_CODE_7F0C0D28  # jump table for switch statement
+D:8005B790                     .word loc_CODE_7F0C0E18
+D:8005B790                     .word loc_CODE_7F0C0EB0
+D:8005B790                     .word loc_CODE_7F0C0FE8
+D:8005B790                     .word loc_CODE_7F0C10B4
+D:8005B790                     .word loc_CODE_7F0C115C
+D:8005B7AC     jpt_700F4BBC:   .word loc_CODE_7F0C11EC  # DATA XREF: sub_CODE_7F0C0C3C+44r
+D:8005B7AC                     .word loc_CODE_7F0C0C94  # jump table for switch statement
+D:8005B7AC                     .word loc_CODE_7F0C0D28
+D:8005B7AC                     .word loc_CODE_7F0C0D28
+D:8005B7AC                     .word loc_CODE_7F0C0CC8
+D:8005B7AC                     .word loc_CODE_7F0C0D28
+D:8005B7AC                     .word loc_CODE_7F0C0D28
+D:8005B7C8     jpt_700F4C70:   .word loc_CODE_7F0C0D48  # DATA XREF: sub_CODE_7F0C0C3C+F8r
+D:8005B7C8                     .word loc_CODE_7F0C0E18  # jump table for switch statement
+D:8005B7C8                     .word loc_CODE_7F0C0D68
+D:8005B7C8                     .word loc_CODE_7F0C0DAC
+D:8005B7C8                     .word loc_CODE_7F0C0E18
+D:8005B7C8                     .word loc_CODE_7F0C0E18
+D:8005B7C8                     .word loc_CODE_7F0C0DE4
+D:8005B7E4     flt_D_8005B7E4: .float 0.02              # DATA XREF: sub_CODE_7F0C0C3C+1B0r
+D:8005B7E8     jpt_700F4D60:   .word loc_CODE_7F0C0E38  # DATA XREF: sub_CODE_7F0C0C3C+1E8r
+D:8005B7E8                     .word loc_CODE_7F0C0E58  # jump table for switch statement
+D:8005B7E8                     .word loc_CODE_7F0C11EC
+D:8005B7E8                     .word loc_CODE_7F0C0E88
+D:8005B7E8                     .word loc_CODE_7F0C0EB0
+D:8005B7E8                     .word loc_CODE_7F0C0EB0
+D:8005B7E8                     .word loc_CODE_7F0C0EB0
+D:8005B804     jpt_700F4DF8:   .word loc_CODE_7F0C0ED0  # DATA XREF: sub_CODE_7F0C0C3C+280r
+D:8005B804                     .word loc_CODE_7F0C0EF0  # jump table for switch statement
+D:8005B804                     .word loc_CODE_7F0C0F20
+D:8005B804                     .word loc_CODE_7F0C0FE8
+D:8005B804                     .word loc_CODE_7F0C0F54
+D:8005B804                     .word loc_CODE_7F0C0F9C
+D:8005B804                     .word loc_CODE_7F0C0FE8
+D:8005B820     jpt_700F4F30:   .word loc_CODE_7F0C1008  # DATA XREF: sub_CODE_7F0C0C3C+3B8r
+D:8005B820                     .word loc_CODE_7F0C10B4  # jump table for switch statement
+D:8005B820                     .word loc_CODE_7F0C10B4
+D:8005B820                     .word loc_CODE_7F0C1028
+D:8005B820                     .word loc_CODE_7F0C10B4
+D:8005B820                     .word loc_CODE_7F0C1070
+D:8005B820                     .word loc_CODE_7F0C10B4
+D:8005B83C     jpt_700F4FFC:   .word loc_CODE_7F0C10D4  # DATA XREF: sub_CODE_7F0C0C3C+484r
+D:8005B83C                     .word loc_CODE_7F0C115C  # jump table for switch statement
+D:8005B83C                     .word loc_CODE_7F0C115C
+D:8005B83C                     .word loc_CODE_7F0C10F4
+D:8005B83C                     .word loc_CODE_7F0C112C
+D:8005B83C                     .word loc_CODE_7F0C115C
+D:8005B83C                     .word loc_CODE_7F0C115C
+D:8005B858     jpt_700F50A4:   .word loc_CODE_7F0C117C  # DATA XREF: sub_CODE_7F0C0C3C+52Cr
+D:8005B858                     .word loc_CODE_7F0C119C  # jump table for switch statement
+D:8005B858                     .word loc_CODE_7F0C11E4
+D:8005B858                     .word loc_CODE_7F0C11E4
+D:8005B858                     .word loc_CODE_7F0C11E4
+D:8005B858                     .word loc_CODE_7F0C11E4
+D:8005B858                     .word loc_CODE_7F0C11CC
+*/
+
+
 #ifdef NONMATCHING
 void sub_GAME_7F0C0C10(void) {
 

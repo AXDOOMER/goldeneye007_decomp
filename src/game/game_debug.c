@@ -5,7 +5,10 @@
 D:8004EAE0     dword_D_8004EAE0:.word 0, 0, 0, 0        # DATA XREF: something_game_c_debug_related+18o
 */
 
-
+/* rodata
+D:8005BFF0     aGame_c_debug:  .ascii "game_c_debug"<0><0><0><0>
+D:8005BFF0                                              # DATA XREF: something_game_c_debug_related+Co
+*/
 
 #ifdef NONMATCHING
 void something_game_c_debug_related(void) {
