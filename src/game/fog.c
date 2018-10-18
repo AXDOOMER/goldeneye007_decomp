@@ -1,5 +1,68 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:800825C0     sky_enabled:    .space 4                 # DATA XREF: sub_CODE_7F0B6368:loc_CODE_7F0B651Cr
+CODE.bss:800825C0                                              # copy_table1_env_to_current+268w
+CODE.bss:800825C0                                              # load_enviroment+1D4w
+CODE.bss:800825C0                                              # sub_CODE_7F0BB070r
+CODE.bss:800825C0                                              # sub_CODE_7F0BB298r
+CODE.bss:800825C0                                              # sub_CODE_7F0BB2C8r
+CODE.bss:800825C0                                              # if_sky_present_convert_valuesr
+CODE.bss:800825C4     ptr_nearfog_enviroment_values:.space 4   # DATA XREF: copy_table1_env_to_current+25Cw
+CODE.bss:800825C4                                              # copy_table1_env_to_current:loc_CODE_7F0BA9B8w
+CODE.bss:800825C4                                              # return_nearfog_values+8r
+CODE.bss:800825C8     buffer_far_pervasiveness:.space 4        # DATA XREF: copy_table1_env_to_current+4Co
+CODE.bss:800825C8                                              # copy_table1_env_to_current+E4w
+CODE.bss:800825C8                                              # copy_table1_env_to_current+108r
+CODE.bss:800825C8                                              # if_sky_present_convert_values+50o
+CODE.bss:800825CC     far_fog:        .space 4                 # DATA XREF: copy_table1_env_to_current+10Cw
+CODE.bss:800825CC                                              # copy_table1_env_to_current+114r
+CODE.bss:800825D0                     .space 8
+CODE.bss:800825D8     flt_CODE_bss_800825D8:.space 4           # DATA XREF: copy_table1_env_to_current+184w
+CODE.bss:800825D8                                              # if_sky_present_convert_values+CCr
+CODE.bss:800825DC     flt_CODE_bss_800825DC:.space 4           # DATA XREF: copy_table1_env_to_current+1A4w
+CODE.bss:800825DC                                              # if_sky_present_convert_values+D0r
+CODE.bss:800825E0     buffer_far_ambiant:.space 4              # DATA XREF: copy_table1_env_to_current+44o
+CODE.bss:800825E0                                              # copy_table1_env_to_current+ACw
+CODE.bss:800825E0                                              # copy_table1_env_to_current+B0r
+CODE.bss:800825E4     bg_dif_light:   .space 4                 # DATA XREF: copy_table1_env_to_current+3Co
+CODE.bss:800825E4                                              # copy_table1_env_to_current+88w
+CODE.bss:800825E4                                              # copy_table1_env_to_current+C0r
+CODE.bss:800825E8     env_table_hit:  .space 4                 # DATA XREF: load_enviroment+7Co
+CODE.bss:800825E8                                              # load_enviroment+80w
+CODE.bss:800825E8                                              # load_enviroment+9Cr
+CODE.bss:800825E8                                              # load_enviroment+F8o
+CODE.bss:800825E8                                              # load_enviroment+FCw
+CODE.bss:800825E8                                              # load_enviroment+118r
+CODE.bss:800825E8                                              # load_enviroment+170o
+CODE.bss:800825E8                                              # load_enviroment+174w
+CODE.bss:800825E8                                              # load_enviroment+190r
+CODE.bss:800825E8                                              # load_enviroment+228o
+CODE.bss:800825E8                                              # load_enviroment+230w
+CODE.bss:800825EC     env_table_match_start:.space 4           # DATA XREF: load_enviroment+84w
+CODE.bss:800825EC                                              # load_enviroment+100w
+CODE.bss:800825EC                                              # load_enviroment+178w
+CODE.bss:800825EC                                              # switch_to_solosky2r
+CODE.bss:800825F0     env_table_match_end:.space 4             # DATA XREF: load_enviroment+94w
+CODE.bss:800825F0                                              # load_enviroment+110w
+CODE.bss:800825F0                                              # load_enviroment+188w
+CODE.bss:800825F0                                              # switch_to_solosky2+60r
+CODE.bss:800825F4                     .align 3
+CODE.bss:800825F8     dword_CODE_bss_800825F8:.space 4         # DATA XREF: switch_to_solosky2+8o
+CODE.bss:800825FC     flt_CODE_bss_800825FC:.space 4           # DATA XREF: switch_to_solosky2+78w
+CODE.bss:80082600     flt_CODE_bss_80082600:.space 4           # DATA XREF: switch_to_solosky2+94w
+CODE.bss:80082604                     .space 0x14
+CODE.bss:80082618     dword_CODE_bss_80082618:.space 4         # DATA XREF: switch_to_solosky2+CCw
+CODE.bss:8008261C     dword_CODE_bss_8008261C:.space 4         # DATA XREF: switch_to_solosky2+100w
+CODE.bss:80082620     off_CODE_bss_80082620:.space 1           # DATA XREF: switch_to_solosky2:loc_CODE_7F0BAE78w
+CODE.bss:80082620                                              # switch_to_solosky2+3A8w
+CODE.bss:80082621     byte_CODE_bss_80082621:.space 1          # DATA XREF: switch_to_solosky2:loc_CODE_7F0BAF5Cw
+CODE.bss:80082621                                              # switch_to_solosky2+3ACw
+CODE.bss:80082622     byte_CODE_bss_80082622:.space 1          # DATA XREF: switch_to_solosky2:loc_CODE_7F0BB040w
+CODE.bss:80082622                                              # switch_to_solosky2+3B4w
+CODE.bss:80082623                     .align 2
+CODE.bss:80082624                     .space 0x3C
+*/
 
 /* data
 D:80044DC0                     .word 0

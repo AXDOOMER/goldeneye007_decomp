@@ -1,5 +1,10 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:8008D370     dword_CODE_bss_8008D370:.space 0x400     # DATA XREF: D:fast3d_relatedo
+CODE.bss:8008D370                                              # D:fast3d_related_0o
+CODE.bss:8008D770     dword_CODE_bss_8008D770:.space 0xBA0     # DATA XREF: load_rsp_microcode+78o
+*/
 
 /* data
 D:8004E9E0     dword_D_8004E9E0:.word 0                 # DATA XREF: something_with_rsp_c_debug+18o

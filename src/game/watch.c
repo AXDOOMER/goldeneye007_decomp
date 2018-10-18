@@ -1,5 +1,11 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:8007B0A0     dword_CODE_bss_8007B0A0:.space 0x40      # DATA XREF: sub_CODE_7F0A714C+1BCo
+CODE.bss:8007B0A0                                              # sub_CODE_7F0A714C+1E4o
+CODE.bss:8007B0E0     dword_CODE_bss_8007B0E0:.space 0x40      # DATA XREF: sub_CODE_7F0A714C+288o
+CODE.bss:8007B0E0                                              # sub_CODE_7F0A714C+294o
+*/
 
 /* data
 D:800409A0     dword_D_800409A0:.word 4                 # DATA XREF: init_watch_at_start_of_stage+20w

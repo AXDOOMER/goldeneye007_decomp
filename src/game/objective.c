@@ -1,5 +1,58 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:80075D30     objective_ptrs: .space 4                 # DATA XREF: something_with_stage_objectives:loc_CODE_7F004F1Cw
+CODE.bss:80075D30                                              # cleanupObjectivesr
+CODE.bss:80075D30                                              # get_text_for_objective+14r
+CODE.bss:80075D30                                              # get_difficulty_for_objective+Cr
+CODE.bss:80075D30                                              # get_status_of_objective+2Cr
+CODE.bss:80075D34     dword_CODE_bss_80075D34:.space 4         # DATA XREF: something_with_stage_objectives+78w
+CODE.bss:80075D34                                              # cleanupObjectives:loc_CODE_7F0075D4r
+CODE.bss:80075D38     dword_CODE_bss_80075D38:.space 0x20      # DATA XREF: something_with_stage_objectives+74o
+CODE.bss:80075D38                                              # cleanupObjectives+8o
+CODE.bss:80075D58     dword_CODE_bss_80075D58:.space 4         # DATA XREF: something_with_stage_objectives+24w
+CODE.bss:80075D58                                              # something_with_stage_objectives+6Co
+CODE.bss:80075D58                                              # cleanupObjectives+2Cr
+CODE.bss:80075D58                                              # cleanupObjectives+40w
+CODE.bss:80075D58                                              # cleanupObjectives+4Co
+CODE.bss:80075D58                                              # cleanupObjectives:loc_CODE_7F007618o
+CODE.bss:80075D58                                              # display_objective_status_text_on_status_change+88o
+CODE.bss:80075D5C     dword_CODE_bss_80075D5C:.space 4         # DATA XREF: something_with_stage_objectives+40w
+CODE.bss:80075D5C                                              # cleanupObjectives+70r
+CODE.bss:80075D5C                                              # cleanupObjectives+84w
+CODE.bss:80075D60     dword_CODE_bss_80075D60:.space 0x20      # DATA XREF: something_with_stage_objectives+3Co
+CODE.bss:80075D80     ptr_last_tag_entry_type16:.space 4       # DATA XREF: something_with_stage_objectives+34o
+CODE.bss:80075D80                                              # something_with_stage_objectives+94w
+CODE.bss:80075D80                                              # set_parent_cur_tag_entryo
+CODE.bss:80075D80                                              # set_parent_cur_tag_entry+8r
+CODE.bss:80075D80                                              # set_parent_cur_tag_entry+14w
+CODE.bss:80075D80                                              # sub_CODE_7F057080r
+CODE.bss:80075D84     ptr_last_briefing_setup_entry_type23:.space 4
+CODE.bss:80075D84                                              # DATA XREF: something_with_stage_objectives+9Cw
+CODE.bss:80075D84                                              # setup_briefing_text_entry_parento
+CODE.bss:80075D84                                              # setup_briefing_text_entry_parent+8r
+CODE.bss:80075D84                                              # setup_briefing_text_entry_parent+14w
+CODE.bss:80075D84                                              # get_ptr_text_for_watch_breifing_pager
+CODE.bss:80075D88     ptr_last_enter_room_subobject_entry_type20:.space 4
+CODE.bss:80075D88                                              # DATA XREF: something_with_stage_objectives+A4w
+CODE.bss:80075D88                                              # set_parent_cur_obj_enter_roomo
+CODE.bss:80075D88                                              # set_parent_cur_obj_enter_room+8r
+CODE.bss:80075D88                                              # set_parent_cur_obj_enter_room+14w
+CODE.bss:80075D88                                              # sub_CODE_7F057744r
+CODE.bss:80075D8C     ptr_last_deposit_in_room_subobject_entry_type21:.space 4
+CODE.bss:80075D8C                                              # DATA XREF: something_with_stage_objectives+B0w
+CODE.bss:80075D8C                                              # set_parent_cur_obj_deposited_in_roomo
+CODE.bss:80075D8C                                              # set_parent_cur_obj_deposited_in_room+8r
+CODE.bss:80075D8C                                              # set_parent_cur_obj_deposited_in_room+14w
+CODE.bss:80075D8C                                              # sub_CODE_7F0577E8r
+CODE.bss:80075D90     ptr_last_photo_obj_in_room_subobject_entry_type1E:.space 4
+CODE.bss:80075D90                                              # DATA XREF: something_with_stage_objectives+B8w
+CODE.bss:80075D90                                              # set_parent_cur_obj_photographo
+CODE.bss:80075D90                                              # set_parent_cur_obj_photograph+8r
+CODE.bss:80075D90                                              # set_parent_cur_obj_photograph+14w
+CODE.bss:80075D90                                              # sub_CODE_7F057898+8r
+*/
+
 /* data
 D:800322F0     num_objectives: .word 0xFFFFFFFF         # DATA XREF: something_with_stage_objectives+1Cw
 D:800322F0                                              # add_ptr_to_objective+18o

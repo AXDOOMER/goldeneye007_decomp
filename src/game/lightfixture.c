@@ -1,5 +1,140 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:80082660     light_fixture_table:lightfixture <?>     # DATA XREF: init_lightfixture_tables+Co
+CODE.bss:80082660                                              # get_index_of_current_entry_in_init_lightfixture_tableo
+CODE.bss:80082660                                              # add_entry_to_init_lightfixture_table+44o
+CODE.bss:80082660                                              # sub_CODE_7F0BBE0C+50o
+CODE.bss:80082660                                              # sub_CODE_7F0BBE0C+54r
+CODE.bss:80082660                                              # sub_CODE_7F0BC4C4+Co
+CODE.bss:80082660                                              # sub_CODE_7F0BC4C4+10r
+CODE.bss:80082660                                              # save_ptrDL_enpoint_to_current_init_lightfixture_table+1Cw
+CODE.bss:8008266C                     lightfixture <?>
+CODE.bss:80082678                     lightfixture <?>
+CODE.bss:80082684                     lightfixture <?>
+CODE.bss:80082690                     lightfixture <?>
+CODE.bss:8008269C                     lightfixture <?>
+CODE.bss:800826A8                     lightfixture <?>
+CODE.bss:800826B4                     lightfixture <?>
+CODE.bss:800826C0                     lightfixture <?>
+CODE.bss:800826CC                     lightfixture <?>
+CODE.bss:800826D8                     lightfixture <?>
+CODE.bss:800826E4                     lightfixture <?>
+CODE.bss:800826F0                     lightfixture <?>
+CODE.bss:800826FC                     lightfixture <?>
+CODE.bss:80082708                     lightfixture <?>
+CODE.bss:80082714                     lightfixture <?>
+CODE.bss:80082720                     lightfixture <?>
+CODE.bss:8008272C                     lightfixture <?>
+CODE.bss:80082738                     lightfixture <?>
+CODE.bss:80082744                     lightfixture <?>
+CODE.bss:80082750                     lightfixture <?>
+CODE.bss:8008275C                     lightfixture <?>
+CODE.bss:80082768                     lightfixture <?>
+CODE.bss:80082774                     lightfixture <?>
+CODE.bss:80082780                     lightfixture <?>
+CODE.bss:8008278C                     lightfixture <?>
+CODE.bss:80082798                     lightfixture <?>
+CODE.bss:800827A4                     lightfixture <?>
+CODE.bss:800827B0                     lightfixture <?>
+CODE.bss:800827BC                     lightfixture <?>
+CODE.bss:800827C8                     lightfixture <?>
+CODE.bss:800827D4                     lightfixture <?>
+CODE.bss:800827E0                     lightfixture <?>
+CODE.bss:800827EC                     lightfixture <?>
+CODE.bss:800827F8                     lightfixture <?>
+CODE.bss:80082804                     lightfixture <?>
+CODE.bss:80082810                     lightfixture <?>
+CODE.bss:8008281C                     lightfixture <?>
+CODE.bss:80082828                     lightfixture <?>
+CODE.bss:80082834                     lightfixture <?>
+CODE.bss:80082840                     lightfixture <?>
+CODE.bss:8008284C                     lightfixture <?>
+CODE.bss:80082858                     lightfixture <?>
+CODE.bss:80082864                     lightfixture <?>
+CODE.bss:80082870                     lightfixture <?>
+CODE.bss:8008287C                     lightfixture <?>
+CODE.bss:80082888                     lightfixture <?>
+CODE.bss:80082894                     lightfixture <?>
+CODE.bss:800828A0                     lightfixture <?>
+CODE.bss:800828AC                     lightfixture <?>
+CODE.bss:800828B8                     lightfixture <?>
+CODE.bss:800828C4                     lightfixture <?>
+CODE.bss:800828D0                     lightfixture <?>
+CODE.bss:800828DC                     lightfixture <?>
+CODE.bss:800828E8                     lightfixture <?>
+CODE.bss:800828F4                     lightfixture <?>
+CODE.bss:80082900                     lightfixture <?>
+CODE.bss:8008290C                     lightfixture <?>
+CODE.bss:80082918                     lightfixture <?>
+CODE.bss:80082924                     lightfixture <?>
+CODE.bss:80082930                     lightfixture <?>
+CODE.bss:8008293C                     lightfixture <?>
+CODE.bss:80082948                     lightfixture <?>
+CODE.bss:80082954                     lightfixture <?>
+CODE.bss:80082960                     lightfixture <?>
+CODE.bss:8008296C                     lightfixture <?>
+CODE.bss:80082978                     lightfixture <?>
+CODE.bss:80082984                     lightfixture <?>
+CODE.bss:80082990                     lightfixture <?>
+CODE.bss:8008299C                     lightfixture <?>
+CODE.bss:800829A8                     lightfixture <?>
+CODE.bss:800829B4                     lightfixture <?>
+CODE.bss:800829C0                     lightfixture <?>
+CODE.bss:800829CC                     lightfixture <?>
+CODE.bss:800829D8                     lightfixture <?>
+CODE.bss:800829E4                     lightfixture <?>
+CODE.bss:800829F0                     lightfixture <?>
+CODE.bss:800829FC                     lightfixture <?>
+CODE.bss:80082A08                     lightfixture <?>
+CODE.bss:80082A14                     lightfixture <?>
+CODE.bss:80082A20                     lightfixture <?>
+CODE.bss:80082A2C                     lightfixture <?>
+CODE.bss:80082A38                     lightfixture <?>
+CODE.bss:80082A44                     lightfixture <?>
+CODE.bss:80082A50                     lightfixture <?>
+CODE.bss:80082A5C                     lightfixture <?>
+CODE.bss:80082A68                     lightfixture <?>
+CODE.bss:80082A74                     lightfixture <?>
+CODE.bss:80082A80                     lightfixture <?>
+CODE.bss:80082A8C                     lightfixture <?>
+CODE.bss:80082A98                     lightfixture <?>
+CODE.bss:80082AA4                     lightfixture <?>
+CODE.bss:80082AB0                     lightfixture <?>
+CODE.bss:80082ABC                     lightfixture <?>
+CODE.bss:80082AC8                     lightfixture <?>
+CODE.bss:80082AD4                     lightfixture <?>
+CODE.bss:80082AE0                     lightfixture <?>
+CODE.bss:80082AEC                     lightfixture <?>
+CODE.bss:80082AF8                     lightfixture <?>
+CODE.bss:80082B04                     lightfixture <?>
+CODE.bss:80082B10     cur_entry_lightfixture_table:.space 2    # DATA XREF: init_lightfixture_tables+4o
+CODE.bss:80082B10                                              # add_entry_to_init_lightfixture_table+10o
+CODE.bss:80082B10                                              # add_entry_to_init_lightfixture_table+18w
+CODE.bss:80082B10                                              # add_entry_to_init_lightfixture_table+1Cr
+CODE.bss:80082B10                                              # save_ptrDL_enpoint_to_current_init_lightfixture_tabler
+CODE.bss:80082B10                                              # sub_CODE_7F0BBE0C+4Co
+CODE.bss:80082B10                                              # sub_CODE_7F0BC4C4+4o
+CODE.bss:80082B12     index_of_cur_entry_lightfixture_table:.space 2
+CODE.bss:80082B12                                              # DATA XREF: add_entry_to_init_lightfixture_table+34r
+CODE.bss:80082B12                                              # sub_CODE_7F0BC4C4+64w
+CODE.bss:80082B14                     .align 3
+CODE.bss:80082B18     word_CODE_bss_80082B18:.space 2          # DATA XREF: init_lightfixture_tables+2Co
+CODE.bss:80082B18                                              # sub_CODE_7F0BB978+24o
+CODE.bss:80082B18                                              # sub_CODE_7F0BB978+28r
+CODE.bss:80082B18                                              # sub_CODE_7F0BBA20+44o
+CODE.bss:80082B18                                              # sub_CODE_7F0BBADC+30o
+CODE.bss:80082B18                                              # sub_CODE_7F0BBADC+34r
+CODE.bss:80082B18                                              # sub_CODE_7F0BBCCC+54o
+CODE.bss:80082B18                                              # sub_CODE_7F0BBCCC+5Cr
+CODE.bss:80082B1A                     .align 2
+CODE.bss:80082B1C                     .space 0x7FC
+CODE.bss:80083318     dword_CODE_bss_80083318:.space 8         # DATA XREF: init_lightfixture_tables+24o
+CODE.bss:80083318                                              # sub_CODE_7F0BB978+20o
+CODE.bss:80083318                                              # sub_CODE_7F0BBADC+2Co
+CODE.bss:80083318                                              # sub_CODE_7F0BBCCC+4Co
+*/
+
 
 /* data
 D:80046030     dword_D_80046030:.word 0                 # DATA XREF: init_lightfixture_tables+50w

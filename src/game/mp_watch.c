@@ -1,5 +1,77 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:8008C700     stop_play_flag: .space 4                 # DATA XREF: controller_gameplay_interaction+1CCr
+CODE.bss:8008C700                                              # record_damage_kills+98r
+CODE.bss:8008C700                                              # unpause_gamew
+CODE.bss:8008C700                                              # sub_CODE_7F0C24BC:loc_CODE_7F0C24E0r
+CODE.bss:8008C700                                              # set_stopplay_flag+Cw
+CODE.bss:8008C700                                              # mp_watch_menu_display+5E4r
+CODE.bss:8008C700                                              # mp_watch_menu_display+6E4r
+CODE.bss:8008C700                                              # mp_watch_menu_display+C54r
+CODE.bss:8008C700                                              # mp_watch_menu_display+10CCr
+CODE.bss:8008C700                                              # mp_watch_menu_display+1E24r
+CODE.bss:8008C704     is_gameover_flag:.space 4                # DATA XREF: controller_gameplay_interaction+1DCr
+CODE.bss:8008C704                                              # record_damage_kills+A8r
+CODE.bss:8008C704                                              # check_can_advance_right_on_mpmenu:page_adv_right_gameoverr
+CODE.bss:8008C704                                              # check_can_advance_left_on_mpmenu:page_adv_left_gameoverr
+CODE.bss:8008C704                                              # unpause_game+8w
+CODE.bss:8008C704                                              # sub_CODE_7F0C2530+88w
+CODE.bss:8008C704                                              # sub_CODE_7F0C2530+90w
+CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+44o
+CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+4Cr
+CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+70w
+CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+74w
+CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+84o
+CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+94r
+CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+494r
+CODE.bss:8008C704                                              # mp_watch_menu_display:text_playr
+CODE.bss:8008C704                                              # mp_watch_menu_display+2C4r
+CODE.bss:8008C704                                              # mp_watch_menu_display+428r
+CODE.bss:8008C704                                              # mp_watch_menu_display:loc_CODE_7F0C45F4r
+CODE.bss:8008C704                                              # mp_watch_menu_display:loc_CODE_7F0C46F4r
+CODE.bss:8008C704                                              # mp_watch_menu_display+C44r
+CODE.bss:8008C704                                              # mp_watch_menu_display+10BCr
+CODE.bss:8008C704                                              # mp_watch_menu_display+1E34r
+CODE.bss:8008C704                                              # sub_CODE_7F0C6048r
+CODE.bss:8008C708     dword_CODE_bss_8008C708:.space 4         # DATA XREF: sub_CODE_7F0C2530+ACw
+CODE.bss:8008C708                                              # sub_CODE_7F0C2E80+118o
+CODE.bss:8008C708                                              # sub_CODE_7F0C2E80+120r
+CODE.bss:8008C708                                              # sub_CODE_7F0C2E80+130w
+CODE.bss:8008C708                                              # mp_watch_menu_display+318r
+CODE.bss:8008C708                                              # mp_watch_menu_display+47Cr
+CODE.bss:8008C70C     dword_CODE_bss_8008C70C:.space 4         # DATA XREF: sub_CODE_7F0C2530+BCw
+CODE.bss:8008C70C                                              # sub_CODE_7F0C2E80+E0o
+CODE.bss:8008C70C                                              # sub_CODE_7F0C2E80+F4r
+CODE.bss:8008C70C                                              # sub_CODE_7F0C2E80+10Cw
+CODE.bss:8008C70C                                              # sub_CODE_7F0C2E80+128w
+CODE.bss:8008C710     time_trigger_alt_gameover_msg:.space 4   # DATA XREF: sub_CODE_7F0C2530:loc_CODE_7F0C25C8w
+CODE.bss:8008C710                                              # sub_CODE_7F0C2E80+138o
+CODE.bss:8008C710                                              # sub_CODE_7F0C2E80+14Cr
+CODE.bss:8008C710                                              # sub_CODE_7F0C2E80+15Cw
+CODE.bss:8008C710                                              # mp_watch_menu_display:loc_CODE_7F0C40ECr
+CODE.bss:8008C714     dword_CODE_bss_8008C714:.space 4         # DATA XREF: sub_CODE_7F0C2530+A8w
+CODE.bss:8008C714                                              # sub_CODE_7F0C2E80+F8o
+CODE.bss:8008C714                                              # sub_CODE_7F0C2E80+FCr
+CODE.bss:8008C714                                              # sub_CODE_7F0C2E80+114w
+CODE.bss:8008C714                                              # sub_CODE_7F0C2E80:loc_CODE_7F0C2FB4r
+CODE.bss:8008C714                                              # sub_CODE_7F0C2E80+154w
+CODE.bss:8008C718     is_paused:      .space 4                 # DATA XREF: unpause_game+18w
+CODE.bss:8008C718                                              # sub_CODE_7F0C2494+18w
+CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+364o
+CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+36Cr
+CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+380w
+CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+3ACo
+CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+3C0w
+CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+5B0o
+CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+5C4w
+CODE.bss:8008C718                                              # mp_watch_menu_display:text_pause_unpauser
+CODE.bss:8008C718                                              # sub_CODE_7F0C6080+8r
+CODE.bss:8008C71C     who_paused:     .space 4                 # DATA XREF: sub_CODE_7F0C2E80+384w
+CODE.bss:8008C71C                                              # sub_CODE_7F0C2E80+3A4r
+CODE.bss:8008C71C                                              # sub_CODE_7F0C2E80+5A8r
+CODE.bss:8008C71C                                              # mp_watch_menu_display+124r
+*/
 
 /* data
 D:80048640     loaded_text_index:.half 0xA000,0xA001,0xA002,0xA003,0xA004,0xA005,0xA006,0xA007,0xA008,0xA009 # 0

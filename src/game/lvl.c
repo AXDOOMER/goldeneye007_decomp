@@ -1,5 +1,58 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:8008C260      # void *ptr_jfont_DL
+CODE.bss:8008C260     ptr_jfont_DL:   .space 4                 # DATA XREF: something_with_lvl_c_debug+4Co
+CODE.bss:8008C260                                              # something_with_lvl_c_debug+58w
+CODE.bss:8008C260                                              # sub_CODE_7F0BE30C+4Cr
+CODE.bss:8008C264                     .align 4
+CODE.bss:8008C270     ramrom_data_target:.space 0xC            # DATA XREF: finalize_ramrom_on_hw+3Co
+CODE.bss:8008C270                                              # load_ramrom_from_devtool+30o
+CODE.bss:8008C270                                              # test_if_recording_demos_this_stage_load+18o
+CODE.bss:8008C270                                              # replay_recorded_ramrom_at_address+14o
+CODE.bss:8008C27C                     .space 3
+CODE.bss:8008C27F     byte_CODE_bss_8008C27F:.space 1          # DATA XREF: test_if_recording_demos_this_stage_load+20o
+CODE.bss:8008C280                     .space 0x100
+CODE.bss:8008C380     dword_CODE_bss_8008C380:.space 0xE8      # DATA XREF: test_if_recording_demos_this_stage_load+124o
+CODE.bss:8008C380                                              # stop_demo_playback+3Co
+CODE.bss:8008C468     dword_CODE_bss_8008C468:.space 0xC       # DATA XREF: record_player_input_as_packet+10o
+CODE.bss:8008C468                                              # iterate_ramrom_entries_handle_camera_out+14o
+CODE.bss:8008C474                     .space 3
+CODE.bss:8008C477     byte_CODE_bss_8008C477:.space 1          # DATA XREF: record_player_input_as_packet+14o
+CODE.bss:8008C478                     .space 0x14
+CODE.bss:8008C48C                     .space 2
+CODE.bss:8008C48E     word_CODE_bss_8008C48E:.space 2          # DATA XREF: iterate_ramrom_entries_handle_camera_out+50o
+CODE.bss:8008C490                     .space 0x160
+CODE.bss:8008C5F0     record_slot_num:.space 4                 # DATA XREF: test_if_recording_demos_this_stage_load+64r
+CODE.bss:8008C5F0                                              # record_next_movie_to_slot+14w
+CODE.bss:8008C5F4      # void *addres_demo_loaded
+CODE.bss:8008C5F4     addres_demo_loaded:.space 4              # DATA XREF: finalize_ramrom_on_hw+20r
+CODE.bss:8008C5F4                                              # finalize_ramrom_on_hw+30o
+CODE.bss:8008C5F4                                              # finalize_ramrom_on_hw+38r
+CODE.bss:8008C5F4                                              # finalize_ramrom_on_hw+48w
+CODE.bss:8008C5F4                                              # finalize_ramrom_on_hw+84r
+CODE.bss:8008C5F4                                              # record_player_input_as_packet+1A4o
+CODE.bss:8008C5F4                                              # record_player_input_as_packet+1D4r
+CODE.bss:8008C5F4                                              # record_player_input_as_packet+1F4r
+CODE.bss:8008C5F4                                              # record_player_input_as_packet+218w
+CODE.bss:8008C5F4                                              # iterate_ramrom_entries_handle_camera_out+Cr
+CODE.bss:8008C5F4                                              # iterate_ramrom_entries_handle_camera_out+44r
+CODE.bss:8008C5F4                                              # iterate_ramrom_entries_handle_camera_out+B4r
+CODE.bss:8008C5F4                                              # iterate_ramrom_entries_handle_camera_out+E0w
+CODE.bss:8008C5F4                                              # test_if_recording_demos_this_stage_load+A0o
+CODE.bss:8008C5F4                                              # test_if_recording_demos_this_stage_load+ACw
+CODE.bss:8008C5F4                                              # test_if_recording_demos_this_stage_load+BCo
+CODE.bss:8008C5F4                                              # test_if_recording_demos_this_stage_load+C4r
+CODE.bss:8008C5F4                                              # test_if_recording_demos_this_stage_load+D0w
+CODE.bss:8008C5F4                                              # replay_recorded_ramrom_at_addresso
+CODE.bss:8008C5F4                                              # replay_recorded_ramrom_at_address+Cw
+CODE.bss:8008C5F4                                              # replay_recorded_ramrom_at_address+1Cr
+CODE.bss:8008C5F4                                              # replay_recorded_ramrom_at_address+28o
+CODE.bss:8008C5F4                                              # replay_recorded_ramrom_at_address+30r
+CODE.bss:8008C5F4                                              # replay_recorded_ramrom_at_address+44w
+CODE.bss:8008C5F8     dword_CODE_bss_8008C5F8:.space 4         # DATA XREF: test_if_recording_demos_this_stage_load+38w
+CODE.bss:8008C5F8                                              # test_if_recording_demos_this_stage_load+F4w
+*/
 
 /* data
 D:80048360     dword_D_80048360:.word 0                 # DATA XREF: something_with_lvl_c_debug+18o

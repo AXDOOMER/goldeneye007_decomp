@@ -1,5 +1,21 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:8008E310     viewport_img_width:.space 4              # DATA XREF: allocate_viewport_buffer+24w
+CODE.bss:8008E310                                              # allocate_viewport_buffer+40w
+CODE.bss:8008E310                                              # allocate_viewport_buffer:continuer
+CODE.bss:8008E310                                              # sub_CODE_7F0D2448+8w
+CODE.bss:8008E310                                              # sub_CODE_7F0D2518+30r
+CODE.bss:8008E314     viewport_img_height:.space 4             # DATA XREF: allocate_viewport_buffer+20o
+CODE.bss:8008E314                                              # allocate_viewport_buffer+30w
+CODE.bss:8008E314                                              # allocate_viewport_buffer:is_soloo
+CODE.bss:8008E314                                              # allocate_viewport_buffer+5Cw
+CODE.bss:8008E314                                              # allocate_viewport_buffer:is_multio
+CODE.bss:8008E314                                              # allocate_viewport_buffer+6Cw
+CODE.bss:8008E314                                              # allocate_viewport_buffer+78r
+CODE.bss:8008E314                                              # sub_CODE_7F0D2448+18w
+CODE.bss:8008E314                                              # sub_CODE_7F0D2518:loc_CODE_7F0D26B4r
+*/
 
 /* data
 D:8004EB00     viewport_img:   .word 0                  # DATA XREF: remove_viewport_buffer+8w

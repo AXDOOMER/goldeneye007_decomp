@@ -1,5 +1,18 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:80079E30     off_CODE_bss_80079E30:.space 1           # DATA XREF: sub_CODE_7F0072B0w
+CODE.bss:80079E30                                              # sub_CODE_7F091B64+4Co
+CODE.bss:80079E30                                              # sub_CODE_7F092438+4Co
+CODE.bss:80079E30                                              # sub_CODE_7F092438:loc_CODE_7F0924A8w
+CODE.bss:80079E31     byte_CODE_bss_80079E31:.space 1          # DATA XREF: sub_CODE_7F0072B0+8w
+CODE.bss:80079E32     byte_CODE_bss_80079E32:.space 1          # DATA XREF: sub_CODE_7F0072B0+24w
+CODE.bss:80079E33     byte_CODE_bss_80079E33:.space 1          # DATA XREF: sub_CODE_7F0072B0+20o
+CODE.bss:80079E34                     .space 0x44
+CODE.bss:80079E78                     .space 3
+CODE.bss:80079E7B     byte_CODE_bss_80079E7B:.space 1          # DATA XREF: sub_CODE_7F0072B0+18o
+*/
+
 /* data
 D:80037070     dword_D_80037070:.word 0x14002100        # DATA XREF: D:stru_D_8003744Co
 D:80037074                     .word 0x10201, 0x3010104

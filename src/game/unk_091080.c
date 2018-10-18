@@ -1,5 +1,11 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:80079E20     dword_CODE_bss_80079E20:.space 4         # DATA XREF: sub_CODE_7F091080+4A8o
+CODE.bss:80079E20                                              # sub_CODE_7F091080+4B0r
+CODE.bss:80079E20                                              # sub_CODE_7F091080+4C0w
+CODE.bss:80079E20                                              # sub_CODE_7F0916F4+40w
+*/
 
 /* data
 D:80037014     dword_D_80037014:.word 0                 # DATA XREF: sub_CODE_7F091080+118o

@@ -1,5 +1,23 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:800888B0     ptr_resource_data:resource_lookup_data <?>
+CODE.bss:800888B0                                              # DATA XREF: ob_c_debug_setup+44o
+CODE.bss:800888B0                                              # load_bg_bytes_at_offset_to_membank+24r
+CODE.bss:800888B0                                              # load_rom_resource_index_to_membank+3Co
+CODE.bss:800888B0                                              # load_rom_resource_index_to_membank+108o
+CODE.bss:800888B0                                              # load_resource_index_to_buffer+14o
+CODE.bss:800888B0                                              # sub_CODE_7F0BD138+8o
+CODE.bss:800888B0                                              # something_mem_bank_a0+24o
+CODE.bss:800888B0                                              # get_index_num_of_named_resource+CCo
+CODE.bss:800888B0                                              # sub_CODE_7F0BD410+20o
+CODE.bss:800888B0                                              # sub_CODE_7F0BD188+20r
+CODE.bss:800888C4     ptr_res_data_next:resource_lookup_data <?>
+CODE.bss:800888C4                                              # DATA XREF: ob_c_debug_setup+54o
+CODE.bss:800888C4                                              # something_mem_bank_a0+30o
+CODE.bss:800888C4                                              # sub_CODE_7F0BD410+8o
+CODE.bss:800888D8     dword_CODE_bss_800888D8:.space 0x3958    # DATA XREF: sub_CODE_7F0BD410+30o
+*/
 
 /* data
 D:80046050     dword_D_80046050:.word 0                 # DATA XREF: ob_c_debug_setup+18o

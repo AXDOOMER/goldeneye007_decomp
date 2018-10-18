@@ -1,6 +1,475 @@
 #include "ultra64.h"
 
-
+/* bss
+CODE.bss:800695A0     flt_CODE_bss_800695A0:.space 4           # DATA XREF: init_menu18_displaycast+838w
+CODE.bss:800695A0                                              # constructor_menu18_displaycast+1BCo
+CODE.bss:800695A0                                              # constructor_menu18_displaycast+1E0w
+CODE.bss:800695A0                                              # constructor_menu18_displaycast+260r
+CODE.bss:800695A0                                              # constructor_menu18_displaycast+29Cr
+CODE.bss:800695A0                                              # constructor_menu18_displaycast+2D4r
+CODE.bss:800695A0                                              # constructor_menu18_displaycast+300r
+CODE.bss:800695A4     flt_CODE_bss_800695A4:.space 4           # DATA XREF: init_menu18_displaycast+6A0w
+CODE.bss:800695A4                                              # init_menu18_displaycast+830r
+CODE.bss:800695A4                                              # constructor_menu18_displaycast+1A0r
+CODE.bss:800695A8     flt_CODE_bss_800695A8:.space 4           # DATA XREF: init_menu18_displaycast+6ECw
+CODE.bss:800695A8                                              # constructor_menu18_displaycast+1A8r
+CODE.bss:800695AC     flt_CODE_bss_800695AC:.space 4           # DATA XREF: init_menu18_displaycast+848w
+CODE.bss:800695AC                                              # constructor_menu18_displaycast+1CCo
+CODE.bss:800695AC                                              # constructor_menu18_displaycast+200w
+CODE.bss:800695AC                                              # constructor_menu18_displaycast+210r
+CODE.bss:800695AC                                              # constructor_menu18_displaycast+23Cw
+CODE.bss:800695AC                                              # constructor_menu18_displaycast+240r
+CODE.bss:800695AC                                              # constructor_menu18_displaycast+254r
+CODE.bss:800695AC                                              # constructor_menu18_displaycast+26Cr
+CODE.bss:800695AC                                              # constructor_menu18_displaycast+298r
+CODE.bss:800695AC                                              # constructor_menu18_displaycast+2B0r
+CODE.bss:800695AC                                              # constructor_menu18_displaycast+2D8r
+CODE.bss:800695B0     flt_CODE_bss_800695B0:.space 4           # DATA XREF: init_menu18_displaycast+738w
+CODE.bss:800695B0                                              # init_menu18_displaycast+840r
+CODE.bss:800695B0                                              # constructor_menu18_displaycast+1E4r
+CODE.bss:800695B4     flt_CODE_bss_800695B4:.space 4           # DATA XREF: init_menu18_displaycast+784w
+CODE.bss:800695B4                                              # constructor_menu18_displaycast+1E8r
+CODE.bss:800695B8     flt_CODE_bss_800695B8:.space 4           # DATA XREF: init_menu18_displaycast+860w
+CODE.bss:800695B8                                              # constructor_menu18_displaycast+1D0o
+CODE.bss:800695B8                                              # constructor_menu18_displaycast+22Cw
+CODE.bss:800695B8                                              # constructor_menu18_displaycast+27Cr
+CODE.bss:800695BC     flt_CODE_bss_800695BC:.space 4           # DATA XREF: init_menu18_displaycast+7D0w
+CODE.bss:800695BC                                              # init_menu18_displaycast+850r
+CODE.bss:800695BC                                              # constructor_menu18_displaycast+204r
+CODE.bss:800695C0     flt_CODE_bss_800695C0:.space 4           # DATA XREF: init_menu18_displaycast+82Cw
+CODE.bss:800695C0                                              # constructor_menu18_displaycast+208r
+CODE.bss:800695C4                     .align 3
+CODE.bss:800695C8     flt_CODE_bss_800695C8:.space 4           # DATA XREF: constructor_menu18_displaycast+7D0o
+CODE.bss:800695C8                                              # constructor_menu18_displaycast+7E4w
+CODE.bss:800695C8                                              # constructor_menu18_displaycast+7ECr
+CODE.bss:800695CC     flt_CODE_bss_800695CC:.space 4           # DATA XREF: constructor_menu18_displaycast+7F0w
+CODE.bss:800695CC                                              # constructor_menu18_displaycast+7F4r
+CODE.bss:800695D0     flt_CODE_bss_800695D0:.space 4           # DATA XREF: constructor_menu18_displaycast+804w
+CODE.bss:800695D0                                              # constructor_menu18_displaycast+81Cr
+CODE.bss:800695D4                     .align 3
+CODE.bss:800695D8     flt_CODE_bss_800695D8:.space 4           # DATA XREF: constructor_menu18_displaycast+708o
+CODE.bss:800695D8                                              # constructor_menu18_displaycast+718w
+CODE.bss:800695D8                                              # constructor_menu18_displaycast+730o
+CODE.bss:800695D8                                              # constructor_menu18_displaycast+73Cr
+CODE.bss:800695D8                                              # constructor_menu18_displaycast+740r
+CODE.bss:800695DC     flt_CODE_bss_800695DC:.space 4           # DATA XREF: constructor_menu18_displaycast+720w
+CODE.bss:800695DC                                              # constructor_menu18_displaycast+754r
+CODE.bss:800695E0     flt_CODE_bss_800695E0:.space 4           # DATA XREF: constructor_menu18_displaycast+724w
+CODE.bss:800695E4     flt_CODE_bss_800695E4:.space 4           # DATA XREF: init_menu18_displaycast+864w
+CODE.bss:800695E4                                              # constructor_menu18_displaycast+4D4o
+CODE.bss:800695E4                                              # constructor_menu18_displaycast+4DCr
+CODE.bss:800695E4                                              # constructor_menu18_displaycast+6B8o
+CODE.bss:800695E4                                              # constructor_menu18_displaycast+6C0r
+CODE.bss:800695E4                                              # constructor_menu18_displaycast+710w
+CODE.bss:800695E8     flt_CODE_bss_800695E8:.space 4           # DATA XREF: init_menu18_displaycast+7E0o
+CODE.bss:800695E8                                              # init_menu18_displaycast+86Cw
+CODE.bss:800695E8                                              # constructor_menu18_displaycast+4F4o
+CODE.bss:800695E8                                              # constructor_menu18_displaycast:loc_CODE_7F019828o
+CODE.bss:800695E8                                              # constructor_menu18_displaycast+508r
+CODE.bss:800695EC     flt_CODE_bss_800695EC:.space 4           # DATA XREF: init_menu18_displaycast+870w
+CODE.bss:800695EC                                              # constructor_menu18_displaycast+4FCw
+CODE.bss:800695EC                                              # constructor_menu18_displaycast+51Cr
+CODE.bss:800695F0     flt_CODE_bss_800695F0:.space 4           # DATA XREF: init_menu18_displaycast+878w
+CODE.bss:800695F0                                              # constructor_menu18_displaycast+534r
+CODE.bss:800695F4                     .align 3
+CODE.bss:800695F8     flt_CODE_bss_800695F8:.space 4           # DATA XREF: constructor_menu18_displaycast+64Co
+CODE.bss:800695F8                                              # constructor_menu18_displaycast+660w
+CODE.bss:800695F8                                              # constructor_menu18_displaycast+66Cr
+CODE.bss:800695FC     flt_CODE_bss_800695FC:.space 4           # DATA XREF: constructor_menu18_displaycast+668w
+CODE.bss:800695FC                                              # constructor_menu18_displaycast+680r
+CODE.bss:80069600     flt_CODE_bss_80069600:.space 4           # DATA XREF: constructor_menu18_displaycast+674w
+CODE.bss:80069600                                              # constructor_menu18_displaycast+694r
+CODE.bss:80069604                     .align 3
+CODE.bss:80069608     flt_CODE_bss_80069608:.space 4           # DATA XREF: constructor_menu18_displaycast+564o
+CODE.bss:80069608                                              # constructor_menu18_displaycast+574w
+CODE.bss:80069608                                              # constructor_menu18_displaycast+594o
+CODE.bss:80069608                                              # constructor_menu18_displaycast+5B0r
+CODE.bss:8006960C     flt_CODE_bss_8006960C:.space 4           # DATA XREF: constructor_menu18_displaycast+57Cw
+CODE.bss:8006960C                                              # constructor_menu18_displaycast+5C4r
+CODE.bss:80069610     flt_CODE_bss_80069610:.space 4           # DATA XREF: constructor_menu18_displaycast+580w
+CODE.bss:80069614     flt_CODE_bss_80069614:.space 4           # DATA XREF: init_menu01_nintendo+C0w
+CODE.bss:80069614                                              # constructor_menu01_nintendo+C4o
+CODE.bss:80069614                                              # constructor_menu01_nintendo+11Cr
+CODE.bss:80069614                                              # constructor_menu01_nintendo+12Cw
+CODE.bss:80069614                                              # constructor_menu01_nintendo+134r
+CODE.bss:80069618     flt_CODE_bss_80069618:.space 4           # DATA XREF: init_menu01_nintendo+D8w
+CODE.bss:80069618                                              # constructor_menu01_nintendo+138o
+CODE.bss:80069618                                              # constructor_menu01_nintendo+140r
+CODE.bss:80069618                                              # constructor_menu01_nintendo+15Cr
+CODE.bss:80069618                                              # constructor_menu01_nintendo+170w
+CODE.bss:80069618                                              # constructor_menu01_nintendo+174r
+CODE.bss:80069618                                              # constructor_menu01_nintendo+188w
+CODE.bss:8006961C                     .align 4
+CODE.bss:80069620     dword_CODE_bss_80069620:.space 0x30      # DATA XREF: toggle_deletion_menu_for_folder+14o
+CODE.bss:80069620                                              # interface_menu05_fileselect+F0o
+CODE.bss:80069620                                              # interface_menu05_fileselect:loc_CODE_7F00BFECo
+CODE.bss:80069620                                              # constructor_menu05_fileselect+23Co
+CODE.bss:80069650                     .space 1
+CODE.bss:80069651     cheat_available:.space 1                 # DATA XREF: interface_menu06_modesel+18o
+CODE.bss:80069651                                              # init_menu15_cheat+50o
+CODE.bss:80069652     CHEAT_AVAILABLE_INVINCIBLE:.space 1
+CODE.bss:80069653     CHEAT_AVAILABLE_ALLGUNS:.space 1
+CODE.bss:80069654                     .space 1
+CODE.bss:80069655                     .space 2
+CODE.bss:80069657     CHEAT_AVAILABLE_LINEMODE:.space 1
+CODE.bss:80069658     CHEAT_AVAILABLE_2X_HEALTH:.space 1
+CODE.bss:80069659     CHEAT_AVAILABLE_2X_ARMOR:.space 1
+CODE.bss:8006965A     CHEAT_AVAILABLE_BOND_INVIS:.space 1
+CODE.bss:8006965B     CHEAT_AVAILABLE_INFINITE_AMMO:.space 1
+CODE.bss:8006965C     CHEAT_AVAILABLE_DK_MODE:.space 1
+CODE.bss:8006965D     CHEAT_AVAILABLE_EXTRA_WEAPONS:.space 1
+CODE.bss:8006965E     CHEAT_AVAILABLE_TINY_BOND:.space 1
+CODE.bss:8006965F     CHEAT_AVAILABLE_PAINTBALL:.space 1
+CODE.bss:80069660     CHEAT_AVAILABLE_10X_HEALTH:.space 1
+CODE.bss:80069661     CHEAT_AVAILABLE_MAGNUM:.space 1
+CODE.bss:80069662     CHEAT_AVAILABLE_LASER:.space 1
+CODE.bss:80069663     CHEAT_AVAILABLE_GOLDENGUN:.space 1
+CODE.bss:80069664     CHEAT_AVAILABLE_SILVERPP7:.space 1
+CODE.bss:80069665     CHEAT_AVAILABLE_GOLDPP7:.space 1
+CODE.bss:80069666     CHEAT_AVAILABLE_MP_INVINCIBILITY:.space 1
+CODE.bss:80069667     CHEAT_AVAILABLE_NO_MP_RADAR:.space 1
+CODE.bss:80069668     CHEAT_AVAILABLE_TURBO:.space 1
+CODE.bss:80069669     CHEAT_AVAILABLE_DEBUG_MODE:.space 1
+CODE.bss:8006966A     CHEAT_AVAILABLE_FAST_ANI:.space 1
+CODE.bss:8006966B     CHEAT_AVAILABLE_SLOW_ANI:.space 1
+CODE.bss:8006966C     CHEAT_AVAILABLE_ENMY_ROCKETS:.space 1
+CODE.bss:8006966D     CHEAT_AVAILABLE_2X_ROCKET:.space 1
+CODE.bss:8006966E     CHEAT_AVAILABLE_2X_GRENADE_LAUNCHER:.space 1
+CODE.bss:8006966F     CHEAT_AVAILABLE_2X_RCP90:.space 1
+CODE.bss:80069670     CHEAT_AVAILABLE_2X_THROWING_KNIVES:.space 1
+CODE.bss:80069671     CHEAT_AVAILABLE_2X_HUNTING_KNIVES:.space 1
+CODE.bss:80069672     CHEAT_AVAILABLE_2X_LASER:.space 2
+CODE.bss:80069674                     .space 0x2C
+CODE.bss:800696A0     cheat_activated:.space 1                 # DATA XREF: interface_menu15_cheat+2ACo
+CODE.bss:800696A1     CHEAT_AVAILABLE_EXTRA_CHARS:.space 1     # DATA XREF: init_menu05_fileselect+BCw
+CODE.bss:800696A1                                              # update_menu15_cheat+28o
+CODE.bss:800696A1                                              # stage_load+15Co
+CODE.bss:800696A1                                              # manage_mp_game+C4o
+CODE.bss:800696A2     cheat_activated_1:.space 1               # DATA XREF: init_menu05_fileselect+C0w
+CODE.bss:800696A3     cheat_activated_2:.space 1               # DATA XREF: init_menu05_fileselect+B8o
+CODE.bss:800696A4     CHEAT_AVAILABLE_MAX_AMMO:.space 1
+CODE.bss:800696A5     cheat_activated_4:.space 1
+CODE.bss:800696A6     cheat_activated_5:.space 1
+CODE.bss:800696A7     cheat_activated_6:.space 1
+CODE.bss:800696A8     cheat_activated_7:.space 1
+CODE.bss:800696A9     cheat_activated_8:.space 1
+CODE.bss:800696AA     cheat_activated_9:.space 1
+CODE.bss:800696AB     cheat_activated_10:.space 1
+CODE.bss:800696AC     cheat_activated_11:.space 1
+CODE.bss:800696AD     cheat_activated_12:.space 1
+CODE.bss:800696AE     cheat_activated_13:.space 1
+CODE.bss:800696AF     cheat_activated_14:.space 1
+CODE.bss:800696B0     cheat_activated_15:.space 1
+CODE.bss:800696B1     cheat_activated_16:.space 1
+CODE.bss:800696B2     cheat_activated_17:.space 1
+CODE.bss:800696B3     cheat_activated_18:.space 1
+CODE.bss:800696B4     cheat_activated_19:.space 1
+CODE.bss:800696B5     cheat_activated_20:.space 1
+CODE.bss:800696B6     cheat_activated_21:.space 1
+CODE.bss:800696B7     cheat_activated_22:.space 1
+CODE.bss:800696B8     cheat_activated_23:.space 1
+CODE.bss:800696B9     cheat_activated_24:.space 1
+CODE.bss:800696BA     cheat_activated_25:.space 1
+CODE.bss:800696BB     cheat_activated_26:.space 1
+CODE.bss:800696BC     cheat_activated_27:.space 1
+CODE.bss:800696BD     cheat_activated_28:.space 1
+CODE.bss:800696BE     cheat_activated_29:.space 1
+CODE.bss:800696BF     cheat_activated_30:.space 1
+CODE.bss:800696C0     cheat_activated_31:.space 1
+CODE.bss:800696C1     cheat_activated_32:.space 1
+CODE.bss:800696C2     cheat_activated_33:.space 1
+CODE.bss:800696C3     cheat_activated_34:.space 1
+CODE.bss:800696C4     cheat_activated_35:.space 1
+CODE.bss:800696C5     cheat_activated_36:.space 1
+CODE.bss:800696C6     cheat_activated_37:.space 1
+CODE.bss:800696C7     cheat_activated_38:.space 1
+CODE.bss:800696C8     cheat_activated_39:.space 1
+CODE.bss:800696C9     cheat_activated_40:.space 1
+CODE.bss:800696CA     cheat_activated_41:.space 1
+CODE.bss:800696CB     cheat_activated_42:.space 1
+CODE.bss:800696CC     cheat_activated_43:.space 1
+CODE.bss:800696CD     cheat_activated_44:.space 1
+CODE.bss:800696CE     cheat_activated_45:.space 1
+CODE.bss:800696CF     cheat_activated_46:.space 1
+CODE.bss:800696D0     cheat_activated_47:.space 1
+CODE.bss:800696D1     cheat_activated_48:.space 1
+CODE.bss:800696D2     cheat_activated_49:.space 1
+CODE.bss:800696D3     cheat_activated_50:.space 1
+CODE.bss:800696D4     cheat_activated_51:.space 1
+CODE.bss:800696D5     cheat_activated_52:.space 1
+CODE.bss:800696D6     cheat_activated_53:.space 1
+CODE.bss:800696D7     cheat_activated_54:.space 1
+CODE.bss:800696D8     cheat_activated_55:.space 1
+CODE.bss:800696D9     cheat_activated_56:.space 1
+CODE.bss:800696DA     cheat_activated_57:.space 1
+CODE.bss:800696DB     cheat_activated_58:.space 1
+CODE.bss:800696DC     cheat_activated_59:.space 1
+CODE.bss:800696DD     cheat_activated_60:.space 1
+CODE.bss:800696DE     cheat_activated_61:.space 1
+CODE.bss:800696DF     cheat_activated_62:.space 1
+CODE.bss:800696E0     cheat_activated_63:.space 1
+CODE.bss:800696E1     cheat_activated_64:.space 1
+CODE.bss:800696E2     cheat_activated_65:.space 1
+CODE.bss:800696E3     cheat_activated_66:.space 1
+CODE.bss:800696E4     cheat_activated_67:.space 1
+CODE.bss:800696E5     cheat_activated_68:.space 1
+CODE.bss:800696E6     cheat_activated_69:.space 1
+CODE.bss:800696E7     cheat_activated_70:.space 1
+CODE.bss:800696E8     cheat_activated_71:.space 1
+CODE.bss:800696E9     cheat_activated_72:.space 1
+CODE.bss:800696EA     cheat_activated_73:.space 1
+CODE.bss:800696EB     cheat_activated_74:.space 1              # DATA XREF: init_menu05_fileselect+B0o
+CODE.bss:800696EC     cheat_activated_75:.space 1
+CODE.bss:800696ED     cheat_activated_76:.space 1
+CODE.bss:800696EE     cheat_activated_77:.space 1
+CODE.bss:800696EF     cheat_activated_78:.space 1
+CODE.bss:800696F0     fav_weapon_right_player1:.space 4        # DATA XREF: constructor_menu0D_missioncomplete+978o
+CODE.bss:800696F0                                              # constructor_menu0D_missioncomplete+980r
+CODE.bss:800696F0                                              # store_favorite_weapon_current_player+24o
+CODE.bss:800696F4     fav_weapon_left_player1:.space 4         # DATA XREF: constructor_menu0D_missioncomplete+98Cr
+CODE.bss:800696F8     fav_weapon_right_player2:.space 4
+CODE.bss:800696FC     fav_weapon_left_player2:.space 4
+CODE.bss:80069700     fav_weapon_right_player3:.space 4
+CODE.bss:80069704     fav_weapon_left_player3:.space 4
+CODE.bss:80069708     fav_weapon_right_player4:.space 4
+CODE.bss:8006970C     fav_weapon_left_player4:.space 4
+CODE.bss:80069710     mp_char_cur_select_player1:.space 4      # DATA XREF: init_menu0f_mpcharsel+1BCw
+CODE.bss:80069710                                              # interface_menu0F_mpcharsel+A0o
+CODE.bss:80069710                                              # constructor_menu0F_mpcharsel+E8o
+CODE.bss:80069714     mp_char_cur_select_player2:.space 4      # DATA XREF: init_menu0f_mpcharsel+1E4w
+CODE.bss:80069718     mp_char_cur_select_player3:.space 4      # DATA XREF: init_menu0f_mpcharsel+214w
+CODE.bss:8006971C     mp_char_cur_select_player4:.space 4      # DATA XREF: init_menu0f_mpcharsel+244w
+CODE.bss:80069720     mp_char_prev_select_player1:.space 4     # DATA XREF: init_menu0f_mpcharsel+1C0w
+CODE.bss:80069720                                              # interface_menu0F_mpcharsel+A4o
+CODE.bss:80069720                                              # constructor_menu0F_mpcharsel+E0o
+CODE.bss:80069724     mp_char_prev_select_player2:.space 4     # DATA XREF: init_menu0f_mpcharsel+1ECw
+CODE.bss:80069728     mp_char_prev_select_player3:.space 4     # DATA XREF: init_menu0f_mpcharsel+21Cw
+CODE.bss:8006972C     mp_char_prev_select_player4:.space 4     # DATA XREF: init_menu0f_mpcharsel+24Cw
+CODE.bss:80069730     dword_CODE_bss_80069730:.space 4         # DATA XREF: init_menu0f_mpcharsel+1C8w
+CODE.bss:80069730                                              # interface_menu0F_mpcharsel+9Co
+CODE.bss:80069730                                              # constructor_menu0F_mpcharsel+E4o
+CODE.bss:80069734     dword_CODE_bss_80069734:.space 4         # DATA XREF: init_menu0f_mpcharsel+1F4w
+CODE.bss:80069738     dword_CODE_bss_80069738:.space 4         # DATA XREF: init_menu0f_mpcharsel+224w
+CODE.bss:8006973C     dword_CODE_bss_8006973C:.space 4         # DATA XREF: init_menu0f_mpcharsel+254w
+CODE.bss:80069740     has_selected_char_player1:.space 4       # DATA XREF: get_players_who_have_selected_mp_char+24o
+CODE.bss:80069740                                              # init_menu0f_mpcharsel+1D0w
+CODE.bss:80069740                                              # interface_menu0F_mpcharsel+A8o
+CODE.bss:80069740                                              # constructor_menu0F_mpcharsel+ECo
+CODE.bss:80069740                                              # init_menu10_mphandicap+30w
+CODE.bss:80069740                                              # interface_menu10_mphandicap+90o
+CODE.bss:80069740                                              # constructor_menu10_mphandicap+E0o
+CODE.bss:80069740                                              # init_menu11_mpcontrol+30w
+CODE.bss:80069740                                              # interface_menu11_mpcontrols+80o
+CODE.bss:80069740                                              # constructor_menu11_mpcontrol+E0o
+CODE.bss:80069744     has_selected_char_player2:.space 4       # DATA XREF: init_menu0f_mpcharsel+1FCw
+CODE.bss:80069744                                              # init_menu10_mphandicap+40w
+CODE.bss:80069744                                              # init_menu11_mpcontrol+40w
+CODE.bss:80069748     has_selected_char_player3:.space 4       # DATA XREF: init_menu0f_mpcharsel+22Cw
+CODE.bss:80069748                                              # init_menu10_mphandicap+50w
+CODE.bss:80069748                                              # init_menu11_mpcontrol+50w
+CODE.bss:8006974C     has_selected_char_player4:.space 4       # DATA XREF: init_menu0f_mpcharsel+25Cw
+CODE.bss:8006974C                                              # init_menu10_mphandicap+68w
+CODE.bss:8006974C                                              # init_menu11_mpcontrol+68w
+CODE.bss:80069750     size_mp_select_image_player1:.space 4    # DATA XREF: init_menu0f_mpcharsel+1DCw
+CODE.bss:80069750                                              # interface_menu0F_mpcharsel+90o
+CODE.bss:80069750                                              # constructor_menu0F_mpcharsel+F8o
+CODE.bss:80069754     size_mp_select_image_player2:.space 4    # DATA XREF: init_menu0f_mpcharsel+20Cw
+CODE.bss:80069758     size_mp_select_image_player3:.space 4    # DATA XREF: init_menu0f_mpcharsel+23Cw
+CODE.bss:8006975C     size_mp_select_image_player4:.space 4    # DATA XREF: init_menu0f_mpcharsel+26Cw
+CODE.bss:80069760     dword_CODE_bss_80069760:.space 4         # DATA XREF: init_menu10_mphandicap+38w
+CODE.bss:80069760                                              # interface_menu10_mphandicap+E4o
+CODE.bss:80069760                                              # init_menu11_mpcontrol+38w
+CODE.bss:80069760                                              # interface_menu11_mpcontrols+E0o
+CODE.bss:80069764     dword_CODE_bss_80069764:.space 4         # DATA XREF: init_menu10_mphandicap+48w
+CODE.bss:80069764                                              # init_menu11_mpcontrol+48w
+CODE.bss:80069768     dword_CODE_bss_80069768:.space 4         # DATA XREF: init_menu10_mphandicap+58w
+CODE.bss:80069768                                              # init_menu11_mpcontrol+58w
+CODE.bss:8006976C     dword_CODE_bss_8006976C:.space 4         # DATA XREF: init_menu10_mphandicap+78w
+CODE.bss:8006976C                                              # init_menu11_mpcontrol+78w
+CODE.bss:80069770      # int dword_CODE_bss_80069770
+CODE.bss:80069770     dword_CODE_bss_80069770:.space 4         # DATA XREF: add_tab1_start+18w
+CODE.bss:80069770                                              # add_tab1_start+44r
+CODE.bss:80069770                                              # add_tab1_start+110r
+CODE.bss:80069774      # int dword_CODE_bss_80069774
+CODE.bss:80069774     dword_CODE_bss_80069774:.space 4         # DATA XREF: add_tab2_next+18w
+CODE.bss:80069774                                              # add_tab2_next+44r
+CODE.bss:80069774                                              # add_tab2_next+110r
+CODE.bss:80069778      # int dword_CODE_bss_80069778
+CODE.bss:80069778     dword_CODE_bss_80069778:.space 4         # DATA XREF: add_tab3_previous+18w
+CODE.bss:80069778                                              # add_tab3_previous+44r
+CODE.bss:80069778                                              # add_tab3_previous+110r
+CODE.bss:8006977C     current_mp_stage_highlighted:.space 4    # DATA XREF: init_menu12_mpstage+40w
+CODE.bss:8006977C                                              # interface_menu12_mpstage+88o
+CODE.bss:8006977C                                              # interface_menu12_mpstage+120w
+CODE.bss:8006977C                                              # interface_menu12_mpstage+12Cr
+CODE.bss:8006977C                                              # interface_menu12_mpstage:loc_CODE_7F013F18o
+CODE.bss:8006977C                                              # interface_menu12_mpstage:loc_CODE_7F013F58r
+CODE.bss:8006977C                                              # constructor_menu12_mpstage+2E8r
+CODE.bss:8006977C                                              # constructor_menu12_mpstage+50Cr
+CODE.bss:80069780     dword_CODE_bss_80069780:.space 4         # DATA XREF: interface_menu13_mpscenario+94w
+CODE.bss:80069780                                              # interface_menu13_mpscenario:loc_CODE_7F014850w
+CODE.bss:80069780                                              # interface_menu13_mpscenario+10Cw
+CODE.bss:80069780                                              # interface_menu13_mpscenario:loc_CODE_7F014908r
+CODE.bss:80069780                                              # constructor_menu13_mpscenario+148r
+CODE.bss:80069784     mission_difficulty_highlighted:.space 4  # DATA XREF: interface_menu06_modesel+118o
+CODE.bss:80069784                                              # interface_menu06_modesel+128w
+CODE.bss:80069784                                              # interface_menu06_modesel+1B0w
+CODE.bss:80069784                                              # interface_menu06_modesel+200w
+CODE.bss:80069784                                              # interface_menu06_modesel+218w
+CODE.bss:80069784                                              # interface_menu06_modesel:loc_CODE_7F00D4ECw
+CODE.bss:80069784                                              # constructor_menu06_modesel+F4r
+CODE.bss:80069784                                              # constructor_menu06_modesel+278r
+CODE.bss:80069784                                              # constructor_menu06_modesel+3CCr
+CODE.bss:80069784                                              # interface_menu07_missionsel+B0w
+CODE.bss:80069784                                              # interface_menu07_missionsel:loc_CODE_7F00E0F0w
+CODE.bss:80069784                                              # interface_menu07_missionsel+2E4r
+CODE.bss:80069784                                              # interface_menu07_missionsel:loc_CODE_7F00E2A8r
+CODE.bss:80069784                                              # constructor_menu07_missionsel+9Cr
+CODE.bss:80069784                                              # interface_menu08_difficulty+C8o
+CODE.bss:80069784                                              # interface_menu08_difficulty+D8w
+CODE.bss:80069784                                              # interface_menu08_difficulty+E4o
+CODE.bss:80069784                                              # interface_menu08_difficulty+130w
+CODE.bss:80069784                                              # interface_menu08_difficulty+168w
+CODE.bss:80069784                                              # interface_menu08_difficulty+18Cw
+CODE.bss:80069784                                              # interface_menu08_difficulty+194w
+CODE.bss:80069784                                              # interface_menu08_difficulty:loc_CODE_7F00E958w
+CODE.bss:80069784                                              # interface_menu08_difficulty+1A8o
+CODE.bss:80069784                                              # interface_menu08_difficulty:loc_CODE_7F00E9A8r
+CODE.bss:80069784                                              # constructor_menu08_difficulty+158r
+CODE.bss:80069788     dword_CODE_bss_80069788:.space 4         # DATA XREF: init_menu14_mpteamsel+54w
+CODE.bss:80069788                                              # init_menu14_mpteamsel+5Cw
+CODE.bss:80069788                                              # interface_menu14_mpteams+9Co
+CODE.bss:80069788                                              # interface_menu14_mpteams+A0o
+CODE.bss:80069788                                              # interface_menu14_mpteams+A8r
+CODE.bss:80069788                                              # interface_menu14_mpteams+C0w
+CODE.bss:80069788                                              # interface_menu14_mpteams:loc_CODE_7F014E20r
+CODE.bss:80069788                                              # interface_menu14_mpteams+F0w
+CODE.bss:80069788                                              # interface_menu14_mpteams+140o
+CODE.bss:80069788                                              # interface_menu14_mpteams+144o
+CODE.bss:80069788                                              # interface_menu14_mpteams+14Cr
+CODE.bss:80069788                                              # interface_menu14_mpteams+164w
+CODE.bss:80069788                                              # interface_menu14_mpteams:loc_CODE_7F014EC4r
+CODE.bss:80069788                                              # interface_menu14_mpteams+194w
+CODE.bss:80069788                                              # interface_menu14_mpteams+1E8o
+CODE.bss:80069788                                              # interface_menu14_mpteams+1ECo
+CODE.bss:80069788                                              # interface_menu14_mpteams+1F4r
+CODE.bss:80069788                                              # interface_menu14_mpteams+20Cw
+CODE.bss:80069788                                              # interface_menu14_mpteams:loc_CODE_7F014F6Cr
+CODE.bss:80069788                                              # interface_menu14_mpteams+23Cw
+CODE.bss:80069788                                              # interface_menu14_mpteams+290o
+CODE.bss:80069788                                              # interface_menu14_mpteams+294o
+CODE.bss:80069788                                              # interface_menu14_mpteams+29Cr
+CODE.bss:80069788                                              # interface_menu14_mpteams+2B4w
+CODE.bss:80069788                                              # interface_menu14_mpteams:loc_CODE_7F015014r
+CODE.bss:80069788                                              # interface_menu14_mpteams+2E4w
+CODE.bss:80069788                                              # interface_menu14_mpteams+2FCo
+CODE.bss:80069788                                              # constructor_menu14_mpteams+270r
+CODE.bss:80069788                                              # constructor_menu14_mpteams:loc_CODE_7F0153C0r
+CODE.bss:80069788                                              # constructor_menu14_mpteams+2F8r
+CODE.bss:8006978C     dword_CODE_bss_8006978C:.space 4         # DATA XREF: load_briefing_text_for_stage+74w
+CODE.bss:8006978C                                              # load_briefing_text_for_stage+98r
+CODE.bss:8006978C                                              # print_objectives_and_status_to_menu:loc_CODE_7F015A64r
+CODE.bss:8006978C                                              # constructor_menu0A_briefing:loc_CODE_7F015F28r
+CODE.bss:8006978C                                              # constructor_menu0A_briefing:loc_CODE_7F015F3Cr
+CODE.bss:8006978C                                              # constructor_menu0A_briefing:loc_CODE_7F015F50r
+CODE.bss:8006978C                                              # constructor_menu0A_briefing:loc_CODE_7F015F64r
+CODE.bss:8006978C                                              # sub_CODE_7F01631C:loc_CODE_7F016364o
+CODE.bss:80069790     dword_CODE_bss_80069790:.space 4         # DATA XREF: init_menu0D_missioncomplete+24r
+CODE.bss:80069790                                              # constructor_menu0D_missioncomplete+3A0r
+CODE.bss:80069790                                              # end_of_mission_briefing+148w
+CODE.bss:80069790                                              # end_of_mission_briefing:loc_CODE_7F01D4E8w
+CODE.bss:80069790                                              # stage_load+128w
+CODE.bss:80069794     highlight_enemy_reaction:.space 4        # DATA XREF: init_menu09_007difficultyselect+30w
+CODE.bss:80069794                                              # interface_menu09_007options+68w
+CODE.bss:80069794                                              # interface_menu09_007options+100w
+CODE.bss:80069794                                              # interface_menu09_007options:loc_CODE_7F00F628r
+CODE.bss:80069794                                              # constructor_menu09_007options+788r
+CODE.bss:80069798     highlight_enemy_health:.space 4          # DATA XREF: init_menu09_007difficultyselect+38w
+CODE.bss:80069798                                              # interface_menu09_007options+70w
+CODE.bss:80069798                                              # interface_menu09_007options+14Cw
+CODE.bss:80069798                                              # interface_menu09_007options:loc_CODE_7F00F63Cr
+CODE.bss:80069798                                              # constructor_menu09_007options+184r
+CODE.bss:8006979C     highlight_enemy_accuracy:.space 4        # DATA XREF: init_menu09_007difficultyselect+48w
+CODE.bss:8006979C                                              # interface_menu09_007options+78w
+CODE.bss:8006979C                                              # interface_menu09_007options+130w
+CODE.bss:8006979C                                              # interface_menu09_007options:loc_CODE_7F00F668r
+CODE.bss:8006979C                                              # constructor_menu09_007options+388r
+CODE.bss:800697A0     highlight_enemy_damage:.space 4          # DATA XREF: init_menu09_007difficultyselect+58w
+CODE.bss:800697A0                                              # interface_menu09_007options+88w
+CODE.bss:800697A0                                              # interface_menu09_007options+118w
+CODE.bss:800697A0                                              # interface_menu09_007options:loc_CODE_7F00F694r
+CODE.bss:800697A0                                              # constructor_menu09_007options+58Cr
+CODE.bss:800697A4                     .align 3
+CODE.bss:800697A8     handicap_player1:.space 4                # DATA XREF: get_player_mp_handicap+4r
+CODE.bss:800697A8                                              # init_mp_options_for_scenario+3Co
+CODE.bss:800697A8                                              # interface_menu10_mphandicap+8Co
+CODE.bss:800697A8                                              # constructor_menu10_mphandicap+DCo
+CODE.bss:800697A8                                              # copy_current_ingame_registers_before_ramrom_playback+90o
+CODE.bss:800697A8                                              # copy_current_ingame_registers_before_ramrom_playback+C4r
+CODE.bss:800697A8                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+98o
+CODE.bss:800697A8                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+C8w
+CODE.bss:800697AC     handicap_player2:.space 4                # DATA XREF: copy_current_ingame_registers_before_ramrom_playback+CCr
+CODE.bss:800697AC                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+D0w
+CODE.bss:800697B0     handicap_player3:.space 4                # DATA XREF: copy_current_ingame_registers_before_ramrom_playback+D4r
+CODE.bss:800697B0                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+D8w
+CODE.bss:800697B4     handicap_player4:.space 4                # DATA XREF: copy_current_ingame_registers_before_ramrom_playback+DCr
+CODE.bss:800697B4                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+E0w
+CODE.bss:800697B8     controlstyle_player1:.space 4            # DATA XREF: init_mp_options_for_scenario+44o
+CODE.bss:800697B8                                              # interface_menu11_mpcontrols+78o
+CODE.bss:800697B8                                              # constructor_menu11_mpcontrol+DCo
+CODE.bss:800697B8                                              # copy_current_ingame_registers_before_ramrom_playback+A0o
+CODE.bss:800697B8                                              # copy_current_ingame_registers_before_ramrom_playback+E4r
+CODE.bss:800697B8                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+A8o
+CODE.bss:800697B8                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+E8w
+CODE.bss:800697BC     controlstyle_player2:.space 4            # DATA XREF: copy_current_ingame_registers_before_ramrom_playback+ECr
+CODE.bss:800697BC                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+F0w
+CODE.bss:800697C0     controlstyle_player3:.space 4            # DATA XREF: copy_current_ingame_registers_before_ramrom_playback+F4r
+CODE.bss:800697C0                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+F8w
+CODE.bss:800697C4     controlstyle_player4:.space 4            # DATA XREF: copy_current_ingame_registers_before_ramrom_playback+FCr
+CODE.bss:800697C4                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+100w
+CODE.bss:800697C8     highlight_players:.space 4               # DATA XREF: init_menu0E_mpoptions:loc_CODE_7F0107E4w
+CODE.bss:800697C8                                              # interface_menu0E_mpoptions+DCw
+CODE.bss:800697C8                                              # interface_menu0E_mpoptions:loc_CODE_7F010AECw
+CODE.bss:800697C8                                              # interface_menu0E_mpoptions:loc_CODE_7F010B7Cr
+CODE.bss:800697C8                                              # constructor_menu0E_mpoptions+E0r
+CODE.bss:800697CC     highlight_scenario:.space 4              # DATA XREF: init_menu0E_mpoptions+B0w
+CODE.bss:800697CC                                              # interface_menu0E_mpoptions+E4w
+CODE.bss:800697CC                                              # interface_menu0E_mpoptions+2A0w
+CODE.bss:800697CC                                              # interface_menu0E_mpoptions:loc_CODE_7F010B98r
+CODE.bss:800697CC                                              # constructor_menu0E_mpoptions+1B8r
+CODE.bss:800697D0     highlight_gameselect:.space 4            # DATA XREF: init_menu0E_mpoptions+B8w
+CODE.bss:800697D0                                              # interface_menu0E_mpoptions+ECw
+CODE.bss:800697D0                                              # interface_menu0E_mpoptions:loc_CODE_7F010BB4r
+CODE.bss:800697D0                                              # constructor_menu0E_mpoptions+290r
+CODE.bss:800697D4     highlight_gamelength:.space 4            # DATA XREF: init_menu0E_mpoptions+C0w
+CODE.bss:800697D4                                              # interface_menu0E_mpoptions+F4w
+CODE.bss:800697D4                                              # interface_menu0E_mpoptions:loc_CODE_7F010BD0r
+CODE.bss:800697D4                                              # constructor_menu0E_mpoptions+384r
+CODE.bss:800697D8     highlight_character:.space 4             # DATA XREF: init_menu0E_mpoptions+C8w
+CODE.bss:800697D8                                              # interface_menu0E_mpoptions+FCw
+CODE.bss:800697D8                                              # interface_menu0E_mpoptions:loc_CODE_7F010BECr
+CODE.bss:800697D8                                              # constructor_menu0E_mpoptions+56Cr
+CODE.bss:800697DC     highlight_weaponselect:.space 4          # DATA XREF: init_menu0E_mpoptions+D0w
+CODE.bss:800697DC                                              # interface_menu0E_mpoptions+104w
+CODE.bss:800697DC                                              # interface_menu0E_mpoptions:loc_CODE_7F010C08r
+CODE.bss:800697DC                                              # constructor_menu0E_mpoptions+478r
+CODE.bss:800697E0     highlight_health:.space 4                # DATA XREF: init_menu0E_mpoptions+D8w
+CODE.bss:800697E0                                              # interface_menu0E_mpoptions+10Cw
+CODE.bss:800697E0                                              # interface_menu0E_mpoptions:loc_CODE_7F010C24r
+CODE.bss:800697E0                                              # constructor_menu0E_mpoptions+660r
+CODE.bss:800697E4     highlight_controlstyle:.space 4          # DATA XREF: init_menu0E_mpoptions+E0w
+CODE.bss:800697E4                                              # interface_menu0E_mpoptions+114w
+CODE.bss:800697E4                                              # interface_menu0E_mpoptions:loc_CODE_7F010C40r
+CODE.bss:800697E4                                              # constructor_menu0E_mpoptions+754r
+CODE.bss:800697E8     highlight_aimadjustment:.space 4         # DATA XREF: init_menu0E_mpoptions+F0w
+CODE.bss:800697E8                                              # interface_menu0E_mpoptions+124w
+CODE.bss:800697E8                                              # interface_menu0E_mpoptions:loc_CODE_7F010C5Cr
+CODE.bss:800697E8                                              # constructor_menu0E_mpoptions+848r
+CODE.bss:800697EC                     .align 4
+CODE.bss:800697F0     dword_CODE_bss_800697F0:.space 0x130     # DATA XREF: init_menu15_cheat+4Co
+CODE.bss:800697F0                                              # constructor_menu15_cheat+88o
+CODE.bss:800697F0                                              # constructor_menu15_cheat+2B8o
+*/
 
 s32 current_menu = -1;
 s32 menu_update = -1;

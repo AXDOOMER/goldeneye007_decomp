@@ -1,6 +1,40 @@
 #include "ultra64.h"
 
-
+/* bss
+CODE.bss:80069920     save1:          save_data <?>            # DATA XREF: sub_CODE_7F01D7A0o
+CODE.bss:80069920                                              # sub_CODE_7F01D7A0+54o
+CODE.bss:80069920                                              # get_save_folder_ptr+24o
+CODE.bss:80069920                                              # sub_CODE_7F01DE50+18o
+CODE.bss:80069920                                              # sub_CODE_7F01DEB4+5Co
+CODE.bss:80069920                                              # sub_CODE_7F01DF90:loc_CODE_7F01E0B4o
+CODE.bss:80069920                                              # sub_CODE_7F01DF90+154o
+CODE.bss:80069920                                              # sub_CODE_7F01DF90+1C8o
+CODE.bss:80069920                                              # sub_CODE_7F01DF90+238o
+CODE.bss:80069920                                              # sub_CODE_7F01E504+2Co
+CODE.bss:80069920                                              # sub_CODE_7F01E504+A0o
+CODE.bss:80069920                                              # sub_CODE_7F01DF90+150o
+CODE.bss:80069980     save2:          save_data <?>            # DATA XREF: sub_CODE_7F01DF90+14Co
+CODE.bss:800699E0     save3:          save_data <?>
+CODE.bss:80069A40     save4:          save_data <?>
+CODE.bss:80069AA0     save5:          save_data <?>
+CODE.bss:80069B00     save6:          save_data <?>            # DATA XREF: sub_CODE_7F01D6E0+3Co
+CODE.bss:80069B00                                              # sub_CODE_7F01D7A0+18o
+CODE.bss:80069B00                                              # get_save_folder_ptr+20o
+CODE.bss:80069B00                                              # get_save_folder_ptr+70o
+CODE.bss:80069B00                                              # copy_eepromfile_a0_from_a1_to_buffer+Co
+CODE.bss:80069B60     dword_CODE_bss_80069B60:.space 4         # DATA XREF: sub_CODE_7F01DF90+144o
+CODE.bss:80069B60                                              # sub_CODE_7F02083C+A4r
+CODE.bss:80069B60                                              # sub_CODE_7F02083C+B8r
+CODE.bss:80069B60                                              # sub_CODE_7F02083C+CCr
+CODE.bss:80069B60                                              # sub_CODE_7F02083C+140r
+CODE.bss:80069B60                                              # sub_CODE_7F02083C:loc_CODE_7F0209F4r
+CODE.bss:80069B60                                              # sub_CODE_7F02083C+204r
+CODE.bss:80069B60                                              # sub_CODE_7F02083C+27Cr
+CODE.bss:80069B60                                              # sub_CODE_7F020EF0+598w
+CODE.bss:80069B60                                              # sub_CODE_7F020EF0+5B8o
+CODE.bss:80069B60                                              # sub_CODE_7F020EF0+5C0r
+CODE.bss:80069B60                                              # sub_CODE_7F020EF0+5E4r
+*/
 
 /*
 D:8002C510     save1_selected_bond:.word 0              # DATA XREF: sub_CODE_7F01DF90+2A8o

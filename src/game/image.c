@@ -1,5 +1,48 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:8008C720     ptr_texture_alloc_start:.space 4         # DATA XREF: set_mt_tex_alloc+6Co
+CODE.bss:8008C720                                              # sub_CODE_7F0CBB0C+8o
+CODE.bss:8008C720                                              # load_image_to_buffer+18o
+CODE.bss:8008C720                                              # process_microcode_sort_display_modes_expand_image_calls+68o
+CODE.bss:8008C724     ptr_texture_alloc_end:.space 4           # DATA XREF: sub_CODE_7F0CBB0C+10r
+CODE.bss:8008C728     ptr_next_available_space:.space 4
+CODE.bss:8008C72C     ptr_last_entry_facemapping:.space 4
+CODE.bss:8008C730     word_CODE_bss_8008C730:.space 2          # DATA XREF: image_related_calls_decompressdata+CCo
+CODE.bss:8008C730                                              # image_related_calls_decompressdata+E4r
+CODE.bss:8008C730                                              # image_related_calls_decompressdata+234o
+CODE.bss:8008C730                                              # process_huffman_compressed_images+CCo
+CODE.bss:8008C730                                              # process_huffman_compressed_images+E4r
+CODE.bss:8008C730                                              # process_huffman_compressed_images+208o
+CODE.bss:8008C730                                              # process_huffman_compressed_images+740o
+CODE.bss:8008C730                                              # sub_CODE_7F0CC714+38o
+CODE.bss:8008C730                                              # sub_CODE_7F0CC7FC+38o
+CODE.bss:8008C732                     .align 2
+CODE.bss:8008C734                     .space 0x95C
+CODE.bss:8008D090     dword_CODE_bss_8008D090:.space 4         # DATA XREF: set_mt_tex_alloc+10w
+CODE.bss:8008D090                                              # image_related_calls_decompressdata+B4r
+CODE.bss:8008D090                                              # image_related_calls_decompressdata+230r
+CODE.bss:8008D090                                              # image_related_calls_decompressdata+304o
+CODE.bss:8008D090                                              # image_related_calls_decompressdata+30Cr
+CODE.bss:8008D090                                              # image_related_calls_decompressdata+334w
+CODE.bss:8008D090                                              # image_related_calls_decompressdata+338w
+CODE.bss:8008D090                                              # process_huffman_compressed_images+84o
+CODE.bss:8008D090                                              # process_huffman_compressed_images+B0r
+CODE.bss:8008D090                                              # process_huffman_compressed_images:loc_CODE_7F0C7F08o
+CODE.bss:8008D090                                              # process_huffman_compressed_images+204r
+CODE.bss:8008D090                                              # process_huffman_compressed_images:def_7F0C8054r
+CODE.bss:8008D090                                              # process_huffman_compressed_images+7E4o
+CODE.bss:8008D090                                              # process_huffman_compressed_images+814r
+CODE.bss:8008D090                                              # process_huffman_compressed_images+83Cw
+CODE.bss:8008D090                                              # process_huffman_compressed_images+840w
+CODE.bss:8008D090                                              # sub_CODE_7F0CC714+24r
+CODE.bss:8008D090                                              # sub_CODE_7F0CC7FC+24r
+CODE.bss:8008D094     dword_CODE_bss_8008D094:.space 4         # DATA XREF: load_image_to_buffer+24o
+CODE.bss:8008D094                                              # load_image_to_buffer+3Cw
+CODE.bss:8008D094                                              # load_image_to_buffer+68r
+CODE.bss:8008D094                                              # load_image_to_buffer+178r
+CODE.bss:8008D094                                              # load_image_to_buffer+1A0r
+*/
 
 /* data
 D:80049170      # int *bytes

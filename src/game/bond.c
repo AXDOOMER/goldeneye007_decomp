@@ -1,5 +1,326 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:80079940     flt_CODE_bss_80079940:.space 4           # DATA XREF: sub_CODE_7F0785DC+54o
+CODE.bss:80079940                                              # sub_CODE_7F0785DC+90w
+CODE.bss:80079940                                              # sub_CODE_7F0785DC+CCr
+CODE.bss:80079940                                              # sub_CODE_7F078950o
+CODE.bss:80079940                                              # sub_CODE_7F078950+8r
+CODE.bss:80079940                                              # sub_CODE_7F078A58+DCo
+CODE.bss:80079940                                              # sub_CODE_7F078A58+F4r
+CODE.bss:80079944     flt_CODE_bss_80079944:.space 4           # DATA XREF: sub_CODE_7F0785DC+B0w
+CODE.bss:80079944                                              # sub_CODE_7F0785DC+DCr
+CODE.bss:80079944                                              # sub_CODE_7F078950+14r
+CODE.bss:80079944                                              # sub_CODE_7F078A58:loc_CODE_7F078B5Cr
+CODE.bss:80079948     flt_CODE_bss_80079948:.space 4           # DATA XREF: sub_CODE_7F0785DC+D4w
+CODE.bss:80079948                                              # sub_CODE_7F0785DC+F8r
+CODE.bss:80079948                                              # sub_CODE_7F078950+1Cr
+CODE.bss:80079948                                              # sub_CODE_7F078A58+110r
+CODE.bss:8007994C     flt_CODE_bss_8007994C:.space 4           # DATA XREF: sub_CODE_7F0785DC+104w
+CODE.bss:8007994C                                              # sub_CODE_7F078950+24r
+CODE.bss:8007994C                                              # sub_CODE_7F078A58+114r
+CODE.bss:80079950     flt_CODE_bss_80079950:.space 4           # DATA XREF: sub_CODE_7F0785DC+70o
+CODE.bss:80079950                                              # sub_CODE_7F0785DC+128w
+CODE.bss:80079950                                              # sub_CODE_7F0785DC+164r
+CODE.bss:80079950                                              # sub_CODE_7F078980o
+CODE.bss:80079950                                              # sub_CODE_7F078980+8r
+CODE.bss:80079950                                              # sub_CODE_7F078A58+128o
+CODE.bss:80079950                                              # sub_CODE_7F078A58+140r
+CODE.bss:80079954     flt_CODE_bss_80079954:.space 4           # DATA XREF: sub_CODE_7F0785DC+148w
+CODE.bss:80079954                                              # sub_CODE_7F0785DC+174r
+CODE.bss:80079954                                              # sub_CODE_7F078980+14r
+CODE.bss:80079954                                              # sub_CODE_7F078A58:loc_CODE_7F078BA8r
+CODE.bss:80079958     flt_CODE_bss_80079958:.space 4           # DATA XREF: sub_CODE_7F0785DC+16Cw
+CODE.bss:80079958                                              # sub_CODE_7F0785DC+190r
+CODE.bss:80079958                                              # sub_CODE_7F078980+1Cr
+CODE.bss:80079958                                              # sub_CODE_7F078A58+15Cr
+CODE.bss:8007995C     flt_CODE_bss_8007995C:.space 4           # DATA XREF: sub_CODE_7F0785DC+19Cw
+CODE.bss:8007995C                                              # sub_CODE_7F078980+24r
+CODE.bss:8007995C                                              # sub_CODE_7F078A58+160r
+CODE.bss:80079960     flt_CODE_bss_80079960:.space 4           # DATA XREF: sub_CODE_7F0785DC+1E8o
+CODE.bss:80079960                                              # sub_CODE_7F0785DC+224w
+CODE.bss:80079960                                              # sub_CODE_7F0785DC+260r
+CODE.bss:80079960                                              # sub_CODE_7F0789B0o
+CODE.bss:80079960                                              # sub_CODE_7F0789B0+8r
+CODE.bss:80079960                                              # sub_CODE_7F078A58+44o
+CODE.bss:80079960                                              # sub_CODE_7F078A58+5Cr
+CODE.bss:80079964     flt_CODE_bss_80079964:.space 4           # DATA XREF: sub_CODE_7F0785DC+244w
+CODE.bss:80079964                                              # sub_CODE_7F0785DC+270r
+CODE.bss:80079964                                              # sub_CODE_7F0789B0+14r
+CODE.bss:80079964                                              # sub_CODE_7F078A58:loc_CODE_7F078AC4r
+CODE.bss:80079968     flt_CODE_bss_80079968:.space 4           # DATA XREF: sub_CODE_7F0785DC+268w
+CODE.bss:80079968                                              # sub_CODE_7F0785DC+28Cr
+CODE.bss:80079968                                              # sub_CODE_7F0789B0+1Cr
+CODE.bss:80079968                                              # sub_CODE_7F078A58+78r
+CODE.bss:8007996C     flt_CODE_bss_8007996C:.space 4           # DATA XREF: sub_CODE_7F005450+58o
+CODE.bss:8007996C                                              # sub_CODE_7F0785DC+298w
+CODE.bss:8007996C                                              # sub_CODE_7F0789B0+24r
+CODE.bss:8007996C                                              # sub_CODE_7F078A58+7Cr
+CODE.bss:80079970     flt_CODE_bss_80079970:.space 4           # DATA XREF: sub_CODE_7F0785DC+1FCo
+CODE.bss:80079970                                              # sub_CODE_7F0785DC+2BCw
+CODE.bss:80079970                                              # sub_CODE_7F0785DC+2F8r
+CODE.bss:80079970                                              # sub_CODE_7F0789E0o
+CODE.bss:80079970                                              # sub_CODE_7F0789E0+8r
+CODE.bss:80079970                                              # sub_CODE_7F078A58+90o
+CODE.bss:80079970                                              # sub_CODE_7F078A58+A8r
+CODE.bss:80079974     flt_CODE_bss_80079974:.space 4           # DATA XREF: sub_CODE_7F0785DC+2DCw
+CODE.bss:80079974                                              # sub_CODE_7F0785DC+308r
+CODE.bss:80079974                                              # sub_CODE_7F0789E0+14r
+CODE.bss:80079974                                              # sub_CODE_7F078A58:loc_CODE_7F078B10r
+CODE.bss:80079978     flt_CODE_bss_80079978:.space 4           # DATA XREF: sub_CODE_7F0785DC+300w
+CODE.bss:80079978                                              # sub_CODE_7F0785DC+324r
+CODE.bss:80079978                                              # sub_CODE_7F0789E0+1Cr
+CODE.bss:80079978                                              # sub_CODE_7F078A58+C4r
+CODE.bss:8007997C     flt_CODE_bss_8007997C:.space 4           # DATA XREF: sub_CODE_7F0785DC+330w
+CODE.bss:8007997C                                              # sub_CODE_7F0789E0+24r
+CODE.bss:8007997C                                              # sub_CODE_7F078A58+C8r
+CODE.bss:80079980     flt_CODE_bss_80079980:.space 4           # DATA XREF: sub_CODE_7F0785DC+370w
+CODE.bss:80079980                                              # sub_CODE_7F078A10+3Cr
+CODE.bss:80079980                                              # sub_CODE_7F078A58+30r
+CODE.bss:80079980                                              # sub_CODE_7F078BF4+2Cr
+CODE.bss:80079984                     .align 4
+CODE.bss:80079990     flt_CODE_bss_80079990:.space 4           # DATA XREF: load_camera_intro_type_values+ECo
+CODE.bss:80079990                                              # load_camera_intro_type_values+F4w
+CODE.bss:80079990                                              # parse_handle_actionblocks+47A0o
+CODE.bss:80079990                                              # parse_handle_actionblocks+47BCw
+CODE.bss:80079990                                              # sub_CODE_7F080DF8+32Co
+CODE.bss:80079990                                              # sub_CODE_7F080DF8+334r
+CODE.bss:80079990                                              # sub_CODE_7F086990+E4o
+CODE.bss:80079990                                              # sub_CODE_7F086990+F0r
+CODE.bss:80079994     flt_CODE_bss_80079994:.space 4           # DATA XREF: load_camera_intro_type_values+F8w
+CODE.bss:80079994                                              # parse_handle_actionblocks+47ACw
+CODE.bss:80079998     flt_CODE_bss_80079998:.space 4           # DATA XREF: load_camera_intro_type_values+FCw
+CODE.bss:80079998                                              # parse_handle_actionblocks+47D4w
+CODE.bss:80079998                                              # sub_CODE_7F080DF8+348r
+CODE.bss:80079998                                              # sub_CODE_7F086990+108r
+CODE.bss:80079998                                              # sub_CODE_7F086990+120r
+CODE.bss:8007999C     dword_CODE_bss_8007999C:.space 4         # DATA XREF: sub_CODE_7F084360+44r
+CODE.bss:8007999C                                              # sub_CODE_7F084360+2D4w
+CODE.bss:8007999C                                              # trigger_explosions_around_player+1Cw
+CODE.bss:800799A0     dword_CODE_bss_800799A0:.space 4         # DATA XREF: sub_CODE_7F084360o
+CODE.bss:800799A0                                              # sub_CODE_7F084360+8r
+CODE.bss:800799A0                                              # sub_CODE_7F084360+18w
+CODE.bss:800799A0                                              # trigger_explosions_around_player+28w
+CODE.bss:800799A4                     .align 3
+CODE.bss:800799A8     flt_CODE_bss_800799A8:.space 4           # DATA XREF: sub_CODE_7F07C7B4+60o
+CODE.bss:800799A8                                              # sub_CODE_7F07C7B4+70w
+CODE.bss:800799A8                                              # sub_CODE_7F07C7B4+8Co
+CODE.bss:800799A8                                              # sub_CODE_7F07C7B4+94r
+CODE.bss:800799A8                                              # sub_CODE_7F07C7B4+A8w
+CODE.bss:800799A8                                              # sub_CODE_7F07C888+30o
+CODE.bss:800799A8                                              # sub_CODE_7F07C888+38r
+CODE.bss:800799A8                                              # MoveBond+95Co
+CODE.bss:800799A8                                              # MoveBond+970r
+CODE.bss:800799A8                                              # MoveBond+9A8o
+CODE.bss:800799A8                                              # MoveBond+9B0r
+CODE.bss:800799A8                                              # MoveBond+D30o
+CODE.bss:800799A8                                              # MoveBond+D38r
+CODE.bss:800799A8                                              # MoveBond+1EFCr
+CODE.bss:800799AC     flt_CODE_bss_800799AC:.space 4           # DATA XREF: sub_CODE_7F07C7B4+78w
+CODE.bss:800799AC                                              # sub_CODE_7F07C7B4+9Cr
+CODE.bss:800799AC                                              # sub_CODE_7F07C7B4+B4w
+CODE.bss:800799AC                                              # MoveBond+D3Cr
+CODE.bss:800799AC                                              # MoveBond+1F04r
+CODE.bss:800799B0     flt_CODE_bss_800799B0:.space 4           # DATA XREF: sub_CODE_7F07C7B4+84w
+CODE.bss:800799B0                                              # sub_CODE_7F07C7B4+A4r
+CODE.bss:800799B0                                              # sub_CODE_7F07C7B4+C0w
+CODE.bss:800799B0                                              # sub_CODE_7F07C888+40r
+CODE.bss:800799B0                                              # MoveBond+974r
+CODE.bss:800799B0                                              # MoveBond+9B8r
+CODE.bss:800799B0                                              # MoveBond+D40r
+CODE.bss:800799B0                                              # MoveBond+1F10r
+CODE.bss:800799B4     dword_CODE_bss_800799B4:.space 4         # DATA XREF: MoveBond+1040o
+CODE.bss:800799B4                                              # MoveBond+104Cw
+CODE.bss:800799B4                                              # MoveBond+1248o
+CODE.bss:800799B4                                              # MoveBond+1250w
+CODE.bss:800799B4                                              # MoveBond+12A0w
+CODE.bss:800799B4                                              # MoveBond+12A8r
+CODE.bss:800799B4                                              # MoveBond+1520o
+CODE.bss:800799B4                                              # MoveBond+1530r
+CODE.bss:800799B4                                              # MoveBond+1548w
+CODE.bss:800799B8     dword_CODE_bss_800799B8:.space 4         # DATA XREF: sub_CODE_7F07CF8C+24r
+CODE.bss:800799B8                                              # sub_CODE_7F07D960+210r
+CODE.bss:800799B8                                              # controller_gameplay_interaction+1224w
+CODE.bss:800799B8                                              # controller_gameplay_interaction+147Cr
+CODE.bss:800799B8                                              # controller_gameplay_interaction+2194r
+CODE.bss:800799B8                                              # controller_gameplay_interaction+22F4r
+CODE.bss:800799B8                                              # MoveBond+CE0r
+CODE.bss:800799B8                                              # MoveBond+1000w
+CODE.bss:800799B8                                              # MoveBond+1474r
+CODE.bss:800799B8                                              # MoveBond+1E4Cr
+CODE.bss:800799BC     flt_CODE_bss_800799BC:.space 4           # DATA XREF: controller_gameplay_interaction+1250w
+CODE.bss:800799BC                                              # MoveBond+DECo
+CODE.bss:800799BC                                              # MoveBond+DF8r
+CODE.bss:800799BC                                              # MoveBond+E04w
+CODE.bss:800799BC                                              # MoveBond+E08r
+CODE.bss:800799BC                                              # MoveBond+E1Cw
+CODE.bss:800799BC                                              # MoveBond+E20r
+CODE.bss:800799BC                                              # MoveBond:loc_CODE_7F085600o
+CODE.bss:800799BC                                              # MoveBond+FC8r
+CODE.bss:800799C0     flt_CODE_bss_800799C0:.space 4           # DATA XREF: sub_CODE_7F07D960+228r
+CODE.bss:800799C0                                              # controller_gameplay_interaction+125Cw
+CODE.bss:800799C0                                              # MoveBond+E64o
+CODE.bss:800799C0                                              # MoveBond+E8Cw
+CODE.bss:800799C0                                              # MoveBond+E90r
+CODE.bss:800799C0                                              # MoveBond+EF8r
+CODE.bss:800799C0                                              # MoveBond+F00r
+CODE.bss:800799C0                                              # MoveBond+F58r
+CODE.bss:800799C0                                              # MoveBond+F68r
+CODE.bss:800799C4     flt_CODE_bss_800799C4:.space 4           # DATA XREF: controller_gameplay_interaction+1270w
+CODE.bss:800799C4                                              # MoveBond+EB8r
+CODE.bss:800799C8     flt_CODE_bss_800799C8:.space 4           # DATA XREF: controller_gameplay_interaction+1278w
+CODE.bss:800799C8                                              # MoveBond+E9Cr
+CODE.bss:800799CC                     .align 4
+CODE.bss:800799D0     flt_CODE_bss_800799D0:.space 4           # DATA XREF: controller_gameplay_interaction+11C8o
+CODE.bss:800799D0                                              # controller_gameplay_interaction+1288w
+CODE.bss:800799D0                                              # MoveBond+E94o
+CODE.bss:800799D0                                              # MoveBond:loc_CODE_7F0855B4r
+CODE.bss:800799D4     flt_CODE_bss_800799D4:.space 4           # DATA XREF: controller_gameplay_interaction+1290w
+CODE.bss:800799D8     flt_CODE_bss_800799D8:.space 4           # DATA XREF: controller_gameplay_interaction+1298w
+CODE.bss:800799D8                                              # MoveBond+F90r
+CODE.bss:800799DC                     .align 4
+CODE.bss:800799E0      # int starting_right_weapon
+CODE.bss:800799E0     starting_right_weapon:.space 4           # DATA XREF: load_camera_intro_type_values+270w
+CODE.bss:800799E0                                              # load_camera_intro_type_values+390w
+CODE.bss:800799E0                                              # load_camera_intro_type_values+6A4w
+CODE.bss:800799E0                                              # sub_CODE_7F0798B8+94r
+CODE.bss:800799E0                                              # solo_char_load+2A8r
+CODE.bss:800799E0                                              # set_camera_mode+378o
+CODE.bss:800799E0                                              # set_camera_mode+3A0r
+CODE.bss:800799E4      # int starting_left_weapon
+CODE.bss:800799E4     starting_left_weapon:.space 4            # DATA XREF: load_camera_intro_type_values+260w
+CODE.bss:800799E4                                              # load_camera_intro_type_values+3A8w
+CODE.bss:800799E4                                              # sub_CODE_7F0798B8+90r
+CODE.bss:800799E4                                              # set_camera_mode+394r
+CODE.bss:800799E8     flt_CODE_bss_800799E8:.space 4           # DATA XREF: sub_CODE_7F07A534+74o
+CODE.bss:800799E8                                              # sub_CODE_7F07B56C:loc_CODE_7F07C000o
+CODE.bss:800799E8                                              # sub_CODE_7F07B56C+A9Cr
+CODE.bss:800799EC     flt_CODE_bss_800799EC:.space 4           # DATA XREF: sub_CODE_7F07B56C+AB0r
+CODE.bss:800799F0     flt_CODE_bss_800799F0:.space 4           # DATA XREF: sub_CODE_7F07B56C+AC0r
+CODE.bss:800799F4     dword_CODE_bss_800799F4:.space 4         # DATA XREF: sub_CODE_7F07A534+4w
+CODE.bss:800799F4                                              # sub_CODE_7F07B56C+AB4o
+CODE.bss:800799F4                                              # sub_CODE_7F07B56C+ACCr
+CODE.bss:800799F4                                              # sub_CODE_7F07B56C+B10r
+CODE.bss:800799F4                                              # sub_CODE_7F07B56C+B1Cr
+CODE.bss:800799F8     dword_CODE_bss_800799F8:.space 4         # DATA XREF: parse_handle_actionblocks+412Cw
+CODE.bss:800799F8                                              # parse_handle_actionblocks+4150w
+CODE.bss:800799F8                                              # parse_handle_actionblocks+4198w
+CODE.bss:800799F8                                              # parse_handle_actionblocks+49DCw
+CODE.bss:800799F8                                              # sub_CODE_7F07B56C+B70o
+CODE.bss:800799F8                                              # sub_CODE_7F07B56C+B74r
+CODE.bss:800799F8                                              # sub_CODE_7F07B56C+B94r
+CODE.bss:800799F8                                              # sub_CODE_7F07B56C+BA4r
+CODE.bss:800799F8                                              # sub_CODE_7F07B56C+BD8r
+CODE.bss:800799F8                                              # sub_CODE_7F07B56C+BE8r
+CODE.bss:800799F8                                              # sub_CODE_7F07B56C+BF4r
+CODE.bss:800799F8                                              # sub_CODE_7F07B56C+C00r
+CODE.bss:800799FC     dword_CODE_bss_800799FC:.space 4         # DATA XREF: parse_handle_actionblocks+41A0w
+CODE.bss:800799FC                                              # parse_handle_actionblocks+49E8w
+CODE.bss:800799FC                                              # sub_CODE_7F07B56C:loc_CODE_7F07C17Co
+CODE.bss:800799FC                                              # sub_CODE_7F07B56C+C18r
+CODE.bss:800799FC                                              # sub_CODE_7F07B56C+C8Cr
+CODE.bss:800799FC                                              # sub_CODE_7F07B56C+CA0r
+CODE.bss:800799FC                                              # sub_CODE_7F07B56C+CD8r
+CODE.bss:800799FC                                              # sub_CODE_7F07B56C+D14r
+CODE.bss:800799FC                                              # sub_CODE_7F07B56C+D48r
+CODE.bss:800799FC                                              # sub_CODE_7F07B56C+D6Cr
+CODE.bss:800799FC                                              # sub_CODE_7F07B56C+D78r
+CODE.bss:80079A00     flt_CODE_bss_80079A00:.space 4           # DATA XREF: parse_handle_actionblocks+4A1Cw
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E1Co
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E3Cr
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E50o
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E70r
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E84o
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E90r
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E94o
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E9Cr
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+EC8o
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+EF8r
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+EFCo
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+F04r
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+F38o
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+F58r
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+F64w
+CODE.bss:80079A00                                              # sub_CODE_7F07B56C+F68r
+CODE.bss:80079A04     flt_CODE_bss_80079A04:.space 4           # DATA XREF: parse_handle_actionblocks+4A2Cw
+CODE.bss:80079A04                                              # sub_CODE_7F07B56C+F4Cr
+CODE.bss:80079A08     flt_CODE_bss_80079A08:.space 4           # DATA XREF: parse_handle_actionblocks+4A34w
+CODE.bss:80079A08                                              # sub_CODE_7F07B56C+EA8r
+CODE.bss:80079A08                                              # sub_CODE_7F07B56C+F18r
+CODE.bss:80079A0C     flt_CODE_bss_80079A0C:.space 4           # DATA XREF: parse_handle_actionblocks+4A3Cw
+CODE.bss:80079A0C                                              # sub_CODE_7F07B56C+EE0r
+CODE.bss:80079A10     flt_CODE_bss_80079A10:.space 4           # DATA XREF: parse_handle_actionblocks+4A44w
+CODE.bss:80079A10                                              # sub_CODE_7F07B56C+E5Cr
+CODE.bss:80079A10                                              # sub_CODE_7F07B56C+ED8r
+CODE.bss:80079A14     dword_CODE_bss_80079A14:.space 4         # DATA XREF: parse_handle_actionblocks+4A54w
+CODE.bss:80079A14                                              # sub_CODE_7F07B56C:loc_CODE_7F07C318r
+CODE.bss:80079A18     dword_CODE_bss_80079A18:.space 4         # DATA XREF: parse_handle_actionblocks+41BCw
+CODE.bss:80079A18                                              # sub_CODE_7F07B56C+CD0r
+CODE.bss:80079A1C     dword_CODE_bss_80079A1C:.space 4         # DATA XREF: parse_handle_actionblocks+41D4w
+CODE.bss:80079A20     mission_timer:  .space 4                 # DATA XREF: load_camera_intro_type_values+23Cw
+CODE.bss:80079A20                                              # possibly_reset_viewport_options_for_player+3DCo
+CODE.bss:80079A20                                              # possibly_reset_viewport_options_for_player+3ECr
+CODE.bss:80079A20                                              # possibly_reset_viewport_options_for_player+3F4w
+CODE.bss:80079A20                                              # sub_CODE_7F08BFB8+8r
+CODE.bss:80079A24     watch_time_0:   .space 4                 # DATA XREF: load_camera_intro_type_values+240o
+CODE.bss:80079A24                                              # load_camera_intro_type_values+244w
+CODE.bss:80079A24                                              # load_camera_intro_type_values+580w
+CODE.bss:80079A24                                              # load_camera_intro_type_values+5BCw
+CODE.bss:80079A24                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F0873CCo
+CODE.bss:80079A24                                              # possibly_reset_viewport_options_for_player+440r
+CODE.bss:80079A24                                              # possibly_reset_viewport_options_for_player+44Cw
+CODE.bss:80079A24                                              # sub_CODE_7F087E74+268r
+CODE.bss:80079A28     dword_CODE_bss_80079A28:.space 0x200     # DATA XREF: display_string_in_lower_left_corner+34o
+CODE.bss:80079A28                                              # display_string_in_lower_left_corner+B4o
+CODE.bss:80079A28                                              # sub_CODE_7F08A5FC+E4o
+CODE.bss:80079A28                                              # sub_CODE_7F08A5FC+2A4o
+CODE.bss:80079C28     dword_CODE_bss_80079C28:.space 4         # DATA XREF: load_camera_intro_type_values:loc_CODE_7F005ED8o
+CODE.bss:80079C28                                              # sub_CODE_7F0790F0+6Co
+CODE.bss:80079C28                                              # sub_CODE_7F0790F0+17Co
+CODE.bss:80079C28                                              # mp_respawn_handler+E4r
+CODE.bss:80079C2C                     .space 0x3C
+CODE.bss:80079C68     dword_CODE_bss_80079C68:.space 4         # DATA XREF: load_camera_intro_type_values+104w
+CODE.bss:80079C68                                              # load_camera_intro_type_values+2E8r
+CODE.bss:80079C68                                              # load_camera_intro_type_values+320w
+CODE.bss:80079C68                                              # load_camera_intro_type_values+6D4r
+CODE.bss:80079C68                                              # load_camera_intro_type_values+6F4r
+CODE.bss:80079C68                                              # sub_CODE_7F0790F0+3Cr
+CODE.bss:80079C68                                              # sub_CODE_7F0790F0+98r
+CODE.bss:80079C68                                              # sub_CODE_7F0790F0+154r
+CODE.bss:80079C68                                              # sub_CODE_7F0790F0+18Cr
+CODE.bss:80079C68                                              # sub_CODE_7F0790F0+1CCr
+CODE.bss:80079C68                                              # sub_CODE_7F0790F0+288r
+CODE.bss:80079C68                                              # sub_CODE_7F0790F0+2A8r
+CODE.bss:80079C68                                              # mp_respawn_handler+C0r
+CODE.bss:80079C6C                     .align 4
+CODE.bss:80079C70     dword_CODE_bss_80079C70:.space 0x130     # DATA XREF: display_string_at_top_of_screen+28o
+CODE.bss:80079C70                                              # sub_CODE_7F08AAE8+A0o
+CODE.bss:80079C70                                              # sub_CODE_7F08AAE8+1E4o
+CODE.bss:80079DA0     dword_CODE_bss_80079DA0:.space 4         # DATA XREF: load_camera_intro_type_values+858w
+CODE.bss:80079DA0                                              # write_stan_tiles_in_yellowr
+CODE.bss:80079DA4     dword_CODE_bss_80079DA4:.space 4         # DATA XREF: load_camera_intro_type_values+874w
+CODE.bss:80079DA4                                              # write_stan_tiles_in_yellow:loc_CODE_7F0896E4r
+CODE.bss:80079DA8     dword_CODE_bss_80079DA8:.space 0x20      # DATA XREF: load_camera_intro_type_values+870o
+CODE.bss:80079DC8     dword_CODE_bss_80079DC8:.space 0x3C      # DATA XREF: load_camera_intro_type_values+868o
+CODE.bss:80079E04     flt_CODE_bss_80079E04:.space 4           # DATA XREF: set_camera_mode+110w
+CODE.bss:80079E04                                              # sub_CODE_7F07B56C+358o
+CODE.bss:80079E08     flt_CODE_bss_80079E08:.space 4           # DATA XREF: set_camera_mode+120w
+CODE.bss:80079E08                                              # sub_CODE_7F07B56C+324r
+CODE.bss:80079E08                                              # sub_CODE_7F07B56C+34Co
+CODE.bss:80079E08                                              # sub_CODE_7F07B56C+460o
+CODE.bss:80079E08                                              # sub_CODE_7F07B56C+468r
+CODE.bss:80079E0C     flt_CODE_bss_80079E0C:.space 4           # DATA XREF: set_camera_mode+128w
+CODE.bss:80079E0C                                              # sub_CODE_7F07B56C+350o
+CODE.bss:80079E10     flt_CODE_bss_80079E10:.space 4           # DATA XREF: set_camera_mode+140w
+CODE.bss:80079E10                                              # sub_CODE_7F07B56C+344o
+CODE.bss:80079E10                                              # sub_CODE_7F07B56C+494o
+CODE.bss:80079E10                                              # sub_CODE_7F07B56C+49Cr
+CODE.bss:80079E10                                              # sub_CODE_7F07B56C+4CCr
+CODE.bss:80079E10                                              # sub_CODE_7F07B56C+4E8o
+CODE.bss:80079E10                                              # sub_CODE_7F07B56C+4F0r
+CODE.bss:80079E10                                              # sub_CODE_7F07B56C+568r
+CODE.bss:80079E10                                              # sub_CODE_7F07B56C+59Cr
+*/
 
 /* data
 D:80036424     camera_80036424:.word 0                  # DATA XREF: load_camera_intro_type_values+54w

@@ -1,6 +1,9 @@
 #include "ultra64.h"
 
-
+/* bss
+CODE.bss:80075DA0     flt_CODE_bss_80075DA0:.space 4           # DATA XREF: sub_CODE_7F058C64+Cw
+CODE.bss:80075DA0                                              # sub_CODE_7F058C88r
+*/
 
 /* data
 D:80032310     flt_D_80032310: .float 65536.0           # DATA XREF: sub_CODE_7F058C4C+14w

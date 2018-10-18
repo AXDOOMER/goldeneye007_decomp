@@ -1,6 +1,21 @@
 #include "ultra64.h"
 
-
+/* bss
+CODE.bss:80083320     dword_CODE_bss_80083320:.space 0x130     # DATA XREF: sub_CODE_7F0BC530+70o
+CODE.bss:80083320                                              # sub_CODE_7F0BC6F0+Co
+CODE.bss:80083320                                              # sub_CODE_7F0BC7D4+20o
+CODE.bss:80083450     dword_CODE_bss_80083450:.space 4         # DATA XREF: sub_CODE_7F0BC530+74o
+CODE.bss:80083450                                              # sub_CODE_7F0BC690+4r
+CODE.bss:80083454                     .space 0x4AC
+CODE.bss:80083900     dword_CODE_bss_80083900:.space 4         # DATA XREF: sub_CODE_7F0BC530+6Co
+CODE.bss:80083900                                              # sub_CODE_7F0BC6F0+4o
+CODE.bss:80083900                                              # sub_CODE_7F0BC7D4+24o
+CODE.bss:80083900                                              # sub_CODE_7F0BC85C+3Cr
+CODE.bss:80083904                     .space 0x4AC
+CODE.bss:80083DB0     dword_CODE_bss_80083DB0:.space 0x4B00    # DATA XREF: sub_CODE_7F0BC530+68o
+CODE.bss:80083DB0                                              # sub_CODE_7F0BC85C+10Co
+CODE.bss:80083DB0                                              # sub_CODE_7F0BC9C4+1Co
+*/
 
 
 

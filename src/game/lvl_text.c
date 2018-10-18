@@ -1,5 +1,40 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:8008C640     ptr_text:       .space 4                 # DATA XREF: init_LnameX+118w
+CODE.bss:8008C640                                              # init_LnameX+15Co
+CODE.bss:8008C640                                              # get_textptr_for_textID+8r
+CODE.bss:8008C644     table_text_pointers:.space 0x94          # DATA XREF: init_LnameX+114o
+CODE.bss:8008C6D8     dword_CODE_bss_8008C6D8:.space 4         # DATA XREF: init_LnameX+16Cw
+CODE.bss:8008C6DC     dword_CODE_bss_8008C6DC:.space 4         # DATA XREF: init_LnameX+188w
+CODE.bss:8008C6E0     dword_CODE_bss_8008C6E0:.space 4         # DATA XREF: init_LnameX+1ACw
+CODE.bss:8008C6E4     dword_CODE_bss_8008C6E4:.space 4         # DATA XREF: init_LnameX+1D0w
+CODE.bss:8008C6E8     dword_CODE_bss_8008C6E8:.space 4         # DATA XREF: init_LnameX+1F4w
+CODE.bss:8008C6EC     dword_CODE_bss_8008C6EC:.space 4         # DATA XREF: init_LnameX+218w
+CODE.bss:8008C6F0     dword_CODE_bss_8008C6F0:.space 4         # DATA XREF: init_LnameX+23Cw
+CODE.bss:8008C6F4     ptr_j_char_data_buf:.space 4             # DATA XREF: init_LnameX+30w
+CODE.bss:8008C6F4                                              # init_LnameX+10Co
+CODE.bss:8008C6F4                                              # something_with_LnameX+F8r
+CODE.bss:8008C6F4                                              # something_with_LnameX+148r
+CODE.bss:8008C6F4                                              # something_with_LnameX+1BCr
+CODE.bss:8008C6F4                                              # something_with_LnameX+1E8r
+CODE.bss:8008C6F4                                              # something_with_LnameX+284r
+CODE.bss:8008C6F4                                              # something_with_LnameX+2B4r
+CODE.bss:8008C6F4                                              # something_with_LnameX:loc_CODE_7F0C1CF0r
+CODE.bss:8008C6F8     ptr_j_char_registry:.space 4             # DATA XREF: init_LnameX+44o
+CODE.bss:8008C6F8                                              # init_LnameX+4Cw
+CODE.bss:8008C6F8                                              # something_with_LnameJ+18o
+CODE.bss:8008C6F8                                              # something_with_LnameJ+1Cr
+CODE.bss:8008C6F8                                              # something_with_LnameX:loc_CODE_7F0C1A58r
+CODE.bss:8008C6F8                                              # something_with_LnameX+114o
+CODE.bss:8008C6F8                                              # something_with_LnameX+128r
+CODE.bss:8008C6F8                                              # something_with_LnameX+17Co
+CODE.bss:8008C6F8                                              # something_with_LnameX+190r
+CODE.bss:8008C6F8                                              # something_with_LnameX+20Co
+CODE.bss:8008C6F8                                              # something_with_LnameX+220r
+CODE.bss:8008C6F8                                              # something_with_LnameX+244r
+CODE.bss:8008C6F8                                              # something_with_LnameX+268r
+*/
 
 /* data
 D:800484D0     j_text_trigger: .word 0                  # DATA XREF: check_memflag_tokens+124r

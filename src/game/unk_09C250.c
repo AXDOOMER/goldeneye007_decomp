@@ -1,5 +1,93 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:8007A100     dword_CODE_bss_8007A100:.space 0x40      # DATA XREF: set_gu_scale+24o
+CODE.bss:8007A100                                              # sub_CODE_7F09F03C+E8o
+CODE.bss:8007A140     ptr_smoke_buf:  .space 4                 # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+108o
+CODE.bss:8007A140                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+114w
+CODE.bss:8007A140                                              # sub_CODE_7F007800:loc_CODE_7F007894o
+CODE.bss:8007A140                                              # sub_CODE_7F007800+9Cr
+CODE.bss:8007A140                                              # sub_CODE_7F007800+B0r
+CODE.bss:8007A140                                              # sub_CODE_7F09C250+3F0o
+CODE.bss:8007A140                                              # sub_CODE_7F09C250+404r
+CODE.bss:8007A140                                              # sub_CODE_7F09E700+2Co
+CODE.bss:8007A140                                              # sub_CODE_7F09E700+48r
+CODE.bss:8007A144     ptr_explosion_buf:.space 4               # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+4Co
+CODE.bss:8007A144                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+54w
+CODE.bss:8007A144                                              # sub_CODE_7F007800+24o
+CODE.bss:8007A144                                              # sub_CODE_7F007800+2Cr
+CODE.bss:8007A144                                              # sub_CODE_7F007800+40r
+CODE.bss:8007A144                                              # sub_CODE_7F09C250:loc_CODE_7F09C2B8r
+CODE.bss:8007A144                                              # sub_CODE_7F09C7C4+C4o
+CODE.bss:8007A144                                              # sub_CODE_7F09C7C4+C8r
+CODE.bss:8007A148     max_casings:    .space 4                 # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+300o
+CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+330w
+CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+348o
+CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+360o
+CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers:loc_CODE_7F0070F4r
+CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+36Cw
+CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers:loc_CODE_7F007100r
+CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+398o
+CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+3A0r
+CODE.bss:8007A148                                              # sub_CODE_7F09F254+AB4r
+CODE.bss:8007A148                                              # sub_CODE_7F09FD3C:loc_CODE_7F09FD94o
+CODE.bss:8007A148                                              # sub_CODE_7F09FD3C+60r
+CODE.bss:8007A148                                              # sub_CODE_7F0A0034+A4r
+CODE.bss:8007A148                                              # sub_CODE_7F0A0034:loc_CODE_7F0A0224r
+CODE.bss:8007A14C     ptr_ejected_casing_buf:.space 4          # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+3A4o
+CODE.bss:8007A14C                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+3ACw
+CODE.bss:8007A14C                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+3BCr
+CODE.bss:8007A14C                                              # sub_CODE_7F09F254+C4o
+CODE.bss:8007A14C                                              # sub_CODE_7F09F254+C8r
+CODE.bss:8007A14C                                              # sub_CODE_7F09F254+F8r
+CODE.bss:8007A14C                                              # sub_CODE_7F09F254+120r
+CODE.bss:8007A14C                                              # sub_CODE_7F09F254+164r
+CODE.bss:8007A14C                                              # sub_CODE_7F09F254+190r
+CODE.bss:8007A14C                                              # sub_CODE_7F09F254+1ACr
+CODE.bss:8007A14C                                              # sub_CODE_7F09F254+1D0r
+CODE.bss:8007A14C                                              # sub_CODE_7F09F254+218r
+CODE.bss:8007A14C                                              # sub_CODE_7F09F254+248r
+CODE.bss:8007A14C                                              # sub_CODE_7F09FD3C+94o
+CODE.bss:8007A14C                                              # sub_CODE_7F09FD3C+9Cr
+CODE.bss:8007A14C                                              # sub_CODE_7F0A0034+D0o
+CODE.bss:8007A14C                                              # sub_CODE_7F0A0034+E8r
+CODE.bss:8007A150     ptr_scorch_buf: .space 4                 # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+268o
+CODE.bss:8007A150                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+270w
+CODE.bss:8007A150                                              # sub_CODE_7F0A027C+1C0o
+CODE.bss:8007A150                                              # sub_CODE_7F0A027C+1C4r
+CODE.bss:8007A150                                              # sub_CODE_7F0A027C+1E0r
+CODE.bss:8007A150                                              # sub_CODE_7F0A027C+1FCr
+CODE.bss:8007A150                                              # sub_CODE_7F0A027C+218r
+CODE.bss:8007A150                                              # sub_CODE_7F0A027C+234r
+CODE.bss:8007A150                                              # sub_CODE_7F0A027C+24Cr
+CODE.bss:8007A150                                              # sub_CODE_7F0A027C+280r
+CODE.bss:8007A150                                              # sub_CODE_7F0A027C+2B4r
+CODE.bss:8007A150                                              # sub_CODE_7F0A027C+2E8r
+CODE.bss:8007A150                                              # sub_CODE_7F0A027C+330r
+CODE.bss:8007A150                                              # sub_CODE_7F0A027C+354r
+CODE.bss:8007A150                                              # sub_CODE_7F0A0AB4+C8o
+CODE.bss:8007A150                                              # sub_CODE_7F0A0AB4+E4r
+CODE.bss:8007A154     ptr_bullet_impact_buf:.space 4           # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+2C4o
+CODE.bss:8007A154                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+2CCw
+CODE.bss:8007A154                                              # sub_CODE_7F0A0CCC+10o
+CODE.bss:8007A154                                              # sub_CODE_7F0A0CCC+20r
+CODE.bss:8007A154                                              # sub_CODE_7F0A0D90+4o
+CODE.bss:8007A154                                              # sub_CODE_7F0A0D90+24r
+CODE.bss:8007A154                                              # sub_CODE_7F0A0E98+14o
+CODE.bss:8007A154                                              # sub_CODE_7F0A108C+33Co
+CODE.bss:8007A154                                              # sub_CODE_7F0A108C+340r
+CODE.bss:8007A154                                              # sub_CODE_7F0A108C+358r
+CODE.bss:8007A154                                              # sub_CODE_7F0A108C+374r
+CODE.bss:8007A154                                              # sub_CODE_7F0A108C+390r
+CODE.bss:8007A154                                              # sub_CODE_7F0A108C+3ACr
+CODE.bss:8007A154                                              # sub_CODE_7F0A108C+3C8r
+CODE.bss:8007A154                                              # sub_CODE_7F0A108C+3FCr
+CODE.bss:8007A154                                              # sub_CODE_7F0A108C+430r
+CODE.bss:8007A154                                              # sub_CODE_7F0A108C+464r
+CODE.bss:8007A154                                              # sub_CODE_7F0A108C+4C8r
+CODE.bss:8007A154                                              # sub_CODE_7F0A1A94+90o
+CODE.bss:8007A154                                              # sub_CODE_7F0A1A94+A8r
+*/
 
 /* data
 D:80040170     dword_D_80040170:.word 0                 # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffersw

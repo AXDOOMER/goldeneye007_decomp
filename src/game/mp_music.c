@@ -1,5 +1,50 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:8008C600     dword_CODE_bss_8008C600:.space 4         # DATA XREF: sub_CODE_7F0C0C3C+78r
+CODE.bss:8008C600                                              # sub_CODE_7F0C0C3C+ACr
+CODE.bss:8008C600                                              # sub_CODE_7F0C0C3C+D8r
+CODE.bss:8008C600                                              # sub_CODE_7F0C0C3C+14Cr
+CODE.bss:8008C600                                              # sub_CODE_7F0C0C3C+304r
+CODE.bss:8008C600                                              # sub_CODE_7F0C0C3C+398r
+CODE.bss:8008C600                                              # sub_CODE_7F0C0C3C+454r
+CODE.bss:8008C600                                              # sub_CODE_7F0C11FC+2Co
+CODE.bss:8008C600                                              # sub_CODE_7F0C11FC+38w
+CODE.bss:8008C600                                              # sub_CODE_7F0C1288+10r
+CODE.bss:8008C600                                              # sub_CODE_7F0C12CC+10r
+CODE.bss:8008C604     dword_CODE_bss_8008C604:.space 4         # DATA XREF: sub_CODE_7F0C1310+1Cw
+CODE.bss:8008C604                                              # sub_CODE_7F0C1340+10r
+CODE.bss:8008C608     dword_CODE_bss_8008C608:.space 4         # DATA XREF: sub_CODE_7F0C1364w
+CODE.bss:8008C608                                              # reset_all_music_slots+28o
+CODE.bss:8008C608                                              # set_musicslot_timeo
+CODE.bss:8008C608                                              # reset_music_in_slot:loc_CODE_7F0C1574w
+CODE.bss:8008C60C     dword_CODE_bss_8008C60C:.space 4         # DATA XREF: sub_CODE_7F0C1364+18w
+CODE.bss:8008C60C                                              # reset_music_in_slot+30w
+CODE.bss:8008C610     dword_CODE_bss_8008C610:.space 4         # DATA XREF: sub_CODE_7F0C1364+30w
+CODE.bss:8008C610                                              # reset_music_in_slot+48w
+CODE.bss:8008C614     dword_CODE_bss_8008C614:.space 4         # DATA XREF: sub_CODE_7F0C1364+48w
+CODE.bss:8008C614                                              # reset_music_in_slot+60w
+CODE.bss:8008C618     dword_CODE_bss_8008C618:.space 4         # DATA XREF: sub_CODE_7F0C1364+8w
+CODE.bss:8008C618                                              # reset_all_music_slots+24o
+CODE.bss:8008C618                                              # reset_music_in_slot+20w
+CODE.bss:8008C61C     dword_CODE_bss_8008C61C:.space 4         # DATA XREF: sub_CODE_7F0C1364+20w
+CODE.bss:8008C61C                                              # reset_music_in_slot+38w
+CODE.bss:8008C620     dword_CODE_bss_8008C620:.space 4         # DATA XREF: sub_CODE_7F0C1364+38w
+CODE.bss:8008C620                                              # reset_music_in_slot+50w
+CODE.bss:8008C624     dword_CODE_bss_8008C624:.space 4         # DATA XREF: sub_CODE_7F0C1364+50w
+CODE.bss:8008C624                                              # reset_music_in_slot+68w
+CODE.bss:8008C628     dword_CODE_bss_8008C628:.space 4         # DATA XREF: sub_CODE_7F0C1364+10w
+CODE.bss:8008C628                                              # reset_all_music_slots+1Co
+CODE.bss:8008C628                                              # reset_all_music_slots:loc_CODE_7F0C1414o
+CODE.bss:8008C628                                              # reset_music_in_slot+28w
+CODE.bss:8008C62C     dword_CODE_bss_8008C62C:.space 4         # DATA XREF: sub_CODE_7F0C1364+28w
+CODE.bss:8008C62C                                              # reset_music_in_slot+40w
+CODE.bss:8008C630     dword_CODE_bss_8008C630:.space 4         # DATA XREF: sub_CODE_7F0C1364+40w
+CODE.bss:8008C630                                              # reset_music_in_slot+58w
+CODE.bss:8008C634     dword_CODE_bss_8008C634:.space 4         # DATA XREF: sub_CODE_7F0C1364+60w
+CODE.bss:8008C634                                              # reset_music_in_slot+70w
+*/
+
 /* data
 D:800484C0     mission_state:  .word 0                  # DATA XREF: sub_CODE_7F0C0C30+8r
 D:800484C0                                              # sub_CODE_7F0C0C3Co

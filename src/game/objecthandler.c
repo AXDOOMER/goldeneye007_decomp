@@ -1,5 +1,33 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:80076A50     dword_CODE_bss_80076A50:.space 0xC       # DATA XREF: sub_CODE_7F005450o
+CODE.bss:80076A5C     dword_CODE_bss_80076A5C:.space 4         # DATA XREF: sub_CODE_7F005450+1Cw
+CODE.bss:80076A60                     .space 4
+CODE.bss:80076A64     dword_CODE_bss_80076A64:.space 0xC       # DATA XREF: sub_CODE_7F005450+14o
+CODE.bss:80076A70     dword_CODE_bss_80076A70:.space 4         # DATA XREF: sub_CODE_7F005450+24w
+CODE.bss:80076A74     dword_CODE_bss_80076A74:.space 4         # DATA XREF: sub_CODE_7F005450+2Cw
+CODE.bss:80076A78     dword_CODE_bss_80076A78:.space 0xC       # DATA XREF: sub_CODE_7F005450+20o
+CODE.bss:80076A84     dword_CODE_bss_80076A84:.space 4         # DATA XREF: sub_CODE_7F005450+3Cw
+CODE.bss:80076A88     dword_CODE_bss_80076A88:.space 4         # DATA XREF: sub_CODE_7F005450+70w
+CODE.bss:80076A8C     dword_CODE_bss_80076A8C:.space 0x14      # DATA XREF: sub_CODE_7F005450+38o
+CODE.bss:80076AA0     dword_CODE_bss_80076AA0:.space 0x14      # DATA XREF: sub_CODE_7F005450+6Co
+CODE.bss:80076AB4     dword_CODE_bss_80076AB4:.space 0x14      # DATA XREF: sub_CODE_7F005450+68o
+CODE.bss:80076AC8     dword_CODE_bss_80076AC8:.space 0x14      # DATA XREF: sub_CODE_7F005450+64o
+CODE.bss:80076ADC     dword_CODE_bss_80076ADC:.space 0x2E2C    # DATA XREF: sub_CODE_7F005450+60o
+CODE.bss:80079908     dword_CODE_bss_80079908:.space 0x28      # DATA XREF: sub_CODE_7F005450+B8o
+CODE.bss:80079930     ptr_allocation_0:.space 4                # DATA XREF: sub_CODE_7F005624+4Co
+CODE.bss:80079930                                              # sub_CODE_7F005624+54w
+CODE.bss:80079930                                              # sub_CODE_7F005624+68r
+CODE.bss:80079930                                              # get_aircraft_obj_instance_controller+44r
+CODE.bss:80079930                                              # get_aircraft_obj_instance_controller+DCr
+CODE.bss:80079934     ptr_allocation_1:.space 4                # DATA XREF: sub_CODE_7F005540+44o
+CODE.bss:80079934                                              # sub_CODE_7F005540+4Cw
+CODE.bss:80079934                                              # sub_CODE_7F005540+60r
+CODE.bss:80079934                                              # get_obj_instance_controller_for_header+64r
+CODE.bss:80079934                                              # get_obj_instance_controller_for_header+F0o
+CODE.bss:80079934                                              # get_obj_instance_controller_for_header+F4r
+*/
 
 /* data
 D:80036070     dword_D_80036070:.word 0                 # DATA XREF: zero_contents_of_80036070_74w

@@ -1,6 +1,42 @@
 #include "ultra64.h"
 
-
+/* bss
+CODE.bss:80079E80     flt_CODE_bss_80079E80:.space 4           # DATA XREF: sub_CODE_7F007290+4w
+CODE.bss:80079E80                                              # sub_CODE_7F092E50+20o
+CODE.bss:80079E80                                              # sub_CODE_7F092E50+28r
+CODE.bss:80079E80                                              # sub_CODE_7F092E50+48w
+CODE.bss:80079E80                                              # sub_CODE_7F092E50+4Cr
+CODE.bss:80079E80                                              # sub_CODE_7F092E50+64w
+CODE.bss:80079E80                                              # sub_CODE_7F092E50+68r
+CODE.bss:80079E80                                              # sub_CODE_7F092E50+80w
+CODE.bss:80079E80                                              # sub_CODE_7F092E50+84r
+CODE.bss:80079E80                                              # sub_CODE_7F092E50+2F8o
+CODE.bss:80079E80                                              # sub_CODE_7F092E50+38Cr
+CODE.bss:80079E84     flt_CODE_bss_80079E84:.space 4           # DATA XREF: sub_CODE_7F007290+Cw
+CODE.bss:80079E84                                              # sub_CODE_7F092E50+8Co
+CODE.bss:80079E84                                              # sub_CODE_7F092E50+98r
+CODE.bss:80079E84                                              # sub_CODE_7F092E50+A4w
+CODE.bss:80079E84                                              # sub_CODE_7F092E50+A8r
+CODE.bss:80079E84                                              # sub_CODE_7F092E50+C0w
+CODE.bss:80079E84                                              # sub_CODE_7F092E50+C4r
+CODE.bss:80079E84                                              # sub_CODE_7F092E50+DCw
+CODE.bss:80079E84                                              # sub_CODE_7F092E50+E0r
+CODE.bss:80079E84                                              # sub_CODE_7F092E50+2FCo
+CODE.bss:80079E84                                              # sub_CODE_7F092E50+424r
+CODE.bss:80079E88     flt_CODE_bss_80079E88:.space 4           # DATA XREF: sub_CODE_7F007290+1Cw
+CODE.bss:80079E88                                              # sub_CODE_7F092E50+F0o
+CODE.bss:80079E88                                              # sub_CODE_7F092E50+FCr
+CODE.bss:80079E88                                              # sub_CODE_7F092E50+104w
+CODE.bss:80079E88                                              # sub_CODE_7F092E50+108r
+CODE.bss:80079E88                                              # sub_CODE_7F092E50+120w
+CODE.bss:80079E88                                              # sub_CODE_7F092E50+124r
+CODE.bss:80079E88                                              # sub_CODE_7F092E50+13Cw
+CODE.bss:80079E88                                              # sub_CODE_7F092E50+140r
+CODE.bss:80079E88                                              # sub_CODE_7F092E50+300o
+CODE.bss:80079E88                                              # sub_CODE_7F092E50+51Cr
+CODE.bss:80079E88                                              # sub_CODE_7F09343C+8Cr
+CODE.bss:80079E88                                              # sub_CODE_7F09365C+8Cr
+*/
 
 /* data
 D:8003FCC0     qword_D_8003FCC0:.dword 0xF580080000018060,0xF580080001018060,0xF200200200000000,0xF200200201000000

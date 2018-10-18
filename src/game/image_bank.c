@@ -1,6 +1,119 @@
 #include "ultra64.h"
 
-
+/* bss
+CODE.bss:8008D0A0     dword_CODE_bss_8008D0A0:.space 4         # DATA XREF: image_related_calls_decompressdata+27Cr
+CODE.bss:8008D0A0                                              # process_huffman_compressed_images+7B4r
+CODE.bss:8008D0A0                                              # process_huffman_compressed_images+7C8w
+CODE.bss:8008D0A0                                              # sub_CODE_7F0CBF10w
+CODE.bss:8008D0A0                                              # sub_CODE_7F0CBF2C+Co
+CODE.bss:8008D0A4     dword_CODE_bss_8008D0A4:.space 4         # DATA XREF: sub_CODE_7F0CBF10+8w
+CODE.bss:8008D0A4                                              # sub_CODE_7F0CBF2C+20o
+CODE.bss:8008D0A4                                              # sub_CODE_7F0CBF2C:loc_CODE_7F0CBF84o
+CODE.bss:8008D0A4                                              # sub_CODE_7F0CBF2C+60r
+CODE.bss:8008D0A8     dword_CODE_bss_8008D0A8:.space 4         # DATA XREF: process_huffman_compressed_images+794o
+CODE.bss:8008D0A8                                              # process_huffman_compressed_images+798r
+CODE.bss:8008D0A8                                              # process_huffman_compressed_images:loc_CODE_7F0C85C8w
+CODE.bss:8008D0A8                                              # sub_CODE_7F0CBF10+18w
+CODE.bss:8008D0A8                                              # sub_CODE_7F0CBF2Co
+CODE.bss:8008D0A8                                              # sub_CODE_7F0CBF2C+8r
+CODE.bss:8008D0AC                     .align 4
+CODE.bss:8008D0B0     globalbank_rdram_offset:.space 4         # DATA XREF: generate_ammo_total_microcode+110r
+CODE.bss:8008D0B0                                              # generate_ammo_total_microcode+3F0r
+CODE.bss:8008D0B0                                              # sub_CODE_7F06A334+B0r
+CODE.bss:8008D0B0                                              # load_prepare_global_image_bank+78o
+CODE.bss:8008D0B0                                              # load_prepare_global_image_bank+80w
+CODE.bss:8008D0B4      # void *ptr_explosionDL
+CODE.bss:8008D0B4     ptr_explosionDL:.space 4                 # DATA XREF: sub_CODE_7F09D5A0+F0r
+CODE.bss:8008D0B4                                              # sub_CODE_7F09F03C+114r
+CODE.bss:8008D0B4                                              # sub_CODE_7F0A0034+58r
+CODE.bss:8008D0B4                                              # load_prepare_global_image_bank+38o
+CODE.bss:8008D0B4                                              # load_prepare_global_image_bank+48w
+CODE.bss:8008D0B4                                              # load_prepare_global_image_bank+54w
+CODE.bss:8008D0B4                                              # load_prepare_global_image_bank+64r
+CODE.bss:8008D0B8      # int *image
+CODE.bss:8008D0B8     image:          .space 4                 # DATA XREF: sub_CODE_7F0A027C+3BCr
+CODE.bss:8008D0B8                                              # sub_CODE_7F0A027C+608r
+CODE.bss:8008D0B8                                              # sub_CODE_7F0A027C+740r
+CODE.bss:8008D0B8                                              # sub_CODE_7F0A027C+768r
+CODE.bss:8008D0B8                                              # sub_CODE_7F0A0AB4+ACr
+CODE.bss:8008D0B8                                              # load_prepare_global_image_bank+90w
+CODE.bss:8008D0B8                                              # load_prepare_global_image_bank+498r
+CODE.bss:8008D0BC     dword_CODE_bss_8008D0BC:.space 4         # DATA XREF: sub_CODE_7F0A108C+558o
+CODE.bss:8008D0BC                                              # sub_CODE_7F0A108C+584r
+CODE.bss:8008D0BC                                              # sub_CODE_7F0A1A94+1ECr
+CODE.bss:8008D0BC                                              # load_prepare_global_image_bank+9Cw
+CODE.bss:8008D0C0     dword_CODE_bss_8008D0C0:.space 4         # DATA XREF: sub_CODE_7F0A3C08+BCr
+CODE.bss:8008D0C0                                              # sub_CODE_7F0A3C08+134r
+CODE.bss:8008D0C0                                              # load_prepare_global_image_bank+C4o
+CODE.bss:8008D0C0                                              # load_prepare_global_image_bank+D4w
+CODE.bss:8008D0C4     dword_CODE_bss_8008D0C4:.space 4         # DATA XREF: sub_CODE_7F0A3C08+E8r
+CODE.bss:8008D0C4                                              # load_prepare_global_image_bank+C0o
+CODE.bss:8008D0C4                                              # load_prepare_global_image_bank+D8w
+CODE.bss:8008D0C8     dword_CODE_bss_8008D0C8:.space 4         # DATA XREF: load_prepare_global_image_bank+E8w
+CODE.bss:8008D0CC     dword_CODE_bss_8008D0CC:.space 4         # DATA XREF: sub_CODE_7F0A3C08+90r
+CODE.bss:8008D0CC                                              # sub_CODE_7F0A3C08+114r
+CODE.bss:8008D0CC                                              # load_prepare_global_image_bank+FCw
+CODE.bss:8008D0D0     dword_CODE_bss_8008D0D0:.space 4         # DATA XREF: sub_CODE_7F061E18+B8r
+CODE.bss:8008D0D0                                              # load_prepare_global_image_bank+110w
+CODE.bss:8008D0D4     dword_CODE_bss_8008D0D4:.space 4         # DATA XREF: sub_CODE_7F061E18+E8r
+CODE.bss:8008D0D4                                              # sub_CODE_7F061E18+110r
+CODE.bss:8008D0D4                                              # load_prepare_global_image_bank+124w
+CODE.bss:8008D0D8     dword_CODE_bss_8008D0D8:.space 4         # DATA XREF: sub_CODE_7F061E18+9A8o
+CODE.bss:8008D0D8                                              # sub_CODE_7F061E18+A00r
+CODE.bss:8008D0D8                                              # sub_CODE_7F061E18+A10r
+CODE.bss:8008D0D8                                              # sub_CODE_7F061E18+AECr
+CODE.bss:8008D0D8                                              # sub_CODE_7F061E18+BC4o
+CODE.bss:8008D0D8                                              # sub_CODE_7F061E18+BE0r
+CODE.bss:8008D0D8                                              # load_prepare_global_image_bank+138w
+CODE.bss:8008D0DC     dword_CODE_bss_8008D0DC:.space 4         # DATA XREF: load_prepare_global_image_bank+14Cw
+CODE.bss:8008D0E0     dword_CODE_bss_8008D0E0:.space 4         # DATA XREF: load_prepare_global_image_bank+160w
+CODE.bss:8008D0E4     dword_CODE_bss_8008D0E4:.space 4         # DATA XREF: load_prepare_global_image_bank+174w
+CODE.bss:8008D0E8     dword_CODE_bss_8008D0E8:.space 4         # DATA XREF: load_prepare_global_image_bank+188w
+CODE.bss:8008D0EC     dword_CODE_bss_8008D0EC:.space 4         # DATA XREF: load_prepare_global_image_bank+19Cw
+CODE.bss:8008D0F0     dword_CODE_bss_8008D0F0:.space 4         # DATA XREF: load_prepare_global_image_bank+1B0w
+CODE.bss:8008D0F4     dword_CODE_bss_8008D0F4:.space 4         # DATA XREF: load_prepare_global_image_bank+1C4w
+CODE.bss:8008D0F8     dword_CODE_bss_8008D0F8:.space 4         # DATA XREF: load_prepare_global_image_bank+1D8w
+CODE.bss:8008D0FC     dword_CODE_bss_8008D0FC:.space 4         # DATA XREF: load_prepare_global_image_bank+1ECw
+CODE.bss:8008D100     dword_CODE_bss_8008D100:.space 4         # DATA XREF: load_prepare_global_image_bank+200w
+CODE.bss:8008D104     dword_CODE_bss_8008D104:.space 4         # DATA XREF: load_prepare_global_image_bank+214w
+CODE.bss:8008D108     dword_CODE_bss_8008D108:.space 4         # DATA XREF: load_prepare_global_image_bank+228w
+CODE.bss:8008D10C     dword_CODE_bss_8008D10C:.space 4         # DATA XREF: load_prepare_global_image_bank+23Cw
+CODE.bss:8008D110     dword_CODE_bss_8008D110:.space 4         # DATA XREF: load_prepare_global_image_bank+250w
+CODE.bss:8008D114      # int *imgcall
+CODE.bss:8008D114     imgcall:        .space 4                 # DATA XREF: load_draw_selected_icon_folder_select+1Cr
+CODE.bss:8008D114                                              # sub_CODE_7F062BE4+20Cr
+CODE.bss:8008D114                                              # sub_CODE_7F06A5E4+40r
+CODE.bss:8008D114                                              # sub_CODE_7F06A5E4:loc_CODE_7F06A67Cr
+CODE.bss:8008D114                                              # load_prepare_global_image_bank+264w
+CODE.bss:8008D118     dword_CODE_bss_8008D118:.space 4         # DATA XREF: load_prepare_global_image_bank+278w
+CODE.bss:8008D11C     dword_CODE_bss_8008D11C:.space 4         # DATA XREF: sub_CODE_7F0A2C44+4r
+CODE.bss:8008D11C                                              # load_prepare_global_image_bank+28Cw
+CODE.bss:8008D120     dword_CODE_bss_8008D120:.space 4         # DATA XREF: process_monitor_animation_microcode+898r
+CODE.bss:8008D120                                              # load_prepare_global_image_bank+2A0w
+CODE.bss:8008D124     dword_CODE_bss_8008D124:.space 4         # DATA XREF: sub_CODE_7F094488+1788r
+CODE.bss:8008D124                                              # sub_CODE_7F094488+29C0r
+CODE.bss:8008D124                                              # load_prepare_global_image_bank+2B4w
+CODE.bss:8008D128     dword_CODE_bss_8008D128:.space 4         # DATA XREF: load_draw_selected_icon_folder_select+38r
+CODE.bss:8008D128                                              # load_draw_selected_icon_folder_select+50r
+CODE.bss:8008D128                                              # constructor_menu05_fileselect+AD0o
+CODE.bss:8008D128                                              # constructor_menu05_fileselect+ADCr
+CODE.bss:8008D128                                              # constructor_menu05_fileselect+B58r
+CODE.bss:8008D128                                              # constructor_menu05_fileselect+C00r
+CODE.bss:8008D128                                              # constructor_menu08_difficulty+450r
+CODE.bss:8008D128                                              # constructor_menu12_mpstage+D0r
+CODE.bss:8008D128                                              # load_prepare_global_image_bank+2C8w
+CODE.bss:8008D12C     dword_CODE_bss_8008D12C:.space 4         # DATA XREF: display_red_blue_on_radar+108r
+CODE.bss:8008D12C                                              # load_prepare_global_image_bank+2DCw
+CODE.bss:8008D130     dword_CODE_bss_8008D130:.space 4         # DATA XREF: init_menu0f_mpcharsel+5Co
+CODE.bss:8008D130                                              # sub_CODE_7F01231C+274o
+CODE.bss:8008D130                                              # sub_CODE_7F01231C+284r
+CODE.bss:8008D130                                              # sub_CODE_7F01231C+304r
+CODE.bss:8008D130                                              # sub_CODE_7F01231C+370r
+CODE.bss:8008D130                                              # sub_CODE_7F01231C+3DCr
+CODE.bss:8008D130                                              # load_prepare_global_image_bank+2F0w
+CODE.bss:8008D134     dword_CODE_bss_8008D134:.space 4         # DATA XREF: constructor_menu12_mpstage+2ACr
+CODE.bss:8008D134                                              # load_prepare_global_image_bank+308w
+*/
 
 
 

@@ -1,5 +1,57 @@
 #include "ultra64.h"
 
+/* bss
+CODE.bss:8008C230     ptr_mgfx0_alloc_start:.space 4           # DATA XREF: set_vtx_gfx_mem_alloc+F0w
+CODE.bss:8008C230                                              # set_vtx_gfx_mem_alloc+104o
+CODE.bss:8008C230                                              # set_vtx_gfx_mem_alloc+108r
+CODE.bss:8008C230                                              # set_vtx_gfx_mem_alloc+12Co
+CODE.bss:8008C230                                              # draw_membars+8o
+CODE.bss:8008C234     ptr_mgfx1_alloc_start:.space 4           # DATA XREF: set_vtx_gfx_mem_alloc+118w
+CODE.bss:8008C234                                              # set_vtx_gfx_mem_alloc+130r
+CODE.bss:8008C238     ptr_mgfx_end:   .space 4                 # DATA XREF: set_vtx_gfx_mem_alloc+140w
+CODE.bss:8008C23C                     .align 4
+CODE.bss:8008C240     ptr_mvtx0_alloc_start:.space 4           # DATA XREF: set_vtx_gfx_mem_alloc+164o
+CODE.bss:8008C240                                              # set_vtx_gfx_mem_alloc+170w
+CODE.bss:8008C240                                              # set_vtx_gfx_mem_alloc+184o
+CODE.bss:8008C240                                              # set_vtx_gfx_mem_alloc+188r
+CODE.bss:8008C240                                              # set_vtx_gfx_mem_alloc+1ACo
+CODE.bss:8008C240                                              # set_vtx_gfx_mem_alloc+1D4r
+CODE.bss:8008C240                                              # draw_membars+74o
+CODE.bss:8008C244     ptr_mvtx1_alloc_start:.space 4           # DATA XREF: set_vtx_gfx_mem_alloc+198w
+CODE.bss:8008C244                                              # set_vtx_gfx_mem_alloc+1B0r
+CODE.bss:8008C248     ptr_mvtx_end:   .space 4                 # DATA XREF: set_vtx_gfx_mem_alloc+1C4w
+CODE.bss:8008C24C     ptr_mvtx_cur_pos:.space 4                # DATA XREF: set_vtx_gfx_mem_alloc+1E4w
+CODE.bss:8008C24C                                              # sub_CODE_7F0BD6C4o
+CODE.bss:8008C24C                                              # sub_CODE_7F0BD6C4+8r
+CODE.bss:8008C24C                                              # sub_CODE_7F0BD6C4+18w
+CODE.bss:8008C24C                                              # sub_CODE_7F0BD6E0o
+CODE.bss:8008C24C                                              # sub_CODE_7F0BD6E0+8r
+CODE.bss:8008C24C                                              # sub_CODE_7F0BD6E0+14w
+CODE.bss:8008C24C                                              # sub_CODE_7F0BD6F8o
+CODE.bss:8008C24C                                              # sub_CODE_7F0BD6F8+8r
+CODE.bss:8008C24C                                              # sub_CODE_7F0BD6F8+18w
+CODE.bss:8008C24C                                              # sub_CODE_7F0BD714o
+CODE.bss:8008C24C                                              # sub_CODE_7F0BD714+8r
+CODE.bss:8008C24C                                              # sub_CODE_7F0BD714+20w
+CODE.bss:8008C24C                                              # allocate_something_in_mvtx+38w
+CODE.bss:8008C24C                                              # sub_CODE_7F0BD7A4+1Cr
+CODE.bss:8008C24C                                              # draw_membars+90r
+CODE.bss:8008C250     bank_in_mgfx_alloc_table:.space 1        # DATA XREF: set_vtx_gfx_mem_alloc+1C8w
+CODE.bss:8008C250                                              # get_ptr_displaylistr
+CODE.bss:8008C250                                              # allocate_something_in_mgfxr
+CODE.bss:8008C250                                              # allocate_something_in_mvtxo
+CODE.bss:8008C250                                              # allocate_something_in_mvtx+8r
+CODE.bss:8008C250                                              # allocate_something_in_mvtx+18w
+CODE.bss:8008C250                                              # allocate_something_in_mvtx+20r
+CODE.bss:8008C250                                              # num_microcode_cmds_that_fitr
+CODE.bss:8008C250                                              # sub_CODE_7F0BD7A4r
+CODE.bss:8008C250                                              # draw_membarsr
+CODE.bss:8008C250                                              # draw_membars+6Cr
+CODE.bss:8008C251                     .align 2
+CODE.bss:8008C254     dword_CODE_bss_8008C254:.space 4         # DATA XREF: set_vtx_gfx_mem_alloc+1CCw
+CODE.bss:8008C254                                              # get_ptr_displaylist+1Cw
+CODE.bss:8008C254                                              # allocate_something_in_mvtx+1Cw
+*/
 
 /* data
 D:800482E0     dword_D_800482E0:.word 0                 # DATA XREF: something_with_dyn_c_debug+18o
