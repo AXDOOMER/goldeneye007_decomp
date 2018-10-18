@@ -1,48 +1,17 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:8008E310     viewport_img_width:.space 4              # DATA XREF: allocate_viewport_buffer+24w
-CODE.bss:8008E310                                              # allocate_viewport_buffer+40w
-CODE.bss:8008E310                                              # allocate_viewport_buffer:continuer
-CODE.bss:8008E310                                              # sub_CODE_7F0D2448+8w
-CODE.bss:8008E310                                              # sub_CODE_7F0D2518+30r
-CODE.bss:8008E314     viewport_img_height:.space 4             # DATA XREF: allocate_viewport_buffer+20o
-CODE.bss:8008E314                                              # allocate_viewport_buffer+30w
-CODE.bss:8008E314                                              # allocate_viewport_buffer:is_soloo
-CODE.bss:8008E314                                              # allocate_viewport_buffer+5Cw
-CODE.bss:8008E314                                              # allocate_viewport_buffer:is_multio
-CODE.bss:8008E314                                              # allocate_viewport_buffer+6Cw
-CODE.bss:8008E314                                              # allocate_viewport_buffer+78r
-CODE.bss:8008E314                                              # sub_CODE_7F0D2448+18w
-CODE.bss:8008E314                                              # sub_CODE_7F0D2518:loc_CODE_7F0D26B4r
-*/
-
-/* data
-D:8004EB00     viewport_img:   .word 0                  # DATA XREF: remove_viewport_buffer+8w
-D:8004EB00                                              # allocate_viewport_buffer+98o
-D:8004EB00                                              # allocate_viewport_buffer+A8w
-D:8004EB00                                              # allocate_viewport_buffer+B0w
-D:8004EB00                                              # sub_CODE_7F0D2448w
-D:8004EB00                                              # sub_CODE_7F0D2464r
-D:8004EB00                                              # sub_CODE_7F0D2464:loc_CODE_7F0D24D4r
-D:8004EB00                                              # sub_CODE_7F0D2518+54r
-*/
+// bss
+s32 viewport_img_width;
+s32 viewport_img_height;
 
 
-#ifdef NONMATCHING
+// data
+s32 viewport_img = 0;
+
+
 void remove_viewport_buffer(void) {
-
+    viewport_img = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel remove_viewport_buffer
-/* 106EB0 7F0D2380 3C018005 */  lui   $at, 0x8005
-/* 106EB4 7F0D2384 03E00008 */  jr    $ra
-/* 106EB8 7F0D2388 AC20EB00 */   sw    $zero, -0x1500($at)
-)
-#endif
-
 
 
 
@@ -96,8 +65,8 @@ glabel allocate_viewport_buffer
 /* 106F48 7F0D2418 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 106F4C 7F0D241C 25840040 */   addiu $a0, $t4, 0x40
 /* 106F50 7F0D2420 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 106F54 7F0D2424 3C038005 */  lui   $v1, %hi(viewport.img) # $v1, 0x8005
-/* 106F58 7F0D2428 2463EB00 */  addiu $v1, %lo(viewport.img) # addiu $v1, $v1, -0x1500
+/* 106F54 7F0D2424 3C038005 */  lui   $v1, %hi(viewport_img) # $v1, 0x8005
+/* 106F58 7F0D2428 2463EB00 */  addiu $v1, %lo(viewport_img) # addiu $v1, $v1, -0x1500
 /* 106F5C 7F0D242C 244E003F */  addiu $t6, $v0, 0x3f
 /* 106F60 7F0D2430 2401FFC0 */  li    $at, -64
 /* 106F64 7F0D2434 AC620000 */  sw    $v0, ($v1)
@@ -109,27 +78,11 @@ glabel allocate_viewport_buffer
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0D2448(void) {
-
+void sub_GAME_7F0D2448(s32 vp_image, s32 vp_width, s32 vp_height) {
+    viewport_img = vp_image;
+    viewport_img_width = vp_width;
+    viewport_img_height = vp_height;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0D2448
-/* 106F78 7F0D2448 3C018005 */  lui   $at, %hi(viewport.img) # $at, 0x8005
-/* 106F7C 7F0D244C AC24EB00 */  sw    $a0, %lo(viewport.img)($at)
-/* 106F80 7F0D2450 3C018009 */  lui   $at, %hi(viewport_img_width) # $at, 0x8009
-/* 106F84 7F0D2454 AC25E310 */  sw    $a1, %lo(viewport_img_width)($at)
-/* 106F88 7F0D2458 3C018009 */  lui   $at, 0x8009
-/* 106F8C 7F0D245C 03E00008 */  jr    $ra
-/* 106F90 7F0D2460 AC26E314 */   sw    $a2, -0x1cec($at)
-)
-#endif
-
 
 
 
@@ -142,8 +95,8 @@ void sub_GAME_7F0D2464(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0D2464
-/* 106F94 7F0D2464 3C0E8005 */  lui   $t6, %hi(viewport.img) # $t6, 0x8005
-/* 106F98 7F0D2468 8DCEEB00 */  lw    $t6, %lo(viewport.img)($t6)
+/* 106F94 7F0D2464 3C0E8005 */  lui   $t6, %hi(viewport_img) # $t6, 0x8005
+/* 106F98 7F0D2468 8DCEEB00 */  lw    $t6, %lo(viewport_img)($t6)
 /* 106F9C 7F0D246C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 106FA0 7F0D2470 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 106FA4 7F0D2474 15C00004 */  bnez  $t6, .L7F0D2488
@@ -174,8 +127,8 @@ glabel sub_GAME_7F0D2464
 .L7F0D24D0:
 /* 107000 7F0D24D0 00003825 */  move  $a3, $zero
 .L7F0D24D4:
-/* 107004 7F0D24D4 3C0F8005 */  lui   $t7, %hi(viewport.img) # $t7, 0x8005
-/* 107008 7F0D24D8 8DEFEB00 */  lw    $t7, %lo(viewport.img)($t7)
+/* 107004 7F0D24D4 3C0F8005 */  lui   $t7, %hi(viewport_img) # $t7, 0x8005
+/* 107008 7F0D24D8 8DEFEB00 */  lw    $t7, %lo(viewport_img)($t7)
 /* 10700C 7F0D24DC 3C19E700 */  lui   $t9, 0xe700
 /* 107010 7F0D24E0 2401FFC0 */  li    $at, -64
 /* 107014 7F0D24E4 ACD90000 */  sw    $t9, ($a2)
@@ -227,8 +180,8 @@ glabel sub_GAME_7F0D2518
 /* 107090 7F0D2560 01014825 */  or    $t1, $t0, $at
 /* 107094 7F0D2564 02002825 */  move  $a1, $s0
 /* 107098 7F0D2568 ACA90000 */  sw    $t1, ($a1)
-/* 10709C 7F0D256C 3C0A8005 */  lui   $t2, %hi(viewport.img) # $t2, 0x8005
-/* 1070A0 7F0D2570 8D4AEB00 */  lw    $t2, %lo(viewport.img)($t2)
+/* 10709C 7F0D256C 3C0A8005 */  lui   $t2, %hi(viewport_img) # $t2, 0x8005
+/* 1070A0 7F0D2570 8D4AEB00 */  lw    $t2, %lo(viewport_img)($t2)
 /* 1070A4 7F0D2574 26100008 */  addiu $s0, $s0, 8
 /* 1070A8 7F0D2578 3C018000 */  lui   $at, 0x8000
 /* 1070AC 7F0D257C 02003025 */  move  $a2, $s0
