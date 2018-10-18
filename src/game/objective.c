@@ -107,20 +107,7 @@ D:800536B8     flt_D_800536B8: .float 3.3333333         # DATA XREF: sub_CODE_7F
 D:800536BC     npc_gravity_modifier:.float 0.27777779   # DATA XREF: sub_CODE_7F057D44+8r
 */
 
-objective_ptrs: .space 4
-dword_CODE_bss_80075D34:.space 4
-dword_CODE_bss_80075D38:.space 0x20
-dword_CODE_bss_80075D58:.space 4
-dword_CODE_bss_80075D5C:.space 4
-dword_CODE_bss_80075D60:.space 0x20
-ptr_last_tag_entry_type16:.space 4
-ptr_last_briefing_setup_entry_type23:.space 4
-ptr_last_enter_room_subobject_entry_type20:.space 4
-ptr_last_deposit_in_room_subobject_entry_type21:.space 4
-ptr_last_photo_obj_in_room_subobject_entry_type1E:.space 4
-                .align 4
-flt_CODE_bss_80075DA0:.space 4           # DATA XREF: sub_CODE_7F058C64+Cw
-                                         # sub_CODE_7F058C88r
+
 
 
 #ifdef NONMATCHING
@@ -189,9 +176,14 @@ glabel something_with_stage_objectives
 
 
 #ifdef NONMATCHING
-void set_parent_cur_tag_entry(void) {
-
+void *set_parent_cur_tag_entry(void *arg0) {
+    // Node 0
+    arg0->unk8 = (void *) ptr_last_tag_entry_type16;
+    ptr_last_tag_entry_type16 = arg0;
+    return;
+    // (possible return value: &ptr_last_tag_entry_type16)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -207,9 +199,14 @@ glabel set_parent_cur_tag_entry
 
 
 #ifdef NONMATCHING
-void setup_briefing_text_entry_parent(void) {
-
+void *setup_briefing_text_entry_parent(void *arg0) {
+    // Node 0
+    arg0->unkC = (void *) ptr_last_briefing_setup_entry_type23;
+    ptr_last_briefing_setup_entry_type23 = arg0;
+    return;
+    // (possible return value: &ptr_last_briefing_setup_entry_type23)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -225,9 +222,19 @@ glabel setup_briefing_text_entry_parent
 
 
 #ifdef NONMATCHING
-void add_ptr_to_objective(void) {
-
+s32 add_ptr_to_objective(void *arg0) {
+    // Node 0
+    (0x80070000 + (arg0->unk4 * 4))->unk5D30 = arg0;
+    if (num_objective_ptrs < arg0->unk4)
+    {
+        // Node 1
+        num_objective_ptrs = (s32) arg0->unk4;
+        return;
+        // (possible return value: arg0->unk4)
+    }
+    // (possible return value: arg0->unk4)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -253,9 +260,14 @@ glabel add_ptr_to_objective
 
 
 #ifdef NONMATCHING
-void set_parent_cur_obj_enter_room(void) {
-
+void *set_parent_cur_obj_enter_room(void *arg0) {
+    // Node 0
+    arg0->unkC = (void *) ptr_last_enter_room_subobject_entry_type20;
+    ptr_last_enter_room_subobject_entry_type20 = arg0;
+    return;
+    // (possible return value: &ptr_last_enter_room_subobject_entry_type20)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -271,9 +283,14 @@ glabel set_parent_cur_obj_enter_room
 
 
 #ifdef NONMATCHING
-void set_parent_cur_obj_deposited_in_room(void) {
-
+void *set_parent_cur_obj_deposited_in_room(void *arg0) {
+    // Node 0
+    arg0->unk10 = (void *) ptr_last_deposit_in_room_subobject_entry_type21;
+    ptr_last_deposit_in_room_subobject_entry_type21 = arg0;
+    return;
+    // (possible return value: &ptr_last_deposit_in_room_subobject_entry_type21)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -289,9 +306,14 @@ glabel set_parent_cur_obj_deposited_in_room
 
 
 #ifdef NONMATCHING
-void set_parent_cur_obj_photograph(void) {
-
+void *set_parent_cur_obj_photograph(void *arg0) {
+    // Node 0
+    arg0->unkC = (void *) ptr_last_photo_obj_in_room_subobject_entry_type1E;
+    ptr_last_photo_obj_in_room_subobject_entry_type1E = arg0;
+    return;
+    // (possible return value: &ptr_last_photo_obj_in_room_subobject_entry_type1E)
 }
+
 #else
 GLOBAL_ASM(
 .text

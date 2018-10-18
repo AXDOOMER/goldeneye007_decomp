@@ -1,492 +1,37 @@
 #include "ultra64.h"
 
 
-/* data
-D:80040E80                     .word 0
-D:80040E84     dword_D_80040E84:.word 0                 # DATA XREF: sub_CODE_7F0ACB78+Cw
-D:80040E84                                              # load_font_tablesw
-D:80040E84                                              # sub_CODE_7F0AD0F8+50r
-D:80040E84                                              # sub_CODE_7F0ADDAC+70r
-D:80040E84                                              # sub_CODE_7F0AE98C+4Co
-D:80040E88     dword_D_80040E88:.word 0                 # DATA XREF: sub_CODE_7F0ACB88+8w
-D:80040E88                                              # load_font_tables+8w
-D:80040E88                                              # sub_CODE_7F0AD0F8+74r
-D:80040E88                                              # sub_CODE_7F0AD0F8+5F8r
-D:80040E88                                              # sub_CODE_7F0AE45C+58r
-D:80040E8C     dword_D_80040E8C:.word 0                 # DATA XREF: sub_CODE_7F0ACB94+8w
-D:80040E8C                                              # load_font_tables+10w
-D:80040E8C                                              # sub_CODE_7F0AEB64+114o
-D:80040E8C                                              # sub_CODE_7F0AEB64+154r
-D:80040E8C                                              # sub_CODE_7F0AEB64+214r
-D:80040E8C                                              # sub_CODE_7F0AEB64+2E0r
-D:80040E90     dword_D_80040E90:.word 0xFFFFFFFF        # DATA XREF: sub_CODE_7F0ACBA0+8w
-D:80040E90                                              # load_font_tables+20w
-D:80040E90                                              # en_text_write_stuff+120r
-D:80040E94     dword_D_80040E94:.word 0                 # DATA XREF: load_font_tables+24w
-D:80040E94                                              # microcode_constructor+100r
-D:80040E98     dword_D_80040E98:.word 0                 # DATA XREF: load_font_tables+2Cw
-D:80040E98                                              # sub_CODE_7F0AD0F8+5FCo
-D:80040E98                                              # sub_CODE_7F0AD0F8+60Co
-D:80040E98                                              # sub_CODE_7F0AD0F8+614r
-D:80040E98                                              # sub_CODE_7F0AD0F8+65Cr
-D:80040E98                                              # sub_CODE_7F0AD0F8:loc_CODE_7F0AD7F8r
-D:80040E98                                              # sub_CODE_7F0AD0F8+740r
-D:80040E98                                              # sub_CODE_7F0AD0F8+7D8o
-D:80040E98                                              # sub_CODE_7F0AD0F8+7DCr
-D:80040E98                                              # sub_CODE_7F0AD0F8+81Cr
-D:80040E98                                              # sub_CODE_7F0AD0F8:loc_CODE_7F0AD9A4o
-D:80040E98                                              # sub_CODE_7F0AD0F8+8C4r
-D:80040E98                                              # sub_CODE_7F0AD0F8+904r
-D:80040E9C     dword_D_80040E9C:.word 0                 # DATA XREF: load_font_tables+34w
-D:80040E9C                                              # sub_CODE_7F0AD0F8+620o
-D:80040E9C                                              # sub_CODE_7F0AD0F8+628r
-D:80040E9C                                              # sub_CODE_7F0AD0F8+680r
-D:80040E9C                                              # sub_CODE_7F0AD0F8+708o
-D:80040E9C                                              # sub_CODE_7F0AD0F8+710r
-D:80040E9C                                              # sub_CODE_7F0AD0F8+764r
-D:80040E9C                                              # sub_CODE_7F0AD0F8+7E8o
-D:80040E9C                                              # sub_CODE_7F0AD0F8+7F0r
-D:80040E9C                                              # sub_CODE_7F0AD0F8+840r
-D:80040E9C                                              # sub_CODE_7F0AD0F8+8CCo
-D:80040E9C                                              # sub_CODE_7F0AD0F8+8D4r
-D:80040E9C                                              # sub_CODE_7F0AD0F8+920r
-D:80040EA0     dword_D_80040EA0:.word 0                 # DATA XREF: load_font_tables+4Cw
-D:80040EA0                                              # sub_CODE_7F0AD0F8+6B0r
-D:80040EA0                                              # sub_CODE_7F0AD0F8+790r
-D:80040EA0                                              # sub_CODE_7F0AD0F8+86Cr
-D:80040EA0                                              # sub_CODE_7F0AD0F8+964r
-D:80040EA4     dword_D_80040EA4:.word 0                 # DATA XREF: load_font_tables+64w
-D:80040EA4                                              # sub_CODE_7F0AD0F8+6C4r
-D:80040EA4                                              # sub_CODE_7F0AD0F8+794r
-D:80040EA4                                              # sub_CODE_7F0AD0F8+870r
-D:80040EA4                                              # sub_CODE_7F0AD0F8+958r
-D:80040EA8     dword_D_80040EA8:.word 0                 # DATA XREF: sub_CODE_7F0AD0F8+134o
-D:80040EA8                                              # sub_CODE_7F0AD0F8+328r
-D:80040EA8                                              # sub_CODE_7F0AD0F8+33Cw
-D:80040EA8                                              # en_text_write_stuff+38w
-D:80040EA8                                              # sub_CODE_7F0ADDAC+134o
-D:80040EA8                                              # sub_CODE_7F0ADDAC+324r
-D:80040EA8                                              # sub_CODE_7F0ADDAC+338w
-D:80040EA8                                              # jp_text_write_stuff+38w
-D:80040EAC     dword_D_80040EAC:.word 0                 # DATA XREF: add_tab1_start+28r
-D:80040EAC                                              # add_tab1_start+F4r
-D:80040EAC                                              # add_tab3_previous+28r
-D:80040EAC                                              # add_tab3_previous+F4r
-D:80040EAC                                              # add_tab2_next+28r
-D:80040EAC                                              # add_tab2_next+F4r
-D:80040EAC                                              # constructor_menu07_missionsel+17Cr
-D:80040EAC                                              # constructor_menu07_missionsel+204r
-D:80040EAC                                              # constructor_menu07_missionsel+280r
-D:80040EAC                                              # constructor_menu12_mpstage+540r
-D:80040EAC                                              # constructor_menu12_mpstage+5C0r
-D:80040EAC                                              # constructor_menu12_mpstage+638r
-D:80040EAC                                              # some_kind_of_display_routine+4r
-D:80040EAC                                              # some_kind_of_display_routine+170r
-D:80040EAC                                              # some_kind_of_display_routine+1DCr
-D:80040EAC                                              # reset_intro_camera_message_dialogs_for_BONDdata+2Cr
-D:80040EAC                                              # sub_CODE_7F08AAE8+414r
-D:80040EAC                                              # sub_CODE_7F08AAE8+478r
-D:80040EAC                                              # sub_CODE_7F08AAE8+4DCr
-D:80040EAC                                              # sub_CODE_7F08AAE8+540r
-D:80040EAC                                              # sub_CODE_7F08AAE8+5A4r
-D:80040EAC                                              # sub_CODE_7F0A4B40+164r
-D:80040EAC                                              # sub_CODE_7F0A77C8+Cr
-D:80040EAC                                              # sub_CODE_7F0A7C18+2Cr
-D:80040EAC                                              # sub_CODE_7F0A7DC4+3Cr
-D:80040EAC                                              # debug_gun_watch_move_related+1Cr
-D:80040EAC                                              # debug_gun_watch_move_related2+314r
-D:80040EAC                                              # debug_gun_watch_move_related2+520r
-D:80040EAC                                              # sub_CODE_7F0A8B10+10r
-D:80040EAC                                              # sub_CODE_7F0A9398+8r
-D:80040EAC                                              # sub_CODE_7F0A97D0+14r
-D:80040EAC                                              # sub_CODE_7F0AB4B8+40r
-D:80040EAC                                              # sub_CODE_7F0ABDFC+40r
-D:80040EAC                                              # sub_CODE_7F0AC168+D0r
-D:80040EAC                                              # load_font_tables+84o
-D:80040EAC                                              # load_font_tables+90w
-D:80040EAC                                              # load_font_tables+B4o
-D:80040EAC                                              # display_text_for_playerdata_on_MP_menu+30r
-D:80040EAC                                              # display_text_for_playerdata_on_MP_menu+B0r
-D:80040EAC                                              # display_text_for_playerdata_on_MP_menu+118r
-D:80040EAC                                              # display_text_for_playerdata_on_MP_menu+18Cr
-D:80040EAC                                              # display_text_for_playerdata_on_MP_menu+1F4r
-D:80040EAC                                              # display_text_for_playerdata_on_MP_menu+268r
-D:80040EAC                                              # display_text_for_playerdata_on_MP_menu+2D0r
-D:80040EAC                                              # mp_watch_menu_display:def_7F0C40C0r
-D:80040EAC                                              # mp_watch_menu_display+1F0r
-D:80040EAC                                              # mp_watch_menu_display+264r
-D:80040EAC                                              # mp_watch_menu_display+34Cr
-D:80040EAC                                              # mp_watch_menu_display+3B8r
-D:80040EAC                                              # mp_watch_menu_display+4B0r
-D:80040EAC                                              # mp_watch_menu_display+51Cr
-D:80040EAC                                              # mp_watch_menu_display+60Cr
-D:80040EAC                                              # mp_watch_menu_display+688r
-D:80040EAC                                              # mp_watch_menu_display+718r
-D:80040EAC                                              # mp_watch_menu_display+798r
-D:80040EAC                                              # mp_watch_menu_display+C7Cr
-D:80040EAC                                              # mp_watch_menu_display+CF8r
-D:80040EAC                                              # mp_watch_menu_display+D74r
-D:80040EAC                                              # mp_watch_menu_display+DF0r
-D:80040EAC                                              # mp_watch_menu_display+10F4r
-D:80040EAC                                              # mp_watch_menu_display+1170r
-D:80040EAC                                              # mp_watch_menu_display+11ECr
-D:80040EAC                                              # mp_watch_menu_display+1268r
-D:80040EAC                                              # mp_watch_menu_display+17A4r
-D:80040EAC                                              # mp_watch_menu_display+1824r
-D:80040EAC                                              # mp_watch_menu_display+1878r
-D:80040EAC                                              # mp_watch_menu_display+1920r
-D:80040EAC                                              # mp_watch_menu_display+1988r
-D:80040EAC                                              # mp_watch_menu_display+19F8r
-D:80040EAC                                              # mp_watch_menu_display+1A5Cr
-D:80040EAC                                              # mp_watch_menu_display+1AD0r
-D:80040EAC                                              # mp_watch_menu_display+1B38r
-D:80040EAC                                              # mp_watch_menu_display+1BD0r
-D:80040EAC                                              # mp_watch_menu_display+1C44r
-D:80040EAC                                              # mp_watch_menu_display+1C94r
-D:80040EAC                                              # mp_watch_menu_display+1D30r
-D:80040EAC                                              # mp_watch_menu_display+1DA4r
-D:80040EAC                                              # mp_watch_menu_display+1F24r
-D:80040EAC                                              # mp_watch_menu_display+1FBCr
-D:80040EB0     dword_D_80040EB0:.word 0                 # DATA XREF: add_tab1_start+40r
-D:80040EB0                                              # add_tab1_start+FCr
-D:80040EB0                                              # add_tab3_previous+40r
-D:80040EB0                                              # add_tab3_previous+FCr
-D:80040EB0                                              # add_tab2_next+40r
-D:80040EB0                                              # add_tab2_next+FCr
-D:80040EB0                                              # constructor_menu07_missionsel+18Cr
-D:80040EB0                                              # constructor_menu07_missionsel+20Cr
-D:80040EB0                                              # constructor_menu07_missionsel+288r
-D:80040EB0                                              # constructor_menu12_mpstage+4E0o
-D:80040EB0                                              # some_kind_of_display_routine+30r
-D:80040EB0                                              # some_kind_of_display_routine+178r
-D:80040EB0                                              # some_kind_of_display_routine+1E4r
-D:80040EB0                                              # reset_intro_camera_message_dialogs_for_BONDdata+3Cr
-D:80040EB0                                              # sub_CODE_7F08AAE8+41Cr
-D:80040EB0                                              # sub_CODE_7F08AAE8+480r
-D:80040EB0                                              # sub_CODE_7F08AAE8+4E4r
-D:80040EB0                                              # sub_CODE_7F08AAE8+548r
-D:80040EB0                                              # sub_CODE_7F08AAE8+5ACr
-D:80040EB0                                              # sub_CODE_7F0A4B40+168r
-D:80040EB0                                              # sub_CODE_7F0A77C8+10r
-D:80040EB0                                              # sub_CODE_7F0A7C18+34r
-D:80040EB0                                              # sub_CODE_7F0A7DC4+40r
-D:80040EB0                                              # debug_gun_watch_move_related+20r
-D:80040EB0                                              # debug_gun_watch_move_related2+318r
-D:80040EB0                                              # debug_gun_watch_move_related2+50Cr
-D:80040EB0                                              # sub_CODE_7F0A8B10+14r
-D:80040EB0                                              # sub_CODE_7F0A9398+10r
-D:80040EB0                                              # sub_CODE_7F0A97D0+18r
-D:80040EB0                                              # sub_CODE_7F0AB4B8+44r
-D:80040EB0                                              # sub_CODE_7F0ABDFC+44r
-D:80040EB0                                              # sub_CODE_7F0AC168+D4r
-D:80040EB0                                              # load_font_tables+7Co
-D:80040EB0                                              # load_font_tables+98w
-D:80040EB0                                              # load_font_tables+ACo
-D:80040EB0                                              # display_text_for_playerdata_on_MP_menu+38r
-D:80040EB0                                              # display_text_for_playerdata_on_MP_menu+B8r
-D:80040EB0                                              # display_text_for_playerdata_on_MP_menu+120r
-D:80040EB0                                              # display_text_for_playerdata_on_MP_menu+194r
-D:80040EB0                                              # display_text_for_playerdata_on_MP_menu+1FCr
-D:80040EB0                                              # display_text_for_playerdata_on_MP_menu+270r
-D:80040EB0                                              # display_text_for_playerdata_on_MP_menu+2D8r
-D:80040EB0                                              # mp_watch_menu_display+174r
-D:80040EB0                                              # mp_watch_menu_display+1F8r
-D:80040EB0                                              # mp_watch_menu_display+26Cr
-D:80040EB0                                              # mp_watch_menu_display+354r
-D:80040EB0                                              # mp_watch_menu_display+3C0r
-D:80040EB0                                              # mp_watch_menu_display+4B8r
-D:80040EB0                                              # mp_watch_menu_display+524r
-D:80040EB0                                              # mp_watch_menu_display+614r
-D:80040EB0                                              # mp_watch_menu_display+690r
-D:80040EB0                                              # mp_watch_menu_display+728r
-D:80040EB0                                              # mp_watch_menu_display+7A0r
-D:80040EB0                                              # mp_watch_menu_display+C84r
-D:80040EB0                                              # mp_watch_menu_display+D00r
-D:80040EB0                                              # mp_watch_menu_display+D7Cr
-D:80040EB0                                              # mp_watch_menu_display+DF8r
-D:80040EB0                                              # mp_watch_menu_display+10FCr
-D:80040EB0                                              # mp_watch_menu_display+1178r
-D:80040EB0                                              # mp_watch_menu_display+11F4r
-D:80040EB0                                              # mp_watch_menu_display+1270r
-D:80040EB0                                              # mp_watch_menu_display+17B4r
-D:80040EB0                                              # mp_watch_menu_display+182Cr
-D:80040EB0                                              # mp_watch_menu_display+1888r
-D:80040EB0                                              # mp_watch_menu_display+1928r
-D:80040EB0                                              # mp_watch_menu_display+1990r
-D:80040EB0                                              # mp_watch_menu_display+1A00r
-D:80040EB0                                              # mp_watch_menu_display+1A64r
-D:80040EB0                                              # mp_watch_menu_display+1AD8r
-D:80040EB0                                              # mp_watch_menu_display+1B48r
-D:80040EB0                                              # mp_watch_menu_display+1BD8r
-D:80040EB0                                              # mp_watch_menu_display+1C4Cr
-D:80040EB0                                              # mp_watch_menu_display+1CA4r
-D:80040EB0                                              # mp_watch_menu_display+1D38r
-D:80040EB0                                              # mp_watch_menu_display+1DACr
-D:80040EB0                                              # mp_watch_menu_display+1F34r
-D:80040EB0                                              # mp_watch_menu_display+1FC4r
-D:80040EB4     dword_D_80040EB4:.word 0                 # DATA XREF: display_aligned_white_text_to_screen+4r
-D:80040EB4                                              # constructor_menu00_legalscreen+1A0o
-D:80040EB4                                              # constructor_menu05_fileselect+254o
-D:80040EB4                                              # constructor_menu06_modesel+58r
-D:80040EB4                                              # constructor_menu06_modesel+C8r
-D:80040EB4                                              # constructor_menu06_modesel+150r
-D:80040EB4                                              # constructor_menu06_modesel+1DCr
-D:80040EB4                                              # constructor_menu06_modesel+24Cr
-D:80040EB4                                              # constructor_menu06_modesel+2D8r
-D:80040EB4                                              # constructor_menu06_modesel+34Cr
-D:80040EB4                                              # constructor_menu06_modesel+3A0r
-D:80040EB4                                              # constructor_menu06_modesel+42Cr
-D:80040EB4                                              # print_current_solo_briefing_stage_name+68r
-D:80040EB4                                              # print_current_solo_briefing_stage_name+15Cr
-D:80040EB4                                              # print_current_solo_briefing_stage_name+250r
-D:80040EB4                                              # constructor_menu08_difficulty+110o
-D:80040EB4                                              # constructor_menu08_difficulty+120r
-D:80040EB4                                              # constructor_menu09_007options+A4r
-D:80040EB4                                              # constructor_menu09_007options+1D8r
-D:80040EB4                                              # constructor_menu09_007options+250r
-D:80040EB4                                              # constructor_menu09_007options+2A8r
-D:80040EB4                                              # constructor_menu09_007options+3DCr
-D:80040EB4                                              # constructor_menu09_007options+454r
-D:80040EB4                                              # constructor_menu09_007options+4ACr
-D:80040EB4                                              # constructor_menu09_007options+5E0r
-D:80040EB4                                              # constructor_menu09_007options+658r
-D:80040EB4                                              # constructor_menu09_007options+6B0r
-D:80040EB4                                              # constructor_menu09_007options+7DCr
-D:80040EB4                                              # constructor_menu09_007options+854r
-D:80040EB4                                              # constructor_menu09_007options+8ACr
-D:80040EB4                                              # constructor_menu0E_mpoptions+64r
-D:80040EB4                                              # constructor_menu0E_mpoptions+B4r
-D:80040EB4                                              # constructor_menu0E_mpoptions+13Cr
-D:80040EB4                                              # constructor_menu0E_mpoptions+18Cr
-D:80040EB4                                              # constructor_menu0E_mpoptions+214r
-D:80040EB4                                              # constructor_menu0E_mpoptions+264r
-D:80040EB4                                              # constructor_menu0E_mpoptions+308r
-D:80040EB4                                              # constructor_menu0E_mpoptions+358r
-D:80040EB4                                              # constructor_menu0E_mpoptions+3FCr
-D:80040EB4                                              # constructor_menu0E_mpoptions+44Cr
-D:80040EB4                                              # constructor_menu0E_mpoptions+4F0r
-D:80040EB4                                              # constructor_menu0E_mpoptions+540r
-D:80040EB4                                              # constructor_menu0E_mpoptions+5E4r
-D:80040EB4                                              # constructor_menu0E_mpoptions+634r
-D:80040EB4                                              # constructor_menu0E_mpoptions+6D8r
-D:80040EB4                                              # constructor_menu0E_mpoptions+728r
-D:80040EB4                                              # constructor_menu0E_mpoptions+7CCr
-D:80040EB4                                              # constructor_menu0E_mpoptions+81Cr
-D:80040EB4                                              # constructor_menu0E_mpoptions+8C0r
-D:80040EB4                                              # constructor_menu0E_mpoptions+940r
-D:80040EB4                                              # constructor_menu0E_mpoptions+9C8r
-D:80040EB4                                              # constructor_menu0E_mpoptions+A74r
-D:80040EB4                                              # constructor_menu0E_mpoptions+B20r
-D:80040EB4                                              # constructor_menu0E_mpoptions+BB4r
-D:80040EB4                                              # constructor_menu0E_mpoptions+C58r
-D:80040EB4                                              # constructor_menu0F_mpcharsel+248r
-D:80040EB4                                              # constructor_menu0F_mpcharsel+2B4r
-D:80040EB4                                              # constructor_menu0F_mpcharsel+324r
-D:80040EB4                                              # constructor_menu0F_mpcharsel+38Cr
-D:80040EB4                                              # constructor_menu10_mphandicap+F4o
-D:80040EB4                                              # constructor_menu11_mpcontrol+F4o
-D:80040EB4                                              # constructor_menu13_mpscenario+8Co
-D:80040EB4                                              # constructor_menu13_mpscenario+9Cr
-D:80040EB4                                              # constructor_menu14_mpteams+E0o
-D:80040EB4                                              # print_objectives_and_status_to_menu+4Co
-D:80040EB4                                              # constructor_menu0A_briefing+10Cr
-D:80040EB4                                              # constructor_menu0A_briefing:loc_CODE_7F015F74r
-D:80040EB4                                              # constructor_menu0A_briefing+250r
-D:80040EB4                                              # constructor_menu0C_missionfailed+70r
-D:80040EB4                                              # constructor_menu0C_missionfailed+C0r
-D:80040EB4                                              # constructor_menu0C_missionfailed+114r
-D:80040EB4                                              # constructor_menu0C_missionfailed+20Cr
-D:80040EB4                                              # constructor_menu0D_missioncomplete+118r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+158r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+1C0r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+360r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+3F0r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+48Cr
-D:80040EB4                                              # constructor_menu0D_missioncomplete+54Cr
-D:80040EB4                                              # constructor_menu0D_missioncomplete+63Cr
-D:80040EB4                                              # constructor_menu0D_missioncomplete+6D0r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+768r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+7E0r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+8A4r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+91Cr
-D:80040EB4                                              # constructor_menu0D_missioncomplete+9E0r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+A58r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+AD8r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+B50r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+C14r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+C90r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+D4Cr
-D:80040EB4                                              # constructor_menu0D_missioncomplete+DCCr
-D:80040EB4                                              # constructor_menu0D_missioncomplete+E8Cr
-D:80040EB4                                              # constructor_menu0D_missioncomplete+F10r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+FDCr
-D:80040EB4                                              # constructor_menu0D_missioncomplete+1058r
-D:80040EB4                                              # constructor_menu0D_missioncomplete+10DCr
-D:80040EB4                                              # constructor_menu15_cheat+A0o
-D:80040EB4                                              # constructor_menu15_cheat+2A0o
-D:80040EB4                                              # constructor_menu16_nocontrollers:loc_CODE_7F0184DCr
-D:80040EB4                                              # constructor_menu16_nocontrollers+F0r
-D:80040EB4                                              # constructor_menu16_nocontrollers:loc_CODE_7F0185BCr
-D:80040EB4                                              # constructor_menu16_nocontrollers+1CCr
-D:80040EB4                                              # constructor_menu18_displaycast+C90r
-D:80040EB4                                              # constructor_menu18_displaycast+D34r
-D:80040EB4                                              # constructor_menu18_displaycast+E9Cr
-D:80040EB4                                              # constructor_menu18_displaycast+F28r
-D:80040EB4                                              # constructor_menu18_displaycast+F8Cr
-D:80040EB4                                              # constructor_menu18_displaycast+1018r
-D:80040EB4                                              # sub_CODE_7F07B56C+8Cr
-D:80040EB4                                              # sub_CODE_7F088CD8+22Cr
-D:80040EB4                                              # sub_CODE_7F088CD8+2F4r
-D:80040EB4                                              # sub_CODE_7F088CD8+3ACr
-D:80040EB4                                              # sub_CODE_7F088CD8+474r
-D:80040EB4                                              # sub_CODE_7F08AAE8+84r
-D:80040EB4                                              # sub_CODE_7F08AAE8+1D4r
-D:80040EB4                                              # load_font_tables+110o
-D:80040EB4                                              # load_font_tables+11Cw
-D:80040EB4                                              # load_font_tables+140o
-D:80040EB4                                              # load_font_tables+148r
-D:80040EB4                                              # load_font_tables+164r
-D:80040EB8     dword_D_80040EB8:.word 0                 # DATA XREF: display_aligned_white_text_to_screen+2Cr
-D:80040EB8                                              # constructor_menu00_legalscreen+19Co
-D:80040EB8                                              # constructor_menu05_fileselect+24Co
-D:80040EB8                                              # constructor_menu06_modesel+60r
-D:80040EB8                                              # constructor_menu06_modesel+D8r
-D:80040EB8                                              # constructor_menu06_modesel+158r
-D:80040EB8                                              # constructor_menu06_modesel+1E4r
-D:80040EB8                                              # constructor_menu06_modesel+25Cr
-D:80040EB8                                              # constructor_menu06_modesel+2E0r
-D:80040EB8                                              # constructor_menu06_modesel+354r
-D:80040EB8                                              # constructor_menu06_modesel+3B0r
-D:80040EB8                                              # constructor_menu06_modesel+434r
-D:80040EB8                                              # print_current_solo_briefing_stage_name+70r
-D:80040EB8                                              # print_current_solo_briefing_stage_name+164r
-D:80040EB8                                              # print_current_solo_briefing_stage_name+258r
-D:80040EB8                                              # constructor_menu08_difficulty+118o
-D:80040EB8                                              # constructor_menu08_difficulty+11Cr
-D:80040EB8                                              # constructor_menu09_007options+ACr
-D:80040EB8                                              # constructor_menu09_007options+1E0r
-D:80040EB8                                              # constructor_menu09_007options+264r
-D:80040EB8                                              # constructor_menu09_007options+2B0r
-D:80040EB8                                              # constructor_menu09_007options+3E4r
-D:80040EB8                                              # constructor_menu09_007options+468r
-D:80040EB8                                              # constructor_menu09_007options+4B4r
-D:80040EB8                                              # constructor_menu09_007options+5E8r
-D:80040EB8                                              # constructor_menu09_007options+66Cr
-D:80040EB8                                              # constructor_menu09_007options+6B8r
-D:80040EB8                                              # constructor_menu09_007options+7E4r
-D:80040EB8                                              # constructor_menu09_007options+868r
-D:80040EB8                                              # constructor_menu09_007options+8B4r
-D:80040EB8                                              # constructor_menu0E_mpoptions+6Cr
-D:80040EB8                                              # constructor_menu0E_mpoptions+C4r
-D:80040EB8                                              # constructor_menu0E_mpoptions+144r
-D:80040EB8                                              # constructor_menu0E_mpoptions+19Cr
-D:80040EB8                                              # constructor_menu0E_mpoptions+21Cr
-D:80040EB8                                              # constructor_menu0E_mpoptions+274r
-D:80040EB8                                              # constructor_menu0E_mpoptions+310r
-D:80040EB8                                              # constructor_menu0E_mpoptions+368r
-D:80040EB8                                              # constructor_menu0E_mpoptions+404r
-D:80040EB8                                              # constructor_menu0E_mpoptions+45Cr
-D:80040EB8                                              # constructor_menu0E_mpoptions+4F8r
-D:80040EB8                                              # constructor_menu0E_mpoptions+550r
-D:80040EB8                                              # constructor_menu0E_mpoptions+5ECr
-D:80040EB8                                              # constructor_menu0E_mpoptions+644r
-D:80040EB8                                              # constructor_menu0E_mpoptions+6E0r
-D:80040EB8                                              # constructor_menu0E_mpoptions+738r
-D:80040EB8                                              # constructor_menu0E_mpoptions+7D4r
-D:80040EB8                                              # constructor_menu0E_mpoptions+82Cr
-D:80040EB8                                              # constructor_menu0E_mpoptions+8C8r
-D:80040EB8                                              # constructor_menu0E_mpoptions+948r
-D:80040EB8                                              # constructor_menu0E_mpoptions+9D0r
-D:80040EB8                                              # constructor_menu0E_mpoptions+A7Cr
-D:80040EB8                                              # constructor_menu0E_mpoptions+B28r
-D:80040EB8                                              # constructor_menu0E_mpoptions+BBCr
-D:80040EB8                                              # constructor_menu0E_mpoptions+C60r
-D:80040EB8                                              # constructor_menu0F_mpcharsel+258r
-D:80040EB8                                              # constructor_menu0F_mpcharsel+2BCr
-D:80040EB8                                              # constructor_menu0F_mpcharsel+334r
-D:80040EB8                                              # constructor_menu0F_mpcharsel+394r
-D:80040EB8                                              # constructor_menu10_mphandicap+F0o
-D:80040EB8                                              # constructor_menu11_mpcontrol+F0o
-D:80040EB8                                              # constructor_menu13_mpscenario+94o
-D:80040EB8                                              # constructor_menu13_mpscenario+98r
-D:80040EB8                                              # constructor_menu14_mpteams+E4o
-D:80040EB8                                              # print_objectives_and_status_to_menu+50o
-D:80040EB8                                              # constructor_menu0A_briefing+114r
-D:80040EB8                                              # constructor_menu0A_briefing+21Cr
-D:80040EB8                                              # constructor_menu0A_briefing+258r
-D:80040EB8                                              # constructor_menu0C_missionfailed+78r
-D:80040EB8                                              # constructor_menu0C_missionfailed+D8r
-D:80040EB8                                              # constructor_menu0C_missionfailed+11Cr
-D:80040EB8                                              # constructor_menu0C_missionfailed+214r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+120r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+170r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+1C8r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+368r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+3F8r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+494r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+554r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+644r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+6D8r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+770r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+7E8r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+8ACr
-D:80040EB8                                              # constructor_menu0D_missioncomplete+924r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+9E8r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+A60r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+AE0r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+B58r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+C1Cr
-D:80040EB8                                              # constructor_menu0D_missioncomplete+C98r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+D54r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+DD4r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+E94r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+F18r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+FE4r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+1060r
-D:80040EB8                                              # constructor_menu0D_missioncomplete+10E4r
-D:80040EB8                                              # constructor_menu15_cheat+98o
-D:80040EB8                                              # constructor_menu15_cheat+2A8o
-D:80040EB8                                              # constructor_menu16_nocontrollers+94r
-D:80040EB8                                              # constructor_menu16_nocontrollers+F8r
-D:80040EB8                                              # constructor_menu16_nocontrollers+174r
-D:80040EB8                                              # constructor_menu16_nocontrollers+1D4r
-D:80040EB8                                              # constructor_menu18_displaycast+C98o
-D:80040EB8                                              # constructor_menu18_displaycast+CA4r
-D:80040EB8                                              # constructor_menu18_displaycast+D40r
-D:80040EB8                                              # constructor_menu18_displaycast+E24o
-D:80040EB8                                              # constructor_menu18_displaycast+EB4r
-D:80040EB8                                              # constructor_menu18_displaycast+F30r
-D:80040EB8                                              # constructor_menu18_displaycast+FA4r
-D:80040EB8                                              # sub_CODE_7F07B56C+84r
-D:80040EB8                                              # sub_CODE_7F088CD8+1CCo
-D:80040EB8                                              # sub_CODE_7F088CD8+250r
-D:80040EB8                                              # sub_CODE_7F088CD8+2FCr
-D:80040EB8                                              # sub_CODE_7F08AAE8+C0r
-D:80040EB8                                              # sub_CODE_7F08AAE8+1D8r
-D:80040EB8                                              # load_font_tables+108o
-D:80040EB8                                              # load_font_tables+124w
-D:80040EB8                                              # load_font_tables+134o
-D:80040EB8                                              # load_font_tables+13Cr
-D:80040EB8                                              # load_font_tables+160r
-D:80040EBC     dword_D_80040EBC:.word 0x5555, 0xAAAAFFFF, 0x5555, 0xAAAAFFFF, 0x5555, 0xAAAAFFFF, 0x5555, 0xAAAAFFFF
-D:80040EBC                                              # DATA XREF: sub_CODE_7F0AD0F8+344o
-D:80040EBC                                              # sub_CODE_7F0ADDAC+33Co
-D:80040EBC                     .word 0, 0
-D:80040EE4     dword_D_80040EE4:.word 0x55555555, 0x55555555, 0xAAAAAAAA, 0xAAAAAAAA, 0xFFFFFFFF, 0xFFFFFFFF
-D:80040EE4                     .word 0, 0
-D:80040F04     dword_D_80040F04:.word 0xC               # DATA XREF: en_text_write_stuff+208r
-D:80040F08     dword_D_80040F08:.word 0xB               # DATA XREF: en_text_write_stuff+218r
-D:80040F0C     dword_D_80040F0C:.word 0                 # DATA XREF: en_text_write_stuff+228r
-D:80040F10     dword_D_80040F10:.word 0                 # DATA XREF: en_text_write_stuff+238r
-D:80040F14     dword_D_80040F14:.word 0                 # DATA XREF: jp_text_write_stuff:loc_CODE_7F0AE870o
-D:80040F14                                              # jp_text_write_stuff+188r
-D:80040F18     dword_D_80040F18:.word 0                 # DATA XREF: jp_text_write_stuff+198r
-D:80040F1C     dword_D_80040F1C:.word 0xC               # DATA XREF: jp_text_write_stuff+1A8r
-D:80040F20     dword_D_80040F20:.word 0xB               # DATA XREF: jp_text_write_stuff+1B8r
-D:80040F24     dword_D_80040F24:.word 0                 # DATA XREF: jp_text_write_stuff+1C8r
-D:80040F28     dword_D_80040F28:.word 0                 # DATA XREF: jp_text_write_stuff+1D8r
-D:80040F2C                     .word 0
-*/
+// data
+s32 D_80040E80 = 0;
+s32 D_80040E84 = 0;
+s32 D_80040E88 = 0;
+s32 D_80040E8C = 0;
+s32 D_80040E90 = -1;
+s32 D_80040E94 = 0;
+s32 D_80040E98 = 0;
+s32 D_80040E9C = 0;
+s32 D_80040EA0 = 0;
+s32 D_80040EA4 = 0;
+s32 D_80040EA8 = 0;
+s32 D_80040EAC = 0;
+s32 D_80040EB0 = 0;
+s32 D_80040EB4 = 0;
+s32 D_80040EB8 = 0;
+
+u32 D_80040EBC[] = { 0x5555, 0xAAAAFFFF, 0x5555, 0xAAAAFFFF, 0x5555, 0xAAAAFFFF, 0x5555, 0xAAAAFFFF, 0, 0};
+u32 D_80040EE4[] = { 0x55555555, 0x55555555, 0xAAAAAAAA, 0xAAAAAAAA, 0xFFFFFFFF, 0xFFFFFFFF, 0, 0};
+
+s32 D_80040F04 = 0xC;
+s32 D_80040F08 = 0xB;
+s32 D_80040F0C = 0;
+s32 D_80040F10 = 0;
+s32 D_80040F14 = 0;
+s32 D_80040F18 = 0;
+s32 D_80040F1C = 0xC;
+s32 D_80040F20 = 0xB;
+s32 D_80040F24 = 0;
+s32 D_80040F28 = 0;
+
 
 
 
@@ -508,17 +53,18 @@ glabel null_init_main
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0ACB78(void) {
-
+void sub_GAME_7F0ACB78(s32 arg0) {
+    D_80040E84 = (s32) -arg0;
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0ACB78
 /* 0E16A8 7F0ACB78 00047023 */  negu  $t6, $a0
-/* 0E16AC 7F0ACB7C 3C018004 */  lui   $at, 0x8004
+/* 0E16AC 7F0ACB7C 3C018004 */  lui   $at, %hi(D_80040E84)
 /* 0E16B0 7F0ACB80 03E00008 */  jr    $ra
-/* 0E16B4 7F0ACB84 AC2E0E84 */   sw    $t6, 0xe84($at)
+/* 0E16B4 7F0ACB84 AC2E0E84 */   sw    $t6, %lo(D_80040E84)($at)
 )
 #endif
 
@@ -527,16 +73,17 @@ glabel sub_GAME_7F0ACB78
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0ACB88(void) {
-
+void sub_GAME_7F0ACB88(s32 arg0) {
+    D_80040E88 = arg0;
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0ACB88
-/* 0E16B8 7F0ACB88 3C018004 */  lui   $at, 0x8004
+/* 0E16B8 7F0ACB88 3C018004 */  lui   $at, %hi(D_80040E88)
 /* 0E16BC 7F0ACB8C 03E00008 */  jr    $ra
-/* 0E16C0 7F0ACB90 AC240E88 */   sw    $a0, 0xe88($at)
+/* 0E16C0 7F0ACB90 AC240E88 */   sw    $a0, %lo(D_80040E88)($at)
 )
 #endif
 
@@ -545,16 +92,16 @@ glabel sub_GAME_7F0ACB88
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0ACB94(void) {
-
+void sub_GAME_7F0ACB94(s32 arg0) {
+    D_80040E8C = arg0;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0ACB94
-/* 0E16C4 7F0ACB94 3C018004 */  lui   $at, 0x8004
+/* 0E16C4 7F0ACB94 3C018004 */  lui   $at, %hi(D_80040E8C)
 /* 0E16C8 7F0ACB98 03E00008 */  jr    $ra
-/* 0E16CC 7F0ACB9C AC240E8C */   sw    $a0, 0xe8c($at)
+/* 0E16CC 7F0ACB9C AC240E8C */   sw    $a0, %lo(D_80040E8C)($at)
 )
 #endif
 
@@ -563,16 +110,16 @@ glabel sub_GAME_7F0ACB94
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0ACBA0(void) {
-
+void sub_GAME_7F0ACBA0(s32 arg0) {
+    D_80040E90 = arg0;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0ACBA0
-/* 0E16D0 7F0ACBA0 3C018004 */  lui   $at, 0x8004
+/* 0E16D0 7F0ACBA0 3C018004 */  lui   $at, %hi(D_80040E90)
 /* 0E16D4 7F0ACBA4 03E00008 */  jr    $ra
-/* 0E16D8 7F0ACBA8 AC240E90 */   sw    $a0, 0xe90($at)
+/* 0E16D8 7F0ACBA8 AC240E90 */   sw    $a0, %lo(D_80040E90)($at)
 )
 #endif
 
@@ -824,9 +371,27 @@ glabel microcode_constructor
 
 
 #ifdef NONMATCHING
-void combiner_bayer_lod_perspective(void) {
+s32 combiner_bayer_lod_perspective(void *arg0) {
+    void *temp_a1;
+    void *temp_a2;
+    void *temp_a3;
 
+    // Node 0
+    temp_a1 = (arg0 + 8);
+    *arg0 = 0xe7000000;
+    arg0->unk4 = 0;
+    temp_a2 = (temp_a1 + 8);
+    temp_a1->unk4 = 0x40;
+    *temp_a1 = 0xba000602;
+    temp_a3 = (temp_a2 + 8);
+    temp_a2->unk4 = 0x80000;
+    *temp_a2 = 0xba001301;
+    temp_a3->unk4 = 0x10000;
+    *temp_a3 = 0xba001001;
+    return;
+    // (possible return value: (temp_a3 + 8))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -862,9 +427,35 @@ glabel combiner_bayer_lod_perspective
 
 
 #ifdef NONMATCHING
-void draw_blackbox_to_screen(void) {
+s32 draw_blackbox_to_screen(void *arg0, void *arg1, void *arg2, void *arg3, void *arg4) {
+    void *temp_a0;
+    void *temp_t0;
+    void *temp_t1;
+    void *temp_v1;
+    void *temp_a1;
 
+    // Node 0
+    *arg0 = 0xb900031d;
+    arg0->unk4 = 0x504240;
+    temp_a0 = (arg0 + 8);
+    *temp_a0 = 0xfcffffff;
+    temp_a0->unk4 = 0xfffdf6fb;
+    temp_t0 = (temp_a0 + 8);
+    *temp_t0 = 0xfa000000;
+    temp_t0->unk4 = 0;
+    temp_t1 = (temp_t0 + 8);
+    *temp_t1 = (s32) ((((*arg4 & 0x3ff) * 4) | 0xf6000000) | ((*arg3 & 0x3ff) << 0xe));
+    temp_v1 = (temp_t1 + 8);
+    temp_t1->unk4 = (s32) (((*arg2 & 0x3ff) * 4) | ((*arg1 & 0x3ff) << 0xe));
+    temp_a1 = (temp_v1 + 8);
+    temp_v1->unk4 = 0x504240;
+    *temp_v1 = 0xb900031d;
+    *temp_a1 = 0xfcff97ff;
+    temp_a1->unk4 = 0xff2dfeff;
+    return;
+    // (possible return value: (temp_a1 + 8))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -927,9 +518,31 @@ glabel draw_blackbox_to_screen
 
 
 #ifdef NONMATCHING
-void microcode_constructor_related_to_menus(void) {
+s32 microcode_constructor_related_to_menus(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u32 arg5) {
+    void *temp_a0;
+    void *temp_t0;
+    void *temp_t1;
+    void *temp_v1;
 
+    // Node 0
+    *arg0 = 0xb900031d;
+    arg0->unk4 = 0x504240;
+    temp_a0 = (arg0 + 8);
+    *temp_a0 = 0xfcffffff;
+    temp_a0->unk4 = 0xfffdf6fb;
+    temp_t0 = (temp_a0 + 8);
+    *temp_t0 = 0xfa000000;
+    temp_t1 = (temp_t0 + 8);
+    temp_t0->unk4 = (s32) (((((arg5 >> 0x18) << 0x18) | (((arg5 >> 0x10) & 0xff) << 0x10)) | (((arg5 >> 8) & 0xff) << 8)) | (arg5 & 0xff));
+    temp_v1 = (temp_t1 + 8);
+    temp_t1->unk4 = (s32) (((arg1 & 0x3ff) << 0xe) | ((arg2 & 0x3ff) * 4));
+    *temp_t1 = (s32) ((((arg3 & 0x3ff) << 0xe) | 0xf6000000) | ((arg4 & 0x3ff) * 4));
+    temp_v1->unk4 = 0xff2dfeff;
+    *temp_v1 = 0xfcff97ff;
+    return;
+    // (possible return value: (temp_v1 + 8))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -3137,9 +2750,10 @@ glabel sub_GAME_7F0AEB64
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0AEF0C(void) {
-
+void sub_GAME_7F0AEF0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    // (function likely stubbed)
 }
+
 #else
 GLOBAL_ASM(
 .text

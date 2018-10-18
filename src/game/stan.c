@@ -319,8 +319,9 @@ glabel sub_GAME_7F0AF000
 
 #ifdef NONMATCHING
 void something_stan_c_debug_related(void) {
-
+    get_ptr_debug_notice_list_entry(&D_80040F40, &aStan_c_debug);
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -754,9 +755,18 @@ glabel sub_GAME_7F0AF20C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0AF5B8(void) {
-
+void sub_GAME_7F0AF5B8(void *arg0) {
+    D_80040FB0 = 1;
+    clippingfile = arg0;
+    base_ptr_connection_vals = (s32) (arg0->unk4 + -0x80);
+    if (check_token(1, "-stanlinelog") != 0)
+    {
+        D_80040FB4 = 1;
+    }
+    sub_GAME_7F0AF038();
+    sub_GAME_7F0B2950(1.0);
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1215,9 +1225,19 @@ glabel sub_GAME_7F0AFA1C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0AFB1C(void) {
+f32 sub_GAME_7F0AFB1C(void *arg0, void *arg1) {
+    void *sp4;
+    f32 sp8;
+    f32 spC;
 
+    // Node 0
+    sp4 = (f32) (*arg1 - *arg0);
+    sp8 = (f32) (arg1->unk4 - arg0->unk4);
+    spC = (f32) (arg1->unk8 - arg0->unk8);
+    return;
+    // (possible return value: ((spC * spC) + ((sp4 * sp4) + (sp8 * sp8))))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1592,9 +1612,13 @@ glabel sub_GAME_7F0AFE70
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0AFFCC(void) {
-
+f32 sub_GAME_7F0AFFCC(f32 arg2, f32 arg3) {
+    // Node 0
+    sub_GAME_7F0AFD1C(arg2, arg3, (arg2 * D_80040F44), (arg3 * D_80040F44));
+    return;
+    // (possible return value: (sub_GAME_7F0AFD1C(arg2, arg3, (arg2 * D_80040F44), (arg3 * D_80040F44)) * D_80040F48))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1626,9 +1650,13 @@ glabel sub_GAME_7F0AFFCC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B0018(void) {
-
+f32 sub_GAME_7F0B0018(f32 arg2, f32 arg3) {
+    // Node 0
+    sub_GAME_7F0AFE70(arg2, arg3, (arg2 * D_80040F44), (arg3 * D_80040F44));
+    return;
+    // (possible return value: (sub_GAME_7F0AFE70(arg2, arg3, (arg2 * D_80040F44), (arg3 * D_80040F44)) * D_80040F48))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1660,9 +1688,21 @@ glabel sub_GAME_7F0B0018
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B0064(void) {
+void sub_GAME_7F0B0064(s32 arg0, s32 arg1, f32 arg2, ? arg3, f32 arg9) {
+    void *temp_v0;
+    f32 temp_f18;
+    f32 temp_f14;
 
+    // Node 0
+    temp_v0 = (arg0 + (arg1 * 8));
+    temp_f18 = (arg9 - (f32) temp_v0->unkC);
+    temp_f14 = (arg2 - (f32) temp_v0->unk8);
+    arg9 = temp_f18;
+    sqrtf(((temp_f14 * temp_f14) + (temp_f18 * temp_f18)), temp_f14);
+    return;
+    // (possible return value: sqrtf(((temp_f14 * temp_f14) + (temp_f18 * temp_f18)), temp_f14))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -5608,9 +5648,13 @@ glabel sub_GAME_7F0B2E58
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B2F00(void) {
-
+void sub_GAME_7F0B2F00(void *arg0, void *arg6) {
+    // Node 0
+    *arg6 = sub_GAME_7F0B2E58(*arg0);
+    return;
+    // (possible return value: sub_GAME_7F0B2E58(*arg0))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -5696,9 +5740,10 @@ glabel load_stan
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B2FD8(void) {
-
+void sub_GAME_7F0B2FD8(void *arg0) {
+    return arg0->unk3;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -5738,8 +5783,12 @@ glabel sub_GAME_7F0B2FE0
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B3004(void) {
-
+    // Node 0
+    sub_GAME_7F0B2D14();
+    return;
+    // (possible return value: sub_GAME_7F0B2D14())
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -5760,9 +5809,10 @@ glabel sub_GAME_7F0B3004
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B3024(void) {
-
+s32 sub_GAME_7F0B3024(s32 arg0, s32 arg1, s32 arg2) {
+    return arg0;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -5779,8 +5829,8 @@ glabel sub_GAME_7F0B3024
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B3034(void) {
-
+s32 sub_GAME_7F0B3034(s32 arg0) {
+    return arg0;
 }
 #else
 GLOBAL_ASM(
@@ -5796,9 +5846,10 @@ glabel sub_GAME_7F0B3034
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B303C(void) {
-
+s32 sub_GAME_7F0B303C(s32 arg0) {
+    return arg0;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -5908,9 +5959,13 @@ glabel sub_GAME_7F0B312C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B3138(void) {
-
+void sub_GAME_7F0B3138(s32 arg0, s32 arg1, ? arg2, ? arg3, ? arg10, f32 arg11, ?32 arg12, f32 arg13, f32 arg14) {
+    // Node 0
+    sub_GAME_7F0B0E24(arg2, arg3, arg1, arg2, arg3, arg10, arg11, arg12, arg13, arg14, 0.0f, 1.0f);
+    return;
+    // (possible return value: sub_GAME_7F0B0E24(arg2, arg3, arg1, arg2, arg3, arg10, arg11, arg12, arg13, arg14, 0.0f, 1.0f))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -5950,9 +6005,13 @@ glabel sub_GAME_7F0B3138
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B31A4(void) {
-
+void sub_GAME_7F0B31A4(s32 arg0, s32 arg1, ? arg2, ? arg3, ? argE, ?32 argF, f32 arg10, f32 arg11) {
+    // Node 0
+    sub_GAME_7F0B18B8(arg2, arg3, arg1, arg2, arg3, argE, argF, arg10, arg11);
+    return;
+    // (possible return value: sub_GAME_7F0B18B8(arg2, arg3, arg1, arg2, arg3, argE, argF, arg10, arg11))
 }
+
 #else
 GLOBAL_ASM(
 .text

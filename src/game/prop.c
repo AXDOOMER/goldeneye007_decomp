@@ -213,9 +213,55 @@ glabel load_proptype
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F001BD4(void) {
+void sub_GAME_7F001BD4(void *arg0, s32 arg1, void *arg12, void *arg13) {
+    f32 sp18;
+    f32 sp20;
+    f32 sp24;
+    f32 sp28;
+    f32 sp2C;
+    f32 sp30;
+    f32 sp34;
+    f32 sp3C;
+    f32 sp40;
+    f32 sp44;
+    f32 temp_f6;
+    f32 temp_f4;
+    f32 temp_f6_2;
+    f32 temp_f2;
+    f32 temp_f10;
+    f32 temp_f12;
+    f32 temp_f14;
+    f32 temp_f16;
 
+    // Node 0
+    sp34 = (f32) arg0->unk2C;
+    sp30 = (f32) arg0->unk30;
+    sp2C = (f32) arg0->unk34;
+    sp28 = (f32) arg0->unk38;
+    sp24 = (f32) arg0->unk3C;
+    sp20 = (f32) arg0->unk40;
+    temp_f6 = ((arg0->unk10 * arg0->unk20) - (arg0->unk1C * arg0->unk14));
+    sp3C = temp_f6;
+    temp_f4 = ((arg0->unk14 * arg0->unk18) - (arg0->unk20 * arg0->unkC));
+    sp40 = temp_f4;
+    sp18 = temp_f6;
+    temp_f6_2 = ((arg0->unkC * arg0->unk1C) - (arg0->unk18 * arg0->unk10));
+    sp44 = temp_f6_2;
+    temp_f2 = (1.0f / sqrtf(((temp_f6_2 * temp_f6_2) + ((sp18 * sp18) + (temp_f4 * temp_f4)))));
+    temp_f10 = (sp3C * temp_f2);
+    sp3C = temp_f10;
+    sp40 = (f32) (sp40 * temp_f2);
+    temp_f12 = (sp24 + sp20);
+    sp44 = (f32) (sp44 * temp_f2);
+    temp_f14 = (sp34 + sp30);
+    temp_f16 = (sp2C + sp28);
+    *arg13 = (f32) ((((arg12->unk18 * temp_f12) + ((temp_f14 * temp_f10) + (temp_f16 * arg12->unkC))) * 0.5f) + *arg12);
+    arg13->unk4 = (f32) ((((arg12->unk1C * temp_f12) + ((temp_f14 * sp40) + (temp_f16 * arg12->unk10))) * 0.5f) + arg12->unk4);
+    arg13->unk8 = (f32) ((((arg12->unk20 * temp_f12) + ((temp_f14 * sp44) + (temp_f16 * arg12->unk14))) * 0.5f) + arg12->unk8);
+    return;
+    // (possible return value: sqrtf(((temp_f6_2 * temp_f6_2) + ((sp18 * sp18) + (temp_f4 * temp_f4)))))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1193,9 +1239,40 @@ def_7F002854:
 
 
 #ifdef NONMATCHING
-void MP_weapon_expansion_routine(void) {
+void MP_weapon_expansion_routine(void *arg1, ? arg7) {
+    ? temp_ret;
 
+    // Node 0
+    if ((arg1->unk8 & 0x4000) != 0)
+    {
+        // Node 1
+        temp_ret = check_if_guardnum_loaded_get_ptr_GUARDdata(arg1->unk6, arg1);
+        if (temp_ret != 0)
+        {
+            // Node 2
+            if (temp_ret->unk18 != 0)
+            {
+                // Node 3
+                if (temp_ret->unk1C != 0)
+                {
+                    // Node 4
+                    sub_GAME_7F051084(arg7, temp_ret, arg7);
+                    return;
+                    // (possible return value: sub_GAME_7F051084(arg7, temp_ret, arg7))
+                }
+            }
+        }
+    }
+    else
+    {
+        // Node 5
+        prepare_load_objects(arg1, arg1);
+    }
+    // Node 6
+    return;
+    // (possible return value: prepare_load_objects(arg1, arg1))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1238,8 +1315,12 @@ glabel MP_weapon_expansion_routine
 
 #ifdef NONMATCHING
 void jmp_prepare_load_objects(void) {
-
+    // Node 0
+    prepare_load_objects();
+    return;
+    // (possible return value: prepare_load_objects())
 }
+
 #else
 GLOBAL_ASM(
 .text

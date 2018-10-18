@@ -476,9 +476,12 @@ glabel sub_GAME_7F091080
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F091580(void) {
-
+void sub_GAME_7F091580(s32 arg0) {
+    // Node 0
+    sub_GAME_7F0876C4(&D_80037014, &D_80037020, &D_8003702C);
+    return arg0;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -506,9 +509,21 @@ glabel sub_GAME_7F091580
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0915BC(void) {
+f32 sub_GAME_7F0915BC(f32 arg0) {
+    f32 temp_f0;
 
+    // Node 0
+    temp_f0 = (D_80037058 / arg0);
+    D_80037058 = arg0;
+    D_80037014 = (f32) (D_80037014 * temp_f0);
+    D_80037014.unk4 = (f32) (D_80037014.unk4 * temp_f0);
+    D_80037014.unk8 = (f32) (D_80037014.unk8 * temp_f0);
+    D_8003705C = (f32) (1.0f / arg0);
+    return;
+    // (possible return value: temp_f0)
 }
+
+
 #else
 GLOBAL_ASM(
 .text
@@ -526,7 +541,7 @@ glabel sub_GAME_7F0915BC
 /* 0C6114 7F0915E4 E44C0000 */  swc1  $f12, ($v0)
 /* 0C6118 7F0915E8 46003202 */  mul.s $f8, $f6, $f0
 /* 0C611C 7F0915EC 44813000 */  mtc1  $at, $f6
-/* 0C6120 7F0915F0 3C018003 */  lui   $at, 0x8003
+/* 0C6120 7F0915F0 3C018003 */  lui   $at, %hi(D_8003705C)
 /* 0C6124 7F0915F4 46005402 */  mul.s $f16, $f10, $f0
 /* 0C6128 7F0915F8 00000000 */  nop   
 /* 0C612C 7F0915FC 46009102 */  mul.s $f4, $f18, $f0
@@ -535,7 +550,7 @@ glabel sub_GAME_7F0915BC
 /* 0C6138 7F091608 460C3203 */  div.s $f8, $f6, $f12
 /* 0C613C 7F09160C E4640008 */  swc1  $f4, 8($v1)
 /* 0C6140 7F091610 03E00008 */  jr    $ra
-/* 0C6144 7F091614 E428705C */   swc1  $f8, 0x705c($at)
+/* 0C6144 7F091614 E428705C */   swc1  $f8, %lo(D_8003705C)($at)
 )
 #endif
 
@@ -545,8 +560,16 @@ glabel sub_GAME_7F0915BC
 
 #ifdef NONMATCHING
 void sub_GAME_7F091618(void) {
-
+    // Node 0
+    get_BONDdata_position();
+    cosf((D_80055860 - get_curplay_horizontal_rotation_in_degrees()));
+    sinf(sp18);
+    cosf(sp18);
+    sinf(sp18);
+    return;
+    // (possible return value: sinf(sp18))
 }
+
 #else
 GLOBAL_ASM(
 .text

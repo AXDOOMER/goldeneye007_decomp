@@ -1,35 +1,53 @@
 #include "ultra64.h"
 
 
-/* data
-D:8004EAF0     flt_D_8004EAF0: .float 0.0               # DATA XREF: sub_CODE_7F0D1AC0+20w
-D:8004EAF0                                              # sub_CODE_7F0D1DFC+8r
-D:8004EAF0                                              # sub_CODE_7F0D1E44+8r
-D:8004EAF0                                              # sub_CODE_7F0D2320+50w
-D:8004EAF4     flt_D_8004EAF4: .float 0.0               # DATA XREF: sub_CODE_7F0D1AC0+4o
-D:8004EAF4                                              # sub_CODE_7F0D1AC0+Cw
-D:8004EAF4                                              # sub_CODE_7F0D1AC0+10r
-D:8004EAF4                                              # sub_CODE_7F0D1BD0+28o
-D:8004EAF4                                              # sub_CODE_7F0D1BD0+38r
-D:8004EAF4                                              # sub_CODE_7F0D1DCC+4o
-D:8004EAF4                                              # sub_CODE_7F0D1DCC+1Cr
-D:8004EAF4                                              # sub_CODE_7F0D1DCC+24w
-D:8004EAF4                                              # sub_CODE_7F0D1DFC+Cr
-D:8004EAF4                                              # sub_CODE_7F0D1E44+Cr
-D:8004EAF4                                              # sub_CODE_7F0D1E98+8r
-D:8004EAF4                                              # sub_CODE_7F0D2320o
-D:8004EAF4                                              # sub_CODE_7F0D2320+10r
-D:8004EAF4                                              # sub_CODE_7F0D2320+44w
-D:8004EAF4                                              # sub_CODE_7F0D2320+48r
-D:8004EAF8                     .align 4
-*/
+// data
+f32 flt_D_8004EAF0 = 0.0;
+f32 flt_D_8004EAF4 = 0.0;
+
 
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0D1AC0(void) {
+s32 sub_GAME_7F0D1AC0(void *arg0) {
+    void *temp_v1;
+    void *temp_a1;
+    void *temp_a0;
+    void *temp_a3;
+    void *temp_v1_2;
+    void *temp_a1_2;
+    void *temp_a2;
 
+    // Node 0
+    D_8004EAF4 = 0.0f;
+    D_8004EAF0 = (f32) D_8004EAF4;
+    temp_v1 = (arg0 + 8);
+    *arg0 = 0xba000c02;
+    arg0->unk4 = 0;
+    temp_a1 = (temp_v1 + 8);
+    temp_v1->unk4 = 0xc0;
+    *temp_v1 = 0xba000602;
+    temp_a1->unk4 = 1;
+    *temp_a1 = 0xb6000000;
+    temp_a0 = (temp_a1 + 8);
+    temp_a3 = (temp_a0 + 8);
+    *temp_a0 = 0xe7000000;
+    temp_a0->unk4 = 0;
+    temp_v1_2 = (temp_a3 + 8);
+    *temp_a3 = 0xba001301;
+    temp_a3->unk4 = 0;
+    temp_a1_2 = (temp_v1_2 + 8);
+    temp_v1_2->unk4 = 0x300000;
+    *temp_v1_2 = 0xba001402;
+    temp_a2 = (temp_a1_2 + 8);
+    temp_a1_2->unk4 = 0xf0a4000;
+    *temp_a1_2 = 0xb900031d;
+    temp_a2->unk4 = 0x800000;
+    *temp_a2 = 0xba001701;
+    return;
+    // (possible return value: (temp_a2 + 8))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -95,9 +113,13 @@ glabel sub_GAME_7F0D1AC0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0D1B94(void) {
-
+void sub_GAME_7F0D1B94(s32 arg1, ?32 argE) {
+    // Node 0
+    sub_GAME_7F0D1BD0(arg1, arg1, argE, 2, 1);
+    return;
+    // (possible return value: sub_GAME_7F0D1BD0(arg1, arg1, argE, 2, 1))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -273,9 +295,18 @@ glabel sub_GAME_7F0D1BD0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0D1DCC(void) {
-
+void *sub_GAME_7F0D1DCC(f32 arg0) {
+    // Node 0
+    if (0.0f < arg0)
+    {
+        // Node 1
+        D_8004EAF4 = (f32) (D_8004EAF4 + arg0);
+        return;
+        // (possible return value: &D_8004EAF4)
+    }
+    // (possible return value: &D_8004EAF4)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -301,9 +332,13 @@ glabel sub_GAME_7F0D1DCC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0D1DFC(void) {
-
+void sub_GAME_7F0D1DFC(s32 arg1, ?32 argC) {
+    // Node 0
+    sub_GAME_7F0D1B94(arg1, ((D_8004EAF0 + arg1) - D_8004EAF4), argC);
+    return;
+    // (possible return value: sub_GAME_7F0D1B94(arg1, ((D_8004EAF0 + arg1) - D_8004EAF4), argC))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -334,9 +369,13 @@ glabel sub_GAME_7F0D1DFC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0D1E44(void) {
-
+void sub_GAME_7F0D1E44(s32 arg1, ?32 argE, ?32 argF, ?32 arg10) {
+    // Node 0
+    sub_GAME_7F0D1BD0(arg1, ((D_8004EAF0 + arg1) - D_8004EAF4), argE, argF, arg10);
+    return;
+    // (possible return value: sub_GAME_7F0D1BD0(arg1, ((D_8004EAF0 + arg1) - D_8004EAF4), argE, argF, arg10))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -680,9 +719,14 @@ glabel sub_GAME_7F0D1E98
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0D2320(void) {
-
+s32 sub_GAME_7F0D2320(void) {
+    // Node 0
+    D_8004EAF4 = (f32) (((s32) (D_8004EAF4 / 10.0f) * 0xa) + 0xa);
+    D_8004EAF0 = (f32) D_8004EAF4;
+    return;
+    // (possible return value: (((s32) (D_8004EAF4 / 10.0f) * 0xa) + 0xa))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -692,7 +736,7 @@ glabel sub_GAME_7F0D2320
 /* 106E58 7F0D2328 3C014120 */  li    $at, 0x41200000 # 10.000000
 /* 106E5C 7F0D232C 44813000 */  mtc1  $at, $f6
 /* 106E60 7F0D2330 C4640000 */  lwc1  $f4, ($v1)
-/* 106E64 7F0D2334 3C018005 */  lui   $at, 0x8005
+/* 106E64 7F0D2334 3C018005 */  lui   $at, %hi(D_8004EAF0)
 /* 106E68 7F0D2338 46062203 */  div.s $f8, $f4, $f6
 /* 106E6C 7F0D233C 4600428D */  trunc.w.s $f10, $f8
 /* 106E70 7F0D2340 44025000 */  mfc1  $v0, $f10
@@ -707,7 +751,7 @@ glabel sub_GAME_7F0D2320
 /* 106E94 7F0D2364 E4720000 */  swc1  $f18, ($v1)
 /* 106E98 7F0D2368 C4640000 */  lwc1  $f4, ($v1)
 /* 106E9C 7F0D236C 03E00008 */  jr    $ra
-/* 106EA0 7F0D2370 E424EAF0 */   swc1  $f4, -0x1510($at)
+/* 106EA0 7F0D2370 E424EAF0 */   swc1  $f4, %lo(D_8004EAF0)($at)
 )
 #endif
 

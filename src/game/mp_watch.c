@@ -1,87 +1,20 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:8008C700     stop_play_flag: .space 4                 # DATA XREF: controller_gameplay_interaction+1CCr
-CODE.bss:8008C700                                              # record_damage_kills+98r
-CODE.bss:8008C700                                              # unpause_gamew
-CODE.bss:8008C700                                              # sub_CODE_7F0C24BC:loc_CODE_7F0C24E0r
-CODE.bss:8008C700                                              # set_stopplay_flag+Cw
-CODE.bss:8008C700                                              # mp_watch_menu_display+5E4r
-CODE.bss:8008C700                                              # mp_watch_menu_display+6E4r
-CODE.bss:8008C700                                              # mp_watch_menu_display+C54r
-CODE.bss:8008C700                                              # mp_watch_menu_display+10CCr
-CODE.bss:8008C700                                              # mp_watch_menu_display+1E24r
-CODE.bss:8008C704     is_gameover_flag:.space 4                # DATA XREF: controller_gameplay_interaction+1DCr
-CODE.bss:8008C704                                              # record_damage_kills+A8r
-CODE.bss:8008C704                                              # check_can_advance_right_on_mpmenu:page_adv_right_gameoverr
-CODE.bss:8008C704                                              # check_can_advance_left_on_mpmenu:page_adv_left_gameoverr
-CODE.bss:8008C704                                              # unpause_game+8w
-CODE.bss:8008C704                                              # sub_CODE_7F0C2530+88w
-CODE.bss:8008C704                                              # sub_CODE_7F0C2530+90w
-CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+44o
-CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+4Cr
-CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+70w
-CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+74w
-CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+84o
-CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+94r
-CODE.bss:8008C704                                              # sub_CODE_7F0C2E80+494r
-CODE.bss:8008C704                                              # mp_watch_menu_display:text_playr
-CODE.bss:8008C704                                              # mp_watch_menu_display+2C4r
-CODE.bss:8008C704                                              # mp_watch_menu_display+428r
-CODE.bss:8008C704                                              # mp_watch_menu_display:loc_CODE_7F0C45F4r
-CODE.bss:8008C704                                              # mp_watch_menu_display:loc_CODE_7F0C46F4r
-CODE.bss:8008C704                                              # mp_watch_menu_display+C44r
-CODE.bss:8008C704                                              # mp_watch_menu_display+10BCr
-CODE.bss:8008C704                                              # mp_watch_menu_display+1E34r
-CODE.bss:8008C704                                              # sub_CODE_7F0C6048r
-CODE.bss:8008C708     dword_CODE_bss_8008C708:.space 4         # DATA XREF: sub_CODE_7F0C2530+ACw
-CODE.bss:8008C708                                              # sub_CODE_7F0C2E80+118o
-CODE.bss:8008C708                                              # sub_CODE_7F0C2E80+120r
-CODE.bss:8008C708                                              # sub_CODE_7F0C2E80+130w
-CODE.bss:8008C708                                              # mp_watch_menu_display+318r
-CODE.bss:8008C708                                              # mp_watch_menu_display+47Cr
-CODE.bss:8008C70C     dword_CODE_bss_8008C70C:.space 4         # DATA XREF: sub_CODE_7F0C2530+BCw
-CODE.bss:8008C70C                                              # sub_CODE_7F0C2E80+E0o
-CODE.bss:8008C70C                                              # sub_CODE_7F0C2E80+F4r
-CODE.bss:8008C70C                                              # sub_CODE_7F0C2E80+10Cw
-CODE.bss:8008C70C                                              # sub_CODE_7F0C2E80+128w
-CODE.bss:8008C710     time_trigger_alt_gameover_msg:.space 4   # DATA XREF: sub_CODE_7F0C2530:loc_CODE_7F0C25C8w
-CODE.bss:8008C710                                              # sub_CODE_7F0C2E80+138o
-CODE.bss:8008C710                                              # sub_CODE_7F0C2E80+14Cr
-CODE.bss:8008C710                                              # sub_CODE_7F0C2E80+15Cw
-CODE.bss:8008C710                                              # mp_watch_menu_display:loc_CODE_7F0C40ECr
-CODE.bss:8008C714     dword_CODE_bss_8008C714:.space 4         # DATA XREF: sub_CODE_7F0C2530+A8w
-CODE.bss:8008C714                                              # sub_CODE_7F0C2E80+F8o
-CODE.bss:8008C714                                              # sub_CODE_7F0C2E80+FCr
-CODE.bss:8008C714                                              # sub_CODE_7F0C2E80+114w
-CODE.bss:8008C714                                              # sub_CODE_7F0C2E80:loc_CODE_7F0C2FB4r
-CODE.bss:8008C714                                              # sub_CODE_7F0C2E80+154w
-CODE.bss:8008C718     is_paused:      .space 4                 # DATA XREF: unpause_game+18w
-CODE.bss:8008C718                                              # sub_CODE_7F0C2494+18w
-CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+364o
-CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+36Cr
-CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+380w
-CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+3ACo
-CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+3C0w
-CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+5B0o
-CODE.bss:8008C718                                              # sub_CODE_7F0C2E80+5C4w
-CODE.bss:8008C718                                              # mp_watch_menu_display:text_pause_unpauser
-CODE.bss:8008C718                                              # sub_CODE_7F0C6080+8r
-CODE.bss:8008C71C     who_paused:     .space 4                 # DATA XREF: sub_CODE_7F0C2E80+384w
-CODE.bss:8008C71C                                              # sub_CODE_7F0C2E80+3A4r
-CODE.bss:8008C71C                                              # sub_CODE_7F0C2E80+5A8r
-CODE.bss:8008C71C                                              # mp_watch_menu_display+124r
-*/
+// bss
+s32 stop_play_flag;
+s32 is_gameover_flag;
+s32 dword_CODE_bss_8008C708;
+s32 dword_CODE_bss_8008C70C;
+s32 time_trigger_alt_gameover_msg;
+s32 dword_CODE_bss_8008C714;
+s32 is_paused;
+s32 who_paused;
 
-/* data
-D:80048640     loaded_text_index:.half 0xA000,0xA001,0xA002,0xA003,0xA004,0xA005,0xA006,0xA007,0xA008,0xA009 # 0
-D:80048640                                              # DATA XREF: sub_CODE_7F0C2530+7E4o
-D:80048640                     .half 0xA00A,0xA00B,0xA00C,0xA00D,0xA00E,0xA00F,0xA010,     0 # 0xA
-D:80048664                     .word 0
-D:80048668                     .word 0
-D:8004866C                     .word 0
+// data
+u16 loaded_text_index[] = {
+    0xA000,0xA001,0xA002,0xA003,0xA004,0xA005,0xA006,0xA007,0xA008,0xA009,0xA00A,0xA00B,0xA00C,0xA00D,0xA00E,0xA00F,0xA010,0
+};
 
-*/
 
 /* rodata
 D:8005BC20     ascii_MP_watch_menu_percentd:.ascii "%d"<0><0>
@@ -263,9 +196,34 @@ def_7F0C1EB4:
 
 
 #ifdef NONMATCHING
-void check_if_player_is_pressing_anything_right(void) {
+void check_if_player_is_pressing_anything_right(s32 arg0) {
+    s32 sp18;
+    s32 sp1C;
+    s32 temp_t6;
 
+    // Node 0
+    temp_t6 = ((s32) (arg0 << 0x18) >> 0x18);
+    sp18 = temp_t6;
+    sp1C = get_controller_3dstick_L_R(temp_t6, -2, 1);
+    if ((get_controller_buttons_pressed(sp18, 0x101) == 0) && (sp1C > 0))
+    {
+        // Node 2
+        if (ptr_BONDdata->unk29D0 != 0)
+        {
+            // Node 3
+            return;
+            // (possible return value: 1)
+        }
+    }
+    else
+    {
+        // Node 3
+        return;
+        // (possible return value: 1)
+    }
+    // (possible return value: 1)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -308,9 +266,34 @@ glabel check_if_player_is_pressing_anything_right
 
 
 #ifdef NONMATCHING
-void check_if_player_is_pressing_anything_left(void) {
+void check_if_player_is_pressing_anything_left(s32 arg0) {
+    s32 sp18;
+    s32 sp1C;
+    s32 temp_t6;
 
+    // Node 0
+    temp_t6 = ((s32) (arg0 << 0x18) >> 0x18);
+    sp18 = temp_t6;
+    sp1C = get_controller_3dstick_L_R(temp_t6, -2, 1);
+    if ((get_controller_buttons_pressed(sp18, 0x202) == 0) && (sp1C < -1))
+    {
+        // Node 2
+        if (ptr_BONDdata->unk29D0 != 0)
+        {
+            // Node 3
+            return;
+            // (possible return value: 1)
+        }
+    }
+    else
+    {
+        // Node 3
+        return;
+        // (possible return value: 1)
+    }
+    // (possible return value: 1)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -355,8 +338,12 @@ glabel check_if_player_is_pressing_anything_left
 
 #ifdef NONMATCHING
 void play_watch_sfx_beep(void) {
-
+    // Node 0
+    play_sfx_a1(ptr_sfx_buf, 0x9f, 0);
+    return;
+    // (possible return value: play_sfx_a1(ptr_sfx_buf, 0x9f, 0))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -381,8 +368,11 @@ glabel play_watch_sfx_beep
 
 #ifdef NONMATCHING
 void unpause_game(void) {
-
+    stop_play_flag = 0;
+    is_gameover_flag = 0;
+    is_paused = 0;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -391,9 +381,9 @@ glabel unpause_game
 /* 0F6B3C 7F0C200C AC20C700 */  sw    $zero, %lo(stop_play_flag)($at)
 /* 0F6B40 7F0C2010 3C018009 */  lui   $at, %hi(is_gameover_flag) # $at, 0x8009
 /* 0F6B44 7F0C2014 AC20C704 */  sw    $zero, %lo(is_gameover_flag)($at)
-/* 0F6B48 7F0C2018 3C018009 */  lui   $at, 0x8009
+/* 0F6B48 7F0C2018 3C018009 */  lui   $at, %hi(is_paused)
 /* 0F6B4C 7F0C201C 03E00008 */  jr    $ra
-/* 0F6B50 7F0C2020 AC20C718 */   sw    $zero, -0x38e8($at)
+/* 0F6B50 7F0C2020 AC20C718 */   sw    $zero, %lo(is_paused)($at)
 )
 #endif
 
@@ -783,8 +773,10 @@ glabel sub_GAME_7F0C234C
 
 #ifdef NONMATCHING
 void sub_GAME_7F0C2494(void) {
-
+    set_controls_locked_flag(1);
+    is_paused = 1;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -851,16 +843,17 @@ glabel sub_GAME_7F0C24BC
 
 #ifdef NONMATCHING
 void set_stopplay_flag(void) {
-
+    stop_play_flag = 1;
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel set_stopplay_flag
 /* 0F7050 7F0C2520 240E0001 */  li    $t6, 1
-/* 0F7054 7F0C2524 3C018009 */  lui   $at, 0x8009
+/* 0F7054 7F0C2524 3C018009 */  lui   $at, %hi(stop_play_flag)
 /* 0F7058 7F0C2528 03E00008 */  jr    $ra
-/* 0F705C 7F0C252C AC2EC700 */   sw    $t6, -0x3900($at)
+/* 0F705C 7F0C252C AC2EC700 */   sw    $t6, %lo(stop_play_flag)($at)
 )
 #endif
 
@@ -5033,23 +5026,30 @@ def_7F0C40C0:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0C6048(void) {
-
+s32 sub_GAME_7F0C6048(void) {
+    // Node 0
+    if (is_gameover_flag != 0)
+    {
+        // Node 1
+        return 0;
+    }
+    return (ptr_BONDdata->unk29C4 | (0 < ptr_BONDdata->unk2A00));
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0C6048
 /* 0FAB78 7F0C6048 3C0E8009 */  lui   $t6, %hi(is_gameover_flag) # $t6, 0x8009
 /* 0FAB7C 7F0C604C 8DCEC704 */  lw    $t6, %lo(is_gameover_flag)($t6)
-/* 0FAB80 7F0C6050 3C028008 */  lui   $v0, 0x8008
+/* 0FAB80 7F0C6050 3C028008 */  lui   $v0, %hi(ptr_BONDdata)
 /* 0FAB84 7F0C6054 11C00003 */  beqz  $t6, .L7F0C6064
 /* 0FAB88 7F0C6058 00000000 */   nop   
 /* 0FAB8C 7F0C605C 03E00008 */  jr    $ra
 /* 0FAB90 7F0C6060 00001025 */   move  $v0, $zero
 
 .L7F0C6064:
-/* 0FAB94 7F0C6064 8C42A0B0 */  lw    $v0, -0x5f50($v0)
+/* 0FAB94 7F0C6064 8C42A0B0 */  lw    $v0, %lo(ptr_BONDdata)($v0)
 /* 0FAB98 7F0C6068 8C582A00 */  lw    $t8, 0x2a00($v0)
 /* 0FAB9C 7F0C606C 8C4F29C4 */  lw    $t7, 0x29c4($v0)
 /* 0FABA0 7F0C6070 0018C82A */  slt   $t9, $zero, $t8
@@ -5064,16 +5064,16 @@ glabel sub_GAME_7F0C6048
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0C6080(void) {
-
+s32 checkGamePaused(void) {
+    return is_paused;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0C6080
-/* 0FABB0 7F0C6080 3C028009 */  lui   $v0, 0x8009
+glabel checkGamePaused
+/* 0FABB0 7F0C6080 3C028009 */  lui   $v0, %hi(is_paused)
 /* 0FABB4 7F0C6084 03E00008 */  jr    $ra
-/* 0FABB8 7F0C6088 8C42C718 */   lw    $v0, -0x38e8($v0)
+/* 0FABB8 7F0C6088 8C42C718 */   lw    $v0, %lo(is_paused)($v0)
 )
 #endif
 

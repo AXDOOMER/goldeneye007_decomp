@@ -1,56 +1,29 @@
 #include "ultra64.h"
 
 
-/* data
-D:80048490     dword_D_80048490:.word 0xFFFFFFFF        # DATA XREF: sub_CODE_7F0C0AA0+38w
-D:80048494     dword_D_80048494:.word 0                 # DATA XREF: sub_CODE_7F0C0AA0+2Co
-D:80048494                                              # sub_CODE_7F0C0AA0+30r
-D:80048494                                              # sub_CODE_7F0C0AA0+44w
-D:80048494                                              # sub_CODE_7F0C0AA0+50r
-D:80048498     dword_D_80048498:.word 1                 # DATA XREF: display_speed_graph+8r
-D:80048498                                              # display_speed_graph+258r
-D:80048498                                              # display_speed_graph+2C4r
-D:80048498                                              # display_speed_graph+2E4r
-D:80048498                                              # video_DL_related_4+10r
-D:80048498                                              # sub_CODE_7F07E62C:loc_CODE_7F07E674r
-D:80048498                                              # sub_CODE_7F07E62C:loc_CODE_7F07E690r
-D:80048498                                              # sub_CODE_7F083FC8:loc_CODE_7F084188r
-D:80048498                                              # possibly_reset_viewport_options_for_player+438r
-D:80048498                                              # sub_CODE_7F0A6A80:loc_CODE_7F0A6CA8r
-D:80048498                                              # sub_CODE_7F0AADC0+124r
-D:80048498                                              # sub_CODE_7F0AADC0+42Cr
-D:80048498                                              # manage_mp_game:loc_CODE_7F0BEBD0r
-D:80048498                                              # record_player_input_as_packet+184r
-D:80048498                                              # sub_CODE_7F0C0AA0+48w
-D:80048498                                              # sub_CODE_7F0C2E80+60r
-D:80048498                                              # sub_CODE_7F0C2E80+ECr
-D:8004849C     dword_D_8004849C:.word 0xFFFFFFFF        # DATA XREF: sub_CODE_7F0C0AA0+60o
-D:8004849C                                              # sub_CODE_7F0C0AA0+6Cw
-D:8004849C                                              # sub_CODE_7F0C0AA0+8Cr
-D:800484A0     dword_D_800484A0:.word 0                 # DATA XREF: sub_CODE_7F0C0AA0+54o
-D:800484A0                                              # sub_CODE_7F0C0AA0+5Cr
-D:800484A0                                              # sub_CODE_7F0C0AA0:loc_CODE_7F0C0B20w
-D:800484A0                                              # sub_CODE_7F0C0AA0+90r
-D:800484A4     dword_D_800484A4:.word 0                 # DATA XREF: sub_CODE_7F0C0AA0+84w
-D:800484A8     dword_D_800484A8:.word 0                 # DATA XREF: sub_CODE_7F0C0AA0+A0w
-D:800484AC     copy_of_osgetcount_value_0:.word 0       # DATA XREF: store_osgetcount+20w
-D:800484AC                                              # sub_CODE_7F0C0AA0+1Cw
-D:800484B0     copy_of_osgetcount_value_1:.word 0       # DATA XREF: mainloop+40Cr
-D:800484B0                                              # store_osgetcount+14o
-D:800484B0                                              # store_osgetcount+1Cw
-D:800484B0                                              # sub_CODE_7F0C0AA0r
-D:800484B0                                              # sub_CODE_7F0C0AA0+24w
-D:800484B0                                              # sub_CODE_7F0C0B4C+30o
-D:800484B4     dword_D_800484B4:.word 1                 # DATA XREF: sub_CODE_7F0C0B4C+34o
-D:800484B4                                              # sub_CODE_7F0C0BE4+8w
-*/
+// data
+s32 dword_D_80048490 = -1;
+s32 dword_D_80048494 = 0;
+s32 dword_D_80048498 = 1;
+s32 dword_D_8004849C = -1;
+s32 dword_D_800484A0 = 0;
+s32 dword_D_800484A4 = 0;
+s32 dword_D_800484A8 = 0;
+s32 copy_of_osgetcount_value_0 = 0;
+s32 copy_of_osgetcount_value_1 = 0;
+s32 dword_D_800484B4 = 1;
 
 
 
 #ifdef NONMATCHING
 void store_osgetcount(void) {
+    s32 temp_ret;
 
+    temp_ret = osGetCount();
+    D_800484B0 = temp_ret;
+    D_800484AC = temp_ret;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -189,16 +162,17 @@ glabel sub_GAME_7F0C0B4C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0C0BE4(void) {
-
+void sub_GAME_7F0C0BE4(s32 arg0) {
+    D_800484B4 = arg0;
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0C0BE4
-/* 0F5714 7F0C0BE4 3C018005 */  lui   $at, 0x8005
+/* 0F5714 7F0C0BE4 3C018005 */  lui   $at, %hi(D_800484B4)
 /* 0F5718 7F0C0BE8 03E00008 */  jr    $ra
-/* 0F571C 7F0C0BEC AC2484B4 */   sw    $a0, -0x7b4c($at)
+/* 0F571C 7F0C0BEC AC2484B4 */   sw    $a0, %lo(D_800484B4)($at)
 )
 #endif
 
@@ -208,8 +182,9 @@ glabel sub_GAME_7F0C0BE4
 
 #ifdef NONMATCHING
 void sub_GAME_7F0C0BF0(void) {
-
+    sub_GAME_7F0A9358();
 }
+
 #else
 GLOBAL_ASM(
 .text

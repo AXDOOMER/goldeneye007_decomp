@@ -14344,9 +14344,14 @@ def_7F075B60:
 
 
 #ifdef NONMATCHING
-void set_objuse_flag_compute_grp_nums_set_obj_loaded(void) {
-
+void set_objuse_flag_compute_grp_nums_set_obj_loaded(void *arg0, void *arg6) {
+    // Node 0
+    arg0->unk1C = 1;
+    arg6->unk14 = set_microcode_entry_numbers(*arg0, arg0);
+    return;
+    // (possible return value: set_microcode_entry_numbers(*arg0, arg0))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -14541,9 +14546,19 @@ def_7F075D80:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F075F68(void) {
-
+void sub_GAME_7F075F68(void *arg0, void *arg1, ?32 arg2) {
+    // Node 0
+    arg0->unk8 = arg1;
+    arg0->unk10 = arg2;
+    arg0->unk2 = (u16)-1;
+    arg0->unk18 = 0;
+    arg0->unk1C = 0;
+    arg0->unk14 = 1.0f;
+    unknown_object_microcode_handler(*arg1);
+    return;
+    // (possible return value: unknown_object_microcode_handler(*arg1))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -14573,9 +14588,32 @@ glabel sub_GAME_7F075F68
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F075FAC(void) {
-
+f32 sub_GAME_7F075FAC(s32 arg0, void *arg6) {
+    // Node 0
+    sub_GAME_7F075F68();
+    arg6->unk20 = 0;
+    arg6->unk54 = 0;
+    arg6->unk26 = (u8)0;
+    arg6->unk98 = 0;
+    arg6->unk9C = 0;
+    arg6->unkA0 = 0;
+    arg6->unk2C = 0.0f;
+    arg6->unk4C = 0.0f;
+    arg6->unk5C = 0.0f;
+    arg6->unk7C = 0.0f;
+    arg6->unk84 = 0.0f;
+    arg6->unk88 = 0.0f;
+    arg6->unkB0 = 0.0f;
+    arg6->unk40 = 1.0f;
+    arg6->unk70 = 1.0f;
+    arg6->unkA4 = 1.0f;
+    arg6->unkB8 = 1.0f;
+    arg6->unk3C = -1.0f;
+    arg6->unk6C = -1.0f;
+    return;
+    // (possible return value: 0.0f)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -15055,8 +15093,12 @@ glabel load_object_fill_header
 
 #ifdef NONMATCHING
 void load_object_into_memory(void) {
-
+    // Node 0
+    load_object_fill_header(0, 0, 0);
+    return;
+    // (possible return value: load_object_fill_header(0, 0, 0))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -15080,8 +15122,12 @@ glabel load_object_into_memory
 
 #ifdef NONMATCHING
 void load_object_into_memory_unused_maybe(void) {
-
+    // Node 0
+    load_object_fill_header(0);
+    return;
+    // (possible return value: load_object_fill_header(0))
 }
+
 #else
 GLOBAL_ASM(
 .text

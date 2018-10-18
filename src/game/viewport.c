@@ -14,8 +14,6 @@ void remove_viewport_buffer(void) {
 }
 
 
-
-
 #ifdef NONMATCHING
 void allocate_viewport_buffer(void) {
 

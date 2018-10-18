@@ -2622,9 +2622,23 @@ glabel get_remaining_buffer_for_index
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BD138(void) {
+void *sub_GAME_7F0BD138(s32 arg0, s32 arg1, ?32 arg2, s32 arg3) {
+    void *temp_v0;
 
+    // Node 0
+    temp_v0 = ((arg0 * 0x14) + &ptr_resource_data);
+    temp_v0->unk4 = arg2;
+    temp_v0->unkC = arg2;
+    if (arg3 != 0)
+    {
+        // Node 1
+        memp_related_1(arg1, arg2, 4);
+        return;
+        // (possible return value: memp_related_1(arg1, arg2, 4))
+    }
+    // (possible return value: temp_v0)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2659,8 +2673,13 @@ glabel sub_GAME_7F0BD138
 
 #ifdef NONMATCHING
 void sub_GAME_7F0BD188(void) {
-
+    // Node 0
+    get_index_num_of_named_resource();
+    return;
+    // (possible return value: *((ptr_resource_data + 4) + (((get_index_num_of_named_resource() * 4) + get_index_num_of_named_resource()) * 4)))
 }
+
+
 #else
 GLOBAL_ASM(
 .text
@@ -2673,9 +2692,9 @@ glabel sub_GAME_7F0BD188
 /* 0F1CCC 7F0BD19C 01C27021 */  addu  $t6, $t6, $v0
 /* 0F1CD0 7F0BD1A0 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0F1CD4 7F0BD1A4 000E7080 */  sll   $t6, $t6, 2
-/* 0F1CD8 7F0BD1A8 3C028009 */  lui   $v0, 0x8009
+/* 0F1CD8 7F0BD1A8 3C028009 */  lui   $v0, %hi(ptr_resource_data+4)
 /* 0F1CDC 7F0BD1AC 004E1021 */  addu  $v0, $v0, $t6
-/* 0F1CE0 7F0BD1B0 8C4288B4 */  lw    $v0, -0x774c($v0)
+/* 0F1CE0 7F0BD1B0 8C4288B4 */  lw    $v0, %lo(ptr_resource_data+4)($v0)
 /* 0F1CE4 7F0BD1B4 03E00008 */  jr    $ra
 /* 0F1CE8 7F0BD1B8 27BD0018 */   addiu $sp, $sp, 0x18
 )
@@ -2736,8 +2755,12 @@ glabel something_mem_bank_a0
 
 #ifdef NONMATCHING
 void sub_GAME_7F0BD234(void) {
-
+    // Node 0
+    something_mem_bank_a0(5);
+    return;
+    // (possible return value: something_mem_bank_a0(5))
 }
+
 #else
 GLOBAL_ASM(
 .text

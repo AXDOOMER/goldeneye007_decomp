@@ -83,9 +83,17 @@ glabel is_less_than_certain_power_of_2
 
 
 #ifdef NONMATCHING
-void ceil8000(void) {
-
+s32 ceil8000(s32 arg0) {
+    // Node 0
+    if ((arg0 + 0xf) < 0)
+    {
+        // Node 1
+        return;
+        // (possible return value: ((s32) (32768.0f / (f32) (((s32) (arg0 + 0xf) >> 4) * 0x10)) + (s32) (((32768.0f / (f32) (((s32) (arg0 + 0xf) >> 4) * 0x10)) - (f32) (s32) (32768.0f / (f32) (((s32) (arg0 + 0xf) >> 4) * 0x10))) + D_80054F90)))
+    }
+    // (possible return value: ((s32) (32768.0f / (f32) (((s32) (arg0 + 0xf) >> 4) * 0x10)) + (s32) (((32768.0f / (f32) (((s32) (arg0 + 0xf) >> 4) * 0x10)) - (f32) (s32) (32768.0f / (f32) (((s32) (arg0 + 0xf) >> 4) * 0x10))) + D_80054F90)))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -124,9 +132,17 @@ glabel ceil8000
 
 
 #ifdef NONMATCHING
-void ceil4000(void) {
-
+s32 ceil4000(s32 arg0) {
+    // Node 0
+    if ((arg0 + 7) < 0)
+    {
+        // Node 1
+        return;
+        // (possible return value: ((s32) (16384.0f / (f32) (((s32) (arg0 + 7) >> 3) * 8)) + (s32) (((16384.0f / (f32) (((s32) (arg0 + 7) >> 3) * 8)) - (f32) (s32) (16384.0f / (f32) (((s32) (arg0 + 7) >> 3) * 8))) + D_80054F94)))
+    }
+    // (possible return value: ((s32) (16384.0f / (f32) (((s32) (arg0 + 7) >> 3) * 8)) + (s32) (((16384.0f / (f32) (((s32) (arg0 + 7) >> 3) * 8)) - (f32) (s32) (16384.0f / (f32) (((s32) (arg0 + 7) >> 3) * 8))) + D_80054F94)))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -165,9 +181,17 @@ glabel ceil4000
 
 
 #ifdef NONMATCHING
-void ceil2000(void) {
-
+s32 ceil2000(s32 arg0) {
+    // Node 0
+    if ((arg0 + 3) < 0)
+    {
+        // Node 1
+        return;
+        // (possible return value: ((s32) (8192.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4)) + (s32) (((8192.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4)) - (f32) (s32) (8192.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4))) + D_80054F98)))
+    }
+    // (possible return value: ((s32) (8192.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4)) + (s32) (((8192.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4)) - (f32) (s32) (8192.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4))) + D_80054F98)))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -206,9 +230,17 @@ glabel ceil2000
 
 
 #ifdef NONMATCHING
-void ceil1000(void) {
-
+s32 ceil1000(s32 arg0) {
+    // Node 0
+    if ((arg0 + 3) < 0)
+    {
+        // Node 1
+        return;
+        // (possible return value: ((s32) (4096.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4)) + (s32) (((4096.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4)) - (f32) (s32) (4096.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4))) + D_80054F9C)))
+    }
+    // (possible return value: ((s32) (4096.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4)) + (s32) (((4096.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4)) - (f32) (s32) (4096.0f / (f32) (((s32) (arg0 + 3) >> 2) * 4))) + D_80054F9C)))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1719,9 +1751,12 @@ glabel likely_generate_DL_for_image_declaration
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F077BB8(void) {
-
+void sub_GAME_7F077BB8(s32 arg0, s32 arg1, ? arg2, ? arg3) {
+    // Node 0
+    return;
+    // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 .text

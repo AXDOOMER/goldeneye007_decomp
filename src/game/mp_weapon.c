@@ -158,15 +158,19 @@ D:8004916C                     .word 0
 
 
 #ifdef NONMATCHING
-void advance_mp_weapon_set_by_one_save_value(void) {
-
+void *advance_mp_weapon_set_by_one_save_value(void) {
+    // Node 0
+    mp_weapon_set = (s32) ((s32) (mp_weapon_set + 1) % 0xe);
+    return;
+    // (possible return value: &mp_weapon_set)
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel advance_mp_weapon_set_by_one_save_value
-/* 0FB100 7F0C65D0 3C028005 */  lui   $v0, %hi(D_80049160) # $v0, 0x8005
-/* 0FB104 7F0C65D4 24429160 */  addiu $v0, %lo(D_80049160) # addiu $v0, $v0, -0x6ea0
+/* 0FB100 7F0C65D0 3C028005 */  lui   $v0, %hi(mp_weapon_set) # $v0, 0x8005
+/* 0FB104 7F0C65D4 24429160 */  addiu $v0, %lo(mp_weapon_set) # addiu $v0, $v0, -0x6ea0
 /* 0FB108 7F0C65D8 8C4E0000 */  lw    $t6, ($v0)
 /* 0FB10C 7F0C65DC 2401000E */  li    $at, 14
 /* 0FB110 7F0C65E0 25CF0001 */  addiu $t7, $t6, 1
@@ -183,17 +187,18 @@ glabel advance_mp_weapon_set_by_one_save_value
 
 
 #ifdef NONMATCHING
-void get_ptr_current_mp_weapon_set_text_code(void) {
-
+s32 get_ptr_current_mp_weapon_set_text_code(void) {
+    // (possible return value: ((mp_weapon_set * 8) + &mp_weapon_set_text_table))
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel get_ptr_current_mp_weapon_set_text_code
-/* 0FB128 7F0C65F8 3C0E8005 */  lui   $t6, %hi(D_80049160) # $t6, 0x8005
-/* 0FB12C 7F0C65FC 8DCE9160 */  lw    $t6, %lo(D_80049160)($t6)
-/* 0FB130 7F0C6600 3C188005 */  lui   $t8, %hi(D_800490F0) # $t8, 0x8005
-/* 0FB134 7F0C6604 271890F0 */  addiu $t8, %lo(D_800490F0) # addiu $t8, $t8, -0x6f10
+/* 0FB128 7F0C65F8 3C0E8005 */  lui   $t6, %hi(mp_weapon_set) # $t6, 0x8005
+/* 0FB12C 7F0C65FC 8DCE9160 */  lw    $t6, %lo(mp_weapon_set)($t6)
+/* 0FB130 7F0C6600 3C188005 */  lui   $t8, %hi(mp_weapon_set_text_table) # $t8, 0x8005
+/* 0FB134 7F0C6604 271890F0 */  addiu $t8, %lo(mp_weapon_set_text_table) # addiu $t8, $t8, -0x6f10
 /* 0FB138 7F0C6608 000E78C0 */  sll   $t7, $t6, 3
 /* 0FB13C 7F0C660C 03E00008 */  jr    $ra
 /* 0FB140 7F0C6610 01F81021 */   addu  $v0, $t7, $t8
@@ -212,8 +217,8 @@ void get_ptr_mp_weapon_set_data(void) {
 GLOBAL_ASM(
 .text
 glabel get_ptr_mp_weapon_set_data
-/* 0FB144 7F0C6614 3C0E8005 */  lui   $t6, %hi(D_80049160) # $t6, 0x8005
-/* 0FB148 7F0C6618 8DCE9160 */  lw    $t6, %lo(D_80049160)($t6)
+/* 0FB144 7F0C6614 3C0E8005 */  lui   $t6, %hi(mp_weapon_set) # $t6, 0x8005
+/* 0FB148 7F0C6618 8DCE9160 */  lw    $t6, %lo(mp_weapon_set)($t6)
 /* 0FB14C 7F0C661C 3C028005 */  lui   $v0, 0x8005
 /* 0FB150 7F0C6620 000E78C0 */  sll   $t7, $t6, 3
 /* 0FB154 7F0C6624 004F1021 */  addu  $v0, $v0, $t7
@@ -227,16 +232,17 @@ glabel get_ptr_mp_weapon_set_data
 
 
 #ifdef NONMATCHING
-void set_mp_weapon_set(void) {
-
+void set_mp_weapon_set(s32 arg0) {
+    mp_weapon_set = arg0;
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel set_mp_weapon_set
-/* 0FB160 7F0C6630 3C018005 */  lui   $at, 0x8005
+/* 0FB160 7F0C6630 3C018005 */  lui   $at, %hi(mp_weapon_set)
 /* 0FB164 7F0C6634 03E00008 */  jr    $ra
-/* 0FB168 7F0C6638 AC249160 */   sw    $a0, -0x6ea0($at)
+/* 0FB168 7F0C6638 AC249160 */   sw    $a0, %lo(mp_weapon_set)($at)
 )
 #endif
 
@@ -245,16 +251,17 @@ glabel set_mp_weapon_set
 
 
 #ifdef NONMATCHING
-void get_mp_weapon_set(void) {
-
+s32 get_mp_weapon_set(void) {
+    return mp_weapon_set;
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel get_mp_weapon_set
-/* 0FB16C 7F0C663C 3C028005 */  lui   $v0, 0x8005
+/* 0FB16C 7F0C663C 3C028005 */  lui   $v0, %hi(mp_weapon_set)
 /* 0FB170 7F0C6640 03E00008 */  jr    $ra
-/* 0FB174 7F0C6644 8C429160 */   lw    $v0, -0x6ea0($v0)
+/* 0FB174 7F0C6644 8C429160 */   lw    $v0, %lo(mp_weapon_set)($v0)
 )
 #endif
 

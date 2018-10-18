@@ -12247,7 +12247,7 @@ Weapon_shooting_pistol:
 /* 099B7C 7F06504C 24010001 */  li    $at, 1
 /* 099B80 7F065050 50410009 */  beql  $v0, $at, .L7F065078
 /* 099B84 7F065054 240F0001 */   li    $t7, 1
-/* 099B88 7F065058 0FC31820 */  jal   sub_GAME_7F0C6080
+/* 099B88 7F065058 0FC31820 */  jal   checkGamePaused
 /* 099B8C 7F06505C 00000000 */   nop   
 /* 099B90 7F065060 14400006 */  bnez  $v0, .L7F06507C
 /* 099B94 7F065064 3C0C8008 */   lui   $t4, %hi(ptr_BONDdata) # $t4, 0x8008
@@ -12324,7 +12324,7 @@ Weapon_shooting_machinegun:
 /* 099C90 7F065160 24010001 */  li    $at, 1
 /* 099C94 7F065164 50410009 */  beql  $v0, $at, .L7F06518C
 /* 099C98 7F065168 240C0001 */   li    $t4, 1
-/* 099C9C 7F06516C 0FC31820 */  jal   sub_GAME_7F0C6080
+/* 099C9C 7F06516C 0FC31820 */  jal   checkGamePaused
 /* 099CA0 7F065170 00000000 */   nop   
 /* 099CA4 7F065174 14400006 */  bnez  $v0, .L7F065190
 /* 099CA8 7F065178 3C198008 */   lui   $t9, %hi(ptr_BONDdata) # $t9, 0x8008
@@ -12487,7 +12487,7 @@ Weapon_shooting_throwable:
 /* 099ED4 7F0653A4 24010001 */  li    $at, 1
 /* 099ED8 7F0653A8 5041000A */  beql  $v0, $at, .L7F0653D4
 /* 099EDC 7F0653AC 8FAD01B4 */   lw    $t5, 0x1b4($sp)
-/* 099EE0 7F0653B0 0FC31820 */  jal   sub_GAME_7F0C6080
+/* 099EE0 7F0653B0 0FC31820 */  jal   checkGamePaused
 /* 099EE4 7F0653B4 00000000 */   nop   
 /* 099EE8 7F0653B8 14400063 */  bnez  $v0, .L7F065548
 /* 099EEC 7F0653BC 3C0B8008 */   lui   $t3, %hi(ptr_BONDdata) # $t3, 0x8008
@@ -12589,7 +12589,7 @@ Weapon_shooting_throwable:
 /* 09A04C 7F06551C 24010001 */  li    $at, 1
 /* 09A050 7F065520 10410004 */  beq   $v0, $at, .L7F065534
 /* 09A054 7F065524 00000000 */   nop   
-/* 09A058 7F065528 0FC31820 */  jal   sub_GAME_7F0C6080
+/* 09A058 7F065528 0FC31820 */  jal   checkGamePaused
 /* 09A05C 7F06552C 00000000 */   nop   
 /* 09A060 7F065530 14400005 */  bnez  $v0, .L7F065548
 .L7F065534:

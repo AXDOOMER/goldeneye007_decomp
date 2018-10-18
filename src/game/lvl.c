@@ -2158,7 +2158,7 @@ glabel manage_mp_game
 /* 0F36DC 7F0BEBAC 10000010 */  b     .L7F0BEBF0
 /* 0F36E0 7F0BEBB0 AC208374 */   sw    $zero, %lo(clock_timer)($at)
 .L7F0BEBB4:
-/* 0F36E4 7F0BEBB4 0FC31820 */  jal   sub_GAME_7F0C6080
+/* 0F36E4 7F0BEBB4 0FC31820 */  jal   checkGamePaused
 /* 0F36E8 7F0BEBB8 00000000 */   nop   
 /* 0F36EC 7F0BEBBC 10400004 */  beqz  $v0, .L7F0BEBD0
 /* 0F36F0 7F0BEBC0 3C0F8005 */   lui   $t7, %hi(D_80048498) # $t7, 0x8005

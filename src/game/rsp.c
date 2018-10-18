@@ -1,10 +1,9 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:8008D370     dword_CODE_bss_8008D370:.space 0x400     # DATA XREF: D:fast3d_relatedo
-CODE.bss:8008D370                                              # D:fast3d_related_0o
-CODE.bss:8008D770     dword_CODE_bss_8008D770:.space 0xBA0     # DATA XREF: load_rsp_microcode+78o
-*/
+// bss
+char dword_CODE_bss_8008D370[0x400];
+char dword_CODE_bss_8008D770[0xBA0];
+
 
 /* data
 D:8004E9E0     dword_D_8004E9E0:.word 0                 # DATA XREF: something_with_rsp_c_debug+18o
@@ -31,31 +30,12 @@ D:8004EAB0                                              # load_rsp_microcode+DC
 D:8004EAB0                                              # load_rsp_microcode+100w
 */
 
-/* rodata
-D:8005BFB0     aRsp_c_debug:   .ascii "rsp_c_debug"<0>  # DATA XREF: something_with_rsp_c_debug+Co
-*/
 
-#ifdef NONMATCHING
+
 void something_with_rsp_c_debug(void) {
-
+    get_ptr_debug_notice_list_entry(&D_8004E9E0, "rsp_c_debug");
 }
-#else
-GLOBAL_ASM(
-.text
-glabel something_with_rsp_c_debug
-/* 1048E0 7F0CFDB0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 1048E4 7F0CFDB4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 1048E8 7F0CFDB8 3C048005 */  lui   $a0, %hi(D_8004E9E0) # $a0, 0x8005
-/* 1048EC 7F0CFDBC 3C058006 */  lui   $a1, %hi(aRsp_c_debug) # $a1, 0x8006
-/* 1048F0 7F0CFDC0 24A5BFB0 */  addiu $a1, %lo(aRsp_c_debug) # addiu $a1, $a1, -0x4050
-/* 1048F4 7F0CFDC4 0C001398 */  jal   get_ptr_debug_notice_list_entry
-/* 1048F8 7F0CFDC8 2484E9E0 */   addiu $a0, %lo(D_8004E9E0) # addiu $a0, $a0, -0x1620
-/* 1048FC 7F0CFDCC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 104900 7F0CFDD0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 104904 7F0CFDD4 03E00008 */  jr    $ra
-/* 104908 7F0CFDD8 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -63,8 +43,16 @@ glabel something_with_rsp_c_debug
 
 #ifdef NONMATCHING
 void allocate_init_rsp_buffers(void) {
+    ? temp_ret;
 
+    // Node 0
+    temp_ret = allocate_bytes_in_bank(0xa000, 6);
+    D_8004E9E8 = temp_ret;
+    D_8004E9E4 = (s32) (temp_ret + 0xa000);
+    return;
+    // (possible return value: temp_ret)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -92,9 +80,33 @@ glabel allocate_init_rsp_buffers
 
 
 #ifdef NONMATCHING
-void load_rsp_microcode(void) {
+void *load_rsp_microcode(s32 arg0, s32 arg1, ? arg2, ?32 arg3) {
+    void *temp_v0;
 
+    // Node 0
+    D_8004EAB0->unk18 = &rspbootTextStart;
+    D_8004EAB0->unk1C = (s32) (&gsp3DTextStart - &rspbootTextStart);
+    temp_v0 = (D_8004EAB0 + 0x10);
+    temp_v0->unk10 = &gsp3DTextStart;
+    temp_v0->unk18 = &D_8005C820;
+    temp_v0->unk28 = (?32) D_8004E9E8;
+    temp_v0->unk30 = arg0;
+    temp_v0->unk34 = (s32) (((s32) (arg1 - arg0) >> 3) * 8);
+    temp_v0->unk38 = &dword_CODE_bss_8008D770;
+    temp_v0->unk3C = 0xba0;
+    temp_v0->unk2C = (?32) D_8004E9E4;
+    *D_8004EAB0 = 0;
+    D_8004EAB0->unk8 = 0x63;
+    D_8004EAB0->unk50 = &msgQ_Q_fast3d;
+    D_8004EAB0->unk54 = arg3;
+    D_8004EAB0->unkC = (?32) D_8004EAB0->unk58;
+    osWritebackDCacheAll();
+    osSendMesg(mq, D_8004EAB0, 1);
+    D_8004EAB0 = (void *) (((s32) D_8004EAB0 ^ &D_8004E9F0) ^ &D_8004EA50);
+    return;
+    // (possible return value: &D_8004EAB0)
 }
+
 #else
 GLOBAL_ASM(
 .text

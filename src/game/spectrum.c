@@ -1,938 +1,51 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:8008E320     ptr_sectrum_monitor_data_temp_buf:.space 4
-CODE.bss:8008E320                                              # DATA XREF: init_spectrum_game+108o
-CODE.bss:8008E320                                              # init_spectrum_game+118w
-CODE.bss:8008E324     ptr_sectrum_game_data_temp_buf:.space 4  # DATA XREF: init_spectrum_game+188o
-CODE.bss:8008E324                                              # init_spectrum_game+190w
-CODE.bss:8008E328     ptr_spectrum_roms:.space 4               # DATA XREF: spectrum_p1controller_to_kempston+2BCo
-CODE.bss:8008E328                                              # init_spectrum_game+E4o
-CODE.bss:8008E328                                              # init_spectrum_game+F0w
-CODE.bss:8008E328                                              # init_spectrum_game+110o
-CODE.bss:8008E328                                              # init_spectrum_game+194o
-CODE.bss:8008E328                                              # run_spectrum_game+18r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+1B4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+228r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+27Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+2ACr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+2F4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+43Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+5F0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+718r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D3FD8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7E8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+83Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+86Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8B4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9FCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A6Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+BC8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CF0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D45B0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+DCCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E10r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D4664r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E70r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EC0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EE0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F18r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F68r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F84r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+FC0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+1018r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+103Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+1078r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+10CCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+10F0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+1134r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+1190r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+11B0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+11ECr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+1240r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+1264r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+12A8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+15D8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+15FCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D4E54r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+1800r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+1BB8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+1C20r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D5474r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+1F44r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+1F68r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D57BCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D5844r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+204Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+208Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+20D0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+20FCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+2130r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D5A00r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D5A28r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+2278r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+22A4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+22DCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D5B94r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D5BBCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+2414r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+2444r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+247Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D5D34r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+2548r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+256Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+25B0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+2640r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+27B0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+28E4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D62A8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D62D0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D6430r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D6458r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D65B8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D65E0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D6740r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D6768r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D6A68r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D6A90r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D6DACr
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D6DD4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D6E8Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+36A0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+36BCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+36F4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D6FA8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+37BCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+37D8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+3810r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D70C4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+38D8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+38F4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+392Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D71E0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+39F4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+3A10r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+3A48r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D72FCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+3B10r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+3B2Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+3B64r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D7418r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+3C2Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+3C48r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+3C80r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D7574r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+3D88r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+3DA4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+3DDCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D7778r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D77A0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D7B90r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D7BB8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D80FCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D8124r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D8600r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D8628r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D8B1Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D8B44r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D8F10r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D8F38r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D9280r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D92A8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D95E8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D9610r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D9A78r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D9AA0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6394r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+63CCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6410r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+644Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+64B4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+64E8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6520r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6578r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+65A4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+65E8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0D9E58r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6690r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+66B8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+66ECr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+673Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6758r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6794r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+67D4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6894r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+68C0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+68F8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+694Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6970r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+69B4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6A18r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6A50r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6AACr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6B20r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6B78r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6DCCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6E48r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6E78r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+6EB0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7138r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+71BCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+71ECr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7224r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+74B0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7530r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7560r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7598r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7824r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+78A4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+78D4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+790Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7B50r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7BC8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7BF8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7C30r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7E98r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7F10r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7F40r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+7F78r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+81D0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+824Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+827Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+82B4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+84F0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8568r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8598r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+85D0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+88A0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8914r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8944r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+897Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8AC4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8B08r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8B34r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8B6Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8C74r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8CB4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8CE0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8D18r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8E04r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8E38r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8E70r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8EC8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8EF4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8F38r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0DC7A8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+8FE8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9018r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9050r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+90A8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+90D4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9118r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0DC988r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+918Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9260r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+928Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+92C4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9318r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+933Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9380r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+93E8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9420r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9464r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+94A0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+951Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9550r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9588r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+95E0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+960Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9650r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0DCEC0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+96F8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9720r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9754r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+97A4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+97C0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+97FCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+983Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+98F8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9924r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+995Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+99B0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+99D4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9A18r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9A80r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9B3Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9B78r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9BFCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9C30r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9C68r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9CC0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9CECr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9D30r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0DD5A0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9DD0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9E98r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9EC4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9EFCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9F50r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9F74r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+9FB8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A020r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A06Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A09Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A0D4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A118r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A168r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A1A0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A1C8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A1FCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A24Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A268r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A2A4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A2FCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A330r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A360r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A398r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A3ECr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A410r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A454r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0DDCCCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A4D0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A500r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A538r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A58Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A5B0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A5F4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A674r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A6A8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A6E0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A738r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A764r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A7A8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0DE018r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A85Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A884r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A8B8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A908r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A924r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A960r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A9C4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+A9F0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AA28r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AA7Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AAA0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AAE4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AB3Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AB6Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+ABA4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+ABF8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AC1Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AC60r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+ACA8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AD3Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AD68r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+ADA0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+ADF4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AE18r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AE5Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AEC4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AF60r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+AFF4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B028r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B060r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B0B8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B0E4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B128r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0DE998r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B1ACr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B3B4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B3F8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B424r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B458r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B4A8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B4C4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B500r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B5ACr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B788r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+B83Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+BA2Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+BA70r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+BA9Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+BAD0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+BB20r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+BB3Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+BB78r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+BC1Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+BE2Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+BEE0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C114r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C158r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C184r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C1B8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C208r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C224r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C260r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C304r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C360r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C3B8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C3ECr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C438r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C62Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C6E0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C740r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C798r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C7CCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+C818r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CA04r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CA48r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CA78r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CAB0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CB04r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CB28r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CB6Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CC18r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CDD0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CE94r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CEF4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CF28r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CF58r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+CFA4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D078r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D1A0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D1D0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D21Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D2E0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D374r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D3A8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D3D8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D424r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D508r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D638r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D668r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D6B4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D784r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D820r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D854r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D884r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D8D0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+D9C4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+DB10r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+DB40r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+DB8Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+DC6Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+DD1Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+DD50r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+DD80r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+DDCCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+DED0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E024r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E054r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E0A0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E18Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E254r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E2E4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E310r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E348r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E39Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E3C0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E404r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E46Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E4A4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E4E8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E570r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E5A4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E5DCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E634r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E660r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E6A4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0E1F14r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E74Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E774r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E7A8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E7F8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E814r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E850r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E890r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E920r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E94Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E984r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E9D8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+E9FCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EA40r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EAA8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EB44r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EBD4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EC08r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EC40r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EC98r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+ECC4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+ED08r
-CODE.bss:8008E328                                              # spectrum_hw_emulation:loc_CODE_7F0E2578r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EDA8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EE68r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EE94r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EECCr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EF20r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EF44r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+EF88r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F024r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F0B4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F0E0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F118r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F16Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F190r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F1D4r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F224r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F270r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F2A0r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F2D8r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F32Cr
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F350r
-CODE.bss:8008E328                                              # spectrum_hw_emulation+F394r
-CODE.bss:8008E32C     ptr_300alloc:   .space 4                 # DATA XREF: sub_CODE_7F0D2A84+60o
-CODE.bss:8008E32C                                              # sub_CODE_7F0D2A84:loc_CODE_7F0D2B48o
-CODE.bss:8008E32C                                              # init_spectrum_game+ACo
-CODE.bss:8008E32C                                              # init_spectrum_game+B4w
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+2C4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+318r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+884r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+8D8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+EFCr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+F30r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+FA0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+FD4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+1058r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+1090r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+1110r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+1150r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+11CCr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+1204r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+1284r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+12C4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+2114r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+2148r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+22BCr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+22F4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+245Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+2494r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+2594r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+25D4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+36D8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+370Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+37F4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+3828r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+3910r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+3944r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+3A2Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+3A60r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+3B48r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+3B7Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+3C64r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+3C98r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+3DC0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+3DF4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+6500r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+653Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+65BCr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+6604r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+66D0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+6704r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+6774r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+67A8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+68D8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+6910r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+6990r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+69D0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+6E90r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+6EC8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+7204r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+723Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+7578r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+75B0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+78ECr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+7924r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+7C10r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+7C48r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+7F58r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+7F90r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+8294r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+82CCr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+85B0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+85E8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+895Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+8994r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+8B4Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+8B84r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+8CF8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+8D30r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+8E50r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+8E8Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+8F0Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+8F54r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9030r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+906Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+90ECr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9134r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+92A4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+92DCr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+935Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+939Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9568r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+95A4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9624r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+966Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9738r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+976Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+97DCr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9810r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+993Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9974r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+99F4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9A34r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9C48r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9C84r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9D04r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9D4Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9EDCr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9F14r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9F94r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+9FD4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A1E0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A214r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A284r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A2B8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A378r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A3B0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A430r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A470r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A518r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A550r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A5D0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A610r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A6C0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A6FCr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A77Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A7C4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A89Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A8D0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A940r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+A974r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+AA08r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+AA40r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+AAC0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+AB00r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+AB84r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+ABBCr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+AC3Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+AC7Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+AD80r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+ADB8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+AE38r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+AE78r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+B040r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+B07Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+B0FCr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+B144r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+B43Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+B470r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+B4E0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+B514r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+BAB4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+BAE8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+BB58r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+BB8Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+C19Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+C1D0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+C240r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+C274r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+C40Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+C458r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+C7ECr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+C838r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+CA90r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+CAC8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+CB48r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+CB88r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+CF78r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+CFC4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+D1F0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+D23Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+D3F8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+D444r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+D688r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+D6D4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+D8A4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+D8F0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+DB60r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+DBACr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+DDA0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+DDECr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E074r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E0C0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E328r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E360r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E3E0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E420r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E5BCr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E5F8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E678r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E6C0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E78Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E7C0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E830r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E864r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E964r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+E99Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+EA1Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+EA5Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+EC20r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+EC5Cr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+ECDCr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+ED24r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+EEACr
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+EEE4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+EF64r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+EFA4r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+F0F8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+F130r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+F1B0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+F1F0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+F2B8r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+F2F0r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+F370r
-CODE.bss:8008E32C                                              # spectrum_hw_emulation+F3B0r
-CODE.bss:8008E330     ptr_6000alloc:  .space 4                 # DATA XREF: init_spectrum_game+98w
-CODE.bss:8008E330                                              # run_spectrum_game+20r
-CODE.bss:8008E330                                              # spectrum_draw_screen+150o
-CODE.bss:8008E334     ptr_pc_keyboard_table_alloc:.space 4     # DATA XREF: init_spectrum_game+18o
-CODE.bss:8008E334                                              # init_spectrum_game+20w
-CODE.bss:8008E334                                              # spectrum_hw_emulation:loc_CODE_7F0D4FE8r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5430r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5480r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+54D0r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5520r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+55BCr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5650r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5720r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5768r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+57B8r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5804r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5850r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+589Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5934r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+59C4r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5A90r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5AD4r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5B20r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5B6Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5BB8r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5C04r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5C9Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5D2Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5DF8r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+5E3Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+6BF8r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+6C48r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+6C98r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+6CE8r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+6D38r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+6D88r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+6DFCr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+6EFCr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+6F50r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+6FA4r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+6FF8r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+704Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+70A0r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+70F4r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+716Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7274r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+72C8r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+731Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7370r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+73C4r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7418r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+746Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+74DCr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+75E8r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+763Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7690r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+76E4r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7738r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+778Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+77E0r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7850r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+795Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_20r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_21r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_22r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_23r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_24r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_25r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7B78r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_27r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7CC0r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7D10r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7D60r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7DB0r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7E00r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7E50r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7EC8r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+7FC0r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+800Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+8058r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+80A4r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+80F0r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+813Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+8188r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+81F8r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+82F8r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_38r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_39r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_3Ar
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_3Br
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_3Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_3Dr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+8518r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:spectrum_op_CB_3Fr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+ACC4r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+B26Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+B648r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+B8E4r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+BCECr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+BFCCr
-CODE.bss:8008E334                                              # spectrum_hw_emulation:loc_CODE_7F0DFCACr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+C4ECr
-CODE.bss:8008E334                                              # spectrum_hw_emulation:loc_CODE_7F0E008Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+C8C8r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+CCA4r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:loc_CODE_7F0E0AC0r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:loc_CODE_7F0E0F60r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:loc_CODE_7F0E1430r
-CODE.bss:8008E334                                              # spectrum_hw_emulation:loc_CODE_7F0E194Cr
-CODE.bss:8008E334                                              # spectrum_hw_emulation+E270r
-CODE.bss:8008E334                                              # spectrum_hw_emulation+E8ACr
-CODE.bss:8008E338     spectrum_header16_15:.space 1            # DATA XREF: init_spectrum_game+340w
-CODE.bss:8008E338                                              # spectrum_hw_emulation+154r
-CODE.bss:8008E338                                              # spectrum_hw_emulation:loc_CODE_7F0E2C08w
-CODE.bss:8008E339     byte_CODE_bss_8008E339:.space 1          # DATA XREF: init_spectrum_game+334w
-CODE.bss:8008E339                                              # spectrum_hw_emulation+158r
-CODE.bss:8008E339                                              # spectrum_hw_emulation+F3E4w
-CODE.bss:8008E33A     byte_CODE_bss_8008E33A:.space 1          # DATA XREF: init_spectrum_game+2D4w
-CODE.bss:8008E33A                                              # spectrum_hw_emulation+15Cr
-CODE.bss:8008E33A                                              # spectrum_hw_emulation+F3ECw
-CODE.bss:8008E33B     byte_CODE_bss_8008E33B:.space 1          # DATA XREF: init_spectrum_game+2C8w
-CODE.bss:8008E33B                                              # spectrum_hw_emulation+160r
-CODE.bss:8008E33B                                              # spectrum_hw_emulation+F3F4w
-CODE.bss:8008E33C     off_CODE_bss_8008E33C:.space 1           # DATA XREF: init_spectrum_game+2BCw
-CODE.bss:8008E33C                                              # spectrum_hw_emulation+164r
-CODE.bss:8008E33C                                              # spectrum_hw_emulation+F3FCw
-CODE.bss:8008E33D     byte_CODE_bss_8008E33D:.space 1          # DATA XREF: init_spectrum_game+2B0w
-CODE.bss:8008E33D                                              # spectrum_hw_emulation+168r
-CODE.bss:8008E33D                                              # spectrum_hw_emulation+F404w
-CODE.bss:8008E33E     byte_CODE_bss_8008E33E:.space 1          # DATA XREF: init_spectrum_game+2A4w
-CODE.bss:8008E33E                                              # spectrum_hw_emulation+16Cr
-CODE.bss:8008E33E                                              # spectrum_hw_emulation+F40Cw
-CODE.bss:8008E33F     byte_CODE_bss_8008E33F:.space 1          # DATA XREF: init_spectrum_game+298w
-CODE.bss:8008E33F                                              # spectrum_hw_emulation+170r
-CODE.bss:8008E33F                                              # spectrum_hw_emulation+F418w
-CODE.bss:8008E340     off_CODE_bss_8008E340:.space 1           # DATA XREF: init_spectrum_game+28Cw
-CODE.bss:8008E340                                              # spectrum_hw_emulation+30r
-CODE.bss:8008E340                                              # spectrum_hw_emulation+F424w
-CODE.bss:8008E341     byte_CODE_bss_8008E341:.space 1          # DATA XREF: init_spectrum_game+280w
-CODE.bss:8008E341                                              # spectrum_hw_emulation+10r
-CODE.bss:8008E341                                              # spectrum_hw_emulation+F430w
-CODE.bss:8008E342     byte_CODE_bss_8008E342:.space 1          # DATA XREF: init_spectrum_game+274w
-CODE.bss:8008E342                                              # spectrum_hw_emulation+34r
-CODE.bss:8008E342                                              # spectrum_hw_emulation+F43Cw
-CODE.bss:8008E343     byte_CODE_bss_8008E343:.space 1          # DATA XREF: init_spectrum_game+268w
-CODE.bss:8008E343                                              # spectrum_hw_emulation+38r
-CODE.bss:8008E343                                              # spectrum_hw_emulation+F448w
-CODE.bss:8008E344     off_CODE_bss_8008E344:.space 1           # DATA XREF: init_spectrum_game+25Cw
-CODE.bss:8008E344                                              # spectrum_hw_emulation+3Cr
-CODE.bss:8008E344                                              # spectrum_hw_emulation+F454w
-CODE.bss:8008E345     byte_CODE_bss_8008E345:.space 1          # DATA XREF: init_spectrum_game+254w
-CODE.bss:8008E345                                              # spectrum_hw_emulation+40r
-CODE.bss:8008E345                                              # spectrum_hw_emulation+F460w
-CODE.bss:8008E346     byte_CODE_bss_8008E346:.space 1          # DATA XREF: init_spectrum_game+244w
-CODE.bss:8008E346                                              # spectrum_hw_emulation+44r
-CODE.bss:8008E346                                              # spectrum_hw_emulation+F46Cw
-CODE.bss:8008E347     byte_CODE_bss_8008E347:.space 1          # DATA XREF: init_spectrum_game+234w
-CODE.bss:8008E347                                              # spectrum_hw_emulation+ACr
-CODE.bss:8008E347                                              # spectrum_hw_emulation+F478w
-CODE.bss:8008E348     spec_I:         .space 1                 # DATA XREF: init_spectrum_game+224w
-CODE.bss:8008E348                                              # spectrum_hw_emulation+B8r
-CODE.bss:8008E348                                              # spectrum_hw_emulation+F49Cw
-CODE.bss:8008E349     byte_CODE_bss_8008E349:.space 1          # DATA XREF: init_spectrum_game+328w
-CODE.bss:8008E349                                              # spectrum_hw_emulation+84r
-CODE.bss:8008E349                                              # spectrum_hw_emulation+F4A8w
-CODE.bss:8008E34A     spec_IFF2_lower:.space 1                 # DATA XREF: init_spectrum_game+320w
-CODE.bss:8008E34A                                              # spectrum_hw_emulation+B0r
-CODE.bss:8008E34A                                              # spectrum_hw_emulation+F484w
-CODE.bss:8008E34B     spec_IFF2_upper:.space 1                 # DATA XREF: init_spectrum_game+21Co
-CODE.bss:8008E34B                                              # init_spectrum_game+31Cw
-CODE.bss:8008E34B                                              # spectrum_hw_emulation+B4r
-CODE.bss:8008E34B                                              # spectrum_hw_emulation+F490w
-CODE.bss:8008E34C     spec_IM:        .space 1                 # DATA XREF: init_spectrum_game+250o
-CODE.bss:8008E34C                                              # init_spectrum_game+36Cw
-CODE.bss:8008E34C                                              # init_spectrum_game+374w
-CODE.bss:8008E34C                                              # spectrum_hw_emulation+BCr
-CODE.bss:8008E34C                                              # spectrum_hw_emulation+F4B4w
-CODE.bss:8008E34D     byte_CODE_bss_8008E34D:.space 1          # DATA XREF: spectrum_p1controller_to_kempston:loc_CODE_7F0D2D8Cr
-CODE.bss:8008E34D                                              # init_spectrum_game+148o
-CODE.bss:8008E34D                                              # init_spectrum_game+15Cw
-CODE.bss:8008E34D                                              # init_spectrum_game+160w
-CODE.bss:8008E34E     spec_IX:        .space 2                 # DATA XREF: init_spectrum_game+308w
-CODE.bss:8008E34E                                              # spectrum_hw_emulation+C0r
-CODE.bss:8008E34E                                              # spectrum_hw_emulation+F4C0w
-CODE.bss:8008E350     spec_IY:        .space 2                 # DATA XREF: init_spectrum_game+2F0w
-CODE.bss:8008E350                                              # spectrum_hw_emulation+C4r
-CODE.bss:8008E350                                              # spectrum_hw_emulation+F4D4w
-CODE.bss:8008E352     spec_SP:        .space 2                 # DATA XREF: init_spectrum_game+230o
-CODE.bss:8008E352                                              # init_spectrum_game+35Cw
-CODE.bss:8008E352                                              # init_spectrum_game:loc_CODE_7F0D333Cr
-CODE.bss:8008E352                                              # init_spectrum_game+3ACw
-CODE.bss:8008E352                                              # spectrum_hw_emulation+C8r
-CODE.bss:8008E352                                              # spectrum_hw_emulation+F4E4w
-CODE.bss:8008E354     spec_PC:        .space 2                 # DATA XREF: init_spectrum_game+3A4w
-CODE.bss:8008E354                                              # spectrum_hw_emulation+CCr
-CODE.bss:8008E354                                              # spectrum_hw_emulation+F518w
-*/
+// bss
+s32 ptr_sectrum_monitor_data_temp_buf;
+s32 ptr_sectrum_game_data_temp_buf;
+s32 ptr_spectrum_roms;
+s32 ptr_300alloc;
+s32 ptr_6000alloc;
+s32 ptr_pc_keyboard_table_alloc;
+s8 spectrum_header16_15;
+s8 byte_CODE_bss_8008E339;
+s8 byte_CODE_bss_8008E33A;
+s8 byte_CODE_bss_8008E33B;
+s8 off_CODE_bss_8008E33C;
+s8 byte_CODE_bss_8008E33D;
+s8 byte_CODE_bss_8008E33E;
+s8 byte_CODE_bss_8008E33F;
+s8 off_CODE_bss_8008E340;
+s8 byte_CODE_bss_8008E341;
+s8 byte_CODE_bss_8008E342;
+s8 byte_CODE_bss_8008E343;
+s8 off_CODE_bss_8008E344;
+s8 byte_CODE_bss_8008E345;
+s8 byte_CODE_bss_8008E346;
+s8 byte_CODE_bss_8008E347;
+s8 spec_I;
+s8 byte_CODE_bss_8008E349;
+s8 spec_IFF2_lower;
+s8 spec_IFF2_upper;
+s8 spec_IM;
+s8 byte_CODE_bss_8008E34D;
+s16 spec_IX;
+s16 spec_IY;
+s16 spec_SP;
+s16 spec_PC;
+
 
 /* data
 D:8004EC30                     .word 0
-D:8004EC34     off_D_8004EC34: .byte 0xFF               # DATA XREF: spectrum_p1controller_to_kempston+74w
-D:8004EC34                                              # spectrum_p1controller_to_kempston+184o
-D:8004EC34                                              # spectrum_p1controller_to_kempston+19Co
-D:8004EC34                                              # spectrum_p1controller_to_kempston+208r
-D:8004EC34                                              # spectrum_p1controller_to_kempston+210w
-D:8004EC34                                              # spectrum_p1controller_to_kempston+268r
-D:8004EC34                                              # spectrum_p1controller_to_kempston+270w
-D:8004EC34                                              # spectrum_input_handling+28o
-D:8004EC35     byte_D_8004EC35:.byte 0xFF, 0xFF         # DATA XREF: spectrum_p1controller_to_kempston+70o
-D:8004EC37     byte_D_8004EC37:.byte 0xFF               # DATA XREF: spectrum_p1controller_to_kempston+1B4r
-D:8004EC37                                              # spectrum_p1controller_to_kempston+1BCw
-D:8004EC37                                              # spectrum_p1controller_to_kempston+1D4r
-D:8004EC37                                              # spectrum_p1controller_to_kempston+1DCw
-D:8004EC37                                              # spectrum_p1controller_to_kempston+27Cr
-D:8004EC37                                              # spectrum_p1controller_to_kempston+284w
-D:8004EC37                                              # spectrum_p1controller_to_kempston+290r
-D:8004EC37                                              # spectrum_p1controller_to_kempston+298w
-D:8004EC38     off_D_8004EC38: .byte 0xFF               # DATA XREF: spectrum_p1controller_to_kempston+188r
-D:8004EC38                                              # spectrum_p1controller_to_kempston+190w
-D:8004EC38                                              # spectrum_p1controller_to_kempston+1F4r
-D:8004EC38                                              # spectrum_p1controller_to_kempston+1FCw
-D:8004EC38                                              # spectrum_p1controller_to_kempston+2A4r
-D:8004EC38                                              # spectrum_p1controller_to_kempston+2ACw
+D:8004EC34     off_D_8004EC34: .byte 0xFF
+D:8004EC35     byte_D_8004EC35:.byte 0xFF, 0xFF
+D:8004EC37     byte_D_8004EC37:.byte 0xFF
+D:8004EC38     off_D_8004EC38: .byte 0xFF
 D:8004EC39                     .byte 0xFF, 0xFF
-D:8004EC3B     byte_D_8004EC3B:.byte 0xFF               # DATA XREF: spectrum_p1controller_to_kempston+21Cr
-D:8004EC3B                                              # spectrum_p1controller_to_kempston+224w
-D:8004EC3B                                              # spectrum_p1controller_to_kempston+248r
-D:8004EC3B                                              # spectrum_p1controller_to_kempston+250w
+D:8004EC3B     byte_D_8004EC3B:.byte 0xFF
 D:8004EC3C                     .byte 0xFF
-D:8004EC3D     byte_D_8004EC3D:.byte 0, 0, 0            # DATA XREF: spectrum_p1controller_to_kempston+6Co
-D:8004EC40     off_D_8004EC40: .byte 0                  # DATA XREF: spectrum_input_handling+ECr
+D:8004EC3D     byte_D_8004EC3D:.byte 0, 0, 0
+D:8004EC40     off_D_8004EC40: .byte 0
 D:8004EC41                     .align 2
 D:8004EC44     dword_D_8004EC44:.word 0x7FE03FE, 0x3FD03FB, 0x3F703EF, 0x4F703FD, 0x4FD04FE, 0x4FB06FB, 0x7F706F7
 D:8004EC44                     .word 0x8FB00EF, 0x4FE03FE, 0x3FD03FB, 0x3F703EF, 0x4EF04F7, 0x4FB04FD, 0xFD05FD
@@ -973,29 +86,18 @@ D:8004ED6C                     .word 0
 
 /* rodata
 D:8005C020     aEmDataSabre_seg_rz:.ascii "em/data/sabre.seg.rz"<0><0><0><0>
-D:8005C020                                              # DATA XREF: D:aEmDataSabre_seg_rz_ptro
-D:8005C038     aEmDataAtic_seg_rz:.ascii "em/data/atic.seg.rz"<0>  # DATA XREF: D:8004ED30o
+D:8005C038     aEmDataAtic_seg_rz:.ascii "em/data/atic.seg.rz"<0>
 D:8005C04C     aEmDataJetpac_seg_rz:.ascii "em/data/jetpac.seg.rz"<0><0><0>
-D:8005C04C                                              # DATA XREF: D:8004ED34o
 D:8005C064     aEmDataJetman_seg_rz:.ascii "em/data/jetman.seg.rz"<0><0><0>
-D:8005C064                                              # DATA XREF: D:8004ED38o
 D:8005C07C     aEmDataAlien8_seg_rz:.ascii "em/data/alien8.seg.rz"<0><0><0>
-D:8005C07C                                              # DATA XREF: D:8004ED3Co
 D:8005C094     aEmDataGunfright_seg_rz:.ascii "em/data/gunfright.seg.rz"<0><0><0><0>
-D:8005C094                                              # DATA XREF: D:8004ED40o
 D:8005C0B0     aEmDataUnder_seg_rz:.ascii "em/data/under.seg.rz"<0><0><0><0>
-D:8005C0B0                                              # DATA XREF: D:8004ED44o
 D:8005C0C8     aEmDataKnightlore_seg_rz:.ascii "em/data/knightlore.seg.rz"<0><0><0>
-D:8005C0C8                                              # DATA XREF: D:8004ED48o
 D:8005C0E4     aEmDataPssst_seg_rz:.ascii "em/data/pssst.seg.rz"<0><0><0><0>
-D:8005C0E4                                              # DATA XREF: D:8004ED4Co
 D:8005C0FC     aEmDataCookie_seg_rz:.ascii "em/data/cookie.seg.rz"<0><0><0>
-D:8005C0FC                                              # DATA XREF: D:8004ED50o
 D:8005C114     aEmDataSpec_rom_seg_rz:.ascii "em/data/spec_rom.seg.rz"<0>
-D:8005C114                                              # DATA XREF: init_spectrum_game+F4o
 D:8005C12C     spectrum_op_table:.word spectrum_op_00, spectrum_op_01, spectrum_op_02, spectrum_op_03, spectrum_op_04
-D:8005C12C                                              # DATA XREF: spectrum_hw_emulation+1FCr
-D:8005C12C                     .word spectrum_op_05, spectrum_op_06, spectrum_op_07, spectrum_op_08, spectrum_op_09  # jump table for switch statement
+D:8005C12C                     .word spectrum_op_05, spectrum_op_06, spectrum_op_07, spectrum_op_08, spectrum_op_09
 D:8005C12C                     .word spectrum_op_0A, spectrum_op_0B, spectrum_op_0C, spectrum_op_0D, spectrum_op_0E
 D:8005C12C                     .word spectrum_op_0F, spectrum_op_10, spectrum_op_11, spectrum_op_12, spectrum_op_13
 D:8005C12C                     .word spectrum_op_14, spectrum_op_15, spectrum_op_16, spectrum_op_17, spectrum_op_18
@@ -1046,9 +148,9 @@ D:8005C12C                     .word spectrum_op_F0, spectrum_op_F1, spectrum_op
 D:8005C12C                     .word spectrum_op_F5, spectrum_op_F6, spectrum_op_F7, spectrum_op_F8, spectrum_op_F9
 D:8005C12C                     .word spectrum_op_FA, spectrum_op_FB, spectrum_op_FC, spectrum_op_FD, spectrum_op_FE
 D:8005C12C                     .word spectrum_op_FF
+
 D:8005C52C     jpt_7010E33C:   .word spectrum_op_CB_00, spectrum_op_CB_01, spectrum_op_CB_02, spectrum_op_CB_03
-D:8005C52C                                              # DATA XREF: spectrum_hw_emulation+6BD4r
-D:8005C52C                     .word spectrum_op_CB_04, spectrum_op_CB_05, spectrum_op_CB_06, spectrum_op_CB_07  # jump table for switch statement
+D:8005C52C                     .word spectrum_op_CB_04, spectrum_op_CB_05, spectrum_op_CB_06, spectrum_op_CB_07
 D:8005C52C                     .word spectrum_op_CB_08, spectrum_op_CB_09, spectrum_op_CB_0A, spectrum_op_CB_0B
 D:8005C52C                     .word spectrum_op_CB_0C, spectrum_op_CB_0D, spectrum_op_CB_0E, spectrum_op_CB_0F
 D:8005C52C                     .word spectrum_op_CB_10, spectrum_op_CB_11, spectrum_op_CB_12, spectrum_op_CB_13
@@ -1063,43 +165,45 @@ D:8005C52C                     .word spectrum_op_CB_30, spectrum_op_CB_31, spect
 D:8005C52C                     .word spectrum_op_CB_34, spectrum_op_CB_35, spectrum_op_CB_36, spectrum_op_CB_37
 D:8005C52C                     .word spectrum_op_CB_38, spectrum_op_CB_39, spectrum_op_CB_3A, spectrum_op_CB_3B
 D:8005C52C                     .word spectrum_op_CB_3C, spectrum_op_CB_3D, spectrum_op_CB_3E, spectrum_op_CB_3F
+
 D:8005C62C     jpt_7010FDE8:   .word spectrum_op_SET_x_B
-D:8005C62C                                              # DATA XREF: spectrum_hw_emulation+8680r
-D:8005C62C                     .word spectrum_op_SET_x_C  # jump table for switch statement
+D:8005C62C                     .word spectrum_op_SET_x_C
 D:8005C62C                     .word spectrum_op_SET_x_D
 D:8005C62C                     .word spectrum_op_SET_x_E
 D:8005C62C                     .word spectrum_op_SET_x_H
 D:8005C62C                     .word spectrum_op_SET_x_L
 D:8005C62C                     .word spectrum_op_SET_x_HL
 D:8005C62C                     .word spectrum_op_SET_x_A
+
 D:8005C64C     jpt_7010FE20:   .word spectrum_op_RES_x_B
-D:8005C64C                                              # DATA XREF: spectrum_hw_emulation+86B8r
-D:8005C64C                     .word spectrum_op_RES_x_C  # jump table for switch statement
+D:8005C64C                     .word spectrum_op_RES_x_C
 D:8005C64C                     .word spectrum_op_RES_x_D
 D:8005C64C                     .word spectrum_op_RES_x_E
 D:8005C64C                     .word spectrum_op_RES_x_H
 D:8005C64C                     .word spectrum_op_RES_x_L
 D:8005C64C                     .word spectrum_op_RES_x_HL
 D:8005C64C                     .word spectrum_op_RES_x_A
+
 D:8005C66C     jpt_7010FE40:   .word spectrum_op_BIT_x_B
-D:8005C66C                                              # DATA XREF: spectrum_hw_emulation+86D8r
-D:8005C66C                     .word spectrum_op_BIT_x_C  # jump table for switch statement
+D:8005C66C                     .word spectrum_op_BIT_x_C
 D:8005C66C                     .word spectrum_op_BIT_x_D
 D:8005C66C                     .word spectrum_op_BIT_x_E
 D:8005C66C                     .word spectrum_op_BIT_x_H
 D:8005C66C                     .word spectrum_op_BIT_x_L
 D:8005C66C                     .word spectrum_op_BIT_x_HL
 D:8005C66C                     .word spectrum_op_BIT_x_A
-D:8005C68C     jpt_701104EC:   .word loc_CODE_7F0DC5C4  # DATA XREF: spectrum_hw_emulation+8D84r
-D:8005C68C                     .word loc_CODE_7F0DC5CC  # jump table for switch statement
+
+D:8005C68C     jpt_701104EC:   .word loc_CODE_7F0DC5C4
+D:8005C68C                     .word loc_CODE_7F0DC5CC
 D:8005C68C                     .word loc_CODE_7F0DC5D4
 D:8005C68C                     .word loc_CODE_7F0DC5DC
 D:8005C68C                     .word loc_CODE_7F0DC5E4
 D:8005C68C                     .word loc_CODE_7F0DC5EC
 D:8005C68C                     .word def_7F0DC5BC
 D:8005C68C                     .word loc_CODE_7F0DC5F4
-D:8005C6AC     jpt_70112968:   .word spectrum_op_ED_A0  # DATA XREF: spectrum_hw_emulation+B200r
-D:8005C6AC                     .word spectrum_op_ED_A1  # jump table for switch statement
+
+D:8005C6AC     jpt_70112968:   .word spectrum_op_ED_A0
+D:8005C6AC                     .word spectrum_op_ED_A1
 D:8005C6AC                     .word spectrum_op_ED_A2
 D:8005C6AC                     .word spectrum_op_ED_A3
 D:8005C6AC                     .word loc_CODE_7F0E1A6C
@@ -1126,9 +230,9 @@ D:8005C6AC                     .word spectrum_op_ED_B8
 D:8005C6AC                     .word spectrum_op_ED_B9
 D:8005C6AC                     .word spectrum_op_ED_BA
 D:8005C6AC                     .word spectrum_op_ED_BB
+
 D:8005C71C     jpt_70112990:   .word spectrum_op_ED_40, spectrum_op_ED_41, spectrum_op_ED_42, spectrum_op_ED_43
-D:8005C71C                                              # DATA XREF: spectrum_hw_emulation+B228r
-D:8005C71C                     .word spectrum_op_ED_44, spectrum_op_ED_45, spectrum_op_ED_46, spectrum_op_ED_47  # jump table for switch statement
+D:8005C71C                     .word spectrum_op_ED_44, spectrum_op_ED_45, spectrum_op_ED_46, spectrum_op_ED_47
 D:8005C71C                     .word spectrum_op_ED_48, spectrum_op_ED_49, spectrum_op_ED_4A, spectrum_op_ED_4B
 D:8005C71C                     .word spectrum_op_ED_4C, spectrum_op_ED_4D, spectrum_op_ED_4E, spectrum_op_ED_4F
 D:8005C71C                     .word spectrum_op_ED_50, spectrum_op_ED_51, spectrum_op_ED_52, spectrum_op_ED_53
