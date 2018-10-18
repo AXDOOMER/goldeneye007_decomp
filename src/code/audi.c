@@ -1,7 +1,7 @@
 //FIXME i still need data/bss love.
 #include "ultra64.h"
-#include "scheduler.h"
-#include "audi.h"
+#include "code/scheduler.h"
+#include "code/audi.h"
 
 u32 audFrameCt = 0;
 u32 nextDMA = 0;

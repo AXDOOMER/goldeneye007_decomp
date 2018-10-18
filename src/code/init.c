@@ -1,9 +1,9 @@
 #include <ultra64.h>
-#include "bond.h"
+#include "bondgame.h"
 #include "boot.h"
-#include "scheduler.h"
-#include "rmon.h"
-#include "init.h"
+#include "code/scheduler.h"
+#include "code/rmon.h"
+#include "code/init.h"
 
 #define NUM_FIELDS  1
 

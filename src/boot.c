@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include "boot.h"
-#include "bond.h"
-#include "rarezip.h"
+#include "bondgame.h"
+#include "rarezip/rarezip.h"
 
 /* This file sets up initial tlb mapping then jumps to boot1 */
 
