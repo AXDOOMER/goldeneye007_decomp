@@ -154,9 +154,56 @@ glabel debug_text_related_2
 
 
 #ifdef NONMATCHING
-void display_text_to_coord(void) {
+s32 display_text_to_coord(s32 arg0, s32 arg1, s32 arg2) {
+    s32 temp_a0;
+    void *temp_t5;
+    void *temp_t8;
+    s32 temp_t7;
+    s32 temp_t5_2;
+    void *temp_v1;
 
+    // Node 0
+    // Node 1
+    if ((debug_text_color != stdout_primary_color_table.unk4) || (debug_text_bg_color.unk4 != (&stdout_environment_color_table + 0)->unk4))
+    {
+        // Node 3
+        if ((0 + 1) < 0x20)
+        {
+            goto loop_1;
+        }
+        // Node 4
+        temp_a0 = (string_formatting * 8);
+        temp_t5 = (temp_a0 + &stdout_primary_color_table);
+        *temp_t5 = (?32) stdout_primary_color;
+        temp_t8 = (&stdout_environment_color_table + temp_a0);
+        temp_t7 = (string_formatting + 1);
+        temp_t5->unk4 = (?32) stdout_primary_color.unk4;
+        *temp_t8 = (?32) debug_text_bg_color;
+        temp_t8->unk4 = (s32) debug_text_bg_color.unk4;
+        temp_t5_2 = (temp_t7 & 0x1f);
+        if (temp_t7 < 0)
+        {
+            // Node 5
+            if (temp_t5_2 != 0)
+            {
+                // Node 6
+            }
+        }
+        // Node 7
+        string_formatting = temp_t5_2;
+    }
+    else
+    {
+
+    }
+    // Node 8
+    temp_v1 = (((arg0 * 0x46) + (arg1 * 2)) + &stdout_debug_menu_screen_buffer);
+    *temp_v1 = (s8) (arg2 & 0xff);
+    temp_v1->unk1 = temp_t5_2;
+    return;
+    // (possible return value: temp_t5_2)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -267,8 +314,27 @@ glabel debug_menu_text_related
 
 #ifdef NONMATCHING
 void debug_text_related_1(void) {
-
+    // Node 0
+    // Node 1
+    // Node 2
+    display_text_to_coord(0, 0, 0);
+    if ((0 + 1) != 0x50)
+    {
+        goto loop_2;
+    }
+    // Node 3
+    if ((0 + 1) != 0x23)
+    {
+        goto loop_1;
+    }
+    // Node 4
+    debug_menu_text_related();
+    null_function();
+    string_formatting = 0;
+    return;
+    // (possible return value: null_function())
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -336,9 +402,42 @@ glabel stubbed_function
 
 
 #ifdef NONMATCHING
-void something_debug_info_related(void) {
+s32 something_debug_info_related(s32 arg0) {
+    s32 temp_s3;
 
+    // Node 0
+    temp_s3 = (arg0 + 0x21);
+    // Node 1
+    if ((temp_s3 >= 0) && (temp_s3 < 0x23))
+    {
+        loop_3:
+        // Node 3
+        stubbed_function(0, temp_s3, 0, 0x21);
+        if ((0 + 1) != 0x50)
+        {
+            goto loop_3;
+        }
+        // Node 4
+    }
+    else
+    {
+        // Node 5
+        // Node 6
+        display_text_to_coord(0, 0x21, 0);
+        if ((0 + 1) != 0x50)
+        {
+            goto loop_6;
+        }
+        // Node 7
+    }
+    // Node 8
+    if ((0x21 + -1) != 0)
+    {
+        goto loop_1;
+    }
+    // (possible return value: 0x21)
 }
+
 #else
 GLOBAL_ASM(
 .text

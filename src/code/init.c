@@ -3,7 +3,10 @@
 #include "boot.h"
 #include "code/scheduler.h"
 #include "code/rmon.h"
+#include "code/tlb_resolve.h"
+#include "code/tlb_hardware.h"
 #include "code/init.h"
+
 
 #define NUM_FIELDS  1
 
@@ -30,9 +33,60 @@ struct debug_handler_entry debug_handler_table[] =
 	{&sp_audi, "Audi"},
 };
 
-#ifdef NONMATCHING
-void init(void) {
+#define TESTING 1
 
+#ifdef TESTING
+void init(void) {
+    s32 *cdata_vaddr_start;
+    s32 rodata_rom_size;
+    s32 datapos;
+    void *dest;
+    void *source;
+
+    cdata_vaddr_start = get_cdata_vaddr_start();
+    rodata_rom_size = (get_rodata_rom_end() - get_rodata_rom_start());
+
+	for (datapos = ((rodata_rom_size + (getRareZipASMRomend() - getRareZipASMRomstart())) + -1); datapos >= 0; datapos--){
+		_rarezipSegmentVaddrStart[-rodata_rom_size + datapos] = &cdata_vaddr_start[datapos];
+	}
+
+    jump_decompressfile((_rarezipSegmentVaddrStart - rodata_rom_size), cdata_vaddr_start, 0x80300000);
+
+    if (0xfff00050 == 0)
+    {
+        osPiRawStartDma(0, 0x101000, 0x70100400, ((&_rarezipSegmentRomStart - &_codeSegmentRomStart) + 0xfff00050));
+        while ((osPiGetStatus() & 1) != 0) {}
+    }
+
+    osInitialize();
+    set_hardwire_TLB_to_2();
+
+
+	//IM BROKEN FIX ME!!!!!!!
+	source = (void *)resolve_TLBaddress_for_InvalidHit;
+	//UT_VEC
+	dest = (void *)0x80000000;
+	//XUT_VEC
+	while (dest != (void *)0x80000080){
+		dest = (dest + 0x10);
+    	source = (source + 0x10);
+    	dest[-0x10] = source[-0x10];
+    	dest[-0xC] = source[-0xC];
+    	dest[-8] = source[-8];
+    	dest[-4] = source[-4];
+	}
+	//TO HERE
+
+    osWritebackDCacheAll(0x80000080);
+    osInvalICache(0x80000001, 0x4000);
+
+	for (i=2; i<32; i++){
+		osUnmapTLB(i);
+	}
+
+    __osSetFpcCsr((__osGetFpcCsr() | 0xe80));
+    osCreateThread(&mainThread, 3, &thread3_main, 0, set_stack_entry(&sp_main, 0x8000), 0xa);
+    osStartThread(&mainThread);
 }
 #else
 GLOBAL_ASM(
@@ -135,7 +189,7 @@ glabel init
 .L70000674:
 /* 001274 70000674 0C0034F4 */  jal   osUnmapTLB
 /* 001278 70000678 02002025 */   move  $a0, $s0
-/* 00127C 7000067C 26100001 */  addiu $s0, %lo(0x80000001) # addiu $s0, $s0, 1
+/* 00127C 7000067C 26100001 */  addiu $s0, 1 # addiu $s0, $s0, 1
 /* 001280 70000680 1611FFFC */  bne   $s0, $s1, .L70000674
 /* 001284 70000684 00000000 */   nop   
 /* 001288 70000688 0C003504 */  jal   __osGetFpcCsr
@@ -223,9 +277,37 @@ void thread3_main(void *args) {
 
 
 #ifdef NONMATCHING
-void setuplastentryofdebughandler(void) {
+s32 setuplastentryofdebughandler(void) {
+    ? sp8;
+    void *temp_t6;
+    void *temp_t0;
 
+    // Node 0
+
+    // Node 1
+    temp_t6 = (&debug_handler_table + 0xc);
+    temp_t0 = (&sp8 + 0xc);
+    temp_t0->unk-C = (?32) debug_handler_table;
+    temp_t0->unk-8 = (?32) temp_t6->unk-8;
+    temp_t0->unk-4 = (?32) temp_t6->unk-4;
+    if (temp_t6 != (&debug_handler_table + 0x30))
+    {
+        goto loop_1;
+    }
+
+    // Node 2
+    *temp_t0 = (?32) *temp_t6;
+    temp_t0->unk4 = (?32) temp_t6->unk4;
+
+    // Node 3
+    if (sp8.unk8 != 0)
+    {
+        goto loop_3;
+    }
+
+    // (possible return value: (&sp8 + 8))
 }
+
 #else
 GLOBAL_ASM(
 .section .text

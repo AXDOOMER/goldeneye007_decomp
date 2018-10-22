@@ -1,7 +1,7 @@
 //FIXME my c code is modtly copy/paste from mips_to_c
 #include "ultra64.h"
-#include "bond.h"
-#include "ramrom.h"
+#include "bondgame.h"
+#include "code/ramrom.h"
 
 /* bss */
 u32 dword_CODE_bss_80060890[0x400];
@@ -146,9 +146,29 @@ void *ptr_videobuffer2 = 0;
 
 
 #ifdef NONMATCHING
-void return_match_in_debug_notice_list(void) {
-
+void *return_match_in_debug_notice_list(s32 arg0) {
+    // Node 0
+    if (debug_notice_list != 0)
+    {
+        loop_1:
+        // Node 1
+        if (something_with_strings_0(debug_notice_list->unk8, arg0) == 0)
+        {
+            // Node 2
+            return;
+            // (possible return value: debug_notice_list)
+        }
+        // Node 3
+        if (*debug_notice_list != 0)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 4
+    return;
+    // (possible return value: NULL)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -714,9 +734,24 @@ glabel was_opcode_In_70000450_70020D90
 
 
 #ifdef NONMATCHING
-void return_strlen(void) {
-
+s32 return_strlen(void *arg0) {
+    // Node 0
+    if (*arg0 != 0)
+    {
+        loop_1:
+        // Node 1
+        if ((0 + 1) < 0x100)
+        {
+            // Node 2
+            if (*(arg0 + 1) != 0)
+            {
+                goto loop_1;
+            }
+        }
+    }
+    // (possible return value: 0)
 }
+
 #else
 GLOBAL_ASM(
 .text

@@ -1,5 +1,5 @@
 #include <ultra64.h>
-#include "scheduler.h"
+#include "code/scheduler.h"
 
 u32 stderr_unused = 0;
 u32 stderr_enabled = 0;

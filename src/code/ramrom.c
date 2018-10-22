@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "ramrom.h"
+#include "code/ramrom.h"
 
 #define align_addr_zero(X) ((((X) + 0xF) | 0xF) ^ 0xF)
 #define align_addr_even(X) (((X) | 1) ^ 1)
