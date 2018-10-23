@@ -1453,8 +1453,42 @@ glabel __osRdbSend
 
 
 #ifdef NONMATCHING
-void scroll_stderr_oneline(void) {
+s32 scroll_stderr_oneline(s32 arg0) {
+    void *temp_a1_2;
+    void *temp_a1;
 
+    // Node 0
+    if (0 < arg0)
+    {
+        // Node 1
+        // Node 2
+        // Node 3
+        temp_a1_2 = (&stderr_buffer + 3);
+        stderr_buffer = (s8) stderr_buffer.unk47;
+        stderr_buffer.unk1 = (s8) stderr_buffer.unk48;
+        stderr_buffer.unk2 = (s8) stderr_buffer.unk49;
+        // Node 4
+        temp_a1 = (temp_a1_2 + 4);
+        temp_a1->unk-3 = (s8) temp_a1_2->unk48;
+        temp_a1->unk-2 = (s8) temp_a1_2->unk49;
+        temp_a1->unk-1 = (s8) temp_a1_2->unk4A;
+        temp_a1->unk-4 = (s8) temp_a1_2->unk47;
+        if ((3 + 4) != 0x47)
+        {
+            goto loop_4;
+        }
+        // Node 5
+        if ((&stderr_buffer + 0x47) != (stderr_buffer + 0x899))
+        {
+            goto loop_3;
+        }
+        // Node 6
+        if (0 < (arg0 + -1))
+        {
+            goto loop_2;
+        }
+    }
+    // (possible return value: (0 < arg0))
 }
 #else
 GLOBAL_ASM(
@@ -1467,8 +1501,8 @@ glabel scroll_stderr_oneline
 /* 0063DC 700057DC 25083FB1 */  addiu $t0, %lo(stderr_buffer + 0x899) # addiu $t0, $t0, 0x3fb1
 /* 0063E0 700057E0 24070047 */  li    $a3, 71
 .L700057E4:
-/* 0063E4 700057E4 3C0E8002 */  lui   $t6, 0x8002
-/* 0063E8 700057E8 25C63718 */  addiu $a2, $t6, 0x3718
+/* 0063E4 700057E4 3C0E8002 */  lui   $t6, %hi(stderr_buffer)
+/* 0063E8 700057E8 25C63718 */  addiu $a2, $t6, %lo(stderr_buffer)
 /* 0063EC 700057EC 00C01825 */  move  $v1, $a2
 .L700057F0:
 /* 0063F0 700057F0 90CF0047 */  lbu   $t7, 0x47($a2)
@@ -1508,9 +1542,86 @@ glabel scroll_stderr_oneline
 
 
 #ifdef NONMATCHING
-void print_to_vidbuff1(void) {
+void print_to_vidbuff1(s32 arg0, s32 arg1, ? arg2, s32 arg6, s32 arg7, s32 arg8) {
+    s32 temp_at;
+    void *temp_a0;
+    void *temp_v1;
+    void *temp_v1_2;
+    void *temp_v1_3;
+    void *temp_v1_4;
 
+    // Node 0
+    if (arg8 == 0)
+    {
+        // Node 1
+    }
+    // Node 2
+    temp_at = (arg8 < 0x7f);
+    if (temp_at == 0)
+    {
+        // Node 3
+        if (temp_at != 0)
+        {
+            // Node 4
+            temp_a0 = (0x80020000 + (arg8 * 4));
+            temp_v1 = (((arg6 * 2) + ptr_videobuffer1) + ((arg7 * get_video2_settings_txtClipW()) * 2));
+            // Node 5
+            if ((temp_a0->unk3F80 & 0x80000000) != 0)
+            {
+                // Node 6
+                *temp_v1 = (u16)0xffff;
+            }
+            else
+            {
+                // Node 7
+                *temp_v1 = (u16)1;
+            }
+            // Node 8
+            temp_v1_2 = (temp_v1 + 2);
+            if (((temp_a0->unk3F80 * 2) & 0x80000000) != 0)
+            {
+                // Node 9
+                *temp_v1_2 = (u16)0xffff;
+            }
+            else
+            {
+                // Node 10
+                *temp_v1_2 = (u16)1;
+            }
+            // Node 11
+            temp_v1_3 = (temp_v1_2 + 2);
+            if (((temp_a0->unk3F80 * 4) & 0x80000000) != 0)
+            {
+                // Node 12
+                *temp_v1_3 = (u16)0xffff;
+            }
+            else
+            {
+                // Node 13
+                *temp_v1_3 = (u16)1;
+            }
+            // Node 14
+            temp_v1_4 = (temp_v1_3 + 2);
+            if (((temp_a0->unk3F80 * 8) & 0x80000000) != 0)
+            {
+                // Node 15
+                *temp_v1_4 = (u16)0xffff;
+            }
+            else
+            {
+                // Node 16
+                *temp_v1_4 = (u16)1;
+            }
+            // Node 17
+            if ((0 + 1) != 7)
+            {
+                goto loop_5;
+            }
+        }
+    }
+    // (possible return value: get_video2_settings_txtClipW())
 }
+
 #else
 GLOBAL_ASM(
 .text

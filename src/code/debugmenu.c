@@ -64,8 +64,8 @@ u32 D_800268B8 = 0xFF;
 
 
 #ifdef NONMATCHING
-void dummied_function(void) {
-
+void dummied_function(s32 arg0, s32 arg1) {
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -81,9 +81,10 @@ glabel dummied_function
 
 
 #ifdef NONMATCHING
-void dummied_function_0(void) {
-
+void dummied_function_0(s32 arg0, s32 arg1) {
+    return 0;
 }
+
 #else
 GLOBAL_ASM(
 .text

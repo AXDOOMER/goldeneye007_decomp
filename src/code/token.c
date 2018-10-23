@@ -18,9 +18,45 @@ const char aJ[] = "-j";
 
 
 #ifdef NONMATCHING
-void check_string_something(void) {
-
+void *check_string_something(void *arg0) {
+    // Node 0
+    strstr_ptrcurrent_string = &D_800291F0;
+    strstr_numstings = 1;
+    if (*arg0 != 0)
+    {
+        loop_1:
+        // Node 1
+        if (0x20 == *arg0)
+        {
+            loop_2:
+            // Node 2
+            *arg0 = (u8)0;
+            if (0x20 == arg0->unk1)
+            {
+                goto loop_2;
+            }
+        }
+        // Node 3
+        *(&strstr_ptrcurrent_string + (strstr_numstings * 4)) = arg0;
+        strstr_numstings = (s32) (strstr_numstings + 1);
+        if (*arg0 >= 0x21)
+        {
+            loop_4:
+            // Node 4
+            if (arg0->unk1 >= 0x21)
+            {
+                goto loop_4;
+            }
+        }
+        // Node 5
+        if (*arg0 != 0)
+        {
+            goto loop_1;
+        }
+    }
+    // (possible return value: arg0)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -82,9 +118,50 @@ void strtok(s32 arg0) {
 
 
 #ifdef NONMATCHING
-void check_boot_switches(void) {
+?32 check_boot_switches(void) {
+    ?32 sp28;
 
+    // Node 0
+    sp28 = 0;
+    if (rmon_debug_is_final_build() != 0)
+    {
+        // Node 1
+        boot_token_from_indy = 0;
+    }
+    else
+    {
+        // Node 2
+        // Node 3
+        osPiReadIo((0xff0000 | 0xb000), &boot_token_from_indy);
+        if ((&boot_token_from_indy + 4) != &dword_CODE_bss_80064EB0)
+        {
+            goto loop_3;
+        }
+    }
+    // Node 4
+    check_string_something(&boot_token_from_indy);
+    if (check_token(1, &aD_6) != 0)
+    {
+        // Node 5
+        sp28 = 1;
+    }
+    // Node 6
+    if (check_token(1, &aS_2) != 0)
+    {
+        // Node 7
+        bootswitch_sound = (u8)1;
+    }
+    // Node 8
+    if (check_token(1, &aJ) != 0)
+    {
+        // Node 9
+        j_text_trigger = 1;
+        return;
+        // (possible return value: sp28)
+    }
+    // (possible return value: sp28)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -157,9 +234,33 @@ glabel check_boot_switches
 
 
 #ifdef NONMATCHING
-void check_token(void) {
-
+s32 check_token(s32 arg0, s32 arg1) {
+    // Node 0
+    if (strstr_numstings >= 2)
+    {
+        // Node 1
+        // Node 2
+        if (string_related(arg1, D_80024478, strlen(arg1)) == 0)
+        {
+            // Node 3
+            if ((arg0 + -1) == 0)
+            {
+                // Node 4
+                return;
+                // (possible return value: (D_80024478 + strlen(arg1)))
+            }
+        }
+        // Node 5
+        if ((1 + 1) < strstr_numstings)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 6
+    return;
+    // (possible return value: 0)
 }
+
 #else
 GLOBAL_ASM(
 .text

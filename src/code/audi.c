@@ -536,8 +536,44 @@ glabel _amMain
 
 
 #ifdef NONMATCHING
-void _amHandleFrameMsg(void) {
+void _amHandleFrameMsg(void *arg0, s32 arg1, void *argB) {
+    s32 sp24;
 
+    // Node 0
+    __clearAudioDMA();
+    sp24 = osVirtualToPhysical(*arg0);
+    if (argB != 0)
+    {
+        // Node 1
+        osAiSetNextBuffer(*argB, (argB->unk4 * 4));
+    }
+    // Node 2
+    arg0->unk4 = (s16) (((dword_CODE_bss_8005ECC4 - (osAiGetLength() >> 2)) + 0x35) & 0xfff0);
+    if (arg0->unk4 < ((s32) (dword_CODE_bss_8005ECC0 << 0x10) >> 0x10))
+    {
+        // Node 3
+        arg0->unk4 = (s16) dword_CODE_bss_8005ECC0;
+    }
+    // Node 4
+    arg0->unk8 = 0;
+    arg0->unk58 = &msgQ_Q_8005E718;
+    arg0->unk5C = arg0;
+    arg0->unk10 = 2;
+    arg0->unk48 = (?32) *(&dword_CODE_bss_8005E518 + (curAcmdList * 4));
+    arg0->unk4C = (s32) (((s32) (alAudioFrame((0x80060000 + (curAcmdList * 4))->unk-1AE8, &dword_CODE_bss_8005ECCC, sp24, arg0->unk4) - *(&dword_CODE_bss_8005E518 + (curAcmdList * 4))) >> 3) * 8);
+    arg0->unk18 = 2;
+    arg0->unk20 = &rspbootTextStart;
+    arg0->unk24 = (s32) (&gsp3DTextStart - &rspbootTextStart);
+    arg0->unk1C = 0;
+    arg0->unk28 = &aspMainTextStart;
+    arg0->unk30 = &aspMainDataStart;
+    arg0->unk34 = 0x800;
+    arg0->unk50 = 0;
+    arg0->unk54 = 0;
+    osSendMesg(osScGetCmdQ(&D_8005DA40, &rspbootTextStart, &curAcmdList, &dword_CODE_bss_8005E518), (arg0 + 8), 0);
+    curAcmdList = (s32) (curAcmdList ^ 1);
+    return;
+    // (possible return value: osSendMesg(osScGetCmdQ(&D_8005DA40, &rspbootTextStart, &curAcmdList, &dword_CODE_bss_8005E518), (arg0 + 8), 0))
 }
 #else
 GLOBAL_ASM(
@@ -656,8 +692,20 @@ glabel _amHandleFrameMsg
 
 
 #ifdef NONMATCHING
-void __amHandleDoneMsg(void) {
-
+void __amHandleDoneMsg(s32 arg0) {
+    // Node 0
+    if ((osAiGetLength() >> 2) == 0)
+    {
+        // Node 1
+        if (firstTime == 0)
+        {
+            // Node 2
+            firstTime = 0;
+            return;
+            // (possible return value: osAiGetLength())
+        }
+    }
+    // (possible return value: osAiGetLength())
 }
 #else
 GLOBAL_ASM(
@@ -688,8 +736,91 @@ glabel __amHandleDoneMsg
 
 
 #ifdef NONMATCHING
-void __amDMA(void) {
+s32 __amDMA(u32 arg0, s32 arg1, ? arg2, s32 arg14) {
+    s32 sp30;
+    s32 sp48;
+    ?32 sp4C;
+    s32 temp_t2;
+    s32 temp_a3;
 
+    // Node 0
+    temp_t2 = (arg0 & 1);
+    sp48 = temp_t2;
+    if (off_CODE_bss_8005E7B0.unk4 != 0)
+    {
+        loop_1:
+        // Node 1
+        if (arg0 >= (u32) off_CODE_bss_8005E7B0.unk4->unk8)
+        {
+            // Node 2
+            if ((off_CODE_bss_8005E7B0.unk4->unk8 + 0x200) >= (arg0 + arg1))
+            {
+                // Node 3
+                off_CODE_bss_8005E7B0.unk4->unkC = (?32) audFrameCt;
+                osVirtualToPhysical(((off_CODE_bss_8005E7B0.unk4->unk10 + arg0) - off_CODE_bss_8005E7B0.unk4->unk8), off_CODE_bss_8005E7B0.unk4, arg0);
+                return;
+                // (possible return value: osVirtualToPhysical(((off_CODE_bss_8005E7B0.unk4->unk10 + arg0) - off_CODE_bss_8005E7B0.unk4->unk8), off_CODE_bss_8005E7B0.unk4, arg0))
+            }
+            // Node 4
+            if (*off_CODE_bss_8005E7B0.unk4 != 0)
+            {
+                goto loop_1;
+            }
+        }
+    }
+    // Node 5
+    if (off_CODE_bss_8005E7B0.unk8 == 0)
+    {
+        // Node 6
+        if (NULL == 0)
+        {
+            // Node 7
+        }
+        // Node 8
+        sp30 = temp_t2;
+        osVirtualToPhysical(NULL->unk10, NULL, arg0);
+    }
+    else
+    {
+        // Node 9
+        off_CODE_bss_8005E7B0.unk8 = (void *) *off_CODE_bss_8005E7B0.unk8;
+        alUnlink(off_CODE_bss_8005E7B0.unk8, NULL, arg0);
+        if (sp38 != 0)
+        {
+            // Node 10
+            alLink(off_CODE_bss_8005E7B0.unk8, sp38, sp38, arg14);
+        }
+        else
+        {
+            // Node 11
+            if (off_CODE_bss_8005E7B0.unk4 != 0)
+            {
+                // Node 12
+                off_CODE_bss_8005E7B0.unk4 = (void *) off_CODE_bss_8005E7B0.unk8;
+                *off_CODE_bss_8005E7B0.unk8 = (void *) off_CODE_bss_8005E7B0.unk4;
+                off_CODE_bss_8005E7B0.unk8->unk4 = 0;
+                off_CODE_bss_8005E7B0.unk4->unk4 = (void *) off_CODE_bss_8005E7B0.unk8;
+            }
+            else
+            {
+                // Node 13
+                off_CODE_bss_8005E7B0.unk4 = (void *) off_CODE_bss_8005E7B0.unk8;
+                *off_CODE_bss_8005E7B0.unk8 = NULL;
+                off_CODE_bss_8005E7B0.unk8->unk4 = 0;
+            }
+        }
+        // Node 14
+        temp_a3 = (arg14 - sp48);
+        off_CODE_bss_8005E7B0.unk8->unk8 = temp_a3;
+        off_CODE_bss_8005E7B0.unk8->unkC = (?32) audFrameCt;
+        nextDMA = (s32) (nextDMA + 1);
+        sp4C = (?32) off_CODE_bss_8005E7B0.unk8->unk10;
+        osPiStartDma(((nextDMA * 0x18) + &dword_CODE_bss_8005ECD0), 1, 0, temp_a3, (?32) off_CODE_bss_8005E7B0.unk8->unk10, 0x200, &audDMAMessageQ);
+        osVirtualToPhysical(sp4C);
+    }
+    // Node 15
+    return;
+    // (possible return value: (osVirtualToPhysical(sp4C) + sp48))
 }
 #else
 GLOBAL_ASM(
@@ -821,8 +952,19 @@ glabel __amDMA
 
 
 #ifdef NONMATCHING
-void __amDmaNew(void) {
-
+void *__amDmaNew(void *arg0) {
+    // Node 0
+    if (off_CODE_bss_8005E7B0 == 0)
+    {
+        // Node 1
+        off_CODE_bss_8005E7B0.unk4 = 0;
+        off_CODE_bss_8005E7B0.unk8 = &dword_CODE_bss_8005E7C0;
+        off_CODE_bss_8005E7B0 = (u8)1;
+    }
+    // Node 2
+    *arg0 = &off_CODE_bss_8005E7B0;
+    return;
+    // (possible return value: &__amDMA)
 }
 #else
 GLOBAL_ASM(
@@ -851,7 +993,59 @@ glabel __amDmaNew
 
 #ifdef NONMATCHING
 void __clearAudioDMA(void) {
+    ?32 sp40;
 
+    // Node 0
+    sp40 = 0;
+    if (nextDMA != 0)
+    {
+        // Node 1
+        // Node 2
+        osRecvMesg(&audDMAMessageQ, &sp40, 0);
+        if ((u32) (0 + 1) < (u32) nextDMA)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 3
+    if (off_CODE_bss_8005E7B0.unk4 != 0)
+    {
+        loop_4:
+        // Node 4
+        if ((u32) (off_CODE_bss_8005E7B0.unk4->unkC + 1) < (u32) audFrameCt)
+        {
+            // Node 5
+            if (off_CODE_bss_8005E7B0.unk4 == off_CODE_bss_8005E7B0.unk4)
+            {
+                // Node 6
+                off_CODE_bss_8005E7B0.unk4 = (void *) *off_CODE_bss_8005E7B0.unk4;
+            }
+            // Node 7
+            alUnlink(off_CODE_bss_8005E7B0.unk4);
+            if (off_CODE_bss_8005E7B0.unk8 != 0)
+            {
+                // Node 8
+                alLink(off_CODE_bss_8005E7B0.unk4, off_CODE_bss_8005E7B0.unk8);
+            }
+            else
+            {
+                // Node 9
+                off_CODE_bss_8005E7B0.unk8 = (void *) off_CODE_bss_8005E7B0.unk4;
+                *off_CODE_bss_8005E7B0.unk4 = NULL;
+                off_CODE_bss_8005E7B0.unk4->unk4 = 0;
+            }
+        }
+        // Node 10
+        if (*off_CODE_bss_8005E7B0.unk4 != 0)
+        {
+            goto loop_4;
+        }
+    }
+    // Node 11
+    nextDMA = 0U;
+    audFrameCt = (u32) (audFrameCt + 1);
+    return;
+    // (function likely void)
 }
 #else
 GLOBAL_ASM(

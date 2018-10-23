@@ -5,9 +5,25 @@
 
 
 #ifdef NONMATCHING
-void textpointer_load_parse_something(void) {
+void *textpointer_load_parse_something(void *arg0, void *arg1) {
+    void *temp_a1;
 
+    // Node 0
+    temp_a1 = (arg1 + 1);
+    *arg0 = (s8) *arg1;
+    if (*arg1 != 0)
+    {
+        loop_1:
+        // Node 1
+        ((arg0 + 1) + 1)->unk-1 = (s8) *temp_a1;
+        if (*temp_a1 != 0)
+        {
+            goto loop_1;
+        }
+    }
+    // (possible return value: arg0)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -32,9 +48,44 @@ glabel textpointer_load_parse_something
 
 
 #ifdef NONMATCHING
-void something_with_strings(void) {
+void *something_with_strings(void *arg0, void *arg1, s32 arg2) {
+    void *temp_v1;
+    void *temp_a1;
+    s32 temp_a2;
 
+    // Node 0
+    temp_v1 = (arg0 + 1);
+    temp_a1 = (arg1 + 1);
+    *arg0 = (s8) *arg1;
+    if (*arg1 != 0)
+    {
+        loop_1:
+        // Node 1
+        if ((arg2 + -1) != 0)
+        {
+            // Node 2
+            (temp_v1 + 1)->unk-1 = (s8) *temp_a1;
+            if (*temp_a1 != 0)
+            {
+                goto loop_1;
+            }
+        }
+    }
+    // Node 3
+    temp_a2 = (arg2 + -1);
+    if (temp_a2 != 0)
+    {
+        loop_4:
+        // Node 4
+        *temp_v1 = (u8)0;
+        if ((temp_a2 + -1) != 0)
+        {
+            goto loop_4;
+        }
+    }
+    // (possible return value: arg0)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -73,9 +124,37 @@ glabel something_with_strings
 
 
 #ifdef NONMATCHING
-void string_load_parse_something(void) {
+void *string_load_parse_something(void *arg0, void *arg1) {
+    void *temp_v0;
+    void *temp_a1;
 
+    // Node 0
+    if (*arg0 != 0)
+    {
+        loop_1:
+        // Node 1
+        if (arg0->unk1 != 0)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 2
+    temp_v0 = (arg0 + 1);
+    temp_a1 = (arg1 + 1);
+    temp_v0->unk-1 = (s8) *arg1;
+    if (*arg1 != 0)
+    {
+        loop_3:
+        // Node 3
+        (temp_v0 + 1)->unk-1 = (s8) *temp_a1;
+        if (*temp_a1 != 0)
+        {
+            goto loop_3;
+        }
+    }
+    // (possible return value: arg0)
 }
+
 #else
 GLOBAL_ASM(
 .text

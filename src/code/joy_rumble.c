@@ -302,8 +302,80 @@ glabel controller_7000CBDC
 
 
 #ifdef NONMATCHING
-void controller_7000CD38(void) {
+void controller_7000CD38(s32 arg0, void *arg1, s32 arg2, ? arg16) {
+    s32 sp2C;
+    ? sp30;
+    ? sp50;
+    u32 temp_v0;
+    ? temp_ret;
+    void *temp_v1;
+    s32 temp_v0_2;
 
+    // Node 0
+    arg1->unk4 = arg0;
+    arg1->unk8 = arg2;
+    *arg1 = 0;
+    arg1->unk65 = (u8)0x80;
+    // Node 1
+    temp_v0 = (&sp30 + 1);
+    temp_v0->unk-1 = (u8)0x80;
+    if (temp_v0 < &sp50)
+    {
+        goto loop_1;
+    }
+    // Node 2
+    temp_ret = __osContRamWrite(arg2, 0x400, &sp30, 0);
+    if (temp_ret == 2)
+    {
+        // Node 3
+        __osContRamWrite(arg16, arg2, 0x400, &sp30, 0);
+    }
+    // Node 4
+    if (temp_ret != 0)
+    {
+        // Node 5
+    }
+    else
+    {
+        // Node 6
+        if (__osContRamRead(arg16, arg2, 0x400, &sp30) != 0)
+        {
+            // Node 7
+            return;
+            // (possible return value: __osContRamRead(arg16, arg2, 0x400, &sp30))
+        }
+        // Node 8
+        if (sp4F != 0x80)
+        {
+            // Node 9
+        }
+        else
+        {
+            // Node 10
+            // Node 11
+            temp_v1 = (&rumble_on_buffer + 4);
+            rumble_off_buffer.unk1 = (u8)1;
+            temp_v1->unk-3 = (u8)0;
+            rumble_off_buffer.unk2 = (u8)1;
+            temp_v1->unk-2 = (u8)0;
+            rumble_off_buffer.unk3 = (u8)1;
+            temp_v1->unk-1 = (u8)0;
+            (&rumble_off_buffer + 4)->unk-4 = (u8)1;
+            temp_v1->unk-4 = (u8)0;
+            if (temp_v1 != &rumble_off_buffer)
+            {
+                goto loop_11;
+            }
+            // Node 12
+            temp_v0_2 = (arg2 << 6);
+            sp2C = temp_v0_2;
+            controller_7000CBDC(arg2, 0x600, &rumble_off_buffer, (temp_v0_2 + &rumble_on_player_packet_buffers));
+            controller_7000CBDC(arg2, 0x600, &rumble_on_buffer, (sp2C + &rumble_off_player1_packet_buffer));
+        }
+    }
+    // Node 13
+    return;
+    // (possible return value: 0)
 }
 #else
 GLOBAL_ASM(

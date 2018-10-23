@@ -62,9 +62,21 @@ char D_80063BA8[8];
 
 
 #ifdef NONMATCHING
-void audio_related(void) {
-
+s32 audio_related(void *arg0, s32 arg1) {
+    // Node 0
+    if (*arg0 > 0)
+    {
+        loop_1:
+        // Node 1
+        (arg0 + 8)->unk-4 = (s32) (arg0->unk4 + arg1);
+        if ((0 + 1) < *arg0)
+        {
+            goto loop_1;
+        }
+    }
+    // (possible return value: 0)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -94,8 +106,152 @@ glabel audio_related
 
 #ifdef NONMATCHING
 void setupaudio(void) {
+    s32 sp38;
+    s32 sp40;
+    ?32 sp50;
+    ?32 sp54;
+    s8 sp58;
+    ?32 sp60;
+    ?32 sp64;
+    ?32 sp68;
+    ?32 sp6C;
+    ?32 sp70;
+    s8 sp74;
+    ?32 sp7C;
+    ?32 sp80;
+    ?32 sp84;
+    ?32 sp88;
+    ?32 sp8C;
+    s8 sp90;
+    ?32 sp98;
+    ?32 sp9C;
+    ?32 spA0;
+    ?32 spA4;
+    ?32 spA8;
+    ?32 spAC;
+    ?32 spB4;
+    ?32 spBC;
+    s8 spC0;
+    s32 spCC;
+    s32 spD4;
+    ?32 spD8;
+    ?32 spDC;
+    ?32 spE0;
+    ? temp_ret;
+    u32 temp_v1;
+    s32 temp_v0;
+    ? temp_ret_2;
+    s32 temp_v0_2;
+    ? temp_ret_3;
+    ? temp_ret_4;
+    s32 temp_v1_2;
+    ? temp_ret_5;
+    ? temp_ret_6;
+    void *temp_a1;
+    s32 temp_v0_3;
 
+    // Node 0
+    if (bootswitch_sound == 0)
+    {
+        // Node 1
+        temp_ret = allocate_bytes_in_bank(0x2e000, 6);
+        // Node 2
+        temp_v1 = (temp_ret + 1);
+        temp_v1->unk-1 = (u8)0;
+        if (temp_v1 < (u32) (temp_ret + 0x2e000))
+        {
+            goto loop_2;
+        }
+        // Node 3
+        alHeapInit(&D_80063710, temp_ret, 0x2e000);
+        temp_v0 = (&_sfxtblSegmentRomStart - &_sfxctlSegmentRomStart);
+        sp38 = temp_v0;
+        temp_ret_2 = alHeapDBAlloc(0, 0, &D_80063710, 1, temp_v0);
+        spD4 = temp_ret_2;
+        romCopy(temp_ret_2, &_sfxctlSegmentRomStart, sp38);
+        alBnkfNew(spD4, &_sfxtblSegmentRomStart);
+        temp_v0_2 = (&_instrumentstblSegmentRomStart - &_instrumentsctlSegmentRomStart);
+        sp38 = temp_v0_2;
+        ptr_sfx_buf = (?32) spD4->unk4;
+        temp_ret_3 = alHeapDBAlloc(0, 0, &D_80063710, 1, temp_v0_2);
+        spCC = temp_ret_3;
+        romCopy(temp_ret_3, &_instrumentsctlSegmentRomStart, sp38);
+        alBnkfNew(spCC, &_instrumentstblSegmentRomStart);
+        D_80063724 = (?32) spCC->unk4;
+        temp_ret_4 = alHeapDBAlloc(0, 0, &D_80063710, 1, 0x10);
+        ptr_musicdatatable = temp_ret_4;
+        romCopy(temp_ret_4, &_musicsampletblSegmentRomStart, 0x10);
+        temp_v1_2 = ((*ptr_musicdatatable * 8) + 4);
+        sp40 = temp_v1_2;
+        temp_ret_5 = alHeapDBAlloc(0, 0, &D_80063710, 1, temp_v1_2);
+        ptr_musicdatatable = temp_ret_5;
+        romCopy(temp_ret_5, sp38, (((sp40 + 0xf) | 0xf) ^ 0xf), &ptr_musicdatatable);
+        audio_related(ptr_musicdatatable, &_musicsampletblSegmentRomStart);
+        D_80063838 = alHeapDBAlloc(0, 0, &D_80063710, 1, 0x18c8);
+        temp_ret_6 = alHeapDBAlloc(0, 0, &D_80063710, 1, 0x1770);
+        D_8006383C = temp_ret_6;
+        D_80063840 = (s32) (temp_ret_6 + 0x7d0);
+        // Node 4
+        temp_a1 = (&D_800637B8 + 2);
+        D_80063738 = (s16) ptr_musicdatatable->unk8;
+        temp_v0_3 = (ptr_musicdatatable->unk8 & 0xffff);
+        temp_a1->unk-2 = (s16) (ptr_musicdatatable + 8)->unk2;
+        if ((temp_v0_3 & 1) != 0)
+        {
+            // Node 5
+            D_80063738 = (s16) (temp_v0_3 + 1);
+        }
+        // Node 6
+        if (temp_a1 != &D_80063836)
+        {
+            goto loop_4;
+        }
+        // Node 7
+        spA4 = 0;
+        spA8 = 0x18;
+        spAC = 0x80;
+        spB4 = 0;
+        spC0 = (u8)6;
+        spBC = 0;
+        init_audi(&spA4, temp_a1, &D_80063836, &D_8006383C);
+        sp88 = 0x10;
+        sp8C = 0x40;
+        sp90 = (u8)0x10;
+        sp98 = 0;
+        sp9C = 0;
+        spA0 = 0;
+        sp6C = 0x10;
+        sp70 = 0x40;
+        sp74 = (u8)0x10;
+        sp7C = 0;
+        sp80 = 0;
+        sp84 = 0;
+        sp50 = 0x10;
+        sp54 = 0x40;
+        sp58 = (u8)0x10;
+        sp60 = 0;
+        sp64 = 0;
+        sp68 = 0;
+        ptr_1st_music_ctrl_block = alHeapDBAlloc(0, 0, &D_80063710, 1, 0x7c);
+        ptr_2nd_music_ctrl_block = alHeapDBAlloc(0, 0, &D_80063710, 1, 0x7c);
+        ptr_3rd_music_ctrl_block = alHeapDBAlloc(0, 0, &D_80063710, 1, 0x7c);
+        alCSPNew(ptr_1st_music_ctrl_block, &sp88);
+        alSeqpSetBank(ptr_1st_music_ctrl_block, D_80063724);
+        alCSPNew(ptr_2nd_music_ctrl_block, &sp6C);
+        alSeqpSetBank(ptr_2nd_music_ctrl_block, D_80063724);
+        alCSPNew(ptr_3rd_music_ctrl_block, &sp50);
+        alSeqpSetBank(ptr_3rd_music_ctrl_block, D_80063724);
+        spDC = 0x40;
+        spD8 = 0x40;
+        spE0 = 8;
+        music_related_16(&spD8);
+        startaudithread();
+        return;
+        // (possible return value: startaudithread())
+    }
+    // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -385,9 +541,58 @@ glabel setupaudio
 
 
 #ifdef NONMATCHING
-void musicTrack1Play(void) {
+void musicTrack1Play(s32 arg0, s32 arg852) {
+    ? sp34;
+    s32 sp2140;
+    void *temp_t2;
+    s32 temp_v0;
+    s32 temp_a2;
 
+    // Node 0
+    if (bootswitch_sound == 0)
+    {
+        // Node 1
+        if (music1_track_num != 0)
+        {
+            // Node 2
+            musicTrack1Stop();
+        }
+        // Node 3
+        music1_track_num = arg852;
+        if (alCSPGetState(ptr_1st_music_ctrl_block) != 0)
+        {
+            loop_4:
+            // Node 4
+            if (alCSPGetState(ptr_1st_music_ctrl_block) != 0)
+            {
+                goto loop_4;
+            }
+        }
+        // Node 5
+        temp_t2 = (ptr_musicdatatable + (music1_track_num * 8));
+        temp_v0 = (music1_track_num * 2);
+        if ((u32) temp_t2->unk4 < 0x10000U)
+        {
+            // Node 6
+            musicTrack1Play(1, temp_t2->unk4, music1_track_num);
+            return;
+            // (possible return value: musicTrack1Play(1, temp_t2->unk4, music1_track_num))
+        }
+        // Node 7
+        temp_a2 = (((*(&D_800637B8 + temp_v0) + 0xf) | 0xf) ^ 0xf);
+        sp2140 = (s32) D_80063838;
+        romCopy(((D_80063838 + (((((0x80060000 + temp_v0)->unk3738 + 0xf) | 0xf) ^ 0xf) + 0x40)) - temp_a2), temp_t2->unk4, temp_a2, music1_track_num);
+        decompressdata(sp28, sp2140, &sp34);
+        alCSeqNew(&D_80063860, D_80063838);
+        alCSPSetSeq(ptr_1st_music_ctrl_block, &D_80063860);
+        musicTrack1Vol((musicTrack1Length() & 0xffff));
+        alCSPPlay(ptr_1st_music_ctrl_block);
+    }
+    // Node 8
+    return;
+    // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -574,9 +779,21 @@ glabel musicTrack1Vol
 
 
 #ifdef NONMATCHING
-void musicTrack1Tempo(void) {
-
+void *musicTrack1Tempo(void) {
+    // Node 0
+    *(&music_array_tempo_maybe + (music1_track_num * 2)) = musicTrack1Length();
+    if (music_array_tempo_maybe >= 0)
+    {
+        loop_1:
+        // Node 1
+        if (music_array_tempo_maybe.unk2 >= 0)
+        {
+            goto loop_1;
+        }
+    }
+    // (possible return value: &music_array_tempo_maybe)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -750,9 +967,58 @@ glabel music_related_3
 
 
 #ifdef NONMATCHING
-void musicTrack2Play(void) {
+void musicTrack2Play(s32 arg0, s32 arg852) {
+    ? sp34;
+    s32 sp2140;
+    void *temp_t2;
+    s32 temp_v0;
+    s32 temp_a2;
 
+    // Node 0
+    if (bootswitch_sound == 0)
+    {
+        // Node 1
+        if (music2_track_num != 0)
+        {
+            // Node 2
+            musicTrack2Stop();
+        }
+        // Node 3
+        music2_track_num = arg852;
+        if (alCSPGetState(ptr_2nd_music_ctrl_block) != 0)
+        {
+            loop_4:
+            // Node 4
+            if (alCSPGetState(ptr_2nd_music_ctrl_block) != 0)
+            {
+                goto loop_4;
+            }
+        }
+        // Node 5
+        temp_t2 = (ptr_musicdatatable + (music2_track_num * 8));
+        temp_v0 = (music2_track_num * 2);
+        if ((u32) temp_t2->unk4 < 0x10000U)
+        {
+            // Node 6
+            musicTrack2Play(1, temp_t2->unk4, music2_track_num);
+            return;
+            // (possible return value: musicTrack2Play(1, temp_t2->unk4, music2_track_num))
+        }
+        // Node 7
+        temp_a2 = (((*(&D_800637B8 + temp_v0) + 0xf) | 0xf) ^ 0xf);
+        sp2140 = (s32) D_8006383C;
+        romCopy(((D_8006383C + (((((0x80060000 + temp_v0)->unk3738 + 0xf) | 0xf) ^ 0xf) + 0x40)) - temp_a2), temp_t2->unk4, temp_a2, music2_track_num);
+        decompressdata(sp28, sp2140, &sp34);
+        alCSeqNew(&D_80063958, D_8006383C);
+        alCSPSetSeq(ptr_2nd_music_ctrl_block, &D_80063958);
+        musicTrack2Vol((musicTrack2Length() & 0xffff));
+        alCSPPlay(ptr_2nd_music_ctrl_block);
+    }
+    // Node 8
+    return;
+    // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -987,9 +1253,21 @@ glabel musicTrack2Vol
 
 
 #ifdef NONMATCHING
-void musicTrack2Tempo(void) {
-
+void *musicTrack2Tempo(void) {
+    // Node 0
+    *(&music_array_tempo_maybe + (music2_track_num * 2)) = musicTrack2Length();
+    if (music_array_tempo_maybe >= 0)
+    {
+        loop_1:
+        // Node 1
+        if (music_array_tempo_maybe.unk2 >= 0)
+        {
+            goto loop_1;
+        }
+    }
+    // (possible return value: &music_array_tempo_maybe)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1162,9 +1440,58 @@ glabel music_related_8
 
 
 #ifdef NONMATCHING
-void music_related_3rd_block(void) {
+void music_related_3rd_block(s32 arg0, s32 arg852) {
+    ? sp34;
+    s32 sp2140;
+    void *temp_t2;
+    s32 temp_v0;
+    s32 temp_a2;
 
+    // Node 0
+    if (bootswitch_sound == 0)
+    {
+        // Node 1
+        if (music3_track_num != 0)
+        {
+            // Node 2
+            music_related_3rd_block_0();
+        }
+        // Node 3
+        music3_track_num = arg852;
+        if (alCSPGetState(ptr_3rd_music_ctrl_block) != 0)
+        {
+            loop_4:
+            // Node 4
+            if (alCSPGetState(ptr_3rd_music_ctrl_block) != 0)
+            {
+                goto loop_4;
+            }
+        }
+        // Node 5
+        temp_t2 = (ptr_musicdatatable + (music3_track_num * 8));
+        temp_v0 = (music3_track_num * 2);
+        if ((u32) temp_t2->unk4 < 0x10000U)
+        {
+            // Node 6
+            music_related_3rd_block(1, temp_t2->unk4, music3_track_num);
+            return;
+            // (possible return value: music_related_3rd_block(1, temp_t2->unk4, music3_track_num))
+        }
+        // Node 7
+        temp_a2 = ((((0x80060000 + temp_v0)->unk37B8 + 0xf) | 0xf) ^ 0xf);
+        sp2140 = (s32) D_80063840;
+        romCopy(((D_80063840 + (((((0x80060000 + temp_v0)->unk3738 + 0xf) | 0xf) ^ 0xf) + 0x40)) - temp_a2), temp_t2->unk4, temp_a2, music3_track_num);
+        decompressdata(sp28, sp2140, &sp34);
+        alCSeqNew(&D_80063A50, D_80063840);
+        alCSPSetSeq(ptr_3rd_music_ctrl_block, &D_80063A50);
+        music_related_3rd_block_1((get_music3len() & 0xffff));
+        alCSPPlay(ptr_3rd_music_ctrl_block);
+    }
+    // Node 8
+    return;
+    // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1399,9 +1726,21 @@ glabel music_related_3rd_block_1
 
 
 #ifdef NONMATCHING
-void music_related_10(void) {
-
+void *music_related_10(void) {
+    // Node 0
+    *(&music_array_tempo_maybe + (music3_track_num * 2)) = get_music3len();
+    if (music_array_tempo_maybe >= 0)
+    {
+        loop_1:
+        // Node 1
+        if (music_array_tempo_maybe.unk2 >= 0)
+        {
+            goto loop_1;
+        }
+    }
+    // (possible return value: &music_array_tempo_maybe)
 }
+
 #else
 GLOBAL_ASM(
 .text

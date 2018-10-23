@@ -39,8 +39,28 @@ s32 D_80023234[] = { 1, 0, 0, 0 };
 
 #ifdef NONMATCHING
 void displaylist_related(void) {
+    void *temp_v0;
 
+    // Node 0
+    displaylist_0 = 0xb8000000;
+    displaylist_0.unk4 = 0;
+    displaylist_0.unk850 = 0xb8000000;
+    displaylist_0.unk854 = 0;
+    displaylist_bank = 0;
+    // Node 1
+    temp_v0 = (&dword_CODE_bss_800607D0 + 4);
+    (&dword_CODE_bss_800607B0 + 4)->unk-4 = 0;
+    temp_v0->unk-4 = 1;
+    if (temp_v0 != &dword_CODE_bss_800607DC)
+    {
+        goto loop_1;
+    }
+    // Node 2
+    video_related_2(1, &dword_CODE_bss_800607DC, 0xb8000000);
+    return;
+    // (possible return value: video_related_2(1, &dword_CODE_bss_800607DC, 0xb8000000))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -82,9 +102,32 @@ glabel displaylist_related
 
 
 #ifdef NONMATCHING
-void video_related_1(void) {
+void *video_related_1(void) {
+    s32 temp_t7;
+    s32 temp_t8;
 
+    // Node 0
+    dword_CODE_bss_800604A8 = osGetCount();
+    // Node 1
+    temp_t7 = (dword_CODE_bss_800607D0 + 0x1f);
+    temp_t8 = (temp_t7 & 0x1f);
+    if (temp_t7 < 0)
+    {
+        // Node 2
+        if (temp_t8 != 0)
+        {
+            // Node 3
+        }
+    }
+    // Node 4
+    (&dword_CODE_bss_800607C0 + 4)->unk-4 = temp_t8;
+    if ((&dword_CODE_bss_800607D0 + 4) != &dword_CODE_bss_800607DC)
+    {
+        goto loop_1;
+    }
+    // (possible return value: &dword_CODE_bss_800607DC)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -124,9 +167,18 @@ glabel video_related_1
 
 
 #ifdef NONMATCHING
-void video_related_2(void) {
-
+void *video_related_2(void) {
+    // Node 0
+    dword_CODE_bss_800604A4 = (?32) dword_CODE_bss_800604A8;
+    // Node 1
+    (&dword_CODE_bss_800607B0 + 4)->unk-4 = (?32) dword_CODE_bss_800607C0;
+    if ((&dword_CODE_bss_800607C0 + 4) != &dword_CODE_bss_800607CC)
+    {
+        goto loop_1;
+    }
+    // (possible return value: &dword_CODE_bss_800607CC)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -155,9 +207,56 @@ glabel video_related_2
 
 
 #ifdef NONMATCHING
-void video_related_3(void) {
+void video_related_3(s32 arg0, s32 arg10) {
+    void *sp1C;
+    void *sp24;
+    void *sp2C;
+    s32 sp34;
+    s32 temp_a3;
+    s32 temp_v1;
+    void *temp_t0;
+    s32 temp_a0;
+    void *temp_v0;
+    s32 temp_a1;
 
+    // Node 0
+    temp_a3 = (arg10 & 0xffff);
+    temp_v1 = (temp_a3 * 4);
+    temp_t0 = (temp_v1 + &dword_CODE_bss_800607D0);
+    temp_a0 = (arg10 >> 0x10);
+    sp34 = osSetIntMask(1);
+    if (temp_a0 == 3)
+    {
+        // Node 1
+    }
+    else
+    {
+        // Node 2
+        if (temp_a0 == 6)
+        {
+            // Node 3
+        }
+    }
+    // Node 4
+    temp_v0 = (((temp_a3 << 8) + (*temp_t0 * 8)) + &dword_CODE_bss_800604B0);
+    sp2C = temp_v0;
+    *temp_v0 = temp_a0;
+    sp24 = (void *) (temp_v1 + &dword_CODE_bss_8005F3F0);
+    sp1C = temp_t0;
+    sp2C->unk4 = osGetCount(temp_a0, *temp_t0, temp_a0, temp_a3);
+    temp_a1 = (sp30 + 1);
+    *sp24 = sp38;
+    if (temp_a1 >= 0x20)
+    {
+        // Node 5
+    }
+    // Node 6
+    *sp1C = temp_a1;
+    osSetIntMask(sp34, temp_a1, sp38);
+    return;
+    // (possible return value: osSetIntMask(sp34, temp_a1, sp38))
 }
+
 #else
 GLOBAL_ASM(
 .text

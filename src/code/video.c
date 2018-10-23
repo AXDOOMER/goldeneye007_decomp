@@ -140,8 +140,28 @@ glabel init_video_settings
 
 
 #ifdef NONMATCHING
-void init_both_video_buffers(void) {
+void *init_both_video_buffers(void) {
+    void *temp_v0;
+    void *temp_v1;
 
+    // Node 0
+    remove_viewport_buffer();
+    // Node 1
+    temp_v0 = (&vid_buff_1 + 0);
+    *temp_v0 = (u8)0;
+    temp_v1 = (&vid_buff_2 + 0);
+    *temp_v1 = (u8)0;
+    temp_v0->unk1 = (u8)0;
+    temp_v1->unk1 = (u8)0;
+    temp_v0->unk2 = (u8)0;
+    temp_v1->unk2 = (u8)0;
+    temp_v0->unk3 = (u8)0;
+    temp_v1->unk3 = (u8)0;
+    if ((0 + 4) != 0x25800)
+    {
+        goto loop_1;
+    }
+    // (possible return value: temp_v0)
 }
 #else
 GLOBAL_ASM(
@@ -959,9 +979,17 @@ glabel video_related_9
 
 
 #ifdef NONMATCHING
-void video_related_A(void) {
-
+void video_related_A(s32 arg0) {
+    // Node 0
+    // Node 1
+    osRecvMesg(&vi_c_debug_MQ, 0, 1);
+    if ((arg0 + -1) > 0)
+    {
+        goto loop_1;
+    }
+    // (possible return value: osRecvMesg(&vi_c_debug_MQ, 0, 1))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1039,16 +1067,20 @@ glabel video_related_B
 
 #ifdef NONMATCHING
 void coloroutputmode_1(void) {
-
+    // Node 0
+    coloroutputmode = 1;
+    return;
+    // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel coloroutputmode_1
 /* 004800 70003C00 240E0001 */  li    $t6, 1
-/* 004804 70003C04 3C018002 */  lui   $at, 0x8002
+/* 004804 70003C04 3C018002 */  lui   $at, %hi(coloroutputmode)
 /* 004808 70003C08 03E00008 */  jr    $ra
-/* 00480C 70003C0C AC2E32AC */   sw    $t6, 0x32ac($at)
+/* 00480C 70003C0C AC2E32AC */   sw    $t6, %lo(coloroutputmode)($at)
 )
 #endif
 
@@ -1057,15 +1089,19 @@ glabel coloroutputmode_1
 
 #ifdef NONMATCHING
 void coloroutputmode_0(void) {
-
+    // Node 0
+    coloroutputmode = 0;
+    return;
+    // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel coloroutputmode_0
-/* 004810 70003C10 3C018002 */  lui   $at, 0x8002
+/* 004810 70003C10 3C018002 */  lui   $at, %hi(coloroutputmode)
 /* 004814 70003C14 03E00008 */  jr    $ra
-/* 004818 70003C18 AC2032AC */   sw    $zero, 0x32ac($at)
+/* 004818 70003C18 AC2032AC */   sw    $zero, %lo(coloroutputmode)($at)
 )
 #endif
 
@@ -1074,8 +1110,9 @@ glabel coloroutputmode_0
 
 #ifdef NONMATCHING
 void get_video2buf_offset28(void) {
-
+    // (possible return value: ptr_video_settings2->unk28)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1092,8 +1129,9 @@ glabel get_video2buf_offset28
 
 #ifdef NONMATCHING
 void get_video1buf_offset28(void) {
-
+    // (possible return value: ptr_video_settings1->unk28)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1109,9 +1147,13 @@ glabel get_video1buf_offset28
 
 
 #ifdef NONMATCHING
-void set_video2buf_offset28(void) {
-
+void set_video2buf_offset28(s32 arg0) {
+    // Node 0
+    ptr_video_settings2->unk28 = arg0;
+    return;
+    // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1128,15 +1170,16 @@ glabel set_video2buf_offset28
 
 #ifdef NONMATCHING
 void video_related_E(void) {
-
+    // (possible return value: dword_CODE_bss_80060824)
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel video_related_E
-/* 00484C 70003C4C 3C028006 */  lui   $v0, 0x8006
+/* 00484C 70003C4C 3C028006 */  lui   $v0, %hi(dword_CODE_bss_80060824)
 /* 004850 70003C50 03E00008 */  jr    $ra
-/* 004854 70003C54 94420824 */   lhu   $v0, 0x824($v0)
+/* 004854 70003C54 94420824 */   lhu   $v0, %lo(dword_CODE_bss_80060824)($v0)
 )
 #endif
 
@@ -1442,9 +1485,113 @@ glabel insert_generic_fillrect
 
 
 #ifdef NONMATCHING
-void video_related_11(void) {
+void *video_related_11(void *arg0) {
+    s16 sp20;
+    s16 sp22;
+    void *sp60;
+    void *temp_s0;
+    void *temp_s0_2;
+    void *temp_s0_4;
+    void *temp_s0_3;
+    void *temp_s0_7;
+    void *temp_s0_5;
+    void *temp_s0_6;
+    void *temp_s0_8;
+    void *temp_s0_9;
+    void *temp_s0_10;
 
+    // Node 0
+    temp_s0 = (arg0 + 8);
+    arg0->unk4 = 0x300000;
+    *arg0 = 0xba001402;
+    *temp_s0 = 0xed000000;
+    sp60 = temp_s0;
+    temp_s0_2 = (temp_s0 + 8);
+    temp_s0_4 = (temp_s0_2 + 8);
+    sp60->unk4 = (s32) (((s32) ((f32) get_video2_settings_txtClipH() * 4.0f) & 0xfff) | (((s32) ((f32) ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) * 4.0f) & 0xfff) << 0xc));
+    temp_s0_2->unk4 = 0x10001;
+    *temp_s0_2 = 0xf7000000;
+    if (get_video2_settings_uly() > 0)
+    {
+        // Node 1
+        if (sub_GAME_7F09B4D8(get_cur_playernum()) == 0)
+        {
+            // Node 2
+            temp_s0_10 = (temp_s0_4 + 8);
+            *sp58 = (s32) (((((get_video2_settings_uly() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
+            sp58->unk4 = 0;
+            *temp_s0_10 = 0xe7000000;
+            temp_s0_10->unk4 = 0;
+        }
+    }
+    // Node 3
+    if (get_num_players() == 1)
+    {
+        // Node 4
+        sp22 = get_video2_settings_height();
+        if ((((s32) (get_video2_settings_uly() << 0x10) >> 0x10) + sp22) < get_video2_settings_txtClipH())
+        {
+            // Node 5
+            temp_s0_9 = (temp_s0_4 + 8);
+            *sp50 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
+            sp50->unk4 = (s32) (((get_video2_settings_height() + ((s32) (get_video2_settings_uly() << 0x10) >> 0x10)) & 0x3ff) * 4);
+            temp_s0_9->unk4 = 0;
+            *temp_s0_9 = 0xe7000000;
+            return;
+            // (possible return value: temp_s0_4)
+        }
+    }
+    else
+    {
+        // Node 6
+        if (sub_GAME_7F09B4D8(get_cur_playernum()) == 0)
+        {
+            // Node 7
+            sp20 = get_video2_settings_height();
+            sp22 = get_video2_settings_height();
+            if (((((s32) (get_video2_settings_uly() << 0x10) >> 0x10) + sp22) + sp20) < get_video2_settings_txtClipH())
+            {
+                // Node 8
+                temp_s0_8 = (temp_s0_4 + 8);
+                *sp48 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
+                sp22 = get_video2_settings_height();
+                sp48->unk4 = (s32) ((((get_video2_settings_height() + ((s32) (get_video2_settings_uly() << 0x10) >> 0x10)) + sp22) & 0x3ff) * 4);
+                *temp_s0_8 = 0xe7000000;
+                temp_s0_8->unk4 = 0;
+            }
+            // Node 9
+            temp_s0_3 = (temp_s0_4 + 8);
+            temp_s0_4->unk4 = 0x1dc;
+            *temp_s0_4 = (s32) (((((get_video2_settings_txtClipW() + -1) & 0x3ff) << 0xe) | 0xf6000000) | 0x1e0);
+            *temp_s0_3 = 0xe7000000;
+            temp_s0_3->unk4 = 0;
+            temp_s0_7 = (temp_s0_3 + 8);
+            if (get_num_players() >= 3)
+            {
+                // Node 10
+                temp_s0_6 = (temp_s0_7 + 8);
+                *temp_s0_7 = (s32) ((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6280000);
+                temp_s0_7->unk4 = 0x27c000;
+                *temp_s0_6 = 0xe7000000;
+                temp_s0_6->unk4 = 0;
+            }
+            // Node 11
+            if (get_num_players() == 3)
+            {
+                // Node 12
+                temp_s0_5 = (temp_s0_7 + 8);
+                *sp30 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
+                sp30->unk4 = 0x2841e4;
+                *temp_s0_5 = 0xe7000000;
+                temp_s0_5->unk4 = 0;
+                return;
+                // (possible return value: temp_s0_4)
+            }
+        }
+    }
+    // (possible return value: temp_s0_4)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1723,58 +1870,68 @@ glabel video_related_11
 #endif
 
 #ifdef NONMATCHING
-void set_video_mp_related_800232A0(void) {
-
+void set_video_mp_related_800232A0(s32 arg0) {
+    // Node 0
+    video_mp_related_800232A0 = arg0;
+    return;
+    // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel set_video_mp_related_800232A0
-/* 004F84 70004384 3C018002 */  lui   $at, 0x8002
+/* 004F84 70004384 3C018002 */  lui   $at, %hi(video_mp_related_800232A0)
 /* 004F88 70004388 03E00008 */  jr    $ra
-/* 004F8C 7000438C AC2432A0 */   sw    $a0, 0x32a0($at)
+/* 004F8C 7000438C AC2432A0 */   sw    $a0, %lo(video_mp_related_800232A0)($at)
 )
 #endif
 
 #ifdef NONMATCHING
 void get_video_mp_related_800232A0(void) {
-
+    // (possible return value: video_mp_related_800232A0)
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel get_video_mp_related_800232A0
-/* 004F90 70004390 3C028002 */  lui   $v0, 0x8002
+/* 004F90 70004390 3C028002 */  lui   $v0, %hi(video_mp_related_800232A0)
 /* 004F94 70004394 03E00008 */  jr    $ra
-/* 004F98 70004398 8C4232A0 */   lw    $v0, 0x32a0($v0)
+/* 004F98 70004398 8C4232A0 */   lw    $v0, %lo(video_mp_related_800232A0)($v0)
 )
 #endif
 
 #ifdef NONMATCHING
-void set_video_mp_related_8002329C(void) {
-
+void set_video_mp_related_8002329C(s32 arg0) {
+    // Node 0
+    video_mp_related_8002329C = arg0;
+    return;
+    // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel set_video_mp_related_8002329C
-/* 004F9C 7000439C 3C018002 */  lui   $at, 0x8002
+/* 004F9C 7000439C 3C018002 */  lui   $at, %hi(video_mp_related_8002329C)
 /* 004FA0 700043A0 03E00008 */  jr    $ra
-/* 004FA4 700043A4 AC24329C */   sw    $a0, 0x329c($at)
+/* 004FA4 700043A4 AC24329C */   sw    $a0, %lo(video_mp_related_8002329C)($at)
 )
 #endif
 
 #ifdef NONMATCHING
 void get_video_mp_related_8002329C(void) {
-
+    // (possible return value: video_mp_related_8002329C)
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel get_video_mp_related_8002329C
-/* 004FA8 700043A8 3C028002 */  lui   $v0, 0x8002
+/* 004FA8 700043A8 3C028002 */  lui   $v0, %hi(video_mp_related_8002329C)
 /* 004FAC 700043AC 03E00008 */  jr    $ra
-/* 004FB0 700043B0 8C42329C */   lw    $v0, 0x329c($v0)
+/* 004FB0 700043B0 8C42329C */   lw    $v0, %lo(video_mp_related_8002329C)($v0)
 )
 #endif
 
@@ -1806,8 +1963,9 @@ glabel set_video2_settings_offset_18_1A
 
 #ifdef NONMATCHING
 void get_video2_settings_offset_18(void) {
-
+    // (possible return value: ptr_video_settings2->unk18)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1821,8 +1979,9 @@ glabel get_video2_settings_offset_18
 
 #ifdef NONMATCHING
 void get_video2_settings_offset_1A(void) {
-
+    // (possible return value: ptr_video_settings2->unk1A)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1835,9 +1994,14 @@ glabel get_video2_settings_offset_1A
 #endif
 
 #ifdef NONMATCHING
-void set_video2_text_clip_size(void) {
-
+void *set_video2_text_clip_size(s16 arg0, s16 arg1) {
+    // Node 0
+    ptr_video_settings2->unk4 = arg0;
+    ptr_video_settings2->unk6 = arg1;
+    return;
+    // (possible return value: &ptr_video_settings2)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1856,8 +2020,9 @@ glabel set_video2_text_clip_size
 
 #ifdef NONMATCHING
 void get_video2_settings_txtClipW(void) {
-
+    // (possible return value: ptr_video_settings2->unk4)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1871,8 +2036,9 @@ glabel get_video2_settings_txtClipW
 
 #ifdef NONMATCHING
 void get_video2_settings_txtClipH(void) {
-
+    // (possible return value: ptr_video_settings2->unk6)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1949,8 +2115,9 @@ glabel get_video2_settings_width
 
 #ifdef NONMATCHING
 void get_video2_settings_height(void) {
-
+    // (possible return value: ptr_video_settings2->unk1E)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2006,8 +2173,9 @@ glabel set_video2_ulx_uly
 
 #ifdef NONMATCHING
 void get_video2_settings_ulx(void) {
-
+    // (possible return value: ptr_video_settings2->unk20)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2021,8 +2189,9 @@ glabel get_video2_settings_ulx
 
 #ifdef NONMATCHING
 void get_video2_settings_uly(void) {
-
+    // (possible return value: ptr_video_settings2->unk22)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2035,9 +2204,13 @@ glabel get_video2_settings_uly
 #endif
 
 #ifdef NONMATCHING
-void set_video2_settings_offset_24(void) {
-
+void set_video2_settings_offset_24(s32 arg0) {
+    // Node 0
+    ptr_video_settings2->unk24 = arg0;
+    return;
+    // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2050,9 +2223,15 @@ glabel set_video2_settings_offset_24
 #endif
 
 #ifdef NONMATCHING
-void video_related_1F(void) {
-
+void video_related_1F(f32 arg0, f32 arg6) {
+    // Node 0
+    ptr_video_settings2->unk8 = arg6;
+    sub_GAME_7F077C30(ptr_video_settings2->unk10, ptr_video_settings2->unk8, ptr_video_settings2->unkC);
+    sub_GAME_7F077C5C();
+    return;
+    // (possible return value: sub_GAME_7F077C5C())
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2080,9 +2259,15 @@ glabel video_related_1F
 #endif
 
 #ifdef NONMATCHING
-void video_related_21(void) {
-
+void video_related_21(f32 arg0, f32 arg6) {
+    // Node 0
+    ptr_video_settings2->unkC = arg6;
+    sub_GAME_7F077C30(ptr_video_settings2->unk10, ptr_video_settings2->unk8, ptr_video_settings2->unkC);
+    sub_GAME_7F077C5C();
+    return;
+    // (possible return value: sub_GAME_7F077C5C())
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2111,8 +2296,9 @@ glabel video_related_21
 
 #ifdef NONMATCHING
 void video_related_23(void) {
-
+    // (possible return value: ptr_video_settings2->unk8)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2125,9 +2311,16 @@ glabel video_related_23
 #endif
 
 #ifdef NONMATCHING
-void video_related_24(void) {
-
+void video_related_24(f32 arg0, f32 arg1, f32 arg6, f32 arg7) {
+    // Node 0
+    ptr_video_settings2->unk8 = arg7;
+    ptr_video_settings2->unkC = (f32) (arg6 / arg7);
+    sub_GAME_7F077C30(ptr_video_settings2->unk10, ptr_video_settings2->unk8, ptr_video_settings2->unkC);
+    sub_GAME_7F077C5C();
+    return;
+    // (possible return value: sub_GAME_7F077C5C())
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2161,9 +2354,16 @@ glabel video_related_24
 #endif
 
 #ifdef NONMATCHING
-void set_page_height(void) {
-
+void set_page_height(f32 arg0, f32 arg1, f32 arg6, f32 arg7) {
+    // Node 0
+    ptr_video_settings2->unk10 = arg6;
+    ptr_video_settings2->unk14 = arg7;
+    sub_GAME_7F077C30(ptr_video_settings2->unk10, ptr_video_settings2->unk8, ptr_video_settings2->unkC);
+    sub_GAME_7F077C5C();
+    return;
+    // (possible return value: sub_GAME_7F077C5C())
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2195,9 +2395,14 @@ glabel set_page_height
 #endif
 
 #ifdef NONMATCHING
-void video_related_27(void) {
-
+void *video_related_27(void *arg0) {
+    // Node 0
+    *arg0 = (f32) ptr_video_settings2->unk10;
+    arg0->unk4 = (f32) ptr_video_settings2->unk14;
+    return;
+    // (possible return value: &ptr_video_settings2)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2215,9 +2420,24 @@ glabel video_related_27
 #endif
 
 #ifdef NONMATCHING
-void set_setfillcolor(void) {
+s32 set_setfillcolor(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 temp_t5;
 
+    // Node 0
+    if (coloroutputmode != 0)
+    {
+        // Node 1
+        temp_t5 = (((((arg1 << 8) & 0xf800) | ((arg2 * 8) & 0x7c0)) | ((arg3 >> 2) & 0x3e)) | 1);
+        *arg0 = 0xf7000000;
+        arg0->unk4 = (s32) ((temp_t5 << 0x10) | temp_t5);
+    }
+    // Node 2
+    arg0->unk4 = (s32) ((((arg1 << 0x18) | (arg2 << 0x10)) | (arg3 << 8)) | 0xff);
+    *arg0 = 0xf7000000;
+    return;
+    // (possible return value: (arg0 + 8))
 }
+
 #else
 GLOBAL_ASM(
 .text

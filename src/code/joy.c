@@ -85,8 +85,50 @@ s32 D_80026970 = 0;
 
 
 #ifdef NONMATCHING
-void something_with_joy_c_debug(void) {
+void *something_with_joy_c_debug(void) {
+    void *temp_v0;
+    void *temp_v0_2;
 
+    // Node 0
+    get_ptr_debug_notice_list_entry(&D_800268C0, &aJoy_c_debug);
+    osCreateMesgQueue(&dword_CODE_bss_80065370, &dword_CODE_bss_80065368, 1);
+    osCreateMesgQueue(&dword_CODE_bss_80065390, &dword_CODE_bss_80065388, 1);
+    osCreateMesgQueue(&dword_CODE_bss_800653B0, &dword_CODE_bss_800653A8, 1);
+    osCreateMesgQueue(&dword_CODE_bss_800653D0, &dword_CODE_bss_800653C8, 1);
+    osCreateMesgQueue(&interrupt5_thread_list_buf, &dword_CODE_bss_80065328, 0xa);
+    osSetEventMesg(5, &interrupt5_thread_list_buf, 0);
+    D_80026918 = 1;
+    disable_all_rumble = 0;
+    temp_v0 = (0x80060000 + 0x4f30);
+    ptr_to_tlb_ramrom_record = 0;
+    // Node 1
+    temp_v0->unk1E0 = 0;
+    temp_v0->unk1E4 = 0;
+    temp_v0->unk1E8 = 0;
+    temp_v0->unk1EC = 0;
+    temp_v0->unk1F8 = -1;
+    temp_v0_2 = (temp_v0 + 0x1fc);
+    temp_v0_2->unk-1E6 = (u8)0;
+    temp_v0_2->unk-1E7 = (u8)0;
+    temp_v0_2->unk-1E8 = (u8)0;
+    temp_v0_2->unk-1EA = (u16)0;
+    temp_v0_2->unk-1EC = (u8)0;
+    temp_v0_2->unk-1ED = (u8)0;
+    temp_v0_2->unk-1EE = (u8)0;
+    temp_v0_2->unk-1F0 = (u16)0;
+    temp_v0_2->unk-1F2 = (u8)0;
+    temp_v0_2->unk-1F3 = (u8)0;
+    temp_v0_2->unk-1F4 = (u8)0;
+    temp_v0_2->unk-1F6 = (u16)0;
+    temp_v0_2->unk-1FC = (u16)0;
+    temp_v0_2->unk-1FA = (u8)0;
+    temp_v0_2->unk-1F9 = (u8)0;
+    temp_v0_2->unk-1F8 = (u8)0;
+    if (temp_v0_2 != &dword_CODE_bss_80065328)
+    {
+        goto loop_1;
+    }
+    // (possible return value: temp_v0_2)
 }
 #else
 GLOBAL_ASM(
@@ -585,9 +627,71 @@ glabel get_num_controllers_plugged_in
 
 
 #ifdef NONMATCHING
-void controller_rumble_related(void) {
+s32 controller_rumble_related(void) {
+    s32 temp_t1;
+    s32 temp_a0;
 
+    // Node 0
+    // Node 1
+    if (controller_1_rumble_state != controller_1_rumble_pulse)
+    {
+        // Node 2
+        temp_a0 = ((0 * 0x68) + &player1_controller_packet);
+        if (1 == controller_1_rumble_pulse)
+        {
+            // Node 3
+            if (controller_7000CAAC(temp_a0) == 0)
+            {
+                // Node 4
+                controller_1_rumble_state = 1;
+            }
+            else
+            {
+                // Node 5
+                *(0 + &controller_1_rumble_inserted) = 0;
+            }
+        }
+        else
+        {
+            // Node 6
+            if (send_rumble_off_to_PIF(temp_a0) == 0)
+            {
+                // Node 7
+                controller_1_rumble_state = 0;
+            }
+            else
+            {
+                // Node 8
+                *(0 + &controller_1_rumble_inserted) = 0;
+            }
+        }
+    }
+    // Node 9
+    if (controller_1_rumble_duration <= 0)
+    {
+        // Node 10
+        controller_1_rumble_duration = 0;
+    }
+    else
+    {
+        // Node 11
+        temp_t1 = (controller_1_rumble_duration + -1);
+        controller_1_rumble_duration = temp_t1;
+        if (temp_t1 <= 0)
+        {
+            // Node 12
+            controller_1_rumble_duration = 0;
+            controller_1_rumble_pulse = 0;
+        }
+    }
+    // Node 13
+    if ((0 + 1) != 4)
+    {
+        goto loop_1;
+    }
+    // (possible return value: controller_1_rumble_duration)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1553,9 +1657,17 @@ glabel get_controller_buttons_pressed
 
 
 #ifdef NONMATCHING
-void controller_7000C430(void) {
-
+s32 controller_7000C430(s32 arg0, s32 arg1) {
+    // Node 0
+    // Node 1
+    (arg0 + 1)->unk-1 = (s8) (((0 < (((s32) (arg1 & 0xffff) >> 0xf) & 1)) * 0x11) + 0x20);
+    if ((0xf + -1) >= 0)
+    {
+        goto loop_1;
+    }
+    // (possible return value: (0xf + -1))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1584,8 +1696,19 @@ glabel controller_7000C430
 
 #ifdef NONMATCHING
 void controller_7000C470(void) {
-
+    // Node 0
+    if (controller_finding_controller_maybe() > 0)
+    {
+        loop_1:
+        // Node 1
+        if ((0 + 1) < controller_finding_controller_maybe())
+        {
+            goto loop_1;
+        }
+    }
+    // (possible return value: controller_finding_controller_maybe())
 }
+
 #else
 GLOBAL_ASM(
 .text

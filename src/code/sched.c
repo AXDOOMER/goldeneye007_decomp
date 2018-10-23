@@ -62,9 +62,42 @@ void osCreateLog(void){
 
 
 #ifdef NONMATCHING
-void osCreateScheduler(void) {
-    
+void osCreateScheduler(void *arg0, s32 arg1, ? arg2, ? arg3, ?32 argB, s32 argC, ? argD) {
+    s32 temp_s1;
+    void *temp_t2;
+
+    // Node 0
+    arg0->unkC8 = 0;
+    arg0->unkCC = 0;
+    arg0->unkB4 = 0;
+    arg0->unkD0 = 0;
+    arg0->unkB8 = 0;
+    arg0->unkBC = 0;
+    arg0->unkC0 = 0;
+    arg0->unkC4 = 0;
+    *arg0 = (u16)1;
+    arg0->unk20 = (u16)5;
+    temp_s1 = (arg0 + 0x40);
+    arg0->unkB0 = argB;
+    osCreateMesgQueue(temp_s1, (arg0 + 0x58), 8);
+    osCreateMesgQueue((arg0 + 0x78), (arg0 + 0x90), 8);
+    osCreateViManager(0xfe);
+    temp_t2 = ((argC * 0x50) + &osViModeTable);
+    dword_CODE_bss_8006087C = temp_t2;
+    dword_CODE_bss_80060880 = (?32) temp_t2->unk1C;
+    dword_CODE_bss_80060884 = (?32) temp_t2->unk30;
+    dword_CODE_bss_80060888 = (?32) temp_t2->unk44;
+    osSetEventMesg(4, temp_s1, 0x29b);
+    osSetEventMesg(9, temp_s1, 0x29c);
+    osSetEventMesg(0xe, temp_s1, 0x29d);
+    osViSetEvent(temp_s1, 0x29a, argD);
+    osCreateLog();
+    osCreateThread(arg0->unkB0, 2, &__scMain, arg0, set_stack_entry(&sp_shed, 0x200), 0x1e);
+    osStartThread(arg0->unkB0);
+    return;
+    // (possible return value: osStartThread(arg0->unkB0))
 }
+
 #else
 GLOBAL_ASM(
 glabel osCreateScheduler
@@ -165,9 +198,17 @@ glabel osCreateScheduler
 
 
 #ifdef NONMATCHING
-void osScAddClient(void) {
-    
+void osScAddClient(s32 arg0, s32 arg1, ? arg2, ? arg3, void *arg6, void *arg7, ?32 arg8, ?32 arg9) {
+    // Node 0
+    arg7->unk4 = arg8;
+    arg7->unk8 = arg9;
+    *arg7 = (void *) arg6->unkB4;
+    arg6->unkB4 = arg7;
+    osSetIntMask(osSetIntMask(1), arg7);
+    return;
+    // (possible return value: osSetIntMask(osSetIntMask(1), arg7))
 }
+
 #else
 GLOBAL_ASM(
 glabel osScAddClient
@@ -202,9 +243,46 @@ glabel osScAddClient
 
 
 #ifdef NONMATCHING
-void osScRemoveClient(void) {
-    
+void osScRemoveClient(void *arg0, s32 arg1, void *arg8, void *arg9) {
+    void *sp18;
+    void *sp1C;
+
+    // Node 0
+    sp18 = NULL;
+    sp1C = (void *) arg0->unkB4;
+    if (sp1C != 0)
+    {
+        loop_1:
+        // Node 1
+        if (sp1C == arg9)
+        {
+            // Node 2
+            if (sp18 != 0)
+            {
+                // Node 3
+                *sp18 = (?32) *arg9;
+            }
+            else
+            {
+                // Node 4
+                arg8->unkB4 = (?32) *arg9;
+            }
+        }
+        else
+        {
+            // Node 5
+            if (*sp1C != 0)
+            {
+                goto loop_1;
+            }
+        }
+    }
+    // Node 6
+    osSetIntMask(osSetIntMask(1), arg9, sp18);
+    return;
+    // (possible return value: osSetIntMask(osSetIntMask(1), arg9, sp18))
 }
+
 #else
 GLOBAL_ASM(
 glabel osScRemoveClient
@@ -254,9 +332,10 @@ glabel osScRemoveClient
 
 
 #ifdef NONMATCHING
-void osScGetCmdQ(void) {
-    
+s32 osScGetCmdQ(s32 arg0) {
+    // (possible return value: (arg0 + 0x78))
 }
+
 #else
 GLOBAL_ASM(
 glabel osScGetCmdQ
@@ -515,9 +594,48 @@ glabel __scHandleRetrace
 
 
 #ifdef NONMATCHING
-void __scHandleRSP(void) {
-    
+void __scHandleRSP(void *arg0) {
+    ?32 sp24;
+    ?32 sp28;
+
+    // Node 0
+    sp28 = 0;
+    sp24 = 0;
+    arg0->unkC8 = 0U;
+    video_related_3(0x10001, arg0->unkC8);
+    if (((sp2C->unk4 & 0x10) != 0) && (osSpTaskYielded((sp2C + 0x10), sp2C) != 0))
+    {
+        // Node 2
+        sp2C->unk4 = (s32) (sp2C->unk4 | 0x20);
+        if ((sp2C->unk8 & 7) == 3)
+        {
+            // Node 3
+            *sp2C = (void *) arg0->unkBC;
+            arg0->unkBC = sp2C;
+            if (arg0->unkC4 == 0)
+            {
+                // Node 4
+                arg0->unkC4 = sp2C;
+            }
+        }
+    }
+    else
+    {
+        // Node 5
+        sp2C->unk4 = (s32) (sp2C->unk4 & -3);
+        __scTaskComplete(arg0, sp2C);
+    }
+    // Node 6
+    if (__scSchedule(arg0, &sp28, &sp24, ((((u32) arg0->unkC8 < 1U) * 2) | ((u32) arg0->unkCC < 1U))) != sp20)
+    {
+        // Node 7
+        __scExec(arg0, sp28, sp24, sp20);
+        return;
+        // (possible return value: __scExec(arg0, sp28, sp24, sp20))
+    }
+    // (possible return value: __scSchedule(arg0, &sp28, &sp24, ((((u32) arg0->unkC8 < 1U) * 2) | ((u32) arg0->unkCC < 1U))))
 }
+
 #else
 GLOBAL_ASM(
 glabel __scHandleRSP
@@ -600,15 +718,16 @@ glabel __scHandleRSP
 
 
 #ifdef NONMATCHING
-void get_counters(void) {
-    
+void *get_counters(void) {
+    // (possible return value: &dword_CODE_bss_8005DB30)
 }
+
 #else
 GLOBAL_ASM(
 glabel get_counters
-/* 001D1C 7000111C 3C028006 */  lui   $v0, 0x8006
+/* 001D1C 7000111C 3C028006 */  lui   $v0, %hi(dword_CODE_bss_8005DB30)
 /* 001D20 70001120 03E00008 */  jr    $ra
-/* 001D24 70001124 2442DB30 */   addiu $v0, $v0, -0x24d0
+/* 001D24 70001124 2442DB30 */   addiu $v0, $v0, %lo(dword_CODE_bss_8005DB30)
 )
 #endif
 
@@ -618,9 +737,32 @@ glabel get_counters
 
 
 #ifdef NONMATCHING
-void __scHandleRDP(void) {
-    
+void __scHandleRDP(void *arg0) {
+    ?32 sp24;
+    ?32 sp28;
+
+    // Node 0
+    sp28 = 0;
+    sp24 = 0;
+    if (arg0->unkCC != 0)
+    {
+        // Node 1
+        video_related_3(0x10002);
+        osDpGetCounters(&target_for_counters_maybe);
+        arg0->unkCC = NULL;
+        arg0->unkCC->unk4 = (s32) (arg0->unkCC->unk4 & -2);
+        __scTaskComplete(arg0, arg0->unkCC);
+        if (__scSchedule(arg0, &sp28, &sp24, ((((u32) arg0->unkC8 < 1U) * 2) | ((u32) arg0->unkCC < 1U))) != sp20)
+        {
+            // Node 2
+            __scExec(arg0, sp28, sp24, sp20);
+            return;
+            // (possible return value: __scExec(arg0, sp28, sp24, sp20))
+        }
+    }
+    // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 glabel __scHandleRDP
@@ -716,9 +858,82 @@ glabel __scTaskReady
 
 
 #ifdef NONMATCHING
-void __scTaskComplete(void) {
-    
+void __scTaskComplete(s32 arg0, void *arg1) {
+    s32 temp_t2;
+    s32 temp_t7;
+    s32 temp_t0;
+    void *temp_t8_2;
+    void *temp_t8;
+    void *temp_t5;
+
+    // Node 0
+    if ((arg1->unk4 & 3) == 0)
+    {
+        // Node 1
+        osSendMesg(arg1->unk50, arg1->unk54, 1);
+        if (arg1->unk10 == 1)
+        {
+            // Node 2
+            if ((arg1->unk8 & 0x40) != 0)
+            {
+                // Node 3
+                if ((arg1->unk8 & 0x20) != 0)
+                {
+                    // Node 4
+                    if (D_800230CC != 0)
+                    {
+                        // Node 5
+                        osViBlack(0);
+                        D_800230CC = 0;
+                    }
+                    // Node 6
+                    temp_t2 = (something_with_osVI * 4);
+                    if ((0x80020000 + temp_t2)->unk30C4 != 0)
+                    {
+                        // Node 7
+                        temp_t8_2 = ((something_with_osVI * 0x50) + &dword_CODE_bss_8005DB40);
+                        // Node 8
+                        temp_t8 = (temp_t8_2 + 0xc);
+                        temp_t5 = ((0x80060000 + (something_with_osVI * 4))->unk-2420 + 0xc);
+                        temp_t5->unk-C = (?32) *temp_t8_2;
+                        temp_t5->unk-8 = (?32) temp_t8->unk-8;
+                        temp_t5->unk-4 = (?32) temp_t8->unk-4;
+                        if (temp_t8 != (temp_t8_2 + 0x48))
+                        {
+                            goto loop_8;
+                        }
+                        // Node 9
+                        *temp_t5 = (?32) *temp_t8;
+                        temp_t5->unk4 = (?32) temp_t8->unk4;
+                        osSetIntMask(osSetIntMask(0x80401));
+                    }
+                    // Node 10
+                    osViSetXScale((0x80020000 + temp_t2)->unk30B4, 0x80401);
+                    osViSetYScale((0x80020000 + (something_with_osVI * 4))->unk30BC);
+                    temp_t7 = (something_with_osVI + 1);
+                    temp_t0 = (temp_t7 & 1);
+                    if (temp_t7 < 0)
+                    {
+                        // Node 11
+                        if (temp_t0 != 0)
+                        {
+                            // Node 12
+                        }
+                    }
+                    // Node 13
+                    something_with_osVI = temp_t0;
+                    CheckDisplayErrorBuffer(arg1->unkC);
+                    osViSwapBuffer(arg1->unkC);
+                }
+            }
+        }
+        // Node 14
+        return;
+        // (possible return value: 1)
+    }
+    // (possible return value: 0)
 }
+
 #else
 GLOBAL_ASM(
 glabel __scTaskComplete

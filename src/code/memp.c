@@ -229,8 +229,97 @@ glabel check_memflag_tokens
 
 
 #ifdef NONMATCHING
-void memp_related_0(void) {
+void *memp_related_0(void *arg0) {
+    s32 sp30;
+    s32 sp34;
+    s32 sp38;
+    s32 sp3C;
+    s32 sp60;
+    s32 sp78;
+    ? sp7C;
+    u32 temp_s0;
+    s32 temp_v1;
+    ? temp_ret;
+    u32 temp_s0_2;
+    u32 temp_s0_3;
+    s32 temp_v0;
+    void *temp_v0_2;
+    void *temp_s0_4;
+    s32 temp_a0;
+    s32 temp_a1;
+    s32 temp_v1_2;
 
+    // Node 0
+    sp60 = (s32) D_80024434;
+    sp60.unk4 = (s32) D_80024434.unk4;
+    sp60.unk8 = (?32) D_80024434.unk8;
+    sp60.unkC = (?32) D_80024434.unkC;
+    sp60.unk10 = (?32) D_80024434.unk10;
+    sp60.unk14 = (?32) D_80024434.unk14;
+    sp60.unk18 = (?32) D_80024434.unk18;
+    // Node 1
+    *(&sp60 + (*arg0 * 4)) = (?32) arg0->unk4;
+    if (arg0->unk8 != 0)
+    {
+        goto loop_1;
+    }
+    // Node 2
+    // Node 3
+    temp_s0 = (&sp60 + 4);
+    *temp_s0 = (s32) (sp60.unk4 + sp60);
+    if (temp_s0 < &sp78)
+    {
+        goto loop_3;
+    }
+    // Node 4
+    temp_v1 = (memory_bank_ptrs.unk8 - memory_bank_ptrs);
+    sp30 = (s32) (sp78 >> 0x1f);
+    sp38 = (s32) (temp_v1 >> 0x1f);
+    sp3C = temp_v1;
+    sp34 = sp78;
+    // Node 5
+    temp_ret = __ll_mul(((s32) sp60 >> 0x1f), sp60, sp38, sp3C);
+    temp_s0_2 = (&sp60 + 4);
+    temp_s0_2->unk-4 = (u64) __ll_div(temp_ret, temp_ret, sp30, sp34);
+    if (temp_s0_2 < &sp7C)
+    {
+        goto loop_5;
+    }
+    // Node 6
+    // Node 7
+    temp_s0_3 = (&sp60 + 4);
+    temp_s0_3->unk-4 = (s32) ((sp60 | 0xf) ^ 0xf);
+    if (temp_s0_3 < &sp7C)
+    {
+        goto loop_7;
+    }
+    // Node 8
+    D_80063BC4 = (s32) (sp60 + memory_bank_ptrs);
+    D_80063BC4 = 0;
+    temp_v0 = (sp64 + memory_bank_ptrs);
+    D_80063BC8 = temp_v0;
+    D_80063BD4 = temp_v0;
+    D_80063BD4 = 0;
+    D_80063BD8 = (s32) (sp68 + memory_bank_ptrs);
+    temp_v0_2 = (&memory_bank_ptrs + (2 * 0x10));
+    temp_s0_4 = (&sp60 + (2 * 4));
+    temp_a0 = (temp_s0_4->unk8 + memory_bank_ptrs);
+    temp_a1 = (temp_s0_4->unkC + memory_bank_ptrs);
+    temp_v1_2 = (temp_s0_4->unk4 + memory_bank_ptrs);
+    temp_v0_2->unk48 = (s32) (temp_s0_4->unk10 + memory_bank_ptrs);
+    temp_v0_2->unk20 = temp_v1_2;
+    temp_v0_2->unk38 = temp_a1;
+    temp_v0_2->unk40 = temp_a1;
+    temp_v0_2->unk28 = temp_a0;
+    temp_v0_2->unk30 = temp_a0;
+    temp_v0_2->unk24 = 0;
+    temp_v0_2->unk34 = 0;
+    temp_v0_2->unk44 = 0;
+    temp_v0_2->unk10 = (s32) (*temp_s0_4 + memory_bank_ptrs);
+    temp_v0_2->unk14 = 0;
+    temp_v0_2->unk18 = temp_v1_2;
+    return;
+    // (possible return value: temp_v0_2)
 }
 #else
 GLOBAL_ASM(
@@ -537,9 +626,16 @@ glabel memp_related_1
 
 
 #ifdef NONMATCHING
-void nulled_list_all8_mem_alloc_banks_sizes(void) {
-
+s32 nulled_list_all8_mem_alloc_banks_sizes(void) {
+    // Node 0
+    // Node 1
+    if (((1 + 1) & 0xff) < 7)
+    {
+        goto loop_1;
+    }
+    // (possible return value: ((1 + 1) & 0xff))
 }
+
 #else
 GLOBAL_ASM(
 .text

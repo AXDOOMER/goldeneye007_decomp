@@ -9,6 +9,53 @@ u32 TLB_manager_mapping_table_start[0xB4];
 u32 TLB_manager_mapping_table_end[4];
 u32 ptr_TLBallocatedblock[4];
 
+
+
+
+
+
+#ifdef NONMATCHING
+void *establish_TLB_buffer_management_table(void) {
+    u32 temp_v1;
+    s32 temp_at;
+    void *temp_v1_2;
+
+    // Node 0
+    // Node 1
+    temp_v1 = (&TLB_managment_table_start_start + 0x10);
+    temp_v1->unk-10 = 1;
+    temp_v1->unk-C = 0;
+    if (temp_v1 < &TLB_manager_mapping_table_start)
+    {
+        goto loop_1;
+    }
+    // Node 2
+    temp_at = (TLB_manager_mapping_table_start + 2);
+    *temp_at = (u8)0;
+    *temp_at = 1;
+    *temp_at = (u8)0;
+    *temp_at = 1;
+    // Node 3
+    temp_v1_2 = ((TLB_manager_mapping_table_start + 4) + 8);
+    temp_v1_2->unk-5 = (u8)0;
+    temp_v1_2->unk-6 = 1;
+    temp_v1_2->unk-3 = (u8)0;
+    temp_v1_2->unk-4 = 1;
+    temp_v1_2->unk-1 = (u8)0;
+    temp_v1_2->unk-2 = 1;
+    temp_v1_2->unk-7 = (u8)0;
+    temp_v1_2->unk-8 = 1;
+    if (temp_v1_2 != &TLB_manager_mapping_table_end)
+    {
+        goto loop_3;
+    }
+    // Node 4
+    ptr_TLBallocatedblock = (s32) ((&sp_boot & -0x2000) + 0xfff4c000);
+    (void *)0x80060000->unk-1B5C = (s32) (&TLB_managment_table_start + 0xffc08000);
+    return;
+    // (possible return value: &TLB_manager_mapping_table_end)
+}
+#else
 GLOBAL_ASM(
 glabel establish_TLB_buffer_management_table
 /* 0023E0 700017E0 3C038006 */  lui   $v1, %hi(TLB_managment_table_start_start) # $v1, 0x8006
@@ -60,7 +107,17 @@ glabel establish_TLB_buffer_management_table
 /* 002490 70001890 03E00008 */  jr    $ra
 /* 002494 70001894 AC28E4A4 */   sw    $t0, -0x1b5c($at)
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void mp_tlb_related(void) {
+    
+}
+#else
 GLOBAL_ASM(
 glabel mp_tlb_related
 /* 002498 70001898 3C038002 */  lui   $v1, %hi(maybe_cur_TLB_entries) # $v1, 0x8002
@@ -75,8 +132,32 @@ glabel mp_tlb_related
 /* 0024B8 700018B8 03E00008 */  jr    $ra
 /* 0024BC 700018BC AC600000 */   sw    $zero, ($v1)
 )
+#endif
 
-s32 return_TLB_index_for_entry(u32 entry);
+
+
+
+
+#ifdef NONMATCHING
+s32 return_TLB_index_for_entry(s32 arg0) {
+    // Node 0
+    // Node 1
+    if (__osGetTLBHi(0) == arg0)
+    {
+        // Node 2
+        return;
+        // (possible return value: 0)
+    }
+    // Node 3
+    if ((0 + 1) != 0x20)
+    {
+        goto loop_1;
+    }
+    // Node 4
+    return;
+    // (possible return value: 0x80000000)
+}
+#else
 GLOBAL_ASM(
 glabel return_TLB_index_for_entry
 /* 0024C0 700018C0 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -107,8 +188,13 @@ glabel return_TLB_index_for_entry
 /* 002518 70001918 03E00008 */  jr    $ra
 /* 00251C 7000191C 27BD0028 */   addiu $sp, $sp, 0x28
 )
+#endif
 
 
+
+
+
+#ifdef NONMATCHING
 void find_remove_TLB_entry(u32 entry) {
     u32 temp_ret = return_TLB_index_for_entry(entry);
 
@@ -117,8 +203,7 @@ void find_remove_TLB_entry(u32 entry) {
 
     osUnmapTLB(temp_ret);
 }
-
-
+#else
 GLOBAL_ASM(
 glabel remove_TLB_entry_from_table
 /* 002554 70001954 3C0F8006 */  lui   $t7, %hi(TLB_manager_mapping_table_start) # $t7, 0x8006
@@ -157,7 +242,45 @@ glabel remove_TLB_entry_from_table
 /* 0025D0 700019D0 03E00008 */  jr    $ra
 /* 0025D4 700019D4 00000000 */   nop   
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void translate_load_rom_from_TLBaddress(s32 arg0) {
+    u32 sp24;
+    u32 sp28;
+    u32 temp_hi;
+    u32 temp_t1;
+    u32 temp_t3;
+    void *temp_a2;
+    void *temp_v1;
+
+    // Node 0
+    maybe_cur_TLB_entries = (s32) (maybe_cur_TLB_entries + 1);
+    find_remove_TLB_entry((arg0 & 0x7fffe000));
+    temp_hi = (return_tlb_random_value() % 0x5aU);
+    tlb_segment_num = temp_hi;
+    remove_TLB_entry_from_table(temp_hi);
+    temp_t1 = (sp28 & 0xffe000);
+    sp24 = temp_t1;
+    romCopy((ptr_TLBallocatedblock + (temp_hi << 0xd)), (temp_t1 + &_rarezipSegmentRomEnd), 0x2000);
+    osInvalICache(0x40000000, 0x40000000);
+    osInvalICache(0x80000000, 0x10000000);
+    temp_t3 = (sp24 >> 0xd);
+    temp_a2 = ((temp_t3 * 0x10) + &TLB_managment_table_start);
+    temp_a2->unk4 = temp_hi;
+    sp28 = temp_t3;
+    temp_v1 = ((temp_hi * 2) + &TLB_manager_mapping_table_start);
+    *temp_v1 = (u8)0;
+    temp_v1->unk1 = sp28;
+    *sp20 = (s32) (((osVirtualToPhysical(sp34, sp24, temp_a2) >> 0xc) << 6) | 0x1f);
+    return;
+    // (possible return value: osVirtualToPhysical(sp34, sp24, temp_a2))
+}
+#else
 GLOBAL_ASM(
 glabel translate_load_rom_from_TLBaddress
 /* 0025D8 700019D8 3C028002 */  lui   $v0, %hi(maybe_cur_TLB_entries) # $v0, 0x8002
@@ -233,10 +356,26 @@ glabel translate_load_rom_from_TLBaddress
 /* 0026F0 70001AF0 03E00008 */  jr    $ra
 /* 0026F4 70001AF4 ACD80000 */   sw    $t8, ($a2)
 )
+#endif
 
+
+
+
+
+#ifdef NONMATCHING
+void return_ptr_TLBmemory(void) {
+    // (possible return value: ptr_TLBallocatedblock)
+}
+#else
 GLOBAL_ASM(
 glabel return_ptr_TLBmemory
-/* 0026F8 70001AF8 3C028006 */  lui   $v0, 0x8006
+/* 0026F8 70001AF8 3C028006 */  lui   $v0, %hi(ptr_TLBallocatedblock)
 /* 0026FC 70001AFC 03E00008 */  jr    $ra
-/* 002700 70001B00 8C42E4A8 */   lw    $v0, -0x1b58($v0)
+/* 002700 70001B00 8C42E4A8 */   lw    $v0, %lo(ptr_TLBallocatedblock)($v0)
 )
+#endif
+
+
+
+
+

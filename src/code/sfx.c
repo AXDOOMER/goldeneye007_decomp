@@ -18,8 +18,57 @@ f32 F32_800243FC = 1.0;
 
 
 #ifdef NONMATCHING
-void music_related_16(void) {
+void music_related_16(void *arg0) {
+    s16 sp38;
+    s32 temp_v0;
+    s32 temp_a0;
 
+    // Node 0
+    D_800243F0->unk44 = (?32) arg0->unk8;
+    D_800243F0->unk3C = 0;
+    D_800243F0->unk48 = 0x80e8;
+    D_800243F0->unk40 = alHeapDBAlloc(0, 0, arg0->unkC, 1, (s32) (*arg0 << 6));
+    alEvtqNew((D_800243F0 + 0x14), alHeapDBAlloc(0, 0, arg0->unkC, 1, (s32) (arg0->unk4 * 0x1c)), arg0->unk4);
+    D_800243EC = (?32) D_800243F0->unk40;
+    if ((u32) *arg0 >= 2U)
+    {
+        loop_1:
+        // Node 1
+        temp_a0 = ((1 << 6) + D_800243F0->unk40);
+        alLink(temp_a0, (temp_a0 + -0x40));
+        if ((u32) (1 + 1) < (u32) *arg0)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 2
+    D_80063BA4 = alHeapDBAlloc(0, 0, arg0->unkC, 2, 7);
+    D_80063BA8 = alHeapDBAlloc(0, 0, arg0->unkC, 2, 7);
+    *D_80063BA4 = (u16)0x7fff;
+    temp_v0 = (3 * 2);
+    *D_80063BA8 = (s16) *D_80063BA4;
+    D_80063BA4->unk2 = (u16)0x7fff;
+    D_80063BA8->unk2 = (s16) D_80063BA4->unk2;
+    D_80063BA4->unk4 = (u16)0x7fff;
+    D_80063BA8->unk4 = (s16) D_80063BA4->unk4;
+    *(D_80063BA4 + temp_v0) = (u16)0x7fff;
+    *(D_80063BA8 + temp_v0) = (s16) *(D_80063BA4 + temp_v0);
+    (D_80063BA4 + temp_v0)->unk2 = (u16)0x7fff;
+    (D_80063BA8 + temp_v0)->unk2 = (s16) (D_80063BA4 + temp_v0)->unk2;
+    (D_80063BA4 + temp_v0)->unk4 = (u16)0x7fff;
+    (D_80063BA8 + temp_v0)->unk4 = (s16) (D_80063BA4 + temp_v0)->unk4;
+    (D_80063BA4 + temp_v0)->unk6 = (u16)0x7fff;
+    (D_80063BA8 + temp_v0)->unk6 = (s16) (D_80063BA4 + temp_v0)->unk6;
+    D_800243F0->unk38 = (?32) alGlobals;
+    *D_800243F0 = 0;
+    D_800243F0->unk8 = &music_related_17;
+    D_800243F0->unk4 = (void *) D_800243F0;
+    alSynAddPlayer(D_800243F0->unk38, D_800243F0);
+    sp38 = (u16)0x20;
+    alEvtqPostEvent((D_800243F0 + 0x14), &sp38, D_800243F0->unk48);
+    D_800243F0->unk4C = alEvtqNextEvent((D_800243F0 + 0x14), (D_800243F0 + 0x28));
+    return;
+    // (possible return value: alEvtqNextEvent((D_800243F0 + 0x14), (D_800243F0 + 0x28)))
 }
 #else
 GLOBAL_ASM(
@@ -212,9 +261,40 @@ glabel music_related_16
 
 
 #ifdef NONMATCHING
-void music_related_17(void) {
+void music_related_17(void *arg0) {
+    s16 sp3C;
+    s32 temp_s1;
+    s32 temp_s2;
+    ? temp_ret;
 
+    // Node 0
+    temp_s1 = (arg0 + 0x28);
+    temp_s2 = (arg0 + 0x14);
+    // Node 1
+    if (0x20 == arg0->unk28)
+    {
+        // Node 2
+        sp3C = (u16)0x20;
+        alEvtqPostEvent(temp_s2, &sp3C, arg0->unk48);
+    }
+    else
+    {
+        // Node 3
+        music_related_18(arg0, temp_s1);
+    }
+    // Node 4
+    temp_ret = alEvtqNextEvent(temp_s2, temp_s1);
+    arg0->unk4C = temp_ret;
+    if (temp_ret == 0)
+    {
+        goto loop_1;
+    }
+    // Node 5
+    arg0->unk50 = (s32) (arg0->unk50 + temp_ret);
+    return;
+    // (possible return value: temp_ret)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1191,9 +1271,43 @@ glabel music_related_20
 
 
 #ifdef NONMATCHING
-void music_related_21(void) {
+void music_related_21(void *arg0, s32 arg1, s32 arg2) {
+    s32 sp30;
 
+    // Node 0
+    sp30 = osSetIntMask(1);
+    if (arg0->unk8 != 0)
+    {
+        loop_1:
+        // Node 1
+        if (arg1 == arg0->unk8->unk10)
+        {
+            // Node 2
+            if ((arg0->unk8->unkC & (arg2 & 0xffff)) != 0)
+            {
+                // Node 3
+                if (*arg0->unk8 != 0)
+                {
+                    // Node 4
+                    *arg0->unk8->unk8 = (s32) (*arg0->unk8->unk8 + arg0->unk8->unk8);
+                }
+                // Node 5
+                alUnlink(arg0->unk8);
+                alLink(arg0->unk8, arg0);
+            }
+        }
+        // Node 6
+        if (*arg0->unk8 != 0)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 7
+    osSetIntMask(sp30);
+    return;
+    // (possible return value: osSetIntMask(sp30))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1260,9 +1374,44 @@ glabel music_related_21
 
 
 #ifdef NONMATCHING
-void music_related_22(void) {
-
+s32 music_related_22(void *arg0, void *arg1) {
+    // Node 0
+    if (D_800243E4 != 0)
+    {
+        loop_1:
+        // Node 1
+        if (*D_800243E4 != 0)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 2
+    if (D_800243E4.unk8 != 0)
+    {
+        loop_3:
+        // Node 3
+        if (*D_800243E4.unk8 != 0)
+        {
+            goto loop_3;
+        }
+    }
+    // Node 4
+    if (D_800243E4.unk4 != 0)
+    {
+        loop_5:
+        // Node 5
+        if (D_800243E4.unk4->unk4 != 0)
+        {
+            goto loop_5;
+        }
+    }
+    // Node 6
+    *arg0 = (u16)0;
+    *arg1 = (u16)0;
+    return;
+    // (possible return value: 0)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1914,9 +2063,37 @@ glabel music_related_28
 
 
 #ifdef NONMATCHING
-void music_related_29(void) {
+void music_related_29(s32 arg0) {
+    s16 sp3C;
+    s32 sp4C;
+    s32 temp_s2;
 
+    // Node 0
+    temp_s2 = (arg0 & 0xff);
+    sp4C = osSetIntMask(1);
+    if (D_800243E4 != 0)
+    {
+        // Node 1
+        // Node 2
+        sp3C = (u16)0x400;
+        if (temp_s2 == (D_800243E4->unk3E & temp_s2))
+        {
+            // Node 3
+            D_800243E4->unk3E = (s8) (D_800243E4->unk3E & -0x11);
+            alEvtqPostEvent((D_800243F0 + 0x14), &sp3C, 0);
+        }
+        // Node 4
+        if (*D_800243E4 != 0)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 5
+    osSetIntMask(sp4C);
+    return;
+    // (possible return value: osSetIntMask(sp4C))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2147,9 +2324,17 @@ glabel music_related_37
 
 
 #ifdef NONMATCHING
-void music_related_38(void) {
-
+void music_related_38(s32 arg0) {
+    // Node 0
+    // Node 1
+    music_related_42((0 & 0xff), ((arg0 & 0xffff) & 0xffff));
+    if (((0 + 1) & 0xff) < 7)
+    {
+        goto loop_1;
+    }
+    // (possible return value: music_related_42((0 & 0xff), ((arg0 & 0xffff) & 0xffff)))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2248,8 +2433,39 @@ glabel music_related_41
 
 
 #ifdef NONMATCHING
-void music_related_42(void) {
+s32 music_related_42(s32 arg0, s32 arg1) {
+    s16 sp30;
+    s32 temp_s3;
+    s16 temp_t6;
+    s32 temp_v0;
 
+    // Node 0
+    temp_s3 = (arg0 & 0xff);
+    temp_t6 = (arg1 & 0xffff);
+    temp_v0 = (temp_s3 * 2);
+    *(D_80063BA8 + temp_v0) = temp_t6;
+    *(D_80063BA4 + temp_v0) = (s32) ((f32) temp_t6 * F32_800243FC);
+    if (D_800243E4 != 0)
+    {
+        loop_1:
+        // Node 1
+        if (D_800243E4->unk8 != 0)
+        {
+            // Node 2
+            if (temp_s3 == (D_800243E4->unk8->unk4->unk2 & 0x3f))
+            {
+                // Node 3
+                sp30 = (u16)0x800;
+                alEvtqPostEvent((D_800243F0 + 0x14), &sp30, 0);
+            }
+        }
+        // Node 4
+        if (*D_800243E4 != 0)
+        {
+            goto loop_1;
+        }
+    }
+    // (possible return value: temp_v0)
 }
 #else
 GLOBAL_ASM(

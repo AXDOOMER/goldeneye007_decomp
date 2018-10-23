@@ -90,8 +90,42 @@ glabel merge_alloc_entries
 
 
 #ifdef NONMATCHING
-void sort_merge_entries_in_alloc_table(void) {
+void sort_merge_entries_in_alloc_table(s32 arg0) {
+    u32 temp_s0;
+    u32 temp_s4;
+    void *temp_s1;
 
+    // Node 0
+    temp_s0 = (arg0 + 0x10);
+    temp_s4 = (arg0 + 0xfe8);
+    temp_s1 = (arg0 + 8);
+    if (temp_s4 >= temp_s0)
+    {
+        loop_1:
+        // Node 1
+        if (temp_s0->unk4 != 0)
+        {
+            // Node 2
+            if ((u32) *temp_s0 < 0U)
+            {
+                // Node 3
+                swap_entries(temp_s0, temp_s1);
+            }
+            // Node 4
+            if (*temp_s0 == (temp_s1->unk4 + 0U))
+            {
+                // Node 5
+                merge_alloc_entries(temp_s1, temp_s0);
+            }
+            // Node 6
+        }
+        // Node 7
+        if (temp_s4 >= (u32) (temp_s0 + 8))
+        {
+            goto loop_1;
+        }
+    }
+    // (possible return value: 0)
 }
 #else
 GLOBAL_ASM(
@@ -159,8 +193,19 @@ glabel sort_merge_entries_in_alloc_table
 
 #ifdef NONMATCHING
 void memp_related_7(void) {
-
+    // Node 0
+    if (sort_merge_entries_in_alloc_table(&ptr_table_allocated_mem_blocks) != 0)
+    {
+        loop_1:
+        // Node 1
+        if (sort_merge_entries_in_alloc_table(&ptr_table_allocated_mem_blocks) != 0)
+        {
+            goto loop_1;
+        }
+    }
+    // (possible return value: sort_merge_entries_in_alloc_table(&ptr_table_allocated_mem_blocks))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -191,8 +236,70 @@ glabel memp_related_7
 
 
 #ifdef NONMATCHING
-void mem_related(void) {
+u32 mem_related(s32 arg0) {
+    u32 temp_s2;
+    u32 temp_s1;
 
+    // Node 0
+    temp_s2 = (arg0 + 0x10);
+    temp_s1 = (arg0 + 0xfe8);
+    // Node 1
+    if (temp_s1 >= temp_s2)
+    {
+        loop_2:
+        // Node 2
+        if (temp_s2->unk4 == 0)
+        {
+            // Node 3
+            return;
+            // (possible return value: temp_s2)
+        }
+        // Node 4
+        if ((u32) temp_s2->unk8 < (u32) *temp_s2)
+        {
+            // Node 5
+            swap_entries(temp_s2, (temp_s2 + 8));
+        }
+        // Node 6
+        if (temp_s2->unk8 == (*temp_s2 + temp_s2->unk4))
+        {
+            // Node 7
+            temp_s2->unk8 = 0U;
+            temp_s2->unkC = 0;
+            temp_s2->unk4 = (u32) (temp_s2->unk4 + temp_s2->unkC);
+            return;
+            // (possible return value: (temp_s2 + 8))
+        }
+        // Node 8
+        if (temp_s1 >= (u32) (temp_s2 + 8))
+        {
+            goto loop_2;
+        }
+        // Node 9
+    }
+    // Node 10
+    if ((0 + 1) < 0x1fc)
+    {
+        goto loop_1;
+    }
+    // Node 11
+    if (temp_s1 >= temp_s2)
+    {
+        loop_12:
+        // Node 12
+        if ((u32) temp_s2->unk4 < -1U)
+        {
+            // Node 13
+        }
+        // Node 14
+        if (temp_s1 >= (u32) (temp_s2 + 8))
+        {
+            goto loop_12;
+        }
+    }
+    // Node 15
+    return;
+    // (possible return value: temp_s2)
 }
 #else
 GLOBAL_ASM(
@@ -283,8 +390,49 @@ glabel mem_related
 
 
 #ifdef NONMATCHING
-void mem_related_model_room_buffers(void) {
+void *mem_related_model_room_buffers(s32 arg0, s32 arg1, s32 arg6, ?32 arg7) {
+    s32 temp_lo;
+    void *temp_v0;
+    void *temp_a3;
 
+    // Node 0
+    temp_lo = ((s32) ((arg0 - ptr_model_room_buf_secondary) * 0x1fc) / (s32) size_modelroom_buf);
+    temp_v0 = ((temp_lo * 8) + &ptr_table_allocated_mem_blocks);
+    temp_a3 = (temp_v0 + 0x10);
+    if (temp_v0->unk14 != 0)
+    {
+        loop_1:
+        // Node 1
+        if (temp_a3->unkC != 0)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 2
+    if (*temp_a3 == -1)
+    {
+        // Node 3
+        if (temp_v0->unk14 != 0)
+        {
+            loop_4:
+            // Node 4
+            if (temp_a3->unk-4 != 0)
+            {
+                goto loop_4;
+            }
+        }
+        // Node 5
+        if (*temp_a3 == 0)
+        {
+            // Node 6
+            mem_related(&ptr_table_allocated_mem_blocks, temp_lo, temp_a3);
+        }
+    }
+    // Node 7
+    *temp_a3 = arg6;
+    temp_a3->unk4 = arg7;
+    return;
+    // (possible return value: temp_v0)
 }
 #else
 GLOBAL_ASM(
@@ -371,9 +519,35 @@ void something_with_mema_c_debug(void) {
 
 
 #ifdef NONMATCHING
-void reset_memtable_base_allocation(void) {
+void *reset_memtable_base_allocation(s32 arg0, s32 arg1) {
+    u32 temp_v0;
 
+    // Node 0
+    ptr_table_allocated_mem_blocks.unkFF0 = -1;
+    ptr_table_allocated_mem_blocks.unkFF8 = -1;
+    ptr_table_allocated_mem_blocks = 0;
+    ptr_table_allocated_mem_blocks.unk4 = 0;
+    ptr_table_allocated_mem_blocks.unk8 = 0;
+    ptr_table_allocated_mem_blocks.unkC = 0;
+    ptr_table_allocated_mem_blocks.unkFF4 = 0;
+    ptr_table_allocated_mem_blocks.unkFFC = -1;
+    // Node 1
+    temp_v0 = (&ptr_first_entry_in_alloc_table + 8);
+    temp_v0->unk-8 = 0;
+    temp_v0->unk-4 = 0;
+    if (&dword_CODE_bss_80064C10 >= temp_v0)
+    {
+        goto loop_1;
+    }
+    // Node 2
+    ptr_model_room_buf_secondary = arg0;
+    ptr_table_allocated_mem_blocks.unk10 = arg0;
+    size_modelroom_buf = arg1;
+    ptr_table_allocated_mem_blocks.unk14 = arg1;
+    return;
+    // (possible return value: &ptr_model_room_buf_secondary)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -420,9 +594,98 @@ void mem_related_calls_sort_merge_entries(void) {
 
 
 #ifdef NONMATCHING
-void memp_related_1(void) {
+s32 mem_related_something_find_first(u32 arg0) {
+    u32 temp_v0;
+    void *temp_s1;
+    s32 temp_t6;
+    s32 temp_at;
 
+    // Node 0
+    // Node 1
+    temp_v0 = (ptr_first_entry_in_alloc_table.unk4 - arg0);
+    if ((((u32) ptr_first_entry_in_alloc_table.unk4 >= arg0) && (-1 != ptr_first_entry_in_alloc_table)) && (temp_at != 0))
+    {
+        // Node 4
+        if (temp_at == 0)
+        {
+            // Node 5
+            if (temp_v0 >= (u32) (arg0 >> 2))
+            {
+                // Node 6
+                temp_s1 = (&ptr_first_entry_in_alloc_table + 8);
+                if ((0 + 1) != 0x10)
+                {
+                    goto loop_1;
+                }
+            }
+        }
+    }
+    else
+    {
+        // Node 6
+        temp_s1 = (&ptr_first_entry_in_alloc_table + 8);
+        if ((0 + 1) != 0x10)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 7
+    if (NULL == 0)
+    {
+        // Node 8
+        if ((u32) temp_s1->unk4 < arg0)
+        {
+            loop_9:
+            // Node 9
+            if ((u32) temp_s1->unkC < arg0)
+            {
+                goto loop_9;
+            }
+        }
+        // Node 10
+        if (-1 == *temp_s1)
+        {
+            // Node 11
+            // Node 12
+            sort_merge_entries_in_alloc_table(&ptr_table_allocated_mem_blocks, NULL, 0x10);
+            if ((0 + 1) != 8)
+            {
+                goto loop_12;
+            }
+            // Node 13
+            if ((u32) ptr_table_allocated_mem_blocks.unk14 < arg0)
+            {
+                loop_14:
+                // Node 14
+                if ((u32) ptr_first_entry_in_alloc_table.unkC < arg0)
+                {
+                    goto loop_14;
+                }
+            }
+            // Node 15
+            if (-1 == ptr_first_entry_in_alloc_table)
+            {
+                // Node 16
+                return;
+                // (possible return value: 0)
+            }
+        }
+        // Node 17
+    }
+    // Node 18
+    temp_t6 = (NULL->unk4 - arg0);
+    *NULL = (s32) (*NULL + arg0);
+    NULL->unk4 = temp_t6;
+    if (temp_t6 == 0)
+    {
+        // Node 19
+        *NULL = 0;
+    }
+    // Node 20
+    return;
+    // (possible return value: *NULL)
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -612,8 +875,14 @@ glabel mem_related_model_room_buffers_0
 
 
 #ifdef NONMATCHING
-void mem_related_allocated_table_related(void) {
-
+void *mem_related_allocated_table_related(void) {
+    // Node 0
+    // Node 1
+    if ((&ptr_table_allocated_mem_blocks + 0x20) != &dword_CODE_bss_80064C08)
+    {
+        goto loop_1;
+    }
+    // (possible return value: &dword_CODE_bss_80064C08)
 }
 #else
 GLOBAL_ASM(
@@ -635,9 +904,32 @@ glabel mem_related_allocated_table_related
 
 
 #ifdef NONMATCHING
-void mem_related_something_first_related(void) {
-
+f32 mem_related_something_first_related(void) {
+    // Node 0
+    if (-1 != ptr_first_entry_in_alloc_table)
+    {
+        loop_1:
+        // Node 1
+        if (0U < (u32) ptr_first_entry_in_alloc_table.unk4)
+        {
+            // Node 2
+        }
+        // Node 3
+        if (-1 != ptr_first_entry_in_alloc_table.unk8)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 4
+    if (0U == 0)
+    {
+        // Node 5
+        return;
+        // (possible return value: ((f32) (u32) (0U * 0) / (f32) 0U))
+    }
+    // (possible return value: ((f32) (u32) (0U * 0) / (f32) 0U))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -825,8 +1117,20 @@ glabel generate_list_alloc_mem
 
 #ifdef NONMATCHING
 void generate_lists_before_after_mem_merge(void) {
-
+    // Node 0
+    generate_list_alloc_mem();
+    // Node 1
+    sort_merge_entries_in_alloc_table(&ptr_table_allocated_mem_blocks);
+    if ((0 + 1) != 0x1fc)
+    {
+        goto loop_1;
+    }
+    // Node 2
+    generate_list_alloc_mem();
+    return;
+    // (possible return value: generate_list_alloc_mem())
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -906,9 +1210,38 @@ glabel mem_related_something_first_related_0
 
 
 #ifdef NONMATCHING
-void mem_related_0(void) {
+u32 mem_related_0(void) {
+    u32 sp18;
 
+    // Node 0
+    sp18 = 0U;
+    memp_related_7();
+    if (-1 != ptr_first_entry_in_alloc_table)
+    {
+        loop_1:
+        // Node 1
+        if (sp18 < (u32) ptr_first_entry_in_alloc_table.unk4)
+        {
+            // Node 2
+        }
+        // Node 3
+        if (-1 != ptr_first_entry_in_alloc_table.unk8)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 4
+    if (sp18 != 0)
+    {
+        // Node 5
+        return;
+        // (possible return value: sp18)
+    }
+    // Node 6
+    return;
+    // (possible return value: 0U)
 }
+
 #else
 GLOBAL_ASM(
 .text
