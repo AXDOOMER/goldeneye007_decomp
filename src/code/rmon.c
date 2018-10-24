@@ -42,9 +42,21 @@ void rmon_debug_stub_4(void) {
 
 
 #ifdef NONMATCHING
-void proutSyncPrintf(void) {
-
+void proutSyncPrintf(s32 arg0, void *arg1, s32 arg2) {
+    // Node 0
+    if (arg2 != 0)
+    {
+        // Node 1
+        // Node 2
+        __osRdbSend(*arg1);
+        if ((0 + 1) != arg2)
+        {
+            goto loop_2;
+        }
+    }
+    // (possible return value: 1)
 }
+
 #else
 GLOBAL_ASM(
 .text

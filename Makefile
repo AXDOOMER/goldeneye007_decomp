@@ -45,6 +45,13 @@ CODEOBJECTS := build/code/init.o build/code/sched.o build/code/osMapTLB.o build/
 			   build/code/debugmenu.o build/code/joy.o build/code/joy_rumble.o build/code/rmon.o
 CODESEGMENT := codesegment.o
 
+ULTRAFILES := libultra/pirawstartdma.c libultra/pigetstatus.c libultra/initialize.c libultra/writebackdcacheall.c \
+			  libultra/invalicache.c libultra/unmaptlb.c libultra/getfpccsr.c libultra/setfpccsr.c libultra/createthread.c \
+			  libultra/startthread.c libultra/createmesgqueue.c libultra/stopthread.c libultra/setthreadpri.c libultra/getcount.c \
+			  libultra/createvimanager.c libultra/
+ULTRAOBJECTS :=
+ULTRASEGMENT := libultra.o
+
 GAMEFILES := game/initgamedata.c game/initweaponanigroups.c game/initactorpropstuff.c game/initnull_0009D0.c \
 			game/initunk_0009E0.c game/initanitable.c game/initunk_000B60.c game/setguscale.c game/initnull_000BC0.c \
 			game/initimages.c game/initintromatrices.c game/initmenus.c game/initguards.c game/deb_loadallmodels.c \

@@ -1,12 +1,5 @@
 #include "ultra64.h"
-
-
-
-
-
-
-
-
+#include "mainmenu.h"
 
 #ifdef NONMATCHING
 void initGameData(void) {
