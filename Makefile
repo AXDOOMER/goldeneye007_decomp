@@ -48,7 +48,8 @@ CODESEGMENT := codesegment.o
 ULTRAFILES := libultra/pirawstartdma.c libultra/pigetstatus.c libultra/initialize.c libultra/writebackdcacheall.c \
 			  libultra/invalicache.c libultra/unmaptlb.c libultra/getfpccsr.c libultra/setfpccsr.c libultra/createthread.c \
 			  libultra/startthread.c libultra/createmesgqueue.c libultra/stopthread.c libultra/setthreadpri.c libultra/getcount.c \
-			  libultra/createvimanager.c libultra/
+			  libultra/createvimanager.c libultra/vimodetable.c libultra/seteventmesg.c libultra/visetevent.c libultra/setintmask.c \
+			  libultra/recvmesg.c libultra/sendmesg.c libultra/visetmode.c libultra/visetxscale.c libultra/
 ULTRAOBJECTS :=
 ULTRASEGMENT := libultra.o
 
