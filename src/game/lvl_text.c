@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "game/lvl_text.h"
 
 /* bss
 CODE.bss:8008C640     ptr_text:       .space 4                 # DATA XREF: init_LnameX+118w
@@ -36,163 +37,21 @@ CODE.bss:8008C6F8                                              # something_with_
 CODE.bss:8008C6F8                                              # something_with_LnameX+268r
 */
 
-/* data
-D:800484D0     j_text_trigger: .word 0                  # DATA XREF: check_memflag_tokens+124r
-D:800484D0                                              # check_boot_switches+BCw
-D:800484D0                                              # write_text_at_abs_coordr
-D:800484D0                                              # constructor_menu05_fileselect+4F0r
-D:800484D0                                              # constructor_menu07_missionsel:loc_CODE_7F00E57Cr
-D:800484D0                                              # constructor_menu08_difficulty+170r
-D:800484D0                                              # constructor_menu08_difficulty+1E0r
-D:800484D0                                              # constructor_menu08_difficulty+298r
-D:800484D0                                              # display_ammo_type_collection_text+18r
-D:800484D0                                              # generate_language_specific_text_for_weaponr
-D:800484D0                                              # generate_language_specific_text_for_weapon:continuer
-D:800484D0                                              # display_objective_status_text_on_status_change+94o
-D:800484D0                                              # init_watch_at_start_of_stage+84r
-D:800484D0                                              # cur_player_set_control_type+30r
-D:800484D0                                              # sub_CODE_7F0A5B80:loc_CODE_7F0A5F88r
-D:800484D0                                              # sub_CODE_7F0A77C8+48r
-D:800484D0                                              # sub_CODE_7F0A7C18+E8r
-D:800484D0                                              # sub_CODE_7F0A7DC4+14r
-D:800484D0                                              # debug_gun_watch_move_related2+38Cr
-D:800484D0                                              # debug_gun_watch_move_related2+3C4r
-D:800484D0                                              # debug_gun_watch_move_related2+400r
-D:800484D0                                              # debug_gun_watch_move_related2+444r
-D:800484D0                                              # debug_gun_watch_move_related2+4C4r
-D:800484D0                                              # debug_gun_watch_move_related2+5B0r
-D:800484D0                                              # debug_gun_watch_move_related2+5D8r
-D:800484D0                                              # sub_CODE_7F0A97D0+98o
-D:800484D0                                              # sub_CODE_7F0A97D0+A8r
-D:800484D0                                              # sub_CODE_7F0A97D0:loc_CODE_7F0A98C4o
-D:800484D0                                              # sub_CODE_7F0A97D0+FCr
-D:800484D0                                              # sub_CODE_7F0A97D0+140r
-D:800484D0                                              # sub_CODE_7F0A97D0+1ECr
-D:800484D0                                              # sub_CODE_7F0A97D0+224r
-D:800484D0                                              # sub_CODE_7F0A97D0+26Cr
-D:800484D0                                              # sub_CODE_7F0AB908r
-D:800484D0                                              # sub_CODE_7F0AB908+1BCr
-D:800484D0                                              # sub_CODE_7F0AC168+3C8r
-D:800484D0                                              # sub_CODE_7F0AC168+4C8r
-D:800484D0                                              # sub_CODE_7F0AC168+670r
-D:800484D0                                              # sub_CODE_7F0AC168+6BCr
-D:800484D0                                              # en_text_write_stuff:loc_CODE_7F0ADB30r
-D:800484D0                                              # jp_text_write_stuff:loc_CODE_7F0AE760r
-D:800484D0                                              # sub_CODE_7F0AE98C:loc_CODE_7F0AE9C4r
-D:800484D0                                              # init_LnameX+8o
-D:800484D0                                              # init_LnameX+10r
-D:800484D0                                              # something_with_LnameJr
-D:800484D0                                              # load_mission_text_bankr
-D:800484D0                                              # load_briefing_text_bankr
-D:800484D0                                              # mp_watch_menu_display+18CCr
-D:800484D4     LnameX_lookuptable:.word 0,0,aLamee,aLamej,aLarche,aLarchj,aLarke,aLarkj,aLashe,aLashj,aLazte
-D:800484D4                                              # DATA XREF: init_LnameX+134o
-D:800484D4                     .word aLaztj,aLcate,aLcatj,aLcavee,aLcavej,aLarece,aLarecj,aLcrade,aLcradj  # "LameE"
-D:800484D4                     .word aLcrype,aLcrypj,aLdame,aLdamj,aLdepoe,aLdepoj,aLdeste,aLdestj,aLdishe
-D:800484D4                     .word aLdishj,aLeare,aLearj,aLelde,aLeldj,aLimpe,aLimpj,aLjune,aLjunj,aLleee
-D:800484D4                     .word aLleej,aLlene,aLlenj,aLlipe,aLlipj,aLluee,aLluej,aLoate,aLoatj,aLpame
-D:800484D4                     .word aLpamj,aLpetee,aLpetej,aLrefe,aLrefj,aLrite,aLritj,aLrune,aLrunj,aLsevbe
-D:800484D4                     .word aLsevbj,aLseve,aLsevj,aLsevxe,aLsevxj,aLsevxbe,aLsevxbj,aLshoe,aLshoj
-D:800484D4                     .word aLsiloe,aLsiloj,aLstate,aLstatj,aLtrae,aLtraj,aLwaxe,aLwaxj,aLgune,aLgunj
-D:800484D4                     .word aLtitlee,aLtitlej,aLmpmenue,aLmpmenuj,aLpropobje,aLpropobjj,aLmpweaponse
-D:800484D4                     .word aLmpweaponsj,aLoptionse,aLoptionsj,aLmisce,aLmiscj,0
-*/
+s32 j_text_trigger = 0;
+void *LnameX_lookuptable[] = {
+    0, 0, "LameE", "LameJ", "LarchE", "LarchJ", "LarkE", "LarkJ", "LashE", "LashJ", "LaztE", 
+    "LaztJ", "LcatE", "LcatJ", "LcaveE", "LcaveJ", "LarecE", "LarecJ", "LcradE", "LcradJ", 
+    "LcrypE", "LcrypJ", "LdamE", "LdamJ", "LdepoE", "LdepoJ", "LdestE", "LdestJ", "LdishE", 
+    "LdishJ", "LearE", "LearJ", "LeldE", "LeldJ", "LimpE", "LimpJ", "LjunE", "LjunJ", "LleeE", 
+    "LleeJ", "LlenE", "LlenJ", "LlipE", "LlipJ", "LlueE", "LlueJ", "LoatE", "LoatJ", "LpamE", 
+    "LpamJ", "LpeteE", "LpeteJ", "LrefE", "LrefJ", "LritE", "LritJ", "LrunE", "LrunJ", "LsevbE", 
+    "LsevbJ", "LsevE", "LsevJ", "LsevxE", "LsevxJ", "LsevxbE", "LsevxbJ", "LshoE", "LshoJ", 
+    "LsiloE", "LsiloJ", "LstatE", "LstatJ", "LtraE", "LtraJ", "LwaxE", "LwaxJ", "LgunE", "LgunJ", 
+    "LtitleE", "LtitleJ", "LmpmenuE", "LmpmenuJ", "LpropobjE", "LpropobjJ", "LmpweaponsE", 
+    "LmpweaponsJ", "LoptionsE", "LoptionsJ", "LmiscE", "LmiscJ",0};
 
 /* rodata
-D:8005B880     aLamee:         .ascii "LameE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B888     aLamej:         .ascii "LameJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B890     aLarche:        .ascii "LarchE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B898     aLarchj:        .ascii "LarchJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B8A0     aLarke:         .ascii "LarkE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B8A8     aLarkj:         .ascii "LarkJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B8B0     aLashe:         .ascii "LashE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B8B8     aLashj:         .ascii "LashJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B8C0     aLazte:         .ascii "LaztE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B8C8     aLaztj:         .ascii "LaztJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B8D0     aLcate:         .ascii "LcatE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B8D8     aLcatj:         .ascii "LcatJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B8E0     aLcavee:        .ascii "LcaveE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B8E8     aLcavej:        .ascii "LcaveJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B8F0     aLarece:        .ascii "LarecE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B8F8     aLarecj:        .ascii "LarecJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B900     aLcrade:        .ascii "LcradE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B908     aLcradj:        .ascii "LcradJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B910     aLcrype:        .ascii "LcrypE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B918     aLcrypj:        .ascii "LcrypJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B920     aLdame:         .ascii "LdamE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B928     aLdamj:         .ascii "LdamJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B930     aLdepoe:        .ascii "LdepoE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B938     aLdepoj:        .ascii "LdepoJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B940     aLdeste:        .ascii "LdestE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B948     aLdestj:        .ascii "LdestJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B950     aLdishe:        .ascii "LdishE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B958     aLdishj:        .ascii "LdishJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005B960     aLeare:         .ascii "LearE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B968     aLearj:         .ascii "LearJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B970     aLelde:         .ascii "LeldE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B978     aLeldj:         .ascii "LeldJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B980     aLimpe:         .ascii "LimpE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B988     aLimpj:         .ascii "LimpJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B990     aLjune:         .ascii "LjunE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B998     aLjunj:         .ascii "LjunJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B9A0     aLleee:         .ascii "LleeE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B9A8     aLleej:         .ascii "LleeJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B9B0     aLlene:         .ascii "LlenE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B9B8     aLlenj:         .ascii "LlenJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B9C0     aLlipe:         .ascii "LlipE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B9C8     aLlipj:         .ascii "LlipJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B9D0     aLluee:         .ascii "LlueE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B9D8     aLluej:         .ascii "LlueJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B9E0     aLoate:         .ascii "LoatE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B9E8     aLoatj:         .ascii "LoatJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B9F0     aLpame:         .ascii "LpamE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005B9F8     aLpamj:         .ascii "LpamJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BA00     aLpetee:        .ascii "LpeteE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005BA08     aLpetej:        .ascii "LpeteJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005BA10     aLrefe:         .ascii "LrefE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BA18     aLrefj:         .ascii "LrefJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BA20     aLrite:         .ascii "LritE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BA28     aLritj:         .ascii "LritJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BA30     aLrune:         .ascii "LrunE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BA38     aLrunj:         .ascii "LrunJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BA40     aLsevbe:        .ascii "LsevbE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005BA48     aLsevbj:        .ascii "LsevbJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005BA50     aLseve:         .ascii "LsevE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BA58     aLsevj:         .ascii "LsevJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BA60     aLsevxe:        .ascii "LsevxE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005BA68     aLsevxj:        .ascii "LsevxJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005BA70     aLsevxbe:       .ascii "LsevxbE"<0>      # DATA XREF: D:LnameX_lookuptableo
-D:8005BA78     aLsevxbj:       .ascii "LsevxbJ"<0>      # DATA XREF: D:LnameX_lookuptableo
-D:8005BA80     aLshoe:         .ascii "LshoE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BA88     aLshoj:         .ascii "LshoJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BA90     aLsiloe:        .ascii "LsiloE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005BA98     aLsiloj:        .ascii "LsiloJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005BAA0     aLstate:        .ascii "LstatE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005BAA8     aLstatj:        .ascii "LstatJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005BAB0     aLtrae:         .ascii "LtraE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BAB8     aLtraj:         .ascii "LtraJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BAC0     aLwaxe:         .ascii "LwaxE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BAC8     aLwaxj:         .ascii "LwaxJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BAD0     aLgune:         .ascii "LgunE"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BAD8     aLgunj:         .ascii "LgunJ"<0><0><0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BAE0     aLtitlee:       .ascii "LtitleE"<0>      # DATA XREF: D:LnameX_lookuptableo
-D:8005BAE8     aLtitlej:       .ascii "LtitleJ"<0>      # DATA XREF: D:LnameX_lookuptableo
-D:8005BAF0     aLmpmenue:      .ascii "LmpmenuE"<0><0><0><0>
-D:8005BAF0                                              # DATA XREF: D:LnameX_lookuptableo
-D:8005BAFC     aLmpmenuj:      .ascii "LmpmenuJ"<0><0><0><0>
-D:8005BAFC                                              # DATA XREF: D:LnameX_lookuptableo
-D:8005BB08     aLpropobje:     .ascii "LpropobjE"<0><0><0>
-D:8005BB08                                              # DATA XREF: D:LnameX_lookuptableo
-D:8005BB14     aLpropobjj:     .ascii "LpropobjJ"<0><0><0>
-D:8005BB14                                              # DATA XREF: D:LnameX_lookuptableo
-D:8005BB20     aLmpweaponse:   .ascii "LmpweaponsE"<0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BB2C     aLmpweaponsj:   .ascii "LmpweaponsJ"<0>  # DATA XREF: D:LnameX_lookuptableo
-D:8005BB38     aLoptionse:     .ascii "LoptionsE"<0><0><0>
-D:8005BB38                                              # DATA XREF: D:LnameX_lookuptableo
-D:8005BB44     aLoptionsj:     .ascii "LoptionsJ"<0><0><0>
-D:8005BB44                                              # DATA XREF: D:LnameX_lookuptableo
-D:8005BB50     aLmisce:        .ascii "LmiscE"<0><0>    # DATA XREF: D:LnameX_lookuptableo
-D:8005BB58     aLmiscj:        .ascii "LmiscJ"<0><0>    # DATA XREF: D:LnameX_lookuptableo
+
 D:8005BB60     jpt_stage_text: .word locret_CODE_7F0C1624
 D:8005BB60                                              # DATA XREF: get_textbank_number_for_stagenum+10r
 D:8005BB60                     .word stagetext_loop     # jump table for switch statement
@@ -815,9 +674,13 @@ glabel something_with_LnameX
 
 
 #ifdef NONMATCHING
-void load_mission_text_bank(void) {
-
+void load_mission_text_bank(s32 arg0, s32 arg6) {
+    // Node 0
+    *(&ptr_text + (arg6 * 4)) = _load_resource_named_to_membank(*(&LnameX_lookuptable + ((arg0 * 8) + (j_text_trigger * 4))), 1, 0x100, 4);
+    return;
+    // (possible return value: _load_resource_named_to_membank(*(&LnameX_lookuptable + ((arg0 * 8) + (j_text_trigger * 4))), 1, 0x100, 4))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -829,20 +692,20 @@ glabel load_mission_text_bank
 /* 0F6848 7F0C1D18 AFA40018 */  sw    $a0, 0x18($sp)
 /* 0F684C 7F0C1D1C 0018C880 */  sll   $t9, $t8, 2
 /* 0F6850 7F0C1D20 01F94021 */  addu  $t0, $t7, $t9
-/* 0F6854 7F0C1D24 3C048005 */  lui   $a0, 0x8005
+/* 0F6854 7F0C1D24 3C048005 */  lui   $a0, %hi(LnameX_lookuptable)
 /* 0F6858 7F0C1D28 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F685C 7F0C1D2C 00882021 */  addu  $a0, $a0, $t0
-/* 0F6860 7F0C1D30 8C8484D4 */  lw    $a0, -0x7b2c($a0)
+/* 0F6860 7F0C1D30 8C8484D4 */  lw    $a0, %lo(LnameX_lookuptable)($a0)
 /* 0F6864 7F0C1D34 24050001 */  li    $a1, 1
 /* 0F6868 7F0C1D38 24060100 */  li    $a2, 256
 /* 0F686C 7F0C1D3C 0FC2F341 */  jal   _load_resource_named_to_membank
 /* 0F6870 7F0C1D40 24070004 */   li    $a3, 4
 /* 0F6874 7F0C1D44 8FA90018 */  lw    $t1, 0x18($sp)
 /* 0F6878 7F0C1D48 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F687C 7F0C1D4C 3C018009 */  lui   $at, 0x8009
+/* 0F687C 7F0C1D4C 3C018009 */  lui   $at, %hi(ptr_text)
 /* 0F6880 7F0C1D50 00095080 */  sll   $t2, $t1, 2
 /* 0F6884 7F0C1D54 002A0821 */  addu  $at, $at, $t2
-/* 0F6888 7F0C1D58 AC22C640 */  sw    $v0, -0x39c0($at)
+/* 0F6888 7F0C1D58 AC22C640 */  sw    $v0, %lo(ptr_text)($at)
 /* 0F688C 7F0C1D5C 03E00008 */  jr    $ra
 /* 0F6890 7F0C1D60 27BD0018 */   addiu $sp, $sp, 0x18
 )
@@ -853,9 +716,13 @@ glabel load_mission_text_bank
 
 
 #ifdef NONMATCHING
-void load_briefing_text_bank(void) {
-
+void load_briefing_text_bank(s32 arg0, s32 arg1, ? arg2, s32 arg6) {
+    // Node 0
+    *(&ptr_text + (arg6 * 4)) = _load_resource_named_to_buffer(*(&LnameX_lookuptable + ((arg0 * 8) + (j_text_trigger * 4))), 1, arg1, arg2);
+    return;
+    // (possible return value: _load_resource_named_to_buffer(*(&LnameX_lookuptable + ((arg0 * 8) + (j_text_trigger * 4))), 1, arg1, arg2))
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -868,20 +735,20 @@ glabel load_briefing_text_bank
 /* 0F68A8 7F0C1D78 0018C880 */  sll   $t9, $t8, 2
 /* 0F68AC 7F0C1D7C 00C03825 */  move  $a3, $a2
 /* 0F68B0 7F0C1D80 01F94021 */  addu  $t0, $t7, $t9
-/* 0F68B4 7F0C1D84 3C048005 */  lui   $a0, 0x8005
+/* 0F68B4 7F0C1D84 3C048005 */  lui   $a0, %hi(LnameX_lookuptable)
 /* 0F68B8 7F0C1D88 00A03025 */  move  $a2, $a1
 /* 0F68BC 7F0C1D8C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F68C0 7F0C1D90 AFA5001C */  sw    $a1, 0x1c($sp)
 /* 0F68C4 7F0C1D94 00882021 */  addu  $a0, $a0, $t0
-/* 0F68C8 7F0C1D98 8C8484D4 */  lw    $a0, -0x7b2c($a0)
+/* 0F68C8 7F0C1D98 8C8484D4 */  lw    $a0, %lo(LnameX_lookuptable)($a0)
 /* 0F68CC 7F0C1D9C 0FC2F350 */  jal   _load_resource_named_to_buffer
 /* 0F68D0 7F0C1DA0 24050001 */   li    $a1, 1
 /* 0F68D4 7F0C1DA4 8FA90018 */  lw    $t1, 0x18($sp)
 /* 0F68D8 7F0C1DA8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F68DC 7F0C1DAC 3C018009 */  lui   $at, 0x8009
+/* 0F68DC 7F0C1DAC 3C018009 */  lui   $at, %hi(ptr_text)
 /* 0F68E0 7F0C1DB0 00095080 */  sll   $t2, $t1, 2
 /* 0F68E4 7F0C1DB4 002A0821 */  addu  $at, $at, $t2
-/* 0F68E8 7F0C1DB8 AC22C640 */  sw    $v0, -0x39c0($at)
+/* 0F68E8 7F0C1DB8 AC22C640 */  sw    $v0, %lo(ptr_text)($at)
 /* 0F68EC 7F0C1DBC 03E00008 */  jr    $ra
 /* 0F68F0 7F0C1DC0 27BD0018 */   addiu $sp, $sp, 0x18
 )
@@ -892,18 +759,22 @@ glabel load_briefing_text_bank
 
 
 #ifdef NONMATCHING
-void blank_text_bank(void) {
-
+void blank_text_bank(s32 arg0) {
+    // Node 0
+    *(&ptr_text + (arg0 * 4)) = 0;
+    return;
+    // (function likely void)
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel blank_text_bank
 /* 0F68F4 7F0C1DC4 00047080 */  sll   $t6, $a0, 2
-/* 0F68F8 7F0C1DC8 3C018009 */  lui   $at, 0x8009
+/* 0F68F8 7F0C1DC8 3C018009 */  lui   $at, %hi(ptr_text)
 /* 0F68FC 7F0C1DCC 002E0821 */  addu  $at, $at, $t6
 /* 0F6900 7F0C1DD0 03E00008 */  jr    $ra
-/* 0F6904 7F0C1DD4 AC20C640 */   sw    $zero, -0x39c0($at)
+/* 0F6904 7F0C1DD4 AC20C640 */   sw    $zero, %lo(ptr_text)($at)
 )
 #endif
 
@@ -912,8 +783,15 @@ glabel blank_text_bank
 
 
 #ifdef NONMATCHING
-void get_textptr_for_textID(void) {
-
+void get_textptr_for_textID(s32 arg0) {
+    // Node 0
+    if (*(*(&ptr_text + ((arg0 >> 0xa) * 4)) + ((arg0 & 0x3ff) * 4)) != 0)
+    {
+        // Node 1
+        return;
+        // (possible return value: 0)
+    }
+    // (possible return value: 0)
 }
 #else
 GLOBAL_ASM(
@@ -921,9 +799,9 @@ GLOBAL_ASM(
 glabel get_textptr_for_textID
 /* 0F6908 7F0C1DD8 00047283 */  sra   $t6, $a0, 0xa
 /* 0F690C 7F0C1DDC 000E7880 */  sll   $t7, $t6, 2
-/* 0F6910 7F0C1DE0 3C028009 */  lui   $v0, 0x8009
+/* 0F6910 7F0C1DE0 3C028009 */  lui   $v0, %hi(ptr_text)
 /* 0F6914 7F0C1DE4 004F1021 */  addu  $v0, $v0, $t7
-/* 0F6918 7F0C1DE8 8C42C640 */  lw    $v0, -0x39c0($v0)
+/* 0F6918 7F0C1DE8 8C42C640 */  lw    $v0, %lo(ptr_text)($v0)
 /* 0F691C 7F0C1DEC 309803FF */  andi  $t8, $a0, 0x3ff
 /* 0F6920 7F0C1DF0 0018C880 */  sll   $t9, $t8, 2
 /* 0F6924 7F0C1DF4 00594021 */  addu  $t0, $v0, $t9

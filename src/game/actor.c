@@ -27814,6 +27814,6 @@ glabel actor_drops_itemtype_setting_timer
 /* 0692C0 7F034790 03E00008 */  jr    $ra
 /* 0692C4 7F034794 00000000 */   nop   
 )
-endif
+#endif
   
 

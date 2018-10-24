@@ -5,16 +5,16 @@
 tools/asmpreproc/compile.sh src/boot.c
 
 tools/asmpreproc/compile.sh src/code/init.c
-tools/asmpreproc/compile.sh src/code/scheduler.c
+tools/asmpreproc/compile.sh src/code/sched.c
 #tools/asmpreproc/compile.sh src/code/osMapTLB.s
 tools/asmpreproc/compile.sh src/code/tlb_manage.c
-tools/asmpreproc/compile.sh src/code/tlb_random.c
+#tools/asmpreproc/compile.sh src/code/tlb_random.s
 tools/asmpreproc/compile.sh src/code/tlb_resolve.c
 tools/asmpreproc/compile.sh src/code/audi.c
-tools/asmpreproc/compile.sh src/code/speedgraph.c
+tools/asmpreproc/compile.sh src/code/speed_graph.c
 tools/asmpreproc/compile.sh src/code/video.c
 tools/asmpreproc/compile.sh src/code/deb.c
-tools/asmpreproc/compile.sh src/code/debug_getlastRA.c
+#tools/asmpreproc/compile.sh src/code/debug_getlastRA.s
 tools/asmpreproc/compile.sh src/code/ramrom.c
 tools/asmpreproc/compile.sh src/code/boss.c
 tools/asmpreproc/compile.sh src/code/music.c

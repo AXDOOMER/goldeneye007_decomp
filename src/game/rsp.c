@@ -5,13 +5,11 @@ char dword_CODE_bss_8008D370[0x400];
 char dword_CODE_bss_8008D770[0xBA0];
 
 
+
+s32 D_8004E9E0 = 0;
+s32 D_8004E9E4 = 0;
+s32 D_8004E9E8 = 0;
 /* data
-D:8004E9E0     dword_D_8004E9E0:.word 0                 # DATA XREF: something_with_rsp_c_debug+18o
-D:8004E9E4     dword_D_8004E9E4:.word 0                 # DATA XREF: allocate_init_rsp_buffers+2Cw
-D:8004E9E4                                              # load_rsp_microcode+68r
-D:8004E9E8     dword_D_8004E9E8:.word 0                 # DATA XREF: allocate_init_rsp_buffers+20o
-D:8004E9E8                                              # allocate_init_rsp_buffers+28w
-D:8004E9E8                                              # load_rsp_microcode+54r
 D:8004E9EC                     .align 4
 D:8004E9F0     fast3d_related: struct_22 <         0, 0, 0, 0, 1, 2, 0, 0, 0, 0x1000, 0, 0x800, dword_CODE_bss_8008D370, \
 D:8004E9F0                                              # DATA XREF: load_rsp_microcode+E8o

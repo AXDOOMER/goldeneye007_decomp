@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "rarezip.h"
+#include "rarezip/rarezip.h"
 
 u32 rz_ptr_source = 0x00000000;
 u32 rz_ptr_target = 0x00000000;
@@ -806,6 +806,77 @@ glabel decompress_inflate
 /* 033FD4 70200A44 00001025 */   move  $v0, $zero
 )
 
+
+
+#ifdef NONMATCHING
+void decompress_type0(void) {
+    s32 temp_v0;
+    u32 temp_a0;
+    u32 temp_v1;
+    u32 temp_a0_2;
+    u32 temp_t5;
+    u32 temp_a0_3;
+    s32 temp_v0_2;
+
+    // Node 0
+    temp_v0 = (rz_bitsinsample & 7);
+    temp_a0 = (rz_bitsinsample - temp_v0);
+    temp_v1 = ((u32) rz_sample >> temp_v0);
+    if (temp_a0 < 0x10U)
+    {
+        // Node 1
+        // Node 2
+        rz_curoffset = (s32) (rz_curoffset + 1);
+        if ((u32) (temp_a0 + 8) < 0x10U)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 3
+    temp_a0_2 = (temp_a0 + -0x10);
+    if (temp_a0_2 < 0x10U)
+    {
+        // Node 4
+        // Node 5
+        rz_curoffset = (s32) (rz_curoffset + 1);
+        if ((u32) (temp_a0_2 + 8) < 0x10U)
+        {
+            goto loop_5;
+        }
+    }
+    // Node 6
+    temp_t5 = ((u32) (temp_v1 >> 0x10) >> 0x10);
+    temp_a0_3 = (temp_a0_2 + -0x10);
+    temp_v0_2 = ((temp_v1 & 0xffff) + -1);
+    if (temp_v0_2 != 0)
+    {
+        // Node 7
+        // Node 8
+        if (temp_a0_3 < 8U)
+        {
+            // Node 9
+            // Node 10
+            rz_curoffset = (s32) (rz_curoffset + 1);
+            if ((u32) (temp_a0_3 + 8) < 8U)
+            {
+                goto loop_10;
+            }
+        }
+        // Node 11
+        *(rz_ptr_target + rz_decompressed_count) = temp_t5;
+        if ((temp_v0_2 + -1) != 0)
+        {
+            goto loop_8;
+        }
+    }
+    // Node 12
+    rz_decompressed_count = (s32) rz_decompressed_count;
+    rz_sample = temp_t5;
+    rz_bitsinsample = temp_a0_3;
+    return;
+    // (possible return value: 0)
+}
+#else
 GLOBAL_ASM(
 glabel decompress_type0
 /* 033FD8 70200A48 3C097020 */  lui   $t1, %hi(rz_bitsinsample) # $t1, 0x7020
@@ -902,7 +973,98 @@ glabel decompress_type0
 /* 034124 70200B94 03E00008 */  jr    $ra
 /* 034128 70200B98 00001025 */   move  $v0, $zero
 )
+#endif
 
+
+#ifdef NONMATCHING
+void decompress_type1(void) {
+    ?32 sp2C;
+    ?32 sp30;
+    ? sp34;
+    ? spA4;
+    ? sp26C;
+    ? sp42C;
+    ? sp48C;
+    ?32 sp4AC;
+    ?32 sp4B0;
+    ? sp4B4;
+    ? sp4B8;
+    void *temp_v0;
+    void *temp_v0_2;
+    u32 temp_v0_3;
+    u32 temp_v0_4;
+    u32 temp_v0_5;
+
+    // Node 0
+    // Node 1
+    temp_v0 = (&sp2C + 0x10);
+    temp_v0->unk-C = 8;
+    temp_v0->unk-8 = 8;
+    temp_v0->unk-4 = 8;
+    temp_v0->unk-10 = 8;
+    if (temp_v0 != &sp26C)
+    {
+        goto loop_1;
+    }
+    // Node 2
+    if (temp_v0 < &sp42C)
+    {
+        // Node 3
+        // Node 4
+        temp_v0_5 = (temp_v0 + 4);
+        temp_v0_5->unk-4 = 9;
+        if (temp_v0_5 < &sp42C)
+        {
+            goto loop_4;
+        }
+    }
+    // Node 5
+    if (temp_v0 < &sp48C)
+    {
+        // Node 6
+        // Node 7
+        temp_v0_4 = (temp_v0 + 4);
+        temp_v0_4->unk-4 = 7;
+        if (temp_v0_4 < &sp48C)
+        {
+            goto loop_7;
+        }
+    }
+    // Node 8
+    if (temp_v0 < &sp4AC)
+    {
+        // Node 9
+        // Node 10
+        temp_v0_3 = (temp_v0 + 4);
+        temp_v0_3->unk-4 = 8;
+        if (temp_v0_3 < &sp4AC)
+        {
+            goto loop_10;
+        }
+    }
+    // Node 11
+    sp4B0 = 7;
+    decompress_buildtable(&sp2C, 0x120, 0x101, &rz_lbase, &rz_lextra, &sp4B8, &sp4B0);
+    sp30 = 5;
+    sp2C = 5;
+    // Node 12
+    temp_v0_2 = (&sp34 + 0x10);
+    temp_v0_2->unk-C = 5;
+    temp_v0_2->unk-8 = 5;
+    temp_v0_2->unk-4 = 5;
+    temp_v0_2->unk-10 = 5;
+    if (temp_v0_2 != &spA4)
+    {
+        goto loop_12;
+    }
+    // Node 13
+    sp4AC = 5;
+    decompress_buildtable(&sp2C, 0x1e, 0, &rz_dbase, &rz_dextra, &sp4B4, &sp4AC);
+    decompress_inflate(sp4B8, sp4B4, sp4B0, sp4AC);
+    return;
+    // (possible return value: 0)
+}
+#else
 GLOBAL_ASM(
 glabel decompress_type1
 /* 03412C 70200B9C 27BDFB40 */  addiu $sp, $sp, -0x4c0
@@ -1004,6 +1166,7 @@ glabel decompress_type1
 /* 03428C 70200CFC 03E00008 */  jr    $ra
 /* 034290 70200D00 00000000 */   nop   
 )
+#endif
 
 GLOBAL_ASM(
 glabel decompress_type2
@@ -1368,6 +1531,70 @@ glabel decompress_type2
 /* 0347B4 70201224 00001025 */   move  $v0, $zero
 )
 
+
+#ifdef NONMATCHING
+void decompress_table(void *arg0) {
+    u32 temp_v1;
+    u32 temp_t3;
+    s32 temp_v0;
+
+    // Node 0
+    if (rz_bitsinsample == 0)
+    {
+        // Node 1
+        // Node 2
+        rz_curoffset = (s32) (rz_curoffset + 1);
+        if ((rz_bitsinsample + 8) == 0)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 3
+    temp_v1 = (rz_bitsinsample + -1);
+    temp_t3 = ((u32) rz_sample >> 1);
+    *arg0 = (s32) (rz_sample & 1);
+    if (temp_v1 < 2U)
+    {
+        // Node 4
+        // Node 5
+        rz_curoffset = (s32) (rz_curoffset + 1);
+        if ((u32) (temp_v1 + 8) < 2U)
+        {
+            goto loop_5;
+        }
+    }
+    // Node 6
+    temp_v0 = (temp_t3 & 3);
+    rz_sample = (u32) (temp_t3 >> 2);
+    rz_bitsinsample = (s32) (temp_v1 + -2);
+    if (temp_v0 == 2)
+    {
+        // Node 7
+        decompress_type2(&rz_curoffset, temp_t3, arg0);
+        return;
+        // (possible return value: decompress_type2(&rz_curoffset, temp_t3, arg0))
+    }
+    // Node 8
+    if (temp_v0 == 0)
+    {
+        // Node 9
+        decompress_type0(&rz_curoffset, temp_t3, arg0);
+        return;
+        // (possible return value: decompress_type0(&rz_curoffset, temp_t3, arg0))
+    }
+    // Node 10
+    if (temp_v0 == 1)
+    {
+        // Node 11
+        decompress_type1(&rz_curoffset, temp_t3, arg0);
+        return;
+        // (possible return value: decompress_type1(&rz_curoffset, temp_t3, arg0))
+    }
+    // Node 12
+    return;
+    // (possible return value: 2)
+}
+#else
 GLOBAL_ASM(
 glabel decompress_table
 /* 0347B8 70201228 3C097020 */  lui   $t1, %hi(rz_bitsinsample) # $t1, 0x7020
@@ -1451,7 +1678,53 @@ glabel decompress_table
 /* 0348D0 70201340 03E00008 */  jr    $ra
 /* 0348D4 70201344 00000000 */   nop   
 )
+#endif
 
+#ifdef NONMATCHING
+void decompress_start(void) {
+    s32 sp34;
+    u32 temp_t7;
+
+    // Node 0
+    rz_decompressed_count = 0;
+    rz_bitsinsample = 0U;
+    rz_sample = 0;
+    // Node 1
+    rz_data3 = 0U;
+    if (decompress_table(&sp34) != 0)
+    {
+        // Node 2
+        return;
+        // (possible return value: decompress_table(&sp34))
+    }
+    // Node 3
+    if (0U < (u32) rz_data3)
+    {
+        // Node 4
+    }
+    // Node 5
+    if (sp34 == 0)
+    {
+        goto loop_1;
+    }
+    // Node 6
+    if ((u32) rz_bitsinsample >= 8U)
+    {
+        loop_7:
+        // Node 7
+        temp_t7 = (rz_bitsinsample + -8);
+        rz_bitsinsample = temp_t7;
+        rz_curoffset = (s32) (rz_curoffset + -1);
+        if (temp_t7 >= 8U)
+        {
+            goto loop_7;
+        }
+    }
+    // Node 8
+    return;
+    // (possible return value: 0)
+}
+#else
 GLOBAL_ASM(
 glabel decompress_start
 /* 0348D8 70201348 27BDFFC8 */  addiu $sp, $sp, -0x38
@@ -1514,6 +1787,8 @@ glabel decompress_start
 /* 0349A4 70201414 03E00008 */  jr    $ra
 /* 0349A8 70201418 27BD0038 */   addiu $sp, $sp, 0x38
 )
+#endif
+
 
 u32 decompress_entry(u32 source, u32 target, u32 buffer) {
 

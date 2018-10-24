@@ -118,10 +118,9 @@ glabel sinf
 /* 08CAE8 7F057FB8 31290001 */  andi  $t1, $t1, 1
 /* 08CAEC 7F057FBC 55200001 */  bnezl $t1, .L7F057FC4
 /* 08CAF0 7F057FC0 46000007 */   neg.s $f0, $f0
-func_7F057FC4:
+glabel func_7F057FC4
 .L7F057FC4:
 /* 08CAF4 7F057FC4 03E00008 */  jr    $ra
 /* 08CAF8 7F057FC8 00000000 */   nop   
-
-/* 08CAFC 7F057FCC 00000000 */  nop   
-
+)
+#endif

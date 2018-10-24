@@ -1,6 +1,6 @@
 #include "ultra64.h"
 
-
+/*
 .section .rodata
  jpt_7003B478:
 .word .L7F007550
@@ -51,7 +51,7 @@
 .word .L7F00755C
 .word .L7F007550
 .align 4
-
+*/
 
 #ifdef NONMATCHING
 void cleanupObjects(s32 stage) {

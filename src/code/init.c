@@ -33,9 +33,7 @@ struct debug_handler_entry debug_handler_table[] =
 	{&sp_audi, "Audi"},
 };
 
-#define TESTING 1
-
-#ifdef TESTING
+#ifdef NONMATCHING
 void init(void) {
     s32 *cdata_vaddr_start;
     s32 rodata_rom_size;
