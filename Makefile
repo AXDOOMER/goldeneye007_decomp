@@ -136,6 +136,7 @@ TOOLS_DIR := tools
 DATASEG_COMP := $(TOOLS_DIR)/data_compress.sh
 RZ_COMP := $(TOOLS_DIR)/1172compress.sh
 N64CKSUM := $(TOOLS_DIR)/n64cksum
+MAKEBG := $(TOOLS_DIR)/makebg.sh
 
 INCLUDE := -I include -I include/code -I include/game -I include/rarezip -I include/libultra
 
@@ -155,7 +156,8 @@ OBJCOPY := $(TOOLCHAIN)objcopy
 default:	$(TARGET)
 
 clean:
-	rm -f $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(TEXT_RZ_FILES) $(BRIEF_RZ_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(MUSIC_RZ_FILES)
+	rm -f $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
+	$(OBOBJECTS) $(MUSIC_RZ_FILES)
 
 install: default
 		$(INSTALL) -m 444 -F /usr/src/PR/ge007 \
@@ -170,7 +172,7 @@ build/$(BOOTOBJECTS): src/$(BOOTFILES)
 	$(ASM_PREPROC) -O2 $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ -O2
 	$(ASM_PREPROC) -O2 $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
 
-build/$(OBSEGMENT): $(PROP_RZ_FILES) $(GUN_RZ_FILES) $(CHR_RZ_FILES) $(TEXT_RZ_FILES) $(BRIEF_RZ_FILES)
+build/$(OBSEGMENT): $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES)
 
 build/$(BOOTSEGMENT): $(BOOTOBJECTS)
 
