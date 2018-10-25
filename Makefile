@@ -1,8 +1,24 @@
 # Makefile to rebuild Goldeneye 007
+include Makefile.obseg
+include Makefile.music
 
 FINAL := YES
 VERSION := US
 TOOLCHAIN := mips-linux-gnu-
+BUILD_DIR := build
+BUILD_SUB_DIRS := \
+	code game rarezip libultra \
+	assets \
+	assets/obseg \
+	assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop assets/obseg/text \
+	assets/obseg/bg assets/obseg/setup assets/obseg/stan \
+	assets/music \
+	assets/ramrom \
+	assets/images \
+	assets/font
+# create build directories
+$(shell mkdir -p $(BUILD_DIR))
+$(foreach dir,$(BUILD_SUB_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
 ifeq ($(FINAL), YES)
  OPTIMIZER := -O2
@@ -49,7 +65,10 @@ ULTRAFILES := libultra/pirawstartdma.c libultra/pigetstatus.c libultra/initializ
 			  libultra/invalicache.c libultra/unmaptlb.c libultra/getfpccsr.c libultra/setfpccsr.c libultra/createthread.c \
 			  libultra/startthread.c libultra/createmesgqueue.c libultra/stopthread.c libultra/setthreadpri.c libultra/getcount.c \
 			  libultra/createvimanager.c libultra/vimodetable.c libultra/seteventmesg.c libultra/visetevent.c libultra/setintmask.c \
-			  libultra/recvmesg.c libultra/sendmesg.c libultra/visetmode.c libultra/visetxscale.c libultra/
+			  libultra/recvmesg.c libultra/sendmesg.c libultra/visetmode.c libultra/visetxscale.c libultra/visetyscale.c \
+			  libultra/virepeatline.c libultra/viblack.c libultra/sptaskyielded.c libultra/dpgetcounters.c libultra/vigetcurrentframebuffer.c \
+			  libultra/vigetnextframebuffer.c libultra/viswapbuffer.c libultra/dpsetstatus.c libultra/sptask.c libultra/dpsetnextbuffer.c \
+			  libultra/
 ULTRAOBJECTS :=
 ULTRASEGMENT := libultra.o
 
@@ -107,13 +126,10 @@ RZFILES := rarezip/rarezip.c
 RZOBJECTS := build/rarezip/rarezip.o
 RZSEGMENT := rzsegment.o
 
-OBFILES := 
-OBOBJECTS := 
-OBSEGMENT := obsegment.o
 #DATAFILES := static.c zbuffer.c cfb.c
 #DATAOBJECTS := $(DATAFILES:.c=.o)
 
-OBJECTS := $(BOOTSEGMENT) $(CODESEGMENT) $(GAMESEGMENT) $(RZSEGMENT)
+OBJECTS := $(BOOTSEGMENT) $(CODESEGMENT) $(GAMESEGMENT) $(RZSEGMENT) $(OBSEGMENT)
 
 # other tools
 TOOLS_DIR := tools
@@ -134,10 +150,12 @@ AS := $(TOOLCHAIN)as
 ASFLAGS := -march=vr4300 -mabi=32 $(INCLUDE)
 ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 
+OBJCOPY := $(TOOLCHAIN)objcopy
+
 default:	$(TARGET)
 
 clean:
-	rm -f $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS)
+	rm -f $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(TEXT_RZ_FILES) $(BRIEF_RZ_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES)
 
 install: default
 		$(INSTALL) -m 444 -F /usr/src/PR/ge007 \
@@ -152,6 +170,7 @@ build/$(BOOTOBJECTS): src/$(BOOTFILES)
 	$(ASM_PREPROC) -O2 $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ -O2
 	$(ASM_PREPROC) -O2 $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
 
+build/$(OBSEGMENT): $(PROP_RZ_FILES) $(GUN_RZ_FILES) $(CHR_RZ_FILES) $(TEXT_RZ_FILES) $(BRIEF_RZ_FILES)
 
 build/$(BOOTSEGMENT): $(BOOTOBJECTS)
 
@@ -163,7 +182,7 @@ build/$(GAMESEGMENT): $(GAMEOBJECTS)
 build/$(RZSEGMENT): $(RZOBJECTS)
 
 
-$(APP): build/$(BOOTSEGMENT) build/$(CODESEGMENT) build/$(GAMESEGMENT) build/$(RZSEGMENT)
+$(APP): build/$(OBSEGMENT) build/$(BOOTSEGMENT) build/$(CODESEGMENT) build/$(GAMESEGMENT) build/$(RZSEGMENT)
 
 $(TARGET):	$(APP)
 		$(MAKEROM) -r rom 
