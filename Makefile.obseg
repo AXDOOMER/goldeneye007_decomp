@@ -8,7 +8,7 @@ OBSEG_DIR := assets/obseg
 
 #bg
 $(BUILD_DIR)/$(OBSEG_DIR)/bg/%.seg: $(OBSEG_DIR)/bg/%.bin
-    $(MAKEBG) $< $@
+	$(MAKEBG) $< $@
 
 BG_SEG_FILES = \
 	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_sev_all_p.seg \
@@ -583,7 +583,7 @@ PROP_RZ_FILES = \
 
 #stan
 $(BUILD_DIR)/$(OBSEG_DIR)/stan/%.rz: $(OBSEG_DIR)/stan/%.bin
-    $(RZ_COMP) $< $@
+	$(RZ_COMP) $< $@
 
 STAN_RZ_FILES = \
     $(BUILD_DIR)/$(OBSEG_DIR)/stan/Tbg_ame_all_p_stanZ.rz \
@@ -648,7 +648,7 @@ BRIEF_RZ_FILES = \
 
 #setup
 $(BUILD_DIR)/$(OBSEG_DIR)/setup/%.rz: $(OBSEG_DIR)/setup/%.bin
-    $(RZ_COMP) $< $@
+	$(RZ_COMP) $< $@
 
 SETUP_RZ_FILES = \
     $(BUILD_DIR)/$(OBSEG_DIR)/setup/Ump_setupameZ.rz \
