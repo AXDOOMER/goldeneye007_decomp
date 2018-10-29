@@ -1,5 +1,6 @@
 #ifndef _BOND_H_
 #define _BOND_H_
+#include "ultra64.h"
 
 extern u32 *_codeSegmentVaddrStart;
 extern u32 *_codeSegmentVaddrEnd;
@@ -29,5 +30,12 @@ extern u8 sp_shed[];
 extern u8 sp_main[];
 extern u8 sp_audi[];
 extern u8 sp_debug[];
+
+struct rgba_val{
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 a;
+};
 
 #endif

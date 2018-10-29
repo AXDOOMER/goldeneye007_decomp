@@ -5,6 +5,7 @@ include Makefile.music
 FINAL := YES
 VERSION := US
 TOOLCHAIN := mips-linux-gnu-
+
 BUILD_DIR := build
 BUILD_SUB_DIRS := \
 	code game rarezip libultra \
@@ -21,10 +22,10 @@ $(shell mkdir -p $(BUILD_DIR))
 $(foreach dir,$(BUILD_SUB_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
 ifeq ($(FINAL), YES)
- OPTIMIZER := -O2
+ OPTIMIZATION := -O2
  LCDEFS :=
 else
- OPTIMIZER := -g
+ OPTIMIZATION := -g
  LCDEFS := -DDEBUG
 endif
 
@@ -70,7 +71,7 @@ ULTRAFILES := libultra/pirawstartdma.c libultra/pigetstatus.c libultra/initializ
 			  libultra/vigetnextframebuffer.c libultra/viswapbuffer.c libultra/dpsetstatus.c libultra/sptask.c libultra/dpsetnextbuffer.c \
 			  libultra/
 ULTRAOBJECTS :=
-ULTRASEGMENT := libultra.o
+ULTRASEGMENT := libultra.a
 
 GAMEFILES := game/initgamedata.c game/initweaponanigroups.c game/initactorpropstuff.c game/initnull_0009D0.c \
 			game/initunk_0009E0.c game/initanitable.c game/initunk_000B60.c game/setguscale.c game/initnull_000BC0.c \
@@ -167,24 +168,23 @@ install: default
 			Makefile 
 	
 build/%.o: src/%.c
-	$(ASM_PREPROC) -O2 $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ -O2
-	$(ASM_PREPROC) -O2 $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
+	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
 
 build/$(BOOTOBJECTS): src/$(BOOTFILES)
-	$(ASM_PREPROC) -O2 $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ -O2
-	$(ASM_PREPROC) -O2 $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
+	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
 
 build/$(OBSEGMENT): $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES)
 
 build/$(BOOTSEGMENT): $(BOOTOBJECTS)
-
+	$(LD) -o build/$(BOOTSEGMENT) -r $(BOOTOBJECTS)
 build/$(CODESEGMENT): $(CODEOBJECTS)
-#		$(LD) -o $(CODESEGMENT) -r $(CODEOBJECTS) $(LDFLAGS)
-
+	$(LD) -o build/$(CODESEGMENT) -r $(CODEOBJECTS)
 build/$(GAMESEGMENT): $(GAMEOBJECTS)
-
+	$(LD) -o build/$(GAMESEGMENT) -r $(GAMEOBJECTS)
 build/$(RZSEGMENT): $(RZOBJECTS)
-
+	$(LD) -o build/$(RZSEGMENT) -r $(RZOBJECTS)
 
 $(APP): build/$(OBSEGMENT) $(MUSIC_RZ_FILES) build/$(BOOTSEGMENT) build/$(CODESEGMENT) build/$(GAMESEGMENT) build/$(RZSEGMENT)
 

@@ -1,34 +1,16 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:80075DB0     dword_CODE_bss_80075DB0:.space 4         # DATA XREF: something_with_ejected_cartridges+1Cw
-CODE.bss:80075DB0                                              # sub_CODE_7F068D20+50o
-CODE.bss:80075DB0                                              # sub_CODE_7F068D20+78r
-CODE.bss:80075DB4                     .align 3
-CODE.bss:80075DB8     dword_CODE_bss_80075DB8:.space 4         # DATA XREF: something_with_ejected_cartridges+24o
-CODE.bss:80075DB8                                              # sub_CODE_7F0643A0r
-CODE.bss:80075DB8                                              # sub_CODE_7F0643A0+1Co
-CODE.bss:80075DBC     dword_CODE_bss_80075DBC:.space 4         # DATA XREF: sub_CODE_7F0643A0:loc_CODE_7F0643C0r
-CODE.bss:80075DBC                                              # sub_CODE_7F0643A0+38o
-CODE.bss:80075DC0     dword_CODE_bss_80075DC0:.space 4         # DATA XREF: sub_CODE_7F0643A0:loc_CODE_7F0643DCr
-CODE.bss:80075DC0                                              # sub_CODE_7F0643A0+54o
-CODE.bss:80075DC4     dword_CODE_bss_80075DC4:.space 4         # DATA XREF: sub_CODE_7F0643A0:loc_CODE_7F0643F8r
-CODE.bss:80075DC4                                              # sub_CODE_7F0643A0+70o
-CODE.bss:80075DC8     dword_CODE_bss_80075DC8:.space 0x9C      # DATA XREF: sub_CODE_7F0009A0+Co
-CODE.bss:80075DC8                                              # something_with_ejected_cartridges+20o
-CODE.bss:80075DC8                                              # sub_CODE_7F068420+8o
-CODE.bss:80075DC8                                              # sub_CODE_7F068E6C+1Co
-CODE.bss:80075DC8                                              # sub_CODE_7F06908C+24o
-CODE.bss:80075E64     dword_CODE_bss_80075E64:.space 4         # DATA XREF: sub_CODE_7F068420r
-CODE.bss:80075E64                                              # sub_CODE_7F068E6C+20r
-CODE.bss:80075E64                                              # sub_CODE_7F06908C+28r
-CODE.bss:80075E68     dword_CODE_bss_80075E68:.space 0xBE0     # DATA XREF: sub_CODE_7F068420+1Co
-CODE.bss:80076A48     dword_CODE_bss_80076A48:.space 8         # DATA XREF: sub_CODE_7F0009A0+8o
-CODE.bss:80076A48                                              # sub_CODE_7F068420+18o
-CODE.bss:80076A48                                              # sub_CODE_7F068420:loc_CODE_7F068458o
-CODE.bss:80076A48                                              # sub_CODE_7F068E6C+18o
-CODE.bss:80076A48                                              # sub_CODE_7F06908C+20o
-*/
+// bss
+s32 dword_CODE_bss_80075DB0;
+s32 dword_CODE_bss_80075DB4;
+s32 dword_CODE_bss_80075DB8;
+s32 dword_CODE_bss_80075DBC;
+s32 dword_CODE_bss_80075DC0;
+s32 dword_CODE_bss_80075DC4;
+s32 dword_CODE_bss_80075DC8[40]; //space 0xA0
+s32 dword_CODE_bss_80075E68[760]; //space 0xBE0
+s32 dword_CODE_bss_80076A48;
+
 
 /* data
 D:80032440     stru_D_80032440:rgba_val <0x96, 0x96, 0x96, 0>

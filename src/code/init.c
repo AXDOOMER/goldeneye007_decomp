@@ -17,8 +17,6 @@ OSThread shedThread;
 OSMesgQueue gfxFrameMsgQ;
 OSMesg gfxFrameMsgBuf[32];
 OSMesgQueue *sched_cmdQ;
-OSSched sc;
-OSScClient gfxClient;
 
 u32 unknown_init_val = 2;
 u32 cart_hw_address = 0x10000000;
@@ -275,36 +273,44 @@ void thread3_main(void *args) {
 
 
 #ifdef NONMATCHING
-s32 setuplastentryofdebughandler(void) {
+void *setuplastentryofdebughandler(void) {
     ? sp8;
     void *temp_t6;
     void *temp_t0;
+    void *temp_v0;
+    void *phi_t6;
+    void *phi_t0;
+    void *phi_v0;
 
     // Node 0
-
+    phi_t6 = &debug_handler_table;
+    phi_t0 = &sp8;
     // Node 1
-    temp_t6 = (&debug_handler_table + 0xc);
-    temp_t0 = (&sp8 + 0xc);
-    temp_t0->unk-C = (?32) debug_handler_table;
+    temp_t6 = (phi_t6 + 0xc);
+    temp_t0 = (phi_t0 + 0xc);
+    temp_t0->unk-C = (?32) *phi_t6;
     temp_t0->unk-8 = (?32) temp_t6->unk-8;
     temp_t0->unk-4 = (?32) temp_t6->unk-4;
+    phi_t6 = temp_t6;
+    phi_t0 = temp_t0;
     if (temp_t6 != (&debug_handler_table + 0x30))
     {
         goto loop_1;
     }
-
     // Node 2
     *temp_t0 = (?32) *temp_t6;
     temp_t0->unk4 = (?32) temp_t6->unk4;
-
+    phi_v0 = &sp8;
     // Node 3
-    if (sp8.unk8 != 0)
+    temp_v0 = (phi_v0 + 8);
+    phi_v0 = temp_v0;
+    if (phi_v0->unk8 != 0)
     {
         goto loop_3;
     }
+    // Node 4
+    return temp_v0;
 
-    // (possible return value: (&sp8 + 8))
-}
 
 #else
 GLOBAL_ASM(

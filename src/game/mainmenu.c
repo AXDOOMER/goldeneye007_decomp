@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "bondgame.h"
 
 /* bss
 CODE.bss:800695A0     flt_CODE_bss_800695A0:.space 4           # DATA XREF: init_menu18_displaycast+838w
@@ -515,9 +516,9 @@ s32 set0_never_used = 0;
 s32 set0_never_used_0 = 0;
 s32 dword_D_8002A968 = 0;
 s32 dword_D_8002A96C = 0;
-/* data 
-stru_D_8002A970:rgba_val <0x96, 0x96, 0x96, 0>
-                rgba_val <0x96, 0x96, 0x96, 0>
+struct rgba_val stru_D_8002A970 = {0x96, 0x96, 0x96, 0};
+struct rgba_val stru_D_8002A974 = {0x96, 0x96, 0x96, 0};
+/*
 stru_D_8002A978:rgba_val <0xFF, 0xFF, 0xFF, 0>
                 rgba_val <0xFF, 0xFF, 0xFF, 0>
                 rgba_val <0x4D, 0x4D, 0x2E, 0>
@@ -10968,11 +10969,6 @@ glabel get_time_div_selected_length
 )
 #endif
 
-void get_time_div_selected_length(void) {
-    // (possible return value: (0x80030000 + (game_length * 0xc))->unk-5008)
-}
-
-
 
 
 #ifdef NONMATCHING
@@ -10994,10 +10990,6 @@ glabel get_score_div_selected_length
 /* 044F94 7F010464 8C42AFFC */   lw    $v0, -0x5004($v0)
 )
 #endif
-
-void get_score_div_selected_length(void) {
-    // (possible return value: (0x80030000 + (game_length * 0xc))->unk-5004)
-}
 
 
 
