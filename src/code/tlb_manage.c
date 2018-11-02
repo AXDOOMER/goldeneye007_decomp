@@ -4,10 +4,10 @@
 u32 maybe_cur_TLB_entries = 0;
 u32 tlb_segment_num = 0;
 
-u32 TLB_managment_table_start[0x800];
-u32 TLB_manager_mapping_table_start[0xB4];
-u32 TLB_manager_mapping_table_end[4];
-u32 ptr_TLBallocatedblock[4];
+char TLB_managment_table_start[0x800];
+char TLB_manager_mapping_table_start[0xB4];
+u32 TLB_manager_mapping_table_end;
+u32 ptr_TLBallocatedblock;
 
 
 

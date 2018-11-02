@@ -46,16 +46,15 @@ s32 dword_CODE_bss_8005E4C8;
 s32 dword_CODE_bss_8005E4CC;
 s32 dword_CODE_bss_8005E4D0[2];
 s32 dword_CODE_bss_8005E4D8[2];
-s32 dword_CODE_bss_8005E4E0[0xE];
-s32 dword_CODE_bss_8005E518[2];
-s32 dword_CODE_bss_8005E520;
-s32 dword_CODE_bss_8005E524[3];
+char dword_CODE_bss_8005E4E0[0x38];
+char dword_CODE_bss_8005E518[0x18];
+
 
 OSThread audiThread;
 OSMesgQueue audioFrameMsgQ;
-OSMesg audioFrameMsgBuf[4];
+OSMesg audioFrameMsgBuf[8];
 OSMesgQueue msgQ_Q_8005E718;
-OSMesg msgQ_buf_8005E730[4];
+OSMesg msgQ_buf_8005E730[8];
 
 u32 dword_CODE_bss_8005E750[0x14];
 
@@ -64,17 +63,15 @@ OSScClient audi_client[2];
 s32 dmaState_initialized;
 s32 dmaState_firstUsed;
 s32 dmaState_firstFree[2];
-s32 dmaBuffs;
-s32 dword_CODE_bss_8005E7C4[4];
-s32 dword_CODE_bss_8005E7D4[0x13B];
+char dmaBuffs[0x500];
 s32 minFrameSize;
 s32 frameSize;
 s32 maxFrameSize;
-s16 cmdLen;
+s32 cmdLen;
 
 OSIoMesg audDMAIOMesgBuf[0x40];
 OSMesgQueue audDMAMessageQ;
-OSMesg audDMAMessageBuf[0x12];
+char audDMAMessageBuf[0x108];
 
 
 

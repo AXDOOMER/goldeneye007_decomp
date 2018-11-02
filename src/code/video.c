@@ -48,16 +48,16 @@ const char aImgviewGrab_D_rgb_0[] = "imgview grab.%d.rgb";
 
 
 
-u32 dword_CODE_bss_800607E0[0x10];
+char dword_CODE_bss_800607E0[0x40];
 Mtx *m;
 s32 dword_CODE_bss_80060824;
-s32 dword_CODE_bss_80060828[0x14];
+char dword_CODE_bss_80060828[0x50];
 u32 off_CODE_bss_80060878;
-s32 viMode = 4;
-s32 dword_CODE_bss_80060880 = 4;
-s32 dword_CODE_bss_80060884 = 4;
-s32 dword_CODE_bss_80060888 = 4;
-s32 dword_CODE_bss_8006088C = 4;
+s32 viMode;
+s32 dword_CODE_bss_80060880;
+s32 dword_CODE_bss_80060884;
+s32 dword_CODE_bss_80060888;
+s32 dword_CODE_bss_8006088C;
 
 #ifdef NONMATCHING
 s32 init_video_settings(void) {

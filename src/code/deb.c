@@ -4,9 +4,9 @@
 #include "code/ramrom.h"
 
 /* bss */
-u32 dword_CODE_bss_80060890[0x400];
-OSThread thread_video_manager_debugthread[0x6B0];
-u32 tlbStack[0x2300];
+char dword_CODE_bss_80060890[0x400];
+char thread_video_manager_debugthread[0x6B0];
+char tlbStack[0x2300];
 OSMesgQueue tlbMesgQ;
 u32 tlbMesgBuf;
 OSThread *ptr_tlbthread_maybe;
@@ -14,7 +14,7 @@ u32 dword_CODE_bss_80063660;
 u32 *current_indy_read_buf_resourceID;
 u32 *ptr_indy_read_buf_string1;
 u32 *ptr_indy_read_buf_string2;
-u32 indy_read_buffer[0x60];
+char indy_read_buffer[0x60];
 
 
 /* data */

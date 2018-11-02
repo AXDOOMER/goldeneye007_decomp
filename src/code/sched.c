@@ -1,4 +1,5 @@
 #include <ultra64.h>
+#include "code/init.h"
 #include "code/scheduler.h"
 
 u32 stderr_unused = 0;
@@ -12,10 +13,14 @@ u32 setby_DPCfill_1 = 0;
 f32 somthing_with_osVI[7] = {0.0,1.0,1.0,1.0,1.0,0.0,0.0};
 u32 D_800230CC = 1;
 
-OSSched sc;
-OSScClient gfxClient;
-s32 dword_CODE_bss_8005DB30[0x10];
-s32 dword_CODE_bss_8005DB40[0xB0];
+//temporary until i get proper sized structs
+//OSSched sc;
+//OSScClient gfxClient;
+char sc[0xD8];
+char gfxClient[0x18];
+
+char dword_CODE_bss_8005DB30[0x10];
+char dword_CODE_bss_8005DB40[0xB0];
 
 extern u32* vid_buff_1;
 extern u32* vid_buff_2;
@@ -44,9 +49,9 @@ void CheckDisplayErrorBuffer(u32 *buffer) {
 }
 
 void CheckDisplayErrorBufferEvery16Frames(u32 framecount) {
-	if (framecount&0xf) {
+	if (framecount & 0xf) {
 		if ((stderr_permitted && stderr_active) || stderr_enabled){
-			if (userCompareValue < (osGetCount()-currentcount)){
+			if (userCompareValue < (osGetCount() - currentcount)){
 				write_stderr_to_buffer(vid_buff_1);
 				write_stderr_to_buffer(vid_buff_2);
 			}
