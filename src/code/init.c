@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include "bondgame.h"
 #include "boot.h"
-#include "code/scheduler.h"
+#include "code/sched.h"
 #include "code/rmon.h"
 #include "code/tlb_resolve.h"
 #include "code/tlb_hardware.h"

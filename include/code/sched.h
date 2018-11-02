@@ -62,6 +62,9 @@ typedef struct {
     s32         doAudio;
 } OSSched;
 
+extern char sc[0xD8];
+extern char gfxClient[0x18];
+
 void activate_stderr(u32 flag);
 void enable_stderr(u32 flag);
 void permit_stderr(u32 flag);

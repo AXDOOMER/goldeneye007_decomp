@@ -2,7 +2,7 @@
 
 
 char memory_bank_ptrs[0x40];
-void *ptr_model_room_buf_pri;
+u32 *ptr_model_room_buf_pri;
 char dword_CODE_bss_80063BF8[0x24];
 s32 dword_CODE_bss_80063C1C;
 

@@ -1,6 +1,6 @@
 //FIXME i still need data/bss love.
 #include "ultra64.h"
-#include "code/scheduler.h"
+#include "code/sched.h"
 #include "code/audi.h"
 
 u32 audFrameCt = 0;
