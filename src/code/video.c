@@ -234,9 +234,9 @@ void *video_related_7(void) {
     }
     // Node 3
     temp_lo = (D_800232B0 * D_800232B4);
-    dword_CODE_bss_8006087C->unk30 = (s32) (((((s32) dword_CODE_bss_80060884 >> 0x10) + temp_lo) << 0x10) | ((dword_CODE_bss_80060884 + temp_lo) & 0xffff));
-    dword_CODE_bss_8006087C->unk44 = (s32) (((((s32) dword_CODE_bss_80060888 >> 0x10) + temp_lo) << 0x10) | ((dword_CODE_bss_80060888 + temp_lo) & 0xffff));
-    osViSetMode(dword_CODE_bss_8006087C, &dword_CODE_bss_8006087C);
+    viMode->unk30 = (s32) (((((s32) dword_CODE_bss_80060884 >> 0x10) + temp_lo) << 0x10) | ((dword_CODE_bss_80060884 + temp_lo) & 0xffff));
+    viMode->unk44 = (s32) (((((s32) dword_CODE_bss_80060888 >> 0x10) + temp_lo) << 0x10) | ((dword_CODE_bss_80060888 + temp_lo) & 0xffff));
+    osViSetMode(viMode, &viMode);
     osViBlack(*(D_800232BC + 3));
     if (D_800232BC != 0)
     {
@@ -276,8 +276,8 @@ glabel video_related_7
 /* 003DDC 700031DC 3C028006 */  lui   $v0, %hi(dword_CODE_bss_80060884) # $v0, 0x8006
 /* 003DE0 700031E0 8C4D0884 */  lw    $t5, %lo(dword_CODE_bss_80060884)($v0)
 /* 003DE4 700031E4 03190019 */  multu $t8, $t9
-/* 003DE8 700031E8 3C058006 */  lui   $a1, %hi(dword_CODE_bss_8006087C) # $a1, 0x8006
-/* 003DEC 700031EC 24A5087C */  addiu $a1, %lo(dword_CODE_bss_8006087C) # addiu $a1, $a1, 0x87c
+/* 003DE8 700031E8 3C058006 */  lui   $a1, %hi(viMode) # $a1, 0x8006
+/* 003DEC 700031EC 24A5087C */  addiu $a1, %lo(viMode) # addiu $a1, $a1, 0x87c
 /* 003DF0 700031F0 000D4C03 */  sra   $t1, $t5, 0x10
 /* 003DF4 700031F4 8CB90000 */  lw    $t9, ($a1)
 /* 003DF8 700031F8 3C028006 */  lui   $v0, %hi(dword_CODE_bss_80060888) # $v0, 0x8006
@@ -366,10 +366,10 @@ glabel video_related_8
 /* 003F04 70003304 00000000 */   nop   
 .L70003308:
 /* 003F08 70003308 8F1832AC */  lw    $t8, %lo(coloroutputmode)($t8)
-/* 003F0C 7000330C 3C038006 */  lui   $v1, %hi(dword_CODE_bss_8006087C) # $v1, 0x8006
+/* 003F0C 7000330C 3C038006 */  lui   $v1, %hi(viMode) # $v1, 0x8006
 /* 003F10 70003310 3C0F8000 */  lui   $t7, 0x8000
 /* 003F14 70003314 1300002B */  beqz  $t8, .L700033C4
-/* 003F18 70003318 2463087C */   addiu $v1, %lo(dword_CODE_bss_8006087C) # addiu $v1, $v1, 0x87c
+/* 003F18 70003318 2463087C */   addiu $v1, %lo(viMode) # addiu $v1, $v1, 0x87c
 /* 003F1C 7000331C 3C198000 */  lui   $t9, %hi(osTvType) # $t9, 0x8000
 /* 003F20 70003320 8F390300 */  lw    $t9, %lo(osTvType)($t9)
 /* 003F24 70003324 24010002 */  li    $at, 2
@@ -479,12 +479,12 @@ glabel video_related_8
 .L700034A4:
 /* 0040A4 700034A4 8F390300 */  lw    $t9, 0x300($t9)
 /* 0040A8 700034A8 24010002 */  li    $at, 2
-/* 0040AC 700034AC 3C038006 */  lui   $v1, %hi(dword_CODE_bss_8006087C) # $v1, 0x8006
+/* 0040AC 700034AC 3C038006 */  lui   $v1, %hi(viMode) # $v1, 0x8006
 /* 0040B0 700034B0 17210007 */  bne   $t9, $at, .L700034D0
-/* 0040B4 700034B4 2463087C */   addiu $v1, %lo(dword_CODE_bss_8006087C) # addiu $v1, $v1, 0x87c
-/* 0040B8 700034B8 3C038006 */  lui   $v1, %hi(dword_CODE_bss_8006087C) # $v1, 0x8006
+/* 0040B4 700034B4 2463087C */   addiu $v1, %lo(viMode) # addiu $v1, $v1, 0x87c
+/* 0040B8 700034B8 3C038006 */  lui   $v1, %hi(viMode) # $v1, 0x8006
 /* 0040BC 700034BC 3C0E8002 */  lui   $t6, %hi(osViModeTable_osViModeMpalHaf1) # $t6, 0x8002
-/* 0040C0 700034C0 2463087C */  addiu $v1, %lo(dword_CODE_bss_8006087C) # addiu $v1, $v1, 0x87c
+/* 0040C0 700034C0 2463087C */  addiu $v1, %lo(viMode) # addiu $v1, $v1, 0x87c
 /* 0040C4 700034C4 25CE75F0 */  addiu $t6, %lo(osViModeTable_osViModeMpalHaf1) # addiu $t6, $t6, 0x75f0
 /* 0040C8 700034C8 10000004 */  b     .L700034DC
 /* 0040CC 700034CC AC6E0000 */   sw    $t6, ($v1)

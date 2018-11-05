@@ -45,8 +45,13 @@ endif
 
 APP := ge007.$(COUNTRYCODE).elf
 TARGET := ge007.$(COUNTRYCODE).z64
+TARGETBIN := ge007.$(COUNTRYCODE).bin
 
 HFILES := $(foreach dir,$(CODE_DIRS),$(wildcard $(dir)/*.h))
+
+HEADERFILES := rom_header.s bootcode.s _start.s rspboot.s gspboot.s aspboot.s
+HEADEROBJECTS := build/rom_header.o build/bootcode.o build/_start.o build/rspboot.o build/gspboot.o build/aspboot.o
+
 
 BOOTFILES := boot.c
 BOOTOBJECTS := build/boot.o
@@ -62,16 +67,19 @@ CODEOBJECTS := build/code/init.o build/code/sched.o build/code/osMapTLB.o build/
 			   build/code/debugmenu.o build/code/joy.o build/code/joy_rumble.o build/code/rmon.o
 CODESEGMENT := codesegment.o
 
-ULTRAFILES := libultra/pirawstartdma.c libultra/pigetstatus.c libultra/initialize.c libultra/writebackdcacheall.c \
-			  libultra/invalicache.c libultra/unmaptlb.c libultra/getfpccsr.c libultra/setfpccsr.c libultra/createthread.c \
-			  libultra/startthread.c libultra/createmesgqueue.c libultra/stopthread.c libultra/setthreadpri.c libultra/getcount.c \
-			  libultra/createvimanager.c libultra/vimodetable.c libultra/seteventmesg.c libultra/visetevent.c libultra/setintmask.c \
-			  libultra/recvmesg.c libultra/sendmesg.c libultra/visetmode.c libultra/visetxscale.c libultra/visetyscale.c \
-			  libultra/virepeatline.c libultra/viblack.c libultra/sptaskyielded.c libultra/dpgetcounters.c libultra/vigetcurrentframebuffer.c \
-			  libultra/vigetnextframebuffer.c libultra/viswapbuffer.c libultra/dpsetstatus.c libultra/sptask.c libultra/dpsetnextbuffer.c \
-			  libultra/
-ULTRAOBJECTS :=
-ULTRASEGMENT := libultra.a
+#ULTRAFILES := libultra/pirawstartdma.c libultra/pigetstatus.c libultra/initialize.c libultra/writebackdcacheall.c \
+#			  libultra/invalicache.c libultra/unmaptlb.c libultra/getfpccsr.c libultra/setfpccsr.c libultra/createthread.c \
+#			  libultra/startthread.c libultra/createmesgqueue.c libultra/stopthread.c libultra/setthreadpri.c libultra/getcount.c \
+#			  libultra/createvimanager.c libultra/vimodetable.c libultra/seteventmesg.c libultra/visetevent.c libultra/setintmask.c \
+#			  libultra/recvmesg.c libultra/sendmesg.c libultra/visetmode.c libultra/visetxscale.c libultra/visetyscale.c \
+#			  libultra/virepeatline.c libultra/viblack.c libultra/sptaskyielded.c libultra/dpgetcounters.c libultra/vigetcurrentframebuffer.c \
+#			  libultra/vigetnextframebuffer.c libultra/viswapbuffer.c libultra/dpsetstatus.c libultra/sptask.c libultra/dpsetnextbuffer.c \
+#			  libultra/
+#ULTRAOBJECTS :=
+#ULTRASEGMENT := libultra.a
+ULTRAFILES := libultra/libultra.s
+ULTRAOBJECTS := build/libultra/libultra.o
+
 
 GAMEFILES := game/initgamedata.c game/initweaponanigroups.c game/initactorpropstuff.c game/initnull_0009D0.c \
 			game/initunk_0009E0.c game/initanitable.c game/initunk_000B60.c game/setguscale.c game/initnull_000BC0.c \
@@ -166,7 +174,10 @@ install: default
 		$(INSTALL) -m 444 -F /usr/src/PR/ge007 \
 			README $(HFILES) $(BOOTFILES) $(CODEFILES) $(GAMEFILES) $(RZFILES) \
 			Makefile 
-	
+
+build/%.o: src/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
 build/%.o: src/%.c
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
@@ -176,7 +187,7 @@ build/$(BOOTOBJECTS): src/$(BOOTFILES)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
 
 build/$(OBSEGMENT): $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES)
-
+	
 build/$(BOOTSEGMENT): $(BOOTOBJECTS)
 	$(LD) -o build/$(BOOTSEGMENT) -r $(BOOTOBJECTS)
 build/$(CODESEGMENT): $(CODEOBJECTS)
@@ -186,11 +197,15 @@ build/$(GAMESEGMENT): $(GAMEOBJECTS)
 build/$(RZSEGMENT): $(RZOBJECTS)
 	$(LD) -o build/$(RZSEGMENT) -r $(RZOBJECTS)
 
-$(APP): build/$(OBSEGMENT) $(MUSIC_RZ_FILES) build/$(BOOTSEGMENT) build/$(CODESEGMENT) build/$(GAMESEGMENT) build/$(RZSEGMENT)
+$(APP): $(ULTRAOBJECTS) $(HEADEROBJECTS) build/$(OBSEGMENT) $(MUSIC_RZ_FILES) build/$(BOOTSEGMENT) build/$(CODESEGMENT) build/$(GAMESEGMENT) build/$(RZSEGMENT)
+	$(LD) $(LDFLAGS) -o $@ 
 
-$(TARGET):	$(APP)
-		$(MAKEROM) -r rom 
+$(TARGETBIN): $(APP)
+	$(OBJCOPY) $< $@ -O binary
 
+$(TARGET):	$(TARGETBIN)
+	$(DATASEG_COMP) $<
+	$(N64CKSUM) $< $@
 
 
 

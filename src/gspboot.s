@@ -7,14 +7,14 @@
 .set gp=64
 
 .include "macros.inc"
-.include "globals.inc"
 
 .section .text, "ax"
-glabel aspMainTextStart
-.incbin "/bin/aspboot.text.bin"
+glabel gsp3DTextStart
+.incbin "/bin/gspboot.text.bin"
 
 .section .data
-glabel aspMainDataStart
-.incbin "/bin/aspboot.data.bin"
+glabel gsp3DDataStart
+.incbin "/bin/gspboot.data.bin"
+
 .section .rodata
 .section .bss

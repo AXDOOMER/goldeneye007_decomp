@@ -39,8 +39,7 @@ const char aD_5[] = "[%d]";
     arg0->unk4 = (?32) arg1->unk4;
     *arg1 = (?32) *arg0;
     arg1->unk4 = (?32) arg0->unk4;
-    return;
-    // (possible return value: *arg0)
+    return *arg0;
 }
 #else
 GLOBAL_ASM(
