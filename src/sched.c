@@ -1,6 +1,6 @@
 #include <ultra64.h>
-#include "code/init.h"
-#include "code/sched.h"
+#include "init.h"
+#include "sched.h"
 
 u32 stderr_unused = 0;
 u32 stderr_enabled = 0;
@@ -22,8 +22,8 @@ char gfxClient[0x18];
 char dword_CODE_bss_8005DB30[0x10];
 char dword_CODE_bss_8005DB40[0xB0];
 
-extern u32* vid_buff_1;
-extern u32* vid_buff_2;
+extern u32* cfb_16_a;
+extern u32* cfb_16_b;
 
 void activate_stderr(u32 flag) {
 	stderr_active = flag;
@@ -52,8 +52,8 @@ void CheckDisplayErrorBufferEvery16Frames(u32 framecount) {
 	if (framecount & 0xf) {
 		if ((stderr_permitted && stderr_active) || stderr_enabled){
 			if (userCompareValue < (osGetCount() - currentcount)){
-				write_stderr_to_buffer(vid_buff_1);
-				write_stderr_to_buffer(vid_buff_2);
+				write_stderr_to_buffer(cfb_16_a);
+				write_stderr_to_buffer(cfb_16_b);
 			}
 		}
 	}

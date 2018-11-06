@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "code/tlb_resolve.h"
+#include "tlb_resolve.h"
 
 
 

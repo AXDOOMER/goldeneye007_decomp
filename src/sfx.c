@@ -1,6 +1,6 @@
 #include "ultra64.h"
-#include "code/music.h"
-#include "code/sfx.h"
+#include "music.h"
+#include "sfx.h"
 
 s32 D_800243E4 = 0;
 s32 D_800243E8 = 0;

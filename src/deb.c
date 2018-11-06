@@ -1,7 +1,7 @@
 //FIXME my c code is modtly copy/paste from mips_to_c
 #include "ultra64.h"
 #include "bondgame.h"
-#include "code/ramrom.h"
+#include "ramrom.h"
 
 /* bss */
 char dword_CODE_bss_80060890[0x400];
@@ -1746,7 +1746,7 @@ glabel set_ptr_video_buffers
 
 #ifdef NONMATCHING
 void set_video_buffer_pointers(void) {
-    set_ptr_video_buffers(&vid_buff_1, &vid_buff_2);
+    set_ptr_video_buffers(&cfb_16_a, &cfb_16_b);
 }
 #else
 GLOBAL_ASM(
@@ -1754,11 +1754,11 @@ GLOBAL_ASM(
 glabel set_video_buffer_pointers
 /* 0065A4 700059A4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0065A8 700059A8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0065AC 700059AC 3C04803B */  lui   $a0, %hi(vid_buff_1) # $a0, 0x803b
-/* 0065B0 700059B0 3C05803E */  lui   $a1, %hi(vid_buff_2) # $a1, 0x803e
-/* 0065B4 700059B4 24A5A800 */  addiu $a1, %lo(vid_buff_2) # addiu $a1, $a1, -0x5800
+/* 0065AC 700059AC 3C04803B */  lui   $a0, %hi(cfb_16_a) # $a0, 0x803b
+/* 0065B0 700059B0 3C05803E */  lui   $a1, %hi(cfb_16_b) # $a1, 0x803e
+/* 0065B4 700059B4 24A5A800 */  addiu $a1, %lo(cfb_16_b) # addiu $a1, $a1, -0x5800
 /* 0065B8 700059B8 0C001661 */  jal   set_ptr_video_buffers
-/* 0065BC 700059BC 24845000 */   addiu $a0, %lo(vid_buff_1) # addiu $a0, $a0, 0x5000
+/* 0065BC 700059BC 24845000 */   addiu $a0, %lo(cfb_16_a) # addiu $a0, $a0, 0x5000
 /* 0065C0 700059C0 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0065C4 700059C4 27BD0018 */  addiu $sp, $sp, 0x18
 /* 0065C8 700059C8 03E00008 */  jr    $ra

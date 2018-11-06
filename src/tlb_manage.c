@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "code/ramrom.h"
+#include "ramrom.h"
 
 u32 maybe_cur_TLB_entries = 0;
 u32 tlb_segment_num = 0;

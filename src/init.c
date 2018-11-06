@@ -1,11 +1,11 @@
 #include <ultra64.h>
 #include "bondgame.h"
 #include "boot.h"
-#include "code/sched.h"
-#include "code/rmon.h"
-#include "code/tlb_resolve.h"
-#include "code/tlb_hardware.h"
-#include "code/init.h"
+#include "sched.h"
+#include "rmon.h"
+#include "tlb_resolve.h"
+#include "tlb_hardware.h"
+#include "init.h"
 
 
 #define NUM_FIELDS  1
@@ -196,8 +196,8 @@ glabel init
 /* 00129C 7000069C 2484B950 */  addiu $a0, %lo(sp_main) # addiu $a0, $a0, -0x46b0
 /* 0012A0 700006A0 0C0001BC */  jal   set_stack_entry
 /* 0012A4 700006A4 34058000 */   li    $a1, 32768
-/* 0012A8 700006A8 3C108006 */  lui   $s0, %hi(mainthread) # $s0, 0x8006
-/* 0012AC 700006AC 2610D640 */  addiu $s0, %lo(mainthread) # addiu $s0, $s0, -0x29c0
+/* 0012A8 700006A8 3C108006 */  lui   $s0, %hi(mainThread) # $s0, 0x8006
+/* 0012AC 700006AC 2610D640 */  addiu $s0, %lo(mainThread) # addiu $s0, $s0, -0x29c0
 /* 0012B0 700006B0 3C067000 */  lui   $a2, %hi(thread3_main) # $a2, 0x7000
 /* 0012B4 700006B4 240C000A */  li    $t4, 10
 /* 0012B8 700006B8 AFAC0014 */  sw    $t4, 0x14($sp)

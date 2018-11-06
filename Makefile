@@ -8,7 +8,7 @@ TOOLCHAIN := mips-linux-gnu-
 
 BUILD_DIR := build
 BUILD_SUB_DIRS := \
-	code game rarezip libultra \
+	game rarezip libultra \
 	assets \
 	assets/obseg \
 	assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop assets/obseg/text \
@@ -57,14 +57,14 @@ BOOTFILES := boot.c
 BOOTOBJECTS := build/boot.o
 BOOTSEGMENT := bootsegment.o
 
-CODEFILES := code/init.c code/sched.c code/osMapTLB.c code/tlb_manage.c code/tlb_random.c code/tlb_resolve.c code/audi.o \
-			   code/speed_graph.c code/video.c code/deb.c code/debug_getlastRA.c code/ramrom.c code/boss.c code/music.o \
-			   code/sfx.c code/memp.c code/mema.c code/random.c code/token.c code/stringhandler.c code/sprintf.c code/pi.c code/vi.o \
-			   code/debugmenu.c code/joy.c code/joy_rumble.c code/rmon.c
-CODEOBJECTS := build/code/init.o build/code/sched.o build/code/osMapTLB.o build/code/tlb_manage.o build/code/tlb_random.o build/code/tlb_resolve.o build/code/audi.o \
-			   build/code/speed_graph.o build/code/video.o build/code/deb.o build/code/debug_getlastRA.o build/code/ramrom.o build/code/boss.o build/code/music.o \
-			   build/code/sfx.o build/code/memp.o build/code/mema.o build/code/random.o build/code/token.o build/code/stringhandler.o build/code/sprintf.o build/code/pi.o build/code/vi.o \
-			   build/code/debugmenu.o build/code/joy.o build/code/joy_rumble.o build/code/rmon.o
+CODEFILES := init.c sched.c osMapTLB.c tlb_manage.c tlb_random.c tlb_resolve.c audi.o \
+			   speed_graph.c video.c deb.c debug_getlastRA.c ramrom.c boss.c music.o \
+			   sfx.c memp.c mema.c random.c token.c stringhandler.c sprintf.c pi.c vi.o \
+			   debugmenu.c joy.c joy_rumble.c rmon.c
+CODEOBJECTS := build/init.o build/sched.o build/osMapTLB.o build/tlb_manage.o build/tlb_random.o build/tlb_resolve.o build/audi.o \
+			   build/speed_graph.o build/video.o build/deb.o build/debug_getlastRA.o build/ramrom.o build/boss.o build/music.o \
+			   build/sfx.o build/memp.o build/mema.o build/random.o build/token.o build/stringhandler.o build/sprintf.o build/pi.o build/vi.o \
+			   build/debugmenu.o build/joy.o build/joy_rumble.o build/rmon.o
 CODESEGMENT := codesegment.o
 
 #ULTRAFILES := libultra/pirawstartdma.c libultra/pigetstatus.c libultra/initialize.c libultra/writebackdcacheall.c \
@@ -147,7 +147,7 @@ RZ_COMP := $(TOOLS_DIR)/1172compress.sh
 N64CKSUM := $(TOOLS_DIR)/n64cksum
 MAKEBG := $(TOOLS_DIR)/makebg.sh
 
-INCLUDE := -I include -I include/code -I include/game -I include/rarezip -I include/libultra
+INCLUDE := -I include -I include/code -I include/game -I include/rarezip -I include/libultra -I src -I src/game -I src/rarezip
 
 CC := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
 CFLAGS := -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm -fullwarn -wlint -woff 819,820,852,821 -signed $(INCLUDE) -mips2
@@ -179,10 +179,6 @@ build/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
 build/%.o: src/%.c
-	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
-	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
-
-build/$(BOOTOBJECTS): src/$(BOOTFILES)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
 

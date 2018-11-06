@@ -20232,8 +20232,8 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBB20 7F086FF0 8C790000 */   lw    $t9, ($v1)
 /* 0BBB24 7F086FF4 0C000F07 */  jal   get_video2buf_offset28
 /* 0BBB28 7F086FF8 00000000 */   nop   
-/* 0BBB2C 7F086FFC 3C0F803E */  lui   $t7, %hi(vid_buff_2) # $t7, 0x803e
-/* 0BBB30 7F087000 25EFA800 */  addiu $t7, %lo(vid_buff_2) # addiu $t7, $t7, -0x5800
+/* 0BBB2C 7F086FFC 3C0F803E */  lui   $t7, %hi(cfb_16_b) # $t7, 0x803e
+/* 0BBB30 7F087000 25EFA800 */  addiu $t7, %lo(cfb_16_b) # addiu $t7, $t7, -0x5800
 /* 0BBB34 7F087004 3C038003 */  lui   $v1, %hi(camera_80036430) # $v1, 0x8003
 /* 0BBB38 7F087008 144F0006 */  bne   $v0, $t7, .L7F087024
 /* 0BBB3C 7F08700C 24636430 */   addiu $v1, %lo(camera_80036430) # addiu $v1, $v1, 0x6430
@@ -20258,8 +20258,8 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBB7C 7F08704C 8C6A0000 */   lw    $t2, ($v1)
 /* 0BBB80 7F087050 0C000F07 */  jal   get_video2buf_offset28
 /* 0BBB84 7F087054 00000000 */   nop   
-/* 0BBB88 7F087058 3C09803B */  lui   $t1, %hi(vid_buff_1) # $t1, 0x803b
-/* 0BBB8C 7F08705C 25295000 */  addiu $t1, %lo(vid_buff_1) # addiu $t1, $t1, 0x5000
+/* 0BBB88 7F087058 3C09803B */  lui   $t1, %hi(cfb_16_a) # $t1, 0x803b
+/* 0BBB8C 7F08705C 25295000 */  addiu $t1, %lo(cfb_16_a) # addiu $t1, $t1, 0x5000
 /* 0BBB90 7F087060 3C038003 */  lui   $v1, %hi(camera_80036434) # $v1, 0x8003
 /* 0BBB94 7F087064 14490005 */  bne   $v0, $t1, .L7F08707C
 /* 0BBB98 7F087068 24636434 */   addiu $v1, %lo(camera_80036434) # addiu $v1, $v1, 0x6434
@@ -20279,8 +20279,8 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBBC4 7F087094 00000000 */   nop   
 /* 0BBBC8 7F087098 0C000F07 */  jal   get_video2buf_offset28
 /* 0BBBCC 7F08709C 00000000 */   nop   
-/* 0BBBD0 7F0870A0 3C0D803E */  lui   $t5, %hi(vid_buff_2) # $t5, 0x803e
-/* 0BBBD4 7F0870A4 25ADA800 */  addiu $t5, %lo(vid_buff_2) # addiu $t5, $t5, -0x5800
+/* 0BBBD0 7F0870A0 3C0D803E */  lui   $t5, %hi(cfb_16_b) # $t5, 0x803e
+/* 0BBBD4 7F0870A4 25ADA800 */  addiu $t5, %lo(cfb_16_b) # addiu $t5, $t5, -0x5800
 /* 0BBBD8 7F0870A8 144D0003 */  bne   $v0, $t5, .L7F0870B8
 /* 0BBBDC 7F0870AC 3C048003 */   lui   $a0, %hi(resolution) # $a0, 0x8003
 /* 0BBBE0 7F0870B0 0C000F0F */  jal   set_video2buf_offset28

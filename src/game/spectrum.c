@@ -35,67 +35,60 @@ s16 spec_SP;
 s16 spec_PC;
 
 
-/* data
-D:8004EC30                     .word 0
-D:8004EC34     off_D_8004EC34: .byte 0xFF
-D:8004EC35     byte_D_8004EC35:.byte 0xFF, 0xFF
-D:8004EC37     byte_D_8004EC37:.byte 0xFF
-D:8004EC38     off_D_8004EC38: .byte 0xFF
-D:8004EC39                     .byte 0xFF, 0xFF
-D:8004EC3B     byte_D_8004EC3B:.byte 0xFF
-D:8004EC3C                     .byte 0xFF
-D:8004EC3D     byte_D_8004EC3D:.byte 0, 0, 0
-D:8004EC40     off_D_8004EC40: .byte 0
-D:8004EC41                     .align 2
-D:8004EC44     dword_D_8004EC44:.word 0x7FE03FE, 0x3FD03FB, 0x3F703EF, 0x4F703FD, 0x4FD04FE, 0x4FB06FB, 0x7F706F7
-D:8004EC44                     .word 0x8FB00EF, 0x4FE03FE, 0x3FD03FB, 0x3F703EF, 0x4EF04F7, 0x4FB04FD, 0xFD05FD
-D:8004EC44                     .word 0x7F706FB, 0x8FB00EF, 0x3FD01FE, 0x7EF00F7, 0x1FB02FB, 0x1F701EF, 0x6EF05FB
-D:8004EC44                     .word 0x6F706FB, 0x6FD07FB, 0x7F705FD, 0x5FE02FE, 0x2F701FD, 0x2EF05F7, 0xEF02FD
-D:8004EC44                     .word 0xFB05EF, 0xFD08FF, 0x8FF08FF, 0x4EF06F7, 0x8FF01FE, 0x7EF00F7, 0x1FB02FB
-D:8004EC44                     .word 0x1F701EF, 0x6EF05FB, 0x6F706FB, 0x6FD07FB, 0x7F705FD, 0x5FE02FE, 0x2F701FD
-D:8004EC44                     .word 0x2EF05F7, 0xEF02FD, 0xFB05EF, 0xFD08FF, 0x8FF08FF, 0x8FF08FF, 0, 0
-D:8004ED0C     dword_D_8004ED0C:.word 0x10021           # DATA XREF: spectrum_draw_screen+44o
-D:8004ED10                     .word 0x80018021
-D:8004ED14                     .word 0x4010421
-D:8004ED18                     .word 0x84018421
-D:8004ED1C                     .word 0x1003F
-D:8004ED20                     .word 0xF801F83F
-D:8004ED24                     .word 0x7C107FF
-D:8004ED28                     .word 0xFFC1FFFF
-D:8004ED2C     aEmDataSabre_seg_rz_ptr:.word aEmDataSabre_seg_rz
-D:8004ED2C                                              # DATA XREF: init_spectrum_game+16Cr
-D:8004ED2C                                              # "em/data/sabre.seg.rz"
-D:8004ED30                     .word aEmDataAtic_seg_rz  # "em/data/atic.seg.rz"
-D:8004ED34                     .word aEmDataJetpac_seg_rz  # "em/data/jetpac.seg.rz"
-D:8004ED38                     .word aEmDataJetman_seg_rz  # "em/data/jetman.seg.rz"
-D:8004ED3C                     .word aEmDataAlien8_seg_rz  # "em/data/alien8.seg.rz"
-D:8004ED40                     .word aEmDataGunfright_seg_rz  # "em/data/gunfright.seg.rz"
-D:8004ED44                     .word aEmDataUnder_seg_rz  # "em/data/under.seg.rz"
-D:8004ED48                     .word aEmDataKnightlore_seg_rz  # "em/data/knightlore.seg.rz"
-D:8004ED4C                     .word aEmDataPssst_seg_rz  # "em/data/pssst.seg.rz"
-D:8004ED50                     .word aEmDataCookie_seg_rz  # "em/data/cookie.seg.rz"
-D:8004ED54     dword_D_8004ED54:.word 0x7000000         # DATA XREF: sub_CODE_7F0D37DC+20r
-D:8004ED54                                              # sub_CODE_7F0D37DC+38w
-D:8004ED58                     .word 0
-D:8004ED5C                     .word 0xFF000000
-D:8004ED60                     .word 0xFF000000
-D:8004ED64                     .word 0
-D:8004ED68                     .word 0
-D:8004ED6C                     .word 0
-*/
+// data
+s8 D_8004EC34 = 0xFF;
+s8 D_8004EC35 = 0xFF;
+s8 D_8004EC36 = 0xFF;
+s8 D_8004EC37 = 0xFF;
+
+s8 D_8004EC38 = 0xFF;
+s8 D_8004EC39 = 0xFF;
+s8 D_8004EC3A = 0xFF;
+s8 D_8004EC3B = 0xFF;
+
+s8 D_8004EC3C = 0xFF;
+s8 D_8004EC3D = 0;
+s8 D_8004EC3E = 0;
+s8 D_8004EC3F = 0;
+
+s16 D_8004EC40[] = {
+        0,     0, 0x7FE, 0x3FE, 0x3FD, 0x3FB, 0x3F7, 0x3EF, 0x4F7, 0x3FD,
+    0x4FD, 0x4FE, 0x4FB, 0x6FB, 0x7F7, 0x6F7, 0x8FB,  0xEF, 0x4FE, 0x3FE,
+    0x3FD, 0x3FB, 0x3F7, 0x3EF, 0x4EF, 0x4F7, 0x4FB, 0x4FD,  0xFD, 0x5FD,
+    0x7F7, 0x6FB, 0x8FB,  0xEF, 0x3FD, 0x1FE, 0x7EF,  0xF7, 0x1FB, 0x2FB,
+    0x1F7, 0x1EF, 0x6EF, 0x5FB, 0x6F7, 0x6FB, 0x6FD, 0x7FB, 0x7F7, 0x5FD,
+    0x5FE, 0x2FE, 0x2F7, 0x1FD, 0x2EF, 0x5F7,  0xEF, 0x2FD,  0xFB, 0x5EF,
+     0xFD, 0x8FF, 0x8FF, 0x8FF, 0x4EF, 0x6F7, 0x8FF, 0x1FE, 0x7EF,  0xF7,
+    0x1FB, 0x2FB, 0x1F7, 0x1EF, 0x6EF, 0x5FB, 0x6F7, 0x6FB, 0x6FD, 0x7FB,
+    0x7F7, 0x5FD, 0x5FE, 0x2FE, 0x2F7, 0x1FD, 0x2EF, 0x5F7,  0xEF, 0x2FD,
+     0xFB, 0x5EF,  0xFD, 0x8FF, 0x8FF, 0x8FF, 0x8FF, 0x8FF,     0,     0
+};
+
+s32 D_8004ED08 = 0;
+
+s16 D_8004ED0C[] = {
+    1,  0x21,0x8001,0x8021, 0x401, 0x421,0x8401,0x8421,
+    1,  0x3F,0xF801,0xF83F, 0x7C1, 0x7FF,0xFFC1,0xFFFF
+};
+
+u32* romnames[] = {
+    "em/data/sabre.seg.rz",
+    "em/data/atic.seg.rz",
+    "em/data/jetpac.seg.rz",
+    "em/data/jetman.seg.rz",
+    "em/data/alien8.seg.rz",
+    "em/data/gunfright.seg.rz",
+    "em/data/under.seg.rz",
+    "em/data/knightlore.seg.rz",
+    "em/data/pssst.seg.rz",
+    "em/data/cookie.seg.rz"
+};
+
+u32 D_8004ED54[] = {0x7000000, 0x0,0xFF000000,0xFF000000};
+
+const char aEmDataSpec_rom_seg_rz[] = "em/data/spec_rom.seg.rz";
 
 /* rodata
-D:8005C020     aEmDataSabre_seg_rz:.ascii "em/data/sabre.seg.rz"<0><0><0><0>
-D:8005C038     aEmDataAtic_seg_rz:.ascii "em/data/atic.seg.rz"<0>
-D:8005C04C     aEmDataJetpac_seg_rz:.ascii "em/data/jetpac.seg.rz"<0><0><0>
-D:8005C064     aEmDataJetman_seg_rz:.ascii "em/data/jetman.seg.rz"<0><0><0>
-D:8005C07C     aEmDataAlien8_seg_rz:.ascii "em/data/alien8.seg.rz"<0><0><0>
-D:8005C094     aEmDataGunfright_seg_rz:.ascii "em/data/gunfright.seg.rz"<0><0><0><0>
-D:8005C0B0     aEmDataUnder_seg_rz:.ascii "em/data/under.seg.rz"<0><0><0><0>
-D:8005C0C8     aEmDataKnightlore_seg_rz:.ascii "em/data/knightlore.seg.rz"<0><0><0>
-D:8005C0E4     aEmDataPssst_seg_rz:.ascii "em/data/pssst.seg.rz"<0><0><0><0>
-D:8005C0FC     aEmDataCookie_seg_rz:.ascii "em/data/cookie.seg.rz"<0><0><0>
-D:8005C114     aEmDataSpec_rom_seg_rz:.ascii "em/data/spec_rom.seg.rz"<0>
 D:8005C12C     spectrum_op_table:.word spectrum_op_00, spectrum_op_01, spectrum_op_02, spectrum_op_03, spectrum_op_04
 D:8005C12C                     .word spectrum_op_05, spectrum_op_06, spectrum_op_07, spectrum_op_08, spectrum_op_09
 D:8005C12C                     .word spectrum_op_0A, spectrum_op_0B, spectrum_op_0C, spectrum_op_0D, spectrum_op_0E
@@ -279,8 +272,8 @@ glabel sub_GAME_7F0D28E0
 /* 107458 7F0D2928 01C41021 */  addu  $v0, $t6, $a0
 /* 10745C 7F0D292C 1160000A */  beqz  $t3, .L7F0D2958
 /* 107460 7F0D2930 01205025 */   move  $t2, $t1
-/* 107464 7F0D2934 3C0C8005 */  lui   $t4, %hi(D_8004ED04) # $t4, 0x8005
-/* 107468 7F0D2938 918CED04 */  lbu   $t4, %lo(D_8004ED04)($t4)
+/* 107464 7F0D2934 3C0C8005 */  lui   $t4, %hi(D_8004EC40+0xC4) # $t4, 0x8005
+/* 107468 7F0D2938 918CED04 */  lbu   $t4, %lo(D_8004EC40+0xC4)($t4)
 /* 10746C 7F0D293C 01201825 */  move  $v1, $t1
 /* 107470 7F0D2940 306D0007 */  andi  $t5, $v1, 7
 /* 107474 7F0D2944 11800004 */  beqz  $t4, .L7F0D2958
@@ -442,8 +435,8 @@ glabel sub_GAME_7F0D2A84
 /* 107654 7F0D2B24 24630004 */  addiu $v1, $v1, 4
 /* 107658 7F0D2B28 1461FFF2 */  bne   $v1, $at, .L7F0D2AF4
 /* 10765C 7F0D2B2C A1E20003 */   sb    $v0, 3($t7)
-/* 107660 7F0D2B30 3C028005 */  lui   $v0, %hi(D_8004ED04) # $v0, 0x8005
-/* 107664 7F0D2B34 2442ED04 */  addiu $v0, %lo(D_8004ED04) # addiu $v0, $v0, -0x12fc
+/* 107660 7F0D2B30 3C028005 */  lui   $v0, %hi(D_8004EC40+0xC4) # $v0, 0x8005
+/* 107664 7F0D2B34 2442ED04 */  addiu $v0, %lo(D_8004EC40+0xC4) # addiu $v0, $v0, -0x12fc
 /* 107668 7F0D2B38 90580000 */  lbu   $t8, ($v0)
 /* 10766C 7F0D2B3C 24190001 */  li    $t9, 1
 /* 107670 7F0D2B40 03384023 */  subu  $t0, $t9, $t8
@@ -627,7 +620,7 @@ glabel spectrum_p1controller_to_kempston
 /* 1078B4 7F0D2D84 24060001 */   li    $a2, 1
 /* 1078B8 7F0D2D88 AFA60030 */  sw    $a2, 0x30($sp)
 .L7F0D2D8C:
-/* 1078BC 7F0D2D8C 3C038009 */  lui   $v1, %hi(D_80090004) # $v1, 0x8009
+/* 1078BC 7F0D2D8C 3C038009 */  lui   $v1, %hi(byte_CODE_bss_8008E34D) # $v1, 0x8009
 /* 1078C0 7F0D2D90 9063E34D */  lbu   $v1, %lo(byte_CODE_bss_8008E34D)($v1)
 /* 1078C4 7F0D2D94 24040002 */  li    $a0, 2
 /* 1078C8 7F0D2D98 8FA60030 */  lw    $a2, 0x30($sp)
@@ -775,7 +768,7 @@ glabel spectrum_p1controller_to_kempston
 /* 107AA0 7F0D2F70 A1400002 */  sb    $zero, 2($t2)
 /* 107AA4 7F0D2F74 8C4B0000 */  lw    $t3, ($v0)
 /* 107AA8 7F0D2F78 01636021 */  addu  $t4, $t3, $v1
-/* 107AAC 7F0D2F7C 24630004 */  addiu $v1, %lo(D_80090004) # addiu $v1, $v1, 4
+/* 107AAC 7F0D2F7C 24630004 */  addiu $v1, 4 # addiu $v1, $v1, 4
 /* 107AB0 7F0D2F80 1464FFF3 */  bne   $v1, $a0, .L7F0D2F50
 /* 107AB4 7F0D2F84 A1800003 */   sb    $zero, 3($t4)
 .L7F0D2F88:
@@ -908,9 +901,9 @@ glabel init_spectrum_game
 /* 107C58 7F0D3128 300200FF */  andi  $v0, $zero, 0xff
 .L7F0D312C:
 /* 107C5C 7F0D312C 00025880 */  sll   $t3, $v0, 2
-/* 107C60 7F0D3130 3C048005 */  lui   $a0, 0x8005
+/* 107C60 7F0D3130 3C048005 */  lui   $a0, %hi(romnames)
 /* 107C64 7F0D3134 008B2021 */  addu  $a0, $a0, $t3
-/* 107C68 7F0D3138 8C84ED2C */  lw    $a0, -0x12d4($a0)
+/* 107C68 7F0D3138 8C84ED2C */  lw    $a0, %lo(romnames)($a0)
 /* 107C6C 7F0D313C 24050001 */  li    $a1, 1
 /* 107C70 7F0D3140 24060100 */  li    $a2, 256
 /* 107C74 7F0D3144 0FC2F341 */  jal   _load_resource_named_to_membank

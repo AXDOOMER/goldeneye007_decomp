@@ -1,6 +1,6 @@
 #include "ultra64.h"
-#include "code/ramrom.h"
-#include "code/sfx.h"
+#include "ramrom.h"
+#include "sfx.h"
 
 
 

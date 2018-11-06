@@ -69,8 +69,8 @@ void activate_stderr(u32 flag);
 void enable_stderr(u32 flag);
 void permit_stderr(u32 flag);
 void setUserCompareValue(u32 value);
-void CheckDisplayErrorBuffer(u32 *buffer);
-void CheckDisplayErrorBufferEvery16Frames(u32 framecount);
+extern void CheckDisplayErrorBuffer(u32 *buffer);
+extern void CheckDisplayErrorBufferEvery16Frames(u32 framecount);
 void osCreateLog(void);
 
 

@@ -1,6 +1,6 @@
 #include "ultra64.h"
-#include "code/ramrom.h"
-#include "code/boss.h"
+#include "ramrom.h"
+#include "boss.h"
 
 /* data */
 u32 D_800241A0 = 0;
