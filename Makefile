@@ -2,6 +2,9 @@
 include Makefile.obseg
 include Makefile.music
 
+QEMU_IRIX := tools/irix/qemu-irix
+IRIX_ROOT := tools/irix/root
+
 FINAL := YES
 VERSION := US
 TOOLCHAIN := mips-linux-gnu-
