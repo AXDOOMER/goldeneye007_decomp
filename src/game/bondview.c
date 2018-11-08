@@ -7,8 +7,8 @@ s32 dword_CODE_bss_80075DB8;
 s32 dword_CODE_bss_80075DBC;
 s32 dword_CODE_bss_80075DC0;
 s32 dword_CODE_bss_80075DC4;
-s32 dword_CODE_bss_80075DC8[40]; //space 0xA0
-s32 dword_CODE_bss_80075E68[760]; //space 0xBE0
+char dword_CODE_bss_80075DC8[0xA0];
+char dword_CODE_bss_80075E68[0xBE0];
 s32 dword_CODE_bss_80076A48;
 
 
@@ -1486,8 +1486,15 @@ glabel nullsub_73
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05C540(void) {
+void *sub_GAME_7F05C540(void *arg0) {
+    void *temp_v0;
 
+    // Node 0
+    temp_v0 = ((D_80034CA0 * 0x24) + &D_80035904);
+    temp_v0->unk4 = (f32) (temp_v0->unk4 + *arg0);
+    temp_v0->unk8 = (f32) (temp_v0->unk8 + arg0->unk4);
+    temp_v0->unkC = (f32) (temp_v0->unkC + arg0->unk8);
+    return temp_v0;
 }
 #else
 GLOBAL_ASM(
@@ -16028,8 +16035,7 @@ void glabel(void) {
 #else
 GLOBAL_ASM(
 .text
-glabel 
-sub_GAME_7F0680D4
+glabel sub_GAME_7F0680D4
 /* 09CC04 7F0680D4 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 09CC08 7F0680D8 3C038008 */  lui   $v1, %hi(ptr_BONDdata) # $v1, 0x8008
 /* 09CC0C 7F0680DC 2463A0B0 */  addiu $v1, %lo(ptr_BONDdata) # addiu $v1, $v1, -0x5f50
@@ -16085,8 +16091,12 @@ sub_GAME_7F0680D4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F068190(void) {
-
+void sub_GAME_7F068190(void *arg0) {
+    // Node 0
+    *arg0 = 0.0f;
+    arg0->unk4 = 0.0f;
+    arg0->unk8 = 0.0f;
+    return sub_GAME_7F077EEC((ptr_BONDdata + 0xfe8), 0x3f800000);
 }
 #else
 GLOBAL_ASM(
@@ -16115,8 +16125,83 @@ glabel sub_GAME_7F068190
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0681CC(void) {
+void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
+    f32 sp18;
+    s32 sp1C;
+    f32 sp20;
+    f32 sp24;
+    f32 sp28;
+    f32 sp30;
+    f32 sp34;
+    ? temp_ret;
+    f32 temp_f10;
+    f32 temp_f16;
+    ? temp_ret_2;
+    f32 temp_f8;
+    f32 temp_f16_2;
+    f32 phi_f16;
+    f32 phi_f10;
+    f32 phi_f16_2;
+    f32 phi_f8;
 
+    // Node 0
+    sp28 = (f32) get_ptr_item_statistics(get_item_in_hand(arg2))->unk30;
+    if (check_special_attributes(return_ammo_in_hand(arg2), 0x1000) != 0)
+    {
+        // Node 1
+        if ((ptr_BONDdata + (arg2 * 0x3a8))->unkC08 == 0x3e800000)
+        {
+            // Node 2
+            sp28 = (f32) (sp28 * 0x3e800000);
+        }
+    }
+    // Node 3
+    sp24 = (f32) ((120.0f * sp28) / video_related_23());
+    sp1C = random_related();
+    temp_ret = random_related();
+    temp_f10 = (f32) sp1C;
+    phi_f10 = temp_f10;
+    if (sp1C < 0)
+    {
+        // Node 4
+        phi_f10 = (temp_f10 + 4294967296.0f);
+    }
+    // Node 5
+    temp_f16 = (f32) temp_ret;
+    phi_f16 = temp_f16;
+    if (temp_ret < 0)
+    {
+        // Node 6
+        phi_f16 = (temp_f16 + 4294967296.0f);
+    }
+    // Node 7
+    sp20 = (f32) ((phi_f16 * 2.3283064365386963e-10f) * ((phi_f10 * 2.3283064365386963e-10f) - 0.5f));
+    sp18 = sub_GAME_7F0784A4();
+    sp30 = (f32) (((((sp20 * sp24) * sp18) * D_800543B0) / (sub_GAME_7F0784F4() * 320.0f)) + ptr_BONDdata->unkFE8);
+    sp1C = random_related();
+    temp_ret_2 = random_related();
+    temp_f8 = (f32) sp1C;
+    phi_f8 = temp_f8;
+    if (sp1C < 0)
+    {
+        // Node 8
+        phi_f8 = (temp_f8 + 4294967296.0f);
+    }
+    // Node 9
+    temp_f16_2 = (f32) temp_ret_2;
+    phi_f16_2 = temp_f16_2;
+    if (temp_ret_2 < 0)
+    {
+        // Node 10
+        phi_f16_2 = (temp_f16_2 + 4294967296.0f);
+    }
+    // Node 11
+    sp20 = (f32) ((phi_f16_2 * 2.3283064365386963e-10f) * ((phi_f8 * 2.3283064365386963e-10f) - 0.5f));
+    sp34 = (f32) (((sub_GAME_7F0784B4() * (sp20 * sp24)) / 240.0f) + ptr_BONDdata->unkFEC);
+    *arg0 = 0.0f;
+    arg0->unk4 = 0.0f;
+    arg0->unk8 = 0.0f;
+    return sub_GAME_7F077EEC(&sp30, arg1, 0x3f800000);
 }
 #else
 GLOBAL_ASM(
@@ -16284,8 +16369,59 @@ glabel sub_GAME_7F0681CC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F068420(void) {
+u32 sub_GAME_7F068420(s32 arg0, void *arg1) {
+    u32 temp_v1;
+    u32 phi_v1;
+    u32 phi_v1_2;
 
+    // Node 0
+    phi_v1_2 = &dword_CODE_bss_80075DC8;
+    if (dword_CODE_bss_80075E64 != 0)
+    {
+        // Node 1
+        phi_v1 = &dword_CODE_bss_80075DC8;
+        // Node 2
+        temp_v1 = (phi_v1 + 0xa0);
+        phi_v1_2 = temp_v1;
+        if (temp_v1 < &dword_CODE_bss_80076A48)
+        {
+            // Node 3
+            phi_v1 = temp_v1;
+            phi_v1_2 = temp_v1;
+            if (temp_v1->unk9C != 0)
+            {
+                goto loop_2;
+            }
+        }
+    }
+    // Node 4
+    if ((u32) phi_v1_2 < &dword_CODE_bss_80076A48)
+    {
+        // Node 5
+        phi_v1_2->unk9C = arg0;
+        phi_v1_2->unk4 = (f32) arg1->unk30;
+        phi_v1_2->unk8 = (f32) arg1->unk34;
+        phi_v1_2->unkC = (f32) arg1->unk38;
+        phi_v1_2->unk1C = (f32) *arg1;
+        phi_v1_2->unk20 = (f32) arg1->unk4;
+        phi_v1_2->unk28 = 0.0f;
+        phi_v1_2->unk24 = (f32) arg1->unk8;
+        phi_v1_2->unk2C = (f32) arg1->unk10;
+        phi_v1_2->unk30 = (f32) arg1->unk14;
+        phi_v1_2->unk38 = 0.0f;
+        phi_v1_2->unk34 = (f32) arg1->unk18;
+        phi_v1_2->unk3C = (f32) arg1->unk20;
+        phi_v1_2->unk40 = (f32) arg1->unk24;
+        phi_v1_2->unk48 = 0.0f;
+        phi_v1_2->unk4C = 0.0f;
+        phi_v1_2->unk50 = 0.0f;
+        phi_v1_2->unk54 = 0.0f;
+        phi_v1_2->unk58 = 1.0f;
+        phi_v1_2->unk44 = (f32) arg1->unk28;
+        return phi_v1_2;
+    }
+    // Node 6
+    return 0U;
 }
 #else
 GLOBAL_ASM(
@@ -17678,9 +17814,174 @@ glabel get_max_ammo_for_weapon
 
 
 #ifdef NONMATCHING
-void microcode_generation_ammo_related(void) {
+void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5, f32 arg6, s32 arg7, ?32 arg8, ?32 arg9, ?32 argA, ?32 argB) {
+    f32 spA8;
+    f32 spAC;
+    f32 spB0;
+    f32 spB4;
+    f32 temp_f4;
+    f32 temp_f4_2;
+    f32 temp_f18;
+    f32 temp_f10;
+    f32 temp_f6;
+    f32 temp_f18_2;
+    f32 temp_f16;
+    s32 phi_t9;
+    f32 phi_f4;
+    f32 phi_f18;
+    s32 phi_t2;
+    f32 phi_f18_2;
+    f32 phi_f16;
+    ? phi_a2;
 
+    // Node 0
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0xc0;
+    *arg0 = 0xba000602;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0;
+    *arg0 = 0xba001301;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0;
+    *arg0 = 0xb9000002;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0;
+    *arg0 = 0xba001001;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0;
+    *arg0 = 0xba000c02;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0xc00;
+    *arg0 = 0xba000903;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0;
+    *arg0 = 0xba000e02;
+    phi_t9 = ((s32) arg1->unk4 >> 1);
+    if (arg1->unk4 < 0)
+    {
+        // Node 1
+        phi_t9 = ((s32) (arg1->unk4 + 1) >> 1);
+    }
+    // Node 2
+    temp_f4 = (((f32) (u32) arg1->unk4 * 0.5f) - (f32) phi_t9);
+    spB0 = temp_f4;
+    if (arg5 != 0)
+    {
+        // Node 3
+        spB0 = (f32) -temp_f4;
+    }
+    // Node 4
+    spB0 = (f32) (spB0 + arg2);
+    if (0.0f <= arg3)
+    {
+        // Node 5
+        temp_f4_2 = (f32) arg1->unk5;
+        phi_f4 = temp_f4_2;
+        if (arg1->unk5 < 0)
+        {
+            // Node 6
+            phi_f4 = (temp_f4_2 + 4294967296.0f);
+        }
+        // Node 7
+        spB4 = (f32) (arg3 - (phi_f4 * 0.5f));
+    }
+    else
+    {
+        // Node 8
+        temp_f18 = (f32) arg1->unk5;
+        phi_f18 = temp_f18;
+        if (arg1->unk5 < 0)
+        {
+            // Node 9
+            phi_f18 = (temp_f18 + 4294967296.0f);
+        }
+        // Node 10
+        phi_t2 = ((s32) arg1->unk5 >> 1);
+        if (arg1->unk5 < 0)
+        {
+            // Node 11
+            phi_t2 = ((s32) (arg1->unk5 + 1) >> 1);
+        }
+        // Node 12
+        temp_f10 = ((phi_f18 * 0.5f) - (f32) phi_t2);
+        temp_f6 = (arg4 - temp_f10);
+        spB4 = (f32) -temp_f10;
+        spB4 = temp_f6;
+        spB4 = (f32) (temp_f6 + arg6);
+    }
+    // Node 13
+    temp_f18_2 = (f32) arg1->unk4;
+    phi_f18_2 = temp_f18_2;
+    if (arg1->unk4 < 0)
+    {
+        // Node 14
+        phi_f18_2 = (temp_f18_2 + 4294967296.0f);
+    }
+    // Node 15
+    spA8 = (f32) (phi_f18_2 * 0.5f);
+    temp_f16 = (f32) arg1->unk5;
+    phi_f16 = temp_f16;
+    if (arg1->unk5 < 0)
+    {
+        // Node 16
+        phi_f16 = (temp_f16 + 4294967296.0f);
+    }
+    // Node 17
+    arg0 = (void *) (arg0 + 8);
+    spAC = (f32) (phi_f16 * 0.5f);
+    arg0->unk4 = 0;
+    *arg0 = 0xe7000000;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0;
+    *arg0 = 0xba001402;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0x504240;
+    *arg0 = 0xb900031d;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0xfffdf6fb;
+    *arg0 = 0xfcffffff;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0;
+    *arg0 = 0xfa000000;
+    arg0 = (void *) (arg0 + 8);
+    *arg0 = (s32) ((((((s32) (spAC + spB4) + 1) & 0x3ff) * 4) | 0xf6000000) | ((((s32) (spB0 + spA8) + 1) & 0x3ff) << 0xe));
+    arg0->unk4 = (s32) (((((s32) (spB4 - spAC) + -1) & 0x3ff) * 4) | ((((s32) (spB0 - spA8) + -1) & 0x3ff) << 0xe));
+    phi_a2 = 1;
+    if (arg7 != 0)
+    {
+        // Node 18
+        phi_a2 = 2;
+    }
+    // Node 19
+    likely_generate_DL_for_image_declaration(arg3, arg2, &arg0, arg1, phi_a2, 0, 0);
+    display_image_at_on_screen_coord(&arg0, &spB0, &spA8, arg1->unk4, (s32) arg1->unk5, 0, 0, 1, arg8, arg9, argA, argB, (s32) (0 < arg1->unk6), 0);
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0;
+    *arg0 = 0xe7000000;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0x40;
+    *arg0 = 0xba000602;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0x80000;
+    *arg0 = 0xba001301;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0;
+    *arg0 = 0xb9000002;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0x10000;
+    *arg0 = 0xba001001;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0x2000;
+    *arg0 = 0xba000c02;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0xc00;
+    *arg0 = 0xba000903;
+    arg0 = (void *) (arg0 + 8);
+    arg0->unk4 = 0;
+    *arg0 = 0xba000e02;
+    return arg0;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -18023,8 +18324,9 @@ glabel microcode_generation_ammo_related
 
 
 #ifdef NONMATCHING
-void set_rgba_redirect_generate_microcode(void) {
-
+void set_rgba_redirect_generate_microcode(? arg2, ? arg3, f32 arg4, ?32 arg5, f32 arg6, ?32 arg7) {
+    // Node 0
+    return microcode_generation_ammo_related(arg2, arg3, arg2, arg3, arg4, arg5, arg6, arg7, 0xff, 0xff, 0xff, 0xff);
 }
 #else
 GLOBAL_ASM(
@@ -18065,8 +18367,114 @@ glabel set_rgba_redirect_generate_microcode
 
 
 #ifdef NONMATCHING
-void some_kind_of_display_routine(void) {
+s32 some_kind_of_display_routine(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+    s16 sp44;
+    s32 sp48;
+    s32 sp4C;
+    s32 sp50;
+    s32 sp54;
+    s32 sp58;
+    s32 sp5C;
+    s32 temp_v1;
+    s32 temp_t0;
+    s32 temp_s0;
+    s32 phi_t8;
+    s32 phi_t4;
+    s32 phi_s0;
 
+    // Node 0
+    sp5C = 0;
+    sp58 = 0;
+    sp54 = 0;
+    sp50 = 0;
+    sp48 = 0;
+    sp4C = 0;
+    sub_GAME_7F0AE98C(&sp4C, &sp48, arg1, D_80040EB0, (?32) D_80040EAC, 0);
+    if (arg3 == 1)
+    {
+        // Node 1
+        sp5C = arg2;
+        sp54 = (s32) (arg2 + sp48);
+    }
+    else
+    {
+        // Node 2
+        if (arg3 == 0)
+        {
+            // Node 3
+            sp54 = arg2;
+            sp5C = (s32) (arg2 - sp48);
+        }
+        else
+        {
+            // Node 4
+            if (arg3 == 2)
+            {
+                // Node 5
+                phi_t8 = (sp48 >> 1);
+                if (sp48 < 0)
+                {
+                    // Node 6
+                    phi_t8 = ((s32) (sp48 + 1) >> 1);
+                }
+                // Node 7
+                temp_v1 = (phi_t8 + arg2);
+                sp5C = (s32) (temp_v1 - sp48);
+                sp54 = temp_v1;
+            }
+        }
+    }
+    // Node 8
+    if (arg5 == 1)
+    {
+        // Node 9
+        sp58 = arg4;
+        sp50 = (s32) (arg4 + sp4C);
+    }
+    else
+    {
+        // Node 10
+        if (arg5 == 0)
+        {
+            // Node 11
+            sp50 = arg4;
+            sp58 = (s32) (arg4 - sp4C);
+        }
+        else
+        {
+            // Node 12
+            if (arg5 == 2)
+            {
+                // Node 13
+                phi_t4 = (sp4C >> 1);
+                if (sp4C < 0)
+                {
+                    // Node 14
+                    phi_t4 = ((s32) (sp4C + 1) >> 1);
+                }
+                // Node 15
+                temp_t0 = (phi_t4 + arg4);
+                sp58 = (s32) (temp_t0 - sp4C);
+                sp50 = temp_t0;
+            }
+        }
+    }
+    // Node 16
+    temp_s0 = draw_blackbox_to_screen(arg0, &sp5C, &sp58, &sp54, &sp50);
+    if (arg6 != 0)
+    {
+        // Node 17
+        sp44 = get_video2_settings_txtClipW();
+        phi_s0 = jp_text_write_stuff(temp_s0, &sp5C, &sp58, arg1, (?32) D_80040EB0, (?32) D_80040EAC, -1, 0x646464ff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    }
+    else
+    {
+        // Node 18
+        sp44 = get_video2_settings_txtClipW();
+        phi_s0 = en_text_write_stuff(temp_s0, &sp5C, &sp58, arg1, (?32) D_80040EB0, (?32) D_80040EAC, 0xff00b0, sp44, get_video2_settings_txtClipH(), 0, 0);
+    }
+    // Node 19
+    return phi_s0;
 }
 #else
 GLOBAL_ASM(
@@ -18233,9 +18641,14 @@ glabel some_kind_of_display_routine
 
 
 #ifdef NONMATCHING
-void display_ammo_total_in_a1(void) {
+void display_ammo_total_in_a1(s32 arg0, s32 arg1, ? arg2, ? arg3, ?32 arg4, ?32 arg5, ?32 arg6) {
+    ? sp2C;
 
+    // Node 0
+    sprintf(&sp2C, &aD_9, arg1);
+    return some_kind_of_display_routine(arg0, &sp2C, arg2, arg3, arg4, arg5, arg6);
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -18274,8 +18687,270 @@ glabel display_ammo_total_in_a1
 
 
 #ifdef NONMATCHING
-void generate_ammo_total_microcode(void) {
+s32 generate_ammo_total_microcode(s32 arg0) {
+    void *sp28;
+    s16 sp2C;
+    s16 sp2E;
+    f32 sp30;
+    f32 sp34;
+    s16 sp38;
+    s32 sp3C;
+    void *sp40;
+    s32 sp44;
+    void *sp48;
+    s32 sp4C;
+    s32 sp50;
+    s32 sp54;
+    s32 sp58;
+    s32 sp5C;
+    s32 sp60;
+    s32 sp64;
+    ? temp_ret;
+    void *temp_v1;
+    s32 temp_v1_3;
+    s32 temp_t3;
+    ? temp_ret_2;
+    void *temp_v1_2;
+    s32 temp_v1_4;
+    s32 temp_t1;
+    s32 phi_v1;
+    s32 phi_t9;
+    s32 phi_t0;
+    s32 phi_v1_2;
+    s32 phi_t3;
+    s32 phi_t0_2;
 
+    // Node 0
+    if (ptr_BONDdata->unk1064 == 0)
+    {
+        // Node 1
+        if (ptr_BONDdata->unk29C4 == 0)
+        {
+            // Node 2
+            sp64 = get_item_in_hand(1);
+            sp60 = get_item_in_hand(0);
+            if (get_num_players() < 3)
+            {
+                // Node 3
+                sp58 = 0x3b;
+                sp54 = 0x3b;
+            }
+            else
+            {
+                // Node 4
+                if ((get_cur_playernum() & 1) != 0)
+                {
+                    // Node 5
+                    sp58 = 0x2b;
+                    sp54 = 0x7f;
+                }
+                else
+                {
+                    // Node 6
+                    sp58 = 0x3b;
+                    sp54 = 0x6d;
+                }
+            }
+            // Node 7
+            if (sp60 != 0)
+            {
+                // Node 8
+                temp_ret = get_ammo_type_for_weapon(sp60);
+                sp5C = temp_ret;
+                if (temp_ret != 0)
+                {
+                    // Node 9
+                    if (ptr_BONDdata->unk894 != 7)
+                    {
+                        // Node 10
+                        if (ptr_BONDdata->unk894 != 7)
+                        {
+                            // Node 11
+                            if (check_special_attributes(sp60, 0x80000) == 0)
+                            {
+                                // Node 12
+                                temp_v1 = ((sp5C * 0xc) + &D_80035EF0);
+                                sp44 = 5;
+                                if (temp_v1->unk4 != 0)
+                                {
+                                    // Node 13
+                                    sp28 = temp_v1;
+                                    sp48 = (void *) (temp_v1->unk4 + globalbank_rdram_offset);
+                                    sp30 = sub_GAME_7F0784C4();
+                                    sp34 = sub_GAME_7F0784A4();
+                                    sp38 = get_video2_settings_uly();
+                                    arg0 = set_rgba_redirect_generate_microcode(arg0, sp48, ((sp34 + sp30) - (f32) sp54), 0xbf800000, (f32) ((get_video2_settings_height() + sp38) + -0x14), 0, (f32) sp28->unk8, 1);
+                                    sp44 = (s32) sp48->unk4;
+                                }
+                                // Node 14
+                                arg0 = microcode_constructor(arg0);
+                                if (check_special_attributes(sp60, 0x400000) != 0)
+                                {
+                                    // Node 15
+                                    sp4C = 0;
+                                    temp_v1_3 = (ptr_BONDdata->unk89C + (ptr_BONDdata + (sp5C * 4))->unk1130);
+                                    phi_v1 = temp_v1_3;
+                                    if (sp64 == sp60)
+                                    {
+                                        // Node 16
+                                        phi_v1 = (temp_v1_3 + ptr_BONDdata->unkC44);
+                                    }
+                                    // Node 17
+                                    sp50 = (s32) phi_v1;
+                                }
+                                else
+                                {
+                                    // Node 18
+                                    sp4C = (s32) ptr_BONDdata->unk89C;
+                                    sp50 = (s32) (ptr_BONDdata + (sp5C * 4))->unk1130;
+                                }
+                                // Node 19
+                                if (check_special_attributes(sp60, 0x400000) == 0)
+                                {
+                                    // Node 20
+                                    sp2C = get_video2_settings_ulx();
+                                    sp2E = get_video2_settings_width();
+                                    sp38 = get_video2_settings_uly();
+                                    get_video2_settings_height();
+                                    phi_t9 = (sp44 >> 1);
+                                    if (sp44 < 0)
+                                    {
+                                        // Node 21
+                                        phi_t9 = ((s32) (sp44 + 1) >> 1);
+                                    }
+                                    // Node 22
+                                    arg0 = display_ammo_total_in_a1(arg0, sp4C, ((((sp2E + sp2C) - sp54) - phi_t9) + -4), 0);
+                                }
+                                // Node 23
+                                if ((sp50 > 0) || (check_special_attributes(sp60, 0x400000) != 0))
+                                {
+                                    // Node 25
+                                    sp2C = get_video2_settings_ulx();
+                                    sp2E = get_video2_settings_width();
+                                    sp38 = get_video2_settings_uly();
+                                    get_video2_settings_height();
+                                    temp_t3 = (sp44 + 1);
+                                    phi_t0 = (temp_t3 >> 1);
+                                    if (temp_t3 < 0)
+                                    {
+                                        // Node 26
+                                        phi_t0 = ((s32) (temp_t3 + 1) >> 1);
+                                    }
+                                    // Node 27
+                                    arg0 = display_ammo_total_in_a1(arg0, sp50, ((((sp2E + sp2C) - sp54) + phi_t0) + 3), 1);
+                                }
+                                else
+                                {
+
+                                }
+                                // Node 28
+                                arg0 = combiner_bayer_lod_perspective(arg0);
+                            }
+                        }
+                    }
+                }
+            }
+            // Node 29
+            if (sp64 != 0)
+            {
+                // Node 30
+                temp_ret_2 = get_ammo_type_for_weapon(sp64);
+                sp5C = temp_ret_2;
+                if (temp_ret_2 != 0)
+                {
+                    // Node 31
+                    if (ptr_BONDdata->unkC3C != 7)
+                    {
+                        // Node 32
+                        if (ptr_BONDdata->unkC3C != 7)
+                        {
+                            // Node 33
+                            if (check_special_attributes(sp64, 0x80000) == 0)
+                            {
+                                // Node 34
+                                temp_v1_2 = ((sp5C * 0xc) + &D_80035EF0);
+                                sp3C = 5;
+                                if (temp_v1_2->unk4 != 0)
+                                {
+                                    // Node 35
+                                    sp28 = temp_v1_2;
+                                    sp40 = (void *) (temp_v1_2->unk4 + globalbank_rdram_offset);
+                                    sp34 = sub_GAME_7F0784C4();
+                                    sp38 = get_video2_settings_uly();
+                                    get_video2_settings_height();
+                                    arg0 = set_rgba_redirect_generate_microcode(sp28->unk8, arg0, sp40, (sp34 + (f32) sp58), 0xbf800000, 1, 1);
+                                    sp3C = (s32) sp40->unk4;
+                                }
+                                // Node 36
+                                arg0 = microcode_constructor(arg0);
+                                if (check_special_attributes(sp64, 0x400000) != 0)
+                                {
+                                    // Node 37
+                                    sp4C = 0;
+                                    temp_v1_4 = (ptr_BONDdata->unkC44 + (ptr_BONDdata + (sp5C * 4))->unk1130);
+                                    phi_v1_2 = temp_v1_4;
+                                    if (sp64 == sp60)
+                                    {
+                                        // Node 38
+                                        phi_v1_2 = (temp_v1_4 + ptr_BONDdata->unk89C);
+                                    }
+                                    // Node 39
+                                    sp50 = (s32) phi_v1_2;
+                                }
+                                else
+                                {
+                                    // Node 40
+                                    sp4C = (s32) ptr_BONDdata->unkC44;
+                                    sp50 = (s32) (ptr_BONDdata + (sp5C * 4))->unk1130;
+                                }
+                                // Node 41
+                                if (check_special_attributes(sp64, 0x400000) == 0)
+                                {
+                                    // Node 42
+                                    sp2E = get_video2_settings_ulx();
+                                    sp38 = get_video2_settings_uly();
+                                    get_video2_settings_height();
+                                    phi_t3 = (sp3C >> 1);
+                                    if (sp3C < 0)
+                                    {
+                                        // Node 43
+                                        phi_t3 = ((s32) (sp3C + 1) >> 1);
+                                    }
+                                    // Node 44
+                                    arg0 = display_ammo_total_in_a1(arg0, sp4C, (((sp2E + sp58) + phi_t3) + 3), 1);
+                                }
+                                // Node 45
+                                if ((sp50 > 0) || (check_special_attributes(sp64, 0x400000) != 0))
+                                {
+                                    // Node 47
+                                    sp2E = get_video2_settings_ulx();
+                                    sp38 = get_video2_settings_uly();
+                                    get_video2_settings_height();
+                                    temp_t1 = (sp3C + 1);
+                                    phi_t0_2 = (temp_t1 >> 1);
+                                    if (temp_t1 < 0)
+                                    {
+                                        // Node 48
+                                        phi_t0_2 = ((s32) (temp_t1 + 1) >> 1);
+                                    }
+                                    // Node 49
+                                    arg0 = display_ammo_total_in_a1(arg0, sp50, (((sp2E + sp58) - phi_t0_2) + -4), 0);
+                                }
+                                else
+                                {
+
+                                }
+                                // Node 50
+                                arg0 = combiner_bayer_lod_perspective(arg0);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // Node 51
+    return arg0;
 }
 #else
 GLOBAL_ASM(
@@ -18714,8 +19389,133 @@ glabel generate_ammo_total_microcode
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06A334(void) {
+s32 sub_GAME_7F06A334(s32 arg0) {
+    void *sp30;
+    s16 sp34;
+    s32 sp3C;
+    void *sp40;
+    s32 sp44;
+    s32 sp48;
+    s32 sp4C;
+    s32 sp50;
+    s32 sp54;
+    ? temp_ret;
+    ? temp_ret_2;
+    void *temp_v0;
+    s32 temp_s0;
+    s32 temp_v1;
+    s32 temp_a2;
+    s32 phi_s0;
+    s32 phi_v1;
+    s32 phi_t4;
+    s32 phi_s0_2;
+    s32 phi_t9;
+    s32 phi_s0_3;
+    s32 phi_s0_4;
 
+    // Node 0
+    sp54 = get_item_in_hand(1);
+    temp_ret = get_item_in_hand(0);
+    phi_s0_4 = arg0;
+    if (temp_ret != 0)
+    {
+        // Node 1
+        sp50 = temp_ret;
+        temp_ret_2 = get_ammo_type_for_weapon(temp_ret);
+        sp4C = temp_ret_2;
+        phi_s0_4 = arg0;
+        if (temp_ret_2 != 0)
+        {
+            // Node 2
+            phi_s0_4 = arg0;
+            if (ptr_BONDdata->unk894 != 7)
+            {
+                // Node 3
+                phi_s0_4 = arg0;
+                if (ptr_BONDdata->unk894 != 7)
+                {
+                    // Node 4
+                    phi_s0_4 = arg0;
+                    if (check_special_attributes(sp50, 0x80000) == 0)
+                    {
+                        // Node 5
+                        temp_v0 = ((sp4C * 0xc) + &D_80035EF0);
+                        sp3C = 5;
+                        sp30 = temp_v0;
+                        sp40 = (void *) temp_v0->unk4;
+                        get_ptr_item_statistics(sp50);
+                        phi_s0 = arg0;
+                        if (sp40 != 0)
+                        {
+                            // Node 6
+                            sp40 = (void *) (sp40 + globalbank_rdram_offset);
+                            sp34 = get_video2_settings_uly();
+                            sp3C = (s32) sp40->unk4;
+                            phi_s0 = set_rgba_redirect_generate_microcode(arg0, sp40, 0x43480000, 0x43340000, (f32) ((get_video2_settings_height() + sp34) + -0x14), 0, (f32) sp30->unk8, 1);
+                        }
+                        // Node 7
+                        temp_s0 = microcode_constructor(phi_s0);
+                        if (check_special_attributes(sp50, 0x400000) != 0)
+                        {
+                            // Node 8
+                            sp44 = 0;
+                            temp_v1 = (ptr_BONDdata->unk89C + (ptr_BONDdata + (sp4C * 4))->unk1130);
+                            phi_v1 = temp_v1;
+                            if (sp54 == sp50)
+                            {
+                                // Node 9
+                                phi_v1 = (temp_v1 + ptr_BONDdata->unkC44);
+                            }
+                            // Node 10
+                            sp48 = (s32) phi_v1;
+                        }
+                        else
+                        {
+                            // Node 11
+                            sp44 = (s32) ptr_BONDdata->unk89C;
+                            sp48 = (s32) (ptr_BONDdata + (sp4C * 4))->unk1130;
+                        }
+                        // Node 12
+                        phi_s0_2 = temp_s0;
+                        if (check_special_attributes(sp50, 0x400000) == 0)
+                        {
+                            // Node 13
+                            phi_t4 = (sp3C >> 1);
+                            if (sp3C < 0)
+                            {
+                                // Node 14
+                                phi_t4 = ((s32) (sp3C + 1) >> 1);
+                            }
+                            // Node 15
+                            phi_s0_2 = display_ammo_total_in_a1(temp_s0, sp44, (0xc4 - phi_t4), 0, 0);
+                        }
+                        // Node 16
+                        if ((sp48 > 0) || (check_special_attributes(sp50, 0x400000) != 0))
+                        {
+                            // Node 18
+                            temp_a2 = (sp3C + 1);
+                            phi_t9 = (temp_a2 >> 1);
+                            if (temp_a2 < 0)
+                            {
+                                // Node 19
+                                phi_t9 = ((s32) (temp_a2 + 1) >> 1);
+                            }
+                            // Node 20
+                            phi_s0_3 = display_ammo_total_in_a1(phi_s0_2, sp48, (phi_t9 + 0xcb), 1, 0);
+                        }
+                        else
+                        {
+
+                        }
+                        // Node 21
+                        phi_s0_4 = combiner_bayer_lod_perspective(phi_s0_3);
+                    }
+                }
+            }
+        }
+    }
+    // Node 22
+    return phi_s0_4;
 }
 #else
 GLOBAL_ASM(
@@ -18896,9 +19696,19 @@ glabel sub_GAME_7F06A334
 
 
 #ifdef NONMATCHING
-void set_unset_bitflags(void) {
-
+void *set_unset_bitflags(s32 arg0, s32 arg1) {
+    // Node 0
+    if (arg1 != 0)
+    {
+        // Node 1
+        // Error: I don't know how to handle not!
+        return;
+    }
+    // Node 2
+    (void *)0x80080000->unk-5F50->unk1128 = (s32) ((void *)0x80080000->unk-5F50->unk1128 | arg0);
+    return (void *)0x80080000->unk-5F50;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -18928,8 +19738,41 @@ glabel set_unset_bitflags
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06A5E4(void) {
+void *sub_GAME_7F06A5E4(void *arg0) {
+    f32 sp44;
+    f32 sp48;
+    f32 sp4C;
+    f32 sp50;
+    ?32 sp54;
+    void *phi_return_reg;
 
+    // Node 0
+    phi_return_reg = ptr_BONDdata;
+    if (ptr_BONDdata->unk1128 == 0)
+    {
+        // Node 1
+        phi_return_reg = ptr_BONDdata;
+        if (ptr_BONDdata->unk29C4 == 0)
+        {
+            // Node 2
+            sp54 = (?32) *arg0;
+            likely_generate_DL_for_image_declaration(&sp54, imgcall, 4, 0, 0);
+            sp4C = (f32) ptr_BONDdata->unkFE8;
+            sp44 = 16.0f;
+            sp48 = 16.0f;
+            sp50 = (f32) ptr_BONDdata->unkFEC;
+            if (get_screen_ratio() == 1)
+            {
+                // Node 3
+                sp44 = (f32) (sp44 * 0.75f);
+            }
+            // Node 4
+            *arg0 = sp54;
+            phi_return_reg = display_image_at_on_screen_coord(&sp54, &sp4C, &sp44, 0x20, 0x20, 0, 0, 1, 0xff, 0xff, 0xff, 0x6e, (s32) (0 < imgcall->unk6), 0);
+        }
+    }
+    // Node 5
+    return phi_return_reg;
 }
 #else
 GLOBAL_ASM(
@@ -19015,8 +19858,20 @@ glabel sub_GAME_7F06A5E4
 
 
 #ifdef NONMATCHING
-void inc_curplayer_hitcount_with_weapon(void) {
+void inc_curplayer_hitcount_with_weapon(s32 arg1) {
+    ? temp_ret;
+    void *temp_v0;
 
+    // Node 0
+    temp_ret = check_special_attributes(0x10000);
+    if (temp_ret != 0)
+    {
+        // Node 1
+        temp_v0 = (cur_player_stat_ptr + (arg1 * 4));
+        *temp_v0 = (s32) (*temp_v0 + 1);
+    }
+    // Node 2
+    return temp_ret;
 }
 #else
 GLOBAL_ASM(
@@ -19049,8 +19904,9 @@ glabel inc_curplayer_hitcount_with_weapon
 
 
 #ifdef NONMATCHING
-void get_curplayer_shot_register(void) {
-
+void get_curplayer_shot_register(s32 arg0) {
+    // Node 0
+    return *(cur_player_stat_ptr + (arg0 * 4));
 }
 #else
 GLOBAL_ASM(
@@ -19070,9 +19926,12 @@ glabel get_curplayer_shot_register
 
 
 #ifdef NONMATCHING
-void inc_cur_civilian_casualties(void) {
-
+void *inc_cur_civilian_casualties(void) {
+    // Node 0
+    cur_player_stat_ptr->unk6C = (s32) (cur_player_stat_ptr->unk6C + 1);
+    return cur_player_stat_ptr;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -19092,7 +19951,8 @@ glabel inc_cur_civilian_casualties
 
 #ifdef NONMATCHING
 void get_civilian_casualties(void) {
-
+    // Node 0
+    return cur_player_stat_ptr->unk6C;
 }
 #else
 GLOBAL_ASM(
@@ -19110,8 +19970,90 @@ glabel get_civilian_casualties
 
 
 #ifdef NONMATCHING
-void increment_num_kills_display_text_in_MP(void) {
+void *increment_num_kills_display_text_in_MP(void) {
+    s32 sp34;
+    ? sp40;
+    void *temp_ret;
+    s32 temp_v0;
+    s32 temp_a0;
+    s32 phi_a0;
+    void *phi_return_reg;
 
+    // Node 0
+    cur_player_stat_ptr->unk1C = (s32) (cur_player_stat_ptr->unk1C + 1);
+    ptr_BONDdata->unk29F8 = (s32) (ptr_BONDdata->unk29F8 + 1);
+    temp_ret = get_num_players();
+    phi_return_reg = temp_ret;
+    if (temp_ret >= 2)
+    {
+        // Node 1
+        sp34 = sub_GAME_7F08BFB8();
+        sprintf(&sp40, &aSD, get_textptr_for_textID(0x98da), cur_player_stat_ptr->unk1C);
+        display_string_in_lower_left_corner(&sp40);
+        if (cur_player_stat_ptr->unk1C >= 2)
+        {
+            // Node 2
+            temp_v0 = (sp34 - ptr_BONDdata->unk29E4);
+            if (cur_player_stat_ptr->unk48 < temp_v0)
+            {
+                // Node 3
+                cur_player_stat_ptr->unk48 = temp_v0;
+            }
+            // Node 4
+            if (temp_v0 < cur_player_stat_ptr->unk44)
+            {
+                // Node 5
+                cur_player_stat_ptr->unk44 = temp_v0;
+            }
+        }
+        // Node 6
+        ptr_BONDdata->unk29F0 = (s32) ptr_BONDdata->unk29EC;
+        ptr_BONDdata->unk29EC = (s32) ptr_BONDdata->unk29E8;
+        ptr_BONDdata->unk29E8 = (s32) ptr_BONDdata->unk29E4;
+        ptr_BONDdata->unk29E4 = sp34;
+        phi_a0 = 1;
+        if (-1 != ptr_BONDdata->unk29E8)
+        {
+            // Node 7
+            phi_a0 = 1;
+            if ((ptr_BONDdata->unk29E4 - ptr_BONDdata->unk29E8) < 0x78)
+            {
+                // Node 8
+                phi_a0 = 2;
+                if (-1 != ptr_BONDdata->unk29EC)
+                {
+                    // Node 9
+                    phi_a0 = 2;
+                    if ((ptr_BONDdata->unk29E4 - ptr_BONDdata->unk29EC) < 0x78)
+                    {
+                        // Node 10
+                        temp_a0 = (2 + 1);
+                        phi_a0 = temp_a0;
+                        if (-1 != ptr_BONDdata->unk29F0)
+                        {
+                            // Node 11
+                            phi_a0 = temp_a0;
+                            if ((ptr_BONDdata->unk29E4 - ptr_BONDdata->unk29F0) < 0x78)
+                            {
+                                // Node 12
+                                phi_a0 = (temp_a0 + 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // Node 13
+        phi_return_reg = ptr_BONDdata;
+        if (cur_player_stat_ptr->unk58 < phi_a0)
+        {
+            // Node 14
+            cur_player_stat_ptr->unk58 = (s32) phi_a0;
+            phi_return_reg = ptr_BONDdata;
+        }
+    }
+    // Node 15
+    return phi_return_reg;
 }
 #else
 GLOBAL_ASM(
@@ -19235,8 +20177,10 @@ glabel increment_num_kills_display_text_in_MP
 
 #ifdef NONMATCHING
 void get_curplay_killcount(void) {
-
+    // Node 0
+    return cur_player_stat_ptr->unk1C;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -19253,8 +20197,10 @@ glabel get_curplay_killcount
 
 
 #ifdef NONMATCHING
-void increment_num_times_killed_MwtGC(void) {
-
+void *increment_num_times_killed_MwtGC(void) {
+    // Node 0
+    cur_player_stat_ptr->unk20 = (s32) (cur_player_stat_ptr->unk20 + 1);
+    return cur_player_stat_ptr;
 }
 #else
 GLOBAL_ASM(
@@ -19275,7 +20221,8 @@ glabel increment_num_times_killed_MwtGC
 
 #ifdef NONMATCHING
 void get_times_killed_mwtgx(void) {
-
+    // Node 0
+    return cur_player_stat_ptr->unk20;
 }
 #else
 GLOBAL_ASM(
@@ -19294,7 +20241,34 @@ glabel get_times_killed_mwtgx
 
 #ifdef NONMATCHING
 void increment_num_deaths(void) {
+    s32 sp28;
+    ? sp30;
+    ? temp_ret;
+    ? phi_return_reg;
 
+    // Node 0
+    ptr_BONDdata->unk29D8 = (s32) (ptr_BONDdata->unk29D8 + 1);
+    temp_ret = get_num_players();
+    phi_return_reg = temp_ret;
+    if (temp_ret >= 2)
+    {
+        // Node 1
+        if (ptr_BONDdata->unk29D8 == 1)
+        {
+            // Node 2
+            sprintf(&sp30, get_textptr_for_textID(0x98db));
+        }
+        else
+        {
+            // Node 3
+            sp28 = get_textptr_for_textID(0x98dc);
+            sprintf(&sp30, &aSDS, sp28, ptr_BONDdata->unk29D8, get_textptr_for_textID(0x98dd));
+        }
+        // Node 4
+        phi_return_reg = display_string_in_lower_left_corner(&sp30);
+    }
+    // Node 5
+    return phi_return_reg;
 }
 #else
 GLOBAL_ASM(
@@ -19355,8 +20329,10 @@ glabel increment_num_deaths
 
 #ifdef NONMATCHING
 void get_curplayer_numdeaths(void) {
-
+    // Node 0
+    return ptr_BONDdata->unk29D8;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -19373,9 +20349,91 @@ glabel get_curplayer_numdeaths
 
 
 #ifdef NONMATCHING
-void increment_num_suicides_display_MP(void) {
+void *increment_num_suicides_display_MP(void) {
+    s32 sp34;
+    ? sp40;
+    void *temp_ret;
+    s32 temp_v1;
+    s32 temp_v1_2;
+    s32 phi_v1;
+    void *phi_return_reg;
 
+    // Node 0
+    ptr_BONDdata->unk29DC = (s32) (ptr_BONDdata->unk29DC + 1);
+    temp_ret = get_num_players();
+    phi_return_reg = temp_ret;
+    if (temp_ret >= 2)
+    {
+        // Node 1
+        sp34 = sub_GAME_7F08BFB8();
+        sprintf(&sp40, &aSD_0, get_textptr_for_textID(0x98de), ptr_BONDdata->unk29DC);
+        display_string_in_lower_left_corner(&sp40);
+        if (cur_player_stat_ptr->unk1C >= 2)
+        {
+            // Node 2
+            temp_v1 = (sp34 - ptr_BONDdata->unk29E4);
+            if (cur_player_stat_ptr->unk48 < temp_v1)
+            {
+                // Node 3
+                cur_player_stat_ptr->unk48 = temp_v1;
+            }
+            // Node 4
+            if (temp_v1 < cur_player_stat_ptr->unk44)
+            {
+                // Node 5
+                cur_player_stat_ptr->unk44 = temp_v1;
+            }
+        }
+        // Node 6
+        ptr_BONDdata->unk29F0 = (s32) ptr_BONDdata->unk29EC;
+        ptr_BONDdata->unk29EC = (s32) ptr_BONDdata->unk29E8;
+        ptr_BONDdata->unk29E8 = (s32) ptr_BONDdata->unk29E4;
+        ptr_BONDdata->unk29E4 = sp34;
+        phi_v1 = 1;
+        if (-1 != ptr_BONDdata->unk29E8)
+        {
+            // Node 7
+            phi_v1 = 1;
+            if ((ptr_BONDdata->unk29E4 - ptr_BONDdata->unk29E8) < 0x78)
+            {
+                // Node 8
+                phi_v1 = 2;
+                if (-1 != ptr_BONDdata->unk29EC)
+                {
+                    // Node 9
+                    phi_v1 = 2;
+                    if ((ptr_BONDdata->unk29E4 - ptr_BONDdata->unk29EC) < 0x78)
+                    {
+                        // Node 10
+                        temp_v1_2 = (2 + 1);
+                        phi_v1 = temp_v1_2;
+                        if (-1 != ptr_BONDdata->unk29F0)
+                        {
+                            // Node 11
+                            phi_v1 = temp_v1_2;
+                            if ((ptr_BONDdata->unk29E4 - ptr_BONDdata->unk29F0) < 0x78)
+                            {
+                                // Node 12
+                                phi_v1 = (temp_v1_2 + 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // Node 13
+        phi_return_reg = cur_player_stat_ptr;
+        if (cur_player_stat_ptr->unk58 < phi_v1)
+        {
+            // Node 14
+            cur_player_stat_ptr->unk58 = (s32) phi_v1;
+            phi_return_reg = cur_player_stat_ptr;
+        }
+    }
+    // Node 15
+    return phi_return_reg;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -19510,8 +20568,169 @@ glabel get_curplayer_numsuicides
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06ABB0(void) {
+f32 sub_GAME_7F06ABB0(void *arg0, void *arg1, void *arg2, s32 arg3, s32 arg4, s3                      2 arg5, s32 arg6, s32 arg7) {
+    void *sp0;
+    void *spC;
+    void *temp_v0;
+    s32 temp_f18;
+    s32 temp_f8;
+    s32 temp_f4;
+    s32 temp_f10;
+    void *temp_v0_2;
+    void *temp_v0_4;
+    void *temp_v0_3;
+    void *temp_v0_5;
+    void *temp_v1;
+    s32 phi_a1;
+    s32 phi_a2;
+    s32 phi_a3;
+    s32 phi_t0;
+    s32 phi_v1;
+    s32 phi_a0;
+    void *phi_v0;
+    s32 phi_a3_2;
+    s32 phi_t0_2;
+    s32 phi_v1_2;
+    s32 phi_a0_2;
+    s32 phi_a3_3;
+    s32 phi_t0_3;
 
+    // Node 0
+    if (0.0f < *arg2)
+    {
+        // Node 1
+        if (0.0f < arg2->unk4)
+        {
+            // Node 2
+            **arg0 = 0xba001301;
+            *arg0->unk4 = 0;
+            temp_v0 = (*arg0 + 8);
+            temp_f18 = (s32) ((*arg1 - *arg2) * 4.0f);
+            temp_f8 = (s32) ((arg1->unk4 - arg2->unk4) * 4.0f);
+            temp_f4 = (s32) ((*arg2 + *arg1) * 4.0f);
+            temp_f10 = (s32) ((arg2->unk4 + arg1->unk4) * 4.0f);
+            phi_v0 = temp_v0;
+            if (temp_f4 >= 0)
+            {
+                // Node 3
+                phi_v0 = temp_v0;
+                if (temp_f10 >= 0)
+                {
+                    // Node 4
+                    phi_a1 = temp_f18;
+                    phi_a3_3 = 0;
+                    phi_t0_3 = 0;
+                    if (temp_f18 < 0)
+                    {
+                        // Node 5
+                        if (arg5 != 0)
+                        {
+                            // Node 6
+                            phi_a1 = 0;
+                            phi_a3_3 = 0;
+                            phi_t0_3 = ((s32) ((-temp_f18 * arg4) << 5) / (s32)                       (temp_f4 - temp_f18));
+                        }
+                        else
+                        {
+                            // Node 7
+                            phi_a1 = 0;
+                            phi_a3_3 = ((s32) ((-temp_f18 * arg3) << 5) / (s32)                       (temp_f4 - temp_f18));
+                            phi_t0_3 = 0;
+                        }
+                    }
+                    // Node 8
+                    phi_a2 = temp_f8;
+                    phi_a3_2 = phi_a3_3;
+                    phi_t0_2 = phi_t0_3;
+                    if (temp_f8 < 0)
+                    {
+                        // Node 9
+                        if (arg5 != 0)
+                        {
+                            // Node 10
+                            phi_a2 = 0;
+                            phi_a3_2 = (phi_a3_3 + ((s32) ((-temp_f8 * arg3) <<                       5) / (s32) (temp_f10 - temp_f8)));
+                            phi_t0_2 = phi_t0_3;
+                        }
+                        else
+                        {
+                            // Node 11
+                            phi_a2 = 0;
+                            phi_a3_2 = phi_a3_3;
+                            phi_t0_2 = (phi_t0_3 + ((s32) ((-temp_f8 * arg4) <<                       5) / (s32) (temp_f10 - temp_f8)));
+                        }
+                    }
+                    // Node 12
+                    if (arg5 != 0)
+                    {
+                        // Node 13
+                        phi_v1_2 = (s32) (((f32) arg3 / (arg2->unk4 + arg2->unk4                      )) * 1024.0f);
+                        phi_a0_2 = (s32) (((f32) arg4 / (*arg2 + *arg2)) * 1024.                      0f);
+                    }
+                    else
+                    {
+                        // Node 14
+                        phi_v1_2 = (s32) (((f32) arg3 / (*arg2 + *arg2)) * 1024.                      0f);
+                        phi_a0_2 = (s32) (((f32) arg4 / (arg2->unk4 + arg2->unk4                      )) * 1024.0f);
+                    }
+                    // Node 15
+                    phi_a3 = phi_a3_2;
+                    phi_v1 = phi_v1_2;
+                    if (arg6 != 0)
+                    {
+                        // Node 16
+                        phi_a3 = (((arg3 + -1) << 5) - phi_a3_2);
+                        phi_v1 = (0x10000 - phi_v1_2);
+                    }
+                    // Node 17
+                    phi_t0 = phi_t0_2;
+                    phi_a0 = phi_a0_2;
+                    if (arg7 != 0)
+                    {
+                        // Node 18
+                        phi_t0 = (((arg4 + -1) << 5) - phi_t0_2);
+                        phi_a0 = (0x10000 - phi_a0_2);
+                    }
+                    // Node 19
+                    if (arg5 != 0)
+                    {
+                        // Node 20
+                        *temp_v0 = (s32) ((((temp_f4 & 0xfff) << 0xc) | 0xe50000                      00) | (temp_f10 & 0xfff));
+                        temp_v0->unk4 = (s32) (((phi_a1 & 0xfff) << 0xc) | (phi_                      a2 & 0xfff));
+                        temp_v0_2 = (temp_v0 + 8);
+                        *temp_v0_2 = 0xb4000000;
+                        temp_v0_2->unk4 = (s32) ((phi_a3 << 0x10) | (phi_t0 & 0x                      ffff));
+                        temp_v0_4 = (temp_v0_2 + 8);
+                        spC = temp_v0_4;
+                        *spC = 0xb3000000;
+                        spC->unk4 = (s32) ((phi_v1 << 0x10) | (phi_a0 & 0xffff))                      ;
+                        phi_v0 = (temp_v0_4 + 8);
+                    }
+                    else
+                    {
+                        // Node 21
+                        *temp_v0 = (s32) ((((temp_f4 & 0xfff) << 0xc) | 0xe40000                      00) | (temp_f10 & 0xfff));
+                        temp_v0->unk4 = (s32) (((phi_a1 & 0xfff) << 0xc) | (phi_                      a2 & 0xfff));
+                        temp_v0_3 = (temp_v0 + 8);
+                        *temp_v0_3 = 0xb4000000;
+                        temp_v0_3->unk4 = (s32) ((phi_a3 << 0x10) | (phi_t0 & 0x                      ffff));
+                        temp_v0_5 = (temp_v0_3 + 8);
+                        sp0 = temp_v0_5;
+                        *sp0 = 0xb3000000;
+                        sp0->unk4 = (s32) ((phi_v1 << 0x10) | (phi_a0 & 0xffff))                      ;
+                        phi_v0 = (temp_v0_5 + 8);
+                    }
+                }
+            }
+            // Node 22
+            temp_v1 = phi_v0;
+            temp_v1->unk4 = 0x80000;
+            *temp_v1 = 0xba001301;
+            *arg0 = (void *) (phi_v0 + 8);
+        }
+    }
+    // Node 23
+    return 0.0f;
 }
 #else
 GLOBAL_ASM(
@@ -19815,8 +21034,55 @@ glabel sub_GAME_7F06ABB0
 
 
 #ifdef NONMATCHING
-void display_image_at_on_screen_coord(void) {
+f32 display_image_at_on_screen_coord(void *arg0, void *arg2, ?32 arg4, ?32 arg5, ?32 arg6, ?32 arg7, s32 arg8, s32 arg9, s32 argA, s32 argB, s32 argC, s32 argD) {
+    void *temp_v0;
+    void *phi_v0;
+    f32 phi_return_reg;
 
+    // Node 0
+    phi_return_reg = 0.0f;
+    if (0.0f < *arg2)
+    {
+        // Node 1
+        phi_return_reg = 0.0f;
+        if (0.0f < arg2->unk4)
+        {
+            // Node 2
+            **arg0 = 0xfb000000;
+            *arg0->unk4 = (s32) ((((arg8 << 0x18) | ((arg9 & 0xff) << 0x10)) | ((argA & 0xff) << 8)) | (argB & 0xff));
+            temp_v0 = (*arg0 + 8);
+            if (argC != 0)
+            {
+                // Node 3
+                *temp_v0 = 0xfc26a005;
+                temp_v0->unk4 = 0x1f1493ff;
+                phi_v0 = (temp_v0 + 8);
+            }
+            else
+            {
+                // Node 4
+                if (argD != 0)
+                {
+                    // Node 5
+                    temp_v0->unk4 = -0x1c8;
+                    *temp_v0 = 0xfc129bff;
+                    phi_v0 = (temp_v0 + 8);
+                }
+                else
+                {
+                    // Node 6
+                    *temp_v0 = 0xfc129a25;
+                    temp_v0->unk4 = 0xff37ffff;
+                    phi_v0 = (temp_v0 + 8);
+                }
+            }
+            // Node 7
+            *arg0 = (void *) phi_v0;
+            phi_return_reg = sub_GAME_7F06ABB0(arg4, arg5, arg6, arg7);
+        }
+    }
+    // Node 8
+    return phi_return_reg;
 }
 #else
 GLOBAL_ASM(
