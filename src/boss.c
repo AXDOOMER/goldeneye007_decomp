@@ -548,15 +548,15 @@ glabel mainloop
 /* 006FD0 700063D0 00000000 */   nop   
 /* 006FD4 700063D4 0C000A04 */  jal   video_related_2
 /* 006FD8 700063D8 00000000 */   nop   
-/* 006FDC 700063DC 3C048006 */  lui   $a0, %hi(msgQ_Q_fast3d) # $a0, 0x8006
-/* 006FE0 700063E0 2484D9A0 */  addiu $a0, %lo(msgQ_Q_fast3d) # addiu $a0, $a0, -0x2660
+/* 006FDC 700063DC 3C048006 */  lui   $a0, %hi(gfxFrameMsgQ) # $a0, 0x8006
+/* 006FE0 700063E0 2484D9A0 */  addiu $a0, %lo(gfxFrameMsgQ) # addiu $a0, $a0, -0x2660
 /* 006FE4 700063E4 27A501D4 */  addiu $a1, $sp, 0x1d4
 /* 006FE8 700063E8 0C003774 */  jal   osRecvMesg
 /* 006FEC 700063EC 00003025 */   move  $a2, $zero
 /* 006FF0 700063F0 14400007 */  bnez  $v0, .L70006410
 .L700063F4:
-/* 006FF4 700063F4 3C048006 */   lui   $a0, %hi(msgQ_Q_fast3d) # $a0, 0x8006
-/* 006FF8 700063F8 2484D9A0 */  addiu $a0, %lo(msgQ_Q_fast3d) # addiu $a0, $a0, -0x2660
+/* 006FF4 700063F4 3C048006 */   lui   $a0, %hi(gfxFrameMsgQ) # $a0, 0x8006
+/* 006FF8 700063F8 2484D9A0 */  addiu $a0, %lo(gfxFrameMsgQ) # addiu $a0, $a0, -0x2660
 /* 006FFC 700063FC 27A501D4 */  addiu $a1, $sp, 0x1d4
 /* 007000 70006400 0C003774 */  jal   osRecvMesg
 /* 007004 70006404 00003025 */   move  $a2, $zero
@@ -567,8 +567,8 @@ glabel mainloop
 /* 007014 70006414 8D0842FC */  lw    $t0, %lo(loadedstage)($t0)
 /* 007018 70006418 05010126 */  bgez  $t0, .L700068B4
 .L7000641C:
-/* 00701C 7000641C 3C048006 */   lui   $a0, %hi(msgQ_Q_fast3d) # $a0, 0x8006
-/* 007020 70006420 2484D9A0 */  addiu $a0, %lo(msgQ_Q_fast3d) # addiu $a0, $a0, -0x2660
+/* 00701C 7000641C 3C048006 */   lui   $a0, %hi(gfxFrameMsgQ) # $a0, 0x8006
+/* 007020 70006420 2484D9A0 */  addiu $a0, %lo(gfxFrameMsgQ) # addiu $a0, $a0, -0x2660
 /* 007024 70006424 27A501D4 */  addiu $a1, $sp, 0x1d4
 /* 007028 70006428 0C003774 */  jal   osRecvMesg
 /* 00702C 7000642C 24060001 */   li    $a2, 1

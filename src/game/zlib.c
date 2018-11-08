@@ -1,20 +1,38 @@
 #include "ultra64.h"
 //.bss
 
+//bss:8008D350
+s32 dword_CODE_bss_8008D350;
+//bss:8008D354
+s32 dword_CODE_bss_8008D354;
+//bss:8008D358
+s32 dword_CODE_bss_8008D358;
+//bss:8008D35C
+s32 dword_CODE_bss_8008D35C;
+//bss:8008D360
+s32 dword_CODE_bss_8008D360;
+//bss:8008D364
+s32 dword_CODE_bss_8008D364;
+//bss:8008D368
+s32 dword_CODE_bss_8008D368;
+//bss:8008D36C
+s32 dword_CODE_bss_8008D36C;
+
+
 //.data
-u8 byte_D_8004E8E0[] = {
+u8 D_8004E8E0[] = {
     0x10,0x11,0x12,   0,   8,   7,   9,   6, 0xA,   5, 0xB,   4, 0xC,   3,
     0xD,   2, 0xE,   1, 0xF,   0
 };
 
-s16 word_D_8004E8F4[] = {
+s16 D_8004E8F4[] = {
     3,     4,     5,     6,     7,     8,     9,   0xA,   0xB,   0xD,
     0xF,  0x11,  0x13,  0x17,  0x1B,  0x1F,  0x23,  0x2B,  0x33,  0x3B,
     0x43,  0x53,  0x63,  0x73,  0x83,  0xA3,  0xC3,  0xE3, 0x102,     0,
    0,     0
 };
 
-u32 dword_D_8004E934[] = {
+u32 D_8004E934[] = {
     0, 0, 0x1010101, 0x2020202, 0x3030303, 0x4040404, 0x5050505, 0x636300
 };
 

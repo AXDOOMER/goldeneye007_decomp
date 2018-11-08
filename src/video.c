@@ -850,14 +850,14 @@ glabel video_related_8
 /* 0045EC 700039EC 3C018002 */  lui   $at, %hi(D_800232C0) # $at, 0x8002
 /* 0045F0 700039F0 11600006 */  beqz  $t3, .L70003A0C
 /* 0045F4 700039F4 AC3932C0 */   sw    $t9, %lo(D_800232C0)($at)
-/* 0045F8 700039F8 3C0F8005 */  lui   $t7, %hi(D_8004EAB0) # $t7, 0x8005
-/* 0045FC 700039FC 8DEFEAB0 */  lw    $t7, %lo(D_8004EAB0)($t7)
+/* 0045F8 700039F8 3C0F8005 */  lui   $t7, %hi(fast3d_related_array) # $t7, 0x8005
+/* 0045FC 700039FC 8DEFEAB0 */  lw    $t7, %lo(fast3d_related_array)($t7)
 /* 004600 70003A00 8D180028 */  lw    $t8, 0x28($t0)
 /* 004604 70003A04 10000006 */  b     .L70003A20
 /* 004608 70003A08 ADF80058 */   sw    $t8, 0x58($t7)
 .L70003A0C:
-/* 00460C 70003A0C 3C198005 */  lui   $t9, %hi(D_8004EAB0) # $t9, 0x8005
-/* 004610 70003A10 8F39EAB0 */  lw    $t9, %lo(D_8004EAB0)($t9)
+/* 00460C 70003A0C 3C198005 */  lui   $t9, %hi(fast3d_related_array) # $t9, 0x8005
+/* 004610 70003A10 8F39EAB0 */  lw    $t9, %lo(fast3d_related_array)($t9)
 /* 004614 70003A14 3C0E803B */  lui   $t6, %hi(cfb_16_a) # $t6, 0x803b
 /* 004618 70003A18 25CE5000 */  addiu $t6, %lo(cfb_16_a) # addiu $t6, $t6, 0x5000
 /* 00461C 70003A1C AF2E0058 */  sw    $t6, 0x58($t9)
