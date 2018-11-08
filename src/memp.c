@@ -1,5 +1,5 @@
 #include "ultra64.h"
-
+#include "memp.h"
 
 char memory_bank_ptrs[0x40];
 u32 *ptr_model_room_buf_pri;
@@ -773,20 +773,19 @@ glabel reset_mem_bank_a0
 
 
 #ifdef NONMATCHING
-void *memp_related_6(s32 arg0, s32 arg6) {
+void *memp_related_6(s32 arg0, s32 arg_unaligned3) {
     void *temp_v0;
 
     // Node 0
     nulled_list_all8_mem_alloc_banks_sizes();
-    temp_v0 = ((arg6 * 0x10) + &memory_bank_ptrs);
+    temp_v0 = ((arg_unaligned3 * 0x10) + &memory_bank_ptrs);
     if (temp_v0->unk4 != 0)
     {
         // Node 1
         temp_v0->unk4 = 0;
-        return;
-        // (possible return value: temp_v0)
     }
-    // (possible return value: temp_v0)
+    // Node 2
+    return temp_v0;
 }
 #else
 GLOBAL_ASM(

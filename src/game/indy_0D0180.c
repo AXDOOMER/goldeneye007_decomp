@@ -1,24 +1,13 @@
 #include "ultra64.h"
+#include "game/indy_0D0180.h"
 
-
-/* data
-D:8004EAC0                     .word 0
-D:8004EAC4     dword_D_8004EAC4:.word 0x103             # DATA XREF: sub_CODE_7F0D0220:loc_CODE_7F0D02ECr
-D:8004EAC4                                              # sub_CODE_7F0D0F4C+100r
-D:8004EAC8     indy_ready:     .word 0                  # DATA XREF: init_indy_if_not_readyo
-D:8004EAC8                                              # init_indy_if_not_ready+8r
-D:8004EAC8                                              # init_indy_if_not_ready+20w
-D:8004EAC8                                              # init_indy_if_readyr
-D:8004EAC8                                              # indy_load_resourcer
-D:8004EAC8                                              # indy_send_capture_datar
-D:8004EAC8                                              # indy_load_ramrom_filer
-D:8004EAC8                                              # check_file_exportedr
-D:8004EAC8                                              # check_file_found_on_indyr
-D:8004EAC8                                              # response_from_command_stringr
-D:8004EAC8                                              # sub_CODE_7F0D0124r
-D:8004EACC                     .align 5
-*/
-
+// data
+//D:8004EAC0
+s32 D_8004EAC0 = 0;
+//D:8004EAC4
+s32 D_8004EAC4 = 0x103;
+//D:8004EAC8
+s32 indy_ready = 0;
 
 #ifdef NONMATCHING
 void sub_GAME_7F0D0180(void) {

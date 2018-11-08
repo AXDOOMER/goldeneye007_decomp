@@ -2,6 +2,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "ramrom.h"
+#include "deb.h"
 
 /* bss */
 char dword_CODE_bss_80060890[0x400];
@@ -168,7 +169,6 @@ void *return_match_in_debug_notice_list(s32 arg0) {
     return;
     // (possible return value: NULL)
 }
-
 #else
 GLOBAL_ASM(
 .text

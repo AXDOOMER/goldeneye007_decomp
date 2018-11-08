@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "game/ob.h"
 
 /* bss
 CODE.bss:800888B0     ptr_resource_data:resource_lookup_data <?>
@@ -2705,8 +2706,39 @@ glabel sub_GAME_7F0BD188
 
 
 #ifdef NONMATCHING
-void something_mem_bank_a0(void) {
+s32 something_mem_bank_a0(s32 arg0) {
+    s32 temp_t6;
+    u32 temp_a1;
+    void *phi_a1;
 
+    // Node 0
+    temp_t6 = (arg0 & 0xff);
+    if (file_entry_max >= 2)
+    {
+        // Node 1
+        phi_a1 = &ptr_res_data_next;
+        // Node 2
+        if (temp_t6 >= phi_a1->unk10)
+        {
+            // Node 3
+            phi_a1->unk10 = (u8)0;
+        }
+        // Node 4
+        if (4 == temp_t6)
+        {
+            // Node 5
+            phi_a1->unk4 = 0;
+        }
+        // Node 6
+        temp_a1 = (phi_a1 + 0x14);
+        phi_a1 = temp_a1;
+        if (temp_a1 < (u32) ((file_entry_max * 0x14) + &ptr_resource_data))
+        {
+            goto loop_2;
+        }
+    }
+    // Node 7
+    return temp_t6;
 }
 #else
 GLOBAL_ASM(

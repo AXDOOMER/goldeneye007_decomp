@@ -1,90 +1,42 @@
 #include "ultra64.h"
+#include "game/indy_0D0180.h"
+#include "game/indy_comms.h"
 
-
-/* rodata
-D:8005BFC0     aSleep5EtcKillallGhostGload:.ascii "sleep 5; /etc/killall ghost gload"<0><0><0>
-D:8005BFC0                                              # DATA XREF: send_indy_close_port_cmd+10o
-*/
-
-
-
-#ifdef NONMATCHING
-void init_indy_if_not_ready(void) {
-
+s32 init_indy_if_not_ready(void) {
+    if (indy_ready != 1)
+    {
+        indy_ready = 1;
+        init_indy_if_ready();
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_indy_if_not_ready
-/* 104A60 7F0CFF30 3C038005 */  lui   $v1, %hi(indy_ready) # $v1, 0x8005
-/* 104A64 7F0CFF34 2463EAC8 */  addiu $v1, %lo(indy_ready) # addiu $v1, $v1, -0x1538
-/* 104A68 7F0CFF38 8C6E0000 */  lw    $t6, ($v1)
-/* 104A6C 7F0CFF3C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 104A70 7F0CFF40 24020001 */  li    $v0, 1
-/* 104A74 7F0CFF44 104E0003 */  beq   $v0, $t6, .L7F0CFF54
-/* 104A78 7F0CFF48 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 104A7C 7F0CFF4C 0FC33FDB */  jal   init_indy_if_ready
-/* 104A80 7F0CFF50 AC620000 */   sw    $v0, ($v1)
-.L7F0CFF54:
-/* 104A84 7F0CFF54 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 104A88 7F0CFF58 27BD0018 */  addiu $sp, $sp, 0x18
-/* 104A8C 7F0CFF5C 03E00008 */  jr    $ra
-/* 104A90 7F0CFF60 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void nullsub_48(void) {
-
+;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel nullsub_48
-/* 104A94 7F0CFF64 03E00008 */  jr    $ra
-/* 104A98 7F0CFF68 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void init_indy_if_ready(void) {
-
+    if (indy_ready != 0)
+    {
+        post_indy__res_cmd_initialize();
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_indy_if_ready
-/* 104A9C 7F0CFF6C 3C0E8005 */  lui   $t6, %hi(indy_ready) # $t6, 0x8005
-/* 104AA0 7F0CFF70 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
-/* 104AA4 7F0CFF74 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 104AA8 7F0CFF78 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 104AAC 7F0CFF7C 51C00004 */  beql  $t6, $zero, .L7F0CFF90
-/* 104AB0 7F0CFF80 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 104AB4 7F0CFF84 0FC3428F */  jal   post_indy__res_cmd_initialize
-/* 104AB8 7F0CFF88 00000000 */   nop   
-/* 104ABC 7F0CFF8C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0CFF90:
-/* 104AC0 7F0CFF90 27BD0018 */  addiu $sp, $sp, 0x18
-/* 104AC4 7F0CFF94 03E00008 */  jr    $ra
-/* 104AC8 7F0CFF98 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
-void load_resource_on_indy(void) {
+void load_resource_on_indy(s32 arg1) {
+    ? sp18;
+    ? sp1C;
+    ? sp20;
 
+    // Node 0
+    if (indy_ready != 0)
+    {
+        // Node 1
+        sub_GAME_7F0D0BA4(0x400000);
+        sub_GAME_7F0D17FC(&sp20, &sp1C, &sp18, arg1);
+    }
+    // Node 2
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -116,8 +68,18 @@ glabel load_resource_on_indy
 
 
 #ifdef NONMATCHING
-void indy_send_capture_data(void) {
+void indy_send_capture_data(s32 arg1, ? arg2) {
+    ? sp1C;
 
+    // Node 0
+    if (indy_ready != 0)
+    {
+        // Node 1
+        post_indy__res_cmd_send_capture_data(arg2, arg1);
+        sub_GAME_7F0D1864(&sp1C);
+    }
+    // Node 2
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -148,7 +110,19 @@ glabel indy_send_capture_data
 
 #ifdef NONMATCHING
 void indy_load_ramrom_file(void) {
+    ? sp1C;
+    ? sp20;
+    ? sp24;
 
+    // Node 0
+    if (indy_ready != 0)
+    {
+        // Node 1
+        post_indy__res_cmd_request_ramrom_file();
+        sub_GAME_7F0D18AC(&sp24, &sp20, &sp1C);
+    }
+    // Node 2
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -179,8 +153,18 @@ glabel indy_load_ramrom_file
 
 
 #ifdef NONMATCHING
-void check_file_exported(void) {
+void check_file_exported(s32 arg1, ? arg2) {
+    ? sp1C;
 
+    // Node 0
+    if (indy_ready != 0)
+    {
+        // Node 1
+        sub_GAME_7F0D0DD0(arg2, arg1);
+        sub_GAME_7F0D1908(&sp1C);
+    }
+    // Node 2
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -275,57 +259,21 @@ glabel response_from_command_string
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0D0124(void) {
-
+    // Node 0
+    if (indy_ready != 0)
+    {
+        // Node 1
+        rmon_debug_returns_neg_1();
+    }
+    // Node 2
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0D0124
-/* 104C54 7F0D0124 3C0E8005 */  lui   $t6, %hi(indy_ready) # $t6, 0x8005
-/* 104C58 7F0D0128 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
-/* 104C5C 7F0D012C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 104C60 7F0D0130 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 104C64 7F0D0134 51C00004 */  beql  $t6, $zero, .L7F0D0148
-/* 104C68 7F0D0138 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 104C6C 7F0D013C 0C0033AC */  jal   rmon_debug_returns_neg_1
-/* 104C70 7F0D0140 00000000 */   nop   
-/* 104C74 7F0D0144 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0D0148:
-/* 104C78 7F0D0148 27BD0018 */  addiu $sp, $sp, 0x18
-/* 104C7C 7F0D014C 03E00008 */  jr    $ra
-/* 104C80 7F0D0150 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void send_indy_close_port_cmd(void) {
-
+    response_from_command_string("sleep 5; /etc/killall ghost gload");
 }
-#else
-GLOBAL_ASM(
-.text
-glabel send_indy_close_port_cmd
-/* 104C84 7F0D0154 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 104C88 7F0D0158 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 104C8C 7F0D015C 3C048006 */  lui   $a0, %hi(aSleep5EtcKillallGhostGload) # $a0, 0x8006
-/* 104C90 7F0D0160 0FC34038 */  jal   response_from_command_string
-/* 104C94 7F0D0164 2484BFC0 */   addiu $a0, %lo(aSleep5EtcKillallGhostGload) # addiu $a0, $a0, -0x4040
-/* 104C98 7F0D0168 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 104C9C 7F0D016C 27BD0018 */  addiu $sp, $sp, 0x18
-nullsub_49:
-/* 104CA0 7F0D0170 03E00008 */  jr    $ra
-/* 104CA4 7F0D0174 00000000 */   nop   
-)
-#endif
+
 
 
 
