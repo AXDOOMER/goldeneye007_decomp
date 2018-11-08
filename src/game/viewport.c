@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "game/bond.h"
 
 // bss
 s32 viewport_img_width;

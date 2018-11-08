@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "bond.h"
 
 /* bss
 CODE.bss:80079940     flt_CODE_bss_80079940:.space 4           # DATA XREF: sub_CODE_7F0785DC+54o
@@ -322,21 +323,13 @@ CODE.bss:80079E10                                              # sub_CODE_7F07B5
 CODE.bss:80079E10                                              # sub_CODE_7F07B56C+59Cr
 */
 
-/* data
-D:80036424     camera_80036424:.word 0                  # DATA XREF: load_camera_intro_type_values+54w
-D:80036424                                              # maybe_solo_intro_camera_handler+6Cw
-D:80036424                                              # controller_gameplay_interaction+134r
-D:80036424                                              # MoveBond:loc_CODE_7F0846E8o
-D:80036424                                              # MoveBond+A8r
-D:80036424                                              # MoveBond+BCw
-D:80036424                                              # MoveBond+CCw
-D:80036428     resolution:     .word 0                  # DATA XREF: load_camera_intro_type_values+58o
-D:80036428                                              # load_camera_intro_type_values+60w
-D:80036428                                              # load_camera_intro_type_values+B0w
-D:80036428                                              # load_camera_intro_type_values+BCw
-D:80036428                                              # possibly_reset_viewport_options_for_player+4Cr
-D:80036428                                              # possibly_reset_viewport_options_for_player+118r
-D:80036428                                              # allocate_viewport_bufferr
+
+//D:80036424
+s32 camera_80036424 = 0;
+//D:80036428
+s32 resolution = 0;
+
+/*
 D:8003642C     camera_8003642C:.word 0                  # DATA XREF: load_camera_intro_type_values+6Cw
 D:8003642C                                              # parse_handle_actionblocks:action_D2_exit_levelr
 D:8003642C                                              # sub_CODE_7F086BF8r

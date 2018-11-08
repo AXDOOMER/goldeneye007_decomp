@@ -10,6 +10,7 @@
 
 
 .section .text, "ax"
+osTvType = 0x80000300;
 
 glabel osPiRawStartDma
 /* 00DB90 7000CF90 27BDFFD8 */  addiu $sp, $sp, -0x28

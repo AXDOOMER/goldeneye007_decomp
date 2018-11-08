@@ -1,53 +1,48 @@
 #include "ultra64.h"
 
+struct music_setup
+{
+  s16 stage_id;
+  s16 main_music;
+  s16 bg_sound;
+  s16 xtrack;
+};
 
-/* data
-D:8004EB10     music_setup_entries:music_setup <     9,    0xF, 0xFFFF,   0x29>
-D:8004EB10                                              # DATA XREF: sub_CODE_7F0D2720r
-D:8004EB10                                              # sub_CODE_7F0D2720+1Co
-D:8004EB10                                              # sub_CODE_7F0D2720+20r
-D:8004EB10                                              # sub_CODE_7F0D2848r
-D:8004EB10                                              # sub_CODE_7F0D2848+Co
-D:8004EB10                                              # sub_CODE_7F0D2848+18r
-D:8004EB10                                              # sub_CODE_7F0D2890r
-D:8004EB10                                              # sub_CODE_7F0D2890+Co
-D:8004EB10                                              # sub_CODE_7F0D2890+18r
-D:8004EB10                     music_setup <  0x14,    0xC, 0xFFFF,   0x26>
-D:8004EB10                     music_setup <  0x16,   0x11, 0xFFFF,   0x3D>
-D:8004EB10                     music_setup <  0x17,      8, 0xFFFF,   0x12>
-D:8004EB10                     music_setup <  0x18,    0xB, 0xFFFF,   0x25>
-D:8004EB10                     music_setup <  0x19,      3, 0xFFFF,   0x1D>
-D:8004EB10                     music_setup <  0x1A,    0xA, 0xFFFF,   0x3E>
-D:8004EB10                     music_setup <  0x1B,   0x10, 0xFFFF,   0x2A>
-D:8004EB10                     music_setup <  0x1C,   0x19, 0xFFFF,   0x2E>
-D:8004EB10                     music_setup <  0x1D,    0xE, 0xFFFF,   0x28>
-D:8004EB10                     music_setup <  0x1E,      4, 0xFFFF,   0x20>
-D:8004EB10                     music_setup <  0x20,   0x16, 0xFFFF,   0x2F>
-D:8004EB10                     music_setup <  0x21,      9, 0xFFFF,   0x35>
-D:8004EB10                     music_setup <  0x22,      7, 0xFFFF,   0x1F>
-D:8004EB10                     music_setup <  0x23,   0x32, 0xFFFF,   0x33>
-D:8004EB10                     music_setup <  0x24,   0x39, 0xFFFF,   0x35>
-D:8004EB10                     music_setup <  0x25,   0x37, 0xFFFF,   0x2B>
-D:8004EB10                     music_setup <  0x27,   0x1A, 0xFFFF,   0x15>
-D:8004EB10                     music_setup <  0x28,      6, 0xFFFF, 0xFFFF>
-D:8004EB10                     music_setup <  0x29,   0x13, 0xFFFF,   0x30>
-D:8004EB10                     music_setup <  0x2A,   0x1C, 0xFFFF, 0xFFFF>
-D:8004EB10                     music_setup <  0x2B,   0x1C,   0x35,   0x3C>
-D:8004EB10                     music_setup <  0x36,   0x31, 0xFFFF, 0xFFFF>
-D:8004EBC8                     .align 4
-D:8004EBD0     random_tracks:  .half      3,     4,     5,     6,     7,     8,     9,   0xA,   0xB,   0xC
-D:8004EBD0                                              # DATA XREF: sub_CODE_7F0D2720+40r
-D:8004EBD0                                              # sub_CODE_7F0D2720+50o
-D:8004EBD0                                              # sub_CODE_7F0D2720+CCo
-D:8004EBD0                                              # sub_CODE_7F0D2720+54r
-D:8004EBD0                                              # sub_CODE_7F0D2720+D0r
-D:8004EBD0                     .half    0xD,   0xE,   0xF,  0x10,  0x11,  0x12,  0x13,  0x15,  0x16,  0x19
-D:8004EBD0                     .half   0x1A,  0x1C,  0x1D,  0x1F,  0x20,  0x21,  0x22,  0x23,  0x24,  0x25
-D:8004EBD0                     .half   0x26,  0x28,  0x29,  0x2A,  0x2B,  0x2D,  0x2E,  0x2F,  0x30,  0x32
-D:8004EBD0                     .half   0x34,  0x38,  0x39,     0
-D:8004EC28                     .word 0
-D:8004EC2C                     .word 0
-*/
+// data
+//D:8004EB10
+struct music_setup music_setup_entries[] = {
+{   9,    0xF, 0xFFFF,   0x29},
+{0x14,    0xC, 0xFFFF,   0x26},
+{0x16,   0x11, 0xFFFF,   0x3D},
+{0x17,      8, 0xFFFF,   0x12},
+{0x18,    0xB, 0xFFFF,   0x25},
+{0x19,      3, 0xFFFF,   0x1D},
+{0x1A,    0xA, 0xFFFF,   0x3E},
+{0x1B,   0x10, 0xFFFF,   0x2A},
+{0x1C,   0x19, 0xFFFF,   0x2E},
+{0x1D,    0xE, 0xFFFF,   0x28},
+{0x1E,      4, 0xFFFF,   0x20},
+{0x20,   0x16, 0xFFFF,   0x2F},
+{0x21,      9, 0xFFFF,   0x35},
+{0x22,      7, 0xFFFF,   0x1F},
+{0x23,   0x32, 0xFFFF,   0x33},
+{0x24,   0x39, 0xFFFF,   0x35},
+{0x25,   0x37, 0xFFFF,   0x2B},
+{0x27,   0x1A, 0xFFFF,   0x15},
+{0x28,      6, 0xFFFF, 0xFFFF},
+{0x29,   0x13, 0xFFFF,   0x30},
+{0x2A,   0x1C, 0xFFFF, 0xFFFF},
+{0x2B,   0x1C,   0x35,   0x3C},
+{0x36,   0x31, 0xFFFF, 0xFFFF}
+};
+
+//D:8004EBD0
+s16 random_tracks[] = {
+        3,     4,     5,     6,     7,     8,     9,   0xA,   0xB,   0xC,   0xD,
+      0xE,   0xF,  0x10,  0x11,  0x12,  0x13,  0x15,  0x16,  0x19,  0x1A,  0x1C,
+     0x1D,  0x1F,  0x20,  0x21,  0x22,  0x23,  0x24,  0x25,  0x26,  0x28,  0x29,
+     0x2A,  0x2B,  0x2D,  0x2E,  0x2F,  0x30,  0x32,  0x34,  0x38,  0x39,     0
+};
 
 
 
@@ -153,9 +148,38 @@ glabel sub_GAME_7F0D2720
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0D2848(void) {
+void sub_GAME_7F0D2848(s32 arg0) {
+    void *temp_v1;
+    s32 temp_v0;
+    s32 phi_v0;
+    void *phi_v1;
 
+    // Node 0
+    temp_v1 = (0x80050000 + -0x14f0);
+    if (music_setup_entries != 0)
+    {
+        // Node 1
+        phi_v0 = *temp_v1;
+        phi_v1 = temp_v1;
+        // Node 2
+        if (arg0 == phi_v0)
+        {
+            // Node 3
+            return phi_v1->unk4;
+        }
+        // Node 4
+        temp_v0 = phi_v1->unk8;
+        phi_v0 = temp_v0;
+        phi_v1 = (phi_v1 + 8);
+        if (temp_v0 != 0)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 5
+    return -1;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -190,8 +214,36 @@ glabel sub_GAME_7F0D2848
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0D2890(void) {
+void sub_GAME_7F0D2890(s32 arg0) {
+    void *temp_v1;
+    s32 temp_v0;
+    s32 phi_v0;
+    void *phi_v1;
 
+    // Node 0
+    temp_v1 = (0x80050000 + -0x14f0);
+    if (music_setup_entries != 0)
+    {
+        // Node 1
+        phi_v0 = *temp_v1;
+        phi_v1 = temp_v1;
+        // Node 2
+        if (arg0 == phi_v0)
+        {
+            // Node 3
+            return phi_v1->unk6;
+        }
+        // Node 4
+        temp_v0 = phi_v1->unk8;
+        phi_v0 = temp_v0;
+        phi_v1 = (phi_v1 + 8);
+        if (temp_v0 != 0)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 5
+    return -1;
 }
 #else
 GLOBAL_ASM(
