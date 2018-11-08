@@ -3,6 +3,7 @@ import argparse
 import tempfile
 import struct
 import copy
+import sys
 import re
 import os
 
@@ -128,7 +129,7 @@ class Symbol:
 
     def __init__(self, data, strtab):
         self.st_name, self.st_value, self.st_size, st_info, self.st_other, self.st_shndx = struct.unpack('>IIIBBH', data)
-        assert self.st_shndx != SHN_XINDEX
+        assert self.st_shndx != SHN_XINDEX, "too many sections (SHN_XINDEX not supported)"
         self.bind = st_info >> 4
         self.type = st_info & 15
         self.name = strtab.lookup_str(self.st_name)
@@ -241,11 +242,19 @@ class Section:
             entries.append(Relocation(self.data[i:i+self.sh_entsize], self.sh_type))
         self.relocations = entries
 
+    def local_symbols(self):
+        assert self.sh_type == SHT_SYMTAB
+        return self.symbol_entries[:self.sh_info]
+
+    def global_symbols(self):
+        assert self.sh_type == SHT_SYMTAB
+        return self.symbol_entries[self.sh_info:]
+
 
 class ElfFile:
     def __init__(self, data):
         self.data = data
-        assert data[:4] == b'\x7fELF'
+        assert data[:4] == b'\x7fELF', "not an ELF file"
 
         self.elf_header = ElfHeader(data[0:52])
 
@@ -325,16 +334,25 @@ class ElfFile:
         outfile.close()
 
 
-def parse_source(f, print_source, optimized):
+def parse_source(f, print_source, optimized, framepointer):
     if optimized:
-        min_instr_count = 2
-        skip_instr_count = 1
+        if framepointer:
+            min_instr_count = 6
+            skip_instr_count = 5
+        else:
+            min_instr_count = 2
+            skip_instr_count = 1
     else:
-        min_instr_count = 4
-        skip_instr_count = 4
+        if framepointer:
+            min_instr_count = 7
+            skip_instr_count = 7
+        else:
+            min_instr_count = 4
+            skip_instr_count = 4
+    MAX_FN_SIZE = 100
     SECTIONS = ['.data', '.text', '.rodata', '.late_rodata', '.bss']
+
     in_asm = False
-    instr_count = 0
     fn_section_sizes = None
     fn_ins_inds = None
     asm_conts = []
@@ -359,41 +377,27 @@ def parse_source(f, print_source, optimized):
         raw_line = raw_line.rstrip()
         line = raw_line.lstrip()
         output_line = ''
-        def instruction():
-            nonlocal instr_count
-            nonlocal output_line
-            assert first_fn_name is not None
-            instr_count += 1
-            if instr_count > skip_instr_count:
-                output_line += '*(volatile int*)0 = 0;'
-                return True
-            return False
 
         def add_sized(size):
-            assert size % 4 == 0 and size >= 0
+            if cur_section in ['.text', '.late_rodata']:
+                assert size % 4 == 0, "size must be a multiple of 4 on line: " + raw_line
+            assert size >= 0
             fn_section_sizes[cur_section] += size
             if cur_section == '.text':
-                for _ in range(size // 4):
-                    instruction()
+                assert first_fn_name is not None, ".text block without an initial glabel"
+                fn_ins_inds.append((len(output_lines), size // 4))
 
         if in_asm:
             if line.startswith(')'):
                 in_asm = False
-                temp_fn_name = None
-                if instr_count > 0:
-                    temp_fn_name = make_name('func')
-                    output_lines[start_index] = 'void {}(void) {{'.format(temp_fn_name)
-                    assert first_fn_name
-                    assert instr_count >= min_instr_count
-                    output_line = '}'
                 late_rodata = []
+                late_rodata_fn_output = []
                 if fn_section_sizes['.late_rodata'] > 0:
                     # Generate late rodata by emitting unique float constants.
                     # This requires 3 instructions for each 4 bytes of rodata.
                     # Doubles would increase 4 to 8, but unfortunately we know
                     # too little about alignment to be able to use them.
                     size = fn_section_sizes['.late_rodata'] // 4
-                    assert size*3 <= len(fn_ins_inds), "late rodata to text ratio is too high: {} / {} must be <= 1/3".format(size, len(fn_ins_inds))
                     for i in range(0, size*3, 3):
                         if (cur_late_rodata_hex & 0xffff) == 0:
                             # Avoid lui
@@ -402,9 +406,48 @@ def parse_source(f, print_source, optimized):
                         cur_late_rodata_hex += 1
                         late_rodata.append(dummy_bytes)
                         fval, = struct.unpack('>f', dummy_bytes)
-                        output_lines[fn_ins_inds[i]] = '*(volatile float*)0 = {}f;'.format(fval)
-                        output_lines[fn_ins_inds[i+1]] = ''
-                        output_lines[fn_ins_inds[i+2]] = ''
+                        late_rodata_fn_output.append('*(volatile float*)0 = {}f;'.format(fval))
+                        late_rodata_fn_output.append('')
+                        late_rodata_fn_output.append('')
+                temp_fn_name = None
+                if fn_section_sizes['.text'] > 0 or late_rodata_fn_output:
+                    temp_fn_name = make_name('func')
+                    output_lines[start_index] = 'void {}(void) {{'.format(temp_fn_name)
+                    instr_count = fn_section_sizes['.text'] // 4
+                    assert instr_count >= min_instr_count, "too short .text block"
+                    available_instr_count = 0
+                    tot_emitted = 0
+                    tot_skipped = 0
+                    fn_emitted = 0
+                    fn_skipped = 0
+                    rodata_stack = late_rodata_fn_output[::-1]
+                    for (line, count) in fn_ins_inds:
+                        for _ in range(count):
+                            if (fn_emitted > MAX_FN_SIZE and instr_count - tot_emitted > min_instr_count and
+                                    (not rodata_stack or rodata_stack[-1])):
+                                # Don't let functions become too large. When a function reaches 284
+                                # instructions, and -O2 -framepointer flags are passed, the IRIX
+                                # compiler decides it is a great idea to start optimizing more.
+                                fn_emitted = 0
+                                fn_skipped = 0
+                                output_lines[line] += ' }} void {}(void) {{ '.format(make_name('large_func'))
+                            if fn_skipped < skip_instr_count:
+                                fn_skipped += 1
+                                tot_skipped += 1
+                            elif rodata_stack:
+                                output_lines[line] += rodata_stack.pop()
+                            else:
+                                available_instr_count += 1
+                                output_lines[line] += '*(volatile int*)0 = 0;'
+                            tot_emitted += 1
+                            fn_emitted += 1
+                    if rodata_stack:
+                        size = len(late_rodata_fn_output) // 3
+                        available = instr_count - tot_skipped
+                        print("late rodata to text ratio is too high: {} / {} must be <= 1/3"
+                                .format(size, available), file=sys.stderr)
+                        exit(1)
+                    output_line = '}'
                 rodata_name = None
                 if fn_section_sizes['.rodata'] > 0:
                     rodata_name = make_name('rodata')
@@ -413,10 +456,15 @@ def parse_source(f, print_source, optimized):
                 if fn_section_sizes['.data'] > 0:
                     data_name = make_name('data')
                     output_line += ' char {}[{}] = {{1}};'.format(data_name, fn_section_sizes['.data'])
+                bss_name = None
+                if fn_section_sizes['.bss'] > 0:
+                    bss_name = make_name('bss')
+                    output_line += ' char {}[{}];'.format(bss_name, fn_section_sizes['.bss'])
                 asm_functions.append((first_fn_name, asm_conts, late_rodata, late_rodata_asm_conts, {
                     '.text': (temp_fn_name, fn_section_sizes['.text']),
                     '.data': (data_name, fn_section_sizes['.data']),
                     '.rodata': (rodata_name, fn_section_sizes['.rodata']),
+                    '.bss': (bss_name, fn_section_sizes['.bss']),
                 }))
             else:
                 line = re.sub(r'/\*.*?\*/', '', line)
@@ -427,20 +475,23 @@ def parse_source(f, print_source, optimized):
                     first_fn_name = line.split()[1]
                 if not line:
                     pass # empty line
-                elif line.startswith('glabel ') or (line.startswith('.') and line.endswith(':')):
+                elif line.startswith('glabel ') or (' ' not in line and line.endswith(':')):
                     pass # label
-                elif line.startswith('.section') or line in ['.text', '.data', '.rdata', '.rodata', '.late_rodata']:
+                elif line.startswith('.section') or line in ['.text', '.data', '.rdata', '.rodata', '.bss', '.late_rodata']:
                     # section change
                     cur_section = '.rodata' if line == '.rdata' else line.split(',')[0].split()[-1]
                     changed_section = True
                     assert cur_section in SECTIONS, "unrecognized .section directive"
-                    assert cur_section != '.bss' "bss sections not supported yet"
                 elif line.startswith('.incbin'):
                     add_sized(int(line.split(',')[-1].strip(), 0))
                 elif line.startswith('.word') or line.startswith('.float'):
                     add_sized(4 * len(line.split(',')))
+                elif line.startswith('.double'):
+                    add_sized(8 * len(line.split(',')))
+                elif line.startswith('.space'):
+                    add_sized(int(line.split()[1], 0))
                 elif line.startswith('.'):
-                    # .macro, .ascii, .balign, ...
+                    # .macro, .ascii, .asciiz, .balign, .align, ...
                     assert False, 'not supported yet: ' + line
                 else:
                     # Unfortunately, macros are hard to support for .rodata --
@@ -452,9 +503,7 @@ def parse_source(f, print_source, optimized):
                     # Similarly, we can't currently deal with pseudo-instructions
                     # that expand to several real instructions.
                     assert cur_section == '.text', "instruction or macro call in non-.text section? not supported: " + line
-                    fn_section_sizes['.text'] += 4
-                    if instruction():
-                        fn_ins_inds.append(len(output_lines))
+                    add_sized(4)
                 if cur_section == '.late_rodata':
                     if not changed_section:
                         late_rodata_asm_conts.append(line)
@@ -464,7 +513,6 @@ def parse_source(f, print_source, optimized):
             if line.startswith('GLOBAL_ASM('):
                 in_asm = True
                 cur_section = '.text'
-                instr_count = 0
                 asm_conts = []
                 late_rodata_asm_conts = []
                 start_index = len(output_lines)
@@ -472,6 +520,7 @@ def parse_source(f, print_source, optimized):
                 fn_section_sizes = {
                     '.text': 0,
                     '.data': 0,
+                    '.bss': 0,
                     '.rodata': 0,
                     '.late_rodata': 0,
                 }
@@ -490,7 +539,7 @@ def parse_source(f, print_source, optimized):
     return asm_functions
 
 def fixup_objfile(objfile_name, functions, asm_prelude, assembler):
-    SECTIONS = ['.data', '.text', '.rodata']
+    SECTIONS = ['.data', '.text', '.rodata', '.bss']
 
     with open(objfile_name, 'rb') as f:
         objfile = ElfFile(f.read())
@@ -499,6 +548,7 @@ def fixup_objfile(objfile_name, functions, asm_prelude, assembler):
         '.text': 0,
         '.data': 0,
         '.rodata': 0,
+        '.bss': 0,
     }
     to_copy = {
         '.text': [],
@@ -536,7 +586,8 @@ def fixup_objfile(objfile_name, functions, asm_prelude, assembler):
                         asm.append('nop')
                 else:
                     asm.append('.space {}'.format(loc - prev_loc))
-            to_copy[sectype].append((loc, size))
+            if sectype != '.bss':
+                to_copy[sectype].append((loc, size))
             prev_locs[sectype] = loc + size
         if not ifdefed:
             if first_fn_name:
@@ -584,6 +635,8 @@ def fixup_objfile(objfile_name, functions, asm_prelude, assembler):
         modified_text_positions = set()
         last_rodata_pos = 0
         for sectype in SECTIONS:
+            if sectype == '.bss':
+                continue
             source = asm_objfile.find_section(sectype)
             target = objfile.find_section(sectype)
             if source is None or not to_copy[sectype]:
@@ -623,20 +676,30 @@ def fixup_objfile(objfile_name, functions, asm_prelude, assembler):
         strtab_adj = len(objfile.symtab.strtab.data)
         objfile.symtab.strtab.data += asm_objfile.symtab.strtab.data
 
+        # Find relocated symbols
+        relocated_symbols = set()
+        for sectype in SECTIONS:
+            for obj in [asm_objfile, objfile]:
+                sec = obj.find_section(sectype)
+                if sec is None:
+                    continue
+                for reltab in sec.relocated_by:
+                    for rel in reltab.relocations:
+                        relocated_symbols.add(obj.symtab.symbol_entries[rel.sym_index])
+
         # Move over symbols, deleting the temporary function labels.
         # Sometimes this naive procedure results in duplicate symbols, or UNDEF
         # symbols that are also defined the same .o file. Hopefully that's fine.
-        # Skip over local symbols -- we don't need them, and they would need to
-        # be reordered before all the existing global ones.
-        new_entries = []
-        index = 0
-        for s in objfile.symtab.symbol_entries:
-            if s.name not in temp_names:
-                s.new_index = index
-                index += 1
-                new_entries.append(s)
-        num_local_syms = asm_objfile.symtab.sh_info
-        for s in asm_objfile.symtab.symbol_entries[num_local_syms:]:
+        # Skip over local symbols that aren't used relocated against, to avoid
+        # conflicts.
+        new_local_syms = [s for s in objfile.symtab.local_symbols() if s.name not in temp_names]
+        new_global_syms = [s for s in objfile.symtab.global_symbols() if s.name not in temp_names]
+        for i, s in enumerate(asm_objfile.symtab.symbol_entries):
+            is_local = (i < asm_objfile.symtab.sh_info)
+            if is_local and s not in relocated_symbols:
+                continue
+            if s.name in temp_names:
+                continue
             if s.st_shndx != SHN_UNDEF:
                 section_name = asm_objfile.sections[s.st_shndx].name
                 assert section_name in SECTIONS, "Generated assembly .o must only have symbols for .text, .data, .rodata and UNDEF, but found {}".format(section_name)
@@ -644,15 +707,18 @@ def fixup_objfile(objfile_name, functions, asm_prelude, assembler):
                 # glabel's aren't marked as functions, making objdump output confusing. Fix that.
                 if s.name in first_fn_names:
                     s.type = STT_FUNC
-            if s.name in temp_names:
-                continue
             if objfile.sections[s.st_shndx].name == '.rodata' and s.st_value in moved_late_rodata:
                 s.st_value = moved_late_rodata[s.st_value]
             s.st_name += strtab_adj
-            s.new_index = index
-            index += 1
-            new_entries.append(s)
-        objfile.symtab.data = b''.join(s.to_bin() for s in new_entries)
+            if is_local:
+                new_local_syms.append(s)
+            else:
+                new_global_syms.append(s)
+        new_syms = new_local_syms + new_global_syms
+        for i, s in enumerate(new_syms):
+            s.new_index = i
+        objfile.symtab.data = b''.join(s.to_bin() for s in new_syms)
+        objfile.symtab.sh_info = len(new_local_syms)
 
         # Move over relocations
         for sectype in SECTIONS:
@@ -681,7 +747,6 @@ def fixup_objfile(objfile_name, functions, asm_prelude, assembler):
             target_reltaba = objfile.find_section('.rela' + sectype)
             for reltab in source.relocated_by:
                 for rel in reltab.relocations:
-                    assert rel.sym_index >= num_local_syms, "Must only have relocations pointing to global symbols"
                     rel.sym_index = asm_objfile.symtab.symbol_entries[rel.sym_index].new_index
                     if sectype == '.rodata' and rel.r_offset in moved_late_rodata:
                         rel.r_offset = moved_late_rodata[rel.r_offset]
@@ -716,6 +781,7 @@ def main():
     parser.add_argument('--post-process', dest='objfile', help="path to .o file to post-process")
     parser.add_argument('--assembler', dest='assembler', help="assembler command (e.g. \"mips-linux-gnu-as -march=vr4300 -mabi=32\")")
     parser.add_argument('--asm-prelude', dest='asm_prelude', help="path to a file containing a prelude to the assembly file (with .set and .macro directives, e.g.)")
+    parser.add_argument('-framepointer', dest='framepointer', action='store_true')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-O2', dest='optimized', action='store_true')
     group.add_argument('-g', dest='optimized', action='store_false')
@@ -723,11 +789,13 @@ def main():
 
     if args.objfile is None:
         with open(args.filename) as f:
-            parse_source(f, print_source=True, optimized=args.optimized)
+            parse_source(f, print_source=True, optimized=args.optimized, framepointer=args.framepointer)
     else:
         assert args.assembler is not None, "must pass assembler command"
         with open(args.filename) as f:
-            functions = parse_source(f, print_source=False, optimized=args.optimized)
+            functions = parse_source(f, print_source=False, optimized=args.optimized, framepointer=args.framepointer)
+        if not functions:
+            return
         asm_prelude = b''
         if args.asm_prelude:
             with open(args.asm_prelude, 'rb') as f:

@@ -147,7 +147,7 @@ RZ_COMP := $(TOOLS_DIR)/1172compress.sh
 N64CKSUM := $(TOOLS_DIR)/n64cksum
 MAKEBG := $(TOOLS_DIR)/makebg.sh
 
-INCLUDE := -I include -I include/code -I include/game -I include/rarezip -I include/libultra -I src -I src/game -I src/rarezip
+INCLUDE := -I include -I include/libultra -I src -I src/game -I src/rarezip
 
 CC := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
 CFLAGS := -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm -fullwarn -wlint -woff 819,820,852,821 -signed $(INCLUDE) -mips2
@@ -184,16 +184,16 @@ build/%.o: src/%.c
 
 build/$(OBSEGMENT): $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES)
 	
-build/$(BOOTSEGMENT): $(BOOTOBJECTS)
-	$(LD) -o build/$(BOOTSEGMENT) -r $(BOOTOBJECTS)
-build/$(CODESEGMENT): $(CODEOBJECTS)
-	$(LD) -o build/$(CODESEGMENT) -r $(CODEOBJECTS)
-build/$(GAMESEGMENT): $(GAMEOBJECTS)
-	$(LD) -o build/$(GAMESEGMENT) -r $(GAMEOBJECTS)
-build/$(RZSEGMENT): $(RZOBJECTS)
-	$(LD) -o build/$(RZSEGMENT) -r $(RZOBJECTS)
+#build/$(BOOTSEGMENT): $(BOOTOBJECTS)
+#	$(LD) -o build/$(BOOTSEGMENT) -r $(BOOTOBJECTS)
+#build/$(CODESEGMENT): $(CODEOBJECTS)
+#	$(LD) -o build/$(CODESEGMENT) -r $(CODEOBJECTS)
+#build/$(GAMESEGMENT): $(GAMEOBJECTS)
+#	$(LD) -o build/$(GAMESEGMENT) -r $(GAMEOBJECTS)
+#build/$(RZSEGMENT): $(RZOBJECTS)
+#	$(LD) -o build/$(RZSEGMENT) -r $(RZOBJECTS)
 
-$(APP): $(ULTRAOBJECTS) $(HEADEROBJECTS) build/$(OBSEGMENT) $(MUSIC_RZ_FILES) build/$(BOOTSEGMENT) build/$(CODESEGMENT) build/$(GAMESEGMENT) build/$(RZSEGMENT)
+$(APP): $(ULTRAOBJECTS) $(HEADEROBJECTS) build/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS)
 	$(LD) $(LDFLAGS) -o $@ 
 
 $(TARGETBIN): $(APP)
