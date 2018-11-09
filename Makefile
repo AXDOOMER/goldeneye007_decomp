@@ -57,7 +57,7 @@ HEADEROBJECTS := build/rom_header.o build/bootcode.o build/_start.o build/rspboo
 
 
 BOOTFILES := boot.c
-BOOTOBJECTS := build/boot.o
+BOOTOBJECTS := build/boot.o build/cfb.o
 BOOTSEGMENT := bootsegment.o
 
 CODEFILES := init.c sched.c osMapTLB.c tlb_manage.c tlb_random.c tlb_resolve.c audi.o \
