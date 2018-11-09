@@ -598,7 +598,7 @@ glabel something_with_LnameX
 /* 0F672C 7F0C1BFC 0000C012 */  mflo  $t8
 /* 0F6730 7F0C1C00 03192821 */  addu  $a1, $t8, $t9
 /* 0F6734 7F0C1C04 AFA80024 */  sw    $t0, 0x24($sp)
-/* 0F6738 7F0C1C08 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 0F6738 7F0C1C08 0C001707 */  jal   romCopy
 /* 0F673C 7F0C1C0C 010F2021 */   addu  $a0, $t0, $t7
 /* 0F6740 7F0C1C10 3C0E8009 */  lui   $t6, %hi(ptr_j_char_data_buf) # $t6, 0x8009
 /* 0F6744 7F0C1C14 8FA80024 */  lw    $t0, 0x24($sp)
@@ -650,7 +650,7 @@ glabel something_with_LnameX
 /* 0F67F8 7F0C1CC8 27183040 */  addiu $t8, %lo(_unknown123040SegmentRomStart) # addiu $t8, $t8, 0x3040
 /* 0F67FC 7F0C1CCC 000E79C0 */  sll   $t7, $t6, 7
 /* 0F6800 7F0C1CD0 01F82821 */  addu  $a1, $t7, $t8
-/* 0F6804 7F0C1CD4 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 0F6804 7F0C1CD4 0C001707 */  jal   romCopy
 /* 0F6808 7F0C1CD8 AFA80024 */   sw    $t0, 0x24($sp)
 /* 0F680C 7F0C1CDC 3C198009 */  lui   $t9, %hi(ptr_j_char_data_buf) # $t9, 0x8009
 /* 0F6810 7F0C1CE0 8FA80024 */  lw    $t0, 0x24($sp)

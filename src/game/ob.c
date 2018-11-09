@@ -2001,7 +2001,7 @@ glabel load_resource
 /* 0F15DC 7F0BCAAC 14A00006 */  bnez  $a1, .L7F0BCAC8
 /* 0F15E0 7F0BCAB0 AFA62130 */   sw    $a2, 0x2130($sp)
 /* 0F15E4 7F0BCAB4 8CC50008 */  lw    $a1, 8($a2)
-/* 0F15E8 7F0BCAB8 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 0F15E8 7F0BCAB8 0C001707 */  jal   romCopy
 /* 0F15EC 7F0BCABC 8CE60000 */   lw    $a2, ($a3)
 /* 0F15F0 7F0BCAC0 10000019 */  b     .L7F0BCB28
 /* 0F15F4 7F0BCAC4 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2022,7 +2022,7 @@ glabel load_resource
 .L7F0BCAFC:
 /* 0F162C 7F0BCAFC 8D450008 */  lw    $a1, 8($t2)
 /* 0F1630 7F0BCB00 AFA72134 */  sw    $a3, 0x2134($sp)
-/* 0F1634 7F0BCB04 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 0F1634 7F0BCB04 0C001707 */  jal   romCopy
 /* 0F1638 7F0BCB08 AFA42124 */   sw    $a0, 0x2124($sp)
 /* 0F163C 7F0BCB0C 8FA42124 */  lw    $a0, 0x2124($sp)
 /* 0F1640 7F0BCB10 8FA52128 */  lw    $a1, 0x2128($sp)
@@ -2327,7 +2327,7 @@ glabel load_bg_bytes_at_offset_to_membank
 /* 0F191C 7F0BCDEC 8CEA0008 */  lw    $t2, 8($a3)
 .L7F0BCDF0:
 /* 0F1920 7F0BCDF0 8FA4001C */  lw    $a0, 0x1c($sp)
-/* 0F1924 7F0BCDF4 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 0F1924 7F0BCDF4 0C001707 */  jal   romCopy
 /* 0F1928 7F0BCDF8 01482821 */   addu  $a1, $t2, $t0
 .L7F0BCDFC:
 /* 0F192C 7F0BCDFC 8FBF0014 */  lw    $ra, 0x14($sp)

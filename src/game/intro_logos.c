@@ -1418,7 +1418,7 @@ glabel sub_GAME_7F008B58
 /* 03D6E8 7F008BB8 3C05002A */  lui   $a1, %hi(_GlobalimagetablecmdblkSegmentRomStart) # $a1, 0x2a
 /* 03D6EC 7F008BBC AC440000 */  sw    $a0, ($v0)
 /* 03D6F0 7F008BC0 24A5E560 */  addiu $a1, %lo(_GlobalimagetablecmdblkSegmentRomStart) # addiu $a1, $a1, -0x1aa0
-/* 03D6F4 7F008BC4 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 03D6F4 7F008BC4 0C001707 */  jal   romCopy
 /* 03D6F8 7F008BC8 3B06003F */   xori  $a2, $t8, 0x3f
 /* 03D6FC 7F008BCC 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 03D700 7F008BD0 27BD0018 */  addiu $sp, $sp, 0x18
@@ -1634,7 +1634,7 @@ glabel sub_GAME_7F008DE4
 /* 03D978 7F008E48 AC490000 */  sw    $t1, ($v0)
 /* 03D97C 7F008E4C 3986003F */  xori  $a2, $t4, 0x3f
 /* 03D980 7F008E50 01202025 */  move  $a0, $t1
-/* 03D984 7F008E54 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 03D984 7F008E54 0C001707 */  jal   romCopy
 /* 03D988 7F008E58 00602825 */   move  $a1, $v1
 /* 03D98C 7F008E5C 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80069588) # $a0, 0x8007
 /* 03D990 7F008E60 3C058007 */  lui   $a1, %hi(dword_CODE_bss_8006958C) # $a1, 0x8007

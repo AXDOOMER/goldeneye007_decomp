@@ -13713,7 +13713,7 @@ glabel sub_GAME_7F0754BC
 /* 0AA088 7F075558 000E3100 */  sll   $a2, $t6, 4
 /* 0AA08C 7F07555C AFA60018 */  sw    $a2, 0x18($sp)
 /* 0AA090 7F075560 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0AA094 7F075564 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 0AA094 7F075564 0C001707 */  jal   romCopy
 /* 0AA098 7F075568 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 0AA09C 7F07556C 3C088003 */  lui   $t0, %hi(D_80036414) # $t0, 0x8003
 /* 0AA0A0 7F075570 25086414 */  addiu $t0, %lo(D_80036414) # addiu $t0, $t0, 0x6414

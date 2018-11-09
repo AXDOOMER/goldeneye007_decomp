@@ -109,7 +109,7 @@ void alloc_load_expand_ani_table(void) {
     temp_a2 = (&D_0000E7E0 - 0);
     temp_ret = allocate_bytes_in_bank(temp_a2, 6, temp_a2);
     ptr_animation_table = temp_ret;
-    load_bytes_from_hw_to_rdram(temp_ret, &_animation_dataSegmentRomStart, sp18);
+    romCopy(temp_ret, &_animation_dataSegmentRomStart, sp18);
     expand_ani_table_entries(&animation_table_ptrs1);
     expand_ani_table_entries(&animation_table_ptrs2);
     return;
@@ -149,7 +149,7 @@ glabel alloc_load_expand_ani_table
 /* 035648 7F000B18 AC620000 */  sw    $v0, ($v1)
 /* 03564C 7F000B1C 8FA60018 */  lw    $a2, 0x18($sp)
 /* 035650 7F000B20 24A5E980 */  addiu $a1, %lo(_animation_dataSegmentRomStart) # addiu $a1, $a1, -0x1680
-/* 035654 7F000B24 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 035654 7F000B24 0C001707 */  jal   romCopy
 /* 035658 7F000B28 00402025 */   move  $a0, $v0
 /* 03565C 7F000B2C 3C048003 */  lui   $a0, %hi(animation_table_ptrs1) # $a0, 0x8003
 /* 035660 7F000B30 0FC00280 */  jal   expand_ani_table_entries

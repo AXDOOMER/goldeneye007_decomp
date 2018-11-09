@@ -175,7 +175,7 @@ glabel load_font_tables
 /* 0E1770 7F0ACC40 8FA6001C */  lw    $a2, 0x1c($sp)
 /* 0E1774 7F0ACC44 AD190000 */  sw    $t9, ($t0)
 /* 0E1778 7F0ACC48 00402025 */  move  $a0, $v0
-/* 0E177C 7F0ACC4C 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 0E177C 7F0ACC4C 0C001707 */  jal   romCopy
 /* 0E1780 7F0ACC50 24A563F0 */   addiu $a1, %lo(_fonttablectlsmall1SegmentRomStart) # addiu $a1, $a1, 0x63f0
 /* 0E1784 7F0ACC54 3C078004 */  lui   $a3, %hi(D_80040EAC) # $a3, 0x8004
 /* 0E1788 7F0ACC58 3C088004 */  lui   $t0, %hi(D_80040EB0) # $t0, 0x8004
@@ -211,7 +211,7 @@ glabel load_font_tables
 /* 0E17FC 7F0ACCCC 8FA6001C */  lw    $a2, 0x1c($sp)
 /* 0E1800 7F0ACCD0 AD0F0000 */  sw    $t7, ($t0)
 /* 0E1804 7F0ACCD4 00402025 */  move  $a0, $v0
-/* 0E1808 7F0ACCD8 0C001707 */  jal   load_bytes_from_hw_to_rdram
+/* 0E1808 7F0ACCD8 0C001707 */  jal   romCopy
 /* 0E180C 7F0ACCDC 24A588A0 */   addiu $a1, %lo(_fonttablectllarge1SegmentRomStart) # addiu $a1, $a1, -0x7760
 /* 0E1810 7F0ACCE0 3C088004 */  lui   $t0, %hi(D_80040EB8) # $t0, 0x8004
 /* 0E1814 7F0ACCE4 25080EB8 */  addiu $t0, %lo(D_80040EB8) # addiu $t0, $t0, 0xeb8
