@@ -1,26 +1,19 @@
 #include "ultra64.h"
+#include "zlib.h"
 
+//this definately isn't proper way this data was represented, but works for now
+// rodata
+//D:8005BF80
+u32 rz_header_bytes[] = {
+    0x11720000, 0x11720000, 0x11720000, 0x11720000, 0x11720000,
+    0x11720000, 0x11720000, 0x11720000, 0x11720000, 0x11720000
+};
 
-
-/* rodata
-D:8005BF80     dword_D_8005BF80:.word 0x11720000        # DATA XREF: decompressdata+24r
-D:8005BF84     dword_D_8005BF84:.word 0x11720000        # DATA XREF: decompressdata+44r
-D:8005BF88     dword_D_8005BF88:.word 0x11720000        # DATA XREF: decompressdata+54r
-D:8005BF8C                     .word 0x11720000
-D:8005BF90                     .word 0x11720000
-D:8005BF94                     .word 0x11720000
-D:8005BF98     dword_D_8005BF98:.word 0x11720000        # DATA XREF: decompressdata:loc_CODE_7F0CE854r
-D:8005BF9C                     .word 0x11720000
-D:8005BFA0                     .word 0x11720000
-D:8005BFA4                     .word 0x11720000
-D:8005BFA8                     .word 0
-D:8005BFAC                     .word 0
-*/
 
 
 
 #ifdef NONMATCHING
-void decompressdata(void) {
+u32 *decompressdata(u32 arg0, u32 arg1, u32 arg2) {
 
 }
 #else
@@ -36,25 +29,25 @@ glabel decompressdata
 /* 103338 7F0CE808 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008D360) # $at, 0x8009
 /* 10333C 7F0CE80C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 103340 7F0CE810 AC26D360 */  sw    $a2, %lo(dword_CODE_bss_8008D360)($at)
-/* 103344 7F0CE814 3C0E8006 */  lui   $t6, %hi(D_8005BF80) # $t6, 0x8006
-/* 103348 7F0CE818 91CEBF80 */  lbu   $t6, %lo(D_8005BF80)($t6)
+/* 103344 7F0CE814 3C0E8006 */  lui   $t6, %hi(rz_header_bytes) # $t6, 0x8006
+/* 103348 7F0CE818 91CEBF80 */  lbu   $t6, %lo(rz_header_bytes)($t6)
 /* 10334C 7F0CE81C 90820000 */  lbu   $v0, ($a0)
-/* 103350 7F0CE820 3C188006 */  lui   $t8, %hi(D_8005BF85) # $t8, 0x8006
-/* 103354 7F0CE824 3C198006 */  lui   $t9, %hi(D_8005BF88) # $t9, 0x8006
+/* 103350 7F0CE820 3C188006 */  lui   $t8, %hi(rz_header_bytes+0x5) # $t8, 0x8006
+/* 103354 7F0CE824 3C198006 */  lui   $t9, %hi(rz_header_bytes+0x8) # $t9, 0x8006
 /* 103358 7F0CE828 144E0005 */  bne   $v0, $t6, .L7F0CE840
-/* 10335C 7F0CE82C 3C0A8006 */   lui   $t2, %hi(D_8005BF98) # $t2, 0x8006
+/* 10335C 7F0CE82C 3C0A8006 */   lui   $t2, %hi(rz_header_bytes+0x18) # $t2, 0x8006
 /* 103360 7F0CE830 908F0001 */  lbu   $t7, 1($a0)
-/* 103364 7F0CE834 9318BF85 */  lbu   $t8, %lo(D_8005BF85)($t8)
+/* 103364 7F0CE834 9318BF85 */  lbu   $t8, %lo(rz_header_bytes+0x5)($t8)
 /* 103368 7F0CE838 51F8000A */  beql  $t7, $t8, .L7F0CE864
 /* 10336C 7F0CE83C 8CEC0000 */   lw    $t4, ($a3)
 .L7F0CE840:
 /* 103370 7F0CE840 9083FFFF */  lbu   $v1, -1($a0)
-/* 103374 7F0CE844 9339BF88 */  lbu   $t9, %lo(D_8005BF88)($t9)
+/* 103374 7F0CE844 9339BF88 */  lbu   $t9, %lo(rz_header_bytes+0x8)($t9)
 /* 103378 7F0CE848 54790002 */  bnel  $v1, $t9, .L7F0CE854
 /* 10337C 7F0CE84C 9089FFFE */   lbu   $t1, -2($a0)
 /* 103380 7F0CE850 9089FFFE */  lbu   $t1, -2($a0)
 .L7F0CE854:
-/* 103384 7F0CE854 914ABF98 */  lbu   $t2, %lo(D_8005BF98)($t2)
+/* 103384 7F0CE854 914ABF98 */  lbu   $t2, %lo(rz_header_bytes+0x18)($t2)
 /* 103388 7F0CE858 552A0002 */  bnel  $t1, $t2, .L7F0CE864
 /* 10338C 7F0CE85C 8CEC0000 */   lw    $t4, ($a3)
 /* 103390 7F0CE860 8CEC0000 */  lw    $t4, ($a3)
