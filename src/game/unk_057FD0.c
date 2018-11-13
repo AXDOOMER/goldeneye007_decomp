@@ -148,9 +148,51 @@ glabel sub_GAME_7F058098
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0580C8(void) {
+s32 sub_GAME_7F0580C8(void *arg0, void *arg1, s32 arg2) {
+    s32 temp_v0;
+    void *temp_a0;
+    void *temp_a3;
+    s32 temp_v1;
+    void *phi_a3;
+    void *phi_t0;
+    void *phi_a0;
+    s32 phi_v0;
+    s32 phi_v1;
 
+    // Node 0
+    phi_t0 = arg0;
+    phi_v1 = 0;
+loop_1:
+    // Node 1
+    phi_a3 = arg1;
+    phi_a0 = (arg2 + phi_v1);
+    phi_v0 = 0;
+loop_2:
+    // Node 2
+    temp_v0 = (phi_v0 + 2);
+    temp_a0 = (phi_a0 + 0x20);
+    temp_a3 = (phi_a3 + 0x20);
+    temp_a0->unk-20 = (f32) ((phi_a3->unkC * phi_t0->unk30) + (((*phi_t0 * *phi_a3) + (phi_t0->unk10 * phi_a3->unk4)) + (phi_t0->unk20 * phi_a3->unk8)));
+    temp_a0->unk-10 = (f32) ((temp_a3->unk-4 * phi_t0->unk30) + (((*phi_t0 * temp_a3->unk-10) + (phi_t0->unk10 * temp_a3->unk-C)) + (phi_t0->unk20 * temp_a3->unk-8)));
+    phi_a3 = temp_a3;
+    phi_a0 = temp_a0;
+    phi_v0 = temp_v0;
+    if (temp_v0 != 4)
+    {
+        goto loop_2;
+    }
+    // Node 3
+    temp_v1 = (phi_v1 + 4);
+    phi_t0 = (phi_t0 + 4);
+    phi_v1 = temp_v1;
+    if (temp_v1 != 0x10)
+    {
+        goto loop_1;
+    }
+    // Node 4
+    return temp_v0;
 }
+
 #else
 GLOBAL_ASM(
 .text

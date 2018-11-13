@@ -1,10 +1,10 @@
 #include "ultra64.h"
 
 
-/* rodata
-D:8005BD20     flt_D_8005BD20: .float 3.1415927         # DATA XREF: display_red_blue_on_radar+360r
-D:8005BD24     flt_D_8005BD24: .float 0.017453292       # DATA XREF: display_red_blue_on_radar:loc_CODE_7F0C64E0r
-*/
+// rodata
+const f32 D_8005BD20 = 3.1415927;
+const f32 D_8005BD24 = 0.017453292;
+
 
 
 
@@ -272,8 +272,8 @@ glabel display_red_blue_on_radar
 /* 0FAF84 7F0C6454 4618103C */   c.lt.s $f2, $f24
 .L7F0C6458:
 /* 0FAF88 7F0C6458 4618103C */  c.lt.s $f2, $f24
-/* 0FAF8C 7F0C645C 3C0F8008 */  lui   $t7, %hi(player1_playerdata) # $t7, 0x8008
-/* 0FAF90 7F0C6460 25EF9EF0 */  addiu $t7, %lo(player1_playerdata) # addiu $t7, $t7, -0x6110
+/* 0FAF8C 7F0C645C 3C0F8008 */  lui   $t7, %hi(player1_player_data) # $t7, 0x8008
+/* 0FAF90 7F0C6460 25EF9EF0 */  addiu $t7, %lo(player1_player_data) # addiu $t7, $t7, -0x6110
 /* 0FAF94 7F0C6464 00094900 */  sll   $t1, $t1, 4
 /* 0FAF98 7F0C6468 4500000A */  bc1f  .L7F0C6494
 /* 0FAF9C 7F0C646C 012F1021 */   addu  $v0, $t1, $t7

@@ -1,102 +1,123 @@
 #include "ultra64.h"
 
+/*
+struct save_data
+{
+  int chksum1;
+  int chksum2;
+  char completion_bitflags;
+  char flag_007;
+  char music_vol;
+  char sfx_vol;
+  char controller_config;
+  char options;
+  char unlocked_cheats_1;
+  char unlocked_cheats_2;
+  char unlocked_cheats_3;
+  char field_11;
+  unsigned agent_dam_time :10;
+  unsigned agent_facility_time :10;
+  unsigned agent_runway_time :10;
+  unsigned agent_surface1_time :10;
+  unsigned agent_bunker1_time :10;
+  unsigned agent_silo_time :10;
+  unsigned agent_frigate_time :10;
+  unsigned agent_surface2_time :10;
+  unsigned agent_bunker2_time :10;
+  unsigned agent_statue_time :10;
+  unsigned agent_archives_time :10;
+  unsigned agent_streets_time :10;
+  unsigned agent_depot_time :10;
+  unsigned agent_train_time :10;
+  unsigned agent_jungle_time :10;
+  unsigned agent_control_time :10;
+  unsigned agent_caverns_time :10;
+  unsigned agent_cradle_time :10;
+  unsigned agent_aztec_time :10;
+  unsigned agent_egyptian_time :10;
+
+  unsigned secretagent_dam_time :10;
+  unsigned secretagent_facility_time :10;
+  unsigned secretagent_runway_time :10;
+  unsigned secretagent_surface1_time :10;
+  unsigned secretagent_bunker1_time :10;
+  unsigned secretagent_silo_time :10;
+  unsigned secretagent_frigate_time :10;
+  unsigned secretagent_surface2_time :10;
+  unsigned secretagent_bunker2_time :10;
+  unsigned secretagent_statue_time :10;
+  unsigned secretagent_archives_time :10;
+  unsigned secretagent_streets_time :10;
+  unsigned secretagent_depot_time :10;
+  unsigned secretagent_train_time :10;
+  unsigned secretagent_jungle_time :10;
+  unsigned secretagent_control_time :10;
+  unsigned secretagent_caverns_time :10;
+  unsigned secretagent_cradle_time :10;
+  unsigned secretagent_aztec_time :10;
+  unsigned secretagent_egyptian_time :10;
+
+  unsigned agent00_dam_time :10;
+  unsigned agent00_facility_time :10;
+  unsigned agent00_runway_time :10;
+  unsigned agent00_surface1_time :10;
+  unsigned agent00_bunker1_time :10;
+  unsigned agent00_silo_time :10;
+  unsigned agent00_frigate_time :10;
+  unsigned agent00_surface2_time :10;
+  unsigned agent00_bunker2_time :10;
+  unsigned agent00_statue_time :10;
+  unsigned agent00_archives_time :10;
+  unsigned agent00_streets_time :10;
+  unsigned agent00_depot_time :10;
+  unsigned agent00_train_time :10;
+  unsigned agent00_jungle_time :10;
+  unsigned agent00_control_time :10;
+  unsigned agent00_caverns_time :10;
+  unsigned agent00_cradle_time :10;
+  unsigned agent00_aztec_time :10;
+  unsigned agent00_egyptian_time :10;
+
+  char unused1;
+  char unused2;
+  char unused3;
+};
+
+*/
+
 /* bss
-CODE.bss:80069920     save1:          save_data <?>            # DATA XREF: sub_CODE_7F01D7A0o
-CODE.bss:80069920                                              # sub_CODE_7F01D7A0+54o
-CODE.bss:80069920                                              # get_save_folder_ptr+24o
-CODE.bss:80069920                                              # sub_CODE_7F01DE50+18o
-CODE.bss:80069920                                              # sub_CODE_7F01DEB4+5Co
-CODE.bss:80069920                                              # sub_CODE_7F01DF90:loc_CODE_7F01E0B4o
-CODE.bss:80069920                                              # sub_CODE_7F01DF90+154o
-CODE.bss:80069920                                              # sub_CODE_7F01DF90+1C8o
-CODE.bss:80069920                                              # sub_CODE_7F01DF90+238o
-CODE.bss:80069920                                              # sub_CODE_7F01E504+2Co
-CODE.bss:80069920                                              # sub_CODE_7F01E504+A0o
-CODE.bss:80069920                                              # sub_CODE_7F01DF90+150o
-CODE.bss:80069980     save2:          save_data <?>            # DATA XREF: sub_CODE_7F01DF90+14Co
+CODE.bss:80069920     save1:          save_data <?>
+CODE.bss:80069980     save2:          save_data <?>
 CODE.bss:800699E0     save3:          save_data <?>
 CODE.bss:80069A40     save4:          save_data <?>
 CODE.bss:80069AA0     save5:          save_data <?>
-CODE.bss:80069B00     save6:          save_data <?>            # DATA XREF: sub_CODE_7F01D6E0+3Co
-CODE.bss:80069B00                                              # sub_CODE_7F01D7A0+18o
-CODE.bss:80069B00                                              # get_save_folder_ptr+20o
-CODE.bss:80069B00                                              # get_save_folder_ptr+70o
-CODE.bss:80069B00                                              # copy_eepromfile_a0_from_a1_to_buffer+Co
-CODE.bss:80069B60     dword_CODE_bss_80069B60:.space 4         # DATA XREF: sub_CODE_7F01DF90+144o
-CODE.bss:80069B60                                              # sub_CODE_7F02083C+A4r
-CODE.bss:80069B60                                              # sub_CODE_7F02083C+B8r
-CODE.bss:80069B60                                              # sub_CODE_7F02083C+CCr
-CODE.bss:80069B60                                              # sub_CODE_7F02083C+140r
-CODE.bss:80069B60                                              # sub_CODE_7F02083C:loc_CODE_7F0209F4r
-CODE.bss:80069B60                                              # sub_CODE_7F02083C+204r
-CODE.bss:80069B60                                              # sub_CODE_7F02083C+27Cr
-CODE.bss:80069B60                                              # sub_CODE_7F020EF0+598w
-CODE.bss:80069B60                                              # sub_CODE_7F020EF0+5B8o
-CODE.bss:80069B60                                              # sub_CODE_7F020EF0+5C0r
-CODE.bss:80069B60                                              # sub_CODE_7F020EF0+5E4r
+CODE.bss:80069B00     save6:          save_data <?>
+CODE.bss:80069B60     dword_CODE_bss_80069B60:.space 4
 */
 
 /*
-D:8002C510     save1_selected_bond:.word 0              # DATA XREF: sub_CODE_7F01DF90+2A8o
-D:8002C510                                              # set_selected_bond_to_folder+14w
-D:8002C510                                              # copy_eeprom_to_stack_set_folder_num+BCr
+D:8002C510     save1_selected_bond:.word 0
 D:8002C514     save2_selected_bond:.word 0
 D:8002C518     save3_selected_bond:.word 0
 D:8002C51C     save4_selected_bond:.word 0
-D:8002C520     dword_D_8002C520:.word 0                 # DATA XREF: sub_CODE_7F01D6E0+Co
-D:8002C524                     .word 0
-D:8002C528     dword_D_8002C528:.word 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8002C528                     .word 0, 0, 0, 0, 0, 0
-D:8002C588     dword_D_8002C588:.word 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8002C588                     .word 0, 0, 0, 0, 0, 0
-D:8002C5E8     dword_D_8002C5E8:.word 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8002C5E8                     .word 0, 0, 0, 0, 0, 0
-D:8002C648     flt_D_8002C648: .float 32.0              # DATA XREF: sub_CODE_7F01DF90+B4r
-D:8002C64C     dword_D_8002C64C:.word 0                 # DATA XREF: sub_CODE_7F01DF90+C0r
-D:8002C650     dword_D_8002C650:.word 0                 # DATA XREF: sub_CODE_7F01DF90+C8r
-D:8002C654     dword_D_8002C654:.word 0                 # DATA XREF: sub_CODE_7F01DF90+D0r
-D:8002C658     dword_D_8002C658:.word 0                 # DATA XREF: sub_CODE_7F01DF90+D8r
-D:8002C65C     dword_D_8002C65C:.word 0                 # DATA XREF: sub_CODE_7F01DF90+E4r
-D:8002C660     dword_D_8002C660:.word 0, 0              # DATA XREF: unlock_stage_in_folder_on_difficulty+60o
-D:8002C668                     .word 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8002C668                     .word 0, 0, 0, 0
-D:8002C6C0     dword_D_8002C6C0:.word 0, 0              # DATA XREF: unlock_stage_in_folder_on_difficulty+68o
-D:8002C6C0                                              # sub_CODE_7F01E760+6Co
-D:8002C6C8     dword_D_8002C6C8:.word 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8002C6C8                     .word 0, 0, 0, 0, 0, 0
-D:8002C728     dword_D_8002C728:.word 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8002C728                     .word 0, 0, 0, 0, 0, 0
-D:8002C788     dword_D_8002C788:.word 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8002C788                     .word 0, 0, 0, 0, 0, 0
-D:8002C7E8     dword_D_8002C7E8:.word 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8002C7E8                     .word 0, 0, 0, 0, 0, 0
-D:8002C848                     .word 0x8000FFFF
-D:8002C84C                     .word 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8002C8A0     blank_eeprom:   .word 0                  # DATA XREF: copy_eeprom_to_stack_set_folder_num+3Co
-D:8002C8A0                                              # copy_eeprom_from_to+58o
-D:8002C8A4                     .word 0
-D:8002C8A8     dword_D_8002C8A8:.word 0x8000FFFF
-D:8002C8AC                     .word 0x3A0000
-D:8002C8B0                     .word 0
-D:8002C8B4                     .word 0
-D:8002C8B8                     .word 0
-D:8002C8BC                     .word 0
-D:8002C8C0                     .word 0
-D:8002C8C4                     .word 0
-D:8002C8C8                     .word 0
-D:8002C8CC                     .word 0
-D:8002C8D0                     .word 0
-D:8002C8D4                     .word 0
-D:8002C8D8                     .word 0
-D:8002C8DC                     .word 0
-D:8002C8E0                     .word 0
-D:8002C8E4                     .word 0
-D:8002C8E8                     .word 0
-D:8002C8EC                     .word 0
-D:8002C8F0                     .word 0
-D:8002C8F4                     .word 0
-D:8002C8F8                     .word 0
-D:8002C8FC                     .word 0
+D:8002C520     stru_D_8002C520:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+D:8002C580     stru_D_8002C580:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+D:8002C5E0     stru_D_8002C5E0:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+D:8002C640     D_8002C640.word 0
+D:8002C644     D_8002C644.word 0
+D:8002C648     flt_D_8002C648: .float 32.0
+D:8002C64C     dword_D_8002C64C:.word 0
+D:8002C650     dword_D_8002C650:.word 0
+D:8002C654     dword_D_8002C654:.word 0
+D:8002C658     dword_D_8002C658:.word 0
+D:8002C65C     dword_D_8002C65C:.word 0
+D:8002C660     stru_D_8002C660:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+D:8002C6C0     stru_D_8002C6C0:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+D:8002C720     stru_D_8002C720:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+D:8002C780     stru_D_8002C780:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+D:8002C7E0     stru_D_8002C7E0:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+D:8002C840     stru_D_8002C840:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+D:8002C8A0     blank_eeprom:   save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
 */
 
 

@@ -7199,7 +7199,7 @@ glabel sub_GAME_7F0A9364
 /* 0DDEA4 7F0A9374 AFA40018 */  sw    $a0, 0x18($sp)
 /* 0DDEA8 7F0A9378 00802825 */  move  $a1, $a0
 /* 0DDEAC 7F0A937C A4450000 */  sh    $a1, ($v0)
-/* 0DDEB0 7F0A9380 0C001CF1 */  jal   music_related_2nd_block_1
+/* 0DDEB0 7F0A9380 0C001CF1 */  jal   musicTrack2Vol
 /* 0DDEB4 7F0A9384 30A4FFFF */   andi  $a0, $a1, 0xffff
 /* 0DDEB8 7F0A9388 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0DDEBC 7F0A938C 27BD0018 */  addiu $sp, $sp, 0x18

@@ -1,17 +1,17 @@
 #include "ultra64.h"
-
+#include "game/unk_0C0A70.h"
 
 // data
-s32 dword_D_80048490 = -1;
-s32 dword_D_80048494 = 0;
-s32 dword_D_80048498 = 1;
-s32 dword_D_8004849C = -1;
-s32 dword_D_800484A0 = 0;
-s32 dword_D_800484A4 = 0;
-s32 dword_D_800484A8 = 0;
+s32 D_80048490 = -1;
+s32 D_80048494 = 0;
+s32 D_80048498 = 1;
+s32 D_8004849C = -1;
+s32 D_800484A0 = 0;
+s32 D_800484A4 = 0;
+s32 D_800484A8 = 0;
 s32 copy_of_osgetcount_value_0 = 0;
 s32 copy_of_osgetcount_value_1 = 0;
-s32 dword_D_800484B4 = 1;
+s32 D_800484B4 = 1;
 
 
 
@@ -20,8 +20,8 @@ void store_osgetcount(void) {
     s32 temp_ret;
 
     temp_ret = osGetCount();
-    D_800484B0 = temp_ret;
-    D_800484AC = temp_ret;
+    copy_of_osgetcount_value_1 = temp_ret;
+    copy_of_osgetcount_value_0 = temp_ret;
 }
 
 #else
@@ -33,11 +33,11 @@ glabel store_osgetcount
 /* 0F55A8 7F0C0A78 0C003638 */  jal   osGetCount
 /* 0F55AC 7F0C0A7C 00000000 */   nop   
 /* 0F55B0 7F0C0A80 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F55B4 7F0C0A84 3C038005 */  lui   $v1, %hi(D_800484B0) # $v1, 0x8005
-/* 0F55B8 7F0C0A88 246384B0 */  addiu $v1, %lo(D_800484B0) # addiu $v1, $v1, -0x7b50
+/* 0F55B4 7F0C0A84 3C038005 */  lui   $v1, %hi(copy_of_osgetcount_value_1) # $v1, 0x8005
+/* 0F55B8 7F0C0A88 246384B0 */  addiu $v1, %lo(copy_of_osgetcount_value_1) # addiu $v1, $v1, -0x7b50
 /* 0F55BC 7F0C0A8C AC620000 */  sw    $v0, ($v1)
-/* 0F55C0 7F0C0A90 3C018005 */  lui   $at, %hi(D_800484AC) # $at, 0x8005
-/* 0F55C4 7F0C0A94 AC2284AC */  sw    $v0, %lo(D_800484AC)($at)
+/* 0F55C0 7F0C0A90 3C018005 */  lui   $at, %hi(copy_of_osgetcount_value_0) # $at, 0x8005
+/* 0F55C4 7F0C0A94 AC2284AC */  sw    $v0, %lo(copy_of_osgetcount_value_0)($at)
 /* 0F55C8 7F0C0A98 03E00008 */  jr    $ra
 /* 0F55CC 7F0C0A9C 27BD0018 */   addiu $sp, $sp, 0x18
 )
@@ -55,17 +55,17 @@ void sub_GAME_7F0C0AA0(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0C0AA0
-/* 0F55D0 7F0C0AA0 3C0E8005 */  lui   $t6, %hi(D_800484B0) # $t6, 0x8005
-/* 0F55D4 7F0C0AA4 8DCE84B0 */  lw    $t6, %lo(D_800484B0)($t6)
+/* 0F55D0 7F0C0AA0 3C0E8005 */  lui   $t6, %hi(copy_of_osgetcount_value_1) # $t6, 0x8005
+/* 0F55D4 7F0C0AA4 8DCE84B0 */  lw    $t6, %lo(copy_of_osgetcount_value_1)($t6)
 /* 0F55D8 7F0C0AA8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F55DC 7F0C0AAC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F55E0 7F0C0AB0 3C018005 */  lui   $at, %hi(D_800484AC) # $at, 0x8005
+/* 0F55E0 7F0C0AB0 3C018005 */  lui   $at, %hi(copy_of_osgetcount_value_0) # $at, 0x8005
 /* 0F55E4 7F0C0AB4 AFA40018 */  sw    $a0, 0x18($sp)
 /* 0F55E8 7F0C0AB8 0C003638 */  jal   osGetCount
-/* 0F55EC 7F0C0ABC AC2E84AC */   sw    $t6, %lo(D_800484AC)($at)
+/* 0F55EC 7F0C0ABC AC2E84AC */   sw    $t6, %lo(copy_of_osgetcount_value_0)($at)
 /* 0F55F0 7F0C0AC0 3C048005 */  lui   $a0, %hi(D_80048494) # $a0, 0x8005
-/* 0F55F4 7F0C0AC4 3C018005 */  lui   $at, %hi(D_800484B0) # $at, 0x8005
-/* 0F55F8 7F0C0AC8 AC2284B0 */  sw    $v0, %lo(D_800484B0)($at)
+/* 0F55F4 7F0C0AC4 3C018005 */  lui   $at, %hi(copy_of_osgetcount_value_1) # $at, 0x8005
+/* 0F55F8 7F0C0AC8 AC2284B0 */  sw    $v0, %lo(copy_of_osgetcount_value_1)($at)
 /* 0F55FC 7F0C0ACC 24848494 */  addiu $a0, %lo(D_80048494) # addiu $a0, $a0, -0x7b6c
 /* 0F5600 7F0C0AD0 8C830000 */  lw    $v1, ($a0)
 /* 0F5604 7F0C0AD4 8FA70018 */  lw    $a3, 0x18($sp)
@@ -120,13 +120,13 @@ glabel sub_GAME_7F0C0B4C
 /* 0F5688 7F0C0B58 AFB10018 */  sw    $s1, 0x18($sp)
 /* 0F568C 7F0C0B5C AFB00014 */  sw    $s0, 0x14($sp)
 /* 0F5690 7F0C0B60 3C108005 */  lui   $s0, %hi(D_800484B4) # $s0, 0x8005
-/* 0F5694 7F0C0B64 3C118005 */  lui   $s1, %hi(D_800484B0) # $s1, 0x8005
+/* 0F5694 7F0C0B64 3C118005 */  lui   $s1, %hi(copy_of_osgetcount_value_1) # $s1, 0x8005
 /* 0F5698 7F0C0B68 3C120005 */  lui   $s2, (0x0005EB61 >> 16) # lui $s2, 5
 /* 0F569C 7F0C0B6C 3C13000B */  lui   $s3, (0x000BD6C3 >> 16) # lui $s3, 0xb
 /* 0F56A0 7F0C0B70 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 0F56A4 7F0C0B74 3673D6C3 */  ori   $s3, (0x000BD6C3 & 0xFFFF) # ori $s3, $s3, 0xd6c3
 /* 0F56A8 7F0C0B78 3652EB61 */  ori   $s2, (0x0005EB61 & 0xFFFF) # ori $s2, $s2, 0xeb61
-/* 0F56AC 7F0C0B7C 263184B0 */  addiu $s1, %lo(D_800484B0) # addiu $s1, $s1, -0x7b50
+/* 0F56AC 7F0C0B7C 263184B0 */  addiu $s1, %lo(copy_of_osgetcount_value_1) # addiu $s1, $s1, -0x7b50
 /* 0F56B0 7F0C0B80 261084B4 */  addiu $s0, %lo(D_800484B4) # addiu $s0, $s0, -0x7b4c
 .L7F0C0B84:
 /* 0F56B4 7F0C0B84 0C003638 */  jal   osGetCount

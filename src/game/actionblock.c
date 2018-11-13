@@ -70,236 +70,61 @@ CODE.bss:80075D28     dword_CODE_bss_80075D28:.space 4
 */
 
 /*
-dword_D_80030A70:.word 0                 # DATA XREF: parse_handle_actionblocks+880o
-                                         # parse_handle_actionblocks+888r
-dword_D_80030A74:.word 0                 # DATA XREF: parse_handle_actionblocks+890r
-dword_D_80030A78:.word 0                 # DATA XREF: parse_handle_actionblocks+898r
-dword_D_80030A7C:.word 0                 # DATA XREF: parse_handle_actionblocks+928o
-                                         # parse_handle_actionblocks+930r
-dword_D_80030A80:.word 0                 # DATA XREF: parse_handle_actionblocks+938r
-dword_D_80030A84:.word 0                 # DATA XREF: parse_handle_actionblocks+940r
-dword_D_80030A88:.word 0                 # DATA XREF: parse_handle_actionblocks:actionFB_switch_to_xskyo
-                                         # parse_handle_actionblocks+4C84r
-dword_D_80030A8C:.word 0                 # DATA XREF: parse_handle_actionblocks+4C90r
-dword_D_80030A90:.word 0                 # DATA XREF: parse_handle_actionblocks+4C98r
+dword_D_80030A70:.word 0
+dword_D_80030A74:.word 0
+dword_D_80030A78:.word 0
+dword_D_80030A7C:.word 0
+dword_D_80030A80:.word 0
+dword_D_80030A84:.word 0
+dword_D_80030A88:.word 0
+dword_D_80030A8C:.word 0
+dword_D_80030A90:.word 0
                 .word 0
                 .word 0
                 .word 0
-ptr_obj_pos_list_current_entry:.word 0   # DATA XREF: init_load_objpos_table+1Cw
-                                         # get_ptr_obj_pos_list_current_entry+8r
-                                         # set_current_objposdata_plus_0x28o
-                                         # set_current_objposdata_plus_0x28+8r
-                                         # set_current_objposdata_plus_0x28+18r
-                                         # set_current_objposdata_plus_0x28+28w
-                                         # set_current_objposdata_plus_0x28+40w
-                                         # sub_CODE_7F03A4F0+3Cw
-                                         # sub_CODE_7F03A538o
-                                         # sub_CODE_7F03A538+8r
-                                         # sub_CODE_7F03A538+18w
-ptr_obj_pos_list_first_entry:.word 0     # DATA XREF: init_load_objpos_table+14o
-                                         # init_load_objpos_table+18w
-                                         # set_current_objposdata_plus_0x28+38o
-                                         # set_current_objposdata_plus_0x28+3Cw
-                                         # sub_CODE_7F03A4F0o
-                                         # sub_CODE_7F03A4F0+8r
-                                         # sub_CODE_7F03A4F0+1Cr
-                                         # sub_CODE_7F03A4F0+2Cw
-                                         # sub_CODE_7F03A4F0+38w
-                                         # sub_CODE_7F03A538:loc_CODE_7F03A554o
-                                         # sub_CODE_7F03A538+24r
-ptr_obj_pos_list_final_entry:.word 0     # DATA XREF: init_load_objpos_table+48w
-                                         # remove_last_obj_pos_data_entryo
-                                         # remove_last_obj_pos_data_entry+8r
-                                         # remove_last_obj_pos_data_entry+20w
-                                         # set_last_obj_pos_datao
-                                         # set_last_obj_pos_data+8r
-                                         # set_last_obj_pos_data+1Cw
-difficulty:     .float 1.0               # DATA XREF: init_load_objpos_table+10w
-                                         # sub_CODE_7F03D188+224r
-                                         # sub_CODE_7F0BE8D0+110w
-                                         # sub_CODE_7F0BE8D0+198w
-                                         # sub_CODE_7F0BE8D0+21Cw
-                                         # sub_CODE_7F0BE8D0+290w
-dword_D_80030AB0:.word 0                 # DATA XREF: sub_CODE_7F03D78C+30o
-                                         # sub_CODE_7F03D78C+34r
-dword_D_80030AB4:.word 0                 # DATA XREF: sub_CODE_7F03D78C+38r
+ptr_obj_pos_list_current_entry:.word 0
+ptr_obj_pos_list_first_entry:.word 0
+ptr_obj_pos_list_final_entry:.word 0
+difficulty:     .float 1.0
+dword_D_80030AB0:.word 0
+dword_D_80030AB4:.word 0
                 .word 0
                 .word 0
-alarm_timer:    .word 0                  # DATA XREF: reinit_between_menus+18w
-                                         # start_alarmo
-                                         # start_alarm+8r
-                                         # start_alarm+18w
-                                         # stop_alarm+10w
-                                         # is_alarm_onr
-                                         # sub_CODE_7F0565F0:loc_CODE_7F056638o
-                                         # sub_CODE_7F0565F0+58r
-                                         # sub_CODE_7F0565F0+68w
-ptr_alarm_sfx:  .word 0                  # DATA XREF: reinit_between_menus+24w
-                                         # deactivate_alarm_sound_effectr
-                                         # deactivate_alarm_sound_effect+2Cr
-                                         # sub_CODE_7F0565F0+18r
-                                         # sub_CODE_7F0565F0+34o
-toxic_gas_sound_timer:.float 0.0         # DATA XREF: reinit_between_menus+2Cw
-                                         # check_if_toxic_gas_activatedr
-                                         # sub_CODE_7F055F64+1Co
-                                         # sub_CODE_7F055F64+2Cr
-                                         # sub_CODE_7F055F64+38w
-                                         # sub_CODE_7F055F64+3Cr
-                                         # sub_CODE_7F055F64+54w
-                                         # sub_CODE_7F055F64:loc_CODE_7F055FC0o
-                                         # sub_CODE_7F055F64+64r
-                                         # sub_CODE_7F055F64+A0o
-                                         # sub_CODE_7F055F64+D4r
-                                         # sub_CODE_7F055F64+FCr
-activate_gas_sound_timer:.word FALSE     # DATA XREF: reinit_between_menus+3Cw
-                                         # init_trigger_toxic_gas_effect+8w
-                                         # sub_CODE_7F055F64o
-                                         # sub_CODE_7F055F64+8r
-                                         # sub_CODE_7F055F64+58w
-flt_D_80030AD0: .float 0.0               # DATA XREF: reinit_between_menus+40o
-                                         # reinit_between_menus+48w
-                                         # init_trigger_toxic_gas_effect+24o
-                                         # init_trigger_toxic_gas_effect+2Cw
-                                         # sub_CODE_7F055F64+1BCo
-flt_D_80030AD4: .float 0.0               # DATA XREF: reinit_between_menus+4Cw
-                                         # init_trigger_toxic_gas_effect+34w
-flt_D_80030AD8: .float 0.0               # DATA XREF: reinit_between_menus+50w
-                                         # init_trigger_toxic_gas_effect+40w
-dword_D_80030ADC:.word 0                 # DATA XREF: reinit_between_menus+54w
-                                         # sub_CODE_7F055F64+B8o
-                                         # sub_CODE_7F055F64+BCr
-                                         # sub_CODE_7F055F64+D8w
-dword_D_80030AE0:.word 0                 # DATA XREF: reinit_between_menus+58w
-                                         # init_trigger_toxic_gas_effect+1Cw
-                                         # sub_CODE_7F055F64:loc_CODE_7F05609Co
-                                         # sub_CODE_7F055F64+148r
-                                         # sub_CODE_7F055F64+170w
-dword_D_80030AE4:.word 0                 # DATA XREF: reinit_between_menus+60w
-                                         # sub_CODE_7F055EF8r
-                                         # sub_CODE_7F055EF8+2Cr
-                                         # sub_CODE_7F055F64+174r
-                                         # sub_CODE_7F055F64+190o
-                                         # sub_CODE_7F055F64:loc_CODE_7F056108r
-                                         # sub_CODE_7F055F64:loc_CODE_7F05612Cr
-                                         # sub_CODE_7F055F64+1E8r
-clock_drawn_flag:.word 1                 # DATA XREF: reinit_between_menus+6Cw
-                                         # set_unset_clock_lock_bits+8o
-                                         # set_unset_clock_lock_bits+10r
-                                         # set_unset_clock_lock_bits+20w
-                                         # set_unset_clock_lock_bits:loc_CODE_7F056184o
-                                         # set_unset_clock_lock_bits+28r
-                                         # set_unset_clock_lock_bits+30w
-                                         # is_clock_drawn_onscreenr
-                                         # sub_CODE_7F056210r
-clock_enable:   .word 0                  # DATA XREF: reinit_between_menus+74w
-                                         # set_clock_enable+8w
-                                         # get_clock_enable+8r
-                                         # sub_CODE_7F0561E0r
-clock_time:     .word 0                  # DATA XREF: reinit_between_menus+7Cw
-                                         # set_clock_time+8w
-                                         # get_clock_time+8r
-                                         # sub_CODE_7F0561E0+8o
-                                         # sub_CODE_7F0561E0+18r
-                                         # sub_CODE_7F0561E0+24w
-                                         # sub_CODE_7F056210+20r
-dword_D_80030AF4:.word 0                 # DATA XREF: reinit_between_menus+90w
-                                         # handle_thrown_explosive_detonation+234r
-                                         # trigger_remote_mine_detonation+10o
-                                         # trigger_remote_mine_detonation+18r
-                                         # trigger_remote_mine_detonation+28w
-                                         # sub_CODE_7F0565F0+90w
-dword_D_80030AF8:.word 0                 # DATA XREF: reinit_between_menus+B8w
-                                         # sub_CODE_7F05126C+40r
-                                         # sub_CODE_7F05126C+170r
-                                         # sub_CODE_7F05126C+1A8w
-                                         # sub_CODE_7F05126C+248w
-                                         # sub_CODE_7F05126C+2C8w
-dword_D_80030AFC:.word 0                 # DATA XREF: reinit_between_menus+E0w
-                                         # sub_CODE_7F0515B0+10o
-                                         # sub_CODE_7F0515B0+5Cr
-dword_D_80030B00:.word 0                 # DATA XREF: reinit_between_menus+158w
-                                         # sub_CODE_7F001910o
-                                         # sub_CODE_7F001910+8r
-                                         # sub_CODE_7F001910+14w
-                                         # sub_CODE_7F03E6A0+2Cr
-dword_D_80030B04:.word 0                 # DATA XREF: reinit_between_menus+160w
-                                         # sub_CODE_7F001928o
-                                         # sub_CODE_7F001928+8r
-                                         # sub_CODE_7F001928+14w
-                                         # sub_CODE_7F03E718+28r
-dword_D_80030B08:.word 0                 # DATA XREF: reinit_between_menus+168w
-                                         # sub_CODE_7F001940o
-                                         # sub_CODE_7F001940+8r
-                                         # sub_CODE_7F001940+14w
-dword_D_80030B0C:.word 0                 # DATA XREF: reinit_between_menus+170w
-                                         # sub_CODE_7F041400+384w
-                                         # sub_CODE_7F0419E4+108w
-                                         # sub_CODE_7F041BB8:loc_CODE_7F041DC0w
-                                         # handles_projectile_motion+30w
-                                         # sub_CODE_7F042A0C+40w
-                                         # object_interaction+5D4r
-                                         # object_interaction+698r
-                                         # object_interaction+6E4r
-                                         # object_interaction+74Cr
-                                         # object_interaction+85Cr
-                                         # object_interaction+868r
- # int bodypartshot
-bodypartshot:   .word 0xFFFFFFFF         # DATA XREF: reinit_between_menus+180w
-                                         # sub_CODE_7F041400+388w
-                                         # sub_CODE_7F0419E4+10Cw
-                                         # sub_CODE_7F041BB8+214w
-                                         # object_interaction+79Cr
-                                         # object_interaction+884r
-                                         # object_interaction+9FCr
-flt_D_80030B14: .float 1.0               # DATA XREF: reinit_between_menus+184w
-                                         # object_interaction+1704r
-                                         # sub_CODE_7F0BE8D0+A8w
-                                         # sub_CODE_7F0BE8D0+150w
-                                         # sub_CODE_7F0BE8D0+1CCw
-                                         # sub_CODE_7F0BE8D0+248w
-flt_D_80030B18: .float 1.0               # DATA XREF: reinit_between_menus+18Cw
-                                         # sub_CODE_7F04EA68:loc_CODE_7F04EE08r
-                                         # sub_CODE_7F0BE8D0+B4w
-                                         # sub_CODE_7F0BE8D0+158w
-                                         # sub_CODE_7F0BE8D0+1D4w
-                                         # sub_CODE_7F0BE8D0+250w
-flt_D_80030B1C: .float 1.0               # DATA XREF: reinit_between_menus+194w
-                                         # object_interaction+44DCr
-                                         # sub_CODE_7F0BE8D0+BCw
-                                         # sub_CODE_7F0BE8D0+160w
-                                         # sub_CODE_7F0BE8D0+1DCw
-                                         # sub_CODE_7F0BE8D0+258w
-flt_D_80030B20: .float 1.0               # DATA XREF: reinit_between_menus+19Cw
-                                         # object_interaction+4530r
-                                         # sub_CODE_7F0BE8D0+C4w
-                                         # sub_CODE_7F0BE8D0+168w
-                                         # sub_CODE_7F0BE8D0+1E4w
-                                         # sub_CODE_7F0BE8D0+260w
-flt_D_80030B24: .float 1.0               # DATA XREF: reinit_between_menus+1A8w
-                                         # sub_CODE_7F04EA68+338r
-                                         # sub_CODE_7F0BE8D0+CCw
-                                         # sub_CODE_7F0BE8D0+170w
-                                         # sub_CODE_7F0BE8D0+1ECw
-                                         # sub_CODE_7F0BE8D0+268w
-solo_ammo_multiplier:.float 1.0          # DATA XREF: reinit_between_menus+1BCw
-                                         # get_ammo_in_magazine+8Cr
-                                         # ammo_collected_from_weapon+B8r
-                                         # collect_or_interact_object+130r
-                                         # sub_CODE_7F0BE8D0+118w
-                                         # sub_CODE_7F0BE8D0+1A8w
-                                         # sub_CODE_7F0BE8D0+224w
-                                         # sub_CODE_7F0BE8D0+298w
-Throwing_knife_SFX_1:.half 0x5F          # DATA XREF: sub_CODE_7F043650+50o
-                                         # sub_CODE_7F043650+54r
+alarm_timer:    .word 0
+ptr_alarm_sfx:  .word 0
+toxic_gas_sound_timer:.float 0.0
+activate_gas_sound_timer:.word FALSE
+flt_D_80030AD0: .float 0.0
+flt_D_80030AD4: .float 0.0
+flt_D_80030AD8: .float 0.0
+dword_D_80030ADC:.word 0
+dword_D_80030AE0:.word 0
+dword_D_80030AE4:.word 0
+clock_drawn_flag:.word 1
+clock_enable:   .word 0
+clock_time:     .word 0
+dword_D_80030AF4:.word 0
+dword_D_80030AF8:.word 0
+dword_D_80030AFC:.word 0
+dword_D_80030B00:.word 0
+dword_D_80030B04:.word 0
+dword_D_80030B08:.word 0
+dword_D_80030B0C:.word 0
+bodypartshot:   .word 0xFFFFFFFF
+flt_D_80030B14: .float 1.0
+flt_D_80030B18: .float 1.0
+flt_D_80030B1C: .float 1.0
+flt_D_80030B20: .float 1.0
+flt_D_80030B24: .float 1.0
+solo_ammo_multiplier:.float 1.0
+Throwing_knife_SFX_1:.half 0x5F
 Throwing_knife_SFX_2:.half 0x60
-Throwing_knife_SFX_3:.half 0x61          # DATA XREF: sub_CODE_7F043650+60r
+Throwing_knife_SFX_3:.half 0x61
 Throwing_knife_SFX_4:.half      0,     0,     0,     0,     1,     0,     3,     0,     0,     0
                 .half      0,     0,     0,     0,     0,     0,     0,     0,     0,     0
                 .half      0,     0,     0,     0,     0,     0,     0,     0,     0,     0
                 .half      0,     0,     0
 monitor_animation_microcode:.word          7,         0,         1,     0x400,      0x14,         8,      0x14,         2
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+14o
-                                         # D:ptr_monitorimageobjectanimationcontrollero
                 .word      0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14,         5
                 .word      0x200,      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14
                 .word          8,      0x14,         5,     0x400,      0x14,         6,     0x400,      0x14
@@ -331,8 +156,6 @@ monitor_animation_microcode:.word          7,         0,         1,     0x400,  
                 .word       0x50,         8,      0x50,         7,      0x19,         8,      0x50,         7
                 .word       0x14,         8,      0x50,       0xB
 dword_D_80030F44:.word        0xD,0x202020FF,         1,         7,      0x1C,         1,     0x800,      0x78
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+50o
-                                         # D:stru_D_8003191Co
                 .word          8,      0x78,         5,     0x100,         1,         6,     0x200,      0x3C
                 .word          1,0xFFFFE000,      0x78,         8,      0x78,         5,     0x400,         1
                 .word          6,     0x400,      0x3C,         6,     0x400,      0x3C,         1,     0x800
@@ -340,49 +163,31 @@ dword_D_80030F44:.word        0xD,0x202020FF,         1,         7,      0x1C,  
                 .word       0x3C,         6,     0x400,      0x78,         2,     0x400,      0x3C,         1
                 .word      0x200,      0x78,         8,      0x78,       0xB
 dword_D_80031018:.word 0xD, 0x202020FF, 1, 7, 0x1C, 5, 0x80, 1, 6, 0x800, 0x3C, 6, 0x400, 0x78
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+5Co
-                                         # D:stru_D_800318B8o
                 .word 2, 0x400, 0xA, 1, 0x200, 0x28, 8, 0x78, 0xB
 dword_D_80031074:.word 7, 0x1D, 0xD, 0x8000FF, 1, 2, 0xFFFFFE00, 0x50, 8, 0x78, 2, 0xFFFFFF00
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+68o
-                                         # D:8003190Co
-                                         # D:80031934o
                 .word 0x14, 8, 0x78, 2, 0xFFFFFF80, 0xA, 8, 0x28, 2, 0xFFFFFE00, 0x28, 8, 0x3C
                 .word 2, 0xFFFFFFC0, 0x1E, 8, 0x78, 0xB
 dword_D_800310F0:.word 7, 0x1D, 0xD, 0x280000FF, 1, 2, 0x200, 0x50, 8, 0x78, 2, 0x100, 0x14
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+74o
-                                         # D:800318F4o
                 .word 8, 0x78, 2, 0x80, 0xA, 8, 0x28, 2, 0x200, 0x28, 8, 0x3C, 2, 0x40, 0x1E
                 .word 8, 0x78, 2, 0x100, 0x14, 8, 0x78, 2, 0x80, 0xA, 0xB
 dword_D_8003118C:.word 7, 0x1D, 0xD, 0x3C00FF, 1, 2, 0x200, 0x50, 8, 0x78, 2, 0x80, 0xA, 8
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+80o
-                                         # D:80031900o
                 .word 0x28, 2, 0x100, 0x14, 8, 0x78, 2, 0x80, 0xA, 8, 0x28, 2, 0x200, 0x28
                 .word 8, 0x3C, 2, 0x40, 0x1E, 8, 0x78, 0xB
 dword_D_8003121C:.word 7, 0x1E, 0xD, 0x404000FF, 1, 1, 0x280, 1, 8, 0xA, 0xB
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+8Co
-                                         # D:800318D0o
-                                         # D:80031928o
 dword_D_80031248:.word 7, 0x1E, 0xD, 0x4040FF, 1, 1, 0x280, 1, 8, 0xA, 0xB
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+98o
-                                         # D:800318DCo
 dword_D_80031274:.word          7,      0x1E,       0xD,0x406440FF,         1,         1,0xFFFFFD80
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+A4o
-                                         # D:800318E8o
                 .word          1,         8,       0xA,       0xB
-dword_D_800312A0:.word 0xD               # DATA XREF: D:800312DCo
+dword_D_800312A0:.word 0xD
                 .word 0xAFF0AFE
                 .word 0x14
                 .word 9
                 .word dword_D_800312C8
-dword_D_800312B4:.word 0xD               # DATA XREF: D:800312E8o
-                                         # D:8003130Co
+dword_D_800312B4:.word 0xD
                 .word 0xA640AFE
                 .word 0x14
                 .word 9
                 .word dword_D_800312C8
-dword_D_800312C8:.word 0xF               # DATA XREF: D:800312B0o
-                                         # D:800312C4o
+dword_D_800312C8:.word 0xF
                 .word 0xB6
                 .word 8
                 .word 1
@@ -393,14 +198,14 @@ dword_D_800312C8:.word 0xF               # DATA XREF: D:800312B0o
                 .word dword_D_800312B4
                 .word 0x147A
                 .word 0xB
-dword_D_800312F4:.word 7                 # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+B0o
+dword_D_800312F4:.word 7
                 .word 0x30
                 .word 0xD
                 .word 0xA960AFE
                 .word 1
                 .word 9
                 .word dword_D_800312B4
-dword_D_80031310:.word 7                 # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+BCo
+dword_D_80031310:.word 7
                 .word 0x10
                 .word 0xD
                 .word 0x303080FF
@@ -421,7 +226,6 @@ dword_D_80031310:.word 7                 # DATA XREF: set_ptr_monitor_img_to_obj
                 .word 5
                 .word 0xB
 dword_D_80031360:.word          7,      0x2C,       0xD,0x308030FF,      0x1E,         1,0xFFFFFC00,     0x400
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+ECo
                 .word          8,     0x5A0,         3,     0x288,     0x168,         4,     0x3AA,     0x168
                 .word          5,      0x80,     0x12C,         6,      0x80,     0x12C,       0xD,      0xFF
                 .word       0x3C,         8,      0x3C,       0xD,0x808080FF,       0xA,         8,      0x5A
@@ -432,18 +236,14 @@ dword_D_80031360:.word          7,      0x2C,       0xD,0x308030FF,      0x1E,  
                 .word      0x1A4,       0xD,  0xC800FF,      0x1E,         8,      0x1E,       0xD,0x1E381EFF
                 .word       0x3C,         8,      0x3C,       0xB
 dword_D_80031490:.word        0xD,      0xFF,         1,       0xD,0xC8C8C8FF,     0x190,         7,         1
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+C8o
                 .word          8,     0x2A8,         7,         2,         8,     0x2A8,         7,         4
                 .word          8,      0xB4,       0xD,0x808032FF,         1,         7,         4,         8
                 .word       0xC8,       0xB
 dword_D_800314F8:.word          5,     0x400,         1,         6,     0x400,         1,       0xD,0xC81414FF
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+D4o
                 .word          1,         7,         6,         8,     0x258,       0xD,0xC8C8C8FF,         5
                 .word          8,         5,       0xD,0x383838FF,      0x3C,         7,      0x1B,       0xD
                 .word  0xA0A0AFF,      0x64,         8,     0x190,       0xB
 dword_D_8003156C:.word        0xD, 0xA960AFF,         0,         7,      0x28,         8,         5,         7
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+F8o
-                                         # D:800318C4o
                 .word       0x29,         8,         5,         7,      0x2A,         8,         5,         7
                 .word       0x2B,         8,       0xA,         7,      0x29,         8,         5,       0xB
                 .word          7,      0x24,       0xD, 0xA960AFF,         0,         8,         3,       0xD
@@ -467,7 +267,6 @@ dword_D_8003156C:.word        0xD, 0xA960AFF,         0,         7,      0x28,  
                 .word  0x87808FF,         0,         8,         2,       0xD, 0xA960AFF,         0,         8
                 .word          3,       0xD, 0x87808FF,         0,         8,         2,       0xB
 byte_D_80031848:.byte    0,   0,   0, 0xD, 0xA,0x78, 0xA,0xFF
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+110o
                 .byte    0,   0,   0,   0,   0,   0,   0,   7
                 .byte    0,   0,   0,0x20,   0,   0,   0,   8
                 .byte    0,   0,   0,   5,   0,   0,   0,   7
@@ -478,9 +277,7 @@ byte_D_80031848:.byte    0,   0,   0, 0xD, 0xA,0x78, 0xA,0xFF
                 .byte    0,   0,   0,0x23,   0,   0,   0,   8
                 .byte    0,   0,   0,   5,   0,   0,   0, 0xB
 dword_D_80031898:.word 7, 0x1C, 0xD, 0x800000, 1, 8, 5, 0xB
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+11Co
 stru_D_800318B8:struct_5 <0xA, dword_D_80031018, 0x1999>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+128o
                 struct_5 <0xA, dword_D_8003156C, 0x1999>
                 struct_5 <0xA, dword_D_8003121C, 0x1999>
                 struct_5 <0xA, dword_D_80031248, 0x1999>
@@ -490,15 +287,11 @@ stru_D_800318B8:struct_5 <0xA, dword_D_80031018, 0x1999>
                 struct_5 <0xA, dword_D_80031074, 0xFFFF>
                 .word 0xB
 stru_D_8003191C:struct_5 <0xA, dword_D_80030F44, 0x51E>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+134o
                 struct_5 <0xA, dword_D_8003121C, 0x51E>
                 struct_5 <0xA, dword_D_80031074, 0x51E>
                 struct_5 <0xA, stru_D_80031950, 0x9999>
                 .word 0xB
 stru_D_80031950:struct_5 <0xA, stru_D_800319D4, 0x1999>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+140o
-                                         # D:80031940o
-                                         # D:stru_D_80031D58o
                 struct_5 <0xA, stru_D_800319F0, 0x1999>
                 struct_5 <0xA, stru_D_80031A0C, 0x1999>
                 struct_5 <0xA, stru_D_80031A28, 0x1999>
@@ -510,64 +303,23 @@ stru_D_80031950:struct_5 <0xA, stru_D_800319D4, 0x1999>
                 struct_5 <0xA, stru_D_80031AD0, 0x1999>
                 .word 8, 0x64, 0xB
 stru_D_800319D4:struct_0 <7, 0x11, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+14Co
-                                         # D:stru_D_80031950o
 stru_D_800319F0:struct_0 <7, 0x12, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+158o
-                                         # D:8003195Co
 stru_D_80031A0C:struct_0 <7, 0x13, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+164o
-                                         # D:80031968o
 stru_D_80031A28:struct_0 <7, 0x14, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+170o
-                                         # D:80031974o
 stru_D_80031A44:struct_0 <7, 0x15, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+17Co
-                                         # D:80031980o
 stru_D_80031A60:struct_0 <7, 0x16, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+188o
-                                         # D:8003198Co
 stru_D_80031A7C:struct_0 <7, 0x17, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+194o
-                                         # D:80031998o
 stru_D_80031A98:struct_0 <7, 0x18, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+1A0o
-                                         # D:800319A4o
 stru_D_80031AB4:struct_0 <7, 0x19, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+1ACo
-                                         # D:800319B0o
 stru_D_80031AD0:struct_0 <7, 0x1A, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+1B8o
-                                         # D:800319BCo
 stru_D_80031AEC:struct_5 <0xA, stru_D_80031B24, 0x1999>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+1C4o
-                                         # D:stru_D_800319D4o
-                                         # D:stru_D_800319F0o
-                                         # D:stru_D_80031A0Co
-                                         # D:stru_D_80031A28o
-                                         # D:stru_D_80031A44o
-                                         # D:stru_D_80031A60o
-                                         # D:stru_D_80031A7Co
-                                         # D:stru_D_80031A98o
-                                         # D:stru_D_80031AB4o
-                                         # D:stru_D_80031AD0o
                 struct_5 <0xA, stru_D_80031B38, 0x1999>
                 struct_5 <0xA, stru_D_80031B4C, 0x1999>
                 struct_12 <0xD, 0xC8, 0xC8, 0xC8, 0xFF, 0x3C, 9, dword_D_80031B60>
 stru_D_80031B24:struct_12 <0xD, 0xC8, 0x32, 0x32, 0xFF, 0x3C, 9, dword_D_80031B60>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+1D0o
-                                         # D:stru_D_80031AECo
 stru_D_80031B38:struct_12 <0xD, 0x32, 0xC8, 0x32, 0xFF, 0x3C, 9, dword_D_80031B60>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+1DCo
-                                         # D:80031AF8o
 stru_D_80031B4C:struct_12 <0xD, 0x32, 0x32, 0xC8, 0xFF, 0x3C, 9, dword_D_80031B60>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+1E8o
-                                         # D:80031B04o
-dword_D_80031B60:.word 8                 # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+1F4o
-                                         # D:80031B10o
-                                         # D:stru_D_80031B24o
-                                         # D:stru_D_80031B38o
-                                         # D:stru_D_80031B4Co
+dword_D_80031B60:.word 8
                 .word 0x32
                 struct_5 <0xA, stru_D_80031BB4, 0x1999>
                 struct_5 <0xA, stru_D_80031BD0, 0x1999>
@@ -579,17 +331,9 @@ dword_D_80031B60:.word 8                 # DATA XREF: set_ptr_monitor_img_to_obj
                 .word 9
                 .word dword_D_80031D30
 stru_D_80031BB4:struct_16 <1, 0x800, 0x78, 8, 0x78, 9, dword_D_80031D30>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+200o
-                                         # D:80031B68o
 stru_D_80031BD0:struct_16 <2, 0x2000, 0x32, 8, 0xC8, 9, dword_D_80031D30>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+20Co
-                                         # D:80031B74o
 stru_D_80031BEC:struct_16 <2, 0x2000, 0xC8, 8, 0xC8, 9, dword_D_80031D30>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+218o
-                                         # D:80031B80o
 stru_D_80031C08:struct_17 <3, 0x288, 0x12C>
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+224o
-                                         # D:80031B8Co
                 struct_17 <4, 0x3AA, 0x12C>
                 struct_17 <5, 0x80, 0xC8>
                 struct_17 <6, 0x80, 0xC8>
@@ -604,47 +348,31 @@ stru_D_80031C08:struct_17 <3, 0x288, 0x12C>
                 .word 9
                 .word dword_D_80031D30
 dword_D_80031C80:.word          3,     0x320,     0x190,         4,     0x190,     0x190,         5,      0x80
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+230o
-                                         # D:80031B98o
                 .word       0xC8,         6,      0x80,      0xC8,         8,     0x12C,         3,      0xC8
                 .word       0xC8,         4,     0x190,     0x320,         5,     0x200,     0x2D0,         6
                 .word      0x200,     0x2D0,         8,     0x320,         5,     0x400,     0x2D0,         6
                 .word      0x400,     0x2D0,         3,     0x200,      0x64,         4,     0x200,      0x3C
                 .word          8,     0x1F4,         9,0x80031D30
 dword_D_80031D30:.word          8,      0x32,       0xA,0x80031AEC,    0x1999,       0xA,0x80031D58,    0x3333
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+23Co
-                                         # D:80031BB0o
-                                         # D:stru_D_80031BB4o
-                                         # D:stru_D_80031BD0o
-                                         # D:stru_D_80031BECo
-                                         # D:80031C7Co
                 .word          9,0x80031950
 stru_D_80031D58:struct_20 <8, 0x32, 0xD, 0xFFFFFFFF, 0xA, 0xD, 0xFF, 5, 0xD, 0xFFFFFFFF, 0xA, 8, 0x19, \
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+248o
                            0xD, 0xFF, 0xC8, 8, 0x1F4, 9, stru_D_80031950>
 dword_D_80031DA8:.word          7,      0x31,         5,     0x200,         0,         6,     0x200,         0
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+254o
                 .word        0xD,0xDC2828FF,      0x3C,         8,      0x3C,       0xD,0x323232FF,       0xA
                 .word          8,       0xA,       0xB
 stru_D_80031DF4:struct_24 <7, 0x31, 5, 0x200, 0, 6, 0x200, 0, 0xD, 0x32C8, 0x32FF, 0x3C, 8, 0x3C, 0xD, \
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+260o
                            0x3232, 0x32FF, 0xA, 8, 0xA, 0xB>
 dword_D_80031E40:.word          7,      0x31,         5,     0x200,         0,         6,     0x200,         0
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+26Co
                 .word        0xD,0x323232FF,       0xA,         8,       0xA,       0xB
 dword_D_80031E78:.word          7,      0x31,         5,     0x200,         0,         6,     0x200,         0
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+278o
                 .word        0xD,0xDC2828FF,       0xA,         8,       0xA,       0xB
 stru_D_80031EB0:struct_24 <7, 0x31, 5, 0x200, 0, 6, 0x200, 0, 0xD, 0x32C8, 0x32FF, 0xA, 8, 0xA, 0xB, 0, 7,\
-                                         # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+284o
                            0, 0xD, 0xFF, 0>
                 .word 0xC
 dword_D_80031F00:.word          5,     0x400,         0,         6,     0x400,         0,         8,         1
-                                         # DATA XREF: D:unknown_object_animation_controllero
                 .word          5,    0x1000,      0x14,         6,    0x1000,      0x14,         8,      0x14
                 .word        0xB
 dword_D_80031F44:.word          7,         0,         1,     0x400,      0x14,         8,      0x14,         2
-                                         # DATA XREF: D:taser_object_animation_controllero
                 .word      0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14,         5
                 .word      0x200,      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14
                 .word          8,      0x14,         5,     0x400,      0x14,         6,     0x400,      0x14
@@ -654,54 +382,37 @@ dword_D_80031F44:.word          7,         0,         1,     0x400,      0x14,  
                 .word          0,         0,         0,         0,         0,         0,         0,         0
                 .word          0,         0
 dword_D_8003204C:.word 0x7FFF, 0x7FFF, 0x7FFF, 0xFFFF8000, 0xFFFF8000, 0xFFFF8000, 0, 0, 0
-                                         # DATA XREF: sub_CODE_7F04D16C+CCo
-                                         # sub_CODE_7F04D16C+D4r
-                                         # sub_CODE_7F04D16C+DCr
-                                         # sub_CODE_7F04D16C+E4r
-                                         # sub_CODE_7F04D16C+E8o
-                                         # sub_CODE_7F04D16C+F8r
 dword_D_80032070:.word 0x7FFF, 0x7FFF, 0x7FFF, 0xFFFF8000, 0xFFFF8000, 0xFFFF8000, 0, 0, 0
-                                         # DATA XREF: sub_CODE_7F04D16C:loc_CODE_7F04D5CCo
-                                         # sub_CODE_7F04D16C+468r
-                                         # sub_CODE_7F04D16C+470r
-                                         # sub_CODE_7F04D16C+478r
-                                         # sub_CODE_7F04D16C+47Co
-                                         # sub_CODE_7F04D16C+48Cr
 blank_07_object:.word  0x1000007,    0xFFFF,         1,         0,         0,         0,0x3F800000,         0
-                                         # DATA XREF: maybe_detonate_object+32Co
                 .word          0,         0,         0,0x3F800000,         0,         0,         0,         0
                 .word 0x3F800000,         0,         0,         0,         0,0x3F800000,         0,         0
                 .word          0,         0,         0,         0,         0,0x447A0000
-dword_D_8003210C:.word 0xFFFFFF00        # DATA XREF: maybe_detonate_object+334o
+dword_D_8003210C:.word 0xFFFFFF00
                 .word 0xFFFFFF00
 blank_11_object:.word  0x1000011,         0,    0x4000,         0,         0,         0,0x3F800000,         0
-                                         # DATA XREF: sub_CODE_7F0510C0+ACo
                 .word          0,         0,         0,0x3F800000,         0,         0,         0,         0
                 .word 0x3F800000,         0,         0,         0,         0,0x3F800000,         0,         0
                 .word          0,         0,         0,         0,         0,0x447A0000
-dword_D_8003218C:.word 0xFFFFFF00        # DATA XREF: sub_CODE_7F0510C0+B8o
+dword_D_8003218C:.word 0xFFFFFF00
                 .word 0xFFFFFF00
 blank_08_object_preset_1:.word  0x1000008,         1,         0,         0,         0,         0,0x3F800000,         0
-                                         # DATA XREF: create_new_item_instance_of_model+A8o
                 .word          0,         0,         0,0x3F800000,         0,         0,         0,         0
                 .word 0x3F800000,         0,         0,         0,         0,0x3F800000,         0,         0
                 .word          0,         0,         0,         0,         0,0x447A0000,0xFFFFFF00,0xFFFFFF00
                 .word   0xFFFFFF
-dword_D_80032218:.word 0                 # DATA XREF: create_new_item_instance_of_model+B0o
+dword_D_80032218:.word 0
 blank_08_object_preset_4001:.word  0x1000008,    0x4001,         0,         0,         0,         0,0x3F800000,         0
-                                         # DATA XREF: something_with_generating_object+C4o
                 .word          0,         0,         0,0x3F800000,         0,         0,         0,         0
                 .word 0x3F800000,         0,         0,         0,         0,0x3F800000,         0,         0
                 .word          0,         0,         0,         0,         0,0x447A0000,0xFFFFFF00,0xFFFFFF00
                 .word   0xFFFFFF
-dword_D_800322A0:.word 0                 # DATA XREF: something_with_generating_object+CCo
-dword_D_800322A4:.word 0                 # DATA XREF: sub_CODE_7F0523F8+4Co
+dword_D_800322A0:.word 0
+dword_D_800322A4:.word 0
 dword_D_800322A8:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 */
 
 /*rodata
 D:80052100     jpt_7006894C:   .word action00_length, action01_length, locret_CODE_7F034A34, locret_CODE_7F034A3C
-D:80052100                                              # DATA XREF: get_length_of_action_block+14r
 D:80052100                     .word locret_CODE_7F034A44, locret_CODE_7F034A4C, locret_CODE_7F034A54, locret_CODE_7F034A5C  # jump table for switch statement
 D:80052100                     .word locret_CODE_7F034A64, locret_CODE_7F034A6C, locret_CODE_7F034A74, locret_CODE_7F034A7C
 D:80052100                     .word locret_CODE_7F034A84, locret_CODE_7F034A8C, locret_CODE_7F034A94, locret_CODE_7F034A9C
@@ -765,9 +476,8 @@ D:80052100                     .word locret_CODE_7F03519C, locret_CODE_7F0351A4,
 D:80052100                     .word locret_CODE_7F0351BC, locret_CODE_7F0351C4, locret_CODE_7F0351CC, locret_CODE_7F0351D4
 D:80052100                     .word locret_CODE_7F0351DC, locret_CODE_7F0351E4, locret_CODE_7F0351EC, locret_CODE_7F0351F4
 D:80052100                     .word actionFC_length
-D:800524F4     flt_D_800524F4: .float 6.2831855         # DATA XREF: parse_handle_actionblocks+DCr
+D:800524F4     flt_D_800524F4: .float 6.2831855
 D:800524F8     jpt_700694DC:   .word action00_return, action01_goto_beginning_then_return, loc_CODE_7F0355EC
-D:800524F8                                              # DATA XREF: parse_handle_actionblocks+11Cr
 D:800524F8                     .word loc_CODE_7F0355F8, action04_end, loc_CODE_7F03563C, loc_CODE_7F0356B0  # jump table for switch statement
 D:800524F8                     .word loc_CODE_7F03570C, loc_CODE_7F035768, loc_CODE_7F03577C, loc_CODE_7F035790
 D:800524F8                     .word loc_CODE_7F03589C, loc_CODE_7F0358D0, loc_CODE_7F0358E4, loc_CODE_7F0359E8
@@ -834,12 +544,12 @@ D:800524F8                     .word actionF4_play_xtheme_in_slot_for_seconds, a
 D:800524F8                     .word actionF6_trigger_explosions_around_players, actionF7_if_num_less_than_civilian_deaths_return
 D:800524F8                     .word actionF8_if_guardID_shot_at_unset_flag_and_return, actionF9_set_killed_in_action_flag
 D:800524F8                     .word action_FA_use_fawn_on_shoulder_animation, actionFB_switch_to_xsky, loc_CODE_7F03A134
-D:800528EC     flt_D_800528EC: .float 0.1               # DATA XREF: parse_handle_actionblocks:loc_CODE_7F037858r
-D:800528F0     flt_D_800528F0: .float 0.1               # DATA XREF: parse_handle_actionblocks:loc_CODE_7F0378E4r
-D:800528F4     flt_D_800528F4: .float 0.1               # DATA XREF: parse_handle_actionblocks+2B3Cr
-D:800528F8     flt_D_800528F8: .float 0.1               # DATA XREF: parse_handle_actionblocks+2B7Cr
-D:800528FC     jpt_7006CB34:   .word loc_CODE_7F038C0C  # DATA XREF: parse_handle_actionblocks+3774r
-D:800528FC                     .word loc_CODE_7F038C0C  # jump table for switch statement
+D:800528EC     flt_D_800528EC: .float 0.1
+D:800528F0     flt_D_800528F0: .float 0.1
+D:800528F4     flt_D_800528F4: .float 0.1
+D:800528F8     flt_D_800528F8: .float 0.1
+D:800528FC     jpt_7006CB34:   .word loc_CODE_7F038C0C
+D:800528FC                     .word loc_CODE_7F038C0C
 D:800528FC                     .word loc_CODE_7F038C0C
 D:800528FC                     .word loc_CODE_7F038C0C
 D:800528FC                     .word loc_CODE_7F038C0C
@@ -868,127 +578,122 @@ D:800528FC                     .word def_7F038C04
 D:800528FC                     .word loc_CODE_7F038C0C
 D:800528FC                     .word loc_CODE_7F038C0C
 D:800528FC                     .word loc_CODE_7F038C0C
-D:80052974     flt_D_80052974: .float 0.016666666       # DATA XREF: parse_handle_actionblocks+4D28r
-D:80052978     flt_D_80052978: .float 0.29166666        # DATA XREF: parse_handle_actionblocks+4D48r
+D:80052974     flt_D_80052974: .float 0.016666666
+D:80052978     flt_D_80052978: .float 0.29166666
 //probably multiple files
-D:80052980     jpt_7007045C:   .word loc_CODE_7F03C534  # DATA XREF: sub_CODE_7F03C4F0+30r
-D:80052980                     .word loc_CODE_7F03C544  # jump table for switch statement
+D:80052980     jpt_7007045C:   .word loc_CODE_7F03C534
+D:80052980                     .word loc_CODE_7F03C544
 D:80052980                     .word def_7F03C52C
 D:80052980                     .word loc_CODE_7F03C534
 D:80052980                     .word def_7F03C52C
 D:80052980                     .word def_7F03C52C
 D:80052980                     .word def_7F03C52C
 D:80052980                     .word def_7F03C52C
-D:800529A0     jpt_7007106C:   .word loc_CODE_7F03D144  # DATA XREF: sub_CODE_7F03D0D4+5Cr
-D:800529A0                     .word def_7F03D13C       # jump table for switch statement
+D:800529A0     jpt_7007106C:   .word loc_CODE_7F03D144
+D:800529A0                     .word def_7F03D13C
 D:800529A0                     .word def_7F03D13C
 D:800529A0                     .word loc_CODE_7F03D154
 D:800529A0                     .word def_7F03D13C
 D:800529A0                     .word def_7F03D13C
 D:800529A0                     .word def_7F03D13C
 D:800529A0                     .word def_7F03D13C
-D:800529C0     flt_D_800529C0: .float 0.175             # DATA XREF: sub_CODE_7F03D188+24r
-D:800529C4     flt_D_800529C4: .float 0.82499999        # DATA XREF: sub_CODE_7F03D188+48r
+D:800529C0     flt_D_800529C0: .float 0.175
+D:800529C4     flt_D_800529C4: .float 0.82499999
 D:800529C8                     .align 4
-D:800529D0     dword_D_800529D0:.word 0xA000000         # DATA XREF: display_ammo_type_collection_text:loc_CODE_7F04F978o
-D:800529D4     dword_D_800529D4:.word 0x2E0A0000        # DATA XREF: display_ammo_type_collection_text+B0o
+D:800529D0     dword_D_800529D0:.word 0xA000000
+D:800529D4     dword_D_800529D4:.word 0x2E0A0000
 D:800529D8     dword_D_800529D8:.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:800529D8                                              # DATA XREF: display_text_when_ammo_collected+14o
 D:800529D8                     .word 0
-D:80052A38     dword_D_80052A38:.word 0                 # DATA XREF: display_text_when_ammo_collected+20o
-D:80052A3C     dword_D_80052A3C:.word 0                 # DATA XREF: generate_language_specific_text_for_weapon+2Co
-D:80052A40     dword_D_80052A40:.word 0xA000000         # DATA XREF: generate_language_specific_text_for_weapon+420o
-D:80052A44     flt_D_80052A44: .float 0.00052642822     # DATA XREF: sub_CODE_7F056210+1F0o
-D:80052A44                                              # sub_CODE_7F056210+2F0o
-D:80052A48     flt_D_80052A48: .float 0.050000001       # DATA XREF: sub_CODE_7F03FBFC+38r
-D:80052A4C     flt_D_80052A4C: .float 3.1415927         # DATA XREF: sub_CODE_7F04088C+6Cr
-D:80052A50     flt_D_80052A50: .float 4.712389          # DATA XREF: sub_CODE_7F040BA0+3Cr
-D:80052A54     flt_D_80052A54: .float 3.1415927         # DATA XREF: sub_CODE_7F040BA0+4Cr
-D:80052A58     flt_D_80052A58: .float 0.1               # DATA XREF: handles_projectile_motion+42Cr
-D:80052A5C     flt_D_80052A5C: .float 0.99000001        # DATA XREF: sub_CODE_7F042A0C+374r
-D:80052A60     flt_D_80052A60: .float -3.1415927        # DATA XREF: sub_CODE_7F04310C+10r
-D:80052A64     flt_D_80052A64: .float 6.2831855         # DATA XREF: sub_CODE_7F04310C+38r
-D:80052A68     flt_D_80052A68: .float 3.1415927         # DATA XREF: sub_CODE_7F04310C:loc_CODE_7F043154r
-D:80052A6C     flt_D_80052A6C: .float 6.2831855         # DATA XREF: sub_CODE_7F04310C+60r
-D:80052A70     flt_D_80052A70: .float 6.2831855         # DATA XREF: sub_CODE_7F04310C+90r
-D:80052A74     flt_D_80052A74: .float 6.2831855         # DATA XREF: sub_CODE_7F0431E4+300r
-D:80052A78     flt_D_80052A78: .float 0.050000001       # DATA XREF: sub_CODE_7F0431E4+30Cr
-D:80052A7C     flt_D_80052A7C: .float 6.2831855         # DATA XREF: sub_CODE_7F0431E4+35Cr
-D:80052A80     flt_D_80052A80: .float 0.050000001       # DATA XREF: sub_CODE_7F0431E4+368r
-D:80052A84     flt_D_80052A84: .float 0.029999999       # DATA XREF: sub_CODE_7F0431E4:loc_CODE_7F043604r
-D:80052A88     flt_D_80052A88: .float 0.15000001        # DATA XREF: sub_CODE_7F0431E4:loc_CODE_7F043624r
-D:80052A8C     flt_D_80052A8C: .float -1.5707964        # DATA XREF: sub_CODE_7F043838+12Cr
-D:80052A90     flt_D_80052A90: .float -1.5707964        # DATA XREF: sub_CODE_7F043838+148r
-D:80052A94     flt_D_80052A94: .float 62500.0           # DATA XREF: handle_thrown_explosive_detonation+400r
+D:80052A38     dword_D_80052A38:.word 0
+D:80052A3C     dword_D_80052A3C:.word 0
+D:80052A40     dword_D_80052A40:.word 0xA000000
+D:80052A44     flt_D_80052A44: .float 0.00052642822
+D:80052A48     flt_D_80052A48: .float 0.050000001
+D:80052A4C     flt_D_80052A4C: .float 3.1415927
+D:80052A50     flt_D_80052A50: .float 4.712389
+D:80052A54     flt_D_80052A54: .float 3.1415927
+D:80052A58     flt_D_80052A58: .float 0.1
+D:80052A5C     flt_D_80052A5C: .float 0.99000001
+D:80052A60     flt_D_80052A60: .float -3.1415927
+D:80052A64     flt_D_80052A64: .float 6.2831855
+D:80052A68     flt_D_80052A68: .float 3.1415927
+D:80052A6C     flt_D_80052A6C: .float 6.2831855
+D:80052A70     flt_D_80052A70: .float 6.2831855
+D:80052A74     flt_D_80052A74: .float 6.2831855
+D:80052A78     flt_D_80052A78: .float 0.050000001
+D:80052A7C     flt_D_80052A7C: .float 6.2831855
+D:80052A80     flt_D_80052A80: .float 0.050000001
+D:80052A84     flt_D_80052A84: .float 0.029999999
+D:80052A88     flt_D_80052A88: .float 0.15000001
+D:80052A8C     flt_D_80052A8C: .float -1.5707964
+D:80052A90     flt_D_80052A90: .float -1.5707964
+D:80052A94     flt_D_80052A94: .float 62500.0
 D:80052A98     rocket_initial_gravity_modifier:.float 0.27777779
-D:80052A98                                              # DATA XREF: object_interaction+2ECr
-D:80052A9C     flt_D_80052A9C: .float 0.011111111       # DATA XREF: object_interaction+344r
-D:80052AA0     flt_D_80052AA0: .float 0.07              # DATA XREF: object_interaction+3C4r
+D:80052A9C     flt_D_80052A9C: .float 0.011111111
+D:80052AA0     flt_D_80052AA0: .float 0.07
 D:80052AA4     prop_projectile_gravity_modifier:.float 0.27777779
-D:80052AA4                                              # DATA XREF: object_interaction+424r
-D:80052AA8     flt_D_80052AA8: .float 2.2222223         # DATA XREF: object_interaction+C9Cr
-D:80052AAC     flt_D_80052AAC: .float 27777.773         # DATA XREF: object_interaction+D78r
+D:80052AA8     flt_D_80052AA8: .float 2.2222223
+D:80052AAC     flt_D_80052AAC: .float 27777.773
 D:80052AB0                     .float 1.1
-D:80052AB4     flt_D_80052AB4: .float 0.89999998        # DATA XREF: object_interaction+111Cr
-D:80052AB8     flt_D_80052AB8: .float 0.89999998        # DATA XREF: object_interaction+1190r
-D:80052ABC     flt_D_80052ABC: .float 0.1               # DATA XREF: object_interaction+127Cr
-D:80052AC0     flt_D_80052AC0: .float -0.1              # DATA XREF: object_interaction+12B4r
-D:80052AC4     flt_D_80052AC4: .float -0.1              # DATA XREF: object_interaction+12E0r
-D:80052AC8     flt_D_80052AC8: .float 6.2831855         # DATA XREF: object_interaction+15B8r
-D:80052ACC     flt_D_80052ACC: .float 6.2831855         # DATA XREF: object_interaction:loc_CODE_7F04689Cr
-D:80052AD0     flt_D_80052AD0: .float 3.1415927         # DATA XREF: object_interaction:loc_CODE_7F0468E8r
-D:80052AD4     flt_D_80052AD4: .float 0.78539819        # DATA XREF: object_interaction:loc_CODE_7F04691Cr
-D:80052AD8     flt_D_80052AD8: .float -0.78539819       # DATA XREF: object_interaction+1660r
+D:80052AB4     flt_D_80052AB4: .float 0.89999998
+D:80052AB8     flt_D_80052AB8: .float 0.89999998
+D:80052ABC     flt_D_80052ABC: .float 0.1
+D:80052AC0     flt_D_80052AC0: .float -0.1
+D:80052AC4     flt_D_80052AC4: .float -0.1
+D:80052AC8     flt_D_80052AC8: .float 6.2831855
+D:80052ACC     flt_D_80052ACC: .float 6.2831855
+D:80052AD0     flt_D_80052AD0: .float 3.1415927
+D:80052AD4     flt_D_80052AD4: .float 0.78539819
+D:80052AD8     flt_D_80052AD8: .float -0.78539819
 D:80052ADC                     .float 6.2831855
-D:80052AE0     flt_D_80052AE0: .float 0.00065449846     # DATA XREF: object_interaction+1764r
-D:80052AE4     flt_D_80052AE4: .float 0.00065449846     # DATA XREF: object_interaction:loc_CODE_7F046B4Cr
-D:80052AE8     flt_D_80052AE8: .float 6.2831855         # DATA XREF: object_interaction+1A2Cr
-D:80052AEC     flt_D_80052AEC: .float 0.000011635529    # DATA XREF: object_interaction:loc_CODE_7F046D98r
+D:80052AE0     flt_D_80052AE0: .float 0.00065449846
+D:80052AE4     flt_D_80052AE4: .float 0.00065449846
+D:80052AE8     flt_D_80052AE8: .float 6.2831855
+D:80052AEC     flt_D_80052AEC: .float 0.000011635529
 D:80052AF0                     .float 6.2831855
-D:80052AF4     flt_D_80052AF4: .float 0.00069813174     # DATA XREF: object_interaction+1ACCr
-D:80052AF8     flt_D_80052AF8: .float 0.0000058177643   # DATA XREF: object_interaction+1AF0r
-D:80052AFC     flt_D_80052AFC: .float 0.00034906587     # DATA XREF: object_interaction+1AF8r
-D:80052B00     flt_D_80052B00: .float 6.2831855         # DATA XREF: object_interaction:loc_CODE_7F046EF4r
-D:80052B04     flt_D_80052B04: .float 6.2831855         # DATA XREF: object_interaction+1C4Cr
-D:80052B08     flt_D_80052B08: .float 6.2831855         # DATA XREF: object_interaction:loc_CODE_7F046F28r
-D:80052B0C     flt_D_80052B0C: .float 3.1415927         # DATA XREF: object_interaction+1C5Cr
-D:80052B10     flt_D_80052B10: .float 1.2217306         # DATA XREF: object_interaction:loc_CODE_7F046F68r
-D:80052B14     flt_D_80052B14: .float -1.2217306        # DATA XREF: object_interaction+1CACr
-D:80052B18     flt_D_80052B18: .float -3.1415927        # DATA XREF: object_interaction+1CE0r
-D:80052B1C     flt_D_80052B1C: .float 3.1415927         # DATA XREF: object_interaction:loc_CODE_7F046FE0r
-D:80052B20     flt_D_80052B20: .float 6.2831855         # DATA XREF: object_interaction:loc_CODE_7F047104r
-D:80052B24     flt_D_80052B24: .float 0.80000001        # DATA XREF: object_interaction+1E90r
-D:80052B28     flt_D_80052B28: .float -3.1415927        # DATA XREF: object_interaction:loc_CODE_7F0471B0r
-D:80052B2C     flt_D_80052B2C: .float 3.1415927         # DATA XREF: object_interaction:loc_CODE_7F0471D8r
-D:80052B30     flt_D_80052B30: .float 0.00087266468     # DATA XREF: object_interaction:loc_CODE_7F047254r
-D:80052B34     flt_D_80052B34: .float 0.00087266468     # DATA XREF: object_interaction+1FA4r
-D:80052B38     flt_D_80052B38: .float 3.1415927         # DATA XREF: object_interaction:loc_CODE_7F0472C8r
-D:80052B3C     flt_D_80052B3C: .float 0.59839863        # DATA XREF: object_interaction+2174r
-D:80052B40     flt_D_80052B40: .float 0.0099733109      # DATA XREF: object_interaction+2178r
-D:80052B44     flt_D_80052B44: .float 0.99000001        # DATA XREF: object_interaction+21E4r
-D:80052B48     flt_D_80052B48: .float 0.000099999997    # DATA XREF: object_interaction:loc_CODE_7F0474E4r
-D:80052B4C     flt_D_80052B4C: .float 0.00021816617     # DATA XREF: object_interaction:loc_CODE_7F04783Cr
-D:80052B50     flt_D_80052B50: .float 0.0065449849      # DATA XREF: object_interaction+2570r
-D:80052B54     flt_D_80052B54: .float 6.2831855         # DATA XREF: object_interaction+259Cr
+D:80052AF4     flt_D_80052AF4: .float 0.00069813174
+D:80052AF8     flt_D_80052AF8: .float 0.0000058177643
+D:80052AFC     flt_D_80052AFC: .float 0.00034906587
+D:80052B00     flt_D_80052B00: .float 6.2831855
+D:80052B04     flt_D_80052B04: .float 6.2831855
+D:80052B08     flt_D_80052B08: .float 6.2831855
+D:80052B0C     flt_D_80052B0C: .float 3.1415927
+D:80052B10     flt_D_80052B10: .float 1.2217306
+D:80052B14     flt_D_80052B14: .float -1.2217306
+D:80052B18     flt_D_80052B18: .float -3.1415927
+D:80052B1C     flt_D_80052B1C: .float 3.1415927
+D:80052B20     flt_D_80052B20: .float 6.2831855
+D:80052B24     flt_D_80052B24: .float 0.80000001
+D:80052B28     flt_D_80052B28: .float -3.1415927
+D:80052B2C     flt_D_80052B2C: .float 3.1415927
+D:80052B30     flt_D_80052B30: .float 0.00087266468
+D:80052B34     flt_D_80052B34: .float 0.00087266468
+D:80052B38     flt_D_80052B38: .float 3.1415927
+D:80052B3C     flt_D_80052B3C: .float 0.59839863
+D:80052B40     flt_D_80052B40: .float 0.0099733109
+D:80052B44     flt_D_80052B44: .float 0.99000001
+D:80052B48     flt_D_80052B48: .float 0.000099999997
+D:80052B4C     flt_D_80052B4C: .float 0.00021816617
+D:80052B50     flt_D_80052B50: .float 0.0065449849
+D:80052B54     flt_D_80052B54: .float 6.2831855
 D:80052B58                     .float 0.00021816617
-D:80052B5C     flt_D_80052B5C: .float -0.00021816617    # DATA XREF: object_interaction+2638r
+D:80052B5C     flt_D_80052B5C: .float -0.00021816617
 D:80052B60                     .float 6.2831855
-D:80052B64     flt_D_80052B64: .float 6.2831855         # DATA XREF: object_interaction:loc_CODE_7F048230r
-D:80052B68     flt_D_80052B68: .float 0.30000001        # DATA XREF: object_interaction+3294r
-D:80052B6C     flt_D_80052B6C: .float 1.5707964         # DATA XREF: object_interaction+355Cr
-D:80052B70     flt_D_80052B70: .float 1.5707964         # DATA XREF: object_interaction+3E44r
-D:80052B74     flt_D_80052B74: .float 0.16              # DATA XREF: object_interaction+44C0r
-D:80052B78     flt_D_80052B78: .float 10000.0           # DATA XREF: object_interaction+4658r
-D:80052B7C     flt_D_80052B7C: .float 3000.0            # DATA XREF: object_interaction+46D8r
-D:80052B80     flt_D_80052B80: .float 0.60000002        # DATA XREF: object_interaction+46F0r
-D:80052B84     flt_D_80052B84: .float 0.30000001        # DATA XREF: object_interaction+4744r
-D:80052B88     flt_D_80052B88: .float -0.1              # DATA XREF: object_interaction+4750r
-D:80052B8C     flt_D_80052B8C: .float 0.2               # DATA XREF: object_interaction:loc_CODE_7F049A40r
-D:80052B90     flt_D_80052B90: .float 3000.0            # DATA XREF: object_interaction+4784r
-D:80052B94     flt_D_80052B94: .float 3000.0            # DATA XREF: object_interaction+479Cr
+D:80052B64     flt_D_80052B64: .float 6.2831855
+D:80052B68     flt_D_80052B68: .float 0.30000001
+D:80052B6C     flt_D_80052B6C: .float 1.5707964
+D:80052B70     flt_D_80052B70: .float 1.5707964
+D:80052B74     flt_D_80052B74: .float 0.16
+D:80052B78     flt_D_80052B78: .float 10000.0
+D:80052B7C     flt_D_80052B7C: .float 3000.0
+D:80052B80     flt_D_80052B80: .float 0.60000002
+D:80052B84     flt_D_80052B84: .float 0.30000001
+D:80052B88     flt_D_80052B88: .float -0.1
+D:80052B8C     flt_D_80052B8C: .float 0.2
+D:80052B90     flt_D_80052B90: .float 3000.0
+D:80052B94     flt_D_80052B94: .float 3000.0
 D:80052B98     jpt_7007DBF0:   .word def_7F049CC0, loc_CODE_7F049CC8, loc_CODE_7F049CD4, loc_CODE_7F049CE0
-D:80052B98                                              # DATA XREF: set_ptr_monitor_img_to_obj_ani_slot+1Cr
-D:80052B98                     .word loc_CODE_7F049CEC, loc_CODE_7F049CF8, loc_CODE_7F049D04, loc_CODE_7F049D10  # jump table for switch statement
+D:80052B98                     .word loc_CODE_7F049CEC, loc_CODE_7F049CF8, loc_CODE_7F049D04, loc_CODE_7F049D10
 D:80052B98                     .word loc_CODE_7F049D1C, loc_CODE_7F049D28, loc_CODE_7F049D34, loc_CODE_7F049D40
 D:80052B98                     .word loc_CODE_7F049D4C, loc_CODE_7F049D58, loc_CODE_7F049D64, loc_CODE_7F049D70
 D:80052B98                     .word loc_CODE_7F049D7C, loc_CODE_7F049D88, loc_CODE_7F049D94, loc_CODE_7F049DA0
@@ -1000,10 +705,9 @@ D:80052B98                     .word loc_CODE_7F049E6C, loc_CODE_7F049E78, loc_C
 D:80052B98                     .word loc_CODE_7F049E9C, loc_CODE_7F049EA8, loc_CODE_7F049EB4, loc_CODE_7F049EC0
 D:80052B98                     .word loc_CODE_7F049ECC, loc_CODE_7F049ED8, loc_CODE_7F049EE4, loc_CODE_7F049EF0
 D:80052B98                     .word loc_CODE_7F049EFC, loc_CODE_7F049F08, loc_CODE_7F049F14, loc_CODE_7F049F20
-D:80052C68     flt_D_80052C68: .float 6.2831855         # DATA XREF: process_monitor_animation_microcode+7Cr
+D:80052C68     flt_D_80052C68: .float 6.2831855
 D:80052C6C     jpt_7007DF4C:   .word command00_reset_scroll_shift
-D:80052C6C                                              # DATA XREF: process_monitor_animation_microcode+C8r
-D:80052C6C                     .word command01_horizontal_scroll  # jump table for switch statement
+D:80052C6C                     .word command01_horizontal_scroll
 D:80052C6C                     .word command02_vertical_scroll
 D:80052C6C                     .word command03_horizontal_pos
 D:80052C6C                     .word command04_vertical_pos
@@ -1019,65 +723,124 @@ D:80052C6C                     .word command0D_colour_transition
 D:80052C6C                     .word command0E_set_rotation
 D:80052C6C                     .word command0F_rotate
 D:80052CAC                     .float 1.5707964
-D:80052CB0     flt_D_80052CB0: .float 1.4141999         # DATA XREF: process_monitor_animation_microcode+8E8r
-D:80052CB4     flt_D_80052CB4: .float 0.85000002        # DATA XREF: sub_CODE_7F04B610:loc_CODE_7F04B894r
-D:80052CB8     flt_D_80052CB8: .float 0.15000001        # DATA XREF: sub_CODE_7F04B610+2E0r
-D:80052CBC     flt_D_80052CBC: .float 0.15000001        # DATA XREF: sub_CODE_7F04B610+30Cr
-D:80052CC0     flt_D_80052CC0: .float 0.89999998        # DATA XREF: sub_CODE_7F04B610+3E8r
-D:80052CC4     flt_D_80052CC4: .float 1.6666666         # DATA XREF: sub_CODE_7F04BCDC+B0r
-D:80052CC8     flt_D_80052CC8: .float 3.3333333         # DATA XREF: sub_CODE_7F04BCDC+C0r
-D:80052CCC     flt_D_80052CCC: .float 1.6666666         # DATA XREF: sub_CODE_7F04BCDC+100r
-D:80052CD0     flt_D_80052CD0: .float 3.3333333         # DATA XREF: sub_CODE_7F04BCDC+108r
-D:80052CD4     flt_D_80052CD4: .float 1.6666666         # DATA XREF: sub_CODE_7F04BCDC+144r
-D:80052CD8     flt_D_80052CD8: .float 3.3333333         # DATA XREF: sub_CODE_7F04BCDC+154r
-D:80052CDC     flt_D_80052CDC: .float 6.2831855         # DATA XREF: sub_CODE_7F04BCDC+194r
-D:80052CE0     flt_D_80052CE0: .float 0.049087387       # DATA XREF: sub_CODE_7F04BCDC+1A4r
-D:80052CE4     flt_D_80052CE4: .float 6.2831855         # DATA XREF: sub_CODE_7F04BCDC+1E4r
-D:80052CE8     flt_D_80052CE8: .float 0.049087387       # DATA XREF: sub_CODE_7F04BCDC+1F4r
-D:80052CEC     flt_D_80052CEC: .float 6.2831855         # DATA XREF: sub_CODE_7F04BCDC+234r
-D:80052CF0     flt_D_80052CF0: .float 0.049087387       # DATA XREF: sub_CODE_7F04BCDC+244r
-D:80052CF4     flt_D_80052CF4: .float 3.3333333         # DATA XREF: sub_CODE_7F04BCDC+2A0r
-D:80052CF8     flt_D_80052CF8: .float 1.6666666         # DATA XREF: sub_CODE_7F04C130+108r
-D:80052CFC     flt_D_80052CFC: .float 1.6666666         # DATA XREF: sub_CODE_7F04C130+140r
-D:80052D00     flt_D_80052D00: .float 1.6666666         # DATA XREF: sub_CODE_7F04C130+170r
-D:80052D04     flt_D_80052D04: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+1A8r
-D:80052D08     flt_D_80052D08: .float 0.024543693       # DATA XREF: sub_CODE_7F04C130+1BCr
-D:80052D0C     flt_D_80052D0C: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+200r
-D:80052D10     flt_D_80052D10: .float 0.024543693       # DATA XREF: sub_CODE_7F04C130+214r
-D:80052D14     flt_D_80052D14: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+258r
-D:80052D18     flt_D_80052D18: .float 0.024543693       # DATA XREF: sub_CODE_7F04C130+26Cr
-D:80052D1C     flt_D_80052D1C: .float 13.333333         # DATA XREF: sub_CODE_7F04C130+2ECr
-D:80052D20     flt_D_80052D20: .float 6.6666665         # DATA XREF: sub_CODE_7F04C130+300r
-D:80052D24     flt_D_80052D24: .float 13.333333         # DATA XREF: sub_CODE_7F04C130+310r
-D:80052D28     flt_D_80052D28: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+348r
-D:80052D2C     flt_D_80052D2C: .float 0.024543693       # DATA XREF: sub_CODE_7F04C130+35Cr
-D:80052D30     flt_D_80052D30: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+3A0r
-D:80052D34     flt_D_80052D34: .float 0.024543693       # DATA XREF: sub_CODE_7F04C130+3B4r
-D:80052D38     flt_D_80052D38: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+3F8r
-D:80052D3C     flt_D_80052D3C: .float 0.024543693       # DATA XREF: sub_CODE_7F04C130+40Cr
-D:80052D40     flt_D_80052D40: .float 1.6666666         # DATA XREF: sub_CODE_7F04C130+4D4r
-D:80052D44     flt_D_80052D44: .float 3.3333333         # DATA XREF: sub_CODE_7F04C130+4E0r
-D:80052D48     flt_D_80052D48: .float 1.6666666         # DATA XREF: sub_CODE_7F04C130+524r
-D:80052D4C     flt_D_80052D4C: .float 1.6666666         # DATA XREF: sub_CODE_7F04C130+578r
-D:80052D50     flt_D_80052D50: .float 3.3333333         # DATA XREF: sub_CODE_7F04C130+584r
-D:80052D54     flt_D_80052D54: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+5C8r
-D:80052D58     flt_D_80052D58: .float 0.098174773       # DATA XREF: sub_CODE_7F04C130+5DCr
-D:80052D5C     flt_D_80052D5C: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+620r
-D:80052D60     flt_D_80052D60: .float 0.098174773       # DATA XREF: sub_CODE_7F04C130+634r
-D:80052D64     flt_D_80052D64: .float 6.2831855         # DATA XREF: sub_CODE_7F04C130+678r
-D:80052D68     flt_D_80052D68: .float 0.098174773       # DATA XREF: sub_CODE_7F04C130+68Cr
-D:80052D6C     flt_D_80052D6C: .float 1.6666666         # DATA XREF: sub_CODE_7F04CA44+D8r
-D:80052D70     flt_D_80052D70: .float 0.83333331        # DATA XREF: sub_CODE_7F04CA44+E0r
-D:80052D74     flt_D_80052D74: .float 1.6666666         # DATA XREF: sub_CODE_7F04CA44+FCr
-D:80052D78     flt_D_80052D78: .float 1.6666666         # DATA XREF: sub_CODE_7F04CA44+158r
-D:80052D7C     flt_D_80052D7C: .float 0.83333331        # DATA XREF: sub_CODE_7F04CA44+160r
-D:80052D80     flt_D_80052D80: .float 6.2831855         # DATA XREF: sub_CODE_7F04CA44+1ACr
-D:80052D84     flt_D_80052D84: .float 0.0098174773      # DATA XREF: sub_CODE_7F04CA44+1BCr
-D:80052D88     flt_D_80052D88: .float 6.2831855         # DATA XREF: sub_CODE_7F04CA44+1F8r
-D:80052D8C     flt_D_80052D8C: .float 0.0098174773      # DATA XREF: sub_CODE_7F04CA44+208r
-D:80052D90     flt_D_80052D90: .float 6.2831855         # DATA XREF: sub_CODE_7F04CA44+244r
-D:80052D94     flt_D_80052D94: .float 0.0098174773      # DATA XREF: sub_CODE_7F04CA44+254r
-D:80052D98     flt_D_80052D98: .float 32767.0           # DATA XREF: sub_CODE_7F04D9B0+60r
+//D:80052CB0
+const f32 flt_D_80052CB0 = 1.4141999;
+//D:80052CB4
+const f32 flt_D_80052CB4 = 0.85000002;
+//D:80052CB8
+const f32 flt_D_80052CB8 = 0.15000001;
+//D:80052CBC
+const f32 flt_D_80052CBC = 0.15000001;
+//D:80052CC0
+const f32 flt_D_80052CC0 = 0.89999998;
+//D:80052CC4
+const f32 flt_D_80052CC4 = 1.6666666;
+//D:80052CC8
+const f32 flt_D_80052CC8 = 3.3333333;
+//D:80052CCC
+const f32 flt_D_80052CCC = 1.6666666;
+//D:80052CD0
+const f32 flt_D_80052CD0 = 3.3333333;
+//D:80052CD4
+const f32 flt_D_80052CD4 = 1.6666666;
+//D:80052CD8
+const f32 flt_D_80052CD8 = 3.3333333;
+//D:80052CDC
+const f32 flt_D_80052CDC = 6.2831855;
+//D:80052CE0
+const f32 flt_D_80052CE0 = 0.049087387;
+//D:80052CE4
+const f32 flt_D_80052CE4 = 6.2831855;
+//D:80052CE8
+const f32 flt_D_80052CE8 = 0.049087387;
+//D:80052CEC
+const f32 flt_D_80052CEC = 6.2831855;
+//D:80052CF0
+const f32 flt_D_80052CF0 = 0.049087387;
+//D:80052CF4
+const f32 flt_D_80052CF4 = 3.3333333;
+//D:80052CF8
+const f32 flt_D_80052CF8 = 1.6666666;
+//D:80052CFC
+const f32 flt_D_80052CFC = 1.6666666;
+//D:80052D00
+const f32 flt_D_80052D00 = 1.6666666;
+//D:80052D04
+const f32 flt_D_80052D04 = 6.2831855;
+//D:80052D08
+const f32 flt_D_80052D08 = 0.024543693;
+//D:80052D0C
+const f32 flt_D_80052D0C = 6.2831855;
+//D:80052D10
+const f32 flt_D_80052D10 = 0.024543693;
+//D:80052D14
+const f32 flt_D_80052D14 = 6.2831855;
+//D:80052D18
+const f32 flt_D_80052D18 = 0.024543693;
+//D:80052D1C
+const f32 flt_D_80052D1C = 13.333333;
+//D:80052D20
+const f32 flt_D_80052D20 = 6.6666665;
+//D:80052D24
+const f32 flt_D_80052D24 = 13.333333;
+//D:80052D28
+const f32 flt_D_80052D28 = 6.2831855;
+//D:80052D2C
+const f32 flt_D_80052D2C = 0.024543693;
+//D:80052D30
+const f32 flt_D_80052D30 = 6.2831855;
+//D:80052D34
+const f32 flt_D_80052D34 = 0.024543693;
+//D:80052D38
+const f32 flt_D_80052D38 = 6.2831855;
+//D:80052D3C
+const f32 flt_D_80052D3C = 0.024543693;
+//D:80052D40
+const f32 flt_D_80052D40 = 1.6666666;
+//D:80052D44
+const f32 flt_D_80052D44 = 3.3333333;
+//D:80052D48
+const f32 flt_D_80052D48 = 1.6666666;
+//D:80052D4C
+const f32 flt_D_80052D4C = 1.6666666;
+//D:80052D50
+const f32 flt_D_80052D50 = 3.3333333;
+//D:80052D54
+const f32 flt_D_80052D54 = 6.2831855;
+//D:80052D58
+const f32 flt_D_80052D58 = 0.098174773;
+//D:80052D5C
+const f32 flt_D_80052D5C = 6.2831855;
+//D:80052D60
+const f32 flt_D_80052D60 = 0.098174773;
+//D:80052D64
+const f32 flt_D_80052D64 = 6.2831855;
+//D:80052D68
+const f32 flt_D_80052D68 = 0.098174773;
+//D:80052D6C
+const f32 flt_D_80052D6C = 1.6666666;
+//D:80052D70
+const f32 flt_D_80052D70 = 0.83333331;
+//D:80052D74
+const f32 flt_D_80052D74 = 1.6666666;
+//D:80052D78
+const f32 flt_D_80052D78 = 1.6666666;
+//D:80052D7C
+const f32 flt_D_80052D7C = 0.83333331;
+//D:80052D80
+const f32 flt_D_80052D80 = 6.2831855;
+//D:80052D84
+const f32 flt_D_80052D84 = 0.0098174773;
+//D:80052D88
+const f32 flt_D_80052D88 = 6.2831855;
+//D:80052D8C
+const f32 flt_D_80052D8C = 0.0098174773;
+//D:80052D90
+const f32 flt_D_80052D90 = 6.2831855;
+//D:80052D94
+const f32 flt_D_80052D94 = 0.0098174773;
+//D:80052D98
+const f32 flt_D_80052D98 = 32767.0;
 D:80052D9C     jpt_70081970:   .word loc_CODE_7F04DAA4  # DATA XREF: sub_CODE_7F04D9B0+84r
 D:80052D9C                     .word def_7F04DA40       # jump table for switch statement
 D:80052D9C                     .word def_7F04DA40
@@ -7751,9 +7514,9 @@ actionDF_Open_Type_16_Door_Used_Cut_Scenes_2:
 /* 06E61C 7F039AEC 26520002 */   addiu $s2, $s2, 2
 /* 06E620 7F039AF0 C4500084 */  lwc1  $f16, 0x84($v0)
 /* 06E624 7F039AF4 E45400B8 */  swc1  $f20, 0xb8($v0)
-/* 06E628 7F039AF8 3C0F8005 */  lui   $t7, %hi(D_8004837C) # $t7, 0x8005
+/* 06E628 7F039AF8 3C0F8005 */  lui   $t7, %hi(global_timer) # $t7, 0x8005
 /* 06E62C 7F039AFC E45000B4 */  swc1  $f16, 0xb4($v0)
-/* 06E630 7F039B00 8DEF837C */  lw    $t7, %lo(D_8004837C)($t7)
+/* 06E630 7F039B00 8DEF837C */  lw    $t7, %lo(global_timer)($t7)
 /* 06E634 7F039B04 A04000BC */  sb    $zero, 0xbc($v0)
 /* 06E638 7F039B08 AC4F00EC */  sw    $t7, 0xec($v0)
 /* 06E63C 7F039B0C 0FC14AC0 */  jal   sub_GAME_7F052B00
@@ -20202,7 +19965,7 @@ glabel sub_GAME_7F0431E4
 /* 0780D4 7F0435A4 44808000 */  mtc1  $zero, $f16
 /* 0780D8 7F0435A8 C7B20030 */  lwc1  $f18, 0x30($sp)
 /* 0780DC 7F0435AC 3C018005 */  li    $at, 0x80050000 # -0.000000
-/* 0780E0 7F0435B0 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0780E0 7F0435B0 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0780E4 7F0435B4 46109032 */  c.eq.s $f18, $f16
 /* 0780E8 7F0435B8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0780EC 7F0435BC 46080083 */  div.s $f2, $f0, $f8
@@ -20298,8 +20061,8 @@ glabel sub_GAME_7F043650
 /* 078200 7F0436D0 00007810 */  mfhi  $t7
 /* 078204 7F0436D4 AFAF0030 */  sw    $t7, 0x30($sp)
 /* 078208 7F0436D8 8E03006C */  lw    $v1, 0x6c($s0)
-/* 07820C 7F0436DC 3C198005 */  lui   $t9, %hi(D_8004837C) # $t9, 0x8005
-/* 078210 7F0436E0 8F39837C */  lw    $t9, %lo(D_8004837C)($t9)
+/* 07820C 7F0436DC 3C198005 */  lui   $t9, %hi(global_timer) # $t9, 0x8005
+/* 078210 7F0436E0 8F39837C */  lw    $t9, %lo(global_timer)($t9)
 /* 078214 7F0436E4 8C7800A0 */  lw    $t8, 0xa0($v1)
 /* 078218 7F0436E8 8FA70034 */  lw    $a3, 0x34($sp)
 /* 07821C 7F0436EC 2728FFFA */  addiu $t0, $t9, -6
@@ -20349,8 +20112,8 @@ glabel sub_GAME_7F043650
 /* 0782C4 7F043794 8D440098 */  lw    $a0, 0x98($t2)
 /* 0782C8 7F043798 0FC14E84 */  jal   sub_GAME_7F053A10
 /* 0782CC 7F04379C 24A50008 */   addiu $a1, $a1, 8
-/* 0782D0 7F0437A0 3C0C8005 */  lui   $t4, %hi(D_8004837C) # $t4, 0x8005
-/* 0782D4 7F0437A4 8D8C837C */  lw    $t4, %lo(D_8004837C)($t4)
+/* 0782D0 7F0437A0 3C0C8005 */  lui   $t4, %hi(global_timer) # $t4, 0x8005
+/* 0782D4 7F0437A4 8D8C837C */  lw    $t4, %lo(global_timer)($t4)
 /* 0782D8 7F0437A8 8E0D006C */  lw    $t5, 0x6c($s0)
 /* 0782DC 7F0437AC 240F0001 */  li    $t7, 1
 /* 0782E0 7F0437B0 ADAC00A0 */  sw    $t4, 0xa0($t5)
@@ -22630,8 +22393,8 @@ glabel object_interaction
 /* 07A0EC 7F0455BC 00000000 */   nop   
 /* 07A0F0 7F0455C0 C4322A98 */  lwc1  $f18, %lo(D_80052A98)($at)
 /* 07A0F4 7F0455C4 C600001C */  lwc1  $f0, 0x1c($s0)
-/* 07A0F8 7F0455C8 3C028005 */  lui   $v0, %hi(D_80048378) # $v0, 0x8005
-/* 07A0FC 7F0455CC 24428378 */  addiu $v0, %lo(D_80048378) # addiu $v0, $v0, -0x7c88
+/* 07A0F8 7F0455C8 3C028005 */  lui   $v0, %hi(global_timer_delta) # $v0, 0x8005
+/* 07A0FC 7F0455CC 24428378 */  addiu $v0, %lo(global_timer_delta) # addiu $v0, $v0, -0x7c88
 /* 07A100 7F0455D0 4612003C */  c.lt.s $f0, $f18
 /* 07A104 7F0455D4 00000000 */  nop   
 /* 07A108 7F0455D8 4502001C */  bc1fl .L7F04564C
@@ -22669,14 +22432,14 @@ glabel object_interaction
 /* 07A180 7F045650 4600403C */  c.lt.s $f8, $f0
 /* 07A184 7F045654 00000000 */  nop   
 /* 07A188 7F045658 45000019 */  bc1f  .L7F0456C0
-/* 07A18C 7F04565C 3C018005 */   lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 07A190 7F045660 C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 07A18C 7F04565C 3C018005 */   lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 07A190 7F045660 C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 07A194 7F045664 C60A0014 */  lwc1  $f10, 0x14($s0)
 /* 07A198 7F045668 C60800B4 */  lwc1  $f8, 0xb4($s0)
 /* 07A19C 7F04566C 46065102 */  mul.s $f4, $f10, $f6
 /* 07A1A0 7F045670 46044280 */  add.s $f10, $f8, $f4
 /* 07A1A4 7F045674 E60A00B4 */  swc1  $f10, 0xb4($s0)
-/* 07A1A8 7F045678 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 07A1A8 7F045678 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 07A1AC 7F04567C C60600B4 */  lwc1  $f6, 0xb4($s0)
 /* 07A1B0 7F045680 3C018005 */  lui   $at, %hi(D_80052AA0) # $at, 0x8005
 /* 07A1B4 7F045684 46083102 */  mul.s $f4, $f6, $f8
@@ -22685,10 +22448,10 @@ glabel object_interaction
 /* 07A1C0 7F045690 C7A80698 */  lwc1  $f8, 0x698($sp)
 /* 07A1C4 7F045694 C60600B0 */  lwc1  $f6, 0xb0($s0)
 /* 07A1C8 7F045698 C42A2AA0 */  lwc1  $f10, %lo(D_80052AA0)($at)
-/* 07A1CC 7F04569C 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07A1CC 7F04569C 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07A1D0 7F0456A0 46083101 */  sub.s $f4, $f6, $f8
 /* 07A1D4 7F0456A4 46045182 */  mul.s $f6, $f10, $f4
-/* 07A1D8 7F0456A8 C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 07A1D8 7F0456A8 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 07A1DC 7F0456AC 460A3102 */  mul.s $f4, $f6, $f10
 /* 07A1E0 7F0456B0 46044180 */  add.s $f6, $f8, $f4
 /* 07A1E4 7F0456B4 E7A60698 */  swc1  $f6, 0x698($sp)
@@ -22706,8 +22469,8 @@ glabel object_interaction
 /* 07A210 7F0456E0 AE030000 */  sw    $v1, ($s0)
 /* 07A214 7F0456E4 E60A0008 */  swc1  $f10, 8($s0)
 .L7F0456E8:
-/* 07A218 7F0456E8 3C028005 */  lui   $v0, %hi(D_80048378) # $v0, 0x8005
-/* 07A21C 7F0456EC 24428378 */  addiu $v0, %lo(D_80048378) # addiu $v0, $v0, -0x7c88
+/* 07A218 7F0456E8 3C028005 */  lui   $v0, %hi(global_timer_delta) # $v0, 0x8005
+/* 07A21C 7F0456EC 24428378 */  addiu $v0, %lo(global_timer_delta) # addiu $v0, $v0, -0x7c88
 /* 07A220 7F0456F0 3C018005 */  lui   $at, %hi(D_80052AA4) # $at, 0x8005
 /* 07A224 7F0456F4 306B0010 */  andi  $t3, $v1, 0x10
 /* 07A228 7F0456F8 C4322AA4 */  lwc1  $f18, %lo(D_80052AA4)($at)
@@ -23507,14 +23270,14 @@ glabel object_interaction
 .L7F046290:
 /* 07ADC0 7F046290 44815000 */  mtc1  $at, $f10
 /* 07ADC4 7F046294 24120001 */  li    $s2, 1
-/* 07ADC8 7F046298 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07ADC8 7F046298 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07ADCC 7F04629C 460A003C */  c.lt.s $f0, $f10
 /* 07ADD0 7F0462A0 26040068 */  addiu $a0, $s0, 0x68
 /* 07ADD4 7F0462A4 26050078 */  addiu $a1, $s0, 0x78
 /* 07ADD8 7F0462A8 45020031 */  bc1fl .L7F046370
 /* 07ADDC 7F0462AC C60A0004 */   lwc1  $f10, 4($s0)
 /* 07ADE0 7F0462B0 C6020064 */  lwc1  $f2, 0x64($s0)
-/* 07ADE4 7F0462B4 C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 07ADE4 7F0462B4 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 07ADE8 7F0462B8 3C0A8005 */  lui   $t2, %hi(clock_timer) # $t2, 0x8005
 /* 07ADEC 7F0462BC 3C018005 */  lui   $at, 0x8005
 /* 07ADF0 7F0462C0 46041202 */  mul.s $f8, $f2, $f4
@@ -23630,8 +23393,8 @@ glabel object_interaction
 /* 07AF90 7F046460 46082300 */   add.s $f12, $f4, $f8
 /* 07AF94 7F046464 3C018005 */  lui   $at, %hi(D_80052AB8) # $at, 0x8005
 /* 07AF98 7F046468 C42E2AB8 */  lwc1  $f14, %lo(D_80052AB8)($at)
-/* 07AF9C 7F04646C 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 07AFA0 7F046470 C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 07AF9C 7F04646C 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 07AFA0 7F046470 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 07AFA4 7F046474 C6060094 */  lwc1  $f6, 0x94($s0)
 /* 07AFA8 7F046478 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 07AFAC 7F04647C 44814000 */  mtc1  $at, $f8
@@ -23766,13 +23529,13 @@ glabel object_interaction
 /* 07B184 7F046654 54410052 */  bnel  $v0, $at, .L7F0467A0
 /* 07B188 7F046658 24010006 */   li    $at, 6
 /* 07B18C 7F04665C 8E700004 */  lw    $s0, 4($s3)
-/* 07B190 7F046660 3C188005 */  lui   $t8, %hi(D_8004837C) # $t8, 0x8005
+/* 07B190 7F046660 3C188005 */  lui   $t8, %hi(global_timer) # $t8, 0x8005
 /* 07B194 7F046664 C60600B4 */  lwc1  $f6, 0xb4($s0)
 /* 07B198 7F046668 E7A6067C */  swc1  $f6, 0x67c($sp)
 /* 07B19C 7F04666C 8E0200EC */  lw    $v0, 0xec($s0)
 /* 07B1A0 7F046670 58400012 */  blezl $v0, .L7F0466BC
 /* 07B1A4 7F046674 820C00BC */   lb    $t4, 0xbc($s0)
-/* 07B1A8 7F046678 8F18837C */  lw    $t8, %lo(D_8004837C)($t8)
+/* 07B1A8 7F046678 8F18837C */  lw    $t8, %lo(global_timer)($t8)
 /* 07B1AC 7F04667C 8E0800A0 */  lw    $t0, 0xa0($s0)
 /* 07B1B0 7F046680 03084823 */  subu  $t1, $t8, $t0
 /* 07B1B4 7F046684 0049082A */  slt   $at, $v0, $t1
@@ -23838,8 +23601,8 @@ glabel object_interaction
 /* 07B28C 7F04675C 0FC15667 */  jal   sub_GAME_7F05599C
 /* 07B290 7F046760 02602025 */   move  $a0, $s3
 .L7F046764:
-/* 07B294 7F046764 3C188005 */  lui   $t8, %hi(D_8004837C) # $t8, 0x8005
-/* 07B298 7F046768 8F18837C */  lw    $t8, %lo(D_8004837C)($t8)
+/* 07B294 7F046764 3C188005 */  lui   $t8, %hi(global_timer) # $t8, 0x8005
+/* 07B298 7F046768 8F18837C */  lw    $t8, %lo(global_timer)($t8)
 /* 07B29C 7F04676C 8E0F00FC */  lw    $t7, 0xfc($s0)
 /* 07B2A0 7F046770 3C088005 */  lui   $t0, %hi(clock_timer) # $t0, 0x8005
 /* 07B2A4 7F046774 01F8082A */  slt   $at, $t7, $t8
@@ -24040,7 +23803,7 @@ glabel object_interaction
 /* 07B570 7F046A40 46000102 */  mul.s $f4, $f0, $f0
 /* 07B574 7F046A44 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 07B578 7F046A48 44814000 */  mtc1  $at, $f8
-/* 07B57C 7F046A4C 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07B57C 7F046A4C 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07B580 7F046A50 46082282 */  mul.s $f10, $f4, $f8
 /* 07B584 7F046A54 46105083 */  div.s $f2, $f10, $f16
 /* 07B588 7F046A58 46029181 */  sub.s $f6, $f18, $f2
@@ -24048,7 +23811,7 @@ glabel object_interaction
 /* 07B590 7F046A60 00000000 */  nop   
 /* 07B594 7F046A64 4502000F */  bc1fl .L7F046AA4
 /* 07B598 7F046A68 C60C00DC */   lwc1  $f12, 0xdc($s0)
-/* 07B59C 7F046A6C C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 07B59C 7F046A6C C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 07B5A0 7F046A70 46048202 */  mul.s $f8, $f16, $f4
 /* 07B5A4 7F046A74 46080281 */  sub.s $f10, $f0, $f8
 /* 07B5A8 7F046A78 E60A00D8 */  swc1  $f10, 0xd8($s0)
@@ -24064,12 +23827,12 @@ glabel object_interaction
 /* 07B5CC 7F046A9C C60E00C8 */   lwc1  $f14, 0xc8($s0)
 /* 07B5D0 7F046AA0 C60C00DC */  lwc1  $f12, 0xdc($s0)
 .L7F046AA4:
-/* 07B5D4 7F046AA4 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07B5D4 7F046AA4 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07B5D8 7F046AA8 460C003C */  c.lt.s $f0, $f12
 /* 07B5DC 7F046AAC 00000000 */  nop   
 /* 07B5E0 7F046AB0 45000017 */  bc1f  .L7F046B10
 /* 07B5E4 7F046AB4 00000000 */   nop   
-/* 07B5E8 7F046AB8 C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 07B5E8 7F046AB8 C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 07B5EC 7F046ABC 46068102 */  mul.s $f4, $f16, $f6
 /* 07B5F0 7F046AC0 46040080 */  add.s $f2, $f0, $f4
 /* 07B5F4 7F046AC4 4602603C */  c.lt.s $f12, $f2
@@ -24093,8 +23856,8 @@ glabel object_interaction
 /* 07B638 7F046B08 C60000D8 */  lwc1  $f0, 0xd8($s0)
 /* 07B63C 7F046B0C C60E00C8 */  lwc1  $f14, 0xc8($s0)
 .L7F046B10:
-/* 07B640 7F046B10 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 07B644 7F046B14 C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 07B640 7F046B10 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 07B644 7F046B14 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 07B648 7F046B18 460A0182 */  mul.s $f6, $f0, $f10
 /* 07B64C 7F046B1C 46067100 */  add.s $f4, $f14, $f6
 /* 07B650 7F046B20 E60400C8 */  swc1  $f4, 0xc8($s0)
@@ -24114,7 +23877,7 @@ glabel object_interaction
 /* 07B684 7F046B54 46000282 */  mul.s $f10, $f0, $f0
 /* 07B688 7F046B58 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 07B68C 7F046B5C 44813000 */  mtc1  $at, $f6
-/* 07B690 7F046B60 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07B690 7F046B60 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07B694 7F046B64 240A0001 */  li    $t2, 1
 /* 07B698 7F046B68 46065102 */  mul.s $f4, $f10, $f6
 /* 07B69C 7F046B6C 46102083 */  div.s $f2, $f4, $f16
@@ -24123,7 +23886,7 @@ glabel object_interaction
 /* 07B6A8 7F046B78 00000000 */  nop   
 /* 07B6AC 7F046B7C 4502000F */  bc1fl .L7F046BBC
 /* 07B6B0 7F046B80 C60C00DC */   lwc1  $f12, 0xdc($s0)
-/* 07B6B4 7F046B84 C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 07B6B4 7F046B84 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 07B6B8 7F046B88 460A8182 */  mul.s $f6, $f16, $f10
 /* 07B6BC 7F046B8C 46060101 */  sub.s $f4, $f0, $f6
 /* 07B6C0 7F046B90 E60400D8 */  swc1  $f4, 0xd8($s0)
@@ -24139,12 +23902,12 @@ glabel object_interaction
 /* 07B6E4 7F046BB4 C60E00C8 */   lwc1  $f14, 0xc8($s0)
 /* 07B6E8 7F046BB8 C60C00DC */  lwc1  $f12, 0xdc($s0)
 .L7F046BBC:
-/* 07B6EC 7F046BBC 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07B6EC 7F046BBC 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07B6F0 7F046BC0 460C003C */  c.lt.s $f0, $f12
 /* 07B6F4 7F046BC4 00000000 */  nop   
 /* 07B6F8 7F046BC8 45000017 */  bc1f  .L7F046C28
 /* 07B6FC 7F046BCC 00000000 */   nop   
-/* 07B700 7F046BD0 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 07B700 7F046BD0 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 07B704 7F046BD4 46088282 */  mul.s $f10, $f16, $f8
 /* 07B708 7F046BD8 460A0080 */  add.s $f2, $f0, $f10
 /* 07B70C 7F046BDC 4602603C */  c.lt.s $f12, $f2
@@ -24168,8 +23931,8 @@ glabel object_interaction
 /* 07B750 7F046C20 C60000D8 */  lwc1  $f0, 0xd8($s0)
 /* 07B754 7F046C24 C60E00C8 */  lwc1  $f14, 0xc8($s0)
 .L7F046C28:
-/* 07B758 7F046C28 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 07B75C 7F046C2C C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 07B758 7F046C28 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 07B75C 7F046C2C C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 07B760 7F046C30 46040202 */  mul.s $f8, $f0, $f4
 /* 07B764 7F046C34 46087281 */  sub.s $f10, $f14, $f8
 /* 07B768 7F046C38 E60A00C8 */  swc1  $f10, 0xc8($s0)
@@ -24479,10 +24242,10 @@ glabel object_interaction
 .L7F0470B4:
 /* 07BBE4 7F0470B4 8E0200B8 */  lw    $v0, 0xb8($s0)
 .L7F0470B8:
-/* 07BBE8 7F0470B8 3C198005 */  lui   $t9, %hi(D_8004837C) # $t9, 0x8005
+/* 07BBE8 7F0470B8 3C198005 */  lui   $t9, %hi(global_timer) # $t9, 0x8005
 /* 07BBEC 7F0470BC 0442000B */  bltzl $v0, .L7F0470EC
 /* 07BBF0 7F0470C0 AFA004AC */   sw    $zero, 0x4ac($sp)
-/* 07BBF4 7F0470C4 8F39837C */  lw    $t9, %lo(D_8004837C)($t9)
+/* 07BBF4 7F0470C4 8F39837C */  lw    $t9, %lo(global_timer)($t9)
 /* 07BBF8 7F0470C8 272AFF88 */  addiu $t2, $t9, -0x78
 /* 07BBFC 7F0470CC 0142082A */  slt   $at, $t2, $v0
 /* 07BC00 7F0470D0 50200006 */  beql  $at, $zero, .L7F0470EC
@@ -24513,8 +24276,8 @@ glabel object_interaction
 /* 07BC58 7F047128 8E0E00D0 */  lw    $t6, 0xd0($s0)
 .L7F04712C:
 /* 07BC5C 7F04712C 11C0001F */  beqz  $t6, .L7F0471AC
-/* 07BC60 7F047130 3C0D8005 */   lui   $t5, %hi(D_8004837C) # $t5, 0x8005
-/* 07BC64 7F047134 8DAD837C */  lw    $t5, %lo(D_8004837C)($t5)
+/* 07BC60 7F047130 3C0D8005 */   lui   $t5, %hi(global_timer) # $t5, 0x8005
+/* 07BC64 7F047134 8DAD837C */  lw    $t5, %lo(global_timer)($t5)
 /* 07BC68 7F047138 24010078 */  li    $at, 120
 /* 07BC6C 7F04713C E7B004D8 */  swc1  $f16, 0x4d8($sp)
 /* 07BC70 7F047140 01A1001A */  div   $zero, $t5, $at
@@ -24675,11 +24438,11 @@ glabel object_interaction
 /* 07BEA0 7F047370 240B0001 */  li    $t3, 1
 /* 07BEA4 7F047374 AFAB04A8 */  sw    $t3, 0x4a8($sp)
 /* 07BEA8 7F047378 1120002F */  beqz  $t1, .L7F047438
-/* 07BEAC 7F04737C 3C198005 */   lui   $t9, %hi(D_8004837C) # $t9, 0x8005
-/* 07BEB0 7F047380 8F39837C */  lw    $t9, %lo(D_8004837C)($t9)
-/* 07BEB4 7F047384 3C0A8005 */  lui   $t2, %hi(D_8004837C) # $t2, 0x8005
+/* 07BEAC 7F04737C 3C198005 */   lui   $t9, %hi(global_timer) # $t9, 0x8005
+/* 07BEB0 7F047380 8F39837C */  lw    $t9, %lo(global_timer)($t9)
+/* 07BEB4 7F047384 3C0A8005 */  lui   $t2, %hi(global_timer) # $t2, 0x8005
 /* 07BEB8 7F047388 AE1900B8 */  sw    $t9, 0xb8($s0)
-/* 07BEBC 7F04738C 8D4A837C */  lw    $t2, %lo(D_8004837C)($t2)
+/* 07BEBC 7F04738C 8D4A837C */  lw    $t2, %lo(global_timer)($t2)
 /* 07BEC0 7F047390 10000029 */  b     .L7F047438
 /* 07BEC4 7F047394 AE0A00BC */   sw    $t2, 0xbc($s0)
 /* 07BEC8 7F047398 460A5000 */  add.s $f0, $f10, $f10
@@ -24706,16 +24469,16 @@ glabel object_interaction
 /* 07BF18 7F0473E8 240E0001 */  li    $t6, 1
 /* 07BF1C 7F0473EC AFAE04A8 */  sw    $t6, 0x4a8($sp)
 /* 07BF20 7F0473F0 11A00011 */  beqz  $t5, .L7F047438
-/* 07BF24 7F0473F4 3C0F8005 */   lui   $t7, %hi(D_8004837C) # $t7, 0x8005
-/* 07BF28 7F0473F8 8DEF837C */  lw    $t7, %lo(D_8004837C)($t7)
+/* 07BF24 7F0473F4 3C0F8005 */   lui   $t7, %hi(global_timer) # $t7, 0x8005
+/* 07BF28 7F0473F8 8DEF837C */  lw    $t7, %lo(global_timer)($t7)
 /* 07BF2C 7F0473FC 1000000E */  b     .L7F047438
 /* 07BF30 7F047400 AE0F00B8 */   sw    $t7, 0xb8($s0)
 /* 07BF34 7F047404 8E0200B8 */  lw    $v0, 0xb8($s0)
 .L7F047408:
-/* 07BF38 7F047408 3C188005 */  lui   $t8, %hi(D_8004837C) # $t8, 0x8005
+/* 07BF38 7F047408 3C188005 */  lui   $t8, %hi(global_timer) # $t8, 0x8005
 /* 07BF3C 7F04740C 0442000B */  bltzl $v0, .L7F04743C
 /* 07BF40 7F047410 8FB904A8 */   lw    $t9, 0x4a8($sp)
-/* 07BF44 7F047414 8F18837C */  lw    $t8, %lo(D_8004837C)($t8)
+/* 07BF44 7F047414 8F18837C */  lw    $t8, %lo(global_timer)($t8)
 /* 07BF48 7F047418 240B0001 */  li    $t3, 1
 /* 07BF4C 7F04741C 24090001 */  li    $t1, 1
 /* 07BF50 7F047420 2708FF88 */  addiu $t0, $t8, -0x78
@@ -24733,8 +24496,8 @@ glabel object_interaction
 /* 07BF78 7F047448 C4202B3C */  lwc1  $f0, %lo(D_80052B3C)($at)
 /* 07BF7C 7F04744C 3C018005 */  lui   $at, %hi(D_80052B40) # $at, 0x8005
 /* 07BF80 7F047450 C4262B40 */  lwc1  $f6, %lo(D_80052B40)($at)
-/* 07BF84 7F047454 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 07BF88 7F047458 C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 07BF84 7F047454 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 07BF88 7F047458 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 07BF8C 7F04745C C60A00B0 */  lwc1  $f10, 0xb0($s0)
 /* 07BF90 7F047460 46043202 */  mul.s $f8, $f6, $f4
 /* 07BF94 7F047464 46085180 */  add.s $f6, $f10, $f8
@@ -24783,10 +24546,10 @@ glabel object_interaction
 .L7F047504:
 /* 07C034 7F047504 4602B03C */  c.lt.s $f22, $f2
 .L7F047508:
-/* 07C038 7F047508 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07C038 7F047508 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07C03C 7F04750C 45020348 */  bc1fl .L7F048230
 /* 07C040 7F047510 92220003 */   lbu   $v0, 3($s1)
-/* 07C044 7F047514 C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 07C044 7F047514 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 07C048 7F047518 C60600B4 */  lwc1  $f6, 0xb4($s0)
 /* 07C04C 7F04751C 46041282 */  mul.s $f10, $f2, $f4
 /* 07C050 7F047520 460A3200 */  add.s $f8, $f6, $f10
@@ -24816,13 +24579,13 @@ glabel object_interaction
 /* 07C0A8 7F047578 0FC0D521 */  jal   parse_handle_actionblocks
 /* 07C0AC 7F04757C E7A6047C */   swc1  $f6, 0x47c($sp)
 /* 07C0B0 7F047580 C62E0098 */  lwc1  $f14, 0x98($s1)
-/* 07C0B4 7F047584 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07C0B4 7F047584 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07C0B8 7F047588 460EB03E */  c.le.s $f22, $f14
 /* 07C0BC 7F04758C 00000000 */  nop   
 /* 07C0C0 7F047590 45020016 */  bc1fl .L7F0475EC
 /* 07C0C4 7F047594 8E2E000C */   lw    $t6, 0xc($s1)
-/* 07C0C8 7F047598 C4228378 */  lwc1  $f2, %lo(D_80048378)($at)
-/* 07C0CC 7F04759C 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07C0C8 7F047598 C4228378 */  lwc1  $f2, %lo(global_timer_delta)($at)
+/* 07C0CC 7F04759C 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07C0D0 7F0475A0 4602703E */  c.le.s $f14, $f2
 /* 07C0D4 7F0475A4 00000000 */  nop   
 /* 07C0D8 7F0475A8 45020006 */  bc1fl .L7F0475C4
@@ -24840,7 +24603,7 @@ glabel object_interaction
 /* 07C104 7F0475D4 460A0200 */  add.s $f8, $f0, $f10
 /* 07C108 7F0475D8 E6280088 */  swc1  $f8, 0x88($s1)
 .L7F0475DC:
-/* 07C10C 7F0475DC C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 07C10C 7F0475DC C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 07C110 7F0475E0 46047181 */  sub.s $f6, $f14, $f4
 /* 07C114 7F0475E4 E6260098 */  swc1  $f6, 0x98($s1)
 /* 07C118 7F0475E8 8E2E000C */  lw    $t6, 0xc($s1)
@@ -25068,8 +24831,8 @@ glabel object_interaction
 /* 07C450 7F047920 E636009C */  swc1  $f22, 0x9c($s1)
 /* 07C454 7F047924 8E980008 */  lw    $t8, 8($s4)
 .L7F047928:
-/* 07C458 7F047928 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 07C45C 7F04792C C4228378 */  lwc1  $f2, %lo(D_80048378)($at)
+/* 07C458 7F047928 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 07C45C 7F04792C C4228378 */  lwc1  $f2, %lo(global_timer_delta)($at)
 /* 07C460 7F047930 8F0F0008 */  lw    $t7, 8($t8)
 /* 07C464 7F047934 C7A40438 */  lwc1  $f4, 0x438($sp)
 /* 07C468 7F047938 4602B03C */  c.lt.s $f22, $f2
@@ -25090,9 +24853,9 @@ glabel object_interaction
 /* 07C49C 7F04796C 46007306 */   mov.s $f12, $f14
 /* 07C4A0 7F047970 C60A0008 */  lwc1  $f10, 8($s0)
 /* 07C4A4 7F047974 C6880014 */  lwc1  $f8, 0x14($s4)
-/* 07C4A8 7F047978 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07C4A8 7F047978 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07C4AC 7F04797C 46085102 */  mul.s $f4, $f10, $f8
-/* 07C4B0 7F047980 C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 07C4B0 7F047980 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 07C4B4 7F047984 46040182 */  mul.s $f6, $f0, $f4
 /* 07C4B8 7F047988 00000000 */  nop   
 /* 07C4BC 7F04798C 460A3202 */  mul.s $f8, $f6, $f10
@@ -25106,8 +24869,8 @@ glabel object_interaction
 /* 07C4DC 7F0479AC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 07C4E0 7F0479B0 44817000 */  mtc1  $at, $f14
 /* 07C4E4 7F0479B4 E7A00444 */  swc1  $f0, 0x444($sp)
-/* 07C4E8 7F0479B8 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 07C4EC 7F0479BC C4228378 */  lwc1  $f2, %lo(D_80048378)($at)
+/* 07C4E8 7F0479B8 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 07C4EC 7F0479BC C4228378 */  lwc1  $f2, %lo(global_timer_delta)($at)
 /* 07C4F0 7F0479C0 C6240088 */  lwc1  $f4, 0x88($s1)
 /* 07C4F4 7F0479C4 C7AA043C */  lwc1  $f10, 0x43c($sp)
 /* 07C4F8 7F0479C8 C7AC0460 */  lwc1  $f12, 0x460($sp)
@@ -25555,13 +25318,13 @@ glabel object_interaction
 /* 07CBA0 7F048070 8FA50070 */   lw    $a1, 0x70($sp)
 /* 07CBA4 7F048074 C62C00A0 */  lwc1  $f12, 0xa0($s1)
 .L7F048078:
-/* 07CBA8 7F048078 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07CBA8 7F048078 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07CBAC 7F04807C 460CB03E */  c.le.s $f22, $f12
 /* 07CBB0 7F048080 00000000 */  nop   
 /* 07CBB4 7F048084 45020016 */  bc1fl .L7F0480E0
 /* 07CBB8 7F048088 C6200094 */   lwc1  $f0, 0x94($s1)
-/* 07CBBC 7F04808C C4228378 */  lwc1  $f2, %lo(D_80048378)($at)
-/* 07CBC0 7F048090 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07CBBC 7F04808C C4228378 */  lwc1  $f2, %lo(global_timer_delta)($at)
+/* 07CBC0 7F048090 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07CBC4 7F048094 4602603E */  c.le.s $f12, $f2
 /* 07CBC8 7F048098 00000000 */  nop   
 /* 07CBCC 7F04809C 45020006 */  bc1fl .L7F0480B8
@@ -25579,18 +25342,18 @@ glabel object_interaction
 /* 07CBF8 7F0480C8 46047180 */  add.s $f6, $f14, $f4
 /* 07CBFC 7F0480CC E6260098 */  swc1  $f6, 0x98($s1)
 .L7F0480D0:
-/* 07CC00 7F0480D0 C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 07CC00 7F0480D0 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 07CC04 7F0480D4 460A6201 */  sub.s $f8, $f12, $f10
 /* 07CC08 7F0480D8 E62800A0 */  swc1  $f8, 0xa0($s1)
 /* 07CC0C 7F0480DC C6200094 */  lwc1  $f0, 0x94($s1)
 .L7F0480E0:
-/* 07CC10 7F0480E0 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07CC10 7F0480E0 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07CC14 7F0480E4 4600B03E */  c.le.s $f22, $f0
 /* 07CC18 7F0480E8 00000000 */  nop   
 /* 07CC1C 7F0480EC 45020016 */  bc1fl .L7F048148
 /* 07CC20 7F0480F0 8E2B000C */   lw    $t3, 0xc($s1)
-/* 07CC24 7F0480F4 C4228378 */  lwc1  $f2, %lo(D_80048378)($at)
-/* 07CC28 7F0480F8 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 07CC24 7F0480F4 C4228378 */  lwc1  $f2, %lo(global_timer_delta)($at)
+/* 07CC28 7F0480F8 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 07CC2C 7F0480FC 4602003E */  c.le.s $f0, $f2
 /* 07CC30 7F048100 00000000 */  nop   
 /* 07CC34 7F048104 45020006 */  bc1fl .L7F048120
@@ -25608,7 +25371,7 @@ glabel object_interaction
 /* 07CC60 7F048130 46046180 */  add.s $f6, $f12, $f4
 /* 07CC64 7F048134 E626008C */  swc1  $f6, 0x8c($s1)
 .L7F048138:
-/* 07CC68 7F048138 C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 07CC68 7F048138 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 07CC6C 7F04813C 460A0201 */  sub.s $f8, $f0, $f10
 /* 07CC70 7F048140 E6280094 */  swc1  $f8, 0x94($s1)
 /* 07CC74 7F048144 8E2B000C */  lw    $t3, 0xc($s1)
@@ -26309,8 +26072,8 @@ glabel object_interaction
 /* 07D6C0 7F048B90 460A3201 */  sub.s $f8, $f6, $f10
 /* 07D6C4 7F048B94 46044082 */  mul.s $f2, $f8, $f4
 /* 07D6C8 7F048B98 11E00026 */  beqz  $t7, .L7F048C34
-/* 07D6CC 7F048B9C 3C018005 */   lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 07D6D0 7F048BA0 C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 07D6CC 7F048B9C 3C018005 */   lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 07D6D0 7F048BA0 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 07D6D4 7F048BA4 C6260088 */  lwc1  $f6, 0x88($s1)
 /* 07D6D8 7F048BA8 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 07D6DC 7F048BAC 460A3202 */  mul.s $f8, $f6, $f10
@@ -26840,7 +26603,7 @@ glabel object_interaction
 /* 07DE78 7F049348 058201E0 */  bltzl $t4, .L7F049ACC
 /* 07DE7C 7F04934C 8E980008 */   lw    $t8, 8($s4)
 /* 07DE80 7F049350 8E0A00AC */  lw    $t2, 0xac($s0)
-/* 07DE84 7F049354 3C0C8005 */  lui   $t4, %hi(D_8004837C) # $t4, 0x8005
+/* 07DE84 7F049354 3C0C8005 */  lui   $t4, %hi(global_timer) # $t4, 0x8005
 /* 07DE88 7F049358 254E0001 */  addiu $t6, $t2, 1
 /* 07DE8C 7F04935C 31CD0001 */  andi  $t5, $t6, 1
 /* 07DE90 7F049360 AE0E00AC */  sw    $t6, 0xac($s0)
@@ -26856,7 +26619,7 @@ glabel object_interaction
 /* 07DEB8 7F049388 AFA90138 */  sw    $t1, 0x138($sp)
 /* 07DEBC 7F04938C 8E1900C0 */  lw    $t9, 0xc0($s0)
 .L7F049390:
-/* 07DEC0 7F049390 8D8C837C */  lw    $t4, %lo(D_8004837C)($t4)
+/* 07DEC0 7F049390 8D8C837C */  lw    $t4, %lo(global_timer)($t4)
 /* 07DEC4 7F049394 032C082A */  slt   $at, $t9, $t4
 /* 07DEC8 7F049398 50200032 */  beql  $at, $zero, .L7F049464
 /* 07DECC 7F04939C 8FAF013C */   lw    $t7, 0x13c($sp)
@@ -26908,8 +26671,8 @@ glabel object_interaction
 /* 07DF78 7F049448 0FC14E84 */  jal   sub_GAME_7F053A10
 /* 07DF7C 7F04944C 8FA50070 */   lw    $a1, 0x70($sp)
 .L7F049450:
-/* 07DF80 7F049450 3C088005 */  lui   $t0, %hi(D_8004837C) # $t0, 0x8005
-/* 07DF84 7F049454 8D08837C */  lw    $t0, %lo(D_8004837C)($t0)
+/* 07DF80 7F049450 3C088005 */  lui   $t0, %hi(global_timer) # $t0, 0x8005
+/* 07DF84 7F049454 8D08837C */  lw    $t0, %lo(global_timer)($t0)
 /* 07DF88 7F049458 250B0002 */  addiu $t3, $t0, 2
 /* 07DF8C 7F04945C AE0B00C0 */  sw    $t3, 0xc0($s0)
 /* 07DF90 7F049460 8FAF013C */  lw    $t7, 0x13c($sp)
@@ -27078,8 +26841,8 @@ glabel object_interaction
 /* 07E204 7F0496D4 46065201 */  sub.s $f8, $f10, $f6
 /* 07E208 7F0496D8 E7A80118 */  swc1  $f8, 0x118($sp)
 .L7F0496DC:
-/* 07E20C 7F0496DC 3C0F8005 */  lui   $t7, %hi(D_8004837C) # $t7, 0x8005
-/* 07E210 7F0496E0 8DEF837C */  lw    $t7, %lo(D_8004837C)($t7)
+/* 07E20C 7F0496DC 3C0F8005 */  lui   $t7, %hi(global_timer) # $t7, 0x8005
+/* 07E210 7F0496E0 8DEF837C */  lw    $t7, %lo(global_timer)($t7)
 /* 07E214 7F0496E4 8E0900BC */  lw    $t1, 0xbc($s0)
 /* 07E218 7F0496E8 27B10110 */  addiu $s1, $sp, 0x110
 /* 07E21C 7F0496EC 8FA50100 */  lw    $a1, 0x100($sp)
@@ -27126,8 +26889,8 @@ glabel object_interaction
 /* 07E2C0 7F049790 44816000 */  mtc1  $at, $f12
 /* 07E2C4 7F049794 3C018005 */  lui   $at, %hi(D_80052B74) # $at, 0x8005
 /* 07E2C8 7F049798 C4282B74 */  lwc1  $f8, %lo(D_80052B74)($at)
-/* 07E2CC 7F04979C 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 07E2D0 7F0497A0 C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 07E2CC 7F04979C 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 07E2D0 7F0497A0 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 07E2D4 7F0497A4 3C018003 */  lui   $at, %hi(D_80030B1C) # $at, 0x8003
 /* 07E2D8 7F0497A8 4600603C */  c.lt.s $f12, $f0
 /* 07E2DC 7F0497AC 460A4182 */  mul.s $f6, $f8, $f10
@@ -28046,8 +27809,8 @@ command0E_set_rotation:
 /* 07EF20 7F04A3F0 E606000C */   swc1  $f6, 0xc($s0)
 command0F_rotate:
 /* 07EF24 7F04A3F4 8C6C0004 */  lw    $t4, 4($v1)
-/* 07EF28 7F04A3F8 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 07EF2C 7F04A3FC C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 07EF28 7F04A3F8 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 07EF2C 7F04A3FC C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 07EF30 7F04A400 448C9000 */  mtc1  $t4, $f18
 /* 07EF34 7F04A404 00000000 */  nop   
 /* 07EF38 7F04A408 46809120 */  cvt.s.w $f4, $f18
@@ -28084,8 +27847,8 @@ def_7F04A01C:
 /* 07EFA4 7F04A474 4600A03C */  c.lt.s $f20, $f0
 /* 07EFA8 7F04A478 00000000 */  nop   
 /* 07EFAC 7F04A47C 45000017 */  bc1f  .L7F04A4DC
-/* 07EFB0 7F04A480 3C028005 */   lui   $v0, %hi(D_80048378) # $v0, 0x8005
-/* 07EFB4 7F04A484 24428378 */  addiu $v0, %lo(D_80048378) # addiu $v0, $v0, -0x7c88
+/* 07EFB0 7F04A480 3C028005 */   lui   $v0, %hi(global_timer_delta) # $v0, 0x8005
+/* 07EFB4 7F04A484 24428378 */  addiu $v0, %lo(global_timer_delta) # addiu $v0, $v0, -0x7c88
 /* 07EFB8 7F04A488 C4520000 */  lwc1  $f18, ($v0)
 /* 07EFBC 7F04A48C C60A0014 */  lwc1  $f10, 0x14($s0)
 /* 07EFC0 7F04A490 46120102 */  mul.s $f4, $f0, $f18
@@ -28110,8 +27873,8 @@ def_7F04A01C:
 /* 07F008 7F04A4D8 E6080010 */  swc1  $f8, 0x10($s0)
 .L7F04A4DC:
 /* 07F00C 7F04A4DC C600002C */  lwc1  $f0, 0x2c($s0)
-/* 07F010 7F04A4E0 3C028005 */  lui   $v0, %hi(D_80048378) # $v0, 0x8005
-/* 07F014 7F04A4E4 24428378 */  addiu $v0, %lo(D_80048378) # addiu $v0, $v0, -0x7c88
+/* 07F010 7F04A4E0 3C028005 */  lui   $v0, %hi(global_timer_delta) # $v0, 0x8005
+/* 07F014 7F04A4E4 24428378 */  addiu $v0, %lo(global_timer_delta) # addiu $v0, $v0, -0x7c88
 /* 07F018 7F04A4E8 4600A03C */  c.lt.s $f20, $f0
 /* 07F01C 7F04A4EC 00000000 */  nop   
 /* 07F020 7F04A4F0 45020017 */  bc1fl .L7F04A550
@@ -41653,9 +41416,9 @@ glabel sub_GAME_7F054FB4
 /* 089BA4 7F055074 02408825 */  move  $s1, $s2
 .L7F055078:
 /* 089BA8 7F055078 12400062 */  beqz  $s2, .L7F055204
-/* 089BAC 7F05507C 3C138005 */   lui   $s3, %hi(D_8004837C) # $s3, 0x8005
+/* 089BAC 7F05507C 3C138005 */   lui   $s3, %hi(global_timer) # $s3, 0x8005
 /* 089BB0 7F055080 4480A000 */  mtc1  $zero, $f20
-/* 089BB4 7F055084 2673837C */  addiu $s3, %lo(D_8004837C) # addiu $s3, $s3, -0x7c84
+/* 089BB4 7F055084 2673837C */  addiu $s3, %lo(global_timer) # addiu $s3, $s3, -0x7c84
 .L7F055088:
 /* 089BB8 7F055088 52800030 */  beql  $s4, $zero, .L7F05514C
 /* 089BBC 7F05508C 962F0098 */   lhu   $t7, 0x98($s1)
@@ -42909,8 +42672,8 @@ glabel sub_GAME_7F055F64
 /* 08AAAC 7F055F7C AFBF001C */   sw    $ra, 0x1c($sp)
 /* 08AAB0 7F055F80 3C038003 */  lui   $v1, %hi(toxic_gas_sound_timer) # $v1, 0x8003
 /* 08AAB4 7F055F84 24630AC8 */  addiu $v1, %lo(toxic_gas_sound_timer) # addiu $v1, $v1, 0xac8
-/* 08AAB8 7F055F88 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 08AABC 7F055F8C C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 08AAB8 7F055F88 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 08AABC 7F055F8C C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 08AAC0 7F055F90 C4640000 */  lwc1  $f4, ($v1)
 /* 08AAC4 7F055F94 3C018007 */  lui   $at, %hi(gas_damage_flag) # $at, 0x8007
 /* 08AAC8 7F055F98 46062200 */  add.s $f8, $f4, $f6
@@ -42945,8 +42708,8 @@ glabel sub_GAME_7F055F64
 /* 08AB38 7F056008 24630AC8 */  addiu $v1, %lo(toxic_gas_sound_timer) # addiu $v1, $v1, 0xac8
 /* 08AB3C 7F05600C 13000050 */  beqz  $t8, .L7F056150
 /* 08AB40 7F056010 3C048003 */   lui   $a0, %hi(D_80030ADC) # $a0, 0x8003
-/* 08AB44 7F056014 3C028005 */  lui   $v0, %hi(D_8004837C) # $v0, 0x8005
-/* 08AB48 7F056018 8C42837C */  lw    $v0, %lo(D_8004837C)($v0)
+/* 08AB44 7F056014 3C028005 */  lui   $v0, %hi(global_timer) # $v0, 0x8005
+/* 08AB48 7F056018 8C42837C */  lw    $v0, %lo(global_timer)($v0)
 /* 08AB4C 7F05601C 24840ADC */  addiu $a0, %lo(D_80030ADC) # addiu $a0, $a0, 0xadc
 /* 08AB50 7F056020 8C990000 */  lw    $t9, ($a0)
 /* 08AB54 7F056024 2448FF1F */  addiu $t0, $v0, -0xe1
@@ -42986,13 +42749,13 @@ glabel sub_GAME_7F055F64
 /* 08ABD4 7F0560A4 3C018007 */  lui   $at, %hi(gas_damage_flag) # $at, 0x8007
 /* 08ABD8 7F0560A8 C4281E78 */  lwc1  $f8, %lo(gas_damage_flag)($at)
 /* 08ABDC 7F0560AC C4400000 */  lwc1  $f0, ($v0)
-/* 08ABE0 7F0560B0 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 08ABE0 7F0560B0 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 08ABE4 7F0560B4 3C048003 */  lui   $a0, 0x8003
 /* 08ABE8 7F0560B8 4608003C */  c.lt.s $f0, $f8
 /* 08ABEC 7F0560BC 00000000 */  nop   
 /* 08ABF0 7F0560C0 4500001A */  bc1f  .L7F05612C
 /* 08ABF4 7F0560C4 00000000 */   nop   
-/* 08ABF8 7F0560C8 C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 08ABF8 7F0560C8 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 08ABFC 7F0560CC 3C098003 */  lui   $t1, %hi(D_80030AE4) # $t1, 0x8003
 /* 08AC00 7F0560D0 460A0400 */  add.s $f16, $f0, $f10
 /* 08AC04 7F0560D4 E4500000 */  swc1  $f16, ($v0)
@@ -43178,9 +42941,9 @@ glabel sub_GAME_7F0561E0
 /* 08AD18 7F0561E8 3C028003 */  lui   $v0, %hi(D_80030AF0) # $v0, 0x8003
 /* 08AD1C 7F0561EC 24420AF0 */  addiu $v0, %lo(D_80030AF0) # addiu $v0, $v0, 0xaf0
 /* 08AD20 7F0561F0 11C00005 */  beqz  $t6, .L7F056208
-/* 08AD24 7F0561F4 3C018005 */   lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 08AD24 7F0561F4 3C018005 */   lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 08AD28 7F0561F8 C4440000 */  lwc1  $f4, ($v0)
-/* 08AD2C 7F0561FC C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 08AD2C 7F0561FC C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 08AD30 7F056200 46062201 */  sub.s $f8, $f4, $f6
 /* 08AD34 7F056204 E4480000 */  swc1  $f8, ($v0)
 .L7F056208:

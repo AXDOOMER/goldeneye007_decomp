@@ -1,63 +1,37 @@
 #include "ultra64.h"
 
 
-/* data
-D:80036B70     highlighted_debug_option:.word 0         # DATA XREF: print_debug_mcm_to_stdout+68o
-D:80036B70                                              # sub_CODE_7F09000C+70o
-D:80036B70                                              # get_highlighted_debug_option+8r
-D:80036B70                                              # sub_CODE_7F0901BC+8w
-D:80036B70                                              # sub_CODE_7F0901C8o
-D:80036B70                                              # sub_CODE_7F0901C8+8r
-D:80036B70                                              # sub_CODE_7F0901C8+1Cw
-D:80036B70                                              # sub_CODE_7F0901C8+30w
-D:80036B70                                              # sub_CODE_7F090248o
-D:80036B70                                              # sub_CODE_7F090248+8r
-D:80036B70                                              # sub_CODE_7F090248+18w
-D:80036B70                                              # sub_CODE_7F090248+30w
-D:80036B70                                              # sub_CODE_7F0902C0+8o
-D:80036B70                                              # sub_CODE_7F0902C0+10r
-D:80036B70                                              # sub_CODE_7F0902C0+28w
-D:80036B70                                              # sub_CODE_7F0902C0+40w
-D:80036B70                                              # sub_CODE_7F09039C+8o
-D:80036B70                                              # sub_CODE_7F09039C+10r
-D:80036B74     ptr_last_debuggrp_cutoff:.word 0         # DATA XREF: init_debug_menu_values+4Cw
-D:80036B74                                              # print_debug_mcm_to_stdout+Cr
-D:80036B74                                              # print_debug_mcm_to_stdout+148r
-D:80036B74                                              # sub_CODE_7F09000C+10o
-D:80036B74                                              # sub_CODE_7F09000C+18r
-D:80036B78     ptr_textptrs:   .word 0                  # DATA XREF: init_debug_menu_valuesw
-D:80036B78                                              # print_debug_mcm_to_stdout+74o
-D:80036B78                                              # sub_CODE_7F09000C+13Cr
-D:80036B7C     ptr_positions:  .word 0                  # DATA XREF: init_debug_menu_values+8w
-D:80036B7C                                              # print_debug_mcm_to_stdout+70o
-D:80036B7C                                              # sub_CODE_7F09000C+78o
-D:80036B80     number_groups:  .word 0                  # DATA XREF: init_debug_menu_values+5Cw
-D:80036B80                                              # sub_CODE_7F0901C8:loc_CODE_7F0901FCr
-D:80036B80                                              # sub_CODE_7F090248:loc_CODE_7F09027Cr
-D:80036B80                                              # sub_CODE_7F0902C0:loc_CODE_7F090304r
-D:80036B80                                              # sub_CODE_7F09039C+28r
-D:80036B84     ptr_groupings:  .word 0                  # DATA XREF: init_debug_menu_values+10w
-D:80036B84                                              # sub_CODE_7F0901C8+20r
-D:80036B84                                              # sub_CODE_7F0901C8+48r
-D:80036B84                                              # sub_CODE_7F090248+1Cr
-D:80036B84                                              # sub_CODE_7F0902C0r
-D:80036B84                                              # sub_CODE_7F09039Cr
-D:80036B88     num_mcm_something:.word 2                # DATA XREF: sub_CODE_7F08FE08+8w
-D:80036B88                                              # print_debug_mcm_to_stdout+4r
-D:80036B88                                              # sub_CODE_7F09000C+8r
-D:80036B8C     mcm_xoffset_multiplier:.word 0x4040400
-D:80036B90     mcm_yoffset_multiplier:.word 0x7070700
+// data
+//D:80036B70
+s32 highlighted_debug_option = 0;
+//D:80036B74
+s32 ptr_last_debuggrp_cutoff = 0;
+//D:80036B78
+s32 ptr_textptrs = 0;
+//D:80036B7C
+s32 ptr_positions = 0;
+//D:80036B80
+s32 number_groups = 0;
+//D:80036B84
+s32 ptr_groupings = 0;
+//D:80036B88
+s32 num_mcm_something = 2;
+//D:80036B8C
+u32 mcm_xoffset_multiplier = 0x4040400;
+//D:80036B90
+u32 mcm_yoffset_multiplier = 0x7070700;
+/*
 D:80036B94                     .word 0
 D:80036B98                     .word 0
 D:80036B9C                     .word 0
 D:80036BA0                     .word 0
-
 */
 
-/* rodata
-D:80055340     aMenu_cErrorTriedToCallFont_makegt:.ascii "menu.c: ERROR! Tried to call font_makegt\n"
-D:80055340                                              # DATA XREF: sub_CODE_7F09000C+158o
-*/
+// rodata
+//D:80055340
+const char aMenu_cErrorTriedToCallFont_makegt[] = "menu.c: ERROR! Tried to call font_makegt\n";
+
+
 
 
 #ifdef NONMATCHING

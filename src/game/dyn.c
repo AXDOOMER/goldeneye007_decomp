@@ -1,115 +1,90 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:8008C230     ptr_mgfx0_alloc_start:.space 4           # DATA XREF: set_vtx_gfx_mem_alloc+F0w
-CODE.bss:8008C230                                              # set_vtx_gfx_mem_alloc+104o
-CODE.bss:8008C230                                              # set_vtx_gfx_mem_alloc+108r
-CODE.bss:8008C230                                              # set_vtx_gfx_mem_alloc+12Co
-CODE.bss:8008C230                                              # draw_membars+8o
-CODE.bss:8008C234     ptr_mgfx1_alloc_start:.space 4           # DATA XREF: set_vtx_gfx_mem_alloc+118w
-CODE.bss:8008C234                                              # set_vtx_gfx_mem_alloc+130r
-CODE.bss:8008C238     ptr_mgfx_end:   .space 4                 # DATA XREF: set_vtx_gfx_mem_alloc+140w
-CODE.bss:8008C23C                     .align 4
-CODE.bss:8008C240     ptr_mvtx0_alloc_start:.space 4           # DATA XREF: set_vtx_gfx_mem_alloc+164o
-CODE.bss:8008C240                                              # set_vtx_gfx_mem_alloc+170w
-CODE.bss:8008C240                                              # set_vtx_gfx_mem_alloc+184o
-CODE.bss:8008C240                                              # set_vtx_gfx_mem_alloc+188r
-CODE.bss:8008C240                                              # set_vtx_gfx_mem_alloc+1ACo
-CODE.bss:8008C240                                              # set_vtx_gfx_mem_alloc+1D4r
-CODE.bss:8008C240                                              # draw_membars+74o
-CODE.bss:8008C244     ptr_mvtx1_alloc_start:.space 4           # DATA XREF: set_vtx_gfx_mem_alloc+198w
-CODE.bss:8008C244                                              # set_vtx_gfx_mem_alloc+1B0r
-CODE.bss:8008C248     ptr_mvtx_end:   .space 4                 # DATA XREF: set_vtx_gfx_mem_alloc+1C4w
-CODE.bss:8008C24C     ptr_mvtx_cur_pos:.space 4                # DATA XREF: set_vtx_gfx_mem_alloc+1E4w
-CODE.bss:8008C24C                                              # sub_CODE_7F0BD6C4o
-CODE.bss:8008C24C                                              # sub_CODE_7F0BD6C4+8r
-CODE.bss:8008C24C                                              # sub_CODE_7F0BD6C4+18w
-CODE.bss:8008C24C                                              # sub_CODE_7F0BD6E0o
-CODE.bss:8008C24C                                              # sub_CODE_7F0BD6E0+8r
-CODE.bss:8008C24C                                              # sub_CODE_7F0BD6E0+14w
-CODE.bss:8008C24C                                              # sub_CODE_7F0BD6F8o
-CODE.bss:8008C24C                                              # sub_CODE_7F0BD6F8+8r
-CODE.bss:8008C24C                                              # sub_CODE_7F0BD6F8+18w
-CODE.bss:8008C24C                                              # sub_CODE_7F0BD714o
-CODE.bss:8008C24C                                              # sub_CODE_7F0BD714+8r
-CODE.bss:8008C24C                                              # sub_CODE_7F0BD714+20w
-CODE.bss:8008C24C                                              # allocate_something_in_mvtx+38w
-CODE.bss:8008C24C                                              # sub_CODE_7F0BD7A4+1Cr
-CODE.bss:8008C24C                                              # draw_membars+90r
-CODE.bss:8008C250     bank_in_mgfx_alloc_table:.space 1        # DATA XREF: set_vtx_gfx_mem_alloc+1C8w
-CODE.bss:8008C250                                              # get_ptr_displaylistr
-CODE.bss:8008C250                                              # allocate_something_in_mgfxr
-CODE.bss:8008C250                                              # allocate_something_in_mvtxo
-CODE.bss:8008C250                                              # allocate_something_in_mvtx+8r
-CODE.bss:8008C250                                              # allocate_something_in_mvtx+18w
-CODE.bss:8008C250                                              # allocate_something_in_mvtx+20r
-CODE.bss:8008C250                                              # num_microcode_cmds_that_fitr
-CODE.bss:8008C250                                              # sub_CODE_7F0BD7A4r
-CODE.bss:8008C250                                              # draw_membarsr
-CODE.bss:8008C250                                              # draw_membars+6Cr
-CODE.bss:8008C251                     .align 2
-CODE.bss:8008C254     dword_CODE_bss_8008C254:.space 4         # DATA XREF: set_vtx_gfx_mem_alloc+1CCw
-CODE.bss:8008C254                                              # get_ptr_displaylist+1Cw
-CODE.bss:8008C254                                              # allocate_something_in_mvtx+1Cw
-*/
+// bss
+//CODE.bss:8008C230
+s32 *ptr_mgfx0_alloc_start;
+//CODE.bss:8008C234
+s32 *ptr_mgfx1_alloc_start;
+//CODE.bss:8008C238
+s32 *ptr_mgfx_end;
+//CODE.bss:8008C23C
+s32 D_8008C23C;
+//CODE.bss:8008C240
+s32 *ptr_mvtx0_alloc_start;
+//CODE.bss:8008C244
+s32 *ptr_mvtx1_alloc_start;
+//CODE.bss:8008C248
+s32 *ptr_mvtx_end;
+//CODE.bss:8008C24C
+s32 *ptr_mvtx_cur_pos;
+//CODE.bss:8008C250
+s32 bank_in_mgfx_alloc_table;
+//CODE.bss:8008C254
+s32 dword_CODE_bss_8008C254;
 
-/* data
-D:800482E0     dword_D_800482E0:.word 0                 # DATA XREF: something_with_dyn_c_debug+18o
-D:800482E0                                              # set_vtx_gfx_mem_alloc+CCr
-D:800482E4     dword_D_800482E4:.word 0x10000
-D:800482E8                     .word 0x18000
-D:800482EC                     .word 0x20000
-D:800482F0     dword_D_800482F0:.word 0x28000           # DATA XREF: set_vtx_gfx_mem_alloc+148r
-D:800482F4                     .word 0x10000
-D:800482F8                     .word 0x18000
-D:800482FC                     .word 0x20000
-D:80048300                     .word 0x28000
-D:80048304                     .ascii ">>>>>>>>>>>>>>>>>>>>>>>>>"<0><0><0>
-D:80048320     membars_string: .ascii "========================="<0><0><0>
-D:80048320                                              # DATA XREF: draw_membars+50o
-D:80048320                                              # draw_membars+B0o
-D:8004833C                     .ascii "-------------------------"<0><0><0>
-D:80048358                     .word 0
-D:8004835C                     .word 0
-*/
 
-/* rodata
-D:8005B680     aDyn_c_debug:   .ascii "dyn_c_debug"<0>  # DATA XREF: something_with_dyn_c_debug+Co
-D:8005B68C     aMgfx:          .ascii "-mgfx"<0><0><0>  # DATA XREF: set_vtx_gfx_mem_alloc+8o
-D:8005B694     aMgfx_1:        .ascii "-mgfx"<0><0><0>  # DATA XREF: set_vtx_gfx_mem_alloc+28o
-D:8005B69C     aMvtx:          .ascii "-mvtx"<0><0><0>  # DATA XREF: set_vtx_gfx_mem_alloc:loc_CODE_7F0BD4F0o
-D:8005B6A4     aMvtx_0:        .ascii "-mvtx"<0>        # DATA XREF: set_vtx_gfx_mem_alloc+84o
-*/
+// data
+//D:800482E0
+s32 D_800482E0 = 0;
+//D:800482E4
+s32 D_800482E4[] = {0x10000, 0x18000, 0x20000};
+//D:800482F0
+s32 D_800482F0[] = {0x28000, 0x10000, 0x18000, 0x20000, 0x28000};
 
-#ifdef NONMATCHING
+//D:80048304
+char membars_string1[] = ">>>>>>>>>>>>>>>>>>>>>>>>>";
+//D:80048320
+char membars_string2[] = "=========================";
+//D:8004833C
+char membars_string3[] = "-------------------------";
+
+
+// rodata
+//D:8005B68C
+const char aMgfx[] = "-mgfx";
+//D:8005B694
+const char aMgfx_1[] = "-mgfx";
+//D:8005B69C
+const char aMvtx[] = "-mvtx";
+//D:8005B6A4
+const char aMvtx_0[] = "-mvtx";
+
+
 void something_with_dyn_c_debug(void) {
-
+    get_ptr_debug_notice_list_entry(&D_800482E0, "dyn_c_debug");
 }
-#else
-GLOBAL_ASM(
-.text
-glabel something_with_dyn_c_debug
-/* 0F1F90 7F0BD460 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F1F94 7F0BD464 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F1F98 7F0BD468 3C048005 */  lui   $a0, %hi(D_800482E0) # $a0, 0x8005
-/* 0F1F9C 7F0BD46C 3C058006 */  lui   $a1, %hi(aDyn_c_debug) # $a1, 0x8006
-/* 0F1FA0 7F0BD470 24A5B680 */  addiu $a1, %lo(aDyn_c_debug) # addiu $a1, $a1, -0x4980
-/* 0F1FA4 7F0BD474 0C001398 */  jal   get_ptr_debug_notice_list_entry
-/* 0F1FA8 7F0BD478 248482E0 */   addiu $a0, %lo(D_800482E0) # addiu $a0, $a0, -0x7d20
-/* 0F1FAC 7F0BD47C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F1FB0 7F0BD480 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F1FB4 7F0BD484 03E00008 */  jr    $ra
-/* 0F1FB8 7F0BD488 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void set_vtx_gfx_mem_alloc(void) {
+    s32 sp18;
+    ? temp_ret;
 
+    // Node 0
+    if (check_token(1, "-mgfx") != 0)
+    {
+        // Node 1
+        sp18 = get_num_players();
+        (0x80050000 + (sp18 * 4))->unk-7D20 = (s32) (strtol(check_token(1, "-mgfx"), 0, 0) << 0xa);
+    }
+    // Node 2
+    if (check_token(1, "-mvtx") != 0)
+    {
+        // Node 3
+        sp18 = get_num_players();
+        (0x80050000 + (sp18 * 4))->unk-7D10 = (s32) (strtol(check_token(1, "-mvtx"), 0, 0) << 0xa);
+    }
+    // Node 4
+    ptr_mgfx0_alloc_start = allocate_bytes_in_bank(((0x80050000 + (get_num_players() * 4))->unk-7D20 * 2), 4);
+    ptr_mgfx0_alloc_start.unk4 = (s32) ((0x80050000 + (get_num_players() * 4))->unk-7D20 + ptr_mgfx0_alloc_start);
+    ptr_mgfx0_alloc_start.unk8 = (s32) ((0x80050000 + (get_num_players() * 4))->unk-7D20 + ptr_mgfx0_alloc_start.unk4);
+    ptr_mvtx0_alloc_start = allocate_bytes_in_bank(((0x80050000 + (get_num_players() * 4))->unk-7D10 * 2), 4);
+    ptr_mvtx0_alloc_start.unk4 = (s32) ((0x80050000 + (get_num_players() * 4))->unk-7D10 + ptr_mvtx0_alloc_start);
+    temp_ret = get_num_players();
+    ptr_mvtx0_alloc_start.unk8 = (s32) ((0x80050000 + (temp_ret * 4))->unk-7D10 + ptr_mvtx0_alloc_start.unk4);
+    bank_in_mgfx_alloc_table = (u8)0;
+    dword_CODE_bss_8008C254 = 0;
+    (void *)0x80090000->unk-3DB4 = (s32) ptr_mvtx0_alloc_start;
+    return temp_ret;
 }
 #else
 GLOBAL_ASM(
@@ -319,8 +294,10 @@ glabel sub_GAME_7F0BD6C4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BD6E0(void) {
-
+s32 sub_GAME_7F0BD6E0(void) {
+    // Node 0
+    ptr_mvtx_cur_pos = (s32) (ptr_mvtx_cur_pos + 0x40);
+    return ptr_mvtx_cur_pos;
 }
 #else
 GLOBAL_ASM(
@@ -340,8 +317,10 @@ glabel sub_GAME_7F0BD6E0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BD6F8(void) {
-
+s32 sub_GAME_7F0BD6F8(s32 arg0) {
+    // Node 0
+    ptr_mvtx_cur_pos = (s32) (ptr_mvtx_cur_pos + (arg0 * 0x10));
+    return ptr_mvtx_cur_pos;
 }
 #else
 GLOBAL_ASM(
@@ -362,8 +341,10 @@ glabel sub_GAME_7F0BD6F8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BD714(void) {
-
+s32 sub_GAME_7F0BD714(s32 arg0) {
+    // Node 0
+    ptr_mvtx_cur_pos = (s32) (ptr_mvtx_cur_pos + (((arg0 + 0xf) | 0xf) ^ 0xf));
+    return ptr_mvtx_cur_pos;
 }
 #else
 GLOBAL_ASM(
@@ -386,8 +367,12 @@ glabel sub_GAME_7F0BD714
 
 
 #ifdef NONMATCHING
-void allocate_something_in_mvtx(void) {
-
+void *allocate_something_in_mvtx(void) {
+    // Node 0
+    bank_in_mgfx_alloc_table = (s8) (bank_in_mgfx_alloc_table ^ 1);
+    dword_CODE_bss_8008C254 = 0;
+    ptr_mvtx_cur_pos = (?32) (0x80090000 + (bank_in_mgfx_alloc_table * 4))->unk-3DC0;
+    return &bank_in_mgfx_alloc_table;
 }
 #else
 GLOBAL_ASM(
@@ -402,12 +387,12 @@ glabel allocate_something_in_mvtx
 /* 0F2280 7F0BD750 A04F0000 */  sb    $t7, ($v0)
 /* 0F2284 7F0BD754 AC20C254 */  sw    $zero, %lo(dword_CODE_bss_8008C254)($at)
 /* 0F2288 7F0BD758 90580000 */  lbu   $t8, ($v0)
-/* 0F228C 7F0BD75C 3C018009 */  lui   $at, 0x8009
+/* 0F228C 7F0BD75C 3C018009 */  lui   $at, %hi(ptr_mvtx_cur_pos)
 /* 0F2290 7F0BD760 0018C880 */  sll   $t9, $t8, 2
 /* 0F2294 7F0BD764 01194021 */  addu  $t0, $t0, $t9
 /* 0F2298 7F0BD768 8D08C240 */  lw    $t0, -0x3dc0($t0)
 /* 0F229C 7F0BD76C 03E00008 */  jr    $ra
-/* 0F22A0 7F0BD770 AC28C24C */   sw    $t0, -0x3db4($at)
+/* 0F22A0 7F0BD770 AC28C24C */   sw    $t0, %lo(ptr_mvtx_cur_pos)($at)
 )
 #endif
 
@@ -416,9 +401,11 @@ glabel allocate_something_in_mvtx
 
 
 #ifdef NONMATCHING
-void removed_debug_routine(void) {
-
+void removed_debug_routine(s32 arg0) {
+    // Node 0
+    return;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -433,8 +420,9 @@ glabel removed_debug_routine
 
 
 #ifdef NONMATCHING
-void num_microcode_cmds_that_fit(void) {
-
+s32 num_microcode_cmds_that_fit(s32 arg0) {
+    // Node 0
+    return ((s32) ((0x80090000 + (bank_in_mgfx_alloc_table * 4))->unk-3DCC - arg0) >> 3);
 }
 #else
 GLOBAL_ASM(
@@ -458,9 +446,11 @@ glabel num_microcode_cmds_that_fit
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BD7A4(void) {
-
+s32 sub_GAME_7F0BD7A4(void) {
+    // Node 0
+    return ((0x80090000 + (bank_in_mgfx_alloc_table * 4))->unk-3DBC - ptr_mvtx_cur_pos);
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -516,8 +506,15 @@ glabel compute_membar_display_string
 
 
 #ifdef NONMATCHING
-void draw_membars(void) {
+void draw_membars(s32 arg0) {
+    void *temp_t7;
+    void *temp_t7_2;
 
+    // Node 0
+    temp_t7 = (&ptr_mgfx0_alloc_start + (bank_in_mgfx_alloc_table * 4));
+    compute_membar_display_string(&D_80048320, (f32) ((s32) (temp_t7->unk4 - arg0) >> 3), (f32) ((s32) (temp_t7->unk4 - *(&ptr_mgfx0_alloc_start + (bank_in_mgfx_alloc_table * 4))) >> 3), arg0);
+    temp_t7_2 = (&ptr_mvtx0_alloc_start + (bank_in_mgfx_alloc_table * 4));
+    return compute_membar_display_string(&D_80048320, (f32) (temp_t7_2->unk4 - ptr_mvtx_cur_pos), (f32) (temp_t7_2->unk4 - *(&ptr_mvtx0_alloc_start + (bank_in_mgfx_alloc_table * 4))), &ptr_mvtx0_alloc_start);
 }
 #else
 GLOBAL_ASM(

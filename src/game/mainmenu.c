@@ -2,113 +2,70 @@
 #include "bondgame.h"
 #include "game/spectrum.h"
 
-/* bss
-CODE.bss:800695A0     flt_CODE_bss_800695A0:.space 4           # DATA XREF: init_menu18_displaycast+838w
-CODE.bss:800695A0                                              # constructor_menu18_displaycast+1BCo
-CODE.bss:800695A0                                              # constructor_menu18_displaycast+1E0w
-CODE.bss:800695A0                                              # constructor_menu18_displaycast+260r
-CODE.bss:800695A0                                              # constructor_menu18_displaycast+29Cr
-CODE.bss:800695A0                                              # constructor_menu18_displaycast+2D4r
-CODE.bss:800695A0                                              # constructor_menu18_displaycast+300r
-CODE.bss:800695A4     flt_CODE_bss_800695A4:.space 4           # DATA XREF: init_menu18_displaycast+6A0w
-CODE.bss:800695A4                                              # init_menu18_displaycast+830r
-CODE.bss:800695A4                                              # constructor_menu18_displaycast+1A0r
-CODE.bss:800695A8     flt_CODE_bss_800695A8:.space 4           # DATA XREF: init_menu18_displaycast+6ECw
-CODE.bss:800695A8                                              # constructor_menu18_displaycast+1A8r
-CODE.bss:800695AC     flt_CODE_bss_800695AC:.space 4           # DATA XREF: init_menu18_displaycast+848w
-CODE.bss:800695AC                                              # constructor_menu18_displaycast+1CCo
-CODE.bss:800695AC                                              # constructor_menu18_displaycast+200w
-CODE.bss:800695AC                                              # constructor_menu18_displaycast+210r
-CODE.bss:800695AC                                              # constructor_menu18_displaycast+23Cw
-CODE.bss:800695AC                                              # constructor_menu18_displaycast+240r
-CODE.bss:800695AC                                              # constructor_menu18_displaycast+254r
-CODE.bss:800695AC                                              # constructor_menu18_displaycast+26Cr
-CODE.bss:800695AC                                              # constructor_menu18_displaycast+298r
-CODE.bss:800695AC                                              # constructor_menu18_displaycast+2B0r
-CODE.bss:800695AC                                              # constructor_menu18_displaycast+2D8r
-CODE.bss:800695B0     flt_CODE_bss_800695B0:.space 4           # DATA XREF: init_menu18_displaycast+738w
-CODE.bss:800695B0                                              # init_menu18_displaycast+840r
-CODE.bss:800695B0                                              # constructor_menu18_displaycast+1E4r
-CODE.bss:800695B4     flt_CODE_bss_800695B4:.space 4           # DATA XREF: init_menu18_displaycast+784w
-CODE.bss:800695B4                                              # constructor_menu18_displaycast+1E8r
-CODE.bss:800695B8     flt_CODE_bss_800695B8:.space 4           # DATA XREF: init_menu18_displaycast+860w
-CODE.bss:800695B8                                              # constructor_menu18_displaycast+1D0o
-CODE.bss:800695B8                                              # constructor_menu18_displaycast+22Cw
-CODE.bss:800695B8                                              # constructor_menu18_displaycast+27Cr
-CODE.bss:800695BC     flt_CODE_bss_800695BC:.space 4           # DATA XREF: init_menu18_displaycast+7D0w
-CODE.bss:800695BC                                              # init_menu18_displaycast+850r
-CODE.bss:800695BC                                              # constructor_menu18_displaycast+204r
-CODE.bss:800695C0     flt_CODE_bss_800695C0:.space 4           # DATA XREF: init_menu18_displaycast+82Cw
-CODE.bss:800695C0                                              # constructor_menu18_displaycast+208r
-CODE.bss:800695C4                     .align 3
-CODE.bss:800695C8     flt_CODE_bss_800695C8:.space 4           # DATA XREF: constructor_menu18_displaycast+7D0o
-CODE.bss:800695C8                                              # constructor_menu18_displaycast+7E4w
-CODE.bss:800695C8                                              # constructor_menu18_displaycast+7ECr
-CODE.bss:800695CC     flt_CODE_bss_800695CC:.space 4           # DATA XREF: constructor_menu18_displaycast+7F0w
-CODE.bss:800695CC                                              # constructor_menu18_displaycast+7F4r
-CODE.bss:800695D0     flt_CODE_bss_800695D0:.space 4           # DATA XREF: constructor_menu18_displaycast+804w
-CODE.bss:800695D0                                              # constructor_menu18_displaycast+81Cr
-CODE.bss:800695D4                     .align 3
-CODE.bss:800695D8     flt_CODE_bss_800695D8:.space 4           # DATA XREF: constructor_menu18_displaycast+708o
-CODE.bss:800695D8                                              # constructor_menu18_displaycast+718w
-CODE.bss:800695D8                                              # constructor_menu18_displaycast+730o
-CODE.bss:800695D8                                              # constructor_menu18_displaycast+73Cr
-CODE.bss:800695D8                                              # constructor_menu18_displaycast+740r
-CODE.bss:800695DC     flt_CODE_bss_800695DC:.space 4           # DATA XREF: constructor_menu18_displaycast+720w
-CODE.bss:800695DC                                              # constructor_menu18_displaycast+754r
-CODE.bss:800695E0     flt_CODE_bss_800695E0:.space 4           # DATA XREF: constructor_menu18_displaycast+724w
-CODE.bss:800695E4     flt_CODE_bss_800695E4:.space 4           # DATA XREF: init_menu18_displaycast+864w
-CODE.bss:800695E4                                              # constructor_menu18_displaycast+4D4o
-CODE.bss:800695E4                                              # constructor_menu18_displaycast+4DCr
-CODE.bss:800695E4                                              # constructor_menu18_displaycast+6B8o
-CODE.bss:800695E4                                              # constructor_menu18_displaycast+6C0r
-CODE.bss:800695E4                                              # constructor_menu18_displaycast+710w
-CODE.bss:800695E8     flt_CODE_bss_800695E8:.space 4           # DATA XREF: init_menu18_displaycast+7E0o
-CODE.bss:800695E8                                              # init_menu18_displaycast+86Cw
-CODE.bss:800695E8                                              # constructor_menu18_displaycast+4F4o
-CODE.bss:800695E8                                              # constructor_menu18_displaycast:loc_CODE_7F019828o
-CODE.bss:800695E8                                              # constructor_menu18_displaycast+508r
-CODE.bss:800695EC     flt_CODE_bss_800695EC:.space 4           # DATA XREF: init_menu18_displaycast+870w
-CODE.bss:800695EC                                              # constructor_menu18_displaycast+4FCw
-CODE.bss:800695EC                                              # constructor_menu18_displaycast+51Cr
-CODE.bss:800695F0     flt_CODE_bss_800695F0:.space 4           # DATA XREF: init_menu18_displaycast+878w
-CODE.bss:800695F0                                              # constructor_menu18_displaycast+534r
-CODE.bss:800695F4                     .align 3
-CODE.bss:800695F8     flt_CODE_bss_800695F8:.space 4           # DATA XREF: constructor_menu18_displaycast+64Co
-CODE.bss:800695F8                                              # constructor_menu18_displaycast+660w
-CODE.bss:800695F8                                              # constructor_menu18_displaycast+66Cr
-CODE.bss:800695FC     flt_CODE_bss_800695FC:.space 4           # DATA XREF: constructor_menu18_displaycast+668w
-CODE.bss:800695FC                                              # constructor_menu18_displaycast+680r
-CODE.bss:80069600     flt_CODE_bss_80069600:.space 4           # DATA XREF: constructor_menu18_displaycast+674w
-CODE.bss:80069600                                              # constructor_menu18_displaycast+694r
-CODE.bss:80069604                     .align 3
-CODE.bss:80069608     flt_CODE_bss_80069608:.space 4           # DATA XREF: constructor_menu18_displaycast+564o
-CODE.bss:80069608                                              # constructor_menu18_displaycast+574w
-CODE.bss:80069608                                              # constructor_menu18_displaycast+594o
-CODE.bss:80069608                                              # constructor_menu18_displaycast+5B0r
-CODE.bss:8006960C     flt_CODE_bss_8006960C:.space 4           # DATA XREF: constructor_menu18_displaycast+57Cw
-CODE.bss:8006960C                                              # constructor_menu18_displaycast+5C4r
-CODE.bss:80069610     flt_CODE_bss_80069610:.space 4           # DATA XREF: constructor_menu18_displaycast+580w
-CODE.bss:80069614     flt_CODE_bss_80069614:.space 4           # DATA XREF: init_menu01_nintendo+C0w
-CODE.bss:80069614                                              # constructor_menu01_nintendo+C4o
-CODE.bss:80069614                                              # constructor_menu01_nintendo+11Cr
-CODE.bss:80069614                                              # constructor_menu01_nintendo+12Cw
-CODE.bss:80069614                                              # constructor_menu01_nintendo+134r
-CODE.bss:80069618     flt_CODE_bss_80069618:.space 4           # DATA XREF: init_menu01_nintendo+D8w
-CODE.bss:80069618                                              # constructor_menu01_nintendo+138o
-CODE.bss:80069618                                              # constructor_menu01_nintendo+140r
-CODE.bss:80069618                                              # constructor_menu01_nintendo+15Cr
-CODE.bss:80069618                                              # constructor_menu01_nintendo+170w
-CODE.bss:80069618                                              # constructor_menu01_nintendo+174r
-CODE.bss:80069618                                              # constructor_menu01_nintendo+188w
-CODE.bss:8006961C                     .align 4
-CODE.bss:80069620     dword_CODE_bss_80069620:.space 0x30      # DATA XREF: toggle_deletion_menu_for_folder+14o
-CODE.bss:80069620                                              # interface_menu05_fileselect+F0o
-CODE.bss:80069620                                              # interface_menu05_fileselect:loc_CODE_7F00BFECo
-CODE.bss:80069620                                              # constructor_menu05_fileselect+23Co
+// bss
+//CODE.bss:800695A0
+f32 flt_CODE_bss_800695A0;
+//CODE.bss:800695A4
+f32 flt_CODE_bss_800695A4;
+//CODE.bss:800695A8
+f32 flt_CODE_bss_800695A8;
+//CODE.bss:800695AC
+f32 flt_CODE_bss_800695AC;
+//CODE.bss:800695B0
+f32 flt_CODE_bss_800695B0;
+//CODE.bss:800695B4
+f32 flt_CODE_bss_800695B4;
+//CODE.bss:800695B8
+f32 flt_CODE_bss_800695B8;
+//CODE.bss:800695BC
+f32 flt_CODE_bss_800695BC;
+//CODE.bss:800695C0
+f32 flt_CODE_bss_800695C0;
+//CODE.bss:800695C4                     .align 3
+//CODE.bss:800695C8
+f32 flt_CODE_bss_800695C8;
+//CODE.bss:800695CC
+f32 flt_CODE_bss_800695CC;
+//CODE.bss:800695D0
+f32 flt_CODE_bss_800695D0;
+//CODE.bss:800695D4                     .align 3
+//CODE.bss:800695D8
+f32 flt_CODE_bss_800695D8;
+//CODE.bss:800695DC
+f32 flt_CODE_bss_800695DC;
+//CODE.bss:800695E0
+f32 flt_CODE_bss_800695E0;
+//CODE.bss:800695E4
+f32 flt_CODE_bss_800695E4;
+//CODE.bss:800695E8
+f32 flt_CODE_bss_800695E8;
+//CODE.bss:800695EC
+f32 flt_CODE_bss_800695EC;
+//CODE.bss:800695F0
+f32 flt_CODE_bss_800695F0;
+//CODE.bss:800695F4                     .align 3
+//CODE.bss:800695F8
+f32 flt_CODE_bss_800695F8;
+//CODE.bss:800695FC
+f32 flt_CODE_bss_800695FC;
+//CODE.bss:80069600
+f32 flt_CODE_bss_80069600;
+//CODE.bss:80069604                     .align 3
+//CODE.bss:80069608
+f32 flt_CODE_bss_80069608;
+//CODE.bss:8006960C
+f32 flt_CODE_bss_8006960C;
+//CODE.bss:80069610
+f32 flt_CODE_bss_80069610;
+//CODE.bss:80069614
+f32 flt_CODE_bss_80069614;
+//CODE.bss:80069618
+f32 flt_CODE_bss_80069618;
+//CODE.bss:8006961C                     .align 4
+/*
+CODE.bss:80069620     dword_CODE_bss_80069620:.space 0x30
 CODE.bss:80069650                     .space 1
-CODE.bss:80069651     cheat_available:.space 1                 # DATA XREF: interface_menu06_modesel+18o
-CODE.bss:80069651                                              # init_menu15_cheat+50o
+CODE.bss:80069651     cheat_available:.space 1
 CODE.bss:80069652     CHEAT_AVAILABLE_INVINCIBLE:.space 1
 CODE.bss:80069653     CHEAT_AVAILABLE_ALLGUNS:.space 1
 CODE.bss:80069654                     .space 1
@@ -142,335 +99,299 @@ CODE.bss:80069670     CHEAT_AVAILABLE_2X_THROWING_KNIVES:.space 1
 CODE.bss:80069671     CHEAT_AVAILABLE_2X_HUNTING_KNIVES:.space 1
 CODE.bss:80069672     CHEAT_AVAILABLE_2X_LASER:.space 2
 CODE.bss:80069674                     .space 0x2C
-CODE.bss:800696A0     cheat_activated:.space 1                 # DATA XREF: interface_menu15_cheat+2ACo
-CODE.bss:800696A1     CHEAT_AVAILABLE_EXTRA_CHARS:.space 1     # DATA XREF: init_menu05_fileselect+BCw
-CODE.bss:800696A1                                              # update_menu15_cheat+28o
-CODE.bss:800696A1                                              # stage_load+15Co
-CODE.bss:800696A1                                              # manage_mp_game+C4o
-CODE.bss:800696A2     cheat_activated_1:.space 1               # DATA XREF: init_menu05_fileselect+C0w
-CODE.bss:800696A3     cheat_activated_2:.space 1               # DATA XREF: init_menu05_fileselect+B8o
-CODE.bss:800696A4     CHEAT_AVAILABLE_MAX_AMMO:.space 1
-CODE.bss:800696A5     cheat_activated_4:.space 1
-CODE.bss:800696A6     cheat_activated_5:.space 1
-CODE.bss:800696A7     cheat_activated_6:.space 1
-CODE.bss:800696A8     cheat_activated_7:.space 1
-CODE.bss:800696A9     cheat_activated_8:.space 1
-CODE.bss:800696AA     cheat_activated_9:.space 1
-CODE.bss:800696AB     cheat_activated_10:.space 1
-CODE.bss:800696AC     cheat_activated_11:.space 1
-CODE.bss:800696AD     cheat_activated_12:.space 1
-CODE.bss:800696AE     cheat_activated_13:.space 1
-CODE.bss:800696AF     cheat_activated_14:.space 1
-CODE.bss:800696B0     cheat_activated_15:.space 1
-CODE.bss:800696B1     cheat_activated_16:.space 1
-CODE.bss:800696B2     cheat_activated_17:.space 1
-CODE.bss:800696B3     cheat_activated_18:.space 1
-CODE.bss:800696B4     cheat_activated_19:.space 1
-CODE.bss:800696B5     cheat_activated_20:.space 1
-CODE.bss:800696B6     cheat_activated_21:.space 1
-CODE.bss:800696B7     cheat_activated_22:.space 1
-CODE.bss:800696B8     cheat_activated_23:.space 1
-CODE.bss:800696B9     cheat_activated_24:.space 1
-CODE.bss:800696BA     cheat_activated_25:.space 1
-CODE.bss:800696BB     cheat_activated_26:.space 1
-CODE.bss:800696BC     cheat_activated_27:.space 1
-CODE.bss:800696BD     cheat_activated_28:.space 1
-CODE.bss:800696BE     cheat_activated_29:.space 1
-CODE.bss:800696BF     cheat_activated_30:.space 1
-CODE.bss:800696C0     cheat_activated_31:.space 1
-CODE.bss:800696C1     cheat_activated_32:.space 1
-CODE.bss:800696C2     cheat_activated_33:.space 1
-CODE.bss:800696C3     cheat_activated_34:.space 1
-CODE.bss:800696C4     cheat_activated_35:.space 1
-CODE.bss:800696C5     cheat_activated_36:.space 1
-CODE.bss:800696C6     cheat_activated_37:.space 1
-CODE.bss:800696C7     cheat_activated_38:.space 1
-CODE.bss:800696C8     cheat_activated_39:.space 1
-CODE.bss:800696C9     cheat_activated_40:.space 1
-CODE.bss:800696CA     cheat_activated_41:.space 1
-CODE.bss:800696CB     cheat_activated_42:.space 1
-CODE.bss:800696CC     cheat_activated_43:.space 1
-CODE.bss:800696CD     cheat_activated_44:.space 1
-CODE.bss:800696CE     cheat_activated_45:.space 1
-CODE.bss:800696CF     cheat_activated_46:.space 1
-CODE.bss:800696D0     cheat_activated_47:.space 1
-CODE.bss:800696D1     cheat_activated_48:.space 1
-CODE.bss:800696D2     cheat_activated_49:.space 1
-CODE.bss:800696D3     cheat_activated_50:.space 1
-CODE.bss:800696D4     cheat_activated_51:.space 1
-CODE.bss:800696D5     cheat_activated_52:.space 1
-CODE.bss:800696D6     cheat_activated_53:.space 1
-CODE.bss:800696D7     cheat_activated_54:.space 1
-CODE.bss:800696D8     cheat_activated_55:.space 1
-CODE.bss:800696D9     cheat_activated_56:.space 1
-CODE.bss:800696DA     cheat_activated_57:.space 1
-CODE.bss:800696DB     cheat_activated_58:.space 1
-CODE.bss:800696DC     cheat_activated_59:.space 1
-CODE.bss:800696DD     cheat_activated_60:.space 1
-CODE.bss:800696DE     cheat_activated_61:.space 1
-CODE.bss:800696DF     cheat_activated_62:.space 1
-CODE.bss:800696E0     cheat_activated_63:.space 1
-CODE.bss:800696E1     cheat_activated_64:.space 1
-CODE.bss:800696E2     cheat_activated_65:.space 1
-CODE.bss:800696E3     cheat_activated_66:.space 1
-CODE.bss:800696E4     cheat_activated_67:.space 1
-CODE.bss:800696E5     cheat_activated_68:.space 1
-CODE.bss:800696E6     cheat_activated_69:.space 1
-CODE.bss:800696E7     cheat_activated_70:.space 1
-CODE.bss:800696E8     cheat_activated_71:.space 1
-CODE.bss:800696E9     cheat_activated_72:.space 1
-CODE.bss:800696EA     cheat_activated_73:.space 1
-CODE.bss:800696EB     cheat_activated_74:.space 1              # DATA XREF: init_menu05_fileselect+B0o
-CODE.bss:800696EC     cheat_activated_75:.space 1
-CODE.bss:800696ED     cheat_activated_76:.space 1
-CODE.bss:800696EE     cheat_activated_77:.space 1
-CODE.bss:800696EF     cheat_activated_78:.space 1
-CODE.bss:800696F0     fav_weapon_right_player1:.space 4        # DATA XREF: constructor_menu0D_missioncomplete+978o
-CODE.bss:800696F0                                              # constructor_menu0D_missioncomplete+980r
-CODE.bss:800696F0                                              # store_favorite_weapon_current_player+24o
-CODE.bss:800696F4     fav_weapon_left_player1:.space 4         # DATA XREF: constructor_menu0D_missioncomplete+98Cr
-CODE.bss:800696F8     fav_weapon_right_player2:.space 4
-CODE.bss:800696FC     fav_weapon_left_player2:.space 4
-CODE.bss:80069700     fav_weapon_right_player3:.space 4
-CODE.bss:80069704     fav_weapon_left_player3:.space 4
-CODE.bss:80069708     fav_weapon_right_player4:.space 4
-CODE.bss:8006970C     fav_weapon_left_player4:.space 4
-CODE.bss:80069710     mp_char_cur_select_player1:.space 4      # DATA XREF: init_menu0f_mpcharsel+1BCw
-CODE.bss:80069710                                              # interface_menu0F_mpcharsel+A0o
-CODE.bss:80069710                                              # constructor_menu0F_mpcharsel+E8o
-CODE.bss:80069714     mp_char_cur_select_player2:.space 4      # DATA XREF: init_menu0f_mpcharsel+1E4w
-CODE.bss:80069718     mp_char_cur_select_player3:.space 4      # DATA XREF: init_menu0f_mpcharsel+214w
-CODE.bss:8006971C     mp_char_cur_select_player4:.space 4      # DATA XREF: init_menu0f_mpcharsel+244w
-CODE.bss:80069720     mp_char_prev_select_player1:.space 4     # DATA XREF: init_menu0f_mpcharsel+1C0w
-CODE.bss:80069720                                              # interface_menu0F_mpcharsel+A4o
-CODE.bss:80069720                                              # constructor_menu0F_mpcharsel+E0o
-CODE.bss:80069724     mp_char_prev_select_player2:.space 4     # DATA XREF: init_menu0f_mpcharsel+1ECw
-CODE.bss:80069728     mp_char_prev_select_player3:.space 4     # DATA XREF: init_menu0f_mpcharsel+21Cw
-CODE.bss:8006972C     mp_char_prev_select_player4:.space 4     # DATA XREF: init_menu0f_mpcharsel+24Cw
-CODE.bss:80069730     dword_CODE_bss_80069730:.space 4         # DATA XREF: init_menu0f_mpcharsel+1C8w
-CODE.bss:80069730                                              # interface_menu0F_mpcharsel+9Co
-CODE.bss:80069730                                              # constructor_menu0F_mpcharsel+E4o
-CODE.bss:80069734     dword_CODE_bss_80069734:.space 4         # DATA XREF: init_menu0f_mpcharsel+1F4w
-CODE.bss:80069738     dword_CODE_bss_80069738:.space 4         # DATA XREF: init_menu0f_mpcharsel+224w
-CODE.bss:8006973C     dword_CODE_bss_8006973C:.space 4         # DATA XREF: init_menu0f_mpcharsel+254w
-CODE.bss:80069740     has_selected_char_player1:.space 4       # DATA XREF: get_players_who_have_selected_mp_char+24o
-CODE.bss:80069740                                              # init_menu0f_mpcharsel+1D0w
-CODE.bss:80069740                                              # interface_menu0F_mpcharsel+A8o
-CODE.bss:80069740                                              # constructor_menu0F_mpcharsel+ECo
-CODE.bss:80069740                                              # init_menu10_mphandicap+30w
-CODE.bss:80069740                                              # interface_menu10_mphandicap+90o
-CODE.bss:80069740                                              # constructor_menu10_mphandicap+E0o
-CODE.bss:80069740                                              # init_menu11_mpcontrol+30w
-CODE.bss:80069740                                              # interface_menu11_mpcontrols+80o
-CODE.bss:80069740                                              # constructor_menu11_mpcontrol+E0o
-CODE.bss:80069744     has_selected_char_player2:.space 4       # DATA XREF: init_menu0f_mpcharsel+1FCw
-CODE.bss:80069744                                              # init_menu10_mphandicap+40w
-CODE.bss:80069744                                              # init_menu11_mpcontrol+40w
-CODE.bss:80069748     has_selected_char_player3:.space 4       # DATA XREF: init_menu0f_mpcharsel+22Cw
-CODE.bss:80069748                                              # init_menu10_mphandicap+50w
-CODE.bss:80069748                                              # init_menu11_mpcontrol+50w
-CODE.bss:8006974C     has_selected_char_player4:.space 4       # DATA XREF: init_menu0f_mpcharsel+25Cw
-CODE.bss:8006974C                                              # init_menu10_mphandicap+68w
-CODE.bss:8006974C                                              # init_menu11_mpcontrol+68w
-CODE.bss:80069750     size_mp_select_image_player1:.space 4    # DATA XREF: init_menu0f_mpcharsel+1DCw
-CODE.bss:80069750                                              # interface_menu0F_mpcharsel+90o
-CODE.bss:80069750                                              # constructor_menu0F_mpcharsel+F8o
-CODE.bss:80069754     size_mp_select_image_player2:.space 4    # DATA XREF: init_menu0f_mpcharsel+20Cw
-CODE.bss:80069758     size_mp_select_image_player3:.space 4    # DATA XREF: init_menu0f_mpcharsel+23Cw
-CODE.bss:8006975C     size_mp_select_image_player4:.space 4    # DATA XREF: init_menu0f_mpcharsel+26Cw
-CODE.bss:80069760     dword_CODE_bss_80069760:.space 4         # DATA XREF: init_menu10_mphandicap+38w
-CODE.bss:80069760                                              # interface_menu10_mphandicap+E4o
-CODE.bss:80069760                                              # init_menu11_mpcontrol+38w
-CODE.bss:80069760                                              # interface_menu11_mpcontrols+E0o
-CODE.bss:80069764     dword_CODE_bss_80069764:.space 4         # DATA XREF: init_menu10_mphandicap+48w
-CODE.bss:80069764                                              # init_menu11_mpcontrol+48w
-CODE.bss:80069768     dword_CODE_bss_80069768:.space 4         # DATA XREF: init_menu10_mphandicap+58w
-CODE.bss:80069768                                              # init_menu11_mpcontrol+58w
-CODE.bss:8006976C     dword_CODE_bss_8006976C:.space 4         # DATA XREF: init_menu10_mphandicap+78w
-CODE.bss:8006976C                                              # init_menu11_mpcontrol+78w
-CODE.bss:80069770      # int dword_CODE_bss_80069770
-CODE.bss:80069770     dword_CODE_bss_80069770:.space 4         # DATA XREF: add_tab1_start+18w
-CODE.bss:80069770                                              # add_tab1_start+44r
-CODE.bss:80069770                                              # add_tab1_start+110r
-CODE.bss:80069774      # int dword_CODE_bss_80069774
-CODE.bss:80069774     dword_CODE_bss_80069774:.space 4         # DATA XREF: add_tab2_next+18w
-CODE.bss:80069774                                              # add_tab2_next+44r
-CODE.bss:80069774                                              # add_tab2_next+110r
-CODE.bss:80069778      # int dword_CODE_bss_80069778
-CODE.bss:80069778     dword_CODE_bss_80069778:.space 4         # DATA XREF: add_tab3_previous+18w
-CODE.bss:80069778                                              # add_tab3_previous+44r
-CODE.bss:80069778                                              # add_tab3_previous+110r
-CODE.bss:8006977C     current_mp_stage_highlighted:.space 4    # DATA XREF: init_menu12_mpstage+40w
-CODE.bss:8006977C                                              # interface_menu12_mpstage+88o
-CODE.bss:8006977C                                              # interface_menu12_mpstage+120w
-CODE.bss:8006977C                                              # interface_menu12_mpstage+12Cr
-CODE.bss:8006977C                                              # interface_menu12_mpstage:loc_CODE_7F013F18o
-CODE.bss:8006977C                                              # interface_menu12_mpstage:loc_CODE_7F013F58r
-CODE.bss:8006977C                                              # constructor_menu12_mpstage+2E8r
-CODE.bss:8006977C                                              # constructor_menu12_mpstage+50Cr
-CODE.bss:80069780     dword_CODE_bss_80069780:.space 4         # DATA XREF: interface_menu13_mpscenario+94w
-CODE.bss:80069780                                              # interface_menu13_mpscenario:loc_CODE_7F014850w
-CODE.bss:80069780                                              # interface_menu13_mpscenario+10Cw
-CODE.bss:80069780                                              # interface_menu13_mpscenario:loc_CODE_7F014908r
-CODE.bss:80069780                                              # constructor_menu13_mpscenario+148r
-CODE.bss:80069784     mission_difficulty_highlighted:.space 4  # DATA XREF: interface_menu06_modesel+118o
-CODE.bss:80069784                                              # interface_menu06_modesel+128w
-CODE.bss:80069784                                              # interface_menu06_modesel+1B0w
-CODE.bss:80069784                                              # interface_menu06_modesel+200w
-CODE.bss:80069784                                              # interface_menu06_modesel+218w
-CODE.bss:80069784                                              # interface_menu06_modesel:loc_CODE_7F00D4ECw
-CODE.bss:80069784                                              # constructor_menu06_modesel+F4r
-CODE.bss:80069784                                              # constructor_menu06_modesel+278r
-CODE.bss:80069784                                              # constructor_menu06_modesel+3CCr
-CODE.bss:80069784                                              # interface_menu07_missionsel+B0w
-CODE.bss:80069784                                              # interface_menu07_missionsel:loc_CODE_7F00E0F0w
-CODE.bss:80069784                                              # interface_menu07_missionsel+2E4r
-CODE.bss:80069784                                              # interface_menu07_missionsel:loc_CODE_7F00E2A8r
-CODE.bss:80069784                                              # constructor_menu07_missionsel+9Cr
-CODE.bss:80069784                                              # interface_menu08_difficulty+C8o
-CODE.bss:80069784                                              # interface_menu08_difficulty+D8w
-CODE.bss:80069784                                              # interface_menu08_difficulty+E4o
-CODE.bss:80069784                                              # interface_menu08_difficulty+130w
-CODE.bss:80069784                                              # interface_menu08_difficulty+168w
-CODE.bss:80069784                                              # interface_menu08_difficulty+18Cw
-CODE.bss:80069784                                              # interface_menu08_difficulty+194w
-CODE.bss:80069784                                              # interface_menu08_difficulty:loc_CODE_7F00E958w
-CODE.bss:80069784                                              # interface_menu08_difficulty+1A8o
-CODE.bss:80069784                                              # interface_menu08_difficulty:loc_CODE_7F00E9A8r
-CODE.bss:80069784                                              # constructor_menu08_difficulty+158r
-CODE.bss:80069788     dword_CODE_bss_80069788:.space 4         # DATA XREF: init_menu14_mpteamsel+54w
-CODE.bss:80069788                                              # init_menu14_mpteamsel+5Cw
-CODE.bss:80069788                                              # interface_menu14_mpteams+9Co
-CODE.bss:80069788                                              # interface_menu14_mpteams+A0o
-CODE.bss:80069788                                              # interface_menu14_mpteams+A8r
-CODE.bss:80069788                                              # interface_menu14_mpteams+C0w
-CODE.bss:80069788                                              # interface_menu14_mpteams:loc_CODE_7F014E20r
-CODE.bss:80069788                                              # interface_menu14_mpteams+F0w
-CODE.bss:80069788                                              # interface_menu14_mpteams+140o
-CODE.bss:80069788                                              # interface_menu14_mpteams+144o
-CODE.bss:80069788                                              # interface_menu14_mpteams+14Cr
-CODE.bss:80069788                                              # interface_menu14_mpteams+164w
-CODE.bss:80069788                                              # interface_menu14_mpteams:loc_CODE_7F014EC4r
-CODE.bss:80069788                                              # interface_menu14_mpteams+194w
-CODE.bss:80069788                                              # interface_menu14_mpteams+1E8o
-CODE.bss:80069788                                              # interface_menu14_mpteams+1ECo
-CODE.bss:80069788                                              # interface_menu14_mpteams+1F4r
-CODE.bss:80069788                                              # interface_menu14_mpteams+20Cw
-CODE.bss:80069788                                              # interface_menu14_mpteams:loc_CODE_7F014F6Cr
-CODE.bss:80069788                                              # interface_menu14_mpteams+23Cw
-CODE.bss:80069788                                              # interface_menu14_mpteams+290o
-CODE.bss:80069788                                              # interface_menu14_mpteams+294o
-CODE.bss:80069788                                              # interface_menu14_mpteams+29Cr
-CODE.bss:80069788                                              # interface_menu14_mpteams+2B4w
-CODE.bss:80069788                                              # interface_menu14_mpteams:loc_CODE_7F015014r
-CODE.bss:80069788                                              # interface_menu14_mpteams+2E4w
-CODE.bss:80069788                                              # interface_menu14_mpteams+2FCo
-CODE.bss:80069788                                              # constructor_menu14_mpteams+270r
-CODE.bss:80069788                                              # constructor_menu14_mpteams:loc_CODE_7F0153C0r
-CODE.bss:80069788                                              # constructor_menu14_mpteams+2F8r
-CODE.bss:8006978C     dword_CODE_bss_8006978C:.space 4         # DATA XREF: load_briefing_text_for_stage+74w
-CODE.bss:8006978C                                              # load_briefing_text_for_stage+98r
-CODE.bss:8006978C                                              # print_objectives_and_status_to_menu:loc_CODE_7F015A64r
-CODE.bss:8006978C                                              # constructor_menu0A_briefing:loc_CODE_7F015F28r
-CODE.bss:8006978C                                              # constructor_menu0A_briefing:loc_CODE_7F015F3Cr
-CODE.bss:8006978C                                              # constructor_menu0A_briefing:loc_CODE_7F015F50r
-CODE.bss:8006978C                                              # constructor_menu0A_briefing:loc_CODE_7F015F64r
-CODE.bss:8006978C                                              # sub_CODE_7F01631C:loc_CODE_7F016364o
-CODE.bss:80069790     dword_CODE_bss_80069790:.space 4         # DATA XREF: init_menu0D_missioncomplete+24r
-CODE.bss:80069790                                              # constructor_menu0D_missioncomplete+3A0r
-CODE.bss:80069790                                              # end_of_mission_briefing+148w
-CODE.bss:80069790                                              # end_of_mission_briefing:loc_CODE_7F01D4E8w
-CODE.bss:80069790                                              # stage_load+128w
-CODE.bss:80069794     highlight_enemy_reaction:.space 4        # DATA XREF: init_menu09_007difficultyselect+30w
-CODE.bss:80069794                                              # interface_menu09_007options+68w
-CODE.bss:80069794                                              # interface_menu09_007options+100w
-CODE.bss:80069794                                              # interface_menu09_007options:loc_CODE_7F00F628r
-CODE.bss:80069794                                              # constructor_menu09_007options+788r
-CODE.bss:80069798     highlight_enemy_health:.space 4          # DATA XREF: init_menu09_007difficultyselect+38w
-CODE.bss:80069798                                              # interface_menu09_007options+70w
-CODE.bss:80069798                                              # interface_menu09_007options+14Cw
-CODE.bss:80069798                                              # interface_menu09_007options:loc_CODE_7F00F63Cr
-CODE.bss:80069798                                              # constructor_menu09_007options+184r
-CODE.bss:8006979C     highlight_enemy_accuracy:.space 4        # DATA XREF: init_menu09_007difficultyselect+48w
-CODE.bss:8006979C                                              # interface_menu09_007options+78w
-CODE.bss:8006979C                                              # interface_menu09_007options+130w
-CODE.bss:8006979C                                              # interface_menu09_007options:loc_CODE_7F00F668r
-CODE.bss:8006979C                                              # constructor_menu09_007options+388r
-CODE.bss:800697A0     highlight_enemy_damage:.space 4          # DATA XREF: init_menu09_007difficultyselect+58w
-CODE.bss:800697A0                                              # interface_menu09_007options+88w
-CODE.bss:800697A0                                              # interface_menu09_007options+118w
-CODE.bss:800697A0                                              # interface_menu09_007options:loc_CODE_7F00F694r
-CODE.bss:800697A0                                              # constructor_menu09_007options+58Cr
-CODE.bss:800697A4                     .align 3
-CODE.bss:800697A8     handicap_player1:.space 4                # DATA XREF: get_player_mp_handicap+4r
-CODE.bss:800697A8                                              # init_mp_options_for_scenario+3Co
-CODE.bss:800697A8                                              # interface_menu10_mphandicap+8Co
-CODE.bss:800697A8                                              # constructor_menu10_mphandicap+DCo
-CODE.bss:800697A8                                              # copy_current_ingame_registers_before_ramrom_playback+90o
-CODE.bss:800697A8                                              # copy_current_ingame_registers_before_ramrom_playback+C4r
-CODE.bss:800697A8                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+98o
-CODE.bss:800697A8                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+C8w
-CODE.bss:800697AC     handicap_player2:.space 4                # DATA XREF: copy_current_ingame_registers_before_ramrom_playback+CCr
-CODE.bss:800697AC                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+D0w
-CODE.bss:800697B0     handicap_player3:.space 4                # DATA XREF: copy_current_ingame_registers_before_ramrom_playback+D4r
-CODE.bss:800697B0                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+D8w
-CODE.bss:800697B4     handicap_player4:.space 4                # DATA XREF: copy_current_ingame_registers_before_ramrom_playback+DCr
-CODE.bss:800697B4                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+E0w
-CODE.bss:800697B8     controlstyle_player1:.space 4            # DATA XREF: init_mp_options_for_scenario+44o
-CODE.bss:800697B8                                              # interface_menu11_mpcontrols+78o
-CODE.bss:800697B8                                              # constructor_menu11_mpcontrol+DCo
-CODE.bss:800697B8                                              # copy_current_ingame_registers_before_ramrom_playback+A0o
-CODE.bss:800697B8                                              # copy_current_ingame_registers_before_ramrom_playback+E4r
-CODE.bss:800697B8                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+A8o
-CODE.bss:800697B8                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+E8w
-CODE.bss:800697BC     controlstyle_player2:.space 4            # DATA XREF: copy_current_ingame_registers_before_ramrom_playback+ECr
-CODE.bss:800697BC                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+F0w
-CODE.bss:800697C0     controlstyle_player3:.space 4            # DATA XREF: copy_current_ingame_registers_before_ramrom_playback+F4r
-CODE.bss:800697C0                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+F8w
-CODE.bss:800697C4     controlstyle_player4:.space 4            # DATA XREF: copy_current_ingame_registers_before_ramrom_playback+FCr
-CODE.bss:800697C4                                              # copy_recorded_ramrom_registers_to_proper_place_ingame+100w
-CODE.bss:800697C8     highlight_players:.space 4               # DATA XREF: init_menu0E_mpoptions:loc_CODE_7F0107E4w
-CODE.bss:800697C8                                              # interface_menu0E_mpoptions+DCw
-CODE.bss:800697C8                                              # interface_menu0E_mpoptions:loc_CODE_7F010AECw
-CODE.bss:800697C8                                              # interface_menu0E_mpoptions:loc_CODE_7F010B7Cr
-CODE.bss:800697C8                                              # constructor_menu0E_mpoptions+E0r
-CODE.bss:800697CC     highlight_scenario:.space 4              # DATA XREF: init_menu0E_mpoptions+B0w
-CODE.bss:800697CC                                              # interface_menu0E_mpoptions+E4w
-CODE.bss:800697CC                                              # interface_menu0E_mpoptions+2A0w
-CODE.bss:800697CC                                              # interface_menu0E_mpoptions:loc_CODE_7F010B98r
-CODE.bss:800697CC                                              # constructor_menu0E_mpoptions+1B8r
-CODE.bss:800697D0     highlight_gameselect:.space 4            # DATA XREF: init_menu0E_mpoptions+B8w
-CODE.bss:800697D0                                              # interface_menu0E_mpoptions+ECw
-CODE.bss:800697D0                                              # interface_menu0E_mpoptions:loc_CODE_7F010BB4r
-CODE.bss:800697D0                                              # constructor_menu0E_mpoptions+290r
-CODE.bss:800697D4     highlight_gamelength:.space 4            # DATA XREF: init_menu0E_mpoptions+C0w
-CODE.bss:800697D4                                              # interface_menu0E_mpoptions+F4w
-CODE.bss:800697D4                                              # interface_menu0E_mpoptions:loc_CODE_7F010BD0r
-CODE.bss:800697D4                                              # constructor_menu0E_mpoptions+384r
-CODE.bss:800697D8     highlight_character:.space 4             # DATA XREF: init_menu0E_mpoptions+C8w
-CODE.bss:800697D8                                              # interface_menu0E_mpoptions+FCw
-CODE.bss:800697D8                                              # interface_menu0E_mpoptions:loc_CODE_7F010BECr
-CODE.bss:800697D8                                              # constructor_menu0E_mpoptions+56Cr
-CODE.bss:800697DC     highlight_weaponselect:.space 4          # DATA XREF: init_menu0E_mpoptions+D0w
-CODE.bss:800697DC                                              # interface_menu0E_mpoptions+104w
-CODE.bss:800697DC                                              # interface_menu0E_mpoptions:loc_CODE_7F010C08r
-CODE.bss:800697DC                                              # constructor_menu0E_mpoptions+478r
-CODE.bss:800697E0     highlight_health:.space 4                # DATA XREF: init_menu0E_mpoptions+D8w
-CODE.bss:800697E0                                              # interface_menu0E_mpoptions+10Cw
-CODE.bss:800697E0                                              # interface_menu0E_mpoptions:loc_CODE_7F010C24r
-CODE.bss:800697E0                                              # constructor_menu0E_mpoptions+660r
-CODE.bss:800697E4     highlight_controlstyle:.space 4          # DATA XREF: init_menu0E_mpoptions+E0w
-CODE.bss:800697E4                                              # interface_menu0E_mpoptions+114w
-CODE.bss:800697E4                                              # interface_menu0E_mpoptions:loc_CODE_7F010C40r
-CODE.bss:800697E4                                              # constructor_menu0E_mpoptions+754r
-CODE.bss:800697E8     highlight_aimadjustment:.space 4         # DATA XREF: init_menu0E_mpoptions+F0w
-CODE.bss:800697E8                                              # interface_menu0E_mpoptions+124w
-CODE.bss:800697E8                                              # interface_menu0E_mpoptions:loc_CODE_7F010C5Cr
-CODE.bss:800697E8                                              # constructor_menu0E_mpoptions+848r
-CODE.bss:800697EC                     .align 4
-CODE.bss:800697F0     dword_CODE_bss_800697F0:.space 0x130     # DATA XREF: init_menu15_cheat+4Co
-CODE.bss:800697F0                                              # constructor_menu15_cheat+88o
-CODE.bss:800697F0                                              # constructor_menu15_cheat+2B8o
+*/
+//CODE.bss:800696A0
+u8 cheat_activated;
+//CODE.bss:800696A1
+u8 CHEAT_AVAILABLE_EXTRA_CHARS;
+//CODE.bss:800696A2
+u8 cheat_activated_1;
+//CODE.bss:800696A3
+u8 cheat_activated_2;
+//CODE.bss:800696A4
+u8 CHEAT_AVAILABLE_MAX_AMMO;
+//CODE.bss:800696A5
+u8 cheat_activated_4;
+//CODE.bss:800696A6
+u8 cheat_activated_5;
+//CODE.bss:800696A7
+u8 cheat_activated_6;
+//CODE.bss:800696A8
+u8 cheat_activated_7;
+//CODE.bss:800696A9
+u8 cheat_activated_8;
+//CODE.bss:800696AA
+u8 cheat_activated_9;
+//CODE.bss:800696AB
+u8 cheat_activated_10;
+//CODE.bss:800696AC
+u8 cheat_activated_11;
+//CODE.bss:800696AD
+u8 cheat_activated_12;
+//CODE.bss:800696AE
+u8 cheat_activated_13;
+//CODE.bss:800696AF
+u8 cheat_activated_14;
+//CODE.bss:800696B0
+u8 cheat_activated_15;
+//CODE.bss:800696B1
+u8 cheat_activated_16;
+//CODE.bss:800696B2
+u8 cheat_activated_17;
+//CODE.bss:800696B3
+u8 cheat_activated_18;
+//CODE.bss:800696B4
+u8 cheat_activated_19;
+//CODE.bss:800696B5
+u8 cheat_activated_20;
+//CODE.bss:800696B6
+u8 cheat_activated_21;
+//CODE.bss:800696B7
+u8 cheat_activated_22;
+//CODE.bss:800696B8
+u8 cheat_activated_23;
+//CODE.bss:800696B9
+u8 cheat_activated_24;
+//CODE.bss:800696BA
+u8 cheat_activated_25;
+//CODE.bss:800696BB
+u8 cheat_activated_26;
+//CODE.bss:800696BC
+u8 cheat_activated_27;
+//CODE.bss:800696BD
+u8 cheat_activated_28;
+//CODE.bss:800696BE
+u8 cheat_activated_29;
+//CODE.bss:800696BF
+u8 cheat_activated_30;
+//CODE.bss:800696C0
+u8 cheat_activated_31;
+//CODE.bss:800696C1
+u8 cheat_activated_32;
+//CODE.bss:800696C2
+u8 cheat_activated_33;
+//CODE.bss:800696C3
+u8 cheat_activated_34;
+//CODE.bss:800696C4
+u8 cheat_activated_35;
+//CODE.bss:800696C5
+u8 cheat_activated_36;
+//CODE.bss:800696C6
+u8 cheat_activated_37;
+//CODE.bss:800696C7
+u8 cheat_activated_38;
+//CODE.bss:800696C8
+u8 cheat_activated_39;
+//CODE.bss:800696C9
+u8 cheat_activated_40;
+//CODE.bss:800696CA
+u8 cheat_activated_41;
+//CODE.bss:800696CB
+u8 cheat_activated_42;
+//CODE.bss:800696CC
+u8 cheat_activated_43;
+//CODE.bss:800696CD
+u8 cheat_activated_44;
+//CODE.bss:800696CE
+u8 cheat_activated_45;
+//CODE.bss:800696CF
+u8 cheat_activated_46;
+//CODE.bss:800696D0
+u8 cheat_activated_47;
+//CODE.bss:800696D1
+u8 cheat_activated_48;
+//CODE.bss:800696D2
+u8 cheat_activated_49;
+//CODE.bss:800696D3
+u8 cheat_activated_50;
+//CODE.bss:800696D4
+u8 cheat_activated_51;
+//CODE.bss:800696D5
+u8 cheat_activated_52;
+//CODE.bss:800696D6
+u8 cheat_activated_53;
+//CODE.bss:800696D7
+u8 cheat_activated_54;
+//CODE.bss:800696D8
+u8 cheat_activated_55;
+//CODE.bss:800696D9
+u8 cheat_activated_56;
+//CODE.bss:800696DA
+u8 cheat_activated_57;
+//CODE.bss:800696DB
+u8 cheat_activated_58;
+//CODE.bss:800696DC
+u8 cheat_activated_59;
+//CODE.bss:800696DD
+u8 cheat_activated_60;
+//CODE.bss:800696DE
+u8 cheat_activated_61;
+//CODE.bss:800696DF
+u8 cheat_activated_62;
+//CODE.bss:800696E0
+u8 cheat_activated_63;
+//CODE.bss:800696E1
+u8 cheat_activated_64;
+//CODE.bss:800696E2
+u8 cheat_activated_65;
+//CODE.bss:800696E3
+u8 cheat_activated_66;
+//CODE.bss:800696E4
+u8 cheat_activated_67;
+//CODE.bss:800696E5
+u8 cheat_activated_68;
+//CODE.bss:800696E6
+u8 cheat_activated_69;
+//CODE.bss:800696E7
+u8 cheat_activated_70;
+//CODE.bss:800696E8
+u8 cheat_activated_71;
+//CODE.bss:800696E9
+u8 cheat_activated_72;
+//CODE.bss:800696EA
+u8 cheat_activated_73;
+//CODE.bss:800696EB
+u8 cheat_activated_74;
+//CODE.bss:800696EC
+u8 cheat_activated_75;
+//CODE.bss:800696ED
+u8 cheat_activated_76;
+//CODE.bss:800696EE
+u8 cheat_activated_77;
+//CODE.bss:800696EF
+u8 cheat_activated_78;
+
+//CODE.bss:800696F0
+s32 fav_weapon_right_player1;
+//CODE.bss:800696F4
+s32 fav_weapon_left_player1;
+//CODE.bss:800696F8
+s32 fav_weapon_right_player2;
+//CODE.bss:800696FC
+s32 fav_weapon_left_player2;
+//CODE.bss:80069700
+s32 fav_weapon_right_player3;
+//CODE.bss:80069704
+s32 fav_weapon_left_player3;
+//CODE.bss:80069708
+s32 fav_weapon_right_player4;
+//CODE.bss:8006970C
+s32 fav_weapon_left_player4;
+//CODE.bss:80069710
+s32 mp_char_cur_select_player1;
+//CODE.bss:80069714
+s32 mp_char_cur_select_player2;
+//CODE.bss:80069718
+s32 mp_char_cur_select_player3;
+//CODE.bss:8006971C
+s32 mp_char_cur_select_player4;
+//CODE.bss:80069720
+s32 mp_char_prev_select_player1;
+//CODE.bss:80069724
+s32 mp_char_prev_select_player2;
+//CODE.bss:80069728
+s32 mp_char_prev_select_player3;
+//CODE.bss:8006972C
+s32 mp_char_prev_select_player4;
+//CODE.bss:80069730
+s32 dword_CODE_bss_80069730;
+//CODE.bss:80069734
+s32 dword_CODE_bss_80069734;
+//CODE.bss:80069738
+s32 dword_CODE_bss_80069738;
+//CODE.bss:8006973C
+s32 dword_CODE_bss_8006973C;
+//CODE.bss:80069740
+s32 has_selected_char_player1;
+//CODE.bss:80069744
+s32 has_selected_char_player2;
+//CODE.bss:80069748
+s32 has_selected_char_player3;
+//CODE.bss:8006974C
+s32 has_selected_char_player4;
+//CODE.bss:80069750
+s32 size_mp_select_image_player1;
+//CODE.bss:80069754
+s32 size_mp_select_image_player2;
+//CODE.bss:80069758
+s32 size_mp_select_image_player3;
+//CODE.bss:8006975C
+s32 size_mp_select_image_player4;
+//CODE.bss:80069760
+s32 dword_CODE_bss_80069760;
+//CODE.bss:80069764
+s32 dword_CODE_bss_80069764;
+//CODE.bss:80069768
+s32 dword_CODE_bss_80069768;
+//CODE.bss:8006976C
+s32 dword_CODE_bss_8006976C;
+//CODE.bss:80069770
+s32 dword_CODE_bss_80069770;
+//CODE.bss:80069774
+s32 dword_CODE_bss_80069774;
+//CODE.bss:80069778
+s32 dword_CODE_bss_80069778;
+//CODE.bss:8006977C
+s32 current_mp_stage_highlighted;
+//CODE.bss:80069780
+s32 dword_CODE_bss_80069780;
+//CODE.bss:80069784
+s32 mission_difficulty_highlighted;
+//CODE.bss:80069788
+s32 dword_CODE_bss_80069788;
+//CODE.bss:8006978C
+s32 dword_CODE_bss_8006978C;
+//CODE.bss:80069790
+s32 dword_CODE_bss_80069790;
+//CODE.bss:80069794
+s32 highlight_enemy_reaction;
+//CODE.bss:80069798
+s32 highlight_enemy_health;
+//CODE.bss:8006979C
+s32 highlight_enemy_accuracy;
+//CODE.bss:800697A0
+s32 highlight_enemy_damage;
+
+//CODE.bss:800697A4                     .align 3
+
+//CODE.bss:800697A8
+s32 handicap_player1;
+//CODE.bss:800697AC
+s32 handicap_player2;
+//CODE.bss:800697B0
+s32 handicap_player3;
+//CODE.bss:800697B4
+s32 handicap_player4;
+//CODE.bss:800697B8
+s32 controlstyle_player1;
+//CODE.bss:800697BC
+s32 controlstyle_player2;
+//CODE.bss:800697C0
+s32 controlstyle_player3;
+//CODE.bss:800697C4
+s32 controlstyle_player4;
+
+//CODE.bss:800697C8
+s32 highlight_players;
+//CODE.bss:800697CC
+s32 highlight_scenario;
+//CODE.bss:800697D0
+s32 highlight_gameselect;
+//CODE.bss:800697D4
+s32 highlight_gamelength;
+//CODE.bss:800697D8
+s32 highlight_character;
+//CODE.bss:800697DC
+s32 highlight_weaponselect;
+//CODE.bss:800697E0
+s32 highlight_health;
+//CODE.bss:800697E4
+s32 highlight_controlstyle;
+//CODE.bss:800697E8
+s32 highlight_aimadjustment;
+//CODE.bss:800697EC                     .align 4
+/*
+CODE.bss:800697F0     dword_CODE_bss_800697F0:.space 0x130
 */
 
 s32 current_menu = -1;
@@ -485,10 +406,10 @@ s32 tab_2_highlight = 0;
 s32 tab_3_highlight = 0;
 s32 selected_folder_num = 0;
 s32 selected_folder_num_copy = 0;
-//s32 gamemode = GAMEMODE_INTRO;
+s32 gamemode = -1;//GAMEMODE_INTRO;
 s32 selected_stage = -1;
 s32 ptr_briefingdata = -1;
-//s32 selected_difficulty = DIFFICULTY_MULTI;
+s32 selected_difficulty = -1;//DIFFICULTY_MULTI;
 s32 append_cheat_sp = FALSE;
 s32 append_cheat_mp = FALSE;
 f32 cursor_h_pos = 220.0;
@@ -505,7 +426,7 @@ s32 is_first_time_on_main_menu = TRUE;
 s32 prev_keypresses = 0;
 s32 dword_D_8002A938 = 0;
 s32 maybe_is_in_menu = TRUE;
-//s32 screen_size = SCREEN_SIZE_320x240;
+s32 screen_size = 0;//SCREEN_SIZE_320x240;
 s32 spectrum_related_flag = 0;
 s32 is_emulating_spectrum = FALSE;
 s32 is_cheat_menu_available = FALSE;
@@ -738,23 +659,24 @@ stru_D_8002B510:MP_sight_aim_settings <0x9C, 0x48, 0, 0>
                 MP_sight_aim_settings <0x9C, 0x49, 1, 0>
                 MP_sight_aim_settings <0x9C, 0x4A, 0, 1>
                 MP_sight_aim_settings <0x9C, 0x4B, 1, 1>
-selected_num_players:.word 0
-player_1_char:  .word 0xFFFFFFFF
-player_2_char:  .word 0xFFFFFFFF
-player_3_char:  .word 0xFFFFFFFF
-player_4_char:  .word 0xFFFFFFFF
- # int MP_stage_selected
-MP_stage_selected:.word MP_STAGE_TEMPLE
-game_length:    .word 2
-aim_sight_adjustment:.word 3
-scenario:       .word 0
-unlock_stage_select:.word TRUE
-unlock_game_length:.word TRUE
-unlock_chars:   .word TRUE
-unlock_weapon_select:.word TRUE
-unlock_handicap:.word TRUE
-unlock_control_style:.word TRUE
-unlock_aim_sight:.word TRUE
+*/
+s32 selected_num_players = 0;
+s32 player_1_char = -1;
+s32 player_2_char = -1;
+s32 player_3_char = -1;
+s32 player_4_char = -1;
+s32 MP_stage_selected = 1; //MP_STAGE_TEMPLE
+s32 game_length = 2;
+s32 aim_sight_adjustment = 3;
+s32 scenario = 0;
+s32 unlock_stage_select = 1;
+s32 unlock_game_length = 1;
+s32 unlock_chars = 1;
+s32 unlock_weapon_select = 1;
+s32 unlock_handicap = 1;
+s32 unlock_control_style = 1;
+s32 unlock_aim_sight = 1;
+/*
 dword_D_8002B560:.word 0
                 solo_target_times <0, 160, 0>
                 solo_target_times <0, 0, 125>
@@ -1615,7 +1537,7 @@ void menu_control_stick_tracking(void) {
     if (0 > 0)
     {
         // Node 18
-        cursor_h_pos = (f32) (cursor_h_pos + ((((f32) 0 * folder_menu_x_dim) + 0.5f) * D_80048378));
+        cursor_h_pos = (f32) (cursor_h_pos + ((((f32) 0 * folder_menu_x_dim) + 0.5f) * global_timer_delta));
     }
     else
     {
@@ -1623,7 +1545,7 @@ void menu_control_stick_tracking(void) {
         if (0 < 0)
         {
             // Node 20
-            cursor_h_pos = (f32) (cursor_h_pos + ((((f32) 0 * folder_menu_z_dim) - 0.5f) * D_80048378));
+            cursor_h_pos = (f32) (cursor_h_pos + ((((f32) 0 * folder_menu_z_dim) - 0.5f) * global_timer_delta));
         }
     }
     // Node 21
@@ -1651,7 +1573,7 @@ void menu_control_stick_tracking(void) {
     if (sp1E > 0)
     {
         // Node 26
-        cursor_v_pos = (f32) (cursor_v_pos + ((((f32) sp1E * D_800519D0) + 0.5f) * D_80048378));
+        cursor_v_pos = (f32) (cursor_v_pos + ((((f32) sp1E * D_800519D0) + 0.5f) * global_timer_delta));
     }
     else
     {
@@ -1659,7 +1581,7 @@ void menu_control_stick_tracking(void) {
         if (sp1E < 0)
         {
             // Node 28
-            cursor_v_pos = (f32) (cursor_v_pos + ((((f32) sp1E * D_800519D4) - 0.5f) * D_80048378));
+            cursor_v_pos = (f32) (cursor_v_pos + ((((f32) sp1E * D_800519D4) - 0.5f) * global_timer_delta));
         }
     }
     // Node 29
@@ -1760,8 +1682,8 @@ glabel menu_control_stick_tracking
 /* 03E7A8 7F009C78 468021A0 */  cvt.s.w $f6, $f4
 /* 03E7AC 7F009C7C 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 03E7B0 7F009C80 44818000 */  mtc1  $at, $f16
-/* 03E7B4 7F009C84 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 03E7B8 7F009C88 C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 03E7B4 7F009C84 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 03E7B8 7F009C88 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 03E7BC 7F009C8C 3C018003 */  lui   $at, %hi(cursor_h_pos) # $at, 0x8003
 /* 03E7C0 7F009C90 46083282 */  mul.s $f10, $f6, $f8
 /* 03E7C4 7F009C94 C428A908 */  lwc1  $f8, %lo(cursor_h_pos)($at)
@@ -1779,8 +1701,8 @@ glabel menu_control_stick_tracking
 /* 03E7F0 7F009CC0 468084A0 */  cvt.s.w $f18, $f16
 /* 03E7F4 7F009CC4 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 03E7F8 7F009CC8 44813000 */  mtc1  $at, $f6
-/* 03E7FC 7F009CCC 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 03E800 7F009CD0 C4308378 */  lwc1  $f16, %lo(D_80048378)($at)
+/* 03E7FC 7F009CCC 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 03E800 7F009CD0 C4308378 */  lwc1  $f16, %lo(global_timer_delta)($at)
 /* 03E804 7F009CD4 3C018003 */  lui   $at, %hi(cursor_h_pos) # $at, 0x8003
 /* 03E808 7F009CD8 46049202 */  mul.s $f8, $f18, $f4
 /* 03E80C 7F009CDC C424A908 */  lwc1  $f4, %lo(cursor_h_pos)($at)
@@ -1848,8 +1770,8 @@ glabel menu_control_stick_tracking
 /* 03E8F8 7F009DC8 468084A0 */  cvt.s.w $f18, $f16
 /* 03E8FC 7F009DCC 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 03E900 7F009DD0 44813000 */  mtc1  $at, $f6
-/* 03E904 7F009DD4 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 03E908 7F009DD8 C4308378 */  lwc1  $f16, %lo(D_80048378)($at)
+/* 03E904 7F009DD4 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 03E908 7F009DD8 C4308378 */  lwc1  $f16, %lo(global_timer_delta)($at)
 /* 03E90C 7F009DDC 3C018003 */  lui   $at, %hi(cursor_v_pos) # $at, 0x8003
 /* 03E910 7F009DE0 46049202 */  mul.s $f8, $f18, $f4
 /* 03E914 7F009DE4 C424A90C */  lwc1  $f4, %lo(cursor_v_pos)($at)
@@ -1867,8 +1789,8 @@ glabel menu_control_stick_tracking
 /* 03E940 7F009E10 468032A0 */  cvt.s.w $f10, $f6
 /* 03E944 7F009E14 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 03E948 7F009E18 44819000 */  mtc1  $at, $f18
-/* 03E94C 7F009E1C 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 03E950 7F009E20 C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 03E94C 7F009E1C 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 03E950 7F009E20 C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 03E954 7F009E24 3C018003 */  lui   $at, %hi(cursor_v_pos) # $at, 0x8003
 /* 03E958 7F009E28 46105102 */  mul.s $f4, $f10, $f16
 /* 03E95C 7F009E2C C430A90C */  lwc1  $f16, %lo(cursor_v_pos)($at)
@@ -2710,7 +2632,7 @@ void init_menu00_legalscreen(void) {
     ? temp_ret;
 
     // Node 0
-    music_related_1st_block();
+    musicTrack1Stop();
     maybe_is_in_menu = 1;
     menu_timer = 0;
     sp20 = (?32) D_8002A9C0;
@@ -2732,7 +2654,7 @@ GLOBAL_ASM(
 glabel init_menu00_legalscreen
 /* 03F118 7F00A5E8 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 03F11C 7F00A5EC AFBF001C */  sw    $ra, 0x1c($sp)
-/* 03F120 7F00A5F0 0C001BF4 */  jal   music_related_1st_block
+/* 03F120 7F00A5F0 0C001BF4 */  jal   musicTrack1Stop
 /* 03F124 7F00A5F4 00000000 */   nop   
 /* 03F128 7F00A5F8 240E0001 */  li    $t6, 1
 /* 03F12C 7F00A5FC 3C018003 */  lui   $at, %hi(maybe_is_in_menu) # $at, 0x8003
@@ -3321,12 +3243,12 @@ void init_menu01_nintendo(void) {
     something_legalscreen_constructor = temp_ret;
     set_obj_instance_controller_scale(temp_ret, 0x3f800000);
     setsuboffset(something_legalscreen_constructor, &sp24);
-    music_track_related(0x2c);
+    musicTrack1Play(0x2c);
     maybe_is_in_menu = 1;
     flt_CODE_bss_80069614 = (f32) D_800519F4;
     (void *)0x80070000->unk-69E8 = (f32) D_800519F8;
     return;
-    // (possible return value: music_track_related(0x2c))
+    // (possible return value: musicTrack1Play(0x2c))
 }
 #else
 GLOBAL_ASM(
@@ -3371,7 +3293,7 @@ glabel init_menu01_nintendo
 /* 03F788 7F00AC58 8C84A958 */  lw    $a0, %lo(something_legalscreen_constructor)($a0)
 /* 03F78C 7F00AC5C 0FC1B303 */  jal   setsuboffset
 /* 03F790 7F00AC60 27A50024 */   addiu $a1, $sp, 0x24
-/* 03F794 7F00AC64 0C001B9F */  jal   music_track_related
+/* 03F794 7F00AC64 0C001B9F */  jal   musicTrack1Play
 /* 03F798 7F00AC68 2404002C */   li    $a0, 44
 /* 03F79C 7F00AC6C 24090001 */  li    $t1, 1
 /* 03F7A0 7F00AC70 3C018003 */  lui   $at, %hi(maybe_is_in_menu) # $at, 0x8003
@@ -3884,10 +3806,10 @@ glabel constructor_menu02_rareware
 void init_menu03_eyeintro(void) {
     // Node 0
     sub_GAME_7F008E80(ptr_logo_and_walletbond_DL, 0x78000);
-    music_track_related(2);
+    musicTrack1Play(2);
     maybe_is_in_menu = 1;
     return;
-    // (possible return value: music_track_related(2))
+    // (possible return value: musicTrack1Play(2))
 }
 #else
 GLOBAL_ASM(
@@ -3900,7 +3822,7 @@ glabel init_menu03_eyeintro
 /* 03FC94 7F00B164 34A58000 */  ori   $a1, (0x00078000 & 0xFFFF) # ori $a1, $a1, 0x8000
 /* 03FC98 7F00B168 0FC023A0 */  jal   sub_GAME_7F008E80
 /* 03FC9C 7F00B16C 8C84A950 */   lw    $a0, %lo(ptr_logo_and_walletbond_DL)($a0)
-/* 03FCA0 7F00B170 0C001B9F */  jal   music_track_related
+/* 03FCA0 7F00B170 0C001B9F */  jal   musicTrack1Play
 /* 03FCA4 7F00B174 24040002 */   li    $a0, 2
 /* 03FCA8 7F00B178 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 03FCAC 7F00B17C 240E0001 */  li    $t6, 1
@@ -4761,7 +4683,7 @@ glabel init_menu05_fileselect
 /* 04059C 7F00BA6C 8D4AA93C */  lw    $t2, %lo(maybe_is_in_menu)($t2)
 /* 0405A0 7F00BA70 11400005 */  beqz  $t2, .L7F00BA88
 /* 0405A4 7F00BA74 00000000 */   nop   
-/* 0405A8 7F00BA78 0C001B9F */  jal   music_track_related
+/* 0405A8 7F00BA78 0C001B9F */  jal   musicTrack1Play
 /* 0405AC 7F00BA7C 24040017 */   li    $a0, 23
 /* 0405B0 7F00BA80 3C018003 */  lui   $at, %hi(maybe_is_in_menu) # $at, 0x8003
 /* 0405B4 7F00BA84 AC20A93C */  sw    $zero, %lo(maybe_is_in_menu)($at)
@@ -7568,7 +7490,7 @@ void init_menu07_missionselect(void) {
     if (maybe_is_in_menu != 0)
     {
         // Node 1
-        music_track_related(0x17);
+        musicTrack1Play(0x17);
         maybe_is_in_menu = 0;
     }
     // Node 2
@@ -7594,7 +7516,7 @@ glabel init_menu07_missionselect
 /* 0429AC 7F00DE7C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0429B0 7F00DE80 11C00005 */  beqz  $t6, .L7F00DE98
 /* 0429B4 7F00DE84 AC20A8D8 */   sw    $zero, %lo(tab_3_selected)($at)
-/* 0429B8 7F00DE88 0C001B9F */  jal   music_track_related
+/* 0429B8 7F00DE88 0C001B9F */  jal   musicTrack1Play
 /* 0429BC 7F00DE8C 24040017 */   li    $a0, 23
 /* 0429C0 7F00DE90 3C018003 */  lui   $at, %hi(maybe_is_in_menu) # $at, 0x8003
 /* 0429C4 7F00DE94 AC20A93C */  sw    $zero, %lo(maybe_is_in_menu)($at)
@@ -11237,9 +11159,9 @@ void init_menu0E_mpoptions(void) {
     {
         // Node 1
         music_related_38(0x7fff);
-        music_related(0x7fff);
-        D_8002434C = 0;
-        music_track_related(0x17);
+        musicTrack1Vol(0x7fff);
+        music1_playing = 0;
+        musicTrack1Play(0x17);
         maybe_is_in_menu = 0;
     }
     // Node 2
@@ -11291,11 +11213,11 @@ glabel init_menu0E_mpoptions
 /* 0452AC 7F01077C AC20A8DC */   sw    $zero, %lo(tab_1_highlight)($at)
 /* 0452B0 7F010780 0C00247A */  jal   music_related_38
 /* 0452B4 7F010784 24047FFF */   li    $a0, 32767
-/* 0452B8 7F010788 0C001C0F */  jal   music_related
+/* 0452B8 7F010788 0C001C0F */  jal   musicTrack1Vol
 /* 0452BC 7F01078C 24047FFF */   li    $a0, 32767
-/* 0452C0 7F010790 3C018002 */  lui   $at, %hi(D_8002434C) # $at, 0x8002
-/* 0452C4 7F010794 AC20434C */  sw    $zero, %lo(D_8002434C)($at)
-/* 0452C8 7F010798 0C001B9F */  jal   music_track_related
+/* 0452C0 7F010790 3C018002 */  lui   $at, %hi(music1_playing) # $at, 0x8002
+/* 0452C4 7F010794 AC20434C */  sw    $zero, %lo(music1_playing)($at)
+/* 0452C8 7F010798 0C001B9F */  jal   musicTrack1Play
 /* 0452CC 7F01079C 24040017 */   li    $a0, 23
 /* 0452D0 7F0107A0 3C018003 */  lui   $at, %hi(maybe_is_in_menu) # $at, 0x8003
 /* 0452D4 7F0107A4 AC20A93C */  sw    $zero, %lo(maybe_is_in_menu)($at)
@@ -18157,12 +18079,12 @@ void init_menu0C_missionfailed(void) {
     {
         // Node 1
         music_related_38(0x7fff);
-        music_related(0x7fff);
-        D_8002434C = 0;
-        music_track_related(0x17);
+        musicTrack1Vol(0x7fff);
+        music1_playing = 0;
+        musicTrack1Play(0x17);
         maybe_is_in_menu = 0;
         return;
-        // (possible return value: music_track_related(0x17))
+        // (possible return value: musicTrack1Play(0x17))
     }
     // (possible return value: set_cursor_pos_tab2())
 }
@@ -18187,11 +18109,11 @@ glabel init_menu0C_missionfailed
 /* 04ABFC 7F0160CC 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 04AC00 7F0160D0 0C00247A */  jal   music_related_38
 /* 04AC04 7F0160D4 24047FFF */   li    $a0, 32767
-/* 04AC08 7F0160D8 0C001C0F */  jal   music_related
+/* 04AC08 7F0160D8 0C001C0F */  jal   musicTrack1Vol
 /* 04AC0C 7F0160DC 24047FFF */   li    $a0, 32767
-/* 04AC10 7F0160E0 3C018002 */  lui   $at, %hi(D_8002434C) # $at, 0x8002
-/* 04AC14 7F0160E4 AC20434C */  sw    $zero, %lo(D_8002434C)($at)
-/* 04AC18 7F0160E8 0C001B9F */  jal   music_track_related
+/* 04AC10 7F0160E0 3C018002 */  lui   $at, %hi(music1_playing) # $at, 0x8002
+/* 04AC14 7F0160E4 AC20434C */  sw    $zero, %lo(music1_playing)($at)
+/* 04AC18 7F0160E8 0C001B9F */  jal   musicTrack1Play
 /* 04AC1C 7F0160EC 24040017 */   li    $a0, 23
 /* 04AC20 7F0160F0 3C018003 */  lui   $at, %hi(maybe_is_in_menu) # $at, 0x8003
 /* 04AC24 7F0160F4 AC20A93C */  sw    $zero, %lo(maybe_is_in_menu)($at)
@@ -21150,11 +21072,11 @@ glabel init_menu18_displaycast
 /* 04D224 7F0186F4 8D8CB5E8 */  lw    $t4, %lo(do_not_play_intro_movie)($t4)
 /* 04D228 7F0186F8 15800007 */  bnez  $t4, .L7F018718
 /* 04D22C 7F0186FC 00000000 */   nop   
-/* 04D230 7F018700 0C001C0F */  jal   music_related
+/* 04D230 7F018700 0C001C0F */  jal   musicTrack1Vol
 /* 04D234 7F018704 24047FFF */   li    $a0, 32767
-/* 04D238 7F018708 3C018002 */  lui   $at, %hi(D_8002434C) # $at, 0x8002
-/* 04D23C 7F01870C AC20434C */  sw    $zero, %lo(D_8002434C)($at)
-/* 04D240 7F018710 0C001B9F */  jal   music_track_related
+/* 04D238 7F018708 3C018002 */  lui   $at, %hi(music1_playing) # $at, 0x8002
+/* 04D23C 7F01870C AC20434C */  sw    $zero, %lo(music1_playing)($at)
+/* 04D240 7F018710 0C001B9F */  jal   musicTrack1Play
 /* 04D244 7F018714 24040002 */   li    $a0, 2
 .L7F018718:
 /* 04D248 7F018718 3C048003 */  lui   $a0, %hi(intro_animation_table) # $a0, 0x8003
@@ -22371,11 +22293,11 @@ glabel constructor_menu18_displaycast
 /* 04E35C 7F01982C 261095E8 */  addiu $s0, %lo(flt_CODE_bss_800695E8) # addiu $s0, $s0, -0x6a18
 /* 04E360 7F019830 C6040000 */  lwc1  $f4, ($s0)
 /* 04E364 7F019834 C7A60128 */  lwc1  $f6, 0x128($sp)
-/* 04E368 7F019838 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 04E368 7F019838 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 04E36C 7F01983C E7A4006C */  swc1  $f4, 0x6c($sp)
 /* 04E370 7F019840 C7A8006C */  lwc1  $f8, 0x6c($sp)
 /* 04E374 7F019844 C6040004 */  lwc1  $f4, 4($s0)
-/* 04E378 7F019848 C4328378 */  lwc1  $f18, %lo(D_80048378)($at)
+/* 04E378 7F019848 C4328378 */  lwc1  $f18, %lo(global_timer_delta)($at)
 /* 04E37C 7F01984C 46083281 */  sub.s $f10, $f6, $f8
 /* 04E380 7F019850 E7A40064 */  swc1  $f4, 0x64($sp)
 /* 04E384 7F019854 C7A80064 */  lwc1  $f8, 0x64($sp)

@@ -1,41 +1,30 @@
 #include "ultra64.h"
 #include "game/lvl_text.h"
 
-/* bss
-CODE.bss:8008C640     ptr_text:       .space 4                 # DATA XREF: init_LnameX+118w
-CODE.bss:8008C640                                              # init_LnameX+15Co
-CODE.bss:8008C640                                              # get_textptr_for_textID+8r
-CODE.bss:8008C644     table_text_pointers:.space 0x94          # DATA XREF: init_LnameX+114o
-CODE.bss:8008C6D8     dword_CODE_bss_8008C6D8:.space 4         # DATA XREF: init_LnameX+16Cw
-CODE.bss:8008C6DC     dword_CODE_bss_8008C6DC:.space 4         # DATA XREF: init_LnameX+188w
-CODE.bss:8008C6E0     dword_CODE_bss_8008C6E0:.space 4         # DATA XREF: init_LnameX+1ACw
-CODE.bss:8008C6E4     dword_CODE_bss_8008C6E4:.space 4         # DATA XREF: init_LnameX+1D0w
-CODE.bss:8008C6E8     dword_CODE_bss_8008C6E8:.space 4         # DATA XREF: init_LnameX+1F4w
-CODE.bss:8008C6EC     dword_CODE_bss_8008C6EC:.space 4         # DATA XREF: init_LnameX+218w
-CODE.bss:8008C6F0     dword_CODE_bss_8008C6F0:.space 4         # DATA XREF: init_LnameX+23Cw
-CODE.bss:8008C6F4     ptr_j_char_data_buf:.space 4             # DATA XREF: init_LnameX+30w
-CODE.bss:8008C6F4                                              # init_LnameX+10Co
-CODE.bss:8008C6F4                                              # something_with_LnameX+F8r
-CODE.bss:8008C6F4                                              # something_with_LnameX+148r
-CODE.bss:8008C6F4                                              # something_with_LnameX+1BCr
-CODE.bss:8008C6F4                                              # something_with_LnameX+1E8r
-CODE.bss:8008C6F4                                              # something_with_LnameX+284r
-CODE.bss:8008C6F4                                              # something_with_LnameX+2B4r
-CODE.bss:8008C6F4                                              # something_with_LnameX:loc_CODE_7F0C1CF0r
-CODE.bss:8008C6F8     ptr_j_char_registry:.space 4             # DATA XREF: init_LnameX+44o
-CODE.bss:8008C6F8                                              # init_LnameX+4Cw
-CODE.bss:8008C6F8                                              # something_with_LnameJ+18o
-CODE.bss:8008C6F8                                              # something_with_LnameJ+1Cr
-CODE.bss:8008C6F8                                              # something_with_LnameX:loc_CODE_7F0C1A58r
-CODE.bss:8008C6F8                                              # something_with_LnameX+114o
-CODE.bss:8008C6F8                                              # something_with_LnameX+128r
-CODE.bss:8008C6F8                                              # something_with_LnameX+17Co
-CODE.bss:8008C6F8                                              # something_with_LnameX+190r
-CODE.bss:8008C6F8                                              # something_with_LnameX+20Co
-CODE.bss:8008C6F8                                              # something_with_LnameX+220r
-CODE.bss:8008C6F8                                              # something_with_LnameX+244r
-CODE.bss:8008C6F8                                              # something_with_LnameX+268r
-*/
+// bss
+//CODE.bss:8008C640
+s32 ptr_text;
+//CODE.bss:8008C644
+char table_text_pointers[0x94];
+//CODE.bss:8008C6D8
+s32 dword_CODE_bss_8008C6D8;
+//CODE.bss:8008C6DC
+s32 dword_CODE_bss_8008C6DC;
+//CODE.bss:8008C6E0
+s32 dword_CODE_bss_8008C6E0;
+//CODE.bss:8008C6E4
+s32 dword_CODE_bss_8008C6E4;
+//CODE.bss:8008C6E8
+s32 dword_CODE_bss_8008C6E8;
+//CODE.bss:8008C6EC
+s32 dword_CODE_bss_8008C6EC;
+//CODE.bss:8008C6F0
+s32 dword_CODE_bss_8008C6F0;
+//CODE.bss:8008C6F4
+s32 ptr_j_char_data_buf;
+//CODE.bss:8008C6F8
+s32 ptr_j_char_registry;
+
 
 s32 j_text_trigger = 0;
 void *LnameX_lookuptable[] = {

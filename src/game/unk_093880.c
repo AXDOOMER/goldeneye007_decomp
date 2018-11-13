@@ -1,1876 +1,28 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:80079E90     dword_CODE_bss_80079E90:.space 4         # DATA XREF: sub_CODE_7F09442C+8w
-CODE.bss:80079E94                     .align 3
-CODE.bss:80079E98     dword_CODE_bss_80079E98:.space 0x48      # DATA XREF: sub_CODE_7F094488+1354o
-CODE.bss:80079E98                                              # sub_CODE_7F094488+1374o
-CODE.bss:80079E98                                              # sub_CODE_7F094488+2A90o
-CODE.bss:80079E98                                              # sub_CODE_7F094488+2AACo
-CODE.bss:80079EE0     ptr_BONDdata_p1:.space 4                 # DATA XREF: sub_CODE_7F007980+2Co
-CODE.bss:80079EE0                                              # sub_CODE_7F020EF0+204r
-CODE.bss:80079EE0                                              # play_sound_for_shot_actor+34r
-CODE.bss:80079EE0                                              # sub_CODE_7F03C574+44o
-CODE.bss:80079EE0                                              # handle_mp_respawn_and_some_things+310r
-CODE.bss:80079EE0                                              # handle_mp_respawn_and_some_things+330r
-CODE.bss:80079EE0                                              # sub_CODE_7F041E0C+2B8r
-CODE.bss:80079EE0                                              # sub_CODE_7F041E0C+364r
-CODE.bss:80079EE0                                              # sub_CODE_7F053894+38o
-CODE.bss:80079EE0                                              # sub_CODE_7F053894+44r
-CODE.bss:80079EE0                                              # sub_CODE_7F0790F0+68o
-CODE.bss:80079EE0                                              # sub_CODE_7F0790F0+180o
-CODE.bss:80079EE0                                              # sub_CODE_7F079A1C+4r
-CODE.bss:80079EE0                                              # sub_CODE_7F08A0B0+18o
-CODE.bss:80079EE0                                              # sub_CODE_7F08A0B0+48o
-CODE.bss:80079EE0                                              # sub_CODE_7F08A274+18o
-CODE.bss:80079EE0                                              # sub_CODE_7F08B0F0+68o
-CODE.bss:80079EE0                                              # sub_CODE_7F08B0F0+1ACo
-CODE.bss:80079EE0                                              # reset_play_data_ptrso
-CODE.bss:80079EE0                                              # reset_play_data_ptrs+8w
-CODE.bss:80079EE0                                              # init_player_data_ptrs_construct_viewportso
-CODE.bss:80079EE0                                              # init_player_data_ptrs_construct_viewports+1Cw
-CODE.bss:80079EE0                                              # getNumPlayersr
-CODE.bss:80079EE0                                              # sub_CODE_7F09A4BC+50o
-CODE.bss:80079EE0                                              # set_cur_player+4r
-CODE.bss:80079EE0                                              # getCurPlayerNum+28o
-CODE.bss:80079EE0                                              # sub_CODE_7F09B4D8+10o
-CODE.bss:80079EE0                                              # sub_CODE_7F09B528+8o
-CODE.bss:80079EE0                                              # sub_CODE_7F0BC530+24o
-CODE.bss:80079EE0                                              # manage_mp_game+174o
-CODE.bss:80079EE0                                              # manage_mp_game+370o
-CODE.bss:80079EE0                                              # manage_mp_game+48Co
-CODE.bss:80079EE0                                              # manage_mp_game+4F8o
-CODE.bss:80079EE0                                              # manage_mp_game+5C0o
-CODE.bss:80079EE0                                              # sub_CODE_7F0C2530+81Co
-CODE.bss:80079EE0                                              # sub_CODE_7F0C2530+8D0o
-CODE.bss:80079EE0                                              # sub_CODE_7F0C2E80+4D0o
-CODE.bss:80079EE0                                              # sub_CODE_7F0C2E80+508o
-CODE.bss:80079EE4     ptr_BONDdata_p2:.space 4                 # DATA XREF: reset_play_data_ptrs+Cw
-CODE.bss:80079EE4                                              # init_player_data_ptrs_construct_viewports+20w
-CODE.bss:80079EE4                                              # getNumPlayers:loc_CODE_7F09A480r
-CODE.bss:80079EE8     ptr_BONDdata_p3:.space 4                 # DATA XREF: reset_play_data_ptrs+10w
-CODE.bss:80079EE8                                              # init_player_data_ptrs_construct_viewports+24w
-CODE.bss:80079EE8                                              # getNumPlayers:loc_CODE_7F09A494r
-CODE.bss:80079EEC     ptr_BONDdata_p4:.space 4                 # DATA XREF: reset_play_data_ptrs+14w
-CODE.bss:80079EEC                                              # init_player_data_ptrs_construct_viewports+2Cw
-CODE.bss:80079EEC                                              # getNumPlayers:loc_CODE_7F09A4A4r
-CODE.bss:80079EF0     player1_playerdata:player_data <?>       # DATA XREF: maybe_mp_interface+3E4o
-CODE.bss:80079EF0                                              # record_damage_kills+2A0o
-CODE.bss:80079EF0                                              # record_damage_kills+498o
-CODE.bss:80079EF0                                              # set_cur_player+24o
-CODE.bss:80079EF0                                              # stage_load+1D4o
-CODE.bss:80079EF0                                              # stage_load:loc_CODE_7F0BDCC8o
-CODE.bss:80079EF0                                              # manage_mp_game+4B0o
-CODE.bss:80079EF0                                              # manage_mp_game+50Co
-CODE.bss:80079EF0                                              # manage_mp_game+5ACo
-CODE.bss:80079EF0                                              # sub_CODE_7F0C2530+ECo
-CODE.bss:80079EF0                                              # sub_CODE_7F0C2530+184o
-CODE.bss:80079EF0                                              # sub_CODE_7F0C2530+6E0o
-CODE.bss:80079EF0                                              # get_points_for_mp_player+Co
-CODE.bss:80079EF0                                              # get_points_for_mp_player+48o
-CODE.bss:80079EF0                                              # get_points_for_mp_player+25Co
-CODE.bss:80079EF0                                              # get_points_for_mp_player+280o
-CODE.bss:80079EF0                                              # get_points_for_mp_player+2F0o
-CODE.bss:80079EF0                                              # mp_watch_menu_display+95Co
-CODE.bss:80079EF0                                              # mp_watch_menu_display+BD4o
-CODE.bss:80079EF0                                              # mp_watch_menu_display+EBCo
-CODE.bss:80079EF0                                              # mp_watch_menu_display+F80o
-CODE.bss:80079EF0                                              # mp_watch_menu_display+FE4o
-CODE.bss:80079EF0                                              # mp_watch_menu_display+1054o
-CODE.bss:80079EF0                                              # mp_watch_menu_display+1390o
-CODE.bss:80079EF0                                              # mp_watch_menu_display+13E8o
-CODE.bss:80079EF0                                              # mp_watch_menu_display+150Co
-CODE.bss:80079EF0                                              # mp_watch_menu_display+1570o
-CODE.bss:80079EF0                                              # mp_watch_menu_display+15D0o
-CODE.bss:80079EF0                                              # mp_watch_menu_display+1634o
-CODE.bss:80079EF0                                              # mp_watch_menu_display+169Co
-CODE.bss:80079EF0                                              # mp_watch_menu_display+1704o
-CODE.bss:80079EF0                                              # mp_watch_menu_display+1E74o
-CODE.bss:80079EF0                                              # mp_watch_menu_display+1EB4o
-CODE.bss:80079EF0                                              # display_red_blue_on_radar+3CCo
-CODE.bss:80079F60     player2_player_data:player_data <?>
-CODE.bss:80079FD0     player3_player_data:player_data <?>
-CODE.bss:8007A040     player4_player_data:player_data <?>
-CODE.bss:8007A0B0      # int *ptr_BONDdata
-CODE.bss:8007A0B0     ptr_BONDdata:   .space 4                 # DATA XREF: video_related_Fo
-CODE.bss:8007A0B0                                              # video_related_F+8r
-CODE.bss:8007A0B0                                              # video_related_F+58r
-CODE.bss:8007A0B0                                              # video_related_F+84r
-CODE.bss:8007A0B0                                              # video_related_F+A4r
-CODE.bss:8007A0B0                                              # video_related_F+E4r
-CODE.bss:8007A0B0                                              # mainloop+114o
-CODE.bss:8007A0B0                                              # init_player_BONDdata_stats+50o
-CODE.bss:8007A0B0                                              # init_player_BONDdata_stats+58r
-CODE.bss:8007A0B0                                              # init_player_BONDdata_stats+7Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata_stats:loc_CODE_7F005154r
-CODE.bss:8007A0B0                                              # init_player_BONDdata_stats+94r
-CODE.bss:8007A0B0                                              # init_player_BONDdata_stats+A4r
-CODE.bss:8007A0B0                                              # init_player_BONDdata_stats+B0r
-CODE.bss:8007A0B0                                              # init_player_BONDdata_stats+B8r
-CODE.bss:8007A0B0                                              # init_player_BONDdata_stats+C0r
-CODE.bss:8007A0B0                                              # init_player_BONDdata_stats+CCr
-CODE.bss:8007A0B0                                              # init_player_BONDdata_stats+DCr
-CODE.bss:8007A0B0                                              # init_player_BONDdata_stats+E8r
-CODE.bss:8007A0B0                                              # load_camera_intro_type_values+294o
-CODE.bss:8007A0B0                                              # load_camera_intro_type_values+638o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0061F0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0061F0+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0061F0+18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0061F0+24r
-CODE.bss:8007A0B0                                              # alloc_additional_item_slotso
-CODE.bss:8007A0B0                                              # alloc_additional_item_slots+8r
-CODE.bss:8007A0B0                                              # alloc_additional_item_slots+1Cr
-CODE.bss:8007A0B0                                              # alloc_additional_item_slots+44r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default:loc_CODE_7F0063CCo
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+48r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+64r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+7Cr
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+94r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+A4r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+B4r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+C4r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+D4r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+E0r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+E8r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+F0r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+F8r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+100r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+108r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+110r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+118r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+120r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+128r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+130r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+138r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+140r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+148r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+150r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+158r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+160r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+168r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+170r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+178r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+180r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+188r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+190r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+198r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+1A0r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+1A8r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+1B0r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+1B8r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+1C0r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+1C8r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+1D0r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+1D8r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+1E0r
-CODE.bss:8007A0B0                                              # sets_a_bunch_of_BONDdata_values_to_default+1E8r
-CODE.bss:8007A0B0                                              # disable_onscreen_texto
-CODE.bss:8007A0B0                                              # disable_onscreen_text+8r
-CODE.bss:8007A0B0                                              # disable_onscreen_text+10r
-CODE.bss:8007A0B0                                              # die_blood_image_routine+14o
-CODE.bss:8007A0B0                                              # die_blood_image_routine+1Cr
-CODE.bss:8007A0B0                                              # die_blood_image_routine+3Co
-CODE.bss:8007A0B0                                              # die_blood_image_routine+40r
-CODE.bss:8007A0B0                                              # die_blood_image_routine:loc_CODE_7F01C2E4o
-CODE.bss:8007A0B0                                              # die_blood_image_routine+68r
-CODE.bss:8007A0B0                                              # die_blood_image_routine+84r
-CODE.bss:8007A0B0                                              # die_blood_image_routine+A0r
-CODE.bss:8007A0B0                                              # die_blood_image_routine+C4r
-CODE.bss:8007A0B0                                              # die_blood_image_routine+D4r
-CODE.bss:8007A0B0                                              # die_blood_image_routine+F0r
-CODE.bss:8007A0B0                                              # die_blood_image_routine+110r
-CODE.bss:8007A0B0                                              # die_blood_image_routine+130r
-CODE.bss:8007A0B0                                              # die_blood_image_routine+150r
-CODE.bss:8007A0B0                                              # sub_CODE_7F01C400+C0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F01C670+128r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0292A8+94r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0292A8:loc_CODE_7F0293C0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0294BC+50r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0294BC+ECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F029760+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F029760:loc_CODE_7F029808r
-CODE.bss:8007A0B0                                              # sub_CODE_7F032FAC+74r
-CODE.bss:8007A0B0                                              # parse_handle_actionblocks+4454r
-CODE.bss:8007A0B0                                              # parse_handle_actionblocks+447Cr
-CODE.bss:8007A0B0                                              # parse_handle_actionblocks+4490r
-CODE.bss:8007A0B0                                              # parse_handle_actionblocks+449Cr
-CODE.bss:8007A0B0                                              # parse_handle_actionblocks:loc_CODE_7F0399E0r
-CODE.bss:8007A0B0                                              # parse_handle_actionblocks:actionEB_return_if_button_pressedr
-CODE.bss:8007A0B0                                              # sub_CODE_7F03BDEC+4Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F03C0F0+170r
-CODE.bss:8007A0B0                                              # sub_CODE_7F03D188+398r
-CODE.bss:8007A0B0                                              # object_interaction+110r
-CODE.bss:8007A0B0                                              # collect_or_interact_object+18r
-CODE.bss:8007A0B0                                              # object_collectability_routines+438r
-CODE.bss:8007A0B0                                              # object_collectability_routines+460r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05522C+3Cr
-CODE.bss:8007A0B0                                              # drop_inventory+4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05C614+18o
-CODE.bss:8007A0B0                                              # sub_CODE_7F05C614+1Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05C614+30r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05C614+60r
-CODE.bss:8007A0B0                                              # unknown_takes_playerhand+44o
-CODE.bss:8007A0B0                                              # unknown_takes_playerhand+4Cr
-CODE.bss:8007A0B0                                              # unknown_takes_playerhand+11Cr
-CODE.bss:8007A0B0                                              # unknown_takes_playerhand+194r
-CODE.bss:8007A0B0                                              # unknown_takes_playerhand+1CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05CEBCr
-CODE.bss:8007A0B0                                              # get_itemtype_in_handr
-CODE.bss:8007A0B0                                              # get_ptr_itemheader_in_handr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05CF30r
-CODE.bss:8007A0B0                                              # remove_item_in_hando
-CODE.bss:8007A0B0                                              # remove_item_in_hand+8r
-CODE.bss:8007A0B0                                              # remove_item_in_hand+1Cr
-CODE.bss:8007A0B0                                              # remove_item_in_hand+2Cr
-CODE.bss:8007A0B0                                              # remove_item_in_hand+38r
-CODE.bss:8007A0B0                                              # place_item_in_hand_swap_and_make_visibleo
-CODE.bss:8007A0B0                                              # place_item_in_hand_swap_and_make_visible+8r
-CODE.bss:8007A0B0                                              # place_item_in_hand_swap_and_make_visible+40r
-CODE.bss:8007A0B0                                              # get_ptr_item_text_call_line+Cr
-CODE.bss:8007A0B0                                              # get_ptr_weapon_model_header_line+Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05D078r
-CODE.bss:8007A0B0                                              # used_to_load_1st_person_model_on_demand+8o
-CODE.bss:8007A0B0                                              # used_to_load_1st_person_model_on_demand+10r
-CODE.bss:8007A0B0                                              # used_to_load_1st_person_model_on_demand+A8r
-CODE.bss:8007A0B0                                              # used_to_load_1st_person_model_on_demand+108r
-CODE.bss:8007A0B0                                              # used_to_load_1st_person_model_on_demand+138r
-CODE.bss:8007A0B0                                              # used_to_load_1st_person_model_on_demand+188r
-CODE.bss:8007A0B0                                              # used_to_load_1st_person_model_on_demand+1B8r
-CODE.bss:8007A0B0                                              # used_to_load_1st_person_model_on_demand+1F4r
-CODE.bss:8007A0B0                                              # used_to_load_1st_person_model_on_demand+22Cr
-CODE.bss:8007A0B0                                              # used_to_load_1st_person_model_on_demand:loc_CODE_7F05D2E8r
-CODE.bss:8007A0B0                                              # get_next_weapon_in_cycle_for_hand+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05D4E0+10o
-CODE.bss:8007A0B0                                              # sub_CODE_7F05D4E0+18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05D4E0+70o
-CODE.bss:8007A0B0                                              # sub_CODE_7F05D4E0+80r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05D4E0:loc_CODE_7F05D578r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05D4E0+BCo
-CODE.bss:8007A0B0                                              # sub_CODE_7F05D4E0+CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05D4E0+F0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05D4E0+104r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05D4E0+110r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05D690r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05D690+1Cr
-CODE.bss:8007A0B0                                              # advance_through_inventory:loc_CODE_7F05D710r
-CODE.bss:8007A0B0                                              # backstep_through_inventory:loc_CODE_7F05D7A8r
-CODE.bss:8007A0B0                                              # autoadvance_on_deplete_all_ammo:loc_CODE_7F05D848r
-CODE.bss:8007A0B0                                              # draw_item_in_hand_has_more_ammo+10o
-CODE.bss:8007A0B0                                              # draw_item_in_hand_has_more_ammo+18r
-CODE.bss:8007A0B0                                              # draw_item_in_hand_has_more_ammo+34r
-CODE.bss:8007A0B0                                              # draw_item_in_hand_has_more_ammo+40r
-CODE.bss:8007A0B0                                              # attempt_reload_item_in_hand+30r
-CODE.bss:8007A0B0                                              # get_item_in_hand+10r
-CODE.bss:8007A0B0                                              # draw_item_in_hand+10o
-CODE.bss:8007A0B0                                              # draw_item_in_hand+18r
-CODE.bss:8007A0B0                                              # draw_item_in_hand+34r
-CODE.bss:8007A0B0                                              # return_ammo_in_hand+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DA8C+18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DAE4+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DAE4+50r
-CODE.bss:8007A0B0                                              # remove_hands_item+18o
-CODE.bss:8007A0B0                                              # remove_hands_item+20r
-CODE.bss:8007A0B0                                              # remove_hands_item+50r
-CODE.bss:8007A0B0                                              # remove_hands_item+80r
-CODE.bss:8007A0B0                                              # remove_hands_item+B8r
-CODE.bss:8007A0B0                                              # remove_hands_item+E8r
-CODE.bss:8007A0B0                                              # remove_hands_item+F8r
-CODE.bss:8007A0B0                                              # remove_hands_item+104r
-CODE.bss:8007A0B0                                              # remove_hands_item+110r
-CODE.bss:8007A0B0                                              # get_hands_firing_status+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DCB8+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DD38+1Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DD38+3Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DDA4+40o
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DDA4+44r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DDA4+58r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DDA4+ACo
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DDA4+B0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DDA4+C4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DE94+40o
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DE94+44r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DE94+58r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DE94+ACo
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DE94+B0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05DE94+C4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E0E4+40o
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E0E4+5Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E0E4+C8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E0E4+CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E0E4:loc_CODE_7F05E1C4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E0E4+E8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E0E4+108r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E0E4+138r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E0E4+148r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E0E4+18Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E5F0+28r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E5F0+54r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E6B4+18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E6B4+7Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E6B4+ACr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E6B4+D4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E6B4+124r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E808+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E83C+1Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E83C+34r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E83C+94r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E83C+B4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05E83C+10Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05EC1C+44r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05EE24+F8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05EE24+140r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05EE24+188r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05F09C+ECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05F09C+15Cr
-CODE.bss:8007A0B0                                              # generate_player_thrown_object+11Cr
-CODE.bss:8007A0B0                                              # generate_player_thrown_object+170r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05F73C+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05F73C:loc_CODE_7F05F84Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F05F928+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05FA7C+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05FB00+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05FB64+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F05FB64:loc_CODE_7F05FE34r
-CODE.bss:8007A0B0                                              # handles_firing_or_throwing_weapon_in_hand+44r
-CODE.bss:8007A0B0                                              # handles_firing_or_throwing_weapon_in_hand+364r
-CODE.bss:8007A0B0                                              # handles_firing_or_throwing_weapon_in_hand+5B8r
-CODE.bss:8007A0B0                                              # handles_firing_or_throwing_weapon_in_hand+660r
-CODE.bss:8007A0B0                                              # handles_firing_or_throwing_weapon_in_hand:loc_CODE_7F06067Cr
-CODE.bss:8007A0B0                                              # handles_firing_or_throwing_weapon_in_hand+840r
-CODE.bss:8007A0B0                                              # handles_firing_or_throwing_weapon_in_hand+894r
-CODE.bss:8007A0B0                                              # handles_firing_or_throwing_weapon_in_hand+8DCr
-CODE.bss:8007A0B0                                              # handles_firing_or_throwing_weapon_in_hand+940r
-CODE.bss:8007A0B0                                              # handles_firing_or_throwing_weapon_in_hand+A40r
-CODE.bss:8007A0B0                                              # handles_firing_or_throwing_weapon_in_hand+CE0r
-CODE.bss:8007A0B0                                              # handles_firing_or_throwing_weapon_in_hand+1838r
-CODE.bss:8007A0B0                                              # sub_CODE_7F061BF4+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F061BF4+B0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F061BF4+DCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F061BF4+1D8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F062BE4+70o
-CODE.bss:8007A0B0                                              # set_enviro_fog_for_items_in_solo_watch_menu:loc_CODE_7F0630B0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F06359C:loc_CODE_7F063654r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0649D8+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0649D8+A8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0649D8+C4r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+14r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+14Cr
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation:loc_CODE_7F064CE0r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+1DCr
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation:loc_CODE_7F064ED0r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+4E4r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+540r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+568r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+654r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+67Cr
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+740r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+80Cr
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+898r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+F9Cr
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+FF8r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation:loc_CODE_7F065B34r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+10E4r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+12A0r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+12C0r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+1618r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+17ACr
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation+1AC4r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation:loc_CODE_7F0668A8r
-CODE.bss:8007A0B0                                              # handle_weapon_id_values_possibly_1st_person_animation:loc_CODE_7F066904r
-CODE.bss:8007A0B0                                              # sub_CODE_7F066E64+28r
-CODE.bss:8007A0B0                                              # get_keyanalyzer_flagr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067174+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0671A4+60o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0671A4+68r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0671A4+7Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0671A4:loc_CODE_7F067244o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0671A4+BCo
-CODE.bss:8007A0B0                                              # sub_CODE_7F0671A4+D0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0671A4+E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0671A4+124r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0671A4+16Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0671A4+18Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0671A4+1E0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0673B4+28r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+20o
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+30r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+3Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+44r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+68r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+8Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+B4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+D8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+110r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+114r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+14Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+174r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+18Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+190r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+1A0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+1A4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+1B8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+208r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420:loc_CODE_7F06762Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+248r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+24Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+284r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+2E0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420:loc_CODE_7F067728r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+32Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420:loc_CODE_7F067764r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420:loc_CODE_7F067780r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+3C8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+3CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+404r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+42Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+444r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+448r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+458r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+45Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+470r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420:loc_CODE_7F0678C0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+4B0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+4B4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+4CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+4D0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+4E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+54Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+564r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+574r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+594r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067420+5C4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067AA4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067AB4+1Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F067AB4+28r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067AB4+38r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067AB4+44r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067AB4+58o
-CODE.bss:8007A0B0                                              # sub_CODE_7F067AB4+64r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067AB4+70r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067AB4+7Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067B4Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F067B4C+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067B4C+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067B4C+1Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F067B4C+28r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067B4C+30r
-CODE.bss:8007A0B0                                              # sub_CODE_7F067B4C+3Cr
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+2Co
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+34r
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+78r
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+94r
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+9Cr
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+E0r
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+100r
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+124r
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+270o
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+278r
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+28Co
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+294r
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+2C0r
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+2C4r
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+360o
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+368r
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+37Co
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+384r
-CODE.bss:8007A0B0                                              # caclulate_gun_crosshair_position_rotation+39Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F068008o
-CODE.bss:8007A0B0                                              # sub_CODE_7F068008+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F068008+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F06802C+2Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F06802C+30r
-CODE.bss:8007A0B0                                              # sub_CODE_7F06802C+3Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F06802C+64o
-CODE.bss:8007A0B0                                              # sub_CODE_7F06802C+68r
-CODE.bss:8007A0B0                                              # sub_CODE_7F06802C+7Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F06802C+84r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0680D4+4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0680D4+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0680D4+1Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0680D4+28r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0680D4+34r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0680D4+40o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0680D4+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0680D4+84o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0680D4+8Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0680D4+9Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F068190+18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0681CC+4Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0681CC+154r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0681CC+204r
-CODE.bss:8007A0B0                                              # sub_CODE_7F068508+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F068508+C4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F068508+230r
-CODE.bss:8007A0B0                                              # sub_CODE_7F068508+3E8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F068508+440r
-CODE.bss:8007A0B0                                              # sub_CODE_7F068508+46Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F068508+494r
-CODE.bss:8007A0B0                                              # sub_CODE_7F068508+578r
-CODE.bss:8007A0B0                                              # sub_CODE_7F068508+784r
-CODE.bss:8007A0B0                                              # sub_CODE_7F068508+7B8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F068508+7E0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F068D20+88r
-CODE.bss:8007A0B0                                              # sub_CODE_7F068EC4+148r
-CODE.bss:8007A0B0                                              # set_unset_ammo_on_screen_setting+8r
-CODE.bss:8007A0B0                                              # set_unset_ammo_on_screen_setting:loc_CODE_7F069118r
-CODE.bss:8007A0B0                                              # give_cur_player_ammo+40r
-CODE.bss:8007A0B0                                              # give_cur_player_ammo+5Cr
-CODE.bss:8007A0B0                                              # give_cur_player_ammo+80r
-CODE.bss:8007A0B0                                              # give_cur_player_ammo+94r
-CODE.bss:8007A0B0                                              # give_cur_player_ammo+D8r
-CODE.bss:8007A0B0                                              # give_cur_player_ammo:loc_CODE_7F06921Cr
-CODE.bss:8007A0B0                                              # check_cur_player_ammo_amount_in_inventoryr
-CODE.bss:8007A0B0                                              # get_ammo_in_hands_magazine+10r
-CODE.bss:8007A0B0                                              # get_ammo_in_hands_weapon+68r
-CODE.bss:8007A0B0                                              # get_ammo_count_for_weapon+14r
-CODE.bss:8007A0B0                                              # generate_ammo_total_microcoder
-CODE.bss:8007A0B0                                              # generate_ammo_total_microcode+B4r
-CODE.bss:8007A0B0                                              # generate_ammo_total_microcode+1D0r
-CODE.bss:8007A0B0                                              # generate_ammo_total_microcode:loc_CODE_7F069F00r
-CODE.bss:8007A0B0                                              # generate_ammo_total_microcode+394r
-CODE.bss:8007A0B0                                              # generate_ammo_total_microcode+4A4r
-CODE.bss:8007A0B0                                              # generate_ammo_total_microcode:loc_CODE_7F06A1D4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F06A334+3Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F06A334+140r
-CODE.bss:8007A0B0                                              # sub_CODE_7F06A334:loc_CODE_7F06A4B0r
-CODE.bss:8007A0B0                                              # set_unset_bitflags+8r
-CODE.bss:8007A0B0                                              # set_unset_bitflags:loc_CODE_7F06A5CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F06A5E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F06A5E4+4Cr
-CODE.bss:8007A0B0                                              # increment_num_kills_display_text_in_MP+18o
-CODE.bss:8007A0B0                                              # increment_num_kills_display_text_in_MP+28r
-CODE.bss:8007A0B0                                              # increment_num_kills_display_text_in_MP+98r
-CODE.bss:8007A0B0                                              # increment_num_kills_display_text_in_MP+9Cr
-CODE.bss:8007A0B0                                              # increment_num_kills_display_text_in_MP+D4r
-CODE.bss:8007A0B0                                              # increment_num_kills_display_text_in_MP+DCr
-CODE.bss:8007A0B0                                              # increment_num_kills_display_text_in_MP+F0r
-CODE.bss:8007A0B0                                              # increment_num_kills_display_text_in_MP+FCr
-CODE.bss:8007A0B0                                              # increment_num_kills_display_text_in_MP+108r
-CODE.bss:8007A0B0                                              # increment_num_kills_display_text_in_MP+114r
-CODE.bss:8007A0B0                                              # increment_num_deathsr
-CODE.bss:8007A0B0                                              # increment_num_deaths+2Cr
-CODE.bss:8007A0B0                                              # increment_num_deaths+70r
-CODE.bss:8007A0B0                                              # get_curplayer_numdeathsr
-CODE.bss:8007A0B0                                              # increment_num_suicides_display_MP+8o
-CODE.bss:8007A0B0                                              # increment_num_suicides_display_MP+10r
-CODE.bss:8007A0B0                                              # increment_num_suicides_display_MP+48r
-CODE.bss:8007A0B0                                              # increment_num_suicides_display_MP+84r
-CODE.bss:8007A0B0                                              # increment_num_suicides_display_MP+88r
-CODE.bss:8007A0B0                                              # increment_num_suicides_display_MP+BCr
-CODE.bss:8007A0B0                                              # increment_num_suicides_display_MP+C4r
-CODE.bss:8007A0B0                                              # increment_num_suicides_display_MP+D8r
-CODE.bss:8007A0B0                                              # increment_num_suicides_display_MP+E4r
-CODE.bss:8007A0B0                                              # increment_num_suicides_display_MP+F0r
-CODE.bss:8007A0B0                                              # increment_num_suicides_display_MP+FCr
-CODE.bss:8007A0B0                                              # get_curplayer_numsuicidesr
-CODE.bss:8007A0B0                                              # set_BONDdata_screensizeo
-CODE.bss:8007A0B0                                              # set_BONDdata_screensize+8r
-CODE.bss:8007A0B0                                              # set_BONDdata_screensize+18r
-CODE.bss:8007A0B0                                              # set_BONDdata_screensize+28r
-CODE.bss:8007A0B0                                              # set_BONDdata_screensize+30r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C14o
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C14+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C14+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C30o
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C30+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C30+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C30+1Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C5C+8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C5C+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C5C+3Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C5C+5Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C5C+80r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C5C+A4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C5C+B4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C5C+C4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C5C+F4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C5C+110r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C5C+130r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077C5C:loc_CODE_7F077E34r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077EEC+4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077FB4+8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F077FB4+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077FB4+28r
-CODE.bss:8007A0B0                                              # sub_CODE_7F077FF4+18o
-CODE.bss:8007A0B0                                              # sub_CODE_7F077FF4+1Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F077FF4+44r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078060+38o
-CODE.bss:8007A0B0                                              # sub_CODE_7F078060+44r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078060+68r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0780F0+18o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0780F0+1Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0780F0+38r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078140+44r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078258+44o
-CODE.bss:8007A0B0                                              # sub_CODE_7F078258+4Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F078258+9Cr
-CODE.bss:8007A0B0                                              # set_BONDdata_field_10C4r
-CODE.bss:8007A0B0                                              # get_BONDdata_field_10C4r
-CODE.bss:8007A0B0                                              # set_BONDdata_field_10C8r
-CODE.bss:8007A0B0                                              # get_BONDdata_field_10C8r
-CODE.bss:8007A0B0                                              # set_BONDdata_field_10D8r
-CODE.bss:8007A0B0                                              # get_BONDdata_field_10D8r
-CODE.bss:8007A0B0                                              # set_BONDdata_field_10E0r
-CODE.bss:8007A0B0                                              # get_BONDdata_field_10E0r
-CODE.bss:8007A0B0                                              # copy_BONDdata_field_10CC_to_10E8_set_10CCo
-CODE.bss:8007A0B0                                              # copy_BONDdata_field_10CC_to_10E8_set_10CC+8r
-CODE.bss:8007A0B0                                              # copy_BONDdata_field_10CC_to_10E8_set_10CC+14r
-CODE.bss:8007A0B0                                              # get_BONDdata_field_10CCr
-CODE.bss:8007A0B0                                              # set_BONDdata_field_10DCr
-CODE.bss:8007A0B0                                              # get_BONDdata_field_10DCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0783F4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078404r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078414r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078424o
-CODE.bss:8007A0B0                                              # sub_CODE_7F078424+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078424+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078444r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078454r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078464r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078474r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078484r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078494r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0784A4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0784B4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0784C4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0784D4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0784E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0784F4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078504o
-CODE.bss:8007A0B0                                              # sub_CODE_7F078504+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078504+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078504+20r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078534o
-CODE.bss:8007A0B0                                              # sub_CODE_7F078534+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078534+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078534+24r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078568o
-CODE.bss:8007A0B0                                              # sub_CODE_7F078568+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078568+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078568+20r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078598o
-CODE.bss:8007A0B0                                              # sub_CODE_7F078598+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078598+18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078598+24r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0785CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0785DCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0785DC+50r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0785DC+1D4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078A10o
-CODE.bss:8007A0B0                                              # sub_CODE_7F078A10+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078A10+1Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F078A10+2Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F078A58r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078BF4+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078BF4+BCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F078BF4+1D4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078BF4+2F0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F078BF4+40Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0790F0+70o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0790F0+74r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0790F0+174o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0790F0+1A8r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+2Co
-CODE.bss:8007A0B0                                              # init_player_BONDdata+34r
-CODE.bss:8007A0B0                                              # init_player_BONDdata:loc_CODE_7F07943Co
-CODE.bss:8007A0B0                                              # init_player_BONDdata+5Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+6Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+7Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+8Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+9Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+A4r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+ACr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+B4r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+BCr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+C4r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+CCr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+D4r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+DCr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+E4r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+ECr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+F4r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+FCr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+104r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+10Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+114r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+11Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+124r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+12Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+134r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+13Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+144r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+14Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+154r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+15Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+164r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+16Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+174r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+17Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+184r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+18Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+194r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+19Cr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+1A4r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+1ACr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+1B4r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+1BCr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+1C4r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+1CCr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+1D4r
-CODE.bss:8007A0B0                                              # init_player_BONDdata+1DCr
-CODE.bss:8007A0B0                                              # init_player_BONDdata+1E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0798B8+30o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0798B8+38r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0798B8+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0798B8+54o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0798B8+5Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0798B8+68r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0798B8+A4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079988+10r
-CODE.bss:8007A0B0                                              # change_crouch_positiono
-CODE.bss:8007A0B0                                              # change_crouch_position+8r
-CODE.bss:8007A0B0                                              # change_crouch_position+18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0799F0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A50r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+13Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+150o
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+158r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60:loc_CODE_7F079BC8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+1A4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+1ACr
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+1BCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+1D0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+1E0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+1ECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+1F8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+204r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+210r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+21Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+228r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+234r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+240r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+24Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+258r
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+26Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F079A60+274r
-CODE.bss:8007A0B0                                              # solo_char_load+10r
-CODE.bss:8007A0B0                                              # solo_char_load+C4r
-CODE.bss:8007A0B0                                              # solo_char_load+E4r
-CODE.bss:8007A0B0                                              # solo_char_load+560o
-CODE.bss:8007A0B0                                              # solo_char_load+568r
-CODE.bss:8007A0B0                                              # solo_char_load+574r
-CODE.bss:8007A0B0                                              # solo_char_load+594r
-CODE.bss:8007A0B0                                              # solo_char_load+5BCo
-CODE.bss:8007A0B0                                              # solo_char_load+5C4r
-CODE.bss:8007A0B0                                              # solo_char_load+5D4r
-CODE.bss:8007A0B0                                              # solo_char_load+5ECr
-CODE.bss:8007A0B0                                              # solo_char_load+604r
-CODE.bss:8007A0B0                                              # solo_char_load+774r
-CODE.bss:8007A0B0                                              # solo_char_load+78Cr
-CODE.bss:8007A0B0                                              # maybe_solo_intro_camera_handlero
-CODE.bss:8007A0B0                                              # maybe_solo_intro_camera_handler+8r
-CODE.bss:8007A0B0                                              # maybe_solo_intro_camera_handler+38o
-CODE.bss:8007A0B0                                              # maybe_solo_intro_camera_handler+3Cr
-CODE.bss:8007A0B0                                              # maybe_solo_intro_camera_handler+48o
-CODE.bss:8007A0B0                                              # maybe_solo_intro_camera_handler+50r
-CODE.bss:8007A0B0                                              # maybe_solo_intro_camera_handler+64r
-CODE.bss:8007A0B0                                              # maybe_solo_intro_camera_handler+74r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07A534:loc_CODE_7F07A5B8r
-CODE.bss:8007A0B0                                              # set_camera_mode+A4o
-CODE.bss:8007A0B0                                              # set_camera_mode+ACr
-CODE.bss:8007A0B0                                              # set_camera_mode+21Co
-CODE.bss:8007A0B0                                              # set_camera_mode+224r
-CODE.bss:8007A0B0                                              # set_camera_mode+27Cr
-CODE.bss:8007A0B0                                              # set_camera_mode+280r
-CODE.bss:8007A0B0                                              # set_camera_mode+290r
-CODE.bss:8007A0B0                                              # set_camera_mode+2A8r
-CODE.bss:8007A0B0                                              # set_camera_mode:loc_CODE_7F07AD24o
-CODE.bss:8007A0B0                                              # set_camera_mode+374r
-CODE.bss:8007A0B0                                              # set_camera_mode+408o
-CODE.bss:8007A0B0                                              # set_camera_mode+420o
-CODE.bss:8007A0B0                                              # set_camera_mode+42Cr
-CODE.bss:8007A0B0                                              # set_camera_mode+738o
-CODE.bss:8007A0B0                                              # set_camera_mode+740r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B2A0:loc_CODE_7F07B2ECo
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B2A0+170o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B2A0+17Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B2A0+1A4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B2A0+1B8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B2A0+1C8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B2A0+1D4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B2A0+1E0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B2A0+224r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B2A0:loc_CODE_7F07B4F0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B2A0+27Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B2A0+29Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C:loc_CODE_7F07B708o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+1A0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+4A0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+4ACr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+4D0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+4F4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+500r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+524r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+530r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+53Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+548r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+55Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+570r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+590r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+79Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+7A8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+7D0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C:loc_CODE_7F07BD6Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+85Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C:loc_CODE_7F07BE1Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+8C4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+8D0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+8DCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+914o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+920r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+940o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+948r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+95Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+9C0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+A18o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+A24r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+AA4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+AC8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+AE8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+AF4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C:loc_CODE_7F07C094r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+B3Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+B48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+B54r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+B98o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+BB0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+BC0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+BCCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+C90o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+CDCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+CECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07B56C+CF8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07C540r
-CODE.bss:8007A0B0                                              # set_BONDdata_lookahead_settingr
-CODE.bss:8007A0B0                                              # get_BONDdata_lookahead_settingr
-CODE.bss:8007A0B0                                              # set_BONDdata_autoaim_yr
-CODE.bss:8007A0B0                                              # get_BONDdata_autoaim_y+1Cr
-CODE.bss:8007A0B0                                              # get_BONDdata_is_aimingr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07C5F0+4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07C5F0+Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07C5F0+2Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07C5F0+50r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07C5F0+58r
-CODE.bss:8007A0B0                                              # set_BONDdata_autoaim_xr
-CODE.bss:8007A0B0                                              # get_BONDdata_autoaim_x+1Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07C6C8+4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07C6C8+Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07C6C8+2Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07C6C8+50r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07C6C8+58r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07CDD4+4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07CF8C:loc_CODE_7F07CFD8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07CF8C:loc_CODE_7F07D030r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07CF8C+ECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07CF8C+100r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07CF8C+184r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07CF8C+1C0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07CF8C+1FCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07CF8C+214r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07CF8C:loc_CODE_7F07D1ACr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D234+2Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D234+34r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D234+44r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D234+50r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D2B4+8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D2B4+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D2B4+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D2B4+DCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D2B4+11Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D2B4+128r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D2B4+134r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D4C0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D4C0+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D4C0+B4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D4C0+BCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D4C0+114o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D4C0+11Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D4C0+128r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D4C0+134r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D61C+8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D61C+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D61C+44r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D61C+138r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D61C+19Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D61C+28Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960+Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960+2Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960+40r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960+4Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960+A4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960+BCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960+148r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960:loc_CODE_7F07DCE4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960+3A4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960:loc_CODE_7F07DDE4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960+4A8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960+4D0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07D960+4D4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07DEFCo
-CODE.bss:8007A0B0                                              # sub_CODE_7F07DEFC+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07DEFC+18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07DEFC+20r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07DF28+8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07DF28+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07DF28+24r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07DF28:loc_CODE_7F07DF58o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07DF28+34r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07DF28+40r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07DF28:loc_CODE_7F07DF74r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E010o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E010+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E010+18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E010+20r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E03Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E03C+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E03C+18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E03C+20r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E068r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+94o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+A0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+D8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090:loc_CODE_7F07E170r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+114r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+160o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+16Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+194r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+1A8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+1B0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+22Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+24Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+26Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+28Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E090+2B0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E388r
-CODE.bss:8007A0B0                                              # trigger_watch_zoomo
-CODE.bss:8007A0B0                                              # trigger_watch_zoom+8r
-CODE.bss:8007A0B0                                              # trigger_watch_zoom+18r
-CODE.bss:8007A0B0                                              # trigger_watch_zoom+20r
-CODE.bss:8007A0B0                                              # trigger_watch_zoom+2Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E438r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E46C+28r
-CODE.bss:8007A0B0                                              # zoom_to_watch_on_openr
-CODE.bss:8007A0B0                                              # zoom_from_watch_on_exitr
-CODE.bss:8007A0B0                                              # check_watch_page_transistion_runningr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E62Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E62C+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E62C:loc_CODE_7F07E6B4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E62C+A8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E62C:loc_CODE_7F07E704r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E62C:loc_CODE_7F07E710r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E62C+F0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E62C+F8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E740r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E7CC:loc_CODE_7F07E804r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E7CC+60r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E7CC+A0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E7CC+C8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E8B0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E8B0+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E8B0:loc_CODE_7F07E8F8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E8B0+54r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E910o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E910+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E910:loc_CODE_7F07E94Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E910+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E964o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E964+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E964+64r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E964+80r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E964+8Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E964+C4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E964+E0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07E964+E8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EA78r
-CODE.bss:8007A0B0                                              # set_BONDdata_paused_flagr
-CODE.bss:8007A0B0                                              # get_BONDdata_paused_flagr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EAF0:loc_CODE_7F07EB10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54:loc_CODE_7F07ECB4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+80r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+94r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+A0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+B4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+158r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+17Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+18Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54:loc_CODE_7F07EDE8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+1B0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+1FCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+254r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+28Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+29Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+2A8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+398r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+3C8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+3D8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54:loc_CODE_7F07F03Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+3F8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+408r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+414r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+454r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+478r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+48Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54:loc_CODE_7F07F0ECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+4A8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+4B8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+4C8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+4D4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+500r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+510r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+52Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+554r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+564r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+57Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+5E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+5F8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54:loc_CODE_7F07F258r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+614r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+624r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+634r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+640r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+674r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+6E8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+710r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+724r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+734r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+740r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+758r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+8D0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+8E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+8ECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54:loc_CODE_7F07F548r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+978o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+97Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+988r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+990r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54:loc_CODE_7F07F5ECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+9B8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+A44o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+A48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+A54r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+A5Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54:loc_CODE_7F07F6B8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+AE8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+AF8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+B04r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54:loc_CODE_7F07F760r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+B48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+B78r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+B88r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07EC54+BA8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07F860r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+8o
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+10r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+84r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+94r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+98r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu:loc_CODE_7F07F940r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu:loc_CODE_7F07F94Cr
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+E0r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+FCr
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+114r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+138r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+150r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+174r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+244r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+24Cr
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+268r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+270r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+28Cr
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+294r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+2B0r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+2B8r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+2DCr
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+2E8r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+2F0r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+2F8r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+324r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+32Cr
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+358r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+360r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+38Cr
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+394r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+3BCr
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+3C4r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+3E8r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+3F0r
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+40Cr
-CODE.bss:8007A0B0                                              # trigger_solo_watch_menu+414r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4+Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4+30r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4+4Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4+68o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4+70r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4+90r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4+ACr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4:loc_CODE_7F07FD80o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4+C0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4+F0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4+10Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4+128r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FCC4+144r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C+Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C+30r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C+4Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C+68o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C+70r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C+90r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C+ACr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C:loc_CODE_7F07FED8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C+C0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C+F0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C+10Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C+128r
-CODE.bss:8007A0B0                                              # sub_CODE_7F07FE1C+144r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080010+3Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F080010+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080010:loc_CODE_7F0800BCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F080010:loc_CODE_7F0800E0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F080010+DCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F080010+E0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F080010+E8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080010:loc_CODE_7F08015Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F080010+1ACr
-CODE.bss:8007A0B0                                              # sub_CODE_7F080010+1ECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0802C4+3Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F0802C4+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0802C4:loc_CODE_7F080370r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0802C4:loc_CODE_7F080394o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0802C4+DCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0802C4+E0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0802C4+E8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0802C4:loc_CODE_7F080414r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0802C4+1B0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0802C4+1F0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0804E0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807B0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807B0+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807B0+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807B0+1Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807B0+24r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807E0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807E0+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807E0+18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807E0+20r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807E0+2Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807E0+34r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807E0+40r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807E0+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807E0+54r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807E0+5Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0807E0+68r
-CODE.bss:8007A0B0                                              # fade_to_over_secondsr
-CODE.bss:8007A0B0                                              # check_if_fade_to_black_completer
-CODE.bss:8007A0B0                                              # sub_CODE_7F0808BCo
-CODE.bss:8007A0B0                                              # sub_CODE_7F0808BC+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0808BC+38r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0808BC+70r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0808BC+A4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0808BC+D8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0808BC+120r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0808BC+12Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0808BC+138r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0808BC+144r
-CODE.bss:8007A0B0                                              # set_curplayer_fadeo
-CODE.bss:8007A0B0                                              # set_curplayer_fade+8r
-CODE.bss:8007A0B0                                              # set_curplayer_fade+28r
-CODE.bss:8007A0B0                                              # set_curplayer_fade+54r
-CODE.bss:8007A0B0                                              # set_curplayer_fade+60r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080A80o
-CODE.bss:8007A0B0                                              # sub_CODE_7F080A80+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080A80+44r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080B34+14o
-CODE.bss:8007A0B0                                              # sub_CODE_7F080B34+18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080B34+E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080B34+10Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F080B34+138r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080B34+198r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080B34+1D4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080B34+1DCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F080B34+1E8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080B34+1F4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080B34+200r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080D60:loc_CODE_7F080DA4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+20o
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+28r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+3Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+44r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+54r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+7Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+84r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+D4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+D8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+E8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+FCo
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+104r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+124r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8:loc_CODE_7F080F20o
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+130r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+150o
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+158r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+16Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+174r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+188o
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+18Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+1ACo
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+1BCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+1D0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8:loc_CODE_7F080FD0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+1E0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+210r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+21Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+224r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+278r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+280r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+314o
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+388r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+40Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+414r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+43Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+448r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+450r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+458r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+460r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+530o
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+538r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+550o
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+558r
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+58Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F080DF8+598r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+ACr
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478:loc_CODE_7F081528r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+C0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+D8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+128r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+144r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+188r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+1C4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+1CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+1D8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+1E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+1F0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+204o
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+20Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+21Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+234r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+244r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+254r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+26Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F081478+274r
-CODE.bss:8007A0B0                                              # sub_CODE_7F081790+8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F081790+10r
-CODE.bss:8007A0B0                                              # controller_gameplay_interaction+D8o
-CODE.bss:8007A0B0                                              # controller_gameplay_interaction+10Cr
-CODE.bss:8007A0B0                                              # controller_gameplay_interaction+13Cr
-CODE.bss:8007A0B0                                              # controller_gameplay_interaction+170r
-CODE.bss:8007A0B0                                              # controller_gameplay_interaction+17Cr
-CODE.bss:8007A0B0                                              # controller_gameplay_interaction+190r
-CODE.bss:8007A0B0                                              # controller_gameplay_interaction:loc_CODE_7F081B10r
-CODE.bss:8007A0B0                                              # controller_gameplay_interaction+1A8r
-CODE.bss:8007A0B0                                              # controller_gameplay_interaction+1B4r
-CODE.bss:8007A0B0                                              # controller_gameplay_interaction+1D8r
-CODE.bss:8007A0B0                                              # controller_gameplay_interaction+1E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+64o
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+70r
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+88r
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+A0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+190r
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+1D4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+1E8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+230r
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+25Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+280r
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+298r
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+2FCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+30Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+350r
-CODE.bss:8007A0B0                                              # sub_CODE_7F083FC8+360r
-CODE.bss:8007A0B0                                              # sub_CODE_7F084360+5Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F084360+268r
-CODE.bss:8007A0B0                                              # MoveBond+C0o
-CODE.bss:8007A0B0                                              # MoveBond+C8r
-CODE.bss:8007A0B0                                              # MoveBond+D8r
-CODE.bss:8007A0B0                                              # MoveBond:loc_CODE_7F08474Co
-CODE.bss:8007A0B0                                              # MoveBond+14Cr
-CODE.bss:8007A0B0                                              # MoveBond+158r
-CODE.bss:8007A0B0                                              # MoveBond+18Cr
-CODE.bss:8007A0B0                                              # MoveBond+190r
-CODE.bss:8007A0B0                                              # MoveBond+1ACr
-CODE.bss:8007A0B0                                              # MoveBond+1BCr
-CODE.bss:8007A0B0                                              # MoveBond+230r
-CODE.bss:8007A0B0                                              # MoveBond+258r
-CODE.bss:8007A0B0                                              # MoveBond+270r
-CODE.bss:8007A0B0                                              # sub_CODE_7F086990:loc_CODE_7F086AD4r
-CODE.bss:8007A0B0                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F087394r
-CODE.bss:8007A0B0                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F0873B4r
-CODE.bss:8007A0B0                                              # possibly_reset_viewport_options_for_player+46Cr
-CODE.bss:8007A0B0                                              # possibly_reset_viewport_options_for_player+4A4r
-CODE.bss:8007A0B0                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F087490r
-CODE.bss:8007A0B0                                              # possibly_reset_viewport_options_for_player+548r
-CODE.bss:8007A0B0                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F087524r
-CODE.bss:8007A0B0                                              # possibly_reset_viewport_options_for_player+5C0r
-CODE.bss:8007A0B0                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F0875C4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0875E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0875E4+24r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0875E4+3Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0875E4+54r
-CODE.bss:8007A0B0                                              # store_BONDdata_curpos_to_previouso
-CODE.bss:8007A0B0                                              # store_BONDdata_curpos_to_previous+8r
-CODE.bss:8007A0B0                                              # store_BONDdata_curpos_to_previous+1Cr
-CODE.bss:8007A0B0                                              # store_BONDdata_curpos_to_previous+28r
-CODE.bss:8007A0B0                                              # store_BONDdata_curpos_to_previous+38o
-CODE.bss:8007A0B0                                              # store_BONDdata_curpos_to_previous+40r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0876C4+34o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0876C4+3Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0876C4+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0876C4+54r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0876C4+60r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0876C4+74r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0876C4+178r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0876C4+1C4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F087A08r
-CODE.bss:8007A0B0                                              # sub_CODE_7F087A08:loc_CODE_7F087BB4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F087A08:loc_CODE_7F087BF8r
-CODE.bss:8007A0B0                                              # seems_to_load_cuff_microcode+48r
-CODE.bss:8007A0B0                                              # seems_to_load_cuff_microcode+98r
-CODE.bss:8007A0B0                                              # seems_to_load_cuff_microcode+12Cr
-CODE.bss:8007A0B0                                              # seems_to_load_cuff_microcode+1A0r
-CODE.bss:8007A0B0                                              # seems_to_load_cuff_microcode+1ECr
-CODE.bss:8007A0B0                                              # seems_to_load_cuff_microcode+238r
-CODE.bss:8007A0B0                                              # sub_CODE_7F087E74r
-CODE.bss:8007A0B0                                              # sub_CODE_7F087E74+9Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F087E74+BCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F087E74+138o
-CODE.bss:8007A0B0                                              # sub_CODE_7F087E74+144r
-CODE.bss:8007A0B0                                              # sub_CODE_7F087E74+160r
-CODE.bss:8007A0B0                                              # sub_CODE_7F087E74+224r
-CODE.bss:8007A0B0                                              # sub_CODE_7F087E74+248r
-CODE.bss:8007A0B0                                              # sub_CODE_7F087E74+274r
-CODE.bss:8007A0B0                                              # sub_CODE_7F087E74+3E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F087E74+668r
-CODE.bss:8007A0B0                                              # sub_CODE_7F087E74+738r
-CODE.bss:8007A0B0                                              # sub_CODE_7F087E74+770r
-CODE.bss:8007A0B0                                              # sub_CODE_7F088618+8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F088618+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F088618+38r
-CODE.bss:8007A0B0                                              # sub_CODE_7F088618+54r
-CODE.bss:8007A0B0                                              # sub_CODE_7F088618+6Cr
-CODE.bss:8007A0B0                                              # mp_respawn_handler+48o
-CODE.bss:8007A0B0                                              # mp_respawn_handler+60r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+70r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+78r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+80r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+88r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+90r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+98r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+114r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+16Cr
-CODE.bss:8007A0B0                                              # mp_respawn_handler+190r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+19Cr
-CODE.bss:8007A0B0                                              # mp_respawn_handler+1A8r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+1C0r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+1D0r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+1E0r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+1F0r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+1FCr
-CODE.bss:8007A0B0                                              # mp_respawn_handler+208r
-CODE.bss:8007A0B0                                              # mp_respawn_handler+214r
-CODE.bss:8007A0B0                                              # maybe_mp_interfacer
-CODE.bss:8007A0B0                                              # maybe_mp_interface+90r
-CODE.bss:8007A0B0                                              # maybe_mp_interface+130r
-CODE.bss:8007A0B0                                              # maybe_mp_interface+168r
-CODE.bss:8007A0B0                                              # maybe_mp_interface+190r
-CODE.bss:8007A0B0                                              # maybe_mp_interface:loc_CODE_7F0893CCr
-CODE.bss:8007A0B0                                              # maybe_mp_interface+278r
-CODE.bss:8007A0B0                                              # maybe_mp_interface:loc_CODE_7F089484r
-CODE.bss:8007A0B0                                              # maybe_mp_interface+2ACr
-CODE.bss:8007A0B0                                              # maybe_mp_interface+2D8r
-CODE.bss:8007A0B0                                              # maybe_mp_interface+2ECr
-CODE.bss:8007A0B0                                              # maybe_mp_interface+300r
-CODE.bss:8007A0B0                                              # maybe_mp_interface+32Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F089718+18r
-CODE.bss:8007A0B0                                              # get_curplayer_positiondatar
-CODE.bss:8007A0B0                                              # kill_current_player+8o
-CODE.bss:8007A0B0                                              # kill_current_player+10r
-CODE.bss:8007A0B0                                              # kill_current_player+44r
-CODE.bss:8007A0B0                                              # kill_current_player+58r
-CODE.bss:8007A0B0                                              # record_damage_kills+20r
-CODE.bss:8007A0B0                                              # record_damage_kills+44r
-CODE.bss:8007A0B0                                              # record_damage_kills+68r
-CODE.bss:8007A0B0                                              # record_damage_kills:loc_CODE_7F0899F8r
-CODE.bss:8007A0B0                                              # record_damage_kills+168r
-CODE.bss:8007A0B0                                              # record_damage_kills:loc_CODE_7F089AACr
-CODE.bss:8007A0B0                                              # record_damage_kills+1E0r
-CODE.bss:8007A0B0                                              # record_damage_kills+210r
-CODE.bss:8007A0B0                                              # record_damage_kills+310r
-CODE.bss:8007A0B0                                              # record_damage_kills+348r
-CODE.bss:8007A0B0                                              # record_damage_kills+354r
-CODE.bss:8007A0B0                                              # record_damage_kills+380r
-CODE.bss:8007A0B0                                              # record_damage_kills+38Cr
-CODE.bss:8007A0B0                                              # record_damage_kills+3A8r
-CODE.bss:8007A0B0                                              # record_damage_kills+4B4r
-CODE.bss:8007A0B0                                              # record_damage_kills+4E4r
-CODE.bss:8007A0B0                                              # record_damage_kills+4FCr
-CODE.bss:8007A0B0                                              # record_damage_kills+508r
-CODE.bss:8007A0B0                                              # check_if_bond_is_invincibler
-CODE.bss:8007A0B0                                              # check_if_healthbar_timer_greater_than_0r
-CODE.bss:8007A0B0                                              # get_BONDdata_field19Cr
-CODE.bss:8007A0B0                                              # get_curplay_horizontal_rotation_in_degreesr
-CODE.bss:8007A0B0                                              # get_curplay_vertical_rotation_in_degreesr
-CODE.bss:8007A0B0                                              # sub_CODE_7F089F38r
-CODE.bss:8007A0B0                                              # set_bondata_invincible_flagr
-CODE.bss:8007A0B0                                              # get_bondata_invincible_flagr
-CODE.bss:8007A0B0                                              # get_cur_players_roomr
-CODE.bss:8007A0B0                                              # get_BONDdata_positionr
-CODE.bss:8007A0B0                                              # get_BONDdata_position3r
-CODE.bss:8007A0B0                                              # get_BONDdata_field408r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A19C+18o
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A19C+20r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A19C:loc_CODE_7F08A1DCo
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A19C+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A19C+5Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A19C+68r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A19C+74r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A19C+88r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A19C+9Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A19C+A8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A19C+B4r
-CODE.bss:8007A0B0                                              # get_BONDdata_watch_healthr
-CODE.bss:8007A0B0                                              # get_BONDdata_watch_armorr
-CODE.bss:8007A0B0                                              # add_BONDdata_watch_armor+18r
-CODE.bss:8007A0B0                                              # reset_intro_camera_message_dialogs_for_BONDdatao
-CODE.bss:8007A0B0                                              # reset_intro_camera_message_dialogs_for_BONDdata+8r
-CODE.bss:8007A0B0                                              # reset_intro_camera_message_dialogs_for_BONDdata+18r
-CODE.bss:8007A0B0                                              # unset_flags_in_BONDdata_stationary_intro_camr
-CODE.bss:8007A0B0                                              # set_flags_in_BONDdata_stationary_intro_camr
-CODE.bss:8007A0B0                                              # display_string_in_lower_left_corner+D8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A4E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A4E4+54r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A4E4+D0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A5FCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A5FC:loc_CODE_7F08A684r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08A9F8+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08AAE8+64r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08AAE8+244r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08AAE8+2C8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08AAE8+2ECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08AAE8+318r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08AAE8+344r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08BCF4+Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08BDC4+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08BE2C+30o
-CODE.bss:8007A0B0                                              # sub_CODE_7F08BEEC+30o
-CODE.bss:8007A0B0                                              # reinit_BONDdata_inventoryo
-CODE.bss:8007A0B0                                              # reinit_BONDdata_inventory+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08C054:loc_CODE_7F08C0A8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F08C054+5Cr
-CODE.bss:8007A0B0                                              # add_additional_weapon_slot_to_player_inventory_documentation_guesso
-CODE.bss:8007A0B0                                              # add_additional_weapon_slot_to_player_inventory_documentation_guess+8r
-CODE.bss:8007A0B0                                              # add_additional_weapon_slot_to_player_inventory_documentation_guess+24r
-CODE.bss:8007A0B0                                              # add_additional_weapon_slot_to_player_inventory_documentation_guess:loc_CODE_7F08C1E0r
-CODE.bss:8007A0B0                                              # reorder_inventory_ptrs_based_on_id_coder
-CODE.bss:8007A0B0                                              # get_ptr_next_available_weaponr
-CODE.bss:8007A0B0                                              # set_BONDdata_allguns_flagr
-CODE.bss:8007A0B0                                              # get_BONDdata_allguns_flagr
-CODE.bss:8007A0B0                                              # get_ptr_inventory_itemr
-CODE.bss:8007A0B0                                              # get_ptr_inventory_for_item_in_handr
-CODE.bss:8007A0B0                                              # check_if_item_availabler
-CODE.bss:8007A0B0                                              # check_if_item_for_hand_availabler
-CODE.bss:8007A0B0                                              # add_item_to_inventory:loc_CODE_7F08C4C4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08C570r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08C61C+4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08C61C+90r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08C61C+BCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08C86C+4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08C86C+7Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08C86C+F8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08C86C:loc_CODE_7F08C968r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08CB10+4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08CB10+9Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08CB10+118r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08CB10:loc_CODE_7F08CC2Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08CE70r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08CF0Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08CF80r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08CFE0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D038r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D108r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D21Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D25Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D2A8:loc_CODE_7F08D304r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D340:loc_CODE_7F08D3ECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D434:loc_CODE_7F08D4E0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D5C8:loc_CODE_7F08D674r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D6BC:loc_CODE_7F08D768r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D8A0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D8A0+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D8A0+14r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D8C0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D8D0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D8E0+18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D8E0+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D9EC:loc_CODE_7F08DA3Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D9EC+CCo
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D9EC+D0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D9EC+F0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08D9EC+FCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DB08+10o
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DB08+1Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DBB0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DBC8+2Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DBC8+30r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DBC8+88r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DBC8+A8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DBC8+FCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DBC8+114r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DBC8+130r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DBC8+178r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DBC8+1C8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DBC8+210r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DBC8:loc_CODE_7F08DE18r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DE48o
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DE48+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DE48+34r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DE48+40r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DE48+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DE48+6Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DF44o
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DF44+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DF44+3Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DF44+54r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DF44+6Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DF44+84r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DF44+9Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DF44+B4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08DF44+D0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E164o
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E164+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E164+40r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E164+5Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E164+78r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E164+94r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E164+B0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E164+CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+78o
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+88r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+94r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240:loc_CODE_7F08E370r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+15Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+178r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+1D8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+1ECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+20Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+220r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+240r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+250r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+25Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+268r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+274r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+2B8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E240+2BCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E8BC+48r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E8BC+DCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E8BC+F4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E8BC+108r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E8BC+128r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08E8BC+138r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08EA48+30r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08EA48+50r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08EAB8+8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08EAF8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08EAF8+38r
-CODE.bss:8007A0B0                                              # sub_CODE_7F08EAF8+6Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F09177C+64o
-CODE.bss:8007A0B0                                              # sub_CODE_7F09193C+9Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F09193C+A4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F09193C+C4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F09193C+DCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F09193C:loc_CODE_7F091A34o
-CODE.bss:8007A0B0                                              # sub_CODE_7F09193C+100r
-CODE.bss:8007A0B0                                              # sub_CODE_7F091B64:cheats_cheat_2x_healthr
-CODE.bss:8007A0B0                                              # sub_CODE_7F091B64+22Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F091B64+244r
-CODE.bss:8007A0B0                                              # sub_CODE_7F091B64:cheats_cheat_2x_armorr
-CODE.bss:8007A0B0                                              # sub_CODE_7F091B64+29Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F091B64+2ACr
-CODE.bss:8007A0B0                                              # sub_CODE_7F091B64+2BCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F091B64+44Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F091B64:cheats_cheat_10x_healthr
-CODE.bss:8007A0B0                                              # sub_CODE_7F091B64+4D8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F091B64+4E8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F091B64+4F8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F092438+1CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F094488+1ACo
-CODE.bss:8007A0B0                                              # sub_CODE_7F094488+1B0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F094488+1FCr
-CODE.bss:8007A0B0                                              # reset_play_data_ptrs+18w
-CODE.bss:8007A0B0                                              # set_cur_player+30w
-CODE.bss:8007A0B0                                              # set_cur_player_screen_sizeo
-CODE.bss:8007A0B0                                              # set_cur_player_screen_size+8r
-CODE.bss:8007A0B0                                              # set_cur_player_screen_size+10r
-CODE.bss:8007A0B0                                              # set_cur_player_viewport_sizeo
-CODE.bss:8007A0B0                                              # set_cur_player_viewport_size+8r
-CODE.bss:8007A0B0                                              # set_cur_player_viewport_size+10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F09B214r
-CODE.bss:8007A0B0                                              # sub_CODE_7F09B224r
-CODE.bss:8007A0B0                                              # sub_CODE_7F09B234r
-CODE.bss:8007A0B0                                              # sub_CODE_7F09B368r
-CODE.bss:8007A0B0                                              # sub_CODE_7F09B398r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A2C44+15Co
-CODE.bss:8007A0B0                                              # init_watch_at_start_of_stage:init_difficuly_multiplierso
-CODE.bss:8007A0B0                                              # init_watch_at_start_of_stage+B8r
-CODE.bss:8007A0B0                                              # init_watch_at_start_of_stage+C8r
-CODE.bss:8007A0B0                                              # init_watch_at_start_of_stage+D8r
-CODE.bss:8007A0B0                                              # init_watch_at_start_of_stage+E8r
-CODE.bss:8007A0B0                                              # init_watch_at_start_of_stage+F8r
-CODE.bss:8007A0B0                                              # cur_player_get_control_typer
-CODE.bss:8007A0B0                                              # cur_player_set_control_typeo
-CODE.bss:8007A0B0                                              # cur_player_set_control_type+8r
-CODE.bss:8007A0B0                                              # cur_player_set_control_type+18r
-CODE.bss:8007A0B0                                              # cur_player_set_control_type+28r
-CODE.bss:8007A0B0                                              # cur_player_set_control_type+48r
-CODE.bss:8007A0B0                                              # cur_player_set_control_type+5Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A714C+10Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A714C+188r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A714C+230r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A714C+258r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A714C+2E0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A714C+308r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A714C+53Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A714C+5F4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A714C+62Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A97D0:loc_CODE_7F0A9894r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A97D0+180r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A97D0+1B4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A97D0:loc_CODE_7F0A9A10r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8+174r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8+1E0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8:loc_CODE_7F0A9CD8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8:loc_CODE_7F0A9D84r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8+350r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8+3ACr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8+484r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8+51Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8+58Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8:loc_CODE_7F0AA084r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8+658r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8+6CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8:loc_CODE_7F0AA1C4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8:loc_CODE_7F0AA274r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8+860r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8+8BCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8:loc_CODE_7F0AA450r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8+A28r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8:loc_CODE_7F0AA55Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8+B34r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8:loc_CODE_7F0AA668r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0A9AB8:loc_CODE_7F0AA744r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0AA7C8:loc_CODE_7F0AA954r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0AA7C8:loc_CODE_7F0AAA38r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0AA7C8:loc_CODE_7F0AAC40r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0AA7C8:loc_CODE_7F0AAD2Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0ACA28+Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B38B4+58o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B38B4+60r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B4FB4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B5058r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B5864+214r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B7F84+1ACr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B7F84:loc_CODE_7F0B81C8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B7F84+290r
-CODE.bss:8007A0B0                                              # parse_global_vis_command_list+60o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B8A6C+14o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B8A6C+1Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+80o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+8Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+98r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+B4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+E0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+ECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+F8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+114r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+148o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+158r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+164r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+184r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+1B8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+1C8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+1D4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0B908C+1F4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0BC624r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0BC85C+30r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0BC85C:loc_CODE_7F0BC8FCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0BC85C+F8r
-CODE.bss:8007A0B0                                              # stage_load+2C4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0BE30C+1C0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0BF800:loc_CODE_7F0BF9E8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0BF800+270r
-CODE.bss:8007A0B0                                              # check_can_advance_right_on_mpmenur
-CODE.bss:8007A0B0                                              # check_can_advance_left_on_mpmenur
-CODE.bss:8007A0B0                                              # check_if_player_is_pressing_anything_right+50r
-CODE.bss:8007A0B0                                              # check_if_player_is_pressing_anything_left+54r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C24BC:loc_CODE_7F0C24FCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2530+E4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+88o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+90r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+B4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+D0o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+168r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+18Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+194r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+1C4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+1CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+1E8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+228o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+230r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+270o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+278r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+298o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+2A8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+2C4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+2CCr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+2E8o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+2F8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+314o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+31Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+338o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+348r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+358r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80:loc_CODE_7F0C324Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+404o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+40Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+41Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+430o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+440r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+49Co
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+4B0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80:loc_CODE_7F0C3410r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+59Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+5E4o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+5E8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+604o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+60Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+618r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+638o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+63Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+668o
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+670r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+67Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80:loc_CODE_7F0C350Cr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+6CCo
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+6D4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+6E4r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+6F0r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+6F8r
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C2E80+704r
-CODE.bss:8007A0B0                                              # mp_watch_menu_display:loc_CODE_7F0C405Cr
-CODE.bss:8007A0B0                                              # mp_watch_menu_display:loc_CODE_7F0C40A0r
-CODE.bss:8007A0B0                                              # mp_watch_menu_display:loc_CODE_7F0C4598r
-CODE.bss:8007A0B0                                              # mp_watch_menu_display+C34r
-CODE.bss:8007A0B0                                              # mp_watch_menu_display+10ACr
-CODE.bss:8007A0B0                                              # mp_watch_menu_display+1758r
-CODE.bss:8007A0B0                                              # mp_watch_menu_display+1964r
-CODE.bss:8007A0B0                                              # mp_watch_menu_display+1A3Cr
-CODE.bss:8007A0B0                                              # mp_watch_menu_display+1B14r
-CODE.bss:8007A0B0                                              # mp_watch_menu_display+1B90r
-CODE.bss:8007A0B0                                              # mp_watch_menu_display+1CECr
-CODE.bss:8007A0B0                                              # sub_CODE_7F0C6048:loc_CODE_7F0C6064r
-CODE.bss:8007A0B0                                              # display_red_blue_on_radar:loc_CODE_7F0C60FCo
-CODE.bss:8007A0B0                                              # display_red_blue_on_radar+74r
-CODE.bss:8007A0B4     cur_player_stat_ptr:.space 4             # DATA XREF: init_player_BONDdata_stats+E0o
-CODE.bss:8007A0B4                                              # sub_CODE_7F021BFC:loc_CODE_7F021EDCr
-CODE.bss:8007A0B4                                              # inc_curplayer_hitcount_with_weapon+20r
-CODE.bss:8007A0B4                                              # get_curplayer_shot_registerr
-CODE.bss:8007A0B4                                              # inc_cur_civilian_casualtiesr
-CODE.bss:8007A0B4                                              # get_civilian_casualtiesr
-CODE.bss:8007A0B4                                              # increment_num_kills_display_text_in_MPr
-CODE.bss:8007A0B4                                              # increment_num_kills_display_text_in_MP+5Cr
-CODE.bss:8007A0B4                                              # increment_num_kills_display_text_in_MP+84r
-CODE.bss:8007A0B4                                              # increment_num_kills_display_text_in_MP+C0r
-CODE.bss:8007A0B4                                              # increment_num_kills_display_text_in_MP:loc_CODE_7F06A8F4r
-CODE.bss:8007A0B4                                              # get_curplay_killcountr
-CODE.bss:8007A0B4                                              # increment_num_times_killed_MwtGCr
-CODE.bss:8007A0B4                                              # get_times_killed_mwtgxr
-CODE.bss:8007A0B4                                              # increment_num_suicides_display_MP+6Co
-CODE.bss:8007A0B4                                              # increment_num_suicides_display_MP+74r
-CODE.bss:8007A0B4                                              # increment_num_suicides_display_MP+ACr
-CODE.bss:8007A0B4                                              # increment_num_suicides_display_MP+108r
-CODE.bss:8007A0B4                                              # increment_num_suicides_display_MP+11Cr
-CODE.bss:8007A0B4                                              # increment_num_suicides_display_MP+138r
-CODE.bss:8007A0B4                                              # increment_num_suicides_display_MP+154r
-CODE.bss:8007A0B4                                              # increment_num_suicides_display_MP:loc_CODE_7F06AB74r
-CODE.bss:8007A0B4                                              # sub_CODE_7F0798B8r
-CODE.bss:8007A0B4                                              # get_BONDdata_autoaim_y:loc_CODE_7F07C5ACr
-CODE.bss:8007A0B4                                              # get_BONDdata_autoaim_x:loc_CODE_7F07C694r
-CODE.bss:8007A0B4                                              # sub_CODE_7F081478+Co
-CODE.bss:8007A0B4                                              # sub_CODE_7F081478+10r
-CODE.bss:8007A0B4                                              # sub_CODE_7F081478+4Cr
-CODE.bss:8007A0B4                                              # possibly_reset_viewport_options_for_player+384r
-CODE.bss:8007A0B4                                              # kill_current_player+DCr
-CODE.bss:8007A0B4                                              # kill_current_player+108r
-CODE.bss:8007A0B4                                              # record_damage_kills+4r
-CODE.bss:8007A0B4                                              # add_BONDdata_watch_armorr
-CODE.bss:8007A0B4                                              # sub_CODE_7F091B64+404r
-CODE.bss:8007A0B4                                              # sub_CODE_7F091B64+440r
-CODE.bss:8007A0B4                                              # sub_CODE_7F092438+184r
-CODE.bss:8007A0B4                                              # sub_CODE_7F092438+1B8r
-CODE.bss:8007A0B4                                              # reset_play_data_ptrs+20w
-CODE.bss:8007A0B4                                              # set_cur_player+40w
-CODE.bss:8007A0B4                                              # sub_CODE_7F0BF800+220r
-CODE.bss:8007A0B4                                              # sub_CODE_7F0BF800:loc_CODE_7F0BFA90o
-CODE.bss:8007A0B4                                              # sub_CODE_7F0BF800+298r
-CODE.bss:8007A0B4                                              # sub_CODE_7F0BF800+2B4r
-CODE.bss:8007A0B4                                              # sub_CODE_7F0BF800:loc_CODE_7F0BFAC0r
-CODE.bss:8007A0B4                                              # sub_CODE_7F0BF800+2F4r
-CODE.bss:8007A0B4                                              # sub_CODE_7F0BF800:loc_CODE_7F0BFB08r
-CODE.bss:8007A0B4                                              # sub_CODE_7F0C2E80:loc_CODE_7F0C2FE0r
-CODE.bss:8007A0B4                                              # sub_CODE_7F0C2E80+198r
-CODE.bss:8007A0B4                                              # sub_CODE_7F0C2E80+1D0r
-CODE.bss:8007A0B8     player_num:     .space 4                 # DATA XREF: reset_play_data_ptrs+28w
-CODE.bss:8007A0B8                                              # set_cur_player+10w
-CODE.bss:8007A0B8                                              # get_cur_playernum+8r
-CODE.bss:8007A0BC     random_byte:    .space 4                 # DATA XREF: reset_play_data_ptrs+3Cw
-CODE.bss:8007A0BC                                              # init_player_data_ptrs_construct_viewports+3Cw
-CODE.bss:8007A0BC                                              # sub_CODE_7F09A4BC+880o
-CODE.bss:8007A0C0     dword_CODE_bss_8007A0C0:.space 4         # DATA XREF: reset_play_data_ptrs+38o
-CODE.bss:8007A0C0                                              # reset_play_data_ptrs+4Cw
-CODE.bss:8007A0C0                                              # sub_CODE_7F09B41C+20o
-CODE.bss:8007A0C0                                              # sub_CODE_7F09B41C+40o
-CODE.bss:8007A0C0                                              # sub_CODE_7F09B4D8+18o
-CODE.bss:8007A0C0                                              # sub_CODE_7F09B4D8+1Cr
-CODE.bss:8007A0C0                                              # sub_CODE_7F09B528r
-CODE.bss:8007A0C4     dword_CODE_bss_8007A0C4:.space 4         # DATA XREF: reset_play_data_ptrs+50w
-CODE.bss:8007A0C4                                              # sub_CODE_7F09B528:loc_CODE_7F09B560r
-CODE.bss:8007A0C8     dword_CODE_bss_8007A0C8:.space 4         # DATA XREF: reset_play_data_ptrs+54w
-CODE.bss:8007A0C8                                              # sub_CODE_7F09B528:loc_CODE_7F09B590r
-CODE.bss:8007A0CC     dword_CODE_bss_8007A0CC:.space 4         # DATA XREF: reset_play_data_ptrs+5Cw
-CODE.bss:8007A0CC                                              # sub_CODE_7F09B528:loc_CODE_7F09B5C0r
-*/
+// bss
+s32 dword_CODE_bss_80079E90;
+s32 dword_CODE_bss_80079E94;
+char dword_CODE_bss_80079E98[0x48];
+u32 *ptr_BONDdata_p1;
+u32 *ptr_BONDdata_p2;
+u32 *ptr_BONDdata_p3;
+u32 *ptr_BONDdata_p4;
+
+char player1_player_data[0x70];
+char player2_player_data[0x70];
+char player3_player_data[0x70];
+char player4_player_data[0x70];
+
+u32 *ptr_BONDdata;
+s32 cur_player_stat_ptr;
+s32 player_num;
+s32 random_byte;
+s32 dword_CODE_bss_8007A0C0;
+s32 dword_CODE_bss_8007A0C4;
+s32 dword_CODE_bss_8007A0C8;
+s32 dword_CODE_bss_8007A0CC;
+
 
 /* rodata
 D:80057520     flt_D_80057520: .float 0.000099999997    # DATA XREF: sub_CODE_7F0938FC+30r
@@ -1979,9 +131,21 @@ D:8005762C                     .word weapon_multi_none
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F093880(void) {
+void sub_GAME_7F093880(f32 arg0, f32 arg1, ? arg2) {
+    f32 sp18;
+    f32 sp1C;
+    f32 sp20;
+    s32 sp24;
 
+    // Node 0
+    sp24 = sub_GAME_7F078444();
+    sp1C = (f32) (sub_GAME_7F0784C4() + arg0);
+    sp18 = sub_GAME_7F0784D4();
+    sp20 = (f32) (sub_GAME_7F0BA72C()->unk38 + (arg1 + sp18));
+    sub_GAME_7F077EEC(&sp1C, arg2, 0x42c80000);
+    return sub_GAME_7F0583D8(sp24, arg2);
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2025,8 +189,62 @@ glabel sub_GAME_7F093880
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0938FC(void) {
+f32 sub_GAME_7F0938FC(void *arg0, void *arg1, void *arg2) {
+    f32 sp24;
+    f32 sp2C;
+    s32 temp_s1;
+    f32 temp_f12;
+    f32 temp_f2;
+    f32 temp_f12_2;
+    f32 phi_f12;
+    f32 phi_f16;
+    f32 phi_f2;
+    f32 phi_return;
 
+    // Node 0
+    temp_s1 = get_BONDdata_position();
+    temp_f12 = ((arg0->unk4 + arg0->unk4) / sqrtf((((arg0->unk8 * arg0->unk8) + (*arg0 * *arg0)) + D_80057520), *arg0));
+    phi_f12 = temp_f12;
+    if (1.0f < temp_f12)
+    {
+        // Node 1
+        phi_f12 = 1.0f;
+    }
+    // Node 2
+    *arg2 = (f32) (1.0f - phi_f12);
+    if (0.0f == arg0->unk4)
+    {
+        // Node 3
+        phi_f16 = D_80057524;
+    }
+    else
+    {
+        // Node 4
+        phi_f16 = arg0->unk4;
+    }
+    // Node 5
+    phi_return = 0.0f;
+    if (0.0f < phi_f16)
+    {
+        // Node 6
+        sp24 = (f32) phi_f16;
+        temp_f2 = ((sub_GAME_7F0BA72C(phi_f12, 1.0f)->unkC - temp_s1->unk4) / phi_f16);
+        sp2C = temp_f2;
+        temp_f12_2 = (sqrtf(((arg0->unk8 * arg0->unk8) + (*arg0 * *arg0)), *arg0) * temp_f2);
+        phi_f2 = temp_f2;
+        if (D_80057528 < temp_f12_2)
+        {
+            // Node 7
+            phi_f2 = (temp_f2 * (D_80057528 / temp_f12_2));
+        }
+        // Node 8
+        *arg1 = (f32) ((*arg0 * phi_f2) + *temp_s1);
+        arg1->unk4 = (f32) (temp_s1->unk4 + (phi_f2 * phi_f16));
+        arg1->unk8 = (f32) ((arg0->unk8 * phi_f2) + temp_s1->unk8);
+        phi_return = 1.401298464324817e-45f;
+    }
+    // Node 9
+    return phi_return;
 }
 #else
 GLOBAL_ASM(
@@ -2139,8 +357,62 @@ glabel sub_GAME_7F0938FC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F093A78(void) {
+f32 sub_GAME_7F093A78(void *arg0, void *arg1, void *arg2) {
+    f32 sp24;
+    f32 sp2C;
+    s32 temp_s1;
+    f32 temp_f2_2;
+    f32 temp_f2;
+    f32 temp_f12;
+    f32 phi_f2;
+    f32 phi_f16;
+    f32 phi_f2_2;
+    f32 phi_return;
 
+    // Node 0
+    temp_s1 = get_BONDdata_position();
+    temp_f2_2 = ((-2.0f * arg0->unk4) / sqrtf((((arg0->unk8 * arg0->unk8) + (*arg0 * *arg0)) + D_8005752C), *arg0));
+    phi_f2 = temp_f2_2;
+    if (1.0f < temp_f2_2)
+    {
+        // Node 1
+        phi_f2 = 1.0f;
+    }
+    // Node 2
+    *arg2 = (f32) (1.0f - phi_f2);
+    if (0.0f == arg0->unk4)
+    {
+        // Node 3
+        phi_f16 = D_80057530;
+    }
+    else
+    {
+        // Node 4
+        phi_f16 = arg0->unk4;
+    }
+    // Node 5
+    phi_return = arg0->unk4;
+    if (phi_f16 < 0.0f)
+    {
+        // Node 6
+        sp24 = (f32) phi_f16;
+        temp_f2 = ((sub_GAME_7F0BA72C(1.0f, 0.0f)->unk24 - temp_s1->unk4) / phi_f16);
+        sp2C = temp_f2;
+        temp_f12 = (sqrtf(((arg0->unk8 * arg0->unk8) + (*arg0 * *arg0)), *arg0) * temp_f2);
+        phi_f2_2 = temp_f2;
+        if (D_80057534 < temp_f12)
+        {
+            // Node 7
+            phi_f2_2 = (temp_f2 * (D_80057534 / temp_f12));
+        }
+        // Node 8
+        *arg1 = (f32) ((*arg0 * phi_f2_2) + *temp_s1);
+        arg1->unk4 = (f32) (temp_s1->unk4 + (phi_f2_2 * phi_f16));
+        arg1->unk8 = (f32) ((arg0->unk8 * phi_f2_2) + temp_s1->unk8);
+        phi_return = 1.401298464324817e-45f;
+    }
+    // Node 9
+    return phi_return;
 }
 #else
 GLOBAL_ASM(
@@ -2255,9 +527,17 @@ glabel sub_GAME_7F093A78
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F093BFC(void) {
+f32 sub_GAME_7F093BFC(void *arg0, void *arg1, void *arg2) {
+    f32 temp_f0;
 
+    // Node 0
+    arg2->unk4 = 0.0f;
+    temp_f0 = (arg0->unk4 / (arg0->unk4 - arg1->unk4));
+    *arg2 = (f32) (((*arg1 - *arg0) * temp_f0) + *arg0);
+    arg2->unk8 = (f32) (((arg1->unk8 - arg0->unk8) * temp_f0) + arg0->unk8);
+    return temp_f0;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2289,8 +569,21 @@ glabel sub_GAME_7F093BFC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F093C48(void) {
-
+f32 sub_GAME_7F093C48(f32 arg0, f32 arg1, f32 arg2) {
+    // Node 0
+    if (arg0 < arg1)
+    {
+        // Node 1
+        return arg1;
+    }
+    // Node 2
+    if (arg2 < arg0)
+    {
+        // Node 3
+        return arg2;
+    }
+    // Node 4
+    return arg0;
 }
 #else
 GLOBAL_ASM(
@@ -2324,8 +617,9 @@ glabel sub_GAME_7F093C48
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F093C88(void) {
-
+f32 sub_GAME_7F093C88(f32 arg0) {
+    // Node 0
+    return (f32) (s32) (arg0 + 0.5f);
 }
 #else
 GLOBAL_ASM(
@@ -2908,16 +1202,19 @@ glabel sub_GAME_7F094298
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09442C(void) {
-
+void sub_GAME_7F09442C(s32 arg0) {
+    // Node 0
+    dword_CODE_bss_80079E90 = arg0;
+    return;
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F09442C
-/* 0C8F5C 7F09442C 3C018008 */  lui   $at, 0x8008
+/* 0C8F5C 7F09442C 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079E90)
 /* 0C8F60 7F094430 03E00008 */  jr    $ra
-/* 0C8F64 7F094434 AC249E90 */   sw    $a0, -0x6170($at)
+/* 0C8F64 7F094434 AC249E90 */   sw    $a0, %lo(dword_CODE_bss_80079E90)($at)
 )
 #endif
 
@@ -2926,8 +1223,16 @@ glabel sub_GAME_7F09442C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F094438(void) {
-
+f32 sub_GAME_7F094438(void) {
+    // Node 0
+    D_8003FD94 = (f32) (D_8003FD94 + (f32) clock_timer);
+    if (D_8003FD94 > 4096.0f)
+    {
+        // Node 1
+        D_8003FD94 = (f32) (D_8003FD94 - 4096.0f);
+    }
+    // Node 2
+    return D_8003FD94;
 }
 #else
 GLOBAL_ASM(
@@ -10227,30 +8532,34 @@ glabel sub_GAME_7F09A4BC
 
 
 #ifdef NONMATCHING
-void set_cur_player(void) {
-
+void set_cur_player(s32 arg0) {
+    // Node 0
+    player_num = arg0;
+    ptr_BONDdata = (u32) *(&ptr_BONDdata_p1 + (arg0 * 4));
+    cur_player_stat_ptr = (s32) ((arg0 * 0x70) + &player1_player_data);
+    return;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel set_cur_player
 /* 0CFC3C 7F09B10C 00047080 */  sll   $t6, $a0, 2
-/* 0CFC40 7F09B110 3C0F8008 */  lui   $t7, 0x8008
+/* 0CFC40 7F09B110 3C0F8008 */  lui   $t7, %hi(ptr_BONDdata_p1)
 /* 0CFC44 7F09B114 01EE7821 */  addu  $t7, $t7, $t6
-/* 0CFC48 7F09B118 8DEF9EE0 */  lw    $t7, -0x6120($t7)
+/* 0CFC48 7F09B118 8DEF9EE0 */  lw    $t7, %lo(ptr_BONDdata_p1)($t7)
 /* 0CFC4C 7F09B11C 3C018008 */  lui   $at, %hi(player_num) # $at, 0x8008
 /* 0CFC50 7F09B120 AC24A0B8 */  sw    $a0, %lo(player_num)($at)
 /* 0CFC54 7F09B124 0004C0C0 */  sll   $t8, $a0, 3
 /* 0CFC58 7F09B128 3C018008 */  lui   $at, %hi(ptr_BONDdata) # $at, 0x8008
 /* 0CFC5C 7F09B12C 0304C023 */  subu  $t8, $t8, $a0
-/* 0CFC60 7F09B130 3C198008 */  lui   $t9, %hi(player1_playerdata) # $t9, 0x8008
-/* 0CFC64 7F09B134 27399EF0 */  addiu $t9, %lo(player1_playerdata) # addiu $t9, $t9, -0x6110
+/* 0CFC60 7F09B130 3C198008 */  lui   $t9, %hi(player1_player_data) # $t9, 0x8008
+/* 0CFC64 7F09B134 27399EF0 */  addiu $t9, %lo(player1_player_data) # addiu $t9, $t9, -0x6110
 /* 0CFC68 7F09B138 0018C100 */  sll   $t8, $t8, 4
 /* 0CFC6C 7F09B13C AC2FA0B0 */  sw    $t7, %lo(ptr_BONDdata)($at)
-/* 0CFC70 7F09B140 3C018008 */  lui   $at, 0x8008
+/* 0CFC70 7F09B140 3C018008 */  lui   $at, %hi(cur_player_stat_ptr)
 /* 0CFC74 7F09B144 03194021 */  addu  $t0, $t8, $t9
 /* 0CFC78 7F09B148 03E00008 */  jr    $ra
-/* 0CFC7C 7F09B14C AC28A0B4 */   sw    $t0, -0x5f4c($at)
+/* 0CFC7C 7F09B14C AC28A0B4 */   sw    $t0, %lo(cur_player_stat_ptr)($at)
 )
 #endif
 
@@ -10259,16 +8568,16 @@ glabel set_cur_player
 
 
 #ifdef NONMATCHING
-void get_cur_playernum(void) {
-
+s32 get_cur_playernum(void) {
+    return player_num;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel get_cur_playernum
-/* 0CFC80 7F09B150 3C028008 */  lui   $v0, 0x8008
+/* 0CFC80 7F09B150 3C028008 */  lui   $v0, %hi(player_num)
 /* 0CFC84 7F09B154 03E00008 */  jr    $ra
-/* 0CFC88 7F09B158 8C42A0B8 */   lw    $v0, -0x5f48($v0)
+/* 0CFC88 7F09B158 8C42A0B8 */   lw    $v0, %lo(player_num)($v0)
 )
 #endif
 
@@ -10328,8 +8637,11 @@ glabel sub_GAME_7F09B15C
 
 
 #ifdef NONMATCHING
-void set_cur_player_screen_size(void) {
-
+void *set_cur_player_screen_size(s16 arg0, s16 arg1) {
+    // Node 0
+    ptr_BONDdata->unk7F0 = arg0;
+    ptr_BONDdata->unk7F2 = arg1;
+    return &ptr_BONDdata;
 }
 #else
 GLOBAL_ASM(
@@ -10350,9 +8662,13 @@ glabel set_cur_player_screen_size
 
 
 #ifdef NONMATCHING
-void set_cur_player_viewport_size(void) {
-
+void *set_cur_player_viewport_size(s16 arg0, s16 arg1) {
+    // Node 0
+    ptr_BONDdata->unk7F4 = arg0;
+    ptr_BONDdata->unk7F6 = arg1;
+    return &ptr_BONDdata;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -10372,9 +8688,12 @@ glabel set_cur_player_viewport_size
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09B214(void) {
-
+void sub_GAME_7F09B214(f32 arg0) {
+    // Node 0
+    ptr_BONDdata->unk11D0 = arg0;
+    return;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -10391,9 +8710,12 @@ glabel sub_GAME_7F09B214
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09B224(void) {
-
+void sub_GAME_7F09B224(f32 arg0) {
+    // Node 0
+    ptr_BONDdata->unk11D4 = arg0;
+    return;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -10410,8 +8732,9 @@ glabel sub_GAME_7F09B224
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09B234(void) {
-
+f32 sub_GAME_7F09B234(void) {
+    // Node 0
+    return ptr_BONDdata->unk11D0;
 }
 #else
 GLOBAL_ASM(
@@ -10575,9 +8898,11 @@ weapon_multi_none:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09B368(void) {
-
+void sub_GAME_7F09B368(s32 arg0) {
+    // Node 0
+    return set_0x4_in_runtime_flags_for_item_in_guards_hand(ptr_BONDdata->unkA8->unk4, arg0);
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -10602,8 +8927,47 @@ glabel sub_GAME_7F09B368
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09B398(void) {
+s32 sub_GAME_7F09B398(s32 arg0) {
+    s32 sp24;
+    s32 sp30;
+    s32 sp34;
+    s32 temp_v1;
+    ? temp_ret;
+    s32 temp_ret_2;
+    ? phi_a3;
+    s32 phi_return;
 
+    // Node 0
+    temp_v1 = (arg0 * 4);
+    phi_return = ptr_BONDdata->unkA8->unk4;
+    if ((ptr_BONDdata->unkA8->unk4 + temp_v1)->unk160 == 0)
+    {
+        // Node 1
+        sp34 = (s32) ptr_BONDdata->unkA8->unk4;
+        sp24 = temp_v1;
+        temp_ret = get_item_in_hand();
+        sp30 = temp_ret;
+        temp_ret_2 = sub_GAME_7F09B244(temp_ret);
+        phi_return = temp_ret_2;
+        if (temp_ret_2 >= 0)
+        {
+            // Node 2
+            if (temp_v1 == 0)
+            {
+                // Node 3
+                phi_a3 = 0;
+            }
+            else
+            {
+                // Node 4
+                phi_a3 = 0x10000000;
+            }
+            // Node 5
+            phi_return = something_with_generating_object(sp34, temp_ret_2, sp30, phi_a3, 0, 0);
+        }
+    }
+    // Node 6
+    return phi_return;
 }
 #else
 GLOBAL_ASM(
@@ -10719,8 +9083,42 @@ glabel sub_GAME_7F09B41C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09B4D8(void) {
+s32 sub_GAME_7F09B4D8(s32 arg0) {
+    s32 temp_v0;
+    void *temp_a1;
+    void *phi_a1;
+    s32 phi_v1;
+    s32 phi_v1_2;
+    s32 phi_v1_3;
 
+    // Node 0
+    phi_a1 = &dword_CODE_bss_8007A0C0;
+    phi_v1_3 = 0;
+loop_1:
+    // Node 1
+    temp_v0 = *phi_a1;
+    temp_a1 = (phi_a1 + 4);
+    phi_v1 = phi_v1_3;
+    if (arg0 != temp_v0)
+    {
+        // Node 2
+        phi_v1_2 = phi_v1_3;
+        if (*(&ptr_BONDdata_p1 + (temp_v0 * 4)) != 0)
+        {
+            // Node 3
+            phi_v1_2 = (phi_v1_3 + 1);
+        }
+        // Node 4
+        phi_a1 = temp_a1;
+        phi_v1 = phi_v1_2;
+        phi_v1_3 = phi_v1_2;
+        if (temp_a1 != &dword_CODE_bss_8007A0D0)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 5
+    return phi_v1;
 }
 #else
 GLOBAL_ASM(
@@ -10757,8 +9155,62 @@ glabel sub_GAME_7F09B4D8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09B528(void) {
+s32 sub_GAME_7F09B528(s32 arg0) {
+    s32 phi_a0;
+    s32 phi_a0_2;
+    s32 phi_a0_3;
 
+    // Node 0
+    phi_a0 = arg0;
+    if (*(&ptr_BONDdata_p1 + (dword_CODE_bss_8007A0C0 * 4)) != 0)
+    {
+        // Node 1
+        if (arg0 == 0)
+        {
+            // Node 2
+            return dword_CODE_bss_8007A0C0;
+        }
+        // Node 3
+        phi_a0 = (arg0 + -1);
+    }
+    // Node 4
+    phi_a0_2 = phi_a0;
+    if (*(&ptr_BONDdata_p1 + (dword_CODE_bss_8007A0C4 * 4)) != 0)
+    {
+        // Node 5
+        if (phi_a0 == 0)
+        {
+            // Node 6
+            return dword_CODE_bss_8007A0C4;
+        }
+        // Node 7
+        phi_a0_2 = (phi_a0 + -1);
+    }
+    // Node 8
+    phi_a0_3 = phi_a0_2;
+    if (*(&ptr_BONDdata_p1 + (dword_CODE_bss_8007A0C8 * 4)) != 0)
+    {
+        // Node 9
+        if (phi_a0_2 == 0)
+        {
+            // Node 10
+            return dword_CODE_bss_8007A0C8;
+        }
+        // Node 11
+        phi_a0_3 = (phi_a0_2 + -1);
+    }
+    // Node 12
+    if (*(&ptr_BONDdata_p1 + (dword_CODE_bss_8007A0CC * 4)) != 0)
+    {
+        // Node 13
+        if (phi_a0_3 == 0)
+        {
+            // Node 14
+            return dword_CODE_bss_8007A0CC;
+        }
+    }
+    // Node 15
+    return 0;
 }
 #else
 GLOBAL_ASM(

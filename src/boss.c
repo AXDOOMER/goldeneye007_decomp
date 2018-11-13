@@ -588,8 +588,8 @@ glabel mainloop
 .L70006464:
 /* 007064 70006464 0C003638 */  jal   osGetCount
 /* 007068 70006468 00000000 */   nop   
-/* 00706C 7000646C 3C0D8005 */  lui   $t5, %hi(D_800484B0) # $t5, 0x8005
-/* 007070 70006470 8DAD84B0 */  lw    $t5, %lo(D_800484B0)($t5)
+/* 00706C 7000646C 3C0D8005 */  lui   $t5, %hi(copy_of_osgetcount_value_1) # $t5, 0x8005
+/* 007070 70006470 8DAD84B0 */  lw    $t5, %lo(copy_of_osgetcount_value_1)($t5)
 /* 007074 70006474 3C010005 */  lui   $at, (0x0005EB61 >> 16) # lui $at, 5
 /* 007078 70006478 3421EB61 */  ori   $at, (0x0005EB61 & 0xFFFF) # ori $at, $at, 0xeb61
 /* 00707C 7000647C 004D1823 */  subu  $v1, $v0, $t5

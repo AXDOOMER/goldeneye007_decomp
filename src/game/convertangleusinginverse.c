@@ -1,15 +1,22 @@
 #include "ultra64.h"
 
 
-/* rodata
-D:80053700     flt_D_80053700: .float 3.1415927         # DATA XREF: convert_angle_using_inverse+3Cr
-D:80053704     flt_D_80053704: .float 1.5707964         # DATA XREF: convert_angle_using_inverse+68r
-D:80053708     flt_D_80053708: .float 4.712389          # DATA XREF: convert_angle_using_inverse+70r
-D:8005370C     flt_D_8005370C: .float 6.2831855         # DATA XREF: convert_angle_using_inverse+C4r
-D:80053710     flt_D_80053710: .float 1.5707964         # DATA XREF: convert_angle_using_inverse+E4r
-D:80053714     flt_D_80053714: .float 3.1415927         # DATA XREF: convert_angle_using_inverse+100r
-D:80053718     flt_D_80053718: .float 6.2831855         # DATA XREF: convert_angle_using_inverse+118r
-*/
+// rodata
+//D:80053700
+const f32 flt_D_80053700 = 3.1415927;
+//D:80053704
+const f32 flt_D_80053704 = 1.5707964;
+//D:80053708
+const f32 flt_D_80053708 = 4.712389;
+//D:8005370C
+const f32 flt_D_8005370C = 6.2831855;
+//D:80053710
+const f32 flt_D_80053710 = 1.5707964;
+//D:80053714
+const f32 flt_D_80053714 = 3.1415927;
+//D:80053718
+const f32 flt_D_80053718 = 6.2831855;
+
 
 
 

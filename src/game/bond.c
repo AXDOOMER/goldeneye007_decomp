@@ -1,775 +1,246 @@
 #include "ultra64.h"
 #include "bond.h"
 
-/* bss
-CODE.bss:80079940     flt_CODE_bss_80079940:.space 4           # DATA XREF: sub_CODE_7F0785DC+54o
-CODE.bss:80079940                                              # sub_CODE_7F0785DC+90w
-CODE.bss:80079940                                              # sub_CODE_7F0785DC+CCr
-CODE.bss:80079940                                              # sub_CODE_7F078950o
-CODE.bss:80079940                                              # sub_CODE_7F078950+8r
-CODE.bss:80079940                                              # sub_CODE_7F078A58+DCo
-CODE.bss:80079940                                              # sub_CODE_7F078A58+F4r
-CODE.bss:80079944     flt_CODE_bss_80079944:.space 4           # DATA XREF: sub_CODE_7F0785DC+B0w
-CODE.bss:80079944                                              # sub_CODE_7F0785DC+DCr
-CODE.bss:80079944                                              # sub_CODE_7F078950+14r
-CODE.bss:80079944                                              # sub_CODE_7F078A58:loc_CODE_7F078B5Cr
-CODE.bss:80079948     flt_CODE_bss_80079948:.space 4           # DATA XREF: sub_CODE_7F0785DC+D4w
-CODE.bss:80079948                                              # sub_CODE_7F0785DC+F8r
-CODE.bss:80079948                                              # sub_CODE_7F078950+1Cr
-CODE.bss:80079948                                              # sub_CODE_7F078A58+110r
-CODE.bss:8007994C     flt_CODE_bss_8007994C:.space 4           # DATA XREF: sub_CODE_7F0785DC+104w
-CODE.bss:8007994C                                              # sub_CODE_7F078950+24r
-CODE.bss:8007994C                                              # sub_CODE_7F078A58+114r
-CODE.bss:80079950     flt_CODE_bss_80079950:.space 4           # DATA XREF: sub_CODE_7F0785DC+70o
-CODE.bss:80079950                                              # sub_CODE_7F0785DC+128w
-CODE.bss:80079950                                              # sub_CODE_7F0785DC+164r
-CODE.bss:80079950                                              # sub_CODE_7F078980o
-CODE.bss:80079950                                              # sub_CODE_7F078980+8r
-CODE.bss:80079950                                              # sub_CODE_7F078A58+128o
-CODE.bss:80079950                                              # sub_CODE_7F078A58+140r
-CODE.bss:80079954     flt_CODE_bss_80079954:.space 4           # DATA XREF: sub_CODE_7F0785DC+148w
-CODE.bss:80079954                                              # sub_CODE_7F0785DC+174r
-CODE.bss:80079954                                              # sub_CODE_7F078980+14r
-CODE.bss:80079954                                              # sub_CODE_7F078A58:loc_CODE_7F078BA8r
-CODE.bss:80079958     flt_CODE_bss_80079958:.space 4           # DATA XREF: sub_CODE_7F0785DC+16Cw
-CODE.bss:80079958                                              # sub_CODE_7F0785DC+190r
-CODE.bss:80079958                                              # sub_CODE_7F078980+1Cr
-CODE.bss:80079958                                              # sub_CODE_7F078A58+15Cr
-CODE.bss:8007995C     flt_CODE_bss_8007995C:.space 4           # DATA XREF: sub_CODE_7F0785DC+19Cw
-CODE.bss:8007995C                                              # sub_CODE_7F078980+24r
-CODE.bss:8007995C                                              # sub_CODE_7F078A58+160r
-CODE.bss:80079960     flt_CODE_bss_80079960:.space 4           # DATA XREF: sub_CODE_7F0785DC+1E8o
-CODE.bss:80079960                                              # sub_CODE_7F0785DC+224w
-CODE.bss:80079960                                              # sub_CODE_7F0785DC+260r
-CODE.bss:80079960                                              # sub_CODE_7F0789B0o
-CODE.bss:80079960                                              # sub_CODE_7F0789B0+8r
-CODE.bss:80079960                                              # sub_CODE_7F078A58+44o
-CODE.bss:80079960                                              # sub_CODE_7F078A58+5Cr
-CODE.bss:80079964     flt_CODE_bss_80079964:.space 4           # DATA XREF: sub_CODE_7F0785DC+244w
-CODE.bss:80079964                                              # sub_CODE_7F0785DC+270r
-CODE.bss:80079964                                              # sub_CODE_7F0789B0+14r
-CODE.bss:80079964                                              # sub_CODE_7F078A58:loc_CODE_7F078AC4r
-CODE.bss:80079968     flt_CODE_bss_80079968:.space 4           # DATA XREF: sub_CODE_7F0785DC+268w
-CODE.bss:80079968                                              # sub_CODE_7F0785DC+28Cr
-CODE.bss:80079968                                              # sub_CODE_7F0789B0+1Cr
-CODE.bss:80079968                                              # sub_CODE_7F078A58+78r
-CODE.bss:8007996C     flt_CODE_bss_8007996C:.space 4           # DATA XREF: sub_CODE_7F005450+58o
-CODE.bss:8007996C                                              # sub_CODE_7F0785DC+298w
-CODE.bss:8007996C                                              # sub_CODE_7F0789B0+24r
-CODE.bss:8007996C                                              # sub_CODE_7F078A58+7Cr
-CODE.bss:80079970     flt_CODE_bss_80079970:.space 4           # DATA XREF: sub_CODE_7F0785DC+1FCo
-CODE.bss:80079970                                              # sub_CODE_7F0785DC+2BCw
-CODE.bss:80079970                                              # sub_CODE_7F0785DC+2F8r
-CODE.bss:80079970                                              # sub_CODE_7F0789E0o
-CODE.bss:80079970                                              # sub_CODE_7F0789E0+8r
-CODE.bss:80079970                                              # sub_CODE_7F078A58+90o
-CODE.bss:80079970                                              # sub_CODE_7F078A58+A8r
-CODE.bss:80079974     flt_CODE_bss_80079974:.space 4           # DATA XREF: sub_CODE_7F0785DC+2DCw
-CODE.bss:80079974                                              # sub_CODE_7F0785DC+308r
-CODE.bss:80079974                                              # sub_CODE_7F0789E0+14r
-CODE.bss:80079974                                              # sub_CODE_7F078A58:loc_CODE_7F078B10r
-CODE.bss:80079978     flt_CODE_bss_80079978:.space 4           # DATA XREF: sub_CODE_7F0785DC+300w
-CODE.bss:80079978                                              # sub_CODE_7F0785DC+324r
-CODE.bss:80079978                                              # sub_CODE_7F0789E0+1Cr
-CODE.bss:80079978                                              # sub_CODE_7F078A58+C4r
-CODE.bss:8007997C     flt_CODE_bss_8007997C:.space 4           # DATA XREF: sub_CODE_7F0785DC+330w
-CODE.bss:8007997C                                              # sub_CODE_7F0789E0+24r
-CODE.bss:8007997C                                              # sub_CODE_7F078A58+C8r
-CODE.bss:80079980     flt_CODE_bss_80079980:.space 4           # DATA XREF: sub_CODE_7F0785DC+370w
-CODE.bss:80079980                                              # sub_CODE_7F078A10+3Cr
-CODE.bss:80079980                                              # sub_CODE_7F078A58+30r
-CODE.bss:80079980                                              # sub_CODE_7F078BF4+2Cr
-CODE.bss:80079984                     .align 4
-CODE.bss:80079990     flt_CODE_bss_80079990:.space 4           # DATA XREF: load_camera_intro_type_values+ECo
-CODE.bss:80079990                                              # load_camera_intro_type_values+F4w
-CODE.bss:80079990                                              # parse_handle_actionblocks+47A0o
-CODE.bss:80079990                                              # parse_handle_actionblocks+47BCw
-CODE.bss:80079990                                              # sub_CODE_7F080DF8+32Co
-CODE.bss:80079990                                              # sub_CODE_7F080DF8+334r
-CODE.bss:80079990                                              # sub_CODE_7F086990+E4o
-CODE.bss:80079990                                              # sub_CODE_7F086990+F0r
-CODE.bss:80079994     flt_CODE_bss_80079994:.space 4           # DATA XREF: load_camera_intro_type_values+F8w
-CODE.bss:80079994                                              # parse_handle_actionblocks+47ACw
-CODE.bss:80079998     flt_CODE_bss_80079998:.space 4           # DATA XREF: load_camera_intro_type_values+FCw
-CODE.bss:80079998                                              # parse_handle_actionblocks+47D4w
-CODE.bss:80079998                                              # sub_CODE_7F080DF8+348r
-CODE.bss:80079998                                              # sub_CODE_7F086990+108r
-CODE.bss:80079998                                              # sub_CODE_7F086990+120r
-CODE.bss:8007999C     dword_CODE_bss_8007999C:.space 4         # DATA XREF: sub_CODE_7F084360+44r
-CODE.bss:8007999C                                              # sub_CODE_7F084360+2D4w
-CODE.bss:8007999C                                              # trigger_explosions_around_player+1Cw
-CODE.bss:800799A0     dword_CODE_bss_800799A0:.space 4         # DATA XREF: sub_CODE_7F084360o
-CODE.bss:800799A0                                              # sub_CODE_7F084360+8r
-CODE.bss:800799A0                                              # sub_CODE_7F084360+18w
-CODE.bss:800799A0                                              # trigger_explosions_around_player+28w
-CODE.bss:800799A4                     .align 3
-CODE.bss:800799A8     flt_CODE_bss_800799A8:.space 4           # DATA XREF: sub_CODE_7F07C7B4+60o
-CODE.bss:800799A8                                              # sub_CODE_7F07C7B4+70w
-CODE.bss:800799A8                                              # sub_CODE_7F07C7B4+8Co
-CODE.bss:800799A8                                              # sub_CODE_7F07C7B4+94r
-CODE.bss:800799A8                                              # sub_CODE_7F07C7B4+A8w
-CODE.bss:800799A8                                              # sub_CODE_7F07C888+30o
-CODE.bss:800799A8                                              # sub_CODE_7F07C888+38r
-CODE.bss:800799A8                                              # MoveBond+95Co
-CODE.bss:800799A8                                              # MoveBond+970r
-CODE.bss:800799A8                                              # MoveBond+9A8o
-CODE.bss:800799A8                                              # MoveBond+9B0r
-CODE.bss:800799A8                                              # MoveBond+D30o
-CODE.bss:800799A8                                              # MoveBond+D38r
-CODE.bss:800799A8                                              # MoveBond+1EFCr
-CODE.bss:800799AC     flt_CODE_bss_800799AC:.space 4           # DATA XREF: sub_CODE_7F07C7B4+78w
-CODE.bss:800799AC                                              # sub_CODE_7F07C7B4+9Cr
-CODE.bss:800799AC                                              # sub_CODE_7F07C7B4+B4w
-CODE.bss:800799AC                                              # MoveBond+D3Cr
-CODE.bss:800799AC                                              # MoveBond+1F04r
-CODE.bss:800799B0     flt_CODE_bss_800799B0:.space 4           # DATA XREF: sub_CODE_7F07C7B4+84w
-CODE.bss:800799B0                                              # sub_CODE_7F07C7B4+A4r
-CODE.bss:800799B0                                              # sub_CODE_7F07C7B4+C0w
-CODE.bss:800799B0                                              # sub_CODE_7F07C888+40r
-CODE.bss:800799B0                                              # MoveBond+974r
-CODE.bss:800799B0                                              # MoveBond+9B8r
-CODE.bss:800799B0                                              # MoveBond+D40r
-CODE.bss:800799B0                                              # MoveBond+1F10r
-CODE.bss:800799B4     dword_CODE_bss_800799B4:.space 4         # DATA XREF: MoveBond+1040o
-CODE.bss:800799B4                                              # MoveBond+104Cw
-CODE.bss:800799B4                                              # MoveBond+1248o
-CODE.bss:800799B4                                              # MoveBond+1250w
-CODE.bss:800799B4                                              # MoveBond+12A0w
-CODE.bss:800799B4                                              # MoveBond+12A8r
-CODE.bss:800799B4                                              # MoveBond+1520o
-CODE.bss:800799B4                                              # MoveBond+1530r
-CODE.bss:800799B4                                              # MoveBond+1548w
-CODE.bss:800799B8     dword_CODE_bss_800799B8:.space 4         # DATA XREF: sub_CODE_7F07CF8C+24r
-CODE.bss:800799B8                                              # sub_CODE_7F07D960+210r
-CODE.bss:800799B8                                              # controller_gameplay_interaction+1224w
-CODE.bss:800799B8                                              # controller_gameplay_interaction+147Cr
-CODE.bss:800799B8                                              # controller_gameplay_interaction+2194r
-CODE.bss:800799B8                                              # controller_gameplay_interaction+22F4r
-CODE.bss:800799B8                                              # MoveBond+CE0r
-CODE.bss:800799B8                                              # MoveBond+1000w
-CODE.bss:800799B8                                              # MoveBond+1474r
-CODE.bss:800799B8                                              # MoveBond+1E4Cr
-CODE.bss:800799BC     flt_CODE_bss_800799BC:.space 4           # DATA XREF: controller_gameplay_interaction+1250w
-CODE.bss:800799BC                                              # MoveBond+DECo
-CODE.bss:800799BC                                              # MoveBond+DF8r
-CODE.bss:800799BC                                              # MoveBond+E04w
-CODE.bss:800799BC                                              # MoveBond+E08r
-CODE.bss:800799BC                                              # MoveBond+E1Cw
-CODE.bss:800799BC                                              # MoveBond+E20r
-CODE.bss:800799BC                                              # MoveBond:loc_CODE_7F085600o
-CODE.bss:800799BC                                              # MoveBond+FC8r
-CODE.bss:800799C0     flt_CODE_bss_800799C0:.space 4           # DATA XREF: sub_CODE_7F07D960+228r
-CODE.bss:800799C0                                              # controller_gameplay_interaction+125Cw
-CODE.bss:800799C0                                              # MoveBond+E64o
-CODE.bss:800799C0                                              # MoveBond+E8Cw
-CODE.bss:800799C0                                              # MoveBond+E90r
-CODE.bss:800799C0                                              # MoveBond+EF8r
-CODE.bss:800799C0                                              # MoveBond+F00r
-CODE.bss:800799C0                                              # MoveBond+F58r
-CODE.bss:800799C0                                              # MoveBond+F68r
-CODE.bss:800799C4     flt_CODE_bss_800799C4:.space 4           # DATA XREF: controller_gameplay_interaction+1270w
-CODE.bss:800799C4                                              # MoveBond+EB8r
-CODE.bss:800799C8     flt_CODE_bss_800799C8:.space 4           # DATA XREF: controller_gameplay_interaction+1278w
-CODE.bss:800799C8                                              # MoveBond+E9Cr
-CODE.bss:800799CC                     .align 4
-CODE.bss:800799D0     flt_CODE_bss_800799D0:.space 4           # DATA XREF: controller_gameplay_interaction+11C8o
-CODE.bss:800799D0                                              # controller_gameplay_interaction+1288w
-CODE.bss:800799D0                                              # MoveBond+E94o
-CODE.bss:800799D0                                              # MoveBond:loc_CODE_7F0855B4r
-CODE.bss:800799D4     flt_CODE_bss_800799D4:.space 4           # DATA XREF: controller_gameplay_interaction+1290w
-CODE.bss:800799D8     flt_CODE_bss_800799D8:.space 4           # DATA XREF: controller_gameplay_interaction+1298w
-CODE.bss:800799D8                                              # MoveBond+F90r
-CODE.bss:800799DC                     .align 4
-CODE.bss:800799E0      # int starting_right_weapon
-CODE.bss:800799E0     starting_right_weapon:.space 4           # DATA XREF: load_camera_intro_type_values+270w
-CODE.bss:800799E0                                              # load_camera_intro_type_values+390w
-CODE.bss:800799E0                                              # load_camera_intro_type_values+6A4w
-CODE.bss:800799E0                                              # sub_CODE_7F0798B8+94r
-CODE.bss:800799E0                                              # solo_char_load+2A8r
-CODE.bss:800799E0                                              # set_camera_mode+378o
-CODE.bss:800799E0                                              # set_camera_mode+3A0r
-CODE.bss:800799E4      # int starting_left_weapon
-CODE.bss:800799E4     starting_left_weapon:.space 4            # DATA XREF: load_camera_intro_type_values+260w
-CODE.bss:800799E4                                              # load_camera_intro_type_values+3A8w
-CODE.bss:800799E4                                              # sub_CODE_7F0798B8+90r
-CODE.bss:800799E4                                              # set_camera_mode+394r
-CODE.bss:800799E8     flt_CODE_bss_800799E8:.space 4           # DATA XREF: sub_CODE_7F07A534+74o
-CODE.bss:800799E8                                              # sub_CODE_7F07B56C:loc_CODE_7F07C000o
-CODE.bss:800799E8                                              # sub_CODE_7F07B56C+A9Cr
-CODE.bss:800799EC     flt_CODE_bss_800799EC:.space 4           # DATA XREF: sub_CODE_7F07B56C+AB0r
-CODE.bss:800799F0     flt_CODE_bss_800799F0:.space 4           # DATA XREF: sub_CODE_7F07B56C+AC0r
-CODE.bss:800799F4     dword_CODE_bss_800799F4:.space 4         # DATA XREF: sub_CODE_7F07A534+4w
-CODE.bss:800799F4                                              # sub_CODE_7F07B56C+AB4o
-CODE.bss:800799F4                                              # sub_CODE_7F07B56C+ACCr
-CODE.bss:800799F4                                              # sub_CODE_7F07B56C+B10r
-CODE.bss:800799F4                                              # sub_CODE_7F07B56C+B1Cr
-CODE.bss:800799F8     dword_CODE_bss_800799F8:.space 4         # DATA XREF: parse_handle_actionblocks+412Cw
-CODE.bss:800799F8                                              # parse_handle_actionblocks+4150w
-CODE.bss:800799F8                                              # parse_handle_actionblocks+4198w
-CODE.bss:800799F8                                              # parse_handle_actionblocks+49DCw
-CODE.bss:800799F8                                              # sub_CODE_7F07B56C+B70o
-CODE.bss:800799F8                                              # sub_CODE_7F07B56C+B74r
-CODE.bss:800799F8                                              # sub_CODE_7F07B56C+B94r
-CODE.bss:800799F8                                              # sub_CODE_7F07B56C+BA4r
-CODE.bss:800799F8                                              # sub_CODE_7F07B56C+BD8r
-CODE.bss:800799F8                                              # sub_CODE_7F07B56C+BE8r
-CODE.bss:800799F8                                              # sub_CODE_7F07B56C+BF4r
-CODE.bss:800799F8                                              # sub_CODE_7F07B56C+C00r
-CODE.bss:800799FC     dword_CODE_bss_800799FC:.space 4         # DATA XREF: parse_handle_actionblocks+41A0w
-CODE.bss:800799FC                                              # parse_handle_actionblocks+49E8w
-CODE.bss:800799FC                                              # sub_CODE_7F07B56C:loc_CODE_7F07C17Co
-CODE.bss:800799FC                                              # sub_CODE_7F07B56C+C18r
-CODE.bss:800799FC                                              # sub_CODE_7F07B56C+C8Cr
-CODE.bss:800799FC                                              # sub_CODE_7F07B56C+CA0r
-CODE.bss:800799FC                                              # sub_CODE_7F07B56C+CD8r
-CODE.bss:800799FC                                              # sub_CODE_7F07B56C+D14r
-CODE.bss:800799FC                                              # sub_CODE_7F07B56C+D48r
-CODE.bss:800799FC                                              # sub_CODE_7F07B56C+D6Cr
-CODE.bss:800799FC                                              # sub_CODE_7F07B56C+D78r
-CODE.bss:80079A00     flt_CODE_bss_80079A00:.space 4           # DATA XREF: parse_handle_actionblocks+4A1Cw
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E1Co
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E3Cr
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E50o
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E70r
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E84o
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E90r
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E94o
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+E9Cr
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+EC8o
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+EF8r
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+EFCo
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+F04r
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+F38o
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+F58r
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+F64w
-CODE.bss:80079A00                                              # sub_CODE_7F07B56C+F68r
-CODE.bss:80079A04     flt_CODE_bss_80079A04:.space 4           # DATA XREF: parse_handle_actionblocks+4A2Cw
-CODE.bss:80079A04                                              # sub_CODE_7F07B56C+F4Cr
-CODE.bss:80079A08     flt_CODE_bss_80079A08:.space 4           # DATA XREF: parse_handle_actionblocks+4A34w
-CODE.bss:80079A08                                              # sub_CODE_7F07B56C+EA8r
-CODE.bss:80079A08                                              # sub_CODE_7F07B56C+F18r
-CODE.bss:80079A0C     flt_CODE_bss_80079A0C:.space 4           # DATA XREF: parse_handle_actionblocks+4A3Cw
-CODE.bss:80079A0C                                              # sub_CODE_7F07B56C+EE0r
-CODE.bss:80079A10     flt_CODE_bss_80079A10:.space 4           # DATA XREF: parse_handle_actionblocks+4A44w
-CODE.bss:80079A10                                              # sub_CODE_7F07B56C+E5Cr
-CODE.bss:80079A10                                              # sub_CODE_7F07B56C+ED8r
-CODE.bss:80079A14     dword_CODE_bss_80079A14:.space 4         # DATA XREF: parse_handle_actionblocks+4A54w
-CODE.bss:80079A14                                              # sub_CODE_7F07B56C:loc_CODE_7F07C318r
-CODE.bss:80079A18     dword_CODE_bss_80079A18:.space 4         # DATA XREF: parse_handle_actionblocks+41BCw
-CODE.bss:80079A18                                              # sub_CODE_7F07B56C+CD0r
-CODE.bss:80079A1C     dword_CODE_bss_80079A1C:.space 4         # DATA XREF: parse_handle_actionblocks+41D4w
-CODE.bss:80079A20     mission_timer:  .space 4                 # DATA XREF: load_camera_intro_type_values+23Cw
-CODE.bss:80079A20                                              # possibly_reset_viewport_options_for_player+3DCo
-CODE.bss:80079A20                                              # possibly_reset_viewport_options_for_player+3ECr
-CODE.bss:80079A20                                              # possibly_reset_viewport_options_for_player+3F4w
-CODE.bss:80079A20                                              # sub_CODE_7F08BFB8+8r
-CODE.bss:80079A24     watch_time_0:   .space 4                 # DATA XREF: load_camera_intro_type_values+240o
-CODE.bss:80079A24                                              # load_camera_intro_type_values+244w
-CODE.bss:80079A24                                              # load_camera_intro_type_values+580w
-CODE.bss:80079A24                                              # load_camera_intro_type_values+5BCw
-CODE.bss:80079A24                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F0873CCo
-CODE.bss:80079A24                                              # possibly_reset_viewport_options_for_player+440r
-CODE.bss:80079A24                                              # possibly_reset_viewport_options_for_player+44Cw
-CODE.bss:80079A24                                              # sub_CODE_7F087E74+268r
-CODE.bss:80079A28     dword_CODE_bss_80079A28:.space 0x200     # DATA XREF: display_string_in_lower_left_corner+34o
-CODE.bss:80079A28                                              # display_string_in_lower_left_corner+B4o
-CODE.bss:80079A28                                              # sub_CODE_7F08A5FC+E4o
-CODE.bss:80079A28                                              # sub_CODE_7F08A5FC+2A4o
-CODE.bss:80079C28     dword_CODE_bss_80079C28:.space 4         # DATA XREF: load_camera_intro_type_values:loc_CODE_7F005ED8o
-CODE.bss:80079C28                                              # sub_CODE_7F0790F0+6Co
-CODE.bss:80079C28                                              # sub_CODE_7F0790F0+17Co
-CODE.bss:80079C28                                              # mp_respawn_handler+E4r
-CODE.bss:80079C2C                     .space 0x3C
-CODE.bss:80079C68     dword_CODE_bss_80079C68:.space 4         # DATA XREF: load_camera_intro_type_values+104w
-CODE.bss:80079C68                                              # load_camera_intro_type_values+2E8r
-CODE.bss:80079C68                                              # load_camera_intro_type_values+320w
-CODE.bss:80079C68                                              # load_camera_intro_type_values+6D4r
-CODE.bss:80079C68                                              # load_camera_intro_type_values+6F4r
-CODE.bss:80079C68                                              # sub_CODE_7F0790F0+3Cr
-CODE.bss:80079C68                                              # sub_CODE_7F0790F0+98r
-CODE.bss:80079C68                                              # sub_CODE_7F0790F0+154r
-CODE.bss:80079C68                                              # sub_CODE_7F0790F0+18Cr
-CODE.bss:80079C68                                              # sub_CODE_7F0790F0+1CCr
-CODE.bss:80079C68                                              # sub_CODE_7F0790F0+288r
-CODE.bss:80079C68                                              # sub_CODE_7F0790F0+2A8r
-CODE.bss:80079C68                                              # mp_respawn_handler+C0r
-CODE.bss:80079C6C                     .align 4
-CODE.bss:80079C70     dword_CODE_bss_80079C70:.space 0x130     # DATA XREF: display_string_at_top_of_screen+28o
-CODE.bss:80079C70                                              # sub_CODE_7F08AAE8+A0o
-CODE.bss:80079C70                                              # sub_CODE_7F08AAE8+1E4o
-CODE.bss:80079DA0     dword_CODE_bss_80079DA0:.space 4         # DATA XREF: load_camera_intro_type_values+858w
-CODE.bss:80079DA0                                              # write_stan_tiles_in_yellowr
-CODE.bss:80079DA4     dword_CODE_bss_80079DA4:.space 4         # DATA XREF: load_camera_intro_type_values+874w
-CODE.bss:80079DA4                                              # write_stan_tiles_in_yellow:loc_CODE_7F0896E4r
-CODE.bss:80079DA8     dword_CODE_bss_80079DA8:.space 0x20      # DATA XREF: load_camera_intro_type_values+870o
-CODE.bss:80079DC8     dword_CODE_bss_80079DC8:.space 0x3C      # DATA XREF: load_camera_intro_type_values+868o
-CODE.bss:80079E04     flt_CODE_bss_80079E04:.space 4           # DATA XREF: set_camera_mode+110w
-CODE.bss:80079E04                                              # sub_CODE_7F07B56C+358o
-CODE.bss:80079E08     flt_CODE_bss_80079E08:.space 4           # DATA XREF: set_camera_mode+120w
-CODE.bss:80079E08                                              # sub_CODE_7F07B56C+324r
-CODE.bss:80079E08                                              # sub_CODE_7F07B56C+34Co
-CODE.bss:80079E08                                              # sub_CODE_7F07B56C+460o
-CODE.bss:80079E08                                              # sub_CODE_7F07B56C+468r
-CODE.bss:80079E0C     flt_CODE_bss_80079E0C:.space 4           # DATA XREF: set_camera_mode+128w
-CODE.bss:80079E0C                                              # sub_CODE_7F07B56C+350o
-CODE.bss:80079E10     flt_CODE_bss_80079E10:.space 4           # DATA XREF: set_camera_mode+140w
-CODE.bss:80079E10                                              # sub_CODE_7F07B56C+344o
-CODE.bss:80079E10                                              # sub_CODE_7F07B56C+494o
-CODE.bss:80079E10                                              # sub_CODE_7F07B56C+49Cr
-CODE.bss:80079E10                                              # sub_CODE_7F07B56C+4CCr
-CODE.bss:80079E10                                              # sub_CODE_7F07B56C+4E8o
-CODE.bss:80079E10                                              # sub_CODE_7F07B56C+4F0r
-CODE.bss:80079E10                                              # sub_CODE_7F07B56C+568r
-CODE.bss:80079E10                                              # sub_CODE_7F07B56C+59Cr
-*/
+// bss
+//CODE.bss:80079940
+f32 flt_CODE_bss_80079940;
+//CODE.bss:80079944
+f32 flt_CODE_bss_80079944;
+//CODE.bss:80079948
+f32 flt_CODE_bss_80079948;
+//CODE.bss:8007994C
+f32 flt_CODE_bss_8007994C;
+//CODE.bss:80079950
+f32 flt_CODE_bss_80079950;
+//CODE.bss:80079954
+f32 flt_CODE_bss_80079954;
+//CODE.bss:80079958
+f32 flt_CODE_bss_80079958;
+//CODE.bss:8007995C
+f32 flt_CODE_bss_8007995C;
+//CODE.bss:80079960
+f32 flt_CODE_bss_80079960;
+//CODE.bss:80079964
+f32 flt_CODE_bss_80079964;
+//CODE.bss:80079968
+f32 flt_CODE_bss_80079968;
+//CODE.bss:8007996C
+f32 flt_CODE_bss_8007996C;
+//CODE.bss:80079970
+f32 flt_CODE_bss_80079970;
+//CODE.bss:80079974
+f32 flt_CODE_bss_80079974;
+//CODE.bss:80079978
+f32 flt_CODE_bss_80079978;
+//CODE.bss:8007997C
+f32 flt_CODE_bss_8007997C;
+//CODE.bss:80079980
+f32 flt_CODE_bss_80079980;
+//CODE.bss:80079984                     .align 4
+//CODE.bss:80079990
+f32 flt_CODE_bss_80079990;
+//CODE.bss:80079994
+f32 flt_CODE_bss_80079994;
+//CODE.bss:80079998
+f32 flt_CODE_bss_80079998;
+//CODE.bss:8007999C
+s32 dword_CODE_bss_8007999C;
+//CODE.bss:800799A0
+s32 dword_CODE_bss_800799A0;
+//CODE.bss:800799A4                     .align 3
+//CODE.bss:800799A8
+f32 flt_CODE_bss_800799A8;
+//CODE.bss:800799AC
+f32 flt_CODE_bss_800799AC;
+//CODE.bss:800799B0
+f32 flt_CODE_bss_800799B0;
+//CODE.bss:800799B4
+s32 dword_CODE_bss_800799B4;
+//CODE.bss:800799B8
+s32 dword_CODE_bss_800799B8;
+//CODE.bss:800799BC
+f32 flt_CODE_bss_800799BC;
+//CODE.bss:800799C0
+f32 flt_CODE_bss_800799C0;
+//CODE.bss:800799C4
+f32 flt_CODE_bss_800799C4;
+//CODE.bss:800799C8
+f32 flt_CODE_bss_800799C8;
+//CODE.bss:800799CC                     .align 4
+//CODE.bss:800799D0
+f32 flt_CODE_bss_800799D0;
+//CODE.bss:800799D4
+f32 flt_CODE_bss_800799D4;
+//CODE.bss:800799D8
+f32 flt_CODE_bss_800799D8;
+//CODE.bss:800799DC                     .align 4
+//CODE.bss:800799E0
+s32 starting_right_weapon;
+//CODE.bss:800799E4
+s32 starting_left_weapon;
+//CODE.bss:800799E8
+f32 flt_CODE_bss_800799E8;
+//CODE.bss:800799EC
+f32 flt_CODE_bss_800799EC;
+//CODE.bss:800799F0
+f32 flt_CODE_bss_800799F0;
+//CODE.bss:800799F4
+s32 dword_CODE_bss_800799F4;
+//CODE.bss:800799F8
+s32 dword_CODE_bss_800799F8;
+//CODE.bss:800799FC
+s32 dword_CODE_bss_800799FC;
+//CODE.bss:80079A00
+f32 flt_CODE_bss_80079A00;
+//CODE.bss:80079A04
+f32 flt_CODE_bss_80079A04;
+//CODE.bss:80079A08
+f32 flt_CODE_bss_80079A08;
+//CODE.bss:80079A0C
+f32 flt_CODE_bss_80079A0C;
+//CODE.bss:80079A10
+f32 flt_CODE_bss_80079A10;
+//CODE.bss:80079A14
+s32 dword_CODE_bss_80079A14;
+//CODE.bss:80079A18
+s32 dword_CODE_bss_80079A18;
+//CODE.bss:80079A1C
+s32 dword_CODE_bss_80079A1C;
+//CODE.bss:80079A20
+f32 mission_timer;
+//CODE.bss:80079A24
+f32 watch_time_0;
+//CODE.bss:80079A28
+char dword_CODE_bss_80079A28[0x200];
+//CODE.bss:80079C28
+char dword_CODE_bss_80079C28[40];
+//CODE.bss:80079C68
+s32 dword_CODE_bss_80079C68;
+//CODE.bss:80079C6C                     .align 4
+//CODE.bss:80079C70
+char dword_CODE_bss_80079C70[0x130];
+//CODE.bss:80079DA0
+s32 dword_CODE_bss_80079DA0;
+//CODE.bss:80079DA4
+s32 dword_CODE_bss_80079DA4;
+//CODE.bss:80079DA8
+char dword_CODE_bss_80079DA8[0x20];
+//CODE.bss:80079DC8
+char dword_CODE_bss_80079DC8[0x3C];
+//CODE.bss:80079E04
+s32 flt_CODE_bss_80079E04;
+//CODE.bss:80079E08
+s32 flt_CODE_bss_80079E08;
+//CODE.bss:80079E0C
+s32 flt_CODE_bss_80079E0C;
+//CODE.bss:80079E10
+s32 flt_CODE_bss_80079E10;
 
 
+// data
 //D:80036424
 s32 camera_80036424 = 0;
 //D:80036428
 s32 resolution = 0;
+//D:8003642C
+s32 camera_8003642C = 0;
+//D:80036430
+s32 camera_80036430 = 0;
+//D:80036434
+s32 camera_80036434 = 0;
+//D:80036438
+s32 camera_80036438 = 0;
+//D:8003643C
+s32 dword_D_8003643C = 0;
+//D:80036440
+s32 dword_D_80036440 = 0;
+//D:80036444
+s32 dword_D_80036444 = 0;
+//D:80036448
+s32 in_tank_flag = 0;
+//D:8003644C
+s32 dword_D_8003644C = 0;
+//D:80036450
+s32 dword_D_80036450 = 0;
+//D:80036454
+s32 dword_D_80036454 = 0;
+//D:80036458
+s32 dword_D_80036458 = 0;
+//D:8003645C
+s32 dword_D_8003645C = 0;
+//D:80036460
+s32 dword_D_80036460 = 0;
+//D:80036464
+s32 dword_D_80036464 = 0;
+//D:80036468
+s32 dword_D_80036468 = 0;
+//D:8003646C
+s32 dword_D_8003646C = 0;
+//D:80036470
+s32 dword_D_80036470 = 0;
+//D:80036474
+s32 dword_D_80036474 = 0;
+//D:80036478
+s32 dword_D_80036478 = 0;
+//D:8003647C
+s32 dword_D_8003647C = 0;
+//D:80036480
+s32 dword_D_80036480 = 0;
+//D:80036484
+s32 dword_D_80036484 = 0;
+//D:80036488
+s32 dword_D_80036488 = 0;
+//D:8003648C
+s32 dword_D_8003648C = 0;
+//D:80036490
+s32 dword_D_80036490 = 0;
+//D:80036494
+s32 cameramode = 0;
+//D:80036498
+s32 dword_D_80036498 = 0;
+//D:8003649C
+s32 dword_D_8003649C = 0;
+//D:800364A0
+s32 stop_time_flag = 0;
+//D:800364A4
+s32 dword_D_800364A4 = 0;
+//D:800364A8
+s32 dword_D_800364A8 = 1;
+//D:800364AC
+s32 dword_D_800364AC = 0;
+//D:800364B0
+s32 dword_D_800364B0 = 1;
+//D:800364B4
+s32 disable_player_pickups_flag = 0;
+//D:800364B8
+s32 dword_D_800364B8 = 0;
+//D:800364BC
+s32 dword_D_800364BC = 0;
+//D:800364C0
+s32 dword_D_800364C0 = 0;
+//D:800364C4
+s32 invisible_to_guards_flag = 1;
+//D:800364C8
+s32 obj_collision_flag = 1;
+//D:800364CC
+f32 flt_D_800364CC = 1.0;
+//D:800364D0
+f32 flt_D_800364D0 = 1.0;
+//D:800364D4
+f32 flt_D_800364D4 = 1.0;
+//D:800364D8
+s32 dword_D_800364D8[] = {
+    0x30B8, 0x31DC, 0x32C8, 0x33AC, 0x34D4, 0x35C8, 0x36D8, 0x384C, 0x39C0, 0x3AF0, 0x3C10, 0x3D04, 0
+};
 
+//D:8003650C
+s32 dword_D_8003650C = 0;
+//D:80036510
+s32 dword_D_80036510 = 0;
+//D:80036514
+s32 dword_D_80036514 = 0;
 /*
-D:8003642C     camera_8003642C:.word 0                  # DATA XREF: load_camera_intro_type_values+6Cw
-D:8003642C                                              # parse_handle_actionblocks:action_D2_exit_levelr
-D:8003642C                                              # sub_CODE_7F086BF8r
-D:8003642C                                              # sub_CODE_7F086C1Cr
-D:8003642C                                              # get_curplayer_viewport_width:loc_CODE_7F086C64r
-D:8003642C                                              # get_curplayer_viewport_height:loc_CODE_7F086D48r
-D:8003642C                                              # get_curplayer_viewport_uly:loc_CODE_7F086EACr
-D:8003642C                                              # possibly_reset_viewport_options_for_player+78w
-D:8003642C                                              # possibly_reset_viewport_options_for_player+D0w
-D:8003642C                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F087088r
-D:8003642C                                              # sub_CODE_7F08AAE8+D8r
-D:80036430     camera_80036430:.word 0                  # DATA XREF: load_camera_intro_type_values+74o
-D:80036430                                              # load_camera_intro_type_values+78w
-D:80036430                                              # load_camera_intro_type_values+C0w
-D:80036430                                              # sub_CODE_7F0804E0+10r
-D:80036430                                              # possibly_reset_viewport_options_for_player+30o
-D:80036430                                              # possibly_reset_viewport_options_for_player+38r
-D:80036430                                              # possibly_reset_viewport_options_for_player+54r
-D:80036430                                              # possibly_reset_viewport_options_for_player+70o
-D:80036430                                              # possibly_reset_viewport_options_for_player+84w
-D:80036430                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F087024r
-D:80036430                                              # possibly_reset_viewport_options_for_player+94w
-D:80036434     camera_80036434:.word 0                  # DATA XREF: load_camera_intro_type_values+84w
-D:80036434                                              # parse_handle_actionblocks+4094r
-D:80036434                                              # parse_handle_actionblocks+40A8w
-D:80036434                                              # sub_CODE_7F0804E0+34r
-D:80036434                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F087034o
-D:80036434                                              # possibly_reset_viewport_options_for_player+A0r
-D:80036434                                              # possibly_reset_viewport_options_for_player+B0r
-D:80036434                                              # possibly_reset_viewport_options_for_player+CCo
-D:80036434                                              # possibly_reset_viewport_options_for_player+DCw
-D:80036434                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F08707Cr
-D:80036434                                              # possibly_reset_viewport_options_for_player+E8w
-D:80036438     camera_80036438:.word 0                  # DATA XREF: load_camera_intro_type_values:loc_CODE_7F005888w
-D:80036438                                              # sub_CODE_7F088CD8+5Co
-D:80036438                                              # sub_CODE_7F088CD8+6Cr
-D:80036438                                              # sub_CODE_7F088CD8+80w
-D:8003643C     dword_D_8003643C:.word 0                 # DATA XREF: load_camera_intro_type_values+CCw
-D:8003643C                                              # parse_handle_actionblocks+4A68w
-D:8003643C                                              # parse_handle_actionblocks:actionF0_return_when_credits_finishedr
-D:8003643C                                              # sub_CODE_7F088CD8+40o
-D:8003643C                                              # sub_CODE_7F088CD8+44r
-D:80036440     dword_D_80036440:.word 0                 # DATA XREF: load_camera_intro_type_values+DCw
-D:80036440                                              # load_camera_intro_type_values+5DCw
-D:80036440                                              # sub_CODE_7F088CD8+58r
-D:80036440                                              # sub_CODE_7F088CD8+E4r
-D:80036440                                              # sub_CODE_7F088CD8+18Cr
-D:80036440                                              # sub_CODE_7F088CD8+1DCr
-D:80036440                                              # sub_CODE_7F088CD8+334r
-D:80036440                                              # sub_CODE_7F088CD8+35Cr
-D:80036440                                              # sub_CODE_7F088CD8+4D0r
-D:80036444     dword_D_80036444:.word 0                 # DATA XREF: load_camera_intro_type_values+100w
-D:80036444                                              # sub_CODE_7F084360+1Cr
-D:80036444                                              # trigger_explosions_around_player+Cw
-D:80036448     in_tank_flag:   .word 0                  # DATA XREF: load_camera_intro_type_values+10Cw
-D:80036448                                              # set_camera_mode:loc_CODE_7F07ADDCw
-D:80036448                                              # get_intank_flag+8r
-D:80036448                                              # get_ptr_for_players_tankr
-D:80036448                                              # sub_CODE_7F07CF8Cr
-D:80036448                                              # sub_CODE_7F07D960+8Cr
-D:80036448                                              # sub_CODE_7F07D960+12Cr
-D:80036448                                              # sub_CODE_7F07D960:loc_CODE_7F07DAF4r
-D:80036448                                              # sub_CODE_7F080DF8r
-D:80036448                                              # controller_gameplay_interaction:loc_CODE_7F081CD8r
-D:80036448                                              # controller_gameplay_interaction:loc_CODE_7F0821CCr
-D:80036448                                              # controller_gameplay_interaction+A90r
-D:80036448                                              # controller_gameplay_interaction+AD4r
-D:80036448                                              # controller_gameplay_interaction:loc_CODE_7F0828C4r
-D:80036448                                              # controller_gameplay_interaction+1068r
-D:80036448                                              # controller_gameplay_interaction+10ECw
-D:80036448                                              # controller_gameplay_interaction+121Cw
-D:80036448                                              # controller_gameplay_interaction:loc_CODE_7F082DD0r
-D:80036448                                              # controller_gameplay_interaction:loc_CODE_7F0836B4r
-D:80036448                                              # controller_gameplay_interaction+1ED8r
-D:80036448                                              # controller_gameplay_interaction+2188r
-D:80036448                                              # controller_gameplay_interaction:loc_CODE_7F083C50r
-D:80036448                                              # MoveBond:loc_CODE_7F0847B8r
-D:80036448                                              # MoveBond:loc_CODE_7F08497Cr
-D:80036448                                              # MoveBond:loc_CODE_7F085318r
-D:80036448                                              # MoveBond+1E38r
-D:80036448                                              # record_damage_kills+B4r
-D:80036448                                              # sub_CODE_7F08A19Cr
-D:8003644C     dword_D_8003644C:.word 0                 # DATA XREF: load_camera_intro_type_values+114w
-D:8003644C                                              # sub_CODE_7F07CF8C+8Cr
-D:8003644C                                              # sub_CODE_7F07CF8C+26Cw
-D:8003644C                                              # sub_CODE_7F07CF8C+27Cr
-D:8003644C                                              # sub_CODE_7F07D960+78r
-D:8003644C                                              # sub_CODE_7F07D960:loc_CODE_7F07DA3Cr
-D:8003644C                                              # sub_CODE_7F07D960+284w
-D:80036450     dword_D_80036450:.word 0                 # DATA XREF: load_camera_intro_type_values+120w
-D:80036450                                              # set_camera_mode+40Cr
-D:80036450                                              # set_camera_mode+598r
-D:80036450                                              # set_camera_mode+690r
-D:80036450                                              # set_camera_mode+6A4r
-D:80036450                                              # sub_CODE_7F07C7B4r
-D:80036450                                              # sub_CODE_7F07C888+4r
-D:80036450                                              # sub_CODE_7F07CAC8+2Cr
-D:80036450                                              # sub_CODE_7F07CAC8+164r
-D:80036450                                              # sub_CODE_7F07CAC8:loc_CODE_7F07CD7Cr
-D:80036450                                              # get_ptr_for_players_tank+20r
-D:80036450                                              # sub_CODE_7F07CF8C:loc_CODE_7F07D1B4r
-D:80036450                                              # sub_CODE_7F07D960+E4o
-D:80036450                                              # sub_CODE_7F07D960+11Cw
-D:80036450                                              # sub_CODE_7F07D960:loc_CODE_7F07DBC8o
-D:80036450                                              # sub_CODE_7F07D960+26Cr
-D:80036450                                              # sub_CODE_7F07D960+288w
-D:80036450                                              # sub_CODE_7F080D60r
-D:80036450                                              # controller_gameplay_interaction+107Cr
-D:80036450                                              # controller_gameplay_interaction:loc_CODE_7F082AA4r
-D:80036450                                              # MoveBond:loc_CODE_7F084F9Cr
-D:80036450                                              # MoveBond+CF4r
-D:80036450                                              # MoveBond+1E24r
-D:80036450                                              # kill_current_player+ACr
-D:80036450                                              # sub_CODE_7F08A03C:loc_CODE_7F08A06Cr
-D:80036454     dword_D_80036454:.word 0                 # DATA XREF: load_camera_intro_type_values+130w
-D:80036454                                              # sub_CODE_7F07D960+19Co
-D:80036454                                              # sub_CODE_7F07D960+1ACr
-D:80036454                                              # sub_CODE_7F07D960+1D8w
-D:80036454                                              # sub_CODE_7F07D960+1DCr
-D:80036454                                              # sub_CODE_7F07D960+1F4w
-D:80036454                                              # sub_CODE_7F07D960:loc_CODE_7F07DB58o
-D:80036454                                              # sub_CODE_7F07D960+200w
-D:80036454                                              # sub_CODE_7F07D960+21Cr
-D:80036454                                              # sub_CODE_7F07D960+23Cr
-D:80036454                                              # sub_CODE_7F07D960+24Cw
-D:80036454                                              # sub_CODE_7F07D960+264w
-D:80036454                                              # sub_CODE_7F07D960+270o
-D:80036454                                              # sub_CODE_7F07D960+28Cw
-D:80036454                                              # sub_CODE_7F080D60+34r
-D:80036458     dword_D_80036458:.word 0                 # DATA XREF: load_camera_intro_type_values+138o
-D:80036458                                              # load_camera_intro_type_values+140w
-D:80036458                                              # sub_CODE_7F007700r
-D:80036458                                              # sub_CODE_7F007700+2Cr
-D:80036458                                              # sub_CODE_7F07EAF0+70o
-D:80036458                                              # sub_CODE_7F07EAF0+74r
-D:80036458                                              # MoveBond+CC0o
-D:80036458                                              # MoveBond+FFCo
-D:80036458                                              # MoveBond+1004r
-D:80036458                                              # MoveBond+100Cr
-D:80036458                                              # MoveBond:loc_CODE_7F085678r
-D:80036458                                              # MoveBond+10CCo
-D:80036458                                              # MoveBond+1138r
-D:80036458                                              # MoveBond:loc_CODE_7F085818o
-D:80036458                                              # MoveBond+11E0r
-D:80036458                                              # MoveBond:loc_CODE_7F08584Cr
-D:80036458                                              # MoveBond+120Cr
-D:80036458                                              # MoveBond:loc_CODE_7F085884r
-D:80036458                                              # MoveBond:loc_CODE_7F085B48r
-D:80036458                                              # MoveBond+154Cr
-D:80036458                                              # MoveBond+1564r
-D:8003645C     dword_D_8003645C:.word 0                 # DATA XREF: load_camera_intro_type_values+144w
-D:8003645C                                              # sub_CODE_7F007700:loc_CODE_7F007730r
-D:8003645C                                              # sub_CODE_7F007700+54r
-D:8003645C                                              # MoveBond+10E0r
-D:8003645C                                              # MoveBond+10ECr
-D:8003645C                                              # MoveBond+10F4r
-D:8003645C                                              # MoveBond+110Co
-D:8003645C                                              # MoveBond:loc_CODE_7F085770r
-D:8003645C                                              # MoveBond+11D8r
-D:8003645C                                              # MoveBond+11F4r
-D:8003645C                                              # MoveBond+1508r
-D:8003645C                                              # MoveBond+155Cr
-D:8003645C                                              # MoveBond:loc_CODE_7F085BB0r
-D:8003645C                                              # MoveBond+1588r
-D:80036460     dword_D_80036460:.word 0                 # DATA XREF: load_camera_intro_type_values+148w
-D:80036460                                              # sub_CODE_7F07EAF0+68o
-D:80036460                                              # controller_gameplay_interaction+1214w
-D:80036460                                              # controller_gameplay_interaction+23A4o
-D:80036460                                              # controller_gameplay_interaction+23B0r
-D:80036460                                              # controller_gameplay_interaction:loc_CODE_7F083D64o
-D:80036460                                              # controller_gameplay_interaction+2400r
-D:80036464     dword_D_80036464:.word 0                 # DATA XREF: load_camera_intro_type_values+154w
-D:80036464                                              # sub_CODE_7F07CEB0+8r
-D:80036464                                              # sub_CODE_7F07CF8C+40r
-D:80036464                                              # controller_gameplay_interaction+120Cw
-D:80036464                                              # MoveBond+380r
-D:80036464                                              # MoveBond+3E4w
-D:80036464                                              # MoveBond+708w
-D:80036464                                              # MoveBond+918r
-D:80036464                                              # MoveBond+9DCr
-D:80036464                                              # MoveBond+AECr
-D:80036464                                              # MoveBond+D0Cr
-D:80036464                                              # MoveBond+D9Cr
-D:80036464                                              # MoveBond+13F8r
-D:80036464                                              # MoveBond+1434r
-D:80036464                                              # MoveBond+1EC8r
-D:80036464                                              # MoveBond+1ED8r
-D:80036464                                              # MoveBond+2080r
-D:80036464                                              # sub_CODE_7F08A19C+24r
-D:80036468     dword_D_80036468:.word 0                 # DATA XREF: load_camera_intro_type_values+160w
-D:8003646C     dword_D_8003646C:.word 0                 # DATA XREF: load_camera_intro_type_values+16Cw
-D:8003646C                                              # sub_CODE_7F07CEB0+60r
-D:8003646C                                              # sub_CODE_7F07CEB0+8Cr
-D:8003646C                                              # sub_CODE_7F07CEB0+A0r
-D:8003646C                                              # sub_CODE_7F07CF80+8r
-D:8003646C                                              # controller_gameplay_interaction+1190o
-D:8003646C                                              # controller_gameplay_interaction+11A4w
-D:8003646C                                              # controller_gameplay_interaction+11ACr
-D:8003646C                                              # MoveBond:loc_CODE_7F085920r
-D:8003646C                                              # MoveBond+1394w
-D:8003646C                                              # MoveBond:loc_CODE_7F0864F0r
-D:80036470     dword_D_80036470:.word 0                 # DATA XREF: load_camera_intro_type_values+178w
-D:80036470                                              # controller_gameplay_interaction+11D0w
-D:80036470                                              # MoveBond+132Co
-D:80036470                                              # MoveBond+1338r
-D:80036470                                              # MoveBond:loc_CODE_7F0859C0o
-D:80036470                                              # MoveBond+1388r
-D:80036474     dword_D_80036474:.word 0                 # DATA XREF: load_camera_intro_type_values+184w
-D:80036474                                              # sub_CODE_7F07C7B4+28r
-D:80036474                                              # sub_CODE_7F07CAC8+1E0r
-D:80036474                                              # sub_CODE_7F07CEB0+10r
-D:80036474                                              # controller_gameplay_interaction+11BCo
-D:80036474                                              # controller_gameplay_interaction+11E8w
-D:80036474                                              # controller_gameplay_interaction+11F0r
-D:80036474                                              # MoveBond+738o
-D:80036474                                              # MoveBond+744r
-D:80036474                                              # MoveBond+934w
-D:80036474                                              # MoveBond+93Cr
-D:80036474                                              # MoveBond+A2Cr
-D:80036474                                              # MoveBond+DA8r
-D:80036474                                              # MoveBond+1EBCr
-D:80036478     dword_D_80036478:.word 0                 # DATA XREF: load_camera_intro_type_values+190w
-D:80036478                                              # controller_gameplay_interaction+11FCw
-D:80036478                                              # MoveBond+850o
-D:80036478                                              # MoveBond+854r
-D:80036478                                              # MoveBond:loc_CODE_7F084EDCo
-D:80036478                                              # MoveBond+8A4r
-D:80036478                                              # MoveBond+8E4w
-D:80036478                                              # MoveBond+908w
-D:80036478                                              # MoveBond+950w
-D:8003647C     dword_D_8003647C:.word 0                 # DATA XREF: load_camera_intro_type_values+198w
-D:8003647C                                              # controller_gameplay_interaction+1200w
-D:8003647C                                              # MoveBond+A54o
-D:8003647C                                              # MoveBond+A60r
-D:8003647C                                              # MoveBond+AA8o
-D:8003647C                                              # MoveBond+AB8r
-D:80036480     dword_D_80036480:.word 0                 # DATA XREF: load_camera_intro_type_values+1A4w
-D:80036480                                              # sub_CODE_7F07D960+68w
-D:80036480                                              # sub_CODE_7F07D960+188w
-D:80036484     dword_D_80036484:.word 0                 # DATA XREF: load_camera_intro_type_values+1B0w
-D:80036484                                              # controller_gameplay_interaction+11D8w
-D:80036484                                              # MoveBond+724o
-D:80036484                                              # MoveBond+734r
-D:80036484                                              # MoveBond+750w
-D:80036484                                              # MoveBond+754r
-D:80036484                                              # MoveBond+774w
-D:80036484                                              # MoveBond+778r
-D:80036484                                              # MoveBond+790w
-D:80036484                                              # MoveBond+794r
-D:80036484                                              # MoveBond+928o
-D:80036484                                              # MoveBond+948w
-D:80036488     dword_D_80036488:.word 0                 # DATA XREF: load_camera_intro_type_values+1B8w
-D:80036488                                              # controller_gameplay_interaction+1474o
-D:80036488                                              # controller_gameplay_interaction+1478w
-D:80036488                                              # controller_gameplay_interaction+14BCr
-D:80036488                                              # controller_gameplay_interaction+14CCw
-D:80036488                                              # controller_gameplay_interaction+14F4r
-D:80036488                                              # controller_gameplay_interaction+1504w
-D:80036488                                              # controller_gameplay_interaction+1580r
-D:80036488                                              # controller_gameplay_interaction+158Cw
-D:80036488                                              # MoveBond+72Cr
-D:80036488                                              # MoveBond+A44r
-D:8003648C     dword_D_8003648C:.word 0                 # DATA XREF: load_camera_intro_type_values+1C0w
-D:8003648C                                              # set_camera_mode+3F4r
-D:8003648C                                              # set_camera_mode+588r
-D:8003648C                                              # set_camera_mode:loc_CODE_7F07B034r
-D:8003648C                                              # kill_current_player+B8w
-D:80036490     dword_D_80036490:.word 0                 # DATA XREF: controller_gameplay_interaction+12A0w
-D:80036490                                              # controller_gameplay_interaction+1640o
-D:80036490                                              # controller_gameplay_interaction+164Cr
-D:80036490                                              # controller_gameplay_interaction+1674w
-D:80036490                                              # MoveBond+22CCw
-D:80036494     cameramode:     .word 0                  # DATA XREF: load_camera_intro_type_values+1DCw
-D:80036494                                              # solo_char_load:loc_CODE_7F079F84r
-D:80036494                                              # get_camera_mode+8r
-D:80036494                                              # set_camera_mode+8o
-D:80036494                                              # set_camera_mode+10w
-D:80036494                                              # set_camera_mode+1Cr
-D:80036494                                              # set_camera_mode+768w
-D:80036494                                              # sub_CODE_7F07B1A4o
-D:80036494                                              # sub_CODE_7F07B1A4+8r
-D:80036494                                              # sub_CODE_7F07B1A4+Cw
-D:80036494                                              # sub_CODE_7F07B56C+4r
-D:80036494                                              # sub_CODE_7F081478+94r
-D:80036494                                              # sub_CODE_7F086990+1D8r
-D:80036494                                              # possibly_reset_viewport_options_for_player+39Cr
-D:80036494                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F087598r
-D:80036498     dword_D_80036498:.word 0                 # DATA XREF: load_camera_intro_type_values+1E4w
-D:80036498                                              # set_camera_mode+14w
-D:80036498                                              # sub_CODE_7F07B1A4+10w
-D:80036498                                              # sub_CODE_7F07B56C+144w
-D:80036498                                              # sub_CODE_7F07B56C+160w
-D:80036498                                              # sub_CODE_7F07B56C+198w
-D:80036498                                              # sub_CODE_7F07B56C+1C0w
-D:80036498                                              # sub_CODE_7F07B56C+5B4w
-D:80036498                                              # sub_CODE_7F07B56C+730w
-D:80036498                                              # sub_CODE_7F07B56C+978w
-D:80036498                                              # sub_CODE_7F07B56C+9A0w
-D:80036498                                              # sub_CODE_7F07B56C+9ECw
-D:80036498                                              # sub_CODE_7F07B56C+A48w
-D:80036498                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F08750Cr
-D:8003649C     dword_D_8003649C:.word 0                 # DATA XREF: load_camera_intro_type_values+1ECw
-D:8003649C                                              # set_camera_mode+164w
-D:8003649C                                              # set_camera_mode:loc_CODE_7F07ACCCr
-D:8003649C                                              # sub_CODE_7F07B56C:loc_CODE_7F07BC68r
-D:8003649C                                              # sub_CODE_7F07B56C+754r
-D:8003649C                                              # sub_CODE_7F07B56C+7A0w
-D:800364A0     stop_time_flag: .word 0                  # DATA XREF: load_camera_intro_type_values+1F8w
-D:800364A0                                              # parse_handle_actionblocks:loc_CODE_7F039964r
-D:800364A0                                              # parse_handle_actionblocks:loc_CODE_7F0399A4r
-D:800364A0                                              # parse_handle_actionblocks:action_EA_stop_timer
-D:800364A0                                              # parse_handle_actionblocks+48DCw
-D:800364A0                                              # set_camera_mode+3ACw
-D:800364A0                                              # possibly_reset_viewport_options_for_player+450r
-D:800364A0                                              # possibly_reset_viewport_options_for_player+498w
-D:800364A0                                              # possibly_reset_viewport_options_for_player:loc_CODE_7F0874C0r
-D:800364A4     dword_D_800364A4:.word 0                 # DATA XREF: load_camera_intro_type_values+200w
-D:800364A4                                              # set_camera_mode+78w
-D:800364A4                                              # set_camera_mode+1E0w
-D:800364A4                                              # set_camera_mode+3C8w
-D:800364A4                                              # sub_CODE_7F07B56C+3Co
-D:800364A4                                              # sub_CODE_7F07B56C+4Cr
-D:800364A4                                              # sub_CODE_7F07B56C+A0o
-D:800364A4                                              # sub_CODE_7F07B56C+A8r
-D:800364A4                                              # sub_CODE_7F07B56C+108o
-D:800364A4                                              # sub_CODE_7F07B56C+118r
-D:800364A4                                              # sub_CODE_7F07B56C+168w
-D:800364A4                                              # sub_CODE_7F07B56C+5C4o
-D:800364A4                                              # sub_CODE_7F07B56C+5D4r
-D:800364A4                                              # sub_CODE_7F07B56C+5F0w
-D:800364A4                                              # sub_CODE_7F07B56C+5FCr
-D:800364A4                                              # sub_CODE_7F07B56C+6ECo
-D:800364A4                                              # sub_CODE_7F07B56C+718o
-D:800364A4                                              # sub_CODE_7F07B56C+76Co
-D:800364A4                                              # sub_CODE_7F07B56C+7F0o
-D:800364A4                                              # sub_CODE_7F07B56C+818o
-D:800364A4                                              # sub_CODE_7F07B56C+904o
-D:800364A4                                              # sub_CODE_7F07B56C+910r
-D:800364A4                                              # sub_CODE_7F07B56C+928w
-D:800364A4                                              # sub_CODE_7F07B56C+934r
-D:800364A4                                              # sub_CODE_7F07B56C+A08o
-D:800364A4                                              # sub_CODE_7F07B56C+A14r
-D:800364A4                                              # sub_CODE_7F07B56C+A30w
-D:800364A8     dword_D_800364A8:.word 1                 # DATA XREF: load_camera_intro_type_values+210w
-D:800364A8                                              # set_camera_mode+1E4w
-D:800364A8                                              # set_camera_mode+3CCw
-D:800364A8                                              # sub_CODE_7F07B56C+5D8o
-D:800364A8                                              # sub_CODE_7F07B56C+5E4r
-D:800364A8                                              # sub_CODE_7F07B56C+6F4o
-D:800364A8                                              # sub_CODE_7F07B56C+720o
-D:800364A8                                              # sub_CODE_7F07B56C+774o
-D:800364A8                                              # sub_CODE_7F07B56C+7FCo
-D:800364A8                                              # sub_CODE_7F07B56C+820o
-D:800364A8                                              # sub_CODE_7F07B56C:loc_CODE_7F07BD90r
-D:800364A8                                              # sub_CODE_7F07B56C+838o
-D:800364A8                                              # sub_CODE_7F07B56C+840r
-D:800364AC     dword_D_800364AC:.word 0                 # DATA XREF: load_camera_intro_type_values+214w
-D:800364AC                                              # load_camera_intro_type_values:swirling_intro_camr
-D:800364AC                                              # load_camera_intro_type_values+3F4w
-D:800364AC                                              # set_camera_mode+1A4r
-D:800364AC                                              # sub_CODE_7F07B2A0r
-D:800364AC                                              # sub_CODE_7F07B2A0+1ECr
-D:800364AC                                              # sub_CODE_7F07B56C+5F4r
-D:800364AC                                              # sub_CODE_7F07B56C+844r
-D:800364B0     dword_D_800364B0:.word 1                 # DATA XREF: load_camera_intro_type_values+1D0w
-D:800364B0                                              # parse_handle_actionblocks:loc_CODE_7F03973Cw
-D:800364B0                                              # parse_handle_actionblocks+4304w
-D:800364B0                                              # possibly_reset_viewport_options_for_player+3B8r
-D:800364B4     disable_player_pickups_flag:.word 0      # DATA XREF: load_camera_intro_type_values+1D4w
-D:800364B4                                              # parse_handle_actionblocks+4928w
-D:800364B4                                              # parse_handle_actionblocks:actionF3_if_player_pickups_disabled_returnr
-D:800364B4                                              # sub_CODE_7F03D0D4+1Cr
-D:800364B4                                              # sub_CODE_7F055F64+7Cr
-D:800364B4                                              # handle_weapon_id_values_possibly_1st_person_animation+12E4r
-D:800364B4                                              # handle_weapon_id_values_possibly_1st_person_animation+163Cr
-D:800364B4                                              # sub_CODE_7F084360+30r
-D:800364B4                                              # record_damage_kills+1B4r
-D:800364B8     dword_D_800364B8:.word 0                 # DATA XREF: load_camera_intro_type_values+224w
-D:800364B8                                              # load_camera_intro_type_values+49Cr
-D:800364B8                                              # load_camera_intro_type_values+4B0w
-D:800364B8                                              # load_camera_intro_type_values:loc_CODE_7F005DF4r
-D:800364BC     dword_D_800364BC:.word 0                 # DATA XREF: load_camera_intro_type_values+22Cw
-D:800364BC                                              # load_camera_intro_type_values+4ACr
-D:800364BC                                              # load_camera_intro_type_values+4BCw
-D:800364BC                                              # load_camera_intro_type_values+650r
-D:800364C0     dword_D_800364C0:.word 0                 # DATA XREF: load_camera_intro_type_values+21Cw
-D:800364C0                                              # load_camera_intro_type_values+64Cw
-D:800364C0                                              # load_camera_intro_type_values+674r
-D:800364C0                                              # load_camera_intro_type_values+688w
-D:800364C0                                              # set_camera_mode+30r
-D:800364C0                                              # sub_CODE_7F07B56C+90r
-D:800364C0                                              # sub_CODE_7F07B56C:loc_CODE_7F07B61Cr
-D:800364C0                                              # sub_CODE_7F07B56C:loc_CODE_7F07B730o
-D:800364C0                                              # sub_CODE_7F07B56C+1CCr
-D:800364C0                                              # sub_CODE_7F07B56C+1DCr
-D:800364C0                                              # sub_CODE_7F07B56C+1E8r
-D:800364C0                                              # sub_CODE_7F07B56C+1F4r
-D:800364C0                                              # sub_CODE_7F07B56C+200r
-D:800364C0                                              # sub_CODE_7F07B56C+234r
-D:800364C0                                              # sub_CODE_7F07B56C+258r
-D:800364C0                                              # sub_CODE_7F07B56C+264r
-D:800364C0                                              # sub_CODE_7F07B56C+2A0r
-D:800364C4     invisible_to_guards_flag:.word 1         # DATA XREF: set_invisible_to_guards_flag+8w
-D:800364C4                                              # get_invisible_to_guards_flag+8r
-D:800364C4                                              # sub_CODE_7F09A4BC+C3Cw
-D:800364C8     obj_collision_flag:.word 1               # DATA XREF: sub_CODE_7F07CF8C+54r
-D:800364C8                                              # set_obj_collision_flag+8w
-D:800364C8                                              # get_obj_collision_flag+8r
-D:800364C8                                              # sub_CODE_7F09A4BC+C40w
-D:800364CC     flt_D_800364CC: .float 1.0               # DATA XREF: sub_CODE_7F0876C4+84r
-D:800364CC                                              # sub_CODE_7F088618+98r
-D:800364CC                                              # sub_CODE_7F08976C+8w
-D:800364D0     flt_D_800364D0: .float 1.0               # DATA XREF: load_camera_intro_type_values+854r
-D:800364D0                                              # sub_CODE_7F089718o
-D:800364D0                                              # sub_CODE_7F089718+8r
-D:800364D0                                              # sub_CODE_7F089718+48w
-D:800364D4     flt_D_800364D4: .float 1.0               # DATA XREF: sub_CODE_7F089718+50w
-D:800364D8     dword_D_800364D8:.word 0x30B8            # DATA XREF: load_camera_intro_type_values:loc_CODE_7F006160o
-D:800364D8                                              # sub_CODE_7F08B0F0+2D4o
-D:800364D8                                              # sub_CODE_7F08B0F0+2ECr
-D:800364DC                     .word 0x31DC, 0x32C8, 0x33AC, 0x34D4, 0x35C8, 0x36D8, 0x384C, 0x39C0, 0x3AF0
-D:800364DC                     .word 0x3C10, 0x3D04, 0
-D:8003650C     dword_D_8003650C:.word 0                 # DATA XREF: load_camera_intro_type_values+9B0o
-D:8003650C                                              # load_camera_intro_type_values+9B8w
-D:8003650C                                              # sub_CODE_7F080B34+98r
-D:8003650C                                              # sub_CODE_7F08B0F0+2C0r
-D:8003650C                                              # sub_CODE_7F08B0F0+330r
-D:80036510     dword_D_80036510:.word 0                 # DATA XREF: load_camera_intro_type_values+A1Cw
-D:80036510                                              # set_camera_mode+658r
-D:80036510                                              # sub_CODE_7F07B1A4+CCo
-D:80036510                                              # sub_CODE_7F07B1A4+D0r
-D:80036510                                              # sub_CODE_7F07B1A4+E0w
-D:80036510                                              # sub_CODE_7F07B56C+9F8w
-D:80036510                                              # sub_CODE_7F07B56C+A90w
-D:80036510                                              # possibly_reset_viewport_options_for_player+5E4r
-D:80036514     dword_D_80036514:.word 0                 # DATA XREF: load_camera_intro_type_values+248w
-D:80036514                                              # load_camera_intro_type_values+474w
-D:80036514                                              # set_camera_mode+204r
 D:80036518     stru_D_80036518:struct_4 <0x5744, 95.0, -1.0, 0.02>
-D:80036518                                              # DATA XREF: set_camera_mode+214o
 D:80036528                     struct_4 <0x6254, 7.0, 40.0, 0.5>
 D:80036538                     struct_4 <0x78C8, 0.0, -1.0, 0.5>
 D:80036548                     struct_4 <0x7AA8, 0.0, -1.0, 0.5>
@@ -778,19 +249,8 @@ D:80036568                     struct_4 <0x7D04, 0.0, -1.0, 0.5>
 D:80036578                     struct_4 <0x7F0C, 0.0, -1.0, 0.5>
 D:80036588                     struct_4 <0x7FB4, 0.0, -1.0, 0.5>
 D:80036598                     struct_4 <0xD89C, 0.0, -1.0, 0.5>
-D:800365A8     flt_D_800365A8: .float 0.90909088        # DATA XREF: load_camera_intro_type_values+258w
-D:800365A8                                              # sub_CODE_7F07E090+30r
-D:800365A8                                              # sub_CODE_7F07E090+FCr
-D:800365A8                                              # sub_CODE_7F07E62C+68r
-D:800365A8                                              # sub_CODE_7F07E7CC+84r
-D:800365A8                                              # sub_CODE_7F07E964+40r
-D:800365A8                                              # sub_CODE_7F07E964+A0r
-D:800365A8                                              # trigger_solo_watch_menu+48o
-D:800365A8                                              # trigger_solo_watch_menu+54r
-D:800365A8                                              # trigger_solo_watch_menu+5Cw
-D:800365A8                                              # trigger_solo_watch_menu+60r
-D:800365A8                                              # trigger_solo_watch_menu+74w
-D:800365AC     dummy_08_pp7_obj:.word 0x1000008         # DATA XREF: solo_char_load+5Co
+D:800365A8     flt_D_800365A8: .float 0.90909088
+D:800365AC     dummy_08_pp7_obj:.word 0x1000008
 D:800365B0                     .word 0xBF4000
 D:800365B4                     .word 0, 0, 0, 0
 D:800365C4                     .byte 0x3F
@@ -808,8 +268,8 @@ D:80036604                     .align 5
 D:80036620                     .byte 0x44
 D:80036621                     .byte 0x7A, 0, 0
 D:80036624                     .word 0xFFFFFF00, 0xFFFFFF00, 0x4FFFFFF
-D:80036630     dword_D_80036630:.word 0                 # DATA XREF: solo_char_load+68o
-D:80036634     dword_D_80036634:.word 0                 # DATA XREF: sub_CODE_7F083FC8:loc_CODE_7F084070o
+D:80036630     dword_D_80036630:.word 0
+D:80036634     dword_D_80036634:.word 0
 D:80036638                     .byte 0
 D:80036639                     .byte 0, 0, 0xA
 D:8003663C                     .word 0x3C, 0x3F19999A, 0
@@ -850,7 +310,7 @@ D:8003676C                     .byte 0
 D:8003676D                     .byte 0, 0, 0xA
 D:80036770                     .word 0x1E, 0x3F19999A, 0
 D:8003677C                     .word 5, 0xF, 0x3ECCCCCD, 0xFF, 0xFF, 0xFF
-D:80036794     dword_D_80036794:.word 0                 # DATA XREF: sub_CODE_7F083FC8+2B8o
+D:80036794     dword_D_80036794:.word 0
 D:80036798                     .byte 0
 D:80036799                     .byte 0, 0, 0x28
 D:8003679C                     .word 0x64, 0
@@ -873,116 +333,65 @@ D:800367E0                     .word 0x14, 0x32, 0
 D:800367EC                     .byte 0
 D:800367ED                     .byte 0, 0, 0x14
 D:800367F0                     .word 0x32
-D:800367F4     dword_D_800367F4:.word 0                 # DATA XREF: MoveBond+28o
-D:800367F4                                              # MoveBond+2Cr
-D:800367F8     dword_D_800367F8:.word 0                 # DATA XREF: MoveBond+34r
-D:800367FC     dword_D_800367FC:.word 0                 # DATA XREF: MoveBond+3Cr
-D:80036800     dword_D_80036800:.word 0                 # DATA XREF: sub_CODE_7F086990+1Co
-D:80036800                                              # sub_CODE_7F086990+20r
-D:80036804     dword_D_80036804:.word 0                 # DATA XREF: sub_CODE_7F086990+28r
-D:80036808     dword_D_80036808:.word 0                 # DATA XREF: sub_CODE_7F086990+30r
-D:8003680C     dword_D_8003680C:.word 0                 # DATA XREF: sub_CODE_7F086990+34o
-D:8003680C                                              # sub_CODE_7F086990+44r
-D:80036810     dword_D_80036810:.word 0                 # DATA XREF: sub_CODE_7F086990+4Cr
-D:80036814     dword_D_80036814:.word 0x3F800000        # DATA XREF: sub_CODE_7F086990+54r
-D:80036818     dword_D_80036818:.word 0                 # DATA XREF: sub_CODE_7F086990+58o
-D:80036818                                              # sub_CODE_7F086990+68r
-D:8003681C     dword_D_8003681C:.word 0x3F800000        # DATA XREF: sub_CODE_7F086990+70r
-D:80036820     dword_D_80036820:.word 0                 # DATA XREF: sub_CODE_7F086990+78r
-D:80036824     dword_D_80036824:.word 0                 # DATA XREF: sub_CODE_7F086990+7Co
-D:80036824                                              # sub_CODE_7F086990+8Cr
-D:80036828     dword_D_80036828:.word 0                 # DATA XREF: sub_CODE_7F086990+94r
-D:8003682C     dword_D_8003682C:.word 0                 # DATA XREF: sub_CODE_7F086990+9Cr
-D:80036830     dword_D_80036830:.word 0                 # DATA XREF: sub_CODE_7F087A08+24o
-D:80036830                                              # sub_CODE_7F087A08:loc_CODE_7F087A94r
-D:80036834     dword_D_80036834:.word 0                 # DATA XREF: sub_CODE_7F087A08+9Cr
-D:80036838     dword_D_80036838:.word 0                 # DATA XREF: sub_CODE_7F087A08+ACr
-D:8003683C     dword_D_8003683C:.word 0                 # DATA XREF: sub_CODE_7F087E74+24o
+*/
+//D:800367F4
+s32 dword_D_800367F4 = 0;
+//D:800367F8
+s32 dword_D_800367F8 = 0;
+//D:800367FC
+s32 dword_D_800367FC = 0;
+//D:80036800
+s32 dword_D_80036800 = 0;
+//D:80036804
+s32 dword_D_80036804 = 0;
+//D:80036808
+s32 dword_D_80036808 = 0;
+//D:8003680C
+s32 dword_D_8003680C = 0;
+//D:80036810
+s32 dword_D_80036810 = 0;
+//D:80036814
+s32 dword_D_80036814 = 0x3F800000;
+//D:80036818
+s32 dword_D_80036818 = 0;
+//D:8003681C
+s32 dword_D_8003681C = 0x3F800000;
+//D:80036820
+s32 dword_D_80036820 = 0;
+//D:80036824
+s32 dword_D_80036824 = 0;
+//D:80036828
+s32 dword_D_80036828 = 0;
+//D:8003682C
+s32 dword_D_8003682C = 0;
+//D:80036830
+s32 dword_D_80036830 = 0;
+//D:80036834
+s32 dword_D_80036834 = 0;
+//D:80036838
+s32 dword_D_80036838 = 0;
+//D:8003683C
+s32 dword_D_8003683C = 0;
+/*
 D:80036840                     .word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:80036878     dword_D_80036878:.word 0                 # DATA XREF: sub_CODE_7F087E74+34o
-D:8003687C     dword_D_8003687C:.word 0                 # DATA XREF: sub_CODE_7F087E74+60o
-D:8003687C                                              # sub_CODE_7F087E74+6Cr
-D:80036880     dword_D_80036880:.word 0                 # DATA XREF: sub_CODE_7F087E74+74r
-D:80036884     dword_D_80036884:.word 0                 # DATA XREF: sub_CODE_7F087E74+7Cr
+D:80036878     dword_D_80036878:.word 0
+D:8003687C     dword_D_8003687C:.word 0
+D:80036880     dword_D_80036880:.word 0
+D:80036884     dword_D_80036884:.word 0
 D:80036888                     .word 0
-D:8003688C     dword_D_8003688C:.word 0                 # DATA XREF: mp_respawn_handler+14o
-D:8003688C                                              # mp_respawn_handler+18r
-D:80036890     dword_D_80036890:.word 0                 # DATA XREF: mp_respawn_handler+20r
-D:80036894     dword_D_80036894:.word 0                 # DATA XREF: mp_respawn_handler+28r
-D:80036898     dword_D_80036898:.word 0                 # DATA XREF: reset_intro_camera_message_dialogs_for_BONDdata+30w
-D:80036898                                              # display_string_in_lower_left_corner+38r
-D:80036898                                              # sub_CODE_7F08A4E4+64o
-D:80036898                                              # sub_CODE_7F08A4E4+6Cr
-D:80036898                                              # sub_CODE_7F08A4E4+84w
-D:80036898                                              # sub_CODE_7F08A5FC+4Cr
-D:80036898                                              # sub_CODE_7F08A5FC+A4w
-D:80036898                                              # sub_CODE_7F08A5FC+C0r
-D:80036898                                              # sub_CODE_7F08A5FC+268r
-D:8003689C     dword_D_8003689C:.word 0                 # DATA XREF: reset_intro_camera_message_dialogs_for_BONDdata+28w
-D:8003689C                                              # display_string_in_lower_left_corner+1Co
-D:8003689C                                              # display_string_in_lower_left_corner+20r
-D:8003689C                                              # display_string_in_lower_left_corner+78o
-D:8003689C                                              # display_string_in_lower_left_corner+80r
-D:8003689C                                              # display_string_in_lower_left_corner+8Cw
-D:8003689C                                              # sub_CODE_7F08A4E4+88r
-D:8003689C                                              # sub_CODE_7F08A4E4+98w
-D:8003689C                                              # sub_CODE_7F08A4E4:loc_CODE_7F08A580r
-D:8003689C                                              # sub_CODE_7F08A4E4+E4r
-D:800368A0     dword_D_800368A0:.word 0                 # DATA XREF: reset_intro_camera_message_dialogs_for_BONDdata+40w
-D:800368A0                                              # sub_CODE_7F08A3B4+10w
-D:800368A0                                              # sub_CODE_7F08A5FC+C8r
-D:800368A0                                              # sub_CODE_7F08A5FC+288r
-D:800368A4     dword_D_800368A4:.word 0                 # DATA XREF: reset_intro_camera_message_dialogs_for_BONDdata+4Cw
-D:800368A4                                              # sub_CODE_7F08A3B4w
-D:800368A4                                              # sub_CODE_7F08A5FC+104r
-D:800368A4                                              # sub_CODE_7F08A5FC+28Cr
-D:800368A8     dword_D_800368A8:.word 0                 # DATA XREF: sub_CODE_7F08A900+14w
-D:800368A8                                              # display_string_at_top_of_screen+20r
-D:800368A8                                              # sub_CODE_7F08A9F8+40o
-D:800368A8                                              # sub_CODE_7F08A9F8+58r
-D:800368A8                                              # sub_CODE_7F08A9F8+84w
-D:800368A8                                              # sub_CODE_7F08AAE8+30r
-D:800368A8                                              # sub_CODE_7F08AAE8+7Cr
-D:800368A8                                              # sub_CODE_7F08AAE8+1B4r
-D:800368AC     dword_D_800368AC:.word 0                 # DATA XREF: sub_CODE_7F08A900+Cw
-D:800368AC                                              # display_string_at_top_of_screeno
-D:800368AC                                              # display_string_at_top_of_screen+8r
-D:800368AC                                              # display_string_at_top_of_screen+70o
-D:800368AC                                              # display_string_at_top_of_screen+78r
-D:800368AC                                              # display_string_at_top_of_screen+84w
-D:800368AC                                              # sub_CODE_7F08A9F8+5Co
-D:800368AC                                              # sub_CODE_7F08A9F8+64r
-D:800368AC                                              # sub_CODE_7F08A9F8+8Cw
-D:800368AC                                              # sub_CODE_7F08A9F8:loc_CODE_7F08AA88o
-D:800368AC                                              # sub_CODE_7F08A9F8+98r
-D:800368AC                                              # sub_CODE_7F08A9F8+C0o
-D:800368AC                                              # sub_CODE_7F08A9F8+C4r
-D:800368B0     dword_D_800368B0:.word 0xFFFFFFFF, 0     # DATA XREF: sub_CODE_7F08A900+4w
-D:800368B0                                              # sub_CODE_7F08A9F8+18o
-D:800368B0                                              # sub_CODE_7F08A9F8+2Cr
-D:800368B0                                              # sub_CODE_7F08A9F8+4Cw
-D:800368B0                                              # sub_CODE_7F08A9F8+B4w
-D:800368B0                                              # sub_CODE_7F08A9F8+E0w
-D:800368B0                                              # sub_CODE_7F08A9F8:loc_CODE_7F08AADCw
-D:800368B0                                              # sub_CODE_7F08AAE8+1Cr
-D:800368B0                                              # sub_CODE_7F08A900+24w
-D:800368B0                                              # sub_CODE_7F08A928o
-D:800368B0                                              # sub_CODE_7F08A928+8r
-D:800368B0                                              # sub_CODE_7F08A928+18w
-D:800368B0                                              # sub_CODE_7F08A944o
-D:800368B0                                              # sub_CODE_7F08A944+8r
-D:800368B0                                              # sub_CODE_7F08A944+14w
-D:800368B0                                              # sub_CODE_7F08A9F8r
-D:800368B0                                              # sub_CODE_7F08AAE8r
+D:8003688C     dword_D_8003688C:.word 0
+D:80036890     dword_D_80036890:.word 0
+D:80036894     dword_D_80036894:.word 0
+D:80036898     dword_D_80036898:.word 0
+D:8003689C     dword_D_8003689C:.word 0
+D:800368A0     dword_D_800368A0:.word 0
+D:800368A4     dword_D_800368A4:.word 0
+D:800368A8     dword_D_800368A8:.word 0
+D:800368AC     dword_D_800368AC:.word 0
+D:800368B0     dword_D_800368B0:.word 0xFFFFFFFF, 0
 D:800368B8     dword_D_800368B8:.word 0x6E00006E, 0x65006500, 0x736500, 0x73000073, 0x77007700, 0x6E7700, 0x6E000000
-D:800368B8                                              # DATA XREF: sub_CODE_7F08AAE8+26Co
-D:800368B8                                              # sub_CODE_7F08AAE8+290r
-D:800368B8                                              # sub_CODE_7F08AAE8+294r
-D:800368B8                                              # sub_CODE_7F08AAE8+29Cr
-D:800368B8                                              # sub_CODE_7F08AAE8+2A4r
 D:800368B8                     .word 0
 D:800368D8     pistol_firing_animation_group1_ptr:.word pistol_firing_animation_group1
-D:800368D8                                              # DATA XREF: sub_CODE_7F08B0F0+720o
 D:800368DC                     .word 0
 D:800368E0                     .word 0x3DCCCCCD, 0x429E0000, 0x42AE0000, 0x800306F0, 0
 D:800368F4                     .word 0x3F000000, 0
@@ -1029,21 +438,21 @@ D:80036AAC                     .word 0, 0
 */
 
 /* rodata
-D:80054FA0     flt_D_80054FA0: .float 3.1415927         # DATA XREF: sub_CODE_7F077C5C+1Cr
-D:80054FA4     flt_D_80054FA4: .float 0.52359879        # DATA XREF: sub_CODE_7F077C5C+D4r
-D:80054FA8     flt_D_80054FA8: .float 0.52359879        # DATA XREF: sub_CODE_7F077C5C+D8r
-D:80054FAC     flt_D_80054FAC: .float -1.0e20           # DATA XREF: sub_CODE_7F078060+24r
-D:80054FB0     flt_D_80054FB0: .float 3.1415927         # DATA XREF: sub_CODE_7F078140+8r
-D:80054FB4     flt_D_80054FB4: .float 3.1415927         # DATA XREF: sub_CODE_7F078258+8r
+D:80054FA0     flt_D_80054FA0: .float 3.1415927
+D:80054FA4     flt_D_80054FA4: .float 0.52359879
+D:80054FA8     flt_D_80054FA8: .float 0.52359879
+D:80054FAC     flt_D_80054FAC: .float -1.0e20
+D:80054FB0     flt_D_80054FB0: .float 3.1415927
+D:80054FB4     flt_D_80054FB4: .float 3.1415927
 D:80054FB8                     .word 0
 D:80054FBC                     .word 0
-D:80054FC0     a8s:            .ascii "%8s"<0>          # DATA XREF: sub_CODE_7F08AAE8+2D8o
-D:80054FC4     aX4_0f:         .ascii "x %4.0f"<0>      # DATA XREF: sub_CODE_7F08AAE8+2F4o
-D:80054FCC     aY4_0f:         .ascii "y %4.0f"<0>      # DATA XREF: sub_CODE_7F08AAE8+320o
-D:80054FD4     aZ4_0f:         .ascii "z %4.0f"<0>      # DATA XREF: sub_CODE_7F08AAE8+34Co
-D:80054FDC     aS3d:           .ascii "%s %3d"<0><0>    # DATA XREF: sub_CODE_7F08AAE8+398o
-D:80054FE4     jpt_700ADD28:   .word loc_CODE_7F079EA4  # DATA XREF: solo_char_load+FCr
-D:80054FE4                     .word cuff_1_brosnan     # jump table for switch statement
+D:80054FC0     a8s:            .ascii "%8s"
+D:80054FC4     aX4_0f:         .ascii "x %4.0f"
+D:80054FCC     aY4_0f:         .ascii "y %4.0f"
+D:80054FD4     aZ4_0f:         .ascii "z %4.0f"
+D:80054FDC     aS3d:           .ascii "%s %3d"
+D:80054FE4     jpt_700ADD28:   .word loc_CODE_7F079EA4
+D:80054FE4                     .word cuff_1_brosnan
 D:80054FE4                     .word cuff_2_jungle
 D:80054FE4                     .word cuff_3_boiler
 D:80054FE4                     .word cuff_4_snowsuit
@@ -1051,8 +460,8 @@ D:80054FE4                     .word cuff_5_connery
 D:80054FE4                     .word cuff_6_moore
 D:80054FE4                     .word cuff_7_dalton
 D:80054FE4                     .word cuff_8_variable_bond_head
-D:80055008     jpt_700ADE1C:   .word loc_CODE_7F079F84  # DATA XREF: solo_char_load+1F0r
-D:80055008                     .word brosnan_tux_head_set  # jump table for switch statement
+D:80055008     jpt_700ADE1C:   .word loc_CODE_7F079F84
+D:80055008                     .word brosnan_tux_head_set
 D:80055008                     .word jungle_head_set
 D:80055008                     .word boiler_bond_head_set
 D:80055008                     .word loc_CODE_7F079F84
@@ -1060,181 +469,344 @@ D:80055008                     .word connery_head_set
 D:80055008                     .word moore_head_set
 D:80055008                     .word dalton_head_set
 D:80055008                     .word variable_body_head
-D:8005502C     flt_D_8005502C: .float 0.97000003        # DATA XREF: solo_char_load+578r
-D:80055030     flt_D_80055030: .float 6.2831855         # DATA XREF: sub_CODE_7F07A534+78r
-D:80055034     flt_D_80055034: .float 1500.0            # DATA XREF: sub_CODE_7F07A534+8Cr
-D:80055038     flt_D_80055038: .float 6.2831855         # DATA XREF: sub_CODE_7F07A534:loc_CODE_7F07A61Cr
-D:8005503C     flt_D_8005503C: .float 0.39269909        # DATA XREF: sub_CODE_7F07A534+F8r
-D:80055040     flt_D_80055040: .float 6.2831855         # DATA XREF: sub_CODE_7F07A534:loc_CODE_7F07A94Cr
-D:80055044     flt_D_80055044: .float 179.5             # DATA XREF: sub_CODE_7F07B56C+328r
-D:80055048     flt_D_80055048: .float 0.1               # DATA XREF: sub_CODE_7F07B56C+354r
-D:8005504C     flt_D_8005504C: .float 0.015             # DATA XREF: sub_CODE_7F07B56C:loc_CODE_7F07B988r
-D:80055050     flt_D_80055050: .float 3.1415927         # DATA XREF: sub_CODE_7F07B56C+470r
-D:80055054     flt_D_80055054: .float 0.079999998       # DATA XREF: sub_CODE_7F07B56C+4C8r
-D:80055058     flt_D_80055058: .float 0.079999998       # DATA XREF: sub_CODE_7F07B56C+56Cr
-D:8005505C     flt_D_8005505C: .float 6.2831855         # DATA XREF: sub_CODE_7F07B56C+F10r
-D:80055060     flt_D_80055060: .float 6.2831855         # DATA XREF: sub_CODE_7F07C7B4+1Cr
-D:80055064     flt_D_80055064: .float 6.2831855         # DATA XREF: sub_CODE_7F07CAC8+188r
-D:80055068     flt_D_80055068: .float 6.2831855         # DATA XREF: sub_CODE_7F07CEB0r
-D:8005506C     flt_D_8005506C: .float 6.2831855         # DATA XREF: sub_CODE_7F07E090+68r
-D:80055070     flt_D_80055070: .float 6.2831855         # DATA XREF: sub_CODE_7F07E090+134r
-D:80055074     flt_D_80055074: .float -0.69999999       # DATA XREF: sub_CODE_7F07E090:loc_CODE_7F07E324r
-D:80055078     flt_D_80055078: .float 0.69999999        # DATA XREF: sub_CODE_7F07E090:loc_CODE_7F07E360r
-D:8005507C      # f32 final
-D:8005507C     final:          .float 5.9000001         # DATA XREF: zoom_to_watch_on_open+10r
-D:80055080     flt_D_80055080: .float -54.099998        # DATA XREF: zoom_to_watch_on_open+28r
-D:80055084     flt_D_80055084: .float -54.099998        # DATA XREF: zoom_from_watch_on_exit+28r
-D:80055088     flt_D_80055088: .float 0.10000001        # DATA XREF: sub_CODE_7F07E7CC+58r
-D:8005508C     flt_D_8005508C: .float 1.7               # DATA XREF: trigger_solo_watch_menu+40r
-D:80055090     flt_D_80055090: .float 1.1               # DATA XREF: trigger_solo_watch_menu+4Cr
-D:80055094     flt_D_80055094: .float -0.69999999       # DATA XREF: sub_CODE_7F07FF74+28r
-D:80055098     flt_D_80055098: .float 0.69999999        # DATA XREF: sub_CODE_7F07FF74+64r
-D:8005509C     flt_D_8005509C: .float 0.050000001       # DATA XREF: sub_CODE_7F080010+64r
-D:800550A0     flt_D_800550A0: .float 0.0125            # DATA XREF: sub_CODE_7F080010:loc_CODE_7F08009Cr
-D:800550A4     flt_D_800550A4: .float 0.050000001       # DATA XREF: sub_CODE_7F080010+104r
-D:800550A8     flt_D_800550A8: .float 0.0125            # DATA XREF: sub_CODE_7F080010:loc_CODE_7F08013Cr
-D:800550AC     flt_D_800550AC: .float 0.050000001       # DATA XREF: sub_CODE_7F080010+188r
-D:800550B0     flt_D_800550B0: .float 0.050000001       # DATA XREF: sub_CODE_7F080010:loc_CODE_7F0801DCr
-D:800550B4     flt_D_800550B4: .float -0.69999999       # DATA XREF: sub_CODE_7F080228+28r
-D:800550B8     flt_D_800550B8: .float 0.69999999        # DATA XREF: sub_CODE_7F080228+64r
-D:800550BC     flt_D_800550BC: .float 0.050000001       # DATA XREF: sub_CODE_7F0802C4+64r
-D:800550C0     flt_D_800550C0: .float 0.0125            # DATA XREF: sub_CODE_7F0802C4:loc_CODE_7F080350r
-D:800550C4     flt_D_800550C4: .float 0.050000001       # DATA XREF: sub_CODE_7F0802C4+108r
-D:800550C8     flt_D_800550C8: .float 0.0125            # DATA XREF: sub_CODE_7F0802C4:loc_CODE_7F0803F4r
-D:800550CC     flt_D_800550CC: .float 0.050000001       # DATA XREF: sub_CODE_7F0802C4+18Cr
-D:800550D0     flt_D_800550D0: .float 0.050000001       # DATA XREF: sub_CODE_7F0802C4:loc_CODE_7F080494r
-D:800550D4     firstperson_weapon_movement_restrictor:.float 0.017453292
-D:800550D4                                              # DATA XREF: sub_CODE_7F080B34+11Cr
-D:800550D8     flt_D_800550D8: .float 0.017453292       # DATA XREF: sub_CODE_7F080B34+1A8r
-D:800550DC     flt_D_800550DC: .float 0.17000002        # DATA XREF: sub_CODE_7F080DF8+48r
-D:800550E0     flt_D_800550E0: .float 0.82999998        # DATA XREF: sub_CODE_7F080DF8+80r
-D:800550E4     flt_D_800550E4: .float 0.17000002        # DATA XREF: sub_CODE_7F080DF8+254r
-D:800550E8     flt_D_800550E8: .float 0.82999998        # DATA XREF: sub_CODE_7F080DF8+27Cr
-D:800550EC     flt_D_800550EC: .float 1.388889          # DATA XREF: sub_CODE_7F080DF8+360r
-D:800550F0     player_gravity_modifier:.float 0.27777779
-D:800550F0                                              # DATA XREF: sub_CODE_7F080DF8:loc_CODE_7F081164r
-D:800550F4     player_view_gravity_modifier:.float 0.27777779
-D:800550F4                                              # DATA XREF: sub_CODE_7F080DF8+3C8r
-D:800550F8     flt_D_800550F8: .float -13.333333        # DATA XREF: sub_CODE_7F080DF8+494r
-D:800550FC     flt_D_800550FC: .float 8.333333          # DATA XREF: sub_CODE_7F080DF8+500r
-D:80055100     flt_D_80055100: .float 0.80000001        # DATA XREF: sub_CODE_7F080DF8+5B0r
-D:80055104     flt_D_80055104: .float 0.19999999        # DATA XREF: sub_CODE_7F080DF8+658r
-D:80055108     flt_D_80055108: .float 0.89999998        # DATA XREF: sub_CODE_7F081478+270r
-D:8005510C     flt_D_8005510C: .float 0.10000002        # DATA XREF: sub_CODE_7F081478:loc_CODE_7F08174Cr
-D:80055110     flt_D_80055110: .float 0.017453292       # DATA XREF: sub_CODE_7F081790:loc_CODE_7F081874r
-D:80055114     flt_D_80055114: .float 0.017453292       # DATA XREF: sub_CODE_7F081790+10Cr
-D:80055118     flt_D_80055118: .float 0.017453292       # DATA XREF: sub_CODE_7F081790:loc_CODE_7F0818FCr
-D:8005511C     flt_D_8005511C: .float 0.017453292       # DATA XREF: sub_CODE_7F081790+18Cr
-D:80055120     flt_D_80055120: .float 0.060000002       # DATA XREF: controller_gameplay_interaction+11A8r
-D:80055124     flt_D_80055124: .float 0.079999983       # DATA XREF: controller_gameplay_interaction+11ECr
-D:80055128     flt_D_80055128: .float 0.017453292       # DATA XREF: controller_gameplay_interaction+14B0r
-D:8005512C     flt_D_8005512C: .float 0.017453292       # DATA XREF: controller_gameplay_interaction+14E8r
-D:80055130     flt_D_80055130: .float 0.017453292       # DATA XREF: controller_gameplay_interaction:loc_CODE_7F082EE0r
-D:80055134     flt_D_80055134: .float 1.08              # DATA XREF: controller_gameplay_interaction:loc_CODE_7F0832D8r
-D:80055138     flt_D_80055138: .float 0.0099999998      # DATA XREF: controller_gameplay_interaction+1A4Cr
-D:8005513C                     .float 0.0099999998
-D:80055140     flt_D_80055140: .float 6.2831855         # DATA XREF: controller_gameplay_interaction+1CB4r
-D:80055144     flt_D_80055144: .float 0.86666667        # DATA XREF: controller_gameplay_interaction+1D00r
-D:80055148     flt_D_80055148: .float 0.050000001       # DATA XREF: controller_gameplay_interaction+1EF4r
-D:8005514C     flt_D_8005514C: .float 0.30000001        # DATA XREF: controller_gameplay_interaction+2314r
-D:80055150     flt_D_80055150: .float 0.30000001        # DATA XREF: controller_gameplay_interaction+234Cr
-D:80055154     flt_D_80055154: .float 0.30000001        # DATA XREF: controller_gameplay_interaction+237Cr
-D:80055158     flt_D_80055158: .float 0.92000002        # DATA XREF: controller_gameplay_interaction+23ACr
-D:8005515C     flt_D_8005515C: .float 0.079999983       # DATA XREF: controller_gameplay_interaction+23F8r
-D:80055160     flt_D_80055160: .float 0.30000001        # DATA XREF: controller_gameplay_interaction:loc_CODE_7F083EC4r
-D:80055164     flt_D_80055164: .float 0.1               # DATA XREF: controller_gameplay_interaction:loc_CODE_7F083F30r
-D:80055168     flt_D_80055168: .float 0.64999998        # DATA XREF: controller_gameplay_interaction+2614r
-D:8005516C     flt_D_8005516C: .float 0.06666667        # DATA XREF: MoveBond+26Cr
-D:80055170     flt_D_80055170: .float 6.2831855         # DATA XREF: MoveBond+358r
-D:80055174     flt_D_80055174: .float 0.017453292       # DATA XREF: MoveBond+364r
-D:80055178     flt_D_80055178: .float 1.01              # DATA XREF: MoveBond+69Cr
-D:8005517C     flt_D_8005517C: .float 1.01              # DATA XREF: MoveBond+6B8r
-D:80055180     flt_D_80055180: .float 6.2831855         # DATA XREF: MoveBond:loc_CODE_7F084D64r
-D:80055184     flt_D_80055184: .float 0.017453292       # DATA XREF: MoveBond:loc_CODE_7F084DE4r
-D:80055188     flt_D_80055188: .float 3.1415927         # DATA XREF: MoveBond:loc_CODE_7F084E38r
-D:8005518C     flt_D_8005518C: .float 6.2831855         # DATA XREF: MoveBond+808r
-D:80055190     flt_D_80055190: .float -3.1415927        # DATA XREF: MoveBond:loc_CODE_7F084E60r
-D:80055194     flt_D_80055194: .float 6.2831855         # DATA XREF: MoveBond+830r
-D:80055198     flt_D_80055198: .float 0.92000002        # DATA XREF: MoveBond+84Cr
-D:8005519C     flt_D_8005519C: .float 0.079999983       # DATA XREF: MoveBond+89Cr
-D:800551A0     flt_D_800551A0: .float 6.2831855         # DATA XREF: MoveBond+8A8r
-D:800551A4                     .float 0.92000002
-D:800551A8     flt_D_800551A8: .float 0.92000002        # DATA XREF: MoveBond+920r
-D:800551AC     flt_D_800551AC: .float 0.079999983       # DATA XREF: MoveBond+940r
-D:800551B0                     .float 0.92000002
-D:800551B4                     .float 0.92000002
-D:800551B8                     .float 0.92000002
-D:800551BC     flt_D_800551BC: .float 6.2831855         # DATA XREF: MoveBond+9D8r
-D:800551C0                     .float 0.92000002
-D:800551C4                     .float 0.92000002
-D:800551C8                     .float 0.92000002
-D:800551CC     flt_D_800551CC: .float 0.92000002        # DATA XREF: MoveBond+A1Cr
-D:800551D0     flt_D_800551D0: .float 0.079999983       # DATA XREF: MoveBond+AB0r
-D:800551D4     flt_D_800551D4: .float 0.017453292       # DATA XREF: MoveBond+AD0r
-D:800551D8     flt_D_800551D8: .float 6.2831855         # DATA XREF: MoveBond+B10r
-D:800551DC     flt_D_800551DC: .float 6.2831855         # DATA XREF: MoveBond+D08r
-D:800551E0     flt_D_800551E0: .float 6.2831855         # DATA XREF: MoveBond+DBCr
-D:800551E4     flt_D_800551E4: .float 6.2831855         # DATA XREF: MoveBond:loc_CODE_7F08546Cr
-D:800551E8     flt_D_800551E8: .float 0.30000001        # DATA XREF: MoveBond+1068r
-D:800551EC     flt_D_800551EC: .float 0.15000001        # DATA XREF: MoveBond+113Cr
-D:800551F0     flt_D_800551F0: .float 20000.0           # DATA XREF: MoveBond+1158r
-D:800551F4     flt_D_800551F4: .float 0.89999998        # DATA XREF: MoveBond:loc_CODE_7F0857C0r
-D:800551F8     flt_D_800551F8: .float 12767.0           # DATA XREF: MoveBond+1194r
-D:800551FC     flt_D_800551FC: .float 20000.0           # DATA XREF: MoveBond+11A4r
-D:80055200     flt_D_80055200: .float 0.89999998        # DATA XREF: MoveBond+1254r
-D:80055204     flt_D_80055204: .float 7767.0            # DATA XREF: MoveBond+1274r
-D:80055208     flt_D_80055208: .float 0.89999998        # DATA XREF: MoveBond+1278r
-D:8005520C     flt_D_8005520C: .float 25000.0           # DATA XREF: MoveBond+1284r
-D:80055210     flt_D_80055210: .float 0.17453294        # DATA XREF: MoveBond+12C4r
-D:80055214     flt_D_80055214: .float 0.43633232        # DATA XREF: MoveBond:loc_CODE_7F08592Cr
-D:80055218     flt_D_80055218: .float -0.087266468      # DATA XREF: MoveBond:loc_CODE_7F08594Cr
-D:8005521C     flt_D_8005521C: .float 0.94              # DATA XREF: MoveBond+1334r
-D:80055220     flt_D_80055220: .float 0.060000002       # DATA XREF: MoveBond+1380r
-D:80055224     flt_D_80055224: .float 2700.0            # DATA XREF: MoveBond+13A8r
-D:80055228     flt_D_80055228: .float 6.2831855         # DATA XREF: MoveBond+13F0r
-D:8005522C     flt_D_8005522C: .float 6.2831855         # DATA XREF: MoveBond+1428r
-D:80055230     flt_D_80055230: .float 0.60000002        # DATA XREF: MoveBond+1628r
-D:80055234     flt_D_80055234: .float 0.80000001        # DATA XREF: MoveBond:loc_CODE_7F085C8Cr
-D:80055238     flt_D_80055238: .float 0.1               # DATA XREF: MoveBond:loc_CODE_7F085D10r
-D:8005523C     flt_D_8005523C: .float 2700.0            # DATA XREF: MoveBond:loc_CODE_7F085D80r
-D:80055240     flt_D_80055240: .float 1.16              # DATA XREF: MoveBond+1904r
-D:80055244     flt_D_80055244: .float 1.01              # DATA XREF: MoveBond+194Cr
-D:80055248     flt_D_80055248: .float 0.99009901        # DATA XREF: MoveBond+19BCr
-D:8005524C     flt_D_8005524C: .float 0.69999999        # DATA XREF: MoveBond:loc_CODE_7F0863ACr
-D:80055250     flt_D_80055250: .float 1.2               # DATA XREF: MoveBond+1DF4r
-D:80055254     flt_D_80055254: .float 0.017453292       # DATA XREF: MoveBond+1E0Cr
-D:80055258     flt_D_80055258: .float 6.2831855         # DATA XREF: MoveBond+1ED4r
-D:8005525C     flt_D_8005525C: .float 0.82999998        # DATA XREF: MoveBond+1FC8r
-D:80055260     flt_D_80055260: .float 0.17000002        # DATA XREF: MoveBond:loc_CODE_7F086638r
-D:80055264     flt_D_80055264: .float 1.7777778         # DATA XREF: possibly_reset_viewport_options_for_player+158r
-D:80055268     flt_D_80055268: .float 1.7777778         # DATA XREF: possibly_reset_viewport_options_for_player+1A4r
-D:8005526C     flt_D_8005526C: .float 3.1415927         # DATA XREF: sub_CODE_7F087A08+180r
-D:80055270     flt_D_80055270: .float 6.2831855         # DATA XREF: sub_CODE_7F087A08+1A4r
-D:80055274     flt_D_80055274: .float 3.1415927         # DATA XREF: sub_CODE_7F087A08+1C8r
-D:80055278     flt_D_80055278: .float 6.2831855         # DATA XREF: sub_CODE_7F087A08+1E8r
-D:8005527C     flt_D_8005527C: .float 0.017453292       # DATA XREF: sub_CODE_7F087E74+1E0r
-D:80055280     flt_D_80055280: .float 6.2831855         # DATA XREF: sub_CODE_7F087E74+400r
-D:80055284     flt_D_80055284: .float 6.2831855         # DATA XREF: mp_respawn_handler+134r
-D:80055288     flt_D_80055288: .float 0.17000002        # DATA XREF: mp_respawn_handler+198r
-D:8005528C     flt_D_8005528C: .float 0.10000002        # DATA XREF: mp_respawn_handler+1E4r
-D:80055290     jpt_700BCB10:   .word mp_spawntype_spawn  # DATA XREF: mp_respawn_handler+2ECr
-D:80055290                     .word mp_spawntype_weapon  # jump table for switch statement
+*/
+
+//D:8005502C
+const f32 D_8005502C = 0.97000003;
+//D:80055030
+const f32 D_80055030 = 6.2831855;
+//D:80055034
+const f32 D_80055034 = 1500.0;
+//D:80055038
+const f32 D_80055038 = 6.2831855;
+//D:8005503C
+const f32 D_8005503C = 0.39269909;
+//D:80055040
+const f32 D_80055040 = 6.2831855;
+//D:80055044
+const f32 D_80055044 = 179.5;
+//D:80055048
+const f32 D_80055048 = 0.1;
+//D:8005504C
+const f32 D_8005504C = 0.015;
+//D:80055050
+const f32 D_80055050 = 3.1415927;
+//D:80055054
+const f32 D_80055054 = 0.079999998;
+//D:80055058
+const f32 D_80055058 = 0.079999998;
+//D:8005505C
+const f32 D_8005505C = 6.2831855;
+//D:80055060
+const f32 D_80055060 = 6.2831855;
+//D:80055064
+const f32 D_80055064 = 6.2831855;
+//D:80055068
+const f32 D_80055068 = 6.2831855;
+//D:8005506C
+const f32 D_8005506C = 6.2831855;
+//D:80055070
+const f32 D_80055070 = 6.2831855;
+//D:80055074
+const f32 D_80055074 = -0.69999999;
+//D:80055078
+const f32 D_80055078 = 0.69999999;
+//D:8005507C
+const f32 final = 5.9000001;
+//D:80055080
+const f32 D_80055080 = -54.099998;
+//D:80055084
+const f32 D_80055084 = -54.099998;
+//D:80055088
+const f32 D_80055088 = 0.10000001;
+//D:8005508C
+const f32 D_8005508C = 1.7;
+//D:80055090
+const f32 D_80055090 = 1.1;
+//D:80055094
+const f32 D_80055094 = -0.69999999;
+//D:80055098
+const f32 D_80055098 = 0.69999999;
+//D:8005509C
+const f32 D_8005509C = 0.050000001;
+//D:800550A0
+const f32 D_800550A0 = 0.0125;
+//D:800550A4
+const f32 D_800550A4 = 0.050000001;
+//D:800550A8
+const f32 D_800550A8 = 0.0125;
+//D:800550AC
+const f32 D_800550AC = 0.050000001;
+//D:800550B0
+const f32 D_800550B0 = 0.050000001;
+//D:800550B4
+const f32 D_800550B4 = -0.69999999;
+//D:800550B8
+const f32 D_800550B8 = 0.69999999;
+//D:800550BC
+const f32 D_800550BC = 0.050000001;
+//D:800550C0
+const f32 D_800550C0 = 0.0125;
+//D:800550C4
+const f32 D_800550C4 = 0.050000001;
+//D:800550C8
+const f32 D_800550C8 = 0.0125;
+//D:800550CC
+const f32 D_800550CC = 0.050000001;
+//D:800550D0
+const f32 D_800550D0 = 0.050000001;
+//D:800550D4
+const f32 firstperson_weapon_movement_restrictor = 0.017453292;
+//D:800550D8
+const f32 D_800550D8 = 0.017453292;
+//D:800550DC
+const f32 D_800550DC = 0.17000002;
+//D:800550E0
+const f32 D_800550E0 = 0.82999998;
+//D:800550E4
+const f32 D_800550E4 = 0.17000002;
+//D:800550E8
+const f32 D_800550E8 = 0.82999998;
+//D:800550EC
+const f32 D_800550EC = 1.388889;
+//D:800550F0
+const f32 player_gravity_modifier = 0.27777779;
+//D:800550F4
+const f32 player_view_gravity_modifier = 0.27777779;
+//D:800550F8
+const f32 D_800550F8 = -13.333333;
+//D:800550FC
+const f32 D_800550FC = 8.333333;
+//D:80055100
+const f32 D_80055100 = 0.80000001;
+//D:80055104
+const f32 D_80055104 = 0.19999999;
+//D:80055108
+const f32 D_80055108 = 0.89999998;
+//D:8005510C
+const f32 D_8005510C = 0.10000002;
+//D:80055110
+const f32 D_80055110 = 0.017453292;
+//D:80055114
+const f32 D_80055114 = 0.017453292;
+//D:80055118
+const f32 D_80055118 = 0.017453292;
+//D:8005511C
+const f32 D_8005511C = 0.017453292;
+//D:80055120
+const f32 D_80055120 = 0.060000002;
+//D:80055124
+const f32 D_80055124 = 0.079999983;
+//D:80055128
+const f32 D_80055128 = 0.017453292;
+//D:8005512C
+const f32 D_8005512C = 0.017453292;
+//D:80055130
+const f32 D_80055130 = 0.017453292;
+//D:80055134
+const f32 D_80055134 = 1.08;
+//D:80055138
+const f32 D_80055138 = 0.0099999998;
+//D:8005513C
+const f32 D_8005513C = 0.0099999998;
+//D:80055140
+const f32 D_80055140 = 6.2831855;
+//D:80055144
+const f32 D_80055144 = 0.86666667;
+//D:80055148
+const f32 D_80055148 = 0.050000001;
+//D:8005514C
+const f32 D_8005514C = 0.30000001;
+//D:80055150
+const f32 D_80055150 = 0.30000001;
+//D:80055154
+const f32 D_80055154 = 0.30000001;
+//D:80055158
+const f32 D_80055158 = 0.92000002;
+//D:8005515C
+const f32 D_8005515C = 0.079999983;
+//D:80055160
+const f32 D_80055160 = 0.30000001;
+//D:80055164
+const f32 D_80055164 = 0.1;
+//D:80055168
+const f32 D_80055168 = 0.64999998;
+//D:8005516C
+const f32 D_8005516C = 0.06666667;
+//D:80055170
+const f32 D_80055170 = 6.2831855;
+//D:80055174
+const f32 D_80055174 = 0.017453292;
+//D:80055178
+const f32 D_80055178 = 1.01;
+//D:8005517C
+const f32 D_8005517C = 1.01;
+//D:80055180
+const f32 D_80055180 = 6.2831855;
+//D:80055184
+const f32 D_80055184 = 0.017453292;
+//D:80055188
+const f32 D_80055188 = 3.1415927;
+//D:8005518C
+const f32 D_8005518C = 6.2831855;
+//D:80055190
+const f32 D_80055190 = -3.1415927;
+//D:80055194
+const f32 D_80055194 = 6.2831855;
+//D:80055198
+const f32 D_80055198 = 0.92000002;
+//D:8005519C
+const f32 D_8005519C = 0.079999983;
+//D:800551A0
+const f32 D_800551A0 = 6.2831855;
+//D:800551A4
+const f32 D_800551A4 = 0.92000002;
+//D:800551A8
+const f32 D_800551A8 = 0.92000002;
+//D:800551AC
+const f32 D_800551AC = 0.079999983;
+//D:800551B0
+const f32 D_800551B0 = 0.92000002;
+//D:800551B4
+const f32 D_800551B4 = 0.92000002;
+//D:800551B8
+const f32 D_800551B8 = 0.92000002;
+//D:800551BC
+const f32 D_800551BC = 6.2831855;
+//D:800551C0
+const f32 D_800551C0 = 0.92000002;
+//D:800551C4
+const f32 D_800551C4 = 0.92000002;
+//D:800551C8
+const f32 D_800551C8 = 0.92000002;
+//D:800551CC
+const f32 D_800551CC = 0.92000002;
+//D:800551D0
+const f32 D_800551D0 = 0.079999983;
+//D:800551D4
+const f32 D_800551D4 = 0.017453292;
+//D:800551D8
+const f32 D_800551D8 = 6.2831855;
+//D:800551DC
+const f32 D_800551DC = 6.2831855;
+//D:800551E0
+const f32 D_800551E0 = 6.2831855;
+//D:800551E4
+const f32 D_800551E4 = 6.2831855;
+//D:800551E8
+const f32 D_800551E8 = 0.30000001;
+//D:800551EC
+const f32 D_800551EC = 0.15000001;
+//D:800551F0
+const f32 D_800551F0 = 20000.0;
+//D:800551F4
+const f32 D_800551F4 = 0.89999998;
+//D:800551F8
+const f32 D_800551F8 = 12767.0;
+//D:800551FC
+const f32 D_800551FC = 20000.0;
+//D:80055200
+const f32 D_80055200 = 0.89999998;
+//D:80055204
+const f32 D_80055204 = 7767.0;
+//D:80055208
+const f32 D_80055208 = 0.89999998;
+//D:8005520C
+const f32 D_8005520C = 25000.0;
+//D:80055210
+const f32 D_80055210 = 0.17453294;
+//D:80055214
+const f32 D_80055214 = 0.43633232;
+//D:80055218
+const f32 D_80055218 = -0.087266468;
+//D:8005521C
+const f32 D_8005521C = 0.94;
+//D:80055220
+const f32 D_80055220 = 0.060000002;
+//D:80055224
+const f32 D_80055224 = 2700.0;
+//D:80055228
+const f32 D_80055228 = 6.2831855;
+//D:8005522C
+const f32 D_8005522C = 6.2831855;
+//D:80055230
+const f32 D_80055230 = 0.60000002;
+//D:80055234
+const f32 D_80055234 = 0.80000001;
+//D:80055238
+const f32 D_80055238 = 0.1;
+//D:8005523C
+const f32 D_8005523C = 2700.0;
+//D:80055240
+const f32 D_80055240 = 1.16;
+//D:80055244
+const f32 D_80055244 = 1.01;
+//D:80055248
+const f32 D_80055248 = 0.99009901;
+//D:8005524C
+const f32 D_8005524C = 0.69999999;
+//D:80055250
+const f32 D_80055250 = 1.2;
+//D:80055254
+const f32 D_80055254 = 0.017453292;
+//D:80055258
+const f32 D_80055258 = 6.2831855;
+//D:8005525C
+const f32 D_8005525C = 0.82999998;
+//D:80055260
+const f32 D_80055260 = 0.17000002;
+//D:80055264
+const f32 D_80055264 = 1.7777778;
+//D:80055268
+const f32 D_80055268 = 1.7777778;
+//D:8005526C
+const f32 D_8005526C = 3.1415927;
+//D:80055270
+const f32 D_80055270 = 6.2831855;
+//D:80055274
+const f32 D_80055274 = 3.1415927;
+//D:80055278
+const f32 D_80055278 = 6.2831855;
+//D:8005527C
+const f32 D_8005527C = 0.017453292;
+//D:80055280
+const f32 D_80055280 = 6.2831855;
+//D:80055284
+const f32 D_80055284 = 6.2831855;
+//D:80055288
+const f32 D_80055288 = 0.17000002;
+//D:8005528C
+const f32 D_8005528C = 0.10000002;
+/*
+D:80055290     jpt_700BCB10:   .word mp_spawntype_spawn
+D:80055290                     .word mp_spawntype_weapon
 D:80055290                     .word mp_spawntype_ammo
 D:80055290                     .word mp_spawntype_intro_swirly
 D:80055290                     .word mp_spawntype_intro_anim
 D:80055290                     .word mp_spawntype_handcuff
 D:80055290                     .word mp_spawntype_intro_camera
-D:800552AC     flt_D_800552AC: .float -0.000099999997   # DATA XREF: mp_respawn_handler+3B8r
-D:800552B0     flt_D_800552B0: .float 3.1415927         # DATA XREF: record_damage_kills+250r
-D:800552B4     twopi_800552B4: .float 6.2831855         # DATA XREF: get_curplay_horizontal_rotation_in_degrees+14r
-D:800552B8     flt_D_800552B8: .float 6.2831855         # DATA XREF: get_curplay_vertical_rotation_in_degrees+8r
-D:800552BC     flt_D_800552BC: .float 3.1415927         # DATA XREF: sub_CODE_7F08AAE8+260r
-D:800552C0     flt_D_800552C0: .float -0.050000001      # DATA XREF: sub_CODE_7F08B0F0:loc_CODE_7F08B680r
-D:800552C4     flt_D_800552C4: .float -0.40000001       # DATA XREF: sub_CODE_7F08B0F0+5D0r
-D:800552C8     flt_D_800552C8: .float 0.050000001       # DATA XREF: sub_CODE_7F08B0F0:loc_CODE_7F08B708r
-D:800552CC     flt_D_800552CC: .float 0.40000001        # DATA XREF: sub_CODE_7F08B0F0+65Cr
-D:800552D0     flt_D_800552D0: .float 6.2831855         # DATA XREF: sub_CODE_7F08B0F0+A0Cr
 */
+//D:800552AC
+const f32 D_800552AC = -0.000099999997;
+//D:800552B0
+const f32 D_800552B0 = 3.1415927;
+//D:800552B4
+const f32 twopi_800552B4 = 6.2831855;
+//D:800552B8
+const f32 D_800552B8 = 6.2831855;
+//D:800552BC
+const f32 D_800552BC = 3.1415927;
+//D:800552C0
+const f32 D_800552C0 = -0.050000001;
+//D:800552C4
+const f32 D_800552C4 = -0.40000001;
+//D:800552C8
+const f32 D_800552C8 = 0.050000001;
+//D:800552CC
+const f32 D_800552CC = 0.40000001;
+//D:800552D0
+const f32 D_800552D0 = 6.2831855;
+
 
 
 #ifdef NONMATCHING
@@ -5707,7 +5279,7 @@ glabel set_camera_mode
 /* 0AFB40 7F07B010 8D6B6510 */  lw    $t3, %lo(D_80036510)($t3)
 /* 0AFB44 7F07B014 15600007 */  bnez  $t3, .L7F07B034
 /* 0AFB48 7F07B018 00000000 */   nop   
-/* 0AFB4C 7F07B01C 0C001B9F */  jal   music_track_related
+/* 0AFB4C 7F07B01C 0C001B9F */  jal   musicTrack1Play
 /* 0AFB50 7F07B020 2404002C */   li    $a0, 44
 /* 0AFB54 7F07B024 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0AFB58 7F07B028 44816000 */  mtc1  $at, $f12
@@ -6142,12 +5714,12 @@ glabel sub_GAME_7F07B56C
 /* 0B00E0 7F07B5B0 3C0142F0 */  li    $at, 0x42F00000 # 120.000000
 /* 0B00E4 7F07B5B4 44810000 */  mtc1  $at, $f0
 /* 0B00E8 7F07B5B8 C5420000 */  lwc1  $f2, ($t2)
-/* 0B00EC 7F07B5BC 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 0B00EC 7F07B5BC 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 0B00F0 7F07B5C0 4600103C */  c.lt.s $f2, $f0
 /* 0B00F4 7F07B5C4 00000000 */  nop   
 /* 0B00F8 7F07B5C8 45000014 */  bc1f  .L7F07B61C
 /* 0B00FC 7F07B5CC 00000000 */   nop   
-/* 0B0100 7F07B5D0 C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 0B0100 7F07B5D0 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 0B0104 7F07B5D4 3C048004 */  lui   $a0, %hi(D_80040EB8) # $a0, 0x8004
 /* 0B0108 7F07B5D8 3C058004 */  lui   $a1, %hi(D_80040EB4) # $a1, 0x8004
 /* 0B010C 7F07B5DC 46041180 */  add.s $f6, $f2, $f4
@@ -6169,8 +5741,8 @@ glabel sub_GAME_7F07B56C
 .L7F07B61C:
 /* 0B014C 7F07B61C 3C0F8003 */  lui   $t7, %hi(D_800364C0) # $t7, 0x8003
 /* 0B0150 7F07B620 8DEF64C0 */  lw    $t7, %lo(D_800364C0)($t7)
-/* 0B0154 7F07B624 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B0158 7F07B628 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0B0154 7F07B624 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B0158 7F07B628 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0B015C 7F07B62C 8DE40020 */  lw    $a0, 0x20($t7)
 /* 0B0160 7F07B630 3C014396 */  li    $at, 0x43960000 # 300.000000
 /* 0B0164 7F07B634 46081000 */  add.s $f0, $f2, $f8
@@ -6191,8 +5763,8 @@ glabel sub_GAME_7F07B56C
 /* 0B01A0 7F07B670 00000000 */   nop   
 /* 0B01A4 7F07B674 3C0A8003 */  lui   $t2, %hi(D_800364A4) # $t2, 0x8003
 /* 0B01A8 7F07B678 254A64A4 */  addiu $t2, %lo(D_800364A4) # addiu $t2, $t2, 0x64a4
-/* 0B01AC 7F07B67C 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B01B0 7F07B680 C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 0B01AC 7F07B67C 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B01B0 7F07B680 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 0B01B4 7F07B684 C5420000 */  lwc1  $f2, ($t2)
 /* 0B01B8 7F07B688 240B0001 */  li    $t3, 1
 /* 0B01BC 7F07B68C 460A1000 */  add.s $f0, $f2, $f10
@@ -6510,8 +6082,8 @@ glabel sub_GAME_7F07B56C
 /* 0B065C 7F07BB2C 24030005 */   li    $v1, 5
 /* 0B0660 7F07BB30 3C0A8003 */  lui   $t2, %hi(D_800364A4) # $t2, 0x8003
 /* 0B0664 7F07BB34 254A64A4 */  addiu $t2, %lo(D_800364A4) # addiu $t2, $t2, 0x64a4
-/* 0B0668 7F07BB38 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B066C 7F07BB3C C4328378 */  lwc1  $f18, %lo(D_80048378)($at)
+/* 0B0668 7F07BB38 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B066C 7F07BB3C C4328378 */  lwc1  $f18, %lo(global_timer_delta)($at)
 /* 0B0670 7F07BB40 C5440000 */  lwc1  $f4, ($t2)
 /* 0B0674 7F07BB44 3C088003 */  lui   $t0, %hi(D_800364A8) # $t0, 0x8003
 /* 0B0678 7F07BB48 250864A8 */  addiu $t0, %lo(D_800364A8) # addiu $t0, $t0, 0x64a8
@@ -6733,8 +6305,8 @@ glabel sub_GAME_7F07B56C
 /* 0B0998 7F07BE68 1462003F */  bne   $v1, $v0, .L7F07BF68
 /* 0B099C 7F07BE6C 3C0A8003 */   lui   $t2, %hi(D_800364A4) # $t2, 0x8003
 /* 0B09A0 7F07BE70 254A64A4 */  addiu $t2, %lo(D_800364A4) # addiu $t2, $t2, 0x64a4
-/* 0B09A4 7F07BE74 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B09A8 7F07BE78 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0B09A4 7F07BE74 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B09A8 7F07BE78 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0B09AC 7F07BE7C C5460000 */  lwc1  $f6, ($t2)
 /* 0B09B0 7F07BE80 3C098008 */  lui   $t1, %hi(ptr_BONDdata) # $t1, 0x8008
 /* 0B09B4 7F07BE84 2529A0B0 */  addiu $t1, %lo(ptr_BONDdata) # addiu $t1, $t1, -0x5f50
@@ -6803,8 +6375,8 @@ glabel sub_GAME_7F07B56C
 /* 0B0A9C 7F07BF6C 14410024 */  bne   $v0, $at, .L7F07C000
 /* 0B0AA0 7F07BF70 3C0A8003 */   lui   $t2, %hi(D_800364A4) # $t2, 0x8003
 /* 0B0AA4 7F07BF74 254A64A4 */  addiu $t2, %lo(D_800364A4) # addiu $t2, $t2, 0x64a4
-/* 0B0AA8 7F07BF78 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B0AAC 7F07BF7C C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 0B0AA8 7F07BF78 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B0AAC 7F07BF7C C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 0B0AB0 7F07BF80 C54A0000 */  lwc1  $f10, ($t2)
 /* 0B0AB4 7F07BF84 3C098008 */  lui   $t1, %hi(ptr_BONDdata) # $t1, 0x8008
 /* 0B0AB8 7F07BF88 2529A0B0 */  addiu $t1, %lo(ptr_BONDdata) # addiu $t1, $t1, -0x5f50
@@ -7152,8 +6724,8 @@ glabel sub_GAME_7F07B56C
 /* 0B0FE0 7F07C4B0 46045200 */  add.s $f8, $f10, $f4
 /* 0B0FE4 7F07C4B4 E5C80008 */  swc1  $f8, 8($t6)
 /* 0B0FE8 7F07C4B8 C4269A04 */  lwc1  $f6, %lo(flt_CODE_bss_80079A04)($at)
-/* 0B0FEC 7F07C4BC 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B0FF0 7F07C4C0 C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 0B0FEC 7F07C4BC 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B0FF0 7F07C4C0 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 0B0FF4 7F07C4C4 C4480000 */  lwc1  $f8, ($v0)
 /* 0B0FF8 7F07C4C8 460A3102 */  mul.s $f4, $f6, $f10
 /* 0B0FFC 7F07C4CC 46044180 */  add.s $f6, $f8, $f4
@@ -9093,8 +8665,8 @@ glabel sub_GAME_7F07D960
 /* 0B264C 7F07DB1C 4500000E */  bc1f  .L7F07DB58
 /* 0B2650 7F07DB20 00000000 */   nop   
 /* 0B2654 7F07DB24 44818000 */  mtc1  $at, $f16
-/* 0B2658 7F07DB28 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B265C 7F07DB2C C4328378 */  lwc1  $f18, %lo(D_80048378)($at)
+/* 0B2658 7F07DB28 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B265C 7F07DB2C C4328378 */  lwc1  $f18, %lo(global_timer_delta)($at)
 /* 0B2660 7F07DB30 46128102 */  mul.s $f4, $f16, $f18
 /* 0B2664 7F07DB34 46040180 */  add.s $f6, $f0, $f4
 /* 0B2668 7F07DB38 E4460000 */  swc1  $f6, ($v0)
@@ -9599,8 +9171,8 @@ glabel sub_GAME_7F07E090
 /* 0B2BDC 7F07E0AC E7A2001C */  swc1  $f2, 0x1c($sp)
 /* 0B2BE0 7F07E0B0 8C430218 */  lw    $v1, 0x218($v0)
 /* 0B2BE4 7F07E0B4 14610031 */  bne   $v1, $at, .L7F07E17C
-/* 0B2BE8 7F07E0B8 3C018005 */   lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B2BEC 7F07E0BC C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 0B2BE8 7F07E0B8 3C018005 */   lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B2BEC 7F07E0BC C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 0B2BF0 7F07E0C0 3C018003 */  lui   $at, %hi(D_800365A8) # $at, 0x8003
 /* 0B2BF4 7F07E0C4 C42665A8 */  lwc1  $f6, %lo(D_800365A8)($at)
 /* 0B2BF8 7F07E0C8 C44A0210 */  lwc1  $f10, 0x210($v0)
@@ -9653,8 +9225,8 @@ glabel sub_GAME_7F07E090
 .L7F07E17C:
 /* 0B2CAC 7F07E17C 24010002 */  li    $at, 2
 /* 0B2CB0 7F07E180 14610031 */  bne   $v1, $at, .L7F07E248
-/* 0B2CB4 7F07E184 3C018005 */   lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B2CB8 7F07E188 C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 0B2CB4 7F07E184 3C018005 */   lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B2CB8 7F07E188 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 0B2CBC 7F07E18C 3C018003 */  lui   $at, %hi(D_800365A8) # $at, 0x8003
 /* 0B2CC0 7F07E190 C42665A8 */  lwc1  $f6, %lo(D_800365A8)($at)
 /* 0B2CC4 7F07E194 C44A0210 */  lwc1  $f10, 0x210($v0)
@@ -9764,8 +9336,8 @@ glabel sub_GAME_7F07E090
 /* 0B2E50 7F07E320 C4400160 */  lwc1  $f0, 0x160($v0)
 .L7F07E324:
 /* 0B2E54 7F07E324 C42C5074 */  lwc1  $f12, %lo(D_80055074)($at)
-/* 0B2E58 7F07E328 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B2E5C 7F07E32C C4228378 */  lwc1  $f2, %lo(D_80048378)($at)
+/* 0B2E58 7F07E328 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B2E5C 7F07E32C C4228378 */  lwc1  $f2, %lo(global_timer_delta)($at)
 /* 0B2E60 7F07E330 3C018005 */  lui   $at, %hi(D_80055078) # $at, 0x8005
 /* 0B2E64 7F07E334 46021200 */  add.s $f8, $f2, $f2
 /* 0B2E68 7F07E338 46080103 */  div.s $f4, $f0, $f8
@@ -10421,8 +9993,8 @@ glabel sub_GAME_7F07E964
 /* 0B34C0 7F07E990 14610018 */  bne   $v1, $at, .L7F07E9F4
 /* 0B34C4 7F07E994 3C0141A0 */   li    $at, 0x41A00000 # 20.000000
 /* 0B34C8 7F07E998 44810000 */  mtc1  $at, $f0
-/* 0B34CC 7F07E99C 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B34D0 7F07E9A0 C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 0B34CC 7F07E99C 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B34D0 7F07E9A0 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 0B34D4 7F07E9A4 3C018003 */  lui   $at, %hi(D_800365A8) # $at, 0x8003
 /* 0B34D8 7F07E9A8 C42665A8 */  lwc1  $f6, %lo(D_800365A8)($at)
 /* 0B34DC 7F07E9AC C44A022C */  lwc1  $f10, 0x22c($v0)
@@ -10446,8 +10018,8 @@ glabel sub_GAME_7F07E964
 .L7F07E9F4:
 /* 0B3524 7F07E9F4 24010002 */  li    $at, 2
 /* 0B3528 7F07E9F8 14610015 */  bne   $v1, $at, .L7F07EA50
-/* 0B352C 7F07E9FC 3C018005 */   lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B3530 7F07EA00 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0B352C 7F07E9FC 3C018005 */   lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B3530 7F07EA00 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0B3534 7F07EA04 3C018003 */  lui   $at, %hi(D_800365A8) # $at, 0x8003
 /* 0B3538 7F07EA08 C42A65A8 */  lwc1  $f10, %lo(D_800365A8)($at)
 /* 0B353C 7F07EA0C C450022C */  lwc1  $f16, 0x22c($v0)
@@ -11869,8 +11441,8 @@ glabel sub_GAME_7F07FCC4
 /* 0B4804 7F07FCD4 8C620000 */  lw    $v0, ($v1)
 /* 0B4808 7F07FCD8 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
 /* 0B480C 7F07FCDC 44811000 */  mtc1  $at, $f2
-/* 0B4810 7F07FCE0 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B4814 7F07FCE4 C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 0B4810 7F07FCE0 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B4814 7F07FCE4 C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 0B4818 7F07FCE8 C4440170 */  lwc1  $f4, 0x170($v0)
 /* 0B481C 7F07FCEC 46062201 */  sub.s $f8, $f4, $f6
 /* 0B4820 7F07FCF0 E4480170 */  swc1  $f8, 0x170($v0)
@@ -11894,8 +11466,8 @@ glabel sub_GAME_7F07FCC4
 /* 0B4864 7F07FD34 8C620000 */  lw    $v0, ($v1)
 /* 0B4868 7F07FD38 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0B486C 7F07FD3C 44811000 */  mtc1  $at, $f2
-/* 0B4870 7F07FD40 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B4874 7F07FD44 C4308378 */  lwc1  $f16, %lo(D_80048378)($at)
+/* 0B4870 7F07FD40 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B4874 7F07FD44 C4308378 */  lwc1  $f16, %lo(global_timer_delta)($at)
 /* 0B4878 7F07FD48 C44A0170 */  lwc1  $f10, 0x170($v0)
 /* 0B487C 7F07FD4C 46105480 */  add.s $f18, $f10, $f16
 /* 0B4880 7F07FD50 E4520170 */  swc1  $f18, 0x170($v0)
@@ -11920,8 +11492,8 @@ glabel sub_GAME_7F07FCC4
 /* 0B48C8 7F07FD98 00000000 */  nop   
 /* 0B48CC 7F07FD9C 45000010 */  bc1f  .L7F07FDE0
 /* 0B48D0 7F07FDA0 00000000 */   nop   
-/* 0B48D4 7F07FDA4 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B48D8 7F07FDA8 C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 0B48D4 7F07FDA4 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B48D8 7F07FDA8 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 0B48DC 7F07FDAC 46040181 */  sub.s $f6, $f0, $f4
 /* 0B48E0 7F07FDB0 E4460170 */  swc1  $f6, 0x170($v0)
 /* 0B48E4 7F07FDB4 8C620000 */  lw    $v0, ($v1)
@@ -11936,7 +11508,7 @@ glabel sub_GAME_7F07FCC4
 /* 0B4908 7F07FDD8 1000000E */  b     .L7F07FE14
 /* 0B490C 7F07FDDC C4400170 */   lwc1  $f0, 0x170($v0)
 .L7F07FDE0:
-/* 0B4910 7F07FDE0 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0B4910 7F07FDE0 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0B4914 7F07FDE4 46080280 */  add.s $f10, $f0, $f8
 /* 0B4918 7F07FDE8 E44A0170 */  swc1  $f10, 0x170($v0)
 /* 0B491C 7F07FDEC 8C620000 */  lw    $v0, ($v1)
@@ -11974,8 +11546,8 @@ glabel sub_GAME_7F07FE1C
 /* 0B495C 7F07FE2C 8C620000 */  lw    $v0, ($v1)
 /* 0B4960 7F07FE30 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0B4964 7F07FE34 44811000 */  mtc1  $at, $f2
-/* 0B4968 7F07FE38 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B496C 7F07FE3C C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 0B4968 7F07FE38 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B496C 7F07FE3C C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 0B4970 7F07FE40 C4442A4C */  lwc1  $f4, 0x2a4c($v0)
 /* 0B4974 7F07FE44 46062200 */  add.s $f8, $f4, $f6
 /* 0B4978 7F07FE48 E4482A4C */  swc1  $f8, 0x2a4c($v0)
@@ -11999,8 +11571,8 @@ glabel sub_GAME_7F07FE1C
 /* 0B49BC 7F07FE8C 8C620000 */  lw    $v0, ($v1)
 /* 0B49C0 7F07FE90 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
 /* 0B49C4 7F07FE94 44811000 */  mtc1  $at, $f2
-/* 0B49C8 7F07FE98 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B49CC 7F07FE9C C4308378 */  lwc1  $f16, %lo(D_80048378)($at)
+/* 0B49C8 7F07FE98 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B49CC 7F07FE9C C4308378 */  lwc1  $f16, %lo(global_timer_delta)($at)
 /* 0B49D0 7F07FEA0 C44A2A4C */  lwc1  $f10, 0x2a4c($v0)
 /* 0B49D4 7F07FEA4 46105481 */  sub.s $f18, $f10, $f16
 /* 0B49D8 7F07FEA8 E4522A4C */  swc1  $f18, 0x2a4c($v0)
@@ -12025,8 +11597,8 @@ glabel sub_GAME_7F07FE1C
 /* 0B4A20 7F07FEF0 00000000 */  nop   
 /* 0B4A24 7F07FEF4 45000010 */  bc1f  .L7F07FF38
 /* 0B4A28 7F07FEF8 00000000 */   nop   
-/* 0B4A2C 7F07FEFC 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B4A30 7F07FF00 C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 0B4A2C 7F07FEFC 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B4A30 7F07FF00 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 0B4A34 7F07FF04 46040181 */  sub.s $f6, $f0, $f4
 /* 0B4A38 7F07FF08 E4462A4C */  swc1  $f6, 0x2a4c($v0)
 /* 0B4A3C 7F07FF0C 8C620000 */  lw    $v0, ($v1)
@@ -12041,7 +11613,7 @@ glabel sub_GAME_7F07FE1C
 /* 0B4A60 7F07FF30 1000000E */  b     .L7F07FF6C
 /* 0B4A64 7F07FF34 C4402A4C */   lwc1  $f0, 0x2a4c($v0)
 .L7F07FF38:
-/* 0B4A68 7F07FF38 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0B4A68 7F07FF38 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0B4A6C 7F07FF3C 46080280 */  add.s $f10, $f0, $f8
 /* 0B4A70 7F07FF40 E44A2A4C */  swc1  $f10, 0x2a4c($v0)
 /* 0B4A74 7F07FF44 8C620000 */  lw    $v0, ($v1)
@@ -12156,7 +11728,7 @@ glabel sub_GAME_7F080010
 /* 0B4BA4 7F080074 3C018005 */  lui   $at, %hi(D_8005509C) # $at, 0x8005
 /* 0B4BA8 7F080078 C426509C */  lwc1  $f6, %lo(D_8005509C)($at)
 /* 0B4BAC 7F08007C 3C018005 */  lui   $at, %hi(D_800550A0) # $at, 0x8005
-/* 0B4BB0 7F080080 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0B4BB0 7F080080 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0B4BB4 7F080084 46083282 */  mul.s $f10, $f6, $f8
 /* 0B4BB8 7F080088 00000000 */  nop   
 /* 0B4BBC 7F08008C 460E5402 */  mul.s $f16, $f10, $f14
@@ -12165,8 +11737,8 @@ glabel sub_GAME_7F080010
 /* 0B4BC8 7F080098 E4520160 */   swc1  $f18, 0x160($v0)
 .L7F08009C:
 /* 0B4BCC 7F08009C C42450A0 */  lwc1  $f4, %lo(D_800550A0)($at)
-/* 0B4BD0 7F0800A0 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B4BD4 7F0800A4 C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 0B4BD0 7F0800A0 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B4BD4 7F0800A4 C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 0B4BD8 7F0800A8 46062202 */  mul.s $f8, $f4, $f6
 /* 0B4BDC 7F0800AC 00000000 */  nop   
 /* 0B4BE0 7F0800B0 460E4282 */  mul.s $f10, $f8, $f14
@@ -12199,7 +11771,7 @@ glabel sub_GAME_7F080010
 /* 0B4C44 7F080114 3C018005 */  lui   $at, %hi(D_800550A4) # $at, 0x8005
 /* 0B4C48 7F080118 C42450A4 */  lwc1  $f4, %lo(D_800550A4)($at)
 /* 0B4C4C 7F08011C 3C018005 */  lui   $at, %hi(D_800550A8) # $at, 0x8005
-/* 0B4C50 7F080120 C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 0B4C50 7F080120 C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 0B4C54 7F080124 46062202 */  mul.s $f8, $f4, $f6
 /* 0B4C58 7F080128 00000000 */  nop   
 /* 0B4C5C 7F08012C 460E4282 */  mul.s $f10, $f8, $f14
@@ -12208,8 +11780,8 @@ glabel sub_GAME_7F080010
 /* 0B4C68 7F080138 E4500160 */   swc1  $f16, 0x160($v0)
 .L7F08013C:
 /* 0B4C6C 7F08013C C43250A8 */  lwc1  $f18, %lo(D_800550A8)($at)
-/* 0B4C70 7F080140 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B4C74 7F080144 C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 0B4C70 7F080140 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B4C74 7F080144 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 0B4C78 7F080148 46049182 */  mul.s $f6, $f18, $f4
 /* 0B4C7C 7F08014C 00000000 */  nop   
 /* 0B4C80 7F080150 460E3202 */  mul.s $f8, $f6, $f14
@@ -12235,7 +11807,7 @@ glabel sub_GAME_7F080010
 /* 0B4CC8 7F080198 3C018005 */  lui   $at, %hi(D_800550AC) # $at, 0x8005
 /* 0B4CCC 7F08019C C43250AC */  lwc1  $f18, %lo(D_800550AC)($at)
 /* 0B4CD0 7F0801A0 3C018005 */  lui   $at, %hi(D_800550B0) # $at, 0x8005
-/* 0B4CD4 7F0801A4 C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 0B4CD4 7F0801A4 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 0B4CD8 7F0801A8 46049182 */  mul.s $f6, $f18, $f4
 /* 0B4CDC 7F0801AC 00000000 */  nop   
 /* 0B4CE0 7F0801B0 460E3202 */  mul.s $f8, $f6, $f14
@@ -12251,8 +11823,8 @@ glabel sub_GAME_7F080010
 /* 0B4D08 7F0801D8 E4400160 */   swc1  $f0, 0x160($v0)
 .L7F0801DC:
 /* 0B4D0C 7F0801DC C43250B0 */  lwc1  $f18, %lo(D_800550B0)($at)
-/* 0B4D10 7F0801E0 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B4D14 7F0801E4 C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 0B4D10 7F0801E0 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B4D14 7F0801E4 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 0B4D18 7F0801E8 46049182 */  mul.s $f6, $f18, $f4
 /* 0B4D1C 7F0801EC 00000000 */  nop   
 /* 0B4D20 7F0801F0 460E3202 */  mul.s $f8, $f6, $f14
@@ -12370,7 +11942,7 @@ glabel sub_GAME_7F0802C4
 /* 0B4E58 7F080328 3C018005 */  lui   $at, %hi(D_800550BC) # $at, 0x8005
 /* 0B4E5C 7F08032C C42650BC */  lwc1  $f6, %lo(D_800550BC)($at)
 /* 0B4E60 7F080330 3C018005 */  lui   $at, %hi(D_800550C0) # $at, 0x8005
-/* 0B4E64 7F080334 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0B4E64 7F080334 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0B4E68 7F080338 46083282 */  mul.s $f10, $f6, $f8
 /* 0B4E6C 7F08033C 00000000 */  nop   
 /* 0B4E70 7F080340 460E5402 */  mul.s $f16, $f10, $f14
@@ -12379,8 +11951,8 @@ glabel sub_GAME_7F0802C4
 /* 0B4E7C 7F08034C E452014C */   swc1  $f18, 0x14c($v0)
 .L7F080350:
 /* 0B4E80 7F080350 C42450C0 */  lwc1  $f4, %lo(D_800550C0)($at)
-/* 0B4E84 7F080354 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B4E88 7F080358 C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 0B4E84 7F080354 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B4E88 7F080358 C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 0B4E8C 7F08035C 46062202 */  mul.s $f8, $f4, $f6
 /* 0B4E90 7F080360 00000000 */  nop   
 /* 0B4E94 7F080364 460E4282 */  mul.s $f10, $f8, $f14
@@ -12414,7 +11986,7 @@ glabel sub_GAME_7F0802C4
 /* 0B4EFC 7F0803CC 3C018005 */  lui   $at, %hi(D_800550C4) # $at, 0x8005
 /* 0B4F00 7F0803D0 C42650C4 */  lwc1  $f6, %lo(D_800550C4)($at)
 /* 0B4F04 7F0803D4 3C018005 */  lui   $at, %hi(D_800550C8) # $at, 0x8005
-/* 0B4F08 7F0803D8 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0B4F08 7F0803D8 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0B4F0C 7F0803DC 46083282 */  mul.s $f10, $f6, $f8
 /* 0B4F10 7F0803E0 00000000 */  nop   
 /* 0B4F14 7F0803E4 460E5402 */  mul.s $f16, $f10, $f14
@@ -12423,8 +11995,8 @@ glabel sub_GAME_7F0802C4
 /* 0B4F20 7F0803F0 E452014C */   swc1  $f18, 0x14c($v0)
 .L7F0803F4:
 /* 0B4F24 7F0803F4 C42450C8 */  lwc1  $f4, %lo(D_800550C8)($at)
-/* 0B4F28 7F0803F8 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B4F2C 7F0803FC C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 0B4F28 7F0803F8 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B4F2C 7F0803FC C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 0B4F30 7F080400 46062202 */  mul.s $f8, $f4, $f6
 /* 0B4F34 7F080404 00000000 */  nop   
 /* 0B4F38 7F080408 460E4282 */  mul.s $f10, $f8, $f14
@@ -12450,7 +12022,7 @@ glabel sub_GAME_7F0802C4
 /* 0B4F80 7F080450 3C018005 */  lui   $at, %hi(D_800550CC) # $at, 0x8005
 /* 0B4F84 7F080454 C42450CC */  lwc1  $f4, %lo(D_800550CC)($at)
 /* 0B4F88 7F080458 3C018005 */  lui   $at, %hi(D_800550D0) # $at, 0x8005
-/* 0B4F8C 7F08045C C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 0B4F8C 7F08045C C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 0B4F90 7F080460 46062202 */  mul.s $f8, $f4, $f6
 /* 0B4F94 7F080464 00000000 */  nop   
 /* 0B4F98 7F080468 460E4282 */  mul.s $f10, $f8, $f14
@@ -12466,8 +12038,8 @@ glabel sub_GAME_7F0802C4
 /* 0B4FC0 7F080490 E440014C */   swc1  $f0, 0x14c($v0)
 .L7F080494:
 /* 0B4FC4 7F080494 C42450D0 */  lwc1  $f4, %lo(D_800550D0)($at)
-/* 0B4FC8 7F080498 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B4FCC 7F08049C C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 0B4FC8 7F080498 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B4FCC 7F08049C C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 0B4FD0 7F0804A0 46062202 */  mul.s $f8, $f4, $f6
 /* 0B4FD4 7F0804A4 00000000 */  nop   
 /* 0B4FD8 7F0804A8 460E4282 */  mul.s $f10, $f8, $f14
@@ -12831,14 +12403,14 @@ glabel sub_GAME_7F0808BC
 /* 0B53F0 7F0808C0 24C6A0B0 */  addiu $a2, %lo(ptr_BONDdata) # addiu $a2, $a2, -0x5f50
 /* 0B53F4 7F0808C4 8CC20000 */  lw    $v0, ($a2)
 /* 0B53F8 7F0808C8 44803000 */  mtc1  $zero, $f6
-/* 0B53FC 7F0808CC 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 0B53FC 7F0808CC 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 0B5400 7F0808D0 C44403E4 */  lwc1  $f4, 0x3e4($v0)
 /* 0B5404 7F0808D4 4604303E */  c.le.s $f6, $f4
 /* 0B5408 7F0808D8 00000000 */  nop   
 /* 0B540C 7F0808DC 4500004A */  bc1f  .L7F080A08
 /* 0B5410 7F0808E0 00000000 */   nop   
 /* 0B5414 7F0808E4 C44803E0 */  lwc1  $f8, 0x3e0($v0)
-/* 0B5418 7F0808E8 C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 0B5418 7F0808E8 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 0B541C 7F0808EC 460A4400 */  add.s $f16, $f8, $f10
 /* 0B5420 7F0808F0 E45003E0 */  swc1  $f16, 0x3e0($v0)
 /* 0B5424 7F0808F4 8CC20000 */  lw    $v0, ($a2)
@@ -12986,7 +12558,7 @@ glabel update_curplayer_fade
 /* 0B55D0 7F080AA0 45000022 */  bc1f  .L7F080B2C
 /* 0B55D4 7F080AA4 00000000 */   nop   
 /* 0B55D8 7F080AA8 C448018C */  lwc1  $f8, 0x18c($v0)
-/* 0B55DC 7F080AAC C42A8378 */  lwc1  $f10, %lo(D_80048378)($at)
+/* 0B55DC 7F080AAC C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
 /* 0B55E0 7F080AB0 8C4E00A8 */  lw    $t6, 0xa8($v0)
 /* 0B55E4 7F080AB4 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
 /* 0B55E8 7F080AB8 460A4400 */  add.s $f16, $f8, $f10
@@ -13492,8 +13064,8 @@ glabel sub_GAME_7F080DF8
 /* 0B5C98 7F081168 C42650F0 */  lwc1  $f6, %lo(D_800550F0)($at)
 /* 0B5C9C 7F08116C E7A60040 */  swc1  $f6, 0x40($sp)
 .L7F081170:
-/* 0B5CA0 7F081170 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B5CA4 7F081174 C42C8378 */  lwc1  $f12, %lo(D_80048378)($at)
+/* 0B5CA0 7F081170 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B5CA4 7F081174 C42C8378 */  lwc1  $f12, %lo(global_timer_delta)($at)
 /* 0B5CA8 7F081178 C7A80040 */  lwc1  $f8, 0x40($sp)
 /* 0B5CAC 7F08117C 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0B5CB0 7F081180 8D100000 */  lw    $s0, ($t0)
@@ -15521,11 +15093,11 @@ glabel controller_gameplay_interaction
 /* 0B7934 7F082E04 00000000 */   nop   
 /* 0B7938 7F082E08 4606A03C */  c.lt.s $f20, $f6
 /* 0B793C 7F082E0C 8E080000 */  lw    $t0, ($s0)
-/* 0B7940 7F082E10 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 0B7940 7F082E10 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 0B7944 7F082E14 C7AA018C */  lwc1  $f10, 0x18c($sp)
 /* 0B7948 7F082E18 4502000B */  bc1fl .L7F082E48
 /* 0B794C 7F082E1C 460AA03C */   c.lt.s $f20, $f10
-/* 0B7950 7F082E20 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0B7950 7F082E20 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0B7954 7F082E24 3C018005 */  lui   $at, %hi(D_80055128) # $at, 0x8005
 /* 0B7958 7F082E28 C4325128 */  lwc1  $f18, %lo(D_80055128)($at)
 /* 0B795C 7F082E2C 46064282 */  mul.s $f10, $f8, $f6
@@ -15536,11 +15108,11 @@ glabel controller_gameplay_interaction
 /* 0B7970 7F082E40 E4460000 */   swc1  $f6, ($v0)
 /* 0B7974 7F082E44 460AA03C */  c.lt.s $f20, $f10
 .L7F082E48:
-/* 0B7978 7F082E48 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 0B7978 7F082E48 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 0B797C 7F082E4C 8FAE01A8 */  lw    $t6, 0x1a8($sp)
 /* 0B7980 7F082E50 4500000A */  bc1f  .L7F082E7C
 /* 0B7984 7F082E54 00000000 */   nop   
-/* 0B7988 7F082E58 C4328378 */  lwc1  $f18, %lo(D_80048378)($at)
+/* 0B7988 7F082E58 C4328378 */  lwc1  $f18, %lo(global_timer_delta)($at)
 /* 0B798C 7F082E5C 3C018005 */  lui   $at, %hi(D_8005512C) # $at, 0x8005
 /* 0B7990 7F082E60 C424512C */  lwc1  $f4, %lo(D_8005512C)($at)
 /* 0B7994 7F082E64 460A9202 */  mul.s $f8, $f18, $f10
@@ -15580,7 +15152,7 @@ glabel controller_gameplay_interaction
 /* 0B7A10 7F082EE0 3C018005 */  lui   $at, %hi(D_80055130) # $at, 0x8005
 /* 0B7A14 7F082EE4 C4285130 */  lwc1  $f8, %lo(D_80055130)($at)
 /* 0B7A18 7F082EE8 3C018005 */  li    $at, 0x80050000 # -0.000000
-/* 0B7A1C 7F082EEC C4328378 */  lwc1  $f18, %lo(D_80048378)($at)
+/* 0B7A1C 7F082EEC C4328378 */  lwc1  $f18, %lo(global_timer_delta)($at)
 /* 0B7A20 7F082EF0 46024102 */  mul.s $f4, $f8, $f2
 /* 0B7A24 7F082EF4 C44A0000 */  lwc1  $f10, ($v0)
 /* 0B7A28 7F082EF8 46122182 */  mul.s $f6, $f4, $f18
@@ -15672,9 +15244,9 @@ glabel controller_gameplay_interaction
 /* 0B7B60 7F083030 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0B7B64 7F083034 46083100 */  add.s $f4, $f6, $f8
 /* 0B7B68 7F083038 44814000 */  mtc1  $at, $f8
-/* 0B7B6C 7F08303C 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 0B7B6C 7F08303C 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 0B7B70 7F083040 460E2482 */  mul.s $f18, $f4, $f14
-/* 0B7B74 7F083044 C4248378 */  lwc1  $f4, %lo(D_80048378)($at)
+/* 0B7B74 7F083044 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
 /* 0B7B78 7F083048 460A9182 */  mul.s $f6, $f18, $f10
 /* 0B7B7C 7F08304C 46083303 */  div.s $f12, $f6, $f8
 /* 0B7B80 7F083050 46046482 */  mul.s $f18, $f12, $f4
@@ -15704,9 +15276,9 @@ glabel controller_gameplay_interaction
 /* 0B7BDC 7F0830AC 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0B7BE0 7F0830B0 46065200 */  add.s $f8, $f10, $f6
 /* 0B7BE4 7F0830B4 44813000 */  mtc1  $at, $f6
-/* 0B7BE8 7F0830B8 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 0B7BE8 7F0830B8 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 0B7BEC 7F0830BC 460E4102 */  mul.s $f4, $f8, $f14
-/* 0B7BF0 7F0830C0 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0B7BF0 7F0830C0 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0B7BF4 7F0830C4 46122282 */  mul.s $f10, $f4, $f18
 /* 0B7BF8 7F0830C8 46065303 */  div.s $f12, $f10, $f6
 /* 0B7BFC 7F0830CC 46086102 */  mul.s $f4, $f12, $f8
@@ -15922,8 +15494,8 @@ glabel controller_gameplay_interaction
 /* 0B7EE8 7F0833B8 4502000A */  bc1fl .L7F0833E4
 /* 0B7EEC 7F0833BC 4600103C */   c.lt.s $f2, $f0
 /* 0B7EF0 7F0833C0 C4245138 */  lwc1  $f4, %lo(D_80055138)($at)
-/* 0B7EF4 7F0833C4 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B7EF8 7F0833C8 C4328378 */  lwc1  $f18, %lo(D_80048378)($at)
+/* 0B7EF4 7F0833C4 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B7EF8 7F0833C8 C4328378 */  lwc1  $f18, %lo(global_timer_delta)($at)
 /* 0B7EFC 7F0833CC 46122282 */  mul.s $f10, $f4, $f18
 /* 0B7F00 7F0833D0 460A0180 */  add.s $f6, $f0, $f10
 /* 0B7F04 7F0833D4 E5060178 */  swc1  $f6, 0x178($t0)
@@ -15947,8 +15519,8 @@ glabel controller_gameplay_interaction
 /* 0B7F44 7F083414 4502000A */  bc1fl .L7F083440
 /* 0B7F48 7F083418 3C013F80 */   lui   $at, %hi(D_3F80513C) # $at, 0x3f80
 /* 0B7F4C 7F08341C C424513C */  lwc1  $f4, %lo(D_3F80513C)($at)
-/* 0B7F50 7F083420 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B7F54 7F083424 C4328378 */  lwc1  $f18, %lo(D_80048378)($at)
+/* 0B7F50 7F083420 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B7F54 7F083424 C4328378 */  lwc1  $f18, %lo(global_timer_delta)($at)
 /* 0B7F58 7F083428 46122282 */  mul.s $f10, $f4, $f18
 /* 0B7F5C 7F08342C 460A0181 */  sub.s $f6, $f0, $f10
 /* 0B7F60 7F083430 E5060178 */  swc1  $f6, 0x178($t0)
@@ -16280,7 +15852,7 @@ glabel controller_gameplay_interaction
 .L7F0838E4:
 /* 0B8414 7F0838E4 8E080000 */  lw    $t0, ($s0)
 /* 0B8418 7F0838E8 3C018005 */  li    $at, 0x80050000 # -0.000000
-/* 0B841C 7F0838EC C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0B841C 7F0838EC C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0B8420 7F0838F0 C5060160 */  lwc1  $f6, 0x160($t0)
 /* 0B8424 7F0838F4 C5000158 */  lwc1  $f0, 0x158($t0)
 /* 0B8428 7F0838F8 46083082 */  mul.s $f2, $f6, $f8
@@ -16415,7 +15987,7 @@ glabel controller_gameplay_interaction
 /* 0B85F4 7F083AC4 8E080000 */  lw    $t0, ($s0)
 .L7F083AC8:
 /* 0B85F8 7F083AC8 3C018005 */  li    $at, 0x80050000 # -0.000000
-/* 0B85FC 7F083ACC C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 0B85FC 7F083ACC C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 0B8600 7F083AD0 C50A0160 */  lwc1  $f10, 0x160($t0)
 /* 0B8604 7F083AD4 3C014060 */  li    $at, 0x40600000 # 3.500000
 /* 0B8608 7F083AD8 44819000 */  mtc1  $at, $f18
@@ -17057,11 +16629,11 @@ glabel sub_GAME_7F084360
 /* 0B8EBC 7F08438C 8FBF0024 */   lw    $ra, 0x24($sp)
 /* 0B8EC0 7F084390 8F3964B4 */  lw    $t9, %lo(D_800364B4)($t9)
 /* 0B8EC4 7F084394 3C088008 */  lui   $t0, %hi(dword_CODE_bss_8007999C) # $t0, 0x8008
-/* 0B8EC8 7F084398 3C098005 */  lui   $t1, %hi(D_8004837C) # $t1, 0x8005
+/* 0B8EC8 7F084398 3C098005 */  lui   $t1, %hi(global_timer) # $t1, 0x8005
 /* 0B8ECC 7F08439C 572000A7 */  bnezl $t9, .L7F08463C
 /* 0B8ED0 7F0843A0 8FBF0024 */   lw    $ra, 0x24($sp)
 /* 0B8ED4 7F0843A4 8D08999C */  lw    $t0, %lo(dword_CODE_bss_8007999C)($t0)
-/* 0B8ED8 7F0843A8 8D29837C */  lw    $t1, %lo(D_8004837C)($t1)
+/* 0B8ED8 7F0843A8 8D29837C */  lw    $t1, %lo(global_timer)($t1)
 /* 0B8EDC 7F0843AC 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
 /* 0B8EE0 7F0843B0 0109082A */  slt   $at, $t0, $t1
 /* 0B8EE4 7F0843B4 502000A1 */  beql  $at, $zero, .L7F08463C
@@ -17229,8 +16801,8 @@ glabel sub_GAME_7F084360
 /* 0B9140 7F084610 00000000 */   nop   
 /* 0B9144 7F084614 2401000F */  li    $at, 15
 /* 0B9148 7F084618 0041001B */  divu  $zero, $v0, $at
-/* 0B914C 7F08461C 3C198005 */  lui   $t9, %hi(D_8004837C) # $t9, 0x8005
-/* 0B9150 7F084620 8F39837C */  lw    $t9, %lo(D_8004837C)($t9)
+/* 0B914C 7F08461C 3C198005 */  lui   $t9, %hi(global_timer) # $t9, 0x8005
+/* 0B9150 7F084620 8F39837C */  lw    $t9, %lo(global_timer)($t9)
 /* 0B9154 7F084624 0000C010 */  mfhi  $t8
 /* 0B9158 7F084628 3C018008 */  lui   $at, %hi(dword_CODE_bss_8007999C) # $at, 0x8008
 /* 0B915C 7F08462C 03194021 */  addu  $t0, $t8, $t9
@@ -17409,8 +16981,8 @@ glabel MoveBond
 /* 0B93AC 7F08487C C7A4038C */  lwc1  $f4, 0x38c($sp)
 /* 0B93B0 7F084880 3C018005 */  lui   $at, %hi(D_8005516C) # $at, 0x8005
 /* 0B93B4 7F084884 C5080174 */  lwc1  $f8, 0x174($t0)
-/* 0B93B8 7F084888 3C098005 */  lui   $t1, %hi(D_80048378) # $t1, 0x8005
-/* 0B93BC 7F08488C 25298378 */  addiu $t1, %lo(D_80048378) # addiu $t1, $t1, -0x7c88
+/* 0B93B8 7F084888 3C098005 */  lui   $t1, %hi(global_timer_delta) # $t1, 0x8005
+/* 0B93BC 7F08488C 25298378 */  addiu $t1, %lo(global_timer_delta) # addiu $t1, $t1, -0x7c88
 /* 0B93C0 7F084890 46044280 */  add.s $f10, $f8, $f4
 /* 0B93C4 7F084894 00001825 */  move  $v1, $zero
 /* 0B93C8 7F084898 2404000C */  li    $a0, 12
@@ -17477,9 +17049,9 @@ glabel MoveBond
 .L7F08497C:
 /* 0B94AC 7F08497C 3C0A8003 */  lui   $t2, %hi(D_80036448) # $t2, 0x8003
 /* 0B94B0 7F084980 8D4A6448 */  lw    $t2, %lo(D_80036448)($t2)
-/* 0B94B4 7F084984 3C098005 */  lui   $t1, %hi(D_80048378) # $t1, 0x8005
+/* 0B94B4 7F084984 3C098005 */  lui   $t1, %hi(global_timer_delta) # $t1, 0x8005
 /* 0B94B8 7F084988 24010001 */  li    $at, 1
-/* 0B94BC 7F08498C 25298378 */  addiu $t1, %lo(D_80048378) # addiu $t1, $t1, -0x7c88
+/* 0B94BC 7F08498C 25298378 */  addiu $t1, %lo(global_timer_delta) # addiu $t1, $t1, -0x7c88
 /* 0B94C0 7F084990 15410211 */  bne   $t2, $at, .L7F0851D8
 /* 0B94C4 7F084994 8E280000 */   lw    $t0, ($s1)
 /* 0B94C8 7F084998 C50A014C */  lwc1  $f10, 0x14c($t0)
@@ -17955,8 +17527,8 @@ glabel MoveBond
 /* 0B9BB8 7F085088 00001025 */   move  $v0, $zero
 /* 0B9BBC 7F08508C 3C018003 */  lui   $at, %hi(D_80036488) # $at, 0x8003
 /* 0B9BC0 7F085090 C4286488 */  lwc1  $f8, %lo(D_80036488)($at)
-/* 0B9BC4 7F085094 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0B9BC8 7F085098 C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 0B9BC4 7F085094 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0B9BC8 7F085098 C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 0B9BCC 7F08509C 3C038003 */  lui   $v1, %hi(D_8003647C) # $v1, 0x8003
 /* 0B9BD0 7F0850A0 2463647C */  addiu $v1, %lo(D_8003647C) # addiu $v1, $v1, 0x647c
 /* 0B9BD4 7F0850A4 46064003 */  div.s $f0, $f8, $f6
@@ -18198,12 +17770,12 @@ glabel MoveBond
 /* 0B9F3C 7F08540C 4600103C */  c.lt.s $f2, $f0
 /* 0B9F40 7F085410 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0B9F44 7F085414 44819000 */  mtc1  $at, $f18
-/* 0B9F48 7F085418 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 0B9F48 7F085418 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 0B9F4C 7F08541C 45000002 */  bc1f  .L7F085428
 /* 0B9F50 7F085420 46085403 */   div.s $f16, $f10, $f8
 /* 0B9F54 7F085424 46000086 */  mov.s $f2, $f0
 .L7F085428:
-/* 0B9F58 7F085428 C4268378 */  lwc1  $f6, %lo(D_80048378)($at)
+/* 0B9F58 7F085428 C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
 /* 0B9F5C 7F08542C 3C014234 */  li    $at, 0x42340000 # 45.000000
 /* 0B9F60 7F085430 44812000 */  mtc1  $at, $f4
 /* 0B9F64 7F085434 3C108008 */  lui   $s0, %hi(flt_CODE_bss_800799BC) # $s0, 0x8008
@@ -18605,8 +18177,8 @@ glabel MoveBond
 /* 0BA510 7F0859E0 3C013F40 */  li    $at, 0x3F400000 # 0.750000
 .L7F0859E4:
 /* 0BA514 7F0859E4 44810000 */  mtc1  $at, $f0
-/* 0BA518 7F0859E8 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0BA51C 7F0859EC C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0BA518 7F0859E8 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0BA51C 7F0859EC C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0BA520 7F0859F0 3C018005 */  lui   $at, %hi(D_80055224) # $at, 0x8005
 /* 0BA524 7F0859F4 C4245224 */  lwc1  $f4, %lo(D_80055224)($at)
 /* 0BA528 7F0859F8 46080182 */  mul.s $f6, $f0, $f8
@@ -18633,8 +18205,8 @@ glabel MoveBond
 /* 0BA578 7F085A48 0FC15FAB */  jal   sinf
 /* 0BA57C 7F085A4C 460A4301 */   sub.s $f12, $f8, $f10
 /* 0BA580 7F085A50 8E2C0000 */  lw    $t4, ($s1)
-/* 0BA584 7F085A54 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0BA588 7F085A58 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0BA584 7F085A54 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0BA588 7F085A58 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0BA58C 7F085A5C C5860174 */  lwc1  $f6, 0x174($t4)
 /* 0BA590 7F085A60 3C018005 */  lui   $at, %hi(D_8005522C) # $at, 0x8005
 /* 0BA594 7F085A64 46003102 */  mul.s $f4, $f6, $f0
@@ -18648,8 +18220,8 @@ glabel MoveBond
 /* 0BA5B4 7F085A84 0FC15FA8 */  jal   cosf
 /* 0BA5B8 7F085A88 46064301 */   sub.s $f12, $f8, $f6
 /* 0BA5BC 7F085A8C 8E390000 */  lw    $t9, ($s1)
-/* 0BA5C0 7F085A90 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0BA5C4 7F085A94 C4288378 */  lwc1  $f8, %lo(D_80048378)($at)
+/* 0BA5C0 7F085A90 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0BA5C4 7F085A94 C4288378 */  lwc1  $f8, %lo(global_timer_delta)($at)
 /* 0BA5C8 7F085A98 C72A0174 */  lwc1  $f10, 0x174($t9)
 /* 0BA5CC 7F085A9C 27A403AC */  addiu $a0, $sp, 0x3ac
 /* 0BA5D0 7F085AA0 24050001 */  li    $a1, 1
@@ -18669,8 +18241,8 @@ glabel MoveBond
 /* 0BA608 7F085AD8 59A00234 */  blezl $t5, .L7F0863AC
 /* 0BA60C 7F085ADC 8E280000 */   lw    $t0, ($s1)
 /* 0BA610 7F085AE0 8E280000 */  lw    $t0, ($s1)
-/* 0BA614 7F085AE4 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0BA618 7F085AE8 C42E8378 */  lwc1  $f14, %lo(D_80048378)($at)
+/* 0BA614 7F085AE4 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0BA618 7F085AE8 C42E8378 */  lwc1  $f14, %lo(global_timer_delta)($at)
 /* 0BA61C 7F085AEC C508048C */  lwc1  $f8, 0x48c($t0)
 /* 0BA620 7F085AF0 C50A0408 */  lwc1  $f10, 0x408($t0)
 /* 0BA624 7F085AF4 C5040494 */  lwc1  $f4, 0x494($t0)
@@ -18735,8 +18307,8 @@ glabel MoveBond
 /* 0BA6FC 7F085BCC 0C002408 */  jal   music_related_28
 /* 0BA700 7F085BD0 8E040004 */   lw    $a0, 4($s0)
 .L7F085BD4:
-/* 0BA704 7F085BD4 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0BA708 7F085BD8 C42E8378 */  lwc1  $f14, %lo(D_80048378)($at)
+/* 0BA704 7F085BD4 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0BA708 7F085BD8 C42E8378 */  lwc1  $f14, %lo(global_timer_delta)($at)
 /* 0BA70C 7F085BDC 3C018003 */  lui   $at, %hi(D_80036AF4) # $at, 0x8003
 /* 0BA710 7F085BE0 C42A6AF4 */  lwc1  $f10, %lo(D_80036AF4)($at)
 /* 0BA714 7F085BE4 3C013F00 */  li    $at, 0x3F000000 # 0.500000
@@ -18887,8 +18459,8 @@ glabel MoveBond
 /* 0BA928 7F085DF8 0FC202CD */  jal   sub_GAME_7F080B34
 /* 0BA92C 7F085DFC 8FA603A0 */   lw    $a2, 0x3a0($sp)
 /* 0BA930 7F085E00 8E280000 */  lw    $t0, ($s1)
-/* 0BA934 7F085E04 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0BA938 7F085E08 C42E8378 */  lwc1  $f14, %lo(D_80048378)($at)
+/* 0BA934 7F085E04 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0BA938 7F085E08 C42E8378 */  lwc1  $f14, %lo(global_timer_delta)($at)
 /* 0BA93C 7F085E0C C5020504 */  lwc1  $f2, 0x504($t0)
 /* 0BA940 7F085E10 C50A0498 */  lwc1  $f10, 0x498($t0)
 /* 0BA944 7F085E14 C50004FC */  lwc1  $f0, 0x4fc($t0)
@@ -18932,10 +18504,10 @@ glabel MoveBond
 /* 0BA9DC 7F085EAC C5040498 */  lwc1  $f4, 0x498($t0)
 /* 0BA9E0 7F085EB0 C50A0174 */  lwc1  $f10, 0x174($t0)
 /* 0BA9E4 7F085EB4 C50604A0 */  lwc1  $f6, 0x4a0($t0)
-/* 0BA9E8 7F085EB8 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 0BA9E8 7F085EB8 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 0BA9EC 7F085EBC 460A2202 */  mul.s $f8, $f4, $f10
 /* 0BA9F0 7F085EC0 C504016C */  lwc1  $f4, 0x16c($t0)
-/* 0BA9F4 7F085EC4 C42E8378 */  lwc1  $f14, %lo(D_80048378)($at)
+/* 0BA9F4 7F085EC4 C42E8378 */  lwc1  $f14, %lo(global_timer_delta)($at)
 /* 0BA9F8 7F085EC8 46043282 */  mul.s $f10, $f6, $f4
 /* 0BA9FC 7F085ECC 460A4181 */  sub.s $f6, $f8, $f10
 /* 0BAA00 7F085ED0 C7AA03AC */  lwc1  $f10, 0x3ac($sp)
@@ -19740,7 +19312,7 @@ glabel sub_GAME_7F086990
 /* 0BB5A8 7F086A78 24429990 */  addiu $v0, %lo(flt_CODE_bss_80079990) # addiu $v0, $v0, -0x6670
 /* 0BB5AC 7F086A7C 44806000 */  mtc1  $zero, $f12
 /* 0BB5B0 7F086A80 C4420000 */  lwc1  $f2, ($v0)
-/* 0BB5B4 7F086A84 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
+/* 0BB5B4 7F086A84 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 0BB5B8 7F086A88 46026032 */  c.eq.s $f12, $f2
 /* 0BB5BC 7F086A8C 00000000 */  nop   
 /* 0BB5C0 7F086A90 45000006 */  bc1f  .L7F086AAC
@@ -19751,7 +19323,7 @@ glabel sub_GAME_7F086990
 /* 0BB5D4 7F086AA4 4501000B */  bc1t  .L7F086AD4
 /* 0BB5D8 7F086AA8 00000000 */   nop   
 .L7F086AAC:
-/* 0BB5DC 7F086AAC C4208378 */  lwc1  $f0, %lo(D_80048378)($at)
+/* 0BB5DC 7F086AAC C4208378 */  lwc1  $f0, %lo(global_timer_delta)($at)
 /* 0BB5E0 7F086AB0 C4520008 */  lwc1  $f18, 8($v0)
 /* 0BB5E4 7F086AB4 C7A60040 */  lwc1  $f6, 0x40($sp)
 /* 0BB5E8 7F086AB8 46001202 */  mul.s $f8, $f2, $f0
@@ -19764,8 +19336,8 @@ glabel sub_GAME_7F086990
 .L7F086AD4:
 /* 0BB604 7F086AD4 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
 /* 0BB608 7F086AD8 8C42A0B0 */  lw    $v0, %lo(ptr_BONDdata)($v0)
-/* 0BB60C 7F086ADC 3C018005 */  lui   $at, %hi(D_80048378) # $at, 0x8005
-/* 0BB610 7F086AE0 C4208378 */  lwc1  $f0, %lo(D_80048378)($at)
+/* 0BB60C 7F086ADC 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0BB610 7F086AE0 C4208378 */  lwc1  $f0, %lo(global_timer_delta)($at)
 /* 0BB614 7F086AE4 C4480504 */  lwc1  $f8, 0x504($v0)
 /* 0BB618 7F086AE8 C44A0498 */  lwc1  $f10, 0x498($v0)
 /* 0BB61C 7F086AEC C45004FC */  lwc1  $f16, 0x4fc($v0)
@@ -22811,15 +22383,15 @@ glabel maybe_mp_interface
 /* 0BDF64 7F089434 00002025 */   move  $a0, $zero
 /* 0BDF68 7F089438 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0BDF6C 7F08943C 00000000 */   nop   
-/* 0BDF70 7F089440 0C001C0F */  jal   music_related
+/* 0BDF70 7F089440 0C001C0F */  jal   musicTrack1Vol
 /* 0BDF74 7F089444 3044FFFF */   andi  $a0, $v0, 0xffff
-/* 0BDF78 7F089448 3C018002 */  lui   $at, %hi(D_8002434C) # $at, 0x8002
-/* 0BDF7C 7F08944C AC20434C */  sw    $zero, %lo(D_8002434C)($at)
-/* 0BDF80 7F089450 0C001CF1 */  jal   music_related_2nd_block_1
+/* 0BDF78 7F089448 3C018002 */  lui   $at, %hi(music1_playing) # $at, 0x8002
+/* 0BDF7C 7F08944C AC20434C */  sw    $zero, %lo(music1_playing)($at)
+/* 0BDF80 7F089450 0C001CF1 */  jal   musicTrack2Vol
 /* 0BDF84 7F089454 00002025 */   move  $a0, $zero
-/* 0BDF88 7F089458 3C018002 */  lui   $at, %hi(D_80024350) # $at, 0x8002
-/* 0BDF8C 7F08945C AC204350 */  sw    $zero, %lo(D_80024350)($at)
-/* 0BDF90 7F089460 0C001B9F */  jal   music_track_related
+/* 0BDF88 7F089458 3C018002 */  lui   $at, %hi(music2_playing) # $at, 0x8002
+/* 0BDF8C 7F08945C AC204350 */  sw    $zero, %lo(music2_playing)($at)
+/* 0BDF90 7F089460 0C001B9F */  jal   musicTrack1Play
 /* 0BDF94 7F089464 2404001B */   li    $a0, 27
 /* 0BDF98 7F089468 10000003 */  b     .L7F089478
 /* 0BDF9C 7F08946C 00000000 */   nop   
@@ -22927,8 +22499,8 @@ glabel maybe_mp_interface
 /* 0BE110 7F0895E0 1840000C */  blez  $v0, .L7F089614
 /* 0BE114 7F0895E4 00001825 */   move  $v1, $zero
 /* 0BE118 7F0895E8 8FA8003C */  lw    $t0, 0x3c($sp)
-/* 0BE11C 7F0895EC 3C0A8008 */  lui   $t2, %hi(player1_playerdata) # $t2, 0x8008
-/* 0BE120 7F0895F0 254A9EF0 */  addiu $t2, %lo(player1_playerdata) # addiu $t2, $t2, -0x6110
+/* 0BE11C 7F0895EC 3C0A8008 */  lui   $t2, %hi(player1_player_data) # $t2, 0x8008
+/* 0BE120 7F0895F0 254A9EF0 */  addiu $t2, %lo(player1_player_data) # addiu $t2, $t2, -0x6110
 /* 0BE124 7F0895F4 00084880 */  sll   $t1, $t0, 2
 /* 0BE128 7F0895F8 012A1021 */  addu  $v0, $t1, $t2
 .L7F0895FC:
@@ -23448,11 +23020,11 @@ glabel record_damage_kills
 /* 0BE6D0 7F089BA0 C54A0148 */  lwc1  $f10, 0x148($t2)
 /* 0BE6D4 7F089BA4 3C0142B4 */  li    $at, 0x42B40000 # 90.000000
 /* 0BE6D8 7F089BA8 000B60C0 */  sll   $t4, $t3, 3
-/* 0BE6DC 7F089BAC 3C0D8008 */  lui   $t5, %hi(player1_playerdata) # $t5, 0x8008
+/* 0BE6DC 7F089BAC 3C0D8008 */  lui   $t5, %hi(player1_player_data) # $t5, 0x8008
 /* 0BE6E0 7F089BB0 018B6023 */  subu  $t4, $t4, $t3
 /* 0BE6E4 7F089BB4 44813000 */  mtc1  $at, $f6
 /* 0BE6E8 7F089BB8 000C6100 */  sll   $t4, $t4, 4
-/* 0BE6EC 7F089BBC 25AD9EF0 */  addiu $t5, %lo(player1_playerdata) # addiu $t5, $t5, -0x6110
+/* 0BE6EC 7F089BBC 25AD9EF0 */  addiu $t5, %lo(player1_player_data) # addiu $t5, $t5, -0x6110
 /* 0BE6F0 7F089BC0 3C014387 */  li    $at, 0x43870000 # 270.000000
 /* 0BE6F4 7F089BC4 018D1021 */  addu  $v0, $t4, $t5
 /* 0BE6F8 7F089BC8 46122201 */  sub.s $f8, $f4, $f18
@@ -23582,13 +23154,13 @@ glabel record_damage_kills
 /* 0BE8C0 7F089D90 8FA4002C */   lw    $a0, 0x2c($sp)
 /* 0BE8C4 7F089D94 8FAD004C */  lw    $t5, 0x4c($sp)
 /* 0BE8C8 7F089D98 8FAF002C */  lw    $t7, 0x2c($sp)
-/* 0BE8CC 7F089D9C 3C088008 */  lui   $t0, %hi(player1_playerdata) # $t0, 0x8008
+/* 0BE8CC 7F089D9C 3C088008 */  lui   $t0, %hi(player1_player_data) # $t0, 0x8008
 /* 0BE8D0 7F089DA0 000D70C0 */  sll   $t6, $t5, 3
 /* 0BE8D4 7F089DA4 01CD7023 */  subu  $t6, $t6, $t5
 /* 0BE8D8 7F089DA8 000E7100 */  sll   $t6, $t6, 4
 /* 0BE8DC 7F089DAC 000FC080 */  sll   $t8, $t7, 2
 /* 0BE8E0 7F089DB0 01D8C821 */  addu  $t9, $t6, $t8
-/* 0BE8E4 7F089DB4 25089EF0 */  addiu $t0, %lo(player1_playerdata) # addiu $t0, $t0, -0x6110
+/* 0BE8E4 7F089DB4 25089EF0 */  addiu $t0, %lo(player1_player_data) # addiu $t0, $t0, -0x6110
 /* 0BE8E8 7F089DB8 03281021 */  addu  $v0, $t9, $t0
 /* 0BE8EC 7F089DBC 8C490024 */  lw    $t1, 0x24($v0)
 /* 0BE8F0 7F089DC0 252A0001 */  addiu $t2, $t1, 1
@@ -26611,8 +26183,8 @@ void trigger_explosions_around_player(void) {
 GLOBAL_ASM(
 .text
 glabel trigger_explosions_around_player
-/* 0C0AF4 7F08BFC4 3C0F8005 */  lui   $t7, %hi(D_8004837C) # $t7, 0x8005
-/* 0C0AF8 7F08BFC8 8DEF837C */  lw    $t7, %lo(D_8004837C)($t7)
+/* 0C0AF4 7F08BFC4 3C0F8005 */  lui   $t7, %hi(global_timer) # $t7, 0x8005
+/* 0C0AF8 7F08BFC8 8DEF837C */  lw    $t7, %lo(global_timer)($t7)
 /* 0C0AFC 7F08BFCC 240E0001 */  li    $t6, 1
 /* 0C0B00 7F08BFD0 3C018003 */  lui   $at, %hi(D_80036444) # $at, 0x8003
 /* 0C0B04 7F08BFD4 AC2E6444 */  sw    $t6, %lo(D_80036444)($at)

@@ -32,10 +32,10 @@ PROJECTILES_TYPE_GLAUNCH_ROUND, 0xFFFFFFFF};
 #ifdef NONMATCHING
 void init_obj_register_difficulty_vals(void) {
     objectiveregisters1 = 0;
-    setting_007_1 = 1.0f;
-    setting_007_2 = 1.0f;
-    setting_007_3 = 1.0f;
-    setting_007_4 = 1.0f;
+    ai_accuracy_modifier = 1.0f;
+    ai_damage_modifier = 1.0f;
+    ai_health_modifier = 1.0f;
+    ai_reaction_speed = 1.0f;
     setting_007_5 = 0;
 }
 #else
@@ -46,14 +46,14 @@ glabel init_obj_register_difficulty_vals
 /* 035B54 7F001024 44810000 */  mtc1  $at, $f0
 /* 035B58 7F001028 3C018003 */  lui   $at, %hi(objectiveregisters1) # $at, 0x8003
 /* 035B5C 7F00102C AC200978 */  sw    $zero, %lo(objectiveregisters1)($at)
-/* 035B60 7F001030 3C018003 */  lui   $at, %hi(setting_007_1) # $at, 0x8003
-/* 035B64 7F001034 E420CE40 */  swc1  $f0, %lo(setting_007_1)($at)
-/* 035B68 7F001038 3C018003 */  lui   $at, %hi(setting_007_2) # $at, 0x8003
-/* 035B6C 7F00103C E420CE44 */  swc1  $f0, %lo(setting_007_2)($at)
-/* 035B70 7F001040 3C018003 */  lui   $at, %hi(setting_007_3) # $at, 0x8003
-/* 035B74 7F001044 E420CE48 */  swc1  $f0, %lo(setting_007_3)($at)
-/* 035B78 7F001048 3C018003 */  lui   $at, %hi(setting_007_4) # $at, 0x8003
-/* 035B7C 7F00104C E420CE4C */  swc1  $f0, %lo(setting_007_4)($at)
+/* 035B60 7F001030 3C018003 */  lui   $at, %hi(ai_accuracy_modifier) # $at, 0x8003
+/* 035B64 7F001034 E420CE40 */  swc1  $f0, %lo(ai_accuracy_modifier)($at)
+/* 035B68 7F001038 3C018003 */  lui   $at, %hi(ai_damage_modifier) # $at, 0x8003
+/* 035B6C 7F00103C E420CE44 */  swc1  $f0, %lo(ai_damage_modifier)($at)
+/* 035B70 7F001040 3C018003 */  lui   $at, %hi(ai_health_modifier) # $at, 0x8003
+/* 035B74 7F001044 E420CE48 */  swc1  $f0, %lo(ai_health_modifier)($at)
+/* 035B78 7F001048 3C018003 */  lui   $at, %hi(ai_reaction_speed) # $at, 0x8003
+/* 035B7C 7F00104C E420CE4C */  swc1  $f0, %lo(ai_reaction_speed)($at)
 /* 035B80 7F001050 3C018003 */  lui   $at, %hi(setting_007_5)
 /* 035B84 7F001054 03E00008 */  jr    $ra
 /* 035B88 7F001058 AC20CE50 */   sw    $zero, %lo(setting_007_5)($at)

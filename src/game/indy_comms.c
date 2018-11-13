@@ -109,7 +109,7 @@ glabel indy_send_capture_data
 
 
 #ifdef NONMATCHING
-void indy_load_ramrom_file(void) {
+void indy_romCopyAligned(void) {
     ? sp1C;
     ? sp20;
     ? sp24;
@@ -127,7 +127,7 @@ void indy_load_ramrom_file(void) {
 #else
 GLOBAL_ASM(
 .text
-glabel indy_load_ramrom_file
+glabel indy_romCopyAligned
 /* 104B4C 7F0D001C 3C0E8005 */  lui   $t6, %hi(indy_ready) # $t6, 0x8005
 /* 104B50 7F0D0020 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
 /* 104B54 7F0D0024 27BDFFD8 */  addiu $sp, $sp, -0x28

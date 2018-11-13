@@ -1,10 +1,10 @@
 #include "ultra64.h"
 
 
-/* data
-D:80036BA4     ptr_mcm_groupings:.word          8,      0x13,      0x1E,      0x2B,      0x32,      0x39,      0x45
-D:80036BA4                                              # DATA XREF: display_debug_menu_text_onscreen+10o
-D:80036BA4                     .word       0x4D,0xFFFFFFFF
+// data
+//D:80036BA4
+s32 ptr_mcm_groupings[] = {8, 0x13, 0x1E, 0x2B, 0x32, 0x39, 0x45, 0x4D, -1};
+/*
 D:80036BC8     ptr_mcm_positions:mcm_layout <8, 5>      # DATA XREF: display_debug_menu_text_onscreen+18o
 D:80036BD0                     mcm_layout <8, 6>
 D:80036BD8                     mcm_layout <8, 7>
@@ -82,374 +82,183 @@ D:80036E10                     mcm_layout <0x39, 0x18>
 D:80036E18                     mcm_layout <0x39, 0x19>
 D:80036E20                     mcm_layout <0x39, 0x1A>
 D:80036E28                     mcm_layout <0x39, 0x1B>
-D:80036E30     mcm_strings:    .word aMoveView          # DATA XREF: display_debug_menu_text_onscreen+20o
-D:80036E30                                              # "move view"
-D:80036E34                     .word aStanView          # "stan view"
-D:80036E38                     .word aBondView          # "bond view"
-D:80036E3C                     .word aLevel             # "level"
-D:80036E40                     .word aRegion            # "region"
-D:80036E44                     .word aScale             # "scale"
-D:80036E48                     .word aPlayTitle         # "play title"
-D:80036E4C                     .word aBondDie           # "bond die"
-D:80036E50                     .word aSelectAnim        # "select anim"
-D:80036E54                     .word aGunPos            # "gun pos"
-D:80036E58                     .word aFlashColour       # "flash colour"
-D:80036E5C                     .word aHitColour         # "hit colour"
-D:80036E60                     .word aMusic             # "music"
-D:80036E64                     .word aSfx               # "sfx"
-D:80036E68                     .word aInvincible        # "invincible"
-D:80036E6C                     .word aVisible           # "visible"
-D:80036E70                     .word aCollisions        # "collisions"
-D:80036E74                     .word aAllGuns           # "all guns"
-D:80036E78                     .word aMaxAmmo           # "max ammo"
-D:80036E7C                     .word aDisplaySpeed      # "display speed"
-D:80036E80                     .word aBackground        # "background"
-D:80036E84                     .word aProps             # "props"
-D:80036E88                     .word aStanHit           # "stan hit"
-D:80036E8C                     .word aStanRegion        # "stan region"
-D:80036E90                     .word aStanProblems      # "stan problems"
-D:80036E94                     .word aPrintManPos       # "print man pos"
-D:80036E98                     .word aPortClose         # "port close"
-D:80036E9C                     .word aPortInf           # "port inf"
-D:80036EA0                     .word aPortApprox        # "port approx"
-D:80036EA4                     .word aPrRoomLoads       # "pr room loads"
-D:80036EA8                     .word aShowMemUse        # "show mem use"
-D:80036EAC                     .word aShowMemBars       # "show mem bars"
-D:80036EB0                     .word aGrabRgb           # "grab rgb"
-D:80036EB4                     .word aGrabJpeg          # "grab jpeg"
-D:80036EB8                     .word aGrabTask          # "grab task"
-D:80036EBC                     .word aRndWalk           # "rnd walk"
-D:80036EC0                     .word aRecordRamrom      # "record ramrom"
-D:80036EC4                     .word aRecord1           # "record 1"
-D:80036EC8                     .word aRecord2           # "record 2"
-D:80036ECC                     .word aRecord3           # "record 3"
-D:80036ED0                     .word aReplayRamrom      # "replay ramrom"
-D:80036ED4                     .word aSaveRamrom        # "save ramrom"
-D:80036ED8                     .word aLoadRamrom        # "load ramrom"
-D:80036EDC                     .word aAutoYAim          # "auto y aim"
-D:80036EE0                     .word aAutoXAim          # "auto x aim"
-D:80036EE4                     .word a007               # "007"
-D:80036EE8                     .word aAgent             # "agent"
-D:80036EEC                     .word aAll               # "all"
-D:80036EF0                     .word aFast              # "fast"
-D:80036EF4                     .word aObjectives        # "objectives"
-D:80036EF8                     .word aMargTop           # "marg top"
-D:80036EFC                     .word aMargBot           # "marg bot"
-D:80036F00                     .word aMargLeft          # "marg left"
-D:80036F04                     .word aMargRight         # "marg right"
-D:80036F08                     .word aMargReset         # "marg reset"
-D:80036F0C                     .word aScreenSize        # "screen size"
-D:80036F10                     .word aScreenPos         # "screen pos"
-D:80036F14                     .word aShowPatrols       # "show patrols"
-D:80036F18                     .word aIntro             # "intro"
-D:80036F1C                     .word aIntroEdit         # "intro edit"
-D:80036F20                     .word aIntroPos          # "intro pos"
-D:80036F24                     .word aWorldPos          # "world pos"
-D:80036F28                     .word aGunKeyPos         # "gun key pos"
-D:80036F2C                     .word aVisCvg            # "vis cvg"
-D:80036F30                     .word aChrNum            # "chr num"
-D:80036F34                     .word aRoomBlocks        # "room blocks"
-D:80036F38                     .word aProfile           # "profile"
-D:80036F3C                     .word aObjLoad           # "obj load"
-D:80036F40                     .word aWeaponLoad        # "weapon load"
-D:80036F44                     .word aJoy2SkyEdit       # "joy2 sky edit"
-D:80036F48                     .word aJoy2HitsEdit      # "joy2 hits edit"
-D:80036F4C                     .word aJoy2DetailEdit    # "joy2 detail edit"
-D:80036F50                     .word aExplosionInfo     # "explosion info"
-D:80036F54                     .word aMagicFog          # "magic fog"
-D:80036F58                     .word aGunWatchPos       # "gun watch pos"
-D:80036F5C                     .word aTestingManPos     # "testing man pos"
-D:80036F60                     .word aFog               # "fog"
-D:80036F64     debug_render_raster:.word 2              # DATA XREF: sub_CODE_7F0904C4+34w
-D:80036F64                                              # sub_CODE_7F090508+34w
-D:80036F64                                              # sub_CODE_7F09054C+34w
-D:80036F64                                              # debug_menu_processor:debug_introposr
-D:80036F64                                              # debug_menu_processor:debug_worldposr
-D:80036F64                                              # get_debug_render_raster+8r
-D:80036F68     debug_freeze_processing:.word 2          # DATA XREF: sub_CODE_7F0904C4+20o
-D:80036F68                                              # sub_CODE_7F0904C4+30w
-D:80036F68                                              # sub_CODE_7F090508+20o
-D:80036F68                                              # sub_CODE_7F090508+30w
-D:80036F68                                              # sub_CODE_7F09054C+20o
-D:80036F68                                              # sub_CODE_7F09054C+30w
-D:80036F68                                              # get_debug_freeze_processing+8r
-D:80036F6C     debug_limit_controller_input:.word 2     # DATA XREF: debug_menu_processor+A4o
-D:80036F6C                                              # debug_menu_processor:loc_CODE_7F090684r
-D:80036F6C                                              # debug_menu_processor+FCw
-D:80036F6C                                              # debug_menu_processor+118o
-D:80036F6C                                              # debug_menu_processor+124w
-D:80036F6C                                              # debug_menu_processor+140o
-D:80036F6C                                              # debug_menu_processor+14Cw
-D:80036F6C                                              # debug_menu_processor+168o
-D:80036F6C                                              # debug_menu_processor+174w
-D:80036F6C                                              # debug_menu_processor+190o
-D:80036F6C                                              # debug_menu_processor+19Cw
-D:80036F6C                                              # get_debug_limit_controller_input+8r
-D:80036F6C                                              # set_debug_limit_controller_input+10w
-D:80036F70     debug_unknown:  .word 2                  # DATA XREF: sub_CODE_7F0904C4+28o
-D:80036F70                                              # sub_CODE_7F0904C4+2Cw
-D:80036F70                                              # sub_CODE_7F090508+28o
-D:80036F70                                              # sub_CODE_7F090508+2Cw
-D:80036F70                                              # sub_CODE_7F09054C+28o
-D:80036F70                                              # sub_CODE_7F09054C+2Cw
-D:80036F70                                              # debug_menu_processor+F8w
-D:80036F70                                              # debug_menu_processor+218w
-D:80036F70                                              # debug_menu_processor+22Cw
-D:80036F70                                              # debug_menu_processor+240w
-D:80036F70                                              # debug_menu_processor+254w
-D:80036F70                                              # debug_menu_processor+268w
-D:80036F70                                              # debug_menu_processor+27Cw
-D:80036F70                                              # debug_menu_processor+290w
-D:80036F70                                              # debug_menu_processor+2A4w
-D:80036F70                                              # debug_menu_processor+2B8w
-D:80036F70                                              # debug_menu_processor+2CCw
-D:80036F70                                              # debug_menu_processor+2F8w
-D:80036F70                                              # debug_menu_processor+788w
-D:80036F70                                              # debug_menu_processor+82Cw
-D:80036F70                                              # debug_menu_processor+840w
-D:80036F70                                              # debug_menu_processor+8CCw
-D:80036F70                                              # set_debug_limit_controller_inputr
-D:80036F74     memusage_display_flag:.word FALSE        # DATA XREF: debug_menu_processor:debug_displayspeedo
-D:80036F74                                              # debug_menu_processor+3F8r
-D:80036F74                                              # debug_menu_processor+404w
-D:80036F74                                              # get_memusage_display_flag+8r
-D:80036F78     debug_do_draw_bg:.word TRUE              # DATA XREF: debug_menu_processor:debug_dodrawbgo
-D:80036F78                                              # debug_menu_processor+420r
-D:80036F78                                              # debug_menu_processor+42Cw
-D:80036F78                                              # get_debug_do_draw_bg+8r
-D:80036F7C     debug_do_draw_obj:.word TRUE             # DATA XREF: debug_menu_processor:debug_dodrawobjo
-D:80036F7C                                              # debug_menu_processor+438r
-D:80036F7C                                              # debug_menu_processor+444w
-D:80036F7C                                              # get_debug_do_draw_obj+8r
-D:80036F80     debug_unknown2: .word 1
-D:80036F84     debug_stanhit_flag:.word FALSE           # DATA XREF: debug_menu_processor:debug_stanhito
-D:80036F84                                              # debug_menu_processor+450r
-D:80036F84                                              # debug_menu_processor+45Cw
-D:80036F84                                              # get_debug_stanhit_flag+8r
-D:80036F88     debug_stanregion_flag:.word FALSE        # DATA XREF: debug_menu_processor:debug_stanregiono
-D:80036F88                                              # debug_menu_processor+468r
-D:80036F88                                              # debug_menu_processor+474w
-D:80036F88                                              # get_debug_stanregion_flag+8r
-D:80036F8C     turbo_mode_flag:.word FALSE              # DATA XREF: debug_menu_processor:debug_turboo
-D:80036F8C                                              # debug_menu_processor+480r
-D:80036F8C                                              # debug_menu_processor+48Cw
-D:80036F8C                                              # get_turbo_mode_flag+8r
-D:80036F90     debug_man_pos_flag:.word 0               # DATA XREF: debug_menu_processor:debug_printmanposo
-D:80036F90                                              # debug_menu_processor+498r
-D:80036F90                                              # debug_menu_processor+4A4w
-D:80036F90                                              # get_debug_man_pos_flag+8r
-D:80036F94     debug_prroomloads_flag:.word 0           # DATA XREF: debug_menu_processor:debug_prroomloadso
-D:80036F94                                              # debug_menu_processor+4E8r
-D:80036F94                                              # debug_menu_processor+4F4w
-D:80036F94                                              # get_debug_prroomloads_flag+8r
-D:80036F98     debug_joy2skyedit_flag:.word 0           # DATA XREF: debug_menu_processor:debug_joy2skyedito
-D:80036F98                                              # debug_menu_processor+7C4r
-D:80036F98                                              # debug_menu_processor+7D0w
-D:80036F98                                              # get_debug_joy2skyedit_flag+8r
-D:80036F9C     debug_joy2hitsedit_flag:.word 0          # DATA XREF: debug_menu_processor:debug_joy2hitsedito
-D:80036F9C                                              # debug_menu_processor+7DCr
-D:80036F9C                                              # debug_menu_processor+7E8w
-D:80036F9C                                              # get_debug_joy2hitsedit_flag+8r
-D:80036FA0     debug_joy2detailedit_flag:.word 0        # DATA XREF: debug_menu_processor:debug_joy2detailedito
-D:80036FA0                                              # debug_menu_processor+7F4r
-D:80036FA0                                              # debug_menu_processor+800w
-D:80036FA0                                              # get_debug_joy2detailedit_flag+8r
-D:80036FA4     debug_explosioninfo_flag:.word 0         # DATA XREF: debug_menu_processor:debug_explosioninfoo
-D:80036FA4                                              # debug_menu_processor+80Cr
-D:80036FA4                                              # debug_menu_processor+818w
-D:80036FA4                                              # get_debug_explosioninfo_flag+8r
-D:80036FA8     linemode_flag:  .word 0                  # DATA XREF: debug_menu_processor:debug_viscvco
-D:80036FA8                                              # debug_menu_processor+7ACr
-D:80036FA8                                              # debug_menu_processor+7B8w
-D:80036FA8                                              # get_linemode_flag+8r
-D:80036FA8                                              # set_linemode_flag+8w
-D:80036FAC     debug_007_unlock_flag:.word 0            # DATA XREF: debug_menu_processor:debug_007o
-D:80036FAC                                              # debug_menu_processor+620r
-D:80036FAC                                              # debug_menu_processor+62Cw
-D:80036FAC                                              # get_debug_007_unlock_flag+8r
-D:80036FB0     debug_enable_agent_levels_flag:.word 0   # DATA XREF: debug_menu_processor:debug_agento
-D:80036FB0                                              # debug_menu_processor+638r
-D:80036FB0                                              # debug_menu_processor+644w
-D:80036FB0                                              # get_debug_enable_agent_levels_flag+8r
-D:80036FB4     debug_enable_all_levels_flag:.word 0     # DATA XREF: debug_menu_processor:debug_allo
-D:80036FB4                                              # debug_menu_processor+650r
-D:80036FB4                                              # debug_menu_processor+65Cw
-D:80036FB4                                              # get_debug_enable_all_levels_flag+8r
-D:80036FB8     debug_chrnum_flag:.word 0                # DATA XREF: debug_menu_processor:debug_chrnumo
-D:80036FB8                                              # debug_menu_processor+794r
-D:80036FB8                                              # debug_menu_processor+7A0w
-D:80036FB8                                              # get_debug_chrnum_flag+8r
-D:80036FBC     debug_gunwatchpos_flag:.byte 0           # DATA XREF: debug_menu_processor:debug_gunwatchposo
-D:80036FBC                                              # debug_menu_processor+84Cr
-D:80036FBC                                              # debug_menu_processor+858w
-D:80036FBC                                              # get_debug_gunwatchpos_flag+8r
-D:80036FBD                     .byte 0, 0
-D:80036FBF     move_watch_item_preview_flag:.byte 0
-D:80036FC0     debug_profile_flag:.word 0               # DATA XREF: debug_menu_processor:debug_profileo
-D:80036FC0                                              # debug_menu_processor+874r
-D:80036FC0                                              # debug_menu_processor+880w
-D:80036FC0                                              # get_debug_profile_flag+8r
-D:80036FC4     debug_enable_taskgrab_flag:.word 0       # DATA XREF: debug_menu_processor:debug_taskgrabo
-D:80036FC4                                              # debug_menu_processor+568r
-D:80036FC4                                              # debug_menu_processor+574w
-D:80036FC4                                              # get_debug_taskgrab_val+8r
-D:80036FC8     debug_testingmanpos_flag:.word 0         # DATA XREF: debug_menu_processor:debug_testingmanposo
-D:80036FC8                                              # debug_menu_processor+4B0r
-D:80036FC8                                              # debug_menu_processor+4BCw
-D:80036FC8                                              # get_debug_testingmanpos_flag+8r
-D:80036FC8                                              # set_debug_testingmanpos_flag+8w
-D:80036FCC     debug_fast_bond_flag:.word 0             # DATA XREF: debug_menu_processor:fast_bond_debugo
-D:80036FCC                                              # debug_menu_processor+668r
-D:80036FCC                                              # debug_menu_processor+674w
-D:80036FCC                                              # get_debug_fast_bond_flag+8r
-D:80036FCC                                              # set_debug_fast_bond_flag+8w
-D:80036FD0     debug_all_obj_complete_flag:.word 0      # DATA XREF: debug_menu_processor:debug_objectiveso
-D:80036FD0                                              # debug_menu_processor+680r
-D:80036FD0                                              # debug_menu_processor+68Cw
-D:80036FD0                                              # get_debug_all_obj_complete_flag+8r
-D:80036FD4     debug_portal_flag:.word 0                # DATA XREF: debug_menu_processor:portal_close_inf_approxo
-D:80036FD4                                              # debug_menu_processor+2D8r
-D:80036FD4                                              # debug_menu_processor+2E4w
-D:80036FD4                                              # getdebug_portal_flag+8r
-D:80036FD8     dword_D_80036FD8:.word 0x80500000
-D:80036FDC                     .word 0x40000
-D:80036FE0                     .word initGameData
-D:80036FE4                     .word 0x7F100000
-D:80036FE8                     .word 0x80600000
-D:80036FEC                     .word 0x40000
-D:80036FF0                     .word 0x70000000
-D:80036FF4                     .word 0x70100000
-D:80036FF8     dword_D_80036FF8:.word 0                 # DATA XREF: debug_menu_processor:loc_CODE_7F090630r
-D:80036FF8                                              # debug_menu_processor+CCw
-D:80036FF8                                              # debug_menu_processor+E0r
-D:80036FF8                                              # debug_menu_processor+924r
-D:80036FF8                                              # debug_menu_processor:loc_CODE_7F090EDCw
-D:80036FF8                                              # debug_menu_processor:loc_CODE_7F090EE4r
-D:80036FFC     grab_rgb_screenshot_flag:.word 0         # DATA XREF: debug_menu_processor+4r
-D:80036FFC                                              # debug_menu_processor+34w
-D:80036FFC                                              # debug_menu_processor+48w
-D:80036FFC                                              # debug_menu_processor+51Cw
-D:80037000     grab_jpeg_screenshot_flag:.word 0        # DATA XREF: debug_menu_processor:loc_CODE_7F0905F4r
-D:80037000                                              # debug_menu_processor+70w
-D:80037000                                              # debug_menu_processor+84w
-D:80037000                                              # debug_menu_processor+540w
-D:80037004     dword_D_80037004:.word 0                 # DATA XREF: debug_menu_processor+708o
-D:80037004                                              # debug_menu_processor+710r
-D:80037004                                              # debug_menu_processor+754o
-D:80037004                                              # debug_menu_processor+760w
-D:80037008     dword_D_80037008:.word 0                 # DATA XREF: debug_menu_processor+718r
-D:80037008                                              # debug_menu_processor+768w
-D:8003700C     dword_D_8003700C:.word 0                 # DATA XREF: debug_menu_processor+724r
-D:8003700C                                              # debug_menu_processor+774w
-D:80037010                     .word 0
 */
+//D:80036E30
+u32 *mcm_strings[] = {
+     "move view",
+     "stan view",
+     "bond view",
+     "level",
+     "region",
+     "scale",
+     "play title",
+     "bond die",
+     "select anim",
+     "gun pos",
+     "flash colour",
+     "hit colour",
+     "music",
+     "sfx",
+     "invincible",
+     "visible",
+     "collisions",
+     "all guns",
+     "max ammo",
+     "display speed",
+     "background",
+     "props",
+     "stan hit",
+     "stan region",
+     "stan problems",
+     "print man pos",
+     "port close",
+     "port inf",
+     "port approx",
+     "pr room loads",
+     "show mem use",
+     "show mem bars",
+     "grab rgb",
+     "grab jpeg",
+     "grab task",
+     "rnd walk",
+     "record ramrom",
+     "record 1",
+     "record 2",
+     "record 3",
+     "replay ramrom",
+     "save ramrom",
+     "load ramrom",
+     "auto y aim",
+     "auto x aim",
+     "007",
+     "agent",
+     "all",
+     "fast",
+     "objectives",
+     "marg top",
+     "marg bot",
+     "marg left",
+     "marg right",
+     "marg reset",
+     "screen size",
+     "screen pos",
+     "show patrols",
+     "intro",
+     "intro edit",
+     "intro pos",
+     "world pos",
+     "gun key pos",
+     "vis cvg",
+     "chr num",
+     "room blocks",
+     "profile",
+     "obj load",
+     "weapon load",
+     "joy2 sky edit",
+     "joy2 hits edit",
+     "joy2 detail edit",
+     "explosion info",
+     "magic fog",
+     "gun watch pos",
+     "testing man pos",
+     "fog"
+};
+
+//D:80036F64
+s32 debug_render_raster = 2;
+//D:80036F68
+s32 debug_freeze_processing = 2;
+//D:80036F6C
+s32 debug_limit_controller_input = 2;
+//D:80036F70
+s32 debug_unknown = 2;
+//D:80036F74
+s32 memusage_display_flag = FALSE;
+//D:80036F78
+s32 debug_do_draw_bg = TRUE;
+//D:80036F7C
+s32 debug_do_draw_obj = TRUE;
+//D:80036F80
+s32 debug_unknown2 = 1;
+//D:80036F84
+s32 debug_stanhit_flag = FALSE;
+//D:80036F88
+s32 debug_stanregion_flag = FALSE;
+//D:80036F8C
+s32 turbo_mode_flag = FALSE;
+//D:80036F90
+s32 debug_man_pos_flag = 0;
+//D:80036F94
+s32 debug_prroomloads_flag = 0;
+//D:80036F98
+s32 debug_joy2skyedit_flag = 0;
+//D:80036F9C
+s32 debug_joy2hitsedit_flag = 0;
+//D:80036FA0
+s32 debug_joy2detailedit_flag = 0;
+//D:80036FA4
+s32 debug_explosioninfo_flag = 0;
+//D:80036FA8
+s32 linemode_flag = 0;
+//D:80036FAC
+s32 debug_007_unlock_flag = 0;
+//D:80036FB0
+s32 debug_enable_agent_levels_flag = 0;
+//D:80036FB4
+s32 debug_enable_all_levels_flag = 0;
+//D:80036FB8
+s32 debug_chrnum_flag = 0;
+
+//D:80036FBC
+u8 debug_gunwatchpos_flag = 0;
+//D:80036FBD
+u8 B_80036FBD = 0;
+//D:80036FBE
+u8 B_80036FBE = 0;
+//D:80036FBF
+u8 move_watch_item_preview_flag = 0;
+//D:80036FC0
+s32 debug_profile_flag = 0;
+//D:80036FC4
+s32 debug_enable_taskgrab_flag = 0;
+//D:80036FC8
+s32 debug_testingmanpos_flag = 0;
+//D:80036FCC
+s32 debug_fast_bond_flag = 0;
+//D:80036FD0
+s32 debug_all_obj_complete_flag = 0 ;
+//D:80036FD4
+s32 debug_portal_flag = 0;
+
+//D:80036FD8
+u32 dword_D_80036FD8[] = {
+    0x80500000,
+    0x40000,
+    &initGameData,
+    0x7F100000,
+    0x80600000,
+    0x40000,
+    0x70000000,
+    0x70100000
+};
+
+//D:80036FF8
+s32 dword_D_80036FF8 = 0;
+//D:80036FFC
+s32 grab_rgb_screenshot_flag = 0;
+//D:80037000
+s32 grab_jpeg_screenshot_flag = 0;
+//D:80037004
+s32 dword_D_80037004 = 0;
+//D:80037008
+s32 dword_D_80037008 = 0;
+//D:8003700C
+s32 dword_D_8003700C = 0;
+
+
 
 /* rodata
-D:80055370     aMoveView:      .ascii "move view"<0><0><0>  # DATA XREF: D:mcm_stringso
-D:8005537C     aStanView:      .ascii "stan view"<0><0><0>  # DATA XREF: D:80036E34o
-D:80055388     aBondView:      .ascii "bond view"<0><0><0>  # DATA XREF: D:80036E38o
-D:80055394     aLevel:         .ascii "level"<0><0><0>  # DATA XREF: D:80036E3Co
-D:8005539C     aRegion:        .ascii "region"<0><0>    # DATA XREF: D:80036E40o
-D:800553A4     aScale:         .ascii "scale"<0><0><0>  # DATA XREF: D:80036E44o
-D:800553AC     aPlayTitle:     .ascii "play title"<0><0>  # DATA XREF: D:80036E48o
-D:800553B8     aBondDie:       .ascii "bond die"<0><0><0><0>  # DATA XREF: D:80036E4Co
-D:800553C4     aSelectAnim:    .ascii "select anim"<0>  # DATA XREF: D:80036E50o
-D:800553D0     aGunPos:        .ascii "gun pos"<0>      # DATA XREF: D:80036E54o
-D:800553D8     aFlashColour:   .ascii "flash colour"<0><0><0><0>  # DATA XREF: D:80036E58o
-D:800553E8     aHitColour:     .ascii "hit colour"<0><0>  # DATA XREF: D:80036E5Co
-D:800553F4     aMusic:         .ascii "music"<0>        # DATA XREF: D:80036E60o
-D:800553FA                     .half 0
-D:800553FC     aSfx:           .ascii "sfx"<0>          # DATA XREF: D:80036E64o
-D:80055400     aInvincible:    .ascii "invincible"<0><0>  # DATA XREF: D:80036E68o
-D:8005540C     aVisible:       .ascii "visible"<0>      # DATA XREF: D:80036E6Co
-D:80055414     aCollisions:    .ascii "collisions"<0><0>  # DATA XREF: D:80036E70o
-D:80055420     aAllGuns:       .ascii "all guns"<0><0><0><0>  # DATA XREF: D:80036E74o
-D:8005542C     aMaxAmmo:       .ascii "max ammo"<0><0><0><0>  # DATA XREF: D:80036E78o
-D:80055438     aDisplaySpeed:  .ascii "display speed"<0><0><0>  # DATA XREF: D:80036E7Co
-D:80055448     aBackground:    .ascii "background"<0><0>  # DATA XREF: D:80036E80o
-D:80055454     aProps:         .ascii "props"<0><0><0>  # DATA XREF: D:80036E84o
-D:8005545C     aStanHit:       .ascii "stan hit"<0><0><0><0>  # DATA XREF: D:80036E88o
-D:80055468     aStanRegion:    .ascii "stan region"<0>  # DATA XREF: D:80036E8Co
-D:80055474     aStanProblems:  .ascii "stan problems"<0><0><0>  # DATA XREF: D:80036E90o
-D:80055484     aPrintManPos:   .ascii "print man pos"<0><0><0>  # DATA XREF: D:80036E94o
-D:80055494     aPortClose:     .ascii "port close"<0><0>  # DATA XREF: D:80036E98o
-D:800554A0     aPortInf:       .ascii "port inf"<0><0><0><0>  # DATA XREF: D:80036E9Co
-D:800554AC     aPortApprox:    .ascii "port approx"<0>  # DATA XREF: D:80036EA0o
-D:800554B8     aPrRoomLoads:   .ascii "pr room loads"<0><0><0>  # DATA XREF: D:80036EA4o
-D:800554C8     aShowMemUse:    .ascii "show mem use"<0><0><0><0>  # DATA XREF: D:80036EA8o
-D:800554D8     aShowMemBars:   .ascii "show mem bars"<0><0><0>  # DATA XREF: D:80036EACo
-D:800554E8     aGrabRgb:       .ascii "grab rgb"<0><0><0><0>  # DATA XREF: D:80036EB0o
-D:800554F4     aGrabJpeg:      .ascii "grab jpeg"<0><0><0>  # DATA XREF: D:80036EB4o
-D:80055500     aGrabTask:      .ascii "grab task"<0><0><0>  # DATA XREF: D:80036EB8o
-D:8005550C     aRndWalk:       .ascii "rnd walk"<0><0><0><0>  # DATA XREF: D:80036EBCo
-D:80055518     aRecordRamrom:  .ascii "record ramrom"<0><0><0>  # DATA XREF: D:80036EC0o
-D:80055528     aRecord1:       .ascii "record 1"<0><0><0><0>  # DATA XREF: D:80036EC4o
-D:80055534     aRecord2:       .ascii "record 2"<0><0><0><0>  # DATA XREF: D:80036EC8o
-D:80055540     aRecord3:       .ascii "record 3"<0>     # DATA XREF: D:80036ECCo
-D:80055549                     .byte 0, 0, 0
-D:8005554C     aReplayRamrom:  .ascii "replay ramrom"<0>  # DATA XREF: D:80036ED0o
-D:8005555A                     .half 0
-D:8005555C     aSaveRamrom:    .ascii "save ramrom"<0>  # DATA XREF: D:80036ED4o
-D:80055568     aLoadRamrom:    .ascii "load ramrom"<0>  # DATA XREF: D:80036ED8o
-D:80055574     aAutoYAim:      .ascii "auto y aim"<0>   # DATA XREF: D:80036EDCo
-D:8005557F                     .byte 0
-D:80055580     aAutoXAim:      .ascii "auto x aim"<0>   # DATA XREF: D:80036EE0o
-D:8005558B                     .byte 0
-D:8005558C     a007:           .ascii "007"<0>          # DATA XREF: D:80036EE4o
-D:80055590     aAgent:         .ascii "agent"<0>        # DATA XREF: D:80036EE8o
-D:80055596                     .half 0
-D:80055598     aAll:           .ascii "all"<0>          # DATA XREF: D:80036EECo
-D:8005559C     aFast:          .ascii "fast"<0>         # DATA XREF: D:80036EF0o
-D:800555A1                     .byte 0, 0, 0
-D:800555A4     aObjectives:    .ascii "objectives"<0>   # DATA XREF: D:80036EF4o
-D:800555AF                     .byte 0
-D:800555B0     aMargTop:       .ascii "marg top"<0>     # DATA XREF: D:80036EF8o
-D:800555B9                     .byte 0, 0, 0
-D:800555BC     aMargBot:       .ascii "marg bot"<0>     # DATA XREF: D:80036EFCo
-D:800555C5                     .byte 0, 0, 0
-D:800555C8     aMargLeft:      .ascii "marg left"<0>    # DATA XREF: D:80036F00o
-D:800555D2                     .half 0
-D:800555D4     aMargRight:     .ascii "marg right"<0>   # DATA XREF: D:80036F04o
-D:800555DF                     .byte 0
-D:800555E0     aMargReset:     .ascii "marg reset"<0>   # DATA XREF: D:80036F08o
-D:800555EB                     .byte 0
-D:800555EC     aScreenSize:    .ascii "screen size"<0>  # DATA XREF: D:80036F0Co
-D:800555F8     aScreenPos:     .ascii "screen pos"<0>   # DATA XREF: D:80036F10o
-D:80055603                     .byte 0
-D:80055604     aShowPatrols:   .ascii "show patrols"<0>  # DATA XREF: D:80036F14o
-D:80055611                     .byte 0, 0, 0
-D:80055614     aIntro:         .ascii "intro"<0>        # DATA XREF: D:80036F18o
-D:8005561A                     .half 0
-D:8005561C     aIntroEdit:     .ascii "intro edit"<0>   # DATA XREF: D:80036F1Co
-D:80055627                     .byte 0
-D:80055628     aIntroPos:      .ascii "intro pos"<0>    # DATA XREF: D:80036F20o
-D:80055632                     .half 0
-D:80055634     aWorldPos:      .ascii "world pos"<0>    # DATA XREF: D:80036F24o
-D:8005563E                     .half 0
-D:80055640     aGunKeyPos:     .ascii "gun key pos"<0>  # DATA XREF: D:80036F28o
-D:8005564C     aVisCvg:        .ascii "vis cvg"<0>      # DATA XREF: D:80036F2Co
-D:80055654     aChrNum:        .ascii "chr num"<0>      # DATA XREF: D:80036F30o
-D:8005565C     aRoomBlocks:    .ascii "room blocks"<0>  # DATA XREF: D:80036F34o
-D:80055668     aProfile:       .ascii "profile"<0>      # DATA XREF: D:80036F38o
-D:80055670     aObjLoad:       .ascii "obj load"<0>     # DATA XREF: D:80036F3Co
-D:80055679                     .byte 0, 0, 0
-D:8005567C     aWeaponLoad:    .ascii "weapon load"<0>  # DATA XREF: D:80036F40o
-D:80055688     aJoy2SkyEdit:   .ascii "joy2 sky edit"<0>  # DATA XREF: D:80036F44o
-D:80055696                     .half 0
-D:80055698     aJoy2HitsEdit:  .ascii "joy2 hits edit"<0>  # DATA XREF: D:80036F48o
-D:800556A7                     .byte 0
-D:800556A8     aJoy2DetailEdit:.ascii "joy2 detail edit"<0>  # DATA XREF: D:80036F4Co
-D:800556B9                     .byte 0, 0, 0
-D:800556BC     aExplosionInfo: .ascii "explosion info"<0>  # DATA XREF: D:80036F50o
-D:800556CB                     .byte 0
-D:800556CC     aMagicFog:      .ascii "magic fog"<0>    # DATA XREF: D:80036F54o
-D:800556D6                     .half 0
-D:800556D8     aGunWatchPos:   .ascii "gun watch pos"<0>  # DATA XREF: D:80036F58o
-D:800556E6                     .half 0
-D:800556E8     aTestingManPos: .ascii "testing man pos"<0>  # DATA XREF: D:80036F5Co
-D:800556F8     aFog:           .ascii "fog"<0>          # DATA XREF: D:80036F60o
 D:800556FC     jpt_700C46A0:   .word debug_stanview, debug_bondview, loc_CODE_7F090798, debug_level, loc_CODE_7F0907BC
-D:800556FC                                              # DATA XREF: debug_menu_processor+1C4r
 D:800556FC                     .word debug_scale, debug_playtitle, debug_bonddie, debug_selectanim, debug_gunpos  # jump table for switch statement
 D:800556FC                     .word debug_flashcolor, debug_hitcolor, debug_music, debug_sfx, debug_invincible
 D:800556FC                     .word debug_visible, debug_collisions, debug_allguns, debug_maxammo, debug_displayspeed
@@ -466,20 +275,20 @@ D:800556FC                     .word debug_worldpos, debug_chrkeypos, debug_visc
 D:800556FC                     .word debug_profile, debug_objload, debug_weaponload, debug_joy2skyedit, debug_joy2hitsedit
 D:800556FC                     .word debug_joy2detailedit, debug_explosioninfo, debug_magicfog, debug_gunwatchpos
 D:800556FC                     .word debug_testingmanpos, debug_fog
+
 D:80055830     jpt_700C4DD8:   .word def_7F090EA8       # DATA XREF: debug_menu_processor+8FCr
-D:80055830                     .word def_7F090EA8       # jump table for switch statement
 D:80055830                     .word def_7F090EA8
 D:80055830                     .word def_7F090EA8
 D:80055830                     .word def_7F090EA8
-D:80055844                     .word 0
-D:80055848                     .word 0
-D:8005584C                     .word 0
+D:80055830                     .word def_7F090EA8
 */
 
 #ifdef NONMATCHING
 void display_debug_menu_text_onscreen(void) {
-
+    // Node 0
+    return init_debug_menu_values(&mcm_strings, &D_80036BC8, &D_80036BA4);
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -506,8 +315,17 @@ glabel display_debug_menu_text_onscreen
 
 #ifdef NONMATCHING
 void sub_GAME_7F0904C4(void) {
+    ? temp_ret;
 
+    // Node 0
+    sub_GAME_7F0916F4();
+    temp_ret = get_highlighted_debug_option();
+    debug_unknown = temp_ret;
+    debug_freeze_processing = temp_ret;
+    debug_render_raster = temp_ret;
+    return temp_ret;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -538,8 +356,17 @@ glabel sub_GAME_7F0904C4
 
 #ifdef NONMATCHING
 void sub_GAME_7F090508(void) {
+    ? temp_ret;
 
+    // Node 0
+    maybe_solo_intro_camera_handler();
+    temp_ret = get_highlighted_debug_option();
+    debug_unknown = temp_ret;
+    debug_freeze_processing = temp_ret;
+    debug_render_raster = temp_ret;
+    return temp_ret;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -570,7 +397,15 @@ glabel sub_GAME_7F090508
 
 #ifdef NONMATCHING
 void sub_GAME_7F09054C(void) {
+    ? temp_ret;
 
+    // Node 0
+    maybe_solo_intro_camera_handler();
+    temp_ret = get_highlighted_debug_option();
+    debug_unknown = temp_ret;
+    debug_freeze_processing = temp_ret;
+    debug_render_raster = temp_ret;
+    return temp_ret;
 }
 #else
 GLOBAL_ASM(
@@ -643,8 +478,8 @@ GLOBAL_ASM(
 .text
 glabel debug_menu_processor
 /* 0C50D0 7F0905A0 27BDFFA0 */  addiu $sp, $sp, -0x60
-/* 0C50D4 7F0905A4 3C038003 */  lui   $v1, %hi(D_80036FFC) # $v1, 0x8003
-/* 0C50D8 7F0905A8 8C636FFC */  lw    $v1, %lo(D_80036FFC)($v1)
+/* 0C50D4 7F0905A4 3C038003 */  lui   $v1, %hi(grabrgb_flag) # $v1, 0x8003
+/* 0C50D8 7F0905A8 8C636FFC */  lw    $v1, %lo(grabrgb_flag)($v1)
 /* 0C50DC 7F0905AC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C50E0 7F0905B0 AFA40060 */  sw    $a0, 0x60($sp)
 /* 0C50E4 7F0905B4 AFA50064 */  sw    $a1, 0x64($sp)
@@ -653,30 +488,30 @@ glabel debug_menu_processor
 /* 0C50F0 7F0905C0 AFA7006C */   sw    $a3, 0x6c($sp)
 /* 0C50F4 7F0905C4 38620003 */  xori  $v0, $v1, 3
 /* 0C50F8 7F0905C8 24630001 */  addiu $v1, $v1, 1
-/* 0C50FC 7F0905CC 3C018003 */  lui   $at, %hi(D_80036FFC) # $at, 0x8003
+/* 0C50FC 7F0905CC 3C018003 */  lui   $at, %hi(grabrgb_flag) # $at, 0x8003
 /* 0C5100 7F0905D0 14400008 */  bnez  $v0, .L7F0905F4
-/* 0C5104 7F0905D4 AC236FFC */   sw    $v1, %lo(D_80036FFC)($at)
+/* 0C5104 7F0905D4 AC236FFC */   sw    $v1, %lo(grabrgb_flag)($at)
 /* 0C5108 7F0905D8 0C0012ED */  jal   indy_grab_rgb_32bit
 /* 0C510C 7F0905DC 00000000 */   nop   
-/* 0C5110 7F0905E0 3C018003 */  lui   $at, %hi(D_80036FFC) # $at, 0x8003
+/* 0C5110 7F0905E0 3C018003 */  lui   $at, %hi(grabrgb_flag) # $at, 0x8003
 /* 0C5114 7F0905E4 0C000F00 */  jal   coloroutputmode_1
-/* 0C5118 7F0905E8 AC206FFC */   sw    $zero, %lo(D_80036FFC)($at)
+/* 0C5118 7F0905E8 AC206FFC */   sw    $zero, %lo(grabrgb_flag)($at)
 /* 0C511C 7F0905EC 0C0038B4 */  jal   osViBlack
 /* 0C5120 7F0905F0 00002025 */   move  $a0, $zero
 .L7F0905F4:
-/* 0C5124 7F0905F4 3C038003 */  lui   $v1, %hi(D_80037000) # $v1, 0x8003
-/* 0C5128 7F0905F8 8C637000 */  lw    $v1, %lo(D_80037000)($v1)
-/* 0C512C 7F0905FC 3C018003 */  lui   $at, %hi(D_80037000) # $at, 0x8003
+/* 0C5124 7F0905F4 3C038003 */  lui   $v1, %hi(grabjpeg_flag) # $v1, 0x8003
+/* 0C5128 7F0905F8 8C637000 */  lw    $v1, %lo(grabjpeg_flag)($v1)
+/* 0C512C 7F0905FC 3C018003 */  lui   $at, %hi(grabjpeg_flag) # $at, 0x8003
 /* 0C5130 7F090600 1060000B */  beqz  $v1, .L7F090630
 /* 0C5134 7F090604 38620003 */   xori  $v0, $v1, 3
 /* 0C5138 7F090608 24630001 */  addiu $v1, $v1, 1
 /* 0C513C 7F09060C 14400008 */  bnez  $v0, .L7F090630
-/* 0C5140 7F090610 AC237000 */   sw    $v1, %lo(D_80037000)($at)
+/* 0C5140 7F090610 AC237000 */   sw    $v1, %lo(grabjpeg_flag)($at)
 /* 0C5144 7F090614 0C001235 */  jal   indy_grab_jpg_32bit
 /* 0C5148 7F090618 00000000 */   nop   
-/* 0C514C 7F09061C 3C018003 */  lui   $at, %hi(D_80037000) # $at, 0x8003
+/* 0C514C 7F09061C 3C018003 */  lui   $at, %hi(grabjpeg_flag) # $at, 0x8003
 /* 0C5150 7F090620 0C000F00 */  jal   coloroutputmode_1
-/* 0C5154 7F090624 AC207000 */   sw    $zero, %lo(D_80037000)($at)
+/* 0C5154 7F090624 AC207000 */   sw    $zero, %lo(grabjpeg_flag)($at)
 /* 0C5158 7F090628 0C0038B4 */  jal   osViBlack
 /* 0C515C 7F09062C 00002025 */   move  $a0, $zero
 .L7F090630:
@@ -1013,8 +848,8 @@ debug_showmembars:
 /* 0C55E4 7F090AB4 8FB80018 */   lw    $t8, 0x18($sp)
 debug_grabrgb:
 /* 0C55E8 7F090AB8 24030001 */  li    $v1, 1
-/* 0C55EC 7F090ABC 3C018003 */  lui   $at, %hi(D_80036FFC) # $at, 0x8003
-/* 0C55F0 7F090AC0 AC236FFC */  sw    $v1, %lo(D_80036FFC)($at)
+/* 0C55EC 7F090ABC 3C018003 */  lui   $at, %hi(grabrgb_flag) # $at, 0x8003
+/* 0C55F0 7F090AC0 AC236FFC */  sw    $v1, %lo(grabrgb_flag)($at)
 /* 0C55F4 7F090AC4 0C0038B4 */  jal   osViBlack
 /* 0C55F8 7F090AC8 24040001 */   li    $a0, 1
 /* 0C55FC 7F090ACC 0C000F04 */  jal   coloroutputmode_0
@@ -1023,8 +858,8 @@ debug_grabrgb:
 /* 0C5608 7F090AD8 8FB80018 */   lw    $t8, 0x18($sp)
 debug_grabjpeg:
 /* 0C560C 7F090ADC 24030001 */  li    $v1, 1
-/* 0C5610 7F090AE0 3C018003 */  lui   $at, %hi(D_80037000) # $at, 0x8003
-/* 0C5614 7F090AE4 AC237000 */  sw    $v1, %lo(D_80037000)($at)
+/* 0C5610 7F090AE0 3C018003 */  lui   $at, %hi(grabjpeg_flag) # $at, 0x8003
+/* 0C5614 7F090AE4 AC237000 */  sw    $v1, %lo(grabjpeg_flag)($at)
 /* 0C5618 7F090AE8 0C0038B4 */  jal   osViBlack
 /* 0C561C 7F090AEC 24040001 */   li    $a0, 1
 /* 0C5620 7F090AF0 0C000F04 */  jal   coloroutputmode_0
@@ -1039,22 +874,22 @@ debug_taskgrab:
 /* 0C5640 7F090B10 100000D8 */  b     .L7F090E74
 /* 0C5644 7F090B14 AC580000 */   sw    $t8, ($v0)
 debug_recordramrom:
-/* 0C5648 7F090B18 0FC301EF */  jal   record_next_movie_to_slot
+/* 0C5648 7F090B18 0FC301EF */  jal   setRamRomRecordSlot
 /* 0C564C 7F090B1C 00002025 */   move  $a0, $zero
 /* 0C5650 7F090B20 100000D5 */  b     .L7F090E78
 /* 0C5654 7F090B24 8FB80018 */   lw    $t8, 0x18($sp)
 debug_ramrom_record1:
-/* 0C5658 7F090B28 0FC301EF */  jal   record_next_movie_to_slot
+/* 0C5658 7F090B28 0FC301EF */  jal   setRamRomRecordSlot
 /* 0C565C 7F090B2C 24040001 */   li    $a0, 1
 /* 0C5660 7F090B30 100000D1 */  b     .L7F090E78
 /* 0C5664 7F090B34 8FB80018 */   lw    $t8, 0x18($sp)
 debug_ramrom_record2:
-/* 0C5668 7F090B38 0FC301EF */  jal   record_next_movie_to_slot
+/* 0C5668 7F090B38 0FC301EF */  jal   setRamRomRecordSlot
 /* 0C566C 7F090B3C 24040002 */   li    $a0, 2
 /* 0C5670 7F090B40 100000CD */  b     .L7F090E78
 /* 0C5674 7F090B44 8FB80018 */   lw    $t8, 0x18($sp)
 debug_ramrom_record3:
-/* 0C5678 7F090B48 0FC301EF */  jal   record_next_movie_to_slot
+/* 0C5678 7F090B48 0FC301EF */  jal   setRamRomRecordSlot
 /* 0C567C 7F090B4C 24040003 */   li    $a0, 3
 /* 0C5680 7F090B50 100000C9 */  b     .L7F090E78
 /* 0C5684 7F090B54 8FB80018 */   lw    $t8, 0x18($sp)
@@ -1334,565 +1169,130 @@ def_7F090EA8:
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_render_raster(void) {
-
+s32 get_debug_render_raster(void) {
+    return debug_render_raster;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_render_raster
-/* 0C5A2C 7F090EFC 3C028003 */  lui   $v0, 0x8003
-/* 0C5A30 7F090F00 03E00008 */  jr    $ra
-/* 0C5A34 7F090F04 8C426F64 */   lw    $v0, 0x6f64($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_freeze_processing(void) {
-
+s32 get_debug_freeze_processing(void) {
+    return debug_freeze_processing;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_freeze_processing
-/* 0C5A38 7F090F08 3C028003 */  lui   $v0, 0x8003
-/* 0C5A3C 7F090F0C 03E00008 */  jr    $ra
-/* 0C5A40 7F090F10 8C426F68 */   lw    $v0, 0x6f68($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_limit_controller_input(void) {
-
+s32 get_debug_limit_controller_input(void) {
+    return debug_limit_controller_input;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_limit_controller_input
-/* 0C5A44 7F090F14 3C028003 */  lui   $v0, 0x8003
-/* 0C5A48 7F090F18 03E00008 */  jr    $ra
-/* 0C5A4C 7F090F1C 8C426F6C */   lw    $v0, 0x6f6c($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void set_debug_limit_controller_input(void) {
-
+    debug_limit_controller_input = debug_unknown;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_debug_limit_controller_input
-/* 0C5A50 7F090F20 3C0E8003 */  lui   $t6, %hi(debug_unknown) # $t6, 0x8003
-/* 0C5A54 7F090F24 8DCE6F70 */  lw    $t6, %lo(debug_unknown)($t6)
-/* 0C5A58 7F090F28 3C018003 */  lui   $at, 0x8003
-/* 0C5A5C 7F090F2C 03E00008 */  jr    $ra
-/* 0C5A60 7F090F30 AC2E6F6C */   sw    $t6, 0x6f6c($at)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_memusage_display_fla(void) {
-
+void get_memusage_display_flag(void) {
+    return memusage_display_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel glabel get_memusage_display_fla
-/* 0C5A64 7F090F34 3C028003 */  lui   $v0, 0x8003
-/* 0C5A68 7F090F38 03E00008 */  jr    $ra
-/* 0C5A6C 7F090F3C 8C426F74 */   lw    $v0, 0x6f74($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_do_draw_bg(void) {
-
+s32 get_debug_do_draw_bg(void) {
+    return debug_do_draw_bg;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_do_draw_bg
-/* 0C5A70 7F090F40 3C028003 */  lui   $v0, 0x8003
-/* 0C5A74 7F090F44 03E00008 */  jr    $ra
-/* 0C5A78 7F090F48 8C426F78 */   lw    $v0, 0x6f78($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_do_draw_obj(void) {
-
+s32 get_debug_do_draw_obj(void) {
+    return debug_do_draw_obj;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_do_draw_obj
-/* 0C5A7C 7F090F4C 3C028003 */  lui   $v0, 0x8003
-/* 0C5A80 7F090F50 03E00008 */  jr    $ra
-/* 0C5A84 7F090F54 8C426F7C */   lw    $v0, 0x6f7c($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_stanhit_flag(void) {
-
+s32 get_debug_stanhit_flag(void) {
+    return debug_stanhit_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_stanhit_flag
-/* 0C5A88 7F090F58 3C028003 */  lui   $v0, 0x8003
-/* 0C5A8C 7F090F5C 03E00008 */  jr    $ra
-/* 0C5A90 7F090F60 8C426F84 */   lw    $v0, 0x6f84($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_stanregion_flag(void) {
-
+s32 get_debug_stanregion_flag(void) {
+    return debug_stanregion_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_stanregion_flag
-/* 0C5A94 7F090F64 3C028003 */  lui   $v0, 0x8003
-/* 0C5A98 7F090F68 03E00008 */  jr    $ra
-/* 0C5A9C 7F090F6C 8C426F88 */   lw    $v0, 0x6f88($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_turbo_mode_flag(void) {
-
+s32 get_turbo_mode_flag(void) {
+    return turbo_mode_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_turbo_mode_flag
-/* 0C5AA0 7F090F70 3C028003 */  lui   $v0, 0x8003
-/* 0C5AA4 7F090F74 03E00008 */  jr    $ra
-/* 0C5AA8 7F090F78 8C426F8C */   lw    $v0, 0x6f8c($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_man_pos_flag(void) {
-
+s32 get_debug_man_pos_flag(void) {
+    return debug_man_pos_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_man_pos_flag
-/* 0C5AAC 7F090F7C 3C028003 */  lui   $v0, 0x8003
-/* 0C5AB0 7F090F80 03E00008 */  jr    $ra
-/* 0C5AB4 7F090F84 8C426F90 */   lw    $v0, 0x6f90($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_testingmanpos_flag(void) {
-
+s32 get_debug_testingmanpos_flag(void) {
+    return debug_testingmanpos_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_testingmanpos_flag
-/* 0C5AB8 7F090F88 3C028003 */  lui   $v0, 0x8003
-/* 0C5ABC 7F090F8C 03E00008 */  jr    $ra
-/* 0C5AC0 7F090F90 8C426FC8 */   lw    $v0, 0x6fc8($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void set_debug_testingmanpos_flag(void) {
-
+void set_debug_testingmanpos_flag(s32 flag) {
+    debug_testingmanpos_flag = flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_debug_testingmanpos_flag
-/* 0C5AC4 7F090F94 3C018003 */  lui   $at, 0x8003
-/* 0C5AC8 7F090F98 03E00008 */  jr    $ra
-/* 0C5ACC 7F090F9C AC246FC8 */   sw    $a0, 0x6fc8($at)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_joy2skyedit_flag(void) {
-
+s32 get_debug_joy2skyedit_flag(void) {
+    return get_debug_joy2skyedit_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_joy2skyedit_flag
-/* 0C5AD0 7F090FA0 3C028003 */  lui   $v0, 0x8003
-/* 0C5AD4 7F090FA4 03E00008 */  jr    $ra
-/* 0C5AD8 7F090FA8 8C426F98 */   lw    $v0, 0x6f98($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_joy2hitsedit_flag(void) {
-
+s32 get_debug_joy2hitsedit_flag(void) {
+    return get_debug_joy2hitsedit_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_joy2hitsedit_flag
-/* 0C5ADC 7F090FAC 3C028003 */  lui   $v0, 0x8003
-/* 0C5AE0 7F090FB0 03E00008 */  jr    $ra
-/* 0C5AE4 7F090FB4 8C426F9C */   lw    $v0, 0x6f9c($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_joy2detailedit_flag(void) {
-
+s32 get_debug_joy2detailedit_flag(void) {
+    return debug_joy2detailedit_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_joy2detailedit_flag
-/* 0C5AE8 7F090FB8 3C028003 */  lui   $v0, 0x8003
-/* 0C5AEC 7F090FBC 03E00008 */  jr    $ra
-/* 0C5AF0 7F090FC0 8C426FA0 */   lw    $v0, 0x6fa0($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_explosioninfo_flag(void) {
-
+s32 get_debug_explosioninfo_flag(void) {
+    return debug_explosioninfo_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_explosioninfo_flag
-/* 0C5AF4 7F090FC4 3C028003 */  lui   $v0, 0x8003
-/* 0C5AF8 7F090FC8 03E00008 */  jr    $ra
-/* 0C5AFC 7F090FCC 8C426FA4 */   lw    $v0, 0x6fa4($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_prroomloads_flag(void) {
-
+s32 get_debug_prroomloads_flag(void) {
+    return debug_prroomloads_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_prroomloads_flag
-/* 0C5B00 7F090FD0 3C028003 */  lui   $v0, 0x8003
-/* 0C5B04 7F090FD4 03E00008 */  jr    $ra
-/* 0C5B08 7F090FD8 8C426F94 */   lw    $v0, 0x6f94($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_linemode_flag(void) {
-
+s32 get_linemode_flag(void) {
+    return linemode_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_linemode_flag
-/* 0C5B0C 7F090FDC 3C028003 */  lui   $v0, 0x8003
-/* 0C5B10 7F090FE0 03E00008 */  jr    $ra
-/* 0C5B14 7F090FE4 8C426FA8 */   lw    $v0, 0x6fa8($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void set_linemode_flag(void) {
-
+void set_linemode_flag(s32 flag) {
+    linemode_flag = flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_linemode_flag
-/* 0C5B18 7F090FE8 3C018003 */  lui   $at, 0x8003
-/* 0C5B1C 7F090FEC 03E00008 */  jr    $ra
-/* 0C5B20 7F090FF0 AC246FA8 */   sw    $a0, 0x6fa8($at)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_007_unlock_flag(void) {
-
+s32 get_debug_007_unlock_flag(void) {
+    return debug_007_unlock_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_007_unlock_flag
-/* 0C5B24 7F090FF4 3C028003 */  lui   $v0, 0x8003
-/* 0C5B28 7F090FF8 03E00008 */  jr    $ra
-/* 0C5B2C 7F090FFC 8C426FAC */   lw    $v0, 0x6fac($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_enable_agent_levels_flag(void) {
-
+s32 get_debug_enable_agent_levels_flag(void) {
+    return debug_enable_agent_levels_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_enable_agent_levels_flag
-/* 0C5B30 7F091000 3C028003 */  lui   $v0, 0x8003
-/* 0C5B34 7F091004 03E00008 */  jr    $ra
-/* 0C5B38 7F091008 8C426FB0 */   lw    $v0, 0x6fb0($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_enable_all_levels_flag(void) {
-
+s32 get_debug_enable_all_levels_flag(void) {
+    return debug_enable_all_levels_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_enable_all_levels_flag
-/* 0C5B3C 7F09100C 3C028003 */  lui   $v0, 0x8003
-/* 0C5B40 7F091010 03E00008 */  jr    $ra
-/* 0C5B44 7F091014 8C426FB4 */   lw    $v0, 0x6fb4($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_fast_bond_flag(void) {
-
+s32 get_debug_fast_bond_flag(void) {
+    return debug_fast_bond_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_fast_bond_flag
-/* 0C5B48 7F091018 3C028003 */  lui   $v0, 0x8003
-/* 0C5B4C 7F09101C 03E00008 */  jr    $ra
-/* 0C5B50 7F091020 8C426FCC */   lw    $v0, 0x6fcc($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void set_debug_fast_bond_flag(void) {
-
+void set_debug_fast_bond_flag(s32 flag) {
+    debug_fast_bond_flag = flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_debug_fast_bond_flag
-/* 0C5B54 7F091024 3C018003 */  lui   $at, 0x8003
-/* 0C5B58 7F091028 03E00008 */  jr    $ra
-/* 0C5B5C 7F09102C AC246FCC */   sw    $a0, 0x6fcc($at)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_all_obj_complete_flag(void) {
-
+s32 get_debug_all_obj_complete_flag(void) {
+    return debug_all_obj_complete_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_all_obj_complete_flag
-/* 0C5B60 7F091030 3C028003 */  lui   $v0, 0x8003
-/* 0C5B64 7F091034 03E00008 */  jr    $ra
-/* 0C5B68 7F091038 8C426FD0 */   lw    $v0, 0x6fd0($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void getdebug_portal_flag(void) {
-
+s32 get_debug_portal_flag(void) {
+    return debug_portal_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel getdebug_portal_flag
-/* 0C5B6C 7F09103C 3C028003 */  lui   $v0, 0x8003
-/* 0C5B70 7F091040 03E00008 */  jr    $ra
-/* 0C5B74 7F091044 8C426FD4 */   lw    $v0, 0x6fd4($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_chrnum_flag(void) {
-
+s32 get_debug_chrnum_flag(void) {
+    return debug_chrnum_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_chrnum_flag
-/* 0C5B78 7F091048 3C028003 */  lui   $v0, 0x8003
-/* 0C5B7C 7F09104C 03E00008 */  jr    $ra
-/* 0C5B80 7F091050 8C426FB8 */   lw    $v0, 0x6fb8($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_gunwatchpos_flag(void) {
-
+s32 get_debug_gunwatchpos_flag(void) {
+    return debug_gunwatchpos_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_gunwatchpos_flag
-/* 0C5B84 7F091054 3C028003 */  lui   $v0, 0x8003
-/* 0C5B88 7F091058 03E00008 */  jr    $ra
-/* 0C5B8C 7F09105C 8C426FBC */   lw    $v0, 0x6fbc($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_profile_flag(void) {
-
+s32  get_debug_profile_flag(void) {
+    return debug_profile_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_profile_flag
-/* 0C5B90 7F091060 3C028003 */  lui   $v0, 0x8003
-/* 0C5B94 7F091064 03E00008 */  jr    $ra
-/* 0C5B98 7F091068 8C426FC0 */   lw    $v0, 0x6fc0($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_debug_taskgrab_val(void) {
-
+s32 get_debug_taskgrab_val(void) {
+    return debug_enable_taskgrab_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_debug_taskgrab_val
-/* 0C5B9C 7F09106C 3C028003 */  lui   $v0, 0x8003
-/* 0C5BA0 7F091070 03E00008 */  jr    $ra
-/* 0C5BA4 7F091074 8C426FC4 */   lw    $v0, 0x6fc4($v0)
-)
-#endif
+
 
 
 

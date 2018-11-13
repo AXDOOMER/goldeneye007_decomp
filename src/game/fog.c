@@ -1,121 +1,44 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:800825C0     sky_enabled:    .space 4                 # DATA XREF: sub_CODE_7F0B6368:loc_CODE_7F0B651Cr
-CODE.bss:800825C0                                              # copy_table1_env_to_current+268w
-CODE.bss:800825C0                                              # load_enviroment+1D4w
-CODE.bss:800825C0                                              # sub_CODE_7F0BB070r
-CODE.bss:800825C0                                              # sub_CODE_7F0BB298r
-CODE.bss:800825C0                                              # sub_CODE_7F0BB2C8r
-CODE.bss:800825C0                                              # if_sky_present_convert_valuesr
-CODE.bss:800825C4     ptr_nearfog_enviroment_values:.space 4   # DATA XREF: copy_table1_env_to_current+25Cw
-CODE.bss:800825C4                                              # copy_table1_env_to_current:loc_CODE_7F0BA9B8w
-CODE.bss:800825C4                                              # return_nearfog_values+8r
-CODE.bss:800825C8     buffer_far_pervasiveness:.space 4        # DATA XREF: copy_table1_env_to_current+4Co
-CODE.bss:800825C8                                              # copy_table1_env_to_current+E4w
-CODE.bss:800825C8                                              # copy_table1_env_to_current+108r
-CODE.bss:800825C8                                              # if_sky_present_convert_values+50o
-CODE.bss:800825CC     far_fog:        .space 4                 # DATA XREF: copy_table1_env_to_current+10Cw
-CODE.bss:800825CC                                              # copy_table1_env_to_current+114r
-CODE.bss:800825D0                     .space 8
-CODE.bss:800825D8     flt_CODE_bss_800825D8:.space 4           # DATA XREF: copy_table1_env_to_current+184w
-CODE.bss:800825D8                                              # if_sky_present_convert_values+CCr
-CODE.bss:800825DC     flt_CODE_bss_800825DC:.space 4           # DATA XREF: copy_table1_env_to_current+1A4w
-CODE.bss:800825DC                                              # if_sky_present_convert_values+D0r
-CODE.bss:800825E0     buffer_far_ambiant:.space 4              # DATA XREF: copy_table1_env_to_current+44o
-CODE.bss:800825E0                                              # copy_table1_env_to_current+ACw
-CODE.bss:800825E0                                              # copy_table1_env_to_current+B0r
-CODE.bss:800825E4     bg_dif_light:   .space 4                 # DATA XREF: copy_table1_env_to_current+3Co
-CODE.bss:800825E4                                              # copy_table1_env_to_current+88w
-CODE.bss:800825E4                                              # copy_table1_env_to_current+C0r
-CODE.bss:800825E8     env_table_hit:  .space 4                 # DATA XREF: load_enviroment+7Co
-CODE.bss:800825E8                                              # load_enviroment+80w
-CODE.bss:800825E8                                              # load_enviroment+9Cr
-CODE.bss:800825E8                                              # load_enviroment+F8o
-CODE.bss:800825E8                                              # load_enviroment+FCw
-CODE.bss:800825E8                                              # load_enviroment+118r
-CODE.bss:800825E8                                              # load_enviroment+170o
-CODE.bss:800825E8                                              # load_enviroment+174w
-CODE.bss:800825E8                                              # load_enviroment+190r
-CODE.bss:800825E8                                              # load_enviroment+228o
-CODE.bss:800825E8                                              # load_enviroment+230w
-CODE.bss:800825EC     env_table_match_start:.space 4           # DATA XREF: load_enviroment+84w
-CODE.bss:800825EC                                              # load_enviroment+100w
-CODE.bss:800825EC                                              # load_enviroment+178w
-CODE.bss:800825EC                                              # switch_to_solosky2r
-CODE.bss:800825F0     env_table_match_end:.space 4             # DATA XREF: load_enviroment+94w
-CODE.bss:800825F0                                              # load_enviroment+110w
-CODE.bss:800825F0                                              # load_enviroment+188w
-CODE.bss:800825F0                                              # switch_to_solosky2+60r
-CODE.bss:800825F4                     .align 3
-CODE.bss:800825F8     dword_CODE_bss_800825F8:.space 4         # DATA XREF: switch_to_solosky2+8o
-CODE.bss:800825FC     flt_CODE_bss_800825FC:.space 4           # DATA XREF: switch_to_solosky2+78w
-CODE.bss:80082600     flt_CODE_bss_80082600:.space 4           # DATA XREF: switch_to_solosky2+94w
-CODE.bss:80082604                     .space 0x14
-CODE.bss:80082618     dword_CODE_bss_80082618:.space 4         # DATA XREF: switch_to_solosky2+CCw
-CODE.bss:8008261C     dword_CODE_bss_8008261C:.space 4         # DATA XREF: switch_to_solosky2+100w
-CODE.bss:80082620     off_CODE_bss_80082620:.space 1           # DATA XREF: switch_to_solosky2:loc_CODE_7F0BAE78w
-CODE.bss:80082620                                              # switch_to_solosky2+3A8w
-CODE.bss:80082621     byte_CODE_bss_80082621:.space 1          # DATA XREF: switch_to_solosky2:loc_CODE_7F0BAF5Cw
-CODE.bss:80082621                                              # switch_to_solosky2+3ACw
-CODE.bss:80082622     byte_CODE_bss_80082622:.space 1          # DATA XREF: switch_to_solosky2:loc_CODE_7F0BB040w
-CODE.bss:80082622                                              # switch_to_solosky2+3B4w
-CODE.bss:80082623                     .align 2
-CODE.bss:80082624                     .space 0x3C
-*/
+// bss
+//CODE.bss:800825C0
+s32 sky_enabled;
+//CODE.bss:800825C4
+u32 *ptr_nearfog_enviroment_values;
+//CODE.bss:800825C8
+s32 buffer_far_pervasiveness;
+//CODE.bss:800825CC
+s32 far_fog;
+//CODE.bss:800825D0
+s32 D_800825D0;
+//CODE.bss:800825D4
+s32 D_800825D4;
+//CODE.bss:800825D8
+s32 flt_CODE_bss_800825D8;
+//CODE.bss:800825DC
+s32 flt_CODE_bss_800825DC;
+//CODE.bss:800825E0
+s32 buffer_far_ambiant;
+//CODE.bss:800825E4
+s32 bg_dif_light;
+//CODE.bss:800825E8
+s32 env_table_hit;
+//CODE.bss:800825EC
+s32 env_table_match_start;
+//CODE.bss:800825F0
+s32 env_table_match_end;
+//CODE.bss:800825F4
+s32 D_800825F4;
+//CODE.bss:800825F8
+char dword_CODE_bss_800825F8[0x68];
+
 
 /* data
 D:80044DC0                     .word 0
-D:80044DC4     near_fog_value: .float 3.4028235e38      # DATA XREF: sub_CODE_7F0BA738+8r
-D:80044DC4                                              # square_near_fog_valuer
-D:80044DC4                                              # copy_table1_env_to_current+BCw
-D:80044DC4                                              # load_enviroment+44w
-D:80044DC4                                              # sub_CODE_7F0BB2C8+9Cr
-D:80044DC8     near_fog_times_intensity:.word 0         # DATA XREF: copy_table1_env_to_current+D0w
-D:80044DC8                                              # load_enviroment+50w
+D:80044DC4     near_fog_value: .float 3.4028235e38
+D:80044DC8     near_fog_times_intensity:.word 0
 D:80044DCC     ptr_current_data:.word 0x384, 0x3E8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:80044DCC                                              # DATA XREF: sub_CODE_7F0BA72C+8o
-D:80044DCC                                              # copy_table1_env_to_current+54o
-D:80044DCC                                              # copy_table1_env_to_current+1ACw
-D:80044DCC                                              # copy_table2_env_to_current+4o
-D:80044DCC                                              # sub_CODE_7F0BB070+2Co
-D:80044DCC                                              # sub_CODE_7F0BB070+78r
-D:80044DCC                                              # sub_CODE_7F0BB070+118o
-D:80044DCC                                              # sub_CODE_7F0BB070+164r
-D:80044DCC                                              # if_sky_present_convert_values+20o
-D:80044DCC                                              # copy_table1_env_to_current+1B8w
-D:80044DCC                                              # sub_CODE_7F0BB070+74r
-D:80044DCC                                              # sub_CODE_7F0BB070+160r
-D:80044DCC                                              # copy_table1_env_to_current+1C0w
-D:80044DCC                                              # copy_table2_env_to_current+Cw
-D:80044DCC                                              # sub_CODE_7F0BB070+3Cr
-D:80044DCC                                              # sub_CODE_7F0BB070+128r
-D:80044DCC                                              # if_sky_present_convert_values+34r
-D:80044DCC                                              # copy_table1_env_to_current+1C8w
-D:80044DCC                                              # copy_table2_env_to_current+14w
-D:80044DCC                                              # sub_CODE_7F0BB070+38r
-D:80044DCC                                              # sub_CODE_7F0BB070+124r
-D:80044DCC                                              # if_sky_present_convert_values+78r
-D:80044DCC                                              # copy_table1_env_to_current+1D0w
-D:80044DCC                                              # copy_table2_env_to_current+1Cw
-D:80044DCC                                              # sub_CODE_7F0BB070+34r
-D:80044DCC                                              # sub_CODE_7F0BB070+120r
-D:80044DCC                                              # if_sky_present_convert_values+A0r
-D:80044DCC                                              # copy_table1_env_to_current+1D8w
-D:80044DCC                                              # copy_table2_env_to_current+24w
-D:80044DCC                                              # copy_table1_env_to_current+1E0w
-D:80044DCC                                              # copy_table2_env_to_current+2Cw
 D:80044E10     env_table1:     enviroment_struct <0x16, 15.0, 3500.0, 2000.0, 2500.0, 2000.0, 0, 0x3E7, 0x3E4, 0x3E8, \
-D:80044E10                                              # DATA XREF: load_enviroment+58o
-D:80044E10                                              # load_enviroment+5Cr
-D:80044E10                                              # load_enviroment+60o
-D:80044E10                                              # load_enviroment+70r
-D:80044E10                                              # load_enviroment:check_cutscene_env_testso
-D:80044E10                                              # load_enviroment+C0r
-D:80044E10                                              # load_enviroment+C4o
-D:80044E10                                              # load_enviroment+ECr
-D:80044E10                                              # load_enviroment+154o
-D:80044E10                                              # load_enviroment+164r
 D:80044E10                                        0x801, 5000.0, 0, 170.0, 100.0, 40.0, 0, -1000.0, 0, 0, 0.0, 0.0, 30.0>
 D:80044E6C                     enviroment_struct <0x17, 10.0, 10000.0, 2500.0, 5000.0, 800.0, 0, 0x3E7, 0x3E4, 0x3E8, 0, \
 D:80044E6C                                        0.0, 0, 0.0, 0.0, 0.0, 0, 0.0, 0, 0, 0.0, 0.0, 0.0>
@@ -233,10 +156,8 @@ D:80045E3C                                        0.0>
 D:80045E98                     enviroment_struct <0x84, 10.0, 10000.0, 3000.0, 4000.0, 600.0, 0, 0x3E7, 0x3CC, 0x3E8, 1, \
 D:80045E98                                        7500.0, 0, 83.0, 10.0, 10.0, 0, -5000.0, 0, 0, 0.0, 0.0, 0.0>
 D:80045EF4                     enviroment_struct <0>
-D:80045F50     env_table2:     .word 0xFFFFFFFF         # DATA XREF: load_enviroment+1D0o
-D:80045F50                                              # load_enviroment+1D8r
-D:80045F50                                              # load_enviroment+1ECo
-D:80045F50                                              # load_enviroment+1F4r
+
+D:80045F50     env_table2:     .word 0xFFFFFFFF
 D:80045F54                     .word 0x104000
 D:80045F58                     .float 5000.0
 D:80045F5C                     .word 0
@@ -250,6 +171,7 @@ D:80045F78                     .word 0
 D:80045F7C                     .word 0
 D:80045F80                     .word 0
 D:80045F84                     .word 0
+
 D:80045F88                     .word 0x1A
 D:80045F8C                     .word 0x10306001
 D:80045F90                     .float 3000.0
@@ -264,6 +186,7 @@ D:80045FB0                     .float 255.0
 D:80045FB4                     .float 255.0
 D:80045FB8                     .float 150.0
 D:80045FBC                     .word 0
+
 D:80045FC0                     .word 0x36
 D:80045FC4                     .word 0x30401000
 D:80045FC8                     .float 5000.0
@@ -278,16 +201,19 @@ D:80045FE8                     .word 0
 D:80045FEC                     .word 0
 D:80045FF0                     .word 0
 D:80045FF4                     .word 0
+
 D:80045FF8                     .word 0
 D:80045FFC                     .word 0
 D:80046000                     .word 0
 D:80046004                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 */
 
-/* rodata
-D:80058D70     default_near_fog:.float 3.4028235e38     # DATA XREF: load_enviroment:set_default_enviromentr
-D:80058D74     flt_D_80058D74: .float 10000.0           # DATA XREF: load_enviroment+1B4r
-*/
+// rodata
+//D:80058D70
+const f32 default_near_fog = 3.4028235e38;
+//D:80058D74
+const f32 flt_D_80058D74 = 10000.0;
+
 
 #ifdef NONMATCHING
 void sub_GAME_7F0BA720(void) {
