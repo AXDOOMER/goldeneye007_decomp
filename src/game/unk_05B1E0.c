@@ -1,21 +1,24 @@
 #include "ultra64.h"
 
 
-/* data
-D:80032430     dword_D_80032430:.word 1, 2, 0, 0        # DATA XREF: sub_CODE_7F05B798+34o
-D:80032430                                              # sub_CODE_7F05B798+48r
-D:80032430                                              # sub_CODE_7F05B798+BCr
-D:80032430                                              # sub_CODE_7F05B798+C4r
-*/
+// data
+//D:80032430
+s32 dword_D_80032430 = 1;
+//D:80032434
+s32 dword_D_80032434 = 2;
 
-/* rodata
-D:80053740     flt_D_80053740: .float 0.000095873802    # DATA XREF: sub_CODE_7F05B1E0+1Cr
-D:80053744     flt_D_80053744: .float -0.99998999       # DATA XREF: sub_CODE_7F05BA08+48r
-D:80053748     flt_D_80053748: .float 0.99998999        # DATA XREF: sub_CODE_7F05BA08:loc_CODE_7F05BAE8r
-D:8005374C     flt_D_8005374C: .float -0.99998999       # DATA XREF: sub_CODE_7F05BC68:loc_CODE_7F05BCA0r
-D:80053750     flt_D_80053750: .float 0.99998999        # DATA XREF: sub_CODE_7F05BC68:loc_CODE_7F05BCF8r
-*/
 
+// rodata
+//D:80053740
+const f32 flt_D_80053740 = 0.000095873802;
+//D:80053744
+const f32 flt_D_80053744 = -0.99998999;
+//D:80053748
+const f32 flt_D_80053748 = 0.99998999;
+//D:8005374C
+const f32 flt_D_8005374C = -0.99998999;
+//D:80053750
+const f32 flt_D_80053750 = 0.99998999;
 
 
 

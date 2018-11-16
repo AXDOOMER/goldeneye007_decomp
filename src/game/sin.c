@@ -1,20 +1,32 @@
 #include "ultra64.h"
 
 
-/* rodata
-D:800536C0     flt_D_800536C0: .float 1.5707963         # DATA XREF: cosfr
-D:800536C4     flt_D_800536C4: .float 0.0000026057805   # DATA XREF: sinf+2Cr
-D:800536C8     flt_D_800536C8: .float -0.00019809602    # DATA XREF: sinf+38r
-D:800536CC     flt_D_800536CC: .float 0.0083330665      # DATA XREF: sinf+48r
-D:800536D0     flt_D_800536D0: .float -0.1666666        # DATA XREF: sinf+58r
-D:800536D4     flt_D_800536D4: .float 0.31830987        # DATA XREF: sinf+88r
-D:800536D8     flt_D_800536D8: .float 3.1415927         # DATA XREF: sinf+A0r
-D:800536DC     flt_D_800536DC: .float 3.1786509e-8      # DATA XREF: sinf+B0r
-D:800536E0     flt_D_800536E0: .float 0.0000026057805   # DATA XREF: sinf+C4r
-D:800536E4     flt_D_800536E4: .float -0.00019809602    # DATA XREF: sinf+D0r
-D:800536E8     flt_D_800536E8: .float 0.0083330665      # DATA XREF: sinf+E0r
-D:800536EC     flt_D_800536EC: .float -0.1666666        # DATA XREF: sinf+F0r
-*/
+// rodata
+//D:800536C0
+const f32 flt_D_800536C0 = 1.5707963;
+//D:800536C4
+const f32 flt_D_800536C4 = 0.0000026057805;
+//D:800536C8
+const f32 flt_D_800536C8 = -0.00019809602;
+//D:800536CC
+const f32 flt_D_800536CC = 0.0083330665;
+//D:800536D0
+const f32 flt_D_800536D0 = -0.1666666;
+//D:800536D4
+const f32 flt_D_800536D4 = 0.31830987;
+//D:800536D8
+const f32 flt_D_800536D8 = 3.1415927;
+//D:800536DC
+const f32 flt_D_800536DC = 3.178650856;
+//D:800536E0
+const f32 flt_D_800536E0 = 0.0000026057805;
+//D:800536E4
+const f32 flt_D_800536E4 = -0.00019809602;
+//D:800536E8
+const f32 flt_D_800536E8 = 0.0083330665;
+//D:800536EC
+const f32 flt_D_800536EC = -0.1666666;
+
 
 
 

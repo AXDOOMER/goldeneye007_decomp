@@ -2,14 +2,25 @@
 
 
 
-
-
-
-
-
 #ifdef NONMATCHING
-void sub_GAME_7F05C440(void) {
+f32 sub_GAME_7F05C440(f32 arg0) {
+    f32 temp_f2;
 
+    // Node 0
+    if (arg0 <= 0.0f)
+    {
+        // Node 1
+        return (f32) (s32) arg0;
+    }
+    // Node 2
+    temp_f2 = (f32) (s32) arg0;
+    if (arg0 == temp_f2)
+    {
+        // Node 3
+        return temp_f2;
+    }
+    // Node 4
+    return (temp_f2 + 1.0f);
 }
 #else
 GLOBAL_ASM(
@@ -57,8 +68,24 @@ glabel sub_GAME_7F05C440
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05C4B8(void) {
+s32 sub_GAME_7F05C4B8(f32 arg0) {
+    s32 temp_f8;
 
+    // Node 0
+    if (arg0 <= 0.0f)
+    {
+        // Node 1
+        return (s32) arg0;
+    }
+    // Node 2
+    temp_f8 = (s32) arg0;
+    if (arg0 == (f32) temp_f8)
+    {
+        // Node 3
+        return temp_f8;
+    }
+    // Node 4
+    return (temp_f8 + 1);
 }
 #else
 GLOBAL_ASM(

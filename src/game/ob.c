@@ -20,1968 +20,759 @@ CODE.bss:800888C4                                              # sub_CODE_7F0BD4
 CODE.bss:800888D8     dword_CODE_bss_800888D8:.space 0x3958    # DATA XREF: sub_CODE_7F0BD410+30o
 */
 
-/* data
-D:80046050     dword_D_80046050:.word 0                 # DATA XREF: ob_c_debug_setup+18o
-D:80046054     resource_table: fileentry <0, aBgBg_NULLall_p_seg_0, 0>
-D:80046054                                              # DATA XREF: load_bg_bytes_at_offset_to_membank+38o
-D:80046054                                              # load_rom_resource_index_to_membank+80o
-D:80046054                                              # load_rom_resource_index_to_membank+150o
-D:80046054                                              # load_resource_index_to_buffer+70o
-D:80046054                                              # load_resource_index_to_buffer+CCo
-D:80046054                                              # get_index_num_of_named_resource+B4o
-D:80046060     file_entry_offset:fileentry <1, aBgBg_sev_all_p_seg_0, 0x438660>
-D:80046060                                              # DATA XREF: ob_c_debug_setup+24o
-D:80046060                                              # get_index_num_of_named_resource+34o
-D:80046060                                              # get_index_num_of_named_resource+3Cr
-D:80046060                                              # "bg/bg_sev_all_p.seg"
-D:8004606C                     fileentry <2, aBgBg_silo_all_p_seg_0, 0x449450>  # "bg/bg_silo_all_p.seg"
-D:80046078                     fileentry <3, aBgBg_stat_all_p_seg_0, 0x49A390>  # "bg/bg_stat_all_p.seg"
-D:80046084                     fileentry <4, aBgBg_arec_all_p_seg_0, 0x4BC460>  # "bg/bg_arec_all_p.seg"
-D:80046090                     fileentry <5, aBgBg_arch_all_p_seg_0, 0x4EA7E0>  # "bg/bg_arch_all_p.seg"
-D:8004609C                     fileentry <6, aBgBg_tra_all_p_seg_0, 0x5102D0>  # "bg/bg_tra_all_p.seg"
-D:800460A8                     fileentry <7, aBgBg_dest_all_p_seg_0, 0x530840>  # "bg/bg_dest_all_p.seg"
-D:800460B4                     fileentry <8, aBgBg_sevb_all_p_seg_0, 0x55E200>  # "bg/bg_sevb_all_p.seg"
-D:800460C0                     fileentry <9, aBgBg_azt_all_p_seg_0, 0x578FA0>  # "bg/bg_azt_all_p.seg"
-D:800460CC                     fileentry <0xA, aBgBg_pete_all_p_seg_0, 0x59A9F0>  # "bg/bg_pete_all_p.seg"
-D:800460D8                     fileentry <0xB, aBgBg_depo_all_p_seg_0, 0x5B4620>  # "bg/bg_depo_all_p.seg"
-D:800460E4                     fileentry <0xC, aBgBg_ref_all_p_seg_0, 0x5E0F90>  # "bg/bg_ref_all_p.seg"
-D:800460F0                     fileentry <0xD, aBgBg_cryp_all_p_seg_0, 0x5EA5A0>  # "bg/bg_cryp_all_p.seg"
-D:800460FC                     fileentry <0xE, aBgBg_dam_all_p_seg_0, 0x5FFC50>  # "bg/bg_dam_all_p.seg"
-D:80046108                     fileentry <0xF, aBgBg_ark_all_p_seg_0, 0x62FDF0>  # "bg/bg_ark_all_p.seg"
-D:80046114                     fileentry <0x10, aBgBg_run_all_p_seg_0, 0x660D70>  # "bg/bg_run_all_p.seg"
-D:80046120                     fileentry <0x11, aBgBg_sevx_all_p_seg_1, 0x66B140>  # "bg/bg_sevx_all_p.seg"
-D:8004612C                     fileentry <0x12, aBgBg_jun_all_p_seg_0, 0x687710>  # "bg/bg_jun_all_p.seg"
-D:80046138                     fileentry <0x13, aBgBg_dish_all_p_seg_0, 0x69C860>  # "bg/bg_dish_all_p.seg"
-D:80046144                     fileentry <0x14, aBgBg_cave_all_p_seg_0, 0x6A10D0>  # "bg/bg_cave_all_p.seg"
-D:80046150                     fileentry <0x15, aBgBg_cat_all_p_seg_0, 0x6C55C0>  # "bg/bg_cat_all_p.seg"
-D:8004615C                     fileentry <0x16, aBgBg_crad_all_p_seg_0, 0x6CAAF0>  # "bg/bg_crad_all_p.seg"
-D:80046168                     fileentry <0x17, aBgBg_sho_all_p_seg_0, 0x6DAE40>  # "bg/bg_sho_all_p.seg"
-D:80046174                     fileentry <0x18, aBgBg_eld_all_p_seg_0, 0x6DAE40>  # "bg/bg_eld_all_p.seg"
-D:80046180                     fileentry <0x19, aBgBg_imp_all_p_seg, 0x6DAE40>  # "bg/bg_imp_all_p.seg"
-D:8004618C                     fileentry <0x1A, aBgBg_ash_all_p_seg, 0x6DAE40>  # "bg/bg_ash_all_p.seg"
-D:80046198                     fileentry <0x1B, aBgBg_lue_all_p_seg_0, 0x6DAE40>  # "bg/bg_lue_all_p.seg"
-D:800461A4                     fileentry <0x1C, aBgBg_ame_all_p_seg_2, 0x6DAE40>  # "bg/bg_ame_all_p.seg"
-D:800461B0                     fileentry <0x1D, aBgBg_rit_all_p_seg_0, 0x6E4DA0>  # "bg/bg_rit_all_p.seg"
-D:800461BC                     fileentry <0x1E, aBgBg_oat_all_p_seg_0, 0x6E4DA0>  # "bg/bg_oat_all_p.seg"
-D:800461C8                     fileentry <0x1F, aBgBg_ear_all_p_seg_0, 0x6EBBF0>  # "bg/bg_ear_all_p.seg"
-D:800461D4                     fileentry <0x20, aBgBg_lee_all_p_seg_0, 0x6EBBF0>  # "bg/bg_lee_all_p.seg"
-D:800461E0                     fileentry <0x21, aBgBg_lip_all_p_seg_0, 0x6EBBF0>  # "bg/bg_lip_all_p.seg"
-D:800461EC                     fileentry <0x22, aBgBg_len_all_p_seg_0, 0x6EBBF0>  # "bg/bg_len_all_p.seg"
-D:800461F8                     fileentry <0x23, aBgBg_wax_all_p_seg_0, 0x6ECB90>  # "bg/bg_wax_all_p.seg"
-D:80046204                     fileentry <0x24, aBgBg_pam_all_p_seg_0, 0x6ECB90>  # "bg/bg_pam_all_p.seg"
-D:80046210                     fileentry <0x25, aCarmourguardz_0, 0x6ECB90>  # "CarmourguardZ"
-D:8004621C                     fileentry <0x26, aCbaronsamediz_0, 0x6EF010>  # "CbaronsamediZ"
-D:80046228                     fileentry <0x27, aCbluecamguardz_0, 0x6F2700>  # "CbluecamguardZ"
-D:80046234                     fileentry <0x28, aCbluemanz_0, 0x6F4DF0>  # "CbluemanZ"
-D:80046240                     fileentry <0x29, aCbluewomanz_0, 0x6F6C00>  # "CbluewomanZ"
-D:8004624C                     fileentry <0x2A, aCboilerbondz_0, 0x6F8AC0>  # "CboilerbondZ"
-D:80046258                     fileentry <0x2B, aCboilertrevz_0, 0x6FB6D0>  # "CboilertrevZ"
-D:80046264                     fileentry <0x2C, aCborisz_0, 0x6FED50>  # "CborisZ"
-D:80046270                     fileentry <0x2D, aCcamguardz_0, 0x701E70>  # "CcamguardZ"
-D:8004627C                     fileentry <0x2E, aCcardimanz_0, 0x704550>  # "CcardimanZ"
-D:80046288                     fileentry <0x2F, aCcheckmanz_0, 0x706350>  # "CcheckmanZ"
-D:80046294                     fileentry <0x30, aCcommguardz_0, 0x7081D0>  # "CcommguardZ"
-D:800462A0                     fileentry <0x31, aCdjbondz_0, 0x70A7D0>  # "CdjbondZ"
-D:800462AC                     fileentry <0x32, aCfattechwomanz_1, 0x70D660>  # "CfattechwomanZ"
-D:800462B8                     fileentry <0x33, aCgreatguard2z_0, 0x70F580>  # "Cgreatguard2Z"
-D:800462C4                     fileentry <0x34, aCgreatguardz_0, 0x711CA0>  # "CgreatguardZ"
-D:800462D0                     fileentry <0x35, aCgreyguardz_0, 0x714320>  # "CgreyguardZ"
-D:800462DC                     fileentry <0x36, aCgreymanz_0, 0x7169F0>  # "CgreymanZ"
-D:800462E8                     fileentry <0x37, aCheadalanz_0, 0x7187B0>  # "CheadalanZ"
-D:800462F4                     fileentry <0x38, aCheadbz_0, 0x718D80>  # "CheadbZ"
-D:80046300                     fileentry <0x39, aCheadbalaclavaz_0, 0x7192F0>  # "CheadbalaclavaZ"
-D:8004630C                     fileentry <0x3A, aCheadbikez_0, 0x7196C0>  # "CheadbikeZ"
-D:80046318                     fileentry <0x3B, aCheadbrosnanz_0, 0x719D60>  # "CheadbrosnanZ"
-D:80046324                     fileentry <0x3C, aCheadbrosnanboilerz_0, 0x71AAB0>  # "CheadbrosnanboilerZ"
-D:80046330                     fileentry <0x3D, aCheadbrosnansnowz_0, 0x71B650>  # "CheadbrosnansnowZ"
-D:8004633C                     fileentry <0x3E, aCheadbrosnansuitz_0, 0x71C4D0>  # "CheadbrosnansuitZ"
-D:80046348                     fileentry <0x3F, aCheadbrosnantimberz_0, 0x71D250>  # "CheadbrosnantimberZ"
-D:80046354                     fileentry <0x40, aCheadchrisz_0, 0x71DE10>  # "CheadchrisZ"
-D:80046360                     fileentry <0x41, aCheaddavez_0, 0x71E350>  # "CheaddaveZ"
-D:8004636C                     fileentry <0x42, aCheaddesz_0, 0x71E8D0>  # "CheaddesZ"
-D:80046378                     fileentry <0x43, aCheadduncanz_0, 0x71EE00>  # "CheadduncanZ"
-D:80046384                     fileentry <0x44, aCheaddwaynez_0, 0x71F320>  # "CheaddwayneZ"
-D:80046390                     fileentry <0x45, aCheadgrahamz_0, 0x71F8A0>  # "CheadgrahamZ"
-D:8004639C                     fileentry <0x46, aCheadgrantz_0, 0x71FE10>  # "CheadgrantZ"
-D:800463A8                     fileentry <0x47, aCheadjimz_0, 0x720340>  # "CheadjimZ"
-D:800463B4                     fileentry <0x48, aCheadjoe2z_0, 0x720870>  # "Cheadjoe2Z"
-D:800463C0                     fileentry <0x49, aCheadjoez_0, 0x720C90>  # "CheadjoeZ"
-D:800463CC                     fileentry <0x4A, aCheadjoelz_0, 0x721200>  # "CheadjoelZ"
-D:800463D8                     fileentry <0x4B, aCheadkarlz_0, 0x721710>  # "CheadkarlZ"
-D:800463E4                     fileentry <0x4C, aCheadkenz_0, 0x721C70>  # "CheadkenZ"
-D:800463F0                     fileentry <0x4D, aCheadleez_0, 0x7221C0>  # "CheadleeZ"
-D:800463FC                     fileentry <0x4E, aCheadmandyz_0, 0x722740>  # "CheadmandyZ"
-D:80046408                     fileentry <0x4F, aCheadmarionz_0, 0x722B30>  # "CheadmarionZ"
-D:80046414                     fileentry <0x50, aCheadmarkz_0, 0x722F40>  # "CheadmarkZ"
-D:80046420                     fileentry <0x51, aCheadmartinz_0, 0x723470>  # "CheadmartinZ"
-D:8004642C                     fileentry <0x52, aCheadmishkinz_0, 0x7239D0>  # "CheadmishkinZ"
-D:80046438                     fileentry <0x53, aCheadneilz_0, 0x723F30>  # "CheadneilZ"
-D:80046444                     fileentry <0x54, aCheadpetez_0, 0x724450>  # "CheadpeteZ"
-D:80046450                     fileentry <0x55, aCheadrobinz_0, 0x7249E0>  # "CheadrobinZ"
-D:8004645C                     fileentry <0x56, aCheadsallyz_0, 0x724EF0>  # "CheadsallyZ"
-D:80046468                     fileentry <0x57, aCheadscottz_0, 0x7252F0>  # "CheadscottZ"
-D:80046474                     fileentry <0x58, aCheadshaunz_0, 0x725870>  # "CheadshaunZ"
-D:80046480                     fileentry <0x59, aCheadsteveez_0, 0x725E50>  # "CheadsteveeZ"
-D:8004648C                     fileentry <0x5A, aCheadstevehz_0, 0x7263A0>  # "CheadstevehZ"
-D:80046498                     fileentry <0x5B, aCheadvivienz_0, 0x7268F0>  # "CheadvivienZ"
-D:800464A4                     fileentry <0x5C, aCjawsz_0, 0x726D80>  # "CjawsZ"
-D:800464B0                     fileentry <0x5D, aCjeanwomanz_0, 0x7299C0>  # "CjeanwomanZ"
-D:800464BC                     fileentry <0x5E, aCmaydayz_0, 0x72B9D0>  # "CmaydayZ"
-D:800464C8                     fileentry <0x5F, aCmoonfemalez_0, 0x72E570>  # "CmoonfemaleZ"
-D:800464D4                     fileentry <0x60, aCmoonguardz_0, 0x7306C0>  # "CmoonguardZ"
-D:800464E0                     fileentry <0x61, aCnatalyaz_0, 0x732CB0>  # "CnatalyaZ"
-D:800464EC                     fileentry <0x62, aCnavyguardz_0, 0x736570>  # "CnavyguardZ"
-D:800464F8                     fileentry <0x63, aCoddjobz_0, 0x738C50>  # "CoddjobZ"
-D:80046504                     fileentry <0x64, aColiveguardz_0, 0x73BD80>  # "ColiveguardZ"
-D:80046510                     fileentry <0x65, aCorumovz_0, 0x73E3D0>  # "CorumovZ"
-D:8004651C                     fileentry <0x66, aCpilotz_0, 0x741800>  # "CpilotZ"
-D:80046528                     fileentry <0x67, aCredmanz_0, 0x744880>  # "CredmanZ"
-D:80046534                     fileentry <0x68, aCrusguardz_0, 0x746FB0>  # "CrusguardZ"
-D:80046540                     fileentry <0x69, aCsnowbondz_0, 0x748BE0>  # "CsnowbondZ"
-D:8004654C                     fileentry <0x6A, aCsnowguardz_0, 0x74BF10>  # "CsnowguardZ"
-D:80046558                     fileentry <0x6B, aCspicebondz_0, 0x74EB90>  # "CspicebondZ"
-D:80046564                     fileentry <0x6C, aCsuit_lf_handz_1, 0x7524B0>  # "Csuit_lf_handZ"
-D:80046570                     fileentry <0x6D, aCsuitbondz_0, 0x7556D0>  # "CsuitbondZ"
-D:8004657C                     fileentry <0x6E, aCtechmanz_0, 0x758460>  # "CtechmanZ"
-D:80046588                     fileentry <0x6F, aCtechwomanz_0, 0x75AB10>  # "CtechwomanZ"
-D:80046594                     fileentry <0x70, aCtimberbondz_0, 0x75CB00>  # "CtimberbondZ"
-D:800465A0                     fileentry <0x71, aCtrevelyanz_0, 0x75F830>  # "CtrevelyanZ"
-D:800465AC                     fileentry <0x72, aCtrevguardz_0, 0x763000>  # "CtrevguardZ"
-D:800465B8                     fileentry <0x73, aCvalentinz_0, 0x765610>  # "CvalentinZ"
-D:800465C4                     fileentry <0x74, aCxeniaz_0, 0x768580>  # "CxeniaZ"
-D:800465D0                     fileentry <0x75, aGak47z_0, 0x76BF70>  # "Gak47Z"
-D:800465DC                     fileentry <0x76, aGaudiotapez_0, 0x76C980>  # "GaudiotapeZ"
-D:800465E8                     fileentry <0x77, aGautoshotz_0, 0x76CD10>  # "GautoshotZ"
-D:800465F4                     fileentry <0x78, aGblackboxz_0, 0x76E520>  # "GblackboxZ"
-D:80046600                     fileentry <0x79, aGblueprintsz_0, 0x76EB20>  # "GblueprintsZ"
-D:8004660C                     fileentry <0x7A, aGbombcasez_0, 0x76EC20>  # "GbombcaseZ"
-D:80046618                     fileentry <0x7B, aGbombdefuserz_0, 0x76F3B0>  # "GbombdefuserZ"
-D:80046624                     fileentry <0x7C, aGbriefcasez_0, 0x76F9A0>  # "GbriefcaseZ"
-D:80046630                     fileentry <0x7D, aGbugz_0, 0x770130>  # "GbugZ"
-D:8004663C                     fileentry <0x7E, aGbugdetectorz_0, 0x770AA0>  # "GbugdetectorZ"
-D:80046648                     fileentry <0x7F, aGbungeez_0, 0x770DF0>  # "GbungeeZ"
-D:80046654                     fileentry <0x80, aGcameraz_0, 0x771140>  # "GcameraZ"
-D:80046660                     fileentry <0x81, aGcartbluez_0, 0x7715C0>  # "GcartblueZ"
-D:8004666C                     fileentry <0x82, aGcartridgez_0, 0x771820>  # "GcartridgeZ"
-D:80046678                     fileentry <0x83, aGcartriflez_0, 0x771950>  # "GcartrifleZ"
-D:80046684                     fileentry <0x84, aGcartshellz_0, 0x771B60>  # "GcartshellZ"
-D:80046690                     fileentry <0x85, aGcircuitboardz_0, 0x771D60>  # "GcircuitboardZ"
-D:8004669C                     fileentry <0x86, aGclipboardz_0, 0x771EA0>  # "GclipboardZ"
-D:800466A8                     fileentry <0x87, aGcreditcardz_0, 0x772090>  # "GcreditcardZ"
-D:800466B4                     fileentry <0x88, aGdarkglassesz_0, 0x7723E0>  # "GdarkglassesZ"
-D:800466C0                     fileentry <0x89, aGdatathiefz_0, 0x772730>  # "GdatathiefZ"
-D:800466CC                     fileentry <0x8A, aGdattapez_0, 0x772870>  # "GdattapeZ"
-D:800466D8                     fileentry <0x8B, aGdoordecoderz_0, 0x7729E0>  # "GdoordecoderZ"
-D:800466E4                     fileentry <0x8C, aGdoorexploderz_0, 0x772F60>  # "GdoorexploderZ"
-D:800466F0                     fileentry <0x8D, aGdossierredz_0, 0x7732B0>  # "GdossierredZ"
-D:800466FC                     fileentry <0x8E, aGdynamitez, 0x773610>  # "GdynamiteZ"
-D:80046708                     fileentry <0x8F, aGexplosivefloppyz_0, 0x773960>  # "GexplosivefloppyZ"
-D:80046714                     fileentry <0x90, aGexplosivepenz, 0x773BB0>  # "GexplosivepenZ"
-D:80046720                     fileentry <0x91, aGextinguisherz, 0x773F00>  # "GextinguisherZ"
-D:8004672C                     fileentry <0x92, aGfingergunz, 0x7746F0>  # "GfingergunZ"
-D:80046738                     fileentry <0x93, aGfistz_0, 0x774A40>  # "GfistZ"
-D:80046744                     fileentry <0x94, aGflarepistolz_0, 0x776140>  # "GflarepistolZ"
-D:80046750                     fileentry <0x95, aGfnp90z_0, 0x776490>  # "Gfnp90Z"
-D:8004675C                     fileentry <0x96, aGgaskeyringz_0, 0x777130>  # "GgaskeyringZ"
-D:80046768                     fileentry <0x97, aGgoldbarz_0, 0x777B60>  # "GgoldbarZ"
-D:80046774                     fileentry <0x98, aGgoldeneyekeyz_0, 0x777EB0>  # "GgoldeneyekeyZ"
-D:80046780                     fileentry <0x99, aGgoldengunz_0, 0x778860>  # "GgoldengunZ"
-D:8004678C                     fileentry <0x9A, aGgoldwppkz_0, 0x77A040>  # "GgoldwppkZ"
-D:80046798                     fileentry <0x9B, aGgrenadez_0, 0x77B9A0>  # "GgrenadeZ"
-D:800467A4                     fileentry <0x9C, aGgrenadelaunchz_0, 0x77C3D0>  # "GgrenadelaunchZ"
-D:800467B0                     fileentry <0x9D, aGheroinz_0, 0x77D450>  # "GheroinZ"
-D:800467BC                     fileentry <0x9E, aGjoypadz_0, 0x77D7A0>  # "GjoypadZ"
-D:800467C8                     fileentry <0x9F, aGkeyanalysercasez_0, 0x77F650>  # "GkeyanalysercaseZ"
-D:800467D4                     fileentry <0xA0, aGkeyboltz_0, 0x77FDE0>  # "GkeyboltZ"
-D:800467E0                     fileentry <0xA1, aGkeycardz_0, 0x7807D0>  # "GkeycardZ"
-D:800467EC                     fileentry <0xA2, aGkeyyalez_0, 0x780900>  # "GkeyyaleZ"
-D:800467F8                     fileentry <0xA3, aGknifez_0, 0x781650>  # "GknifeZ"
-D:80046804                     fileentry <0xA4, aGlaserz_0, 0x783120>  # "GlaserZ"
-D:80046810                     fileentry <0xA5, aGlectrez_0, 0x783F10>  # "GlectreZ"
-D:8004681C                     fileentry <0xA6, aGlockexploderz_0, 0x784260>  # "GlockexploderZ"
-D:80046828                     fileentry <0xA7, aGm16z_0, 0x7845B0>  # "Gm16Z"
-D:80046834                     fileentry <0xA8, aGmapz_0, 0x784FD0>  # "GmapZ"
-D:80046840                     fileentry <0xA9, aGmicrocameraz_0, 0x7850C0>  # "GmicrocameraZ"
-D:8004684C                     fileentry <0xAA, aGmicrocodez_0, 0x785700>  # "GmicrocodeZ"
-D:80046858                     fileentry <0xAB, aGmicrofilmz_0, 0x785A50>  # "GmicrofilmZ"
-D:80046864                     fileentry <0xAC, aGmoneyz_0, 0x785DA0>  # "GmoneyZ"
-D:80046870                     fileentry <0xAD, aGmp5kz_0, 0x7860F0>  # "Gmp5kZ"
-D:8004687C                     fileentry <0xAE, aGmp5ksilz_0, 0x786CD0>  # "Gmp5ksilZ"
-D:80046888                     fileentry <0xAF, aGpitongunz_0, 0x7879D0>  # "GpitongunZ"
-D:80046894                     fileentry <0xB0, aGplansz_0, 0x787D20>  # "GplansZ"
-D:800468A0                     fileentry <0xB1, aGplastiquez_0, 0x787EF0>  # "GplastiqueZ"
-D:800468AC                     fileentry <0xB2, aGpolarizedglassesz_0, 0x788240>  # "GpolarizedglassesZ"
-D:800468B8                     fileentry <0xB3, aGproximityminez_0, 0x7887A0>  # "GproximitymineZ"
-D:800468C4                     fileentry <0xB4, aGremoteminez_0, 0x788F90>  # "GremotemineZ"
-D:800468D0                     fileentry <0xB5, aGrocketlaunchz_0, 0x789950>  # "GrocketlaunchZ"
-D:800468DC                     fileentry <0xB6, aGrugerz_0, 0x78AB70>  # "GrugerZ"
-D:800468E8                     fileentry <0xB7, aGsafecrackercasez_0, 0x78C900>  # "GsafecrackercaseZ"
-D:800468F4                     fileentry <0xB8, aGshotgunz_0, 0x78D090>  # "GshotgunZ"
-D:80046900                     fileentry <0xB9, aGsilverwppkz_0, 0x78DF70>  # "GsilverwppkZ"
-D:8004690C                     fileentry <0xBA, aGskorpionz_0, 0x78F8D0>  # "GskorpionZ"
-D:80046918                     fileentry <0xBB, aGsniperriflez_0, 0x790AD0>  # "GsniperrifleZ"
-D:80046924                     fileentry <0xBC, aGspectrez_0, 0x791B40>  # "GspectreZ"
-D:80046930                     fileentry <0xBD, aGspooltapez_0, 0x7927C0>  # "GspooltapeZ"
-D:8004693C                     fileentry <0xBE, aGspyfilez_0, 0x792B10>  # "GspyfileZ"
-D:80046948                     fileentry <0xBF, aGstafflistz_0, 0x792E60>  # "GstafflistZ"
-D:80046954                     fileentry <0xC0, aGtaserz_0, 0x793000>  # "GtaserZ"
-D:80046960                     fileentry <0xC1, aGthrowknifez_0, 0x794E60>  # "GthrowknifeZ"
-D:8004696C                     fileentry <0xC2, aGtimedminez_0, 0x796950>  # "GtimedmineZ"
-D:80046978                     fileentry <0xC3, aGtriggerz_0, 0x797410>  # "GtriggerZ"
-D:80046984                     fileentry <0xC4, aGtt33z_0, 0x79A810>  # "Gtt33Z"
-D:80046990                     fileentry <0xC5, aGuziz_0, 0x79C330>  # "GuziZ"
-D:8004699C                     fileentry <0xC6, aGvideotapez_0, 0x79CC40>  # "GvideotapeZ"
-D:800469A8                     fileentry <0xC7, aGwatchcommunicatorz_0, 0x79CE50>  # "GwatchcommunicatorZ"
-D:800469B4                     fileentry <0xC8, aGwatchgeigercounterz_0, 0x79E2B0>  # "GwatchgeigercounterZ"
-D:800469C0                     fileentry <0xC9, aGwatchidentifierz_0, 0x79F710>  # "GwatchidentifierZ"
-D:800469CC                     fileentry <0xCA, aGwatchlaserz_0, 0x7A0B70>  # "GwatchlaserZ"
-D:800469D8                     fileentry <0xCB, aGwatchmagnetattractz_0, 0x7A3F70>  # "GwatchmagnetattractZ"
-D:800469E4                     fileentry <0xCC, aGwatchmagnetrepelz_0, 0x7A53C0>  # "GwatchmagnetrepelZ"
-D:800469F0                     fileentry <0xCD, aGweaponcasez_0, 0x7A6820>  # "GweaponcaseZ"
-D:800469FC                     fileentry <0xCE, aGwppkz_0, 0x7A6FB0>  # "GwppkZ"
-D:80046A08                     fileentry <0xCF, aGwppksilz_0, 0x7A8C40>  # "GwppksilZ"
-D:80046A14                     fileentry <0xD0, aGwristdartz, 0x7AA980>  # "GwristdartZ"
-D:80046A20                     fileentry <0xD1, aPicbmz_0, 0x7AACD0>  # "PICBMZ"
-D:80046A2C                     fileentry <0xD2, aPicbm_nosez_0, 0x7AD250>  # "PICBM_noseZ"
-D:80046A38                     fileentry <0xD3, aPak47magz_0, 0x7ADA00>  # "Pak47magZ"
-D:80046A44                     fileentry <0xD4, aPalarm1z_0, 0x7ADBE0>  # "Palarm1Z"
-D:80046A50                     fileentry <0xD5, aPalarm2z_0, 0x7ADD40>  # "Palarm2Z"
-D:80046A5C                     fileentry <0xD6, aPammo_crate1z_0, 0x7ADEE0>  # "Pammo_crate1Z"
-D:80046A68                     fileentry <0xD7, aPammo_crate2z_0, 0x7AE120>  # "Pammo_crate2Z"
-D:80046A74                     fileentry <0xD8, aPammo_crate3z_0, 0x7AE360>  # "Pammo_crate3Z"
-D:80046A80                     fileentry <0xD9, aPammo_crate4z_0, 0x7AE5B0>  # "Pammo_crate4Z"
-D:80046A8C                     fileentry <0xDA, aPammo_crate5z_0, 0x7AE820>  # "Pammo_crate5Z"
-D:80046A98                     fileentry <0xDB, aPapcz_0, 0x7AEAE0>  # "PapcZ"
-D:80046AA4                     fileentry <0xDC, aParchsecdoor1z_0, 0x7B0740>  # "Parchsecdoor1Z"
-D:80046AB0                     fileentry <0xDD, aParchsecdoor2z_0, 0x7B0920>  # "Parchsecdoor2Z"
-D:80046ABC                     fileentry <0xDE, aParticz_0, 0x7B0AF0>  # "ParticZ"
-D:80046AC8                     fileentry <0xDF, aPartictrailerz_0, 0x7B18F0>  # "PartictrailerZ"
-D:80046AD4                     fileentry <0xE0, aPbarricadez_0, 0x7B2200>  # "PbarricadeZ"
-D:80046AE0                     fileentry <0xE1, aPbin1z_0, 0x7B2440>  # "Pbin1Z"
-D:80046AEC                     fileentry <0xE2, aPblotter1z_0, 0x7B2790>  # "Pblotter1Z"
-D:80046AF8                     fileentry <0xE3, aPbodyarmourz_0, 0x7B2870>  # "PbodyarmourZ"
-D:80046B04                     fileentry <0xE4, aPbodyarmourvestz_0, 0x7B2D10>  # "PbodyarmourvestZ"
-D:80046B10                     fileentry <0xE5, aPbollardz_0, 0x7B3130>  # "PbollardZ"
-D:80046B1C                     fileentry <0xE6, aPbombz_0, 0x7B3330>  # "PbombZ"
-D:80046B28                     fileentry <0xE7, aPbook1z_0, 0x7B34A0>  # "Pbook1Z"
-D:80046B34                     fileentry <0xE8, aPbookshelf1z_0, 0x7B3630>  # "Pbookshelf1Z"
-D:80046B40                     fileentry <0xE9, aPborg_cratez_0, 0x7B3D20>  # "Pborg_crateZ"
-D:80046B4C                     fileentry <0xEA, aPboxcartridgesz_0, 0x7B3E90>  # "PboxcartridgesZ"
-D:80046B58                     fileentry <0xEB, aPboxes2x4z_0, 0x7B4090>  # "Pboxes2x4Z"
-D:80046B64                     fileentry <0xEC, aPboxes3x4z_0, 0x7B44C0>  # "Pboxes3x4Z"
-D:80046B70                     fileentry <0xED, aPboxes4x4z_0, 0x7B4900>  # "Pboxes4x4Z"
-D:80046B7C                     fileentry <0xEE, aPbrakeunitz_0, 0x7B4F60>  # "PbrakeunitZ"
-D:80046B88                     fileentry <0xEF, aPbridge_console1az_0, 0x7B52D0>  # "Pbridge_console1aZ"
-D:80046B94                     fileentry <0xF0, aPbridge_console1bz_0, 0x7B5850>  # "Pbridge_console1bZ"
-D:80046BA0                     fileentry <0xF1, aPbridge_console2az_0, 0x7B5DB0>  # "Pbridge_console2aZ"
-D:80046BAC                     fileentry <0xF2, aPbridge_console2bz_0, 0x7B6330>  # "Pbridge_console2bZ"
-D:80046BB8                     fileentry <0xF3, aPbridge_console3az_0, 0x7B6820>  # "Pbridge_console3aZ"
-D:80046BC4                     fileentry <0xF4, aPbridge_console3bz_0, 0x7B6D70>  # "Pbridge_console3bZ"
-D:80046BD0                     fileentry <0xF5, aPcarbmwz_0, 0x7B7300>  # "PcarbmwZ"
-D:80046BDC                     fileentry <0xF6, aPcard_box1z_0, 0x7B7FE0>  # "Pcard_box1Z"
-D:80046BE8                     fileentry <0xF7, aPcard_box2z_0, 0x7B81E0>  # "Pcard_box2Z"
-D:80046BF4                     fileentry <0xF8, aPcard_box3z_0, 0x7B8420>  # "Pcard_box3Z"
-D:80046C00                     fileentry <0xF9, aPcard_box4_lgz_0, 0x7B8610>  # "Pcard_box4_lgZ"
-D:80046C0C                     fileentry <0xFA, aPcard_box5_lgz_0, 0x7B87C0>  # "Pcard_box5_lgZ"
-D:80046C18                     fileentry <0xFB, aPcard_box6_lgz_0, 0x7B89C0>  # "Pcard_box6_lgZ"
-D:80046C24                     fileentry <0xFC, aPcarescortz_0, 0x7B8BB0>  # "PcarescortZ"
-D:80046C30                     fileentry <0xFD, aPcargolfz_0, 0x7B97B0>  # "PcargolfZ"
-D:80046C3C                     fileentry <0xFE, aPcarweirdz_0, 0x7BA3E0>  # "PcarweirdZ"
-D:80046C48                     fileentry <0xFF, aPcarzilz_0, 0x7BB520>  # "PcarzilZ"
-D:80046C54                     fileentry <0x100, aPcctvz_0, 0x7BCB20>  # "PcctvZ"
-D:80046C60                     fileentry <0x101, aPchraudiotapez_0, 0x7BCEA0>  # "PchraudiotapeZ"
-D:80046C6C                     fileentry <0x102, aPchrautoshotz_0, 0x7BD400>  # "PchrautoshotZ"
-D:80046C78                     fileentry <0x103, aPchrblackboxz_0, 0x7BD760>  # "PchrblackboxZ"
-D:80046C84                     fileentry <0x104, aPchrblueprintsz_0, 0x7BDFE0>  # "PchrblueprintsZ"
-D:80046C90                     fileentry <0x105, aPchrbombcasez_0, 0x7BE130>  # "PchrbombcaseZ"
-D:80046C9C                     fileentry <0x106, aPchrbombdefuserz_0, 0x7BE320>  # "PchrbombdefuserZ"
-D:80046CA8                     fileentry <0x107, aPchrbriefcasez_0, 0x7BEC00>  # "PchrbriefcaseZ"
-D:80046CB4                     fileentry <0x108, aPchrbugz_0, 0x7BED90>  # "PchrbugZ"
-D:80046CC0                     fileentry <0x109, aPchrbugdetectorz_0, 0x7BFB40>  # "PchrbugdetectorZ"
-D:80046CCC                     fileentry <0x10A, aPchrbungeez_0, 0x7BFCB0>  # "PchrbungeeZ"
-D:80046CD8                     fileentry <0x10B, aPchrcameraz_0, 0x7BFE20>  # "PchrcameraZ"
-D:80046CE4                     fileentry <0x10C, aPchrcircuitboardz_0, 0x7C04B0>  # "PchrcircuitboardZ"
-D:80046CF0                     fileentry <0x10D, aPchrclipboardz_0, 0x7C0650>  # "PchrclipboardZ"
-D:80046CFC                     fileentry <0x10E, aPchrcreditcardz_0, 0x7C08D0>  # "PchrcreditcardZ"
-D:80046D08                     fileentry <0x10F, aPchrdarkglassesz_0, 0x7C0A40>  # "PchrdarkglassesZ"
-D:80046D14                     fileentry <0x110, aPchrdatathiefz_0, 0x7C0BB0>  # "PchrdatathiefZ"
-D:80046D20                     fileentry <0x111, aPchrdattapez_0, 0x7C0D50>  # "PchrdattapeZ"
-D:80046D2C                     fileentry <0x112, aPchrdoordecoderz_0, 0x7C0F40>  # "PchrdoordecoderZ"
-D:80046D38                     fileentry <0x113, aPchrdoorexploderz_0, 0x7C17A0>  # "PchrdoorexploderZ"
-D:80046D44                     fileentry <0x114, aPchrdossierredz_0, 0x7C1910>  # "PchrdossierredZ"
-D:80046D50                     fileentry <0x115, aPchrdynamitez_0, 0x7C1DE0>  # "PchrdynamiteZ"
-D:80046D5C                     fileentry <0x116, aPchrexplosivepenz_0, 0x7C1F50>  # "PchrexplosivepenZ"
-D:80046D68                     fileentry <0x117, aPchrextinguisherz_0, 0x7C20C0>  # "PchrextinguisherZ"
-D:80046D74                     fileentry <0x118, aPchrfingergunz_0, 0x7C25C0>  # "PchrfingergunZ"
-D:80046D80                     fileentry <0x119, aPchrflarepistolz_0, 0x7C2730>  # "PchrflarepistolZ"
-D:80046D8C                     fileentry <0x11A, aPchrfnp90z_0, 0x7C28A0>  # "Pchrfnp90Z"
-D:80046D98                     fileentry <0x11B, aPchrgaskeyringz_0, 0x7C2D00>  # "PchrgaskeyringZ"
-D:80046DA4                     fileentry <0x11C, aPchrgoldbarz_0, 0x7C3C10>  # "PchrgoldbarZ"
-D:80046DB0                     fileentry <0x11D, aPchrgoldenz_0, 0x7C3D80>  # "PchrgoldenZ"
-D:80046DBC                     fileentry <0x11E, aPchrgoldeneyekeyz_0, 0x7C3FF0>  # "PchrgoldeneyekeyZ"
-D:80046DC8                     fileentry <0x11F, aPchrgoldwppkz_0, 0x7C4E90>  # "PchrgoldwppkZ"
-D:80046DD4                     fileentry <0x120, aPchrgrenadez_0, 0x7C5000>  # "PchrgrenadeZ"
-D:80046DE0                     fileentry <0x121, aPchrgrenadelaunchz_0, 0x7C5370>  # "PchrgrenadelaunchZ"
-D:80046DEC                     fileentry <0x122, aPchrgrenaderoundz_0, 0x7C5700>  # "PchrgrenaderoundZ"
-D:80046DF8                     fileentry <0x123, aPchrheroinz_0, 0x7C5970>  # "PchrheroinZ"
-D:80046E04                     fileentry <0x124, aPchrkalashz_0, 0x7C5AE0>  # "PchrkalashZ"
-D:80046E10                     fileentry <0x125, aPchrkeyanalysercasez_0, 0x7C5ED0>  # "PchrkeyanalysercaseZ"
-D:80046E1C                     fileentry <0x126, aPchrkeyboltz_0, 0x7C60C0>  # "PchrkeyboltZ"
-D:80046E28                     fileentry <0x127, aPchrkeyyalez_0, 0x7C6F60>  # "PchrkeyyaleZ"
-D:80046E34                     fileentry <0x128, aPchrknifez_0, 0x7C83C0>  # "PchrknifeZ"
-D:80046E40                     fileentry <0x129, aPchrlaserz_0, 0x7C85C0>  # "PchrlaserZ"
-D:80046E4C                     fileentry <0x12A, aPchrlectrez_0, 0x7C8980>  # "PchrlectreZ"
-D:80046E58                     fileentry <0x12B, aPchrlockexploderz_0, 0x7C8AF0>  # "PchrlockexploderZ"
-D:80046E64                     fileentry <0x12C, aPchrm16z_0, 0x7C8C60>  # "Pchrm16Z"
-D:80046E70                     fileentry <0x12D, aPchrmapz_0, 0x7C9030>  # "PchrmapZ"
-D:80046E7C                     fileentry <0x12E, aPchrmicrocameraz_0, 0x7C9180>  # "PchrmicrocameraZ"
-D:80046E88                     fileentry <0x12F, aPchrmicrocodez_0, 0x7C9A70>  # "PchrmicrocodeZ"
-D:80046E94                     fileentry <0x130, aPchrmicrofilmz_0, 0x7C9BE0>  # "PchrmicrofilmZ"
-D:80046EA0                     fileentry <0x131, aPchrmoneyz_0, 0x7C9D50>  # "PchrmoneyZ"
-D:80046EAC                     fileentry <0x132, aPchrmp5kz_0, 0x7C9EC0>  # "Pchrmp5kZ"
-D:80046EB8                     fileentry <0x133, aPchrmp5ksilz_0, 0x7CA240>  # "Pchrmp5ksilZ"
-D:80046EC4                     fileentry <0x134, aPchrpitongunz_0, 0x7CA650>  # "PchrpitongunZ"
-D:80046ED0                     fileentry <0x135, aPchrplansz_0, 0x7CA7C0>  # "PchrplansZ"
-D:80046EDC                     fileentry <0x136, aPchrplastiquez_0, 0x7CAA50>  # "PchrplastiqueZ"
-D:80046EE8                     fileentry <0x137, aPchrpolarizedglassesz_0, 0x7CAEB0>  # "PchrpolarizedglassesZ"
-D:80046EF4                     fileentry <0x138, aPchrproximityminez_0, 0x7CB770>  # "PchrproximitymineZ"
-D:80046F00                     fileentry <0x139, aPchrremoteminez_0, 0x7CBBD0>  # "PchrremotemineZ"
-D:80046F0C                     fileentry <0x13A, aPchrrocketz_0, 0x7CC030>  # "PchrrocketZ"
-D:80046F18                     fileentry <0x13B, aPchrrocketlaunchz_0, 0x7CC5E0>  # "PchrrocketlaunchZ"
-D:80046F24                     fileentry <0x13C, aPchrrugerz_0, 0x7CC9C0>  # "PchrrugerZ"
-D:80046F30                     fileentry <0x13D, aPchrsafecrackercasez_0, 0x7CCDA0>  # "PchrsafecrackercaseZ"
-D:80046F3C                     fileentry <0x13E, aPchrshotgunz_0, 0x7CCF90>  # "PchrshotgunZ"
-D:80046F48                     fileentry <0x13F, aPchrsilverwppkz_0, 0x7CD2E0>  # "PchrsilverwppkZ"
-D:80046F54                     fileentry <0x140, aPchrskorpionz_0, 0x7CD450>  # "PchrskorpionZ"
-D:80046F60                     fileentry <0x141, aPchrsniperriflez_0, 0x7CD7D0>  # "PchrsniperrifleZ"
-D:80046F6C                     fileentry <0x142, aPchrspectrez_0, 0x7CDB60>  # "PchrspectreZ"
-D:80046F78                     fileentry <0x143, aPchrspooltapez_0, 0x7CDED0>  # "PchrspooltapeZ"
-D:80046F84                     fileentry <0x144, aPchrspyfilez_0, 0x7CE040>  # "PchrspyfileZ"
-D:80046F90                     fileentry <0x145, aPchrstafflistz_0, 0x7CE1B0>  # "PchrstafflistZ"
-D:80046F9C                     fileentry <0x146, aPchrtesttubez_0, 0x7CE3D0>  # "PchrtesttubeZ"
-D:80046FA8                     fileentry <0x147, aPchrthrowknifez_0, 0x7CE590>  # "PchrthrowknifeZ"
-D:80046FB4                     fileentry <0x148, aPchrtimedminez_0, 0x7CE7B0>  # "PchrtimedmineZ"
-D:80046FC0                     fileentry <0x149, aPchrtt33z_0, 0x7CECE0>  # "Pchrtt33Z"
-D:80046FCC                     fileentry <0x14A, aPchruziz_0, 0x7CEF70>  # "PchruziZ"
-D:80046FD8                     fileentry <0x14B, aPchrvideotapez_0, 0x7CF240>  # "PchrvideotapeZ"
-D:80046FE4                     fileentry <0x14C, aPchrweaponcasez_0, 0x7CF510>  # "PchrweaponcaseZ"
-D:80046FF0                     fileentry <0x14D, aPchrwppkz_0, 0x7CF710>  # "PchrwppkZ"
-D:80046FFC                     fileentry <0x14E, aPchrwppksilz_0, 0x7CF950>  # "PchrwppksilZ"
-D:80047008                     fileentry <0x14F, aPchrwristdartz_0, 0x7CFC30>  # "PchrwristdartZ"
-D:80047014                     fileentry <0x150, aPconsole1z_0, 0x7CFDA0>  # "Pconsole1Z"
-D:80047020                     fileentry <0x151, aPconsole2z_0, 0x7D0420>  # "Pconsole2Z"
-D:8004702C                     fileentry <0x152, aPconsole3z_0, 0x7D0AA0>  # "Pconsole3Z"
-D:80047038                     fileentry <0x153, aPconsole_sev2az_0, 0x7D1130>  # "Pconsole_sev2aZ"
-D:80047044                     fileentry <0x154, aPconsole_sev2bz_0, 0x7D1550>  # "Pconsole_sev2bZ"
-D:80047050                     fileentry <0x155, aPconsole_sev2cz_0, 0x7D1A10>  # "Pconsole_sev2cZ"
-D:8004705C                     fileentry <0x156, aPconsole_sev2dz_0, 0x7D1E50>  # "Pconsole_sev2dZ"
-D:80047068                     fileentry <0x157, aPconsole_sev_geaz_0, 0x7D2280>  # "Pconsole_sev_GEaZ"
-D:80047074                     fileentry <0x158, aPconsole_sev_gebz_0, 0x7D26B0>  # "Pconsole_sev_GEbZ"
-D:80047080                     fileentry <0x159, aPconsole_sevaz_0, 0x7D2AE0>  # "Pconsole_sevaZ"
-D:8004708C                     fileentry <0x15A, aPconsole_sevbz_0, 0x7D2F60>  # "Pconsole_sevbZ"
-D:80047098                     fileentry <0x15B, aPconsole_sevcz_0, 0x7D33D0>  # "Pconsole_sevcZ"
-D:800470A4                     fileentry <0x15C, aPconsole_sevdz_0, 0x7D3800>  # "Pconsole_sevdZ"
-D:800470B0                     fileentry <0x15D, aPcryptdoor1az_0, 0x7D3C30>  # "Pcryptdoor1aZ"
-D:800470BC                     fileentry <0x15E, aPcryptdoor1bz_0, 0x7D3DC0>  # "Pcryptdoor1bZ"
-D:800470C8                     fileentry <0x15F, aPcryptdoor2az_0, 0x7D3F50>  # "Pcryptdoor2aZ"
-D:800470D4                     fileentry <0x160, aPcryptdoor2bz_0, 0x7D40E0>  # "Pcryptdoor2bZ"
-D:800470E0                     fileentry <0x161, aPcryptdoor3z_0, 0x7D4270>  # "Pcryptdoor3Z"
-D:800470EC                     fileentry <0x162, aPcryptdoor4z_0, 0x7D44E0>  # "Pcryptdoor4Z"
-D:800470F8                     fileentry <0x163, aPdamchaindoorz_0, 0x7D4660>  # "PdamchaindoorZ"
-D:80047104                     fileentry <0x164, aPdamgatedoorz_0, 0x7D48E0>  # "PdamgatedoorZ"
-D:80047110                     fileentry <0x165, aPdamtundoorz_0, 0x7D4B00>  # "PdamtundoorZ"
-D:8004711C                     fileentry <0x166, aPdepot_door_steelz_0, 0x7D4E70>  # "Pdepot_door_steelZ"
-D:80047128                     fileentry <0x167, aPdepot_gate_entryz_0, 0x7D5010>  # "Pdepot_gate_entryZ"
-D:80047134                     fileentry <0x168, aPdesk1z_0, 0x7D5250>  # "Pdesk1Z"
-D:80047140                     fileentry <0x169, aPdesk2z_0, 0x7D53D0>  # "Pdesk2Z"
-D:8004714C                     fileentry <0x16A, aPdesk_arecibo1z_0, 0x7D5550>  # "Pdesk_arecibo1Z"
-D:80047158                     fileentry <0x16B, aPdesk_lamp2z_0, 0x7D5790>  # "Pdesk_lamp2Z"
-D:80047164                     fileentry <0x16C, aPdest_enginez_0, 0x7D5A90>  # "Pdest_engineZ"
-D:80047170                     fileentry <0x16D, aPdest_exocetz_0, 0x7D7380>  # "Pdest_exocetZ"
-D:8004717C                     fileentry <0x16E, aPdest_gunz_0, 0x7D79E0>  # "Pdest_gunZ"
-D:80047188                     fileentry <0x16F, aPdest_harpoonz_0, 0x7D8050>  # "Pdest_harpoonZ"
-D:80047194                     fileentry <0x170, aPdest_seawolfz_0, 0x7D88F0>  # "Pdest_seawolfZ"
-D:800471A0                     fileentry <0x171, aPdisc_readerz_0, 0x7D98A0>  # "Pdisc_readerZ"
-D:800471AC                     fileentry <0x172, aPdisk_drive1z_0, 0x7D9A60>  # "Pdisk_drive1Z"
-D:800471B8                     fileentry <0x173, aPdoor_azt_chairz_0, 0x7D9BF0>  # "Pdoor_azt_chairZ"
-D:800471C4                     fileentry <0x174, aPdoor_azt_deskz_0, 0x7D9D70>  # "Pdoor_azt_deskZ"
-D:800471D0                     fileentry <0x175, aPdoor_azt_desk_topz_0, 0x7DA1B0>  # "Pdoor_azt_desk_topZ"
-D:800471DC                     fileentry <0x176, aPdoor_aztecz_0, 0x7DA540>  # "Pdoor_aztecZ"
-D:800471E8                     fileentry <0x177, aPdoor_dest1z_0, 0x7DA770>  # "Pdoor_dest1Z"
-D:800471F4                     fileentry <0x178, aPdoor_dest2z_0, 0x7DAA70>  # "Pdoor_dest2Z"
-D:80047200                     fileentry <0x179, aPdoor_eyelidz_0, 0x7DAE30>  # "Pdoor_eyelidZ"
-D:8004720C                     fileentry <0x17A, aPdoor_irisz_0, 0x7DB390>  # "Pdoor_irisZ"
-D:80047218                     fileentry <0x17B, aPdoor_mfz_0, 0x7DBDE0>  # "Pdoor_mfZ"
-D:80047224                     fileentry <0x17C, aPdoor_roller1z_0, 0x7DC0D0>  # "Pdoor_roller1Z"
-D:80047230                     fileentry <0x17D, aPdoor_roller2z_0, 0x7DC440>  # "Pdoor_roller2Z"
-D:8004723C                     fileentry <0x17E, aPdoor_roller3z_0, 0x7DC680>  # "Pdoor_roller3Z"
-D:80047248                     fileentry <0x17F, aPdoor_roller4z_0, 0x7DC8C0>  # "Pdoor_roller4Z"
-D:80047254                     fileentry <0x180, aPdoor_rollertrainz_0, 0x7DCB20>  # "Pdoor_rollertrainZ"
-D:80047260                     fileentry <0x181, aPdoor_st_arec1z_0, 0x7DCC50>  # "Pdoor_st_arec1Z"
-D:8004726C                     fileentry <0x182, aPdoor_st_arec2z_0, 0x7DCEB0>  # "Pdoor_st_arec2Z"
-D:80047278                     fileentry <0x183, aPdoor_winz_0, 0x7DD190>  # "Pdoor_winZ"
-D:80047284                     fileentry <0x184, aPdoorconsolez_0, 0x7DD330>  # "PdoorconsoleZ"
-D:80047290                     fileentry <0x185, aPdoorpanelz_0, 0x7DD7A0>  # "PdoorpanelZ"
-D:8004729C                     fileentry <0x186, aPdoorprison1z_0, 0x7DDB10>  # "Pdoorprison1Z"
-D:800472A8                     fileentry <0x187, aPdoorstatgatez_0, 0x7DDC60>  # "PdoorstatgateZ"
-D:800472B4                     fileentry <0x188, aPexplosionbitz_0, 0x7DDE60>  # "PexplosionbitZ"
-D:800472C0                     fileentry <0x189, aPfiling_cabinet1z_0, 0x7DDF80>  # "Pfiling_cabinet1Z"
-D:800472CC                     fileentry <0x18A, aPflagz_0, 0x7DE100>  # "PflagZ"
-D:800472D8                     fileentry <0x18B, aPfloppyz_0, 0x7DE230>  # "PfloppyZ"
-D:800472E4                     fileentry <0x18C, aPfnp90magz_0, 0x7DE550>  # "Pfnp90magZ"
-D:800472F0                     fileentry <0x18D, aPgas_plant_met1_do1z_0, 0x7DE6F0>  # "Pgas_plant_met1_do1Z"
-D:800472FC                     fileentry <0x18E, aPgas_plant_sw2_do1z_0, 0x7DEA70>  # "Pgas_plant_sw2_do1Z"
-D:80047308                     fileentry <0x18F, aPgas_plant_sw3_do1z_0, 0x7DEC50>  # "Pgas_plant_sw3_do1Z"
-D:80047314                     fileentry <0x190, aPgas_plant_sw4_do1z_0, 0x7DEE50>  # "Pgas_plant_sw4_do1Z"
-D:80047320                     fileentry <0x191, aPgas_plant_sw_do1z_0, 0x7DEFB0>  # "Pgas_plant_sw_do1Z"
-D:8004732C                     fileentry <0x192, aPgas_plant_wc_cub1z_0, 0x7DF240>  # "Pgas_plant_wc_cub1Z"
-D:80047338                     fileentry <0x193, aPgasbarrelz_0, 0x7DF450>  # "PgasbarrelZ"
-D:80047344                     fileentry <0x194, aPgasbarrelsz_0, 0x7DF660>  # "PgasbarrelsZ"
-D:80047350                     fileentry <0x195, aPgasplant_clear_doorz_0, 0x7DFBA0>  # "Pgasplant_clear_doorZ"
-D:8004735C                     fileentry <0x196, aPgastankz_0, 0x7E0100>  # "PgastankZ"
-D:80047368                     fileentry <0x197, aPglassware1z_0, 0x7E06B0>  # "Pglassware1Z"
-D:80047374                     fileentry <0x198, aPglassware2z_0, 0x7E0810>  # "Pglassware2Z"
-D:80047380                     fileentry <0x199, aPglassware3z_0, 0x7E0AA0>  # "Pglassware3Z"
-D:8004738C                     fileentry <0x19A, aPglassware4z_0, 0x7E0CB0>  # "Pglassware4Z"
-D:80047398                     fileentry <0x19B, aPgoldeneyelogoz_0, 0x7E1230>  # "PgoldeneyelogoZ"
-D:800473A4                     fileentry <0x19C, aPgoldenshellsz_0, 0x7E20E0>  # "PgoldenshellsZ"
-D:800473B0                     fileentry <0x19D, aPgroundgunz_0, 0x7E22E0>  # "PgroundgunZ"
-D:800473BC                     fileentry <0x19E, aPgun_runway1z_0, 0x7E2AB0>  # "Pgun_runway1Z"
-D:800473C8                     fileentry <0x19F, aPhatberetz_0, 0x7E31F0>  # "PhatberetZ"
-D:800473D4                     fileentry <0x1A0, aPhatberetbluez_0, 0x7E3490>  # "PhatberetblueZ"
-D:800473E0                     fileentry <0x1A1, aPhatberetredz_0, 0x7E3760>  # "PhatberetredZ"
-D:800473EC                     fileentry <0x1A2, aPhatchboltz_0, 0x7E3A40>  # "PhatchboltZ"
-D:800473F8                     fileentry <0x1A3, aPhatchdoorz_0, 0x7E3B10>  # "PhatchdoorZ"
-D:80047404                     fileentry <0x1A4, aPhatchsevxz_0, 0x7E3D30>  # "PhatchsevxZ"
-D:80047410                     fileentry <0x1A5, aPhatfurryz_0, 0x7E3EA0>  # "PhatfurryZ"
-D:8004741C                     fileentry <0x1A6, aPhatfurryblackz_0, 0x7E40D0>  # "PhatfurryblackZ"
-D:80047428                     fileentry <0x1A7, aPhatfurrybrownz_0, 0x7E42F0>  # "PhatfurrybrownZ"
-D:80047434                     fileentry <0x1A8, aPhathelmetz_0, 0x7E4500>  # "PhathelmetZ"
-D:80047440                     fileentry <0x1A9, aPhathelmetgreyz_0, 0x7E4730>  # "PhathelmetgreyZ"
-D:8004744C                     fileentry <0x1AA, aPhatmoonz_0, 0x7E4960>  # "PhatmoonZ"
-D:80047458                     fileentry <0x1AB, aPhatpeakedz_0, 0x7E4D40>  # "PhatpeakedZ"
-D:80047464                     fileentry <0x1AC, aPhattbirdz_0, 0x7E5050>  # "PhattbirdZ"
-D:80047470                     fileentry <0x1AD, aPhattbirdbrownz_0, 0x7E52A0>  # "PhattbirdbrownZ"
-D:8004747C                     fileentry <0x1AE, aPhelicopterz_0, 0x7E5510>  # "PhelicopterZ"
-D:80047488                     fileentry <0x1AF, aPhindz_0, 0x7E9730>  # "PhindZ"
-D:80047494                     fileentry <0x1B0, aPjeepz_0, 0x7EAEA0>  # "PjeepZ"
-D:800474A0                     fileentry <0x1B1, aPjerry_can1z_0, 0x7EC000>  # "Pjerry_can1Z"
-D:800474AC                     fileentry <0x1B2, aPjungle3_treez_0, 0x7EC260>  # "Pjungle3_treeZ"
-D:800474B8                     fileentry <0x1B3, aPjungle5_treez_0, 0x7EC9E0>  # "Pjungle5_treeZ"
-D:800474C4                     fileentry <0x1B4, aPkey_holderz_0, 0x7ECF10>  # "Pkey_holderZ"
-D:800474D0                     fileentry <0x1B5, aPkeyboard1z_0, 0x7ED260>  # "Pkeyboard1Z"
-D:800474DC                     fileentry <0x1B6, aPkit_units1z_0, 0x7ED3D0>  # "Pkit_units1Z"
-D:800474E8                     fileentry <0x1B7, aPlabbenchz_0, 0x7ED670>  # "PlabbenchZ"
-D:800474F4                     fileentry <0x1B8, aPlandminez_0, 0x7EDA40>  # "PlandmineZ"
-D:80047500                     fileentry <0x1B9, aPlegalpagez_0, 0x7EDCB0>  # "PlegalpageZ"
-D:8004750C                     fileentry <0x1BA, aPletter_tray1z_0, 0x7EEC70>  # "Pletter_tray1Z"
-D:80047518                     fileentry <0x1BB, aPlocker3z_0, 0x7EEDD0>  # "Plocker3Z"
-D:80047524                     fileentry <0x1BC, aPlocker4z_0, 0x7EEF60>  # "Plocker4Z"
-D:80047530                     fileentry <0x1BD, aPm16magz_0, 0x7EF0F0>  # "Pm16magZ"
-D:8004753C                     fileentry <0x1BE, aPmagnumshellsz_0, 0x7EF230>  # "PmagnumshellsZ"
-D:80047548                     fileentry <0x1BF, aPmainframe1z_0, 0x7EF430>  # "Pmainframe1Z"
-D:80047554                     fileentry <0x1C0, aPmainframe2z_0, 0x7EF730>  # "Pmainframe2Z"
-D:80047560                     fileentry <0x1C1, aPmetal_chair1z_0, 0x7EFA00>  # "Pmetal_chair1Z"
-D:8004756C                     fileentry <0x1C2, aPmetal_crate1z_0, 0x7EFD40>  # "Pmetal_crate1Z"
-D:80047578                     fileentry <0x1C3, aPmetal_crate2z_0, 0x7EFF00>  # "Pmetal_crate2Z"
-D:80047584                     fileentry <0x1C4, aPmetal_crate3z_0, 0x7F00C0>  # "Pmetal_crate3Z"
-D:80047590                     fileentry <0x1C5, aPmetal_crate4z_0, 0x7F0280>  # "Pmetal_crate4Z"
-D:8004759C                     fileentry <0x1C6, aPmilcopterz_0, 0x7F0440>  # "PmilcopterZ"
-D:800475A8                     fileentry <0x1C7, aPmiltruckz_0, 0x7F1D20>  # "PmiltruckZ"
-D:800475B4                     fileentry <0x1C8, aPmissile_rack2z_0, 0x7F4020>  # "Pmissile_rack2Z"
-D:800475C0                     fileentry <0x1C9, aPmissile_rackz_0, 0x7F4A30>  # "Pmissile_rackZ"
-D:800475CC                     fileentry <0x1CA, aPmodemboxz_0, 0x7F4E10>  # "PmodemboxZ"
-D:800475D8                     fileentry <0x1CB, aPmotorbikez_0, 0x7F5150>  # "PmotorbikeZ"
-D:800475E4                     fileentry <0x1CC, aPmp5kmagz_0, 0x7F6010>  # "Pmp5kmagZ"
-D:800475F0                     fileentry <0x1CD, aPnintendologoz_0, 0x7F6160>  # "PnintendologoZ"
-D:800475FC                     fileentry <0x1CE, aPoil_drum1z_0, 0x7F8C40>  # "Poil_drum1Z"
-D:80047608                     fileentry <0x1CF, aPoil_drum2z_0, 0x7F8EB0>  # "Poil_drum2Z"
-D:80047614                     fileentry <0x1D0, aPoil_drum3z_0, 0x7F91A0>  # "Poil_drum3Z"
-D:80047620                     fileentry <0x1D1, aPoil_drum5z_0, 0x7F9490>  # "Poil_drum5Z"
-D:8004762C                     fileentry <0x1D2, aPoil_drum6z_0, 0x7F9780>  # "Poil_drum6Z"
-D:80047638                     fileentry <0x1D3, aPoil_drum7z_0, 0x7F9A90>  # "Poil_drum7Z"
-D:80047644                     fileentry <0x1D4, aPpadlockz_0, 0x7F9D90>  # "PpadlockZ"
-D:80047650                     fileentry <0x1D5, aPpalmz_0, 0x7FA7E0>  # "PpalmZ"
-D:8004765C                     fileentry <0x1D6, aPpalmtreez_0, 0x7FAC30>  # "PpalmtreeZ"
-D:80047668                     fileentry <0x1D7, aPphone1z_0, 0x7FB100>  # "Pphone1Z"
-D:80047674                     fileentry <0x1D8, aPplanez_0, 0x7FB240>  # "PplaneZ"
-D:80047680                     fileentry <0x1D9, aPplant11z_0, 0x7FD820>  # "Pplant11Z"
-D:8004768C                     fileentry <0x1DA, aPplant1z_0, 0x7FDBE0>  # "Pplant1Z"
-D:80047698                     fileentry <0x1DB, aPplant2z_0, 0x7FDF70>  # "Pplant2Z"
-D:800476A4                     fileentry <0x1DC, aPplant2bz_0, 0x7FE2D0>  # "Pplant2bZ"
-D:800476B0                     fileentry <0x1DD, aPplant3z_0, 0x7FE6E0>  # "Pplant3Z"
-D:800476BC                     fileentry <0x1DE, aPradio_unit1z_0, 0x7FEB30>  # "Pradio_unit1Z"
-D:800476C8                     fileentry <0x1DF, aPradio_unit2z_0, 0x7FECE0>  # "Pradio_unit2Z"
-D:800476D4                     fileentry <0x1E0, aPradio_unit3z_0, 0x7FEEA0>  # "Pradio_unit3Z"
-D:800476E0                     fileentry <0x1E1, aPradio_unit4z_0, 0x7FF060>  # "Pradio_unit4Z"
-D:800476EC                     fileentry <0x1E2, aProofgunz_0, 0x7FF220>  # "ProofgunZ"
-D:800476F8                     fileentry <0x1E3, aPsafez_0, 0x7FF880>  # "PsafeZ"
-D:80047704                     fileentry <0x1E4, aPsafedoorz_0, 0x7FFBD0>  # "PsafedoorZ"
-D:80047710                     fileentry <0x1E5, aPsat1_reflectz_0, 0x8000C0>  # "Psat1_reflectZ"
-D:8004771C                     fileentry <0x1E6, aPsatboxz_0, 0x801630>  # "PsatboxZ"
-D:80047728                     fileentry <0x1E7, aPsatdishz_0, 0x801750>  # "PsatdishZ"
-D:80047734                     fileentry <0x1E8, aPsec_panelz_0, 0x801BB0>  # "Psec_panelZ"
-D:80047740                     fileentry <0x1E9, aPsev_door3z_0, 0x801D50>  # "Psev_door3Z"
-D:8004774C                     fileentry <0x1EA, aPsev_door3_windz_0, 0x801FE0>  # "Psev_door3_windZ"
-D:80047758                     fileentry <0x1EB, aPsev_door4_windz_0, 0x802370>  # "Psev_door4_windZ"
-D:80047764                     fileentry <0x1EC, aPsev_doorz_0, 0x802750>  # "Psev_doorZ"
-D:80047770                     fileentry <0x1ED, aPsev_door_v1z_0, 0x802AA0>  # "Psev_door_v1Z"
-D:8004777C                     fileentry <0x1EE, aPsev_trislidez_0, 0x802DD0>  # "Psev_trislideZ"
-D:80047788                     fileentry <0x1EF, aPsevdishz_0, 0x803180>  # "PsevdishZ"
-D:80047794                     fileentry <0x1F0, aPsevdoormetslidez_0, 0x8040A0>  # "PsevdoormetslideZ"
-D:800477A0                     fileentry <0x1F1, aPsevdoornowindz_0, 0x804380>  # "PsevdoornowindZ"
-D:800477AC                     fileentry <0x1F2, aPsevdoorwindz_0, 0x8044F0>  # "PsevdoorwindZ"
-D:800477B8                     fileentry <0x1F3, aPsevdoorwoodz_0, 0x804920>  # "PsevdoorwoodZ"
-D:800477C4                     fileentry <0x1F4, aPshuttlez_0, 0x804CD0>  # "PshuttleZ"
-D:800477D0                     fileentry <0x1F5, aPshuttle_door_lz_0, 0x8076D0>  # "Pshuttle_door_lZ"
-D:800477DC                     fileentry <0x1F6, aPshuttle_door_rz_0, 0x808300>  # "Pshuttle_door_rZ"
-D:800477E8                     fileentry <0x1F7, aPsilencerz_0, 0x809000>  # "PsilencerZ"
-D:800477F4                     fileentry <0x1F8, aPsilo_lift_doorz_0, 0x8091A0>  # "Psilo_lift_doorZ"
-D:80047800                     fileentry <0x1F9, aPsilotopdoorz_0, 0x8093E0>  # "PsilotopdoorZ"
-D:8004780C                     fileentry <0x1FA, aPskorpionmagz_0, 0x8096D0>  # "PskorpionmagZ"
-D:80047818                     fileentry <0x1FB, aPspectremagz_0, 0x809830>  # "PspectremagZ"
-D:80047824                     fileentry <0x1FC, aPspeedboatz_0, 0x8099A0>  # "PspeedboatZ"
-D:80047830                     fileentry <0x1FD, aPst_pete_room_1iz_0, 0x80A6E0>  # "Pst_pete_room_1iZ"
-D:8004783C                     fileentry <0x1FE, aPst_pete_room_2iz_0, 0x80D820>  # "Pst_pete_room_2iZ"
-D:80047848                     fileentry <0x1FF, aPst_pete_room_3tz_0, 0x810A00>  # "Pst_pete_room_3tZ"
-D:80047854                     fileentry <0x200, aPst_pete_room_5cz_0, 0x813940>  # "Pst_pete_room_5cZ"
-D:80047860                     fileentry <0x201, aPst_pete_room_6cz_0, 0x816ED0>  # "Pst_pete_room_6cZ"
-D:8004786C                     fileentry <0x202, aPsteel_door1z_0, 0x81A2E0>  # "Psteel_door1Z"
-D:80047878                     fileentry <0x203, aPsteel_door2z_0, 0x81A550>  # "Psteel_door2Z"
-D:80047884                     fileentry <0x204, aPsteel_door2bz_0, 0x81A800>  # "Psteel_door2bZ"
-D:80047890                     fileentry <0x205, aPsteel_door3z_0, 0x81AAD0>  # "Psteel_door3Z"
-D:8004789C                     fileentry <0x206, aPstool1z_0, 0x81ADA0>  # "Pstool1Z"
-D:800478A8                     fileentry <0x207, aPswipe_card2z_0, 0x81B060>  # "Pswipe_card2Z"
-D:800478B4                     fileentry <0x208, aPswivel_chair1z_0, 0x81B1F0>  # "Pswivel_chair1Z"
-D:800478C0                     fileentry <0x209, aPtankz_0, 0x81B480>  # "PtankZ"
-D:800478CC                     fileentry <0x20A, aPtigerz_0, 0x81CF20>  # "PtigerZ"
-D:800478D8                     fileentry <0x20B, aPtorpedo_rackz_0, 0x81EDB0>  # "Ptorpedo_rackZ"
-D:800478E4                     fileentry <0x20C, aPtrain_door2z_0, 0x81F630>  # "Ptrain_door2Z"
-D:800478F0                     fileentry <0x20D, aPtrain_door3z_0, 0x81FA00>  # "Ptrain_door3Z"
-D:800478FC                     fileentry <0x20E, aPtrain_doorz_0, 0x81FE20>  # "Ptrain_doorZ"
-D:80047908                     fileentry <0x20F, aPtrainextdoorz_0, 0x820090>  # "PtrainextdoorZ"
-D:80047914                     fileentry <0x210, aPtt33magz_0, 0x8203D0>  # "Ptt33magZ"
-D:80047920                     fileentry <0x211, aPtuning_console1z_0, 0x820510>  # "Ptuning_console1Z"
-D:8004792C                     fileentry <0x212, aPtv1z_0, 0x820A30>  # "Ptv1Z"
-D:80047938                     fileentry <0x213, aPtv4screenz_0, 0x820C00>  # "Ptv4screenZ"
-D:80047944                     fileentry <0x214, aPtv_holderz_0, 0x820DA0>  # "Ptv_holderZ"
-D:80047950                     fileentry <0x215, aPtvscreenz_1, 0x821470>  # "PtvscreenZ"
-D:8004795C                     fileentry <0x216, aPuzimagz_0, 0x821540>  # "PuzimagZ"
-D:80047968                     fileentry <0x217, aPvertdoorz_1, 0x821680>  # "PvertdoorZ"
-D:80047974                     fileentry <0x218, aPwalletbondz_0, 0x821C90>  # "PwalletbondZ"
-D:80047980                     fileentry <0x219, aPwindowz_0, 0x823240>  # "PwindowZ"
-D:8004798C                     fileentry <0x21A, aPwindow_cor11z_1, 0x823330>  # "Pwindow_cor11Z"
-D:80047998                     fileentry <0x21B, aPwindow_lib_lg1z_0, 0x823410>  # "Pwindow_lib_lg1Z"
-D:800479A4                     fileentry <0x21C, aPwindow_lib_sm1z_0, 0x8234F0>  # "Pwindow_lib_sm1Z"
-D:800479B0                     fileentry <0x21D, aPwood_lg_crate1z_0, 0x8235E0>  # "Pwood_lg_crate1Z"
-D:800479BC                     fileentry <0x21E, aPwood_lg_crate2z_0, 0x823860>  # "Pwood_lg_crate2Z"
-D:800479C8                     fileentry <0x21F, aPwood_md_crate3z_0, 0x823A80>  # "Pwood_md_crate3Z"
-D:800479D4                     fileentry <0x220, aPwood_sm_crate4z_0, 0x823CA0>  # "Pwood_sm_crate4Z"
-D:800479E0                     fileentry <0x221, aPwood_sm_crate5z_0, 0x823F00>  # "Pwood_sm_crate5Z"
-D:800479EC                     fileentry <0x222, aPwood_sm_crate6z_0, 0x824160>  # "Pwood_sm_crate6Z"
-D:800479F8                     fileentry <0x223, aPwooden_table1z_0, 0x824380>  # "Pwooden_table1Z"
-D:80047A04                     fileentry <0x224, aPwppkmagz_0, 0x8246F0>  # "PwppkmagZ"
-D:80047A10                     fileentry <0x225, aTbg_ame_all_p_stanz_2, 0x824830>  # "Tbg_ame_all_p_stanZ"
-D:80047A1C                     fileentry <0x226, aTbg_arch_all_p_stanz_0, 0x826160>  # "Tbg_arch_all_p_stanZ"
-D:80047A28                     fileentry <0x227, aTbg_arec_all_p_stanz_0, 0x82BE50>  # "Tbg_arec_all_p_stanZ"
-D:80047A34                     fileentry <0x228, aTbg_ark_all_p_stanz_0, 0x8341A0>  # "Tbg_ark_all_p_stanZ"
-D:80047A40                     fileentry <0x229, aTbg_ash_all_p_stanz, 0x83D160>  # "Tbg_ash_all_p_stanZ"
-D:80047A4C                     fileentry <0x22A, aTbg_azt_all_p_stanz_0, 0x83EA90>  # "Tbg_azt_all_p_stanZ"
-D:80047A58                     fileentry <0x22B, aTbg_cat_all_p_stanz_0, 0x844010>  # "Tbg_cat_all_p_stanZ"
-D:80047A64                     fileentry <0x22C, aTbg_cave_all_p_stanz_0, 0x846740>  # "Tbg_cave_all_p_stanZ"
-D:80047A70                     fileentry <0x22D, aTbg_crad_all_p_stanz_0, 0x84B630>  # "Tbg_crad_all_p_stanZ"
-D:80047A7C                     fileentry <0x22E, aTbg_cryp_all_p_stanz_0, 0x84DF40>  # "Tbg_cryp_all_p_stanZ"
-D:80047A88                     fileentry <0x22F, aTbg_dam_all_p_stanz_0, 0x850FB0>  # "Tbg_dam_all_p_stanZ"
-D:80047A94                     fileentry <0x230, aTbg_depo_all_p_stanz_0, 0x85B390>  # "Tbg_depo_all_p_stanZ"
-D:80047AA0                     fileentry <0x231, aTbg_dest_all_p_stanz_0, 0x8622D0>  # "Tbg_dest_all_p_stanZ"
-D:80047AAC                     fileentry <0x232, aTbg_dish_all_p_stanz_0, 0x868BC0>  # "Tbg_dish_all_p_stanZ"
-D:80047AB8                     fileentry <0x233, aTbg_ear_all_p_stanz_0, 0x8696D0>  # "Tbg_ear_all_p_stanZ"
-D:80047AC4                     fileentry <0x234, aTbg_eld_all_p_stanz_0, 0x8696D0>  # "Tbg_eld_all_p_stanZ"
-D:80047AD0                     fileentry <0x235, aTbg_imp_all_p_stanz, 0x8696D0>  # "Tbg_imp_all_p_stanZ"
-D:80047ADC                     fileentry <0x236, aTbg_jun_all_p_stanz_0, 0x86B000>  # "Tbg_jun_all_p_stanZ"
-D:80047AE8                     fileentry <0x237, aTbg_lee_all_p_stanz_0, 0x872150>  # "Tbg_lee_all_p_stanZ"
-D:80047AF4                     fileentry <0x238, aTbg_len_all_p_stanz_0, 0x872150>  # "Tbg_len_all_p_stanZ"
-D:80047B00                     fileentry <0x239, aTbg_lip_all_p_stanz_0, 0x872C10>  # "Tbg_lip_all_p_stanZ"
-D:80047B0C                     fileentry <0x23A, aTbg_lue_all_p_stanz_0, 0x872C10>  # "Tbg_lue_all_p_stanZ"
-D:80047B18                     fileentry <0x23B, aTbg_oat_all_p_stanz_0, 0x872C10>  # "Tbg_oat_all_p_stanZ"
-D:80047B24                     fileentry <0x23C, aTbg_pam_all_p_stanz_0, 0x874510>  # "Tbg_pam_all_p_stanZ"
-D:80047B30                     fileentry <0x23D, aTbg_pete_all_p_stanz_0, 0x874510>  # "Tbg_pete_all_p_stanZ"
-D:80047B3C                     fileentry <0x23E, aTbg_ref_all_p_stanz_0, 0x878BA0>  # "Tbg_ref_all_p_stanZ"
-D:80047B48                     fileentry <0x23F, aTbg_rit_all_p_stanz_0, 0x87A970>  # "Tbg_rit_all_p_stanZ"
-D:80047B54                     fileentry <0x240, aTbg_run_all_p_stanz_0, 0x87A970>  # "Tbg_run_all_p_stanZ"
-D:80047B60                     fileentry <0x241, aTbg_sev_all_p_stanz_0, 0x87C3F0>  # "Tbg_sev_all_p_stanZ"
-D:80047B6C                     fileentry <0x242, aTbg_sevb_all_p_stanz_0, 0x8801C0>  # "Tbg_sevb_all_p_stanZ"
-D:80047B78                     fileentry <0x243, aTbg_sevx_all_p_stanz_1, 0x885100>  # "Tbg_sevx_all_p_stanZ"
-D:80047B84                     fileentry <0x244, aTbg_silo_all_p_stanz_0, 0x88E430>  # "Tbg_silo_all_p_stanZ"
-D:80047B90                     fileentry <0x245, aTbg_stat_all_p_stanz_0, 0x8974D0>  # "Tbg_stat_all_p_stanZ"
-D:80047B9C                     fileentry <0x246, aTbg_tra_all_p_stanz_0, 0x89C390>  # "Tbg_tra_all_p_stanZ"
-D:80047BA8                     fileentry <0x247, aTbg_wax_all_p_stanz_0, 0x89E760>  # "Tbg_wax_all_p_stanZ"
-D:80047BB4                     fileentry <0x248, aUbriefarchz, 0x89E760>  # "UbriefarchZ"
-D:80047BC0                     fileentry <0x249, aUbriefarkz, 0x89E780>  # "UbriefarkZ"
-D:80047BCC                     fileentry <0x24A, aUbriefaztz, 0x89E7A0>  # "UbriefaztZ"
-D:80047BD8                     fileentry <0x24B, aUbriefcavez, 0x89E7C0>  # "UbriefcaveZ"
-D:80047BE4                     fileentry <0x24C, aUbriefcontrolz, 0x89E7E0>  # "UbriefcontrolZ"
-D:80047BF0                     fileentry <0x24D, aUbriefcradz, 0x89E800>  # "UbriefcradZ"
-D:80047BFC                     fileentry <0x24E, aUbriefcrypz, 0x89E820>  # "UbriefcrypZ"
-D:80047C08                     fileentry <0x24F, aUbriefdamz, 0x89E840>  # "UbriefdamZ"
-D:80047C14                     fileentry <0x250, aUbriefdepoz, 0x89E860>  # "UbriefdepoZ"
-D:80047C20                     fileentry <0x251, aUbriefdestz, 0x89E880>  # "UbriefdestZ"
-D:80047C2C                     fileentry <0x252, aUbriefjunz, 0x89E8A0>  # "UbriefjunZ"
-D:80047C38                     fileentry <0x253, aUbriefpetez, 0x89E8C0>  # "UbriefpeteZ"
-D:80047C44                     fileentry <0x254, aUbriefrunz, 0x89E8E0>  # "UbriefrunZ"
-D:80047C50                     fileentry <0x255, aUbriefsevbz, 0x89E900>  # "UbriefsevbZ"
-D:80047C5C                     fileentry <0x256, aUbriefsevbunkerz, 0x89E920>  # "UbriefsevbunkerZ"
-D:80047C68                     fileentry <0x257, aUbriefsevxz, 0x89E940>  # "UbriefsevxZ"
-D:80047C74                     fileentry <0x258, aUbriefsevxbz, 0x89E960>  # "UbriefsevxbZ"
-D:80047C80                     fileentry <0x259, aUbriefsiloz, 0x89E980>  # "UbriefsiloZ"
-D:80047C8C                     fileentry <0x25A, aUbriefstatuez, 0x89E9A0>  # "UbriefstatueZ"
-D:80047C98                     fileentry <0x25B, aUbrieftraz, 0x89E9C0>  # "UbrieftraZ"
-D:80047CA4                     fileentry <0x25C, aUmp_setupamez, 0x89E9E0>  # "Ump_setupameZ"
-D:80047CB0                     fileentry <0x25D, aUmp_setuparchz, 0x89F100>  # "Ump_setuparchZ"
-D:80047CBC                     fileentry <0x25E, aUmp_setuparkz, 0x8A1EA0>  # "Ump_setuparkZ"
-D:80047CC8                     fileentry <0x25F, aUmp_setupashz, 0x8A3BE0>  # "Ump_setupashZ"
-D:80047CD4                     fileentry <0x260, aUmp_setupcavez, 0x8A42D0>  # "Ump_setupcaveZ"
-D:80047CE0                     fileentry <0x261, aUmp_setupcradz, 0x8A6830>  # "Ump_setupcradZ"
-D:80047CEC                     fileentry <0x262, aUmp_setupcrypz, 0x8A7190>  # "Ump_setupcrypZ"
-D:80047CF8                     fileentry <0x263, aUmp_setupdishz, 0x8A7EF0>  # "Ump_setupdishZ"
-D:80047D04                     fileentry <0x264, aUmp_setupimpz, 0x8A82E0>  # "Ump_setupimpZ"
-D:80047D10                     fileentry <0x265, aUmp_setupoatz, 0x8A8920>  # "Ump_setupoatZ"
-D:80047D1C                     fileentry <0x266, aUmp_setuprefz, 0x8A8C70>  # "Ump_setuprefZ"
-D:80047D28                     fileentry <0x267, aUmp_setupsevbz, 0x8A9080>  # "Ump_setupsevbZ"
-D:80047D34                     fileentry <0x268, aUmp_setupstatuez, 0x8AA390>  # "Ump_setupstatueZ"
-D:80047D40                     fileentry <0x269, aUsetuparchz_0, 0x8AB210>  # "UsetuparchZ"
-D:80047D4C                     fileentry <0x26A, aUsetuparkz_1, 0x8AF820>  # "UsetuparkZ"
-D:80047D58                     fileentry <0x26B, aUsetupaztz_1, 0x8B33B0>  # "UsetupaztZ"
-D:80047D64                     fileentry <0x26C, aUsetupcavez_0, 0x8B5CB0>  # "UsetupcaveZ"
-D:80047D70                     fileentry <0x26D, aUsetupcontrolz_1, 0x8B9B10>  # "UsetupcontrolZ"
-D:80047D7C                     fileentry <0x26E, aUsetupcradz_0, 0x8BD610>  # "UsetupcradZ"
-D:80047D88                     fileentry <0x26F, aUsetupcrypz_0, 0x8BF240>  # "UsetupcrypZ"
-D:80047D94                     fileentry <0x270, aUsetupdamz_1, 0x8C10D0>  # "UsetupdamZ"
-D:80047DA0                     fileentry <0x271, aUsetupdepoz_0, 0x8C53A0>  # "UsetupdepoZ"
-D:80047DAC                     fileentry <0x272, aUsetupdestz_0, 0x8C8330>  # "UsetupdestZ"
-D:80047DB8                     fileentry <0x273, aUsetupjunz_1, 0x8CA680>  # "UsetupjunZ"
-D:80047DC4                     fileentry <0x274, aUsetuplenz_1, 0x8CDD80>  # "UsetuplenZ"
-D:80047DD0                     fileentry <0x275, aUsetuppetez_0, 0x8CE350>  # "UsetuppeteZ"
-D:80047DDC                     fileentry <0x276, aUsetuprunz_1, 0x8D12D0>  # "UsetuprunZ"
-D:80047DE8                     fileentry <0x277, aUsetupsevbz_0, 0x8D2B30>  # "UsetupsevbZ"
-D:80047DF4                     fileentry <0x278, aUsetupsevbunkerz_1, 0x8D5190>  # "UsetupsevbunkerZ"
-D:80047E00                     fileentry <0x279, aUsetupsevxz_0, 0x8D6BC0>  # "UsetupsevxZ"
-D:80047E0C                     fileentry <0x27A, aUsetupsevxbz_0, 0x8DAED0>  # "UsetupsevxbZ"
-D:80047E18                     fileentry <0x27B, aUsetupsiloz_0, 0x8DEFC0>  # "UsetupsiloZ"
-D:80047E24                     fileentry <0x27C, aUsetupstatuez_0, 0x8E1A10>  # "UsetupstatueZ"
-D:80047E30                     fileentry <0x27D, aUsetuptraz_1, 0x8E41E0>  # "UsetuptraZ"
-D:80047E3C                     fileentry <0x27E, aLamee_0, 0x8E7410>  # "LameE"
-D:80047E48                     fileentry <0x27F, aLamej_0, 0x8E7420>  # "LameJ"
-D:80047E54                     fileentry <0x280, aLarche_1, 0x8E7430>  # "LarchE"
-D:80047E60                     fileentry <0x281, aLarchj_1, 0x8E7A60>  # "LarchJ"
-D:80047E6C                     fileentry <0x282, aLarece_1, 0x8E80C0>  # "LarecE"
-D:80047E78                     fileentry <0x283, aLarecj_1, 0x8E8690>  # "LarecJ"
-D:80047E84                     fileentry <0x284, aLarke_0, 0x8E8C20>  # "LarkE"
-D:80047E90                     fileentry <0x285, aLarkj_0, 0x8E92C0>  # "LarkJ"
-D:80047E9C                     fileentry <0x286, aLashe_0, 0x8E9970>  # "LashE"
-D:80047EA8                     fileentry <0x287, aLashj_0, 0x8E9980>  # "LashJ"
-D:80047EB4                     fileentry <0x288, aLazte_0, 0x8E9990>  # "LaztE"
-D:80047EC0                     fileentry <0x289, aLaztj_0, 0x8E9DD0>  # "LaztJ"
-D:80047ECC                     fileentry <0x28A, aLcate_0, 0x8EA280>  # "LcatE"
-D:80047ED8                     fileentry <0x28B, aLcatj_0, 0x8EA290>  # "LcatJ"
-D:80047EE4                     fileentry <0x28C, aLcavee_1, 0x8EA2A0>  # "LcaveE"
-D:80047EF0                     fileentry <0x28D, aLcavej_1, 0x8EA6A0>  # "LcaveJ"
-D:80047EFC                     fileentry <0x28E, aLcrade_1, 0x8EAB00>  # "LcradE"
-D:80047F08                     fileentry <0x28F, aLcradj_1, 0x8EAFD0>  # "LcradJ"
-D:80047F14                     fileentry <0x290, aLcrype_1, 0x8EB480>  # "LcrypE"
-D:80047F20                     fileentry <0x291, aLcrypj_1, 0x8EB6D0>  # "LcrypJ"
-D:80047F2C                     fileentry <0x292, aLdame_0, 0x8EB990>  # "LdamE"
-D:80047F38                     fileentry <0x293, aLdamj_0, 0x8EBDE0>  # "LdamJ"
-D:80047F44                     fileentry <0x294, aLdepoe_1, 0x8EC250>  # "LdepoE"
-D:80047F50                     fileentry <0x295, aLdepoj_1, 0x8EC5C0>  # "LdepoJ"
-D:80047F5C                     fileentry <0x296, aLdeste_1, 0x8EC900>  # "LdestE"
-D:80047F68                     fileentry <0x297, aLdestj_1, 0x8ECD90>  # "LdestJ"
-D:80047F74                     fileentry <0x298, aLdishe_1, 0x8ED1F0>  # "LdishE"
-D:80047F80                     fileentry <0x299, aLdishj_1, 0x8ED200>  # "LdishJ"
-D:80047F8C                     fileentry <0x29A, aLeare_0, 0x8ED210>  # "LearE"
-D:80047F98                     fileentry <0x29B, aLearj_0, 0x8ED220>  # "LearJ"
-D:80047FA4                     fileentry <0x29C, aLelde_0, 0x8ED230>  # "LeldE"
-D:80047FB0                     fileentry <0x29D, aLeldj_0, 0x8ED240>  # "LeldJ"
-D:80047FBC                     fileentry <0x29E, aLgune_0, 0x8ED250>  # "LgunE"
-D:80047FC8                     fileentry <0x29F, aLgunj_0, 0x8ED970>  # "LgunJ"
-D:80047FD4                     fileentry <0x2A0, aLimpe_0, 0x8EE0C0>  # "LimpE"
-D:80047FE0                     fileentry <0x2A1, aLimpj_0, 0x8EE0D0>  # "LimpJ"
-D:80047FEC                     fileentry <0x2A2, aLjune_0, 0x8EE0E0>  # "LjunE"
-D:80047FF8                     fileentry <0x2A3, aLjunj_0, 0x8EE600>  # "LjunJ"
-D:80048004                     fileentry <0x2A4, aLleee_0, 0x8EEB40>  # "LleeE"
-D:80048010                     fileentry <0x2A5, aLleej_0, 0x8EEB50>  # "LleeJ"
-D:8004801C                     fileentry <0x2A6, aLlene_0, 0x8EEB60>  # "LlenE"
-D:80048028                     fileentry <0x2A7, aLlenj_0, 0x8EF1A0>  # "LlenJ"
-D:80048034                     fileentry <0x2A8, aLlipe_0, 0x8EF450>  # "LlipE"
-D:80048040                     fileentry <0x2A9, aLlipj_0, 0x8EF460>  # "LlipJ"
-D:8004804C                     fileentry <0x2AA, aLluee_0, 0x8EF470>  # "LlueE"
-D:80048058                     fileentry <0x2AB, aLluej_0, 0x8EF480>  # "LlueJ"
-D:80048064                     fileentry <0x2AC, aLmisce_1, 0x8EF490>  # "LmiscE"
-D:80048070                     fileentry <0x2AD, aLmiscj_1, 0x8EF730>  # "LmiscJ"
-D:8004807C                     fileentry <0x2AE, aLmpmenue_0, 0x8EFA10>  # "LmpmenuE"
-D:80048088                     fileentry <0x2AF, aLmpmenuj_0, 0x8EFBB0>  # "LmpmenuJ"
-D:80048094                     fileentry <0x2B0, aLmpweaponse_0, 0x8EFD40>  # "LmpweaponsE"
-D:800480A0                     fileentry <0x2B1, aLmpweaponsj_0, 0x8EFE00>  # "LmpweaponsJ"
-D:800480AC                     fileentry <0x2B2, aLoate_0, 0x8EFEE0>  # "LoatE"
-D:800480B8                     fileentry <0x2B3, aLoatj_0, 0x8EFEF0>  # "LoatJ"
-D:800480C4                     fileentry <0x2B4, aLoptionse_0, 0x8EFF00>  # "LoptionsE"
-D:800480D0                     fileentry <0x2B5, aLoptionsj_0, 0x8F0130>  # "LoptionsJ"
-D:800480DC                     fileentry <0x2B6, aLpame_0, 0x8F0380>  # "LpamE"
-D:800480E8                     fileentry <0x2B7, aLpamj_0, 0x8F0390>  # "LpamJ"
-D:800480F4                     fileentry <0x2B8, aLpetee_1, 0x8F03A0>  # "LpeteE"
-D:80048100                     fileentry <0x2B9, aLpetej_1, 0x8F0820>  # "LpeteJ"
-D:8004810C                     fileentry <0x2BA, aLpropobje_0, 0x8F0C90>  # "LpropobjE"
-D:80048118                     fileentry <0x2BB, aLpropobjj_0, 0x8F0F30>  # "LpropobjJ"
-D:80048124                     fileentry <0x2BC, aLrefe_0, 0x8F11F0>  # "LrefE"
-D:80048130                     fileentry <0x2BD, aLrefj_0, 0x8F1200>  # "LrefJ"
-D:8004813C                     fileentry <0x2BE, aLrite_0, 0x8F1210>  # "LritE"
-D:80048148                     fileentry <0x2BF, aLritj_0, 0x8F1220>  # "LritJ"
-D:80048154                     fileentry <0x2C0, aLrune_0, 0x8F1230>  # "LrunE"
-D:80048160                     fileentry <0x2C1, aLrunj_0, 0x8F14A0>  # "LrunJ"
-D:8004816C                     fileentry <0x2C2, aLseve_0, 0x8F1730>  # "LsevE"
-D:80048178                     fileentry <0x2C3, aLsevj_0, 0x8F1C90>  # "LsevJ"
-D:80048184                     fileentry <0x2C4, aLsevbe_1, 0x8F21A0>  # "LsevbE"
-D:80048190                     fileentry <0x2C5, aLsevbj_1, 0x8F28F0>  # "LsevbJ"
-D:8004819C                     fileentry <0x2C6, aLsevxe_1, 0x8F30E0>  # "LsevxE"
-D:800481A8                     fileentry <0x2C7, aLsevxj_1, 0x8F3540>  # "LsevxJ"
-D:800481B4                     fileentry <0x2C8, aLsevxbe_0, 0x8F3900>  # "LsevxbE"
-D:800481C0                     fileentry <0x2C9, aLsevxbj_0, 0x8F3D90>  # "LsevxbJ"
-D:800481CC                     fileentry <0x2CA, aLshoe_0, 0x8F41E0>  # "LshoE"
-D:800481D8                     fileentry <0x2CB, aLshoj_0, 0x8F41F0>  # "LshoJ"
-D:800481E4                     fileentry <0x2CC, aLsiloe_1, 0x8F4200>  # "LsiloE"
-D:800481F0                     fileentry <0x2CD, aLsiloj_1, 0x8F47B0>  # "LsiloJ"
-D:800481FC                     fileentry <0x2CE, aLstate_1, 0x8F4D90>  # "LstatE"
-D:80048208                     fileentry <0x2CF, aLstatj_1, 0x8F56B0>  # "LstatJ"
-D:80048214                     fileentry <0x2D0, aLtitlee_0, 0x8F5F20>  # "LtitleE"
-D:80048220                     fileentry <0x2D1, aLtitlej_0, 0x8F69E0>  # "LtitleJ"
-D:8004822C                     fileentry <0x2D2, aLtrae_0, 0x8F7570>  # "LtraE"
-D:80048238                     fileentry <0x2D3, aLtraj_0, 0x8F79A0>  # "LtraJ"
-D:80048244                     fileentry <0x2D4, aLwaxe_0, 0x8F7DC0>  # "LwaxE"
-D:80048250                     fileentry <0x2D5, aLwaxj_0, 0x8F7DD0>  # "LwaxJ"
-D:8004825C                     fileentry <0x2D6, aObOb_end_seg, 0x8F7DE0>  # "ob/ob_end.seg"
-D:80048268                     fileentry <0>
-D:80048274                     fileentry <0>
-D:80048280                     fileentry <0>
-D:8004828C                     fileentry <0>
-D:80048298                     fileentry <0>
-D:800482A4                     fileentry <0>
-D:800482B0                     fileentry <0>
-D:800482BC                     fileentry <0>
-D:800482C8                     fileentry <0>
-D:800482D4     file_entry_max: .word 0x2D7              # DATA XREF: ob_c_debug_setup+1Cr
-D:800482D4                                              # something_mem_bank_a0r
-D:800482D4                                              # get_index_num_of_named_resource+8o
-D:800482D4                                              # get_index_num_of_named_resource+10r
-D:800482D4                                              # sub_CODE_7F0BD38C+8o
-D:800482D4                                              # sub_CODE_7F0BD38C+10r
-D:800482D4                                              # sub_CODE_7F0BD3E4r
-D:800482D4                                              # sub_CODE_7F0BD410r
-D:800482D8                     .word 0
-D:800482DC                     .word 0
-*/
+struct fileentry {
+    s32 index;
+    s32 *filename;
+    s32 size;
+};
+// data
+//D:80046050
+s32 dword_D_80046050 = 0;
+
+struct fileentry resource_table[] = {
+    {0, "", 0},
+    {1, "bg/bg_sev_all_p.seg", 0x438660},
+    {2, "bg/bg_silo_all_p.seg", 0x449450},
+    {3, "bg/bg_stat_all_p.seg", 0x49A390},
+    {4, "bg/bg_arec_all_p.seg", 0x4BC460},
+    {5, "bg/bg_arch_all_p.seg", 0x4EA7E0},
+    {6, "bg/bg_tra_all_p.seg", 0x5102D0},
+    {7, "bg/bg_dest_all_p.seg", 0x530840},
+    {8, "bg/bg_sevb_all_p.seg", 0x55E200},
+    {9, "bg/bg_azt_all_p.seg", 0x578FA0},
+    {0xA, "bg/bg_pete_all_p.seg", 0x59A9F0},
+    {0xB, "bg/bg_depo_all_p.seg", 0x5B4620},
+    {0xC, "bg/bg_ref_all_p.seg", 0x5E0F90},
+    {0xD, "bg/bg_cryp_all_p.seg", 0x5EA5A0},
+    {0xE, "bg/bg_dam_all_p.seg", 0x5FFC50},
+    {0xF, "bg/bg_ark_all_p.seg", 0x62FDF0},
+    {0x10, "bg/bg_run_all_p.seg", 0x660D70},
+    {0x11, "bg/bg_sevx_all_p.seg", 0x66B140},
+    {0x12, "bg/bg_jun_all_p.seg", 0x687710},
+    {0x13, "bg/bg_dish_all_p.seg", 0x69C860},
+    {0x14, "bg/bg_cave_all_p.seg", 0x6A10D0},
+    {0x15, "bg/bg_cat_all_p.seg", 0x6C55C0},
+    {0x16, "bg/bg_crad_all_p.seg", 0x6CAAF0},
+    {0x17, "bg/bg_sho_all_p.seg", 0x6DAE40},
+    {0x18, "bg/bg_eld_all_p.seg", 0x6DAE40},
+    {0x19, "bg/bg_imp_all_p.seg", 0x6DAE40},
+    {0x1A, "bg/bg_ash_all_p.seg", 0x6DAE40},
+    {0x1B, "bg/bg_lue_all_p.seg", 0x6DAE40},
+    {0x1C, "bg/bg_ame_all_p.seg", 0x6DAE40},
+    {0x1D, "bg/bg_rit_all_p.seg", 0x6E4DA0},
+    {0x1E, "bg/bg_oat_all_p.seg", 0x6E4DA0},
+    {0x1F, "bg/bg_ear_all_p.seg", 0x6EBBF0},
+    {0x20, "bg/bg_lee_all_p.seg", 0x6EBBF0},
+    {0x21, "bg/bg_lip_all_p.seg", 0x6EBBF0},
+    {0x22, "bg/bg_len_all_p.seg", 0x6EBBF0},
+    {0x23, "bg/bg_wax_all_p.seg", 0x6ECB90},
+    {0x24, "bg/bg_pam_all_p.seg", 0x6ECB90},
+    {0x25, "CarmourguardZ", 0x6ECB90},
+    {0x26, "CbaronsamediZ", 0x6EF010},
+    {0x27, "CbluecamguardZ", 0x6F2700},
+    {0x28, "CbluemanZ", 0x6F4DF0},
+    {0x29, "CbluewomanZ", 0x6F6C00},
+    {0x2A, "CboilerbondZ", 0x6F8AC0},
+    {0x2B, "CboilertrevZ", 0x6FB6D0},
+    {0x2C, "CborisZ", 0x6FED50},
+    {0x2D, "CcamguardZ", 0x701E70},
+    {0x2E, "CcardimanZ", 0x704550},
+    {0x2F, "CcheckmanZ", 0x706350},
+    {0x30, "CcommguardZ", 0x7081D0},
+    {0x31, "CdjbondZ", 0x70A7D0},
+    {0x32, "CfattechwomanZ", 0x70D660},
+    {0x33, "Cgreatguard2Z", 0x70F580},
+    {0x34, "CgreatguardZ", 0x711CA0},
+    {0x35, "CgreyguardZ", 0x714320},
+    {0x36, "CgreymanZ", 0x7169F0},
+    {0x37, "CheadalanZ", 0x7187B0},
+    {0x38, "CheadbZ", 0x718D80},
+    {0x39, "CheadbalaclavaZ", 0x7192F0},
+    {0x3A, "CheadbikeZ", 0x7196C0},
+    {0x3B, "CheadbrosnanZ", 0x719D60},
+    {0x3C, "CheadbrosnanboilerZ", 0x71AAB0},
+    {0x3D, "CheadbrosnansnowZ", 0x71B650},
+    {0x3E, "CheadbrosnansuitZ", 0x71C4D0},
+    {0x3F, "CheadbrosnantimberZ", 0x71D250},
+    {0x40, "CheadchrisZ", 0x71DE10},
+    {0x41, "CheaddaveZ", 0x71E350},
+    {0x42, "CheaddesZ", 0x71E8D0},
+    {0x43, "CheadduncanZ", 0x71EE00},
+    {0x44, "CheaddwayneZ", 0x71F320},
+    {0x45, "CheadgrahamZ", 0x71F8A0},
+    {0x46, "CheadgrantZ", 0x71FE10},
+    {0x47, "CheadjimZ", 0x720340},
+    {0x48, "Cheadjoe2Z", 0x720870},
+    {0x49, "CheadjoeZ", 0x720C90},
+    {0x4A, "CheadjoelZ", 0x721200},
+    {0x4B, "CheadkarlZ", 0x721710},
+    {0x4C, "CheadkenZ", 0x721C70},
+    {0x4D, "CheadleeZ", 0x7221C0},
+    {0x4E, "CheadmandyZ", 0x722740},
+    {0x4F, "CheadmarionZ", 0x722B30},
+    {0x50, "CheadmarkZ", 0x722F40},
+    {0x51, "CheadmartinZ", 0x723470},
+    {0x52, "CheadmishkinZ", 0x7239D0},
+    {0x53, "CheadneilZ", 0x723F30},
+    {0x54, "CheadpeteZ", 0x724450},
+    {0x55, "CheadrobinZ", 0x7249E0},
+    {0x56, "CheadsallyZ", 0x724EF0},
+    {0x57, "CheadscottZ", 0x7252F0},
+    {0x58, "CheadshaunZ", 0x725870},
+    {0x59, "CheadsteveeZ", 0x725E50},
+    {0x5A, "CheadstevehZ", 0x7263A0},
+    {0x5B, "CheadvivienZ", 0x7268F0},
+    {0x5C, "CjawsZ", 0x726D80},
+    {0x5D, "CjeanwomanZ", 0x7299C0},
+    {0x5E, "CmaydayZ", 0x72B9D0},
+    {0x5F, "CmoonfemaleZ", 0x72E570},
+    {0x60, "CmoonguardZ", 0x7306C0},
+    {0x61, "CnatalyaZ", 0x732CB0},
+    {0x62, "CnavyguardZ", 0x736570},
+    {0x63, "CoddjobZ", 0x738C50},
+    {0x64, "ColiveguardZ", 0x73BD80},
+    {0x65, "CorumovZ", 0x73E3D0},
+    {0x66, "CpilotZ", 0x741800},
+    {0x67, "CredmanZ", 0x744880},
+    {0x68, "CrusguardZ", 0x746FB0},
+    {0x69, "CsnowbondZ", 0x748BE0},
+    {0x6A, "CsnowguardZ", 0x74BF10},
+    {0x6B, "CspicebondZ", 0x74EB90},
+    {0x6C, "Csuit_lf_handZ", 0x7524B0},
+    {0x6D, "CsuitbondZ", 0x7556D0},
+    {0x6E, "CtechmanZ", 0x758460},
+    {0x6F, "CtechwomanZ", 0x75AB10},
+    {0x70, "CtimberbondZ", 0x75CB00},
+    {0x71, "CtrevelyanZ", 0x75F830},
+    {0x72, "CtrevguardZ", 0x763000},
+    {0x73, "CvalentinZ", 0x765610},
+    {0x74, "CxeniaZ", 0x768580},
+    {0x75, "Gak47Z", 0x76BF70},
+    {0x76, "GaudiotapeZ", 0x76C980},
+    {0x77, "GautoshotZ", 0x76CD10},
+    {0x78, "GblackboxZ", 0x76E520},
+    {0x79, "GblueprintsZ", 0x76EB20},
+    {0x7A, "GbombcaseZ", 0x76EC20},
+    {0x7B, "GbombdefuserZ", 0x76F3B0},
+    {0x7C, "GbriefcaseZ", 0x76F9A0},
+    {0x7D, "GbugZ", 0x770130},
+    {0x7E, "GbugdetectorZ", 0x770AA0},
+    {0x7F, "GbungeeZ", 0x770DF0},
+    {0x80, "GcameraZ", 0x771140},
+    {0x81, "GcartblueZ", 0x7715C0},
+    {0x82, "GcartridgeZ", 0x771820},
+    {0x83, "GcartrifleZ", 0x771950},
+    {0x84, "GcartshellZ", 0x771B60},
+    {0x85, "GcircuitboardZ", 0x771D60},
+    {0x86, "GclipboardZ", 0x771EA0},
+    {0x87, "GcreditcardZ", 0x772090},
+    {0x88, "GdarkglassesZ", 0x7723E0},
+    {0x89, "GdatathiefZ", 0x772730},
+    {0x8A, "GdattapeZ", 0x772870},
+    {0x8B, "GdoordecoderZ", 0x7729E0},
+    {0x8C, "GdoorexploderZ", 0x772F60},
+    {0x8D, "GdossierredZ", 0x7732B0},
+    {0x8E, "GdynamiteZ", 0x773610},
+    {0x8F, "GexplosivefloppyZ", 0x773960},
+    {0x90, "GexplosivepenZ", 0x773BB0},
+    {0x91, "GextinguisherZ", 0x773F00},
+    {0x92, "GfingergunZ", 0x7746F0},
+    {0x93, "GfistZ", 0x774A40},
+    {0x94, "GflarepistolZ", 0x776140},
+    {0x95, "Gfnp90Z", 0x776490},
+    {0x96, "GgaskeyringZ", 0x777130},
+    {0x97, "GgoldbarZ", 0x777B60},
+    {0x98, "GgoldeneyekeyZ", 0x777EB0},
+    {0x99, "GgoldengunZ", 0x778860},
+    {0x9A, "GgoldwppkZ", 0x77A040},
+    {0x9B, "GgrenadeZ", 0x77B9A0},
+    {0x9C, "GgrenadelaunchZ", 0x77C3D0},
+    {0x9D, "GheroinZ", 0x77D450},
+    {0x9E, "GjoypadZ", 0x77D7A0},
+    {0x9F, "GkeyanalysercaseZ", 0x77F650},
+    {0xA0, "GkeyboltZ", 0x77FDE0},
+    {0xA1, "GkeycardZ", 0x7807D0},
+    {0xA2, "GkeyyaleZ", 0x780900},
+    {0xA3, "GknifeZ", 0x781650},
+    {0xA4, "GlaserZ", 0x783120},
+    {0xA5, "GlectreZ", 0x783F10},
+    {0xA6, "GlockexploderZ", 0x784260},
+    {0xA7, "Gm16Z", 0x7845B0},
+    {0xA8, "GmapZ", 0x784FD0},
+    {0xA9, "GmicrocameraZ", 0x7850C0},
+    {0xAA, "GmicrocodeZ", 0x785700},
+    {0xAB, "GmicrofilmZ", 0x785A50},
+    {0xAC, "GmoneyZ", 0x785DA0},
+    {0xAD, "Gmp5kZ", 0x7860F0},
+    {0xAE, "Gmp5ksilZ", 0x786CD0},
+    {0xAF, "GpitongunZ", 0x7879D0},
+    {0xB0, "GplansZ", 0x787D20},
+    {0xB1, "GplastiqueZ", 0x787EF0},
+    {0xB2, "GpolarizedglassesZ", 0x788240},
+    {0xB3, "GproximitymineZ", 0x7887A0},
+    {0xB4, "GremotemineZ", 0x788F90},
+    {0xB5, "GrocketlaunchZ", 0x789950},
+    {0xB6, "GrugerZ", 0x78AB70},
+    {0xB7, "GsafecrackercaseZ", 0x78C900},
+    {0xB8, "GshotgunZ", 0x78D090},
+    {0xB9, "GsilverwppkZ", 0x78DF70},
+    {0xBA, "GskorpionZ", 0x78F8D0},
+    {0xBB, "GsniperrifleZ", 0x790AD0},
+    {0xBC, "GspectreZ", 0x791B40},
+    {0xBD, "GspooltapeZ", 0x7927C0},
+    {0xBE, "GspyfileZ", 0x792B10},
+    {0xBF, "GstafflistZ", 0x792E60},
+    {0xC0, "GtaserZ", 0x793000},
+    {0xC1, "GthrowknifeZ", 0x794E60},
+    {0xC2, "GtimedmineZ", 0x796950},
+    {0xC3, "GtriggerZ", 0x797410},
+    {0xC4, "Gtt33Z", 0x79A810},
+    {0xC5, "GuziZ", 0x79C330},
+    {0xC6, "GvideotapeZ", 0x79CC40},
+    {0xC7, "GwatchcommunicatorZ", 0x79CE50},
+    {0xC8, "GwatchgeigercounterZ", 0x79E2B0},
+    {0xC9, "GwatchidentifierZ", 0x79F710},
+    {0xCA, "GwatchlaserZ", 0x7A0B70},
+    {0xCB, "GwatchmagnetattractZ", 0x7A3F70},
+    {0xCC, "GwatchmagnetrepelZ", 0x7A53C0},
+    {0xCD, "GweaponcaseZ", 0x7A6820},
+    {0xCE, "GwppkZ", 0x7A6FB0},
+    {0xCF, "GwppksilZ", 0x7A8C40},
+    {0xD0, "GwristdartZ", 0x7AA980},
+    {0xD1, "PICBMZ", 0x7AACD0},
+    {0xD2, "PICBM_noseZ", 0x7AD250},
+    {0xD3, "Pak47magZ", 0x7ADA00},
+    {0xD4, "Palarm1Z", 0x7ADBE0},
+    {0xD5, "Palarm2Z", 0x7ADD40},
+    {0xD6, "Pammo_crate1Z", 0x7ADEE0},
+    {0xD7, "Pammo_crate2Z", 0x7AE120},
+    {0xD8, "Pammo_crate3Z", 0x7AE360},
+    {0xD9, "Pammo_crate4Z", 0x7AE5B0},
+    {0xDA, "Pammo_crate5Z", 0x7AE820},
+    {0xDB, "PapcZ", 0x7AEAE0},
+    {0xDC, "Parchsecdoor1Z", 0x7B0740},
+    {0xDD, "Parchsecdoor2Z", 0x7B0920},
+    {0xDE, "ParticZ", 0x7B0AF0},
+    {0xDF, "PartictrailerZ", 0x7B18F0},
+    {0xE0, "PbarricadeZ", 0x7B2200},
+    {0xE1, "Pbin1Z", 0x7B2440},
+    {0xE2, "Pblotter1Z", 0x7B2790},
+    {0xE3, "PbodyarmourZ", 0x7B2870},
+    {0xE4, "PbodyarmourvestZ", 0x7B2D10},
+    {0xE5, "PbollardZ", 0x7B3130},
+    {0xE6, "PbombZ", 0x7B3330},
+    {0xE7, "Pbook1Z", 0x7B34A0},
+    {0xE8, "Pbookshelf1Z", 0x7B3630},
+    {0xE9, "Pborg_crateZ", 0x7B3D20},
+    {0xEA, "PboxcartridgesZ", 0x7B3E90},
+    {0xEB, "Pboxes2x4Z", 0x7B4090},
+    {0xEC, "Pboxes3x4Z", 0x7B44C0},
+    {0xED, "Pboxes4x4Z", 0x7B4900},
+    {0xEE, "PbrakeunitZ", 0x7B4F60},
+    {0xEF, "Pbridge_console1aZ", 0x7B52D0},
+    {0xF0, "Pbridge_console1bZ", 0x7B5850},
+    {0xF1, "Pbridge_console2aZ", 0x7B5DB0},
+    {0xF2, "Pbridge_console2bZ", 0x7B6330},
+    {0xF3, "Pbridge_console3aZ", 0x7B6820},
+    {0xF4, "Pbridge_console3bZ", 0x7B6D70},
+    {0xF5, "PcarbmwZ", 0x7B7300},
+    {0xF6, "Pcard_box1Z", 0x7B7FE0},
+    {0xF7, "Pcard_box2Z", 0x7B81E0},
+    {0xF8, "Pcard_box3Z", 0x7B8420},
+    {0xF9, "Pcard_box4_lgZ", 0x7B8610},
+    {0xFA, "Pcard_box5_lgZ", 0x7B87C0},
+    {0xFB, "Pcard_box6_lgZ", 0x7B89C0},
+    {0xFC, "PcarescortZ", 0x7B8BB0},
+    {0xFD, "PcargolfZ", 0x7B97B0},
+    {0xFE, "PcarweirdZ", 0x7BA3E0},
+    {0xFF, "PcarzilZ", 0x7BB520},
+    {0x100, "PcctvZ", 0x7BCB20},
+    {0x101, "PchraudiotapeZ", 0x7BCEA0},
+    {0x102, "PchrautoshotZ", 0x7BD400},
+    {0x103, "PchrblackboxZ", 0x7BD760},
+    {0x104, "PchrblueprintsZ", 0x7BDFE0},
+    {0x105, "PchrbombcaseZ", 0x7BE130},
+    {0x106, "PchrbombdefuserZ", 0x7BE320},
+    {0x107, "PchrbriefcaseZ", 0x7BEC00},
+    {0x108, "PchrbugZ", 0x7BED90},
+    {0x109, "PchrbugdetectorZ", 0x7BFB40},
+    {0x10A, "PchrbungeeZ", 0x7BFCB0},
+    {0x10B, "PchrcameraZ", 0x7BFE20},
+    {0x10C, "PchrcircuitboardZ", 0x7C04B0},
+    {0x10D, "PchrclipboardZ", 0x7C0650},
+    {0x10E, "PchrcreditcardZ", 0x7C08D0},
+    {0x10F, "PchrdarkglassesZ", 0x7C0A40},
+    {0x110, "PchrdatathiefZ", 0x7C0BB0},
+    {0x111, "PchrdattapeZ", 0x7C0D50},
+    {0x112, "PchrdoordecoderZ", 0x7C0F40},
+    {0x113, "PchrdoorexploderZ", 0x7C17A0},
+    {0x114, "PchrdossierredZ", 0x7C1910},
+    {0x115, "PchrdynamiteZ", 0x7C1DE0},
+    {0x116, "PchrexplosivepenZ", 0x7C1F50},
+    {0x117, "PchrextinguisherZ", 0x7C20C0},
+    {0x118, "PchrfingergunZ", 0x7C25C0},
+    {0x119, "PchrflarepistolZ", 0x7C2730},
+    {0x11A, "Pchrfnp90Z", 0x7C28A0},
+    {0x11B, "PchrgaskeyringZ", 0x7C2D00},
+    {0x11C, "PchrgoldbarZ", 0x7C3C10},
+    {0x11D, "PchrgoldenZ", 0x7C3D80},
+    {0x11E, "PchrgoldeneyekeyZ", 0x7C3FF0},
+    {0x11F, "PchrgoldwppkZ", 0x7C4E90},
+    {0x120, "PchrgrenadeZ", 0x7C5000},
+    {0x121, "PchrgrenadelaunchZ", 0x7C5370},
+    {0x122, "PchrgrenaderoundZ", 0x7C5700},
+    {0x123, "PchrheroinZ", 0x7C5970},
+    {0x124, "PchrkalashZ", 0x7C5AE0},
+    {0x125, "PchrkeyanalysercaseZ", 0x7C5ED0},
+    {0x126, "PchrkeyboltZ", 0x7C60C0},
+    {0x127, "PchrkeyyaleZ", 0x7C6F60},
+    {0x128, "PchrknifeZ", 0x7C83C0},
+    {0x129, "PchrlaserZ", 0x7C85C0},
+    {0x12A, "PchrlectreZ", 0x7C8980},
+    {0x12B, "PchrlockexploderZ", 0x7C8AF0},
+    {0x12C, "Pchrm16Z", 0x7C8C60},
+    {0x12D, "PchrmapZ", 0x7C9030},
+    {0x12E, "PchrmicrocameraZ", 0x7C9180},
+    {0x12F, "PchrmicrocodeZ", 0x7C9A70},
+    {0x130, "PchrmicrofilmZ", 0x7C9BE0},
+    {0x131, "PchrmoneyZ", 0x7C9D50},
+    {0x132, "Pchrmp5kZ", 0x7C9EC0},
+    {0x133, "Pchrmp5ksilZ", 0x7CA240},
+    {0x134, "PchrpitongunZ", 0x7CA650},
+    {0x135, "PchrplansZ", 0x7CA7C0},
+    {0x136, "PchrplastiqueZ", 0x7CAA50},
+    {0x137, "PchrpolarizedglassesZ", 0x7CAEB0},
+    {0x138, "PchrproximitymineZ", 0x7CB770},
+    {0x139, "PchrremotemineZ", 0x7CBBD0},
+    {0x13A, "PchrrocketZ", 0x7CC030},
+    {0x13B, "PchrrocketlaunchZ", 0x7CC5E0},
+    {0x13C, "PchrrugerZ", 0x7CC9C0},
+    {0x13D, "PchrsafecrackercaseZ", 0x7CCDA0},
+    {0x13E, "PchrshotgunZ", 0x7CCF90},
+    {0x13F, "PchrsilverwppkZ", 0x7CD2E0},
+    {0x140, "PchrskorpionZ", 0x7CD450},
+    {0x141, "PchrsniperrifleZ", 0x7CD7D0},
+    {0x142, "PchrspectreZ", 0x7CDB60},
+    {0x143, "PchrspooltapeZ", 0x7CDED0},
+    {0x144, "PchrspyfileZ", 0x7CE040},
+    {0x145, "PchrstafflistZ", 0x7CE1B0},
+    {0x146, "PchrtesttubeZ", 0x7CE3D0},
+    {0x147, "PchrthrowknifeZ", 0x7CE590},
+    {0x148, "PchrtimedmineZ", 0x7CE7B0},
+    {0x149, "Pchrtt33Z", 0x7CECE0},
+    {0x14A, "PchruziZ", 0x7CEF70},
+    {0x14B, "PchrvideotapeZ", 0x7CF240},
+    {0x14C, "PchrweaponcaseZ", 0x7CF510},
+    {0x14D, "PchrwppkZ", 0x7CF710},
+    {0x14E, "PchrwppksilZ", 0x7CF950},
+    {0x14F, "PchrwristdartZ", 0x7CFC30},
+    {0x150, "Pconsole1Z", 0x7CFDA0},
+    {0x151, "Pconsole2Z", 0x7D0420},
+    {0x152, "Pconsole3Z", 0x7D0AA0},
+    {0x153, "Pconsole_sev2aZ", 0x7D1130},
+    {0x154, "Pconsole_sev2bZ", 0x7D1550},
+    {0x155, "Pconsole_sev2cZ", 0x7D1A10},
+    {0x156, "Pconsole_sev2dZ", 0x7D1E50},
+    {0x157, "Pconsole_sev_GEaZ", 0x7D2280},
+    {0x158, "Pconsole_sev_GEbZ", 0x7D26B0},
+    {0x159, "Pconsole_sevaZ", 0x7D2AE0},
+    {0x15A, "Pconsole_sevbZ", 0x7D2F60},
+    {0x15B, "Pconsole_sevcZ", 0x7D33D0},
+    {0x15C, "Pconsole_sevdZ", 0x7D3800},
+    {0x15D, "Pcryptdoor1aZ", 0x7D3C30},
+    {0x15E, "Pcryptdoor1bZ", 0x7D3DC0},
+    {0x15F, "Pcryptdoor2aZ", 0x7D3F50},
+    {0x160, "Pcryptdoor2bZ", 0x7D40E0},
+    {0x161, "Pcryptdoor3Z", 0x7D4270},
+    {0x162, "Pcryptdoor4Z", 0x7D44E0},
+    {0x163, "PdamchaindoorZ", 0x7D4660},
+    {0x164, "PdamgatedoorZ", 0x7D48E0},
+    {0x165, "PdamtundoorZ", 0x7D4B00},
+    {0x166, "Pdepot_door_steelZ", 0x7D4E70},
+    {0x167, "Pdepot_gate_entryZ", 0x7D5010},
+    {0x168, "Pdesk1Z", 0x7D5250},
+    {0x169, "Pdesk2Z", 0x7D53D0},
+    {0x16A, "Pdesk_arecibo1Z", 0x7D5550},
+    {0x16B, "Pdesk_lamp2Z", 0x7D5790},
+    {0x16C, "Pdest_engineZ", 0x7D5A90},
+    {0x16D, "Pdest_exocetZ", 0x7D7380},
+    {0x16E, "Pdest_gunZ", 0x7D79E0},
+    {0x16F, "Pdest_harpoonZ", 0x7D8050},
+    {0x170, "Pdest_seawolfZ", 0x7D88F0},
+    {0x171, "Pdisc_readerZ", 0x7D98A0},
+    {0x172, "Pdisk_drive1Z", 0x7D9A60},
+    {0x173, "Pdoor_azt_chairZ", 0x7D9BF0},
+    {0x174, "Pdoor_azt_deskZ", 0x7D9D70},
+    {0x175, "Pdoor_azt_desk_topZ", 0x7DA1B0},
+    {0x176, "Pdoor_aztecZ", 0x7DA540},
+    {0x177, "Pdoor_dest1Z", 0x7DA770},
+    {0x178, "Pdoor_dest2Z", 0x7DAA70},
+    {0x179, "Pdoor_eyelidZ", 0x7DAE30},
+    {0x17A, "Pdoor_irisZ", 0x7DB390},
+    {0x17B, "Pdoor_mfZ", 0x7DBDE0},
+    {0x17C, "Pdoor_roller1Z", 0x7DC0D0},
+    {0x17D, "Pdoor_roller2Z", 0x7DC440},
+    {0x17E, "Pdoor_roller3Z", 0x7DC680},
+    {0x17F, "Pdoor_roller4Z", 0x7DC8C0},
+    {0x180, "Pdoor_rollertrainZ", 0x7DCB20},
+    {0x181, "Pdoor_st_arec1Z", 0x7DCC50},
+    {0x182, "Pdoor_st_arec2Z", 0x7DCEB0},
+    {0x183, "Pdoor_winZ", 0x7DD190},
+    {0x184, "PdoorconsoleZ", 0x7DD330},
+    {0x185, "PdoorpanelZ", 0x7DD7A0},
+    {0x186, "Pdoorprison1Z", 0x7DDB10},
+    {0x187, "PdoorstatgateZ", 0x7DDC60},
+    {0x188, "PexplosionbitZ", 0x7DDE60},
+    {0x189, "Pfiling_cabinet1Z", 0x7DDF80},
+    {0x18A, "PflagZ", 0x7DE100},
+    {0x18B, "PfloppyZ", 0x7DE230},
+    {0x18C, "Pfnp90magZ", 0x7DE550},
+    {0x18D, "Pgas_plant_met1_do1Z", 0x7DE6F0},
+    {0x18E, "Pgas_plant_sw2_do1Z", 0x7DEA70},
+    {0x18F, "Pgas_plant_sw3_do1Z", 0x7DEC50},
+    {0x190, "Pgas_plant_sw4_do1Z", 0x7DEE50},
+    {0x191, "Pgas_plant_sw_do1Z", 0x7DEFB0},
+    {0x192, "Pgas_plant_wc_cub1Z", 0x7DF240},
+    {0x193, "PgasbarrelZ", 0x7DF450},
+    {0x194, "PgasbarrelsZ", 0x7DF660},
+    {0x195, "Pgasplant_clear_doorZ", 0x7DFBA0},
+    {0x196, "PgastankZ", 0x7E0100},
+    {0x197, "Pglassware1Z", 0x7E06B0},
+    {0x198, "Pglassware2Z", 0x7E0810},
+    {0x199, "Pglassware3Z", 0x7E0AA0},
+    {0x19A, "Pglassware4Z", 0x7E0CB0},
+    {0x19B, "PgoldeneyelogoZ", 0x7E1230},
+    {0x19C, "PgoldenshellsZ", 0x7E20E0},
+    {0x19D, "PgroundgunZ", 0x7E22E0},
+    {0x19E, "Pgun_runway1Z", 0x7E2AB0},
+    {0x19F, "PhatberetZ", 0x7E31F0},
+    {0x1A0, "PhatberetblueZ", 0x7E3490},
+    {0x1A1, "PhatberetredZ", 0x7E3760},
+    {0x1A2, "PhatchboltZ", 0x7E3A40},
+    {0x1A3, "PhatchdoorZ", 0x7E3B10},
+    {0x1A4, "PhatchsevxZ", 0x7E3D30},
+    {0x1A5, "PhatfurryZ", 0x7E3EA0},
+    {0x1A6, "PhatfurryblackZ", 0x7E40D0},
+    {0x1A7, "PhatfurrybrownZ", 0x7E42F0},
+    {0x1A8, "PhathelmetZ", 0x7E4500},
+    {0x1A9, "PhathelmetgreyZ", 0x7E4730},
+    {0x1AA, "PhatmoonZ", 0x7E4960},
+    {0x1AB, "PhatpeakedZ", 0x7E4D40},
+    {0x1AC, "PhattbirdZ", 0x7E5050},
+    {0x1AD, "PhattbirdbrownZ", 0x7E52A0},
+    {0x1AE, "PhelicopterZ", 0x7E5510},
+    {0x1AF, "PhindZ", 0x7E9730},
+    {0x1B0, "PjeepZ", 0x7EAEA0},
+    {0x1B1, "Pjerry_can1Z", 0x7EC000},
+    {0x1B2, "Pjungle3_treeZ", 0x7EC260},
+    {0x1B3, "Pjungle5_treeZ", 0x7EC9E0},
+    {0x1B4, "Pkey_holderZ", 0x7ECF10},
+    {0x1B5, "Pkeyboard1Z", 0x7ED260},
+    {0x1B6, "Pkit_units1Z", 0x7ED3D0},
+    {0x1B7, "PlabbenchZ", 0x7ED670},
+    {0x1B8, "PlandmineZ", 0x7EDA40},
+    {0x1B9, "PlegalpageZ", 0x7EDCB0},
+    {0x1BA, "Pletter_tray1Z", 0x7EEC70},
+    {0x1BB, "Plocker3Z", 0x7EEDD0},
+    {0x1BC, "Plocker4Z", 0x7EEF60},
+    {0x1BD, "Pm16magZ", 0x7EF0F0},
+    {0x1BE, "PmagnumshellsZ", 0x7EF230},
+    {0x1BF, "Pmainframe1Z", 0x7EF430},
+    {0x1C0, "Pmainframe2Z", 0x7EF730},
+    {0x1C1, "Pmetal_chair1Z", 0x7EFA00},
+    {0x1C2, "Pmetal_crate1Z", 0x7EFD40},
+    {0x1C3, "Pmetal_crate2Z", 0x7EFF00},
+    {0x1C4, "Pmetal_crate3Z", 0x7F00C0},
+    {0x1C5, "Pmetal_crate4Z", 0x7F0280},
+    {0x1C6, "PmilcopterZ", 0x7F0440},
+    {0x1C7, "PmiltruckZ", 0x7F1D20},
+    {0x1C8, "Pmissile_rack2Z", 0x7F4020},
+    {0x1C9, "Pmissile_rackZ", 0x7F4A30},
+    {0x1CA, "PmodemboxZ", 0x7F4E10},
+    {0x1CB, "PmotorbikeZ", 0x7F5150},
+    {0x1CC, "Pmp5kmagZ", 0x7F6010},
+    {0x1CD, "PnintendologoZ", 0x7F6160},
+    {0x1CE, "Poil_drum1Z", 0x7F8C40},
+    {0x1CF, "Poil_drum2Z", 0x7F8EB0},
+    {0x1D0, "Poil_drum3Z", 0x7F91A0},
+    {0x1D1, "Poil_drum5Z", 0x7F9490},
+    {0x1D2, "Poil_drum6Z", 0x7F9780},
+    {0x1D3, "Poil_drum7Z", 0x7F9A90},
+    {0x1D4, "PpadlockZ", 0x7F9D90},
+    {0x1D5, "PpalmZ", 0x7FA7E0},
+    {0x1D6, "PpalmtreeZ", 0x7FAC30},
+    {0x1D7, "Pphone1Z", 0x7FB100},
+    {0x1D8, "PplaneZ", 0x7FB240},
+    {0x1D9, "Pplant11Z", 0x7FD820},
+    {0x1DA, "Pplant1Z", 0x7FDBE0},
+    {0x1DB, "Pplant2Z", 0x7FDF70},
+    {0x1DC, "Pplant2bZ", 0x7FE2D0},
+    {0x1DD, "Pplant3Z", 0x7FE6E0},
+    {0x1DE, "Pradio_unit1Z", 0x7FEB30},
+    {0x1DF, "Pradio_unit2Z", 0x7FECE0},
+    {0x1E0, "Pradio_unit3Z", 0x7FEEA0},
+    {0x1E1, "Pradio_unit4Z", 0x7FF060},
+    {0x1E2, "ProofgunZ", 0x7FF220},
+    {0x1E3, "PsafeZ", 0x7FF880},
+    {0x1E4, "PsafedoorZ", 0x7FFBD0},
+    {0x1E5, "Psat1_reflectZ", 0x8000C0},
+    {0x1E6, "PsatboxZ", 0x801630},
+    {0x1E7, "PsatdishZ", 0x801750},
+    {0x1E8, "Psec_panelZ", 0x801BB0},
+    {0x1E9, "Psev_door3Z", 0x801D50},
+    {0x1EA, "Psev_door3_windZ", 0x801FE0},
+    {0x1EB, "Psev_door4_windZ", 0x802370},
+    {0x1EC, "Psev_doorZ", 0x802750},
+    {0x1ED, "Psev_door_v1Z", 0x802AA0},
+    {0x1EE, "Psev_trislideZ", 0x802DD0},
+    {0x1EF, "PsevdishZ", 0x803180},
+    {0x1F0, "PsevdoormetslideZ", 0x8040A0},
+    {0x1F1, "PsevdoornowindZ", 0x804380},
+    {0x1F2, "PsevdoorwindZ", 0x8044F0},
+    {0x1F3, "PsevdoorwoodZ", 0x804920},
+    {0x1F4, "PshuttleZ", 0x804CD0},
+    {0x1F5, "Pshuttle_door_lZ", 0x8076D0},
+    {0x1F6, "Pshuttle_door_rZ", 0x808300},
+    {0x1F7, "PsilencerZ", 0x809000},
+    {0x1F8, "Psilo_lift_doorZ", 0x8091A0},
+    {0x1F9, "PsilotopdoorZ", 0x8093E0},
+    {0x1FA, "PskorpionmagZ", 0x8096D0},
+    {0x1FB, "PspectremagZ", 0x809830},
+    {0x1FC, "PspeedboatZ", 0x8099A0},
+    {0x1FD, "Pst_pete_room_1iZ", 0x80A6E0},
+    {0x1FE, "Pst_pete_room_2iZ", 0x80D820},
+    {0x1FF, "Pst_pete_room_3tZ", 0x810A00},
+    {0x200, "Pst_pete_room_5cZ", 0x813940},
+    {0x201, "Pst_pete_room_6cZ", 0x816ED0},
+    {0x202, "Psteel_door1Z", 0x81A2E0},
+    {0x203, "Psteel_door2Z", 0x81A550},
+    {0x204, "Psteel_door2bZ", 0x81A800},
+    {0x205, "Psteel_door3Z", 0x81AAD0},
+    {0x206, "Pstool1Z", 0x81ADA0},
+    {0x207, "Pswipe_card2Z", 0x81B060},
+    {0x208, "Pswivel_chair1Z", 0x81B1F0},
+    {0x209, "PtankZ", 0x81B480},
+    {0x20A, "PtigerZ", 0x81CF20},
+    {0x20B, "Ptorpedo_rackZ", 0x81EDB0},
+    {0x20C, "Ptrain_door2Z", 0x81F630},
+    {0x20D, "Ptrain_door3Z", 0x81FA00},
+    {0x20E, "Ptrain_doorZ", 0x81FE20},
+    {0x20F, "PtrainextdoorZ", 0x820090},
+    {0x210, "Ptt33magZ", 0x8203D0},
+    {0x211, "Ptuning_console1Z", 0x820510},
+    {0x212, "Ptv1Z", 0x820A30},
+    {0x213, "Ptv4screenZ", 0x820C00},
+    {0x214, "Ptv_holderZ", 0x820DA0},
+    {0x215, "PtvscreenZ", 0x821470},
+    {0x216, "PuzimagZ", 0x821540},
+    {0x217, "PvertdoorZ", 0x821680},
+    {0x218, "PwalletbondZ", 0x821C90},
+    {0x219, "PwindowZ", 0x823240},
+    {0x21A, "Pwindow_cor11Z", 0x823330},
+    {0x21B, "Pwindow_lib_lg1Z", 0x823410},
+    {0x21C, "Pwindow_lib_sm1Z", 0x8234F0},
+    {0x21D, "Pwood_lg_crate1Z", 0x8235E0},
+    {0x21E, "Pwood_lg_crate2Z", 0x823860},
+    {0x21F, "Pwood_md_crate3Z", 0x823A80},
+    {0x220, "Pwood_sm_crate4Z", 0x823CA0},
+    {0x221, "Pwood_sm_crate5Z", 0x823F00},
+    {0x222, "Pwood_sm_crate6Z", 0x824160},
+    {0x223, "Pwooden_table1Z", 0x824380},
+    {0x224, "PwppkmagZ", 0x8246F0},
+    {0x225, "Tbg_ame_all_p_stanZ", 0x824830},
+    {0x226, "Tbg_arch_all_p_stanZ", 0x826160},
+    {0x227, "Tbg_arec_all_p_stanZ", 0x82BE50},
+    {0x228, "Tbg_ark_all_p_stanZ", 0x8341A0},
+    {0x229, "Tbg_ash_all_p_stanZ", 0x83D160},
+    {0x22A, "Tbg_azt_all_p_stanZ", 0x83EA90},
+    {0x22B, "Tbg_cat_all_p_stanZ", 0x844010},
+    {0x22C, "Tbg_cave_all_p_stanZ", 0x846740},
+    {0x22D, "Tbg_crad_all_p_stanZ", 0x84B630},
+    {0x22E, "Tbg_cryp_all_p_stanZ", 0x84DF40},
+    {0x22F, "Tbg_dam_all_p_stanZ", 0x850FB0},
+    {0x230, "Tbg_depo_all_p_stanZ", 0x85B390},
+    {0x231, "Tbg_dest_all_p_stanZ", 0x8622D0},
+    {0x232, "Tbg_dish_all_p_stanZ", 0x868BC0},
+    {0x233, "Tbg_ear_all_p_stanZ", 0x8696D0},
+    {0x234, "Tbg_eld_all_p_stanZ", 0x8696D0},
+    {0x235, "Tbg_imp_all_p_stanZ", 0x8696D0},
+    {0x236, "Tbg_jun_all_p_stanZ", 0x86B000},
+    {0x237, "Tbg_lee_all_p_stanZ", 0x872150},
+    {0x238, "Tbg_len_all_p_stanZ", 0x872150},
+    {0x239, "Tbg_lip_all_p_stanZ", 0x872C10},
+    {0x23A, "Tbg_lue_all_p_stanZ", 0x872C10},
+    {0x23B, "Tbg_oat_all_p_stanZ", 0x872C10},
+    {0x23C, "Tbg_pam_all_p_stanZ", 0x874510},
+    {0x23D, "Tbg_pete_all_p_stanZ", 0x874510},
+    {0x23E, "Tbg_ref_all_p_stanZ", 0x878BA0},
+    {0x23F, "Tbg_rit_all_p_stanZ", 0x87A970},
+    {0x240, "Tbg_run_all_p_stanZ", 0x87A970},
+    {0x241, "Tbg_sev_all_p_stanZ", 0x87C3F0},
+    {0x242, "Tbg_sevb_all_p_stanZ", 0x8801C0},
+    {0x243, "Tbg_sevx_all_p_stanZ", 0x885100},
+    {0x244, "Tbg_silo_all_p_stanZ", 0x88E430},
+    {0x245, "Tbg_stat_all_p_stanZ", 0x8974D0},
+    {0x246, "Tbg_tra_all_p_stanZ", 0x89C390},
+    {0x247, "Tbg_wax_all_p_stanZ", 0x89E760},
+    {0x248, "UbriefarchZ", 0x89E760},
+    {0x249, "UbriefarkZ", 0x89E780},
+    {0x24A, "UbriefaztZ", 0x89E7A0},
+    {0x24B, "UbriefcaveZ", 0x89E7C0},
+    {0x24C, "UbriefcontrolZ", 0x89E7E0},
+    {0x24D, "UbriefcradZ", 0x89E800},
+    {0x24E, "UbriefcrypZ", 0x89E820},
+    {0x24F, "UbriefdamZ", 0x89E840},
+    {0x250, "UbriefdepoZ", 0x89E860},
+    {0x251, "UbriefdestZ", 0x89E880},
+    {0x252, "UbriefjunZ", 0x89E8A0},
+    {0x253, "UbriefpeteZ", 0x89E8C0},
+    {0x254, "UbriefrunZ", 0x89E8E0},
+    {0x255, "UbriefsevbZ", 0x89E900},
+    {0x256, "UbriefsevbunkerZ", 0x89E920},
+    {0x257, "UbriefsevxZ", 0x89E940},
+    {0x258, "UbriefsevxbZ", 0x89E960},
+    {0x259, "UbriefsiloZ", 0x89E980},
+    {0x25A, "UbriefstatueZ", 0x89E9A0},
+    {0x25B, "UbrieftraZ", 0x89E9C0},
+    {0x25C, "Ump_setupameZ", 0x89E9E0},
+    {0x25D, "Ump_setuparchZ", 0x89F100},
+    {0x25E, "Ump_setuparkZ", 0x8A1EA0},
+    {0x25F, "Ump_setupashZ", 0x8A3BE0},
+    {0x260, "Ump_setupcaveZ", 0x8A42D0},
+    {0x261, "Ump_setupcradZ", 0x8A6830},
+    {0x262, "Ump_setupcrypZ", 0x8A7190},
+    {0x263, "Ump_setupdishZ", 0x8A7EF0},
+    {0x264, "Ump_setupimpZ", 0x8A82E0},
+    {0x265, "Ump_setupoatZ", 0x8A8920},
+    {0x266, "Ump_setuprefZ", 0x8A8C70},
+    {0x267, "Ump_setupsevbZ", 0x8A9080},
+    {0x268, "Ump_setupstatueZ", 0x8AA390},
+    {0x269, "UsetuparchZ", 0x8AB210},
+    {0x26A, "UsetuparkZ", 0x8AF820},
+    {0x26B, "UsetupaztZ", 0x8B33B0},
+    {0x26C, "UsetupcaveZ", 0x8B5CB0},
+    {0x26D, "UsetupcontrolZ", 0x8B9B10},
+    {0x26E, "UsetupcradZ", 0x8BD610},
+    {0x26F, "UsetupcrypZ", 0x8BF240},
+    {0x270, "UsetupdamZ", 0x8C10D0},
+    {0x271, "UsetupdepoZ", 0x8C53A0},
+    {0x272, "UsetupdestZ", 0x8C8330},
+    {0x273, "UsetupjunZ", 0x8CA680},
+    {0x274, "UsetuplenZ", 0x8CDD80},
+    {0x275, "UsetuppeteZ", 0x8CE350},
+    {0x276, "UsetuprunZ", 0x8D12D0},
+    {0x277, "UsetupsevbZ", 0x8D2B30},
+    {0x278, "UsetupsevbunkerZ", 0x8D5190},
+    {0x279, "UsetupsevxZ", 0x8D6BC0},
+    {0x27A, "UsetupsevxbZ", 0x8DAED0},
+    {0x27B, "UsetupsiloZ", 0x8DEFC0},
+    {0x27C, "UsetupstatueZ", 0x8E1A10},
+    {0x27D, "UsetuptraZ", 0x8E41E0},
+    {0x27E, "LameE", 0x8E7410},
+    {0x27F, "LameJ", 0x8E7420},
+    {0x280, "LarchE", 0x8E7430},
+    {0x281, "LarchJ", 0x8E7A60},
+    {0x282, "LarecE", 0x8E80C0},
+    {0x283, "LarecJ", 0x8E8690},
+    {0x284, "LarkE", 0x8E8C20},
+    {0x285, "LarkJ", 0x8E92C0},
+    {0x286, "LashE", 0x8E9970},
+    {0x287, "LashJ", 0x8E9980},
+    {0x288, "LaztE", 0x8E9990},
+    {0x289, "LaztJ", 0x8E9DD0},
+    {0x28A, "LcatE", 0x8EA280},
+    {0x28B, "LcatJ", 0x8EA290},
+    {0x28C, "LcaveE", 0x8EA2A0},
+    {0x28D, "LcaveJ", 0x8EA6A0},
+    {0x28E, "LcradE", 0x8EAB00},
+    {0x28F, "LcradJ", 0x8EAFD0},
+    {0x290, "LcrypE", 0x8EB480},
+    {0x291, "LcrypJ", 0x8EB6D0},
+    {0x292, "LdamE", 0x8EB990},
+    {0x293, "LdamJ", 0x8EBDE0},
+    {0x294, "LdepoE", 0x8EC250},
+    {0x295, "LdepoJ", 0x8EC5C0},
+    {0x296, "LdestE", 0x8EC900},
+    {0x297, "LdestJ", 0x8ECD90},
+    {0x298, "LdishE", 0x8ED1F0},
+    {0x299, "LdishJ", 0x8ED200},
+    {0x29A, "LearE", 0x8ED210},
+    {0x29B, "LearJ", 0x8ED220},
+    {0x29C, "LeldE", 0x8ED230},
+    {0x29D, "LeldJ", 0x8ED240},
+    {0x29E, "LgunE", 0x8ED250},
+    {0x29F, "LgunJ", 0x8ED970},
+    {0x2A0, "LimpE", 0x8EE0C0},
+    {0x2A1, "LimpJ", 0x8EE0D0},
+    {0x2A2, "LjunE", 0x8EE0E0},
+    {0x2A3, "LjunJ", 0x8EE600},
+    {0x2A4, "LleeE", 0x8EEB40},
+    {0x2A5, "LleeJ", 0x8EEB50},
+    {0x2A6, "LlenE", 0x8EEB60},
+    {0x2A7, "LlenJ", 0x8EF1A0},
+    {0x2A8, "LlipE", 0x8EF450},
+    {0x2A9, "LlipJ", 0x8EF460},
+    {0x2AA, "LlueE", 0x8EF470},
+    {0x2AB, "LlueJ", 0x8EF480},
+    {0x2AC, "LmiscE", 0x8EF490},
+    {0x2AD, "LmiscJ", 0x8EF730},
+    {0x2AE, "LmpmenuE", 0x8EFA10},
+    {0x2AF, "LmpmenuJ", 0x8EFBB0},
+    {0x2B0, "LmpweaponsE", 0x8EFD40},
+    {0x2B1, "LmpweaponsJ", 0x8EFE00},
+    {0x2B2, "LoatE", 0x8EFEE0},
+    {0x2B3, "LoatJ", 0x8EFEF0},
+    {0x2B4, "LoptionsE", 0x8EFF00},
+    {0x2B5, "LoptionsJ", 0x8F0130},
+    {0x2B6, "LpamE", 0x8F0380},
+    {0x2B7, "LpamJ", 0x8F0390},
+    {0x2B8, "LpeteE", 0x8F03A0},
+    {0x2B9, "LpeteJ", 0x8F0820},
+    {0x2BA, "LpropobjE", 0x8F0C90},
+    {0x2BB, "LpropobjJ", 0x8F0F30},
+    {0x2BC, "LrefE", 0x8F11F0},
+    {0x2BD, "LrefJ", 0x8F1200},
+    {0x2BE, "LritE", 0x8F1210},
+    {0x2BF, "LritJ", 0x8F1220},
+    {0x2C0, "LrunE", 0x8F1230},
+    {0x2C1, "LrunJ", 0x8F14A0},
+    {0x2C2, "LsevE", 0x8F1730},
+    {0x2C3, "LsevJ", 0x8F1C90},
+    {0x2C4, "LsevbE", 0x8F21A0},
+    {0x2C5, "LsevbJ", 0x8F28F0},
+    {0x2C6, "LsevxE", 0x8F30E0},
+    {0x2C7, "LsevxJ", 0x8F3540},
+    {0x2C8, "LsevxbE", 0x8F3900},
+    {0x2C9, "LsevxbJ", 0x8F3D90},
+    {0x2CA, "LshoE", 0x8F41E0},
+    {0x2CB, "LshoJ", 0x8F41F0},
+    {0x2CC, "LsiloE", 0x8F4200},
+    {0x2CD, "LsiloJ", 0x8F47B0},
+    {0x2CE, "LstatE", 0x8F4D90},
+    {0x2CF, "LstatJ", 0x8F56B0},
+    {0x2D0, "LtitleE", 0x8F5F20},
+    {0x2D1, "LtitleJ", 0x8F69E0},
+    {0x2D2, "LtraE", 0x8F7570},
+    {0x2D3, "LtraJ", 0x8F79A0},
+    {0x2D4, "LwaxE", 0x8F7DC0},
+    {0x2D5, "LwaxJ", 0x8F7DD0},
+    {0x2D6, "ob/ob_end.seg", 0x8F7DE0},
+    {0},
+    {0},
+    {0},
+    {0},
+    {0},
+    {0},
+    {0},
+    {0},
+    {0}
+};
+
+//D:800482D4
+s32 file_entry_max = 0x2D7;
+
 
 /* rodata
-D:80058DA0     aBgBg_NULLall_p_seg_0:.word 0            # DATA XREF: D:resource_tableo
-D:80058DA4     aBgBg_sev_all_p_seg_0:.ascii "bg/bg_sev_all_p.seg"<0>
-D:80058DA4                                              # DATA XREF: D:file_entry_offseto
-D:80058DB8     aBgBg_silo_all_p_seg_0:.ascii "bg/bg_silo_all_p.seg"<0>
-D:80058DB8                                              # DATA XREF: D:8004606Co
-D:80058DCD                     .align 4
-D:80058DD0     aBgBg_stat_all_p_seg_0:.ascii "bg/bg_stat_all_p.seg"<0>
-D:80058DD0                                              # DATA XREF: D:80046078o
-D:80058DE5                     .align 2
-D:80058DE8     aBgBg_arec_all_p_seg_0:.ascii "bg/bg_arec_all_p.seg"<0>
-D:80058DE8                                              # DATA XREF: D:80046084o
-D:80058DFD                     .align 4
-D:80058E00     aBgBg_arch_all_p_seg_0:.ascii "bg/bg_arch_all_p.seg"<0>
-D:80058E00                                              # DATA XREF: D:80046090o
-D:80058E15                     .align 2
-D:80058E18     aBgBg_tra_all_p_seg_0:.ascii "bg/bg_tra_all_p.seg"<0>
-D:80058E18                                              # DATA XREF: D:8004609Co
-D:80058E2C     aBgBg_dest_all_p_seg_0:.ascii "bg/bg_dest_all_p.seg"<0>
-D:80058E2C                                              # DATA XREF: D:800460A8o
-D:80058E41                     .align 2
-D:80058E44     aBgBg_sevb_all_p_seg_0:.ascii "bg/bg_sevb_all_p.seg"<0>
-D:80058E44                                              # DATA XREF: D:800460B4o
-D:80058E59                     .align 2
-D:80058E5C     aBgBg_azt_all_p_seg_0:.ascii "bg/bg_azt_all_p.seg"<0>
-D:80058E5C                                              # DATA XREF: D:800460C0o
-D:80058E70     aBgBg_pete_all_p_seg_0:.ascii "bg/bg_pete_all_p.seg"<0><0><0><0>
-D:80058E70                                              # DATA XREF: D:800460CCo
-D:80058E88     aBgBg_depo_all_p_seg_0:.ascii "bg/bg_depo_all_p.seg"<0>
-D:80058E88                                              # DATA XREF: D:800460D8o
-D:80058E9D                     .byte 0, 0, 0
-D:80058EA0     aBgBg_ref_all_p_seg_0:.ascii "bg/bg_ref_all_p.seg"<0>
-D:80058EA0                                              # DATA XREF: D:800460E4o
-D:80058EB4     aBgBg_cryp_all_p_seg_0:.ascii "bg/bg_cryp_all_p.seg"<0>
-D:80058EB4                                              # DATA XREF: D:800460F0o
-D:80058EC9                     .byte 0, 0, 0
-D:80058ECC     aBgBg_dam_all_p_seg_0:.ascii "bg/bg_dam_all_p.seg"<0>
-D:80058ECC                                              # DATA XREF: D:800460FCo
-D:80058EE0     aBgBg_ark_all_p_seg_0:.ascii "bg/bg_ark_all_p.seg"<0>
-D:80058EE0                                              # DATA XREF: D:80046108o
-D:80058EF4     aBgBg_run_all_p_seg_0:.ascii "bg/bg_run_all_p.seg"<0>
-D:80058EF4                                              # DATA XREF: D:80046114o
-D:80058F08     aBgBg_sevx_all_p_seg_1:.ascii "bg/bg_sevx_all_p.seg"<0>
-D:80058F08                                              # DATA XREF: D:80046120o
-D:80058F1D                     .byte 0, 0, 0
-D:80058F20     aBgBg_jun_all_p_seg_0:.ascii "bg/bg_jun_all_p.seg"<0>
-D:80058F20                                              # DATA XREF: D:8004612Co
-D:80058F34     aBgBg_dish_all_p_seg_0:.ascii "bg/bg_dish_all_p.seg"<0>
-D:80058F34                                              # DATA XREF: D:80046138o
-D:80058F49                     .byte 0, 0, 0
-D:80058F4C     aBgBg_cave_all_p_seg_0:.ascii "bg/bg_cave_all_p.seg"<0>
-D:80058F4C                                              # DATA XREF: D:80046144o
-D:80058F61                     .byte 0, 0, 0
-D:80058F64     aBgBg_cat_all_p_seg_0:.ascii "bg/bg_cat_all_p.seg"<0>
-D:80058F64                                              # DATA XREF: D:80046150o
-D:80058F78     aBgBg_crad_all_p_seg_0:.ascii "bg/bg_crad_all_p.seg"<0>
-D:80058F78                                              # DATA XREF: D:8004615Co
-D:80058F8D                     .byte 0, 0, 0
-D:80058F90     aBgBg_sho_all_p_seg_0:.ascii "bg/bg_sho_all_p.seg"<0>
-D:80058F90                                              # DATA XREF: D:80046168o
-D:80058FA4     aBgBg_eld_all_p_seg_0:.ascii "bg/bg_eld_all_p.seg"<0>
-D:80058FA4                                              # DATA XREF: D:80046174o
-D:80058FB8     aBgBg_imp_all_p_seg:.ascii "bg/bg_imp_all_p.seg"<0>  # DATA XREF: D:80046180o
-D:80058FCC     aBgBg_ash_all_p_seg:.ascii "bg/bg_ash_all_p.seg"<0>  # DATA XREF: D:8004618Co
-D:80058FE0     aBgBg_lue_all_p_seg_0:.ascii "bg/bg_lue_all_p.seg"<0>
-D:80058FE0                                              # DATA XREF: D:80046198o
-D:80058FF4     aBgBg_ame_all_p_seg_2:.ascii "bg/bg_ame_all_p.seg"<0>
-D:80058FF4                                              # DATA XREF: D:800461A4o
-D:80059008     aBgBg_rit_all_p_seg_0:.ascii "bg/bg_rit_all_p.seg"<0>
-D:80059008                                              # DATA XREF: D:800461B0o
-D:8005901C     aBgBg_oat_all_p_seg_0:.ascii "bg/bg_oat_all_p.seg"<0>
-D:8005901C                                              # DATA XREF: D:800461BCo
-D:80059030     aBgBg_ear_all_p_seg_0:.ascii "bg/bg_ear_all_p.seg"<0>
-D:80059030                                              # DATA XREF: D:800461C8o
-D:80059044     aBgBg_lee_all_p_seg_0:.ascii "bg/bg_lee_all_p.seg"<0>
-D:80059044                                              # DATA XREF: D:800461D4o
-D:80059058     aBgBg_lip_all_p_seg_0:.ascii "bg/bg_lip_all_p.seg"<0>
-D:80059058                                              # DATA XREF: D:800461E0o
-D:8005906C     aBgBg_len_all_p_seg_0:.ascii "bg/bg_len_all_p.seg"<0>
-D:8005906C                                              # DATA XREF: D:800461ECo
-D:80059080     aBgBg_wax_all_p_seg_0:.ascii "bg/bg_wax_all_p.seg"<0>
-D:80059080                                              # DATA XREF: D:800461F8o
-D:80059094     aBgBg_pam_all_p_seg_0:.ascii "bg/bg_pam_all_p.seg"<0>
-D:80059094                                              # DATA XREF: D:80046204o
-D:800590A8     aCarmourguardz_0:.ascii "CarmourguardZ"<0>  # DATA XREF: D:80046210o
-D:800590B6                     .half 0
-D:800590B8     aCbaronsamediz_0:.ascii "CbaronsamediZ"<0>  # DATA XREF: D:8004621Co
-D:800590C6                     .half 0
-D:800590C8     aCbluecamguardz_0:.ascii "CbluecamguardZ"<0>  # DATA XREF: D:80046228o
-D:800590D7                     .byte 0
-D:800590D8     aCbluemanz_0:   .ascii "CbluemanZ"<0>    # DATA XREF: D:80046234o
-D:800590E2                     .half 0
-D:800590E4     aCbluewomanz_0: .ascii "CbluewomanZ"<0>  # DATA XREF: D:80046240o
-D:800590F0     aCboilerbondz_0:.ascii "CboilerbondZ"<0>  # DATA XREF: D:8004624Co
-D:800590FD                     .byte 0, 0, 0
-D:80059100     aCboilertrevz_0:.ascii "CboilertrevZ"<0>  # DATA XREF: D:80046258o
-D:8005910D                     .byte 0, 0, 0
-D:80059110     aCborisz_0:     .ascii "CborisZ"<0>      # DATA XREF: D:80046264o
-D:80059118     aCcamguardz_0:  .ascii "CcamguardZ"<0>   # DATA XREF: D:80046270o
-D:80059123                     .byte 0
-D:80059124     aCcardimanz_0:  .ascii "CcardimanZ"<0>   # DATA XREF: D:8004627Co
-D:8005912F                     .byte 0
-D:80059130     aCcheckmanz_0:  .ascii "CcheckmanZ"<0>   # DATA XREF: D:80046288o
-D:8005913B                     .byte 0
-D:8005913C     aCcommguardz_0: .ascii "CcommguardZ"<0>  # DATA XREF: D:80046294o
-D:80059148     aCdjbondz_0:    .ascii "CdjbondZ"<0>     # DATA XREF: D:800462A0o
-D:80059151                     .byte 0, 0, 0
-D:80059154     aCfattechwomanz_1:.ascii "CfattechwomanZ"<0><0>  # DATA XREF: D:800462ACo
-D:80059164     aCgreatguard2z_0:.ascii "Cgreatguard2Z"<0>  # DATA XREF: D:800462B8o
-D:80059172                     .half 0
-D:80059174     aCgreatguardz_0:.ascii "CgreatguardZ"<0>  # DATA XREF: D:800462C4o
-D:80059181                     .byte 0, 0, 0
-D:80059184     aCgreyguardz_0: .ascii "CgreyguardZ"<0>  # DATA XREF: D:800462D0o
-D:80059190     aCgreymanz_0:   .ascii "CgreymanZ"<0>    # DATA XREF: D:800462DCo
-D:8005919A                     .half 0
-D:8005919C     aCheadalanz_0:  .ascii "CheadalanZ"<0>   # DATA XREF: D:800462E8o
-D:800591A7                     .byte 0
-D:800591A8     aCheadbz_0:     .ascii "CheadbZ"<0>      # DATA XREF: D:800462F4o
-D:800591B0     aCheadbalaclavaz_0:.ascii "CheadbalaclavaZ"<0>  # DATA XREF: D:80046300o
-D:800591C0     aCheadbikez_0:  .ascii "CheadbikeZ"<0>   # DATA XREF: D:8004630Co
-D:800591CB                     .byte 0
-D:800591CC     aCheadbrosnanz_0:.ascii "CheadbrosnanZ"<0>  # DATA XREF: D:80046318o
-D:800591DA                     .half 0
-D:800591DC     aCheadbrosnanboilerz_0:.ascii "CheadbrosnanboilerZ"<0>
-D:800591DC                                              # DATA XREF: D:80046324o
-D:800591F0     aCheadbrosnansnowz_0:.ascii "CheadbrosnansnowZ"<0>  # DATA XREF: D:80046330o
-D:80059202                     .half 0
-D:80059204     aCheadbrosnansuitz_0:.ascii "CheadbrosnansuitZ"<0>  # DATA XREF: D:8004633Co
-D:80059216                     .half 0
-D:80059218     aCheadbrosnantimberz_0:.ascii "CheadbrosnantimberZ"<0>
-D:80059218                                              # DATA XREF: D:80046348o
-D:8005922C     aCheadchrisz_0: .ascii "CheadchrisZ"<0>  # DATA XREF: D:80046354o
-D:80059238     aCheaddavez_0:  .ascii "CheaddaveZ"<0>   # DATA XREF: D:80046360o
-D:80059243                     .byte 0
-D:80059244     aCheaddesz_0:   .ascii "CheaddesZ"<0>    # DATA XREF: D:8004636Co
-D:8005924E                     .half 0
-D:80059250     aCheadduncanz_0:.ascii "CheadduncanZ"<0>  # DATA XREF: D:80046378o
-D:8005925D                     .byte 0, 0, 0
-D:80059260     aCheaddwaynez_0:.ascii "CheaddwayneZ"<0>  # DATA XREF: D:80046384o
-D:8005926D                     .byte 0, 0, 0
-D:80059270     aCheadgrahamz_0:.ascii "CheadgrahamZ"<0>  # DATA XREF: D:80046390o
-D:8005927D                     .byte 0, 0, 0
-D:80059280     aCheadgrantz_0: .ascii "CheadgrantZ"<0>  # DATA XREF: D:8004639Co
-D:8005928C     aCheadjimz_0:   .ascii "CheadjimZ"<0>    # DATA XREF: D:800463A8o
-D:80059296                     .half 0
-D:80059298     aCheadjoe2z_0:  .ascii "Cheadjoe2Z"<0>   # DATA XREF: D:800463B4o
-D:800592A3                     .byte 0
-D:800592A4     aCheadjoez_0:   .ascii "CheadjoeZ"<0>    # DATA XREF: D:800463C0o
-D:800592AE                     .half 0
-D:800592B0     aCheadjoelz_0:  .ascii "CheadjoelZ"<0>   # DATA XREF: D:800463CCo
-D:800592BB                     .byte 0
-D:800592BC     aCheadkarlz_0:  .ascii "CheadkarlZ"<0>   # DATA XREF: D:800463D8o
-D:800592C7                     .byte 0
-D:800592C8     aCheadkenz_0:   .ascii "CheadkenZ"<0>    # DATA XREF: D:800463E4o
-D:800592D2                     .half 0
-D:800592D4     aCheadleez_0:   .ascii "CheadleeZ"<0>    # DATA XREF: D:800463F0o
-D:800592DE                     .half 0
-D:800592E0     aCheadmandyz_0: .ascii "CheadmandyZ"<0>  # DATA XREF: D:800463FCo
-D:800592EC     aCheadmarionz_0:.ascii "CheadmarionZ"<0>  # DATA XREF: D:80046408o
-D:800592F9                     .byte 0, 0, 0
-D:800592FC     aCheadmarkz_0:  .ascii "CheadmarkZ"<0>   # DATA XREF: D:80046414o
-D:80059307                     .byte 0
-D:80059308     aCheadmartinz_0:.ascii "CheadmartinZ"<0>  # DATA XREF: D:80046420o
-D:80059315                     .byte 0, 0, 0
-D:80059318     aCheadmishkinz_0:.ascii "CheadmishkinZ"<0>  # DATA XREF: D:8004642Co
-D:80059326                     .half 0
-D:80059328     aCheadneilz_0:  .ascii "CheadneilZ"<0>   # DATA XREF: D:80046438o
-D:80059333                     .byte 0
-D:80059334     aCheadpetez_0:  .ascii "CheadpeteZ"<0>   # DATA XREF: D:80046444o
-D:8005933F                     .byte 0
-D:80059340     aCheadrobinz_0: .ascii "CheadrobinZ"<0>  # DATA XREF: D:80046450o
-D:8005934C     aCheadsallyz_0: .ascii "CheadsallyZ"<0>  # DATA XREF: D:8004645Co
-D:80059358     aCheadscottz_0: .ascii "CheadscottZ"<0>  # DATA XREF: D:80046468o
-D:80059364     aCheadshaunz_0: .ascii "CheadshaunZ"<0>  # DATA XREF: D:80046474o
-D:80059370     aCheadsteveez_0:.ascii "CheadsteveeZ"<0>  # DATA XREF: D:80046480o
-D:8005937D                     .byte 0, 0, 0
-D:80059380     aCheadstevehz_0:.ascii "CheadstevehZ"<0>  # DATA XREF: D:8004648Co
-D:8005938D                     .byte 0, 0, 0
-D:80059390     aCheadvivienz_0:.ascii "CheadvivienZ"<0>  # DATA XREF: D:80046498o
-D:8005939D                     .byte 0, 0, 0
-D:800593A0     aCjawsz_0:      .ascii "CjawsZ"<0>       # DATA XREF: D:800464A4o
-D:800593A7                     .byte 0
-D:800593A8     aCjeanwomanz_0: .ascii "CjeanwomanZ"<0>  # DATA XREF: D:800464B0o
-D:800593B4     aCmaydayz_0:    .ascii "CmaydayZ"<0>     # DATA XREF: D:800464BCo
-D:800593BD                     .byte 0, 0, 0
-D:800593C0     aCmoonfemalez_0:.ascii "CmoonfemaleZ"<0>  # DATA XREF: D:800464C8o
-D:800593CD                     .byte 0, 0, 0
-D:800593D0     aCmoonguardz_0: .ascii "CmoonguardZ"<0>  # DATA XREF: D:800464D4o
-D:800593DC     aCnatalyaz_0:   .ascii "CnatalyaZ"<0>    # DATA XREF: D:800464E0o
-D:800593E6                     .half 0
-D:800593E8     aCnavyguardz_0: .ascii "CnavyguardZ"<0>  # DATA XREF: D:800464ECo
-D:800593F4     aCoddjobz_0:    .ascii "CoddjobZ"<0>     # DATA XREF: D:800464F8o
-D:800593FD                     .byte 0, 0, 0
-D:80059400     aColiveguardz_0:.ascii "ColiveguardZ"<0>  # DATA XREF: D:80046504o
-D:8005940D                     .byte 0, 0, 0
-D:80059410     aCorumovz_0:    .ascii "CorumovZ"<0>     # DATA XREF: D:80046510o
-D:80059419                     .byte 0, 0, 0
-D:8005941C     aCpilotz_0:     .ascii "CpilotZ"<0>      # DATA XREF: D:8004651Co
-D:80059424     aCredmanz_0:    .ascii "CredmanZ"<0>     # DATA XREF: D:80046528o
-D:8005942D                     .byte 0, 0, 0
-D:80059430     aCrusguardz_0:  .ascii "CrusguardZ"<0>   # DATA XREF: D:80046534o
-D:8005943B                     .byte 0
-D:8005943C     aCsnowbondz_0:  .ascii "CsnowbondZ"<0>   # DATA XREF: D:80046540o
-D:80059447                     .byte 0
-D:80059448     aCsnowguardz_0: .ascii "CsnowguardZ"<0>  # DATA XREF: D:8004654Co
-D:80059454     aCspicebondz_0: .ascii "CspicebondZ"<0>  # DATA XREF: D:80046558o
-D:80059460     aCsuit_lf_handz_1:.ascii "Csuit_lf_handZ"<0>  # DATA XREF: D:80046564o
-D:8005946F                     .byte 0
-D:80059470     aCsuitbondz_0:  .ascii "CsuitbondZ"<0>   # DATA XREF: D:80046570o
-D:8005947B                     .byte 0
-D:8005947C     aCtechmanz_0:   .ascii "CtechmanZ"<0>    # DATA XREF: D:8004657Co
-D:80059486                     .half 0
-D:80059488     aCtechwomanz_0: .ascii "CtechwomanZ"<0>  # DATA XREF: D:80046588o
-D:80059494     aCtimberbondz_0:.ascii "CtimberbondZ"<0>  # DATA XREF: D:80046594o
-D:800594A1                     .byte 0, 0, 0
-D:800594A4     aCtrevelyanz_0: .ascii "CtrevelyanZ"<0>  # DATA XREF: D:800465A0o
-D:800594B0     aCtrevguardz_0: .ascii "CtrevguardZ"<0>  # DATA XREF: D:800465ACo
-D:800594BC     aCvalentinz_0:  .ascii "CvalentinZ"<0>   # DATA XREF: D:800465B8o
-D:800594C7                     .byte 0
-D:800594C8     aCxeniaz_0:     .ascii "CxeniaZ"<0>      # DATA XREF: D:800465C4o
-D:800594D0     aGak47z_0:      .ascii "Gak47Z"<0>       # DATA XREF: D:800465D0o
-D:800594D7                     .byte 0
-D:800594D8     aGaudiotapez_0: .ascii "GaudiotapeZ"<0>  # DATA XREF: D:800465DCo
-D:800594E4     aGautoshotz_0:  .ascii "GautoshotZ"<0>   # DATA XREF: D:800465E8o
-D:800594EF                     .byte 0
-D:800594F0     aGblackboxz_0:  .ascii "GblackboxZ"<0>   # DATA XREF: D:800465F4o
-D:800594FB                     .byte 0
-D:800594FC     aGblueprintsz_0:.ascii "GblueprintsZ"<0>  # DATA XREF: D:80046600o
-D:80059509                     .byte 0, 0, 0
-D:8005950C     aGbombcasez_0:  .ascii "GbombcaseZ"<0>   # DATA XREF: D:8004660Co
-D:80059517                     .byte 0
-D:80059518     aGbombdefuserz_0:.ascii "GbombdefuserZ"<0>  # DATA XREF: D:80046618o
-D:80059526                     .half 0
-D:80059528     aGbriefcasez_0: .ascii "GbriefcaseZ"<0>  # DATA XREF: D:80046624o
-D:80059534     aGbugz_0:       .ascii "GbugZ"<0>        # DATA XREF: D:80046630o
-D:8005953A                     .half 0
-D:8005953C     aGbugdetectorz_0:.ascii "GbugdetectorZ"<0>  # DATA XREF: D:8004663Co
-D:8005954A                     .half 0
-D:8005954C     aGbungeez_0:    .ascii "GbungeeZ"<0>     # DATA XREF: D:80046648o
-D:80059555                     .byte 0, 0, 0
-D:80059558     aGcameraz_0:    .ascii "GcameraZ"<0>     # DATA XREF: D:80046654o
-D:80059561                     .byte 0, 0, 0
-D:80059564     aGcartbluez_0:  .ascii "GcartblueZ"<0>   # DATA XREF: D:80046660o
-D:8005956F                     .byte 0
-D:80059570     aGcartridgez_0: .ascii "GcartridgeZ"<0>  # DATA XREF: D:8004666Co
-D:8005957C     aGcartriflez_0: .ascii "GcartrifleZ"<0>  # DATA XREF: D:80046678o
-D:80059588     aGcartshellz_0: .ascii "GcartshellZ"<0>  # DATA XREF: D:80046684o
-D:80059594     aGcircuitboardz_0:.ascii "GcircuitboardZ"<0>  # DATA XREF: D:80046690o
-D:800595A3                     .byte 0
-D:800595A4     aGclipboardz_0: .ascii "GclipboardZ"<0>  # DATA XREF: D:8004669Co
-D:800595B0     aGcreditcardz_0:.ascii "GcreditcardZ"<0>  # DATA XREF: D:800466A8o
-D:800595BD                     .byte 0, 0, 0
-D:800595C0     aGdarkglassesz_0:.ascii "GdarkglassesZ"<0>  # DATA XREF: D:800466B4o
-D:800595CE                     .half 0
-D:800595D0     aGdatathiefz_0: .ascii "GdatathiefZ"<0>  # DATA XREF: D:800466C0o
-D:800595DC     aGdattapez_0:   .ascii "GdattapeZ"<0>    # DATA XREF: D:800466CCo
-D:800595E6                     .half 0
-D:800595E8     aGdoordecoderz_0:.ascii "GdoordecoderZ"<0>  # DATA XREF: D:800466D8o
-D:800595F6                     .half 0
-D:800595F8     aGdoorexploderz_0:.ascii "GdoorexploderZ"<0>  # DATA XREF: D:800466E4o
-D:80059607                     .byte 0
-D:80059608     aGdossierredz_0:.ascii "GdossierredZ"<0>  # DATA XREF: D:800466F0o
-D:80059615                     .byte 0, 0, 0
-D:80059618     aGdynamitez:    .ascii "GdynamiteZ"<0>   # DATA XREF: D:800466FCo
-D:80059623                     .byte 0
-D:80059624     aGexplosivefloppyz_0:.ascii "GexplosivefloppyZ"<0>  # DATA XREF: D:80046708o
-D:80059636                     .half 0
-D:80059638     aGexplosivepenz:.ascii "GexplosivepenZ"<0>  # DATA XREF: D:80046714o
-D:80059647                     .byte 0
-D:80059648     aGextinguisherz:.ascii "GextinguisherZ"<0>  # DATA XREF: D:80046720o
-D:80059657                     .byte 0
-D:80059658     aGfingergunz:   .ascii "GfingergunZ"<0>  # DATA XREF: D:8004672Co
-D:80059664     aGfistz_0:      .ascii "GfistZ"<0>       # DATA XREF: D:80046738o
-D:8005966B                     .byte 0
-D:8005966C     aGflarepistolz_0:.ascii "GflarepistolZ"<0>  # DATA XREF: D:80046744o
-D:8005967A                     .half 0
-D:8005967C     aGfnp90z_0:     .ascii "Gfnp90Z"<0>      # DATA XREF: D:80046750o
-D:80059684     aGgaskeyringz_0:.ascii "GgaskeyringZ"<0>  # DATA XREF: D:8004675Co
-D:80059691                     .byte 0, 0, 0
-D:80059694     aGgoldbarz_0:   .ascii "GgoldbarZ"<0>    # DATA XREF: D:80046768o
-D:8005969E                     .half 0
-D:800596A0     aGgoldeneyekeyz_0:.ascii "GgoldeneyekeyZ"<0>  # DATA XREF: D:80046774o
-D:800596AF                     .byte 0
-D:800596B0     aGgoldengunz_0: .ascii "GgoldengunZ"<0>  # DATA XREF: D:80046780o
-D:800596BC     aGgoldwppkz_0:  .ascii "GgoldwppkZ"<0>   # DATA XREF: D:8004678Co
-D:800596C7                     .byte 0
-D:800596C8     aGgrenadez_0:   .ascii "GgrenadeZ"<0>    # DATA XREF: D:80046798o
-D:800596D2                     .half 0
-D:800596D4     aGgrenadelaunchz_0:.ascii "GgrenadelaunchZ"<0>  # DATA XREF: D:800467A4o
-D:800596E4     aGheroinz_0:    .ascii "GheroinZ"<0>     # DATA XREF: D:800467B0o
-D:800596ED                     .byte 0, 0, 0
-D:800596F0     aGjoypadz_0:    .ascii "GjoypadZ"<0>     # DATA XREF: D:800467BCo
-D:800596F9                     .byte 0, 0, 0
-D:800596FC     aGkeyanalysercasez_0:.ascii "GkeyanalysercaseZ"<0>  # DATA XREF: D:800467C8o
-D:8005970E                     .half 0
-D:80059710     aGkeyboltz_0:   .ascii "GkeyboltZ"<0>    # DATA XREF: D:800467D4o
-D:8005971A                     .half 0
-D:8005971C     aGkeycardz_0:   .ascii "GkeycardZ"<0>    # DATA XREF: D:800467E0o
-D:80059726                     .half 0
-D:80059728     aGkeyyalez_0:   .ascii "GkeyyaleZ"<0>    # DATA XREF: D:800467ECo
-D:80059732                     .half 0
-D:80059734     aGknifez_0:     .ascii "GknifeZ"<0>      # DATA XREF: D:800467F8o
-D:8005973C     aGlaserz_0:     .ascii "GlaserZ"<0>      # DATA XREF: D:80046804o
-D:80059744     aGlectrez_0:    .ascii "GlectreZ"<0>     # DATA XREF: D:80046810o
-D:8005974D                     .byte 0, 0, 0
-D:80059750     aGlockexploderz_0:.ascii "GlockexploderZ"<0>  # DATA XREF: D:8004681Co
-D:8005975F                     .byte 0
-D:80059760     aGm16z_0:       .ascii "Gm16Z"<0>        # DATA XREF: D:80046828o
-D:80059766                     .half 0
-D:80059768     aGmapz_0:       .ascii "GmapZ"<0>        # DATA XREF: D:80046834o
-D:8005976E                     .half 0
-D:80059770     aGmicrocameraz_0:.ascii "GmicrocameraZ"<0>  # DATA XREF: D:80046840o
-D:8005977E                     .half 0
-D:80059780     aGmicrocodez_0: .ascii "GmicrocodeZ"<0>  # DATA XREF: D:8004684Co
-D:8005978C     aGmicrofilmz_0: .ascii "GmicrofilmZ"<0>  # DATA XREF: D:80046858o
-D:80059798     aGmoneyz_0:     .ascii "GmoneyZ"<0>      # DATA XREF: D:80046864o
-D:800597A0     aGmp5kz_0:      .ascii "Gmp5kZ"<0>       # DATA XREF: D:80046870o
-D:800597A7                     .byte 0
-D:800597A8     aGmp5ksilz_0:   .ascii "Gmp5ksilZ"<0>    # DATA XREF: D:8004687Co
-D:800597B2                     .half 0
-D:800597B4     aGpitongunz_0:  .ascii "GpitongunZ"<0>   # DATA XREF: D:80046888o
-D:800597BF                     .byte 0
-D:800597C0     aGplansz_0:     .ascii "GplansZ"<0>      # DATA XREF: D:80046894o
-D:800597C8     aGplastiquez_0: .ascii "GplastiqueZ"<0>  # DATA XREF: D:800468A0o
-D:800597D4     aGpolarizedglassesz_0:.ascii "GpolarizedglassesZ"<0>  # DATA XREF: D:800468ACo
-D:800597E7                     .byte 0
-D:800597E8     aGproximityminez_0:.ascii "GproximitymineZ"<0>  # DATA XREF: D:800468B8o
-D:800597F8     aGremoteminez_0:.ascii "GremotemineZ"<0>  # DATA XREF: D:800468C4o
-D:80059805                     .byte 0, 0, 0
-D:80059808     aGrocketlaunchz_0:.ascii "GrocketlaunchZ"<0>  # DATA XREF: D:800468D0o
-D:80059817                     .byte 0
-D:80059818     aGrugerz_0:     .ascii "GrugerZ"<0>      # DATA XREF: D:800468DCo
-D:80059820     aGsafecrackercasez_0:.ascii "GsafecrackercaseZ"<0>  # DATA XREF: D:800468E8o
-D:80059832                     .half 0
-D:80059834     aGshotgunz_0:   .ascii "GshotgunZ"<0>    # DATA XREF: D:800468F4o
-D:8005983E                     .half 0
-D:80059840     aGsilverwppkz_0:.ascii "GsilverwppkZ"<0>  # DATA XREF: D:80046900o
-D:8005984D                     .byte 0, 0, 0
-D:80059850     aGskorpionz_0:  .ascii "GskorpionZ"<0>   # DATA XREF: D:8004690Co
-D:8005985B                     .byte 0
-D:8005985C     aGsniperriflez_0:.ascii "GsniperrifleZ"<0>  # DATA XREF: D:80046918o
-D:8005986A                     .half 0
-D:8005986C     aGspectrez_0:   .ascii "GspectreZ"<0>    # DATA XREF: D:80046924o
-D:80059876                     .half 0
-D:80059878     aGspooltapez_0: .ascii "GspooltapeZ"<0>  # DATA XREF: D:80046930o
-D:80059884     aGspyfilez_0:   .ascii "GspyfileZ"<0>    # DATA XREF: D:8004693Co
-D:8005988E                     .half 0
-D:80059890     aGstafflistz_0: .ascii "GstafflistZ"<0>  # DATA XREF: D:80046948o
-D:8005989C     aGtaserz_0:     .ascii "GtaserZ"<0>      # DATA XREF: D:80046954o
-D:800598A4     aGthrowknifez_0:.ascii "GthrowknifeZ"<0>  # DATA XREF: D:80046960o
-D:800598B1                     .byte 0, 0, 0
-D:800598B4     aGtimedminez_0: .ascii "GtimedmineZ"<0>  # DATA XREF: D:8004696Co
-D:800598C0     aGtriggerz_0:   .ascii "GtriggerZ"<0>    # DATA XREF: D:80046978o
-D:800598CA                     .half 0
-D:800598CC     aGtt33z_0:      .ascii "Gtt33Z"<0>       # DATA XREF: D:80046984o
-D:800598D3                     .byte 0
-D:800598D4     aGuziz_0:       .ascii "GuziZ"<0>        # DATA XREF: D:80046990o
-D:800598DA                     .half 0
-D:800598DC     aGvideotapez_0: .ascii "GvideotapeZ"<0>  # DATA XREF: D:8004699Co
-D:800598E8     aGwatchcommunicatorz_0:.ascii "GwatchcommunicatorZ"<0>
-D:800598E8                                              # DATA XREF: D:800469A8o
-D:800598FC     aGwatchgeigercounterz_0:.ascii "GwatchgeigercounterZ"<0>
-D:800598FC                                              # DATA XREF: D:800469B4o
-D:80059911                     .byte 0, 0, 0
-D:80059914     aGwatchidentifierz_0:.ascii "GwatchidentifierZ"<0>  # DATA XREF: D:800469C0o
-D:80059926                     .half 0
-D:80059928     aGwatchlaserz_0:.ascii "GwatchlaserZ"<0>  # DATA XREF: D:800469CCo
-D:80059935                     .byte 0, 0, 0
-D:80059938     aGwatchmagnetattractz_0:.ascii "GwatchmagnetattractZ"<0>
-D:80059938                                              # DATA XREF: D:800469D8o
-D:8005994D                     .byte 0, 0, 0
-D:80059950     aGwatchmagnetrepelz_0:.ascii "GwatchmagnetrepelZ"<0>  # DATA XREF: D:800469E4o
-D:80059963                     .byte 0
-D:80059964     aGweaponcasez_0:.ascii "GweaponcaseZ"<0>  # DATA XREF: D:800469F0o
-D:80059971                     .byte 0, 0, 0
-D:80059974     aGwppkz_0:      .ascii "GwppkZ"<0>       # DATA XREF: D:800469FCo
-D:8005997B                     .byte 0
-D:8005997C     aGwppksilz_0:   .ascii "GwppksilZ"<0>    # DATA XREF: D:80046A08o
-D:80059986                     .half 0
-D:80059988     aGwristdartz:   .ascii "GwristdartZ"<0>  # DATA XREF: D:80046A14o
-D:80059994     aPicbmz_0:      .ascii "PICBMZ"<0>       # DATA XREF: D:80046A20o
-D:8005999B                     .byte 0
-D:8005999C     aPicbm_nosez_0: .ascii "PICBM_noseZ"<0>  # DATA XREF: D:80046A2Co
-D:800599A8     aPak47magz_0:   .ascii "Pak47magZ"<0>    # DATA XREF: D:80046A38o
-D:800599B2                     .half 0
-D:800599B4     aPalarm1z_0:    .ascii "Palarm1Z"<0>     # DATA XREF: D:80046A44o
-D:800599BD                     .byte 0, 0, 0
-D:800599C0     aPalarm2z_0:    .ascii "Palarm2Z"<0>     # DATA XREF: D:80046A50o
-D:800599C9                     .byte 0, 0, 0
-D:800599CC     aPammo_crate1z_0:.ascii "Pammo_crate1Z"<0>  # DATA XREF: D:80046A5Co
-D:800599DA                     .half 0
-D:800599DC     aPammo_crate2z_0:.ascii "Pammo_crate2Z"<0>  # DATA XREF: D:80046A68o
-D:800599EA                     .half 0
-D:800599EC     aPammo_crate3z_0:.ascii "Pammo_crate3Z"<0>  # DATA XREF: D:80046A74o
-D:800599FA                     .half 0
-D:800599FC     aPammo_crate4z_0:.ascii "Pammo_crate4Z"<0>  # DATA XREF: D:80046A80o
-D:80059A0A                     .half 0
-D:80059A0C     aPammo_crate5z_0:.ascii "Pammo_crate5Z"<0>  # DATA XREF: D:80046A8Co
-D:80059A1A                     .half 0
-D:80059A1C     aPapcz_0:       .ascii "PapcZ"<0>        # DATA XREF: D:80046A98o
-D:80059A22                     .half 0
-D:80059A24     aParchsecdoor1z_0:.ascii "Parchsecdoor1Z"<0>  # DATA XREF: D:80046AA4o
-D:80059A33                     .byte 0
-D:80059A34     aParchsecdoor2z_0:.ascii "Parchsecdoor2Z"<0>  # DATA XREF: D:80046AB0o
-D:80059A43                     .byte 0
-D:80059A44     aParticz_0:     .ascii "ParticZ"<0>      # DATA XREF: D:80046ABCo
-D:80059A4C     aPartictrailerz_0:.ascii "PartictrailerZ"<0>  # DATA XREF: D:80046AC8o
-D:80059A5B                     .byte 0
-D:80059A5C     aPbarricadez_0: .ascii "PbarricadeZ"<0>  # DATA XREF: D:80046AD4o
-D:80059A68     aPbin1z_0:      .ascii "Pbin1Z"<0>       # DATA XREF: D:80046AE0o
-D:80059A6F                     .byte 0
-D:80059A70     aPblotter1z_0:  .ascii "Pblotter1Z"<0>   # DATA XREF: D:80046AECo
-D:80059A7B                     .byte 0
-D:80059A7C     aPbodyarmourz_0:.ascii "PbodyarmourZ"<0>  # DATA XREF: D:80046AF8o
-D:80059A89                     .byte 0, 0, 0
-D:80059A8C     aPbodyarmourvestz_0:.ascii "PbodyarmourvestZ"<0>  # DATA XREF: D:80046B04o
-D:80059A9D                     .byte 0, 0, 0
-D:80059AA0     aPbollardz_0:   .ascii "PbollardZ"<0>    # DATA XREF: D:80046B10o
-D:80059AAA                     .half 0
-D:80059AAC     aPbombz_0:      .ascii "PbombZ"<0>       # DATA XREF: D:80046B1Co
-D:80059AB3                     .byte 0
-D:80059AB4     aPbook1z_0:     .ascii "Pbook1Z"<0>      # DATA XREF: D:80046B28o
-D:80059ABC     aPbookshelf1z_0:.ascii "Pbookshelf1Z"<0>  # DATA XREF: D:80046B34o
-D:80059AC9                     .byte 0, 0, 0
-D:80059ACC     aPborg_cratez_0:.ascii "Pborg_crateZ"<0>  # DATA XREF: D:80046B40o
-D:80059AD9                     .byte 0, 0, 0
-D:80059ADC     aPboxcartridgesz_0:.ascii "PboxcartridgesZ"<0>  # DATA XREF: D:80046B4Co
-D:80059AEC     aPboxes2x4z_0:  .ascii "Pboxes2x4Z"<0>   # DATA XREF: D:80046B58o
-D:80059AF7                     .byte 0
-D:80059AF8     aPboxes3x4z_0:  .ascii "Pboxes3x4Z"<0>   # DATA XREF: D:80046B64o
-D:80059B03                     .byte 0
-D:80059B04     aPboxes4x4z_0:  .ascii "Pboxes4x4Z"<0>   # DATA XREF: D:80046B70o
-D:80059B0F                     .byte 0
-D:80059B10     aPbrakeunitz_0: .ascii "PbrakeunitZ"<0>  # DATA XREF: D:80046B7Co
-D:80059B1C     aPbridge_console1az_0:.ascii "Pbridge_console1aZ"<0>  # DATA XREF: D:80046B88o
-D:80059B2F                     .byte 0
-D:80059B30     aPbridge_console1bz_0:.ascii "Pbridge_console1bZ"<0>  # DATA XREF: D:80046B94o
-D:80059B43                     .byte 0
-D:80059B44     aPbridge_console2az_0:.ascii "Pbridge_console2aZ"<0>  # DATA XREF: D:80046BA0o
-D:80059B57                     .byte 0
-D:80059B58     aPbridge_console2bz_0:.ascii "Pbridge_console2bZ"<0>  # DATA XREF: D:80046BACo
-D:80059B6B                     .byte 0
-D:80059B6C     aPbridge_console3az_0:.ascii "Pbridge_console3aZ"<0>  # DATA XREF: D:80046BB8o
-D:80059B7F                     .byte 0
-D:80059B80     aPbridge_console3bz_0:.ascii "Pbridge_console3bZ"<0>  # DATA XREF: D:80046BC4o
-D:80059B93                     .byte 0
-D:80059B94     aPcarbmwz_0:    .ascii "PcarbmwZ"<0>     # DATA XREF: D:80046BD0o
-D:80059B9D                     .byte 0, 0, 0
-D:80059BA0     aPcard_box1z_0: .ascii "Pcard_box1Z"<0>  # DATA XREF: D:80046BDCo
-D:80059BAC     aPcard_box2z_0: .ascii "Pcard_box2Z"<0>  # DATA XREF: D:80046BE8o
-D:80059BB8     aPcard_box3z_0: .ascii "Pcard_box3Z"<0>  # DATA XREF: D:80046BF4o
-D:80059BC4     aPcard_box4_lgz_0:.ascii "Pcard_box4_lgZ"<0>  # DATA XREF: D:80046C00o
-D:80059BD3                     .byte 0
-D:80059BD4     aPcard_box5_lgz_0:.ascii "Pcard_box5_lgZ"<0>  # DATA XREF: D:80046C0Co
-D:80059BE3                     .byte 0
-D:80059BE4     aPcard_box6_lgz_0:.ascii "Pcard_box6_lgZ"<0>  # DATA XREF: D:80046C18o
-D:80059BF3                     .byte 0
-D:80059BF4     aPcarescortz_0: .ascii "PcarescortZ"<0>  # DATA XREF: D:80046C24o
-D:80059C00     aPcargolfz_0:   .ascii "PcargolfZ"<0>    # DATA XREF: D:80046C30o
-D:80059C0A                     .half 0
-D:80059C0C     aPcarweirdz_0:  .ascii "PcarweirdZ"<0>   # DATA XREF: D:80046C3Co
-D:80059C17                     .byte 0
-D:80059C18     aPcarzilz_0:    .ascii "PcarzilZ"<0>     # DATA XREF: D:80046C48o
-D:80059C21                     .byte 0, 0, 0
-D:80059C24     aPcctvz_0:      .ascii "PcctvZ"<0>       # DATA XREF: D:80046C54o
-D:80059C2B                     .byte 0
-D:80059C2C     aPchraudiotapez_0:.ascii "PchraudiotapeZ"<0>  # DATA XREF: D:80046C60o
-D:80059C3B                     .byte 0
-D:80059C3C     aPchrautoshotz_0:.ascii "PchrautoshotZ"<0>  # DATA XREF: D:80046C6Co
-D:80059C4A                     .half 0
-D:80059C4C     aPchrblackboxz_0:.ascii "PchrblackboxZ"<0>  # DATA XREF: D:80046C78o
-D:80059C5A                     .half 0
-D:80059C5C     aPchrblueprintsz_0:.ascii "PchrblueprintsZ"<0>  # DATA XREF: D:80046C84o
-D:80059C6C     aPchrbombcasez_0:.ascii "PchrbombcaseZ"<0>  # DATA XREF: D:80046C90o
-D:80059C7A                     .half 0
-D:80059C7C     aPchrbombdefuserz_0:.ascii "PchrbombdefuserZ"<0>  # DATA XREF: D:80046C9Co
-D:80059C8D                     .byte 0, 0, 0
-D:80059C90     aPchrbriefcasez_0:.ascii "PchrbriefcaseZ"<0>  # DATA XREF: D:80046CA8o
-D:80059C9F                     .byte 0
-D:80059CA0     aPchrbugz_0:    .ascii "PchrbugZ"<0>     # DATA XREF: D:80046CB4o
-D:80059CA9                     .byte 0, 0, 0
-D:80059CAC     aPchrbugdetectorz_0:.ascii "PchrbugdetectorZ"<0>  # DATA XREF: D:80046CC0o
-D:80059CBD                     .byte 0, 0, 0
-D:80059CC0     aPchrbungeez_0: .ascii "PchrbungeeZ"<0>  # DATA XREF: D:80046CCCo
-D:80059CCC     aPchrcameraz_0: .ascii "PchrcameraZ"<0>  # DATA XREF: D:80046CD8o
-D:80059CD8     aPchrcircuitboardz_0:.ascii "PchrcircuitboardZ"<0>  # DATA XREF: D:80046CE4o
-D:80059CEA                     .half 0
-D:80059CEC     aPchrclipboardz_0:.ascii "PchrclipboardZ"<0>  # DATA XREF: D:80046CF0o
-D:80059CFB                     .byte 0
-D:80059CFC     aPchrcreditcardz_0:.ascii "PchrcreditcardZ"<0>  # DATA XREF: D:80046CFCo
-D:80059D0C     aPchrdarkglassesz_0:.ascii "PchrdarkglassesZ"<0>  # DATA XREF: D:80046D08o
-D:80059D1D                     .byte 0, 0, 0
-D:80059D20     aPchrdatathiefz_0:.ascii "PchrdatathiefZ"<0>  # DATA XREF: D:80046D14o
-D:80059D2F                     .byte 0
-D:80059D30     aPchrdattapez_0:.ascii "PchrdattapeZ"<0>  # DATA XREF: D:80046D20o
-D:80059D3D                     .byte 0, 0, 0
-D:80059D40     aPchrdoordecoderz_0:.ascii "PchrdoordecoderZ"<0>  # DATA XREF: D:80046D2Co
-D:80059D51                     .byte 0, 0, 0
-D:80059D54     aPchrdoorexploderz_0:.ascii "PchrdoorexploderZ"<0>  # DATA XREF: D:80046D38o
-D:80059D66                     .half 0
-D:80059D68     aPchrdossierredz_0:.ascii "PchrdossierredZ"<0>  # DATA XREF: D:80046D44o
-D:80059D78     aPchrdynamitez_0:.ascii "PchrdynamiteZ"<0>  # DATA XREF: D:80046D50o
-D:80059D86                     .half 0
-D:80059D88     aPchrexplosivepenz_0:.ascii "PchrexplosivepenZ"<0>  # DATA XREF: D:80046D5Co
-D:80059D9A                     .half 0
-D:80059D9C     aPchrextinguisherz_0:.ascii "PchrextinguisherZ"<0>  # DATA XREF: D:80046D68o
-D:80059DAE                     .half 0
-D:80059DB0     aPchrfingergunz_0:.ascii "PchrfingergunZ"<0>  # DATA XREF: D:80046D74o
-D:80059DBF                     .byte 0
-D:80059DC0     aPchrflarepistolz_0:.ascii "PchrflarepistolZ"<0>  # DATA XREF: D:80046D80o
-D:80059DD1                     .byte 0, 0, 0
-D:80059DD4     aPchrfnp90z_0:  .ascii "Pchrfnp90Z"<0>   # DATA XREF: D:80046D8Co
-D:80059DDF                     .byte 0
-D:80059DE0     aPchrgaskeyringz_0:.ascii "PchrgaskeyringZ"<0>  # DATA XREF: D:80046D98o
-D:80059DF0     aPchrgoldbarz_0:.ascii "PchrgoldbarZ"<0>  # DATA XREF: D:80046DA4o
-D:80059DFD                     .byte 0, 0, 0
-D:80059E00     aPchrgoldenz_0: .ascii "PchrgoldenZ"<0>  # DATA XREF: D:80046DB0o
-D:80059E0C     aPchrgoldeneyekeyz_0:.ascii "PchrgoldeneyekeyZ"<0>  # DATA XREF: D:80046DBCo
-D:80059E1E                     .half 0
-D:80059E20     aPchrgoldwppkz_0:.ascii "PchrgoldwppkZ"<0>  # DATA XREF: D:80046DC8o
-D:80059E2E                     .half 0
-D:80059E30     aPchrgrenadez_0:.ascii "PchrgrenadeZ"<0>  # DATA XREF: D:80046DD4o
-D:80059E3D                     .byte 0, 0, 0
-D:80059E40     aPchrgrenadelaunchz_0:.ascii "PchrgrenadelaunchZ"<0>  # DATA XREF: D:80046DE0o
-D:80059E53                     .byte 0
-D:80059E54     aPchrgrenaderoundz_0:.ascii "PchrgrenaderoundZ"<0>  # DATA XREF: D:80046DECo
-D:80059E66                     .half 0
-D:80059E68     aPchrheroinz_0: .ascii "PchrheroinZ"<0>  # DATA XREF: D:80046DF8o
-D:80059E74     aPchrkalashz_0: .ascii "PchrkalashZ"<0>  # DATA XREF: D:80046E04o
-D:80059E80     aPchrkeyanalysercasez_0:.ascii "PchrkeyanalysercaseZ"<0>
-D:80059E80                                              # DATA XREF: D:80046E10o
-D:80059E95                     .byte 0, 0, 0
-D:80059E98     aPchrkeyboltz_0:.ascii "PchrkeyboltZ"<0>  # DATA XREF: D:80046E1Co
-D:80059EA5                     .byte 0, 0, 0
-D:80059EA8     aPchrkeyyalez_0:.ascii "PchrkeyyaleZ"<0>  # DATA XREF: D:80046E28o
-D:80059EB5                     .byte 0, 0, 0
-D:80059EB8     aPchrknifez_0:  .ascii "PchrknifeZ"<0>   # DATA XREF: D:80046E34o
-D:80059EC3                     .byte 0
-D:80059EC4     aPchrlaserz_0:  .ascii "PchrlaserZ"<0>   # DATA XREF: D:80046E40o
-D:80059ECF                     .byte 0
-D:80059ED0     aPchrlectrez_0: .ascii "PchrlectreZ"<0>  # DATA XREF: D:80046E4Co
-D:80059EDC     aPchrlockexploderz_0:.ascii "PchrlockexploderZ"<0>  # DATA XREF: D:80046E58o
-D:80059EEE                     .half 0
-D:80059EF0     aPchrm16z_0:    .ascii "Pchrm16Z"<0>     # DATA XREF: D:80046E64o
-D:80059EF9                     .byte 0, 0, 0
-D:80059EFC     aPchrmapz_0:    .ascii "PchrmapZ"<0>     # DATA XREF: D:80046E70o
-D:80059F05                     .byte 0, 0, 0
-D:80059F08     aPchrmicrocameraz_0:.ascii "PchrmicrocameraZ"<0>  # DATA XREF: D:80046E7Co
-D:80059F19                     .byte 0, 0, 0
-D:80059F1C     aPchrmicrocodez_0:.ascii "PchrmicrocodeZ"<0>  # DATA XREF: D:80046E88o
-D:80059F2B                     .byte 0
-D:80059F2C     aPchrmicrofilmz_0:.ascii "PchrmicrofilmZ"<0>  # DATA XREF: D:80046E94o
-D:80059F3B                     .byte 0
-D:80059F3C     aPchrmoneyz_0:  .ascii "PchrmoneyZ"<0>   # DATA XREF: D:80046EA0o
-D:80059F47                     .byte 0
-D:80059F48     aPchrmp5kz_0:   .ascii "Pchrmp5kZ"<0>    # DATA XREF: D:80046EACo
-D:80059F52                     .half 0
-D:80059F54     aPchrmp5ksilz_0:.ascii "Pchrmp5ksilZ"<0>  # DATA XREF: D:80046EB8o
-D:80059F61                     .byte 0, 0, 0
-D:80059F64     aPchrpitongunz_0:.ascii "PchrpitongunZ"<0>  # DATA XREF: D:80046EC4o
-D:80059F72                     .half 0
-D:80059F74     aPchrplansz_0:  .ascii "PchrplansZ"<0>   # DATA XREF: D:80046ED0o
-D:80059F7F                     .byte 0
-D:80059F80     aPchrplastiquez_0:.ascii "PchrplastiqueZ"<0>  # DATA XREF: D:80046EDCo
-D:80059F8F                     .byte 0
-D:80059F90     aPchrpolarizedglassesz_0:.ascii "PchrpolarizedglassesZ"<0>
-D:80059F90                                              # DATA XREF: D:80046EE8o
-D:80059FA6                     .half 0
-D:80059FA8     aPchrproximityminez_0:.ascii "PchrproximitymineZ"<0>  # DATA XREF: D:80046EF4o
-D:80059FBB                     .byte 0
-D:80059FBC     aPchrremoteminez_0:.ascii "PchrremotemineZ"<0>  # DATA XREF: D:80046F00o
-D:80059FCC     aPchrrocketz_0: .ascii "PchrrocketZ"<0>  # DATA XREF: D:80046F0Co
-D:80059FD8     aPchrrocketlaunchz_0:.ascii "PchrrocketlaunchZ"<0>  # DATA XREF: D:80046F18o
-D:80059FEA                     .half 0
-D:80059FEC     aPchrrugerz_0:  .ascii "PchrrugerZ"<0>   # DATA XREF: D:80046F24o
-D:80059FF7                     .byte 0
-D:80059FF8     aPchrsafecrackercasez_0:.ascii "PchrsafecrackercaseZ"<0>
-D:80059FF8                                              # DATA XREF: D:80046F30o
-D:8005A00D                     .byte 0, 0, 0
-D:8005A010     aPchrshotgunz_0:.ascii "PchrshotgunZ"<0>  # DATA XREF: D:80046F3Co
-D:8005A01D                     .byte 0, 0, 0
-D:8005A020     aPchrsilverwppkz_0:.ascii "PchrsilverwppkZ"<0>  # DATA XREF: D:80046F48o
-D:8005A030     aPchrskorpionz_0:.ascii "PchrskorpionZ"<0>  # DATA XREF: D:80046F54o
-D:8005A03E                     .half 0
-D:8005A040     aPchrsniperriflez_0:.ascii "PchrsniperrifleZ"<0>  # DATA XREF: D:80046F60o
-D:8005A051                     .byte 0, 0, 0
-D:8005A054     aPchrspectrez_0:.ascii "PchrspectreZ"<0>  # DATA XREF: D:80046F6Co
-D:8005A061                     .byte 0, 0, 0
-D:8005A064     aPchrspooltapez_0:.ascii "PchrspooltapeZ"<0>  # DATA XREF: D:80046F78o
-D:8005A073                     .byte 0
-D:8005A074     aPchrspyfilez_0:.ascii "PchrspyfileZ"<0>  # DATA XREF: D:80046F84o
-D:8005A081                     .byte 0, 0, 0
-D:8005A084     aPchrstafflistz_0:.ascii "PchrstafflistZ"<0>  # DATA XREF: D:80046F90o
-D:8005A093                     .byte 0
-D:8005A094     aPchrtesttubez_0:.ascii "PchrtesttubeZ"<0>  # DATA XREF: D:80046F9Co
-D:8005A0A2                     .half 0
-D:8005A0A4     aPchrthrowknifez_0:.ascii "PchrthrowknifeZ"<0>  # DATA XREF: D:80046FA8o
-D:8005A0B4     aPchrtimedminez_0:.ascii "PchrtimedmineZ"<0>  # DATA XREF: D:80046FB4o
-D:8005A0C3                     .byte 0
-D:8005A0C4     aPchrtt33z_0:   .ascii "Pchrtt33Z"<0>    # DATA XREF: D:80046FC0o
-D:8005A0CE                     .half 0
-D:8005A0D0     aPchruziz_0:    .ascii "PchruziZ"<0>     # DATA XREF: D:80046FCCo
-D:8005A0D9                     .byte 0, 0, 0
-D:8005A0DC     aPchrvideotapez_0:.ascii "PchrvideotapeZ"<0>  # DATA XREF: D:80046FD8o
-D:8005A0EB                     .byte 0
-D:8005A0EC     aPchrweaponcasez_0:.ascii "PchrweaponcaseZ"<0>  # DATA XREF: D:80046FE4o
-D:8005A0FC     aPchrwppkz_0:   .ascii "PchrwppkZ"<0>    # DATA XREF: D:80046FF0o
-D:8005A106                     .half 0
-D:8005A108     aPchrwppksilz_0:.ascii "PchrwppksilZ"<0>  # DATA XREF: D:80046FFCo
-D:8005A115                     .byte 0, 0, 0
-D:8005A118     aPchrwristdartz_0:.ascii "PchrwristdartZ"<0>  # DATA XREF: D:80047008o
-D:8005A127                     .byte 0
-D:8005A128     aPconsole1z_0:  .ascii "Pconsole1Z"<0>   # DATA XREF: D:80047014o
-D:8005A133                     .byte 0
-D:8005A134     aPconsole2z_0:  .ascii "Pconsole2Z"<0>   # DATA XREF: D:80047020o
-D:8005A13F                     .byte 0
-D:8005A140     aPconsole3z_0:  .ascii "Pconsole3Z"<0>   # DATA XREF: D:8004702Co
-D:8005A14B                     .byte 0
-D:8005A14C     aPconsole_sev2az_0:.ascii "Pconsole_sev2aZ"<0>  # DATA XREF: D:80047038o
-D:8005A15C     aPconsole_sev2bz_0:.ascii "Pconsole_sev2bZ"<0>  # DATA XREF: D:80047044o
-D:8005A16C     aPconsole_sev2cz_0:.ascii "Pconsole_sev2cZ"<0>  # DATA XREF: D:80047050o
-D:8005A17C     aPconsole_sev2dz_0:.ascii "Pconsole_sev2dZ"<0>  # DATA XREF: D:8004705Co
-D:8005A18C     aPconsole_sev_geaz_0:.ascii "Pconsole_sev_GEaZ"<0>  # DATA XREF: D:80047068o
-D:8005A19E                     .half 0
-D:8005A1A0     aPconsole_sev_gebz_0:.ascii "Pconsole_sev_GEbZ"<0>  # DATA XREF: D:80047074o
-D:8005A1B2                     .half 0
-D:8005A1B4     aPconsole_sevaz_0:.ascii "Pconsole_sevaZ"<0>  # DATA XREF: D:80047080o
-D:8005A1C3                     .byte 0
-D:8005A1C4     aPconsole_sevbz_0:.ascii "Pconsole_sevbZ"<0>  # DATA XREF: D:8004708Co
-D:8005A1D3                     .byte 0
-D:8005A1D4     aPconsole_sevcz_0:.ascii "Pconsole_sevcZ"<0>  # DATA XREF: D:80047098o
-D:8005A1E3                     .byte 0
-D:8005A1E4     aPconsole_sevdz_0:.ascii "Pconsole_sevdZ"<0>  # DATA XREF: D:800470A4o
-D:8005A1F3                     .byte 0
-D:8005A1F4     aPcryptdoor1az_0:.ascii "Pcryptdoor1aZ"<0>  # DATA XREF: D:800470B0o
-D:8005A202                     .half 0
-D:8005A204     aPcryptdoor1bz_0:.ascii "Pcryptdoor1bZ"<0>  # DATA XREF: D:800470BCo
-D:8005A212                     .half 0
-D:8005A214     aPcryptdoor2az_0:.ascii "Pcryptdoor2aZ"<0>  # DATA XREF: D:800470C8o
-D:8005A222                     .half 0
-D:8005A224     aPcryptdoor2bz_0:.ascii "Pcryptdoor2bZ"<0>  # DATA XREF: D:800470D4o
-D:8005A232                     .half 0
-D:8005A234     aPcryptdoor3z_0:.ascii "Pcryptdoor3Z"<0>  # DATA XREF: D:800470E0o
-D:8005A241                     .byte 0, 0, 0
-D:8005A244     aPcryptdoor4z_0:.ascii "Pcryptdoor4Z"<0>  # DATA XREF: D:800470ECo
-D:8005A251                     .byte 0, 0, 0
-D:8005A254     aPdamchaindoorz_0:.ascii "PdamchaindoorZ"<0>  # DATA XREF: D:800470F8o
-D:8005A263                     .byte 0
-D:8005A264     aPdamgatedoorz_0:.ascii "PdamgatedoorZ"<0>  # DATA XREF: D:80047104o
-D:8005A272                     .half 0
-D:8005A274     aPdamtundoorz_0:.ascii "PdamtundoorZ"<0>  # DATA XREF: D:80047110o
-D:8005A281                     .byte 0, 0, 0
-D:8005A284     aPdepot_door_steelz_0:.ascii "Pdepot_door_steelZ"<0>  # DATA XREF: D:8004711Co
-D:8005A297                     .byte 0
-D:8005A298     aPdepot_gate_entryz_0:.ascii "Pdepot_gate_entryZ"<0>  # DATA XREF: D:80047128o
-D:8005A2AB                     .byte 0
-D:8005A2AC     aPdesk1z_0:     .ascii "Pdesk1Z"<0>      # DATA XREF: D:80047134o
-D:8005A2B4     aPdesk2z_0:     .ascii "Pdesk2Z"<0>      # DATA XREF: D:80047140o
-D:8005A2BC     aPdesk_arecibo1z_0:.ascii "Pdesk_arecibo1Z"<0>  # DATA XREF: D:8004714Co
-D:8005A2CC     aPdesk_lamp2z_0:.ascii "Pdesk_lamp2Z"<0>  # DATA XREF: D:80047158o
-D:8005A2D9                     .byte 0, 0, 0
-D:8005A2DC     aPdest_enginez_0:.ascii "Pdest_engineZ"<0>  # DATA XREF: D:80047164o
-D:8005A2EA                     .half 0
-D:8005A2EC     aPdest_exocetz_0:.ascii "Pdest_exocetZ"<0>  # DATA XREF: D:80047170o
-D:8005A2FA                     .half 0
-D:8005A2FC     aPdest_gunz_0:  .ascii "Pdest_gunZ"<0>   # DATA XREF: D:8004717Co
-D:8005A307                     .byte 0
-D:8005A308     aPdest_harpoonz_0:.ascii "Pdest_harpoonZ"<0>  # DATA XREF: D:80047188o
-D:8005A317                     .byte 0
-D:8005A318     aPdest_seawolfz_0:.ascii "Pdest_seawolfZ"<0>  # DATA XREF: D:80047194o
-D:8005A327                     .byte 0
-D:8005A328     aPdisc_readerz_0:.ascii "Pdisc_readerZ"<0>  # DATA XREF: D:800471A0o
-D:8005A336                     .half 0
-D:8005A338     aPdisk_drive1z_0:.ascii "Pdisk_drive1Z"<0>  # DATA XREF: D:800471ACo
-D:8005A346                     .half 0
-D:8005A348     aPdoor_azt_chairz_0:.ascii "Pdoor_azt_chairZ"<0>  # DATA XREF: D:800471B8o
-D:8005A359                     .byte 0, 0, 0
-D:8005A35C     aPdoor_azt_deskz_0:.ascii "Pdoor_azt_deskZ"<0>  # DATA XREF: D:800471C4o
-D:8005A36C     aPdoor_azt_desk_topz_0:.ascii "Pdoor_azt_desk_topZ"<0>
-D:8005A36C                                              # DATA XREF: D:800471D0o
-D:8005A380     aPdoor_aztecz_0:.ascii "Pdoor_aztecZ"<0>  # DATA XREF: D:800471DCo
-D:8005A38D                     .byte 0, 0, 0
-D:8005A390     aPdoor_dest1z_0:.ascii "Pdoor_dest1Z"<0>  # DATA XREF: D:800471E8o
-D:8005A39D                     .byte 0, 0, 0
-D:8005A3A0     aPdoor_dest2z_0:.ascii "Pdoor_dest2Z"<0>  # DATA XREF: D:800471F4o
-D:8005A3AD                     .byte 0, 0, 0
-D:8005A3B0     aPdoor_eyelidz_0:.ascii "Pdoor_eyelidZ"<0>  # DATA XREF: D:80047200o
-D:8005A3BE                     .half 0
-D:8005A3C0     aPdoor_irisz_0: .ascii "Pdoor_irisZ"<0>  # DATA XREF: D:8004720Co
-D:8005A3CC     aPdoor_mfz_0:   .ascii "Pdoor_mfZ"<0>    # DATA XREF: D:80047218o
-D:8005A3D6                     .half 0
-D:8005A3D8     aPdoor_roller1z_0:.ascii "Pdoor_roller1Z"<0>  # DATA XREF: D:80047224o
-D:8005A3E7                     .byte 0
-D:8005A3E8     aPdoor_roller2z_0:.ascii "Pdoor_roller2Z"<0>  # DATA XREF: D:80047230o
-D:8005A3F7                     .byte 0
-D:8005A3F8     aPdoor_roller3z_0:.ascii "Pdoor_roller3Z"<0>  # DATA XREF: D:8004723Co
-D:8005A407                     .byte 0
-D:8005A408     aPdoor_roller4z_0:.ascii "Pdoor_roller4Z"<0>  # DATA XREF: D:80047248o
-D:8005A417                     .byte 0
-D:8005A418     aPdoor_rollertrainz_0:.ascii "Pdoor_rollertrainZ"<0>  # DATA XREF: D:80047254o
-D:8005A42B                     .byte 0
-D:8005A42C     aPdoor_st_arec1z_0:.ascii "Pdoor_st_arec1Z"<0>  # DATA XREF: D:80047260o
-D:8005A43C     aPdoor_st_arec2z_0:.ascii "Pdoor_st_arec2Z"<0>  # DATA XREF: D:8004726Co
-D:8005A44C     aPdoor_winz_0:  .ascii "Pdoor_winZ"<0>   # DATA XREF: D:80047278o
-D:8005A457                     .byte 0
-D:8005A458     aPdoorconsolez_0:.ascii "PdoorconsoleZ"<0>  # DATA XREF: D:80047284o
-D:8005A466                     .half 0
-D:8005A468     aPdoorpanelz_0: .ascii "PdoorpanelZ"<0>  # DATA XREF: D:80047290o
-D:8005A474     aPdoorprison1z_0:.ascii "Pdoorprison1Z"<0>  # DATA XREF: D:8004729Co
-D:8005A482                     .half 0
-D:8005A484     aPdoorstatgatez_0:.ascii "PdoorstatgateZ"<0>  # DATA XREF: D:800472A8o
-D:8005A493                     .byte 0
-D:8005A494     aPexplosionbitz_0:.ascii "PexplosionbitZ"<0>  # DATA XREF: D:800472B4o
-D:8005A4A3                     .byte 0
-D:8005A4A4     aPfiling_cabinet1z_0:.ascii "Pfiling_cabinet1Z"<0>  # DATA XREF: D:800472C0o
-D:8005A4B6                     .half 0
-D:8005A4B8     aPflagz_0:      .ascii "PflagZ"<0>       # DATA XREF: D:800472CCo
-D:8005A4BF                     .byte 0
-D:8005A4C0     aPfloppyz_0:    .ascii "PfloppyZ"<0>     # DATA XREF: D:800472D8o
-D:8005A4C9                     .byte 0, 0, 0
-D:8005A4CC     aPfnp90magz_0:  .ascii "Pfnp90magZ"<0>   # DATA XREF: D:800472E4o
-D:8005A4D7                     .byte 0
-D:8005A4D8     aPgas_plant_met1_do1z_0:.ascii "Pgas_plant_met1_do1Z"<0>
-D:8005A4D8                                              # DATA XREF: D:800472F0o
-D:8005A4ED                     .byte 0, 0, 0
-D:8005A4F0     aPgas_plant_sw2_do1z_0:.ascii "Pgas_plant_sw2_do1Z"<0>
-D:8005A4F0                                              # DATA XREF: D:800472FCo
-D:8005A504     aPgas_plant_sw3_do1z_0:.ascii "Pgas_plant_sw3_do1Z"<0>
-D:8005A504                                              # DATA XREF: D:80047308o
-D:8005A518     aPgas_plant_sw4_do1z_0:.ascii "Pgas_plant_sw4_do1Z"<0>
-D:8005A518                                              # DATA XREF: D:80047314o
-D:8005A52C     aPgas_plant_sw_do1z_0:.ascii "Pgas_plant_sw_do1Z"<0>  # DATA XREF: D:80047320o
-D:8005A53F                     .byte 0
-D:8005A540     aPgas_plant_wc_cub1z_0:.ascii "Pgas_plant_wc_cub1Z"<0>
-D:8005A540                                              # DATA XREF: D:8004732Co
-D:8005A554     aPgasbarrelz_0: .ascii "PgasbarrelZ"<0>  # DATA XREF: D:80047338o
-D:8005A560     aPgasbarrelsz_0:.ascii "PgasbarrelsZ"<0>  # DATA XREF: D:80047344o
-D:8005A56D                     .byte 0, 0, 0
-D:8005A570     aPgasplant_clear_doorz_0:.ascii "Pgasplant_clear_doorZ"<0>
-D:8005A570                                              # DATA XREF: D:80047350o
-D:8005A586                     .half 0
-D:8005A588     aPgastankz_0:   .ascii "PgastankZ"<0>    # DATA XREF: D:8004735Co
-D:8005A592                     .half 0
-D:8005A594     aPglassware1z_0:.ascii "Pglassware1Z"<0>  # DATA XREF: D:80047368o
-D:8005A5A1                     .byte 0, 0, 0
-D:8005A5A4     aPglassware2z_0:.ascii "Pglassware2Z"<0>  # DATA XREF: D:80047374o
-D:8005A5B1                     .byte 0, 0, 0
-D:8005A5B4     aPglassware3z_0:.ascii "Pglassware3Z"<0>  # DATA XREF: D:80047380o
-D:8005A5C1                     .byte 0, 0, 0
-D:8005A5C4     aPglassware4z_0:.ascii "Pglassware4Z"<0>  # DATA XREF: D:8004738Co
-D:8005A5D1                     .byte 0, 0, 0
-D:8005A5D4     aPgoldeneyelogoz_0:.ascii "PgoldeneyelogoZ"<0>  # DATA XREF: D:80047398o
-D:8005A5E4     aPgoldenshellsz_0:.ascii "PgoldenshellsZ"<0>  # DATA XREF: D:800473A4o
-D:8005A5F3                     .byte 0
-D:8005A5F4     aPgroundgunz_0: .ascii "PgroundgunZ"<0>  # DATA XREF: D:800473B0o
-D:8005A600     aPgun_runway1z_0:.ascii "Pgun_runway1Z"<0>  # DATA XREF: D:800473BCo
-D:8005A60E                     .half 0
-D:8005A610     aPhatberetz_0:  .ascii "PhatberetZ"<0>   # DATA XREF: D:800473C8o
-D:8005A61B                     .byte 0
-D:8005A61C     aPhatberetbluez_0:.ascii "PhatberetblueZ"<0>  # DATA XREF: D:800473D4o
-D:8005A62B                     .byte 0
-D:8005A62C     aPhatberetredz_0:.ascii "PhatberetredZ"<0>  # DATA XREF: D:800473E0o
-D:8005A63A                     .half 0
-D:8005A63C     aPhatchboltz_0: .ascii "PhatchboltZ"<0>  # DATA XREF: D:800473ECo
-D:8005A648     aPhatchdoorz_0: .ascii "PhatchdoorZ"<0>  # DATA XREF: D:800473F8o
-D:8005A654     aPhatchsevxz_0: .ascii "PhatchsevxZ"<0>  # DATA XREF: D:80047404o
-D:8005A660     aPhatfurryz_0:  .ascii "PhatfurryZ"<0>   # DATA XREF: D:80047410o
-D:8005A66B                     .byte 0
-D:8005A66C     aPhatfurryblackz_0:.ascii "PhatfurryblackZ"<0>  # DATA XREF: D:8004741Co
-D:8005A67C     aPhatfurrybrownz_0:.ascii "PhatfurrybrownZ"<0>  # DATA XREF: D:80047428o
-D:8005A68C     aPhathelmetz_0: .ascii "PhathelmetZ"<0>  # DATA XREF: D:80047434o
-D:8005A698     aPhathelmetgreyz_0:.ascii "PhathelmetgreyZ"<0>  # DATA XREF: D:80047440o
-D:8005A6A8     aPhatmoonz_0:   .ascii "PhatmoonZ"<0>    # DATA XREF: D:8004744Co
-D:8005A6B2                     .half 0
-D:8005A6B4     aPhatpeakedz_0: .ascii "PhatpeakedZ"<0>  # DATA XREF: D:80047458o
-D:8005A6C0     aPhattbirdz_0:  .ascii "PhattbirdZ"<0>   # DATA XREF: D:80047464o
-D:8005A6CB                     .byte 0
-D:8005A6CC     aPhattbirdbrownz_0:.ascii "PhattbirdbrownZ"<0>  # DATA XREF: D:80047470o
-D:8005A6DC     aPhelicopterz_0:.ascii "PhelicopterZ"<0>  # DATA XREF: D:8004747Co
-D:8005A6E9                     .byte 0, 0, 0
-D:8005A6EC     aPhindz_0:      .ascii "PhindZ"<0>       # DATA XREF: D:80047488o
-D:8005A6F3                     .byte 0
-D:8005A6F4     aPjeepz_0:      .ascii "PjeepZ"<0>       # DATA XREF: D:80047494o
-D:8005A6FB                     .byte 0
-D:8005A6FC     aPjerry_can1z_0:.ascii "Pjerry_can1Z"<0>  # DATA XREF: D:800474A0o
-D:8005A709                     .byte 0, 0, 0
-D:8005A70C     aPjungle3_treez_0:.ascii "Pjungle3_treeZ"<0>  # DATA XREF: D:800474ACo
-D:8005A71B                     .byte 0
-D:8005A71C     aPjungle5_treez_0:.ascii "Pjungle5_treeZ"<0>  # DATA XREF: D:800474B8o
-D:8005A72B                     .byte 0
-D:8005A72C     aPkey_holderz_0:.ascii "Pkey_holderZ"<0>  # DATA XREF: D:800474C4o
-D:8005A739                     .byte 0, 0, 0
-D:8005A73C     aPkeyboard1z_0: .ascii "Pkeyboard1Z"<0>  # DATA XREF: D:800474D0o
-D:8005A748     aPkit_units1z_0:.ascii "Pkit_units1Z"<0>  # DATA XREF: D:800474DCo
-D:8005A755                     .byte 0, 0, 0
-D:8005A758     aPlabbenchz_0:  .ascii "PlabbenchZ"<0>   # DATA XREF: D:800474E8o
-D:8005A763                     .byte 0
-D:8005A764     aPlandminez_0:  .ascii "PlandmineZ"<0>   # DATA XREF: D:800474F4o
-D:8005A76F                     .byte 0
-D:8005A770     aPlegalpagez_0: .ascii "PlegalpageZ"<0>  # DATA XREF: D:80047500o
-D:8005A77C     aPletter_tray1z_0:.ascii "Pletter_tray1Z"<0>  # DATA XREF: D:8004750Co
-D:8005A78B                     .byte 0
-D:8005A78C     aPlocker3z_0:   .ascii "Plocker3Z"<0>    # DATA XREF: D:80047518o
-D:8005A796                     .half 0
-D:8005A798     aPlocker4z_0:   .ascii "Plocker4Z"<0>    # DATA XREF: D:80047524o
-D:8005A7A2                     .half 0
-D:8005A7A4     aPm16magz_0:    .ascii "Pm16magZ"<0>     # DATA XREF: D:80047530o
-D:8005A7AD                     .byte 0, 0, 0
-D:8005A7B0     aPmagnumshellsz_0:.ascii "PmagnumshellsZ"<0>  # DATA XREF: D:8004753Co
-D:8005A7BF                     .byte 0
-D:8005A7C0     aPmainframe1z_0:.ascii "Pmainframe1Z"<0>  # DATA XREF: D:80047548o
-D:8005A7CD                     .byte 0, 0, 0
-D:8005A7D0     aPmainframe2z_0:.ascii "Pmainframe2Z"<0>  # DATA XREF: D:80047554o
-D:8005A7DD                     .byte 0, 0, 0
-D:8005A7E0     aPmetal_chair1z_0:.ascii "Pmetal_chair1Z"<0>  # DATA XREF: D:80047560o
-D:8005A7EF                     .byte 0
-D:8005A7F0     aPmetal_crate1z_0:.ascii "Pmetal_crate1Z"<0>  # DATA XREF: D:8004756Co
-D:8005A7FF                     .byte 0
-D:8005A800     aPmetal_crate2z_0:.ascii "Pmetal_crate2Z"<0>  # DATA XREF: D:80047578o
-D:8005A80F                     .byte 0
-D:8005A810     aPmetal_crate3z_0:.ascii "Pmetal_crate3Z"<0>  # DATA XREF: D:80047584o
-D:8005A81F                     .byte 0
-D:8005A820     aPmetal_crate4z_0:.ascii "Pmetal_crate4Z"<0>  # DATA XREF: D:80047590o
-D:8005A82F                     .byte 0
-D:8005A830     aPmilcopterz_0: .ascii "PmilcopterZ"<0>  # DATA XREF: D:8004759Co
-D:8005A83C     aPmiltruckz_0:  .ascii "PmiltruckZ"<0>   # DATA XREF: D:800475A8o
-D:8005A847                     .byte 0
-D:8005A848     aPmissile_rack2z_0:.ascii "Pmissile_rack2Z"<0>  # DATA XREF: D:800475B4o
-D:8005A858     aPmissile_rackz_0:.ascii "Pmissile_rackZ"<0>  # DATA XREF: D:800475C0o
-D:8005A867                     .byte 0
-D:8005A868     aPmodemboxz_0:  .ascii "PmodemboxZ"<0>   # DATA XREF: D:800475CCo
-D:8005A873                     .byte 0
-D:8005A874     aPmotorbikez_0: .ascii "PmotorbikeZ"<0>  # DATA XREF: D:800475D8o
-D:8005A880     aPmp5kmagz_0:   .ascii "Pmp5kmagZ"<0>    # DATA XREF: D:800475E4o
-D:8005A88A                     .half 0
-D:8005A88C     aPnintendologoz_0:.ascii "PnintendologoZ"<0>  # DATA XREF: D:800475F0o
-D:8005A89B                     .byte 0
-D:8005A89C     aPoil_drum1z_0: .ascii "Poil_drum1Z"<0>  # DATA XREF: D:800475FCo
-D:8005A8A8     aPoil_drum2z_0: .ascii "Poil_drum2Z"<0>  # DATA XREF: D:80047608o
-D:8005A8B4     aPoil_drum3z_0: .ascii "Poil_drum3Z"<0>  # DATA XREF: D:80047614o
-D:8005A8C0     aPoil_drum5z_0: .ascii "Poil_drum5Z"<0>  # DATA XREF: D:80047620o
-D:8005A8CC     aPoil_drum6z_0: .ascii "Poil_drum6Z"<0>  # DATA XREF: D:8004762Co
-D:8005A8D8     aPoil_drum7z_0: .ascii "Poil_drum7Z"<0>  # DATA XREF: D:80047638o
-D:8005A8E4     aPpadlockz_0:   .ascii "PpadlockZ"<0>    # DATA XREF: D:80047644o
-D:8005A8EE                     .half 0
-D:8005A8F0     aPpalmz_0:      .ascii "PpalmZ"<0>       # DATA XREF: D:80047650o
-D:8005A8F7                     .byte 0
-D:8005A8F8     aPpalmtreez_0:  .ascii "PpalmtreeZ"<0>   # DATA XREF: D:8004765Co
-D:8005A903                     .byte 0
-D:8005A904     aPphone1z_0:    .ascii "Pphone1Z"<0>     # DATA XREF: D:80047668o
-D:8005A90D                     .byte 0, 0, 0
-D:8005A910     aPplanez_0:     .ascii "PplaneZ"<0>      # DATA XREF: D:80047674o
-D:8005A918     aPplant11z_0:   .ascii "Pplant11Z"<0>    # DATA XREF: D:80047680o
-D:8005A922                     .half 0
-D:8005A924     aPplant1z_0:    .ascii "Pplant1Z"<0>     # DATA XREF: D:8004768Co
-D:8005A92D                     .byte 0, 0, 0
-D:8005A930     aPplant2z_0:    .ascii "Pplant2Z"<0>     # DATA XREF: D:80047698o
-D:8005A939                     .byte 0, 0, 0
-D:8005A93C     aPplant2bz_0:   .ascii "Pplant2bZ"<0>    # DATA XREF: D:800476A4o
-D:8005A946                     .half 0
-D:8005A948     aPplant3z_0:    .ascii "Pplant3Z"<0>     # DATA XREF: D:800476B0o
-D:8005A951                     .byte 0, 0, 0
-D:8005A954     aPradio_unit1z_0:.ascii "Pradio_unit1Z"<0>  # DATA XREF: D:800476BCo
-D:8005A962                     .half 0
-D:8005A964     aPradio_unit2z_0:.ascii "Pradio_unit2Z"<0>  # DATA XREF: D:800476C8o
-D:8005A972                     .half 0
-D:8005A974     aPradio_unit3z_0:.ascii "Pradio_unit3Z"<0>  # DATA XREF: D:800476D4o
-D:8005A982                     .half 0
-D:8005A984     aPradio_unit4z_0:.ascii "Pradio_unit4Z"<0>  # DATA XREF: D:800476E0o
-D:8005A992                     .half 0
-D:8005A994     aProofgunz_0:   .ascii "ProofgunZ"<0>    # DATA XREF: D:800476ECo
-D:8005A99E                     .half 0
-D:8005A9A0     aPsafez_0:      .ascii "PsafeZ"<0>       # DATA XREF: D:800476F8o
-D:8005A9A7                     .byte 0
-D:8005A9A8     aPsafedoorz_0:  .ascii "PsafedoorZ"<0>   # DATA XREF: D:80047704o
-D:8005A9B3                     .byte 0
-D:8005A9B4     aPsat1_reflectz_0:.ascii "Psat1_reflectZ"<0>  # DATA XREF: D:80047710o
-D:8005A9C3                     .byte 0
-D:8005A9C4     aPsatboxz_0:    .ascii "PsatboxZ"<0>     # DATA XREF: D:8004771Co
-D:8005A9CD                     .byte 0, 0, 0
-D:8005A9D0     aPsatdishz_0:   .ascii "PsatdishZ"<0>    # DATA XREF: D:80047728o
-D:8005A9DA                     .half 0
-D:8005A9DC     aPsec_panelz_0: .ascii "Psec_panelZ"<0>  # DATA XREF: D:80047734o
-D:8005A9E8     aPsev_door3z_0: .ascii "Psev_door3Z"<0>  # DATA XREF: D:80047740o
-D:8005A9F4     aPsev_door3_windz_0:.ascii "Psev_door3_windZ"<0>  # DATA XREF: D:8004774Co
-D:8005AA05                     .byte 0, 0, 0
-D:8005AA08     aPsev_door4_windz_0:.ascii "Psev_door4_windZ"<0>  # DATA XREF: D:80047758o
-D:8005AA19                     .byte 0, 0, 0
-D:8005AA1C     aPsev_doorz_0:  .ascii "Psev_doorZ"<0>   # DATA XREF: D:80047764o
-D:8005AA27                     .byte 0
-D:8005AA28     aPsev_door_v1z_0:.ascii "Psev_door_v1Z"<0>  # DATA XREF: D:80047770o
-D:8005AA36                     .half 0
-D:8005AA38     aPsev_trislidez_0:.ascii "Psev_trislideZ"<0>  # DATA XREF: D:8004777Co
-D:8005AA47                     .byte 0
-D:8005AA48     aPsevdishz_0:   .ascii "PsevdishZ"<0>    # DATA XREF: D:80047788o
-D:8005AA52                     .half 0
-D:8005AA54     aPsevdoormetslidez_0:.ascii "PsevdoormetslideZ"<0>  # DATA XREF: D:80047794o
-D:8005AA66                     .half 0
-D:8005AA68     aPsevdoornowindz_0:.ascii "PsevdoornowindZ"<0>  # DATA XREF: D:800477A0o
-D:8005AA78     aPsevdoorwindz_0:.ascii "PsevdoorwindZ"<0>  # DATA XREF: D:800477ACo
-D:8005AA86                     .half 0
-D:8005AA88     aPsevdoorwoodz_0:.ascii "PsevdoorwoodZ"<0>  # DATA XREF: D:800477B8o
-D:8005AA96                     .half 0
-D:8005AA98     aPshuttlez_0:   .ascii "PshuttleZ"<0>    # DATA XREF: D:800477C4o
-D:8005AAA2                     .half 0
-D:8005AAA4     aPshuttle_door_lz_0:.ascii "Pshuttle_door_lZ"<0>  # DATA XREF: D:800477D0o
-D:8005AAB5                     .byte 0, 0, 0
-D:8005AAB8     aPshuttle_door_rz_0:.ascii "Pshuttle_door_rZ"<0>  # DATA XREF: D:800477DCo
-D:8005AAC9                     .byte 0, 0, 0
-D:8005AACC     aPsilencerz_0:  .ascii "PsilencerZ"<0>   # DATA XREF: D:800477E8o
-D:8005AAD7                     .byte 0
-D:8005AAD8     aPsilo_lift_doorz_0:.ascii "Psilo_lift_doorZ"<0>  # DATA XREF: D:800477F4o
-D:8005AAE9                     .byte 0, 0, 0
-D:8005AAEC     aPsilotopdoorz_0:.ascii "PsilotopdoorZ"<0>  # DATA XREF: D:80047800o
-D:8005AAFA                     .half 0
-D:8005AAFC     aPskorpionmagz_0:.ascii "PskorpionmagZ"<0>  # DATA XREF: D:8004780Co
-D:8005AB0A                     .half 0
-D:8005AB0C     aPspectremagz_0:.ascii "PspectremagZ"<0>  # DATA XREF: D:80047818o
-D:8005AB19                     .byte 0, 0, 0
-D:8005AB1C     aPspeedboatz_0: .ascii "PspeedboatZ"<0>  # DATA XREF: D:80047824o
-D:8005AB28     aPst_pete_room_1iz_0:.ascii "Pst_pete_room_1iZ"<0>  # DATA XREF: D:80047830o
-D:8005AB3A                     .half 0
-D:8005AB3C     aPst_pete_room_2iz_0:.ascii "Pst_pete_room_2iZ"<0>  # DATA XREF: D:8004783Co
-D:8005AB4E                     .half 0
-D:8005AB50     aPst_pete_room_3tz_0:.ascii "Pst_pete_room_3tZ"<0>  # DATA XREF: D:80047848o
-D:8005AB62                     .half 0
-D:8005AB64     aPst_pete_room_5cz_0:.ascii "Pst_pete_room_5cZ"<0>  # DATA XREF: D:80047854o
-D:8005AB76                     .half 0
-D:8005AB78     aPst_pete_room_6cz_0:.ascii "Pst_pete_room_6cZ"<0>  # DATA XREF: D:80047860o
-D:8005AB8A                     .half 0
-D:8005AB8C     aPsteel_door1z_0:.ascii "Psteel_door1Z"<0>  # DATA XREF: D:8004786Co
-D:8005AB9A                     .half 0
-D:8005AB9C     aPsteel_door2z_0:.ascii "Psteel_door2Z"<0>  # DATA XREF: D:80047878o
-D:8005ABAA                     .half 0
-D:8005ABAC     aPsteel_door2bz_0:.ascii "Psteel_door2bZ"<0>  # DATA XREF: D:80047884o
-D:8005ABBB                     .byte 0
-D:8005ABBC     aPsteel_door3z_0:.ascii "Psteel_door3Z"<0>  # DATA XREF: D:80047890o
-D:8005ABCA                     .half 0
-D:8005ABCC     aPstool1z_0:    .ascii "Pstool1Z"<0>     # DATA XREF: D:8004789Co
-D:8005ABD5                     .byte 0, 0, 0
-D:8005ABD8     aPswipe_card2z_0:.ascii "Pswipe_card2Z"<0>  # DATA XREF: D:800478A8o
-D:8005ABE6                     .half 0
-D:8005ABE8     aPswivel_chair1z_0:.ascii "Pswivel_chair1Z"<0>  # DATA XREF: D:800478B4o
-D:8005ABF8     aPtankz_0:      .ascii "PtankZ"<0>       # DATA XREF: D:800478C0o
-D:8005ABFF                     .byte 0
-D:8005AC00     aPtigerz_0:     .ascii "PtigerZ"<0>      # DATA XREF: D:800478CCo
-D:8005AC08     aPtorpedo_rackz_0:.ascii "Ptorpedo_rackZ"<0>  # DATA XREF: D:800478D8o
-D:8005AC17                     .byte 0
-D:8005AC18     aPtrain_door2z_0:.ascii "Ptrain_door2Z"<0>  # DATA XREF: D:800478E4o
-D:8005AC26                     .half 0
-D:8005AC28     aPtrain_door3z_0:.ascii "Ptrain_door3Z"<0>  # DATA XREF: D:800478F0o
-D:8005AC36                     .half 0
-D:8005AC38     aPtrain_doorz_0:.ascii "Ptrain_doorZ"<0>  # DATA XREF: D:800478FCo
-D:8005AC45                     .byte 0, 0, 0
-D:8005AC48     aPtrainextdoorz_0:.ascii "PtrainextdoorZ"<0>  # DATA XREF: D:80047908o
-D:8005AC57                     .byte 0
-D:8005AC58     aPtt33magz_0:   .ascii "Ptt33magZ"<0>    # DATA XREF: D:80047914o
-D:8005AC62                     .half 0
-D:8005AC64     aPtuning_console1z_0:.ascii "Ptuning_console1Z"<0><0><0>
-D:8005AC64                                              # DATA XREF: D:80047920o
-D:8005AC78     aPtv1z_0:       .ascii "Ptv1Z"<0><0><0>  # DATA XREF: D:8004792Co
-D:8005AC80     aPtv4screenz_0: .ascii "Ptv4screenZ"<0>  # DATA XREF: D:80047938o
-D:8005AC8C     aPtv_holderz_0: .ascii "Ptv_holderZ"<0>  # DATA XREF: D:80047944o
-D:8005AC98     aPtvscreenz_1:  .ascii "PtvscreenZ"<0><0>  # DATA XREF: D:80047950o
-D:8005ACA4     aPuzimagz_0:    .ascii "PuzimagZ"<0><0><0><0>  # DATA XREF: D:8004795Co
-D:8005ACB0     aPvertdoorz_1:  .ascii "PvertdoorZ"<0><0>  # DATA XREF: D:80047968o
-D:8005ACBC     aPwalletbondz_0:.ascii "PwalletbondZ"<0><0><0><0>  # DATA XREF: D:80047974o
-D:8005ACCC     aPwindowz_0:    .ascii "PwindowZ"<0><0><0><0>  # DATA XREF: D:80047980o
-D:8005ACD8     aPwindow_cor11z_1:.ascii "Pwindow_cor11Z"<0><0>  # DATA XREF: D:8004798Co
-D:8005ACE8     aPwindow_lib_lg1z_0:.ascii "Pwindow_lib_lg1Z"<0><0><0><0>
-D:8005ACE8                                              # DATA XREF: D:80047998o
-D:8005ACFC     aPwindow_lib_sm1z_0:.ascii "Pwindow_lib_sm1Z"<0><0><0><0>
-D:8005ACFC                                              # DATA XREF: D:800479A4o
-D:8005AD10     aPwood_lg_crate1z_0:.ascii "Pwood_lg_crate1Z"<0><0><0><0>
-D:8005AD10                                              # DATA XREF: D:800479B0o
-D:8005AD24     aPwood_lg_crate2z_0:.ascii "Pwood_lg_crate2Z"<0><0><0><0>
-D:8005AD24                                              # DATA XREF: D:800479BCo
-D:8005AD38     aPwood_md_crate3z_0:.ascii "Pwood_md_crate3Z"<0><0><0><0>
-D:8005AD38                                              # DATA XREF: D:800479C8o
-D:8005AD4C     aPwood_sm_crate4z_0:.ascii "Pwood_sm_crate4Z"<0><0><0><0>
-D:8005AD4C                                              # DATA XREF: D:800479D4o
-D:8005AD60     aPwood_sm_crate5z_0:.ascii "Pwood_sm_crate5Z"<0><0><0><0>
-D:8005AD60                                              # DATA XREF: D:800479E0o
-D:8005AD74     aPwood_sm_crate6z_0:.ascii "Pwood_sm_crate6Z"<0><0><0><0>
-D:8005AD74                                              # DATA XREF: D:800479ECo
-D:8005AD88     aPwooden_table1z_0:.ascii "Pwooden_table1Z"<0>  # DATA XREF: D:800479F8o
-D:8005AD98     aPwppkmagz_0:   .ascii "PwppkmagZ"<0><0><0>  # DATA XREF: D:80047A04o
-D:8005ADA4     aTbg_ame_all_p_stanz_2:.ascii "Tbg_ame_all_p_stanZ"<0>
-D:8005ADA4                                              # DATA XREF: D:80047A10o
-D:8005ADB8     aTbg_arch_all_p_stanz_0:.ascii "Tbg_arch_all_p_stanZ"<0><0><0><0>
-D:8005ADB8                                              # DATA XREF: D:80047A1Co
-D:8005ADD0     aTbg_arec_all_p_stanz_0:.ascii "Tbg_arec_all_p_stanZ"<0><0><0><0>
-D:8005ADD0                                              # DATA XREF: D:80047A28o
-D:8005ADE8     aTbg_ark_all_p_stanz_0:.ascii "Tbg_ark_all_p_stanZ"<0>
-D:8005ADE8                                              # DATA XREF: D:80047A34o
-D:8005ADFC     aTbg_ash_all_p_stanz:.ascii "Tbg_ash_all_p_stanZ"<0>  # DATA XREF: D:80047A40o
-D:8005AE10     aTbg_azt_all_p_stanz_0:.ascii "Tbg_azt_all_p_stanZ"<0>
-D:8005AE10                                              # DATA XREF: D:80047A4Co
-D:8005AE24     aTbg_cat_all_p_stanz_0:.ascii "Tbg_cat_all_p_stanZ"<0>
-D:8005AE24                                              # DATA XREF: D:80047A58o
-D:8005AE38     aTbg_cave_all_p_stanz_0:.ascii "Tbg_cave_all_p_stanZ"<0><0><0><0>
-D:8005AE38                                              # DATA XREF: D:80047A64o
-D:8005AE50     aTbg_crad_all_p_stanz_0:.ascii "Tbg_crad_all_p_stanZ"<0><0><0><0>
-D:8005AE50                                              # DATA XREF: D:80047A70o
-D:8005AE68     aTbg_cryp_all_p_stanz_0:.ascii "Tbg_cryp_all_p_stanZ"<0><0><0><0>
-D:8005AE68                                              # DATA XREF: D:80047A7Co
-D:8005AE80     aTbg_dam_all_p_stanz_0:.ascii "Tbg_dam_all_p_stanZ"<0>
-D:8005AE80                                              # DATA XREF: D:80047A88o
-D:8005AE94     aTbg_depo_all_p_stanz_0:.ascii "Tbg_depo_all_p_stanZ"<0><0><0><0>
-D:8005AE94                                              # DATA XREF: D:80047A94o
-D:8005AEAC     aTbg_dest_all_p_stanz_0:.ascii "Tbg_dest_all_p_stanZ"<0><0><0><0>
-D:8005AEAC                                              # DATA XREF: D:80047AA0o
-D:8005AEC4     aTbg_dish_all_p_stanz_0:.ascii "Tbg_dish_all_p_stanZ"<0><0><0><0>
-D:8005AEC4                                              # DATA XREF: D:80047AACo
-D:8005AEDC     aTbg_ear_all_p_stanz_0:.ascii "Tbg_ear_all_p_stanZ"<0>
-D:8005AEDC                                              # DATA XREF: D:80047AB8o
-D:8005AEF0     aTbg_eld_all_p_stanz_0:.ascii "Tbg_eld_all_p_stanZ"<0>
-D:8005AEF0                                              # DATA XREF: D:80047AC4o
-D:8005AF04     aTbg_imp_all_p_stanz:.ascii "Tbg_imp_all_p_stanZ"<0>  # DATA XREF: D:80047AD0o
-D:8005AF18     aTbg_jun_all_p_stanz_0:.ascii "Tbg_jun_all_p_stanZ"<0>
-D:8005AF18                                              # DATA XREF: D:80047ADCo
-D:8005AF2C     aTbg_lee_all_p_stanz_0:.ascii "Tbg_lee_all_p_stanZ"<0>
-D:8005AF2C                                              # DATA XREF: D:80047AE8o
-D:8005AF40     aTbg_len_all_p_stanz_0:.ascii "Tbg_len_all_p_stanZ"<0>
-D:8005AF40                                              # DATA XREF: D:80047AF4o
-D:8005AF54     aTbg_lip_all_p_stanz_0:.ascii "Tbg_lip_all_p_stanZ"<0>
-D:8005AF54                                              # DATA XREF: D:80047B00o
-D:8005AF68     aTbg_lue_all_p_stanz_0:.ascii "Tbg_lue_all_p_stanZ"<0>
-D:8005AF68                                              # DATA XREF: D:80047B0Co
-D:8005AF7C     aTbg_oat_all_p_stanz_0:.ascii "Tbg_oat_all_p_stanZ"<0>
-D:8005AF7C                                              # DATA XREF: D:80047B18o
-D:8005AF90     aTbg_pam_all_p_stanz_0:.ascii "Tbg_pam_all_p_stanZ"<0>
-D:8005AF90                                              # DATA XREF: D:80047B24o
-D:8005AFA4     aTbg_pete_all_p_stanz_0:.ascii "Tbg_pete_all_p_stanZ"<0><0><0><0>
-D:8005AFA4                                              # DATA XREF: D:80047B30o
-D:8005AFBC     aTbg_ref_all_p_stanz_0:.ascii "Tbg_ref_all_p_stanZ"<0>
-D:8005AFBC                                              # DATA XREF: D:80047B3Co
-D:8005AFD0     aTbg_rit_all_p_stanz_0:.ascii "Tbg_rit_all_p_stanZ"<0>
-D:8005AFD0                                              # DATA XREF: D:80047B48o
-D:8005AFE4     aTbg_run_all_p_stanz_0:.ascii "Tbg_run_all_p_stanZ"<0>
-D:8005AFE4                                              # DATA XREF: D:80047B54o
-D:8005AFF8     aTbg_sev_all_p_stanz_0:.ascii "Tbg_sev_all_p_stanZ"<0>
-D:8005AFF8                                              # DATA XREF: D:80047B60o
-D:8005B00C     aTbg_sevb_all_p_stanz_0:.ascii "Tbg_sevb_all_p_stanZ"<0><0><0><0>
-D:8005B00C                                              # DATA XREF: D:80047B6Co
-D:8005B024     aTbg_sevx_all_p_stanz_1:.ascii "Tbg_sevx_all_p_stanZ"<0><0><0><0>
-D:8005B024                                              # DATA XREF: D:80047B78o
-D:8005B03C     aTbg_silo_all_p_stanz_0:.ascii "Tbg_silo_all_p_stanZ"<0><0><0><0>
-D:8005B03C                                              # DATA XREF: D:80047B84o
-D:8005B054     aTbg_stat_all_p_stanz_0:.ascii "Tbg_stat_all_p_stanZ"<0><0><0><0>
-D:8005B054                                              # DATA XREF: D:80047B90o
-D:8005B06C     aTbg_tra_all_p_stanz_0:.ascii "Tbg_tra_all_p_stanZ"<0>
-D:8005B06C                                              # DATA XREF: D:80047B9Co
-D:8005B080     aTbg_wax_all_p_stanz_0:.ascii "Tbg_wax_all_p_stanZ"<0>
-D:8005B080                                              # DATA XREF: D:80047BA8o
-D:8005B094     aUbriefarchz:   .ascii "UbriefarchZ"<0>  # DATA XREF: D:80047BB4o
-D:8005B0A0     aUbriefarkz:    .ascii "UbriefarkZ"<0><0>  # DATA XREF: D:80047BC0o
-D:8005B0AC     aUbriefaztz:    .ascii "UbriefaztZ"<0><0>  # DATA XREF: D:80047BCCo
-D:8005B0B8     aUbriefcavez:   .ascii "UbriefcaveZ"<0>  # DATA XREF: D:80047BD8o
-D:8005B0C4     aUbriefcontrolz:.ascii "UbriefcontrolZ"<0><0>  # DATA XREF: D:80047BE4o
-D:8005B0D4     aUbriefcradz:   .ascii "UbriefcradZ"<0>  # DATA XREF: D:80047BF0o
-D:8005B0E0     aUbriefcrypz:   .ascii "UbriefcrypZ"<0>  # DATA XREF: D:80047BFCo
-D:8005B0EC     aUbriefdamz:    .ascii "UbriefdamZ"<0><0>  # DATA XREF: D:80047C08o
-D:8005B0F8     aUbriefdepoz:   .ascii "UbriefdepoZ"<0>  # DATA XREF: D:80047C14o
-D:8005B104     aUbriefdestz:   .ascii "UbriefdestZ"<0>  # DATA XREF: D:80047C20o
-D:8005B110     aUbriefjunz:    .ascii "UbriefjunZ"<0><0>  # DATA XREF: D:80047C2Co
-D:8005B11C     aUbriefpetez:   .ascii "UbriefpeteZ"<0>  # DATA XREF: D:80047C38o
-D:8005B128     aUbriefrunz:    .ascii "UbriefrunZ"<0><0>  # DATA XREF: D:80047C44o
-D:8005B134     aUbriefsevbz:   .ascii "UbriefsevbZ"<0>  # DATA XREF: D:80047C50o
-D:8005B140     aUbriefsevbunkerz:.ascii "UbriefsevbunkerZ"<0><0><0><0>
-D:8005B140                                              # DATA XREF: D:80047C5Co
-D:8005B154     aUbriefsevxz:   .ascii "UbriefsevxZ"<0>  # DATA XREF: D:80047C68o
-D:8005B160     aUbriefsevxbz:  .ascii "UbriefsevxbZ"<0><0><0><0>  # DATA XREF: D:80047C74o
-D:8005B170     aUbriefsiloz:   .ascii "UbriefsiloZ"<0>  # DATA XREF: D:80047C80o
-D:8005B17C     aUbriefstatuez: .ascii "UbriefstatueZ"<0><0><0>  # DATA XREF: D:80047C8Co
-D:8005B18C     aUbrieftraz:    .ascii "UbrieftraZ"<0><0>  # DATA XREF: D:80047C98o
-D:8005B198     aUmp_setupamez: .ascii "Ump_setupameZ"<0><0><0>  # DATA XREF: D:80047CA4o
-D:8005B1A8     aUmp_setuparchz:.ascii "Ump_setuparchZ"<0><0>  # DATA XREF: D:80047CB0o
-D:8005B1B8     aUmp_setuparkz: .ascii "Ump_setuparkZ"<0><0><0>  # DATA XREF: D:80047CBCo
-D:8005B1C8     aUmp_setupashz: .ascii "Ump_setupashZ"<0><0><0>  # DATA XREF: D:80047CC8o
-D:8005B1D8     aUmp_setupcavez:.ascii "Ump_setupcaveZ"<0><0>  # DATA XREF: D:80047CD4o
-D:8005B1E8     aUmp_setupcradz:.ascii "Ump_setupcradZ"<0><0>  # DATA XREF: D:80047CE0o
-D:8005B1F8     aUmp_setupcrypz:.ascii "Ump_setupcrypZ"<0><0>  # DATA XREF: D:80047CECo
-D:8005B208     aUmp_setupdishz:.ascii "Ump_setupdishZ"<0><0>  # DATA XREF: D:80047CF8o
-D:8005B218     aUmp_setupimpz: .ascii "Ump_setupimpZ"<0><0><0>  # DATA XREF: D:80047D04o
-D:8005B228     aUmp_setupoatz: .ascii "Ump_setupoatZ"<0><0><0>  # DATA XREF: D:80047D10o
-D:8005B238     aUmp_setuprefz: .ascii "Ump_setuprefZ"<0><0><0>  # DATA XREF: D:80047D1Co
-D:8005B248     aUmp_setupsevbz:.ascii "Ump_setupsevbZ"<0><0>  # DATA XREF: D:80047D28o
-D:8005B258     aUmp_setupstatuez:.ascii "Ump_setupstatueZ"<0><0><0><0>
-D:8005B258                                              # DATA XREF: D:80047D34o
-D:8005B26C     aUsetuparchz_0: .ascii "UsetuparchZ"<0>  # DATA XREF: D:80047D40o
-D:8005B278     aUsetuparkz_1:  .ascii "UsetuparkZ"<0><0>  # DATA XREF: D:80047D4Co
-D:8005B284     aUsetupaztz_1:  .ascii "UsetupaztZ"<0><0>  # DATA XREF: D:80047D58o
-D:8005B290     aUsetupcavez_0: .ascii "UsetupcaveZ"<0>  # DATA XREF: D:80047D64o
-D:8005B29C     aUsetupcontrolz_1:.ascii "UsetupcontrolZ"<0><0>  # DATA XREF: D:80047D70o
-D:8005B2AC     aUsetupcradz_0: .ascii "UsetupcradZ"<0>  # DATA XREF: D:80047D7Co
-D:8005B2B8     aUsetupcrypz_0: .ascii "UsetupcrypZ"<0>  # DATA XREF: D:80047D88o
-D:8005B2C4     aUsetupdamz_1:  .ascii "UsetupdamZ"<0><0>  # DATA XREF: D:80047D94o
-D:8005B2D0     aUsetupdepoz_0: .ascii "UsetupdepoZ"<0>  # DATA XREF: D:80047DA0o
-D:8005B2DC     aUsetupdestz_0: .ascii "UsetupdestZ"<0>  # DATA XREF: D:80047DACo
-D:8005B2E8     aUsetupjunz_1:  .ascii "UsetupjunZ"<0><0>  # DATA XREF: D:80047DB8o
-D:8005B2F4     aUsetuplenz_1:  .ascii "UsetuplenZ"<0><0>  # DATA XREF: D:80047DC4o
-D:8005B300     aUsetuppetez_0: .ascii "UsetuppeteZ"<0>  # DATA XREF: D:80047DD0o
-D:8005B30C     aUsetuprunz_1:  .ascii "UsetuprunZ"<0><0>  # DATA XREF: D:80047DDCo
-D:8005B318     aUsetupsevbz_0: .ascii "UsetupsevbZ"<0>  # DATA XREF: D:80047DE8o
-D:8005B324     aUsetupsevbunkerz_1:.ascii "UsetupsevbunkerZ"<0><0><0><0>
-D:8005B324                                              # DATA XREF: D:80047DF4o
-D:8005B338     aUsetupsevxz_0: .ascii "UsetupsevxZ"<0>  # DATA XREF: D:80047E00o
-D:8005B344     aUsetupsevxbz_0:.ascii "UsetupsevxbZ"<0><0><0><0>  # DATA XREF: D:80047E0Co
-D:8005B354     aUsetupsiloz_0: .ascii "UsetupsiloZ"<0>  # DATA XREF: D:80047E18o
-D:8005B360     aUsetupstatuez_0:.ascii "UsetupstatueZ"<0><0><0>  # DATA XREF: D:80047E24o
-D:8005B370     aUsetuptraz_1:  .ascii "UsetuptraZ"<0><0>  # DATA XREF: D:80047E30o
-D:8005B37C     aLamee_0:       .ascii "LameE"<0><0><0>  # DATA XREF: D:80047E3Co
-D:8005B384     aLamej_0:       .ascii "LameJ"<0><0><0>  # DATA XREF: D:80047E48o
-D:8005B38C     aLarche_1:      .ascii "LarchE"<0><0>    # DATA XREF: D:80047E54o
-D:8005B394     aLarchj_1:      .ascii "LarchJ"<0><0>    # DATA XREF: D:80047E60o
-D:8005B39C     aLarece_1:      .ascii "LarecE"<0><0>    # DATA XREF: D:80047E6Co
-D:8005B3A4     aLarecj_1:      .ascii "LarecJ"<0><0>    # DATA XREF: D:80047E78o
-D:8005B3AC     aLarke_0:       .ascii "LarkE"<0><0><0>  # DATA XREF: D:80047E84o
-D:8005B3B4     aLarkj_0:       .ascii "LarkJ"<0><0><0>  # DATA XREF: D:80047E90o
-D:8005B3BC     aLashe_0:       .ascii "LashE"<0><0><0>  # DATA XREF: D:80047E9Co
-D:8005B3C4     aLashj_0:       .ascii "LashJ"<0><0><0>  # DATA XREF: D:80047EA8o
-D:8005B3CC     aLazte_0:       .ascii "LaztE"<0><0><0>  # DATA XREF: D:80047EB4o
-D:8005B3D4     aLaztj_0:       .ascii "LaztJ"<0><0><0>  # DATA XREF: D:80047EC0o
-D:8005B3DC     aLcate_0:       .ascii "LcatE"<0><0><0>  # DATA XREF: D:80047ECCo
-D:8005B3E4     aLcatj_0:       .ascii "LcatJ"<0><0><0>  # DATA XREF: D:80047ED8o
-D:8005B3EC     aLcavee_1:      .ascii "LcaveE"<0><0>    # DATA XREF: D:80047EE4o
-D:8005B3F4     aLcavej_1:      .ascii "LcaveJ"<0><0>    # DATA XREF: D:80047EF0o
-D:8005B3FC     aLcrade_1:      .ascii "LcradE"<0><0>    # DATA XREF: D:80047EFCo
-D:8005B404     aLcradj_1:      .ascii "LcradJ"<0><0>    # DATA XREF: D:80047F08o
-D:8005B40C     aLcrype_1:      .ascii "LcrypE"<0><0>    # DATA XREF: D:80047F14o
-D:8005B414     aLcrypj_1:      .ascii "LcrypJ"<0><0>    # DATA XREF: D:80047F20o
-D:8005B41C     aLdame_0:       .ascii "LdamE"<0><0><0>  # DATA XREF: D:80047F2Co
-D:8005B424     aLdamj_0:       .ascii "LdamJ"<0><0><0>  # DATA XREF: D:80047F38o
-D:8005B42C     aLdepoe_1:      .ascii "LdepoE"<0><0>    # DATA XREF: D:80047F44o
-D:8005B434     aLdepoj_1:      .ascii "LdepoJ"<0><0>    # DATA XREF: D:80047F50o
-D:8005B43C     aLdeste_1:      .ascii "LdestE"<0><0>    # DATA XREF: D:80047F5Co
-D:8005B444     aLdestj_1:      .ascii "LdestJ"<0><0>    # DATA XREF: D:80047F68o
-D:8005B44C     aLdishe_1:      .ascii "LdishE"<0><0>    # DATA XREF: D:80047F74o
-D:8005B454     aLdishj_1:      .ascii "LdishJ"<0><0>    # DATA XREF: D:80047F80o
-D:8005B45C     aLeare_0:       .ascii "LearE"<0><0><0>  # DATA XREF: D:80047F8Co
-D:8005B464     aLearj_0:       .ascii "LearJ"<0><0><0>  # DATA XREF: D:80047F98o
-D:8005B46C     aLelde_0:       .ascii "LeldE"<0><0><0>  # DATA XREF: D:80047FA4o
-D:8005B474     aLeldj_0:       .ascii "LeldJ"<0><0><0>  # DATA XREF: D:80047FB0o
-D:8005B47C     aLgune_0:       .ascii "LgunE"<0><0><0>  # DATA XREF: D:80047FBCo
-D:8005B484     aLgunj_0:       .ascii "LgunJ"<0><0><0>  # DATA XREF: D:80047FC8o
-D:8005B48C     aLimpe_0:       .ascii "LimpE"<0><0><0>  # DATA XREF: D:80047FD4o
-D:8005B494     aLimpj_0:       .ascii "LimpJ"<0><0><0>  # DATA XREF: D:80047FE0o
-D:8005B49C     aLjune_0:       .ascii "LjunE"<0><0><0>  # DATA XREF: D:80047FECo
-D:8005B4A4     aLjunj_0:       .ascii "LjunJ"<0><0><0>  # DATA XREF: D:80047FF8o
-D:8005B4AC     aLleee_0:       .ascii "LleeE"<0><0><0>  # DATA XREF: D:80048004o
-D:8005B4B4     aLleej_0:       .ascii "LleeJ"<0><0><0>  # DATA XREF: D:80048010o
-D:8005B4BC     aLlene_0:       .ascii "LlenE"<0><0><0>  # DATA XREF: D:8004801Co
-D:8005B4C4     aLlenj_0:       .ascii "LlenJ"<0><0><0>  # DATA XREF: D:80048028o
-D:8005B4CC     aLlipe_0:       .ascii "LlipE"<0><0><0>  # DATA XREF: D:80048034o
-D:8005B4D4     aLlipj_0:       .ascii "LlipJ"<0><0><0>  # DATA XREF: D:80048040o
-D:8005B4DC     aLluee_0:       .ascii "LlueE"<0><0><0>  # DATA XREF: D:8004804Co
-D:8005B4E4     aLluej_0:       .ascii "LlueJ"<0><0><0>  # DATA XREF: D:80048058o
-D:8005B4EC     aLmisce_1:      .ascii "LmiscE"<0><0>    # DATA XREF: D:80048064o
-D:8005B4F4     aLmiscj_1:      .ascii "LmiscJ"<0><0>    # DATA XREF: D:80048070o
-D:8005B4FC     aLmpmenue_0:    .ascii "LmpmenuE"<0><0><0><0>  # DATA XREF: D:8004807Co
-D:8005B508     aLmpmenuj_0:    .ascii "LmpmenuJ"<0><0><0><0>  # DATA XREF: D:80048088o
-D:8005B514     aLmpweaponse_0: .ascii "LmpweaponsE"<0>  # DATA XREF: D:80048094o
-D:8005B520     aLmpweaponsj_0: .ascii "LmpweaponsJ"<0>  # DATA XREF: D:800480A0o
-D:8005B52C     aLoate_0:       .ascii "LoatE"<0><0><0>  # DATA XREF: D:800480ACo
-D:8005B534     aLoatj_0:       .ascii "LoatJ"<0><0><0>  # DATA XREF: D:800480B8o
-D:8005B53C     aLoptionse_0:   .ascii "LoptionsE"<0><0><0>  # DATA XREF: D:800480C4o
-D:8005B548     aLoptionsj_0:   .ascii "LoptionsJ"<0><0><0>  # DATA XREF: D:800480D0o
-D:8005B554     aLpame_0:       .ascii "LpamE"<0><0><0>  # DATA XREF: D:800480DCo
-D:8005B55C     aLpamj_0:       .ascii "LpamJ"<0><0><0>  # DATA XREF: D:800480E8o
-D:8005B564     aLpetee_1:      .ascii "LpeteE"<0><0>    # DATA XREF: D:800480F4o
-D:8005B56C     aLpetej_1:      .ascii "LpeteJ"<0><0>    # DATA XREF: D:80048100o
-D:8005B574     aLpropobje_0:   .ascii "LpropobjE"<0><0><0>  # DATA XREF: D:8004810Co
-D:8005B580     aLpropobjj_0:   .ascii "LpropobjJ"<0><0><0>  # DATA XREF: D:80048118o
-D:8005B58C     aLrefe_0:       .ascii "LrefE"<0><0><0>  # DATA XREF: D:80048124o
-D:8005B594     aLrefj_0:       .ascii "LrefJ"<0><0><0>  # DATA XREF: D:80048130o
-D:8005B59C     aLrite_0:       .ascii "LritE"<0><0><0>  # DATA XREF: D:8004813Co
-D:8005B5A4     aLritj_0:       .ascii "LritJ"<0><0><0>  # DATA XREF: D:80048148o
-D:8005B5AC     aLrune_0:       .ascii "LrunE"<0><0><0>  # DATA XREF: D:80048154o
-D:8005B5B4     aLrunj_0:       .ascii "LrunJ"<0><0><0>  # DATA XREF: D:80048160o
-D:8005B5BC     aLseve_0:       .ascii "LsevE"<0><0><0>  # DATA XREF: D:8004816Co
-D:8005B5C4     aLsevj_0:       .ascii "LsevJ"<0><0><0>  # DATA XREF: D:80048178o
-D:8005B5CC     aLsevbe_1:      .ascii "LsevbE"<0><0>    # DATA XREF: D:80048184o
-D:8005B5D4     aLsevbj_1:      .ascii "LsevbJ"<0><0>    # DATA XREF: D:80048190o
-D:8005B5DC     aLsevxe_1:      .ascii "LsevxE"<0><0>    # DATA XREF: D:8004819Co
-D:8005B5E4     aLsevxj_1:      .ascii "LsevxJ"<0><0>    # DATA XREF: D:800481A8o
-D:8005B5EC     aLsevxbe_0:     .ascii "LsevxbE"<0>      # DATA XREF: D:800481B4o
-D:8005B5F4     aLsevxbj_0:     .ascii "LsevxbJ"<0>      # DATA XREF: D:800481C0o
-D:8005B5FC     aLshoe_0:       .ascii "LshoE"<0><0><0>  # DATA XREF: D:800481CCo
-D:8005B604     aLshoj_0:       .ascii "LshoJ"<0><0><0>  # DATA XREF: D:800481D8o
-D:8005B60C     aLsiloe_1:      .ascii "LsiloE"<0><0>    # DATA XREF: D:800481E4o
-D:8005B614     aLsiloj_1:      .ascii "LsiloJ"<0><0>    # DATA XREF: D:800481F0o
-D:8005B61C     aLstate_1:      .ascii "LstatE"<0><0>    # DATA XREF: D:800481FCo
-D:8005B624     aLstatj_1:      .ascii "LstatJ"<0><0>    # DATA XREF: D:80048208o
-D:8005B62C     aLtitlee_0:     .ascii "LtitleE"<0>      # DATA XREF: D:80048214o
-D:8005B634     aLtitlej_0:     .ascii "LtitleJ"<0>      # DATA XREF: D:80048220o
-D:8005B63C     aLtrae_0:       .ascii "LtraE"<0><0><0>  # DATA XREF: D:8004822Co
-D:8005B644     aLtraj_0:       .ascii "LtraJ"<0><0><0>  # DATA XREF: D:80048238o
-D:8005B64C     aLwaxe_0:       .ascii "LwaxE"<0><0><0>  # DATA XREF: D:80048244o
-D:8005B654     aLwaxj_0:       .ascii "LwaxJ"<0><0><0>  # DATA XREF: D:80048250o
-D:8005B65C     aObOb_end_seg:  .ascii "ob/ob_end.seg"<0>  # DATA XREF: D:8004825Co
-D:8005B66A                     .half 0
 D:8005B66C     rz_header_1:    .word 0x11720000         # DATA XREF: load_resource_from_indy+8Cr
 D:8005B670     rz_header_2:    .word 0x11720000         # DATA XREF: load_resource_from_indy+ACr
 D:8005B674     aOb_c_debug:    .ascii "ob_c_debug"<0><0>  # DATA XREF: ob_c_debug_setup+Co

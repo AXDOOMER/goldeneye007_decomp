@@ -1,83 +1,27 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:8007A0D0     dword_CODE_bss_8007A0D0:.space 4         # DATA XREF: sub_CODE_7F09B4D8+14o
-CODE.bss:8007A0D0                                              # sub_CODE_7F09B820+28w
-CODE.bss:8007A0D0                                              # sub_CODE_7F09B820+7Cw
-CODE.bss:8007A0D0                                              # sub_CODE_7F09B820+B4w
-CODE.bss:8007A0D0                                              # sub_CODE_7F09B820+FCr
-CODE.bss:8007A0D0                                              # sub_CODE_7F09B820+160o
-CODE.bss:8007A0D0                                              # sub_CODE_7F09B820+168r
-CODE.bss:8007A0D0                                              # sub_CODE_7F09B820+1A4r
-CODE.bss:8007A0D0                                              # sub_CODE_7F09C044+20r
-CODE.bss:8007A0D4     dword_CODE_bss_8007A0D4:.space 4         # DATA XREF: sub_CODE_7F09B7A8r
-CODE.bss:8007A0D4                                              # sub_CODE_7F09B820+2Co
-CODE.bss:8007A0D4                                              # sub_CODE_7F09B820+38w
-CODE.bss:8007A0D4                                              # sub_CODE_7F09B820+80o
-CODE.bss:8007A0D4                                              # sub_CODE_7F09B820+88w
-CODE.bss:8007A0D4                                              # sub_CODE_7F09B820+B8o
-CODE.bss:8007A0D4                                              # sub_CODE_7F09B820+C4w
-CODE.bss:8007A0D4                                              # sub_CODE_7F09B820:loc_CODE_7F09B8F8r
-CODE.bss:8007A0D4                                              # sub_CODE_7F09B820+1A8o
-CODE.bss:8007A0D4                                              # sub_CODE_7F09B820+1E4r
-CODE.bss:8007A0D4                                              # sub_CODE_7F09BE4C+40r
-CODE.bss:8007A0D8     dword_CODE_bss_8007A0D8:.space 4         # DATA XREF: sub_CODE_7F09B820+48w
-CODE.bss:8007A0D8                                              # sub_CODE_7F09B820+98w
-CODE.bss:8007A0D8                                              # sub_CODE_7F09B820+D0w
-CODE.bss:8007A0D8                                              # sub_CODE_7F09B820+148r
-CODE.bss:8007A0D8                                              # sub_CODE_7F09B820+240r
-CODE.bss:8007A0D8                                              # sub_CODE_7F09BBBC+Cr
-CODE.bss:8007A0D8                                              # sub_CODE_7F09BBBC:loc_CODE_7F09BDF8r
-CODE.bss:8007A0D8                                              # sub_CODE_7F09C044+68r
-CODE.bss:8007A0DC     dword_CODE_bss_8007A0DC:.space 4         # DATA XREF: sub_CODE_7F09B7E4r
-CODE.bss:8007A0DC                                              # sub_CODE_7F09B820+40o
-CODE.bss:8007A0DC                                              # sub_CODE_7F09B820+50w
-CODE.bss:8007A0DC                                              # sub_CODE_7F09B820+94o
-CODE.bss:8007A0DC                                              # sub_CODE_7F09B820+A4w
-CODE.bss:8007A0DC                                              # sub_CODE_7F09B820+CCo
-CODE.bss:8007A0DC                                              # sub_CODE_7F09B820+D4w
-CODE.bss:8007A0DC                                              # sub_CODE_7F09B820+120o
-CODE.bss:8007A0DC                                              # sub_CODE_7F09B820+124r
-CODE.bss:8007A0DC                                              # sub_CODE_7F09B820+1B8o
-CODE.bss:8007A0DC                                              # sub_CODE_7F09BBBC+50r
-CODE.bss:8007A0DC                                              # sub_CODE_7F09BBBC+140r
-CODE.bss:8007A0DC                                              # sub_CODE_7F09BE4C+5Cr
-CODE.bss:8007A0E0     dword_CODE_bss_8007A0E0:.space 4         # DATA XREF: sub_CODE_7F09B820+118w
-CODE.bss:8007A0E0                                              # sub_CODE_7F09B820+190r
-CODE.bss:8007A0E0                                              # sub_CODE_7F09C044r
-CODE.bss:8007A0E4     dword_CODE_bss_8007A0E4:.space 4         # DATA XREF: sub_CODE_7F09B820+16Co
-CODE.bss:8007A0E4                                              # sub_CODE_7F09B820+174w
-CODE.bss:8007A0E4                                              # sub_CODE_7F09C044:loc_CODE_7F09C094r
-CODE.bss:8007A0E8     dword_CODE_bss_8007A0E8:.space 4         # DATA XREF: sub_CODE_7F09B7A8+20r
-CODE.bss:8007A0E8                                              # sub_CODE_7F09B820+F0o
-CODE.bss:8007A0E8                                              # sub_CODE_7F09B820+F8w
-CODE.bss:8007A0E8                                              # sub_CODE_7F09B820+180o
-CODE.bss:8007A0E8                                              # sub_CODE_7F09B820+18Cr
-CODE.bss:8007A0E8                                              # sub_CODE_7F09B820+1A0r
-CODE.bss:8007A0E8                                              # sub_CODE_7F09B820+1B4r
-CODE.bss:8007A0E8                                              # sub_CODE_7F09B820+1C4r
-CODE.bss:8007A0E8                                              # sub_CODE_7F09B820+1D4r
-CODE.bss:8007A0E8                                              # sub_CODE_7F09B820+1F4r
-CODE.bss:8007A0E8                                              # sub_CODE_7F09BE4C+34r
-CODE.bss:8007A0E8                                              # sub_CODE_7F09C044+4Cr
-CODE.bss:8007A0EC     dword_CODE_bss_8007A0EC:.space 4         # DATA XREF: sub_CODE_7F09B7E4+20r
-CODE.bss:8007A0EC                                              # sub_CODE_7F09B820+13Co
-CODE.bss:8007A0EC                                              # sub_CODE_7F09B820+144w
-CODE.bss:8007A0EC                                              # sub_CODE_7F09B820+1C8o
-CODE.bss:8007A0EC                                              # sub_CODE_7F09BBBC+6Co
-CODE.bss:8007A0EC                                              # sub_CODE_7F09BBBC+74r
-CODE.bss:8007A0EC                                              # sub_CODE_7F09BBBC:loc_CODE_7F09BD34o
-CODE.bss:8007A0EC                                              # sub_CODE_7F09BE4C+50r
-CODE.bss:8007A0EC                                              # sub_CODE_7F09C044+90r
-CODE.bss:8007A0F0     word_CODE_bss_8007A0F0:.space 2          # DATA XREF: sub_CODE_7F09B820+188w
-CODE.bss:8007A0F0                                              # sub_CODE_7F09BE4C+38o
-CODE.bss:8007A0F0                                              # sub_CODE_7F09C044+44o
-CODE.bss:8007A0F2     word_CODE_bss_8007A0F2:.space 2          # DATA XREF: sub_CODE_7F09B820+228w
-CODE.bss:8007A0F2                                              # sub_CODE_7F09BBBC+14o
-CODE.bss:8007A0F2                                              # sub_CODE_7F09BBBC+18r
-CODE.bss:8007A0F2                                              # sub_CODE_7F09BE4C+54o
-CODE.bss:8007A0F2                                              # sub_CODE_7F09C044+88o
-*/
+// bss
+//CODE.bss:8007A0D0
+s32 dword_CODE_bss_8007A0D0;
+//CODE.bss:8007A0D4
+s32 dword_CODE_bss_8007A0D4;
+//CODE.bss:8007A0D8
+s32 dword_CODE_bss_8007A0D8;
+//CODE.bss:8007A0DC
+s32 dword_CODE_bss_8007A0DC;
+//CODE.bss:8007A0E0
+s32 dword_CODE_bss_8007A0E0;
+//CODE.bss:8007A0E4
+s32 dword_CODE_bss_8007A0E4;
+//CODE.bss:8007A0E8
+s32 dword_CODE_bss_8007A0E8;
+//CODE.bss:8007A0EC
+s32 dword_CODE_bss_8007A0EC;
+//CODE.bss:8007A0F0
+s16 word_CODE_bss_8007A0F0;
+//CODE.bss:8007A0F2
+s16 word_CODE_bss_8007A0F2;
+
 
 
 

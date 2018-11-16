@@ -1,22 +1,9 @@
 #include "ultra64.h"
 
-
-
-
-
-
-
 #ifdef NONMATCHING
-void sub_GAME_7F05A9E0(f32 arg0, ? arg8) {
-    f32 sp18;
-
-    // Node 0
-    sp18 = sinf(arg8);
-    sqrtf(((sp18 / cosf(arg8)) + 1.0f));
-    return;
-    // (possible return value: sqrtf(((sp18 / cosf(arg8)) + 1.0f)))
+void sub_GAME_7F05A9E0(f32 arg0) {
+    return sqrtf(((sinf(arg0) / cosf(arg0)) + 1.0f));
 }
-
 #else
 GLOBAL_ASM(
 .text

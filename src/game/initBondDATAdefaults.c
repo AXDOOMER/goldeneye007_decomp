@@ -5,12 +5,11 @@
 s32 D_8002A790[] = { 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 
-/*.section .rodata
-F32_8004F1F0: .float 0.10000001
-F32_8004F1F4: .float 14.285716
-F32_8004F1F8: .float 0.93000001
-.word 0
-*/
+// .rodata
+const f32 F32_8004F1F0 = 0.10000001;
+const f32 F32_8004F1F4 = 14.285716;
+const f32 F32_8004F1F8 = 0.93000001;
+
 
 #ifdef NONMATCHING
 void sub_GAME_7F0062C0(void) {

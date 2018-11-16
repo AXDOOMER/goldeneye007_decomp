@@ -1,14 +1,20 @@
 #include "ultra64.h"
 
 
-/* rodata
-D:80053720     flt_D_80053720: .float 32767.0           # DATA XREF: sub_CODE_7F05ACB0:loc_CODE_7F05ACF8r
-D:80053724     flt_D_80053724: .float 3.1415927         # DATA XREF: sub_CODE_7F05ACB0:loc_CODE_7F05AD38r
-D:80053728     flt_D_80053728: .float 65535.0           # DATA XREF: sub_CODE_7F05ACB0+9Cr
-D:8005372C     flt_D_8005372C: .float 32767.0           # DATA XREF: sub_CODE_7F05AD5C:loc_CODE_7F05ADA4r
-D:80053730     flt_D_80053730: .float 3.1415927         # DATA XREF: sub_CODE_7F05AD5C+70r
-D:80053734     flt_D_80053734: .float 65535.0           # DATA XREF: sub_CODE_7F05AD5C+80r
-*/
+// rodata
+//D:80053720
+const f32 flt_D_80053720 = 32767.0;
+//D:80053724
+const f32 flt_D_80053724 = 3.1415927;
+//D:80053728
+const f32 flt_D_80053728 = 65535.0;
+//D:8005372C
+const f32 flt_D_8005372C = 32767.0;
+//D:80053730
+const f32 flt_D_80053730 = 3.1415927;
+//D:80053734
+const f32 flt_D_80053734 = 65535.0;
+
 
 
 

@@ -1,117 +1,42 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:80069550     dword_CODE_bss_80069550:.space 4         # DATA XREF: sub_CODE_7F008E80+BCo
-CODE.bss:80069550                                              # sub_CODE_7F008E80+C4w
-CODE.bss:80069550                                              # sub_CODE_7F008E80+D8r
-CODE.bss:80069550                                              # sub_CODE_7F008E80+F4r
-CODE.bss:80069554     dword_CODE_bss_80069554:.space 4         # DATA XREF: something_with_gunbarrel_and_rareware_logo_matrix_manip+CCr
-CODE.bss:80069554                                              # something_with_gunbarrel_and_rareware_logo_matrix_manip+128r
-CODE.bss:80069554                                              # insert_sight_backdrop_eye_intro+108r
-CODE.bss:80069554                                              # sub_CODE_7F008E80+ECo
-CODE.bss:80069554                                              # sub_CODE_7F008E80+F8w
-CODE.bss:80069554                                              # sub_CODE_7F008E80+110r
-CODE.bss:80069558      # Mtx *matrix_buffer_rarelogo_0
-CODE.bss:80069558     matrix_buffer_rarelogo_0:.space 4        # DATA XREF: alloc_intro_matrices+1Cw
-CODE.bss:80069558                                              # load_display_rare_logo+68r
-CODE.bss:80069558                                              # load_display_rare_logo+D0r
-CODE.bss:8006955C      # Mtx *matrix_buffer_gunbarrel_0
-CODE.bss:8006955C     matrix_buffer_gunbarrel_0:.space 4       # DATA XREF: alloc_intro_matrices+30w
-CODE.bss:8006955C                                              # sub_CODE_7F008E80+54r
-CODE.bss:8006955C                                              # sub_CODE_7F01C1A4+1Cr
-CODE.bss:80069560      # Mtx *matrix_buffer_rarelogo_1
-CODE.bss:80069560     matrix_buffer_rarelogo_1:.space 4        # DATA XREF: alloc_intro_matrices+44w
-CODE.bss:80069560                                              # load_display_rare_logo+168r
-CODE.bss:80069560                                              # load_display_rare_logo+1C0r
-CODE.bss:80069564      # Mtx *matrix_buffer_rarelogo_2
-CODE.bss:80069564     matrix_buffer_rarelogo_2:.space 4        # DATA XREF: alloc_intro_matrices+58w
-CODE.bss:80069564                                              # something_with_gunbarrel_and_rareware_logo_matrix_manip+Cr
-CODE.bss:80069564                                              # insert_sight_backdrop_eye_intro+34r
-CODE.bss:80069564                                              # load_display_rare_logo+1F0r
-CODE.bss:80069564                                              # load_display_rare_logo+24Cr
-CODE.bss:80069564                                              # sub_CODE_7F01C1A4+50r
-CODE.bss:80069568      # Mtx *matrix_buffer_gunbarrel_1
-CODE.bss:80069568     matrix_buffer_gunbarrel_1:.space 4       # DATA XREF: alloc_intro_matrices+6Cw
-CODE.bss:80069568                                              # something_with_gunbarrel_and_rareware_logo_matrix_manip+48r
-CODE.bss:80069568                                              # something_with_gunbarrel_and_rareware_logo_matrix_manip+FCr
-CODE.bss:80069568                                              # insert_sight_backdrop_eye_intro+68r
-CODE.bss:80069568                                              # insert_sight_backdrop_eye_intro+DCr
-CODE.bss:8006956C      # Mtx *matrix_buffer_intro_backdrop
-CODE.bss:8006956C     matrix_buffer_intro_backdrop:.space 4    # DATA XREF: alloc_intro_matrices+80w
-CODE.bss:8006956C                                              # insert_bond_eye_intro+10r
-CODE.bss:8006956C                                              # insert_bond_eye_intro+13Cr
-CODE.bss:80069570      # Mtx *matrix_buffer_intro_bond
-CODE.bss:80069570     matrix_buffer_intro_bond:.space 4        # DATA XREF: alloc_intro_matrices+98w
-CODE.bss:80069570                                              # insert_bond_eye_intro+58r
-CODE.bss:80069570                                              # insert_bond_eye_intro+100r
-CODE.bss:80069574      # float x
-CODE.bss:80069574     x:              .space 4                 # DATA XREF: something_with_gunbarrel_and_rareware_logo_matrix_manip+30r
-CODE.bss:80069574                                              # insert_sight_backdrop_eye_intror
-CODE.bss:80069574                                              # insert_sniper_sight_eye_intro+94r
-CODE.bss:80069574                                              # sub_CODE_7F008B58+18w
-CODE.bss:80069574                                              # retrieve_display_rareware_logo+134r
-CODE.bss:80069574                                              # sub_CODE_7F008E80+88w
-CODE.bss:80069574                                              # sub_CODE_7F009254+58o
-CODE.bss:80069574                                              # sub_CODE_7F009254+68r
-CODE.bss:80069574                                              # sub_CODE_7F009254+84w
-CODE.bss:80069574                                              # sub_CODE_7F009254+90r
-CODE.bss:80069574                                              # sub_CODE_7F009254+B4r
-CODE.bss:80069574                                              # sub_CODE_7F009254+ECw
-CODE.bss:80069574                                              # sub_CODE_7F009254+140o
-CODE.bss:80069574                                              # sub_CODE_7F009254+150r
-CODE.bss:80069574                                              # sub_CODE_7F009254+170o
-CODE.bss:80069574                                              # sub_CODE_7F009254+178r
-CODE.bss:80069574                                              # sub_CODE_7F009254+1A0w
-CODE.bss:80069574                                              # sub_CODE_7F009254+1A4r
-CODE.bss:80069574                                              # sub_CODE_7F009254+2D4o
-CODE.bss:80069574                                              # sub_CODE_7F009254+2DCr
-CODE.bss:80069574                                              # sub_CODE_7F009254+358o
-CODE.bss:80069574                                              # sub_CODE_7F009254+36Cw
-CODE.bss:80069574                                              # sub_CODE_7F009254+404o
-CODE.bss:80069574                                              # sub_CODE_7F009254+418w
-CODE.bss:80069578      # float y
-CODE.bss:80069578     y:              .space 4                 # DATA XREF: something_with_gunbarrel_and_rareware_logo_matrix_manip+2Cr
-CODE.bss:80069578                                              # insert_sight_backdrop_eye_intro+10r
-CODE.bss:80069578                                              # sub_CODE_7F008E80+8Cw
-CODE.bss:8006957C      # float dword_CODE_bss_8006957C
-CODE.bss:8006957C     dword_CODE_bss_8006957C:.space 4         # DATA XREF: something_with_gunbarrel_and_rareware_logo_matrix_manip+60r
-CODE.bss:8006957C                                              # sub_CODE_7F008E80+A4w
-CODE.bss:8006957C                                              # sub_CODE_7F009254+A8w
-CODE.bss:8006957C                                              # sub_CODE_7F009254+2ECw
-CODE.bss:8006957C                                              # sub_CODE_7F009254+348r
-CODE.bss:8006957C                                              # sub_CODE_7F009254+3F4r
-CODE.bss:80069580      # float dword_CODE_bss_80069580
-CODE.bss:80069580     dword_CODE_bss_80069580:.space 4         # DATA XREF: something_with_gunbarrel_and_rareware_logo_matrix_manip+5Cr
-CODE.bss:80069580                                              # sub_CODE_7F008E80+A8w
-CODE.bss:80069584     word_CODE_bss_80069584:.space 2          # DATA XREF: sub_CODE_7F008E80+C0w
-CODE.bss:80069584                                              # sub_CODE_7F009254+6Co
-CODE.bss:80069584                                              # sub_CODE_7F009254+78r
-CODE.bss:80069584                                              # sub_CODE_7F009254+98w
-CODE.bss:80069584                                              # sub_CODE_7F009254+B0w
-CODE.bss:80069584                                              # sub_CODE_7F009254+2E0o
-CODE.bss:80069584                                              # sub_CODE_7F009254+2E8w
-CODE.bss:80069584                                              # sub_CODE_7F009254+308o
-CODE.bss:80069584                                              # sub_CODE_7F009254+30Cr
-CODE.bss:80069584                                              # sub_CODE_7F009254+320w
-CODE.bss:80069584                                              # sub_CODE_7F009254:loc_CODE_7F009610o
-CODE.bss:80069584                                              # sub_CODE_7F009254+3C4r
-CODE.bss:80069584                                              # sub_CODE_7F009254+3D0w
-CODE.bss:80069586                     .align 2
-CODE.bss:80069588     dword_CODE_bss_80069588:.space 4         # DATA XREF: sub_CODE_7F008DE4+58o
-CODE.bss:80069588                                              # sub_CODE_7F008DE4+64w
-CODE.bss:80069588                                              # sub_CODE_7F008DE4+88r
-CODE.bss:8006958C     dword_CODE_bss_8006958C:.space 4         # DATA XREF: sub_CODE_7F007CC8+8Cr
-CODE.bss:8006958C                                              # sub_CODE_7F008DE4+18w
-CODE.bss:8006958C                                              # sub_CODE_7F008DE4+7Cr
-CODE.bss:80069590      # void *virtualaddress
-CODE.bss:80069590     virtualaddress: .space 4                 # DATA XREF: sub_CODE_7F008B58+50o
-CODE.bss:80069590                                              # sub_CODE_7F008B58+64w
-CODE.bss:80069590                                              # retrieve_display_rareware_logo+38r
-CODE.bss:80069594     dword_CODE_bss_80069594:.space 4         # DATA XREF: sub_CODE_7F007F30+80o
-CODE.bss:80069594                                              # sub_CODE_7F007F30+94r
-CODE.bss:80069594                                              # sub_CODE_7F008E80+380w
-
-*/
+// bss
+//CODE.bss:80069550
+s32 dword_CODE_bss_80069550;
+//CODE.bss:80069554
+s32 dword_CODE_bss_80069554;
+//CODE.bss:80069558
+s32 matrix_buffer_rarelogo_0;
+//CODE.bss:8006955C
+s32 matrix_buffer_gunbarrel_0;
+//CODE.bss:80069560
+s32 matrix_buffer_rarelogo_1;
+//CODE.bss:80069564
+s32 matrix_buffer_rarelogo_2;
+//CODE.bss:80069568
+s32 matrix_buffer_gunbarrel_1;
+//CODE.bss:8006956C
+s32 matrix_buffer_intro_backdrop;
+//CODE.bss:80069570
+s32 matrix_buffer_intro_bond;
+//CODE.bss:80069574
+s32 x;
+//CODE.bss:80069578
+s32 y;
+//CODE.bss:8006957C
+s32 dword_CODE_bss_8006957C;
+//CODE.bss:80069580
+s32 dword_CODE_bss_80069580;
+//CODE.bss:80069584
+s32 word_CODE_bss_80069584;
+//CODE.bss:80069588
+s32 dword_CODE_bss_80069588;
+//CODE.bss:8006958C
+s32 dword_CODE_bss_8006958C;
+//CODE.bss:80069590
+s32 virtualaddress;
+//CODE.bss:80069594
+s32 dword_CODE_bss_80069594;
 
 
 /* data

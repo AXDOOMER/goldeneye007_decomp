@@ -1,152 +1,43 @@
 #include "ultra64.h"
 
 /* bss
-CODE.bss:8007B120     clippingfile:   .space 4                 # DATA XREF: sub_CODE_7F0AF038+68r
-CODE.bss:8007B120                                              # sub_CODE_7F0AF5B8+Co
-CODE.bss:8007B120                                              # sub_CODE_7F0AF5B8+1Cw
-CODE.bss:8007B120                                              # sub_CODE_7F0AF808+4r
-CODE.bss:8007B120                                              # sub_CODE_7F0AFB78+3Cr
-CODE.bss:8007B120                                              # sub_CODE_7F0B2E58+28r
-CODE.bss:8007B120                                              # load_stano
-CODE.bss:8007B120                                              # load_stan+8w
+CODE.bss:8007B120     clippingfile:   .space 4
 CODE.bss:8007B124     ptr_firstroom:  .space 4
-CODE.bss:8007B128     dword_CODE_bss_8007B128:.space 4         # DATA XREF: sub_CODE_7F0AF038+10w
-CODE.bss:8007B128                                              # sub_CODE_7F0AF038+98o
-CODE.bss:8007B128                                              # sub_CODE_7F0AF20C+74o
-CODE.bss:8007B12C     dword_CODE_bss_8007B12C:.space 4         # DATA XREF: sub_CODE_7F0AF038+18w
-CODE.bss:8007B130     dword_CODE_bss_8007B130:.space 4         # DATA XREF: sub_CODE_7F0AF038+4Cw
-CODE.bss:8007B134     dword_CODE_bss_8007B134:.space 0x220     # DATA XREF: sub_CODE_7F0AF038+48o
-CODE.bss:8007B354     dword_CODE_bss_8007B354:.space 4         # DATA XREF: sub_CODE_7F0AF038+44o
-CODE.bss:8007B358     dword_CODE_bss_8007B358:.space 0x684     # DATA XREF: sub_CODE_7F0AF038+A0o
-CODE.bss:8007B358                                              # sub_CODE_7F0AF20C+13Co
-CODE.bss:8007B358                                              # sub_CODE_7F0B9338+78o
-CODE.bss:8007B9DC     dword_CODE_bss_8007B9DC:.space 4         # DATA XREF: sub_CODE_7F0AF038+4o
-CODE.bss:8007B9DC                                              # sub_CODE_7F0AF038+Cw
-CODE.bss:8007B9DC                                              # sub_CODE_7F0AF20C+F0r
-CODE.bss:8007B9DC                                              # sub_CODE_7F0AF20C:loc_CODE_7F0AF534r
-CODE.bss:8007B9DC                                              # sub_CODE_7F0B9338+3Cr
+CODE.bss:8007B128     dword_CODE_bss_8007B128:.space 4
+CODE.bss:8007B12C     dword_CODE_bss_8007B12C:.space 4
+CODE.bss:8007B130     dword_CODE_bss_8007B130:.space 4
+CODE.bss:8007B134     dword_CODE_bss_8007B134:.space 0x220
+CODE.bss:8007B354     dword_CODE_bss_8007B354:.space 4
+CODE.bss:8007B358     dword_CODE_bss_8007B358:.space 0x684
+CODE.bss:8007B9DC     dword_CODE_bss_8007B9DC:.space 4
 CODE.bss:8007B9E0                     .space 4
-CODE.bss:8007B9E4     dword_CODE_bss_8007B9E4:.space 4         # DATA XREF: sub_CODE_7F0B0914:loc_CODE_7F0B0B78w
-CODE.bss:8007B9E4                                              # sub_CODE_7F0B0E24+100r
-CODE.bss:8007B9E4                                              # sub_CODE_7F0B0E24+4F4w
-CODE.bss:8007B9E4                                              # sub_CODE_7F0B18B8+138o
-CODE.bss:8007B9E4                                              # sub_CODE_7F0B1CC4w
-CODE.bss:8007B9E4                                              # sub_CODE_7F0B1CE0+8r
-CODE.bss:8007B9E4                                              # sub_CODE_7F0B1DDC:loc_CODE_7F0B1FFCw
-CODE.bss:8007B9E4                                              # sub_CODE_7F0B28B0r
-CODE.bss:8007B9E8     dword_CODE_bss_8007B9E8:.space 4         # DATA XREF: sub_CODE_7F0B0914+26Cw
-CODE.bss:8007B9E8                                              # sub_CODE_7F0B0E24+108r
-CODE.bss:8007B9E8                                              # sub_CODE_7F0B0E24+4F8w
-CODE.bss:8007B9E8                                              # sub_CODE_7F0B18B8+368w
-CODE.bss:8007B9E8                                              # sub_CODE_7F0B1CC4+8w
-CODE.bss:8007B9E8                                              # sub_CODE_7F0B1CEC+8r
-CODE.bss:8007B9E8                                              # sub_CODE_7F0B1DDC+230w
-CODE.bss:8007B9E8                                              # sub_CODE_7F0B28B0+20r
+CODE.bss:8007B9E4     dword_CODE_bss_8007B9E4:.space 4
+CODE.bss:8007B9E8     dword_CODE_bss_8007B9E8:.space 4
 CODE.bss:8007B9EC                     .align 4
-CODE.bss:8007B9F0     flt_CODE_bss_8007B9F0:.space 4           # DATA XREF: sub_CODE_7F0B0E24+130o
-CODE.bss:8007B9F0                                              # sub_CODE_7F0B0E24+190w
-CODE.bss:8007B9F0                                              # sub_CODE_7F0B0E24:loc_CODE_7F0B100Co
-CODE.bss:8007B9F0                                              # sub_CODE_7F0B18B8+148o
-CODE.bss:8007B9F0                                              # sub_CODE_7F0B28B0+40o
-CODE.bss:8007B9F0                                              # sub_CODE_7F0B28B0+54r
-CODE.bss:8007B9F4     flt_CODE_bss_8007B9F4:.space 4           # DATA XREF: sub_CODE_7F0B0E24+1A8w
-CODE.bss:8007B9F4                                              # sub_CODE_7F0B28B0+64r
-CODE.bss:8007B9F8     flt_CODE_bss_8007B9F8:.space 4           # DATA XREF: sub_CODE_7F0B0E24+ECo
-CODE.bss:8007B9F8                                              # sub_CODE_7F0B0E24+1C0w
-CODE.bss:8007B9F8                                              # sub_CODE_7F0B0E24+4D8o
-CODE.bss:8007B9F8                                              # sub_CODE_7F0B0E24+4E0w
-CODE.bss:8007B9F8                                              # sub_CODE_7F0B18B8+150o
-CODE.bss:8007B9F8                                              # sub_CODE_7F0B28B0+68o
-CODE.bss:8007B9F8                                              # sub_CODE_7F0B28B0+74r
-CODE.bss:8007B9FC     flt_CODE_bss_8007B9FC:.space 4           # DATA XREF: sub_CODE_7F0B0E24+1DCw
-CODE.bss:8007B9FC                                              # sub_CODE_7F0B0E24+4F0w
-CODE.bss:8007B9FC                                              # sub_CODE_7F0B28B0+80r
-CODE.bss:8007BA00     flt_CODE_bss_8007BA00:.space 4           # DATA XREF: sub_CODE_7F030D70+260r
-CODE.bss:8007BA00                                              # sub_CODE_7F030D70+390r
-CODE.bss:8007BA00                                              # sub_CODE_7F0B0E24+5A0w
-CODE.bss:8007BA04     dword_CODE_bss_8007BA04:.space 4         # DATA XREF: sub_CODE_7F02D734:loc_CODE_7F02E060r
-CODE.bss:8007BA04                                              # sub_CODE_7F02D734:loc_CODE_7F02E0C8r
-CODE.bss:8007BA04                                              # sub_CODE_7F02D734+9B8r
-CODE.bss:8007BA04                                              # sub_CODE_7F02D734+A30r
-CODE.bss:8007BA04                                              # sub_CODE_7F07CF8C+23Cr
-CODE.bss:8007BA04                                              # sub_CODE_7F0B0E24+1F4o
-CODE.bss:8007BA04                                              # sub_CODE_7F0B0E24+200w
-CODE.bss:8007BA04                                              # sub_CODE_7F0B18B8+C4w
-CODE.bss:8007BA04                                              # sub_CODE_7F0B18B8+36Cw
+CODE.bss:8007B9F0     flt_CODE_bss_8007B9F0:.space 4
+CODE.bss:8007B9F4     flt_CODE_bss_8007B9F4:.space 4
+CODE.bss:8007B9F8     flt_CODE_bss_8007B9F8:.space 4
+CODE.bss:8007B9FC     flt_CODE_bss_8007B9FC:.space 4
+CODE.bss:8007BA00     flt_CODE_bss_8007BA00:.space 4
+CODE.bss:8007BA04     dword_CODE_bss_8007BA04:.space 4
 CODE.bss:8007BA08                     .space 4
-CODE.bss:8007BA0C     dword_CODE_bss_8007BA0C:.space 4         # DATA XREF: sub_CODE_7F0B2274+88w
-CODE.bss:8007BA0C                                              # sub_CODE_7F0B2420+4r
-CODE.bss:8007BA10     dword_CODE_bss_8007BA10:.space 4         # DATA XREF: sub_CODE_7F0B2718+54w
-CODE.bss:8007BA10                                              # sub_CODE_7F0B2718+60o
-CODE.bss:8007BA10                                              # sub_CODE_7F0B2718+74o
-CODE.bss:8007BA10                                              # sub_CODE_7F0B2718+C0o
+CODE.bss:8007BA0C     dword_CODE_bss_8007BA0C:.space 4
+CODE.bss:8007BA10     dword_CODE_bss_8007BA10:.space 4
 CODE.bss:8007BA14                     .space 0x57C
 */
 
 /* data
 D:80040F30     dword_D_80040F30:.word 0x8D8604C5, 0x9DA40000, 0, 0, 0
-D:80040F30                                              # DATA XREF: sub_CODE_7F0B2274+38o
-D:80040F30                                              # sub_CODE_7F0B2420+58o
-D:80040F44     flt_D_80040F44: .float 1.0               # DATA XREF: sub_CODE_7F0AF20C+54r
-D:80040F44                                              # sub_CODE_7F0AFFCC+8r
-D:80040F44                                              # sub_CODE_7F0B0018+8r
-D:80040F44                                              # sub_CODE_7F0B00C4+20r
-D:80040F44                                              # sub_CODE_7F0B0140+Cr
-D:80040F44                                              # sub_CODE_7F0B0518+10r
-D:80040F44                                              # sub_CODE_7F0B0914+10r
-D:80040F44                                              # sub_CODE_7F0B1DDC+10r
-D:80040F44                                              # sub_CODE_7F0B26B8+4r
-D:80040F44                                              # sub_CODE_7F0B2950w
-D:80040F44                                              # sub_CODE_7F0B2970+8r
-D:80040F48     flt_D_80040F48: .float 1.0               # DATA XREF: sub_CODE_7F0AF924+58o
-D:80040F48                                              # sub_CODE_7F0AF924+68r
-D:80040F48                                              # sub_CODE_7F0AF924+A4r
-D:80040F48                                              # sub_CODE_7F0AF924+E0r
-D:80040F48                                              # sub_CODE_7F0AFA1C+2Co
-D:80040F48                                              # sub_CODE_7F0AFA1C+38r
-D:80040F48                                              # sub_CODE_7F0AFA1C+50r
-D:80040F48                                              # sub_CODE_7F0AFA1C+6Cr
-D:80040F48                                              # sub_CODE_7F0AFFCC+30r
-D:80040F48                                              # sub_CODE_7F0B0018+30r
-D:80040F48                                              # sub_CODE_7F0B00C4+60r
-D:80040F48                                              # sub_CODE_7F0B0140+40r
-D:80040F48                                              # sub_CODE_7F0B0E24+164r
-D:80040F48                                              # sub_CODE_7F0B1CF8+Cr
-D:80040F48                                              # sub_CODE_7F0B23AC+24r
-D:80040F48                                              # sub_CODE_7F0B2950+1Cw
-D:80040F48                                              # sub_CODE_7F0B2970+208r
-D:80040F48                                              # sub_CODE_7F0B2970+290r
-D:80040F48                                              # sub_CODE_7F0B2C74+4o
-D:80040F48                                              # sub_CODE_7F0B2C74+7Cr
-D:80040F48                                              # sub_CODE_7F0B2C74+84r
-D:80040F48                                              # sub_CODE_7F0B2C74+90r
+D:80040F44     flt_D_80040F44: .float 1.0
+D:80040F48     flt_D_80040F48: .float 1.0
 D:80040F4C     list_of_tilesizes:.word 0x20202020,0x28303840,0x48505800
-D:80040F4C                                              # DATA XREF: sub_CODE_7F0AF038+70o
-D:80040F4C                                              # sub_CODE_7F0AF20C+78o
-D:80040F4C                                              # sub_CODE_7F0AF808+4Co
-D:80040F4C                                              # sub_CODE_7F0B2E58+30o
-D:80040F4C                                              # load_stan+40o
-D:80040F58     base_ptr_connection_vals:.word 0         # DATA XREF: sub_CODE_7F07D960+468r
-D:80040F58                                              # sub_CODE_7F0AF5B8+30w
-D:80040F58                                              # sub_CODE_7F0AF638+40o
-D:80040F58                                              # sub_CODE_7F0B0914+1BCr
-D:80040F58                                              # sub_CODE_7F0B1DDC+1D4r
-D:80040F58                                              # sub_CODE_7F0B2274+24r
-D:80040F58                                              # sub_CODE_7F0B2420+60r
-D:80040F58                                              # sub_CODE_7F0B2718+5Co
-D:80040F58                                              # load_stan+20w
-D:80040F5C     ptr_firstroom_0:.word 0                  # DATA XREF: load_stan+34w
+D:80040F58     base_ptr_connection_vals:.word 0
+D:80040F5C     ptr_firstroom_0:.word 0
 D:80040F60                     .word 0
 D:80040F64     dword_D_80040F64:.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:80040F64                                              # DATA XREF: sub_CODE_7F0AEF3C+14o
-D:80040FAC     dword_D_80040FAC:.word 0                 # DATA XREF: sub_CODE_7F0AEF3Cr
-D:80040FAC                                              # sub_CODE_7F0AEF3C+58w
-D:80040FB0     dword_D_80040FB0:.word 0                 # DATA XREF: sub_CODE_7F0AF5B8+14w
-D:80040FB4     stanlinelog_flag:.word 0                 # DATA XREF: sub_CODE_7F081478:loc_CODE_7F081564o
-D:80040FB4                                              # sub_CODE_7F081478:loc_CODE_7F081608r
-D:80040FB4                                              # sub_CODE_7F081478+194w
-D:80040FB4                                              # sub_CODE_7F081478+1C8w
-D:80040FB4                                              # sub_CODE_7F0AF5B8+48w
+D:80040FAC     dword_D_80040FAC:.word 0
+D:80040FB0     dword_D_80040FB0:.word 0
+D:80040FB4     stanlinelog_flag:.word 0
 D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -159,40 +50,19 @@ D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:80040FB8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:80040FB8                     .word 0, 0, 0, 0
-D:800413BC     dword_D_800413BC:.word 0                 # DATA XREF: sub_CODE_7F0B0E24:loc_CODE_7F0B0F7Cw
-D:800413BC                                              # sub_CODE_7F0B0E24+4C0w
-D:800413BC                                              # sub_CODE_7F0B18B8+134o
-D:800413BC                                              # sub_CODE_7F0B1CC4+18w
-D:800413BC                                              # sub_CODE_7F0B28B0:loc_CODE_7F0B28E8r
-D:800413C0     flt_D_800413C0: .float 0.0               # DATA XREF: sub_CODE_7F0B3044+38o
-D:800413C0                                              # sub_CODE_7F0B3044+54w
-D:800413C0                                              # sub_CODE_7F0B3044+80o
-D:800413C0                                              # sub_CODE_7F0B3044+9Cr
-D:800413C0                                              # sub_CODE_7F0B3044+A4w
-D:800413C0                                              # sub_CODE_7F0B3044+A8r
-D:800413C0                                              # sub_CODE_7F0B3044+C8w
-D:800413C4     flt_D_800413C4: .float 0.0               # DATA XREF: sub_CODE_7F0B3044+5Cw
-D:800413C4                                              # sub_CODE_7F0B3044+94r
-D:800413C8     dword_D_800413C8:.word 1                 # DATA XREF: sub_CODE_7F0B3044+60w
-D:800413CC     dword_D_800413CC:.word 1                 # DATA XREF: sub_CODE_7F0B3044+58r
-D:800413CC                                              # sub_CODE_7F0B3044+88r
-D:800413CC                                              # sub_CODE_7F0B3044+DCw
-D:800413D0     dword_D_800413D0:.word 0                 # DATA XREF: sub_CODE_7F0B3044+30o
-D:800413D0                                              # sub_CODE_7F0B3044+34r
-D:800413D0                                              # sub_CODE_7F0B3044+68w
-D:800413D0                                              # sub_CODE_7F0B3044:loc_CODE_7F0B30B0o
-D:800413D0                                              # sub_CODE_7F0B3044+74r
+D:800413BC     dword_D_800413BC:.word 0
+D:800413C0     flt_D_800413C0: .float 0.0
+D:800413C4     flt_D_800413C4: .float 0.0
+D:800413C8     dword_D_800413C8:.word 1
+D:800413CC     dword_D_800413CC:.word 1
+D:800413D0     dword_D_800413D0:.word 0
 D:800413D4                     .word 0, 0, 0, 0, 0, 0, 0
 */
 
 /* rodata
-D:800585A0     aCDCC:          .ascii "%c%d%c%c"<0>     # DATA XREF: sub_CODE_7F0AEF3C+7Co
-D:800585A9                     .byte 0, 0, 0
-D:800585AC     aStan_c_debug:  .ascii "stan_c_debug"<0>
-D:800585AC                                              # DATA XREF: something_stan_c_debug_related+Co
-D:800585B9                     .byte 0, 0, 0
-D:800585BC     aStanlinelog:   .ascii "-stanlinelog"<0>  # DATA XREF: sub_CODE_7F0AF5B8+34o
-D:800585C9                     .byte 0, 0, 0
+D:800585A0     aCDCC:          .ascii "%c%d%c%c"
+D:800585AC     aStan_c_debug:  .ascii "stan_c_debug"
+D:800585BC     aStanlinelog:   .ascii "-stanlinelog"
 D:800585CC     flt_D_800585CC: .float 32767.0           # DATA XREF: sub_CODE_7F0AF20C+4r
 D:800585D0     flt_D_800585D0: .float -3.4028235e38     # DATA XREF: sub_CODE_7F0AF20C+10r
 D:800585D4     flt_D_800585D4: .float -32767.0          # DATA XREF: sub_CODE_7F0AF20C:loc_CODE_7F0AF2C8r

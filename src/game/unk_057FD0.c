@@ -1,24 +1,20 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:80075DA0     flt_CODE_bss_80075DA0:.space 4           # DATA XREF: sub_CODE_7F058C64+Cw
-CODE.bss:80075DA0                                              # sub_CODE_7F058C88r
-*/
+// bss
+//CODE.bss:80075DA0
+f32 flt_CODE_bss_80075DA0;
 
-/* data
-D:80032310     flt_D_80032310: .float 65536.0           # DATA XREF: sub_CODE_7F058C4C+14w
-D:80032310                                              # sub_CODE_7F058C64o
-D:80032310                                              # sub_CODE_7F058C64+8r
-D:80032310                                              # sub_CODE_7F058C64+20w
-D:80032310                                              # sub_CODE_7F058C88+10w
-D:80032310                                              # sub_CODE_7F058C9C+18o
-D:80032310                                              # sub_CODE_7F058E78+18o
-D:80032314                     .float 65536.0
-*/
 
-/* rodata
-D:800536F0     flt_D_800536F0: .float 57.295776         # DATA XREF: sub_CODE_7F059CE8+8r
-*/
+// data
+//D:80032310     
+f32 flt_D_80032310 = 65536.0;
+//D:80032314     
+f32 flt_D_80032314 = 65536.0;
+
+
+// rodata
+//D:800536F0
+const f32 flt_D_800536F0 = 57.295776;
 
 
 

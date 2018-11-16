@@ -16,10 +16,9 @@ s32 dword_D_8002BB2C = 0;
 
 
 
-/*
-.section .rodata
-F32_80051CF0: .float 299.0
-*/
+// .rodata
+const f32 F32_80051CF0 = 299.0;
+
 
 
 

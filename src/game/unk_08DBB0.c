@@ -68,8 +68,10 @@ D:8005533C     flt_D_8005533C: .float 0.0041666669      # DATA XREF: sub_CODE_7F
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08DBB0(void) {
-
+u32 sub_GAME_7F08DBB0(void) {
+    // Node 0
+    ptr_BONDdata->unk5BC = (s8) ((u32) ptr_BONDdata->unk5BC < 1U);
+    return ptr_BONDdata->unk5BC;
 }
 #else
 GLOBAL_ASM(

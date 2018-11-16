@@ -1,121 +1,26 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:8007A100     dword_CODE_bss_8007A100:.space 0x40      # DATA XREF: set_gu_scale+24o
-CODE.bss:8007A100                                              # sub_CODE_7F09F03C+E8o
-CODE.bss:8007A140     ptr_smoke_buf:  .space 4                 # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+108o
-CODE.bss:8007A140                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+114w
-CODE.bss:8007A140                                              # sub_CODE_7F007800:loc_CODE_7F007894o
-CODE.bss:8007A140                                              # sub_CODE_7F007800+9Cr
-CODE.bss:8007A140                                              # sub_CODE_7F007800+B0r
-CODE.bss:8007A140                                              # sub_CODE_7F09C250+3F0o
-CODE.bss:8007A140                                              # sub_CODE_7F09C250+404r
-CODE.bss:8007A140                                              # sub_CODE_7F09E700+2Co
-CODE.bss:8007A140                                              # sub_CODE_7F09E700+48r
-CODE.bss:8007A144     ptr_explosion_buf:.space 4               # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+4Co
-CODE.bss:8007A144                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+54w
-CODE.bss:8007A144                                              # sub_CODE_7F007800+24o
-CODE.bss:8007A144                                              # sub_CODE_7F007800+2Cr
-CODE.bss:8007A144                                              # sub_CODE_7F007800+40r
-CODE.bss:8007A144                                              # sub_CODE_7F09C250:loc_CODE_7F09C2B8r
-CODE.bss:8007A144                                              # sub_CODE_7F09C7C4+C4o
-CODE.bss:8007A144                                              # sub_CODE_7F09C7C4+C8r
-CODE.bss:8007A148     max_casings:    .space 4                 # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+300o
-CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+330w
-CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+348o
-CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+360o
-CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers:loc_CODE_7F0070F4r
-CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+36Cw
-CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers:loc_CODE_7F007100r
-CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+398o
-CODE.bss:8007A148                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+3A0r
-CODE.bss:8007A148                                              # sub_CODE_7F09F254+AB4r
-CODE.bss:8007A148                                              # sub_CODE_7F09FD3C:loc_CODE_7F09FD94o
-CODE.bss:8007A148                                              # sub_CODE_7F09FD3C+60r
-CODE.bss:8007A148                                              # sub_CODE_7F0A0034+A4r
-CODE.bss:8007A148                                              # sub_CODE_7F0A0034:loc_CODE_7F0A0224r
-CODE.bss:8007A14C     ptr_ejected_casing_buf:.space 4          # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+3A4o
-CODE.bss:8007A14C                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+3ACw
-CODE.bss:8007A14C                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+3BCr
-CODE.bss:8007A14C                                              # sub_CODE_7F09F254+C4o
-CODE.bss:8007A14C                                              # sub_CODE_7F09F254+C8r
-CODE.bss:8007A14C                                              # sub_CODE_7F09F254+F8r
-CODE.bss:8007A14C                                              # sub_CODE_7F09F254+120r
-CODE.bss:8007A14C                                              # sub_CODE_7F09F254+164r
-CODE.bss:8007A14C                                              # sub_CODE_7F09F254+190r
-CODE.bss:8007A14C                                              # sub_CODE_7F09F254+1ACr
-CODE.bss:8007A14C                                              # sub_CODE_7F09F254+1D0r
-CODE.bss:8007A14C                                              # sub_CODE_7F09F254+218r
-CODE.bss:8007A14C                                              # sub_CODE_7F09F254+248r
-CODE.bss:8007A14C                                              # sub_CODE_7F09FD3C+94o
-CODE.bss:8007A14C                                              # sub_CODE_7F09FD3C+9Cr
-CODE.bss:8007A14C                                              # sub_CODE_7F0A0034+D0o
-CODE.bss:8007A14C                                              # sub_CODE_7F0A0034+E8r
-CODE.bss:8007A150     ptr_scorch_buf: .space 4                 # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+268o
-CODE.bss:8007A150                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+270w
-CODE.bss:8007A150                                              # sub_CODE_7F0A027C+1C0o
-CODE.bss:8007A150                                              # sub_CODE_7F0A027C+1C4r
-CODE.bss:8007A150                                              # sub_CODE_7F0A027C+1E0r
-CODE.bss:8007A150                                              # sub_CODE_7F0A027C+1FCr
-CODE.bss:8007A150                                              # sub_CODE_7F0A027C+218r
-CODE.bss:8007A150                                              # sub_CODE_7F0A027C+234r
-CODE.bss:8007A150                                              # sub_CODE_7F0A027C+24Cr
-CODE.bss:8007A150                                              # sub_CODE_7F0A027C+280r
-CODE.bss:8007A150                                              # sub_CODE_7F0A027C+2B4r
-CODE.bss:8007A150                                              # sub_CODE_7F0A027C+2E8r
-CODE.bss:8007A150                                              # sub_CODE_7F0A027C+330r
-CODE.bss:8007A150                                              # sub_CODE_7F0A027C+354r
-CODE.bss:8007A150                                              # sub_CODE_7F0A0AB4+C8o
-CODE.bss:8007A150                                              # sub_CODE_7F0A0AB4+E4r
-CODE.bss:8007A154     ptr_bullet_impact_buf:.space 4           # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+2C4o
-CODE.bss:8007A154                                              # alloc_explosion_smoke_casing_scorch_impact_buffers+2CCw
-CODE.bss:8007A154                                              # sub_CODE_7F0A0CCC+10o
-CODE.bss:8007A154                                              # sub_CODE_7F0A0CCC+20r
-CODE.bss:8007A154                                              # sub_CODE_7F0A0D90+4o
-CODE.bss:8007A154                                              # sub_CODE_7F0A0D90+24r
-CODE.bss:8007A154                                              # sub_CODE_7F0A0E98+14o
-CODE.bss:8007A154                                              # sub_CODE_7F0A108C+33Co
-CODE.bss:8007A154                                              # sub_CODE_7F0A108C+340r
-CODE.bss:8007A154                                              # sub_CODE_7F0A108C+358r
-CODE.bss:8007A154                                              # sub_CODE_7F0A108C+374r
-CODE.bss:8007A154                                              # sub_CODE_7F0A108C+390r
-CODE.bss:8007A154                                              # sub_CODE_7F0A108C+3ACr
-CODE.bss:8007A154                                              # sub_CODE_7F0A108C+3C8r
-CODE.bss:8007A154                                              # sub_CODE_7F0A108C+3FCr
-CODE.bss:8007A154                                              # sub_CODE_7F0A108C+430r
-CODE.bss:8007A154                                              # sub_CODE_7F0A108C+464r
-CODE.bss:8007A154                                              # sub_CODE_7F0A108C+4C8r
-CODE.bss:8007A154                                              # sub_CODE_7F0A1A94+90o
-CODE.bss:8007A154                                              # sub_CODE_7F0A1A94+A8r
-*/
+// bss
+//CODE.bss:8007A100
+char dword_CODE_bss_8007A100[0x40];
+//CODE.bss:8007A140
+u32 *ptr_smoke_buf;
+//CODE.bss:8007A144
+u32 *ptr_explosion_buf;
+//CODE.bss:8007A148
+s32 max_casings;
+//CODE.bss:8007A14C
+u32 *ptr_ejected_casing_buf;
+//CODE.bss:8007A150
+u32 *ptr_scorch_buf;
+//CODE.bss:8007A154
+u32 *ptr_bullet_impact_buf;
 
 /* data
-D:80040170     dword_D_80040170:.word 0                 # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffersw
-D:80040170                                              # sub_CODE_7F007800+20w
-D:80040170                                              # sub_CODE_7F09C250+60w
-D:80040170                                              # sub_CODE_7F09C7AC+4w
-D:80040170                                              # sub_CODE_7F09C7C4+4r
-D:80040170                                              # sub_CODE_7F09C7C4:loc_CODE_7F09C944o
-D:80040170                                              # sub_CODE_7F09C7C4+188r
-D:80040170                                              # sub_CODE_7F09C7C4+198w
-D:80040170                                              # sub_CODE_7F09C7C4+1D0r
-D:80040174     dword_D_80040174:.word 0                 # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+8w
-D:80040174                                              # sub_CODE_7F09C7AC+14w
-D:80040174                                              # sub_CODE_7F09C7C4+158o
-D:80040174                                              # sub_CODE_7F09C7C4+160r
-D:80040174                                              # sub_CODE_7F09C7C4+178w
-D:80040178     flt_D_80040178: .float 1.0               # DATA XREF: alloc_explosion_smoke_casing_scorch_impact_buffers+48w
-D:80040178                                              # sub_CODE_7F09C9D8+470r
-D:80040178                                              # sub_CODE_7F0BE8D0+104w
-D:80040178                                              # sub_CODE_7F0BE8D0+190w
-D:80040178                                              # sub_CODE_7F0BE8D0+20Cw
-D:80040178                                              # sub_CODE_7F0BE8D0+288w
+D:80040170     dword_D_80040170:.word 0
+D:80040174     dword_D_80040174:.word 0
+D:80040178     flt_D_80040178: .float 1.0
 D:8004017C     dword_D_8004017C:.word    0x1003C,  0x630000,         0,0x80808000
-D:8004017C                                              # DATA XREF: sub_CODE_7F09C250+3E8o
-D:8004017C                                              # sub_CODE_7F09DDA4+80o
-D:8004017C                                              # sub_CODE_7F09E700+30o
-D:8004017C                                              # sub_CODE_7F09E8AC+88o
-D:8004017C                                              # sub_CODE_7F09E8AC+4B4o
 D:8004017C                     .word 0x3E99999A,  0xB40000, 0x1E0003C,  0x2D003C
 D:8004017C                     .word 0x3CA3D70A,0x50506000,0x3E99999A,  0xB40000
 D:8004017C                     .word  0x1E0003C,  0x320014,0x3C23D70A,0x80808000
@@ -221,9 +126,6 @@ D:8004017C                     .word  0x2000468, 0x2000510, 0x20005B8, 0x2000660
 D:8004017C                     .word  0x2000708, 0x20007B0, 0x2000858, 0x2000900
 D:8004017C                     .word  0x20009A8,         0,         0,         0
 D:8004080C     dword_D_8004080C:.word 0x41200000, 0x41200000, 0x1020800, 0x40C00000, 0x40C00000, 0x1020800
-D:8004080C                                              # DATA XREF: sub_CODE_7F0A0D90+Co
-D:8004080C                                              # sub_CODE_7F0A108C+80o
-D:8004080C                                              # sub_CODE_7F0A1A94+98o
 D:8004080C                     .word 0x41000000, 0x41000000, 0x20800, 0x41A00000, 0x41A00000, 0x1020800, 0x40C00000
 D:8004080C                     .word 0x40C00000, 0x1020800, 0x41000000, 0x41000000, 0x1020800, 0x41400000
 D:8004080C                     .word 0x41400000, 0x1020800, 0x40C00000, 0x40C00000, 0x1020800, 0x41A00000
@@ -233,50 +135,70 @@ D:8004080C                     .word 0x41A00000, 0x1020800, 0x41C00000, 0x41C000
 D:8004080C                     .word 0x40C00000, 0x1020100, 0x40C00000, 0x40C00000, 0x1020100, 0x41C00000
 D:8004080C                     .word 0x41C00000, 0x2020800, 0x40C00000, 0x40C00000, 0x1020100, 0x41000000
 D:8004080C                     .word 0x41000000, 0x1020100, 0x41400000, 0x41400000, 0x1020100, 0, 0, 0, 0
-D:8004090C     dword_D_8004090C:.word 0xFFFFFFFF        # DATA XREF: sub_CODE_7F09D82C+30r
-D:80040910     dword_D_80040910:.word 0                 # DATA XREF: sub_CODE_7F09DDA4+2Co
-D:80040910                                              # sub_CODE_7F09DDA4+30r
-D:80040914     dword_D_80040914:.word 0                 # DATA XREF: sub_CODE_7F09DDA4+34r
-D:80040918     dword_D_80040918:.word 0                 # DATA XREF: sub_CODE_7F09DDA4+48r
-D:8004091C     dword_D_8004091C:.word 0                 # DATA XREF: sub_CODE_7F09DDA4+44r
-D:80040920     dword_D_80040920:.word 0                 # DATA XREF: sub_CODE_7F0A027C+28o
-D:80040920                                              # sub_CODE_7F0A027C+2Cr
-D:80040924     dword_D_80040924:.word 0                 # DATA XREF: sub_CODE_7F0A027C+3Cr
-D:80040928     dword_D_80040928:.word 0                 # DATA XREF: sub_CODE_7F0A027C+48r
-D:8004092C     dword_D_8004092C:.word 0xDC              # DATA XREF: sub_CODE_7F0A027C+50r
-D:80040930     dword_D_80040930:.word 0                 # DATA XREF: sub_CODE_7F0A108C+30o
-D:80040930                                              # sub_CODE_7F0A108C+34r
-D:80040934     dword_D_80040934:.word 0                 # DATA XREF: sub_CODE_7F0A108C+44r
-D:80040938     dword_D_80040938:.word 0                 # DATA XREF: sub_CODE_7F0A108C+54r
-D:8004093C     dword_D_8004093C:.word 0xDC              # DATA XREF: sub_CODE_7F0A108C+5Cr
+D:8004090C     dword_D_8004090C:.word 0xFFFFFFFF
+D:80040910     dword_D_80040910:.word 0
+D:80040914     dword_D_80040914:.word 0
+D:80040918     dword_D_80040918:.word 0
+D:8004091C     dword_D_8004091C:.word 0
+D:80040920     dword_D_80040920:.word 0
+D:80040924     dword_D_80040924:.word 0
+D:80040928     dword_D_80040928:.word 0
+D:8004092C     dword_D_8004092C:.word 0xDC
+D:80040930     dword_D_80040930:.word 0
+D:80040934     dword_D_80040934:.word 0
+D:80040938     dword_D_80040938:.word 0
+D:8004093C     dword_D_8004093C:.word 0xDC
 */
 
-/* rodata
-D:800576B0     flt_D_800576B0: .float 999999.88         # DATA XREF: sub_CODE_7F09C250:loc_CODE_7F09C4F8r
-D:800576B4     flt_D_800576B4: .float 6.2831855         # DATA XREF: sub_CODE_7F09C250+32Cr
-D:800576B8     flt_D_800576B8: .float 0.80000001        # DATA XREF: sub_CODE_7F09C7C4:loc_CODE_7F09C814r
-D:800576BC     flt_D_800576BC: .float 6.2831855         # DATA XREF: sub_CODE_7F09CEE8+2E8r
-D:800576C0     flt_D_800576C0: .float 30000.0           # DATA XREF: sub_CODE_7F09DDA4+320r
-D:800576C4     flt_D_800576C4: .float 30000.0           # DATA XREF: sub_CODE_7F09DDA4+4ECr
-D:800576C8     flt_D_800576C8: .float -30000.0          # DATA XREF: sub_CODE_7F09DDA4+51Cr
-D:800576CC     flt_D_800576CC: .float 0.15000001        # DATA XREF: sub_CODE_7F09E8AC+A8r
-D:800576D0     flt_D_800576D0: .float 0.30000001        # DATA XREF: sub_CODE_7F09E8AC+ACr
-D:800576D4     flt_D_800576D4: .float 0.0099999998      # DATA XREF: sub_CODE_7F09E8AC+B4r
-D:800576D8     flt_D_800576D8: .float 0.02              # DATA XREF: sub_CODE_7F09E8AC+BCr
-D:800576DC     flt_D_800576DC: .float 6.2831855         # DATA XREF: sub_CODE_7F09E8AC+348r
-D:800576E0     flt_D_800576E0: .float 1.12              # DATA XREF: sub_CODE_7F09F254+8Cr
-D:800576E4     flt_D_800576E4: .float 0.12              # DATA XREF: sub_CODE_7F09F254+94r
-D:800576E8     flt_D_800576E8: .float 6.2831855         # DATA XREF: sub_CODE_7F09F254+91Cr
-D:800576EC     flt_D_800576EC: .float 0.1               # DATA XREF: sub_CODE_7F09F254+9E4r
-D:800576F0     flt_D_800576F0: .float 30000.0           # DATA XREF: sub_CODE_7F09FD3C+74r
-D:800576F4     flt_D_800576F4: .float -30000.0          # DATA XREF: sub_CODE_7F09FD3C+78r
-D:800576F8     flt_D_800576F8: .float 0.2               # DATA XREF: sub_CODE_7F09FD3C+80r
-D:800576FC     flt_D_800576FC: .float -20000.0          # DATA XREF: sub_CODE_7F0A0034+BCr
-D:80057700     flt_D_80057700: .float 20000.0           # DATA XREF: sub_CODE_7F0A0034+E0r
-D:80057704     flt_D_80057704: .float 6.2831855         # DATA XREF: sub_CODE_7F0A027C+80r
-D:80057708     flt_D_80057708: .float 0.2               # DATA XREF: sub_CODE_7F0A027C+118r
-D:8005770C     flt_D_8005770C: .float 0.80000001        # DATA XREF: sub_CODE_7F0A027C+124r
-*/
+// rodata
+//D:800576B0
+const f32 flt_D_800576B0 = 999999.88;
+//D:800576B4
+const f32 flt_D_800576B4 = 6.2831855;
+//D:800576B8
+const f32 flt_D_800576B8 = 0.80000001;
+//D:800576BC
+const f32 flt_D_800576BC = 6.2831855;
+//D:800576C0
+const f32 flt_D_800576C0 = 30000.0;
+//D:800576C4
+const f32 flt_D_800576C4 = 30000.0;
+//D:800576C8
+const f32 flt_D_800576C8 = -30000.0;
+//D:800576CC
+const f32 flt_D_800576CC = 0.15000001;
+//D:800576D0
+const f32 flt_D_800576D0 = 0.30000001;
+//D:800576D4
+const f32 flt_D_800576D4 = 0.0099999998;
+//D:800576D8
+const f32 flt_D_800576D8 = 0.02;
+//D:800576DC
+const f32 flt_D_800576DC = 6.2831855;
+//D:800576E0
+const f32 flt_D_800576E0 = 1.12;
+//D:800576E4
+const f32 flt_D_800576E4 = 0.12;
+//D:800576E8
+const f32 flt_D_800576E8 = 6.2831855;
+//D:800576EC
+const f32 flt_D_800576EC = 0.1;
+//D:800576F0
+const f32 flt_D_800576F0 = 30000.0;
+//D:800576F4
+const f32 flt_D_800576F4 = -30000.0;
+//D:800576F8
+const f32 flt_D_800576F8 = 0.2;
+//D:800576FC
+const f32 flt_D_800576FC = -20000.0;
+//D:80057700
+const f32 flt_D_80057700 = 20000.0;
+//D:80057704
+const f32 flt_D_80057704 = 6.2831855;
+//D:80057708
+const f32 flt_D_80057708 = 0.2;
+//D:8005770C
+const f32 flt_D_8005770C = 0.80000001;
 
 #ifdef NONMATCHING
 void sub_GAME_7F09C250(void) {

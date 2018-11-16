@@ -30,59 +30,28 @@ CODE.bss:80079934                                              # get_obj_instanc
 */
 
 /* data
-D:80036070     dword_D_80036070:.word 0                 # DATA XREF: zero_contents_of_80036070_74w
-D:80036070                                              # sub_CODE_7F005624+1Co
-D:80036070                                              # sub_CODE_7F005624+38w
-D:80036070                                              # sub_CODE_7F005624+48r
-D:80036070                                              # get_aircraft_obj_instance_controller+28r
-D:80036070                                              # get_aircraft_obj_instance_controller:loc_CODE_7F06C300r
-D:80036074     dword_D_80036074:.word 0                 # DATA XREF: zero_contents_of_80036070_74+10w
-D:80036074                                              # sub_CODE_7F005540+14o
-D:80036074                                              # sub_CODE_7F005540+30w
-D:80036074                                              # sub_CODE_7F005540+40r
-D:80036074                                              # get_obj_instance_controller_for_header+44o
-D:80036074                                              # get_obj_instance_controller_for_header+4Cr
-D:80036074                                              # get_obj_instance_controller_for_header:loc_CODE_7F06C168o
-D:80036074                                              # get_obj_instance_controller_for_header+DCr
-D:80036078     dword_D_80036078:.word 0                 # DATA XREF: set_contents_of_80036078+8w
-D:80036078                                              # get_obj_instance_controller_for_header+4r
-D:80036078                                              # get_aircraft_obj_instance_controllerr
+D:80036070     dword_D_80036070:.word 0
+D:80036074     dword_D_80036074:.word 0
+D:80036078     dword_D_80036078:.word 0
 D:8003607C                     .word 0
 D:80036080                     .word 0
-D:80036084     dword_D_80036084:.word 0                 # DATA XREF: set_80036084+8w
-D:80036084                                              # process_08_distance_triggers+34r
-D:80036088     flt_D_80036088: .float 1.0               # DATA XREF: set_float_80036088+8w
-D:80036088                                              # process_08_distance_triggers+64r
-D:8003608C     dword_D_8003608C:.word 0                 # DATA XREF: set_8003608C+8w
-D:8003608C                                              # dorottex_+60r
-D:8003608C                                              # dorottex_+8Cr
-D:8003608C                                              # dotube:loc_CODE_7F0733CCr
-D:8003608C                                              # dotube+374r
-D:8003608C                                              # dogfnegx+324r
-D:8003608C                                              # dogfnegx+3FCr
-D:8003608C                                              # doshadow:loc_CODE_7F0741E4r
-D:8003608C                                              # doshadow+238r
-D:80036090     dword_D_80036090:.word 0                 # DATA XREF: sub_CODE_7F020EF0+588w
-D:80036090                                              # sub_CODE_7F020EF0+608w
-D:80036090                                              # sub_CODE_7F06D8B0+B0r
-D:80036090                                              # sub_CODE_7F06DB5C+B0r
-D:80036094     dword_D_80036094:.word 0                 # DATA XREF: process_02_position+20o
-D:80036094                                              # process_02_position+24r
-D:80036098     dword_D_80036098:.word 0                 # DATA XREF: process_02_position+38r
-D:8003609C     dword_D_8003609C:.word 0                 # DATA XREF: process_02_position+44r
-D:800360A0     dword_D_800360A0:.word 0                 # DATA XREF: process_02_position+74o
-D:800360A0                                              # process_02_position+8Cr
-D:800360A4     dword_D_800360A4:.word 0                 # DATA XREF: process_02_position+98r
-D:800360A8     dword_D_800360A8:.word 0                 # DATA XREF: process_02_position+A0r
-D:800360AC     dword_D_800360AC:.word 0                 # DATA XREF: process_02_position+E0o
-D:800360AC                                              # process_02_position+100r
-D:800360B0     dword_D_800360B0:.word 0                 # DATA XREF: process_02_position+10Cr
-D:800360B4     dword_D_800360B4:.word 0                 # DATA XREF: process_02_position+114r
-D:800360B8     dword_D_800360B8:.word 0                 # DATA XREF: process_02_position+144o
-D:800360B8                                              # process_02_position+15Cr
-D:800360BC     dword_D_800360BC:.word 0                 # DATA XREF: process_02_position+168r
-D:800360C0     dword_D_800360C0:.word 0                 # DATA XREF: process_02_position+170r
-D:800360C4     dword_D_800360C4:.word 0                 # DATA XREF: process_07_unknown+130o
+D:80036084     dword_D_80036084:.word 0
+D:80036088     flt_D_80036088: .float 1.0
+D:8003608C     dword_D_8003608C:.word 0
+D:80036090     dword_D_80036090:.word 0
+D:80036094     dword_D_80036094:.word 0
+D:80036098     dword_D_80036098:.word 0
+D:8003609C     dword_D_8003609C:.word 0
+D:800360A0     dword_D_800360A0:.word 0
+D:800360A4     dword_D_800360A4:.word 0
+D:800360A8     dword_D_800360A8:.word 0
+D:800360AC     dword_D_800360AC:.word 0
+D:800360B0     dword_D_800360B0:.word 0
+D:800360B4     dword_D_800360B4:.word 0
+D:800360B8     dword_D_800360B8:.word 0
+D:800360BC     dword_D_800360BC:.word 0
+D:800360C0     dword_D_800360C0:.word 0
+D:800360C4     dword_D_800360C4:.word 0
 D:800360C8                     .word 0
 D:800360CC                     .word 0x10, 1, 0x1000, 0xD, 1, 0x1000, 0xD, 9, 0x800, 0xC, 9, 0x800, 0xC, 0x19
 D:800360CC                     .word 0x400, 0xB, 0x19, 0x400, 0xB, 0x39, 0x400, 0xB, 0x39, 0x400, 0xB, 0x59

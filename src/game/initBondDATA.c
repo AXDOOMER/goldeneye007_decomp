@@ -14,11 +14,10 @@ struct  BONDdata_item_control_blocks BONDdata_item_control_blocks_initdata = {
 0, 0, 0}
 */
 
-/*
-.section .rodata
-F32_8004F0E0: .float 0.89999998
-fl_neg_pi: .float -3.1415927
-*/
+// .rodata
+const f32 F32_8004F0E0 = 0.89999998;
+const f32 fl_neg_pi = -3.1415927;
+
 
 
 

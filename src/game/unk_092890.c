@@ -1,12 +1,6 @@
 #include "ultra64.h"
 
 
-
-
-
-
-
-
 #ifdef NONMATCHING
 void sub_GAME_7F092890(void) {
 

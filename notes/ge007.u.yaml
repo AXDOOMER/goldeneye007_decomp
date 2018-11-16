@@ -5729,7 +5729,7 @@ labels:
    - [0x80040F5C,	"ptr_firstroom_0"]
    - [0x80041424,	"room_information"]
    - [0x800442F4,	"max_num_rooms"]
-   - [0x8004448C,	"levelinfostruct"]
+   - [0x8004448C,	"levelinfotable"]
    - [0x80044DC4,	"near_fog_value"]
    - [0x80044DC8,	"near_fog_times_intensity"]
    - [0x80044DCC,	"ptr_current_data"]

@@ -1,791 +1,928 @@
 #include "ultra64.h"
+#include "game/actor.h"
+// data
+s32 animation_rate = 0;
+s32 D_8002C904 = 0;
+s32 D_8002C908 = 0;
+s32 D_8002C90C = 0;
+s32 D_8002C910 = 0;
 
 /*
-animation_rate: .word 0
-dword_D_8002C904:.word 0
-dword_D_8002C908:.word 0
-dword_D_8002C90C:.word 0
-dword_D_8002C910:.word 0
-stru_D_8002C914:animation_something <0>
-                animation_something <1, 1, 0, 0x41880000, 3, 0, 0x42080000, stru_D_8002CE54, 0, stru_D_8002DF10, 0>
-                animation_something <2, 1, 0, 0x41880000, 3, 0, 0x421C0000, stru_D_8002CEE0, 0, stru_D_8002DF64, 0>
-                animation_something <3, 1, 0, 0x41A80000, 3, 0, 0x422C0000, stru_D_8002CF6C, 0, stru_D_8002DFB8, 0>
-                animation_something <4, 1, 0, 0x41880000, 3, 0, 0x42080000, stru_D_8002D014, 0, stru_D_8002E028, 0>
-                animation_something <5, 1, 0, 0x41880000, 3, 0, 0x421C0000, stru_D_8002D0A0, 0, stru_D_8002E07C, 0>
-                animation_something <6, 1, 0, 0x41A80000, 3, 0, 0x422C0000, stru_D_8002D12C, 0, stru_D_8002E0D0, 0>
-                animation_something <7, 1, 0, 0x41A80000, 3, 0, 0x42500000, stru_D_8002D1D4, 0, stru_D_8002E140, 0>
-                animation_something <8, 1, 0, 0x41A80000, 3, 0, 0x422C0000, stru_D_8002D3B0, 0, stru_D_8002E23C, 0>
-stru_D_8002CAA0:animation_something <9, 1, 0, 0x41880000, 3, 0, 0x42080000, stru_D_8002D6DC, 0, stru_D_8002E300, 0>
-stru_D_8002CACC:animation_something <0xA, 1, 0, 0x41880000, 3, 0, 0x422C0000, stru_D_8002D768, 0, stru_D_8002E354, 0>
-                animation_something <0xB, 1, 0, 0x41A80000, 3, 0, 0x42500000, stru_D_8002D7F4, 0, stru_D_8002E3A8, 0>
-stru_D_8002CB24:animation_something <0xC, 1, 0, 0x41880000, 3, 0, 0x42080000, stru_D_8002D880, 0, stru_D_8002E418, 0>
-stru_D_8002CB50:animation_something <0xD, 1, 0, 0x41880000, 3, 0, 0x422C0000, stru_D_8002D90C, 0, stru_D_8002E46C, 0>
-                animation_something <0xE, 1, 0, 0x41A80000, 3, 0, 0x42500000, stru_D_8002D998, 0, stru_D_8002E4C0, 0>
-                animation_something <0xF, 1, 0, 0x41D00000, 3, 0, 0x42700000, stru_D_8002DA24, 0, stru_D_8002E530, 0>
-                animation_something <0x64, 1, 0, 0x41D00000, 0, 0, 0, stru_D_8002DCE0, 0, stru_D_8002E5BC, 0>
-                animation_something <0x6E, 1, 0, 0x41A80000, 0, 0, 0, 0, 0, 0, 0>
-stru_D_8002CC2C:animation_something <0xFFFFFFFF, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-dword_D_8002CC58:.word 0
-show_patrols_flag:.word FALSE
-player1_guardID:.word 0x1388
-ptr_guard_data: .word 0
-num_guards:     .word 0
-dword_D_8002CC6C:.word 0
-                .word 1
-                .word 3
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-dword_D_8002CCA8:.word 0
-dword_D_8002CCAC:.word 0
-dword_D_8002CCB0:.word 0
-dword_D_8002CCB4:.word 0
-off_D_8002CCB8: .byte 0x5A
-byte_D_8002CCB9:.byte 0
-byte_D_8002CCBA:.byte 0
-                .align 2
-dword_D_8002CCBC:.word 0
-dword_D_8002CCC0:.word 1
-                .word 3
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-                .word 0
-dword_D_8002CCF8:.word 0
-                .word 0
-num_bodies:     .word 0
-num_male_heads: .word 0
-num_female_heads:.word 0
-list_of_bodies: .word BODY_Jungle_Commando,BODY_St_Petersburg_Guard,BODY_Russian_Soldier,BODY_Russian_Infantry # 0
-                .word BODY_Janus_Special_Forces,BODY_Tuxedo,BODY_Boris,BODY_Ourumov # 4
-                .word BODY_Trevelyan_Janus,BODY_Valentin_,BODY_Xenia,BODY_Baron_Samedi # 8
-                .word BODY_Jaws,BODY_Mayday,BODY_Oddjob,BODY_Natalya_Skirt # 0xC
-                .word BODY_Janus_Marine,BODY_Russian_Commandant,BODY_Siberian_Guard_1_Mishkin,BODY_Naval_Officer # 0x10
-                .word BODY_Siberian_Special_Forces,BODY_Special_Operations_Uniform,BODY_Formal_Wear,BODY_Jungle_Fatigues # 0x14
-                .word BODY_Unused_Female,BODY_Rosika,BODY_Scientist_2_Female,BODY_Civilian_1_Female # 0x18
-                .word BODY_Unused_Male_1,BODY_Unused_Male_2,BODY_Civilian_4,BODY_Civilian_2 # 0x1C
-                .word BODY_Civilian_3,BODY_Scientist_1_Male,BODY_Tuxedo,BODY_Tuxedo # 0x20
-                .word BODY_Tuxedo,BODY_Helicopter_Pilot,BODY_Siberian_Guard_2,BODY_Arctic_Commando # 0x24
-                .word BODY_Moonraker_Elite_1_Male,BODY_Moonraker_Elite_2_Female,0xFFFFFFFF # 0x28
+//D:8002C914
+struct animation_something stru_D_8002C914[] = {
+    {0,0,0,0,0,0,0,0,0,0,0},
+    {1, 1, 0, 17.0, 3, 0, 34.0, &stru_D_8002CE54, 0, &stru_D_8002DF10, 0},
+    {2, 1, 0, 17.0, 3, 0, 39.0, &stru_D_8002CEE0, 0, &stru_D_8002DF64, 0},
+    {3, 1, 0, 21.0, 3, 0, 43.0, &stru_D_8002CF6C, 0, &stru_D_8002DFB8, 0},
+    {4, 1, 0, 17.0, 3, 0, 34.0, &stru_D_8002D014, 0, &stru_D_8002E028, 0},
+    {5, 1, 0, 17.0, 3, 0, 39.0, &stru_D_8002D0A0, 0, &stru_D_8002E07C, 0},
+    {6, 1, 0, 21.0, 3, 0, 43.0, &stru_D_8002D12C, 0, &stru_D_8002E0D0, 0},
+    {7, 1, 0, 21.0, 3, 0, 52.0, &stru_D_8002D1D4, 0, &stru_D_8002E140, 0},
+    {8, 1, 0, 21.0, 3, 0, 43.0, &stru_D_8002D3B0, 0, &stru_D_8002E23C, 0},
+    {9, 1, 0, 17.0, 3, 0, 34.0, &stru_D_8002D6DC, 0, &stru_D_8002E300, 0},
+    {0xA, 1, 0, 17.0, 3, 0, 43.0, &stru_D_8002D768, 0, &stru_D_8002E354, 0},
+    {0xB, 1, 0, 21.0, 3, 0, 52.0, &stru_D_8002D7F4, 0, &stru_D_8002E3A8, 0},
+    {0xC, 1, 0, 17.0, 3, 0, 34.0, &stru_D_8002D880, 0, &stru_D_8002E418, 0},
+    {0xD, 1, 0, 17.0, 3, 0, 43.0, &stru_D_8002D90C, 0, &stru_D_8002E46C, 0},
+    {0xE, 1, 0, 21.0, 3, 0, 52.0, &stru_D_8002D998, 0, &stru_D_8002E4C0, 0},
+    {0xF, 1, 0, 26.0, 3, 0, 60.0, &stru_D_8002DA24, 0, &stru_D_8002E530, 0},
+    {0x64, 1, 0, 26.0, 0, 0, 0.0, &stru_D_8002DCE0, 0, &stru_D_8002E5BC, 0},
+    {0x6E, 1, 0, 21.0, 0, 0, 0.0, 0, 0, 0, 0},
+    {0xFFFFFFFF, 0, 0, 0.0, 0, 0, 0.0, 0, 0, 0, 0}
+};
+//*/
 
-random_male_heads:.word HEAD_Male_Jim,HEAD_Male_Chris,HEAD_Male_Lee,HEAD_Male_Graeme,HEAD_Male_Steve_H
-                .word HEAD_Male_Neil,HEAD_Male_Robin,HEAD_Male_Des,HEAD_Male_Grant,HEAD_Male_Dave_Dr_Doak
-                .word HEAD_Male_Karl,HEAD_Male_Alan,HEAD_Male_Pete,HEAD_Male_Martin,HEAD_Male_Mark
-                .word HEAD_Male_Duncan,HEAD_Male_Shaun,HEAD_Male_Dwayne,HEAD_Male_B,HEAD_Male_Steve_Ellis
-                .word HEAD_Male_Joel,HEAD_Male_Scott,HEAD_Male_Joe_Altered,HEAD_Male_Ken,HEAD_Male_Joe
-                .word 0xFFFFFFFF
+s32 D_8002CC58 = 0;
+s32 show_patrols_flag = FALSE;
+s32 player1_guardID = 0x1388;
+s32 ptr_guard_data = 0;
+s32 num_guards = 0;
+s32 D_8002CC6C[] = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+s32 D_8002CCA8 = 0;
+s32 D_8002CCAC = 0;
+s32 D_8002CCB0 = 0;
+s32 D_8002CCB4 = 0;
+u8 off_D_8002CCB8 = 0x5A;
+u8 byte_D_8002CCB9 = 0;
+u8 byte_D_8002CCBA = 0;
+u8 byte_D_8002CCBB = 0;
+u32 D_8002CCBC = 0;
+u32 D_8002CCC0[] = {1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+s32 D_8002CCF8 = 0;
+s32 D_8002CCFC = 0;
+s32 num_bodies = 0;
+s32 num_male_heads = 0;
+s32 num_female_heads = 0;
 
-random_female_heads:.word HEAD_Female_Sally,HEAD_Female_Marion_Rosika,HEAD_Female_Mandy,HEAD_Female_Vivien
-                .word 0xFFFFFFFF
+s32 list_of_bodies[] = {
+    BODY_Jungle_Commando,BODY_St_Petersburg_Guard,BODY_Russian_Soldier,BODY_Russian_Infantry,
+    BODY_Janus_Special_Forces,BODY_Tuxedo,BODY_Boris,BODY_Ourumov,
+    BODY_Trevelyan_Janus,BODY_Valentin_,BODY_Xenia,BODY_Baron_Samedi,
+    BODY_Jaws,BODY_Mayday,BODY_Oddjob,BODY_Natalya_Skirt,
+    BODY_Janus_Marine,BODY_Russian_Commandant,BODY_Siberian_Guard_1_Mishkin,BODY_Naval_Officer,
+    BODY_Siberian_Special_Forces,BODY_Special_Operations_Uniform,BODY_Formal_Wear,BODY_Jungle_Fatigues,
+    BODY_Unused_Female,BODY_Rosika,BODY_Scientist_2_Female,BODY_Civilian_1_Female,
+    BODY_Unused_Male_1,BODY_Unused_Male_2,BODY_Civilian_4,BODY_Civilian_2,
+    BODY_Civilian_3,BODY_Scientist_1_Male,BODY_Tuxedo,BODY_Tuxedo,
+    BODY_Tuxedo,BODY_Helicopter_Pilot,BODY_Siberian_Guard_2,BODY_Arctic_Commando,
+    BODY_Moonraker_Elite_1_Male,BODY_Moonraker_Elite_2_Female,-1,
+};
 
-current_random_body:.word 0
-current_random_male_head:.word 0
-current_random_female_head:.word 0
-ai_accuracy_modifier:.float 1.0
-ai_damage_modifier:.float 1.0
-ai_health_modifier:.float 1.0
-ai_reaction_speed:.float 1.0
-setting_007_5:  .word 0
-stru_D_8002CE54:struck_animation_table <0x35C8, 0, -1.0, 0.5, 0, 27.0, -1.0>
-                struck_animation_table <0x36D8, 0, -1.0, 0.5, 0, 26.0, -1.0>
-                struck_animation_table <0x33AC, 1, -1.0, 0.5, 0, 25.0, -1.0>
-                struck_animation_table <0x34D4, 1, -1.0, 0.5, 0, 23.0, -1.0>
-                struck_animation_table <0, 0, 0.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002CEE0:struck_animation_table <0x35C8, 0, -1.0, 0.5, 0, 27.0, -1.0>
-                struck_animation_table <0x36D8, 0, -1.0, 0.5, 0, 26.0, -1.0>
-                struck_animation_table <0x33AC, 1, -1.0, 0.5, 0, 25.0, -1.0>
-                struck_animation_table <0x34D4, 1, -1.0, 0.5, 0, 23.0, -1.0>
-                struck_animation_table <0, 0, 0.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002CF6C:struck_animation_table <0x35C8, 0, -1.0, 0.5, 1, 27.0, -1.0>
-                struck_animation_table <0x36D8, 0, -1.0, 0.5, 1, 26.0, -1.0>
-                struck_animation_table <0x33AC, 1, -1.0, 0.5, 1, 25.0, -1.0>
-                struck_animation_table <0x34D4, 1, -1.0, 0.5, 1, 23.0, -1.0>
-                struck_animation_table <0x540C, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, 0.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002D014:struck_animation_table <0x33AC, 0, -1.0, 0.5, 0, 25.0, -1.0>
-                struck_animation_table <0x34D4, 0, -1.0, 0.5, 0, 23.0, -1.0>
-                struck_animation_table <0x35C8, 1, -1.0, 0.5, 0, 27.0, -1.0>
-                struck_animation_table <0x36D8, 1, -1.0, 0.5, 0, 26.0, -1.0>
-                struck_animation_table <0, 0, 0.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002D0A0:struck_animation_table <0x33AC, 0, -1.0, 0.5, 0, 25.0, -1.0>
-                struck_animation_table <0x34D4, 0, -1.0, 0.5, 0, 23.0, -1.0>
-                struck_animation_table <0x35C8, 1, -1.0, 0.5, 0, 27.0, -1.0>
-                struck_animation_table <0x36D8, 1, -1.0, 0.5, 0, 26.0, -1.0>
-                struck_animation_table <0, 0, 0.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002D12C:struck_animation_table <0x33AC, 0, -1.0, 0.5, 1, 25.0, -1.0>
-                struck_animation_table <0x34D4, 0, -1.0, 0.5, 1, 23.0, -1.0>
-                struck_animation_table <0x35C8, 1, -1.0, 0.5, 1, 27.0, -1.0>
-                struck_animation_table <0x36D8, 1, -1.0, 0.5, 1, 26.0, -1.0>
-                struck_animation_table <0x540C, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, 0.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002D1D4:struck_animation_table <0x30B8, 0, -1.0, 0.5, 0, 55.0, 39.0>
-                struck_animation_table <0x30B8, 1, -1.0, 0.5, 0, 55.0, 39.0>
-                struck_animation_table <0x31DC, 0, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x31DC, 1, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x32C8, 0, -1.0, 0.5, 1, 29.0, -1.0>
-                struck_animation_table <0x32C8, 1, -1.0, 0.5, 1, 29.0, -1.0>
-                struck_animation_table <0x384C, 0, -1.0, 0.5, 0, 97.0, 64.0>
-                struck_animation_table <0x384C, 1, -1.0, 0.5, 0, 97.0, 64.0>
-                struck_animation_table <0x3AF0, 0, -1.0, 0.5, 0, 31.0, -1.0>
-                struck_animation_table <0x3AF0, 1, -1.0, 0.5, 0, 31.0, -1.0>
-                struck_animation_table <0x3C10, 0, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x3C10, 1, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x3D04, 0, -1.0, 0.5, 0, 28.0, -1.0>
-                struck_animation_table <0x3D04, 1, -1.0, 0.5, 0, 28.0, -1.0>
-                struck_animation_table <0x282C, 0, -1.0, 0.5, 0, 79.0, 415.0>
-                struck_animation_table <0x282C, 1, -1.0, 0.5, 0, 79.0, 415.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002D3B0:struck_animation_table <0x30B8, 0, -1.0, 0.5, 0, 55.0, 39.0>
-                struck_animation_table <0x30B8, 1, -1.0, 0.5, 0, 55.0, 39.0>
-                struck_animation_table <0x31DC, 0, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x31DC, 1, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x32C8, 0, -1.0, 0.5, 1, 29.0, -1.0>
-                struck_animation_table <0x32C8, 1, -1.0, 0.5, 1, 29.0, -1.0>
-                struck_animation_table <0x33AC, 0, -1.0, 0.5, 1, 25.0, -1.0>
-                struck_animation_table <0x33AC, 1, -1.0, 0.5, 1, 25.0, -1.0>
-                struck_animation_table <0x34D4, 0, -1.0, 0.5, 1, 23.0, -1.0>
-                struck_animation_table <0x34D4, 1, -1.0, 0.5, 1, 23.0, -1.0>
-                struck_animation_table <0x35C8, 0, -1.0, 0.5, 1, 27.0, -1.0>
-                struck_animation_table <0x35C8, 1, -1.0, 0.5, 1, 27.0, -1.0>
-                struck_animation_table <0x36D8, 0, -1.0, 0.5, 1, 26.0, -1.0>
-                struck_animation_table <0x36D8, 1, -1.0, 0.5, 1, 26.0, -1.0>
-                struck_animation_table <0x384C, 0, -1.0, 0.5, 0, 97.0, 64.0>
-                struck_animation_table <0x384C, 1, -1.0, 0.5, 0, 97.0, 64.0>
-                struck_animation_table <0x39C0, 0, -1.0, 0.5, 0, 94.0, 66.0>
-                struck_animation_table <0x39C0, 1, -1.0, 0.5, 0, 94.0, 66.0>
-                struck_animation_table <0x3AF0, 0, -1.0, 0.5, 0, 31.0, -1.0>
-                struck_animation_table <0x3AF0, 1, -1.0, 0.5, 0, 31.0, -1.0>
-                struck_animation_table <0x3C10, 0, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x3C10, 1, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x3D04, 0, -1.0, 0.5, 0, 28.0, -1.0>
-                struck_animation_table <0x3D04, 1, -1.0, 0.5, 0, 28.0, -1.0>
-                struck_animation_table <0x2E64, 0, -1.0, 0.5, 0, 87.0, 203.0>
-                struck_animation_table <0x2E64, 1, -1.0, 0.5, 0, 87.0, 203.0>
-                struck_animation_table <0x51C4, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x51C4, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002D6DC:struck_animation_table <0x35C8, 0, -1.0, 0.5, 0, 27.0, -1.0>
-                struck_animation_table <0x36D8, 0, -1.0, 0.5, 0, 26.0, -1.0>
-                struck_animation_table <0x33AC, 1, -1.0, 0.5, 0, 25.0, -1.0>
-                struck_animation_table <0x34D4, 1, -1.0, 0.5, 0, 23.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002D768:struck_animation_table <0x35C8, 0, -1.0, 0.5, 0, 27.0, -1.0>
-                struck_animation_table <0x36D8, 0, -1.0, 0.5, 0, 26.0, -1.0>
-                struck_animation_table <0x33AC, 1, -1.0, 0.5, 0, 25.0, -1.0>
-                struck_animation_table <0x34D4, 1, -1.0, 0.5, 0, 23.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002D7F4:struck_animation_table <0x35C8, 0, -1.0, 0.5, 1, 27.0, -1.0>
-                struck_animation_table <0x36D8, 0, -1.0, 0.5, 1, 26.0, -1.0>
-                struck_animation_table <0x33AC, 1, -1.0, 0.5, 1, 25.0, -1.0>
-                struck_animation_table <0x34D4, 1, -1.0, 0.5, 1, 23.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002D880:struck_animation_table <0x33AC, 0, -1.0, 0.5, 0, 25.0, -1.0>
-                struck_animation_table <0x34D4, 0, -1.0, 0.5, 0, 23.0, -1.0>
-                struck_animation_table <0x35C8, 1, -1.0, 0.5, 0, 27.0, -1.0>
-                struck_animation_table <0x36D8, 1, -1.0, 0.5, 0, 26.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002D90C:struck_animation_table <0x33AC, 0, -1.0, 0.5, 0, 25.0, -1.0>
-                struck_animation_table <0x34D4, 0, -1.0, 0.5, 0, 23.0, -1.0>
-                struck_animation_table <0x35C8, 1, -1.0, 0.5, 0, 27.0, -1.0>
-                struck_animation_table <0x36D8, 1, -1.0, 0.5, 0, 26.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002D998:struck_animation_table <0x33AC, 0, -1.0, 0.5, 1, 25.0, -1.0>
-                struck_animation_table <0x34D4, 0, -1.0, 0.5, 1, 23.0, -1.0>
-                struck_animation_table <0x35C8, 1, -1.0, 0.5, 1, 27.0, -1.0>
-                struck_animation_table <0x36D8, 1, -1.0, 0.5, 1, 26.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002DA24:struck_animation_table <0x30B8, 0, -1.0, 0.5, 0, 55.0, 39.0>
-                struck_animation_table <0x30B8, 1, -1.0, 0.5, 0, 55.0, 39.0>
-                struck_animation_table <0x31DC, 0, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x31DC, 1, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x32C8, 0, -1.0, 0.5, 1, 29.0, -1.0>
-                struck_animation_table <0x32C8, 1, -1.0, 0.5, 1, 29.0, -1.0>
-                struck_animation_table <0x33AC, 0, -1.0, 0.5, 1, 25.0, -1.0>
-                struck_animation_table <0x33AC, 1, -1.0, 0.5, 1, 25.0, -1.0>
-                struck_animation_table <0x34D4, 0, -1.0, 0.5, 1, 23.0, -1.0>
-                struck_animation_table <0x34D4, 1, -1.0, 0.5, 1, 23.0, -1.0>
-                struck_animation_table <0x35C8, 0, -1.0, 0.5, 1, 27.0, -1.0>
-                struck_animation_table <0x35C8, 1, -1.0, 0.5, 1, 27.0, -1.0>
-                struck_animation_table <0x36D8, 0, -1.0, 0.5, 1, 26.0, -1.0>
-                struck_animation_table <0x36D8, 1, -1.0, 0.5, 1, 26.0, -1.0>
-                struck_animation_table <0x384C, 0, -1.0, 0.5, 0, 97.0, 64.0>
-                struck_animation_table <0x384C, 1, -1.0, 0.5, 0, 97.0, 64.0>
-                struck_animation_table <0x39C0, 0, -1.0, 0.5, 0, 94.0, 66.0>
-                struck_animation_table <0x39C0, 1, -1.0, 0.5, 0, 94.0, 66.0>
-                struck_animation_table <0x3AF0, 0, -1.0, 0.5, 0, 31.0, -1.0>
-                struck_animation_table <0x3AF0, 1, -1.0, 0.5, 0, 31.0, -1.0>
-                struck_animation_table <0x3C10, 0, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x3C10, 1, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x3D04, 0, -1.0, 0.5, 0, 28.0, -1.0>
-                struck_animation_table <0x3D04, 1, -1.0, 0.5, 0, 28.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002DCE0:struck_animation_table <0x30B8, 0, -1.0, 0.5, 0, 55.0, 39.0>
-                struck_animation_table <0x30B8, 1, -1.0, 0.5, 0, 55.0, 39.0>
-                struck_animation_table <0x31DC, 0, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x31DC, 1, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x32C8, 0, -1.0, 0.5, 1, 29.0, -1.0>
-                struck_animation_table <0x32C8, 1, -1.0, 0.5, 1, 29.0, -1.0>
-                struck_animation_table <0x384C, 0, -1.0, 0.5, 0, 97.0, 64.0>
-                struck_animation_table <0x384C, 1, -1.0, 0.5, 0, 97.0, 64.0>
-                struck_animation_table <0x39C0, 0, -1.0, 0.5, 0, 94.0, 66.0>
-                struck_animation_table <0x39C0, 1, -1.0, 0.5, 0, 94.0, 66.0>
-                struck_animation_table <0x3AF0, 0, -1.0, 0.5, 0, 31.0, -1.0>
-                struck_animation_table <0x3AF0, 1, -1.0, 0.5, 0, 31.0, -1.0>
-                struck_animation_table <0x3C10, 0, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x3C10, 1, -1.0, 0.5, 0, 36.0, -1.0>
-                struck_animation_table <0x3D04, 0, -1.0, 0.5, 0, 28.0, -1.0>
-                struck_animation_table <0x3D04, 1, -1.0, 0.5, 0, 28.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002DEBC:struck_animation_table <0x2F94, 0, -1.0, 0.5, 0, 67.0, 54.0>
-                struck_animation_table <0x2F94, 1, -1.0, 0.5, 0, 67.0, 54.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002DF10:struck_animation_table <0x1F84, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x2134, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002DF64:struck_animation_table <0x1F84, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x2134, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002DFB8:struck_animation_table <0x1F84, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x2134, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x540C, 1, 20.0, 0.40000001, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002E028:struck_animation_table <0x2134, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x1F84, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002E07C:struck_animation_table <0x2134, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x1F84, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002E0D0:struck_animation_table <0x2134, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x1F84, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x540C, 0, 20.0, 0.40000001, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002E140:struck_animation_table <0x282C, 0, 20.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x282C, 1, 30.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x39C0, 0, 20.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x39C0, 1, 20.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x30B8, 0, 15.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x30B8, 1, 15.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x3AF0, 0, 10.0, 0.25, 0, -1.0, -1.0>
-                struck_animation_table <0x3AF0, 1, 10.0, 0.25, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002E23C:struck_animation_table <0x2E64, 0, 15.0, 0.5, 0, 87.0, 203.0>
-                struck_animation_table <0x2E64, 1, 15.0, 0.5, 0, 87.0, 203.0>
-                struck_animation_table <0x39C0, 0, 20.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x39C0, 1, 20.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x30B8, 0, 15.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x30B8, 1, 15.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002E300:struck_animation_table <0x1C9C, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x1E40, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002E354:struck_animation_table <0x1A6C, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x1B54, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002E3A8:struck_animation_table <0x186C, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x1984, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x39C0, 0, 20.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002E418:struck_animation_table <0x1E40, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x1C9C, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002E46C:struck_animation_table <0x1B54, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x1A6C, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002E4C0:struck_animation_table <0x1984, 0, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x186C, 1, -1.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x39C0, 1, 20.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002E530:struck_animation_table <0x39C0, 0, 20.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x39C0, 1, 20.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x30B8, 0, 15.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x30B8, 1, 15.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
-stru_D_8002E5BC:struck_animation_table <0x39C0, 0, 20.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x39C0, 1, 20.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x30B8, 0, 15.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0x30B8, 1, 15.0, 0.5, 0, -1.0, -1.0>
-                struck_animation_table <0, 0, -1.0, 0.5, 0, -1.0, -1.0>
+s32 random_male_heads[] = {
+    HEAD_Male_Jim,HEAD_Male_Chris,HEAD_Male_Lee,HEAD_Male_Graeme,HEAD_Male_Steve_H,
+    HEAD_Male_Neil,HEAD_Male_Robin,HEAD_Male_Des,HEAD_Male_Grant,HEAD_Male_Dave_Dr_Doak,
+    HEAD_Male_Karl,HEAD_Male_Alan,HEAD_Male_Pete,HEAD_Male_Martin,HEAD_Male_Mark,
+    HEAD_Male_Duncan,HEAD_Male_Shaun,HEAD_Male_Dwayne,HEAD_Male_B,HEAD_Male_Steve_Ellis,
+    HEAD_Male_Joel,HEAD_Male_Scott,HEAD_Male_Joe_Altered,HEAD_Male_Ken,HEAD_Male_Joe,
+    -1
+};
 
-stru_D_8002E648:explosion_death_animation <0x98C8, 0, 0.5, 9.0, 18.0, 29.0, -1.0>
-                explosion_death_animation <0x98C8, 1, 0.5, 9.0, 18.0, 29.0, -1.0>
-                explosion_death_animation <0xA1B8, 0, 0.5, 11.0, 19.0, 31.0, -1.0>
-                explosion_death_animation <0xA1B8, 1, 0.5, 11.0, 19.0, 31.0, -1.0>
-                explosion_death_animation <0xA094, 0, 0.5, 6.0, 20.0, 27.0, -1.0>
-                explosion_death_animation <0xA094, 1, 0.5, 6.0, 20.0, 27.0, -1.0>
-                explosion_death_animation <0xA424, 0, 0.5, 29.0, 36.0, 48.0, -1.0>
-                explosion_death_animation <0xA424, 1, 0.5, 29.0, 36.0, 48.0, -1.0>
-                explosion_death_animation <0xA538, 0, 0.5, 29.0, 38.0, 49.0, -1.0>
-                explosion_death_animation <0xA538, 1, 0.5, 29.0, 38.0, 49.0, -1.0>
-                explosion_death_animation <0xA650, 0, 0.5, 19.0, 30.0, 42.0, -1.0>
-                explosion_death_animation <0xA650, 1, 0.5, 19.0, 30.0, 42.0, -1.0>
-                explosion_death_animation <0x9A2C, 0, 0.5, 9.0, 21.0, 29.0, 55.0>
-                explosion_death_animation <0x9A2C, 1, 0.5, 9.0, 21.0, 29.0, 55.0>
-                explosion_death_animation <0x9D5C, 0, 0.5, 6.0, 18.0, 27.0, -1.0>
-                explosion_death_animation <0x9D5C, 1, 0.5, 6.0, 18.0, 27.0, -1.0>
-                explosion_death_animation <0x9E44, 0, 0.5, 6.0, 19.0, 29.0, -1.0>
-                explosion_death_animation <0x9E44, 1, 0.5, 6.0, 19.0, 29.0, -1.0>
-                explosion_death_animation <0x9B48, 0, 0.5, 8.0, 14.0, 25.0, -1.0>
-                explosion_death_animation <0x9B48, 1, 0.5, 8.0, 14.0, 25.0, -1.0>
-                explosion_death_animation <0x9C4C, 0, 0.5, 8.0, 19.0, 25.0, -1.0>
-                explosion_death_animation <0x9C4C, 1, 0.5, 8.0, 19.0, 25.0, -1.0>
-                explosion_death_animation <0x9F48, 0, 0.5, 12.0, 21.0, 29.0, -1.0>
-                explosion_death_animation <0x9F48, 1, 0.5, 12.0, 21.0, 29.0, -1.0>
-                explosion_death_animation <0xA2F8, 0, 0.5, 22.0, 30.0, 41.0, -1.0>
-                explosion_death_animation <0xA2F8, 1, 0.5, 22.0, 30.0, 41.0, -1.0>
-                explosion_death_animation <0, 0, 0.5, 0.0, 0.0, 0.0, -1.0>
+s32 random_female_heads[] = {
+    HEAD_Female_Sally,HEAD_Female_Marion_Rosika,HEAD_Female_Mandy,HEAD_Female_Vivien, -1
+};
 
-expl_forward:   .word 0x10203, 0x4050000
-expl_f_left:    .word 0x7090B00
-expl_f_right:   .word 0x6080A00
-expl_left:      .word 0xC0F1100
-expl_right:     .word 0xD0E1000
-expl_back:      .word 0x14151617
-expl_b_right:   .word 0x12180000
-expl_b_left:    .word 0x13190000
-explosion_animation_table:explosion_animation <expl_forward, 6>
-                explosion_animation <expl_f_left, 3>
-                explosion_animation <expl_left, 3>
-                explosion_animation <expl_b_right, 2>
-                explosion_animation <expl_back, 4>
-                explosion_animation <expl_b_left, 2>
-                explosion_animation <expl_right, 3>
-                explosion_animation <expl_f_right, 3>
-rifle_firing_animation_group1:weapon_firing_animation_table <0x214, 28.0, 0, 0, 0, -1.0, 23.0, 54.0, -1.0, -1.0, 18.0, \
-                                               54.0, 0.87266463, -0.52359879, 1.0471976, -0.34906587, 1.6,\
-                                               1.8>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_rifle_firing_animation_group1:.word rifle_firing_animation_group1
-                .word 0xFFFFFFFF
-rifle_firing_animation_group2:weapon_firing_animation_table <0x144, 37.0, 0, 0, 0, -1.0, 30.0, 81.0, -1.0, -1.0, 25.0, \
-                                               81.0, 0.87266463, -0.69813174, 0.69813174, -0.69813174, \
-                                               1.6, 1.75>
-                weapon_firing_animation_table <0x318, 27.0, 0, 0, 0, -1.0, 22.0, 61.0, -1.0, -1.0, 17.0, \
-                                               61.0, 0.87266463, -0.2617994, 0.69813174, -0.69813174, 2.0,\
-                                               1.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_rifle_firing_animation_group2:.word rifle_firing_animation_group2
-                .word 0xFFFFFFFF
-rifle_firing_animation_group5:weapon_firing_animation_table <0x144, 37.0, 0, 0, 0, -1.0, 30.0, 81.0, -1.0, -1.0, 25.0, \
-                                               81.0, 0.87266463, -0.69813174, 0.69813174, -0.69813174, \
-                                               1.6, 1.75>
-                weapon_firing_animation_table <0x318, 27.0, 0, 0, 0, -1.0, 22.0, 61.0, -1.0, -1.0, 17.0, \
-                                               61.0, 0.87266463, -0.2617994, 0.69813174, -0.69813174, 2.0,\
-                                               1.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_rifle_firing_animation_group5:.word rifle_firing_animation_group5
-                .word 0xFFFFFFFF
-rifle_firing_animation_group3:weapon_firing_animation_table <0x3C4, 19.0, 0, 0x3FC90FDB, 0, -1.0, 19.0, 61.0, -1.0, \
-                                               -1.0, 14.0, 61.0, 0.87266463, -0.34906587, 0.43633232, \
-                                               -1.0471976, 2.5, 2.5>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_rifle_firing_animation_group3:.word rifle_firing_animation_group3
-                .word 0xFFFFFFFF
-rifle_firing_animation_group4:weapon_firing_animation_table <0x814, 27.0, 0, 0, 0, -1.0, 39.0, 74.0, -1.0, -1.0, 34.0, \
-                                               74.0, 0.87266463, -0.69813174, 0.78539819, -0.69813174, \
-                                               1.5, 1.5>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_rifle_firing_animation_group4:.word rifle_firing_animation_group4
-                .word 0xFFFFFFFF
-ptr_rifle_firing_animation_groups:.word ptr_rifle_firing_animation_group1
-                .word ptr_rifle_firing_animation_group2
-                .word ptr_rifle_firing_animation_group2
-                .word ptr_rifle_firing_animation_group2
-                .word ptr_rifle_firing_animation_group2
-                .word ptr_rifle_firing_animation_group2
-                .word ptr_rifle_firing_animation_group2
-                .word ptr_rifle_firing_animation_group2
-                .word ptr_rifle_firing_animation_group2
-                .word ptr_rifle_firing_animation_group2
-                .word ptr_rifle_firing_animation_group3
-                .word ptr_rifle_firing_animation_group3
-                .word ptr_rifle_firing_animation_group3
-                .word ptr_rifle_firing_animation_group3
-                .word ptr_rifle_firing_animation_group3
-                .word ptr_rifle_firing_animation_group3
-                .word ptr_rifle_firing_animation_group4
-                .word ptr_rifle_firing_animation_group4
-                .word ptr_rifle_firing_animation_group4
-                .word ptr_rifle_firing_animation_group4
-                .word ptr_rifle_firing_animation_group4
-                .word ptr_rifle_firing_animation_group4
-                .word ptr_rifle_firing_animation_group5
-                .word ptr_rifle_firing_animation_group5
-                .word ptr_rifle_firing_animation_group5
-                .word ptr_rifle_firing_animation_group5
-                .word ptr_rifle_firing_animation_group5
-                .word ptr_rifle_firing_animation_group5
-                .word ptr_rifle_firing_animation_group5
-                .word ptr_rifle_firing_animation_group5
-                .word ptr_rifle_firing_animation_group5
-                .word ptr_rifle_firing_animation_group1
-pistol_firing_animation_group1:weapon_firing_animation_table <0x60D4, 26.0, 0, 0, 0x41400000, 140.0, 58.0, 92.0, 60.0, \
-                                               79.0, 20.0, 120.0, 0.87266463, -0.69813174, 0.69813174, \
-                                               -0.69813174, 0.0, 0.0>
-                weapon_firing_animation_table <0x6484, 0.0, 0, 0, 0x41880000, 100.0, 25.0, 87.0, 30.0, \
-                                               55.0, 20.0, 93.0, 0.87266463, -0.69813174, 0.69813174, \
-                                               -1.0471976, 0.0, 0.0>
-                weapon_firing_animation_table <0x6554, 0.0, 0, 0, 0x41400000, 64.0, 19.0, 51.0, 24.0, \
-                                               46.0, 14.0, 58.0, 0.87266463, -0.69813174, 0.52359879, \
-                                               -0.78539819, 0.0, 0.0>
-                weapon_firing_animation_table <0x6644, 22.0, 0, 0, 0x40800000, 69.0, 22.0, 49.0, 22.0, \
-                                               33.0, 8.0, 58.0, 0.87266463, -0.69813174, 0.43633232, \
-                                               -0.78539819, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_pistol_firing_animation_group1:.word pistol_firing_animation_group1
-                .word 0xFFFFFFFF
-pistol_firing_animation_group2:weapon_firing_animation_table <0x60D4, 26.0, 0, 0, 0x41400000, 140.0, 58.0, 92.0, 60.0, \
-                                               79.0, 20.0, 120.0, 0.87266463, -0.69813174, 0.69813174, \
-                                               -0.69813174, 0.0, 0.0>
-                weapon_firing_animation_table <0x6644, 22.0, 0, 0, 0x40800000, 69.0, 22.0, 49.0, 22.0, \
-                                               33.0, 8.0, 58.0, 0.87266463, -0.69813174, 0.43633232, \
-                                               -0.78539819, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_pistol_firing_animation_group2:.word pistol_firing_animation_group2
-                .word 0xFFFFFFFF
-pistol_firing_animation_group3:weapon_firing_animation_table <0x60D4, 26.0, 0, 0, 0x41400000, 140.0, 58.0, 92.0, 60.0, \
-                                               79.0, 20.0, 120.0, 0.87266463, -0.69813174, 0.69813174, \
-                                               -0.69813174, 0.0, 0.0>
-                weapon_firing_animation_table <0x6644, 22.0, 0, 0, 0x40800000, 69.0, 22.0, 49.0, 22.0, \
-                                               33.0, 8.0, 58.0, 0.87266463, -0.69813174, 0.43633232, \
-                                               -0.78539819, 0.0, 0.0>
-                weapon_firing_animation_table <0x694C, 0.0, 0, 0x3FC90FDB, 0x40E00000, 130.0, 45.0, 93.0, \
-                                               56.0, 73.0, 26.0, 107.0, 0.87266463, -0.69813174, \
-                                               0.34906587, -0.52359879, 0.0, 0.0>
-                weapon_firing_animation_table <0x6A18, 15.0, 0, 0x3FC90FDB, 0x40A00000, 76.0, 20.0, 31.0, \
-                                               31.0, 38.0, 15.0, 49.0, 0.87266463, -0.69813174, \
-                                               0.52359879, -1.0471976, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_pistol_firing_animation_group3:.word pistol_firing_animation_group3
-                .word 0xFFFFFFFF
-pistol_firing_animation_group6:weapon_firing_animation_table <0x60D4, 26.0, 0, 0, 0x41400000, 140.0, 58.0, 92.0, 60.0, \
-                                               79.0, 20.0, 120.0, 0.87266463, -0.69813174, 0.69813174, \
-                                               -0.69813174, 0.0, 0.0>
-                weapon_firing_animation_table <0x6644, 22.0, 0, 0, 0x40800000, 69.0, 22.0, 49.0, 22.0, \
-                                               33.0, 8.0, 58.0, 0.87266463, -0.69813174, 0.43633232, \
-                                               -0.78539819, 0.0, 0.0>
-                weapon_firing_animation_table <0x6738, 0.0, 0, 0x4096CBE4, 0x40E00000, 139.0, 54.0, 105.0,\
-                                               61.0, 88.0, 26.0, 120.0, 0.87266463, -0.69813174, \
-                                               0.69813174, -0.61086529, 0.0, 0.0>
-                weapon_firing_animation_table <0x6808, 19.0, 0, 0x4096CBE4, 0x40800000, 79.0, 21.0, 50.0, \
-                                               26.0, 42.0, 10.0, 64.0, 0.87266463, -0.69813174, \
-                                               0.69813174, -0.61086529, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_pistol_firing_animation_group6:.word pistol_firing_animation_group6
-                .word 0xFFFFFFFF
-pistol_firing_animation_group4:weapon_firing_animation_table <0x6A18, 19.0, 0, 0x3FC90FDB, 0x40A00000, 76.0, 20.0, 31.0, \
-                                               31.0, 38.0, 15.0, 49.0, 0.87266463, -0.69813174, \
-                                               0.52359879, -1.0471976, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_pistol_firing_animation_group4:.word pistol_firing_animation_group4
-                .word 0xFFFFFFFF
-pistol_firing_animation_group5:weapon_firing_animation_table <0x6808, 19.0, 0, 0x4096CBE4, 0x40800000, 79.0, 21.0, 50.0, \
-                                               26.0, 42.0, 10.0, 64.0, 0.87266463, -0.69813174, \
-                                               0.69813174, -0.61086529, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_pistol_firing_animation_group5:.word pistol_firing_animation_group5
-                .word 0xFFFFFFFF
-ptr_pistol_firing_animation_groups:.word ptr_pistol_firing_animation_group1
-                .word ptr_pistol_firing_animation_group1
-                .word ptr_pistol_firing_animation_group2
-                .word ptr_pistol_firing_animation_group2
-                .word ptr_pistol_firing_animation_group2
-                .word ptr_pistol_firing_animation_group3
-                .word ptr_pistol_firing_animation_group3
-                .word ptr_pistol_firing_animation_group3
-                .word ptr_pistol_firing_animation_group3
-                .word ptr_pistol_firing_animation_group3
-                .word ptr_pistol_firing_animation_group4
-                .word ptr_pistol_firing_animation_group4
-                .word ptr_pistol_firing_animation_group4
-                .word ptr_pistol_firing_animation_group4
-                .word ptr_pistol_firing_animation_group4
-                .word ptr_pistol_firing_animation_group4
-                .word ptr_pistol_firing_animation_group5
-                .word ptr_pistol_firing_animation_group5
-                .word ptr_pistol_firing_animation_group5
-                .word ptr_pistol_firing_animation_group5
-                .word ptr_pistol_firing_animation_group5
-                .word ptr_pistol_firing_animation_group5
-                .word ptr_pistol_firing_animation_group6
-                .word ptr_pistol_firing_animation_group6
-                .word ptr_pistol_firing_animation_group6
-                .word ptr_pistol_firing_animation_group6
-                .word ptr_pistol_firing_animation_group6
-                .word ptr_pistol_firing_animation_group2
-                .word ptr_pistol_firing_animation_group2
-                .word ptr_pistol_firing_animation_group2
-                .word ptr_pistol_firing_animation_group1
-                .word ptr_pistol_firing_animation_group1
-doubles_firing_animation_group1:weapon_firing_animation_table <0x8E1C, 26.0, 0, 0, 0x40E00000, 92.0, 28.0, 68.0, -1.0, \
-                                               -1.0, 11.0, 73.0, 0.87266463, -0.69813174, 0.69813174, \
-                                               -0.69813174, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_doubles_firing_animation_group1:.word doubles_firing_animation_group1
-                .word 0xFFFFFFFF
-doubles_firing_animation_group2:weapon_firing_animation_table <0x8F2C, 26.0, 0, 0x3FC90FDB, 0x41100000, 112.0, 38.0, 87.0,\
-                                               -1.0, -1.0, 19.0, 98.0, 0.87266463, -0.69813174, \
-                                               0.43633232, -0.43633232, 0.0, 0.0>
-                weapon_firing_animation_table <0x9194, 25.0, 0, 0x3FC90FDB, 0x41200000, 112.0, 32.0, 86.0,\
-                                               -1.0, -1.0, 19.0, 97.0, 0.87266463, -0.69813174, \
-                                               0.43633232, -0.43633232, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_doubles_firing_animation_group2:.word doubles_firing_animation_group2
-                .word 0xFFFFFFFF
-doubles_firing_animation_group3:weapon_firing_animation_table <0x9084, 39.0, 0, 0x4096CBE4, 0x41B00000, 127.0, 44.0, \
-                                               102.0, -1.0, -1.0, 28.0, 112.0, 0.87266463, -0.69813174, \
-                                               0.43633232, -0.43633232, 0.0, 0.0>
-                weapon_firing_animation_table <0x92EC, 39.0, 0, 0x4096CBE4, 0x41B80000, 130.0, 46.0, \
-                                               100.0, -1.0, -1.0, 30.0, 110.0, 0.87266463, -0.69813174, \
-                                               0.43633232, -0.43633232, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_doubles_firing_animation_group3:.word doubles_firing_animation_group3
-                .word 0xFFFFFFFF
-ptr_doubles_firing_animation_groups:.word ptr_doubles_firing_animation_group1
-                .word ptr_doubles_firing_animation_group1
-                .word ptr_doubles_firing_animation_group1
-                .word ptr_doubles_firing_animation_group1
-                .word ptr_doubles_firing_animation_group1
-                .word ptr_doubles_firing_animation_group2
-                .word ptr_doubles_firing_animation_group2
-                .word ptr_doubles_firing_animation_group2
-                .word ptr_doubles_firing_animation_group2
-                .word ptr_doubles_firing_animation_group2
-                .word ptr_doubles_firing_animation_group2
-                .word ptr_doubles_firing_animation_group2
-                .word ptr_doubles_firing_animation_group2
-                .word ptr_doubles_firing_animation_group2
-                .word ptr_doubles_firing_animation_group2
-                .word ptr_doubles_firing_animation_group2
-                .word ptr_doubles_firing_animation_group3
-                .word ptr_doubles_firing_animation_group3
-                .word ptr_doubles_firing_animation_group3
-                .word ptr_doubles_firing_animation_group3
-                .word ptr_doubles_firing_animation_group3
-                .word ptr_doubles_firing_animation_group3
-                .word ptr_doubles_firing_animation_group3
-                .word ptr_doubles_firing_animation_group3
-                .word ptr_doubles_firing_animation_group3
-                .word ptr_doubles_firing_animation_group3
-                .word ptr_doubles_firing_animation_group3
-                .word ptr_doubles_firing_animation_group1
-                .word ptr_doubles_firing_animation_group1
-                .word ptr_doubles_firing_animation_group1
-                .word ptr_doubles_firing_animation_group1
-                .word ptr_doubles_firing_animation_group1
-crouched_rifle_firing_animation_group1:weapon_firing_animation_table <0x990, 27.0, 0, 0, 0, -1.0, 35.0, 75.0, -1.0, -1.0, 31.0, \
-                                               75.0, 0.87266463, -0.69813174, 0.90757126, -0.69813174, \
-                                               1.5, 1.5>
-                weapon_firing_animation_table <0xB84, 24.0, 0, 0, 0, -1.0, 46.0, 98.0, -1.0, -1.0, 41.0, \
-                                               98.0, 0.87266463, -0.52359879, 1.134464, -0.69813174, 1.6, \
-                                               1.6>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_crouched_rifle_firing_animation_group1:.word crouched_rifle_firing_animation_group1
-                .word 0xFFFFFFFF
-crouched_rifle_firing_animation_group2:weapon_firing_animation_table <0xDB4, 26.0, 0, 0, 0, -1.0, 34.0, 87.0, -1.0, -1.0, 29.0, \
-                                               87.0, 0.87266463, -0.52359879, 0.69813174, -0.95993108, \
-                                               1.6, 2.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_crouched_rifle_firing_animation_group2:.word crouched_rifle_firing_animation_group2
-                .word 0xFFFFFFFF
-crouched_rifle_firing_animation_group3:weapon_firing_animation_table <0x1028, 28.0, 0, 0, 0, -1.0, 36.0, 88.0, -1.0, -1.0, 31.0, \
-                                               88.0, 0.87266463, -0.69813174, 0.87266463, -0.43633232, \
-                                               1.6, 1.5>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_crouched_rifle_firing_animation_group3:.word crouched_rifle_firing_animation_group3
-                .word 0xFFFFFFFF
-ptr_crouched_rifle_firing_animation_groups:.word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group2
-                .word ptr_crouched_rifle_firing_animation_group2
-                .word ptr_crouched_rifle_firing_animation_group2
-                .word ptr_crouched_rifle_firing_animation_group2
-                .word ptr_crouched_rifle_firing_animation_group2
-                .word ptr_crouched_rifle_firing_animation_group2
-                .word ptr_crouched_rifle_firing_animation_group3
-                .word ptr_crouched_rifle_firing_animation_group3
-                .word ptr_crouched_rifle_firing_animation_group3
-                .word ptr_crouched_rifle_firing_animation_group3
-                .word ptr_crouched_rifle_firing_animation_group3
-                .word ptr_crouched_rifle_firing_animation_group3
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-                .word ptr_crouched_rifle_firing_animation_group1
-crouched_pistol_firing_animation_group1:weapon_firing_animation_table <0x6C18, 25.0, 0, 0, 0x41400000, 132.0, 55.0, 87.0, 67.0, \
-                                               87.0, 26.0, 111.0, 0.87266463, -0.69813174, 0.61086529, \
-                                               -0.78539819, 0.0, 0.0>
-                weapon_firing_animation_table <0x6D50, 26.0, 0, 0, 0x41000000, 89.0, 31.0, 63.0, 41.0, \
-                                               51.0, 21.0, 80.0, 0.87266463, -0.69813174, 0.34906587, \
-                                               -1.134464, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_crouched_pistol_firing_animation_group1:.word crouched_pistol_firing_animation_group1
-                .word 0xFFFFFFFF
-crouched_pistol_firing_animation_group2:weapon_firing_animation_table <0x71D0, 47.0, 0, 0x3FC90FDB, 0x40E00000, 128.0, 33.0, 86.0,\
-                                               47.0, 74.0, 23.0, 106.0, 0.87266463, -0.52359879, \
-                                               0.52359879, -0.78539819, 0.0, 0.0>
-                weapon_firing_animation_table <0x7304, 18.0, 0, 0x3FC90FDB, 0x40E00000, 78.0, 28.0, 52.0, \
-                                               35.0, 45.0, 15.0, 66.0, 0.87266463, -0.087266468, \
-                                               0.69813174, -0.78539819, 1.5, 1.0>
-                weapon_firing_animation_table <0x7430, 20.0, 0, 0x3FC90FDB, 0x41500000, 92.0, 37.0, 67.0, \
-                                               42.0, 55.0, 25.0, 84.0, 0.87266463, -0.52359879, \
-                                               0.34906587, -0.69813174, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_crouched_pistol_firing_animation_group2:.word crouched_pistol_firing_animation_group2
-                .word 0xFFFFFFFF
-crouched_pistol_firing_animation_group3:weapon_firing_animation_table <0x6F08, 28.0, 0, 0x4096CBE4, 0x41700000, 124.0, 38.0, 97.0,\
-                                               60.0, 84.0, 20.0, 106.0, 0.87266463, -0.69813174, \
-                                               0.52359879, -0.87266463, 0.0, 0.0>
-                weapon_firing_animation_table <0x700C, 23.0, 0, 0x4096CBE4, 0, 85.0, 32.0, 38.0, 38.0, \
-                                               60.0, 14.0, 71.0, 0.87266463, -0.69813174, 0.61086529, \
-                                               -0.95993108, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_crouched_pistol_firing_animation_group3:.word crouched_pistol_firing_animation_group3
-                .word 0xFFFFFFFF
-ptr_crouched_pistol_firing_animation_groups:.word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group2
-                .word ptr_crouched_pistol_firing_animation_group2
-                .word ptr_crouched_pistol_firing_animation_group2
-                .word ptr_crouched_pistol_firing_animation_group2
-                .word ptr_crouched_pistol_firing_animation_group2
-                .word ptr_crouched_pistol_firing_animation_group2
-                .word ptr_crouched_pistol_firing_animation_group3
-                .word ptr_crouched_pistol_firing_animation_group3
-                .word ptr_crouched_pistol_firing_animation_group3
-                .word ptr_crouched_pistol_firing_animation_group3
-                .word ptr_crouched_pistol_firing_animation_group3
-                .word ptr_crouched_pistol_firing_animation_group3
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-                .word ptr_crouched_pistol_firing_animation_group1
-crouched_doubles_firing_animation_group1:weapon_firing_animation_table <0x8698, 22.0, 0, 0, 0x41200000, 111.0, 34.0, 87.0, -1.0, \
-                                               -1.0, 17.0, 104.0, 0.87266463, -0.69813174, 0.61086529, \
-                                               -0.78539819, 0.0, 0.0>
-                weapon_firing_animation_table <0x8AAC, 25.0, 0, 0, 0x41100000, 92.0, 33.0, 62.0, -1.0, \
-                                               -1.0, 18.0, 69.0, 0.87266463, -0.69813174, 0.61086529, \
-                                               -0.78539819, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_crouched_doubles_firing_animation_group1:.word crouched_doubles_firing_animation_group1
-                .word 0xFFFFFFFF
-crouched_doubles_firing_animation_group2:weapon_firing_animation_table <0x8800, 28.0, 0, 0x3FC90FDB, 0x41700000, 108.0, 34.0, 73.0,\
-                                               -1.0, -1.0, 17.0, 93.0, 0.87266463, -0.69813174, \
-                                               0.52359879, -0.78539819, 0.0, 0.0>
-                weapon_firing_animation_table <0x8BF0, 19.0, 0, 0x3FC90FDB, 0x40400000, 95.0, 30.0, 64.0, \
-                                               -1.0, -1.0, 14.0, 71.0, 0.87266463, -0.69813174, \
-                                               0.52359879, -0.78539819, 1.5, 1.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_crouched_doubles_firing_animation_group2:.word crouched_doubles_firing_animation_group2
-                .word 0xFFFFFFFF
-crouched_doubles_firing_animation_group3:weapon_firing_animation_table <0x8978, 31.0, 0, 0x4096CBE4, 0x41600000, 111.0, 40.0, 83.0,\
-                                               -1.0, -1.0, 21.0, 94.0, 0.87266463, -0.69813174, \
-                                               0.52359879, -0.78539819, 0.0, 0.0>
-                weapon_firing_animation_table <0x8D28, 26.0, 0, 0x4096CBE4, 0x40E00000, 89.0, 34.0, 60.0, \
-                                               -1.0, -1.0, 20.0, 68.0, 0.87266463, -0.69813174, \
-                                               0.52359879, -0.78539819, 0.0, 0.0>
-                weapon_firing_animation_table <0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
-                                               0.0, 0.0, 0.0, 0.0, 0.0>
-ptr_crouched_doubles_firing_animation_group3:.word crouched_doubles_firing_animation_group3
-                .word 0xFFFFFFFF
-ptr_crouched_doubles_firing_animation_groups:.word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group2
-                .word ptr_crouched_doubles_firing_animation_group2
-                .word ptr_crouched_doubles_firing_animation_group2
-                .word ptr_crouched_doubles_firing_animation_group2
-                .word ptr_crouched_doubles_firing_animation_group2
-                .word ptr_crouched_doubles_firing_animation_group2
-                .word ptr_crouched_doubles_firing_animation_group3
-                .word ptr_crouched_doubles_firing_animation_group3
-                .word ptr_crouched_doubles_firing_animation_group3
-                .word ptr_crouched_doubles_firing_animation_group3
-                .word ptr_crouched_doubles_firing_animation_group3
-                .word ptr_crouched_doubles_firing_animation_group3
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
-                .word ptr_crouched_doubles_firing_animation_group1
+s32 current_random_body = 0;
+s32 current_random_male_head = 0;
+s32 current_random_female_head = 0;
+f32 ai_accuracy_modifier = 1.0;
+f32 ai_damage_modifier = 1.0;
+f32 ai_health_modifier = 1.0;
+f32 ai_reaction_speed = 1.0;
+s32 setting_007_5 = 0;
+
+struct struck_animation_table stru_D_8002CE54[] = {
+    {0x35C8, 0, -1.0, 0.5, 0, 27.0, -1.0},
+    {0x36D8, 0, -1.0, 0.5, 0, 26.0, -1.0},
+    {0x33AC, 1, -1.0, 0.5, 0, 25.0, -1.0},
+    {0x34D4, 1, -1.0, 0.5, 0, 23.0, -1.0},
+    {0, 0, 0.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002CEE0[] = {
+    {0x35C8, 0, -1.0, 0.5, 0, 27.0, -1.0},
+    {0x36D8, 0, -1.0, 0.5, 0, 26.0, -1.0},
+    {0x33AC, 1, -1.0, 0.5, 0, 25.0, -1.0},
+    {0x34D4, 1, -1.0, 0.5, 0, 23.0, -1.0},
+    {0, 0, 0.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002CF6C[] = {
+    {0x35C8, 0, -1.0, 0.5, 1, 27.0, -1.0},
+    {0x36D8, 0, -1.0, 0.5, 1, 26.0, -1.0},
+    {0x33AC, 1, -1.0, 0.5, 1, 25.0, -1.0},
+    {0x34D4, 1, -1.0, 0.5, 1, 23.0, -1.0},
+    {0x540C, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, 0.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002D014[] = {
+    {0x33AC, 0, -1.0, 0.5, 0, 25.0, -1.0},
+    {0x34D4, 0, -1.0, 0.5, 0, 23.0, -1.0},
+    {0x35C8, 1, -1.0, 0.5, 0, 27.0, -1.0},
+    {0x36D8, 1, -1.0, 0.5, 0, 26.0, -1.0},
+    {0, 0, 0.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002D0A0[] = {
+    {0x33AC, 0, -1.0, 0.5, 0, 25.0, -1.0},
+    {0x34D4, 0, -1.0, 0.5, 0, 23.0, -1.0},
+    {0x35C8, 1, -1.0, 0.5, 0, 27.0, -1.0},
+    {0x36D8, 1, -1.0, 0.5, 0, 26.0, -1.0},
+    {0, 0, 0.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002D12C[] = {
+    {0x33AC, 0, -1.0, 0.5, 1, 25.0, -1.0},
+    {0x34D4, 0, -1.0, 0.5, 1, 23.0, -1.0},
+    {0x35C8, 1, -1.0, 0.5, 1, 27.0, -1.0},
+    {0x36D8, 1, -1.0, 0.5, 1, 26.0, -1.0},
+    {0x540C, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, 0.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002D1D4[] = {
+    {0x30B8, 0, -1.0, 0.5, 0, 55.0, 39.0},
+    {0x30B8, 1, -1.0, 0.5, 0, 55.0, 39.0},
+    {0x31DC, 0, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x31DC, 1, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x32C8, 0, -1.0, 0.5, 1, 29.0, -1.0},
+    {0x32C8, 1, -1.0, 0.5, 1, 29.0, -1.0},
+    {0x384C, 0, -1.0, 0.5, 0, 97.0, 64.0},
+    {0x384C, 1, -1.0, 0.5, 0, 97.0, 64.0},
+    {0x3AF0, 0, -1.0, 0.5, 0, 31.0, -1.0},
+    {0x3AF0, 1, -1.0, 0.5, 0, 31.0, -1.0},
+    {0x3C10, 0, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x3C10, 1, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x3D04, 0, -1.0, 0.5, 0, 28.0, -1.0},
+    {0x3D04, 1, -1.0, 0.5, 0, 28.0, -1.0},
+    {0x282C, 0, -1.0, 0.5, 0, 79.0, 415.0},
+    {0x282C, 1, -1.0, 0.5, 0, 79.0, 415.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002D3B0[] = {
+    {0x30B8, 0, -1.0, 0.5, 0, 55.0, 39.0},
+    {0x30B8, 1, -1.0, 0.5, 0, 55.0, 39.0},
+    {0x31DC, 0, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x31DC, 1, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x32C8, 0, -1.0, 0.5, 1, 29.0, -1.0},
+    {0x32C8, 1, -1.0, 0.5, 1, 29.0, -1.0},
+    {0x33AC, 0, -1.0, 0.5, 1, 25.0, -1.0},
+    {0x33AC, 1, -1.0, 0.5, 1, 25.0, -1.0},
+    {0x34D4, 0, -1.0, 0.5, 1, 23.0, -1.0},
+    {0x34D4, 1, -1.0, 0.5, 1, 23.0, -1.0},
+    {0x35C8, 0, -1.0, 0.5, 1, 27.0, -1.0},
+    {0x35C8, 1, -1.0, 0.5, 1, 27.0, -1.0},
+    {0x36D8, 0, -1.0, 0.5, 1, 26.0, -1.0},
+    {0x36D8, 1, -1.0, 0.5, 1, 26.0, -1.0},
+    {0x384C, 0, -1.0, 0.5, 0, 97.0, 64.0},
+    {0x384C, 1, -1.0, 0.5, 0, 97.0, 64.0},
+    {0x39C0, 0, -1.0, 0.5, 0, 94.0, 66.0},
+    {0x39C0, 1, -1.0, 0.5, 0, 94.0, 66.0},
+    {0x3AF0, 0, -1.0, 0.5, 0, 31.0, -1.0},
+    {0x3AF0, 1, -1.0, 0.5, 0, 31.0, -1.0},
+    {0x3C10, 0, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x3C10, 1, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x3D04, 0, -1.0, 0.5, 0, 28.0, -1.0},
+    {0x3D04, 1, -1.0, 0.5, 0, 28.0, -1.0},
+    {0x2E64, 0, -1.0, 0.5, 0, 87.0, 203.0},
+    {0x2E64, 1, -1.0, 0.5, 0, 87.0, 203.0},
+    {0x51C4, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x51C4, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002D6DC[] = {
+    {0x35C8, 0, -1.0, 0.5, 0, 27.0, -1.0},
+    {0x36D8, 0, -1.0, 0.5, 0, 26.0, -1.0},
+    {0x33AC, 1, -1.0, 0.5, 0, 25.0, -1.0},
+    {0x34D4, 1, -1.0, 0.5, 0, 23.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002D768[] = {
+    {0x35C8, 0, -1.0, 0.5, 0, 27.0, -1.0},
+    {0x36D8, 0, -1.0, 0.5, 0, 26.0, -1.0},
+    {0x33AC, 1, -1.0, 0.5, 0, 25.0, -1.0},
+    {0x34D4, 1, -1.0, 0.5, 0, 23.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002D7F4[] = {
+    {0x35C8, 0, -1.0, 0.5, 1, 27.0, -1.0},
+    {0x36D8, 0, -1.0, 0.5, 1, 26.0, -1.0},
+    {0x33AC, 1, -1.0, 0.5, 1, 25.0, -1.0},
+    {0x34D4, 1, -1.0, 0.5, 1, 23.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002D880[] = {
+    {0x33AC, 0, -1.0, 0.5, 0, 25.0, -1.0},
+    {0x34D4, 0, -1.0, 0.5, 0, 23.0, -1.0},
+    {0x35C8, 1, -1.0, 0.5, 0, 27.0, -1.0},
+    {0x36D8, 1, -1.0, 0.5, 0, 26.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002D90C[] = {
+    {0x33AC, 0, -1.0, 0.5, 0, 25.0, -1.0},
+    {0x34D4, 0, -1.0, 0.5, 0, 23.0, -1.0},
+    {0x35C8, 1, -1.0, 0.5, 0, 27.0, -1.0},
+    {0x36D8, 1, -1.0, 0.5, 0, 26.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002D998[] = {
+    {0x33AC, 0, -1.0, 0.5, 1, 25.0, -1.0},
+    {0x34D4, 0, -1.0, 0.5, 1, 23.0, -1.0},
+    {0x35C8, 1, -1.0, 0.5, 1, 27.0, -1.0},
+    {0x36D8, 1, -1.0, 0.5, 1, 26.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002DA24[] = {
+    {0x30B8, 0, -1.0, 0.5, 0, 55.0, 39.0},
+    {0x30B8, 1, -1.0, 0.5, 0, 55.0, 39.0},
+    {0x31DC, 0, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x31DC, 1, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x32C8, 0, -1.0, 0.5, 1, 29.0, -1.0},
+    {0x32C8, 1, -1.0, 0.5, 1, 29.0, -1.0},
+    {0x33AC, 0, -1.0, 0.5, 1, 25.0, -1.0},
+    {0x33AC, 1, -1.0, 0.5, 1, 25.0, -1.0},
+    {0x34D4, 0, -1.0, 0.5, 1, 23.0, -1.0},
+    {0x34D4, 1, -1.0, 0.5, 1, 23.0, -1.0},
+    {0x35C8, 0, -1.0, 0.5, 1, 27.0, -1.0},
+    {0x35C8, 1, -1.0, 0.5, 1, 27.0, -1.0},
+    {0x36D8, 0, -1.0, 0.5, 1, 26.0, -1.0},
+    {0x36D8, 1, -1.0, 0.5, 1, 26.0, -1.0},
+    {0x384C, 0, -1.0, 0.5, 0, 97.0, 64.0},
+    {0x384C, 1, -1.0, 0.5, 0, 97.0, 64.0},
+    {0x39C0, 0, -1.0, 0.5, 0, 94.0, 66.0},
+    {0x39C0, 1, -1.0, 0.5, 0, 94.0, 66.0},
+    {0x3AF0, 0, -1.0, 0.5, 0, 31.0, -1.0},
+    {0x3AF0, 1, -1.0, 0.5, 0, 31.0, -1.0},
+    {0x3C10, 0, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x3C10, 1, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x3D04, 0, -1.0, 0.5, 0, 28.0, -1.0},
+    {0x3D04, 1, -1.0, 0.5, 0, 28.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002DCE0[] = {
+    {0x30B8, 0, -1.0, 0.5, 0, 55.0, 39.0},
+    {0x30B8, 1, -1.0, 0.5, 0, 55.0, 39.0},
+    {0x31DC, 0, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x31DC, 1, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x32C8, 0, -1.0, 0.5, 1, 29.0, -1.0},
+    {0x32C8, 1, -1.0, 0.5, 1, 29.0, -1.0},
+    {0x384C, 0, -1.0, 0.5, 0, 97.0, 64.0},
+    {0x384C, 1, -1.0, 0.5, 0, 97.0, 64.0},
+    {0x39C0, 0, -1.0, 0.5, 0, 94.0, 66.0},
+    {0x39C0, 1, -1.0, 0.5, 0, 94.0, 66.0},
+    {0x3AF0, 0, -1.0, 0.5, 0, 31.0, -1.0},
+    {0x3AF0, 1, -1.0, 0.5, 0, 31.0, -1.0},
+    {0x3C10, 0, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x3C10, 1, -1.0, 0.5, 0, 36.0, -1.0},
+    {0x3D04, 0, -1.0, 0.5, 0, 28.0, -1.0},
+    {0x3D04, 1, -1.0, 0.5, 0, 28.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002DEBC[] = {
+    {0x2F94, 0, -1.0, 0.5, 0, 67.0, 54.0},
+    {0x2F94, 1, -1.0, 0.5, 0, 67.0, 54.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002DF10[] = {
+    {0x1F84, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x2134, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002DF64[] = {
+    {0x1F84, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x2134, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002DFB8[] = {
+    {0x1F84, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x2134, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x540C, 1, 20.0, 0.40000001, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002E028[] = {
+    {0x2134, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x1F84, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002E07C[] = {
+    {0x2134, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x1F84, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002E0D0[] = {
+    {0x2134, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x1F84, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x540C, 0, 20.0, 0.40000001, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002E140[] = {
+    {0x282C, 0, 20.0, 0.5, 0, -1.0, -1.0},
+    {0x282C, 1, 30.0, 0.5, 0, -1.0, -1.0},
+    {0x39C0, 0, 20.0, 0.5, 0, -1.0, -1.0},
+    {0x39C0, 1, 20.0, 0.5, 0, -1.0, -1.0},
+    {0x30B8, 0, 15.0, 0.5, 0, -1.0, -1.0},
+    {0x30B8, 1, 15.0, 0.5, 0, -1.0, -1.0},
+    {0x3AF0, 0, 10.0, 0.25, 0, -1.0, -1.0},
+    {0x3AF0, 1, 10.0, 0.25, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002E23C[] = {
+    {0x2E64, 0, 15.0, 0.5, 0, 87.0, 203.0},
+    {0x2E64, 1, 15.0, 0.5, 0, 87.0, 203.0},
+    {0x39C0, 0, 20.0, 0.5, 0, -1.0, -1.0},
+    {0x39C0, 1, 20.0, 0.5, 0, -1.0, -1.0},
+    {0x30B8, 0, 15.0, 0.5, 0, -1.0, -1.0},
+    {0x30B8, 1, 15.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002E300[] = {
+    {0x1C9C, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x1E40, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002E354[] = {
+    {0x1A6C, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x1B54, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002E3A8[] = {
+    {0x186C, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x1984, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x39C0, 0, 20.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002E418[] = {
+    {0x1E40, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x1C9C, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002E46C[] = {
+    {0x1B54, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x1A6C, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002E4C0[] = {
+    {0x1984, 0, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x186C, 1, -1.0, 0.5, 0, -1.0, -1.0},
+    {0x39C0, 1, 20.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002E530[] = {
+    {0x39C0, 0, 20.0, 0.5, 0, -1.0, -1.0},
+    {0x39C0, 1, 20.0, 0.5, 0, -1.0, -1.0},
+    {0x30B8, 0, 15.0, 0.5, 0, -1.0, -1.0},
+    {0x30B8, 1, 15.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+struct struck_animation_table stru_D_8002E5BC[] = {
+    {0x39C0, 0, 20.0, 0.5, 0, -1.0, -1.0},
+    {0x39C0, 1, 20.0, 0.5, 0, -1.0, -1.0},
+    {0x30B8, 0, 15.0, 0.5, 0, -1.0, -1.0},
+    {0x30B8, 1, 15.0, 0.5, 0, -1.0, -1.0},
+    {0, 0, -1.0, 0.5, 0, -1.0, -1.0}
+};
+
+
+
+struct explosion_death_animation stru_D_8002E648[] = {
+    {0x98C8, 0, 0.5, 9.0, 18.0, 29.0, -1.0},
+    {0x98C8, 1, 0.5, 9.0, 18.0, 29.0, -1.0},
+    {0xA1B8, 0, 0.5, 11.0, 19.0, 31.0, -1.0},
+    {0xA1B8, 1, 0.5, 11.0, 19.0, 31.0, -1.0},
+    {0xA094, 0, 0.5, 6.0, 20.0, 27.0, -1.0},
+    {0xA094, 1, 0.5, 6.0, 20.0, 27.0, -1.0},
+    {0xA424, 0, 0.5, 29.0, 36.0, 48.0, -1.0},
+    {0xA424, 1, 0.5, 29.0, 36.0, 48.0, -1.0},
+    {0xA538, 0, 0.5, 29.0, 38.0, 49.0, -1.0},
+    {0xA538, 1, 0.5, 29.0, 38.0, 49.0, -1.0},
+    {0xA650, 0, 0.5, 19.0, 30.0, 42.0, -1.0},
+    {0xA650, 1, 0.5, 19.0, 30.0, 42.0, -1.0},
+    {0x9A2C, 0, 0.5, 9.0, 21.0, 29.0, 55.0},
+    {0x9A2C, 1, 0.5, 9.0, 21.0, 29.0, 55.0},
+    {0x9D5C, 0, 0.5, 6.0, 18.0, 27.0, -1.0},
+    {0x9D5C, 1, 0.5, 6.0, 18.0, 27.0, -1.0},
+    {0x9E44, 0, 0.5, 6.0, 19.0, 29.0, -1.0},
+    {0x9E44, 1, 0.5, 6.0, 19.0, 29.0, -1.0},
+    {0x9B48, 0, 0.5, 8.0, 14.0, 25.0, -1.0},
+    {0x9B48, 1, 0.5, 8.0, 14.0, 25.0, -1.0},
+    {0x9C4C, 0, 0.5, 8.0, 19.0, 25.0, -1.0},
+    {0x9C4C, 1, 0.5, 8.0, 19.0, 25.0, -1.0},
+    {0x9F48, 0, 0.5, 12.0, 21.0, 29.0, -1.0},
+    {0x9F48, 1, 0.5, 12.0, 21.0, 29.0, -1.0},
+    {0xA2F8, 0, 0.5, 22.0, 30.0, 41.0, -1.0},
+    {0xA2F8, 1, 0.5, 22.0, 30.0, 41.0, -1.0},
+    {0, 0, 0.5, 0.0, 0.0, 0.0, -1.0},
+};
+
+u8 expl_forward[] = {0x01, 0x02, 0x03, 0x4, 0x05, 0x00, 0x00};
+u8 expl_f_left[] = {0x7, 0x09, 0x0B, 0x00};
+u8 expl_f_right[] = {0x06, 0x08, 0x0A, 0x00};
+u8 expl_left[] = {0x0C, 0x0F, 0x11, 0x00};
+u8 expl_right[] = {0x0D, 0x0E, 0x10, 0x00};
+u8 expl_back[] = {0x14, 0x15, 0x16, 0x17};
+u8 expl_b_right[] = {0x12, 0x18, 0x00, 0x00};
+u8 expl_b_left[] = {0x13, 0x19, 0x00, 0x00};
+
+struct explosion_animation explosion_animation_table[] = {
+    {expl_forward, 6},
+    {expl_f_left, 3},
+    {expl_left, 3},
+    {expl_b_right, 2},
+    {expl_back, 4},
+    {expl_b_left, 2},
+    {expl_right, 3},
+    {expl_f_right, 3}
+};
+
+struct weapon_firing_animation_table rifle_firing_animation_group1[] = {
+    {0x214, 28.0, 0, 0, 0, -1.0, 23.0, 54.0, -1.0, -1.0, 18.0, 54.0, 0.87266463, -0.52359879, 1.0471976, -0.34906587, 1.6, 1.8},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_rifle_firing_animation_group1[] = {
+    &rifle_firing_animation_group1,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table rifle_firing_animation_group2[] = {
+    {0x144, 37.0, 0, 0, 0, -1.0, 30.0, 81.0, -1.0, -1.0, 25.0, 81.0, 0.87266463, -0.69813174, 0.69813174, -0.69813174, 1.6, 1.75},
+    {0x318, 27.0, 0, 0, 0, -1.0, 22.0, 61.0, -1.0, -1.0, 17.0, 61.0, 0.87266463, -0.2617994, 0.69813174, -0.69813174, 2.0, 1.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_rifle_firing_animation_group2[] = {
+    &rifle_firing_animation_group2,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table rifle_firing_animation_group5[] = {
+    {0x144, 37.0, 0, 0, 0, -1.0, 30.0, 81.0, -1.0, -1.0, 25.0, 81.0, 0.87266463, -0.69813174, 0.69813174, -0.69813174, 1.6, 1.75},
+    {0x318, 27.0, 0, 0, 0, -1.0, 22.0, 61.0, -1.0, -1.0, 17.0, 61.0, 0.87266463, -0.2617994, 0.69813174, -0.69813174, 2.0, 1.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_rifle_firing_animation_group5[] = {
+    &rifle_firing_animation_group5,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table rifle_firing_animation_group3[] = {
+    {0x3C4, 19.0, 0, 0x3FC90FDB, 0, -1.0, 19.0, 61.0, -1.0, -1.0, 14.0, 61.0, 0.87266463, -0.34906587, 0.43633232, -1.0471976, 2.5, 2.5},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_rifle_firing_animation_group3[] = {
+    &rifle_firing_animation_group3,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table rifle_firing_animation_group4[] = {
+    {0x814, 27.0, 0, 0, 0, -1.0, 39.0, 74.0, -1.0, -1.0, 34.0, 74.0, 0.87266463, -0.69813174, 0.78539819, -0.69813174, 1.5, 1.5},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_rifle_firing_animation_group4[] = {
+    &rifle_firing_animation_group4,
+    0xFFFFFFFF
+};
+
+s32 ptr_rifle_firing_animation_groups[] = {
+    &ptr_rifle_firing_animation_group1,
+    &ptr_rifle_firing_animation_group2,
+    &ptr_rifle_firing_animation_group2,
+    &ptr_rifle_firing_animation_group2,
+    &ptr_rifle_firing_animation_group2,
+    &ptr_rifle_firing_animation_group2,
+    &ptr_rifle_firing_animation_group2,
+    &ptr_rifle_firing_animation_group2,
+    &ptr_rifle_firing_animation_group2,
+    &ptr_rifle_firing_animation_group2,
+    &ptr_rifle_firing_animation_group3,
+    &ptr_rifle_firing_animation_group3,
+    &ptr_rifle_firing_animation_group3,
+    &ptr_rifle_firing_animation_group3,
+    &ptr_rifle_firing_animation_group3,
+    &ptr_rifle_firing_animation_group3,
+    &ptr_rifle_firing_animation_group4,
+    &ptr_rifle_firing_animation_group4,
+    &ptr_rifle_firing_animation_group4,
+    &ptr_rifle_firing_animation_group4,
+    &ptr_rifle_firing_animation_group4,
+    &ptr_rifle_firing_animation_group4,
+    &ptr_rifle_firing_animation_group5,
+    &ptr_rifle_firing_animation_group5,
+    &ptr_rifle_firing_animation_group5,
+    &ptr_rifle_firing_animation_group5,
+    &ptr_rifle_firing_animation_group5,
+    &ptr_rifle_firing_animation_group5,
+    &ptr_rifle_firing_animation_group5,
+    &ptr_rifle_firing_animation_group5,
+    &ptr_rifle_firing_animation_group5,
+    &ptr_rifle_firing_animation_group1
+};
+
+struct weapon_firing_animation_table pistol_firing_animation_group1[] = {
+    {0x60D4, 26.0, 0, 0, 0x41400000, 140.0, 58.0, 92.0, 60.0, 79.0, 20.0, 120.0, 0.87266463, -0.69813174, 0.69813174, -0.69813174, 0.0, 0.0},
+    {0x6484, 0.0, 0, 0, 0x41880000, 100.0, 25.0, 87.0, 30.0, 55.0, 20.0, 93.0, 0.87266463, -0.69813174, 0.69813174, -1.0471976, 0.0, 0.0},
+    {0x6554, 0.0, 0, 0, 0x41400000, 64.0, 19.0, 51.0, 24.0, 46.0, 14.0, 58.0, 0.87266463, -0.69813174, 0.52359879, -0.78539819, 0.0, 0.0},
+    {0x6644, 22.0, 0, 0, 0x40800000, 69.0, 22.0, 49.0, 22.0, 33.0, 8.0, 58.0, 0.87266463, -0.69813174, 0.43633232, -0.78539819, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_pistol_firing_animation_group1[] = {
+    &pistol_firing_animation_group1,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table pistol_firing_animation_group2[] = {
+    {0x60D4, 26.0, 0, 0, 0x41400000, 140.0, 58.0, 92.0, 60.0, 79.0, 20.0, 120.0, 0.87266463, -0.69813174, 0.69813174, -0.69813174, 0.0, 0.0},
+    {0x6644, 22.0, 0, 0, 0x40800000, 69.0, 22.0, 49.0, 22.0, 33.0, 8.0, 58.0, 0.87266463, -0.69813174, 0.43633232, -0.78539819, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_pistol_firing_animation_group2[] = {
+    &pistol_firing_animation_group2,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table pistol_firing_animation_group3[] = {
+    {0x60D4, 26.0, 0, 0, 0x41400000, 140.0, 58.0, 92.0, 60.0, 79.0, 20.0, 120.0, 0.87266463, -0.69813174, 0.69813174, -0.69813174, 0.0, 0.0},
+    {0x6644, 22.0, 0, 0, 0x40800000, 69.0, 22.0, 49.0, 22.0, 33.0, 8.0, 58.0, 0.87266463, -0.69813174, 0.43633232, -0.78539819, 0.0, 0.0},
+    {0x694C, 0.0, 0, 0x3FC90FDB, 0x40E00000, 130.0, 45.0, 93.0, 56.0, 73.0, 26.0, 107.0, 0.87266463, -0.69813174, 0.34906587, -0.52359879, 0.0, 0.0},
+    {0x6A18, 15.0, 0, 0x3FC90FDB, 0x40A00000, 76.0, 20.0, 31.0, 31.0, 38.0, 15.0, 49.0, 0.87266463, -0.69813174, 0.52359879, -1.0471976, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_pistol_firing_animation_group3[] = {
+    &pistol_firing_animation_group3,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table pistol_firing_animation_group6[] = {
+    {0x60D4, 26.0, 0, 0, 0x41400000, 140.0, 58.0, 92.0, 60.0, 79.0, 20.0, 120.0, 0.87266463, -0.69813174, 0.69813174, -0.69813174, 0.0, 0.0},
+    {0x6644, 22.0, 0, 0, 0x40800000, 69.0, 22.0, 49.0, 22.0, 33.0, 8.0, 58.0, 0.87266463, -0.69813174, 0.43633232, -0.78539819, 0.0, 0.0},
+    {0x6738, 0.0, 0, 0x4096CBE4, 0x40E00000, 139.0, 54.0, 105.0, 61.0, 88.0, 26.0, 120.0, 0.87266463, -0.69813174, 0.69813174, -0.61086529, 0.0, 0.0},
+    {0x6808, 19.0, 0, 0x4096CBE4, 0x40800000, 79.0, 21.0, 50.0, 26.0, 42.0, 10.0, 64.0, 0.87266463, -0.69813174, 0.69813174, -0.61086529, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_pistol_firing_animation_group6[] = {
+    &pistol_firing_animation_group6,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table pistol_firing_animation_group4[] = {
+    {0x6A18, 19.0, 0, 0x3FC90FDB, 0x40A00000, 76.0, 20.0, 31.0, 31.0, 38.0, 15.0, 49.0, 0.87266463, -0.69813174, 0.52359879, -1.0471976, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_pistol_firing_animation_group4[] = {
+    &pistol_firing_animation_group4,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table pistol_firing_animation_group5[] = {
+    {0x6808, 19.0, 0, 0x4096CBE4, 0x40800000, 79.0, 21.0, 50.0, 26.0, 42.0, 10.0, 64.0, 0.87266463, -0.69813174, 0.69813174, -0.61086529, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_pistol_firing_animation_group5[] = {
+    &pistol_firing_animation_group5,
+    0xFFFFFFFF
+};
+
+s32 ptr_pistol_firing_animation_groups[] = {
+    &ptr_pistol_firing_animation_group1,
+    &ptr_pistol_firing_animation_group1,
+    &ptr_pistol_firing_animation_group2,
+    &ptr_pistol_firing_animation_group2,
+    &ptr_pistol_firing_animation_group2,
+    &ptr_pistol_firing_animation_group3,
+    &ptr_pistol_firing_animation_group3,
+    &ptr_pistol_firing_animation_group3,
+    &ptr_pistol_firing_animation_group3,
+    &ptr_pistol_firing_animation_group3,
+    &ptr_pistol_firing_animation_group4,
+    &ptr_pistol_firing_animation_group4,
+    &ptr_pistol_firing_animation_group4,
+    &ptr_pistol_firing_animation_group4,
+    &ptr_pistol_firing_animation_group4,
+    &ptr_pistol_firing_animation_group4,
+    &ptr_pistol_firing_animation_group5,
+    &ptr_pistol_firing_animation_group5,
+    &ptr_pistol_firing_animation_group5,
+    &ptr_pistol_firing_animation_group5,
+    &ptr_pistol_firing_animation_group5,
+    &ptr_pistol_firing_animation_group5,
+    &ptr_pistol_firing_animation_group6,
+    &ptr_pistol_firing_animation_group6,
+    &ptr_pistol_firing_animation_group6,
+    &ptr_pistol_firing_animation_group6,
+    &ptr_pistol_firing_animation_group6,
+    &ptr_pistol_firing_animation_group2,
+    &ptr_pistol_firing_animation_group2,
+    &ptr_pistol_firing_animation_group2,
+    &ptr_pistol_firing_animation_group1,
+    &ptr_pistol_firing_animation_group1
+};
+
+struct weapon_firing_animation_table doubles_firing_animation_group1[] = {
+    {0x8E1C, 26.0, 0, 0, 0x40E00000, 92.0, 28.0, 68.0, -1.0, -1.0, 11.0, 73.0, 0.87266463, -0.69813174, 0.69813174, -0.69813174, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_doubles_firing_animation_group1[] = {
+    &doubles_firing_animation_group1,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table doubles_firing_animation_group2[] = {
+    {0x8F2C, 26.0, 0, 0x3FC90FDB, 0x41100000, 112.0, 38.0, 87.0, -1.0, -1.0, 19.0, 98.0, 0.87266463, -0.69813174, 0.43633232, -0.43633232, 0.0, 0.0},
+    {0x9194, 25.0, 0, 0x3FC90FDB, 0x41200000, 112.0, 32.0, 86.0, -1.0, -1.0, 19.0, 97.0, 0.87266463, -0.69813174, 0.43633232, -0.43633232, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_doubles_firing_animation_group2[] = {
+    &doubles_firing_animation_group2,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table doubles_firing_animation_group3[] = {
+    {0x9084, 39.0, 0, 0x4096CBE4, 0x41B00000, 127.0, 44.0, 102.0, -1.0, -1.0, 28.0, 112.0, 0.87266463, -0.69813174, 0.43633232, -0.43633232, 0.0, 0.0},
+    {0x92EC, 39.0, 0, 0x4096CBE4, 0x41B80000, 130.0, 46.0, 100.0, -1.0, -1.0, 30.0, 110.0, 0.87266463, -0.69813174, 0.43633232, -0.43633232, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_doubles_firing_animation_group3[] = {
+    &doubles_firing_animation_group3,
+    0xFFFFFFFF
+};
+
+s32 ptr_doubles_firing_animation_groups[] = {
+    &ptr_doubles_firing_animation_group1,
+    &ptr_doubles_firing_animation_group1,
+    &ptr_doubles_firing_animation_group1,
+    &ptr_doubles_firing_animation_group1,
+    &ptr_doubles_firing_animation_group1,
+    &ptr_doubles_firing_animation_group2,
+    &ptr_doubles_firing_animation_group2,
+    &ptr_doubles_firing_animation_group2,
+    &ptr_doubles_firing_animation_group2,
+    &ptr_doubles_firing_animation_group2,
+    &ptr_doubles_firing_animation_group2,
+    &ptr_doubles_firing_animation_group2,
+    &ptr_doubles_firing_animation_group2,
+    &ptr_doubles_firing_animation_group2,
+    &ptr_doubles_firing_animation_group2,
+    &ptr_doubles_firing_animation_group2,
+    &ptr_doubles_firing_animation_group3,
+    &ptr_doubles_firing_animation_group3,
+    &ptr_doubles_firing_animation_group3,
+    &ptr_doubles_firing_animation_group3,
+    &ptr_doubles_firing_animation_group3,
+    &ptr_doubles_firing_animation_group3,
+    &ptr_doubles_firing_animation_group3,
+    &ptr_doubles_firing_animation_group3,
+    &ptr_doubles_firing_animation_group3,
+    &ptr_doubles_firing_animation_group3,
+    &ptr_doubles_firing_animation_group3,
+    &ptr_doubles_firing_animation_group1,
+    &ptr_doubles_firing_animation_group1,
+    &ptr_doubles_firing_animation_group1,
+    &ptr_doubles_firing_animation_group1,
+    &ptr_doubles_firing_animation_group1
+};
+
+struct weapon_firing_animation_table crouched_rifle_firing_animation_group1[] = {
+    {0x990, 27.0, 0, 0, 0, -1.0, 35.0, 75.0, -1.0, -1.0, 31.0, 75.0, 0.87266463, -0.69813174, 0.90757126, -0.69813174, 1.5, 1.5},
+    {0xB84, 24.0, 0, 0, 0, -1.0, 46.0, 98.0, -1.0, -1.0, 41.0, 98.0, 0.87266463, -0.52359879, 1.134464, -0.69813174, 1.6, 1.6},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_crouched_rifle_firing_animation_group1[] = {
+    &crouched_rifle_firing_animation_group1,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table crouched_rifle_firing_animation_group2[] = {
+    {0xDB4, 26.0, 0, 0, 0, -1.0, 34.0, 87.0, -1.0, -1.0, 29.0, 87.0, 0.87266463, -0.52359879, 0.69813174, -0.95993108, 1.6, 2.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_crouched_rifle_firing_animation_group2[] = {
+    &crouched_rifle_firing_animation_group2,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table crouched_rifle_firing_animation_group3[] = {
+    {0x1028, 28.0, 0, 0, 0, -1.0, 36.0, 88.0, -1.0, -1.0, 31.0, 88.0, 0.87266463, -0.69813174, 0.87266463, -0.43633232, 1.6, 1.5},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_crouched_rifle_firing_animation_group3[] = {
+    &crouched_rifle_firing_animation_group3,
+    0xFFFFFFFF
+};
+
+s32 ptr_crouched_rifle_firing_animation_groups[] = {
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group2,
+    &ptr_crouched_rifle_firing_animation_group2,
+    &ptr_crouched_rifle_firing_animation_group2,
+    &ptr_crouched_rifle_firing_animation_group2,
+    &ptr_crouched_rifle_firing_animation_group2,
+    &ptr_crouched_rifle_firing_animation_group2,
+    &ptr_crouched_rifle_firing_animation_group3,
+    &ptr_crouched_rifle_firing_animation_group3,
+    &ptr_crouched_rifle_firing_animation_group3,
+    &ptr_crouched_rifle_firing_animation_group3,
+    &ptr_crouched_rifle_firing_animation_group3,
+    &ptr_crouched_rifle_firing_animation_group3,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1,
+    &ptr_crouched_rifle_firing_animation_group1
+};
+
+struct weapon_firing_animation_table crouched_pistol_firing_animation_group1[] = {
+    {0x6C18, 25.0, 0, 0, 0x41400000, 132.0, 55.0, 87.0, 67.0, 87.0, 26.0, 111.0, 0.87266463, -0.69813174, 0.61086529, -0.78539819, 0.0, 0.0},
+    {0x6D50, 26.0, 0, 0, 0x41000000, 89.0, 31.0, 63.0, 41.0, 51.0, 21.0, 80.0, 0.87266463, -0.69813174, 0.34906587, -1.134464, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_crouched_pistol_firing_animation_group1[] = {
+    &crouched_pistol_firing_animation_group1,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table crouched_pistol_firing_animation_group2[] = {
+    {0x71D0, 47.0, 0, 0x3FC90FDB, 0x40E00000, 128.0, 33.0, 86.0,47.0, 74.0, 23.0, 106.0, 0.87266463, -0.52359879, 0.52359879, -0.78539819, 0.0, 0.0},
+    {0x7304, 18.0, 0, 0x3FC90FDB, 0x40E00000, 78.0, 28.0, 52.0, 35.0, 45.0, 15.0, 66.0, 0.87266463, -0.087266468, 0.69813174, -0.78539819, 1.5, 1.0},
+    {0x7430, 20.0, 0, 0x3FC90FDB, 0x41500000, 92.0, 37.0, 67.0, 42.0, 55.0, 25.0, 84.0, 0.87266463, -0.52359879, 0.34906587, -0.69813174, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_crouched_pistol_firing_animation_group2[] = {
+    &crouched_pistol_firing_animation_group2,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table crouched_pistol_firing_animation_group3[] = {
+    {0x6F08, 28.0, 0, 0x4096CBE4, 0x41700000, 124.0, 38.0, 97.0, 60.0, 84.0, 20.0, 106.0, 0.87266463, -0.69813174, 0.52359879, -0.87266463, 0.0, 0.0},
+    {0x700C, 23.0, 0, 0x4096CBE4, 0, 85.0, 32.0, 38.0, 38.0, 60.0, 14.0, 71.0, 0.87266463, -0.69813174, 0.61086529, -0.95993108, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_crouched_pistol_firing_animation_group3[] = {
+    &crouched_pistol_firing_animation_group3,
+    0xFFFFFFFF
+};
+
+s32 ptr_crouched_pistol_firing_animation_groups[] = {
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group2,
+    &ptr_crouched_pistol_firing_animation_group2,
+    &ptr_crouched_pistol_firing_animation_group2,
+    &ptr_crouched_pistol_firing_animation_group2,
+    &ptr_crouched_pistol_firing_animation_group2,
+    &ptr_crouched_pistol_firing_animation_group2,
+    &ptr_crouched_pistol_firing_animation_group3,
+    &ptr_crouched_pistol_firing_animation_group3,
+    &ptr_crouched_pistol_firing_animation_group3,
+    &ptr_crouched_pistol_firing_animation_group3,
+    &ptr_crouched_pistol_firing_animation_group3,
+    &ptr_crouched_pistol_firing_animation_group3,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1,
+    &ptr_crouched_pistol_firing_animation_group1
+};
+
+struct weapon_firing_animation_table crouched_doubles_firing_animation_group1[] = {
+    {0x8698, 22.0, 0, 0, 0x41200000, 111.0, 34.0, 87.0, -1.0, -1.0, 17.0, 104.0, 0.87266463, -0.69813174, 0.61086529, -0.78539819, 0.0, 0.0},
+    {0x8AAC, 25.0, 0, 0, 0x41100000, 92.0, 33.0, 62.0, -1.0, -1.0, 18.0, 69.0, 0.87266463, -0.69813174, 0.61086529, -0.78539819, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_crouched_doubles_firing_animation_group1[] = {
+    &crouched_doubles_firing_animation_group1,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table crouched_doubles_firing_animation_group2[] = {
+    {0x8800, 28.0, 0, 0x3FC90FDB, 0x41700000, 108.0, 34.0, 73.0, -1.0, -1.0, 17.0, 93.0, 0.87266463, -0.69813174, 0.52359879, -0.78539819, 0.0, 0.0},
+    {0x8BF0, 19.0, 0, 0x3FC90FDB, 0x40400000, 95.0, 30.0, 64.0, -1.0, -1.0, 14.0, 71.0, 0.87266463, -0.69813174, 0.52359879, -0.78539819, 1.5, 1.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_crouched_doubles_firing_animation_group2[] = {
+    &crouched_doubles_firing_animation_group2,
+    0xFFFFFFFF
+};
+
+struct weapon_firing_animation_table crouched_doubles_firing_animation_group3[] = {
+    {0x8978, 31.0, 0, 0x4096CBE4, 0x41600000, 111.0, 40.0, 83.0,-1.0, -1.0, 21.0, 94.0, 0.87266463, -0.69813174, 0.52359879, -0.78539819, 0.0, 0.0},
+    {0x8D28, 26.0, 0, 0x4096CBE4, 0x40E00000, 89.0, 34.0, 60.0, -1.0, -1.0, 20.0, 68.0, 0.87266463, -0.69813174, 0.52359879, -0.78539819, 0.0, 0.0},
+    {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+};
+
+s32 ptr_crouched_doubles_firing_animation_group3[] = {
+    &crouched_doubles_firing_animation_group3,
+    0xFFFFFFFF
+};
+
+s32 ptr_crouched_doubles_firing_animation_groups[] = {
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group2,
+    &ptr_crouched_doubles_firing_animation_group2,
+    &ptr_crouched_doubles_firing_animation_group2,
+    &ptr_crouched_doubles_firing_animation_group2,
+    &ptr_crouched_doubles_firing_animation_group2,
+    &ptr_crouched_doubles_firing_animation_group2,
+    &ptr_crouched_doubles_firing_animation_group3,
+    &ptr_crouched_doubles_firing_animation_group3,
+    &ptr_crouched_doubles_firing_animation_group3,
+    &ptr_crouched_doubles_firing_animation_group3,
+    &ptr_crouched_doubles_firing_animation_group3,
+    &ptr_crouched_doubles_firing_animation_group3,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1,
+    &ptr_crouched_doubles_firing_animation_group1
+};
+
+/*
 stru_D_80030078:struct_1 <0x1334, 76.0, 0.0, 0.0, 20.0, -1.0, 98.0, 161.0, -1.0, -1.0, 93.0, 161.0, \
                           0.87266463, -0.52359879, 0.69813174, -0.69813174, 1.7, 2.0>
 stru_D_800300C0:struct_1 <0x1578, 58.0, 0.0, 0.0, 10.0, -1.0, 77.0, 104.0, -1.0, -1.0, 72.0, 104.0, \
@@ -850,65 +987,78 @@ stru_D_80030858:struct_1 <0x83A4, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, -1.0
                           0.87266463, -0.52359879, 0.52359879, -0.52359879, 0.0, 0.0>
                 struct_1 <0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, \
                           0.0, 0.0>
-objectiveregisters1:.word 0
-objectiveregisters2:.word 0
-objectiveregisters3:.word 0
-dword_D_80030984:.word 0
-dword_D_80030988:.word 0
-dword_D_8003098C:.word 0
-dword_D_80030990:.word 0
-dword_D_80030994:.word 0
-dword_D_80030998:.word 0
-dword_D_8003099C:.word 0
-dword_D_800309A0:.word 0
-dword_D_800309A4:.word 0
-dword_D_800309A8:.word 0
-dword_D_800309AC:.word 0
-dword_D_800309B0:.word 0
-dword_D_800309B4:.word 0
-dword_D_800309B8:.word 0
-dword_D_800309BC:.word 0
-dword_D_800309C0:.word 0
-dword_D_800309C4:.word 0
-dword_D_800309C8:.word 0
-dword_D_800309CC:.word 0
-dword_D_800309D0:.word 0
-dword_D_800309D4:.word 0
-dword_D_800309D8:.word 0
-dword_D_800309DC:.word 0
-dword_D_800309E0:.word 0
-dword_D_800309E4:.word 0
-dword_D_800309E8:.word 0
-dword_D_800309EC:.word 0
-dword_D_800309F0:.word 0
-dword_D_800309F4:.word 0
-male_guard_yelps:.half   0x86,  0x87,  0x88,  0x89,  0x8A,  0x8B,  0x8C,  0x8D,  0x8E,  0x8F
-                .half   0x90,  0x91,  0x92,  0x93,  0x94,  0x95,  0x96,  0x97,  0x98,  0x99
-                .half   0x9A,  0x9B,  0x9C,  0x9D,  0x9E,     0
-female_guard_yelps:.half    0xD,   0xE,   0xF,     0
-male_guard_yelp_counter:.word 0
-female_guard_yelp_counter:.word 0
-metal_ricochet_SFX1:.half 0xEF
-metal_ricochet_SFX2:.half 0x48
-metal_ricochet_SFX3:.half 0x49
-                .half 0
-dword_D_80030A44:.word 0
-dword_D_80030A48:.word 0
-dword_D_80030A4C:.word 0
-body_hit_SFX1:  .half 0x7B
-body_hit_SFX2:  .half 0x7C
-body_hit_SFX3:  .half 0x7D
-body_hit_SFX4:  .half 0x7E
-body_hit_SFX5:  .half 0x7F
-body_hit_SFX6:  .half 0x80
-body_hit_SFX7:  .half 0x81
-body_hit_SFX8:  .half 0x82
-body_hit_SFX9:  .half 0x83
-body_hit_SFXA:  .half 0x84
-body_hit_SFXB:  .half 0x85
-body_hit_SFXC:  .half 0
-dword_D_80030A68:.word 0
-*/
+                          */
+
+s32 objectiveregisters1 = 0;
+s32 objectiveregisters2 = 0;
+s32 objectiveregisters3 = 0;
+s32 D_80030984 = 0;
+s32 D_80030988 = 0;
+s32 D_8003098C = 0;
+s32 D_80030990 = 0;
+s32 D_80030994 = 0;
+s32 D_80030998 = 0;
+s32 D_8003099C = 0;
+s32 D_800309A0 = 0;
+s32 D_800309A4 = 0;
+s32 D_800309A8 = 0;
+s32 D_800309AC = 0;
+s32 D_800309B0 = 0;
+s32 D_800309B4 = 0;
+s32 D_800309B8 = 0;
+s32 D_800309BC = 0;
+s32 D_800309C0 = 0;
+s32 D_800309C4 = 0;
+s32 D_800309C8 = 0;
+s32 D_800309CC = 0;
+s32 D_800309D0 = 0;
+s32 D_800309D4 = 0;
+s32 D_800309D8 = 0;
+s32 D_800309DC = 0;
+s32 D_800309E0 = 0;
+s32 D_800309E4 = 0;
+s32 D_800309E8 = 0;
+s32 D_800309EC = 0;
+s32 D_800309F0 = 0;
+s32 D_800309F4 = 0;
+
+s16 male_guard_yelps[] = {
+    0x86,  0x87,  0x88,  0x89,  0x8A,  0x8B,  0x8C,  0x8D,  0x8E,  0x8F,
+    0x90,  0x91,  0x92,  0x93,  0x94,  0x95,  0x96,  0x97,  0x98,  0x99,
+    0x9A,  0x9B,  0x9C,  0x9D,  0x9E,     0
+};
+
+s16 female_guard_yelps[] = {
+    0xD,   0xE,   0xF,     0
+};
+
+s32 male_guard_yelp_counter = 0;
+s32 female_guard_yelp_counter = 0;
+
+s16 metal_ricochet_SFX1 = 0xEF;
+s16 metal_ricochet_SFX2 = 0x48;
+s16 metal_ricochet_SFX3 = 0x49;
+s16 D_80030A42 = 0;
+
+s32 D_80030A44 = 0;
+s32 D_80030A48 = 0;
+s32 D_80030A4C = 0;
+
+s16 body_hit_SFX1 = 0x7B;
+s16 body_hit_SFX2 = 0x7C;
+s16 body_hit_SFX3 = 0x7D;
+s16 body_hit_SFX4 = 0x7E;
+s16 body_hit_SFX5 = 0x7F;
+s16 body_hit_SFX6 = 0x80;
+s16 body_hit_SFX7 = 0x81;
+s16 body_hit_SFX8 = 0x82;
+s16 body_hit_SFX9 = 0x83;
+s16 body_hit_SFXA = 0x84;
+s16 body_hit_SFXB = 0x85;
+s16 body_hit_SFXC = 0;
+
+s32 D_80030A68 = 0;
+
 
 
 /*

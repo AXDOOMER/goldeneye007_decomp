@@ -1,16 +1,7 @@
 #include "ultra64.h"
 
-
-
-
-/*
-.section .rodata
-F32_80051D00: .float 3.1415927
-*/
-
-
-
-
+// .rodata
+const f32 F32_80051D00 = 3.1415927;
 
 #ifdef NONMATCHING
 void sub_GAME_7F01BAE0(void) {
