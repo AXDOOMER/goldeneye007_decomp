@@ -1,35 +1,16 @@
 #include "ultra64.h"
 #include "game/ob.h"
 
-/* bss
-CODE.bss:800888B0     ptr_resource_data:resource_lookup_data <?>
-CODE.bss:800888B0                                              # DATA XREF: ob_c_debug_setup+44o
-CODE.bss:800888B0                                              # load_bg_bytes_at_offset_to_membank+24r
-CODE.bss:800888B0                                              # load_rom_resource_index_to_membank+3Co
-CODE.bss:800888B0                                              # load_rom_resource_index_to_membank+108o
-CODE.bss:800888B0                                              # load_resource_index_to_buffer+14o
-CODE.bss:800888B0                                              # sub_CODE_7F0BD138+8o
-CODE.bss:800888B0                                              # something_mem_bank_a0+24o
-CODE.bss:800888B0                                              # get_index_num_of_named_resource+CCo
-CODE.bss:800888B0                                              # sub_CODE_7F0BD410+20o
-CODE.bss:800888B0                                              # sub_CODE_7F0BD188+20r
-CODE.bss:800888C4     ptr_res_data_next:resource_lookup_data <?>
-CODE.bss:800888C4                                              # DATA XREF: ob_c_debug_setup+54o
-CODE.bss:800888C4                                              # something_mem_bank_a0+30o
-CODE.bss:800888C4                                              # sub_CODE_7F0BD410+8o
-CODE.bss:800888D8     dword_CODE_bss_800888D8:.space 0x3958    # DATA XREF: sub_CODE_7F0BD410+30o
-*/
+//bss
+u8 ptr_resource_data[0x14];
+u8 ptr_res_data_next[0x14];
+u8 dword_CODE_bss_800888D8[0x3958];
 
-struct fileentry {
-    s32 index;
-    s32 *filename;
-    s32 size;
-};
 // data
 //D:80046050
-s32 dword_D_80046050 = 0;
+s32 D_80046050 = 0;
 
-struct fileentry resource_table[] = {
+struct fileentry file_resource_table[] = {
     {0, "", 0},
     {1, "bg/bg_sev_all_p.seg", 0x438660},
     {2, "bg/bg_silo_all_p.seg", 0x449450},
@@ -772,11 +753,14 @@ struct fileentry resource_table[] = {
 s32 file_entry_max = 0x2D7;
 
 
-/* rodata
-D:8005B66C     rz_header_1:    .word 0x11720000         # DATA XREF: load_resource_from_indy+8Cr
-D:8005B670     rz_header_2:    .word 0x11720000         # DATA XREF: load_resource_from_indy+ACr
-D:8005B674     aOb_c_debug:    .ascii "ob_c_debug"<0><0>  # DATA XREF: ob_c_debug_setup+Co
-*/
+// rodata
+//D:8005B66C
+const u32 rz_header_1 = 0x11720000;
+//D:8005B670
+const u32 rz_header_2 = 0x11720000;
+//D:8005B674
+const char aOb_c_debug[] = "ob_c_debug";
+
 
 #ifdef NONMATCHING
 void load_resource(void) {
@@ -882,12 +866,12 @@ glabel resource_load_from_indy
 /* 0F16F0 7F0BCBC0 3C0C8006 */  lui   $t4, %hi(rz_header_1) # $t4, 0x8006
 /* 0F16F4 7F0BCBC4 918CB66C */  lbu   $t4, %lo(rz_header_1)($t4)
 /* 0F16F8 7F0BCBC8 90EB0000 */  lbu   $t3, ($a3)
-/* 0F16FC 7F0BCBCC 3C0E8006 */  lui   $t6, %hi(D_8005B671) # $t6, 0x8006
+/* 0F16FC 7F0BCBCC 3C0E8006 */  lui   $t6, %hi(rz_header_2 + 0x1) # $t6, 0x8006
 /* 0F1700 7F0BCBD0 02002825 */  move  $a1, $s0
 /* 0F1704 7F0BCBD4 156C000B */  bne   $t3, $t4, .L7F0BCC04
 /* 0F1708 7F0BCBD8 00E02025 */   move  $a0, $a3
 /* 0F170C 7F0BCBDC 90ED0001 */  lbu   $t5, 1($a3)
-/* 0F1710 7F0BCBE0 91CEB671 */  lbu   $t6, %lo(D_8005B671)($t6)
+/* 0F1710 7F0BCBE0 91CEB671 */  lbu   $t6, %lo(rz_header_2 + 0x1)($t6)
 /* 0F1714 7F0BCBE4 27A60024 */  addiu $a2, $sp, 0x24
 /* 0F1718 7F0BCBE8 15AE0006 */  bne   $t5, $t6, .L7F0BCC04
 /* 0F171C 7F0BCBEC 00000000 */   nop   
@@ -917,8 +901,36 @@ glabel resource_load_from_indy
 
 
 #ifdef NONMATCHING
-void ob_c_debug_setup(void) {
+void *ob_c_debug_setup(void) {
+    s32 temp_v1;
+    u32 temp_v0;
+    void *phi_a0;
+    u32 phi_v0;
 
+    // Node 0
+    get_ptr_debug_notice_list_entry(&D_80046050, &aOb_c_debug);
+    temp_v1 = (file_entry_max + -1);
+    if (temp_v1 >= 2)
+    {
+        // Node 1
+        phi_a0 = (void *) (file_resource_table + 0xc);
+        phi_v0 = &ptr_res_data_next;
+loop_2:
+        // Node 2
+        temp_v0 = (phi_v0 + 0x14);
+        temp_v0->unk-14 = (s32) (phi_a0->unk14 - phi_a0->unk8);
+        temp_v0->unk-10 = 0;
+        temp_v0->unk-C = 0;
+        temp_v0->unk-8 = 0;
+        phi_a0 = (phi_a0 + 0xc);
+        phi_v0 = temp_v0;
+        if (temp_v0 < (u32) ((temp_v1 * 0x14) + &ptr_resource_data))
+        {
+            goto loop_2;
+        }
+    }
+    // Node 3
+    return &ptr_res_data_next;
 }
 #else
 GLOBAL_ASM(
@@ -933,8 +945,8 @@ glabel ob_c_debug_setup
 /* 0F1770 7F0BCC40 24846050 */   addiu $a0, %lo(D_80046050) # addiu $a0, $a0, 0x6050
 /* 0F1774 7F0BCC44 3C038005 */  lui   $v1, %hi(file_entry_max) # $v1, 0x8005
 /* 0F1778 7F0BCC48 8C6382D4 */  lw    $v1, %lo(file_entry_max)($v1)
-/* 0F177C 7F0BCC4C 3C048004 */  lui   $a0, %hi(D_80046060) # $a0, 0x8004
-/* 0F1780 7F0BCC50 24846060 */  addiu $a0, %lo(D_80046060) # addiu $a0, $a0, 0x6060
+/* 0F177C 7F0BCC4C 3C048004 */  lui   $a0, %hi(file_resource_table + 0xC) # $a0, 0x8004
+/* 0F1780 7F0BCC50 24846060 */  addiu $a0, %lo(file_resource_table + 0xC) # addiu $a0, $a0, 0x6060
 /* 0F1784 7F0BCC54 2463FFFF */  addiu $v1, $v1, -1
 /* 0F1788 7F0BCC58 28610002 */  slti  $at, $v1, 2
 /* 0F178C 7F0BCC5C 14200013 */  bnez  $at, .L7F0BCCAC
@@ -971,9 +983,10 @@ glabel ob_c_debug_setup
 
 
 #ifdef NONMATCHING
-void _load_rom_index_to_membank(void) {
-
+void _load_rom_index_to_membank(s32 arg3) {
+    load_rom_resource_index_to_membank((arg3 & 0xff));
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -997,7 +1010,7 @@ glabel _load_rom_index_to_membank
 
 #ifdef NONMATCHING
 void _load_resource_index_to_membank(void) {
-
+    load_resource_index_to_buffer();
 }
 #else
 GLOBAL_ASM(
@@ -1019,8 +1032,9 @@ glabel _load_resource_index_to_membank
 
 
 #ifdef NONMATCHING
-void _load_resource_named_to_membank(void) {
-
+void _load_resource_named_to_membank(s32 arg1, ? arg2, ? arg3, ? arg_unalignedF) {
+    // Node 0
+    return load_rom_resource_index_to_membank(get_index_num_of_named_resource(), arg1, arg2, arg_unalignedF);
 }
 #else
 GLOBAL_ASM(
@@ -1049,9 +1063,10 @@ glabel _load_resource_named_to_membank
 
 
 #ifdef NONMATCHING
-void _load_resource_named_to_buffer(void) {
-
+void _load_resource_named_to_buffer(s32 arg1, ? arg2, ? arg3) {
+    load_resource_index_to_buffer(get_index_num_of_named_resource(), arg1, arg2, arg3);
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1276,8 +1291,62 @@ glabel load_rom_resource_index_to_membank
 
 
 #ifdef NONMATCHING
-void load_resource_index_to_buffer(void) {
+void load_resource_index_to_buffer(s32 arg0, s32 arg1, ? arg2, ?32 arg3) {
+    void *temp_s0;
+    void *temp_a2;
+    void *temp_a2_2;
 
+    // Node 0
+    temp_s0 = ((arg0 * 0x14) + &ptr_resource_data);
+    if (temp_s0->unk4 == 0)
+    {
+        // Node 1
+        if (*temp_s0 != 0)
+        {
+            // Node 2
+            temp_s0->unk4 = (s32) *temp_s0;
+        }
+        else
+        {
+            // Node 3
+            temp_s0->unk4 = (s32) temp_s0->unk8;
+        }
+    }
+    // Node 4
+    if (((arg1 == 0) || (arg1 == 2)) || (arg1 == 2))
+    {
+        // Node 7
+        temp_a2_2 = ((arg0 * 0xc) + &file_resource_table);
+        if (temp_a2_2->unk8 == 0)
+        {
+            // Node 8
+            temp_s0->unkC = arg3;
+            resource_load_from_indy(arg2, arg3, temp_a2_2, temp_s0);
+        }
+        else
+        {
+            // Node 9
+            temp_s0->unkC = arg3;
+            load_resource(arg2, arg3, temp_a2_2, temp_s0);
+        }
+    }
+    else
+    {
+        // Node 10
+        temp_a2 = ((arg0 * 0xc) + &file_resource_table);
+        if (temp_a2->unk8 == 0)
+        {
+            // Node 11
+            resource_load_from_indy(arg2, 0, temp_a2, temp_s0);
+        }
+        else
+        {
+            // Node 12
+            load_resource(arg2, 0, temp_a2, temp_s0);
+        }
+    }
+    // Node 13
+    return arg2;
 }
 #else
 GLOBAL_ASM(
@@ -1624,8 +1693,8 @@ glabel get_index_num_of_named_resource
 /* 0F1DAC 7F0BD27C AFB00014 */  sw    $s0, 0x14($sp)
 /* 0F1DB0 7F0BD280 14200012 */  bnez  $at, .L7F0BD2CC
 /* 0F1DB4 7F0BD284 24110001 */   li    $s1, 1
-/* 0F1DB8 7F0BD288 3C108004 */  lui   $s0, %hi(D_80046060) # $s0, 0x8004
-/* 0F1DBC 7F0BD28C 26106060 */  addiu $s0, %lo(D_80046060) # addiu $s0, $s0, 0x6060
+/* 0F1DB8 7F0BD288 3C108004 */  lui   $s0, %hi(file_resource_table + 0xC) # $s0, 0x8004
+/* 0F1DBC 7F0BD28C 26106060 */  addiu $s0, %lo(file_resource_table + 0xC) # addiu $s0, $s0, 0x6060
 /* 0F1DC0 7F0BD290 8E050004 */  lw    $a1, 4($s0)
 .L7F0BD294:
 /* 0F1DC4 7F0BD294 50A00008 */  beql  $a1, $zero, .L7F0BD2B8
@@ -1719,8 +1788,27 @@ glabel sub_GAME_7F0BD384
 
 #ifdef NONMATCHING
 void sub_GAME_7F0BD38C(void) {
+    s32 temp_s0;
+    s32 phi_s0;
 
+    // Node 0
+    phi_s0 = 1;
+    if (file_entry_max >= 2)
+    {
+loop_1:
+        // Node 1
+        sub_GAME_7F0BD384(phi_s0);
+        temp_s0 = (phi_s0 + 1);
+        phi_s0 = temp_s0;
+        if (temp_s0 < file_entry_max)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 2
+    return;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1785,9 +1873,28 @@ glabel sub_GAME_7F0BD3E4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BD410(void) {
+void *sub_GAME_7F0BD410(void) {
+    u32 temp_v0;
+    u32 phi_v0;
 
+    // Node 0
+    if (file_entry_max >= 2)
+    {
+        // Node 1
+        phi_v0 = &ptr_res_data_next;
+loop_2:
+        // Node 2
+        temp_v0 = (phi_v0 + 0x14);
+        phi_v0 = temp_v0;
+        if (temp_v0 < (u32) ((file_entry_max * 0x14) + &ptr_resource_data))
+        {
+            goto loop_2;
+        }
+    }
+    // Node 3
+    return &ptr_res_data_next;
 }
+
 #else
 GLOBAL_ASM(
 .text

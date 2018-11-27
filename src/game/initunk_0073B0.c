@@ -4,13 +4,49 @@
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0073B0(void) {
+void cleanupGuardData(void) {
+    void *temp_v0;
+    s32 temp_s2;
+    s32 phi_s0;
+    s32 phi_s2;
+    s32 phi_v1;
 
+    // Node 0
+    if (D_8002CC68 > 0)
+    {
+        // Node 1
+        phi_s0 = 0;
+        phi_s2 = 0;
+        phi_v1 = D_8002CC68;
+loop_2:
+        // Node 2
+        temp_v0 = (ptr_guard_data + phi_s0);
+        if (temp_v0->unk1C != 0)
+        {
+            // Node 3
+            disable_sounds_attached_to_player_then_something(temp_v0->unk18);
+            sub_GAME_7F03A538((ptr_guard_data + phi_s0)->unk18);
+            unset_stateflag_0x04_for_posdata((ptr_guard_data + phi_s0)->unk18);
+            set_last_obj_pos_data((ptr_guard_data + phi_s0)->unk18);
+            phi_v1 = D_8002CC68;
+        }
+        // Node 4
+        temp_s2 = (phi_s2 + 1);
+        phi_s0 = (phi_s0 + 0x1dc);
+        phi_s2 = temp_s2;
+        phi_v1 = phi_v1;
+        if (temp_s2 < phi_v1)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 5
+    return;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0073B0
+glabel cleanupGuardData
 /* 03BEE0 7F0073B0 3C038003 */  lui   $v1, %hi(D_8002CC68) # $v1, 0x8003
 /* 03BEE4 7F0073B4 8C63CC68 */  lw    $v1, %lo(D_8002CC68)($v1)
 /* 03BEE8 7F0073B8 27BDFFD8 */  addiu $sp, $sp, -0x28

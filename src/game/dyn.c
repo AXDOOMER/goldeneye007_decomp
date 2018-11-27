@@ -512,9 +512,9 @@ void draw_membars(s32 arg0) {
 
     // Node 0
     temp_t7 = (&ptr_mgfx0_alloc_start + (bank_in_mgfx_alloc_table * 4));
-    compute_membar_display_string(&D_80048320, (f32) ((s32) (temp_t7->unk4 - arg0) >> 3), (f32) ((s32) (temp_t7->unk4 - *(&ptr_mgfx0_alloc_start + (bank_in_mgfx_alloc_table * 4))) >> 3), arg0);
+    compute_membar_display_string(&membars_string2, (f32) ((s32) (temp_t7->unk4 - arg0) >> 3), (f32) ((s32) (temp_t7->unk4 - *(&ptr_mgfx0_alloc_start + (bank_in_mgfx_alloc_table * 4))) >> 3), arg0);
     temp_t7_2 = (&ptr_mvtx0_alloc_start + (bank_in_mgfx_alloc_table * 4));
-    return compute_membar_display_string(&D_80048320, (f32) (temp_t7_2->unk4 - ptr_mvtx_cur_pos), (f32) (temp_t7_2->unk4 - *(&ptr_mvtx0_alloc_start + (bank_in_mgfx_alloc_table * 4))), &ptr_mvtx0_alloc_start);
+    return compute_membar_display_string(&membars_string2, (f32) (temp_t7_2->unk4 - ptr_mvtx_cur_pos), (f32) (temp_t7_2->unk4 - *(&ptr_mvtx0_alloc_start + (bank_in_mgfx_alloc_table * 4))), &ptr_mvtx0_alloc_start);
 }
 #else
 GLOBAL_ASM(
@@ -540,8 +540,8 @@ glabel draw_membars
 /* 0F2384 7F0BD854 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F2388 7F0BD858 46802120 */  cvt.s.w $f4, $f4
 /* 0F238C 7F0BD85C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F2390 7F0BD860 3C048005 */  lui   $a0, %hi(D_80048320) # $a0, 0x8005
-/* 0F2394 7F0BD864 24848320 */  addiu $a0, %lo(D_80048320) # addiu $a0, $a0, -0x7ce0
+/* 0F2390 7F0BD860 3C048005 */  lui   $a0, %hi(membars_string2) # $a0, 0x8005
+/* 0F2394 7F0BD864 24848320 */  addiu $a0, %lo(membars_string2) # addiu $a0, $a0, -0x7ce0
 /* 0F2398 7F0BD868 468031A0 */  cvt.s.w $f6, $f6
 /* 0F239C 7F0BD86C 44052000 */  mfc1  $a1, $f4
 /* 0F23A0 7F0BD870 44063000 */  mfc1  $a2, $f6
@@ -559,12 +559,12 @@ glabel draw_membars
 /* 0F23D0 7F0BD8A0 3C188009 */  lui   $t8, %hi(ptr_mvtx_cur_pos) # $t8, 0x8009
 /* 0F23D4 7F0BD8A4 8F18C24C */  lw    $t8, %lo(ptr_mvtx_cur_pos)($t8)
 /* 0F23D8 7F0BD8A8 8D4B0000 */  lw    $t3, ($t2)
-/* 0F23DC 7F0BD8AC 3C048005 */  lui   $a0, %hi(D_80048320) # $a0, 0x8005
+/* 0F23DC 7F0BD8AC 3C048005 */  lui   $a0, %hi(membars_string2) # $a0, 0x8005
 /* 0F23E0 7F0BD8B0 0078C823 */  subu  $t9, $v1, $t8
 /* 0F23E4 7F0BD8B4 006B6023 */  subu  $t4, $v1, $t3
 /* 0F23E8 7F0BD8B8 448C5000 */  mtc1  $t4, $f10
 /* 0F23EC 7F0BD8BC 44994000 */  mtc1  $t9, $f8
-/* 0F23F0 7F0BD8C0 24848320 */  addiu $a0, %lo(D_80048320) # addiu $a0, $a0, -0x7ce0
+/* 0F23F0 7F0BD8C0 24848320 */  addiu $a0, %lo(membars_string2) # addiu $a0, $a0, -0x7ce0
 /* 0F23F4 7F0BD8C4 468052A0 */  cvt.s.w $f10, $f10
 /* 0F23F8 7F0BD8C8 46804220 */  cvt.s.w $f8, $f8
 /* 0F23FC 7F0BD8CC 44065000 */  mfc1  $a2, $f10

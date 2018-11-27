@@ -33,11 +33,16 @@ s32 D_800825F4;
 char dword_CODE_bss_800825F8[0x68];
 
 
-/* data
-D:80044DC0                     .word 0
-D:80044DC4     near_fog_value: .float 3.4028235e38
-D:80044DC8     near_fog_times_intensity:.word 0
-D:80044DCC     ptr_current_data:.word 0x384, 0x3E8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+// data
+//D:80044DC0
+s32 D_80044DC0 = 0;
+//D:80044DC4
+f32 near_fog_value = 3.4028235e38;
+//D:80044DC8
+f32 near_fog_times_intensity = 0.0;
+//D:80044DCC
+s32 ptr_current_data[] = {0x384, 0x3E8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+/*
 D:80044E10     env_table1:     enviroment_struct <0x16, 15.0, 3500.0, 2000.0, 2500.0, 2000.0, 0, 0x3E7, 0x3E4, 0x3E8, \
 D:80044E10                                        0x801, 5000.0, 0, 170.0, 100.0, 40.0, 0, -1000.0, 0, 0, 0.0, 0.0, 30.0>
 D:80044E6C                     enviroment_struct <0x17, 10.0, 10000.0, 2500.0, 5000.0, 800.0, 0, 0x3E7, 0x3E4, 0x3E8, 0, \
@@ -564,8 +569,8 @@ glabel load_enviroment
 /* 0EF5E8 7F0BAAB8 3C098004 */  lui   $t1, 0x8004
 /* 0EF5EC 7F0BAABC 25234E10 */  addiu $v1, $t1, 0x4e10
 /* 0EF5F0 7F0BAAC0 8C6F0000 */  lw    $t7, ($v1)
-/* 0EF5F4 7F0BAAC4 3C188004 */  lui   $t8, %hi(env.table1) # $t8, 0x8004
-/* 0EF5F8 7F0BAAC8 27184E10 */  addiu $t8, %lo(env.table1) # addiu $t8, $t8, 0x4e10
+/* 0EF5F4 7F0BAAC4 3C188004 */  lui   $t8, %hi(env_table1) # $t8, 0x8004
+/* 0EF5F8 7F0BAAC8 27184E10 */  addiu $t8, %lo(env_table1) # addiu $t8, $t8, 0x4e10
 /* 0EF5FC 7F0BAACC 11E00013 */  beqz  $t7, .L7F0BAB1C
 /* 0EF600 7F0BAAD0 24E40384 */   addiu $a0, $a3, 0x384
 /* 0EF604 7F0BAAD4 8F020000 */  lw    $v0, ($t8)
@@ -589,11 +594,11 @@ glabel load_enviroment
 /* 0EF644 7F0BAB14 1440FFF0 */  bnez  $v0, .L7F0BAAD8
 /* 0EF648 7F0BAB18 00000000 */   nop   
 .L7F0BAB1C:
-/* 0EF64C 7F0BAB1C 3C098004 */  lui   $t1, %hi(env.table1) # $t1, 0x8004
-/* 0EF650 7F0BAB20 25294E10 */  addiu $t1, %lo(env.table1) # addiu $t1, $t1, 0x4e10
+/* 0EF64C 7F0BAB1C 3C098004 */  lui   $t1, %hi(env_table1) # $t1, 0x8004
+/* 0EF650 7F0BAB20 25294E10 */  addiu $t1, %lo(env_table1) # addiu $t1, $t1, 0x4e10
 /* 0EF654 7F0BAB24 8D250000 */  lw    $a1, ($t1)
-/* 0EF658 7F0BAB28 3C0A8004 */  lui   $t2, %hi(env.table1) # $t2, 0x8004
-/* 0EF65C 7F0BAB2C 254A4E10 */  addiu $t2, %lo(env.table1) # addiu $t2, $t2, 0x4e10
+/* 0EF658 7F0BAB28 3C0A8004 */  lui   $t2, %hi(env_table1) # $t2, 0x8004
+/* 0EF65C 7F0BAB2C 254A4E10 */  addiu $t2, %lo(env_table1) # addiu $t2, $t2, 0x4e10
 /* 0EF660 7F0BAB30 10A00019 */  beqz  $a1, .L7F0BAB98
 /* 0EF664 7F0BAB34 01201825 */   move  $v1, $t1
 /* 0EF668 7F0BAB38 00085880 */  sll   $t3, $t0, 2
@@ -631,8 +636,8 @@ glabel load_enviroment
 /* 0EF6DC 7F0BABAC 00082080 */  sll   $a0, $t0, 2
 /* 0EF6E0 7F0BABB0 00882023 */  subu  $a0, $a0, $t0
 /* 0EF6E4 7F0BABB4 000420C0 */  sll   $a0, $a0, 3
-/* 0EF6E8 7F0BABB8 3C0D8004 */  lui   $t5, %hi(env.table1) # $t5, 0x8004
-/* 0EF6EC 7F0BABBC 25AD4E10 */  addiu $t5, %lo(env.table1) # addiu $t5, $t5, 0x4e10
+/* 0EF6E8 7F0BABB8 3C0D8004 */  lui   $t5, %hi(env_table1) # $t5, 0x8004
+/* 0EF6EC 7F0BABBC 25AD4E10 */  addiu $t5, %lo(env_table1) # addiu $t5, $t5, 0x4e10
 /* 0EF6F0 7F0BABC0 00882021 */  addu  $a0, $a0, $t0
 /* 0EF6F4 7F0BABC4 00042080 */  sll   $a0, $a0, 2
 /* 0EF6F8 7F0BABC8 8DA20000 */  lw    $v0, ($t5)
@@ -664,17 +669,17 @@ glabel load_enviroment
 /* 0EF750 7F0BAC20 AFA6001C */  sw    $a2, 0x1c($sp)
 /* 0EF754 7F0BAC24 0C001194 */  jal   set_page_height
 /* 0EF758 7F0BAC28 AFA70028 */   sw    $a3, 0x28($sp)
-/* 0EF75C 7F0BAC2C 3C048004 */  lui   $a0, %hi(env.table2) # $a0, 0x8004
+/* 0EF75C 7F0BAC2C 3C048004 */  lui   $a0, %hi(env_table2) # $a0, 0x8004
 /* 0EF760 7F0BAC30 3C018008 */  lui   $at, %hi(sky_enabled) # $at, 0x8008
-/* 0EF764 7F0BAC34 24845F50 */  addiu $a0, %lo(env.table2) # addiu $a0, $a0, 0x5f50
+/* 0EF764 7F0BAC34 24845F50 */  addiu $a0, %lo(env_table2) # addiu $a0, $a0, 0x5f50
 /* 0EF768 7F0BAC38 AC2025C0 */  sw    $zero, %lo(sky_enabled)($at)
 /* 0EF76C 7F0BAC3C 8C8F0000 */  lw    $t7, ($a0)
 /* 0EF770 7F0BAC40 8FA6001C */  lw    $a2, 0x1c($sp)
 /* 0EF774 7F0BAC44 8FA70028 */  lw    $a3, 0x28($sp)
 /* 0EF778 7F0BAC48 11E0000B */  beqz  $t7, .L7F0BAC78
 /* 0EF77C 7F0BAC4C 00801825 */   move  $v1, $a0
-/* 0EF780 7F0BAC50 3C188004 */  lui   $t8, %hi(env.table2) # $t8, 0x8004
-/* 0EF784 7F0BAC54 27185F50 */  addiu $t8, %lo(env.table2) # addiu $t8, $t8, 0x5f50
+/* 0EF780 7F0BAC50 3C188004 */  lui   $t8, %hi(env_table2) # $t8, 0x8004
+/* 0EF784 7F0BAC54 27185F50 */  addiu $t8, %lo(env_table2) # addiu $t8, $t8, 0x5f50
 /* 0EF788 7F0BAC58 8F020000 */  lw    $v0, ($t8)
 .L7F0BAC5C:
 /* 0EF78C 7F0BAC5C 54E20003 */  bnel  $a3, $v0, .L7F0BAC6C

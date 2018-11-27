@@ -128,8 +128,74 @@ glabel sub_GAME_7F0ACBA0
 
 
 #ifdef NONMATCHING
-void load_font_tables(void) {
+void *load_font_tables(void) {
+    s32 temp_a2;
+    ? temp_ret;
+    void *temp_v0;
+    s32 temp_v1;
+    s32 temp_a2_2;
+    ? temp_ret_2;
+    void *temp_v0_2;
+    void *temp_v0_3;
+    void *temp_v0_4;
+    void *temp_v0_5;
+    s32 temp_v1_2;
+    s32 phi_v1;
+    s32 phi_v1_2;
 
+    // Node 0
+    D_80040E84 = 0;
+    D_80040E88 = 0;
+    D_80040E8C = 0;
+    D_80040E90 = -1;
+    D_80040E94 = 0;
+    D_80040E98 = 0;
+    D_80040E9C = 0;
+    D_80040EA0 = 0;
+    temp_a2 = (&D_000024B0 - 0);
+    D_80040EA4 = 0;
+    temp_ret = allocate_bytes_in_bank(temp_a2, 4, temp_a2);
+    D_80040EAC = temp_ret;
+    D_80040EB0 = (s32) (temp_ret + 0x2a4);
+    romCopy(temp_ret, &_fonttablectlsmall1SegmentRomStart, sp1C, &D_80040EAC);
+    phi_v1 = 0;
+loop_1:
+    // Node 1
+    temp_v0 = (D_80040EB0 + phi_v1);
+    temp_v1 = (phi_v1 + 0x18);
+    temp_v0->unk14 = (s32) (temp_v0->unk14 + D_80040EAC);
+    phi_v1 = temp_v1;
+    if (temp_v1 < 0x8d0)
+    {
+        goto loop_1;
+    }
+    // Node 2
+    temp_a2_2 = (&D_00003540 - 0);
+    temp_ret_2 = allocate_bytes_in_bank(temp_a2_2, 4, temp_a2_2, &D_80040EAC);
+    D_80040EB4 = temp_ret_2;
+    D_80040EB8 = (void *) (temp_ret_2 + 0x2a4);
+    romCopy(temp_ret_2, &_fonttablectllarge1SegmentRomStart, sp1C, &D_80040EB4);
+    D_80040EB8->unk14 = (s32) (D_80040EB8->unk14 + D_80040EB4);
+    D_80040EB8->unk2C = (s32) (D_80040EB8->unk2C + D_80040EB4);
+    phi_v1_2 = 0x30;
+loop_3:
+    // Node 3
+    temp_v0_2 = (D_80040EB8 + phi_v1_2);
+    temp_v0_2->unk14 = (s32) (temp_v0_2->unk14 + D_80040EB4);
+    temp_v0_3 = (D_80040EB8 + phi_v1_2);
+    temp_v0_3->unk2C = (s32) (temp_v0_3->unk2C + D_80040EB4);
+    temp_v0_4 = (D_80040EB8 + phi_v1_2);
+    temp_v0_4->unk44 = (s32) (temp_v0_4->unk44 + D_80040EB4);
+    temp_v0_5 = (D_80040EB8 + phi_v1_2);
+    temp_v1_2 = (phi_v1_2 + 0x60);
+    temp_v0_5->unk5C = (s32) (temp_v0_5->unk5C + D_80040EB4);
+    phi_v1_2 = temp_v1_2;
+    if (temp_v1_2 != 0x8d0)
+    {
+        goto loop_3;
+    }
+    // Node 4
+    return temp_v0_5;
 }
 #else
 GLOBAL_ASM(

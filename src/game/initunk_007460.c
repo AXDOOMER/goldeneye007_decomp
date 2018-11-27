@@ -4,13 +4,39 @@
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F007460(void) {
+void cleanupObjectSounds(void) {
+    s32 temp_a0;
+    void *temp_s0;
+    void *phi_s0;
 
+    // Node 0
+    phi_s0 = &sfx_related;
+loop_1:
+    // Node 1
+    temp_a0 = *phi_s0;
+    if (temp_a0 != 0)
+    {
+        // Node 2
+        if (music_related_26(temp_a0) != 0)
+        {
+            // Node 3
+            music_related_28(*phi_s0);
+        }
+    }
+    // Node 4
+    temp_s0 = (phi_s0 + 0x18);
+    phi_s0 = temp_s0;
+    if (temp_s0 != &ptr_list_object_lookup_indices)
+    {
+        goto loop_1;
+    }
+    // Node 5
+    return;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F007460
+glabel cleanupObjectSounds
 /* 03BF90 7F007460 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 03BF94 7F007464 AFB10018 */  sw    $s1, 0x18($sp)
 /* 03BF98 7F007468 AFB00014 */  sw    $s0, 0x14($sp)

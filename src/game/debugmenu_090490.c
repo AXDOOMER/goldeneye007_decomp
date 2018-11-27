@@ -1,5 +1,5 @@
 #include "ultra64.h"
-
+#include "game/debugmenu_090490.h"
 
 // data
 //D:80036BA4

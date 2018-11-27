@@ -256,6 +256,7 @@ void translate_load_rom_from_TLBaddress(s32 arg0) {
     u32 temp_t1;
     u32 temp_t3;
     void *temp_a2;
+    ? temp_ret;
     void *temp_v1;
 
     // Node 0
@@ -273,12 +274,12 @@ void translate_load_rom_from_TLBaddress(s32 arg0) {
     temp_a2 = ((temp_t3 * 0x10) + &TLB_managment_table_start);
     temp_a2->unk4 = temp_hi;
     sp28 = temp_t3;
+    temp_ret = osVirtualToPhysical(sp34, sp24, temp_a2);
     temp_v1 = ((temp_hi * 2) + &TLB_manager_mapping_table_start);
     *temp_v1 = (u8)0;
     temp_v1->unk1 = sp28;
-    *sp20 = (s32) (((osVirtualToPhysical(sp34, sp24, temp_a2) >> 0xc) << 6) | 0x1f);
-    return;
-    // (possible return value: osVirtualToPhysical(sp34, sp24, temp_a2))
+    *sp20 = (s32) (((temp_ret >> 0xc) << 6) | 0x1f);
+    return temp_ret;
 }
 #else
 GLOBAL_ASM(

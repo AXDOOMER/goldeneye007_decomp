@@ -101,7 +101,7 @@ glabel expand_ani_table_entries
 #ifdef NONMATCHING
 void alloc_load_expand_ani_table(void) {
     s32 temp_a2;
-    s32 temp_ret;
+    ? temp_ret;
 
     // Node 0
     osCreateMesgQueue(&animMsgQ, &animMsgBuf, 8);
@@ -112,8 +112,6 @@ void alloc_load_expand_ani_table(void) {
     romCopy(temp_ret, &_animation_dataSegmentRomStart, sp18);
     expand_ani_table_entries(&animation_table_ptrs1);
     expand_ani_table_entries(&animation_table_ptrs2);
-    return;
-    // (possible return value: expand_ani_table_entries(&animation_table_ptrs2))
 }
 #else
 GLOBAL_ASM(

@@ -4,13 +4,66 @@
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F007980(void) {
+void cleanupplayersoundrelated(void) {
+    ? temp_ret;
+    void *temp_s0;
+    s32 temp_s1;
+    s32 temp_s4;
+    ? temp_ret_2;
+    void *phi_s2;
+    s32 phi_s1;
+    s32 phi_s4;
+    ? phi_return;
 
+    // Node 0
+    temp_ret = get_num_players();
+    phi_return = temp_ret;
+    if (temp_ret > 0)
+    {
+        // Node 1
+        phi_s2 = ((0 * 4) + &ptr_BONDdata_p1);
+        phi_s4 = 0;
+loop_2:
+        // Node 2
+        phi_s1 = 0;
+loop_3:
+        // Node 3
+        temp_s0 = (*phi_s2 + phi_s1);
+        if (temp_s0->unkA44 != 0)
+        {
+            // Node 4
+            if (music_related_26(temp_s0->unkA44) != 0)
+            {
+                // Node 5
+                music_related_28((temp_s0 + 0x870)->unk1D4);
+            }
+        }
+        // Node 6
+        temp_s1 = (phi_s1 + 0x3a8);
+        phi_s1 = temp_s1;
+        if (temp_s1 != 0x750)
+        {
+            goto loop_3;
+        }
+        // Node 7
+        temp_s4 = (phi_s4 + 1);
+        temp_ret_2 = get_num_players();
+        phi_s2 = (phi_s2 + 4);
+        phi_s4 = temp_s4;
+        phi_return = temp_ret_2;
+        if (temp_s4 < temp_ret_2)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 8
+    return phi_return;
 }
+
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F007980
+glabel cleanupplayersoundrelated
 /* 03C4B0 7F007980 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 03C4B4 7F007984 AFBF002C */  sw    $ra, 0x2c($sp)
 /* 03C4B8 7F007988 AFB40028 */  sw    $s4, 0x28($sp)

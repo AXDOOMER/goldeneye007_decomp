@@ -13631,8 +13631,51 @@ glabel sub_GAME_7F07549C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0754BC(void) {
+s32 sub_GAME_7F0754BC(void *arg0, s32 arg1, ? arg2) {
+    s32 temp_t6;
+    s32 temp_t2;
+    s32 temp_a1;
+    s32 phi_a1;
+    s32 phi_v1;
+    s32 phi_a3;
+    s32 phi_a3_2;
 
+    // Node 0
+    temp_t6 = ((s32) arg0->unkE >> 3);
+    if ((*arg0 << 0) < 0)
+    {
+        // Node 1
+        phi_a3_2 = (*arg0 + (arg1 * temp_t6));
+    }
+    else
+    {
+        // Node 2
+        phi_a3_2 = 0;
+        if (D_80036414 != 0)
+        {
+            // Node 3
+            temp_t2 = (((u32) (D_80036414->unk8 + 0xf) >> 4) * 0x10);
+            temp_a1 = (*arg0 + (arg1 * temp_t6));
+            phi_a1 = temp_a1;
+            phi_v1 = temp_t6;
+            phi_a3 = temp_t2;
+            if ((temp_a1 & 1) != 0)
+            {
+                // Node 4
+                phi_a1 = (temp_a1 + -1);
+                phi_v1 = (temp_t6 + 1);
+                phi_a3 = (temp_t2 + 1);
+            }
+            // Node 5
+            romCopy(temp_t2, phi_a1, (((u32) (phi_v1 + 0xf) >> 4) * 0x10), phi_a3);
+            *D_80036414 = (s32) (*D_80036414 + 1);
+            D_80036414->unk8 = (s32) (sp20 + sp18);
+            phi_a3_2 = sp2C;
+        }
+        // Node 6
+    }
+    // Node 7
+    return phi_a3_2;
 }
 #else
 GLOBAL_ASM(

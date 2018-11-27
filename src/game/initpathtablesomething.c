@@ -18,7 +18,7 @@ glabel init_pathtable_something
 /* 03B2FC 7F0067CC AFBF0024 */  sw    $ra, 0x24($sp)
 /* 03B300 7F0067D0 AFB10020 */  sw    $s1, 0x20($sp)
 /* 03B304 7F0067D4 00C08825 */  move  $s1, $a2
-/* 03B308 7F0067D8 0FC2CB96 */  jal   sub_GAME_7F0B2E58
+/* 03B308 7F0067D8 0FC2CB96 */  jal   stanMatchTileName
 /* 03B30C 7F0067DC 00A02025 */   move  $a0, $a1
 /* 03B310 7F0067E0 10400007 */  beqz  $v0, .L7F006800
 /* 03B314 7F0067E4 AE220000 */   sw    $v0, ($s1)

@@ -5156,7 +5156,55 @@ cheat_button_default:
 
 #ifdef NONMATCHING
 void sub_GAME_7F0926C0(void) {
+    s32 sp30;
+    s32 temp_s4;
+    s32 temp_s0;
+    s32 temp_s3;
+    s32 phi_s3;
+    void *phi_s1;
+    s32 phi_s0;
 
+    // Node 0
+    temp_s4 = get_num_players();
+    sp30 = get_cur_playernum();
+    if (temp_s4 > 0)
+    {
+        // Node 1
+        phi_s3 = 0;
+loop_2:
+        // Node 2
+        set_cur_player(phi_s3);
+        phi_s1 = &D_8003F81C;
+        phi_s0 = 1;
+loop_3:
+        // Node 3
+        if ((phi_s1->unk-4 & 0x40) != 0)
+        {
+            // Node 4
+            if (sub_GAME_7F0927BC(phi_s0) != 0)
+            {
+                // Node 5
+                sub_GAME_7F092438(phi_s0);
+            }
+        }
+        // Node 6
+        temp_s0 = (phi_s0 + 1);
+        phi_s1 = (phi_s1 + 0x10);
+        phi_s0 = temp_s0;
+        if (temp_s0 != 0x4b)
+        {
+            goto loop_3;
+        }
+        // Node 7
+        temp_s3 = (phi_s3 + 1);
+        phi_s3 = temp_s3;
+        if (temp_s3 != temp_s4)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 8
+    return set_cur_player(sp30);
 }
 #else
 GLOBAL_ASM(

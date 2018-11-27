@@ -148,17 +148,26 @@ void setupaudio(void) {
     s32 temp_v1_2;
     ? temp_ret_5;
     ? temp_ret_6;
+    s16 temp_t4;
+    void *temp_a0;
     void *temp_a1;
     s32 temp_v0_3;
+    u32 phi_v1;
+    void *phi_a0;
+    void *phi_v1_2;
+    void *phi_a1;
 
     // Node 0
     if (bootswitch_sound == 0)
     {
         // Node 1
         temp_ret = allocate_bytes_in_bank(0x2e000, 6);
+        phi_v1 = temp_ret;
+loop_2:
         // Node 2
-        temp_v1 = (temp_ret + 1);
+        temp_v1 = (phi_v1 + 1);
         temp_v1->unk-1 = (u8)0;
+        phi_v1 = temp_v1;
         if (temp_v1 < (u32) (temp_ret + 0x2e000))
         {
             goto loop_2;
@@ -186,23 +195,32 @@ void setupaudio(void) {
         sp40 = temp_v1_2;
         temp_ret_5 = alHeapDBAlloc(0, 0, &D_80063710, 1, temp_v1_2);
         ptr_musicdatatable = temp_ret_5;
-        romCopy(temp_ret_5, sp38, (((sp40 + 0xf) | 0xf) ^ 0xf), &ptr_musicdatatable);
+        romCopy(temp_ret_5, sp38, (((temp_v1_2 + 0xf) | 0xf) ^ 0xf), &ptr_musicdatatable);
         audio_related(ptr_musicdatatable, &_musicsampletblSegmentRomStart);
         D_80063838 = alHeapDBAlloc(0, 0, &D_80063710, 1, 0x18c8);
         temp_ret_6 = alHeapDBAlloc(0, 0, &D_80063710, 1, 0x1770);
         D_8006383C = temp_ret_6;
         D_80063840 = (s32) (temp_ret_6 + 0x7d0);
+        phi_a0 = (void *) ptr_musicdatatable;
+        phi_v1_2 = &D_80063738;
+        phi_a1 = &D_800637B8;
+loop_4:
         // Node 4
-        temp_a1 = (&D_800637B8 + 2);
-        D_80063738 = (s16) ptr_musicdatatable->unk8;
-        temp_v0_3 = (ptr_musicdatatable->unk8 & 0xffff);
-        temp_a1->unk-2 = (s16) (ptr_musicdatatable + 8)->unk2;
+        temp_t4 = phi_a0->unk8;
+        temp_a0 = (phi_a0 + 8);
+        temp_a1 = (phi_a1 + 2);
+        *phi_v1_2 = temp_t4;
+        temp_v0_3 = (temp_t4 & 0xffff);
+        temp_a1->unk-2 = (s16) temp_a0->unk2;
         if ((temp_v0_3 & 1) != 0)
         {
             // Node 5
-            D_80063738 = (s16) (temp_v0_3 + 1);
+            *phi_v1_2 = (s16) (temp_v0_3 + 1);
         }
         // Node 6
+        phi_a0 = temp_a0;
+        phi_v1_2 = (phi_v1_2 + 2);
+        phi_a1 = temp_a1;
         if (temp_a1 != &D_80063836)
         {
             goto loop_4;
@@ -215,18 +233,21 @@ void setupaudio(void) {
         spC0 = (u8)6;
         spBC = 0;
         init_audi(&spA4, temp_a1, &D_80063836, &D_8006383C);
+        
         sp88 = 0x10;
         sp8C = 0x40;
         sp90 = (u8)0x10;
         sp98 = 0;
         sp9C = 0;
         spA0 = 0;
+
         sp6C = 0x10;
         sp70 = 0x40;
         sp74 = (u8)0x10;
         sp7C = 0;
         sp80 = 0;
         sp84 = 0;
+
         sp50 = 0x10;
         sp54 = 0x40;
         sp58 = (u8)0x10;
@@ -247,12 +268,10 @@ void setupaudio(void) {
         spE0 = 8;
         music_related_16(&spD8);
         startaudithread();
-        return;
-        // (possible return value: startaudithread())
     }
-    // (function likely void)
+    // Node 8
+    return;
 }
-
 #else
 GLOBAL_ASM(
 .text

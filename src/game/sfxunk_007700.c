@@ -3,13 +3,34 @@
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F007700(void) {
-
+void cleanupsoundrelated(void) {
+    // Node 0
+    if (D_80036458 != 0)
+    {
+        // Node 1
+        if (music_related_26(D_80036458) != 0)
+        {
+            // Node 2
+            music_related_28(D_80036458);
+        }
+    }
+    // Node 3
+    if (D_8003645C != 0)
+    {
+        // Node 4
+        if (music_related_26(D_8003645C) != 0)
+        {
+            // Node 5
+            music_related_28(D_8003645C);
+        }
+    }
+    // Node 6
+    return;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F007700
+glabel cleanupsoundrelated
 /* 03C230 7F007700 3C048003 */  lui   $a0, %hi(D_80036458) # $a0, 0x8003
 /* 03C234 7F007704 8C846458 */  lw    $a0, %lo(D_80036458)($a0)
 /* 03C238 7F007708 27BDFFE8 */  addiu $sp, $sp, -0x18

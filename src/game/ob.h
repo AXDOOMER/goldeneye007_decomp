@@ -2,6 +2,12 @@
 #define _OB_H_
 #include "ultra64.h"
 
+struct fileentry {
+    s32 index;
+    s32 *filename;
+    s32 size;
+};
+
 void something_mem_bank_a0(int);
 void sub_GAME_7F0BD234(void);
 

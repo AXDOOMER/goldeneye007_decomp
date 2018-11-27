@@ -3,13 +3,82 @@
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F007800(void) {
+void cleanupExplosions(void) {
+    ? temp_ret;
+    void *temp_t8;
+    s32 temp_s0;
+    void *temp_t7;
+    s32 temp_s0_2;
+    s32 phi_s0;
+    s32 phi_s0_2;
+    ? phi_return;
+    ? phi_return_2;
+    ? phi_return_3;
+    ? phi_return_4;
 
+    // Node 0
+    D_80040170 = 0;
+    temp_ret = video_related_9(0);
+    phi_s0 = 0;
+    phi_return_3 = temp_ret;
+    phi_return_4 = temp_ret;
+    if (ptr_explosion_buf != 0)
+    {
+loop_1:
+        // Node 1
+        temp_t8 = (ptr_explosion_buf + phi_s0);
+        if (*temp_t8 != 0)
+        {
+            // Node 2
+            sub_GAME_7F03A538(*temp_t8);
+            unset_stateflag_0x04_for_posdata(*(ptr_explosion_buf + phi_s0));
+            *(ptr_explosion_buf + phi_s0) = 0;
+            phi_return_4 = set_last_obj_pos_data(*(ptr_explosion_buf + phi_s0));
+        }
+        // Node 3
+        temp_s0 = (phi_s0 + 0x3e0);
+        phi_s0 = temp_s0;
+        phi_return_3 = phi_return_4;
+        phi_return_4 = phi_return_4;
+        if (temp_s0 != 0x1740)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 4
+    phi_s0_2 = 0;
+    phi_return = phi_return_3;
+    phi_return_2 = phi_return_3;
+    if (ptr_smoke_buf != 0)
+    {
+loop_5:
+        // Node 5
+        temp_t7 = (ptr_smoke_buf + phi_s0_2);
+        if (*temp_t7 != 0)
+        {
+            // Node 6
+            sub_GAME_7F03A538(*temp_t7);
+            unset_stateflag_0x04_for_posdata(*(ptr_smoke_buf + phi_s0_2));
+            *(ptr_smoke_buf + phi_s0_2) = 0;
+            phi_return_2 = set_last_obj_pos_data(*(ptr_smoke_buf + phi_s0_2));
+        }
+        // Node 7
+        temp_s0_2 = (phi_s0_2 + 0x198);
+        phi_s0_2 = temp_s0_2;
+        phi_return = phi_return_2;
+        phi_return_2 = phi_return_2;
+        if (temp_s0_2 != 0x1fe0)
+        {
+            goto loop_5;
+        }
+    }
+    // Node 8
+    return phi_return;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F007800
+glabel cleanupExplosions
 /* 03C330 7F007800 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 03C334 7F007804 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 03C338 7F007808 3C018004 */  lui   $at, %hi(D_80040170) # $at, 0x8004

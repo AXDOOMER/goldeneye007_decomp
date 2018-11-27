@@ -850,11 +850,9 @@ glabel mem_related_something_find_first_0
 
 #ifdef NONMATCHING
 void mem_related_model_room_buffers_0(void) {
-    // Node 0
     mem_related_model_room_buffers();
-    return;
-    // (possible return value: mem_related_model_room_buffers())
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -875,13 +873,21 @@ glabel mem_related_model_room_buffers_0
 
 #ifdef NONMATCHING
 void *mem_related_allocated_table_related(void) {
+    void *temp_v1;
+    void *phi_v1;
+
     // Node 0
+    phi_v1 = &ptr_table_allocated_mem_blocks;
+loop_1:
     // Node 1
-    if ((&ptr_table_allocated_mem_blocks + 0x20) != &dword_CODE_bss_80064C08)
+    temp_v1 = (phi_v1 + 0x20);
+    phi_v1 = temp_v1;
+    if (temp_v1 != &dword_CODE_bss_80064C08)
     {
         goto loop_1;
     }
-    // (possible return value: &dword_CODE_bss_80064C08)
+    // Node 2
+    return &dword_CODE_bss_80064C08;
 }
 #else
 GLOBAL_ASM(

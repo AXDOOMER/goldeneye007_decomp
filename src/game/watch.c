@@ -5,103 +5,61 @@ char dword_CODE_bss_8007B0A0[0x40];
 char dword_CODE_bss_8007B0E0[0x40];
 
 
-/* data
-D:800409A0     dword_D_800409A0:.word 4
-D:800409A4     dword_D_800409A4:.word 0
-D:800409A8     watch_soundrelated_maybe:.word 0
-D:800409AC     dword_D_800409AC:.word 0
-D:800409B0     dword_D_800409B0:.word 0
-D:800409B4     dword_D_800409B4:.word 0
-D:800409B8     dword_D_800409B8:.word 0
-D:800409BC     dword_D_800409BC:.word 0
-D:800409C0     dword_D_800409C0:.word 0
-D:800409C4     dword_D_800409C4:.word 0
-D:800409C8     dword_D_800409C8:.word 0
-D:800409CC     dword_D_800409CC:.word 0
-D:800409D0     dword_D_800409D0:.word 0xFFFFFFFF
-D:800409D4     dword_D_800409D4:.word 0
-D:800409D8     dword_D_800409D8:.word 8
-D:800409DC     word_D_800409DC:.half 0xAC09
-D:800409DE                     .half 0xAC03
-D:800409E0                     .half 0xAC02
-D:800409E2                     .half 0xAC00
-D:800409E4                     .half 0xAC01
-D:800409E6                     .half 0xAC01
-D:800409E8                     .half 0xAC06
-D:800409EA                     .half 0xAC06
-D:800409EC                     .half 0xAC04
-D:800409EE                     .half 0xAC05
-D:800409F0                     .half 0xAC0A
-D:800409F2                     .half 0xAC03
-D:800409F4                     .half 0xAC02
-D:800409F6                     .half 0xAC00
-D:800409F8                     .half 0xAC01
-D:800409FA                     .half 0xAC01
-D:800409FC                     .half 0xAC05
-D:800409FE                     .half 0xAC05
-D:80040A00                     .half 0xAC04
-D:80040A02                     .half 0xAC06
-D:80040A04                     .half 0xAC0B
-D:80040A06                     .half 0xAC00
-D:80040A08                     .half 0xAC02
-D:80040A0A                     .half 0xAC01
-D:80040A0C                     .half 0xAC03
-D:80040A0E                     .half 0xAC03
-D:80040A10                     .half 0xAC06
-D:80040A12                     .half 0xAC06
-D:80040A14                     .half 0xAC04
-D:80040A16                     .half 0xAC05
-D:80040A18                     .half 0xAC0C
-D:80040A1A                     .half 0xAC00
-D:80040A1C                     .half 0xAC02
-D:80040A1E                     .half 0xAC01
-D:80040A20                     .half 0xAC03
-D:80040A22                     .half 0xAC03
-D:80040A24                     .half 0xAC05
-D:80040A26                     .half 0xAC05
-D:80040A28                     .half 0xAC04
-D:80040A2A                     .half 0xAC06
-D:80040A2C                     .half 0xAC0D
-D:80040A2E                     .half 0xAC07
-D:80040A30                     .half 0xAC07
-D:80040A32                     .half 0xAC07
-D:80040A34                     .half 0xAC07
-D:80040A36                     .half 0xAC07
-D:80040A38                     .half 0xAC07
-D:80040A3A                     .half 0xAC07
-D:80040A3C                     .half 0xAC07
-D:80040A3E                     .half 0xAC07
-D:80040A40                     .half 0xAC0E
-D:80040A42                     .half 0xAC07
-D:80040A44                     .half 0xAC07
-D:80040A46                     .half 0xAC07
-D:80040A48                     .half 0xAC07
-D:80040A4A                     .half 0xAC07
-D:80040A4C                     .half 0xAC07
-D:80040A4E                     .half 0xAC07
-D:80040A50                     .half 0xAC07
-D:80040A52                     .half 0xAC07
-D:80040A54                     .half 0xAC0F
-D:80040A56                     .half 0xAC07
-D:80040A58                     .half 0xAC07
-D:80040A5A                     .half 0xAC07
-D:80040A5C                     .half 0xAC07
-D:80040A5E                     .half 0xAC07
-D:80040A60                     .half 0xAC07
-D:80040A62                     .half 0xAC07
-D:80040A64                     .half 0xAC07
-D:80040A66                     .half 0xAC07
-D:80040A68                     .half 0xAC10
-D:80040A6A                     .half 0xAC07
-D:80040A6C                     .half 0xAC07
-D:80040A6E                     .half 0xAC07
-D:80040A70                     .half 0xAC07
-D:80040A72                     .half 0xAC07
-D:80040A74                     .half 0xAC07
-D:80040A76                     .half 0xAC07
-D:80040A78                     .half 0xAC07
-D:80040A7A                     .half 0xAC07
-
+// data
+//D:800409A0
+s32 dword_D_800409A0 = 4;
+//D:800409A4
+s32 dword_D_800409A4 = 0;
+//D:800409A8
+s32 watch_soundrelated_maybe = 0;
+//D:800409AC
+s32 dword_D_800409AC = 0;
+//D:800409B0
+s32 dword_D_800409B0 = 0;
+//D:800409B4
+s32 dword_D_800409B4 = 0;
+//D:800409B8
+s32 dword_D_800409B8 = 0;
+//D:800409BC
+s32 dword_D_800409BC = 0;
+//D:800409C0
+s32 dword_D_800409C0 = 0;
+//D:800409C4
+s32 dword_D_800409C4 = 0;
+//D:800409C8
+s32 dword_D_800409C8 = 0;
+//D:800409CC
+s32 dword_D_800409CC = 0;
+//D:800409D0
+s32 dword_D_800409D0 = 0xFFFFFFFF;
+//D:800409D4
+s32 dword_D_800409D4 = 0;
+//D:800409D8
+s32 dword_D_800409D8 = 8;
+//D:800409DC
+u16 word_D_800409DC[] = {
+    0xAC09, 0xAC03, 0xAC02, 0xAC00,
+    0xAC01, 0xAC01, 0xAC06, 0xAC06,
+    0xAC04, 0xAC05, 0xAC0A, 0xAC03,
+    0xAC02, 0xAC00, 0xAC01, 0xAC01,
+    0xAC05, 0xAC05, 0xAC04, 0xAC06,
+    0xAC0B, 0xAC00, 0xAC02, 0xAC01,
+    0xAC03, 0xAC03, 0xAC06, 0xAC06,
+    0xAC04, 0xAC05, 0xAC0C, 0xAC00,
+    0xAC02, 0xAC01, 0xAC03, 0xAC03,
+    0xAC05, 0xAC05, 0xAC04, 0xAC06,
+    0xAC0D, 0xAC07, 0xAC07, 0xAC07,
+    0xAC07, 0xAC07, 0xAC07, 0xAC07,
+    0xAC07, 0xAC07, 0xAC0E, 0xAC07,
+    0xAC07, 0xAC07, 0xAC07, 0xAC07,
+    0xAC07, 0xAC07, 0xAC07, 0xAC07,
+    0xAC0F, 0xAC07, 0xAC07, 0xAC07,
+    0xAC07, 0xAC07, 0xAC07, 0xAC07,
+    0xAC07, 0xAC07, 0xAC10, 0xAC07,
+    0xAC07, 0xAC07, 0xAC07, 0xAC07,
+    0xAC07, 0xAC07, 0xAC07, 0xAC07
+};
+/*
 D:80040A7C     word_D_80040A7C:.half 0xAC11
 D:80040A7E                     .half 0xAC1C
 D:80040A80                     .half 0xAC1B
@@ -279,7 +237,8 @@ D:80040E6C                     .word 0x10E
 D:80040E70                     .word 0x108
 D:80040E74                     .word 0xFE
 D:80040E78                     .word 0xFFFFFFFF
-D:80040E7C     dword_D_80040E7C:.word 0                 # DATA XREF: sub_CODE_7F0AC168+94o
+//D:80040E7C
+s32 D_80040E7C = 0;
 
 */
 

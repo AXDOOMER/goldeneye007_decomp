@@ -2,7 +2,7 @@
 
 
 
-void sub_GAME_7F007970(void){
+void cleanup_REMOVED_(void){
 
 }
 

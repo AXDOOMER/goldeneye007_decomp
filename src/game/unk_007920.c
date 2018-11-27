@@ -3,8 +3,30 @@
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F007920(void) {
+s32 sub_GAME_7F007920(void) {
+    s32 temp_v0;
+    s32 phi_v1;
+    s32 phi_v0;
 
+    // Node 0
+    if (dword_CODE_bss_8007A160 > 0)
+    {
+        // Node 1
+        phi_v1 = 0;
+        phi_v0 = 0;
+loop_2:
+        // Node 2
+        temp_v0 = (phi_v0 + 1);
+        *(dword_CODE_bss_8007A164 + phi_v1) = 0;
+        phi_v1 = (phi_v1 + 0x68);
+        phi_v0 = temp_v0;
+        if (temp_v0 < dword_CODE_bss_8007A160)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 3
+    return 0;
 }
 #else
 GLOBAL_ASM(

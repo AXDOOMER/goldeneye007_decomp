@@ -10,53 +10,72 @@ s32 ptr_clipping;
 s32 dword_CODE_bss_8007BF98;
 /*
 CODE.bss:8007BF9C                     .align 4
-CODE.bss:8007BFA0     list_visible_rooms_in_cur_global_vis_packet:.space 0x98
-CODE.bss:8007C038     num_visible_rooms_in_cur_global_vis_packet:.space 4
-CODE.bss:8007C03C                     .align 4
-CODE.bss:8007C040     dword_CODE_bss_8007C040:.space 0x60
-CODE.bss:8007C0A0     dword_CODE_bss_8007C0A0:.space 0x60
-CODE.bss:8007C100     dword_CODE_bss_8007C100:.space 0x3E80
-CODE.bss:8007FF80     ptr_bgdata_portals:.space 4
-CODE.bss:8007FF84     ptr_bgdata_offsets:.space 4
-CODE.bss:8007FF88     dword_CODE_bss_8007FF88:.space 4
-CODE.bss:8007FF8C     ptr_bgdata_room_fileposition_list:.space 4
-CODE.bss:8007FF90     dword_CODE_bss_8007FF90:.space 4
-CODE.bss:8007FF94     dword_CODE_bss_8007FF94:.space 4
-CODE.bss:8007FF98     dword_CODE_bss_8007FF98:.space 4
-CODE.bss:8007FF9C                     .align 4
-CODE.bss:8007FFA0     dword_CODE_bss_8007FFA0:.space 4
-CODE.bss:8007FFA4     dword_CODE_bss_8007FFA4:.space 4
-CODE.bss:8007FFA8                     .space 0x1658
-CODE.bss:80081600     dword_CODE_bss_80081600:.space 0x10
-CODE.bss:80081610     dword_CODE_bss_80081610:.space 4
-CODE.bss:80081614                     .align 3
-CODE.bss:80081618     table_for_portals:.space 0xFA0
-CODE.bss:800825B8     dword_CODE_bss_800825B8:.space 8
 */
+//CODE.bss:8007BFA0
+char list_visible_rooms_in_cur_global_vis_packet[0x98];
+//CODE.bss:8007C038
+s32 num_visible_rooms_in_cur_global_vis_packet;
+/*
+CODE.bss:8007C03C                     .align 4
+*/
+//CODE.bss:8007C040
+char dword_CODE_bss_8007C040[0x60];
+//CODE.bss:8007C0A0
+char dword_CODE_bss_8007C0A0[0x60];
+//CODE.bss:8007C100
+char dword_CODE_bss_8007C100[0x3E80];
+//CODE.bss:8007FF80
+s32 ptr_bgdata_portals;
+//CODE.bss:8007FF84
+s32 ptr_bgdata_offsets;
+//CODE.bss:8007FF88
+s32 dword_CODE_bss_8007FF88;
+//CODE.bss:8007FF8C
+s32 ptr_bgdata_room_fileposition_list;
+//CODE.bss:8007FF90
+s32 dword_CODE_bss_8007FF90;
+//CODE.bss:8007FF94
+s32 dword_CODE_bss_8007FF94;
+//CODE.bss:8007FF98
+s32 dword_CODE_bss_8007FF98;
+/*
+CODE.bss:8007FF9C                     .align 4
+*/
+//CODE.bss:8007FFA0
+s32 dword_CODE_bss_8007FFA0;
+
+//CODE.bss:8007FFA4
+char dword_CODE_bss_8007FFA4[0x165C];
+//CODE.bss:80081600
+char dword_CODE_bss_80081600[0x18];
+//CODE.bss:80081618
+char table_for_portals[0xFA8];
+
 
 // data
 //D:800413F0
 s32 *ptr_bg_c_debug_debug_notice_list = 0;
 //D:800413F4
-f32 flt_D_800413F4 = 1.0;
+f32 D_800413F4 = 1.0;
 //D:800413F8
-f32 flt_D_800413F8 = 1.0;
+f32 D_800413F8 = 1.0;
 //D:800413FC
-f32 flt_D_800413FC = 1.0;
+f32 D_800413FC = 1.0;
 //D:80041400
-s32 dword_D_80041400 = 1;
+s32 D_80041400 = 1;
 //D:80041404
-s32 dword_D_80041404 = 1;
+s32 D_80041404 = 1;
 //D:80041408
-s32 dword_D_80041408 = 1;
+s32 D_80041408 = 1;
 //D:8004140C
-s32 dword_D_8004140C = -1;
+s32 D_8004140C = -1;
 //D:80041410
-s32 dword_D_80041410 = -1;
+s32 D_80041410 = -1;
+
+//D:80041414
+u32 D_80041414 = 0;
 /*
-D:80041414     off_D_80041414: .byte 0, 0, 0
-D:80041417     byte_D_80041417:.byte 0
-D:80041418     dword_D_80041418:.word 0
+D:80041418     D_80041418:.word 0
 D:8004141C                     .word 0, 0
 D:80041424     room_information:room_index <0>
 D:80041474     stru_D_80041474:room_index <0>
@@ -209,193 +228,246 @@ D:80044214                     room_index <0>
 D:80044264                     room_index <0>
 D:800442B4                     .word 0
 D:800442B8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:800442F4     max_num_rooms:  .word 0x96 
-D:800442F8     dword_D_800442F8:.word 0
-D:800442FC     dword_D_800442FC:.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:800442FC                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:800442FC                     .word 0, 0, 0, 0
-D:800443C4     dword_D_800443C4:.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:800443C4                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:800443C4                     .word 0, 0, 0, 0
 */
-//D:8004448C
-
-
-struct levelentry levelinfotable[] = {
-    {LEVELID_BUNKER1, "bg/bg_sev_all_p.seg", "Tbg_sev_all_p_stanZ", 0.53931433, 1.0, 23.148148},
-    {LEVELID_SILO, "bg/bg_silo_all_p_seg", "Tbg_silo_all_p_stanz", 0.47256002, 1.0, 29.069},
-    {LEVELID_STATUE, "bg/bg_stat_all_p_seg", "Tbg_stat_all_p_stanz", 0.10720287, 1.0, 0.0801},
-    {LEVELID_CONTROL, "bg/bg_arec_all_p_seg", "Tbg_arec_all_p_stanz", 0.49886572, 1.0, 80.645164},
-    {LEVELID_ARCHIVES, "bg/bg_arch_all_p_seg", "Tbg_arch_all_p_stanz", 0.50678575, 1.0, 54.347824},
-    {LEVELID_TRAIN, "bg/bg_tra_all_p_seg", "Tbg_tra_all_p_stanz", 0.15019713, 1.0, 19.53125},
-    {LEVELID_FRIGATE, "bg/bg_dest_all_p_seg", "Tbg_dest_all_p_stanz", 0.44757429, 1.0, 36.764706},
-    {LEVELID_BUNKER2, "bg/bg_sevb_all_p_seg", "Tbg_sevb_all_p_stanz", 0.53931433, 1.0, 23.148148},
-    {LEVELID_AZTEC, "bg/bg_azt_all_p_seg", "Tbg_azt_all_p_stanz", 0.35300568, 1.0, 52.083332},
-    {LEVELID_STREETS, "bg/bg_pete_all_p_seg", "Tbg_pete_all_p_stanz", 0.34187999, 1.0, 42.372883},
-    {LEVELID_DEPOT, "bg/bg_depo_all_p_seg", "Tbg_depo_all_p_stanz", 0.21847887, 1.0, 17.605633},
-    {LEVELID_COMPLEX, "bg/bg_ref_all_p_seg", "Tbg_ref_all_p_stanz", 0.94285715, 1.0, 37.878788},
-    {LEVELID_EGYPT, "bg/bg_cryp_all_p_seg", "Tbg_cryp_all_p_stanz", 0.25608, 1.0, 23.584906},
-    {LEVELID_DAM, "bg/bg_dam_all_p_seg", "Tbg_dam_all_p_stanz", 0.23363999, 0.2, 100.0},
-    {LEVELID_FACILITY, "bg/bg_ark_all_p_seg", "Tbg_ark_all_p_stanz", 1.20648, 1.0, 64.102562},
-    {LEVELID_RUNWAY, "bg/bg_run_all_p_seg", "Tbg_run_all_p_stanz", 0.089571431, 1.0, 4.5537338},
-    {LEVELID_SURFACE, "bg/bg_sevx_all_p_seg", "Tbg_sevx_all_p_stanz", 0.45445713, 0.2, 22.603975},
-    {LEVELID_JUNGLE, "bg/bg_jun_all_p_seg", "Tbg_jun_all_p_stanz", 0.094662853, 1.0, 6.6844921},
-    {LEVELID_TEMPLE, "bg/bg_dish_all_p_seg", "Tbg_dish_all_p_stanz", 0.47142857, 1.0, 147.05882},
-    {LEVELID_CAVERNS, "bg/bg_cave_all_p_seg", "Tbg_cave_all_p_stanz", 0.26824287, 1.0, 13.44086},
-    {LEVELID_CITADEL, "bg/bg_cat_all_p_seg", "Tbg_cat_all_p_stanz", 0.76852286, 1.0, 38.461536},
-    {LEVELID_CRADLE, "bg/bg_crad_all_p_seg", "Tbg_crad_all_p_stanz", 0.23571429, 1.0, 43.103451},
-    {LEVELID_SHO, "bg/bg_sho_all_p_seg", "Tbg_sho_all_p_stanz", 0.528, 1.0, 21.18644},
-    {LEVELID_SURFACE2, "bg/bg_sevx_all_p_seg_0", "Tbg_sevx_all_p_stanz_0", 0.45445713, 0.2, 22.603975},
-    {LEVELID_ELD, "bg/bg_eld_all_p_seg", "Tbg_eld_all_p_stanz", 0.94285715, 1.0, 10.123456},
-    {LEVELID_BASEMENT, "bg/bg_ame_all_p_seg", "Tbg_ame_all_p_stanz", 0.65999997, 1.0, 37.878788},
-    {LEVELID_STACK, "bg/bg_ame_all_p_seg_0", "Tbg_ame_all_p_stanz_0", 0.65999997, 1.0, 37.878788},
-    {LEVELID_LUE, "bg/bg_lue_all_p_seg", "Tbg_lue_all_p_stanz", 0.94285715, 1.0, 10.123456},
-    {LEVELID_LIBRARY, "bg/bg_ame_all_p_seg_1", "Tbg_ame_all_p_stanz_1", 0.65999997, 1.0, 37.878788},
-    {LEVELID_RIT, "bg/bg_rit_all_p_seg", "Tbg_rit_all_p_stanz", 0.94285715, 1.0, 10.123456},
-    {LEVELID_CAVES, "bg/bg_oat_all_p_seg", "Tbg_oat_all_p_stanz", 0.14142857, 1.0, 10.123456},
-    {LEVELID_EAR, "bg/bg_ear_all_p_seg", "Tbg_ear_all_p_stanz", 0.94285715, 1.0, 10.123456},
-    {LEVELID_LEE, "bg/bg_lee_all_p_seg", "Tbg_lee_all_p_stanz", 0.94285715, 1.0, 10.123456},
-    {LEVELID_LIP, "bg/bg_lip_all_p_seg", "Tbg_lip_all_p_stanz", 0.94285715, 1.0, 10.123456},
-    {LEVELID_CUBA, "bg/bg_len_all_p_seg", "Tbg_len_all_p_stanz", 0.094662853, 1.0, 6.6844921},
-    {LEVELID_WAX, "bg/bg_wax_all_p_seg", "Tbg_wax_all_p_stanz", 0.94285715, 1.0, 10.123456},
-    {LEVELID_PAM, "bg/bg_pam_all_p_seg", "Tbg_pam_all_p_stanz", 0.94285715, 1.0, 10.123456},
-    {LEVELID_MAX, "bg/bgx.seg", "Tbgxz", 0.94285715, 1.0, 1.0}
+//D:800442F4
+s32 MaxNumRooms = 0x96 ;
+//D:800442F8
+s32 D_800442F8 = 0;
+//D:800442FC
+s32 D_800442FC[] = {
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
+//D:800443C4
+s32 D_800443C4[] = {
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+};
+
+//D:8004448C
+struct levelentry levelinfotable[] = {
+    {LEVELID_BUNKER1,  "bg/bg_sev_all_p.seg",  "Tbg_sev_all_p_stanZ",  0.53931433,  1.0, 23.148148},
+    {LEVELID_SILO,     "bg/bg_silo_all_p_seg", "Tbg_silo_all_p_stanz", 0.47256002,  1.0, 29.069},
+    {LEVELID_STATUE,   "bg/bg_stat_all_p_seg", "Tbg_stat_all_p_stanz", 0.10720287,  1.0, 0.0801},
+    {LEVELID_CONTROL,  "bg/bg_arec_all_p_seg", "Tbg_arec_all_p_stanz", 0.49886572,  1.0, 80.645164},
+    {LEVELID_ARCHIVES, "bg/bg_arch_all_p_seg", "Tbg_arch_all_p_stanz", 0.50678575,  1.0, 54.347824},
+    {LEVELID_TRAIN,    "bg/bg_tra_all_p_seg",  "Tbg_tra_all_p_stanz",  0.15019713,  1.0, 19.53125},
+    {LEVELID_FRIGATE,  "bg/bg_dest_all_p_seg", "Tbg_dest_all_p_stanz", 0.44757429,  1.0, 36.764706},
+    {LEVELID_BUNKER2,  "bg/bg_sevb_all_p_seg", "Tbg_sevb_all_p_stanz", 0.53931433,  1.0, 23.148148},
+    {LEVELID_AZTEC,    "bg/bg_azt_all_p_seg",  "Tbg_azt_all_p_stanz",  0.35300568,  1.0, 52.083332},
+    {LEVELID_STREETS,  "bg/bg_pete_all_p_seg", "Tbg_pete_all_p_stanz", 0.34187999,  1.0, 42.372883},
+    {LEVELID_DEPOT,    "bg/bg_depo_all_p_seg", "Tbg_depo_all_p_stanz", 0.21847887,  1.0, 17.605633},
+    {LEVELID_COMPLEX,  "bg/bg_ref_all_p_seg",  "Tbg_ref_all_p_stanz",  0.94285715,  1.0, 37.878788},
+    {LEVELID_EGYPT,    "bg/bg_cryp_all_p_seg", "Tbg_cryp_all_p_stanz", 0.25608,     1.0, 23.584906},
+    {LEVELID_DAM,      "bg/bg_dam_all_p_seg",  "Tbg_dam_all_p_stanz",  0.23363999,  0.2, 100.0},
+    {LEVELID_FACILITY, "bg/bg_ark_all_p_seg",  "Tbg_ark_all_p_stanz",  1.20648,     1.0, 64.102562},
+    {LEVELID_RUNWAY,   "bg/bg_run_all_p_seg",  "Tbg_run_all_p_stanz",  0.089571431, 1.0, 4.5537338},
+    {LEVELID_SURFACE,  "bg/bg_sevx_all_p_seg", "Tbg_sevx_all_p_stanz", 0.45445713,  0.2, 22.603975},
+    {LEVELID_JUNGLE,   "bg/bg_jun_all_p_seg",  "Tbg_jun_all_p_stanz",  0.094662853, 1.0, 6.6844921},
+    {LEVELID_TEMPLE,   "bg/bg_dish_all_p_seg", "Tbg_dish_all_p_stanz", 0.47142857,  1.0, 147.05882},
+    {LEVELID_CAVERNS,  "bg/bg_cave_all_p_seg", "Tbg_cave_all_p_stanz", 0.26824287,  1.0, 13.44086},
+    {LEVELID_CITADEL,  "bg/bg_cat_all_p_seg",  "Tbg_cat_all_p_stanz",  0.76852286,  1.0, 38.461536},
+    {LEVELID_CRADLE,   "bg/bg_crad_all_p_seg", "Tbg_crad_all_p_stanz", 0.23571429,  1.0, 43.103451},
+    {LEVELID_SHO,      "bg/bg_sho_all_p_seg",  "Tbg_sho_all_p_stanz",  0.528,       1.0, 21.18644},
+    {LEVELID_SURFACE2, "bg/bg_sevx_all_p_seg", "Tbg_sevx_all_p_stanz", 0.45445713,  0.2, 22.603975},
+    {LEVELID_ELD,      "bg/bg_eld_all_p_seg",  "Tbg_eld_all_p_stanz",  0.94285715,  1.0, 10.123456},
+    {LEVELID_BASEMENT, "bg/bg_ame_all_p_seg",  "Tbg_ame_all_p_stanz",  0.65999997,  1.0, 37.878788},
+    {LEVELID_STACK,    "bg/bg_ame_all_p_seg",  "Tbg_ame_all_p_stanz",  0.65999997,  1.0, 37.878788},
+    {LEVELID_LUE,      "bg/bg_lue_all_p_seg",  "Tbg_lue_all_p_stanz",  0.94285715,  1.0, 10.123456},
+    {LEVELID_LIBRARY,  "bg/bg_ame_all_p_seg",  "Tbg_ame_all_p_stanz",  0.65999997,  1.0, 37.878788},
+    {LEVELID_RIT,      "bg/bg_rit_all_p_seg",  "Tbg_rit_all_p_stanz",  0.94285715,  1.0, 10.123456},
+    {LEVELID_CAVES,    "bg/bg_oat_all_p_seg",  "Tbg_oat_all_p_stanz",  0.14142857,  1.0, 10.123456},
+    {LEVELID_EAR,      "bg/bg_ear_all_p_seg",  "Tbg_ear_all_p_stanz",  0.94285715,  1.0, 10.123456},
+    {LEVELID_LEE,      "bg/bg_lee_all_p_seg",  "Tbg_lee_all_p_stanz",  0.94285715,  1.0, 10.123456},
+    {LEVELID_LIP,      "bg/bg_lip_all_p_seg",  "Tbg_lip_all_p_stanz",  0.94285715,  1.0, 10.123456},
+    {LEVELID_CUBA,     "bg/bg_len_all_p_seg",  "Tbg_len_all_p_stanz",  0.094662853, 1.0, 6.6844921},
+    {LEVELID_WAX,      "bg/bg_wax_all_p_seg",  "Tbg_wax_all_p_stanz",  0.94285715,  1.0, 10.123456},
+    {LEVELID_PAM,      "bg/bg_pam_all_p_seg",  "Tbg_pam_all_p_stanz",  0.94285715,  1.0, 10.123456},
+    {LEVELID_MAX,      "bg/bgx.seg",           "Tbgxz",                0.94285715,  1.0, 1.0}
+};
+
+//D:8004481C
+u32 D_8004481C[] = {0x1000100, 0};
+//D:80044824
+u32 D_80044824[] = {0x32C2E32, 0x373E3F4E, 0x56595D72, 0x76797AFF, 0x11003AFF};
+//D:80044838
+s32 current_room_maybe = 1;
+//D:8004483C
+s32 D_8004483C = 0;
+//D:80044840
+u32 D_80044840[] = {0x96969600, 0x96969600};
+//D:80044848
+u32 D_80044848[] = {0xFFFFFF00, 0xFFFFFF00, 0x4D4D2E00, 0};
+
+//D:80044858
+s32 D_80044858 = 0;
+//D:8004485C
+s32 D_8004485C = 1;
+//D:80044860
+s32 D_80044860 = 0;
+//D:80044864
+s32 D_80044864 = 0;
+//D:80044868
+s32 D_80044868 = 0x7FFF;
+//D:8004486C
+s32 D_8004486C = 0x7FFF;
+//D:80044870
+s32 D_80044870 = 0x7FFF;
+//D:80044874
+s32 D_80044874 = 0xFFFF8000;
+//D:80044878
+s32 D_80044878 = 0xFFFF8000;
+//D:8004487C
+s32 D_8004487C = 0xFFFF8000;
+//D:80044880
+s32 D_80044880 = 0x7FFF;
+//D:80044884
+s32 D_80044884 = 0x7FFF;
+//D:80044888
+s32 D_80044888 = 0x7FFF;
+//D:8004488C
+s32 D_8004488C = 0xFFFF8000;
+//D:80044890
+s32 D_80044890 = 0xFFFF8000;
+//D:80044894
+s32 D_80044894 = 0xFFFF8000;
+//D:80044898
+s32 D_80044898 = 0;
+//D:8004489C
+s32 D_8004489C = 0xF;
+//D:800448A0
+s32 D_800448A0 = 0;
+//D:800448A4
+s32 D_800448A4[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:800448F8
+s32 D_800448F8 = 0;
+//D:800448FC
+s32 current_visibility = 0;
+//D:80044900
+s32 D_80044900 = 0;
+
+//D:80044904
+s32 D_80044904 = 0x7F7FFFFF;
+//D:80044908
+s32 D_80044908 = 0x7F7FFFFF;
+//D:8004490C
+s32 D_8004490C = 0x7F7FFFFF;
+//D:80044910
+s32 D_80044910 = 0xFF7FFFFF;
+//D:80044914
+s32 D_80044914 = 0xFF7FFFFF;
+//D:80044918
+s32 D_80044918 = 0xFF7FFFFF;
+//D:8004491C                     .word 0
+//D:80044920                     .word 0
+//D:80044924                     .word 0
+
+//D:80044928
+u32 D_80044928[] = {
+    0xFC26A004, 0x1F1093FF, 
+    0xFC232DFF, 0xFFFFFE38, 
+    0, 0
+};
+
+//D:80044940
+u32 D_80044940[] = {
+    0xB900031D, 0xC192078,
+    0xB900031D, 0xC8112078,
+    0xB900031D, 0xC182078,
+    0xB900031D, 0xC8102078, 0xB900031D, 0xC192D58, 0xB900031D, 0xC8112D58,
+    0xB900031D, 0xC184DD8, 0xB900031D, 0xC8104DD8, 0xB900031D, 0xC1849D8,
+    0xB900031D, 0xC81049D8, 0xB900031D, 0xC193078, 0xB900031D, 0xC8113078,
+    0xB900031D, 0xC192048, 0xB900031D, 0xC8112048, 0xB900031D, 0xC182048,
+    0xB900031D, 0xC8102048, 0, 0
+};
+
+//D:800449C8
+u32 D_800449C8[] = {
+    0xB900031D, 0xC184DD8, 
+    0xB900031D, 0xC8104DD8,
+    0xB900031D, 0xC1849D8,
+    0xB900031D, 0xC81049D8, 0xB900031D, 0xC193078, 0xB900031D, 0xC8113078,
+    0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF,
+    0xFC121A24, 0xFF37FFFF, 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD,
+    0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD, 0xFC26A004, 0x1F1093FF,
+    0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF,
+    0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD, 0xFC127E24, 0xFFFFF9FC,
+    0xFC127E24, 0xFFFFFBFD, 0xFCFFFFFF, 0xFFFE7838, 0xFCFFFFFF, 0xFFFE7A38,
+    0xFCFFFFFF, 0xFFFE793C, 0xFCFFFFFF, 0xFFFE7B3D, 0xFC26E404, 0x1F10FFFF,
+    0xFC26E404, 0x1F14FFFF, 0, 0
+};
+
+//D:80044AB0
+u32 D_80044AB0[] = {
+    0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF,
+    0xFC121A24, 0xFF37FFFF, 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD,
+    0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD, 0xFC26A004, 0x1F1093FF,
+    0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF,
+    0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD, 0xFC127E24, 0xFFFFF9FC,
+    0xFC127E24, 0xFFFFFBFD, 0xFCFFFFFF, 0xFFFE7838, 0xFCFFFFFF, 0xFFFE7A38,
+    0xFCFFFFFF, 0xFFFE793C, 0xFCFFFFFF, 0xFFFE7B3D, 0, 0
+};
+
+//D:80044B58
+u32 D_80044B58[] = {
+    0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF,
+    0xFC121A24, 0xFF37FFFF, 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD,
+    0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD, 0xFC26A004, 0x1F1093FF,
+    0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF,
+    0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD, 0xFC127E24, 0xFFFFF9FC,
+    0xFC127E24, 0xFFFFFBFD, 0xFCFFFFFF, 0xFFFE7838, 0xFCFFFFFF, 0xFFFE7A38,
+    0xFCFFFFFF, 0xFFFE793C, 0xFCFFFFFF, 0xFFFE7B3D, 0, 0
+};
+
+//D:80044C00
+u32 D_80044C00[] = {
+    0xB900031D, 0x5049D8, 0xB900031D, 0x553078, 0xB900031D, 0xC1849D8, 0xB900031D, 0xC193078, 0, 0
+};
+
+//D:80044C28
+u32 D_80044C28[] = {
+    0xB900031D, 0x552078, 0xB900031D, 0x502078, 0xB900031D, 0xC192078, 0xB900031D, 0xC182078, 0, 0
+};
+
+//D:80044C50
+u32 D_80044C50[] = {
+    0xB900031D, 0xC1849D8, 0xB900031D, 0xC184B50, 0, 0
+};
+
+//D:80044C68
+u32 D_80044C68[] = {
+    0xBA001402, 0, 0xBA001402, 0x100000, 0xB900031D, 0x502048, 0xB900031D, 0x8D02048, 0xFC127E24, 0xFFFFF9FC, 0xFC127FFF, 0xFFFFF838, 0, 0
+};
+
+//D:80044CA0
+u32 D_80044CA0[] = {
+    0xFC127E24, 0xFFFFF9FC, 0xFC137E26, 0xFFFFFBFD, 0xFC121824, 0xFF33FFFF,
+    0xFC131A26, 0xFF37FFFF, 0xFC127E24, 0xFFFFF9FC, 0xFC137E26, 0xFFFFFBFD,
+    0xFC121824, 0xFF33FFFF, 0xFC131A26, 0xFF37FFFF, 0xFCFFFFFF, 0xFFFE793C,
+    0xFC637EC6, 0xFFFFFBFD, 0xFC26A004, 0x1FFC93FC, 0xFC26A006, 0x1FFC93FD,
+    0xFC26A004, 0x1F1093FF, 0xFC26A006, 0x1F1493FF, 0xFC26A004, 0x1FFC93FC,
+    0xFC26A006, 0x1FFC93FD, 0xFC26A004, 0x1F1093FF, 0xFC26A006, 0x1F1493FF,
+    0xFC26E404, 0x1FFCFFFC, 0xFC26E406, 0x1FFCFFFD, 0xFC26E404, 0x1F10FFFF,
+    0xFC26E406, 0x1F14FFFF, 0xFC26E404, 0x1FFCFFFC, 0xFC26E406, 0x1FFCFFFD,
+    0xFC26E404, 0x1F10FFFF, 0xFC26E406, 0x1F14FFFF, 0xFCFFFFFF, 0xFFFE7838,
+    0xFC637FFF, 0xFFFFFA38, 0, 0
+};
+
+//D:80044D88
+s32 *D_80044D88[] = {
+    &D_80044928, &D_80044940, &D_80044C00, &D_80044C28, &D_80044C50,
+    &D_800449C8, &D_80044AB0, &D_80044B58, &D_80044C68, &D_80044CA0
+};
+//D:80044DB0
+s32 D_80044DB0 = 0;
+
+
+// rodata
+//D:80058C48
+const char aPortD[] = "PORT%d";
+//D:80058C50
+const char aRoomD[] = "ROOM%d";
 /*
-D:8004481C                     .word 0x1000100, 0
-D:80044824     dword_D_80044824:.word 0x32C2E32
-D:80044828                     .word 0x373E3F4E
-D:8004482C                     .word 0x56595D72
-D:80044830                     .word 0x76797AFF
-D:80044834                     .word 0x11003AFF
-D:80044838     current_room_maybe:.word 1
-D:8004483C     dword_D_8004483C:.word 0
-D:80044840     dword_D_80044840:.word 0x96969600
-D:80044844                     .word 0x96969600
-D:80044848     dword_D_80044848:.word 0xFFFFFF00
-D:8004484C                     .word 0xFFFFFF00
-D:80044850                     .word 0x4D4D2E00
-D:80044854                     .word 0
-D:80044858     dword_D_80044858:.word 0
-D:8004485C     dword_D_8004485C:.word 1
-D:80044860     dword_D_80044860:.word 0
-D:80044864     dword_D_80044864:.word 0
-D:80044868     dword_D_80044868:.word 0x7FFF
-D:8004486C     dword_D_8004486C:.word 0x7FFF
-D:80044870     dword_D_80044870:.word 0x7FFF
-D:80044874     dword_D_80044874:.word 0xFFFF8000
-D:80044878     dword_D_80044878:.word 0xFFFF8000
-D:8004487C     dword_D_8004487C:.word 0xFFFF8000
-D:80044880     dword_D_80044880:.word 0x7FFF
-D:80044884     dword_D_80044884:.word 0x7FFF
-D:80044888     dword_D_80044888:.word 0x7FFF
-D:8004488C     dword_D_8004488C:.word 0xFFFF8000
-D:80044890     dword_D_80044890:.word 0xFFFF8000
-D:80044894     dword_D_80044894:.word 0xFFFF8000
-D:80044898     dword_D_80044898:.word 0
-D:8004489C     dword_D_8004489C:.word 0xF
-D:800448A0     dword_D_800448A0:.word 0
-D:800448A4     off_D_800448A4: .word 0
-D:800448A8                     .word 0
-D:800448AC                     .word 0
-D:800448B0                     .word 0
-D:800448B4                     .word 0
-D:800448B8                     .word 0
-D:800448BC                     .word 0
-D:800448C0                     .word 0
-D:800448C4                     .word 0
-D:800448C8                     .word 0
-D:800448CC                     .word 0
-D:800448D0                     .word 0
-D:800448D4                     .word 0
-D:800448D8                     .word 0
-D:800448DC                     .word 0
-D:800448E0                     .word 0
-D:800448E4                     .word 0
-D:800448E8                     .word 0
-D:800448EC                     .word 0
-D:800448F0                     .word 0
-D:800448F4                     .word 0
-D:800448F8     off_D_800448F8: .word 0
-D:800448FC     current_visibility:.word 0
-D:80044900     off_D_80044900: .word 0
-D:80044904     dword_D_80044904:.word 0x7F7FFFFF, 0x7F7FFFFF, 0x7F7FFFFF, 0xFF7FFFFF, 0xFF7FFFFF, 0xFF7FFFFF
-D:80044904                     .word 0, 0, 0
-D:80044928     dword_D_80044928:.word 0xFC26A004, 0x1F1093FF, 0xFC232DFF, 0xFFFFFE38, 0, 0
-D:80044940     dword_D_80044940:.word 0xB900031D, 0xC192078, 0xB900031D, 0xC8112078, 0xB900031D, 0xC182078
-D:80044940                     .word 0xB900031D, 0xC8102078, 0xB900031D, 0xC192D58, 0xB900031D, 0xC8112D58
-D:80044940                     .word 0xB900031D, 0xC184DD8, 0xB900031D, 0xC8104DD8, 0xB900031D, 0xC1849D8
-D:80044940                     .word 0xB900031D, 0xC81049D8, 0xB900031D, 0xC193078, 0xB900031D, 0xC8113078
-D:80044940                     .word 0xB900031D, 0xC192048, 0xB900031D, 0xC8112048, 0xB900031D, 0xC182048
-D:80044940                     .word 0xB900031D, 0xC8102048, 0, 0
-D:800449C8     dword_D_800449C8:.word 0xB900031D, 0xC184DD8, 0xB900031D, 0xC8104DD8, 0xB900031D, 0xC1849D8
-D:800449C8                     .word 0xB900031D, 0xC81049D8, 0xB900031D, 0xC193078, 0xB900031D, 0xC8113078
-D:800449C8                     .word 0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF
-D:800449C8                     .word 0xFC121A24, 0xFF37FFFF, 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD
-D:800449C8                     .word 0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD, 0xFC26A004, 0x1F1093FF
-D:800449C8                     .word 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF
-D:800449C8                     .word 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD, 0xFC127E24, 0xFFFFF9FC
-D:800449C8                     .word 0xFC127E24, 0xFFFFFBFD, 0xFCFFFFFF, 0xFFFE7838, 0xFCFFFFFF, 0xFFFE7A38
-D:800449C8                     .word 0xFCFFFFFF, 0xFFFE793C, 0xFCFFFFFF, 0xFFFE7B3D, 0xFC26E404, 0x1F10FFFF
-D:800449C8                     .word 0xFC26E404, 0x1F14FFFF, 0, 0
-D:80044AB0     dword_D_80044AB0:.word 0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF
-D:80044AB0                     .word 0xFC121A24, 0xFF37FFFF, 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD
-D:80044AB0                     .word 0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD, 0xFC26A004, 0x1F1093FF
-D:80044AB0                     .word 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF
-D:80044AB0                     .word 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD, 0xFC127E24, 0xFFFFF9FC
-D:80044AB0                     .word 0xFC127E24, 0xFFFFFBFD, 0xFCFFFFFF, 0xFFFE7838, 0xFCFFFFFF, 0xFFFE7A38
-D:80044AB0                     .word 0xFCFFFFFF, 0xFFFE793C, 0xFCFFFFFF, 0xFFFE7B3D, 0, 0
-D:80044B58     dword_D_80044B58:.word 0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF
-D:80044B58                     .word 0xFC121A24, 0xFF37FFFF, 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD
-D:80044B58                     .word 0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD, 0xFC26A004, 0x1F1093FF
-D:80044B58                     .word 0xFC26A004, 0x1F1493FF, 0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF
-D:80044B58                     .word 0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD, 0xFC127E24, 0xFFFFF9FC
-D:80044B58                     .word 0xFC127E24, 0xFFFFFBFD, 0xFCFFFFFF, 0xFFFE7838, 0xFCFFFFFF, 0xFFFE7A38
-D:80044B58                     .word 0xFCFFFFFF, 0xFFFE793C, 0xFCFFFFFF, 0xFFFE7B3D, 0, 0
-D:80044C00     dword_D_80044C00:.word 0xB900031D, 0x5049D8, 0xB900031D, 0x553078, 0xB900031D, 0xC1849D8, 0xB900031D
-D:80044C00                                              # DATA XREF: D:80044D90o
-D:80044C00                     .word 0xC193078, 0, 0
-D:80044C28     dword_D_80044C28:.word 0xB900031D, 0x552078, 0xB900031D, 0x502078, 0xB900031D, 0xC192078, 0xB900031D
-D:80044C28                                              # DATA XREF: D:80044D94o
-D:80044C28                     .word 0xC182078, 0, 0
-D:80044C50     dword_D_80044C50:.word 0xB900031D, 0xC1849D8, 0xB900031D, 0xC184B50, 0, 0
-D:80044C50                                              # DATA XREF: D:80044D98o
-D:80044C68     dword_D_80044C68:.word 0xBA001402, 0     # DATA XREF: D:80044DA8o
-D:80044C70                     .word 0xBA001402, 0x100000, 0xB900031D, 0x502048, 0xB900031D, 0x8D02048, 0xFC127E24
-D:80044C70                     .word 0xFFFFF9FC, 0xFC127FFF, 0xFFFFF838, 0, 0
-D:80044CA0     dword_D_80044CA0:.word 0xFC127E24, 0xFFFFF9FC, 0xFC137E26, 0xFFFFFBFD, 0xFC121824, 0xFF33FFFF
-D:80044CA0                                              # DATA XREF: D:80044DACo
-D:80044CA0                     .word 0xFC131A26, 0xFF37FFFF, 0xFC127E24, 0xFFFFF9FC, 0xFC137E26, 0xFFFFFBFD
-D:80044CA0                     .word 0xFC121824, 0xFF33FFFF, 0xFC131A26, 0xFF37FFFF, 0xFCFFFFFF, 0xFFFE793C
-D:80044CA0                     .word 0xFC637EC6, 0xFFFFFBFD, 0xFC26A004, 0x1FFC93FC, 0xFC26A006, 0x1FFC93FD
-D:80044CA0                     .word 0xFC26A004, 0x1F1093FF, 0xFC26A006, 0x1F1493FF, 0xFC26A004, 0x1FFC93FC
-D:80044CA0                     .word 0xFC26A006, 0x1FFC93FD, 0xFC26A004, 0x1F1093FF, 0xFC26A006, 0x1F1493FF
-D:80044CA0                     .word 0xFC26E404, 0x1FFCFFFC, 0xFC26E406, 0x1FFCFFFD, 0xFC26E404, 0x1F10FFFF
-D:80044CA0                     .word 0xFC26E406, 0x1F14FFFF, 0xFC26E404, 0x1FFCFFFC, 0xFC26E406, 0x1FFCFFFD
-D:80044CA0                     .word 0xFC26E404, 0x1F10FFFF, 0xFC26E406, 0x1F14FFFF, 0xFCFFFFFF, 0xFFFE7838
-D:80044CA0                     .word 0xFC637FFF, 0xFFFFFA38, 0, 0
-D:80044D88     off_D_80044D88: .word dword_D_80044928   # DATA XREF: sub_CODE_7F0BA640+2Co
-D:80044D8C                     .word dword_D_80044940
-D:80044D90                     .word dword_D_80044C00
-D:80044D94                     .word dword_D_80044C28
-D:80044D98                     .word dword_D_80044C50
-D:80044D9C                     .word dword_D_800449C8
-D:80044DA0                     .word dword_D_80044AB0
-D:80044DA4                     .word dword_D_80044B58
-D:80044DA8                     .word dword_D_80044C68
-D:80044DAC                     .word dword_D_80044CA0
-D:80044DB0     dword_D_80044DB0:.word 0                 # DATA XREF: sub_CODE_7F0BA640+3Cr
-D:80044DB0                                              # sub_CODE_7F0BA640+9Cw
-D:80044DB0                                              # sub_CODE_7F0BA640+B8w
-D:80044DB0                                              # sub_CODE_7F0BA640+BCw
-
-*/
-
-/* rodata
-D:80058C48     aPortD:         .ascii "PORT%d"<0>       # DATA XREF: sub_CODE_7F0B5D7C+44o
-D:80058C4F                     .byte 0
-D:80058C50     aRoomD:         .ascii "ROOM%d"<0>       # DATA XREF: sub_CODE_7F0B5DE0+44o
-D:80058C57                     .byte 0
 D:80058C58     jpt_700E883C:   .word loc_CODE_7F0B4914  # DATA XREF: sub_CODE_7F0B4884+7Cr
 D:80058C58                     .word loc_CODE_7F0B4914  # jump table for switch statement
 D:80058C58                     .word loc_CODE_7F0B4914
@@ -405,7 +477,10 @@ D:80058C58                     .word def_7F0B490C
 D:80058C58                     .word loc_CODE_7F0B4914
 D:80058C58                     .word def_7F0B490C
 D:80058C58                     .word loc_CODE_7F0B4914
-D:80058C7C     flt_D_80058C7C: .float 0.89999998        # DATA XREF: sub_CODE_7F0B5528+B0r
+*/
+//D:80058C7C
+const f32 D_80058C7C = 0.89999998;
+/*
 D:80058C80     jpt_700EC3D8:   .word if_statement       # DATA XREF: parse_global_vis_command_list+88r
 D:80058C80                     .word dont_exec_commands_even_on_return  # jump table for switch statement
 D:80058C80                     .word endif_continue_exec
@@ -459,11 +534,16 @@ D:80058CB4                     .word disable_room
 D:80058CB4                     .word disable_room_range
 D:80058CB4                     .word preload_room
 D:80058CB4                     .word preload_room_range
-D:80058D54     flt_D_80058D54: .float 3.4028235e38      # DATA XREF: sub_CODE_7F0B96CC+1C4r
-D:80058D58     flt_D_80058D58: .float -3.4028235e38     # DATA XREF: sub_CODE_7F0B96CC+1D4r
-D:80058D5C     flt_D_80058D5C: .float 0.99900001        # DATA XREF: sub_CODE_7F0B993C+20r
-D:80058D60     flt_D_80058D60: .float 3.4028235e38      # DATA XREF: sub_CODE_7F0B9E04+54r
 */
+//D:80058D54
+const f32 D_80058D54 = 3.4028235e38;
+//D:80058D58
+const f32 D_80058D58 = -3.4028235e38;
+//D:80058D5C
+const f32 D_80058D5C = 0.99900001;
+//D:80058D60
+const f32 D_80058D60 = 3.4028235e38;
+
 
 void something_with_bg_c_debug(void) {
     get_ptr_debug_notice_list_entry(&ptr_bg_c_debug_debug_notice_list, "bg_c_debug");
@@ -482,11 +562,11 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B37EC
 /* 0E831C 7F0B37EC 3C028004 */  lui   $v0, %hi(D_80044824) # $v0, 0x8004
-/* 0E8320 7F0B37F0 3C038004 */  lui   $v1, %hi(D_80044838) # $v1, 0x8004
+/* 0E8320 7F0B37F0 3C038004 */  lui   $v1, %hi(current_room_maybe) # $v1, 0x8004
 /* 0E8324 7F0B37F4 3C088008 */  lui   $t0, %hi(ptr_bgdata_portals) # $t0, 0x8008
 /* 0E8328 7F0B37F8 3C078004 */  lui   $a3, %hi(D_80041400) # $a3, 0x8004
 /* 0E832C 7F0B37FC 24424824 */  addiu $v0, %lo(D_80044824) # addiu $v0, $v0, 0x4824
-/* 0E8330 7F0B3800 24634838 */  addiu $v1, %lo(D_80044838) # addiu $v1, $v1, 0x4838
+/* 0E8330 7F0B3800 24634838 */  addiu $v1, %lo(current_room_maybe) # addiu $v1, $v1, 0x4838
 /* 0E8334 7F0B3804 24E71400 */  addiu $a3, %lo(D_80041400) # addiu $a3, $a3, 0x1400
 /* 0E8338 7F0B3808 2508FF80 */  addiu $t0, %lo(ptr_bgdata_portals) # addiu $t0, $t0, -0x80
 /* 0E833C 7F0B380C 240900FF */  li    $t1, 255
@@ -738,8 +818,10 @@ glabel sub_GAME_7F0B39BC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B3B04(void) {
-
+void sub_GAME_7F0B3B04(s32 arg0) {
+    // Node 0
+    *((D_80041414 + 3) + (arg0 * 0x50)) = (u8)0;
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -846,12 +928,12 @@ loop_1:
     temp_v1->unk-9D = (u8)0;
     temp_v1->unk-4D = (u8)0;
     phi_v1 = temp_v1;
-    if (temp_v1 != &max_num_rooms)
+    if (temp_v1 != &MaxNumRooms)
     {
         goto loop_1;
     }
     // Node 2
-    return &max_num_rooms;
+    return &MaxNumRooms;
 }
 #else
 GLOBAL_ASM(
@@ -863,8 +945,8 @@ glabel sub_GAME_7F0B3BC4
 /* 0E8700 7F0B3BD0 A0201417 */  sb    $zero, %lo(D_80041417)($at)
 /* 0E8704 7F0B3BD4 3C018004 */  lui   $at, %hi(D_80041467) # $at, 0x8004
 /* 0E8708 7F0B3BD8 3C038004 */  lui   $v1, %hi(D_800414B4) # $v1, 0x8004
-/* 0E870C 7F0B3BDC 3C028004 */  lui   $v0, %hi(max_num_rooms) # $v0, 0x8004
-/* 0E8710 7F0B3BE0 244242F4 */  addiu $v0, %lo(max_num_rooms) # addiu $v0, $v0, 0x42f4
+/* 0E870C 7F0B3BDC 3C028004 */  lui   $v0, %hi(MaxNumRooms) # $v0, 0x8004
+/* 0E8710 7F0B3BE0 244242F4 */  addiu $v0, %lo(MaxNumRooms) # addiu $v0, $v0, 0x42f4
 /* 0E8714 7F0B3BE4 246314B4 */  addiu $v1, %lo(D_800414B4) # addiu $v1, $v1, 0x14b4
 /* 0E8718 7F0B3BE8 A0201467 */  sb    $zero, %lo(D_80041467)($at)
 .L7F0B3BEC:
@@ -1207,8 +1289,32 @@ glabel sub_GAME_7F0B3C8C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B4034(void) {
+s32 sub_GAME_7F0B4034(s32 arg0) {
+    s32 temp_v1;
+    void *phi_a0;
+    s32 phi_v1;
+    s32 phi_v1_2;
 
+    // Node 0
+    phi_v1 = arg0;
+    if ((ptr_bgdata_room_fileposition_list + (arg0 * 0x18))->unk4 == 0)
+    {
+        // Node 1
+        phi_a0 = (ptr_bgdata_room_fileposition_list + (arg0 * 0x18));
+        phi_v1_2 = arg0;
+loop_2:
+        // Node 2
+        temp_v1 = (phi_v1_2 + 1);
+        phi_a0 = (phi_a0 + 0x18);
+        phi_v1 = temp_v1;
+        phi_v1_2 = temp_v1;
+        if (phi_a0->unk1C == 0)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 3
+    return phi_v1;
 }
 #else
 GLOBAL_ASM(
@@ -1244,8 +1350,32 @@ glabel sub_GAME_7F0B4034
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B4084(void) {
+s32 sub_GAME_7F0B4084(s32 arg0) {
+    s32 temp_v1;
+    void *phi_a0;
+    s32 phi_v1;
+    s32 phi_v1_2;
 
+    // Node 0
+    phi_v1 = arg0;
+    if ((ptr_bgdata_room_fileposition_list + (arg0 * 0x18))->unk8 == 0)
+    {
+        // Node 1
+        phi_a0 = (ptr_bgdata_room_fileposition_list + (arg0 * 0x18));
+        phi_v1_2 = arg0;
+loop_2:
+        // Node 2
+        temp_v1 = (phi_v1_2 + 1);
+        phi_a0 = (phi_a0 + 0x18);
+        phi_v1 = temp_v1;
+        phi_v1_2 = temp_v1;
+        if (phi_a0->unk20 == 0)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 3
+    return phi_v1;
 }
 #else
 GLOBAL_ASM(
@@ -1281,8 +1411,32 @@ glabel sub_GAME_7F0B4084
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B40D4(void) {
+s32 sub_GAME_7F0B40D4(s32 arg0) {
+    s32 temp_v1;
+    void *phi_a0;
+    s32 phi_v1;
+    s32 phi_v1_2;
 
+    // Node 0
+    phi_v1 = arg0;
+    if (*(ptr_bgdata_room_fileposition_list + (arg0 * 0x18)) == 0)
+    {
+        // Node 1
+        phi_a0 = (ptr_bgdata_room_fileposition_list + (arg0 * 0x18));
+        phi_v1_2 = arg0;
+loop_2:
+        // Node 2
+        temp_v1 = (phi_v1_2 + 1);
+        phi_a0 = (phi_a0 + 0x18);
+        phi_v1 = temp_v1;
+        phi_v1_2 = temp_v1;
+        if (phi_a0->unk18 == 0)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 3
+    return phi_v1;
 }
 #else
 GLOBAL_ASM(
@@ -1331,7 +1485,7 @@ glabel sub_GAME_7F0B4124
 /* 0E8C60 7F0B4130 AFB00018 */  sw    $s0, 0x18($sp)
 /* 0E8C64 7F0B4134 26521400 */  addiu $s2, %lo(D_80041400) # addiu $s2, $s2, 0x1400
 /* 0E8C68 7F0B4138 3C108004 */  lui   $s0, %hi(D_80041414) # $s0, 0x8004
-/* 0E8C6C 7F0B413C 3C028004 */  lui   $v0, %hi(max_num_rooms) # $v0, 0x8004
+/* 0E8C6C 7F0B413C 3C028004 */  lui   $v0, %hi(MaxNumRooms) # $v0, 0x8004
 /* 0E8C70 7F0B4140 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0E8C74 7F0B4144 AFBE0038 */  sw    $fp, 0x38($sp)
 /* 0E8C78 7F0B4148 AFB70034 */  sw    $s7, 0x34($sp)
@@ -1341,7 +1495,7 @@ glabel sub_GAME_7F0B4124
 /* 0E8C88 7F0B4158 AFB30024 */  sw    $s3, 0x24($sp)
 /* 0E8C8C 7F0B415C AFB1001C */  sw    $s1, 0x1c($sp)
 /* 0E8C90 7F0B4160 AE400000 */  sw    $zero, ($s2)
-/* 0E8C94 7F0B4164 244242F4 */  addiu $v0, %lo(max_num_rooms) # addiu $v0, $v0, 0x42f4
+/* 0E8C94 7F0B4164 244242F4 */  addiu $v0, %lo(MaxNumRooms) # addiu $v0, $v0, 0x42f4
 /* 0E8C98 7F0B4168 26101414 */  addiu $s0, %lo(D_80041414) # addiu $s0, $s0, 0x1414
 .L7F0B416C:
 /* 0E8C9C 7F0B416C 26100050 */  addiu $s0, $s0, 0x50
@@ -1423,9 +1577,9 @@ glabel sub_GAME_7F0B4124
 /* 0E8DC4 7F0B4294 AE020000 */  sw    $v0, ($s0)
 /* 0E8DC8 7F0B4298 00402025 */  move  $a0, $v0
 /* 0E8DCC 7F0B429C 00002825 */  move  $a1, $zero
-/* 0E8DD0 7F0B42A0 0FC2CBCB */  jal   load_stan
+/* 0E8DD0 7F0B42A0 0FC2CBCB */  jal   stanDetermineEOF
 /* 0E8DD4 7F0B42A4 00403025 */   move  $a2, $v0
-/* 0E8DD8 7F0B42A8 0FC2BD6E */  jal   sub_GAME_7F0AF5B8
+/* 0E8DD8 7F0B42A8 0FC2BD6E */  jal   stanLoadFile
 /* 0E8DDC 7F0B42AC 8E040000 */   lw    $a0, ($s0)
 /* 0E8DE0 7F0B42B0 8E4C0000 */  lw    $t4, ($s2)
 /* 0E8DE4 7F0B42B4 01940019 */  multu $t4, $s4
@@ -1477,8 +1631,8 @@ glabel sub_GAME_7F0B4124
 /* 0E8E9C 7F0B436C AC8A0000 */  sw    $t2, ($a0)
 /* 0E8EA0 7F0B4370 AEC20000 */  sw    $v0, ($s6)
 /* 0E8EA4 7F0B4374 8C4B0004 */  lw    $t3, 4($v0)
-/* 0E8EA8 7F0B4378 3C168004 */  lui   $s6, %hi(max_num_rooms) # $s6, 0x8004
-/* 0E8EAC 7F0B437C 26D642F4 */  addiu $s6, %lo(max_num_rooms) # addiu $s6, $s6, 0x42f4
+/* 0E8EA8 7F0B4378 3C168004 */  lui   $s6, %hi(MaxNumRooms) # $s6, 0x8004
+/* 0E8EAC 7F0B437C 26D642F4 */  addiu $s6, %lo(MaxNumRooms) # addiu $s6, $s6, 0x42f4
 /* 0E8EB0 7F0B4380 01626021 */  addu  $t4, $t3, $v0
 /* 0E8EB4 7F0B4384 01936821 */  addu  $t5, $t4, $s3
 /* 0E8EB8 7F0B4388 AEAD0000 */  sw    $t5, ($s5)
@@ -1798,7 +1952,8 @@ glabel sub_GAME_7F0B4124
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B47E0(void) {
-
+    sub_GAME_7F0B667C();
+    sub_GAME_7F058C4C(1.0);
 }
 #else
 GLOBAL_ASM(
@@ -1824,8 +1979,9 @@ glabel sub_GAME_7F0B47E0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B4810(void) {
-
+void sub_GAME_7F0B4810(f32 arg0) {
+    D_800413F4 = arg0;
+    D_800413F8 = (f32) (1.0f / arg0);
 }
 #else
 GLOBAL_ASM(
@@ -1835,10 +1991,10 @@ glabel sub_GAME_7F0B4810
 /* 0E9344 7F0B4814 E42C13F4 */  swc1  $f12, %lo(D_800413F4)($at)
 /* 0E9348 7F0B4818 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0E934C 7F0B481C 44812000 */  mtc1  $at, $f4
-/* 0E9350 7F0B4820 3C018004 */  lui   $at, 0x8004
+/* 0E9350 7F0B4820 3C018004 */  lui   $at, %hi(D_800413F8)
 /* 0E9354 7F0B4824 460C2183 */  div.s $f6, $f4, $f12
 /* 0E9358 7F0B4828 03E00008 */  jr    $ra
-/* 0E935C 7F0B482C E42613F8 */   swc1  $f6, 0x13f8($at)
+/* 0E935C 7F0B482C E42613F8 */   swc1  $f6, %lo(D_800413F8)($at)
 )
 #endif
 
@@ -1848,15 +2004,16 @@ glabel sub_GAME_7F0B4810
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B4830(void) {
-
+    return D_800413F8;
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B4830
-/* 0E9360 7F0B4830 3C018004 */  lui   $at, 0x8004
+/* 0E9360 7F0B4830 3C018004 */  lui   $at, %hi(D_800413F8)
 /* 0E9364 7F0B4834 03E00008 */  jr    $ra
-/* 0E9368 7F0B4838 C42013F8 */   lwc1  $f0, 0x13f8($at)
+/* 0E9368 7F0B4838 C42013F8 */   lwc1  $f0, %lo(D_800413F8)($at)
 )
 #endif
 
@@ -1866,15 +2023,15 @@ glabel sub_GAME_7F0B4830
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B483C(void) {
-
+    return D_800413F4;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B483C
-/* 0E936C 7F0B483C 3C018004 */  lui   $at, 0x8004
+/* 0E936C 7F0B483C 3C018004 */  lui   $at, %hi(D_800413F4)
 /* 0E9370 7F0B4840 03E00008 */  jr    $ra
-/* 0E9374 7F0B4844 C42013F4 */   lwc1  $f0, 0x13f4($at)
+/* 0E9374 7F0B4844 C42013F4 */   lwc1  $f0, %lo(D_800413F4)($at)
 )
 #endif
 
@@ -1883,8 +2040,11 @@ glabel sub_GAME_7F0B483C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B4848(void) {
+f32 sub_GAME_7F0B4848(void) {
+    void *temp_v0;
 
+    temp_v0 = ((D_80041400 * 0x18) + &levelinfotable);
+    return (temp_v0->unk14 / temp_v0->unkC);
 }
 #else
 GLOBAL_ASM(
@@ -1911,15 +2071,15 @@ glabel sub_GAME_7F0B4848
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B4878(void) {
-
+    return D_800413FC;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B4878
-/* 0E93A8 7F0B4878 3C018004 */  lui   $at, 0x8004
+/* 0E93A8 7F0B4878 3C018004 */  lui   $at, %hi(D_800413FC)
 /* 0E93AC 7F0B487C 03E00008 */  jr    $ra
-/* 0E93B0 7F0B4880 C42013FC */   lwc1  $f0, 0x13fc($at)
+/* 0E93B0 7F0B4880 C42013FC */   lwc1  $f0, %lo(D_800413FC)($at)
 )
 #endif
 
@@ -1978,10 +2138,10 @@ def_7F0B490C:
 .L7F0B491C:
 /* 0E944C 7F0B491C 0FC227E6 */  jal   get_cur_players_room
 /* 0E9450 7F0B4920 00000000 */   nop   
-/* 0E9454 7F0B4924 3C018004 */  lui   $at, %hi(D_80044838) # $at, 0x8004
+/* 0E9454 7F0B4924 3C018004 */  lui   $at, %hi(current_room_maybe) # $at, 0x8004
 /* 0E9458 7F0B4928 00409825 */  move  $s3, $v0
 /* 0E945C 7F0B492C 0FC227F5 */  jal   get_BONDdata_position
-/* 0E9460 7F0B4930 AC224838 */   sw    $v0, %lo(D_80044838)($at)
+/* 0E9460 7F0B4930 AC224838 */   sw    $v0, %lo(current_room_maybe)($at)
 /* 0E9464 7F0B4934 0FC22800 */  jal   get_BONDdata_position3
 /* 0E9468 7F0B4938 0040A025 */   move  $s4, $v0
 /* 0E946C 7F0B493C 3C038008 */  lui   $v1, %hi(ptr_bgdata_portals) # $v1, 0x8008
@@ -2045,9 +2205,9 @@ def_7F0B490C:
 /* 0E953C 7F0B4A0C 56FEFFD1 */  bnel  $s7, $fp, .L7F0B4954
 /* 0E9540 7F0B4A10 8C790000 */   lw    $t9, ($v1)
 .L7F0B4A14:
-/* 0E9544 7F0B4A14 3C018004 */  lui   $at, %hi(D_80044838) # $at, 0x8004
+/* 0E9544 7F0B4A14 3C018004 */  lui   $at, %hi(current_room_maybe) # $at, 0x8004
 /* 0E9548 7F0B4A18 0FC2E29B */  jal   sub_GAME_7F0B8A6C
-/* 0E954C 7F0B4A1C AC334838 */   sw    $s3, %lo(D_80044838)($at)
+/* 0E954C 7F0B4A1C AC334838 */   sw    $s3, %lo(current_room_maybe)($at)
 /* 0E9550 7F0B4A20 8FBF003C */  lw    $ra, 0x3c($sp)
 /* 0E9554 7F0B4A24 8FB00018 */  lw    $s0, 0x18($sp)
 /* 0E9558 7F0B4A28 8FB1001C */  lw    $s1, 0x1c($sp)
@@ -2377,8 +2537,48 @@ glabel sub_GAME_7F0B4AB4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B4E40(void) {
+void sub_GAME_7F0B4E40(void *arg0) {
+    void *temp_v1;
+    void *temp_a1;
+    void *temp_a2;
+    void *temp_a0;
+    void *temp_v0;
+    void *phi_a0;
 
+    // Node 0
+    temp_v1 = (arg0 + 8);
+    *arg0 = 0xbc000002;
+    arg0->unk4 = 0x80000040;
+    temp_a1 = (temp_v1 + 8);
+    *temp_v1 = 0x3860010;
+    temp_v1->unk4 = &D_80044848;
+    temp_a2 = (temp_a1 + 8);
+    *temp_a1 = 0x3880010;
+    temp_a1->unk4 = &D_80044840;
+    *temp_a2 = 0x3840010;
+    sp20->unk4 = sub_GAME_7F078474((temp_a2 + 8), temp_a1, temp_a2);
+    *arg0 = 0x3820010;
+    sp1C->unk4 = (s32) (sub_GAME_7F078474((arg0 + 8), arg0, sp20) + 0x10);
+    *arg0 = 0xbc003c06;
+    arg0->unk4 = (s32) ptr_bg_data;
+    temp_a0 = (arg0 + 8);
+    if (dword_CODE_bss_8007FF88 == 1)
+    {
+        // Node 1
+        *temp_a0 = 0x6000000;
+        temp_a0->unk4 = (?32) dword_CODE_bss_8007BF98;
+        phi_a0 = (temp_a0 + 8);
+    }
+    else
+    {
+        // Node 2
+        phi_a0 = sub_GAME_7F0BB298(sub_GAME_7F0B4FB4(sub_GAME_7F0B8D78(sub_GAME_7F0BB070(temp_a0, 0))));
+    }
+    // Node 3
+    temp_v0 = phi_a0;
+    *temp_v0 = 0x1030040;
+    temp_v0->unk4 = (?32) m;
+    return sub_GAME_7F08BCF4((phi_a0 + 8));
 }
 #else
 GLOBAL_ASM(
@@ -2481,8 +2681,8 @@ glabel sub_GAME_7F0B4E40
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B4F9C(void) {
-
+void sub_GAME_7F0B4F9C(s32 arg0) {
+    return (dword_CODE_bss_8007FF94 + (arg0 * 4))->unk4;
 }
 #else
 GLOBAL_ASM(
@@ -2503,7 +2703,7 @@ glabel sub_GAME_7F0B4F9C
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B4FB4(void) {
-
+    return sub_GAME_7F0B5058(ptr_BONDdata->unk7F4, ptr_BONDdata->unk7F6, (ptr_BONDdata->unk7F4 + ptr_BONDdata->unk7F0), (s32) (ptr_BONDdata->unk7F6 + ptr_BONDdata->unk7F2));
 }
 #else
 GLOBAL_ASM(
@@ -2533,8 +2733,11 @@ glabel sub_GAME_7F0B4FB4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B4FF4(void) {
+void sub_GAME_7F0B4FF4(s32 arg0, s32 arg1, f32 arg2, ? arg3, ? arg4) {
+    s32 sp20;
 
+    sp20 = sub_GAME_7F05C4B8(arg3);
+    return sub_GAME_7F0B5058(arg0, (s32) arg1, (s32) arg2, sp20, sub_GAME_7F05C4B8(arg4));
 }
 #else
 GLOBAL_ASM(
@@ -2660,9 +2863,28 @@ glabel sub_GAME_7F0B5058
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5168(void) {
+s32 sub_GAME_7F0B5168(void) {
+    void *temp_v1;
+    void *phi_v1;
 
+    // Node 0
+    phi_v1 = &table_for_portals;
+loop_1:
+    // Node 1
+    temp_v1 = (phi_v1 + 0x50);
+    temp_v1->unk-3C = -1;
+    temp_v1->unk-28 = -1;
+    temp_v1->unk-14 = -1;
+    temp_v1->unk-50 = -1;
+    phi_v1 = temp_v1;
+    if (temp_v1 != &dword_CODE_bss_800825B8)
+    {
+        goto loop_1;
+    }
+    // Node 2
+    return -1;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2689,8 +2911,27 @@ glabel sub_GAME_7F0B5168
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B519C(void) {
-
+void sub_GAME_7F0B519C(void *arg0, void *arg1) {
+    // Node 0
+    if (*arg1 <= *arg0)
+    {
+        // Node 1
+        if (*arg0 <= arg1->unk8)
+        {
+            // Node 2
+            if (arg1->unk4 <= arg0->unk4)
+            {
+                // Node 3
+                if (arg0->unk4 <= arg1->unkC)
+                {
+                    // Node 4
+                    return 1;
+                }
+            }
+        }
+    }
+    // Node 5
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -2733,8 +2974,207 @@ glabel sub_GAME_7F0B519C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5208(void) {
+void sub_GAME_7F0B5208(s32 arg0, void *arg1) {
+    ? sp3C;
+    f32 sp40;
+    f32 sp5C;
+    f32 sp60;
+    f32 sp64;
+    f32 sp68;
+    s32 sp74;
+    ? temp_ret;
+    s32 temp_v1;
+    s32 phi_v1;
+    void *phi_a2;
+    s32 phi_s6;
+    s32 phi_s1;
+    s32 phi_s2;
+    s32 phi_s3;
+    s32 phi_s4;
+    s32 phi_s5;
+    s32 phi_s6_2;
+    s32 phi_s1_2;
+    s32 phi_s2_2;
+    s32 phi_s3_2;
+    s32 phi_s4_2;
+    s32 phi_s5_2;
+    s32 phi_s1_3;
+    s32 phi_s2_3;
+    s32 phi_s3_3;
 
+    // Node 0
+    video_related_27(&sp3C);
+    sp40 = (f32) (sp40 / D_800413FC);
+    phi_v1 = 0;
+    phi_a2 = ((arg0 * 0x50) + &D_80041414);
+    phi_s6_2 = 0;
+    phi_s4_2 = 0;
+    phi_s5_2 = 0;
+    phi_s1_3 = 0;
+    phi_s2_3 = 0;
+    phi_s3_3 = 0;
+loop_1:
+    // Node 1
+    if ((phi_v1 & 1) != 0)
+    {
+        // Node 2
+        sp5C = (f32) phi_a2->unk38;
+    }
+    else
+    {
+        // Node 3
+        sp5C = (f32) phi_a2->unk44;
+    }
+    // Node 4
+    if ((phi_v1 & 2) != 0)
+    {
+        // Node 5
+        sp60 = (f32) phi_a2->unk3C;
+    }
+    else
+    {
+        // Node 6
+        sp60 = (f32) phi_a2->unk48;
+    }
+    // Node 7
+    if ((phi_v1 & 4) != 0)
+    {
+        // Node 8
+        sp64 = (f32) phi_a2->unk40;
+    }
+    else
+    {
+        // Node 9
+        sp64 = (f32) phi_a2->unk4C;
+    }
+    // Node 10
+    sp74 = (s32) phi_v1;
+    temp_ret = sub_GAME_7F0B5488(&sp5C, &sp68, phi_a2);
+    if (temp_ret == 0)
+    {
+        // Node 11
+        phi_s1 = phi_s1_3;
+        if (sp40 <= -sp70)
+        {
+            // Node 12
+            phi_s1 = (phi_s1_3 + 1);
+        }
+        // Node 13
+        phi_s2 = phi_s2_3;
+        if (*arg1 <= sp68)
+        {
+            // Node 14
+            phi_s2 = (phi_s2_3 + 1);
+        }
+        // Node 15
+        phi_s3 = phi_s3_3;
+        if (sp68 <= arg1->unk8)
+        {
+            // Node 16
+            phi_s3 = (phi_s3_3 + 1);
+        }
+        // Node 17
+        phi_s4 = phi_s4_2;
+        if (arg1->unk4 <= sp6C)
+        {
+            // Node 18
+            phi_s4 = (phi_s4_2 + 1);
+        }
+        // Node 19
+        phi_s5 = phi_s5_2;
+        if (sp6C <= arg1->unkC)
+        {
+            // Node 20
+            phi_s5 = (phi_s5_2 + 1);
+        }
+        // Node 21
+        phi_s6 = (phi_s6_2 + 1);
+    }
+    else
+    {
+        // Node 22
+        phi_s1_2 = phi_s1_3;
+        if (sp40 <= -sp70)
+        {
+            // Node 23
+            phi_s1_2 = (phi_s1_3 + 1);
+        }
+        // Node 24
+        if (sp68 <= *arg1)
+        {
+            // Node 25
+            phi_s2_2 = (phi_s2_3 + 1);
+            phi_s3_2 = phi_s3_3;
+        }
+        else
+        {
+            // Node 26
+            phi_s2_2 = phi_s2_3;
+            phi_s3_2 = phi_s3_3;
+            if (arg1->unk8 <= sp68)
+            {
+                // Node 27
+                phi_s2_2 = phi_s2_3;
+                phi_s3_2 = (phi_s3_3 + 1);
+            }
+        }
+        // Node 28
+        if (sp6C <= arg1->unk4)
+        {
+            // Node 29
+            phi_s6 = phi_s6_2;
+            phi_s1 = phi_s1_2;
+            phi_s2 = phi_s2_2;
+            phi_s3 = phi_s3_2;
+            phi_s4 = (phi_s4_2 + 1);
+            phi_s5 = phi_s5_2;
+        }
+        else
+        {
+            // Node 30
+            phi_s6 = phi_s6_2;
+            phi_s1 = phi_s1_2;
+            phi_s2 = phi_s2_2;
+            phi_s3 = phi_s3_2;
+            phi_s4 = phi_s4_2;
+            phi_s5 = phi_s5_2;
+            if (arg1->unkC <= sp6C)
+            {
+                // Node 31
+                phi_s6 = phi_s6_2;
+                phi_s1 = phi_s1_2;
+                phi_s2 = phi_s2_2;
+                phi_s3 = phi_s3_2;
+                phi_s4 = phi_s4_2;
+                phi_s5 = (phi_s5_2 + 1);
+            }
+        }
+    }
+    // Node 32
+    temp_v1 = (phi_v1 + 1);
+    phi_v1 = temp_v1;
+    phi_a2 = sp38;
+    phi_s6_2 = phi_s6;
+    phi_s4_2 = phi_s4;
+    phi_s5_2 = phi_s5;
+    phi_s1_3 = phi_s1;
+    phi_s2_3 = phi_s2;
+    phi_s3_3 = phi_s3;
+    if (temp_v1 != 8)
+    {
+        goto loop_1;
+    }
+    // Node 33
+    if ((((((phi_s6 == 8) || (phi_s1 == 8)) || (phi_s2 == 8)) || (phi_s3 == 8)) || (phi_s4 == 8)) || (phi_s5 == 8))
+    {
+        // Node 39
+    }
+    else
+    {
+
+    }
+    // Node 40
+    return temp_ret;
 }
 #else
 GLOBAL_ASM(
@@ -2930,8 +3370,19 @@ glabel sub_GAME_7F0B5208
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5488(void) {
-
+void sub_GAME_7F0B5488(void *arg0, void *arg1) {
+    // Node 0
+    *arg1 = (f32) (*arg0 * D_800413F8);
+    arg1->unk4 = (f32) (arg0->unk4 * D_800413F8);
+    arg1->unk8 = (f32) (arg0->unk8 * D_800413F8);
+    sub_GAME_7F058474(get_BONDdata_field_10CC(), arg1, arg0);
+    sub_GAME_7F078060(arg1, arg1);
+    if (0.0f < arg1->unk8)
+    {
+        // Node 1
+    }
+    // Node 2
+    return 1;
 }
 #else
 GLOBAL_ASM(
@@ -3423,8 +3874,11 @@ glabel sub_GAME_7F0B5864
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5B14(void) {
-
+s32 sub_GAME_7F0B5B14(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    // Node 0
+    arg0->unk4 = (s32) (((arg1 & 0x3ff) << 0xe) | ((arg2 & 0x3ff) * 4));
+    *arg0 = (s32) (((((arg3 + 1) & 0x3ff) << 0xe) | 0xf6000000) | (((arg4 + 1) & 0x3ff) * 4));
+    return (arg0 + 8);
 }
 #else
 GLOBAL_ASM(
@@ -3457,8 +3911,9 @@ glabel sub_GAME_7F0B5B14
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5B60(void) {
-
+void sub_GAME_7F0B5B60(s32 arg1, ? arg2, ? arg3, ?32 arg4) {
+    // Node 0
+    return sub_GAME_7F0B5B14(sub_GAME_7F0B5B14(sub_GAME_7F0B5B14(sub_GAME_7F0B5B14(), arg3, arg2, arg3, arg4), arg1, arg4, arg3), arg1, arg2, arg1, arg4);
 }
 #else
 GLOBAL_ASM(
@@ -3503,8 +3958,67 @@ glabel sub_GAME_7F0B5B60
 
 
 #ifdef NONMATCHING
-void vis_is_inline_of_sight(void) {
-
+f32 vis_is_inline_of_sight(void *arg0, void *arg1) {
+    // Node 0
+    if (*arg1 < *arg0)
+    {
+        // Node 1
+        *arg0 = (f32) *arg0;
+    }
+    else
+    {
+        // Node 2
+        *arg0 = (f32) *arg1;
+    }
+    // Node 3
+    if (arg1->unk4 < arg0->unk4)
+    {
+        // Node 4
+        arg0->unk4 = (f32) arg0->unk4;
+    }
+    else
+    {
+        // Node 5
+        arg0->unk4 = (f32) arg1->unk4;
+    }
+    // Node 6
+    if (arg0->unk8 < arg1->unk8)
+    {
+        // Node 7
+        arg0->unk8 = (f32) arg0->unk8;
+    }
+    else
+    {
+        // Node 8
+        arg0->unk8 = (f32) arg1->unk8;
+    }
+    // Node 9
+    if (arg0->unkC < arg1->unkC)
+    {
+        // Node 10
+        arg0->unkC = (f32) arg0->unkC;
+    }
+    else
+    {
+        // Node 11
+        arg0->unkC = (f32) arg1->unkC;
+    }
+    // Node 12
+    if (arg0->unk8 <= *arg0)
+    {
+        // Node 13
+        *arg0 = (f32) arg0->unk8;
+        return arg0->unk8;
+    }
+    // Node 14
+    if (arg0->unkC <= arg0->unk4)
+    {
+        // Node 15
+        arg0->unk4 = (f32) arg0->unkC;
+        return 0.0f;
+    }
+    // Node 16
+    return 1.401298464324817e-45f;
 }
 #else
 GLOBAL_ASM(
@@ -3583,8 +4097,50 @@ glabel vis_is_inline_of_sight
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5CC0(void) {
-
+f32 sub_GAME_7F0B5CC0(void *arg0, void *arg1) {
+    // Node 0
+    if (*arg0 < *arg1)
+    {
+        // Node 1
+        *arg0 = (f32) *arg0;
+    }
+    else
+    {
+        // Node 2
+        *arg0 = (f32) *arg1;
+    }
+    // Node 3
+    if (arg0->unk4 < arg1->unk4)
+    {
+        // Node 4
+        arg0->unk4 = (f32) arg0->unk4;
+    }
+    else
+    {
+        // Node 5
+        arg0->unk4 = (f32) arg1->unk4;
+    }
+    // Node 6
+    if (arg1->unk8 < arg0->unk8)
+    {
+        // Node 7
+        arg0->unk8 = (f32) arg0->unk8;
+    }
+    else
+    {
+        // Node 8
+        arg0->unk8 = (f32) arg1->unk8;
+    }
+    // Node 9
+    if (arg1->unkC < arg0->unkC)
+    {
+        // Node 10
+        arg0->unkC = (f32) arg0->unkC;
+        return arg1->unkC;
+    }
+    // Node 11
+    arg0->unkC = (f32) arg1->unkC;
+    return arg1->unkC;
 }
 #else
 GLOBAL_ASM(
@@ -3641,8 +4197,13 @@ glabel sub_GAME_7F0B5CC0
 
 
 #ifdef NONMATCHING
-void copy_4_floats_a1_to_a0(void) {
-
+void copy_4_floats_a1_to_a0(void *arg0, void *arg1) {
+    // Node 0
+    *arg0 = (f32) *arg1;
+    arg0->unk4 = (f32) arg1->unk4;
+    arg0->unk8 = (f32) arg1->unk8;
+    arg0->unkC = (f32) arg1->unkC;
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -3665,8 +4226,14 @@ glabel copy_4_floats_a1_to_a0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5D7C(void) {
+void sub_GAME_7F0B5D7C(s32 arg0) {
+    s32 temp_hi;
 
+    // Node 0
+    temp_hi = ((s32) (D_80044860 + 1) % 0xa);
+    D_80044860 = temp_hi;
+    sprintf(((temp_hi * 9) + &dword_CODE_bss_8007C040), "PORT%d", arg0);
+    return sp1C;
 }
 #else
 GLOBAL_ASM(
@@ -3705,8 +4272,14 @@ glabel sub_GAME_7F0B5D7C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5DE0(void) {
+void sub_GAME_7F0B5DE0(s32 arg0) {
+    s32 temp_hi;
 
+    // Node 0
+    temp_hi = ((s32) (D_80044864 + 1) % 0xa);
+    D_80044864 = temp_hi;
+    sprintf(((temp_hi * 9) + &dword_CODE_bss_8007C0A0), "ROOM%d", arg0);
+    return sp1C;
 }
 #else
 GLOBAL_ASM(
@@ -3745,16 +4318,17 @@ glabel sub_GAME_7F0B5DE0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5E44(void) {
-
+void getMaxNumRooms(void) {
+    return MaxNumRooms;
 }
+
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0B5E44
-/* 0EA974 7F0B5E44 3C028004 */  lui   $v0, 0x8004
+glabel getMaxNumRooms
+/* 0EA974 7F0B5E44 3C028004 */  lui   $v0, %hi(MaxNumRooms)
 /* 0EA978 7F0B5E48 03E00008 */  jr    $ra
-/* 0EA97C 7F0B5E4C 8C4242F4 */   lw    $v0, 0x42f4($v0)
+/* 0EA97C 7F0B5E4C 8C4242F4 */   lw    $v0, %lo(MaxNumRooms)($v0)
 )
 #endif
 
@@ -3763,8 +4337,8 @@ glabel sub_GAME_7F0B5E44
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5E50(void) {
-
+void sub_GAME_7F0B5E50(s32 arg0) {
+    return *(&D_80041414 + (arg0 * 0x50));
 }
 #else
 GLOBAL_ASM(
@@ -3773,10 +4347,10 @@ glabel sub_GAME_7F0B5E50
 /* 0EA980 7F0B5E50 00047080 */  sll   $t6, $a0, 2
 /* 0EA984 7F0B5E54 01C47021 */  addu  $t6, $t6, $a0
 /* 0EA988 7F0B5E58 000E7100 */  sll   $t6, $t6, 4
-/* 0EA98C 7F0B5E5C 3C028004 */  lui   $v0, 0x8004
+/* 0EA98C 7F0B5E5C 3C028004 */  lui   $v0, %hi(D_80041414)
 /* 0EA990 7F0B5E60 004E1021 */  addu  $v0, $v0, $t6
 /* 0EA994 7F0B5E64 03E00008 */  jr    $ra
-/* 0EA998 7F0B5E68 90421414 */   lbu   $v0, 0x1414($v0)
+/* 0EA998 7F0B5E68 90421414 */   lbu   $v0, %lo(D_80041414)($v0)
 )
 #endif
 
@@ -3785,8 +4359,8 @@ glabel sub_GAME_7F0B5E50
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5E6C(void) {
-
+void sub_GAME_7F0B5E6C(s32 arg0) {
+    return *(&D_80041415 + (arg0 * 0x50));
 }
 #else
 GLOBAL_ASM(
@@ -3795,10 +4369,10 @@ glabel sub_GAME_7F0B5E6C
 /* 0EA99C 7F0B5E6C 00047080 */  sll   $t6, $a0, 2
 /* 0EA9A0 7F0B5E70 01C47021 */  addu  $t6, $t6, $a0
 /* 0EA9A4 7F0B5E74 000E7100 */  sll   $t6, $t6, 4
-/* 0EA9A8 7F0B5E78 3C028004 */  lui   $v0, 0x8004
+/* 0EA9A8 7F0B5E78 3C028004 */  lui   $v0, %hi(D_80041415)
 /* 0EA9AC 7F0B5E7C 004E1021 */  addu  $v0, $v0, $t6
 /* 0EA9B0 7F0B5E80 03E00008 */  jr    $ra
-/* 0EA9B4 7F0B5E84 90421415 */   lbu   $v0, 0x1415($v0)
+/* 0EA9B4 7F0B5E84 90421415 */   lbu   $v0, %lo(D_80041415)($v0)
 )
 #endif
 
@@ -3807,8 +4381,38 @@ glabel sub_GAME_7F0B5E6C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5E88(void) {
+s32 sub_GAME_7F0B5E88(s32 arg0) {
+    s32 temp_a2;
+    s32 phi_a2;
+    s32 phi_v1;
+    void *phi_a1;
 
+    // Node 0
+    if (*ptr_bgdata_portals != 0)
+    {
+        // Node 1
+        phi_a2 = *ptr_bgdata_portals;
+        phi_v1 = 0;
+        phi_a1 = ptr_bgdata_portals;
+loop_2:
+        // Node 2
+        if (arg0 == phi_a2)
+        {
+            // Node 3
+            return phi_v1;
+        }
+        // Node 4
+        temp_a2 = phi_a1->unk8;
+        phi_a2 = temp_a2;
+        phi_v1 = (phi_v1 + 1);
+        phi_a1 = (phi_a1 + 8);
+        if (temp_a2 != 0)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 5
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -3847,7 +4451,55 @@ glabel sub_GAME_7F0B5E88
 
 #ifdef NONMATCHING
 void generate_room_load_string(void) {
+    ? sp29;
+    ? temp_ret;
+    void *phi_v1;
+    s32 phi_a0;
+    void *phi_v0;
+    s32 phi_a0_2;
+    s32 phi_a0_3;
 
+    // Node 0
+    temp_ret = get_debug_prroomloads_flag();
+    if (temp_ret != 0)
+    {
+        // Node 1
+        phi_a0_3 = 1;
+        if (MaxNumRooms >= 2)
+        {
+            // Node 2
+            phi_v1 = &D_80041464;
+            phi_a0 = 1;
+            phi_v0 = &sp29;
+loop_3:
+            // Node 3
+            if (phi_v1->unk2 != 0)
+            {
+                // Node 4
+                *phi_v0 = (s8) (((s32) phi_a0 % 0xa) + 0x30);
+                phi_a0_2 = (phi_a0 + 1);
+            }
+            else
+            {
+                // Node 5
+                *phi_v0 = (u8)0x2e;
+                phi_a0_2 = (phi_a0 + 1);
+            }
+            // Node 6
+            phi_v1 = (phi_v1 + 0x50);
+            phi_a0 = phi_a0_2;
+            phi_v0 = (phi_v0 + 1);
+            phi_a0_3 = phi_a0_2;
+            if (phi_a0_2 < MaxNumRooms)
+            {
+                goto loop_3;
+            }
+        }
+        // Node 7
+        (sp + phi_a0_3)->unk28 = (u8)0;
+    }
+    // Node 8
+    return temp_ret;
 }
 #else
 GLOBAL_ASM(
@@ -3858,8 +4510,8 @@ glabel generate_room_load_string
 /* 0EAA10 7F0B5EE0 0FC243F4 */  jal   get_debug_prroomloads_flag
 /* 0EAA14 7F0B5EE4 00000000 */   nop   
 /* 0EAA18 7F0B5EE8 10400024 */  beqz  $v0, .L7F0B5F7C
-/* 0EAA1C 7F0B5EEC 3C078004 */   lui   $a3, %hi(max_num_rooms) # $a3, 0x8004
-/* 0EAA20 7F0B5EF0 8CE742F4 */  lw    $a3, %lo(max_num_rooms)($a3)
+/* 0EAA1C 7F0B5EEC 3C078004 */   lui   $a3, %hi(MaxNumRooms) # $a3, 0x8004
+/* 0EAA20 7F0B5EF0 8CE742F4 */  lw    $a3, %lo(MaxNumRooms)($a3)
 /* 0EAA24 7F0B5EF4 3C038004 */  lui   $v1, %hi(D_80041464) # $v1, 0x8004
 /* 0EAA28 7F0B5EF8 24631464 */  addiu $v1, %lo(D_80041464) # addiu $v1, $v1, 0x1464
 /* 0EAA2C 7F0B5EFC 28E10002 */  slti  $at, $a3, 2
@@ -3914,7 +4566,10 @@ glabel generate_room_load_string
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B5F8C(void) {
+    ? sp18;
 
+    // Node 0
+    return decompressdata(&sp18);
 }
 #else
 GLOBAL_ASM(
@@ -3936,8 +4591,28 @@ glabel sub_GAME_7F0B5F8C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5FAC(void) {
+void sub_GAME_7F0B5FAC(s32 arg0, s32 arg1, s32 arg2) {
+    void *sp1C;
+    void *temp_v1;
+    s32 temp_t9;
+    ? temp_ret;
 
+    // Node 0
+    temp_v1 = ((arg0 * 0x50) + &D_80041414);
+    temp_t9 = ((temp_v1->unk10 + 0xf) & -0x10);
+    if (arg2 >= (temp_t9 + 0x20))
+    {
+        // Node 2
+        sp1C = temp_v1;
+        load_bg_bytes_at_offset_to_membank(*(&levelinfotable + (D_80041400 * 0x18)), ((arg2 - temp_t9) + arg1), (((*(ptr_bgdata_room_fileposition_list + (arg0 * 0x18)) + ptr_bg_data) - ptr_bg_data) + 0xf1000000), temp_t9);
+        temp_ret = sub_GAME_7F0B5F8C(sp18, arg1);
+        temp_v1->unk1C = temp_ret;
+        temp_v1->unk4 = arg1;
+        // Node 3
+        return temp_ret;
+    }
+    // Node 1
+    return temp_ret;
 }
 #else
 GLOBAL_ASM(
@@ -3975,7 +4650,7 @@ glabel sub_GAME_7F0B5FAC
 /* 0EAB4C 7F0B601C 3C028008 */  lui   $v0, %hi(ptr_bg_data) # $v0, 0x8008
 /* 0EAB50 7F0B6020 8C42BF90 */  lw    $v0, %lo(ptr_bg_data)($v0)
 /* 0EAB54 7F0B6024 8FAA0038 */  lw    $t2, 0x38($sp)
-/* 0EAB58 7F0B6028 3C048004 */  lui   $a0, 0x8004
+/* 0EAB58 7F0B6028 3C048004 */  lui   $a0, %hi(levelinfotable)
 /* 0EAB5C 7F0B602C 3C01F100 */  lui   $at, 0xf100
 /* 0EAB60 7F0B6030 01476023 */  subu  $t4, $t2, $a3
 /* 0EAB64 7F0B6034 00006812 */  mflo  $t5
@@ -3992,7 +4667,7 @@ glabel sub_GAME_7F0B5FAC
 /* 0EAB90 7F0B6060 00004812 */  mflo  $t1
 /* 0EAB94 7F0B6064 00892021 */  addu  $a0, $a0, $t1
 /* 0EAB98 7F0B6068 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
-/* 0EAB9C 7F0B606C 8C844490 */   lw    $a0, 0x4490($a0)
+/* 0EAB9C 7F0B606C 8C844490 */   lw    $a0, %lo(levelinfotable)($a0)
 /* 0EABA0 7F0B6070 8FA40018 */  lw    $a0, 0x18($sp)
 /* 0EABA4 7F0B6074 0FC2D7E3 */  jal   sub_GAME_7F0B5F8C
 /* 0EABA8 7F0B6078 8FA50034 */   lw    $a1, 0x34($sp)
@@ -4054,7 +4729,7 @@ glabel sub_GAME_7F0B609C
 /* 0EAC44 7F0B6114 3C028008 */  lui   $v0, %hi(ptr_bg_data) # $v0, 0x8008
 /* 0EAC48 7F0B6118 8C42BF90 */  lw    $v0, %lo(ptr_bg_data)($v0)
 /* 0EAC4C 7F0B611C 8FAA0040 */  lw    $t2, 0x40($sp)
-/* 0EAC50 7F0B6120 3C048004 */  lui   $a0, 0x8004
+/* 0EAC50 7F0B6120 3C048004 */  lui   $a0, %hi(levelinfotable)
 /* 0EAC54 7F0B6124 3C01F100 */  lui   $at, 0xf100
 /* 0EAC58 7F0B6128 01476023 */  subu  $t4, $t2, $a3
 /* 0EAC5C 7F0B612C 00006812 */  mflo  $t5
@@ -4070,7 +4745,7 @@ glabel sub_GAME_7F0B609C
 /* 0EAC84 7F0B6154 00004812 */  mflo  $t1
 /* 0EAC88 7F0B6158 00892021 */  addu  $a0, $a0, $t1
 /* 0EAC8C 7F0B615C 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
-/* 0EAC90 7F0B6160 8C844490 */   lw    $a0, 0x4490($a0)
+/* 0EAC90 7F0B6160 8C844490 */   lw    $a0, %lo(levelinfotable)($a0)
 /* 0EAC94 7F0B6164 02202025 */  move  $a0, $s1
 /* 0EAC98 7F0B6168 0FC2D7E3 */  jal   sub_GAME_7F0B5F8C
 /* 0EAC9C 7F0B616C 02002825 */   move  $a1, $s0
@@ -4152,7 +4827,7 @@ glabel sub_GAME_7F0B61DC
 /* 0EAD84 7F0B6254 3C028008 */  lui   $v0, %hi(ptr_bg_data) # $v0, 0x8008
 /* 0EAD88 7F0B6258 8C42BF90 */  lw    $v0, %lo(ptr_bg_data)($v0)
 /* 0EAD8C 7F0B625C 8FAA0040 */  lw    $t2, 0x40($sp)
-/* 0EAD90 7F0B6260 3C048004 */  lui   $a0, 0x8004
+/* 0EAD90 7F0B6260 3C048004 */  lui   $a0, %hi(levelinfotable)
 /* 0EAD94 7F0B6264 3C01F100 */  lui   $at, 0xf100
 /* 0EAD98 7F0B6268 01476023 */  subu  $t4, $t2, $a3
 /* 0EAD9C 7F0B626C 00006812 */  mflo  $t5
@@ -4168,7 +4843,7 @@ glabel sub_GAME_7F0B61DC
 /* 0EADC4 7F0B6294 00004812 */  mflo  $t1
 /* 0EADC8 7F0B6298 00892021 */  addu  $a0, $a0, $t1
 /* 0EADCC 7F0B629C 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
-/* 0EADD0 7F0B62A0 8C844490 */   lw    $a0, 0x4490($a0)
+/* 0EADD0 7F0B62A0 8C844490 */   lw    $a0, %lo(levelinfotable)($a0)
 /* 0EADD4 7F0B62A4 02002025 */  move  $a0, $s0
 /* 0EADD8 7F0B62A8 0FC2D7E3 */  jal   sub_GAME_7F0B5F8C
 /* 0EADDC 7F0B62AC 02202825 */   move  $a1, $s1
@@ -4207,8 +4882,21 @@ glabel sub_GAME_7F0B61DC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B6314(void) {
+void sub_GAME_7F0B6314(s32 arg0) {
+    void *temp_v0;
 
+    // Node 0
+    temp_v0 = ((arg0 * 0x50) + &D_80041414);
+    temp_v0->unk35 = (u8)1;
+    if (temp_v0->unk2 != 0)
+    {
+        // Node 2
+        // Node 3
+        return 0;
+    }
+    // Node 1
+    sub_GAME_7F0B6368();
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -4245,15 +4933,178 @@ glabel sub_GAME_7F0B6314
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B6368(void) {
+void sub_GAME_7F0B6368(s32 rooms) {
+    void *sp1C;
+    s32 sp20;
+    s32 sp28;
+    s32 sp2C;
+    void *temp_v1;
+    ? temp_ret;
+    void *temp_v1_2;
+    ? temp_ret_2;
+    ? temp_ret_3;
+    void *temp_v1_5;
+    ? temp_ret_4;
+    void *temp_v1_6;
+    s32 temp_t1;
+    s32 temp_a0;
+    void *temp_v1_3;
+    s32 temp_a0_2;
+    void *temp_v1_4;
+    void *phi_v1;
+    s32 phi_a3;
+    s32 phi_a3_2;
+    void *phi_v1_2;
+    void *phi_v1_3;
 
+    // Node 0
+    if (rooms < MaxNumRooms)
+    {
+        // Node 1
+        temp_v1 = ((rooms * 0x50) + &D_80041414);
+        if (temp_v1->unk2 == 0)
+        {
+            // Node 2
+            if (temp_v1->unk28 > 0)
+            {
+                // Node 3
+                sp2C = (s32) temp_v1->unk28;
+                sp1C = temp_v1;
+                sp28 = 0;
+                if (get_debug_joy2detailedit_flag(0) != 0)
+                {
+                    // Node 4
+                    sp2C = (s32) (sp2C + 0x400);
+                }
+            }
+            else
+            {
+                // Node 5
+                sp1C = temp_v1;
+                sp2C = mem_related_0(0);
+            }
+            // Node 6
+            sp1C = (void *) temp_v1;
+            temp_ret = mem_related_something_find_first(sp2C, sp28);
+            temp_v1_2 = temp_v1;
+            sp20 = temp_ret;
+            if (temp_ret != 0)
+            {
+                // Node 7
+                if (temp_v1_2->unk10 != 0)
+                {
+                    // Node 8
+                    sp1C = temp_v1_2;
+                    temp_ret_2 = sub_GAME_7F0B5FAC(rooms, temp_ret, sp2C, sp28);
+                    if (temp_ret_2 >= 0)
+                    {
+                        // Node 9
+                        sp1C = temp_v1_2;
+                        sp28 = temp_ret_2;
+                        sub_GAME_7F0BB978(rooms, sp28);
+                    }
+                }
+                else
+                {
+                    // Node 10
+                    temp_v1_2->unk4 = 0;
+                    temp_v1_2->unk1C = 0;
+                }
+                // Node 11
+                phi_v1 = temp_v1_2;
+                phi_a3 = sp28;
+                if (temp_v1_2->unk14 != 0)
+                {
+                    // Node 12
+                    sp1C = (void *) temp_v1_2;
+                    temp_ret_3 = sub_GAME_7F0B609C(rooms, (sp20 + sp28), (sp2C - sp28), sp28);
+                    temp_v1_5 = temp_v1_2;
+                    phi_v1 = temp_v1_5;
+                    phi_a3 = sp28;
+                    if (temp_ret_3 >= 0)
+                    {
+                        // Node 13
+                        phi_v1 = temp_v1_5;
+                        phi_a3 = (sp28 + temp_ret_3);
+                    }
+                }
+                // Node 14
+                if (phi_v1->unk18 != 0)
+                {
+                    // Node 15
+                    sp1C = (void *) phi_v1;
+                    temp_ret_4 = sub_GAME_7F0B61DC(rooms, (sp20 + phi_a3), (sp2C - phi_a3), phi_a3);
+                    temp_v1_6 = phi_v1;
+                    phi_a3_2 = sp28;
+                    phi_v1_2 = temp_v1_6;
+                    if (temp_ret_4 > 0)
+                    {
+                        // Node 16
+                        phi_a3_2 = (sp28 + temp_ret_4);
+                        phi_v1_2 = temp_v1_6;
+                    }
+                }
+                else
+                {
+                    // Node 17
+                    phi_v1->unkC = 0;
+                    phi_a3_2 = phi_a3;
+                    phi_v1_2 = phi_v1;
+                }
+                // Node 18
+                temp_t1 = ((phi_a3_2 + 0x20) & -0x10);
+                phi_v1_2->unk28 = temp_t1;
+                phi_v1_2->unk2 = (u8)1;
+                phi_v1_3 = phi_v1_2;
+                if (sp2C != temp_t1)
+                {
+                    // Node 19
+                    sp1C = (void *) phi_v1_2;
+                    mem_related_1(sp20, sp2C, temp_t1, phi_a3_2);
+                    phi_v1_3 = phi_v1_2;
+                }
+                // Node 20
+                if (sky_enabled != 0)
+                {
+                    // Node 21
+                    temp_a0 = phi_v1_3->unk8;
+                    sp1C = (void *) phi_v1_3;
+                    sub_GAME_7F0BA640(temp_a0, (phi_v1_3->unk20 + temp_a0), 1);
+                    temp_v1_3 = phi_v1_3;
+                    if (temp_v1_3->unkC != 0)
+                    {
+                        // Node 22
+                        sub_GAME_7F0BA640(temp_v1_3->unkC, (temp_v1_3->unk24 + temp_v1_3->unkC), 5);
+                    }
+                }
+                else
+                {
+                    // Node 23
+                    temp_a0_2 = phi_v1_3->unk8;
+                    sp1C = (void *) phi_v1_3;
+                    sub_GAME_7F0BA640(temp_a0_2, (phi_v1_3->unk20 + temp_a0_2), 6);
+                    temp_v1_4 = phi_v1_3;
+                    if (temp_v1_4->unkC != 0)
+                    {
+                        // Node 24
+                        sub_GAME_7F0BA640(temp_v1_4->unkC, (temp_v1_4->unk24 + temp_v1_4->unkC), 7);
+                    }
+                }
+                // Node 25
+                sub_GAME_7F0B6994(rooms);
+                generate_room_load_string();
+            }
+        }
+    }
+    // Node 26
+    return;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B6368
-/* 0EAE98 7F0B6368 3C0F8004 */  lui   $t7, %hi(max_num_rooms) # $t7, 0x8004
-/* 0EAE9C 7F0B636C 8DEF42F4 */  lw    $t7, %lo(max_num_rooms)($t7)
+/* 0EAE98 7F0B6368 3C0F8004 */  lui   $t7, %hi(MaxNumRooms) # $t7, 0x8004
+/* 0EAE9C 7F0B636C 8DEF42F4 */  lw    $t7, %lo(MaxNumRooms)($t7)
 /* 0EAEA0 7F0B6370 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 0EAEA4 7F0B6374 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0EAEA8 7F0B6378 008F082A */  slt   $at, $a0, $t7
@@ -4423,8 +5274,40 @@ glabel sub_GAME_7F0B6368
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B65C4(void) {
+void sub_GAME_7F0B65C4(s32 arg0) {
+    void *temp_s0;
 
+    // Node 0
+    temp_s0 = ((arg0 * 0x50) + &D_80041414);
+    if (temp_s0->unk2C != 0)
+    {
+        // Node 1
+        mem_related_model_room_buffers_0(temp_s0->unk2C, (((temp_s0->unk30 * 0x1c) + 0xf) & -0x10), temp_s0->unk2C);
+        temp_s0->unk2C = 0;
+    }
+    // Node 2
+    if (temp_s0->unk28 > 0)
+    {
+        // Node 3
+        if (temp_s0->unk4 != 0)
+        {
+            // Node 4
+            mem_related_model_room_buffers_0(temp_s0->unk4, temp_s0->unk28);
+            temp_s0->unk4 = 0;
+        }
+        else
+        {
+            // Node 5
+            mem_related_model_room_buffers_0(temp_s0->unk8, temp_s0->unk28);
+            temp_s0->unk4 = 0;
+        }
+        // Node 6
+        temp_s0->unk8 = 0;
+        temp_s0->unkC = 0;
+    }
+    // Node 7
+    temp_s0->unk2 = (u8)0;
+    return generate_room_load_string();
 }
 #else
 GLOBAL_ASM(
@@ -4488,15 +5371,53 @@ glabel sub_GAME_7F0B65C4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B667C(void) {
+s32 sub_GAME_7F0B667C(void) {
+    s32 temp_s1;
+    void *phi_s0;
+    s32 phi_s1;
+    s32 phi_v0;
+    s32 phi_return;
+    s32 phi_return_2;
 
+    // Node 0
+    phi_return = MaxNumRooms;
+    if (MaxNumRooms >= 2)
+    {
+        // Node 1
+        phi_s0 = &D_80041464;
+        phi_s1 = 1;
+        phi_v0 = MaxNumRooms;
+        phi_return_2 = MaxNumRooms;
+loop_2:
+        // Node 2
+        if (phi_s0->unk2 != 0)
+        {
+            // Node 3
+            sub_GAME_7F0B65C4(phi_s1);
+            phi_v0 = MaxNumRooms;
+            phi_return_2 = MaxNumRooms;
+        }
+        // Node 4
+        temp_s1 = (phi_s1 + 1);
+        phi_s0 = (phi_s0 + 0x50);
+        phi_s1 = temp_s1;
+        phi_return = phi_return_2;
+        phi_v0 = phi_v0;
+        phi_return_2 = phi_return_2;
+        if (temp_s1 < phi_v0)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 5
+    return phi_return;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B667C
-/* 0EB1AC 7F0B667C 3C028004 */  lui   $v0, %hi(max_num_rooms) # $v0, 0x8004
-/* 0EB1B0 7F0B6680 8C4242F4 */  lw    $v0, %lo(max_num_rooms)($v0)
+/* 0EB1AC 7F0B667C 3C028004 */  lui   $v0, %hi(MaxNumRooms) # $v0, 0x8004
+/* 0EB1B0 7F0B6680 8C4242F4 */  lw    $v0, %lo(MaxNumRooms)($v0)
 /* 0EB1B4 7F0B6684 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0EB1B8 7F0B6688 AFB10018 */  sw    $s1, 0x18($sp)
 /* 0EB1BC 7F0B668C 28410002 */  slti  $at, $v0, 2
@@ -4512,8 +5433,8 @@ glabel sub_GAME_7F0B667C
 /* 0EB1E0 7F0B66B0 26310001 */   addiu $s1, $s1, 1
 /* 0EB1E4 7F0B66B4 0FC2D971 */  jal   sub_GAME_7F0B65C4
 /* 0EB1E8 7F0B66B8 02202025 */   move  $a0, $s1
-/* 0EB1EC 7F0B66BC 3C028004 */  lui   $v0, %hi(max_num_rooms) # $v0, 0x8004
-/* 0EB1F0 7F0B66C0 8C4242F4 */  lw    $v0, %lo(max_num_rooms)($v0)
+/* 0EB1EC 7F0B66BC 3C028004 */  lui   $v0, %hi(MaxNumRooms) # $v0, 0x8004
+/* 0EB1F0 7F0B66C0 8C4242F4 */  lw    $v0, %lo(MaxNumRooms)($v0)
 /* 0EB1F4 7F0B66C4 26310001 */  addiu $s1, $s1, 1
 .L7F0B66C8:
 /* 0EB1F8 7F0B66C8 0222082A */  slt   $at, $s1, $v0
@@ -4534,14 +5455,64 @@ glabel sub_GAME_7F0B667C
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B66E8(void) {
+    s8 temp_v0;
+    s32 temp_s1;
+    void *phi_s0;
+    s32 phi_s1;
+    s32 phi_v1;
+    s32 phi_v1_2;
 
+    // Node 0
+    if (MaxNumRooms >= 2)
+    {
+        // Node 1
+        phi_s0 = &D_80041464;
+        phi_s1 = 1;
+        phi_v1_2 = MaxNumRooms;
+loop_2:
+        // Node 2
+        phi_v1 = phi_v1_2;
+        if (phi_s0->unk35 == 0)
+        {
+            // Node 3
+            temp_v0 = phi_s0->unk2;
+            if (4 == temp_v0)
+            {
+                // Node 4
+                sub_GAME_7F0B65C4(phi_s1);
+                phi_v1 = MaxNumRooms;
+            }
+            else
+            {
+                // Node 5
+                phi_v1 = phi_v1_2;
+                if (temp_v0 != 0)
+                {
+                    // Node 6
+                    phi_s0->unk2 = (s8) (temp_v0 + 1);
+                    phi_v1 = phi_v1_2;
+                }
+            }
+        }
+        // Node 7
+        temp_s1 = (phi_s1 + 1);
+        phi_s0 = (phi_s0 + 0x50);
+        phi_s1 = temp_s1;
+        phi_v1_2 = phi_v1;
+        if (temp_s1 < phi_v1)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 8
+    return;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B66E8
-/* 0EB218 7F0B66E8 3C038004 */  lui   $v1, %hi(max_num_rooms) # $v1, 0x8004
-/* 0EB21C 7F0B66EC 8C6342F4 */  lw    $v1, %lo(max_num_rooms)($v1)
+/* 0EB218 7F0B66E8 3C038004 */  lui   $v1, %hi(MaxNumRooms) # $v1, 0x8004
+/* 0EB21C 7F0B66EC 8C6342F4 */  lw    $v1, %lo(MaxNumRooms)($v1)
 /* 0EB220 7F0B66F0 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0EB224 7F0B66F4 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 0EB228 7F0B66F8 28610002 */  slti  $at, $v1, 2
@@ -4562,9 +5533,9 @@ glabel sub_GAME_7F0B66E8
 /* 0EB260 7F0B6730 00000000 */   nop   
 /* 0EB264 7F0B6734 0FC2D971 */  jal   sub_GAME_7F0B65C4
 /* 0EB268 7F0B6738 02202025 */   move  $a0, $s1
-/* 0EB26C 7F0B673C 3C038004 */  lui   $v1, %hi(max_num_rooms) # $v1, 0x8004
+/* 0EB26C 7F0B673C 3C038004 */  lui   $v1, %hi(MaxNumRooms) # $v1, 0x8004
 /* 0EB270 7F0B6740 10000004 */  b     .L7F0B6754
-/* 0EB274 7F0B6744 8C6342F4 */   lw    $v1, %lo(max_num_rooms)($v1)
+/* 0EB274 7F0B6744 8C6342F4 */   lw    $v1, %lo(MaxNumRooms)($v1)
 .L7F0B6748:
 /* 0EB278 7F0B6748 10400002 */  beqz  $v0, .L7F0B6754
 /* 0EB27C 7F0B674C 244F0001 */   addiu $t7, $v0, 1
@@ -4597,8 +5568,8 @@ void sub_GAME_7F0B677C(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B677C
-/* 0EB2AC 7F0B677C 3C0E8004 */  lui   $t6, %hi(max_num_rooms) # $t6, 0x8004
-/* 0EB2B0 7F0B6780 8DCE42F4 */  lw    $t6, %lo(max_num_rooms)($t6)
+/* 0EB2AC 7F0B677C 3C0E8004 */  lui   $t6, %hi(MaxNumRooms) # $t6, 0x8004
+/* 0EB2B0 7F0B6780 8DCE42F4 */  lw    $t6, %lo(MaxNumRooms)($t6)
 /* 0EB2B4 7F0B6784 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0EB2B8 7F0B6788 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0EB2BC 7F0B678C 00AE082A */  slt   $at, $a1, $t6
@@ -4689,8 +5660,8 @@ void sub_GAME_7F0B6898(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B6898
-/* 0EB3C8 7F0B6898 3C0E8004 */  lui   $t6, %hi(max_num_rooms) # $t6, 0x8004
-/* 0EB3CC 7F0B689C 8DCE42F4 */  lw    $t6, %lo(max_num_rooms)($t6)
+/* 0EB3C8 7F0B6898 3C0E8004 */  lui   $t6, %hi(MaxNumRooms) # $t6, 0x8004
+/* 0EB3CC 7F0B689C 8DCE42F4 */  lw    $t6, %lo(MaxNumRooms)($t6)
 /* 0EB3D0 7F0B68A0 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0EB3D4 7F0B68A4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0EB3D8 7F0B68A8 00AE082A */  slt   $at, $a1, $t6
@@ -4766,8 +5737,213 @@ glabel sub_GAME_7F0B6898
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B6994(void) {
+void sub_GAME_7F0B6994(s32 arg0) {
+    s32 sp24;
+    s32 sp3C;
+    s32 sp44;
+    void *temp_a1;
+    s32 temp_v1_8;
+    s32 temp_t8;
+    ? temp_ret;
+    void *temp_a0;
+    s32 temp_t2;
+    s32 temp_a2;
+    void *temp_v1;
+    s32 temp_a3;
+    s32 temp_v1_2;
+    s32 temp_a2_2;
+    s32 temp_v1_3;
+    s32 temp_v1_4;
+    s32 temp_v1_5;
+    s32 temp_v1_6;
+    s32 temp_v1_7;
+    s32 temp_v1_9;
+    s32 phi_v1;
+    void *phi_t3;
+    s32 phi_t5;
+    s32 phi_v1_2;
+    s16 phi_ra;
+    s32 phi_t5_2;
+    void *phi_v1_3;
+    s32 phi_a2;
+    void *phi_t3_2;
+    void *phi_a1;
+    s32 phi_a2_2;
+    s32 phi_t5_3;
+    s32 phi_t5_4;
 
+    // Node 0
+    temp_a1 = ((arg0 * 0x50) + &D_80041414);
+    if (temp_a1->unk2C == 0)
+    {
+        // Node 1
+        sp44 = (s32) temp_a1->unk4;
+        phi_t5 = 0;
+        if (-0x48 != *temp_a1->unk8)
+        {
+            // Node 2
+            phi_v1 = *temp_a1->unk8;
+            phi_t3 = temp_a1->unk8;
+            phi_t5_4 = 0;
+loop_3:
+            // Node 3
+            phi_t5_3 = phi_t5_4;
+            if (4 == phi_v1)
+            {
+                // Node 4
+                phi_t5_3 = (phi_t5_4 + 1);
+            }
+            // Node 5
+            temp_v1_8 = phi_t3->unk8;
+            phi_v1 = temp_v1_8;
+            phi_t3 = (phi_t3 + 8);
+            phi_t5 = phi_t5_3;
+            phi_t5_4 = phi_t5_3;
+            if (-0x48 != temp_v1_8)
+            {
+                goto loop_3;
+            }
+        }
+        // Node 6
+        temp_t8 = (((((phi_t5 * 8) - phi_t5) * 4) + 0xf) & -0x10);
+        sp24 = temp_t8;
+        sp3C = (s32) phi_t5;
+        temp_ret = mem_related_something_find_first(temp_t8, temp_a1, temp_a1->unk8);
+        if (temp_ret != 0)
+        {
+            // Node 7
+            sp28->unk2C = temp_ret;
+            sp28->unk30 = (s16) phi_t5;
+            if (-0x48 != *sp48)
+            {
+                // Node 8
+                phi_v1_2 = *sp48;
+                phi_ra = (u16)0;
+                phi_t5_2 = 0;
+                phi_t3_2 = sp48;
+loop_9:
+                // Node 9
+                phi_t5_2 = phi_t5_2;
+                if (4 == phi_v1_2)
+                {
+                    // Node 10
+                    temp_a0 = (temp_ret + (((phi_t5_2 * 8) - phi_t5_2) * 4));
+                    *temp_a0 = (s16) phi_ra;
+                    temp_t2 = (arg0 * 0x18);
+                    phi_v1_3 = (temp_ret + (((phi_t5_2 * 8) - phi_t5_2) * 4));
+                    phi_a2 = 0;
+loop_11:
+                    // Node 11
+                    temp_a2 = (phi_a2 + 1);
+                    temp_v1 = (phi_v1_3 + 4);
+                    *temp_v1 = 0x7fff;
+                    temp_v1->unkC = -0x8000;
+                    phi_v1_3 = temp_v1;
+                    phi_a2 = temp_a2;
+                    if (temp_a2 < 3)
+                    {
+                        goto loop_11;
+                    }
+                    // Node 12
+                    temp_a3 = ((((u32) phi_t3_2->unk1 >> 4) & 0xf) + 1);
+                    if (temp_a3 > 0)
+                    {
+                        // Node 13
+                        phi_a1 = ((phi_t3_2->unk4 & 0xffffff) + sp44);
+                        phi_a2_2 = 0;
+loop_14:
+                        // Node 14
+                        temp_v1_2 = *phi_a1;
+                        temp_a2_2 = (phi_a2_2 + 1);
+                        if (temp_v1_2 < temp_a0->unk4)
+                        {
+                            // Node 15
+                            temp_a0->unk4 = temp_v1_2;
+                        }
+                        // Node 16
+                        temp_v1_3 = phi_a1->unk2;
+                        if (temp_v1_3 < temp_a0->unk8)
+                        {
+                            // Node 17
+                            temp_a0->unk8 = temp_v1_3;
+                        }
+                        // Node 18
+                        temp_v1_4 = phi_a1->unk4;
+                        if (temp_v1_4 < temp_a0->unkC)
+                        {
+                            // Node 19
+                            temp_a0->unkC = temp_v1_4;
+                        }
+                        // Node 20
+                        temp_v1_5 = *phi_a1;
+                        if (temp_a0->unk10 < temp_v1_5)
+                        {
+                            // Node 21
+                            temp_a0->unk10 = temp_v1_5;
+                        }
+                        // Node 22
+                        temp_v1_6 = phi_a1->unk2;
+                        if (temp_a0->unk14 < temp_v1_6)
+                        {
+                            // Node 23
+                            temp_a0->unk14 = temp_v1_6;
+                        }
+                        // Node 24
+                        temp_v1_7 = phi_a1->unk4;
+                        if (temp_a0->unk18 < temp_v1_7)
+                        {
+                            // Node 25
+                            temp_a0->unk18 = temp_v1_7;
+                        }
+                        // Node 26
+                        phi_a1 = (phi_a1 + 0x10);
+                        phi_a2_2 = temp_a2_2;
+                        if (temp_a2_2 != temp_a3)
+                        {
+                            goto loop_14;
+                        }
+                    }
+                    // Node 27
+                    if (temp_a0->unk4 == temp_a0->unk10)
+                    {
+                        // Node 28
+                        temp_a0->unk10 = (s32) (temp_a0->unk10 + 1);
+                    }
+                    // Node 29
+                    if (temp_a0->unk8 == temp_a0->unk14)
+                    {
+                        // Node 30
+                        temp_a0->unk14 = (s32) (temp_a0->unk14 + 1);
+                    }
+                    // Node 31
+                    if (temp_a0->unkC == temp_a0->unk18)
+                    {
+                        // Node 32
+                        temp_a0->unk18 = (s32) (temp_a0->unk18 + 1);
+                    }
+                    // Node 33
+                    temp_a0->unk4 = (s32) (temp_a0->unk4 + (s32) (ptr_bgdata_room_fileposition_list + temp_t2)->unkC);
+                    temp_a0->unk8 = (s32) (temp_a0->unk8 + (s32) (ptr_bgdata_room_fileposition_list + temp_t2)->unk10);
+                    temp_a0->unkC = (s32) (temp_a0->unkC + (s32) (ptr_bgdata_room_fileposition_list + temp_t2)->unk14);
+                    temp_a0->unk10 = (s32) (temp_a0->unk10 + (s32) (ptr_bgdata_room_fileposition_list + temp_t2)->unkC);
+                    temp_a0->unk14 = (s32) (temp_a0->unk14 + (s32) (ptr_bgdata_room_fileposition_list + temp_t2)->unk10);
+                    temp_a0->unk18 = (s32) (temp_a0->unk18 + (s32) (ptr_bgdata_room_fileposition_list + temp_t2)->unk14);
+                    phi_t5_2 = (phi_t5_2 + 1);
+                }
+                // Node 34
+                temp_v1_9 = phi_t3_2->unk8;
+                phi_v1_2 = temp_v1_9;
+                phi_ra = (phi_ra + 1);
+                phi_t3_2 = (phi_t3_2 + 8);
+                if (-0x48 != temp_v1_9)
+                {
+                    goto loop_9;
+                }
+            }
+        }
+    }
+    // Node 35
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -5013,8 +6189,217 @@ glabel sub_GAME_7F0B6994
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B6CEC(void) {
+void sub_GAME_7F0B6CEC(void *arg0, void *arg1, void *arg2, void *arg3) {
+    f32 sp0;
+    f32 sp4;
+    f32 sp20;
+    f32 sp30;
+    f32 sp34;
+    f32 sp60;
+    f32 sp64;
+    f32 sp68;
+    f32 sp6C;
+    f32 sp70;
+    f32 sp74;
+    f32 temp_f6;
+    f32 temp_f16_2;
+    f32 temp_f14;
+    f32 temp_f2;
+    f32 temp_f0;
+    f32 temp_f0_2;
+    f32 temp_f18;
+    f32 temp_f12;
+    f32 temp_f16;
+    f32 phi_f14;
+    f32 phi_f16;
+    f32 phi_f0;
+    f32 phi_f2;
+    f32 phi_f14_2;
+    f32 phi_f12;
+    f32 phi_f0_2;
+    f32 phi_f18;
+    f32 phi_f2_2;
+    f32 phi_f16_2;
+    f32 phi_f0_3;
+    f32 phi_f18_2;
+    f32 phi_f12_2;
+    f32 phi_f2_3;
+    f32 phi_f18_3;
+    f32 phi_f0_4;
+    f32 phi_f14_3;
+    f32 phi_f12_3;
 
+    // Node 0
+    temp_f6 = (f32) *arg2;
+    sp6C = temp_f6;
+    sp70 = (f32) arg2->unk4;
+    sp74 = (f32) arg2->unk8;
+    sp60 = (f32) *arg3;
+    sp64 = (f32) arg3->unk4;
+    sp68 = (f32) arg3->unk8;
+    temp_f16_2 = (sp60 - *arg0);
+    temp_f14 = (temp_f6 - *arg0);
+    phi_f14 = temp_f14;
+    phi_f16 = temp_f16_2;
+    phi_f18 = *arg1;
+    if (*arg1 < 0.0f)
+    {
+        // Node 1
+        phi_f14 = -temp_f14;
+        phi_f16 = -temp_f16_2;
+        phi_f18 = -*arg1;
+    }
+    // Node 2
+    if (phi_f14 < 0.0f)
+    {
+        // Node 3
+        if (phi_f16 < 0.0f)
+        {
+            // Node 4
+            return 1;
+        }
+    }
+    // Node 5
+    phi_f14_2 = phi_f14;
+    phi_f16_2 = phi_f16;
+    if (phi_f16 < phi_f14)
+    {
+        // Node 6
+        phi_f14_2 = phi_f16;
+        phi_f16_2 = phi_f14;
+    }
+    // Node 7
+    sp4 = (f32) arg0->unk4;
+    temp_f2 = (sp64 - sp4);
+    temp_f0 = (sp70 - sp4);
+    phi_f0 = temp_f0;
+    phi_f2 = temp_f2;
+    phi_f12 = arg1->unk4;
+    if (arg1->unk4 < 0.0f)
+    {
+        // Node 8
+        phi_f0 = -temp_f0;
+        phi_f2 = -temp_f2;
+        phi_f12 = -arg1->unk4;
+    }
+    // Node 9
+    if (phi_f0 < 0.0f)
+    {
+        // Node 10
+        if (phi_f2 < 0.0f)
+        {
+            // Node 11
+            return 1;
+        }
+    }
+    // Node 12
+    phi_f0_2 = phi_f0;
+    phi_f2_2 = phi_f2;
+    if (phi_f2 < phi_f0)
+    {
+        // Node 13
+        sp20 = (f32) phi_f0;
+        phi_f0_2 = phi_f2;
+        phi_f2_2 = sp20;
+    }
+    // Node 14
+    sp4 = (f32) (phi_f14_2 * phi_f12);
+    sp0 = (f32) (phi_f0_2 * phi_f18);
+    if (sp0 < sp4)
+    {
+        // Node 15
+        temp_f0_2 = (phi_f2_2 * phi_f18);
+        if (temp_f0_2 < sp4)
+        {
+            // Node 16
+            return 1;
+        }
+        // Node 17
+        sp30 = (f32) phi_f18;
+        sp4 = (f32) (phi_f16_2 * phi_f12);
+        phi_f0_3 = temp_f0_2;
+    }
+    else
+    {
+        // Node 18
+        if ((phi_f16_2 * phi_f12) < sp0)
+        {
+            // Node 19
+            return 1;
+        }
+        // Node 20
+        sp34 = (f32) phi_f0_2;
+        sp0 = (f32) (phi_f2_2 * phi_f18);
+        phi_f0_3 = sp0;
+    }
+    // Node 21
+    if (sp4 < phi_f0_3)
+    {
+        // Node 22
+        phi_f0_4 = phi_f16_2;
+        phi_f14_3 = phi_f18;
+    }
+    else
+    {
+        // Node 23
+        phi_f0_4 = phi_f2_2;
+        phi_f14_3 = phi_f12;
+    }
+    // Node 24
+    temp_f18 = (sp74 - arg0->unk8);
+    temp_f12 = (sp68 - arg0->unk8);
+    phi_f18_2 = temp_f18;
+    phi_f12_2 = temp_f12;
+    phi_f2_3 = arg1->unk8;
+    if (arg1->unk8 < 0.0f)
+    {
+        // Node 25
+        phi_f18_2 = -temp_f18;
+        phi_f12_2 = -temp_f12;
+        phi_f2_3 = -arg1->unk8;
+    }
+    // Node 26
+    if (phi_f18_2 < 0.0f)
+    {
+        // Node 27
+        if (phi_f12_2 < 0.0f)
+        {
+            // Node 28
+            return 1;
+        }
+    }
+    // Node 29
+    phi_f18_3 = phi_f18_2;
+    phi_f12_3 = phi_f12_2;
+    if (phi_f12_2 < phi_f18_2)
+    {
+        // Node 30
+        phi_f18_3 = phi_f12_2;
+        phi_f12_3 = phi_f18_2;
+    }
+    // Node 31
+    temp_f16 = (sp34 * phi_f2_3);
+    if (temp_f16 < (phi_f18_3 * sp30))
+    {
+        // Node 32
+        if ((phi_f0_4 * phi_f2_3) >= (phi_f18_3 * phi_f14_3))
+        {
+            // Node 36
+            // Node 37
+            return 1;
+        }
+        // Node 33
+        return 1;
+    }
+    // Node 34
+    if ((phi_f12_3 * sp30) >= temp_f16)
+    {
+        // Node 36
+        // Node 37
+        return 1;
+    }
+    // Node 35
+    return 1;
 }
 #else
 GLOBAL_ASM(
@@ -5247,8 +6632,431 @@ glabel sub_GAME_7F0B6CEC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B7010(void) {
+?32 sub_GAME_7F0B7010(void *arg0, s32 arg1, ?32 arg2, void *arg3, s32 arg4, void *arg5) {
+    s32 sp54;
+    void *sp64;
+    s32 sp80;
+    s32 sp84;
+    s32 sp88;
+    s32 sp8C;
+    s32 sp90;
+    s32 sp94;
+    s32 sp9C;
+    s32 spA0;
+    s32 spA4;
+    ? spA8;
+    s32 spC8;
+    s32 spCC;
+    s32 spD0;
+    s32 spD4;
+    s32 spD8;
+    s32 spDC;
+    s32 spE4;
+    s32 spE8;
+    s32 spEC;
+    s32 spF0;
+    f32 spF8;
+    ?32 sp12C;
+    void *temp_t0;
+    void *temp_s3;
+    s32 temp_t2;
+    s32 temp_s1;
+    void *temp_a0;
+    void *temp_v1;
+    void *temp_v0;
+    void *temp_v0_4;
+    u32 temp_v0_5;
+    void *temp_a0_2;
+    void *temp_v1_2;
+    void *temp_v0_2;
+    void *temp_v0_6;
+    u32 temp_v0_7;
+    s32 temp_s5;
+    s32 temp_v0_3;
+    s32 phi_v0;
+    void *phi_s3;
+    void *phi_a0;
+    void *phi_v0_2;
+    void *phi_v0_3;
+    s16 phi_s0;
+    s32 phi_s5;
+    void *phi_a0_2;
+    void *phi_t0;
+    void *phi_v0_4;
+    void *phi_v0_5;
+    s16 phi_s0_2;
+    void *phi_t0_2;
 
+    // Node 0
+    temp_t0 = ((arg4 * 0x50) + &D_80041414);
+    temp_s3 = ((*arg3 * 8) + temp_t0->unk8);
+    spF0 = 0x7fffffff;
+    sp12C = 0;
+    temp_t2 = (temp_s3->unk1 & 0xf);
+    temp_s1 = ((temp_s3->unk4 & 0xffffff) + temp_t0->unk4);
+    if (temp_s3->unk8 != 4)
+    {
+        // Node 1
+        if (temp_s3->unk8 != -0x48)
+        {
+            // Node 2
+            sp64 = temp_t0;
+            phi_v0 = temp_s3->unk8;
+            phi_s3 = (temp_s3 + 8);
+            phi_t0_2 = &spA8;
+loop_3:
+            // Node 3
+            if (phi_v0 == -0x41)
+            {
+                // Node 4
+                spD4 = (?32) D_80044868;
+                spD4.unk4 = (?32) D_80044868.unk4;
+                spD4.unk8 = (?32) D_80044868.unk8;
+                spC8 = (?32) D_80044874;
+                spC8.unk4 = (?32) D_80044874.unk4;
+                spC8.unk8 = (?32) D_80044874.unk8;
+                spE4 = (s32) (((s32) phi_s3->unk5 / 0xa) - temp_t2);
+                spE8 = (s32) (((s32) phi_s3->unk6 / 0xa) - temp_t2);
+                spEC = (s32) (((s32) phi_s3->unk7 / 0xa) - temp_t2);
+                sp54 = (s32) (arg4 * 0x18);
+                phi_a0 = &spE4;
+loop_5:
+                // Node 5
+                temp_a0 = (phi_a0 + 4);
+                temp_v1 = (temp_s1 + (*phi_a0 * 0x10));
+                if (*temp_v1 < spD4)
+                {
+                    // Node 6
+                    spD4 = (s32) *temp_v1;
+                }
+                // Node 7
+                if (spC8 < *temp_v1)
+                {
+                    // Node 8
+                    spC8 = (s32) *temp_v1;
+                }
+                // Node 9
+                if (temp_v1->unk2 < spD8)
+                {
+                    // Node 10
+                    spD8 = (s32) temp_v1->unk2;
+                }
+                // Node 11
+                if (spCC < temp_v1->unk2)
+                {
+                    // Node 12
+                    spCC = (s32) temp_v1->unk2;
+                }
+                // Node 13
+                if (temp_v1->unk4 < spDC)
+                {
+                    // Node 14
+                    spDC = (s32) temp_v1->unk4;
+                }
+                // Node 15
+                if (spD0 < temp_v1->unk4)
+                {
+                    // Node 16
+                    spD0 = (s32) temp_v1->unk4;
+                }
+                // Node 17
+                phi_a0 = temp_a0;
+                if (temp_a0 != &spF0)
+                {
+                    goto loop_5;
+                }
+                // Node 18
+                temp_v0 = (ptr_bgdata_room_fileposition_list + sp54);
+                spD4 = (s32) (spD4 + (s32) temp_v0->unkC);
+                spD8 = (s32) (spD8 + (s32) temp_v0->unk10);
+                spDC = (s32) (spDC + (s32) temp_v0->unk14);
+                spC8 = (s32) (spC8 + (s32) temp_v0->unkC);
+                spCC = (s32) (spCC + (s32) temp_v0->unk10);
+                spD0 = (s32) (spD0 + (s32) temp_v0->unk14);
+                phi_t0_2 = &spA8;
+                if (sub_GAME_7F0B6CEC(arg0, arg2, &spD4, &spC8) != 0)
+                {
+                    // Node 19
+                    phi_t0_2 = &spA8;
+                    if (sub_GAME_7F092890((temp_s1 + (spE4 * 0x10)), (temp_s1 + (spE8 * 0x10)), (temp_s1 + (spEC * 0x10)), ((sp54 + ptr_bgdata_room_fileposition_list) + 0xc), arg0, arg1, arg2, &spF8) != 0)
+                    {
+                        // Node 20
+                        temp_v0_4 = phi_s3;
+                        sp12C = 1;
+                        phi_v0_3 = temp_v0_4;
+                        if (0xfd != *phi_s3)
+                        {
+                            // Node 21
+                            phi_v0_2 = temp_v0_4;
+                            phi_v0_3 = temp_v0_4;
+                            if ((u32) sp64->unk8 < (u32) phi_s3)
+                            {
+loop_22:
+                                // Node 22
+                                temp_v0_5 = (phi_v0_2 + -8);
+                                phi_v0_3 = temp_v0_5;
+                                if (0xfd != phi_v0_2->unk-8)
+                                {
+                                    // Node 23
+                                    phi_v0_2 = temp_v0_5;
+                                    phi_v0_3 = temp_v0_5;
+                                    if ((u32) sp64->unk8 < temp_v0_5)
+                                    {
+                                        goto loop_22;
+                                    }
+                                }
+                            }
+                        }
+                        // Node 24
+                        if (phi_v0_3 == sp64->unk8)
+                        {
+                            // Node 25
+                            phi_s0 = (u16)-1;
+                        }
+                        else
+                        {
+                            // Node 26
+                            phi_s0 = *((phi_v0_3->unk4 + -8) | 0x80000000);
+                        }
+                        // Node 27
+                        if (check_if_imageID_is_light(phi_s0, ((s32) sp100 - (s32) arg0->unk8), arg0) != 0)
+                        {
+                            // Node 28
+                        }
+                        // Node 29
+                        phi_t0_2 = &spA8;
+                        if (0x4fd != 0)
+                        {
+                            // Node 30
+                            phi_t0_2 = &spA8;
+                            if (phi_s0 != 0x4fd)
+                            {
+                                // Node 31
+                                *arg5 = spF8;
+                                arg5->unk4 = spFC;
+                                arg5->unk8 = sp100;
+                                arg5->unkC = sp104;
+                                arg5->unk10 = sp108;
+                                arg5->unk14 = sp10C;
+                                arg5->unk18 = (s32) ((spE4 * 0x10) + temp_s1);
+                                arg5->unk1C = (s32) ((spE8 * 0x10) + temp_s1);
+                                arg5->unk2A = (s16) phi_s0;
+                                arg5->unk24 = (void *) phi_s3;
+                                arg5->unk20 = (s32) ((spEC * 0x10) + temp_s1);
+                                arg5->unk28 = (u16)0;
+                                phi_t0_2 = &spA8;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // Node 32
+                phi_t0_2 = phi_t0_2;
+                if (phi_v0 == -0x4f)
+                {
+                    // Node 33
+                    sp54 = (s32) (arg4 * 0x18);
+                    phi_s5 = 0;
+                    phi_t0 = phi_t0_2;
+loop_34:
+                    // Node 34
+                    sp8C = (?32) D_80044880;
+                    sp8C.unk4 = (?32) D_80044880.unk4;
+                    sp8C.unk8 = (?32) D_80044880.unk8;
+                    sp80 = (?32) D_8004488C;
+                    sp80.unk4 = (?32) D_8004488C.unk4;
+                    sp80.unk8 = (?32) D_8004488C.unk8;
+                    if (phi_s5 == 0)
+                    {
+                        // Node 35
+                        sp9C = (s32) ((phi_s3->unk4 & 0xf) - temp_t2);
+                        spA0 = (s32) (((u32) phi_s3->unk7 >> 4) - temp_t2);
+                        spA4 = (s32) ((*phi_s3 & 0xf) - temp_t2);
+                    }
+                    else
+                    {
+                        // Node 36
+                        if (phi_s5 == 1)
+                        {
+                            // Node 37
+                            sp9C = (s32) ((phi_s3->unk6 & 0xf) - temp_t2);
+                            spA0 = (s32) (((u32) phi_s3->unk6 >> 0xc) - temp_t2);
+                            spA4 = (s32) (((u32) phi_s3->unk3 >> 4) - temp_t2);
+                        }
+                        else
+                        {
+                            // Node 38
+                            if (phi_s5 == 2)
+                            {
+                                // Node 39
+                                sp9C = (s32) ((phi_s3->unk4 & 0xf) - temp_t2);
+                                spA0 = (s32) (((u32) phi_s3->unk5 >> 4) - temp_t2);
+                                spA4 = (s32) ((phi_s3->unk2 & 0xf) - temp_t2);
+                            }
+                            else
+                            {
+                                // Node 40
+                                sp9C = (s32) ((phi_s3->unk4 & 0xf) - temp_t2);
+                                spA0 = (s32) (((u32) phi_s3->unk4 >> 0x1c) - temp_t2);
+                                spA4 = (s32) (((u32) phi_s3->unk2 >> 0xc) - temp_t2);
+                            }
+                        }
+                    }
+                    // Node 41
+                    phi_a0_2 = &sp9C;
+loop_42:
+                    // Node 42
+                    temp_a0_2 = (phi_a0_2 + 4);
+                    temp_v1_2 = (temp_s1 + (*phi_a0_2 * 0x10));
+                    if (*temp_v1_2 < sp8C)
+                    {
+                        // Node 43
+                        sp8C = (s32) *temp_v1_2;
+                    }
+                    // Node 44
+                    if (sp80 < *temp_v1_2)
+                    {
+                        // Node 45
+                        sp80 = (s32) *temp_v1_2;
+                    }
+                    // Node 46
+                    if (temp_v1_2->unk2 < sp90)
+                    {
+                        // Node 47
+                        sp90 = (s32) temp_v1_2->unk2;
+                    }
+                    // Node 48
+                    if (sp84 < temp_v1_2->unk2)
+                    {
+                        // Node 49
+                        sp84 = (s32) temp_v1_2->unk2;
+                    }
+                    // Node 50
+                    if (temp_v1_2->unk4 < sp94)
+                    {
+                        // Node 51
+                        sp94 = (s32) temp_v1_2->unk4;
+                    }
+                    // Node 52
+                    if (sp88 < temp_v1_2->unk4)
+                    {
+                        // Node 53
+                        sp88 = (s32) temp_v1_2->unk4;
+                    }
+                    // Node 54
+                    phi_a0_2 = temp_a0_2;
+                    if (temp_a0_2 != phi_t0)
+                    {
+                        goto loop_42;
+                    }
+                    // Node 55
+                    temp_v0_2 = (ptr_bgdata_room_fileposition_list + sp54);
+                    sp8C = (s32) (sp8C + (s32) temp_v0_2->unkC);
+                    sp90 = (s32) (sp90 + (s32) temp_v0_2->unk10);
+                    sp94 = (s32) (sp94 + (s32) temp_v0_2->unk14);
+                    sp80 = (s32) (sp80 + (s32) temp_v0_2->unkC);
+                    sp84 = (s32) (sp84 + (s32) temp_v0_2->unk10);
+                    sp88 = (s32) (sp88 + (s32) temp_v0_2->unk14);
+                    if (sub_GAME_7F0B6CEC(arg0, arg2, &sp8C, &sp80) != 0)
+                    {
+                        // Node 56
+                        if (sub_GAME_7F092890((temp_s1 + (sp9C * 0x10)), (temp_s1 + (spA0 * 0x10)), (temp_s1 + (spA4 * 0x10)), ((sp54 + ptr_bgdata_room_fileposition_list) + 0xc), arg0, arg1, arg2, &spF8) != 0)
+                        {
+                            // Node 57
+                            temp_v0_6 = phi_s3;
+                            sp12C = 1;
+                            phi_v0_5 = temp_v0_6;
+                            if (0xfd != *phi_s3)
+                            {
+                                // Node 58
+                                phi_v0_4 = temp_v0_6;
+                                phi_v0_5 = temp_v0_6;
+                                if ((u32) sp64->unk8 < (u32) phi_s3)
+                                {
+loop_59:
+                                    // Node 59
+                                    temp_v0_7 = (phi_v0_4 + -8);
+                                    phi_v0_5 = temp_v0_7;
+                                    if (0xfd != phi_v0_4->unk-8)
+                                    {
+                                        // Node 60
+                                        phi_v0_4 = temp_v0_7;
+                                        phi_v0_5 = temp_v0_7;
+                                        if ((u32) sp64->unk8 < temp_v0_7)
+                                        {
+                                            goto loop_59;
+                                        }
+                                    }
+                                }
+                            }
+                            // Node 61
+                            if (phi_v0_5 == sp64->unk8)
+                            {
+                                // Node 62
+                                phi_s0_2 = (u16)-1;
+                            }
+                            else
+                            {
+                                // Node 63
+                                phi_s0_2 = *((phi_v0_5->unk4 + -8) | 0x80000000);
+                            }
+                            // Node 64
+                            if (check_if_imageID_is_light(phi_s0_2, ((s32) sp100 - (s32) arg0->unk8), arg0) != 0)
+                            {
+                                // Node 65
+                            }
+                            // Node 66
+                            if (0x4fd != 0)
+                            {
+                                // Node 67
+                                if (phi_s0_2 != 0x4fd)
+                                {
+                                    // Node 68
+                                    *arg5 = spF8;
+                                    arg5->unk4 = spFC;
+                                    arg5->unk8 = sp100;
+                                    arg5->unkC = sp104;
+                                    arg5->unk10 = sp108;
+                                    arg5->unk14 = sp10C;
+                                    arg5->unk18 = (s32) ((sp9C * 0x10) + temp_s1);
+                                    arg5->unk1C = (s32) ((spA0 * 0x10) + temp_s1);
+                                    arg5->unk2A = (s16) phi_s0_2;
+                                    arg5->unk24 = (void *) phi_s3;
+                                    arg5->unk20 = (s32) ((spA4 * 0x10) + temp_s1);
+                                    arg5->unk28 = (s16) (phi_s5 + 1);
+                                }
+                            }
+                        }
+                    }
+                    // Node 69
+                    temp_s5 = (phi_s5 + 1);
+                    phi_s5 = temp_s5;
+                    phi_t0 = &spA8;
+                    phi_t0_2 = &spA8;
+                    if (temp_s5 != 4)
+                    {
+                        goto loop_34;
+                    }
+                }
+            }
+            // Node 70
+            temp_v0_3 = phi_s3->unk8;
+            if (temp_v0_3 != -0x48)
+            {
+                // Node 71
+                phi_v0 = temp_v0_3;
+                phi_s3 = (phi_s3 + 8);
+                if (temp_v0_3 != -0x48)
+                {
+                    goto loop_3;
+                }
+            }
+        }
+    }
+    // Node 72
+    return sp12C;
 }
 #else
 GLOBAL_ASM(
@@ -6198,7 +8006,9 @@ glabel sub_GAME_7F0B7A78
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B7D94(void) {
-
+    // Node 0
+    D_800448A0 = 0;
+    D_800448A4 = 0;
 }
 #else
 GLOBAL_ASM(
@@ -6206,9 +8016,9 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B7D94
 /* 0EC8C4 7F0B7D94 3C018004 */  lui   $at, %hi(D_800448A0) # $at, 0x8004
 /* 0EC8C8 7F0B7D98 AC2048A0 */  sw    $zero, %lo(D_800448A0)($at)
-/* 0EC8CC 7F0B7D9C 3C018004 */  lui   $at, 0x8004
+/* 0EC8CC 7F0B7D9C 3C018004 */  lui   $at, %hi(D_800448A4)
 /* 0EC8D0 7F0B7DA0 03E00008 */  jr    $ra
-/* 0EC8D4 7F0B7DA4 AC2048A4 */   sw    $zero, 0x48a4($at)
+/* 0EC8D4 7F0B7DA4 AC2048A4 */   sw    $zero, %lo(D_800448A4)($at)
 )
 #endif
 
@@ -6217,8 +8027,23 @@ glabel sub_GAME_7F0B7D94
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B7DA8(void) {
+s8 sub_GAME_7F0B7DA8(s32 arg0) {
+    void *temp_v0;
+    s8 temp_t8;
+    s8 phi_a1;
 
+    // Node 0
+    temp_v0 = ((arg0 * 0x50) + &D_80041414);
+    phi_a1 = temp_v0->unk3;
+    if (temp_v0->unk3 < 0xff)
+    {
+        // Node 1
+        temp_t8 = (temp_v0->unk3 + 1);
+        temp_v0->unk3 = temp_t8;
+        phi_a1 = (temp_t8 & 0xff);
+    }
+    // Node 2
+    return phi_a1;
 }
 #else
 GLOBAL_ASM(
@@ -6248,8 +8073,48 @@ glabel sub_GAME_7F0B7DA8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B7DE4(void) {
+void sub_GAME_7F0B7DE4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, void *arg4) {
+    void *sp1C;
+    void *temp_v1;
+    void *temp_v0;
+    s32 temp_a0;
+    s32 phi_a0;
 
+    // Node 0
+    temp_v1 = ((D_800448A0 << 5) + &dword_CODE_bss_8007C100);
+    if ((arg3 < 2) || (sub_GAME_7F0B7DA8(((temp_v0->unk4 ^ temp_v0->unk5) ^ arg1)) < 9))
+    {
+        // Node 2
+        *temp_v1 = arg0;
+        temp_v1->unk4 = arg1;
+        temp_v1->unkC = (s32) arg3;
+        temp_v1->unk8 = arg2;
+        temp_v1->unk10 = (f32) *arg4;
+        temp_v1->unk14 = (f32) arg4->unk4;
+        temp_v1->unk18 = (f32) arg4->unk8;
+        temp_v1->unk1C = (f32) arg4->unkC;
+        temp_a0 = (*&D_800448A0 + 1);
+        *&D_800448A0 = temp_a0;
+        phi_a0 = temp_a0;
+        if (temp_a0 == 0x1f4)
+        {
+            // Node 3
+            *&D_800448A0 = 0;
+            phi_a0 = 0;
+        }
+        // Node 4
+        if (D_800448A4 == phi_a0)
+        {
+            // Node 5
+            *&D_800448A0 = (s32) (phi_a0 + -1);
+        }
+    }
+    else
+    {
+
+    }
+    // Node 6
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -6678,8 +8543,11 @@ glabel sub_GAME_7F0B7F84
 
 
 #ifdef NONMATCHING
-void push_arg_to_table(void) {
-
+s32 push_arg_to_table(s32 arg0) {
+    // Node 0
+    *(&D_800448A8 + (D_800448F8 * 4)) = arg0;
+    D_800448F8 = (s32) ((s32) (D_800448F8 + 1) % 0x14);
+    return arg0;
 }
 #else
 GLOBAL_ASM(
@@ -6688,11 +8556,11 @@ glabel push_arg_to_table
 /* 0ECEA4 7F0B8374 3C058004 */  lui   $a1, %hi(D_800448F8) # $a1, 0x8004
 /* 0ECEA8 7F0B8378 24A548F8 */  addiu $a1, %lo(D_800448F8) # addiu $a1, $a1, 0x48f8
 /* 0ECEAC 7F0B837C 8CA30000 */  lw    $v1, ($a1)
-/* 0ECEB0 7F0B8380 3C018004 */  lui   $at, 0x8004
+/* 0ECEB0 7F0B8380 3C018004 */  lui   $at, %hi(D_800448A8)
 /* 0ECEB4 7F0B8384 00801025 */  move  $v0, $a0
 /* 0ECEB8 7F0B8388 00037080 */  sll   $t6, $v1, 2
 /* 0ECEBC 7F0B838C 002E0821 */  addu  $at, $at, $t6
-/* 0ECEC0 7F0B8390 AC2448A8 */  sw    $a0, 0x48a8($at)
+/* 0ECEC0 7F0B8390 AC2448A8 */  sw    $a0, %lo(D_800448A8)($at)
 /* 0ECEC4 7F0B8394 24010014 */  li    $at, 20
 /* 0ECEC8 7F0B8398 246F0001 */  addiu $t7, $v1, 1
 /* 0ECECC 7F0B839C 01E1001A */  div   $zero, $t7, $at
@@ -6709,7 +8577,12 @@ glabel push_arg_to_table
 
 #ifdef NONMATCHING
 void pull_arg_from_stack(void) {
+    s32 temp_hi;
 
+    // Node 0
+    temp_hi = ((s32) (D_800448F8 + 0x13) % 0x14);
+    D_800448F8 = temp_hi;
+    return *(&D_800448A8 + (temp_hi * 4));
 }
 #else
 GLOBAL_ASM(
@@ -6719,7 +8592,7 @@ glabel pull_arg_from_stack
 /* 0ECEE4 7F0B83B4 248448F8 */  addiu $a0, %lo(D_800448F8) # addiu $a0, $a0, 0x48f8
 /* 0ECEE8 7F0B83B8 8C8E0000 */  lw    $t6, ($a0)
 /* 0ECEEC 7F0B83BC 24010014 */  li    $at, 20
-/* 0ECEF0 7F0B83C0 3C038004 */  lui   $v1, 0x8004
+/* 0ECEF0 7F0B83C0 3C038004 */  lui   $v1, %hi(D_800448A8)
 /* 0ECEF4 7F0B83C4 25CF0013 */  addiu $t7, $t6, 0x13
 /* 0ECEF8 7F0B83C8 01E1001A */  div   $zero, $t7, $at
 /* 0ECEFC 7F0B83CC 0000C010 */  mfhi  $t8
@@ -6727,7 +8600,7 @@ glabel pull_arg_from_stack
 /* 0ECF04 7F0B83D4 00681821 */  addu  $v1, $v1, $t0
 /* 0ECF08 7F0B83D8 AC980000 */  sw    $t8, ($a0)
 /* 0ECF0C 7F0B83DC 03E00008 */  jr    $ra
-/* 0ECF10 7F0B83E0 8C6248A8 */   lw    $v0, 0x48a8($v1)
+/* 0ECF10 7F0B83E0 8C6248A8 */   lw    $v0, %lo(D_800448A8)($v1)
 )
 #endif
 
@@ -6774,7 +8647,7 @@ glabel parse_global_vis_command_list
 /* 0ECF48 7F0B8418 AFB30024 */  sw    $s3, 0x24($sp)
 /* 0ECF4C 7F0B841C AFB20020 */  sw    $s2, 0x20($sp)
 /* 0ECF50 7F0B8420 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0ECF54 7F0B8424 3C018008 */  lui   $at, %hi(dword_CODE_bss_80081610) # $at, 0x8008
+/* 0ECF54 7F0B8424 3C018008 */  lui   $at, %hi(dword_CODE_bss_80081600 + 0x10) # $at, 0x8008
 /* 0ECF58 7F0B8428 00808825 */  move  $s1, $a0
 /* 0ECF5C 7F0B842C 00A09025 */  move  $s2, $a1
 /* 0ECF60 7F0B8430 AFBF003C */  sw    $ra, 0x3c($sp)
@@ -6786,14 +8659,14 @@ glabel parse_global_vis_command_list
 /* 0ECF78 7F0B8448 AFB00018 */  sw    $s0, 0x18($sp)
 /* 0ECF7C 7F0B844C 24130001 */  li    $s3, 1
 /* 0ECF80 7F0B8450 14800003 */  bnez  $a0, .L7F0B8460
-/* 0ECF84 7F0B8454 AC201610 */   sw    $zero, %lo(dword_CODE_bss_80081610)($at)
+/* 0ECF84 7F0B8454 AC201610 */   sw    $zero, %lo(dword_CODE_bss_80081600 + 0x10)($at)
 /* 0ECF88 7F0B8458 10000166 */  b     .L7F0B89F4
 /* 0ECF8C 7F0B845C 00801025 */   move  $v0, $a0
 .L7F0B8460:
 /* 0ECF90 7F0B8460 3C1E8008 */  lui   $fp, %hi(ptr_BONDdata) # $fp, 0x8008
 /* 0ECF94 7F0B8464 3C168008 */  lui   $s6, %hi(dword_CODE_bss_80081600) # $s6, 0x8008
-/* 0ECF98 7F0B8468 3C148004 */  lui   $s4, %hi(D_800448FC) # $s4, 0x8004
-/* 0ECF9C 7F0B846C 269448FC */  addiu $s4, %lo(D_800448FC) # addiu $s4, $s4, 0x48fc
+/* 0ECF98 7F0B8468 3C148004 */  lui   $s4, %hi(current_visibility) # $s4, 0x8004
+/* 0ECF9C 7F0B846C 269448FC */  addiu $s4, %lo(current_visibility) # addiu $s4, $s4, 0x48fc
 /* 0ECFA0 7F0B8470 26D61600 */  addiu $s6, %lo(dword_CODE_bss_80081600) # addiu $s6, $s6, 0x1600
 /* 0ECFA4 7F0B8474 27DEA0B0 */  addiu $fp, %lo(ptr_BONDdata) # addiu $fp, $fp, -0x5f50
 /* 0ECFA8 7F0B8478 24170001 */  li    $s7, 1
@@ -6900,8 +8773,8 @@ carrot_merge_last_two_on_stack:
 /* 0ED0FC 7F0B85CC 02398821 */   addu  $s1, $s1, $t9
 push_tf_if_in_range_rooms:
 /* 0ED100 7F0B85D0 1240000C */  beqz  $s2, .L7F0B8604
-/* 0ED104 7F0B85D4 3C028004 */   lui   $v0, %hi(D_80044838) # $v0, 0x8004
-/* 0ED108 7F0B85D8 8C424838 */  lw    $v0, %lo(D_80044838)($v0)
+/* 0ED104 7F0B85D4 3C028004 */   lui   $v0, %hi(current_room_maybe) # $v0, 0x8004
+/* 0ED108 7F0B85D8 8C424838 */  lw    $v0, %lo(current_room_maybe)($v0)
 /* 0ED10C 7F0B85DC 8E28000C */  lw    $t0, 0xc($s1)
 /* 0ED110 7F0B85E0 0048202A */  slt   $a0, $v0, $t0
 /* 0ED114 7F0B85E4 38840001 */  xori  $a0, $a0, 1
@@ -7160,8 +9033,8 @@ if_statement:
 /* 0ED480 7F0B8950 00488821 */   addu  $s1, $v0, $t0
 endif_continue_exec:
 /* 0ED484 7F0B8954 92290001 */  lbu   $t1, 1($s1)
-/* 0ED488 7F0B8958 3C018008 */  lui   $at, %hi(dword_CODE_bss_80081610) # $at, 0x8008
-/* 0ED48C 7F0B895C AC201610 */  sw    $zero, %lo(dword_CODE_bss_80081610)($at)
+/* 0ED488 7F0B8958 3C018008 */  lui   $at, %hi(dword_CODE_bss_80081600 + 0x10) # $at, 0x8008
+/* 0ED48C 7F0B895C AC201610 */  sw    $zero, %lo(dword_CODE_bss_80081600 + 0x10)($at)
 /* 0ED490 7F0B8960 000950C0 */  sll   $t2, $t1, 3
 /* 0ED494 7F0B8964 10000023 */  b     .L7F0B89F4
 /* 0ED498 7F0B8968 022A1021 */   addu  $v0, $s1, $t2
@@ -7172,9 +9045,9 @@ dont_exec_commands_even_on_return:
 /* 0ED4A8 7F0B8978 000B60C0 */  sll   $t4, $t3, 3
 /* 0ED4AC 7F0B897C 1040FEC0 */  beqz  $v0, .L7F0B8480
 /* 0ED4B0 7F0B8980 022C8821 */   addu  $s1, $s1, $t4
-/* 0ED4B4 7F0B8984 3C018008 */  lui   $at, %hi(dword_CODE_bss_80081610) # $at, 0x8008
+/* 0ED4B4 7F0B8984 3C018008 */  lui   $at, %hi(dword_CODE_bss_80081600 + 0x10) # $at, 0x8008
 /* 0ED4B8 7F0B8988 1000FEBD */  b     .L7F0B8480
-/* 0ED4BC 7F0B898C AC371610 */   sw    $s7, %lo(dword_CODE_bss_80081610)($at)
+/* 0ED4BC 7F0B898C AC371610 */   sw    $s7, %lo(dword_CODE_bss_80081600 + 0x10)($at)
 if_statement_pull_from_stack:
 /* 0ED4C0 7F0B8990 0FC2E0EC */  jal   pull_arg_from_stack
 /* 0ED4C4 7F0B8994 00000000 */   nop   
@@ -7183,8 +9056,8 @@ if_statement_pull_from_stack:
 /* 0ED4D0 7F0B89A0 000D70C0 */  sll   $t6, $t5, 3
 /* 0ED4D4 7F0B89A4 0FC2E105 */  jal   parse_global_vis_command_list
 /* 0ED4D8 7F0B89A8 01D12021 */   addu  $a0, $t6, $s1
-/* 0ED4DC 7F0B89AC 3C0F8008 */  lui   $t7, %hi(dword_CODE_bss_80081610) # $t7, 0x8008
-/* 0ED4E0 7F0B89B0 8DEF1610 */  lw    $t7, %lo(dword_CODE_bss_80081610)($t7)
+/* 0ED4DC 7F0B89AC 3C0F8008 */  lui   $t7, %hi(dword_CODE_bss_80081600 + 0x10) # $t7, 0x8008
+/* 0ED4E0 7F0B89B0 8DEF1610 */  lw    $t7, %lo(dword_CODE_bss_80081600 + 0x10)($t7)
 /* 0ED4E4 7F0B89B4 00408825 */  move  $s1, $v0
 /* 0ED4E8 7F0B89B8 51E0FEB2 */  beql  $t7, $zero, .L7F0B8484
 /* 0ED4EC 7F0B89BC 92240000 */   lbu   $a0, ($s1)
@@ -7226,19 +9099,29 @@ invalid_type_terminate:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B8A24(void) {
-
+void sub_GAME_7F0B8A24(s32 arg0) {
+    // Node 0
+    current_visibility = 0;
+    if (arg0 != 0)
+    {
+        // Node 2
+        sub_GAME_7F0B83E4(0, arg0);
+        // Node 3
+        return parse_global_vis_command_list(arg0, 1);
+    }
+    // Node 1
+    return parse_global_vis_command_list(arg0, 1);
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B8A24
 /* 0ED554 7F0B8A24 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0ED558 7F0B8A28 3C018004 */  lui   $at, %hi(D_800448FC) # $at, 0x8004
+/* 0ED558 7F0B8A28 3C018004 */  lui   $at, %hi(current_visibility) # $at, 0x8004
 /* 0ED55C 7F0B8A2C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0ED560 7F0B8A30 00803025 */  move  $a2, $a0
 /* 0ED564 7F0B8A34 14800003 */  bnez  $a0, .L7F0B8A44
-/* 0ED568 7F0B8A38 AC2048FC */   sw    $zero, %lo(D_800448FC)($at)
+/* 0ED568 7F0B8A38 AC2048FC */   sw    $zero, %lo(current_visibility)($at)
 /* 0ED56C 7F0B8A3C 10000007 */  b     .L7F0B8A5C
 /* 0ED570 7F0B8A40 00801025 */   move  $v0, $a0
 .L7F0B8A44:
@@ -7286,8 +9169,8 @@ glabel sub_GAME_7F0B8A6C
 /* 0ED5D8 7F0B8AA8 0FC2CEF1 */  jal   sub_GAME_7F0B3BC4
 /* 0ED5DC 7F0B8AAC E7AA005C */   swc1  $f10, 0x5c($sp)
 /* 0ED5E0 7F0B8AB0 3C028004 */  lui   $v0, %hi(D_80041414) # $v0, 0x8004
-/* 0ED5E4 7F0B8AB4 3C038004 */  lui   $v1, %hi(max_num_rooms) # $v1, 0x8004
-/* 0ED5E8 7F0B8AB8 246342F4 */  addiu $v1, %lo(max_num_rooms) # addiu $v1, $v1, 0x42f4
+/* 0ED5E4 7F0B8AB4 3C038004 */  lui   $v1, %hi(MaxNumRooms) # $v1, 0x8004
+/* 0ED5E8 7F0B8AB8 246342F4 */  addiu $v1, %lo(MaxNumRooms) # addiu $v1, $v1, 0x42f4
 /* 0ED5EC 7F0B8ABC 24421414 */  addiu $v0, %lo(D_80041414) # addiu $v0, $v0, 0x1414
 .L7F0B8AC0:
 /* 0ED5F0 7F0B8AC0 24420050 */  addiu $v0, $v0, 0x50
@@ -7344,8 +9227,8 @@ glabel sub_GAME_7F0B8A6C
 /* 0ED6B4 7F0B8B84 0FC2CE6F */  jal   sub_GAME_7F0B39BC
 /* 0ED6B8 7F0B8B88 24C61118 */   addiu $a2, $a2, 0x1118
 .L7F0B8B8C:
-/* 0ED6BC 7F0B8B8C 3C0B8004 */  lui   $t3, %hi(max_num_rooms) # $t3, 0x8004
-/* 0ED6C0 7F0B8B90 8D6B42F4 */  lw    $t3, %lo(max_num_rooms)($t3)
+/* 0ED6BC 7F0B8B8C 3C0B8004 */  lui   $t3, %hi(MaxNumRooms) # $t3, 0x8004
+/* 0ED6C0 7F0B8B90 8D6B42F4 */  lw    $t3, %lo(MaxNumRooms)($t3)
 /* 0ED6C4 7F0B8B94 24100001 */  li    $s0, 1
 /* 0ED6C8 7F0B8B98 29610002 */  slti  $at, $t3, 2
 /* 0ED6CC 7F0B8B9C 14200012 */  bnez  $at, .L7F0B8BE8
@@ -7363,8 +9246,8 @@ glabel sub_GAME_7F0B8A6C
 /* 0ED6F8 7F0B8BC8 0FC2CE6F */  jal   sub_GAME_7F0B39BC
 /* 0ED6FC 7F0B8BCC 24C61118 */   addiu $a2, $a2, 0x1118
 .L7F0B8BD0:
-/* 0ED700 7F0B8BD0 3C0C8004 */  lui   $t4, %hi(max_num_rooms) # $t4, 0x8004
-/* 0ED704 7F0B8BD4 8D8C42F4 */  lw    $t4, %lo(max_num_rooms)($t4)
+/* 0ED700 7F0B8BD0 3C0C8004 */  lui   $t4, %hi(MaxNumRooms) # $t4, 0x8004
+/* 0ED704 7F0B8BD4 8D8C42F4 */  lw    $t4, %lo(MaxNumRooms)($t4)
 /* 0ED708 7F0B8BD8 26100001 */  addiu $s0, $s0, 1
 /* 0ED70C 7F0B8BDC 020C082A */  slt   $at, $s0, $t4
 /* 0ED710 7F0B8BE0 5420FFF1 */  bnezl $at, .L7F0B8BA8
@@ -7384,8 +9267,8 @@ glabel sub_GAME_7F0B8A6C
 /* 0ED740 7F0B8C10 24C61118 */   addiu $a2, $a2, 0x1118
 .L7F0B8C14:
 /* 0ED744 7F0B8C14 8E260000 */  lw    $a2, ($s1)
-/* 0ED748 7F0B8C18 3C048004 */  lui   $a0, %hi(D_80044838) # $a0, 0x8004
-/* 0ED74C 7F0B8C1C 8C844838 */  lw    $a0, %lo(D_80044838)($a0)
+/* 0ED748 7F0B8C18 3C048004 */  lui   $a0, %hi(current_room_maybe) # $a0, 0x8004
+/* 0ED74C 7F0B8C1C 8C844838 */  lw    $a0, %lo(current_room_maybe)($a0)
 /* 0ED750 7F0B8C20 00002825 */  move  $a1, $zero
 /* 0ED754 7F0B8C24 24070001 */  li    $a3, 1
 /* 0ED758 7F0B8C28 0FC2CE6F */  jal   sub_GAME_7F0B39BC
@@ -7398,8 +9281,8 @@ glabel sub_GAME_7F0B8A6C
 /* 0ED774 7F0B8C44 00801025 */  move  $v0, $a0
 /* 0ED778 7F0B8C48 11A00016 */  beqz  $t5, .L7F0B8CA4
 .L7F0B8C4C:
-/* 0ED77C 7F0B8C4C 3C058004 */   lui   $a1, %hi(D_80044838) # $a1, 0x8004
-/* 0ED780 7F0B8C50 8CA54838 */  lw    $a1, %lo(D_80044838)($a1)
+/* 0ED77C 7F0B8C4C 3C058004 */   lui   $a1, %hi(current_room_maybe) # $a1, 0x8004
+/* 0ED780 7F0B8C50 8CA54838 */  lw    $a1, %lo(current_room_maybe)($a1)
 /* 0ED784 7F0B8C54 904E0004 */  lbu   $t6, 4($v0)
 /* 0ED788 7F0B8C58 00002025 */  move  $a0, $zero
 /* 0ED78C 7F0B8C5C 02003025 */  move  $a2, $s0
@@ -7492,8 +9375,47 @@ glabel sub_GAME_7F0B8A6C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B8D78(void) {
+void sub_GAME_7F0B8D78(s32 arg0, s32 arg1) {
+    s32 temp_v1;
+    void *phi_v0;
+    s32 phi_v1;
+    s32 phi_a1;
 
+    // Node 0
+    phi_a1 = arg1;
+    if (D_80041400 == 0xd)
+    {
+        // Node 1
+        phi_a1 = arg1;
+        if (D_8004483C > 0)
+        {
+            // Node 2
+            phi_v0 = &dword_CODE_bss_8007FFA0;
+            phi_v1 = 0;
+loop_3:
+            // Node 3
+            temp_v1 = (phi_v1 + 1);
+            if (0x23 == *phi_v0)
+            {
+                // Node 4
+                phi_v0->unk4 = 0;
+                phi_a1 = 0x23;
+            }
+            else
+            {
+                // Node 5
+                phi_v0 = (phi_v0 + 0x1c);
+                phi_v1 = temp_v1;
+                phi_a1 = 0x23;
+                if (temp_v1 < D_8004483C)
+                {
+                    goto loop_3;
+                }
+            }
+        }
+    }
+    // Node 6
+    sub_GAME_7F0B4FB4(sub_GAME_7F0B3C8C(arg0, phi_a1, arg0));
 }
 #else
 GLOBAL_ASM(
@@ -7603,8 +9525,50 @@ glabel sub_GAME_7F0B8DF4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B8E98(void) {
+s32 sub_GAME_7F0B8E98(s32 arg0, s32 arg1) {
+    s32 temp_v1;
+    void *temp_v0;
+    s32 temp_at;
+    void *phi_a2;
+    void *phi_v0;
+    s32 phi_v1;
+    s32 phi_v1_2;
 
+    // Node 0
+    phi_v1_2 = 0;
+    if (num_visible_rooms_in_cur_global_vis_packet > 0)
+    {
+        // Node 1
+        phi_v1_2 = 0;
+        if (arg1 > 0)
+        {
+            // Node 2
+            phi_a2 = (0 + &list_visible_rooms_in_cur_global_vis_packet);
+            phi_v0 = (arg0 + (0 * 4));
+            phi_v1 = 0;
+loop_3:
+            // Node 3
+            temp_v1 = (phi_v1 + 1);
+            temp_v0 = (phi_v0 + 4);
+            temp_v0->unk-4 = (?32) *phi_a2;
+            temp_at = (temp_v1 < arg1);
+            phi_v1_2 = temp_v1;
+            if (temp_at != 0)
+            {
+                // Node 4
+                phi_a2 = (phi_a2 + 1);
+                phi_v0 = temp_v0;
+                phi_v1 = temp_v1;
+                phi_v1_2 = temp_v1;
+                if (temp_at != 0)
+                {
+                    goto loop_3;
+                }
+            }
+        }
+    }
+    // Node 5
+    return phi_v1_2;
 }
 #else
 GLOBAL_ASM(
@@ -7721,8 +9685,47 @@ glabel sub_GAME_7F0B8EFC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B8FD0(void) {
+void sub_GAME_7F0B8FD0(s32 arg0, s32 arg1) {
+    s32 temp_v0;
+    s32 temp_v1;
+    void *phi_a0;
 
+    // Node 0
+    phi_a0 = ptr_bgdata_portals;
+    if (*ptr_bgdata_portals != 0)
+    {
+loop_1:
+        // Node 1
+        temp_v0 = phi_a0->unk4;
+        temp_v1 = phi_a0->unk5;
+        if (temp_v0 == arg0)
+        {
+            // Node 2
+            if (temp_v1 == arg1)
+            {
+                // Node 3
+                return 1;
+            }
+        }
+        // Node 4
+        if (temp_v1 == arg0)
+        {
+            // Node 5
+            if (temp_v0 == arg1)
+            {
+                // Node 6
+                return 1;
+            }
+        }
+        // Node 7
+        phi_a0 = (phi_a0 + 8);
+        if (phi_a0->unk8 != 0)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 8
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -7770,8 +9773,15 @@ glabel sub_GAME_7F0B8FD0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9040(void) {
+f32 sub_GAME_7F0B9040(s32 arg0, s32 arg1, f32 arg2) {
+    void *temp_v0;
+    s32 temp_f16;
 
+    // Node 0
+    temp_v0 = ((arg0 * 4) + &D_80041404);
+    temp_f16 = (s32) (((f32) *temp_v0 * arg1) + arg2);
+    *temp_v0 = temp_f16;
+    return (f32) temp_f16;
 }
 #else
 GLOBAL_ASM(
@@ -7804,8 +9814,73 @@ glabel sub_GAME_7F0B9040
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B908C(void) {
+f32 sub_GAME_7F0B908C(void) {
+    s16 sp1E;
+    f32 sp20;
+    f32 sp24;
+    f32 sp28;
+    f32 sp2C;
 
+    // Node 0
+    sp2C = (f32) D_80041404;
+    sp24 = (f32) D_80041404.unk4;
+    sp28 = (f32) ((f32) D_8004140C + (f32) get_video2_settings_txtClipW());
+    sp20 = (f32) ((f32) D_80041410 + (f32) get_video2_settings_txtClipH());
+    ptr_BONDdata->unk1118 = (f32) get_video2_settings_ulx();
+    if (ptr_BONDdata->unk1118 < sp2C)
+    {
+        // Node 1
+        ptr_BONDdata->unk1118 = sp2C;
+    }
+    // Node 2
+    if (sp28 < ptr_BONDdata->unk1118)
+    {
+        // Node 3
+        ptr_BONDdata->unk1118 = sp28;
+    }
+    // Node 4
+    ptr_BONDdata->unk111C = (f32) get_video2_settings_uly(sp28, &ptr_BONDdata);
+    if (ptr_BONDdata->unk111C < sp24)
+    {
+        // Node 5
+        ptr_BONDdata->unk111C = sp24;
+    }
+    // Node 6
+    if (sp20 < ptr_BONDdata->unk111C)
+    {
+        // Node 7
+        ptr_BONDdata->unk111C = sp20;
+    }
+    // Node 8
+    sp1E = get_video2_settings_ulx(sp20, &ptr_BONDdata);
+    ptr_BONDdata->unk1120 = (f32) (get_video2_settings_width() + sp1E);
+    if (ptr_BONDdata->unk1120 < sp2C)
+    {
+        // Node 9
+        ptr_BONDdata->unk1120 = sp2C;
+    }
+    // Node 10
+    if (sp28 < ptr_BONDdata->unk1120)
+    {
+        // Node 11
+        ptr_BONDdata->unk1120 = sp28;
+    }
+    // Node 12
+    sp1E = get_video2_settings_uly(&ptr_BONDdata);
+    ptr_BONDdata->unk1124 = (f32) (get_video2_settings_height() + sp1E);
+    if (ptr_BONDdata->unk1124 < sp24)
+    {
+        // Node 13
+        ptr_BONDdata->unk1124 = sp24;
+    }
+    // Node 14
+    if (sp20 < ptr_BONDdata->unk1124)
+    {
+        // Node 15
+        ptr_BONDdata->unk1124 = sp20;
+    }
+    // Node 16
+    return ptr_BONDdata->unk1124;
 }
 #else
 GLOBAL_ASM(
@@ -7965,8 +10040,54 @@ glabel sub_GAME_7F0B908C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B92B4(void) {
+s32 sub_GAME_7F0B92B4(s32 arg0, void *arg1) {
+    void *temp_a2;
+    s32 temp_v0;
+    f32 temp_f18;
+    void *temp_a2_2;
+    s32 temp_v0_2;
+    void *temp_v1;
+    f32 temp_f18_2;
+    f32 phi_f18;
+    void *phi_v1;
+    s32 phi_v0;
+    f32 phi_f18_2;
+    void *phi_v1_2;
+    void *phi_a2;
 
+    // Node 0
+    temp_a2 = ((arg0 * 0x50) + &D_80041414);
+    temp_v0 = (0 + 1);
+    temp_f18 = ((temp_a2->unk44 + temp_a2->unk38) * 0.5f);
+    phi_f18 = temp_f18;
+    phi_v1 = arg1;
+    phi_v0 = temp_v0;
+    phi_f18_2 = temp_f18;
+    phi_v1_2 = arg1;
+    phi_a2 = temp_a2;
+    if (temp_v0 != 3)
+    {
+loop_1:
+        // Node 1
+        *phi_v1 = (f32) phi_f18;
+        temp_a2_2 = (phi_a2 + 4);
+        temp_v0_2 = (phi_v0 + 1);
+        temp_v1 = (phi_v1 + 4);
+        temp_f18_2 = ((phi_a2->unk48 + temp_a2_2->unk38) * 0.5f);
+        phi_f18 = temp_f18_2;
+        phi_v1 = temp_v1;
+        phi_v0 = temp_v0_2;
+        phi_f18_2 = temp_f18_2;
+        phi_v1_2 = temp_v1;
+        phi_a2 = temp_a2_2;
+        if (temp_v0_2 != 3)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 2
+    (phi_v1_2 + 4)->unk-4 = (f32) phi_f18_2;
+    return temp_v0;
 }
 #else
 GLOBAL_ASM(
@@ -8209,8 +10330,84 @@ glabel sub_GAME_7F0B9338
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B95D8(void) {
+void sub_GAME_7F0B95D8(s32 arg0) {
+    void *temp_a2;
+    void *temp_t8;
+    s32 temp_t0;
+    void *temp_a2_2;
+    s32 temp_a1;
+    void *phi_v1;
+    void *phi_a2;
+    s32 phi_a1;
+    s32 phi_t0;
+    void *phi_t2;
 
+    // Node 0
+    phi_v1 = ptr_bgdata_portals;
+    if (*ptr_bgdata_portals != 0)
+    {
+loop_1:
+        // Node 1
+        if ((arg0 == phi_v1->unk4) || (arg0 == phi_v1->unk5))
+        {
+            // Node 3
+            temp_a2 = *phi_v1;
+            if (*temp_a2 > 0)
+            {
+                // Node 4
+                phi_a1 = 0;
+                phi_a2 = temp_a2;
+loop_5:
+                // Node 5
+                phi_t0 = 0;
+                phi_t2 = ((arg0 * 0x50) + &D_80041414);
+loop_6:
+                // Node 6
+                temp_t8 = ((phi_a2 + (((phi_a1 * 4) - phi_a1) * 4)) + phi_t0);
+                temp_t0 = (phi_t0 + 4);
+                if (temp_t8->unk4 < phi_t2->unk38)
+                {
+                    // Node 7
+                    phi_t2->unk38 = (f32) temp_t8->unk4;
+                }
+                // Node 8
+                if (phi_t2->unk44 < temp_t8->unk4)
+                {
+                    // Node 9
+                    phi_t2->unk44 = (f32) temp_t8->unk4;
+                }
+                // Node 10
+                temp_a2_2 = *phi_v1;
+                phi_a2 = temp_a2_2;
+                phi_t0 = temp_t0;
+                phi_t2 = (phi_t2 + 4);
+                if (temp_t0 != 0xc)
+                {
+                    goto loop_6;
+                }
+                // Node 11
+                temp_a1 = (phi_a1 + 1);
+                phi_a1 = temp_a1;
+                phi_a2 = temp_a2_2;
+                if (temp_a1 < *temp_a2_2)
+                {
+                    goto loop_5;
+                }
+            }
+        }
+        else
+        {
+
+        }
+        // Node 12
+        phi_v1 = (phi_v1 + 8);
+        if (phi_v1->unk8 != 0)
+        {
+            goto loop_1;
+        }
+    }
+    // Node 13
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -8475,7 +10672,16 @@ glabel sub_GAME_7F0B96CC
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B993C(void) {
+    f32 sp1C;
 
+    // Node 0
+    sub_GAME_7F0B96CC(&sp1C);
+    if (((sp24 * sp24) + (sp1C * sp1C)) < D_80058D5C)
+    {
+        // Node 1
+    }
+    // Node 2
+    return 1;
 }
 #else
 GLOBAL_ASM(
@@ -8511,8 +10717,61 @@ glabel sub_GAME_7F0B993C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9990(void) {
+f32 sub_GAME_7F0B9990(s32 arg0) {
+    void *temp_t8;
+    s32 temp_t9;
+    s32 temp_a0;
+    f32 temp_f2;
+    s32 temp_v1;
+    f32 temp_f2_6;
+    f32 temp_f2_2;
+    s32 temp_v1_2;
+    f32 temp_f2_3;
+    f32 temp_f2_4;
+    f32 temp_f2_5;
+    s32 phi_v1;
+    s32 phi_v1_2;
+    f32 phi_f2;
+    f32 phi_f2_2;
+    f32 phi_f2_3;
 
+    // Node 0
+    temp_t8 = (ptr_bgdata_portals + (arg0 * 8));
+    temp_t9 = (((s32) temp_t8->unk7 >> 4) & 0xf);
+    temp_a0 = -(s32) (temp_t9 & 3);
+    temp_f2 = ((f32) (temp_t8->unk7 & 0xf) * 0.25f);
+    phi_f2 = temp_f2;
+    if (temp_t9 != 0)
+    {
+        // Node 1
+        phi_v1 = temp_t9;
+        phi_v1_2 = temp_t9;
+        phi_f2_2 = temp_f2;
+        phi_f2_3 = temp_f2;
+        if (((temp_a0 == 0) || ((temp_a0 + temp_t9) != temp_v1)) || (temp_v1 != 0))
+        {
+loop_4:
+            // Node 4
+            temp_f2_2 = (phi_f2_2 + phi_f2_2);
+            temp_v1_2 = (phi_v1_2 + -4);
+            temp_f2_3 = (temp_f2_2 + temp_f2_2);
+            temp_f2_4 = (temp_f2_3 + temp_f2_3);
+            temp_f2_5 = (temp_f2_4 + temp_f2_4);
+            phi_v1_2 = temp_v1_2;
+            phi_f2 = temp_f2_5;
+            phi_f2_2 = temp_f2_5;
+            if (temp_v1_2 != 0)
+            {
+                goto loop_4;
+            }
+        }
+        else
+        {
+
+        }
+    }
+    // Node 5
+    return phi_f2;
 }
 #else
 GLOBAL_ASM(
@@ -8562,9 +10821,11 @@ glabel sub_GAME_7F0B9990
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9A14(void) {
-
+void sub_GAME_7F0B9A14(s32 arg0) {
+    // Node 0
+    return (ptr_bgdata_portals + (arg0 * 8))->unk7;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -8583,8 +10844,34 @@ glabel sub_GAME_7F0B9A14
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9A2C(void) {
+s32 sub_GAME_7F0B9A2C(s32 arg0) {
+    void *temp_v1;
+    s32 temp_v0;
+    s32 temp_t8;
+    s8 phi_v0;
 
+    // Node 0
+    temp_v1 = (ptr_bgdata_portals + (arg0 * 8));
+    temp_v0 = (temp_v1->unk7 + 1);
+    if (temp_v1->unk7 >= 0xff)
+    {
+        // Node 1
+        phi_v0 = (u8)0xff;
+    }
+    else
+    {
+        // Node 2
+        temp_t8 = (temp_v0 & 0xff);
+        phi_v0 = temp_t8;
+        if (((temp_t8 >> 4) & 0xf) > 0)
+        {
+            // Node 3
+            phi_v0 = ((temp_t8 | 8) & 0xff);
+        }
+    }
+    // Node 4
+    temp_v1->unk7 = (s8) phi_v0;
+    return temp_v0;
 }
 #else
 GLOBAL_ASM(
@@ -8620,8 +10907,37 @@ glabel sub_GAME_7F0B9A2C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9A7C(void) {
+s32 sub_GAME_7F0B9A7C(s32 arg0) {
+    void *temp_v1;
+    s8 temp_t1;
+    s8 phi_v0;
 
+    // Node 0
+    temp_v1 = (ptr_bgdata_portals + (arg0 * 8));
+    if ((((s32) temp_v1->unk7 >> 4) & 0xf) == 0)
+    {
+        // Node 1
+        phi_v0 = (s8) temp_v1->unk7;
+        if (temp_v1->unk7 > 0)
+        {
+            // Node 2
+            phi_v0 = ((temp_v1->unk7 + -1) & 0xff);
+        }
+    }
+    else
+    {
+        // Node 3
+        temp_t1 = ((temp_v1->unk7 + -1) & 0xff);
+        phi_v0 = temp_t1;
+        if ((temp_t1 & 0xf) < 8)
+        {
+            // Node 4
+            phi_v0 = ((temp_t1 + -8) & 0xff);
+        }
+    }
+    // Node 5
+    temp_v1->unk7 = (s8) phi_v0;
+    return temp_v1->unk7;
 }
 #else
 GLOBAL_ASM(
@@ -8663,8 +10979,9 @@ glabel sub_GAME_7F0B9A7C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9AE4(void) {
-
+s32 sub_GAME_7F0B9AE4(s32 arg0) {
+    // Node 0
+    return ((ptr_bgdata_portals + (arg0 * 8))->unk6 & 1);
 }
 #else
 GLOBAL_ASM(
@@ -8686,8 +11003,9 @@ glabel sub_GAME_7F0B9AE4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9B04(void) {
-
+s32 sub_GAME_7F0B9B04(s32 arg0) {
+    // Node 0
+    return ((ptr_bgdata_portals + (arg0 * 8))->unk6 & 2);
 }
 #else
 GLOBAL_ASM(
@@ -8709,8 +11027,13 @@ glabel sub_GAME_7F0B9B04
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9B24(void) {
+void *sub_GAME_7F0B9B24(s32 arg0) {
+    void *temp_v0;
 
+    // Node 0
+    temp_v0 = (ptr_bgdata_portals + (arg0 * 8));
+    temp_v0->unk6 = (s8) (temp_v0->unk6 | 2);
+    return temp_v0;
 }
 #else
 GLOBAL_ASM(
@@ -8732,8 +11055,13 @@ glabel sub_GAME_7F0B9B24
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9B44(void) {
+void *sub_GAME_7F0B9B44(s32 arg0) {
+    void *temp_v0;
 
+    // Node 0
+    temp_v0 = (ptr_bgdata_portals + (arg0 * 8));
+    temp_v0->unk6 = (s8) (temp_v0->unk6 & 0xfd);
+    return temp_v0;
 }
 #else
 GLOBAL_ASM(
@@ -8755,8 +11083,16 @@ glabel sub_GAME_7F0B9B44
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9B64(void) {
+s8 sub_GAME_7F0B9B64(s32 arg0) {
+    s32 temp_v1;
+    void *temp_a1;
 
+    // Node 0
+    temp_v1 = (arg0 * 8);
+    temp_a1 = (ptr_bgdata_portals + temp_v1);
+    temp_a1->unk4 = (s8) temp_a1->unk5;
+    (ptr_bgdata_portals + temp_v1)->unk5 = (s8) temp_a1->unk4;
+    return temp_a1->unk4;
 }
 #else
 GLOBAL_ASM(
@@ -8782,8 +11118,64 @@ glabel sub_GAME_7F0B9B64
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9B94(void) {
+f32 sub_GAME_7F0B9B94(s32 arg0) {
+    s32 sp24;
+    ?32 sp28;
+    f32 sp34;
+    f32 sp38;
+    f32 sp3C;
+    f32 sp48;
+    f32 sp54;
+    void *temp_v0;
+    f32 temp_f0;
+    f32 phi_f16;
+    f32 phi_f18;
+    f32 phi_f14;
+    s32 phi_v0;
+    f32 phi_f12;
+    f32 phi_return;
 
+    // Node 0
+    temp_v0 = (ptr_bgdata_portals + (arg0 * 8));
+    sp28 = (?32) temp_v0->unk5;
+    sub_GAME_7F0B92B4(temp_v0->unk4, &sp54);
+    sub_GAME_7F0B92B4(sp28, &sp48);
+    sub_GAME_7F0B96CC(arg0, &sp34);
+    phi_f16 = sp3C;
+    phi_f18 = sp34;
+    phi_f14 = sp40;
+    phi_v0 = 0;
+    phi_f12 = sp44;
+    if (sp44 < ((sp5C * sp3C) + ((sp34 * sp54) + (sp38 * sp58))))
+    {
+        // Node 1
+        sp24 = 1;
+        sub_GAME_7F0B9B64(sp44, sp40, arg0);
+        sp38 = (f32) -sp38;
+        phi_f16 = -sp3C;
+        phi_f18 = -sp34;
+        phi_f14 = -sp44;
+        phi_v0 = 1;
+        phi_f12 = -sp40;
+    }
+    // Node 2
+    sp3C = (f32) phi_f16;
+    sp34 = (f32) phi_f18;
+    temp_f0 = ((sp50 * phi_f16) + ((phi_f18 * sp48) + (sp38 * sp4C)));
+    phi_return = temp_f0;
+    if (temp_f0 <= phi_f14)
+    {
+        // Node 3
+        phi_return = temp_f0;
+        if (phi_v0 != 0)
+        {
+            // Node 4
+            sp24 = (s32) phi_v0;
+            phi_return = sub_GAME_7F0B9B64(phi_f12, phi_f14, arg0);
+        }
+    }
+    // Node 5
+    return phi_return;
 }
 #else
 GLOBAL_ASM(
@@ -8959,8 +11351,13 @@ glabel sub_GAME_7F0B9CC8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9DBC(void) {
+void *sub_GAME_7F0B9DBC(s32 arg0, u32 arg1) {
+    void *temp_v0;
 
+    // Node 0
+    temp_v0 = (ptr_bgdata_portals + (arg0 * 8));
+    temp_v0->unk6 = (s8) ((temp_v0->unk6 | 1) ^ (0U < arg1));
+    return temp_v0;
 }
 #else
 GLOBAL_ASM(
@@ -8984,8 +11381,9 @@ glabel sub_GAME_7F0B9DBC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9DE4(void) {
-
+s32 sub_GAME_7F0B9DE4(s32 arg0, s32 arg1, ? arg2) {
+    // Node 0
+    return arg0;
 }
 #else
 GLOBAL_ASM(
@@ -9003,8 +11401,9 @@ glabel sub_GAME_7F0B9DE4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9DF4(void) {
-
+void sub_GAME_7F0B9DF4(s32 arg0) {
+    // Node 0
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -9020,8 +11419,9 @@ glabel sub_GAME_7F0B9DF4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B9DFC(void) {
-
+void sub_GAME_7F0B9DFC(s32 arg0) {
+    // Node 0
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -9366,8 +11766,40 @@ glabel sub_GAME_7F0B9F14
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BA26C(void) {
+void sub_GAME_7F0BA26C(s32 arg0, void *arg1, void *arg2, s32 arg3) {
+    s32 temp_v1;
+    void *phi_t0;
+    void *phi_t1;
+    s32 phi_v1;
 
+    // Node 0
+    phi_t0 = arg1;
+    phi_t1 = arg2;
+    phi_v1 = 0;
+loop_1:
+    // Node 1
+    temp_v1 = (phi_v1 + 4);
+    if (*phi_t0 < *phi_t1)
+    {
+        // Node 3
+        return 0;
+    }
+    // Node 2
+    if (*(arg3 + phi_v1) < *(arg0 + phi_v1))
+    {
+        // Node 3
+        return 0;
+    }
+    // Node 4
+    phi_t0 = (phi_t0 + 4);
+    phi_t1 = (phi_t1 + 4);
+    phi_v1 = temp_v1;
+    if (temp_v1 != 0xc)
+    {
+        goto loop_1;
+    }
+    // Node 5
+    return 1;
 }
 #else
 GLOBAL_ASM(
@@ -9632,8 +12064,56 @@ glabel sub_GAME_7F0BA2D4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BA5C0(void) {
+u32 sub_GAME_7F0BA5C0(u32 arg0, u32 arg1) {
+    s32 temp_a0;
+    u32 temp_v0;
+    void *phi_v0;
+    s32 phi_a0;
+    void *phi_v1;
 
+    // Node 0
+    if (arg0 < arg1)
+    {
+        // Node 1
+        phi_v0 = arg0;
+loop_2:
+        // Node 2
+        if (D_80044940 != 0)
+        {
+            // Node 3
+            phi_a0 = D_80044940;
+            phi_v1 = &D_80044940;
+loop_4:
+            // Node 4
+            if (*phi_v0 == phi_a0)
+            {
+                // Node 5
+                if (phi_v0->unk4 == phi_v1->unk4)
+                {
+                    // Node 6
+                    *phi_v0 = (s32) phi_v1->unk8;
+                    phi_v0->unk4 = (s32) phi_v1->unkC;
+                }
+            }
+            // Node 7
+            temp_a0 = phi_v1->unk10;
+            phi_a0 = temp_a0;
+            phi_v1 = (phi_v1 + 0x10);
+            if (temp_a0 != 0)
+            {
+                goto loop_4;
+            }
+        }
+        // Node 8
+        temp_v0 = (phi_v0 + 8);
+        phi_v0 = temp_v0;
+        if (temp_v0 < arg1)
+        {
+            goto loop_2;
+        }
+    }
+    // Node 9
+    return arg0;
 }
 #else
 GLOBAL_ASM(

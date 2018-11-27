@@ -69,57 +69,58 @@ CODE.bss:80075D24     dword_CODE_bss_80075D24:.space 4
 CODE.bss:80075D28     dword_CODE_bss_80075D28:.space 4
 */
 
+//data
+s32 D_80030A70 = 0;
+s32 D_80030A74 = 0;
+s32 D_80030A78 = 0;
+s32 D_80030A7C = 0;
+s32 D_80030A80 = 0;
+s32 D_80030A84 = 0;
+s32 D_80030A88 = 0;
+s32 D_80030A8C = 0;
+s32 D_80030A90 = 0;
+s32 D_80030A94 = 0;
+s32 D_80030A98 = 0;
+s32 D_80030A9C = 0;
+s32 *ptr_obj_pos_list_current_entry = 0;
+s32 *ptr_obj_pos_list_first_entry = 0;
+s32 *ptr_obj_pos_list_final_entry = 0;
+f32 difficulty = 1.0;
+s32 D_80030AB0 = 0;
+s32 D_80030AB4 = 0;
+s32 D_80030AB8 = 0;
+s32 D_80030ABC = 0;
+s32 alarm_timer = 0;
+s32 *ptr_alarm_sfx = 0;
+f32 toxic_gas_sound_timer = 0.0;
+s32 activate_gas_sound_timer = FALSE;
+f32 D_80030AD0 = 0.0;
+f32 D_80030AD4 = 0.0;
+f32 D_80030AD8 = 0.0;
+s32 D_80030ADC = 0;
+s32 D_80030AE0 = 0;
+s32 D_80030AE4 = 0;
+s32 clock_drawn_flag = 1;
+s32 clock_enable = 0;
+s32 clock_time = 0;
+s32 D_80030AF4 = 0;
+s32 D_80030AF8 = 0;
+s32 D_80030AFC = 0;
+s32 D_80030B00 = 0;
+s32 D_80030B04 = 0;
+s32 D_80030B08 = 0;
+s32 D_80030B0C = 0;
+s32 bodypartshot = 0xFFFFFFFF;
+f32 D_80030B14 = 1.0;
+f32 D_80030B18 = 1.0;
+f32 D_80030B1C = 1.0;
+f32 D_80030B20 = 1.0;
+f32 D_80030B24 = 1.0;
+f32 solo_ammo_multiplier = 1.0;
+s16 Throwing_knife_SFX_1 = 0x5F;
+s16 Throwing_knife_SFX_2 = 0x60;
+s16 Throwing_knife_SFX_3 = 0x61;
 /*
-dword_D_80030A70:.word 0
-dword_D_80030A74:.word 0
-dword_D_80030A78:.word 0
-dword_D_80030A7C:.word 0
-dword_D_80030A80:.word 0
-dword_D_80030A84:.word 0
-dword_D_80030A88:.word 0
-dword_D_80030A8C:.word 0
-dword_D_80030A90:.word 0
-                .word 0
-                .word 0
-                .word 0
-ptr_obj_pos_list_current_entry:.word 0
-ptr_obj_pos_list_first_entry:.word 0
-ptr_obj_pos_list_final_entry:.word 0
-difficulty:     .float 1.0
-dword_D_80030AB0:.word 0
-dword_D_80030AB4:.word 0
-                .word 0
-                .word 0
-alarm_timer:    .word 0
-ptr_alarm_sfx:  .word 0
-toxic_gas_sound_timer:.float 0.0
-activate_gas_sound_timer:.word FALSE
-flt_D_80030AD0: .float 0.0
-flt_D_80030AD4: .float 0.0
-flt_D_80030AD8: .float 0.0
-dword_D_80030ADC:.word 0
-dword_D_80030AE0:.word 0
-dword_D_80030AE4:.word 0
-clock_drawn_flag:.word 1
-clock_enable:   .word 0
-clock_time:     .word 0
-dword_D_80030AF4:.word 0
-dword_D_80030AF8:.word 0
-dword_D_80030AFC:.word 0
-dword_D_80030B00:.word 0
-dword_D_80030B04:.word 0
-dword_D_80030B08:.word 0
-dword_D_80030B0C:.word 0
-bodypartshot:   .word 0xFFFFFFFF
-flt_D_80030B14: .float 1.0
-flt_D_80030B18: .float 1.0
-flt_D_80030B1C: .float 1.0
-flt_D_80030B20: .float 1.0
-flt_D_80030B24: .float 1.0
-solo_ammo_multiplier:.float 1.0
-Throwing_knife_SFX_1:.half 0x5F
-Throwing_knife_SFX_2:.half 0x60
-Throwing_knife_SFX_3:.half 0x61
 Throwing_knife_SFX_4:.half      0,     0,     0,     0,     1,     0,     3,     0,     0,     0
                 .half      0,     0,     0,     0,     0,     0,     0,     0,     0,     0
                 .half      0,     0,     0,     0,     0,     0,     0,     0,     0,     0
@@ -724,123 +725,123 @@ D:80052C6C                     .word command0E_set_rotation
 D:80052C6C                     .word command0F_rotate
 D:80052CAC                     .float 1.5707964
 //D:80052CB0
-const f32 flt_D_80052CB0 = 1.4141999;
+const f32 D_80052CB0 = 1.4141999;
 //D:80052CB4
-const f32 flt_D_80052CB4 = 0.85000002;
+const f32 D_80052CB4 = 0.85000002;
 //D:80052CB8
-const f32 flt_D_80052CB8 = 0.15000001;
+const f32 D_80052CB8 = 0.15000001;
 //D:80052CBC
-const f32 flt_D_80052CBC = 0.15000001;
+const f32 D_80052CBC = 0.15000001;
 //D:80052CC0
-const f32 flt_D_80052CC0 = 0.89999998;
+const f32 D_80052CC0 = 0.89999998;
 //D:80052CC4
-const f32 flt_D_80052CC4 = 1.6666666;
+const f32 D_80052CC4 = 1.6666666;
 //D:80052CC8
-const f32 flt_D_80052CC8 = 3.3333333;
+const f32 D_80052CC8 = 3.3333333;
 //D:80052CCC
-const f32 flt_D_80052CCC = 1.6666666;
+const f32 D_80052CCC = 1.6666666;
 //D:80052CD0
-const f32 flt_D_80052CD0 = 3.3333333;
+const f32 D_80052CD0 = 3.3333333;
 //D:80052CD4
-const f32 flt_D_80052CD4 = 1.6666666;
+const f32 D_80052CD4 = 1.6666666;
 //D:80052CD8
-const f32 flt_D_80052CD8 = 3.3333333;
+const f32 D_80052CD8 = 3.3333333;
 //D:80052CDC
-const f32 flt_D_80052CDC = 6.2831855;
+const f32 D_80052CDC = 6.2831855;
 //D:80052CE0
-const f32 flt_D_80052CE0 = 0.049087387;
+const f32 D_80052CE0 = 0.049087387;
 //D:80052CE4
-const f32 flt_D_80052CE4 = 6.2831855;
+const f32 D_80052CE4 = 6.2831855;
 //D:80052CE8
-const f32 flt_D_80052CE8 = 0.049087387;
+const f32 D_80052CE8 = 0.049087387;
 //D:80052CEC
-const f32 flt_D_80052CEC = 6.2831855;
+const f32 D_80052CEC = 6.2831855;
 //D:80052CF0
-const f32 flt_D_80052CF0 = 0.049087387;
+const f32 D_80052CF0 = 0.049087387;
 //D:80052CF4
-const f32 flt_D_80052CF4 = 3.3333333;
+const f32 D_80052CF4 = 3.3333333;
 //D:80052CF8
-const f32 flt_D_80052CF8 = 1.6666666;
+const f32 D_80052CF8 = 1.6666666;
 //D:80052CFC
-const f32 flt_D_80052CFC = 1.6666666;
+const f32 D_80052CFC = 1.6666666;
 //D:80052D00
-const f32 flt_D_80052D00 = 1.6666666;
+const f32 D_80052D00 = 1.6666666;
 //D:80052D04
-const f32 flt_D_80052D04 = 6.2831855;
+const f32 D_80052D04 = 6.2831855;
 //D:80052D08
-const f32 flt_D_80052D08 = 0.024543693;
+const f32 D_80052D08 = 0.024543693;
 //D:80052D0C
-const f32 flt_D_80052D0C = 6.2831855;
+const f32 D_80052D0C = 6.2831855;
 //D:80052D10
-const f32 flt_D_80052D10 = 0.024543693;
+const f32 D_80052D10 = 0.024543693;
 //D:80052D14
-const f32 flt_D_80052D14 = 6.2831855;
+const f32 D_80052D14 = 6.2831855;
 //D:80052D18
-const f32 flt_D_80052D18 = 0.024543693;
+const f32 D_80052D18 = 0.024543693;
 //D:80052D1C
-const f32 flt_D_80052D1C = 13.333333;
+const f32 D_80052D1C = 13.333333;
 //D:80052D20
-const f32 flt_D_80052D20 = 6.6666665;
+const f32 D_80052D20 = 6.6666665;
 //D:80052D24
-const f32 flt_D_80052D24 = 13.333333;
+const f32 D_80052D24 = 13.333333;
 //D:80052D28
-const f32 flt_D_80052D28 = 6.2831855;
+const f32 D_80052D28 = 6.2831855;
 //D:80052D2C
-const f32 flt_D_80052D2C = 0.024543693;
+const f32 D_80052D2C = 0.024543693;
 //D:80052D30
-const f32 flt_D_80052D30 = 6.2831855;
+const f32 D_80052D30 = 6.2831855;
 //D:80052D34
-const f32 flt_D_80052D34 = 0.024543693;
+const f32 D_80052D34 = 0.024543693;
 //D:80052D38
-const f32 flt_D_80052D38 = 6.2831855;
+const f32 D_80052D38 = 6.2831855;
 //D:80052D3C
-const f32 flt_D_80052D3C = 0.024543693;
+const f32 D_80052D3C = 0.024543693;
 //D:80052D40
-const f32 flt_D_80052D40 = 1.6666666;
+const f32 D_80052D40 = 1.6666666;
 //D:80052D44
-const f32 flt_D_80052D44 = 3.3333333;
+const f32 D_80052D44 = 3.3333333;
 //D:80052D48
-const f32 flt_D_80052D48 = 1.6666666;
+const f32 D_80052D48 = 1.6666666;
 //D:80052D4C
-const f32 flt_D_80052D4C = 1.6666666;
+const f32 D_80052D4C = 1.6666666;
 //D:80052D50
-const f32 flt_D_80052D50 = 3.3333333;
+const f32 D_80052D50 = 3.3333333;
 //D:80052D54
-const f32 flt_D_80052D54 = 6.2831855;
+const f32 D_80052D54 = 6.2831855;
 //D:80052D58
-const f32 flt_D_80052D58 = 0.098174773;
+const f32 D_80052D58 = 0.098174773;
 //D:80052D5C
-const f32 flt_D_80052D5C = 6.2831855;
+const f32 D_80052D5C = 6.2831855;
 //D:80052D60
-const f32 flt_D_80052D60 = 0.098174773;
+const f32 D_80052D60 = 0.098174773;
 //D:80052D64
-const f32 flt_D_80052D64 = 6.2831855;
+const f32 D_80052D64 = 6.2831855;
 //D:80052D68
-const f32 flt_D_80052D68 = 0.098174773;
+const f32 D_80052D68 = 0.098174773;
 //D:80052D6C
-const f32 flt_D_80052D6C = 1.6666666;
+const f32 D_80052D6C = 1.6666666;
 //D:80052D70
-const f32 flt_D_80052D70 = 0.83333331;
+const f32 D_80052D70 = 0.83333331;
 //D:80052D74
-const f32 flt_D_80052D74 = 1.6666666;
+const f32 D_80052D74 = 1.6666666;
 //D:80052D78
-const f32 flt_D_80052D78 = 1.6666666;
+const f32 D_80052D78 = 1.6666666;
 //D:80052D7C
-const f32 flt_D_80052D7C = 0.83333331;
+const f32 D_80052D7C = 0.83333331;
 //D:80052D80
-const f32 flt_D_80052D80 = 6.2831855;
+const f32 D_80052D80 = 6.2831855;
 //D:80052D84
-const f32 flt_D_80052D84 = 0.0098174773;
+const f32 D_80052D84 = 0.0098174773;
 //D:80052D88
-const f32 flt_D_80052D88 = 6.2831855;
+const f32 D_80052D88 = 6.2831855;
 //D:80052D8C
-const f32 flt_D_80052D8C = 0.0098174773;
+const f32 D_80052D8C = 0.0098174773;
 //D:80052D90
-const f32 flt_D_80052D90 = 6.2831855;
+const f32 D_80052D90 = 6.2831855;
 //D:80052D94
-const f32 flt_D_80052D94 = 0.0098174773;
+const f32 D_80052D94 = 0.0098174773;
 //D:80052D98
-const f32 flt_D_80052D98 = 32767.0;
+const f32 D_80052D98 = 32767.0;
 D:80052D9C     jpt_70081970:   .word loc_CODE_7F04DAA4  # DATA XREF: sub_CODE_7F04D9B0+84r
 D:80052D9C                     .word def_7F04DA40       # jump table for switch statement
 D:80052D9C                     .word def_7F04DA40
@@ -8862,7 +8863,7 @@ glabel sub_GAME_7F03AA44
 /* 06F5FC 7F03AACC E7A60050 */  swc1  $f6, 0x50($sp)
 /* 06F600 7F03AAD0 C6280008 */  lwc1  $f8, 8($s1)
 /* 06F604 7F03AAD4 46024282 */  mul.s $f10, $f8, $f2
-/* 06F608 7F03AAD8 0FC2D791 */  jal   sub_GAME_7F0B5E44
+/* 06F608 7F03AAD8 0FC2D791 */  jal   getMaxNumRooms
 /* 06F60C 7F03AADC E7AA0054 */   swc1  $f10, 0x54($sp)
 /* 06F610 7F03AAE0 28410002 */  slti  $at, $v0, 2
 /* 06F614 7F03AAE4 14200014 */  bnez  $at, .L7F03AB38
@@ -8883,7 +8884,7 @@ glabel sub_GAME_7F03AA44
 /* 06F64C 7F03AB1C A2340000 */  sb    $s4, ($s1)
 /* 06F650 7F03AB20 26100001 */  addiu $s0, $s0, 1
 .L7F03AB24:
-/* 06F654 7F03AB24 0FC2D791 */  jal   sub_GAME_7F0B5E44
+/* 06F654 7F03AB24 0FC2D791 */  jal   getMaxNumRooms
 /* 06F658 7F03AB28 26310001 */   addiu $s1, $s1, 1
 /* 06F65C 7F03AB2C 0202082A */  slt   $at, $s0, $v0
 /* 06F660 7F03AB30 5420FFF2 */  bnezl $at, .L7F03AAFC
@@ -9244,7 +9245,7 @@ glabel sub_GAME_7F03AF5C
 /* 06FAE4 7F03AFB4 0FC2D20C */  jal   sub_GAME_7F0B4830
 /* 06FAE8 7F03AFB8 0000B825 */   move  $s7, $zero
 /* 06FAEC 7F03AFBC 46000606 */  mov.s $f24, $f0
-/* 06FAF0 7F03AFC0 0FC2D791 */  jal   sub_GAME_7F0B5E44
+/* 06FAF0 7F03AFC0 0FC2D791 */  jal   getMaxNumRooms
 /* 06FAF4 7F03AFC4 24110001 */   li    $s1, 1
 /* 06FAF8 7F03AFC8 28410002 */  slti  $at, $v0, 2
 /* 06FAFC 7F03AFCC 14200051 */  bnez  $at, .L7F03B114
@@ -9328,7 +9329,7 @@ glabel sub_GAME_7F03AF5C
 .L7F03B0FC:
 /* 06FC2C 7F03B0FC 26310001 */  addiu $s1, $s1, 1
 .L7F03B100:
-/* 06FC30 7F03B100 0FC2D791 */  jal   sub_GAME_7F0B5E44
+/* 06FC30 7F03B100 0FC2D791 */  jal   getMaxNumRooms
 /* 06FC34 7F03B104 26520001 */   addiu $s2, $s2, 1
 /* 06FC38 7F03B108 0222082A */  slt   $at, $s1, $v0
 /* 06FC3C 7F03B10C 5420FFB9 */  bnezl $at, .L7F03AFF4
@@ -13479,8 +13480,8 @@ void sub_GAME_7F03E4F0(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F03E4F0
-/* 073020 7F03E4F0 3C038004 */  lui   $v1, %hi(max_num_rooms) # $v1, 0x8004
-/* 073024 7F03E4F4 8C6342F4 */  lw    $v1, %lo(max_num_rooms)($v1)
+/* 073020 7F03E4F0 3C038004 */  lui   $v1, %hi(MaxNumRooms) # $v1, 0x8004
+/* 073024 7F03E4F4 8C6342F4 */  lw    $v1, %lo(MaxNumRooms)($v1)
 /* 073028 7F03E4F8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 07302C 7F03E4FC AFB30014 */  sw    $s3, 0x14($sp)
 /* 073030 7F03E500 AFB20010 */  sw    $s2, 0x10($sp)
@@ -13586,8 +13587,8 @@ glabel sub_GAME_7F03E4F0
 .L7F03E664:
 /* 073194 7F03E664 04C3FFC0 */  bgezl $a2, .L7F03E568
 /* 073198 7F03E668 00004025 */   move  $t0, $zero
-/* 07319C 7F03E66C 3C038004 */  lui   $v1, %hi(max_num_rooms) # $v1, 0x8004
-/* 0731A0 7F03E670 8C6342F4 */  lw    $v1, %lo(max_num_rooms)($v1)
+/* 07319C 7F03E66C 3C038004 */  lui   $v1, %hi(MaxNumRooms) # $v1, 0x8004
+/* 0731A0 7F03E670 8C6342F4 */  lw    $v1, %lo(MaxNumRooms)($v1)
 .L7F03E674:
 /* 0731A4 7F03E674 0043082A */  slt   $at, $v0, $v1
 .L7F03E678:
