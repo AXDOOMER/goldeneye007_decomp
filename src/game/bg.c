@@ -362,46 +362,103 @@ s32 D_80044918 = 0xFF7FFFFF;
 //D:80044920                     .word 0
 //D:80044924                     .word 0
 
-//D:80044928
-Gfx D_80044928[] = {
-    0xFC26A0041F1093FF, 
-    0xFC232DFFFFFFFE38, 
-    NULL
-};
 
-//D:80044940
-// RenderMode/Combiner Look-Up-Table - Primary
+// RenderMode/Combiner Look-Up-Tables
 // Looks for value on left, and replaces with correct value on right
 // eg 0x0C192078 = C8112078, or had they used macros gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2 )
-Gfx D_80044940[] = {
-    0xB900031D0C192078, 0xB900031DC8112078, //gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2 ), //Standard FOG OPA
-    0xB900031D0C182078, 0xB900031DC8102078, //gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_TERR2 ), //Texterrain FOG OPA
-    0xB900031D0C192D58, 0xB900031DC8112D58, //gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_DECAL2 ), //Standard FOG DECAL
-    0xB900031D0C184DD8, 0xB900031DC8104DD8, //gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2 ), //Transparent FOG DECAL
-    0xB900031D0C1849D8, 0xB900031DC81049D8, //gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2 ),  //Transparent Texture 1
-    0xB900031D0C193078, 0xB900031DC8113078, //gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2 ), // See PGDLists\Transparent Textures.htm
-    0xB900031D0C192048, 0xB900031DC8112048, //gsDPSetRenderMode(G_RM_FOG_SHADE_A, AA_EN | IM_RD | CVG_DST_CLAMP | ZMODE_OPA | ALPHA_CVG_SEL | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM)), //Modified Z-Less Fog OPA
-    0xB900031D0C182048, 0xB900031DC8102048, //gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_OPA_TERR2 ), //Standard Z-Less Fog OPA
+// The reason for this LUT is to dynamicly change the rendermode and combiner to FOG / NoFog or any other setting they might have wanted to test during development as it applies during runtime
+/*Reminder:
+	1cycle combiners repeat both cycles gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA)
+				              (       -  )*     +  ,  (       -  )*     +
+	G_CC_MODULATERGBA2	    = COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0
+#define	ModulateRGB_EnvA 	= TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT //custom combiner for triangle alpha
+#define	ModulateRGB_EnvA2 	= COMBINED, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT //custom combiner for triangle alpha
+#define	ModulateRGBA_EnvA 	= TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0 //custom combiner for Texture*triangle alpha
+#define	ModulateRGBA_EnvA2 	= COMBINED, 0, SHADE, 0, COMBINED, 0, ENVIRONMENT, 0 //custom combiner for texture*triangle alpha
+#define	SHADE_EnvA 		    = 0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT //custom combiner for triangle alpha
+#define	TLRGB_ATile1 		= TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0
+*/
+//D:80044928
+Gfx D_80044928[] = {
+    0xFC26A0041F1093FF, 0xFC232DFFFFFFFE38, 
+    //gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2), 
+    //gDPSetCombineLERP(TEXEL1, 0, COMBINED_ALPHA, 0, TEXEL1, 0, PRIM_LOD_FRAC, 0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
     NULL
 };
 
-//D:800449C8
-// RenderMode/Combiner Look-Up-Table - Secondary
+//D:80044940 - Primary
+Gfx D_80044940[] = {
+    0xB900031D0C192078, 0xB900031DC8112078, 
+    0xB900031D0C182078, 0xB900031DC8102078, 
+    0xB900031D0C192D58, 0xB900031DC8112D58, 
+    0xB900031D0C184DD8, 0xB900031DC8104DD8, 
+    0xB900031D0C1849D8, 0xB900031DC81049D8,
+    0xB900031D0C193078, 0xB900031DC8113078, 
+    0xB900031D0C192048, 0xB900031DC8112048, 
+    0xB900031D0C182048, 0xB900031DC8102048, 
+
+    /*
+    //Add FOG to all rendermodes 
+    //Standard HiQuality Surface to Standard Fogable HiQuality Surface
+    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    //Terrain to Fogable Terrain
+    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_TERR2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_TERR2),
+    //Standard DECAL to FOG DECAL
+    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_DECAL2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_DECAL2),
+    //Transparent DECAL to  FOG Transparent DECAL
+    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_DECAL2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
+    //Transparent Surface to FOG Transparent Surface
+    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
+    // Billboard Cut-out to FOG Billboard Cut-out - eg, Mario Tree or Depot lamp
+    // See PGDLists\Transparent Textures.htm for more info
+    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    //Standard Z-Less OPA to Standard FOG Z-Less OPA
+    gDPSetRenderMode(G_RM_PASS, G_RM_AA_OPA_SURF2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_OPA_SURF2),
+    //Z-Less OPA Terrain to Z-Less Fog OPA Terrain
+    gDPSetRenderMode(G_RM_PASS, G_RM_AA_OPA_TERR2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_OPA_TERR2),
+    */
+    NULL
+};
+
+//D:800449C8 - Secondary
 Gfx D_800449C8[] = {
     0xB900031D0C184DD8, 0xB900031DC8104DD8,
     0xB900031D0C1849D8, 0xB900031DC81049D8, 
     0xB900031D0C193078, 0xB900031DC8113078,
     0xFC26A0041F1093FF, 0xFC26A0041F1493FF, 
-    0xFC121824FF33FFFF, 0xFC121A24FF37FFFF, 
-    0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD,
-    0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD, 
-    0xFC26A0041F1093FF, 0xFC26A0041F1493FF, 
     0xFC121824FF33FFFF, 0xFC121A24FF37FFFF,
-    0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD, 
-    0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD, 
-    0xFCFFFFFFFFFE7838, 0xFCFFFFFFFFFE7A38,
-    0xFCFFFFFFFFFE793C, 0xFCFFFFFFFFFE7B3D, 
-    0xFC26E4041F10FFFF, 0xFC26E4041F14FFFF, 
+    0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD,
+    0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD,
+    0xFC26A0041F1093FF, 0xFC26A0041F1493FF,
+    0xFC121824FF33FFFF, 0xFC121A24FF37FFFF,
+    0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD,
+    0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD,
+    0xFCFFFFFFFFFE7838, 0xFCFFFFFFFFFE7A38, 
+    0xFCFFFFFFFFFE793C, 0xFCFFFFFFFFFE7B3D,
+    0xFC26E4041F10FFFF, 0xFC26E4041F14FFFF,   
+    /*
+    //Add FOG to Rendermodes
+    //Transparent DECAL to  FOG Transparent DECAL
+    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_DECAL2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
+    //Transparent Surface to FOG Transparent Surface
+    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
+    // Billboard Cut-out to FOG Billboard Cut-out - eg, Mario Tree or Depot lamp
+    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+
+    // Swap all refrences to Shade in Alpha to Environment
+    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
+    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA), 
+    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2),
+    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA), 
+    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
+    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA), 
+    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2), 
+    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA),
+    gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_PASS2),
+    gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA),
+    // This one is an oddball... its extra here AND is weird using Tile1 only for Alpha
+    gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGBA) , gDPSetCombineMode(TLRGB_ATile1, ModulateRGB_EnvA2),
+    */
     NULL
 };
 
@@ -418,6 +475,19 @@ Gfx D_80044AB0[] = {
     0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD,
     0xFCFFFFFFFFFE7838, 0xFCFFFFFFFFFE7A38,
     0xFCFFFFFFFFFE793C, 0xFCFFFFFFFFFE7B3D, 
+    /*
+    // Swap all refrences to Shade in Alpha to Environment
+    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
+    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA), 
+    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2),
+    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA), 
+    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
+    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA), 
+    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2), 
+    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA),
+    gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_PASS2),
+    gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA),
+    */
     NULL
 };
 
@@ -434,6 +504,19 @@ Gfx D_80044B58[] = {
     0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD, 
     0xFCFFFFFFFFFE7838, 0xFCFFFFFFFFFE7A38,
     0xFCFFFFFFFFFE793C, 0xFCFFFFFFFFFE7B3D, 
+    /*
+    // Swap all refrences to Shade in Alpha to Environment
+    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
+    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA), 
+    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2),
+    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA), 
+    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
+    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA), 
+    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2), 
+    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA),
+    gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_PASS2),
+    gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA),
+    */
     NULL
 };
 
@@ -441,6 +524,12 @@ Gfx D_80044B58[] = {
 Gfx D_80044C00[] = {
     0xB900031D005049D8, 0xB900031D00553078, 
     0xB900031D0C1849D8, 0xB900031D0C193078, 
+    /*
+    //Transparent 1Cycle to  BillBoard 1Cycle
+    gDPSetRenderMode(G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_AA_ZB_TEX_EDGE, G_RM_AA_ZB_TEX_EDGE2),
+    //Transparent Surface to Billboard 
+    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2),
+    */
     NULL
 };
 
@@ -486,7 +575,7 @@ Gfx D_80044CA0[] = {
 };
 
 //D:80044D88
-s32 *D_80044D88[] = {
+s32 *ptrDynamicCCRMLUT[] = {
     &D_80044928, &D_80044940, &D_80044C00, &D_80044C28, &D_80044C50,
     &D_800449C8, &D_80044AB0, &D_80044B58, &D_80044C68, &D_80044CA0
 };
@@ -12202,26 +12291,26 @@ void sub_GAME_7F0BA640(void) {
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0BA640
-/* 0EF170 7F0BA640 10A00004 */  beqz  $a1, .L7F0BA654
-/* 0EF174 7F0BA644 00801025 */   move  $v0, $a0
-/* 0EF178 7F0BA648 0045082B */  sltu  $at, $v0, $a1
-/* 0EF17C 7F0BA64C 14200006 */  bnez  $at, .L7F0BA668
+glabel sub_GAME_7F0BA640 //DynamicCCRMLUT(Int DLSize (a0), Gfx GBICommand(a1), Gfx ReplacementGBICommand (a2))
+/* 0EF170 7F0BA640 10A00004 */  beqz  $a1, .L7F0BA654   //if a1 = 0 goto L7F0BA654
+/* 0EF174 7F0BA644 00801025 */   move  $v0, $a0         //v0 = a0
+/* 0EF178 7F0BA648 0045082B */  sltu  $at, $v0, $a1     //if a1 < v0   then goto L7F0BA668
+/* 0EF17C 7F0BA64C 14200006 */  bnez  $at, .L7F0BA668   //
 /* 0EF180 7F0BA650 00000000 */   nop   
 .L7F0BA654:
-/* 0EF184 7F0BA654 14A0002E */  bnez  $a1, .L7F0BA710
+/* 0EF184 7F0BA654 14A0002E */  bnez  $a1, .L7F0BA710   //if a1 != 0 goto return
 /* 0EF188 7F0BA658 00000000 */   nop   
-/* 0EF18C 7F0BA65C 808E0000 */  lb    $t6, ($a0)
-/* 0EF190 7F0BA660 2408FFB8 */  li    $t0, -72
-/* 0EF194 7F0BA664 110E002A */  beq   $t0, $t6, .L7F0BA710
+/* 0EF18C 7F0BA65C 808E0000 */  lb    $t6, ($a0)        //t6 = byte(a0)
+/* 0EF190 7F0BA660 2408FFB8 */  li    $t0, -72          //t0 = 0xB8
+/* 0EF194 7F0BA664 110E002A */  beq   $t0, $t6, .L7F0BA710  //if t6 = 0xB8 return (B8 = EndDl())
 .L7F0BA668:
-/* 0EF198 7F0BA668 3C098004 */   lui   $t1, %hi(D_80044D88) # $t1, 0x8004
-/* 0EF19C 7F0BA66C 25294D88 */  addiu $t1, %lo(D_80044D88) # addiu $t1, $t1, 0x4d88
-/* 0EF1A0 7F0BA670 00067880 */  sll   $t7, $a2, 2
-/* 0EF1A4 7F0BA674 012FC021 */  addu  $t8, $t1, $t7
+/* 0EF198 7F0BA668 3C098004 */   lui   $t1, %hi(ptrDynamicCCRMLUT) # $t1, 0x8004
+/* 0EF19C 7F0BA66C 25294D88 */  addiu $t1, %lo(ptrDynamicCCRMLUT) # addiu $t1, $t1, 0x4d88
+/* 0EF1A0 7F0BA670 00067880 */  sll   $t7, $a2, 2   //t7 = a2 << 2
+/* 0EF1A4 7F0BA674 012FC021 */  addu  $t8, $t1, $t7 //t8 = t7 + t1
 /* 0EF1A8 7F0BA678 8F030000 */  lw    $v1, ($t8)
 /* 0EF1AC 7F0BA67C 3C078004 */  lui   $a3, %hi(D_80044DB0) # $a3, 0x8004
-/* 0EF1B0 7F0BA680 8CE74DB0 */  lw    $a3, %lo(D_80044DB0)($a3)
+/* 0EF1B0 7F0BA680 8CE74DB0 */  lw    $a3, %lo(D_80044DB0)($a3) # 0x4DB0($a3), 
 /* 0EF1B4 7F0BA684 8C640000 */  lw    $a0, ($v1)
 /* 0EF1B8 7F0BA688 2408FFB8 */  li    $t0, -72
 /* 0EF1BC 7F0BA68C 10800011 */  beqz  $a0, .L7F0BA6D4
