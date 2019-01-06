@@ -368,15 +368,18 @@ s32 D_80044918 = 0xFF7FFFFF;
 // eg 0x0C192078 = C8112078, or had they used macros gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2 )
 // The reason for this LUT is to dynamicly change the rendermode and combiner to FOG / NoFog or any other setting they might have wanted to test during development as it applies during runtime
 /*Reminder:
-	1cycle combiners repeat both cycles gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA)
-				              (       -  )*     +  ,  (       -  )*     +
-	G_CC_MODULATERGBA2	    = COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0
-#define	ModulateRGB_EnvA 	= TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT //custom combiner for triangle alpha
-#define	ModulateRGB_EnvA2 	= COMBINED, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT //custom combiner for triangle alpha
-#define	ModulateRGBA_EnvA 	= TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0 //custom combiner for Texture*triangle alpha
-#define	ModulateRGBA_EnvA2 	= COMBINED, 0, SHADE, 0, COMBINED, 0, ENVIRONMENT, 0 //custom combiner for texture*triangle alpha
-#define	SHADE_EnvA 		    = 0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT //custom combiner for triangle alpha
-#define	TLRGB_ATile1 		= TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0
+	1cycle combiners repeat both cycles gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA2)
+				            (       -  )*     +  ,  (       -  )*     +
+	G_CC_MODULATERGBA2	    COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0 
+*/
+/*
+//New Defines to be added to gbi.h
+#define	ModulateRGB_EnvA 	TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT //custom combiner for triangle alpha
+#define	ModulateRGB_EnvA2 	COMBINED, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT //custom combiner for triangle alpha
+#define	ModulateRGBA_EnvA 	TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0 //custom combiner for Texture*triangle alpha
+#define	ModulateRGBA_EnvA2 	COMBINED, 0, SHADE, 0, COMBINED, 0, ENVIRONMENT, 0 //custom combiner for texture*triangle alpha
+#define	SHADE_EnvA 		    0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT //custom combiner for triangle alpha
+#define	TLRGB_ATile1 		TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0
 */
 //D:80044928
 Gfx D_80044928[] = {
@@ -507,15 +510,15 @@ Gfx D_80044B58[] = {
     /*
     // Swap all refrences to Shade in Alpha to Environment
     gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
-    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA), 
+    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA2) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA2), 
     gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2),
-    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA), 
+    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB2) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA2), 
     gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
-    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA), 
+    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA2) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA2), 
     gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2), 
-    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA),
+    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB2) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA2),
     gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_PASS2),
-    gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA),
+    gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA2),
     */
     NULL
 };
@@ -538,12 +541,23 @@ Gfx D_80044C00[] = {
 Gfx D_80044C28[] = {
     0xB900031D00552078, 0xB900031D00502078, 
     0xB900031D0C192078, 0xB900031D0C182078,
+	/*
+	//1 Cycle Opa to Particle
+	gDPSetRenderMode(RM_AA_ZB_OPA_SURF, RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_AA_ZB_PCL_SURF, G_RM_AA_ZB_PCL_SURF2),
+	//2 cycle Opa to Particle
+	gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_PCL_SURF2),
+	*/
     NULL
 };
 
 //D:80044C50
 Gfx D_80044C50[] = {
-    0xB900031D0C1849D8, 0xB900031D0C184B50, Null
+    0xB900031D0C1849D8, 0xB900031D0C184B50, 
+	/*
+	//Transparent to Cloud (Saves AA - Stops Jaggies from appearing behind BillBoard)
+	gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_ZB_CLD_SURF2),
+	*/
+	NULL
 };
 
 //D:80044C68
@@ -552,7 +566,13 @@ Gfx D_80044C68[] = {
     0xBA00140200000000, 0xBA00140200100000, //1Cycle --> 2Cycle
     0xB900031D00502048, 0xB900031D08D02048, 
     0xFC127E24FFFFF9FC, 0xFC127FFFFFFFF838, 
-    NULL
+    /*
+	//1 Cycle particle Surface to 2 Cycle colour + 1-a*Fog ???
+	gsDPSetCycleType(G_CYC_2CYCLE),
+	gDPSetRenderMode(G_RM_AA_PCL_SURF, G_RM_AA_PCL_SURF2), gDPSetRenderMode(AA_EN | IM_RD | CVG_DST_CLAMP | ALPHA_CVG_SEL | ZMODE_OPA | GBL_c1(G_BL_CLR_IN, G_BL_A_SHADE, G_BL_CLR_FOG, G_BL_1MA) | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
+	gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_PASS2), gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2),
+	*/
+	NULL
 };
 
 //D:80044CA0
@@ -571,11 +591,27 @@ Gfx D_80044CA0[] = {
     0xFC26E4041FFCFFFC, 0xFC26E4061FFCFFFD,
     0xFC26E4041F10FFFF, 0xFC26E4061F14FFFF, 
     0xFCFFFFFFFFFE7838, 0xFC637FFFFFFFFA38, 
-    NULL
+    /*
+	gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB2) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA2), 
+ 	gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA2) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA2), 
+ 	gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB2) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA2), 
+ 	gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA2) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA2), 
+ 	gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE2), gDPSetCombineLERP(CENTER, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT, CENTER, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT),
+ 	gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT),
+ 	gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, COMBINED_ALPHA, 0, COMBINED, 0, ENVIRONMENT, 0),
+ 	gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT),
+ 	gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, COMBINED_ALPHA, 0, COMBINED, 0, ENVIRONMENT, 0),
+ 	gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGB2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0, COMBINED, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT),
+ 	gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGBA2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0, COMBINED, 0, COMBINED_ALPHA, 0, COMBINED, 0, ENVIRONMENT, 0),
+ 	gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGB2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0, COMBINED, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT),
+ 	gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGBA2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0, COMBINED, 0, COMBINED_ALPHA, 0, COMBINED, 0, ENVIRONMENT, 0),
+ 	gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2), gDPSetCombineLERP(CENTER, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
+	*/
+	NULL
 };
 
 //D:80044D88
-s32 *ptrDynamicCCRMLUT[] = {
+s32 *ptrDynamic_CC_RM_LUT[] = {
     &D_80044928, &D_80044940, &D_80044C00, &D_80044C28, &D_80044C50,
     &D_800449C8, &D_80044AB0, &D_80044B58, &D_80044C68, &D_80044CA0
 };
@@ -12304,8 +12340,8 @@ glabel sub_GAME_7F0BA640 //DynamicCCRMLUT(Int DLSize (a0), Gfx GBICommand(a1), G
 /* 0EF190 7F0BA660 2408FFB8 */  li    $t0, -72          //t0 = 0xB8
 /* 0EF194 7F0BA664 110E002A */  beq   $t0, $t6, .L7F0BA710  //if t6 = 0xB8 return (B8 = EndDl())
 .L7F0BA668:
-/* 0EF198 7F0BA668 3C098004 */   lui   $t1, %hi(ptrDynamicCCRMLUT) # $t1, 0x8004
-/* 0EF19C 7F0BA66C 25294D88 */  addiu $t1, %lo(ptrDynamicCCRMLUT) # addiu $t1, $t1, 0x4d88
+/* 0EF198 7F0BA668 3C098004 */   lui   $t1, %hi(ptrDynamic_CC_RM_LUT) # $t1, 0x8004
+/* 0EF19C 7F0BA66C 25294D88 */  addiu $t1, %lo(ptrDynamic_CC_RM_LUT) # addiu $t1, $t1, 0x4d88
 /* 0EF1A0 7F0BA670 00067880 */  sll   $t7, $a2, 2   //t7 = a2 << 2
 /* 0EF1A4 7F0BA674 012FC021 */  addu  $t8, $t1, $t7 //t8 = t7 + t1
 /* 0EF1A8 7F0BA678 8F030000 */  lw    $v1, ($t8)
