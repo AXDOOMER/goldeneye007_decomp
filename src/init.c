@@ -34,19 +34,19 @@ struct debug_handler_entry debug_handler_table[] =
 #ifdef NONMATCHING
 void init(void) {
     s32 *cdata_vaddr_start;
-    s32 rodata_rom_size;
+    s32 cdata_rom_size;
     s32 datapos;
     void *dest;
     void *source;
 
-    cdata_vaddr_start = get_cdata_vaddr_start();
-    rodata_rom_size = (get_rodata_rom_end() - get_rodata_rom_start());
+    cdata_vaddr_start = get_cdataSegmentVaddrStart();
+    cdata_rom_size = (get_cdataSegmentRomEnd() - get_cdataSegmentRomStart());
 
-	for (datapos = ((rodata_rom_size + (getRareZipASMRomend() - getRareZipASMRomstart())) + -1); datapos >= 0; datapos--){
-		_rarezipSegmentVaddrStart[-rodata_rom_size + datapos] = &cdata_vaddr_start[datapos];
+	for (datapos = ((cdata_rom_size + (get_rarezipSegmentRomEnd() - get_rarezipSegmentRomStart())) + -1); datapos >= 0; datapos--){
+		_rarezipSegmentVaddrStart[-cdata_rom_size + datapos] = &cdata_vaddr_start[datapos];
 	}
 
-    jump_decompressfile((_rarezipSegmentVaddrStart - rodata_rom_size), cdata_vaddr_start, 0x80300000);
+    jump_decompressfile((_rarezipSegmentVaddrStart - cdata_rom_size), cdata_vaddr_start, 0x80300000);
 
     if (0xfff00050 == 0)
     {
@@ -91,16 +91,16 @@ glabel init
 /* 001110 70000510 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 001114 70000514 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 001118 70000518 AFB10020 */  sw    $s1, 0x20($sp)
-/* 00111C 7000051C 0C00012F */  jal   get_cdata_vaddr_start
+/* 00111C 7000051C 0C00012F */  jal   get_cdataSegmentVaddrStart
 /* 001120 70000520 AFB0001C */   sw    $s0, 0x1c($sp)
-/* 001124 70000524 0C000132 */  jal   get_rodata_rom_start
+/* 001124 70000524 0C000132 */  jal   get_cdataSegmentRomStart
 /* 001128 70000528 00408025 */   move  $s0, $v0
-/* 00112C 7000052C 0C000135 */  jal   get_rodata_rom_end
+/* 00112C 7000052C 0C000135 */  jal   get_cdataSegmentRomEnd
 /* 001130 70000530 AFA20034 */   sw    $v0, 0x34($sp)
 /* 001134 70000534 8FAE0034 */  lw    $t6, 0x34($sp)
-/* 001138 70000538 0C000138 */  jal   getRareZipASMRomstart
+/* 001138 70000538 0C000138 */  jal   get_rarezipSegmentRomStart
 /* 00113C 7000053C 004E8823 */   subu  $s1, $v0, $t6
-/* 001140 70000540 0C00013B */  jal   getRareZipASMRomend
+/* 001140 70000540 0C00013B */  jal   get_rarezipSegmentRomEnd
 /* 001144 70000544 AFA20028 */   sw    $v0, 0x28($sp)
 /* 001148 70000548 8FAF0028 */  lw    $t7, 0x28($sp)
 /* 00114C 7000054C 3C0A7020 */  lui   $t2, 0x7020
@@ -273,7 +273,8 @@ void thread3_main(void *args) {
 
 
 #ifdef NONMATCHING
-void *setuplastentryofdebughandler(void) {
+void *setuplastentryofdebughandler(void)
+{
     ? sp8;
     void *temp_t6;
     void *temp_t0;
@@ -282,10 +283,9 @@ void *setuplastentryofdebughandler(void) {
     void *phi_t0;
     void *phi_v0;
 
-    // Node 0
     phi_t6 = &debug_handler_table;
     phi_t0 = &sp8;
-    // Node 1
+loop_1:
     temp_t6 = (phi_t6 + 0xc);
     temp_t0 = (phi_t0 + 0xc);
     temp_t0->unk-C = (?32) *phi_t6;
@@ -297,21 +297,18 @@ void *setuplastentryofdebughandler(void) {
     {
         goto loop_1;
     }
-    // Node 2
     *temp_t0 = (?32) *temp_t6;
     temp_t0->unk4 = (?32) temp_t6->unk4;
     phi_v0 = &sp8;
-    // Node 3
+loop_3:
     temp_v0 = (phi_v0 + 8);
     phi_v0 = temp_v0;
     if (phi_v0->unk8 != 0)
     {
         goto loop_3;
     }
-    // Node 4
     return temp_v0;
-
-
+}
 #else
 GLOBAL_ASM(
 .section .text

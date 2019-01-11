@@ -19,7 +19,7 @@ u32 D_800230CC = 1;
 char sc[0xD8];
 char gfxClient[0x18];
 
-char dword_CODE_bss_8005DB30[0x10];
+char target_for_counters_maybe[0x10];
 char dword_CODE_bss_8005DB40[0xB0];
 
 extern u32* cfb_16_a;
@@ -67,37 +67,38 @@ void osCreateLog(void){
 
 
 #ifdef NONMATCHING
-void osCreateScheduler(void *arg0, s32 arg1, ? arg2, s32 arg_unalignedB, ? numFields) {
+void osCreateScheduler(void *arg0, s32 arg1, ? arg2, s32 arg_unalignedB, ? arg3)
+{
+    s32 temp_s1;
     void *temp_t2;
 
-    // Node 0
-    arg0->curRSPTask = 0;
-    arg0->curRDPTask = 0;
-    arg0->clientList = 0;
-    arg0->frameCount = 0;
-    arg0->audioListHead = 0;
-    arg0->gfxListHead = 0;
-    arg0->audioListTail = 0;
-    arg0->gfxListTail = 0;
-    arg0->retraceMsg.type = 1;
-    arg0->prenmiMsg.type = 5;
-    //temp_s1 = (arg0 + 0x40);
-    arg0->thread = arg1;
-    osCreateMesgQueue(&sc->interruptQ, sc->intBuf, 8);
-    osCreateMesgQueue(&sc->cmdQ, sc->cmdMsgBuf, 8);
+    arg0->unkC8 = 0;
+    arg0->unkCC = 0;
+    arg0->unkB4 = 0;
+    arg0->unkD0 = 0;
+    arg0->unkB8 = 0;
+    arg0->unkBC = 0;
+    arg0->unkC0 = 0;
+    arg0->unkC4 = 0;
+    *arg0 = (u16)1;
+    arg0->unk20 = (u16)5;
+    temp_s1 = (arg0 + 0x40);
+    arg0->unkB0 = arg1;
+    osCreateMesgQueue(temp_s1, (arg0 + 0x58), 8);
+    osCreateMesgQueue((arg0 + 0x78), (arg0 + 0x90), 8);
     osCreateViManager(0xfe);
     temp_t2 = ((arg_unalignedB * 0x50) + &osViModeTable);
     viMode = temp_t2;
     dword_CODE_bss_80060880 = (?32) temp_t2->unk1C;
     dword_CODE_bss_80060884 = (?32) temp_t2->unk30;
     dword_CODE_bss_80060888 = (?32) temp_t2->unk44;
-    osSetEventMesg(4, &sc->interruptQ, 0x29b);
-    osSetEventMesg(9, &sc->interruptQ, 0x29c);
-    osSetEventMesg(0xe, &sc->interruptQ, 0x29d);
-    osViSetEvent(&sc->interruptQ, 0x29a, numFields);
+    osSetEventMesg(4, temp_s1, 0x29b);
+    osSetEventMesg(9, temp_s1, 0x29c);
+    osSetEventMesg(0xe, temp_s1, 0x29d);
+    osViSetEvent(temp_s1, 0x29a, arg3);
     osCreateLog();
-    osCreateThread(arg0->thread, 2, &__scMain, arg0, set_stack_entry(&sp_shed, 0x200), 0x1e);
-    return osStartThread(arg0->thread);
+    osCreateThread(arg0->unkB0, 2, &__scMain, arg0, set_stack_entry(&sp_shed, 0x200), 0x1e);
+    osStartThread(arg0->unkB0);
 }
 #else
 GLOBAL_ASM(
@@ -199,13 +200,13 @@ glabel osCreateScheduler
 
 
 #ifdef NONMATCHING
-void osScAddClient(void *arg0, void *arg1, ?32 arg2, ?32 arg3) {
-    // Node 0
+void osScAddClient(void *arg0, void *arg1, ?32 arg2, ?32 arg3)
+{
     arg1->unk4 = arg2;
     arg1->unk8 = arg3;
     *arg1 = (void *) arg0->unkB4;
     arg0->unkB4 = arg1;
-    return osSetIntMask(osSetIntMask(1), arg1);
+    osSetIntMask(osSetIntMask(1), arg1);
 }
 #else
 GLOBAL_ASM(
@@ -241,16 +242,16 @@ glabel osScAddClient
 
 
 #ifdef NONMATCHING
-void osScRemoveClient(void *arg0, void *arg1) {
-    void *sp18;
+void osScRemoveClient(void *arg0, void *arg1)
+{
     void *sp1C;
+    void *sp18;
     void *temp_a2;
     void *temp_v1;
     void *phi_v1;
     void *phi_a2;
     void *phi_a2_2;
 
-    // Node 0
     sp18 = NULL;
     sp1C = (void *) arg0->unkB4;
     phi_v1 = arg0->unkB4;
@@ -258,27 +259,22 @@ void osScRemoveClient(void *arg0, void *arg1) {
     phi_a2_2 = sp18;
     if (arg0->unkB4 != 0)
     {
-        loop_1:
-        // Node 1
+block_1:
         if (phi_v1 == arg1)
         {
-            // Node 2
             if (phi_a2 != 0)
             {
-                // Node 3
                 *phi_a2 = (void *) *arg1;
                 phi_a2_2 = phi_a2;
             }
             else
             {
-                // Node 4
                 arg0->unkB4 = (void *) *arg1;
                 phi_a2_2 = phi_a2;
             }
         }
         else
         {
-            // Node 5
             temp_a2 = phi_v1;
             temp_v1 = *phi_v1;
             phi_v1 = temp_v1;
@@ -286,12 +282,11 @@ void osScRemoveClient(void *arg0, void *arg1) {
             phi_a2_2 = temp_a2;
             if (temp_v1 != 0)
             {
-                goto loop_1;
+                goto block_1;
             }
         }
     }
-    // Node 6
-    return osSetIntMask(osSetIntMask(1), arg1, phi_a2_2);
+    osSetIntMask(osSetIntMask(1), arg1, phi_a2_2);
 }
 #else
 GLOBAL_ASM(
@@ -342,10 +337,10 @@ glabel osScRemoveClient
 
 
 #ifdef NONMATCHING
-s32 osScGetCmdQ(s32 arg0) {
-    // (possible return value: (arg0 + 0x78))
+s32 osScGetCmdQ(s32 arg0)
+{
+    return (arg0 + 0x78);
 }
-
 #else
 GLOBAL_ASM(
 glabel osScGetCmdQ
@@ -493,8 +488,66 @@ glabel __scMain
 
 
 #ifdef NONMATCHING
-void __scHandleRetrace(void) {
-    
+void __scHandleRetrace(void *arg0)
+{
+    ?32 sp3C;
+    ?32 sp30;
+    ?32 sp2C;
+    s32 temp_s2;
+    s32 temp_s0;
+    void *temp_s0_2;
+    void *phi_s0;
+
+    sp3C = 0;
+    sp30 = 0;
+    sp2C = 0;
+    video_related_1();
+    arg0->unkD0 = (s32) (arg0->unkD0 + 1);
+    video_related_7();
+    controller_7000BD88();
+    music_related_15();
+    temp_s2 = (arg0 + 0x78);
+    if (osRecvMesg(temp_s2, &sp3C, 0) != -1)
+    {
+block_1:
+        __scAppendList(arg0, sp3C);
+        if (osRecvMesg(temp_s2, &sp3C, 0) != -1)
+        {
+            goto block_1;
+        }
+    }
+    if ((arg0->unkD4 != 0) && (arg0->unkC8 != 0))
+    {
+        __scYield(arg0, &sp30);
+    }
+    else
+    {
+        temp_s0 = ((((u32) arg0->unkC8 < 1U) * 2) | ((u32) arg0->unkCC < 1U));
+        if (__scSchedule(arg0, &sp30, &sp2C, temp_s0) != temp_s0)
+        {
+            __scExec(arg0, sp30, sp2C);
+        }
+    }
+    phi_s0 = arg0->unkB4;
+    if (arg0->unkB4 != 0)
+    {
+block_9:
+        if ((phi_s0->unk8 == 0) || ((arg0->unkD0 & 1) == 0))
+        {
+            osSendMesg(phi_s0->unk4, arg0, 0);
+        }
+        else
+        {
+
+        }
+        temp_s0_2 = *phi_s0;
+        phi_s0 = temp_s0_2;
+        if (temp_s0_2 != 0)
+        {
+            goto block_9;
+        }
+    }
+    CheckDisplayErrorBufferEvery16Frames(arg0->unkD0);
 }
 #else
 GLOBAL_ASM(
@@ -604,50 +657,39 @@ glabel __scHandleRetrace
 
 
 #ifdef NONMATCHING
-void __scHandleRSP(void *arg0) {
-    ?32 sp24;
+void __scHandleRSP(void *arg0)
+{
     ?32 sp28;
-    ? temp_ret;
-    ? phi_return_reg;
+    ?32 sp24;
 
-    // Node 0
     sp28 = 0;
     sp24 = 0;
     arg0->unkC8 = 0U;
     video_related_3(0x10001, arg0->unkC8);
     if (((sp2C->unk4 & 0x10) != 0) && (osSpTaskYielded((sp2C + 0x10), sp2C) != 0))
     {
-        // Node 2
         sp2C->unk4 = (s32) (sp2C->unk4 | 0x20);
         if ((sp2C->unk8 & 7) == 3)
         {
-            // Node 3
             *sp2C = (void *) arg0->unkBC;
             arg0->unkBC = sp2C;
             if (arg0->unkC4 == 0)
             {
-                // Node 4
                 arg0->unkC4 = sp2C;
             }
         }
     }
     else
     {
-        // Node 5
         sp2C->unk4 = (s32) (sp2C->unk4 & -3);
         __scTaskComplete(arg0, sp2C);
     }
-    // Node 6
-    temp_ret = __scSchedule(arg0, &sp28, &sp24, ((((u32) arg0->unkC8 < 1U) * 2) | ((u32) arg0->unkCC < 1U)));
-    phi_return_reg = temp_ret;
-    if (temp_ret != sp20)
+    if (__scSchedule(arg0, &sp28, &sp24, ((((u32) arg0->unkC8 < 1U) * 2) | ((u32) arg0->unkCC < 1U))) != sp20)
     {
-        // Node 7
-        phi_return_reg = __scExec(arg0, sp28, sp24, sp20);
+        __scExec(arg0, sp28, sp24, sp20);
     }
-    // Node 8
-    return phi_return_reg;
 }
+
 #else
 GLOBAL_ASM(
 glabel __scHandleRSP
@@ -730,16 +772,16 @@ glabel __scHandleRSP
 
 
 #ifdef NONMATCHING
-void *get_counters(void) {
-    // (possible return value: &dword_CODE_bss_8005DB30)
+void *get_counters(void)
+{
+    return &target_for_counters_maybe;
 }
-
 #else
 GLOBAL_ASM(
 glabel get_counters
-/* 001D1C 7000111C 3C028006 */  lui   $v0, %hi(dword_CODE_bss_8005DB30)
+/* 001D1C 7000111C 3C028006 */  lui   $v0, %hi(target_for_counters_maybe)
 /* 001D20 70001120 03E00008 */  jr    $ra
-/* 001D24 70001124 2442DB30 */   addiu $v0, $v0, %lo(dword_CODE_bss_8005DB30)
+/* 001D24 70001124 2442DB30 */   addiu $v0, $v0, %lo(target_for_counters_maybe)
 )
 #endif
 
@@ -749,16 +791,15 @@ glabel get_counters
 
 
 #ifdef NONMATCHING
-void __scHandleRDP(void *arg0) {
-    ?32 sp24;
+void __scHandleRDP(void *arg0)
+{
     ?32 sp28;
+    ?32 sp24;
 
-    // Node 0
     sp28 = 0;
     sp24 = 0;
     if (arg0->unkCC != 0)
     {
-        // Node 1
         video_related_3(0x10002);
         osDpGetCounters(&target_for_counters_maybe);
         arg0->unkCC = NULL;
@@ -766,13 +807,11 @@ void __scHandleRDP(void *arg0) {
         __scTaskComplete(arg0, arg0->unkCC);
         if (__scSchedule(arg0, &sp28, &sp24, ((((u32) arg0->unkC8 < 1U) * 2) | ((u32) arg0->unkCC < 1U))) != sp20)
         {
-            // Node 2
             __scExec(arg0, sp28, sp24, sp20);
         }
     }
-    // Node 3
-    return;
 }
+
 #else
 GLOBAL_ASM(
 glabel __scHandleRDP
@@ -831,8 +870,20 @@ glabel __scHandleRDP
 
 
 #ifdef NONMATCHING
-void __scTaskReady(void) {
-    
+s32 __scTaskReady(s32 arg0)
+{
+    s32 sp1C;
+
+    if (arg0 != 0)
+    {
+        sp1C = osViGetCurrentFramebuffer();
+        if (osViGetNextFramebuffer() == sp1C)
+        {
+            return arg0;
+        }
+        return 0;
+    }
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -868,10 +919,11 @@ glabel __scTaskReady
 
 
 #ifdef NONMATCHING
-void __scTaskComplete(s32 arg0, void *arg1) {
+void __scTaskComplete(s32 arg0, void *arg1)
+{
     s32 temp_t2;
-    void *temp_t8_2;
     void *temp_t8;
+    void *temp_t8_2;
     void *temp_t5;
     s32 temp_t7;
     s32 temp_t0;
@@ -879,57 +931,47 @@ void __scTaskComplete(s32 arg0, void *arg1) {
     void *phi_t5;
     s32 phi_v1;
     s32 phi_t0;
-    ? phi_return_reg;
+    ? phi_return;
 
-    // Node 0
-    phi_return_reg = 0;
+    phi_return = 0;
     if ((arg1->unk4 & 3) == 0)
     {
-        // Node 1
         osSendMesg(arg1->unk50, arg1->unk54, 1);
         if (arg1->unk10 == 1)
         {
-            // Node 2
             if ((arg1->unk8 & 0x40) != 0)
             {
-                // Node 3
                 if ((arg1->unk8 & 0x20) != 0)
                 {
-                    // Node 4
                     if (D_800230CC != 0)
                     {
-                        // Node 5
                         osViBlack(0);
                         D_800230CC = 0;
                     }
-                    // Node 6
                     temp_t2 = (something_with_osVI * 4);
                     phi_v1 = temp_t2;
                     if ((0x80020000 + temp_t2)->unk30C4 != 0)
                     {
-                        // Node 7
-                        temp_t8_2 = ((something_with_osVI * 0x50) + &dword_CODE_bss_8005DB40);
-                        phi_t8 = temp_t8_2;
+                        temp_t8 = ((something_with_osVI * 0x50) + &dword_CODE_bss_8005DB40);
+                        phi_t8 = temp_t8;
                         phi_t5 = (0x80060000 + (something_with_osVI * 4))->unk-2420;
-                        // Node 8
-                        temp_t8 = (phi_t8 + 0xc);
+block_8:
+                        temp_t8_2 = (phi_t8 + 0xc);
                         temp_t5 = (phi_t5 + 0xc);
                         temp_t5->unk-C = (?32) *phi_t8;
-                        temp_t5->unk-8 = (?32) temp_t8->unk-8;
-                        temp_t5->unk-4 = (?32) temp_t8->unk-4;
-                        phi_t8 = temp_t8;
+                        temp_t5->unk-8 = (?32) temp_t8_2->unk-8;
+                        temp_t5->unk-4 = (?32) temp_t8_2->unk-4;
+                        phi_t8 = temp_t8_2;
                         phi_t5 = temp_t5;
-                        if (temp_t8 != (temp_t8_2 + 0x48))
+                        if (temp_t8_2 != (temp_t8 + 0x48))
                         {
-                            goto loop_8;
+                            goto block_8;
                         }
-                        // Node 9
-                        *temp_t5 = (?32) *temp_t8;
-                        temp_t5->unk4 = (?32) temp_t8->unk4;
+                        *temp_t5 = (?32) *temp_t8_2;
+                        temp_t5->unk4 = (?32) temp_t8_2->unk4;
                         osSetIntMask(osSetIntMask(0x80401));
                         phi_v1 = (something_with_osVI * 4);
                     }
-                    // Node 10
                     osViSetXScale((0x80020000 + phi_v1)->unk30B4);
                     osViSetYScale((0x80020000 + (something_with_osVI * 4))->unk30BC);
                     temp_t7 = (something_with_osVI + 1);
@@ -937,26 +979,21 @@ void __scTaskComplete(s32 arg0, void *arg1) {
                     phi_t0 = temp_t0;
                     if (temp_t7 < 0)
                     {
-                        // Node 11
                         phi_t0 = temp_t0;
                         if (temp_t0 != 0)
                         {
-                            // Node 12
                             phi_t0 = (temp_t0 + -2);
                         }
                     }
-                    // Node 13
                     something_with_osVI = (s32) phi_t0;
                     CheckDisplayErrorBuffer(arg1->unkC);
                     osViSwapBuffer(arg1->unkC);
                 }
             }
         }
-        // Node 14
-        phi_return_reg = 1;
+        phi_return = 1;
     }
-    // Node 15
-    return phi_return_reg;
+    return phi_return;
 }
 #else
 GLOBAL_ASM(
@@ -1081,8 +1118,36 @@ glabel __scTaskComplete
 
 
 #ifdef NONMATCHING
-void __scAppendList(void) {
-    
+s32 __scAppendList(void *arg0, void *arg1)
+{
+    if (arg1->unk10 == 2)
+    {
+        if (arg0->unkC0 != 0)
+        {
+            *arg0->unkC0 = arg1;
+        }
+        else
+        {
+            arg0->unkB8 = arg1;
+        }
+        arg0->unkC0 = arg1;
+        arg0->unkD4 = 1;
+    }
+    else
+    {
+        if (arg0->unkC4 != 0)
+        {
+            *arg0->unkC4 = arg1;
+        }
+        else
+        {
+            arg0->unkBC = arg1;
+        }
+        arg0->unkC4 = arg1;
+    }
+    *arg1 = 0;
+    arg1->unk4 = (s32) (arg1->unk8 & 3);
+    return arg1->unk10;
 }
 #else
 GLOBAL_ASM(
@@ -1125,8 +1190,54 @@ glabel __scAppendList
 
 
 #ifdef NONMATCHING
-void __scExec(void) {
-    
+void __scExec(void *arg0, void *arg1, void *arg2)
+{
+    s32 phi_v0;
+
+    if (arg1 != 0)
+    {
+        if (arg1->unk10 == 2)
+        {
+            osWritebackDCacheAll();
+        }
+        phi_v0 = arg1->unk10;
+        if (arg1->unk10 != 2)
+        {
+            phi_v0 = arg1->unk10;
+            if ((arg1->unk4 & 0x10) == 0)
+            {
+                osDpSetStatus(0x3c0);
+                phi_v0 = arg1->unk10;
+            }
+        }
+        if (phi_v0 == 2)
+        {
+            video_related_3(0x30001);
+        }
+        else
+        {
+            video_related_3(0x30001);
+            video_related_3(0x20002);
+        }
+        arg1->unk4 = (s32) (arg1->unk4 & -0x31);
+        osSpTaskLoad((arg1 + 0x10));
+        osSpTaskStartGo(sp20);
+        arg0->unkC8 = arg1;
+        if (arg1 == arg2)
+        {
+            arg0->unkCC = arg2;
+        }
+    }
+    if (arg2 != 0)
+    {
+        if (arg2 != arg1)
+        {
+            osDpSetNextBuffer(arg2->unk38, *arg2->unk3C, arg2->unk3C->unk4);
+            setby_DPCfill_0 = 1;
+            setby_DPCfill_1 = 0;
+            arg0->unkCC = arg2;
+        }
+    }
 }
 #else
 GLOBAL_ASM(
@@ -1217,8 +1328,17 @@ glabel __scExec
 
 
 #ifdef NONMATCHING
-void __scYield(void) {
-    
+void *__scYield(void *arg0)
+{
+    void *phi_return;
+
+    phi_return = arg0->unkC8;
+    if (arg0->unkC8->unk10 == 1)
+    {
+        arg0->unkC8->unk4 = (s32) (arg0->unkC8->unk4 | 0x10);
+        phi_return = osSpTaskYield();
+    }
+    return phi_return;
 }
 #else
 GLOBAL_ASM(
@@ -1252,6 +1372,17 @@ void __scSchedule(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel J_80028400
+    .word .L70001758
+    .word .L70001704
+    .word .L7000167C
+    .word .L70001758
+    .word .L70001758
+    .word .L70001704
+    .word .L70001704
+
+.text
 glabel __scSchedule
 /* 00219C 7000159C 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0021A0 700015A0 AFB10018 */  sw    $s1, 0x18($sp)

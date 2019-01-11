@@ -15,28 +15,32 @@ u32 ptr_TLBallocatedblock;
 
 
 #ifdef NONMATCHING
-void *establish_TLB_buffer_management_table(void) {
+void *establish_TLB_buffer_management_table(void)
+{
     u32 temp_v1;
     s32 temp_at;
     void *temp_v1_2;
+    u32 phi_v1;
+    void *phi_v1_2;
 
-    // Node 0
-    // Node 1
-    temp_v1 = (&TLB_managment_table_start_start + 0x10);
+    phi_v1 = &TLB_managment_table_start;
+block_1:
+    temp_v1 = (phi_v1 + 0x10);
     temp_v1->unk-10 = 1;
     temp_v1->unk-C = 0;
+    phi_v1 = temp_v1;
     if (temp_v1 < &TLB_manager_mapping_table_start)
     {
-        goto loop_1;
+        goto block_1;
     }
-    // Node 2
     temp_at = (TLB_manager_mapping_table_start + 2);
     *temp_at = (u8)0;
     *temp_at = 1;
     *temp_at = (u8)0;
     *temp_at = 1;
-    // Node 3
-    temp_v1_2 = ((TLB_manager_mapping_table_start + 4) + 8);
+    phi_v1_2 = (void *) (TLB_manager_mapping_table_start + 4);
+block_3:
+    temp_v1_2 = (phi_v1_2 + 8);
     temp_v1_2->unk-5 = (u8)0;
     temp_v1_2->unk-6 = 1;
     temp_v1_2->unk-3 = (u8)0;
@@ -45,20 +49,19 @@ void *establish_TLB_buffer_management_table(void) {
     temp_v1_2->unk-2 = 1;
     temp_v1_2->unk-7 = (u8)0;
     temp_v1_2->unk-8 = 1;
+    phi_v1_2 = temp_v1_2;
     if (temp_v1_2 != &TLB_manager_mapping_table_end)
     {
-        goto loop_3;
+        goto block_3;
     }
-    // Node 4
     ptr_TLBallocatedblock = (s32) ((&sp_boot & -0x2000) + 0xfff4c000);
     (void *)0x80060000->unk-1B5C = (s32) (&TLB_managment_table_start + 0xffc08000);
-    return;
-    // (possible return value: &TLB_manager_mapping_table_end)
+    return &TLB_manager_mapping_table_end;
 }
 #else
 GLOBAL_ASM(
 glabel establish_TLB_buffer_management_table
-/* 0023E0 700017E0 3C038006 */  lui   $v1, %hi(TLB_managment_table_start_start) # $v1, 0x8006
+/* 0023E0 700017E0 3C038006 */  lui   $v1, %hi(TLB_managment_table_start) # $v1, 0x8006
 /* 0023E4 700017E4 3C028006 */  lui   $v0, %hi(TLB_manager_mapping_table_start) # $v0, 0x8006
 /* 0023E8 700017E8 2442E3F0 */  addiu $v0, %lo(TLB_manager_mapping_table_start) # addiu $v0, $v0, -0x1c10
 /* 0023EC 700017EC 2463DBF0 */  addiu $v1, %lo(TLB_managment_table_start) # addiu $v1, $v1, -0x2410
@@ -191,10 +194,6 @@ glabel return_TLB_index_for_entry
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
 void find_remove_TLB_entry(u32 entry) {
     u32 temp_ret = return_TLB_index_for_entry(entry);
 
@@ -202,6 +201,29 @@ void find_remove_TLB_entry(u32 entry) {
         return;
 
     osUnmapTLB(temp_ret);
+}
+
+
+#ifdef NONMATCHING
+void remove_TLB_entry_from_table(s32 arg0)
+{
+    void *sp18;
+    void *temp_v1;
+    ? temp_ret;
+
+    temp_v1 = ((arg0 * 2) + &TLB_manager_mapping_table_start);
+    if (*temp_v1 == 0)
+    {
+        sp18 = temp_v1;
+        temp_ret = return_TLB_index_for_entry(((temp_v1->unk1 << 0xd) | 0x7f000000));
+        if ((temp_ret << 0) >= 0)
+        {
+            sp18 = temp_v1;
+            osUnmapTLB(temp_ret);
+        }
+        (0x80060000 + (temp_v1->unk1 * 0x10))->unk-2410 = 1;
+        *temp_v1 = 1;
+    }
 }
 #else
 GLOBAL_ASM(

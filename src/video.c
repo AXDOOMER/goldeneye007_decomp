@@ -328,8 +328,364 @@ glabel video_related_7
 
 
 #ifdef NONMATCHING
-void video_related_8(void) {
+void video_related_8(void)
+{
+    void *temp_v0;
+    void *temp_t7;
+    void *temp_t6;
+    void *temp_t9;
+    void *temp_t8;
+    void *temp_t9_2;
+    void *temp_t6_2;
+    void *temp_t7_2;
+    void *temp_t8_2;
+    s32 temp_t1;
+    void *temp_v1;
+    void *temp_t8_3;
+    void *temp_t7_3;
+    void *temp_v1_2;
+    void *temp_t8_4;
+    void *temp_t6_3;
+    void *temp_v1_3;
+    void *temp_t6_4;
+    void *temp_t8_5;
+    void *temp_v1_4;
+    void *temp_t6_5;
+    void *temp_t9_3;
+    s32 temp_v0_2;
+    s32 temp_a0;
+    s32 temp_v0_3;
+    s32 temp_a0_2;
+    s32 temp_v0_4;
+    s32 temp_a0_3;
+    s32 temp_t2;
+    s32 temp_t9_4;
+    s32 temp_t7_4;
+    s32 temp_t8_6;
+    s8 temp_t6_6;
+    s8 temp_t7_5;
+    s32 temp_a1;
+    void *phi_t7;
+    void *phi_t6;
+    void *phi_t9;
+    void *phi_t8;
+    void *phi_t9_2;
+    void *phi_t6_2;
+    void *phi_t7_2;
+    void *phi_t8_2;
+    f32 phi_f0;
+    void *phi_t8_3;
+    void *phi_t7_3;
+    void *phi_t8_4;
+    void *phi_t6_3;
+    void *phi_t6_4;
+    void *phi_t8_5;
+    void *phi_t6_5;
+    void *phi_t9_3;
+    void *phi_v1;
+    s32 phi_t9_4;
+    s8 phi_t6_6;
+    s8 phi_t7_4;
 
+    if (*ptr_video_settings2 != *ptr_video_settings1)
+    {
+        if (*ptr_video_settings2 != 0)
+        {
+            if (*ptr_video_settings2 != 1)
+            {
+                if (*ptr_video_settings2 != 2)
+                {
+
+                }
+                else
+                {
+                    if ((void *)0x80000000->unk300 == 2)
+                    {
+                        viMode = &osViModeTable_osViModeMpalHaf1;
+                    }
+                    else
+                    {
+                        viMode = &osViModeTable_osViModeNtscHaf1;
+                    }
+                    temp_v0 = *&viMode;
+                    dword_CODE_bss_80060880 = (s32) temp_v0->unk1C;
+                    dword_CODE_bss_80060884 = (s32) temp_v0->unk30;
+                    dword_CODE_bss_80060888 = (s32) temp_v0->unk44;
+                    osViBlack(0);
+                }
+            }
+            else
+            {
+                if (coloroutputmode != 0)
+                {
+                    if (osTvType == 2)
+                    {
+                        phi_t7 = &osViModeTable_osViModeMpalLan1;
+                        phi_t6 = &dword_CODE_bss_80060828;
+block_9:
+                        temp_t7 = (phi_t7 + 0xc);
+                        temp_t6 = (phi_t6 + 0xc);
+                        temp_t6->unk-C = (?32) *phi_t7;
+                        temp_t6->unk-8 = (?32) temp_t7->unk-8;
+                        temp_t6->unk-4 = (?32) temp_t7->unk-4;
+                        phi_t7 = temp_t7;
+                        phi_t6 = temp_t6;
+                        if (temp_t7 != (&osViModeTable_osViModeMpalLan1 + 0x48))
+                        {
+                            goto block_9;
+                        }
+                        *temp_t6 = (?32) *temp_t7;
+                        temp_t6->unk4 = (?32) temp_t7->unk4;
+                    }
+                    else
+                    {
+                        phi_t9 = &osViModeTable_osViModeNtscLan1;
+                        phi_t8 = &dword_CODE_bss_80060828;
+block_12:
+                        temp_t9 = (phi_t9 + 0xc);
+                        temp_t8 = (phi_t8 + 0xc);
+                        temp_t8->unk-C = (?32) *phi_t9;
+                        temp_t8->unk-8 = (?32) temp_t9->unk-8;
+                        temp_t8->unk-4 = (?32) temp_t9->unk-4;
+                        phi_t9 = temp_t9;
+                        phi_t8 = temp_t8;
+                        if (temp_t9 != (&osViModeTable_osViModeNtscLan1 + 0x48))
+                        {
+                            goto block_12;
+                        }
+                        *temp_t8 = (?32) *temp_t9;
+                        temp_t8->unk4 = (?32) temp_t9->unk4;
+                    }
+                }
+                else
+                {
+                    if ((void *)0x80000000->unk300 == 2)
+                    {
+                        phi_t9_2 = &osViModeTable_osViModeMpalLan2;
+                        phi_t6_2 = &dword_CODE_bss_80060828;
+block_16:
+                        temp_t9_2 = (phi_t9_2 + 0xc);
+                        temp_t6_2 = (phi_t6_2 + 0xc);
+                        temp_t6_2->unk-C = (?32) *phi_t9_2;
+                        temp_t6_2->unk-8 = (?32) temp_t9_2->unk-8;
+                        temp_t6_2->unk-4 = (?32) temp_t9_2->unk-4;
+                        phi_t9_2 = temp_t9_2;
+                        phi_t6_2 = temp_t6_2;
+                        if (temp_t9_2 != (&osViModeTable_osViModeMpalLan2 + 0x48))
+                        {
+                            goto block_16;
+                        }
+                        *temp_t6_2 = (?32) *temp_t9_2;
+                        temp_t6_2->unk4 = (?32) temp_t9_2->unk4;
+                    }
+                    else
+                    {
+                        phi_t7_2 = &osViModeTable_osViModeNtscLan2;
+                        phi_t8_2 = &dword_CODE_bss_80060828;
+block_19:
+                        temp_t7_2 = (phi_t7_2 + 0xc);
+                        temp_t8_2 = (phi_t8_2 + 0xc);
+                        temp_t8_2->unk-C = (?32) *phi_t7_2;
+                        temp_t8_2->unk-8 = (?32) temp_t7_2->unk-8;
+                        temp_t8_2->unk-4 = (?32) temp_t7_2->unk-4;
+                        phi_t7_2 = temp_t7_2;
+                        phi_t8_2 = temp_t8_2;
+                        if (temp_t7_2 != (&osViModeTable_osViModeNtscLan2 + 0x48))
+                        {
+                            goto block_19;
+                        }
+                        *temp_t8_2 = (?32) *temp_t7_2;
+                        temp_t8_2->unk4 = (?32) temp_t7_2->unk4;
+                    }
+                }
+                viMode = &dword_CODE_bss_80060828;
+                dword_CODE_bss_80060880 = (s32) dword_CODE_bss_80060828.unk1C;
+                dword_CODE_bss_80060884 = (s32) dword_CODE_bss_80060828.unk30;
+                dword_CODE_bss_80060888 = (s32) dword_CODE_bss_80060828.unk44;
+                video_related_6(0);
+            }
+        }
+        else
+        {
+            osViSetYScale(0x3f800000);
+            osViBlack(1);
+        }
+        osViSetSpecialFeatures(0x42);
+    }
+    phi_f0 = ((f32) ptr_video_settings2->unk6 / (f32) ptr_video_settings2->unk1A);
+    if (*ptr_video_settings2 == 0)
+    {
+        phi_f0 = 1.0f;
+    }
+    temp_t1 = (D_800232C0 * 4);
+    (0x80020000 + temp_t1)->unk30B4 = (f32) ((f32) ptr_video_settings2->unk4 / (f32) ptr_video_settings2->unk18);
+    (0x80020000 + temp_t1)->unk30BC = (f32) phi_f0;
+    if (*ptr_video_settings2 == 1)
+    {
+        (0x80060000 + temp_t1)->unk-2420 = &dword_CODE_bss_80060828;
+        if (coloroutputmode != 0)
+        {
+            if (osTvType == 2)
+            {
+                temp_v1 = ((D_800232C0 * 0x50) + &dword_CODE_bss_8005DB40);
+                phi_t8_3 = &osViModeTable_osViModeMpalLan1;
+                phi_t7_3 = temp_v1;
+block_33:
+                temp_t8_3 = (phi_t8_3 + 0xc);
+                temp_t7_3 = (phi_t7_3 + 0xc);
+                temp_t7_3->unk-C = (?32) *phi_t8_3;
+                temp_t7_3->unk-8 = (?32) temp_t8_3->unk-8;
+                temp_t7_3->unk-4 = (?32) temp_t8_3->unk-4;
+                phi_t8_3 = temp_t8_3;
+                phi_t7_3 = temp_t7_3;
+                if (temp_t8_3 != (&osViModeTable_osViModeMpalLan1 + 0x48))
+                {
+                    goto block_33;
+                }
+                *temp_t7_3 = (?32) *temp_t8_3;
+                temp_t7_3->unk4 = (?32) temp_t8_3->unk4;
+                phi_v1 = temp_v1;
+            }
+            else
+            {
+                temp_v1_2 = ((D_800232C0 * 0x50) + &dword_CODE_bss_8005DB40);
+                phi_t8_4 = &osViModeTable_osViModeNtscLan1;
+                phi_t6_3 = temp_v1_2;
+block_36:
+                temp_t8_4 = (phi_t8_4 + 0xc);
+                temp_t6_3 = (phi_t6_3 + 0xc);
+                temp_t6_3->unk-C = (?32) *phi_t8_4;
+                temp_t6_3->unk-8 = (?32) temp_t8_4->unk-8;
+                temp_t6_3->unk-4 = (?32) temp_t8_4->unk-4;
+                phi_t8_4 = temp_t8_4;
+                phi_t6_3 = temp_t6_3;
+                if (temp_t8_4 != (&osViModeTable_osViModeNtscLan1 + 0x48))
+                {
+                    goto block_36;
+                }
+                *temp_t6_3 = (?32) *temp_t8_4;
+                temp_t6_3->unk4 = (?32) temp_t8_4->unk4;
+                phi_v1 = temp_v1_2;
+            }
+        }
+        else
+        {
+            if (osTvType == 2)
+            {
+                temp_v1_3 = ((D_800232C0 * 0x50) + &dword_CODE_bss_8005DB40);
+                phi_t6_4 = &osViModeTable_osViModeMpalLan2;
+                phi_t8_5 = temp_v1_3;
+block_40:
+                temp_t6_4 = (phi_t6_4 + 0xc);
+                temp_t8_5 = (phi_t8_5 + 0xc);
+                temp_t8_5->unk-C = (?32) *phi_t6_4;
+                temp_t8_5->unk-8 = (?32) temp_t6_4->unk-8;
+                temp_t8_5->unk-4 = (?32) temp_t6_4->unk-4;
+                phi_t6_4 = temp_t6_4;
+                phi_t8_5 = temp_t8_5;
+                if (temp_t6_4 != (&osViModeTable_osViModeMpalLan2 + 0x48))
+                {
+                    goto block_40;
+                }
+                *temp_t8_5 = (?32) *temp_t6_4;
+                temp_t8_5->unk4 = (?32) temp_t6_4->unk4;
+                phi_v1 = temp_v1_3;
+            }
+            else
+            {
+                temp_v1_4 = ((D_800232C0 * 0x50) + &dword_CODE_bss_8005DB40);
+                phi_t6_5 = &osViModeTable_osViModeNtscLan2;
+                phi_t9_3 = temp_v1_4;
+block_43:
+                temp_t6_5 = (phi_t6_5 + 0xc);
+                temp_t9_3 = (phi_t9_3 + 0xc);
+                temp_t9_3->unk-C = (?32) *phi_t6_5;
+                temp_t9_3->unk-8 = (?32) temp_t6_5->unk-8;
+                temp_t9_3->unk-4 = (?32) temp_t6_5->unk-4;
+                phi_t6_5 = temp_t6_5;
+                phi_t9_3 = temp_t9_3;
+                if (temp_t6_5 != (&osViModeTable_osViModeNtscLan2 + 0x48))
+                {
+                    goto block_43;
+                }
+                *temp_t9_3 = (?32) *temp_t6_5;
+                temp_t9_3->unk4 = (?32) temp_t6_5->unk4;
+                phi_v1 = temp_v1_4;
+            }
+        }
+        phi_v1->unk8 = (s32) ptr_video_settings2->unk18;
+        temp_v0_2 = phi_v1->unk1C;
+        phi_v1->unk20 = (s32) ((s32) (ptr_video_settings2->unk18 << 0xa) / 0x280);
+        phi_v1->unk2C = (s32) ((s32) (ptr_video_settings2->unk1A << 0xb) / 0x1e0);
+        phi_v1->unk40 = (s32) ((s32) (ptr_video_settings2->unk1A << 0xb) / 0x1e0);
+        phi_v1->unk28 = (s32) (ptr_video_settings2->unk18 * 2);
+        phi_v1->unk3C = (s32) (ptr_video_settings2->unk18 * 2);
+        temp_a0 = ((((s32) (((temp_v0_2 >> 0x10) & 0xffff) + D_8002329C) % 0xffff) << 0x10) | ((s32) ((temp_v0_2 & 0xffff) + D_8002329C) % 0xffff));
+        phi_v1->unk1C = temp_a0;
+        dword_CODE_bss_80060880 = temp_a0;
+        temp_v0_3 = phi_v1->unk30;
+        temp_a0_2 = ((((s32) (((temp_v0_3 >> 0x10) & 0xffff) + D_800232A0) % 0xffff) << 0x10) | ((s32) ((temp_v0_3 & 0xffff) + D_800232A0) % 0xffff));
+        phi_v1->unk30 = temp_a0_2;
+        dword_CODE_bss_80060884 = temp_a0_2;
+        temp_v0_4 = phi_v1->unk44;
+        temp_a0_3 = ((((s32) (((temp_v0_4 >> 0x10) & 0xffff) + D_800232A0) % 0xffff) << 0x10) | ((s32) ((temp_v0_4 & 0xffff) + D_800232A0) % 0xffff));
+        phi_v1->unk44 = temp_a0_3;
+        dword_CODE_bss_80060888 = temp_a0_3;
+        (0x80020000 + temp_t1)->unk30C4 = 1;
+    }
+    else
+    {
+        (0x80020000 + temp_t1)->unk30C4 = 0;
+    }
+    temp_t2 = (D_800232C0 + 1);
+    temp_t9_4 = (temp_t2 & 1);
+    phi_t9_4 = temp_t9_4;
+    if (temp_t2 < 0)
+    {
+        phi_t9_4 = temp_t9_4;
+        if (temp_t9_4 != 0)
+        {
+            phi_t9_4 = (temp_t9_4 + -2);
+        }
+    }
+    D_800232C0 = (s32) phi_t9_4;
+    if (coloroutputmode != 0)
+    {
+        fast3d_related_array->unk58 = (void *) ptr_video_settings2->unk28;
+    }
+    else
+    {
+        fast3d_related_array->unk58 = &cfb_16_a;
+    }
+    temp_t7_4 = (off_CODE_bss_80060878 + 1);
+    temp_t8_6 = (byte_CODE_bss_80060879 + 1);
+    temp_t6_6 = (temp_t7_4 & 1);
+    phi_t6_6 = temp_t6_6;
+    if (temp_t7_4 < 0)
+    {
+        phi_t6_6 = temp_t6_6;
+        if (temp_t6_6 != 0)
+        {
+            phi_t6_6 = (temp_t6_6 + -2);
+        }
+    }
+    off_CODE_bss_80060878 = (s8) phi_t6_6;
+    temp_t7_5 = (temp_t8_6 & 1);
+    phi_t7_4 = temp_t7_5;
+    if (temp_t8_6 < 0)
+    {
+        phi_t7_4 = temp_t7_5;
+        if (temp_t7_5 != 0)
+        {
+            phi_t7_4 = (temp_t7_5 + -2);
+        }
+    }
+    byte_CODE_bss_80060879 = (s8) phi_t7_4;
+    ptr_video_settings1 = (void *) (&video1_settings + (off_CODE_bss_80060878 * 0x2c));
+    temp_a1 = (&video1_settings + (byte_CODE_bss_80060879 * 0x2c));
+    *&ptr_video_settings2 = temp_a1;
+    _bcopy(*&ptr_video_settings2, temp_a1, 0x2c, &video1_settings);
+    ptr_video_settings2->unk28 = (s32) ((byte_CODE_bss_80060879 * 0x25800) + &cfb_16_a);
 }
 #else
 GLOBAL_ASM(

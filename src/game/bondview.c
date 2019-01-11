@@ -12472,21 +12472,21 @@ Weapon_shooting_throwable:
 /* 099F0C 7F0653DC 8E0401D4 */  lw    $a0, 0x1d4($s0)
 /* 099F10 7F0653E0 50800008 */  beql  $a0, $zero, .L7F065404
 /* 099F14 7F0653E4 8E0401D8 */   lw    $a0, 0x1d8($s0)
-/* 099F18 7F0653E8 0C00237C */  jal   music_related_26
+/* 099F18 7F0653E8 0C00237C */  jal   sfxGetArg0Unk3F
 /* 099F1C 7F0653EC 00000000 */   nop   
 /* 099F20 7F0653F0 50400004 */  beql  $v0, $zero, .L7F065404
 /* 099F24 7F0653F4 8E0401D8 */   lw    $a0, 0x1d8($s0)
-/* 099F28 7F0653F8 0C002408 */  jal   music_related_28
+/* 099F28 7F0653F8 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
 /* 099F2C 7F0653FC 8E0401D4 */   lw    $a0, 0x1d4($s0)
 /* 099F30 7F065400 8E0401D8 */  lw    $a0, 0x1d8($s0)
 .L7F065404:
 /* 099F34 7F065404 10800007 */  beqz  $a0, .L7F065424
 /* 099F38 7F065408 00000000 */   nop   
-/* 099F3C 7F06540C 0C00237C */  jal   music_related_26
+/* 099F3C 7F06540C 0C00237C */  jal   sfxGetArg0Unk3F
 /* 099F40 7F065410 00000000 */   nop   
 /* 099F44 7F065414 10400003 */  beqz  $v0, .L7F065424
 /* 099F48 7F065418 00000000 */   nop   
-/* 099F4C 7F06541C 0C002408 */  jal   music_related_28
+/* 099F4C 7F06541C 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
 /* 099F50 7F065420 8E0401D8 */   lw    $a0, 0x1d8($s0)
 .L7F065424:
 /* 099F54 7F065424 0FC17805 */  jal   sub_GAME_7F05E014
@@ -15439,7 +15439,7 @@ glabel sub_GAME_7F067420
 /* 09C550 7F067A20 8CE401D4 */  lw    $a0, 0x1d4($a3)
 /* 09C554 7F067A24 10800005 */  beqz  $a0, .L7F067A3C
 /* 09C558 7F067A28 00000000 */   nop   
-/* 09C55C 7F067A2C 0C00237C */  jal   music_related_26
+/* 09C55C 7F067A2C 0C00237C */  jal   sfxGetArg0Unk3F
 /* 09C560 7F067A30 AFA70034 */   sw    $a3, 0x34($sp)
 /* 09C564 7F067A34 14400016 */  bnez  $v0, .L7F067A90
 /* 09C568 7F067A38 8FA70034 */   lw    $a3, 0x34($sp)
@@ -15460,11 +15460,11 @@ glabel sub_GAME_7F067420
 /* 09C59C 7F067A6C 8CE401D4 */  lw    $a0, 0x1d4($a3)
 /* 09C5A0 7F067A70 50800008 */  beql  $a0, $zero, .L7F067A94
 /* 09C5A4 7F067A74 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09C5A8 7F067A78 0C00237C */  jal   music_related_26
+/* 09C5A8 7F067A78 0C00237C */  jal   sfxGetArg0Unk3F
 /* 09C5AC 7F067A7C AFA70034 */   sw    $a3, 0x34($sp)
 /* 09C5B0 7F067A80 10400003 */  beqz  $v0, .L7F067A90
 /* 09C5B4 7F067A84 8FA70034 */   lw    $a3, 0x34($sp)
-/* 09C5B8 7F067A88 0C002408 */  jal   music_related_28
+/* 09C5B8 7F067A88 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
 /* 09C5BC 7F067A8C 8CE401D4 */   lw    $a0, 0x1d4($a3)
 .L7F067A90:
 /* 09C5C0 7F067A90 8FBF001C */  lw    $ra, 0x1c($sp)

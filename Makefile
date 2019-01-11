@@ -91,7 +91,7 @@ GAMEFILES := game/initgamedata.c game/initweaponanigroups.c game/initactorpropst
 			game/initunk_005450.c game/initunk_005520.c game/initcameraandthrown.c game/inititemslots.c \
 			game/initBondDATAdefaults.c game/initpathtablesomething.c game/initpathtablelinks.c game/initexplosioncasing.c \
 			game/initunk_007180.c game/initunk_007290.c game/initunk_0072B0.c game/initmttex.c game/initunk_0073B0.c \
-			game/initunk_007460.c game/cleanup_alarms.c game/cleanup_objects.c game/cleanup_objectives.c game/sfxunk_007700.c \
+			game/initunk_007460.c game/cleanup_alarms.c game/cleanup_objects.c game/cleanup_objectives.c game/cleanupSFXRelated.c \
 			game/playerstats_007770.c game/unk_007800.c game/unk_007920.c game/null_007970.c game/unk_007980.c \
 			game/intro_logos.c game/mainmenu.c game/blood_animation.c \
 			game/blood_decrypt.c game/eeprom.c game/actor.c game/actionblock.c game/loadobjectmodel.c game/objective_status.c \
@@ -114,7 +114,7 @@ GAMEOBJECTS := build/game/initgamedata.o build/game/initweaponanigroups.o build/
 			build/game/initpathtablelinks.o build/game/initexplosioncasing.o build/game/initunk_007180.o \
 			build/game/initunk_007290.o build/game/initunk_0072B0.o build/game/initmttex.o build/game/initunk_0073B0.o \
 			build/game/initunk_007460.o build/game/cleanup_alarms.o build/game/cleanup_objects.o \
-			build/game/cleanup_objectives.o build/game/sfxunk_007700.o build/game/playerstats_007770.o \
+			build/game/cleanup_objectives.o build/game/cleanupSFXRelated.o build/game/playerstats_007770.o \
 			build/game/unk_007800.o build/game/unk_007920.o build/game/null_007970.o build/game/unk_007980.o \
 			build/game/intro_logos.o build/game/mainmenu.o \
 			build/game/blood_animation.o build/game/blood_decrypt.o build/game/eeprom.o \
@@ -157,7 +157,7 @@ CFLAGS := -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm -fullwarn -wlint -woff 81
 
 LD := $(TOOLCHAIN)ld
 LD_SCRIPT := $(TARGET).ld
-LDFLAGS := -T $(LD_SCRIPT) -Map $(BUILD_DIR)/ge007.$(COUNTRYCODE).map
+LDFLAGS := -T undefined_syms.txt -T $(LD_SCRIPT) -Map $(BUILD_DIR)/ge007.$(COUNTRYCODE).map
 
 AS := $(TOOLCHAIN)as
 ASFLAGS := -march=vr4300 -mabi=32 $(INCLUDE)

@@ -43,27 +43,27 @@ glabel boot
 /* of the code inserted by the custom makerom rare created*/
 
 
-u32 *get_cdata_vaddr_start(void)
+u32 *get_cdataSegmentVaddrStart(void)
 {
 	return _cdataSegmentVaddrStart;
 }
 
-u32 *get_rodata_rom_start(void)
+u32 *get_cdataSegmentRomStart(void)
 {
 	return _cdataSegmentRomStart;
 }
 
-u32 *get_rodata_rom_end(void)
+u32 *get_cdataSegmentRomEnd(void)
 {
 	return _cdataSegmentRomEnd;
 }
 
-u32 *getRareZipASMRomstart(void)
+u32 *get_rarezipSegmentRomStart(void)
 {
 	return _rarezipSegmentRomStart;
 }
 
-u32 *getRareZipASMRomend(void)
+u32 *get_rarezipSegmentRomEnd(void)
 {
 	return _rarezipSegmentRomEnd;
 }

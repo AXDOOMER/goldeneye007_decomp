@@ -135,25 +135,25 @@
    # file asm/game/7F007320.s
    - [0x7F007320, "set_mt_tex_alloc"]
    # file asm/game/7F0073B0.s
-   - [0x7F0073B0, "sub_GAME_7F0073B0"]
+   - [0x7F0073B0, "cleanupGuardData"]
    # file asm/game/7F007460.s
-   - [0x7F007460, "sub_GAME_7F007460"]
+   - [0x7F007460, "cleanupObjectSounds"]
    # file asm/game/7F0074D0.s
-   - [0x7F0074D0, "sub_GAME_7F0074D0"]
+   - [0x7F0074D0, "cleanupAlarms"]
    # file asm/game/7F007500.s
-   - [0x7F007500, "sub_GAME_7F007500"]
+   - [0x7F007500, "cleanupObjects"]
    # file asm/game/7F007700.s
-   - [0x7F007700, "sub_GAME_7F007700"]
+   - [0x7F007700, "cleanupSFXRelated"]
    # file asm/game/7F007770.s
    - [0x7F007770, "sub_GAME_7F007770"]
    # file asm/game/7F007800.s
-   - [0x7F007800, "sub_GAME_7F007800"]
+   - [0x7F007800, "cleanupExplosions"]
    # file asm/game/7F007920.s
    - [0x7F007920, "sub_GAME_7F007920"]
    # file asm/game/7F007970.s
-   - [0x7F007970, "sub_GAME_7F007970"]
+   - [0x7F007970, "cleanup_REMOVED_"]
    # file asm/game/7F007980.s
-   - [0x7F007980, "sub_GAME_7F007980"]
+   - [0x7F007980, "cleanupplayersoundrelated"]
    # file asm/game/intro_logos.s
    - [0x7F007A40, "something_with_gunbarrel_and_rareware_logo_matrix_manip"]
    # file asm/game/menus.s

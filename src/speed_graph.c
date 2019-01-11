@@ -38,29 +38,33 @@ s32 D_80023234[] = { 1, 0, 0, 0 };
 
 
 #ifdef NONMATCHING
-void displaylist_related(void) {
+void displaylist_related(void)
+{
     void *temp_v0;
+    void *temp_v1;
+    void *phi_v1;
+    void *phi_v0;
 
-    // Node 0
     displaylist_0 = 0xb8000000;
     displaylist_0.unk4 = 0;
     displaylist_0.unk850 = 0xb8000000;
     displaylist_0.unk854 = 0;
     displaylist_bank = 0;
-    // Node 1
-    temp_v0 = (&dword_CODE_bss_800607D0 + 4);
-    (&dword_CODE_bss_800607B0 + 4)->unk-4 = 0;
+    phi_v1 = &dword_CODE_bss_800607B0;
+    phi_v0 = &dword_CODE_bss_800607D0;
+block_1:
+    temp_v0 = (phi_v0 + 4);
+    temp_v1 = (phi_v1 + 4);
+    temp_v1->unk-4 = 0;
     temp_v0->unk-4 = 1;
+    phi_v1 = temp_v1;
+    phi_v0 = temp_v0;
     if (temp_v0 != &dword_CODE_bss_800607DC)
     {
-        goto loop_1;
+        goto block_1;
     }
-    // Node 2
     video_related_2(1, &dword_CODE_bss_800607DC, 0xb8000000);
-    return;
-    // (possible return value: video_related_2(1, &dword_CODE_bss_800607DC, 0xb8000000))
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -102,32 +106,42 @@ glabel displaylist_related
 
 
 #ifdef NONMATCHING
-void *video_related_1(void) {
+void *video_related_1(void)
+{
+    void *temp_v1;
+    void *temp_a0;
     s32 temp_t7;
     s32 temp_t8;
+    void *phi_v1;
+    s32 phi_t8;
+    void *phi_a0;
 
-    // Node 0
     dword_CODE_bss_800604A8 = osGetCount();
-    // Node 1
-    temp_t7 = (dword_CODE_bss_800607D0 + 0x1f);
+    phi_v1 = &dword_CODE_bss_800607D0;
+    phi_a0 = &dword_CODE_bss_800607C0;
+block_1:
+    temp_v1 = (phi_v1 + 4);
+    temp_a0 = (phi_a0 + 4);
+    temp_t7 = (*phi_v1 + 0x1f);
     temp_t8 = (temp_t7 & 0x1f);
+    phi_t8 = temp_t8;
     if (temp_t7 < 0)
     {
-        // Node 2
+        phi_t8 = temp_t8;
         if (temp_t8 != 0)
         {
-            // Node 3
+            phi_t8 = (temp_t8 + -0x20);
         }
     }
-    // Node 4
-    (&dword_CODE_bss_800607C0 + 4)->unk-4 = temp_t8;
-    if ((&dword_CODE_bss_800607D0 + 4) != &dword_CODE_bss_800607DC)
+    temp_a0->unk-4 = (s32) phi_t8;
+    phi_v1 = temp_v1;
+    phi_a0 = temp_a0;
+    if (temp_v1 != &dword_CODE_bss_800607DC)
     {
-        goto loop_1;
+        goto block_1;
     }
-    // (possible return value: &dword_CODE_bss_800607DC)
+    return &dword_CODE_bss_800607DC;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -167,18 +181,28 @@ glabel video_related_1
 
 
 #ifdef NONMATCHING
-void *video_related_2(void) {
-    // Node 0
-    dword_CODE_bss_800604A4 = (?32) dword_CODE_bss_800604A8;
-    // Node 1
-    (&dword_CODE_bss_800607B0 + 4)->unk-4 = (?32) dword_CODE_bss_800607C0;
-    if ((&dword_CODE_bss_800607C0 + 4) != &dword_CODE_bss_800607CC)
-    {
-        goto loop_1;
-    }
-    // (possible return value: &dword_CODE_bss_800607CC)
-}
+void *video_related_2(void)
+{
+    void *temp_a0;
+    void *temp_v1;
+    void *phi_a0;
+    void *phi_v1;
 
+    dword_CODE_bss_800604A4 = (?32) dword_CODE_bss_800604A8;
+    phi_a0 = &dword_CODE_bss_800607C0;
+    phi_v1 = &dword_CODE_bss_800607B0;
+block_1:
+    temp_a0 = (phi_a0 + 4);
+    temp_v1 = (phi_v1 + 4);
+    temp_v1->unk-4 = (?32) *phi_a0;
+    phi_a0 = temp_a0;
+    phi_v1 = temp_v1;
+    if (temp_a0 != &dword_CODE_bss_800607CC)
+    {
+        goto block_1;
+    }
+    return &dword_CODE_bss_800607CC;
+}
 #else
 GLOBAL_ASM(
 .text
@@ -207,56 +231,54 @@ glabel video_related_2
 
 
 #ifdef NONMATCHING
-void video_related_3(s32 arg0, s32 arg10) {
-    void *sp1C;
-    void *sp24;
-    void *sp2C;
+void video_related_3(s32 arg0)
+{
     s32 sp34;
+    void *sp2C;
+    void *sp24;
+    void *sp1C;
     s32 temp_a3;
     s32 temp_v1;
     void *temp_t0;
     s32 temp_a0;
     void *temp_v0;
     s32 temp_a1;
+    s32 phi_a2;
+    s32 phi_a1;
 
-    // Node 0
-    temp_a3 = (arg10 & 0xffff);
+    temp_a3 = (arg0 & 0xffff);
     temp_v1 = (temp_a3 * 4);
     temp_t0 = (temp_v1 + &dword_CODE_bss_800607D0);
-    temp_a0 = (arg10 >> 0x10);
+    temp_a0 = (arg0 >> 0x10);
     sp34 = osSetIntMask(1);
     if (temp_a0 == 3)
     {
-        // Node 1
+        phi_a2 = ((0x80060000 + temp_v1)->unk-C10 | 0x8000);
     }
     else
     {
-        // Node 2
+        phi_a2 = temp_a0;
         if (temp_a0 == 6)
         {
-            // Node 3
+            phi_a2 = ((0x80060000 + temp_v1)->unk-C10 & 0x7fff);
         }
     }
-    // Node 4
     temp_v0 = (((temp_a3 << 8) + (*temp_t0 * 8)) + &dword_CODE_bss_800604B0);
     sp2C = temp_v0;
-    *temp_v0 = temp_a0;
+    *temp_v0 = (s32) phi_a2;
     sp24 = (void *) (temp_v1 + &dword_CODE_bss_8005F3F0);
     sp1C = temp_t0;
-    sp2C->unk4 = osGetCount(temp_a0, *temp_t0, temp_a0, temp_a3);
+    sp2C->unk4 = osGetCount(temp_a0, *temp_t0, phi_a2, temp_a3);
     temp_a1 = (sp30 + 1);
     *sp24 = sp38;
+    phi_a1 = temp_a1;
     if (temp_a1 >= 0x20)
     {
-        // Node 5
+        phi_a1 = 0;
     }
-    // Node 6
-    *sp1C = temp_a1;
-    osSetIntMask(sp34, temp_a1, sp38);
-    return;
-    // (possible return value: osSetIntMask(sp34, temp_a1, sp38))
+    *temp_t0 = (s32) phi_a1;
+    osSetIntMask(sp34, phi_a1, sp38);
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -588,8 +610,185 @@ glabel display_speed_graph
 
 
 #ifdef NONMATCHING
-void video_DL_related_4(void) {
+u32 video_DL_related_4(void)
+{
+    s32 spC8;
+    ? spB8;
+    ? spAC;
+    ? spA0;
+    s32 sp80;
+    void *sp70;
+    u32 temp_v0;
+    u32 temp_s4;
+    u32 temp_s5;
+    void *temp_s4_2;
+    void *temp_s5_2;
+    void *temp_v0_2;
+    void *temp_t0;
+    f32 temp_f12;
+    s32 temp_s3;
+    s32 temp_s1;
+    s32 temp_t9;
+    s32 temp_t3;
+    u32 temp_ret;
+    u32 phi_s4;
+    u32 phi_s5;
+    s32 phi_s1;
+    u32 phi_v1;
+    s32 phi_a1;
+    void *phi_s3;
+    void *phi_v0;
+    s32 phi_s2;
+    s32 phi_t9;
+    s32 phi_a1_2;
+    s32 phi_a1_3;
+    void *phi_s3_2;
+    u32 phi_return;
+    void *phi_s3_3;
+    void *phi_s3_4;
+    s32 phi_s3_5;
 
+    temp_v0 = (counterforframes + D_80048498);
+    counterforframes = temp_v0;
+    if (temp_v0 >= 0xc9U)
+    {
+        D_80023234 = (s32) (D_80023234 ^ 1);
+        counterforframes = (u32) (temp_v0 + -0xc8);
+    }
+    D_8002322C = (s32) (D_8002322C + 1);
+    phi_return = temp_v0;
+    if (D_80023234 != (D_8002322C & 1))
+    {
+        phi_s4 = &spAC;
+block_4:
+        temp_s4 = (phi_s4 + 4);
+        temp_s4->unk-4 = 0;
+        phi_s4 = temp_s4;
+        if (temp_s4 < &spB8)
+        {
+            goto block_4;
+        }
+        phi_s5 = &spA0;
+block_6:
+        temp_s5 = (phi_s5 + 4);
+        temp_s5->unk-4 = (u32) dword_CODE_bss_800604A4;
+        phi_s5 = temp_s5;
+        if (temp_s5 < &spAC)
+        {
+            goto block_6;
+        }
+        sp70 = &dword_CODE_bss_800607B0;
+        spC8 = 0;
+        sp80 = 0;
+        phi_s3_4 = sub_GAME_7F0D1AC0(((displaylist_bank * 0x850) + &displaylist_0));
+block_8:
+        temp_s4_2 = (sp80 + &spAC);
+        phi_a1_3 = subroutine_arg0;
+        phi_s3_2 = phi_s3_4;
+        if (*sp70 != subroutine_arg0)
+        {
+            temp_s5_2 = (sp80 + &spA0);
+            phi_s1 = *sp70;
+            phi_a1 = subroutine_arg0;
+            phi_s3 = phi_s3_4;
+block_10:
+            temp_v0_2 = (((spC8 << 8) + &dword_CODE_bss_800604B0) + (phi_s1 * 8));
+            phi_s2 = *temp_v0_2;
+            if ((*temp_v0_2 & 0x8000) != 0)
+            {
+                phi_s2 = 3;
+            }
+            phi_v1 = *temp_s5_2;
+            if ((u32) *temp_s5_2 < (u32) dword_CODE_bss_800604A4)
+            {
+                phi_v1 = dword_CODE_bss_800604A4;
+            }
+            phi_a1_2 = phi_a1;
+            phi_s3_3 = phi_s3;
+            if ((u32) temp_v0_2->unk4 >= (u32) dword_CODE_bss_800604A4)
+            {
+                phi_a1_2 = phi_a1;
+                phi_s3_3 = phi_s3;
+                if ((u32) temp_v0_2->unk4 >= (u32) phi_v1)
+                {
+                    if (1 != *temp_s4_2)
+                    {
+                        if (*temp_s4_2 != 3)
+                        {
+                            if ((*temp_s4_2 & 0x8000) == 0)
+                            {
+                                if ((temp_v0_2->unk4 - phi_v1) < 0)
+                                {
+
+                                }
+                            }
+                        }
+                    }
+                    temp_t0 = ((*temp_s4_2 * 0x10) + &D_800231D4);
+                    temp_f12 = ((f32) (u32) (temp_v0_2->unk4 - phi_v1) / aIL0);
+                    if (1 == *temp_s4_2)
+                    {
+                        sub_GAME_7F0D1DCC(temp_f12, dword_CODE_bss_800604A4, phi_a1);
+                        phi_v0 = phi_s3;
+                        phi_s3_5 = (s32) phi_s3;
+                    }
+                    else
+                    {
+                        temp_s3 = sub_GAME_7F0D1BD0(temp_f12, phi_s3, temp_f12, (((s32) temp_t0->unk4 >> 0x18) & 0xff), (((s32) temp_t0->unk4 >> 0x10) & 0xff), (s32) (((s32) temp_t0->unk4 >> 8) & 0xff), (?32) temp_t0->unk8, (?32) temp_t0->unkC);
+                        phi_v0 = temp_s3;
+                        phi_s3_5 = temp_s3;
+                    }
+                    *phi_v0 = 0xe7000000;
+                    phi_v0->unk4 = 0;
+                    phi_a1_2 = subroutine_arg0;
+                    phi_s3_3 = (phi_s3_5 + 8);
+                }
+            }
+            temp_s1 = (phi_s1 + 1);
+            *temp_s4_2 = (s32) phi_s2;
+            *temp_s5_2 = (u32) temp_v0_2->unk4;
+            temp_t9 = (temp_s1 & 0x1f);
+            phi_t9 = temp_t9;
+            if (temp_s1 < 0)
+            {
+                phi_t9 = temp_t9;
+                if (temp_t9 != 0)
+                {
+                    phi_t9 = (temp_t9 + -0x20);
+                }
+            }
+            phi_s1 = phi_t9;
+            phi_a1 = phi_a1_2;
+            phi_s3 = phi_s3_3;
+            phi_a1_3 = phi_a1_2;
+            phi_s3_2 = phi_s3_3;
+            if (phi_t9 != phi_a1_2)
+            {
+                goto block_10;
+            }
+        }
+        if (spC8 < 2)
+        {
+            sub_GAME_7F0D2320(phi_a1_3);
+        }
+        temp_t3 = (spC8 + 1);
+        sp70 = (void *) (sp70 + 4);
+        sp80 = (s32) (sp80 + 4);
+        spC8 = temp_t3;
+        phi_s3_4 = phi_s3_2;
+        if (temp_t3 != 3)
+        {
+            goto block_8;
+        }
+        temp_ret = sub_GAME_7F0D1E98(phi_s3_2, 0, 0, 0);
+        *temp_ret = 0xe7000000;
+        temp_ret->unk4 = 0;
+        temp_ret->unk8 = 0xb8000000;
+        temp_ret->unkC = 0;
+        displaylist_bank = (s32) (displaylist_bank ^ 1);
+        phi_return = temp_ret;
+    }
+    return phi_return;
 }
 #else
 GLOBAL_ASM(

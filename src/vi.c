@@ -101,12 +101,10 @@ void start_nulled_entry(void) {
 
 
 #ifdef NONMATCHING
-void something_with_vi_c_debug(void) {
-    // Node 0
+void something_with_vi_c_debug(void)
+{
     get_ptr_debug_notice_list_entry(&ptr_vi_c_debug_debug_notice_list, &aVi_c_debug);
     osCreateMesgQueue(&vi_c_debug_MQ, &vi_c_debug_MSG, 8);
-    return;
-    // (possible return value: osCreateMesgQueue(&vi_c_debug_MQ, &vi_c_debug_MSG, 8))
 }
 #else
 GLOBAL_ASM(

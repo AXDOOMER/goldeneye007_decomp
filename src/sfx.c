@@ -18,30 +18,33 @@ f32 F32_800243FC = 1.0;
 
 
 #ifdef NONMATCHING
-void music_related_16(void *arg0) {
+void music_related_16(void *arg0)
+{
     s16 sp38;
-    s32 temp_v0;
     s32 temp_a0;
+    u32 temp_s0;
+    s32 temp_v0;
+    u32 phi_s0;
 
-    // Node 0
     D_800243F0->unk44 = (?32) arg0->unk8;
     D_800243F0->unk3C = 0;
     D_800243F0->unk48 = 0x80e8;
     D_800243F0->unk40 = alHeapDBAlloc(0, 0, arg0->unkC, 1, (s32) (*arg0 << 6));
     alEvtqNew((D_800243F0 + 0x14), alHeapDBAlloc(0, 0, arg0->unkC, 1, (s32) (arg0->unk4 * 0x1c)), arg0->unk4);
-    D_800243EC = (?32) D_800243F0->unk40;
+    D_800243EC = (s32) D_800243F0->unk40;
+    phi_s0 = 1U;
     if ((u32) *arg0 >= 2U)
     {
-        loop_1:
-        // Node 1
-        temp_a0 = ((1 << 6) + D_800243F0->unk40);
+block_1:
+        temp_a0 = ((phi_s0 << 6) + D_800243F0->unk40);
         alLink(temp_a0, (temp_a0 + -0x40));
-        if ((u32) (1 + 1) < (u32) *arg0)
+        temp_s0 = (phi_s0 + 1);
+        phi_s0 = temp_s0;
+        if (temp_s0 < (u32) *arg0)
         {
-            goto loop_1;
+            goto block_1;
         }
     }
-    // Node 2
     D_80063BA4 = alHeapDBAlloc(0, 0, arg0->unkC, 2, 7);
     D_80063BA8 = alHeapDBAlloc(0, 0, arg0->unkC, 2, 7);
     *D_80063BA4 = (u16)0x7fff;
@@ -67,8 +70,6 @@ void music_related_16(void *arg0) {
     sp38 = (u16)0x20;
     alEvtqPostEvent((D_800243F0 + 0x14), &sp38, D_800243F0->unk48);
     D_800243F0->unk4C = alEvtqNextEvent((D_800243F0 + 0x14), (D_800243F0 + 0x28));
-    return;
-    // (possible return value: alEvtqNextEvent((D_800243F0 + 0x14), (D_800243F0 + 0x28)))
 }
 #else
 GLOBAL_ASM(
@@ -261,40 +262,33 @@ glabel music_related_16
 
 
 #ifdef NONMATCHING
-void music_related_17(void *arg0) {
+void music_related_17(void *arg0)
+{
     s16 sp3C;
     s32 temp_s1;
     s32 temp_s2;
     ? temp_ret;
 
-    // Node 0
     temp_s1 = (arg0 + 0x28);
     temp_s2 = (arg0 + 0x14);
-    // Node 1
+block_1:
     if (0x20 == arg0->unk28)
     {
-        // Node 2
         sp3C = (u16)0x20;
         alEvtqPostEvent(temp_s2, &sp3C, arg0->unk48);
     }
     else
     {
-        // Node 3
         music_related_18(arg0, temp_s1);
     }
-    // Node 4
     temp_ret = alEvtqNextEvent(temp_s2, temp_s1);
     arg0->unk4C = temp_ret;
     if (temp_ret == 0)
     {
-        goto loop_1;
+        goto block_1;
     }
-    // Node 5
     arg0->unk50 = (s32) (arg0->unk50 + temp_ret);
-    return;
-    // (possible return value: temp_ret)
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -1149,19 +1143,15 @@ glabel J_80029160
 
 
 #ifdef NONMATCHING
-void music_related_19(void *arg0, ? arg8) {
-    // Node 0
+void music_related_19(void *arg0)
+{
     if ((arg0->unk3E & 4) != 0)
     {
-        // Node 1
         alSynStopVoice(D_800243F0->unk38, (arg0 + 0xc));
         alSynFreeVoice(D_800243F0->unk38, sp1C);
     }
-    // Node 2
-    music_related_24(arg8);
-    music_related_21((D_800243F0 + 0x14), arg8, 0xffff);
-    return;
-    // (possible return value: music_related_21((D_800243F0 + 0x14), arg8, 0xffff))
+    music_related_24(arg0);
+    music_related_21((D_800243F0 + 0x14), arg0, 0xffff);
 }
 #else
 GLOBAL_ASM(
@@ -1213,18 +1203,16 @@ glabel music_related_19
 
 
 #ifdef NONMATCHING
-void music_related_20(void *arg0, void *argC) {
-    f32 sp1C;
-    s16 sp20;
+void music_related_20(void *arg0)
+{
     f32 sp28;
+    s16 sp20;
+    f32 sp1C;
 
-    // Node 0
     sp20 = (u16)0x10;
-    sp1C = (f32) (alCents2Ratio(arg0->unk8->unk4->unk5, arg0) * argC->unk2C);
+    sp1C = (f32) (alCents2Ratio(arg0->unk8->unk4->unk5, arg0) * arg0->unk2C);
     sp28 = sp1C;
-    alEvtqPostEvent((D_800243F0 + 0x14), &sp20, 0x8235, argC);
-    return;
-    // (possible return value: alEvtqPostEvent((D_800243F0 + 0x14), &sp20, 0x8235, argC))
+    alEvtqPostEvent((D_800243F0 + 0x14), &sp20, 0x8235, arg0);
 }
 #else
 GLOBAL_ASM(
@@ -1271,43 +1259,38 @@ glabel music_related_20
 
 
 #ifdef NONMATCHING
-void music_related_21(void *arg0, s32 arg1, s32 arg2) {
+void music_related_21(void *arg0, s32 arg1, s32 arg2)
+{
     s32 sp30;
+    void *temp_s1;
+    void *phi_s0;
 
-    // Node 0
     sp30 = osSetIntMask(1);
+    phi_s0 = arg0->unk8;
     if (arg0->unk8 != 0)
     {
-        loop_1:
-        // Node 1
-        if (arg1 == arg0->unk8->unk10)
+block_1:
+        temp_s1 = *phi_s0;
+        if (arg1 == phi_s0->unk10)
         {
-            // Node 2
-            if ((arg0->unk8->unkC & (arg2 & 0xffff)) != 0)
+            if ((phi_s0->unkC & (arg2 & 0xffff)) != 0)
             {
-                // Node 3
-                if (*arg0->unk8 != 0)
+                if (temp_s1 != 0)
                 {
-                    // Node 4
-                    *arg0->unk8->unk8 = (s32) (*arg0->unk8->unk8 + arg0->unk8->unk8);
+                    temp_s1->unk8 = (s32) (temp_s1->unk8 + phi_s0->unk8);
                 }
-                // Node 5
-                alUnlink(arg0->unk8);
-                alLink(arg0->unk8, arg0);
+                alUnlink(phi_s0);
+                alLink(phi_s0, arg0);
             }
         }
-        // Node 6
-        if (*arg0->unk8 != 0)
+        phi_s0 = temp_s1;
+        if (temp_s1 != 0)
         {
-            goto loop_1;
+            goto block_1;
         }
     }
-    // Node 7
     osSetIntMask(sp30);
-    return;
-    // (possible return value: osSetIntMask(sp30))
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -1374,44 +1357,76 @@ glabel music_related_21
 
 
 #ifdef NONMATCHING
-s32 music_related_22(void *arg0, void *arg1) {
-    // Node 0
+s32 music_related_22(void *arg0, void *arg1)
+{
+    void *temp_v0;
+    s16 temp_t6;
+    void *temp_v1;
+    s16 temp_t7;
+    void *temp_a2;
+    s32 temp_t8;
+    void *phi_v0;
+    void *phi_v1;
+    void *phi_a2;
+    s16 phi_a0;
+    s16 phi_a3;
+    s32 phi_v1_2;
+    s16 phi_a0_2;
+    s16 phi_a3_2;
+    s32 phi_v1_3;
+
+    phi_v0 = D_800243E4;
+    phi_a3 = (u16)0;
+    phi_a3_2 = (u16)0;
     if (D_800243E4 != 0)
     {
-        loop_1:
-        // Node 1
-        if (*D_800243E4 != 0)
+block_1:
+        temp_v0 = *phi_v0;
+        temp_t6 = ((phi_a3_2 + 1) & 0xffff);
+        phi_v0 = temp_v0;
+        phi_a3 = temp_t6;
+        phi_a3_2 = temp_t6;
+        if (temp_v0 != 0)
         {
-            goto loop_1;
+            goto block_1;
         }
     }
-    // Node 2
+    phi_v1 = D_800243E4.unk8;
+    phi_a0 = (u16)0;
+    phi_a0_2 = (u16)0;
     if (D_800243E4.unk8 != 0)
     {
-        loop_3:
-        // Node 3
-        if (*D_800243E4.unk8 != 0)
+block_3:
+        temp_v1 = *phi_v1;
+        temp_t7 = ((phi_a0_2 + 1) & 0xffff);
+        phi_v1 = temp_v1;
+        phi_a0 = temp_t7;
+        phi_a0_2 = temp_t7;
+        if (temp_v1 != 0)
         {
-            goto loop_3;
+            goto block_3;
         }
     }
-    // Node 4
+    phi_a2 = D_800243E4.unk4;
+    phi_v1_2 = 0;
+    phi_v1_3 = 0;
     if (D_800243E4.unk4 != 0)
     {
-        loop_5:
-        // Node 5
-        if (D_800243E4.unk4->unk4 != 0)
+block_5:
+        temp_a2 = phi_a2->unk4;
+        temp_t8 = ((phi_v1_3 + 1) & 0xffff);
+        phi_a2 = temp_a2;
+        phi_v1_2 = temp_t8;
+        phi_v1_3 = temp_t8;
+        if (temp_a2 != 0)
         {
-            goto loop_5;
+            goto block_5;
         }
     }
-    // Node 6
-    *arg0 = (u16)0;
-    *arg1 = (u16)0;
-    return;
-    // (possible return value: 0)
+    *arg0 = (s16) phi_a0;
+    *arg1 = (s16) phi_a3;
+    return phi_v1_2;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -1464,21 +1479,19 @@ glabel music_related_22
 
 
 #ifdef NONMATCHING
-void *music_related_23(s32 arg0, void *arg1, void *argF) {
+void *music_related_23(s32 arg0, void *arg1)
+{
     s32 sp28;
     s8 temp_a1;
     s8 temp_t5;
 
-    // Node 0
     if (D_800243E4.unk8 != 0)
     {
-        // Node 1
         sp28 = osSetIntMask(1, arg1->unk4);
         D_800243E4.unk8 = (void *) *D_800243E4.unk8;
         alUnlink(D_800243E4.unk8);
         if (D_800243E4 != 0)
         {
-            // Node 2
             *D_800243E4.unk8 = (void *) D_800243E4;
             D_800243E4.unk8->unk4 = 0;
             D_800243E4->unk4 = (void *) D_800243E4.unk8;
@@ -1486,47 +1499,38 @@ void *music_related_23(s32 arg0, void *arg1, void *argF) {
         }
         else
         {
-            // Node 3
             D_800243E4.unk8->unk4 = 0;
             *D_800243E4.unk8 = NULL;
             D_800243E4 = (void *) D_800243E4.unk8;
             D_800243E4.unk4 = (void *) D_800243E4.unk8;
         }
-        // Node 4
         osSetIntMask(sp28, sp30);
         D_800243E4.unk8->unk3F = (u8)5;
-        temp_a1 = (((u32) (*argF->unk4 + 1) < 1U) + 0x40);
+        temp_a1 = (((u32) ((*arg1)->unk4 + 1) < 1U) + 0x40);
         D_800243E4.unk8->unk36 = temp_a1;
         D_800243E4.unk8->unk38 = 2;
-        D_800243E4.unk8->unk8 = argF;
+        D_800243E4.unk8->unk8 = arg1;
         D_800243E4.unk8->unk2C = 1.0f;
         D_800243E4.unk8->unk30 = 0;
         temp_t5 = (sp30->unk3 & 0xf0);
         D_800243E4.unk8->unk3E = temp_t5;
         if ((temp_t5 & 0x20) != 0)
         {
-            // Node 5
             D_800243E4.unk8->unk28 = alCents2Ratio(((sp30->unk4 * 0x64) + -0x1770), temp_a1, sp30);
         }
         else
         {
-            // Node 6
             D_800243E4.unk8->unk28 = alCents2Ratio((((sp30->unk4 * 0x64) + sp30->unk5) + -0x1770), temp_a1, sp30);
         }
-        // Node 7
         if (sp24 != 0x40)
         {
-            // Node 8
             D_800243E4.unk8->unk3E = (s8) (D_800243E4.unk8->unk3E | 2);
         }
-        // Node 9
         D_800243E4.unk8->unk3D = (u8)0;
         D_800243E4.unk8->unk3C = (u8)0x40;
         D_800243E4.unk8->unk34 = (u16)0x7fff;
-        return;
-        // (possible return value: D_800243E4.unk8)
     }
-    // (possible return value: D_800243E4.unk8)
+    return D_800243E4.unk8;
 }
 #else
 GLOBAL_ASM(
@@ -1653,58 +1657,44 @@ glabel music_related_23
 
 
 #ifdef NONMATCHING
-void *music_related_24(void *arg0, void *arg6) {
-    // Node 0
+void *music_related_24(void *arg0)
+{
     if (arg0 == D_800243E4)
     {
-        // Node 1
-        D_800243E4 = (s32) *arg0;
+        D_800243E4 = (void *) *arg0;
     }
-    // Node 2
     if (arg0 == D_800243E4.unk4)
     {
-        // Node 3
         D_800243E4.unk4 = (s32) arg0->unk4;
     }
-    // Node 4
     alUnlink();
     if (D_800243E4.unk8 != 0)
     {
-        // Node 5
-        *arg6 = (void *) D_800243E4.unk8;
-        arg6->unk4 = 0;
-        D_800243E4.unk8->unk4 = arg6;
-        D_800243E4.unk8 = arg6;
+        *arg0 = (void *) D_800243E4.unk8;
+        arg0->unk4 = 0;
+        D_800243E4.unk8->unk4 = arg0;
+        D_800243E4.unk8 = arg0;
     }
     else
     {
-        // Node 6
-        arg6->unk4 = 0;
-        *arg6 = NULL;
-        D_800243E4.unk8 = arg6;
+        arg0->unk4 = 0;
+        *arg0 = NULL;
+        D_800243E4.unk8 = arg0;
     }
-    // Node 7
-    if ((arg6->unk3E & 4) != 0)
+    if ((arg0->unk3E & 4) != 0)
     {
-        // Node 8
         D_800243F4 = (s16) (D_800243F4 + -1);
     }
-    // Node 9
-    arg6->unk3F = (u8)0;
-    if (arg6->unk30 != 0)
+    arg0->unk3F = (u8)0;
+    if (arg0->unk30 != 0)
     {
-        // Node 10
-        if (arg6 == *arg6->unk30)
+        if (arg0 == *arg0->unk30)
         {
-            // Node 11
-            *arg6->unk30 = 0;
+            *arg0->unk30 = 0;
         }
-        // Node 12
-        arg6->unk30 = NULL;
-        return;
-        // (possible return value: arg6->unk30)
+        arg0->unk30 = NULL;
     }
-    // (possible return value: arg6->unk30)
+    return arg0->unk30;
 }
 #else
 GLOBAL_ASM(
@@ -1783,16 +1773,12 @@ glabel music_related_24
 
 
 #ifdef NONMATCHING
-void music_related_25(void *arg0, s32 arg1) {
-    // Node 0
+void music_related_25(void *arg0, s32 arg1)
+{
     if (arg0 != 0)
     {
-        // Node 1
         arg0->unk36 = (s8) (arg1 & 0xff);
-        return;
-        // (function likely void)
     }
-    // (function likely void)
 }
 #else
 GLOBAL_ASM(
@@ -1818,20 +1804,18 @@ glabel music_related_25
 
 
 #ifdef NONMATCHING
-void music_related_26(void *arg0) {
-    // Node 0
+void sfxGetArg0Unk3F(void *arg0)
+{
     if (arg0 != 0)
     {
-        // Node 1
-        return;
-        // (possible return value: arg0->unk3F)
+        return arg0->unk3F;
     }
-    // (possible return value: 0)
+    return 0;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_26
+glabel sfxGetArg0Unk3F
 /* 0099F0 70008DF0 10800003 */  beqz  $a0, .L70008E00
 /* 0099F4 70008DF4 00001025 */   move  $v0, $zero
 /* 0099F8 70008DF8 03E00008 */  jr    $ra
@@ -1852,8 +1836,93 @@ glabel music_related_26
 
 
 #ifdef NONMATCHING
-void play_sfx_a1(void) {
+void *play_sfx_a1(s32 arg0, s32 arg1, void *arg2)
+{
+    s16 sp6E;
+    s32 sp68;
+    s32 sp54;
+    s16 sp50;
+    ?32 sp48;
+    s16 sp40;
+    s32 temp_t6;
+    void *temp_t0;
+    ? temp_ret;
+    s32 temp_s0;
+    s32 temp_t4;
+    s32 temp_s1;
+    s8 temp_t7;
+    s32 phi_s1;
+    s32 phi_s4;
+    void *phi_s7;
+    s32 phi_s3;
 
+    temp_t6 = ((s32) (arg1 << 0x10) >> 0x10);
+    sp6E = (u16)0;
+    if (bootswitch_sound != 0)
+    {
+        return 0;
+    }
+    if (temp_t6 == 0)
+    {
+        return 0;
+    }
+    phi_s1 = temp_t6;
+    phi_s4 = 0;
+    phi_s7 = NULL;
+    phi_s3 = sp64;
+block_5:
+    temp_t0 = (subroutine_arg3 + (phi_s1 * 4));
+    temp_ret = music_related_23(arg0, temp_t0->unkC);
+    temp_s0 = temp_ret;
+    if (temp_ret != 0)
+    {
+        D_800243F0->unk3C = temp_ret;
+        sp50 = (u16)1;
+        sp54 = temp_ret;
+        temp_t4 = (temp_t0->unkC->unk4->unk1 * 0x8235);
+        if ((temp_ret->unk3E & 0x10) != 0)
+        {
+            temp_ret->unk3E = (s8) (temp_ret->unk3E & 0xffef);
+            alEvtqPostEvent((D_800243F0 + 0x14), &sp50, (phi_s4 + 1));
+            sp68 = (s32) (temp_t4 + 1);
+        }
+        else
+        {
+            alEvtqPostEvent((D_800243F0 + 0x14), &sp50, (temp_t4 + 1));
+        }
+        phi_s7 = temp_s0;
+        phi_s3 = temp_t4;
+    }
+    temp_s1 = ((s32) ((*temp_t0->unkC->unk4 + ((temp_t0->unkC->unk4->unk2 & 0xc0) * 4)) << 0x10) >> 0x10);
+    if (temp_s1 != 0)
+    {
+        phi_s1 = temp_s1;
+        phi_s4 = (phi_s4 + phi_s3);
+        phi_s7 = phi_s7;
+        phi_s3 = phi_s3;
+        if (temp_s0 != 0)
+        {
+            goto block_5;
+        }
+    }
+    if (phi_s7 != 0)
+    {
+        temp_t7 = (phi_s7->unk3E | 1);
+        phi_s7->unk3E = temp_t7;
+        phi_s7->unk30 = arg2;
+        if (sp6E != 0)
+        {
+            phi_s7->unk3E = (s8) (temp_t7 | 0x10);
+            sp40 = (u16)0x200;
+            sp48 = sp6E;
+            alEvtqPostEvent((D_800243F0 + 0x14), &sp40, sp68);
+        }
+    }
+    if (arg2 != 0)
+    {
+        *arg2 = (void *) phi_s7;
+    }
+    return phi_s7;
 }
 #else
 GLOBAL_ASM(
@@ -2012,25 +2081,21 @@ glabel play_sfx_a1
 
 
 #ifdef NONMATCHING
-void music_related_28(void *arg0) {
+void sfxSetArg0Unk3EPostEvent(void *arg0)
+{
     s16 sp18;
 
-    // Node 0
     sp18 = (u16)0x400;
     if (arg0 != 0)
     {
-        // Node 1
         arg0->unk3E = (s8) (arg0->unk3E & 0xffef);
         alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0);
-        return;
-        // (possible return value: alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0))
     }
-    // (function likely void)
 }
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_28
+glabel sfxSetArg0Unk3EPostEvent
 /* 009C20 70009020 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 009C24 70009024 240E0400 */  li    $t6, 1024
 /* 009C28 70009028 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -2063,37 +2128,37 @@ glabel music_related_28
 
 
 #ifdef NONMATCHING
-void music_related_29(s32 arg0) {
-    s16 sp3C;
+void music_related_29(s32 arg0)
+{
     s32 sp4C;
+    s16 sp3C;
     s32 temp_s2;
+    s8 temp_v0;
+    void *temp_s0;
+    void *phi_s0;
 
-    // Node 0
     temp_s2 = (arg0 & 0xff);
     sp4C = osSetIntMask(1);
     if (D_800243E4 != 0)
     {
-        // Node 1
-        // Node 2
+        phi_s0 = D_800243E4;
+block_2:
         sp3C = (u16)0x400;
-        if (temp_s2 == (D_800243E4->unk3E & temp_s2))
+        temp_v0 = phi_s0->unk3E;
+        if (temp_s2 == (temp_v0 & temp_s2))
         {
-            // Node 3
-            D_800243E4->unk3E = (s8) (D_800243E4->unk3E & -0x11);
+            phi_s0->unk3E = (s8) (temp_v0 & -0x11);
             alEvtqPostEvent((D_800243F0 + 0x14), &sp3C, 0);
         }
-        // Node 4
-        if (*D_800243E4 != 0)
+        temp_s0 = *phi_s0;
+        phi_s0 = temp_s0;
+        if (temp_s0 != 0)
         {
-            goto loop_2;
+            goto block_2;
         }
     }
-    // Node 5
     osSetIntMask(sp4C);
-    return;
-    // (possible return value: osSetIntMask(sp4C))
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2157,11 +2222,9 @@ glabel music_related_29
 
 
 #ifdef NONMATCHING
-void music_related_30(void) {
-    // Node 0
+void music_related_30(void)
+{
     music_related_29(1);
-    return;
-    // (possible return value: music_related_29(1))
 }
 #else
 GLOBAL_ASM(
@@ -2187,11 +2250,9 @@ glabel music_related_30
 
 
 #ifdef NONMATCHING
-void music_related_32(void) {
-    // Node 0
+void music_related_32(void)
+{
     music_related_29(0x11);
-    return;
-    // (possible return value: music_related_29(0x11))
 }
 #else
 GLOBAL_ASM(
@@ -2217,11 +2278,9 @@ glabel music_related_32
 
 
 #ifdef NONMATCHING
-void music_related_34(void) {
-    // Node 0
+void music_related_34(void)
+{
     music_related_29(3);
-    return;
-    // (possible return value: music_related_29(3))
 }
 #else
 GLOBAL_ASM(
@@ -2247,18 +2306,14 @@ glabel music_related_34
 
 
 #ifdef NONMATCHING
-void music_related_36(s32 arg0, s32 arg1, ? arg2) {
+void music_related_36(s32 arg0, s32 arg1, ? arg2)
+{
     ? sp18;
 
-    // Node 0
     if (arg0 != 0)
     {
-        // Node 1
         alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0);
-        return;
-        // (possible return value: alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0))
     }
-    // (function likely void)
 }
 #else
 GLOBAL_ASM(
@@ -2294,11 +2349,9 @@ glabel music_related_36
 
 
 #ifdef NONMATCHING
-void music_related_37(void) {
-    // Node 0
+void music_related_37(void)
+{
     music_related_41(0);
-    return;
-    // (possible return value: music_related_41(0))
 }
 #else
 GLOBAL_ASM(
@@ -2324,17 +2377,21 @@ glabel music_related_37
 
 
 #ifdef NONMATCHING
-void music_related_38(s32 arg0) {
-    // Node 0
-    // Node 1
-    music_related_42((0 & 0xff), ((arg0 & 0xffff) & 0xffff));
-    if (((0 + 1) & 0xff) < 7)
-    {
-        goto loop_1;
-    }
-    // (possible return value: music_related_42((0 & 0xff), ((arg0 & 0xffff) & 0xffff)))
-}
+void music_related_38(s32 arg0)
+{
+    s32 temp_t6;
+    s32 phi_s0;
 
+    phi_s0 = 0;
+block_1:
+    music_related_42((phi_s0 & 0xff), ((arg0 & 0xffff) & 0xffff));
+    temp_t6 = ((phi_s0 + 1) & 0xff);
+    phi_s0 = temp_t6;
+    if (temp_t6 < 7)
+    {
+        goto block_1;
+    }
+}
 #else
 GLOBAL_ASM(
 .text
@@ -2370,12 +2427,10 @@ glabel music_related_38
 
 
 #ifdef NONMATCHING
-void music_related_39(f32 arg0) {
-    // Node 0
+void music_related_39(f32 arg0)
+{
     F32_800243FC = arg0;
     music_related_38((music_related_37() & 0xffff));
-    return;
-    // (possible return value: music_related_38((music_related_37() & 0xffff)))
 }
 #else
 GLOBAL_ASM(
@@ -2404,11 +2459,11 @@ glabel music_related_39
 
 
 #ifdef NONMATCHING
-void music_related_41(s32 arg0) {
-    // Node 0
-    return;
-    // (possible return value: *(D_80063BA8 + ((arg0 & 0xff) * 2)))
+void music_related_41(s32 arg0)
+{
+    return *(D_80063BA8 + ((arg0 & 0xff) * 2));
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2433,39 +2488,46 @@ glabel music_related_41
 
 
 #ifdef NONMATCHING
-s32 music_related_42(s32 arg0, s32 arg1) {
+s32 music_related_42(s32 arg0, s32 arg1)
+{
     s16 sp30;
     s32 temp_s3;
     s16 temp_t6;
     s32 temp_v0;
+    void *temp_v0_2;
+    void *temp_s0;
+    void *phi_s0;
+    s32 phi_return;
 
-    // Node 0
     temp_s3 = (arg0 & 0xff);
     temp_t6 = (arg1 & 0xffff);
     temp_v0 = (temp_s3 * 2);
     *(D_80063BA8 + temp_v0) = temp_t6;
     *(D_80063BA4 + temp_v0) = (s32) ((f32) temp_t6 * F32_800243FC);
+    phi_s0 = D_800243E4;
+    phi_return = temp_v0;
     if (D_800243E4 != 0)
     {
-        loop_1:
-        // Node 1
-        if (D_800243E4->unk8 != 0)
+block_1:
+        temp_v0_2 = phi_s0->unk8;
+        phi_return = temp_v0_2;
+        if (temp_v0_2 != 0)
         {
-            // Node 2
-            if (temp_s3 == (D_800243E4->unk8->unk4->unk2 & 0x3f))
+            phi_return = temp_v0_2;
+            if (temp_s3 == (temp_v0_2->unk4->unk2 & 0x3f))
             {
-                // Node 3
                 sp30 = (u16)0x800;
-                alEvtqPostEvent((D_800243F0 + 0x14), &sp30, 0);
+                phi_return = alEvtqPostEvent((D_800243F0 + 0x14), &sp30, 0);
             }
         }
-        // Node 4
-        if (*D_800243E4 != 0)
+        temp_s0 = *phi_s0;
+        phi_s0 = temp_s0;
+        if (temp_s0 != 0)
         {
-            goto loop_1;
+            goto block_1;
         }
     }
-    // (possible return value: temp_v0)
+    return phi_return;
 }
 #else
 GLOBAL_ASM(

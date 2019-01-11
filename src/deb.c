@@ -205,21 +205,18 @@ glabel return_match_in_debug_notice_list
 #endif
 
 #ifdef NONMATCHING
-u32 get_entry_of_size_in_debug_notice_list(s32 arg0) {
+u32 get_entry_of_size_in_debug_notice_list(s32 arg0)
+{
     u32 temp_v0;
 
-    // Node 0
     temp_v0 = (debug_notice_list_data + arg0);
     if (&thread_video_manager_debugthread >= temp_v0)
     {
-        // Node 2
         debug_notice_list_data = temp_v0;
-        // Node 3
         return debug_notice_list_data;
     }
-    // Node 1
     debug_notice_list_data = (u32) (temp_v0 - arg0);
-    return debug_notice_list_data;
+    return allocate_bytes_in_bank(6);
 }
 #else
 GLOBAL_ASM(
@@ -259,18 +256,16 @@ glabel get_entry_of_size_in_debug_notice_list
 
 
 #ifdef NONMATCHING
-void add_new_entry_to_debug_notice_list(s32 arg0, s32 arg1) {
-    u32 temp_ret;
+void add_new_entry_to_debug_notice_list(s32 arg0, s32 arg1)
+{
+    ? temp_ret;
 
-    // Node 0
     temp_ret = get_entry_of_size_in_debug_notice_list(0x10);
     *temp_ret = (s32) debug_notice_list;
     temp_ret->unk4 = arg1;
     temp_ret->unk8 = arg0;
     debug_notice_list = temp_ret;
-    return temp_ret;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -331,20 +326,12 @@ glabel add_debug_notice_deb_c_debug
 
 
 #ifdef NONMATCHING
-void get_ptr_debug_notice_list_entry(s32 arg0, s32 arg1) {
-    ? temp_ret;
-    ? phi_return;
-
-    // Node 0
-    temp_ret = return_match_in_debug_notice_list(arg1);
-    phi_return = temp_ret;
-    if (temp_ret == 0)
+void get_ptr_debug_notice_list_entry(s32 arg0, s32 arg1)
+{
+    if (return_match_in_debug_notice_list(arg1) == 0)
     {
-        // Node 1
-        phi_return = add_new_entry_to_debug_notice_list(arg1, arg0);
+        add_new_entry_to_debug_notice_list(arg1, arg0);
     }
-    // Node 2
-    return phi_return;
 }
 #else
 GLOBAL_ASM(
@@ -373,16 +360,15 @@ glabel get_ptr_debug_notice_list_entry
 
 
 #ifdef NONMATCHING
-void *scan_debug_notice_list_till_NULL(void) {
+void *scan_debug_notice_list_till_NULL(void)
+{
     void *temp_v0;
     void *phi_v0;
 
-    // Node 0
     phi_v0 = debug_notice_list;
     if (debug_notice_list != 0)
     {
 loop_1:
-        // Node 1
         temp_v0 = *phi_v0;
         phi_v0 = temp_v0;
         if (temp_v0 != 0)
@@ -390,7 +376,6 @@ loop_1:
             goto loop_1;
         }
     }
-    // Node 2
     return debug_notice_list;
 }
 #else
@@ -696,32 +681,25 @@ glabel debug_related_8
 #endif
 
 #ifdef NONMATCHING
-void was_opcode_In_70000450_70020D90(u32 arg0) {
-    // Node 0
+void was_opcode_In_70000450_70020D90(u32 arg0)
+{
     if ((arg0 & 3) == 0)
     {
-        // Node 1
         if (arg0 >= &_codeSegmentVaddrStart)
         {
-            // Node 2
             if (&_codeSegmentVaddrEnd >= arg0)
             {
-                // Node 3
                 if ((arg0->unk-8 & 0xfc00003c) == 9)
                 {
-                    // Node 4
                     return 1;
                 }
-                // Node 5
                 if ((arg0->unk-8 & 0xfc000000) == 0xc000000)
                 {
-                    // Node 6
                     return 1;
                 }
             }
         }
     }
-    // Node 7
     return 0;
 }
 #else
@@ -771,25 +749,23 @@ glabel was_opcode_In_70000450_70020D90
 
 
 #ifdef NONMATCHING
-s32 return_strlen(void *arg0) {
+s32 return_strlen(void *arg0)
+{
     s32 temp_v1;
     s32 phi_v1;
     void *phi_a0;
     s32 phi_v1_2;
 
-    // Node 0
     phi_v1 = 0;
     phi_a0 = (arg0 + 1);
     phi_v1_2 = 0;
     if (*arg0 != 0)
     {
 loop_1:
-        // Node 1
         temp_v1 = (phi_v1 + 1);
         phi_v1_2 = temp_v1;
         if (temp_v1 < 0x100)
         {
-            // Node 2
             phi_v1 = temp_v1;
             phi_a0 = (phi_a0 + 1);
             phi_v1_2 = temp_v1;
@@ -799,7 +775,6 @@ loop_1:
             }
         }
     }
-    // Node 3
     return phi_v1_2;
 }
 #else
@@ -959,11 +934,10 @@ glabel scan_load_resourceID_from_indy_read_buf
 
 
 #ifdef NONMATCHING
-s32 is_valid_indy_read_buf_resourceID(void) {
-    // Node 0
+s32 is_valid_indy_read_buf_resourceID(void)
+{
     indy_file_get_address_subsequent_data(0xe00000);
-    return;
-    // (possible return value: ((u32) (current_indy_read_buf_resourceID ^ 0x826475be) < 1U))
+    return ((u32) (current_indy_read_buf_resourceID ^ 0x826475be) < 1U);
 }
 #else
 GLOBAL_ASM(
@@ -1044,11 +1018,13 @@ glabel return_indy_read_buf_resourceID
 #endif
 
 #ifdef NONMATCHING
-s32 debug_sp_related_11(u32 arg0, u32 arg1) {
-    ? sp8;
+s32 debug_sp_related_11(u32 arg0, u32 arg1)
+{
     ? sp1C;
+    ? sp8;
+    s32 temp_v0;
+    void *temp_t8;
 
-    // Node 0
     sp1C = (?32) ptr_sp_rmon_0;
     sp1C.unk4 = (?32) ptr_sp_rmon_0.unk4;
     sp1C.unk8 = (?32) ptr_sp_rmon_0.unk8;
@@ -1061,27 +1037,19 @@ s32 debug_sp_related_11(u32 arg0, u32 arg1) {
     sp8.unk10 = (?32) ptr_sp_idle_1.unk10;
     if (arg1 <= 0)
     {
-        // Node 2
-        return;
-        // (possible return value: 0)
+        return 0;
     }
-    // Node 1
+    temp_v0 = (arg1 * 4);
     if (arg1 >= 6U)
     {
-        // Node 2
-        return;
-        // (possible return value: 0)
+        return 0;
     }
-    // Node 3
-    if (arg0 >= 0x80000000U)
+    temp_t8 = (&sp8 + temp_v0);
+    if (arg0 < 0x80000000U)
     {
-        // Node 4
-        return;
-        // (possible return value: *(&sp8 + (arg1 * 4)))
+        return ((arg0 & 0xf0000000) | (*temp_t8 - *(&sp1C + temp_v0)));
     }
-    // Node 5
-    return;
-    // (possible return value: ((arg0 & 0xf0000000) | (*(&sp8 + (arg1 * 4)) - *(&sp1C + (arg1 * 4)))))
+    return *temp_t8;
 }
 #else
 GLOBAL_ASM(

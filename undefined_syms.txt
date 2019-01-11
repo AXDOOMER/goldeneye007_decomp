@@ -1,0 +1,41 @@
+/*gspFast3DDataStart = 0xaddress;*/
+
+_bootSegmentStart = 0x04000000;
+_bootSegmentRomStart = 0x00000000;
+_bootSegmentEnd = 0x04001000;
+_bootSegmentRomEnd = 0x00001000;
+
+_codeSegmentStart = 0x80000400;
+_codeSegmentRomStart = 0x00001000;
+_codeSegmentEnd = 0x80020D90;
+_codeSegmentRomEnd = 0x00021990;
+
+/*_cdataSegmentStart = */
+_cdataSegmentRomStart = 0x00021990;
+_cdataSegmentVaddrStart = 0x80020D90;
+/*_cdataSegmentEnd = */
+_cdataSegmentRomEnd = 0x00033590;
+_cdataSegmentVaddrEnd = 0x8005D2E0;
+
+_decompressBuffer = 0x80300000;
+_rarezipSegmentStart = 0x70200000;
+_rarezipSegmentRomStart = 0x00033590;
+_rarezipSegmentEnd = 0x7020159C;
+_rarezipSegmentRomEnd = 0x34B30;
+
+sp_main = 0x803AB950;
+sp_boot = 0x803AB400;
+sp_rmon = 0x803AB410;
+sp_idle = 0x803AB710;
+sp_shed = 0x803AB750;
+sp_audi = 0x803B3950;
+sp_debug = 0x803B4950;
+
+osTvType = 0x80000300;
+cfb_16_a = 0x803B5000;
+cfb_16_b = 0x803DA800;
+
+set_hardwire_TLB_to_2 = 0x70001BB0;
+osViModeTable_osViModeMpalLan1 = 0x80027320;
+
+something_with_osVI = 0x800230B0;

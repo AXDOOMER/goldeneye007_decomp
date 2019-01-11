@@ -583,8 +583,56 @@ glabel set_color_speedgraph
 
 
 #ifdef NONMATCHING
-void write_char_to_screen(void) {
+void *write_char_to_screen(s32 arg0, s32 arg_unaligned3)
+{
+    s32 sp24;
+    s32 sp20;
+    s32 sp1C;
+    s32 temp_t6;
+    s32 temp_lo;
+    s32 temp_t1;
+    s32 temp_t6_2;
+    s32 phi_t7;
 
+    temp_t6 = (get_video2_settings_txtClipW() + -0xd);
+    phi_t7 = (temp_t6 >> 2);
+    if (temp_t6 < 0)
+    {
+        phi_t7 = ((s32) (temp_t6 + 3) >> 2);
+    }
+    sp24 = (s32) phi_t7;
+    temp_lo = ((s32) (get_video2_settings_txtClipH() + -0xa) / 7);
+    if ((arg_unaligned3 != 0) && (arg_unaligned3 >= 0x20))
+    {
+        if (arg_unaligned3 < 0x7f)
+        {
+block_5:
+            sp1C = arg_unaligned3;
+            sp20 = temp_lo;
+            display_text_to_coord(debug_menu_x_text_pos, debug_menu_y_text_pos, arg_unaligned3, &debug_menu_y_text_pos);
+        }
+    }
+    else
+    {
+        goto block_5;
+    }
+    temp_t1 = (debug_menu_x_text_pos + 1);
+    debug_menu_x_text_pos = temp_t1;
+    if (((arg_unaligned3 == 0xd) || (arg_unaligned3 == 0xa)) || (temp_t1 >= sp24))
+    {
+        temp_t6_2 = (debug_menu_y_text_pos + 1);
+        debug_menu_y_text_pos = temp_t6_2;
+        debug_menu_x_text_pos = (s32) debug_menu_x_pos_offset;
+        if (temp_t6_2 >= temp_lo)
+        {
+            debug_menu_y_text_pos = (s32) debug_menu_y_pos_offset;
+        }
+    }
+    else
+    {
+
+    }
+    return &debug_menu_x_text_pos;
 }
 #else
 GLOBAL_ASM(

@@ -1859,11 +1859,11 @@ glabel manage_mp_game
 /* 0F3994 7F0BEE64 8C8483A0 */  lw    $a0, %lo(D_800483A0)($a0)
 /* 0F3998 7F0BEE68 10800007 */  beqz  $a0, .L7F0BEE88
 /* 0F399C 7F0BEE6C 00000000 */   nop   
-/* 0F39A0 7F0BEE70 0C00237C */  jal   music_related_26
+/* 0F39A0 7F0BEE70 0C00237C */  jal   sfxGetArg0Unk3F
 /* 0F39A4 7F0BEE74 00000000 */   nop   
 /* 0F39A8 7F0BEE78 10400003 */  beqz  $v0, .L7F0BEE88
 /* 0F39AC 7F0BEE7C 3C048005 */   lui   $a0, %hi(D_800483A0) # $a0, 0x8005
-/* 0F39B0 7F0BEE80 0C002408 */  jal   music_related_28
+/* 0F39B0 7F0BEE80 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
 /* 0F39B4 7F0BEE84 8C8483A0 */   lw    $a0, %lo(D_800483A0)($a0)
 .L7F0BEE88:
 /* 0F39B8 7F0BEE88 3C038005 */  lui   $v1, %hi(D_80048398) # $v1, 0x8005
@@ -2768,10 +2768,10 @@ void unload_stage_text_data(void) {
     if (D_800483A0 != 0)
     {
         // Node 1
-        if (music_related_26(D_800483A0) != 0)
+        if (sfxGetArg0Unk3F(D_800483A0) != 0)
         {
             // Node 2
-            music_related_28(D_800483A0);
+            sfxSetArg0Unk3EPostEvent(D_800483A0);
         }
     }
     // Node 3
@@ -2791,7 +2791,7 @@ void unload_stage_text_data(void) {
     cleanupAlarms();
     cleanupObjects(current_stage_to_load);
     cleanupObjectives();
-    cleanupsoundrelated();
+    cleanupSFXRelated();
     cleanupplayersoundrelated();
     sub_GAME_7F0C1268();
     sub_GAME_7F0B47E0();
@@ -2806,11 +2806,11 @@ glabel unload_stage_text_data
 /* 0F465C 7F0BFB2C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F4660 7F0BFB30 10800007 */  beqz  $a0, .L7F0BFB50
 /* 0F4664 7F0BFB34 00000000 */   nop   
-/* 0F4668 7F0BFB38 0C00237C */  jal   music_related_26
+/* 0F4668 7F0BFB38 0C00237C */  jal   sfxGetArg0Unk3F
 /* 0F466C 7F0BFB3C 00000000 */   nop   
 /* 0F4670 7F0BFB40 10400003 */  beqz  $v0, .L7F0BFB50
 /* 0F4674 7F0BFB44 3C048005 */   lui   $a0, %hi(D_800483A0) # $a0, 0x8005
-/* 0F4678 7F0BFB48 0C002408 */  jal   music_related_28
+/* 0F4678 7F0BFB48 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
 /* 0F467C 7F0BFB4C 8C8483A0 */   lw    $a0, %lo(D_800483A0)($a0)
 .L7F0BFB50:
 /* 0F4680 7F0BFB50 3C048005 */  lui   $a0, %hi(current_stage_to_load) # $a0, 0x8005
@@ -2844,7 +2844,7 @@ glabel unload_stage_text_data
 /* 0F46EC 7F0BFBBC 8C848364 */   lw    $a0, %lo(current_stage_to_load)($a0)
 /* 0F46F0 7F0BFBC0 0FC01D64 */  jal   cleanupObjectives
 /* 0F46F4 7F0BFBC4 00000000 */   nop   
-/* 0F46F8 7F0BFBC8 0FC01DC0 */  jal   cleanupsoundrelated
+/* 0F46F8 7F0BFBC8 0FC01DC0 */  jal   cleanupSFXRelated
 /* 0F46FC 7F0BFBCC 00000000 */   nop   
 /* 0F4700 7F0BFBD0 0FC01E60 */  jal   cleanupplayersoundrelated
 /* 0F4704 7F0BFBD4 00000000 */   nop   

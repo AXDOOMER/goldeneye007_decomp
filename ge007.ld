@@ -1,33 +1,38 @@
 /*OUTPUT_FORMAT ("elf32-bigmips")*/
 OUTPUT_ARCH (mips)
 
+#define BEGIN_SEG(name, addr) \
+    _##name##SegmentStart = ADDR(.name); \
+    _##name##SegmentRomStart = __romPos; \
+    .name addr : AT(__romPos)
+
+#define END_SEG(name) \
+    _##name##SegmentEnd = ADDR(.name) + SIZEOF(.name); \
+    _##name##SegmentRomEnd = __romPos + SIZEOF(.name); \
+    __romPos += SIZEOF(.name);
+
+#define BEGIN_NOLOAD(name) \
+    _##name##SegmentNoloadStart = ADDR(.name.noload); \
+    .name.noload (NOLOAD) :
+
+#define END_NOLOAD(name) \
+    _##name##SegmentNoloadEnd = ADDR(.name.noload) + SIZEOF(.name.noload);
+
 SECTIONS
 {
     __romPos = 0;
 
-	rom_start = .;
-   /* header */
-   .header 0x04000000 : AT(__romPos) {
-      build/rom_header.o(.data);
-   }
-   __romPos += SIZEOF(.header);
-
-   /* boot */
-   .boot 0x04000040 : AT(__romPos) {
+   BEGIN_SEG(boot, 0x04000000)
+   {
+      build/rom_header.o(.text);
       build/bootcode.o(.text);
    }
-   __romPos += SIZEOF(.boot);
+   END_SEG(boot)
 
    __ramPos = 400;
-   /* 0x80000400, 0x80000450 */
-   .text_start 0x80000400 : AT(__romPos) {
+   BEGIN_SEG(code, 0x80000400)
+   {
       build/_start.o (.text);
-   }
-   __romPos += SIZEOF(.text_start);
-   __ramPos += SIZEOF(.text_start);
-
-   /* 0x70000450, 0x70020D90 001050-021990 */
-   .text_code 0x70000450 : AT(0x1050) {
       build/boot.o (.text);
       build/init.o (.text);
       build/sched.o (.text);
@@ -58,23 +63,26 @@ SECTIONS
       build/rmon.o (.text);
       build/libultra/libultra.o (.text);
    }
-   __romPos += SIZEOF(.text_code);
-   __ramPos += SIZEOF(.text_code);
-   
-   .c_data __romPos : AT(__romPos) {
-      * (.c_data);
+   END_SEG(code)
+   __ramPos += SIZEOF(.code);
+
+   .c_data_dummy __romPos : AT(__romPos) {
+      * (.c_data_dummy);
    }
-   __romPos += SIZEOF(.c_data);
+   __romPos += SIZEOF(.c_data_dummy);
    
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
-   .text_rarezip 0x70200000 : AT(__romPos) {
+   BEGIN_SEG(rarezip, 0x70200000)
+   {
       build/rarezip/rarezip.o (.text);
       build/rarezip/rarezip.o (.data);
    }
-   __romPos += SIZEOF(.text_rarezip);
-   
+   END_SEG(rarezip)
+
+  
    /* (0x7F000000, 0x7F0E2D50, 0x7EFCB4D0), // 034B30-117881 [E2D51] */
-   .text_tlbcode 0x7F000000 : AT(__romPos) {
+   BEGIN_SEG(game, 0x7F000000)
+   {
       build/game/initgamedata.o (.text);
       build/game/initweaponanigroups.o (.text);
       build/game/initactorpropstuff.o (.text);
@@ -184,16 +192,20 @@ SECTIONS
       build/game/music_0D2720.o (.text);
       build/game/spectrum.o (.text);
    }
-   __romPos += SIZEOF(.text_tlbcode);
+   END_SEG(GAME)
    
    .romfiles 0x117880 : AT(__romPos) {
       * (.romfiles);
+
       * (.ramrom);
+
       * (.font);
+
       * (.music);
+      
       * (.musiccompressed);
    }
-   __romPos += SIZEOF(.text_tlbcode);
+   __romPos += SIZEOF(.romfiles);
 
    .ob_seg 0x438660 : AT(__romPos) {
       * (.ob_seg);
