@@ -10,9 +10,18 @@ s32 dword_CODE_bss_800604A4;
 u32 dword_CODE_bss_800604A8;
 u32 dword_CODE_bss_800604AC;
 s32 dword_CODE_bss_800604B0[0xC0];
-s32 dword_CODE_bss_800607B0[4];
-s32 dword_CODE_bss_800607C0[4];
-s32 dword_CODE_bss_800607D0[4];
+s32 dword_CODE_bss_800607B0;
+s32 dword_CODE_bss_800607B4;
+s32 dword_CODE_bss_800607B8;
+s32 dword_CODE_bss_800607BC;
+s32 dword_CODE_bss_800607C0;
+s32 dword_CODE_bss_800607C4;
+s32 dword_CODE_bss_800607C8;
+s32 dword_CODE_bss_800607CC;
+s32 dword_CODE_bss_800607D0;
+s32 dword_CODE_bss_800607D4;
+s32 dword_CODE_bss_800607D8;
+s32 dword_CODE_bss_800607DC;
 
 s32 D_800231D0[] = { 0, 0, 2, 0, 1, 0, 2, 0, 2, 0xFF000000, 2, 0, 3, 0x9200, 4, 0xFFFFFFFF, 4, 0xDB000000, 4, 0xFFFFFFFF };
 
@@ -24,15 +33,15 @@ s32 D_80023234[] = { 1, 0, 0, 0 };
 
 
 //GLOBAL_ASM(
-//    .rodata
-//    aUtz2_0f: .asciiz "utz %2.0f%%\n"
-//    aRsp2_0f: .asciiz "rsp %2.0f%%\n"
-//    aTex2_0f: .asciiz "tex %2.0f%%"
-//    a2dHz: .asciiz "%2d hz"
-//    a2dFrames: .asciiz "%2d frames"
-//    a2d: .asciiz " [%2d]"
-//    asc_D_80028468: .asciiz "     "
-//    aIL0: .asciiz "I=l0"
+/*    .rodata*/
+const char aUtz2_0f[] = "utz %2.0f%%\n";
+const char aRsp2_0f[] = "rsp %2.0f%%\n";
+const char aTex2_0f[] = "tex %2.0f%%";
+const char a2dHz[] = "%2d hz";
+const char a2dFrames[] = "%2d frames";
+const char a2d[] = " [%2d]";
+const char asc_D_80028468[] = "     ";
+const char aIL0[] = "I=l0";
 //)
 
 
@@ -396,7 +405,7 @@ glabel display_speed_graph
 /* 0035C0 700029C0 3C018002 */  lui   $at, %hi(D_80023224) # $at, 0x8002
 /* 0035C4 700029C4 AC223224 */  sw    $v0, %lo(D_80023224)($at)
 .L700029C8:
-/* 0035C8 700029C8 0C000447 */  jal   setcountertarget
+/* 0035C8 700029C8 0C000447 */  jal   get_counters
 /* 0035CC 700029CC AFA40048 */   sw    $a0, 0x48($sp)
 /* 0035D0 700029D0 AFA20044 */  sw    $v0, 0x44($sp)
 /* 0035D4 700029D4 240400FF */  li    $a0, 255

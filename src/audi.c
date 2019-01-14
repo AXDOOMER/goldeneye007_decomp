@@ -303,14 +303,14 @@ glabel amCreateAudioMgr
 /* 002AFC 70001EFC AE02FFFC */   sw    $v0, -4($s0)
 /* 002B00 70001F00 3C04803B */  lui   $a0, %hi(sp_audi) # $a0, 0x803b
 /* 002B04 70001F04 24843950 */  addiu $a0, %lo(sp_audi) # addiu $a0, $a0, 0x3950
-/* 002B08 70001F08 0C0001BC */  jal   grow_stack
+/* 002B08 70001F08 0C0001BC */  jal   set_stack_entry
 /* 002B0C 70001F0C 24051000 */   li    $a1, 4096
-/* 002B10 70001F10 3C048006 */  lui   $a0, %hi(audithread) # $a0, 0x8006
+/* 002B10 70001F10 3C048006 */  lui   $a0, %hi(audiThread) # $a0, 0x8006
 /* 002B14 70001F14 3C067000 */  lui   $a2, %hi(_amMain) # $a2, 0x7000
 /* 002B18 70001F18 24190014 */  li    $t9, 20
 /* 002B1C 70001F1C AFB90014 */  sw    $t9, 0x14($sp)
 /* 002B20 70001F20 24C61F7C */  addiu $a2, %lo(_amMain) # addiu $a2, $a2, 0x1f7c
-/* 002B24 70001F24 2484E530 */  addiu $a0, %lo(audithread) # addiu $a0, $a0, -0x1ad0
+/* 002B24 70001F24 2484E530 */  addiu $a0, %lo(audiThread) # addiu $a0, $a0, -0x1ad0
 /* 002B28 70001F28 24050004 */  li    $a1, 4
 /* 002B2C 70001F2C 00003825 */  move  $a3, $zero
 /* 002B30 70001F30 0C00350C */  jal   osCreateThread
@@ -327,7 +327,7 @@ glabel amCreateAudioMgr
 #endif
 
 
-void startaudithread(void) {
+void startaudiThread(void) {
     osStartThread(&audiThread);
 }
 
@@ -358,7 +358,7 @@ void _amMain(s32 arg0)
 
     sp64 = NULL;
     sp60 = 0;
-    osScAddClient(&D_8005DA40, &dword_CODE_bss_8005E7A0, &audioFrameMsgQ, 1);
+    osScAddClient(&sc, &audi_client, &audioFrameMsgQ, 1);
     phi_s1 = 0;
     phi_s2_2 = 0;
 loop_1:
@@ -460,8 +460,8 @@ glabel _amMain
 /* 002B90 70001F90 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 002B94 70001F94 AFB20020 */  sw    $s2, 0x20($sp)
 /* 002B98 70001F98 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 002B9C 70001F9C 3C048006 */  lui   $a0, %hi(D_8005DA40) # $a0, 0x8006
-/* 002BA0 70001FA0 3C058006 */  lui   $a1, %hi(dword_CODE_bss_8005E7A0) # $a1, 0x8006
+/* 002B9C 70001F9C 3C048006 */  lui   $a0, %hi(sc) # $a0, 0x8006
+/* 002BA0 70001FA0 3C058006 */  lui   $a1, %hi(audi_client) # $a1, 0x8006
 /* 002BA4 70001FA4 AFBE0038 */  sw    $fp, 0x38($sp)
 /* 002BA8 70001FA8 AFB70034 */  sw    $s7, 0x34($sp)
 /* 002BAC 70001FAC AFB5002C */  sw    $s5, 0x2c($sp)
@@ -472,8 +472,8 @@ glabel _amMain
 /* 002BC0 70001FC0 00009025 */  move  $s2, $zero
 /* 002BC4 70001FC4 AFA00064 */  sw    $zero, 0x64($sp)
 /* 002BC8 70001FC8 AFA00060 */  sw    $zero, 0x60($sp)
-/* 002BCC 70001FCC 24A5E7A0 */  addiu $a1, %lo(dword_CODE_bss_8005E7A0) # addiu $a1, $a1, -0x1860
-/* 002BD0 70001FD0 2484DA40 */  addiu $a0, %lo(D_8005DA40) # addiu $a0, $a0, -0x25c0
+/* 002BCC 70001FCC 24A5E7A0 */  addiu $a1, %lo(audi_client) # addiu $a1, $a1, -0x1860
+/* 002BD0 70001FD0 2484DA40 */  addiu $a0, %lo(sc) # addiu $a0, $a0, -0x25c0
 /* 002BD4 70001FD4 02C03025 */  move  $a2, $s6
 /* 002BD8 70001FD8 0C000305 */  jal   osScAddClient
 /* 002BDC 70001FDC 24070001 */   li    $a3, 1
@@ -669,7 +669,7 @@ void _amHandleFrameMsg(void *arg0, s32 arg1, void *argB) {
     arg0->unk5C = arg0;
     arg0->unk10 = 2;
     arg0->unk48 = (?32) *(&dword_CODE_bss_8005E518 + (curAcmdList * 4));
-    arg0->unk4C = (s32) (((s32) (alAudioFrame((0x80060000 + (curAcmdList * 4))->unk-1AE8, &dword_CODE_bss_8005ECCC, sp24, arg0->unk4) - *(&dword_CODE_bss_8005E518 + (curAcmdList * 4))) >> 3) * 8);
+    arg0->unk4C = (s32) (((s32) (alAudioFrame((0x80060000 + (curAcmdList * 4))->unk-1AE8, &cmdLen, sp24, arg0->unk4) - *(&dword_CODE_bss_8005E518 + (curAcmdList * 4))) >> 3) * 8);
     arg0->unk18 = 2;
     arg0->unk20 = &rspbootTextStart;
     arg0->unk24 = (s32) (&gsp3DTextStart - &rspbootTextStart);
@@ -679,10 +679,10 @@ void _amHandleFrameMsg(void *arg0, s32 arg1, void *argB) {
     arg0->unk34 = 0x800;
     arg0->unk50 = 0;
     arg0->unk54 = 0;
-    osSendMesg(osScGetCmdQ(&D_8005DA40, &rspbootTextStart, &curAcmdList, &dword_CODE_bss_8005E518), (arg0 + 8), 0);
+    osSendMesg(osScGetCmdQ(&sc, &rspbootTextStart, &curAcmdList, &dword_CODE_bss_8005E518), (arg0 + 8), 0);
     curAcmdList = (s32) (curAcmdList ^ 1);
     return;
-    // (possible return value: osSendMesg(osScGetCmdQ(&D_8005DA40, &rspbootTextStart, &curAcmdList, &dword_CODE_bss_8005E518), (arg0 + 8), 0))
+    // (possible return value: osSendMesg(osScGetCmdQ(&sc, &rspbootTextStart, &curAcmdList, &dword_CODE_bss_8005E518), (arg0 + 8), 0))
 }
 #else
 GLOBAL_ASM(
@@ -728,8 +728,8 @@ glabel _amHandleFrameMsg
 /* 002ED4 700022D4 86070004 */  lh    $a3, 4($s0)
 .L700022D8:
 /* 002ED8 700022D8 8D8C30FC */  lw    $t4, %lo(curAcmdList)($t4)
-/* 002EDC 700022DC 3C058006 */  lui   $a1, %hi(dword_CODE_bss_8005ECCC) # $a1, 0x8006
-/* 002EE0 700022E0 24A5ECCC */  addiu $a1, %lo(dword_CODE_bss_8005ECCC) # addiu $a1, $a1, -0x1334
+/* 002EDC 700022DC 3C058006 */  lui   $a1, %hi(cmdLen) # $a1, 0x8006
+/* 002EE0 700022E0 24A5ECCC */  addiu $a1, %lo(cmdLen) # addiu $a1, $a1, -0x1334
 /* 002EE4 700022E4 000C6880 */  sll   $t5, $t4, 2
 /* 002EE8 700022E8 008D2021 */  addu  $a0, $a0, $t5
 /* 002EEC 700022EC 8C84E518 */  lw    $a0, -0x1ae8($a0)
@@ -768,7 +768,7 @@ glabel _amHandleFrameMsg
 /* 002F70 70002370 25082280 */  addiu $t0, %lo(aspMainTextStart) # addiu $t0, $t0, 0x2280
 /* 002F74 70002374 2529D020 */  addiu $t1, %lo(aspMainDataStart) # addiu $t1, $t1, -0x2fe0
 /* 002F78 70002378 240A0800 */  li    $t2, 2048
-/* 002F7C 7000237C 3C048006 */  lui   $a0, %hi(D_8005DA40) # $a0, 0x8006
+/* 002F7C 7000237C 3C048006 */  lui   $a0, %hi(sc) # $a0, 0x8006
 /* 002F80 70002380 AE0F004C */  sw    $t7, 0x4c($s0)
 /* 002F84 70002384 AE030018 */  sw    $v1, 0x18($s0)
 /* 002F88 70002388 AE050020 */  sw    $a1, 0x20($s0)
@@ -780,7 +780,7 @@ glabel _amHandleFrameMsg
 /* 002FA0 700023A0 AE000050 */  sw    $zero, 0x50($s0)
 /* 002FA4 700023A4 AE000054 */  sw    $zero, 0x54($s0)
 /* 002FA8 700023A8 0C00033E */  jal   osScGetCmdQ
-/* 002FAC 700023AC 2484DA40 */   addiu $a0, %lo(D_8005DA40) # addiu $a0, $a0, -0x25c0
+/* 002FAC 700023AC 2484DA40 */   addiu $a0, %lo(sc) # addiu $a0, $a0, -0x25c0
 /* 002FB0 700023B0 00402025 */  move  $a0, $v0
 /* 002FB4 700023B4 26050008 */  addiu $a1, $s0, 8
 /* 002FB8 700023B8 0C0037C4 */  jal   osSendMesg
@@ -855,30 +855,30 @@ s32 __amDMA(u32 arg0, s32 arg1, ? arg2, s32 arg14) {
     // Node 0
     temp_t2 = (arg0 & 1);
     sp48 = temp_t2;
-    if (off_CODE_bss_8005E7B0.unk4 != 0)
+    if (dmaState_initialized.unk4 != 0)
     {
         loop_1:
         // Node 1
-        if (arg0 >= (u32) off_CODE_bss_8005E7B0.unk4->unk8)
+        if (arg0 >= (u32) dmaState_initialized.unk4->unk8)
         {
             // Node 2
-            if ((off_CODE_bss_8005E7B0.unk4->unk8 + 0x200) >= (arg0 + arg1))
+            if ((dmaState_initialized.unk4->unk8 + 0x200) >= (arg0 + arg1))
             {
                 // Node 3
-                off_CODE_bss_8005E7B0.unk4->unkC = (?32) audFrameCt;
-                osVirtualToPhysical(((off_CODE_bss_8005E7B0.unk4->unk10 + arg0) - off_CODE_bss_8005E7B0.unk4->unk8), off_CODE_bss_8005E7B0.unk4, arg0);
+                dmaState_initialized.unk4->unkC = (?32) audFrameCt;
+                osVirtualToPhysical(((dmaState_initialized.unk4->unk10 + arg0) - dmaState_initialized.unk4->unk8), dmaState_initialized.unk4, arg0);
                 return;
-                // (possible return value: osVirtualToPhysical(((off_CODE_bss_8005E7B0.unk4->unk10 + arg0) - off_CODE_bss_8005E7B0.unk4->unk8), off_CODE_bss_8005E7B0.unk4, arg0))
+                // (possible return value: osVirtualToPhysical(((dmaState_initialized.unk4->unk10 + arg0) - dmaState_initialized.unk4->unk8), dmaState_initialized.unk4, arg0))
             }
             // Node 4
-            if (*off_CODE_bss_8005E7B0.unk4 != 0)
+            if (*dmaState_initialized.unk4 != 0)
             {
                 goto loop_1;
             }
         }
     }
     // Node 5
-    if (off_CODE_bss_8005E7B0.unk8 == 0)
+    if (dmaState_initialized.unk8 == 0)
     {
         // Node 6
         if (NULL == 0)
@@ -892,39 +892,39 @@ s32 __amDMA(u32 arg0, s32 arg1, ? arg2, s32 arg14) {
     else
     {
         // Node 9
-        off_CODE_bss_8005E7B0.unk8 = (void *) *off_CODE_bss_8005E7B0.unk8;
-        alUnlink(off_CODE_bss_8005E7B0.unk8, NULL, arg0);
+        dmaState_initialized.unk8 = (void *) *dmaState_initialized.unk8;
+        alUnlink(dmaState_initialized.unk8, NULL, arg0);
         if (sp38 != 0)
         {
             // Node 10
-            alLink(off_CODE_bss_8005E7B0.unk8, sp38, sp38, arg14);
+            alLink(dmaState_initialized.unk8, sp38, sp38, arg14);
         }
         else
         {
             // Node 11
-            if (off_CODE_bss_8005E7B0.unk4 != 0)
+            if (dmaState_initialized.unk4 != 0)
             {
                 // Node 12
-                off_CODE_bss_8005E7B0.unk4 = (void *) off_CODE_bss_8005E7B0.unk8;
-                *off_CODE_bss_8005E7B0.unk8 = (void *) off_CODE_bss_8005E7B0.unk4;
-                off_CODE_bss_8005E7B0.unk8->unk4 = 0;
-                off_CODE_bss_8005E7B0.unk4->unk4 = (void *) off_CODE_bss_8005E7B0.unk8;
+                dmaState_initialized.unk4 = (void *) dmaState_initialized.unk8;
+                *dmaState_initialized.unk8 = (void *) dmaState_initialized.unk4;
+                dmaState_initialized.unk8->unk4 = 0;
+                dmaState_initialized.unk4->unk4 = (void *) dmaState_initialized.unk8;
             }
             else
             {
                 // Node 13
-                off_CODE_bss_8005E7B0.unk4 = (void *) off_CODE_bss_8005E7B0.unk8;
-                *off_CODE_bss_8005E7B0.unk8 = NULL;
-                off_CODE_bss_8005E7B0.unk8->unk4 = 0;
+                dmaState_initialized.unk4 = (void *) dmaState_initialized.unk8;
+                *dmaState_initialized.unk8 = NULL;
+                dmaState_initialized.unk8->unk4 = 0;
             }
         }
         // Node 14
         temp_a3 = (arg14 - sp48);
-        off_CODE_bss_8005E7B0.unk8->unk8 = temp_a3;
-        off_CODE_bss_8005E7B0.unk8->unkC = (?32) audFrameCt;
+        dmaState_initialized.unk8->unk8 = temp_a3;
+        dmaState_initialized.unk8->unkC = (?32) audFrameCt;
         nextDMA = (s32) (nextDMA + 1);
-        sp4C = (?32) off_CODE_bss_8005E7B0.unk8->unk10;
-        osPiStartDma(((nextDMA * 0x18) + &dword_CODE_bss_8005ECD0), 1, 0, temp_a3, (?32) off_CODE_bss_8005E7B0.unk8->unk10, 0x200, &audDMAMessageQ);
+        sp4C = (?32) dmaState_initialized.unk8->unk10;
+        osPiStartDma(((nextDMA * 0x18) + &audDMAIOMesgBuf), 1, 0, temp_a3, (?32) dmaState_initialized.unk8->unk10, 0x200, &audDMAMessageQ);
         osVirtualToPhysical(sp4C);
     }
     // Node 15
@@ -935,8 +935,8 @@ s32 __amDMA(u32 arg0, s32 arg1, ? arg2, s32 arg14) {
 GLOBAL_ASM(
 .text
 glabel __amDMA
-/* 003024 70002424 3C098006 */  lui   $t1, %hi(off_CODE_bss_8005E7B0) # $t1, 0x8006
-/* 003028 70002428 2529E7B0 */  addiu $t1, %lo(off_CODE_bss_8005E7B0) # addiu $t1, $t1, -0x1850
+/* 003024 70002424 3C098006 */  lui   $t1, %hi(dmaState_initialized) # $t1, 0x8006
+/* 003028 70002428 2529E7B0 */  addiu $t1, %lo(dmaState_initialized) # addiu $t1, $t1, -0x1850
 /* 00302C 7000242C 8D280004 */  lw    $t0, 4($t1)
 /* 003030 70002430 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 003034 70002434 AFB00028 */  sw    $s0, 0x28($sp)
@@ -991,8 +991,8 @@ glabel __amDMA
 /* 0030E4 700024E4 0C003AA4 */  jal   alUnlink
 /* 0030E8 700024E8 AD2B0008 */   sw    $t3, 8($t1)
 /* 0030EC 700024EC 8FA60038 */  lw    $a2, 0x38($sp)
-/* 0030F0 700024F0 3C098006 */  lui   $t1, %hi(off_CODE_bss_8005E7B0) # $t1, 0x8006
-/* 0030F4 700024F4 2529E7B0 */  addiu $t1, %lo(off_CODE_bss_8005E7B0) # addiu $t1, $t1, -0x1850
+/* 0030F0 700024F0 3C098006 */  lui   $t1, %hi(dmaState_initialized) # $t1, 0x8006
+/* 0030F4 700024F4 2529E7B0 */  addiu $t1, %lo(dmaState_initialized) # addiu $t1, $t1, -0x1850
 /* 0030F8 700024F8 10C00007 */  beqz  $a2, .L70002518
 /* 0030FC 700024FC 8FA70050 */   lw    $a3, 0x50($sp)
 /* 003100 70002500 02002025 */  move  $a0, $s0
@@ -1025,13 +1025,13 @@ glabel __amDMA
 /* 003160 70002560 8E030010 */  lw    $v1, 0x10($s0)
 /* 003164 70002564 AE0D000C */  sw    $t5, 0xc($s0)
 /* 003168 70002568 8D020000 */  lw    $v0, ($t0)
-/* 00316C 7000256C 3C0F8006 */  lui   $t7, %hi(dword_CODE_bss_8005ECD0) # $t7, 0x8006
+/* 00316C 7000256C 3C0F8006 */  lui   $t7, %hi(audDMAIOMesgBuf) # $t7, 0x8006
 /* 003170 70002570 3C198006 */  lui   $t9, %hi(audDMAMessageQ) # $t9, 0x8006
 /* 003174 70002574 00027080 */  sll   $t6, $v0, 2
 /* 003178 70002578 01C27023 */  subu  $t6, $t6, $v0
 /* 00317C 7000257C 000E70C0 */  sll   $t6, $t6, 3
 /* 003180 70002580 2739F2D0 */  addiu $t9, %lo(audDMAMessageQ) # addiu $t9, $t9, -0xd30
-/* 003184 70002584 25EFECD0 */  addiu $t7, %lo(dword_CODE_bss_8005ECD0) # addiu $t7, $t7, -0x1330
+/* 003184 70002584 25EFECD0 */  addiu $t7, %lo(audDMAIOMesgBuf) # addiu $t7, $t7, -0x1330
 /* 003188 70002588 24180200 */  li    $t8, 512
 /* 00318C 7000258C 244B0001 */  addiu $t3, $v0, 1
 /* 003190 70002590 AD0B0000 */  sw    $t3, ($t0)
@@ -1063,15 +1063,15 @@ glabel __amDMA
 #ifdef NONMATCHING
 void *__amDmaNew(void *arg0) {
     // Node 0
-    if (off_CODE_bss_8005E7B0 == 0)
+    if (dmaState_initialized == 0)
     {
         // Node 1
-        off_CODE_bss_8005E7B0.unk4 = 0;
-        off_CODE_bss_8005E7B0.unk8 = &dmaBuffs;
-        off_CODE_bss_8005E7B0 = (u8)1;
+        dmaState_initialized.unk4 = 0;
+        dmaState_initialized.unk8 = &dmaBuffs;
+        dmaState_initialized = (u8)1;
     }
     // Node 2
-    *arg0 = &off_CODE_bss_8005E7B0;
+    *arg0 = &dmaState_initialized;
     return;
     // (possible return value: &__amDMA)
 }
@@ -1079,8 +1079,8 @@ void *__amDmaNew(void *arg0) {
 GLOBAL_ASM(
 .text
 glabel __amDmaNew
-/* 0031D8 700025D8 3C038006 */  lui   $v1, %hi(off_CODE_bss_8005E7B0) # $v1, 0x8006
-/* 0031DC 700025DC 2463E7B0 */  addiu $v1, %lo(off_CODE_bss_8005E7B0) # addiu $v1, $v1, -0x1850
+/* 0031D8 700025D8 3C038006 */  lui   $v1, %hi(dmaState_initialized) # $v1, 0x8006
+/* 0031DC 700025DC 2463E7B0 */  addiu $v1, %lo(dmaState_initialized) # addiu $v1, $v1, -0x1850
 /* 0031E0 700025E0 906E0000 */  lbu   $t6, ($v1)
 /* 0031E4 700025E4 3C027000 */  lui   $v0, %hi(__amDMA) # $v0, 0x7000
 /* 0031E8 700025E8 3C0F8006 */  lui   $t7, %hi(dmaBuffs) # $t7, 0x8006
@@ -1117,35 +1117,35 @@ void __clearAudioDMA(void) {
         }
     }
     // Node 3
-    if (off_CODE_bss_8005E7B0.unk4 != 0)
+    if (dmaState_initialized.unk4 != 0)
     {
         loop_4:
         // Node 4
-        if ((u32) (off_CODE_bss_8005E7B0.unk4->unkC + 1) < (u32) audFrameCt)
+        if ((u32) (dmaState_initialized.unk4->unkC + 1) < (u32) audFrameCt)
         {
             // Node 5
-            if (off_CODE_bss_8005E7B0.unk4 == off_CODE_bss_8005E7B0.unk4)
+            if (dmaState_initialized.unk4 == dmaState_initialized.unk4)
             {
                 // Node 6
-                off_CODE_bss_8005E7B0.unk4 = (void *) *off_CODE_bss_8005E7B0.unk4;
+                dmaState_initialized.unk4 = (void *) *dmaState_initialized.unk4;
             }
             // Node 7
-            alUnlink(off_CODE_bss_8005E7B0.unk4);
-            if (off_CODE_bss_8005E7B0.unk8 != 0)
+            alUnlink(dmaState_initialized.unk4);
+            if (dmaState_initialized.unk8 != 0)
             {
                 // Node 8
-                alLink(off_CODE_bss_8005E7B0.unk4, off_CODE_bss_8005E7B0.unk8);
+                alLink(dmaState_initialized.unk4, dmaState_initialized.unk8);
             }
             else
             {
                 // Node 9
-                off_CODE_bss_8005E7B0.unk8 = (void *) off_CODE_bss_8005E7B0.unk4;
-                *off_CODE_bss_8005E7B0.unk4 = NULL;
-                off_CODE_bss_8005E7B0.unk4->unk4 = 0;
+                dmaState_initialized.unk8 = (void *) dmaState_initialized.unk4;
+                *dmaState_initialized.unk4 = NULL;
+                dmaState_initialized.unk4->unk4 = 0;
             }
         }
         // Node 10
-        if (*off_CODE_bss_8005E7B0.unk4 != 0)
+        if (*dmaState_initialized.unk4 != 0)
         {
             goto loop_4;
         }
@@ -1187,8 +1187,8 @@ glabel __clearAudioDMA
 /* 00326C 7000266C 5420FFF9 */  bnezl $at, .L70002654
 /* 003270 70002670 02202025 */   move  $a0, $s1
 .L70002674:
-/* 003274 70002674 3C128006 */  lui   $s2, %hi(off_CODE_bss_8005E7B0) # $s2, 0x8006
-/* 003278 70002678 2652E7B0 */  addiu $s2, %lo(off_CODE_bss_8005E7B0) # addiu $s2, $s2, -0x1850
+/* 003274 70002674 3C128006 */  lui   $s2, %hi(dmaState_initialized) # $s2, 0x8006
+/* 003278 70002678 2652E7B0 */  addiu $s2, %lo(dmaState_initialized) # addiu $s2, $s2, -0x1850
 /* 00327C 7000267C 8E500004 */  lw    $s0, 4($s2)
 /* 003280 70002680 3C138002 */  lui   $s3, %hi(audFrameCt) # $s3, 0x8002
 /* 003284 70002684 267330F4 */  addiu $s3, %lo(audFrameCt) # addiu $s3, $s3, 0x30f4
