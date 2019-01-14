@@ -383,10 +383,10 @@ s32 D_80044918 = 0xFF7FFFFF;
 */
 //D:80044928
 Gfx D_80044928[] = {
-    0xFC26A0041F1093FF, 0xFC232DFFFFFFFE38, 
+    0xFC26A004, 0x1F1093FF, 0xFC232DFF, 0xFFFFFE38, 
     //gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2), 
     //gDPSetCombineLERP(TEXEL1, 0, COMBINED_ALPHA, 0, TEXEL1, 0, PRIM_LOD_FRAC, 0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    NULL
+    0x0,0x0
 };
 
 //D:80044940 - Primary
@@ -420,7 +420,7 @@ Gfx D_80044940[] = {
     //Z-Less OPA Terrain to Z-Less Fog OPA Terrain
     gDPSetRenderMode(G_RM_PASS, G_RM_AA_OPA_TERR2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_OPA_TERR2),
     */
-    NULL
+    0x0, 0x0
 };
 
 //D:800449C8 - Secondary
@@ -462,7 +462,7 @@ Gfx D_800449C8[] = {
     // This one is an oddball... its extra here AND is weird using Tile1 only for Alpha
     gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGBA) , gDPSetCombineMode(TLRGB_ATile1, ModulateRGB_EnvA2),
     */
-    NULL
+    0x0, 0x0
 };
 
 //D:80044AB0
@@ -491,7 +491,7 @@ Gfx D_80044AB0[] = {
     gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_PASS2),
     gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA),
     */
-    NULL
+    0x0, 0x0
 };
 
 //D:80044B58
@@ -520,7 +520,7 @@ Gfx D_80044B58[] = {
     gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_PASS2),
     gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA2),
     */
-    NULL
+    0x0, 0x0
 };
 
 //D:80044C00
@@ -533,7 +533,7 @@ Gfx D_80044C00[] = {
     //Transparent Surface to Billboard 
     gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2),
     */
-    NULL
+    0x0, 0x0
 };
 
 //D:80044C28
@@ -547,7 +547,7 @@ Gfx D_80044C28[] = {
 	//2 cycle Opa to Particle
 	gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_PCL_SURF2),
 	*/
-    NULL
+    0x0, 0x0
 };
 
 //D:80044C50
@@ -557,7 +557,7 @@ Gfx D_80044C50[] = {
 	//Transparent to Cloud (Saves AA - Stops Jaggies from appearing behind BillBoard)
 	gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_ZB_CLD_SURF2),
 	*/
-	NULL
+	0x0, 0x0
 };
 
 //D:80044C68
@@ -572,7 +572,7 @@ Gfx D_80044C68[] = {
 	gDPSetRenderMode(G_RM_AA_PCL_SURF, G_RM_AA_PCL_SURF2), gDPSetRenderMode(AA_EN | IM_RD | CVG_DST_CLAMP | ALPHA_CVG_SEL | ZMODE_OPA | GBL_c1(G_BL_CLR_IN, G_BL_A_SHADE, G_BL_CLR_FOG, G_BL_1MA) | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
 	gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_PASS2), gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2),
 	*/
-	NULL
+	0x0, 0x0
 };
 
 //D:80044CA0
@@ -607,7 +607,7 @@ Gfx D_80044CA0[] = {
  	gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGBA2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0, COMBINED, 0, COMBINED_ALPHA, 0, COMBINED, 0, ENVIRONMENT, 0),
  	gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2), gDPSetCombineLERP(CENTER, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
 	*/
-	NULL
+	0x0, 0x0
 };
 
 //D:80044D88
@@ -12327,23 +12327,23 @@ void sub_GAME_7F0BA640(void) {
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0BA640 //DynamicCCRMLUT(Int DLSize (a0), Gfx GBICommand(a1), Gfx ReplacementGBICommand (a2))
-/* 0EF170 7F0BA640 10A00004 */  beqz  $a1, .L7F0BA654   //if a1 = 0 goto L7F0BA654
-/* 0EF174 7F0BA644 00801025 */   move  $v0, $a0         //v0 = a0
-/* 0EF178 7F0BA648 0045082B */  sltu  $at, $v0, $a1     //if a1 < v0   then goto L7F0BA668
-/* 0EF17C 7F0BA64C 14200006 */  bnez  $at, .L7F0BA668   //
+glabel sub_GAME_7F0BA640 /*DynamicCCRMLUT(Int DLSize (a0), Gfx GBICommand(a1), Gfx ReplacementGBICommand (a2))*/
+/* 0EF170 7F0BA640 10A00004 */  beqz  $a1, .L7F0BA654   /*if a1 = 0 goto L7F0BA654*/
+/* 0EF174 7F0BA644 00801025 */   move  $v0, $a0         /*v0 = a0*/
+/* 0EF178 7F0BA648 0045082B */  sltu  $at, $v0, $a1     /*if a1 < v0   then goto L7F0BA668*/
+/* 0EF17C 7F0BA64C 14200006 */  bnez  $at, .L7F0BA668   
 /* 0EF180 7F0BA650 00000000 */   nop   
 .L7F0BA654:
-/* 0EF184 7F0BA654 14A0002E */  bnez  $a1, .L7F0BA710   //if a1 != 0 goto return
+/* 0EF184 7F0BA654 14A0002E */  bnez  $a1, .L7F0BA710   /*if a1 != 0 goto return*/
 /* 0EF188 7F0BA658 00000000 */   nop   
-/* 0EF18C 7F0BA65C 808E0000 */  lb    $t6, ($a0)        //t6 = byte(a0)
-/* 0EF190 7F0BA660 2408FFB8 */  li    $t0, -72          //t0 = 0xB8
-/* 0EF194 7F0BA664 110E002A */  beq   $t0, $t6, .L7F0BA710  //if t6 = 0xB8 return (B8 = EndDl())
+/* 0EF18C 7F0BA65C 808E0000 */  lb    $t6, ($a0)        /*t6 = byte(a0)*/
+/* 0EF190 7F0BA660 2408FFB8 */  li    $t0, -72          /*t0 = 0xB8*/
+/* 0EF194 7F0BA664 110E002A */  beq   $t0, $t6, .L7F0BA710  /*if t6 = 0xB8 return (B8 = EndDl())*/
 .L7F0BA668:
 /* 0EF198 7F0BA668 3C098004 */   lui   $t1, %hi(ptrDynamic_CC_RM_LUT) # $t1, 0x8004
 /* 0EF19C 7F0BA66C 25294D88 */  addiu $t1, %lo(ptrDynamic_CC_RM_LUT) # addiu $t1, $t1, 0x4d88
-/* 0EF1A0 7F0BA670 00067880 */  sll   $t7, $a2, 2   //t7 = a2 << 2
-/* 0EF1A4 7F0BA674 012FC021 */  addu  $t8, $t1, $t7 //t8 = t7 + t1
+/* 0EF1A0 7F0BA670 00067880 */  sll   $t7, $a2, 2   /*t7 = a2 << 2*/
+/* 0EF1A4 7F0BA674 012FC021 */  addu  $t8, $t1, $t7 /*t8 = t7 + t1*/
 /* 0EF1A8 7F0BA678 8F030000 */  lw    $v1, ($t8)
 /* 0EF1AC 7F0BA67C 3C078004 */  lui   $a3, %hi(D_80044DB0) # $a3, 0x8004
 /* 0EF1B0 7F0BA680 8CE74DB0 */  lw    $a3, %lo(D_80044DB0)($a3) # 0x4DB0($a3), 

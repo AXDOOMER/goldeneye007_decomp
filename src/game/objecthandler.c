@@ -8735,11 +8735,11 @@ Model Type 4: Normal Fog/Lighting object
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F071030 //DisplayListSetup(obj)
-/* 0A5B60 7F071030 8C820030 */  lw    $v0, 0x30($a0)    //a0=obj?
+/* 0A5B60 7F071030 8C820030 */  lw    $v0, 0x30($a0)    /*a0=obj?*/
 /* 0A5B64 7F071034 24010007 */  li    $at, 7
-/* 0A5B68 7F071038 5441006C */  bnel  $v0, $at, .L7F0711EC      //obj.ModelType <= 7? 
+/* 0A5B68 7F071038 5441006C */  bnel  $v0, $at, .L7F0711EC      /*obj.ModelType <= 7? */
 /* 0A5B6C 7F07103C 24010008 */   li    $at, 8
-/* 0A5B70 7F071040 50A00054 */  beql  $a1, $zero, .L7F071194    //a1 = 
+/* 0A5B70 7F071040 50A00054 */  beql  $a1, $zero, .L7F071194    /*a1 = */
 /* 0A5B74 7F071044 8C990004 */   lw    $t9, 4($a0)
 /* 0A5B78 7F071048 8C82000C */  lw    $v0, 0xc($a0)
 /* 0A5B7C 7F07104C 3C0FE700 */  lui   $t7, 0xe700
@@ -8749,7 +8749,7 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5B8C 7F07105C AC400004 */  sw    $zero, 4($v0)
 /* 0A5B90 7F071060 AC4F0000 */  sw    $t7, ($v0)
 /* 0A5B94 7F071064 8C82000C */  lw    $v0, 0xc($a0)
-/* 0A5B98 7F071068 37391402 */  ori   $t9, (0xBA001402 & 0xFFFF) # ori $t9, $t9, 0x1402 //2Cycle
+/* 0A5B98 7F071068 37391402 */  ori   $t9, (0xBA001402 & 0xFFFF) # ori $t9, $t9, 0x1402 /*2Cycle*/
 /* 0A5B9C 7F07106C 3C0C0010 */  lui   $t4, 0x10
 /* 0A5BA0 7F071070 24580008 */  addiu $t8, $v0, 8
 /* 0A5BA4 7F071074 AC98000C */  sw    $t8, 0xc($a0)
@@ -8793,7 +8793,7 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5C3C 7F07110C 372C00FF */  ori   $t4, $t9, 0xff
 /* 0A5C40 7F071110 AC4C0004 */  sw    $t4, 4($v0)
 /* 0A5C44 7F071114 8C82000C */  lw    $v0, 0xc($a0)
-/* 0A5C48 7F071118 3C0F5FFE */  lui   $t7, (0x5FFEDBF8 >> 16) # lui $t7, 0x5ffe    //fulldl guard 
+/* 0A5C48 7F071118 3C0F5FFE */  lui   $t7, (0x5FFEDBF8 >> 16) # lui $t7, 0x5ffe    /*fulldl guard */
 /* 0A5C4C 7F07111C 3C0EFC15 */  lui   $t6, (0xFC159804 >> 16) # lui $t6, 0xfc15
 /* 0A5C50 7F071120 244D0008 */  addiu $t5, $v0, 8
 /* 0A5C54 7F071124 AC8D000C */  sw    $t5, 0xc($a0)
@@ -8827,7 +8827,7 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5CBC 7F07118C AC4F0000 */   sw    $t7, ($v0)
 
 /* 0A5CC0 7F071190 8C990004 */  lw    $t9, 4($a0)
-.L7F071194: //UseZ - Transparent Gun Rendermode
+.L7F071194: /*UseZ - Transparent Gun Rendermode*/
 /* 0A5CC4 7F071194 3C18B900 */  lui   $t8, (0xB900031D >> 16) # lui $t8, 0xb900
 /* 0A5CC8 7F071198 3C0DB900 */  lui   $t5, (0xB900031D >> 16) # lui $t5, 0xb900
 /* 0A5CCC 7F07119C 1320000A */  beqz  $t9, .L7F0711C8
@@ -8842,7 +8842,7 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5CF0 7F0711C0 03E00008 */  jr    $ra
 /* 0A5CF4 7F0711C4 AC4E0004 */   sw    $t6, 4($v0)
 
-.L7F0711C8: //not UseZ - Opaque Gun Rendermode
+.L7F0711C8: /*not UseZ - Opaque Gun Rendermode*/
 /* 0A5CF8 7F0711C8 8C82000C */  lw    $v0, 0xc($a0)
 /* 0A5CFC 7F0711CC 3C19C410 */  lui   $t9, (0xC41041C8 >> 16) # lui $t9, 0xc410
 /* 0A5D00 7F0711D0 373941C8 */  ori   $t9, (0xC41041C8 & 0xFFFF) # ori $t9, $t9, 0x41c8
@@ -8870,11 +8870,11 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5D50 7F071220 3C180010 */  lui   $t8, 0x10
 /* 0A5D54 7F071224 244E0008 */  addiu $t6, $v0, 8
 /* 0A5D58 7F071228 AC8E000C */  sw    $t6, 0xc($a0)
-/* 0A5D5C 7F07122C AC580004 */  sw    $t8, 4($v0)       //add to t7 = 
-/* 0A5D60 7F071230 AC4F0000 */  sw    $t7, ($v0)        //0xBA00140200000010 2cycle
+/* 0A5D5C 7F07122C AC580004 */  sw    $t8, 4($v0)       /*add to t7 = */
+/* 0A5D60 7F071230 AC4F0000 */  sw    $t7, ($v0)        /*0xBA00140200000010 2cycle*/
 /* 0A5D64 7F071234 8C8A0038 */  lw    $t2, 0x38($a0)
 /* 0A5D68 7F071238 8C82000C */  lw    $v0, 0xc($a0)
-/* 0A5D6C 7F07123C 3C0DF800 */  lui   $t5, 0xf800       //fogcolour
+/* 0A5D6C 7F07123C 3C0DF800 */  lui   $t5, 0xf800       /*fogcolour*/
 /* 0A5D70 7F071240 000A4402 */  srl   $t0, $t2, 0x10
 /* 0A5D74 7F071244 244C0008 */  addiu $t4, $v0, 8
 /* 0A5D78 7F071248 AC8C000C */  sw    $t4, 0xc($a0)
@@ -8883,7 +8883,7 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5D84 7F071254 000E7E00 */  sll   $t7, $t6, 0x18
 /* 0A5D88 7F071258 0018CC00 */  sll   $t9, $t8, 0x10
 /* 0A5D8C 7F07125C 000A4A02 */  srl   $t1, $t2, 8
-/* 0A5D90 7F071260 AC4D0000 */  sw    $t5, ($v0)        //black
+/* 0A5D90 7F071260 AC4D0000 */  sw    $t5, ($v0)        /*black*/
 /* 0A5D94 7F071264 312D00FF */  andi  $t5, $t1, 0xff
 /* 0A5D98 7F071268 01F96025 */  or    $t4, $t7, $t9
 /* 0A5D9C 7F07126C 000D7200 */  sll   $t6, $t5, 8
@@ -8893,7 +8893,7 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5DAC 7F07127C AC590004 */  sw    $t9, 4($v0)
 /* 0A5DB0 7F071280 8C8A0034 */  lw    $t2, 0x34($a0)
 /* 0A5DB4 7F071284 8C82000C */  lw    $v0, 0xc($a0)
-/* 0A5DB8 7F071288 3C0EFB00 */  lui   $t6, 0xfb00       //envcolour
+/* 0A5DB8 7F071288 3C0EFB00 */  lui   $t6, 0xfb00       /*envcolour*/
 /* 0A5DBC 7F07128C 000A4402 */  srl   $t0, $t2, 0x10
 /* 0A5DC0 7F071290 244C0008 */  addiu $t4, $v0, 8
 /* 0A5DC4 7F071294 AC8C000C */  sw    $t4, 0xc($a0)
@@ -8902,7 +8902,7 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5DD0 7F0712A0 00187E00 */  sll   $t7, $t8, 0x18
 /* 0A5DD4 7F0712A4 00196C00 */  sll   $t5, $t9, 0x10
 /* 0A5DD8 7F0712A8 000A4A02 */  srl   $t1, $t2, 8
-/* 0A5DDC 7F0712AC AC4E0000 */  sw    $t6, ($v0)        //black
+/* 0A5DDC 7F0712AC AC4E0000 */  sw    $t6, ($v0)        /*black*/
 /* 0A5DE0 7F0712B0 312E00FF */  andi  $t6, $t1, 0xff
 /* 0A5DE4 7F0712B4 01ED6025 */  or    $t4, $t7, $t5
 /* 0A5DE8 7F0712B8 000EC200 */  sll   $t8, $t6, 8
@@ -8929,7 +8929,7 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5E3C 7F07130C 35CE49D8 */  ori   $t6, (0xC41049D8 & 0xFFFF) # ori $t6, $t6, 0x49d8
 /* 0A5E40 7F071310 244F0008 */  addiu $t7, $v0, 8
 /* 0A5E44 7F071314 AC8F000C */  sw    $t7, 0xc($a0)
-/* 0A5E48 7F071318 35AD031D */  ori   $t5, (0xB900031D & 0xFFFF) # ori $t5, $t5, 0x31d  //Transparent Gun Rendermode Z
+/* 0A5E48 7F071318 35AD031D */  ori   $t5, (0xB900031D & 0xFFFF) # ori $t5, $t5, 0x31d  /*Transparent Gun Rendermode Z*/
 /* 0A5E4C 7F07131C AC4D0000 */  sw    $t5, ($v0)
 /* 0A5E50 7F071320 03E00008 */  jr    $ra
 /* 0A5E54 7F071324 AC4E0004 */   sw    $t6, 4($v0)
@@ -8937,7 +8937,7 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 .L7F071328:
 /* 0A5E58 7F071328 8C82000C */  lw    $v0, 0xc($a0)
 /* 0A5E5C 7F07132C 3C19C410 */  lui   $t9, (0xC41041C8 >> 16) # lui $t9, 0xc410
-/* 0A5E60 7F071330 373941C8 */  ori   $t9, (0xC41041C8 & 0xFFFF) # ori $t9, $t9, 0x41c8 //transparent Gun rendermode NoZ
+/* 0A5E60 7F071330 373941C8 */  ori   $t9, (0xC41041C8 & 0xFFFF) # ori $t9, $t9, 0x41c8 /*transparent Gun rendermode NoZ*/
 /* 0A5E64 7F071334 244C0008 */  addiu $t4, $v0, 8
 /* 0A5E68 7F071338 AC8C000C */  sw    $t4, 0xc($a0)
 /* 0A5E6C 7F07133C AC590004 */  sw    $t9, 4($v0)
@@ -8966,19 +8966,19 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5EC0 7F071390 3C0D0010 */  lui   $t5, 0x10
 /* 0A5EC4 7F071394 24590008 */  addiu $t9, $v0, 8
 /* 0A5EC8 7F071398 AC99000C */  sw    $t9, 0xc($a0)
-/* 0A5ECC 7F07139C AC4D0004 */  sw    $t5, 4($v0)       //add to t4 =
-/* 0A5ED0 7F0713A0 AC4F0000 */  sw    $t7, ($v0)        //2cycle
+/* 0A5ECC 7F07139C AC4D0004 */  sw    $t5, 4($v0)       /*add to t4 =*/
+/* 0A5ED0 7F0713A0 AC4F0000 */  sw    $t7, ($v0)        /*2cycle*/
 /* 0A5ED4 7F0713A4 8C82000C */  lw    $v0, 0xc($a0)
 /* 0A5ED8 7F0713A8 00083402 */  srl   $a2, $t0, 0x10
 /* 0A5EDC 7F0713AC 30CF00FF */  andi  $t7, $a2, 0xff
 /* 0A5EE0 7F0713B0 244E0008 */  addiu $t6, $v0, 8
 /* 0A5EE4 7F0713B4 AC8E000C */  sw    $t6, 0xc($a0)
-/* 0A5EE8 7F0713B8 3C0CF800 */  lui   $t4, 0xf800       //fogcolour
+/* 0A5EE8 7F0713B8 3C0CF800 */  lui   $t4, 0xf800       /*fogcolour*/
 /* 0A5EEC 7F0713BC 00082E02 */  srl   $a1, $t0, 0x18
 /* 0A5EF0 7F0713C0 0005CE00 */  sll   $t9, $a1, 0x18
 /* 0A5EF4 7F0713C4 000F6C00 */  sll   $t5, $t7, 0x10
 /* 0A5EF8 7F0713C8 00083A02 */  srl   $a3, $t0, 8
-/* 0A5EFC 7F0713CC AC4C0000 */  sw    $t4, ($v0)        //black
+/* 0A5EFC 7F0713CC AC4C0000 */  sw    $t4, ($v0)        /*black*/
 /* 0A5F00 7F0713D0 30EC00FF */  andi  $t4, $a3, 0xff
 /* 0A5F04 7F0713D4 032D7025 */  or    $t6, $t9, $t5
 /* 0A5F08 7F0713D8 000CC200 */  sll   $t8, $t4, 8
@@ -8988,11 +8988,11 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5F18 7F0713E8 AC4D0004 */  sw    $t5, 4($v0)
 /* 0A5F1C 7F0713EC 8C82000C */  lw    $v0, 0xc($a0)
 /* 0A5F20 7F0713F0 2418FFFF */  li    $t8, -1
-/* 0A5F24 7F0713F4 3C0EFB00 */  lui   $t6, 0xfb00       //envcolour
+/* 0A5F24 7F0713F4 3C0EFB00 */  lui   $t6, 0xfb00       /*envcolour*/
 /* 0A5F28 7F0713F8 244C0008 */  addiu $t4, $v0, 8
 /* 0A5F2C 7F0713FC AC8C000C */  sw    $t4, 0xc($a0)
 /* 0A5F30 7F071400 AC580004 */  sw    $t8, 4($v0)
-/* 0A5F34 7F071404 AC4E0000 */  sw    $t6, ($v0)        //black
+/* 0A5F34 7F071404 AC4E0000 */  sw    $t6, ($v0)        /*black*/
 /* 0A5F38 7F071408 8C82000C */  lw    $v0, 0xc($a0)
 /* 0A5F3C 7F07140C 3C19FA00 */  lui   $t9, 0xfa00
 /* 0A5F40 7F071410 244F0008 */  addiu $t7, $v0, 8
@@ -9000,7 +9000,7 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5F48 7F071418 AC590000 */  sw    $t9, ($v0)
 /* 0A5F4C 7F07141C 8C8D0034 */  lw    $t5, 0x34($a0)
 /* 0A5F50 7F071420 3C19FC26 */  lui   $t9, (0xFC26A004 >> 16) # lui $t9, 0xfc26
-/* 0A5F54 7F071424 3739A004 */  ori   $t9, (0xFC26A004 & 0xFFFF) # ori $t9, $t9, 0xa004     //prop combiner
+/* 0A5F54 7F071424 3739A004 */  ori   $t9, (0xFC26A004 & 0xFFFF) # ori $t9, $t9, 0xa004     /*prop combiner*/
 /* 0A5F58 7F071428 000D7202 */  srl   $t6, $t5, 8
 /* 0A5F5C 7F07142C 31D800FF */  andi  $t8, $t6, 0xff
 /* 0A5F60 7F071430 AC580004 */  sw    $t8, 4($v0)
@@ -9018,7 +9018,7 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5F90 7F071460 35AD031D */   ori   $t5, (0xB900031D & 0xFFFF) # ori $t5, $t5, 0x31d
 /* 0A5F94 7F071464 8C82000C */  lw    $v0, 0xc($a0)
 /* 0A5F98 7F071468 3C0FC411 */  lui   $t7, (0xC4112078 >> 16) # lui $t7, 0xc411
-/* 0A5F9C 7F07146C 35EF2078 */  ori   $t7, (0xC4112078 & 0xFFFF) # ori $t7, $t7, 0x2078     //primary prop useZ rendermode
+/* 0A5F9C 7F07146C 35EF2078 */  ori   $t7, (0xC4112078 & 0xFFFF) # ori $t7, $t7, 0x2078     /*primary prop useZ rendermode*/
 /* 0A5FA0 7F071470 244E0008 */  addiu $t6, $v0, 8
 /* 0A5FA4 7F071474 AC8E000C */  sw    $t6, 0xc($a0)
 /* 0A5FA8 7F071478 3718031D */  ori   $t8, (0xB900031D & 0xFFFF) # ori $t8, $t8, 0x31d
@@ -9026,17 +9026,17 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A5FB0 7F071480 03E00008 */  jr    $ra
 /* 0A5FB4 7F071484 AC4F0004 */   sw    $t7, 4($v0)
 
-.L7F071488: //Not UseZ
+.L7F071488: /*Not UseZ*/
 /* 0A5FB8 7F071488 8C82000C */  lw    $v0, 0xc($a0)
 /* 0A5FBC 7F07148C 3C0CC411 */  lui   $t4, (0xC4112048 >> 16) # lui $t4, 0xc411
-/* 0A5FC0 7F071490 358C2048 */  ori   $t4, (0xC4112048 & 0xFFFF) # ori $t4, $t4, 0x2048 //primary prop noz rendermode
+/* 0A5FC0 7F071490 358C2048 */  ori   $t4, (0xC4112048 & 0xFFFF) # ori $t4, $t4, 0x2048 /*primary prop noz rendermode*/
 /* 0A5FC4 7F071494 24590008 */  addiu $t9, $v0, 8
 /* 0A5FC8 7F071498 AC99000C */  sw    $t9, 0xc($a0)
 /* 0A5FCC 7F07149C AC4C0004 */  sw    $t4, 4($v0)
 /* 0A5FD0 7F0714A0 03E00008 */  jr    $ra
 /* 0A5FD4 7F0714A4 AC4D0000 */   sw    $t5, ($v0)
 
-.L7F0714A8: //sec UseZ
+.L7F0714A8: /*sec UseZ*/
 /* 0A5FD8 7F0714A8 8C8E0004 */  lw    $t6, 4($a0)
 /* 0A5FDC 7F0714AC 3C0CB900 */  lui   $t4, (0xB900031D >> 16) # lui $t4, 0xb900
 /* 0A5FE0 7F0714B0 3C0FB900 */  lui   $t7, (0xB900031D >> 16) # lui $t7, 0xb900
@@ -9052,7 +9052,7 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A6008 7F0714D8 03E00008 */  jr    $ra
 /* 0A600C 7F0714DC AC590004 */   sw    $t9, 4($v0)
 
-.L7F0714E0: //Sec Not UseZ
+.L7F0714E0: /*Sec Not UseZ*/
 /* 0A6010 7F0714E0 8C82000C */  lw    $v0, 0xc($a0)
 /* 0A6014 7F0714E4 3C0EC410 */  lui   $t6, (0xC41041C8 >> 16) # lui $t6, 0xc410
 /* 0A6018 7F0714E8 35CE41C8 */  ori   $t6, (0xC41041C8 & 0xFFFF) # ori $t6, $t6, 0x41c8
@@ -9074,11 +9074,11 @@ glabel sub_GAME_7F071030 //DisplayListSetup(obj)
 /* 0A6050 7F071520 AC590000 */  sw    $t9, ($v0)
 /* 0A6054 7F071524 8C82000C */  lw    $v0, 0xc($a0)
 /* 0A6058 7F071528 358C1402 */  ori   $t4, (0xBA001402 & 0xFFFF) # ori $t4, $t4, 0x1402
-/* 0A605C 7F07152C 3C0E0010 */  lui   $t6, 0x10     //add to t4 = 
+/* 0A605C 7F07152C 3C0E0010 */  lui   $t6, 0x10     /*add to t4 = */
 /* 0A6060 7F071530 244D0008 */  addiu $t5, $v0, 8
 /* 0A6064 7F071534 AC8D000C */  sw    $t5, 0xc($a0)
 /* 0A6068 7F071538 AC4E0004 */  sw    $t6, 4($v0)
-/* 0A606C 7F07153C AC4C0000 */  sw    $t4, ($v0)       //2cycle
+/* 0A606C 7F07153C AC4C0000 */  sw    $t4, ($v0)       /*2cycle*/
 /* 0A6070 7F071540 8C82000C */  lw    $v0, 0xc($a0)
 /* 0A6074 7F071544 00083402 */  srl   $a2, $t0, 0x10
 /* 0A6078 7F071548 30CC00FF */  andi  $t4, $a2, 0xff
