@@ -1,12 +1,16 @@
 #include "ultra64.h"
 
 
-/* rodata
-D:80054F90     flt_D_80054F90: .float 0.99999899        # DATA XREF: ceil8000+30r
-D:80054F94     flt_D_80054F94: .float 0.99999899        # DATA XREF: ceil4000+30r
-D:80054F98     flt_D_80054F98: .float 0.99999899        # DATA XREF: ceil2000+30r
-D:80054F9C     flt_D_80054F9C: .float 0.99999899        # DATA XREF: ceil1000+30r
-*/
+/* rodata */
+//D:80054F90
+const f32 D_80054F90 = 0.99999899;
+//D:80054F94
+const f32 D_80054F94 = 0.99999899;
+//D:80054F98
+const f32 D_80054F98 = 0.99999899;
+//D:80054F9C
+const f32 D_80054F9C = 0.99999899;
+
 
 
 #ifdef NONMATCHING
@@ -492,10 +496,10 @@ glabel generate_microcode_for_othermode_setting
 /* 0AB4E4 7F0769B4 AC6E0000 */  sw    $t6, ($v1)
 /* 0AB4E8 7F0769B8 AC600004 */  sw    $zero, 4($v1)
 /* 0AB4EC 7F0769BC 00402825 */  move  $a1, $v0
-/* 0AB4F0 7F0769C0 3C0FBA00 */  lui   $t7, (0xBA001402 >> 16) # lui $t7, 0xba00         //BA00140200000000 
-/* 0AB4F4 7F0769C4 35EF1402 */  ori   $t7, (0xBA001402 & 0xFFFF) # ori $t7, $t7, 0x1402 //
-/* 0AB4F8 7F0769C8 ACAF0000 */  sw    $t7, ($a1)                                        //
-/* 0AB4FC 7F0769CC ACA00004 */  sw    $zero, 4($a1)                                     //gDPSetCycleType(G_CYC_1CYCLE)
+/* 0AB4F0 7F0769C0 3C0FBA00 */  lui   $t7, (0xBA001402 >> 16) # lui $t7, 0xba00         #BA00140200000000 
+/* 0AB4F4 7F0769C4 35EF1402 */  ori   $t7, (0xBA001402 & 0xFFFF) # ori $t7, $t7, 0x1402 #
+/* 0AB4F8 7F0769C8 ACAF0000 */  sw    $t7, ($a1)                                        #
+/* 0AB4FC 7F0769CC ACA00004 */  sw    $zero, 4($a1)                                     #gDPSetCycleType(G_CYC_1CYCLE)
 /* 0AB500 7F0769D0 8FB80004 */  lw    $t8, 4($sp)
 /* 0AB504 7F0769D4 24420008 */  addiu $v0, $v0, 8
 /* 0AB508 7F0769D8 24010002 */  li    $at, 2
@@ -514,30 +518,30 @@ glabel generate_microcode_for_othermode_setting
 /* 0AB538 7F076A08 1420000A */  bnez  $at, .L7F076A34
 /* 0AB53C 7F076A0C 00401825 */   move  $v1, $v0
 /* 0AB540 7F076A10 00401825 */  move  $v1, $v0
-/* 0AB544 7F076A14 3C19B900 */  lui   $t9, (0xB900031D >> 16) # lui $t9, 0xb900         //B900031D00552D58
-/* 0AB548 7F076A18 3C090055 */  lui   $t1, (0x00552D58 >> 16) # lui $t1, 0x55           //
-/* 0AB54C 7F076A1C 35292D58 */  ori   $t1, (0x00552D58 & 0xFFFF) # ori $t1, $t1, 0x2d58 //
-/* 0AB550 7F076A20 3739031D */  ori   $t9, (0xB900031D & 0xFFFF) # ori $t9, $t9, 0x31d  //
-/* 0AB554 7F076A24 AC790000 */  sw    $t9, ($v1)                                        //
-/* 0AB558 7F076A28 AC690004 */  sw    $t1, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB544 7F076A14 3C19B900 */  lui   $t9, (0xB900031D >> 16) # lui $t9, 0xb900         #B900031D00552D58
+/* 0AB548 7F076A18 3C090055 */  lui   $t1, (0x00552D58 >> 16) # lui $t1, 0x55           #
+/* 0AB54C 7F076A1C 35292D58 */  ori   $t1, (0x00552D58 & 0xFFFF) # ori $t1, $t1, 0x2d58 #
+/* 0AB550 7F076A20 3739031D */  ori   $t9, (0xB900031D & 0xFFFF) # ori $t9, $t9, 0x31d  #
+/* 0AB554 7F076A24 AC790000 */  sw    $t9, ($v1)                                        #
+/* 0AB558 7F076A28 AC690004 */  sw    $t1, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB55C 7F076A2C 100000CC */  b     .L7F076D60
 /* 0AB560 7F076A30 24420008 */   addiu $v0, $v0, 8
 .L7F076A34:
-/* 0AB564 7F076A34 3C0AB900 */  lui   $t2, (0xB900031D >> 16) # lui $t2, 0xb900         //B900031D00552078
-/* 0AB568 7F076A38 3C0B0055 */  lui   $t3, (0x00552078 >> 16) # lui $t3, 0x55           //
-/* 0AB56C 7F076A3C 356B2078 */  ori   $t3, (0x00552078 & 0xFFFF) # ori $t3, $t3, 0x2078 //
-/* 0AB570 7F076A40 354A031D */  ori   $t2, (0xB900031D & 0xFFFF) # ori $t2, $t2, 0x31d  //
-/* 0AB574 7F076A44 AC6A0000 */  sw    $t2, ($v1)                                        //
-/* 0AB578 7F076A48 AC6B0004 */  sw    $t3, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB564 7F076A34 3C0AB900 */  lui   $t2, (0xB900031D >> 16) # lui $t2, 0xb900         #B900031D00552078
+/* 0AB568 7F076A38 3C0B0055 */  lui   $t3, (0x00552078 >> 16) # lui $t3, 0x55           #
+/* 0AB56C 7F076A3C 356B2078 */  ori   $t3, (0x00552078 & 0xFFFF) # ori $t3, $t3, 0x2078 #
+/* 0AB570 7F076A40 354A031D */  ori   $t2, (0xB900031D & 0xFFFF) # ori $t2, $t2, 0x31d  #
+/* 0AB574 7F076A44 AC6A0000 */  sw    $t2, ($v1)                                        #
+/* 0AB578 7F076A48 AC6B0004 */  sw    $t3, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB57C 7F076A4C 100000C4 */  b     .L7F076D60
 /* 0AB580 7F076A50 24420008 */   addiu $v0, $v0, 8
 .L7F076A54:
-/* 0AB584 7F076A54 3C0CB900 */  lui   $t4, (0xB900031D >> 16) # lui $t4, 0xb900         //B900031D 00552048
-/* 0AB588 7F076A58 3C0D0055 */  lui   $t5, (0x00552048 >> 16) # lui $t5, 0x55           //
-/* 0AB58C 7F076A5C 35AD2048 */  ori   $t5, (0x00552048 & 0xFFFF) # ori $t5, $t5, 0x2048 //
-/* 0AB590 7F076A60 358C031D */  ori   $t4, (0xB900031D & 0xFFFF) # ori $t4, $t4, 0x31d  //
-/* 0AB594 7F076A64 AC6C0000 */  sw    $t4, ($v1)                                        //
-/* 0AB598 7F076A68 AC6D0004 */  sw    $t5, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB584 7F076A54 3C0CB900 */  lui   $t4, (0xB900031D >> 16) # lui $t4, 0xb900         #B900031D 00552048
+/* 0AB588 7F076A58 3C0D0055 */  lui   $t5, (0x00552048 >> 16) # lui $t5, 0x55           #
+/* 0AB58C 7F076A5C 35AD2048 */  ori   $t5, (0x00552048 & 0xFFFF) # ori $t5, $t5, 0x2048 #
+/* 0AB590 7F076A60 358C031D */  ori   $t4, (0xB900031D & 0xFFFF) # ori $t4, $t4, 0x31d  #
+/* 0AB594 7F076A64 AC6C0000 */  sw    $t4, ($v1)                                        #
+/* 0AB598 7F076A68 AC6D0004 */  sw    $t5, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB59C 7F076A6C 100000BC */  b     .L7F076D60
 /* 0AB5A0 7F076A70 24420008 */   addiu $v0, $v0, 8
 .L7F076A74:
@@ -547,85 +551,85 @@ glabel generate_microcode_for_othermode_setting
 /* 0AB5B0 7F076A80 1420000A */  bnez  $at, .L7F076AAC
 /* 0AB5B4 7F076A84 00401825 */   move  $v1, $v0
 /* 0AB5B8 7F076A88 00401825 */  move  $v1, $v0
-/* 0AB5BC 7F076A8C 3C0EB900 */  lui   $t6, (0xB900031D >> 16) # lui $t6, 0xb900         //B900031D00504DD8
-/* 0AB5C0 7F076A90 3C0F0050 */  lui   $t7, (0x00504DD8 >> 16) # lui $t7, 0x50           //
-/* 0AB5C4 7F076A94 35EF4DD8 */  ori   $t7, (0x00504DD8 & 0xFFFF) # ori $t7, $t7, 0x4dd8 //
-/* 0AB5C8 7F076A98 35CE031D */  ori   $t6, (0xB900031D & 0xFFFF) # ori $t6, $t6, 0x31d  //
-/* 0AB5CC 7F076A9C AC6E0000 */  sw    $t6, ($v1)                                        //
-/* 0AB5D0 7F076AA0 AC6F0004 */  sw    $t7, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB5BC 7F076A8C 3C0EB900 */  lui   $t6, (0xB900031D >> 16) # lui $t6, 0xb900         #B900031D00504DD8
+/* 0AB5C0 7F076A90 3C0F0050 */  lui   $t7, (0x00504DD8 >> 16) # lui $t7, 0x50           #
+/* 0AB5C4 7F076A94 35EF4DD8 */  ori   $t7, (0x00504DD8 & 0xFFFF) # ori $t7, $t7, 0x4dd8 #
+/* 0AB5C8 7F076A98 35CE031D */  ori   $t6, (0xB900031D & 0xFFFF) # ori $t6, $t6, 0x31d  #
+/* 0AB5CC 7F076A9C AC6E0000 */  sw    $t6, ($v1)                                        #
+/* 0AB5D0 7F076AA0 AC6F0004 */  sw    $t7, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB5D4 7F076AA4 100000AE */  b     .L7F076D60
 /* 0AB5D8 7F076AA8 24420008 */   addiu $v0, $v0, 8
 .L7F076AAC:
-/* 0AB5DC 7F076AAC 3C18B900 */  lui   $t8, (0xB900031D >> 16) # lui $t8, 0xb900         //B900031D005049D8
-/* 0AB5E0 7F076AB0 3C190050 */  lui   $t9, (0x005049D8 >> 16) # lui $t9, 0x50           //
-/* 0AB5E4 7F076AB4 373949D8 */  ori   $t9, (0x005049D8 & 0xFFFF) # ori $t9, $t9, 0x49d8 //
-/* 0AB5E8 7F076AB8 3718031D */  ori   $t8, (0xB900031D & 0xFFFF) # ori $t8, $t8, 0x31d  //
-/* 0AB5EC 7F076ABC AC780000 */  sw    $t8, ($v1)                                        //
-/* 0AB5F0 7F076AC0 AC790004 */  sw    $t9, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB5DC 7F076AAC 3C18B900 */  lui   $t8, (0xB900031D >> 16) # lui $t8, 0xb900         #B900031D005049D8
+/* 0AB5E0 7F076AB0 3C190050 */  lui   $t9, (0x005049D8 >> 16) # lui $t9, 0x50           #
+/* 0AB5E4 7F076AB4 373949D8 */  ori   $t9, (0x005049D8 & 0xFFFF) # ori $t9, $t9, 0x49d8 #
+/* 0AB5E8 7F076AB8 3718031D */  ori   $t8, (0xB900031D & 0xFFFF) # ori $t8, $t8, 0x31d  #
+/* 0AB5EC 7F076ABC AC780000 */  sw    $t8, ($v1)                                        #
+/* 0AB5F0 7F076AC0 AC790004 */  sw    $t9, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB5F4 7F076AC4 100000A6 */  b     .L7F076D60
 /* 0AB5F8 7F076AC8 24420008 */   addiu $v0, $v0, 8
 .L7F076ACC:
-/* 0AB5FC 7F076ACC 3C09B900 */  lui   $t1, (0xB900031D >> 16) # lui $t1, 0xb900         //
-/* 0AB600 7F076AD0 3C0A0050 */  lui   $t2, (0x005041C8 >> 16) # lui $t2, 0x50           //
-/* 0AB604 7F076AD4 354A41C8 */  ori   $t2, (0x005041C8 & 0xFFFF) # ori $t2, $t2, 0x41c8 //
-/* 0AB608 7F076AD8 3529031D */  ori   $t1, (0xB900031D & 0xFFFF) # ori $t1, $t1, 0x31d  //
-/* 0AB60C 7F076ADC AC690000 */  sw    $t1, ($v1)                                        //
-/* 0AB610 7F076AE0 AC6A0004 */  sw    $t2, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB5FC 7F076ACC 3C09B900 */  lui   $t1, (0xB900031D >> 16) # lui $t1, 0xb900         #
+/* 0AB600 7F076AD0 3C0A0050 */  lui   $t2, (0x005041C8 >> 16) # lui $t2, 0x50           #
+/* 0AB604 7F076AD4 354A41C8 */  ori   $t2, (0x005041C8 & 0xFFFF) # ori $t2, $t2, 0x41c8 #
+/* 0AB608 7F076AD8 3529031D */  ori   $t1, (0xB900031D & 0xFFFF) # ori $t1, $t1, 0x31d  #
+/* 0AB60C 7F076ADC AC690000 */  sw    $t1, ($v1)                                        #
+/* 0AB610 7F076AE0 AC6A0004 */  sw    $t2, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB614 7F076AE4 1000009E */  b     .L7F076D60
 /* 0AB618 7F076AE8 24420008 */   addiu $v0, $v0, 8
 .L7F076AEC:
 /* 0AB61C 7F076AEC 10E0000A */  beqz  $a3, .L7F076B18
 /* 0AB620 7F076AF0 00401825 */   move  $v1, $v0
 /* 0AB624 7F076AF4 00401825 */  move  $v1, $v0
-/* 0AB628 7F076AF8 3C0BB900 */  lui   $t3, (0xB900031D >> 16) # lui $t3, 0xb900         //
-/* 0AB62C 7F076AFC 3C0C0055 */  lui   $t4, (0x00553078 >> 16) # lui $t4, 0x55           //
-/* 0AB630 7F076B00 358C3078 */  ori   $t4, (0x00553078 & 0xFFFF) # ori $t4, $t4, 0x3078 //
-/* 0AB634 7F076B04 356B031D */  ori   $t3, (0xB900031D & 0xFFFF) # ori $t3, $t3, 0x31d  //
-/* 0AB638 7F076B08 AC6B0000 */  sw    $t3, ($v1)                                        //
-/* 0AB63C 7F076B0C AC6C0004 */  sw    $t4, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB628 7F076AF8 3C0BB900 */  lui   $t3, (0xB900031D >> 16) # lui $t3, 0xb900         #
+/* 0AB62C 7F076AFC 3C0C0055 */  lui   $t4, (0x00553078 >> 16) # lui $t4, 0x55           #
+/* 0AB630 7F076B00 358C3078 */  ori   $t4, (0x00553078 & 0xFFFF) # ori $t4, $t4, 0x3078 #
+/* 0AB634 7F076B04 356B031D */  ori   $t3, (0xB900031D & 0xFFFF) # ori $t3, $t3, 0x31d  #
+/* 0AB638 7F076B08 AC6B0000 */  sw    $t3, ($v1)                                        #
+/* 0AB63C 7F076B0C AC6C0004 */  sw    $t4, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB640 7F076B10 10000093 */  b     .L7F076D60
 /* 0AB644 7F076B14 24420008 */   addiu $v0, $v0, 8
 .L7F076B18:
-/* 0AB648 7F076B18 3C0DB900 */  lui   $t5, (0xB900031D >> 16) # lui $t5, 0xb900         //
-/* 0AB64C 7F076B1C 3C0E0055 */  lui   $t6, (0x00553048 >> 16) # lui $t6, 0x55           //
-/* 0AB650 7F076B20 35CE3048 */  ori   $t6, (0x00553048 & 0xFFFF) # ori $t6, $t6, 0x3048 //
-/* 0AB654 7F076B24 35AD031D */  ori   $t5, (0xB900031D & 0xFFFF) # ori $t5, $t5, 0x31d  //
-/* 0AB658 7F076B28 AC6D0000 */  sw    $t5, ($v1)                                        //
-/* 0AB65C 7F076B2C AC6E0004 */  sw    $t6, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB648 7F076B18 3C0DB900 */  lui   $t5, (0xB900031D >> 16) # lui $t5, 0xb900         #
+/* 0AB64C 7F076B1C 3C0E0055 */  lui   $t6, (0x00553048 >> 16) # lui $t6, 0x55           #
+/* 0AB650 7F076B20 35CE3048 */  ori   $t6, (0x00553048 & 0xFFFF) # ori $t6, $t6, 0x3048 #
+/* 0AB654 7F076B24 35AD031D */  ori   $t5, (0xB900031D & 0xFFFF) # ori $t5, $t5, 0x31d  #
+/* 0AB658 7F076B28 AC6D0000 */  sw    $t5, ($v1)                                        #
+/* 0AB65C 7F076B2C AC6E0004 */  sw    $t6, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB660 7F076B30 1000008B */  b     .L7F076D60
 /* 0AB664 7F076B34 24420008 */   addiu $v0, $v0, 8
 .L7F076B38:
 /* 0AB668 7F076B38 10E0000A */  beqz  $a3, .L7F076B64
 /* 0AB66C 7F076B3C 00401825 */   move  $v1, $v0
 /* 0AB670 7F076B40 00401825 */  move  $v1, $v0
-/* 0AB674 7F076B44 3C0FB900 */  lui   $t7, (0xB900031D >> 16) # lui $t7, 0xb900         //
-/* 0AB678 7F076B48 3C180050 */  lui   $t8, (0x00504B50 >> 16) # lui $t8, 0x50           //
-/* 0AB67C 7F076B4C 37184B50 */  ori   $t8, (0x00504B50 & 0xFFFF) # ori $t8, $t8, 0x4b50 //
-/* 0AB680 7F076B50 35EF031D */  ori   $t7, (0xB900031D & 0xFFFF) # ori $t7, $t7, 0x31d  //
-/* 0AB684 7F076B54 AC6F0000 */  sw    $t7, ($v1)                                        //
-/* 0AB688 7F076B58 AC780004 */  sw    $t8, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB674 7F076B44 3C0FB900 */  lui   $t7, (0xB900031D >> 16) # lui $t7, 0xb900         #
+/* 0AB678 7F076B48 3C180050 */  lui   $t8, (0x00504B50 >> 16) # lui $t8, 0x50           #
+/* 0AB67C 7F076B4C 37184B50 */  ori   $t8, (0x00504B50 & 0xFFFF) # ori $t8, $t8, 0x4b50 #
+/* 0AB680 7F076B50 35EF031D */  ori   $t7, (0xB900031D & 0xFFFF) # ori $t7, $t7, 0x31d  #
+/* 0AB684 7F076B54 AC6F0000 */  sw    $t7, ($v1)                                        #
+/* 0AB688 7F076B58 AC780004 */  sw    $t8, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB68C 7F076B5C 10000080 */  b     .L7F076D60
 /* 0AB690 7F076B60 24420008 */   addiu $v0, $v0, 8
 .L7F076B64:
-/* 0AB694 7F076B64 3C19B900 */  lui   $t9, (0xB900031D >> 16) # lui $t9, 0xb900         //
-/* 0AB698 7F076B68 3C090050 */  lui   $t1, (0x00504340 >> 16) # lui $t1, 0x50           //
-/* 0AB69C 7F076B6C 35294340 */  ori   $t1, (0x00504340 & 0xFFFF) # ori $t1, $t1, 0x4340 //
-/* 0AB6A0 7F076B70 3739031D */  ori   $t9, (0xB900031D & 0xFFFF) # ori $t9, $t9, 0x31d  //
-/* 0AB6A4 7F076B74 AC790000 */  sw    $t9, ($v1)                                        //
-/* 0AB6A8 7F076B78 AC690004 */  sw    $t1, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB694 7F076B64 3C19B900 */  lui   $t9, (0xB900031D >> 16) # lui $t9, 0xb900         #
+/* 0AB698 7F076B68 3C090050 */  lui   $t1, (0x00504340 >> 16) # lui $t1, 0x50           #
+/* 0AB69C 7F076B6C 35294340 */  ori   $t1, (0x00504340 & 0xFFFF) # ori $t1, $t1, 0x4340 #
+/* 0AB6A0 7F076B70 3739031D */  ori   $t9, (0xB900031D & 0xFFFF) # ori $t9, $t9, 0x31d  #
+/* 0AB6A4 7F076B74 AC790000 */  sw    $t9, ($v1)                                        #
+/* 0AB6A8 7F076B78 AC690004 */  sw    $t1, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB6AC 7F076B7C 10000078 */  b     .L7F076D60
 /* 0AB6B0 7F076B80 24420008 */   addiu $v0, $v0, 8
 .L7F076B84:
 /* 0AB6B4 7F076B84 00401825 */  move  $v1, $v0
 /* 0AB6B8 7F076B88 24420008 */  addiu $v0, $v0, 8
-/* 0AB6BC 7F076B8C 3C0AE700 */  lui   $t2, 0xe700                                       //e7000000000000
-/* 0AB6C0 7F076B90 AC6A0000 */  sw    $t2, ($v1)                                        //gDPPipeSync()
+/* 0AB6BC 7F076B8C 3C0AE700 */  lui   $t2, 0xe700                                       #e7000000000000
+/* 0AB6C0 7F076B90 AC6A0000 */  sw    $t2, ($v1)                                        #gDPPipeSync()
 /* 0AB6C4 7F076B94 AC600004 */  sw    $zero, 4($v1)
 /* 0AB6C8 7F076B98 00402825 */  move  $a1, $v0
-/* 0AB6CC 7F076B9C 3C0BBA00 */  lui   $t3, (0xBA001402 >> 16) # lui $t3, 0xba00         //
-/* 0AB6D0 7F076BA0 356B1402 */  ori   $t3, (0xBA001402 & 0xFFFF) # ori $t3, $t3, 0x1402 //
-/* 0AB6D4 7F076BA4 3C0C0010 */  lui   $t4, 0x10                                         //2c
-/* 0AB6D8 7F076BA8 ACAC0004 */  sw    $t4, 4($a1)                                       //gDPSetCycleType(G_CYC_2CYCLE)
+/* 0AB6CC 7F076B9C 3C0BBA00 */  lui   $t3, (0xBA001402 >> 16) # lui $t3, 0xba00         #
+/* 0AB6D0 7F076BA0 356B1402 */  ori   $t3, (0xBA001402 & 0xFFFF) # ori $t3, $t3, 0x1402 #
+/* 0AB6D4 7F076BA4 3C0C0010 */  lui   $t4, 0x10                                         #2c
+/* 0AB6D8 7F076BA8 ACAC0004 */  sw    $t4, 4($a1)                                       #gDPSetCycleType(G_CYC_2CYCLE)
 /* 0AB6DC 7F076BAC ACAB0000 */  sw    $t3, ($a1)
 /* 0AB6E0 7F076BB0 8FAD0004 */  lw    $t5, 4($sp)
 /* 0AB6E4 7F076BB4 24420008 */  addiu $v0, $v0, 8
@@ -645,30 +649,30 @@ glabel generate_microcode_for_othermode_setting
 /* 0AB718 7F076BE8 1420000A */  bnez  $at, .L7F076C14
 /* 0AB71C 7F076BEC 00401825 */   move  $v1, $v0
 /* 0AB720 7F076BF0 00401825 */  move  $v1, $v0
-/* 0AB724 7F076BF4 3C0EB900 */  lui   $t6, (0xB900031D >> 16) # lui $t6, 0xb900         //
-/* 0AB728 7F076BF8 3C0F0C19 */  lui   $t7, (0x0C192D58 >> 16) # lui $t7, 0xc19          //
-/* 0AB72C 7F076BFC 35EF2D58 */  ori   $t7, (0x0C192D58 & 0xFFFF) # ori $t7, $t7, 0x2d58 //
-/* 0AB730 7F076C00 35CE031D */  ori   $t6, (0xB900031D & 0xFFFF) # ori $t6, $t6, 0x31d  //
-/* 0AB734 7F076C04 AC6E0000 */  sw    $t6, ($v1)                                        //
-/* 0AB738 7F076C08 AC6F0004 */  sw    $t7, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB724 7F076BF4 3C0EB900 */  lui   $t6, (0xB900031D >> 16) # lui $t6, 0xb900         #
+/* 0AB728 7F076BF8 3C0F0C19 */  lui   $t7, (0x0C192D58 >> 16) # lui $t7, 0xc19          #
+/* 0AB72C 7F076BFC 35EF2D58 */  ori   $t7, (0x0C192D58 & 0xFFFF) # ori $t7, $t7, 0x2d58 #
+/* 0AB730 7F076C00 35CE031D */  ori   $t6, (0xB900031D & 0xFFFF) # ori $t6, $t6, 0x31d  #
+/* 0AB734 7F076C04 AC6E0000 */  sw    $t6, ($v1)                                        #
+/* 0AB738 7F076C08 AC6F0004 */  sw    $t7, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB73C 7F076C0C 10000054 */  b     .L7F076D60
 /* 0AB740 7F076C10 24420008 */   addiu $v0, $v0, 8
 .L7F076C14:
-/* 0AB744 7F076C14 3C18B900 */  lui   $t8, (0xB900031D >> 16) # lui $t8, 0xb900         //
-/* 0AB748 7F076C18 3C190C19 */  lui   $t9, (0x0C192078 >> 16) # lui $t9, 0xc19          //
-/* 0AB74C 7F076C1C 37392078 */  ori   $t9, (0x0C192078 & 0xFFFF) # ori $t9, $t9, 0x2078 //
-/* 0AB750 7F076C20 3718031D */  ori   $t8, (0xB900031D & 0xFFFF) # ori $t8, $t8, 0x31d  //
-/* 0AB754 7F076C24 AC780000 */  sw    $t8, ($v1)                                        //
-/* 0AB758 7F076C28 AC790004 */  sw    $t9, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB744 7F076C14 3C18B900 */  lui   $t8, (0xB900031D >> 16) # lui $t8, 0xb900         #
+/* 0AB748 7F076C18 3C190C19 */  lui   $t9, (0x0C192078 >> 16) # lui $t9, 0xc19          #
+/* 0AB74C 7F076C1C 37392078 */  ori   $t9, (0x0C192078 & 0xFFFF) # ori $t9, $t9, 0x2078 #
+/* 0AB750 7F076C20 3718031D */  ori   $t8, (0xB900031D & 0xFFFF) # ori $t8, $t8, 0x31d  #
+/* 0AB754 7F076C24 AC780000 */  sw    $t8, ($v1)                                        #
+/* 0AB758 7F076C28 AC790004 */  sw    $t9, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB75C 7F076C2C 1000004C */  b     .L7F076D60
 /* 0AB760 7F076C30 24420008 */   addiu $v0, $v0, 8
 .L7F076C34:
-/* 0AB764 7F076C34 3C09B900 */  lui   $t1, (0xB900031D >> 16) # lui $t1, 0xb900         //
-/* 0AB768 7F076C38 3C0A0C19 */  lui   $t2, (0x0C192048 >> 16) # lui $t2, 0xc19          //
-/* 0AB76C 7F076C3C 354A2048 */  ori   $t2, (0x0C192048 & 0xFFFF) # ori $t2, $t2, 0x2048 //
-/* 0AB770 7F076C40 3529031D */  ori   $t1, (0xB900031D & 0xFFFF) # ori $t1, $t1, 0x31d  //
-/* 0AB774 7F076C44 AC690000 */  sw    $t1, ($v1)                                        //
-/* 0AB778 7F076C48 AC6A0004 */  sw    $t2, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB764 7F076C34 3C09B900 */  lui   $t1, (0xB900031D >> 16) # lui $t1, 0xb900         #
+/* 0AB768 7F076C38 3C0A0C19 */  lui   $t2, (0x0C192048 >> 16) # lui $t2, 0xc19          #
+/* 0AB76C 7F076C3C 354A2048 */  ori   $t2, (0x0C192048 & 0xFFFF) # ori $t2, $t2, 0x2048 #
+/* 0AB770 7F076C40 3529031D */  ori   $t1, (0xB900031D & 0xFFFF) # ori $t1, $t1, 0x31d  #
+/* 0AB774 7F076C44 AC690000 */  sw    $t1, ($v1)                                        #
+/* 0AB778 7F076C48 AC6A0004 */  sw    $t2, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB77C 7F076C4C 10000044 */  b     .L7F076D60
 /* 0AB780 7F076C50 24420008 */   addiu $v0, $v0, 8
 .L7F076C54:
@@ -678,72 +682,72 @@ glabel generate_microcode_for_othermode_setting
 /* 0AB790 7F076C60 1420000A */  bnez  $at, .L7F076C8C
 /* 0AB794 7F076C64 00401825 */   move  $v1, $v0
 /* 0AB798 7F076C68 00401825 */  move  $v1, $v0
-/* 0AB79C 7F076C6C 3C0BB900 */  lui   $t3, (0xB900031D >> 16) # lui $t3, 0xb900         //
-/* 0AB7A0 7F076C70 3C0C0C18 */  lui   $t4, (0x0C184DD8 >> 16) # lui $t4, 0xc18          //
-/* 0AB7A4 7F076C74 358C4DD8 */  ori   $t4, (0x0C184DD8 & 0xFFFF) # ori $t4, $t4, 0x4dd8 //
-/* 0AB7A8 7F076C78 356B031D */  ori   $t3, (0xB900031D & 0xFFFF) # ori $t3, $t3, 0x31d  //
-/* 0AB7AC 7F076C7C AC6B0000 */  sw    $t3, ($v1)                                        //
-/* 0AB7B0 7F076C80 AC6C0004 */  sw    $t4, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB79C 7F076C6C 3C0BB900 */  lui   $t3, (0xB900031D >> 16) # lui $t3, 0xb900         #
+/* 0AB7A0 7F076C70 3C0C0C18 */  lui   $t4, (0x0C184DD8 >> 16) # lui $t4, 0xc18          #
+/* 0AB7A4 7F076C74 358C4DD8 */  ori   $t4, (0x0C184DD8 & 0xFFFF) # ori $t4, $t4, 0x4dd8 #
+/* 0AB7A8 7F076C78 356B031D */  ori   $t3, (0xB900031D & 0xFFFF) # ori $t3, $t3, 0x31d  #
+/* 0AB7AC 7F076C7C AC6B0000 */  sw    $t3, ($v1)                                        #
+/* 0AB7B0 7F076C80 AC6C0004 */  sw    $t4, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB7B4 7F076C84 10000036 */  b     .L7F076D60
 /* 0AB7B8 7F076C88 24420008 */   addiu $v0, $v0, 8
 .L7F076C8C:
-/* 0AB7BC 7F076C8C 3C0DB900 */  lui   $t5, (0xB900031D >> 16) # lui $t5, 0xb900         //
-/* 0AB7C0 7F076C90 3C0E0C18 */  lui   $t6, (0x0C1849D8 >> 16) # lui $t6, 0xc18          //
-/* 0AB7C4 7F076C94 35CE49D8 */  ori   $t6, (0x0C1849D8 & 0xFFFF) # ori $t6, $t6, 0x49d8 //
-/* 0AB7C8 7F076C98 35AD031D */  ori   $t5, (0xB900031D & 0xFFFF) # ori $t5, $t5, 0x31d  //
-/* 0AB7CC 7F076C9C AC6D0000 */  sw    $t5, ($v1)                                        //
-/* 0AB7D0 7F076CA0 AC6E0004 */  sw    $t6, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB7BC 7F076C8C 3C0DB900 */  lui   $t5, (0xB900031D >> 16) # lui $t5, 0xb900         #
+/* 0AB7C0 7F076C90 3C0E0C18 */  lui   $t6, (0x0C1849D8 >> 16) # lui $t6, 0xc18          #
+/* 0AB7C4 7F076C94 35CE49D8 */  ori   $t6, (0x0C1849D8 & 0xFFFF) # ori $t6, $t6, 0x49d8 #
+/* 0AB7C8 7F076C98 35AD031D */  ori   $t5, (0xB900031D & 0xFFFF) # ori $t5, $t5, 0x31d  #
+/* 0AB7CC 7F076C9C AC6D0000 */  sw    $t5, ($v1)                                        #
+/* 0AB7D0 7F076CA0 AC6E0004 */  sw    $t6, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB7D4 7F076CA4 1000002E */  b     .L7F076D60
 /* 0AB7D8 7F076CA8 24420008 */   addiu $v0, $v0, 8
 .L7F076CAC:
-/* 0AB7DC 7F076CAC 3C0FB900 */  lui   $t7, (0xB900031D >> 16) # lui $t7, 0xb900         //
-/* 0AB7E0 7F076CB0 3C180C18 */  lui   $t8, (0x0C1841C8 >> 16) # lui $t8, 0xc18          //
-/* 0AB7E4 7F076CB4 371841C8 */  ori   $t8, (0x0C1841C8 & 0xFFFF) # ori $t8, $t8, 0x41c8 //
-/* 0AB7E8 7F076CB8 35EF031D */  ori   $t7, (0xB900031D & 0xFFFF) # ori $t7, $t7, 0x31d  //
-/* 0AB7EC 7F076CBC AC6F0000 */  sw    $t7, ($v1)                                        //
-/* 0AB7F0 7F076CC0 AC780004 */  sw    $t8, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB7DC 7F076CAC 3C0FB900 */  lui   $t7, (0xB900031D >> 16) # lui $t7, 0xb900         #
+/* 0AB7E0 7F076CB0 3C180C18 */  lui   $t8, (0x0C1841C8 >> 16) # lui $t8, 0xc18          #
+/* 0AB7E4 7F076CB4 371841C8 */  ori   $t8, (0x0C1841C8 & 0xFFFF) # ori $t8, $t8, 0x41c8 #
+/* 0AB7E8 7F076CB8 35EF031D */  ori   $t7, (0xB900031D & 0xFFFF) # ori $t7, $t7, 0x31d  #
+/* 0AB7EC 7F076CBC AC6F0000 */  sw    $t7, ($v1)                                        #
+/* 0AB7F0 7F076CC0 AC780004 */  sw    $t8, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB7F4 7F076CC4 10000026 */  b     .L7F076D60
 /* 0AB7F8 7F076CC8 24420008 */   addiu $v0, $v0, 8
 .L7F076CCC:
 /* 0AB7FC 7F076CCC 10E0000A */  beqz  $a3, .L7F076CF8
 /* 0AB800 7F076CD0 00401825 */   move  $v1, $v0
 /* 0AB804 7F076CD4 00401825 */  move  $v1, $v0
-/* 0AB808 7F076CD8 3C19B900 */  lui   $t9, (0xB900031D >> 16) # lui $t9, 0xb900         //
-/* 0AB80C 7F076CDC 3C090C19 */  lui   $t1, (0x0C193078 >> 16) # lui $t1, 0xc19          //
-/* 0AB810 7F076CE0 35293078 */  ori   $t1, (0x0C193078 & 0xFFFF) # ori $t1, $t1, 0x3078 //
-/* 0AB814 7F076CE4 3739031D */  ori   $t9, (0xB900031D & 0xFFFF) # ori $t9, $t9, 0x31d  //
-/* 0AB818 7F076CE8 AC790000 */  sw    $t9, ($v1)                                        //
-/* 0AB81C 7F076CEC AC690004 */  sw    $t1, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB808 7F076CD8 3C19B900 */  lui   $t9, (0xB900031D >> 16) # lui $t9, 0xb900         #
+/* 0AB80C 7F076CDC 3C090C19 */  lui   $t1, (0x0C193078 >> 16) # lui $t1, 0xc19          #
+/* 0AB810 7F076CE0 35293078 */  ori   $t1, (0x0C193078 & 0xFFFF) # ori $t1, $t1, 0x3078 #
+/* 0AB814 7F076CE4 3739031D */  ori   $t9, (0xB900031D & 0xFFFF) # ori $t9, $t9, 0x31d  #
+/* 0AB818 7F076CE8 AC790000 */  sw    $t9, ($v1)                                        #
+/* 0AB81C 7F076CEC AC690004 */  sw    $t1, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB820 7F076CF0 1000001B */  b     .L7F076D60
 /* 0AB824 7F076CF4 24420008 */   addiu $v0, $v0, 8
 .L7F076CF8:
-/* 0AB828 7F076CF8 3C0AB900 */  lui   $t2, (0xB900031D >> 16) # lui $t2, 0xb900         //
-/* 0AB82C 7F076CFC 3C0B0C19 */  lui   $t3, (0x0C193048 >> 16) # lui $t3, 0xc19          //
-/* 0AB830 7F076D00 356B3048 */  ori   $t3, (0x0C193048 & 0xFFFF) # ori $t3, $t3, 0x3048 //
-/* 0AB834 7F076D04 354A031D */  ori   $t2, (0xB900031D & 0xFFFF) # ori $t2, $t2, 0x31d  //
-/* 0AB838 7F076D08 AC6A0000 */  sw    $t2, ($v1)                                        //
-/* 0AB83C 7F076D0C AC6B0004 */  sw    $t3, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB828 7F076CF8 3C0AB900 */  lui   $t2, (0xB900031D >> 16) # lui $t2, 0xb900         #
+/* 0AB82C 7F076CFC 3C0B0C19 */  lui   $t3, (0x0C193048 >> 16) # lui $t3, 0xc19          #
+/* 0AB830 7F076D00 356B3048 */  ori   $t3, (0x0C193048 & 0xFFFF) # ori $t3, $t3, 0x3048 #
+/* 0AB834 7F076D04 354A031D */  ori   $t2, (0xB900031D & 0xFFFF) # ori $t2, $t2, 0x31d  #
+/* 0AB838 7F076D08 AC6A0000 */  sw    $t2, ($v1)                                        #
+/* 0AB83C 7F076D0C AC6B0004 */  sw    $t3, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB840 7F076D10 10000013 */  b     .L7F076D60
 /* 0AB844 7F076D14 24420008 */   addiu $v0, $v0, 8
 .L7F076D18:
 /* 0AB848 7F076D18 10E0000A */  beqz  $a3, .L7F076D44
 /* 0AB84C 7F076D1C 00401825 */   move  $v1, $v0
 /* 0AB850 7F076D20 00401825 */  move  $v1, $v0
-/* 0AB854 7F076D24 3C0CB900 */  lui   $t4, (0xB900031D >> 16) # lui $t4, 0xb900         //
-/* 0AB858 7F076D28 3C0D0C18 */  lui   $t5, (0x0C184B50 >> 16) # lui $t5, 0xc18          //
-/* 0AB85C 7F076D2C 35AD4B50 */  ori   $t5, (0x0C184B50 & 0xFFFF) # ori $t5, $t5, 0x4b50 //
-/* 0AB860 7F076D30 358C031D */  ori   $t4, (0xB900031D & 0xFFFF) # ori $t4, $t4, 0x31d  //
-/* 0AB864 7F076D34 AC6C0000 */  sw    $t4, ($v1)                                        //
-/* 0AB868 7F076D38 AC6D0004 */  sw    $t5, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB854 7F076D24 3C0CB900 */  lui   $t4, (0xB900031D >> 16) # lui $t4, 0xb900         #
+/* 0AB858 7F076D28 3C0D0C18 */  lui   $t5, (0x0C184B50 >> 16) # lui $t5, 0xc18          #
+/* 0AB85C 7F076D2C 35AD4B50 */  ori   $t5, (0x0C184B50 & 0xFFFF) # ori $t5, $t5, 0x4b50 #
+/* 0AB860 7F076D30 358C031D */  ori   $t4, (0xB900031D & 0xFFFF) # ori $t4, $t4, 0x31d  #
+/* 0AB864 7F076D34 AC6C0000 */  sw    $t4, ($v1)                                        #
+/* 0AB868 7F076D38 AC6D0004 */  sw    $t5, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB86C 7F076D3C 10000008 */  b     .L7F076D60
 /* 0AB870 7F076D40 24420008 */   addiu $v0, $v0, 8
 .L7F076D44:
-/* 0AB874 7F076D44 3C0EB900 */  lui   $t6, (0xB900031D >> 16) # lui $t6, 0xb900         //
-/* 0AB878 7F076D48 3C0F0C18 */  lui   $t7, (0x0C184340 >> 16) # lui $t7, 0xc18          //
-/* 0AB87C 7F076D4C 35EF4340 */  ori   $t7, (0x0C184340 & 0xFFFF) # ori $t7, $t7, 0x4340 //
-/* 0AB880 7F076D50 35CE031D */  ori   $t6, (0xB900031D & 0xFFFF) # ori $t6, $t6, 0x31d  //
-/* 0AB884 7F076D54 AC6E0000 */  sw    $t6, ($v1)                                        //
-/* 0AB888 7F076D58 AC6F0004 */  sw    $t7, 4($v1)                                       //gDPSetRenderMode(,)
+/* 0AB874 7F076D44 3C0EB900 */  lui   $t6, (0xB900031D >> 16) # lui $t6, 0xb900         #
+/* 0AB878 7F076D48 3C0F0C18 */  lui   $t7, (0x0C184340 >> 16) # lui $t7, 0xc18          #
+/* 0AB87C 7F076D4C 35EF4340 */  ori   $t7, (0x0C184340 & 0xFFFF) # ori $t7, $t7, 0x4340 #
+/* 0AB880 7F076D50 35CE031D */  ori   $t6, (0xB900031D & 0xFFFF) # ori $t6, $t6, 0x31d  #
+/* 0AB884 7F076D54 AC6E0000 */  sw    $t6, ($v1)                                        #
+/* 0AB888 7F076D58 AC6F0004 */  sw    $t7, 4($v1)                                       #gDPSetRenderMode(,)
 /* 0AB88C 7F076D5C 24420008 */  addiu $v0, $v0, 8
 .L7F076D60:
 /* 0AB890 7F076D60 03E00008 */  jr    $ra
@@ -802,22 +806,22 @@ glabel likely_generate_DL_for_image_declaration
 .L7F076DF8:
 /* 0AB928 7F076DF8 25F80008 */  addiu $t8, $t7, 8
 /* 0AB92C 7F076DFC AFB8016C */  sw    $t8, 0x16c($sp)
-/* 0AB930 7F076E00 3C19BB00 */  lui   $t9, (0xBB000001 >> 16) # lui $t9, 0xbb00     //
-/* 0AB934 7F076E04 37390001 */  ori   $t9, (0xBB000001 & 0xFFFF) # ori $t9, $t9, 1  //
+/* 0AB930 7F076E00 3C19BB00 */  lui   $t9, (0xBB000001 >> 16) # lui $t9, 0xbb00     #
+/* 0AB934 7F076E04 37390001 */  ori   $t9, (0xBB000001 & 0xFFFF) # ori $t9, $t9, 1  #
 /* 0AB938 7F076E08 240EFFFF */  li    $t6, -1
-/* 0AB93C 7F076E0C ADEE0004 */  sw    $t6, 4($t7)                                   // As with above gbi, I forgot to include *dl since I dont know where it is saving the Gfx array (*dl)
-/* 0AB940 7F076E10 ADF90000 */  sw    $t9, ($t7)                                    //gSPTexture(*dl, 0xFFFF, 0xFFFF, 1, 0, G_ON) //use FFFF since 1.0 cannot be represented directly
+/* 0AB93C 7F076E0C ADEE0004 */  sw    $t6, 4($t7)                                   # As with above gbi, I forgot to include *dl since I dont know where it is saving the Gfx array (*dl)
+/* 0AB940 7F076E10 ADF90000 */  sw    $t9, ($t7)                                    #gSPTexture(*dl, 0xFFFF, 0xFFFF, 1, 0, G_ON) #use FFFF since 1.0 cannot be represented directly
 .L7F076E14:
 /* 0AB944 7F076E14 8FAF016C */  lw    $t7, 0x16c($sp)
-/* 0AB948 7F076E18 3C19FCFF */  lui   $t9, (0xFCFFFFFF >> 16) # lui $t9, 0xfcff         //
-/* 0AB94C 7F076E1C 3C0EFFFE */  lui   $t6, (0xFFFE793C >> 16) # lui $t6, 0xfffe         //FCFFFFFFFFFE793C
+/* 0AB948 7F076E18 3C19FCFF */  lui   $t9, (0xFCFFFFFF >> 16) # lui $t9, 0xfcff         #
+/* 0AB94C 7F076E1C 3C0EFFFE */  lui   $t6, (0xFFFE793C >> 16) # lui $t6, 0xfffe         #FCFFFFFFFFFE793C
 /* 0AB950 7F076E20 25F80008 */  addiu $t8, $t7, 8
 /* 0AB954 7F076E24 AFB8016C */  sw    $t8, 0x16c($sp)
-/* 0AB958 7F076E28 35CE793C */  ori   $t6, (0xFFFE793C & 0xFFFF) # ori $t6, $t6, 0x793c //
-/* 0AB95C 7F076E2C 3739FFFF */  ori   $t9, (0xFCFFFFFF & 0xFFFF) # ori $t9, $t9, 0xffff //
-/* 0AB960 7F076E30 ADF90000 */  sw    $t9, ($t7)                                        //
+/* 0AB958 7F076E28 35CE793C */  ori   $t6, (0xFFFE793C & 0xFFFF) # ori $t6, $t6, 0x793c #
+/* 0AB95C 7F076E2C 3739FFFF */  ori   $t9, (0xFCFFFFFF & 0xFFFF) # ori $t9, $t9, 0xffff #
+/* 0AB960 7F076E30 ADF90000 */  sw    $t9, ($t7)                                        #
 /* 0AB964 7F076E34 10000352 */  b     .L7F077B80
-/* 0AB968 7F076E38 ADEE0004 */   sw    $t6, 4($t7)                                      //gDPSetCombineMode()
+/* 0AB968 7F076E38 ADEE0004 */   sw    $t6, 4($t7)                                      #gDPSetCombineMode()
 .L7F076E3C:
 /* 0AB96C 7F076E3C 8EE20000 */  lw    $v0, ($s7)
 /* 0AB970 7F076E40 92F50004 */  lbu   $s5, 4($s7)
@@ -947,22 +951,22 @@ glabel likely_generate_DL_for_image_declaration
 /* 0ABB40 7F077010 AC4E0000 */   sw    $t6, ($v0)
 .L7F077014:
 /* 0ABB44 7F077014 8FB8016C */  lw    $t8, 0x16c($sp)
-/* 0ABB48 7F077018 3C0EBB00 */  lui   $t6, (0xBB000001 >> 16) # lui $t6, 0xbb00     //
-/* 0ABB4C 7F07701C 35CE0001 */  ori   $t6, (0xBB000001 & 0xFFFF) # ori $t6, $t6, 1  //
+/* 0ABB48 7F077018 3C0EBB00 */  lui   $t6, (0xBB000001 >> 16) # lui $t6, 0xbb00     #
+/* 0ABB4C 7F07701C 35CE0001 */  ori   $t6, (0xBB000001 & 0xFFFF) # ori $t6, $t6, 1  #
 /* 0ABB50 7F077020 27190008 */  addiu $t9, $t8, 8
 /* 0ABB54 7F077024 AFB9016C */  sw    $t9, 0x16c($sp)
-/* 0ABB58 7F077028 240FFFFF */  li    $t7, -1                                       //
-/* 0ABB5C 7F07702C AF0F0004 */  sw    $t7, 4($t8)                                   //
-/* 0ABB60 7F077030 AF0E0000 */  sw    $t6, ($t8)                                    //gSPTexture(*dl, 0xFFFF, 0xFFFF, 1, 0, G_ON) //use FFFF since 1.0 cannot be represented directly
+/* 0ABB58 7F077028 240FFFFF */  li    $t7, -1                                       #
+/* 0ABB5C 7F07702C AF0F0004 */  sw    $t7, 4($t8)                                   #
+/* 0ABB60 7F077030 AF0E0000 */  sw    $t6, ($t8)                                    #gSPTexture(*dl, 0xFFFF, 0xFFFF, 1, 0, G_ON) #use FFFF since 1.0 cannot be represented directly
 .L7F077034:
 /* 0ABB64 7F077034 8FB8016C */  lw    $t8, 0x16c($sp)
-/* 0ABB68 7F077038 3C0EBA00 */  lui   $t6, (0xBA001001 >> 16) # lui $t6, 0xba00         //
-/* 0ABB6C 7F07703C 35CE1001 */  ori   $t6, (0xBA001001 & 0xFFFF) # ori $t6, $t6, 0x1001 //
+/* 0ABB68 7F077038 3C0EBA00 */  lui   $t6, (0xBA001001 >> 16) # lui $t6, 0xba00         #
+/* 0ABB6C 7F07703C 35CE1001 */  ori   $t6, (0xBA001001 & 0xFFFF) # ori $t6, $t6, 0x1001 #
 /* 0ABB70 7F077040 27190008 */  addiu $t9, $t8, 8
 /* 0ABB74 7F077044 AFB9016C */  sw    $t9, 0x16c($sp)
 /* 0ABB78 7F077048 AF000004 */  sw    $zero, 4($t8)
 /* 0ABB7C 7F07704C 1220000C */  beqz  $s1, .L7F077080
-/* 0ABB80 7F077050 AF0E0000 */   sw    $t6, ($t8)                                       //gDPSetTextureLOD(G_TL_TILE)
+/* 0ABB80 7F077050 AF0E0000 */   sw    $t6, ($t8)                                       #gDPSetTextureLOD(G_TL_TILE)
 /* 0ABB84 7F077054 24010002 */  li    $at, 2
 /* 0ABB88 7F077058 11210024 */  beq   $t1, $at, .L7F0770EC
 /* 0ABB8C 7F07705C 8FAF0144 */   lw    $t7, 0x144($sp)
@@ -976,34 +980,34 @@ glabel likely_generate_DL_for_image_declaration
 /* 0ABBAC 7F07707C 8FA2016C */   lw    $v0, 0x16c($sp)
 .L7F077080:
 /* 0ABBB0 7F077080 8FAF016C */  lw    $t7, 0x16c($sp)
-/* 0ABBB4 7F077084 3C19FC12 */  lui   $t9, (0xFC121824 >> 16) # lui $t9, 0xfc12         //
-/* 0ABBB8 7F077088 3C0EFF33 */  lui   $t6, (0xFF33FFFF >> 16) # lui $t6, 0xff33         //
+/* 0ABBB4 7F077084 3C19FC12 */  lui   $t9, (0xFC121824 >> 16) # lui $t9, 0xfc12         #
+/* 0ABBB8 7F077088 3C0EFF33 */  lui   $t6, (0xFF33FFFF >> 16) # lui $t6, 0xff33         #
 /* 0ABBBC 7F07708C 25F80008 */  addiu $t8, $t7, 8
 /* 0ABBC0 7F077090 AFB8016C */  sw    $t8, 0x16c($sp)
-/* 0ABBC4 7F077094 35CEFFFF */  ori   $t6, (0xFF33FFFF & 0xFFFF) # ori $t6, $t6, 0xffff //
-/* 0ABBC8 7F077098 37391824 */  ori   $t9, (0xFC121824 & 0xFFFF) # ori $t9, $t9, 0x1824 //
+/* 0ABBC4 7F077094 35CEFFFF */  ori   $t6, (0xFF33FFFF & 0xFFFF) # ori $t6, $t6, 0xffff #
+/* 0ABBC8 7F077098 37391824 */  ori   $t9, (0xFC121824 & 0xFFFF) # ori $t9, $t9, 0x1824 #
 /* 0ABBCC 7F07709C ADF90000 */  sw    $t9, ($t7)
 /* 0ABBD0 7F0770A0 1000002B */  b     .L7F077150
-/* 0ABBD4 7F0770A4 ADEE0004 */   sw    $t6, 4($t7)                                      //gDPSetCombineMode()
+/* 0ABBD4 7F0770A4 ADEE0004 */   sw    $t6, 4($t7)                                      #gDPSetCombineMode()
 .L7F0770A8:
 /* 0ABBD8 7F0770A8 25F80008 */  addiu $t8, $t7, 8
-/* 0ABBDC 7F0770AC 3C19FC12 */  lui   $t9, (0xFC121824 >> 16) # lui $t9, 0xfc12         //
-/* 0ABBE0 7F0770B0 3C0EFF33 */  lui   $t6, (0xFF33FFFF >> 16) # lui $t6, 0xff33         //
-/* 0ABBE4 7F0770B4 35CEFFFF */  ori   $t6, (0xFF33FFFF & 0xFFFF) # ori $t6, $t6, 0xffff //
-/* 0ABBE8 7F0770B8 37391824 */  ori   $t9, (0xFC121824 & 0xFFFF) # ori $t9, $t9, 0x1824 //
+/* 0ABBDC 7F0770AC 3C19FC12 */  lui   $t9, (0xFC121824 >> 16) # lui $t9, 0xfc12         #
+/* 0ABBE0 7F0770B0 3C0EFF33 */  lui   $t6, (0xFF33FFFF >> 16) # lui $t6, 0xff33         #
+/* 0ABBE4 7F0770B4 35CEFFFF */  ori   $t6, (0xFF33FFFF & 0xFFFF) # ori $t6, $t6, 0xffff #
+/* 0ABBE8 7F0770B8 37391824 */  ori   $t9, (0xFC121824 & 0xFFFF) # ori $t9, $t9, 0x1824 #
 /* 0ABBEC 7F0770BC AFB8016C */  sw    $t8, 0x16c($sp)
 /* 0ABBF0 7F0770C0 ADEE0004 */  sw    $t6, 4($t7)
 /* 0ABBF4 7F0770C4 10000022 */  b     .L7F077150
-/* 0ABBF8 7F0770C8 ADF90000 */   sw    $t9, ($t7)                                       //gDPSetCombineMode()
+/* 0ABBF8 7F0770C8 ADF90000 */   sw    $t9, ($t7)                                       #gDPSetCombineMode()
 .L7F0770CC:
 /* 0ABBFC 7F0770CC 25F80008 */  addiu $t8, $t7, 8
-/* 0ABC00 7F0770D0 3C19FC12 */  lui   $t9, (0xFC127E24 >> 16) # lui $t9, 0xfc12         //
-/* 0ABC04 7F0770D4 37397E24 */  ori   $t9, (0xFC127E24 & 0xFFFF) # ori $t9, $t9, 0x7e24 //
+/* 0ABC00 7F0770D0 3C19FC12 */  lui   $t9, (0xFC127E24 >> 16) # lui $t9, 0xfc12         #
+/* 0ABC04 7F0770D4 37397E24 */  ori   $t9, (0xFC127E24 & 0xFFFF) # ori $t9, $t9, 0x7e24 #
 /* 0ABC08 7F0770D8 AFB8016C */  sw    $t8, 0x16c($sp)
 /* 0ABC0C 7F0770DC 240EF9FC */  li    $t6, -1540
 /* 0ABC10 7F0770E0 ADEE0004 */  sw    $t6, 4($t7)
 /* 0ABC14 7F0770E4 1000001A */  b     .L7F077150
-/* 0ABC18 7F0770E8 ADF90000 */   sw    $t9, ($t7)                                       //gDPSetCombineMode()
+/* 0ABC18 7F0770E8 ADF90000 */   sw    $t9, ($t7)                                       #gDPSetCombineMode()
 .L7F0770EC:
 /* 0ABC1C 7F0770EC 34018000 */  li    $at, 32768
 /* 0ABC20 7F0770F0 11E10006 */  beq   $t7, $at, .L7F07710C
@@ -1015,23 +1019,23 @@ glabel likely_generate_DL_for_image_declaration
 /* 0ABC38 7F077108 8FA2016C */   lw    $v0, 0x16c($sp)
 .L7F07710C:
 /* 0ABC3C 7F07710C 27190008 */  addiu $t9, $t8, 8
-/* 0ABC40 7F077110 3C0EFC12 */  lui   $t6, (0xFC121824 >> 16) # lui $t6, 0xfc12         //
-/* 0ABC44 7F077114 3C0FFF33 */  lui   $t7, (0xFF33FFFF >> 16) # lui $t7, 0xff33         //
-/* 0ABC48 7F077118 35EFFFFF */  ori   $t7, (0xFF33FFFF & 0xFFFF) # ori $t7, $t7, 0xffff //
-/* 0ABC4C 7F07711C 35CE1824 */  ori   $t6, (0xFC121824 & 0xFFFF) # ori $t6, $t6, 0x1824 //
+/* 0ABC40 7F077110 3C0EFC12 */  lui   $t6, (0xFC121824 >> 16) # lui $t6, 0xfc12         #
+/* 0ABC44 7F077114 3C0FFF33 */  lui   $t7, (0xFF33FFFF >> 16) # lui $t7, 0xff33         #
+/* 0ABC48 7F077118 35EFFFFF */  ori   $t7, (0xFF33FFFF & 0xFFFF) # ori $t7, $t7, 0xffff #
+/* 0ABC4C 7F07711C 35CE1824 */  ori   $t6, (0xFC121824 & 0xFFFF) # ori $t6, $t6, 0x1824 #
 /* 0ABC50 7F077120 AFB9016C */  sw    $t9, 0x16c($sp)
 /* 0ABC54 7F077124 AF0F0004 */  sw    $t7, 4($t8)
 /* 0ABC58 7F077128 10000009 */  b     .L7F077150
-/* 0ABC5C 7F07712C AF0E0000 */   sw    $t6, ($t8)                                       //gDPSetCombineMode()
+/* 0ABC5C 7F07712C AF0E0000 */   sw    $t6, ($t8)                                       #gDPSetCombineMode()
 .L7F077130:
 /* 0ABC60 7F077130 27190008 */  addiu $t9, $t8, 8
 /* 0ABC64 7F077134 AFB9016C */  sw    $t9, 0x16c($sp)
-/* 0ABC68 7F077138 3C0EFC12 */  lui   $t6, (0xFC121824 >> 16) # lui $t6, 0xfc12         //
-/* 0ABC6C 7F07713C 3C0FFF33 */  lui   $t7, (0xFF33FFFF >> 16) # lui $t7, 0xff33         //
-/* 0ABC70 7F077140 35EFFFFF */  ori   $t7, (0xFF33FFFF & 0xFFFF) # ori $t7, $t7, 0xffff //
-/* 0ABC74 7F077144 35CE1824 */  ori   $t6, (0xFC121824 & 0xFFFF) # ori $t6, $t6, 0x1824 //
+/* 0ABC68 7F077138 3C0EFC12 */  lui   $t6, (0xFC121824 >> 16) # lui $t6, 0xfc12         #
+/* 0ABC6C 7F07713C 3C0FFF33 */  lui   $t7, (0xFF33FFFF >> 16) # lui $t7, 0xff33         #
+/* 0ABC70 7F077140 35EFFFFF */  ori   $t7, (0xFF33FFFF & 0xFFFF) # ori $t7, $t7, 0xffff #
+/* 0ABC74 7F077144 35CE1824 */  ori   $t6, (0xFC121824 & 0xFFFF) # ori $t6, $t6, 0x1824 #
 /* 0ABC78 7F077148 AF0E0000 */  sw    $t6, ($t8)
-/* 0ABC7C 7F07714C AF0F0004 */  sw    $t7, 4($t8)                                       //gDPSetCombineMode()
+/* 0ABC7C 7F07714C AF0F0004 */  sw    $t7, 4($t8)                                       #gDPSetCombineMode()
 .L7F077150:
 /* 0ABC80 7F077150 8FA2016C */  lw    $v0, 0x16c($sp)
 .L7F077154:
@@ -1112,8 +1116,8 @@ glabel likely_generate_DL_for_image_declaration
 .L7F077274:
 /* 0ABDA4 7F077274 270F0008 */  addiu $t7, $t8, 8
 /* 0ABDA8 7F077278 AFAF016C */  sw    $t7, 0x16c($sp)
-/* 0ABDAC 7F07727C 3C19F500 */  lui   $t9, (0xF5000100 >> 16) # lui $t9, 0xf500         //
-/* 0ABDB0 7F077280 37390100 */  ori   $t9, (0xF5000100 & 0xFFFF) # ori $t9, $t9, 0x100  //gDPSetTile()
+/* 0ABDAC 7F07727C 3C19F500 */  lui   $t9, (0xF5000100 >> 16) # lui $t9, 0xf500         #
+/* 0ABDB0 7F077280 37390100 */  ori   $t9, (0xF5000100 & 0xFFFF) # ori $t9, $t9, 0x100  #gDPSetTile()
 /* 0ABDB4 7F077284 AF190000 */  sw    $t9, ($t8)
 /* 0ABDB8 7F077288 AF0A0004 */  sw    $t2, 4($t8)
 /* 0ABDBC 7F07728C 8FAE016C */  lw    $t6, 0x16c($sp)
@@ -1147,8 +1151,8 @@ glabel likely_generate_DL_for_image_declaration
 /* 0ABE2C 7F0772FC AF200004 */  sw    $zero, 4($t9)
 /* 0ABE30 7F077300 AF2C0000 */  sw    $t4, ($t9)
 /* 0ABE34 7F077304 8FB8016C */  lw    $t8, 0x16c($sp)
-/* 0ABE38 7F077308 3C19BA00 */  lui   $t9, (0xBA000E02 >> 16) # lui $t9, 0xba00         //
-/* 0ABE3C 7F07730C 37390E02 */  ori   $t9, (0xBA000E02 & 0xFFFF) # ori $t9, $t9, 0xe02  //gDPSetTextureLUT()
+/* 0ABE38 7F077308 3C19BA00 */  lui   $t9, (0xBA000E02 >> 16) # lui $t9, 0xba00         #
+/* 0ABE3C 7F07730C 37390E02 */  ori   $t9, (0xBA000E02 & 0xFFFF) # ori $t9, $t9, 0xe02  #gDPSetTextureLUT()
 /* 0ABE40 7F077310 270F0008 */  addiu $t7, $t8, 8
 /* 0ABE44 7F077314 AFAF016C */  sw    $t7, 0x16c($sp)
 /* 0ABE48 7F077318 AF190000 */  sw    $t9, ($t8)
@@ -1157,8 +1161,8 @@ glabel likely_generate_DL_for_image_declaration
 /* 0ABE54 7F077324 AF0E0004 */   sw    $t6, 4($t8)
 .L7F077328:
 /* 0ABE58 7F077328 8FB8016C */  lw    $t8, 0x16c($sp)
-/* 0ABE5C 7F07732C 3C19BA00 */  lui   $t9, (0xBA000E02 >> 16) # lui $t9, 0xba00         //
-/* 0ABE60 7F077330 37390E02 */  ori   $t9, (0xBA000E02 & 0xFFFF) # ori $t9, $t9, 0xe02  //gDPSetTextureLUT()
+/* 0ABE5C 7F07732C 3C19BA00 */  lui   $t9, (0xBA000E02 >> 16) # lui $t9, 0xba00         #
+/* 0ABE60 7F077330 37390E02 */  ori   $t9, (0xBA000E02 & 0xFFFF) # ori $t9, $t9, 0xe02  #gDPSetTextureLUT()
 /* 0ABE64 7F077334 270F0008 */  addiu $t7, $t8, 8
 /* 0ABE68 7F077338 AFAF016C */  sw    $t7, 0x16c($sp)
 /* 0ABE6C 7F07733C AF000004 */  sw    $zero, 4($t8)
@@ -1338,14 +1342,14 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AC0F8 7F0775C8 AC4F0000 */  sw    $t7, ($v0)
 .L7F0775CC:
 /* 0AC0FC 7F0775CC 8FB8016C */  lw    $t8, 0x16c($sp)
-/* 0AC100 7F0775D0 3C0FBA00 */  lui   $t7, (0xBA001001 >> 16) # lui $t7, 0xba00         //
-/* 0AC104 7F0775D4 35EF1001 */  ori   $t7, (0xBA001001 & 0xFFFF) # ori $t7, $t7, 0x1001 //
+/* 0AC100 7F0775D0 3C0FBA00 */  lui   $t7, (0xBA001001 >> 16) # lui $t7, 0xba00         #
+/* 0AC104 7F0775D4 35EF1001 */  ori   $t7, (0xBA001001 & 0xFFFF) # ori $t7, $t7, 0x1001 #
 /* 0AC108 7F0775D8 27190008 */  addiu $t9, $t8, 8
 /* 0AC10C 7F0775DC AFB9016C */  sw    $t9, 0x16c($sp)
 /* 0AC110 7F0775E0 3C0E0001 */  lui   $t6, 1
 /* 0AC114 7F0775E4 AF0E0004 */  sw    $t6, 4($t8)
 /* 0AC118 7F0775E8 1220000B */  beqz  $s1, .L7F077618
-/* 0AC11C 7F0775EC AF0F0000 */   sw    $t7, ($t8)                                       //gDPSetTextureLOD(G_TL_LOD)
+/* 0AC11C 7F0775EC AF0F0000 */   sw    $t7, ($t8)                                       #gDPSetTextureLOD(G_TL_LOD)
 /* 0AC120 7F0775F0 24010002 */  li    $at, 2
 /* 0AC124 7F0775F4 11010024 */  beq   $t0, $at, .L7F077688
 /* 0AC128 7F0775F8 24010003 */   li    $at, 3
@@ -1358,15 +1362,15 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AC144 7F077614 8FA2016C */   lw    $v0, 0x16c($sp)
 .L7F077618:
 /* 0AC148 7F077618 8FB8016C */  lw    $t8, 0x16c($sp)
-/* 0AC14C 7F07761C 3C0FFC26 */  lui   $t7, (0xFC26A004 >> 16) # lui $t7, 0xfc26          //
-/* 0AC150 7F077620 3C0E1F10 */  lui   $t6, (0x1F1093FF >> 16) # lui $t6, 0x1f10          //
+/* 0AC14C 7F07761C 3C0FFC26 */  lui   $t7, (0xFC26A004 >> 16) # lui $t7, 0xfc26          #
+/* 0AC150 7F077620 3C0E1F10 */  lui   $t6, (0x1F1093FF >> 16) # lui $t6, 0x1f10          #
 /* 0AC154 7F077624 27190008 */  addiu $t9, $t8, 8
 /* 0AC158 7F077628 AFB9016C */  sw    $t9, 0x16c($sp)
-/* 0AC15C 7F07762C 35CE93FF */  ori   $t6, (0x1F1093FF & 0xFFFF) # ori $t6, $t6, 0x93ff //
-/* 0AC160 7F077630 35EFA004 */  ori   $t7, (0xFC26A004 & 0xFFFF) # ori $t7, $t7, 0xa004 //
+/* 0AC15C 7F07762C 35CE93FF */  ori   $t6, (0x1F1093FF & 0xFFFF) # ori $t6, $t6, 0x93ff #
+/* 0AC160 7F077630 35EFA004 */  ori   $t7, (0xFC26A004 & 0xFFFF) # ori $t7, $t7, 0xa004 #
 /* 0AC164 7F077634 AF0F0000 */  sw    $t7, ($t8)
 /* 0AC168 7F077638 1000002C */  b     .L7F0776EC
-/* 0AC16C 7F07763C AF0E0004 */   sw    $t6, 4($t8)                                       //gDPSetCombineMode()
+/* 0AC16C 7F07763C AF0E0004 */   sw    $t6, 4($t8)                                       #gDPSetCombineMode()
 .L7F077640:
 /* 0AC170 7F077640 27190008 */  addiu $t9, $t8, 8
 /* 0AC174 7F077644 3C0FFC26 */  lui   $t7, (0xFC26A004 >> 16) # lui $t7, 0xfc26
@@ -1376,7 +1380,7 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AC184 7F077654 AFB9016C */  sw    $t9, 0x16c($sp)
 /* 0AC188 7F077658 AF0E0004 */  sw    $t6, 4($t8)
 /* 0AC18C 7F07765C 10000023 */  b     .L7F0776EC
-/* 0AC190 7F077660 AF0F0000 */   sw    $t7, ($t8)                                       //gDPSetCombineMode()
+/* 0AC190 7F077660 AF0F0000 */   sw    $t7, ($t8)                                       #gDPSetCombineMode()
 .L7F077664:
 /* 0AC194 7F077664 27190008 */  addiu $t9, $t8, 8
 /* 0AC198 7F077668 3C0FFC26 */  lui   $t7, (0xFC26A004 >> 16) # lui $t7, 0xfc26
@@ -1386,7 +1390,7 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AC1A8 7F077678 AFB9016C */  sw    $t9, 0x16c($sp)
 /* 0AC1AC 7F07767C AF0E0004 */  sw    $t6, 4($t8)
 /* 0AC1B0 7F077680 1000001A */  b     .L7F0776EC
-/* 0AC1B4 7F077684 AF0F0000 */   sw    $t7, ($t8)                                       //gDPSetCombineMode()
+/* 0AC1B4 7F077684 AF0F0000 */   sw    $t7, ($t8)                                       #gDPSetCombineMode()
 .L7F077688:
 /* 0AC1B8 7F077688 34018000 */  li    $at, 32768
 /* 0AC1BC 7F07768C 12410006 */  beq   $s2, $at, .L7F0776A8
@@ -1405,7 +1409,7 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AC1EC 7F0776BC AFB9016C */  sw    $t9, 0x16c($sp)
 /* 0AC1F0 7F0776C0 AF0E0004 */  sw    $t6, 4($t8)
 /* 0AC1F4 7F0776C4 10000009 */  b     .L7F0776EC
-/* 0AC1F8 7F0776C8 AF0F0000 */   sw    $t7, ($t8)                                       //gDPSetCombineMode()
+/* 0AC1F8 7F0776C8 AF0F0000 */   sw    $t7, ($t8)                                       #gDPSetCombineMode()
 .L7F0776CC:
 /* 0AC1FC 7F0776CC 27190008 */  addiu $t9, $t8, 8
 /* 0AC200 7F0776D0 AFB9016C */  sw    $t9, 0x16c($sp)
@@ -1414,7 +1418,7 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AC20C 7F0776DC 35CEFFFF */  ori   $t6, (0xFF33FFFF & 0xFFFF) # ori $t6, $t6, 0xffff
 /* 0AC210 7F0776E0 35EF1824 */  ori   $t7, (0xFC121824 & 0xFFFF) # ori $t7, $t7, 0x1824
 /* 0AC214 7F0776E4 AF0F0000 */  sw    $t7, ($t8)
-/* 0AC218 7F0776E8 AF0E0004 */  sw    $t6, 4($t8)                                       //gDPSetCombineMode()
+/* 0AC218 7F0776E8 AF0E0004 */  sw    $t6, 4($t8)                                       #gDPSetCombineMode()
 .L7F0776EC:
 /* 0AC21C 7F0776EC 8FA2016C */  lw    $v0, 0x16c($sp)
 .L7F0776F0:
@@ -1490,8 +1494,8 @@ glabel likely_generate_DL_for_image_declaration
 .L7F0777FC:
 /* 0AC32C 7F0777FC 272E0008 */  addiu $t6, $t9, 8
 /* 0AC330 7F077800 AFAE016C */  sw    $t6, 0x16c($sp)
-/* 0AC334 7F077804 3C18F500 */  lui   $t8, (0xF5000100 >> 16) # lui $t8, 0xf500         //
-/* 0AC338 7F077808 37180100 */  ori   $t8, (0xF5000100 & 0xFFFF) # ori $t8, $t8, 0x100  //gDPSetTile()
+/* 0AC334 7F077804 3C18F500 */  lui   $t8, (0xF5000100 >> 16) # lui $t8, 0xf500         #
+/* 0AC338 7F077808 37180100 */  ori   $t8, (0xF5000100 & 0xFFFF) # ori $t8, $t8, 0x100  #gDPSetTile()
 /* 0AC33C 7F07780C AF380000 */  sw    $t8, ($t9)
 /* 0AC340 7F077810 AF2A0004 */  sw    $t2, 4($t9)
 /* 0AC344 7F077814 8FAF016C */  lw    $t7, 0x16c($sp)
@@ -1525,8 +1529,8 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AC3B4 7F077884 AF000004 */  sw    $zero, 4($t8)
 /* 0AC3B8 7F077888 AF0C0000 */  sw    $t4, ($t8)
 /* 0AC3BC 7F07788C 8FB9016C */  lw    $t9, 0x16c($sp)
-/* 0AC3C0 7F077890 3C18BA00 */  lui   $t8, (0xBA000E02 >> 16) # lui $t8, 0xba00         //
-/* 0AC3C4 7F077894 37180E02 */  ori   $t8, (0xBA000E02 & 0xFFFF) # ori $t8, $t8, 0xe02  //gDPSetTextureLUT()
+/* 0AC3C0 7F077890 3C18BA00 */  lui   $t8, (0xBA000E02 >> 16) # lui $t8, 0xba00         #
+/* 0AC3C4 7F077894 37180E02 */  ori   $t8, (0xBA000E02 & 0xFFFF) # ori $t8, $t8, 0xe02  #gDPSetTextureLUT()
 /* 0AC3C8 7F077898 272E0008 */  addiu $t6, $t9, 8
 /* 0AC3CC 7F07789C AFAE016C */  sw    $t6, 0x16c($sp)
 /* 0AC3D0 7F0778A0 AF320004 */  sw    $s2, 4($t9)
@@ -1534,8 +1538,8 @@ glabel likely_generate_DL_for_image_declaration
 /* 0AC3D8 7F0778A8 AF380000 */   sw    $t8, ($t9)
 .L7F0778AC:
 /* 0AC3DC 7F0778AC 8FAF016C */  lw    $t7, 0x16c($sp)
-/* 0AC3E0 7F0778B0 3C0EBA00 */  lui   $t6, (0xBA000E02 >> 16) # lui $t6, 0xba00         //
-/* 0AC3E4 7F0778B4 35CE0E02 */  ori   $t6, (0xBA000E02 & 0xFFFF) # ori $t6, $t6, 0xe02  //gDPSetTextureLUT()
+/* 0AC3E0 7F0778B0 3C0EBA00 */  lui   $t6, (0xBA000E02 >> 16) # lui $t6, 0xba00         #
+/* 0AC3E4 7F0778B4 35CE0E02 */  ori   $t6, (0xBA000E02 & 0xFFFF) # ori $t6, $t6, 0xe02  #gDPSetTextureLUT()
 /* 0AC3E8 7F0778B8 25F90008 */  addiu $t9, $t7, 8
 /* 0AC3EC 7F0778BC AFB9016C */  sw    $t9, 0x16c($sp)
 /* 0AC3F0 7F0778C0 ADE00004 */  sw    $zero, 4($t7)
