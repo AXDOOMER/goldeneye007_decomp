@@ -412,7 +412,7 @@ dword_D_800322A4:.word 0
 dword_D_800322A8:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 */
 
-/*rodata
+/*rodata 
 D:80052100     jpt_7006894C:   .word action00_length, action01_length, locret_CODE_7F034A34, locret_CODE_7F034A3C
 D:80052100                     .word locret_CODE_7F034A44, locret_CODE_7F034A4C, locret_CODE_7F034A54, locret_CODE_7F034A5C  # jump table for switch statement
 D:80052100                     .word locret_CODE_7F034A64, locret_CODE_7F034A6C, locret_CODE_7F034A74, locret_CODE_7F034A7C
@@ -478,7 +478,7 @@ D:80052100                     .word locret_CODE_7F0351BC, locret_CODE_7F0351C4,
 D:80052100                     .word locret_CODE_7F0351DC, locret_CODE_7F0351E4, locret_CODE_7F0351EC, locret_CODE_7F0351F4
 D:80052100                     .word actionFC_length
 D:800524F4     flt_D_800524F4: .float 6.2831855
-D:800524F8     jpt_700694DC:   .word action00_return, action01_goto_beginning_then_return, loc_CODE_7F0355EC
+D:800524F8     jpt_700694DC:   .word Action00_GoToLabel, Action01_GoToLabelFromTop, Action02_Label
 D:800524F8                     .word loc_CODE_7F0355F8, action04_end, loc_CODE_7F03563C, loc_CODE_7F0356B0  # jump table for switch statement
 D:800524F8                     .word loc_CODE_7F03570C, loc_CODE_7F035768, loc_CODE_7F03577C, loc_CODE_7F035790
 D:800524F8                     .word loc_CODE_7F03589C, loc_CODE_7F0358D0, loc_CODE_7F0358E4, loc_CODE_7F0359E8
@@ -1266,7 +1266,7 @@ glabel set_sound_effect_source_to_location
 /* 0692F4 7F0347C4 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0692F8 7F0347C8 50A00041 */  beql  $a1, $zero, .L7F0348D0
 /* 0692FC 7F0347CC AE000004 */   sw    $zero, 4($s0)
-/* 069300 7F0347D0 0C00237C */  jal   sfxGetArg0Unk3F
+/* 069300 7F0347D0 0C00237C */  jal   music_related_26
 /* 069304 7F0347D4 00A02025 */   move  $a0, $a1
 /* 069308 7F0347D8 5040003D */  beql  $v0, $zero, .L7F0348D0
 /* 06930C 7F0347DC AE000004 */   sw    $zero, 4($s0)
@@ -1408,7 +1408,7 @@ glabel set_sound_effect_to_slot
 /* 06948C 7F03495C 10A00007 */  beqz  $a1, .L7F03497C
 /* 069490 7F034960 00A02025 */   move  $a0, $a1
 /* 069494 7F034964 AFA30018 */  sw    $v1, 0x18($sp)
-/* 069498 7F034968 0C00237C */  jal   sfxGetArg0Unk3F
+/* 069498 7F034968 0C00237C */  jal   music_related_26
 /* 06949C 7F03496C AFA0001C */   sw    $zero, 0x1c($sp)
 /* 0694A0 7F034970 8FA30018 */  lw    $v1, 0x18($sp)
 /* 0694A4 7F034974 14400009 */  bnez  $v0, .L7F03499C
@@ -1456,7 +1456,7 @@ glabel sub_GAME_7F0349BC
 /* 069508 7F0349D8 000E70C0 */  sll   $t6, $t6, 3
 /* 06950C 7F0349DC 3C048007 */  lui   $a0, 0x8007
 /* 069510 7F0349E0 008E2021 */  addu  $a0, $a0, $t6
-/* 069514 7F0349E4 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 069514 7F0349E4 0C002408 */  jal   music_related_28
 /* 069518 7F0349E8 8C849B70 */   lw    $a0, -0x6490($a0)
 .L7F0349EC:
 /* 06951C 7F0349EC 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -1471,26 +1471,48 @@ glabel sub_GAME_7F0349BC
 
 
 #ifdef NONMATCHING
-void get_length_of_action_block(void) {
+enum ActionCommands
+{
+	GotoLabel,
+	GotoLabelFromTop,
+	Label,
+	Yield,
+	End,
+	JAL,
 
+};
+u8 get_length_of_action_block(CurrentActionByte) {
+	enum ActionCommands Action = byte(CurrentActionByte)
+	switch(Action)
+	{
+		case GotoLabel:
+			return 2;
+		case GotoLabelFromTop:
+			return 2;
+		...
+		case 252:
+			return 1;
+		default:
+			return 1;
+	}
 }
 #else
 GLOBAL_ASM(
 .text
-glabel get_length_of_action_block
-/* 06952C 7F0349FC 00851021 */  addu  $v0, $a0, $a1
-/* 069530 7F034A00 904E0000 */  lbu   $t6, ($v0)
-/* 069534 7F034A04 2DC100FD */  sltiu $at, $t6, 0xfd
-/* 069538 7F034A08 1020020B */  beqz  $at, .L7F035238
-/* 06953C 7F034A0C 000E7080 */   sll   $t6, $t6, 2
-/* 069540 7F034A10 3C018005 */  lui   $at, 0x8005
-/* 069544 7F034A14 002E0821 */  addu  $at, $at, $t6
-/* 069548 7F034A18 8C2E2100 */  lw    $t6, 0x2100($at)
-/* 06954C 7F034A1C 01C00008 */  jr    $t6
+glabel get_length_of_action_block #(CurrentActionByte)
+/* 06952C 7F0349FC 00851021 */  addu  $v0, $a0, $a1      #v0 = CurrentActionByte
+/* 069530 7F034A00 904E0000 */  lbu   $t6, ($v0)         #t6= Action = byte(v0)
+/* 069534 7F034A04 2DC100FD */  sltiu $at, $t6, 0xfd               #if not Action less than 253
+/* 069538 7F034A08 1020020B */  beqz  $at, ActionLengthSwitchElse  #   Action << 2
+/* 06953C 7F034A0C 000E7080 */   sll   $t6, $t6, 2                 #   return 1 //goto ActionLengthSwitchElse
+/* 069540 7F034A10 3C018005 */  lui   $at, 0x8005                  #else
+/* 069544 7F034A14 002E0821 */  addu  $at, $at, $t6      # at = 8005 + t6
+/* 069548 7F034A18 8C2E2100 */  lw    $t6, 0x2100($at)             # Switch Action
+/* 06954C 7F034A1C 01C00008 */  jr    $t6                # jump to address held at 80052100+at = Select Case t6
 /* 069550 7F034A20 00000000 */   nop   
 action00_length:
 /* 069554 7F034A24 03E00008 */  jr    $ra
-/* 069558 7F034A28 24020002 */   li    $v0, 2
+/* 069558 7F034A28 24020002 */   li    $v0, 2 #return 2
 
 action01_length:
 /* 06955C 7F034A2C 03E00008 */  jr    $ra
@@ -2265,7 +2287,7 @@ actionAD_length:
 /* 069D64 7F035234 24420001 */   addiu $v0, $v0, 1
 
 invalid_type:
-.L7F035238:
+ActionLengthSwitchElse:
 /* 069D68 7F035238 24020001 */  li    $v0, 1
 /* 069D6C 7F03523C 03E00008 */  jr    $ra
 /* 069D70 7F035240 00000000 */   nop   
@@ -2277,7 +2299,8 @@ invalid_type:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F035244(void) {
+void sub_GAME_7F035244(void)
+{
 
 }
 #else
@@ -2286,7 +2309,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F035244
 /* 069D74 7F035244 3C088007 */  lui   $t0, %hi(ptr_setup_path_tbl) # $t0, 0x8007
 /* 069D78 7F035248 25085D00 */  addiu $t0, %lo(ptr_setup_path_tbl) # addiu $t0, $t0, 0x5d00
-/* 069D7C 7F03524C 8D020014 */  lw    $v0, 0x14($t0)
+/* 069D7C 7F03524C 8D020014 */  lw    $v0, 0x14($t0) #v0 = ptr_setup_actions
 /* 069D80 7F035250 00A03825 */  move  $a3, $a1
 /* 069D84 7F035254 3C198003 */  lui   $t9, 0x8003
 /* 069D88 7F035258 10400013 */  beqz  $v0, .L7F0352A8
@@ -2404,19 +2427,20 @@ glabel true_if_sucessfully_performing_action
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F035398(void) {
+//sub_GAME/_7F035398
+void LoadNext-PrevActionBlock(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F035398
+glabel LoadNext-PrevActionBlock
 /* 069EC8 7F035398 28810401 */  slti  $at, $a0, 0x401
 /* 069ECC 7F03539C 14200014 */  bnez  $at, .L7F0353F0
 /* 069ED0 7F0353A0 3C198003 */   lui   $t9, 0x8003
 /* 069ED4 7F0353A4 3C028007 */  lui   $v0, %hi(ptr_setup_actions) # $v0, 0x8007
 /* 069ED8 7F0353A8 8C425D14 */  lw    $v0, %lo(ptr_setup_actions)($v0)
-/* 069EDC 7F0353AC 5040001F */  beql  $v0, $zero, .L7F03542C
+/* 069EDC 7F0353AC 5040001F */  beql  $v0, $zero, .L7F03542C #if <= 0 return
 /* 069EE0 7F0353B0 00001025 */   move  $v0, $zero
 /* 069EE4 7F0353B4 8C4E0000 */  lw    $t6, ($v0)
 /* 069EE8 7F0353B8 00401825 */  move  $v1, $v0
@@ -2506,7 +2530,15 @@ glabel get_ptr_path_for_pathnum
 
 #ifdef NONMATCHING
 void parse_handle_actionblocks(void) {
-
+/*
+	at some point during this block we have
+	switch byte(action)
+	case 0:
+			NextStatement =+ 2;
+			true_if_sucessfully_performing_action();
+			break;
+	case 1:
+*/
 }
 #else
 GLOBAL_ASM(
@@ -2521,7 +2553,7 @@ glabel parse_handle_actionblocks
 /* 069FCC 7F03549C AFB50064 */  sw    $s5, 0x64($sp)
 /* 069FD0 7F0354A0 AFB40060 */  sw    $s4, 0x60($sp)
 /* 069FD4 7F0354A4 AFB3005C */  sw    $s3, 0x5c($sp)
-/* 069FD8 7F0354A8 AFB20058 */  sw    $s2, 0x58($sp)
+/* 069FD8 7F0354A8 AFB20058 */  sw    $s2, 0x58($sp)  #free s2 for CurrentActionByte?
 /* 069FDC 7F0354AC AFB10054 */  sw    $s1, 0x54($sp)
 /* 069FE0 7F0354B0 AFB00050 */  sw    $s0, 0x50($sp)
 /* 069FE4 7F0354B4 F7BA0048 */  sdc1  $f26, 0x48($sp)
@@ -2571,7 +2603,7 @@ glabel parse_handle_actionblocks
 /* 06A080 7F035550 8C760080 */  lw    $s6, 0x80($v1)
 /* 06A084 7F035554 AFB207A4 */  sw    $s2, 0x7a4($sp)
 .L7F035558:
-/* 06A088 7F035558 12C01329 */  beqz  $s6, .L7F03A200
+/* 06A088 7F035558 12C01329 */  beqz  $s6, Action04_End_1
 /* 06A08C 7F03555C 8FB207A4 */   lw    $s2, 0x7a4($sp)
 /* 06A090 7F035560 C43A24F4 */  lwc1  $f26, %lo(D_800524F4)($at)
 /* 06A094 7F035564 3C014120 */  li    $at, 0x41200000 # 10.000000
@@ -2584,58 +2616,58 @@ glabel parse_handle_actionblocks
 /* 06A0B0 7F035580 02D28821 */  addu  $s1, $s6, $s2
 /* 06A0B4 7F035584 AFA307AC */  sw    $v1, 0x7ac($sp)
 /* 06A0B8 7F035588 AFA607B0 */  sw    $a2, 0x7b0($sp)
-.L7F03558C:
-/* 06A0BC 7F03558C 922E0000 */  lbu   $t6, ($s1)
-.L7F035590:
+GetByteS1_ParseCommandByte_SwitchCase:
+/* 06A0BC 7F03558C 922E0000 */  lbu   $t6, ($s1) #t6 = byte(s1)
+ParseCommandByte_SwitchCase:
 /* 06A0C0 7F035590 02C02025 */  move  $a0, $s6
-/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd
+/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd    # if not t6 < 253 goto L7F03A1EC
 /* 06A0C8 7F035598 10201314 */  beqz  $at, .L7F03A1EC
 /* 06A0CC 7F03559C 000E7080 */   sll   $t6, $t6, 2
 /* 06A0D0 7F0355A0 3C018005 */  lui   $at, 0x8005
 /* 06A0D4 7F0355A4 002E0821 */  addu  $at, $at, $t6
 /* 06A0D8 7F0355A8 8C2E24F8 */  lw    $t6, 0x24f8($at)
-/* 06A0DC 7F0355AC 01C00008 */  jr    $t6
+/* 06A0DC 7F0355AC 01C00008 */  jr    $t6		    #switch t6 (look up table for switch 0x800524f8)
 /* 06A0E0 7F0355B0 00000000 */   nop   
-action00_RVL_2:
+Action00_GoToLabel: 					            #case 0
 /* 06A0E4 7F0355B4 02C02025 */  move  $a0, $s6
 /* 06A0E8 7F0355B8 02402825 */  move  $a1, $s2
 /* 06A0EC 7F0355BC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A0F0 7F0355C0 92260001 */   lbu   $a2, 1($s1)
 /* 06A0F4 7F0355C4 00409025 */  move  $s2, $v0
-/* 06A0F8 7F0355C8 1000FFF0 */  b     .L7F03558C
+/* 06A0F8 7F0355C8 1000FFF0 */  b     GetByteS1_ParseCommandByte_SwitchCase	#break;
 /* 06A0FC 7F0355CC 02C28821 */   addu  $s1, $s6, $v0
-action01_Go_To_Beginning_Then_RVL_2:
+Action01_GoToLabelFromTop: 			                #case 1
 /* 06A100 7F0355D0 02C02025 */  move  $a0, $s6
 /* 06A104 7F0355D4 00002825 */  move  $a1, $zero
 /* 06A108 7F0355D8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A10C 7F0355DC 92260001 */   lbu   $a2, 1($s1)
 /* 06A110 7F0355E0 00409025 */  move  $s2, $v0
-/* 06A114 7F0355E4 1000FFE9 */  b     .L7F03558C
+/* 06A114 7F0355E4 1000FFE9 */  b     GetByteS1_ParseCommandByte_SwitchCase	   #break
 /* 06A118 7F0355E8 02C28821 */   addu  $s1, $s6, $v0
-action02_Resume_If_RVL_Met_2:
-/* 06A11C 7F0355EC 26520002 */  addiu $s2, $s2, 2
-/* 06A120 7F0355F0 1000FFE6 */  b     .L7F03558C
+Action02_Label:                                        #case 2
+/* 06A11C 7F0355EC 26520002 */  addiu $s2, $s2, 2    # s2++  PC ?    # CurrentActionByte += 2
+/* 06A120 7F0355F0 1000FFE6 */  b     GetByteS1_ParseCommandByte_SwitchCase                     # s1 +=2; goto 58c
 /* 06A124 7F0355F4 26310002 */   addiu $s1, $s1, 2
 action03_Leave_The_Routine_When_Return_Continue_From_Spot_1:
-/* 06A128 7F0355F8 12E00004 */  beqz  $s7, .L7F03560C
-/* 06A12C 7F0355FC 26520001 */   addiu $s2, $s2, 1
-/* 06A130 7F035600 AEF60104 */  sw    $s6, 0x104($s7)
-/* 06A134 7F035604 100012FE */  b     .L7F03A200
-/* 06A138 7F035608 A6F20108 */   sh    $s2, 0x108($s7)
+/* 06A128 7F0355F8 12E00004 */  beqz  $s7, .L7F03560C    # s2++  PC?
+/* 06A12C 7F0355FC 26520001 */   addiu $s2, $s2, 1       # if s7 = 0 goto 0c      If actionblock not initilised else?
+/* 06A130 7F035600 AEF60104 */  sw    $s6, 0x104($s7)    # s7.104 = s6              
+/* 06A134 7F035604 100012FE */  b     Action04_End_1     # s7.108 = u16(s2)           
+/* 06A138 7F035608 A6F20108 */   sh    $s2, 0x108($s7)   # goto end1 (load return addr) 
 .L7F03560C:
 /* 06A13C 7F03560C 8FAF07B0 */  lw    $t7, 0x7b0($sp)
 /* 06A140 7F035610 8FB807AC */  lw    $t8, 0x7ac($sp)
-/* 06A144 7F035614 11E00004 */  beqz  $t7, .L7F035628
+/* 06A144 7F035614 11E00004 */  beqz  $t7, .L7F035628    # if t7 = 0 goto 28 
 /* 06A148 7F035618 00000000 */   nop   
-/* 06A14C 7F03561C ADF60080 */  sw    $s6, 0x80($t7)
-/* 06A150 7F035620 100012F7 */  b     .L7F03A200
-/* 06A154 7F035624 A5F20084 */   sh    $s2, 0x84($t7)
+/* 06A14C 7F03561C ADF60080 */  sw    $s6, 0x80($t7)     #else t7.80 = s6 
+/* 06A150 7F035620 100012F7 */  b     Action04_End_1     # t7.84 = u16(s2)
+/* 06A154 7F035624 A5F20084 */   sh    $s2, 0x84($t7)    # end1 (load return addr)
 .L7F035628:
-/* 06A158 7F035628 530012F6 */  beql  $t8, $zero, .L7F03A204
-/* 06A15C 7F03562C 8FBF0074 */   lw    $ra, 0x74($sp)
-/* 06A160 7F035630 AF160080 */  sw    $s6, 0x80($t8)
-/* 06A164 7F035634 100012F2 */  b     .L7F03A200
-/* 06A168 7F035638 A7120084 */   sh    $s2, 0x84($t8)
+/* 06A158 7F035628 530012F6 */  beql  $t8, $zero, Action04_End_2    # load return addr (same as end1 (sp.74))
+/* 06A15C 7F03562C 8FBF0074 */   lw    $ra, 0x74($sp)               # if t8 = 0 goto end2 (skip return addr)
+/* 06A160 7F035630 AF160080 */  sw    $s6, 0x80($t8)                # else t8.80 = s6
+/* 06A164 7F035634 100012F2 */  b     Action04_End_1                # t8.84 = u16(s2)
+/* 06A168 7F035638 A7120084 */   sh    $s2, 0x84($t8)               # end1(load return addr)
 action05_Jump_To_Function_4:
 /* 06A16C 7F03563C 92390002 */  lbu   $t9, 2($s1)
 /* 06A170 7F035640 922A0003 */  lbu   $t2, 3($s1)
@@ -2647,10 +2679,10 @@ action05_Jump_To_Function_4:
 /* 06A188 7F035658 14A10007 */  bne   $a1, $at, .L7F035678
 /* 06A18C 7F03565C 01601825 */   move  $v1, $t3
 /* 06A190 7F035660 01602025 */  move  $a0, $t3
-/* 06A194 7F035664 0FC0D4E6 */  jal   sub_GAME_7F035398
+/* 06A194 7F035664 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
 /* 06A198 7F035668 00009025 */   move  $s2, $zero
 /* 06A19C 7F03566C 0040B025 */  move  $s6, $v0
-/* 06A1A0 7F035670 1000FFC6 */  b     .L7F03558C
+/* 06A1A0 7F035670 1000FFC6 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A1A4 7F035674 00408825 */   move  $s1, $v0
 .L7F035678:
 /* 06A1A8 7F035678 02E02025 */  move  $a0, $s7
@@ -2659,14 +2691,14 @@ action05_Jump_To_Function_4:
 /* 06A1B4 7F035684 97A30792 */  lhu   $v1, 0x792($sp)
 /* 06A1B8 7F035688 10400006 */  beqz  $v0, .L7F0356A4
 /* 06A1BC 7F03568C 00408025 */   move  $s0, $v0
-/* 06A1C0 7F035690 0FC0D4E6 */  jal   sub_GAME_7F035398
+/* 06A1C0 7F035690 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
 /* 06A1C4 7F035694 00602025 */   move  $a0, $v1
 /* 06A1C8 7F035698 AE020104 */  sw    $v0, 0x104($s0)
 /* 06A1CC 7F03569C A6000108 */  sh    $zero, 0x108($s0)
 /* 06A1D0 7F0356A0 A2000008 */  sb    $zero, 8($s0)
 .L7F0356A4:
 /* 06A1D4 7F0356A4 26520004 */  addiu $s2, $s2, 4
-/* 06A1D8 7F0356A8 1000FFB8 */  b     .L7F03558C
+/* 06A1D8 7F0356A8 1000FFB8 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A1DC 7F0356AC 26310004 */   addiu $s1, $s1, 4
 action06_Set_Return_Subroutine_for_0007_Command_3:
 /* 06A1E0 7F0356B0 922C0001 */  lbu   $t4, 1($s1)
@@ -2679,60 +2711,60 @@ action06_Set_Return_Subroutine_for_0007_Command_3:
 /* 06A1FC 7F0356CC 01E01025 */   move  $v0, $t7
 /* 06A200 7F0356D0 A6EF010A */  sh    $t7, 0x10a($s7)
 /* 06A204 7F0356D4 26520003 */  addiu $s2, $s2, 3
-/* 06A208 7F0356D8 1000FFAC */  b     .L7F03558C
+/* 06A208 7F0356D8 1000FFAC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A20C 7F0356DC 26310003 */   addiu $s1, $s1, 3
 .L7F0356E0:
 /* 06A210 7F0356E0 13000005 */  beqz  $t8, .L7F0356F8
 /* 06A214 7F0356E4 8FB907AC */   lw    $t9, 0x7ac($sp)
 /* 06A218 7F0356E8 A7020086 */  sh    $v0, 0x86($t8)
 /* 06A21C 7F0356EC 26520003 */  addiu $s2, $s2, 3
-/* 06A220 7F0356F0 1000FFA6 */  b     .L7F03558C
+/* 06A220 7F0356F0 1000FFA6 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A224 7F0356F4 26310003 */   addiu $s1, $s1, 3
 .L7F0356F8:
 /* 06A228 7F0356F8 13200002 */  beqz  $t9, .L7F035704
 /* 06A22C 7F0356FC 26520003 */   addiu $s2, $s2, 3
 /* 06A230 7F035700 A7220086 */  sh    $v0, 0x86($t9)
 .L7F035704:
-/* 06A234 7F035704 1000FFA1 */  b     .L7F03558C
+/* 06A234 7F035704 1000FFA1 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A238 7F035708 26310003 */   addiu $s1, $s1, 3
 action07_Jump_to_Return_Subroutine_1:
 /* 06A23C 7F03570C 12E00006 */  beqz  $s7, .L7F035728
 /* 06A240 7F035710 00009025 */   move  $s2, $zero
-/* 06A244 7F035714 0FC0D4E6 */  jal   sub_GAME_7F035398
+/* 06A244 7F035714 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
 /* 06A248 7F035718 86E4010A */   lh    $a0, 0x10a($s7)
 /* 06A24C 7F03571C 0040B025 */  move  $s6, $v0
-/* 06A250 7F035720 1000FF9A */  b     .L7F03558C
+/* 06A250 7F035720 1000FF9A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A254 7F035724 00408825 */   move  $s1, $v0
 .L7F035728:
 /* 06A258 7F035728 8FA907B0 */  lw    $t1, 0x7b0($sp)
 /* 06A25C 7F03572C 8FAA07AC */  lw    $t2, 0x7ac($sp)
 /* 06A260 7F035730 11200006 */  beqz  $t1, .L7F03574C
 /* 06A264 7F035734 00000000 */   nop   
-/* 06A268 7F035738 0FC0D4E6 */  jal   sub_GAME_7F035398
+/* 06A268 7F035738 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
 /* 06A26C 7F03573C 85240086 */   lh    $a0, 0x86($t1)
 /* 06A270 7F035740 0040B025 */  move  $s6, $v0
-/* 06A274 7F035744 1000FF91 */  b     .L7F03558C
+/* 06A274 7F035744 1000FF91 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A278 7F035748 00408825 */   move  $s1, $v0
 .L7F03574C:
 /* 06A27C 7F03574C 11400004 */  beqz  $t2, .L7F035760
 /* 06A280 7F035750 00000000 */   nop   
-/* 06A284 7F035754 0FC0D4E6 */  jal   sub_GAME_7F035398
+/* 06A284 7F035754 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
 /* 06A288 7F035758 85440086 */   lh    $a0, 0x86($t2)
 /* 06A28C 7F03575C 0040B025 */  move  $s6, $v0
 .L7F035760:
-/* 06A290 7F035760 1000FF8A */  b     .L7F03558C
+/* 06A290 7F035760 1000FF8A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A294 7F035764 02C08825 */   move  $s1, $s6
 action08_Reset_Animation_1:
 /* 06A298 7F035768 0FC0CD75 */  jal   sub_GAME_7F0335D4
 /* 06A29C 7F03576C 02E02025 */   move  $a0, $s7
 /* 06A2A0 7F035770 26520001 */  addiu $s2, $s2, 1
-/* 06A2A4 7F035774 1000FF85 */  b     .L7F03558C
+/* 06A2A4 7F035774 1000FF85 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A2A8 7F035778 26310001 */   addiu $s1, $s1, 1
 action09_Guard_Kneels_1:
 /* 06A2AC 7F03577C 0FC0CDB1 */  jal   check_if_able_to_then_kneel
 /* 06A2B0 7F035780 02E02025 */   move  $a0, $s7
 /* 06A2B4 7F035784 26520001 */  addiu $s2, $s2, 1
-/* 06A2B8 7F035788 1000FF80 */  b     .L7F03558C
+/* 06A2B8 7F035788 1000FF80 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A2BC 7F03578C 26310001 */   addiu $s1, $s1, 1
 action0A_Animation_9:
 /* 06A2C0 7F035790 922B0001 */  lbu   $t3, 1($s1)
@@ -2771,7 +2803,7 @@ action0A_Animation_9:
 /* 06A33C 7F03580C 0FC0CDC0 */  jal   check_if_able_to_then_perform_animation
 /* 06A340 7F035810 AFAE0014 */   sw    $t6, 0x14($sp)
 /* 06A344 7F035814 26520009 */  addiu $s2, $s2, 9
-/* 06A348 7F035818 1000FF5C */  b     .L7F03558C
+/* 06A348 7F035818 1000FF5C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A34C 7F03581C 26310009 */   addiu $s1, $s1, 9
 .L7F035820:
 /* 06A350 7F035820 11E0001B */  beqz  $t7, .L7F035890
@@ -2805,7 +2837,7 @@ action0A_Animation_9:
 .L7F035890:
 /* 06A3C0 7F035890 26520009 */  addiu $s2, $s2, 9
 .L7F035894:
-/* 06A3C4 7F035894 1000FF3D */  b     .L7F03558C
+/* 06A3C4 7F035894 1000FF3D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A3C8 7F035898 26310009 */   addiu $s1, $s1, 9
 action0B_If_Guard_WastingTime_SwatFlies_RVL_2:
 /* 06A3CC 7F03589C 82EB0007 */  lb    $t3, 7($s7)
@@ -2816,23 +2848,23 @@ action0B_If_Guard_WastingTime_SwatFlies_RVL_2:
 /* 06A3E0 7F0358B0 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A3E4 7F0358B4 92260001 */   lbu   $a2, 1($s1)
 /* 06A3E8 7F0358B8 00409025 */  move  $s2, $v0
-/* 06A3EC 7F0358BC 1000FF33 */  b     .L7F03558C
+/* 06A3EC 7F0358BC 1000FF33 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A3F0 7F0358C0 02C28821 */   addu  $s1, $s6, $v0
 .L7F0358C4:
 /* 06A3F4 7F0358C4 26520002 */  addiu $s2, $s2, 2
-/* 06A3F8 7F0358C8 1000FF30 */  b     .L7F03558C
+/* 06A3F8 7F0358C8 1000FF30 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A3FC 7F0358CC 26310002 */   addiu $s1, $s1, 2
 action0C_Guard_Gestures_1:
 /* 06A400 7F0358D0 0FC0CD84 */  jal   check_if_able_to_then_shuffle_feet
 /* 06A404 7F0358D4 02E02025 */   move  $a0, $s7
 /* 06A408 7F0358D8 26520001 */  addiu $s2, $s2, 1
-/* 06A40C 7F0358DC 1000FF2B */  b     .L7F03558C
+/* 06A40C 7F0358DC 1000FF2B */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A410 7F0358E0 26310001 */   addiu $s1, $s1, 1
 action0D_Guard_Looks_Around_When_Shot_At_1:
 /* 06A414 7F0358E4 0FC0CDA2 */  jal   check_if_able_to_then_look_flustered
 /* 06A418 7F0358E8 02E02025 */   move  $a0, $s7
 /* 06A41C 7F0358EC 26520001 */  addiu $s2, $s2, 1
-/* 06A420 7F0358F0 1000FF26 */  b     .L7F03558C
+/* 06A420 7F0358F0 1000FF26 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A424 7F0358F4 26310001 */   addiu $s1, $s1, 1
 action2F_When_Guard_Stops_Moving_RVL_2:
 /* 06A428 7F0358F8 0FC0A717 */  jal   check_if_actor_stationary
@@ -2843,11 +2875,11 @@ action2F_When_Guard_Stops_Moving_RVL_2:
 /* 06A43C 7F03590C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A440 7F035910 92260001 */   lbu   $a2, 1($s1)
 /* 06A444 7F035914 00409025 */  move  $s2, $v0
-/* 06A448 7F035918 1000FF1C */  b     .L7F03558C
+/* 06A448 7F035918 1000FF1C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A44C 7F03591C 02C28821 */   addu  $s1, $s6, $v0
 .L7F035920:
 /* 06A450 7F035920 26520002 */  addiu $s2, $s2, 2
-/* 06A454 7F035924 1000FF19 */  b     .L7F03558C
+/* 06A454 7F035924 1000FF19 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A458 7F035928 26310002 */   addiu $s1, $s1, 2
 action30_Detect_If_Guard_Killed_RVL_If_So_3:
 /* 06A45C 7F03592C 02E02025 */  move  $a0, $s7
@@ -2864,11 +2896,11 @@ action30_Detect_If_Guard_Killed_RVL_If_So_3:
 /* 06A484 7F035954 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A488 7F035958 92260002 */   lbu   $a2, 2($s1)
 /* 06A48C 7F03595C 00409025 */  move  $s2, $v0
-/* 06A490 7F035960 1000FF0A */  b     .L7F03558C
+/* 06A490 7F035960 1000FF0A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A494 7F035964 02C28821 */   addu  $s1, $s6, $v0
 .L7F035968:
 /* 06A498 7F035968 26520003 */  addiu $s2, $s2, 3
-/* 06A49C 7F03596C 1000FF07 */  b     .L7F03558C
+/* 06A49C 7F03596C 1000FF07 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A4A0 7F035970 26310003 */   addiu $s1, $s1, 3
 action31_If_GuardID_Finish_DeathAnimation_RVL_3:
 /* 06A4A4 7F035974 02E02025 */  move  $a0, $s7
@@ -2883,11 +2915,11 @@ action31_If_GuardID_Finish_DeathAnimation_RVL_3:
 /* 06A4C4 7F035994 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A4C8 7F035998 92260002 */   lbu   $a2, 2($s1)
 /* 06A4CC 7F03599C 00409025 */  move  $s2, $v0
-/* 06A4D0 7F0359A0 1000FEFA */  b     .L7F03558C
+/* 06A4D0 7F0359A0 1000FEFA */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A4D4 7F0359A4 02C28821 */   addu  $s1, $s6, $v0
 .L7F0359A8:
 /* 06A4D8 7F0359A8 26520003 */  addiu $s2, $s2, 3
-/* 06A4DC 7F0359AC 1000FEF7 */  b     .L7F03558C
+/* 06A4DC 7F0359AC 1000FEF7 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A4E0 7F0359B0 26310003 */   addiu $s1, $s1, 3
 action32_If_Bond_In_Sight_RVL_2:
 /* 06A4E4 7F0359B4 0FC0A75C */  jal   sub_GAME_7F029D70
@@ -2898,11 +2930,11 @@ action32_If_Bond_In_Sight_RVL_2:
 /* 06A4F8 7F0359C8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A4FC 7F0359CC 92260001 */   lbu   $a2, 1($s1)
 /* 06A500 7F0359D0 00409025 */  move  $s2, $v0
-/* 06A504 7F0359D4 1000FEED */  b     .L7F03558C
+/* 06A504 7F0359D4 1000FEED */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A508 7F0359D8 02C28821 */   addu  $s1, $s6, $v0
 .L7F0359DC:
 /* 06A50C 7F0359DC 26520002 */  addiu $s2, $s2, 2
-/* 06A510 7F0359E0 1000FEEA */  b     .L7F03558C
+/* 06A510 7F0359E0 1000FEEA */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A514 7F0359E4 26310002 */   addiu $s1, $s1, 2
 action0E_Guard_Steps_Sideways_RVL_2:
 /* 06A518 7F0359E8 0FC0A8B2 */  jal   actor_steps_sideways
@@ -2913,11 +2945,11 @@ action0E_Guard_Steps_Sideways_RVL_2:
 /* 06A52C 7F0359FC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A530 7F035A00 92260001 */   lbu   $a2, 1($s1)
 /* 06A534 7F035A04 00409025 */  move  $s2, $v0
-/* 06A538 7F035A08 1000FEE0 */  b     .L7F03558C
+/* 06A538 7F035A08 1000FEE0 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A53C 7F035A0C 02C28821 */   addu  $s1, $s6, $v0
 .L7F035A10:
 /* 06A540 7F035A10 26520002 */  addiu $s2, $s2, 2
-/* 06A544 7F035A14 1000FEDD */  b     .L7F03558C
+/* 06A544 7F035A14 1000FEDD */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A548 7F035A18 26310002 */   addiu $s1, $s1, 2
 action0F_Guard_Hops_Sideways_RVL_2:
 /* 06A54C 7F035A1C 0FC0A90A */  jal   actor_hops_sideways
@@ -2928,11 +2960,11 @@ action0F_Guard_Hops_Sideways_RVL_2:
 /* 06A560 7F035A30 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A564 7F035A34 92260001 */   lbu   $a2, 1($s1)
 /* 06A568 7F035A38 00409025 */  move  $s2, $v0
-/* 06A56C 7F035A3C 1000FED3 */  b     .L7F03558C
+/* 06A56C 7F035A3C 1000FED3 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A570 7F035A40 02C28821 */   addu  $s1, $s6, $v0
 .L7F035A44:
 /* 06A574 7F035A44 26520002 */  addiu $s2, $s2, 2
-/* 06A578 7F035A48 1000FED0 */  b     .L7F03558C
+/* 06A578 7F035A48 1000FED0 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A57C 7F035A4C 26310002 */   addiu $s1, $s1, 2
 action10_Guard_Runs_Sideways_RVL_2:
 /* 06A580 7F035A50 0FC0A962 */  jal   actor_runs_sideways
@@ -2943,11 +2975,11 @@ action10_Guard_Runs_Sideways_RVL_2:
 /* 06A594 7F035A64 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A598 7F035A68 92260001 */   lbu   $a2, 1($s1)
 /* 06A59C 7F035A6C 00409025 */  move  $s2, $v0
-/* 06A5A0 7F035A70 1000FEC6 */  b     .L7F03558C
+/* 06A5A0 7F035A70 1000FEC6 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A5A4 7F035A74 02C28821 */   addu  $s1, $s6, $v0
 .L7F035A78:
 /* 06A5A8 7F035A78 26520002 */  addiu $s2, $s2, 2
-/* 06A5AC 7F035A7C 1000FEC3 */  b     .L7F03558C
+/* 06A5AC 7F035A7C 1000FEC3 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A5B0 7F035A80 26310002 */   addiu $s1, $s1, 2
 action11_Guard_Walks_Firing_RVL_2:
 /* 06A5B4 7F035A84 0FC0A9C1 */  jal   actor_walks_and_fires
@@ -2958,11 +2990,11 @@ action11_Guard_Walks_Firing_RVL_2:
 /* 06A5C8 7F035A98 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A5CC 7F035A9C 92260001 */   lbu   $a2, 1($s1)
 /* 06A5D0 7F035AA0 00409025 */  move  $s2, $v0
-/* 06A5D4 7F035AA4 1000FEB9 */  b     .L7F03558C
+/* 06A5D4 7F035AA4 1000FEB9 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A5D8 7F035AA8 02C28821 */   addu  $s1, $s6, $v0
 .L7F035AAC:
 /* 06A5DC 7F035AAC 26520002 */  addiu $s2, $s2, 2
-/* 06A5E0 7F035AB0 1000FEB6 */  b     .L7F03558C
+/* 06A5E0 7F035AB0 1000FEB6 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A5E4 7F035AB4 26310002 */   addiu $s1, $s1, 2
 action12_Guard_Runs_Firing_RVL_2:
 /* 06A5E8 7F035AB8 0FC0A9FE */  jal   actor_runs_and_fires
@@ -2973,11 +3005,11 @@ action12_Guard_Runs_Firing_RVL_2:
 /* 06A5FC 7F035ACC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A600 7F035AD0 92260001 */   lbu   $a2, 1($s1)
 /* 06A604 7F035AD4 00409025 */  move  $s2, $v0
-/* 06A608 7F035AD8 1000FEAC */  b     .L7F03558C
+/* 06A608 7F035AD8 1000FEAC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A60C 7F035ADC 02C28821 */   addu  $s1, $s6, $v0
 .L7F035AE0:
 /* 06A610 7F035AE0 26520002 */  addiu $s2, $s2, 2
-/* 06A614 7F035AE4 1000FEA9 */  b     .L7F03558C
+/* 06A614 7F035AE4 1000FEA9 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A618 7F035AE8 26310002 */   addiu $s1, $s1, 2
 action13_Guard_Rolls_On_Ground_Then_Fires_Crouched_RVL_2:
 /* 06A61C 7F035AEC 0FC0AA3B */  jal   actor_rolls_fires_crouched
@@ -2988,11 +3020,11 @@ action13_Guard_Rolls_On_Ground_Then_Fires_Crouched_RVL_2:
 /* 06A630 7F035B00 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A634 7F035B04 92260001 */   lbu   $a2, 1($s1)
 /* 06A638 7F035B08 00409025 */  move  $s2, $v0
-/* 06A63C 7F035B0C 1000FE9F */  b     .L7F03558C
+/* 06A63C 7F035B0C 1000FE9F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A640 7F035B10 02C28821 */   addu  $s1, $s6, $v0
 .L7F035B14:
 /* 06A644 7F035B14 26520002 */  addiu $s2, $s2, 2
-/* 06A648 7F035B18 1000FE9C */  b     .L7F03558C
+/* 06A648 7F035B18 1000FE9C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A64C 7F035B1C 26310002 */   addiu $s1, $s1, 2
 action14_Guard_Aims_Shoots_at_Bond_Guard_Pad_RVL_6:
 /* 06A650 7F035B20 922D0003 */  lbu   $t5, 3($s1)
@@ -3011,11 +3043,11 @@ action14_Guard_Aims_Shoots_at_Bond_Guard_Pad_RVL_6:
 /* 06A684 7F035B54 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A688 7F035B58 92260005 */   lbu   $a2, 5($s1)
 /* 06A68C 7F035B5C 00409025 */  move  $s2, $v0
-/* 06A690 7F035B60 1000FE8A */  b     .L7F03558C
+/* 06A690 7F035B60 1000FE8A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A694 7F035B64 02C28821 */   addu  $s1, $s6, $v0
 .L7F035B68:
 /* 06A698 7F035B68 26520006 */  addiu $s2, $s2, 6
-/* 06A69C 7F035B6C 1000FE87 */  b     .L7F03558C
+/* 06A69C 7F035B6C 1000FE87 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A6A0 7F035B70 26310006 */   addiu $s1, $s1, 6
 action15_Guard_Kneels_Aims_Shoots_at_Bond_Guard_Pad_RVL_6:
 /* 06A6A4 7F035B74 922A0003 */  lbu   $t2, 3($s1)
@@ -3034,11 +3066,11 @@ action15_Guard_Kneels_Aims_Shoots_at_Bond_Guard_Pad_RVL_6:
 /* 06A6D8 7F035BA8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A6DC 7F035BAC 92260005 */   lbu   $a2, 5($s1)
 /* 06A6E0 7F035BB0 00409025 */  move  $s2, $v0
-/* 06A6E4 7F035BB4 1000FE75 */  b     .L7F03558C
+/* 06A6E4 7F035BB4 1000FE75 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A6E8 7F035BB8 02C28821 */   addu  $s1, $s6, $v0
 .L7F035BBC:
 /* 06A6EC 7F035BBC 26520006 */  addiu $s2, $s2, 6
-/* 06A6F0 7F035BC0 1000FE72 */  b     .L7F03558C
+/* 06A6F0 7F035BC0 1000FE72 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A6F4 7F035BC4 26310006 */   addiu $s1, $s1, 6
 actionE7_If_Guard_Moving_And_Shooting_RVL_2:
 /* 06A6F8 7F035BC8 82F80007 */  lb    $t8, 7($s7)
@@ -3057,11 +3089,11 @@ actionE7_If_Guard_Moving_And_Shooting_RVL_2:
 /* 06A72C 7F035BFC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A730 7F035C00 92260001 */   lbu   $a2, 1($s1)
 /* 06A734 7F035C04 00409025 */  move  $s2, $v0
-/* 06A738 7F035C08 1000FE60 */  b     .L7F03558C
+/* 06A738 7F035C08 1000FE60 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A73C 7F035C0C 02C28821 */   addu  $s1, $s6, $v0
 /* 06A740 7F035C10 26520002 */  addiu $s2, $s2, 2
 .L7F035C14:
-/* 06A744 7F035C14 1000FE5D */  b     .L7F03558C
+/* 06A744 7F035C14 1000FE5D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A748 7F035C18 26310002 */   addiu $s1, $s1, 2
 actionE8_If_Guard_Is_Shooting_RVL_2:
 /* 06A74C 7F035C1C 82EB0007 */  lb    $t3, 7($s7)
@@ -3072,11 +3104,11 @@ actionE8_If_Guard_Is_Shooting_RVL_2:
 /* 06A760 7F035C30 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A764 7F035C34 92260001 */   lbu   $a2, 1($s1)
 /* 06A768 7F035C38 00409025 */  move  $s2, $v0
-/* 06A76C 7F035C3C 1000FE53 */  b     .L7F03558C
+/* 06A76C 7F035C3C 1000FE53 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A770 7F035C40 02C28821 */   addu  $s1, $s6, $v0
 .L7F035C44:
 /* 06A774 7F035C44 26520002 */  addiu $s2, $s2, 2
-/* 06A778 7F035C48 1000FE50 */  b     .L7F03558C
+/* 06A778 7F035C48 1000FE50 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A77C 7F035C4C 26310002 */   addiu $s1, $s1, 2
 action16_Guard_Shoots_Guards_Without_Animation_Change_RVL_6:
 /* 06A780 7F035C50 922C0003 */  lbu   $t4, 3($s1)
@@ -3095,11 +3127,11 @@ action16_Guard_Shoots_Guards_Without_Animation_Change_RVL_6:
 /* 06A7B4 7F035C84 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A7B8 7F035C88 92260005 */   lbu   $a2, 5($s1)
 /* 06A7BC 7F035C8C 00409025 */  move  $s2, $v0
-/* 06A7C0 7F035C90 1000FE3E */  b     .L7F03558C
+/* 06A7C0 7F035C90 1000FE3E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A7C4 7F035C94 02C28821 */   addu  $s1, $s6, $v0
 .L7F035C98:
 /* 06A7C8 7F035C98 26520006 */  addiu $s2, $s2, 6
-/* 06A7CC 7F035C9C 1000FE3B */  b     .L7F03558C
+/* 06A7CC 7F035C9C 1000FE3B */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A7D0 7F035CA0 26310006 */   addiu $s1, $s1, 6
 action17_Guard_Constantly_Angles_To_Face_RVL_6:
 /* 06A7D4 7F035CA4 92290003 */  lbu   $t1, 3($s1)
@@ -3118,11 +3150,11 @@ action17_Guard_Constantly_Angles_To_Face_RVL_6:
 /* 06A808 7F035CD8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A80C 7F035CDC 92260005 */   lbu   $a2, 5($s1)
 /* 06A810 7F035CE0 00409025 */  move  $s2, $v0
-/* 06A814 7F035CE4 1000FE29 */  b     .L7F03558C
+/* 06A814 7F035CE4 1000FE29 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A818 7F035CE8 02C28821 */   addu  $s1, $s6, $v0
 .L7F035CEC:
 /* 06A81C 7F035CEC 26520006 */  addiu $s2, $s2, 6
-/* 06A820 7F035CF0 1000FE26 */  b     .L7F03558C
+/* 06A820 7F035CF0 1000FE26 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A824 7F035CF4 26310006 */   addiu $s1, $s1, 6
 action18_Shoot_Guard_ID_In_Style_With_Weapon_Type_num_4:
 /* 06A828 7F035CF8 02E02025 */  move  $a0, $s7
@@ -3150,7 +3182,7 @@ action18_Shoot_Guard_ID_In_Style_With_Weapon_Type_num_4:
 .L7F035D50:
 /* 06A880 7F035D50 26520004 */  addiu $s2, $s2, 4
 .L7F035D54:
-/* 06A884 7F035D54 1000FE0D */  b     .L7F03558C
+/* 06A884 7F035D54 1000FE0D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A888 7F035D58 26310004 */   addiu $s1, $s1, 4
 action19_Guard_ID1_Shoots_Guard_ID2_In_Style_4:
 /* 06A88C 7F035D5C 02E02025 */  move  $a0, $s7
@@ -3225,7 +3257,7 @@ action19_Guard_ID1_Shoots_Guard_ID2_In_Style_4:
 .L7F035E6C:
 /* 06A99C 7F035E6C 26520004 */  addiu $s2, $s2, 4
 .L7F035E70:
-/* 06A9A0 7F035E70 1000FDC6 */  b     .L7F03558C
+/* 06A9A0 7F035E70 1000FDC6 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A9A4 7F035E74 26310004 */   addiu $s1, $s1, 4
 action1A_Guard_Throws_Grenade_RVL_2:
 /* 06A9A8 7F035E78 0FC0D15F */  jal   actor_draws_throws_grenade_at_player_if_possible
@@ -3236,11 +3268,11 @@ action1A_Guard_Throws_Grenade_RVL_2:
 /* 06A9BC 7F035E8C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06A9C0 7F035E90 92260001 */   lbu   $a2, 1($s1)
 /* 06A9C4 7F035E94 00409025 */  move  $s2, $v0
-/* 06A9C8 7F035E98 1000FDBC */  b     .L7F03558C
+/* 06A9C8 7F035E98 1000FDBC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A9CC 7F035E9C 02C28821 */   addu  $s1, $s6, $v0
 .L7F035EA0:
 /* 06A9D0 7F035EA0 26520002 */  addiu $s2, $s2, 2
-/* 06A9D4 7F035EA4 1000FDB9 */  b     .L7F03558C
+/* 06A9D4 7F035EA4 1000FDB9 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06A9D8 7F035EA8 26310002 */   addiu $s1, $s1, 2
 action1B_Drop_Weapon_Inventory_num_RVL_5:
 /* 06A9DC 7F035EAC 922D0001 */  lbu   $t5, 1($s1)
@@ -3257,23 +3289,23 @@ action1B_Drop_Weapon_Inventory_num_RVL_5:
 /* 06AA08 7F035ED8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AA0C 7F035EDC 92260004 */   lbu   $a2, 4($s1)
 /* 06AA10 7F035EE0 00409025 */  move  $s2, $v0
-/* 06AA14 7F035EE4 1000FDA9 */  b     .L7F03558C
+/* 06AA14 7F035EE4 1000FDA9 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AA18 7F035EE8 02C28821 */   addu  $s1, $s6, $v0
 .L7F035EEC:
 /* 06AA1C 7F035EEC 26520005 */  addiu $s2, $s2, 5
-/* 06AA20 7F035EF0 1000FDA6 */  b     .L7F03558C
+/* 06AA20 7F035EF0 1000FDA6 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AA24 7F035EF4 26310005 */   addiu $s1, $s1, 5
 action21_Guard_Surrenders_1:
 /* 06AA28 7F035EF8 0FC0CCD9 */  jal   check_if_able_to_then_surrender
 /* 06AA2C 7F035EFC 02E02025 */   move  $a0, $s7
 /* 06AA30 7F035F00 26520001 */  addiu $s2, $s2, 1
-/* 06AA34 7F035F04 1000FDA1 */  b     .L7F03558C
+/* 06AA34 7F035F04 1000FDA1 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AA38 7F035F08 26310001 */   addiu $s1, $s1, 1
 action22_Guard_Set_To_Move_Fades_And_Disappear_1:
 /* 06AA3C 7F035F0C 0FC0CCE8 */  jal   sub_GAME_7F0333A0
 /* 06AA40 7F035F10 02E02025 */   move  $a0, $s7
 /* 06AA44 7F035F14 26520001 */  addiu $s2, $s2, 1
-/* 06AA48 7F035F18 1000FD9C */  b     .L7F03558C
+/* 06AA48 7F035F18 1000FD9C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AA4C 7F035F1C 26310001 */   addiu $s1, $s1, 1
 action23_Eliminate_Guard_ID_2:
 /* 06AA50 7F035F20 02E02025 */  move  $a0, $s7
@@ -3288,7 +3320,7 @@ action23_Eliminate_Guard_ID_2:
 /* 06AA74 7F035F44 354B0020 */  ori   $t3, $t2, 0x20
 /* 06AA78 7F035F48 A44B0012 */  sh    $t3, 0x12($v0)
 .L7F035F4C:
-/* 06AA7C 7F035F4C 1000FD8F */  b     .L7F03558C
+/* 06AA7C 7F035F4C 1000FD8F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AA80 7F035F50 26310002 */   addiu $s1, $s1, 2
 action24_Activate_Object_At_Preset_RVL_If_Successful_4:
 /* 06AA84 7F035F54 922C0001 */  lbu   $t4, 1($s1)
@@ -3304,23 +3336,23 @@ action24_Activate_Object_At_Preset_RVL_If_Successful_4:
 /* 06AAAC 7F035F7C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AAB0 7F035F80 92260003 */   lbu   $a2, 3($s1)
 /* 06AAB4 7F035F84 00409025 */  move  $s2, $v0
-/* 06AAB8 7F035F88 1000FD80 */  b     .L7F03558C
+/* 06AAB8 7F035F88 1000FD80 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AABC 7F035F8C 02C28821 */   addu  $s1, $s6, $v0
 .L7F035F90:
 /* 06AAC0 7F035F90 26520004 */  addiu $s2, $s2, 4
-/* 06AAC4 7F035F94 1000FD7D */  b     .L7F03558C
+/* 06AAC4 7F035F94 1000FD7D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AAC8 7F035F98 26310004 */   addiu $s1, $s1, 4
 action25_Sound_Alarm_1:
 /* 06AACC 7F035F9C 0FC15772 */  jal   start_alarm
 /* 06AAD0 7F035FA0 00000000 */   nop   
 /* 06AAD4 7F035FA4 26520001 */  addiu $s2, $s2, 1
-/* 06AAD8 7F035FA8 1000FD78 */  b     .L7F03558C
+/* 06AAD8 7F035FA8 1000FD78 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AADC 7F035FAC 26310001 */   addiu $s1, $s1, 1
 action26_Turn_Off_Alarm_1:
 /* 06AAE0 7F035FB0 0FC1578B */  jal   stop_alarm
 /* 06AAE4 7F035FB4 00000000 */   nop   
 /* 06AAE8 7F035FB8 26520001 */  addiu $s2, $s2, 1
-/* 06AAEC 7F035FBC 1000FD73 */  b     .L7F03558C
+/* 06AAEC 7F035FBC 1000FD73 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AAF0 7F035FC0 26310001 */   addiu $s1, $s1, 1
 action27_Return_False_Invalid_Type_2:
 /* 06AAF4 7F035FC4 0FC0D13F */  jal   removed_animation_routine_27
@@ -3331,11 +3363,11 @@ action27_Return_False_Invalid_Type_2:
 /* 06AB08 7F035FD8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AB0C 7F035FDC 92260001 */   lbu   $a2, 1($s1)
 /* 06AB10 7F035FE0 00409025 */  move  $s2, $v0
-/* 06AB14 7F035FE4 1000FD69 */  b     .L7F03558C
+/* 06AB14 7F035FE4 1000FD69 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AB18 7F035FE8 02C28821 */   addu  $s1, $s6, $v0
 .L7F035FEC:
 /* 06AB1C 7F035FEC 26520002 */  addiu $s2, $s2, 2
-/* 06AB20 7F035FF0 1000FD66 */  b     .L7F03558C
+/* 06AB20 7F035FF0 1000FD66 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AB24 7F035FF4 26310002 */   addiu $s1, $s1, 2
 action28_Jog_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB28 7F035FF8 02E02025 */  move  $a0, $s7
@@ -3347,11 +3379,11 @@ action28_Jog_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB40 7F036010 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AB44 7F036014 92260001 */   lbu   $a2, 1($s1)
 /* 06AB48 7F036018 00409025 */  move  $s2, $v0
-/* 06AB4C 7F03601C 1000FD5B */  b     .L7F03558C
+/* 06AB4C 7F03601C 1000FD5B */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AB50 7F036020 02C28821 */   addu  $s1, $s6, $v0
 .L7F036024:
 /* 06AB54 7F036024 26520002 */  addiu $s2, $s2, 2
-/* 06AB58 7F036028 1000FD58 */  b     .L7F03558C
+/* 06AB58 7F036028 1000FD58 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AB5C 7F03602C 26310002 */   addiu $s1, $s1, 2
 action29_Walk_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB60 7F036030 02E02025 */  move  $a0, $s7
@@ -3363,11 +3395,11 @@ action29_Walk_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB78 7F036048 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AB7C 7F03604C 92260001 */   lbu   $a2, 1($s1)
 /* 06AB80 7F036050 00409025 */  move  $s2, $v0
-/* 06AB84 7F036054 1000FD4D */  b     .L7F03558C
+/* 06AB84 7F036054 1000FD4D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AB88 7F036058 02C28821 */   addu  $s1, $s6, $v0
 .L7F03605C:
 /* 06AB8C 7F03605C 26520002 */  addiu $s2, $s2, 2
-/* 06AB90 7F036060 1000FD4A */  b     .L7F03558C
+/* 06AB90 7F036060 1000FD4A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AB94 7F036064 26310002 */   addiu $s1, $s1, 2
 action2A_Run_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06AB98 7F036068 02E02025 */  move  $a0, $s7
@@ -3379,11 +3411,11 @@ action2A_Run_To_Bond_Return_Loop_When_Reached_Bond_2:
 /* 06ABB0 7F036080 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06ABB4 7F036084 92260001 */   lbu   $a2, 1($s1)
 /* 06ABB8 7F036088 00409025 */  move  $s2, $v0
-/* 06ABBC 7F03608C 1000FD3F */  b     .L7F03558C
+/* 06ABBC 7F03608C 1000FD3F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ABC0 7F036090 02C28821 */   addu  $s1, $s6, $v0
 .L7F036094:
 /* 06ABC4 7F036094 26520002 */  addiu $s2, $s2, 2
-/* 06ABC8 7F036098 1000FD3C */  b     .L7F03558C
+/* 06ABC8 7F036098 1000FD3C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ABCC 7F03609C 26310002 */   addiu $s1, $s1, 2
 action2B_Return_False_Invalid_Type_2:
 /* 06ABD0 7F0360A0 0FC0D142 */  jal   removed_animation_routine_2B
@@ -3394,11 +3426,11 @@ action2B_Return_False_Invalid_Type_2:
 /* 06ABE4 7F0360B4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06ABE8 7F0360B8 92260001 */   lbu   $a2, 1($s1)
 /* 06ABEC 7F0360BC 00409025 */  move  $s2, $v0
-/* 06ABF0 7F0360C0 1000FD32 */  b     .L7F03558C
+/* 06ABF0 7F0360C0 1000FD32 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ABF4 7F0360C4 02C28821 */   addu  $s1, $s6, $v0
 .L7F0360C8:
 /* 06ABF8 7F0360C8 26520002 */  addiu $s2, $s2, 2
-/* 06ABFC 7F0360CC 1000FD2F */  b     .L7F03558C
+/* 06ABFC 7F0360CC 1000FD2F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AC00 7F0360D0 26310002 */   addiu $s1, $s1, 2
 action2C_Jog_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC04 7F0360D4 02E02025 */  move  $a0, $s7
@@ -3411,11 +3443,11 @@ action2C_Jog_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC20 7F0360F0 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AC24 7F0360F4 92260002 */   lbu   $a2, 2($s1)
 /* 06AC28 7F0360F8 00409025 */  move  $s2, $v0
-/* 06AC2C 7F0360FC 1000FD23 */  b     .L7F03558C
+/* 06AC2C 7F0360FC 1000FD23 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AC30 7F036100 02C28821 */   addu  $s1, $s6, $v0
 .L7F036104:
 /* 06AC34 7F036104 26520003 */  addiu $s2, $s2, 3
-/* 06AC38 7F036108 1000FD20 */  b     .L7F03558C
+/* 06AC38 7F036108 1000FD20 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AC3C 7F03610C 26310003 */   addiu $s1, $s1, 3
 action2D_Walk_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC40 7F036110 02E02025 */  move  $a0, $s7
@@ -3428,11 +3460,11 @@ action2D_Walk_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC5C 7F03612C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AC60 7F036130 92260002 */   lbu   $a2, 2($s1)
 /* 06AC64 7F036134 00409025 */  move  $s2, $v0
-/* 06AC68 7F036138 1000FD14 */  b     .L7F03558C
+/* 06AC68 7F036138 1000FD14 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AC6C 7F03613C 02C28821 */   addu  $s1, $s6, $v0
 .L7F036140:
 /* 06AC70 7F036140 26520003 */  addiu $s2, $s2, 3
-/* 06AC74 7F036144 1000FD11 */  b     .L7F03558C
+/* 06AC74 7F036144 1000FD11 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AC78 7F036148 26310003 */   addiu $s1, $s1, 3
 action2E_Run_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC7C 7F03614C 02E02025 */  move  $a0, $s7
@@ -3445,18 +3477,18 @@ action2E_Run_To_Character_Position_RVL_On_Arrival_3:
 /* 06AC98 7F036168 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AC9C 7F03616C 92260002 */   lbu   $a2, 2($s1)
 /* 06ACA0 7F036170 00409025 */  move  $s2, $v0
-/* 06ACA4 7F036174 1000FD05 */  b     .L7F03558C
+/* 06ACA4 7F036174 1000FD05 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ACA8 7F036178 02C28821 */   addu  $s1, $s6, $v0
 .L7F03617C:
 /* 06ACAC 7F03617C 26520003 */  addiu $s2, $s2, 3
-/* 06ACB0 7F036180 1000FD02 */  b     .L7F03558C
+/* 06ACB0 7F036180 1000FD02 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ACB4 7F036184 26310003 */   addiu $s1, $s1, 3
 action33_Seed_Random_Byte_1:
 /* 06ACB8 7F036188 0C002914 */  jal   random_related
 /* 06ACBC 7F03618C 00000000 */   nop   
 /* 06ACC0 7F036190 A2E2010F */  sb    $v0, 0x10f($s7)
 /* 06ACC4 7F036194 26520001 */  addiu $s2, $s2, 1
-/* 06ACC8 7F036198 1000FCFC */  b     .L7F03558C
+/* 06ACC8 7F036198 1000FCFC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ACCC 7F03619C 26310001 */   addiu $s1, $s1, 1
 action34_If_Seeded_Byte_LTV_Go_Into_RVL_3:
 /* 06ACD0 7F0361A0 92F8010F */  lbu   $t8, 0x10f($s7)
@@ -3469,11 +3501,11 @@ action34_If_Seeded_Byte_LTV_Go_Into_RVL_3:
 /* 06ACEC 7F0361BC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06ACF0 7F0361C0 92260002 */   lbu   $a2, 2($s1)
 /* 06ACF4 7F0361C4 00409025 */  move  $s2, $v0
-/* 06ACF8 7F0361C8 1000FCF0 */  b     .L7F03558C
+/* 06ACF8 7F0361C8 1000FCF0 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ACFC 7F0361CC 02C28821 */   addu  $s1, $s6, $v0
 /* 06AD00 7F0361D0 26520003 */  addiu $s2, $s2, 3
 .L7F0361D4:
-/* 06AD04 7F0361D4 1000FCED */  b     .L7F03558C
+/* 06AD04 7F0361D4 1000FCED */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AD08 7F0361D8 26310003 */   addiu $s1, $s1, 3
 action35_If_Seeded_Byte_GTV_Go_Into_RVL_3:
 /* 06AD0C 7F0361DC 922A0001 */  lbu   $t2, 1($s1)
@@ -3486,11 +3518,11 @@ action35_If_Seeded_Byte_GTV_Go_Into_RVL_3:
 /* 06AD28 7F0361F8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AD2C 7F0361FC 92260002 */   lbu   $a2, 2($s1)
 /* 06AD30 7F036200 00409025 */  move  $s2, $v0
-/* 06AD34 7F036204 1000FCE1 */  b     .L7F03558C
+/* 06AD34 7F036204 1000FCE1 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AD38 7F036208 02C28821 */   addu  $s1, $s6, $v0
 /* 06AD3C 7F03620C 26520003 */  addiu $s2, $s2, 3
 .L7F036210:
-/* 06AD40 7F036210 1000FCDE */  b     .L7F03558C
+/* 06AD40 7F036210 1000FCDE */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AD44 7F036214 26310003 */   addiu $s1, $s1, 3
 action1C_Guard_Jogs_To_Preset_3:
 /* 06AD48 7F036218 922C0001 */  lbu   $t4, 1($s1)
@@ -3502,7 +3534,7 @@ action1C_Guard_Jogs_To_Preset_3:
 /* 06AD60 7F036230 0FC0AAED */  jal   actor_moves_to_preset_at_speed
 /* 06AD64 7F036234 24060001 */   li    $a2, 1
 /* 06AD68 7F036238 26520003 */  addiu $s2, $s2, 3
-/* 06AD6C 7F03623C 1000FCD3 */  b     .L7F03558C
+/* 06AD6C 7F03623C 1000FCD3 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AD70 7F036240 26310003 */   addiu $s1, $s1, 3
 action1D_Guard_Jogs_To_Predefined_Preset_2328_1:
 /* 06AD74 7F036244 02E02025 */  move  $a0, $s7
@@ -3510,7 +3542,7 @@ action1D_Guard_Jogs_To_Predefined_Preset_2328_1:
 /* 06AD7C 7F03624C 0FC0AAED */  jal   actor_moves_to_preset_at_speed
 /* 06AD80 7F036250 24060001 */   li    $a2, 1
 /* 06AD84 7F036254 26520001 */  addiu $s2, $s2, 1
-/* 06AD88 7F036258 1000FCCC */  b     .L7F03558C
+/* 06AD88 7F036258 1000FCCC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AD8C 7F03625C 26310001 */   addiu $s1, $s1, 1
 action1E_Guard_Walks_To_Preset_3:
 /* 06AD90 7F036260 922F0001 */  lbu   $t7, 1($s1)
@@ -3522,7 +3554,7 @@ action1E_Guard_Walks_To_Preset_3:
 /* 06ADA8 7F036278 0FC0AAED */  jal   actor_moves_to_preset_at_speed
 /* 06ADAC 7F03627C 00003025 */   move  $a2, $zero
 /* 06ADB0 7F036280 26520003 */  addiu $s2, $s2, 3
-/* 06ADB4 7F036284 1000FCC1 */  b     .L7F03558C
+/* 06ADB4 7F036284 1000FCC1 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ADB8 7F036288 26310003 */   addiu $s1, $s1, 3
 action1F_Guard_Runs__To_Preset_3:
 /* 06ADBC 7F03628C 922B0001 */  lbu   $t3, 1($s1)
@@ -3534,7 +3566,7 @@ action1F_Guard_Runs__To_Preset_3:
 /* 06ADD4 7F0362A4 0FC0AAED */  jal   actor_moves_to_preset_at_speed
 /* 06ADD8 7F0362A8 24060002 */   li    $a2, 2
 /* 06ADDC 7F0362AC 26520003 */  addiu $s2, $s2, 3
-/* 06ADE0 7F0362B0 1000FCB6 */  b     .L7F03558C
+/* 06ADE0 7F0362B0 1000FCB6 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ADE4 7F0362B4 26310003 */   addiu $s1, $s1, 3
 action20_Activate_Path_2:
 /* 06ADE8 7F0362B8 0FC0D50D */  jal   get_ptr_path_for_pathnum
@@ -3543,7 +3575,7 @@ action20_Activate_Path_2:
 /* 06ADF4 7F0362C4 0FC0AB55 */  jal   if_actor_able_set_on_path
 /* 06ADF8 7F0362C8 00402825 */   move  $a1, $v0
 /* 06ADFC 7F0362CC 26520002 */  addiu $s2, $s2, 2
-/* 06AE00 7F0362D0 1000FCAE */  b     .L7F03558C
+/* 06AE00 7F0362D0 1000FCAE */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AE04 7F0362D4 26310002 */   addiu $s1, $s1, 2
 action36_If_Alarm_Activated_RVL_Plus_Stack_2:
 /* 06AE08 7F0362D8 0FC0CDD8 */  jal   alarm_timer_related
@@ -3554,11 +3586,11 @@ action36_If_Alarm_Activated_RVL_Plus_Stack_2:
 /* 06AE1C 7F0362EC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AE20 7F0362F0 92260001 */   lbu   $a2, 1($s1)
 /* 06AE24 7F0362F4 00409025 */  move  $s2, $v0
-/* 06AE28 7F0362F8 1000FCA4 */  b     .L7F03558C
+/* 06AE28 7F0362F8 1000FCA4 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AE2C 7F0362FC 02C28821 */   addu  $s1, $s6, $v0
 .L7F036300:
 /* 06AE30 7F036300 26520002 */  addiu $s2, $s2, 2
-/* 06AE34 7F036304 1000FCA1 */  b     .L7F03558C
+/* 06AE34 7F036304 1000FCA1 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AE38 7F036308 26310002 */   addiu $s1, $s1, 2
 action37_If_Alarm_Activated_RVL_2:
 /* 06AE3C 7F03630C 0FC15794 */  jal   is_alarm_on
@@ -3569,11 +3601,11 @@ action37_If_Alarm_Activated_RVL_2:
 /* 06AE50 7F036320 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AE54 7F036324 92260001 */   lbu   $a2, 1($s1)
 /* 06AE58 7F036328 00409025 */  move  $s2, $v0
-/* 06AE5C 7F03632C 1000FC97 */  b     .L7F03558C
+/* 06AE5C 7F03632C 1000FC97 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AE60 7F036330 02C28821 */   addu  $s1, $s6, $v0
 .L7F036334:
 /* 06AE64 7F036334 26520002 */  addiu $s2, $s2, 2
-/* 06AE68 7F036338 1000FC94 */  b     .L7F03558C
+/* 06AE68 7F036338 1000FC94 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AE6C 7F03633C 26310002 */   addiu $s1, $s1, 2
 action38_If_Toxic_Gas_Released_RVL_2:
 /* 06AE70 7F036340 0FC157CE */  jal   check_if_toxic_gas_activated
@@ -3584,11 +3616,11 @@ action38_If_Toxic_Gas_Released_RVL_2:
 /* 06AE84 7F036354 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AE88 7F036358 92260001 */   lbu   $a2, 1($s1)
 /* 06AE8C 7F03635C 00409025 */  move  $s2, $v0
-/* 06AE90 7F036360 1000FC8A */  b     .L7F03558C
+/* 06AE90 7F036360 1000FC8A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AE94 7F036364 02C28821 */   addu  $s1, $s6, $v0
 .L7F036368:
 /* 06AE98 7F036368 26520002 */  addiu $s2, $s2, 2
-/* 06AE9C 7F03636C 1000FC87 */  b     .L7F03558C
+/* 06AE9C 7F03636C 1000FC87 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AEA0 7F036370 26310002 */   addiu $s1, $s1, 2
 action39_If_Guard_Heard_Gunfire_RVL_2:
 /* 06AEA4 7F036374 0FC0CCD5 */  jal   check_if_actor_02_flag_set
@@ -3599,11 +3631,11 @@ action39_If_Guard_Heard_Gunfire_RVL_2:
 /* 06AEB8 7F036388 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AEBC 7F03638C 92260001 */   lbu   $a2, 1($s1)
 /* 06AEC0 7F036390 00409025 */  move  $s2, $v0
-/* 06AEC4 7F036394 1000FC7D */  b     .L7F03558C
+/* 06AEC4 7F036394 1000FC7D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AEC8 7F036398 02C28821 */   addu  $s1, $s6, $v0
 .L7F03639C:
 /* 06AECC 7F03639C 26520002 */  addiu $s2, $s2, 2
-/* 06AED0 7F0363A0 1000FC7A */  b     .L7F03558C
+/* 06AED0 7F0363A0 1000FC7A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AED4 7F0363A4 26310002 */   addiu $s1, $s1, 2
 action3A_If_Bond_Shoots_Another_Guard_RVL_2:
 /* 06AED8 7F0363A8 0FC0CD6D */  jal   check_if_actor_FA_target_set
@@ -3614,11 +3646,11 @@ action3A_If_Bond_Shoots_Another_Guard_RVL_2:
 /* 06AEEC 7F0363BC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AEF0 7F0363C0 92260001 */   lbu   $a2, 1($s1)
 /* 06AEF4 7F0363C4 00409025 */  move  $s2, $v0
-/* 06AEF8 7F0363C8 1000FC70 */  b     .L7F03558C
+/* 06AEF8 7F0363C8 1000FC70 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AEFC 7F0363CC 02C28821 */   addu  $s1, $s6, $v0
 .L7F0363D0:
 /* 06AF00 7F0363D0 26520002 */  addiu $s2, $s2, 2
-/* 06AF04 7F0363D4 1000FC6D */  b     .L7F03558C
+/* 06AF04 7F0363D4 1000FC6D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AF08 7F0363D8 26310002 */   addiu $s1, $s1, 2
 action3B_If_Guard_Killed_In_Front_Of_Guard_RVL_2:
 /* 06AF0C 7F0363DC 0FC0CD71 */  jal   check_if_actor_FB_target_set
@@ -3629,11 +3661,11 @@ action3B_If_Guard_Killed_In_Front_Of_Guard_RVL_2:
 /* 06AF20 7F0363F0 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AF24 7F0363F4 92260001 */   lbu   $a2, 1($s1)
 /* 06AF28 7F0363F8 00409025 */  move  $s2, $v0
-/* 06AF2C 7F0363FC 1000FC63 */  b     .L7F03558C
+/* 06AF2C 7F0363FC 1000FC63 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AF30 7F036400 02C28821 */   addu  $s1, $s6, $v0
 .L7F036404:
 /* 06AF34 7F036404 26520002 */  addiu $s2, $s2, 2
-/* 06AF38 7F036408 1000FC60 */  b     .L7F03558C
+/* 06AF38 7F036408 1000FC60 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AF3C 7F03640C 26310002 */   addiu $s1, $s1, 2
 action3C_If_Guard_In_Firing_Range_RVL_2:
 /* 06AF40 7F036410 0FC0A52F */  jal   sub_GAME_7F0294BC
@@ -3644,11 +3676,11 @@ action3C_If_Guard_In_Firing_Range_RVL_2:
 /* 06AF54 7F036424 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AF58 7F036428 92260001 */   lbu   $a2, 1($s1)
 /* 06AF5C 7F03642C 00409025 */  move  $s2, $v0
-/* 06AF60 7F036430 1000FC56 */  b     .L7F03558C
+/* 06AF60 7F036430 1000FC56 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AF64 7F036434 02C28821 */   addu  $s1, $s6, $v0
 .L7F036438:
 /* 06AF68 7F036438 26520002 */  addiu $s2, $s2, 2
-/* 06AF6C 7F03643C 1000FC53 */  b     .L7F03558C
+/* 06AF6C 7F03643C 1000FC53 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AF70 7F036440 26310002 */   addiu $s1, $s1, 2
 action3D___Unused___Unknown___2:
 /* 06AF74 7F036444 0FC0CF71 */  jal   sub_GAME_7F033DC4
@@ -3659,11 +3691,11 @@ action3D___Unused___Unknown___2:
 /* 06AF88 7F036458 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AF8C 7F03645C 92260001 */   lbu   $a2, 1($s1)
 /* 06AF90 7F036460 00409025 */  move  $s2, $v0
-/* 06AF94 7F036464 1000FC49 */  b     .L7F03558C
+/* 06AF94 7F036464 1000FC49 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AF98 7F036468 02C28821 */   addu  $s1, $s6, $v0
 .L7F03646C:
 /* 06AF9C 7F03646C 26520002 */  addiu $s2, $s2, 2
-/* 06AFA0 7F036470 1000FC46 */  b     .L7F03558C
+/* 06AFA0 7F036470 1000FC46 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AFA4 7F036474 26310002 */   addiu $s1, $s1, 2
 action3E_If_Shot_Current_Guard_RVL_2:
 /* 06AFA8 7F036478 0FC0CADA */  jal   sub_GAME_7F032B68
@@ -3674,11 +3706,11 @@ action3E_If_Shot_Current_Guard_RVL_2:
 /* 06AFBC 7F03648C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AFC0 7F036490 92260001 */   lbu   $a2, 1($s1)
 /* 06AFC4 7F036494 00409025 */  move  $s2, $v0
-/* 06AFC8 7F036498 1000FC3C */  b     .L7F03558C
+/* 06AFC8 7F036498 1000FC3C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AFCC 7F03649C 02C28821 */   addu  $s1, $s6, $v0
 .L7F0364A0:
 /* 06AFD0 7F0364A0 26520002 */  addiu $s2, $s2, 2
-/* 06AFD4 7F0364A4 1000FC39 */  b     .L7F03558C
+/* 06AFD4 7F0364A4 1000FC39 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06AFD8 7F0364A8 26310002 */   addiu $s1, $s1, 2
 action3F_If_Heard_Bond_RVL_2:
 /* 06AFDC 7F0364AC 0FC0CAE8 */  jal   sub_GAME_7F032BA0
@@ -3689,11 +3721,11 @@ action3F_If_Heard_Bond_RVL_2:
 /* 06AFF0 7F0364C0 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06AFF4 7F0364C4 92260001 */   lbu   $a2, 1($s1)
 /* 06AFF8 7F0364C8 00409025 */  move  $s2, $v0
-/* 06AFFC 7F0364CC 1000FC2F */  b     .L7F03558C
+/* 06AFFC 7F0364CC 1000FC2F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B000 7F0364D0 02C28821 */   addu  $s1, $s6, $v0
 .L7F0364D4:
 /* 06B004 7F0364D4 26520002 */  addiu $s2, $s2, 2
-/* 06B008 7F0364D8 1000FC2C */  b     .L7F03558C
+/* 06B008 7F0364D8 1000FC2C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B00C 7F0364DC 26310002 */   addiu $s1, $s1, 2
 action40_If_Another_Guard_In_Same_Room_As_Guard_ID_RVL_3:
 /* 06B010 7F0364E0 02E02025 */  move  $a0, $s7
@@ -3715,12 +3747,12 @@ action40_If_Another_Guard_In_Same_Room_As_Guard_ID_RVL_3:
 /* 06B050 7F036520 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B054 7F036524 92260002 */   lbu   $a2, 2($s1)
 /* 06B058 7F036528 00409025 */  move  $s2, $v0
-/* 06B05C 7F03652C 1000FC17 */  b     .L7F03558C
+/* 06B05C 7F03652C 1000FC17 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B060 7F036530 02C28821 */   addu  $s1, $s6, $v0
 .L7F036534:
 /* 06B064 7F036534 26520003 */  addiu $s2, $s2, 3
 .L7F036538:
-/* 06B068 7F036538 1000FC14 */  b     .L7F03558C
+/* 06B068 7F036538 1000FC14 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B06C 7F03653C 26310003 */   addiu $s1, $s1, 3
 action41_If_Guard_Has_Been_On_Screen_RVL_2:
 /* 06B070 7F036540 8EEF0014 */  lw    $t7, 0x14($s7)
@@ -3732,11 +3764,11 @@ action41_If_Guard_Has_Been_On_Screen_RVL_2:
 /* 06B088 7F036558 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B08C 7F03655C 92260001 */   lbu   $a2, 1($s1)
 /* 06B090 7F036560 00409025 */  move  $s2, $v0
-/* 06B094 7F036564 1000FC09 */  b     .L7F03558C
+/* 06B094 7F036564 1000FC09 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B098 7F036568 02C28821 */   addu  $s1, $s6, $v0
 /* 06B09C 7F03656C 26520002 */  addiu $s2, $s2, 2
 .L7F036570:
-/* 06B0A0 7F036570 1000FC06 */  b     .L7F03558C
+/* 06B0A0 7F036570 1000FC06 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B0A4 7F036574 26310002 */   addiu $s1, $s1, 2
 action42_If_Current_Guard_On_Screen_In_Loaded_Room_RVL_2:
 /* 06B0A8 7F036578 8EE90018 */  lw    $t1, 0x18($s7)
@@ -3749,11 +3781,11 @@ action42_If_Current_Guard_On_Screen_In_Loaded_Room_RVL_2:
 /* 06B0C4 7F036594 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B0C8 7F036598 92260001 */   lbu   $a2, 1($s1)
 /* 06B0CC 7F03659C 00409025 */  move  $s2, $v0
-/* 06B0D0 7F0365A0 1000FBFA */  b     .L7F03558C
+/* 06B0D0 7F0365A0 1000FBFA */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B0D4 7F0365A4 02C28821 */   addu  $s1, $s6, $v0
 /* 06B0D8 7F0365A8 26520002 */  addiu $s2, $s2, 2
 .L7F0365AC:
-/* 06B0DC 7F0365AC 1000FBF7 */  b     .L7F03558C
+/* 06B0DC 7F0365AC 1000FBF7 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B0E0 7F0365B0 26310002 */   addiu $s1, $s1, 2
 action43_If_Guard_In_A_Room_Currently_Loaded_RVL_2:
 /* 06B0E4 7F0365B4 8EEC0018 */  lw    $t4, 0x18($s7)
@@ -3767,11 +3799,11 @@ action43_If_Guard_In_A_Room_Currently_Loaded_RVL_2:
 /* 06B104 7F0365D4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B108 7F0365D8 92260001 */   lbu   $a2, 1($s1)
 /* 06B10C 7F0365DC 00409025 */  move  $s2, $v0
-/* 06B110 7F0365E0 1000FBEA */  b     .L7F03558C
+/* 06B110 7F0365E0 1000FBEA */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B114 7F0365E4 02C28821 */   addu  $s1, $s6, $v0
 .L7F0365E8:
 /* 06B118 7F0365E8 26520002 */  addiu $s2, $s2, 2
-/* 06B11C 7F0365EC 1000FBE7 */  b     .L7F03558C
+/* 06B11C 7F0365EC 1000FBE7 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B120 7F0365F0 26310002 */   addiu $s1, $s1, 2
 action44_If_Room_Containing_Preset_Is_Loaded_RVL_4:
 /* 06B124 7F0365F4 92390001 */  lbu   $t9, 1($s1)
@@ -3787,11 +3819,11 @@ action44_If_Room_Containing_Preset_Is_Loaded_RVL_4:
 /* 06B14C 7F03661C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B150 7F036620 92260003 */   lbu   $a2, 3($s1)
 /* 06B154 7F036624 00409025 */  move  $s2, $v0
-/* 06B158 7F036628 1000FBD8 */  b     .L7F03558C
+/* 06B158 7F036628 1000FBD8 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B15C 7F03662C 02C28821 */   addu  $s1, $s6, $v0
 .L7F036630:
 /* 06B160 7F036630 26520004 */  addiu $s2, $s2, 4
-/* 06B164 7F036634 1000FBD5 */  b     .L7F03558C
+/* 06B164 7F036634 1000FBD5 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B168 7F036638 26310004 */   addiu $s1, $s1, 4
 action45_Go_To_RVL_If_Bond_Has_Guard_At_Gunpoint_2:
 /* 06B16C 7F03663C 0FC0CCFE */  jal   sub_GAME_7F0333F8
@@ -3802,11 +3834,11 @@ action45_Go_To_RVL_If_Bond_Has_Guard_At_Gunpoint_2:
 /* 06B180 7F036650 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B184 7F036654 92260001 */   lbu   $a2, 1($s1)
 /* 06B188 7F036658 00409025 */  move  $s2, $v0
-/* 06B18C 7F03665C 1000FBCB */  b     .L7F03558C
+/* 06B18C 7F03665C 1000FBCB */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B190 7F036660 02C28821 */   addu  $s1, $s6, $v0
 .L7F036664:
 /* 06B194 7F036664 26520002 */  addiu $s2, $s2, 2
-/* 06B198 7F036668 1000FBC8 */  b     .L7F03558C
+/* 06B198 7F036668 1000FBC8 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B19C 7F03666C 26310002 */   addiu $s1, $s1, 2
 action46_If_Fired_A_Shot_RVL_2:
 /* 06B1A0 7F036670 0FC0CD24 */  jal   check_if_actor_invisible
@@ -3817,11 +3849,11 @@ action46_If_Fired_A_Shot_RVL_2:
 /* 06B1B4 7F036684 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B1B8 7F036688 92260001 */   lbu   $a2, 1($s1)
 /* 06B1BC 7F03668C 00409025 */  move  $s2, $v0
-/* 06B1C0 7F036690 1000FBBE */  b     .L7F03558C
+/* 06B1C0 7F036690 1000FBBE */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B1C4 7F036694 02C28821 */   addu  $s1, $s6, $v0
 .L7F036698:
 /* 06B1C8 7F036698 26520002 */  addiu $s2, $s2, 2
-/* 06B1CC 7F03669C 1000FBBB */  b     .L7F03558C
+/* 06B1CC 7F03669C 1000FBBB */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B1D0 7F0366A0 26310002 */   addiu $s1, $s1, 2
 action47_If_Distance_Between_Bond_And_Guard_LTV_RVL_3:
 /* 06B1D4 7F0366A4 0FC0CB13 */  jal   sub_GAME_7F032C4C
@@ -3849,11 +3881,11 @@ action47_If_Distance_Between_Bond_And_Guard_LTV_RVL_3:
 /* 06B228 7F0366F8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B22C 7F0366FC 92260002 */   lbu   $a2, 2($s1)
 /* 06B230 7F036700 00409025 */  move  $s2, $v0
-/* 06B234 7F036704 1000FBA1 */  b     .L7F03558C
+/* 06B234 7F036704 1000FBA1 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B238 7F036708 02C28821 */   addu  $s1, $s6, $v0
 /* 06B23C 7F03670C 26520003 */  addiu $s2, $s2, 3
 .L7F036710:
-/* 06B240 7F036710 1000FB9E */  b     .L7F03558C
+/* 06B240 7F036710 1000FB9E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B244 7F036714 26310003 */   addiu $s1, $s1, 3
 action48_If_Distance_Between_Bond_And_Guard_GTV_RVL_3:
 /* 06B248 7F036718 0FC0CB13 */  jal   sub_GAME_7F032C4C
@@ -3881,11 +3913,11 @@ action48_If_Distance_Between_Bond_And_Guard_GTV_RVL_3:
 /* 06B29C 7F03676C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B2A0 7F036770 92260002 */   lbu   $a2, 2($s1)
 /* 06B2A4 7F036774 00409025 */  move  $s2, $v0
-/* 06B2A8 7F036778 1000FB84 */  b     .L7F03558C
+/* 06B2A8 7F036778 1000FB84 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B2AC 7F03677C 02C28821 */   addu  $s1, $s6, $v0
 /* 06B2B0 7F036780 26520003 */  addiu $s2, $s2, 3
 .L7F036784:
-/* 06B2B4 7F036784 1000FB81 */  b     .L7F03558C
+/* 06B2B4 7F036784 1000FB81 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B2B8 7F036788 26310003 */   addiu $s1, $s1, 3
 action49_Test_if_Actor_and_Player_CCWAngle_LTV_RVL_Unused_3:
 /* 06B2BC 7F03678C 0FC0CB5C */  jal   get_angle_between_actor_cur_player
@@ -3913,11 +3945,11 @@ action49_Test_if_Actor_and_Player_CCWAngle_LTV_RVL_Unused_3:
 /* 06B310 7F0367E0 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B314 7F0367E4 92260002 */   lbu   $a2, 2($s1)
 /* 06B318 7F0367E8 00409025 */  move  $s2, $v0
-/* 06B31C 7F0367EC 1000FB67 */  b     .L7F03558C
+/* 06B31C 7F0367EC 1000FB67 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B320 7F0367F0 02C28821 */   addu  $s1, $s6, $v0
 /* 06B324 7F0367F4 26520003 */  addiu $s2, $s2, 3
 .L7F0367F8:
-/* 06B328 7F0367F8 1000FB64 */  b     .L7F03558C
+/* 06B328 7F0367F8 1000FB64 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B32C 7F0367FC 26310003 */   addiu $s1, $s1, 3
 action4A_Test_if_Actor_and_Player_CCWAngle_GTV_RVL_Unused_3:
 /* 06B330 7F036800 0FC0CB5C */  jal   get_angle_between_actor_cur_player
@@ -3945,11 +3977,11 @@ action4A_Test_if_Actor_and_Player_CCWAngle_GTV_RVL_Unused_3:
 /* 06B384 7F036854 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B388 7F036858 92260002 */   lbu   $a2, 2($s1)
 /* 06B38C 7F03685C 00409025 */  move  $s2, $v0
-/* 06B390 7F036860 1000FB4A */  b     .L7F03558C
+/* 06B390 7F036860 1000FB4A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B394 7F036864 02C28821 */   addu  $s1, $s6, $v0
 /* 06B398 7F036868 26520003 */  addiu $s2, $s2, 3
 .L7F03686C:
-/* 06B39C 7F03686C 1000FB47 */  b     .L7F03558C
+/* 06B39C 7F03686C 1000FB47 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B3A0 7F036870 26310003 */   addiu $s1, $s1, 3
 action4B_RVL_If_In_Proximity_Of_Bond_4:
 /* 06B3A4 7F036874 922C0001 */  lbu   $t4, 1($s1)
@@ -3973,11 +4005,11 @@ action4B_RVL_If_In_Proximity_Of_Bond_4:
 /* 06B3EC 7F0368BC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B3F0 7F0368C0 92260003 */   lbu   $a2, 3($s1)
 /* 06B3F4 7F0368C4 00409025 */  move  $s2, $v0
-/* 06B3F8 7F0368C8 1000FB30 */  b     .L7F03558C
+/* 06B3F8 7F0368C8 1000FB30 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B3FC 7F0368CC 02C28821 */   addu  $s1, $s6, $v0
 /* 06B400 7F0368D0 26520004 */  addiu $s2, $s2, 4
 .L7F0368D4:
-/* 06B404 7F0368D4 1000FB2D */  b     .L7F03558C
+/* 06B404 7F0368D4 1000FB2D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B408 7F0368D8 26310004 */   addiu $s1, $s1, 4
 action4C_RVL_If_Not_In_Proximity_Of_Bond_4:
 /* 06B40C 7F0368DC 922F0001 */  lbu   $t7, 1($s1)
@@ -4001,11 +4033,11 @@ action4C_RVL_If_Not_In_Proximity_Of_Bond_4:
 /* 06B454 7F036924 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B458 7F036928 92260003 */   lbu   $a2, 3($s1)
 /* 06B45C 7F03692C 00409025 */  move  $s2, $v0
-/* 06B460 7F036930 1000FB16 */  b     .L7F03558C
+/* 06B460 7F036930 1000FB16 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B464 7F036934 02C28821 */   addu  $s1, $s6, $v0
 /* 06B468 7F036938 26520004 */  addiu $s2, $s2, 4
 .L7F03693C:
-/* 06B46C 7F03693C 1000FB13 */  b     .L7F03558C
+/* 06B46C 7F03693C 1000FB13 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B470 7F036940 26310004 */   addiu $s1, $s1, 4
 action4D_When_Guard_In_Proximity_Of_Preset_RVL_7:
 /* 06B474 7F036944 02E02025 */  move  $a0, $s7
@@ -4039,11 +4071,11 @@ action4D_When_Guard_In_Proximity_Of_Preset_RVL_7:
 /* 06B4E4 7F0369B4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B4E8 7F0369B8 92260006 */   lbu   $a2, 6($s1)
 /* 06B4EC 7F0369BC 00409025 */  move  $s2, $v0
-/* 06B4F0 7F0369C0 1000FAF2 */  b     .L7F03558C
+/* 06B4F0 7F0369C0 1000FAF2 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B4F4 7F0369C4 02C28821 */   addu  $s1, $s6, $v0
 /* 06B4F8 7F0369C8 26520007 */  addiu $s2, $s2, 7
 .L7F0369CC:
-/* 06B4FC 7F0369CC 1000FAEF */  b     .L7F03558C
+/* 06B4FC 7F0369CC 1000FAEF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B500 7F0369D0 26310007 */   addiu $s1, $s1, 7
 action4E_When_Guard_Not_In_Proximity_Of_Preset_RVL_7:
 /* 06B504 7F0369D4 02E02025 */  move  $a0, $s7
@@ -4077,11 +4109,11 @@ action4E_When_Guard_Not_In_Proximity_Of_Preset_RVL_7:
 /* 06B574 7F036A44 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B578 7F036A48 92260006 */   lbu   $a2, 6($s1)
 /* 06B57C 7F036A4C 00409025 */  move  $s2, $v0
-/* 06B580 7F036A50 1000FACE */  b     .L7F03558C
+/* 06B580 7F036A50 1000FACE */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B584 7F036A54 02C28821 */   addu  $s1, $s6, $v0
 /* 06B588 7F036A58 26520007 */  addiu $s2, $s2, 7
 .L7F036A5C:
-/* 06B58C 7F036A5C 1000FACB */  b     .L7F03558C
+/* 06B58C 7F036A5C 1000FACB */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B590 7F036A60 26310007 */   addiu $s1, $s1, 7
 action4F_If_Current_Guard_Is_In_Units_Of_Guard_ID_RVL_5:
 /* 06B594 7F036A64 92290001 */  lbu   $t1, 1($s1)
@@ -4106,11 +4138,11 @@ action4F_If_Current_Guard_Is_In_Units_Of_Guard_ID_RVL_5:
 /* 06B5E0 7F036AB0 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B5E4 7F036AB4 92260004 */   lbu   $a2, 4($s1)
 /* 06B5E8 7F036AB8 00409025 */  move  $s2, $v0
-/* 06B5EC 7F036ABC 1000FAB3 */  b     .L7F03558C
+/* 06B5EC 7F036ABC 1000FAB3 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B5F0 7F036AC0 02C28821 */   addu  $s1, $s6, $v0
 /* 06B5F4 7F036AC4 26520005 */  addiu $s2, $s2, 5
 .L7F036AC8:
-/* 06B5F8 7F036AC8 1000FAB0 */  b     .L7F03558C
+/* 06B5F8 7F036AC8 1000FAB0 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B5FC 7F036ACC 26310005 */   addiu $s1, $s1, 5
 action50_If_Current_Guard_Is_Not_In_Units_Of_Guard_ID_RVL_5:
 /* 06B600 7F036AD0 92390001 */  lbu   $t9, 1($s1)
@@ -4135,11 +4167,11 @@ action50_If_Current_Guard_Is_Not_In_Units_Of_Guard_ID_RVL_5:
 /* 06B64C 7F036B1C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B650 7F036B20 92260004 */   lbu   $a2, 4($s1)
 /* 06B654 7F036B24 00409025 */  move  $s2, $v0
-/* 06B658 7F036B28 1000FA98 */  b     .L7F03558C
+/* 06B658 7F036B28 1000FA98 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B65C 7F036B2C 02C28821 */   addu  $s1, $s6, $v0
 /* 06B660 7F036B30 26520005 */  addiu $s2, $s2, 5
 .L7F036B34:
-/* 06B664 7F036B34 1000FA95 */  b     .L7F03558C
+/* 06B664 7F036B34 1000FA95 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B668 7F036B38 26310005 */   addiu $s1, $s1, 5
 action51_SetClosestGuardUnitsGuardID_Then_RVL_IfSuccess_4:
 /* 06B66C 7F036B3C 92380001 */  lbu   $t8, 1($s1)
@@ -4160,11 +4192,11 @@ action51_SetClosestGuardUnitsGuardID_Then_RVL_IfSuccess_4:
 /* 06B6A8 7F036B78 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B6AC 7F036B7C 92260003 */   lbu   $a2, 3($s1)
 /* 06B6B0 7F036B80 00409025 */  move  $s2, $v0
-/* 06B6B4 7F036B84 1000FA81 */  b     .L7F03558C
+/* 06B6B4 7F036B84 1000FA81 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B6B8 7F036B88 02C28821 */   addu  $s1, $s6, $v0
 .L7F036B8C:
 /* 06B6BC 7F036B8C 26520004 */  addiu $s2, $s2, 4
-/* 06B6C0 7F036B90 1000FA7E */  b     .L7F03558C
+/* 06B6C0 7F036B90 1000FA7E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B6C4 7F036B94 26310004 */   addiu $s1, $s1, 4
 action52_GoIntoRVLIf_In_Units_Of_Preset_6:
 /* 06B6C8 7F036B98 922F0001 */  lbu   $t7, 1($s1)
@@ -4192,11 +4224,11 @@ action52_GoIntoRVLIf_In_Units_Of_Preset_6:
 /* 06B720 7F036BF0 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B724 7F036BF4 92260005 */   lbu   $a2, 5($s1)
 /* 06B728 7F036BF8 00409025 */  move  $s2, $v0
-/* 06B72C 7F036BFC 1000FA63 */  b     .L7F03558C
+/* 06B72C 7F036BFC 1000FA63 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B730 7F036C00 02C28821 */   addu  $s1, $s6, $v0
 /* 06B734 7F036C04 26520006 */  addiu $s2, $s2, 6
 .L7F036C08:
-/* 06B738 7F036C08 1000FA60 */  b     .L7F03558C
+/* 06B738 7F036C08 1000FA60 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B73C 7F036C0C 26310006 */   addiu $s1, $s1, 6
 action53_GoIntoRVLIf_Not_In_Units_Of_Preset_6:
 /* 06B740 7F036C10 922E0001 */  lbu   $t6, 1($s1)
@@ -4224,11 +4256,11 @@ action53_GoIntoRVLIf_Not_In_Units_Of_Preset_6:
 /* 06B798 7F036C68 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B79C 7F036C6C 92260005 */   lbu   $a2, 5($s1)
 /* 06B7A0 7F036C70 00409025 */  move  $s2, $v0
-/* 06B7A4 7F036C74 1000FA45 */  b     .L7F03558C
+/* 06B7A4 7F036C74 1000FA45 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B7A8 7F036C78 02C28821 */   addu  $s1, $s6, $v0
 /* 06B7AC 7F036C7C 26520006 */  addiu $s2, $s2, 6
 .L7F036C80:
-/* 06B7B0 7F036C80 1000FA42 */  b     .L7F03558C
+/* 06B7B0 7F036C80 1000FA42 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B7B4 7F036C84 26310006 */   addiu $s1, $s1, 6
 action54_GoIntoRVLIf_Guard_Is_At_Preset_5:
 /* 06B7B8 7F036C88 922A0002 */  lbu   $t2, 2($s1)
@@ -4245,11 +4277,11 @@ action54_GoIntoRVLIf_Guard_Is_At_Preset_5:
 /* 06B7E4 7F036CB4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B7E8 7F036CB8 92260004 */   lbu   $a2, 4($s1)
 /* 06B7EC 7F036CBC 00409025 */  move  $s2, $v0
-/* 06B7F0 7F036CC0 1000FA32 */  b     .L7F03558C
+/* 06B7F0 7F036CC0 1000FA32 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B7F4 7F036CC4 02C28821 */   addu  $s1, $s6, $v0
 .L7F036CC8:
 /* 06B7F8 7F036CC8 26520005 */  addiu $s2, $s2, 5
-/* 06B7FC 7F036CCC 1000FA2F */  b     .L7F03558C
+/* 06B7FC 7F036CCC 1000FA2F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B800 7F036CD0 26310005 */   addiu $s1, $s1, 5
 action55_GoIntoRVLIf_Entered_Room_with_Preset_4:
 /* 06B804 7F036CD4 922D0001 */  lbu   $t5, 1($s1)
@@ -4265,11 +4297,11 @@ action55_GoIntoRVLIf_Entered_Room_with_Preset_4:
 /* 06B82C 7F036CFC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B830 7F036D00 92260003 */   lbu   $a2, 3($s1)
 /* 06B834 7F036D04 00409025 */  move  $s2, $v0
-/* 06B838 7F036D08 1000FA20 */  b     .L7F03558C
+/* 06B838 7F036D08 1000FA20 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B83C 7F036D0C 02C28821 */   addu  $s1, $s6, $v0
 .L7F036D10:
 /* 06B840 7F036D10 26520004 */  addiu $s2, $s2, 4
-/* 06B844 7F036D14 1000FA1D */  b     .L7F03558C
+/* 06B844 7F036D14 1000FA1D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B848 7F036D18 26310004 */   addiu $s1, $s1, 4
 action56_GoIntoRVLIf_16_Object_num_Collected_3:
 /* 06B84C 7F036D1C 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4287,12 +4319,12 @@ action56_GoIntoRVLIf_16_Object_num_Collected_3:
 /* 06B87C 7F036D4C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B880 7F036D50 92260002 */   lbu   $a2, 2($s1)
 /* 06B884 7F036D54 00409025 */  move  $s2, $v0
-/* 06B888 7F036D58 1000FA0C */  b     .L7F03558C
+/* 06B888 7F036D58 1000FA0C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B88C 7F036D5C 02C28821 */   addu  $s1, $s6, $v0
 .L7F036D60:
 /* 06B890 7F036D60 26520003 */  addiu $s2, $s2, 3
 .L7F036D64:
-/* 06B894 7F036D64 1000FA09 */  b     .L7F03558C
+/* 06B894 7F036D64 1000FA09 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B898 7F036D68 26310003 */   addiu $s1, $s1, 3
 action57_GoIntoRVLIf_Specified_Weapon_Deposited_3:
 /* 06B89C 7F036D6C 0FC146BB */  jal   check_if_item_deposited
@@ -4303,11 +4335,11 @@ action57_GoIntoRVLIf_Specified_Weapon_Deposited_3:
 /* 06B8B0 7F036D80 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B8B4 7F036D84 92260002 */   lbu   $a2, 2($s1)
 /* 06B8B8 7F036D88 00409025 */  move  $s2, $v0
-/* 06B8BC 7F036D8C 1000F9FF */  b     .L7F03558C
+/* 06B8BC 7F036D8C 1000F9FF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B8C0 7F036D90 02C28821 */   addu  $s1, $s6, $v0
 .L7F036D94:
 /* 06B8C4 7F036D94 26520003 */  addiu $s2, $s2, 3
-/* 06B8C8 7F036D98 1000F9FC */  b     .L7F03558C
+/* 06B8C8 7F036D98 1000F9FC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B8CC 7F036D9C 26310003 */   addiu $s1, $s1, 3
 action58_GoIntoRVLIf_SpecifiedWeaponDeposited_On16Object_4:
 /* 06B8D0 7F036DA0 92240002 */  lbu   $a0, 2($s1)
@@ -4343,11 +4375,11 @@ action58_GoIntoRVLIf_SpecifiedWeaponDeposited_On16Object_4:
 /* 06B93C 7F036E0C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B940 7F036E10 92260003 */   lbu   $a2, 3($s1)
 /* 06B944 7F036E14 00409025 */  move  $s2, $v0
-/* 06B948 7F036E18 1000F9DC */  b     .L7F03558C
+/* 06B948 7F036E18 1000F9DC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B94C 7F036E1C 02C28821 */   addu  $s1, $s6, $v0
 .L7F036E20:
 /* 06B950 7F036E20 26520004 */  addiu $s2, $s2, 4
-/* 06B954 7F036E24 1000F9D9 */  b     .L7F03558C
+/* 06B954 7F036E24 1000F9D9 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B958 7F036E28 26310004 */   addiu $s1, $s1, 4
 action59_GoIntoRVLIf_Specified_Weapon_Is_Out_3:
 /* 06B95C 7F036E2C 0FC17674 */  jal   get_item_in_hand
@@ -4365,11 +4397,11 @@ action59_GoIntoRVLIf_Specified_Weapon_Is_Out_3:
 /* 06B988 7F036E58 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B98C 7F036E5C 92260002 */   lbu   $a2, 2($s1)
 /* 06B990 7F036E60 00409025 */  move  $s2, $v0
-/* 06B994 7F036E64 1000F9C9 */  b     .L7F03558C
+/* 06B994 7F036E64 1000F9C9 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B998 7F036E68 02C28821 */   addu  $s1, $s6, $v0
 .L7F036E6C:
 /* 06B99C 7F036E6C 26520003 */  addiu $s2, $s2, 3
-/* 06B9A0 7F036E70 1000F9C6 */  b     .L7F03558C
+/* 06B9A0 7F036E70 1000F9C6 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B9A4 7F036E74 26310003 */   addiu $s1, $s1, 3
 action5A_GoIntoRVLIf_Type_16_Object_num_Loaded_3:
 /* 06B9A8 7F036E78 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4384,11 +4416,11 @@ action5A_GoIntoRVLIf_Type_16_Object_num_Loaded_3:
 /* 06B9CC 7F036E9C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06B9D0 7F036EA0 92260002 */   lbu   $a2, 2($s1)
 /* 06B9D4 7F036EA4 00409025 */  move  $s2, $v0
-/* 06B9D8 7F036EA8 1000F9B8 */  b     .L7F03558C
+/* 06B9D8 7F036EA8 1000F9B8 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B9DC 7F036EAC 02C28821 */   addu  $s1, $s6, $v0
 /* 06B9E0 7F036EB0 26520003 */  addiu $s2, $s2, 3
 .L7F036EB4:
-/* 06B9E4 7F036EB4 1000F9B5 */  b     .L7F03558C
+/* 06B9E4 7F036EB4 1000F9B5 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06B9E8 7F036EB8 26310003 */   addiu $s1, $s1, 3
 action5B_GoIntoRVLIf_16_Object_num_Not_Destroyed_3:
 /* 06B9EC 7F036EBC 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4406,12 +4438,12 @@ action5B_GoIntoRVLIf_16_Object_num_Not_Destroyed_3:
 /* 06BA1C 7F036EEC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06BA20 7F036EF0 92260002 */   lbu   $a2, 2($s1)
 /* 06BA24 7F036EF4 00409025 */  move  $s2, $v0
-/* 06BA28 7F036EF8 1000F9A4 */  b     .L7F03558C
+/* 06BA28 7F036EF8 1000F9A4 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BA2C 7F036EFC 02C28821 */   addu  $s1, $s6, $v0
 .L7F036F00:
 /* 06BA30 7F036F00 26520003 */  addiu $s2, $s2, 3
 .L7F036F04:
-/* 06BA34 7F036F04 1000F9A1 */  b     .L7F03558C
+/* 06BA34 7F036F04 1000F9A1 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BA38 7F036F08 26310003 */   addiu $s1, $s1, 3
 action5C_GoIntoRVLIf_16_Object_num_Activated_3:
 /* 06BA3C 7F036F0C 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4434,11 +4466,11 @@ action5C_GoIntoRVLIf_16_Object_num_Activated_3:
 /* 06BA80 7F036F50 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06BA84 7F036F54 92260002 */   lbu   $a2, 2($s1)
 /* 06BA88 7F036F58 00409025 */  move  $s2, $v0
-/* 06BA8C 7F036F5C 1000F98B */  b     .L7F03558C
+/* 06BA8C 7F036F5C 1000F98B */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BA90 7F036F60 02C28821 */   addu  $s1, $s6, $v0
 /* 06BA94 7F036F64 26520003 */  addiu $s2, $s2, 3
 .L7F036F68:
-/* 06BA98 7F036F68 1000F988 */  b     .L7F03558C
+/* 06BA98 7F036F68 1000F988 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BA9C 7F036F6C 26310003 */   addiu $s1, $s1, 3
 action5D_GoIntoRVLIf_Gadget_Used_On_16_Object_num_3:
 /* 06BAA0 7F036F70 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4460,11 +4492,11 @@ action5D_GoIntoRVLIf_Gadget_Used_On_16_Object_num_3:
 /* 06BAE0 7F036FB0 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06BAE4 7F036FB4 92260002 */   lbu   $a2, 2($s1)
 /* 06BAE8 7F036FB8 00409025 */  move  $s2, $v0
-/* 06BAEC 7F036FBC 1000F973 */  b     .L7F03558C
+/* 06BAEC 7F036FBC 1000F973 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BAF0 7F036FC0 02C28821 */   addu  $s1, $s6, $v0
 /* 06BAF4 7F036FC4 26520003 */  addiu $s2, $s2, 3
 .L7F036FC8:
-/* 06BAF8 7F036FC8 1000F970 */  b     .L7F03558C
+/* 06BAF8 7F036FC8 1000F970 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BAFC 7F036FCC 26310003 */   addiu $s1, $s1, 3
 action5E_16_Object_Activates_2:
 /* 06BB00 7F036FD0 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4481,7 +4513,7 @@ action5E_16_Object_Activates_2:
 /* 06BB2C 7F036FFC 0FC15667 */  jal   sub_GAME_7F05599C
 /* 06BB30 7F037000 8C440010 */   lw    $a0, 0x10($v0)
 /* 06BB34 7F037004 26520002 */  addiu $s2, $s2, 2
-/* 06BB38 7F037008 1000F960 */  b     .L7F03558C
+/* 06BB38 7F037008 1000F960 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BB3C 7F03700C 26310002 */   addiu $s1, $s1, 2
 /* 06BB40 7F037010 24010001 */  li    $at, 1
 .L7F037014:
@@ -4495,7 +4527,7 @@ action5E_16_Object_Activates_2:
 .L7F03702C:
 /* 06BB5C 7F03702C 26520002 */  addiu $s2, $s2, 2
 .L7F037030:
-/* 06BB60 7F037030 1000F956 */  b     .L7F03558C
+/* 06BB60 7F037030 1000F956 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BB64 7F037034 26310002 */   addiu $s1, $s1, 2
 action5F_16_Object_Explodes_2:
 /* 06BB68 7F037038 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4529,7 +4561,7 @@ action5F_16_Object_Explodes_2:
 .L7F0370A8:
 /* 06BBD8 7F0370A8 26520002 */  addiu $s2, $s2, 2
 .L7F0370AC:
-/* 06BBDC 7F0370AC 1000F937 */  b     .L7F03558C
+/* 06BBDC 7F0370AC 1000F937 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BBE0 7F0370B0 26310002 */   addiu $s1, $s1, 2
 action60_Guard_Drops_16_Object_num_2:
 /* 06BBE4 7F0370B4 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4557,7 +4589,7 @@ action60_Guard_Drops_16_Object_num_2:
 .L7F03710C:
 /* 06BC3C 7F03710C 26520002 */  addiu $s2, $s2, 2
 .L7F037110:
-/* 06BC40 7F037110 1000F91E */  b     .L7F03558C
+/* 06BC40 7F037110 1000F91E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BC44 7F037114 26310002 */   addiu $s1, $s1, 2
 action61_Kill_Guard_num_2:
 /* 06BC48 7F037118 02E02025 */  move  $a0, $s7
@@ -4573,7 +4605,7 @@ action61_Kill_Guard_num_2:
 .L7F037140:
 /* 06BC70 7F037140 26520002 */  addiu $s2, $s2, 2
 .L7F037144:
-/* 06BC74 7F037144 1000F911 */  b     .L7F03558C
+/* 06BC74 7F037144 1000F911 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BC78 7F037148 26310002 */   addiu $s1, $s1, 2
 action62_Guard_num_Throws_Equipment_2:
 /* 06BC7C 7F03714C 02E02025 */  move  $a0, $s7
@@ -4605,7 +4637,7 @@ action62_Guard_num_Throws_Equipment_2:
 .L7F0371B0:
 /* 06BCE0 7F0371B0 26520002 */  addiu $s2, $s2, 2
 .L7F0371B4:
-/* 06BCE4 7F0371B4 1000F8F5 */  b     .L7F03558C
+/* 06BCE4 7F0371B4 1000F8F5 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BCE8 7F0371B8 26310002 */   addiu $s1, $s1, 2
 action63_Guard_Gives_Bond_16_Object_num_2:
 /* 06BCEC 7F0371BC 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4624,7 +4656,7 @@ action63_Guard_Gives_Bond_16_Object_num_2:
 .L7F0371F0:
 /* 06BD20 7F0371F0 26520002 */  addiu $s2, $s2, 2
 .L7F0371F4:
-/* 06BD24 7F0371F4 1000F8E5 */  b     .L7F03558C
+/* 06BD24 7F0371F4 1000F8E5 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BD28 7F0371F8 26310002 */   addiu $s1, $s1, 2
 action64_Type_16_Object_Equipped_On_Guard_3:
 /* 06BD2C 7F0371FC 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4671,7 +4703,7 @@ action64_Type_16_Object_Equipped_On_Guard_3:
 .L7F037294:
 /* 06BDC4 7F037294 26520003 */  addiu $s2, $s2, 3
 .L7F037298:
-/* 06BDC8 7F037298 1000F8BC */  b     .L7F03558C
+/* 06BDC8 7F037298 1000F8BC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BDCC 7F03729C 26310003 */   addiu $s1, $s1, 3
 action65_Object_Moved_To_Preset_4:
 /* 06BDD0 7F0372A0 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4748,7 +4780,7 @@ action65_Object_Moved_To_Preset_4:
 .L7F0373B0:
 /* 06BEE0 7F0373B0 26520004 */  addiu $s2, $s2, 4
 .L7F0373B4:
-/* 06BEE4 7F0373B4 1000F875 */  b     .L7F03558C
+/* 06BEE4 7F0373B4 1000F875 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BEE8 7F0373B8 26310004 */   addiu $s1, $s1, 4
 action66_Open_Door_2:
 /* 06BEEC 7F0373BC 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4768,7 +4800,7 @@ action66_Open_Door_2:
 .L7F0373F4:
 /* 06BF24 7F0373F4 26520002 */  addiu $s2, $s2, 2
 .L7F0373F8:
-/* 06BF28 7F0373F8 1000F864 */  b     .L7F03558C
+/* 06BF28 7F0373F8 1000F864 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BF2C 7F0373FC 26310002 */   addiu $s1, $s1, 2
 action67_Close_Door_2:
 /* 06BF30 7F037400 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4788,7 +4820,7 @@ action67_Close_Door_2:
 .L7F037438:
 /* 06BF68 7F037438 26520002 */  addiu $s2, $s2, 2
 .L7F03743C:
-/* 06BF6C 7F03743C 1000F853 */  b     .L7F03558C
+/* 06BF6C 7F03743C 1000F853 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06BF70 7F037440 26310002 */   addiu $s1, $s1, 2
 action68_Check_Door_Status_RVL_If_Met_4:
 /* 06BF74 7F037444 92240001 */  lbu   $a0, 1($s1)
@@ -4844,11 +4876,11 @@ action68_Check_Door_Status_RVL_If_Met_4:
 /* 06C028 7F0374F8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C02C 7F0374FC 92260003 */   lbu   $a2, 3($s1)
 /* 06C030 7F037500 00409025 */  move  $s2, $v0
-/* 06C034 7F037504 1000F821 */  b     .L7F03558C
+/* 06C034 7F037504 1000F821 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C038 7F037508 02C28821 */   addu  $s1, $s6, $v0
 .L7F03750C:
 /* 06C03C 7F03750C 26520004 */  addiu $s2, $s2, 4
-/* 06C040 7F037510 1000F81E */  b     .L7F03558C
+/* 06C040 7F037510 1000F81E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C044 7F037514 26310004 */   addiu $s1, $s1, 4
 action69_If_16_Object_Is_Valid_Door_RVL_3:
 /* 06C048 7F037518 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4871,11 +4903,11 @@ action69_If_16_Object_Is_Valid_Door_RVL_3:
 /* 06C08C 7F03755C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C090 7F037560 92260002 */   lbu   $a2, 2($s1)
 /* 06C094 7F037564 00409025 */  move  $s2, $v0
-/* 06C098 7F037568 1000F808 */  b     .L7F03558C
+/* 06C098 7F037568 1000F808 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C09C 7F03756C 02C28821 */   addu  $s1, $s6, $v0
 /* 06C0A0 7F037570 26520003 */  addiu $s2, $s2, 3
 .L7F037574:
-/* 06C0A4 7F037574 1000F805 */  b     .L7F03558C
+/* 06C0A4 7F037574 1000F805 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C0A8 7F037578 26310003 */   addiu $s1, $s1, 3
 action6A_Set_Bits_To_Lock_On_Type_16_Door_3:
 /* 06C0AC 7F03757C 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4894,7 +4926,7 @@ action6A_Set_Bits_To_Lock_On_Type_16_Door_3:
 /* 06C0E0 7F0375B0 01C37825 */  or    $t7, $t6, $v1
 /* 06C0E4 7F0375B4 AC4F009C */  sw    $t7, 0x9c($v0)
 .L7F0375B8:
-/* 06C0E8 7F0375B8 1000F7F4 */  b     .L7F03558C
+/* 06C0E8 7F0375B8 1000F7F4 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C0EC 7F0375BC 26310003 */   addiu $s1, $s1, 3
 action6B_Unset_Bits_To_Lock_On_Type_16_Door_3:
 /* 06C0F0 7F0375C0 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -4914,7 +4946,7 @@ action6B_Unset_Bits_To_Lock_On_Type_16_Door_3:
 /* 06C128 7F0375F8 012A5824 */  and   $t3, $t1, $t2
 /* 06C12C 7F0375FC AC4B009C */  sw    $t3, 0x9c($v0)
 .L7F037600:
-/* 06C130 7F037600 1000F7E2 */  b     .L7F03558C
+/* 06C130 7F037600 1000F7E2 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C134 7F037604 26310003 */   addiu $s1, $s1, 3
 action6C_If_Tagged_Locked_Door_16_Objects_Toggled_RVL_4:
 /* 06C138 7F037608 92240001 */  lbu   $a0, 1($s1)
@@ -4941,11 +4973,11 @@ action6C_If_Tagged_Locked_Door_16_Objects_Toggled_RVL_4:
 /* 06C188 7F037658 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C18C 7F03765C 92260003 */   lbu   $a2, 3($s1)
 /* 06C190 7F037660 00409025 */  move  $s2, $v0
-/* 06C194 7F037664 1000F7C9 */  b     .L7F03558C
+/* 06C194 7F037664 1000F7C9 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C198 7F037668 02C28821 */   addu  $s1, $s6, $v0
 .L7F03766C:
 /* 06C19C 7F03766C 26520004 */  addiu $s2, $s2, 4
-/* 06C1A0 7F037670 1000F7C6 */  b     .L7F03558C
+/* 06C1A0 7F037670 1000F7C6 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C1A4 7F037674 26310004 */   addiu $s1, $s1, 4
 action6D_If_Objective_num_Complete_RVL_3:
 /* 06C1A8 7F037678 0FC15C6A */  jal   add_objective
@@ -4963,12 +4995,12 @@ action6D_If_Objective_num_Complete_RVL_3:
 /* 06C1D8 7F0376A8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C1DC 7F0376AC 92260002 */   lbu   $a2, 2($s1)
 /* 06C1E0 7F0376B0 00409025 */  move  $s2, $v0
-/* 06C1E4 7F0376B4 1000F7B5 */  b     .L7F03558C
+/* 06C1E4 7F0376B4 1000F7B5 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C1E8 7F0376B8 02C28821 */   addu  $s1, $s6, $v0
 .L7F0376BC:
 /* 06C1EC 7F0376BC 26520003 */  addiu $s2, $s2, 3
 .L7F0376C0:
-/* 06C1F0 7F0376C0 1000F7B2 */  b     .L7F03558C
+/* 06C1F0 7F0376C0 1000F7B2 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C1F4 7F0376C4 26310003 */   addiu $s1, $s1, 3
 action6E_If_Guard_2328_Preset_RVL_3:
 /* 06C1F8 7F0376C8 02E02025 */  move  $a0, $s7
@@ -4980,11 +5012,11 @@ action6E_If_Guard_2328_Preset_RVL_3:
 /* 06C210 7F0376E0 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C214 7F0376E4 92260002 */   lbu   $a2, 2($s1)
 /* 06C218 7F0376E8 00409025 */  move  $s2, $v0
-/* 06C21C 7F0376EC 1000F7A7 */  b     .L7F03558C
+/* 06C21C 7F0376EC 1000F7A7 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C220 7F0376F0 02C28821 */   addu  $s1, $s6, $v0
 .L7F0376F4:
 /* 06C224 7F0376F4 26520003 */  addiu $s2, $s2, 3
-/* 06C228 7F0376F8 1000F7A4 */  b     .L7F03558C
+/* 06C228 7F0376F8 1000F7A4 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C22C 7F0376FC 26310003 */   addiu $s1, $s1, 3
 action6F_If_Guard_2328_Preset_Set_RVL_3:
 /* 06C230 7F037700 02E02025 */  move  $a0, $s7
@@ -4996,11 +5028,11 @@ action6F_If_Guard_2328_Preset_Set_RVL_3:
 /* 06C248 7F037718 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C24C 7F03771C 92260002 */   lbu   $a2, 2($s1)
 /* 06C250 7F037720 00409025 */  move  $s2, $v0
-/* 06C254 7F037724 1000F799 */  b     .L7F03558C
+/* 06C254 7F037724 1000F799 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C258 7F037728 02C28821 */   addu  $s1, $s6, $v0
 .L7F03772C:
 /* 06C25C 7F03772C 26520003 */  addiu $s2, $s2, 3
-/* 06C260 7F037730 1000F796 */  b     .L7F03558C
+/* 06C260 7F037730 1000F796 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C264 7F037734 26310003 */   addiu $s1, $s1, 3
 action78_Go_To_RVL_If_Guard_Shot_LTV_3:
 /* 06C268 7F037738 0FC0CD69 */  jal   get_times_actor_shot
@@ -5014,11 +5046,11 @@ action78_Go_To_RVL_If_Guard_Shot_LTV_3:
 /* 06C288 7F037758 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C28C 7F03775C 92260002 */   lbu   $a2, 2($s1)
 /* 06C290 7F037760 00409025 */  move  $s2, $v0
-/* 06C294 7F037764 1000F789 */  b     .L7F03558C
+/* 06C294 7F037764 1000F789 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C298 7F037768 02C28821 */   addu  $s1, $s6, $v0
 /* 06C29C 7F03776C 26520003 */  addiu $s2, $s2, 3
 .L7F037770:
-/* 06C2A0 7F037770 1000F786 */  b     .L7F03558C
+/* 06C2A0 7F037770 1000F786 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C2A4 7F037774 26310003 */   addiu $s1, $s1, 3
 action79_Go_To_RVL_If_Guard_Shot_GTV_3:
 /* 06C2A8 7F037778 0FC0CD69 */  jal   get_times_actor_shot
@@ -5032,11 +5064,11 @@ action79_Go_To_RVL_If_Guard_Shot_GTV_3:
 /* 06C2C8 7F037798 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C2CC 7F03779C 92260002 */   lbu   $a2, 2($s1)
 /* 06C2D0 7F0377A0 00409025 */  move  $s2, $v0
-/* 06C2D4 7F0377A4 1000F779 */  b     .L7F03558C
+/* 06C2D4 7F0377A4 1000F779 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C2D8 7F0377A8 02C28821 */   addu  $s1, $s6, $v0
 /* 06C2DC 7F0377AC 26520003 */  addiu $s2, $s2, 3
 .L7F0377B0:
-/* 06C2E0 7F0377B0 1000F776 */  b     .L7F03558C
+/* 06C2E0 7F0377B0 1000F776 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C2E4 7F0377B4 26310003 */   addiu $s1, $s1, 3
 action7A_Go_To_RVL_If_Number_Near_Miss_Gunshots_LTV_3:
 /* 06C2E8 7F0377B8 0FC0CD6B */  jal   get_num_shots_near_actor
@@ -5050,11 +5082,11 @@ action7A_Go_To_RVL_If_Number_Near_Miss_Gunshots_LTV_3:
 /* 06C308 7F0377D8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C30C 7F0377DC 92260002 */   lbu   $a2, 2($s1)
 /* 06C310 7F0377E0 00409025 */  move  $s2, $v0
-/* 06C314 7F0377E4 1000F769 */  b     .L7F03558C
+/* 06C314 7F0377E4 1000F769 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C318 7F0377E8 02C28821 */   addu  $s1, $s6, $v0
 /* 06C31C 7F0377EC 26520003 */  addiu $s2, $s2, 3
 .L7F0377F0:
-/* 06C320 7F0377F0 1000F766 */  b     .L7F03558C
+/* 06C320 7F0377F0 1000F766 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C324 7F0377F4 26310003 */   addiu $s1, $s1, 3
 action7B_Go_To_RVL_If_Number_Near_Miss_Gunshots_GTV_3:
 /* 06C328 7F0377F8 0FC0CD6B */  jal   get_num_shots_near_actor
@@ -5068,11 +5100,11 @@ action7B_Go_To_RVL_If_Number_Near_Miss_Gunshots_GTV_3:
 /* 06C348 7F037818 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C34C 7F03781C 92260002 */   lbu   $a2, 2($s1)
 /* 06C350 7F037820 00409025 */  move  $s2, $v0
-/* 06C354 7F037824 1000F759 */  b     .L7F03558C
+/* 06C354 7F037824 1000F759 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C358 7F037828 02C28821 */   addu  $s1, $s6, $v0
 /* 06C35C 7F03782C 26520003 */  addiu $s2, $s2, 3
 .L7F037830:
-/* 06C360 7F037830 1000F756 */  b     .L7F03558C
+/* 06C360 7F037830 1000F756 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C364 7F037834 26310003 */   addiu $s1, $s1, 3
 action7C_If_Guard_Health_Below_Value_RVL_4:
 /* 06C368 7F037838 922A0002 */  lbu   $t2, 2($s1)
@@ -5106,11 +5138,11 @@ action7C_If_Guard_Health_Below_Value_RVL_4:
 /* 06C3D4 7F0378A4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C3D8 7F0378A8 92260003 */   lbu   $a2, 3($s1)
 /* 06C3DC 7F0378AC 00409025 */  move  $s2, $v0
-/* 06C3E0 7F0378B0 1000F736 */  b     .L7F03558C
+/* 06C3E0 7F0378B0 1000F736 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C3E4 7F0378B4 02C28821 */   addu  $s1, $s6, $v0
 /* 06C3E8 7F0378B8 26520004 */  addiu $s2, $s2, 4
 .L7F0378BC:
-/* 06C3EC 7F0378BC 1000F733 */  b     .L7F03558C
+/* 06C3EC 7F0378BC 1000F733 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C3F0 7F0378C0 26310004 */   addiu $s1, $s1, 4
 action7D_If_Guard_Health_Above_Value_RVL_4:
 /* 06C3F4 7F0378C4 922B0002 */  lbu   $t3, 2($s1)
@@ -5144,11 +5176,11 @@ action7D_If_Guard_Health_Above_Value_RVL_4:
 /* 06C460 7F037930 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C464 7F037934 92260003 */   lbu   $a2, 3($s1)
 /* 06C468 7F037938 00409025 */  move  $s2, $v0
-/* 06C46C 7F03793C 1000F713 */  b     .L7F03558C
+/* 06C46C 7F03793C 1000F713 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C470 7F037940 02C28821 */   addu  $s1, $s6, $v0
 /* 06C474 7F037944 26520004 */  addiu $s2, $s2, 4
 .L7F037948:
-/* 06C478 7F037948 1000F710 */  b     .L7F03558C
+/* 06C478 7F037948 1000F710 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C47C 7F03794C 26310004 */   addiu $s1, $s1, 4
 action7E_If_Guard_nums_Bitflag_01000000_Set_RVL_3:
 /* 06C480 7F037950 02E02025 */  move  $a0, $s7
@@ -5169,11 +5201,11 @@ action7E_If_Guard_nums_Bitflag_01000000_Set_RVL_3:
 /* 06C4BC 7F03798C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C4C0 7F037990 92260002 */   lbu   $a2, 2($s1)
 /* 06C4C4 7F037994 00409025 */  move  $s2, $v0
-/* 06C4C8 7F037998 1000F6FC */  b     .L7F03558C
+/* 06C4C8 7F037998 1000F6FC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C4CC 7F03799C 02C28821 */   addu  $s1, $s6, $v0
 /* 06C4D0 7F0379A0 26520003 */  addiu $s2, $s2, 3
 .L7F0379A4:
-/* 06C4D4 7F0379A4 1000F6F9 */  b     .L7F03558C
+/* 06C4D4 7F0379A4 1000F6F9 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C4D8 7F0379A8 26310003 */   addiu $s1, $s1, 3
 action7F_If_Health_Below_Value_RVL_3:
 /* 06C4DC 7F0379AC 922F0001 */  lbu   $t7, 1($s1)
@@ -5201,11 +5233,11 @@ action7F_If_Health_Below_Value_RVL_3:
 /* 06C530 7F037A00 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C534 7F037A04 92260002 */   lbu   $a2, 2($s1)
 /* 06C538 7F037A08 00409025 */  move  $s2, $v0
-/* 06C53C 7F037A0C 1000F6DF */  b     .L7F03558C
+/* 06C53C 7F037A0C 1000F6DF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C540 7F037A10 02C28821 */   addu  $s1, $s6, $v0
 /* 06C544 7F037A14 26520003 */  addiu $s2, $s2, 3
 .L7F037A18:
-/* 06C548 7F037A18 1000F6DC */  b     .L7F03558C
+/* 06C548 7F037A18 1000F6DC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C54C 7F037A1C 26310003 */   addiu $s1, $s1, 3
 action80_If_Health_Above_Value_RVL_3:
 /* 06C550 7F037A20 92380001 */  lbu   $t8, 1($s1)
@@ -5233,11 +5265,11 @@ action80_If_Health_Above_Value_RVL_3:
 /* 06C5A4 7F037A74 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C5A8 7F037A78 92260002 */   lbu   $a2, 2($s1)
 /* 06C5AC 7F037A7C 00409025 */  move  $s2, $v0
-/* 06C5B0 7F037A80 1000F6C2 */  b     .L7F03558C
+/* 06C5B0 7F037A80 1000F6C2 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C5B4 7F037A84 02C28821 */   addu  $s1, $s6, $v0
 /* 06C5B8 7F037A88 26520003 */  addiu $s2, $s2, 3
 .L7F037A8C:
-/* 06C5BC 7F037A8C 1000F6BF */  b     .L7F03558C
+/* 06C5BC 7F037A8C 1000F6BF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C5C0 7F037A90 26310003 */   addiu $s1, $s1, 3
 action70_Go_Into_RVL_Difficulty_LTV_3:
 /* 06C5C4 7F037A94 0FC2FF04 */  jal   get_current_difficulty
@@ -5251,11 +5283,11 @@ action70_Go_Into_RVL_Difficulty_LTV_3:
 /* 06C5E4 7F037AB4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C5E8 7F037AB8 92260002 */   lbu   $a2, 2($s1)
 /* 06C5EC 7F037ABC 00409025 */  move  $s2, $v0
-/* 06C5F0 7F037AC0 1000F6B2 */  b     .L7F03558C
+/* 06C5F0 7F037AC0 1000F6B2 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C5F4 7F037AC4 02C28821 */   addu  $s1, $s6, $v0
 /* 06C5F8 7F037AC8 26520003 */  addiu $s2, $s2, 3
 .L7F037ACC:
-/* 06C5FC 7F037ACC 1000F6AF */  b     .L7F03558C
+/* 06C5FC 7F037ACC 1000F6AF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C600 7F037AD0 26310003 */   addiu $s1, $s1, 3
 action71_GoIntoRVLIf_Difficulty_GTV_3:
 /* 06C604 7F037AD4 0FC2FF04 */  jal   get_current_difficulty
@@ -5269,11 +5301,11 @@ action71_GoIntoRVLIf_Difficulty_GTV_3:
 /* 06C624 7F037AF4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C628 7F037AF8 92260002 */   lbu   $a2, 2($s1)
 /* 06C62C 7F037AFC 00409025 */  move  $s2, $v0
-/* 06C630 7F037B00 1000F6A2 */  b     .L7F03558C
+/* 06C630 7F037B00 1000F6A2 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C634 7F037B04 02C28821 */   addu  $s1, $s6, $v0
 /* 06C638 7F037B08 26520003 */  addiu $s2, $s2, 3
 .L7F037B0C:
-/* 06C63C 7F037B0C 1000F69F */  b     .L7F03558C
+/* 06C63C 7F037B0C 1000F69F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C640 7F037B10 26310003 */   addiu $s1, $s1, 3
 action72_Go_To_RVL_If_Time_LTV_4:
 /* 06C644 7F037B14 922B0001 */  lbu   $t3, 1($s1)
@@ -5295,11 +5327,11 @@ action72_Go_To_RVL_If_Time_LTV_4:
 /* 06C684 7F037B54 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C688 7F037B58 92260003 */   lbu   $a2, 3($s1)
 /* 06C68C 7F037B5C 00409025 */  move  $s2, $v0
-/* 06C690 7F037B60 1000F68A */  b     .L7F03558C
+/* 06C690 7F037B60 1000F68A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C694 7F037B64 02C28821 */   addu  $s1, $s6, $v0
 /* 06C698 7F037B68 26520004 */  addiu $s2, $s2, 4
 .L7F037B6C:
-/* 06C69C 7F037B6C 1000F687 */  b     .L7F03558C
+/* 06C69C 7F037B6C 1000F687 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C6A0 7F037B70 26310004 */   addiu $s1, $s1, 4
 action73_Go_To_RVL_If_Time_GTV_4:
 /* 06C6A4 7F037B74 922E0001 */  lbu   $t6, 1($s1)
@@ -5321,11 +5353,11 @@ action73_Go_To_RVL_If_Time_GTV_4:
 /* 06C6E4 7F037BB4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C6E8 7F037BB8 92260003 */   lbu   $a2, 3($s1)
 /* 06C6EC 7F037BBC 00409025 */  move  $s2, $v0
-/* 06C6F0 7F037BC0 1000F672 */  b     .L7F03558C
+/* 06C6F0 7F037BC0 1000F672 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C6F4 7F037BC4 02C28821 */   addu  $s1, $s6, $v0
 /* 06C6F8 7F037BC8 26520004 */  addiu $s2, $s2, 4
 .L7F037BCC:
-/* 06C6FC 7F037BCC 1000F66F */  b     .L7F03558C
+/* 06C6FC 7F037BCC 1000F66F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C700 7F037BD0 26310004 */   addiu $s1, $s1, 4
 action74_Go_To_RVL_If_Power_On_Time_LTV_4:
 /* 06C704 7F037BD4 922A0001 */  lbu   $t2, 1($s1)
@@ -5348,11 +5380,11 @@ action74_Go_To_RVL_If_Power_On_Time_LTV_4:
 /* 06C748 7F037C18 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C74C 7F037C1C 92260003 */   lbu   $a2, 3($s1)
 /* 06C750 7F037C20 00409025 */  move  $s2, $v0
-/* 06C754 7F037C24 1000F659 */  b     .L7F03558C
+/* 06C754 7F037C24 1000F659 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C758 7F037C28 02C28821 */   addu  $s1, $s6, $v0
 /* 06C75C 7F037C2C 26520004 */  addiu $s2, $s2, 4
 .L7F037C30:
-/* 06C760 7F037C30 1000F656 */  b     .L7F03558C
+/* 06C760 7F037C30 1000F656 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C764 7F037C34 26310004 */   addiu $s1, $s1, 4
 action75_Go_To_RVL_If_Power_On_Time_GTV_4:
 /* 06C768 7F037C38 922D0001 */  lbu   $t5, 1($s1)
@@ -5375,11 +5407,11 @@ action75_Go_To_RVL_If_Power_On_Time_GTV_4:
 /* 06C7AC 7F037C7C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C7B0 7F037C80 92260003 */   lbu   $a2, 3($s1)
 /* 06C7B4 7F037C84 00409025 */  move  $s2, $v0
-/* 06C7B8 7F037C88 1000F640 */  b     .L7F03558C
+/* 06C7B8 7F037C88 1000F640 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C7BC 7F037C8C 02C28821 */   addu  $s1, $s6, $v0
 /* 06C7C0 7F037C90 26520004 */  addiu $s2, $s2, 4
 .L7F037C94:
-/* 06C7C4 7F037C94 1000F63D */  b     .L7F03558C
+/* 06C7C4 7F037C94 1000F63D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C7C8 7F037C98 26310004 */   addiu $s1, $s1, 4
 action76_Go_To_RVL_If_Stage_Number_LTV_3:
 /* 06C7CC 7F037C9C 0C001A57 */  jal   get_stage_num
@@ -5393,11 +5425,11 @@ action76_Go_To_RVL_If_Stage_Number_LTV_3:
 /* 06C7EC 7F037CBC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C7F0 7F037CC0 92260002 */   lbu   $a2, 2($s1)
 /* 06C7F4 7F037CC4 00409025 */  move  $s2, $v0
-/* 06C7F8 7F037CC8 1000F630 */  b     .L7F03558C
+/* 06C7F8 7F037CC8 1000F630 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C7FC 7F037CCC 02C28821 */   addu  $s1, $s6, $v0
 /* 06C800 7F037CD0 26520003 */  addiu $s2, $s2, 3
 .L7F037CD4:
-/* 06C804 7F037CD4 1000F62D */  b     .L7F03558C
+/* 06C804 7F037CD4 1000F62D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C808 7F037CD8 26310003 */   addiu $s1, $s1, 3
 action77_Go_To_RVL_If_Stage_Number_GTV_3:
 /* 06C80C 7F037CDC 0C001A57 */  jal   get_stage_num
@@ -5411,17 +5443,17 @@ action77_Go_To_RVL_If_Stage_Number_GTV_3:
 /* 06C82C 7F037CFC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C830 7F037D00 92260002 */   lbu   $a2, 2($s1)
 /* 06C834 7F037D04 00409025 */  move  $s2, $v0
-/* 06C838 7F037D08 1000F620 */  b     .L7F03558C
+/* 06C838 7F037D08 1000F620 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C83C 7F037D0C 02C28821 */   addu  $s1, $s6, $v0
 /* 06C840 7F037D10 26520003 */  addiu $s2, $s2, 3
 .L7F037D14:
-/* 06C844 7F037D14 1000F61D */  b     .L7F03558C
+/* 06C844 7F037D14 1000F61D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C848 7F037D18 26310003 */   addiu $s1, $s1, 3
 action81_Set_User_Byte_num1_2:
 /* 06C84C 7F037D1C 922B0001 */  lbu   $t3, 1($s1)
 /* 06C850 7F037D20 26520002 */  addiu $s2, $s2, 2
 /* 06C854 7F037D24 26310002 */  addiu $s1, $s1, 2
-/* 06C858 7F037D28 1000F618 */  b     .L7F03558C
+/* 06C858 7F037D28 1000F618 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C85C 7F037D2C A2EB010C */   sb    $t3, 0x10c($s7)
 action82_Add_Value_To_User_Byte_num1_Max_To_FF_2:
 /* 06C860 7F037D30 92250001 */  lbu   $a1, 1($s1)
@@ -5434,12 +5466,12 @@ action82_Add_Value_To_User_Byte_num1_Max_To_FF_2:
 /* 06C87C 7F037D4C 240D00FF */  li    $t5, 255
 /* 06C880 7F037D50 A2ED010C */  sb    $t5, 0x10c($s7)
 /* 06C884 7F037D54 26520002 */  addiu $s2, $s2, 2
-/* 06C888 7F037D58 1000F60C */  b     .L7F03558C
+/* 06C888 7F037D58 1000F60C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C88C 7F037D5C 26310002 */   addiu $s1, $s1, 2
 .L7F037D60:
 /* 06C890 7F037D60 A2EE010C */  sb    $t6, 0x10c($s7)
 /* 06C894 7F037D64 26520002 */  addiu $s2, $s2, 2
-/* 06C898 7F037D68 1000F608 */  b     .L7F03558C
+/* 06C898 7F037D68 1000F608 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C89C 7F037D6C 26310002 */   addiu $s1, $s1, 2
 action83_Subtract_Value_To_User_Byte_num1_Min_To_0_2:
 /* 06C8A0 7F037D70 92E2010C */  lbu   $v0, 0x10c($s7)
@@ -5449,12 +5481,12 @@ action83_Subtract_Value_To_User_Byte_num1_Min_To_0_2:
 /* 06C8B0 7F037D80 00457823 */   subu  $t7, $v0, $a1
 /* 06C8B4 7F037D84 A2E0010C */  sb    $zero, 0x10c($s7)
 /* 06C8B8 7F037D88 26520002 */  addiu $s2, $s2, 2
-/* 06C8BC 7F037D8C 1000F5FF */  b     .L7F03558C
+/* 06C8BC 7F037D8C 1000F5FF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C8C0 7F037D90 26310002 */   addiu $s1, $s1, 2
 .L7F037D94:
 /* 06C8C4 7F037D94 A2EF010C */  sb    $t7, 0x10c($s7)
 /* 06C8C8 7F037D98 26520002 */  addiu $s2, $s2, 2
-/* 06C8CC 7F037D9C 1000F5FB */  b     .L7F03558C
+/* 06C8CC 7F037D9C 1000F5FB */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C8D0 7F037DA0 26310002 */   addiu $s1, $s1, 2
 action84_If_Value_GreaterThan_User_Byte_num1_RVL_3:
 /* 06C8D4 7F037DA4 92F8010C */  lbu   $t8, 0x10c($s7)
@@ -5467,11 +5499,11 @@ action84_If_Value_GreaterThan_User_Byte_num1_RVL_3:
 /* 06C8F0 7F037DC0 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C8F4 7F037DC4 92260002 */   lbu   $a2, 2($s1)
 /* 06C8F8 7F037DC8 00409025 */  move  $s2, $v0
-/* 06C8FC 7F037DCC 1000F5EF */  b     .L7F03558C
+/* 06C8FC 7F037DCC 1000F5EF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C900 7F037DD0 02C28821 */   addu  $s1, $s6, $v0
 /* 06C904 7F037DD4 26520003 */  addiu $s2, $s2, 3
 .L7F037DD8:
-/* 06C908 7F037DD8 1000F5EC */  b     .L7F03558C
+/* 06C908 7F037DD8 1000F5EC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C90C 7F037DDC 26310003 */   addiu $s1, $s1, 3
 action85_If_User_Byte_num1_LessThan_Random_Value_RVL_2:
 /* 06C910 7F037DE0 92EA010C */  lbu   $t2, 0x10c($s7)
@@ -5484,17 +5516,17 @@ action85_If_User_Byte_num1_LessThan_Random_Value_RVL_2:
 /* 06C92C 7F037DFC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C930 7F037E00 92260001 */   lbu   $a2, 1($s1)
 /* 06C934 7F037E04 00409025 */  move  $s2, $v0
-/* 06C938 7F037E08 1000F5E0 */  b     .L7F03558C
+/* 06C938 7F037E08 1000F5E0 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C93C 7F037E0C 02C28821 */   addu  $s1, $s6, $v0
 /* 06C940 7F037E10 26520002 */  addiu $s2, $s2, 2
 .L7F037E14:
-/* 06C944 7F037E14 1000F5DD */  b     .L7F03558C
+/* 06C944 7F037E14 1000F5DD */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C948 7F037E18 26310002 */   addiu $s1, $s1, 2
 action86_Set_User_Byte_num2_2:
 /* 06C94C 7F037E1C 922C0001 */  lbu   $t4, 1($s1)
 /* 06C950 7F037E20 26520002 */  addiu $s2, $s2, 2
 /* 06C954 7F037E24 26310002 */  addiu $s1, $s1, 2
-/* 06C958 7F037E28 1000F5D8 */  b     .L7F03558C
+/* 06C958 7F037E28 1000F5D8 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C95C 7F037E2C A2EC010D */   sb    $t4, 0x10d($s7)
 action87_Add_Value_To_User_Byte_num2_Max_To_FF_2:
 /* 06C960 7F037E30 92250001 */  lbu   $a1, 1($s1)
@@ -5507,12 +5539,12 @@ action87_Add_Value_To_User_Byte_num2_Max_To_FF_2:
 /* 06C97C 7F037E4C 240E00FF */  li    $t6, 255
 /* 06C980 7F037E50 A2EE010D */  sb    $t6, 0x10d($s7)
 /* 06C984 7F037E54 26520002 */  addiu $s2, $s2, 2
-/* 06C988 7F037E58 1000F5CC */  b     .L7F03558C
+/* 06C988 7F037E58 1000F5CC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C98C 7F037E5C 26310002 */   addiu $s1, $s1, 2
 .L7F037E60:
 /* 06C990 7F037E60 A2EF010D */  sb    $t7, 0x10d($s7)
 /* 06C994 7F037E64 26520002 */  addiu $s2, $s2, 2
-/* 06C998 7F037E68 1000F5C8 */  b     .L7F03558C
+/* 06C998 7F037E68 1000F5C8 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C99C 7F037E6C 26310002 */   addiu $s1, $s1, 2
 action88_Subtract_Value_To_User_Byte_num2_Min_To_0_2:
 /* 06C9A0 7F037E70 92E2010D */  lbu   $v0, 0x10d($s7)
@@ -5522,12 +5554,12 @@ action88_Subtract_Value_To_User_Byte_num2_Min_To_0_2:
 /* 06C9B0 7F037E80 0045C023 */   subu  $t8, $v0, $a1
 /* 06C9B4 7F037E84 A2E0010D */  sb    $zero, 0x10d($s7)
 /* 06C9B8 7F037E88 26520002 */  addiu $s2, $s2, 2
-/* 06C9BC 7F037E8C 1000F5BF */  b     .L7F03558C
+/* 06C9BC 7F037E8C 1000F5BF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C9C0 7F037E90 26310002 */   addiu $s1, $s1, 2
 .L7F037E94:
 /* 06C9C4 7F037E94 A2F8010D */  sb    $t8, 0x10d($s7)
 /* 06C9C8 7F037E98 26520002 */  addiu $s2, $s2, 2
-/* 06C9CC 7F037E9C 1000F5BB */  b     .L7F03558C
+/* 06C9CC 7F037E9C 1000F5BB */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C9D0 7F037EA0 26310002 */   addiu $s1, $s1, 2
 action89_If_Value_GreaterThan_User_Byte_num2_RVL_3:
 /* 06C9D4 7F037EA4 92E9010D */  lbu   $t1, 0x10d($s7)
@@ -5540,11 +5572,11 @@ action89_If_Value_GreaterThan_User_Byte_num2_RVL_3:
 /* 06C9F0 7F037EC0 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06C9F4 7F037EC4 92260002 */   lbu   $a2, 2($s1)
 /* 06C9F8 7F037EC8 00409025 */  move  $s2, $v0
-/* 06C9FC 7F037ECC 1000F5AF */  b     .L7F03558C
+/* 06C9FC 7F037ECC 1000F5AF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CA00 7F037ED0 02C28821 */   addu  $s1, $s6, $v0
 /* 06CA04 7F037ED4 26520003 */  addiu $s2, $s2, 3
 .L7F037ED8:
-/* 06CA08 7F037ED8 1000F5AC */  b     .L7F03558C
+/* 06CA08 7F037ED8 1000F5AC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CA0C 7F037EDC 26310003 */   addiu $s1, $s1, 3
 action8A_If_User_Byte_num2_LessThan_Random_Value_RVL_2:
 /* 06CA10 7F037EE0 92EB010D */  lbu   $t3, 0x10d($s7)
@@ -5557,11 +5589,11 @@ action8A_If_User_Byte_num2_LessThan_Random_Value_RVL_2:
 /* 06CA2C 7F037EFC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06CA30 7F037F00 92260001 */   lbu   $a2, 1($s1)
 /* 06CA34 7F037F04 00409025 */  move  $s2, $v0
-/* 06CA38 7F037F08 1000F5A0 */  b     .L7F03558C
+/* 06CA38 7F037F08 1000F5A0 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CA3C 7F037F0C 02C28821 */   addu  $s1, $s6, $v0
 /* 06CA40 7F037F10 26520002 */  addiu $s2, $s2, 2
 .L7F037F14:
-/* 06CA44 7F037F14 1000F59D */  b     .L7F03558C
+/* 06CA44 7F037F14 1000F59D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CA48 7F037F18 26310002 */   addiu $s1, $s1, 2
 action8B_Set_Guard_Hearing_Distance_3:
 /* 06CA4C 7F037F1C 92390001 */  lbu   $t9, 1($s1)
@@ -5575,7 +5607,7 @@ action8B_Set_Guard_Hearing_Distance_3:
 /* 06CA6C 7F037F3C 468054A0 */  cvt.s.w $f18, $f10
 /* 06CA70 7F037F40 26310003 */  addiu $s1, $s1, 3
 /* 06CA74 7F037F44 46069003 */  div.s $f0, $f18, $f6
-/* 06CA78 7F037F48 1000F590 */  b     .L7F03558C
+/* 06CA78 7F037F48 1000F590 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CA7C 7F037F4C E6E000EC */   swc1  $f0, 0xec($s7)
 action8C_Set_Guard_Visible_Distance_2:
 /* 06CA80 7F037F50 92380001 */  lbu   $t8, 1($s1)
@@ -5589,19 +5621,19 @@ action8C_Set_Guard_Visible_Distance_2:
 /* 06CAA0 7F037F70 00000000 */  nop   
 /* 06CAA4 7F037F74 46082100 */  add.s $f4, $f4, $f8
 .L7F037F78:
-/* 06CAA8 7F037F78 1000F584 */  b     .L7F03558C
+/* 06CAA8 7F037F78 1000F584 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CAAC 7F037F7C E6E400D0 */   swc1  $f4, 0xd0($s7)
 action8D_Set_Guard_Grenade_Probability_2:
 /* 06CAB0 7F037F80 92290001 */  lbu   $t1, 1($s1)
 /* 06CAB4 7F037F84 26520002 */  addiu $s2, $s2, 2
 /* 06CAB8 7F037F88 26310002 */  addiu $s1, $s1, 2
-/* 06CABC 7F037F8C 1000F57F */  b     .L7F03558C
+/* 06CABC 7F037F8C 1000F57F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CAC0 7F037F90 A2E90010 */   sb    $t1, 0x10($s7)
 action8E_Set_Guard_ID_2:
 /* 06CAC4 7F037F94 922A0001 */  lbu   $t2, 1($s1)
 /* 06CAC8 7F037F98 26520002 */  addiu $s2, $s2, 2
 /* 06CACC 7F037F9C 26310002 */  addiu $s1, $s1, 2
-/* 06CAD0 7F037FA0 1000F57A */  b     .L7F03558C
+/* 06CAD0 7F037FA0 1000F57A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CAD4 7F037FA4 A6EA0000 */   sh    $t2, ($s7)
 action8F_Set_Guard_Health_3:
 /* 06CAD8 7F037FA8 922B0001 */  lbu   $t3, 1($s1)
@@ -5618,7 +5650,7 @@ action8F_Set_Guard_Health_3:
 /* 06CB04 7F037FD4 0FC08006 */  jal   sub_GAME_7F020018
 /* 06CB08 7F037FD8 00000000 */   nop   
 /* 06CB0C 7F037FDC 26520003 */  addiu $s2, $s2, 3
-/* 06CB10 7F037FE0 1000F56A */  b     .L7F03558C
+/* 06CB10 7F037FE0 1000F56A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CB14 7F037FE4 26310003 */   addiu $s1, $s1, 3
 action90_Set_Guard_Armor_Amount_3:
 /* 06CB18 7F037FE8 922E0001 */  lbu   $t6, 1($s1)
@@ -5635,39 +5667,39 @@ action90_Set_Guard_Armor_Amount_3:
 /* 06CB44 7F038014 0FC08015 */  jal   sub_GAME_7F020054
 /* 06CB48 7F038018 00000000 */   nop   
 /* 06CB4C 7F03801C 26520003 */  addiu $s2, $s2, 3
-/* 06CB50 7F038020 1000F55A */  b     .L7F03558C
+/* 06CB50 7F038020 1000F55A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CB54 7F038024 26310003 */   addiu $s1, $s1, 3
 action91_Set_Character_Reaction_Speed_2:
 /* 06CB58 7F038028 822A0001 */  lb    $t2, 1($s1)
 /* 06CB5C 7F03802C 26520002 */  addiu $s2, $s2, 2
 /* 06CB60 7F038030 26310002 */  addiu $s1, $s1, 2
-/* 06CB64 7F038034 1000F555 */  b     .L7F03558C
+/* 06CB64 7F038034 1000F555 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CB68 7F038038 A2EA0003 */   sb    $t2, 3($s7)
 action92_Set_Character_Injury_Recovery_Speed_2:
 /* 06CB6C 7F03803C 822B0001 */  lb    $t3, 1($s1)
 /* 06CB70 7F038040 26520002 */  addiu $s2, $s2, 2
 /* 06CB74 7F038044 26310002 */  addiu $s1, $s1, 2
-/* 06CB78 7F038048 1000F550 */  b     .L7F03558C
+/* 06CB78 7F038048 1000F550 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CB7C 7F03804C A2EB000D */   sb    $t3, 0xd($s7)
 action93_Set_Character_Accuracy_2:
 /* 06CB80 7F038050 822C0001 */  lb    $t4, 1($s1)
 /* 06CB84 7F038054 26520002 */  addiu $s2, $s2, 2
 /* 06CB88 7F038058 26310002 */  addiu $s1, $s1, 2
-/* 06CB8C 7F03805C 1000F54B */  b     .L7F03558C
+/* 06CB8C 7F03805C 1000F54B */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CB90 7F038060 A2EC0002 */   sb    $t4, 2($s7)
 action94_Mask_Guard_Type_With_Value_2:
 /* 06CB94 7F038064 02E02025 */  move  $a0, $s7
 /* 06CB98 7F038068 0FC0CC86 */  jal   sub_GAME_7F033218
 /* 06CB9C 7F03806C 92250001 */   lbu   $a1, 1($s1)
 /* 06CBA0 7F038070 26520002 */  addiu $s2, $s2, 2
-/* 06CBA4 7F038074 1000F545 */  b     .L7F03558C
+/* 06CBA4 7F038074 1000F545 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBA8 7F038078 26310002 */   addiu $s1, $s1, 2
 action95_Unmask_Guard_Type_With_Value_2:
 /* 06CBAC 7F03807C 02E02025 */  move  $a0, $s7
 /* 06CBB0 7F038080 0FC0CC8B */  jal   sub_GAME_7F03322C
 /* 06CBB4 7F038084 92250001 */   lbu   $a1, 1($s1)
 /* 06CBB8 7F038088 26520002 */  addiu $s2, $s2, 2
-/* 06CBBC 7F03808C 1000F53F */  b     .L7F03558C
+/* 06CBBC 7F03808C 1000F53F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBC0 7F038090 26310002 */   addiu $s1, $s1, 2
 action96_If_Guard_Type_Value_Is_Set_RVL_3:
 /* 06CBC4 7F038094 02E02025 */  move  $a0, $s7
@@ -5679,11 +5711,11 @@ action96_If_Guard_Type_Value_Is_Set_RVL_3:
 /* 06CBDC 7F0380AC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06CBE0 7F0380B0 92260002 */   lbu   $a2, 2($s1)
 /* 06CBE4 7F0380B4 00409025 */  move  $s2, $v0
-/* 06CBE8 7F0380B8 1000F534 */  b     .L7F03558C
+/* 06CBE8 7F0380B8 1000F534 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBEC 7F0380BC 02C28821 */   addu  $s1, $s6, $v0
 .L7F0380C0:
 /* 06CBF0 7F0380C0 26520003 */  addiu $s2, $s2, 3
-/* 06CBF4 7F0380C4 1000F531 */  b     .L7F03558C
+/* 06CBF4 7F0380C4 1000F531 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CBF8 7F0380C8 26310003 */   addiu $s1, $s1, 3
 action97_Mask_Guard_Type_Flags_With_Value_3:
 /* 06CBFC 7F0380CC 02E02025 */  move  $a0, $s7
@@ -5691,7 +5723,7 @@ action97_Mask_Guard_Type_Flags_With_Value_3:
 /* 06CC04 7F0380D4 0FC0CC98 */  jal   sub_GAME_7F033260
 /* 06CC08 7F0380D8 92260002 */   lbu   $a2, 2($s1)
 /* 06CC0C 7F0380DC 26520003 */  addiu $s2, $s2, 3
-/* 06CC10 7F0380E0 1000F52A */  b     .L7F03558C
+/* 06CC10 7F0380E0 1000F52A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CC14 7F0380E4 26310003 */   addiu $s1, $s1, 3
 action98_Unmask_Guard_Type_Flags_With_Value_3:
 /* 06CC18 7F0380E8 02E02025 */  move  $a0, $s7
@@ -5699,7 +5731,7 @@ action98_Unmask_Guard_Type_Flags_With_Value_3:
 /* 06CC20 7F0380F0 0FC0CCA4 */  jal   sub_GAME_7F033290
 /* 06CC24 7F0380F4 92260002 */   lbu   $a2, 2($s1)
 /* 06CC28 7F0380F8 26520003 */  addiu $s2, $s2, 3
-/* 06CC2C 7F0380FC 1000F523 */  b     .L7F03558C
+/* 06CC2C 7F0380FC 1000F523 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CC30 7F038100 26310003 */   addiu $s1, $s1, 3
 action99_If_Guard_Type_Flags_Set_RVL_4:
 /* 06CC34 7F038104 02E02025 */  move  $a0, $s7
@@ -5712,11 +5744,11 @@ action99_If_Guard_Type_Flags_Set_RVL_4:
 /* 06CC50 7F038120 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06CC54 7F038124 92260003 */   lbu   $a2, 3($s1)
 /* 06CC58 7F038128 00409025 */  move  $s2, $v0
-/* 06CC5C 7F03812C 1000F517 */  b     .L7F03558C
+/* 06CC5C 7F03812C 1000F517 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CC60 7F038130 02C28821 */   addu  $s1, $s6, $v0
 .L7F038134:
 /* 06CC64 7F038134 26520004 */  addiu $s2, $s2, 4
-/* 06CC68 7F038138 1000F514 */  b     .L7F03558C
+/* 06CC68 7F038138 1000F514 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CC6C 7F03813C 26310004 */   addiu $s1, $s1, 4
 action9A_Set_Objective_Bits_5:
 /* 06CC70 7F038140 92390001 */  lbu   $t9, 1($s1)
@@ -5732,7 +5764,7 @@ action9A_Set_Objective_Bits_5:
 /* 06CC98 7F038168 0FC0CCBF */  jal   toggle_objective_bitflags
 /* 06CC9C 7F03816C 016C2825 */   or    $a1, $t3, $t4
 /* 06CCA0 7F038170 26520005 */  addiu $s2, $s2, 5
-/* 06CCA4 7F038174 1000F505 */  b     .L7F03558C
+/* 06CCA4 7F038174 1000F505 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CCA8 7F038178 26310005 */   addiu $s1, $s1, 5
 action9B_Unset_Objective_Value_5:
 /* 06CCAC 7F03817C 92390001 */  lbu   $t9, 1($s1)
@@ -5748,7 +5780,7 @@ action9B_Unset_Objective_Value_5:
 /* 06CCD4 7F0381A4 0FC0CCC6 */  jal   untoggle_objective_bitflags
 /* 06CCD8 7F0381A8 016C2825 */   or    $a1, $t3, $t4
 /* 06CCDC 7F0381AC 26520005 */  addiu $s2, $s2, 5
-/* 06CCE0 7F0381B0 1000F4F6 */  b     .L7F03558C
+/* 06CCE0 7F0381B0 1000F4F6 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CCE4 7F0381B4 26310005 */   addiu $s1, $s1, 5
 action9C_Check_If_Objective_Value_Return_Loop_If_So_6:
 /* 06CCE8 7F0381B8 92390001 */  lbu   $t9, 1($s1)
@@ -5769,11 +5801,11 @@ action9C_Check_If_Objective_Value_Return_Loop_If_So_6:
 /* 06CD24 7F0381F4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06CD28 7F0381F8 92260005 */   lbu   $a2, 5($s1)
 /* 06CD2C 7F0381FC 00409025 */  move  $s2, $v0
-/* 06CD30 7F038200 1000F4E2 */  b     .L7F03558C
+/* 06CD30 7F038200 1000F4E2 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CD34 7F038204 02C28821 */   addu  $s1, $s6, $v0
 .L7F038208:
 /* 06CD38 7F038208 26520006 */  addiu $s2, $s2, 6
-/* 06CD3C 7F03820C 1000F4DF */  b     .L7F03558C
+/* 06CD3C 7F03820C 1000F4DF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CD40 7F038210 26310006 */   addiu $s1, $s1, 6
 action9D_Set_Guard_Bit_Tags_5:
 /* 06CD44 7F038214 92390001 */  lbu   $t9, 1($s1)
@@ -5790,7 +5822,7 @@ action9D_Set_Guard_Bit_Tags_5:
 /* 06CD70 7F038240 03226825 */  or    $t5, $t9, $v0
 /* 06CD74 7F038244 AEED0014 */  sw    $t5, 0x14($s7)
 /* 06CD78 7F038248 26520005 */  addiu $s2, $s2, 5
-/* 06CD7C 7F03824C 1000F4CF */  b     .L7F03558C
+/* 06CD7C 7F03824C 1000F4CF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CD80 7F038250 26310005 */   addiu $s1, $s1, 5
 action9E_Unset_Guard_Bit_Tags_5:
 /* 06CD84 7F038254 922E0001 */  lbu   $t6, 1($s1)
@@ -5808,7 +5840,7 @@ action9E_Unset_Guard_Bit_Tags_5:
 /* 06CDB4 7F038284 01D87824 */  and   $t7, $t6, $t8
 /* 06CDB8 7F038288 AEEF0014 */  sw    $t7, 0x14($s7)
 /* 06CDBC 7F03828C 26520005 */  addiu $s2, $s2, 5
-/* 06CDC0 7F038290 1000F4BE */  b     .L7F03558C
+/* 06CDC0 7F038290 1000F4BE */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CDC4 7F038294 26310005 */   addiu $s1, $s1, 5
 action9F_Check_Guard_Bits_If_Same_RVL_6:
 /* 06CDC8 7F038298 92290001 */  lbu   $t1, 1($s1)
@@ -5829,11 +5861,11 @@ action9F_Check_Guard_Bits_If_Same_RVL_6:
 /* 06CE04 7F0382D4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06CE08 7F0382D8 92260005 */   lbu   $a2, 5($s1)
 /* 06CE0C 7F0382DC 00409025 */  move  $s2, $v0
-/* 06CE10 7F0382E0 1000F4AA */  b     .L7F03558C
+/* 06CE10 7F0382E0 1000F4AA */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CE14 7F0382E4 02C28821 */   addu  $s1, $s6, $v0
 .L7F0382E8:
 /* 06CE18 7F0382E8 26520006 */  addiu $s2, $s2, 6
-/* 06CE1C 7F0382EC 1000F4A7 */  b     .L7F03558C
+/* 06CE1C 7F0382EC 1000F4A7 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CE20 7F0382F0 26310006 */   addiu $s1, $s1, 6
 actionA0_Set_Guard_ID_Bits_6:
 /* 06CE24 7F0382F4 922B0002 */  lbu   $t3, 2($s1)
@@ -5855,7 +5887,7 @@ actionA0_Set_Guard_ID_Bits_6:
 /* 06CE64 7F038334 01706825 */  or    $t5, $t3, $s0
 /* 06CE68 7F038338 AC4D0014 */  sw    $t5, 0x14($v0)
 .L7F03833C:
-/* 06CE6C 7F03833C 1000F493 */  b     .L7F03558C
+/* 06CE6C 7F03833C 1000F493 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CE70 7F038340 26310006 */   addiu $s1, $s1, 6
 actionA1_Unset_Guard_ID_Bits_6:
 /* 06CE74 7F038344 922C0002 */  lbu   $t4, 2($s1)
@@ -5878,7 +5910,7 @@ actionA1_Unset_Guard_ID_Bits_6:
 /* 06CEB8 7F038388 0198C824 */  and   $t9, $t4, $t8
 /* 06CEBC 7F03838C AC590014 */  sw    $t9, 0x14($v0)
 .L7F038390:
-/* 06CEC0 7F038390 1000F47E */  b     .L7F03558C
+/* 06CEC0 7F038390 1000F47E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CEC4 7F038394 26310006 */   addiu $s1, $s1, 6
 actionA2_Check_Guard_Bits_If_Same_RVL_7:
 /* 06CEC8 7F038398 922E0002 */  lbu   $t6, 2($s1)
@@ -5905,11 +5937,11 @@ actionA2_Check_Guard_Bits_If_Same_RVL_7:
 /* 06CF1C 7F0383EC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06CF20 7F0383F0 92260006 */   lbu   $a2, 6($s1)
 /* 06CF24 7F0383F4 00409025 */  move  $s2, $v0
-/* 06CF28 7F0383F8 1000F464 */  b     .L7F03558C
+/* 06CF28 7F0383F8 1000F464 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CF2C 7F0383FC 02C28821 */   addu  $s1, $s6, $v0
 /* 06CF30 7F038400 26520007 */  addiu $s2, $s2, 7
 .L7F038404:
-/* 06CF34 7F038404 1000F461 */  b     .L7F03558C
+/* 06CF34 7F038404 1000F461 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CF38 7F038408 26310007 */   addiu $s1, $s1, 7
 actionA3_Set_State_Bits_16_Type_Object_6:
 /* 06CF3C 7F03840C 92290002 */  lbu   $t1, 2($s1)
@@ -5933,7 +5965,7 @@ actionA3_Set_State_Bits_16_Type_Object_6:
 /* 06CF84 7F038454 01B05025 */  or    $t2, $t5, $s0
 /* 06CF88 7F038458 AC4A0008 */  sw    $t2, 8($v0)
 .L7F03845C:
-/* 06CF8C 7F03845C 1000F44B */  b     .L7F03558C
+/* 06CF8C 7F03845C 1000F44B */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CF90 7F038460 26310006 */   addiu $s1, $s1, 6
 actionA4_Unset_State_Bits_16_Type_Object_6:
 /* 06CF94 7F038464 922B0002 */  lbu   $t3, 2($s1)
@@ -5958,7 +5990,7 @@ actionA4_Unset_State_Bits_16_Type_Object_6:
 /* 06CFE0 7F0384B0 0198C824 */  and   $t9, $t4, $t8
 /* 06CFE4 7F0384B4 AC590008 */  sw    $t9, 8($v0)
 .L7F0384B8:
-/* 06CFE8 7F0384B8 1000F434 */  b     .L7F03558C
+/* 06CFE8 7F0384B8 1000F434 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06CFEC 7F0384BC 26310006 */   addiu $s1, $s1, 6
 actionA5_Check_State_Bits_16_Type_Object_If_Same_RVL_7:
 /* 06CFF0 7F0384C0 922F0002 */  lbu   $t7, 2($s1)
@@ -5987,11 +6019,11 @@ actionA5_Check_State_Bits_16_Type_Object_If_Same_RVL_7:
 /* 06D04C 7F03851C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06D050 7F038520 92260006 */   lbu   $a2, 6($s1)
 /* 06D054 7F038524 00409025 */  move  $s2, $v0
-/* 06D058 7F038528 1000F418 */  b     .L7F03558C
+/* 06D058 7F038528 1000F418 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D05C 7F03852C 02C28821 */   addu  $s1, $s6, $v0
 /* 06D060 7F038530 26520007 */  addiu $s2, $s2, 7
 .L7F038534:
-/* 06D064 7F038534 1000F415 */  b     .L7F03558C
+/* 06D064 7F038534 1000F415 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D068 7F038538 26310007 */   addiu $s1, $s1, 7
 actionA6_Set_16_Object_States_More_6:
 /* 06D06C 7F03853C 922D0002 */  lbu   $t5, 2($s1)
@@ -6015,7 +6047,7 @@ actionA6_Set_16_Object_States_More_6:
 /* 06D0B4 7F038584 01505825 */  or    $t3, $t2, $s0
 /* 06D0B8 7F038588 AC4B000C */  sw    $t3, 0xc($v0)
 .L7F03858C:
-/* 06D0BC 7F03858C 1000F3FF */  b     .L7F03558C
+/* 06D0BC 7F03858C 1000F3FF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D0C0 7F038590 26310006 */   addiu $s1, $s1, 6
 actionA7_Unset_16_Object_States_More_6:
 /* 06D0C4 7F038594 922C0002 */  lbu   $t4, 2($s1)
@@ -6040,7 +6072,7 @@ actionA7_Unset_16_Object_States_More_6:
 /* 06D110 7F0385E0 03197824 */  and   $t7, $t8, $t9
 /* 06D114 7F0385E4 AC4F000C */  sw    $t7, 0xc($v0)
 .L7F0385E8:
-/* 06D118 7F0385E8 1000F3E8 */  b     .L7F03558C
+/* 06D118 7F0385E8 1000F3E8 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D11C 7F0385EC 26310006 */   addiu $s1, $s1, 6
 actionA8_Check_16_Object_States_More_If_Same_RVL_7:
 /* 06D120 7F0385F0 922E0002 */  lbu   $t6, 2($s1)
@@ -6069,18 +6101,18 @@ actionA8_Check_16_Object_States_More_If_Same_RVL_7:
 /* 06D17C 7F03864C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06D180 7F038650 92260006 */   lbu   $a2, 6($s1)
 /* 06D184 7F038654 00409025 */  move  $s2, $v0
-/* 06D188 7F038658 1000F3CC */  b     .L7F03558C
+/* 06D188 7F038658 1000F3CC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D18C 7F03865C 02C28821 */   addu  $s1, $s6, $v0
 /* 06D190 7F038660 26520007 */  addiu $s2, $s2, 7
 .L7F038664:
-/* 06D194 7F038664 1000F3C9 */  b     .L7F03558C
+/* 06D194 7F038664 1000F3C9 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D198 7F038668 26310007 */   addiu $s1, $s1, 7
 actionA9_Sets_To_Guard_ID_Fc_Current_Guard_2:
 /* 06D19C 7F03866C 02E02025 */  move  $a0, $s7
 /* 06D1A0 7F038670 0FC0CF3D */  jal   sub_GAME_7F033CF4
 /* 06D1A4 7F038674 92250001 */   lbu   $a1, 1($s1)
 /* 06D1A8 7F038678 26520002 */  addiu $s2, $s2, 2
-/* 06D1AC 7F03867C 1000F3C3 */  b     .L7F03558C
+/* 06D1AC 7F03867C 1000F3C3 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D1B0 7F038680 26310002 */   addiu $s1, $s1, 2
 actionAA_Sets_FC_Value_For_Guard_ID_To_Guard_ID_3:
 /* 06D1B4 7F038684 02E02025 */  move  $a0, $s7
@@ -6088,7 +6120,7 @@ actionAA_Sets_FC_Value_For_Guard_ID_To_Guard_ID_3:
 /* 06D1BC 7F03868C 0FC0CF47 */  jal   sub_GAME_7F033D1C
 /* 06D1C0 7F038690 92260002 */   lbu   $a2, 2($s1)
 /* 06D1C4 7F038694 26520003 */  addiu $s2, $s2, 3
-/* 06D1C8 7F038698 1000F3BC */  b     .L7F03558C
+/* 06D1C8 7F038698 1000F3BC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D1CC 7F03869C 26310003 */   addiu $s1, $s1, 3
 actionAB_Set_Current_Guards_2328_Value_To_Preset_3:
 /* 06D1D0 7F0386A0 922A0001 */  lbu   $t2, 1($s1)
@@ -6103,14 +6135,14 @@ actionAB_Set_Current_Guards_2328_Value_To_Preset_3:
 /* 06D1F4 7F0386C4 0FC0CF57 */  jal   sub_GAME_7F033D5C
 /* 06D1F8 7F0386C8 03002825 */   move  $a1, $t8
 /* 06D1FC 7F0386CC 26520003 */  addiu $s2, $s2, 3
-/* 06D200 7F0386D0 1000F3AE */  b     .L7F03558C
+/* 06D200 7F0386D0 1000F3AE */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D204 7F0386D4 26310003 */   addiu $s1, $s1, 3
 .L7F0386D8:
 /* 06D208 7F0386D8 13200002 */  beqz  $t9, .L7F0386E4
 /* 06D20C 7F0386DC 26520003 */   addiu $s2, $s2, 3
 /* 06D210 7F0386E0 A7220006 */  sh    $v0, 6($t9)
 .L7F0386E4:
-/* 06D214 7F0386E4 1000F3A9 */  b     .L7F03558C
+/* 06D214 7F0386E4 1000F3A9 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D218 7F0386E8 26310003 */   addiu $s1, $s1, 3
 actionAC_Set_Guard_ID_numS_2328_Value_To_Preset_4:
 /* 06D21C 7F0386EC 922F0002 */  lbu   $t7, 2($s1)
@@ -6122,39 +6154,39 @@ actionAC_Set_Guard_ID_numS_2328_Value_To_Preset_4:
 /* 06D234 7F038704 0FC0CF61 */  jal   sub_GAME_7F033D84
 /* 06D238 7F038708 92250001 */   lbu   $a1, 1($s1)
 /* 06D23C 7F03870C 26520004 */  addiu $s2, $s2, 4
-/* 06D240 7F038710 1000F39E */  b     .L7F03558C
+/* 06D240 7F038710 1000F39E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D244 7F038714 26310004 */   addiu $s1, $s1, 4
 actionAD_Debug_Comment_20:
 /* 06D248 7F038718 02C02025 */  move  $a0, $s6
 /* 06D24C 7F03871C 0FC0D27F */  jal   get_length_of_action_block
 /* 06D250 7F038720 02402825 */   move  $a1, $s2
 /* 06D254 7F038724 02429021 */  addu  $s2, $s2, $v0
-/* 06D258 7F038728 1000F398 */  b     .L7F03558C
+/* 06D258 7F038728 1000F398 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D25C 7F03872C 02D28821 */   addu  $s1, $s6, $s2
 actionAE_Reset_Cycle_Counter_And_Enable_It_1:
 /* 06D260 7F038730 0FC0CCF1 */  jal   reset_and_start_loop_counter
 /* 06D264 7F038734 02E02025 */   move  $a0, $s7
 /* 06D268 7F038738 26520001 */  addiu $s2, $s2, 1
-/* 06D26C 7F03873C 1000F393 */  b     .L7F03558C
+/* 06D26C 7F03873C 1000F393 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D270 7F038740 26310001 */   addiu $s1, $s1, 1
 actionAF_Reset_Cycle_Counter_1:
 /* 06D274 7F038744 AEE00110 */  sw    $zero, 0x110($s7)
 /* 06D278 7F038748 26520001 */  addiu $s2, $s2, 1
-/* 06D27C 7F03874C 1000F38F */  b     .L7F03558C
+/* 06D27C 7F03874C 1000F38F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D280 7F038750 26310001 */   addiu $s1, $s1, 1
 actionB0_Disable_Cycle_Counter_1:
 /* 06D284 7F038754 96EA0012 */  lhu   $t2, 0x12($s7)
 /* 06D288 7F038758 26520001 */  addiu $s2, $s2, 1
 /* 06D28C 7F03875C 26310001 */  addiu $s1, $s1, 1
 /* 06D290 7F038760 314CFFBF */  andi  $t4, $t2, 0xffbf
-/* 06D294 7F038764 1000F389 */  b     .L7F03558C
+/* 06D294 7F038764 1000F389 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D298 7F038768 A6EC0012 */   sh    $t4, 0x12($s7)
 actionB1_Enable_Cycle_Counter_1:
 /* 06D29C 7F03876C 96EB0012 */  lhu   $t3, 0x12($s7)
 /* 06D2A0 7F038770 26520001 */  addiu $s2, $s2, 1
 /* 06D2A4 7F038774 26310001 */  addiu $s1, $s1, 1
 /* 06D2A8 7F038778 35780040 */  ori   $t8, $t3, 0x40
-/* 06D2AC 7F03877C 1000F383 */  b     .L7F03558C
+/* 06D2AC 7F03877C 1000F383 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D2B0 7F038780 A6F80012 */   sh    $t8, 0x12($s7)
 actionB2_Check_Cycle_Counter_Enable_Status_2:
 /* 06D2B4 7F038784 96F90012 */  lhu   $t9, 0x12($s7)
@@ -6166,11 +6198,11 @@ actionB2_Check_Cycle_Counter_Enable_Status_2:
 /* 06D2CC 7F03879C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06D2D0 7F0387A0 92260001 */   lbu   $a2, 1($s1)
 /* 06D2D4 7F0387A4 00409025 */  move  $s2, $v0
-/* 06D2D8 7F0387A8 1000F378 */  b     .L7F03558C
+/* 06D2D8 7F0387A8 1000F378 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D2DC 7F0387AC 02C28821 */   addu  $s1, $s6, $v0
 /* 06D2E0 7F0387B0 26520002 */  addiu $s2, $s2, 2
 .L7F0387B4:
-/* 06D2E4 7F0387B4 1000F375 */  b     .L7F03558C
+/* 06D2E4 7F0387B4 1000F375 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D2E8 7F0387B8 26310002 */   addiu $s1, $s1, 2
 actionB3_If_Cycle_Counter_LTV_RVL_5:
 /* 06D2EC 7F0387BC 922E0001 */  lbu   $t6, 1($s1)
@@ -6202,11 +6234,11 @@ actionB3_If_Cycle_Counter_LTV_RVL_5:
 /* 06D350 7F038820 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06D354 7F038824 92260004 */   lbu   $a2, 4($s1)
 /* 06D358 7F038828 00409025 */  move  $s2, $v0
-/* 06D35C 7F03882C 1000F357 */  b     .L7F03558C
+/* 06D35C 7F03882C 1000F357 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D360 7F038830 02C28821 */   addu  $s1, $s6, $v0
 /* 06D364 7F038834 26520005 */  addiu $s2, $s2, 5
 .L7F038838:
-/* 06D368 7F038838 1000F354 */  b     .L7F03558C
+/* 06D368 7F038838 1000F354 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D36C 7F03883C 26310005 */   addiu $s1, $s1, 5
 actionB4_If_Cycle_Counter_GTV_RVL_5:
 /* 06D370 7F038840 92390001 */  lbu   $t9, 1($s1)
@@ -6238,25 +6270,25 @@ actionB4_If_Cycle_Counter_GTV_RVL_5:
 /* 06D3D4 7F0388A4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06D3D8 7F0388A8 92260004 */   lbu   $a2, 4($s1)
 /* 06D3DC 7F0388AC 00409025 */  move  $s2, $v0
-/* 06D3E0 7F0388B0 1000F336 */  b     .L7F03558C
+/* 06D3E0 7F0388B0 1000F336 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D3E4 7F0388B4 02C28821 */   addu  $s1, $s6, $v0
 /* 06D3E8 7F0388B8 26520005 */  addiu $s2, $s2, 5
 .L7F0388BC:
-/* 06D3EC 7F0388BC 1000F333 */  b     .L7F03558C
+/* 06D3EC 7F0388BC 1000F333 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D3F0 7F0388C0 26310005 */   addiu $s1, $s1, 5
 actionB5_Show_Timer_1:
 /* 06D3F4 7F0388C4 24040001 */  li    $a0, 1
 /* 06D3F8 7F0388C8 0FC15858 */  jal   set_unset_clock_lock_bits
 /* 06D3FC 7F0388CC 24050001 */   li    $a1, 1
 /* 06D400 7F0388D0 26520001 */  addiu $s2, $s2, 1
-/* 06D404 7F0388D4 1000F32D */  b     .L7F03558C
+/* 06D404 7F0388D4 1000F32D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D408 7F0388D8 26310001 */   addiu $s1, $s1, 1
 actionB6_Hide_Timer_Silent_Countdown_1:
 /* 06D40C 7F0388DC 24040001 */  li    $a0, 1
 /* 06D410 7F0388E0 0FC15858 */  jal   set_unset_clock_lock_bits
 /* 06D414 7F0388E4 00002825 */   move  $a1, $zero
 /* 06D418 7F0388E8 26520001 */  addiu $s2, $s2, 1
-/* 06D41C 7F0388EC 1000F327 */  b     .L7F03558C
+/* 06D41C 7F0388EC 1000F327 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D420 7F0388F0 26310001 */   addiu $s1, $s1, 1
 actionB7_Set_Timer_X_Seconds__Doesnt_Show_Timer_Yet_3:
 /* 06D424 7F0388F4 922B0001 */  lbu   $t3, 1($s1)
@@ -6270,19 +6302,19 @@ actionB7_Set_Timer_X_Seconds__Doesnt_Show_Timer_Yet_3:
 /* 06D444 7F038914 0FC1586C */  jal   set_clock_time
 /* 06D448 7F038918 00000000 */   nop   
 /* 06D44C 7F03891C 26520003 */  addiu $s2, $s2, 3
-/* 06D450 7F038920 1000F31A */  b     .L7F03558C
+/* 06D450 7F038920 1000F31A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D454 7F038924 26310003 */   addiu $s1, $s1, 3
 actionB8_Stop_Timer_1:
 /* 06D458 7F038928 0FC15872 */  jal   set_clock_enable
 /* 06D45C 7F03892C 00002025 */   move  $a0, $zero
 /* 06D460 7F038930 26520001 */  addiu $s2, $s2, 1
-/* 06D464 7F038934 1000F315 */  b     .L7F03558C
+/* 06D464 7F038934 1000F315 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D468 7F038938 26310001 */   addiu $s1, $s1, 1
 actionB9_Start_Timer_1:
 /* 06D46C 7F03893C 0FC15872 */  jal   set_clock_enable
 /* 06D470 7F038940 24040001 */   li    $a0, 1
 /* 06D474 7F038944 26520001 */  addiu $s2, $s2, 1
-/* 06D478 7F038948 1000F310 */  b     .L7F03558C
+/* 06D478 7F038948 1000F310 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D47C 7F03894C 26310001 */   addiu $s1, $s1, 1
 actionBA_Check_Timer_Enabled_Status_RVL_If_Enabled_2:
 /* 06D480 7F038950 0FC15875 */  jal   get_clock_enable
@@ -6293,11 +6325,11 @@ actionBA_Check_Timer_Enabled_Status_RVL_If_Enabled_2:
 /* 06D494 7F038964 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06D498 7F038968 92260001 */   lbu   $a2, 1($s1)
 /* 06D49C 7F03896C 00409025 */  move  $s2, $v0
-/* 06D4A0 7F038970 1000F306 */  b     .L7F03558C
+/* 06D4A0 7F038970 1000F306 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D4A4 7F038974 02C28821 */   addu  $s1, $s6, $v0
 .L7F038978:
 /* 06D4A8 7F038978 26520002 */  addiu $s2, $s2, 2
-/* 06D4AC 7F03897C 1000F303 */  b     .L7F03558C
+/* 06D4AC 7F03897C 1000F303 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D4B0 7F038980 26310002 */   addiu $s1, $s1, 2
 actionBB_Detect_If_Timer_Below_Certain_Point_RVL_If_So_4:
 /* 06D4B4 7F038984 922F0001 */  lbu   $t7, 1($s1)
@@ -6320,11 +6352,11 @@ actionBB_Detect_If_Timer_Below_Certain_Point_RVL_If_So_4:
 /* 06D4F8 7F0389C8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06D4FC 7F0389CC 92260003 */   lbu   $a2, 3($s1)
 /* 06D500 7F0389D0 00409025 */  move  $s2, $v0
-/* 06D504 7F0389D4 1000F2ED */  b     .L7F03558C
+/* 06D504 7F0389D4 1000F2ED */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D508 7F0389D8 02C28821 */   addu  $s1, $s6, $v0
 /* 06D50C 7F0389DC 26520004 */  addiu $s2, $s2, 4
 .L7F0389E0:
-/* 06D510 7F0389E0 1000F2EA */  b     .L7F03558C
+/* 06D510 7F0389E0 1000F2EA */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D514 7F0389E4 26310004 */   addiu $s1, $s1, 4
 actionBC_Detect_If_Timer_Above_Certain_Point_RVL_If_So_4:
 /* 06D518 7F0389E8 922C0001 */  lbu   $t4, 1($s1)
@@ -6347,11 +6379,11 @@ actionBC_Detect_If_Timer_Above_Certain_Point_RVL_If_So_4:
 /* 06D55C 7F038A2C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06D560 7F038A30 92260003 */   lbu   $a2, 3($s1)
 /* 06D564 7F038A34 00409025 */  move  $s2, $v0
-/* 06D568 7F038A38 1000F2D4 */  b     .L7F03558C
+/* 06D568 7F038A38 1000F2D4 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D56C 7F038A3C 02C28821 */   addu  $s1, $s6, $v0
 /* 06D570 7F038A40 26520004 */  addiu $s2, $s2, 4
 .L7F038A44:
-/* 06D574 7F038A44 1000F2D1 */  b     .L7F03558C
+/* 06D574 7F038A44 1000F2D1 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D578 7F038A48 26310004 */   addiu $s1, $s1, 4
 actionBD_Spawn_Guard_C:
 /* 06D57C 7F038A4C 922E0003 */  lbu   $t6, 3($s1)
@@ -6375,7 +6407,7 @@ actionBD_Spawn_Guard_C:
 /* 06D5C4 7F038A94 92380006 */  lbu   $t8, 6($s1)
 /* 06D5C8 7F038A98 000B6200 */  sll   $t4, $t3, 8
 /* 06D5CC 7F038A9C 01981025 */  or    $v0, $t4, $t8
-/* 06D5D0 7F038AA0 0FC0D4E6 */  jal   sub_GAME_7F035398
+/* 06D5D0 7F038AA0 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
 /* 06D5D4 7F038AA4 3044FFFF */   andi  $a0, $v0, 0xffff
 /* 06D5D8 7F038AA8 8FB90280 */  lw    $t9, 0x280($sp)
 /* 06D5DC 7F038AAC 92250001 */  lbu   $a1, 1($s1)
@@ -6391,11 +6423,11 @@ actionBD_Spawn_Guard_C:
 /* 06D604 7F038AD4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06D608 7F038AD8 9226000B */   lbu   $a2, 0xb($s1)
 /* 06D60C 7F038ADC 00409025 */  move  $s2, $v0
-/* 06D610 7F038AE0 1000F2AA */  b     .L7F03558C
+/* 06D610 7F038AE0 1000F2AA */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D614 7F038AE4 02C28821 */   addu  $s1, $s6, $v0
 .L7F038AE8:
 /* 06D618 7F038AE8 2652000C */  addiu $s2, $s2, 0xc
-/* 06D61C 7F038AEC 1000F2A7 */  b     .L7F03558C
+/* 06D61C 7F038AEC 1000F2A7 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D620 7F038AF0 2631000C */   addiu $s1, $s1, 0xc
 actionBE_Respawn_Guard_with_ID_B:
 /* 06D624 7F038AF4 922F0006 */  lbu   $t7, 6($s1)
@@ -6412,7 +6444,7 @@ actionBE_Respawn_Guard_with_ID_B:
 /* 06D650 7F038B20 01787025 */  or    $t6, $t3, $t8
 /* 06D654 7F038B24 01A91025 */  or    $v0, $t5, $t1
 /* 06D658 7F038B28 3044FFFF */  andi  $a0, $v0, 0xffff
-/* 06D65C 7F038B2C 0FC0D4E6 */  jal   sub_GAME_7F035398
+/* 06D65C 7F038B2C 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
 /* 06D660 7F038B30 01D98025 */   or    $s0, $t6, $t9
 /* 06D664 7F038B34 92250001 */  lbu   $a1, 1($s1)
 /* 06D668 7F038B38 82260002 */  lb    $a2, 2($s1)
@@ -6427,11 +6459,11 @@ actionBE_Respawn_Guard_with_ID_B:
 /* 06D68C 7F038B5C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06D690 7F038B60 9226000A */   lbu   $a2, 0xa($s1)
 /* 06D694 7F038B64 00409025 */  move  $s2, $v0
-/* 06D698 7F038B68 1000F288 */  b     .L7F03558C
+/* 06D698 7F038B68 1000F288 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D69C 7F038B6C 02C28821 */   addu  $s1, $s6, $v0
 .L7F038B70:
 /* 06D6A0 7F038B70 2652000B */  addiu $s2, $s2, 0xb
-/* 06D6A4 7F038B74 1000F285 */  b     .L7F03558C
+/* 06D6A4 7F038B74 1000F285 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D6A8 7F038B78 2631000B */   addiu $s1, $s1, 0xb
 actionBF_Spawn_Weapon_9:
 /* 06D6AC 7F038B7C 922C0004 */  lbu   $t4, 4($s1)
@@ -6497,11 +6529,11 @@ actionBF_Spawn_Weapon_9:
 /* 06D790 7F038C60 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06D794 7F038C64 92260008 */   lbu   $a2, 8($s1)
 /* 06D798 7F038C68 00409025 */  move  $s2, $v0
-/* 06D79C 7F038C6C 1000F247 */  b     .L7F03558C
+/* 06D79C 7F038C6C 1000F247 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D7A0 7F038C70 02C28821 */   addu  $s1, $s6, $v0
 .L7F038C74:
 /* 06D7A4 7F038C74 26520009 */  addiu $s2, $s2, 9
-/* 06D7A8 7F038C78 1000F244 */  b     .L7F03558C
+/* 06D7A8 7F038C78 1000F244 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D7AC 7F038C7C 26310009 */   addiu $s1, $s1, 9
 actionC0_Spawn_Hat_8:
 /* 06D7B0 7F038C80 922D0003 */  lbu   $t5, 3($s1)
@@ -6536,11 +6568,11 @@ actionC0_Spawn_Hat_8:
 /* 06D820 7F038CF0 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06D824 7F038CF4 92260007 */   lbu   $a2, 7($s1)
 /* 06D828 7F038CF8 00409025 */  move  $s2, $v0
-/* 06D82C 7F038CFC 1000F223 */  b     .L7F03558C
+/* 06D82C 7F038CFC 1000F223 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D830 7F038D00 02C28821 */   addu  $s1, $s6, $v0
 .L7F038D04:
 /* 06D834 7F038D04 26520008 */  addiu $s2, $s2, 8
-/* 06D838 7F038D08 1000F220 */  b     .L7F03558C
+/* 06D838 7F038D08 1000F220 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D83C 7F038D0C 26310008 */   addiu $s1, $s1, 8
 actionC1_GuardIDDoesAV_If_Gunfire_RVL_WhenComplete_5:
 /* 06D840 7F038D10 92380002 */  lbu   $t8, 2($s1)
@@ -6552,7 +6584,7 @@ actionC1_GuardIDDoesAV_If_Gunfire_RVL_WhenComplete_5:
 /* 06D858 7F038D28 AFA00210 */  sw    $zero, 0x210($sp)
 /* 06D85C 7F038D2C AFA00234 */  sw    $zero, 0x234($sp)
 /* 06D860 7F038D30 00009825 */  move  $s3, $zero
-/* 06D864 7F038D34 0FC0D4E6 */  jal   sub_GAME_7F035398
+/* 06D864 7F038D34 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
 /* 06D868 7F038D38 0000A025 */   move  $s4, $zero
 /* 06D86C 7F038D3C 00408025 */  move  $s0, $v0
 /* 06D870 7F038D40 02E02025 */  move  $a0, $s7
@@ -6656,11 +6688,11 @@ actionC1_GuardIDDoesAV_If_Gunfire_RVL_WhenComplete_5:
 /* 06D9D8 7F038EA8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06D9DC 7F038EAC 92260004 */   lbu   $a2, 4($s1)
 /* 06D9E0 7F038EB0 00409025 */  move  $s2, $v0
-/* 06D9E4 7F038EB4 1000F1B5 */  b     .L7F03558C
+/* 06D9E4 7F038EB4 1000F1B5 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D9E8 7F038EB8 02C28821 */   addu  $s1, $s6, $v0
 /* 06D9EC 7F038EBC 26520005 */  addiu $s2, $s2, 5
 .L7F038EC0:
-/* 06D9F0 7F038EC0 1000F1B2 */  b     .L7F03558C
+/* 06D9F0 7F038EC0 1000F1B2 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06D9F4 7F038EC4 26310005 */   addiu $s1, $s1, 5
 actionC2_Display_Text_Preset_Bottom_Screen_3:
 /* 06D9F8 7F038EC8 922C0001 */  lbu   $t4, 1($s1)
@@ -6671,7 +6703,7 @@ actionC2_Display_Text_Preset_Bottom_Screen_3:
 /* 06DA0C 7F038EDC 0FC228F2 */  jal   display_string_in_lower_left_corner
 /* 06DA10 7F038EE0 00402025 */   move  $a0, $v0
 /* 06DA14 7F038EE4 26520003 */  addiu $s2, $s2, 3
-/* 06DA18 7F038EE8 1000F1A8 */  b     .L7F03558C
+/* 06DA18 7F038EE8 1000F1A8 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DA1C 7F038EEC 26310003 */   addiu $s1, $s1, 3
 actionC3_Display_Text_Preset_Top_Screen_3:
 /* 06DA20 7F038EF0 92390001 */  lbu   $t9, 1($s1)
@@ -6682,7 +6714,7 @@ actionC3_Display_Text_Preset_Top_Screen_3:
 /* 06DA34 7F038F04 0FC22A57 */  jal   display_string_at_top_of_screen
 /* 06DA38 7F038F08 00402025 */   move  $a0, $v0
 /* 06DA3C 7F038F0C 26520003 */  addiu $s2, $s2, 3
-/* 06DA40 7F038F10 1000F19E */  b     .L7F03558C
+/* 06DA40 7F038F10 1000F19E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DA44 7F038F14 26310003 */   addiu $s1, $s1, 3
 actionC4_Play_Sound_Effect_num_In_Slot_num_0_7_4:
 /* 06DA48 7F038F18 922F0001 */  lbu   $t7, 1($s1)
@@ -6694,13 +6726,13 @@ actionC4_Play_Sound_Effect_num_In_Slot_num_0_7_4:
 /* 06DA60 7F038F30 0FC0D249 */  jal   set_sound_effect_to_slot
 /* 06DA64 7F038F34 000C2C03 */   sra   $a1, $t4, 0x10
 /* 06DA68 7F038F38 26520004 */  addiu $s2, $s2, 4
-/* 06DA6C 7F038F3C 1000F193 */  b     .L7F03558C
+/* 06DA6C 7F038F3C 1000F193 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DA70 7F038F40 26310004 */   addiu $s1, $s1, 4
 actionC9_Shut_Off_Sound_In_Slot_Number_2:
 /* 06DA74 7F038F44 0FC0D26F */  jal   sub_GAME_7F0349BC
 /* 06DA78 7F038F48 82240001 */   lb    $a0, 1($s1)
 /* 06DA7C 7F038F4C 26520002 */  addiu $s2, $s2, 2
-/* 06DA80 7F038F50 1000F18E */  b     .L7F03558C
+/* 06DA80 7F038F50 1000F18E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DA84 7F038F54 26310002 */   addiu $s1, $s1, 2
 actionC7_Sound_In_Slot_num_Crecendos_To_Volume_Over_ms_6:
 /* 06DA88 7F038F58 92380002 */  lbu   $t8, 2($s1)
@@ -6746,7 +6778,7 @@ actionC7_Sound_In_Slot_num_Crecendos_To_Volume_Over_ms_6:
 /* 06DB28 7F038FF8 82240001 */   lb    $a0, 1($s1)
 .L7F038FFC:
 /* 06DB2C 7F038FFC 26520006 */  addiu $s2, $s2, 6
-/* 06DB30 7F039000 1000F162 */  b     .L7F03558C
+/* 06DB30 7F039000 1000F162 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DB34 7F039004 26310006 */   addiu $s1, $s1, 6
 actionC8_Sound_In_Slot_num_Fades_To_Volume_Over_ms_6:
 /* 06DB38 7F039008 922D0002 */  lbu   $t5, 2($s1)
@@ -6795,7 +6827,7 @@ actionC8_Sound_In_Slot_num_Fades_To_Volume_Over_ms_6:
 /* 06DBE4 7F0390B4 82240001 */   lb    $a0, 1($s1)
 .L7F0390B8:
 /* 06DBE8 7F0390B8 26520006 */  addiu $s2, $s2, 6
-/* 06DBEC 7F0390BC 1000F133 */  b     .L7F03558C
+/* 06DBEC 7F0390BC 1000F133 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DBF0 7F0390C0 26310006 */   addiu $s1, $s1, 6
 actionC5_EmanateSoundSlotnumFrom16ObjectWithAudibleRV_5:
 /* 06DBF4 7F0390C4 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -6837,7 +6869,7 @@ actionC5_EmanateSoundSlotnumFrom16ObjectWithAudibleRV_5:
 .L7F039154:
 /* 06DC84 7F039154 26520005 */  addiu $s2, $s2, 5
 .L7F039158:
-/* 06DC88 7F039158 1000F10C */  b     .L7F03558C
+/* 06DC88 7F039158 1000F10C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DC8C 7F03915C 26310005 */   addiu $s1, $s1, 5
 actionC6_EmanateSoundSlotnumFromPresetWithAudibleRV_6:
 /* 06DC90 7F039160 922D0002 */  lbu   $t5, 2($s1)
@@ -6906,7 +6938,7 @@ actionC6_EmanateSoundSlotnumFromPresetWithAudibleRV_6:
 .L7F039254:
 /* 06DD84 7F039254 26520006 */  addiu $s2, $s2, 6
 .L7F039258:
-/* 06DD88 7F039258 1000F0CC */  b     .L7F03558C
+/* 06DD88 7F039258 1000F0CC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DD8C 7F03925C 26310006 */   addiu $s1, $s1, 6
 actionCA_If_Value_GreaterThan_Volume_7FFF_Max_RVL_5:
 /* 06DD90 7F039260 92390002 */  lbu   $t9, 2($s1)
@@ -6933,12 +6965,12 @@ actionCA_If_Value_GreaterThan_Volume_7FFF_Max_RVL_5:
 /* 06DDE4 7F0392B4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06DDE8 7F0392B8 92260004 */   lbu   $a2, 4($s1)
 /* 06DDEC 7F0392BC 00409025 */  move  $s2, $v0
-/* 06DDF0 7F0392C0 1000F0B2 */  b     .L7F03558C
+/* 06DDF0 7F0392C0 1000F0B2 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DDF4 7F0392C4 02C28821 */   addu  $s1, $s6, $v0
 .L7F0392C8:
 /* 06DDF8 7F0392C8 26520005 */  addiu $s2, $s2, 5
 .L7F0392CC:
-/* 06DDFC 7F0392CC 1000F0AF */  b     .L7F03558C
+/* 06DDFC 7F0392CC 1000F0AF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DE00 7F0392D0 26310005 */   addiu $s1, $s1, 5
 actionCB_Set_Object_Path_27_Type_Object_2:
 /* 06DE04 7F0392D4 0FC0D50D */  jal   get_ptr_path_for_pathnum
@@ -6950,7 +6982,7 @@ actionCB_Set_Object_Path_27_Type_Object_2:
 /* 06DE1C 7F0392EC AD6200A4 */  sw    $v0, 0xa4($t3)
 /* 06DE20 7F0392F0 AD6000A8 */  sw    $zero, 0xa8($t3)
 .L7F0392F4:
-/* 06DE24 7F0392F4 1000F0A5 */  b     .L7F03558C
+/* 06DE24 7F0392F4 1000F0A5 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DE28 7F0392F8 26310002 */   addiu $s1, $s1, 2
 actionCC_Set_Speed_Moving_Vehicle_27_Type_Object_5:
 /* 06DE2C 7F0392FC 922F0001 */  lbu   $t7, 1($s1)
@@ -6977,7 +7009,7 @@ actionCC_Set_Speed_Moving_Vehicle_27_Type_Object_5:
 /* 06DE80 7F039350 E5620094 */  swc1  $f2, 0x94($t3)
 /* 06DE84 7F039354 E5600098 */  swc1  $f0, 0x98($t3)
 .L7F039358:
-/* 06DE88 7F039358 1000F08C */  b     .L7F03558C
+/* 06DE88 7F039358 1000F08C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DE8C 7F03935C 26310005 */   addiu $s1, $s1, 5
 actionCD_Set_Speed_Aircraft_Rotor_5:
 /* 06DE90 7F039360 922F0001 */  lbu   $t7, 1($s1)
@@ -7002,7 +7034,7 @@ actionCD_Set_Speed_Aircraft_Rotor_5:
 /* 06DEDC 7F0393AC E5620090 */  swc1  $f2, 0x90($t3)
 /* 06DEE0 7F0393B0 E5600094 */  swc1  $f0, 0x94($t3)
 .L7F0393B4:
-/* 06DEE4 7F0393B4 1000F075 */  b     .L7F03558C
+/* 06DEE4 7F0393B4 1000F075 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DEE8 7F0393B8 26310005 */   addiu $s1, $s1, 5
 actionCE_Detect_If_Currently_In_Intro_Camera_RVL_If_So_2:
 /* 06DEEC 7F0393BC 0FC1E94A */  jal   get_camera_mode
@@ -7020,11 +7052,11 @@ actionCE_Detect_If_Currently_In_Intro_Camera_RVL_If_So_2:
 /* 06DF18 7F0393E8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06DF1C 7F0393EC 92260001 */   lbu   $a2, 1($s1)
 /* 06DF20 7F0393F0 00409025 */  move  $s2, $v0
-/* 06DF24 7F0393F4 1000F065 */  b     .L7F03558C
+/* 06DF24 7F0393F4 1000F065 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DF28 7F0393F8 02C28821 */   addu  $s1, $s6, $v0
 .L7F0393FC:
 /* 06DF2C 7F0393FC 26520002 */  addiu $s2, $s2, 2
-/* 06DF30 7F039400 1000F062 */  b     .L7F03558C
+/* 06DF30 7F039400 1000F062 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DF34 7F039404 26310002 */   addiu $s1, $s1, 2
 actionCF_Detect_If_Currently_In_Intro_Swirl_RVL_If_So_2:
 /* 06DF38 7F039408 0FC1E94A */  jal   get_camera_mode
@@ -7036,11 +7068,11 @@ actionCF_Detect_If_Currently_In_Intro_Swirl_RVL_If_So_2:
 /* 06DF50 7F039420 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06DF54 7F039424 92260001 */   lbu   $a2, 1($s1)
 /* 06DF58 7F039428 00409025 */  move  $s2, $v0
-/* 06DF5C 7F03942C 1000F057 */  b     .L7F03558C
+/* 06DF5C 7F03942C 1000F057 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DF60 7F039430 02C28821 */   addu  $s1, $s6, $v0
 .L7F039434:
 /* 06DF64 7F039434 26520002 */  addiu $s2, $s2, 2
-/* 06DF68 7F039438 1000F054 */  b     .L7F03558C
+/* 06DF68 7F039438 1000F054 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DF6C 7F03943C 26310002 */   addiu $s1, $s1, 2
 actionD0_Change_Animation_Type_Of_Type_16_Monitor_4:
 /* 06DF70 7F039440 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -7058,7 +7090,7 @@ actionD0_Change_Animation_Type_Of_Type_16_Monitor_4:
 /* 06DFA0 7F039470 0FC12726 */  jal   set_ptr_monitor_img_to_obj_ani_slot
 /* 06DFA4 7F039474 92250003 */   lbu   $a1, 3($s1)
 /* 06DFA8 7F039478 26520004 */  addiu $s2, $s2, 4
-/* 06DFAC 7F03947C 1000F043 */  b     .L7F03558C
+/* 06DFAC 7F03947C 1000F043 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DFB0 7F039480 26310004 */   addiu $s1, $s1, 4
 /* 06DFB4 7F039484 2401000B */  li    $at, 11
 .L7F039488:
@@ -7079,7 +7111,7 @@ actionD0_Change_Animation_Type_Of_Type_16_Monitor_4:
 .L7F0394C0:
 /* 06DFF0 7F0394C0 26520004 */  addiu $s2, $s2, 4
 .L7F0394C4:
-/* 06DFF4 7F0394C4 1000F031 */  b     .L7F03558C
+/* 06DFF4 7F0394C4 1000F031 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06DFF8 7F0394C8 26310004 */   addiu $s1, $s1, 4
 actionD1_If_Bond_In_Tank_RVL_2:
 /* 06DFFC 7F0394CC 0FC1F39E */  jal   get_intank_flag
@@ -7091,11 +7123,11 @@ actionD1_If_Bond_In_Tank_RVL_2:
 /* 06E014 7F0394E4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06E018 7F0394E8 92260001 */   lbu   $a2, 1($s1)
 /* 06E01C 7F0394EC 00409025 */  move  $s2, $v0
-/* 06E020 7F0394F0 1000F026 */  b     .L7F03558C
+/* 06E020 7F0394F0 1000F026 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E024 7F0394F4 02C28821 */   addu  $s1, $s6, $v0
 .L7F0394F8:
 /* 06E028 7F0394F8 26520002 */  addiu $s2, $s2, 2
-/* 06E02C 7F0394FC 1000F023 */  b     .L7F03558C
+/* 06E02C 7F0394FC 1000F023 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E030 7F039500 26310002 */   addiu $s1, $s1, 2
 actionD2_Exit_Level_1:
 /* 06E034 7F039504 3C0D8003 */  lui   $t5, %hi(camera_8003642C) # $t5, 0x8003
@@ -7110,20 +7142,20 @@ actionD2_Exit_Level_1:
 /* 06E058 7F039528 26520001 */   addiu $s2, $s2, 1
 /* 06E05C 7F03952C AC2F6434 */  sw    $t7, %lo(camera_80036434)($at)
 /* 06E060 7F039530 26520001 */  addiu $s2, $s2, 1
-/* 06E064 7F039534 1000F015 */  b     .L7F03558C
+/* 06E064 7F039534 1000F015 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E068 7F039538 26310001 */   addiu $s1, $s1, 1
 .L7F03953C:
 /* 06E06C 7F03953C 0C001A5A */  jal   return_to_title_from_level_end
 /* 06E070 7F039540 00000000 */   nop   
 /* 06E074 7F039544 26520001 */  addiu $s2, $s2, 1
 .L7F039548:
-/* 06E078 7F039548 1000F010 */  b     .L7F03558C
+/* 06E078 7F039548 1000F010 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E07C 7F03954C 26310001 */   addiu $s1, $s1, 1
 actionD3_Return_From_Camera_Scene_1:
 /* 06E080 7F039550 0FC1EA6E */  jal   set_camera_mode
 /* 06E084 7F039554 24040008 */   li    $a0, 8
 /* 06E088 7F039558 26520001 */  addiu $s2, $s2, 1
-/* 06E08C 7F03955C 1000F00B */  b     .L7F03558C
+/* 06E08C 7F03955C 1000F00B */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E090 7F039560 26310001 */   addiu $s1, $s1, 1
 actionD4_Camera_Looks_At_Bond_From_Preset_3:
 /* 06E094 7F039564 922A0001 */  lbu   $t2, 1($s1)
@@ -7161,7 +7193,7 @@ actionD4_Camera_Looks_At_Bond_From_Preset_3:
 /* 06E10C 7F0395DC 0FC1EA6E */  jal   set_camera_mode
 /* 06E110 7F0395E0 24040007 */   li    $a0, 7
 /* 06E114 7F0395E4 26520003 */  addiu $s2, $s2, 3
-/* 06E118 7F0395E8 1000EFE8 */  b     .L7F03558C
+/* 06E118 7F0395E8 1000EFE8 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E11C 7F0395EC 26310003 */   addiu $s1, $s1, 3
 actionD5_Go_To_Camera_Position_6:
 /* 06E120 7F0395F0 0FC15C20 */  jal   sub_GAME_7F057080
@@ -7196,7 +7228,7 @@ actionD5_Go_To_Camera_Position_6:
 .L7F039664:
 /* 06E194 7F039664 26520006 */  addiu $s2, $s2, 6
 .L7F039668:
-/* 06E198 7F039668 1000EFC8 */  b     .L7F03558C
+/* 06E198 7F039668 1000EFC8 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E19C 7F03966C 26310006 */   addiu $s1, $s1, 6
 actionD6_If_Less_Than_Elevation_RVL_4:
 /* 06E1A0 7F039670 922C0001 */  lbu   $t4, 1($s1)
@@ -7221,11 +7253,11 @@ actionD6_If_Less_Than_Elevation_RVL_4:
 /* 06E1EC 7F0396BC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06E1F0 7F0396C0 92260003 */   lbu   $a2, 3($s1)
 /* 06E1F4 7F0396C4 00409025 */  move  $s2, $v0
-/* 06E1F8 7F0396C8 1000EFB0 */  b     .L7F03558C
+/* 06E1F8 7F0396C8 1000EFB0 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E1FC 7F0396CC 02C28821 */   addu  $s1, $s6, $v0
 /* 06E200 7F0396D0 26520004 */  addiu $s2, $s2, 4
 .L7F0396D4:
-/* 06E204 7F0396D4 1000EFAD */  b     .L7F03558C
+/* 06E204 7F0396D4 1000EFAD */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E208 7F0396D8 26310004 */   addiu $s1, $s1, 4
 actionD7_Disable_Text_Variable_2:
 /* 06E20C 7F0396DC 24040004 */  li    $a0, 4
@@ -7258,7 +7290,7 @@ actionD7_Disable_Text_Variable_2:
 /* 06E26C 7F03973C 3C018003 */  lui   $at, %hi(D_800364B0) # $at, 0x8003
 /* 06E270 7F039740 AC2064B0 */  sw    $zero, %lo(D_800364B0)($at)
 /* 06E274 7F039744 26520002 */  addiu $s2, $s2, 2
-/* 06E278 7F039748 1000EF90 */  b     .L7F03558C
+/* 06E278 7F039748 1000EF90 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E27C 7F03974C 26310002 */   addiu $s1, $s1, 2
 actionD8_Enable_All_On_Screen_Displays_1:
 /* 06E280 7F039750 24040004 */  li    $a0, 4
@@ -7278,7 +7310,7 @@ actionD8_Enable_All_On_Screen_Displays_1:
 /* 06E2B8 7F039788 3C018003 */  lui   $at, %hi(D_800364B0) # $at, 0x8003
 /* 06E2BC 7F03978C AC2C64B0 */  sw    $t4, %lo(D_800364B0)($at)
 /* 06E2C0 7F039790 26520001 */  addiu $s2, $s2, 1
-/* 06E2C4 7F039794 1000EF7D */  b     .L7F03558C
+/* 06E2C4 7F039794 1000EF7D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E2C8 7F039798 26310001 */   addiu $s1, $s1, 1
 actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E2CC 7F03979C 922B0002 */  lbu   $t3, 2($s1)
@@ -7394,11 +7426,11 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E474 7F039944 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06E478 7F039948 92260004 */   lbu   $a2, 4($s1)
 /* 06E47C 7F03994C 00409025 */  move  $s2, $v0
-/* 06E480 7F039950 1000EF0E */  b     .L7F03558C
+/* 06E480 7F039950 1000EF0E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E484 7F039954 02C28821 */   addu  $s1, $s6, $v0
 .L7F039958:
 /* 06E488 7F039958 26520005 */  addiu $s2, $s2, 5
-/* 06E48C 7F03995C 1000EF0B */  b     .L7F03558C
+/* 06E48C 7F03995C 1000EF0B */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E490 7F039960 26310005 */   addiu $s1, $s1, 5
 actionDA_Fade_Out_From_Cut_Scene_1:
 /* 06E494 7F039964 3C0D8003 */  lui   $t5, %hi(D_800364A0) # $t5, 0x8003
@@ -7416,7 +7448,7 @@ actionDA_Fade_Out_From_Cut_Scene_1:
 /* 06E4C4 7F039994 4600B306 */   mov.s $f12, $f22
 .L7F039998:
 /* 06E4C8 7F039998 26520001 */  addiu $s2, $s2, 1
-/* 06E4CC 7F03999C 1000EEFB */  b     .L7F03558C
+/* 06E4CC 7F03999C 1000EEFB */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E4D0 7F0399A0 26310001 */   addiu $s1, $s1, 1
 actionDB_Fade_In_From_Black_Reset_DA_1:
 /* 06E4D4 7F0399A4 3C0E8003 */  lui   $t6, %hi(D_800364A0) # $t6, 0x8003
@@ -7433,7 +7465,7 @@ actionDB_Fade_In_From_Black_Reset_DA_1:
 /* 06E500 7F0399D0 4600A386 */   mov.s $f14, $f20
 .L7F0399D4:
 /* 06E504 7F0399D4 26520001 */  addiu $s2, $s2, 1
-/* 06E508 7F0399D8 1000EEEC */  b     .L7F03558C
+/* 06E508 7F0399D8 1000EEEC */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E50C 7F0399DC 26310001 */   addiu $s1, $s1, 1
 actionDC_RVL_When_Fade_Complete_2:
 /* 06E510 7F0399E0 3C0F8008 */  lui   $t7, %hi(ptr_BONDdata) # $t7, 0x8008
@@ -7448,11 +7480,11 @@ actionDC_RVL_When_Fade_Complete_2:
 /* 06E534 7F039A04 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06E538 7F039A08 92260001 */   lbu   $a2, 1($s1)
 /* 06E53C 7F039A0C 00409025 */  move  $s2, $v0
-/* 06E540 7F039A10 1000EEDE */  b     .L7F03558C
+/* 06E540 7F039A10 1000EEDE */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E544 7F039A14 02C28821 */   addu  $s1, $s6, $v0
 /* 06E548 7F039A18 26520002 */  addiu $s2, $s2, 2
 .L7F039A1C:
-/* 06E54C 7F039A1C 1000EEDB */  b     .L7F03558C
+/* 06E54C 7F039A1C 1000EEDB */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E550 7F039A20 26310002 */   addiu $s1, $s1, 2
 actionDD_Remove_All_Guards_1:
 /* 06E554 7F039A24 0FC07D4C */  jal   get_numguards
@@ -7479,7 +7511,7 @@ actionDD_Remove_All_Guards_1:
 /* 06E5A0 7F039A70 0443FFF7 */  bgezl $v0, .L7F039A50
 /* 06E5A4 7F039A74 8FCA0000 */   lw    $t2, ($fp)
 .L7F039A78:
-/* 06E5A8 7F039A78 1000EEC4 */  b     .L7F03558C
+/* 06E5A8 7F039A78 1000EEC4 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E5AC 7F039A7C 26310001 */   addiu $s1, $s1, 1
 actionDE_Bring_Removed_Guards_Back_1:
 /* 06E5B0 7F039A80 0FC07D4C */  jal   get_numguards
@@ -7503,7 +7535,7 @@ actionDE_Bring_Removed_Guards_Back_1:
 /* 06E5F4 7F039AC4 AC4D0014 */   sw    $t5, 0x14($v0)
 .L7F039AC8:
 /* 06E5F8 7F039AC8 26520001 */  addiu $s2, $s2, 1
-/* 06E5FC 7F039ACC 1000EEAF */  b     .L7F03558C
+/* 06E5FC 7F039ACC 1000EEAF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E600 7F039AD0 26310001 */   addiu $s1, $s1, 1
 actionDF_Open_Type_16_Door_Used_Cut_Scenes_2:
 /* 06E604 7F039AD4 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -7529,7 +7561,7 @@ actionDF_Open_Type_16_Door_Used_Cut_Scenes_2:
 .L7F039B24:
 /* 06E654 7F039B24 26520002 */  addiu $s2, $s2, 2
 .L7F039B28:
-/* 06E658 7F039B28 1000EE98 */  b     .L7F03558C
+/* 06E658 7F039B28 1000EE98 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E65C 7F039B2C 26310002 */   addiu $s1, $s1, 2
 actionE0_Guard_ID_Draws_Weapon_num_3:
 /* 06E660 7F039B30 02E02025 */  move  $a0, $s7
@@ -7541,7 +7573,7 @@ actionE0_Guard_ID_Draws_Weapon_num_3:
 /* 06E678 7F039B48 92250002 */   lbu   $a1, 2($s1)
 .L7F039B4C:
 /* 06E67C 7F039B4C 26520003 */  addiu $s2, $s2, 3
-/* 06E680 7F039B50 1000EE8E */  b     .L7F03558C
+/* 06E680 7F039B50 1000EE8E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E684 7F039B54 26310003 */   addiu $s1, $s1, 3
 actionE1_If_Fewer_than_This_Many_Players_Playing_RVL_3:
 /* 06E688 7F039B58 0FC26919 */  jal   get_num_players
@@ -7555,11 +7587,11 @@ actionE1_If_Fewer_than_This_Many_Players_Playing_RVL_3:
 /* 06E6A8 7F039B78 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06E6AC 7F039B7C 92260002 */   lbu   $a2, 2($s1)
 /* 06E6B0 7F039B80 00409025 */  move  $s2, $v0
-/* 06E6B4 7F039B84 1000EE81 */  b     .L7F03558C
+/* 06E6B4 7F039B84 1000EE81 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E6B8 7F039B88 02C28821 */   addu  $s1, $s6, $v0
 /* 06E6BC 7F039B8C 26520003 */  addiu $s2, $s2, 3
 .L7F039B90:
-/* 06E6C0 7F039B90 1000EE7E */  b     .L7F03558C
+/* 06E6C0 7F039B90 1000EE7E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E6C4 7F039B94 26310003 */   addiu $s1, $s1, 3
 actionE2_If_Ammo_Value_In_Type_Is_LTV_RVL_4:
 /* 06E6C8 7F039B98 0FC1A496 */  jal   check_cur_player_ammo_amount_total
@@ -7573,11 +7605,11 @@ actionE2_If_Ammo_Value_In_Type_Is_LTV_RVL_4:
 /* 06E6E8 7F039BB8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06E6EC 7F039BBC 92260003 */   lbu   $a2, 3($s1)
 /* 06E6F0 7F039BC0 00409025 */  move  $s2, $v0
-/* 06E6F4 7F039BC4 1000EE71 */  b     .L7F03558C
+/* 06E6F4 7F039BC4 1000EE71 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E6F8 7F039BC8 02C28821 */   addu  $s1, $s6, $v0
 /* 06E6FC 7F039BCC 26520004 */  addiu $s2, $s2, 4
 .L7F039BD0:
-/* 06E700 7F039BD0 1000EE6E */  b     .L7F03558C
+/* 06E700 7F039BD0 1000EE6E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E704 7F039BD4 26310004 */   addiu $s1, $s1, 4
 actionE3_Draw_Weapon_From_Inventory_In_Game_2:
 /* 06E708 7F039BD8 00002025 */  move  $a0, $zero
@@ -7587,7 +7619,7 @@ actionE3_Draw_Weapon_From_Inventory_In_Game_2:
 /* 06E718 7F039BE8 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
 /* 06E71C 7F039BEC 00002825 */   move  $a1, $zero
 /* 06E720 7F039BF0 26520002 */  addiu $s2, $s2, 2
-/* 06E724 7F039BF4 1000EE65 */  b     .L7F03558C
+/* 06E724 7F039BF4 1000EE65 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E728 7F039BF8 26310002 */   addiu $s1, $s1, 2
 actionE4_Draw_Weapon_From_Inventory_Cut_Scene_2:
 /* 06E72C 7F039BFC 00002025 */  move  $a0, $zero
@@ -7597,7 +7629,7 @@ actionE4_Draw_Weapon_From_Inventory_Cut_Scene_2:
 /* 06E73C 7F039C0C 0FC176D5 */  jal   remove_hands_item
 /* 06E740 7F039C10 00002825 */   move  $a1, $zero
 /* 06E744 7F039C14 26520002 */  addiu $s2, $s2, 2
-/* 06E748 7F039C18 1000EE5C */  b     .L7F03558C
+/* 06E748 7F039C18 1000EE5C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E74C 7F039C1C 26310002 */   addiu $s1, $s1, 2
 actionE5_Set_Bonds_Speed_3:
 /* 06E750 7F039C20 822C0001 */  lb    $t4, 1($s1)
@@ -7613,7 +7645,7 @@ actionE5_Set_Bonds_Speed_3:
 /* 06E778 7F039C48 448B3000 */  mtc1  $t3, $f6
 /* 06E77C 7F039C4C 00000000 */  nop   
 /* 06E780 7F039C50 468032A0 */  cvt.s.w $f10, $f6
-/* 06E784 7F039C54 1000EE4D */  b     .L7F03558C
+/* 06E784 7F039C54 1000EE4D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E788 7F039C58 E44A0008 */   swc1  $f10, 8($v0)
 actionE6_If_16_Object_And_Preset_Are_In_Same_Room_RVL_5:
 /* 06E78C 7F039C5C 92380002 */  lbu   $t8, 2($s1)
@@ -7665,11 +7697,11 @@ actionE6_If_16_Object_And_Preset_Are_In_Same_Room_RVL_5:
 /* 06E83C 7F039D0C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06E840 7F039D10 92260004 */   lbu   $a2, 4($s1)
 /* 06E844 7F039D14 00409025 */  move  $s2, $v0
-/* 06E848 7F039D18 1000EE1C */  b     .L7F03558C
+/* 06E848 7F039D18 1000EE1C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E84C 7F039D1C 02C28821 */   addu  $s1, $s6, $v0
 /* 06E850 7F039D20 26520005 */  addiu $s2, $s2, 5
 .L7F039D24:
-/* 06E854 7F039D24 1000EE19 */  b     .L7F03558C
+/* 06E854 7F039D24 1000EE19 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E858 7F039D28 26310005 */   addiu $s1, $s1, 5
 actionE9_Instantly_Switch_Sky_To_Sky_2_1:
 /* 06E85C 7F039D2C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -7677,7 +7709,7 @@ actionE9_Instantly_Switch_Sky_To_Sky_2_1:
 /* 06E864 7F039D34 0FC2EB2A */  jal   switch_to_solosky2
 /* 06E868 7F039D38 00000000 */   nop   
 /* 06E86C 7F039D3C 26520001 */  addiu $s2, $s2, 1
-/* 06E870 7F039D40 1000EE12 */  b     .L7F03558C
+/* 06E870 7F039D40 1000EE12 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E874 7F039D44 26310001 */   addiu $s1, $s1, 1
 actionEA_Stop_Game_Time_1:
 /* 06E878 7F039D48 3C0D8003 */  lui   $t5, %hi(D_800364A0) # $t5, 0x8003
@@ -7688,7 +7720,7 @@ actionEA_Stop_Game_Time_1:
 /* 06E88C 7F039D5C 26520001 */   addiu $s2, $s2, 1
 /* 06E890 7F039D60 AC2E64A0 */  sw    $t6, %lo(D_800364A0)($at)
 .L7F039D64:
-/* 06E894 7F039D64 1000EE09 */  b     .L7F03558C
+/* 06E894 7F039D64 1000EE09 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E898 7F039D68 26310001 */   addiu $s1, $s1, 1
 actionEB_If_Key_Pressed_RVL_2:
 /* 06E89C 7F039D6C 3C0F8008 */  lui   $t7, %hi(ptr_BONDdata) # $t7, 0x8008
@@ -7701,18 +7733,18 @@ actionEB_If_Key_Pressed_RVL_2:
 /* 06E8B8 7F039D88 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06E8BC 7F039D8C 92260001 */   lbu   $a2, 1($s1)
 /* 06E8C0 7F039D90 00409025 */  move  $s2, $v0
-/* 06E8C4 7F039D94 1000EDFD */  b     .L7F03558C
+/* 06E8C4 7F039D94 1000EDFD */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E8C8 7F039D98 02C28821 */   addu  $s1, $s6, $v0
 /* 06E8CC 7F039D9C 26520002 */  addiu $s2, $s2, 2
 .L7F039DA0:
-/* 06E8D0 7F039DA0 1000EDFA */  b     .L7F03558C
+/* 06E8D0 7F039DA0 1000EDFA */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E8D4 7F039DA4 26310002 */   addiu $s1, $s1, 2
 actionEC_Disable_Player_Pickups_1:
 /* 06E8D8 7F039DA8 24090001 */  li    $t1, 1
 /* 06E8DC 7F039DAC 3C018003 */  lui   $at, %hi(D_800364B4) # $at, 0x8003
 /* 06E8E0 7F039DB0 AC2964B4 */  sw    $t1, %lo(D_800364B4)($at)
 /* 06E8E4 7F039DB4 26520001 */  addiu $s2, $s2, 1
-/* 06E8E8 7F039DB8 1000EDF4 */  b     .L7F03558C
+/* 06E8E8 7F039DB8 1000EDF4 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E8EC 7F039DBC 26310001 */   addiu $s1, $s1, 1
 actionED_Hide_First_Person_Display_1:
 /* 06E8F0 7F039DC0 0FC173D7 */  jal   remove_item_in_hand
@@ -7720,7 +7752,7 @@ actionED_Hide_First_Person_Display_1:
 /* 06E8F8 7F039DC8 0FC173D7 */  jal   remove_item_in_hand
 /* 06E8FC 7F039DCC 24040001 */   li    $a0, 1
 /* 06E900 7F039DD0 26520001 */  addiu $s2, $s2, 1
-/* 06E904 7F039DD4 1000EDED */  b     .L7F03558C
+/* 06E904 7F039DD4 1000EDED */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E908 7F039DD8 26310001 */   addiu $s1, $s1, 1
 actionEE_Cuba_Circular_Camera_Aim_D:
 /* 06E90C 7F039DDC 92390003 */  lbu   $t9, 3($s1)
@@ -7788,14 +7820,14 @@ actionEE_Cuba_Circular_Camera_Aim_D:
 /* 06EA04 7F039ED4 0FC1EA6E */  jal   set_camera_mode
 /* 06EA08 7F039ED8 AC269A14 */   sw    $a2, %lo(dword_CODE_bss_80079A14)($at)
 /* 06EA0C 7F039EDC 2652000D */  addiu $s2, $s2, 0xd
-/* 06EA10 7F039EE0 1000EDAA */  b     .L7F03558C
+/* 06EA10 7F039EE0 1000EDAA */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EA14 7F039EE4 2631000D */   addiu $s1, $s1, 0xd
 actionEF_Trigger_Credits_1:
 /* 06EA18 7F039EE8 240F0001 */  li    $t7, 1
 /* 06EA1C 7F039EEC 3C018003 */  lui   $at, %hi(D_8003643C) # $at, 0x8003
 /* 06EA20 7F039EF0 AC2F643C */  sw    $t7, %lo(D_8003643C)($at)
 /* 06EA24 7F039EF4 26520001 */  addiu $s2, $s2, 1
-/* 06EA28 7F039EF8 1000EDA4 */  b     .L7F03558C
+/* 06EA28 7F039EF8 1000EDA4 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EA2C 7F039EFC 26310001 */   addiu $s1, $s1, 1
 actionF0_RVL_If_Credits_Completed_2:
 /* 06EA30 7F039F00 3C0A8003 */  lui   $t2, %hi(D_8003643C) # $t2, 0x8003
@@ -7807,11 +7839,11 @@ actionF0_RVL_If_Credits_Completed_2:
 /* 06EA48 7F039F18 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06EA4C 7F039F1C 92260001 */   lbu   $a2, 1($s1)
 /* 06EA50 7F039F20 00409025 */  move  $s2, $v0
-/* 06EA54 7F039F24 1000ED99 */  b     .L7F03558C
+/* 06EA54 7F039F24 1000ED99 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EA58 7F039F28 02C28821 */   addu  $s1, $s6, $v0
 .L7F039F2C:
 /* 06EA5C 7F039F2C 26520002 */  addiu $s2, $s2, 2
-/* 06EA60 7F039F30 1000ED96 */  b     .L7F03558C
+/* 06EA60 7F039F30 1000ED96 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EA64 7F039F34 26310002 */   addiu $s1, $s1, 2
 actionF1_If_All_Objectives_Complete_RVL_2:
 /* 06EA68 7F039F38 0FC15D2E */  jal   check_objectives_complete
@@ -7822,11 +7854,11 @@ actionF1_If_All_Objectives_Complete_RVL_2:
 /* 06EA7C 7F039F4C 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06EA80 7F039F50 92260001 */   lbu   $a2, 1($s1)
 /* 06EA84 7F039F54 00409025 */  move  $s2, $v0
-/* 06EA88 7F039F58 1000ED8C */  b     .L7F03558C
+/* 06EA88 7F039F58 1000ED8C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EA8C 7F039F5C 02C28821 */   addu  $s1, $s6, $v0
 .L7F039F60:
 /* 06EA90 7F039F60 26520002 */  addiu $s2, $s2, 2
-/* 06EA94 7F039F64 1000ED89 */  b     .L7F03558C
+/* 06EA94 7F039F64 1000ED89 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EA98 7F039F68 26310002 */   addiu $s1, $s1, 2
 actionF2_Check_Current_Folder_Bond_RVL_3:
 /* 06EA9C 7F039F6C 0FC0755B */  jal   would_have_returned_bond_for_folder_num
@@ -7839,11 +7871,11 @@ actionF2_Check_Current_Folder_Bond_RVL_3:
 /* 06EAB8 7F039F88 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06EABC 7F039F8C 92260002 */   lbu   $a2, 2($s1)
 /* 06EAC0 7F039F90 00409025 */  move  $s2, $v0
-/* 06EAC4 7F039F94 1000ED7D */  b     .L7F03558C
+/* 06EAC4 7F039F94 1000ED7D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EAC8 7F039F98 02C28821 */   addu  $s1, $s6, $v0
 /* 06EACC 7F039F9C 26520003 */  addiu $s2, $s2, 3
 .L7F039FA0:
-/* 06EAD0 7F039FA0 1000ED7A */  b     .L7F03558C
+/* 06EAD0 7F039FA0 1000ED7A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EAD4 7F039FA4 26310003 */   addiu $s1, $s1, 3
 actionF3_If_Player_Pickups_Disabled_RVL_2:
 /* 06EAD8 7F039FA8 3C0C8003 */  lui   $t4, %hi(D_800364B4) # $t4, 0x8003
@@ -7855,11 +7887,11 @@ actionF3_If_Player_Pickups_Disabled_RVL_2:
 /* 06EAF0 7F039FC0 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06EAF4 7F039FC4 92260001 */   lbu   $a2, 1($s1)
 /* 06EAF8 7F039FC8 00409025 */  move  $s2, $v0
-/* 06EAFC 7F039FCC 1000ED6F */  b     .L7F03558C
+/* 06EAFC 7F039FCC 1000ED6F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EB00 7F039FD0 02C28821 */   addu  $s1, $s6, $v0
 /* 06EB04 7F039FD4 26520002 */  addiu $s2, $s2, 2
 .L7F039FD8:
-/* 06EB08 7F039FD8 1000ED6C */  b     .L7F03558C
+/* 06EB08 7F039FD8 1000ED6C */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EB0C 7F039FDC 26310002 */   addiu $s1, $s1, 2
 actionF4_PlaysValuenum1ThemeSlot03ForValuenum2Seconds_4:
 /* 06EB10 7F039FE0 02201025 */  move  $v0, $s1
@@ -7869,7 +7901,7 @@ actionF4_PlaysValuenum1ThemeSlot03ForValuenum2Seconds_4:
 /* 06EB20 7F039FF0 90450002 */  lbu   $a1, 2($v0)
 /* 06EB24 7F039FF4 0FC3053F */  jal   set_musicslot_time
 /* 06EB28 7F039FF8 90460003 */   lbu   $a2, 3($v0)
-/* 06EB2C 7F039FFC 1000ED64 */  b     .L7F035590
+/* 06EB2C 7F039FFC 1000ED64 */  b     ParseCommandByte_SwitchCase
 /* 06EB30 7F03A000 922E0000 */   lbu   $t6, ($s1)
 actionF5_Turn_Off_Music_In_Slot_num_0_3_2:
 /* 06EB34 7F03A004 02201025 */  move  $v0, $s1
@@ -7877,13 +7909,13 @@ actionF5_Turn_Off_Music_In_Slot_num_0_3_2:
 /* 06EB3C 7F03A00C 26520002 */  addiu $s2, $s2, 2
 /* 06EB40 7F03A010 0FC30556 */  jal   reset_music_in_slot
 /* 06EB44 7F03A014 80440001 */   lb    $a0, 1($v0)
-/* 06EB48 7F03A018 1000ED5D */  b     .L7F035590
+/* 06EB48 7F03A018 1000ED5D */  b     ParseCommandByte_SwitchCase
 /* 06EB4C 7F03A01C 922E0000 */   lbu   $t6, ($s1)
 actionF6_Trigger_Explosions_Around_Bond_1:
 /* 06EB50 7F03A020 0FC22FF1 */  jal   trigger_explosions_around_player
 /* 06EB54 7F03A024 00002025 */   move  $a0, $zero
 /* 06EB58 7F03A028 26520001 */  addiu $s2, $s2, 1
-/* 06EB5C 7F03A02C 1000ED57 */  b     .L7F03558C
+/* 06EB5C 7F03A02C 1000ED57 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EB60 7F03A030 26310001 */   addiu $s1, $s1, 1
 actionF7_If_Number_Of_Hostages_Scientists_Killed_RVL_3:
 /* 06EB64 7F03A034 0FC1A9DC */  jal   get_civilian_casualties
@@ -7897,11 +7929,11 @@ actionF7_If_Number_Of_Hostages_Scientists_Killed_RVL_3:
 /* 06EB84 7F03A054 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06EB88 7F03A058 92260002 */   lbu   $a2, 2($s1)
 /* 06EB8C 7F03A05C 00409025 */  move  $s2, $v0
-/* 06EB90 7F03A060 1000ED4A */  b     .L7F03558C
+/* 06EB90 7F03A060 1000ED4A */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EB94 7F03A064 02C28821 */   addu  $s1, $s6, $v0
 /* 06EB98 7F03A068 26520003 */  addiu $s2, $s2, 3
 .L7F03A06C:
-/* 06EB9C 7F03A06C 1000ED47 */  b     .L7F03558C
+/* 06EB9C 7F03A06C 1000ED47 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EBA0 7F03A070 26310003 */   addiu $s1, $s1, 3
 actionF8_If_Guard_ID_00200000_Flag_Set_Unset_And_Return_3:
 /* 06EBA4 7F03A074 02E02025 */  move  $a0, $s7
@@ -7923,24 +7955,24 @@ actionF8_If_Guard_ID_00200000_Flag_Set_Unset_And_Return_3:
 /* 06EBE4 7F03A0B4 0FC0D4BC */  jal   true_if_sucessfully_performing_action
 /* 06EBE8 7F03A0B8 92260002 */   lbu   $a2, 2($s1)
 /* 06EBEC 7F03A0BC 00409025 */  move  $s2, $v0
-/* 06EBF0 7F03A0C0 1000ED32 */  b     .L7F03558C
+/* 06EBF0 7F03A0C0 1000ED32 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EBF4 7F03A0C4 02C28821 */   addu  $s1, $s6, $v0
 /* 06EBF8 7F03A0C8 26520003 */  addiu $s2, $s2, 3
 .L7F03A0CC:
-/* 06EBFC 7F03A0CC 1000ED2F */  b     .L7F03558C
+/* 06EBFC 7F03A0CC 1000ED2F */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EC00 7F03A0D0 26310003 */   addiu $s1, $s1, 3
 actionF9_Set_Killed_In_Action_Automatic_Mission_Failure_1:
 /* 06EC04 7F03A0D4 240F0001 */  li    $t7, 1
 /* 06EC08 7F03A0D8 3C018003 */  lui   $at, %hi(mission_kia) # $at, 0x8003
 /* 06EC0C 7F03A0DC AC2FA928 */  sw    $t7, %lo(mission_kia)($at)
 /* 06EC10 7F03A0E0 26520001 */  addiu $s2, $s2, 1
-/* 06EC14 7F03A0E4 1000ED29 */  b     .L7F03558C
+/* 06EC14 7F03A0E4 1000ED29 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EC18 7F03A0E8 26310001 */   addiu $s1, $s1, 1
 actionFA_Guard_Fawns_On_Shoulder_1:
 /* 06EC1C 7F03A0EC 0FC0CD93 */  jal   check_if_able_to_then_fawn_on_shoulder
 /* 06EC20 7F03A0F0 02E02025 */   move  $a0, $s7
 /* 06EC24 7F03A0F4 26520001 */  addiu $s2, $s2, 1
-/* 06EC28 7F03A0F8 1000ED24 */  b     .L7F03558C
+/* 06EC28 7F03A0F8 1000ED24 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EC2C 7F03A0FC 26310001 */   addiu $s1, $s1, 1
 actionFB_SwitchToSkyValuenumAndActivateGasContainersIfExist_:
 /* 06EC30 7F03A100 3C0A8003 */  lui   $t2, %hi(D_80030A88) # $t2, 0x8003
@@ -7954,7 +7986,7 @@ actionFB_SwitchToSkyValuenumAndActivateGasContainersIfExist_:
 /* 06EC50 7F03A120 0FC15799 */  jal   init_trigger_toxic_gas_effect
 /* 06EC54 7F03A124 AC810008 */   sw    $at, 8($a0)
 /* 06EC58 7F03A128 26520001 */  addiu $s2, $s2, 1
-/* 06EC5C 7F03A12C 1000ED17 */  b     .L7F03558C
+/* 06EC5C 7F03A12C 1000ED17 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EC60 7F03A130 26310001 */   addiu $s1, $s1, 1
 actionFC_Launch_Shuttle_2:
 /* 06EC64 7F03A134 0FC15C30 */  jal   get_handle_to_tagged_object
@@ -8002,25 +8034,25 @@ actionFC_Launch_Shuttle_2:
 /* 06ED0C 7F03A1DC E7340018 */  swc1  $f20, 0x18($t9)
 /* 06ED10 7F03A1E0 26520002 */  addiu $s2, $s2, 2
 .L7F03A1E4:
-/* 06ED14 7F03A1E4 1000ECE9 */  b     .L7F03558C
+/* 06ED14 7F03A1E4 1000ECE9 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ED18 7F03A1E8 26310002 */   addiu $s1, $s1, 2
 .L7F03A1EC:
 /* 06ED1C 7F03A1EC 0FC0D27F */  jal   get_length_of_action_block
-/* 06ED20 7F03A1F0 02402825 */   move  $a1, $s2
-/* 06ED24 7F03A1F4 02429021 */  addu  $s2, $s2, $v0
-/* 06ED28 7F03A1F8 1000ECE4 */  b     .L7F03558C
-/* 06ED2C 7F03A1FC 02D28821 */   addu  $s1, $s6, $s2
-action04_Terminator_1:
-.L7F03A200:
+/* 06ED20 7F03A1F0 02402825 */   move  $a1, $s2                    # 
+/* 06ED24 7F03A1F4 02429021 */  addu  $s2, $s2, $v0                # CurrentActionByte += get_length_of_action_block(CurrentActionByte)
+/* 06ED28 7F03A1F8 1000ECE4 */  b     GetByteS1_ParseCommandByte_SwitchCase                  # s1 = CurrentActionByte + s6
+/* 06ED2C 7F03A1FC 02D28821 */   addu  $s1, $s6, $s2              # goto 58c
+
+Action04_End_1:
 /* 06ED30 7F03A200 8FBF0074 */  lw    $ra, 0x74($sp)
-.L7F03A204:
+Action04_End_2:
 /* 06ED34 7F03A204 D7B40030 */  ldc1  $f20, 0x30($sp)
 /* 06ED38 7F03A208 D7B60038 */  ldc1  $f22, 0x38($sp)
 /* 06ED3C 7F03A20C D7B80040 */  ldc1  $f24, 0x40($sp)
 /* 06ED40 7F03A210 D7BA0048 */  ldc1  $f26, 0x48($sp)
 /* 06ED44 7F03A214 8FB00050 */  lw    $s0, 0x50($sp)
 /* 06ED48 7F03A218 8FB10054 */  lw    $s1, 0x54($sp)
-/* 06ED4C 7F03A21C 8FB20058 */  lw    $s2, 0x58($sp)
+/* 06ED4C 7F03A21C 8FB20058 */  lw    $s2, 0x58($sp)    #load s2 with value before entering actionblock
 /* 06ED50 7F03A220 8FB3005C */  lw    $s3, 0x5c($sp)
 /* 06ED54 7F03A224 8FB40060 */  lw    $s4, 0x60($sp)
 /* 06ED58 7F03A228 8FB50064 */  lw    $s5, 0x64($sp)
@@ -15435,21 +15467,21 @@ glabel sub_GAME_7F03FB70
 /* 0746C0 7F03FB90 8C840098 */  lw    $a0, 0x98($a0)
 /* 0746C4 7F03FB94 50800008 */  beql  $a0, $zero, .L7F03FBB8
 /* 0746C8 7F03FB98 8E04009C */   lw    $a0, 0x9c($s0)
-/* 0746CC 7F03FB9C 0C00237C */  jal   sfxGetArg0Unk3F
+/* 0746CC 7F03FB9C 0C00237C */  jal   music_related_26
 /* 0746D0 7F03FBA0 00000000 */   nop   
 /* 0746D4 7F03FBA4 50400004 */  beql  $v0, $zero, .L7F03FBB8
 /* 0746D8 7F03FBA8 8E04009C */   lw    $a0, 0x9c($s0)
-/* 0746DC 7F03FBAC 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 0746DC 7F03FBAC 0C002408 */  jal   music_related_28
 /* 0746E0 7F03FBB0 8E040098 */   lw    $a0, 0x98($s0)
 /* 0746E4 7F03FBB4 8E04009C */  lw    $a0, 0x9c($s0)
 .L7F03FBB8:
 /* 0746E8 7F03FBB8 50800008 */  beql  $a0, $zero, .L7F03FBDC
 /* 0746EC 7F03FBBC 8E180000 */   lw    $t8, ($s0)
-/* 0746F0 7F03FBC0 0C00237C */  jal   sfxGetArg0Unk3F
+/* 0746F0 7F03FBC0 0C00237C */  jal   music_related_26
 /* 0746F4 7F03FBC4 00000000 */   nop   
 /* 0746F8 7F03FBC8 50400004 */  beql  $v0, $zero, .L7F03FBDC
 /* 0746FC 7F03FBCC 8E180000 */   lw    $t8, ($s0)
-/* 074700 7F03FBD0 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 074700 7F03FBD0 0C002408 */  jal   music_related_28
 /* 074704 7F03FBD4 8E04009C */   lw    $a0, 0x9c($s0)
 /* 074708 7F03FBD8 8E180000 */  lw    $t8, ($s0)
 .L7F03FBDC:
@@ -17036,21 +17068,21 @@ glabel sub_GAME_7F040D98
 /* 0758F4 7F040DC4 8C8400C4 */  lw    $a0, 0xc4($a0)
 /* 0758F8 7F040DC8 50800008 */  beql  $a0, $zero, .L7F040DEC
 /* 0758FC 7F040DCC 8E4400C8 */   lw    $a0, 0xc8($s2)
-/* 075900 7F040DD0 0C00237C */  jal   sfxGetArg0Unk3F
+/* 075900 7F040DD0 0C00237C */  jal   music_related_26
 /* 075904 7F040DD4 00000000 */   nop   
 /* 075908 7F040DD8 50400004 */  beql  $v0, $zero, .L7F040DEC
 /* 07590C 7F040DDC 8E4400C8 */   lw    $a0, 0xc8($s2)
-/* 075910 7F040DE0 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 075910 7F040DE0 0C002408 */  jal   music_related_28
 /* 075914 7F040DE4 8E4400C4 */   lw    $a0, 0xc4($s2)
 /* 075918 7F040DE8 8E4400C8 */  lw    $a0, 0xc8($s2)
 .L7F040DEC:
 /* 07591C 7F040DEC 5080004E */  beql  $a0, $zero, .L7F040F28
 /* 075920 7F040DF0 8E510010 */   lw    $s1, 0x10($s2)
-/* 075924 7F040DF4 0C00237C */  jal   sfxGetArg0Unk3F
+/* 075924 7F040DF4 0C00237C */  jal   music_related_26
 /* 075928 7F040DF8 00000000 */   nop   
 /* 07592C 7F040DFC 5040004A */  beql  $v0, $zero, .L7F040F28
 /* 075930 7F040E00 8E510010 */   lw    $s1, 0x10($s2)
-/* 075934 7F040E04 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 075934 7F040E04 0C002408 */  jal   music_related_28
 /* 075938 7F040E08 8E4400C8 */   lw    $a0, 0xc8($s2)
 /* 07593C 7F040E0C 10000046 */  b     .L7F040F28
 /* 075940 7F040E10 8E510010 */   lw    $s1, 0x10($s2)
@@ -17071,21 +17103,21 @@ glabel sub_GAME_7F040D98
 /* 075974 7F040E44 8E4400F4 */  lw    $a0, 0xf4($s2)
 /* 075978 7F040E48 50800008 */  beql  $a0, $zero, .L7F040E6C
 /* 07597C 7F040E4C 8E4400F8 */   lw    $a0, 0xf8($s2)
-/* 075980 7F040E50 0C00237C */  jal   sfxGetArg0Unk3F
+/* 075980 7F040E50 0C00237C */  jal   music_related_26
 /* 075984 7F040E54 00000000 */   nop   
 /* 075988 7F040E58 50400004 */  beql  $v0, $zero, .L7F040E6C
 /* 07598C 7F040E5C 8E4400F8 */   lw    $a0, 0xf8($s2)
-/* 075990 7F040E60 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 075990 7F040E60 0C002408 */  jal   music_related_28
 /* 075994 7F040E64 8E4400F4 */   lw    $a0, 0xf4($s2)
 /* 075998 7F040E68 8E4400F8 */  lw    $a0, 0xf8($s2)
 .L7F040E6C:
 /* 07599C 7F040E6C 5080002E */  beql  $a0, $zero, .L7F040F28
 /* 0759A0 7F040E70 8E510010 */   lw    $s1, 0x10($s2)
-/* 0759A4 7F040E74 0C00237C */  jal   sfxGetArg0Unk3F
+/* 0759A4 7F040E74 0C00237C */  jal   music_related_26
 /* 0759A8 7F040E78 00000000 */   nop   
 /* 0759AC 7F040E7C 5040002A */  beql  $v0, $zero, .L7F040F28
 /* 0759B0 7F040E80 8E510010 */   lw    $s1, 0x10($s2)
-/* 0759B4 7F040E84 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 0759B4 7F040E84 0C002408 */  jal   music_related_28
 /* 0759B8 7F040E88 8E4400F8 */   lw    $a0, 0xf8($s2)
 /* 0759BC 7F040E8C 10000026 */  b     .L7F040F28
 /* 0759C0 7F040E90 8E510010 */   lw    $s1, 0x10($s2)
@@ -17107,11 +17139,11 @@ glabel sub_GAME_7F040D98
 /* 0759F8 7F040EC8 8E4400B0 */  lw    $a0, 0xb0($s2)
 /* 0759FC 7F040ECC 50800016 */  beql  $a0, $zero, .L7F040F28
 /* 075A00 7F040ED0 8E510010 */   lw    $s1, 0x10($s2)
-/* 075A04 7F040ED4 0C00237C */  jal   sfxGetArg0Unk3F
+/* 075A04 7F040ED4 0C00237C */  jal   music_related_26
 /* 075A08 7F040ED8 00000000 */   nop   
 /* 075A0C 7F040EDC 50400012 */  beql  $v0, $zero, .L7F040F28
 /* 075A10 7F040EE0 8E510010 */   lw    $s1, 0x10($s2)
-/* 075A14 7F040EE4 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 075A14 7F040EE4 0C002408 */  jal   music_related_28
 /* 075A18 7F040EE8 8E4400B0 */   lw    $a0, 0xb0($s2)
 /* 075A1C 7F040EEC 1000000E */  b     .L7F040F28
 /* 075A20 7F040EF0 8E510010 */   lw    $s1, 0x10($s2)
@@ -17122,11 +17154,11 @@ glabel sub_GAME_7F040D98
 /* 075A30 7F040F00 8E4400AC */  lw    $a0, 0xac($s2)
 /* 075A34 7F040F04 50800008 */  beql  $a0, $zero, .L7F040F28
 /* 075A38 7F040F08 8E510010 */   lw    $s1, 0x10($s2)
-/* 075A3C 7F040F0C 0C00237C */  jal   sfxGetArg0Unk3F
+/* 075A3C 7F040F0C 0C00237C */  jal   music_related_26
 /* 075A40 7F040F10 00000000 */   nop   
 /* 075A44 7F040F14 50400004 */  beql  $v0, $zero, .L7F040F28
 /* 075A48 7F040F18 8E510010 */   lw    $s1, 0x10($s2)
-/* 075A4C 7F040F1C 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 075A4C 7F040F1C 0C002408 */  jal   music_related_28
 /* 075A50 7F040F20 8E4400AC */   lw    $a0, 0xac($s2)
 .L7F040F24:
 /* 075A54 7F040F24 8E510010 */  lw    $s1, 0x10($s2)
@@ -20074,13 +20106,13 @@ glabel sub_GAME_7F043650
 /* 078230 7F043700 8D240098 */  lw    $a0, 0x98($t1)
 /* 078234 7F043704 5080000A */  beql  $a0, $zero, .L7F043730
 /* 078238 7F043708 8FA70034 */   lw    $a3, 0x34($sp)
-/* 07823C 7F04370C 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07823C 7F04370C 0C00237C */  jal   music_related_26
 /* 078240 7F043710 AFAB002C */   sw    $t3, 0x2c($sp)
 /* 078244 7F043714 10400005 */  beqz  $v0, .L7F04372C
 /* 078248 7F043718 8FA7002C */   lw    $a3, 0x2c($sp)
 /* 07824C 7F04371C 8E0A006C */  lw    $t2, 0x6c($s0)
 /* 078250 7F043720 01476021 */  addu  $t4, $t2, $a3
-/* 078254 7F043724 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 078254 7F043724 0C002408 */  jal   music_related_28
 /* 078258 7F043728 8D840098 */   lw    $a0, 0x98($t4)
 .L7F04372C:
 /* 07825C 7F04372C 8FA70034 */  lw    $a3, 0x34($sp)
@@ -20130,24 +20162,24 @@ glabel sub_GAME_7F043650
 /* 078300 7F0437D0 8C640098 */  lw    $a0, 0x98($v1)
 /* 078304 7F0437D4 50800009 */  beql  $a0, $zero, .L7F0437FC
 /* 078308 7F0437D8 8E09006C */   lw    $t1, 0x6c($s0)
-/* 07830C 7F0437DC 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07830C 7F0437DC 0C00237C */  jal   music_related_26
 /* 078310 7F0437E0 00000000 */   nop   
 /* 078314 7F0437E4 50400005 */  beql  $v0, $zero, .L7F0437FC
 /* 078318 7F0437E8 8E09006C */   lw    $t1, 0x6c($s0)
 /* 07831C 7F0437EC 8E0B006C */  lw    $t3, 0x6c($s0)
-/* 078320 7F0437F0 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 078320 7F0437F0 0C002408 */  jal   music_related_28
 /* 078324 7F0437F4 8D640098 */   lw    $a0, 0x98($t3)
 /* 078328 7F0437F8 8E09006C */  lw    $t1, 0x6c($s0)
 .L7F0437FC:
 /* 07832C 7F0437FC 8D24009C */  lw    $a0, 0x9c($t1)
 /* 078330 7F043800 50800009 */  beql  $a0, $zero, .L7F043828
 /* 078334 7F043804 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 078338 7F043808 0C00237C */  jal   sfxGetArg0Unk3F
+/* 078338 7F043808 0C00237C */  jal   music_related_26
 /* 07833C 7F04380C 00000000 */   nop   
 /* 078340 7F043810 50400005 */  beql  $v0, $zero, .L7F043828
 /* 078344 7F043814 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 078348 7F043818 8E0A006C */  lw    $t2, 0x6c($s0)
-/* 07834C 7F04381C 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 07834C 7F04381C 0C002408 */  jal   music_related_28
 /* 078350 7F043820 8D44009C */   lw    $a0, 0x9c($t2)
 .L7F043824:
 /* 078354 7F043824 8FBF001C */  lw    $ra, 0x1c($sp)
@@ -24639,7 +24671,7 @@ glabel object_interaction
 /* 07C180 7F047650 8E2400AC */  lw    $a0, 0xac($s1)
 /* 07C184 7F047654 10800005 */  beqz  $a0, .L7F04766C
 /* 07C188 7F047658 00000000 */   nop   
-/* 07C18C 7F04765C 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07C18C 7F04765C 0C00237C */  jal   music_related_26
 /* 07C190 7F047660 00000000 */   nop   
 /* 07C194 7F047664 5440000A */  bnezl $v0, .L7F047690
 /* 07C198 7F047668 8E2400AC */   lw    $a0, 0xac($s1)
@@ -24666,11 +24698,11 @@ glabel object_interaction
 .L7F0476B0:
 /* 07C1E0 7F0476B0 50800008 */  beql  $a0, $zero, .L7F0476D4
 /* 07C1E4 7F0476B4 8E2400A4 */   lw    $a0, 0xa4($s1)
-/* 07C1E8 7F0476B8 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07C1E8 7F0476B8 0C00237C */  jal   music_related_26
 /* 07C1EC 7F0476BC 00000000 */   nop   
 /* 07C1F0 7F0476C0 50400004 */  beql  $v0, $zero, .L7F0476D4
 /* 07C1F4 7F0476C4 8E2400A4 */   lw    $a0, 0xa4($s1)
-/* 07C1F8 7F0476C8 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 07C1F8 7F0476C8 0C002408 */  jal   music_related_28
 /* 07C1FC 7F0476CC 8E2400AC */   lw    $a0, 0xac($s1)
 /* 07C200 7F0476D0 8E2400A4 */  lw    $a0, 0xa4($s1)
 .L7F0476D4:
@@ -25406,7 +25438,7 @@ glabel object_interaction
 /* 07CCDC 7F0481AC 8E2400B0 */  lw    $a0, 0xb0($s1)
 /* 07CCE0 7F0481B0 10800005 */  beqz  $a0, .L7F0481C8
 /* 07CCE4 7F0481B4 00000000 */   nop   
-/* 07CCE8 7F0481B8 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07CCE8 7F0481B8 0C00237C */  jal   music_related_26
 /* 07CCEC 7F0481BC 00000000 */   nop   
 /* 07CCF0 7F0481C0 5440000A */  bnezl $v0, .L7F0481EC
 /* 07CCF4 7F0481C4 8E2400B0 */   lw    $a0, 0xb0($s1)
@@ -25433,11 +25465,11 @@ glabel object_interaction
 .L7F04820C:
 /* 07CD3C 7F04820C 50800008 */  beql  $a0, $zero, .L7F048230
 /* 07CD40 7F048210 92220003 */   lbu   $v0, 3($s1)
-/* 07CD44 7F048214 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07CD44 7F048214 0C00237C */  jal   music_related_26
 /* 07CD48 7F048218 00000000 */   nop   
 /* 07CD4C 7F04821C 50400004 */  beql  $v0, $zero, .L7F048230
 /* 07CD50 7F048220 92220003 */   lbu   $v0, 3($s1)
-/* 07CD54 7F048224 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 07CD54 7F048224 0C002408 */  jal   music_related_28
 /* 07CD58 7F048228 8E2400B0 */   lw    $a0, 0xb0($s1)
 .L7F04822C:
 /* 07CD5C 7F04822C 92220003 */  lbu   $v0, 3($s1)
@@ -26627,21 +26659,21 @@ glabel object_interaction
 /* 07DED0 7F0493A0 8E0400C4 */  lw    $a0, 0xc4($s0)
 /* 07DED4 7F0493A4 50800008 */  beql  $a0, $zero, .L7F0493C8
 /* 07DED8 7F0493A8 8E0400C8 */   lw    $a0, 0xc8($s0)
-/* 07DEDC 7F0493AC 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07DEDC 7F0493AC 0C00237C */  jal   music_related_26
 /* 07DEE0 7F0493B0 00000000 */   nop   
 /* 07DEE4 7F0493B4 50400004 */  beql  $v0, $zero, .L7F0493C8
 /* 07DEE8 7F0493B8 8E0400C8 */   lw    $a0, 0xc8($s0)
-/* 07DEEC 7F0493BC 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 07DEEC 7F0493BC 0C002408 */  jal   music_related_28
 /* 07DEF0 7F0493C0 8E0400C4 */   lw    $a0, 0xc4($s0)
 /* 07DEF4 7F0493C4 8E0400C8 */  lw    $a0, 0xc8($s0)
 .L7F0493C8:
 /* 07DEF8 7F0493C8 50800008 */  beql  $a0, $zero, .L7F0493EC
 /* 07DEFC 7F0493CC 8E0A00C4 */   lw    $t2, 0xc4($s0)
-/* 07DF00 7F0493D0 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07DF00 7F0493D0 0C00237C */  jal   music_related_26
 /* 07DF04 7F0493D4 00000000 */   nop   
 /* 07DF08 7F0493D8 50400004 */  beql  $v0, $zero, .L7F0493EC
 /* 07DF0C 7F0493DC 8E0A00C4 */   lw    $t2, 0xc4($s0)
-/* 07DF10 7F0493E0 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 07DF10 7F0493E0 0C002408 */  jal   music_related_28
 /* 07DF14 7F0493E4 8E0400C8 */   lw    $a0, 0xc8($s0)
 /* 07DF18 7F0493E8 8E0A00C4 */  lw    $t2, 0xc4($s0)
 .L7F0493EC:
@@ -39647,7 +39679,7 @@ glabel sub_GAME_7F053A3C
 /* 08857C 7F053A4C 0005182B */  sltu  $v1, $zero, $a1
 /* 088580 7F053A50 50600005 */  beql  $v1, $zero, .L7F053A68
 /* 088584 7F053A54 8FAF0028 */   lw    $t7, 0x28($sp)
-/* 088588 7F053A58 0C00237C */  jal   sfxGetArg0Unk3F
+/* 088588 7F053A58 0C00237C */  jal   music_related_26
 /* 08858C 7F053A5C 00A02025 */   move  $a0, $a1
 /* 088590 7F053A60 0002182B */  sltu  $v1, $zero, $v0
 /* 088594 7F053A64 8FAF0028 */  lw    $t7, 0x28($sp)
@@ -39657,7 +39689,7 @@ glabel sub_GAME_7F053A3C
 /* 0885A0 7F053A70 0004182B */  sltu  $v1, $zero, $a0
 /* 0885A4 7F053A74 50600005 */  beql  $v1, $zero, .L7F053A8C
 /* 0885A8 7F053A78 8FB80024 */   lw    $t8, 0x24($sp)
-/* 0885AC 7F053A7C 0C00237C */  jal   sfxGetArg0Unk3F
+/* 0885AC 7F053A7C 0C00237C */  jal   music_related_26
 /* 0885B0 7F053A80 00000000 */   nop   
 /* 0885B4 7F053A84 0002182B */  sltu  $v1, $zero, $v0
 /* 0885B8 7F053A88 8FB80024 */  lw    $t8, 0x24($sp)
@@ -39721,11 +39753,11 @@ glabel sub_GAME_7F053B10
 /* 08864C 7F053B1C 8C8500F4 */  lw    $a1, 0xf4($a0)
 /* 088650 7F053B20 50A00008 */  beql  $a1, $zero, .L7F053B44
 /* 088654 7F053B24 8FB80018 */   lw    $t8, 0x18($sp)
-/* 088658 7F053B28 0C00237C */  jal   sfxGetArg0Unk3F
+/* 088658 7F053B28 0C00237C */  jal   music_related_26
 /* 08865C 7F053B2C 00A02025 */   move  $a0, $a1
 /* 088660 7F053B30 10400003 */  beqz  $v0, .L7F053B40
 /* 088664 7F053B34 8FAF0018 */   lw    $t7, 0x18($sp)
-/* 088668 7F053B38 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 088668 7F053B38 0C002408 */  jal   music_related_28
 /* 08866C 7F053B3C 8DE400F4 */   lw    $a0, 0xf4($t7)
 .L7F053B40:
 /* 088670 7F053B40 8FB80018 */  lw    $t8, 0x18($sp)
@@ -39733,11 +39765,11 @@ glabel sub_GAME_7F053B10
 /* 088674 7F053B44 8F0400F8 */  lw    $a0, 0xf8($t8)
 /* 088678 7F053B48 50800008 */  beql  $a0, $zero, .L7F053B6C
 /* 08867C 7F053B4C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 088680 7F053B50 0C00237C */  jal   sfxGetArg0Unk3F
+/* 088680 7F053B50 0C00237C */  jal   music_related_26
 /* 088684 7F053B54 00000000 */   nop   
 /* 088688 7F053B58 10400003 */  beqz  $v0, .L7F053B68
 /* 08868C 7F053B5C 8FB90018 */   lw    $t9, 0x18($sp)
-/* 088690 7F053B60 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 088690 7F053B60 0C002408 */  jal   music_related_28
 /* 088694 7F053B64 8F2400F8 */   lw    $a0, 0xf8($t9)
 .L7F053B68:
 /* 088698 7F053B68 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -42479,11 +42511,11 @@ glabel deactivate_alarm_sound_effect
 /* 08A928 7F055DF8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 08A92C 7F055DFC 50800008 */  beql  $a0, $zero, .L7F055E20
 /* 08A930 7F055E00 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 08A934 7F055E04 0C00237C */  jal   sfxGetArg0Unk3F
+/* 08A934 7F055E04 0C00237C */  jal   music_related_26
 /* 08A938 7F055E08 00000000 */   nop   
 /* 08A93C 7F055E0C 10400003 */  beqz  $v0, .L7F055E1C
 /* 08A940 7F055E10 3C048003 */   lui   $a0, %hi(ptr_alarm_sfx) # $a0, 0x8003
-/* 08A944 7F055E14 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 08A944 7F055E14 0C002408 */  jal   music_related_28
 /* 08A948 7F055E18 8C840AC4 */   lw    $a0, %lo(ptr_alarm_sfx)($a0)
 .L7F055E1C:
 /* 08A94C 7F055E1C 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -42610,11 +42642,11 @@ glabel sub_GAME_7F055EF8
 /* 08AA34 7F055F04 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 08AA38 7F055F08 50800008 */  beql  $a0, $zero, .L7F055F2C
 /* 08AA3C 7F055F0C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 08AA40 7F055F10 0C00237C */  jal   sfxGetArg0Unk3F
+/* 08AA40 7F055F10 0C00237C */  jal   music_related_26
 /* 08AA44 7F055F14 00000000 */   nop   
 /* 08AA48 7F055F18 10400003 */  beqz  $v0, .L7F055F28
 /* 08AA4C 7F055F1C 3C048003 */   lui   $a0, %hi(D_80030AE4) # $a0, 0x8003
-/* 08AA50 7F055F20 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 08AA50 7F055F20 0C002408 */  jal   music_related_28
 /* 08AA54 7F055F24 8C840AE4 */   lw    $a0, %lo(D_80030AE4)($a0)
 .L7F055F28:
 /* 08AA58 7F055F28 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -42786,11 +42818,11 @@ glabel sub_GAME_7F055F64
 /* 08AC5C 7F05612C 8C840AE4 */  lw    $a0, 0xae4($a0)
 /* 08AC60 7F056130 50800008 */  beql  $a0, $zero, .L7F056154
 /* 08AC64 7F056134 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 08AC68 7F056138 0C00237C */  jal   sfxGetArg0Unk3F
+/* 08AC68 7F056138 0C00237C */  jal   music_related_26
 /* 08AC6C 7F05613C 00000000 */   nop   
 /* 08AC70 7F056140 10400003 */  beqz  $v0, .L7F056150
 /* 08AC74 7F056144 3C048003 */   lui   $a0, %hi(D_80030AE4) # $a0, 0x8003
-/* 08AC78 7F056148 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 08AC78 7F056148 0C002408 */  jal   music_related_28
 /* 08AC7C 7F05614C 8C840AE4 */   lw    $a0, %lo(D_80030AE4)($a0)
 .L7F056150:
 /* 08AC80 7F056150 8FBF001C */  lw    $ra, 0x1c($sp)
