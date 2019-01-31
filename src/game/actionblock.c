@@ -2428,13 +2428,13 @@ glabel true_if_sucessfully_performing_action
 
 #ifdef NONMATCHING
 //sub_GAME/_7F035398
-void LoadNext-PrevActionBlock(void) {
+void LoadNext_PrevActionBlock(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel LoadNext-PrevActionBlock
+glabel LoadNext_PrevActionBlock
 /* 069EC8 7F035398 28810401 */  slti  $at, $a0, 0x401
 /* 069ECC 7F03539C 14200014 */  bnez  $at, .L7F0353F0
 /* 069ED0 7F0353A0 3C198003 */   lui   $t9, 0x8003
@@ -2679,7 +2679,7 @@ action05_Jump_To_Function_4:
 /* 06A188 7F035658 14A10007 */  bne   $a1, $at, .L7F035678
 /* 06A18C 7F03565C 01601825 */   move  $v1, $t3
 /* 06A190 7F035660 01602025 */  move  $a0, $t3
-/* 06A194 7F035664 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
+/* 06A194 7F035664 0FC0D4E6 */  jal   LoadNext_PrevActionBlock
 /* 06A198 7F035668 00009025 */   move  $s2, $zero
 /* 06A19C 7F03566C 0040B025 */  move  $s6, $v0
 /* 06A1A0 7F035670 1000FFC6 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -2691,7 +2691,7 @@ action05_Jump_To_Function_4:
 /* 06A1B4 7F035684 97A30792 */  lhu   $v1, 0x792($sp)
 /* 06A1B8 7F035688 10400006 */  beqz  $v0, .L7F0356A4
 /* 06A1BC 7F03568C 00408025 */   move  $s0, $v0
-/* 06A1C0 7F035690 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
+/* 06A1C0 7F035690 0FC0D4E6 */  jal   LoadNext_PrevActionBlock
 /* 06A1C4 7F035694 00602025 */   move  $a0, $v1
 /* 06A1C8 7F035698 AE020104 */  sw    $v0, 0x104($s0)
 /* 06A1CC 7F03569C A6000108 */  sh    $zero, 0x108($s0)
@@ -2730,7 +2730,7 @@ action06_Set_Return_Subroutine_for_0007_Command_3:
 action07_Jump_to_Return_Subroutine_1:
 /* 06A23C 7F03570C 12E00006 */  beqz  $s7, .L7F035728
 /* 06A240 7F035710 00009025 */   move  $s2, $zero
-/* 06A244 7F035714 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
+/* 06A244 7F035714 0FC0D4E6 */  jal   LoadNext_PrevActionBlock
 /* 06A248 7F035718 86E4010A */   lh    $a0, 0x10a($s7)
 /* 06A24C 7F03571C 0040B025 */  move  $s6, $v0
 /* 06A250 7F035720 1000FF9A */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -2740,7 +2740,7 @@ action07_Jump_to_Return_Subroutine_1:
 /* 06A25C 7F03572C 8FAA07AC */  lw    $t2, 0x7ac($sp)
 /* 06A260 7F035730 11200006 */  beqz  $t1, .L7F03574C
 /* 06A264 7F035734 00000000 */   nop   
-/* 06A268 7F035738 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
+/* 06A268 7F035738 0FC0D4E6 */  jal   LoadNext_PrevActionBlock
 /* 06A26C 7F03573C 85240086 */   lh    $a0, 0x86($t1)
 /* 06A270 7F035740 0040B025 */  move  $s6, $v0
 /* 06A274 7F035744 1000FF91 */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -2748,7 +2748,7 @@ action07_Jump_to_Return_Subroutine_1:
 .L7F03574C:
 /* 06A27C 7F03574C 11400004 */  beqz  $t2, .L7F035760
 /* 06A280 7F035750 00000000 */   nop   
-/* 06A284 7F035754 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
+/* 06A284 7F035754 0FC0D4E6 */  jal   LoadNext_PrevActionBlock
 /* 06A288 7F035758 85440086 */   lh    $a0, 0x86($t2)
 /* 06A28C 7F03575C 0040B025 */  move  $s6, $v0
 .L7F035760:
@@ -6407,7 +6407,7 @@ actionBD_Spawn_Guard_C:
 /* 06D5C4 7F038A94 92380006 */  lbu   $t8, 6($s1)
 /* 06D5C8 7F038A98 000B6200 */  sll   $t4, $t3, 8
 /* 06D5CC 7F038A9C 01981025 */  or    $v0, $t4, $t8
-/* 06D5D0 7F038AA0 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
+/* 06D5D0 7F038AA0 0FC0D4E6 */  jal   LoadNext_PrevActionBlock
 /* 06D5D4 7F038AA4 3044FFFF */   andi  $a0, $v0, 0xffff
 /* 06D5D8 7F038AA8 8FB90280 */  lw    $t9, 0x280($sp)
 /* 06D5DC 7F038AAC 92250001 */  lbu   $a1, 1($s1)
@@ -6444,7 +6444,7 @@ actionBE_Respawn_Guard_with_ID_B:
 /* 06D650 7F038B20 01787025 */  or    $t6, $t3, $t8
 /* 06D654 7F038B24 01A91025 */  or    $v0, $t5, $t1
 /* 06D658 7F038B28 3044FFFF */  andi  $a0, $v0, 0xffff
-/* 06D65C 7F038B2C 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
+/* 06D65C 7F038B2C 0FC0D4E6 */  jal   LoadNext_PrevActionBlock
 /* 06D660 7F038B30 01D98025 */   or    $s0, $t6, $t9
 /* 06D664 7F038B34 92250001 */  lbu   $a1, 1($s1)
 /* 06D668 7F038B38 82260002 */  lb    $a2, 2($s1)
@@ -6584,7 +6584,7 @@ actionC1_GuardIDDoesAV_If_Gunfire_RVL_WhenComplete_5:
 /* 06D858 7F038D28 AFA00210 */  sw    $zero, 0x210($sp)
 /* 06D85C 7F038D2C AFA00234 */  sw    $zero, 0x234($sp)
 /* 06D860 7F038D30 00009825 */  move  $s3, $zero
-/* 06D864 7F038D34 0FC0D4E6 */  jal   LoadNext-PrevActionBlock
+/* 06D864 7F038D34 0FC0D4E6 */  jal   LoadNext_PrevActionBlock
 /* 06D868 7F038D38 0000A025 */   move  $s4, $zero
 /* 06D86C 7F038D3C 00408025 */  move  $s0, $v0
 /* 06D870 7F038D40 02E02025 */  move  $a0, $s7

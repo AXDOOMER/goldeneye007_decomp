@@ -13,6 +13,7 @@ char dword_CODE_bss_8006530C[8];
 char dword_CODE_bss_80065314[0x10];
 s32 dword_CODE_bss_80065324;
 char contdemoMesg[0x28];
+OSMesgQueue contdemoMesgMQ;
 
 OSMesgQueue contdemoMesgMQ;
 OSMesg cont1Mesg;
@@ -91,12 +92,12 @@ void *something_with_joy_c_debug(void) {
 
     // Node 0
     get_ptr_debug_notice_list_entry(&D_800268C0, &aJoy_c_debug);
-    osCreateMesgQueue(&dword_CODE_bss_80065370, &dword_CODE_bss_80065368, 1);
-    osCreateMesgQueue(&dword_CODE_bss_80065390, &dword_CODE_bss_80065388, 1);
-    osCreateMesgQueue(&dword_CODE_bss_800653B0, &dword_CODE_bss_800653A8, 1);
-    osCreateMesgQueue(&dword_CODE_bss_800653D0, &dword_CODE_bss_800653C8, 1);
-    osCreateMesgQueue(&interrupt5_thread_list_buf, &dword_CODE_bss_80065328, 0xa);
-    osSetEventMesg(5, &interrupt5_thread_list_buf, 0);
+    osCreateMesgQueue(&cont1MesgMQ, &cont1Mesg, 1);
+    osCreateMesgQueue(&cont2MesgMQ, &cont2Mesg, 1);
+    osCreateMesgQueue(&cont3MesgMQ, &cont3Mesg, 1);
+    osCreateMesgQueue(&cont4MesgMQ, &cont4Mesg, 1);
+    osCreateMesgQueue(&contdemoMesgMQ, &contdemoMesg, 0xa);
+    osSetEventMesg(5, &contdemoMesgMQ, 0);
     D_80026918 = 1;
     disable_all_rumble = 0;
     temp_v0 = (0x80060000 + 0x4f30);
@@ -124,7 +125,7 @@ void *something_with_joy_c_debug(void) {
     temp_v0_2->unk-1FA = (u8)0;
     temp_v0_2->unk-1F9 = (u8)0;
     temp_v0_2->unk-1F8 = (u8)0;
-    if (temp_v0_2 != &dword_CODE_bss_80065328)
+    if (temp_v0_2 != &contdemoMesg)
     {
         goto loop_1;
     }
@@ -141,38 +142,38 @@ glabel something_with_joy_c_debug
 /* 00C170 7000B570 24A59390 */  addiu $a1, %lo(aJoy_c_debug) # addiu $a1, $a1, -0x6c70
 /* 00C174 7000B574 0C001398 */  jal   get_ptr_debug_notice_list_entry
 /* 00C178 7000B578 248468C0 */   addiu $a0, %lo(D_800268C0) # addiu $a0, $a0, 0x68c0
-/* 00C17C 7000B57C 3C048006 */  lui   $a0, %hi(dword_CODE_bss_80065370) # $a0, 0x8006
-/* 00C180 7000B580 3C058006 */  lui   $a1, %hi(dword_CODE_bss_80065368) # $a1, 0x8006
-/* 00C184 7000B584 24A55368 */  addiu $a1, %lo(dword_CODE_bss_80065368) # addiu $a1, $a1, 0x5368
-/* 00C188 7000B588 24845370 */  addiu $a0, %lo(dword_CODE_bss_80065370) # addiu $a0, $a0, 0x5370
+/* 00C17C 7000B57C 3C048006 */  lui   $a0, %hi(cont1MesgMQ) # $a0, 0x8006
+/* 00C180 7000B580 3C058006 */  lui   $a1, %hi(cont1Mesg) # $a1, 0x8006
+/* 00C184 7000B584 24A55368 */  addiu $a1, %lo(cont1Mesg) # addiu $a1, $a1, 0x5368
+/* 00C188 7000B588 24845370 */  addiu $a0, %lo(cont1MesgMQ) # addiu $a0, $a0, 0x5370
 /* 00C18C 7000B58C 0C0035B4 */  jal   osCreateMesgQueue
 /* 00C190 7000B590 24060001 */   li    $a2, 1
-/* 00C194 7000B594 3C048006 */  lui   $a0, %hi(dword_CODE_bss_80065390) # $a0, 0x8006
-/* 00C198 7000B598 3C058006 */  lui   $a1, %hi(dword_CODE_bss_80065388) # $a1, 0x8006
-/* 00C19C 7000B59C 24A55388 */  addiu $a1, %lo(dword_CODE_bss_80065388) # addiu $a1, $a1, 0x5388
-/* 00C1A0 7000B5A0 24845390 */  addiu $a0, %lo(dword_CODE_bss_80065390) # addiu $a0, $a0, 0x5390
+/* 00C194 7000B594 3C048006 */  lui   $a0, %hi(cont2MesgMQ) # $a0, 0x8006
+/* 00C198 7000B598 3C058006 */  lui   $a1, %hi(cont2Mesg) # $a1, 0x8006
+/* 00C19C 7000B59C 24A55388 */  addiu $a1, %lo(cont2Mesg) # addiu $a1, $a1, 0x5388
+/* 00C1A0 7000B5A0 24845390 */  addiu $a0, %lo(cont2MesgMQ) # addiu $a0, $a0, 0x5390
 /* 00C1A4 7000B5A4 0C0035B4 */  jal   osCreateMesgQueue
 /* 00C1A8 7000B5A8 24060001 */   li    $a2, 1
-/* 00C1AC 7000B5AC 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800653B0) # $a0, 0x8006
-/* 00C1B0 7000B5B0 3C058006 */  lui   $a1, %hi(dword_CODE_bss_800653A8) # $a1, 0x8006
-/* 00C1B4 7000B5B4 24A553A8 */  addiu $a1, %lo(dword_CODE_bss_800653A8) # addiu $a1, $a1, 0x53a8
-/* 00C1B8 7000B5B8 248453B0 */  addiu $a0, %lo(dword_CODE_bss_800653B0) # addiu $a0, $a0, 0x53b0
+/* 00C1AC 7000B5AC 3C048006 */  lui   $a0, %hi(cont3MesgMQ) # $a0, 0x8006
+/* 00C1B0 7000B5B0 3C058006 */  lui   $a1, %hi(cont3Mesg) # $a1, 0x8006
+/* 00C1B4 7000B5B4 24A553A8 */  addiu $a1, %lo(cont3Mesg) # addiu $a1, $a1, 0x53a8
+/* 00C1B8 7000B5B8 248453B0 */  addiu $a0, %lo(cont3MesgMQ) # addiu $a0, $a0, 0x53b0
 /* 00C1BC 7000B5BC 0C0035B4 */  jal   osCreateMesgQueue
 /* 00C1C0 7000B5C0 24060001 */   li    $a2, 1
-/* 00C1C4 7000B5C4 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800653D0) # $a0, 0x8006
-/* 00C1C8 7000B5C8 3C058006 */  lui   $a1, %hi(dword_CODE_bss_800653C8) # $a1, 0x8006
-/* 00C1CC 7000B5CC 24A553C8 */  addiu $a1, %lo(dword_CODE_bss_800653C8) # addiu $a1, $a1, 0x53c8
-/* 00C1D0 7000B5D0 248453D0 */  addiu $a0, %lo(dword_CODE_bss_800653D0) # addiu $a0, $a0, 0x53d0
+/* 00C1C4 7000B5C4 3C048006 */  lui   $a0, %hi(cont4MesgMQ) # $a0, 0x8006
+/* 00C1C8 7000B5C8 3C058006 */  lui   $a1, %hi(cont4Mesg) # $a1, 0x8006
+/* 00C1CC 7000B5CC 24A553C8 */  addiu $a1, %lo(cont4Mesg) # addiu $a1, $a1, 0x53c8
+/* 00C1D0 7000B5D0 248453D0 */  addiu $a0, %lo(cont4MesgMQ) # addiu $a0, $a0, 0x53d0
 /* 00C1D4 7000B5D4 0C0035B4 */  jal   osCreateMesgQueue
 /* 00C1D8 7000B5D8 24060001 */   li    $a2, 1
-/* 00C1DC 7000B5DC 3C048006 */  lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
-/* 00C1E0 7000B5E0 3C058006 */  lui   $a1, %hi(dword_CODE_bss_80065328) # $a1, 0x8006
-/* 00C1E4 7000B5E4 24A55328 */  addiu $a1, %lo(dword_CODE_bss_80065328) # addiu $a1, $a1, 0x5328
-/* 00C1E8 7000B5E8 24845350 */  addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00C1DC 7000B5DC 3C048006 */  lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
+/* 00C1E0 7000B5E0 3C058006 */  lui   $a1, %hi(contdemoMesg) # $a1, 0x8006
+/* 00C1E4 7000B5E4 24A55328 */  addiu $a1, %lo(contdemoMesg) # addiu $a1, $a1, 0x5328
+/* 00C1E8 7000B5E8 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00C1EC 7000B5EC 0C0035B4 */  jal   osCreateMesgQueue
 /* 00C1F0 7000B5F0 2406000A */   li    $a2, 10
-/* 00C1F4 7000B5F4 3C058006 */  lui   $a1, %hi(interrupt5_thread_list_buf) # $a1, 0x8006
-/* 00C1F8 7000B5F8 24A55350 */  addiu $a1, %lo(interrupt5_thread_list_buf) # addiu $a1, $a1, 0x5350
+/* 00C1F4 7000B5F4 3C058006 */  lui   $a1, %hi(contdemoMesgMQ) # $a1, 0x8006
+/* 00C1F8 7000B5F8 24A55350 */  addiu $a1, %lo(contdemoMesgMQ) # addiu $a1, $a1, 0x5350
 /* 00C1FC 7000B5FC 24040005 */  li    $a0, 5
 /* 00C200 7000B600 0C003714 */  jal   osSetEventMesg
 /* 00C204 7000B604 00003025 */   move  $a2, $zero
@@ -184,9 +185,9 @@ glabel something_with_joy_c_debug
 /* 00C21C 7000B61C 3C0F8006 */  lui   $t7, 0x8006
 /* 00C220 7000B620 3C018002 */  lui   $at, %hi(ptr_to_tlb_ramrom_record) # $at, 0x8002
 /* 00C224 7000B624 25E24F30 */  addiu $v0, $t7, 0x4f30
-/* 00C228 7000B628 3C058006 */  lui   $a1, %hi(dword_CODE_bss_80065328) # $a1, 0x8006
+/* 00C228 7000B628 3C058006 */  lui   $a1, %hi(contdemoMesg) # $a1, 0x8006
 /* 00C22C 7000B62C AC206928 */  sw    $zero, %lo(ptr_to_tlb_ramrom_record)($at)
-/* 00C230 7000B630 24A55328 */  addiu $a1, %lo(dword_CODE_bss_80065328) # addiu $a1, $a1, 0x5328
+/* 00C230 7000B630 24A55328 */  addiu $a1, %lo(contdemoMesg) # addiu $a1, $a1, 0x5328
 /* 00C234 7000B634 00401825 */  move  $v1, $v0
 /* 00C238 7000B638 2404FFFF */  li    $a0, -1
 .L7000B63C:
@@ -231,13 +232,13 @@ void test_controller_presence(void) {
     if (D_80026918 != 0)
     {
         // Node 1
-        osSendMesg(&dword_CODE_bss_80065370, &sp1C, 0);
-        osRecvMesg(&dword_CODE_bss_80065390, &sp1C, 1);
+        osSendMesg(&cont1MesgMQ, &sp1C, 0);
+        osRecvMesg(&cont2MesgMQ, &sp1C, 1);
         controller_check_for_rumble_maybe();
-        osSendMesg(&dword_CODE_bss_800653B0, &sp1C, 0);
-        osRecvMesg(&dword_CODE_bss_800653D0, &sp1C, 1);
+        osSendMesg(&cont3MesgMQ, &sp1C, 0);
+        osRecvMesg(&cont4MesgMQ, &sp1C, 1);
         return;
-        // (possible return value: osRecvMesg(&dword_CODE_bss_800653D0, &sp1C, 1))
+        // (possible return value: osRecvMesg(&cont4MesgMQ, &sp1C, 1))
     }
     // (function likely void)
 }
@@ -250,25 +251,25 @@ glabel test_controller_presence
 /* 00C2B4 7000B6B4 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00C2B8 7000B6B8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00C2BC 7000B6BC 11C00016 */  beqz  $t6, .L7000B718
-/* 00C2C0 7000B6C0 3C048006 */   lui   $a0, %hi(dword_CODE_bss_80065370) # $a0, 0x8006
-/* 00C2C4 7000B6C4 24845370 */  addiu $a0, %lo(dword_CODE_bss_80065370) # addiu $a0, $a0, 0x5370
+/* 00C2C0 7000B6C0 3C048006 */   lui   $a0, %hi(cont1MesgMQ) # $a0, 0x8006
+/* 00C2C4 7000B6C4 24845370 */  addiu $a0, %lo(cont1MesgMQ) # addiu $a0, $a0, 0x5370
 /* 00C2C8 7000B6C8 27A5001C */  addiu $a1, $sp, 0x1c
 /* 00C2CC 7000B6CC 0C0037C4 */  jal   osSendMesg
 /* 00C2D0 7000B6D0 00003025 */   move  $a2, $zero
-/* 00C2D4 7000B6D4 3C048006 */  lui   $a0, %hi(dword_CODE_bss_80065390) # $a0, 0x8006
-/* 00C2D8 7000B6D8 24845390 */  addiu $a0, %lo(dword_CODE_bss_80065390) # addiu $a0, $a0, 0x5390
+/* 00C2D4 7000B6D4 3C048006 */  lui   $a0, %hi(cont2MesgMQ) # $a0, 0x8006
+/* 00C2D8 7000B6D8 24845390 */  addiu $a0, %lo(cont2MesgMQ) # addiu $a0, $a0, 0x5390
 /* 00C2DC 7000B6DC 27A5001C */  addiu $a1, $sp, 0x1c
 /* 00C2E0 7000B6E0 0C003774 */  jal   osRecvMesg
 /* 00C2E4 7000B6E4 24060001 */   li    $a2, 1
 /* 00C2E8 7000B6E8 0C002E04 */  jal   controller_check_for_rumble_maybe
 /* 00C2EC 7000B6EC 00000000 */   nop   
-/* 00C2F0 7000B6F0 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800653B0) # $a0, 0x8006
-/* 00C2F4 7000B6F4 248453B0 */  addiu $a0, %lo(dword_CODE_bss_800653B0) # addiu $a0, $a0, 0x53b0
+/* 00C2F0 7000B6F0 3C048006 */  lui   $a0, %hi(cont3MesgMQ) # $a0, 0x8006
+/* 00C2F4 7000B6F4 248453B0 */  addiu $a0, %lo(cont3MesgMQ) # addiu $a0, $a0, 0x53b0
 /* 00C2F8 7000B6F8 27A5001C */  addiu $a1, $sp, 0x1c
 /* 00C2FC 7000B6FC 0C0037C4 */  jal   osSendMesg
 /* 00C300 7000B700 00003025 */   move  $a2, $zero
-/* 00C304 7000B704 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800653D0) # $a0, 0x8006
-/* 00C308 7000B708 248453D0 */  addiu $a0, %lo(dword_CODE_bss_800653D0) # addiu $a0, $a0, 0x53d0
+/* 00C304 7000B704 3C048006 */  lui   $a0, %hi(cont4MesgMQ) # $a0, 0x8006
+/* 00C308 7000B708 248453D0 */  addiu $a0, %lo(cont4MesgMQ) # addiu $a0, $a0, 0x53d0
 /* 00C30C 7000B70C 27A5001C */  addiu $a1, $sp, 0x1c
 /* 00C310 7000B710 0C003774 */  jal   osRecvMesg
 /* 00C314 7000B714 24060001 */   li    $a2, 1
@@ -329,8 +330,8 @@ glabel controller_7000B734
 /* 00C36C 7000B76C 51000025 */  beql  $t0, $zero, .L7000B804
 /* 00C370 7000B770 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 00C374 7000B774 90690002 */  lbu   $t1, 2($v1)
-/* 00C378 7000B778 3C048006 */  lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
-/* 00C37C 7000B77C 24845350 */  addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00C378 7000B778 3C048006 */  lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
+/* 00C37C 7000B77C 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00C380 7000B780 312A0001 */  andi  $t2, $t1, 1
 /* 00C384 7000B784 1140001E */  beqz  $t2, .L7000B800
 /* 00C388 7000B788 00065880 */   sll   $t3, $a2, 2
@@ -353,8 +354,8 @@ glabel controller_7000B734
 /* 00C3CC 7000B7CC 2401000B */  li    $at, 11
 /* 00C3D0 7000B7D0 1441000B */  bne   $v0, $at, .L7000B800
 .L7000B7D4:
-/* 00C3D4 7000B7D4 3C048006 */   lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
-/* 00C3D8 7000B7D8 24845350 */  addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00C3D4 7000B7D4 3C048006 */   lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
+/* 00C3D8 7000B7D8 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00C3DC 7000B7DC 0C00334E */  jal   controller_7000CD38
 /* 00C3E0 7000B7E0 AFA7001C */   sw    $a3, 0x1c($sp)
 /* 00C3E4 7000B7E4 14400004 */  bnez  $v0, .L7000B7F8
@@ -391,54 +392,54 @@ glabel controller_check_for_rumble_maybe
 /* 00C420 7000B820 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 00C424 7000B824 11C0000D */  beqz  $t6, .L7000B85C
 /* 00C428 7000B828 AFB00018 */   sw    $s0, 0x18($sp)
-/* 00C42C 7000B82C 3C048006 */  lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
+/* 00C42C 7000B82C 3C048006 */  lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
 /* 00C430 7000B830 3C058002 */  lui   $a1, %hi(num_controller_plugged_in_flags) # $a1, 0x8002
 /* 00C434 7000B834 3C068006 */  lui   $a2, %hi(player1_controllerstatus) # $a2, 0x8006
 /* 00C438 7000B838 AC400000 */  sw    $zero, ($v0)
 /* 00C43C 7000B83C 24C653E8 */  addiu $a2, %lo(player1_controllerstatus) # addiu $a2, $a2, 0x53e8
 /* 00C440 7000B840 24A568D0 */  addiu $a1, %lo(num_controller_plugged_in_flags) # addiu $a1, $a1, 0x68d0
 /* 00C444 7000B844 0C005240 */  jal   osContInit
-/* 00C448 7000B848 24845350 */   addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00C448 7000B848 24845350 */   addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00C44C 7000B84C 240F0001 */  li    $t7, 1
 /* 00C450 7000B850 3C018002 */  lui   $at, %hi(D_8002691C) # $at, 0x8002
 /* 00C454 7000B854 10000026 */  b     .L7000B8F0
 /* 00C458 7000B858 AC2F691C */   sw    $t7, %lo(D_8002691C)($at)
 .L7000B85C:
-/* 00C45C 7000B85C 3C048006 */  lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
+/* 00C45C 7000B85C 3C048006 */  lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
 /* 00C460 7000B860 2410000F */  li    $s0, 15
 /* 00C464 7000B864 0C005330 */  jal   osContStartQuery
-/* 00C468 7000B868 24845350 */   addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
-/* 00C46C 7000B86C 3C048006 */  lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
-/* 00C470 7000B870 24845350 */  addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00C468 7000B868 24845350 */   addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
+/* 00C46C 7000B86C 3C048006 */  lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
+/* 00C470 7000B870 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00C474 7000B874 00002825 */  move  $a1, $zero
 /* 00C478 7000B878 0C003774 */  jal   osRecvMesg
 /* 00C47C 7000B87C 24060001 */   li    $a2, 1
 /* 00C480 7000B880 3C048006 */  lui   $a0, %hi(player1_controllerstatus) # $a0, 0x8006
 /* 00C484 7000B884 0C005351 */  jal   osContGetQuery
 /* 00C488 7000B888 248453E8 */   addiu $a0, %lo(player1_controllerstatus) # addiu $a0, $a0, 0x53e8
-/* 00C48C 7000B88C 3C188006 */  lui   $t8, %hi(D_800653EB) # $t8, 0x8006
-/* 00C490 7000B890 931853EB */  lbu   $t8, %lo(D_800653EB)($t8)
-/* 00C494 7000B894 3C088006 */  lui   $t0, %hi(D_800653EF) # $t0, 0x8006
-/* 00C498 7000B898 3C0A8006 */  lui   $t2, %hi(D_800653F3) # $t2, 0x8006
+/* 00C48C 7000B88C 3C188006 */  lui   $t8, %hi(player1_controllerstatus+3) # $t8, 0x8006
+/* 00C490 7000B890 931853EB */  lbu   $t8, %lo(player1_controllerstatus+3)($t8)
+/* 00C494 7000B894 3C088006 */  lui   $t0, %hi(player2_controllerstatus+3) # $t0, 0x8006
+/* 00C498 7000B898 3C0A8006 */  lui   $t2, %hi(player3_controllerstatus+3) # $t2, 0x8006
 /* 00C49C 7000B89C 33190008 */  andi  $t9, $t8, 8
 /* 00C4A0 7000B8A0 13200002 */  beqz  $t9, .L7000B8AC
-/* 00C4A4 7000B8A4 3C0C8006 */   lui   $t4, %hi(D_800653F7) # $t4, 0x8006
+/* 00C4A4 7000B8A4 3C0C8006 */   lui   $t4, %hi(player4_controllerstatus+3) # $t4, 0x8006
 /* 00C4A8 7000B8A8 2410000E */  li    $s0, 14
 .L7000B8AC:
-/* 00C4AC 7000B8AC 910853EF */  lbu   $t0, %lo(D_800653EF)($t0)
+/* 00C4AC 7000B8AC 910853EF */  lbu   $t0, %lo(player2_controllerstatus+3)($t0)
 /* 00C4B0 7000B8B0 3C018002 */  lui   $at, %hi(num_controller_plugged_in_flags) # $at, 0x8002
 /* 00C4B4 7000B8B4 31090008 */  andi  $t1, $t0, 8
 /* 00C4B8 7000B8B8 11200002 */  beqz  $t1, .L7000B8C4
 /* 00C4BC 7000B8BC 00000000 */   nop   
 /* 00C4C0 7000B8C0 2610FFFE */  addiu $s0, $s0, -2
 .L7000B8C4:
-/* 00C4C4 7000B8C4 914A53F3 */  lbu   $t2, %lo(D_800653F3)($t2)
+/* 00C4C4 7000B8C4 914A53F3 */  lbu   $t2, %lo(player3_controllerstatus+3)($t2)
 /* 00C4C8 7000B8C8 314B0008 */  andi  $t3, $t2, 8
 /* 00C4CC 7000B8CC 11600002 */  beqz  $t3, .L7000B8D8
 /* 00C4D0 7000B8D0 00000000 */   nop   
 /* 00C4D4 7000B8D4 2610FFFC */  addiu $s0, $s0, -4
 .L7000B8D8:
-/* 00C4D8 7000B8D8 918C53F7 */  lbu   $t4, %lo(D_800653F7)($t4)
+/* 00C4D8 7000B8D8 918C53F7 */  lbu   $t4, %lo(player4_controllerstatus+3)($t4)
 /* 00C4DC 7000B8DC 318D0008 */  andi  $t5, $t4, 8
 /* 00C4E0 7000B8E0 11A00002 */  beqz  $t5, .L7000B8EC
 /* 00C4E4 7000B8E4 00000000 */   nop   
@@ -1005,16 +1006,16 @@ GLOBAL_ASM(
 glabel controller_7000BD88
 /* 00C988 7000BD88 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 00C98C 7000BD8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00C990 7000BD90 3C048006 */  lui   $a0, %hi(dword_CODE_bss_80065370) # $a0, 0x8006
-/* 00C994 7000BD94 24845370 */  addiu $a0, %lo(dword_CODE_bss_80065370) # addiu $a0, $a0, 0x5370
+/* 00C990 7000BD90 3C048006 */  lui   $a0, %hi(cont1MesgMQ) # $a0, 0x8006
+/* 00C994 7000BD94 24845370 */  addiu $a0, %lo(cont1MesgMQ) # addiu $a0, $a0, 0x5370
 /* 00C998 7000BD98 27A5004C */  addiu $a1, $sp, 0x4c
 /* 00C99C 7000BD9C 0C003774 */  jal   osRecvMesg
 /* 00C9A0 7000BDA0 00003025 */   move  $a2, $zero
 /* 00C9A4 7000BDA4 14400015 */  bnez  $v0, .L7000BDFC
 /* 00C9A8 7000BDA8 3C0E8002 */   lui   $t6, %hi(D_800268C8) # $t6, 0x8002
 /* 00C9AC 7000BDAC 8DCE68C8 */  lw    $t6, %lo(D_800268C8)($t6)
-/* 00C9B0 7000BDB0 3C048006 */  lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
-/* 00C9B4 7000BDB4 24845350 */  addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00C9B0 7000BDB0 3C048006 */  lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
+/* 00C9B4 7000BDB4 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00C9B8 7000BDB8 11C00005 */  beqz  $t6, .L7000BDD0
 /* 00C9BC 7000BDBC 27A5004C */   addiu $a1, $sp, 0x4c
 /* 00C9C0 7000BDC0 0C003774 */  jal   osRecvMesg
@@ -1022,8 +1023,8 @@ glabel controller_7000BD88
 /* 00C9C8 7000BDC8 3C018002 */  lui   $at, %hi(D_800268C8) # $at, 0x8002
 /* 00C9CC 7000BDCC AC2068C8 */  sw    $zero, %lo(D_800268C8)($at)
 .L7000BDD0:
-/* 00C9D0 7000BDD0 3C048006 */  lui   $a0, %hi(dword_CODE_bss_80065390) # $a0, 0x8006
-/* 00C9D4 7000BDD4 24845390 */  addiu $a0, %lo(dword_CODE_bss_80065390) # addiu $a0, $a0, 0x5390
+/* 00C9D0 7000BDD0 3C048006 */  lui   $a0, %hi(cont2MesgMQ) # $a0, 0x8006
+/* 00C9D4 7000BDD4 24845390 */  addiu $a0, %lo(cont2MesgMQ) # addiu $a0, $a0, 0x5390
 /* 00C9D8 7000BDD8 27A5004C */  addiu $a1, $sp, 0x4c
 /* 00C9DC 7000BDDC 0C0037C4 */  jal   osSendMesg
 /* 00C9E0 7000BDE0 00003025 */   move  $a2, $zero
@@ -1034,20 +1035,20 @@ glabel controller_7000BD88
 /* 00C9F4 7000BDF4 100000B9 */  b     .L7000C0DC
 /* 00C9F8 7000BDF8 AC780000 */   sw    $t8, ($v1)
 .L7000BDFC:
-/* 00C9FC 7000BDFC 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800653B0) # $a0, 0x8006
-/* 00CA00 7000BE00 248453B0 */  addiu $a0, %lo(dword_CODE_bss_800653B0) # addiu $a0, $a0, 0x53b0
+/* 00C9FC 7000BDFC 3C048006 */  lui   $a0, %hi(cont3MesgMQ) # $a0, 0x8006
+/* 00CA00 7000BE00 248453B0 */  addiu $a0, %lo(cont3MesgMQ) # addiu $a0, $a0, 0x53b0
 /* 00CA04 7000BE04 27A5004C */  addiu $a1, $sp, 0x4c
 /* 00CA08 7000BE08 0C003774 */  jal   osRecvMesg
 /* 00CA0C 7000BE0C 00003025 */   move  $a2, $zero
 /* 00CA10 7000BE10 14400011 */  bnez  $v0, .L7000BE58
-/* 00CA14 7000BE14 3C048006 */   lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
+/* 00CA14 7000BE14 3C048006 */   lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
 /* 00CA18 7000BE18 0C00535C */  jal   osContStartReadData
-/* 00CA1C 7000BE1C 24845350 */   addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00CA1C 7000BE1C 24845350 */   addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00CA20 7000BE20 24190001 */  li    $t9, 1
 /* 00CA24 7000BE24 3C018002 */  lui   $at, %hi(D_800268C8) # $at, 0x8002
-/* 00CA28 7000BE28 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800653D0) # $a0, 0x8006
+/* 00CA28 7000BE28 3C048006 */  lui   $a0, %hi(cont4MesgMQ) # $a0, 0x8006
 /* 00CA2C 7000BE2C AC3968C8 */  sw    $t9, %lo(D_800268C8)($at)
-/* 00CA30 7000BE30 248453D0 */  addiu $a0, %lo(dword_CODE_bss_800653D0) # addiu $a0, $a0, 0x53d0
+/* 00CA30 7000BE30 248453D0 */  addiu $a0, %lo(cont4MesgMQ) # addiu $a0, $a0, 0x53d0
 /* 00CA34 7000BE34 27A5004C */  addiu $a1, $sp, 0x4c
 /* 00CA38 7000BE38 0C0037C4 */  jal   osSendMesg
 /* 00CA3C 7000BE3C 00003025 */   move  $a2, $zero
@@ -1065,8 +1066,8 @@ glabel controller_7000BD88
 /* 00CA68 7000BE68 55A0009D */  bnezl $t5, .L7000C0E0
 /* 00CA6C 7000BE6C 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 00CA70 7000BE70 8DCE691C */  lw    $t6, %lo(D_8002691C)($t6)
-/* 00CA74 7000BE74 3C048006 */  lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
-/* 00CA78 7000BE78 24845350 */  addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00CA74 7000BE74 3C048006 */  lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
+/* 00CA78 7000BE78 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00CA7C 7000BE7C 11C00097 */  beqz  $t6, .L7000C0DC
 /* 00CA80 7000BE80 27A5004C */   addiu $a1, $sp, 0x4c
 /* 00CA84 7000BE84 0C003774 */  jal   osRecvMesg
@@ -1165,9 +1166,9 @@ glabel controller_7000BD88
 .L7000BFDC:
 /* 00CBDC 7000BFDC 0C002E9F */  jal   controller_rumble_related
 /* 00CBE0 7000BFE0 00000000 */   nop   
-/* 00CBE4 7000BFE4 3C048006 */  lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
+/* 00CBE4 7000BFE4 3C048006 */  lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
 /* 00CBE8 7000BFE8 0C00535C */  jal   osContStartReadData
-/* 00CBEC 7000BFEC 24845350 */   addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00CBEC 7000BFEC 24845350 */   addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00CBF0 7000BFF0 3C038002 */  lui   $v1, %hi(D_80026970) # $v1, 0x8002
 /* 00CBF4 7000BFF4 8C636970 */  lw    $v1, %lo(D_80026970)($v1)
 /* 00CBF8 7000BFF8 24190001 */  li    $t9, 1
@@ -1984,10 +1985,10 @@ void controller_7000C67C(void) {
     ? sp1C;
 
     // Node 0
-    osSendMesg(&dword_CODE_bss_80065370, &sp1C, 0);
-    osRecvMesg(&dword_CODE_bss_80065390, &sp1C, 1);
+    osSendMesg(&cont1MesgMQ, &sp1C, 0);
+    osRecvMesg(&cont2MesgMQ, &sp1C, 1);
     return;
-    // (possible return value: osRecvMesg(&dword_CODE_bss_80065390, &sp1C, 1))
+    // (possible return value: osRecvMesg(&cont2MesgMQ, &sp1C, 1))
 }
 #else
 GLOBAL_ASM(
@@ -1995,13 +1996,13 @@ GLOBAL_ASM(
 glabel controller_7000C67C
 /* 00D27C 7000C67C 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D280 7000C680 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00D284 7000C684 3C048006 */  lui   $a0, %hi(dword_CODE_bss_80065370) # $a0, 0x8006
-/* 00D288 7000C688 24845370 */  addiu $a0, %lo(dword_CODE_bss_80065370) # addiu $a0, $a0, 0x5370
+/* 00D284 7000C684 3C048006 */  lui   $a0, %hi(cont1MesgMQ) # $a0, 0x8006
+/* 00D288 7000C688 24845370 */  addiu $a0, %lo(cont1MesgMQ) # addiu $a0, $a0, 0x5370
 /* 00D28C 7000C68C 27A5001C */  addiu $a1, $sp, 0x1c
 /* 00D290 7000C690 0C0037C4 */  jal   osSendMesg
 /* 00D294 7000C694 00003025 */   move  $a2, $zero
-/* 00D298 7000C698 3C048006 */  lui   $a0, %hi(dword_CODE_bss_80065390) # $a0, 0x8006
-/* 00D29C 7000C69C 24845390 */  addiu $a0, %lo(dword_CODE_bss_80065390) # addiu $a0, $a0, 0x5390
+/* 00D298 7000C698 3C048006 */  lui   $a0, %hi(cont2MesgMQ) # $a0, 0x8006
+/* 00D29C 7000C69C 24845390 */  addiu $a0, %lo(cont2MesgMQ) # addiu $a0, $a0, 0x5390
 /* 00D2A0 7000C6A0 27A5001C */  addiu $a1, $sp, 0x1c
 /* 00D2A4 7000C6A4 0C003774 */  jal   osRecvMesg
 /* 00D2A8 7000C6A8 24060001 */   li    $a2, 1
@@ -2021,10 +2022,10 @@ void controller_7000C6BC(void) {
     ? sp1C;
 
     // Node 0
-    osSendMesg(&dword_CODE_bss_800653B0, &sp1C, 0);
-    osRecvMesg(&dword_CODE_bss_800653D0, &sp1C, 1);
+    osSendMesg(&cont3MesgMQ, &sp1C, 0);
+    osRecvMesg(&cont4MesgMQ, &sp1C, 1);
     return;
-    // (possible return value: osRecvMesg(&dword_CODE_bss_800653D0, &sp1C, 1))
+    // (possible return value: osRecvMesg(&cont4MesgMQ, &sp1C, 1))
 }
 #else
 GLOBAL_ASM(
@@ -2032,13 +2033,13 @@ GLOBAL_ASM(
 glabel controller_7000C6BC
 /* 00D2BC 7000C6BC 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D2C0 7000C6C0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00D2C4 7000C6C4 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800653B0) # $a0, 0x8006
-/* 00D2C8 7000C6C8 248453B0 */  addiu $a0, %lo(dword_CODE_bss_800653B0) # addiu $a0, $a0, 0x53b0
+/* 00D2C4 7000C6C4 3C048006 */  lui   $a0, %hi(cont3MesgMQ) # $a0, 0x8006
+/* 00D2C8 7000C6C8 248453B0 */  addiu $a0, %lo(cont3MesgMQ) # addiu $a0, $a0, 0x53b0
 /* 00D2CC 7000C6CC 27A5001C */  addiu $a1, $sp, 0x1c
 /* 00D2D0 7000C6D0 0C0037C4 */  jal   osSendMesg
 /* 00D2D4 7000C6D4 00003025 */   move  $a2, $zero
-/* 00D2D8 7000C6D8 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800653D0) # $a0, 0x8006
-/* 00D2DC 7000C6DC 248453D0 */  addiu $a0, %lo(dword_CODE_bss_800653D0) # addiu $a0, $a0, 0x53d0
+/* 00D2D8 7000C6D8 3C048006 */  lui   $a0, %hi(cont4MesgMQ) # $a0, 0x8006
+/* 00D2DC 7000C6DC 248453D0 */  addiu $a0, %lo(cont4MesgMQ) # addiu $a0, $a0, 0x53d0
 /* 00D2E0 7000C6E0 27A5001C */  addiu $a1, $sp, 0x1c
 /* 00D2E4 7000C6E4 0C003774 */  jal   osRecvMesg
 /* 00D2E8 7000C6E8 24060001 */   li    $a2, 1
@@ -2059,7 +2060,7 @@ s32 save_7000C6FC(void) {
 
     // Node 0
     controller_7000C67C();
-    sp1C = osEepromProbe(&interrupt5_thread_list_buf);
+    sp1C = osEepromProbe(&contdemoMesgMQ);
     controller_7000C6BC();
     return;
     // (possible return value: sp1C)
@@ -2072,9 +2073,9 @@ glabel save_7000C6FC
 /* 00D300 7000C700 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D304 7000C704 0C00319F */  jal   controller_7000C67C
 /* 00D308 7000C708 00000000 */   nop   
-/* 00D30C 7000C70C 3C048006 */  lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
+/* 00D30C 7000C70C 3C048006 */  lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
 /* 00D310 7000C710 0C0053F4 */  jal   osEepromProbe
-/* 00D314 7000C714 24845350 */   addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00D314 7000C714 24845350 */   addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00D318 7000C718 0C0031AF */  jal   controller_7000C6BC
 /* 00D31C 7000C71C AFA2001C */   sw    $v0, 0x1c($sp)
 /* 00D320 7000C720 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -2095,7 +2096,7 @@ s32 save_7000C734(s32 arg0, s32 arg1, ? arg8, ? arg9) {
 
     // Node 0
     controller_7000C67C();
-    sp1C = osEepromRead(&interrupt5_thread_list_buf, arg8, arg9);
+    sp1C = osEepromRead(&contdemoMesgMQ, arg8, arg9);
     controller_7000C6BC();
     return;
     // (possible return value: sp1C)
@@ -2109,8 +2110,8 @@ glabel save_7000C734
 /* 00D33C 7000C73C AFA40020 */  sw    $a0, 0x20($sp)
 /* 00D340 7000C740 0C00319F */  jal   controller_7000C67C
 /* 00D344 7000C744 AFA50024 */   sw    $a1, 0x24($sp)
-/* 00D348 7000C748 3C048006 */  lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
-/* 00D34C 7000C74C 24845350 */  addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00D348 7000C748 3C048006 */  lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
+/* 00D34C 7000C74C 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00D350 7000C750 93A50023 */  lbu   $a1, 0x23($sp)
 /* 00D354 7000C754 0C005410 */  jal   osEepromRead
 /* 00D358 7000C758 8FA60024 */   lw    $a2, 0x24($sp)
@@ -2134,7 +2135,7 @@ s32 save_7000C778(s32 arg0, s32 arg1, ? arg8, ? arg9) {
 
     // Node 0
     controller_7000C67C();
-    sp1C = osEepromWrite(&interrupt5_thread_list_buf, arg8, arg9);
+    sp1C = osEepromWrite(&contdemoMesgMQ, arg8, arg9);
     controller_7000C6BC();
     return;
     // (possible return value: sp1C)
@@ -2148,8 +2149,8 @@ glabel save_7000C778
 /* 00D380 7000C780 AFA40020 */  sw    $a0, 0x20($sp)
 /* 00D384 7000C784 0C00319F */  jal   controller_7000C67C
 /* 00D388 7000C788 AFA50024 */   sw    $a1, 0x24($sp)
-/* 00D38C 7000C78C 3C048006 */  lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
-/* 00D390 7000C790 24845350 */  addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00D38C 7000C78C 3C048006 */  lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
+/* 00D390 7000C790 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00D394 7000C794 93A50023 */  lbu   $a1, 0x23($sp)
 /* 00D398 7000C798 0C0054D0 */  jal   osEepromWrite
 /* 00D39C 7000C79C 8FA60024 */   lw    $a2, 0x24($sp)
@@ -2173,7 +2174,7 @@ s32 save_7000C7BC(s32 arg0, s32 arg1, ? arg2, ? arg8, ? arg9, ? argA) {
 
     // Node 0
     controller_7000C67C();
-    sp1C = osEepromLongRead(&interrupt5_thread_list_buf, arg8, arg9, argA);
+    sp1C = osEepromLongRead(&contdemoMesgMQ, arg8, arg9, argA);
     controller_7000C6BC();
     return;
     // (possible return value: sp1C)
@@ -2188,8 +2189,8 @@ glabel save_7000C7BC
 /* 00D3C8 7000C7C8 AFA50024 */  sw    $a1, 0x24($sp)
 /* 00D3CC 7000C7CC 0C00319F */  jal   controller_7000C67C
 /* 00D3D0 7000C7D0 AFA60028 */   sw    $a2, 0x28($sp)
-/* 00D3D4 7000C7D4 3C048006 */  lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
-/* 00D3D8 7000C7D8 24845350 */  addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00D3D4 7000C7D4 3C048006 */  lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
+/* 00D3D8 7000C7D8 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00D3DC 7000C7DC 93A50023 */  lbu   $a1, 0x23($sp)
 /* 00D3E0 7000C7E0 8FA60024 */  lw    $a2, 0x24($sp)
 /* 00D3E4 7000C7E4 0C005608 */  jal   osEepromLongRead
@@ -2214,7 +2215,7 @@ s32 save_7000C808(s32 arg0, s32 arg1, ? arg2, ? arg8, ? arg9, ? argA) {
 
     // Node 0
     controller_7000C67C();
-    sp1C = osEepromLongWrite(&interrupt5_thread_list_buf, arg8, arg9, argA);
+    sp1C = osEepromLongWrite(&contdemoMesgMQ, arg8, arg9, argA);
     controller_7000C6BC();
     return;
     // (possible return value: sp1C)
@@ -2229,8 +2230,8 @@ glabel save_7000C808
 /* 00D414 7000C814 AFA50024 */  sw    $a1, 0x24($sp)
 /* 00D418 7000C818 0C00319F */  jal   controller_7000C67C
 /* 00D41C 7000C81C AFA60028 */   sw    $a2, 0x28($sp)
-/* 00D420 7000C820 3C048006 */  lui   $a0, %hi(interrupt5_thread_list_buf) # $a0, 0x8006
-/* 00D424 7000C824 24845350 */  addiu $a0, %lo(interrupt5_thread_list_buf) # addiu $a0, $a0, 0x5350
+/* 00D420 7000C820 3C048006 */  lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
+/* 00D424 7000C824 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00D428 7000C828 93A50023 */  lbu   $a1, 0x23($sp)
 /* 00D42C 7000C82C 8FA60024 */  lw    $a2, 0x24($sp)
 /* 00D430 7000C830 0C005658 */  jal   osEepromLongWrite

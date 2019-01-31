@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "ramrom.h"
 #include "boss.h"
+#include "game/debugmenu_090490.h"
 
 /* data */
 u32 D_800241A0 = 0;
@@ -87,8 +88,94 @@ const char aU64_taskgrab_D_core[] = "u64.taskgrab.%d.core";
 
 
 #ifdef NONMATCHING
-void init_mainthread_data(void) {
+void init_mainthread_data(void)
+{
+    ? sp9C;
+    ? sp78;
+    ? sp60;
+    ? temp_ret;
+    ? temp_ret_2;
+    s32 temp_s0;
+    s32 phi_s0;
+    s32 phi_s0_2;
 
+    add_debug_notice_deb_c_debug();
+    romCreateMesgQueue();
+    establish_TLB_buffer_management_table();
+    image_entries_load();
+    something_with_memp_c_debug();
+    something_with_mema_c_debug();
+    something_with_bg_c_debug();
+    something_with_vi_c_debug();
+    init_video_settings();
+    init_indy_if_not_ready();
+    debug_and_update_stage_flag = rmon_debug_is_final_build();
+    ob_c_debug_setup();
+    something_with_rsp_c_debug();
+    something_with_dyn_c_debug();
+    something_with_joy_c_debug();
+    osCreateMesgQueue(&sp60, &sp9C, 1);
+    phi_s0 = 0;
+block_1:
+    temp_ret = __ll_mul(0, 0x186a0, osClockRate, osClockRate);
+    temp_ret_2 = ull_div(temp_ret, temp_ret, 0, 0xf4240);
+    osSetTimer(&sp78, temp_ret_2, temp_ret_2, 0, 0);
+    osRecvMesg(&sp60, &sp9C, 1);
+    if (phi_s0 == 1)
+    {
+        test_controller_presence();
+        phi_s0_2 = (phi_s0 + 1);
+    }
+    else
+    {
+        if (phi_s0 >= 2)
+        {
+            redirect_to_ramrom_replay_and_record_handlers_if_set();
+        }
+        phi_s0_2 = (phi_s0 + 1);
+    }
+    phi_s0 = phi_s0_2;
+    if (phi_s0_2 != 4)
+    {
+        goto block_1;
+    }
+    if (check_token(1, "-level_") == 0)
+    {
+        debug_and_update_stage_flag = 1;
+    }
+    something_stan_c_debug_related();
+    something_game_c_debug_related();
+    if (debug_and_update_stage_flag != 0)
+    {
+        strtok("          -ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400");
+    }
+    if (check_token(1, "-m") != 0)
+    {
+        current_m_malloc_value = (s32) (strtol(check_token(1, "-m"), 0, 0) << 0xa);
+    }
+    temp_s0 = (osVirtualToPhysical(&room_model_buffer) | 0x80000000);
+    check_memflag_tokens(temp_s0, (return_ptr_TLBmemory() - temp_s0));
+    reset_mem_bank_a0(6);
+    init_LnameX();
+    something_with_lvl_c_debug();
+    something_with_boss_c_debug();
+    null_init_main();
+    null_init_main_0();
+    default_player_perspective_and_height();
+    store_osgetcount();
+    null_init_main_1();
+    displaylist_related();
+    set_gu_scale();
+    null_init_main_2();
+    sub_GAME_7F000980();
+    alloc_load_expand_ani_table();
+    init_weapon_animation_groups_maybe();
+    reset_counter_rand_body_head();
+    null_init_main_3();
+    sub_GAME_7F000B60();
+    initGameData();
+    sub_GAME_7F01D6E0();
+    clear_ramrom_block_buffer_heading_ptrs();
 }
 #else
 GLOBAL_ASM(
@@ -626,7 +713,7 @@ glabel mainloop
 /* 0070EC 700064EC 3C040002 */   lui   $a0, 2
 /* 0070F0 700064F0 0C002F43 */  jal   redirect_to_ramrom_replay_and_record_handlers_if_set
 /* 0070F4 700064F4 00000000 */   nop   
-/* 0070F8 700064F8 0C000262 */  jal   set_stderr_permitted
+/* 0070F8 700064F8 0C000262 */  jal   permit_stderr
 /* 0070FC 700064FC 00002025 */   move  $a0, $zero
 /* 007100 70006500 0FC2F59D */  jal   get_ptr_displaylist
 /* 007104 70006504 00000000 */   nop   

@@ -986,8 +986,104 @@ glabel zlib_decompressor_type0
 
 
 #ifdef NONMATCHING
-void zlib_decompressor_type1(void) {
+void zlib_decompressor_type1(void)
+{
+    ? sp4B8;
+    ? sp4B4;
+    ?32 sp4B0;
+    ?32 sp4AC;
+    ? sp48C;
+    ? sp42C;
+    ? sp26C;
+    ? spA4;
+    ? sp34;
+    ?32 sp30;
+    ?32 sp2C;
+    void *temp_v0;
+    u32 temp_v0_2;
+    u32 temp_v0_3;
+    u32 temp_v0_4;
+    void *temp_v0_5;
+    void *phi_v0;
+    u32 phi_v0_2;
+    u32 phi_v0_3;
+    u32 phi_v0_4;
+    u32 phi_v0_5;
+    u32 phi_v0_6;
+    void *phi_v0_7;
 
+    phi_v0 = &sp2C;
+block_1:
+    temp_v0 = (phi_v0 + 0x10);
+    temp_v0->unk-C = 8;
+    temp_v0->unk-8 = 8;
+    temp_v0->unk-4 = 8;
+    temp_v0->unk-10 = 8;
+    phi_v0 = temp_v0;
+    if (temp_v0 != &sp26C)
+    {
+        goto block_1;
+    }
+    phi_v0_3 = temp_v0;
+    if (temp_v0 < &sp42C)
+    {
+        phi_v0_2 = temp_v0;
+block_4:
+        temp_v0_2 = (phi_v0_2 + 4);
+        temp_v0_2->unk-4 = 9;
+        phi_v0_2 = temp_v0_2;
+        phi_v0_3 = temp_v0_2;
+        if (temp_v0_2 < &sp42C)
+        {
+            goto block_4;
+        }
+    }
+    phi_v0_5 = phi_v0_3;
+    if ((u32) phi_v0_3 < &sp48C)
+    {
+        phi_v0_4 = phi_v0_3;
+block_7:
+        temp_v0_3 = (phi_v0_4 + 4);
+        temp_v0_3->unk-4 = 7;
+        phi_v0_4 = temp_v0_3;
+        phi_v0_5 = temp_v0_3;
+        if (temp_v0_3 < &sp48C)
+        {
+            goto block_7;
+        }
+    }
+    if ((u32) phi_v0_5 < &sp4AC)
+    {
+        phi_v0_6 = phi_v0_5;
+block_10:
+        temp_v0_4 = (phi_v0_6 + 4);
+        temp_v0_4->unk-4 = 8;
+        phi_v0_6 = temp_v0_4;
+        if (temp_v0_4 < &sp4AC)
+        {
+            goto block_10;
+        }
+    }
+    sp4B0 = 7;
+    sub_GAME_7F0CE8B0(&sp2C, 0x120, 0x101, &D_8004E8F4, &D_8004E934, &sp4B8, &sp4B0);
+    sp30 = 5;
+    sp2C = 5;
+    phi_v0_7 = &sp34;
+block_12:
+    temp_v0_5 = (phi_v0_7 + 0x10);
+    temp_v0_5->unk-C = 5;
+    temp_v0_5->unk-8 = 5;
+    temp_v0_5->unk-4 = 5;
+    temp_v0_5->unk-10 = 5;
+    phi_v0_7 = temp_v0_5;
+    if (temp_v0_5 != &spA4)
+    {
+        goto block_12;
+    }
+    sp4AC = 5;
+    sub_GAME_7F0CE8B0(&sp2C, 0x1e, 0, &D_8004E954, &D_8004E990, &sp4B4, &sp4AC);
+    sub_GAME_7F0CEEF0(sp4B8, sp4B4, sp4B0, sp4AC);
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -1473,8 +1569,85 @@ glabel zlib_decompressor_type2
 
 
 #ifdef NONMATCHING
-void select_zlib_decompression_routine(void) {
+void select_zlib_decompression_routine(void *arg0, s32 arg2)
+{
+    s32 temp_v1;
+    u32 temp_a1;
+    u32 temp_v1_2;
+    u32 temp_t3;
+    u32 temp_v1_3;
+    u32 temp_a1_2;
+    s32 temp_v0;
+    s32 phi_v1;
+    u32 phi_a1;
+    s32 phi_v1_2;
+    u32 phi_v1_3;
+    u32 phi_a1_2;
+    u32 phi_v1_4;
+    s32 phi_a2;
+    u32 phi_a1_3;
+    u32 phi_a1_4;
 
+    phi_a1 = dword_CODE_bss_8008D364;
+    phi_v1_2 = dword_CODE_bss_8008D368;
+    phi_a2 = arg2;
+    if (dword_CODE_bss_8008D368 == 0)
+    {
+        phi_v1 = dword_CODE_bss_8008D368;
+        phi_a1_3 = dword_CODE_bss_8008D364;
+block_2:
+        dword_CODE_bss_8008D358 = (s32) (dword_CODE_bss_8008D358 + 1);
+        temp_v1 = (phi_v1 + 8);
+        temp_a1 = (phi_a1_3 | (*(dword_CODE_bss_8008D350 + dword_CODE_bss_8008D358) << phi_v1));
+        phi_v1 = temp_v1;
+        phi_a1 = temp_a1;
+        phi_v1_2 = temp_v1;
+        phi_a1_3 = temp_a1;
+        phi_a2 = dword_CODE_bss_8008D350;
+        if (temp_v1 == 0)
+        {
+            goto block_2;
+        }
+    }
+    temp_v1_2 = (phi_v1_2 + -1);
+    temp_t3 = ((u32) phi_a1 >> 1);
+    *arg0 = (s32) (phi_a1 & 1);
+    phi_a1_2 = temp_t3;
+    phi_v1_4 = temp_v1_2;
+    if (temp_v1_2 < 2U)
+    {
+        phi_v1_3 = temp_v1_2;
+        phi_a1_4 = temp_t3;
+block_5:
+        dword_CODE_bss_8008D358 = (s32) (dword_CODE_bss_8008D358 + 1);
+        temp_v1_3 = (phi_v1_3 + 8);
+        temp_a1_2 = (phi_a1_4 | (*(dword_CODE_bss_8008D350 + dword_CODE_bss_8008D358) << phi_v1_3));
+        phi_v1_3 = temp_v1_3;
+        phi_a1_2 = temp_a1_2;
+        phi_v1_4 = temp_v1_3;
+        phi_a2 = dword_CODE_bss_8008D350;
+        phi_a1_4 = temp_a1_2;
+        if (temp_v1_3 < 2U)
+        {
+            goto block_5;
+        }
+    }
+    temp_v0 = (phi_a1_2 & 3);
+    dword_CODE_bss_8008D364 = (u32) ((u32) phi_a1_2 >> 2);
+    dword_CODE_bss_8008D368 = (s32) (phi_v1_4 + -2);
+    if (temp_v0 == 2)
+    {
+        return zlib_decompressor_type2(&dword_CODE_bss_8008D358, phi_a1_2, phi_a2, arg0);
+    }
+    if (temp_v0 == 0)
+    {
+        return zlib_decompressor_type0(&dword_CODE_bss_8008D358, phi_a1_2, phi_a2, arg0);
+    }
+    if (temp_v0 == 1)
+    {
+        return zlib_decompressor_type1(&dword_CODE_bss_8008D358, phi_a1_2, phi_a2, arg0);
+    }
+    return 2;
 }
 #else
 GLOBAL_ASM(
@@ -1568,8 +1741,48 @@ glabel select_zlib_decompression_routine
 
 
 #ifdef NONMATCHING
-void loop_to_decompress_entire_file(void) {
+void loop_to_decompress_entire_file(void)
+{
+    s32 sp34;
+    ? temp_ret;
+    u32 temp_t7;
+    u32 phi_s1;
+    u32 phi_v1;
 
+    dword_CODE_bss_8008D35C = 0;
+    dword_CODE_bss_8008D368 = 0U;
+    dword_CODE_bss_8008D364 = 0;
+    phi_s1 = 0U;
+block_1:
+    dword_CODE_bss_8008D36C = 0U;
+    temp_ret = select_zlib_decompression_routine(&sp34);
+    if (temp_ret != 0)
+    {
+        return temp_ret;
+    }
+    phi_s1 = phi_s1;
+    if ((u32) phi_s1 < (u32) dword_CODE_bss_8008D36C)
+    {
+        phi_s1 = dword_CODE_bss_8008D36C;
+    }
+    if (sp34 == 0)
+    {
+        goto block_1;
+    }
+    phi_v1 = dword_CODE_bss_8008D368;
+    if ((u32) dword_CODE_bss_8008D368 >= 8U)
+    {
+block_7:
+        temp_t7 = (phi_v1 + -8);
+        dword_CODE_bss_8008D368 = temp_t7;
+        dword_CODE_bss_8008D358 = (s32) (dword_CODE_bss_8008D358 + -1);
+        phi_v1 = temp_t7;
+        if (temp_t7 >= 8U)
+        {
+            goto block_7;
+        }
+    }
+    return 0;
 }
 #else
 GLOBAL_ASM(

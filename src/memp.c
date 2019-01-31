@@ -1,7 +1,18 @@
 #include "ultra64.h"
 #include "memp.h"
 
-char memory_bank_ptrs[0x40];
+
+char memory_bank_ptrs[0x8];
+char D_80063BB8[0x8];
+char D_80063BC0[0x4];
+char D_80063BC4[0x4];
+char D_80063BC8[0x8];
+char D_80063BD0[0x4];
+char D_80063BD4[0x4];
+char D_80063BD8[0x8];
+char D_80063BE0[4];
+char D_80063BE4[4];
+char D_80063BE8[8];
 u32 *ptr_model_room_buf_pri;
 char dword_CODE_bss_80063BF8[0x24];
 s32 dword_CODE_bss_80063C1C;

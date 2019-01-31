@@ -6,7 +6,7 @@ void *ptr_table_allocated_mem_blocks;
 s32 dword_CODE_bss_80063C2C;
 s32 index_for_loadedroom;
 s32 dword_CODE_bss_80063C34;
-s32 dword_CODE_bss_80063C38;
+s32 ptr_first_entry_in_alloc_table;
 char dword_CODE_bss_80063C3C[0xC];
 char dword_CODE_bss_80063C48[0xFC0];
 char dword_CODE_bss_80064C08[8];

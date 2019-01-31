@@ -133,7 +133,7 @@ void strtok(s32 arg0) {
         // Node 2
         // Node 3
         osPiReadIo((0xff0000 | 0xb000), &boot_token_from_indy);
-        if ((&boot_token_from_indy + 4) != &dword_CODE_bss_80064EB0)
+        if ((&boot_token_from_indy + 4) != &piCmdBuf)
         {
             goto loop_3;
         }
@@ -181,8 +181,8 @@ glabel check_boot_switches
 /* 00B1F0 7000A5F0 1000000A */  b     .L7000A61C
 /* 00B1F4 7000A5F4 AC204C30 */   sw    $zero, %lo(boot_token_from_indy)($at)
 .L7000A5F8:
-/* 00B1F8 7000A5F8 3C128006 */  lui   $s2, %hi(dword_CODE_bss_80064EB0) # $s2, 0x8006
-/* 00B1FC 7000A5FC 26524EB0 */  addiu $s2, %lo(dword_CODE_bss_80064EB0) # addiu $s2, $s2, 0x4eb0
+/* 00B1F8 7000A5F8 3C128006 */  lui   $s2, %hi(piCmdBuf) # $s2, 0x8006
+/* 00B1FC 7000A5FC 26524EB0 */  addiu $s2, %lo(piCmdBuf) # addiu $s2, $s2, 0x4eb0
 /* 00B200 7000A600 26104C30 */  addiu $s0, %lo(boot_token_from_indy) # addiu $s0, $s0, 0x4c30
 .L7000A604:
 /* 00B204 7000A604 02202025 */  move  $a0, $s1

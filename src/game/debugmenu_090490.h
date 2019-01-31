@@ -33,5 +33,5 @@ s32 get_debug_chrnum_flag(void);
 s32 get_debug_gunwatchpos_flag(void);
 s32  get_debug_profile_flag(void);
 s32 get_debug_taskgrab_val(void);
-
+void debug_menu_processor(void);
 #endif

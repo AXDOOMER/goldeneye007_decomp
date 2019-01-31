@@ -9,6 +9,8 @@ _codeSegmentStart = 0x80000400;
 _codeSegmentRomStart = 0x00001000;
 _codeSegmentEnd = 0x80020D90;
 _codeSegmentRomEnd = 0x00021990;
+_codeSegmentVaddrStart = 0x70000450;
+_codeSegmentVaddrEnd = 0x70020D90;
 
 /*_cdataSegmentStart = */
 _cdataSegmentRomStart = 0x00021990;
@@ -16,6 +18,8 @@ _cdataSegmentVaddrStart = 0x80020D90;
 /*_cdataSegmentEnd = */
 _cdataSegmentRomEnd = 0x00033590;
 _cdataSegmentVaddrEnd = 0x8005D2E0;
+
+room_model_buffer = 0x8008E360;
 
 _decompressBuffer = 0x80300000;
 _rarezipSegmentStart = 0x70200000;
@@ -36,6 +40,23 @@ cfb_16_a = 0x803B5000;
 cfb_16_b = 0x803DA800;
 
 set_hardwire_TLB_to_2 = 0x70001BB0;
-osViModeTable_osViModeMpalLan1 = 0x80027320;
-
+debug_menu_processor = 0x7F0905A0;
+get_linemode_flag = 0x7F090FDC;
+get_memusage_display_flag = 0x7F090F34;
+display_debug_menu_text_onscreen = 0x7F090490;
+get_debug_taskgrab_val = 0x7F09106C;
 something_with_osVI = 0x800230B0;
+
+_sfxctlSegmentRomStart = 0x2EBDE0;
+_sfxctlSegmentRomEnd = 0x2F19A0;
+
+_sfxtblSegmentRomStart = 0x2F19A0;
+_sfxtblSegmentRomEnd = 0x3B4450;
+
+_instrumentsctlSegmentRomStart = 0x3B4450;
+_instrumentsctlSegmentRomEnd = 0x3B87F0;
+
+_instrumentstblSegmentRomStart = 0x3B87F0;
+_instrumentstblSegmentRomEnd = 0x419790;
+
+_musicsampletblSegmentRomStart = 0x419790;

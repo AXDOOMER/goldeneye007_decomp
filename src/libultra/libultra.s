@@ -940,212 +940,212 @@ D_800269B8: .word 0
 .section .data
 glabel osViModeTable
 D_800269C0:
-osViModeTable.osViModeNtscLpn1:
+glabel osViModeTable_osViModeNtscLpn1
 .word          0,    0x320E,     0x140, 0x3E52239,     0x20D
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x200,         0
 .word      0x280,     0x400,  0x2501FF,   0xE0204,         2
 .word      0x280,     0x400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeNtscLpf1:
+glabel osViModeTable_osViModeNtscLpf1
 .word  0x1000000,    0x324E,     0x140, 0x3E52239,     0x20C
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x200,         0
 .word      0x280, 0x1000400,  0x2301FD,   0xE0204,         2
 .word      0x280, 0x3000400,  0x2501FF,   0xE0204,         2
-glabel osViModeTable.osViModeNtscLan1
+glabel osViModeTable_osViModeNtscLan1
 .word  0x2000000,    0x311E,     0x140, 0x3E52239,     0x20D
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x200,         0
 .word      0x280,     0x400,  0x2501FF,   0xE0204,         2
 .word      0x280,     0x400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeNtscLaf1:
+glabel osViModeTable_osViModeNtscLaf1
 .word  0x3000000,    0x305E,     0x140, 0x3E52239,     0x20C
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x200,         0
 .word      0x280, 0x1000400,  0x2301FD,   0xE0204,         2
 .word      0x280, 0x3000400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeNtscLpn2:
+glabel osViModeTable_osViModeNtscLpn2
 .word  0x4000000,    0x330F,     0x140, 0x3E52239,     0x20D
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x200,         0
 .word      0x500,     0x400,  0x2501FF,   0xE0204,         2
 .word      0x500,     0x400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeNtscLpf2:
+glabel osViModeTable_osViModeNtscLpf2
 .word  0x5000000,    0x324F,     0x140, 0x3E52239,     0x20C
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x200,         0
 .word      0x500, 0x1000400,  0x2301FD,   0xE0204,         2
 .word      0x500, 0x3000400,  0x2501FF,   0xE0204,         2
-glabel osViModeTable.osViModeNtscLan2
+glabel osViModeTable_osViModeNtscLan2
 .word  0x6000000,    0x301F,     0x140, 0x3E52239,     0x20D
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x200,         0
 .word      0x500,     0x400,  0x2501FF,   0xE0204,         2
 .word      0x500,     0x400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeNtscLaf2:
+glabel osViModeTable_osViModeNtscLaf2
 .word  0x7000000,    0x305F,     0x140, 0x3E52239,     0x20C
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x200,         0
 .word      0x500, 0x1000400,  0x2301FD,   0xE0204,         2
 .word      0x500, 0x3000400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeNtscHpn1:
+glabel osViModeTable_osViModeNtscHpn1
 .word  0x8000000,    0x324E,     0x500, 0x3E52239,     0x20C
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x400,         0
 .word      0x500,     0x400,  0x2301FD,   0xE0204,         2
 .word      0xA00,     0x400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeNtscHpf1:
+glabel osViModeTable_osViModeNtscHpf1
 .word  0x9000000,    0x324E,     0x280, 0x3E52239,     0x20C
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x400,         0
 .word      0x500, 0x2000800,  0x2301FD,   0xE0204,         2
 .word      0xA00, 0x2000800,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeNtscHan1:
+glabel osViModeTable_osViModeNtscHan1
 .word  0xA000000,    0x305E,     0x500, 0x3E52239,     0x20C
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x400,         0
 .word      0x500,     0x400,  0x2301FD,   0xE0204,         2
 .word      0xA00,     0x400,  0x2501FF,   0xE0204,         2
-glabel osViModeTable.osViModeNtscHaf1
+glabel osViModeTable_osViModeNtscHaf1
 .word  0xB000000,    0x305E,     0x280, 0x3E52239,     0x20C
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x400,         0
 .word      0x500, 0x2000800,  0x2301FD,   0xE0204,         2
 .word      0xA00, 0x2000800,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeNtscHpn2:
+glabel osViModeTable_osViModeNtscHpn2
 .word  0xC000000,    0x334F,     0x500, 0x3E52239,     0x20C
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x400,         0
 .word      0xA00,     0x400,  0x2301FD,   0xE0204,         2
 .word     0x1400,     0x400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeNtscHpf2:
+glabel osViModeTable_osViModeNtscHpf2
 .word  0xD000000,    0x324F,     0x280, 0x3E52239,     0x20C
 .word      0xC15, 0xC150C15,  0x6C02EC,     0x400,         0
 .word      0xA00, 0x2000800,  0x2301FD,   0xE0204,         2
 .word     0x1400, 0x2000800,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModePalLpn1:
+glabel osViModeTable_osViModePalLpn1
 .word  0xE000000,    0x320E,     0x140, 0x404233A,     0x271
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x200,         0
 .word      0x280,     0x400,  0x5F0239,   0x9026B,         2
 .word      0x280,     0x400,  0x5F0239,   0x9026B,         2
-osViModeTable.osViModePalLpf1:
+glabel osViModeTable_osViModePalLpf1
 .word  0xF000000,    0x324E,     0x140, 0x404233A,     0x270
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x200,         0
 .word      0x280, 0x1000400,  0x5D0237,   0x9026B,         2
 .word      0x280, 0x3000400,  0x5F0239,   0xD0269,         2
-osViModeTable.osViModePalLan1:
+glabel osViModeTable_osViModePalLan1
 .word 0x10000000,    0x311E,     0x140, 0x404233A,     0x271
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x200,         0
 .word      0x280,     0x400,  0x5F0239,   0x9026B,         2
 .word      0x280,     0x400,  0x5F0239,   0x9026B,         2
-osViModeTable.osViModePalLaf1:
+glabel osViModeTable_osViModePalLaf1
 .word 0x11000000,    0x305E,     0x140, 0x404233A,     0x270
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x200,         0
 .word      0x280, 0x1000400,  0x5D0237,   0x9026B,         2
 .word      0x280, 0x3000400,  0x5F0239,   0xD0269,         2
-osViModeTable.osViModePalLpn2:
+glabel osViModeTable_osViModePalLpn2
 .word 0x12000000,    0x330F,     0x140, 0x404233A,     0x271
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x200,         0
 .word      0x500,     0x400,  0x5F0239,   0x9026B,         2
 .word      0x500,     0x400,  0x5F0239,   0x9026B,         2
-osViModeTable.osViModePalLpf2:
+glabel osViModeTable_osViModePalLpf2
 .word 0x13000000,    0x324F,     0x140, 0x404233A,     0x270
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x200,         0
 .word      0x500, 0x1000400,  0x5D0237,   0x9026B,         2
 .word      0x500, 0x3000400,  0x5F0239,   0xD0269,         2
-osViModeTable.osViModePalLan2:
+glabel osViModeTable_osViModePalLan2
 .word 0x14000000,    0x301F,     0x140, 0x404233A,     0x271
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x200,         0
 .word      0x500,     0x400,  0x5F0239,   0x9026B,         2
 .word      0x500,     0x400,  0x5F0239,   0x9026B,         2
-osViModeTable.osViModePalLaf2:
+glabel osViModeTable_osViModePalLaf2
 .word 0x15000000,    0x305F,     0x140, 0x404233A,     0x270
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x200,         0
 .word      0x500, 0x1000400,  0x5D0237,   0x9026B,         2
 .word      0x500, 0x3000400,  0x5F0239,   0xD0269,         2
-osViModeTable.osViModePalHpn1:
+glabel osViModeTable_osViModePalHpn1
 .word 0x16000000,    0x324E,     0x500, 0x404233A,     0x270
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x400,         0
 .word      0x500,     0x400,  0x5D0237,   0x9026B,         2
 .word      0xA00,     0x400,  0x5F0239,   0xD0269,         2
-osViModeTable.osViModePalHpf1:
+glabel osViModeTable_osViModePalHpf1
 .word 0x17000000,    0x324E,     0x280, 0x404233A,     0x270
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x400,         0
 .word      0x500, 0x2000800,  0x5D0237,   0x9026B,         2
 .word      0xA00, 0x2000800,  0x5F0239,   0xD0269,         2
-osViModeTable.osViModePalHan1:
+glabel osViModeTable_osViModePalHan1
 .word 0x18000000,    0x305E,     0x500, 0x404233A,     0x270
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x400,         0
 .word      0x500,     0x400,  0x5D0237,   0x9026B,         2
 .word      0xA00,     0x400,  0x5F0239,   0xD0269,         2
-osViModeTable.osViModePalHaf1:
+glabel osViModeTable_osViModePalHaf1
 .word 0x19000000,    0x305E,     0x280, 0x404233A,     0x270
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x400,         0
 .word      0x500, 0x2000800,  0x5D0237,   0x9026B,         2
 .word      0xA00, 0x2000800,  0x5F0239,   0xD0269,         2
-osViModeTable.osViModePalHpn2:
+glabel osViModeTable_osViModePalHpn2
 .word 0x1A000000,    0x334F,     0x500, 0x404233A,     0x270
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x400,         0
 .word      0xA00,     0x400,  0x5D0237,   0x9026B,         2
 .word     0x1400,     0x400,  0x5F0239,   0xD0269,         2
-osViModeTable.osViModePalHpf2:
+glabel osViModeTable_osViModePalHpf2
 .word 0x1B000000,    0x324F,     0x280, 0x404233A,     0x270
 .word   0x150C69, 0xC6F0C6E,  0x800300,     0x400,         0
 .word      0xA00, 0x2000800,  0x5D0237,   0x9026B,         2
 .word     0x1400, 0x2000800,  0x5F0239,   0xD0269,         2
-osViModeTable.osViModeMpalLpn1:
+glabel osViModeTable_osViModeMpalLpn1
 .word 0x1C000000,    0x320E,     0x140, 0x4651E39,     0x20D
 .word    0x40C11, 0xC190C1A,  0x6C02EC,     0x200,         0
 .word      0x280,     0x400,  0x2501FF,   0xE0204,         2
 .word      0x280,     0x400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeMpalLpf1:
+glabel osViModeTable_osViModeMpalLpf1
 .word 0x1D000000,    0x324E,     0x140, 0x4651E39,     0x20C
 .word      0xC10, 0xC1C0C1C,  0x6C02EC,     0x200,         0
 .word      0x280, 0x1000400,  0x2301FD,   0xB0202,         2
 .word      0x280, 0x3000400,  0x2501FF,   0xE0204,         2
-glabel osViModeTable.osViModeMpalLan1
+glabel osViModeTable_osViModeMpalLan1
 .word 0x1E000000,    0x311E,     0x140, 0x4651E39,     0x20D
 .word    0x40C11, 0xC190C1A,  0x6C02EC,     0x200,         0
 .word      0x280,     0x400,  0x2501FF,   0xE0204,         2
 .word      0x280,     0x400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeMpalLaf1:
+glabel osViModeTable_osViModeMpalLaf1
 .word 0x1F000000,    0x305E,     0x140, 0x4651E39,     0x20C
 .word      0xC10, 0xC1C0C1C,  0x6C02EC,     0x200,         0
 .word      0x280, 0x1000400,  0x2301FD,   0xB0202,         2
 .word      0x280, 0x3000400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeMpalLpn2:
+glabel osViModeTable_osViModeMpalLpn2
 .word 0x20000000,    0x330F,     0x140, 0x4651E39,     0x20D
 .word    0x40C11, 0xC190C1A,  0x6C02EC,     0x200,         0
 .word      0x500,     0x400,  0x2501FF,   0xE0204,         2
 .word      0x500,     0x400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeMpalLpf2:
+glabel osViModeTable_osViModeMpalLpf2
 .word 0x21000000,    0x324F,     0x140, 0x4651E39,     0x20C
 .word      0xC10, 0xC1C0C1C,  0x6C02EC,     0x200,         0
 .word      0x500, 0x1000400,  0x2301FD,   0xB0202,         2
 .word      0x500, 0x3000400,  0x2501FF,   0xE0204,         2
-glabel osViModeTable.osViModeMpalLan2
+glabel osViModeTable_osViModeMpalLan2
 .word 0x22000000,    0x301F,     0x140, 0x4651E39,     0x20D
 .word    0x40C11, 0xC190C1A,  0x6C02EC,     0x200,         0
 .word      0x500,     0x400,  0x2501FF,   0xE0204,         2
 .word      0x500,     0x400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeMpalLaf2:
+glabel osViModeTable_osViModeMpalLaf2
 .word 0x23000000,    0x305F,     0x140, 0x4651E39,     0x20C
 .word      0xC10, 0xC1C0C1C,  0x6C02EC,     0x200,         0
 .word      0x500, 0x1000400,  0x2301FD,   0xB0202,         2
 .word      0x500, 0x3000400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeMpalHpn1:
+glabel osViModeTable_osViModeMpalHpn1
 .word 0x24000000,    0x324E,     0x500, 0x4651E39,     0x20C
 .word      0xC10, 0xC1C0C1C,  0x6C02EC,     0x400,         0
 .word      0x500,     0x400,  0x2301FD,   0xB0202,         2
 .word      0xA00,     0x400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeMpalHpf1:
+glabel osViModeTable_osViModeMpalHpf1
 .word 0x25000000,    0x324E,     0x280, 0x4651E39,     0x20C
 .word      0xC10, 0xC1C0C1C,  0x6C02EC,     0x400,         0
 .word      0x500, 0x2000800,  0x2301FD,   0xB0202,         2
 .word      0xA00, 0x2000800,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeMpalHan1:
+glabel osViModeTable_osViModeMpalHan1
 .word 0x26000000,    0x305E,     0x500, 0x4651E39,     0x20C
 .word      0xC10, 0xC1C0C1C,  0x6C02EC,     0x400,         0
 .word      0x500,     0x400,  0x2301FD,   0xB0202,         2
 .word      0xA00,     0x400,  0x2501FF,   0xE0204,         2
-glabel osViModeTable.osViModeMpalHaf1
+glabel osViModeTable_osViModeMpalHaf1
 .word 0x27000000,    0x305E,     0x280, 0x4651E39,     0x20C
 .word      0xC10, 0xC1C0C1C,  0x6C02EC,     0x400,         0
 .word      0x500, 0x2000800,  0x2301FD,   0xB0202,         2
 .word      0xA00, 0x2000800,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeMpalHpn2:
+glabel osViModeTable_osViModeMpalHpn2
 .word 0x28000000,    0x334F,     0x500, 0x4651E39,     0x20C
 .word      0xC10, 0xC1C0C1C,  0x6C02EC,     0x400,         0
 .word      0xA00,     0x400,  0x2301FD,   0xB0202,         2
 .word     0x1400,     0x400,  0x2501FF,   0xE0204,         2
-osViModeTable.osViModeMpalHpf2:
+glabel osViModeTable_osViModeMpalHpf2
 .word 0x29000000,    0x324F,     0x280, 0x4651E39,     0x20C
 .word      0xC10, 0xC1C0C1C,  0x6C02EC,     0x400,         0
 .word      0xA00, 0x2000800,  0x2301FD,   0xB0202,         2
@@ -6254,7 +6254,7 @@ glabel alSeqpSetBank
 /* 012E24 70012224 00000000 */  nop   
 /* 012E28 70012228 00000000 */  nop   
 /* 012E2C 7001222C 00000000 */  nop   
-glabel ultra_70012230
+glabel alCSPGetState
 /* 012E30 70012230 03E00008 */  jr    $ra
 /* 012E34 70012234 8C82002C */   lw    $v0, 0x2c($a0)
 
@@ -7028,7 +7028,7 @@ glabel __alCSeqNextDelta
     F64_800296D8: .double 1000000.0
 
 .section .text 
-glabel unknown_libname_63
+glabel alCSPSetSeq
 /* 013900 70012D00 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 013904 70012D04 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 013908 70012D08 240E000D */  li    $t6, 13
@@ -7046,7 +7046,8 @@ glabel unknown_libname_63
 /* 013934 70012D34 00000000 */  nop   
 /* 013938 70012D38 00000000 */  nop   
 /* 01393C 70012D3C 00000000 */  nop   
-glabel unknown_libname_64
+
+glabel alCSPPlay
 /* 013940 70012D40 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 013944 70012D44 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 013948 70012D48 240E000F */  li    $t6, 15
@@ -7060,7 +7061,7 @@ glabel unknown_libname_64
 /* 013968 70012D68 03E00008 */  jr    $ra
 /* 01396C 70012D6C 00000000 */   nop   
 
-glabel unknown_libname_65
+glabel alCSPStop
 /* 013970 70012D70 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 013974 70012D74 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 013978 70012D78 240E0011 */  li    $t6, 17
@@ -7074,7 +7075,7 @@ glabel unknown_libname_65
 /* 013998 70012D98 03E00008 */  jr    $ra
 /* 01399C 70012D9C 00000000 */   nop   
 
-glabel unknown_libname_66
+glabel alCSPSetVol
 /* 0139A0 70012DA0 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0139A4 70012DA4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0139A8 70012DA8 AFA5002C */  sw    $a1, 0x2c($sp)
