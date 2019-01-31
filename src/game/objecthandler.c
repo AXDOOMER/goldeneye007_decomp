@@ -8734,7 +8734,7 @@ Model Type 4: Normal Fog/Lighting object
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F071030 //DisplayListSetup(obj)
+glabel sub_GAME_7F071030 /*DisplayListSetup(obj)*/
 /* 0A5B60 7F071030 8C820030 */  lw    $v0, 0x30($a0)    /*a0=obj?*/
 /* 0A5B64 7F071034 24010007 */  li    $at, 7
 /* 0A5B68 7F071038 5441006C */  bnel  $v0, $at, .L7F0711EC      /*obj.ModelType <= 7? */
