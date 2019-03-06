@@ -61,25 +61,24 @@ s32 dword_CODE_bss_80060888;
 s32 dword_CODE_bss_8006088C;
 
 #ifdef NONMATCHING
-s32 init_video_settings(void) {
+s32 init_video_settings(void)
+{
     s32 temp_v0;
-    void *temp_t8;
     void *temp_t6;
+    void *temp_t8;
 
-    // Node 0
-    temp_v0 = (0 & 0xff);
-    temp_t8 = (&video1_settings + (temp_v0 * 0x2c));
+    temp_v0 = 0 & 0xff;
+    temp_t8 = &video1_settings + (temp_v0 * 0x2c);
     off_CODE_bss_80060878 = (u8)0;
     off_CODE_bss_80060879 = (u8)1;
     ptr_video_settings1 = temp_t8;
     temp_t8->unk28 = (s32) (&cfb_16_a + (temp_v0 * 0x25800));
-    temp_t6 = (&video1_settings + (off_CODE_bss_80060879 * 0x2c));
+    temp_t6 = &video1_settings + (off_CODE_bss_80060879 * 0x2c);
     ptr_video_settings2 = temp_t6;
     temp_t6->unk28 = (s32) (&cfb_16_a + (off_CODE_bss_80060879 * 0x25800));
     D_8002329C = 0;
     D_800232A0 = 0;
-    return;
-    // (possible return value: temp_v0)
+    return temp_v0;
 }
 #else
 GLOBAL_ASM(
@@ -141,28 +140,33 @@ glabel init_video_settings
 
 
 #ifdef NONMATCHING
-void *init_both_video_buffers(void) {
+void *init_both_video_buffers(void)
+{
+    s32 temp_a0;
     void *temp_v0;
     void *temp_v1;
+    s32 phi_a0;
 
-    // Node 0
     remove_viewport_buffer();
-    // Node 1
-    temp_v0 = (&cfb_16_a + 0);
-    *temp_v0 = (u8)0;
-    temp_v1 = (&cfb_16_b + 0);
-    *temp_v1 = (u8)0;
+    phi_a0 = 0;
+loop_1:
+    temp_v0 = &cfb_16_a + phi_a0;
+    temp_v0->unk0 = (u8)0;
+    temp_v1 = &cfb_16_b + phi_a0;
+    temp_v1->unk0 = (u8)0;
     temp_v0->unk1 = (u8)0;
     temp_v1->unk1 = (u8)0;
     temp_v0->unk2 = (u8)0;
     temp_v1->unk2 = (u8)0;
     temp_v0->unk3 = (u8)0;
+    temp_a0 = phi_a0 + 4;
     temp_v1->unk3 = (u8)0;
-    if ((0 + 4) != 0x25800)
+    phi_a0 = temp_a0;
+    if (temp_a0 != 0x25800)
     {
         goto loop_1;
     }
-    // (possible return value: temp_v0)
+    return temp_v0;
 }
 #else
 GLOBAL_ASM(
@@ -201,8 +205,9 @@ glabel init_both_video_buffers
 
 
 #ifdef NONMATCHING
-void video_related_6(s32 arg0) {
-    D_800232BC= arg0+2;
+void video_related_6(s32 arg0)
+{
+    D_800232BC = (s32) (arg0 + 2);
 }
 #else
 GLOBAL_ASM(
@@ -217,42 +222,35 @@ glabel video_related_6
 
 
 #ifdef NONMATCHING
-void *video_related_7(void) {
+void *video_related_7(void)
+{
     s32 temp_lo;
     s32 temp_t6;
 
-    // Node 0
     if (D_800232B8 != 0)
     {
-        // Node 1
-        temp_t6 = (D_800232B8 + -1);
+        temp_t6 = D_800232B8 + -1;
         D_800232B8 = temp_t6;
         if (temp_t6 == 0)
         {
-            // Node 2
             D_800232B4 = 0;
         }
     }
-    // Node 3
-    temp_lo = (D_800232B0 * D_800232B4);
+    temp_lo = D_800232B0 * D_800232B4;
     viMode->unk30 = (s32) (((((s32) dword_CODE_bss_80060884 >> 0x10) + temp_lo) << 0x10) | ((dword_CODE_bss_80060884 + temp_lo) & 0xffff));
     viMode->unk44 = (s32) (((((s32) dword_CODE_bss_80060888 >> 0x10) + temp_lo) << 0x10) | ((dword_CODE_bss_80060888 + temp_lo) & 0xffff));
     osViSetMode(viMode, &viMode);
     osViBlack(*(D_800232BC + 3));
     if (D_800232BC != 0)
     {
-        // Node 4
         if (D_800232BC < 3)
         {
-            // Node 5
             D_800232BC = (s32) (D_800232BC + -1);
         }
     }
-    // Node 6
     osViSetSpecialFeatures(0x42);
     D_800232B0 = (s32) -(s32) D_800232B0;
-    return;
-    // (possible return value: &D_800232B0)
+    return &D_800232B0;
 }
 #else
 GLOBAL_ASM(
@@ -1282,22 +1280,24 @@ glabel video_related_8
 #endif
 
 #ifdef NONMATCHING
-f32 video_related_9(f32 arg0) {
-    // Node 0
+f32 video_related_9(f32 arg0)
+{
+    f32 phi_f12;
+    f32 phi_f12_2;
+
+    phi_f12 = arg0;
     if (14.0f < arg0)
     {
-        // Node 1
+        phi_f12 = 14.0f;
     }
-    // Node 2
-    if (arg0 < 0.0f)
+    phi_f12_2 = phi_f12;
+    if (phi_f12 < 0.0f)
     {
-        // Node 3
+        phi_f12_2 = 0.0f;
     }
-    // Node 4
-    D_800232B4 = (s32) arg0;
+    D_800232B4 = (s32) phi_f12_2;
     D_800232B8 = 0xa;
-    return;
-    // (possible return value: 0.0f)
+    return 0.0f;
 }
 #else
 GLOBAL_ASM(
@@ -1336,17 +1336,21 @@ glabel video_related_9
 
 
 #ifdef NONMATCHING
-void video_related_A(s32 arg0) {
-    // Node 0
-    // Node 1
+void video_related_A(s32 arg0)
+{
+    s32 temp_s0;
+    s32 phi_s0;
+
+    phi_s0 = arg0;
+loop_1:
     osRecvMesg(&vi_c_debug_MQ, 0, 1);
-    if ((arg0 + -1) > 0)
+    temp_s0 = phi_s0 + -1;
+    phi_s0 = temp_s0;
+    if (temp_s0 > 0)
     {
         goto loop_1;
     }
-    // (possible return value: osRecvMesg(&vi_c_debug_MQ, 0, 1))
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -1375,22 +1379,21 @@ glabel video_related_A
 #endif
 
 #ifdef NONMATCHING
-s16 video_related_B(s8 arg0) {
+s16 video_related_B(s8 arg0)
+{
     s32 temp_v1;
     void *temp_v0;
     void *temp_v0_2;
 
-    // Node 0
-    temp_v1 = (arg0 * 2);
-    *ptr_video_settings2 = arg0;
-    temp_v0 = (0x80030000 + temp_v1);
+    temp_v1 = arg0 * 2;
+    ptr_video_settings2->unk0 = arg0;
+    temp_v0 = 0x80030000 + temp_v1;
     ptr_video_settings2->unk18 = (s16) temp_v0->unk-7B80;
     ptr_video_settings2->unk4 = (s16) temp_v0->unk-7B80;
-    temp_v0_2 = (0x80030000 + temp_v1);
+    temp_v0_2 = 0x80030000 + temp_v1;
     ptr_video_settings2->unk1A = (s16) temp_v0_2->unk-7B78;
     ptr_video_settings2->unk6 = (s16) temp_v0_2->unk-7B78;
-    return;
-    // (possible return value: temp_v0_2->unk-7B78)
+    return temp_v0_2->unk-7B78;
 }
 #else
 GLOBAL_ASM(
@@ -1423,13 +1426,10 @@ glabel video_related_B
 
 
 #ifdef NONMATCHING
-void coloroutputmode_1(void) {
-    // Node 0
+void coloroutputmode_1(void)
+{
     coloroutputmode = 1;
-    return;
-    // (function likely void)
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -1445,13 +1445,10 @@ glabel coloroutputmode_1
 
 
 #ifdef NONMATCHING
-void coloroutputmode_0(void) {
-    // Node 0
+void coloroutputmode_0(void)
+{
     coloroutputmode = 0;
-    return;
-    // (function likely void)
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -1466,10 +1463,10 @@ glabel coloroutputmode_0
 
 
 #ifdef NONMATCHING
-void get_video2buf_offset28(void) {
-    // (possible return value: ptr_video_settings2->unk28)
+? get_video2buf_offset28(void)
+{
+    return ptr_video_settings2->unk28;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -1485,10 +1482,10 @@ glabel get_video2buf_offset28
 
 
 #ifdef NONMATCHING
-void get_video1buf_offset28(void) {
-    // (possible return value: ptr_video_settings1->unk28)
+? get_video1buf_offset28(void)
+{
+    return ptr_video_settings1->unk28;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -1504,13 +1501,10 @@ glabel get_video1buf_offset28
 
 
 #ifdef NONMATCHING
-void set_video2buf_offset28(s32 arg0) {
-    // Node 0
+void set_video2buf_offset28(s32 arg0)
+{
     ptr_video_settings2->unk28 = arg0;
-    return;
-    // (function likely void)
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -1526,10 +1520,10 @@ glabel set_video2buf_offset28
 
 
 #ifdef NONMATCHING
-void video_related_E(void) {
-    // (possible return value: word_CODE_bss_80060824)
+? video_related_E(void)
+{
+    return word_CODE_bss_80060824;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -1544,48 +1538,53 @@ glabel video_related_E
 
 
 #ifdef NONMATCHING
-s32 video_related_F(void *arg0) {
+void *video_related_F(void *arg0)
+{
     void *temp_s0;
-    void *temp_s0_2;
-    void *temp_s0_3;
+    void *temp_v0;
+    void *temp_v0_2;
+    void *temp_v0_3;
+    void *temp_v1;
+    void *phi_s0;
 
-    // Node 0
     if (ptr_BONDdata != 0)
     {
-        // Node 1
         (ptr_BONDdata + (off_CODE_bss_80060879 * 0x10))->unk7D0 = (s16) (ptr_video_settings2->unk1C * 2);
         (ptr_BONDdata + (off_CODE_bss_80060879 * 0x10))->unk7D8 = (s16) ((ptr_video_settings2->unk1C * 2) + (ptr_video_settings2->unk20 * 4));
         (ptr_BONDdata + (off_CODE_bss_80060879 * 0x10))->unk7D2 = (s16) (ptr_video_settings2->unk1E * 2);
         (ptr_BONDdata + (off_CODE_bss_80060879 * 0x10))->unk7DA = (s16) ((ptr_video_settings2->unk1E * 2) + (ptr_video_settings2->unk22 * 4));
     }
-    // Node 2
-    *arg0 = 0x3800010;
+    arg0->unk0 = 0x3800010;
     arg0->unk4 = (s32) ((ptr_BONDdata + (off_CODE_bss_80060879 * 0x10)) + 0x800007d0);
-    temp_s0 = (arg0 + 8);
+    temp_s0 = arg0 + 8;
     m = sub_GAME_7F0BD6E0(&off_CODE_bss_80060879, &ptr_BONDdata);
     guPerspectiveF(&dword_CODE_bss_800607E0, &word_CODE_bss_80060824, ptr_video_settings2->unk8, ptr_video_settings2->unkC, (f32) ptr_video_settings2->unk10, (f32) ptr_video_settings2->unk14, 1.0f);
     guMtxF2L(&dword_CODE_bss_800607E0, m);
-    *temp_s0 = 0x1030040;
-    temp_s0_2 = (temp_s0 + 8);
-    temp_s0->unk4 = (s32) (m + 0x80000000);
-    *temp_s0_2 = 0xbc00000e;
-    temp_s0_3 = (temp_s0_2 + 8);
-    temp_s0_2->unk4 = (?32) word_CODE_bss_80060824;
+    temp_v0 = temp_s0;
+    temp_v0->unk0 = 0x1030040;
+    temp_s0 = temp_s0 + 8;
+    temp_v0->unk4 = (s32) (m + 0x80000000);
+    temp_v1 = temp_s0;
+    temp_v1->unk0 = 0xbc00000e;
+    temp_s0 = temp_s0 + 8;
+    temp_v1->unk4 = (?32) word_CODE_bss_80060824;
     set_BONDdata_field_10D8(m, &m);
     set_BONDdata_field_10DC(&dword_CODE_bss_800607E0);
+    temp_v0_2 = temp_s0;
     if (coloroutputmode != 0)
     {
-        // Node 3
-        *temp_s0_3 = (s32) (((ptr_video_settings2->unk18 + -1) & 0xfff) | 0xff100000);
-        temp_s0_3->unk4 = (void *) (ptr_video_settings2->unk28 + 0x80000000);
-        return;
-        // (possible return value: (temp_s0_3 + 8))
+        temp_v0_3 = temp_s0;
+        temp_v0_3->unk0 = (s32) (((ptr_video_settings2->unk18 + -1) & 0xfff) | 0xff100000);
+        temp_v0_3->unk4 = (s32) (ptr_video_settings2->unk28 + 0x80000000);
+        phi_s0 = temp_s0 + 8;
     }
-    // Node 4
-    temp_s0_3->unk4 = &D_003B5000;
-    *temp_s0_3 = (s32) (((ptr_video_settings2->unk18 + -1) & 0xfff) | 0xff180000);
-    return;
-    // (possible return value: (temp_s0_3 + 8))
+    else
+    {
+        temp_v0_2->unk4 = 0x3b5000;
+        temp_v0_2->unk0 = (s32) (((ptr_video_settings2->unk18 + -1) & 0xfff) | 0xff180000);
+        phi_s0 = temp_s0 + 8;
+    }
+    return phi_s0;
 }
 #else
 GLOBAL_ASM(
@@ -1752,12 +1751,16 @@ glabel video_related_F
 
 
 #ifdef NONMATCHING
+s32 video_related_10(s32 arg0)
+{
+    s32 phi_a0;
 
-s32 video_related_10(s32 arg0) {
+    phi_a0 = arg0;
     if (ptr_video_settings2->unk24 != 0)
     {
-        return sub_GAME_7F0D2518(sub_GAME_7F0D2464());
+        phi_a0 = sub_GAME_7F0D2518(sub_GAME_7F0D2464());
     }
+    return phi_a0;
 }
 #else
 GLOBAL_ASM(
@@ -1787,22 +1790,22 @@ glabel video_related_10
 
 
 #ifdef NONMATCHING
-s32 insert_generic_fillrect(void *arg0) {
+s32 insert_generic_fillrect(void *arg0)
+{
     void *temp_a1;
     void *temp_a3;
 
-    // Node 0
     arg0->unk4 = 0x300000;
-    *arg0 = 0xba001402;
-    temp_a1 = (arg0 + 8);
-    temp_a3 = (temp_a1 + 8);
-    *temp_a1 = (s32) (((((ptr_video_settings2->unk18 + -1) & 0x3ff) << 0xe) | 0xf6000000) | (((ptr_video_settings2->unk1A + -1) & 0x3ff) * 4));
+    arg0->unk0 = 0xba001402;
+    temp_a1 = arg0 + 8;
+    temp_a3 = temp_a1 + 8;
+    temp_a1->unk0 = (s32) (((((ptr_video_settings2->unk18 + -1) & 0x3ff) << 0xe) | 0xf6000000) | (((ptr_video_settings2->unk1A + -1) & 0x3ff) * 4));
     temp_a1->unk4 = 0;
-    *temp_a3 = 0xe7000000;
+    temp_a3->unk0 = 0xe7000000;
     temp_a3->unk4 = 0;
-    return;
-    // (possible return value: (temp_a3 + 8))
+    return temp_a3 + 8;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1842,113 +1845,113 @@ glabel insert_generic_fillrect
 
 
 #ifdef NONMATCHING
-void *video_related_11(void *arg0) {
-    s16 sp20;
-    s16 sp22;
+void *video_related_11(void *arg0)
+{
     void *sp60;
+    s16 sp22;
+    s16 sp20;
     void *temp_s0;
     void *temp_s0_2;
-    void *temp_s0_4;
     void *temp_s0_3;
-    void *temp_s0_7;
+    void *temp_s0_4;
     void *temp_s0_5;
-    void *temp_s0_6;
-    void *temp_s0_8;
-    void *temp_s0_9;
-    void *temp_s0_10;
+    void *temp_s1;
+    void *temp_s1_2;
+    void *temp_v1;
+    void *phi_s0;
+    void *phi_s0_2;
+    void *phi_s0_3;
+    void *phi_s0_4;
 
-    // Node 0
-    temp_s0 = (arg0 + 8);
+    temp_s0 = arg0 + 8;
     arg0->unk4 = 0x300000;
-    *arg0 = 0xba001402;
+    arg0->unk0 = 0xba001402;
     *temp_s0 = 0xed000000;
     sp60 = temp_s0;
-    temp_s0_2 = (temp_s0 + 8);
-    temp_s0_4 = (temp_s0_2 + 8);
+    temp_s0 = temp_s0 + 8;
+    temp_v1 = temp_s0;
+    temp_s0 = temp_s0 + 8;
     sp60->unk4 = (s32) (((s32) ((f32) get_video2_settings_txtClipH() * 4.0f) & 0xfff) | (((s32) ((f32) ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) * 4.0f) & 0xfff) << 0xc));
-    temp_s0_2->unk4 = 0x10001;
-    *temp_s0_2 = 0xf7000000;
+    temp_v1->unk4 = 0x10001;
+    temp_v1->unk0 = 0xf7000000;
+    phi_s0 = temp_s0;
     if (get_video2_settings_uly() > 0)
     {
-        // Node 1
+        phi_s0 = temp_s0;
         if (sub_GAME_7F09B4D8(get_cur_playernum()) == 0)
         {
-            // Node 2
-            temp_s0_10 = (temp_s0_4 + 8);
-            *sp58 = (s32) (((((get_video2_settings_uly() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
+            temp_s0 = temp_s0 + 8;
+            sp58->unk0 = (s32) (((((get_video2_settings_uly() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
             sp58->unk4 = 0;
-            *temp_s0_10 = 0xe7000000;
-            temp_s0_10->unk4 = 0;
+            temp_s0->unk0 = 0xe7000000;
+            temp_s0->unk4 = 0;
+            phi_s0 = temp_s0 + 8;
         }
     }
-    // Node 3
     if (get_num_players() == 1)
     {
-        // Node 4
         sp22 = get_video2_settings_height();
+        phi_s0_4 = phi_s0;
         if ((((s32) (get_video2_settings_uly() << 0x10) >> 0x10) + sp22) < get_video2_settings_txtClipH())
         {
-            // Node 5
-            temp_s0_9 = (temp_s0_4 + 8);
-            *sp50 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
+            temp_s0_2 = phi_s0 + 8;
+            sp50->unk0 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
             sp50->unk4 = (s32) (((get_video2_settings_height() + ((s32) (get_video2_settings_uly() << 0x10) >> 0x10)) & 0x3ff) * 4);
-            temp_s0_9->unk4 = 0;
-            *temp_s0_9 = 0xe7000000;
-            return;
-            // (possible return value: temp_s0_4)
+            temp_s0_2->unk4 = 0;
+            temp_s0_2->unk0 = 0xe7000000;
+            phi_s0_4 = temp_s0_2 + 8;
         }
     }
     else
     {
-        // Node 6
+        phi_s0_4 = phi_s0;
         if (sub_GAME_7F09B4D8(get_cur_playernum()) == 0)
         {
-            // Node 7
             sp20 = get_video2_settings_height();
             sp22 = get_video2_settings_height();
+            phi_s0_2 = phi_s0;
             if (((((s32) (get_video2_settings_uly() << 0x10) >> 0x10) + sp22) + sp20) < get_video2_settings_txtClipH())
             {
-                // Node 8
-                temp_s0_8 = (temp_s0_4 + 8);
-                *sp48 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
+                temp_s0_3 = phi_s0 + 8;
+                sp48->unk0 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
                 sp22 = get_video2_settings_height();
                 sp48->unk4 = (s32) ((((get_video2_settings_height() + ((s32) (get_video2_settings_uly() << 0x10) >> 0x10)) + sp22) & 0x3ff) * 4);
-                *temp_s0_8 = 0xe7000000;
-                temp_s0_8->unk4 = 0;
+                temp_s0_3->unk0 = 0xe7000000;
+                temp_s0_3->unk4 = 0;
+                phi_s0_2 = temp_s0_3 + 8;
             }
-            // Node 9
-            temp_s0_3 = (temp_s0_4 + 8);
-            temp_s0_4->unk4 = 0x1dc;
-            *temp_s0_4 = (s32) (((((get_video2_settings_txtClipW() + -1) & 0x3ff) << 0xe) | 0xf6000000) | 0x1e0);
-            *temp_s0_3 = 0xe7000000;
-            temp_s0_3->unk4 = 0;
-            temp_s0_7 = (temp_s0_3 + 8);
+            temp_s1 = phi_s0_2;
+            temp_s0_4 = phi_s0_2 + 8;
+            temp_s1->unk4 = 0x1dc;
+            temp_s1->unk0 = (s32) (((((get_video2_settings_txtClipW() + -1) & 0x3ff) << 0xe) | 0xf6000000) | 0x1e0);
+            temp_s0_4->unk0 = 0xe7000000;
+            temp_s0_4->unk4 = 0;
+            temp_s0_4 = temp_s0_4 + 8;
+            temp_s1_2 = temp_s0_4;
+            phi_s0_3 = temp_s0_4;
             if (get_num_players() >= 3)
             {
-                // Node 10
-                temp_s0_6 = (temp_s0_7 + 8);
-                *temp_s0_7 = (s32) ((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6280000);
-                temp_s0_7->unk4 = 0x27c000;
-                *temp_s0_6 = 0xe7000000;
-                temp_s0_6->unk4 = 0;
+                temp_s0_4 = temp_s0_4 + 8;
+                temp_s1_2->unk0 = (s32) ((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6280000);
+                temp_s1_2->unk4 = 0x27c000;
+                temp_s0_4->unk0 = 0xe7000000;
+                temp_s0_4->unk4 = 0;
+                phi_s0_3 = temp_s0_4 + 8;
             }
-            // Node 11
+            phi_s0_4 = phi_s0_3;
             if (get_num_players() == 3)
             {
-                // Node 12
-                temp_s0_5 = (temp_s0_7 + 8);
-                *sp30 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
+                temp_s0_5 = phi_s0_3 + 8;
+                sp30->unk0 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
                 sp30->unk4 = 0x2841e4;
-                *temp_s0_5 = 0xe7000000;
+                temp_s0_5->unk0 = 0xe7000000;
                 temp_s0_5->unk4 = 0;
-                return;
-                // (possible return value: temp_s0_4)
+                phi_s0_4 = temp_s0_5 + 8;
             }
         }
     }
-    // (possible return value: temp_s0_4)
+    return phi_s0_4;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2227,13 +2230,10 @@ glabel video_related_11
 #endif
 
 #ifdef NONMATCHING
-void set_D_800232A0(s32 arg0) {
-    // Node 0
+void set_D_800232A0(s32 arg0)
+{
     D_800232A0 = arg0;
-    return;
-    // (function likely void)
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2245,10 +2245,10 @@ glabel set_D_800232A0
 #endif
 
 #ifdef NONMATCHING
-void get_D_800232A0(void) {
-    // (possible return value: D_800232A0)
+? get_D_800232A0(void)
+{
+    return D_800232A0;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2260,13 +2260,10 @@ glabel get_D_800232A0
 #endif
 
 #ifdef NONMATCHING
-void set_D_8002329C(s32 arg0) {
-    // Node 0
+void set_D_8002329C(s32 arg0)
+{
     D_8002329C = arg0;
-    return;
-    // (function likely void)
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2278,10 +2275,10 @@ glabel set_D_8002329C
 #endif
 
 #ifdef NONMATCHING
-void get_D_8002329C(void) {
-    // (possible return value: D_8002329C)
+? get_D_8002329C(void)
+{
+    return D_8002329C;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2293,12 +2290,11 @@ glabel get_D_8002329C
 #endif
 
 #ifdef NONMATCHING
-void *set_video2_settings_offset_18_1A(s16 arg0, s16 arg1) {
-    // Node 0
+void *set_video2_settings_offset_18_1A(s16 arg0, s16 arg1)
+{
     ptr_video_settings2->unk18 = arg0;
     ptr_video_settings2->unk1A = arg1;
-    return;
-    // (possible return value: &ptr_video_settings2)
+    return &ptr_video_settings2;
 }
 #else
 GLOBAL_ASM(
@@ -2319,10 +2315,10 @@ glabel set_video2_settings_offset_18_1A
 
 
 #ifdef NONMATCHING
-void get_video2_settings_offset_18(void) {
-    // (possible return value: ptr_video_settings2->unk18)
+? get_video2_settings_offset_18(void)
+{
+    return ptr_video_settings2->unk18;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2335,10 +2331,10 @@ glabel get_video2_settings_offset_18
 #endif
 
 #ifdef NONMATCHING
-void get_video2_settings_offset_1A(void) {
-    // (possible return value: ptr_video_settings2->unk1A)
+? get_video2_settings_offset_1A(void)
+{
+    return ptr_video_settings2->unk1A;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2351,14 +2347,12 @@ glabel get_video2_settings_offset_1A
 #endif
 
 #ifdef NONMATCHING
-void *set_video2_text_clip_size(s16 arg0, s16 arg1) {
-    // Node 0
+void *set_video2_text_clip_size(s16 arg0, s16 arg1)
+{
     ptr_video_settings2->unk4 = arg0;
     ptr_video_settings2->unk6 = arg1;
-    return;
-    // (possible return value: &ptr_video_settings2)
+    return &ptr_video_settings2;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2376,10 +2370,10 @@ glabel set_video2_text_clip_size
 #endif
 
 #ifdef NONMATCHING
-void get_video2_settings_txtClipW(void) {
-    // (possible return value: ptr_video_settings2->unk4)
+? get_video2_settings_txtClipW(void)
+{
+    return ptr_video_settings2->unk4;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2392,10 +2386,10 @@ glabel get_video2_settings_txtClipW
 #endif
 
 #ifdef NONMATCHING
-void get_video2_settings_txtClipH(void) {
-    // (possible return value: ptr_video_settings2->unk6)
+? get_video2_settings_txtClipH(void)
+{
+    return ptr_video_settings2->unk6;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2408,14 +2402,12 @@ glabel get_video2_settings_txtClipH
 #endif
 
 #ifdef NONMATCHING
-void set_video2_width_height(s16 arg0, s16 arg1) {
-    // Node 0
+void set_video2_width_height(s16 arg0, s16 arg1)
+{
     ptr_video_settings2->unk1C = arg0;
     ptr_video_settings2->unk1E = arg1;
     set_BONDdata_screensize((f32) ptr_video_settings2->unk1C, (f32) ptr_video_settings2->unk1E);
     sub_GAME_7F077C5C();
-    return;
-    // (possible return value: sub_GAME_7F077C5C())
 }
 #else
 GLOBAL_ASM(
@@ -2452,7 +2444,8 @@ glabel set_video2_width_height
 
 
 #ifdef NONMATCHING
-void get_video2_settings_width(void) {
+? get_video2_settings_width(void)
+{
     return ptr_video_settings2->unk1C;
 }
 #else
@@ -2471,10 +2464,10 @@ glabel get_video2_settings_width
 
 
 #ifdef NONMATCHING
-void get_video2_settings_height(void) {
-    // (possible return value: ptr_video_settings2->unk1E)
+? get_video2_settings_height(void)
+{
+    return ptr_video_settings2->unk1E;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2487,13 +2480,11 @@ glabel get_video2_settings_height
 #endif
 
 #ifdef NONMATCHING
-void set_video2_ulx_uly(s16 arg0, s16 arg1) {
-    // Node 0
+void set_video2_ulx_uly(s16 arg0, s16 arg1)
+{
     ptr_video_settings2->unk20 = arg0;
     ptr_video_settings2->unk22 = arg1;
     sub_GAME_7F077C14((f32) ptr_video_settings2->unk20, (f32) ptr_video_settings2->unk22);
-    return;
-    // (possible return value: sub_GAME_7F077C14((f32) ptr_video_settings2->unk20, (f32) ptr_video_settings2->unk22))
 }
 #else
 GLOBAL_ASM(
@@ -2529,10 +2520,10 @@ glabel set_video2_ulx_uly
 
 
 #ifdef NONMATCHING
-void get_video2_settings_ulx(void) {
-    // (possible return value: ptr_video_settings2->unk20)
+? get_video2_settings_ulx(void)
+{
+    return ptr_video_settings2->unk20;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2545,10 +2536,10 @@ glabel get_video2_settings_ulx
 #endif
 
 #ifdef NONMATCHING
-void get_video2_settings_uly(void) {
-    // (possible return value: ptr_video_settings2->unk22)
+? get_video2_settings_uly(void)
+{
+    return ptr_video_settings2->unk22;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2561,13 +2552,10 @@ glabel get_video2_settings_uly
 #endif
 
 #ifdef NONMATCHING
-void set_video2_settings_offset_24(s32 arg0) {
-    // Node 0
+void set_video2_settings_offset_24(s32 arg0)
+{
     ptr_video_settings2->unk24 = arg0;
-    return;
-    // (function likely void)
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2580,15 +2568,12 @@ glabel set_video2_settings_offset_24
 #endif
 
 #ifdef NONMATCHING
-void video_related_1F(f32 arg0, f32 arg6) {
-    // Node 0
-    ptr_video_settings2->unk8 = arg6;
+void video_related_1F(f32 arg0)
+{
+    ptr_video_settings2->unk8 = arg0;
     sub_GAME_7F077C30(ptr_video_settings2->unk10, ptr_video_settings2->unk8, ptr_video_settings2->unkC);
     sub_GAME_7F077C5C();
-    return;
-    // (possible return value: sub_GAME_7F077C5C())
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2616,15 +2601,12 @@ glabel video_related_1F
 #endif
 
 #ifdef NONMATCHING
-void video_related_21(f32 arg0, f32 arg6) {
-    // Node 0
-    ptr_video_settings2->unkC = arg6;
+void video_related_21(f32 arg0)
+{
+    ptr_video_settings2->unkC = arg0;
     sub_GAME_7F077C30(ptr_video_settings2->unk10, ptr_video_settings2->unk8, ptr_video_settings2->unkC);
     sub_GAME_7F077C5C();
-    return;
-    // (possible return value: sub_GAME_7F077C5C())
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2652,10 +2634,10 @@ glabel video_related_21
 #endif
 
 #ifdef NONMATCHING
-void video_related_23(void) {
-    // (possible return value: ptr_video_settings2->unk8)
+? video_related_23(void)
+{
+    return ptr_video_settings2->unk8;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2668,16 +2650,13 @@ glabel video_related_23
 #endif
 
 #ifdef NONMATCHING
-void video_related_24(f32 arg0, f32 arg1, f32 arg6, f32 arg7) {
-    // Node 0
-    ptr_video_settings2->unk8 = arg7;
-    ptr_video_settings2->unkC = (f32) (arg6 / arg7);
+void video_related_24(f32 arg0, f32 arg1)
+{
+    ptr_video_settings2->unk8 = arg1;
+    ptr_video_settings2->unkC = (f32) (arg0 / arg1);
     sub_GAME_7F077C30(ptr_video_settings2->unk10, ptr_video_settings2->unk8, ptr_video_settings2->unkC);
     sub_GAME_7F077C5C();
-    return;
-    // (possible return value: sub_GAME_7F077C5C())
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2711,16 +2690,13 @@ glabel video_related_24
 #endif
 
 #ifdef NONMATCHING
-void set_page_height(f32 arg0, f32 arg1, f32 arg6, f32 arg7) {
-    // Node 0
-    ptr_video_settings2->unk10 = arg6;
-    ptr_video_settings2->unk14 = arg7;
+void set_page_height(f32 arg0, f32 arg1)
+{
+    ptr_video_settings2->unk10 = arg0;
+    ptr_video_settings2->unk14 = arg1;
     sub_GAME_7F077C30(ptr_video_settings2->unk10, ptr_video_settings2->unk8, ptr_video_settings2->unkC);
     sub_GAME_7F077C5C();
-    return;
-    // (possible return value: sub_GAME_7F077C5C())
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2752,14 +2728,12 @@ glabel set_page_height
 #endif
 
 #ifdef NONMATCHING
-void *video_related_27(void *arg0) {
-    // Node 0
-    *arg0 = (f32) ptr_video_settings2->unk10;
+void *video_related_27(void *arg0)
+{
+    arg0->unk0 = (f32) ptr_video_settings2->unk10;
     arg0->unk4 = (f32) ptr_video_settings2->unk14;
-    return;
-    // (possible return value: &ptr_video_settings2)
+    return &ptr_video_settings2;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2777,24 +2751,21 @@ glabel video_related_27
 #endif
 
 #ifdef NONMATCHING
-s32 set_setfillcolor(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+s32 set_setfillcolor(void *arg0, s32 arg1, s32 arg2, s32 arg3)
+{
     s32 temp_t5;
 
-    // Node 0
     if (coloroutputmode != 0)
     {
-        // Node 1
-        temp_t5 = (((((arg1 << 8) & 0xf800) | ((arg2 * 8) & 0x7c0)) | ((arg3 >> 2) & 0x3e)) | 1);
-        *arg0 = 0xf7000000;
+        temp_t5 = ((((arg1 << 8) & 0xf800) | ((arg2 * 8) & 0x7c0)) | ((arg3 >> 2) & 0x3e)) | 1;
+        arg0->unk0 = 0xf7000000;
         arg0->unk4 = (s32) ((temp_t5 << 0x10) | temp_t5);
+        return arg0 + 8;
     }
-    // Node 2
     arg0->unk4 = (s32) ((((arg1 << 0x18) | (arg2 << 0x10)) | (arg3 << 8)) | 0xff);
-    *arg0 = 0xf7000000;
-    return;
-    // (possible return value: (arg0 + 8))
+    arg0->unk0 = 0xf7000000;
+    return arg0 + 8;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -2839,8 +2810,30 @@ glabel set_setfillcolor
 #endif
 
 #ifdef NONMATCHING
-void indy_grab_jpg_16bit(void) {
+void indy_grab_jpg_16bit(void)
+{
+    ? sp38;
+    ? sp34;
 
+loop_1:
+    sprintf(&sp38, &aGrab_D_jpeg_1, jpg_16bit_grabnum);
+    if (check_file_found_on_indy(&sp38, &sp34) != 0)
+    {
+        jpg_16bit_grabnum = (s32) (jpg_16bit_grabnum + 1);
+        goto loop_1;
+    }
+    sprintf(&sp38, &aGrab_D_temp_uix, jpg_16bit_grabnum);
+    indy_send_capture_data(&sp38, ptr_video_settings2->unk28, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 2);
+    sprintf(&sp38, &aUix2pixGrab_D_temp_uix, jpg_16bit_grabnum);
+    response_from_command_string(&sp38);
+    sprintf(&sp38, &aFromaliasGrab_D_temp_pixGrab_D_tem, jpg_16bit_grabnum, jpg_16bit_grabnum);
+    response_from_command_string(&sp38);
+    sprintf(&sp38, &aImgcopyFjfifGrab_D_temp_rgbGrab_D_, jpg_16bit_grabnum, jpg_16bit_grabnum);
+    response_from_command_string(&sp38);
+    sprintf(&sp38, &aRmGrab_D_temp_uixGrab_D_temp_pixGr, jpg_16bit_grabnum, jpg_16bit_grabnum);
+    response_from_command_string(&sp38);
+    sprintf(&sp38, &aImgviewGrab_D_jpeg, jpg_16bit_grabnum);
+    response_from_command_string(&sp38);
 }
 #else
 GLOBAL_ASM(
@@ -2947,8 +2940,30 @@ glabel indy_grab_jpg_16bit
 #endif
 
 #ifdef NONMATCHING
-void indy_grab_jpg_32bit(void) {
+void indy_grab_jpg_32bit(void)
+{
+    ? sp38;
+    ? sp34;
 
+loop_1:
+    sprintf(&sp38, &aGrab_D_jpeg, jpg_32bit_grabnum);
+    if (check_file_found_on_indy(&sp38, &sp34) != 0)
+    {
+        jpg_32bit_grabnum = (s32) (jpg_32bit_grabnum + 1);
+        goto loop_1;
+    }
+    sprintf(&sp38, &aGrab_D_temp_uix_0, jpg_32bit_grabnum);
+    indy_send_capture_data(&sp38, &cfb_16_a, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 4);
+    sprintf(&sp38, &aUix2pixXsDGrab_D_temp_uix, get_video2_settings_txtClipW(), jpg_32bit_grabnum);
+    response_from_command_string(&sp38);
+    sprintf(&sp38, &aFromaliasGrab_D_temp_pixGrab_D_t_0, jpg_32bit_grabnum, jpg_32bit_grabnum);
+    response_from_command_string(&sp38);
+    sprintf(&sp38, &aImgcopyFjfifGrab_D_temp_rgbGrab__0, jpg_32bit_grabnum, jpg_32bit_grabnum);
+    response_from_command_string(&sp38);
+    sprintf(&sp38, &aRmGrab_D_temp_uixGrab_D_temp_pix_0, jpg_32bit_grabnum, jpg_32bit_grabnum);
+    response_from_command_string(&sp38);
+    sprintf(&sp38, &aImgviewGrab_D_jpeg_0, jpg_32bit_grabnum);
+    response_from_command_string(&sp38);
 }
 #else
 GLOBAL_ASM(
@@ -3059,8 +3074,28 @@ glabel indy_grab_jpg_32bit
 #endif
 
 #ifdef NONMATCHING
-void indy_grab_rgb_16bit(void) {
+void indy_grab_rgb_16bit(void)
+{
+    ? sp30;
+    ? sp2C;
 
+loop_1:
+    sprintf(&sp30, &aGrab_D_rgb, rgb_16bit_grabnum);
+    if (check_file_found_on_indy(&sp30, &sp2C) != 0)
+    {
+        rgb_16bit_grabnum = (s32) (rgb_16bit_grabnum + 1);
+        goto loop_1;
+    }
+    sprintf(&sp30, &aGrab_D_temp_uix_1, rgb_16bit_grabnum);
+    indy_send_capture_data(&sp30, ptr_video_settings2->unk28, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 2);
+    sprintf(&sp30, &aUix2pixGrab_D_temp_uix_0, rgb_16bit_grabnum);
+    response_from_command_string(&sp30);
+    sprintf(&sp30, &aFromaliasGrab_D_temp_pixGrab_D_rgb, rgb_16bit_grabnum, rgb_16bit_grabnum);
+    response_from_command_string(&sp30);
+    sprintf(&sp30, &aRmGrab_D_temp_uixGrab_D_temp_pix, rgb_16bit_grabnum, rgb_16bit_grabnum);
+    response_from_command_string(&sp30);
+    sprintf(&sp30, &aImgviewGrab_D_rgb, rgb_16bit_grabnum);
+    response_from_command_string(&sp30);
 }
 #else
 GLOBAL_ASM(
@@ -3157,8 +3192,28 @@ glabel indy_grab_rgb_16bit
 #endif
 
 #ifdef NONMATCHING
-void indy_grab_rgb_32bit(void) {
+void indy_grab_rgb_32bit(void)
+{
+    ? sp30;
+    ? sp2C;
 
+loop_1:
+    sprintf(&sp30, &aGrab_D_rgb_0, rgb_32bit_grabnum);
+    if (check_file_found_on_indy(&sp30, &sp2C) != 0)
+    {
+        rgb_32bit_grabnum = (s32) (rgb_32bit_grabnum + 1);
+        goto loop_1;
+    }
+    sprintf(&sp30, &aGrab_D_temp_uix_2, rgb_32bit_grabnum);
+    indy_send_capture_data(&sp30, &cfb_16_a, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 4);
+    sprintf(&sp30, &aUix2pixXsDGrab_D_temp_uix_0, get_video2_settings_txtClipW(), rgb_32bit_grabnum);
+    response_from_command_string(&sp30);
+    sprintf(&sp30, &aFromaliasGrab_D_temp_pixGrab_D_r_0, rgb_32bit_grabnum, rgb_32bit_grabnum);
+    response_from_command_string(&sp30);
+    sprintf(&sp30, &aRmGrab_D_temp_uixGrab_D_temp_pix_1, rgb_32bit_grabnum, rgb_32bit_grabnum);
+    response_from_command_string(&sp30);
+    sprintf(&sp30, &aImgviewGrab_D_rgb_0, rgb_32bit_grabnum);
+    response_from_command_string(&sp30);
 }
 #else
 GLOBAL_ASM(

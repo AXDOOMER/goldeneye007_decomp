@@ -6,7 +6,7 @@
 #ifdef NONMATCHING
 s32 proutSprintf(s32 arg2)
 {
-    return (memcpy() + arg2);
+    return memcpy() + arg2;
 }
 #else
 GLOBAL_ASM(
@@ -31,14 +31,14 @@ glabel proutSprintf
 #ifdef NONMATCHING
 s32 sprintf(s32 arg0, s32 arg1, ? arg2, ? arg3)
 {
-    ? temp_ret;
+    s32 temp_ret;
 
     temp_ret = _Printf(&proutSprintf, arg0, arg1, &arg2);
     if (temp_ret >= 0)
     {
         *(arg0 + temp_ret) = (u8)0;
     }
-    return (temp_ret + -1);
+    return temp_ret + -1;
 }
 #else
 GLOBAL_ASM(

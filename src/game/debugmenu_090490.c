@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/debugmenu_090490.h"
+#include "game/initgamedata.h"
 
 // data
 //D:80036BA4
@@ -1185,7 +1186,7 @@ void set_debug_limit_controller_input(void) {
     debug_limit_controller_input = debug_unknown;
 }
 
-void get_memusage_display_flag(void) {
+s32 get_memusage_display_flag(void) {
     return memusage_display_flag;
 }
 

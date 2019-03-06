@@ -27757,8 +27757,24 @@ glabel removed_animation_routine_2B
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F034514(void) {
+? sub_GAME_7F034514(s32 arg0, s32 arg1)
+{
+    s32 temp_ret;
 
+    arg1 = sub_GAME_7F032F94();
+    if (true_if_actor_dying_fading_limping_shot(arg0) != 0)
+    {
+        temp_ret = scan_position_data_table_for_normal_object_at_preset(arg1);
+        if (temp_ret != 0)
+        {
+            if (check_if_object_has_not_been_destroyed(temp_ret) != 0)
+            {
+                sub_GAME_7F024150(arg0);
+                return 1;
+            }
+        }
+    }
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -27798,8 +27814,72 @@ glabel sub_GAME_7F034514
 
 
 #ifdef NONMATCHING
-void actor_draws_throws_grenade_at_player_if_possible(void) {
+? actor_draws_throws_grenade_at_player_if_possible(void *arg0)
+{
+    s32 sp24;
+    s32 sp20;
+    s32 temp_ret;
+    s32 temp_ret_2;
+    void *temp_v1;
+    ? phi_a3;
+    ? phi_a2;
 
+    if ((u32) (random_related() % 0xffU) >= (u32) arg0->unk10)
+    {
+        return 0;
+    }
+    if (sub_GAME_7F032DE4(arg0) < 10.0f)
+    {
+        return 0;
+    }
+    if (true_if_actor_dying_fading_limping_shot(arg0) != 0)
+    {
+        sp24 = something_with_weaponpos_of_guarddata_hand(arg0, 1);
+        temp_ret = something_with_weaponpos_of_guarddata_hand(arg0, 0);
+        sp20 = temp_ret;
+        if (temp_ret != 0)
+        {
+            if (temp_ret->unk4->unk80 == 0x1a)
+            {
+                throw_weapon_in_guard_hand(arg0, temp_ret, 0, 0);
+                return 1;
+            }
+        }
+        if (sp24 != 0)
+        {
+            if (sp24->unk4->unk80 == 0x1a)
+            {
+                throw_weapon_in_guard_hand(arg0, sp24, 1, 0);
+                return 1;
+            }
+        }
+        if ((sp24 == 0) || (temp_ret == 0))
+        {
+            phi_a3 = 0;
+            if (temp_ret != 0)
+            {
+                phi_a3 = 0x10000000;
+            }
+            temp_ret_2 = actor_draws_weapon_with_model(arg0, 0xc4, 0x1a, phi_a3);
+            if (temp_ret_2 != 0)
+            {
+                temp_v1 = temp_ret_2->unk4;
+                temp_v1->unk64 = (s32) (temp_v1->unk64 | 0x800);
+                phi_a2 = 1;
+                if (sp20 == 0)
+                {
+                    phi_a2 = 0;
+                }
+                throw_weapon_in_guard_hand(arg0, temp_ret_2, phi_a2, 1);
+                return 1;
+            }
+        }
+        else
+        {
+
+        }
+    }
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -27916,8 +27996,28 @@ glabel actor_draws_throws_grenade_at_player_if_possible
 
 
 #ifdef NONMATCHING
-void actor_drops_itemtype_setting_timer(void) {
+? actor_drops_itemtype_setting_timer(void *arg0, s32 arg1, s32 arg2)
+{
+    s32 sp1C;
+    s32 temp_ret;
+    void *temp_a0;
 
+    temp_ret = create_new_item_instance_of_model(arg1, arg2 & 0xff);
+    if (temp_ret != 0)
+    {
+        if (temp_ret->unk10 != 0)
+        {
+            temp_a0 = temp_ret->unk14;
+            sp1C = temp_ret;
+            set_obj_instance_controller_scale(temp_a0, temp_a0->unk14);
+            sub_GAME_7F03A5A4(sp1C->unk10, arg0->unk18);
+            sp1C->unk82 = (u16)0xb4;
+            sub_GAME_7F04BFD0(sp1C->unk10, 1);
+            arg0->unk12 = (s16) (arg0->unk12 | 1);
+            return 1;
+        }
+    }
+    return 0;
 }
 #else
 GLOBAL_ASM(

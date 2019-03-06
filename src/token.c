@@ -18,45 +18,72 @@ const char aJ[] = "-j";
 
 
 #ifdef NONMATCHING
-void *check_string_something(void *arg0) {
-    // Node 0
+void *check_string_something(void *arg0)
+{
+    s32 temp_v0;
+    s32 temp_v0_2;
+    void *temp_a0;
+    void *temp_a0_2;
+    s32 phi_v0;
+    void *phi_a0;
+    void *phi_a0_2;
+    void *phi_a0_3;
+    s32 phi_v0_2;
+    void *phi_a0_4;
+    void *phi_a0_5;
+    void *phi_a0_6;
+
     strstr_ptrcurrent_string = &D_800291F0;
     strstr_numstings = 1;
+    phi_v0 = *arg0;
+    phi_a0_4 = arg0;
+    phi_a0_5 = arg0;
     if (*arg0 != 0)
     {
-        loop_1:
-        // Node 1
-        if (0x20 == *arg0)
+loop_1:
+        phi_a0 = phi_a0_5;
+        phi_a0_2 = phi_a0_5;
+        if (0x20 == phi_v0)
         {
-            loop_2:
-            // Node 2
-            *arg0 = (u8)0;
-            if (0x20 == arg0->unk1)
+loop_2:
+            phi_a0->unk0 = (u8)0;
+            temp_a0 = phi_a0 + 1;
+            phi_a0 = temp_a0;
+            phi_a0_2 = temp_a0;
+            if (0x20 == phi_a0->unk1)
             {
                 goto loop_2;
             }
         }
-        // Node 3
-        *(&strstr_ptrcurrent_string + (strstr_numstings * 4)) = arg0;
+        *(&strstr_ptrcurrent_string + (strstr_numstings * 4)) = (void *) phi_a0_2;
         strstr_numstings = (s32) (strstr_numstings + 1);
-        if (*arg0 >= 0x21)
+        temp_v0 = *phi_a0_2;
+        phi_a0_3 = phi_a0_2;
+        phi_v0_2 = temp_v0;
+        phi_a0_6 = phi_a0_2;
+        if (temp_v0 >= 0x21)
         {
-            loop_4:
-            // Node 4
-            if (arg0->unk1 >= 0x21)
+loop_4:
+            temp_v0_2 = phi_a0_3->unk1;
+            temp_a0_2 = phi_a0_3 + 1;
+            phi_a0_3 = temp_a0_2;
+            phi_v0_2 = temp_v0_2;
+            phi_a0_6 = temp_a0_2;
+            if (temp_v0_2 >= 0x21)
             {
                 goto loop_4;
             }
         }
-        // Node 5
-        if (*arg0 != 0)
+        phi_v0 = phi_v0_2;
+        phi_a0_4 = phi_a0_6;
+        phi_a0_5 = phi_a0_6;
+        if (phi_v0_2 != 0)
         {
             goto loop_1;
         }
     }
-    // (possible return value: arg0)
+    return phi_a0_4;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -118,50 +145,47 @@ void strtok(s32 arg0) {
 
 
 #ifdef NONMATCHING
-?32 check_boot_switches(void) {
-    ?32 sp28;
+?32 check_boot_switches(void)
+{
+    ?32 is_debug;
+    void *temp_s0;
+    s32 phi_s1;
+    void *phi_s0;
 
-    // Node 0
-    sp28 = 0;
+    is_debug = 0;
     if (rmon_debug_is_final_build() != 0)
     {
-        // Node 1
         boot_token_from_indy = 0;
     }
     else
     {
-        // Node 2
-        // Node 3
-        osPiReadIo((0xff0000 | 0xb000), &boot_token_from_indy);
-        if ((&boot_token_from_indy + 4) != &piCmdBuf)
+        phi_s1 = 0xffb000;
+        phi_s0 = &boot_token_from_indy;
+loop_3:
+        osPiReadIo(phi_s1, phi_s0);
+        temp_s0 = phi_s0 + 4;
+        phi_s1 = phi_s1 + 4;
+        phi_s0 = temp_s0;
+        if (temp_s0 != &piCmdBuf)
         {
             goto loop_3;
         }
     }
-    // Node 4
     check_string_something(&boot_token_from_indy);
-    if (check_token(1, &aD_6) != 0)
+    if (check_token(1, "-d") != 0)
     {
-        // Node 5
-        sp28 = 1;
+        is_debug = 1;
     }
-    // Node 6
-    if (check_token(1, &aS_2) != 0)
+    if (check_token(1, "-s") != 0)
     {
-        // Node 7
         bootswitch_sound = (u8)1;
     }
-    // Node 8
-    if (check_token(1, &aJ) != 0)
+    if (check_token(1, "-j") != 0)
     {
-        // Node 9
         j_text_trigger = 1;
-        return;
-        // (possible return value: sp28)
     }
-    // (possible return value: sp28)
+    return is_debug;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -234,33 +258,42 @@ glabel check_boot_switches
 
 
 #ifdef NONMATCHING
-s32 check_token(s32 arg0, s32 arg1) {
-    // Node 0
+s32 check_token(s32 arg0, s32 arg1)
+{
+    s32 temp_s1;
+    s32 temp_s2;
+    s32 temp_s3;
+    void *phi_s0;
+    s32 phi_s2;
+    s32 phi_s1;
+
+    temp_s3 = strlen(arg1);
     if (strstr_numstings >= 2)
     {
-        // Node 1
-        // Node 2
-        if (string_related(arg1, D_80024478, strlen(arg1)) == 0)
+        phi_s0 = &D_80024478;
+        phi_s2 = arg0;
+        phi_s1 = 1;
+loop_2:
+        phi_s2 = phi_s2;
+        if (string_related(arg1, *phi_s0, temp_s3) == 0)
         {
-            // Node 3
-            if ((arg0 + -1) == 0)
+            temp_s2 = phi_s2 + -1;
+            phi_s2 = temp_s2;
+            if (temp_s2 == 0)
             {
-                // Node 4
-                return;
-                // (possible return value: (D_80024478 + strlen(arg1)))
+                return *phi_s0 + temp_s3;
             }
         }
-        // Node 5
-        if ((1 + 1) < strstr_numstings)
+        temp_s1 = phi_s1 + 1;
+        phi_s0 = phi_s0 + 4;
+        phi_s1 = temp_s1;
+        if (temp_s1 < strstr_numstings)
         {
             goto loop_2;
         }
     }
-    // Node 6
-    return;
-    // (possible return value: 0)
+    return 0;
 }
-
 #else
 GLOBAL_ASM(
 .text

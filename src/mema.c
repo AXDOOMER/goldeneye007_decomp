@@ -33,13 +33,18 @@ const char aD_5[] = "[%d]";
 
 
 #ifdef NONMATCHING
-?32 swap_entries(void *arg0, void *arg1) {
-    // Node 0
-    *arg0 = (?32) *arg1;
+?32 swap_entries(void *arg0, void *arg1)
+{
+    ?32 temp_v0;
+    ?32 temp_v1;
+
+    temp_v0 = arg0->unk0;
+    temp_v1 = arg0->unk4;
+    arg0->unk0 = (?32) arg1->unk0;
     arg0->unk4 = (?32) arg1->unk4;
-    *arg1 = (?32) *arg0;
-    arg1->unk4 = (?32) arg0->unk4;
-    return *arg0;
+    arg1->unk0 = temp_v0;
+    arg1->unk4 = temp_v1;
+    return temp_v0;
 }
 #else
 GLOBAL_ASM(
@@ -62,13 +67,11 @@ glabel swap_entries
 
 
 #ifdef NONMATCHING
-void merge_alloc_entries(void *arg0, void *arg1) {
-    // Node 0
+void merge_alloc_entries(void *arg0, void *arg1)
+{
     arg0->unk4 = (s32) (arg0->unk4 + arg1->unk4);
-    *arg1 = 0;
+    arg1->unk0 = 0;
     arg1->unk4 = 0;
-    return;
-    // (function likely void)
 }
 #else
 GLOBAL_ASM(
@@ -89,42 +92,65 @@ glabel merge_alloc_entries
 
 
 #ifdef NONMATCHING
-void sort_merge_entries_in_alloc_table(s32 arg0) {
+? sort_merge_entries_in_alloc_table(s32 arg0)
+{
     u32 temp_s0;
+    u32 temp_s0_2;
     u32 temp_s4;
-    void *temp_s1;
+    void *phi_s0;
+    u32 phi_s2;
+    void *phi_s1;
+    void *phi_s0_2;
+    ? phi_s3;
+    void *phi_s0_3;
+    ? phi_s3_2;
+    u32 phi_v0;
+    ? phi_s3_3;
 
-    // Node 0
-    temp_s0 = (arg0 + 0x10);
-    temp_s4 = (arg0 + 0xfe8);
-    temp_s1 = (arg0 + 8);
+    temp_s0 = arg0 + 0x10;
+    temp_s4 = arg0 + 0xfe8;
+    phi_s0 = temp_s0;
+    phi_s2 = 0U;
+    phi_s1 = arg0 + 8;
+    phi_s3 = 0;
+    phi_s3_3 = 0;
     if (temp_s4 >= temp_s0)
     {
-        loop_1:
-        // Node 1
-        if (temp_s0->unk4 != 0)
+loop_1:
+        phi_s0_2 = phi_s0;
+        phi_s2 = phi_s2;
+        phi_s1 = phi_s1;
+        phi_s3_2 = phi_s3_3;
+        if (phi_s0->unk4 != 0)
         {
-            // Node 2
-            if ((u32) *temp_s0 < 0U)
+            if ((u32) phi_s0->unk0 < (u32) phi_s2)
             {
-                // Node 3
-                swap_entries(temp_s0, temp_s1);
+                swap_entries(phi_s0, phi_s1);
             }
-            // Node 4
-            if (*temp_s0 == (temp_s1->unk4 + 0U))
+            phi_s0_3 = phi_s0;
+            phi_v0 = phi_s0->unk0;
+            phi_s3_2 = phi_s3_3;
+            if (phi_s0->unk0 == (phi_s1->unk4 + phi_s2))
             {
-                // Node 5
-                merge_alloc_entries(temp_s1, temp_s0);
+                merge_alloc_entries(phi_s1, phi_s0);
+                phi_s0_3 = phi_s1;
+                phi_v0 = phi_s1->unk0;
+                phi_s3_2 = 1;
             }
-            // Node 6
+            phi_s0_2 = phi_s0_3;
+            phi_s2 = phi_v0;
+            phi_s1 = phi_s0_3;
         }
-        // Node 7
-        if (temp_s4 >= (u32) (temp_s0 + 8))
+        temp_s0_2 = phi_s0_2 + 8;
+        phi_s0 = temp_s0_2;
+        phi_s3 = phi_s3_2;
+        phi_s3_3 = phi_s3_2;
+        if (temp_s4 >= temp_s0_2)
         {
             goto loop_1;
         }
     }
-    // (possible return value: 0)
+    return phi_s3;
 }
 #else
 GLOBAL_ASM(
@@ -191,20 +217,17 @@ glabel sort_merge_entries_in_alloc_table
 
 
 #ifdef NONMATCHING
-void memp_related_7(void) {
-    // Node 0
+void memp_related_7(void)
+{
     if (sort_merge_entries_in_alloc_table(&ptr_table_allocated_mem_blocks) != 0)
     {
-        loop_1:
-        // Node 1
+loop_1:
         if (sort_merge_entries_in_alloc_table(&ptr_table_allocated_mem_blocks) != 0)
         {
             goto loop_1;
         }
     }
-    // (possible return value: sort_merge_entries_in_alloc_table(&ptr_table_allocated_mem_blocks))
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -800,8 +823,46 @@ glabel mem_related_something_find_first
 
 
 #ifdef NONMATCHING
-void mem_related_something_find_first_0(void) {
+s32 mem_related_something_find_first_0(s32 arg0, u32 arg1)
+{
+    s32 temp_a1;
+    u32 temp_a2;
+    u32 temp_t4;
+    s32 phi_a1;
+    void *phi_v1;
 
+    if (-1 == ptr_first_entry_in_alloc_table)
+    {
+        return 0;
+    }
+    phi_a1 = ptr_first_entry_in_alloc_table;
+    phi_v1 = &ptr_first_entry_in_alloc_table;
+loop_2:
+    if (arg0 != phi_a1)
+    {
+block_4:
+        temp_a1 = phi_v1->unk8;
+        phi_a1 = temp_a1;
+        phi_v1 = phi_v1 + 8;
+        if (-1 != temp_a1)
+        {
+            goto loop_2;
+        }
+        return 0;
+    }
+    temp_a2 = phi_v1->unk4;
+    if (temp_a2 < arg1)
+    {
+        goto block_4;
+    }
+    temp_t4 = temp_a2 - arg1;
+    phi_v1->unk0 = (s32) (phi_a1 + arg1);
+    phi_v1->unk4 = temp_t4;
+    if (temp_t4 == 0)
+    {
+        phi_v1->unk0 = 0;
+    }
+    return arg0;
 }
 #else
 GLOBAL_ASM(
@@ -872,21 +933,19 @@ glabel mem_related_model_room_buffers_0
 
 
 #ifdef NONMATCHING
-void *mem_related_allocated_table_related(void) {
+void *mem_related_allocated_table_related(void)
+{
     void *temp_v1;
     void *phi_v1;
 
-    // Node 0
     phi_v1 = &ptr_table_allocated_mem_blocks;
 loop_1:
-    // Node 1
-    temp_v1 = (phi_v1 + 0x20);
+    temp_v1 = phi_v1 + 0x20;
     phi_v1 = temp_v1;
     if (temp_v1 != &dword_CODE_bss_80064C08)
     {
         goto loop_1;
     }
-    // Node 2
     return &dword_CODE_bss_80064C08;
 }
 #else
@@ -909,32 +968,48 @@ glabel mem_related_allocated_table_related
 
 
 #ifdef NONMATCHING
-f32 mem_related_something_first_related(void) {
-    // Node 0
+f32 mem_related_something_first_related(void)
+{
+    u32 temp_a1;
+    u32 temp_v0;
+    u32 phi_v1;
+    void *phi_a0;
+    u32 phi_v0;
+    u32 phi_v1_2;
+    u32 phi_v1_3;
+    u32 phi_v0_2;
+
+    phi_v1 = 0U;
+    phi_a0 = &ptr_first_entry_in_alloc_table;
+    phi_v0 = 0U;
+    phi_v1_2 = 0U;
+    phi_v0_2 = 0U;
     if (-1 != ptr_first_entry_in_alloc_table)
     {
-        loop_1:
-        // Node 1
-        if (0U < (u32) ptr_first_entry_in_alloc_table.unk4)
+loop_1:
+        temp_a1 = phi_a0->unk4;
+        temp_v0 = phi_v0_2 + temp_a1;
+        phi_v1_3 = phi_v1;
+        if ((u32) phi_v1 < temp_a1)
         {
-            // Node 2
+            phi_v1_3 = temp_a1;
         }
-        // Node 3
-        if (-1 != ptr_first_entry_in_alloc_table.unk8)
+        phi_v1 = phi_v1_3;
+        phi_a0 = phi_a0 + 8;
+        phi_v0 = temp_v0;
+        phi_v1_2 = phi_v1_3;
+        phi_v0_2 = temp_v0;
+        if (-1 != phi_a0->unk8)
         {
             goto loop_1;
         }
     }
-    // Node 4
-    if (0U == 0)
+    if (phi_v0 == 0)
     {
-        // Node 5
-        return;
-        // (possible return value: ((f32) (u32) (0U * 0) / (f32) 0U))
+        return 0;
     }
-    // (possible return value: ((f32) (u32) (0U * 0) / (f32) 0U))
+    return (f32) (u32) (phi_v0 - phi_v1_2) / (f32) (u32) phi_v0;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -1170,8 +1245,26 @@ glabel generate_lists_before_after_mem_merge
 
 
 #ifdef NONMATCHING
-void mem_related_something_first_related_0(void) {
+void mem_related_something_first_related_0(void *arg0)
+{
+    s32 temp_s1;
+    s32 phi_s1;
+    void *phi_s0;
 
+    if (-1 != ptr_first_entry_in_alloc_table)
+    {
+        phi_s1 = ptr_first_entry_in_alloc_table;
+        phi_s0 = &ptr_first_entry_in_alloc_table;
+loop_2:
+        arg0(phi_s1 + phi_s0->unk4, phi_s0);
+        temp_s1 = phi_s0->unk8;
+        phi_s1 = temp_s1;
+        phi_s0 = phi_s0 + 8;
+        if (-1 != temp_s1)
+        {
+            goto loop_2;
+        }
+    }
 }
 #else
 GLOBAL_ASM(

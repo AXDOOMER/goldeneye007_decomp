@@ -392,8 +392,385 @@ void setup_gamevalues_and_launchmainloop(void) {
 
 
 #ifdef NONMATCHING
-void mainloop(void) {
+void mainloop(void)
+{
+    s32 sp1DC;
+    void *sp1D4;
+    ? sp1B4;
+    s32 sp1AC;
+    s32 sp1A4;
+    ? sp5C;
+    ? sp58;
+    void *sp48;
+    s32 temp_a0;
+    s32 temp_a1;
+    s32 temp_a2;
+    s32 temp_ret;
+    s32 temp_ret_2;
+    s32 temp_s0;
+    s32 temp_s0_2;
+    s32 temp_s0_3;
+    s32 temp_s1;
+    s32 temp_s3;
+    s32 temp_s3_2;
+    s32 temp_v0_3;
+    s32 temp_v0_4;
+    s32 temp_v1;
+    s32 temp_v1_2;
+    s32 temp_v1_3;
+    void *temp_s3_3;
+    void *temp_v0;
+    void *temp_v0_2;
+    void *temp_v0_5;
+    s32 phi_v1;
+    void *phi_v0;
+    s32 phi_s0;
+    s32 phi_s0_2;
+    s32 phi_v1_2;
+    void *phi_v0_2;
+    s32 phi_s0_3;
+    s32 phi_s1;
+    u32 phi_fp;
+    s32 phi_s1_2;
+    s32 phi_s3;
+    s32 phi_s3_2;
+    void *phi_s3_3;
+    s32 phi_v0_3;
+    u32 phi_fp_2;
+    s32 phi_s0_4;
+    s32 phi_s0_5;
 
+    sp1DC = 0;
+    reset_mem_bank_5();
+    if (check_token(1, &aLevel__0) != 0)
+    {
+        temp_ret = check_token(1, &aLevel__1);
+        current_stage_num = (s32) ((temp_ret->unk1 + (temp_ret->unk0 * 0xa)) + -0x210);
+    }
+    if (current_stage_num != 0x5a)
+    {
+        sub_GAME_7F01DF90();
+        get_selected_folder_num(0);
+        get_difficulty(0);
+        set_solo_and_ptr_briefing(current_stage_num);
+        if (check_token(1, &aHard) != 0)
+        {
+            get_difficulty(*check_token(1, &aHard_1) + -0x30);
+            set_difficulty(*check_token(1, &aHard_2) + -0x30);
+        }
+    }
+    increment_random_num(osGetCount());
+loop_6:
+    sp1D4 = NULL;
+    sp1B4.unk0 = (?32) D_80024304.unk0;
+    sp1B4.unk4 = (?32) D_80024304.unk4;
+    sp1B4.unkC = (?32) D_80024304.unkC;
+    sp1B4.unk8 = (?32) D_80024304.unk8;
+    sp1B4.unk10 = (?32) D_80024304.unk10;
+    sp1B4.unk14 = (?32) D_80024304.unk14;
+    sp1B4.unk1C = (?32) D_80024304.unk1C;
+    sp1B4.unk18 = (?32) D_80024304.unk18;
+    sp1AC = 0;
+    test_if_recording_demos_this_stage_load(current_stage_num, get_current_difficulty());
+    if (debug_and_update_stage_flag != 0)
+    {
+        phi_s0_2 = -1;
+        if (current_stage_num != 0x5a)
+        {
+            phi_s0_2 = -1;
+            if (get_selected_num_players() >= 2)
+            {
+                phi_s0 = 0;
+                if (memallocstringtable != 0)
+                {
+                    temp_v0 = 0x80020000 + 0x41bc;
+                    phi_v1 = *temp_v0;
+                    phi_v0 = temp_v0;
+                    phi_s0_4 = 0;
+loop_11:
+                    phi_s0 = phi_s0_4;
+                    if ((current_stage_num + 0x190) != phi_v1)
+                    {
+                        temp_v1 = phi_v0->unk8;
+                        temp_s0 = phi_s0_4 + 1;
+                        phi_v1 = temp_v1;
+                        phi_v0 = phi_v0 + 8;
+                        phi_s0 = temp_s0;
+                        phi_s0_4 = temp_s0;
+                        if (temp_v1 != 0)
+                        {
+                            goto loop_11;
+                        }
+                    }
+                }
+                phi_s0_2 = phi_s0;
+                if (*(&memallocstringtable + (phi_s0 * 8)) == 0)
+                {
+                    phi_s0_2 = -1;
+                }
+            }
+        }
+        phi_s0_3 = phi_s0_2;
+        if (phi_s0_2 < 0)
+        {
+            phi_s0_3 = 0;
+            if (memallocstringtable != 0)
+            {
+                temp_v0_2 = 0x80020000 + 0x41bc;
+                phi_v1_2 = *temp_v0_2;
+                phi_v0_2 = temp_v0_2;
+                phi_s0_5 = 0;
+loop_18:
+                phi_s0_3 = phi_s0_5;
+                if (current_stage_num != phi_v1_2)
+                {
+                    temp_v1_2 = phi_v0_2->unk8;
+                    temp_s0_2 = phi_s0_5 + 1;
+                    phi_v1_2 = temp_v1_2;
+                    phi_v0_2 = phi_v0_2 + 8;
+                    phi_s0_3 = temp_s0_2;
+                    phi_s0_5 = temp_s0_2;
+                    if (temp_v1_2 != 0)
+                    {
+                        goto loop_18;
+                    }
+                }
+            }
+        }
+        strtok((&memallocstringtable + (phi_s0_3 * 8))->unk4, &memallocstringtable);
+    }
+    reset_mem_bank_a0(4);
+    something_mem_bank_a0(4);
+    if (check_token(1, &aMa) != 0)
+    {
+        current_ma_malloc_value = (s32) (strtol(check_token(1, &aMa_0), 0, 0) << 0xa);
+    }
+    reset_memtable_base_allocation(allocate_bytes_in_bank(current_ma_malloc_value, 4), current_ma_malloc_value);
+    reset_play_data_ptrs();
+    phi_s1 = 0;
+    if (current_stage_num != 0x5a)
+    {
+        phi_s1 = 1;
+        if (get_selected_num_players() >= 2)
+        {
+            phi_s1 = get_selected_num_players();
+        }
+    }
+    init_player_data_ptrs_construct_viewports(phi_s1);
+    set_vtx_gfx_mem_alloc();
+    test_controller_presence();
+    stage_load(current_stage_num);
+    init_both_video_buffers();
+    debug_text_related_2();
+    sub_GAME_7F0C0B4C();
+    video_related_2();
+    if (osRecvMesg(&gfxFrameMsgQ, &sp1D4, 0) == 0)
+    {
+loop_27:
+        if (osRecvMesg(&gfxFrameMsgQ, &sp1D4, 0) == 0)
+        {
+            goto loop_27;
+        }
+    }
+    phi_fp = 0U;
+    if (loadedstage < 0)
+    {
+loop_29:
+        osRecvMesg(&gfxFrameMsgQ, &sp1D4, 1);
+        if (*sp1D4 != 1)
+        {
+            if (*sp1D4 != 2)
+            {
+                if (*sp1D4 != 5)
+                {
+                    phi_v0_3 = loadedstage;
+                    phi_fp_2 = phi_fp;
+                }
+                else
+                {
+                    phi_v0_3 = (void *)0x80020000->unk42FC;
+                    phi_fp_2 = 4U;
+                }
+            }
+            else
+            {
+                phi_v0_3 = (void *)0x80020000->unk42FC;
+                phi_fp_2 = phi_fp;
+            }
+        }
+        else
+        {
+            if ((u32) (osGetCount() - copy_of_osgetcount_value_1) < 0x5eb61U)
+            {
+                phi_v0_3 = loadedstage;
+                phi_fp_2 = phi_fp;
+            }
+            else
+            {
+                phi_v0_3 = (void *)0x80020000->unk42FC;
+                phi_fp_2 = phi_fp;
+                if ((void *)0x80020000->unk42FC < 0)
+                {
+                    phi_v0_3 = (void *)0x80020000->unk42FC;
+                    phi_fp_2 = phi_fp;
+                    if ((u32) phi_fp < 2U)
+                    {
+                        sp48 = &sp1B4;
+                        if (get_is_ramrom_flag() != 0)
+                        {
+                            iterate_ramrom_entries_handle_camera_out();
+                        }
+                        else
+                        {
+                            sub_GAME_7F0C0B4C();
+                        }
+                        video_DL_related_4();
+                        video_related_2();
+                        video_related_3(0x20000);
+                        redirect_to_ramrom_replay_and_record_handlers_if_set();
+                        permit_stderr(0);
+                        temp_ret_2 = get_ptr_displaylist();
+                        sp1A4 = temp_ret_2;
+                        if (debug_feature_flag != 0)
+                        {
+                            debug_feature_flag = debug_menu_processor((s32) (((s32) (get_cur_controller_horz_stick_pos(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (s32) (((s32) (get_cur_controller_vert_stick_pos(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (get_controller_buttons_held(0, 0xffff) & 0xffff) & 0xffff, get_controller_buttons_pressed(0, 0xffff) & 0xffff);
+                        }
+                        manage_mp_game();
+                        sub_GAME_7F09B41C();
+                        if (current_stage_num != 0x5a)
+                        {
+                            phi_s1_2 = 0;
+                            if (get_num_players() > 0)
+                            {
+loop_44:
+                                set_cur_player(sub_GAME_7F09B528(phi_s1_2));
+                                set_video2_width_height(ptr_BONDdata->unk7F0, ptr_BONDdata->unk7F2);
+                                set_video2_ulx_uly(ptr_BONDdata->unk7F4, ptr_BONDdata->unk7F6);
+                                sub_GAME_7F0BF800();
+                                temp_s1 = phi_s1_2 + 1;
+                                phi_s1_2 = temp_s1;
+                                if (temp_s1 < get_num_players())
+                                {
+                                    goto loop_44;
+                                }
+                            }
+                        }
+                        temp_s3 = sub_GAME_7F0BE30C(temp_ret_2);
+                        phi_s3 = temp_s3;
+                        if (get_linemode_flag() != 0)
+                        {
+                            temp_v0_3 = temp_s3;
+                            temp_s3 = temp_s3 + 8;
+                            temp_v1_3 = temp_s3;
+                            temp_v0_3->unk0 = 0xe7000000;
+                            temp_v0_3->unk4 = 0;
+                            temp_s3 = temp_s3 + 8;
+                            temp_a0 = temp_s3;
+                            temp_s3 = temp_s3 + 8;
+                            temp_v1_3->unk0 = 0xba001402;
+                            temp_v1_3->unk4 = 0;
+                            temp_a1 = temp_s3;
+                            temp_s3 = temp_s3 + 8;
+                            temp_a0->unk0 = 0xf9000000;
+                            temp_a0->unk4 = -1;
+                            temp_a2 = temp_s3;
+                            temp_s3 = temp_s3 + 8;
+                            temp_a1->unk0 = 0xee000000;
+                            temp_a1->unk4 = -1;
+                            temp_v0_4 = temp_s3;
+                            temp_s3 = temp_s3 + 8;
+                            temp_a2->unk4 = 4;
+                            temp_a2->unk0 = 0xb9000201;
+                            temp_s0_3 = temp_s3;
+                            temp_v0_4->unk0 = 0xb900031d;
+                            temp_v0_4->unk4 = 0xfa54040;
+                            temp_s0_3->unk0 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW(temp_a0, temp_a1, temp_a2, -1) << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
+                            temp_s0_3->unk4 = 0;
+                            phi_s3 = temp_s3 + 8;
+                        }
+                        temp_s3_2 = read_screen_display_block_and_write_chars(phi_s3);
+                        phi_s3_2 = temp_s3_2;
+                        if (get_memusage_display_flag() != 0)
+                        {
+                            phi_s3_2 = display_speed_graph(temp_s3_2);
+                        }
+                        phi_s3_3 = (void *) phi_s3_2;
+                        if (debug_feature_flag != 0)
+                        {
+                            display_debug_menu_text_onscreen();
+                            phi_s3_3 = print_debug_mcm_to_stdout(phi_s3_2);
+                        }
+                        temp_v0_5 = phi_s3_3;
+                        temp_s3_3 = phi_s3_3 + 8;
+                        temp_v0_5->unk0 = 0xe9000000;
+                        temp_v0_5->unk4 = 0;
+                        temp_s3_3->unk0 = 0xb8000000;
+                        temp_s3_3->unk4 = 0;
+                        temp_s3_3 = temp_s3_3 + 8;
+                        if (show_mem_use_flag != 0)
+                        {
+                            nulled_list_all8_mem_alloc_banks_sizes();
+                            generate_lists_before_after_mem_merge();
+                            removed_debug_routine(temp_s3_3);
+                            nullsub_41(0);
+                            show_mem_use_flag = 0;
+                        }
+                        if (show_mem_bars_flag != 0)
+                        {
+                            draw_membars(temp_s3_3);
+                        }
+                        allocate_something_in_mgfx(temp_s3_3);
+                        allocate_something_in_mvtx();
+                        video_related_8();
+                        if (get_debug_taskgrab_val() != 0)
+                        {
+                            if (get_controller_buttons_pressed(0, 0xc000) != 0)
+                            {
+                                if (get_controller_buttons_held(0, 0xc000) == 0xc000)
+                                {
+loop_58:
+                                    sprintf(&sp5C, &aU64_taskgrab_D_core, taskgrab_ramdump_num);
+                                    if (check_file_found_on_indy(&sp5C, &sp58) != 0)
+                                    {
+                                        taskgrab_ramdump_num = (s32) (taskgrab_ramdump_num + 1);
+                                        goto loop_58;
+                                    }
+                                    indy_send_capture_data(&sp5C, 0x80000000, 0x400000);
+                                }
+                            }
+                        }
+                        load_rsp_microcode(sp1A4, temp_s3_3, 0, sp48);
+                        mem_related_calls_sort_merge_entries();
+                        sp1AC = (s32) (sp1AC ^ 1);
+                        video_related_3(0x10000);
+                        phi_v0_3 = loadedstage;
+                        phi_fp_2 = phi_fp;
+                    }
+                }
+            }
+        }
+        phi_fp = phi_fp_2;
+        if (phi_v0_3 < 0)
+        {
+            goto loop_29;
+        }
+        phi_fp = phi_fp_2;
+        if (phi_fp_2 != 0)
+        {
+            goto loop_29;
+        }
+    }
+    unload_stage_text_data();
+    stop_demo_playback();
+    memp_related_6(4);
+    something_mem_bank_a0(4);
+    current_stage_num = (?32) loadedstage;
+    loadedstage = -1;
+    if (sp1DC == 0)
+    {
+        goto loop_6;
+    }
+    sub_GAME_7F0D1A7C();
 }
 #else
 GLOBAL_ASM(

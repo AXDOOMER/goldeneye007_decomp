@@ -129,11 +129,9 @@ glabel null_init_main_0
 
 
 #ifdef NONMATCHING
-void debug_text_related_2(void) {
-    // Node 0
+void debug_text_related_2(void)
+{
     debug_text_related_1();
-    return;
-    // (possible return value: debug_text_related_1())
 }
 #else
 GLOBAL_ASM(
@@ -742,8 +740,26 @@ glabel debug_text_related_0
 
 
 #ifdef NONMATCHING
-void write_string_stdout(void) {
+void write_string_stdout(void *arg0)
+{
+    void *temp_s1;
+    s32 phi_s0;
+    void *phi_s1;
 
+    phi_s0 = *arg0;
+    phi_s1 = arg0;
+    if (*arg0 != 0)
+    {
+loop_1:
+        temp_s1 = phi_s1 + 1;
+        write_char_to_screen(phi_s0 & 0xff);
+        phi_s0 = *temp_s1;
+        phi_s1 = temp_s1;
+        if (*temp_s1 != 0)
+        {
+            goto loop_1;
+        }
+    }
 }
 #else
 GLOBAL_ASM(
@@ -775,8 +791,27 @@ glabel write_string_stdout
 
 
 #ifdef NONMATCHING
-void debug_text_related(void) {
+void debug_text_related(void *arg2)
+{
+    void *temp_s1;
+    s32 phi_s0;
+    void *phi_s1;
 
+    set_final_debug_text_positions();
+    phi_s0 = *arg2;
+    phi_s1 = arg2;
+    if (*arg2 != 0)
+    {
+loop_1:
+        temp_s1 = phi_s1 + 1;
+        write_char_to_screen(phi_s0 & 0xff);
+        phi_s0 = *temp_s1;
+        phi_s1 = temp_s1;
+        if (*temp_s1 != 0)
+        {
+            goto loop_1;
+        }
+    }
 }
 #else
 GLOBAL_ASM(
@@ -809,8 +844,185 @@ glabel debug_text_related
 
 
 #ifdef NONMATCHING
-void read_screen_display_block_and_write_chars(void) {
+void *read_screen_display_block_and_write_chars(void *arg0)
+{
+    s32 sp40;
+    s32 temp_a0;
+    s32 temp_a0_2;
+    s32 temp_a1;
+    s32 temp_a1_2;
+    s32 temp_a2;
+    s32 temp_s1;
+    s32 temp_s3;
+    s32 temp_s5;
+    s32 temp_t0;
+    s32 temp_v0;
+    s32 temp_v1;
+    s32 temp_v1_2;
+    s32 temp_v1_3;
+    s32 temp_v1_4;
+    void *temp_a1_3;
+    void *temp_s0;
+    void *temp_s0_2;
+    void *temp_t5;
+    void *temp_t8;
+    void *temp_v0_2;
+    void *phi_a0;
+    s32 phi_a2;
+    s32 phi_a1;
+    s32 phi_t0;
+    s32 phi_a2_2;
+    void *phi_s1;
+    void *phi_s2;
+    s32 phi_s4;
+    void *phi_s0;
+    void *phi_s0_2;
+    s32 phi_s1_2;
+    s32 phi_s5;
+    void *phi_s0_3;
+    void *phi_s1_3;
+    void *phi_s1_4;
+    s32 phi_s4_2;
+    s32 phi_s4_3;
 
+    phi_t0 = 0;
+    phi_a2 = -1;
+    phi_s1_4 = arg0;
+loop_1:
+    temp_a1 = 0x80020000 + 0x5030;
+    phi_a0 = phi_t0 + temp_a1;
+    phi_a1 = temp_a1;
+loop_2:
+    temp_a1_2 = phi_a1 + 0x46;
+    temp_v1 = phi_a0->unk1;
+    phi_a2_2 = phi_a2;
+    phi_s1 = phi_s1_4;
+    if (phi_a0->unk0 != 0)
+    {
+        phi_a2_2 = phi_a2;
+        phi_s1_3 = phi_s1_4;
+        if (temp_v1 != phi_a2)
+        {
+            phi_a2_2 = temp_v1;
+            phi_s1_3 = phi_s1_4 + 0x10;
+        }
+        phi_s1 = phi_s1_3 + 0x18;
+    }
+    phi_a0 = phi_a0 + 0x46;
+    phi_a2 = phi_a2_2;
+    phi_a1 = temp_a1_2;
+    phi_s1_4 = phi_s1;
+    if (temp_a1_2 != &stdout_primary_color_table)
+    {
+        goto loop_2;
+    }
+    temp_t0 = phi_t0 + 2;
+    phi_t0 = temp_t0;
+    phi_a2 = phi_a2_2;
+    phi_s1_4 = phi_s1;
+    if (temp_t0 < 0x46)
+    {
+        goto loop_1;
+    }
+    temp_a0 = phi_s1 - arg0;
+    temp_v1_2 = num_microcode_cmds_that_fit(arg0, temp_a1_2, phi_a2_2, &stdout_primary_color_table) + -0x800;
+    if (temp_a0 <= 0)
+    {
+        return arg0;
+    }
+    if (temp_v1_2 <= 0)
+    {
+        D_800268B8 = 0;
+block_15:
+    }
+    else
+    {
+        if (temp_v1_2 < temp_a0)
+        {
+            D_800268B8 = (s32) ((s32) (temp_v1_2 * 0xff) / temp_a0);
+        }
+        else
+        {
+            D_800268B8 = 0x100;
+            goto block_15;
+        }
+    }
+    arg0->unk0 = 0x6000000;
+    arg0->unk4 = &stdout_display_list;
+    sp40 = 0;
+    phi_s5 = 0;
+    phi_s4 = -1;
+    phi_s0 = arg0 + 8;
+loop_17:
+    phi_s2 = sp40 + &stdout_debug_menu_screen_buffer;
+    phi_s1_2 = 0;
+loop_18:
+    temp_s3 = phi_s2->unk0;
+    temp_v1_3 = phi_s2->unk1;
+    phi_s0_3 = phi_s0;
+    phi_s4_2 = phi_s4;
+    if (temp_s3 != 0)
+    {
+        temp_v0 = temp_v1_3 * 8;
+        phi_s0_2 = phi_s0;
+        phi_s4_3 = phi_s4;
+        if (temp_v1_3 != phi_s4)
+        {
+            temp_t5 = &stdout_primary_color_table + temp_v0;
+            temp_t8 = &stdout_environment_color_table + temp_v0;
+            temp_s0 = phi_s0 + 0x10;
+            temp_s0->unk-10 = (?32) temp_t5->unk0;
+            temp_s0->unk-C = (?32) temp_t5->unk4;
+            temp_s0->unk-8 = (?32) temp_t8->unk0;
+            temp_s0->unk-4 = (?32) temp_t8->unk4;
+            phi_s0_2 = temp_s0;
+            phi_s4_3 = temp_v1_3;
+        }
+        phi_s0_3 = phi_s0_2;
+        phi_s4_2 = phi_s4_3;
+        if ((u32) (random_related() & 0xff) < (u32) D_800268B8)
+        {
+            temp_v0_2 = phi_s0_2;
+            phi_s0_3 = phi_s0_2;
+            phi_s4_2 = phi_s4_3;
+            if (num_microcode_cmds_that_fit(phi_s0_2) >= 0x400)
+            {
+                temp_v1_4 = phi_s1_2 * 0x10;
+                temp_a0_2 = ((phi_s5 * 8) - phi_s5) * 4;
+                temp_a2 = temp_s3 + -0x20;
+                temp_s0_2 = phi_s0_2 + 8;
+                temp_a1_3 = temp_s0_2;
+                temp_v0_2->unk0 = (s32) (((((temp_v1_4 + 0x10) & 0xfff) << 0xc) | 0xe4000000) | ((temp_a0_2 + 0x1c) & 0xfff));
+                temp_v0_2->unk4 = (s32) (((temp_v1_4 & 0xfff) << 0xc) | (temp_a0_2 & 0xfff));
+                temp_s0_2 = temp_s0_2 + 8;
+                temp_a1_3->unk0 = 0xb4000000;
+                temp_a1_3->unk4 = (s32) (((temp_a2 & 0x1f) << 0x17) | (((temp_a2 >> 5) * 0xe0) & 0xffff));
+                temp_s0_2->unk0 = 0xb3000000;
+                temp_s0_2->unk4 = 0x4000400;
+                phi_s0_3 = temp_s0_2 + 8;
+                phi_s4_2 = phi_s4_3;
+            }
+        }
+    }
+    temp_s1 = phi_s1_2 + 1;
+    phi_s2 = phi_s2 + 0x46;
+    phi_s4 = phi_s4_2;
+    phi_s0 = phi_s0_3;
+    phi_s1_2 = temp_s1;
+    if (temp_s1 != 0x50)
+    {
+        goto loop_18;
+    }
+    temp_s5 = phi_s5 + 1;
+    sp40 = (s32) (sp40 + 2);
+    phi_s5 = temp_s5;
+    phi_s4 = phi_s4_2;
+    phi_s0 = phi_s0_3;
+    if (temp_s5 != 0x23)
+    {
+        goto loop_17;
+    }
+    return phi_s0_3;
 }
 #else
 GLOBAL_ASM(

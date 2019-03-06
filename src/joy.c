@@ -306,8 +306,47 @@ glabel osPfsChecker
 
 
 #ifdef NONMATCHING
-void controller_7000B734(void) {
+s32 controller_7000B734(s32 arg0)
+{
+    s32 temp_ret;
+    s32 temp_ret_2;
+    s32 temp_v0;
+    void *temp_a3;
+    void *temp_v1;
+    s32 phi_return;
 
+    temp_v0 = arg0 * 4;
+    temp_a3 = temp_v0 + &controller_1_rumble_inserted;
+    phi_return = temp_v0;
+    if (*temp_a3 >= 0)
+    {
+        temp_v1 = temp_v0 + &player1_controllerstatus;
+        phi_return = temp_v0;
+        if ((temp_v1->unk0 & 4) != 0)
+        {
+            phi_return = temp_v0;
+            if ((temp_v1->unk2 & 1) != 0)
+            {
+                temp_ret = osPfsInit(&contdemoMesgMQ, (arg0 * 0x68) + &player1_controller_packet, arg0, temp_a3);
+                if ((temp_ret == 0xa) || (temp_ret == 0xb))
+                {
+                    temp_ret_2 = controller_7000CD38(&contdemoMesgMQ, sp20, arg0, sp1C);
+                    if (temp_ret_2 == 0)
+                    {
+                        *sp1C = 1;
+                        return temp_ret_2;
+                    }
+                    *sp1C = -1;
+                    phi_return = temp_ret_2;
+                }
+                else
+                {
+
+                }
+            }
+        }
+    }
+    return phi_return;
 }
 #else
 GLOBAL_ASM(
@@ -378,8 +417,115 @@ glabel controller_7000B734
 
 
 #ifdef NONMATCHING
-void controller_check_for_rumble_maybe(void) {
+s32 controller_check_for_rumble_maybe(void)
+{
+    s32 temp_a0;
+    s32 temp_a1;
+    s32 temp_s0;
+    s32 temp_s0_2;
+    s32 temp_v0_2;
+    u32 temp_v1;
+    void *temp_v0;
+    s8 phi_s0;
+    s32 phi_s0_2;
+    s32 phi_s0_3;
+    void *phi_a3;
+    void *phi_a2;
+    u32 phi_v1;
+    s32 phi_a1;
+    void *phi_a3_2;
+    s32 phi_return;
+    s8 phi_s0_4;
+    s32 phi_return_2;
+    s8 phi_s0_5;
+    s8 phi_s0_6;
 
+    if (D_8002692C != 0)
+    {
+        D_8002692C = 0;
+        D_8002691C = 1;
+        phi_return_2 = osContInit(&contdemoMesgMQ, &num_controller_plugged_in_flags, &player1_controllerstatus);
+    }
+    else
+    {
+        osContStartQuery(&contdemoMesgMQ);
+        osRecvMesg(&contdemoMesgMQ, 0, 1);
+        phi_s0_6 = (u8)0xf;
+        if ((*(player1_controllerstatus + 3) & 8) != 0)
+        {
+            phi_s0_6 = (u8)0xe;
+        }
+        phi_s0_5 = phi_s0_6;
+        if ((*(player2_controllerstatus + 3) & 8) != 0)
+        {
+            phi_s0_5 = phi_s0_6 + -2;
+        }
+        phi_s0_4 = phi_s0_5;
+        if ((*(player3_controllerstatus + 3) & 8) != 0)
+        {
+            phi_s0_4 = phi_s0_5 + -4;
+        }
+        phi_s0 = phi_s0_4;
+        if ((*(player4_controllerstatus + 3) & 8) != 0)
+        {
+            phi_s0 = phi_s0_4 + -8;
+        }
+        num_controller_plugged_in_flags = (s8) phi_s0;
+        phi_return_2 = osContGetQuery(&player1_controllerstatus);
+    }
+    phi_s0_2 = 0;
+loop_12:
+    temp_s0 = (s32) ((phi_s0_2 + 1) << 0x18) >> 0x18;
+    phi_s0_2 = temp_s0;
+    if (temp_s0 < 4)
+    {
+        goto loop_12;
+    }
+    phi_s0_3 = 0;
+    phi_a3 = &num_controller_plugged_in_flags_0;
+    phi_a2 = &controller_1_rumble_inserted;
+loop_14:
+    temp_a1 = 1 << phi_s0_3;
+    temp_v1 = *phi_a3;
+    if ((((num_controller_plugged_in_flags & temp_a1) != 0) && ((temp_v0->unk0 & 3) != 0)) && (temp_v0->unk3 == 0))
+    {
+        if (((temp_v0_2 & temp_a1) != 0) || (*(phi_a2 + temp_a0) <= 0))
+        {
+            phi_v1 = num_controller_plugged_in_flags_0;
+            phi_a1 = sp24;
+            phi_a3_2 = &num_controller_plugged_in_flags_0;
+            phi_return = controller_7000B734(phi_s0_3, temp_a1, phi_a2, phi_a3);
+            phi_a2 = &controller_1_rumble_inserted;
+        }
+        else
+        {
+
+        }
+        *phi_a3_2 = (s8) (phi_v1 | phi_a1);
+        phi_a3 = phi_a3_2;
+    }
+    else
+    {
+        phi_return = phi_return_2;
+        phi_a3 = phi_a3;
+        phi_a2 = phi_a2;
+        if ((temp_v1 & temp_a1) != 0)
+        {
+            *phi_a3 = (s8) (temp_v1 ^ temp_a1);
+            *(phi_a2 + (phi_s0_3 * 4)) = 0;
+            phi_return = phi_return_2;
+            phi_a3 = phi_a3;
+            phi_a2 = phi_a2;
+        }
+    }
+    temp_s0_2 = (s32) ((phi_s0_3 + 1) << 0x18) >> 0x18;
+    phi_s0_3 = temp_s0_2;
+    phi_return_2 = phi_return;
+    if (temp_s0_2 < 4)
+    {
+        goto loop_14;
+    }
+    return phi_return;
 }
 #else
 GLOBAL_ASM(
@@ -526,35 +672,29 @@ glabel controller_check_for_rumble_maybe
 
 
 #ifdef NONMATCHING
-void controller_finding_controller_maybe(void) {
-    // Node 0
+s32 controller_finding_controller_maybe(void)
+{
     if (ptr_current_point_in_controller_input_index->unk1F8 >= 0)
     {
-        // Node 1
+        return (s32) (ptr_current_point_in_controller_input_index->unk1F8 << 0x18) >> 0x18;
     }
-    // Node 2
     if (((void *)0x80020000->unk68D0 & 1) == 0)
     {
-        // Node 3
+        return 0;
     }
-    // Node 4
     if (((void *)0x80020000->unk68D0 & 2) == 0)
     {
-        // Node 5
+        return 1;
     }
-    // Node 6
     if (((void *)0x80020000->unk68D0 & 4) == 0)
     {
-        // Node 7
+        return 2;
     }
-    // Node 8
     if (((void *)0x80020000->unk68D0 & 8) == 0)
     {
-        // Node 9
-        return;
-        // (possible return value: 3)
+        return 3;
     }
-    // (possible return value: 4)
+    return 4;
 }
 #else
 GLOBAL_ASM(
@@ -609,16 +749,18 @@ glabel controller_finding_controller_maybe
 
 
 #ifdef NONMATCHING
-void get_num_controllers_plugged_in(void) {
-    // (possible return value: (void *)0x80020000->unk68D0)
+u32 get_num_controllers_plugged_in(void)
+{
+    return num_controller_plugged_in_flags;
 }
+
 #else
 GLOBAL_ASM(
 .text
 glabel get_num_controllers_plugged_in
-/* 00C670 7000BA70 3C028002 */  lui   $v0, 0x8002
+/* 00C670 7000BA70 3C028002 */  lui   $v0, %hi(num_controller_plugged_in_flags)
 /* 00C674 7000BA74 03E00008 */  jr    $ra
-/* 00C678 7000BA78 904268D0 */   lbu   $v0, 0x68d0($v0)
+/* 00C678 7000BA78 904268D0 */   lbu   $v0, %lo(num_controller_plugged_in_flags)($v0)
 )
 #endif
 
@@ -809,19 +951,17 @@ glabel set_disable_all_rumble_and_something
 
 
 #ifdef NONMATCHING
-void set_ptr_tlb_ramrom_record(s32 arg0) {
-    // Node 0
-    (void *)0x80020000->unk6928 = arg0;
-    return;
-    // (function likely void)
+void set_ptr_tlb_ramrom_record(s32 arg0)
+{
+    ptr_to_tlb_ramrom_record = arg0;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel set_ptr_tlb_ramrom_record
-/* 00C7BC 7000BBBC 3C018002 */  lui   $at, 0x8002
+/* 00C7BC 7000BBBC 3C018002 */  lui   $at, %hi(ptr_to_tlb_ramrom_record)
 /* 00C7C0 7000BBC0 03E00008 */  jr    $ra
-/* 00C7C4 7000BBC4 AC246928 */   sw    $a0, 0x6928($at)
+/* 00C7C4 7000BBC4 AC246928 */   sw    $a0, %lo(ptr_to_tlb_ramrom_record)($at)
 )
 #endif
 
@@ -997,8 +1137,149 @@ glabel redirect_to_ramrom_replay_and_record_handlers_if_set
 
 
 #ifdef NONMATCHING
-void controller_7000BD88(void) {
+void controller_7000BD88(void)
+{
+    ? sp4C;
+    s32 sp40;
+    s32 temp_a0;
+    s32 temp_a0_2;
+    s32 temp_a2;
+    s32 temp_hi;
+    s32 temp_lo;
+    s32 temp_t6;
+    s32 temp_t8;
+    s32 temp_v1;
+    void *temp_t3;
+    void *temp_v1_2;
+    s32 phi_v1;
+    s32 phi_v0;
+    s32 phi_a0;
+    s32 phi_a0_2;
+    void *phi_t1;
+    void *phi_a0_3;
+    void *phi_a1;
+    void *phi_v1_2;
 
+    if (osRecvMesg(&cont1MesgMQ, &sp4C, 0) == 0)
+    {
+        if (D_800268C8 != 0)
+        {
+            osRecvMesg(&contdemoMesgMQ, &sp4C, 1);
+            D_800268C8 = 0;
+        }
+        osSendMesg(&cont2MesgMQ, &sp4C, 0);
+        D_800268CC = (s32) (D_800268CC + 1);
+        return;
+    }
+    if (osRecvMesg(&cont3MesgMQ, &sp4C, 0) == 0)
+    {
+        osContStartReadData(&contdemoMesgMQ);
+        D_800268C8 = 1;
+        osSendMesg(&cont4MesgMQ, &sp4C, 0);
+        D_800268CC = (s32) (D_800268CC + -1);
+        return;
+    }
+    if (D_800268CC == 0)
+    {
+        if (D_8002691C != 0)
+        {
+            if (osRecvMesg(&contdemoMesgMQ, &sp4C, 0) == 0)
+            {
+                D_800268C8 = 0;
+                temp_hi = (s32) (controller_input_index.unk1E8 + 1) % 0x14;
+                phi_v1 = temp_hi;
+                if (temp_hi == controller_input_index.unk1E4)
+                {
+                    phi_v1 = controller_input_index.unk1E8;
+                }
+                sp40 = (s32) phi_v1;
+                osContGetReadData(&controller_input_index + (((phi_v1 * 4) - phi_v1) * 8), &controller_input_index);
+                temp_t6 = D_80026920 + 1;
+                temp_t8 = temp_t6 % 0x78;
+                controller_input_index.unk1EC = (s32) ((s32) (sp40 + 0x13) % 0x14);
+                D_80026920 = temp_t6;
+                controller_input_index.unk1E8 = sp40;
+                phi_v0 = sp40;
+                if (temp_t8 == 0)
+                {
+                    controller_check_for_rumble_maybe(&D_80026920, &controller_input_index);
+                    phi_v0 = controller_input_index.unk1E8;
+                }
+                temp_a2 = &controller_input_index + (((phi_v0 * 4) - phi_v0) * 8);
+                phi_a0 = 0;
+loop_14:
+                temp_lo = phi_a0 * 6;
+                temp_t3 = temp_a2 + temp_lo;
+                if ((temp_t3->unk4 != 0) || (((&controller_input_index + (&controller_input_index->unk1EC * 0x18)) + temp_lo)->unk4 == 0))
+                {
+                    temp_a0 = phi_a0 + 1;
+                    if ((temp_t3->unk4 != 0) && (((&controller_input_index + (&controller_input_index->unk1EC * 0x18)) + temp_lo)->unk4 == 0))
+                    {
+block_18:
+                        controller_check_for_rumble_maybe(phi_a0_2, &controller_input_index, temp_a2, 6);
+                    }
+                    else
+                    {
+                        temp_a0_2 = (s32) (temp_a0 << 0x18) >> 0x18;
+                        phi_a0 = temp_a0_2;
+                        if (temp_a0_2 < 4)
+                        {
+                            goto loop_14;
+                        }
+                    }
+                }
+                else
+                {
+                    goto block_18;
+                }
+                controller_rumble_related();
+                osContStartReadData(&contdemoMesgMQ);
+                D_800268C8 = 1;
+                temp_v1 = D_80026970 + 1;
+                D_80026970 = temp_v1;
+                if (temp_v1 >= 0x3c)
+                {
+                    phi_t1 = &pl1_controller_failure_lr;
+                    phi_a0_3 = &pl1_controller_failure_ud;
+                    phi_a1 = &pl1_controller_failure_held;
+                    phi_v1_2 = &pl1_controller_failure_pressed;
+loop_22:
+                    if ((((phi_t1->unk0 != 0) || (phi_a0_3->unk0 != 0)) || (phi_a1->unk0 != 0)) || (phi_v1_2->unk0 != 0))
+                    {
+                        phi_t1->unk0 = 0;
+                        phi_a0_3->unk0 = 0;
+                        phi_a1->unk0 = 0;
+                        phi_v1_2->unk0 = 0;
+                    }
+                    else
+                    {
+
+                    }
+                    if ((((phi_t1->unk4 != 0) || (phi_a0_3->unk4 != 0)) || (phi_a1->unk4 != 0)) || (phi_v1_2->unk4 != 0))
+                    {
+                        phi_t1->unk4 = 0;
+                        phi_a0_3->unk4 = 0;
+                        phi_a1->unk4 = 0;
+                        phi_v1_2->unk4 = 0;
+                    }
+                    else
+                    {
+
+                    }
+                    temp_v1_2 = phi_v1_2 + 8;
+                    phi_t1 = phi_t1 + 8;
+                    phi_a0_3 = phi_a0_3 + 8;
+                    phi_a1 = phi_a1 + 8;
+                    phi_v1_2 = temp_v1_2;
+                    if (temp_v1_2 != &D_80026970)
+                    {
+                        goto loop_22;
+                    }
+                    D_80026970 = 0;
+                }
+            }
+        }
+    }
 }
 #else
 GLOBAL_ASM(
@@ -1245,25 +1526,22 @@ glabel controller_7000BD88
 
 
 #ifdef NONMATCHING
-void get_cur_controller_horz_stick_pos(s32 arg0) {
+? get_cur_controller_horz_stick_pos(s32 arg0)
+{
     s32 temp_t7;
     void *temp_v1;
 
-    // Node 0
-    temp_t7 = ((s32) (arg0 << 0x18) >> 0x18);
+    temp_t7 = (s32) (arg0 << 0x18) >> 0x18;
     if (ptr_current_point_in_controller_input_index->unk1F8 < 0)
     {
-        // Node 1
         if ((((s32) num_controller_plugged_in_flags >> temp_t7) & 1) == 0)
         {
-            // Node 2
-            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_lr);
+            temp_v1 = (temp_t7 * 4) + &pl1_controller_failure_lr;
             *temp_v1 = (s32) (*temp_v1 + 1);
-            return;
-            // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6))->unk2)
+            return 0;
         }
     }
-    // (possible return value: ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6))->unk2)
+    return ((ptr_current_point_in_controller_input_index + (ptr_current_point_in_controller_input_index->unk1E0 * 0x18)) + (temp_t7 * 6))->unk2;
 }
 #else
 GLOBAL_ASM(

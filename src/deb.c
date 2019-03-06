@@ -147,27 +147,27 @@ void *ptr_videobuffer2 = 0;
 
 
 #ifdef NONMATCHING
-void *return_match_in_debug_notice_list(s32 arg0) {
-    // Node 0
+void *return_match_in_debug_notice_list(s32 arg0)
+{
+    void *temp_s0;
+    void *phi_s0;
+
+    phi_s0 = debug_notice_list;
     if (debug_notice_list != 0)
     {
-        loop_1:
-        // Node 1
-        if (something_with_strings_0(debug_notice_list->unk8, arg0) == 0)
+loop_1:
+        if (something_with_strings_0(phi_s0->unk8, arg0) == 0)
         {
-            // Node 2
-            return;
-            // (possible return value: debug_notice_list)
+            return phi_s0;
         }
-        // Node 3
-        if (*debug_notice_list != 0)
+        temp_s0 = phi_s0->unk0;
+        phi_s0 = temp_s0;
+        if (temp_s0 != 0)
         {
             goto loop_1;
         }
     }
-    // Node 4
-    return;
-    // (possible return value: NULL)
+    return NULL;
 }
 #else
 GLOBAL_ASM(

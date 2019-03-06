@@ -78,8 +78,118 @@ char audDMAMessageBuf[0x108];
 
 
 #ifdef NONMATCHING
-void amCreateAudioMgr(void) {
+void amCreateAudioMgr(void *arg0)
+{
+    ? sp48;
+    f32 temp_f0;
+    s32 temp_ret;
+    s32 temp_s2;
+    u32 temp_s0;
+    u32 temp_t0;
+    u32 temp_t9;
+    u32 temp_v1;
+    void *temp_s0_2;
+    void *temp_s1;
+    void *temp_t0_2;
+    void *temp_t7;
+    u32 phi_v1;
+    u32 phi_v1_2;
+    void *phi_t7;
+    void *phi_t0;
+    void *phi_s0;
+    s32 phi_s0_2;
+    void *phi_s1;
+    s32 phi_s2;
+    void *phi_s0_3;
 
+    arg0->unk10 = &__amDmaNew;
+    temp_ret = osAiSetFrequency(0x5622);
+    arg0->unk18 = temp_ret;
+    temp_f0 = (f32) (temp_ret * 2) / 60.0f;
+    temp_t9 = (u32) temp_f0;
+    frameSize = temp_t9;
+    temp_t0 = temp_t9 + 1;
+    phi_v1 = temp_t9;
+    if ((f32) temp_t9 < temp_f0)
+    {
+        frameSize = temp_t0;
+        phi_v1 = temp_t0;
+    }
+    phi_v1_2 = phi_v1;
+    if ((phi_v1 & 0xf) != 0)
+    {
+        temp_v1 = (phi_v1 & -0x10) + 0x10;
+        frameSize = temp_v1;
+        phi_v1_2 = temp_v1;
+    }
+    minFrameSize = (s32) (phi_v1_2 + -0x10);
+    maxFrameSize = (s32) (phi_v1_2 + 0x35);
+    if (arg0->unk1C == 6)
+    {
+        phi_t7 = &D_80023100;
+        phi_t0 = &sp48;
+loop_6:
+        temp_t7 = phi_t7 + 0xc;
+        temp_t0_2 = phi_t0 + 0xc;
+        temp_t0_2->unk-C = (?32) *phi_t7;
+        temp_t0_2->unk-8 = (?32) temp_t7->unk-8;
+        temp_t0_2->unk-4 = (?32) temp_t7->unk-4;
+        phi_t7 = temp_t7;
+        phi_t0 = temp_t0_2;
+        if (temp_t7 != (&D_80023100 + 0xc0))
+        {
+            goto loop_6;
+        }
+        temp_t0_2->unk0 = (?32) temp_t7->unk0;
+        temp_t0_2->unk4 = (?32) temp_t7->unk4;
+        arg0->unk20 = &sp48;
+        alInit(&dword_CODE_bss_8005E750, arg0);
+    }
+    else
+    {
+        alInit(&dword_CODE_bss_8005E750, arg0);
+    }
+    phi_s0 = &dword_CODE_bss_8005E518;
+loop_10:
+    phi_s0->unk8 = alHeapDBAlloc(0, 0, arg0->unk14, 1, 0x60);
+    temp_s0 = phi_s0 + 4;
+    *phi_s0->unk8 = alHeapDBAlloc(0, 0, arg0->unk14, 1, (s32) (maxFrameSize * 4));
+    phi_s0 = temp_s0;
+    if (temp_s0 < &dword_CODE_bss_8005E524)
+    {
+        goto loop_10;
+    }
+    osCreateMesgQueue(&msgQ_Q_8005E718, &msgQ_buf_8005E730, 8);
+    osCreateMesgQueue(&audioFrameMsgQ, &audioFrameMsgBuf, 8);
+    osCreateMesgQueue(&audDMAMessageQ, &audDMAMessageBuf, 0x40);
+    dmaBuffs.unk4 = 0;
+    dmaBuffs.unk0 = 0;
+    phi_s0_2 = dmaBuffs + 0xe;
+    phi_s1 = &dmaBuffs;
+    phi_s2 = 0;
+loop_12:
+    alLink(phi_s0_2, phi_s1);
+    temp_s2 = phi_s2 + 1;
+    temp_s1 = phi_s1 + 0x14;
+    temp_s1->unk-4 = alHeapDBAlloc(0, 0, arg0->unk14, 1, 0x200);
+    phi_s0_2 = phi_s0_2 + 0x14;
+    phi_s1 = temp_s1;
+    phi_s2 = temp_s2;
+    if (temp_s2 < 0x3f)
+    {
+        goto loop_12;
+    }
+    temp_s1->unk10 = alHeapDBAlloc(0, 0, arg0->unk14, 1, 0x200);
+    phi_s0_3 = &dword_CODE_bss_8005E518;
+loop_14:
+    temp_s0_2 = phi_s0_3 + 4;
+    temp_s0_2->unk-4 = alHeapDBAlloc(0, 0, arg0->unk14, 1, 0x5dc0);
+    phi_s0_3 = temp_s0_2;
+    if (temp_s0_2 != &dword_CODE_bss_8005E520)
+    {
+        goto loop_14;
+    }
+    osCreateThread(&audiThread, 4, &_amMain, 0, set_stack_entry(&sp_audi, 0x1000), 0x14);
 }
 #else
 GLOBAL_ASM(

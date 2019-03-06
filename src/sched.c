@@ -355,8 +355,91 @@ glabel osScGetCmdQ
 
 
 #ifdef NONMATCHING
-void __scMain(void) {
-    
+void __scMain(void *arg0)
+{
+    s32 sp4C;
+    s32 temp_s3;
+    void *temp_s0;
+    void *phi_s0;
+    s32 phi_s0_2;
+    s32 phi_s0_3;
+
+    sp4C = 0;
+    temp_s3 = arg0 + 0x40;
+    phi_s0_3 = 0;
+loop_1:
+    osRecvMesg(temp_s3, &sp4C, 1);
+    if (sp4C != 0x29a)
+    {
+        if (sp4C != 0x29b)
+        {
+            if (sp4C != 0x29c)
+            {
+                if (sp4C != 0x29d)
+                {
+                    phi_s0_2 = phi_s0_3;
+                }
+                else
+                {
+                    reset_cont_rumble_detect();
+                    phi_s0 = arg0->unkB4;
+                    if (arg0->unkB4 != 0)
+                    {
+loop_10:
+                        osSendMesg(phi_s0->unk4, arg0 + 0x20, 0);
+                        temp_s0 = phi_s0->unk0;
+                        phi_s0 = temp_s0;
+                        if (temp_s0 != 0)
+                        {
+                            goto loop_10;
+                        }
+                    }
+                    phi_s0_2 = 1;
+                }
+            }
+            else
+            {
+                __scHandleRDP(arg0);
+                phi_s0_2 = phi_s0_3;
+            }
+        }
+        else
+        {
+            __scHandleRSP(arg0);
+            phi_s0_2 = phi_s0_3;
+        }
+    }
+    else
+    {
+        __scHandleRetrace(arg0);
+        phi_s0_2 = phi_s0_3;
+    }
+    phi_s0_3 = phi_s0_2;
+    if (phi_s0_2 == 0)
+    {
+        goto loop_1;
+    }
+    if (osTvType == 2)
+    {
+        osViSetMode(&osViModeTable_osViModeMpalLan1);
+    }
+    else
+    {
+        osViSetMode(0x80020000 + 0x6a60);
+    }
+    osViSetXScale(0x3f800000);
+    osViSetYScale(0x3f800000);
+    osViRepeatLine(0);
+    osViBlack(1);
+loop_17:
+loop_18:
+    osRecvMesg(temp_s3, &sp4C, 1);
+    if (sp4C != 0x29a)
+    {
+        goto loop_17;
+    }
+    controller_7000BD88();
+    goto loop_18;
 }
 #else
 GLOBAL_ASM(

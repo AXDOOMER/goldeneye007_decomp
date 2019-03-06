@@ -42,21 +42,28 @@ void rmon_debug_stub_4(void) {
 
 
 #ifdef NONMATCHING
-void proutSyncPrintf(s32 arg0, void *arg1, s32 arg2) {
-    // Node 0
+? proutSyncPrintf(s32 arg0, void *arg1, s32 arg2)
+{
+    s32 temp_s0;
+    void *phi_s1;
+    s32 phi_s0;
+
     if (arg2 != 0)
     {
-        // Node 1
-        // Node 2
-        __osRdbSend(*arg1);
-        if ((0 + 1) != arg2)
+        phi_s1 = arg1;
+        phi_s0 = 0;
+loop_2:
+        temp_s0 = phi_s0 + 1;
+        __osRdbSend(*phi_s1);
+        phi_s1 = phi_s1 + 1;
+        phi_s0 = temp_s0;
+        if (temp_s0 != arg2)
         {
             goto loop_2;
         }
     }
-    // (possible return value: 1)
+    return 1;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -92,11 +99,9 @@ glabel proutSyncPrintf
 
 
 #ifdef NONMATCHING
-void osSyncPrintf(s32 arg0, s32 arg1, ? arg2, ? arg3, ? arg8, ? arg9) {
-    // Node 0
-    _Printf(&proutSyncPrintf, 0, arg8, &arg9);
-    return;
-    // (possible return value: _Printf(&proutSyncPrintf, 0, arg8, &arg9))
+void osSyncPrintf(s32 arg0, s32 arg1, ? arg2, ? arg3)
+{
+    _Printf(&proutSyncPrintf, 0, arg0, &arg1);
 }
 #else
 GLOBAL_ASM(

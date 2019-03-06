@@ -142,23 +142,24 @@ glabel mp_tlb_related
 
 
 #ifdef NONMATCHING
-s32 return_TLB_index_for_entry(s32 arg0) {
-    // Node 0
-    // Node 1
-    if (__osGetTLBHi(0) == arg0)
+s32 return_TLB_index_for_entry(s32 arg0)
+{
+    s32 temp_s0;
+    s32 phi_s0;
+
+    phi_s0 = 0;
+loop_1:
+    if (__osGetTLBHi(phi_s0) == arg0)
     {
-        // Node 2
-        return;
-        // (possible return value: 0)
+        return phi_s0;
     }
-    // Node 3
-    if ((0 + 1) != 0x20)
+    temp_s0 = phi_s0 + 1;
+    phi_s0 = temp_s0;
+    if (temp_s0 != 0x20)
     {
         goto loop_1;
     }
-    // Node 4
-    return;
-    // (possible return value: 0x80000000)
+    return 0x80000000;
 }
 #else
 GLOBAL_ASM(
@@ -386,8 +387,9 @@ glabel translate_load_rom_from_TLBaddress
 
 
 #ifdef NONMATCHING
-void return_ptr_TLBmemory(void) {
-    // (possible return value: ptr_TLBallocatedblock)
+? return_ptr_TLBmemory(void)
+{
+    return ptr_TLBallocatedblock;
 }
 #else
 GLOBAL_ASM(

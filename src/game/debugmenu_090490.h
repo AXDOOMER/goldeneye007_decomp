@@ -6,7 +6,7 @@ s32 get_debug_render_raster(void);
 s32 get_debug_freeze_processing(void);
 s32 get_debug_limit_controller_input(void);
 void set_debug_limit_controller_input(void);
-void get_memusage_display_flag(void);
+s32 get_memusage_display_flag(void);
 s32 get_debug_do_draw_bg(void);
 s32 get_debug_do_draw_obj(void);
 s32 get_debug_stanhit_flag(void);
