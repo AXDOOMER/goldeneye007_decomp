@@ -73,8 +73,8 @@ void init(void) {
 	}
 	//TO HERE
 
-    osWritebackDCacheAll(0x80000080);
-    osInvalICache(0x80000001, 0x4000);
+    osWritebackDCacheAll();
+    osInvalICache(0x80000000, 0x4000);
 
 	for (i=2; i<32; i++){
 		osUnmapTLB(i);

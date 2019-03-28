@@ -3,8 +3,13 @@
 u64 tlb_random_seed = 0xAB8D9F77081280783;
 
 #ifdef NONMATCHING
-void return_tlb_random_value(void) {
-
+u32 return_tlb_random_value(void)
+{
+  tlb_random_seed =
+       ((tlb_random_seed << 0x3f) >> 0x1f | (tlb_random_seed << 0x1f) >> 0x20) ^
+       (tlb_random_seed << 0x2c) >> 0x20;
+  tlb_random_seed = tlb_random_seed >> 0x14 & 0xfff ^ tlb_random_seed;
+  return (u32)tlb_random_seed;
 }
 #else
 GLOBAL_ASM(

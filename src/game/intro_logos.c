@@ -39,8 +39,9 @@ s32 virtualaddress;
 s32 dword_CODE_bss_80069594;
 
 
-/* data
-dword_D_8002A7D0:.word 0
+// data
+u32 D_8002A7D0 = 0;
+/*
 dword_D_8002A7D4:.word 0x3000000, 0, 0, 0, 0
 dword_D_8002A7E8:.word 0xFF, 0xFF, 0xFF, 0, 0, 0
 dword_D_8002A800:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

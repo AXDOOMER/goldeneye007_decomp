@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "mainmenu.h"
+#include "game/mainmenu.h"
 
 #ifdef NONMATCHING
 void initGameData(void) {
@@ -25,8 +25,8 @@ void initGameData(void) {
     do_not_play_intro_movie = 0;
     randomly_selected_intro_animation = 0;
     intro_animation_count = 0;
-    D_8002B5F4 = 0;
-    D_8002B5F8 = 0;
+    objinstance = 0;
+    ptrobjinstance = 0;
     full_actor_intro = 0;
 }
 #else
@@ -82,10 +82,10 @@ glabel initGameData
 /* 034BE8 7F0000B8 AC20B5EC */  sw    $zero, %lo(randomly_selected_intro_animation)($at)
 /* 034BEC 7F0000BC 3C018003 */  lui   $at, %hi(intro_animation_count) # $at, 0x8003
 /* 034BF0 7F0000C0 AC20B5F0 */  sw    $zero, %lo(intro_animation_count)($at)
-/* 034BF4 7F0000C4 3C018003 */  lui   $at, %hi(D_8002B5F4) # $at, 0x8003
-/* 034BF8 7F0000C8 AC20B5F4 */  sw    $zero, %lo(D_8002B5F4)($at)
-/* 034BFC 7F0000CC 3C018003 */  lui   $at, %hi(D_8002B5F8) # $at, 0x8003
-/* 034C00 7F0000D0 AC20B5F8 */  sw    $zero, %lo(D_8002B5F8)($at)
+/* 034BF4 7F0000C4 3C018003 */  lui   $at, %hi(objinstance) # $at, 0x8003
+/* 034BF8 7F0000C8 AC20B5F4 */  sw    $zero, %lo(objinstance)($at)
+/* 034BFC 7F0000CC 3C018003 */  lui   $at, %hi(ptrobjinstance) # $at, 0x8003
+/* 034C00 7F0000D0 AC20B5F8 */  sw    $zero, %lo(ptrobjinstance)($at)
 /* 034C04 7F0000D4 3C018003 */  lui   $at, %hi(full_actor_intro)
 /* 034C08 7F0000D8 03E00008 */  jr    $ra
 /* 034C0C 7F0000DC AC20B5FC */   sw    $zero, %lo(full_actor_intro)($at)

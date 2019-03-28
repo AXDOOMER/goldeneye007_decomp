@@ -1,5 +1,5 @@
 #include "ultra64.h"
-
+#include "game/cheat_buttons_objectrelated.h"
 // bss
 char off_CODE_bss_80079E30[0x4C];
 
@@ -104,1310 +104,1173 @@ D:800374E4                     .word aUsetupdishz,aUsetupcavez,aUsetupcatz,aUset
 D:800374E4                     .word aUsetupeldz,aUsetupimpz,aUsetupashz,aUsetupluez,aUsetupamez,aUsetupritz
 D:800374E4                     .word aUsetupoatz,aUsetupearz,aUsetupleez,aUsetuplipz,aUsetuplenz,aUsetupwaxz
 D:800374E4                     .word aUsetuppamz,0,0
-D:800375D0     Palarm1z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 304.6402, 2, 0, 0>
-D:800375D0                                              # DATA XREF: D:PitemZ_entrieso
-D:800375F0     Palarm2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 208.22205, 3, 0, 0>
-D:800375F0                                              # DATA XREF: D:8003A234o
-D:80037610     PexplosionbitZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 208.22205, 0, 0, 0>
-D:80037610                                              # DATA XREF: D:8003A240o
-D:80037630     Pammo_crate1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 691.83429, 3, 0, 0>
-D:80037630                                              # DATA XREF: D:8003A24Co
-D:80037650     Pammo_crate2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 691.83429, 4, 0, 0>
-D:80037650                                              # DATA XREF: D:8003A258o
-D:80037670     Pammo_crate3Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 691.83429, 4, 0, 0>
-D:80037670                                              # DATA XREF: D:8003A264o
-D:80037690     Pammo_crate4Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 691.83429, 5, 0, 0>
-D:80037690                                              # DATA XREF: D:8003A270o
-D:800376B0     Pammo_crate5Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 691.83429, 5, 0, 0>
-D:800376B0                                              # DATA XREF: D:8003A27Co
-D:800376D0     Pbin1Z_header:  PitemZ_header <0, model_object_standard_object, 0, 1, 3027.6262, 2, 0, 0>
-D:800376D0                                              # DATA XREF: D:8003A288o
-D:800376F0     Pblotter1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 432.46707, 1, 0, 0>
-D:800376F0                                              # DATA XREF: D:8003A294o
-D:80037710     Pbook1Z_header: PitemZ_header <0, model_object_standard_object, 0, 1, 171.37482, 2, 0, 0>
-D:80037710                                              # DATA XREF: D:8003A2A0o
-D:80037730     Pbookshelf1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1166.7578, 0xD, 0, 0>
-D:80037730                                              # DATA XREF: D:8003A2ACo
-D:80037750     Pbridge_console1aZ_header:PitemZ_header <0, prop_console_four_screen_related, 4, 1, 788.03992, 0xF, 0, 0>
-D:80037750                                              # DATA XREF: D:8003A2B8o
-D:80037770     Pbridge_console1bZ_header:PitemZ_header <0, prop_console_one_screen_related, 1, 1, 788.03992, 0x10, 0, 0>
-D:80037770                                              # DATA XREF: D:8003A2C4o
-D:80037790     Pbridge_console2aZ_header:PitemZ_header <0, prop_console_four_screen_related, 4, 1, 788.03992, 0xF, 0, 0>
-D:80037790                                              # DATA XREF: D:8003A2D0o
-D:800377B0     Pbridge_console2bZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 788.03992, 0xF, 0, 0>
-D:800377B0                                              # DATA XREF: D:8003A2DCo
-D:800377D0     Pbridge_console3aZ_header:PitemZ_header <0, prop_console_four_screen_related, 4, 1, 788.03992, 0xF, 0, 0>
-D:800377D0                                              # DATA XREF: D:8003A2E8o
-D:800377F0     Pbridge_console3bZ_header:PitemZ_header <0, prop_console_four_screen_related, 4, 1, 788.03992, 0x10, 0, 0>
-D:800377F0                                              # DATA XREF: D:8003A2F4o
-D:80037810     Pcard_box1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 727.4613, 5, 0, 0>
-D:80037810                                              # DATA XREF: D:8003A300o
-D:80037830     Pcard_box2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 727.4613, 6, 0, 0>
-D:80037830                                              # DATA XREF: D:8003A30Co
-D:80037850     Pcard_box3Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 727.4613, 5, 0, 0>
-D:80037850                                              # DATA XREF: D:8003A318o
-D:80037870     Pcard_box4_lgZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 800.2074, 4, 0, 0>
-D:80037870                                              # DATA XREF: D:8003A324o
-D:80037890     Pcard_box5_lgZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 800.2074, 5, 0, 0>
-D:80037890                                              # DATA XREF: D:8003A330o
-D:800378B0     Pcard_box6_lgZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 800.2074, 5, 0, 0>
-D:800378B0                                              # DATA XREF: D:8003A33Co
-D:800378D0     PcctvZ_header:  PitemZ_header <0, prop_cctv_related, 4, 2, 558.90094, 6, 0, 0>
-D:800378D0                                              # DATA XREF: D:8003A348o
-D:800378F0     Pconsole1Z_header:PitemZ_header <0, prop_console_four_screen_related, 4, 1, 1611.2357, 0xA, 0, 0>
-D:800378F0                                              # DATA XREF: D:8003A354o
-D:80037910     Pconsole2Z_header:PitemZ_header <0, prop_console_four_screen_related, 4, 1, 1611.2357, 0xA, 0, 0>
-D:80037910                                              # DATA XREF: D:8003A360o
-D:80037930     Pconsole3Z_header:PitemZ_header <0, prop_console_four_screen_related, 4, 1, 1611.2357, 0xA, 0, 0>
-D:80037930                                              # DATA XREF: D:8003A36Co
-D:80037950     Pconsole_sevaZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 994.23688, 0xE, 0, 0>
-D:80037950                                              # DATA XREF: D:8003A378o
-D:80037970     Pconsole_sevbZ_header:PitemZ_header <0, prop_console_one_screen_related, 1, 1, 994.23688, 0xB, 0, 0>
-D:80037970                                              # DATA XREF: D:8003A384o
-D:80037990     Pconsole_sevcZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 994.23688, 0xF, 0, 0>
-D:80037990                                              # DATA XREF: D:8003A390o
-D:800379B0     Pconsole_sevdZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0>
-D:800379B0                                              # DATA XREF: D:8003A39Co
-D:800379D0     Pconsole_sev2aZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0>
-D:800379D0                                              # DATA XREF: D:8003A3A8o
-D:800379F0     Pconsole_sev2bZ_header:PitemZ_header <0, prop_console_one_screen_related, 1, 1, 994.23688, 0xD, 0, 0>
-D:800379F0                                              # DATA XREF: D:8003A3B4o
-D:80037A10     Pconsole_sev2cZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 994.23688, 0xF, 0, 0>
-D:80037A10                                              # DATA XREF: D:8003A3C0o
-D:80037A30     Pconsole_sev2dZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0>
-D:80037A30                                              # DATA XREF: D:8003A3CCo
-D:80037A50     Pconsole_sev_GEaZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0>
-D:80037A50                                              # DATA XREF: D:8003A3D8o
-D:80037A70     Pconsole_sev_GEbZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0>
-D:80037A70                                              # DATA XREF: D:8003A3E4o
-D:80037A90     Pdesk1Z_header: PitemZ_header <0, model_object_standard_object, 0, 1, 957.18225, 3, 0, 0>
-D:80037A90                                              # DATA XREF: D:8003A3F0o
-D:80037AB0     Pdesk2Z_header: PitemZ_header <0, model_object_standard_object, 0, 1, 957.18225, 3, 0, 0>
-D:80037AB0                                              # DATA XREF: D:8003A3FCo
-D:80037AD0     Pdesk_lamp2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 804.59833, 4, 0, 0>
-D:80037AD0                                              # DATA XREF: D:8003A408o
-D:80037AF0     Pdisc_readerZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 214.33035, 6, 0, 0>
-D:80037AF0                                              # DATA XREF: D:8003A414o
-D:80037B10     Pdisk_drive1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 191.85779, 4, 0, 0>
-D:80037B10                                              # DATA XREF: D:8003A420o
-D:80037B30     Pfiling_cabinet1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1055.5693, 2, 0, 0>
-D:80037B30                                              # DATA XREF: D:8003A42Co
-D:80037B50     Pjerry_can1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 366.61932, 4, 0, 0>
-D:80037B50                                              # DATA XREF: D:8003A438o
-D:80037B70     Pkeyboard1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 278.23227, 2, 0, 0>
-D:80037B70                                              # DATA XREF: D:8003A444o
-D:80037B90     Pkit_units1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1661.4763, 4, 0, 0>
-D:80037B90                                              # DATA XREF: D:8003A450o
-D:80037BB0     Pletter_tray1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 252.06836, 1, 0, 0>
-D:80037BB0                                              # DATA XREF: D:8003A45Co
-D:80037BD0     Pmainframe1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1119.4073, 7, 0, 0>
-D:80037BD0                                              # DATA XREF: D:8003A468o
-D:80037BF0     Pmainframe2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1119.4073, 7, 0, 0>
-D:80037BF0                                              # DATA XREF: D:8003A474o
-D:80037C10     Pmetal_chair1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 639.18097, 2, 0, 0>
-D:80037C10                                              # DATA XREF: D:8003A480o
-D:80037C30     Pmetal_crate1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1010.363, 3, 0, 0>
-D:80037C30                                              # DATA XREF: D:8003A48Co
-D:80037C50     Pmetal_crate2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1010.363, 3, 0, 0>
-D:80037C50                                              # DATA XREF: D:8003A498o
-D:80037C70     Pmetal_crate3Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1010.363, 2, 0, 0>
-D:80037C70                                              # DATA XREF: D:8003A4A4o
-D:80037C90     Pmetal_crate4Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1010.363, 3, 0, 0>
-D:80037C90                                              # DATA XREF: D:8003A4B0o
-D:80037CB0     Pmissile_rackZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 964.16296, 4, 0, 0>
-D:80037CB0                                              # DATA XREF: D:8003A4BCo
-D:80037CD0     Pmissile_rack2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1148.4724, 4, 0, 0>
-D:80037CD0                                              # DATA XREF: D:8003A4C8o
-D:80037CF0     Poil_drum1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 745.45892, 2, 0, 0>
-D:80037CF0                                              # DATA XREF: D:8003A4D4o
-D:80037D10     Poil_drum2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 745.45892, 4, 0, 0>
-D:80037D10                                              # DATA XREF: D:8003A4E0o
-D:80037D30     Poil_drum3Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 745.45892, 4, 0, 0>
-D:80037D30                                              # DATA XREF: D:8003A4ECo
-D:80037D50     Poil_drum5Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 745.45892, 3, 0, 0>
-D:80037D50                                              # DATA XREF: D:8003A4F8o
-D:80037D70     Poil_drum6Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 745.45892, 3, 0, 0>
-D:80037D70                                              # DATA XREF: D:8003A504o
-D:80037D90     Poil_drum7Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 745.45892, 4, 0, 0>
-D:80037D90                                              # DATA XREF: D:8003A510o
-D:80037DB0     PpadlockZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 225.64145, 4, 0, 0>
-D:80037DB0                                              # DATA XREF: D:8003A51Co
-D:80037DD0     Pphone1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 166.03481, 2, 0, 0>
-D:80037DD0                                              # DATA XREF: D:8003A528o
-D:80037DF0     Pradio_unit1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 354.59534, 5, 0, 0>
-D:80037DF0                                              # DATA XREF: D:8003A534o
-D:80037E10     Pradio_unit2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 354.59534, 5, 0, 0>
-D:80037E10                                              # DATA XREF: D:8003A540o
-D:80037E30     Pradio_unit3Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 354.59534, 5, 0, 0>
-D:80037E30                                              # DATA XREF: D:8003A54Co
-D:80037E50     Pradio_unit4Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 354.59534, 5, 0, 0>
-D:80037E50                                              # DATA XREF: D:8003A558o
-D:80037E70     Psat1_reflectZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 5185.9409, 0xD, 0, 0>
-D:80037E70                                              # DATA XREF: D:8003A564o
-D:80037E90     PsatdishZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2437.468, 2, 0, 0>
-D:80037E90                                              # DATA XREF: D:8003A570o
-D:80037EB0     PsatboxZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 89.935875, 1, 0, 0>
-D:80037EB0                                              # DATA XREF: D:8003A57Co
-D:80037ED0     Pstool1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 353.11398, 2, 0, 0>
-D:80037ED0                                              # DATA XREF: D:8003A588o
-D:80037EF0     Pswivel_chair1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 581.16394, 3, 0, 0>
-D:80037EF0                                              # DATA XREF: D:8003A594o
-D:80037F10     Ptorpedo_rackZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 765.61725, 3, 0, 0>
-D:80037F10                                              # DATA XREF: D:8003A5A0o
-D:80037F30     Ptv1Z_header:   PitemZ_header <0, prop_console_one_screen_related, 1, 1, 347.0235, 5, 0, 0>
-D:80037F30                                              # DATA XREF: D:8003A5ACo
-D:80037F50     Ptv_holderZ_header:PitemZ_header <0, prop_tv_holder_related, 4, 5, 1352.4841, 2, 0, 0>
-D:80037F50                                              # DATA XREF: D:8003A5B8o
-D:80037F70     PtvscreenZ_header:PitemZ_header <0, prop_console_one_screen_related, 1, 1, 211.74477, 1, 0, 0>
-D:80037F70                                              # DATA XREF: D:8003A5C4o
-D:80037F90     Ptv4screenZ_header:PitemZ_header <0, prop_console_four_screen_related, 4, 1, 211.74477, 1, 0, 0>
-D:80037F90                                              # DATA XREF: D:8003A5D0o
-D:80037FB0     Pwood_lg_crate1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1010.363, 3, 0, 0>
-D:80037FB0                                              # DATA XREF: D:8003A5DCo
-D:80037FD0     Pwood_lg_crate2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1010.363, 2, 0, 0>
-D:80037FD0                                              # DATA XREF: D:8003A5E8o
-D:80037FF0     Pwood_md_crate3Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 909.32666, 2, 0, 0>
-D:80037FF0                                              # DATA XREF: D:8003A5F4o
-D:80038010     Pwood_sm_crate4Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 727.4613, 3, 0, 0>
-D:80038010                                              # DATA XREF: D:8003A600o
-D:80038030     Pwood_sm_crate5Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 727.4613, 4, 0, 0>
-D:80038030                                              # DATA XREF: D:8003A60Co
-D:80038050     Pwood_sm_crate6Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 727.4613, 4, 0, 0>
-D:80038050                                              # DATA XREF: D:8003A618o
-D:80038070     Pwooden_table1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1095.1365, 2, 0, 0>
-D:80038070                                              # DATA XREF: D:8003A624o
-D:80038090     Pswipe_card2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 123.08884, 2, 0, 0>
-D:80038090                                              # DATA XREF: D:8003A630o
-D:800380B0     Pborg_crateZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1010.363, 1, 0, 0>
-D:800380B0                                              # DATA XREF: D:8003A63Co
-D:800380D0     Pboxes4x4Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2424.8711, 7, 0, 0>
-D:800380D0                                              # DATA XREF: D:8003A648o
-D:800380F0     Pboxes3x4Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2241.0935, 6, 0, 0>
-D:800380F0                                              # DATA XREF: D:8003A654o
-D:80038110     Pboxes2x4Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2100.0, 6, 0, 0>
-D:80038110                                              # DATA XREF: D:8003A660o
-D:80038130     Psec_panelZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1567.2454, 3, 0, 0>
-D:80038130                                              # DATA XREF: D:8003A66Co
-D:80038150     PICBM_noseZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2782.7126, 8, 0, 0>
-D:80038150                                              # DATA XREF: D:8003A678o
-D:80038170     PICBMZ_header:  PitemZ_header <0, model_object_standard_object, 0, 1, 14790.535, 0xE, 0, 0>
-D:80038170                                              # DATA XREF: D:8003A684o
-D:80038190     Ptuning_console1Z_header:PitemZ_header <0, prop_console_one_screen_related, 1, 1, 1139.5872, 0xE, 0, 0>
-D:80038190                                              # DATA XREF: D:8003A690o
-D:800381B0     Pdesk_arecibo1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1829.1477, 3, 0, 0>
-D:800381B0                                              # DATA XREF: D:8003A69Co
-D:800381D0     Plocker3Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 916.99805, 3, 0, 0>
-D:800381D0                                              # DATA XREF: D:8003A6A8o
-D:800381F0     Plocker4Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 916.99805, 3, 0, 0>
-D:800381F0                                              # DATA XREF: D:8003A6B4o
-D:80038210     ProofgunZ_header:PitemZ_header <0, prop_rotating_stuff_related, 8, 5, 1910.908, 0xE, 0, 0>
-D:80038210                                              # DATA XREF: D:8003A6C0o
-D:80038230     Pdest_engineZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 6459.439, 0xA, 0, 0>
-D:80038230                                              # DATA XREF: D:8003A6CCo
-D:80038250     Pdest_exocetZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1644.8435, 8, 0, 0>
-D:80038250                                              # DATA XREF: D:8003A6D8o
-D:80038270     Pdest_gunZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2124.0735, 5, 0, 0>
-D:80038270                                              # DATA XREF: D:8003A6E4o
-D:80038290     Pdest_harpoonZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1798.7655, 5, 0, 0>
-D:80038290                                              # DATA XREF: D:8003A6F0o
-D:800382B0     Pdest_seawolfZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2282.0623, 0xA, 0, 0>
-D:800382B0                                              # DATA XREF: D:8003A6FCo
-D:800382D0     PwindowZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 423.48956, 1, 0, 0>
-D:800382D0                                              # DATA XREF: D:8003A708o
-D:800382F0     Pwindow_lib_lg1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 835.20624, 1, 0, 0>
-D:800382F0                                              # DATA XREF: D:8003A714o
-D:80038310     Pwindow_lib_sm1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 601.28625, 1, 0, 0>
-D:80038310                                              # DATA XREF: D:8003A720o
-D:80038330     Pwindow_cor11Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 414.53622, 1, 0, 0>
-D:80038330                                              # DATA XREF: D:8003A72Co
-D:80038350     Pjungle3_treeZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 28729.467, 5, 0, 0>
-D:80038350                                              # DATA XREF: D:8003A738o
-D:80038370     PpalmZ_header:  PitemZ_header <0, model_object_standard_object, 0, 1, 15501.406, 3, 0, 0>
-D:80038370                                              # DATA XREF: D:8003A744o
-D:80038390     PpalmtreeZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1781.4542, 2, 0, 0>
-D:80038390                                              # DATA XREF: D:8003A750o
-D:800383B0     Pplant2bZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1252.9539, 2, 0, 0>
-D:800383B0                                              # DATA XREF: D:8003A75Co
-D:800383D0     PlabbenchZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 844.09717, 4, 0, 0>
-D:800383D0                                              # DATA XREF: D:8003A768o
-D:800383F0     PgasbarrelZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 725.94379, 2, 0, 0>
-D:800383F0                                              # DATA XREF: D:8003A774o
-D:80038410     PgasbarrelsZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1174.1927, 2, 0, 0>
-D:80038410                                              # DATA XREF: D:8003A780o
-D:80038430     PbodyarmourZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 246.94099, 7, 0, 0>
-D:80038430                                              # DATA XREF: D:8003A78Co
-D:80038450     PbodyarmourvestZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 241.82211, 2, 0, 0>
-D:80038450                                              # DATA XREF: D:8003A798o
-D:80038470     PgastankZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1130.0691, 5, 0, 0>
-D:80038470                                              # DATA XREF: D:8003A7A4o
-D:80038490     Pglassware1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 72.111031, 1, 0, 0>
-D:80038490                                              # DATA XREF: D:8003A7B0o
-D:800384B0     PhatchboltZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2236.0679, 1, 0, 0>
-D:800384B0                                              # DATA XREF: D:8003A7BCo
-D:800384D0     PbrakeunitZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 801.95074, 4, 0, 0>
-D:800384D0                                              # DATA XREF: D:8003A7C8o
-D:800384F0     Pak47magZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 107.11019, 2, 0, 0>
-D:800384F0                                              # DATA XREF: D:8003A7D4o
-D:80038510     Pm16magZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 87.934891, 2, 0, 0>
-D:80038510                                              # DATA XREF: D:8003A7E0o
-D:80038530     Pmp5kmagZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 119.54729, 2, 0, 0>
-D:80038530                                              # DATA XREF: D:8003A7ECo
-D:80038550     PskorpionmagZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 58.428444, 2, 0, 0>
-D:80038550                                              # DATA XREF: D:8003A7F8o
-D:80038570     PspectremagZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 99.01432, 2, 0, 0>
-D:80038570                                              # DATA XREF: D:8003A804o
-D:80038590     PuzimagZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 74.28373, 2, 0, 0>
-D:80038590                                              # DATA XREF: D:8003A810o
-D:800385B0     PsilencerZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 63.915436, 3, 0, 0>
-D:800385B0                                              # DATA XREF: D:8003A81Co
-D:800385D0     PchrextinguisherZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 425.50903, 2, 0, 0>
-D:800385D0                                              # DATA XREF: D:8003A828o
-D:800385F0     PboxcartridgesZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 66.81916, 3, 0, 0>
-D:800385F0                                              # DATA XREF: D:8003A834o
-D:80038610     Pfnp90magZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 176.28201, 2, 0, 0>
-D:80038610                                              # DATA XREF: D:8003A840o
-D:80038630     PgoldenshellsZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 66.81916, 3, 0, 0>
-D:80038630                                              # DATA XREF: D:8003A84Co
-D:80038650     PmagnumshellsZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 66.81916, 3, 0, 0>
-D:80038650                                              # DATA XREF: D:8003A858o
-D:80038670     PwppkmagZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 74.28373, 2, 0, 0>
-D:80038670                                              # DATA XREF: D:8003A864o
-D:80038690     Ptt33magZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 74.28373, 2, 0, 0>
-D:80038690                                              # DATA XREF: D:8003A870o
-D:800386B0     Psev_doorZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1143.7695, 3, 0, 0>
-D:800386B0                                              # DATA XREF: D:8003A87Co
-D:800386D0     Psev_door3Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1143.5603, 6, 0, 0>
-D:800386D0                                              # DATA XREF: D:8003A888o
-D:800386F0     Psev_door3_windZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1143.5603, 5, 0, 0>
-D:800386F0                                              # DATA XREF: D:8003A894o
-D:80038710     Psev_door4_windZ_header:PitemZ_header <0, prop_door_related, 4, 1, 1143.5603, 8, 0, 0>
-D:80038710                                              # DATA XREF: D:8003A8A0o
-D:80038730     Psev_trislideZ_header:PitemZ_header <0, prop_door_related, 4, 1, 950.54327, 2, 0, 0>
-D:80038730                                              # DATA XREF: D:8003A8ACo
-D:80038750     Psev_door_v1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1137.8739, 6, 0, 0>
-D:80038750                                              # DATA XREF: D:8003A8B8o
-D:80038770     Psteel_door1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1137.8739, 4, 0, 0>
-D:80038770                                              # DATA XREF: D:8003A8C4o
-D:80038790     Psteel_door2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1137.8739, 9, 0, 0>
-D:80038790                                              # DATA XREF: D:8003A8D0o
-D:800387B0     Psteel_door3Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1137.8739, 9, 0, 0>
-D:800387B0                                              # DATA XREF: D:8003A8DCo
-D:800387D0     Psilo_lift_doorZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 600.71082, 4, 0, 0>
-D:800387D0                                              # DATA XREF: D:8003A8E8o
-D:800387F0     Psteel_door2bZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1137.8739, 9, 0, 0>
-D:800387F0                                              # DATA XREF: D:8003A8F4o
-D:80038810     Pdoor_roller1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1032.125, 4, 0, 0>
-D:80038810                                              # DATA XREF: D:8003A900o
-D:80038830     Pdoor_roller2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1032.125, 4, 0, 0>
-D:80038830                                              # DATA XREF: D:8003A90Co
-D:80038850     Pdoor_roller3Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1032.125, 4, 0, 0>
-D:80038850                                              # DATA XREF: D:8003A918o
-D:80038870     Pdoor_roller4Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1032.125, 4, 0, 0>
-D:80038870                                              # DATA XREF: D:8003A924o
-D:80038890     Pdoor_st_arec1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 763.03589, 3, 0, 0>
-D:80038890                                              # DATA XREF: D:8003A930o
-D:800388B0     Pdoor_st_arec2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 763.03589, 3, 0, 0>
-D:800388B0                                              # DATA XREF: D:8003A93Co
-D:800388D0     Pdoor_dest1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 461.3873, 3, 0, 0>
-D:800388D0                                              # DATA XREF: D:8003A948o
-D:800388F0     Pdoor_dest2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 461.3873, 5, 0, 0>
-D:800388F0                                              # DATA XREF: D:8003A954o
-D:80038910     Pgas_plant_sw_do1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 862.29706, 4, 0, 0>
-D:80038910                                              # DATA XREF: D:8003A960o
-D:80038930     Pgas_plant_sw2_do1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 862.88489, 2, 0, 0>
-D:80038930                                              # DATA XREF: D:8003A96Co
-D:80038950     Pgas_plant_sw3_do1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 862.88489, 2, 0, 0>
-D:80038950                                              # DATA XREF: D:8003A978o
-D:80038970     Pgas_plant_sw4_do1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 862.88489, 1, 0, 0>
-D:80038970                                              # DATA XREF: D:8003A984o
-D:80038990     Pgas_plant_met1_do1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 862.88489, 5, 0, 0>
-D:80038990                                              # DATA XREF: D:8003A990o
-D:800389B0     Pgas_plant_wc_cub1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 783.8501, 3, 0, 0>
-D:800389B0                                              # DATA XREF: D:8003A99Co
-D:800389D0     Pgasplant_clear_doorZ_header:PitemZ_header <0, prop_door_related, 4, 1, 1025.0952, 2, 0, 0>
-D:800389D0                                              # DATA XREF: D:8003A9A8o
-D:800389F0     Ptrain_doorZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 456.99615, 3, 0, 0>
-D:800389F0                                              # DATA XREF: D:8003A9B4o
-D:80038A10     Ptrain_door2Z_header:PitemZ_header <0, prop_door_related, 4, 1, 445.98541, 3, 0, 0>
-D:80038A10                                              # DATA XREF: D:8003A9C0o
-D:80038A30     Ptrain_door3Z_header:PitemZ_header <0, prop_door_related, 4, 1, 445.98541, 4, 0, 0>
-D:80038A30                                              # DATA XREF: D:8003A9CCo
-D:80038A50     Pdoor_eyelidZ_header:PitemZ_header <0, prop_eyelid_door_related, 3, 3, 3165.4348, 3, 0, 0>
-D:80038A50                                              # DATA XREF: D:8003A9D8o
-D:80038A70     Pdoor_irisZ_header:PitemZ_header <0, prop_iris_door_related, 0xD, 0xD, 1621.3601, 5, 0, 0>
-D:80038A70                                              # DATA XREF: D:8003A9E4o
-D:80038A90     PsevdoorwoodZ_header:PitemZ_header <0, prop_door_related, 4, 1, 851.62671, 3, 0, 0>
-D:80038A90                                              # DATA XREF: D:8003A9F0o
-D:80038AB0     PsevdoorwindZ_header:PitemZ_header <0, prop_door_related, 4, 1, 851.62671, 5, 0, 0>
-D:80038AB0                                              # DATA XREF: D:8003A9FCo
-D:80038AD0     PsevdoornowindZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 863.03766, 2, 0, 0>
-D:80038AD0                                              # DATA XREF: D:8003AA08o
-D:80038AF0     PsevdoormetslideZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 863.74707, 2, 0, 0>
-D:80038AF0                                              # DATA XREF: D:8003AA14o
-D:80038B10     Pcryptdoor1aZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 502.64923, 2, 0, 0>
-D:80038B10                                              # DATA XREF: D:8003AA20o
-D:80038B30     Pcryptdoor1bZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 400.97537, 2, 0, 0>
-D:80038B30                                              # DATA XREF: D:8003AA2Co
-D:80038B50     Pcryptdoor2aZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 502.64923, 2, 0, 0>
-D:80038B50                                              # DATA XREF: D:8003AA38o
-D:80038B70     Pcryptdoor2bZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 400.97537, 2, 0, 0>
-D:80038B70                                              # DATA XREF: D:8003AA44o
-D:80038B90     Pcryptdoor3Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 801.95074, 3, 0, 0>
-D:80038B90                                              # DATA XREF: D:8003AA50o
-D:80038BB0     Pcryptdoor4Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 801.95074, 1, 0, 0>
-D:80038BB0                                              # DATA XREF: D:8003AA5Co
-D:80038BD0     PvertdoorZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1997.2246, 5, 0, 0>
-D:80038BD0                                              # DATA XREF: D:8003AA68o
-D:80038BF0     PhatchdoorZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 192.1653, 1, 0, 0>
-D:80038BF0                                              # DATA XREF: D:8003AA74o
-D:80038C10     PdamgatedoorZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 308.36456, 3, 0, 0>
-D:80038C10                                              # DATA XREF: D:8003AA80o
-D:80038C30     PdamtundoorZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 127.89996, 4, 0, 0>
-D:80038C30                                              # DATA XREF: D:8003AA8Co
-D:80038C50     PdamchaindoorZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 171.36655, 2, 0, 0>
-D:80038C50                                              # DATA XREF: D:8003AA98o
-D:80038C70     PsilotopdoorZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2675.3958, 5, 0, 0>
-D:80038C70                                              # DATA XREF: D:8003AAA4o
-D:80038C90     Pdoorprison1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1062.0833, 1, 0, 0>
-D:80038C90                                              # DATA XREF: D:8003AAB0o
-D:80038CB0     PdoorstatgateZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1503.9503, 3, 0, 0>
-D:80038CB0                                              # DATA XREF: D:8003AABCo
-D:80038CD0     PchrkalashZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 403.53766, 8, 0, 0>
-D:80038CD0                                              # DATA XREF: D:8003AAC8o
-D:80038CF0     PchrgrenadelaunchZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 422.48355, 7, 0, 0>
-D:80038CF0                                              # DATA XREF: D:8003AAD4o
-D:80038D10     PchrknifeZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 245.14619, 2, 0, 0>
-D:80038D10                                              # DATA XREF: D:8003AAE0o
-D:80038D30     PchrlaserZ_header:PitemZ_header <0, prop_weapon_related, 3, 2, 444.66241, 8, 0, 0>
-D:80038D30                                              # DATA XREF: D:8003AAECo
-D:80038D50     Pchrm16Z_header:PitemZ_header <0, prop_weapon_related, 3, 2, 964.01367, 6, 0, 0>
-D:80038D50                                              # DATA XREF: D:8003AAF8o
-D:80038D70     Pchrmp5kZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 277.32227, 9, 0, 0>
-D:80038D70                                              # DATA XREF: D:8003AB04o
-D:80038D90     PchrrugerZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 246.72643, 5, 0, 0>
-D:80038D90                                              # DATA XREF: D:8003AB10o
-D:80038DB0     PchrwppkZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 125.79879, 5, 0, 0>
-D:80038DB0                                              # DATA XREF: D:PchrwppkZ_entryo
-D:80038DD0     PchrshotgunZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 488.88385, 8, 0, 0>
-D:80038DD0                                              # DATA XREF: D:8003AB28o
-D:80038DF0     PchrskorpionZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 183.37708, 7, 0, 0>
-D:80038DF0                                              # DATA XREF: D:8003AB34o
-D:80038E10     PchrspectreZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 351.26923, 6, 0, 0>
-D:80038E10                                              # DATA XREF: D:8003AB40o
-D:80038E30     PchruziZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 265.11813, 7, 0, 0>
-D:80038E30                                              # DATA XREF: D:8003AB4Co
-D:80038E50     PchrgrenadeZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 118.18749, 2, 0, 0>
-D:80038E50                                              # DATA XREF: D:8003AB58o
-D:80038E70     Pchrfnp90Z_header:PitemZ_header <0, prop_weapon_related, 3, 2, 470.04633, 7, 0, 0>
-D:80038E70                                              # DATA XREF: D:8003AB64o
-D:80038E90     PchrbriefcaseZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 342.23688, 5, 0, 0>
-D:80038E90                                              # DATA XREF: D:8003AB70o
-D:80038EB0     PchrremotemineZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 87.434036, 2, 0, 0>
-D:80038EB0                                              # DATA XREF: D:8003AB7Co
-D:80038ED0     PchrproximitymineZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 87.196609, 2, 0, 0>
-D:80038ED0                                              # DATA XREF: D:8003AB88o
-D:80038EF0     PchrtimedmineZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 87.245888, 3, 0, 0>
-D:80038EF0                                              # DATA XREF: D:8003AB94o
-D:80038F10     PchrrocketZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 342.8634, 3, 0, 0>
-D:80038F10                                              # DATA XREF: D:8003ABA0o
-D:80038F30     PchrgrenaderoundZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 96.976593, 1, 0, 0>
-D:80038F30                                              # DATA XREF: D:8003ABACo
-D:80038F50     PchrwppksilZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 219.44571, 6, 0, 0>
-D:80038F50                                              # DATA XREF: D:8003ABB8o
-D:80038F70     Pchrtt33Z_header:PitemZ_header <0, prop_weapon_related, 3, 1, 142.11539, 5, 0, 0>
-D:80038F70                                              # DATA XREF: D:8003ABC4o
-D:80038F90     Pchrmp5ksilZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 406.18033, 0xA, 0, 0>
-D:80038F90                                              # DATA XREF: D:8003ABD0o
-D:80038FB0     PchrautoshotZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 375.50247, 8, 0, 0>
-D:80038FB0                                              # DATA XREF: D:8003ABDCo
-D:80038FD0     PchrgoldenZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 157.98299, 2, 0, 0>
-D:80038FD0                                              # DATA XREF: D:8003ABE8o
-D:80038FF0     PchrthrowknifeZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 217.61888, 2, 0, 0>
-D:80038FF0                                              # DATA XREF: D:8003ABF4o
-D:80039010     PchrsniperrifleZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 616.93939, 5, 0, 0>
-D:80039010                                              # DATA XREF: D:8003AC00o
-D:80039030     PchrrocketlaunchZ_header:PitemZ_header <0, prop_weapon_related, 3, 2, 501.55179, 6, 0, 0>
-D:80039030                                              # DATA XREF: D:8003AC0Co
-D:80039050     PhatfurryZ_header:PitemZ_header <0, item_hat_related, 0, 1, 152.53136, 3, 0, 0>
-D:80039050                                              # DATA XREF: D:8003AC18o
-D:80039070     PhatfurrybrownZ_header:PitemZ_header <0, item_hat_related, 0, 1, 152.53136, 3, 0, 0>
-D:80039070                                              # DATA XREF: D:8003AC24o
-D:80039090     PhatfurryblackZ_header:PitemZ_header <0, item_hat_related, 0, 1, 152.53136, 3, 0, 0>
-D:80039090                                              # DATA XREF: D:8003AC30o
-D:800390B0     PhattbirdZ_header:PitemZ_header <0, item_hat_related, 0, 1, 114.45274, 1, 0, 0>
-D:800390B0                                              # DATA XREF: D:8003AC3Co
-D:800390D0     PhattbirdbrownZ_header:PitemZ_header <0, item_hat_related, 0, 1, 122.7013, 1, 0, 0>
-D:800390D0                                              # DATA XREF: D:8003AC48o
-D:800390F0     PhathelmetZ_header:PitemZ_header <0, item_hat_related, 0, 1, 163.84476, 1, 0, 0>
-D:800390F0                                              # DATA XREF: D:8003AC54o
-D:80039110     PhathelmetgreyZ_header:PitemZ_header <0, item_hat_related, 0, 1, 163.84476, 1, 0, 0>
-D:80039110                                              # DATA XREF: D:8003AC60o
-D:80039130     PhatmoonZ_header:PitemZ_header <0, item_hat_related, 0, 1, 138.25751, 2, 0, 0>
-D:80039130                                              # DATA XREF: D:8003AC6Co
-D:80039150     PhatberetZ_header:PitemZ_header <0, item_hat_related, 0, 1, 116.16043, 1, 0, 0>
-D:80039150                                              # DATA XREF: D:8003AC78o
-D:80039170     PhatberetblueZ_header:PitemZ_header <0, item_hat_related, 0, 1, 116.16043, 2, 0, 0>
-D:80039170                                              # DATA XREF: D:8003AC84o
-D:80039190     PhatberetredZ_header:PitemZ_header <0, item_hat_related, 0, 1, 115.46455, 2, 0, 0>
-D:80039190                                              # DATA XREF: D:8003AC90o
-D:800391B0     PhatpeakedZ_header:PitemZ_header <0, item_hat_related, 0, 1, 148.39027, 1, 0, 0>
-D:800391B0                                              # DATA XREF: D:8003AC9Co
-D:800391D0     PchrwristdartZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:800391D0                                              # DATA XREF: D:8003ACA8o
-D:800391F0     PchrexplosivepenZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:800391F0                                              # DATA XREF: D:8003ACB4o
-D:80039210     PchrbombcaseZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 342.23688, 5, 0, 0>
-D:80039210                                              # DATA XREF: D:8003ACC0o
-D:80039230     PchrflarepistolZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:80039230                                              # DATA XREF: D:8003ACCCo
-D:80039250     PchrpitongunZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:80039250                                              # DATA XREF: D:8003ACD8o
-D:80039270     PchrfingergunZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:80039270                                              # DATA XREF: D:8003ACE4o
-D:80039290     PchrsilverwppkZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:80039290                                              # DATA XREF: D:8003ACF0o
-D:800392B0     PchrgoldwppkZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:800392B0                                              # DATA XREF: D:8003ACFCo
-D:800392D0     PchrdynamiteZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:800392D0                                              # DATA XREF: D:8003AD08o
-D:800392F0     PchrbungeeZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:800392F0                                              # DATA XREF: D:8003AD14o
-D:80039310     PchrdoordecoderZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 180.27969, 0x10, 0, 0>
-D:80039310                                              # DATA XREF: D:8003AD20o
-D:80039330     PchrbombdefuserZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 84.370705, 0xC, 0, 0>
-D:80039330                                              # DATA XREF: D:8003AD2Co
-D:80039350     PchrbugdetectorZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:80039350                                              # DATA XREF: D:8003AD38o
-D:80039370     PchrsafecrackercaseZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 342.23688, 5, 0, 0>
-D:80039370                                              # DATA XREF: D:8003AD44o
-D:80039390     PchrcameraZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 52.775627, 0xB, 0, 0>
-D:80039390                                              # DATA XREF: D:8003AD50o
-D:800393B0     PchrlockexploderZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:800393B0                                              # DATA XREF: D:8003AD5Co
-D:800393D0     PchrdoorexploderZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:800393D0                                              # DATA XREF: D:8003AD68o
-D:800393F0     PchrkeyanalysercaseZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 342.23688, 5, 0, 0>
-D:800393F0                                              # DATA XREF: D:8003AD74o
-D:80039410     PchrweaponcaseZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 274.2905, 5, 0, 0>
-D:80039410                                              # DATA XREF: D:8003AD80o
-D:80039430     PchrkeyyaleZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 82.850311, 1, 0, 0>
-D:80039430                                              # DATA XREF: D:8003AD8Co
-D:80039450     PchrkeyboltZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 151.85315, 1, 0, 0>
-D:80039450                                              # DATA XREF: D:8003AD98o
-D:80039470     PchrbugZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 104.7203, 6, 0, 0>
-D:80039470                                              # DATA XREF: D:8003ADA4o
-D:80039490     PchrmicrocameraZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 126.49728, 7, 0, 0>
-D:80039490                                              # DATA XREF: D:8003ADB0o
-D:800394B0     PfloppyZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 60.902443, 5, 0, 0>
-D:800394B0                                              # DATA XREF: D:8003ADBCo
-D:800394D0     PchrgoldeneyekeyZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 98.987083, 5, 0, 0>
-D:800394D0                                              # DATA XREF: D:8003ADC8o
-D:800394F0     PchrpolarizedglassesZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 53.776386, 2, 0, 0>
-D:800394F0                                              # DATA XREF: D:8003ADD4o
-D:80039510     PchrcreditcardZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:80039510                                              # DATA XREF: D:8003ADE0o
-D:80039530     PchrdarkglassesZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:80039530                                              # DATA XREF: D:8003ADECo
-D:80039550     PchrgaskeyringZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 111.59859, 9, 0, 0>
-D:80039550                                              # DATA XREF: D:8003ADF8o
-D:80039570     PchrdatathiefZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 119.78231, 3, 0, 0>
-D:80039570                                              # DATA XREF: D:8003AE04o
-D:80039590     PsafeZ_header:  PitemZ_header <0, model_object_standard_object, 0, 1, 1011.1874, 3, 0, 0>
-D:80039590                                              # DATA XREF: D:8003AE10o
-D:800395B0     PbombZ_header:  PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:800395B0                                              # DATA XREF: D:8003AE1Co
-D:800395D0     PchrplansZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 384.74649, 5, 0, 0>
-D:800395D0                                              # DATA XREF: D:8003AE28o
-D:800395F0     PchrspyfileZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:800395F0                                              # DATA XREF: D:8003AE34o
-D:80039610     PchrblueprintsZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 588.65448, 4, 0, 0>
-D:80039610                                              # DATA XREF: D:8003AE40o
-D:80039630     PchrcircuitboardZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 138.90285, 3, 0, 0>
-D:80039630                                              # DATA XREF: D:8003AE4Co
-D:80039650     PchrmapZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 588.65448, 4, 0, 0>
-D:80039650                                              # DATA XREF: D:8003AE58o
-D:80039670     PchrspooltapeZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:80039670                                              # DATA XREF: D:8003AE64o
-D:80039690     PchraudiotapeZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 97.531075, 9, 0, 0>
-D:80039690                                              # DATA XREF: D:8003AE70o
-D:800396B0     PchrmicrofilmZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:800396B0                                              # DATA XREF: D:8003AE7Co
-D:800396D0     PchrmicrocodeZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:800396D0                                              # DATA XREF: D:8003AE88o
-D:800396F0     PchrlectreZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:800396F0                                              # DATA XREF: D:8003AE94o
-D:80039710     PchrmoneyZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:80039710                                              # DATA XREF: D:8003AEA0o
-D:80039730     PchrgoldbarZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:80039730                                              # DATA XREF: D:8003AEACo
-D:80039750     PchrheroinZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 288.67514, 1, 0, 0>
-D:80039750                                              # DATA XREF: D:8003AEB8o
-D:80039770     PchrclipboardZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 190.41742, 3, 0, 0>
-D:80039770                                              # DATA XREF: D:8003AEC4o
-D:80039790     PchrdossierredZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 183.54231, 4, 0, 0>
-D:80039790                                              # DATA XREF: D:8003AED0o
-D:800397B0     PchrstafflistZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 215.17534, 4, 0, 0>
-D:800397B0                                              # DATA XREF: D:8003AEDCo
-D:800397D0     PchrdattapeZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 79.868584, 4, 0, 0>
-D:800397D0                                              # DATA XREF: D:8003AEE8o
-D:800397F0     PchrplastiqueZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 143.86052, 3, 0, 0>
-D:800397F0                                              # DATA XREF: D:8003AEF4o
-D:80039810     PchrblackboxZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 128.31796, 5, 0, 0>
-D:80039810                                              # DATA XREF: D:8003AF00o
-D:80039830     PchrvideotapeZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 122.69632, 9, 0, 0>
-D:80039830                                              # DATA XREF: D:8003AF0Co
-D:80039850     PnintendologoZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1868.335, 1, 0, 0>
-D:80039850                                              # DATA XREF: D:PnintendologoZ_entryo
-D:80039870     PgoldeneyelogoZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1287.1866, 2, 0, 0>
-D:80039870                                              # DATA XREF: D:PgoldeneyelogoZ_entryo
-D:80039890     PwalletbondZ_header:PitemZ_header <0, prop_walletbond_related, 0x2B, 1, 3504.53, 0x54, 0, 0>
-D:80039890                                              # DATA XREF: D:PwalletbondZ_entryo
-D:800398B0     PmiltruckZ_header:PitemZ_header <0, prop_car_related, 0xB, 5, 4589.7188, 0x16, 0, 0>
-D:800398B0                                              # DATA XREF: D:8003AF3Co
-D:800398D0     PjeepZ_header:  PitemZ_header <0, prop_car_related, 0xB, 5, 2107.8105, 0x10, 0, 0>
-D:800398D0                                              # DATA XREF: D:8003AF48o
-D:800398F0     ParticZ_header: PitemZ_header <0, prop_car_related, 0xB, 5, 2678.5667, 0x11, 0, 0>
-D:800398F0                                              # DATA XREF: D:8003AF54o
-D:80039910     PhelicopterZ_header:PitemZ_header <0, prop_flying_related, 6, 4, 4955.271, 0x18, 0, 0>
-D:80039910                                              # DATA XREF: D:8003AF60o
-D:80039930     PtigerZ_header: PitemZ_header <0, prop_flying_related, 6, 4, 4072.0291, 0xE, 0, 0>
-D:80039930                                              # DATA XREF: D:8003AF6Co
-D:80039950     PmilcopterZ_header:PitemZ_header <0, prop_flying_related, 6, 4, 5316.9155, 0xF, 0, 0>
-D:80039950                                              # DATA XREF: D:8003AF78o
-D:80039970     PhindZ_header:  PitemZ_header <0, prop_flying_related, 6, 5, 5315.314, 0xB, 0, 0>
-D:80039970                                              # DATA XREF: D:8003AF84o
-D:80039990     PartictrailerZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 4014.6265, 0xB, 0, 0>
-D:80039990                                              # DATA XREF: D:8003AF90o
-D:800399B0     PmotorbikeZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1610.8706, 6, 0, 0>
-D:800399B0                                              # DATA XREF: D:8003AF9Co
-D:800399D0     PtankZ_header:  PitemZ_header <0, item_tank_related, 9, 5, 6290.8398, 0x18, 0, 0>
-D:800399D0                                              # DATA XREF: D:8003AFA8o
-D:800399F0     PapcZ_header:   PitemZ_header <0, model_object_standard_object, 0, 1, 3611.1035, 0xE, 0, 0>
-D:800399F0                                              # DATA XREF: D:8003AFB4o
-D:80039A10     PspeedboatZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1799.4586, 0xD, 0, 0>
-D:80039A10                                              # DATA XREF: D:8003AFC0o
-D:80039A30     PplaneZ_header: PitemZ_header <0, prop_flying_related, 6, 3, 9285.4492, 0x1C, 0, 0>
-D:80039A30                                              # DATA XREF: D:8003AFCCo
-D:80039A50     Pgun_runway1Z_header:PitemZ_header <0, prop_rotating_stuff_related, 8, 5, 1927.5205, 6, 0, 0>
-D:80039A50                                              # DATA XREF: D:8003AFD8o
-D:80039A70     PsafedoorZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 714.14612, 4, 0, 0>
-D:80039A70                                              # DATA XREF: D:8003AFE4o
-D:80039A90     Pkey_holderZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 223.87097, 7, 0, 0>
-D:80039A90                                              # DATA XREF: D:8003AFF0o
-D:80039AB0     PhatchsevxZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1224.7664, 2, 0, 0>
-D:80039AB0                                              # DATA XREF: D:8003AFFCo
-D:80039AD0     PsevdishZ_header:PitemZ_header <0, prop_rotating_stuff_related, 8, 3, 14350.1, 7, 0, 0>
-D:80039AD0                                              # DATA XREF: D:8003B008o
-D:80039AF0     Parchsecdoor1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 455.81409, 3, 0, 0>
-D:80039AF0                                              # DATA XREF: D:8003B014o
-D:80039B10     Parchsecdoor2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 496.99292, 3, 0, 0>
-D:80039B10                                              # DATA XREF: D:8003B020o
-D:80039B30     PgroundgunZ_header:PitemZ_header <0, prop_rotating_stuff_related, 8, 5, 2182.6472, 4, 0, 0>
-D:80039B30                                              # DATA XREF: D:8003B02Co
-D:80039B50     PtrainextdoorZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 587.70111, 5, 0, 0>
-D:80039B50                                              # DATA XREF: D:8003B038o
-D:80039B70     PcarbmwZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 553.08728, 0xB, 0, 0>
-D:80039B70                                              # DATA XREF: D:8003B044o
-D:80039B90     PcarescortZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1110.5665, 9, 0, 0>
-D:80039B90                                              # DATA XREF: D:8003B050o
-D:80039BB0     PcargolfZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1121.6409, 0xA, 0, 0>
-D:80039BB0                                              # DATA XREF: D:8003B05Co
-D:80039BD0     PcarweirdZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 984.03931, 0xD, 0, 0>
-D:80039BD0                                              # DATA XREF: D:8003B068o
-D:80039BF0     PcarzilZ_header:PitemZ_header <0, prop_car_related, 0xB, 5, 1044.5764, 0xD, 0, 0>
-D:80039BF0                                              # DATA XREF: D:8003B074o
-D:80039C10     Pshuttle_door_lZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 706.56641, 7, 0, 0>
-D:80039C10                                              # DATA XREF: D:8003B080o
-D:80039C30     Pshuttle_door_rZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 706.56641, 8, 0, 0>
-D:80039C30                                              # DATA XREF: D:8003B08Co
-D:80039C50     Pdepot_gate_entryZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 811.28949, 3, 0, 0>
-D:80039C50                                              # DATA XREF: D:8003B098o
-D:80039C70     Pdepot_door_steelZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 574.79651, 3, 0, 0>
-D:80039C70                                              # DATA XREF: D:8003B0A4o
-D:80039C90     Pglassware2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 98.488579, 3, 0, 0>
-D:80039C90                                              # DATA XREF: D:8003B0B0o
-D:80039CB0     Pglassware3Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 137.92715, 1, 0, 0>
-D:80039CB0                                              # DATA XREF: D:8003B0BCo
-D:80039CD0     Pglassware4Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 177.48241, 2, 0, 0>
-D:80039CD0                                              # DATA XREF: D:8003B0C8o
-D:80039CF0     PlandmineZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 440.03009, 2, 0, 0>
-D:80039CF0                                              # DATA XREF: D:8003B0D4o
-D:80039D10     Pplant1Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2704.1086, 1, 0, 0>
-D:80039D10                                              # DATA XREF: D:8003B0E0o
-D:80039D30     Pplant11Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2704.1086, 1, 0, 0>
-D:80039D30                                              # DATA XREF: D:8003B0ECo
-D:80039D50     Pplant2Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 3416.248, 2, 0, 0>
-D:80039D50                                              # DATA XREF: D:8003B0F8o
-D:80039D70     Pplant3Z_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2986.0405, 1, 0, 0>
-D:80039D70                                              # DATA XREF: D:8003B104o
-D:80039D90     Pjungle5_treeZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 3277.6123, 4, 0, 0>
-D:80039D90                                              # DATA XREF: D:8003B110o
-D:80039DB0     PlegalpageZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2711.7573, 5, 0, 0>
-D:80039DB0                                              # DATA XREF: D:PlegalpageZ_entryo
-D:80039DD0     Pst_pete_room_1iZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 8437.5137, 0x17, 0, 0>
-D:80039DD0                                              # DATA XREF: D:8003B128o
-D:80039DF0     Pst_pete_room_2iZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 8515.8164, 0x19, 0, 0>
-D:80039DF0                                              # DATA XREF: D:8003B134o
-D:80039E10     Pst_pete_room_3tZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 4561.9766, 0x1B, 0, 0>
-D:80039E10                                              # DATA XREF: D:8003B140o
-D:80039E30     Pst_pete_room_5cZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 4561.9766, 0x19, 0, 0>
-D:80039E30                                              # DATA XREF: D:8003B14Co
-D:80039E50     Pst_pete_room_6cZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 5006.2896, 0x17, 0, 0>
-D:80039E50                                              # DATA XREF: D:8003B158o
-D:80039E70     Pdoor_rollertrainZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 1032.125, 2, 0, 0>
-D:80039E70                                              # DATA XREF: D:8003B164o
-D:80039E90     Pdoor_winZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 211.90215, 1, 0, 0>
-D:80039E90                                              # DATA XREF: D:8003B170o
-D:80039EB0     Pdoor_aztecZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 632.48639, 1, 0, 0>
-D:80039EB0                                              # DATA XREF: D:8003B17Co
-D:80039ED0     PshuttleZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 4475.1494, 9, 0, 0>
-D:80039ED0                                              # DATA XREF: D:8003B188o
-D:80039EF0     Pdoor_azt_deskZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 860.41669, 2, 0, 0>
-D:80039EF0                                              # DATA XREF: D:8003B194o
-D:80039F10     Pdoor_azt_desk_topZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 565.93268, 3, 0, 0>
-D:80039F10                                              # DATA XREF: D:8003B1A0o
-D:80039F30     Pdoor_azt_chairZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 94.510803, 3, 0, 0>
-D:80039F30                                              # DATA XREF: D:8003B1ACo
-D:80039F50     Pdoor_mfZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 559.70367, 7, 0, 0>
-D:80039F50                                              # DATA XREF: D:8003B1B8o
-D:80039F70     PflagZ_header:  PitemZ_header <0, prop_weapon_related, 3, 1, 862.30865, 2, 0, 0>
-D:80039F70                                              # DATA XREF: D:8003B1C4o
-D:80039F90     PbarricadeZ_header:PitemZ_header <0, model_object_standard_object, 0, 1, 2047.3016, 2, 0, 0>
-D:80039F90                                              # DATA XREF: D:8003B1D0o
-D:80039FB0     PmodemboxZ_header:PitemZ_header <0, prop_console_one_screen_related, 1, 1, 338.28839, 4, 0, 0>
-D:80039FB0                                              # DATA XREF: D:8003B1DCo
-D:80039FD0     PdoorpanelZ_header:PitemZ_header <0, prop_console_four_screen_related, 4, 1, 338.28839, 4, 0, 0>
-D:80039FD0                                              # DATA XREF: D:8003B1E8o
-D:80039FF0     PdoorconsoleZ_header:PitemZ_header <0, prop_console_one_screen_related, 1, 1, 994.23688, 0xD, 0, 0>
-D:80039FF0                                              # DATA XREF: D:8003B1F4o
-D:8003A010     PchrtesttubeZ_header:PitemZ_header <0, prop_weapon_related, 3, 1, 136.25925, 2, 0, 0>
-D:8003A010                                              # DATA XREF: D:8003B200o
-D:8003A030     Pbollardz_header:PitemZ_header <0, model_object_standard_object, 0, 1, 628.78754, 1, 0, 0>
-D:8003A030                                              # DATA XREF: D:8003B20Co
-D:8003A050     word_D_8003A050:.half 2                  # DATA XREF: D:prop_cctv_relatedo
-D:8003A052                     .half 0
-D:8003A054                     .half 0
-D:8003A056                     .half 2
-D:8003A058                     .half 3
-D:8003A05A                     .half 3
-D:8003A05C     prop_cctv_related:item_related <2, 0, word_D_8003A050, 6, 0>
-D:8003A05C                                              # DATA XREF: sub_CODE_7F04EA68+2C8o
-D:8003A05C                                              # sub_CODE_7F04EA68+358o
-D:8003A05C                                              # D:PcctvZ_headero
-D:8003A068     word_D_8003A068:.half 2                  # DATA XREF: D:prop_console_one_screen_relatedo
-D:8003A06A                     .half 0
-D:8003A06C                     .half 0
-D:8003A06E                     .half 0
-D:8003A070     prop_console_one_screen_related:item_related <1, 0, word_D_8003A068, 3, 0>
-D:8003A070                                              # DATA XREF: sub_CODE_7F04B590+4o
-D:8003A070                                              # D:Pbridge_console1bZ_headero
-D:8003A070                                              # D:Pconsole_sevbZ_headero
-D:8003A070                                              # D:Pconsole_sev2bZ_headero
-D:8003A070                                              # D:Ptv1Z_headero
-D:8003A070                                              # D:PtvscreenZ_headero
-D:8003A070                                              # D:Ptuning_console1Z_headero
-D:8003A070                                              # D:PmodemboxZ_headero
-D:8003A070                                              # D:PdoorconsoleZ_headero
-D:8003A07C     word_D_8003A07C:.half 2                  # DATA XREF: D:prop_console_four_screen_relatedo
-D:8003A07E                     .half 0
-D:8003A080                     .half 0
-D:8003A082                     .half 0
-D:8003A084     prop_console_four_screen_related:item_related <1, 0, word_D_8003A07C, 3, 0>
-D:8003A084                                              # DATA XREF: sub_CODE_7F04B590:loc_CODE_7F04B5BCo
-D:8003A084                                              # D:Pbridge_console1aZ_headero
-D:8003A084                                              # D:Pbridge_console2aZ_headero
-D:8003A084                                              # D:Pbridge_console3aZ_headero
-D:8003A084                                              # D:Pbridge_console3bZ_headero
-D:8003A084                                              # D:Pconsole1Z_headero
-D:8003A084                                              # D:Pconsole2Z_headero
-D:8003A084                                              # D:Pconsole3Z_headero
-D:8003A084                                              # D:Ptv4screenZ_headero
-D:8003A084                                              # D:PdoorpanelZ_headero
-D:8003A090     word_D_8003A090:.half 2                  # DATA XREF: D:prop_tv_holder_relatedo
-D:8003A092                     .half 0
-D:8003A094                     .half 0
-D:8003A096                     .half 2
-D:8003A098                     .half 3
-D:8003A09A                     .half 3
-D:8003A09C                     .half 2
-D:8003A09E                     .half 6
-D:8003A0A0                     .half 6
-D:8003A0A2                     .half 2
-D:8003A0A4                     .half 9
-D:8003A0A6                     .half 9
-D:8003A0A8                     .half 2
-D:8003A0AA                     .half 0xC
-D:8003A0AC                     .half 0xC
-D:8003A0AE                     .half 0
-D:8003A0B0     prop_tv_holder_related:item_related <5, 0, word_D_8003A090, 0xF, 0>
-D:8003A0B0                                              # DATA XREF: D:Ptv_holderZ_headero
-D:8003A0BC     word_D_8003A0BC:.half 2                  # DATA XREF: D:prop_rotating_stuff_relatedo
-D:8003A0BE                     .half 0
-D:8003A0C0                     .half 0
-D:8003A0C2                     .half 2
-D:8003A0C4                     .half 3
-D:8003A0C6                     .half 3
-D:8003A0C8                     .half 2
-D:8003A0CA                     .half 6
-D:8003A0CC                     .half 6
-D:8003A0CE                     .half 2
-D:8003A0D0                     .half 9
-D:8003A0D2                     .half 9
-D:8003A0D4                     .half 2
-D:8003A0D6                     .half 0xC
-D:8003A0D8                     .half 0xC
-D:8003A0DA                     .half 2
-D:8003A0DC                     .half 0xF
-D:8003A0DE                     .half 0xF
-D:8003A0E0     prop_rotating_stuff_related:item_related <6, 0, word_D_8003A0BC, 0x12, 0>
-D:8003A0E0                                              # DATA XREF: D:ProofgunZ_headero
-D:8003A0E0                                              # D:Pgun_runway1Z_headero
-D:8003A0E0                                              # D:PsevdishZ_headero
-D:8003A0E0                                              # D:PgroundgunZ_headero
-D:8003A0EC     word_D_8003A0EC:.half 2                  # DATA XREF: D:prop_eyelid_door_relatedo
-D:8003A0EE                     .half 0
-D:8003A0F0                     .half 0
-D:8003A0F2                     .half 2
-D:8003A0F4                     .half 3
-D:8003A0F6                     .half 3
-D:8003A0F8                     .half 2
-D:8003A0FA                     .half 6
-D:8003A0FC                     .half 6
-D:8003A0FE                     .half 0
-D:8003A100     prop_eyelid_door_related:item_related <3, 0, word_D_8003A0EC, 9, 0>
-D:8003A100                                              # DATA XREF: object_interaction+31D0o
-D:8003A100                                              # D:Pdoor_eyelidZ_headero
-D:8003A10C     word_D_8003A10C:.half 2                  # DATA XREF: D:prop_iris_door_relatedo
-D:8003A10E                     .half 0
-D:8003A110                     .word 2
-D:8003A114                     .half 3
-D:8003A116                     .half 3
-D:8003A118                     .half 2
-D:8003A11A                     .half 6
-D:8003A11C                     .half 6
-D:8003A11E                     .half 2
-D:8003A120                     .half 9
-D:8003A122                     .half 9
-D:8003A124                     .half 2
-D:8003A126                     .half 0xC
-D:8003A128                     .half 0xC
-D:8003A12A                     .half 2
-D:8003A12C                     .half 0xF
-D:8003A12E                     .half 0xF
-D:8003A130                     .half 2
-D:8003A132                     .half 0x12
-D:8003A134                     .half 0x12
-D:8003A136                     .half 2
-D:8003A138                     .half 0x15
-D:8003A13A                     .half 0x15
-D:8003A13C                     .half 2
-D:8003A13E                     .half 0x18
-D:8003A140                     .half 0x18
-D:8003A142                     .half 2
-D:8003A144                     .half 0x1B
-D:8003A146                     .half 0x1B
-D:8003A148                     .half 2
-D:8003A14A                     .half 0x1E
-D:8003A14C                     .half 0x1E
-D:8003A14E                     .half 2
-D:8003A150                     .half 0x21
-D:8003A152                     .half 0x21
-D:8003A154                     .half 2
-D:8003A156                     .half 0x24
-D:8003A158                     .half 0x24
-D:8003A15A                     .half 0
-D:8003A15C     prop_iris_door_related:item_related <0xD, 0, word_D_8003A10C, 0x27, 0>
-D:8003A15C                                              # DATA XREF: object_interaction+31E8o
-D:8003A15C                                              # D:Pdoor_irisZ_headero
-D:8003A168     word_D_8003A168:.half 2                  # DATA XREF: D:prop_walletbond_relatedo
-D:8003A16A                     .half 0
-D:8003A16C                     .half 0
-D:8003A16E                     .half 0
-D:8003A170     prop_walletbond_related:item_related <1, 0, word_D_8003A168, 3, 0>
-D:8003A170                                              # DATA XREF: D:PwalletbondZ_headero
-D:8003A17C     word_D_8003A17C:.half 2                  # DATA XREF: D:prop_car_relatedo
-D:8003A17E                     .half 0
-D:8003A180                     .word 2
-D:8003A184                     .half 3
-D:8003A186                     .half 3
-D:8003A188                     .half 2
-D:8003A18A                     .half 6
-D:8003A18C                     .half 6
-D:8003A18E                     .half 2
-D:8003A190                     .half 9
-D:8003A192                     .half 9
-D:8003A194                     .half 2
-D:8003A196                     .half 0xC
-D:8003A198                     .half 0xC
-D:8003A19A                     .half 0
-D:8003A19C     prop_car_related:item_related <5, 0, word_D_8003A17C, 0xF, 0>
-D:8003A19C                                              # DATA XREF: D:PmiltruckZ_headero
-D:8003A19C                                              # D:PjeepZ_headero
-D:8003A19C                                              # D:ParticZ_headero
-D:8003A19C                                              # D:PcarzilZ_headero
-D:8003A1A8     word_D_8003A1A8:.half 0x401              # DATA XREF: D:prop_flying_relatedo
-D:8003A1AA                     .half 0
-D:8003A1AC                     .half 0
-D:8003A1AE                     .half 2
-D:8003A1B0                     .half 0
-D:8003A1B2                     .half 0
-D:8003A1B4                     .half 0x15
-D:8003A1B6                     .half 3
-D:8003A1B8                     .half 3
-D:8003A1BA                     .half 0x15
-D:8003A1BC                     .half 4
-D:8003A1BE                     .half 4
-D:8003A1C0                     .half 0x15
-D:8003A1C2                     .half 5
-D:8003A1C4                     .half 5
-D:8003A1C6                     .half 0
-D:8003A1C8     prop_flying_related:item_related <5, 0, word_D_8003A1A8, 3, 0>
-D:8003A1C8                                              # DATA XREF: D:PhelicopterZ_headero
-D:8003A1C8                                              # D:PtigerZ_headero
-D:8003A1C8                                              # D:PmilcopterZ_headero
-D:8003A1C8                                              # D:PhindZ_headero
-D:8003A1C8                                              # D:PplaneZ_headero
-D:8003A1D4     word_D_8003A1D4:.half 2                  # DATA XREF: D:prop_door_relatedo
-D:8003A1D6                     .half 0
-D:8003A1D8                     .half 0
-D:8003A1DA                     .half 0
-D:8003A1DC     prop_door_related:item_related <1, 0, word_D_8003A1D4, 3, 0>
-D:8003A1DC                                              # DATA XREF: object_interaction:loc_CODE_7F048350o
-D:8003A1DC                                              # sub_CODE_7F04E720:loc_CODE_7F04E92Co
-D:8003A1DC                                              # sub_CODE_7F04EA68+1B0o
-D:8003A1DC                                              # sub_CODE_7F04EA68+288o
-D:8003A1DC                                              # sub_CODE_7F04EA68+3DCo
-D:8003A1DC                                              # D:Psev_door4_windZ_headero
-D:8003A1DC                                              # D:Psev_trislideZ_headero
-D:8003A1DC                                              # D:Pgasplant_clear_doorZ_headero
-D:8003A1DC                                              # D:Ptrain_door2Z_headero
-D:8003A1DC                                              # D:Ptrain_door3Z_headero
-D:8003A1DC                                              # D:PsevdoorwoodZ_headero
-D:8003A1DC                                              # D:PsevdoorwindZ_headero
-D:8003A1E8     word_D_8003A1E8:.half 2                  # DATA XREF: D:item_tank_relatedo
-D:8003A1EA                     .half 0
-D:8003A1EC                     .half 0
-D:8003A1EE                     .half 2
-D:8003A1F0                     .half 3
-D:8003A1F2                     .half 3
-D:8003A1F4                     .half 2
-D:8003A1F6                     .half 6
-D:8003A1F8                     .half 6
-D:8003A1FA                     .half 2
-D:8003A1FC                     .half 9
-D:8003A1FE                     .half 9
-D:8003A200                     .half 2
-D:8003A202                     .half 0xC
-D:8003A204                     .half 0xC
-D:8003A206                     .half 0
-D:8003A208     item_tank_related:item_related <5, 0, word_D_8003A1E8, 0xF, 0>
-D:8003A208                                              # DATA XREF: D:PtankZ_headero
-D:8003A214     word_D_8003A214:.half 0x15               # DATA XREF: D:item_hat_relatedo
-D:8003A216                     .half 0
-D:8003A218                     .half 0
-D:8003A21A                     .half 0
-D:8003A21C     item_hat_related:item_related <1, 0, word_D_8003A214, 0, 0>
-D:8003A21C                                              # DATA XREF: D:PhatfurryZ_headero
-D:8003A21C                                              # D:PhatfurrybrownZ_headero
-D:8003A21C                                              # D:PhatfurryblackZ_headero
-D:8003A21C                                              # D:PhattbirdZ_headero
-D:8003A21C                                              # D:PhattbirdbrownZ_headero
-D:8003A21C                                              # D:PhathelmetZ_headero
-D:8003A21C                                              # D:PhathelmetgreyZ_headero
-D:8003A21C                                              # D:PhatmoonZ_headero
-D:8003A21C                                              # D:PhatberetZ_headero
-D:8003A21C                                              # D:PhatberetblueZ_headero
-D:8003A21C                                              # D:PhatberetredZ_headero
-D:8003A21C                                              # D:PhatpeakedZ_headero
-D:8003A228                     .globl PitemZ_entries
-D:8003A228     PitemZ_entries: p_itementry <Palarm1z_header, aPalarm1z, 0.1>
-D:8003A228                                              # DATA XREF: prepare_load_objects+14Cr
-D:8003A228                                              # prepare_load_objects+1FCr
-D:8003A228                                              # prepare_load_objects+590r
-D:8003A228                                              # stage_loading_setup_objparse_cleanupafter+A4o
-D:8003A228                                              # sub_CODE_7F008E80+2D0o
-D:8003A228                                              # init_menu00_legalscreen+4Co
-D:8003A228                                              # init_menu01_nintendo+38o
-D:8003A228                                              # init_menu04_goldeneyelogo+38o
-D:8003A228                                              # load_walletbond+24o
-D:8003A228                                              # init_menu18_displaycast+4E0o
-D:8003A228                                              # maybe_detonate_object+3DCr
-D:8003A228                                              # sub_CODE_7F0510C0+10r
-D:8003A228                                              # create_new_item_instance_of_model+10r
-D:8003A228                                              # something_with_generating_object+38r
-D:8003A228                                              # load_model+8o
-D:8003A228                                              # solo_char_load+664o
-D:8003A228                                              # "Palarm1Z"
-D:8003A234                     p_itementry <Palarm2Z_header, aPalarm2z, 0.1>  # "Palarm2Z"
-D:8003A240                     p_itementry <PexplosionbitZ_header, aPexplosionbitz, 0.1>  # "PexplosionbitZ"
-D:8003A24C                     p_itementry <Pammo_crate1Z_header, aPammo_crate1z, 0.1>  # "Pammo_crate1Z"
-D:8003A258                     p_itementry <Pammo_crate2Z_header, aPammo_crate2z, 0.1>  # "Pammo_crate2Z"
-D:8003A264                     p_itementry <Pammo_crate3Z_header, aPammo_crate3z, 0.1>  # "Pammo_crate3Z"
-D:8003A270                     p_itementry <Pammo_crate4Z_header, aPammo_crate4z, 0.1>  # "Pammo_crate4Z"
-D:8003A27C                     p_itementry <Pammo_crate5Z_header, aPammo_crate5z, 0.1>  # "Pammo_crate5Z"
-D:8003A288                     p_itementry <Pbin1Z_header, aPbin1z, 0.1>  # "Pbin1Z"
-D:8003A294                     p_itementry <Pblotter1Z_header, aPblotter1z, 0.1>  # "Pblotter1Z"
-D:8003A2A0                     p_itementry <Pbook1Z_header, aPbook1z, 0.1>  # "Pbook1Z"
-D:8003A2AC                     p_itementry <Pbookshelf1Z_header, aPbookshelf1z, 0.1>  # "Pbookshelf1Z"
-D:8003A2B8                     p_itementry <Pbridge_console1aZ_header, aPbridge_console1az, 0.1>  # "Pbridge_console1aZ"
-D:8003A2C4                     p_itementry <Pbridge_console1bZ_header, aPbridge_console1bz, 0.1>  # "Pbridge_console1bZ"
-D:8003A2D0                     p_itementry <Pbridge_console2aZ_header, aPbridge_console2az, 0.1>  # "Pbridge_console2aZ"
-D:8003A2DC                     p_itementry <Pbridge_console2bZ_header, aPbridge_console2bz, 0.1>  # "Pbridge_console2bZ"
-D:8003A2E8                     p_itementry <Pbridge_console3aZ_header, aPbridge_console3az, 0.1>  # "Pbridge_console3aZ"
-D:8003A2F4                     p_itementry <Pbridge_console3bZ_header, aPbridge_console3bz, 0.1>  # "Pbridge_console3bZ"
-D:8003A300                     p_itementry <Pcard_box1Z_header, aPcard_box1z, 0.1>  # "Pcard_box1Z"
-D:8003A30C                     p_itementry <Pcard_box2Z_header, aPcard_box2z, 0.1>  # "Pcard_box2Z"
-D:8003A318                     p_itementry <Pcard_box3Z_header, aPcard_box3z, 0.1>  # "Pcard_box3Z"
-D:8003A324                     p_itementry <Pcard_box4_lgZ_header, aPcard_box4_lgz, 0.1>  # "Pcard_box4_lgZ"
-D:8003A330                     p_itementry <Pcard_box5_lgZ_header, aPcard_box5_lgz, 0.1>  # "Pcard_box5_lgZ"
-D:8003A33C                     p_itementry <Pcard_box6_lgZ_header, aPcard_box6_lgz, 0.1>  # "Pcard_box6_lgZ"
-D:8003A348                     p_itementry <PcctvZ_header, aPcctvz, 0.1>  # "PcctvZ"
-D:8003A354                     p_itementry <Pconsole1Z_header, aPconsole1z, 0.1>  # "Pconsole1Z"
-D:8003A360                     p_itementry <Pconsole2Z_header, aPconsole2z, 0.1>  # "Pconsole2Z"
-D:8003A36C                     p_itementry <Pconsole3Z_header, aPconsole3z, 0.1>  # "Pconsole3Z"
-D:8003A378                     p_itementry <Pconsole_sevaZ_header, aPconsole_sevaz, 0.1>  # "Pconsole_sevaZ"
-D:8003A384                     p_itementry <Pconsole_sevbZ_header, aPconsole_sevbz, 0.1>  # "Pconsole_sevbZ"
-D:8003A390                     p_itementry <Pconsole_sevcZ_header, aPconsole_sevcz, 0.1>  # "Pconsole_sevcZ"
-D:8003A39C                     p_itementry <Pconsole_sevdZ_header, aPconsole_sevdz, 0.1>  # "Pconsole_sevdZ"
-D:8003A3A8                     p_itementry <Pconsole_sev2aZ_header, aPconsole_sev2az, 0.1>  # "Pconsole_sev2aZ"
-D:8003A3B4                     p_itementry <Pconsole_sev2bZ_header, aPconsole_sev2bz, 0.1>  # "Pconsole_sev2bZ"
-D:8003A3C0                     p_itementry <Pconsole_sev2cZ_header, aPconsole_sev2cz, 0.1>  # "Pconsole_sev2cZ"
-D:8003A3CC                     p_itementry <Pconsole_sev2dZ_header, aPconsole_sev2dz, 0.1>  # "Pconsole_sev2dZ"
-D:8003A3D8                     p_itementry <Pconsole_sev_GEaZ_header, aPconsole_sev_geaz, 0.1>  # "Pconsole_sev_GEaZ"
-D:8003A3E4                     p_itementry <Pconsole_sev_GEbZ_header, aPconsole_sev_gebz, 0.1>  # "Pconsole_sev_GEbZ"
-D:8003A3F0                     p_itementry <Pdesk1Z_header, aPdesk1z, 0.1>  # "Pdesk1Z"
-D:8003A3FC                     p_itementry <Pdesk2Z_header, aPdesk2z, 0.1>  # "Pdesk2Z"
-D:8003A408                     p_itementry <Pdesk_lamp2Z_header, aPdesk_lamp2z, 0.1>  # "Pdesk_lamp2Z"
-D:8003A414                     p_itementry <Pdisc_readerZ_header, aPdisc_readerz, 0.1>  # "Pdisc_readerZ"
-D:8003A420                     p_itementry <Pdisk_drive1Z_header, aPdisk_drive1z, 0.1>  # "Pdisk_drive1Z"
-D:8003A42C                     p_itementry <Pfiling_cabinet1Z_header, aPfiling_cabinet1z, 0.1>  # "Pfiling_cabinet1Z"
-D:8003A438                     p_itementry <Pjerry_can1Z_header, aPjerry_can1z, 0.1>  # "Pjerry_can1Z"
-D:8003A444                     p_itementry <Pkeyboard1Z_header, aPkeyboard1z, 0.1>  # "Pkeyboard1Z"
-D:8003A450                     p_itementry <Pkit_units1Z_header, aPkit_units1z, 0.1>  # "Pkit_units1Z"
-D:8003A45C                     p_itementry <Pletter_tray1Z_header, aPletter_tray1z, 0.1>  # "Pletter_tray1Z"
-D:8003A468                     p_itementry <Pmainframe1Z_header, aPmainframe1z, 0.1>  # "Pmainframe1Z"
-D:8003A474                     p_itementry <Pmainframe2Z_header, aPmainframe2z, 0.1>  # "Pmainframe2Z"
-D:8003A480                     p_itementry <Pmetal_chair1Z_header, aPmetal_chair1z, 0.1>  # "Pmetal_chair1Z"
-D:8003A48C                     p_itementry <Pmetal_crate1Z_header, aPmetal_crate1z, 0.1>  # "Pmetal_crate1Z"
-D:8003A498                     p_itementry <Pmetal_crate2Z_header, aPmetal_crate2z, 0.1>  # "Pmetal_crate2Z"
-D:8003A4A4                     p_itementry <Pmetal_crate3Z_header, aPmetal_crate3z, 0.1>  # "Pmetal_crate3Z"
-D:8003A4B0                     p_itementry <Pmetal_crate4Z_header, aPmetal_crate4z, 0.1>  # "Pmetal_crate4Z"
-D:8003A4BC                     p_itementry <Pmissile_rackZ_header, aPmissile_rackz, 0.1>  # "Pmissile_rackZ"
-D:8003A4C8                     p_itementry <Pmissile_rack2Z_header, aPmissile_rack2z, 0.1>  # "Pmissile_rack2Z"
-D:8003A4D4                     p_itementry <Poil_drum1Z_header, aPoil_drum1z, 0.1>  # "Poil_drum1Z"
-D:8003A4E0                     p_itementry <Poil_drum2Z_header, aPoil_drum2z, 0.1>  # "Poil_drum2Z"
-D:8003A4EC                     p_itementry <Poil_drum3Z_header, aPoil_drum3z, 0.1>  # "Poil_drum3Z"
-D:8003A4F8                     p_itementry <Poil_drum5Z_header, aPoil_drum5z, 0.1>  # "Poil_drum5Z"
-D:8003A504                     p_itementry <Poil_drum6Z_header, aPoil_drum6z, 0.1>  # "Poil_drum6Z"
-D:8003A510                     p_itementry <Poil_drum7Z_header, aPoil_drum7z, 0.1>  # "Poil_drum7Z"
-D:8003A51C                     p_itementry <PpadlockZ_header, aPpadlockz, 0.1>  # "PpadlockZ"
-D:8003A528                     p_itementry <Pphone1Z_header, aPphone1z, 0.1>  # "Pphone1Z"
-D:8003A534                     p_itementry <Pradio_unit1Z_header, aPradio_unit1z, 0.1>  # "Pradio_unit1Z"
-D:8003A540                     p_itementry <Pradio_unit2Z_header, aPradio_unit2z, 0.1>  # "Pradio_unit2Z"
-D:8003A54C                     p_itementry <Pradio_unit3Z_header, aPradio_unit3z, 0.1>  # "Pradio_unit3Z"
-D:8003A558                     p_itementry <Pradio_unit4Z_header, aPradio_unit4z, 0.1>  # "Pradio_unit4Z"
-D:8003A564                     p_itementry <Psat1_reflectZ_header, aPsat1_reflectz, 0.1>  # "Psat1_reflectZ"
-D:8003A570                     p_itementry <PsatdishZ_header, aPsatdishz, 0.1>  # "PsatdishZ"
-D:8003A57C                     p_itementry <PsatboxZ_header, aPsatboxz, 0.1>  # "PsatboxZ"
-D:8003A588                     p_itementry <Pstool1Z_header, aPstool1z, 0.1>  # "Pstool1Z"
-D:8003A594                     p_itementry <Pswivel_chair1Z_header, aPswivel_chair1z, 0.1>  # "Pswivel_chair1Z"
-D:8003A5A0                     p_itementry <Ptorpedo_rackZ_header, aPtorpedo_rackz, 0.1>  # "Ptorpedo_rackZ"
-D:8003A5AC                     p_itementry <Ptv1Z_header, aPtv1z, 0.1>  # "Ptv1Z"
-D:8003A5B8                     p_itementry <Ptv_holderZ_header, aPtv_holderz, 0.1>  # "Ptv_holderZ"
-D:8003A5C4                     p_itementry <PtvscreenZ_header, aPtvscreenz, 0.1>  # "PtvscreenZ"
-D:8003A5D0                     p_itementry <Ptv4screenZ_header, aPtv4screenz, 0.1>  # "Ptv4screenZ"
-D:8003A5DC                     p_itementry <Pwood_lg_crate1Z_header, aPwood_lg_crate1z, 0.1>  # "Pwood_lg_crate1Z"
-D:8003A5E8                     p_itementry <Pwood_lg_crate2Z_header, aPwood_lg_crate2z, 0.1>  # "Pwood_lg_crate2Z"
-D:8003A5F4                     p_itementry <Pwood_md_crate3Z_header, aPwood_md_crate3z, 0.1>  # "Pwood_md_crate3Z"
-D:8003A600                     p_itementry <Pwood_sm_crate4Z_header, aPwood_sm_crate4z, 0.1>  # "Pwood_sm_crate4Z"
-D:8003A60C                     p_itementry <Pwood_sm_crate5Z_header, aPwood_sm_crate5z, 0.1>  # "Pwood_sm_crate5Z"
-D:8003A618                     p_itementry <Pwood_sm_crate6Z_header, aPwood_sm_crate6z, 0.1>  # "Pwood_sm_crate6Z"
-D:8003A624                     p_itementry <Pwooden_table1Z_header, aPwooden_table1z, 0.1>  # "Pwooden_table1Z"
-D:8003A630                     p_itementry <Pswipe_card2Z_header, aPswipe_card2z, 0.1>  # "Pswipe_card2Z"
-D:8003A63C                     p_itementry <Pborg_crateZ_header, aPborg_cratez, 0.1>  # "Pborg_crateZ"
-D:8003A648                     p_itementry <Pboxes4x4Z_header, aPboxes4x4z, 0.1>  # "Pboxes4x4Z"
-D:8003A654                     p_itementry <Pboxes3x4Z_header, aPboxes3x4z, 0.1>  # "Pboxes3x4Z"
-D:8003A660                     p_itementry <Pboxes2x4Z_header, aPboxes2x4z, 0.1>  # "Pboxes2x4Z"
-D:8003A66C                     p_itementry <Psec_panelZ_header, aPsec_panelz, 0.1>  # "Psec_panelZ"
-D:8003A678                     p_itementry <PICBM_noseZ_header, aPicbm_nosez, 0.1>  # "PICBM_noseZ"
-D:8003A684                     p_itementry <PICBMZ_header, aPicbmz, 0.1>  # "PICBMZ"
-D:8003A690                     p_itementry <Ptuning_console1Z_header, aPtuning_console1z, 0.1>  # "Ptuning_console1Z"
-D:8003A69C                     p_itementry <Pdesk_arecibo1Z_header, aPdesk_arecibo1z, 0.1>  # "Pdesk_arecibo1Z"
-D:8003A6A8                     p_itementry <Plocker3Z_header, aPlocker3z, 0.1>  # "Plocker3Z"
-D:8003A6B4                     p_itementry <Plocker4Z_header, aPlocker4z, 0.1>  # "Plocker4Z"
-D:8003A6C0                     p_itementry <ProofgunZ_header, aProofgunz, 0.1>  # "ProofgunZ"
-D:8003A6CC                     p_itementry <Pdest_engineZ_header, aPdest_enginez, 0.1>  # "Pdest_engineZ"
-D:8003A6D8                     p_itementry <Pdest_exocetZ_header, aPdest_exocetz, 0.1>  # "Pdest_exocetZ"
-D:8003A6E4                     p_itementry <Pdest_gunZ_header, aPdest_gunz, 0.1>  # "Pdest_gunZ"
-D:8003A6F0                     p_itementry <Pdest_harpoonZ_header, aPdest_harpoonz, 0.1>  # "Pdest_harpoonZ"
-D:8003A6FC                     p_itementry <Pdest_seawolfZ_header, aPdest_seawolfz, 0.1>  # "Pdest_seawolfZ"
-D:8003A708                     p_itementry <PwindowZ_header, aPwindowz, 0.1>  # "PwindowZ"
-D:8003A714                     p_itementry <Pwindow_lib_lg1Z_header, aPwindow_lib_lg1z, 0.1>  # "Pwindow_lib_lg1Z"
-D:8003A720                     p_itementry <Pwindow_lib_sm1Z_header, aPwindow_lib_sm1z, 0.1>  # "Pwindow_lib_sm1Z"
-D:8003A72C                     p_itementry <Pwindow_cor11Z_header, aPwindow_cor11z, 0.1>  # "Pwindow_cor11Z"
-D:8003A738                     p_itementry <Pjungle3_treeZ_header, aPjungle3_treez, 0.1>  # "Pjungle3_treeZ"
-D:8003A744                     p_itementry <PpalmZ_header, aPpalmz, 0.1>  # "PpalmZ"
-D:8003A750                     p_itementry <PpalmtreeZ_header, aPpalmtreez, 0.1>  # "PpalmtreeZ"
-D:8003A75C                     p_itementry <Pplant2bZ_header, aPplant2bz, 0.1>  # "Pplant2bZ"
-D:8003A768                     p_itementry <PlabbenchZ_header, aPlabbenchz, 0.1>  # "PlabbenchZ"
-D:8003A774                     p_itementry <PgasbarrelZ_header, aPgasbarrelz, 0.1>  # "PgasbarrelZ"
-D:8003A780                     p_itementry <PgasbarrelsZ_header, aPgasbarrelsz, 0.1>  # "PgasbarrelsZ"
-D:8003A78C                     p_itementry <PbodyarmourZ_header, aPbodyarmourz, 0.1>  # "PbodyarmourZ"
-D:8003A798                     p_itementry <PbodyarmourvestZ_header, aPbodyarmourvestz, 0.1>  # "PbodyarmourvestZ"
-D:8003A7A4                     p_itementry <PgastankZ_header, aPgastankz, 0.1>  # "PgastankZ"
-D:8003A7B0                     p_itementry <Pglassware1Z_header, aPglassware1z, 0.1>  # "Pglassware1Z"
-D:8003A7BC                     p_itementry <PhatchboltZ_header, aPhatchboltz, 0.1>  # "PhatchboltZ"
-D:8003A7C8                     p_itementry <PbrakeunitZ_header, aPbrakeunitz, 0.1>  # "PbrakeunitZ"
-D:8003A7D4                     p_itementry <Pak47magZ_header, aPak47magz, 0.1>  # "Pak47magZ"
-D:8003A7E0                     p_itementry <Pm16magZ_header, aPm16magz, 0.1>  # "Pm16magZ"
-D:8003A7EC                     p_itementry <Pmp5kmagZ_header, aPmp5kmagz, 0.1>  # "Pmp5kmagZ"
-D:8003A7F8                     p_itementry <PskorpionmagZ_header, aPskorpionmagz, 0.1>  # "PskorpionmagZ"
-D:8003A804                     p_itementry <PspectremagZ_header, aPspectremagz, 0.1>  # "PspectremagZ"
-D:8003A810                     p_itementry <PuzimagZ_header, aPuzimagz, 0.1>  # "PuzimagZ"
-D:8003A81C                     p_itementry <PsilencerZ_header, aPsilencerz, 0.1>  # "PsilencerZ"
-D:8003A828                     p_itementry <PchrextinguisherZ_header, aPchrextinguisherz, 0.1>  # "PchrextinguisherZ"
-D:8003A834                     p_itementry <PboxcartridgesZ_header, aPboxcartridgesz, 0.1>  # "PboxcartridgesZ"
-D:8003A840                     p_itementry <Pfnp90magZ_header, aPfnp90magz, 0.1>  # "Pfnp90magZ"
-D:8003A84C                     p_itementry <PgoldenshellsZ_header, aPgoldenshellsz, 0.1>  # "PgoldenshellsZ"
-D:8003A858                     p_itementry <PmagnumshellsZ_header, aPmagnumshellsz, 0.1>  # "PmagnumshellsZ"
-D:8003A864                     p_itementry <PwppkmagZ_header, aPwppkmagz, 0.1>  # "PwppkmagZ"
-D:8003A870                     p_itementry <Ptt33magZ_header, aPtt33magz, 0.1>  # "Ptt33magZ"
-D:8003A87C                     p_itementry <Psev_doorZ_header, aPsev_doorz, 1.0>  # "Psev_doorZ"
-D:8003A888                     p_itementry <Psev_door3Z_header, aPsev_door3z, 1.0>  # "Psev_door3Z"
-D:8003A894                     p_itementry <Psev_door3_windZ_header, aPsev_door3_windz, 1.0>  # "Psev_door3_windZ"
-D:8003A8A0                     p_itementry <Psev_door4_windZ_header, aPsev_door4_windz, 1.0>  # "Psev_door4_windZ"
-D:8003A8AC                     p_itementry <Psev_trislideZ_header, aPsev_trislidez, 1.0>  # "Psev_trislideZ"
-D:8003A8B8                     p_itementry <Psev_door_v1Z_header, aPsev_door_v1z, 1.0>  # "Psev_door_v1Z"
-D:8003A8C4                     p_itementry <Psteel_door1Z_header, aPsteel_door1z, 1.0>  # "Psteel_door1Z"
-D:8003A8D0                     p_itementry <Psteel_door2Z_header, aPsteel_door2z, 1.0>  # "Psteel_door2Z"
-D:8003A8DC                     p_itementry <Psteel_door3Z_header, aPsteel_door3z, 1.0>  # "Psteel_door3Z"
-D:8003A8E8                     p_itementry <Psilo_lift_doorZ_header, aPsilo_lift_doorz, 1.0>  # "Psilo_lift_doorZ"
-D:8003A8F4                     p_itementry <Psteel_door2bZ_header, aPsteel_door2bz, 1.0>  # "Psteel_door2bZ"
-D:8003A900                     p_itementry <Pdoor_roller1Z_header, aPdoor_roller1z, 1.0>  # "Pdoor_roller1Z"
-D:8003A90C                     p_itementry <Pdoor_roller2Z_header, aPdoor_roller2z, 1.0>  # "Pdoor_roller2Z"
-D:8003A918                     p_itementry <Pdoor_roller3Z_header, aPdoor_roller3z, 1.0>  # "Pdoor_roller3Z"
-D:8003A924                     p_itementry <Pdoor_roller4Z_header, aPdoor_roller4z, 1.0>  # "Pdoor_roller4Z"
-D:8003A930                     p_itementry <Pdoor_st_arec1Z_header, aPdoor_st_arec1z, 1.0>  # "Pdoor_st_arec1Z"
-D:8003A93C                     p_itementry <Pdoor_st_arec2Z_header, aPdoor_st_arec2z, 1.0>  # "Pdoor_st_arec2Z"
-D:8003A948                     p_itementry <Pdoor_dest1Z_header, aPdoor_dest1z, 1.0>  # "Pdoor_dest1Z"
-D:8003A954                     p_itementry <Pdoor_dest2Z_header, aPdoor_dest2z, 1.0>  # "Pdoor_dest2Z"
-D:8003A960                     p_itementry <Pgas_plant_sw_do1Z_header, aPgas_plant_sw_do1z, 1.0>  # "Pgas_plant_sw_do1Z"
-D:8003A96C                     p_itementry <Pgas_plant_sw2_do1Z_header, aPgas_plant_sw2_do1z, 1.0>  # "Pgas_plant_sw2_do1Z"
-D:8003A978                     p_itementry <Pgas_plant_sw3_do1Z_header, aPgas_plant_sw3_do1z, 1.0>  # "Pgas_plant_sw3_do1Z"
-D:8003A984                     p_itementry <Pgas_plant_sw4_do1Z_header, aPgas_plant_sw4_do1z, 1.0>  # "Pgas_plant_sw4_do1Z"
-D:8003A990                     p_itementry <Pgas_plant_met1_do1Z_header, aPgas_plant_met1_do1z, 1.0>  # "Pgas_plant_met1_do1Z"
-D:8003A99C                     p_itementry <Pgas_plant_wc_cub1Z_header, aPgas_plant_wc_cub1z, 1.0>  # "Pgas_plant_wc_cub1Z"
-D:8003A9A8                     p_itementry <Pgasplant_clear_doorZ_header, aPgasplant_clear_doorz, 1.0>  # "Pgasplant_clear_doorZ"
-D:8003A9B4                     p_itementry <Ptrain_doorZ_header, aPtrain_doorz, 1.0>  # "Ptrain_doorZ"
-D:8003A9C0                     p_itementry <Ptrain_door2Z_header, aPtrain_door2z, 1.0>  # "Ptrain_door2Z"
-D:8003A9CC                     p_itementry <Ptrain_door3Z_header, aPtrain_door3z, 1.0>  # "Ptrain_door3Z"
-D:8003A9D8                     p_itementry <Pdoor_eyelidZ_header, aPdoor_eyelidz, 1.0>  # "Pdoor_eyelidZ"
-D:8003A9E4                     p_itementry <Pdoor_irisZ_header, aPdoor_irisz, 1.0>  # "Pdoor_irisZ"
-D:8003A9F0                     p_itementry <PsevdoorwoodZ_header, aPsevdoorwoodz, 1.0>  # "PsevdoorwoodZ"
-D:8003A9FC                     p_itementry <PsevdoorwindZ_header, aPsevdoorwindz, 1.0>  # "PsevdoorwindZ"
-D:8003AA08                     p_itementry <PsevdoornowindZ_header, aPsevdoornowindz, 1.0>  # "PsevdoornowindZ"
-D:8003AA14                     p_itementry <PsevdoormetslideZ_header, aPsevdoormetslidez, 1.0>  # "PsevdoormetslideZ"
-D:8003AA20                     p_itementry <Pcryptdoor1aZ_header, aPcryptdoor1az, 1.0>  # "Pcryptdoor1aZ"
-D:8003AA2C                     p_itementry <Pcryptdoor1bZ_header, aPcryptdoor1bz, 1.0>  # "Pcryptdoor1bZ"
-D:8003AA38                     p_itementry <Pcryptdoor2aZ_header, aPcryptdoor2az, 1.0>  # "Pcryptdoor2aZ"
-D:8003AA44                     p_itementry <Pcryptdoor2bZ_header, aPcryptdoor2bz, 1.0>  # "Pcryptdoor2bZ"
-D:8003AA50                     p_itementry <Pcryptdoor3Z_header, aPcryptdoor3z, 1.0>  # "Pcryptdoor3Z"
-D:8003AA5C                     p_itementry <Pcryptdoor4Z_header, aPcryptdoor4z, 1.0>  # "Pcryptdoor4Z"
-D:8003AA68                     p_itementry <PvertdoorZ_header, aPvertdoorz, 1.0>  # "PvertdoorZ"
-D:8003AA74                     p_itementry <PhatchdoorZ_header, aPhatchdoorz, 1.0>  # "PhatchdoorZ"
-D:8003AA80                     p_itementry <PdamgatedoorZ_header, aPdamgatedoorz, 1.0>  # "PdamgatedoorZ"
-D:8003AA8C                     p_itementry <PdamtundoorZ_header, aPdamtundoorz, 1.0>  # "PdamtundoorZ"
-D:8003AA98                     p_itementry <PdamchaindoorZ_header, aPdamchaindoorz, 1.0>  # "PdamchaindoorZ"
-D:8003AAA4                     p_itementry <PsilotopdoorZ_header, aPsilotopdoorz, 1.0>  # "PsilotopdoorZ"
-D:8003AAB0                     p_itementry <Pdoorprison1Z_header, aPdoorprison1z, 1.0>  # "Pdoorprison1Z"
-D:8003AABC                     p_itementry <PdoorstatgateZ_header, aPdoorstatgatez, 1.0>  # "PdoorstatgateZ"
-D:8003AAC8                     p_itementry <PchrkalashZ_header, aPchrkalashz, 0.1>  # "PchrkalashZ"
-D:8003AAD4                     p_itementry <PchrgrenadelaunchZ_header, aPchrgrenadelaunchz, 0.1>  # "PchrgrenadelaunchZ"
-D:8003AAE0                     p_itementry <PchrknifeZ_header, aPchrknifez, 0.1>  # "PchrknifeZ"
-D:8003AAEC                     p_itementry <PchrlaserZ_header, aPchrlaserz, 0.1>  # "PchrlaserZ"
-D:8003AAF8                     p_itementry <Pchrm16Z_header, aPchrm16z, 0.1>  # "Pchrm16Z"
-D:8003AB04                     p_itementry <Pchrmp5kZ_header, aPchrmp5kz, 0.1>  # "Pchrmp5kZ"
-D:8003AB10                     p_itementry <PchrrugerZ_header, aPchrrugerz, 0.1>  # "PchrrugerZ"
-D:8003AB1C     PchrwppkZ_entry:p_itementry <PchrwppkZ_header, aPchrwppkz, 0.1>
-D:8003AB1C                                              # DATA XREF: sub_CODE_7F008E80+2E0r
-D:8003AB1C                                              # sub_CODE_7F008E80+324r
-D:8003AB1C                                              # sub_CODE_7F008E80+32Cr
-D:8003AB1C                                              # sub_CODE_7F008E80+2E4r
-D:8003AB1C                                              # sub_CODE_7F008E80+2F8r
-D:8003AB1C                                              # "PchrwppkZ"
-D:8003AB28                     p_itementry <PchrshotgunZ_header, aPchrshotgunz, 0.1>  # "PchrshotgunZ"
-D:8003AB34                     p_itementry <PchrskorpionZ_header, aPchrskorpionz, 0.1>  # "PchrskorpionZ"
-D:8003AB40                     p_itementry <PchrspectreZ_header, aPchrspectrez, 0.1>  # "PchrspectreZ"
-D:8003AB4C                     p_itementry <PchruziZ_header, aPchruziz, 0.1>  # "PchruziZ"
-D:8003AB58                     p_itementry <PchrgrenadeZ_header, aPchrgrenadez, 0.1>  # "PchrgrenadeZ"
-D:8003AB64                     p_itementry <Pchrfnp90Z_header, aPchrfnp90z, 0.1>  # "Pchrfnp90Z"
-D:8003AB70                     p_itementry <PchrbriefcaseZ_header, aPchrbriefcasez, 0.1>  # "PchrbriefcaseZ"
-D:8003AB7C                     p_itementry <PchrremotemineZ_header, aPchrremoteminez, 0.1>  # "PchrremotemineZ"
-D:8003AB88                     p_itementry <PchrproximitymineZ_header, aPchrproximityminez, 0.1>  # "PchrproximitymineZ"
-D:8003AB94                     p_itementry <PchrtimedmineZ_header, aPchrtimedminez, 0.1>  # "PchrtimedmineZ"
-D:8003ABA0                     p_itementry <PchrrocketZ_header, aPchrrocketz, 0.1>  # "PchrrocketZ"
-D:8003ABAC                     p_itementry <PchrgrenaderoundZ_header, aPchrgrenaderoundz, 0.1>  # "PchrgrenaderoundZ"
-D:8003ABB8                     p_itementry <PchrwppksilZ_header, aPchrwppksilz, 0.1>  # "PchrwppksilZ"
-D:8003ABC4                     p_itementry <Pchrtt33Z_header, aPchrtt33z, 0.1>  # "Pchrtt33Z"
-D:8003ABD0                     p_itementry <Pchrmp5ksilZ_header, aPchrmp5ksilz, 0.1>  # "Pchrmp5ksilZ"
-D:8003ABDC                     p_itementry <PchrautoshotZ_header, aPchrautoshotz, 0.1>  # "PchrautoshotZ"
-D:8003ABE8                     p_itementry <PchrgoldenZ_header, aPchrgoldenz, 0.1>  # "PchrgoldenZ"
-D:8003ABF4                     p_itementry <PchrthrowknifeZ_header, aPchrthrowknifez, 0.1>  # "PchrthrowknifeZ"
-D:8003AC00                     p_itementry <PchrsniperrifleZ_header, aPchrsniperriflez, 0.1>  # "PchrsniperrifleZ"
-D:8003AC0C                     p_itementry <PchrrocketlaunchZ_header, aPchrrocketlaunchz, 0.1>  # "PchrrocketlaunchZ"
-D:8003AC18                     p_itementry <PhatfurryZ_header, aPhatfurryz, 0.1>  # "PhatfurryZ"
-D:8003AC24                     p_itementry <PhatfurrybrownZ_header, aPhatfurrybrownz, 0.1>  # "PhatfurrybrownZ"
-D:8003AC30                     p_itementry <PhatfurryblackZ_header, aPhatfurryblackz, 0.1>  # "PhatfurryblackZ"
-D:8003AC3C                     p_itementry <PhattbirdZ_header, aPhattbirdz, 0.1>  # "PhattbirdZ"
-D:8003AC48                     p_itementry <PhattbirdbrownZ_header, aPhattbirdbrownz, 0.1>  # "PhattbirdbrownZ"
-D:8003AC54                     p_itementry <PhathelmetZ_header, aPhathelmetz, 0.1>  # "PhathelmetZ"
-D:8003AC60                     p_itementry <PhathelmetgreyZ_header, aPhathelmetgreyz, 0.1>  # "PhathelmetgreyZ"
-D:8003AC6C                     p_itementry <PhatmoonZ_header, aPhatmoonz, 0.1>  # "PhatmoonZ"
-D:8003AC78                     p_itementry <PhatberetZ_header, aPhatberetz, 0.1>  # "PhatberetZ"
-D:8003AC84                     p_itementry <PhatberetblueZ_header, aPhatberetbluez, 0.1>  # "PhatberetblueZ"
-D:8003AC90                     p_itementry <PhatberetredZ_header, aPhatberetredz, 0.1>  # "PhatberetredZ"
-D:8003AC9C                     p_itementry <PhatpeakedZ_header, aPhatpeakedz, 0.1>  # "PhatpeakedZ"
-D:8003ACA8                     p_itementry <PchrwristdartZ_header, aPchrwristdartz, 0.1>  # "PchrwristdartZ"
-D:8003ACB4                     p_itementry <PchrexplosivepenZ_header, aPchrexplosivepenz, 0.1>  # "PchrexplosivepenZ"
-D:8003ACC0                     p_itementry <PchrbombcaseZ_header, aPchrbombcasez, 0.1>  # "PchrbombcaseZ"
-D:8003ACCC                     p_itementry <PchrflarepistolZ_header, aPchrflarepistolz, 0.1>  # "PchrflarepistolZ"
-D:8003ACD8                     p_itementry <PchrpitongunZ_header, aPchrpitongunz, 0.1>  # "PchrpitongunZ"
-D:8003ACE4                     p_itementry <PchrfingergunZ_header, aPchrfingergunz, 0.1>  # "PchrfingergunZ"
-D:8003ACF0                     p_itementry <PchrsilverwppkZ_header, aPchrsilverwppkz, 0.1>  # "PchrsilverwppkZ"
-D:8003ACFC                     p_itementry <PchrgoldwppkZ_header, aPchrgoldwppkz, 0.1>  # "PchrgoldwppkZ"
-D:8003AD08                     p_itementry <PchrdynamiteZ_header, aPchrdynamitez, 0.1>  # "PchrdynamiteZ"
-D:8003AD14                     p_itementry <PchrbungeeZ_header, aPchrbungeez, 0.1>  # "PchrbungeeZ"
-D:8003AD20                     p_itementry <PchrdoordecoderZ_header, aPchrdoordecoderz, 0.1>  # "PchrdoordecoderZ"
-D:8003AD2C                     p_itementry <PchrbombdefuserZ_header, aPchrbombdefuserz, 0.1>  # "PchrbombdefuserZ"
-D:8003AD38                     p_itementry <PchrbugdetectorZ_header, aPchrbugdetectorz, 0.1>  # "PchrbugdetectorZ"
-D:8003AD44                     p_itementry <PchrsafecrackercaseZ_header, aPchrsafecrackercasez, 0.1>  # "PchrsafecrackercaseZ"
-D:8003AD50                     p_itementry <PchrcameraZ_header, aPchrcameraz, 0.1>  # "PchrcameraZ"
-D:8003AD5C                     p_itementry <PchrlockexploderZ_header, aPchrlockexploderz, 0.1>  # "PchrlockexploderZ"
-D:8003AD68                     p_itementry <PchrdoorexploderZ_header, aPchrdoorexploderz, 0.1>  # "PchrdoorexploderZ"
-D:8003AD74                     p_itementry <PchrkeyanalysercaseZ_header, aPchrkeyanalysercasez, 0.1>  # "PchrkeyanalysercaseZ"
-D:8003AD80                     p_itementry <PchrweaponcaseZ_header, aPchrweaponcasez, 0.1>  # "PchrweaponcaseZ"
-D:8003AD8C                     p_itementry <PchrkeyyaleZ_header, aPchrkeyyalez, 0.1>  # "PchrkeyyaleZ"
-D:8003AD98                     p_itementry <PchrkeyboltZ_header, aPchrkeyboltz, 0.1>  # "PchrkeyboltZ"
-D:8003ADA4                     p_itementry <PchrbugZ_header, aPchrbugz, 0.1>  # "PchrbugZ"
-D:8003ADB0                     p_itementry <PchrmicrocameraZ_header, aPchrmicrocameraz, 0.1>  # "PchrmicrocameraZ"
-D:8003ADBC                     p_itementry <PfloppyZ_header, aPfloppyz, 0.1>  # "PfloppyZ"
-D:8003ADC8                     p_itementry <PchrgoldeneyekeyZ_header, aPchrgoldeneyekeyz, 0.1>  # "PchrgoldeneyekeyZ"
-D:8003ADD4                     p_itementry <PchrpolarizedglassesZ_header, aPchrpolarizedglassesz, 0.1>  # "PchrpolarizedglassesZ"
-D:8003ADE0                     p_itementry <PchrcreditcardZ_header, aPchrcreditcardz, 0.1>  # "PchrcreditcardZ"
-D:8003ADEC                     p_itementry <PchrdarkglassesZ_header, aPchrdarkglassesz, 0.1>  # "PchrdarkglassesZ"
-D:8003ADF8                     p_itementry <PchrgaskeyringZ_header, aPchrgaskeyringz, 0.1>  # "PchrgaskeyringZ"
-D:8003AE04                     p_itementry <PchrdatathiefZ_header, aPchrdatathiefz, 0.1>  # "PchrdatathiefZ"
-D:8003AE10                     p_itementry <PsafeZ_header, aPsafez, 0.1>  # "PsafeZ"
-D:8003AE1C                     p_itementry <PbombZ_header, aPbombz, 0.1>  # "PbombZ"
-D:8003AE28                     p_itementry <PchrplansZ_header, aPchrplansz, 0.1>  # "PchrplansZ"
-D:8003AE34                     p_itementry <PchrspyfileZ_header, aPchrspyfilez, 0.1>  # "PchrspyfileZ"
-D:8003AE40                     p_itementry <PchrblueprintsZ_header, aPchrblueprintsz, 0.1>  # "PchrblueprintsZ"
-D:8003AE4C                     p_itementry <PchrcircuitboardZ_header, aPchrcircuitboardz, 0.1>  # "PchrcircuitboardZ"
-D:8003AE58                     p_itementry <PchrmapZ_header, aPchrmapz, 0.1>  # "PchrmapZ"
-D:8003AE64                     p_itementry <PchrspooltapeZ_header, aPchrspooltapez, 0.1>  # "PchrspooltapeZ"
-D:8003AE70                     p_itementry <PchraudiotapeZ_header, aPchraudiotapez, 0.1>  # "PchraudiotapeZ"
-D:8003AE7C                     p_itementry <PchrmicrofilmZ_header, aPchrmicrofilmz, 0.1>  # "PchrmicrofilmZ"
-D:8003AE88                     p_itementry <PchrmicrocodeZ_header, aPchrmicrocodez, 0.1>  # "PchrmicrocodeZ"
-D:8003AE94                     p_itementry <PchrlectreZ_header, aPchrlectrez, 0.1>  # "PchrlectreZ"
-D:8003AEA0                     p_itementry <PchrmoneyZ_header, aPchrmoneyz, 0.1>  # "PchrmoneyZ"
-D:8003AEAC                     p_itementry <PchrgoldbarZ_header, aPchrgoldbarz, 0.1>  # "PchrgoldbarZ"
-D:8003AEB8                     p_itementry <PchrheroinZ_header, aPchrheroinz, 0.1>  # "PchrheroinZ"
-D:8003AEC4                     p_itementry <PchrclipboardZ_header, aPchrclipboardz, 0.1>  # "PchrclipboardZ"
-D:8003AED0                     p_itementry <PchrdossierredZ_header, aPchrdossierredz, 0.1>  # "PchrdossierredZ"
-D:8003AEDC                     p_itementry <PchrstafflistZ_header, aPchrstafflistz, 0.1>  # "PchrstafflistZ"
-D:8003AEE8                     p_itementry <PchrdattapeZ_header, aPchrdattapez, 0.1>  # "PchrdattapeZ"
-D:8003AEF4                     p_itementry <PchrplastiqueZ_header, aPchrplastiquez, 0.1>  # "PchrplastiqueZ"
-D:8003AF00                     p_itementry <PchrblackboxZ_header, aPchrblackboxz, 0.1>  # "PchrblackboxZ"
-D:8003AF0C                     p_itementry <PchrvideotapeZ_header, aPchrvideotapez, 0.1>  # "PchrvideotapeZ"
-D:8003AF18      # int *PnintendologoZ_entry
-D:8003AF18     PnintendologoZ_entry:p_itementry <PnintendologoZ_header, aPnintendologoz, 0.1>
-D:8003AF18                                              # DATA XREF: init_menu01_nintendo+4Cr
-D:8003AF18                                              # init_menu01_nintendo+64r
-D:8003AF18                                              # init_menu01_nintendo+70r
-D:8003AF18                                              # init_menu01_nintendo+50r
-D:8003AF18                                              # "PnintendologoZ"
-D:8003AF24      # int *PgoldeneyelogoZ_entry
-D:8003AF24     PgoldeneyelogoZ_entry:p_itementry <PgoldeneyelogoZ_header, aPgoldeneyelogoz, 0.1>
-D:8003AF24                                              # DATA XREF: init_menu04_goldeneyelogo+4Cr
-D:8003AF24                                              # init_menu04_goldeneyelogo+64r
-D:8003AF24                                              # init_menu04_goldeneyelogo+70r
-D:8003AF24                                              # init_menu04_goldeneyelogo+50r
-D:8003AF24                                              # "PgoldeneyelogoZ"
-D:8003AF30     PwalletbondZ_entry:p_itementry <PwalletbondZ_header, aPwalletbondz, 0.1>
-D:8003AF30                                              # DATA XREF: load_walletbond+34r
-D:8003AF30                                              # load_walletbond+4Cr
-D:8003AF30                                              # load_walletbond+38r
-D:8003AF30                                              # "PwalletbondZ"
-D:8003AF3C                     p_itementry <PmiltruckZ_header, aPmiltruckz, 0.1>  # "PmiltruckZ"
-D:8003AF48                     p_itementry <PjeepZ_header, aPjeepz, 0.1>  # "PjeepZ"
-D:8003AF54                     p_itementry <ParticZ_header, aParticz, 0.1>  # "ParticZ"
-D:8003AF60                     p_itementry <PhelicopterZ_header, aPhelicopterz, 0.1>  # "PhelicopterZ"
-D:8003AF6C                     p_itementry <PtigerZ_header, aPtigerz, 0.1>  # "PtigerZ"
-D:8003AF78                     p_itementry <PmilcopterZ_header, aPmilcopterz, 0.1>  # "PmilcopterZ"
-D:8003AF84                     p_itementry <PhindZ_header, aPhindz, 0.1>  # "PhindZ"
-D:8003AF90                     p_itementry <PartictrailerZ_header, aPartictrailerz, 0.1>  # "PartictrailerZ"
-D:8003AF9C                     p_itementry <PmotorbikeZ_header, aPmotorbikez, 0.1>  # "PmotorbikeZ"
-D:8003AFA8                     p_itementry <PtankZ_header, aPtankz, 0.1>  # "PtankZ"
-D:8003AFB4                     p_itementry <PapcZ_header, aPapcz, 0.1>  # "PapcZ"
-D:8003AFC0                     p_itementry <PspeedboatZ_header, aPspeedboatz, 0.1>  # "PspeedboatZ"
-D:8003AFCC                     p_itementry <PplaneZ_header, aPplanez, 0.1>  # "PplaneZ"
-D:8003AFD8                     p_itementry <Pgun_runway1Z_header, aPgun_runway1z, 0.1>  # "Pgun_runway1Z"
-D:8003AFE4                     p_itementry <PsafedoorZ_header, aPsafedoorz, 1.0>  # "PsafedoorZ"
-D:8003AFF0                     p_itementry <Pkey_holderZ_header, aPkey_holderz, 1.0>  # "Pkey_holderZ"
-D:8003AFFC                     p_itementry <PhatchsevxZ_header, aPhatchsevxz, 1.0>  # "PhatchsevxZ"
-D:8003B008                     p_itementry <PsevdishZ_header, aPsevdishz, 1.0>  # "PsevdishZ"
-D:8003B014                     p_itementry <Parchsecdoor1Z_header, aParchsecdoor1z, 1.0>  # "Parchsecdoor1Z"
-D:8003B020                     p_itementry <Parchsecdoor2Z_header, aParchsecdoor2z, 1.0>  # "Parchsecdoor2Z"
-D:8003B02C                     p_itementry <PgroundgunZ_header, aPgroundgunz, 0.1>  # "PgroundgunZ"
-D:8003B038                     p_itementry <PtrainextdoorZ_header, aPtrainextdoorz, 1.0>  # "PtrainextdoorZ"
-D:8003B044                     p_itementry <PcarbmwZ_header, aPcarbmwz, 0.1>  # "PcarbmwZ"
-D:8003B050                     p_itementry <PcarescortZ_header, aPcarescortz, 0.1>  # "PcarescortZ"
-D:8003B05C                     p_itementry <PcargolfZ_header, aPcargolfz, 0.1>  # "PcargolfZ"
-D:8003B068                     p_itementry <PcarweirdZ_header, aPcarweirdz, 0.1>  # "PcarweirdZ"
-D:8003B074                     p_itementry <PcarzilZ_header, aPcarzilz, 0.1>  # "PcarzilZ"
-D:8003B080                     p_itementry <Pshuttle_door_lZ_header, aPshuttle_door_lz, 1.0>  # "Pshuttle_door_lZ"
-D:8003B08C                     p_itementry <Pshuttle_door_rZ_header, aPshuttle_door_rz, 1.0>  # "Pshuttle_door_rZ"
-D:8003B098                     p_itementry <Pdepot_gate_entryZ_header, aPdepot_gate_entryz, 0.1>  # "Pdepot_gate_entryZ"
-D:8003B0A4                     p_itementry <Pdepot_door_steelZ_header, aPdepot_door_steelz, 0.1>  # "Pdepot_door_steelZ"
-D:8003B0B0                     p_itementry <Pglassware2Z_header, aPglassware2z, 0.1>  # "Pglassware2Z"
-D:8003B0BC                     p_itementry <Pglassware3Z_header, aPglassware3z, 0.1>  # "Pglassware3Z"
-D:8003B0C8                     p_itementry <Pglassware4Z_header, aPglassware4z, 0.1>  # "Pglassware4Z"
-D:8003B0D4                     p_itementry <PlandmineZ_header, aPlandminez, 0.1>  # "PlandmineZ"
-D:8003B0E0                     p_itementry <Pplant1Z_header, aPplant1z, 0.1>  # "Pplant1Z"
-D:8003B0EC                     p_itementry <Pplant11Z_header, aPplant11z, 0.1>  # "Pplant11Z"
-D:8003B0F8                     p_itementry <Pplant2Z_header, aPplant2z, 0.1>  # "Pplant2Z"
-D:8003B104                     p_itementry <Pplant3Z_header, aPplant3z, 0.1>  # "Pplant3Z"
-D:8003B110                     p_itementry <Pjungle5_treeZ_header, aPjungle5_treez, 0.1>  # "Pjungle5_treeZ"
-D:8003B11C      # int *PlegalpageZ_entry
-D:8003B11C     PlegalpageZ_entry:p_itementry <PlegalpageZ_header, aPlegalpagez, 0.1>
-D:8003B11C                                              # DATA XREF: init_menu00_legalscreen+60r
-D:8003B11C                                              # init_menu00_legalscreen+78r
-D:8003B11C                                              # init_menu00_legalscreen+84r
-D:8003B11C                                              # init_menu00_legalscreen+64r
-D:8003B11C                                              # "PlegalpageZ"
-D:8003B128                     p_itementry <Pst_pete_room_1iZ_header, aPst_pete_room_1iz, 0.1>  # "Pst_pete_room_1iZ"
-D:8003B134                     p_itementry <Pst_pete_room_2iZ_header, aPst_pete_room_2iz, 0.1>  # "Pst_pete_room_2iZ"
-D:8003B140                     p_itementry <Pst_pete_room_3tZ_header, aPst_pete_room_3tz, 0.1>  # "Pst_pete_room_3tZ"
-D:8003B14C                     p_itementry <Pst_pete_room_5cZ_header, aPst_pete_room_5cz, 0.1>  # "Pst_pete_room_5cZ"
-D:8003B158                     p_itementry <Pst_pete_room_6cZ_header, aPst_pete_room_6cz, 0.1>  # "Pst_pete_room_6cZ"
-D:8003B164                     p_itementry <Pdoor_rollertrainZ_header, aPdoor_rollertrainz, 1.0>  # "Pdoor_rollertrainZ"
-D:8003B170                     p_itementry <Pdoor_winZ_header, aPdoor_winz, 1.0>  # "Pdoor_winZ"
-D:8003B17C                     p_itementry <Pdoor_aztecZ_header, aPdoor_aztecz, 1.0>  # "Pdoor_aztecZ"
-D:8003B188                     p_itementry <PshuttleZ_header, aPshuttlez, 0.1>  # "PshuttleZ"
-D:8003B194                     p_itementry <Pdoor_azt_deskZ_header, aPdoor_azt_deskz, 1.0>  # "Pdoor_azt_deskZ"
-D:8003B1A0                     p_itementry <Pdoor_azt_desk_topZ_header, aPdoor_azt_desk_topz, 1.0>  # "Pdoor_azt_desk_topZ"
-D:8003B1AC                     p_itementry <Pdoor_azt_chairZ_header, aPdoor_azt_chairz, 1.0>  # "Pdoor_azt_chairZ"
-D:8003B1B8                     p_itementry <Pdoor_mfZ_header, aPdoor_mfz, 1.0>  # "Pdoor_mfZ"
-D:8003B1C4                     p_itementry <PflagZ_header, aPflagz, 0.1>  # "PflagZ"
-D:8003B1D0                     p_itementry <PbarricadeZ_header, aPbarricadez, 0.1>  # "PbarricadeZ"
-D:8003B1DC                     p_itementry <PmodemboxZ_header, aPmodemboxz, 0.1>  # "PmodemboxZ"
-D:8003B1E8                     p_itementry <PdoorpanelZ_header, aPdoorpanelz, 0.1>  # "PdoorpanelZ"
-D:8003B1F4                     p_itementry <PdoorconsoleZ_header, aPdoorconsolez, 0.1>  # "PdoorconsoleZ"
-D:8003B200                     p_itementry <PchrtesttubeZ_header, aPchrtesttubez, 0.1>  # "PchrtesttubeZ"
-D:8003B20C                     p_itementry <Pbollardz_header, aPbollardz, 0.1>  # "PbollardZ"
-D:8003B218     PitemZ_entry_end:p_itementry <0, aPnullZ, 1.0>
-D:8003B218                                              # DATA XREF: stage_loading_setup_objparse_cleanupafter+ACo
-D:8003B218                                              # ""
+*/
+
+//D:800375D0
+struct PitemZ_header Palarm1z_header = {0, &model_object_standard_object, 0, 1, 304.6402, 2, 0, 0};
+//D:800375F0
+struct PitemZ_header Palarm2Z_header = {0, &model_object_standard_object, 0, 1, 208.22205, 3, 0, 0};
+//D:80037610
+struct PitemZ_header PexplosionbitZ_header = {0, &model_object_standard_object, 0, 1, 208.22205, 0, 0, 0};
+//D:80037630
+struct PitemZ_header Pammo_crate1Z_header = {0, &model_object_standard_object, 0, 1, 691.83429, 3, 0, 0};
+//D:80037650
+struct PitemZ_header Pammo_crate2Z_header = {0, &model_object_standard_object, 0, 1, 691.83429, 4, 0, 0};
+//D:80037670
+struct PitemZ_header Pammo_crate3Z_header = {0, &model_object_standard_object, 0, 1, 691.83429, 4, 0, 0};
+//D:80037690
+struct PitemZ_header Pammo_crate4Z_header = {0, &model_object_standard_object, 0, 1, 691.83429, 5, 0, 0};
+//D:800376B0
+struct PitemZ_header Pammo_crate5Z_header = {0, &model_object_standard_object, 0, 1, 691.83429, 5, 0, 0};
+//D:800376D0
+struct PitemZ_header Pbin1Z_header = {0, &model_object_standard_object, 0, 1, 3027.6262, 2, 0, 0};
+//D:800376F0
+struct PitemZ_header Pblotter1Z_header = {0, &model_object_standard_object, 0, 1, 432.46707, 1, 0, 0};
+//D:80037710
+struct PitemZ_header Pbook1Z_header = {0, &model_object_standard_object, 0, 1, 171.37482, 2, 0, 0};
+//D:80037730
+struct PitemZ_header Pbookshelf1Z_header = {0, &model_object_standard_object, 0, 1, 1166.7578, 0xD, 0, 0};
+//D:80037750
+struct PitemZ_header Pbridge_console1aZ_header = {0, &prop_console_four_screen_related, 4, 1, 788.03992, 0xF, 0, 0};
+//D:80037770
+struct PitemZ_header Pbridge_console1bZ_header = {0, &prop_console_one_screen_related, 1, 1, 788.03992, 0x10, 0, 0};
+//D:80037790
+struct PitemZ_header Pbridge_console2aZ_header = {0, &prop_console_four_screen_related, 4, 1, 788.03992, 0xF, 0, 0};
+//D:800377B0
+struct PitemZ_header Pbridge_console2bZ_header = {0, &model_object_standard_object, 0, 1, 788.03992, 0xF, 0, 0};
+//D:800377D0
+struct PitemZ_header Pbridge_console3aZ_header = {0, &prop_console_four_screen_related, 4, 1, 788.03992, 0xF, 0, 0};
+//D:800377F0
+struct PitemZ_header Pbridge_console3bZ_header = {0, &prop_console_four_screen_related, 4, 1, 788.03992, 0x10, 0, 0};
+//D:80037810
+struct PitemZ_header Pcard_box1Z_header = {0, &model_object_standard_object, 0, 1, 727.4613, 5, 0, 0};
+//D:80037830
+struct PitemZ_header Pcard_box2Z_header = {0, &model_object_standard_object, 0, 1, 727.4613, 6, 0, 0};
+//D:80037850
+struct PitemZ_header Pcard_box3Z_header = {0, &model_object_standard_object, 0, 1, 727.4613, 5, 0, 0};
+//D:80037870
+struct PitemZ_header Pcard_box4_lgZ_header = {0, &model_object_standard_object, 0, 1, 800.2074, 4, 0, 0};
+//D:80037890
+struct PitemZ_header Pcard_box5_lgZ_header = {0, &model_object_standard_object, 0, 1, 800.2074, 5, 0, 0};
+//D:800378B0
+struct PitemZ_header Pcard_box6_lgZ_header = {0, &model_object_standard_object, 0, 1, 800.2074, 5, 0, 0};
+//D:800378D0
+struct PitemZ_header PcctvZ_header = {0, &prop_cctv_related, 4, 2, 558.90094, 6, 0, 0};
+//D:800378F0
+struct PitemZ_header Pconsole1Z_header = {0, &prop_console_four_screen_related, 4, 1, 1611.2357, 0xA, 0, 0};
+//D:80037910
+struct PitemZ_header Pconsole2Z_header = {0, &prop_console_four_screen_related, 4, 1, 1611.2357, 0xA, 0, 0};
+//D:80037930
+struct PitemZ_header Pconsole3Z_header = {0, &prop_console_four_screen_related, 4, 1, 1611.2357, 0xA, 0, 0};
+//D:80037950
+struct PitemZ_header Pconsole_sevaZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xE, 0, 0};
+//D:80037970
+struct PitemZ_header Pconsole_sevbZ_header = {0, &prop_console_one_screen_related, 1, 1, 994.23688, 0xB, 0, 0};
+//D:80037990
+struct PitemZ_header Pconsole_sevcZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xF, 0, 0};
+//D:800379B0
+struct PitemZ_header Pconsole_sevdZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0};
+//D:800379D0
+struct PitemZ_header Pconsole_sev2aZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0};
+//D:800379F0
+struct PitemZ_header Pconsole_sev2bZ_header = {0, &prop_console_one_screen_related, 1, 1, 994.23688, 0xD, 0, 0};
+//D:80037A10
+struct PitemZ_header Pconsole_sev2cZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xF, 0, 0};
+//D:80037A30
+struct PitemZ_header Pconsole_sev2dZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0};
+//D:80037A50
+struct PitemZ_header Pconsole_sev_GEaZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0};
+//D:80037A70
+struct PitemZ_header Pconsole_sev_GEbZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0};
+//D:80037A90
+struct PitemZ_header Pdesk1Z_header = {0, &model_object_standard_object, 0, 1, 957.18225, 3, 0, 0};
+//D:80037AB0
+struct PitemZ_header Pdesk2Z_header = {0, &model_object_standard_object, 0, 1, 957.18225, 3, 0, 0};
+//D:80037AD0
+struct PitemZ_header Pdesk_lamp2Z_header = {0, &model_object_standard_object, 0, 1, 804.59833, 4, 0, 0};
+//D:80037AF0
+struct PitemZ_header Pdisc_readerZ_header = {0, &model_object_standard_object, 0, 1, 214.33035, 6, 0, 0};
+//D:80037B10
+struct PitemZ_header Pdisk_drive1Z_header = {0, &model_object_standard_object, 0, 1, 191.85779, 4, 0, 0};
+//D:80037B30
+struct PitemZ_header Pfiling_cabinet1Z_header = {0, &model_object_standard_object, 0, 1, 1055.5693, 2, 0, 0};
+//D:80037B50
+struct PitemZ_header Pjerry_can1Z_header = {0, &model_object_standard_object, 0, 1, 366.61932, 4, 0, 0};
+//D:80037B70
+struct PitemZ_header Pkeyboard1Z_header = {0, &model_object_standard_object, 0, 1, 278.23227, 2, 0, 0};
+//D:80037B90
+struct PitemZ_header Pkit_units1Z_header = {0, &model_object_standard_object, 0, 1, 1661.4763, 4, 0, 0};
+//D:80037BB0
+struct PitemZ_header Pletter_tray1Z_header = {0, &model_object_standard_object, 0, 1, 252.06836, 1, 0, 0};
+//D:80037BD0
+struct PitemZ_header Pmainframe1Z_header = {0, &model_object_standard_object, 0, 1, 1119.4073, 7, 0, 0};
+//D:80037BF0
+struct PitemZ_header Pmainframe2Z_header = {0, &model_object_standard_object, 0, 1, 1119.4073, 7, 0, 0};
+//D:80037C10
+struct PitemZ_header Pmetal_chair1Z_header = {0, &model_object_standard_object, 0, 1, 639.18097, 2, 0, 0};
+//D:80037C30
+struct PitemZ_header Pmetal_crate1Z_header = {0, &model_object_standard_object, 0, 1, 1010.363, 3, 0, 0};
+//D:80037C50
+struct PitemZ_header Pmetal_crate2Z_header = {0, &model_object_standard_object, 0, 1, 1010.363, 3, 0, 0};
+//D:80037C70
+struct PitemZ_header Pmetal_crate3Z_header = {0, &model_object_standard_object, 0, 1, 1010.363, 2, 0, 0};
+//D:80037C90
+struct PitemZ_header Pmetal_crate4Z_header = {0, &model_object_standard_object, 0, 1, 1010.363, 3, 0, 0};
+//D:80037CB0
+struct PitemZ_header Pmissile_rackZ_header = {0, &model_object_standard_object, 0, 1, 964.16296, 4, 0, 0};
+//D:80037CD0
+struct PitemZ_header Pmissile_rack2Z_header = {0, &model_object_standard_object, 0, 1, 1148.4724, 4, 0, 0};
+//D:80037CF0
+struct PitemZ_header Poil_drum1Z_header = {0, &model_object_standard_object, 0, 1, 745.45892, 2, 0, 0};
+//D:80037D10
+struct PitemZ_header Poil_drum2Z_header = {0, &model_object_standard_object, 0, 1, 745.45892, 4, 0, 0};
+//D:80037D30
+struct PitemZ_header Poil_drum3Z_header = {0, &model_object_standard_object, 0, 1, 745.45892, 4, 0, 0};
+//D:80037D50
+struct PitemZ_header Poil_drum5Z_header = {0, &model_object_standard_object, 0, 1, 745.45892, 3, 0, 0};
+//D:80037D70
+struct PitemZ_header Poil_drum6Z_header = {0, &model_object_standard_object, 0, 1, 745.45892, 3, 0, 0};
+//D:80037D90
+struct PitemZ_header Poil_drum7Z_header = {0, &model_object_standard_object, 0, 1, 745.45892, 4, 0, 0};
+//D:80037DB0
+struct PitemZ_header PpadlockZ_header = {0, &model_object_standard_object, 0, 1, 225.64145, 4, 0, 0};
+//D:80037DD0
+struct PitemZ_header Pphone1Z_header = {0, &model_object_standard_object, 0, 1, 166.03481, 2, 0, 0};
+//D:80037DF0
+struct PitemZ_header Pradio_unit1Z_header = {0, &model_object_standard_object, 0, 1, 354.59534, 5, 0, 0};
+//D:80037E10
+struct PitemZ_header Pradio_unit2Z_header = {0, &model_object_standard_object, 0, 1, 354.59534, 5, 0, 0};
+//D:80037E30
+struct PitemZ_header Pradio_unit3Z_header = {0, &model_object_standard_object, 0, 1, 354.59534, 5, 0, 0};
+//D:80037E50
+struct PitemZ_header Pradio_unit4Z_header = {0, &model_object_standard_object, 0, 1, 354.59534, 5, 0, 0};
+//D:80037E70
+struct PitemZ_header Psat1_reflectZ_header = {0, &model_object_standard_object, 0, 1, 5185.9409, 0xD, 0, 0};
+//D:80037E90
+struct PitemZ_header PsatdishZ_header = {0, &model_object_standard_object, 0, 1, 2437.468, 2, 0, 0};
+//D:80037EB0
+struct PitemZ_header PsatboxZ_header = {0, &model_object_standard_object, 0, 1, 89.935875, 1, 0, 0};
+//D:80037ED0
+struct PitemZ_header Pstool1Z_header = {0, &model_object_standard_object, 0, 1, 353.11398, 2, 0, 0};
+//D:80037EF0
+struct PitemZ_header Pswivel_chair1Z_header = {0, &model_object_standard_object, 0, 1, 581.16394, 3, 0, 0};
+//D:80037F10
+struct PitemZ_header Ptorpedo_rackZ_header = {0, &model_object_standard_object, 0, 1, 765.61725, 3, 0, 0};
+//D:80037F30
+struct PitemZ_header Ptv1Z_header = {0, &prop_console_one_screen_related, 1, 1, 347.0235, 5, 0, 0};
+//D:80037F50
+struct PitemZ_header Ptv_holderZ_header = {0, &prop_tv_holder_related, 4, 5, 1352.4841, 2, 0, 0};
+//D:80037F70
+struct PitemZ_header PtvscreenZ_header = {0, &prop_console_one_screen_related, 1, 1, 211.74477, 1, 0, 0};
+//D:80037F90
+struct PitemZ_header Ptv4screenZ_header = {0, &prop_console_four_screen_related, 4, 1, 211.74477, 1, 0, 0};
+//D:80037FB0
+struct PitemZ_header Pwood_lg_crate1Z_header = {0, &model_object_standard_object, 0, 1, 1010.363, 3, 0, 0};
+//D:80037FD0
+struct PitemZ_header Pwood_lg_crate2Z_header = {0, &model_object_standard_object, 0, 1, 1010.363, 2, 0, 0};
+//D:80037FF0
+struct PitemZ_header Pwood_md_crate3Z_header = {0, &model_object_standard_object, 0, 1, 909.32666, 2, 0, 0};
+//D:80038010
+struct PitemZ_header Pwood_sm_crate4Z_header = {0, &model_object_standard_object, 0, 1, 727.4613, 3, 0, 0};
+//D:80038030
+struct PitemZ_header Pwood_sm_crate5Z_header = {0, &model_object_standard_object, 0, 1, 727.4613, 4, 0, 0};
+//D:80038050
+struct PitemZ_header Pwood_sm_crate6Z_header = {0, &model_object_standard_object, 0, 1, 727.4613, 4, 0, 0};
+//D:80038070
+struct PitemZ_header Pwooden_table1Z_header = {0, &model_object_standard_object, 0, 1, 1095.1365, 2, 0, 0};
+//D:80038090
+struct PitemZ_header Pswipe_card2Z_header = {0, &model_object_standard_object, 0, 1, 123.08884, 2, 0, 0};
+//D:800380B0
+struct PitemZ_header Pborg_crateZ_header = {0, &model_object_standard_object, 0, 1, 1010.363, 1, 0, 0};
+//D:800380D0
+struct PitemZ_header Pboxes4x4Z_header = {0, &model_object_standard_object, 0, 1, 2424.8711, 7, 0, 0};
+//D:800380F0
+struct PitemZ_header Pboxes3x4Z_header = {0, &model_object_standard_object, 0, 1, 2241.0935, 6, 0, 0};
+//D:80038110
+struct PitemZ_header Pboxes2x4Z_header = {0, &model_object_standard_object, 0, 1, 2100.0, 6, 0, 0};
+//D:80038130
+struct PitemZ_header Psec_panelZ_header = {0, &model_object_standard_object, 0, 1, 1567.2454, 3, 0, 0};
+//D:80038150
+struct PitemZ_header PICBM_noseZ_header = {0, &model_object_standard_object, 0, 1, 2782.7126, 8, 0, 0};
+//D:80038170
+struct PitemZ_header PICBMZ_header = {0, &model_object_standard_object, 0, 1, 14790.535, 0xE, 0, 0};
+//D:80038190
+struct PitemZ_header Ptuning_console1Z_header = {0, &prop_console_one_screen_related, 1, 1, 1139.5872, 0xE, 0, 0};
+//D:800381B0
+struct PitemZ_header Pdesk_arecibo1Z_header = {0, &model_object_standard_object, 0, 1, 1829.1477, 3, 0, 0};
+//D:800381D0
+struct PitemZ_header Plocker3Z_header = {0, &model_object_standard_object, 0, 1, 916.99805, 3, 0, 0};
+//D:800381F0
+struct PitemZ_header Plocker4Z_header = {0, &model_object_standard_object, 0, 1, 916.99805, 3, 0, 0};
+//D:80038210
+struct PitemZ_header ProofgunZ_header = {0, &prop_rotating_stuff_related, 8, 5, 1910.908, 0xE, 0, 0};
+//D:80038230
+struct PitemZ_header Pdest_engineZ_header = {0, &model_object_standard_object, 0, 1, 6459.439, 0xA, 0, 0};
+//D:80038250
+struct PitemZ_header Pdest_exocetZ_header = {0, &model_object_standard_object, 0, 1, 1644.8435, 8, 0, 0};
+//D:80038270
+struct PitemZ_header Pdest_gunZ_header = {0, &model_object_standard_object, 0, 1, 2124.0735, 5, 0, 0};
+//D:80038290
+struct PitemZ_header Pdest_harpoonZ_header = {0, &model_object_standard_object, 0, 1, 1798.7655, 5, 0, 0};
+//D:800382B0
+struct PitemZ_header Pdest_seawolfZ_header = {0, &model_object_standard_object, 0, 1, 2282.0623, 0xA, 0, 0};
+//D:800382D0
+struct PitemZ_header PwindowZ_header = {0, &model_object_standard_object, 0, 1, 423.48956, 1, 0, 0};
+//D:800382F0
+struct PitemZ_header Pwindow_lib_lg1Z_header = {0, &model_object_standard_object, 0, 1, 835.20624, 1, 0, 0};
+//D:80038310
+struct PitemZ_header Pwindow_lib_sm1Z_header = {0, &model_object_standard_object, 0, 1, 601.28625, 1, 0, 0};
+//D:80038330
+struct PitemZ_header Pwindow_cor11Z_header = {0, &model_object_standard_object, 0, 1, 414.53622, 1, 0, 0};
+//D:80038350
+struct PitemZ_header Pjungle3_treeZ_header = {0, &model_object_standard_object, 0, 1, 28729.467, 5, 0, 0};
+//D:80038370
+struct PitemZ_header PpalmZ_header = {0, &model_object_standard_object, 0, 1, 15501.406, 3, 0, 0};
+//D:80038390
+struct PitemZ_header PpalmtreeZ_header = {0, &model_object_standard_object, 0, 1, 1781.4542, 2, 0, 0};
+//D:800383B0
+struct PitemZ_header Pplant2bZ_header = {0, &model_object_standard_object, 0, 1, 1252.9539, 2, 0, 0};
+//D:800383D0
+struct PitemZ_header PlabbenchZ_header = {0, &model_object_standard_object, 0, 1, 844.09717, 4, 0, 0};
+//D:800383F0
+struct PitemZ_header PgasbarrelZ_header = {0, &model_object_standard_object, 0, 1, 725.94379, 2, 0, 0};
+//D:80038410
+struct PitemZ_header PgasbarrelsZ_header = {0, &model_object_standard_object, 0, 1, 1174.1927, 2, 0, 0};
+//D:80038430
+struct PitemZ_header PbodyarmourZ_header = {0, &model_object_standard_object, 0, 1, 246.94099, 7, 0, 0};
+//D:80038450
+struct PitemZ_header PbodyarmourvestZ_header = {0, &model_object_standard_object, 0, 1, 241.82211, 2, 0, 0};
+//D:80038470
+struct PitemZ_header PgastankZ_header = {0, &model_object_standard_object, 0, 1, 1130.0691, 5, 0, 0};
+//D:80038490
+struct PitemZ_header Pglassware1Z_header = {0, &model_object_standard_object, 0, 1, 72.111031, 1, 0, 0};
+//D:800384B0
+struct PitemZ_header PhatchboltZ_header = {0, &model_object_standard_object, 0, 1, 2236.0679, 1, 0, 0};
+//D:800384D0
+struct PitemZ_header PbrakeunitZ_header = {0, &model_object_standard_object, 0, 1, 801.95074, 4, 0, 0};
+//D:800384F0
+struct PitemZ_header Pak47magZ_header = {0, &model_object_standard_object, 0, 1, 107.11019, 2, 0, 0};
+//D:80038510
+struct PitemZ_header Pm16magZ_header = {0, &model_object_standard_object, 0, 1, 87.934891, 2, 0, 0};
+//D:80038530
+struct PitemZ_header Pmp5kmagZ_header = {0, &model_object_standard_object, 0, 1, 119.54729, 2, 0, 0};
+//D:80038550
+struct PitemZ_header PskorpionmagZ_header = {0, &model_object_standard_object, 0, 1, 58.428444, 2, 0, 0};
+//D:80038570
+struct PitemZ_header PspectremagZ_header = {0, &model_object_standard_object, 0, 1, 99.01432, 2, 0, 0};
+//D:80038590
+struct PitemZ_header PuzimagZ_header = {0, &model_object_standard_object, 0, 1, 74.28373, 2, 0, 0};
+//D:800385B0
+struct PitemZ_header PsilencerZ_header = {0, &model_object_standard_object, 0, 1, 63.915436, 3, 0, 0};
+//D:800385D0
+struct PitemZ_header PchrextinguisherZ_header = {0, &model_object_standard_object, 0, 1, 425.50903, 2, 0, 0};
+//D:800385F0
+struct PitemZ_header PboxcartridgesZ_header = {0, &model_object_standard_object, 0, 1, 66.81916, 3, 0, 0};
+//D:80038610
+struct PitemZ_header Pfnp90magZ_header = {0, &model_object_standard_object, 0, 1, 176.28201, 2, 0, 0};
+//D:80038630
+struct PitemZ_header PgoldenshellsZ_header = {0, &model_object_standard_object, 0, 1, 66.81916, 3, 0, 0};
+//D:80038650
+struct PitemZ_header PmagnumshellsZ_header = {0, &model_object_standard_object, 0, 1, 66.81916, 3, 0, 0};
+//D:80038670
+struct PitemZ_header PwppkmagZ_header = {0, &model_object_standard_object, 0, 1, 74.28373, 2, 0, 0};
+//D:80038690
+struct PitemZ_header Ptt33magZ_header = {0, &model_object_standard_object, 0, 1, 74.28373, 2, 0, 0};
+//D:800386B0
+struct PitemZ_header Psev_doorZ_header = {0, &model_object_standard_object, 0, 1, 1143.7695, 3, 0, 0};
+//D:800386D0
+struct PitemZ_header Psev_door3Z_header = {0, &model_object_standard_object, 0, 1, 1143.5603, 6, 0, 0};
+//D:800386F0
+struct PitemZ_header Psev_door3_windZ_header = {0, &model_object_standard_object, 0, 1, 1143.5603, 5, 0, 0};
+//D:80038710
+struct PitemZ_header Psev_door4_windZ_header = {0, &prop_door_related, 4, 1, 1143.5603, 8, 0, 0};
+//D:80038730
+struct PitemZ_header Psev_trislideZ_header = {0, &prop_door_related, 4, 1, 950.54327, 2, 0, 0};
+//D:80038750
+struct PitemZ_header Psev_door_v1Z_header = {0, &model_object_standard_object, 0, 1, 1137.8739, 6, 0, 0};
+//D:80038770
+struct PitemZ_header Psteel_door1Z_header = {0, &model_object_standard_object, 0, 1, 1137.8739, 4, 0, 0};
+//D:80038790
+struct PitemZ_header Psteel_door2Z_header = {0, &model_object_standard_object, 0, 1, 1137.8739, 9, 0, 0};
+//D:800387B0
+struct PitemZ_header Psteel_door3Z_header = {0, &model_object_standard_object, 0, 1, 1137.8739, 9, 0, 0};
+//D:800387D0
+struct PitemZ_header Psilo_lift_doorZ_header = {0, &model_object_standard_object, 0, 1, 600.71082, 4, 0, 0};
+//D:800387F0
+struct PitemZ_header Psteel_door2bZ_header = {0, &model_object_standard_object, 0, 1, 1137.8739, 9, 0, 0};
+//D:80038810
+struct PitemZ_header Pdoor_roller1Z_header = {0, &model_object_standard_object, 0, 1, 1032.125, 4, 0, 0};
+//D:80038830
+struct PitemZ_header Pdoor_roller2Z_header = {0, &model_object_standard_object, 0, 1, 1032.125, 4, 0, 0};
+//D:80038850
+struct PitemZ_header Pdoor_roller3Z_header = {0, &model_object_standard_object, 0, 1, 1032.125, 4, 0, 0};
+//D:80038870
+struct PitemZ_header Pdoor_roller4Z_header = {0, &model_object_standard_object, 0, 1, 1032.125, 4, 0, 0};
+//D:80038890
+struct PitemZ_header Pdoor_st_arec1Z_header = {0, &model_object_standard_object, 0, 1, 763.03589, 3, 0, 0};
+//D:800388B0
+struct PitemZ_header Pdoor_st_arec2Z_header = {0, &model_object_standard_object, 0, 1, 763.03589, 3, 0, 0};
+//D:800388D0
+struct PitemZ_header Pdoor_dest1Z_header = {0, &model_object_standard_object, 0, 1, 461.3873, 3, 0, 0};
+//D:800388F0
+struct PitemZ_header Pdoor_dest2Z_header = {0, &model_object_standard_object, 0, 1, 461.3873, 5, 0, 0};
+//D:80038910
+struct PitemZ_header Pgas_plant_sw_do1Z_header = {0, &model_object_standard_object, 0, 1, 862.29706, 4, 0, 0};
+//D:80038930
+struct PitemZ_header Pgas_plant_sw2_do1Z_header = {0, &model_object_standard_object, 0, 1, 862.88489, 2, 0, 0};
+//D:80038950
+struct PitemZ_header Pgas_plant_sw3_do1Z_header = {0, &model_object_standard_object, 0, 1, 862.88489, 2, 0, 0};
+//D:80038970
+struct PitemZ_header Pgas_plant_sw4_do1Z_header = {0, &model_object_standard_object, 0, 1, 862.88489, 1, 0, 0};
+//D:80038990
+struct PitemZ_header Pgas_plant_met1_do1Z_header = {0, &model_object_standard_object, 0, 1, 862.88489, 5, 0, 0};
+//D:800389B0
+struct PitemZ_header Pgas_plant_wc_cub1Z_header = {0, &model_object_standard_object, 0, 1, 783.8501, 3, 0, 0};
+//D:800389D0
+struct PitemZ_header Pgasplant_clear_doorZ_header = {0, &prop_door_related, 4, 1, 1025.0952, 2, 0, 0};
+//D:800389F0
+struct PitemZ_header Ptrain_doorZ_header = {0, &model_object_standard_object, 0, 1, 456.99615, 3, 0, 0};
+//D:80038A10
+struct PitemZ_header Ptrain_door2Z_header = {0, &prop_door_related, 4, 1, 445.98541, 3, 0, 0};
+//D:80038A30
+struct PitemZ_header Ptrain_door3Z_header = {0, &prop_door_related, 4, 1, 445.98541, 4, 0, 0};
+//D:80038A50
+struct PitemZ_header Pdoor_eyelidZ_header = {0, &prop_eyelid_door_related, 3, 3, 3165.4348, 3, 0, 0};
+//D:80038A70
+struct PitemZ_header Pdoor_irisZ_header = {0, &prop_iris_door_related, 0xD, 0xD, 1621.3601, 5, 0, 0};
+//D:80038A90
+struct PitemZ_header PsevdoorwoodZ_header = {0, &prop_door_related, 4, 1, 851.62671, 3, 0, 0};
+//D:80038AB0
+struct PitemZ_header PsevdoorwindZ_header = {0, &prop_door_related, 4, 1, 851.62671, 5, 0, 0};
+//D:80038AD0
+struct PitemZ_header PsevdoornowindZ_header = {0, &model_object_standard_object, 0, 1, 863.03766, 2, 0, 0};
+//D:80038AF0
+struct PitemZ_header PsevdoormetslideZ_header = {0, &model_object_standard_object, 0, 1, 863.74707, 2, 0, 0};
+//D:80038B10
+struct PitemZ_header Pcryptdoor1aZ_header = {0, &model_object_standard_object, 0, 1, 502.64923, 2, 0, 0};
+//D:80038B30
+struct PitemZ_header Pcryptdoor1bZ_header = {0, &model_object_standard_object, 0, 1, 400.97537, 2, 0, 0};
+//D:80038B50
+struct PitemZ_header Pcryptdoor2aZ_header = {0, &model_object_standard_object, 0, 1, 502.64923, 2, 0, 0};
+//D:80038B70
+struct PitemZ_header Pcryptdoor2bZ_header = {0, &model_object_standard_object, 0, 1, 400.97537, 2, 0, 0};
+//D:80038B90
+struct PitemZ_header Pcryptdoor3Z_header = {0, &model_object_standard_object, 0, 1, 801.95074, 3, 0, 0};
+//D:80038BB0
+struct PitemZ_header Pcryptdoor4Z_header = {0, &model_object_standard_object, 0, 1, 801.95074, 1, 0, 0};
+//D:80038BD0
+struct PitemZ_header PvertdoorZ_header = {0, &model_object_standard_object, 0, 1, 1997.2246, 5, 0, 0};
+//D:80038BF0
+struct PitemZ_header PhatchdoorZ_header = {0, &model_object_standard_object, 0, 1, 192.1653, 1, 0, 0};
+//D:80038C10
+struct PitemZ_header PdamgatedoorZ_header = {0, &model_object_standard_object, 0, 1, 308.36456, 3, 0, 0};
+//D:80038C30
+struct PitemZ_header PdamtundoorZ_header = {0, &model_object_standard_object, 0, 1, 127.89996, 4, 0, 0};
+//D:80038C50
+struct PitemZ_header PdamchaindoorZ_header = {0, &model_object_standard_object, 0, 1, 171.36655, 2, 0, 0};
+//D:80038C70
+struct PitemZ_header PsilotopdoorZ_header = {0, &model_object_standard_object, 0, 1, 2675.3958, 5, 0, 0};
+//D:80038C90
+struct PitemZ_header Pdoorprison1Z_header = {0, &model_object_standard_object, 0, 1, 1062.0833, 1, 0, 0};
+//D:80038CB0
+struct PitemZ_header PdoorstatgateZ_header = {0, &model_object_standard_object, 0, 1, 1503.9503, 3, 0, 0};
+//D:80038CD0
+struct PitemZ_header PchrkalashZ_header = {0, &prop_weapon_related, 3, 1, 403.53766, 8, 0, 0};
+//D:80038CF0
+struct PitemZ_header PchrgrenadelaunchZ_header = {0, &prop_weapon_related, 3, 1, 422.48355, 7, 0, 0};
+//D:80038D10
+struct PitemZ_header PchrknifeZ_header = {0, &prop_weapon_related, 3, 1, 245.14619, 2, 0, 0};
+//D:80038D30
+struct PitemZ_header PchrlaserZ_header = {0, &prop_weapon_related, 3, 2, 444.66241, 8, 0, 0};
+//D:80038D50
+struct PitemZ_header Pchrm16Z_header = {0, &prop_weapon_related, 3, 2, 964.01367, 6, 0, 0};
+//D:80038D70
+struct PitemZ_header Pchrmp5kZ_header = {0, &prop_weapon_related, 3, 1, 277.32227, 9, 0, 0};
+//D:80038D90
+struct PitemZ_header PchrrugerZ_header = {0, &prop_weapon_related, 3, 1, 246.72643, 5, 0, 0};
+//D:80038DB0
+struct PitemZ_header PchrwppkZ_header = {0, &prop_weapon_related, 3, 1, 125.79879, 5, 0, 0};
+//D:80038DD0
+struct PitemZ_header PchrshotgunZ_header = {0, &prop_weapon_related, 3, 1, 488.88385, 8, 0, 0};
+//D:80038DF0
+struct PitemZ_header PchrskorpionZ_header = {0, &prop_weapon_related, 3, 1, 183.37708, 7, 0, 0};
+//D:80038E10
+struct PitemZ_header PchrspectreZ_header = {0, &prop_weapon_related, 3, 1, 351.26923, 6, 0, 0};
+//D:80038E30
+struct PitemZ_header PchruziZ_header = {0, &prop_weapon_related, 3, 1, 265.11813, 7, 0, 0};
+//D:80038E50
+struct PitemZ_header PchrgrenadeZ_header = {0, &prop_weapon_related, 3, 1, 118.18749, 2, 0, 0};
+//D:80038E70
+struct PitemZ_header Pchrfnp90Z_header = {0, &prop_weapon_related, 3, 2, 470.04633, 7, 0, 0};
+//D:80038E90
+struct PitemZ_header PchrbriefcaseZ_header = {0, &prop_weapon_related, 3, 1, 342.23688, 5, 0, 0};
+//D:80038EB0
+struct PitemZ_header PchrremotemineZ_header = {0, &prop_weapon_related, 3, 1, 87.434036, 2, 0, 0};
+//D:80038ED0
+struct PitemZ_header PchrproximitymineZ_header = {0, &prop_weapon_related, 3, 1, 87.196609, 2, 0, 0};
+//D:80038EF0
+struct PitemZ_header PchrtimedmineZ_header = {0, &prop_weapon_related, 3, 1, 87.245888, 3, 0, 0};
+//D:80038F10
+struct PitemZ_header PchrrocketZ_header = {0, &prop_weapon_related, 3, 1, 342.8634, 3, 0, 0};
+//D:80038F30
+struct PitemZ_header PchrgrenaderoundZ_header = {0, &prop_weapon_related, 3, 1, 96.976593, 1, 0, 0};
+//D:80038F50
+struct PitemZ_header PchrwppksilZ_header = {0, &prop_weapon_related, 3, 1, 219.44571, 6, 0, 0};
+//D:80038F70
+struct PitemZ_header Pchrtt33Z_header = {0, &prop_weapon_related, 3, 1, 142.11539, 5, 0, 0};
+//D:80038F90
+struct PitemZ_header Pchrmp5ksilZ_header = {0, &prop_weapon_related, 3, 1, 406.18033, 0xA, 0, 0};
+//D:80038FB0
+struct PitemZ_header PchrautoshotZ_header = {0, &prop_weapon_related, 3, 1, 375.50247, 8, 0, 0};
+//D:80038FD0
+struct PitemZ_header PchrgoldenZ_header = {0, &prop_weapon_related, 3, 1, 157.98299, 2, 0, 0};
+//D:80038FF0
+struct PitemZ_header PchrthrowknifeZ_header = {0, &prop_weapon_related, 3, 1, 217.61888, 2, 0, 0};
+//D:80039010
+struct PitemZ_header PchrsniperrifleZ_header = {0, &prop_weapon_related, 3, 1, 616.93939, 5, 0, 0};
+//D:80039030
+struct PitemZ_header PchrrocketlaunchZ_header = {0, &prop_weapon_related, 3, 2, 501.55179, 6, 0, 0};
+//D:80039050
+struct PitemZ_header PhatfurryZ_header = {0, &item_hat_related, 0, 1, 152.53136, 3, 0, 0};
+//D:80039070
+struct PitemZ_header PhatfurrybrownZ_header = {0, &item_hat_related, 0, 1, 152.53136, 3, 0, 0};
+//D:80039090
+struct PitemZ_header PhatfurryblackZ_header = {0, &item_hat_related, 0, 1, 152.53136, 3, 0, 0};
+//D:800390B0
+struct PitemZ_header PhattbirdZ_header = {0, &item_hat_related, 0, 1, 114.45274, 1, 0, 0};
+//D:800390D0
+struct PitemZ_header PhattbirdbrownZ_header = {0, &item_hat_related, 0, 1, 122.7013, 1, 0, 0};
+//D:800390F0
+struct PitemZ_header PhathelmetZ_header = {0, &item_hat_related, 0, 1, 163.84476, 1, 0, 0};
+//D:80039110
+struct PitemZ_header PhathelmetgreyZ_header = {0, &item_hat_related, 0, 1, 163.84476, 1, 0, 0};
+//D:80039130
+struct PitemZ_header PhatmoonZ_header = {0, &item_hat_related, 0, 1, 138.25751, 2, 0, 0};
+//D:80039150
+struct PitemZ_header PhatberetZ_header = {0, &item_hat_related, 0, 1, 116.16043, 1, 0, 0};
+//D:80039170
+struct PitemZ_header PhatberetblueZ_header = {0, &item_hat_related, 0, 1, 116.16043, 2, 0, 0};
+//D:80039190
+struct PitemZ_header PhatberetredZ_header = {0, &item_hat_related, 0, 1, 115.46455, 2, 0, 0};
+//D:800391B0
+struct PitemZ_header PhatpeakedZ_header = {0, &item_hat_related, 0, 1, 148.39027, 1, 0, 0};
+//D:800391D0
+struct PitemZ_header PchrwristdartZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:800391F0
+struct PitemZ_header PchrexplosivepenZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039210
+struct PitemZ_header PchrbombcaseZ_header = {0, &prop_weapon_related, 3, 1, 342.23688, 5, 0, 0};
+//D:80039230
+struct PitemZ_header PchrflarepistolZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039250
+struct PitemZ_header PchrpitongunZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039270
+struct PitemZ_header PchrfingergunZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039290
+struct PitemZ_header PchrsilverwppkZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:800392B0
+struct PitemZ_header PchrgoldwppkZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:800392D0
+struct PitemZ_header PchrdynamiteZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:800392F0
+struct PitemZ_header PchrbungeeZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039310
+struct PitemZ_header PchrdoordecoderZ_header = {0, &prop_weapon_related, 3, 1, 180.27969, 0x10, 0, 0};
+//D:80039330
+struct PitemZ_header PchrbombdefuserZ_header = {0, &model_object_standard_object, 0, 1, 84.370705, 0xC, 0, 0};
+//D:80039350
+struct PitemZ_header PchrbugdetectorZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039370
+struct PitemZ_header PchrsafecrackercaseZ_header = {0, &prop_weapon_related, 3, 1, 342.23688, 5, 0, 0};
+//D:80039390
+struct PitemZ_header PchrcameraZ_header = {0, &model_object_standard_object, 0, 1, 52.775627, 0xB, 0, 0};
+//D:800393B0
+struct PitemZ_header PchrlockexploderZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:800393D0
+struct PitemZ_header PchrdoorexploderZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:800393F0
+struct PitemZ_header PchrkeyanalysercaseZ_header = {0, &prop_weapon_related, 3, 1, 342.23688, 5, 0, 0};
+//D:80039410
+struct PitemZ_header PchrweaponcaseZ_header = {0, &model_object_standard_object, 0, 1, 274.2905, 5, 0, 0};
+//D:80039430
+struct PitemZ_header PchrkeyyaleZ_header = {0, &model_object_standard_object, 0, 1, 82.850311, 1, 0, 0};
+//D:80039450
+struct PitemZ_header PchrkeyboltZ_header = {0, &model_object_standard_object, 0, 1, 151.85315, 1, 0, 0};
+//D:80039470
+struct PitemZ_header PchrbugZ_header = {0, &model_object_standard_object, 0, 1, 104.7203, 6, 0, 0};
+//D:80039490
+struct PitemZ_header PchrmicrocameraZ_header = {0, &model_object_standard_object, 0, 1, 126.49728, 7, 0, 0};
+//D:800394B0
+struct PitemZ_header PfloppyZ_header = {0, &model_object_standard_object, 0, 1, 60.902443, 5, 0, 0};
+//D:800394D0
+struct PitemZ_header PchrgoldeneyekeyZ_header = {0, &model_object_standard_object, 0, 1, 98.987083, 5, 0, 0};
+//D:800394F0
+struct PitemZ_header PchrpolarizedglassesZ_header = {0, &model_object_standard_object, 0, 1, 53.776386, 2, 0, 0};
+//D:80039510
+struct PitemZ_header PchrcreditcardZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039530
+struct PitemZ_header PchrdarkglassesZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039550
+struct PitemZ_header PchrgaskeyringZ_header = {0, &model_object_standard_object, 0, 1, 111.59859, 9, 0, 0};
+//D:80039570
+struct PitemZ_header PchrdatathiefZ_header = {0, &model_object_standard_object, 0, 1, 119.78231, 3, 0, 0};
+//D:80039590
+struct PitemZ_header PsafeZ_header = {0, &model_object_standard_object, 0, 1, 1011.1874, 3, 0, 0};
+//D:800395B0
+struct PitemZ_header PbombZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:800395D0
+struct PitemZ_header PchrplansZ_header = {0, &model_object_standard_object, 0, 1, 384.74649, 5, 0, 0};
+//D:800395F0
+struct PitemZ_header PchrspyfileZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039610
+struct PitemZ_header PchrblueprintsZ_header = {0, &model_object_standard_object, 0, 1, 588.65448, 4, 0, 0};
+//D:80039630
+struct PitemZ_header PchrcircuitboardZ_header = {0, &model_object_standard_object, 0, 1, 138.90285, 3, 0, 0};
+//D:80039650
+struct PitemZ_header PchrmapZ_header = {0, &model_object_standard_object, 0, 1, 588.65448, 4, 0, 0};
+//D:80039670
+struct PitemZ_header PchrspooltapeZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039690
+struct PitemZ_header PchraudiotapeZ_header = {0, &model_object_standard_object, 0, 1, 97.531075, 9, 0, 0};
+//D:800396B0
+struct PitemZ_header PchrmicrofilmZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:800396D0
+struct PitemZ_header PchrmicrocodeZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:800396F0
+struct PitemZ_header PchrlectreZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039710
+struct PitemZ_header PchrmoneyZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039730
+struct PitemZ_header PchrgoldbarZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039750
+struct PitemZ_header PchrheroinZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+//D:80039770
+struct PitemZ_header PchrclipboardZ_header = {0, &model_object_standard_object, 0, 1, 190.41742, 3, 0, 0};
+//D:80039790
+struct PitemZ_header PchrdossierredZ_header = {0, &model_object_standard_object, 0, 1, 183.54231, 4, 0, 0};
+//D:800397B0
+struct PitemZ_header PchrstafflistZ_header = {0, &model_object_standard_object, 0, 1, 215.17534, 4, 0, 0};
+//D:800397D0
+struct PitemZ_header PchrdattapeZ_header = {0, &model_object_standard_object, 0, 1, 79.868584, 4, 0, 0};
+//D:800397F0
+struct PitemZ_header PchrplastiqueZ_header = {0, &model_object_standard_object, 0, 1, 143.86052, 3, 0, 0};
+//D:80039810
+struct PitemZ_header PchrblackboxZ_header = {0, &model_object_standard_object, 0, 1, 128.31796, 5, 0, 0};
+//D:80039830
+struct PitemZ_header PchrvideotapeZ_header = {0, &model_object_standard_object, 0, 1, 122.69632, 9, 0, 0};
+//D:80039850
+struct PitemZ_header PnintendologoZ_header = {0, &model_object_standard_object, 0, 1, 1868.335, 1, 0, 0};
+//D:80039870
+struct PitemZ_header PgoldeneyelogoZ_header = {0, &model_object_standard_object, 0, 1, 1287.1866, 2, 0, 0};
+//D:80039890
+struct PitemZ_header PwalletbondZ_header = {0, &prop_walletbond_related, 0x2B, 1, 3504.53, 0x54, 0, 0};
+//D:800398B0
+struct PitemZ_header PmiltruckZ_header = {0, &prop_car_related, 0xB, 5, 4589.7188, 0x16, 0, 0};
+//D:800398D0
+struct PitemZ_header PjeepZ_header = {0, &prop_car_related, 0xB, 5, 2107.8105, 0x10, 0, 0};
+//D:800398F0
+struct PitemZ_header ParticZ_header = {0, &prop_car_related, 0xB, 5, 2678.5667, 0x11, 0, 0};
+//D:80039910
+struct PitemZ_header PhelicopterZ_header = {0, &prop_flying_related, 6, 4, 4955.271, 0x18, 0, 0};
+//D:80039930
+struct PitemZ_header PtigerZ_header = {0, &prop_flying_related, 6, 4, 4072.0291, 0xE, 0, 0};
+//D:80039950
+struct PitemZ_header PmilcopterZ_header = {0, &prop_flying_related, 6, 4, 5316.9155, 0xF, 0, 0};
+//D:80039970
+struct PitemZ_header PhindZ_header = {0, &prop_flying_related, 6, 5, 5315.314, 0xB, 0, 0};
+//D:80039990
+struct PitemZ_header PartictrailerZ_header = {0, &model_object_standard_object, 0, 1, 4014.6265, 0xB, 0, 0};
+//D:800399B0
+struct PitemZ_header PmotorbikeZ_header = {0, &model_object_standard_object, 0, 1, 1610.8706, 6, 0, 0};
+//D:800399D0
+struct PitemZ_header PtankZ_header = {0, &item_tank_related, 9, 5, 6290.8398, 0x18, 0, 0};
+//D:800399F0
+struct PitemZ_header PapcZ_header = {0, &model_object_standard_object, 0, 1, 3611.1035, 0xE, 0, 0};
+//D:80039A10
+struct PitemZ_header PspeedboatZ_header = {0, &model_object_standard_object, 0, 1, 1799.4586, 0xD, 0, 0};
+//D:80039A30
+struct PitemZ_header PplaneZ_header = {0, &prop_flying_related, 6, 3, 9285.4492, 0x1C, 0, 0};
+//D:80039A50
+struct PitemZ_header Pgun_runway1Z_header = {0, &prop_rotating_stuff_related, 8, 5, 1927.5205, 6, 0, 0};
+//D:80039A70
+struct PitemZ_header PsafedoorZ_header = {0, &model_object_standard_object, 0, 1, 714.14612, 4, 0, 0};
+//D:80039A90
+struct PitemZ_header Pkey_holderZ_header = {0, &model_object_standard_object, 0, 1, 223.87097, 7, 0, 0};
+//D:80039AB0
+struct PitemZ_header PhatchsevxZ_header = {0, &model_object_standard_object, 0, 1, 1224.7664, 2, 0, 0};
+//D:80039AD0
+struct PitemZ_header PsevdishZ_header = {0, &prop_rotating_stuff_related, 8, 3, 14350.1, 7, 0, 0};
+//D:80039AF0
+struct PitemZ_header Parchsecdoor1Z_header = {0, &model_object_standard_object, 0, 1, 455.81409, 3, 0, 0};
+//D:80039B10
+struct PitemZ_header Parchsecdoor2Z_header = {0, &model_object_standard_object, 0, 1, 496.99292, 3, 0, 0};
+//D:80039B30
+struct PitemZ_header PgroundgunZ_header = {0, &prop_rotating_stuff_related, 8, 5, 2182.6472, 4, 0, 0};
+//D:80039B50
+struct PitemZ_header PtrainextdoorZ_header = {0, &model_object_standard_object, 0, 1, 587.70111, 5, 0, 0};
+//D:80039B70
+struct PitemZ_header PcarbmwZ_header = {0, &model_object_standard_object, 0, 1, 553.08728, 0xB, 0, 0};
+//D:80039B90
+struct PitemZ_header PcarescortZ_header = {0, &model_object_standard_object, 0, 1, 1110.5665, 9, 0, 0};
+//D:80039BB0
+struct PitemZ_header PcargolfZ_header = {0, &model_object_standard_object, 0, 1, 1121.6409, 0xA, 0, 0};
+//D:80039BD0
+struct PitemZ_header PcarweirdZ_header = {0, &model_object_standard_object, 0, 1, 984.03931, 0xD, 0, 0};
+//D:80039BF0
+struct PitemZ_header PcarzilZ_header = {0, &prop_car_related, 0xB, 5, 1044.5764, 0xD, 0, 0};
+//D:80039C10
+struct PitemZ_header Pshuttle_door_lZ_header = {0, &model_object_standard_object, 0, 1, 706.56641, 7, 0, 0};
+//D:80039C30
+struct PitemZ_header Pshuttle_door_rZ_header = {0, &model_object_standard_object, 0, 1, 706.56641, 8, 0, 0};
+//D:80039C50
+struct PitemZ_header Pdepot_gate_entryZ_header = {0, &model_object_standard_object, 0, 1, 811.28949, 3, 0, 0};
+//D:80039C70
+struct PitemZ_header Pdepot_door_steelZ_header = {0, &model_object_standard_object, 0, 1, 574.79651, 3, 0, 0};
+//D:80039C90
+struct PitemZ_header Pglassware2Z_header = {0, &model_object_standard_object, 0, 1, 98.488579, 3, 0, 0};
+//D:80039CB0
+struct PitemZ_header Pglassware3Z_header = {0, &model_object_standard_object, 0, 1, 137.92715, 1, 0, 0};
+//D:80039CD0
+struct PitemZ_header Pglassware4Z_header = {0, &model_object_standard_object, 0, 1, 177.48241, 2, 0, 0};
+//D:80039CF0
+struct PitemZ_header PlandmineZ_header = {0, &model_object_standard_object, 0, 1, 440.03009, 2, 0, 0};
+//D:80039D10
+struct PitemZ_header Pplant1Z_header = {0, &model_object_standard_object, 0, 1, 2704.1086, 1, 0, 0};
+//D:80039D30
+struct PitemZ_header Pplant11Z_header = {0, &model_object_standard_object, 0, 1, 2704.1086, 1, 0, 0};
+//D:80039D50
+struct PitemZ_header Pplant2Z_header = {0, &model_object_standard_object, 0, 1, 3416.248, 2, 0, 0};
+//D:80039D70
+struct PitemZ_header Pplant3Z_header = {0, &model_object_standard_object, 0, 1, 2986.0405, 1, 0, 0};
+//D:80039D90
+struct PitemZ_header Pjungle5_treeZ_header = {0, &model_object_standard_object, 0, 1, 3277.6123, 4, 0, 0};
+//D:80039DB0
+struct PitemZ_header PlegalpageZ_header = {0, &model_object_standard_object, 0, 1, 2711.7573, 5, 0, 0};
+//D:80039DD0
+struct PitemZ_header Pst_pete_room_1iZ_header = {0, &model_object_standard_object, 0, 1, 8437.5137, 0x17, 0, 0};
+//D:80039DF0
+struct PitemZ_header Pst_pete_room_2iZ_header = {0, &model_object_standard_object, 0, 1, 8515.8164, 0x19, 0, 0};
+//D:80039E10
+struct PitemZ_header Pst_pete_room_3tZ_header = {0, &model_object_standard_object, 0, 1, 4561.9766, 0x1B, 0, 0};
+//D:80039E30
+struct PitemZ_header Pst_pete_room_5cZ_header = {0, &model_object_standard_object, 0, 1, 4561.9766, 0x19, 0, 0};
+//D:80039E50
+struct PitemZ_header Pst_pete_room_6cZ_header = {0, &model_object_standard_object, 0, 1, 5006.2896, 0x17, 0, 0};
+//D:80039E70
+struct PitemZ_header Pdoor_rollertrainZ_header = {0, &model_object_standard_object, 0, 1, 1032.125, 2, 0, 0};
+//D:80039E90
+struct PitemZ_header Pdoor_winZ_header = {0, &model_object_standard_object, 0, 1, 211.90215, 1, 0, 0};
+//D:80039EB0
+struct PitemZ_header Pdoor_aztecZ_header = {0, &model_object_standard_object, 0, 1, 632.48639, 1, 0, 0};
+//D:80039ED0
+struct PitemZ_header PshuttleZ_header = {0, &model_object_standard_object, 0, 1, 4475.1494, 9, 0, 0};
+//D:80039EF0
+struct PitemZ_header Pdoor_azt_deskZ_header = {0, &model_object_standard_object, 0, 1, 860.41669, 2, 0, 0};
+//D:80039F10
+struct PitemZ_header Pdoor_azt_desk_topZ_header = {0, &model_object_standard_object, 0, 1, 565.93268, 3, 0, 0};
+//D:80039F30
+struct PitemZ_header Pdoor_azt_chairZ_header = {0, &model_object_standard_object, 0, 1, 94.510803, 3, 0, 0};
+//D:80039F50
+struct PitemZ_header Pdoor_mfZ_header = {0, &model_object_standard_object, 0, 1, 559.70367, 7, 0, 0};
+//D:80039F70
+struct PitemZ_header PflagZ_header = {0, &prop_weapon_related, 3, 1, 862.30865, 2, 0, 0};
+//D:80039F90
+struct PitemZ_header PbarricadeZ_header = {0, &model_object_standard_object, 0, 1, 2047.3016, 2, 0, 0};
+//D:80039FB0
+struct PitemZ_header PmodemboxZ_header = {0, &prop_console_one_screen_related, 1, 1, 338.28839, 4, 0, 0};
+//D:80039FD0
+struct PitemZ_header PdoorpanelZ_header = {0, &prop_console_four_screen_related, 4, 1, 338.28839, 4, 0, 0};
+//D:80039FF0
+struct PitemZ_header PdoorconsoleZ_header = {0, &prop_console_one_screen_related, 1, 1, 994.23688, 0xD, 0, 0};
+//D:8003A010
+struct PitemZ_header PchrtesttubeZ_header = {0, &prop_weapon_related, 3, 1, 136.25925, 2, 0, 0};
+//D:8003A030
+struct PitemZ_header Pbollardz_header = {0, &model_object_standard_object, 0, 1, 628.78754, 1, 0, 0};
+
+//D:8003A050
+struct prop_pos_data word_D_8003A050[2] = {
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003}
+};
+//D:8003A05C
+struct item_related prop_cctv_related = {2, 0, word_D_8003A050, 6, 0};
+
+//D:8003A068
+struct prop_pos_data word_D_8003A068[] = {
+    {0x0002, 0x0000, 0x0000}
+};
+//D:8003A06E                     .half 0
+
+//D:8003A070
+struct item_related prop_console_one_screen_related = {1, 0, word_D_8003A068, 3, 0};
+
+//D:8003A07C
+struct prop_pos_data word_D_8003A07C[] = {
+    {0x0002, 0x0000, 0x0000}
+};
+//D:8003A082                     .half 0
+
+//D:8003A084
+struct item_related prop_console_four_screen_related = {1, 0, word_D_8003A07C, 3, 0};
+
+//D:8003A090
+struct prop_pos_data word_D_8003A090[] = {
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0002, 0x0009, 0x0009},
+    {0x0002, 0x000C, 0x000C}
+};
+//D:8003A0AE                     .half 0
+
+//D:8003A0B0
+struct item_related prop_tv_holder_related = {5, 0, word_D_8003A090, 0xF, 0};
+
+//D:8003A0BC
+struct prop_pos_data word_D_8003A0BC[] = {
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0002, 0x0009, 0x0009},
+    {0x0002, 0x000C, 0x000C},
+    {0x0002, 0x000F, 0x000F}
+};
+//D:8003A0E0
+struct item_related prop_rotating_stuff_related = {6, 0, word_D_8003A0BC, 0x12, 0};
+
+//D:8003A0EC
+struct prop_pos_data word_D_8003A0EC[] = {
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006}
+};
+//D:8003A0FE                     .half 0
+//D:8003A100
+struct item_related prop_eyelid_door_related = {3, 0, word_D_8003A0EC, 9, 0};
+
+//D:8003A10C
+struct prop_pos_data word_D_8003A10C[] = {
+    {0x0002, 0x0000, 0x0002},
+    {0x0003, 0x0003, 0x0002},
+    {0x0006, 0x0006, 0x0002},
+    {0x0009, 0x0009, 0x0002},
+    {0x000C, 0x000C, 0x0002},
+    {0x000F, 0x000F, 0x0002},
+    {0x0012, 0x0012, 0x0002},
+    {0x0015, 0x0015, 0x0002},
+    {0x0018, 0x0018, 0x0002},
+    {0x001B, 0x001B, 0x0002},
+    {0x001E, 0x001E, 0x0002},
+    {0x0021, 0x0021, 0x0002},
+    {0x0024, 0x0024, 0x0000}
+};
+//D:8003A15C
+struct item_related prop_iris_door_related = {0xD, 0, word_D_8003A10C, 0x27, 0};
+
+//D:8003A168
+struct prop_pos_data word_D_8003A168[] = {
+    {0x0002, 0x0000, 0x0000}
+};
+//D:8003A16E                     .half 0
+//D:8003A170
+struct item_related prop_walletbond_related = {1, 0, word_D_8003A168, 3, 0};
+
+//D:8003A17C
+struct prop_pos_data word_D_8003A17C[] = {
+    {0x0002, 0x0000, 0x0002},
+    {0x0003, 0x0003, 0x0002},
+    {0x0006, 0x0006, 0x0002},
+    {0x0009, 0x0009, 0x0002},
+    {0x000C, 0x000C, 0x0000}
+};
+//D:8003A19C
+struct item_related prop_car_related = {5, 0, word_D_8003A17C, 0xF, 0};
+
+//D:8003A1A8
+struct prop_pos_data word_D_8003A1A8[] = {
+    {0x0401, 0x0000, 0x0000},
+    {0x0002, 0x0000, 0x0000},
+    {0x0015, 0x0003, 0x0003},
+    {0x0015, 0x0004, 0x0004},
+    {0x0015, 0x0005, 0x0005}
+};
+//D:8003A1C6                     .half 0
+//D:8003A1C8
+struct item_related prop_flying_related = {5, 0, word_D_8003A1A8, 3, 0};
+
+//D:8003A1D4
+struct prop_pos_data word_D_8003A1D4[] = {
+    {0x0002, 0x0000, 0x0000}
+};
+//D:8003A1DA                     .half 0
+//D:8003A1DC
+struct item_related prop_door_related = {1, 0, word_D_8003A1D4, 3, 0};
+
+//D:8003A1E8
+struct prop_pos_data word_D_8003A1E8[] = {
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0002, 0x0009, 0x0009},
+    {0x0002, 0x000C, 0x000C}
+};
+//D:8003A206                     .half 0
+//D:8003A208
+struct item_related item_tank_related = {5, 0, word_D_8003A1E8, 0xF, 0};
+
+//D:8003A214
+struct prop_pos_data word_D_8003A214[] = {
+    {0x0015, 0x0000, 0x0000},
+};
+//D:8003A21A                     .half 0
+//D:8003A21C
+struct item_related item_hat_related = {1, 0, word_D_8003A214, 0, 0};
+
+//D:8003A228                     .globl PitemZ_entries
+struct p_itementry PitemZ_entries[] = {
+    {&Palarm1z_header, "Palarm1Z", 0.1},
+    {&Palarm2Z_header, "Palarm2Z", 0.1},
+    {&PexplosionbitZ_header, "PexplosionbitZ", 0.1},
+    {&Pammo_crate1Z_header, "Pammo_crate1Z", 0.1},
+    {&Pammo_crate2Z_header, "Pammo_crate2Z", 0.1},
+    {&Pammo_crate3Z_header, "Pammo_crate3Z", 0.1},
+    {&Pammo_crate4Z_header, "Pammo_crate4Z", 0.1},
+    {&Pammo_crate5Z_header, "Pammo_crate5Z", 0.1},
+    {&Pbin1Z_header, "Pbin1Z", 0.1},
+    {&Pblotter1Z_header, "Pblotter1Z", 0.1},
+    {&Pbook1Z_header, "Pbook1Z", 0.1},
+    {&Pbookshelf1Z_header, "Pbookshelf1Z", 0.1},
+    {&Pbridge_console1aZ_header, "Pbridge_console1aZ", 0.1},
+    {&Pbridge_console1bZ_header, "Pbridge_console1bZ", 0.1},
+    {&Pbridge_console2aZ_header, "Pbridge_console2aZ", 0.1},
+    {&Pbridge_console2bZ_header, "Pbridge_console2bZ", 0.1},
+    {&Pbridge_console3aZ_header, "Pbridge_console3aZ", 0.1},
+    {&Pbridge_console3bZ_header, "Pbridge_console3bZ", 0.1},
+    {&Pcard_box1Z_header, "Pcard_box1Z", 0.1},
+    {&Pcard_box2Z_header, "Pcard_box2Z", 0.1},
+    {&Pcard_box3Z_header, "Pcard_box3Z", 0.1},
+    {&Pcard_box4_lgZ_header, "Pcard_box4_lgZ", 0.1},
+    {&Pcard_box5_lgZ_header, "Pcard_box5_lgZ", 0.1},
+    {&Pcard_box6_lgZ_header, "Pcard_box6_lgZ", 0.1},
+    {&PcctvZ_header, "PcctvZ", 0.1},
+    {&Pconsole1Z_header, "Pconsole1Z", 0.1},
+    {&Pconsole2Z_header, "Pconsole2Z", 0.1},
+    {&Pconsole3Z_header, "Pconsole3Z", 0.1},
+    {&Pconsole_sevaZ_header, "Pconsole_sevaZ", 0.1},
+    {&Pconsole_sevbZ_header, "Pconsole_sevbZ", 0.1},
+    {&Pconsole_sevcZ_header, "Pconsole_sevcZ", 0.1},
+    {&Pconsole_sevdZ_header, "Pconsole_sevdZ", 0.1},
+    {&Pconsole_sev2aZ_header, "Pconsole_sev2aZ", 0.1},
+    {&Pconsole_sev2bZ_header, "Pconsole_sev2bZ", 0.1},
+    {&Pconsole_sev2cZ_header, "Pconsole_sev2cZ", 0.1},
+    {&Pconsole_sev2dZ_header, "Pconsole_sev2dZ", 0.1},
+    {&Pconsole_sev_GEaZ_header, "Pconsole_sev_GEaZ", 0.1},
+    {&Pconsole_sev_GEbZ_header, "Pconsole_sev_GEbZ", 0.1},
+    {&Pdesk1Z_header, "Pdesk1Z", 0.1},
+    {&Pdesk2Z_header, "Pdesk2Z", 0.1},
+    {&Pdesk_lamp2Z_header, "Pdesk_lamp2Z", 0.1},
+    {&Pdisc_readerZ_header, "Pdisc_readerZ", 0.1},
+    {&Pdisk_drive1Z_header, "Pdisk_drive1Z", 0.1},
+    {&Pfiling_cabinet1Z_header, "Pfiling_cabinet1Z", 0.1},
+    {&Pjerry_can1Z_header, "Pjerry_can1Z", 0.1},
+    {&Pkeyboard1Z_header, "Pkeyboard1Z", 0.1},
+    {&Pkit_units1Z_header, "Pkit_units1Z", 0.1},
+    {&Pletter_tray1Z_header, "Pletter_tray1Z", 0.1},
+    {&Pmainframe1Z_header, "Pmainframe1Z", 0.1},
+    {&Pmainframe2Z_header, "Pmainframe2Z", 0.1},
+    {&Pmetal_chair1Z_header, "Pmetal_chair1Z", 0.1},
+    {&Pmetal_crate1Z_header, "Pmetal_crate1Z", 0.1},
+    {&Pmetal_crate2Z_header, "Pmetal_crate2Z", 0.1},
+    {&Pmetal_crate3Z_header, "Pmetal_crate3Z", 0.1},
+    {&Pmetal_crate4Z_header, "Pmetal_crate4Z", 0.1},
+    {&Pmissile_rackZ_header, "Pmissile_rackZ", 0.1},
+    {&Pmissile_rack2Z_header, "Pmissile_rack2Z", 0.1},
+    {&Poil_drum1Z_header, "Poil_drum1Z", 0.1},
+    {&Poil_drum2Z_header, "Poil_drum2Z", 0.1},
+    {&Poil_drum3Z_header, "Poil_drum3Z", 0.1},
+    {&Poil_drum5Z_header, "Poil_drum5Z", 0.1},
+    {&Poil_drum6Z_header, "Poil_drum6Z", 0.1},
+    {&Poil_drum7Z_header, "Poil_drum7Z", 0.1},
+    {&PpadlockZ_header, "PpadlockZ", 0.1},
+    {&Pphone1Z_header, "Pphone1Z", 0.1},
+    {&Pradio_unit1Z_header, "Pradio_unit1Z", 0.1},
+    {&Pradio_unit2Z_header, "Pradio_unit2Z", 0.1},
+    {&Pradio_unit3Z_header, "Pradio_unit3Z", 0.1},
+    {&Pradio_unit4Z_header, "Pradio_unit4Z", 0.1},
+    {&Psat1_reflectZ_header, "Psat1_reflectZ", 0.1},
+    {&PsatdishZ_header, "PsatdishZ", 0.1},
+    {&PsatboxZ_header, "PsatboxZ", 0.1},
+    {&Pstool1Z_header, "Pstool1Z", 0.1},
+    {&Pswivel_chair1Z_header, "Pswivel_chair1Z", 0.1},
+    {&Ptorpedo_rackZ_header, "Ptorpedo_rackZ", 0.1},
+    {&Ptv1Z_header, "Ptv1Z", 0.1},
+    {&Ptv_holderZ_header, "Ptv_holderZ", 0.1},
+    {&PtvscreenZ_header, "PtvscreenZ", 0.1},
+    {&Ptv4screenZ_header, "Ptv4screenZ", 0.1},
+    {&Pwood_lg_crate1Z_header, "Pwood_lg_crate1Z", 0.1},
+    {&Pwood_lg_crate2Z_header, "Pwood_lg_crate2Z", 0.1},
+    {&Pwood_md_crate3Z_header, "Pwood_md_crate3Z", 0.1},
+    {&Pwood_sm_crate4Z_header, "Pwood_sm_crate4Z", 0.1},
+    {&Pwood_sm_crate5Z_header, "Pwood_sm_crate5Z", 0.1},
+    {&Pwood_sm_crate6Z_header, "Pwood_sm_crate6Z", 0.1},
+    {&Pwooden_table1Z_header, "Pwooden_table1Z", 0.1},
+    {&Pswipe_card2Z_header, "Pswipe_card2Z", 0.1},
+    {&Pborg_crateZ_header, "Pborg_crateZ", 0.1},
+    {&Pboxes4x4Z_header, "Pboxes4x4Z", 0.1},
+    {&Pboxes3x4Z_header, "Pboxes3x4Z", 0.1},
+    {&Pboxes2x4Z_header, "Pboxes2x4Z", 0.1},
+    {&Psec_panelZ_header, "Psec_panelZ", 0.1},
+    {&PICBM_noseZ_header, "PICBM_noseZ", 0.1},
+    {&PICBMZ_header, "PICBMZ", 0.1},
+    {&Ptuning_console1Z_header, "Ptuning_console1Z", 0.1},
+    {&Pdesk_arecibo1Z_header, "Pdesk_arecibo1Z", 0.1},
+    {&Plocker3Z_header, "Plocker3Z", 0.1},
+    {&Plocker4Z_header, "Plocker4Z", 0.1},
+    {&ProofgunZ_header, "ProofgunZ", 0.1},
+    {&Pdest_engineZ_header, "Pdest_engineZ", 0.1},
+    {&Pdest_exocetZ_header, "Pdest_exocetZ", 0.1},
+    {&Pdest_gunZ_header, "Pdest_gunZ", 0.1},
+    {&Pdest_harpoonZ_header, "Pdest_harpoonZ", 0.1},
+    {&Pdest_seawolfZ_header, "Pdest_seawolfZ", 0.1},
+    {&PwindowZ_header, "PwindowZ", 0.1},
+    {&Pwindow_lib_lg1Z_header, "Pwindow_lib_lg1Z", 0.1},
+    {&Pwindow_lib_sm1Z_header, "Pwindow_lib_sm1Z", 0.1},
+    {&Pwindow_cor11Z_header, "Pwindow_cor11Z", 0.1},
+    {&Pjungle3_treeZ_header, "Pjungle3_treeZ", 0.1},
+    {&PpalmZ_header, "PpalmZ", 0.1},
+    {&PpalmtreeZ_header, "PpalmtreeZ", 0.1},
+    {&Pplant2bZ_header, "Pplant2bZ", 0.1},
+    {&PlabbenchZ_header, "PlabbenchZ", 0.1},
+    {&PgasbarrelZ_header, "PgasbarrelZ", 0.1},
+    {&PgasbarrelsZ_header, "PgasbarrelsZ", 0.1},
+    {&PbodyarmourZ_header, "PbodyarmourZ", 0.1},
+    {&PbodyarmourvestZ_header, "PbodyarmourvestZ", 0.1},
+    {&PgastankZ_header, "PgastankZ", 0.1},
+    {&Pglassware1Z_header, "Pglassware1Z", 0.1},
+    {&PhatchboltZ_header, "PhatchboltZ", 0.1},
+    {&PbrakeunitZ_header, "PbrakeunitZ", 0.1},
+    {&Pak47magZ_header, "Pak47magZ", 0.1},
+    {&Pm16magZ_header, "Pm16magZ", 0.1},
+    {&Pmp5kmagZ_header, "Pmp5kmagZ", 0.1},
+    {&PskorpionmagZ_header, "PskorpionmagZ", 0.1},
+    {&PspectremagZ_header, "PspectremagZ", 0.1},
+    {&PuzimagZ_header, "PuzimagZ", 0.1},
+    {&PsilencerZ_header, "PsilencerZ", 0.1},
+    {&PchrextinguisherZ_header, "PchrextinguisherZ", 0.1},
+    {&PboxcartridgesZ_header, "PboxcartridgesZ", 0.1},
+    {&Pfnp90magZ_header, "Pfnp90magZ", 0.1},
+    {&PgoldenshellsZ_header, "PgoldenshellsZ", 0.1},
+    {&PmagnumshellsZ_header, "PmagnumshellsZ", 0.1},
+    {&PwppkmagZ_header, "PwppkmagZ", 0.1},
+    {&Ptt33magZ_header, "Ptt33magZ", 0.1},
+    {&Psev_doorZ_header, "Psev_doorZ", 1.0},
+    {&Psev_door3Z_header, "Psev_door3Z", 1.0},
+    {&Psev_door3_windZ_header, "Psev_door3_windZ", 1.0},
+    {&Psev_door4_windZ_header, "Psev_door4_windZ", 1.0},
+    {&Psev_trislideZ_header, "Psev_trislideZ", 1.0},
+    {&Psev_door_v1Z_header, "Psev_door_v1Z", 1.0},
+    {&Psteel_door1Z_header, "Psteel_door1Z", 1.0},
+    {&Psteel_door2Z_header, "Psteel_door2Z", 1.0},
+    {&Psteel_door3Z_header, "Psteel_door3Z", 1.0},
+    {&Psilo_lift_doorZ_header, "Psilo_lift_doorZ", 1.0},
+    {&Psteel_door2bZ_header, "Psteel_door2bZ", 1.0},
+    {&Pdoor_roller1Z_header, "Pdoor_roller1Z", 1.0},
+    {&Pdoor_roller2Z_header, "Pdoor_roller2Z", 1.0},
+    {&Pdoor_roller3Z_header, "Pdoor_roller3Z", 1.0},
+    {&Pdoor_roller4Z_header, "Pdoor_roller4Z", 1.0},
+    {&Pdoor_st_arec1Z_header, "Pdoor_st_arec1Z", 1.0},
+    {&Pdoor_st_arec2Z_header, "Pdoor_st_arec2Z", 1.0},
+    {&Pdoor_dest1Z_header, "Pdoor_dest1Z", 1.0},
+    {&Pdoor_dest2Z_header, "Pdoor_dest2Z", 1.0},
+    {&Pgas_plant_sw_do1Z_header, "Pgas_plant_sw_do1Z", 1.0},
+    {&Pgas_plant_sw2_do1Z_header, "Pgas_plant_sw2_do1Z", 1.0},
+    {&Pgas_plant_sw3_do1Z_header, "Pgas_plant_sw3_do1Z", 1.0},
+    {&Pgas_plant_sw4_do1Z_header, "Pgas_plant_sw4_do1Z", 1.0},
+    {&Pgas_plant_met1_do1Z_header, "Pgas_plant_met1_do1Z", 1.0},
+    {&Pgas_plant_wc_cub1Z_header, "Pgas_plant_wc_cub1Z", 1.0},
+    {&Pgasplant_clear_doorZ_header, "Pgasplant_clear_doorZ", 1.0},
+    {&Ptrain_doorZ_header, "Ptrain_doorZ", 1.0},
+    {&Ptrain_door2Z_header, "Ptrain_door2Z", 1.0},
+    {&Ptrain_door3Z_header, "Ptrain_door3Z", 1.0},
+    {&Pdoor_eyelidZ_header, "Pdoor_eyelidZ", 1.0},
+    {&Pdoor_irisZ_header, "Pdoor_irisZ", 1.0},
+    {&PsevdoorwoodZ_header, "PsevdoorwoodZ", 1.0},
+    {&PsevdoorwindZ_header, "PsevdoorwindZ", 1.0},
+    {&PsevdoornowindZ_header, "PsevdoornowindZ", 1.0},
+    {&PsevdoormetslideZ_header, "PsevdoormetslideZ", 1.0},
+    {&Pcryptdoor1aZ_header, "Pcryptdoor1aZ", 1.0},
+    {&Pcryptdoor1bZ_header, "Pcryptdoor1bZ", 1.0},
+    {&Pcryptdoor2aZ_header, "Pcryptdoor2aZ", 1.0},
+    {&Pcryptdoor2bZ_header, "Pcryptdoor2bZ", 1.0},
+    {&Pcryptdoor3Z_header, "Pcryptdoor3Z", 1.0},
+    {&Pcryptdoor4Z_header, "Pcryptdoor4Z", 1.0},
+    {&PvertdoorZ_header, "PvertdoorZ", 1.0},
+    {&PhatchdoorZ_header, "PhatchdoorZ", 1.0},
+    {&PdamgatedoorZ_header, "PdamgatedoorZ", 1.0},
+    {&PdamtundoorZ_header, "PdamtundoorZ", 1.0},
+    {&PdamchaindoorZ_header, "PdamchaindoorZ", 1.0},
+    {&PsilotopdoorZ_header, "PsilotopdoorZ", 1.0},
+    {&Pdoorprison1Z_header, "Pdoorprison1Z", 1.0},
+    {&PdoorstatgateZ_header, "PdoorstatgateZ", 1.0},
+    {&PchrkalashZ_header, "PchrkalashZ", 0.1},
+    {&PchrgrenadelaunchZ_header, "PchrgrenadelaunchZ", 0.1},
+    {&PchrknifeZ_header, "PchrknifeZ", 0.1},
+    {&PchrlaserZ_header, "PchrlaserZ", 0.1},
+    {&Pchrm16Z_header, "Pchrm16Z", 0.1},
+    {&Pchrmp5kZ_header, "Pchrmp5kZ", 0.1},
+    {&PchrrugerZ_header, "PchrrugerZ", 0.1},
+    {&PchrwppkZ_header, "PchrwppkZ", 0.1},
+    {&PchrshotgunZ_header, "PchrshotgunZ", 0.1},
+    {&PchrskorpionZ_header, "PchrskorpionZ", 0.1},
+    {&PchrspectreZ_header, "PchrspectreZ", 0.1},
+    {&PchruziZ_header, "PchruziZ", 0.1},
+    {&PchrgrenadeZ_header, "PchrgrenadeZ", 0.1},
+    {&Pchrfnp90Z_header, "Pchrfnp90Z", 0.1},
+    {&PchrbriefcaseZ_header, "PchrbriefcaseZ", 0.1},
+    {&PchrremotemineZ_header, "PchrremotemineZ", 0.1},
+    {&PchrproximitymineZ_header, "PchrproximitymineZ", 0.1},
+    {&PchrtimedmineZ_header, "PchrtimedmineZ", 0.1},
+    {&PchrrocketZ_header, "PchrrocketZ", 0.1},
+    {&PchrgrenaderoundZ_header, "PchrgrenaderoundZ", 0.1},
+    {&PchrwppksilZ_header, "PchrwppksilZ", 0.1},
+    {&Pchrtt33Z_header, "Pchrtt33Z", 0.1},
+    {&Pchrmp5ksilZ_header, "Pchrmp5ksilZ", 0.1},
+    {&PchrautoshotZ_header, "PchrautoshotZ", 0.1},
+    {&PchrgoldenZ_header, "PchrgoldenZ", 0.1},
+    {&PchrthrowknifeZ_header, "PchrthrowknifeZ", 0.1},
+    {&PchrsniperrifleZ_header, "PchrsniperrifleZ", 0.1},
+    {&PchrrocketlaunchZ_header, "PchrrocketlaunchZ", 0.1},
+    {&PhatfurryZ_header, "PhatfurryZ", 0.1},
+    {&PhatfurrybrownZ_header, "PhatfurrybrownZ", 0.1},
+    {&PhatfurryblackZ_header, "PhatfurryblackZ", 0.1},
+    {&PhattbirdZ_header, "PhattbirdZ", 0.1},
+    {&PhattbirdbrownZ_header, "PhattbirdbrownZ", 0.1},
+    {&PhathelmetZ_header, "PhathelmetZ", 0.1},
+    {&PhathelmetgreyZ_header, "PhathelmetgreyZ", 0.1},
+    {&PhatmoonZ_header, "PhatmoonZ", 0.1},
+    {&PhatberetZ_header, "PhatberetZ", 0.1},
+    {&PhatberetblueZ_header, "PhatberetblueZ", 0.1},
+    {&PhatberetredZ_header, "PhatberetredZ", 0.1},
+    {&PhatpeakedZ_header, "PhatpeakedZ", 0.1},
+    {&PchrwristdartZ_header, "PchrwristdartZ", 0.1},
+    {&PchrexplosivepenZ_header, "PchrexplosivepenZ", 0.1},
+    {&PchrbombcaseZ_header, "PchrbombcaseZ", 0.1},
+    {&PchrflarepistolZ_header, "PchrflarepistolZ", 0.1},
+    {&PchrpitongunZ_header, "PchrpitongunZ", 0.1},
+    {&PchrfingergunZ_header, "PchrfingergunZ", 0.1},
+    {&PchrsilverwppkZ_header, "PchrsilverwppkZ", 0.1},
+    {&PchrgoldwppkZ_header, "PchrgoldwppkZ", 0.1},
+    {&PchrdynamiteZ_header, "PchrdynamiteZ", 0.1},
+    {&PchrbungeeZ_header, "PchrbungeeZ", 0.1},
+    {&PchrdoordecoderZ_header, "PchrdoordecoderZ", 0.1},
+    {&PchrbombdefuserZ_header, "PchrbombdefuserZ", 0.1},
+    {&PchrbugdetectorZ_header, "PchrbugdetectorZ", 0.1},
+    {&PchrsafecrackercaseZ_header, "PchrsafecrackercaseZ", 0.1},
+    {&PchrcameraZ_header, "PchrcameraZ", 0.1},
+    {&PchrlockexploderZ_header, "PchrlockexploderZ", 0.1},
+    {&PchrdoorexploderZ_header, "PchrdoorexploderZ", 0.1},
+    {&PchrkeyanalysercaseZ_header, "PchrkeyanalysercaseZ", 0.1},
+    {&PchrweaponcaseZ_header, "PchrweaponcaseZ", 0.1},
+    {&PchrkeyyaleZ_header, "PchrkeyyaleZ", 0.1},
+    {&PchrkeyboltZ_header, "PchrkeyboltZ", 0.1},
+    {&PchrbugZ_header, "PchrbugZ", 0.1},
+    {&PchrmicrocameraZ_header, "PchrmicrocameraZ", 0.1},
+    {&PfloppyZ_header, "PfloppyZ", 0.1},
+    {&PchrgoldeneyekeyZ_header, "PchrgoldeneyekeyZ", 0.1},
+    {&PchrpolarizedglassesZ_header, "PchrpolarizedglassesZ", 0.1},
+    {&PchrcreditcardZ_header, "PchrcreditcardZ", 0.1},
+    {&PchrdarkglassesZ_header, "PchrdarkglassesZ", 0.1},
+    {&PchrgaskeyringZ_header, "PchrgaskeyringZ", 0.1},
+    {&PchrdatathiefZ_header, "PchrdatathiefZ", 0.1},
+    {&PsafeZ_header, "PsafeZ", 0.1},
+    {&PbombZ_header, "PbombZ", 0.1},
+    {&PchrplansZ_header, "PchrplansZ", 0.1},
+    {&PchrspyfileZ_header, "PchrspyfileZ", 0.1},
+    {&PchrblueprintsZ_header, "PchrblueprintsZ", 0.1},
+    {&PchrcircuitboardZ_header, "PchrcircuitboardZ", 0.1},
+    {&PchrmapZ_header, "PchrmapZ", 0.1},
+    {&PchrspooltapeZ_header, "PchrspooltapeZ", 0.1},
+    {&PchraudiotapeZ_header, "PchraudiotapeZ", 0.1},
+    {&PchrmicrofilmZ_header, "PchrmicrofilmZ", 0.1},
+    {&PchrmicrocodeZ_header, "PchrmicrocodeZ", 0.1},
+    {&PchrlectreZ_header, "PchrlectreZ", 0.1},
+    {&PchrmoneyZ_header, "PchrmoneyZ", 0.1},
+    {&PchrgoldbarZ_header, "PchrgoldbarZ", 0.1},
+    {&PchrheroinZ_header, "PchrheroinZ", 0.1},
+    {&PchrclipboardZ_header, "PchrclipboardZ", 0.1},
+    {&PchrdossierredZ_header, "PchrdossierredZ", 0.1},
+    {&PchrstafflistZ_header, "PchrstafflistZ", 0.1},
+    {&PchrdattapeZ_header, "PchrdattapeZ", 0.1},
+    {&PchrplastiqueZ_header, "PchrplastiqueZ", 0.1},
+    {&PchrblackboxZ_header, "PchrblackboxZ", 0.1},
+    {&PchrvideotapeZ_header, "PchrvideotapeZ", 0.1},
+    {&PnintendologoZ_header, "PnintendologoZ", 0.1},
+    {&PgoldeneyelogoZ_header, "PgoldeneyelogoZ", 0.1},
+    {&PwalletbondZ_header, "PwalletbondZ", 0.1},
+    {&PmiltruckZ_header, "PmiltruckZ", 0.1},
+    {&PjeepZ_header, "PjeepZ", 0.1},
+    {&ParticZ_header, "ParticZ", 0.1},
+    {&PhelicopterZ_header, "PhelicopterZ", 0.1},
+    {&PtigerZ_header, "PtigerZ", 0.1},
+    {&PmilcopterZ_header, "PmilcopterZ", 0.1},
+    {&PhindZ_header, "PhindZ", 0.1},
+    {&PartictrailerZ_header, "PartictrailerZ", 0.1},
+    {&PmotorbikeZ_header, "PmotorbikeZ", 0.1},
+    {&PtankZ_header, "PtankZ", 0.1},
+    {&PapcZ_header, "PapcZ", 0.1},
+    {&PspeedboatZ_header, "PspeedboatZ", 0.1},
+    {&PplaneZ_header, "PplaneZ", 0.1},
+    {&Pgun_runway1Z_header, "Pgun_runway1Z", 0.1},
+    {&PsafedoorZ_header, "PsafedoorZ", 1.0},
+    {&Pkey_holderZ_header, "Pkey_holderZ", 1.0},
+    {&PhatchsevxZ_header, "PhatchsevxZ", 1.0},
+    {&PsevdishZ_header, "PsevdishZ", 1.0},
+    {&Parchsecdoor1Z_header, "Parchsecdoor1Z", 1.0},
+    {&Parchsecdoor2Z_header, "Parchsecdoor2Z", 1.0},
+    {&PgroundgunZ_header, "PgroundgunZ", 0.1},
+    {&PtrainextdoorZ_header, "PtrainextdoorZ", 1.0},
+    {&PcarbmwZ_header, "PcarbmwZ", 0.1},
+    {&PcarescortZ_header, "PcarescortZ", 0.1},
+    {&PcargolfZ_header, "PcargolfZ", 0.1},
+    {&PcarweirdZ_header, "PcarweirdZ", 0.1},
+    {&PcarzilZ_header, "PcarzilZ", 0.1},
+    {&Pshuttle_door_lZ_header, "Pshuttle_door_lZ", 1.0},
+    {&Pshuttle_door_rZ_header, "Pshuttle_door_rZ", 1.0},
+    {&Pdepot_gate_entryZ_header, "Pdepot_gate_entryZ", 0.1},
+    {&Pdepot_door_steelZ_header, "Pdepot_door_steelZ", 0.1},
+    {&Pglassware2Z_header, "Pglassware2Z", 0.1},
+    {&Pglassware3Z_header, "Pglassware3Z", 0.1},
+    {&Pglassware4Z_header, "Pglassware4Z", 0.1},
+    {&PlandmineZ_header, "PlandmineZ", 0.1},
+    {&Pplant1Z_header, "Pplant1Z", 0.1},
+    {&Pplant11Z_header, "Pplant11Z", 0.1},
+    {&Pplant2Z_header, "Pplant2Z", 0.1},
+    {&Pplant3Z_header, "Pplant3Z", 0.1},
+    {&Pjungle5_treeZ_header, "Pjungle5_treeZ", 0.1},
+    {&PlegalpageZ_header, "PlegalpageZ", 0.1},
+    {&Pst_pete_room_1iZ_header, "Pst_pete_room_1iZ", 0.1},
+    {&Pst_pete_room_2iZ_header, "Pst_pete_room_2iZ", 0.1},
+    {&Pst_pete_room_3tZ_header, "Pst_pete_room_3tZ", 0.1},
+    {&Pst_pete_room_5cZ_header, "Pst_pete_room_5cZ", 0.1},
+    {&Pst_pete_room_6cZ_header, "Pst_pete_room_6cZ", 0.1},
+    {&Pdoor_rollertrainZ_header, "Pdoor_rollertrainZ", 1.0},
+    {&Pdoor_winZ_header, "Pdoor_winZ", 1.0},
+    {&Pdoor_aztecZ_header, "Pdoor_aztecZ", 1.0},
+    {&PshuttleZ_header, "PshuttleZ", 0.1},
+    {&Pdoor_azt_deskZ_header, "Pdoor_azt_deskZ", 1.0},
+    {&Pdoor_azt_desk_topZ_header, "Pdoor_azt_desk_topZ", 1.0},
+    {&Pdoor_azt_chairZ_header, "Pdoor_azt_chairZ", 1.0},
+    {&Pdoor_mfZ_header, "Pdoor_mfZ", 1.0},
+    {&PflagZ_header, "PflagZ", 0.1},
+    {&PbarricadeZ_header, "PbarricadeZ", 0.1},
+    {&PmodemboxZ_header, "PmodemboxZ", 0.1},
+    {&PdoorpanelZ_header, "PdoorpanelZ", 0.1},
+    {&PdoorconsoleZ_header, "PdoorconsoleZ", 0.1},
+    {&PchrtesttubeZ_header, "PchrtesttubeZ", 0.1},
+    {&Pbollardz_header, "PbollardZ", 0.1},
+    {0, " ", 1.0}
+};
+/*
 D:8003B224                     .word 0x6315C
 D:8003B228                     .word 0x7B6CDBFF
 D:8003B22C                     .word 0x5126FB59
@@ -1550,760 +1413,255 @@ D:8003C4C0                     .word 0xFFFFFFFF
 D:8003C4C4                     .word 0xFFFFFFFF
 D:8003C4C8                     .word 0xFFFF0000
 D:8003C4CC                     .word 0
-D:8003C4D0     word_D_8003C4D0:.half 2                  # DATA XREF: D:model_object_standard_objecto
-D:8003C4D2                     .half 0
-D:8003C4D4                     .half 0
-D:8003C4D6                     .half 0
-D:8003C4D8     model_object_standard_object:item_related <1, 0, word_D_8003C4D0, 3, 0>
-D:8003C4D8                                              # DATA XREF: D:Palarm1z_headero
-D:8003C4D8                                              # D:Palarm2Z_headero
-D:8003C4D8                                              # D:PexplosionbitZ_headero
-D:8003C4D8                                              # D:Pammo_crate1Z_headero
-D:8003C4D8                                              # D:Pammo_crate2Z_headero
-D:8003C4D8                                              # D:Pammo_crate3Z_headero
-D:8003C4D8                                              # D:Pammo_crate4Z_headero
-D:8003C4D8                                              # D:Pammo_crate5Z_headero
-D:8003C4D8                                              # D:Pbin1Z_headero
-D:8003C4D8                                              # D:Pblotter1Z_headero
-D:8003C4D8                                              # D:Pbook1Z_headero
-D:8003C4D8                                              # D:Pbookshelf1Z_headero
-D:8003C4D8                                              # D:Pbridge_console2bZ_headero
-D:8003C4D8                                              # D:Pcard_box1Z_headero
-D:8003C4D8                                              # D:Pcard_box2Z_headero
-D:8003C4D8                                              # D:Pcard_box3Z_headero
-D:8003C4D8                                              # D:Pcard_box4_lgZ_headero
-D:8003C4D8                                              # D:Pcard_box5_lgZ_headero
-D:8003C4D8                                              # D:Pcard_box6_lgZ_headero
-D:8003C4D8                                              # D:Pconsole_sevaZ_headero
-D:8003C4D8                                              # D:Pconsole_sevcZ_headero
-D:8003C4D8                                              # D:Pconsole_sevdZ_headero
-D:8003C4D8                                              # D:Pconsole_sev2aZ_headero
-D:8003C4D8                                              # D:Pconsole_sev2cZ_headero
-D:8003C4D8                                              # D:Pconsole_sev2dZ_headero
-D:8003C4D8                                              # D:Pconsole_sev_GEaZ_headero
-D:8003C4D8                                              # D:Pconsole_sev_GEbZ_headero
-D:8003C4D8                                              # D:Pdesk1Z_headero
-D:8003C4D8                                              # D:Pdesk2Z_headero
-D:8003C4D8                                              # D:Pdesk_lamp2Z_headero
-D:8003C4D8                                              # D:Pdisc_readerZ_headero
-D:8003C4D8                                              # D:Pdisk_drive1Z_headero
-D:8003C4D8                                              # D:Pfiling_cabinet1Z_headero
-D:8003C4D8                                              # D:Pjerry_can1Z_headero
-D:8003C4D8                                              # D:Pkeyboard1Z_headero
-D:8003C4D8                                              # D:Pkit_units1Z_headero
-D:8003C4D8                                              # D:Pletter_tray1Z_headero
-D:8003C4D8                                              # D:Pmainframe1Z_headero
-D:8003C4D8                                              # D:Pmainframe2Z_headero
-D:8003C4D8                                              # D:Pmetal_chair1Z_headero
-D:8003C4D8                                              # D:Pmetal_crate1Z_headero
-D:8003C4D8                                              # D:Pmetal_crate2Z_headero
-D:8003C4D8                                              # D:Pmetal_crate3Z_headero
-D:8003C4D8                                              # D:Pmetal_crate4Z_headero
-D:8003C4D8                                              # D:Pmissile_rackZ_headero
-D:8003C4D8                                              # D:Pmissile_rack2Z_headero
-D:8003C4D8                                              # D:Poil_drum1Z_headero
-D:8003C4D8                                              # D:Poil_drum2Z_headero
-D:8003C4D8                                              # D:Poil_drum3Z_headero
-D:8003C4D8                                              # D:Poil_drum5Z_headero
-D:8003C4D8                                              # D:Poil_drum6Z_headero
-D:8003C4D8                                              # D:Poil_drum7Z_headero
-D:8003C4D8                                              # D:PpadlockZ_headero
-D:8003C4D8                                              # D:Pphone1Z_headero
-D:8003C4D8                                              # D:Pradio_unit1Z_headero
-D:8003C4D8                                              # D:Pradio_unit2Z_headero
-D:8003C4D8                                              # D:Pradio_unit3Z_headero
-D:8003C4D8                                              # D:Pradio_unit4Z_headero
-D:8003C4D8                                              # D:Psat1_reflectZ_headero
-D:8003C4D8                                              # D:PsatdishZ_headero
-D:8003C4D8                                              # D:PsatboxZ_headero
-D:8003C4D8                                              # D:Pstool1Z_headero
-D:8003C4D8                                              # D:Pswivel_chair1Z_headero
-D:8003C4D8                                              # D:Ptorpedo_rackZ_headero
-D:8003C4D8                                              # D:Pwood_lg_crate1Z_headero
-D:8003C4D8                                              # D:Pwood_lg_crate2Z_headero
-D:8003C4D8                                              # D:Pwood_md_crate3Z_headero
-D:8003C4D8                                              # D:Pwood_sm_crate4Z_headero
-D:8003C4D8                                              # D:Pwood_sm_crate5Z_headero
-D:8003C4D8                                              # D:Pwood_sm_crate6Z_headero
-D:8003C4D8                                              # D:Pwooden_table1Z_headero
-D:8003C4D8                                              # D:Pswipe_card2Z_headero
-D:8003C4D8                                              # D:Pborg_crateZ_headero
-D:8003C4D8                                              # D:Pboxes4x4Z_headero
-D:8003C4D8                                              # D:Pboxes3x4Z_headero
-D:8003C4D8                                              # D:Pboxes2x4Z_headero
-D:8003C4D8                                              # D:Psec_panelZ_headero
-D:8003C4D8                                              # D:PICBM_noseZ_headero
-D:8003C4D8                                              # D:PICBMZ_headero
-D:8003C4D8                                              # D:Pdesk_arecibo1Z_headero
-D:8003C4D8                                              # D:Plocker3Z_headero
-D:8003C4D8                                              # D:Plocker4Z_headero
-D:8003C4D8                                              # D:Pdest_engineZ_headero
-D:8003C4D8                                              # D:Pdest_exocetZ_headero
-D:8003C4D8                                              # D:Pdest_gunZ_headero
-D:8003C4D8                                              # D:Pdest_harpoonZ_headero
-D:8003C4D8                                              # D:Pdest_seawolfZ_headero
-D:8003C4D8                                              # D:PwindowZ_headero
-D:8003C4D8                                              # D:Pwindow_lib_lg1Z_headero
-D:8003C4D8                                              # D:Pwindow_lib_sm1Z_headero
-D:8003C4D8                                              # D:Pwindow_cor11Z_headero
-D:8003C4D8                                              # D:Pjungle3_treeZ_headero
-D:8003C4D8                                              # D:PpalmZ_headero
-D:8003C4D8                                              # D:PpalmtreeZ_headero
-D:8003C4D8                                              # D:Pplant2bZ_headero
-D:8003C4D8                                              # D:PlabbenchZ_headero
-D:8003C4D8                                              # D:PgasbarrelZ_headero
-D:8003C4D8                                              # D:PgasbarrelsZ_headero
-D:8003C4D8                                              # D:PbodyarmourZ_headero
-D:8003C4D8                                              # D:PbodyarmourvestZ_headero
-D:8003C4D8                                              # D:PgastankZ_headero
-D:8003C4D8                                              # D:Pglassware1Z_headero
-D:8003C4D8                                              # D:PhatchboltZ_headero
-D:8003C4D8                                              # D:PbrakeunitZ_headero
-D:8003C4D8                                              # D:Pak47magZ_headero
-D:8003C4D8                                              # D:Pm16magZ_headero
-D:8003C4D8                                              # D:Pmp5kmagZ_headero
-D:8003C4D8                                              # D:PskorpionmagZ_headero
-D:8003C4D8                                              # D:PspectremagZ_headero
-D:8003C4D8                                              # D:PuzimagZ_headero
-D:8003C4D8                                              # D:PsilencerZ_headero
-D:8003C4D8                                              # D:PchrextinguisherZ_headero
-D:8003C4D8                                              # D:PboxcartridgesZ_headero
-D:8003C4D8                                              # D:Pfnp90magZ_headero
-D:8003C4D8                                              # D:PgoldenshellsZ_headero
-D:8003C4D8                                              # D:PmagnumshellsZ_headero
-D:8003C4D8                                              # D:PwppkmagZ_headero
-D:8003C4D8                                              # D:Ptt33magZ_headero
-D:8003C4D8                                              # D:Psev_doorZ_headero
-D:8003C4D8                                              # D:Psev_door3Z_headero
-D:8003C4D8                                              # D:Psev_door3_windZ_headero
-D:8003C4D8                                              # D:Psev_door_v1Z_headero
-D:8003C4D8                                              # D:Psteel_door1Z_headero
-D:8003C4D8                                              # D:Psteel_door2Z_headero
-D:8003C4D8                                              # D:Psteel_door3Z_headero
-D:8003C4D8                                              # D:Psilo_lift_doorZ_headero
-D:8003C4D8                                              # D:Psteel_door2bZ_headero
-D:8003C4D8                                              # D:Pdoor_roller1Z_headero
-D:8003C4D8                                              # D:Pdoor_roller2Z_headero
-D:8003C4D8                                              # D:Pdoor_roller3Z_headero
-D:8003C4D8                                              # D:Pdoor_roller4Z_headero
-D:8003C4D8                                              # D:Pdoor_st_arec1Z_headero
-D:8003C4D8                                              # D:Pdoor_st_arec2Z_headero
-D:8003C4D8                                              # D:Pdoor_dest1Z_headero
-D:8003C4D8                                              # D:Pdoor_dest2Z_headero
-D:8003C4D8                                              # D:Pgas_plant_sw_do1Z_headero
-D:8003C4D8                                              # D:Pgas_plant_sw2_do1Z_headero
-D:8003C4D8                                              # D:Pgas_plant_sw3_do1Z_headero
-D:8003C4D8                                              # D:Pgas_plant_sw4_do1Z_headero
-D:8003C4D8                                              # D:Pgas_plant_met1_do1Z_headero
-D:8003C4D8                                              # D:Pgas_plant_wc_cub1Z_headero
-D:8003C4D8                                              # D:Ptrain_doorZ_headero
-D:8003C4D8                                              # D:PsevdoornowindZ_headero
-D:8003C4D8                                              # D:PsevdoormetslideZ_headero
-D:8003C4D8                                              # D:Pcryptdoor1aZ_headero
-D:8003C4D8                                              # D:Pcryptdoor1bZ_headero
-D:8003C4D8                                              # D:Pcryptdoor2aZ_headero
-D:8003C4D8                                              # D:Pcryptdoor2bZ_headero
-D:8003C4D8                                              # D:Pcryptdoor3Z_headero
-D:8003C4D8                                              # D:Pcryptdoor4Z_headero
-D:8003C4D8                                              # D:PvertdoorZ_headero
-D:8003C4D8                                              # D:PhatchdoorZ_headero
-D:8003C4D8                                              # D:PdamgatedoorZ_headero
-D:8003C4D8                                              # D:PdamtundoorZ_headero
-D:8003C4D8                                              # D:PdamchaindoorZ_headero
-D:8003C4D8                                              # D:PsilotopdoorZ_headero
-D:8003C4D8                                              # D:Pdoorprison1Z_headero
-D:8003C4D8                                              # D:PdoorstatgateZ_headero
-D:8003C4D8                                              # D:PchrwristdartZ_headero
-D:8003C4D8                                              # D:PchrexplosivepenZ_headero
-D:8003C4D8                                              # D:PchrflarepistolZ_headero
-D:8003C4D8                                              # D:PchrpitongunZ_headero
-D:8003C4D8                                              # D:PchrfingergunZ_headero
-D:8003C4D8                                              # D:PchrsilverwppkZ_headero
-D:8003C4D8                                              # D:PchrgoldwppkZ_headero
-D:8003C4D8                                              # D:PchrdynamiteZ_headero
-D:8003C4D8                                              # D:PchrbungeeZ_headero
-D:8003C4D8                                              # D:PchrbombdefuserZ_headero
-D:8003C4D8                                              # D:PchrbugdetectorZ_headero
-D:8003C4D8                                              # D:PchrcameraZ_headero
-D:8003C4D8                                              # D:PchrlockexploderZ_headero
-D:8003C4D8                                              # D:PchrdoorexploderZ_headero
-D:8003C4D8                                              # D:PchrweaponcaseZ_headero
-D:8003C4D8                                              # D:PchrkeyyaleZ_headero
-D:8003C4D8                                              # D:PchrkeyboltZ_headero
-D:8003C4D8                                              # D:PchrbugZ_headero
-D:8003C4D8                                              # D:PchrmicrocameraZ_headero
-D:8003C4D8                                              # D:PfloppyZ_headero
-D:8003C4D8                                              # D:PchrgoldeneyekeyZ_headero
-D:8003C4D8                                              # D:PchrpolarizedglassesZ_headero
-D:8003C4D8                                              # D:PchrcreditcardZ_headero
-D:8003C4D8                                              # D:PchrdarkglassesZ_headero
-D:8003C4D8                                              # D:PchrgaskeyringZ_headero
-D:8003C4D8                                              # D:PchrdatathiefZ_headero
-D:8003C4D8                                              # D:PsafeZ_headero
-D:8003C4D8                                              # D:PbombZ_headero
-D:8003C4D8                                              # D:PchrplansZ_headero
-D:8003C4D8                                              # D:PchrspyfileZ_headero
-D:8003C4D8                                              # D:PchrblueprintsZ_headero
-D:8003C4D8                                              # D:PchrcircuitboardZ_headero
-D:8003C4D8                                              # D:PchrmapZ_headero
-D:8003C4D8                                              # D:PchrspooltapeZ_headero
-D:8003C4D8                                              # D:PchraudiotapeZ_headero
-D:8003C4D8                                              # D:PchrmicrofilmZ_headero
-D:8003C4D8                                              # D:PchrmicrocodeZ_headero
-D:8003C4D8                                              # D:PchrlectreZ_headero
-D:8003C4D8                                              # D:PchrmoneyZ_headero
-D:8003C4D8                                              # D:PchrgoldbarZ_headero
-D:8003C4D8                                              # D:PchrheroinZ_headero
-D:8003C4D8                                              # D:PchrclipboardZ_headero
-D:8003C4D8                                              # D:PchrdossierredZ_headero
-D:8003C4D8                                              # D:PchrstafflistZ_headero
-D:8003C4D8                                              # D:PchrdattapeZ_headero
-D:8003C4D8                                              # D:PchrplastiqueZ_headero
-D:8003C4D8                                              # D:PchrblackboxZ_headero
-D:8003C4D8                                              # D:PchrvideotapeZ_headero
-D:8003C4D8                                              # D:PnintendologoZ_headero
-D:8003C4D8                                              # D:PgoldeneyelogoZ_headero
-D:8003C4D8                                              # D:PartictrailerZ_headero
-D:8003C4D8                                              # D:PmotorbikeZ_headero
-D:8003C4D8                                              # D:PapcZ_headero
-D:8003C4D8                                              # D:PspeedboatZ_headero
-D:8003C4D8                                              # D:PsafedoorZ_headero
-D:8003C4D8                                              # D:Pkey_holderZ_headero
-D:8003C4D8                                              # D:PhatchsevxZ_headero
-D:8003C4D8                                              # D:Parchsecdoor1Z_headero
-D:8003C4D8                                              # D:Parchsecdoor2Z_headero
-D:8003C4D8                                              # D:PtrainextdoorZ_headero
-D:8003C4D8                                              # D:PcarbmwZ_headero
-D:8003C4D8                                              # D:PcarescortZ_headero
-D:8003C4D8                                              # D:PcargolfZ_headero
-D:8003C4D8                                              # D:PcarweirdZ_headero
-D:8003C4D8                                              # D:Pshuttle_door_lZ_headero
-D:8003C4D8                                              # D:Pshuttle_door_rZ_headero
-D:8003C4D8                                              # D:Pdepot_gate_entryZ_headero
-D:8003C4D8                                              # D:Pdepot_door_steelZ_headero
-D:8003C4D8                                              # D:Pglassware2Z_headero
-D:8003C4D8                                              # D:Pglassware3Z_headero
-D:8003C4D8                                              # D:Pglassware4Z_headero
-D:8003C4D8                                              # D:PlandmineZ_headero
-D:8003C4D8                                              # D:Pplant1Z_headero
-D:8003C4D8                                              # D:Pplant11Z_headero
-D:8003C4D8                                              # D:Pplant2Z_headero
-D:8003C4D8                                              # D:Pplant3Z_headero
-D:8003C4D8                                              # D:Pjungle5_treeZ_headero
-D:8003C4D8                                              # D:PlegalpageZ_headero
-D:8003C4D8                                              # D:Pst_pete_room_1iZ_headero
-D:8003C4D8                                              # D:Pst_pete_room_2iZ_headero
-D:8003C4D8                                              # D:Pst_pete_room_3tZ_headero
-D:8003C4D8                                              # D:Pst_pete_room_5cZ_headero
-D:8003C4D8                                              # D:Pst_pete_room_6cZ_headero
-D:8003C4D8                                              # D:Pdoor_rollertrainZ_headero
-D:8003C4D8                                              # D:Pdoor_winZ_headero
-D:8003C4D8                                              # D:Pdoor_aztecZ_headero
-D:8003C4D8                                              # D:PshuttleZ_headero
-D:8003C4D8                                              # D:Pdoor_azt_deskZ_headero
-D:8003C4D8                                              # D:Pdoor_azt_desk_topZ_headero
-D:8003C4D8                                              # D:Pdoor_azt_chairZ_headero
-D:8003C4D8                                              # D:Pdoor_mfZ_headero
-D:8003C4D8                                              # D:PbarricadeZ_headero
-D:8003C4D8                                              # D:Pbollardz_headero
-D:8003C4E4                     .word 0
-D:8003C4E8                     .word 0
-D:8003C4EC                     .word 0
-D:8003C4F0     word_D_8003C4F0:.half 0x15               # DATA XREF: D:prop_weapon_relatedo
-D:8003C4F2                     .half 0
-D:8003C4F4                     .half 0
-D:8003C4F6                     .half 0x15
-D:8003C4F8                     .half 1
-D:8003C4FA                     .half 1
-D:8003C4FC     prop_weapon_related:item_related <2, 0, word_D_8003C4F0, 0, 0>
-D:8003C4FC                                              # DATA XREF: sub_CODE_7F052574+20o
-D:8003C4FC                                              # sub_CODE_7F052604+1Co
-D:8003C4FC                                              # D:PchrkalashZ_headero
-D:8003C4FC                                              # D:PchrgrenadelaunchZ_headero
-D:8003C4FC                                              # D:PchrknifeZ_headero
-D:8003C4FC                                              # D:PchrlaserZ_headero
-D:8003C4FC                                              # D:Pchrm16Z_headero
-D:8003C4FC                                              # D:Pchrmp5kZ_headero
-D:8003C4FC                                              # D:PchrrugerZ_headero
-D:8003C4FC                                              # D:PchrwppkZ_headero
-D:8003C4FC                                              # D:PchrshotgunZ_headero
-D:8003C4FC                                              # D:PchrskorpionZ_headero
-D:8003C4FC                                              # D:PchrspectreZ_headero
-D:8003C4FC                                              # D:PchruziZ_headero
-D:8003C4FC                                              # D:PchrgrenadeZ_headero
-D:8003C4FC                                              # D:Pchrfnp90Z_headero
-D:8003C4FC                                              # D:PchrbriefcaseZ_headero
-D:8003C4FC                                              # D:PchrremotemineZ_headero
-D:8003C4FC                                              # D:PchrproximitymineZ_headero
-D:8003C4FC                                              # D:PchrtimedmineZ_headero
-D:8003C4FC                                              # D:PchrrocketZ_headero
-D:8003C4FC                                              # D:PchrgrenaderoundZ_headero
-D:8003C4FC                                              # D:PchrwppksilZ_headero
-D:8003C4FC                                              # D:Pchrtt33Z_headero
-D:8003C4FC                                              # D:Pchrmp5ksilZ_headero
-D:8003C4FC                                              # D:PchrautoshotZ_headero
-D:8003C4FC                                              # D:PchrgoldenZ_headero
-D:8003C4FC                                              # D:PchrthrowknifeZ_headero
-D:8003C4FC                                              # D:PchrsniperrifleZ_headero
-D:8003C4FC                                              # D:PchrrocketlaunchZ_headero
-D:8003C4FC                                              # D:PchrbombcaseZ_headero
-D:8003C4FC                                              # D:PchrdoordecoderZ_headero
-D:8003C4FC                                              # D:PchrsafecrackercaseZ_headero
-D:8003C4FC                                              # D:PchrkeyanalysercaseZ_headero
-D:8003C4FC                                              # D:PflagZ_headero
-D:8003C4FC                                              # D:PchrtesttubeZ_headero
-D:8003C508                     .word 0
-D:8003C50C                     .word 0
-D:8003C510     dword_D_8003C510:.word 0x4010000, 2, 0   # DATA XREF: D:8003C574o
-D:8003C51C     dword_D_8003C51C:.word 0x20003
-D:8003C520                     .word 0x30002
-D:8003C524                     .word 0x60006
-D:8003C528                     .word 0x20009
-D:8003C52C                     .word 0xC0002
-D:8003C530                     .word 0xC0009
-D:8003C534                     .word 0x2000F
-D:8003C538                     .word 0x120002
-D:8003C53C                     .word 0x12000F
-D:8003C540                     .word 0x20015
-D:8003C544                     .word 0x180002
-D:8003C548                     .word 0x180015
-D:8003C54C                     .word 0x2001B
-D:8003C550                     .word 0x1E0002
-D:8003C554                     .word 0x1E001B
-D:8003C558                     .word 0x20021
-D:8003C55C                     .word 0x240002
-D:8003C560                     .word 0x240021
-D:8003C564                     .word 0x20027
-D:8003C568                     .word 0x2A0002
-D:8003C56C                     .word 0x2A0027
-D:8003C570     dword_D_8003C570:.word 0x100000          # DATA XREF: D:8003C654o
-D:8003C574                     .word dword_D_8003C510
-D:8003C578                     .word 0x2D0000
-D:8003C57C                     .word 0
-D:8003C580     dword_D_8003C580:.word 0x10000           # DATA XREF: sub_CODE_7F000B60o
-D:8003C580                                              # D:8003C5A0o
-D:8003C584                     .word dword_D_8003C5E0
-D:8003C588                     .word 0
-D:8003C58C                     .word 0
-D:8003C590                     .word 0
-D:8003C594                     .word dword_D_8003C598
-D:8003C598     dword_D_8003C598:.word 0x20000           # DATA XREF: D:8003C594o
-D:8003C598                                              # D:8003C5B8o
-D:8003C598                                              # D:8003C5E4o
-D:8003C59C                     .word dword_D_8003C5F0
-D:8003C5A0                     .word dword_D_8003C580
-D:8003C5A4                     .word 0
-D:8003C5A8                     .word 0
-D:8003C5AC                     .word dword_D_8003C5B0
-D:8003C5B0     dword_D_8003C5B0:.word 0x20000           # DATA XREF: D:8003C5ACo
-D:8003C5B0                                              # D:8003C5D0o
-D:8003C5B0                                              # D:8003C604o
-D:8003C5B4                     .word dword_D_8003C60C
-D:8003C5B8                     .word dword_D_8003C598
-D:8003C5BC                     .word 0
-D:8003C5C0                     .word 0
-D:8003C5C4                     .word dword_D_8003C5C8
-D:8003C5C8     dword_D_8003C5C8:.word 0x20000           # DATA XREF: D:8003C5C4o
-D:8003C5C8                                              # D:8003C620o
-D:8003C5CC                     .word dword_D_8003C628
-D:8003C5D0                     .word dword_D_8003C5B0
-D:8003C5D4                     .word 0
-D:8003C5D8                     .word 0
-D:8003C5DC                     .word 0
-D:8003C5E0     dword_D_8003C5E0:.word 1                 # DATA XREF: D:8003C584o
-D:8003C5E4                     .word dword_D_8003C598
-D:8003C5E8                     .word 0
-D:8003C5EC                     .word 0
-D:8003C5F0     dword_D_8003C5F0:.word 0                 # DATA XREF: D:8003C59Co
-D:8003C5F4                     .word 0
-D:8003C5F8                     .word 0
-D:8003C5FC                     .word 0x10002
-D:8003C600                     .word 0xFFFFFFFF
-D:8003C604                     .word dword_D_8003C5B0
-D:8003C608                     .word 0
-D:8003C60C     dword_D_8003C60C:.word 0x3F96C81D, 0x422493D6, 0  # DATA XREF: D:8003C5B4o
-D:8003C618                     .word 0x20003
-D:8003C61C                     .word 0xFFFFFFFF
-D:8003C620                     .word dword_D_8003C5C8
-D:8003C624                     .word 0
-D:8003C628     dword_D_8003C628:.word 0xC024DDA0, 0x43F036EA, 0  # DATA XREF: D:8003C5CCo
-D:8003C634     dword_D_8003C634:.word 0x30000
-D:8003C638                     .word 0xFFFFFFFF
-D:8003C63C                     .word 0
-D:8003C640                     .word 0
+*/
+
+//D:8003C4D0
+struct prop_pos_data word_D_8003C4D0[] = {
+    {0x0002, 0x0000, 0x0000}
+};
+//D:8003C4D6                     .half 0
+//D:8003C4D8
+struct item_related model_object_standard_object = {1, 0, word_D_8003C4D0, 3, 0};
+//D:8003C4E4                     .word 0
+//D:8003C4E8                     .word 0
+//D:8003C4EC                     .word 0
+
+//D:8003C4F0
+struct prop_pos_data word_D_8003C4F0[] = {
+    {0x0015, 0x0000, 0x0000},
+    {0x0015, 0x0001, 0x0001}
+};
+//D:8003C4FC
+struct item_related prop_weapon_related = {2, 0, word_D_8003C4F0, 0, 0};
+//D:8003C508                     .word 0
+//D:8003C50C                     .word 0
+
+//D:8003C510
+struct prop_pos_data dword_D_8003C510[] = {
+    {0x0401, 0x0000, 0x0000},
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0002, 0x0009, 0x000C},
+    {0x0002, 0x000C, 0x0009},
+    {0x0002, 0x000F, 0x0012},
+    {0x0002, 0x0012, 0x000F},
+    {0x0002, 0x0015, 0x0018},
+    {0x0002, 0x0018, 0x0015},
+    {0x0002, 0x001B, 0x001E},
+    {0x0002, 0x001E, 0x001B},
+    {0x0002, 0x0021, 0x0024},
+    {0x0002, 0x0024, 0x0021},
+    {0x0002, 0x0027, 0x002A},
+    {0x0002, 0x002A, 0x0027}
+};
+
+
+//item_related struct
+//D:8003C570
+struct item_related dword_D_8003C570 = {0x10, 0x0000, dword_D_8003C510, 0x2D, 0x0000};
+//D:8003C57C
+//.word 0
+
+
+//D:8003C580
+struct player_gait_header dword_D_8003C580 = {0, 1, 0, &dword_D_8003C5E0, 0, 0, 0, &dword_D_8003C598};
+//D:8003C598
+struct player_gait_pos_header dword_D_8003C598 = {0, 2, 0, &dword_D_8003C5F0, &dword_D_8003C580, 0, 0, &dword_D_8003C5B0};
+//D:8003C5B0
+struct player_gait_pos_header dword_D_8003C5B0 = {0, 2, 0, &dword_D_8003C60C, &dword_D_8003C598, 0, 0, &dword_D_8003C5C8};
+//D:8003C5C8
+struct player_gait_pos_header dword_D_8003C5C8 = {0, 2, 0, &dword_D_8003C628, &dword_D_8003C5B0, 0, 0, 0};
+//D:8003C5E0
+struct player_gait_object_entry dword_D_8003C5E0 = {1, &dword_D_8003C598, 0, 0};
+//D:8003C5F0
+struct player_gait_position_entry dword_D_8003C5F0 = {0.0, 0.0, 0.0, 0x0001, 0x0002, 0xFFFF, 0xFFFF, &dword_D_8003C5B0, 0};
+//D:8003C60C
+struct player_gait_position_entry dword_D_8003C60C = {1.177982, 41.14437, 0, 0x0002, 0x0003, 0xFFFF, 0xFFFF, &dword_D_8003C5C8, 0};
+//D:8003C628
+struct player_gait_position_entry dword_D_8003C628 = {-2.576027, 480.42902, 0, 0x0003, 0x0000, 0xFFFF, 0xFFFF, 0, 0};
+
+/*
 D:8003C644                     .word 0
 D:8003C648                     .word 0
 D:8003C64C                     .word 0
-D:8003C650     dword_D_8003C650:.word 0                 # DATA XREF: sub_CODE_7F000B60+10w
-D:8003C650                                              # sets_a_bunch_of_BONDdata_values_to_default+8o
-D:8003C654                     .word dword_D_8003C570, 0
-D:8003C65C     dword_D_8003C65C:.word 4
-D:8003C660                     .word 0x4224A519
-D:8003C664     dword_D_8003C664:.word 0                 # DATA XREF: sets_a_bunch_of_BONDdata_values_to_default+10r
-D:8003C668                     .word 0
-D:8003C66C                     .word 0
-D:8003C670     dword_D_8003C670:.word 0x4010000, 2, 0   # DATA XREF: D:model_suit_lf_hando
-D:8003C67C     dword_D_8003C67C:.word 0x20003
-D:8003C680                     .word 0x30002
-D:8003C684                     .word 0x60006
-D:8003C688                     .word 0x20009
-D:8003C68C                     .word 0xC0002
-D:8003C690                     .word 0xC0009
-D:8003C694                     .word 0x2000F
-D:8003C698                     .word 0x120002
-D:8003C69C                     .word 0x12000F
-D:8003C6A0                     .word 0x20015
-D:8003C6A4                     .word 0x180002
-D:8003C6A8                     .word 0x180015
-D:8003C6AC                     .word 0x2001B
-D:8003C6B0                     .word 0x1E0002
-D:8003C6B4                     .word 0x1E001B
-D:8003C6B8                     .word 0x20021
-D:8003C6BC                     .word 0x240002
-D:8003C6C0                     .word 0x240021
-D:8003C6C4                     .word 0x20027
-D:8003C6C8                     .word 0x2A0002
-D:8003C6CC                     .word 0x2A0027
-D:8003C6D0                     .word 0x15002D
-D:8003C6D4                     .word 0x2D0015
-D:8003C6D8                     .word 0x2E002E
-D:8003C6DC                     .word 0x15002F
-D:8003C6E0                     .word 0x2F0000
-D:8003C6E4     model_suit_lf_hand:model_data <0x130000, dword_D_8003C670, 0x2D0000>
-D:8003C6E4                                              # DATA XREF: D:Csuit_lf_handz_structo
-D:8003C6F0     dword_D_8003C6F0:.word 0x20000           # DATA XREF: D:weapon_gun_standard_guno
-D:8003C6F4                     .word 2
-D:8003C6F8                     .word 0x30003
-D:8003C6FC                     .word 0x20006
-D:8003C700                     .word 0x60015
-D:8003C704                     .word 0xF000F
-D:8003C708                     .word 0x20009
-D:8003C70C                     .word 0x90002
-D:8003C710                     .word 0xC000C
-D:8003C714     weapon_gun_standard_gun:model_data <0x60000, dword_D_8003C6F0, 0xF0000>
-D:8003C714                                              # DATA XREF: D:GwppkZ_structo
-D:8003C714                                              # D:GwppksilZ_structo
-D:8003C714                                              # D:Gtt33Z_structo
-D:8003C714                                              # D:GskorpianZ_structo
-D:8003C714                                              # D:Gak47Z_structo
-D:8003C714                                              # D:Gmp5kZ_structo
-D:8003C714                                              # D:Gmp5ksilZ_structo
-D:8003C714                                              # D:Gm16Z_structo
-D:8003C714                                              # D:Gfnp90Z_structo
-D:8003C714                                              # D:8003C900o
-D:8003C714                                              # D:GgoldengunZ_structo
-D:8003C714                                              # D:GshotgunZ_structo
-D:8003C714                                              # D:GautoshotZ_structo
-D:8003C714                                              # D:GspectreZ_structo
-D:8003C714                                              # D:GlaserZ_structo
-D:8003C714                                              # D:GrocketlaunchZ_structo
-D:8003C714                                              # D:GknifeZ_headero
-D:8003C714                                              # D:GthrowknifeZ_structo
-D:8003C714                                              # D:GtaserZ_structo
-D:8003C714                                              # D:GremotemineZ_structo
-D:8003C714                                              # D:GproximitymineZ_structo
-D:8003C714                                              # D:GtimedmineZ_structo
-D:8003C714                                              # D:GtriggerZ_structo
-D:8003C714                                              # D:GgrenadeZ_structo
-D:8003C714                                              # D:GfistZ_headero
-D:8003C714                                              # D:GsniperrifleZ_structo
-D:8003C714                                              # D:8003CC00o
-D:8003C714                                              # D:8003CC20o
-D:8003C714                                              # D:GbombcaseZ_structo
-D:8003C714                                              # D:GflarepistolZ_structo
-D:8003C714                                              # D:GpitongunZ_structo
-D:8003C714                                              # D:8003CCA0o
-D:8003C714                                              # D:GsilverwppkZ_structo
-D:8003C714                                              # D:GgoldwppkZ_structo
-D:8003C714                                              # D:8003CD00o
-D:8003C714                                              # D:GbungeeZ_structo
-D:8003C714                                              # D:GdoordecoderZ_structo
-D:8003C714                                              # D:GbombdefuserZ_structo
-D:8003C714                                              # D:GbugdetectorZ_structo
-D:8003C714                                              # D:GsafecrackercaseZ_structo
-D:8003C714                                              # D:GcameraZ_structo
-D:8003C714                                              # D:GlockexploderZ_structo
-D:8003C714                                              # D:GdoorexploderZ_structo
-D:8003C714                                              # D:GkeyanalysercaseZ_structo
-D:8003C714                                              # D:GweaponcaseZ_structo
-D:8003C714                                              # D:GkeycardZ_structo
-D:8003C714                                              # D:GkeyyaleZ_structo
-D:8003C714                                              # D:GkeyboltZ_structo
-D:8003C714                                              # D:GbugZ_structo
-D:8003C714                                              # D:GmicrocameraZ_structo
-D:8003C714                                              # D:GexplosivefloppyZ_structo
-D:8003C714                                              # D:GgoldeneyekeyZ_structo
-D:8003C714                                              # D:GpolarizedglassesZ_structo
-D:8003C714                                              # D:GcreditcardZ_structo
-D:8003C714                                              # D:GdarkglassesZ_structo
-D:8003C714                                              # D:GwatchidentifierZ_structo
-D:8003C714                                              # D:GwatchcommunicatorZ_structo
-D:8003C714                                              # D:GwatchlaserZ_structo
-D:8003C714                                              # D:GwatchgeigercounterZ_structo
-D:8003C714                                              # D:GwatchmagnetrepelZ_structo
-D:8003C714                                              # D:GwatchmagnetattractZ_structo
-D:8003C714                                              # D:GgaskeyringZ_structo
-D:8003C714                                              # D:GdatathiefZ_structo
-D:8003C714                                              # D:GbriefcaseZ_structo
-D:8003C714                                              # D:GblackboxZ_structo
-D:8003C714                                              # D:GplastiqueZ_structo
-D:8003C714                                              # D:GvideotapeZ_structo
-D:8003C714                                              # D:GclipboardZ_structo
-D:8003C714                                              # D:GstafflistZ_structo
-D:8003C714                                              # D:GdossierredZ_structo
-D:8003C714                                              # D:GaudiotapeZ_structo
-D:8003C714                                              # D:GdattapeZ_structo
-D:8003C714                                              # D:GplansZ_structo
-D:8003C714                                              # D:GspyfileZ_structo
-D:8003C714                                              # D:GblueprintsZ_structo
-D:8003C714                                              # D:GcircuitboardZ_structo
-D:8003C714                                              # D:GmapZ_structo
-D:8003C714                                              # D:GspooltapeZ_structo
-D:8003C714                                              # D:GmicrofilmZ_structo
-D:8003C714                                              # D:GmicrocodeZ_structo
-D:8003C714                                              # D:GlectreZ_structo
-D:8003C714                                              # D:GmoneyZ_structo
-D:8003C714                                              # D:GgoldbarZ_structo
-D:8003C714                                              # D:GheroinZ_structo
-D:8003C720     dword_D_8003C720:.word 0x20000           # DATA XREF: D:weapon_gun_unassignedo
-D:8003C724                     .half 0
-D:8003C726                     .half 0
-D:8003C728     weapon_gun_unassigned:model_data <0x10000, dword_D_8003C720, 0x30000>
-D:8003C728                                              # DATA XREF: D:GcartridgeZ_structo
-D:8003C728                                              # D:GcartrifleZ_structo
-D:8003C728                                              # D:GcartblueZ_structo
-D:8003C728                                              # D:GcartshellZ_structo
-D:8003C734                     .word 0
-D:8003C738                     .word 0
-D:8003C73C                     .word 0
-D:8003C740     dword_D_8003C740:.word 0x20000           # DATA XREF: D:weapon_gun_revolvero
-D:8003C744                     .word 2
-D:8003C748                     .word 0x30003
-D:8003C74C                     .word 0x20006
-D:8003C750                     .word 0x60002
-D:8003C754                     .word 0x90009
-D:8003C758                     .word 0x2000C
-D:8003C75C                     .word 0xC0002
-D:8003C760                     .word 0xF000F
-D:8003C764                     .word 0x20012
-D:8003C768                     .word 0x120000
-D:8003C76C     weapon_gun_revolver:model_data <0x70000, dword_D_8003C740, 0x150000>
-D:8003C76C                                              # DATA XREF: handles_firing_or_throwing_weapon_in_hand+E20o
-D:8003C76C                                              # set_enviro_fog_for_items_in_solo_watch_menu+184o
-D:8003C76C                                              # D:GrugerZ_structo
-D:8003C76C                                              # D:GgrenadelaunchZ_structo
-D:8003C778                     .word 0
-D:8003C77C                     .word 0
-D:8003C780     dword_D_8003C780:.word 0x20000           # DATA XREF: D:weapon_gun_kf7o
-D:8003C784                     .word 2
-D:8003C788                     .word 0x30003
-D:8003C78C                     .word 0x20006
-D:8003C790                     .word 0x60002
-D:8003C794                     .word 0x90009
-D:8003C798                     .word 0x150012
-D:8003C79C                     .word 0x120002
-D:8003C7A0                     .word 0xC000C
-D:8003C7A4                     .word 0x2000F
-D:8003C7A8                     .word 0xF0000
-D:8003C7AC     weapon_gun_kf7: model_data <0x70000, dword_D_8003C780, 0x120000>
-D:8003C7AC                                              # DATA XREF: handles_firing_or_throwing_weapon_in_hand:loc_CODE_7F061308o
-D:8003C7AC                                              # D:GuziZ_structo
+*/
+
+//D:8003C650
+struct object_header player_gait_object = {0, &dword_D_8003C570,0,0, 4, 41.16123,0,0,0,0};
+
+
+//D:8003C670
+struct prop_pos_data dword_D_8003C670[] = {
+    {0x0401, 0x0000, 0x0000},
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0002, 0x0009, 0x000C},
+    {0x0002, 0x000C, 0x0009},
+    {0x0002, 0x000F, 0x0012},
+    {0x0002, 0x0012, 0x000F},
+    {0x0002, 0x0015, 0x0018},
+    {0x0002, 0x0018, 0x0015},
+    {0x0002, 0x001B, 0x001E},
+    {0x0002, 0x001E, 0x001B},
+    {0x0002, 0x0021, 0x0024},
+    {0x0002, 0x0024, 0x0021},
+    {0x0002, 0x0027, 0x002A},
+    {0x0002, 0x002A, 0x0027},
+    {0x0015, 0x002D, 0x002D},
+    {0x0015, 0x002E, 0x002E},
+    {0x0015, 0x002F, 0x002F},
+};
+
+//D:8003C6E4
+struct item_related model_suit_lf_hand = {0x13, 0x0000, dword_D_8003C670, 0x2D, 0x0000};
+
+//D:8003C6F0
+struct prop_pos_data dword_D_8003C6F0[] = {
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0015, 0x000F, 0x000F},
+    {0x0002, 0x0009, 0x0009},
+    {0x0002, 0x000C, 0x000C}
+};
+//D:8003C714
+struct item_related weapon_gun_standard_gun = {0x6, 0x0000, dword_D_8003C6F0, 0xF, 0x0000};
+
+//D:8003C720
+struct prop_pos_data dword_D_8003C720[] = {
+    {0x0002, 0x0000, 0x0000}
+};
+//D:8003C728
+struct item_related weapon_gun_unassigned = {0x1, 0x0000, dword_D_8003C720, 0x3, 0x0000};
+
+//D:8003C734                     .word 0
+//D:8003C738                     .word 0
+//D:8003C73C                     .word 0
+//D:8003C740
+struct prop_pos_data dword_D_8003C740[] = {
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0002, 0x0009, 0x0009},
+    {0x0002, 0x000C, 0x000C},
+    {0x0002, 0x000F, 0x000F},
+    {0x0002, 0x0012, 0x0012}
+};
+//D:8003C76C
+struct item_related weapon_gun_revolver = {0x7, 0x0000, dword_D_8003C740, 0x15, 0x0000};
+
+//D:8003C778                     .word 0
+//D:8003C77C                     .word 0
+//D:8003C780
+struct prop_pos_data dword_D_8003C780[] = {
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0002, 0x0009, 0x0009},
+    {0x0015, 0x0012, 0x0012},
+    {0x0002, 0x000C, 0x000C},
+    {0x0002, 0x000F, 0x000F}
+};
+//D:8003C7AC
+struct item_related weapon_gun_kf7 = {0x7, 0x0000, dword_D_8003C780, 0x12, 0x0000};
+/*
 D:8003C7B8                     .word 0
 D:8003C7BC                     .word 0
 D:8003C7C0     GwppkZ_struct:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0xC, 0, 0>
-D:8003C7C0                                              # DATA XREF: D:80033A04o
 D:8003C7E0     GwppksilZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 438.66476, 0xC, 0, 0>
-D:8003C7E0                                              # DATA XREF: D:80033A3Co
 D:8003C800     Gtt33Z_struct:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 438.16788, 0xF, 0, 0>
-D:8003C800                                              # DATA XREF: D:80033A74o
 D:8003C820     GskorpianZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 390.40039, 0xC, 0, 0>
-D:8003C820                                              # DATA XREF: D:80033AACo
 D:8003C840     Gak47Z_struct:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 941.9339, 0x12, 0, 0>
-D:8003C840                                              # DATA XREF: D:80033AE4o
 D:8003C860     GuziZ_struct:   itemheader <0, weapon_gun_kf7, 0, 0x24, 5, 436.95404, 0xC, 0, 0>
-D:8003C860                                              # DATA XREF: D:80033B1Co
 D:8003C880     Gmp5kZ_struct:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 499.24536, 9, 0, 0>
-D:8003C880                                              # DATA XREF: D:80033B54o
 D:8003C8A0     Gmp5ksilZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 655.97717, 9, 0, 0>
-D:8003C8A0                                              # DATA XREF: D:80033B8Co
 D:8003C8C0     Gm16Z_struct:   itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 1096.2413, 8, 0, 0>
-D:8003C8C0                                              # DATA XREF: D:80033BFCo
 D:8003C8E0     Gfnp90Z_struct: itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 460.81909, 0xA, 0, 0>
-D:8003C8E0                                              # DATA XREF: D:80033C34o
 D:8003C900                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 238.62167, 4, 0, 0>
 D:8003C920     GrugerZ_struct: itemheader <0, weapon_gun_revolver, 0, 0x24, 6, 553.44312, 0xE, 0, 0>
-D:8003C920                                              # DATA XREF: D:80033D14o
 D:8003C940     GgoldengunZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 5, 384.92172, 0xB, 0, 0>
-D:8003C940                                              # DATA XREF: D:80033D4Co
 D:8003C960     GshotgunZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 4, 919.33038, 0xD, 0, 0>
-D:8003C960                                              # DATA XREF: D:80033C6Co
 D:8003C980     GautoshotZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 840.15125, 0x10, 0, 0>
-D:8003C980                                              # DATA XREF: D:80033CA4o
 D:8003C9A0     GgrenadelaunchZ_struct:itemheader <0, weapon_gun_revolver, 0, 0x24, 5, 768.33496, 0xF, 0, 0>
-D:8003C9A0                                              # DATA XREF: D:80033E64o
 D:8003C9C0     GspectreZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 598.42865, 0xB, 0, 0>
-D:8003C9C0                                              # DATA XREF: D:80033BC4o
 D:8003C9E0     GlaserZ_struct: itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 442.81848, 0xD, 0, 0>
-D:8003C9E0                                              # DATA XREF: D:80033DF4o
 D:8003CA00     GrocketlaunchZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 566.51208, 0xA, 0, 0>
-D:8003CA00                                              # DATA XREF: D:80033E9Co
 D:8003CA20     GknifeZ_header: itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 376.97263, 9, 0, 0>
-D:8003CA20                                              # DATA XREF: D:80033994o
 D:8003CA40     GthrowknifeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 373.31387, 9, 0, 0>
-D:8003CA40                                              # DATA XREF: D:800339CCo
 D:8003CA60     GtaserZ_struct: itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 182.78622, 0x11, 0, 0>
-D:8003CA60                                              # DATA XREF: D:80033FECo
 D:8003CA80     GremotemineZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 50.999378, 3, 0, 0>
-D:8003CA80                                              # DATA XREF: D:80033F7Co
 D:8003CAA0     GproximitymineZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 51.00029, 3, 0, 0>
-D:8003CAA0                                              # DATA XREF: D:80033F44o
 D:8003CAC0     GtimedmineZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 49.368877, 4, 0, 0>
-D:8003CAC0                                              # DATA XREF: D:80033F0Co
 D:8003CAE0     GtriggerZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 283.9006, 0x16, 0, 0>
-D:8003CAE0                                              # DATA XREF: D:80033FB4o
 D:8003CB00     GgrenadeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 427.27081, 5, 0, 0>
-D:8003CB00                                              # DATA XREF: D:80033ED4o
 D:8003CB20     GfistZ_header:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 243.84764, 0xE, 0, 0>
-D:8003CB20                                              # DATA XREF: D:8003395Co
 D:8003CB40     GsniperrifleZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 808.03253, 7, 0, 0>
-D:8003CB40                                              # DATA XREF: D:80033CDCo
 D:8003CB60     GcartridgeZ_struct:itemheader <0, weapon_gun_unassigned, 0, 0, 1, 14.128822, 2, 0, 0>
-D:8003CB60                                              # DATA XREF: D:ejected_cartridgeo
-D:8003CB60                                              # D:GwppkZ_statso
-D:8003CB60                                              # D:GwppksilZ_statso
-D:8003CB60                                              # D:Gtt33Z_statso
-D:8003CB60                                              # D:GskorpianZ_statso
-D:8003CB60                                              # D:GuziZ_statso
-D:8003CB60                                              # D:Gmp5kZ_statso
-D:8003CB60                                              # D:Gmp5ksilZ_statso
-D:8003CB60                                              # D:GspectreZ_statso
-D:8003CB60                                              # D:Gfnp90Z_statso
-D:8003CB60                                              # D:GsilverwppkZ_statso
-D:8003CB60                                              # D:GgoldwppkZ_statso
 D:8003CB80     GcartrifleZ_struct:itemheader <0, weapon_gun_unassigned, 0, 0, 1, 30.122747, 2, 0, 0>
-D:8003CB80                                              # DATA XREF: D:80032474o
-D:8003CB80                                              # D:Gak47Z_statso
 D:8003CBA0     GcartblueZ_struct:itemheader <0, weapon_gun_unassigned, 0, 0, 1, 30.122747, 2, 0, 0>
-D:8003CBA0                                              # DATA XREF: D:8003247Co
-D:8003CBA0                                              # D:Gm16Z_statso
-D:8003CBA0                                              # D:GsniperrifleZ_statso
 D:8003CBC0     GcartshellZ_struct:itemheader <0, weapon_gun_unassigned, 0, 0, 1, 29.8451, 2, 0, 0>
-D:8003CBC0                                              # DATA XREF: D:80032484o
-D:8003CBC0                                              # D:GshotgunZ_statso
 D:8003CBE0     GjoypadZ_struct:itemheader <0, weapon_gun_controller, 0, 0xE, 0xD, 523.96826, 4, 0, 0>
-D:8003CBE0                                              # DATA XREF: D:80034BBCo
 D:8003CC00                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
 D:8003CC20                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
 D:8003CC40     GbombcaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003CC40                                              # DATA XREF: D:8003405Co
 D:8003CC60     GflarepistolZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CC60                                              # DATA XREF: D:800340CCo
 D:8003CC80     GpitongunZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CC80                                              # DATA XREF: D:80034104o
 D:8003CCA0                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
 D:8003CCC0     GsilverwppkZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0xB, 0, 0>
-D:8003CCC0                                              # DATA XREF: D:80033D84o
 D:8003CCE0     GgoldwppkZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0xB, 0, 0>
-D:8003CCE0                                              # DATA XREF: D:80033DBCo
 D:8003CD00                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
 D:8003CD20     GbungeeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CD20                                              # DATA XREF: D:8003413Co
 D:8003CD40     GdoordecoderZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 60.850407, 0x10, 0, 0>
-D:8003CD40                                              # DATA XREF: D:80034174o
 D:8003CD60     GbombdefuserZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 84.370705, 0xC, 0, 0>
-D:8003CD60                                              # DATA XREF: D:800341ACo
 D:8003CD80     GbugdetectorZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CD80                                              # DATA XREF: D:800343DCo
 D:8003CDA0     GsafecrackercaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003CDA0                                              # DATA XREF: D:800342FCo
 D:8003CDC0     GcameraZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 52.775627, 0xB, 0, 0>
-D:8003CDC0                                              # DATA XREF: D:800341E4o
 D:8003CDE0     GlockexploderZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CDE0                                              # DATA XREF: D:8003421Co
 D:8003CE00     GdoorexploderZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CE00                                              # DATA XREF: D:80034254o
 D:8003CE20     GkeyanalysercaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003CE20                                              # DATA XREF: D:80034334o
 D:8003CE40     GweaponcaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003CE40                                              # DATA XREF: D:800342C4o
 D:8003CE60     GkeycardZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 123.08884, 2, 0, 0>
-D:8003CE60                                              # DATA XREF: D:80034ADCo
 D:8003CE80     GkeyyaleZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 414.25156, 1, 0, 0>
-D:8003CE80                                              # DATA XREF: D:80034B14o
 D:8003CEA0     GkeyboltZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 759.26581, 1, 0, 0>
-D:8003CEA0                                              # DATA XREF: D:80034B4Co
 D:8003CEC0     GbugZ_struct:   itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 106.2163, 6, 0, 0>
-D:8003CEC0                                              # DATA XREF: D:8003436Co
 D:8003CEE0     GmicrocameraZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 70.039436, 7, 0, 0>
-D:8003CEE0                                              # DATA XREF: D:800343A4o
 D:8003CF00     GexplosivefloppyZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 60.902443, 5, 0, 0>
-D:8003CF00                                              # DATA XREF: D:80034414o
 D:8003CF20     GgoldeneyekeyZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 98.987083, 5, 0, 0>
-D:8003CF20                                              # DATA XREF: D:8003467Co
 D:8003CF40     GpolarizedglassesZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 53.776386, 2, 0, 0>
-D:8003CF40                                              # DATA XREF: D:8003444Co
 D:8003CF60     GcreditcardZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CF60                                              # DATA XREF: D:800344BCo
 D:8003CF80     GdarkglassesZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CF80                                              # DATA XREF: D:80034484o
 D:8003CFA0     GwatchidentifierZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0>
-D:8003CFA0                                              # DATA XREF: D:80034564o
 D:8003CFC0     GwatchcommunicatorZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0>
-D:8003CFC0                                              # DATA XREF: D:8003459Co
 D:8003CFE0     GwatchlaserZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 283.9006, 0x16, 0, 0>
-D:8003CFE0                                              # DATA XREF: D:80033E2Co
 D:8003D000     GwatchgeigercounterZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0>
-D:8003D000                                              # DATA XREF: D:800345D4o
 D:8003D020     GwatchmagnetrepelZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0>
-D:8003D020                                              # DATA XREF: D:8003460Co
 D:8003D040     GwatchmagnetattractZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1D, 3, 384.9288, 9, 0, 0>
-D:8003D040                                              # DATA XREF: D:80034644o
 D:8003D060     GgaskeyringZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 111.59859, 9, 0, 0>
-D:8003D060                                              # DATA XREF: D:800344F4o
 D:8003D080     GdatathiefZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 119.78231, 3, 0, 0>
-D:8003D080                                              # DATA XREF: D:8003452Co
 D:8003D0A0     GbriefcaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003D0A0                                              # DATA XREF: D:8003428Co
 D:8003D0C0     GblackboxZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 128.31796, 5, 0, 0>
-D:8003D0C0                                              # DATA XREF: D:800346B4o
 D:8003D0E0     GplastiqueZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 255.35242, 3, 0, 0>
-D:8003D0E0                                              # DATA XREF: D:80034094o
 D:8003D100     GvideotapeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 122.69632, 9, 0, 0>
-D:8003D100                                              # DATA XREF: D:800348E4o
 D:8003D120     GclipboardZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 190.41742, 3, 0, 0>
-D:8003D120                                              # DATA XREF: D:80034724o
 D:8003D140     GstafflistZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 215.17534, 4, 0, 0>
-D:8003D140                                              # DATA XREF: D:8003475Co
 D:8003D160     GdossierredZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 183.54231, 4, 0, 0>
-D:8003D160                                              # DATA XREF: D:80034794o
 D:8003D180     GaudiotapeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 97.531075, 9, 0, 0>
-D:8003D180                                              # DATA XREF: D:800348ACo
 D:8003D1A0     GdattapeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 79.868584, 4, 0, 0>
-D:8003D1A0                                              # DATA XREF: D:8003491Co
-D:8003D1C0     GplansZ_struct: itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 81.950996, 5, 0, 0>
-D:8003D1C0                                              # DATA XREF: D:800347CCo
+D:8003D1C0     GplansZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 81.950996, 5, 0, 0>
 D:8003D1E0     GspyfileZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D1E0                                              # DATA XREF: D:80034804o
 D:8003D200     GblueprintsZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 125.3834, 4, 0, 0>
-D:8003D200                                              # DATA XREF: D:8003483Co
 D:8003D220     GcircuitboardZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 138.90285, 3, 0, 0>
-D:8003D220                                              # DATA XREF: D:800346ECo
-D:8003D240     GmapZ_struct:   itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 125.3834, 4, 0, 0>
-D:8003D240                                              # DATA XREF: D:80034874o
+D:8003D240     GmapZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 125.3834, 4, 0, 0>
 D:8003D260     GspooltapeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D260                                              # DATA XREF: D:80034954o
 D:8003D280     GmicrofilmZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D280                                              # DATA XREF: D:8003498Co
 D:8003D2A0     GmicrocodeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D2A0                                              # DATA XREF: D:800349C4o
 D:8003D2C0     GlectreZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D2C0                                              # DATA XREF: D:800349FCo
-D:8003D2E0     GmoneyZ_struct: itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D2E0                                              # DATA XREF: D:80034A34o
+D:8003D2E0     GmoneyZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
 D:8003D300     GgoldbarZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D300                                              # DATA XREF: D:80034A6Co
 D:8003D320     GheroinZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D320                                              # DATA XREF: D:80034AA4o
+
 D:8003D340     dword_D_8003D340:.word    0x20000,         2,   0x30003,   0x20006
 D:8003D340                                              # DATA XREF: D:8003D394o
 D:8003D340                     .word    0x60002,   0x90009,   0x2000C,   0xC0002
@@ -2314,328 +1672,265 @@ D:8003D390     weapon_gun_controller:.word 0xD0000      # DATA XREF: D:GjoypadZ_
 D:8003D394                     .word dword_D_8003D340
 D:8003D398                     .word 0x270000
 D:8003D39C                     .word 0
-D:8003D3A0     dword_D_8003D3A0:.word  0x4010000,         2,         0,   0x20003
-D:8003D3A0                                              # DATA XREF: D:model_guard_charactero
-D:8003D3A0                     .word    0x30002,   0x60006,   0x20009,   0xC0002
-D:8003D3A0                     .word    0xC0009,   0x2000F,  0x120002,  0x12000F
-D:8003D3A0                     .word    0x20015,  0x180002,  0x180015,   0x2001B
-D:8003D3A0                     .word   0x1E0002,  0x1E001B,   0x20021,  0x240002
-D:8003D3A0                     .word   0x240021,   0x20027,  0x2A0002,  0x2A0027
-D:8003D400     model_guard_character:model_data <0x100000, dword_D_8003D3A0, 0x2D0000>
-D:8003D400                                              # DATA XREF: sub_CODE_7F0001F0+38o
-D:8003D400                                              # sub_CODE_7F000290+38o
-D:8003D400                                              # sub_CODE_7F0062C0+44o
-D:8003D400                                              # D:CcamguardZ_structo
-D:8003D400                                              # D:CgreyguardZ_structo
-D:8003D400                                              # D:ColiveguardZ_structo
-D:8003D400                                              # D:CrusguardZ_structo
-D:8003D400                                              # D:CtrevguardZ_structo
-D:8003D400                                              # D:CborisZ_structo
-D:8003D400                                              # D:CorumovZ_structo
-D:8003D400                                              # D:CtrevelyanZ_structo
-D:8003D400                                              # D:CboilertrevZ_structo
-D:8003D400                                              # D:CvalentinZ_structo
-D:8003D400                                              # D:CxeniaZ_structo
-D:8003D400                                              # D:CbaronsamediZ_structo
-D:8003D400                                              # D:CjawsZ_structo
-D:8003D400                                              # D:CmaydayZ_structo
-D:8003D400                                              # D:CoddjobZ_structo
-D:8003D400                                              # D:CnatalyaZ_structo
-D:8003D400                                              # D:CarmourguardZ_structo
-D:8003D400                                              # D:CcommguardZ_structo
-D:8003D400                                              # D:CgreatguardZ_structo
-D:8003D400                                              # D:CnavyguardZ_structo
-D:8003D400                                              # D:CsnowguardZ_structo
-D:8003D400                                              # D:CbluewomanZ_structo
-D:8003D400                                              # D:CfattechwomanZ_structo
-D:8003D400                                              # D:CtechwomanZ_structo
-D:8003D400                                              # D:CjeanwomanZ_structo
-D:8003D400                                              # D:CgreymanZ_structo
-D:8003D400                                              # D:CbluemanZ_structo
-D:8003D400                                              # D:CredmanZ_structo
-D:8003D400                                              # D:CcardimanZ_structo
-D:8003D400                                              # D:CcheckmanZ_structo
-D:8003D400                                              # D:CtechmanZ_structo
-D:8003D400                                              # D:CpilotZ_structo
-D:8003D400                                              # D:Cgreatguard2Z_structo
-D:8003D400                                              # D:CbluecamguardZ_structo
-D:8003D400                                              # D:CmoonguardZ_structo
-D:8003D400                                              # D:CmoonfemaleZ_structo
-D:8003D400                                              # D:CboilerbondZ_structo
-D:8003D400                                              # D:CsuitbondZ_structo
-D:8003D400                                              # D:CtimberbondZ_structo
-D:8003D400                                              # D:CsnowbondZ_structo
-D:8003D400                                              # D:CdjbondZ_structo
-D:8003D400                                              # D:CspicebondZ_structo
+*/
+u32 dword_D_8003D3A0[] = {0x4010000,         2,         0,   0x20003,
+                          0x30002,   0x60006,   0x20009,   0xC0002,
+                          0xC0009,   0x2000F,  0x120002,  0x12000F,
+                          0x20015,  0x180002,  0x180015,   0x2001B,
+                          0x1E0002,  0x1E001B,   0x20021,  0x240002,
+                          0x240021,   0x20027,  0x2A0002,  0x2A0027};
+
+
+//D:8003D400
+     struct model_data model_guard_character = {0x100000, dword_D_8003D3A0, 0x2D0000};
+/*
 D:8003D40C                     .word 0
-D:8003D410     CcamguardZ_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xE, 0, 0>
-D:8003D410                                              # DATA XREF: D:c_item_entrieso
-D:8003D430     CgreyguardZ_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1292.6892, 0, 0xD, 0, 0>
-D:8003D430                                              # DATA XREF: D:8003DE24o
-D:8003D450     ColiveguardZ_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0x10, 0, 0>
-D:8003D450                                              # DATA XREF: D:8003DE38o
-D:8003D470     CrusguardZ_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xD, 0, 0>
-D:8003D470                                              # DATA XREF: D:8003DE4Co
-D:8003D490     CtrevguardZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0x12, 0, 0>
-D:8003D490                                              # DATA XREF: D:8003DE60o
-D:8003D4B0     CborisZ_struct: object_header <0, model_guard_character, 0, 7, 0x14, 1223.1553, 0, 0x15, 0, 0>
-D:8003D4B0                                              # DATA XREF: D:8003DE88o
-D:8003D4D0     CorumovZ_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1347.004, 0, 0x15, 0, 0>
-D:8003D4D0                                              # DATA XREF: D:8003DE9Co
-D:8003D4F0     CtrevelyanZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1263.2534, 0, 0x10, 0, 0>
-D:8003D4F0                                              # DATA XREF: D:8003DEB0o
-D:8003D510     CboilertrevZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1263.2534, 0, 0x10, 0, 0>
-D:8003D510                                              # DATA XREF: D:8003DEC4o
-D:8003D530     CvalentinZ_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1208.6277, 0, 0x10, 0, 0>
-D:8003D530                                              # DATA XREF: D:8003DED8o
-D:8003D550     CxeniaZ_struct: object_header <0, model_guard_character, 0, 7, 0x15, 1285.4487, 0, 0x13, 0, 0>
-D:8003D550                                              # DATA XREF: D:8003DEECo
-D:8003D570     CbaronsamediZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1292.5995, 0, 0x19, 0, 0>
-D:8003D570                                              # DATA XREF: D:8003DF00o
-D:8003D590     CjawsZ_struct:  object_header <0, model_guard_character, 0, 7, 0x15, 1550.059, 0, 0x14, 0, 0>
-D:8003D590                                              # DATA XREF: D:8003DF14o
-D:8003D5B0     CmaydayZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1260.657, 0, 0x10, 0, 0>
-D:8003D5B0                                              # DATA XREF: D:8003DF28o
-D:8003D5D0     CoddjobZ_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1082.4603, 0, 0x12, 0, 0>
-D:8003D5D0                                              # DATA XREF: D:8003DF3Co
-D:8003D5F0     CnatalyaZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1226.1493, 0, 0x10, 0, 0>
-D:8003D5F0                                              # DATA XREF: D:8003DF50o
-D:8003D610     CarmourguardZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0x11, 0, 0>
-D:8003D610                                              # DATA XREF: D:8003DF64o
-D:8003D630     CcommguardZ_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xF, 0, 0>
-D:8003D630                                              # DATA XREF: D:8003DF78o
-D:8003D650     CgreatguardZ_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1283.0787, 0, 0xB, 0, 0>
-D:8003D650                                              # DATA XREF: D:8003DF8Co
-D:8003D670     CnavyguardZ_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xF, 0, 0>
-D:8003D670                                              # DATA XREF: D:8003DFA0o
-D:8003D690     CsnowguardZ_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1261.1731, 0, 0x11, 0, 0>
-D:8003D690                                              # DATA XREF: D:8003DFB4o
-D:8003D6B0     CbluewomanZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1148.2167, 0, 0xD, 0, 0>
-D:8003D6B0                                              # DATA XREF: D:8003E018o
-D:8003D6D0     CfattechwomanZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1149.4025, 0, 0xC, 0, 0>
-D:8003D6D0                                              # DATA XREF: D:8003E02Co
-D:8003D6F0     CtechwomanZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1158.2109, 0, 0xC, 0, 0>
-D:8003D6F0                                              # DATA XREF: D:8003E040o
-D:8003D710     CjeanwomanZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1124.0725, 0, 0xF, 0, 0>
-D:8003D710                                              # DATA XREF: D:8003E054o
-D:8003D730     CgreymanZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1293.0195, 0, 0xF, 0, 0>
-D:8003D730                                              # DATA XREF: D:8003E068o
-D:8003D750     CbluemanZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0xF, 0, 0>
-D:8003D750                                              # DATA XREF: D:8003E07Co
-D:8003D770     CredmanZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0xF, 0, 0>
-D:8003D770                                              # DATA XREF: D:8003E090o
-D:8003D790     CcardimanZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0xE, 0, 0>
-D:8003D790                                              # DATA XREF: D:8003E0A4o
-D:8003D7B0     CcheckmanZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0x10, 0, 0>
-D:8003D7B0                                              # DATA XREF: D:8003E0B8o
-D:8003D7D0     CtechmanZ_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1292.6892, 0, 0xC, 0, 0>
-D:8003D7D0                                              # DATA XREF: D:8003E0CCo
-D:8003D7F0     CpilotZ_struct: object_header <0, model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0x18, 0, 0>
-D:8003D7F0                                              # DATA XREF: D:8003E0E0o
-D:8003D810     Cgreatguard2Z_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1283.0787, 0, 0x10, 0, 0>
-D:8003D810                                              # DATA XREF: D:8003E0F4o
-D:8003D830     CbluecamguardZ_struct:object_header <0, model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xE, 0, 0>
-D:8003D830                                              # DATA XREF: D:8003E108o
-D:8003D850     CmoonguardZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0xD, 0, 0>
-D:8003D850                                              # DATA XREF: D:8003E11Co
-D:8003D870     CmoonfemaleZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1124.0725, 0, 0xB, 0, 0>
-D:8003D870                                              # DATA XREF: D:8003E130o
-D:8003D890     CboilerbondZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1273.6262, 0, 0xD, 0, 0>
-D:8003D890                                              # DATA XREF: D:8003DFC8o
-D:8003D8B0     CsuitbondZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1292.3391, 0, 0xE, 0, 0>
-D:8003D8B0                                              # DATA XREF: D:8003DFDCo
-D:8003D8D0     CtimberbondZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1282.7715, 0, 0x10, 0, 0>
-D:8003D8D0                                              # DATA XREF: D:8003DFF0o
-D:8003D8F0     CsnowbondZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1299.1359, 0, 0xE, 0, 0>
-D:8003D8F0                                              # DATA XREF: D:8003E004o
-D:8003D910     CdjbondZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1285.0543, 0, 0xD, 0, 0>
-D:8003D910                                              # DATA XREF: D:stru_D_8003DE74o
-D:8003D930     Csuit_lf_handz_struct:object_header <0, model_suit_lf_hand, 0, 0xA, 9, 12231.949, 0, 0x16, 0, 0>
-D:8003D930                                              # DATA XREF: D:80034B84o
-D:8003D930                                              # D:stru_D_8003E144o
-D:8003D950     CheadkarlZ_struct:object_header <0, 0, 0, 2, 1, 218.15375, 0, 6, 0, 0>
-D:8003D950                                              # DATA XREF: D:8003E158o
-D:8003D970     CheadalanZ_struct:object_header <0, 0, 0, 2, 1, 215.03685, 0, 4, 0, 0>
-D:8003D970                                              # DATA XREF: D:8003E16Co
-D:8003D990     CheadpeteZ_struct:object_header <0, 0, 0, 2, 1, 216.28949, 0, 4, 0, 0>
-D:8003D990                                              # DATA XREF: D:8003E180o
-D:8003D9B0     CheadmartinZ_struct:object_header <0, 0, 0, 2, 1, 222.34796, 0, 6, 0, 0>
-D:8003D9B0                                              # DATA XREF: D:8003E194o
-D:8003D9D0     stru_D_8003D9D0:object_header <0, 0, 0, 2, 1, 220.2446, 0, 5, 0, 0>
-D:8003D9D0                                              # DATA XREF: D:8003E1A8o
-D:8003D9F0     stru_D_8003D9F0:object_header <0, 0, 0, 2, 1, 201.51955, 0, 5, 0, 0>
-D:8003D9F0                                              # DATA XREF: D:8003E1BCo
-D:8003DA10     stru_D_8003DA10:object_header <0, 0, 0, 2, 1, 212.62949, 0, 5, 0, 0>
-D:8003DA10                                              # DATA XREF: D:8003E1F8o
-D:8003DA30     stru_D_8003DA30:object_header <0, 0, 0, 2, 1, 218.35564, 0, 4, 0, 0>
-D:8003DA30                                              # DATA XREF: D:8003E1D0o
-D:8003DA50     stru_D_8003DA50:object_header <0, 0, 0, 2, 1, 192.53412, 0, 4, 0, 0>
-D:8003DA50                                              # DATA XREF: D:8003E1E4o
-D:8003DA70     stru_D_8003DA70:object_header <0, 0, 0, 2, 1, 218.35564, 0, 4, 0, 0>
-D:8003DA70                                              # DATA XREF: D:8003E20Co
-D:8003DA90     stru_D_8003DA90:object_header <0, 0, 0, 2, 1, 227.52234, 0, 4, 0, 0>
-D:8003DA90                                              # DATA XREF: D:8003E220o
-D:8003DAB0     stru_D_8003DAB0:object_header <0, 0, 0, 2, 1, 228.29831, 0, 4, 0, 0>
-D:8003DAB0                                              # DATA XREF: D:8003E234o
-D:8003DAD0     stru_D_8003DAD0:object_header <0, 0, 0, 2, 1, 235.64778, 0, 6, 0, 0>
-D:8003DAD0                                              # DATA XREF: D:8003E248o
-D:8003DAF0     stru_D_8003DAF0:object_header <0, 0, 0, 2, 1, 218.35564, 0, 5, 0, 0>
-D:8003DAF0                                              # DATA XREF: D:8003E25Co
-D:8003DB10     stru_D_8003DB10:object_header <0, 0, 0, 2, 1, 240.50017, 0, 4, 0, 0>
-D:8003DB10                                              # DATA XREF: D:8003E270o
-D:8003DB30     stru_D_8003DB30:object_header <0, 0, 0, 2, 1, 234.83342, 0, 4, 0, 0>
-D:8003DB30                                              # DATA XREF: D:8003E284o
-D:8003DB50     stru_D_8003DB50:object_header <0, 0, 0, 2, 1, 228.24614, 0, 4, 0, 0>
-D:8003DB50                                              # DATA XREF: D:8003E298o
-D:8003DB70     stru_D_8003DB70:object_header <0, 0, 0, 2, 1, 228.55029, 0, 4, 0, 0>
-D:8003DB70                                              # DATA XREF: D:8003E2ACo
-D:8003DB90     stru_D_8003DB90:object_header <0, 0, 0, 2, 1, 212.62949, 0, 2, 0, 0>
-D:8003DB90                                              # DATA XREF: D:8003E2C0o
-D:8003DBB0     stru_D_8003DBB0:object_header <0, 0, 0, 2, 1, 219.82707, 0, 6, 0, 0>
-D:8003DBB0                                              # DATA XREF: D:8003E2D4o
-D:8003DBD0     stru_D_8003DBD0:object_header <0, 0, 0, 2, 1, 193.20615, 0, 5, 0, 0>
-D:8003DBD0                                              # DATA XREF: D:8003E2E8o
-D:8003DBF0     stru_D_8003DBF0:object_header <0, 0, 0, 2, 1, 235.64778, 0, 4, 0, 0>
-D:8003DBF0                                              # DATA XREF: D:8003E2FCo
-D:8003DC10     stru_D_8003DC10:object_header <0, 0, 0, 2, 1, 223.18559, 0, 4, 0, 0>
-D:8003DC10                                              # DATA XREF: D:8003E310o
-D:8003DC30     stru_D_8003DC30:object_header <0, 0, 0, 2, 1, 218.35564, 0, 5, 0, 0>
-D:8003DC30                                              # DATA XREF: D:8003E324o
-D:8003DC50     stru_D_8003DC50:object_header <0, 0, 0, 2, 1, 193.20615, 0, 4, 0, 0>
-D:8003DC50                                              # DATA XREF: D:8003E338o
-D:8003DC70     stru_D_8003DC70:object_header <0, 0, 0, 2, 1, 235.64778, 0, 5, 0, 0>
-D:8003DC70                                              # DATA XREF: D:8003E34Co
-D:8003DC90     stru_D_8003DC90:object_header <0, 0, 0, 2, 1, 193.20615, 0, 3, 0, 0>
-D:8003DC90                                              # DATA XREF: D:8003E360o
-D:8003DCB0     stru_D_8003DCB0:object_header <0, 0, 0, 2, 1, 224.83139, 0, 3, 0, 0>
-D:8003DCB0                                              # DATA XREF: D:8003E374o
-D:8003DCD0     stru_D_8003DCD0:object_header <0, 0, 0, 2, 1, 219.97256, 0, 3, 0, 0>
-D:8003DCD0                                              # DATA XREF: D:8003E388o
-D:8003DCF0     stru_D_8003DCF0:object_header <0, 0, 0, 2, 1, 203.44904, 0, 3, 0, 0>
-D:8003DCF0                                              # DATA XREF: D:8003E39Co
-D:8003DD10     stru_D_8003DD10:object_header <0, 0, 0, 2, 1, 196.83067, 0, 3, 0, 0>
-D:8003DD10                                              # DATA XREF: D:8003E3B0o
-D:8003DD30     stru_D_8003DD30:object_header <0, 0, 0, 2, 1, 176.67717, 0, 1, 0, 0>
-D:8003DD30                                              # DATA XREF: D:8003E3C4o
-D:8003DD50     stru_D_8003DD50:object_header <0, 0, 0, 2, 1, 190.61967, 0, 4, 0, 0>
-D:8003DD50                                              # DATA XREF: D:8003E3D8o
-D:8003DD70     CheadbrosnansuitZ_struct:object_header <0, 0, 0, 2, 1, 212.45657, 0, 5, 0, 0>
-D:8003DD70                                              # DATA XREF: D:8003E3ECo
-D:8003DD90     CheadbrosnantimberZ_struct:object_header <0, 0, 0, 2, 1, 179.28358, 0, 4, 0, 0>
-D:8003DD90                                              # DATA XREF: D:8003E400o
-D:8003DDB0     CheadbrosnansnowZ_struct:object_header <0, 0, 0, 2, 1, 225.0605, 0, 6, 0, 0>
-D:8003DDB0                                              # DATA XREF: D:8003E414o
-D:8003DDD0     CheadbrosnanZ_struct:object_header <0, 0, 0, 2, 1, 189.48112, 0, 5, 0, 0>
-D:8003DDD0                                              # DATA XREF: D:stru_D_8003E428o
-D:8003DDF0     CspicebondZ_struct:object_header <0, model_guard_character, 0, 7, 0x15, 1208.6448, 0, 0x11, 0, 0>
-D:8003DDF0                                              # DATA XREF: D:8003E43Co
-D:8003DE10     c_item_entries: c_itementry <CcamguardZ_struct, aCcamguardz, 1.0, 1.0, 0x1000000>
-D:8003DE10                                              # DATA XREF: set_new_rand_head_bodiesr
-D:8003DE10                                              # set_new_rand_head_bodies+1Co
-D:8003DE10                                              # set_new_rand_head_bodies+20r
-D:8003DE10                                              # sub_CODE_7F008E80+170o
-D:8003DE10                                              # init_menu18_displaycast+2A0o
-D:8003DE10                                              # init_menu18_displaycast+318o
-D:8003DE10                                              # load_body_head_if_not_loaded+8o
-D:8003DE10                                              # maybe_load_models_for_guards+8o
-D:8003DE10                                              # retrieve_header_for_body_and_head+8o
-D:8003DE10                                              # retrieve_header_for_body_and_head+90r
-D:8003DE10                                              # solo_char_load+2F0o
-D:8003DE10                                              # solo_char_load+380o
-D:8003DE10                                              # solo_char_load+4D4o
-D:8003DE10                                              # solo_char_load:loc_CODE_7F07A1F8o
-D:8003DE10                                              # "CcamguardZ"
-D:8003DE24                     c_itementry <CgreyguardZ_struct, aCgreyguardz, 1.0, 1.0, 0x1000000>  # "CgreyguardZ"
-D:8003DE38                     c_itementry <ColiveguardZ_struct, aColiveguardz, 1.0, 1.0, 0x1000000>  # "ColiveguardZ"
-D:8003DE4C                     c_itementry <CrusguardZ_struct, aCrusguardz, 1.0, 1.0, 0x1000000>  # "CrusguardZ"
-D:8003DE60                     c_itementry <CtrevguardZ_struct, aCtrevguardz, 1.0, 1.0, 0x1000000>  # "CtrevguardZ"
-D:8003DE74     stru_D_8003DE74:c_itementry <CdjbondZ_struct, aCdjbondz, 1.0, 1.0446, 0x1000000>
-D:8003DE74                                              # DATA XREF: sub_CODE_7F008E80+190r
-D:8003DE74                                              # sub_CODE_7F008E80+210r
-D:8003DE74                                              # sub_CODE_7F008E80+198r
-D:8003DE74                                              # sub_CODE_7F008E80+1A0r
-D:8003DE74                                              # "CdjbondZ"
-D:8003DE88                     c_itementry <CborisZ_struct, aCborisz, 1.0, 0.9702, 0x1010000>  # "CborisZ"
-D:8003DE9C                     c_itementry <CorumovZ_struct, aCorumovz, 1.0, 1.0778, 0x1010000>  # "CorumovZ"
-D:8003DEB0                     c_itementry <CtrevelyanZ_struct, aCtrevelyanz, 1.0, 1.0, 0x1010000>  # "CtrevelyanZ"
-D:8003DEC4                     c_itementry <CboilertrevZ_struct, aCboilertrevz, 1.0, 1.0, 0x1010000>  # "CboilertrevZ"
-D:8003DED8                     c_itementry <CvalentinZ_struct, aCvalentinz, 1.0, 0.93239999, 0x1010000>  # "CvalentinZ"
-D:8003DEEC                     c_itementry <CxeniaZ_struct, aCxeniaz, 1.0, 1.0, 0x10000>  # "CxeniaZ"
-D:8003DF00                     c_itementry <CbaronsamediZ_struct, aCbaronsamediz, 1.0, 1.0, 0x1010000>  # "CbaronsamediZ"
-D:8003DF14                     c_itementry <CjawsZ_struct, aCjawsz, 1.0, 1.199, 0x1010000>  # "CjawsZ"
-D:8003DF28                     c_itementry <CmaydayZ_struct, aCmaydayz, 1.0, 1.0, 0x10000>  # "CmaydayZ"
-D:8003DF3C                     c_itementry <CoddjobZ_struct, aCoddjobz, 1.0, 0.78780001, 0x1010000>  # "CoddjobZ"
-D:8003DF50                     c_itementry <CnatalyaZ_struct, aCnatalyaz, 1.0, 0.96609998, 0x10000>  # "CnatalyaZ"
-D:8003DF64                     c_itementry <CarmourguardZ_struct, aCarmourguardz, 1.0, 1.0, 0x1000000>  # "CarmourguardZ"
-D:8003DF78                     c_itementry <CcommguardZ_struct, aCcommguardz, 1.0, 1.0, 0x1000000>  # "CcommguardZ"
-D:8003DF8C                     c_itementry <CgreatguardZ_struct, aCgreatguardz, 1.0, 1.0, 0x1000000>  # "CgreatguardZ"
-D:8003DFA0                     c_itementry <CnavyguardZ_struct, aCnavyguardz, 1.0, 1.0, 0x1000000>  # "CnavyguardZ"
-D:8003DFB4                     c_itementry <CsnowguardZ_struct, aCsnowguardz, 1.0, 1.0, 0x1010000>  # "CsnowguardZ"
-D:8003DFC8                     c_itementry <CboilerbondZ_struct, aCboilerbondz, 1.0, 1.0403, 0x1000000>  # "CboilerbondZ"
-D:8003DFDC                     c_itementry <CsuitbondZ_struct, aCsuitbondz, 1.0, 1.058, 0x1000000>  # "CsuitbondZ"
-D:8003DFF0                     c_itementry <CtimberbondZ_struct, aCtimberbondz, 1.0, 1.0438, 0x1000000>  # "CtimberbondZ"
-D:8003E004                     c_itementry <CsnowbondZ_struct, aCsnowbondz, 1.0, 1.0438, 0x1000000>  # "CsnowbondZ"
-D:8003E018                     c_itementry <CbluewomanZ_struct, aCbluewomanz, 1.0, 0.88529998, 0>  # "CbluewomanZ"
-D:8003E02C                     c_itementry <CfattechwomanZ_struct, aCfattechwomanz, 1.0, 0.88529998, 0>  # "CfattechwomanZ"
-D:8003E040                     c_itementry <CtechwomanZ_struct, aCtechwomanz, 1.0, 0.91600001, 0>  # "CtechwomanZ"
-D:8003E054                     c_itementry <CjeanwomanZ_struct, aCjeanwomanz, 1.0, 0.88529998, 0>  # "CjeanwomanZ"
-D:8003E068                     c_itementry <CgreymanZ_struct, aCgreymanz, 1.0, 1.0, 0x1000000>  # "CgreymanZ"
-D:8003E07C                     c_itementry <CbluemanZ_struct, aCbluemanz, 1.0, 1.0, 0x1000000>  # "CbluemanZ"
-D:8003E090                     c_itementry <CredmanZ_struct, aCredmanz, 1.0, 1.0, 0x1000000>  # "CredmanZ"
-D:8003E0A4                     c_itementry <CcardimanZ_struct, aCcardimanz, 1.0, 1.0, 0x1000000>  # "CcardimanZ"
-D:8003E0B8                     c_itementry <CcheckmanZ_struct, aCcheckmanz, 1.0, 1.0, 0x1000000>  # "CcheckmanZ"
-D:8003E0CC                     c_itementry <CtechmanZ_struct, aCtechmanz, 1.0, 1.0, 0x1000000>  # "CtechmanZ"
-D:8003E0E0                     c_itementry <CpilotZ_struct, aCpilotz, 1.0, 1.0, 0x1010000>  # "CpilotZ"
-D:8003E0F4                     c_itementry <Cgreatguard2Z_struct, aCgreatguard2z, 1.0, 1.0, 0x1000000>  # "Cgreatguard2Z"
-D:8003E108                     c_itementry <CbluecamguardZ_struct, aCbluecamguardz, 1.0, 1.0, 0x1000000>  # "CbluecamguardZ"
-D:8003E11C                     c_itementry <CmoonguardZ_struct, aCmoonguardz, 1.0, 1.0, 0x1000000>  # "CmoonguardZ"
-D:8003E130                     c_itementry <CmoonfemaleZ_struct, aCmoonfemalez, 1.0, 0.88529998, 0>  # "CmoonfemaleZ"
-D:8003E144     stru_D_8003E144:c_itementry <Csuit_lf_handz_struct, aCsuit_lf_handz_0, 0.1, 1.0, 0x1000000>
-D:8003E144                                              # DATA XREF: sub_CODE_7F07E7CC+50r
-D:8003E144                                              # "Csuit_lf_handZ"
-D:8003E158                     c_itementry <CheadkarlZ_struct, aCheadkarlz, 1.0, 1.0, 0x1010000>  # "CheadkarlZ"
-D:8003E16C                     c_itementry <CheadalanZ_struct, aCheadalanz, 1.0, 1.0, 0x1010000>  # "CheadalanZ"
-D:8003E180                     c_itementry <CheadpeteZ_struct, aCheadpetez, 1.0, 1.0, 0x1010000>  # "CheadpeteZ"
-D:8003E194                     c_itementry <CheadmartinZ_struct, aCheadmartinz, 1.0, 1.0, 0x1010000>  # "CheadmartinZ"
-D:8003E1A8                     c_itementry <stru_D_8003D9D0, aCheadmarkz, 1.0, 1.0, 0x1010000>  # "CheadmarkZ"
-D:8003E1BC                     c_itementry <stru_D_8003D9F0, aCheadduncanz, 1.0, 1.0, 0x1010000>  # "CheadduncanZ"
-D:8003E1D0                     c_itementry <stru_D_8003DA30, aCheadshaunz, 1.0, 1.0, 0x1010000>  # "CheadshaunZ"
-D:8003E1E4                     c_itementry <stru_D_8003DA50, aCheaddwaynez, 1.0, 1.0, 0x1010000>  # "CheaddwayneZ"
-D:8003E1F8                     c_itementry <stru_D_8003DA10, aCheadbz, 1.0, 1.0, 0x1010000>  # "CheadbZ"
-D:8003E20C                     c_itementry <stru_D_8003DA70, aCheaddavez, 1.0, 1.0, 0x1010000>  # "CheaddaveZ"
-D:8003E220                     c_itementry <stru_D_8003DA90, aCheadgrantz, 1.0, 1.0, 0x1010000>  # "CheadgrantZ"
-D:8003E234                     c_itementry <stru_D_8003DAB0, aCheaddesz, 1.0, 1.0, 0x1010000>  # "CheaddesZ"
-D:8003E248                     c_itementry <stru_D_8003DAD0, aCheadchrisz, 1.0, 1.0, 0x1010000>  # "CheadchrisZ"
-D:8003E25C                     c_itementry <stru_D_8003DAF0, aCheadleez, 1.0, 1.0, 0x1010000>  # "CheadleeZ"
-D:8003E270                     c_itementry <stru_D_8003DB10, aCheadneilz, 1.0, 1.0, 0x1010000>  # "CheadneilZ"
-D:8003E284                     c_itementry <stru_D_8003DB30, aCheadjimz, 1.0, 1.0, 0x1010000>  # "CheadjimZ"
-D:8003E298                     c_itementry <stru_D_8003DB50, aCheadrobinz, 1.0, 1.0, 0x1010000>  # "CheadrobinZ"
-D:8003E2AC                     c_itementry <stru_D_8003DB70, aCheadstevehz, 1.0, 1.0, 0x1010000>  # "CheadstevehZ"
-D:8003E2C0                     c_itementry <stru_D_8003DB90, aCheadbalaclavaz, 1.0, 1.0, 0x1010000>  # "CheadbalaclavaZ"
-D:8003E2D4                     c_itementry <stru_D_8003DBB0, aCheadbikez, 1.0, 1.0, 0x1010000>  # "CheadbikeZ"
-D:8003E2E8                     c_itementry <stru_D_8003DBD0, aCheadgrahamz, 1.0, 1.0, 0x1010000>  # "CheadgrahamZ"
-D:8003E2FC                     c_itementry <stru_D_8003DBF0, aCheadsteveez, 1.0, 1.0, 0x1010000>  # "CheadsteveeZ"
-D:8003E310                     c_itementry <stru_D_8003DC10, aCheadjoelz, 1.0, 1.0, 0x1010000>  # "CheadjoelZ"
-D:8003E324                     c_itementry <stru_D_8003DC30, aCheadscottz, 1.0, 1.0, 0x1010000>  # "CheadscottZ"
-D:8003E338                     c_itementry <stru_D_8003DC50, aCheadjoez, 1.0, 1.0, 0x1010000>  # "CheadjoeZ"
-D:8003E34C                     c_itementry <stru_D_8003DC70, aCheadkenz, 1.0, 1.0, 0x1010000>  # "CheadkenZ"
-D:8003E360                     c_itementry <stru_D_8003DC90, aCheadjoe2z, 1.0, 1.0, 0x1010000>  # "Cheadjoe2Z"
-D:8003E374                     c_itementry <stru_D_8003DCB0, aCheadmishkinz, 1.0, 1.0, 0x1010000>  # "CheadmishkinZ"
-D:8003E388                     c_itementry <stru_D_8003DCD0, aCheadsallyz, 1.0, 1.0, 0x10000>  # "CheadsallyZ"
-D:8003E39C                     c_itementry <stru_D_8003DCF0, aCheadmarionz, 1.0, 1.0, 0x10000>  # "CheadmarionZ"
-D:8003E3B0                     c_itementry <stru_D_8003DD10, aCheadmandyz, 1.0, 1.0, 0x10000>  # "CheadmandyZ"
-D:8003E3C4                     c_itementry <stru_D_8003DD30, aCheadvivienz, 1.0, 1.0, 0x10000>  # "CheadvivienZ"
-D:8003E3D8                     c_itementry <stru_D_8003DD50, aCheadbrosnanboilerz, 1.0, 1.0, 0x1010000>  # "CheadbrosnanboilerZ"
-D:8003E3EC                     c_itementry <CheadbrosnansuitZ_struct, aCheadbrosnansuitz, 1.0, 1.0, 0x1010000>  # "CheadbrosnansuitZ"
-D:8003E400                     c_itementry <CheadbrosnantimberZ_struct, aCheadbrosnantimberz, 1.0, 1.0, 0x1010000>  # "CheadbrosnantimberZ"
-D:8003E414                     c_itementry <CheadbrosnansnowZ_struct, aCheadbrosnansnowz, 1.0, 1.0, 0x1010000>  # "CheadbrosnansnowZ"
-D:8003E428     stru_D_8003E428:c_itementry <CheadbrosnanZ_struct, aCheadbrosnanz, 1.0, 1.0, 0x1010000>
-D:8003E428                                              # DATA XREF: sub_CODE_7F008E80+1D0r
-D:8003E428                                              # sub_CODE_7F008E80+214r
-D:8003E428                                              # sub_CODE_7F008E80+1D8r
-D:8003E428                                              # sub_CODE_7F008E80+1E0r
-D:8003E428                                              # "CheadbrosnanZ"
-D:8003E43C                     c_itementry <CspicebondZ_struct, aCspicebondz, 0.94999999, 0.96609998, 0x10000>  # "CspicebondZ"
+*/
+//D:8003D410
+struct object_header CcamguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xE, 0, 0};
+//D:8003D430
+struct object_header CgreyguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1292.6892, 0, 0xD, 0, 0};
+//D:8003D450
+struct object_header ColiveguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0x10, 0, 0};
+//D:8003D470
+struct object_header CrusguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xD, 0, 0};
+//D:8003D490
+struct object_header CtrevguardZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0x12, 0, 0};
+//D:8003D4B0
+struct object_header CborisZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1223.1553, 0, 0x15, 0, 0};
+//D:8003D4D0
+struct object_header CorumovZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1347.004, 0, 0x15, 0, 0};
+//D:8003D4F0
+struct object_header CtrevelyanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1263.2534, 0, 0x10, 0, 0};
+//D:8003D510
+struct object_header CboilertrevZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1263.2534, 0, 0x10, 0, 0};
+//D:8003D530
+struct object_header CvalentinZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1208.6277, 0, 0x10, 0, 0};
+//D:8003D550
+struct object_header CxeniaZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1285.4487, 0, 0x13, 0, 0};
+//D:8003D570
+struct object_header CbaronsamediZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.5995, 0, 0x19, 0, 0};
+//D:8003D590
+struct object_header CjawsZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1550.059, 0, 0x14, 0, 0};
+//D:8003D5B0
+struct object_header CmaydayZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.657, 0, 0x10, 0, 0};
+//D:8003D5D0
+struct object_header CoddjobZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1082.4603, 0, 0x12, 0, 0};
+//D:8003D5F0
+struct object_header CnatalyaZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1226.1493, 0, 0x10, 0, 0};
+//D:8003D610
+struct object_header CarmourguardZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0x11, 0, 0};
+//D:8003D630
+struct object_header CcommguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xF, 0, 0};
+//D:8003D650
+struct object_header CgreatguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1283.0787, 0, 0xB, 0, 0};
+//D:8003D670
+struct object_header CnavyguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xF, 0, 0};
+//D:8003D690
+struct object_header CsnowguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1261.1731, 0, 0x11, 0, 0};
+//D:8003D6B0
+struct object_header CbluewomanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1148.2167, 0, 0xD, 0, 0};
+//D:8003D6D0
+struct object_header CfattechwomanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1149.4025, 0, 0xC, 0, 0};
+//D:8003D6F0
+struct object_header CtechwomanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1158.2109, 0, 0xC, 0, 0};
+//D:8003D710
+struct object_header CjeanwomanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1124.0725, 0, 0xF, 0, 0};
+//D:8003D730
+struct object_header CgreymanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1293.0195, 0, 0xF, 0, 0};
+//D:8003D750
+struct object_header CbluemanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0xF, 0, 0};
+//D:8003D770
+struct object_header CredmanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0xF, 0, 0};
+//D:8003D790
+struct object_header CcardimanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0xE, 0, 0};
+//D:8003D7B0
+struct object_header CcheckmanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0x10, 0, 0};
+//D:8003D7D0
+struct object_header CtechmanZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1292.6892, 0, 0xC, 0, 0};
+//D:8003D7F0
+struct object_header CpilotZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0x18, 0, 0};
+//D:8003D810
+struct object_header Cgreatguard2Z_struct = {0, &model_guard_character, 0, 7, 0x14, 1283.0787, 0, 0x10, 0, 0};
+//D:8003D830
+struct object_header CbluecamguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xE, 0, 0};
+//D:8003D850
+struct object_header CmoonguardZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0xD, 0, 0};
+//D:8003D870
+struct object_header CmoonfemaleZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1124.0725, 0, 0xB, 0, 0};
+//D:8003D890
+struct object_header CboilerbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1273.6262, 0, 0xD, 0, 0};
+//D:8003D8B0
+struct object_header CsuitbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.3391, 0, 0xE, 0, 0};
+//D:8003D8D0
+struct object_header CtimberbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1282.7715, 0, 0x10, 0, 0};
+//D:8003D8F0
+struct object_header CsnowbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1299.1359, 0, 0xE, 0, 0};
+//D:8003D910
+struct object_header CdjbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1285.0543, 0, 0xD, 0, 0};
+//D:8003D930
+struct object_header Csuit_lf_handz_struct = {0, &model_suit_lf_hand, 0, 0xA, 9, 12231.949, 0, 0x16, 0, 0};
+//D:8003D950
+struct object_header CheadkarlZ_struct = {0, 0, 0, 2, 1, 218.15375, 0, 6, 0, 0};
+//D:8003D970
+struct object_header CheadalanZ_struct = {0, 0, 0, 2, 1, 215.03685, 0, 4, 0, 0};
+//D:8003D990
+struct object_header CheadpeteZ_struct = {0, 0, 0, 2, 1, 216.28949, 0, 4, 0, 0};
+//D:8003D9B0
+struct object_header CheadmartinZ_struct = {0, 0, 0, 2, 1, 222.34796, 0, 6, 0, 0};
+//D:8003D9D0
+struct object_header stru_D_8003D9D0 = {0, 0, 0, 2, 1, 220.2446, 0, 5, 0, 0};
+//D:8003D9F0
+struct object_header stru_D_8003D9F0 = {0, 0, 0, 2, 1, 201.51955, 0, 5, 0, 0};
+//D:8003DA10
+struct object_header stru_D_8003DA10 = {0, 0, 0, 2, 1, 212.62949, 0, 5, 0, 0};
+//D:8003DA30
+struct object_header stru_D_8003DA30 = {0, 0, 0, 2, 1, 218.35564, 0, 4, 0, 0};
+//D:8003DA50
+struct object_header stru_D_8003DA50 = {0, 0, 0, 2, 1, 192.53412, 0, 4, 0, 0};
+//D:8003DA70
+struct object_header stru_D_8003DA70 = {0, 0, 0, 2, 1, 218.35564, 0, 4, 0, 0};
+//D:8003DA90
+struct object_header stru_D_8003DA90 = {0, 0, 0, 2, 1, 227.52234, 0, 4, 0, 0};
+//D:8003DAB0
+struct object_header stru_D_8003DAB0 = {0, 0, 0, 2, 1, 228.29831, 0, 4, 0, 0};
+//D:8003DAD0
+struct object_header stru_D_8003DAD0 = {0, 0, 0, 2, 1, 235.64778, 0, 6, 0, 0};
+//D:8003DAF0
+struct object_header stru_D_8003DAF0 = {0, 0, 0, 2, 1, 218.35564, 0, 5, 0, 0};
+//D:8003DB10
+struct object_header stru_D_8003DB10 = {0, 0, 0, 2, 1, 240.50017, 0, 4, 0, 0};
+//D:8003DB30
+struct object_header stru_D_8003DB30 = {0, 0, 0, 2, 1, 234.83342, 0, 4, 0, 0};
+//D:8003DB50
+struct object_header stru_D_8003DB50 = {0, 0, 0, 2, 1, 228.24614, 0, 4, 0, 0};
+//D:8003DB70
+struct object_header stru_D_8003DB70 = {0, 0, 0, 2, 1, 228.55029, 0, 4, 0, 0};
+//D:8003DB90
+struct object_header stru_D_8003DB90 = {0, 0, 0, 2, 1, 212.62949, 0, 2, 0, 0};
+//D:8003DBB0
+struct object_header stru_D_8003DBB0 = {0, 0, 0, 2, 1, 219.82707, 0, 6, 0, 0};
+//D:8003DBD0
+struct object_header stru_D_8003DBD0 = {0, 0, 0, 2, 1, 193.20615, 0, 5, 0, 0};
+//D:8003DBF0
+struct object_header stru_D_8003DBF0 = {0, 0, 0, 2, 1, 235.64778, 0, 4, 0, 0};
+//D:8003DC10
+struct object_header stru_D_8003DC10 = {0, 0, 0, 2, 1, 223.18559, 0, 4, 0, 0};
+//D:8003DC30
+struct object_header stru_D_8003DC30 = {0, 0, 0, 2, 1, 218.35564, 0, 5, 0, 0};
+//D:8003DC50
+struct object_header stru_D_8003DC50 = {0, 0, 0, 2, 1, 193.20615, 0, 4, 0, 0};
+//D:8003DC70
+struct object_header stru_D_8003DC70 = {0, 0, 0, 2, 1, 235.64778, 0, 5, 0, 0};
+//D:8003DC90
+struct object_header stru_D_8003DC90 = {0, 0, 0, 2, 1, 193.20615, 0, 3, 0, 0};
+//D:8003DCB0
+struct object_header stru_D_8003DCB0 = {0, 0, 0, 2, 1, 224.83139, 0, 3, 0, 0};
+//D:8003DCD0
+struct object_header stru_D_8003DCD0 = {0, 0, 0, 2, 1, 219.97256, 0, 3, 0, 0};
+//D:8003DCF0
+struct object_header stru_D_8003DCF0 = {0, 0, 0, 2, 1, 203.44904, 0, 3, 0, 0};
+//D:8003DD10
+struct object_header stru_D_8003DD10 = {0, 0, 0, 2, 1, 196.83067, 0, 3, 0, 0};
+//D:8003DD30
+struct object_header stru_D_8003DD30 = {0, 0, 0, 2, 1, 176.67717, 0, 1, 0, 0};
+//D:8003DD50
+struct object_header stru_D_8003DD50 = {0, 0, 0, 2, 1, 190.61967, 0, 4, 0, 0};
+//D:8003DD70
+struct object_header CheadbrosnansuitZ_struct = {0, 0, 0, 2, 1, 212.45657, 0, 5, 0, 0};
+//D:8003DD90
+struct object_header CheadbrosnantimberZ_struct = {0, 0, 0, 2, 1, 179.28358, 0, 4, 0, 0};
+//D:8003DDB0
+struct object_header CheadbrosnansnowZ_struct = {0, 0, 0, 2, 1, 225.0605, 0, 6, 0, 0};
+//D:8003DDD0
+struct object_header CheadbrosnanZ_struct = {0, 0, 0, 2, 1, 189.48112, 0, 5, 0, 0};
+//D:8003DDF0
+struct object_header CspicebondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1208.6448, 0, 0x11, 0, 0};
+
+struct c_itementry c_item_entries[] = {
+    {&CcamguardZ_struct, "CcamguardZ", 1.0, 1.0, 0x1000000},
+    {&CgreyguardZ_struct, "CgreyguardZ", 1.0, 1.0, 0x1000000},
+    {&ColiveguardZ_struct, "ColiveguardZ", 1.0, 1.0, 0x1000000},
+    {&CrusguardZ_struct, "CrusguardZ", 1.0, 1.0, 0x1000000},
+    {&CtrevguardZ_struct, "CtrevguardZ", 1.0, 1.0, 0x1000000},
+    {&CdjbondZ_struct, "CdjbondZ", 1.0, 1.0446, 0x1000000},
+    {&CborisZ_struct, "CborisZ", 1.0, 0.9702, 0x1010000},
+    {&CorumovZ_struct, "CorumovZ", 1.0, 1.0778, 0x1010000},
+    {&CtrevelyanZ_struct, "CtrevelyanZ", 1.0, 1.0, 0x1010000},
+    {&CboilertrevZ_struct, "CboilertrevZ", 1.0, 1.0, 0x1010000},
+    {&CvalentinZ_struct, "CvalentinZ", 1.0, 0.93239999, 0x1010000},
+    {&CxeniaZ_struct, "CxeniaZ", 1.0, 1.0, 0x10000},
+    {&CbaronsamediZ_struct, "CbaronsamediZ", 1.0, 1.0, 0x1010000},
+    {&CjawsZ_struct, "CjawsZ", 1.0, 1.199, 0x1010000},
+    {&CmaydayZ_struct, "CmaydayZ", 1.0, 1.0, 0x10000},
+    {&CoddjobZ_struct, "CoddjobZ", 1.0, 0.78780001, 0x1010000},
+    {&CnatalyaZ_struct, "CnatalyaZ", 1.0, 0.96609998, 0x10000},
+    {&CarmourguardZ_struct, "CarmourguardZ", 1.0, 1.0, 0x1000000},
+    {&CcommguardZ_struct, "CcommguardZ", 1.0, 1.0, 0x1000000},
+    {&CgreatguardZ_struct, "CgreatguardZ", 1.0, 1.0, 0x1000000},
+    {&CnavyguardZ_struct, "CnavyguardZ", 1.0, 1.0, 0x1000000},
+    {&CsnowguardZ_struct, "CsnowguardZ", 1.0, 1.0, 0x1010000},
+    {&CboilerbondZ_struct, "CboilerbondZ", 1.0, 1.0403, 0x1000000},
+    {&CsuitbondZ_struct, "CsuitbondZ", 1.0, 1.058, 0x1000000},
+    {&CtimberbondZ_struct, "CtimberbondZ", 1.0, 1.0438, 0x1000000},
+    {&CsnowbondZ_struct, "CsnowbondZ", 1.0, 1.0438, 0x1000000},
+    {&CbluewomanZ_struct, "CbluewomanZ", 1.0, 0.88529998, 0},
+    {&CfattechwomanZ_struct, "CfattechwomanZ", 1.0, 0.88529998, 0},
+    {&CtechwomanZ_struct, "CtechwomanZ", 1.0, 0.91600001, 0},
+    {&CjeanwomanZ_struct, "CjeanwomanZ", 1.0, 0.88529998, 0},
+    {&CgreymanZ_struct, "CgreymanZ", 1.0, 1.0, 0x1000000},
+    {&CbluemanZ_struct, "CbluemanZ", 1.0, 1.0, 0x1000000},
+    {&CredmanZ_struct, "CredmanZ", 1.0, 1.0, 0x1000000},
+    {&CcardimanZ_struct, "CcardimanZ", 1.0, 1.0, 0x1000000},
+    {&CcheckmanZ_struct, "CcheckmanZ", 1.0, 1.0, 0x1000000},
+    {&CtechmanZ_struct, "CtechmanZ", 1.0, 1.0, 0x1000000},
+    {&CpilotZ_struct, "CpilotZ", 1.0, 1.0, 0x1010000},
+    {&Cgreatguard2Z_struct, "Cgreatguard2Z", 1.0, 1.0, 0x1000000},
+    {&CbluecamguardZ_struct, "CbluecamguardZ", 1.0, 1.0, 0x1000000},
+    {&CmoonguardZ_struct, "CmoonguardZ", 1.0, 1.0, 0x1000000},
+    {&CmoonfemaleZ_struct, "CmoonfemaleZ", 1.0, 0.88529998, 0},
+    {&Csuit_lf_handz_struct, "Csuit_lf_handZ", 0.1, 1.0, 0x1000000},
+    {&CheadkarlZ_struct, "CheadkarlZ", 1.0, 1.0, 0x1010000},
+    {&CheadalanZ_struct, "CheadalanZ", 1.0, 1.0, 0x1010000},
+    {&CheadpeteZ_struct, "CheadpeteZ", 1.0, 1.0, 0x1010000},
+    {&CheadmartinZ_struct, "CheadmartinZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003D9D0, "CheadmarkZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003D9F0, "CheadduncanZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DA30, "CheadshaunZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DA50, "CheaddwayneZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DA10, "CheadbZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DA70, "CheaddaveZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DA90, "CheadgrantZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DAB0, "CheaddesZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DAD0, "CheadchrisZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DAF0, "CheadleeZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DB10, "CheadneilZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DB30, "CheadjimZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DB50, "CheadrobinZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DB70, "CheadstevehZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DB90, "CheadbalaclavaZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DBB0, "CheadbikeZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DBD0, "CheadgrahamZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DBF0, "CheadsteveeZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DC10, "CheadjoelZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DC30, "CheadscottZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DC50, "CheadjoeZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DC70, "CheadkenZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DC90, "Cheadjoe2Z", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DCB0, "CheadmishkinZ", 1.0, 1.0, 0x1010000},
+    {&stru_D_8003DCD0, "CheadsallyZ", 1.0, 1.0, 0x10000},
+    {&stru_D_8003DCF0, "CheadmarionZ", 1.0, 1.0, 0x10000},
+    {&stru_D_8003DD10, "CheadmandyZ", 1.0, 1.0, 0x10000},
+    {&stru_D_8003DD30, "CheadvivienZ", 1.0, 1.0, 0x10000},
+    {&stru_D_8003DD50, "CheadbrosnanboilerZ", 1.0, 1.0, 0x1010000},
+    {&CheadbrosnansuitZ_struct, "CheadbrosnansuitZ", 1.0, 1.0, 0x1010000},
+    {&CheadbrosnantimberZ_struct, "CheadbrosnantimberZ", 1.0, 1.0, 0x1010000},
+    {&CheadbrosnansnowZ_struct, "CheadbrosnansnowZ", 1.0, 1.0, 0x1010000},
+    {&CheadbrosnanZ_struct, "CheadbrosnanZ", 1.0, 1.0, 0x1010000},
+    {&CspicebondZ_struct, "CspicebondZ", 0.94999999, 0.96609998, 0x10000},
+};
+
+/*
 D:8003E450                     .word 0, 0
 D:8003E458                     .float 1.0
 D:8003E45C                     .word 0
@@ -3141,761 +2436,8 @@ D:8003FCBC                     .word 0
 */
 
 /* rodata
-D:80055870     aUsetupsevbunkerz:.ascii "UsetupsevbunkerZ"<0><0><0><0>
-D:80055870                                              # DATA XREF: D:setup_text_pointerso
-D:80055884     aUsetupsiloz:   .ascii "UsetupsiloZ"<0>  # DATA XREF: D:setup_text_pointerso
-D:80055890     aUsetupsevbunkerz_0:.ascii "UsetupsevbunkerZ"<0><0><0><0>
-D:80055890                                              # DATA XREF: D:setup_text_pointerso
-D:800558A4     aUsetupstatuez: .ascii "UsetupstatueZ"<0><0><0>
-D:800558A4                                              # DATA XREF: D:setup_text_pointerso
-D:800558B4     aUsetupcontrolz:.ascii "UsetupcontrolZ"<0><0>
-D:800558B4                                              # DATA XREF: D:setup_text_pointerso
-D:800558C4     aUsetuparchz:   .ascii "UsetuparchZ"<0>  # DATA XREF: D:setup_text_pointerso
-D:800558D0     aUsetuptraz:    .ascii "UsetuptraZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:800558DC     aUsetupdestz:   .ascii "UsetupdestZ"<0>  # DATA XREF: D:setup_text_pointerso
-D:800558E8     aUsetupsevbz:   .ascii "UsetupsevbZ"<0>  # DATA XREF: D:setup_text_pointerso
-D:800558F4     aUsetupaztz:    .ascii "UsetupaztZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:80055900     aUsetuppetez:   .ascii "UsetuppeteZ"<0>  # DATA XREF: D:setup_text_pointerso
-D:8005590C     aUsetupdepoz:   .ascii "UsetupdepoZ"<0>  # DATA XREF: D:setup_text_pointerso
-D:80055918     aUsetuprefz:    .ascii "UsetuprefZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:80055924     aUsetupcrypz:   .ascii "UsetupcrypZ"<0>  # DATA XREF: D:setup_text_pointerso
-D:80055930     aUsetupdamz:    .ascii "UsetupdamZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:8005593C     aUsetuparkz:    .ascii "UsetuparkZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:80055948     aUsetuprunz:    .ascii "UsetuprunZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:80055954     aUsetupsevxz:   .ascii "UsetupsevxZ"<0>  # DATA XREF: D:setup_text_pointerso
-D:80055960     aUsetupjunz:    .ascii "UsetupjunZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:8005596C     aUsetupdishz:   .ascii "UsetupdishZ"<0>  # DATA XREF: D:setup_text_pointerso
-D:80055978     aUsetupcavez:   .ascii "UsetupcaveZ"<0>  # DATA XREF: D:setup_text_pointerso
-D:80055984     aUsetupcatz:    .ascii "UsetupcatZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:80055990     aUsetupcradz:   .ascii "UsetupcradZ"<0>  # DATA XREF: D:setup_text_pointerso
-D:8005599C     aUsetupshoz:    .ascii "UsetupshoZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:800559A8     aUsetupsevxbz:  .ascii "UsetupsevxbZ"<0><0><0><0>
-D:800559A8                                              # DATA XREF: D:setup_text_pointerso
-D:800559B8     aUsetupeldz:    .ascii "UsetupeldZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:800559C4     aUsetupimpz:    .ascii "UsetupimpZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:800559D0     aUsetupashz:    .ascii "UsetupashZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:800559DC     aUsetupluez:    .ascii "UsetuplueZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:800559E8     aUsetupamez:    .ascii "UsetupameZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:800559F4     aUsetupritz:    .ascii "UsetupritZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:80055A00     aUsetupoatz:    .ascii "UsetupoatZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:80055A0C     aUsetupearz:    .ascii "UsetupearZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:80055A18     aUsetupleez:    .ascii "UsetupleeZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:80055A24     aUsetuplipz:    .ascii "UsetuplipZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:80055A30     aUsetuplenz:    .ascii "UsetuplenZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:80055A3C     aUsetupwaxz:    .ascii "UsetupwaxZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:80055A48     aUsetuppamz:    .ascii "UsetuppamZ"<0><0>  # DATA XREF: D:setup_text_pointerso
-D:80055A54                     .align 4
-D:80055A60     aPalarm1z:      .ascii "Palarm1Z"<0><0><0><0>  # DATA XREF: D:PitemZ_entrieso
-D:80055A6C     aPalarm2z:      .ascii "Palarm2Z"<0><0><0><0>  # DATA XREF: D:8003A234o
-D:80055A78     aPexplosionbitz:.ascii "PexplosionbitZ"<0><0>  # DATA XREF: D:8003A240o
-D:80055A88     aPammo_crate1z: .ascii "Pammo_crate1Z"<0><0><0>  # DATA XREF: D:8003A24Co
-D:80055A98     aPammo_crate2z: .ascii "Pammo_crate2Z"<0><0><0>  # DATA XREF: D:8003A258o
-D:80055AA8     aPammo_crate3z: .ascii "Pammo_crate3Z"<0><0><0>  # DATA XREF: D:8003A264o
-D:80055AB8     aPammo_crate4z: .ascii "Pammo_crate4Z"<0><0><0>  # DATA XREF: D:8003A270o
-D:80055AC8     aPammo_crate5z: .ascii "Pammo_crate5Z"<0><0><0>  # DATA XREF: D:8003A27Co
-D:80055AD8     aPbin1z:        .ascii "Pbin1Z"<0><0>    # DATA XREF: D:8003A288o
-D:80055AE0     aPblotter1z:    .ascii "Pblotter1Z"<0><0>  # DATA XREF: D:8003A294o
-D:80055AEC     aPbook1z:       .ascii "Pbook1Z"<0>      # DATA XREF: D:8003A2A0o
-D:80055AF4     aPbookshelf1z:  .ascii "Pbookshelf1Z"<0><0><0><0>  # DATA XREF: D:8003A2ACo
-D:80055B04     aPbridge_console1az:.ascii "Pbridge_console1aZ"<0><0>
-D:80055B04                                              # DATA XREF: D:8003A2B8o
-D:80055B18     aPbridge_console1bz:.ascii "Pbridge_console1bZ"<0><0>
-D:80055B18                                              # DATA XREF: D:8003A2C4o
-D:80055B2C     aPbridge_console2az:.ascii "Pbridge_console2aZ"<0><0>
-D:80055B2C                                              # DATA XREF: D:8003A2D0o
-D:80055B40     aPbridge_console2bz:.ascii "Pbridge_console2bZ"<0><0>
-D:80055B40                                              # DATA XREF: D:8003A2DCo
-D:80055B54     aPbridge_console3az:.ascii "Pbridge_console3aZ"<0><0>
-D:80055B54                                              # DATA XREF: D:8003A2E8o
-D:80055B68     aPbridge_console3bz:.ascii "Pbridge_console3bZ"<0><0>
-D:80055B68                                              # DATA XREF: D:8003A2F4o
-D:80055B7C     aPcard_box1z:   .ascii "Pcard_box1Z"<0>  # DATA XREF: D:8003A300o
-D:80055B88     aPcard_box2z:   .ascii "Pcard_box2Z"<0>  # DATA XREF: D:8003A30Co
-D:80055B94     aPcard_box3z:   .ascii "Pcard_box3Z"<0>  # DATA XREF: D:8003A318o
-D:80055BA0     aPcard_box4_lgz:.ascii "Pcard_box4_lgZ"<0><0>  # DATA XREF: D:8003A324o
-D:80055BB0     aPcard_box5_lgz:.ascii "Pcard_box5_lgZ"<0><0>  # DATA XREF: D:8003A330o
-D:80055BC0     aPcard_box6_lgz:.ascii "Pcard_box6_lgZ"<0><0>  # DATA XREF: D:8003A33Co
-D:80055BD0     aPcctvz:        .ascii "PcctvZ"<0><0>    # DATA XREF: D:8003A348o
-D:80055BD8     aPconsole1z:    .ascii "Pconsole1Z"<0><0>  # DATA XREF: D:8003A354o
-D:80055BE4     aPconsole2z:    .ascii "Pconsole2Z"<0><0>  # DATA XREF: D:8003A360o
-D:80055BF0     aPconsole3z:    .ascii "Pconsole3Z"<0><0>  # DATA XREF: D:8003A36Co
-D:80055BFC     aPconsole_sevaz:.ascii "Pconsole_sevaZ"<0><0>  # DATA XREF: D:8003A378o
-D:80055C0C     aPconsole_sevbz:.ascii "Pconsole_sevbZ"<0><0>  # DATA XREF: D:8003A384o
-D:80055C1C     aPconsole_sevcz:.ascii "Pconsole_sevcZ"<0><0>  # DATA XREF: D:8003A390o
-D:80055C2C     aPconsole_sevdz:.ascii "Pconsole_sevdZ"<0><0>  # DATA XREF: D:8003A39Co
-D:80055C3C     aPconsole_sev2az:.ascii "Pconsole_sev2aZ"<0>  # DATA XREF: D:8003A3A8o
-D:80055C4C     aPconsole_sev2bz:.ascii "Pconsole_sev2bZ"<0>  # DATA XREF: D:8003A3B4o
-D:80055C5C     aPconsole_sev2cz:.ascii "Pconsole_sev2cZ"<0>  # DATA XREF: D:8003A3C0o
-D:80055C6C     aPconsole_sev2dz:.ascii "Pconsole_sev2dZ"<0>  # DATA XREF: D:8003A3CCo
-D:80055C7C     aPconsole_sev_geaz:.ascii "Pconsole_sev_GEaZ"<0><0><0>
-D:80055C7C                                              # DATA XREF: D:8003A3D8o
-D:80055C90     aPconsole_sev_gebz:.ascii "Pconsole_sev_GEbZ"<0><0><0>
-D:80055C90                                              # DATA XREF: D:8003A3E4o
-D:80055CA4     aPdesk1z:       .ascii "Pdesk1Z"<0>      # DATA XREF: D:8003A3F0o
-D:80055CAC     aPdesk2z:       .ascii "Pdesk2Z"<0>      # DATA XREF: D:8003A3FCo
-D:80055CB4     aPdesk_lamp2z:  .ascii "Pdesk_lamp2Z"<0>  # DATA XREF: D:8003A408o
-D:80055CC1                     .byte 0, 0, 0
-D:80055CC4     aPdisc_readerz: .ascii "Pdisc_readerZ"<0>  # DATA XREF: D:8003A414o
-D:80055CD2                     .half 0
-D:80055CD4     aPdisk_drive1z: .ascii "Pdisk_drive1Z"<0>  # DATA XREF: D:8003A420o
-D:80055CE2                     .half 0
-D:80055CE4     aPfiling_cabinet1z:.ascii "Pfiling_cabinet1Z"<0>  # DATA XREF: D:8003A42Co
-D:80055CF6                     .half 0
-D:80055CF8     aPjerry_can1z:  .ascii "Pjerry_can1Z"<0>  # DATA XREF: D:8003A438o
-D:80055D05                     .byte 0, 0, 0
-D:80055D08     aPkeyboard1z:   .ascii "Pkeyboard1Z"<0>  # DATA XREF: D:8003A444o
-D:80055D14     aPkit_units1z:  .ascii "Pkit_units1Z"<0>  # DATA XREF: D:8003A450o
-D:80055D21                     .byte 0, 0, 0
-D:80055D24     aPletter_tray1z:.ascii "Pletter_tray1Z"<0><0>  # DATA XREF: D:8003A45Co
-D:80055D34     aPmainframe1z:  .ascii "Pmainframe1Z"<0>  # DATA XREF: D:8003A468o
-D:80055D41                     .byte 0, 0, 0
-D:80055D44     aPmainframe2z:  .ascii "Pmainframe2Z"<0>  # DATA XREF: D:8003A474o
-D:80055D51                     .byte 0, 0, 0
-D:80055D54     aPmetal_chair1z:.ascii "Pmetal_chair1Z"<0><0>  # DATA XREF: D:8003A480o
-D:80055D64     aPmetal_crate1z:.ascii "Pmetal_crate1Z"<0><0>  # DATA XREF: D:8003A48Co
-D:80055D74     aPmetal_crate2z:.ascii "Pmetal_crate2Z"<0><0>  # DATA XREF: D:8003A498o
-D:80055D84     aPmetal_crate3z:.ascii "Pmetal_crate3Z"<0><0>  # DATA XREF: D:8003A4A4o
-D:80055D94     aPmetal_crate4z:.ascii "Pmetal_crate4Z"<0><0>  # DATA XREF: D:8003A4B0o
-D:80055DA4     aPmissile_rackz:.ascii "Pmissile_rackZ"<0><0>  # DATA XREF: D:8003A4BCo
-D:80055DB4     aPmissile_rack2z:.ascii "Pmissile_rack2Z"<0>  # DATA XREF: D:8003A4C8o
-D:80055DC4     aPoil_drum1z:   .ascii "Poil_drum1Z"<0>  # DATA XREF: D:8003A4D4o
-D:80055DD0     aPoil_drum2z:   .ascii "Poil_drum2Z"<0>  # DATA XREF: D:8003A4E0o
-D:80055DDC     aPoil_drum3z:   .ascii "Poil_drum3Z"<0>  # DATA XREF: D:8003A4ECo
-D:80055DE8     aPoil_drum5z:   .ascii "Poil_drum5Z"<0>  # DATA XREF: D:8003A4F8o
-D:80055DF4     aPoil_drum6z:   .ascii "Poil_drum6Z"<0>  # DATA XREF: D:8003A504o
-D:80055E00     aPoil_drum7z:   .ascii "Poil_drum7Z"<0>  # DATA XREF: D:8003A510o
-D:80055E0C     aPpadlockz:     .ascii "PpadlockZ"<0>    # DATA XREF: D:8003A51Co
-D:80055E16                     .half 0
-D:80055E18     aPphone1z:      .ascii "Pphone1Z"<0>     # DATA XREF: D:8003A528o
-D:80055E21                     .byte 0, 0, 0
-D:80055E24     aPradio_unit1z: .ascii "Pradio_unit1Z"<0>  # DATA XREF: D:8003A534o
-D:80055E32                     .half 0
-D:80055E34     aPradio_unit2z: .ascii "Pradio_unit2Z"<0>  # DATA XREF: D:8003A540o
-D:80055E42                     .half 0
-D:80055E44     aPradio_unit3z: .ascii "Pradio_unit3Z"<0>  # DATA XREF: D:8003A54Co
-D:80055E52                     .half 0
-D:80055E54     aPradio_unit4z: .ascii "Pradio_unit4Z"<0>  # DATA XREF: D:8003A558o
-D:80055E62                     .half 0
-D:80055E64     aPsat1_reflectz:.ascii "Psat1_reflectZ"<0><0>  # DATA XREF: D:8003A564o
-D:80055E74     aPsatdishz:     .ascii "PsatdishZ"<0>    # DATA XREF: D:8003A570o
-D:80055E7E                     .half 0
-D:80055E80     aPsatboxz:      .ascii "PsatboxZ"<0>     # DATA XREF: D:8003A57Co
-D:80055E89                     .byte 0, 0, 0
-D:80055E8C     aPstool1z:      .ascii "Pstool1Z"<0>     # DATA XREF: D:8003A588o
-D:80055E95                     .byte 0, 0, 0
-D:80055E98     aPswivel_chair1z:.ascii "Pswivel_chair1Z"<0>  # DATA XREF: D:8003A594o
-D:80055EA8     aPtorpedo_rackz:.ascii "Ptorpedo_rackZ"<0><0>  # DATA XREF: D:8003A5A0o
-D:80055EB8     aPtv1z:         .ascii "Ptv1Z"<0>        # DATA XREF: D:8003A5ACo
-D:80055EBE                     .half 0
-D:80055EC0     aPtv_holderz:   .ascii "Ptv_holderZ"<0>  # DATA XREF: D:8003A5B8o
-D:80055ECC     aPtvscreenz:    .ascii "PtvscreenZ"<0><0>  # DATA XREF: D:8003A5C4o
-D:80055ED8     aPtv4screenz:   .ascii "Ptv4screenZ"<0>  # DATA XREF: D:8003A5D0o
-D:80055EE4     aPwood_lg_crate1z:.ascii "Pwood_lg_crate1Z"<0>  # DATA XREF: D:8003A5DCo
-D:80055EF5                     .byte 0, 0, 0
-D:80055EF8     aPwood_lg_crate2z:.ascii "Pwood_lg_crate2Z"<0>  # DATA XREF: D:8003A5E8o
-D:80055F09                     .byte 0, 0, 0
-D:80055F0C     aPwood_md_crate3z:.ascii "Pwood_md_crate3Z"<0>  # DATA XREF: D:8003A5F4o
-D:80055F1D                     .byte 0, 0, 0
-D:80055F20     aPwood_sm_crate4z:.ascii "Pwood_sm_crate4Z"<0>  # DATA XREF: D:8003A600o
-D:80055F31                     .byte 0, 0, 0
-D:80055F34     aPwood_sm_crate5z:.ascii "Pwood_sm_crate5Z"<0>  # DATA XREF: D:8003A60Co
-D:80055F45                     .byte 0, 0, 0
-D:80055F48     aPwood_sm_crate6z:.ascii "Pwood_sm_crate6Z"<0>  # DATA XREF: D:8003A618o
-D:80055F59                     .byte 0, 0, 0
-D:80055F5C     aPwooden_table1z:.ascii "Pwooden_table1Z"<0>  # DATA XREF: D:8003A624o
-D:80055F6C     aPswipe_card2z: .ascii "Pswipe_card2Z"<0>  # DATA XREF: D:8003A630o
-D:80055F7A                     .half 0
-D:80055F7C     aPborg_cratez:  .ascii "Pborg_crateZ"<0>  # DATA XREF: D:8003A63Co
-D:80055F89                     .byte 0, 0, 0
-D:80055F8C     aPboxes4x4z:    .ascii "Pboxes4x4Z"<0><0>  # DATA XREF: D:8003A648o
-D:80055F98     aPboxes3x4z:    .ascii "Pboxes3x4Z"<0><0>  # DATA XREF: D:8003A654o
-D:80055FA4     aPboxes2x4z:    .ascii "Pboxes2x4Z"<0><0>  # DATA XREF: D:8003A660o
-D:80055FB0     aPsec_panelz:   .ascii "Psec_panelZ"<0>  # DATA XREF: D:8003A66Co
-D:80055FBC     aPicbm_nosez:   .ascii "PICBM_noseZ"<0>  # DATA XREF: D:8003A678o
-D:80055FC8     aPicbmz:        .ascii "PICBMZ"<0><0>    # DATA XREF: D:8003A684o
-D:80055FD0     aPtuning_console1z:.ascii "Ptuning_console1Z"<0>  # DATA XREF: D:8003A690o
-D:80055FE2                     .half 0
-D:80055FE4     aPdesk_arecibo1z:.ascii "Pdesk_arecibo1Z"<0>  # DATA XREF: D:8003A69Co
-D:80055FF4     aPlocker3z:     .ascii "Plocker3Z"<0>    # DATA XREF: D:8003A6A8o
-D:80055FFE                     .half 0
-D:80056000     aPlocker4z:     .ascii "Plocker4Z"<0>    # DATA XREF: D:8003A6B4o
-D:8005600A                     .half 0
-D:8005600C     aProofgunz:     .ascii "ProofgunZ"<0>    # DATA XREF: D:8003A6C0o
-D:80056016                     .half 0
-D:80056018     aPdest_enginez: .ascii "Pdest_engineZ"<0>  # DATA XREF: D:8003A6CCo
-D:80056026                     .half 0
-D:80056028     aPdest_exocetz: .ascii "Pdest_exocetZ"<0>  # DATA XREF: D:8003A6D8o
-D:80056036                     .half 0
-D:80056038     aPdest_gunz:    .ascii "Pdest_gunZ"<0>   # DATA XREF: D:8003A6E4o
-D:80056043                     .byte 0
-D:80056044     aPdest_harpoonz:.ascii "Pdest_harpoonZ"<0>  # DATA XREF: D:8003A6F0o
-D:80056053                     .byte 0
-D:80056054     aPdest_seawolfz:.ascii "Pdest_seawolfZ"<0>  # DATA XREF: D:8003A6FCo
-D:80056063                     .byte 0
-D:80056064     aPwindowz:      .ascii "PwindowZ"<0>     # DATA XREF: D:8003A708o
-D:8005606D                     .byte 0, 0, 0
-D:80056070     aPwindow_lib_lg1z:.ascii "Pwindow_lib_lg1Z"<0>  # DATA XREF: D:8003A714o
-D:80056081                     .byte 0, 0, 0
-D:80056084     aPwindow_lib_sm1z:.ascii "Pwindow_lib_sm1Z"<0>  # DATA XREF: D:8003A720o
-D:80056095                     .byte 0, 0, 0
-D:80056098     aPwindow_cor11z:.ascii "Pwindow_cor11Z"<0>  # DATA XREF: D:8003A72Co
-D:800560A7                     .byte 0
-D:800560A8     aPjungle3_treez:.ascii "Pjungle3_treeZ"<0>  # DATA XREF: D:8003A738o
-D:800560B7                     .byte 0
-D:800560B8     aPpalmz:        .ascii "PpalmZ"<0>       # DATA XREF: D:8003A744o
-D:800560BF                     .byte 0
-D:800560C0     aPpalmtreez:    .ascii "PpalmtreeZ"<0>   # DATA XREF: D:8003A750o
-D:800560CB                     .byte 0
-D:800560CC     aPplant2bz:     .ascii "Pplant2bZ"<0>    # DATA XREF: D:8003A75Co
-D:800560D6                     .half 0
-D:800560D8     aPlabbenchz:    .ascii "PlabbenchZ"<0>   # DATA XREF: D:8003A768o
-D:800560E3                     .byte 0
-D:800560E4     aPgasbarrelz:   .ascii "PgasbarrelZ"<0>  # DATA XREF: D:8003A774o
-D:800560F0     aPgasbarrelsz:  .ascii "PgasbarrelsZ"<0>  # DATA XREF: D:8003A780o
-D:800560FD                     .byte 0, 0, 0
-D:80056100     aPbodyarmourz:  .ascii "PbodyarmourZ"<0>  # DATA XREF: D:8003A78Co
-D:8005610D                     .byte 0, 0, 0
-D:80056110     aPbodyarmourvestz:.ascii "PbodyarmourvestZ"<0>  # DATA XREF: D:8003A798o
-D:80056121                     .byte 0, 0, 0
-D:80056124     aPgastankz:     .ascii "PgastankZ"<0>    # DATA XREF: D:8003A7A4o
-D:8005612E                     .half 0
-D:80056130     aPglassware1z:  .ascii "Pglassware1Z"<0>  # DATA XREF: D:8003A7B0o
-D:8005613D                     .byte 0, 0, 0
-D:80056140     aPhatchboltz:   .ascii "PhatchboltZ"<0>  # DATA XREF: D:8003A7BCo
-D:8005614C     aPbrakeunitz:   .ascii "PbrakeunitZ"<0>  # DATA XREF: D:8003A7C8o
-D:80056158     aPak47magz:     .ascii "Pak47magZ"<0>    # DATA XREF: D:8003A7D4o
-D:80056162                     .half 0
-D:80056164     aPm16magz:      .ascii "Pm16magZ"<0>     # DATA XREF: D:8003A7E0o
-D:8005616D                     .byte 0, 0, 0
-D:80056170     aPmp5kmagz:     .ascii "Pmp5kmagZ"<0>    # DATA XREF: D:8003A7ECo
-D:8005617A                     .half 0
-D:8005617C     aPskorpionmagz: .ascii "PskorpionmagZ"<0>  # DATA XREF: D:8003A7F8o
-D:8005618A                     .half 0
-D:8005618C     aPspectremagz:  .ascii "PspectremagZ"<0>  # DATA XREF: D:8003A804o
-D:80056199                     .byte 0, 0, 0
-D:8005619C     aPuzimagz:      .ascii "PuzimagZ"<0>     # DATA XREF: D:8003A810o
-D:800561A5                     .byte 0, 0, 0
-D:800561A8     aPsilencerz:    .ascii "PsilencerZ"<0>   # DATA XREF: D:8003A81Co
-D:800561B3                     .byte 0
-D:800561B4     aPchrextinguisherz:.ascii "PchrextinguisherZ"<0>  # DATA XREF: D:8003A828o
-D:800561C6                     .half 0
-D:800561C8     aPboxcartridgesz:.ascii "PboxcartridgesZ"<0>  # DATA XREF: D:8003A834o
-D:800561D8     aPfnp90magz:    .ascii "Pfnp90magZ"<0>   # DATA XREF: D:8003A840o
-D:800561E3                     .byte 0
-D:800561E4     aPgoldenshellsz:.ascii "PgoldenshellsZ"<0>  # DATA XREF: D:8003A84Co
-D:800561F3                     .byte 0
-D:800561F4     aPmagnumshellsz:.ascii "PmagnumshellsZ"<0>  # DATA XREF: D:8003A858o
-D:80056203                     .byte 0
-D:80056204     aPwppkmagz:     .ascii "PwppkmagZ"<0>    # DATA XREF: D:8003A864o
-D:8005620E                     .half 0
-D:80056210     aPtt33magz:     .ascii "Ptt33magZ"<0>    # DATA XREF: D:8003A870o
-D:8005621A                     .half 0
-D:8005621C     aPsev_doorz:    .ascii "Psev_doorZ"<0>   # DATA XREF: D:8003A87Co
-D:80056227                     .byte 0
-D:80056228     aPsev_door3z:   .ascii "Psev_door3Z"<0>  # DATA XREF: D:8003A888o
-D:80056234     aPsev_door3_windz:.ascii "Psev_door3_windZ"<0>  # DATA XREF: D:8003A894o
-D:80056245                     .byte 0, 0, 0
-D:80056248     aPsev_door4_windz:.ascii "Psev_door4_windZ"<0>  # DATA XREF: D:8003A8A0o
-D:80056259                     .byte 0, 0, 0
-D:8005625C     aPsev_trislidez:.ascii "Psev_trislideZ"<0>  # DATA XREF: D:8003A8ACo
-D:8005626B                     .byte 0
-D:8005626C     aPsev_door_v1z: .ascii "Psev_door_v1Z"<0>  # DATA XREF: D:8003A8B8o
-D:8005627A                     .half 0
-D:8005627C     aPsteel_door1z: .ascii "Psteel_door1Z"<0>  # DATA XREF: D:8003A8C4o
-D:8005628A                     .half 0
-D:8005628C     aPsteel_door2z: .ascii "Psteel_door2Z"<0>  # DATA XREF: D:8003A8D0o
-D:8005629A                     .half 0
-D:8005629C     aPsteel_door3z: .ascii "Psteel_door3Z"<0>  # DATA XREF: D:8003A8DCo
-D:800562AA                     .half 0
-D:800562AC     aPsilo_lift_doorz:.ascii "Psilo_lift_doorZ"<0>  # DATA XREF: D:8003A8E8o
-D:800562BD                     .byte 0, 0, 0
-D:800562C0     aPsteel_door2bz:.ascii "Psteel_door2bZ"<0>  # DATA XREF: D:8003A8F4o
-D:800562CF                     .byte 0
-D:800562D0     aPdoor_roller1z:.ascii "Pdoor_roller1Z"<0>  # DATA XREF: D:8003A900o
-D:800562DF                     .byte 0
-D:800562E0     aPdoor_roller2z:.ascii "Pdoor_roller2Z"<0>  # DATA XREF: D:8003A90Co
-D:800562EF                     .byte 0
-D:800562F0     aPdoor_roller3z:.ascii "Pdoor_roller3Z"<0>  # DATA XREF: D:8003A918o
-D:800562FF                     .byte 0
-D:80056300     aPdoor_roller4z:.ascii "Pdoor_roller4Z"<0>  # DATA XREF: D:8003A924o
-D:8005630F                     .byte 0
-D:80056310     aPdoor_st_arec1z:.ascii "Pdoor_st_arec1Z"<0>  # DATA XREF: D:8003A930o
-D:80056320     aPdoor_st_arec2z:.ascii "Pdoor_st_arec2Z"<0>  # DATA XREF: D:8003A93Co
-D:80056330     aPdoor_dest1z:  .ascii "Pdoor_dest1Z"<0>  # DATA XREF: D:8003A948o
-D:8005633D                     .byte 0, 0, 0
-D:80056340     aPdoor_dest2z:  .ascii "Pdoor_dest2Z"<0>  # DATA XREF: D:8003A954o
-D:8005634D                     .byte 0, 0, 0
-D:80056350     aPgas_plant_sw_do1z:.ascii "Pgas_plant_sw_do1Z"<0>  # DATA XREF: D:8003A960o
-D:80056363                     .byte 0
-D:80056364     aPgas_plant_sw2_do1z:.ascii "Pgas_plant_sw2_do1Z"<0>  # DATA XREF: D:8003A96Co
-D:80056378     aPgas_plant_sw3_do1z:.ascii "Pgas_plant_sw3_do1Z"<0>  # DATA XREF: D:8003A978o
-D:8005638C     aPgas_plant_sw4_do1z:.ascii "Pgas_plant_sw4_do1Z"<0>  # DATA XREF: D:8003A984o
-D:800563A0     aPgas_plant_met1_do1z:.ascii "Pgas_plant_met1_do1Z"<0>
-D:800563A0                                              # DATA XREF: D:8003A990o
-D:800563B5                     .byte 0, 0, 0
-D:800563B8     aPgas_plant_wc_cub1z:.ascii "Pgas_plant_wc_cub1Z"<0>  # DATA XREF: D:8003A99Co
-D:800563CC     aPgasplant_clear_doorz:.ascii "Pgasplant_clear_doorZ"<0>
-D:800563CC                                              # DATA XREF: D:8003A9A8o
-D:800563E2                     .half 0
-D:800563E4     aPtrain_doorz:  .ascii "Ptrain_doorZ"<0>  # DATA XREF: D:8003A9B4o
-D:800563F1                     .byte 0, 0, 0
-D:800563F4     aPtrain_door2z: .ascii "Ptrain_door2Z"<0>  # DATA XREF: D:8003A9C0o
-D:80056402                     .half 0
-D:80056404     aPtrain_door3z: .ascii "Ptrain_door3Z"<0>  # DATA XREF: D:8003A9CCo
-D:80056412                     .half 0
-D:80056414     aPdoor_eyelidz: .ascii "Pdoor_eyelidZ"<0>  # DATA XREF: D:8003A9D8o
-D:80056422                     .half 0
-D:80056424     aPdoor_irisz:   .ascii "Pdoor_irisZ"<0>  # DATA XREF: D:8003A9E4o
-D:80056430     aPsevdoorwoodz: .ascii "PsevdoorwoodZ"<0>  # DATA XREF: D:8003A9F0o
-D:8005643E                     .half 0
-D:80056440     aPsevdoorwindz: .ascii "PsevdoorwindZ"<0>  # DATA XREF: D:8003A9FCo
-D:8005644E                     .half 0
-D:80056450     aPsevdoornowindz:.ascii "PsevdoornowindZ"<0>  # DATA XREF: D:8003AA08o
-D:80056460     aPsevdoormetslidez:.ascii "PsevdoormetslideZ"<0>  # DATA XREF: D:8003AA14o
-D:80056472                     .half 0
-D:80056474     aPcryptdoor1az: .ascii "Pcryptdoor1aZ"<0>  # DATA XREF: D:8003AA20o
-D:80056482                     .half 0
-D:80056484     aPcryptdoor1bz: .ascii "Pcryptdoor1bZ"<0>  # DATA XREF: D:8003AA2Co
-D:80056492                     .half 0
-D:80056494     aPcryptdoor2az: .ascii "Pcryptdoor2aZ"<0>  # DATA XREF: D:8003AA38o
-D:800564A2                     .half 0
-D:800564A4     aPcryptdoor2bz: .ascii "Pcryptdoor2bZ"<0>  # DATA XREF: D:8003AA44o
-D:800564B2                     .half 0
-D:800564B4     aPcryptdoor3z:  .ascii "Pcryptdoor3Z"<0>  # DATA XREF: D:8003AA50o
-D:800564C1                     .byte 0, 0, 0
-D:800564C4     aPcryptdoor4z:  .ascii "Pcryptdoor4Z"<0>  # DATA XREF: D:8003AA5Co
-D:800564D1                     .byte 0, 0, 0
-D:800564D4     aPvertdoorz:    .ascii "PvertdoorZ"<0>   # DATA XREF: D:8003AA68o
-D:800564DF                     .byte 0
-D:800564E0     aPhatchdoorz:   .ascii "PhatchdoorZ"<0>  # DATA XREF: D:8003AA74o
-D:800564EC     aPdamgatedoorz: .ascii "PdamgatedoorZ"<0>  # DATA XREF: D:8003AA80o
-D:800564FA                     .half 0
-D:800564FC     aPdamtundoorz:  .ascii "PdamtundoorZ"<0>  # DATA XREF: D:8003AA8Co
-D:80056509                     .byte 0, 0, 0
-D:8005650C     aPdamchaindoorz:.ascii "PdamchaindoorZ"<0>  # DATA XREF: D:8003AA98o
-D:8005651B                     .byte 0
-D:8005651C     aPsilotopdoorz: .ascii "PsilotopdoorZ"<0>  # DATA XREF: D:8003AAA4o
-D:8005652A                     .half 0
-D:8005652C     aPdoorprison1z: .ascii "Pdoorprison1Z"<0>  # DATA XREF: D:8003AAB0o
-D:8005653A                     .half 0
-D:8005653C     aPdoorstatgatez:.ascii "PdoorstatgateZ"<0>  # DATA XREF: D:8003AABCo
-D:8005654B                     .byte 0
-D:8005654C     aPchrkalashz:   .ascii "PchrkalashZ"<0>  # DATA XREF: D:8003AAC8o
-D:80056558     aPchrgrenadelaunchz:.ascii "PchrgrenadelaunchZ"<0>  # DATA XREF: D:8003AAD4o
-D:8005656B                     .byte 0
-D:8005656C     aPchrknifez:    .ascii "PchrknifeZ"<0>   # DATA XREF: D:8003AAE0o
-D:80056577                     .byte 0
-D:80056578     aPchrlaserz:    .ascii "PchrlaserZ"<0>   # DATA XREF: D:8003AAECo
-D:80056583                     .byte 0
-D:80056584     aPchrm16z:      .ascii "Pchrm16Z"<0>     # DATA XREF: D:8003AAF8o
-D:8005658D                     .byte 0, 0, 0
-D:80056590     aPchrmp5kz:     .ascii "Pchrmp5kZ"<0>    # DATA XREF: D:8003AB04o
-D:8005659A                     .half 0
-D:8005659C     aPchrrugerz:    .ascii "PchrrugerZ"<0>   # DATA XREF: D:8003AB10o
-D:800565A7                     .byte 0
-D:800565A8     aPchrwppkz:     .ascii "PchrwppkZ"<0>    # DATA XREF: D:PchrwppkZ_entryo
-D:800565B2                     .half 0
-D:800565B4     aPchrshotgunz:  .ascii "PchrshotgunZ"<0>  # DATA XREF: D:8003AB28o
-D:800565C1                     .byte 0, 0, 0
-D:800565C4     aPchrskorpionz: .ascii "PchrskorpionZ"<0>  # DATA XREF: D:8003AB34o
-D:800565D2                     .half 0
-D:800565D4     aPchrspectrez:  .ascii "PchrspectreZ"<0>  # DATA XREF: D:8003AB40o
-D:800565E1                     .byte 0, 0, 0
-D:800565E4     aPchruziz:      .ascii "PchruziZ"<0>     # DATA XREF: D:8003AB4Co
-D:800565ED                     .byte 0, 0, 0
-D:800565F0     aPchrgrenadez:  .ascii "PchrgrenadeZ"<0>  # DATA XREF: D:8003AB58o
-D:800565FD                     .byte 0, 0, 0
-D:80056600     aPchrfnp90z:    .ascii "Pchrfnp90Z"<0>   # DATA XREF: D:8003AB64o
-D:8005660B                     .byte 0
-D:8005660C     aPchrbriefcasez:.ascii "PchrbriefcaseZ"<0>  # DATA XREF: D:8003AB70o
-D:8005661B                     .byte 0
-D:8005661C     aPchrremoteminez:.ascii "PchrremotemineZ"<0>  # DATA XREF: D:8003AB7Co
-D:8005662C     aPchrproximityminez:.ascii "PchrproximitymineZ"<0>  # DATA XREF: D:8003AB88o
-D:8005663F                     .byte 0
-D:80056640     aPchrtimedminez:.ascii "PchrtimedmineZ"<0>  # DATA XREF: D:8003AB94o
-D:8005664F                     .byte 0
-D:80056650     aPchrrocketz:   .ascii "PchrrocketZ"<0>  # DATA XREF: D:8003ABA0o
-D:8005665C     aPchrgrenaderoundz:.ascii "PchrgrenaderoundZ"<0>  # DATA XREF: D:8003ABACo
-D:8005666E                     .half 0
-D:80056670     aPchrwppksilz:  .ascii "PchrwppksilZ"<0>  # DATA XREF: D:8003ABB8o
-D:8005667D                     .byte 0, 0, 0
-D:80056680     aPchrtt33z:     .ascii "Pchrtt33Z"<0>    # DATA XREF: D:8003ABC4o
-D:8005668A                     .half 0
-D:8005668C     aPchrmp5ksilz:  .ascii "Pchrmp5ksilZ"<0>  # DATA XREF: D:8003ABD0o
-D:80056699                     .byte 0, 0, 0
-D:8005669C     aPchrautoshotz: .ascii "PchrautoshotZ"<0>  # DATA XREF: D:8003ABDCo
-D:800566AA                     .half 0
-D:800566AC     aPchrgoldenz:   .ascii "PchrgoldenZ"<0>  # DATA XREF: D:8003ABE8o
-D:800566B8     aPchrthrowknifez:.ascii "PchrthrowknifeZ"<0>  # DATA XREF: D:8003ABF4o
-D:800566C8     aPchrsniperriflez:.ascii "PchrsniperrifleZ"<0>  # DATA XREF: D:8003AC00o
-D:800566D9                     .byte 0, 0, 0
-D:800566DC     aPchrrocketlaunchz:.ascii "PchrrocketlaunchZ"<0>  # DATA XREF: D:8003AC0Co
-D:800566EE                     .half 0
-D:800566F0     aPhatfurryz:    .ascii "PhatfurryZ"<0>   # DATA XREF: D:8003AC18o
-D:800566FB                     .byte 0
-D:800566FC     aPhatfurrybrownz:.ascii "PhatfurrybrownZ"<0>  # DATA XREF: D:8003AC24o
-D:8005670C     aPhatfurryblackz:.ascii "PhatfurryblackZ"<0>  # DATA XREF: D:8003AC30o
-D:8005671C     aPhattbirdz:    .ascii "PhattbirdZ"<0>   # DATA XREF: D:8003AC3Co
-D:80056727                     .byte 0
-D:80056728     aPhattbirdbrownz:.ascii "PhattbirdbrownZ"<0>  # DATA XREF: D:8003AC48o
-D:80056738     aPhathelmetz:   .ascii "PhathelmetZ"<0>  # DATA XREF: D:8003AC54o
-D:80056744     aPhathelmetgreyz:.ascii "PhathelmetgreyZ"<0>  # DATA XREF: D:8003AC60o
-D:80056754     aPhatmoonz:     .ascii "PhatmoonZ"<0>    # DATA XREF: D:8003AC6Co
-D:8005675E                     .half 0
-D:80056760     aPhatberetz:    .ascii "PhatberetZ"<0>   # DATA XREF: D:8003AC78o
-D:8005676B                     .byte 0
-D:8005676C     aPhatberetbluez:.ascii "PhatberetblueZ"<0>  # DATA XREF: D:8003AC84o
-D:8005677B                     .byte 0
-D:8005677C     aPhatberetredz: .ascii "PhatberetredZ"<0>  # DATA XREF: D:8003AC90o
-D:8005678A                     .half 0
-D:8005678C     aPhatpeakedz:   .ascii "PhatpeakedZ"<0>  # DATA XREF: D:8003AC9Co
-D:80056798     aPchrwristdartz:.ascii "PchrwristdartZ"<0>  # DATA XREF: D:8003ACA8o
-D:800567A7                     .byte 0
-D:800567A8     aPchrexplosivepenz:.ascii "PchrexplosivepenZ"<0>  # DATA XREF: D:8003ACB4o
-D:800567BA                     .half 0
-D:800567BC     aPchrbombcasez: .ascii "PchrbombcaseZ"<0>  # DATA XREF: D:8003ACC0o
-D:800567CA                     .half 0
-D:800567CC     aPchrflarepistolz:.ascii "PchrflarepistolZ"<0>  # DATA XREF: D:8003ACCCo
-D:800567DD                     .byte 0, 0, 0
-D:800567E0     aPchrpitongunz: .ascii "PchrpitongunZ"<0>  # DATA XREF: D:8003ACD8o
-D:800567EE                     .half 0
-D:800567F0     aPchrfingergunz:.ascii "PchrfingergunZ"<0>  # DATA XREF: D:8003ACE4o
-D:800567FF                     .byte 0
-D:80056800     aPchrsilverwppkz:.ascii "PchrsilverwppkZ"<0>  # DATA XREF: D:8003ACF0o
-D:80056810     aPchrgoldwppkz: .ascii "PchrgoldwppkZ"<0>  # DATA XREF: D:8003ACFCo
-D:8005681E                     .half 0
-D:80056820     aPchrdynamitez: .ascii "PchrdynamiteZ"<0>  # DATA XREF: D:8003AD08o
-D:8005682E                     .half 0
-D:80056830     aPchrbungeez:   .ascii "PchrbungeeZ"<0>  # DATA XREF: D:8003AD14o
-D:8005683C     aPchrdoordecoderz:.ascii "PchrdoordecoderZ"<0>  # DATA XREF: D:8003AD20o
-D:8005684D                     .byte 0, 0, 0
-D:80056850     aPchrbombdefuserz:.ascii "PchrbombdefuserZ"<0>  # DATA XREF: D:8003AD2Co
-D:80056861                     .byte 0, 0, 0
-D:80056864     aPchrbugdetectorz:.ascii "PchrbugdetectorZ"<0>  # DATA XREF: D:8003AD38o
-D:80056875                     .byte 0, 0, 0
-D:80056878     aPchrsafecrackercasez:.ascii "PchrsafecrackercaseZ"<0>
-D:80056878                                              # DATA XREF: D:8003AD44o
-D:8005688D                     .byte 0, 0, 0
-D:80056890     aPchrcameraz:   .ascii "PchrcameraZ"<0>  # DATA XREF: D:8003AD50o
-D:8005689C     aPchrlockexploderz:.ascii "PchrlockexploderZ"<0>  # DATA XREF: D:8003AD5Co
-D:800568AE                     .half 0
-D:800568B0     aPchrdoorexploderz:.ascii "PchrdoorexploderZ"<0>  # DATA XREF: D:8003AD68o
-D:800568C2                     .half 0
-D:800568C4     aPchrkeyanalysercasez:.ascii "PchrkeyanalysercaseZ"<0>
-D:800568C4                                              # DATA XREF: D:8003AD74o
-D:800568D9                     .byte 0, 0, 0
-D:800568DC     aPchrweaponcasez:.ascii "PchrweaponcaseZ"<0>  # DATA XREF: D:8003AD80o
-D:800568EC     aPchrkeyyalez:  .ascii "PchrkeyyaleZ"<0>  # DATA XREF: D:8003AD8Co
-D:800568F9                     .byte 0, 0, 0
-D:800568FC     aPchrkeyboltz:  .ascii "PchrkeyboltZ"<0>  # DATA XREF: D:8003AD98o
-D:80056909                     .byte 0, 0, 0
-D:8005690C     aPchrbugz:      .ascii "PchrbugZ"<0>     # DATA XREF: D:8003ADA4o
-D:80056915                     .byte 0, 0, 0
-D:80056918     aPchrmicrocameraz:.ascii "PchrmicrocameraZ"<0>  # DATA XREF: D:8003ADB0o
-D:80056929                     .byte 0, 0, 0
-D:8005692C     aPfloppyz:      .ascii "PfloppyZ"<0>     # DATA XREF: D:8003ADBCo
-D:80056935                     .byte 0, 0, 0
-D:80056938     aPchrgoldeneyekeyz:.ascii "PchrgoldeneyekeyZ"<0>  # DATA XREF: D:8003ADC8o
-D:8005694A                     .half 0
-D:8005694C     aPchrpolarizedglassesz:.ascii "PchrpolarizedglassesZ"<0>
-D:8005694C                                              # DATA XREF: D:8003ADD4o
-D:80056962                     .half 0
-D:80056964     aPchrcreditcardz:.ascii "PchrcreditcardZ"<0>  # DATA XREF: D:8003ADE0o
-D:80056974     aPchrdarkglassesz:.ascii "PchrdarkglassesZ"<0>  # DATA XREF: D:8003ADECo
-D:80056985                     .byte 0, 0, 0
-D:80056988     aPchrgaskeyringz:.ascii "PchrgaskeyringZ"<0>  # DATA XREF: D:8003ADF8o
-D:80056998     aPchrdatathiefz:.ascii "PchrdatathiefZ"<0>  # DATA XREF: D:8003AE04o
-D:800569A7                     .byte 0
-D:800569A8     aPsafez:        .ascii "PsafeZ"<0>       # DATA XREF: D:8003AE10o
-D:800569AF                     .byte 0
-D:800569B0     aPbombz:        .ascii "PbombZ"<0>       # DATA XREF: D:8003AE1Co
-D:800569B7                     .byte 0
-D:800569B8     aPchrplansz:    .ascii "PchrplansZ"<0>   # DATA XREF: D:8003AE28o
-D:800569C3                     .byte 0
-D:800569C4     aPchrspyfilez:  .ascii "PchrspyfileZ"<0>  # DATA XREF: D:8003AE34o
-D:800569D1                     .byte 0, 0, 0
-D:800569D4     aPchrblueprintsz:.ascii "PchrblueprintsZ"<0>  # DATA XREF: D:8003AE40o
-D:800569E4     aPchrcircuitboardz:.ascii "PchrcircuitboardZ"<0>  # DATA XREF: D:8003AE4Co
-D:800569F6                     .half 0
-D:800569F8     aPchrmapz:      .ascii "PchrmapZ"<0>     # DATA XREF: D:8003AE58o
-D:80056A01                     .byte 0, 0, 0
-D:80056A04     aPchrspooltapez:.ascii "PchrspooltapeZ"<0>  # DATA XREF: D:8003AE64o
-D:80056A13                     .byte 0
-D:80056A14     aPchraudiotapez:.ascii "PchraudiotapeZ"<0>  # DATA XREF: D:8003AE70o
-D:80056A23                     .byte 0
-D:80056A24     aPchrmicrofilmz:.ascii "PchrmicrofilmZ"<0>  # DATA XREF: D:8003AE7Co
-D:80056A33                     .byte 0
-D:80056A34     aPchrmicrocodez:.ascii "PchrmicrocodeZ"<0>  # DATA XREF: D:8003AE88o
-D:80056A43                     .byte 0
-D:80056A44     aPchrlectrez:   .ascii "PchrlectreZ"<0>  # DATA XREF: D:8003AE94o
-D:80056A50     aPchrmoneyz:    .ascii "PchrmoneyZ"<0>   # DATA XREF: D:8003AEA0o
-D:80056A5B                     .byte 0
-D:80056A5C     aPchrgoldbarz:  .ascii "PchrgoldbarZ"<0>  # DATA XREF: D:8003AEACo
-D:80056A69                     .byte 0, 0, 0
-D:80056A6C     aPchrheroinz:   .ascii "PchrheroinZ"<0>  # DATA XREF: D:8003AEB8o
-D:80056A78     aPchrclipboardz:.ascii "PchrclipboardZ"<0>  # DATA XREF: D:8003AEC4o
-D:80056A87                     .byte 0
-D:80056A88     aPchrdossierredz:.ascii "PchrdossierredZ"<0>  # DATA XREF: D:8003AED0o
-D:80056A98     aPchrstafflistz:.ascii "PchrstafflistZ"<0>  # DATA XREF: D:8003AEDCo
-D:80056AA7                     .byte 0
-D:80056AA8     aPchrdattapez:  .ascii "PchrdattapeZ"<0>  # DATA XREF: D:8003AEE8o
-D:80056AB5                     .byte 0, 0, 0
-D:80056AB8     aPchrplastiquez:.ascii "PchrplastiqueZ"<0>  # DATA XREF: D:8003AEF4o
-D:80056AC7                     .byte 0
-D:80056AC8     aPchrblackboxz: .ascii "PchrblackboxZ"<0>  # DATA XREF: D:8003AF00o
-D:80056AD6                     .half 0
-D:80056AD8     aPchrvideotapez:.ascii "PchrvideotapeZ"<0>  # DATA XREF: D:8003AF0Co
-D:80056AE7                     .byte 0
-D:80056AE8     aPnintendologoz:.ascii "PnintendologoZ"<0>
-D:80056AE8                                              # DATA XREF: D:PnintendologoZ_entryo
-D:80056AF7                     .byte 0
-D:80056AF8     aPgoldeneyelogoz:.ascii "PgoldeneyelogoZ"<0>
-D:80056AF8                                              # DATA XREF: D:PgoldeneyelogoZ_entryo
-D:80056B08     aPwalletbondz:  .ascii "PwalletbondZ"<0>  # DATA XREF: D:PwalletbondZ_entryo
-D:80056B15                     .byte 0, 0, 0
-D:80056B18     aPmiltruckz:    .ascii "PmiltruckZ"<0>   # DATA XREF: D:8003AF3Co
-D:80056B23                     .byte 0
-D:80056B24     aPjeepz:        .ascii "PjeepZ"<0>       # DATA XREF: D:8003AF48o
-D:80056B2B                     .byte 0
-D:80056B2C     aParticz:       .ascii "ParticZ"<0>      # DATA XREF: D:8003AF54o
-D:80056B34     aPhelicopterz:  .ascii "PhelicopterZ"<0>  # DATA XREF: D:8003AF60o
-D:80056B41                     .byte 0, 0, 0
-D:80056B44     aPtigerz:       .ascii "PtigerZ"<0>      # DATA XREF: D:8003AF6Co
-D:80056B4C     aPmilcopterz:   .ascii "PmilcopterZ"<0>  # DATA XREF: D:8003AF78o
-D:80056B58     aPhindz:        .ascii "PhindZ"<0>       # DATA XREF: D:8003AF84o
-D:80056B5F                     .byte 0
-D:80056B60     aPartictrailerz:.ascii "PartictrailerZ"<0>  # DATA XREF: D:8003AF90o
-D:80056B6F                     .byte 0
-D:80056B70     aPmotorbikez:   .ascii "PmotorbikeZ"<0>  # DATA XREF: D:8003AF9Co
-D:80056B7C     aPtankz:        .ascii "PtankZ"<0>       # DATA XREF: D:8003AFA8o
-D:80056B83                     .byte 0
-D:80056B84     aPapcz:         .ascii "PapcZ"<0>        # DATA XREF: D:8003AFB4o
-D:80056B8A                     .half 0
-D:80056B8C     aPspeedboatz:   .ascii "PspeedboatZ"<0>  # DATA XREF: D:8003AFC0o
-D:80056B98     aPplanez:       .ascii "PplaneZ"<0>      # DATA XREF: D:8003AFCCo
-D:80056BA0     aPgun_runway1z: .ascii "Pgun_runway1Z"<0>  # DATA XREF: D:8003AFD8o
-D:80056BAE                     .half 0
-D:80056BB0     aPsafedoorz:    .ascii "PsafedoorZ"<0>   # DATA XREF: D:8003AFE4o
-D:80056BBB                     .byte 0
-D:80056BBC     aPkey_holderz:  .ascii "Pkey_holderZ"<0>  # DATA XREF: D:8003AFF0o
-D:80056BC9                     .byte 0, 0, 0
-D:80056BCC     aPhatchsevxz:   .ascii "PhatchsevxZ"<0>  # DATA XREF: D:8003AFFCo
-D:80056BD8     aPsevdishz:     .ascii "PsevdishZ"<0>    # DATA XREF: D:8003B008o
-D:80056BE2                     .half 0
-D:80056BE4     aParchsecdoor1z:.ascii "Parchsecdoor1Z"<0>  # DATA XREF: D:8003B014o
-D:80056BF3                     .byte 0
-D:80056BF4     aParchsecdoor2z:.ascii "Parchsecdoor2Z"<0>  # DATA XREF: D:8003B020o
-D:80056C03                     .byte 0
-D:80056C04     aPgroundgunz:   .ascii "PgroundgunZ"<0>  # DATA XREF: D:8003B02Co
-D:80056C10     aPtrainextdoorz:.ascii "PtrainextdoorZ"<0>  # DATA XREF: D:8003B038o
-D:80056C1F                     .byte 0
-D:80056C20     aPcarbmwz:      .ascii "PcarbmwZ"<0>     # DATA XREF: D:8003B044o
-D:80056C29                     .byte 0, 0, 0
-D:80056C2C     aPcarescortz:   .ascii "PcarescortZ"<0>  # DATA XREF: D:8003B050o
-D:80056C38     aPcargolfz:     .ascii "PcargolfZ"<0>    # DATA XREF: D:8003B05Co
-D:80056C42                     .half 0
-D:80056C44     aPcarweirdz:    .ascii "PcarweirdZ"<0>   # DATA XREF: D:8003B068o
-D:80056C4F                     .byte 0
-D:80056C50     aPcarzilz:      .ascii "PcarzilZ"<0>     # DATA XREF: D:8003B074o
-D:80056C59                     .byte 0, 0, 0
-D:80056C5C     aPshuttle_door_lz:.ascii "Pshuttle_door_lZ"<0>  # DATA XREF: D:8003B080o
-D:80056C6D                     .byte 0, 0, 0
-D:80056C70     aPshuttle_door_rz:.ascii "Pshuttle_door_rZ"<0>  # DATA XREF: D:8003B08Co
-D:80056C81                     .byte 0, 0, 0
-D:80056C84     aPdepot_gate_entryz:.ascii "Pdepot_gate_entryZ"<0>  # DATA XREF: D:8003B098o
-D:80056C97                     .byte 0
-D:80056C98     aPdepot_door_steelz:.ascii "Pdepot_door_steelZ"<0>  # DATA XREF: D:8003B0A4o
-D:80056CAB                     .byte 0
-D:80056CAC     aPglassware2z:  .ascii "Pglassware2Z"<0>  # DATA XREF: D:8003B0B0o
-D:80056CB9                     .byte 0, 0, 0
-D:80056CBC     aPglassware3z:  .ascii "Pglassware3Z"<0>  # DATA XREF: D:8003B0BCo
-D:80056CC9                     .byte 0, 0, 0
-D:80056CCC     aPglassware4z:  .ascii "Pglassware4Z"<0>  # DATA XREF: D:8003B0C8o
-D:80056CD9                     .byte 0, 0, 0
-D:80056CDC     aPlandminez:    .ascii "PlandmineZ"<0>   # DATA XREF: D:8003B0D4o
-D:80056CE7                     .byte 0
-D:80056CE8     aPplant1z:      .ascii "Pplant1Z"<0>     # DATA XREF: D:8003B0E0o
-D:80056CF1                     .byte 0, 0, 0
-D:80056CF4     aPplant11z:     .ascii "Pplant11Z"<0>    # DATA XREF: D:8003B0ECo
-D:80056CFE                     .half 0
-D:80056D00     aPplant2z:      .ascii "Pplant2Z"<0>     # DATA XREF: D:8003B0F8o
-D:80056D09                     .byte 0, 0, 0
-D:80056D0C     aPplant3z:      .ascii "Pplant3Z"<0>     # DATA XREF: D:8003B104o
-D:80056D15                     .byte 0, 0, 0
-D:80056D18     aPjungle5_treez:.ascii "Pjungle5_treeZ"<0>  # DATA XREF: D:8003B110o
-D:80056D27                     .byte 0
-D:80056D28     aPlegalpagez:   .ascii "PlegalpageZ"<0>  # DATA XREF: D:PlegalpageZ_entryo
-D:80056D34     aPst_pete_room_1iz:.ascii "Pst_pete_room_1iZ"<0>  # DATA XREF: D:8003B128o
-D:80056D46                     .half 0
-D:80056D48     aPst_pete_room_2iz:.ascii "Pst_pete_room_2iZ"<0>  # DATA XREF: D:8003B134o
-D:80056D5A                     .half 0
-D:80056D5C     aPst_pete_room_3tz:.ascii "Pst_pete_room_3tZ"<0>  # DATA XREF: D:8003B140o
-D:80056D6E                     .half 0
-D:80056D70     aPst_pete_room_5cz:.ascii "Pst_pete_room_5cZ"<0>  # DATA XREF: D:8003B14Co
-D:80056D82                     .half 0
-D:80056D84     aPst_pete_room_6cz:.ascii "Pst_pete_room_6cZ"<0>  # DATA XREF: D:8003B158o
-D:80056D96                     .half 0
-D:80056D98     aPdoor_rollertrainz:.ascii "Pdoor_rollertrainZ"<0>  # DATA XREF: D:8003B164o
-D:80056DAB                     .byte 0
-D:80056DAC     aPdoor_winz:    .ascii "Pdoor_winZ"<0>   # DATA XREF: D:8003B170o
-D:80056DB7                     .byte 0
-D:80056DB8     aPdoor_aztecz:  .ascii "Pdoor_aztecZ"<0>  # DATA XREF: D:8003B17Co
-D:80056DC5                     .byte 0, 0, 0
-D:80056DC8     aPshuttlez:     .ascii "PshuttleZ"<0>    # DATA XREF: D:8003B188o
-D:80056DD2                     .half 0
-D:80056DD4     aPdoor_azt_deskz:.ascii "Pdoor_azt_deskZ"<0>  # DATA XREF: D:8003B194o
-D:80056DE4     aPdoor_azt_desk_topz:.ascii "Pdoor_azt_desk_topZ"<0>  # DATA XREF: D:8003B1A0o
-D:80056DF8     aPdoor_azt_chairz:.ascii "Pdoor_azt_chairZ"<0><0><0><0>
-D:80056DF8                                              # DATA XREF: D:8003B1ACo
-D:80056E0C     aPdoor_mfz:     .ascii "Pdoor_mfZ"<0>    # DATA XREF: D:8003B1B8o
-D:80056E16                     .half 0
-D:80056E18     aPflagz:        .ascii "PflagZ"<0>       # DATA XREF: D:8003B1C4o
-D:80056E1F                     .byte 0
-D:80056E20     aPbarricadez:   .ascii "PbarricadeZ"<0>  # DATA XREF: D:8003B1D0o
-D:80056E2C     aPmodemboxz:    .ascii "PmodemboxZ"<0>   # DATA XREF: D:8003B1DCo
-D:80056E37                     .byte 0
-D:80056E38     aPdoorpanelz:   .ascii "PdoorpanelZ"<0>  # DATA XREF: D:8003B1E8o
-D:80056E44     aPdoorconsolez: .ascii "PdoorconsoleZ"<0>  # DATA XREF: D:8003B1F4o
-D:80056E52                     .half 0
-D:80056E54     aPchrtesttubez: .ascii "PchrtesttubeZ"<0>  # DATA XREF: D:8003B200o
-D:80056E62                     .half 0
-D:80056E64     aPbollardz:     .ascii "PbollardZ"<0><0><0>  # DATA XREF: D:8003B20Co
-D:80056E70     aPnullZ:        .ascii <0><0><0><0><0><0><0><0><0><0><0><0><0><0><0><0>
-D:80056E70                                              # DATA XREF: D:PitemZ_entry_endo
-D:80056E80     aCcamguardz:    .ascii "CcamguardZ"<0><0>  # DATA XREF: D:c_item_entrieso
-D:80056E8C     aCgreyguardz:   .ascii "CgreyguardZ"<0>  # DATA XREF: D:8003DE24o
-D:80056E98     aColiveguardz:  .ascii "ColiveguardZ"<0><0><0><0>  # DATA XREF: D:8003DE38o
-D:80056EA8     aCrusguardz:    .ascii "CrusguardZ"<0>   # DATA XREF: D:8003DE4Co
-D:80056EB3                     .byte 0
-D:80056EB4     aCtrevguardz:   .ascii "CtrevguardZ"<0>  # DATA XREF: D:8003DE60o
-D:80056EC0     aCdjbondz:      .ascii "CdjbondZ"<0>     # DATA XREF: D:stru_D_8003DE74o
-D:80056EC9                     .byte 0, 0, 0
-D:80056ECC     aCborisz:       .ascii "CborisZ"<0>      # DATA XREF: D:8003DE88o
-D:80056ED4     aCorumovz:      .ascii "CorumovZ"<0>     # DATA XREF: D:8003DE9Co
-D:80056EDD                     .byte 0, 0, 0
-D:80056EE0     aCtrevelyanz:   .ascii "CtrevelyanZ"<0>  # DATA XREF: D:8003DEB0o
-D:80056EEC     aCboilertrevz:  .ascii "CboilertrevZ"<0>  # DATA XREF: D:8003DEC4o
-D:80056EF9                     .byte 0, 0, 0
-D:80056EFC     aCvalentinz:    .ascii "CvalentinZ"<0>   # DATA XREF: D:8003DED8o
-D:80056F07                     .byte 0
-D:80056F08     aCxeniaz:       .ascii "CxeniaZ"<0>      # DATA XREF: D:8003DEECo
-D:80056F10     aCbaronsamediz: .ascii "CbaronsamediZ"<0>  # DATA XREF: D:8003DF00o
-D:80056F1E                     .half 0
-D:80056F20     aCjawsz:        .ascii "CjawsZ"<0>       # DATA XREF: D:8003DF14o
-D:80056F27                     .byte 0
-D:80056F28     aCmaydayz:      .ascii "CmaydayZ"<0>     # DATA XREF: D:8003DF28o
-D:80056F31                     .byte 0, 0, 0
-D:80056F34     aCoddjobz:      .ascii "CoddjobZ"<0>     # DATA XREF: D:8003DF3Co
-D:80056F3D                     .byte 0, 0, 0
-D:80056F40     aCnatalyaz:     .ascii "CnatalyaZ"<0>    # DATA XREF: D:8003DF50o
-D:80056F4A                     .half 0
-D:80056F4C     aCarmourguardz: .ascii "CarmourguardZ"<0>  # DATA XREF: D:8003DF64o
-D:80056F5A                     .half 0
-D:80056F5C     aCcommguardz:   .ascii "CcommguardZ"<0>  # DATA XREF: D:8003DF78o
-D:80056F68     aCgreatguardz:  .ascii "CgreatguardZ"<0>  # DATA XREF: D:8003DF8Co
-D:80056F75                     .byte 0, 0, 0
-D:80056F78     aCnavyguardz:   .ascii "CnavyguardZ"<0>  # DATA XREF: D:8003DFA0o
-D:80056F84     aCsnowguardz:   .ascii "CsnowguardZ"<0>  # DATA XREF: D:8003DFB4o
-D:80056F90     aCboilerbondz:  .ascii "CboilerbondZ"<0>  # DATA XREF: D:8003DFC8o
-D:80056F9D                     .byte 0, 0, 0
-D:80056FA0     aCsuitbondz:    .ascii "CsuitbondZ"<0>   # DATA XREF: D:8003DFDCo
-D:80056FAB                     .byte 0
-D:80056FAC     aCtimberbondz:  .ascii "CtimberbondZ"<0>  # DATA XREF: D:8003DFF0o
-D:80056FB9                     .byte 0, 0, 0
-D:80056FBC     aCsnowbondz:    .ascii "CsnowbondZ"<0>   # DATA XREF: D:8003E004o
-D:80056FC7                     .byte 0
-D:80056FC8     aCbluewomanz:   .ascii "CbluewomanZ"<0>  # DATA XREF: D:8003E018o
-D:80056FD4     aCfattechwomanz:.ascii "CfattechwomanZ"<0>  # DATA XREF: D:8003E02Co
-D:80056FE3                     .byte 0
-D:80056FE4     aCtechwomanz:   .ascii "CtechwomanZ"<0>  # DATA XREF: D:8003E040o
-D:80056FF0     aCjeanwomanz:   .ascii "CjeanwomanZ"<0>  # DATA XREF: D:8003E054o
-D:80056FFC     aCgreymanz:     .ascii "CgreymanZ"<0>    # DATA XREF: D:8003E068o
-D:80057006                     .half 0
-D:80057008     aCbluemanz:     .ascii "CbluemanZ"<0>    # DATA XREF: D:8003E07Co
-D:80057012                     .half 0
-D:80057014     aCredmanz:      .ascii "CredmanZ"<0>     # DATA XREF: D:8003E090o
-D:8005701D                     .byte 0, 0, 0
-D:80057020     aCcardimanz:    .ascii "CcardimanZ"<0>   # DATA XREF: D:8003E0A4o
-D:8005702B                     .byte 0
-D:8005702C     aCcheckmanz:    .ascii "CcheckmanZ"<0>   # DATA XREF: D:8003E0B8o
-D:80057037                     .byte 0
-D:80057038     aCtechmanz:     .ascii "CtechmanZ"<0>    # DATA XREF: D:8003E0CCo
-D:80057042                     .half 0
-D:80057044     aCpilotz:       .ascii "CpilotZ"<0>      # DATA XREF: D:8003E0E0o
-D:8005704C     aCgreatguard2z: .ascii "Cgreatguard2Z"<0>  # DATA XREF: D:8003E0F4o
-D:8005705A                     .half 0
-D:8005705C     aCbluecamguardz:.ascii "CbluecamguardZ"<0>  # DATA XREF: D:8003E108o
-D:8005706B                     .byte 0
-D:8005706C     aCmoonguardz:   .ascii "CmoonguardZ"<0>  # DATA XREF: D:8003E11Co
-D:80057078     aCmoonfemalez:  .ascii "CmoonfemaleZ"<0>  # DATA XREF: D:8003E130o
-D:80057085                     .byte 0, 0, 0
-D:80057088     aCsuit_lf_handz_0:.ascii "Csuit_lf_handZ"<0>  # DATA XREF: D:stru_D_8003E144o
-D:80057097                     .byte 0
-D:80057098     aCheadkarlz:    .ascii "CheadkarlZ"<0>   # DATA XREF: D:8003E158o
-D:800570A3                     .byte 0
-D:800570A4     aCheadalanz:    .ascii "CheadalanZ"<0>   # DATA XREF: D:8003E16Co
-D:800570AF                     .byte 0
-D:800570B0     aCheadpetez:    .ascii "CheadpeteZ"<0>   # DATA XREF: D:8003E180o
-D:800570BB                     .byte 0
-D:800570BC     aCheadmartinz:  .ascii "CheadmartinZ"<0>  # DATA XREF: D:8003E194o
-D:800570C9                     .byte 0, 0, 0
-D:800570CC     aCheadmarkz:    .ascii "CheadmarkZ"<0>   # DATA XREF: D:8003E1A8o
-D:800570D7                     .byte 0
-D:800570D8     aCheadduncanz:  .ascii "CheadduncanZ"<0>  # DATA XREF: D:8003E1BCo
-D:800570E5                     .byte 0, 0, 0
-D:800570E8     aCheadshaunz:   .ascii "CheadshaunZ"<0>  # DATA XREF: D:8003E1D0o
-D:800570F4     aCheaddwaynez:  .ascii "CheaddwayneZ"<0>  # DATA XREF: D:8003E1E4o
-D:80057101                     .byte 0, 0, 0
-D:80057104     aCheadbz:       .ascii "CheadbZ"<0>      # DATA XREF: D:8003E1F8o
-D:8005710C     aCheaddavez:    .ascii "CheaddaveZ"<0>   # DATA XREF: D:8003E20Co
-D:80057117                     .byte 0
-D:80057118     aCheadgrantz:   .ascii "CheadgrantZ"<0>  # DATA XREF: D:8003E220o
-D:80057124     aCheaddesz:     .ascii "CheaddesZ"<0>    # DATA XREF: D:8003E234o
-D:8005712E                     .half 0
-D:80057130     aCheadchrisz:   .ascii "CheadchrisZ"<0>  # DATA XREF: D:8003E248o
-D:8005713C     aCheadleez:     .ascii "CheadleeZ"<0>    # DATA XREF: D:8003E25Co
-D:80057146                     .half 0
-D:80057148     aCheadneilz:    .ascii "CheadneilZ"<0>   # DATA XREF: D:8003E270o
-D:80057153                     .byte 0
-D:80057154     aCheadjimz:     .ascii "CheadjimZ"<0>    # DATA XREF: D:8003E284o
-D:8005715E                     .half 0
-D:80057160     aCheadrobinz:   .ascii "CheadrobinZ"<0>  # DATA XREF: D:8003E298o
-D:8005716C     aCheadstevehz:  .ascii "CheadstevehZ"<0>  # DATA XREF: D:8003E2ACo
-D:80057179                     .byte 0, 0, 0
-D:8005717C     aCheadbalaclavaz:.ascii "CheadbalaclavaZ"<0>  # DATA XREF: D:8003E2C0o
-D:8005718C     aCheadbikez:    .ascii "CheadbikeZ"<0>   # DATA XREF: D:8003E2D4o
-D:80057197                     .byte 0
-D:80057198     aCheadgrahamz:  .ascii "CheadgrahamZ"<0>  # DATA XREF: D:8003E2E8o
-D:800571A5                     .byte 0, 0, 0
-D:800571A8     aCheadsteveez:  .ascii "CheadsteveeZ"<0>  # DATA XREF: D:8003E2FCo
-D:800571B5                     .byte 0, 0, 0
-D:800571B8     aCheadjoelz:    .ascii "CheadjoelZ"<0>   # DATA XREF: D:8003E310o
-D:800571C3                     .byte 0
-D:800571C4     aCheadscottz:   .ascii "CheadscottZ"<0>  # DATA XREF: D:8003E324o
-D:800571D0     aCheadjoez:     .ascii "CheadjoeZ"<0>    # DATA XREF: D:8003E338o
-D:800571DA                     .half 0
-D:800571DC     aCheadkenz:     .ascii "CheadkenZ"<0>    # DATA XREF: D:8003E34Co
-D:800571E6                     .half 0
-D:800571E8     aCheadjoe2z:    .ascii "Cheadjoe2Z"<0>   # DATA XREF: D:8003E360o
-D:800571F3                     .byte 0
-D:800571F4     aCheadmishkinz: .ascii "CheadmishkinZ"<0>  # DATA XREF: D:8003E374o
-D:80057202                     .half 0
-D:80057204     aCheadsallyz:   .ascii "CheadsallyZ"<0>  # DATA XREF: D:8003E388o
-D:80057210     aCheadmarionz:  .ascii "CheadmarionZ"<0>  # DATA XREF: D:8003E39Co
-D:8005721D                     .byte 0, 0, 0
-D:80057220     aCheadmandyz:   .ascii "CheadmandyZ"<0>  # DATA XREF: D:8003E3B0o
-D:8005722C     aCheadvivienz:  .ascii "CheadvivienZ"<0>  # DATA XREF: D:8003E3C4o
-D:80057239                     .byte 0, 0, 0
-D:8005723C     aCheadbrosnanboilerz:.ascii "CheadbrosnanboilerZ"<0>  # DATA XREF: D:8003E3D8o
-D:80057250     aCheadbrosnansuitz:.ascii "CheadbrosnansuitZ"<0>  # DATA XREF: D:8003E3ECo
-D:80057262                     .half 0
-D:80057264     aCheadbrosnantimberz:.ascii "CheadbrosnantimberZ"<0>  # DATA XREF: D:8003E400o
-D:80057278     aCheadbrosnansnowz:.ascii "CheadbrosnansnowZ"<0>  # DATA XREF: D:8003E414o
-D:8005728A                     .half 0
-D:8005728C     aCheadbrosnanz: .ascii "CheadbrosnanZ"<0>  # DATA XREF: D:stru_D_8003E428o
-D:8005729A                     .half 0
-D:8005729C     aCspicebondz:   .ascii "CspicebondZ"<0>  # DATA XREF: D:8003E43Co
-D:800572A8                     .align 4
+
+
 D:800572B0     jpt_700C5B38:   .word cheats_cheat_extra_mp_chars, cheats_cheat_invincibility, cheats_cheat_allguns
 D:800572B0                                              # DATA XREF: sub_CODE_7F091B64+98r
 D:800572B0                     .word cheats_cheat_max_ammo, cheats_debug_return_saved_ra, cheats_cheat_deactivate_invincibility  # jump table for switch statement

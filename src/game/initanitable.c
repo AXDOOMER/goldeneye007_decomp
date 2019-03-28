@@ -10,7 +10,7 @@ s32 *ptr_animation_table;
 
 
 //data
-u32 dword_D_80029D60[] = { 0, dword_CODE_bss_80069170, dword_CODE_bss_80069170};
+u32 D_80029D60[] = { 0, dword_CODE_bss_80069170, dword_CODE_bss_80069170};
 
 s32 animation_table_ptrs1[] = {
     0x1C, 0x144, 0x214, 0x318, 0x3C4, 0x610, 0x814, 0x990, 0xB84, 0xDB4,
@@ -106,7 +106,7 @@ void alloc_load_expand_ani_table(void) {
     // Node 0
     osCreateMesgQueue(&animMsgQ, &animMsgBuf, 8);
     sub_GAME_7F0009E0(&D_80029D60, &animMsgQ, &dword_CODE_bss_80069458);
-    temp_a2 = (&D_0000E7E0 - 0);
+    temp_a2 = (&0x0000E7E0 - 0);
     temp_ret = allocate_bytes_in_bank(temp_a2, 6, temp_a2);
     ptr_animation_table = temp_ret;
     romCopy(temp_ret, &_animation_dataSegmentRomStart, sp18);
@@ -132,10 +132,10 @@ glabel alloc_load_expand_ani_table
 /* 03560C 7F000ADC 24A59440 */  addiu $a1, %lo(animMsgQ) # addiu $a1, $a1, -0x6bc0
 /* 035610 7F000AE0 0FC00278 */  jal   sub_GAME_7F0009E0
 /* 035614 7F000AE4 24849D60 */   addiu $a0, %lo(D_80029D60) # addiu $a0, $a0, -0x62a0
-/* 035618 7F000AE8 3C0E0001 */  lui   $t6, %hi(D_0000E7E0) # $t6, 1
+/* 035618 7F000AE8 3C0E0001 */  lui   $t6, %hi(0x0000E7E0) # $t6, 1
 /* 03561C 7F000AEC 3C0F0000 */  lui   $t7, 0
 /* 035620 7F000AF0 25EF0000 */  addiu $t7, $t7, 0
-/* 035624 7F000AF4 25CEE7E0 */  addiu $t6, %lo(D_0000E7E0) # addiu $t6, $t6, -0x1820
+/* 035624 7F000AF4 25CEE7E0 */  addiu $t6, %lo(0x0000E7E0) # addiu $t6, $t6, -0x1820
 /* 035628 7F000AF8 01CF3023 */  subu  $a2, $t6, $t7
 /* 03562C 7F000AFC 00C02025 */  move  $a0, $a2
 /* 035630 7F000B00 AFA60018 */  sw    $a2, 0x18($sp)

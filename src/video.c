@@ -1336,7 +1336,7 @@ glabel video_related_9
 
 
 #ifdef NONMATCHING
-void video_related_A(s32 arg0)
+void receive_vi_c_msgs(s32 arg0)
 {
     s32 temp_s0;
     s32 phi_s0;
@@ -1354,7 +1354,7 @@ loop_1:
 #else
 GLOBAL_ASM(
 .text
-glabel video_related_A
+glabel receive_vi_c_msgs
 /* 004764 70003B64 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 004768 70003B68 AFB10018 */  sw    $s1, 0x18($sp)
 /* 00476C 70003B6C AFB00014 */  sw    $s0, 0x14($sp)
@@ -1520,14 +1520,14 @@ glabel set_video2buf_offset28
 
 
 #ifdef NONMATCHING
-? video_related_E(void)
+? get_80060824(void)
 {
     return word_CODE_bss_80060824;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel video_related_E
+glabel get_80060824
 /* 00484C 70003C4C 3C028006 */  lui   $v0, %hi(word_CODE_bss_80060824)
 /* 004850 70003C50 03E00008 */  jr    $ra
 /* 004854 70003C54 94420824 */   lhu   $v0, %lo(word_CODE_bss_80060824)($v0)
@@ -1845,7 +1845,7 @@ glabel insert_generic_fillrect
 
 
 #ifdef NONMATCHING
-void *video_related_11(void *arg0)
+void *setupscreensfornumplayers(void *arg0)
 {
     void *sp60;
     s16 sp22;
@@ -1955,7 +1955,7 @@ void *video_related_11(void *arg0)
 #else
 GLOBAL_ASM(
 .text
-glabel video_related_11
+glabel setupscreensfornumplayers
 /* 004B64 70003F64 27BDFF98 */  addiu $sp, $sp, -0x68
 /* 004B68 70003F68 AFB00014 */  sw    $s0, 0x14($sp)
 /* 004B6C 70003F6C AFBF001C */  sw    $ra, 0x1c($sp)

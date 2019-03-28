@@ -9755,7 +9755,7 @@ glabel sub_GAME_7F062BE4
 /* 097AB8 7F062F88 358C000E */  ori   $t4, (0xBC00000E & 0xFFFF) # ori $t4, $t4, 0xe
 /* 097ABC 7F062F8C 02008825 */  move  $s1, $s0
 /* 097AC0 7F062F90 AE2C0000 */  sw    $t4, ($s1)
-/* 097AC4 7F062F94 0C000F13 */  jal   video_related_E
+/* 097AC4 7F062F94 0C000F13 */  jal   get_80060824
 /* 097AC8 7F062F98 26100008 */   addiu $s0, $s0, 8
 /* 097ACC 7F062F9C 24010017 */  li    $at, 23
 /* 097AD0 7F062FA0 16810006 */  bne   $s4, $at, .L7F062FBC

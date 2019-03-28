@@ -17,8 +17,8 @@ glabel init_menus_or_reset
 /* 035864 7F000D34 3C018003 */  lui   $at, %hi(screen_size) # $at, 0x8003
 /* 035868 7F000D38 AC20A940 */  sw    $zero, %lo(screen_size)($at)
 /* 03586C 7F000D3C 24030001 */  li    $v1, 1
-/* 035870 7F000D40 3C018003 */  lui   $at, %hi(D_8002A944) # $at, 0x8003
-/* 035874 7F000D44 AC23A944 */  sw    $v1, %lo(D_8002A944)($at)
+/* 035870 7F000D40 3C018003 */  lui   $at, %hi(spectrum_related_flag) # $at, 0x8003
+/* 035874 7F000D44 AC23A944 */  sw    $v1, %lo(spectrum_related_flag)($at)
 /* 035878 7F000D48 3C018003 */  lui   $at, %hi(is_emulating_spectrum) # $at, 0x8003
 /* 03587C 7F000D4C AC20A948 */  sw    $zero, %lo(is_emulating_spectrum)($at)
 /* 035880 7F000D50 3C018003 */  lui   $at, %hi(folder_selection_screen_option_icon) # $at, 0x8003
@@ -40,13 +40,13 @@ glabel init_menus_or_reset
 /* 0358C0 7F000D90 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0358C4 7F000D94 11C00005 */  beqz  $t6, .L7F000DAC
 /* 0358C8 7F000D98 AC23A93C */   sw    $v1, %lo(maybe_is_in_menu)($at)
-/* 0358CC 7F000D9C 3C028003 */  lui   $v0, %hi(menu.update) # $v0, 0x8003
-/* 0358D0 7F000DA0 2442A8C4 */  addiu $v0, %lo(menu.update) # addiu $v0, $v0, -0x573c
+/* 0358CC 7F000D9C 3C028003 */  lui   $v0, %hi(menu_update) # $v0, 0x8003
+/* 0358D0 7F000DA0 2442A8C4 */  addiu $v0, %lo(menu_update) # addiu $v0, $v0, -0x573c
 /* 0358D4 7F000DA4 240F0005 */  li    $t7, 5
 /* 0358D8 7F000DA8 AC4F0000 */  sw    $t7, ($v0)
 .L7F000DAC:
-/* 0358DC 7F000DAC 3C028003 */  lui   $v0, %hi(menu.update) # $v0, 0x8003
-/* 0358E0 7F000DB0 2442A8C4 */  addiu $v0, %lo(menu.update) # addiu $v0, $v0, -0x573c
+/* 0358DC 7F000DAC 3C028003 */  lui   $v0, %hi(menu_update) # $v0, 0x8003
+/* 0358E0 7F000DB0 2442A8C4 */  addiu $v0, %lo(menu_update) # addiu $v0, $v0, -0x573c
 /* 0358E4 7F000DB4 8C580000 */  lw    $t8, ($v0)
 /* 0358E8 7F000DB8 3C040007 */  lui   $a0, (0x00078000 >> 16) # lui $a0, 7
 /* 0358EC 7F000DBC 24190005 */  li    $t9, 5

@@ -131,9 +131,9 @@ struct animation_something
   s32 field_10;
   s32 field_14;
   f32 field_18;
-  s32 *field_1C;
+  struct struck_animation_table *field_1C;
   s32 field_20;
-  s32 *field_24;
+  struct struck_animation_table *field_24;
   s32 field_28;
 };
 
@@ -187,38 +187,40 @@ struct weapon_firing_animation_table
   f32 anonymous_17;
 };
 
-/*
-struct struck_animation_table stru_D_8002CE54[];
-struct struct_animation_table stru_D_8002DF10[];
-struct struck_animation_table stru_D_8002CEE0[];
-struct struct_animation_table stru_D_8002DF64[];
-struct struck_animation_table stru_D_8002CF6C[];
-struct struct_animation_table stru_D_8002DFB8[];
-struct struck_animation_table stru_D_8002D014[];
-struct struct_animation_table stru_D_8002E028[];
-struct struck_animation_table stru_D_8002D0A0[];
-struct struct_animation_table stru_D_8002E07C[];
-struct struck_animation_table stru_D_8002D12C[];
-struct struct_animation_table stru_D_8002E0D0[];
-struct struck_animation_table stru_D_8002D1D4[];
-struct struct_animation_table stru_D_8002E140[];
-struct struck_animation_table stru_D_8002D3B0[];
-struct struct_animation_table stru_D_8002E23C[];
-struct struck_animation_table stru_D_8002D6DC[];
-struct struct_animation_table stru_D_8002E300[];
-struct struck_animation_table stru_D_8002D768[];
-struct struct_animation_table stru_D_8002E354[];
-struct struck_animation_table stru_D_8002D7F4[];
-struct struct_animation_table stru_D_8002E3A8[];
-struct struck_animation_table stru_D_8002D880[];
-struct struct_animation_table stru_D_8002E418[];
-struct struck_animation_table stru_D_8002D90C[];
-struct struct_animation_table stru_D_8002E46C[];
-struct struck_animation_table stru_D_8002D998[];
-struct struct_animation_table stru_D_8002E4C0[];
-struct struck_animation_table stru_D_8002DA24[];
-struct struct_animation_table stru_D_8002E530[];
-struct struck_animation_table stru_D_8002DCE0[];
-struct struct_animation_table stru_D_8002E5BC[];
-*/
+extern struct animation_something D_8002C914[];
+
+
+extern struct struck_animation_table D_8002CE54[];
+extern struct struck_animation_table D_8002DF10[];
+extern struct struck_animation_table D_8002CEE0[];
+extern struct struck_animation_table D_8002DF64[];
+extern struct struck_animation_table D_8002CF6C[];
+extern struct struck_animation_table D_8002DFB8[];
+extern struct struck_animation_table D_8002D014[];
+extern struct struck_animation_table D_8002E028[];
+extern struct struck_animation_table D_8002D0A0[];
+extern struct struck_animation_table D_8002E07C[];
+extern struct struck_animation_table D_8002D12C[];
+extern struct struck_animation_table D_8002E0D0[];
+extern struct struck_animation_table D_8002D1D4[];
+extern struct struck_animation_table D_8002E140[];
+extern struct struck_animation_table D_8002D3B0[];
+extern struct struck_animation_table D_8002E23C[];
+extern struct struck_animation_table D_8002D6DC[];
+extern struct struck_animation_table D_8002E300[];
+extern struct struck_animation_table D_8002D768[];
+extern struct struck_animation_table D_8002E354[];
+extern struct struck_animation_table D_8002D7F4[];
+extern struct struck_animation_table D_8002E3A8[];
+extern struct struck_animation_table D_8002D880[];
+extern struct struck_animation_table D_8002E418[];
+extern struct struck_animation_table D_8002D90C[];
+extern struct struck_animation_table D_8002E46C[];
+extern struct struck_animation_table D_8002D998[];
+extern struct struck_animation_table D_8002E4C0[];
+extern struct struck_animation_table D_8002DA24[];
+extern struct struck_animation_table D_8002E530[];
+extern struct struck_animation_table D_8002DCE0[];
+extern struct struck_animation_table D_8002E5BC[];
+
 #endif

@@ -60,3 +60,6 @@ _instrumentstblSegmentRomStart = 0x3B87F0;
 _instrumentstblSegmentRomEnd = 0x419790;
 
 _musicsampletblSegmentRomStart = 0x419790;
+
+_animation_tableSegmentRomStart = 0x124ac0;
+_animation_dataSegmentRomStart = 0x28e980;

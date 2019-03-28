@@ -12,12 +12,12 @@ void cleanupGuardData(void) {
     s32 phi_v1;
 
     // Node 0
-    if (D_8002CC68 > 0)
+    if (num_guards > 0)
     {
         // Node 1
         phi_s0 = 0;
         phi_s2 = 0;
-        phi_v1 = D_8002CC68;
+        phi_v1 = num_guards;
 loop_2:
         // Node 2
         temp_v0 = (ptr_guard_data + phi_s0);
@@ -28,7 +28,7 @@ loop_2:
             sub_GAME_7F03A538((ptr_guard_data + phi_s0)->unk18);
             unset_stateflag_0x04_for_posdata((ptr_guard_data + phi_s0)->unk18);
             set_last_obj_pos_data((ptr_guard_data + phi_s0)->unk18);
-            phi_v1 = D_8002CC68;
+            phi_v1 = num_guards;
         }
         // Node 4
         temp_s2 = (phi_s2 + 1);
@@ -47,8 +47,8 @@ loop_2:
 GLOBAL_ASM(
 .text
 glabel cleanupGuardData
-/* 03BEE0 7F0073B0 3C038003 */  lui   $v1, %hi(D_8002CC68) # $v1, 0x8003
-/* 03BEE4 7F0073B4 8C63CC68 */  lw    $v1, %lo(D_8002CC68)($v1)
+/* 03BEE0 7F0073B0 3C038003 */  lui   $v1, %hi(num_guards) # $v1, 0x8003
+/* 03BEE4 7F0073B4 8C63CC68 */  lw    $v1, %lo(num_guards)($v1)
 /* 03BEE8 7F0073B8 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 03BEEC 7F0073BC AFB20020 */  sw    $s2, 0x20($sp)
 /* 03BEF0 7F0073C0 AFBF0024 */  sw    $ra, 0x24($sp)
@@ -79,8 +79,8 @@ glabel cleanupGuardData
 /* 03BF50 7F007420 01505821 */  addu  $t3, $t2, $s0
 /* 03BF54 7F007424 0FC0E921 */  jal   set_last_obj_pos_data
 /* 03BF58 7F007428 8D640018 */   lw    $a0, 0x18($t3)
-/* 03BF5C 7F00742C 3C038003 */  lui   $v1, %hi(D_8002CC68) # $v1, 0x8003
-/* 03BF60 7F007430 8C63CC68 */  lw    $v1, %lo(D_8002CC68)($v1)
+/* 03BF5C 7F00742C 3C038003 */  lui   $v1, %hi(num_guards) # $v1, 0x8003
+/* 03BF60 7F007430 8C63CC68 */  lw    $v1, %lo(num_guards)($v1)
 /* 03BF64 7F007434 26520001 */  addiu $s2, $s2, 1
 .L7F007438:
 /* 03BF68 7F007438 0243082A */  slt   $at, $s2, $v1

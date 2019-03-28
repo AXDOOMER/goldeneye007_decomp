@@ -87,8 +87,8 @@ GLOBAL_ASM(
 glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03AEBC 7F00638C 27BDFF20 */  addiu $sp, $sp, -0xe0
 /* 03AEC0 7F006390 AFB20038 */  sw    $s2, 0x38($sp)
-/* 03AEC4 7F006394 3C128004 */  lui   $s2, %hi(D_8003C650) # $s2, 0x8004
-/* 03AEC8 7F006398 2652C650 */  addiu $s2, %lo(D_8003C650) # addiu $s2, $s2, -0x39b0
+/* 03AEC4 7F006394 3C128004 */  lui   $s2, %hi(player_gait_object) # $s2, 0x8004
+/* 03AEC8 7F006398 2652C650 */  addiu $s2, %lo(player_gait_object) # addiu $s2, $s2, -0x39b0
 /* 03AECC 7F00639C 864E0014 */  lh    $t6, 0x14($s2)
 /* 03AED0 7F0063A0 AFBF0044 */  sw    $ra, 0x44($sp)
 /* 03AED4 7F0063A4 AFB40040 */  sw    $s4, 0x40($sp)

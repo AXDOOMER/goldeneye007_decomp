@@ -1228,7 +1228,7 @@ glabel sub_GAME_7F0BE30C
 /* 0F30B4 7F0BE584 8FA40060 */   lw    $a0, 0x60($sp)
 /* 0F30B8 7F0BE588 AFA20060 */  sw    $v0, 0x60($sp)
 .L7F0BE58C:
-/* 0F30BC 7F0BE58C 0C000FD9 */  jal   video_related_11
+/* 0F30BC 7F0BE58C 0C000FD9 */  jal   setupscreensfornumplayers
 /* 0F30C0 7F0BE590 8FA40060 */   lw    $a0, 0x60($sp)
 /* 0F30C4 7F0BE594 AFA20060 */  sw    $v0, 0x60($sp)
 /* 0F30C8 7F0BE598 0FC25122 */  jal   sub_GAME_7F094488

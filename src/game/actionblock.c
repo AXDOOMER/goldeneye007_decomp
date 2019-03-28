@@ -1,12 +1,14 @@
 #include "ultra64.h"
+#include "game/actionblock.h"
 
-/* bss
-CODE.bss:80069B70     sfx_related:    .space 4
-CODE.bss:80069B74     dword_CODE_bss_80069B74:.space 4
-CODE.bss:80069B78     dword_CODE_bss_80069B78:.space 4
-CODE.bss:80069B7C                     .space 0xB4
-CODE.bss:80069C30     ptr_list_object_lookup_indices:.space 4
-CODE.bss:80069C34     num_obj_position_data_entries:.space 4
+// bss
+//CODE.bss:80069B70
+struct sfx_register_struct sfx_related[8];
+//CODE.bss:80069C30
+void * ptr_list_object_lookup_indices;
+//CODE.bss:80069C34
+u32 num_obj_position_data_entries;
+/*
 CODE.bss:80069C38     pos_data_entry: .space 0x24
 CODE.bss:80069C5C     dword_CODE_bss_80069C5C:.space 4
 CODE.bss:80069C60                     .space 0xC
@@ -56,18 +58,30 @@ CODE.bss:80075B98     dword_CODE_bss_80075B98:.space 0x6C
 CODE.bss:80075C04     dword_CODE_bss_80075C04:.space 0xC
 CODE.bss:80075C10     dword_CODE_bss_80075C10:.space 0x78
 CODE.bss:80075C88     dword_CODE_bss_80075C88:.space 0x78
-CODE.bss:80075D00     ptr_setup_path_tbl:.space 4
-CODE.bss:80075D04     ptr_setup_path_link:.space 4
-CODE.bss:80075D08     ptr_setup_intro:.space 4
-CODE.bss:80075D0C     ptr_setup_objects:.space 4
-CODE.bss:80075D10     ptr_setup_path_sets:.space 4
-CODE.bss:80075D14     ptr_setup_actions:.space 4
-CODE.bss:80075D18     ptr_0xxxpresets:.space 4
-CODE.bss:80075D1C     ptr_2xxxpresets:.space 4
-CODE.bss:80075D20     dword_CODE_bss_80075D20:.space 4
-CODE.bss:80075D24     dword_CODE_bss_80075D24:.space 4
-CODE.bss:80075D28     dword_CODE_bss_80075D28:.space 4
 */
+//CODE.bss:80075D00
+void * ptr_setup_path_tbl;
+//CODE.bss:80075D04
+void * ptr_setup_path_link;
+//CODE.bss:80075D08
+void * ptr_setup_intro;
+//CODE.bss:80075D0C
+void * ptr_setup_objects;
+//CODE.bss:80075D10
+void * ptr_setup_path_sets;
+//CODE.bss:80075D14
+void * ptr_setup_actions;
+//CODE.bss:80075D18
+void * ptr_0xxxpresets;
+//CODE.bss:80075D1C
+void * ptr_2xxxpresets;
+//CODE.bss:80075D20
+u32 dword_CODE_bss_80075D20;
+//CODE.bss:80075D24
+u32 dword_CODE_bss_80075D24;
+//CODE.bss:80075D28
+u32 dword_CODE_bss_80075D28;
+
 
 //data
 s32 D_80030A70 = 0;

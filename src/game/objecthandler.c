@@ -88,27 +88,29 @@ D:800363F0                                              # doshadow+84o
 D:800363F0                                              # doshadow+B4r
 D:800363F0                                              # doshadow+BCr
 D:800363F4                     .word 0
-D:800363F8     dword_D_800363F8:.word 0                 # DATA XREF: doshadow+28o
-D:800363F8                                              # doshadow+30r
-D:800363FC     dword_D_800363FC:.word 0                 # DATA XREF: doshadow+34r
-D:80036400     dword_D_80036400:.word 0                 # DATA XREF: doshadow+4Cr
-D:80036404     dword_D_80036404:.word 0xFFFFFF50        # DATA XREF: doshadow+48r
-D:80036408     dword_D_80036408:.word 0x3F800000        # DATA XREF: sub_CODE_7F074CAC+2Co
-D:80036408                                              # sub_CODE_7F074CAC+34r
-D:8003640C     dword_D_8003640C:.word 0                 # DATA XREF: sub_CODE_7F074CAC+4Cr
-D:80036410     dword_D_80036410:.word 0                 # DATA XREF: sub_CODE_7F074CAC+48r
-D:80036414     dword_D_80036414:.word 0                 # DATA XREF: sub_CODE_7F0009E0w
-D:80036414                                              # sub_CODE_7F0754BC:loc_CODE_7F0754FCo
-D:80036414                                              # sub_CODE_7F0754BC+48r
-D:80036414                                              # sub_CODE_7F0754BC+B0o
-D:80036414                                              # sub_CODE_7F0754BC+B8r
-D:80036414                                              # sub_CODE_7F0754BC+D8r
-D:80036414                                              # sub_CODE_7F0755B0o
-D:80036414                                              # sub_CODE_7F0755B0+8r
-D:80036414                                              # sub_CODE_7F0755B0+1Cr
-D:80036418     dword_D_80036418:.word 0                 # DATA XREF: sub_CODE_7F0009E0+8w
-D:8003641C     dword_D_8003641C:.word 0                 # DATA XREF: sub_CODE_7F0009E0+18w
 */
+
+//D:800363F8
+u32 D_800363F8 =  0;
+//D:800363FC
+u32 D_800363FC =  0;
+//D:80036400
+u32 D_80036400 =  0;
+//D:80036404
+u32 D_80036404 =  0xFFFFFF50;
+//D:80036408
+f32 D_80036408 =  0x3F800000;
+//D:8003640C
+u32 D_8003640C =  0;
+//D:80036410
+u32 D_80036410 =  0;
+//D:80036414
+u32 D_80036414 =  0;
+//D:80036418
+u32 D_80036418 =  0;
+//D:8003641C
+u32 D_8003641C =  0;
+
 
 /* rodata
 D:80054420     aDrawjointlistNoGfxlist:.ascii "drawjointlist: no gfxlist!\n"<0>

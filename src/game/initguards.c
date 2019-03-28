@@ -10,10 +10,10 @@ void init_guards(void) {
     D_8002C90C = 0;
     D_8002C910 = 0;
     D_8002CC58 = 0;
-    show_patrols = 0;
+    show_patrols_flag = 0;
     player1_guardID = 0x1388;
     ptr_guard_data = 0;
-    D_8002CC68 = 0;
+    num_guards = 0;
     init_obj_register_difficulty_vals();
 }
 
@@ -36,17 +36,17 @@ glabel init_guards
 /* 0359A0 7F000E70 AC20C910 */  sw    $zero, %lo(D_8002C910)($at)
 /* 0359A4 7F000E74 3C018003 */  lui   $at, %hi(D_8002CC58) # $at, 0x8003
 /* 0359A8 7F000E78 AC20CC58 */  sw    $zero, %lo(D_8002CC58)($at)
-/* 0359AC 7F000E7C 3C018003 */  lui   $at, %hi(show_patrols) # $at, 0x8003
-/* 0359B0 7F000E80 AC20CC5C */  sw    $zero, %lo(show_patrols)($at)
+/* 0359AC 7F000E7C 3C018003 */  lui   $at, %hi(show_patrols_flag) # $at, 0x8003
+/* 0359B0 7F000E80 AC20CC5C */  sw    $zero, %lo(show_patrols_flag)($at)
 /* 0359B4 7F000E84 3C018003 */  lui   $at, %hi(player1_guardID) # $at, 0x8003
 /* 0359B8 7F000E88 AC2ECC60 */  sw    $t6, %lo(player1_guardID)($at)
 /* 0359BC 7F000E8C 3C018003 */  lui   $at, %hi(ptr_guard_data) # $at, 0x8003
 /* 0359C0 7F000E90 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0359C4 7F000E94 AC20CC64 */  sw    $zero, %lo(ptr_guard_data)($at)
 /* 0359C8 7F000E98 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0359CC 7F000E9C 3C018003 */  lui   $at, %hi(D_8002CC68) # $at, 0x8003
+/* 0359CC 7F000E9C 3C018003 */  lui   $at, %hi(num_guards) # $at, 0x8003
 /* 0359D0 7F000EA0 0FC00408 */  jal   init_obj_register_difficulty_vals
-/* 0359D4 7F000EA4 AC20CC68 */   sw    $zero, %lo(D_8002CC68)($at)
+/* 0359D4 7F000EA4 AC20CC68 */   sw    $zero, %lo(num_guards)($at)
 /* 0359D8 7F000EA8 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0359DC 7F000EAC 27BD0018 */  addiu $sp, $sp, 0x18
 /* 0359E0 7F000EB0 03E00008 */  jr    $ra
@@ -70,17 +70,17 @@ glabel alloc_init_GUARDdata_entries
 /* 0359F8 7F000EC8 01EE7823 */  subu  $t7, $t7, $t6
 /* 0359FC 7F000ECC 000F7880 */  sll   $t7, $t7, 2
 /* 035A00 7F000ED0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 035A04 7F000ED4 3C068003 */  lui   $a2, %hi(D_8002CC68) # $a2, 0x8003
+/* 035A04 7F000ED4 3C068003 */  lui   $a2, %hi(num_guards) # $a2, 0x8003
 /* 035A08 7F000ED8 25E4000F */  addiu $a0, $t7, 0xf
-/* 035A0C 7F000EDC 24C6CC68 */  addiu $a2, %lo(D_8002CC68) # addiu $a2, $a2, -0x3398
+/* 035A0C 7F000EDC 24C6CC68 */  addiu $a2, %lo(num_guards) # addiu $a2, $a2, -0x3398
 /* 035A10 7F000EE0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 035A14 7F000EE4 3498000F */  ori   $t8, $a0, 0xf
 /* 035A18 7F000EE8 ACCE0000 */  sw    $t6, ($a2)
 /* 035A1C 7F000EEC 3B04000F */  xori  $a0, $t8, 0xf
 /* 035A20 7F000EF0 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 035A24 7F000EF4 24050004 */   li    $a1, 4
-/* 035A28 7F000EF8 3C068003 */  lui   $a2, %hi(D_8002CC68) # $a2, 0x8003
-/* 035A2C 7F000EFC 24C6CC68 */  addiu $a2, %lo(D_8002CC68) # addiu $a2, $a2, -0x3398
+/* 035A28 7F000EF8 3C068003 */  lui   $a2, %hi(num_guards) # $a2, 0x8003
+/* 035A2C 7F000EFC 24C6CC68 */  addiu $a2, %lo(num_guards) # addiu $a2, $a2, -0x3398
 /* 035A30 7F000F00 8CC80000 */  lw    $t0, ($a2)
 /* 035A34 7F000F04 3C048003 */  lui   $a0, %hi(ptr_guard_data) # $a0, 0x8003
 /* 035A38 7F000F08 2484CC64 */  addiu $a0, %lo(ptr_guard_data) # addiu $a0, $a0, -0x339c

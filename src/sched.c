@@ -67,38 +67,36 @@ void osCreateLog(void){
 
 
 #ifdef NONMATCHING
-void osCreateScheduler(void *arg0, s32 arg1, ? arg2, s32 arg_unalignedB, ? arg3)
+void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u8 numFields)
 {
-    s32 temp_s1;
     void *temp_t2;
 
-    arg0->unkC8 = 0;
-    arg0->unkCC = 0;
-    arg0->unkB4 = 0;
-    arg0->unkD0 = 0;
-    arg0->unkB8 = 0;
-    arg0->unkBC = 0;
-    arg0->unkC0 = 0;
-    arg0->unkC4 = 0;
-    *arg0 = (u16)1;
-    arg0->unk20 = (u16)5;
-    temp_s1 = (arg0 + 0x40);
-    arg0->unkB0 = arg1;
-    osCreateMesgQueue(temp_s1, (arg0 + 0x58), 8);
-    osCreateMesgQueue((arg0 + 0x78), (arg0 + 0x90), 8);
+    sc->curRSPTask = 0;
+    sc->curRDPTask = 0;
+    sc->clientList = 0;
+    sc->frameCount = 0;
+    sc->audioListHead = 0;
+    sc->gfxListHead = 0;
+    sc->audioListTail = 0;
+    sc->gfxListTail = 0;
+    sc->retraceMsg.type = (u16)1;
+    sc->prenmiMsg.type = (u16)5;
+    sc->thread = stack;
+    osCreateMesgQueue(&sc->interruptQ, sc->intBuf, 8);
+    osCreateMesgQueue(&sc->cmdQ, sc->cmdMsgBuf, 8);
     osCreateViManager(0xfe);
-    temp_t2 = ((arg_unalignedB * 0x50) + &osViModeTable);
+    temp_t2 = ((mode * 0x50) + &osViModeTable);
     viMode = temp_t2;
     dword_CODE_bss_80060880 = (?32) temp_t2->unk1C;
     dword_CODE_bss_80060884 = (?32) temp_t2->unk30;
     dword_CODE_bss_80060888 = (?32) temp_t2->unk44;
-    osSetEventMesg(4, temp_s1, 0x29b);
-    osSetEventMesg(9, temp_s1, 0x29c);
-    osSetEventMesg(0xe, temp_s1, 0x29d);
-    osViSetEvent(temp_s1, 0x29a, arg3);
+    osSetEventMesg(4, &sc->interruptQ, 0x29b);
+    osSetEventMesg(9, &sc->interruptQ, 0x29c);
+    osSetEventMesg(0xe, &sc->interruptQ, 0x29d);
+    osViSetEvent(&sc->interruptQ, 0x29a, numFields);
     osCreateLog();
-    osCreateThread(arg0->unkB0, 2, &__scMain, arg0, set_stack_entry(&sp_shed, 0x200), 0x1e);
-    osStartThread(arg0->unkB0);
+    osCreateThread(sc->thread, 2, &__scMain, sc, set_stack_entry(&sp_shed, 0x200), 0x1e);
+    osStartThread(sc->thread);
 }
 #else
 GLOBAL_ASM(
