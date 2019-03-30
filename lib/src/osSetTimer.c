@@ -1,27 +1,29 @@
 #include "libultra_internal.h"
-extern OSTimer *D_80334830;
+
+// Externs defined in osTimer.c
+extern OSTimer *firstTimer;
 extern u64 __osInsertTimer(OSTimer *);
 
-u32 osSetTimer(OSTimer *a0, OSTime a1, u64 a2, OSMesgQueue *a3, OSMesg a4)
+u32 osSetTimer(OSTimer *timer, OSTime countdown, u64 interval, OSMesgQueue *mq, OSMesg msg)
 {
-    u64 sp18;
-    a0->next = NULL;
-    a0->prev = NULL;
-    a0->interval = a2;
-    if (a1 != 0)
+    u64 rem;
+    timer->next = NULL;
+    timer->prev = NULL;
+    timer->interval = interval;
+    if (countdown != 0)
     {
-        a0->remaining = a1;
+        timer->remaining = countdown;
     }
     else
     {
-        a0->remaining = a2;
+        timer->remaining = interval;
     }
-    a0->mq = a3;
-    a0->msg = a4;
-    sp18 = __osInsertTimer(a0);
-    if (D_80334830->next == a0)
+    timer->mq = mq;
+    timer->msg = msg;
+    rem = __osInsertTimer(timer);
+    if (firstTimer->next == timer)
     {
-        __osSetTimerIntr(sp18);
+        __osSetTimerIntr(rem);
     }
     return 0;
 }

@@ -2,12 +2,12 @@
 
 OSTimer aTimer;
 
-// This timer is the first node in a circular linked list of timers
+// This timer is the first node in a circular doubly-linked list of timers
 OSTimer *firstTimer = &aTimer;
 
 OSTime _osCurrentTime;
 
-// Unused variables
+// These are accessed in other files using externs
 u32 D_80365DA8;
 u32 D_80365DAC;
 
