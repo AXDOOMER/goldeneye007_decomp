@@ -1,4 +1,3 @@
-
 .set noat      # allow manual use of $at
 .set noreorder # don't insert nops after branches
 .set gp=64
@@ -9,8 +8,8 @@
 .section .text, "ax" 
   
 glabel __osSetCompare
-	mtc0  $a0, $11
-	jr    $ra
+	mtc0  $a0, $11             ; Move $0a to cp0's compare register: https://en.wikichip.org/wiki/mips/coprocessor_0
+	jr    $ra                  ; return control to the caller: https://chortle.ccsu.edu/AssemblyTutorial/Chapter-26/ass26_6.html
 	 nop   
 
 	nop   
