@@ -7,8 +7,10 @@ OSTimer *firstTimer = &aTimer;
 
 OSTime _osCurrentTime;
 
+// Count at last VI manager loop
+u32 lastViCount;
+
 // These are accessed in other files using externs
-u32 D_80365DA8;
 u32 D_80365DAC;
 
 // Count at last interrupt
@@ -17,7 +19,7 @@ u32 lastIntCount;
 void __osTimerServicesInit()
 {
     _osCurrentTime = 0;
-    D_80365DA8 = 0;
+    lastViCount = 0;
     D_80365DAC = 0;
 
     // Init the Circular Linked List

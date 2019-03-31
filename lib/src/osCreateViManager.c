@@ -908,7 +908,7 @@ viMesgStruct viEventCounterMesg;
 extern void __osTimerServicesInit(void);
 extern void __osTimerInterrupt(void);
 extern OSTime _osCurrentTime;
-extern u32 D_80365DA8;
+extern u32 lastViCount;
 extern u32 D_80365DAC;
 void viMgrMain(void *);
 //glabel osCreateViManager
@@ -960,16 +960,20 @@ void viMgrMain(void *vargs)
     OSViContext *context;
     OSMgrArgs *args;
     OSMesg mesg;
-    u32 sp28; //useless?
-    u32 sp24; //time related
+    u32 setTimetoCount;    // Useless. Is for dead code that the compiler didn't delete.
+    u32 oldCount;          // Value of the CPU's count register
+
     mesg = NULL;
-    sp28 = FALSE;
+    setTimetoCount = FALSE;
     context = __osViGetCurrentContext();
+
     if ((viEventCounterMesg.unk14 = context->retraceCount) == 0)
     {
         viEventCounterMesg.unk14 = 1;
     }
+
     args = (OSMgrArgs *)vargs;
+
     while (1)
     {
         osRecvMesg(args->unk0c, &mesg, OS_MESG_BLOCK);
@@ -986,17 +990,21 @@ void viMgrMain(void *vargs)
                 }
                 viEventCounterMesg.unk14 = context->retraceCount;
             }
+
             D_80365DAC++;
-            if (sp28)
+
+            // This will never be executed because "setTimetoCount" is always false
+            if (setTimetoCount)
             {
-                sp24 = osGetCount();
-                _osCurrentTime = sp24;
-                sp28 = 0;
+                oldCount = osGetCount();
+                _osCurrentTime = oldCount;
+                setTimetoCount = 0;
             }
-            sp24 = D_80365DA8;
-            D_80365DA8 = osGetCount();
-            sp24 = D_80365DA8 - sp24;
-            _osCurrentTime = _osCurrentTime + sp24;
+
+            oldCount = lastViCount;
+            lastViCount = osGetCount();
+            oldCount = lastViCount - oldCount;
+            _osCurrentTime = _osCurrentTime + oldCount;
             break;
         case 14:
             __osTimerInterrupt();
