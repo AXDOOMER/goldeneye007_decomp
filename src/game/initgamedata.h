@@ -3,4 +3,5 @@
 #include "ultra64.h"
 
 void initGameData(void);
+
 #endif

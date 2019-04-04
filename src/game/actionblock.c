@@ -23,7 +23,11 @@ CODE.bss:80069D08     dword_CODE_bss_80069D08:.space 0x34
 CODE.bss:80069D3C     dword_CODE_bss_80069D3C:.space 0x34
 CODE.bss:80069D70     dword_CODE_bss_80069D70:.space 0x34
 CODE.bss:80069DA4     dword_CODE_bss_80069DA4:.space 0x7874
-CODE.bss:80071618     ptr_room_lookup_buffer_maybe:.space 4
+*/
+
+//CODE.bss:80071618
+void *ptr_room_lookup_buffer_maybe;
+/*
 CODE.bss:8007161C     dword_CODE_bss_8007161C:.space 4
 CODE.bss:80071620     dword_CODE_bss_80071620:.space 4
 CODE.bss:80071624                     .space 0x90
@@ -7875,7 +7879,7 @@ actionF1_If_All_Objectives_Complete_RVL_2:
 /* 06EA94 7F039F64 1000ED89 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EA98 7F039F68 26310002 */   addiu $s1, $s1, 2
 actionF2_Check_Current_Folder_Bond_RVL_3:
-/* 06EA9C 7F039F6C 0FC0755B */  jal   would_have_returned_bond_for_folder_num
+/* 06EA9C 7F039F6C 0FC0755B */  jal   getSelectedFolderBond
 /* 06EAA0 7F039F70 00000000 */   nop   
 /* 06EAA4 7F039F74 82290001 */  lb    $t1, 1($s1)
 /* 06EAA8 7F039F78 02C02025 */  move  $a0, $s6

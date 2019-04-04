@@ -177,7 +177,7 @@
    # file asm/game/init_watch.s
    - [0x7F01D500, "sub_GAME_7F01D500"]
    # file asm/game/7F01D590.s
-   - [0x7F01D590, "get_selected_folder_num"]
+   - [0x7F01D590, "set_selected_folder_num"]
    # file asm/game/7F01D680.s
    - [0x7F01D680, "store_favorite_weapon_current_player"]
    # file asm/game/eeprom_stuff.s

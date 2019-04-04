@@ -47,12 +47,14 @@ flt_D_8004F1E0: .float 0.10000002
                 .align 4
 */
 
-/* data
-D:8002A780     dword_D_8002A780:.word 0                 # DATA XREF: load_camera_intro_type_values+20o
-D:8002A780                                              # load_camera_intro_type_values+24r
-D:8002A784     dword_D_8002A784:.word 0                 # DATA XREF: load_camera_intro_type_values+2Cr
-D:8002A788     dword_D_8002A788:.word 0                 # DATA XREF: load_camera_intro_type_values+34r
-*/
+// data
+//D:8002A780
+u32 D_8002A780 = 0;
+//D:8002A784
+u32 D_8002A784 = 0;
+//D:8002A788
+u32 D_8002A788 = 0;
+
 
 
 

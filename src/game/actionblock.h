@@ -3,7 +3,7 @@
 #include "ultra64.h"
 
 struct sfx_register_struct {
-    u32 field_0x0 :32;
+    u32 field_0x0;
     u32 field_0x4;
     u32 field_0x8;
     u32 field_0xc;

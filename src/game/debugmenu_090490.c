@@ -4,86 +4,89 @@
 
 // data
 //D:80036BA4
-s32 ptr_mcm_groupings[] = {8, 0x13, 0x1E, 0x2B, 0x32, 0x39, 0x45, 0x4D, -1};
-/*
-D:80036BC8     ptr_mcm_positions:mcm_layout <8, 5>      # DATA XREF: display_debug_menu_text_onscreen+18o
-D:80036BD0                     mcm_layout <8, 6>
-D:80036BD8                     mcm_layout <8, 7>
-D:80036BE0                     mcm_layout <8, 8>
-D:80036BE8                     mcm_layout <8, 9>
-D:80036BF0                     mcm_layout <8, 0xA>
-D:80036BF8                     mcm_layout <8, 0xB>
-D:80036C00                     mcm_layout <8, 0xC>
-D:80036C08                     mcm_layout <0x19, 5>
-D:80036C10                     mcm_layout <0x19, 6>
-D:80036C18                     mcm_layout <0x19, 7>
-D:80036C20                     mcm_layout <0x19, 8>
-D:80036C28                     mcm_layout <0x19, 9>
-D:80036C30                     mcm_layout <0x19, 0xA>
-D:80036C38                     mcm_layout <0x19, 0xB>
-D:80036C40                     mcm_layout <0x19, 0xC>
-D:80036C48                     mcm_layout <0x19, 0xD>
-D:80036C50                     mcm_layout <0x19, 0xE>
-D:80036C58                     mcm_layout <0x19, 0xF>
-D:80036C60                     mcm_layout <0x28, 5>
-D:80036C68                     mcm_layout <0x28, 6>
-D:80036C70                     mcm_layout <0x28, 7>
-D:80036C78                     mcm_layout <0x28, 8>
-D:80036C80                     mcm_layout <0x28, 9>
-D:80036C88                     mcm_layout <0x28, 0xA>
-D:80036C90                     mcm_layout <0x28, 0xB>
-D:80036C98                     mcm_layout <0x28, 0xC>
-D:80036CA0                     mcm_layout <0x28, 0xD>
-D:80036CA8                     mcm_layout <0x28, 0xE>
-D:80036CB0                     mcm_layout <0x28, 0xF>
-D:80036CB8                     mcm_layout <0x39, 5>
-D:80036CC0                     mcm_layout <0x39, 6>
-D:80036CC8                     mcm_layout <0x39, 7>
-D:80036CD0                     mcm_layout <0x39, 8>
-D:80036CD8                     mcm_layout <0x39, 9>
-D:80036CE0                     mcm_layout <0x39, 0xA>
-D:80036CE8                     mcm_layout <0x39, 0xB>
-D:80036CF0                     mcm_layout <0x39, 0xC>
-D:80036CF8                     mcm_layout <0x39, 0xD>
-D:80036D00                     mcm_layout <0x39, 0xE>
-D:80036D08                     mcm_layout <0x39, 0xF>
-D:80036D10                     mcm_layout <0x39, 0x10>
-D:80036D18                     mcm_layout <0x39, 0x11>
-D:80036D20                     mcm_layout <8, 0x14>
-D:80036D28                     mcm_layout <8, 0x15>
-D:80036D30                     mcm_layout <8, 0x16>
-D:80036D38                     mcm_layout <8, 0x17>
-D:80036D40                     mcm_layout <8, 0x18>
-D:80036D48                     mcm_layout <8, 0x19>
-D:80036D50                     mcm_layout <8, 0x1A>
-D:80036D58                     mcm_layout <0x19, 0x14>
-D:80036D60                     mcm_layout <0x19, 0x15>
-D:80036D68                     mcm_layout <0x19, 0x16>
-D:80036D70                     mcm_layout <0x19, 0x17>
-D:80036D78                     mcm_layout <0x19, 0x18>
-D:80036D80                     mcm_layout <0x19, 0x19>
-D:80036D88                     mcm_layout <0x19, 0x1A>
-D:80036D90                     mcm_layout <0x28, 0x14>
-D:80036D98                     mcm_layout <0x28, 0x15>
-D:80036DA0                     mcm_layout <0x28, 0x16>
-D:80036DA8                     mcm_layout <0x28, 0x17>
-D:80036DB0                     mcm_layout <0x28, 0x18>
-D:80036DB8                     mcm_layout <0x28, 0x19>
-D:80036DC0                     mcm_layout <0x28, 0x1A>
-D:80036DC8                     mcm_layout <0x28, 0x1B>
-D:80036DD0                     mcm_layout <0x28, 0x1C>
-D:80036DD8                     mcm_layout <0x28, 0x1D>
-D:80036DE0                     mcm_layout <0x28, 0x1E>
-D:80036DE8                     mcm_layout <0x28, 0x1F>
-D:80036DF0                     mcm_layout <0x39, 0x14>
-D:80036DF8                     mcm_layout <0x39, 0x15>
-D:80036E00                     mcm_layout <0x39, 0x16>
-D:80036E08                     mcm_layout <0x39, 0x17>
-D:80036E10                     mcm_layout <0x39, 0x18>
-D:80036E18                     mcm_layout <0x39, 0x19>
-D:80036E20                     mcm_layout <0x39, 0x1A>
-D:80036E28                     mcm_layout <0x39, 0x1B>
-*/
+s32 mcm_column_groupings[] = {8, 0x13, 0x1E, 0x2B, 0x32, 0x39, 0x45, 0x4D, -1};
+
+//D:80036BC8
+struct mcm_layout mcm_onscreen_positions[] = {
+    {8, 5},
+    {8, 6},
+    {8, 7},
+    {8, 8},
+    {8, 9},
+    {8, 0xA},
+    {8, 0xB},
+    {8, 0xC},
+    {0x19, 5},
+    {0x19, 6},
+    {0x19, 7},
+    {0x19, 8},
+    {0x19, 9},
+    {0x19, 0xA},
+    {0x19, 0xB},
+    {0x19, 0xC},
+    {0x19, 0xD},
+    {0x19, 0xE},
+    {0x19, 0xF},
+    {0x28, 5},
+    {0x28, 6},
+    {0x28, 7},
+    {0x28, 8},
+    {0x28, 9},
+    {0x28, 0xA},
+    {0x28, 0xB},
+    {0x28, 0xC},
+    {0x28, 0xD},
+    {0x28, 0xE},
+    {0x28, 0xF},
+    {0x39, 5},
+    {0x39, 6},
+    {0x39, 7},
+    {0x39, 8},
+    {0x39, 9},
+    {0x39, 0xA},
+    {0x39, 0xB},
+    {0x39, 0xC},
+    {0x39, 0xD},
+    {0x39, 0xE},
+    {0x39, 0xF},
+    {0x39, 0x10},
+    {0x39, 0x11},
+    {8, 0x14},
+    {8, 0x15},
+    {8, 0x16},
+    {8, 0x17},
+    {8, 0x18},
+    {8, 0x19},
+    {8, 0x1A},
+    {0x19, 0x14},
+    {0x19, 0x15},
+    {0x19, 0x16},
+    {0x19, 0x17},
+    {0x19, 0x18},
+    {0x19, 0x19},
+    {0x19, 0x1A},
+    {0x28, 0x14},
+    {0x28, 0x15},
+    {0x28, 0x16},
+    {0x28, 0x17},
+    {0x28, 0x18},
+    {0x28, 0x19},
+    {0x28, 0x1A},
+    {0x28, 0x1B},
+    {0x28, 0x1C},
+    {0x28, 0x1D},
+    {0x28, 0x1E},
+    {0x28, 0x1F},
+    {0x39, 0x14},
+    {0x39, 0x15},
+    {0x39, 0x16},
+    {0x39, 0x17},
+    {0x39, 0x18},
+    {0x39, 0x19},
+    {0x39, 0x1A},
+    {0x39, 0x1B}
+};
+
 //D:80036E30
 u32 *mcm_strings[] = {
      "move view",
@@ -235,8 +238,11 @@ s32 debug_portal_flag = 0;
 u32 dword_D_80036FD8[] = {
     0x80500000,
     0x40000,
-    &initGameData,
-    0x7F100000,
+    0x7F000000,
+    0x7F100000
+};
+
+u32 dword_D_80036FE8[] = {
     0x80600000,
     0x40000,
     0x70000000,
@@ -244,7 +250,7 @@ u32 dword_D_80036FD8[] = {
 };
 
 //D:80036FF8
-s32 dword_D_80036FF8 = 0;
+s32 show_debug_menu_flag = 0;
 //D:80036FFC
 s32 grab_rgb_screenshot_flag = 0;
 //D:80037000
@@ -285,11 +291,10 @@ D:80055830                     .word def_7F090EA8
 */
 
 #ifdef NONMATCHING
-void display_debug_menu_text_onscreen(void) {
-    // Node 0
-    return init_debug_menu_values(&mcm_strings, &D_80036BC8, &D_80036BA4);
+void display_debug_menu_text_onscreen(void)
+{
+  init_debug_menu_values((char *)mcm_strings,mcm_onscreen_positions,mcm_column_groupings);
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -297,10 +302,10 @@ glabel display_debug_menu_text_onscreen
 /* 0C4FC0 7F090490 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0C4FC4 7F090494 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C4FC8 7F090498 3C048003 */  lui   $a0, %hi(mcm_strings) # $a0, 0x8003
-/* 0C4FCC 7F09049C 3C058003 */  lui   $a1, %hi(D_80036BC8) # $a1, 0x8003
-/* 0C4FD0 7F0904A0 3C068003 */  lui   $a2, %hi(D_80036BA4) # $a2, 0x8003
-/* 0C4FD4 7F0904A4 24C66BA4 */  addiu $a2, %lo(D_80036BA4) # addiu $a2, $a2, 0x6ba4
-/* 0C4FD8 7F0904A8 24A56BC8 */  addiu $a1, %lo(D_80036BC8) # addiu $a1, $a1, 0x6bc8
+/* 0C4FCC 7F09049C 3C058003 */  lui   $a1, %hi(mcm_onscreen_positions) # $a1, 0x8003
+/* 0C4FD0 7F0904A0 3C068003 */  lui   $a2, %hi(mcm_column_groupings) # $a2, 0x8003
+/* 0C4FD4 7F0904A4 24C66BA4 */  addiu $a2, %lo(mcm_column_groupings) # addiu $a2, $a2, 0x6ba4
+/* 0C4FD8 7F0904A8 24A56BC8 */  addiu $a1, %lo(mcm_onscreen_positions) # addiu $a1, $a1, 0x6bc8
 /* 0C4FDC 7F0904AC 0FC23F85 */  jal   init_debug_menu_values
 /* 0C4FE0 7F0904B0 24846E30 */   addiu $a0, %lo(mcm_strings) # addiu $a0, $a0, 0x6e30
 /* 0C4FE4 7F0904B4 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -516,10 +521,10 @@ glabel debug_menu_processor
 /* 0C5158 7F090628 0C0038B4 */  jal   osViBlack
 /* 0C515C 7F09062C 00002025 */   move  $a0, $zero
 .L7F090630:
-/* 0C5160 7F090630 3C0E8003 */  lui   $t6, %hi(D_80036FF8) # $t6, 0x8003
-/* 0C5164 7F090634 8DCE6FF8 */  lw    $t6, %lo(D_80036FF8)($t6)
+/* 0C5160 7F090630 3C0E8003 */  lui   $t6, %hi(show_debug_menu_flag) # $t6, 0x8003
+/* 0C5164 7F090634 8DCE6FF8 */  lw    $t6, %lo(show_debug_menu_flag)($t6)
 /* 0C5168 7F090638 3C048003 */  lui   $a0, %hi(debug_limit_controller_input) # $a0, 0x8003
-/* 0C516C 7F09063C 3C018003 */  lui   $at, %hi(D_80036FF8) # $at, 0x8003
+/* 0C516C 7F09063C 3C018003 */  lui   $at, %hi(show_debug_menu_flag) # $at, 0x8003
 /* 0C5170 7F090640 15C00010 */  bnez  $t6, .L7F090684
 /* 0C5174 7F090644 24846F6C */   addiu $a0, %lo(debug_limit_controller_input) # addiu $a0, $a0, 0x6f6c
 /* 0C5178 7F090648 97A4006A */  lhu   $a0, 0x6a($sp)
@@ -532,13 +537,13 @@ glabel debug_menu_processor
 /* 0C5194 7F090664 03001025 */  move  $v0, $t8
 .L7F090668:
 /* 0C5198 7F090668 10400003 */  beqz  $v0, .L7F090678
-/* 0C519C 7F09066C AC226FF8 */   sw    $v0, %lo(D_80036FF8)($at)
+/* 0C519C 7F09066C AC226FF8 */   sw    $v0, %lo(show_debug_menu_flag)($at)
 /* 0C51A0 7F090670 0FC301F5 */  jal   stop_recording_ramrom
 /* 0C51A4 7F090674 00000000 */   nop   
 .L7F090678:
-/* 0C51A8 7F090678 3C028003 */  lui   $v0, %hi(D_80036FF8) # $v0, 0x8003
+/* 0C51A8 7F090678 3C028003 */  lui   $v0, %hi(show_debug_menu_flag) # $v0, 0x8003
 /* 0C51AC 7F09067C 1000021B */  b     .L7F090EEC
-/* 0C51B0 7F090680 8C426FF8 */   lw    $v0, %lo(D_80036FF8)($v0)
+/* 0C51B0 7F090680 8C426FF8 */   lw    $v0, %lo(show_debug_menu_flag)($v0)
 .L7F090684:
 /* 0C51B4 7F090684 8C820000 */  lw    $v0, ($a0)
 /* 0C51B8 7F090688 2403FFFE */  li    $v1, -2
@@ -931,22 +936,22 @@ debug_007:
 /* 0C56F8 7F090BC8 100000AA */  b     .L7F090E74
 /* 0C56FC 7F090BCC AC480000 */   sw    $t0, ($v0)
 debug_agent:
-/* 0C5700 7F090BD0 3C028003 */  lui   $v0, %hi(debug_enable_agent_levels) # $v0, 0x8003
-/* 0C5704 7F090BD4 24426FB0 */  addiu $v0, %lo(debug_enable_agent_levels) # addiu $v0, $v0, 0x6fb0
+/* 0C5700 7F090BD0 3C028003 */  lui   $v0, %hi(debug_enable_agent_levels_flag) # $v0, 0x8003
+/* 0C5704 7F090BD4 24426FB0 */  addiu $v0, %lo(debug_enable_agent_levels_flag) # addiu $v0, $v0, 0x6fb0
 /* 0C5708 7F090BD8 8C490000 */  lw    $t1, ($v0)
 /* 0C570C 7F090BDC 392A0001 */  xori  $t2, $t1, 1
 /* 0C5710 7F090BE0 100000A4 */  b     .L7F090E74
 /* 0C5714 7F090BE4 AC4A0000 */   sw    $t2, ($v0)
 debug_all:
-/* 0C5718 7F090BE8 3C028003 */  lui   $v0, %hi(debug_enable_all_levels) # $v0, 0x8003
-/* 0C571C 7F090BEC 24426FB4 */  addiu $v0, %lo(debug_enable_all_levels) # addiu $v0, $v0, 0x6fb4
+/* 0C5718 7F090BE8 3C028003 */  lui   $v0, %hi(debug_enable_all_levels_flag) # $v0, 0x8003
+/* 0C571C 7F090BEC 24426FB4 */  addiu $v0, %lo(debug_enable_all_levels_flag) # addiu $v0, $v0, 0x6fb4
 /* 0C5720 7F090BF0 8C4B0000 */  lw    $t3, ($v0)
 /* 0C5724 7F090BF4 396C0001 */  xori  $t4, $t3, 1
 /* 0C5728 7F090BF8 1000009E */  b     .L7F090E74
 /* 0C572C 7F090BFC AC4C0000 */   sw    $t4, ($v0)
 fast_bond_debug:
-/* 0C5730 7F090C00 3C028003 */  lui   $v0, %hi(debug_fast_bond) # $v0, 0x8003
-/* 0C5734 7F090C04 24426FCC */  addiu $v0, %lo(debug_fast_bond) # addiu $v0, $v0, 0x6fcc
+/* 0C5730 7F090C00 3C028003 */  lui   $v0, %hi(debug_fast_bond_flag) # $v0, 0x8003
+/* 0C5734 7F090C04 24426FCC */  addiu $v0, %lo(debug_fast_bond_flag) # addiu $v0, $v0, 0x6fcc
 /* 0C5738 7F090C08 8C4D0000 */  lw    $t5, ($v0)
 /* 0C573C 7F090C0C 39AE0001 */  xori  $t6, $t5, 1
 /* 0C5740 7F090C10 10000098 */  b     .L7F090E74
@@ -1146,22 +1151,22 @@ def_7F090EA8:
 .L7F090EB0:
 /* 0C59E0 7F090EB0 8FA90018 */  lw    $t1, 0x18($sp)
 .L7F090EB4:
-/* 0C59E4 7F090EB4 3C0B8003 */  lui   $t3, %hi(D_80036FF8) # $t3, 0x8003
+/* 0C59E4 7F090EB4 3C0B8003 */  lui   $t3, %hi(show_debug_menu_flag) # $t3, 0x8003
 /* 0C59E8 7F090EB8 312A1000 */  andi  $t2, $t1, 0x1000
 /* 0C59EC 7F090EBC 11400009 */  beqz  $t2, .L7F090EE4
 /* 0C59F0 7F090EC0 00000000 */   nop   
-/* 0C59F4 7F090EC4 8D6B6FF8 */  lw    $t3, %lo(D_80036FF8)($t3)
+/* 0C59F4 7F090EC4 8D6B6FF8 */  lw    $t3, %lo(show_debug_menu_flag)($t3)
 /* 0C59F8 7F090EC8 24010001 */  li    $at, 1
 /* 0C59FC 7F090ECC 15610003 */  bne   $t3, $at, .L7F090EDC
 /* 0C5A00 7F090ED0 00000000 */   nop   
 /* 0C5A04 7F090ED4 0C002BC0 */  jal   debug_text_related_1
 /* 0C5A08 7F090ED8 00000000 */   nop   
 .L7F090EDC:
-/* 0C5A0C 7F090EDC 3C018003 */  lui   $at, %hi(D_80036FF8) # $at, 0x8003
-/* 0C5A10 7F090EE0 AC206FF8 */  sw    $zero, %lo(D_80036FF8)($at)
+/* 0C5A0C 7F090EDC 3C018003 */  lui   $at, %hi(show_debug_menu_flag) # $at, 0x8003
+/* 0C5A10 7F090EE0 AC206FF8 */  sw    $zero, %lo(show_debug_menu_flag)($at)
 .L7F090EE4:
-/* 0C5A14 7F090EE4 3C028003 */  lui   $v0, %hi(D_80036FF8) # $v0, 0x8003
-/* 0C5A18 7F090EE8 8C426FF8 */  lw    $v0, %lo(D_80036FF8)($v0)
+/* 0C5A14 7F090EE4 3C028003 */  lui   $v0, %hi(show_debug_menu_flag) # $v0, 0x8003
+/* 0C5A18 7F090EE8 8C426FF8 */  lw    $v0, %lo(show_debug_menu_flag)($v0)
 .L7F090EEC:
 /* 0C5A1C 7F090EEC 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0C5A20 7F090EF0 27BD0060 */  addiu $sp, $sp, 0x60

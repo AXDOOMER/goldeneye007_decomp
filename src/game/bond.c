@@ -4761,7 +4761,7 @@ glabel solo_char_load
 /* 0AE8F0 7F079DC0 24010001 */  li    $at, 1
 /* 0AE8F4 7F079DC4 14410066 */  bne   $v0, $at, .L7F079F60
 /* 0AE8F8 7F079DC8 00000000 */   nop   
-/* 0AE8FC 7F079DCC 0FC0755B */  jal   would_have_returned_bond_for_folder_num
+/* 0AE8FC 7F079DCC 0FC0755B */  jal   getSelectedFolderBond
 /* 0AE900 7F079DD0 00000000 */   nop   
 /* 0AE904 7F079DD4 3C0F8008 */  lui   $t7, %hi(ptr_BONDdata) # $t7, 0x8008
 /* 0AE908 7F079DD8 8DEFA0B0 */  lw    $t7, %lo(ptr_BONDdata)($t7)
@@ -12889,7 +12889,7 @@ glabel trigger_solo_watch_menu
 .L7F07FB38:
 /* 0B4668 7F07FB38 54410010 */  bnel  $v0, $at, .L7F07FB7C
 /* 0B466C 7F07FB3C 2401000C */   li    $at, 12
-/* 0B4670 7F07FB40 0FC07549 */  jal   sub_GAME_7F01D524
+/* 0B4670 7F07FB40 0FC07549 */  jal   deleteCurrentSelectedFolder
 /* 0B4674 7F07FB44 00000000 */   nop   
 /* 0B4678 7F07FB48 0FC304D0 */  jal   sub_GAME_7F0C1340
 /* 0B467C 7F07FB4C 00000000 */   nop   
@@ -23021,7 +23021,7 @@ s32 seems_to_load_cuff_microcode(s32 arg0, void *arg1, s32 arg2) {
     s32 phi_return;
 
     // Node 0
-    sp40 = would_have_returned_bond_for_folder_num();
+    sp40 = getSelectedFolderBond();
     temp_a3 = (arg2 * 4);
     temp_a0 = (arg1->unk8 + temp_a3);
     phi_a0 = temp_a0;
@@ -23150,7 +23150,7 @@ glabel seems_to_load_cuff_microcode
 /* 0BC748 7F087C18 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0BC74C 7F087C1C AFA40048 */  sw    $a0, 0x48($sp)
 /* 0BC750 7F087C20 AFA5004C */  sw    $a1, 0x4c($sp)
-/* 0BC754 7F087C24 0FC0755B */  jal   would_have_returned_bond_for_folder_num
+/* 0BC754 7F087C24 0FC0755B */  jal   getSelectedFolderBond
 /* 0BC758 7F087C28 AFA60050 */   sw    $a2, 0x50($sp)
 /* 0BC75C 7F087C2C 8FAE004C */  lw    $t6, 0x4c($sp)
 /* 0BC760 7F087C30 8FA30050 */  lw    $v1, 0x50($sp)

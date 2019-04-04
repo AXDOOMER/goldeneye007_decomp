@@ -16,10 +16,14 @@ u32 *ptr_scorch_buf;
 //CODE.bss:8007A154
 u32 *ptr_bullet_impact_buf;
 
-/* data
-D:80040170     dword_D_80040170:.word 0
-D:80040174     dword_D_80040174:.word 0
-D:80040178     flt_D_80040178: .float 1.0
+// data
+//D:80040170
+s32 D_80040170 = 0;
+//D:80040174
+s32 D_80040174 = 0;
+//D:80040178
+f32 D_80040178 = 1.0;
+/*
 D:8004017C     dword_D_8004017C:.word    0x1003C,  0x630000,         0,0x80808000
 D:8004017C                     .word 0x3E99999A,  0xB40000, 0x1E0003C,  0x2D003C
 D:8004017C                     .word 0x3CA3D70A,0x50506000,0x3E99999A,  0xB40000

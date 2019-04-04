@@ -205,42 +205,21 @@ D:80040DEC     dword_D_80040DEC:.word 0x44FA0000
 D:80040DF0                     .word 0x44160000
 D:80040DF4                     .word 0x43480000
 D:80040DF8     dword_D_80040DF8:.word 0x43A00000
-D:80040DFC     dword_D_80040DFC:.word 0x34
-D:80040E00                     .word 0x2F
-D:80040E04                     .word 0x2D
-D:80040E08                     .word 0x2A
-D:80040E0C                     .word 0x28
-D:80040E10                     .word 0x25
-D:80040E14                     .word 0x25
-D:80040E18                     .word 0x28
-D:80040E1C                     .word 0x2A
-D:80040E20                     .word 0x2D
-D:80040E24                     .word 0x2F
-D:80040E28                     .word 0x34
-D:80040E2C                     .word 0x37
-D:80040E30                     .word 0x40
-D:80040E34                     .word 0xFFFFFFFF
-D:80040E38     dword_D_80040E38:.word 0x4B
-D:80040E3C     dword_D_80040E3C:.word 0xFFFFFFFF
-D:80040E40     dword_D_80040E40:.word 0x10E
-D:80040E44                     .word 0x113
-D:80040E48                     .word 0x116
-D:80040E4C                     .word 0x119
-D:80040E50                     .word 0x11A
-D:80040E54                     .word 0x11B
-D:80040E58                     .word 0x11B
-D:80040E5C                     .word 0x11A
-D:80040E60                     .word 0x119
-D:80040E64                     .word 0x116
-D:80040E68                     .word 0x113
-D:80040E6C                     .word 0x10E
-D:80040E70                     .word 0x108
-D:80040E74                     .word 0xFE
-D:80040E78                     .word 0xFFFFFFFF
+*/
+//D:80040DFC
+s32 D_80040DFC[] = {0x34, 0x2F, 0x2D, 0x2A, 0x28, 0x25, 0x25, 0x28, 0x2A, 0x2D, 0x2F, 0x34, 0x37, 0x40, 0xFFFFFFFF};
+
+//D:80040E38
+s32 D_80040E38 = 0x4B;
+//D:80040E3C
+s32 D_80040E3C = 0xFFFFFFFF;
+
+//D:80040E40
+s32 D_80040E40[] = {0x10E, 0x113, 0x116, 0x119, 0x11A, 0x11B, 0x11B, 0x11A, 0x119, 0x116, 0x113, 0x10E, 0x108, 0xFE, 0xFFFFFFFF};
 //D:80040E7C
 s32 D_80040E7C = 0;
 
-*/
+
 
 /* rodata
 D:80057760     aDD:            .ascii "%d, %d\n"
@@ -297,35 +276,66 @@ D:80058444     asc_D_80058444: .ascii " \n\n"
 D:80058448     aC_2:           .ascii "%c: "
 D:80058450     asc_D_80058450: .ascii " \n"
 D:80058454     asc_D_80058454: .ascii " \n\n"
-D:80058458     flt_D_80058458: .float 4.5999999
-D:8005845C     flt_D_8005845C: .float 4.5999999
-D:80058460     flt_D_80058460: .float 5.9000001
-D:80058464     flt_D_80058464: .float 3.95
-D:80058468     flt_D_80058468: .float 3.95
-D:8005846C     flt_D_8005846C: .float 4.5999999
-D:80058470     flt_D_80058470: .float 4.5999999
-D:80058474     flt_D_80058474: .float 3.95
-D:80058478     flt_D_80058478: .float 5.9000001
-D:8005847C     flt_D_8005847C: .float 0.1
-D:80058480     flt_D_80058480: .float 0.1
-D:80058484     flt_D_80058484: .float 0.55000001
-D:80058488     flt_D_80058488: .float 0.1
-D:8005848C     flt_D_8005848C: .float 0.44999999
-D:80058490     flt_D_80058490: .float 0.1
-D:80058494     flt_D_80058494: .float 0.1
-D:80058498     flt_D_80058498: .float 0.1
-D:8005849C     flt_D_8005849C: .float 0.55000001
-D:800584A0     flt_D_800584A0: .float 0.1
-D:800584A4     flt_D_800584A4: .float 0.44999999
-D:800584A8     flt_D_800584A8: .float 0.1
-D:800584AC     flt_D_800584AC: .float 213444.0
-D:800584B0     flt_D_800584B0: .float 0.99900001
-D:800584B4     flt_D_800584B4: .float 0.99989998
-D:800584B8     flt_D_800584B8: .float 3.1415927
-D:800584BC     flt_D_800584BC: .float 6.2831855
-D:800584C0     flt_D_800584C0: .float -3.1415927
-D:800584C4     flt_D_800584C4: .float 6.2831855
-D:800584C8     flt_D_800584C8: .float 6.2831855
+*/
+//D:80058458
+const f32 D_80058458 = 4.5999999;
+//D:8005845C
+const f32 D_8005845C = 4.5999999;
+//D:80058460
+const f32 D_80058460 = 5.9000001;
+//D:80058464
+const f32 D_80058464 = 3.95;
+//D:80058468
+const f32 D_80058468 = 3.95;
+//D:8005846C
+const f32 D_8005846C = 4.5999999;
+//D:80058470
+const f32 D_80058470 = 4.5999999;
+//D:80058474
+const f32 D_80058474 = 3.95;
+//D:80058478
+const f32 D_80058478 = 5.9000001;
+//D:8005847C
+const f32 D_8005847C = 0.1;
+//D:80058480
+const f32 D_80058480 = 0.1;
+//D:80058484
+const f32 D_80058484 = 0.55000001;
+//D:80058488
+const f32 D_80058488 = 0.1;
+//D:8005848C
+const f32 D_8005848C = 0.44999999;
+//D:80058490
+const f32 D_80058490 = 0.1;
+//D:80058494
+const f32 D_80058494 = 0.1;
+//D:80058498
+const f32 D_80058498 = 0.1;
+//D:8005849C
+const f32 D_8005849C = 0.55000001;
+//D:800584A0
+const f32 D_800584A0 = 0.1;
+//D:800584A4
+const f32 D_800584A4 = 0.44999999;
+//D:800584A8
+const f32 D_800584A8 = 0.1;
+//D:800584AC
+const f32 D_800584AC = 213444.0;
+//D:800584B0
+const f32 D_800584B0 = 0.99900001;
+//D:800584B4
+const f32 D_800584B4 = 0.99989998;
+//D:800584B8
+const f32 D_800584B8 = 3.1415927;
+//D:800584BC
+const f32 D_800584BC = 6.2831855;
+//D:800584C0
+const f32 D_800584C0 = -3.1415927;
+//D:800584C4
+const f32 D_800584C4 = 6.2831855;
+//D:800584C8
+const f32 D_800584C8 = 6.2831855;
+/*
 D:800584CC     jpt_700DAD2C:   .word loc_CODE_7F0A6E04  # DATA XREF: sub_CODE_7F0A6A80+370r
 D:800584CC                     .word loc_CODE_7F0A6ED0  # jump table for switch statement
 D:800584CC                     .word loc_CODE_7F0A6E14
@@ -341,32 +351,60 @@ D:800584E0                     .word loc_CODE_7F0A6EA8
 D:800584E0                     .word loc_CODE_7F0A6EA8
 D:800584E0                     .word loc_CODE_7F0A6EA8
 D:800584E0                     .word loc_CODE_7F0A6EA8
-D:80058508     flt_D_80058508: .float 0.050000001
-D:8005850C     flt_D_8005850C: .float 0.98000002
-D:80058510     flt_D_80058510: .float 1.0204082
-D:80058514     flt_D_80058514: .float 10000.0
-D:80058518     flt_D_80058518: .float 6.2831855
-D:8005851C     flt_D_8005851C: .float 6.2831855
-D:80058520     flt_D_80058520: .float 0.98000002
-D:80058524     flt_D_80058524: .float 1.0204082
-D:80058528     flt_D_80058528: .float 10000.0
-D:8005852C     flt_D_8005852C: .float 6.2831855
-D:80058530     flt_D_80058530: .float 6.2831855
-D:80058534     flt_D_80058534: .float 1.2
-D:80058538     flt_D_80058538: .float 32767.0
-D:8005853C     flt_D_8005853C: .float 32767.0
-D:80058540     flt_D_80058540: .float 0.1
-D:80058544     flt_D_80058544: .float -0.1
-D:80058548     flt_D_80058548: .float 0.2
-D:8005854C     flt_D_8005854C: .float 6.2831855
-D:80058550     flt_D_80058550: .float 6.2831855
-D:80058554     flt_D_80058554: .float 0.78539819
-D:80058558     flt_D_80058558: .float 495.0
-D:8005855C     flt_D_8005855C: .float 3000.0
-D:80058560     flt_D_80058560: .float 6.2831855
-D:80058564     flt_D_80058564: .float 0.78539819
-D:80058568     flt_D_80058568: .float -505.0
-D:8005856C     flt_D_8005856C: .float 3000.0
+*/
+//D:80058508
+const f32 D_80058508 = 0.050000001;
+//D:8005850C
+const f32 D_8005850C = 0.98000002;
+//D:80058510
+const f32 D_80058510 = 1.0204082;
+//D:80058514
+const f32 D_80058514 = 10000.0;
+//D:80058518
+const f32 D_80058518 = 6.2831855;
+//D:8005851C
+const f32 D_8005851C = 6.2831855;
+//D:80058520
+const f32 D_80058520 = 0.98000002;
+//D:80058524
+const f32 D_80058524 = 1.0204082;
+//D:80058528
+const f32 D_80058528 = 10000.0;
+//D:8005852C
+const f32 D_8005852C = 6.2831855;
+//D:80058530
+const f32 D_80058530 = 6.2831855;
+//D:80058534
+const f32 D_80058534 = 1.2;
+//D:80058538
+const f32 D_80058538 = 32767.0;
+//D:8005853C
+const f32 D_8005853C = 32767.0;
+//D:80058540
+const f32 D_80058540 = 0.1;
+//D:80058544
+const f32 D_80058544 = -0.1;
+//D:80058548
+const f32 D_80058548 = 0.2;
+//D:8005854C
+const f32 D_8005854C = 6.2831855;
+//D:80058550
+const f32 D_80058550 = 6.2831855;
+//D:80058554
+const f32 D_80058554 = 0.78539819;
+//D:80058558
+const f32 D_80058558 = 495.0;
+//D:8005855C
+const f32 D_8005855C = 3000.0;
+//D:80058560
+const f32 D_80058560 = 6.2831855;
+//D:80058564
+const f32 D_80058564 = 0.78539819;
+//D:80058568
+const f32 D_80058568 = -505.0;
+//D:8005856C
+const f32 D_8005856C = 3000.0;
+/*
 D:80058570     jpt_700E02E0:   .word loc_CODE_7F0AC3B8  # DATA XREF: sub_CODE_7F0AC168+23Cr
 D:80058570                     .word loc_CODE_7F0AC400  # jump table for switch statement
 D:80058570                     .word loc_CODE_7F0AC448
@@ -1819,7 +1857,7 @@ glabel sub_GAME_7F0A526C
 /* 0D9EE4 7F0A53B4 00000000 */   nop   
 /* 0D9EE8 7F0A53B8 240E0001 */  li    $t6, 1
 /* 0D9EEC 7F0A53BC 3C018003 */  lui   $at, %hi(mission_failed_or_aborted) # $at, 0x8003
-/* 0D9EF0 7F0A53C0 0FC07549 */  jal   sub_GAME_7F01D524
+/* 0D9EF0 7F0A53C0 0FC07549 */  jal   deleteCurrentSelectedFolder
 /* 0D9EF4 7F0A53C4 AC2EA924 */   sw    $t6, %lo(mission_failed_or_aborted)($at)
 .L7F0A53C8:
 /* 0D9EF8 7F0A53C8 8FBF0014 */  lw    $ra, 0x14($sp)

@@ -339,11 +339,11 @@ s32 dword_CODE_bss_80069780;
 //CODE.bss:80069784
 s32 mission_difficulty_highlighted;
 //CODE.bss:80069788
-s32 dword_CODE_bss_80069788;
+s32 teamsize;
 //CODE.bss:8006978C
-s32 dword_CODE_bss_8006978C;
+s32 ptrbriefingdata;
 //CODE.bss:80069790
-s32 dword_CODE_bss_80069790;
+s32 newcheatunlocked;
 //CODE.bss:80069794
 s32 highlight_enemy_reaction;
 //CODE.bss:80069798
@@ -7438,7 +7438,7 @@ void init_menu06_modeselect(void)
     tab_2_selected = 0;
     tab_3_selected = 0;
     load_walletbond();
-    sub_GAME_7F01D548();
+    copyCurrentEEPROMtoStack();
 }
 #else
 GLOBAL_ASM(
@@ -7454,7 +7454,7 @@ glabel init_menu06_modeselect
 /* 041D9C 7F00D26C 3C018003 */  lui   $at, %hi(tab_3_selected) # $at, 0x8003
 /* 041DA0 7F00D270 0FC02E2B */  jal   load_walletbond
 /* 041DA4 7F00D274 AC20A8D8 */   sw    $zero, %lo(tab_3_selected)($at)
-/* 041DA8 7F00D278 0FC07552 */  jal   sub_GAME_7F01D548
+/* 041DA8 7F00D278 0FC07552 */  jal   copyCurrentEEPROMtoStack
 /* 041DAC 7F00D27C 00000000 */   nop   
 /* 041DB0 7F00D280 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 041DB4 7F00D284 27BD0018 */  addiu $sp, $sp, 0x18
@@ -23171,7 +23171,7 @@ void init_menu0D_missioncomplete(void)
     tab_3_selected = 0;
     load_walletbond();
     load_briefing_text_for_stage();
-    if (dword_CODE_bss_80069790 != 0)
+    if (newcheatunlocked != 0)
     {
         play_sfx_a1(ptr_sfx_buf, 0x102, 0);
     }
@@ -23189,8 +23189,8 @@ glabel init_menu0D_missioncomplete
 /* 04B1C4 7F016694 AC20A8D8 */   sw    $zero, %lo(tab_3_selected)($at)
 /* 04B1C8 7F016698 0FC05548 */  jal   load_briefing_text_for_stage
 /* 04B1CC 7F01669C 00000000 */   nop   
-/* 04B1D0 7F0166A0 3C0E8007 */  lui   $t6, %hi(dword_CODE_bss_80069790) # $t6, 0x8007
-/* 04B1D4 7F0166A4 8DCE9790 */  lw    $t6, %lo(dword_CODE_bss_80069790)($t6)
+/* 04B1D0 7F0166A0 3C0E8007 */  lui   $t6, %hi(newcheatunlocked) # $t6, 0x8007
+/* 04B1D4 7F0166A4 8DCE9790 */  lw    $t6, %lo(newcheatunlocked)($t6)
 /* 04B1D8 7F0166A8 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 04B1DC 7F0166AC 24050102 */  li    $a1, 258
 /* 04B1E0 7F0166B0 11C00003 */  beqz  $t6, .L7F0166C0
@@ -23710,8 +23710,8 @@ glabel constructor_menu0D_missioncomplete
 /* 04B8CC 7F016D9C AFAC0014 */  sw    $t4, 0x14($sp)
 /* 04B8D0 7F016DA0 0FC025D8 */  jal   write_text_at_abs_coord
 /* 04B8D4 7F016DA4 AFAB0010 */   sw    $t3, 0x10($sp)
-/* 04B8D8 7F016DA8 3C0E8007 */  lui   $t6, %hi(dword_CODE_bss_80069790) # $t6, 0x8007
-/* 04B8DC 7F016DAC 8DCE9790 */  lw    $t6, %lo(dword_CODE_bss_80069790)($t6)
+/* 04B8D8 7F016DA8 3C0E8007 */  lui   $t6, %hi(newcheatunlocked) # $t6, 0x8007
+/* 04B8DC 7F016DAC 8DCE9790 */  lw    $t6, %lo(newcheatunlocked)($t6)
 /* 04B8E0 7F016DB0 00408825 */  move  $s1, $v0
 /* 04B8E4 7F016DB4 51C00023 */  beql  $t6, $zero, .L7F016E44
 /* 04B8E8 7F016DB8 8FAB0060 */   lw    $t3, 0x60($sp)

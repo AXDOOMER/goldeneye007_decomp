@@ -124,8 +124,12 @@ D:8002C8A0     blank_eeprom:   save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 
 
 
 #ifdef NONMATCHING
-void get_007_reaction_speed(void) {
-
+f32 get_007_reaction_speed(void)
+{
+  if (get_current_difficulty() != DIFFICULTY_007) {
+    slider_007_mode_reaction = 0.00000000;
+  }
+  return slider_007_mode_reaction;
 }
 #else
 GLOBAL_ASM(
@@ -153,8 +157,12 @@ glabel get_007_reaction_speed
 
 
 #ifdef NONMATCHING
-void get_007_health_mod(void) {
-
+f32 get_007_health_mod(void)
+{
+  if (get_current_difficulty() != DIFFICULTY_007) {
+    slider_007_mode_health = 1.00000000;
+  }
+  return slider_007_mode_health;
 }
 #else
 GLOBAL_ASM(
@@ -183,8 +191,12 @@ glabel get_007_health_mod
 
 
 #ifdef NONMATCHING
-void get_007_damage_mod(void) {
-
+f32 get_007_damage_mod(void)
+{
+  if (get_current_difficulty() != DIFFICULTY_007) {
+    slider_007_mode_accuracy = 1.00000000;
+  }
+  return slider_007_mode_accuracy;
 }
 #else
 GLOBAL_ASM(
@@ -213,8 +225,12 @@ glabel get_007_damage_mod
 
 
 #ifdef NONMATCHING
-void get_007_accuracy_mod(void) {
-
+f32 get_007_accuracy_mod(void)
+{
+  if (get_current_difficulty() != DIFFICULTY_007) {
+    slider_007_mode_damage = 1.00000000;
+  }
+  return slider_007_mode_damage;
 }
 #else
 GLOBAL_ASM(
@@ -243,8 +259,35 @@ glabel get_007_accuracy_mod
 
 
 #ifdef NONMATCHING
-void end_of_mission_briefing(void) {
+void end_of_mission_briefing(void)
 
+{
+  short sVar1;
+  int iVar3;
+  save_file *folder;
+  ulonglong uVar2;
+  
+  if (((-1 < briefingpage) && (selected_difficulty != DIFFICULTY_007)) && (append_cheat_sp == FALSE)
+     ) {
+    sVar1 = (&solo_target_times_ARRAY_8002b564
+              [mission_folder_setup_entries[briefingpage].mission_num].agent_time)
+            [selected_difficulty];
+
+    unlock_stage_in_folder_on_difficulty
+              (selected_folder_num,(longlong)mission_folder_setup_entries[briefingpage].mission_num,
+               (longlong)selected_difficulty,getMissiontime() / 0x3c);
+
+    if ((longlong)(getMissiontime() / 0x3c) <= (longlong)sVar1) {
+      folder = getEEPROMforFoldernum(selected_folder_num);
+      if (check_if_cheat_unlocked(folder,(longlong)mission_folder_setup_entries[briefingpage].mission_num) == 0) {
+        proc_7F01E760(selected_folder_num,(longlong)mission_folder_setup_entries[briefingpage].mission_num);
+        newcheatunlocked = 1;
+        return;
+      }
+    }
+    newcheatunlocked = 0;
+  }
+  return;
 }
 #else
 GLOBAL_ASM(
@@ -330,12 +373,12 @@ glabel end_of_mission_briefing
 /* 052000 7F01D4D0 0FC079D8 */  jal   sub_GAME_7F01E760
 /* 052004 7F01D4D4 8CA5ABF8 */   lw    $a1, -0x5408($a1)
 /* 052008 7F01D4D8 24090001 */  li    $t1, 1
-/* 05200C 7F01D4DC 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069790) # $at, 0x8007
+/* 05200C 7F01D4DC 3C018007 */  lui   $at, %hi(newcheatunlocked) # $at, 0x8007
 /* 052010 7F01D4E0 10000003 */  b     .L7F01D4F0
-/* 052014 7F01D4E4 AC299790 */   sw    $t1, %lo(dword_CODE_bss_80069790)($at)
+/* 052014 7F01D4E4 AC299790 */   sw    $t1, %lo(newcheatunlocked)($at)
 .L7F01D4E8:
-/* 052018 7F01D4E8 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069790) # $at, 0x8007
-/* 05201C 7F01D4EC AC209790 */  sw    $zero, %lo(dword_CODE_bss_80069790)($at)
+/* 052018 7F01D4E8 3C018007 */  lui   $at, %hi(newcheatunlocked) # $at, 0x8007
+/* 05201C 7F01D4EC AC209790 */  sw    $zero, %lo(newcheatunlocked)($at)
 .L7F01D4F0:
 /* 052020 7F01D4F0 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F01D4F4:
@@ -348,8 +391,9 @@ glabel end_of_mission_briefing
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01D500(void) {
-
+void proc_7F01D500(void)
+{
+  get_screen_ratio_settings_for_mpgame_from_folder(selected_folder_num);
 }
 #else
 GLOBAL_ASM(
@@ -370,13 +414,14 @@ glabel sub_GAME_7F01D500
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01D524(void) {
-
+void deleteCurrentSelectedFolder(void)
+{
+  delete_update_eeprom_file(selected_folder_num);
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F01D524
+glabel deleteCurrentSelectedFolder
 /* 052054 7F01D524 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 052058 7F01D528 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 05205C 7F01D52C 3C048003 */  lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
@@ -392,13 +437,14 @@ glabel sub_GAME_7F01D524
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01D548(void) {
-
+void copyCurrentEEPROMtoStack(void)
+{
+  copy_eeprom_to_stack_set_folder_num(selected_folder_num);
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F01D548
+glabel copyCurrentEEPROMtoStack
 /* 052078 7F01D548 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 05207C 7F01D54C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 052080 7F01D550 3C048003 */  lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
@@ -414,13 +460,18 @@ glabel sub_GAME_7F01D548
 
 
 #ifdef NONMATCHING
-void would_have_returned_bond_for_folder_num(void) {
-
+u8 getSelectedFolderBond(void)
+{
+  u32 uVar1;
+  u8 bond;
+  
+  uVar1 = removed_would_have_returned_bond_for_folder_num(selected_folder_num);
+  return (u8)uVar1;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel would_have_returned_bond_for_folder_num
+glabel getSelectedFolderBond
 /* 05209C 7F01D56C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0520A0 7F01D570 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0520A4 7F01D574 3C048003 */  lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
@@ -436,13 +487,14 @@ glabel would_have_returned_bond_for_folder_num
 
 
 #ifdef NONMATCHING
-void get_selected_folder_num(void) {
-
+void set_selected_folder_num(u32 foldernum)
+{
+  selected_folder_num = foldernum;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel get_selected_folder_num
+glabel set_selected_folder_num
 /* 0520C0 7F01D590 3C018003 */  lui   $at, 0x8003
 /* 0520C4 7F01D594 03E00008 */  jr    $ra
 /* 0520C8 7F01D598 AC24A8E8 */   sw    $a0, -0x5718($at)
@@ -452,13 +504,29 @@ glabel get_selected_folder_num
 
 
 #ifdef NONMATCHING
-void get_difficulty(void) {
-
+void set_selected_difficulty(DIFFICULTY difficulty)
+{
+  if (difficulty != DIFFICULTY_AGENT) {
+    if (difficulty == DIFFICULTY_SECRET) {
+      selected_difficulty = DIFFICULTY_SECRET;
+      return;
+    }
+    if (difficulty == DIFFICULTY_00) {
+      selected_difficulty = DIFFICULTY_00;
+      return;
+    }
+    if (difficulty == DIFFICULTY_007) {
+      selected_difficulty = DIFFICULTY_007;
+      return;
+    }
+  }
+  selected_difficulty = DIFFICULTY_AGENT;
+  return;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel get_difficulty
+glabel set_selected_difficulty
 /* 0520CC 7F01D59C 10800009 */  beqz  $a0, .L7F01D5C4
 /* 0520D0 7F01D5A0 24020001 */   li    $v0, 1
 /* 0520D4 7F01D5A4 1082000A */  beq   $a0, $v0, .L7F01D5D0
@@ -492,8 +560,11 @@ glabel get_difficulty
 
 
 #ifdef NONMATCHING
-void set_solo_and_ptr_briefing(void) {
-
+void set_solo_and_ptr_briefing(LEVELID stage)
+{
+  gamemode = GAMEMODE_SOLO;
+  selected_stage = stage;
+  briefingpage = pull_and_display_text_for_folder_a0((undefined *)stage);
 }
 #else
 GLOBAL_ASM(
@@ -517,8 +588,10 @@ glabel set_solo_and_ptr_briefing
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01D61C(void) {
-
+void sub_GAME_7F01D61C(save_file *savefile)
+{
+  copy_eeprom_from_to(selected_folder_num,(int)savefile);
+  return;
 }
 #else
 GLOBAL_ASM(
@@ -540,8 +613,13 @@ glabel sub_GAME_7F01D61C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01D644(void) {
+void sub_GAME_7F01D644(save_file *eeprom)
 
+{
+  selected_folder_num_copy = selected_folder_num;
+  selected_folder_num = 100;
+  copy_eepromfile_a0_from_a1_to_buffer(100,eeprom);
+  return;
 }
 #else
 GLOBAL_ASM(
@@ -568,8 +646,13 @@ glabel sub_GAME_7F01D644
 
 
 #ifdef NONMATCHING
-void store_favorite_weapon_current_player(void) {
-
+void store_favorite_weapon_current_player(u32 right,u32 left)
+{
+  u32 playerNum;
+  
+  playerNum = get_cur_playernum();
+  (&fav_weapon_player1)[playerNum].right = right;
+  (&fav_weapon_player1)[playerNum].left = left;
 }
 #else
 GLOBAL_ASM(

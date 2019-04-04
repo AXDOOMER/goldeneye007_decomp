@@ -1,4 +1,4 @@
-/*gspFast3DDataStart = 0xaddress;*/
+gspFast3DDataStart = 0x8005c820;
 
 _bootSegmentStart = 0x04000000;
 _bootSegmentRomStart = 0x00000000;
@@ -47,6 +47,24 @@ display_debug_menu_text_onscreen = 0x7F090490;
 get_debug_taskgrab_val = 0x7F09106C;
 something_with_osVI = 0x800230B0;
 
+_unknown117880SegmentRomStart = 0x117880;
+_unknown117880SegmentRomEnd = 0x117940;
+
+_unknown117940SegmentRomStart = 0x117940;
+_unknown117940SegmentRomEnd = 0x123040;
+
+_unknown123040SegmentRomStart = 0x123040;
+_unknown123040SegmentRomEnd = 0x124ac0;
+
+_animation_tableSegmentRomStart = 0x124ac0;
+_animation_tableSegmentRomEnd = 0x28e980;
+
+_animation_dataSegmentRomStart = 0x28e980;
+_animation_dataSegmentRomEnd = 0x29d160;
+
+_GlobalimagetableSegmentRomStart = 0x29d160;
+_GlobalimagetableSegmentRomEnd = 0x29e560;
+
 _sfxctlSegmentRomStart = 0x2EBDE0;
 _sfxctlSegmentRomEnd = 0x2F19A0;
 
@@ -61,5 +79,8 @@ _instrumentstblSegmentRomEnd = 0x419790;
 
 _musicsampletblSegmentRomStart = 0x419790;
 
-_animation_tableSegmentRomStart = 0x124ac0;
-_animation_dataSegmentRomStart = 0x28e980;
+_fonttablectlsmall1SegmentRomStart = 0x2e63f0;
+
+
+_fonttablectllarge1SegmentRomStart = 0x2e88a0;
+
