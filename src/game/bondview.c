@@ -419,22 +419,12 @@ D:80034C2C                     gitem_data_struct <0, 0, 0, stru_D_80033844, 0x98
 D:80034C2C                                        0x9883, 0x9883, 10.0, 10.0, 1000.0>
 D:80034C64                     gitem_data_struct <0, 0, 0, stru_D_800338B4, 0x9883, 0x9873, 12.0, 0.0, 528.0, 80.0, 0.0, \
 D:80034C64                                        0x9873, 0x98CC, 0.0, -4.0, 310.0>
-
-D:80034C9C     cartridges_eject:.word 0                 # DATA XREF: something_with_ejected_cartridges+40w
-D:80034C9C                                              # set_carts_to_eject+8w
-D:80034C9C                                              # get_carts_to_eject+8r
-D:80034C9C                                              # sub_CODE_7F05C614r
-D:80034C9C                                              # sub_CODE_7F05C614+8Cw
-D:80034CA0     dword_D_80034CA0:.word 0                 # DATA XREF: something_with_ejected_cartridges+50w
-D:80034CA0                                              # sub_CODE_7F05C540r
-D:80034CA0                                              # sub_CODE_7F05C594r
-D:80034CA0                                              # sub_CODE_7F05C594+44r
-D:80034CA0                                              # sub_CODE_7F05C614+2Cr
-D:80034CA0                                              # sub_CODE_7F05C614+58r
-D:80034CA0                                              # sub_CODE_7F05C6B8o
-D:80034CA0                                              # sub_CODE_7F05C6B8+8r
-D:80034CA0                                              # sub_CODE_7F05C6B8+20w
-D:80034CA0                                              # sub_CODE_7F05C6B8+38w
+*/
+//D:80034C9C
+u32 cartridges_eject = 0;
+//D:80034CA0
+u32 dword_D_80034CA0 = 0;
+/*
 D:80034CA4     flt_D_80034CA4: .float  0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.5       
 D:80034CA4                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1CF8o
 D:80034CA4                     .float  8.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0
@@ -820,17 +810,24 @@ D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
 D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
 D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
 D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:80035C40     dword_D_80035C40:.word 0                 # DATA XREF: handles_firing_or_throwing_weapon_in_hand+10o
-D:80035C40                                              # handles_firing_or_throwing_weapon_in_hand+14r
-D:80035C44     dword_D_80035C44:.word 0                 # DATA XREF: handles_firing_or_throwing_weapon_in_hand+1Cr
-D:80035C48     dword_D_80035C48:.word 0                 # DATA XREF: handles_firing_or_throwing_weapon_in_hand+24r
-D:80035C4C     dword_D_80035C4C:.word 0                 # DATA XREF: handles_firing_or_throwing_weapon_in_hand:loc_CODE_7F0601A8o
-D:80035C4C                                              # handles_firing_or_throwing_weapon_in_hand+1E8r
-D:80035C50     dword_D_80035C50:.word 0                 # DATA XREF: handles_firing_or_throwing_weapon_in_hand+1F8r
-D:80035C54     dword_D_80035C54:.word 0                 # DATA XREF: handles_firing_or_throwing_weapon_in_hand+208r
-D:80035C58     dword_D_80035C58:.word 0                 # DATA XREF: handles_firing_or_throwing_weapon_in_hand+1FCo
-D:80035C58                                              # handles_firing_or_throwing_weapon_in_hand+218r
-D:80035C5C     dword_D_80035C5C:.word 0                 # DATA XREF: handles_firing_or_throwing_weapon_in_hand+21Cr
+*/
+//D:80035C40
+u32 D_80035C40 = 0;
+//D:80035C44
+u32 D_80035C44 = 0;
+//D:80035C48
+u32 D_80035C48 = 0;
+//D:80035C4C
+u32 D_80035C4C = 0;
+//D:80035C50
+u32 D_80035C50 = 0;
+//D:80035C54
+u32 D_80035C54 = 0;
+//D:80035C58
+u32 D_80035C58 = 0;
+//D:80035C5C
+u32 D_80035C5C = 0;
+/*
 D:80035C60     flt_D_80035C60: .float -1.0              # DATA XREF: handles_firing_or_throwing_weapon_in_hand+228r
 D:80035C64     dword_D_80035C64:.word 0                 # DATA XREF: handles_firing_or_throwing_weapon_in_hand+20Co
 D:80035C64                                              # handles_firing_or_throwing_weapon_in_hand+238r
@@ -1075,45 +1072,86 @@ D:80053BF8     aSD:            .ascii "%s: %d\n"<0>     # DATA XREF: increment_n
 D:80053C00     aSDS:           .ascii "%s %d %s\n"      # DATA XREF: increment_num_deaths+78o
 D:80053C00                     .ascii <0><0><0>
 D:80053C0C     aSD_0:          .ascii "%s: %d\n"<0>     # DATA XREF: increment_num_suicides_display_MP+4Co
-D:80053C14     flt_D_80053C14: .float 0.079999998       # DATA XREF: unknown_takes_playerhand+F4r
-D:80053C18     flt_D_80053C18: .float 0.1               # DATA XREF: unknown_takes_playerhand+16Cr
-D:80053C1C     flt_D_80053C1C: .float 0.1               # DATA XREF: unknown_takes_playerhand+224r
-D:80053C20     flt_D_80053C20: .float 0.1               # DATA XREF: unknown_takes_playerhand+2DCr
-D:80053C24     flt_D_80053C24: .float 0.1               # DATA XREF: sub_CODE_7F05DDA4+28r
-D:80053C28     flt_D_80053C28: .float 0.1               # DATA XREF: sub_CODE_7F05DDA4+94r
-D:80053C2C     flt_D_80053C2C: .float 0.1               # DATA XREF: sub_CODE_7F05DE94+28r
-D:80053C30     flt_D_80053C30: .float 0.1               # DATA XREF: sub_CODE_7F05DE94+94r
-D:80053C34     flt_D_80053C34: .float 0.80000001        # DATA XREF: sub_CODE_7F05E0E4:loc_CODE_7F05E11Cr
-D:80053C38                     .float 0.1
-D:80053C3C     flt_D_80053C3C: .float 0.1               # DATA XREF: sub_CODE_7F05E0E4:loc_CODE_7F05E14Cr
-D:80053C40     flt_D_80053C40: .float 6.2831855         # DATA XREF: sub_CODE_7F05E0E4+84r
-D:80053C44     flt_D_80053C44: .float 2.8               # DATA XREF: sub_CODE_7F05E0E4+8Cr
-D:80053C48     flt_D_80053C48: .float 0.80000001        # DATA XREF: sub_CODE_7F05E0E4+ACr
-D:80053C4C     flt_D_80053C4C: .float 0.2               # DATA XREF: sub_CODE_7F05E0E4+B8r
-D:80053C50                     .float 0.1
-D:80053C54     flt_D_80053C54: .float 0.30000001        # DATA XREF: sub_CODE_7F05E0E4+100r
-D:80053C58     flt_D_80053C58: .float 0.30000001        # DATA XREF: sub_CODE_7F05E0E4+130r
-D:80053C5C     flt_D_80053C5C: .float 0.94999999        # DATA XREF: sub_CODE_7F05E0E4+188r
-D:80053C60     flt_D_80053C60: .float 0.94999999        # DATA XREF: sub_CODE_7F05E0E4+1C0r
-D:80053C64     flt_D_80053C64: .float 0.050000012       # DATA XREF: sub_CODE_7F05E0E4+1C8r
-D:80053C68     flt_D_80053C68: .float 0.016666668       # DATA XREF: sub_CODE_7F05E0E4+1E0r
-D:80053C6C     flt_D_80053C6C: .float 0.2               # DATA XREF: sub_CODE_7F05E0E4+320r
-D:80053C70     flt_D_80053C70: .float 0.1               # DATA XREF: sub_CODE_7F05E0E4:loc_CODE_7F05E4B4r
-D:80053C74     flt_D_80053C74: .float -0.1              # DATA XREF: sub_CODE_7F05E0E4+3E8r
-D:80053C78     flt_D_80053C78: .float 0.087266468       # DATA XREF: get_value_if_watch_is_on_hand_or_not+34r
-D:80053C7C     flt_D_80053C7C: .float 0.17453294        # DATA XREF: get_value_if_watch_is_on_hand_or_not:loc_CODE_7F05E69Cr
-D:80053C80     flt_D_80053C80: .float 0.029088823       # DATA XREF: sub_CODE_7F05E6B4+58r
-D:80053C84     flt_D_80053C84: .float 0.017453294       # DATA XREF: sub_CODE_7F05E6B4+108r
-D:80053C88     flt_D_80053C88: .float 0.16666667        # DATA XREF: sub_CODE_7F05E83C+ECr
-D:80053C8C     flt_D_80053C8C: .float 16.666666         # DATA XREF: sub_CODE_7F05EE24+5Cr
-D:80053C90     flt_D_80053C90: .float 0.30000001        # DATA XREF: sub_CODE_7F05EE24+228r
-D:80053C94     flt_D_80053C94: .float 0.13333333        # DATA XREF: sub_CODE_7F05EE24+23Cr
-D:80053C98     flt_D_80053C98: .float 4.712389          # DATA XREF: sub_CODE_7F05F09C+118r
-D:80053C9C     flt_D_80053C9C: .float 3.1415927         # DATA XREF: sub_CODE_7F05F09C+140r
-D:80053CA0     flt_D_80053CA0: .float 12.1              # DATA XREF: sub_CODE_7F05F09C+1C4r
-D:80053CA4     flt_D_80053CA4: .float 0.1               # DATA XREF: sub_CODE_7F05F09C+288r
-D:80053CA8     flt_D_80053CA8: .float 16.666666         # DATA XREF: generate_player_thrown_object+4r
-D:80053CAC     flt_D_80053CAC: .float 6.6666665         # DATA XREF: generate_player_thrown_object+44r
+*/
+//D:80053C14
+const f32 D_80053C14 = 0.079999998;
+//D:80053C18
+const f32 D_80053C18 = 0.1;
+//D:80053C1C
+const f32 D_80053C1C = 0.1;
+//D:80053C20
+const f32 D_80053C20 = 0.1;
+//D:80053C24
+const f32 D_80053C24 = 0.1;
+//D:80053C28
+const f32 D_80053C28 = 0.1;
+//D:80053C2C
+const f32 D_80053C2C = 0.1;
+//D:80053C30
+const f32 D_80053C30 = 0.1;
+//D:80053C34
+const f32 D_80053C34 = 0.80000001;
+//D:80053C38
+const f32 D_80053C38 = 0.1;
+//D:80053C3C
+const f32 D_80053C3C = 0.1;
+//D:80053C40
+const f32 D_80053C40 = 6.2831855;
+//D:80053C44
+const f32 D_80053C44 = 2.8;
+//D:80053C48
+const f32 D_80053C48 = 0.80000001;
+//D:80053C4C
+const f32 D_80053C4C = 0.2;
+//D:80053C50
+const f32 D_80053C50 = 0.1;
+//D:80053C54
+const f32 D_80053C54 = 0.30000001;
+//D:80053C58
+const f32 D_80053C58 = 0.30000001;
+//D:80053C5C
+const f32 D_80053C5C = 0.94999999;
+//D:80053C60
+const f32 D_80053C60 = 0.94999999;
+//D:80053C64
+const f32 D_80053C64 = 0.050000012;
+//D:80053C68
+const f32 D_80053C68 = 0.016666668;
+//D:80053C6C
+const f32 D_80053C6C = 0.2;
+//D:80053C70
+const f32 D_80053C70 = 0.1;
+//D:80053C74
+const f32 D_80053C74 = -0.1;
+//D:80053C78
+const f32 D_80053C78 = 0.087266468;
+//D:80053C7C
+const f32 D_80053C7C = 0.17453294;
+//D:80053C80
+const f32 D_80053C80 = 0.029088823;
+//D:80053C84
+const f32 D_80053C84 = 0.017453294;
+//D:80053C88
+const f32 D_80053C88 = 0.16666667;
+//D:80053C8C
+const f32 D_80053C8C = 16.666666;
+//D:80053C90
+const f32 D_80053C90 = 0.30000001;
+//D:80053C94
+const f32 D_80053C94 = 0.13333333;
+//D:80053C98
+const f32 D_80053C98 = 4.712389;
+//D:80053C9C
+const f32 D_80053C9C = 3.1415927;
+//D:80053CA0
+const f32 D_80053CA0 = 12.1;
+//D:80053CA4
+const f32 D_80053CA4 = 0.1;
+//D:80053CA8
+const f32 D_80053CA8 = 16.666666;
+//D:80053CAC
+const f32 D_80053CAC = 6.6666665;
+/*
 D:80053CB0     jpt_player_thrown_object:.word thrown_item_timed_mine
 D:80053CB0                                              # DATA XREF: generate_player_thrown_object+1F8r
 D:80053CB0                     .word thrown_item_proximity_mine  # jump table for switch statement
@@ -1186,34 +1224,64 @@ D:80053D3C                     .word generate_temp_default
 D:80053D3C                     .word generate_temp_default
 D:80053D3C                     .word generate_temp_default
 D:80053D3C                     .word generate_temp_static_thrown
-D:80053DC8     flt_D_80053DC8: .float 0.1               # DATA XREF: generate_player_thrown_object+3A4r
-D:80053DCC     flt_D_80053DCC: .float 33.333332         # DATA XREF: sub_CODE_7F05F73C+7Cr
-D:80053DD0     flt_D_80053DD0: .float 0.30000001        # DATA XREF: sub_CODE_7F05F73C+1B4r
-D:80053DD4     flt_D_80053DD4: .float 0.13333333        # DATA XREF: sub_CODE_7F05F73C+1CCr
-D:80053DD8     flt_D_80053DD8: .float 66.666664         # DATA XREF: sub_CODE_7F05FB64:loc_CODE_7F05FC2Cr
-D:80053DDC     flt_D_80053DDC: .float 1.111111          # DATA XREF: sub_CODE_7F05FB64+20Cr
-D:80053DE0     flt_D_80053DE0: .float 0.94999999        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+3DCr
-D:80053DE4     flt_D_80053DE4: .float 0.050000012       # DATA XREF: handles_firing_or_throwing_weapon_in_hand:loc_CODE_7F060474r
-D:80053DE8     flt_D_80053DE8: .float 0.60000002        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+758r
-D:80053DEC     flt_D_80053DEC: .float 0.30000001        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+764r
-D:80053DF0     flt_D_80053DF0: .float 0.60000002        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+7ACr
-D:80053DF4     flt_D_80053DF4: .float 0.30000001        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+7B8r
-D:80053DF8     flt_D_80053DF8: .float 0.60000002        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+7FCr
-D:80053DFC     flt_D_80053DFC: .float 0.30000001        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+808r
-D:80053E00     flt_D_80053E00: .float 27.799999         # DATA XREF: handles_firing_or_throwing_weapon_in_hand+A98r
-D:80053E04     flt_D_80053E04: .float 0.10000001        # DATA XREF: handles_firing_or_throwing_weapon_in_hand:loc_CODE_7F060DC8r
-D:80053E08     flt_D_80053E08: .float 6.2831855         # DATA XREF: handles_firing_or_throwing_weapon_in_hand+E90r
-D:80053E0C     flt_D_80053E0C: .float 6.2831855         # DATA XREF: handles_firing_or_throwing_weapon_in_hand+EC0r
-D:80053E10     flt_D_80053E10: .float 6.2831855         # DATA XREF: handles_firing_or_throwing_weapon_in_hand+F00r
-D:80053E14     flt_D_80053E14: .float 0.52359879        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+F84r
-D:80053E18     flt_D_80053E18: .float 0.52359879        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+FB0r
-D:80053E1C     flt_D_80053E1C: .float 6.2831855         # DATA XREF: handles_firing_or_throwing_weapon_in_hand+10C0r
-D:80053E20     flt_D_80053E20: .float 6.2831855         # DATA XREF: handles_firing_or_throwing_weapon_in_hand+1268r
-D:80053E24     flt_D_80053E24: .float 0.10000001        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+12A4r
-D:80053E28     flt_D_80053E28: .float 0.10000001        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+140Cr
-D:80053E2C     flt_D_80053E2C: .float 6.2831855         # DATA XREF: handles_firing_or_throwing_weapon_in_hand+145Cr
-D:80053E30     flt_D_80053E30: .float 6.2831855         # DATA XREF: handles_firing_or_throwing_weapon_in_hand+15BCr
-D:80053E34     flt_D_80053E34: .float 6.2831855         # DATA XREF: handles_firing_or_throwing_weapon_in_hand+15D4r
+*/
+//D:80053DC8
+const f32 D_80053DC8 = 0.1;
+//D:80053DCC
+const f32 D_80053DCC = 33.333332;
+//D:80053DD0
+const f32 D_80053DD0 = 0.30000001;
+//D:80053DD4
+const f32 D_80053DD4 = 0.13333333;
+//D:80053DD8
+const f32 D_80053DD8 = 66.666664;
+//D:80053DDC
+const f32 D_80053DDC = 1.111111;
+//D:80053DE0
+const f32 D_80053DE0 = 0.94999999;
+//D:80053DE4
+const f32 D_80053DE4 = 0.050000012;
+//D:80053DE8
+const f32 D_80053DE8 = 0.60000002;
+//D:80053DEC
+const f32 D_80053DEC = 0.30000001;
+//D:80053DF0
+const f32 D_80053DF0 = 0.60000002;
+//D:80053DF4
+const f32 D_80053DF4 = 0.30000001;
+//D:80053DF8
+const f32 D_80053DF8 = 0.60000002;
+//D:80053DFC
+const f32 D_80053DFC = 0.30000001;
+//D:80053E00
+const f32 D_80053E00 = 27.799999;
+//D:80053E04
+const f32 D_80053E04 = 0.10000001;
+//D:80053E08
+const f32 D_80053E08 = 6.2831855;
+//D:80053E0C
+const f32 D_80053E0C = 6.2831855;
+//D:80053E10
+const f32 D_80053E10 = 6.2831855;
+//D:80053E14
+const f32 D_80053E14 = 0.52359879;
+//D:80053E18
+const f32 D_80053E18 = 0.52359879;
+//D:80053E1C
+const f32 D_80053E1C = 6.2831855;
+//D:80053E20
+const f32 D_80053E20 = 6.2831855;
+//D:80053E24
+const f32 D_80053E24 = 0.10000001;
+//D:80053E28
+const f32 D_80053E28 = 0.10000001;
+//D:80053E2C
+const f32 D_80053E2C = 6.2831855;
+//D:80053E30
+const f32 D_80053E30 = 6.2831855;
+//D:80053E34
+const f32 D_80053E34 = 6.2831855;
+/*
 D:80053E38     jpt_weapon_bullet_type:.word weapon_bullet_type_pistol
 D:80053E38                                              # DATA XREF: handles_firing_or_throwing_weapon_in_hand+17D8r
 D:80053E38                     .word weapon_bullet_type_pistol  # jump table for switch statement
@@ -1235,45 +1303,86 @@ D:80053E38                     .word weapon_bullet_type_pistol
 D:80053E38                     .word weapon_bullet_type_pistol
 D:80053E38                     .word weapon_bullet_type_none
 D:80053E38                     .word weapon_bullet_type_none
-D:80053E88     flt_D_80053E88: .float 10000.0           # DATA XREF: sub_CODE_7F061948:loc_CODE_7F061A38r
-D:80053E8C     flt_D_80053E8C: .float 3000.0            # DATA XREF: sub_CODE_7F061948+138r
-D:80053E90     flt_D_80053E90: .float 0.60000002        # DATA XREF: sub_CODE_7F061948+150r
-D:80053E94     flt_D_80053E94: .float 0.30000001        # DATA XREF: sub_CODE_7F061948+1A4r
-D:80053E98     flt_D_80053E98: .float -0.1              # DATA XREF: sub_CODE_7F061948+1B0r
-D:80053E9C     flt_D_80053E9C: .float 3000.0            # DATA XREF: sub_CODE_7F061948+1D4r
-D:80053EA0     flt_D_80053EA0: .float 3000.0            # DATA XREF: sub_CODE_7F061948:loc_CODE_7F061B4Cr
-D:80053EA4     flt_D_80053EA4: .float 0.2               # DATA XREF: sub_CODE_7F061948+208r
-D:80053EA8     flt_D_80053EA8: .float 0.087266468       # DATA XREF: sub_CODE_7F061BF4+1B0r
-D:80053EAC     flt_D_80053EAC: .float 1.4141999         # DATA XREF: sub_CODE_7F061E18+B0r
-D:80053EB0     flt_D_80053EB0: .float 0.1               # DATA XREF: sub_CODE_7F061E18+440r
-D:80053EB4     flt_D_80053EB4: .float 0.89999998        # DATA XREF: sub_CODE_7F061E18+79Cr
-D:80053EB8     flt_D_80053EB8: .float 0.89999998        # DATA XREF: sub_CODE_7F061E18+7C4r
-D:80053EBC     flt_D_80053EBC: .float 0.89999998        # DATA XREF: sub_CODE_7F061E18+7ECr
-D:80053EC0     flt_D_80053EC0: .float 0.89999998        # DATA XREF: sub_CODE_7F061E18+828r
-D:80053EC4     flt_D_80053EC4: .float 0.89999998        # DATA XREF: sub_CODE_7F061E18+850r
-D:80053EC8     flt_D_80053EC8: .float 0.89999998        # DATA XREF: sub_CODE_7F061E18+878r
-D:80053ECC     flt_D_80053ECC: .float 1.4141999         # DATA XREF: sub_CODE_7F061E18+96Cr
-D:80053ED0     flt_D_80053ED0: .float 0.89999998        # DATA XREF: sub_CODE_7F061E18+974r
-D:80053ED4     flt_D_80053ED4: .float 6.2831855         # DATA XREF: sub_CODE_7F06359C+144r
-D:80053ED8     flt_D_80053ED8: .float 0.60000002        # DATA XREF: sub_CODE_7F06359C+150r
-D:80053EDC     flt_D_80053EDC: .float 6.2831855         # DATA XREF: sub_CODE_7F06359C+188r
-D:80053EE0     flt_D_80053EE0: .float 0.60000002        # DATA XREF: sub_CODE_7F06359C+194r
-D:80053EE4     flt_D_80053EE4: .float -1.0471976        # DATA XREF: sub_CODE_7F06359C+308r
-D:80053EE8     flt_D_80053EE8: .float 6.2831855         # DATA XREF: sub_CODE_7F06359C+41Cr
-D:80053EEC     flt_D_80053EEC: .float 0.60000002        # DATA XREF: sub_CODE_7F06359C+428r
-D:80053EF0     flt_D_80053EF0: .float 6.2831855         # DATA XREF: sub_CODE_7F06359C+460r
-D:80053EF4     flt_D_80053EF4: .float 0.60000002        # DATA XREF: sub_CODE_7F06359C+46Cr
-D:80053EF8     flt_D_80053EF8: .float -0.17453294       # DATA XREF: sub_CODE_7F06359C+534r
-D:80053EFC     flt_D_80053EFC: .float 1.0471976         # DATA XREF: sub_CODE_7F06359C:loc_CODE_7F063ADCr
-D:80053F00     flt_D_80053F00: .float 0.17453294        # DATA XREF: sub_CODE_7F06359C+9F0r
-D:80053F04     flt_D_80053F04: .float 1.0471976         # DATA XREF: sub_CODE_7F06359C:loc_CODE_7F063F98r
-D:80053F08     flt_D_80053F08: .float -0.17453294       # DATA XREF: sub_CODE_7F06359C+AACr
-D:80053F0C     flt_D_80053F0C: .float 0.17453294        # DATA XREF: sub_CODE_7F06359C+AD4r
-D:80053F10     flt_D_80053F10: .float 0.17453294        # DATA XREF: sub_CODE_7F06359C+AF4r
-D:80053F14     flt_D_80053F14: .float -0.17453294       # DATA XREF: sub_CODE_7F06359C+B1Cr
-D:80053F18     flt_D_80053F18: .float -0.89759791       # DATA XREF: sub_CODE_7F06359C+B34r
-D:80053F1C     flt_D_80053F1C: .float -0.17453294       # DATA XREF: sub_CODE_7F06359C+C8Cr
-D:80053F20     flt_D_80053F20: .float 3.1415927         # DATA XREF: sub_CODE_7F06359C:loc_CODE_7F064234r
+*/
+//D:80053E88
+const f32 D_80053E88 = 10000.0;
+//D:80053E8C
+const f32 D_80053E8C = 3000.0;
+//D:80053E90
+const f32 D_80053E90 = 0.60000002;
+//D:80053E94
+const f32 D_80053E94 = 0.30000001;
+//D:80053E98
+const f32 D_80053E98 = -0.1;
+//D:80053E9C
+const f32 D_80053E9C = 3000.0;
+//D:80053EA0
+const f32 D_80053EA0 = 3000.0;
+//D:80053EA4
+const f32 D_80053EA4 = 0.2;
+//D:80053EA8
+const f32 D_80053EA8 = 0.087266468;
+//D:80053EAC
+const f32 D_80053EAC = 1.4141999;
+//D:80053EB0
+const f32 D_80053EB0 = 0.1;
+//D:80053EB4
+const f32 D_80053EB4 = 0.89999998;
+//D:80053EB8
+const f32 D_80053EB8 = 0.89999998;
+//D:80053EBC
+const f32 D_80053EBC = 0.89999998;
+//D:80053EC0
+const f32 D_80053EC0 = 0.89999998;
+//D:80053EC4
+const f32 D_80053EC4 = 0.89999998;
+//D:80053EC8
+const f32 D_80053EC8 = 0.89999998;
+//D:80053ECC
+const f32 D_80053ECC = 1.4141999;
+//D:80053ED0
+const f32 D_80053ED0 = 0.89999998;
+//D:80053ED4
+const f32 D_80053ED4 = 6.2831855;
+//D:80053ED8
+const f32 D_80053ED8 = 0.60000002;
+//D:80053EDC
+const f32 D_80053EDC = 6.2831855;
+//D:80053EE0
+const f32 D_80053EE0 = 0.60000002;
+//D:80053EE4
+const f32 D_80053EE4 = -1.0471976;
+//D:80053EE8
+const f32 D_80053EE8 = 6.2831855;
+//D:80053EEC
+const f32 D_80053EEC = 0.60000002;
+//D:80053EF0
+const f32 D_80053EF0 = 6.2831855;
+//D:80053EF4
+const f32 D_80053EF4 = 0.60000002;
+//D:80053EF8
+const f32 D_80053EF8 = -0.17453294;
+//D:80053EFC
+const f32 D_80053EFC = 1.0471976;
+//D:80053F00
+const f32 D_80053F00 = 0.17453294;
+//D:80053F04
+const f32 D_80053F04 = 1.0471976;
+//D:80053F08
+const f32 D_80053F08 = -0.17453294;
+//D:80053F0C
+const f32 D_80053F0C = 0.17453294;
+//D:80053F10
+const f32 D_80053F10 = 0.17453294;
+//D:80053F14
+const f32 D_80053F14 = -0.17453294;
+//D:80053F18
+const f32 D_80053F18 = -0.89759791;
+//D:80053F1C
+const f32 D_80053F1C = -0.17453294;
+//D:80053F20
+const f32 D_80053F20 = 3.1415927;
+/*
 D:80053F24     jpt_70098CF8:   .word Weapon_function_slapper, Weapon_function_hunting_knife, Weapon_function_throwing_knife
 D:80053F24                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+294r
 D:80053F24                     .word Weapon_function_guns, Weapon_function_guns, Weapon_function_guns, Weapon_function_guns  # jump table for switch statement
@@ -1322,15 +1431,26 @@ D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_
 D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
 D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
 D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_watch_magnet
-D:80054170     flt_D_80054170: .float 6.2831855         # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+B90r
-D:80054174     flt_D_80054174: .float 1.5707964         # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+C1Cr
-D:80054178     flt_D_80054178: .float 6.2831855         # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation:loc_CODE_7F065760r
-D:8005417C     flt_D_8005417C: .float 3.1415927         # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+CD4r
-D:80054180     flt_D_80054180: .float 1.5707964         # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+DF4r
-D:80054184     flt_D_80054184: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation:loc_CODE_7F065B50r
-D:80054188     flt_D_80054188: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+11ECr
-D:8005418C     flt_D_8005418C: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+120Cr
-D:80054190     flt_D_80054190: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1234r
+*/
+//D:80054170
+const f32 D_80054170 = 6.2831855;
+//D:80054174
+const f32 D_80054174 = 1.5707964;
+//D:80054178
+const f32 D_80054178 = 6.2831855;
+//D:8005417C
+const f32 D_8005417C = 3.1415927;
+//D:80054180
+const f32 D_80054180 = 1.5707964;
+//D:80054184
+const f32 D_80054184 = 0.69813174;
+//D:80054188
+const f32 D_80054188 = 0.69813174;
+//D:8005418C
+const f32 D_8005418C = 0.69813174;
+//D:80054190
+const f32 D_80054190 = 0.69813174;
+/*
 D:80054194     jpt_70099D7C:   .word weapon_switchstyle_NONE, weapon_switchstyle_NONE, weapon_playsfx_knife
 D:80054194                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1318r
 D:80054194                     .word weapon_playsfx_knife, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun  # jump table for switch statement
@@ -1349,8 +1469,12 @@ D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, wea
 D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
 D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_switchstyle_NONE
 D:80054194                     .word weapon_switchstyle_NONE
-D:8005428C     flt_D_8005428C: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+13F0r
-D:80054290     flt_D_80054290: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+152Cr
+*/
+//D:8005428C
+const f32 D_8005428C = 0.69813174;
+//D:80054290
+const f32 D_80054290 = 0.69813174;
+/*
 D:80054294     jpt_7009A0D4:   .word weapon_reload_none_sfx, weapon_reload_none_sfx, weapon_reload_none_sfx
 D:80054294                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1670r
 D:80054294                     .word weapon_reload_none_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx  # jump table for switch statement
@@ -1373,44 +1497,76 @@ D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sf
 D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
 D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
 D:80054294                     .word weapon_reload_none_sfx, weapon_reload_none_sfx
-D:8005438C     flt_D_8005438C: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation:loc_CODE_7F066234r
-D:80054390     flt_D_80054390: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1744r
-D:80054394     flt_D_80054394: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1774r
-D:80054398     flt_D_80054398: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+182Cr
-D:8005439C     flt_D_8005439C: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation:loc_CODE_7F066460r
-D:800543A0     flt_D_800543A0: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1A1Cr
-D:800543A4     flt_D_800543A4: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1A3Cr
-D:800543A8     flt_D_800543A8: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1A64r
-D:800543AC     flt_D_800543AC: .float 0.69813174        # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1B38r
-D:800543B0     flt_D_800543B0: .float 1.3333334         # DATA XREF: sub_CODE_7F0681CC+148r
-D:800543B4     flt_D_800543B4: .float 0.10000001        # DATA XREF: sub_CODE_7F068508+7Cr
-D:800543B8     flt_D_800543B8: .float 0.5333333         # DATA XREF: sub_CODE_7F068508+180r
-D:800543BC     flt_D_800543BC: .float 6.2831855         # DATA XREF: sub_CODE_7F068508+26Cr
-D:800543C0     flt_D_800543C0: .float 0.39269909        # DATA XREF: sub_CODE_7F068508+28Cr
-D:800543C4     flt_D_800543C4: .float 6.2831855         # DATA XREF: sub_CODE_7F068508+2C4r
-D:800543C8     flt_D_800543C8: .float 0.39269909        # DATA XREF: sub_CODE_7F068508+2E4r
-D:800543CC     flt_D_800543CC: .float 6.2831855         # DATA XREF: sub_CODE_7F068508+31Cr
-D:800543D0     flt_D_800543D0: .float 0.39269909        # DATA XREF: sub_CODE_7F068508+344r
-D:800543D4     flt_D_800543D4: .float 775875.0          # DATA XREF: sub_CODE_7F068508:loc_CODE_7F0688C8r
-D:800543D8     expended_shell_initial_gravity_modifier_pistol:.float 0.27777779
-D:800543D8                                              # DATA XREF: sub_CODE_7F068508+3C8r
-D:800543DC     flt_D_800543DC: .float 1.4166666         # DATA XREF: sub_CODE_7F068508+4C8r
-D:800543E0     flt_D_800543E0: .float 1.6666666         # DATA XREF: sub_CODE_7F068508+520r
-D:800543E4     flt_D_800543E4: .float 6.2831855         # DATA XREF: sub_CODE_7F068508+5B4r
-D:800543E8     flt_D_800543E8: .float 0.39269909        # DATA XREF: sub_CODE_7F068508+5D4r
-D:800543EC     flt_D_800543EC: .float 6.2831855         # DATA XREF: sub_CODE_7F068508+60Cr
-D:800543F0     flt_D_800543F0: .float 0.39269909        # DATA XREF: sub_CODE_7F068508+62Cr
-D:800543F4     flt_D_800543F4: .float 6.2831855         # DATA XREF: sub_CODE_7F068508+664r
-D:800543F8     flt_D_800543F8: .float 0.39269909        # DATA XREF: sub_CODE_7F068508+68Cr
-D:800543FC     flt_D_800543FC: .float 775875.0          # DATA XREF: sub_CODE_7F068508:loc_CODE_7F068C10r
-D:80054400     expended_shell_initial_gravity_modifier_non_pistol:.float 0.27777779
-D:80054400                                              # DATA XREF: sub_CODE_7F068508+710r
-D:80054404     expended_shell_initial_gravity_modifier_all:.float 0.27777779
-D:80054404                                              # DATA XREF: sub_CODE_7F068D20+8r
-D:80054408     flt_D_80054408: .float 0.10000001        # DATA XREF: sub_CODE_7F068EC4+A8r
-D:8005440C     flt_D_8005440C: .float -30000.0          # DATA XREF: sub_CODE_7F068EC4+E0r
-D:80054410     flt_D_80054410: .float 30000.0           # DATA XREF: sub_CODE_7F068EC4+E8r
 */
+//D:8005438C
+const f32 D_8005438C = 0.69813174;
+//D:80054390
+const f32 D_80054390 = 0.69813174;
+//D:80054394
+const f32 D_80054394 = 0.69813174;
+//D:80054398
+const f32 D_80054398 = 0.69813174;
+//D:8005439C
+const f32 D_8005439C = 0.69813174;
+//D:800543A0
+const f32 D_800543A0 = 0.69813174;
+//D:800543A4
+const f32 D_800543A4 = 0.69813174;
+//D:800543A8
+const f32 D_800543A8 = 0.69813174;
+//D:800543AC
+const f32 D_800543AC = 0.69813174;
+//D:800543B0
+const f32 D_800543B0 = 1.3333334;
+//D:800543B4
+const f32 D_800543B4 = 0.10000001;
+//D:800543B8
+const f32 D_800543B8 = 0.5333333;
+//D:800543BC
+const f32 D_800543BC = 6.2831855;
+//D:800543C0
+const f32 D_800543C0 = 0.39269909;
+//D:800543C4
+const f32 D_800543C4 = 6.2831855;
+//D:800543C8
+const f32 D_800543C8 = 0.39269909;
+//D:800543CC
+const f32 D_800543CC = 6.2831855;
+//D:800543D0
+const f32 D_800543D0 = 0.39269909;
+//D:800543D4
+const f32 D_800543D4 = 775875.0;
+//D:800543D8
+const f32 expended_shell_initial_gravity_modifier_pistol = 0.27777779;
+//D:800543DC
+const f32 D_800543DC = 1.4166666;
+//D:800543E0
+const f32 D_800543E0 = 1.6666666;
+//D:800543E4
+const f32 D_800543E4 = 6.2831855;
+//D:800543E8
+const f32 D_800543E8 = 0.39269909;
+//D:800543EC
+const f32 D_800543EC = 6.2831855;
+//D:800543F0
+const f32 D_800543F0 = 0.39269909;
+//D:800543F4
+const f32 D_800543F4 = 6.2831855;
+//D:800543F8
+const f32 D_800543F8 = 0.39269909;
+//D:800543FC
+const f32 D_800543FC = 775875.0;
+//D:80054400
+const f32 expended_shell_initial_gravity_modifier_non_pistol = 0.27777779;
+//D:80054404
+const f32 expended_shell_initial_gravity_modifier_all = 0.27777779;
+//D:80054408
+const f32 D_80054408 = 0.10000001;
+//D:8005440C
+const f32 D_8005440C = -30000.0;
+//D:80054410
+const f32 D_80054410 = 30000.0;
+
 
 
 #ifdef NONMATCHING
