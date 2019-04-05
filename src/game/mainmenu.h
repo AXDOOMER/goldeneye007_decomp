@@ -1,6 +1,74 @@
 #ifndef _MAINMENU_H_
 #define _MAINMENU_H_
 #include "ultra64.h"
+
+typedef enum LEVELID {
+    LEVELID_ARCHIVES=24,
+    LEVELID_AZTEC=28,
+    LEVELID_BASEMENT=45,
+    LEVELID_BUNKER1=9,
+    LEVELID_BUNKER2=27,
+    LEVELID_CAVERNS=39,
+    LEVELID_CAVES=50,
+    LEVELID_CITADEL=40,
+    LEVELID_COMPLEX=31,
+    LEVELID_CONTROL=23,
+    LEVELID_CRADLE=41,
+    LEVELID_CUBA=54,
+    LEVELID_DAM=33,
+    LEVELID_DEPOT=30,
+    LEVELID_EAR=51,
+    LEVELID_EGYPT=32,
+    LEVELID_ELD=44,
+    LEVELID_FACILITY=34,
+    LEVELID_FRIGATE=26,
+    LEVELID_JUNGLE=37,
+    LEVELID_LEE=52,
+    LEVELID_LIBRARY=48,
+    LEVELID_LIP=53,
+    LEVELID_LUE=47,
+    LEVELID_MAX=57,
+    LEVELID_NONE=-1,
+    LEVELID_PAM=56,
+    LEVELID_RIT=49,
+    LEVELID_RUNWAY=35,
+    LEVELID_SHO=42,
+    LEVELID_SILO=20,
+    LEVELID_STACK=46,
+    LEVELID_STATUE=22,
+    LEVELID_STREETS=29,
+    LEVELID_SURFACE=36,
+    LEVELID_SURFACE2=43,
+    LEVELID_TEMPLE=38,
+    LEVELID_TRAIN=25,
+    LEVELID_WAX=55
+} LEVELID;
+
+typedef enum mission_setup_type {
+    MISSION_HEADER=1,
+    MISSION_PART=0
+} mission_setup_type;
+
+struct legal_screen_text {
+    int h_pos;
+    int v_pos;
+    int flag;
+    int flag2;
+    short txtID;
+    short anonymous_5;
+};
+
+struct mission_folder_setup {
+    void * string_ptr;
+    short folder_text_preset;
+    short icon_text_preset;
+    int stage_id;
+    int unknown;
+    int type;
+    int mission_num;
+    void * briefing_name_ptr;
+};
+
 extern f32 flt_CODE_bss_800695A0;
 //CODE.bss:800695A4
 extern f32 flt_CODE_bss_800695A4;

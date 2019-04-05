@@ -456,26 +456,29 @@ f32 slider_007_mode_reaction = 0.0f;
 f32 slider_007_mode_health = 1.0f;
 f32 slider_007_mode_damage = 1.0f;
 f32 slider_007_mode_accuracy = 1.0f;
+u32 D_8002A9B0 = 0xA0000000;
+u32 D_8002A9B4 = 0x96000000;
+u32 D_8002A9B8 = 0x28000000;
+u32 D_8002A9BC = 0x8C000000;
+u32 D_8002A9C0 = 0;
+u32 D_8002A9C4 = 0;
+u32 D_8002A9C8 = 0;
+
+struct legal_screen_text D_8002A9CC[] = {
+    {220, 30, 1, 1, 0x9C07, 0},
+    {34, 83, 0, 1, 0x9C08, 0},
+    {226, 84, 0, 1, 0x9C09, 0},
+    {226, 97, 0, 1, 0x9C0A, 0},
+    {226, 110, 0, 1, 0x9C0B, 0},
+    {226, 122, 0, 1, 0x9C0C, 0},
+    {227, 134, 0, 1, 0x9C0D, 0},
+    {219, 211, 0, 1, 0x9C0E, 0},
+    {60, 169, 0, 1, 0x9C0F, 0},
+    {60, 201, 0, 1, 0x9C10, 0},
+    {99, 266, 0, 1, 0x9C11, 0},
+    {80, 280, 0, 1, 0x9C12, 0}
+};
 /*
-dword_D_8002A9B0:.word 0xA0000000
-dword_D_8002A9B4:.word 0x96000000
-dword_D_8002A9B8:.word 0x28000000
-dword_D_8002A9BC:.word 0x8C000000
-dword_D_8002A9C0:.word 0
-dword_D_8002A9C4:.word 0
-dword_D_8002A9C8:.word 0
-stru_D_8002A9CC:legal_screen_text <220, 30, 1, 1, 0x9C07, 0>
-                legal_screen_text <34, 83, 0, 1, 0x9C08, 0>
-                legal_screen_text <226, 84, 0, 1, 0x9C09, 0>
-                legal_screen_text <226, 97, 0, 1, 0x9C0A, 0>
-                legal_screen_text <226, 110, 0, 1, 0x9C0B, 0>
-                legal_screen_text <226, 122, 0, 1, 0x9C0C, 0>
-                legal_screen_text <227, 134, 0, 1, 0x9C0D, 0>
-                legal_screen_text <219, 211, 0, 1, 0x9C0E, 0>
-                legal_screen_text <60, 169, 0, 1, 0x9C0F, 0>
-                legal_screen_text <60, 201, 0, 1, 0x9C10, 0>
-                legal_screen_text <99, 266, 0, 1, 0x9C11, 0>
-                legal_screen_text <80, 280, 0, 1, 0x9C12, 0>
 dword_D_8002AABC:.word 0
 dword_D_8002AAC0:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 dword_D_8002AB0C:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -495,45 +498,47 @@ f32 folder_option_ERASE_left_bound = 0.0;
 f32 folder_option_ERASE_upper_bound = 0.0;
 f32 folder_option_ERASE_right_bound = 0.0;
 f32 folder_option_ERASE_lower_bound = 0.0;
-/*
-mission_folder_setup_entries:
-    mission_folder_setup <"1", 0x9C78, 0, LEVELID_NONE, 0, MISSION_HEADER, 0xFFFFFFFF, 0>
-    mission_folder_setup <"i", 0x9C79, 0, LEVELID_DAM, 0, MISSION_PART, 0, "UbriefdamZ">
-    mission_folder_setup <"ii", 0x9C7A, 0, LEVELID_FACILITY, 0, MISSION_PART, 1, "UbriefarkZ">
-    mission_folder_setup <"iii", 0x9C7B, 0, LEVELID_RUNWAY, 0, MISSION_PART, 2, "UbriefrunZ">
-    mission_folder_setup <"2", 0x9C7C, 0, LEVELID_NONE, 0, MISSION_HEADER, 0xFFFFFFFF, 0>
-    mission_folder_setup <"i", 0x9C7D, 0, LEVELID_SURFACE, 0, MISSION_PART, 3, "UbriefsevxZ">
-    mission_folder_setup <"ii", 0x9C7E, 0, LEVELID_BUNKER1, 0, MISSION_PART, 4, "UbriefsevbunkerZ">
-    mission_folder_setup <"3", 0x9C7F, 0, LEVELID_NONE, 1, MISSION_HEADER, 0xFFFFFFFF, 0>
-    mission_folder_setup <"i", 0x9C80, 0x9C81, LEVELID_SILO, 1, MISSION_PART, 5, "UbriefsiloZ">
-    mission_folder_setup <"4", 0x9C82, 0, LEVELID_NONE, 1, MISSION_HEADER, 0xFFFFFFFF, 0>
-    mission_folder_setup <"i", 0x9C83, 0, LEVELID_FRIGATE, 1, MISSION_PART, 6, "UbriefdestZ">
-    mission_folder_setup <"5", 0x9C7C, 0, LEVELID_NONE, 1, MISSION_HEADER, 0xFFFFFFFF, 0>
-    mission_folder_setup <"i", 0x9C7D, 0, LEVELID_SURFACE2, 1, MISSION_PART, 7, "UbriefsevxbZ">
-    mission_folder_setup <"ii", 0x9C7E, 0, LEVELID_BUNKER2, 1, MISSION_PART, 8, "UbriefsevbZ">
-    mission_folder_setup <"6", 0x9C84, 0, LEVELID_NONE, 2, MISSION_HEADER, 0xFFFFFFFF, 0>
-    mission_folder_setup <"i", 0x9C85, 0x9C86, LEVELID_STATUE, 2, MISSION_PART, 9, "UbriefstatueZ">
-    mission_folder_setup <"ii", 0x9C87, 0x9C88, LEVELID_ARCHIVES, 2, MISSION_PART, 0xA, "UbriefarchZ">
-    mission_folder_setup <"iii", 0x9C89, 0, LEVELID_STREETS, 2, MISSION_PART, 0xB, "UbriefpeteZ">
-    mission_folder_setup <"iv", 0x9C8A, 0, LEVELID_DEPOT, 2, MISSION_PART, 0xC, "UbriefdepoZ">
-    mission_folder_setup <"v", 0x9C8B, 0, LEVELID_TRAIN, 2, MISSION_PART, 0xD, "UbrieftraZ">
-    mission_folder_setup <"7", 0x9C8C, 0, LEVELID_NONE, 3, MISSION_HEADER, 0xFFFFFFFF, 0>
-    mission_folder_setup <"i"     , 0x9C8D, 0, LEVELID_JUNGLE, 3, MISSION_PART, 0xE, "UbriefjunZ">
-    mission_folder_setup <"ii", 0x9C8E, 0x9C8F, LEVELID_CONTROL, 3, MISSION_PART, 0xF, "UbriefcontrolZ">
-    mission_folder_setup <"iii", 0x9C90, 0x9C91, LEVELID_CAVERNS, 3, MISSION_PART, 0x10, "UbriefcaveZ">
-    mission_folder_setup <"iv", 0x9C92, 0x9C93, LEVELID_CRADLE, 3, MISSION_PART, 0x11, "UbriefcradZ">
-    mission_folder_setup <"8", 0x9C94, 0, LEVELID_NONE, 4, MISSION_HEADER, 0xFFFFFFFF, 0>
-    mission_folder_setup <"i", 0x9C95, 0x9C96, LEVELID_AZTEC, 4, MISSION_PART, 0x12, "UbriefaztZ">
-    mission_folder_setup <"9", 0x9C97, 0, LEVELID_NONE, 4, MISSION_HEADER, 0xFFFFFFFF, 0>
-    mission_folder_setup <"i", 0x9C98, 0x9C99, LEVELID_EGYPT, 4, MISSION_PART, 0x13, "UbriefcrypZ">
-    mission_folder_setup <0, 0, 0, LEVELID_NONE, 0xFFFFFFFF, MISSION_PART, 0xFFFFFFFF, 0>
 
-unknown_folderselect_constructor:.word 0x14
-dword_D_8002AF30:.word 0x14
-dword_D_8002AF34:.word 0x14
-unknown_folderselect_constructor_0:.word 0x32
-dword_D_8002AF3C:.word 0x32
-dword_D_8002AF40:.word 0x32
+struct mission_folder_setup mission_folder_setup_entries[] = {
+    {"1", 0x9C78, 0, LEVELID_NONE, 0, MISSION_HEADER, 0xFFFFFFFF, 0},
+    {"i", 0x9C79, 0, LEVELID_DAM, 0, MISSION_PART, 0, "UbriefdamZ"},
+    {"ii", 0x9C7A, 0, LEVELID_FACILITY, 0, MISSION_PART, 1, "UbriefarkZ"},
+    {"iii", 0x9C7B, 0, LEVELID_RUNWAY, 0, MISSION_PART, 2, "UbriefrunZ"},
+    {"2", 0x9C7C, 0, LEVELID_NONE, 0, MISSION_HEADER, 0xFFFFFFFF, 0},
+    {"i", 0x9C7D, 0, LEVELID_SURFACE, 0, MISSION_PART, 3, "UbriefsevxZ"},
+    {"ii", 0x9C7E, 0, LEVELID_BUNKER1, 0, MISSION_PART, 4, "UbriefsevbunkerZ"},
+    {"3", 0x9C7F, 0, LEVELID_NONE, 1, MISSION_HEADER, 0xFFFFFFFF, 0},
+    {"i", 0x9C80, 0x9C81, LEVELID_SILO, 1, MISSION_PART, 5, "UbriefsiloZ"},
+    {"4", 0x9C82, 0, LEVELID_NONE, 1, MISSION_HEADER, 0xFFFFFFFF, 0},
+    {"i", 0x9C83, 0, LEVELID_FRIGATE, 1, MISSION_PART, 6, "UbriefdestZ"},
+    {"5", 0x9C7C, 0, LEVELID_NONE, 1, MISSION_HEADER, 0xFFFFFFFF, 0},
+    {"i", 0x9C7D, 0, LEVELID_SURFACE2, 1, MISSION_PART, 7, "UbriefsevxbZ"},
+    {"ii", 0x9C7E, 0, LEVELID_BUNKER2, 1, MISSION_PART, 8, "UbriefsevbZ"},
+    {"6", 0x9C84, 0, LEVELID_NONE, 2, MISSION_HEADER, 0xFFFFFFFF, 0},
+    {"i", 0x9C85, 0x9C86, LEVELID_STATUE, 2, MISSION_PART, 9, "UbriefstatueZ"},
+    {"ii", 0x9C87, 0x9C88, LEVELID_ARCHIVES, 2, MISSION_PART, 0xA, "UbriefarchZ"},
+    {"iii", 0x9C89, 0, LEVELID_STREETS, 2, MISSION_PART, 0xB, "UbriefpeteZ"},
+    {"iv", 0x9C8A, 0, LEVELID_DEPOT, 2, MISSION_PART, 0xC, "UbriefdepoZ"},
+    {"v", 0x9C8B, 0, LEVELID_TRAIN, 2, MISSION_PART, 0xD, "UbrieftraZ"},
+    {"7", 0x9C8C, 0, LEVELID_NONE, 3, MISSION_HEADER, 0xFFFFFFFF, 0},
+    {"i"     , 0x9C8D, 0, LEVELID_JUNGLE, 3, MISSION_PART, 0xE, "UbriefjunZ"},
+    {"ii", 0x9C8E, 0x9C8F, LEVELID_CONTROL, 3, MISSION_PART, 0xF, "UbriefcontrolZ"},
+    {"iii", 0x9C90, 0x9C91, LEVELID_CAVERNS, 3, MISSION_PART, 0x10, "UbriefcaveZ"},
+    {"iv", 0x9C92, 0x9C93, LEVELID_CRADLE, 3, MISSION_PART, 0x11, "UbriefcradZ"},
+    {"8", 0x9C94, 0, LEVELID_NONE, 4, MISSION_HEADER, 0xFFFFFFFF, 0},
+    {"i", 0x9C95, 0x9C96, LEVELID_AZTEC, 4, MISSION_PART, 0x12, "UbriefaztZ"},
+    {"9", 0x9C97, 0, LEVELID_NONE, 4, MISSION_HEADER, 0xFFFFFFFF, 0},
+    {"i", 0x9C98, 0x9C99, LEVELID_EGYPT, 4, MISSION_PART, 0x13, "UbriefcrypZ"},
+    {0, 0, 0, LEVELID_NONE, 0xFFFFFFFF, MISSION_PART, 0xFFFFFFFF, 0}
+};
+
+u32 unknown_folderselect_constructor = 0x14;
+u32 D_8002AF30 = 0x14;
+u32 D_8002AF34 = 0x14;
+u32 unknown_folderselect_constructor_0 = 0x32;
+u32 D_8002AF3C = 0x32;
+u32 D_8002AF40 = 0x32;
+/*
 unknown_folderselect:.word          0,         1,         3,         0,         0,         0,         0
                 .word          0,         0,         0,         0,         0,         0,         0
                 .word          0,         0
@@ -800,63 +805,6 @@ color_palette_entries_50_percent:.half 1
 
 
 
-const char str_1[] = "1";
-const char aI_0[] = "i";
-const char aUbriefdamz_1[] = "UbriefdamZ";
-const char aIi[] = "ii";
-const char aUbriefarkz_1[] = "UbriefarkZ";
-const char aIii[] = "iii";
-const char aUbriefrunz_1[] = "UbriefrunZ";
-
-const char asc_D_8004F344[] = "2";
-const char aI_2[] = "i";
-const char aUbriefsevxz_0[] = "UbriefsevxZ";
-const char aIi_1[] = "ii";
-const char aUbriefsevbunkerz_1[] = "UbriefsevbunkerZ";
-
-const char asc_D_8004F370[] = "3";
-const char aI_1[] = "i";
-const char aUbriefsiloz_0[] = "UbriefsiloZ";
-
-const char a4[] = "4";
-const char aI_3[] = "i";
-const char aUbriefdestz_0[] = "UbriefdestZ";
-
-const char a5[] = "5";
-const char aI_4[] = "i";
-const char aUbriefsevxbz_0[] = "UbriefsevxbZ";
-const char aIi_0[] = "ii";
-const char aUbriefsevbz_0[] = "UbriefsevbZ";
-
-const char a6[] = "6";
-const char aI_5[] = "i";
-const char aUbriefstatuez_0[] = "UbriefstatueZ";
-const char aIi_2[] = "ii";
-const char aUbriefarchz_0[] = "UbriefarchZ";
-const char aIii_0[] = "iii";
-const char aUbriefpetez_0[] = "UbriefpeteZ";
-const char aIv[] = "iv";
-const char aUbriefdepoz_0[] = "UbriefdepoZ";
-const char aV[] = "v";
-const char aUbrieftraz_0[] = "UbrieftraZ";
-
-const char a7[] = "7";
-const char aI_6[] = "i";
-const char aUbriefjunz_0[] = "UbriefjunZ";
-const char aIi_3[] = "ii";
-const char aUbriefcontrolz_0[] = "UbriefcontrolZ";
-const char aIii_1[] = "iii";
-const char aUbriefcavez_0[] = "UbriefcaveZ";
-const char aIv_0[] = "iv";
-const char aUbriefcradz_0[] = "UbriefcradZ";
-
-const char a8[] = "8";
-const char aI_7[] = "i";
-const char aUbriefaztz_0[] = "UbriefaztZ";
-
-const char a9[] = "9";
-const char aI_8[] = "i";
-const char aUbriefcrypz_0[] = "UbriefcrypZ";
 
 const char asc_D_8004F488[] = "\n";
 const char a_[] = ".";
