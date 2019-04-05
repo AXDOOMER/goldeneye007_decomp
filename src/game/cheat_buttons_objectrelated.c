@@ -95,16 +95,18 @@ D:800374C4                     struct_13 <dword_D_800373E0, 0xF>
 D:800374CC                     struct_13 <dword_D_800373E8, 0x10>
 D:800374D4                     struct_13 <dword_D_80037444, 0x11>
 D:800374DC                     struct_13 <0>
-D:800374E4     setup_text_pointers:.word 0,0,0,0,0,0,0,0,0,aUsetupsevbunkerz,0,0,0,0,0,0,0,0,0,0,aUsetupsiloz
-D:800374E4                                              # DATA XREF: stage_loading_setup_objparse_cleanupafter+D4o
-D:800374E4                     .word aUsetupsevbunkerz_0,aUsetupstatuez,aUsetupcontrolz,aUsetuparchz,aUsetuptraz  # "UsetupsevbunkerZ"
-D:800374E4                     .word aUsetupdestz,aUsetupsevbz,aUsetupaztz,aUsetuppetez,aUsetupdepoz,aUsetuprefz
-D:800374E4                     .word aUsetupcrypz,aUsetupdamz,aUsetuparkz,aUsetuprunz,aUsetupsevxz,aUsetupjunz
-D:800374E4                     .word aUsetupdishz,aUsetupcavez,aUsetupcatz,aUsetupcradz,aUsetupshoz,aUsetupsevxbz
-D:800374E4                     .word aUsetupeldz,aUsetupimpz,aUsetupashz,aUsetupluez,aUsetupamez,aUsetupritz
-D:800374E4                     .word aUsetupoatz,aUsetupearz,aUsetupleez,aUsetuplipz,aUsetuplenz,aUsetupwaxz
-D:800374E4                     .word aUsetuppamz,0,0
 */
+//D:800374E4
+char * setup_text_pointers[] = {0,0,0,0,0,0,0,0,0,"UsetupsevbunkerZ",0,0,0,0,0,0,0,0,0,0,"UsetupsiloZ",
+    "UsetupsevbunkerZ","UsetupstatueZ","UsetupcontrolZ","UsetuparchZ","UsetuptraZ",
+    "UsetupdestZ","UsetupsevbZ","UsetupaztZ","UsetuppeteZ","UsetupdepoZ","UsetuprefZ",
+    "UsetupcrypZ","UsetupdamZ","UsetuparkZ","UsetuprunZ","UsetupsevxZ","UsetupjunZ",
+    "UsetupdishZ","UsetupcaveZ","UsetupcatZ","UsetupcradZ","UsetupshoZ","UsetupsevxbZ",
+    "UsetupeldZ","UsetupimpZ","UsetupashZ","UsetuplueZ","UsetupameZ","UsetupritZ",
+    "UsetupoatZ","UsetupearZ","UsetupleeZ","UsetuplipZ","UsetuplenZ","UsetupwaxZ",
+    "UsetuppamZ",0,0
+};
+
 
 //D:800375D0
 struct PitemZ_header Palarm1z_header = {0, &model_object_standard_object, 0, 1, 304.6402, 2, 0, 0};
@@ -2463,8 +2465,10 @@ D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlo
 D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
 D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
 D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800573D8      # f32 finalamount
-D:800573D8     finalamount:    .float 0.050000001       # DATA XREF: sub_CODE_7F091B64+5F0r
+*/
+//D:800573D8
+const f32 finalamount = 0.050000001;
+/*
 D:800573DC     jpt_700C6400:   .word cheat_button_default, cheat_button_invincibility, cheat_button_all_guns
 D:800573DC                                              # DATA XREF: sub_CODE_7F092438+8Cr
 D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_line_mode  # jump table for switch statement
@@ -2485,8 +2489,10 @@ D:800573DC                     .word cheat_button_default, cheat_button_default,
 D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
 D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
 D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:80057504     flt_D_80057504: .float 0.80000001        # DATA XREF: sub_CODE_7F0927F4+38r
 */
+//D:80057504
+const f32 D_80057504 = 0.80000001;
+
 
 
 
