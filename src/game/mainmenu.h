@@ -44,6 +44,135 @@ typedef enum LEVELID {
     LEVELID_WAX=55
 } LEVELID;
 
+typedef enum GENDER {
+    FEMALE=0,
+    MALE=1
+} GENDER;
+
+typedef enum BODIES {
+    BODY_Arctic_Commando=38,
+    BODY_Baron_Samedi=12,
+    BODY_Boris=6,
+    BODY_Civilian_1_Female=29,
+    BODY_Civilian_2=33,
+    BODY_Civilian_3=34,
+    BODY_Civilian_4=32,
+    BODY_Female_Mandy=72,
+    BODY_Female_Marion_Rosika=71,
+    BODY_Female_Sally=70,
+    BODY_Female_Vivien=73,
+    BODY_Formal_Wear=23,
+    BODY_Helicopter_Pilot=36,
+    BODY_Janus_Marine=17,
+    BODY_Janus_Special_Forces=4,
+    BODY_Jaws=13,
+    BODY_Jungle_Commando=0,
+    BODY_Jungle_Fatigues=24,
+    BODY_Left_Suit_Hand_Floating_Arm=41,
+    BODY_Male_Alan=43,
+    BODY_Male_B=50,
+    BODY_Male_Biker=61,
+    BODY_Male_Chris=54,
+    BODY_Male_Dave_Dr_Doak=51,
+    BODY_Male_Des=53,
+    BODY_Male_Duncan=47,
+    BODY_Male_Dwayne=49,
+    BODY_Male_Graeme=62,
+    BODY_Male_Grant=52,
+    BODY_Male_Jim=57,
+    BODY_Male_Joe=68,
+    BODY_Male_Joe_Altered=66,
+    BODY_Male_Joel=64,
+    BODY_Male_Karl=42,
+    BODY_Male_Ken=67,
+    BODY_Male_Lee=55,
+    BODY_Male_Mark=46,
+    BODY_Male_Martin=45,
+    BODY_Male_Mishkin=69,
+    BODY_Male_Neil=56,
+    BODY_Male_Pete=44,
+    BODY_Male_Pierce_Bond_1=74,
+    BODY_Male_Pierce_Bond_2=75,
+    BODY_Male_Pierce_Bond_3=76,
+    BODY_Male_Pierce_Bond_Parka=77,
+    BODY_Male_Pierce_Bond_Tuxedo=78,
+    BODY_Male_Robin=58,
+    BODY_Male_Scott=65,
+    BODY_Male_Shaun=48,
+    BODY_Male_Steve_Ellis=63,
+    BODY_Male_Steve_H=59,
+    BODY_Male_Terrorist=60,
+    BODY_Mayday=14,
+    BODY_Moonraker_Elite_1_Male=39,
+    BODY_Moonraker_Elite_2_Female=40,
+    BODY_Natalya_Jungle_Fatigues=79,
+    BODY_Natalya_Skirt=16,
+    BODY_Naval_Officer=20,
+    BODY_Oddjob=15,
+    BODY_Ourumov=7,
+    BODY_Parka=25,
+    BODY_Rosika=27,
+    BODY_Russian_Commandant=18,
+    BODY_Russian_Infantry=3,
+    BODY_Russian_Soldier=2,
+    BODY_Scientist_1_Male=35,
+    BODY_Scientist_2_Female=28,
+    BODY_Siberian_Guard_1_Mishkin=19,
+    BODY_Siberian_Guard_2=37,
+    BODY_Siberian_Special_Forces=21,
+    BODY_Special_Operations_Uniform=22,
+    BODY_St_Petersburg_Guard=1,
+    BODY_Trevelyan_006=9,
+    BODY_Trevelyan_Janus=8,
+    BODY_Tuxedo=5,
+    BODY_Unused_Female=26,
+    BODY_Unused_Male_1=30,
+    BODY_Unused_Male_2=31,
+    BODY_Valentin_=10,
+    BODY_Xenia=11
+} BODIES;
+
+typedef enum HEADS {
+    HEAD_Female_Mandy=72,
+    HEAD_Female_Marion_Rosika=71,
+    HEAD_Female_Sally=70,
+    HEAD_Female_Vivien=73,
+    HEAD_Male_Alan=43,
+    HEAD_Male_B=50,
+    HEAD_Male_Biker=61,
+    HEAD_Male_Chris=54,
+    HEAD_Male_Dave_Dr_Doak=51,
+    HEAD_Male_Des=53,
+    HEAD_Male_Duncan=47,
+    HEAD_Male_Dwayne=49,
+    HEAD_Male_Graeme=62,
+    HEAD_Male_Grant=52,
+    HEAD_Male_Jim=57,
+    HEAD_Male_Joe=68,
+    HEAD_Male_Joe_Altered=66,
+    HEAD_Male_Joel=64,
+    HEAD_Male_Karl=42,
+    HEAD_Male_Ken=67,
+    HEAD_Male_Lee=55,
+    HEAD_Male_Mark=46,
+    HEAD_Male_Martin=45,
+    HEAD_Male_Mishkin=69,
+    HEAD_Male_Neil=56,
+    HEAD_Male_Pete=44,
+    HEAD_Male_Pierce_Bond_1=74,
+    HEAD_Male_Pierce_Bond_2=75,
+    HEAD_Male_Pierce_Bond_3=76,
+    HEAD_Male_Pierce_Bond_Parka=77,
+    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT=78,
+    HEAD_Male_Robin=58,
+    HEAD_Male_Scott=65,
+    HEAD_Male_Shaun=48,
+    HEAD_Male_Steve_Ellis=63,
+    HEAD_Male_Steve_H=59,
+    HEAD_Male_Terrorist=60,
+    HEAD_Natalya_Jungle_Fatigues=79
+} HEADS;
+
 typedef enum mission_setup_type {
     MISSION_HEADER=1,
     MISSION_PART=0
@@ -67,6 +196,58 @@ struct mission_folder_setup {
     int type;
     int mission_num;
     void * briefing_name_ptr;
+};
+
+struct MP_game_length_settings {
+    u16 text_preset;
+    u16 padding;
+    int time;
+    int points;
+};
+
+struct mp_stage_playercount {
+    short stage;
+    char min;
+    char max;
+};
+
+struct mp_stage_setup {
+    short folder_text_preset;
+    short select_screen_text_preset;
+    int photo;
+    int stage_id;
+    int unlock_after;
+    int min_player;
+    int max_player;
+};
+
+struct MP_selectable_chars {
+    short text_preset;
+    char gender;
+    char select_photo;
+    short body;
+    short head;
+    float pov;
+};
+
+struct MP_handicap_menu {
+    short text_preset;
+    short padding;
+    float damage_modifier;
+};
+
+struct MP_controller_configuration_menu {
+    char anonymous_0;
+    char field_1;
+    char field_2;
+    char field_3;
+};
+
+struct MP_sight_aim_settings {
+    char anonymous_0;
+    char field_1;
+    char field_2;
+    char field_3;
 };
 
 extern f32 flt_CODE_bss_800695A0;
@@ -624,7 +805,7 @@ mp_player_counts:mp_stage_playercount <0x9C35, 2, 4>
                 mp_stage_playercount <0x9C3A, 4, 4>
                 mp_stage_playercount <0x9C3B, 4, 4>
                 mp_stage_playercount <0x9C3C, 3, 3>
-multi_stage_setup_random:mp_stage_setup <0x9C9A, 0x9C9B, 0x10, 0xFFFFFFFF, 0xFFFFFFFF, 1, 4>
+multi_stage_setups:mp_stage_setup <0x9C9A, 0x9C9B, 0x10, 0xFFFFFFFF, 0xFFFFFFFF, 1, 4>
 stru_D_8002B08C:mp_stage_setup <0x9C9C, 0x9C9D, 0xC, 0x26, 0xFFFFFFFF, 1, 4>
                 mp_stage_setup <0x9C9E, 0x9C9F, 0xE, 0x1F, 0xFFFFFFFF, 1, 4>
                 mp_stage_setup <0x9CA2, 0x9CA3, 0xF, 0x32, 0xFFFFFFFF, 1, 4>

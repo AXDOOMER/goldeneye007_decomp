@@ -4820,7 +4820,7 @@ labels:
    - [0x8002AF44,	"unknown_folderselect"]
    - [0x8002AFD0,	"cursor_xpos_table_mission_select"]
    - [0x8002AFE4,	"cursor_ypos_table_mission_select"]
-   - [0x8002B074,	"multi_stage_setup_random"]
+   - [0x8002B074,	"multi_stage_setups"]
    - [0x8002B08C,	"aA_9"]
    - [0x8002B194,	"num_chars_selectable_mp"]
    - [0x8002B198,	"mp_chr_setup"]

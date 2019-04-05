@@ -552,125 +552,145 @@ f32 D_8002AFC8 = 190.0;
 f32 D_8002AFCC = -3300.0;
 u32 cursor_xpos_table_mission_select[] = {73, 142, 212, 282, 352};
 u32 cursor_ypos_table_mission_select[] = {62, 131, 201, 270};
-/*
-                MP_game_length_settings <0x9C2D, 0, 0, 0>
-                MP_game_length_settings <0x9C2E, 0, 0x4650, 0>
-                MP_game_length_settings <0x9C2F, 0, 0x8CA0, 0>
-                MP_game_length_settings <0x9C30, 0, 0x11940, 0>
-                MP_game_length_settings <0x9C31, 0, 0, 5>
-                MP_game_length_settings <0x9C32, 0, 0, 0xA>
-                MP_game_length_settings <0x9C33, 0, 0, 0x14>
-                MP_game_length_settings <0x9C34, 0, 0, 0>
-mp_player_counts:mp_stage_playercount <0x9C35, 2, 4>
-                mp_stage_playercount <0x9C36, 2, 4>
-                mp_stage_playercount <0x9C37, 2, 4>
-                mp_stage_playercount <0x9C38, 2, 4>
-                mp_stage_playercount <0x9C39, 2, 4>
-                mp_stage_playercount <0x9C3A, 4, 4>
-                mp_stage_playercount <0x9C3B, 4, 4>
-                mp_stage_playercount <0x9C3C, 3, 3>
-multi_stage_setup_random:mp_stage_setup <0x9C9A, 0x9C9B, 0x10, 0xFFFFFFFF, 0xFFFFFFFF, 1, 4>
-stru_D_8002B08C:mp_stage_setup <0x9C9C, 0x9C9D, 0xC, 0x26, 0xFFFFFFFF, 1, 4>
-                mp_stage_setup <0x9C9E, 0x9C9F, 0xE, 0x1F, 0xFFFFFFFF, 1, 4>
-                mp_stage_setup <0x9CA2, 0x9CA3, 0xF, 0x32, 0xFFFFFFFF, 1, 4>
-                mp_stage_setup <0x9CA0, 0x9CA1, 0xD, 0x30, 0xFFFFFFFF, 1, 4>
-                mp_stage_setup <0x9D0D, 0x9D0E, 0xD, 0x2D, 0xFFFFFFFF, 1, 4>
-                mp_stage_setup <0x9D0F, 0x9D10, 0xD, 0x2E, 0xFFFFFFFF, 1, 4>
-                mp_stage_setup <0x9CA4, 0x9CA5, 4, 0x22, 1, 1, 4>
-                mp_stage_setup <0x9CA6, 0x9CA7, 0, 0x1B, 8, 1, 3>
-                mp_stage_setup <0x9CA8, 0x9CA9, 2, 0x18, 0xA, 1, 3>
-                mp_stage_setup <0x9CAA, 0x9CAB, 1, 0x27, 0x10, 1, 3>
-                mp_stage_setup <0x9CAC, 0x9CAD, 0xA, 0x20, 0x13, 1, 2>
-num_chars_selectable_mp:.word 8
-mp_chr_setup:   MP_selectable_chars <0x9CB8, MALE, 0, BODY_Tuxedo, HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0>
-                MP_selectable_chars <0x9CBF, FEMALE, 9, BODY_Natalya_Skirt, HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.96609998>
-                MP_selectable_chars <0x9CBC, MALE, 6, BODY_Trevelyan_Janus, HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0>
-                MP_selectable_chars <0x9CBE, FEMALE, 8, BODY_Xenia, HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0>
-                MP_selectable_chars <0x9CBB, MALE, 5, BODY_Ourumov, HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0778>
-                MP_selectable_chars <0x9CBA, MALE, 4, BODY_Boris, HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.9702>
-                MP_selectable_chars <0x9CBD, MALE, 7, BODY_Valentin_, HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.93239999>
-                MP_selectable_chars <0x9CB9, MALE, 0xF, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Mishkin, 1.0>
-                MP_selectable_chars <0x9CC2, FEMALE, 0xC, BODY_Mayday, HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0>
-                MP_selectable_chars <0x9CC1, MALE, 0xB, BODY_Jaws, HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.199>
-                MP_selectable_chars <0x9CC3, MALE, 0xD, BODY_Oddjob, HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT,0.78780001>
-                MP_selectable_chars <0x9CC0, MALE, 0xA, BODY_Baron_Samedi, HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0>
-                MP_selectable_chars <0x9CFD, MALE, 0xE, BODY_Russian_Soldier, HEAD_Male_Mark, 1.0>
-                MP_selectable_chars <0x9CFC, MALE, 0xE, BODY_Russian_Infantry, HEAD_Male_Karl, 1.0>
-                MP_selectable_chars <0x9D07, MALE, 0xE, BODY_Scientist_1_Male, HEAD_Male_Dave_Dr_Doak, 1.0>
-                MP_selectable_chars <0x9D07, FEMALE, 0xE, BODY_Scientist_2_Female, HEAD_Female_Sally, 1.0>
-                MP_selectable_chars <0x9D00, MALE, 0xE, BODY_Russian_Commandant, HEAD_Male_Martin, 1.0>
-                MP_selectable_chars <0x9CFE, MALE, 0xE, BODY_Janus_Marine, HEAD_Male_Steve_Ellis, 1.0>
-                MP_selectable_chars <0x9D01, MALE, 0xE, BODY_Naval_Officer, HEAD_Male_Duncan, 1.0>
-                MP_selectable_chars <0x9D06, MALE, 0xE, BODY_Helicopter_Pilot, HEAD_Male_Pete, 1.0>
-                MP_selectable_chars <0x9CFB, MALE, 0xE, BODY_St_Petersburg_Guard, HEAD_Male_Ken, 1.0>
-                MP_selectable_chars <0x9D08, FEMALE, 0xE, BODY_Civilian_1_Female, HEAD_Female_Marion_Rosika, 1.0>
-                MP_selectable_chars <0x9D08, MALE, 0xE, BODY_Civilian_2, HEAD_Male_Graeme, 1.0>
-                MP_selectable_chars <0x9D08, MALE, 0xE, BODY_Civilian_3, HEAD_Male_Grant, 1.0>
-                MP_selectable_chars <0x9D08, MALE, 0xE, BODY_Civilian_4, HEAD_Male_Dwayne, 1.0>
-                MP_selectable_chars <0x9D02, MALE, 0xE, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Lee, 1.0>
-                MP_selectable_chars <0x9D03, MALE, 0xE, BODY_Arctic_Commando, HEAD_Male_Chris, 1.0>
-                MP_selectable_chars <0x9D02, MALE, 0xE, BODY_Siberian_Guard_2, HEAD_Male_Scott, 1.0>
-                MP_selectable_chars <0x9D04, MALE, 0xE, BODY_Siberian_Special_Forces, HEAD_Male_Alan, 1.0>
-                MP_selectable_chars <0x9CFA, MALE, 0xE, BODY_Jungle_Commando, HEAD_Male_Joel, 1.0>
-                MP_selectable_chars <0x9CFF, MALE, 0xE, BODY_Janus_Special_Forces, HEAD_Male_B, 1.0>
-                MP_selectable_chars <0x9D05, MALE, 0xE, BODY_Moonraker_Elite_1_Male, HEAD_Male_Neil, 1.0>
-                MP_selectable_chars <0x9D05, FEMALE, 0xE, BODY_Moonraker_Elite_2_Female, HEAD_Female_Vivien, 1.0>
-                MP_selectable_chars <0x9CC4, FEMALE, 0xE, BODY_Rosika, HEAD_Female_Marion_Rosika, 0.88529998>
-                MP_selectable_chars <0x9CC5, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Karl, 1.0446>
-                MP_selectable_chars <0x9CC6, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Martin, 1.0446>
-                MP_selectable_chars <0x9CC7, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Mark, 1.0446>
-                MP_selectable_chars <0x9CC8, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Dave_Dr_Doak, 1.0446>
-                MP_selectable_chars <0x9CC9, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Duncan, 1.0446>
-                MP_selectable_chars <0x9CCA, FEMALE, 0xE, BODY_Tuxedo, HEAD_Male_B, 1.0446>
-                MP_selectable_chars <0x9CCB, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Steve_Ellis, 1.0446>
-                MP_selectable_chars <0x9CCC, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Grant, 1.0446>
-                MP_selectable_chars <0x9CCD, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Graeme, 1.0446>
-                MP_selectable_chars <0x9CCE, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Ken, 1.0446>
-                MP_selectable_chars <0x9CCF, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Alan, 1.0446>
-                MP_selectable_chars <0x9CD0, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Pete, 1.0446>
-                MP_selectable_chars <0x9CD1, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Shaun, 1.0446>
-                MP_selectable_chars <0x9CD2, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Dwayne, 1.0446>
-                MP_selectable_chars <0x9CD3, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Des, 1.0446>
-                MP_selectable_chars <0x9CD4, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Chris, 1.0446>
-                MP_selectable_chars <0x9CD5, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Lee, 1.0446>
-                MP_selectable_chars <0x9CD6, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Neil, 1.0446>
-                MP_selectable_chars <0x9CD7, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Jim, 1.0446>
-                MP_selectable_chars <0x9CD8, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Robin, 1.0446>
-                MP_selectable_chars <0x9CD9, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Steve_H, 1.0446>
-                MP_selectable_chars <0x9CDA, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Terrorist, 1.0446>
-                MP_selectable_chars <0x9CDB, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Biker, 1.0446>
-                MP_selectable_chars <0x9CDC, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Joel, 1.0446>
-                MP_selectable_chars <0x9CDD, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Scott, 1.0446>
-                MP_selectable_chars <0x9CDE, MALE, 0xE, BODY_Tuxedo, HEAD_Male_Joe, 1.0446>
-                MP_selectable_chars <0x9CDF, FEMALE, 0xE, BODY_Tuxedo, HEAD_Female_Sally, 1.0446>
-                MP_selectable_chars <0x9CE0, FEMALE, 0xE, BODY_Tuxedo, HEAD_Female_Marion_Rosika, 1.0446>
-                MP_selectable_chars <0x9CE1, FEMALE, 0xE, BODY_Tuxedo, HEAD_Female_Mandy, 1.0446>
-                MP_selectable_chars <0x9CE2, FEMALE, 0xE, BODY_Tuxedo, HEAD_Female_Vivien, 1.0446>
 
-MP_handicap_table:MP_handicap_menu <0x9C3D, 0, 10.0>
-                MP_handicap_menu <0x9C3E, 0, 2.8560996>
-                MP_handicap_menu <0x9C3F, 0, 2.1969998>
-                MP_handicap_menu <0x9C40, 0, 1.6899998>
-                MP_handicap_menu <0x9C41, 0, 1.3>
-                MP_handicap_menu <0x9C42, 0, 1.0>
-                MP_handicap_menu <0x9C43, 0, 0.76923078>
-                MP_handicap_menu <0x9C44, 0, 0.59171599>
-                MP_handicap_menu <0x9C45, 0, 0.45516616>
-                MP_handicap_menu <0x9C46, 0, 0.35012782>
-                MP_handicap_menu <0x9C47, 0, 0.1>
-                MP_controller_configuration_menu <0x9D, 0x15, 0, 1>
-                MP_controller_configuration_menu <0x9D, 0x16, 1, 1>
-                MP_controller_configuration_menu <0x9D, 0x17, 2, 1>
-                MP_controller_configuration_menu <0x9D, 0x18, 3, 1>
-                MP_controller_configuration_menu <0x9D, 0x19, 4, 2>
-                MP_controller_configuration_menu <0x9D, 0x1A, 5, 2>
-                MP_controller_configuration_menu <0x9D, 0x1B, 6, 2>
-                MP_controller_configuration_menu <0x9D, 0x1C, 7, 2>
-stru_D_8002B510:MP_sight_aim_settings <0x9C, 0x48, 0, 0>
-                MP_sight_aim_settings <0x9C, 0x49, 1, 0>
-                MP_sight_aim_settings <0x9C, 0x4A, 0, 1>
-                MP_sight_aim_settings <0x9C, 0x4B, 1, 1>
-*/
+struct MP_game_length_settings multi_game_lengths[] = {
+    {0x9C2D, 0, 0, 0},
+    {0x9C2E, 0, 0x4650, 0},
+    {0x9C2F, 0, 0x8CA0, 0},
+    {0x9C30, 0, 0x11940, 0},
+    {0x9C31, 0, 0, 5},
+    {0x9C32, 0, 0, 0xA},
+    {0x9C33, 0, 0, 0x14},
+    {0x9C34, 0, 0, 0}
+};
+
+struct mp_stage_playercount mp_player_counts[] = {
+    {0x9C35, 2, 4},
+    {0x9C36, 2, 4},
+    {0x9C37, 2, 4},
+    {0x9C38, 2, 4},
+    {0x9C39, 2, 4},
+    {0x9C3A, 4, 4},
+    {0x9C3B, 4, 4},
+    {0x9C3C, 3, 3}
+};
+
+struct mp_stage_setup multi_stage_setups[] = {
+    {0x9C9A, 0x9C9B, 0x10, 0xFFFFFFFF, 0xFFFFFFFF, 1, 4},
+    {0x9C9C, 0x9C9D, 0xC, 0x26, 0xFFFFFFFF, 1, 4},
+    {0x9C9E, 0x9C9F, 0xE, 0x1F, 0xFFFFFFFF, 1, 4},
+    {0x9CA2, 0x9CA3, 0xF, 0x32, 0xFFFFFFFF, 1, 4},
+    {0x9CA0, 0x9CA1, 0xD, 0x30, 0xFFFFFFFF, 1, 4},
+    {0x9D0D, 0x9D0E, 0xD, 0x2D, 0xFFFFFFFF, 1, 4},
+    {0x9D0F, 0x9D10, 0xD, 0x2E, 0xFFFFFFFF, 1, 4},
+    {0x9CA4, 0x9CA5, 4, 0x22, 1, 1, 4},
+    {0x9CA6, 0x9CA7, 0, 0x1B, 8, 1, 3},
+    {0x9CA8, 0x9CA9, 2, 0x18, 0xA, 1, 3},
+    {0x9CAA, 0x9CAB, 1, 0x27, 0x10, 1, 3},
+    {0x9CAC, 0x9CAD, 0xA, 0x20, 0x13, 1, 2}
+};
+
+u32 num_chars_selectable_mp = 8;
+
+struct MP_selectable_chars mp_chr_setup[] = {
+    {0x9CB8, MALE,     0, BODY_Tuxedo,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {0x9CBF, FEMALE,   9, BODY_Natalya_Skirt,            HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.96609998},
+    {0x9CBC, MALE,     6, BODY_Trevelyan_Janus,          HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {0x9CBE, FEMALE,   8, BODY_Xenia,                    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {0x9CBB, MALE,     5, BODY_Ourumov,                  HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0778},
+    {0x9CBA, MALE,     4, BODY_Boris,                    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.9702},
+    {0x9CBD, MALE,     7, BODY_Valentin_,                HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 0.93239999},
+    {0x9CB9, MALE,   0xF, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Mishkin, 1.0},
+    {0x9CC2, FEMALE, 0xC, BODY_Mayday,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {0x9CC1, MALE,   0xB, BODY_Jaws,                     HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.199},
+    {0x9CC3, MALE,   0xD, BODY_Oddjob,                   HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT,0.78780001},
+    {0x9CC0, MALE,   0xA, BODY_Baron_Samedi,             HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT, 1.0},
+    {0x9CFD, MALE,   0xE, BODY_Russian_Soldier,          HEAD_Male_Mark, 1.0},
+    {0x9CFC, MALE,   0xE, BODY_Russian_Infantry,         HEAD_Male_Karl, 1.0},
+    {0x9D07, MALE,   0xE, BODY_Scientist_1_Male,         HEAD_Male_Dave_Dr_Doak, 1.0},
+    {0x9D07, FEMALE, 0xE, BODY_Scientist_2_Female,       HEAD_Female_Sally, 1.0},
+    {0x9D00, MALE,   0xE, BODY_Russian_Commandant,       HEAD_Male_Martin, 1.0},
+    {0x9CFE, MALE,   0xE, BODY_Janus_Marine,             HEAD_Male_Steve_Ellis, 1.0},
+    {0x9D01, MALE,   0xE, BODY_Naval_Officer,            HEAD_Male_Duncan, 1.0},
+    {0x9D06, MALE,   0xE, BODY_Helicopter_Pilot,         HEAD_Male_Pete, 1.0},
+    {0x9CFB, MALE,   0xE, BODY_St_Petersburg_Guard,      HEAD_Male_Ken, 1.0},
+    {0x9D08, FEMALE, 0xE, BODY_Civilian_1_Female,        HEAD_Female_Marion_Rosika, 1.0},
+    {0x9D08, MALE,   0xE, BODY_Civilian_2,               HEAD_Male_Graeme, 1.0},
+    {0x9D08, MALE,   0xE, BODY_Civilian_3,               HEAD_Male_Grant, 1.0},
+    {0x9D08, MALE,   0xE, BODY_Civilian_4,               HEAD_Male_Dwayne, 1.0},
+    {0x9D02, MALE,   0xE, BODY_Siberian_Guard_1_Mishkin, HEAD_Male_Lee, 1.0},
+    {0x9D03, MALE,   0xE, BODY_Arctic_Commando,          HEAD_Male_Chris, 1.0},
+    {0x9D02, MALE,   0xE, BODY_Siberian_Guard_2,         HEAD_Male_Scott, 1.0},
+    {0x9D04, MALE,   0xE, BODY_Siberian_Special_Forces,  HEAD_Male_Alan, 1.0},
+    {0x9CFA, MALE,   0xE, BODY_Jungle_Commando,          HEAD_Male_Joel, 1.0},
+    {0x9CFF, MALE,   0xE, BODY_Janus_Special_Forces,     HEAD_Male_B, 1.0},
+    {0x9D05, MALE,   0xE, BODY_Moonraker_Elite_1_Male,   HEAD_Male_Neil, 1.0},
+    {0x9D05, FEMALE, 0xE, BODY_Moonraker_Elite_2_Female, HEAD_Female_Vivien, 1.0},
+    {0x9CC4, FEMALE, 0xE, BODY_Rosika,                   HEAD_Female_Marion_Rosika, 0.88529998},
+    {0x9CC5, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Karl, 1.0446},
+    {0x9CC6, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Martin, 1.0446},
+    {0x9CC7, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Mark, 1.0446},
+    {0x9CC8, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Dave_Dr_Doak, 1.0446},
+    {0x9CC9, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Duncan, 1.0446},
+    {0x9CCA, FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Male_B, 1.0446},
+    {0x9CCB, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Steve_Ellis, 1.0446},
+    {0x9CCC, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Grant, 1.0446},
+    {0x9CCD, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Graeme, 1.0446},
+    {0x9CCE, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Ken, 1.0446},
+    {0x9CCF, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Alan, 1.0446},
+    {0x9CD0, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Pete, 1.0446},
+    {0x9CD1, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Shaun, 1.0446},
+    {0x9CD2, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Dwayne, 1.0446},
+    {0x9CD3, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Des, 1.0446},
+    {0x9CD4, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Chris, 1.0446},
+    {0x9CD5, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Lee, 1.0446},
+    {0x9CD6, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Neil, 1.0446},
+    {0x9CD7, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Jim, 1.0446},
+    {0x9CD8, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Robin, 1.0446},
+    {0x9CD9, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Steve_H, 1.0446},
+    {0x9CDA, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Terrorist, 1.0446},
+    {0x9CDB, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Biker, 1.0446},
+    {0x9CDC, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Joel, 1.0446},
+    {0x9CDD, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Scott, 1.0446},
+    {0x9CDE, MALE,   0xE, BODY_Tuxedo,                   HEAD_Male_Joe, 1.0446},
+    {0x9CDF, FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Sally, 1.0446},
+    {0x9CE0, FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Marion_Rosika, 1.0446},
+    {0x9CE1, FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Mandy, 1.0446},
+    {0x9CE2, FEMALE, 0xE, BODY_Tuxedo,                   HEAD_Female_Vivien, 1.0446}
+};
+
+struct MP_handicap_menu MP_handicap_table[] = {
+    {0x9C3D, 0, 10.0},
+    {0x9C3E, 0, 2.8560996},
+    {0x9C3F, 0, 2.1969998},
+    {0x9C40, 0, 1.6899998},
+    {0x9C41, 0, 1.3},
+    {0x9C42, 0, 1.0},
+    {0x9C43, 0, 0.76923078},
+    {0x9C44, 0, 0.59171599},
+    {0x9C45, 0, 0.45516616},
+    {0x9C46, 0, 0.35012782},
+    {0x9C47, 0, 0.1}
+};
+
+struct MP_controller_configuration_menu MP_controller_configuration_table[] = {
+    {0x9D, 0x15, 0, 1},
+    {0x9D, 0x16, 1, 1},
+    {0x9D, 0x17, 2, 1},
+    {0x9D, 0x18, 3, 1},
+    {0x9D, 0x19, 4, 2},
+    {0x9D, 0x1A, 5, 2},
+    {0x9D, 0x1B, 6, 2},
+    {0x9D, 0x1C, 7, 2}
+};
+
+struct MP_sight_aim_settings D_8002B510[] = {
+    {0x9C, 0x48, 0, 0},
+    {0x9C, 0x49, 1, 0},
+    {0x9C, 0x4A, 0, 1},
+    {0x9C, 0x4B, 1, 1}
+};
+
 s32 selected_num_players = 0;
 s32 player_1_char = -1;
 s32 player_2_char = -1;
@@ -12275,7 +12295,7 @@ glabel get_player_control_style
     void *sp18;
     void *temp_v1;
 
-    temp_v1 = (arg0 * 0x18) + &multi_stage_setup_random;
+    temp_v1 = (arg0 * 0x18) + &multi_stage_setups;
     if (temp_v1->unk10 == 0)
     {
         return 0;
@@ -12301,8 +12321,8 @@ GLOBAL_ASM(
 glabel check_if_mp_stage_unlocked
 /* 044C00 7F0100D0 00047080 */  sll   $t6, $a0, 2
 /* 044C04 7F0100D4 01C47023 */  subu  $t6, $t6, $a0
-/* 044C08 7F0100D8 3C0F8003 */  lui   $t7, %hi(multi_stage_setup_random) # $t7, 0x8003
-/* 044C0C 7F0100DC 25EFB074 */  addiu $t7, %lo(multi_stage_setup_random) # addiu $t7, $t7, -0x4f8c
+/* 044C08 7F0100D8 3C0F8003 */  lui   $t7, %hi(multi_stage_setups) # $t7, 0x8003
+/* 044C0C 7F0100DC 25EFB074 */  addiu $t7, %lo(multi_stage_setups) # addiu $t7, $t7, -0x4f8c
 /* 044C10 7F0100E0 000E70C0 */  sll   $t6, $t6, 3
 /* 044C14 7F0100E4 01CF1821 */  addu  $v1, $t6, $t7
 /* 044C18 7F0100E8 8C780010 */  lw    $t8, 0x10($v1)
@@ -19325,7 +19345,7 @@ loop_5:
 loop_6:
     if (phi_s1_3 < 0xc)
     {
-        temp_s0_3 = ((&multi_stage_setup_random + (phi_s1_3 * 0x18))->unk4 * 0xc) + dword_CODE_bss_8008D134;
+        temp_s0_3 = ((&multi_stage_setups + (phi_s1_3 * 0x18))->unk4 * 0xc) + dword_CODE_bss_8008D134;
         likely_generate_DL_for_image_declaration(temp_s3, temp_s0_3, 1, 0, 2);
         temp_t5 = arg0;
         if (phi_s1_3 == current_mp_stage_highlighted)
@@ -19389,7 +19409,7 @@ loop_17:
     {
         if (check_if_mp_stage_unlocked(phi_s5) != 0)
         {
-            temp_s3_2 = (((phi_s5 * 4) - phi_s5) * 8) + &multi_stage_setup_random;
+            temp_s3_2 = (((phi_s5 * 4) - phi_s5) * 8) + &multi_stage_setups;
             phi_s2_2 = 0x96969600;
             if (phi_s5 == current_mp_stage_highlighted)
             {
@@ -19586,11 +19606,11 @@ glabel constructor_menu12_mpstage
 /* 048DCC 7F01429C 44814000 */  mtc1  $at, $f8
 /* 048DD0 7F0142A0 46040180 */  add.s $f6, $f0, $f4
 /* 048DD4 7F0142A4 3C0142AA */  li    $at, 0x42AA0000 # 85.000000
-/* 048DD8 7F0142A8 3C168003 */  lui   $s6, %hi(multi_stage_setup_random) # $s6, 0x8003
+/* 048DD8 7F0142A8 3C168003 */  lui   $s6, %hi(multi_stage_setups) # $s6, 0x8003
 /* 048DDC 7F0142AC 4481A000 */  mtc1  $at, $f20
 /* 048DE0 7F0142B0 46083280 */  add.s $f10, $f6, $f8
 /* 048DE4 7F0142B4 00008825 */  move  $s1, $zero
-/* 048DE8 7F0142B8 26D6B074 */  addiu $s6, %lo(multi_stage_setup_random) # addiu $s6, $s6, -0x4f8c
+/* 048DE8 7F0142B8 26D6B074 */  addiu $s6, %lo(multi_stage_setups) # addiu $s6, $s6, -0x4f8c
 /* 048DEC 7F0142BC AFA000B4 */  sw    $zero, 0xb4($sp)
 /* 048DF0 7F0142C0 E7AA00DC */  swc1  $f10, 0xdc($sp)
 /* 048DF4 7F0142C4 241E000C */  li    $fp, 12
@@ -19770,8 +19790,8 @@ glabel constructor_menu12_mpstage
 /* 049090 7F014560 8D4A977C */  lw    $t2, %lo(current_mp_stage_highlighted)($t2)
 /* 049094 7F014564 0015C880 */  sll   $t9, $s5, 2
 /* 049098 7F014568 0335C823 */  subu  $t9, $t9, $s5
-/* 04909C 7F01456C 3C098003 */  lui   $t1, %hi(multi_stage_setup_random) # $t1, 0x8003
-/* 0490A0 7F014570 2529B074 */  addiu $t1, %lo(multi_stage_setup_random) # addiu $t1, $t1, -0x4f8c
+/* 04909C 7F01456C 3C098003 */  lui   $t1, %hi(multi_stage_setups) # $t1, 0x8003
+/* 0490A0 7F014570 2529B074 */  addiu $t1, %lo(multi_stage_setups) # addiu $t1, $t1, -0x4f8c
 /* 0490A4 7F014574 0019C8C0 */  sll   $t9, $t9, 3
 /* 0490A8 7F014578 36529600 */  ori   $s2, (0x96969600 & 0xFFFF) # ori $s2, $s2, 0x9600
 /* 0490AC 7F01457C 16AA0002 */  bne   $s5, $t2, .L7F014588
