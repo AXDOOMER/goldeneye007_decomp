@@ -21,8 +21,44 @@ const f32 flt_D_80053718 = 6.2831855;
 
 
 #ifdef NONMATCHING
-void convert_angle_using_inverse(void) {
-
+float convert_angle_using_inverse(f32 vector1,f32 vector2)
+{
+  float fVar1;
+  
+  if ((float)vector1 == 0.00000000) {
+    fVar1 = flt_80053700;
+    if (0.00000000 <= (float)vector2) {
+      fVar1 = 0.00000000;
+    }
+  }
+  else {
+    if ((float)vector2 == 0.00000000) {
+      fVar1 = flt_80053704;
+      if ((float)vector1 <= 0.00000000) {
+        fVar1 = flt_80053708;
+      }
+    }
+    else {
+      fVar1 = sqrtf((float)vector1 * (float)vector1 + (float)vector2 * (float)vector2);
+      if ((float)vector2 < (float)vector1) {
+        fVar1 = proc_7F05ACB0((float)vector2 / fVar1);
+        if ((float)vector1 < 0.00000000) {
+          fVar1 = flt_8005370C - fVar1;
+        }
+      }
+      else {
+        fVar1 = proc_7F05ACB0((float)vector1 / fVar1);
+        fVar1 = flt_80053710 - fVar1;
+        if ((float)vector2 < 0.00000000) {
+          fVar1 = flt_80053714 - fVar1;
+        }
+        if (fVar1 < 0.00000000) {
+          fVar1 = fVar1 + flt_80053718;
+        }
+      }
+    }
+  }
+  return fVar1;
 }
 #else
 GLOBAL_ASM(

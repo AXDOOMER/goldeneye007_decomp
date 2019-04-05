@@ -84,11 +84,11 @@ s32 random_female_heads[] = {
 s32 current_random_body = 0;
 s32 current_random_male_head = 0;
 s32 current_random_female_head = 0;
-f32 ai_accuracy_modifier = 1.0;
-f32 ai_damage_modifier = 1.0;
-f32 ai_health_modifier = 1.0;
-f32 ai_reaction_speed = 1.0;
-s32 setting_007_5 = 0;
+f32 ai_accuracy_modifier = 1.0f;
+f32 ai_damage_modifier = 1.0f;
+f32 ai_health_modifier = 1.0f;
+f32 ai_reaction_speed = 1.0f;
+f32 setting_007_5 = 0.0f;
 
 struct struck_animation_table D_8002CE54[] = {
     {0x35C8, 0, -1.0, 0.5, 0, 27.0, -1.0},

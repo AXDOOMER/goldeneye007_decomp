@@ -36,7 +36,7 @@ void init_obj_register_difficulty_vals(void) {
     ai_damage_modifier = 1.0f;
     ai_health_modifier = 1.0f;
     ai_reaction_speed = 1.0f;
-    setting_007_5 = 0;
+    setting_007_5 = 0.0f;
 }
 #else
 GLOBAL_ASM(
