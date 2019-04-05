@@ -11,4 +11,8 @@ struct sfx_register_struct {
     u32 field_0x14;
 };
 
+void stop_alarm(void);
+
+void sub_GAME_7F055EF8(void);
+
 #endif

@@ -42696,33 +42696,23 @@ glabel deactivate_alarm_sound_effect
 
 
 
-#ifdef NONMATCHING
-void stop_alarm(void) {
 
+void stop_alarm(void)
+{
+  alarm_timer = 0;
+  deactivate_alarm_sound_effect();
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel stop_alarm
-/* 08A95C 7F055E2C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08A960 7F055E30 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08A964 7F055E34 3C018003 */  lui   $at, %hi(alarm_timer) # $at, 0x8003
-/* 08A968 7F055E38 0FC1577B */  jal   deactivate_alarm_sound_effect
-/* 08A96C 7F055E3C AC200AC0 */   sw    $zero, %lo(alarm_timer)($at)
-/* 08A970 7F055E40 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08A974 7F055E44 27BD0018 */  addiu $sp, $sp, 0x18
-/* 08A978 7F055E48 03E00008 */  jr    $ra
-/* 08A97C 7F055E4C 00000000 */   nop   
-)
-#endif
+
 
 
 
 
 
 #ifdef NONMATCHING
-void is_alarm_on(void) {
-
+s32 is_alarm_on(void)
+{
+  return (0 < alarm_timer);
 }
 #else
 GLOBAL_ASM(
