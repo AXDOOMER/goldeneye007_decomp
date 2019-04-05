@@ -495,7 +495,10 @@ D:80052100                     .word locret_CODE_7F03519C, locret_CODE_7F0351A4,
 D:80052100                     .word locret_CODE_7F0351BC, locret_CODE_7F0351C4, locret_CODE_7F0351CC, locret_CODE_7F0351D4
 D:80052100                     .word locret_CODE_7F0351DC, locret_CODE_7F0351E4, locret_CODE_7F0351EC, locret_CODE_7F0351F4
 D:80052100                     .word actionFC_length
-D:800524F4     flt_D_800524F4: .float 6.2831855
+*/
+//D:800524F4
+const f32 D_800524F4 = 6.2831855;
+/*
 D:800524F8     jpt_700694DC:   .word Action00_GoToLabel, Action01_GoToLabelFromTop, Action02_Label
 D:800524F8                     .word loc_CODE_7F0355F8, action04_end, loc_CODE_7F03563C, loc_CODE_7F0356B0  # jump table for switch statement
 D:800524F8                     .word loc_CODE_7F03570C, loc_CODE_7F035768, loc_CODE_7F03577C, loc_CODE_7F035790
@@ -563,10 +566,16 @@ D:800524F8                     .word actionF4_play_xtheme_in_slot_for_seconds, a
 D:800524F8                     .word actionF6_trigger_explosions_around_players, actionF7_if_num_less_than_civilian_deaths_return
 D:800524F8                     .word actionF8_if_guardID_shot_at_unset_flag_and_return, actionF9_set_killed_in_action_flag
 D:800524F8                     .word action_FA_use_fawn_on_shoulder_animation, actionFB_switch_to_xsky, loc_CODE_7F03A134
-D:800528EC     flt_D_800528EC: .float 0.1
-D:800528F0     flt_D_800528F0: .float 0.1
-D:800528F4     flt_D_800528F4: .float 0.1
-D:800528F8     flt_D_800528F8: .float 0.1
+*/
+//D:800528EC
+const f32 D_800528EC = 0.1;
+//D:800528F0
+const f32 D_800528F0 = 0.1;
+//D:800528F4
+const f32 D_800528F4 = 0.1;
+//D:800528F8
+const f32 D_800528F8 = 0.1;
+/*
 D:800528FC     jpt_7006CB34:   .word loc_CODE_7F038C0C
 D:800528FC                     .word loc_CODE_7F038C0C
 D:800528FC                     .word loc_CODE_7F038C0C
@@ -597,8 +606,12 @@ D:800528FC                     .word def_7F038C04
 D:800528FC                     .word loc_CODE_7F038C0C
 D:800528FC                     .word loc_CODE_7F038C0C
 D:800528FC                     .word loc_CODE_7F038C0C
-D:80052974     flt_D_80052974: .float 0.016666666
-D:80052978     flt_D_80052978: .float 0.29166666
+*/
+//D:80052974
+const f32 D_80052974 = 0.016666666;
+//D:80052978
+const f32 D_80052978 = 0.29166666;
+/*
 //probably multiple files
 D:80052980     jpt_7007045C:   .word loc_CODE_7F03C534
 D:80052980                     .word loc_CODE_7F03C544
@@ -616,8 +629,12 @@ D:800529A0                     .word def_7F03D13C
 D:800529A0                     .word def_7F03D13C
 D:800529A0                     .word def_7F03D13C
 D:800529A0                     .word def_7F03D13C
-D:800529C0     flt_D_800529C0: .float 0.175
-D:800529C4     flt_D_800529C4: .float 0.82499999
+*/
+//D:800529C0
+const f32 D_800529C0 = 0.175;
+//D:800529C4
+const f32 D_800529C4 = 0.82499999;
+/*
 D:800529C8                     .align 4
 D:800529D0     dword_D_800529D0:.word 0xA000000
 D:800529D4     dword_D_800529D4:.word 0x2E0A0000
@@ -626,91 +643,178 @@ D:800529D8                     .word 0
 D:80052A38     dword_D_80052A38:.word 0
 D:80052A3C     dword_D_80052A3C:.word 0
 D:80052A40     dword_D_80052A40:.word 0xA000000
-D:80052A44     flt_D_80052A44: .float 0.00052642822
-D:80052A48     flt_D_80052A48: .float 0.050000001
-D:80052A4C     flt_D_80052A4C: .float 3.1415927
-D:80052A50     flt_D_80052A50: .float 4.712389
-D:80052A54     flt_D_80052A54: .float 3.1415927
-D:80052A58     flt_D_80052A58: .float 0.1
-D:80052A5C     flt_D_80052A5C: .float 0.99000001
-D:80052A60     flt_D_80052A60: .float -3.1415927
-D:80052A64     flt_D_80052A64: .float 6.2831855
-D:80052A68     flt_D_80052A68: .float 3.1415927
-D:80052A6C     flt_D_80052A6C: .float 6.2831855
-D:80052A70     flt_D_80052A70: .float 6.2831855
-D:80052A74     flt_D_80052A74: .float 6.2831855
-D:80052A78     flt_D_80052A78: .float 0.050000001
-D:80052A7C     flt_D_80052A7C: .float 6.2831855
-D:80052A80     flt_D_80052A80: .float 0.050000001
-D:80052A84     flt_D_80052A84: .float 0.029999999
-D:80052A88     flt_D_80052A88: .float 0.15000001
-D:80052A8C     flt_D_80052A8C: .float -1.5707964
-D:80052A90     flt_D_80052A90: .float -1.5707964
-D:80052A94     flt_D_80052A94: .float 62500.0
-D:80052A98     rocket_initial_gravity_modifier:.float 0.27777779
-D:80052A9C     flt_D_80052A9C: .float 0.011111111
-D:80052AA0     flt_D_80052AA0: .float 0.07
-D:80052AA4     prop_projectile_gravity_modifier:.float 0.27777779
-D:80052AA8     flt_D_80052AA8: .float 2.2222223
-D:80052AAC     flt_D_80052AAC: .float 27777.773
-D:80052AB0                     .float 1.1
-D:80052AB4     flt_D_80052AB4: .float 0.89999998
-D:80052AB8     flt_D_80052AB8: .float 0.89999998
-D:80052ABC     flt_D_80052ABC: .float 0.1
-D:80052AC0     flt_D_80052AC0: .float -0.1
-D:80052AC4     flt_D_80052AC4: .float -0.1
-D:80052AC8     flt_D_80052AC8: .float 6.2831855
-D:80052ACC     flt_D_80052ACC: .float 6.2831855
-D:80052AD0     flt_D_80052AD0: .float 3.1415927
-D:80052AD4     flt_D_80052AD4: .float 0.78539819
-D:80052AD8     flt_D_80052AD8: .float -0.78539819
-D:80052ADC                     .float 6.2831855
-D:80052AE0     flt_D_80052AE0: .float 0.00065449846
-D:80052AE4     flt_D_80052AE4: .float 0.00065449846
-D:80052AE8     flt_D_80052AE8: .float 6.2831855
-D:80052AEC     flt_D_80052AEC: .float 0.000011635529
-D:80052AF0                     .float 6.2831855
-D:80052AF4     flt_D_80052AF4: .float 0.00069813174
-D:80052AF8     flt_D_80052AF8: .float 0.0000058177643
-D:80052AFC     flt_D_80052AFC: .float 0.00034906587
-D:80052B00     flt_D_80052B00: .float 6.2831855
-D:80052B04     flt_D_80052B04: .float 6.2831855
-D:80052B08     flt_D_80052B08: .float 6.2831855
-D:80052B0C     flt_D_80052B0C: .float 3.1415927
-D:80052B10     flt_D_80052B10: .float 1.2217306
-D:80052B14     flt_D_80052B14: .float -1.2217306
-D:80052B18     flt_D_80052B18: .float -3.1415927
-D:80052B1C     flt_D_80052B1C: .float 3.1415927
-D:80052B20     flt_D_80052B20: .float 6.2831855
-D:80052B24     flt_D_80052B24: .float 0.80000001
-D:80052B28     flt_D_80052B28: .float -3.1415927
-D:80052B2C     flt_D_80052B2C: .float 3.1415927
-D:80052B30     flt_D_80052B30: .float 0.00087266468
-D:80052B34     flt_D_80052B34: .float 0.00087266468
-D:80052B38     flt_D_80052B38: .float 3.1415927
-D:80052B3C     flt_D_80052B3C: .float 0.59839863
-D:80052B40     flt_D_80052B40: .float 0.0099733109
-D:80052B44     flt_D_80052B44: .float 0.99000001
-D:80052B48     flt_D_80052B48: .float 0.000099999997
-D:80052B4C     flt_D_80052B4C: .float 0.00021816617
-D:80052B50     flt_D_80052B50: .float 0.0065449849
-D:80052B54     flt_D_80052B54: .float 6.2831855
-D:80052B58                     .float 0.00021816617
-D:80052B5C     flt_D_80052B5C: .float -0.00021816617
-D:80052B60                     .float 6.2831855
-D:80052B64     flt_D_80052B64: .float 6.2831855
-D:80052B68     flt_D_80052B68: .float 0.30000001
-D:80052B6C     flt_D_80052B6C: .float 1.5707964
-D:80052B70     flt_D_80052B70: .float 1.5707964
-D:80052B74     flt_D_80052B74: .float 0.16
-D:80052B78     flt_D_80052B78: .float 10000.0
-D:80052B7C     flt_D_80052B7C: .float 3000.0
-D:80052B80     flt_D_80052B80: .float 0.60000002
-D:80052B84     flt_D_80052B84: .float 0.30000001
-D:80052B88     flt_D_80052B88: .float -0.1
-D:80052B8C     flt_D_80052B8C: .float 0.2
-D:80052B90     flt_D_80052B90: .float 3000.0
-D:80052B94     flt_D_80052B94: .float 3000.0
+*/
+//D:80052A44
+const f32 D_80052A44 = 0.00052642822;
+//D:80052A48
+const f32 D_80052A48 = 0.050000001;
+//D:80052A4C
+const f32 D_80052A4C = 3.1415927;
+//D:80052A50
+const f32 D_80052A50 = 4.712389;
+//D:80052A54
+const f32 D_80052A54 = 3.1415927;
+//D:80052A58
+const f32 D_80052A58 = 0.1;
+//D:80052A5C
+const f32 D_80052A5C = 0.99000001;
+//D:80052A60
+const f32 D_80052A60 = -3.1415927;
+//D:80052A64
+const f32 D_80052A64 = 6.2831855;
+//D:80052A68
+const f32 D_80052A68 = 3.1415927;
+//D:80052A6C
+const f32 D_80052A6C = 6.2831855;
+//D:80052A70
+const f32 D_80052A70 = 6.2831855;
+//D:80052A74
+const f32 D_80052A74 = 6.2831855;
+//D:80052A78
+const f32 D_80052A78 = 0.050000001;
+//D:80052A7C
+const f32 D_80052A7C = 6.2831855;
+//D:80052A80
+const f32 D_80052A80 = 0.050000001;
+//D:80052A84
+const f32 D_80052A84 = 0.029999999;
+//D:80052A88
+const f32 D_80052A88 = 0.15000001;
+//D:80052A8C
+const f32 D_80052A8C = -1.5707964;
+//D:80052A90
+const f32 D_80052A90 = -1.5707964;
+//D:80052A94
+const f32 D_80052A94 = 62500.0;
+//D:80052A98
+const f32 rocket_initial_gravity_modifier = 0.27777779;
+//D:80052A9C
+const f32 D_80052A9C = 0.011111111;
+//D:80052AA0
+const f32 D_80052AA0 = 0.07;
+//D:80052AA4
+const f32 prop_projectile_gravity_modifier = 0.27777779;
+//D:80052AA8
+const f32 D_80052AA8 = 2.2222223;
+//D:80052AAC
+const f32 D_80052AAC = 27777.773;
+//D:80052AB0
+const f32 D_80052AB0 = 1.1;
+//D:80052AB4
+const f32 D_80052AB4 = 0.89999998;
+//D:80052AB8
+const f32 D_80052AB8 = 0.89999998;
+//D:80052ABC
+const f32 D_80052ABC = 0.1;
+//D:80052AC0
+const f32 D_80052AC0 = -0.1;
+//D:80052AC4
+const f32 D_80052AC4 = -0.1;
+//D:80052AC8
+const f32 D_80052AC8 = 6.2831855;
+//D:80052ACC
+const f32 D_80052ACC = 6.2831855;
+//D:80052AD0
+const f32 D_80052AD0 = 3.1415927;
+//D:80052AD4
+const f32 D_80052AD4 = 0.78539819;
+//D:80052AD8
+const f32 D_80052AD8 = -0.78539819;
+//D:80052ADC
+const f32 D_80052ADC = 6.2831855;
+//D:80052AE0
+const f32 D_80052AE0 = 0.00065449846;
+//D:80052AE4
+const f32 D_80052AE4 = 0.00065449846;
+//D:80052AE8
+const f32 D_80052AE8 = 6.2831855;
+//D:80052AEC
+const f32 D_80052AEC = 0.000011635529;
+//D:80052AF0
+const f32 D_80052AF0 = 6.2831855;
+//D:80052AF4
+const f32 D_80052AF4 = 0.00069813174;
+//D:80052AF8
+const f32 D_80052AF8 = 0.0000058177643;
+//D:80052AFC
+const f32 D_80052AFC = 0.00034906587;
+//D:80052B00
+const f32 D_80052B00 = 6.2831855;
+//D:80052B04
+const f32 D_80052B04 = 6.2831855;
+//D:80052B08
+const f32 D_80052B08 = 6.2831855;
+//D:80052B0C
+const f32 D_80052B0C = 3.1415927;
+//D:80052B10
+const f32 D_80052B10 = 1.2217306;
+//D:80052B14
+const f32 D_80052B14 = -1.2217306;
+//D:80052B18
+const f32 D_80052B18 = -3.1415927;
+//D:80052B1C
+const f32 D_80052B1C = 3.1415927;
+//D:80052B20
+const f32 D_80052B20 = 6.2831855;
+//D:80052B24
+const f32 D_80052B24 = 0.80000001;
+//D:80052B28
+const f32 D_80052B28 = -3.1415927;
+//D:80052B2C
+const f32 D_80052B2C = 3.1415927;
+//D:80052B30
+const f32 D_80052B30 = 0.00087266468;
+//D:80052B34
+const f32 D_80052B34 = 0.00087266468;
+//D:80052B38
+const f32 D_80052B38 = 3.1415927;
+//D:80052B3C
+const f32 D_80052B3C = 0.59839863;
+//D:80052B40
+const f32 D_80052B40 = 0.0099733109;
+//D:80052B44
+const f32 D_80052B44 = 0.99000001;
+//D:80052B48
+const f32 D_80052B48 = 0.000099999997;
+//D:80052B4C
+const f32 D_80052B4C = 0.00021816617;
+//D:80052B50
+const f32 D_80052B50 = 0.0065449849;
+//D:80052B54
+const f32 D_80052B54 = 6.2831855;
+//D:80052B58
+const f32 D_80052B58 = 0.00021816617;
+//D:80052B5C
+const f32 D_80052B5C = -0.00021816617;
+//D:80052B60
+const f32 D_80052B60 = 6.2831855;
+//D:80052B64
+const f32 D_80052B64 = 6.2831855;
+//D:80052B68
+const f32 D_80052B68 = 0.30000001;
+//D:80052B6C
+const f32 D_80052B6C = 1.5707964;
+//D:80052B70
+const f32 D_80052B70 = 1.5707964;
+//D:80052B74
+const f32 D_80052B74 = 0.16;
+//D:80052B78
+const f32 D_80052B78 = 10000.0;
+//D:80052B7C
+const f32 D_80052B7C = 3000.0;
+//D:80052B80
+const f32 D_80052B80 = 0.60000002;
+//D:80052B84
+const f32 D_80052B84 = 0.30000001;
+//D:80052B88
+const f32 D_80052B88 = -0.1;
+//D:80052B8C
+const f32 D_80052B8C = 0.2;
+//D:80052B90
+const f32 D_80052B90 = 3000.0;
+//D:80052B94
+const f32 D_80052B94 = 3000.0;
+/*
 D:80052B98     jpt_7007DBF0:   .word def_7F049CC0, loc_CODE_7F049CC8, loc_CODE_7F049CD4, loc_CODE_7F049CE0
 D:80052B98                     .word loc_CODE_7F049CEC, loc_CODE_7F049CF8, loc_CODE_7F049D04, loc_CODE_7F049D10
 D:80052B98                     .word loc_CODE_7F049D1C, loc_CODE_7F049D28, loc_CODE_7F049D34, loc_CODE_7F049D40
@@ -742,6 +846,7 @@ D:80052C6C                     .word command0D_colour_transition
 D:80052C6C                     .word command0E_set_rotation
 D:80052C6C                     .word command0F_rotate
 D:80052CAC                     .float 1.5707964
+*/
 //D:80052CB0
 const f32 D_80052CB0 = 1.4141999;
 //D:80052CB4
@@ -860,6 +965,7 @@ const f32 D_80052D90 = 6.2831855;
 const f32 D_80052D94 = 0.0098174773;
 //D:80052D98
 const f32 D_80052D98 = 32767.0;
+/*
 D:80052D9C     jpt_70081970:   .word loc_CODE_7F04DAA4  # DATA XREF: sub_CODE_7F04D9B0+84r
 D:80052D9C                     .word def_7F04DA40       # jump table for switch statement
 D:80052D9C                     .word def_7F04DA40
@@ -948,13 +1054,22 @@ D:80052EAC                     .word notcollectable_object
 D:80052EAC                     .word notcollectable_object
 D:80052EAC                     .word collectable_object
 D:80052EAC                     .word collectable_object
-D:80052EF4     flt_D_80052EF4: .float 160000.0          # DATA XREF: sub_CODE_7F04EF58+E4r
-D:80052EF8     flt_D_80052EF8: .float 2.0943952         # DATA XREF: sub_CODE_7F04EF58+F4r
-D:80052EFC     flt_D_80052EFC: .float 40000.0           # DATA XREF: sub_CODE_7F04EF58+100r
-D:80052F00     flt_D_80052F00: .float 0.39269909        # DATA XREF: sub_CODE_7F04EF58+108r
-D:80052F04     flt_D_80052F04: .float 6.2831855         # DATA XREF: sub_CODE_7F04EF58+184r
-D:80052F08     flt_D_80052F08: .float 3.1415927         # DATA XREF: sub_CODE_7F04EF58:loc_CODE_7F04F0E4r
-D:80052F0C     flt_D_80052F0C: .float 6.2831855         # DATA XREF: sub_CODE_7F04EF58+1A8r
+*/
+//D:80052EF4
+const f32 D_80052EF4 = 160000.0;
+//D:80052EF8
+const f32 D_80052EF8 = 2.0943952;
+//D:80052EFC
+const f32 D_80052EFC = 40000.0;
+//D:80052F00
+const f32 D_80052F00 = 0.39269909;
+//D:80052F04
+const f32 D_80052F04 = 6.2831855;
+//D:80052F08
+const f32 D_80052F08 = 3.1415927;
+//D:80052F0C
+const f32 D_80052F0C = 6.2831855;
+/*
 D:80052F10     jpt_70083244:   .word text_some          # DATA XREF: append_text_ammo_amount_word+1Cr
 D:80052F10                     .word text_some          # jump table for switch statement
 D:80052F10                     .word text_some
@@ -1148,11 +1263,18 @@ D:8005322C                     .word interact_default_object
 D:8005322C                     .word interact_default_object
 D:8005322C                     .word interact_default_object
 D:8005322C                     .word interact_default_object
-D:800532E0     flt_D_800532E0: .float -0.78539819       # DATA XREF: object_collectability_routines+41Cr
-D:800532E4     flt_D_800532E4: .float 122500.0          # DATA XREF: object_collectability_routines+49Cr
-D:800532E8     flt_D_800532E8: .float 10000.0           # DATA XREF: object_collectability_routines+520r
-D:800532EC     flt_D_800532EC: .float 62500.0           # DATA XREF: detonate_proxmine_within_range+14r
-D:800532F0     flt_D_800532F0: .float 3.1415927         # DATA XREF: sub_CODE_7F0523F8+CCr
+*/
+//D:800532E0
+const f32 D_800532E0 = -0.78539819;
+//D:800532E4
+const f32 D_800532E4 = 122500.0;
+//D:800532E8
+const f32 D_800532E8 = 10000.0;
+//D:800532EC
+const f32 D_800532EC = 62500.0;
+//D:800532F0
+const f32 D_800532F0 = 3.1415927;
+/*
 D:800532F4     jpt_hat_worn:   .word model_hat_fur      # DATA XREF: get_hat_model+1Cr
 D:800532F4                     .word model_hat_fur      # jump table for switch statement
 D:800532F4                     .word model_hat_fur
@@ -1165,16 +1287,28 @@ D:800532F4                     .word model_hat_beret
 D:800532F4                     .word model_hat_beret
 D:800532F4                     .word model_hat_beret
 D:800532F4                     .word model_hat_officerhat
-D:80053324     flt_D_80053324: .float 6.2831855         # DATA XREF: sub_CODE_7F0526EC+264r
-D:80053328     flt_D_80053328: .float 6.2831855         # DATA XREF: sub_CODE_7F0526EC:loc_CODE_7F052980r
-D:8005332C     flt_D_8005332C: .float 6.2831855         # DATA XREF: sub_CODE_7F0526EC+2D0r
-D:80053330     flt_D_80053330: .float 6.2831855         # DATA XREF: sub_CODE_7F0526EC:loc_CODE_7F0529ECr
-D:80053334     flt_D_80053334: .float 10000.0           # DATA XREF: sub_CODE_7F052B00+140r
-D:80053338     flt_D_80053338: .float 0.40000001        # DATA XREF: sub_CODE_7F052B00+1ACr
-D:8005333C     flt_D_8005333C: .float 0.40000001        # DATA XREF: sub_CODE_7F052B00+1D4r
-D:80053340     flt_D_80053340: .float 10000.0           # DATA XREF: sub_CODE_7F0537B8+60r
-D:80053344     flt_D_80053344: .float 22767.0           # DATA XREF: sub_CODE_7F0537B8+A4r
-D:80053348     flt_D_80053348: .float 5000.0            # DATA XREF: sub_CODE_7F0539B8+18r
+*/
+//D:80053324
+const f32 D_80053324 = 6.2831855;
+//D:80053328
+const f32 D_80053328 = 6.2831855;
+//D:8005332C
+const f32 D_8005332C = 6.2831855;
+//D:80053330
+const f32 D_80053330 = 6.2831855;
+//D:80053334
+const f32 D_80053334 = 10000.0;
+//D:80053338
+const f32 D_80053338 = 0.40000001;
+//D:8005333C
+const f32 D_8005333C = 0.40000001;
+//D:80053340
+const f32 D_80053340 = 10000.0;
+//D:80053344
+const f32 D_80053344 = 22767.0;
+//D:80053348
+const f32 D_80053348 = 5000.0;
+/*
 D:8005334C     door_opening_sound_table_0:.word loc_CODE_7F053BEC
 D:8005334C                                              # DATA XREF: play_door_opening_soundeffect_0+60r
 D:8005334C                     .word loc_CODE_7F053C2C  # jump table for switch statement
@@ -1247,20 +1381,34 @@ D:80053418                     .word loc_CODE_7F05469C
 D:80053418                     .word loc_CODE_7F0546BC
 D:80053418                     .word loc_CODE_7F0546DC
 D:80053418                     .word loc_CODE_7F0546FC
-D:8005345C     flt_D_8005345C: .float 1.024e9           # DATA XREF: sub_CODE_7F054D6C+ECr
-D:80053460     flt_D_80053460: .float 6.2831855         # DATA XREF: sub_CODE_7F05522C+1B0r
-D:80053464     flt_D_80053464: .float 6.2831855         # DATA XREF: sub_CODE_7F05522C:loc_CODE_7F0553E4r
-D:80053468     flt_D_80053468: .float 3.1415927         # DATA XREF: sub_CODE_7F05522C+1C0r
-D:8005346C     flt_D_8005346C: .float 6.2831855         # DATA XREF: sub_CODE_7F05522C+2D4r
-D:80053470     flt_D_80053470: .float 3.1415927         # DATA XREF: sub_CODE_7F05522C:loc_CODE_7F055508r
-D:80053474     flt_D_80053474: .float 6.2831855         # DATA XREF: sub_CODE_7F05522C+2F8r
-D:80053478     flt_D_80053478: .float 6.2831855         # DATA XREF: sub_CODE_7F05522C+358r
-D:8005347C     flt_D_8005347C: .float 3.1415927         # DATA XREF: sub_CODE_7F05522C:loc_CODE_7F05558Cr
-D:80053480     flt_D_80053480: .float 6.2831855         # DATA XREF: sub_CODE_7F05522C+37Cr
-D:80053484     flt_D_80053484: .float 0.34906587        # DATA XREF: sub_CODE_7F0555F8+4Cr
-D:80053488     flt_D_80053488: .float 3.1415927         # DATA XREF: sub_CODE_7F0555F8+194r
-D:8005348C     flt_D_8005348C: .float 40000.0           # DATA XREF: sub_CODE_7F055804+90r
 */
+//D:8005345C
+const f32 D_8005345C = 1.024e9;
+//D:80053460
+const f32 D_80053460 = 6.2831855;
+//D:80053464
+const f32 D_80053464 = 6.2831855;
+//D:80053468
+const f32 D_80053468 = 3.1415927;
+//D:8005346C
+const f32 D_8005346C = 6.2831855;
+//D:80053470
+const f32 D_80053470 = 3.1415927;
+//D:80053474
+const f32 D_80053474 = 6.2831855;
+//D:80053478
+const f32 D_80053478 = 6.2831855;
+//D:8005347C
+const f32 D_8005347C = 3.1415927;
+//D:80053480
+const f32 D_80053480 = 6.2831855;
+//D:80053484
+const f32 D_80053484 = 0.34906587;
+//D:80053488
+const f32 D_80053488 = 3.1415927;
+//D:8005348C
+const f32 D_8005348C = 40000.0;
+
 
 
 
