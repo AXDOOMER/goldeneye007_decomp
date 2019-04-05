@@ -613,11 +613,11 @@ glabel stage_load
 /* 0F2830 7F0BDD00 26310070 */  addiu $s1, $s1, 0x70
 /* 0F2834 7F0BDD04 1613FFF2 */  bne   $s0, $s3, .L7F0BDCD0
 /* 0F2838 7F0BDD08 E620FFF4 */   swc1  $f0, -0xc($s1)
-/* 0F283C 7F0BDD0C 0FC04108 */  jal   get_time_div_selected_length
+/* 0F283C 7F0BDD0C 0FC04108 */  jal   get_mp_timelimit
 /* 0F2840 7F0BDD10 00000000 */   nop   
 /* 0F2844 7F0BDD14 0FC2FF0A */  jal   set_mp_time
 /* 0F2848 7F0BDD18 00402025 */   move  $a0, $v0
-/* 0F284C 7F0BDD1C 0FC04111 */  jal   get_score_div_selected_length
+/* 0F284C 7F0BDD1C 0FC04111 */  jal   get_mp_pointlimit
 /* 0F2850 7F0BDD20 00000000 */   nop   
 /* 0F2854 7F0BDD24 0FC2FF0D */  jal   set_mp_point
 /* 0F2858 7F0BDD28 00402025 */   move  $a0, $v0

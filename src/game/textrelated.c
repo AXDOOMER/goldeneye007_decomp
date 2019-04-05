@@ -15,8 +15,8 @@ s32 D_80040EA4 = 0;
 s32 D_80040EA8 = 0;
 s32 D_80040EAC = 0;
 s32 D_80040EB0 = 0;
-s32 D_80040EB4 = 0;
-s32 D_80040EB8 = 0;
+s32 ptrFirstFontTable = 0;
+s32 ptrSecondFontTable = 0;
 
 u16 D_80040EBC[] = {
     0x0000, 0x5555, 0xaaaa, 0xffff,
@@ -187,23 +187,23 @@ loop_1:
     // Node 2
     temp_a2_2 = (&0x00003540 - 0);
     temp_ret_2 = allocate_bytes_in_bank(temp_a2_2, 4, temp_a2_2, &D_80040EAC);
-    D_80040EB4 = temp_ret_2;
-    D_80040EB8 = (void *) (temp_ret_2 + 0x2a4);
-    romCopy(temp_ret_2, &_fonttablectllarge1SegmentRomStart, sp1C, &D_80040EB4);
-    D_80040EB8->unk14 = (s32) (D_80040EB8->unk14 + D_80040EB4);
-    D_80040EB8->unk2C = (s32) (D_80040EB8->unk2C + D_80040EB4);
+    ptrFirstFontTable = temp_ret_2;
+    ptrSecondFontTable = (void *) (temp_ret_2 + 0x2a4);
+    romCopy(temp_ret_2, &_fonttablectllarge1SegmentRomStart, sp1C, &ptrFirstFontTable);
+    ptrSecondFontTable->unk14 = (s32) (ptrSecondFontTable->unk14 + ptrFirstFontTable);
+    ptrSecondFontTable->unk2C = (s32) (ptrSecondFontTable->unk2C + ptrFirstFontTable);
     phi_v1_2 = 0x30;
 loop_3:
     // Node 3
-    temp_v0_2 = (D_80040EB8 + phi_v1_2);
-    temp_v0_2->unk14 = (s32) (temp_v0_2->unk14 + D_80040EB4);
-    temp_v0_3 = (D_80040EB8 + phi_v1_2);
-    temp_v0_3->unk2C = (s32) (temp_v0_3->unk2C + D_80040EB4);
-    temp_v0_4 = (D_80040EB8 + phi_v1_2);
-    temp_v0_4->unk44 = (s32) (temp_v0_4->unk44 + D_80040EB4);
-    temp_v0_5 = (D_80040EB8 + phi_v1_2);
+    temp_v0_2 = (ptrSecondFontTable + phi_v1_2);
+    temp_v0_2->unk14 = (s32) (temp_v0_2->unk14 + ptrFirstFontTable);
+    temp_v0_3 = (ptrSecondFontTable + phi_v1_2);
+    temp_v0_3->unk2C = (s32) (temp_v0_3->unk2C + ptrFirstFontTable);
+    temp_v0_4 = (ptrSecondFontTable + phi_v1_2);
+    temp_v0_4->unk44 = (s32) (temp_v0_4->unk44 + ptrFirstFontTable);
+    temp_v0_5 = (ptrSecondFontTable + phi_v1_2);
     temp_v1_2 = (phi_v1_2 + 0x60);
-    temp_v0_5->unk5C = (s32) (temp_v0_5->unk5C + D_80040EB4);
+    temp_v0_5->unk5C = (s32) (temp_v0_5->unk5C + ptrFirstFontTable);
     phi_v1_2 = temp_v1_2;
     if (temp_v1_2 != 0x8d0)
     {
@@ -282,10 +282,10 @@ glabel load_font_tables
 /* 0E17D4 7F0ACCA4 AFA6001C */  sw    $a2, 0x1c($sp)
 /* 0E17D8 7F0ACCA8 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 0E17DC 7F0ACCAC 24050004 */   li    $a1, 4
-/* 0E17E0 7F0ACCB0 3C078004 */  lui   $a3, %hi(D_80040EB4) # $a3, 0x8004
-/* 0E17E4 7F0ACCB4 3C088004 */  lui   $t0, %hi(D_80040EB8) # $t0, 0x8004
-/* 0E17E8 7F0ACCB8 25080EB8 */  addiu $t0, %lo(D_80040EB8) # addiu $t0, $t0, 0xeb8
-/* 0E17EC 7F0ACCBC 24E70EB4 */  addiu $a3, %lo(D_80040EB4) # addiu $a3, $a3, 0xeb4
+/* 0E17E0 7F0ACCB0 3C078004 */  lui   $a3, %hi(ptrFirstFontTable) # $a3, 0x8004
+/* 0E17E4 7F0ACCB4 3C088004 */  lui   $t0, %hi(ptrSecondFontTable) # $t0, 0x8004
+/* 0E17E8 7F0ACCB8 25080EB8 */  addiu $t0, %lo(ptrSecondFontTable) # addiu $t0, $t0, 0xeb8
+/* 0E17EC 7F0ACCBC 24E70EB4 */  addiu $a3, %lo(ptrFirstFontTable) # addiu $a3, $a3, 0xeb4
 /* 0E17F0 7F0ACCC0 244F02A4 */  addiu $t7, $v0, 0x2a4
 /* 0E17F4 7F0ACCC4 3C05002F */  lui   $a1, %hi(_fonttablectllarge1SegmentRomStart) # $a1, 0x2f
 /* 0E17F8 7F0ACCC8 ACE20000 */  sw    $v0, ($a3)
@@ -294,11 +294,11 @@ glabel load_font_tables
 /* 0E1804 7F0ACCD4 00402025 */  move  $a0, $v0
 /* 0E1808 7F0ACCD8 0C001707 */  jal   romCopy
 /* 0E180C 7F0ACCDC 24A588A0 */   addiu $a1, %lo(_fonttablectllarge1SegmentRomStart) # addiu $a1, $a1, -0x7760
-/* 0E1810 7F0ACCE0 3C088004 */  lui   $t0, %hi(D_80040EB8) # $t0, 0x8004
-/* 0E1814 7F0ACCE4 25080EB8 */  addiu $t0, %lo(D_80040EB8) # addiu $t0, $t0, 0xeb8
+/* 0E1810 7F0ACCE0 3C088004 */  lui   $t0, %hi(ptrSecondFontTable) # $t0, 0x8004
+/* 0E1814 7F0ACCE4 25080EB8 */  addiu $t0, %lo(ptrSecondFontTable) # addiu $t0, $t0, 0xeb8
 /* 0E1818 7F0ACCE8 8D020000 */  lw    $v0, ($t0)
-/* 0E181C 7F0ACCEC 3C078004 */  lui   $a3, %hi(D_80040EB4) # $a3, 0x8004
-/* 0E1820 7F0ACCF0 24E70EB4 */  addiu $a3, %lo(D_80040EB4) # addiu $a3, $a3, 0xeb4
+/* 0E181C 7F0ACCEC 3C078004 */  lui   $a3, %hi(ptrFirstFontTable) # $a3, 0x8004
+/* 0E1820 7F0ACCF0 24E70EB4 */  addiu $a3, %lo(ptrFirstFontTable) # addiu $a3, $a3, 0xeb4
 /* 0E1824 7F0ACCF4 8CF90000 */  lw    $t9, ($a3)
 /* 0E1828 7F0ACCF8 8C580014 */  lw    $t8, 0x14($v0)
 /* 0E182C 7F0ACCFC 24030030 */  li    $v1, 48

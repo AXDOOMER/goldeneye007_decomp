@@ -250,6 +250,23 @@ struct MP_sight_aim_settings {
     char field_3;
 };
 
+struct intro_char {
+    int body;
+    int head;
+    short text1;
+    short text2;
+    short text3;
+    short RESERVED;
+    int flag;
+};
+
+struct intro_animation {
+    int animID;
+    float startframeoffset;
+    float playback_speed;
+    int camera_preset;
+};
+
 extern f32 flt_CODE_bss_800695A0;
 //CODE.bss:800695A4
 extern f32 flt_CODE_bss_800695A4;
@@ -564,13 +581,13 @@ extern s32 size_mp_select_image_player3;
 //CODE.bss:8006975C
 extern s32 size_mp_select_image_player4;
 //CODE.bss:80069760
-extern s32 dword_CODE_bss_80069760;
+extern s32 handicap_player1;
 //CODE.bss:80069764
-extern s32 dword_CODE_bss_80069764;
+extern s32 handicap_player2;
 //CODE.bss:80069768
-extern s32 dword_CODE_bss_80069768;
+extern s32 handicap_player3;
 //CODE.bss:8006976C
-extern s32 dword_CODE_bss_8006976C;
+extern s32 handicap_player4;
 //CODE.bss:80069770
 extern s32 dword_CODE_bss_80069770;
 //CODE.bss:80069774
