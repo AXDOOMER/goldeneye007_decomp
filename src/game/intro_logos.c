@@ -63,25 +63,27 @@ flt_D_8002A88C: .float -1.0
 dword_D_8002A890:.word 0
 flt_D_8002A894: .float 1.0
 dword_D_8002A898:.word 0
- # float a
-a:              .float 0
-intro_eye_counter:.word 0
-intro_state_blood_animation:.word 0
-dword_D_8002A8A8:.word 0
-dword_D_8002A8AC:.word 0
-dword_D_8002A8B0:.word 0
+*/
+
+f32 a = 0;
+u32 intro_eye_counter = 0;
+u32 intro_state_blood_animation = 0;
+u32 dword_D_8002A8A8 = 0;
+u32 dword_D_8002A8AC = 0;
+u32 dword_D_8002A8B0 = 0;
+/*
                 .word 0
                 .word 0
                 .word 0
 */
 
 
+//.section .rodata
+const f32 D_8004F2D0 =  0.91000003;
+const f32 D_8004F2D4 =  10000.0;
+const f32 D_8004F2D8 =  5000.0;
+const f32 D_8004F2DC =  0.91000003;
 /*
-.section .rodata
-F32_8004F2D0: .float 0.91000003
-F32_8004F2D4: .float 10000.0
-F32_8004F2D8: .float 5000.0
-F32_8004F2DC: .float 0.91000003
 jpt_7003D1CC:   .word .L7F0092A4
 .word .L7F009344
 .word .L7F009428
@@ -89,11 +91,11 @@ jpt_7003D1CC:   .word .L7F0092A4
 .word .L7F009550
 .word .L7F009610
 .word .L7F0096D8
-F32_8004F2FC: .float 1390.0
-F32_8004F300: .float 1276.0
-F32_8004F304: .float 5.8183274
-.align 4
 */
+const f32 D_8004F2FC = 1390.0;
+const f32 D_8004F300 = 1276.0;
+const f32 D_8004F304 = 5.8183274;
+
 
 #ifdef NONMATCHING
 void something_with_gunbarrel_and_rareware_logo_matrix_manip(void) {

@@ -109,15 +109,15 @@ const char aStan_c_debug[] = "stan_c_debug";
 //D:800585BC
 const char aStanlinelog[] = "-stanlinelog";
 //D:800585CC
-const f32 flt_D_800585CC = 32767.0;
+const f32 D_800585CC = 32767.0;
 //D:800585D0
-const f32 flt_D_800585D0 = -3.4028235e38;
+const f32 D_800585D0 = -3.4028235e38;
 //D:800585D4
-const f32 flt_D_800585D4 = -32767.0;
+const f32 D_800585D4 = -32767.0;
 //D:800585D8
-const f32 flt_D_800585D8 = 0.1;
+const f32 D_800585D8 = 0.1;
 //D:800585DC
-const f32 flt_D_800585DC = 0.89999998;
+const f32 D_800585DC = 0.89999998;
 
 
 #ifdef NONMATCHING

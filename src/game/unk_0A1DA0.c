@@ -1,19 +1,21 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:8007A160     dword_CODE_bss_8007A160:.space 4
-CODE.bss:8007A164     dword_CODE_bss_8007A164:.space 4
-CODE.bss:8007A168                     .align 4
-CODE.bss:8007A170     dword_CODE_bss_8007A170:.space 4
-CODE.bss:8007A174     word_CODE_bss_8007A174:.space 2
-CODE.bss:8007A176                     .align 2
-CODE.bss:8007A178                     .space 0x368
-CODE.bss:8007A4E0     dword_CODE_bss_8007A4E0:.space 4
-CODE.bss:8007A4E4     word_CODE_bss_8007A4E4:.space 2
-CODE.bss:8007A4E6                     .align 2
-CODE.bss:8007A4E8                     .space 0xBB0
-CODE.bss:8007B098     dword_CODE_bss_8007B098:.space 8
-*/
+// bss
+//CODE.bss:8007A160
+u32 dword_CODE_bss_8007A160;
+//CODE.bss:8007A164
+u32 dword_CODE_bss_8007A164;
+//CODE.bss:8007A168
+u32 dword_CODE_bss_8007A168;
+//CODE.bss:8007A16C
+u32 dword_CODE_bss_8007A16C;
+//CODE.bss:8007A170
+u8 dword_CODE_bss_8007A170[0x370];
+//CODE.bss:8007A4E0
+u8 dword_CODE_bss_8007A4E0[0xBB8];
+//CODE.bss:8007B098
+u8 dword_CODE_bss_8007B098[8];
+
 
 /* data
 D:80040940     dword_D_80040940:.word          0,         0,         0,         0

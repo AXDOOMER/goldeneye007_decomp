@@ -486,6 +486,7 @@ dword_D_8002AB94:.word 0xC4610000, 0x44480000, 0
                 .float 900.0
                 .float -200.0
                 .word 0
+*/
 f32 folder_option_COPY_left_bound = 0.0;
 f32 folder_option_COPY_upper_bound = 0.0;
 f32 folder_option_COPY_right_bound = 0.0;
@@ -494,6 +495,7 @@ f32 folder_option_ERASE_left_bound = 0.0;
 f32 folder_option_ERASE_upper_bound = 0.0;
 f32 folder_option_ERASE_right_bound = 0.0;
 f32 folder_option_ERASE_lower_bound = 0.0;
+/*
 mission_folder_setup_entries:
     mission_folder_setup <"1", 0x9C78, 0, LEVELID_NONE, 0, MISSION_HEADER, 0xFFFFFFFF, 0>
     mission_folder_setup <"i", 0x9C79, 0, LEVELID_DAM, 0, MISSION_PART, 0, "UbriefdamZ">
@@ -538,12 +540,14 @@ unknown_folderselect:.word          0,         1,         3,         0,         
 dword_D_8002AF84:.word          0,         1,         3,         0,         0,         0,         0
                 .word          0,         0,         0,         0,         0,         0,         0
                 .word          0
-dword_D_8002AFC0:.word 0
-dword_D_8002AFC4:.word 0
-flt_D_8002AFC8: .float 190.0
-flt_D_8002AFCC: .float -3300.0
-cursor_xpos_table_mission_select:.word         73,       142,       212,       282,       352
-cursor_ypos_table_mission_select:.word         62,       131,       201,       270
+                */
+u32 D_8002AFC0 = 0;
+u32 D_8002AFC4 = 0;
+f32 D_8002AFC8 = 190.0;
+f32 D_8002AFCC = -3300.0;
+u32 cursor_xpos_table_mission_select[] = {73, 142, 212, 282, 352};
+u32 cursor_ypos_table_mission_select[] = {62, 131, 201, 270};
+/*
                 MP_game_length_settings <0x9C2D, 0, 0, 0>
                 MP_game_length_settings <0x9C2E, 0, 0x4650, 0>
                 MP_game_length_settings <0x9C2F, 0, 0x8CA0, 0>
