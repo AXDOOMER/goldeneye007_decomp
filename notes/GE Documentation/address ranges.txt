@@ -81,6 +81,7 @@ Listed are fixed areas of memory and registers for functions.
 80024404	[tied to memory management]
 
 80024460	seed for random value
+80024464	current random value
 80024470	strstr: #strings
 80024474	strstr: p->current string#
 80024478-4518	strstr: p->each substring; 0x28 substrings maximum
@@ -538,7 +539,7 @@ Listed are fixed areas of memory and registers for functions.
 
 80036424	
 80036428	resolution(?)	(0:140xF0 (78 MP); 1:1B8x14A)
-8003642C	
+8003642C	hires flag	(0:off; 1:on - used for cuba)
 80036430	
 80036434	
 80036438	
@@ -1667,6 +1668,7 @@ set to 3 for fade-in, 2 to restart the swirl animation, 1 to do the cameras
 800799E0	starting right-hand weapon
 800799E4	starting left-hand weapon (when applicable)
 
+80079A20	SP current time, from 0.  long value in seconds.
 80079A24	watch time
 
 80079E04	(float) 

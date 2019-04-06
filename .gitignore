@@ -2,3 +2,7 @@
 build/*
 .*~
 *.rz
+.vscode/settings.json
+.vscode/c_cpp_properties.json
+*.tmp
+.vscode/ipch/*

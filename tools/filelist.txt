@@ -1,77 +1,77 @@
    # file asm/code/boot0.s
-   - [0x80000450, "boot"]
+   - [0x70000450, "boot"]
    # file asm/code/boot1.s
-   - [0x80000510, "boot1"]
+   - [0x70000510, "boot1"]
    # file asm/code/std_err_flags.s
-   - [0x80000970, "set_stderr_activated"]
+   - [0x70000970, "set_stderr_activated"]
    # file asm/code/scheduler.s
-   - [0x800009A0, "testtodisplaystderrandupdatecount"]
+   - [0x700009A0, "testtodisplaystderrandupdatecount"]
    # file asm/code/osMapTLBRdb.s
-   - [0x80001780, "osMapTLBRdb"]
+   - [0x70001780, "osMapTLBRdb"]
    # file asm/code/tlb_buffer_management.s
-   - [0x800017E0, "establish_TLB_buffer_management_table"]
+   - [0x700017E0, "establish_TLB_buffer_management_table"]
    # file asm/code/tlb_index.s
-   - [0x800018C0, "return_TLB_index_for_entry"]
+   - [0x700018C0, "return_TLB_index_for_entry"]
    # file asm/code/tlb_load_remove.s
-   - [0x80001920, "find_remove_TLB_entry"]
+   - [0x70001920, "find_remove_TLB_entry"]
    # file asm/code/tlb_random.s
-   - [0x80001B10, "return_tlb_random_value"]
+   - [0x70001B10, "return_tlb_random_value"]
    # file asm/code/tlb_resolve.s
-   - [0x80001B60, "resolve_TLBaddress_for_InvalidHit"]
+   - [0x70001B60, "resolve_TLBaddress_for_InvalidHit"]
    # file asm/code/tlb_set_hardwire.s
-   - [0x80001BB0, "set_hardwire_TLB_to_2"]
+   - [0x70001BB0, "set_hardwire_TLB_to_2"]
    # file asm/code/init_audi.s
-   - [0x80001BD0, "init_audi"]
+   - [0x70001BD0, "init_audi"]
    # file asm/code/speed_graph.s
-   - [0x80002730, "displaylist_related"]
+   - [0x70002730, "displaylist_related"]
    # file asm/code/video.s
-   - [0x80003060, "init_video_settings"]
+   - [0x70003060, "init_video_settings"]
    # file asm/code/debug_notice_list_handler.s
-   - [0x80004D20, "return_match_in_debug_notice_list"]
+   - [0x70004D20, "return_match_in_debug_notice_list"]
    # file asm/code/tlb_init_indy_load.s
-   - [0x80004EE0, "init_tlb"]
+   - [0x70004EE0, "init_tlb"]
    # file asm/code/debug_sp_related.s
-   - [0x80005420, "debug_sp_related_11"]
+   - [0x70005420, "debug_sp_related_11"]
    # file asm/code/normal_float_handler.s
-   - [0x80005560, "_is_normal_single_precision_float"]
+   - [0x70005560, "_is_normal_single_precision_float"]
    # file asm/code/std_err_handler.s
-   - [0x80005630, "write_char_to_pos_stderr"]
+   - [0x70005630, "write_char_to_pos_stderr"]
    # file asm/code/error_handler_last_ra_on_stack.s
-   - [0x80005B10, "return_last_RA_saved_to_stack"]
+   - [0x70005B10, "return_last_RA_saved_to_stack"]
    # file asm/code/load_file.s
-   - [0x80005B60, "creates_a_message_queue_for_memory"]
+   - [0x70005B60, "creates_a_message_queue_for_memory"]
    # file asm/code/main.s
-   - [0x80005D30, "init_mainthread_data"]
+   - [0x70005D30, "init_mainthread_data"]
    # file asm/code/music1.s
-   - [0x800069F0, "audio_related"]
+   - [0x700069F0, "audio_related"]
    # file asm/code/music2.s
-   - [0x80007B20, "music_related_16"]
+   - [0x70007B20, "music_related_16"]
    # file asm/code/memp.s
-   - [0x80009380, "something_with_memp_c_debug"]
+   - [0x70009380, "something_with_memp_c_debug"]
    # file asm/code/mema.s
-   - [0x80009A10, "swap_entries"]
+   - [0x70009A10, "swap_entries"]
    # file asm/code/random.s
-   - [0x8000A450, "random_related"]
+   - [0x7000A450, "random_related"]
    # file asm/code/checktoken.s
-   - [0x8000A4F0, "check_string_something"]
+   - [0x7000A4F0, "check_string_something"]
    # file asm/code/string_stuff.s
-   - [0x8000A770, "textpointer_load_parse_something"]
+   - [0x7000A770, "textpointer_load_parse_something"]
    # file asm/code/sprintf.s
-   - [0x8000AC70, "proutSprintf"]
+   - [0x7000AC70, "proutSprintf"]
    # file asm/code/vi_c.s
-   - [0x8000ACF0, "start_pi_manager"]
+   - [0x7000ACF0, "start_pi_manager"]
    # file asm/code/dummied_7000AD80.s
-   - [0x8000AD80, "dummied_function"]
+   - [0x7000AD80, "dummied_function"]
    # file asm/code/debug.s
-   - [0x8000ADB0, "debug_text_related_2"]
+   - [0x7000ADB0, "debug_text_related_2"]
    # file asm/code/joy_c.s
-   - [0x8000B560, "something_with_joy_c_debug"]
+   - [0x7000B560, "something_with_joy_c_debug"]
    # file asm/code/rumble.s
-   - [0x8000C980, "send_rumble_off_to_PIF"]
+   - [0x7000C980, "send_rumble_off_to_PIF"]
    # file asm/code/rmon.s
-   - [0x8000CEA0, "rmonMain"]
+   - [0x7000CEA0, "rmonMain"]
    # file asm/libultra/libultra.s
-   - [0x8000CF90, "osPiRawStartDma"]
+   - [0x7000CF90, "osPiRawStartDma"]
    # file asm/rarezip/rarezipsegment.s
    - [0x70200000, "decompress.buildtable"]
    # file asm/game/initdata.s
@@ -135,25 +135,25 @@
    # file asm/game/7F007320.s
    - [0x7F007320, "set_mt_tex_alloc"]
    # file asm/game/7F0073B0.s
-   - [0x7F0073B0, "sub_GAME_7F0073B0"]
+   - [0x7F0073B0, "cleanupGuardData"]
    # file asm/game/7F007460.s
-   - [0x7F007460, "sub_GAME_7F007460"]
+   - [0x7F007460, "cleanupObjectSounds"]
    # file asm/game/7F0074D0.s
-   - [0x7F0074D0, "sub_GAME_7F0074D0"]
+   - [0x7F0074D0, "cleanupAlarms"]
    # file asm/game/7F007500.s
-   - [0x7F007500, "sub_GAME_7F007500"]
+   - [0x7F007500, "cleanupObjects"]
    # file asm/game/7F007700.s
-   - [0x7F007700, "sub_GAME_7F007700"]
+   - [0x7F007700, "cleanupSFXRelated"]
    # file asm/game/7F007770.s
    - [0x7F007770, "sub_GAME_7F007770"]
    # file asm/game/7F007800.s
-   - [0x7F007800, "sub_GAME_7F007800"]
+   - [0x7F007800, "cleanupExplosions"]
    # file asm/game/7F007920.s
    - [0x7F007920, "sub_GAME_7F007920"]
    # file asm/game/7F007970.s
-   - [0x7F007970, "sub_GAME_7F007970"]
+   - [0x7F007970, "cleanup_REMOVED_"]
    # file asm/game/7F007980.s
-   - [0x7F007980, "sub_GAME_7F007980"]
+   - [0x7F007980, "cleanupplayersoundrelated"]
    # file asm/game/intro_logos.s
    - [0x7F007A40, "something_with_gunbarrel_and_rareware_logo_matrix_manip"]
    # file asm/game/menus.s
@@ -177,7 +177,7 @@
    # file asm/game/init_watch.s
    - [0x7F01D500, "sub_GAME_7F01D500"]
    # file asm/game/7F01D590.s
-   - [0x7F01D590, "get_selected_folder_num"]
+   - [0x7F01D590, "set_selected_folder_num"]
    # file asm/game/7F01D680.s
    - [0x7F01D680, "store_favorite_weapon_current_player"]
    # file asm/game/eeprom_stuff.s

@@ -1,0 +1,86 @@
+gspFast3DDataStart = 0x8005c820;
+
+_bootSegmentStart = 0x04000000;
+_bootSegmentRomStart = 0x00000000;
+_bootSegmentEnd = 0x04001000;
+_bootSegmentRomEnd = 0x00001000;
+
+_codeSegmentStart = 0x80000400;
+_codeSegmentRomStart = 0x00001000;
+_codeSegmentEnd = 0x80020D90;
+_codeSegmentRomEnd = 0x00021990;
+_codeSegmentVaddrStart = 0x70000450;
+_codeSegmentVaddrEnd = 0x70020D90;
+
+/*_cdataSegmentStart = */
+_cdataSegmentRomStart = 0x00021990;
+_cdataSegmentVaddrStart = 0x80020D90;
+/*_cdataSegmentEnd = */
+_cdataSegmentRomEnd = 0x00033590;
+_cdataSegmentVaddrEnd = 0x8005D2E0;
+
+room_model_buffer = 0x8008E360;
+
+_decompressBuffer = 0x80300000;
+_rarezipSegmentStart = 0x70200000;
+_rarezipSegmentRomStart = 0x00033590;
+_rarezipSegmentEnd = 0x7020159C;
+_rarezipSegmentRomEnd = 0x34B30;
+
+sp_main = 0x803AB950;
+sp_boot = 0x803AB400;
+sp_rmon = 0x803AB410;
+sp_idle = 0x803AB710;
+sp_shed = 0x803AB750;
+sp_audi = 0x803B3950;
+sp_debug = 0x803B4950;
+
+osTvType = 0x80000300;
+cfb_16_a = 0x803B5000;
+cfb_16_b = 0x803DA800;
+
+set_hardwire_TLB_to_2 = 0x70001BB0;
+debug_menu_processor = 0x7F0905A0;
+get_linemode_flag = 0x7F090FDC;
+get_memusage_display_flag = 0x7F090F34;
+display_debug_menu_text_onscreen = 0x7F090490;
+get_debug_taskgrab_val = 0x7F09106C;
+something_with_osVI = 0x800230B0;
+
+_unknown117880SegmentRomStart = 0x117880;
+_unknown117880SegmentRomEnd = 0x117940;
+
+_unknown117940SegmentRomStart = 0x117940;
+_unknown117940SegmentRomEnd = 0x123040;
+
+_unknown123040SegmentRomStart = 0x123040;
+_unknown123040SegmentRomEnd = 0x124ac0;
+
+_animation_tableSegmentRomStart = 0x124ac0;
+_animation_tableSegmentRomEnd = 0x28e980;
+
+_animation_dataSegmentRomStart = 0x28e980;
+_animation_dataSegmentRomEnd = 0x29d160;
+
+_GlobalimagetableSegmentRomStart = 0x29d160;
+_GlobalimagetableSegmentRomEnd = 0x29e560;
+
+_sfxctlSegmentRomStart = 0x2EBDE0;
+_sfxctlSegmentRomEnd = 0x2F19A0;
+
+_sfxtblSegmentRomStart = 0x2F19A0;
+_sfxtblSegmentRomEnd = 0x3B4450;
+
+_instrumentsctlSegmentRomStart = 0x3B4450;
+_instrumentsctlSegmentRomEnd = 0x3B87F0;
+
+_instrumentstblSegmentRomStart = 0x3B87F0;
+_instrumentstblSegmentRomEnd = 0x419790;
+
+_musicsampletblSegmentRomStart = 0x419790;
+
+_fonttablectlsmall1SegmentRomStart = 0x2e63f0;
+
+
+_fonttablectllarge1SegmentRomStart = 0x2e88a0;
+
