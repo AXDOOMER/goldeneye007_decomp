@@ -26,9 +26,9 @@ default, default,
 default, default,
 default, bug,
 microcamera };
-
-default_zoom_speed:.float 0.90909088
-
+*/
+const f32 default_zoom_speed = 0.90909088;
+/*
 jpt_700399A4:   .word spawn_point
                 .word weapon
                 .word ammo
@@ -38,13 +38,13 @@ jpt_700399A4:   .word spawn_point
                 .word fixed_cam
                 .word watch_time
                 .word credits
-
-flt_D_8004F1D0: .float -0.000099999997
-flt_D_8004F1D4: .float 6.2831855
-flt_D_8004F1D8: .float 6.2831855
-flt_D_8004F1DC: .float 0.17000002
-flt_D_8004F1E0: .float 0.10000002
-                .align 4
+*/
+const f32 D_8004F1D0 = -0.000099999997;
+const f32 D_8004F1D4 = 6.2831855;
+const f32 D_8004F1D8 = 6.2831855;
+const f32 D_8004F1DC = 0.17000002;
+const f32 D_8004F1E0 = 0.10000002;
+/*                .align 4
 */
 
 // data

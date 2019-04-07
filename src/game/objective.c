@@ -50,19 +50,32 @@ D:80053654                     .word objective_microcode_type_22_use_key_analyze
 D:80053684                     .word 0
 D:80053688                     .word 0
 D:8005368C                     .word 0
-D:80053690     flt_D_80053690: .float 6.2831855         # DATA XREF: sub_CODE_7F057AC0+58r
-D:80053694     flt_D_80053694: .float 0.098174773       # DATA XREF: sub_CODE_7F057AC0+6Cr
-D:80053698     flt_D_80053698: .float 6.2831855         # DATA XREF: sub_CODE_7F057AC0+B0r
-D:8005369C     flt_D_8005369C: .float 0.098174773       # DATA XREF: sub_CODE_7F057AC0+C4r
-D:800536A0     flt_D_800536A0: .float 6.2831855         # DATA XREF: sub_CODE_7F057AC0+108r
-D:800536A4     flt_D_800536A4: .float 0.098174773       # DATA XREF: sub_CODE_7F057AC0+11Cr
-D:800536A8     flt_D_800536A8: .float 1.6666666         # DATA XREF: sub_CODE_7F057C14+38r
-D:800536AC     flt_D_800536AC: .float 3.3333333         # DATA XREF: sub_CODE_7F057C14+4Cr
-D:800536B0     flt_D_800536B0: .float 1.6666666         # DATA XREF: sub_CODE_7F057C14+94r
-D:800536B4     flt_D_800536B4: .float 1.6666666         # DATA XREF: sub_CODE_7F057C14+E4r
-D:800536B8     flt_D_800536B8: .float 3.3333333         # DATA XREF: sub_CODE_7F057C14+F8r
-D:800536BC     npc_gravity_modifier:.float 0.27777779   # DATA XREF: sub_CODE_7F057D44+8r
 */
+//D:80053690
+const f32 D_80053690 = 6.2831855;
+//D:80053694
+const f32 D_80053694 = 0.098174773;
+//D:80053698
+const f32 D_80053698 = 6.2831855;
+//D:8005369C
+const f32 D_8005369C = 0.098174773;
+//D:800536A0
+const f32 D_800536A0 = 6.2831855;
+//D:800536A4
+const f32 D_800536A4 = 0.098174773;
+//D:800536A8
+const f32 D_800536A8 = 1.6666666;
+//D:800536AC
+const f32 D_800536AC = 3.3333333;
+//D:800536B0
+const f32 D_800536B0 = 1.6666666;
+//D:800536B4
+const f32 D_800536B4 = 1.6666666;
+//D:800536B8
+const f32 D_800536B8 = 3.3333333;
+//D:800536BC
+const f32 npc_gravity_modifier = 0.27777779;
+
 
 
 

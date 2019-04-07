@@ -56,16 +56,19 @@ stru_D_8002A868:rgba_val <0xFF, 0xFF, 0xFF, 0>
                 rgba_val <0xFF, 0xFF, 0xFF, 0>
                 .word 0x7F0000
                 .word 0
-dword_D_8002A878:.word 0
-dword_D_8002A87C:.word 0
-dword_D_8002A880:.word 0x45989800, 0, 0
-flt_D_8002A88C: .float -1.0
-dword_D_8002A890:.word 0
-flt_D_8002A894: .float 1.0
-dword_D_8002A898:.word 0
 */
+u32 dword_D_8002A878 =  0;
+u32 dword_D_8002A87C =  0;
+f32 dword_D_8002A880 =  4883.0f;
+u32 dword_D_8002A884 = 0;
+u32 dword_D_8002A888 = 0;
+f32 flt_D_8002A88C =  -1.0f;
+u32 dword_D_8002A890 =  0;
+f32 flt_D_8002A894 =  1.0f;
+u32 dword_D_8002A898 =  0;
 
-f32 a = 0;
+
+f32 a = 0.0f;
 u32 intro_eye_counter = 0;
 u32 intro_state_blood_animation = 0;
 u32 dword_D_8002A8A8 = 0;

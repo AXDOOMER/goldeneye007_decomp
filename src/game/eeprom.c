@@ -103,14 +103,7 @@ D:8002C51C     save4_selected_bond:.word 0
 D:8002C520     stru_D_8002C520:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
 D:8002C580     stru_D_8002C580:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
 D:8002C5E0     stru_D_8002C5E0:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C640     D_8002C640.word 0
-D:8002C644     D_8002C644.word 0
-D:8002C648     flt_D_8002C648: .float 32.0
-D:8002C64C     dword_D_8002C64C:.word 0
-D:8002C650     dword_D_8002C650:.word 0
-D:8002C654     dword_D_8002C654:.word 0
-D:8002C658     dword_D_8002C658:.word 0
-D:8002C65C     dword_D_8002C65C:.word 0
+D:8002C640     stru_D_8002C640:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
 D:8002C660     stru_D_8002C660:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
 D:8002C6C0     stru_D_8002C6C0:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
 D:8002C720     stru_D_8002C720:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
