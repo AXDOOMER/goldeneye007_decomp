@@ -3297,9 +3297,9 @@ cheats_cheat_goldpp7:
 cheats_cheat_invisibility_mp:
 /* 0C6C74 7F092144 3C014396 */  li    $at, 0x43960000 # 300.000000
 /* 0C6C78 7F092148 44816000 */  mtc1  $at, $f12
-/* 0C6C7C 7F09214C 3C018005 */  lui   $at, %hi(D_800573D8) # $at, 0x8005
+/* 0C6C7C 7F09214C 3C018005 */  lui   $at, %hi(finalamount) # $at, 0x8005
 /* 0C6C80 7F092150 0FC20284 */  jal   set_curplayer_fade
-/* 0C6C84 7F092154 C42E73D8 */   lwc1  $f14, %lo(D_800573D8)($at)
+/* 0C6C84 7F092154 C42E73D8 */   lwc1  $f14, %lo(finalamount)($at)
 /* 0C6C88 7F092158 100000B4 */  b     .L7F09242C
 /* 0C6C8C 7F09215C 8FBF0014 */   lw    $ra, 0x14($sp)
 cheats_cheat_fast:

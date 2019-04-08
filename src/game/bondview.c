@@ -25,11 +25,12 @@ D:8003244C                     rgba_val <0xFF, 0xFF, 0xFF, 0>
 D:80032450                     .word 0xB24D2E00
 D:80032454                     .word 0
 D:80032458     dword_D_80032458:.word 0                 # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+164r
-D:8003245C      # int *allocation_size_0
-D:8003245C     allocation_size_0:.word 0x14820          # DATA XREF: init_player_BONDdata_stats+40r
-D:80032460      # int *allocation_size_1
-D:80032460     allocation_size_1:.word 0x14820          # DATA XREF: init_player_BONDdata_stats+70r
 */
+//D:8003245C
+u32 size_right_item_buffer = 0x14820;
+//D:80032460
+u32 size_left_item_buffer = 0x14820;
+
 //D:80032464
 u32 D_80032464[] ={0x7530, 0x7530};
 /*
@@ -949,7 +950,7 @@ D:80053760     aGcartridgez:   .ascii "GcartridgeZ"<0>  # DATA XREF: D:ejected_c
 D:8005376C     aGcartriflez:   .ascii "GcartrifleZ"<0>  # DATA XREF: D:80032474o
 D:80053778     aGcartbluez:    .ascii "GcartblueZ"<0><0>  # DATA XREF: D:8003247Co
 D:80053784     aGcartshellz:   .ascii "GcartshellZ"<0>  # DATA XREF: D:80032484o
-D:80053790     aGnocartZ:      .ascii <0><0><0><0>      # DATA XREF: D:8003248Co
+D:80053790     aGnocartZ:      .ascii ""<0><0><0><0>      # DATA XREF: D:8003248Co
 D:80053794     aGfistz:        .ascii "GfistZ"<0><0>    # DATA XREF: D:8003395Co
 D:8005379C     aGknifez:       .ascii "GknifeZ"<0>      # DATA XREF: D:80033994o
 D:800537A4     aGthrowknifez:  .ascii "GthrowknifeZ"<0><0><0><0>  # DATA XREF: D:800339CCo

@@ -10,61 +10,93 @@ D:80036AD0                                              # sub_CODE_7F08EAF8+70o
 D:80036AE4     dword_D_80036AE4:.word 0x3FC00000, 0x4070, 0x40F00000, 0x41880000, 0
 D:80036AF8                     .word 0x3FC00000
 D:80036AFC                     .word 0x42C80000
-D:80036B00     dword_D_80036B00:.word 0                 # DATA XREF: sets_a_bunch_of_BONDdata_values_to_default+B8o
-D:80036B00                                              # sub_CODE_7F08E240+18o
-D:80036B00                                              # sub_CODE_7F08E240+1Cr
-D:80036B04     dword_D_80036B04:.word 0                 # DATA XREF: sub_CODE_7F08E240+24r
-D:80036B08     dword_D_80036B08:.word 0                 # DATA XREF: sub_CODE_7F08E240+2Cr
-D:80036B0C     dword_D_80036B0C:.word 0                 # DATA XREF: sub_CODE_7F08E240+30o
-D:80036B0C                                              # sub_CODE_7F08E240+40r
-D:80036B10     dword_D_80036B10:.word 0                 # DATA XREF: sub_CODE_7F08E240+48r
-D:80036B14     flt_D_80036B14: .float 1.0               # DATA XREF: sub_CODE_7F08E240+50r
-D:80036B18     dword_D_80036B18:.word 0                 # DATA XREF: sub_CODE_7F08E240+54o
-D:80036B18                                              # sub_CODE_7F08E240+64r
-D:80036B1C     flt_D_80036B1C: .float 1.0               # DATA XREF: sub_CODE_7F08E240+6Cr
-D:80036B20     dword_D_80036B20:.word 0                 # DATA XREF: sub_CODE_7F08E240+74r
-D:80036B24     dword_D_80036B24:.word 0                 # DATA XREF: sub_CODE_7F08E240+A4o
-D:80036B24                                              # sub_CODE_7F08E240:loc_CODE_7F08E3C4r
-D:80036B28     dword_D_80036B28:.word 1                 # DATA XREF: sub_CODE_7F08E240+194r
-D:80036B2C     dword_D_80036B2C:.word 3                 # DATA XREF: sub_CODE_7F08E240+19Cr
-D:80036B30     dword_D_80036B30:.word 0                 # DATA XREF: sub_CODE_7F08E240+188o
-D:80036B30                                              # sub_CODE_7F08E240+1A8r
-D:80036B34                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:80036B60     dword_D_80036B60:.word 0                 # DATA XREF: sub_CODE_7F08E240+A8o
-D:80036B64     dword_D_80036B64:.word 0                 # DATA XREF: sub_CODE_7F08E240+1ACo
-D:80036B64                                              # sub_CODE_7F08E240+1B8r
-D:80036B68     dword_D_80036B68:.word 0                 # DATA XREF: sub_CODE_7F08E240+1C0r
-D:80036B6C     dword_D_80036B6C:.word 0                 # DATA XREF: sub_CODE_7F08E240+1C8r
-
 */
+//D:80036B00
+u32 D_80036B00 = 0;
+//D:80036B04
+u32 D_80036B04 = 0;
+//D:80036B08
+u32 D_80036B08 = 0;
+//D:80036B0C
+u32 D_80036B0C = 0;
+//D:80036B10
+u32 D_80036B10 = 0;
+//D:80036B14
+f32 D_80036B14 = 1.0;
+//D:80036B18
+u32 D_80036B18 = 0;
+//D:80036B1C
+f32 D_80036B1C =  1.0;
+//D:80036B20
+u32 D_80036B20 = 0;
+//D:80036B24
+u32 D_80036B24 = 0;
+//D:80036B28
+u32 D_80036B28 = 1;
+//D:80036B2C
+u32 D_80036B2C = 3;
+//D:80036B30
+u32 D_80036B30[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:80036B60
+u32 D_80036B60 = 0;
+//D:80036B64
+u32 D_80036B64 = 0;
+//D:80036B68
+u32 D_80036B68 = 0;
+//D:80036B6C
+u32 D_80036B6C = 0;
 
-/* rodata
-D:800552E0     flt_D_800552E0: .float 0.02              # DATA XREF: sub_CODE_7F08DBC8+64r
-D:800552E4     flt_D_800552E4: .float 0.02              # DATA XREF: sub_CODE_7F08DBC8+D8r
-D:800552E8     flt_D_800552E8: .float 0.0099999998      # DATA XREF: sub_CODE_7F08DBC8+15Cr
-D:800552EC     flt_D_800552EC: .float -0.0099999998     # DATA XREF: sub_CODE_7F08DBC8+1A4r
-D:800552F0     flt_D_800552F0: .float -0.0099999998     # DATA XREF: sub_CODE_7F08DBC8+1F4r
-D:800552F4     flt_D_800552F4: .float 0.0099999998      # DATA XREF: sub_CODE_7F08DBC8+23Cr
-D:800552F8     flt_D_800552F8: .float 0.069999993       # DATA XREF: sub_CODE_7F08DE48+24r
-D:800552FC     master_player_perspective:.float 0.069999993
-D:800552FC                                              # DATA XREF: sub_CODE_7F08DE48:loc_CODE_7F08DE9Cr
-D:80055300     flt_D_80055300: .float 0.93000001        # DATA XREF: sub_CODE_7F08DE48+64r
-D:80055304     flt_D_80055304: .float 0.69999999        # DATA XREF: sub_CODE_7F08E240+B4r
-D:80055308     flt_D_80055308: .float 0.1               # DATA XREF: sub_CODE_7F08E240:loc_CODE_7F08E320r
-D:8005530C     flt_D_8005530C: .float 0.60000002        # DATA XREF: sub_CODE_7F08E240+FCr
-D:80055310     flt_D_80055310: .float 0.59999996        # DATA XREF: sub_CODE_7F08E240+104r
-D:80055314     flt_D_80055314: .float 0.40000001        # DATA XREF: sub_CODE_7F08E240+110r
-D:80055318     flt_D_80055318: .float 0.40000001        # DATA XREF: sub_CODE_7F08E240:loc_CODE_7F08E368r
-D:8005531C     flt_D_8005531C: .float 0.89999998        # DATA XREF: sub_CODE_7F08E240+14Cr
-D:80055320     flt_D_80055320: .float 0.93000001        # DATA XREF: sub_CODE_7F08E240+414r
-D:80055324     flt_D_80055324: .float 0.99000001        # DATA XREF: sub_CODE_7F08E240+428r
-D:80055328     flt_D_80055328: .float 0.85000002        # DATA XREF: sub_CODE_7F08E240:loc_CODE_7F08E678r
-D:8005532C     flt_D_8005532C: .float 0.99000001        # DATA XREF: sub_CODE_7F08E240+4BCr
-D:80055330     flt_D_80055330: .float 0.0083333338      # DATA XREF: sub_CODE_7F08E240+4C8r
-D:80055334     flt_D_80055334: .float 0.025000002       # DATA XREF: sub_CODE_7F08E240+4D0r
-D:80055338     flt_D_80055338: .float 0.012500001       # DATA XREF: sub_CODE_7F08EAF8+24r
-D:8005533C     flt_D_8005533C: .float 0.0041666669      # DATA XREF: sub_CODE_7F08EAF8+2Cr
-*/
+
+
+// rodata
+//D:800552E0
+const f32 D_800552E0 = 0.02;
+//D:800552E4
+const f32 D_800552E4 = 0.02;
+//D:800552E8
+const f32 D_800552E8 = 0.0099999998;
+//D:800552EC
+const f32 D_800552EC = -0.0099999998;
+//D:800552F0
+const f32 D_800552F0 = -0.0099999998;
+//D:800552F4
+const f32 D_800552F4 = 0.0099999998;
+//D:800552F8
+const f32 D_800552F8 = 0.069999993;
+//D:800552FC
+const f32 master_player_perspective = 0.069999993;
+//D:80055300
+const f32 D_80055300 = 0.93000001;
+//D:80055304
+const f32 D_80055304 = 0.69999999;
+//D:80055308
+const f32 D_80055308 = 0.1;
+//D:8005530C
+const f32 D_8005530C = 0.60000002;
+//D:80055310
+const f32 D_80055310 = 0.59999996;
+//D:80055314
+const f32 D_80055314 = 0.40000001;
+//D:80055318
+const f32 D_80055318 = 0.40000001;
+//D:8005531C
+const f32 D_8005531C = 0.89999998;
+//D:80055320
+const f32 D_80055320 = 0.93000001;
+//D:80055324
+const f32 D_80055324 = 0.99000001;
+//D:80055328
+const f32 D_80055328 = 0.85000002;
+//D:8005532C
+const f32 D_8005532C = 0.99000001;
+//D:80055330
+const f32 D_80055330 = 0.0083333338;
+//D:80055334
+const f32 D_80055334 = 0.025000002;
+//D:80055338
+const f32 D_80055338 = 0.012500001;
+//D:8005533C
+const f32 D_8005533C = 0.0041666669;
 
 
 #ifdef NONMATCHING
@@ -303,8 +335,8 @@ glabel sub_GAME_7F08DE48
 /* 0C29C4 7F08DE94 AF2004DC */  sw    $zero, 0x4dc($t9)
 /* 0C29C8 7F08DE98 8CC80000 */  lw    $t0, ($a2)
 .L7F08DE9C:
-/* 0C29CC 7F08DE9C 3C018005 */  lui   $at, %hi(D_800552FC) # $at, 0x8005
-/* 0C29D0 7F08DEA0 C42252FC */  lwc1  $f2, %lo(D_800552FC)($at)
+/* 0C29CC 7F08DE9C 3C018005 */  lui   $at, %hi(master_player_perspective) # $at, 0x8005
+/* 0C29D0 7F08DEA0 C42252FC */  lwc1  $f2, %lo(master_player_perspective)($at)
 /* 0C29D4 7F08DEA4 1900001A */  blez  $t0, .L7F08DF10
 /* 0C29D8 7F08DEA8 00001825 */   move  $v1, $zero
 /* 0C29DC 7F08DEAC 3C018005 */  lui   $at, %hi(D_80055300) # $at, 0x8005

@@ -16,17 +16,8 @@ CODE.bss:80076AB4     dword_CODE_bss_80076AB4:.space 0x14      # DATA XREF: sub_
 CODE.bss:80076AC8     dword_CODE_bss_80076AC8:.space 0x14      # DATA XREF: sub_CODE_7F005450+64o
 CODE.bss:80076ADC     dword_CODE_bss_80076ADC:.space 0x2E2C    # DATA XREF: sub_CODE_7F005450+60o
 CODE.bss:80079908     dword_CODE_bss_80079908:.space 0x28      # DATA XREF: sub_CODE_7F005450+B8o
-CODE.bss:80079930     ptr_allocation_0:.space 4                # DATA XREF: sub_CODE_7F005624+4Co
-CODE.bss:80079930                                              # sub_CODE_7F005624+54w
-CODE.bss:80079930                                              # sub_CODE_7F005624+68r
-CODE.bss:80079930                                              # get_aircraft_obj_instance_controller+44r
-CODE.bss:80079930                                              # get_aircraft_obj_instance_controller+DCr
-CODE.bss:80079934     ptr_allocation_1:.space 4                # DATA XREF: sub_CODE_7F005540+44o
-CODE.bss:80079934                                              # sub_CODE_7F005540+4Cw
-CODE.bss:80079934                                              # sub_CODE_7F005540+60r
-CODE.bss:80079934                                              # get_obj_instance_controller_for_header+64r
-CODE.bss:80079934                                              # get_obj_instance_controller_for_header+F0o
-CODE.bss:80079934                                              # get_obj_instance_controller_for_header+F4r
+CODE.bss:80079930     ptr_allocation_0:.space 4
+CODE.bss:80079934     ptr_allocation_1:.space 4
 */
 
 // data
@@ -360,9 +351,9 @@ D:80054AF8                     .word loc_CODE_7F06C838
 D:80054AF8                     .word loc_CODE_7F06C7E4
 */
 //D:80054B58
-f32 D_80054B58 = 6.2831855;
+const f32 D_80054B58 = 6.2831855;
 //D:80054B5C
-f32 D_80054B5C = 6.2831855;
+const f32 D_80054B5C = 6.2831855;
 /*
 D:80054B60     jpt_getjointsize:.word loc_CODE_7F06CEF8  # DATA XREF: getjointsize+54r
 D:80054B60                     .word loc_CODE_7F06CF10  # jump table for switch statement
@@ -387,59 +378,59 @@ D:80054B60                     .word def_7F06CEF0
 D:80054B60                     .word loc_CODE_7F06CF40
 */
 //D:80054BB4
-f32 D_80054BB4 = 6.2831855;
+const f32 D_80054BB4 = 6.2831855;
 //D:80054BB8
-f32 D_80054BB8 = 6.2831855;
+const f32 D_80054BB8 = 6.2831855;
 //D:80054BBC
-f32 D_80054BBC = 3.1415927;
+const f32 D_80054BBC = 3.1415927;
 //D:80054BC0
-f32 D_80054BC0 = 6.2831855;
+const f32 D_80054BC0 = 6.2831855;
 //D:80054BC4
-f32 D_80054BC4 = 3.1415927;
+const f32 D_80054BC4 = 3.1415927;
 //D:80054BC8
-f32 D_80054BC8 = 6.2831855;
+const f32 D_80054BC8 = 6.2831855;
 //D:80054BCC
-f32 D_80054BCC = 6.2831855;
+const f32 D_80054BCC = 6.2831855;
 //D:80054BD0
-f32 D_80054BD0 = 3.1415927;
+const f32 D_80054BD0 = 3.1415927;
 //D:80054BD4
-f32 D_80054BD4 = 6.2831855;
+const f32 D_80054BD4 = 6.2831855;
 //D:80054BD8
-f32 D_80054BD8 = 0.890118;
+const f32 D_80054BD8 = 0.890118;
 //D:80054BDC
-f32 D_80054BDC = 3.1415927;
+const f32 D_80054BDC = 3.1415927;
 //D:80054BE0
-f32 D_80054BE0 = 6.2831855;
+const f32 D_80054BE0 = 6.2831855;
 //D:80054BE4
-f32 D_80054BE4 = 6.2831855;
+const f32 D_80054BE4 = 6.2831855;
 //D:80054BE8
-f32 D_80054BE8 = 3.1415927;
+const f32 D_80054BE8 = 3.1415927;
 //D:80054BEC
-f32 D_80054BEC = 6.2831855;
+const f32 D_80054BEC = 6.2831855;
 //D:80054BF0
-f32 D_80054BF0 = 0.890118;
+const f32 D_80054BF0 = 0.890118;
 //D:80054BF4
-f32 D_80054BF4 = 6.2831855;
+const f32 D_80054BF4 = 6.2831855;
 //D:80054BF8
-f32 D_80054BF8 = 3.1415927;
+const f32 D_80054BF8 = 3.1415927;
 //D:80054BFC
-f32 D_80054BFC = 6.2831855;
+const f32 D_80054BFC = 6.2831855;
 //D:80054C00
-f32 D_80054C00 = 6.2831855;
+const f32 D_80054C00 = 6.2831855;
 //D:80054C04
-f32 D_80054C04 = 3.1415927;
+const f32 D_80054C04 = 3.1415927;
 //D:80054C08
-f32 D_80054C08 = 6.2831855;
+const f32 D_80054C08 = 6.2831855;
 //D:80054C0C
-f32 D_80054C0C = 0.890118;
+const f32 D_80054C0C = 0.890118;
 //D:80054C10
-f32 D_80054C10 = 6.2831855;
+const f32 D_80054C10 = 6.2831855;
 //D:80054C14
-f32 D_80054C14 = 6.2831855;
+const f32 D_80054C14 = 6.2831855;
 //D:80054C18
-f32 D_80054C18 = 6.2831855;
+const f32 D_80054C18 = 6.2831855;
 //D:80054C1C
-f32 D_80054C1C = 6.2831855;
+const f32 D_80054C1C = 6.2831855;
 /*
 D:80054C20     jpt_700A2E24:   .word loc_CODE_7F06EEFC  # DATA XREF: sub_CODE_7F06EEA4+44r
 D:80054C20                     .word loc_CODE_7F06EEFC  # jump table for switch statement
@@ -515,15 +506,15 @@ D:80054CE0                     .word loc_CODE_7F06F1D8
 D:80054CE0                     .word def_7F06F120
 */
 //D:80054D40
-f32 D_80054D40 = 6.2831855;
+const f32 D_80054D40 = 6.2831855;
 //D:80054D44
-f32 D_80054D44 = 6.2831855;
+const f32 D_80054D44 = 6.2831855;
 //D:80054D48
-f32 D_80054D48 = 6.2831855;
+const f32 D_80054D48 = 6.2831855;
 //D:80054D4C
-f32 D_80054D4C = 6.2831855;
+const f32 D_80054D4C = 6.2831855;
 //D:80054D50
-f32 D_80054D50 = 6.2831855;
+const f32 D_80054D50 = 6.2831855;
 /*
 D:80054D54     jpt_700A8494:   .word def_7F074564       # DATA XREF: sub_CODE_7F074534+24r
 D:80054D54                     .word def_7F074564       # jump table for switch statement

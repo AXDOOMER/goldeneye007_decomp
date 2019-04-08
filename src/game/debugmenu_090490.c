@@ -256,11 +256,11 @@ s32 grab_rgb_screenshot_flag = 0;
 //D:80037000
 s32 grab_jpeg_screenshot_flag = 0;
 //D:80037004
-s32 dword_D_80037004 = 0;
+s32 D_80037004 = 0;
 //D:80037008
-s32 dword_D_80037008 = 0;
+s32 D_80037008 = 0;
 //D:8003700C
-s32 dword_D_8003700C = 0;
+s32 D_8003700C = 0;
 
 
 
@@ -484,8 +484,8 @@ GLOBAL_ASM(
 .text
 glabel debug_menu_processor
 /* 0C50D0 7F0905A0 27BDFFA0 */  addiu $sp, $sp, -0x60
-/* 0C50D4 7F0905A4 3C038003 */  lui   $v1, %hi(grabrgb_flag) # $v1, 0x8003
-/* 0C50D8 7F0905A8 8C636FFC */  lw    $v1, %lo(grabrgb_flag)($v1)
+/* 0C50D4 7F0905A4 3C038003 */  lui   $v1, %hi(grab_rgb_screenshot_flag) # $v1, 0x8003
+/* 0C50D8 7F0905A8 8C636FFC */  lw    $v1, %lo(grab_rgb_screenshot_flag)($v1)
 /* 0C50DC 7F0905AC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C50E0 7F0905B0 AFA40060 */  sw    $a0, 0x60($sp)
 /* 0C50E4 7F0905B4 AFA50064 */  sw    $a1, 0x64($sp)
@@ -494,30 +494,30 @@ glabel debug_menu_processor
 /* 0C50F0 7F0905C0 AFA7006C */   sw    $a3, 0x6c($sp)
 /* 0C50F4 7F0905C4 38620003 */  xori  $v0, $v1, 3
 /* 0C50F8 7F0905C8 24630001 */  addiu $v1, $v1, 1
-/* 0C50FC 7F0905CC 3C018003 */  lui   $at, %hi(grabrgb_flag) # $at, 0x8003
+/* 0C50FC 7F0905CC 3C018003 */  lui   $at, %hi(grab_rgb_screenshot_flag) # $at, 0x8003
 /* 0C5100 7F0905D0 14400008 */  bnez  $v0, .L7F0905F4
-/* 0C5104 7F0905D4 AC236FFC */   sw    $v1, %lo(grabrgb_flag)($at)
+/* 0C5104 7F0905D4 AC236FFC */   sw    $v1, %lo(grab_rgb_screenshot_flag)($at)
 /* 0C5108 7F0905D8 0C0012ED */  jal   indy_grab_rgb_32bit
 /* 0C510C 7F0905DC 00000000 */   nop   
-/* 0C5110 7F0905E0 3C018003 */  lui   $at, %hi(grabrgb_flag) # $at, 0x8003
+/* 0C5110 7F0905E0 3C018003 */  lui   $at, %hi(grab_rgb_screenshot_flag) # $at, 0x8003
 /* 0C5114 7F0905E4 0C000F00 */  jal   coloroutputmode_1
-/* 0C5118 7F0905E8 AC206FFC */   sw    $zero, %lo(grabrgb_flag)($at)
+/* 0C5118 7F0905E8 AC206FFC */   sw    $zero, %lo(grab_rgb_screenshot_flag)($at)
 /* 0C511C 7F0905EC 0C0038B4 */  jal   osViBlack
 /* 0C5120 7F0905F0 00002025 */   move  $a0, $zero
 .L7F0905F4:
-/* 0C5124 7F0905F4 3C038003 */  lui   $v1, %hi(grabjpeg_flag) # $v1, 0x8003
-/* 0C5128 7F0905F8 8C637000 */  lw    $v1, %lo(grabjpeg_flag)($v1)
-/* 0C512C 7F0905FC 3C018003 */  lui   $at, %hi(grabjpeg_flag) # $at, 0x8003
+/* 0C5124 7F0905F4 3C038003 */  lui   $v1, %hi(grab_jpeg_screenshot_flag) # $v1, 0x8003
+/* 0C5128 7F0905F8 8C637000 */  lw    $v1, %lo(grab_jpeg_screenshot_flag)($v1)
+/* 0C512C 7F0905FC 3C018003 */  lui   $at, %hi(grab_jpeg_screenshot_flag) # $at, 0x8003
 /* 0C5130 7F090600 1060000B */  beqz  $v1, .L7F090630
 /* 0C5134 7F090604 38620003 */   xori  $v0, $v1, 3
 /* 0C5138 7F090608 24630001 */  addiu $v1, $v1, 1
 /* 0C513C 7F09060C 14400008 */  bnez  $v0, .L7F090630
-/* 0C5140 7F090610 AC237000 */   sw    $v1, %lo(grabjpeg_flag)($at)
+/* 0C5140 7F090610 AC237000 */   sw    $v1, %lo(grab_jpeg_screenshot_flag)($at)
 /* 0C5144 7F090614 0C001235 */  jal   indy_grab_jpg_32bit
 /* 0C5148 7F090618 00000000 */   nop   
-/* 0C514C 7F09061C 3C018003 */  lui   $at, %hi(grabjpeg_flag) # $at, 0x8003
+/* 0C514C 7F09061C 3C018003 */  lui   $at, %hi(grab_jpeg_screenshot_flag) # $at, 0x8003
 /* 0C5150 7F090620 0C000F00 */  jal   coloroutputmode_1
-/* 0C5154 7F090624 AC207000 */   sw    $zero, %lo(grabjpeg_flag)($at)
+/* 0C5154 7F090624 AC207000 */   sw    $zero, %lo(grab_jpeg_screenshot_flag)($at)
 /* 0C5158 7F090628 0C0038B4 */  jal   osViBlack
 /* 0C515C 7F09062C 00002025 */   move  $a0, $zero
 .L7F090630:
@@ -684,8 +684,8 @@ debug_music:
 /* 0C5398 7F090868 10000182 */  b     .L7F090E74
 /* 0C539C 7F09086C AC226F70 */   sw    $v0, %lo(debug_unknown)($at)
 portal_close_inf_approx:
-/* 0C53A0 7F090870 3C028003 */  lui   $v0, %hi(D_80036FD4) # $v0, 0x8003
-/* 0C53A4 7F090874 24426FD4 */  addiu $v0, %lo(D_80036FD4) # addiu $v0, $v0, 0x6fd4
+/* 0C53A0 7F090870 3C028003 */  lui   $v0, %hi(debug_portal_flag) # $v0, 0x8003
+/* 0C53A4 7F090874 24426FD4 */  addiu $v0, %lo(debug_portal_flag) # addiu $v0, $v0, 0x6fd4
 /* 0C53A8 7F090878 8C480000 */  lw    $t0, ($v0)
 /* 0C53AC 7F09087C 39090001 */  xori  $t1, $t0, 1
 /* 0C53B0 7F090880 1000017C */  b     .L7F090E74
@@ -766,8 +766,8 @@ debug_maxammo:
 /* 0C54B8 7F090988 1000013B */  b     .L7F090E78
 /* 0C54BC 7F09098C 8FB80018 */   lw    $t8, 0x18($sp)
 debug_displayspeed:
-/* 0C54C0 7F090990 3C028003 */  lui   $v0, %hi(debug_fps_counter_membars) # $v0, 0x8003
-/* 0C54C4 7F090994 24426F74 */  addiu $v0, %lo(debug_fps_counter_membars) # addiu $v0, $v0, 0x6f74
+/* 0C54C0 7F090990 3C028003 */  lui   $v0, %hi(memusage_display_flag) # $v0, 0x8003
+/* 0C54C4 7F090994 24426F74 */  addiu $v0, %lo(memusage_display_flag) # addiu $v0, $v0, 0x6f74
 /* 0C54C8 7F090998 8C580000 */  lw    $t8, ($v0)
 /* 0C54CC 7F09099C 3B190001 */  xori  $t9, $t8, 1
 /* 0C54D0 7F0909A0 17200134 */  bnez  $t9, .L7F090E74
@@ -791,36 +791,36 @@ debug_dodrawobj:
 /* 0C5510 7F0909E0 10000124 */  b     .L7F090E74
 /* 0C5514 7F0909E4 AC4C0000 */   sw    $t4, ($v0)
 debug_stanhit:
-/* 0C5518 7F0909E8 3C028003 */  lui   $v0, %hi(line_mode) # $v0, 0x8003
-/* 0C551C 7F0909EC 24426F84 */  addiu $v0, %lo(line_mode) # addiu $v0, $v0, 0x6f84
+/* 0C5518 7F0909E8 3C028003 */  lui   $v0, %hi(debug_stanhit_flag) # $v0, 0x8003
+/* 0C551C 7F0909EC 24426F84 */  addiu $v0, %lo(debug_stanhit_flag) # addiu $v0, $v0, 0x6f84
 /* 0C5520 7F0909F0 8C4D0000 */  lw    $t5, ($v0)
 /* 0C5524 7F0909F4 39AE0001 */  xori  $t6, $t5, 1
 /* 0C5528 7F0909F8 1000011E */  b     .L7F090E74
 /* 0C552C 7F0909FC AC4E0000 */   sw    $t6, ($v0)
 debug_stanregion:
-/* 0C5530 7F090A00 3C028003 */  lui   $v0, %hi(debug_man_pos) # $v0, 0x8003
-/* 0C5534 7F090A04 24426F88 */  addiu $v0, %lo(debug_man_pos) # addiu $v0, $v0, 0x6f88
+/* 0C5530 7F090A00 3C028003 */  lui   $v0, %hi(debug_stanregion_flag) # $v0, 0x8003
+/* 0C5534 7F090A04 24426F88 */  addiu $v0, %lo(debug_stanregion_flag) # addiu $v0, $v0, 0x6f88
 /* 0C5538 7F090A08 8C4F0000 */  lw    $t7, ($v0)
 /* 0C553C 7F090A0C 39F80001 */  xori  $t8, $t7, 1
 /* 0C5540 7F090A10 10000118 */  b     .L7F090E74
 /* 0C5544 7F090A14 AC580000 */   sw    $t8, ($v0)
 debug_turbo:
-/* 0C5548 7F090A18 3C028003 */  lui   $v0, %hi(turbo_mode) # $v0, 0x8003
-/* 0C554C 7F090A1C 24426F8C */  addiu $v0, %lo(turbo_mode) # addiu $v0, $v0, 0x6f8c
+/* 0C5548 7F090A18 3C028003 */  lui   $v0, %hi(turbo_mode_flag) # $v0, 0x8003
+/* 0C554C 7F090A1C 24426F8C */  addiu $v0, %lo(turbo_mode_flag) # addiu $v0, $v0, 0x6f8c
 /* 0C5550 7F090A20 8C590000 */  lw    $t9, ($v0)
 /* 0C5554 7F090A24 3B280001 */  xori  $t0, $t9, 1
 /* 0C5558 7F090A28 10000112 */  b     .L7F090E74
 /* 0C555C 7F090A2C AC480000 */   sw    $t0, ($v0)
 debug_printmanpos:
-/* 0C5560 7F090A30 3C028003 */  lui   $v0, %hi(D_80036F90) # $v0, 0x8003
-/* 0C5564 7F090A34 24426F90 */  addiu $v0, %lo(D_80036F90) # addiu $v0, $v0, 0x6f90
+/* 0C5560 7F090A30 3C028003 */  lui   $v0, %hi(debug_man_pos_flag) # $v0, 0x8003
+/* 0C5564 7F090A34 24426F90 */  addiu $v0, %lo(debug_man_pos_flag) # addiu $v0, $v0, 0x6f90
 /* 0C5568 7F090A38 8C490000 */  lw    $t1, ($v0)
 /* 0C556C 7F090A3C 392A0001 */  xori  $t2, $t1, 1
 /* 0C5570 7F090A40 1000010C */  b     .L7F090E74
 /* 0C5574 7F090A44 AC4A0000 */   sw    $t2, ($v0)
 debug_testingmanpos:
-/* 0C5578 7F090A48 3C028003 */  lui   $v0, %hi(D_80036FC8) # $v0, 0x8003
-/* 0C557C 7F090A4C 24426FC8 */  addiu $v0, %lo(D_80036FC8) # addiu $v0, $v0, 0x6fc8
+/* 0C5578 7F090A48 3C028003 */  lui   $v0, %hi(debug_testingmanpos_flag) # $v0, 0x8003
+/* 0C557C 7F090A4C 24426FC8 */  addiu $v0, %lo(debug_testingmanpos_flag) # addiu $v0, $v0, 0x6fc8
 /* 0C5580 7F090A50 8C4B0000 */  lw    $t3, ($v0)
 /* 0C5584 7F090A54 396C0001 */  xori  $t4, $t3, 1
 /* 0C5588 7F090A58 10000106 */  b     .L7F090E74
@@ -836,8 +836,8 @@ debug_bonddie:
 /* 0C55A8 7F090A78 100000FF */  b     .L7F090E78
 /* 0C55AC 7F090A7C 8FB80018 */   lw    $t8, 0x18($sp)
 debug_prroomloads:
-/* 0C55B0 7F090A80 3C028003 */  lui   $v0, %hi(D_80036F94) # $v0, 0x8003
-/* 0C55B4 7F090A84 24426F94 */  addiu $v0, %lo(D_80036F94) # addiu $v0, $v0, 0x6f94
+/* 0C55B0 7F090A80 3C028003 */  lui   $v0, %hi(debug_prroomloads_flag) # $v0, 0x8003
+/* 0C55B4 7F090A84 24426F94 */  addiu $v0, %lo(debug_prroomloads_flag) # addiu $v0, $v0, 0x6f94
 /* 0C55B8 7F090A88 8C4D0000 */  lw    $t5, ($v0)
 /* 0C55BC 7F090A8C 39AE0001 */  xori  $t6, $t5, 1
 /* 0C55C0 7F090A90 100000F8 */  b     .L7F090E74
@@ -854,8 +854,8 @@ debug_showmembars:
 /* 0C55E4 7F090AB4 8FB80018 */   lw    $t8, 0x18($sp)
 debug_grabrgb:
 /* 0C55E8 7F090AB8 24030001 */  li    $v1, 1
-/* 0C55EC 7F090ABC 3C018003 */  lui   $at, %hi(grabrgb_flag) # $at, 0x8003
-/* 0C55F0 7F090AC0 AC236FFC */  sw    $v1, %lo(grabrgb_flag)($at)
+/* 0C55EC 7F090ABC 3C018003 */  lui   $at, %hi(grab_rgb_screenshot_flag) # $at, 0x8003
+/* 0C55F0 7F090AC0 AC236FFC */  sw    $v1, %lo(grab_rgb_screenshot_flag)($at)
 /* 0C55F4 7F090AC4 0C0038B4 */  jal   osViBlack
 /* 0C55F8 7F090AC8 24040001 */   li    $a0, 1
 /* 0C55FC 7F090ACC 0C000F04 */  jal   coloroutputmode_0
@@ -864,8 +864,8 @@ debug_grabrgb:
 /* 0C5608 7F090AD8 8FB80018 */   lw    $t8, 0x18($sp)
 debug_grabjpeg:
 /* 0C560C 7F090ADC 24030001 */  li    $v1, 1
-/* 0C5610 7F090AE0 3C018003 */  lui   $at, %hi(grabjpeg_flag) # $at, 0x8003
-/* 0C5614 7F090AE4 AC237000 */  sw    $v1, %lo(grabjpeg_flag)($at)
+/* 0C5610 7F090AE0 3C018003 */  lui   $at, %hi(grab_jpeg_screenshot_flag) # $at, 0x8003
+/* 0C5614 7F090AE4 AC237000 */  sw    $v1, %lo(grab_jpeg_screenshot_flag)($at)
 /* 0C5618 7F090AE8 0C0038B4 */  jal   osViBlack
 /* 0C561C 7F090AEC 24040001 */   li    $a0, 1
 /* 0C5620 7F090AF0 0C000F04 */  jal   coloroutputmode_0
@@ -873,8 +873,8 @@ debug_grabjpeg:
 /* 0C5628 7F090AF8 100000DF */  b     .L7F090E78
 /* 0C562C 7F090AFC 8FB80018 */   lw    $t8, 0x18($sp)
 debug_taskgrab:
-/* 0C5630 7F090B00 3C028003 */  lui   $v0, %hi(debug_walk_through_doors) # $v0, 0x8003
-/* 0C5634 7F090B04 24426FC4 */  addiu $v0, %lo(debug_walk_through_doors) # addiu $v0, $v0, 0x6fc4
+/* 0C5630 7F090B00 3C028003 */  lui   $v0, %hi(debug_enable_taskgrab_flag) # $v0, 0x8003
+/* 0C5634 7F090B04 24426FC4 */  addiu $v0, %lo(debug_enable_taskgrab_flag) # addiu $v0, $v0, 0x6fc4
 /* 0C5638 7F090B08 8C4F0000 */  lw    $t7, ($v0)
 /* 0C563C 7F090B0C 39F80001 */  xori  $t8, $t7, 1
 /* 0C5640 7F090B10 100000D8 */  b     .L7F090E74
@@ -929,8 +929,8 @@ debug_autoxaim:
 /* 0C56E0 7F090BB0 100000B1 */  b     .L7F090E78
 /* 0C56E4 7F090BB4 8FB80018 */   lw    $t8, 0x18($sp)
 debug_007:
-/* 0C56E8 7F090BB8 3C028003 */  lui   $v0, %hi(D_80036FAC) # $v0, 0x8003
-/* 0C56EC 7F090BBC 24426FAC */  addiu $v0, %lo(D_80036FAC) # addiu $v0, $v0, 0x6fac
+/* 0C56E8 7F090BB8 3C028003 */  lui   $v0, %hi(debug_007_unlock_flag) # $v0, 0x8003
+/* 0C56EC 7F090BBC 24426FAC */  addiu $v0, %lo(debug_007_unlock_flag) # addiu $v0, $v0, 0x6fac
 /* 0C56F0 7F090BC0 8C590000 */  lw    $t9, ($v0)
 /* 0C56F4 7F090BC4 3B280001 */  xori  $t0, $t9, 1
 /* 0C56F8 7F090BC8 100000AA */  b     .L7F090E74
@@ -957,8 +957,8 @@ fast_bond_debug:
 /* 0C5740 7F090C10 10000098 */  b     .L7F090E74
 /* 0C5744 7F090C14 AC4E0000 */   sw    $t6, ($v0)
 debug_objectives:
-/* 0C5748 7F090C18 3C028003 */  lui   $v0, %hi(debug_all_obj_complete) # $v0, 0x8003
-/* 0C574C 7F090C1C 24426FD0 */  addiu $v0, %lo(debug_all_obj_complete) # addiu $v0, $v0, 0x6fd0
+/* 0C5748 7F090C18 3C028003 */  lui   $v0, %hi(debug_all_obj_complete_flag) # $v0, 0x8003
+/* 0C574C 7F090C1C 24426FD0 */  addiu $v0, %lo(debug_all_obj_complete_flag) # addiu $v0, $v0, 0x6fd0
 /* 0C5750 7F090C20 8C4F0000 */  lw    $t7, ($v0)
 /* 0C5754 7F090C24 39F80001 */  xori  $t8, $t7, 1
 /* 0C5758 7F090C28 10000092 */  b     .L7F090E74
@@ -1033,43 +1033,43 @@ debug_chrkeypos:
 /* 0C5854 7F090D24 10000053 */  b     .L7F090E74
 /* 0C5858 7F090D28 AC226F70 */   sw    $v0, %lo(debug_unknown)($at)
 debug_chrnum:
-/* 0C585C 7F090D2C 3C028003 */  lui   $v0, %hi(D_80036FB8) # $v0, 0x8003
-/* 0C5860 7F090D30 24426FB8 */  addiu $v0, %lo(D_80036FB8) # addiu $v0, $v0, 0x6fb8
+/* 0C585C 7F090D2C 3C028003 */  lui   $v0, %hi(debug_chrnum_flag) # $v0, 0x8003
+/* 0C5860 7F090D30 24426FB8 */  addiu $v0, %lo(debug_chrnum_flag) # addiu $v0, $v0, 0x6fb8
 /* 0C5864 7F090D34 8C490000 */  lw    $t1, ($v0)
 /* 0C5868 7F090D38 392A0001 */  xori  $t2, $t1, 1
 /* 0C586C 7F090D3C 1000004D */  b     .L7F090E74
 /* 0C5870 7F090D40 AC4A0000 */   sw    $t2, ($v0)
 debug_viscvc:
-/* 0C5874 7F090D44 3C028003 */  lui   $v0, %hi(D_80036FA8) # $v0, 0x8003
-/* 0C5878 7F090D48 24426FA8 */  addiu $v0, %lo(D_80036FA8) # addiu $v0, $v0, 0x6fa8
+/* 0C5874 7F090D44 3C028003 */  lui   $v0, %hi(linemode_flag) # $v0, 0x8003
+/* 0C5878 7F090D48 24426FA8 */  addiu $v0, %lo(linemode_flag) # addiu $v0, $v0, 0x6fa8
 /* 0C587C 7F090D4C 8C4B0000 */  lw    $t3, ($v0)
 /* 0C5880 7F090D50 396C0001 */  xori  $t4, $t3, 1
 /* 0C5884 7F090D54 10000047 */  b     .L7F090E74
 /* 0C5888 7F090D58 AC4C0000 */   sw    $t4, ($v0)
 debug_joy2skyedit:
-/* 0C588C 7F090D5C 3C028003 */  lui   $v0, %hi(D_80036F98) # $v0, 0x8003
-/* 0C5890 7F090D60 24426F98 */  addiu $v0, %lo(D_80036F98) # addiu $v0, $v0, 0x6f98
+/* 0C588C 7F090D5C 3C028003 */  lui   $v0, %hi(debug_joy2skyedit_flag) # $v0, 0x8003
+/* 0C5890 7F090D60 24426F98 */  addiu $v0, %lo(debug_joy2skyedit_flag) # addiu $v0, $v0, 0x6f98
 /* 0C5894 7F090D64 8C4D0000 */  lw    $t5, ($v0)
 /* 0C5898 7F090D68 39AE0001 */  xori  $t6, $t5, 1
 /* 0C589C 7F090D6C 10000041 */  b     .L7F090E74
 /* 0C58A0 7F090D70 AC4E0000 */   sw    $t6, ($v0)
 debug_joy2hitsedit:
-/* 0C58A4 7F090D74 3C028003 */  lui   $v0, %hi(D_80036F9C) # $v0, 0x8003
-/* 0C58A8 7F090D78 24426F9C */  addiu $v0, %lo(D_80036F9C) # addiu $v0, $v0, 0x6f9c
+/* 0C58A4 7F090D74 3C028003 */  lui   $v0, %hi(debug_joy2hitsedit_flag) # $v0, 0x8003
+/* 0C58A8 7F090D78 24426F9C */  addiu $v0, %lo(debug_joy2hitsedit_flag) # addiu $v0, $v0, 0x6f9c
 /* 0C58AC 7F090D7C 8C4F0000 */  lw    $t7, ($v0)
 /* 0C58B0 7F090D80 39F80001 */  xori  $t8, $t7, 1
 /* 0C58B4 7F090D84 1000003B */  b     .L7F090E74
 /* 0C58B8 7F090D88 AC580000 */   sw    $t8, ($v0)
 debug_joy2detailedit:
-/* 0C58BC 7F090D8C 3C028003 */  lui   $v0, %hi(D_80036FA0) # $v0, 0x8003
-/* 0C58C0 7F090D90 24426FA0 */  addiu $v0, %lo(D_80036FA0) # addiu $v0, $v0, 0x6fa0
+/* 0C58BC 7F090D8C 3C028003 */  lui   $v0, %hi(debug_joy2detailedit_flag) # $v0, 0x8003
+/* 0C58C0 7F090D90 24426FA0 */  addiu $v0, %lo(debug_joy2detailedit_flag) # addiu $v0, $v0, 0x6fa0
 /* 0C58C4 7F090D94 8C590000 */  lw    $t9, ($v0)
 /* 0C58C8 7F090D98 3B280001 */  xori  $t0, $t9, 1
 /* 0C58CC 7F090D9C 10000035 */  b     .L7F090E74
 /* 0C58D0 7F090DA0 AC480000 */   sw    $t0, ($v0)
 debug_explosioninfo:
-/* 0C58D4 7F090DA4 3C028003 */  lui   $v0, %hi(D_80036FA4) # $v0, 0x8003
-/* 0C58D8 7F090DA8 24426FA4 */  addiu $v0, %lo(D_80036FA4) # addiu $v0, $v0, 0x6fa4
+/* 0C58D4 7F090DA4 3C028003 */  lui   $v0, %hi(debug_explosioninfo_flag) # $v0, 0x8003
+/* 0C58D8 7F090DA8 24426FA4 */  addiu $v0, %lo(debug_explosioninfo_flag) # addiu $v0, $v0, 0x6fa4
 /* 0C58DC 7F090DAC 8C490000 */  lw    $t1, ($v0)
 /* 0C58E0 7F090DB0 392A0001 */  xori  $t2, $t1, 1
 /* 0C58E4 7F090DB4 1000002F */  b     .L7F090E74
@@ -1087,8 +1087,8 @@ debug_fog:
 /* 0C590C 7F090DDC 10000025 */  b     .L7F090E74
 /* 0C5910 7F090DE0 AC226F70 */   sw    $v0, %lo(debug_unknown)($at)
 debug_gunwatchpos:
-/* 0C5914 7F090DE4 3C028003 */  lui   $v0, %hi(D_80036FBC) # $v0, 0x8003
-/* 0C5918 7F090DE8 24426FBC */  addiu $v0, %lo(D_80036FBC) # addiu $v0, $v0, 0x6fbc
+/* 0C5914 7F090DE4 3C028003 */  lui   $v0, %hi(debug_gunwatchpos_flag) # $v0, 0x8003
+/* 0C5918 7F090DE8 24426FBC */  addiu $v0, %lo(debug_gunwatchpos_flag) # addiu $v0, $v0, 0x6fbc
 /* 0C591C 7F090DEC 8C4B0000 */  lw    $t3, ($v0)
 /* 0C5920 7F090DF0 396C0001 */  xori  $t4, $t3, 1
 /* 0C5924 7F090DF4 1000001F */  b     .L7F090E74
@@ -1099,8 +1099,8 @@ debug_roomblocks:
 /* 0C5934 7F090E04 1000001C */  b     .L7F090E78
 /* 0C5938 7F090E08 8FB80018 */   lw    $t8, 0x18($sp)
 debug_profile:
-/* 0C593C 7F090E0C 3C028003 */  lui   $v0, %hi(D_80036FC0) # $v0, 0x8003
-/* 0C5940 7F090E10 24426FC0 */  addiu $v0, %lo(D_80036FC0) # addiu $v0, $v0, 0x6fc0
+/* 0C593C 7F090E0C 3C028003 */  lui   $v0, %hi(debug_profile_flag) # $v0, 0x8003
+/* 0C5940 7F090E10 24426FC0 */  addiu $v0, %lo(debug_profile_flag) # addiu $v0, $v0, 0x6fc0
 /* 0C5944 7F090E14 8C4D0000 */  lw    $t5, ($v0)
 /* 0C5948 7F090E18 39AE0001 */  xori  $t6, $t5, 1
 /* 0C594C 7F090E1C 11C00005 */  beqz  $t6, .L7F090E34

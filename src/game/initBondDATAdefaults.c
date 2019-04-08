@@ -266,8 +266,8 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03B178 7F006648 1729FFF8 */  bne   $t9, $t1, .L7F00662C
 /* 03B17C 7F00664C AD41FFFC */   sw    $at, -4($t2)
 /* 03B180 7F006650 8F210000 */  lw    $at, ($t9)
-/* 03B184 7F006654 3C0C0000 */  lui   $t4, %hi(D_0000001C) # $t4, 0
-/* 03B188 7F006658 258C001C */  addiu $t4, %lo(D_0000001C) # addiu $t4, $t4, 0x1c
+/* 03B184 7F006654 3C0C0000 */  lui   $t4, %hi(0x0000001C) # $t4, 0
+/* 03B188 7F006658 258C001C */  addiu $t4, %lo(0x0000001C) # addiu $t4, $t4, 0x1c
 /* 03B18C 7F00665C AD410000 */  sw    $at, ($t2)
 /* 03B190 7F006660 8E8B0000 */  lw    $t3, ($s4)
 /* 03B194 7F006664 8E240000 */  lw    $a0, ($s1)

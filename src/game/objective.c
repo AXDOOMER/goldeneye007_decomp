@@ -15,8 +15,9 @@ u32 *ptr_last_deposit_in_room_subobject_entry_type21;
 u32 *ptr_last_photo_obj_in_room_subobject_entry_type1E;
 
 
-/* data
-D:800322F0     num_objectives: .word 0xFFFFFFFF
+// data
+s32 num_objective_ptrs = 0xFFFFFFFF;
+/*
 D:800322F4                     .word 0
 D:800322F8                     .word 0
 D:800322FC                     .word 0
@@ -30,10 +31,12 @@ u32 D_80032304 = 0;
 u32 D_80032308 = 0;
 
 
-/* rodata
-D:80053610     dword_D_80053610:.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:80053610                                              # DATA XREF: display_objective_status_text_on_status_change+1Co
-D:80053640     dword_D_80053640:.word 0                 # DATA XREF: display_objective_status_text_on_status_change+44o
+// rodata
+//D:80053610
+const u32 D_80053610[10] = {0};
+//D:80053640
+const u32 D_80053640 = 0;
+/*
 D:80053644     aSAC:           .ascii "%s Ç%c "<0>      # DATA XREF: display_objective_status_text_on_status_change+84o
 D:8005364C     aSC:            .ascii "%s %c: "<0>      # DATA XREF: display_objective_status_text_on_status_change+114o
 D:80053654     jpt_objectives_microcode_handler:.word objective_microcode_type_17_18_1F_default

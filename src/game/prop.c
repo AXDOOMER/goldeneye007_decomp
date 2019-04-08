@@ -15,7 +15,7 @@ only_read_by_stageload:
 .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 aMp_: .asciiz "mp_"
 */
-f32 D_8004EEB4 = 0.000001;
+const f32 D_8004EEB4 = 0.000001;
 /*
 jpt_700366F0:
 .word .L7F0027C8
@@ -58,12 +58,12 @@ jpt_mp_ammo_crate_expansion:
 .word .L7F002870
 .word .L7F002870
 */
-f32 D_8004EF50 = 6.2831855;
-f32 D_8004EF54 = 6.2831855;
-f32 D_8004EF58 = 0.36651915;
-f32 D_8004EF5C = 1.5707964;
-f32 D_8004EF60 = 1.5707964;
-f32 D_8004EF64 = 0.000001;
+const f32 D_8004EF50 = 6.2831855;
+const f32 D_8004EF54 = 6.2831855;
+const f32 D_8004EF58 = 0.36651915;
+const f32 D_8004EF5C = 1.5707964;
+const f32 D_8004EF60 = 1.5707964;
+const f32 D_8004EF64 = 0.000001;
 /*
 jpt_object_type_expansion:
 .word door_expand
