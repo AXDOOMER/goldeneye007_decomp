@@ -7599,8 +7599,8 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E48C 7F03995C 1000EF0B */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E490 7F039960 26310005 */   addiu $s1, $s1, 5
 actionDA_Fade_Out_From_Cut_Scene_1:
-/* 06E494 7F039964 3C0D8003 */  lui   $t5, %hi(D_800364A0) # $t5, 0x8003
-/* 06E498 7F039968 8DAD64A0 */  lw    $t5, %lo(D_800364A0)($t5)
+/* 06E494 7F039964 3C0D8003 */  lui   $t5, %hi(stop_time_flag) # $t5, 0x8003
+/* 06E498 7F039968 8DAD64A0 */  lw    $t5, %lo(stop_time_flag)($t5)
 /* 06E49C 7F03996C 24010002 */  li    $at, 2
 /* 06E4A0 7F039970 00002025 */  move  $a0, $zero
 /* 06E4A4 7F039974 11A10008 */  beq   $t5, $at, .L7F039998
@@ -7617,8 +7617,8 @@ actionDA_Fade_Out_From_Cut_Scene_1:
 /* 06E4CC 7F03999C 1000EEFB */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E4D0 7F0399A0 26310001 */   addiu $s1, $s1, 1
 actionDB_Fade_In_From_Black_Reset_DA_1:
-/* 06E4D4 7F0399A4 3C0E8003 */  lui   $t6, %hi(D_800364A0) # $t6, 0x8003
-/* 06E4D8 7F0399A8 8DCE64A0 */  lw    $t6, %lo(D_800364A0)($t6)
+/* 06E4D4 7F0399A4 3C0E8003 */  lui   $t6, %hi(stop_time_flag) # $t6, 0x8003
+/* 06E4D8 7F0399A8 8DCE64A0 */  lw    $t6, %lo(stop_time_flag)($t6)
 /* 06E4DC 7F0399AC 24010002 */  li    $at, 2
 /* 06E4E0 7F0399B0 00002025 */  move  $a0, $zero
 /* 06E4E4 7F0399B4 11C10007 */  beq   $t6, $at, .L7F0399D4
@@ -7878,13 +7878,13 @@ actionE9_Instantly_Switch_Sky_To_Sky_2_1:
 /* 06E870 7F039D40 1000EE12 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E874 7F039D44 26310001 */   addiu $s1, $s1, 1
 actionEA_Stop_Game_Time_1:
-/* 06E878 7F039D48 3C0D8003 */  lui   $t5, %hi(D_800364A0) # $t5, 0x8003
-/* 06E87C 7F039D4C 8DAD64A0 */  lw    $t5, %lo(D_800364A0)($t5)
+/* 06E878 7F039D48 3C0D8003 */  lui   $t5, %hi(stop_time_flag) # $t5, 0x8003
+/* 06E87C 7F039D4C 8DAD64A0 */  lw    $t5, %lo(stop_time_flag)($t5)
 /* 06E880 7F039D50 240E0001 */  li    $t6, 1
-/* 06E884 7F039D54 3C018003 */  lui   $at, %hi(D_800364A0) # $at, 0x8003
+/* 06E884 7F039D54 3C018003 */  lui   $at, %hi(stop_time_flag) # $at, 0x8003
 /* 06E888 7F039D58 15A00002 */  bnez  $t5, .L7F039D64
 /* 06E88C 7F039D5C 26520001 */   addiu $s2, $s2, 1
-/* 06E890 7F039D60 AC2E64A0 */  sw    $t6, %lo(D_800364A0)($at)
+/* 06E890 7F039D60 AC2E64A0 */  sw    $t6, %lo(stop_time_flag)($at)
 .L7F039D64:
 /* 06E894 7F039D64 1000EE09 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E898 7F039D68 26310001 */   addiu $s1, $s1, 1
@@ -8129,8 +8129,8 @@ actionF8_If_Guard_ID_00200000_Flag_Set_Unset_And_Return_3:
 /* 06EC00 7F03A0D0 26310003 */   addiu $s1, $s1, 3
 actionF9_Set_Killed_In_Action_Automatic_Mission_Failure_1:
 /* 06EC04 7F03A0D4 240F0001 */  li    $t7, 1
-/* 06EC08 7F03A0D8 3C018003 */  lui   $at, %hi(mission_kia) # $at, 0x8003
-/* 06EC0C 7F03A0DC AC2FA928 */  sw    $t7, %lo(mission_kia)($at)
+/* 06EC08 7F03A0D8 3C018003 */  lui   $at, %hi(mission_kia_flag) # $at, 0x8003
+/* 06EC0C 7F03A0DC AC2FA928 */  sw    $t7, %lo(mission_kia_flag)($at)
 /* 06EC10 7F03A0E0 26520001 */  addiu $s2, $s2, 1
 /* 06EC14 7F03A0E4 1000ED29 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06EC18 7F03A0E8 26310001 */   addiu $s1, $s1, 1

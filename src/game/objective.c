@@ -21,12 +21,14 @@ D:800322F4                     .word 0
 D:800322F8                     .word 0
 D:800322FC                     .word 0
 //file possibly split at sub_CODE_7F057AC0
-
-D:80032300     dword_D_80032300:.word 0                 # DATA XREF: sub_CODE_7F057AC0+10o
-D:80032300                                              # sub_CODE_7F057AC0+14r
-D:80032304     dword_D_80032304:.word 0                 # DATA XREF: sub_CODE_7F057AC0+1Cr
-D:80032308     dword_D_80032308:.word 0                 # DATA XREF: sub_CODE_7F057AC0+24r
 */
+//D:80032300
+u32 D_80032300 = 0;
+//D:80032304
+u32 D_80032304 = 0;
+//D:80032308
+u32 D_80032308 = 0;
+
 
 /* rodata
 D:80053610     dword_D_80053610:.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

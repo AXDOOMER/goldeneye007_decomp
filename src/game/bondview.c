@@ -29,8 +29,10 @@ D:8003245C      # int *allocation_size_0
 D:8003245C     allocation_size_0:.word 0x14820          # DATA XREF: init_player_BONDdata_stats+40r
 D:80032460      # int *allocation_size_1
 D:80032460     allocation_size_1:.word 0x14820          # DATA XREF: init_player_BONDdata_stats+70r
-D:80032464     dword_D_80032464:.word 0x7530            # DATA XREF: used_to_load_1st_person_model_on_demand:loc_CODE_7F05D274o
-D:80032468                     .word 0x7530
+*/
+//D:80032464
+u32 D_80032464[] ={0x7530, 0x7530};
+/*
 D:8003246C     ejected_cartridge:ejected_cart <GcartridgeZ_struct, aGcartridgez> # "GcartridgeZ"
 D:80032474                     ejected_cart <GcartrifleZ_struct, aGcartriflez>  # "GcartrifleZ"
 D:8003247C                     ejected_cart <GcartblueZ_struct, aGcartbluez>  # "GcartblueZ"
@@ -423,7 +425,7 @@ D:80034C64                                        0x9873, 0x98CC, 0.0, -4.0, 310
 //D:80034C9C
 u32 cartridges_eject = 0;
 //D:80034CA0
-u32 dword_D_80034CA0 = 0;
+u32 D_80034CA0 = 0;
 /*
 D:80034CA4     flt_D_80034CA4: .float  0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.5       
 D:80034CA4                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1CF8o
@@ -827,29 +829,44 @@ u32 D_80035C54 = 0;
 u32 D_80035C58 = 0;
 //D:80035C5C
 u32 D_80035C5C = 0;
+
+//D:80035C60
+f32 D_80035C60 = -1.0;
+//D:80035C64
+f32 D_80035C64 = 0.0;
+//D:80035C68
+f32 D_80035C68 = 1.0;
+//D:80035C6C
+f32 D_80035C6C = 0.0;
+//D:80035C70
+f32 D_80035C70 = 6.2536321;
+//D:80035C74
+f32 D_80035C74 = 6.2592888;
+//D:80035C78
+f32 D_80035C78 = 0.204238;
+//D:80035C7C
+f32 D_80035C7C = 0.25044999;
+//D:80035C80
+f32 D_80035C80 = 0.90482301;
+//D:80035C84
+f32 D_80035C84 = 0.28716999;
+//D:80035C88
+f32 D_80035C88 = 1.715736;
+//D:80035C8C
+f32 D_80035C8C = 0.37460899;
+//D:80035C90
+f32 D_80035C90 = 0.92193699;
 /*
-D:80035C60     flt_D_80035C60: .float -1.0              # DATA XREF: handles_firing_or_throwing_weapon_in_hand+228r
-D:80035C64     dword_D_80035C64:.word 0                 # DATA XREF: handles_firing_or_throwing_weapon_in_hand+20Co
-D:80035C64                                              # handles_firing_or_throwing_weapon_in_hand+238r
-D:80035C68     flt_D_80035C68: .float 1.0               # DATA XREF: handles_firing_or_throwing_weapon_in_hand+23Cr
-D:80035C6C     dword_D_80035C6C:.word 0                 # DATA XREF: handles_firing_or_throwing_weapon_in_hand+244r
-D:80035C70     flt_D_80035C70: .float 6.2536321         # DATA XREF: handles_firing_or_throwing_weapon_in_hand+9B0o
-D:80035C70                                              # handles_firing_or_throwing_weapon_in_hand+9B4r
-D:80035C74     flt_D_80035C74: .float 6.2592888         # DATA XREF: handles_firing_or_throwing_weapon_in_hand+9C4r
-D:80035C78     flt_D_80035C78: .float 0.204238          # DATA XREF: handles_firing_or_throwing_weapon_in_hand+9CCr
-D:80035C7C     flt_D_80035C7C: .float 0.25044999        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+9F8o
-D:80035C7C                                              # handles_firing_or_throwing_weapon_in_hand+9FCr
-D:80035C80     flt_D_80035C80: .float 0.90482301        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+A0Cr
-D:80035C84     flt_D_80035C84: .float 0.28716999        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+A14r
-D:80035C88     flt_D_80035C88: .float 1.715736          # DATA XREF: handles_firing_or_throwing_weapon_in_hand+A50o
-D:80035C88                                              # handles_firing_or_throwing_weapon_in_hand+A5Cr
-D:80035C8C     flt_D_80035C8C: .float 0.37460899        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+A6Cr
-D:80035C90     flt_D_80035C90: .float 0.92193699        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+A74r
-D:80035C94                     .word 0
-D:80035C98     dword_D_80035C98:.word 0                 # DATA XREF: sub_CODE_7F061E18+2Co
-D:80035C98                                              # sub_CODE_7F061E18+30r
-D:80035C9C     dword_D_80035C9C:.word 0                 # DATA XREF: sub_CODE_7F061E18+34r
-D:80035CA0     dword_D_80035CA0:.word 0                 # DATA XREF: sub_CODE_7F061E18+48r
+//D:80035C94                     .word 0
+*/
+
+//D:80035C98
+u32 D_80035C98 = 0;
+//D:80035C9C
+u32 D_80035C9C = 0;
+//D:80035CA0
+u32 D_80035CA0 = 0;
+/*
 D:80035CA4     dword_D_80035CA4:.word 0xFFFFFFFF, 0, 0, 0, 0, 0, 0, 0
 D:80035CA4                                              # DATA XREF: sub_CODE_7F061E18+44r
 D:80035CA4                                              # sub_CODE_7F061E18+5Co
@@ -920,16 +937,12 @@ D:80035EF0                     .half      0,  0x32, 0x200, 0xD20
 D:80035EF0                     .half 0xBF80,     0,     0,     1
 D:80035EF0                     .half      0,     0,     0,     0
 D:80035EF0                     .half      0,     0,     0,     0
-//i may belong to objecthandler.c
-D:80036060     dword_D_80036060:.word 0                 # DATA XREF: sub_CODE_7F005450+10w
-D:80036060                                              # sub_CODE_7F06B120+4o
-D:80036060                                              # sub_CODE_7F06B120+14r
-D:80036060                                              # sub_CODE_7F06B120+1Cr
-D:80036060                                              # sub_CODE_7F06B120+24r
-D:80036060                                              # sub_CODE_7F06B248+8o
-D:80036060                                              # sub_CODE_7F06B248+Cr
-D:80036060                                              # sub_CODE_7F06B248+14w
 */
+
+//i may belong to objecthandler.c
+//D:80036060
+u32 D_80036060 = 0;
+
 
 /* rodata
 D:80053760     aGcartridgez:   .ascii "GcartridgeZ"<0>  # DATA XREF: D:ejected_cartridgeo
@@ -8426,11 +8439,11 @@ glabel sub_GAME_7F061948
 /* 096550 7F061A20 4600103C */  c.lt.s $f2, $f0
 /* 096554 7F061A24 00000000 */  nop   
 /* 096558 7F061A28 4502000A */  bc1fl .L7F061A54
-/* 09655C 7F061A2C 3C0143FA */   lui   $at, %hi(D_43FA3E88) # $at, 0x43fa
+/* 09655C 7F061A2C 3C0143FA */   lui   $at, %hi(0x43FA3E88) # $at, 0x43fa
 /* 096560 7F061A30 10000007 */  b     .L7F061A50
 /* 096564 7F061A34 46001306 */   mov.s $f12, $f2
 .L7F061A38:
-/* 096568 7F061A38 C4223E88 */  lwc1  $f2, %lo(D_43FA3E88)($at)
+/* 096568 7F061A38 C4223E88 */  lwc1  $f2, %lo(0x43FA3E88)($at)
 /* 09656C 7F061A3C 4600103C */  c.lt.s $f2, $f0
 /* 096570 7F061A40 00000000 */  nop   
 /* 096574 7F061A44 45020003 */  bc1fl .L7F061A54

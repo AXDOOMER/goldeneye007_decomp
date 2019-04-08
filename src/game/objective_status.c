@@ -1118,9 +1118,9 @@ void sub_GAME_7F057D44(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F057D44
-/* 08C874 7F057D44 3C018005 */  lui   $at, %hi(D_800536BC) # $at, 0x8005
+/* 08C874 7F057D44 3C018005 */  lui   $at, %hi(npc_gravity_modifier) # $at, 0x8005
 /* 08C878 7F057D48 44866000 */  mtc1  $a2, $f12
-/* 08C87C 7F057D4C C42436BC */  lwc1  $f4, %lo(D_800536BC)($at)
+/* 08C87C 7F057D4C C42436BC */  lwc1  $f4, %lo(npc_gravity_modifier)($at)
 /* 08C880 7F057D50 C4A20000 */  lwc1  $f2, ($a1)
 /* 08C884 7F057D54 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 08C888 7F057D58 46046182 */  mul.s $f6, $f12, $f4

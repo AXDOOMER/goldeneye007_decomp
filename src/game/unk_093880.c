@@ -8560,8 +8560,8 @@ glabel sub_GAME_7F09A4BC
 /* 0CFC20 7F09B0F0 ADE02A70 */  sw    $zero, 0x2a70($t7)
 /* 0CFC24 7F09B0F4 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0CFC28 7F09B0F8 AC2864C4 */  sw    $t0, %lo(D_800364C4)($at)
-/* 0CFC2C 7F09B0FC 3C018003 */  lui   $at, %hi(D_800364C8) # $at, 0x8003
-/* 0CFC30 7F09B100 AC2864C8 */  sw    $t0, %lo(D_800364C8)($at)
+/* 0CFC2C 7F09B0FC 3C018003 */  lui   $at, %hi(obj_collision_flag) # $at, 0x8003
+/* 0CFC30 7F09B100 AC2864C8 */  sw    $t0, %lo(obj_collision_flag)($at)
 /* 0CFC34 7F09B104 03E00008 */  jr    $ra
 /* 0CFC38 7F09B108 27BD03D0 */   addiu $sp, $sp, 0x3d0
 )

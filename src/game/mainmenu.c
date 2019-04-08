@@ -22987,7 +22987,7 @@ glabel interface_menu0C_missionfailed
 block_2:
         return 0;
     }
-    if (mission_kia != 0)
+    if (mission_kia_flag != 0)
     {
         goto block_2;
     }
@@ -23027,8 +23027,8 @@ glabel sub_GAME_7F01631C
 /* 04AE68 7F016338 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 04AE6C 7F01633C 15C00007 */  bnez  $t6, .L7F01635C
 /* 04AE70 7F016340 AFB00018 */   sw    $s0, 0x18($sp)
-/* 04AE74 7F016344 3C0F8003 */  lui   $t7, %hi(mission_kia) # $t7, 0x8003
-/* 04AE78 7F016348 8DEFA928 */  lw    $t7, %lo(mission_kia)($t7)
+/* 04AE74 7F016344 3C0F8003 */  lui   $t7, %hi(mission_kia_flag) # $t7, 0x8003
+/* 04AE78 7F016348 8DEFA928 */  lw    $t7, %lo(mission_kia_flag)($t7)
 /* 04AE7C 7F01634C 00008025 */  move  $s0, $zero
 /* 04AE80 7F016350 00008825 */  move  $s1, $zero
 /* 04AE84 7F016354 11E00003 */  beqz  $t7, .L7F016364
@@ -23106,7 +23106,7 @@ void constructor_menu0C_missionfailed(s32 arg0)
     spC10 = 0xa7;
     sp44 = get_video2_settings_txtClipW();
     arg0 = write_text_at_abs_coord(arg0, &spC14, &spC10, temp_ret, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
-    if (mission_kia != 0)
+    if (mission_kia_flag != 0)
     {
         phi_v1 = 0x780000ff;
         phi_s0 = get_textptr_for_textID(0x9c64);
@@ -23228,8 +23228,8 @@ glabel constructor_menu0C_missionfailed
 /* 04B068 7F016538 AFAD0010 */  sw    $t5, 0x10($sp)
 /* 04B06C 7F01653C 0FC025D8 */  jal   write_text_at_abs_coord
 /* 04B070 7F016540 AFB8001C */   sw    $t8, 0x1c($sp)
-/* 04B074 7F016544 3C198003 */  lui   $t9, %hi(mission_kia) # $t9, 0x8003
-/* 04B078 7F016548 8F39A928 */  lw    $t9, %lo(mission_kia)($t9)
+/* 04B074 7F016544 3C198003 */  lui   $t9, %hi(mission_kia_flag) # $t9, 0x8003
+/* 04B078 7F016548 8F39A928 */  lw    $t9, %lo(mission_kia_flag)($t9)
 /* 04B07C 7F01654C AFA20C18 */  sw    $v0, 0xc18($sp)
 /* 04B080 7F016550 3C088003 */  lui   $t0, %hi(mission_failed_or_aborted) # $t0, 0x8003
 /* 04B084 7F016554 13200007 */  beqz  $t9, .L7F016574
