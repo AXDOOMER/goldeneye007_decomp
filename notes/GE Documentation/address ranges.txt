@@ -591,13 +591,16 @@ set to 3 for fade-in, 2 to restart the swirl animation, 1 to do the cameras
 800365AC	PP7 08 object copied to stack during player creation
 80036634
 
-80036898	
-8003689C	1- display status bar
+80036898	status bar text buffer index
+8003689C	display status bar
+	queued number of items to display (max=5, disabled=0)
+	display timer is 11DC offset of BONDData (unlike upper text window's timer)
 800368A0	copy of 1st font table
 800368A4	copy of second font table
 800368A8
-800368AC	1- display upper text window
-800368B0	
+800368AC	display upper text window
+	queued number of items to display (max=2, disabled=0)
+800368B0	timer for upper text window
 800368B4	
 800368B8	debug manpos: cardinal directions and tolerance
 800368D8	???; animation table
@@ -1670,6 +1673,14 @@ set to 3 for fade-in, 2 to restart the swirl animation, 1 to do the cameras
 
 80079A20	SP current time, from 0.  long value in seconds.
 80079A24	watch time
+
+80079A28	status bar text buffer 1 [length 101]
+80079A8D	status bar text buffer 2 [length 101]
+80079AF2	status bar text buffer 3 [length 101]
+80079B57	status bar text buffer 4 [length 101]
+80079BBC	status bar text buffer 5 [length 101]
+80079C70	upper text window buffer 1 [length 150]
+80079D07	upper text window buffer 2 [length 150]
 
 80079E04	(float) 
 80079E08	(float) 
