@@ -1795,9 +1795,15 @@ s32 insert_generic_fillrect(void *arg0)
     void *temp_a1;
     void *temp_a3;
 
-    arg0->unk4 = 0x300000;
-    arg0->unk0 = 0xba001402;
-    temp_a1 = arg0 + 8;
+    //arg0->unk4 = 0x300000;
+    //arg0->unk0 = 0xba001402;
+    //
+	arg0->unk0 = gsDPSetCycleType(G_CYC_1CYCLE);
+	// OR
+	gDPSetCycleType(Gfx *arg0, G_CYC_1CYCLE);
+	//------------------------------------------------------------------------------
+	
+	temp_a1 = arg0 + 8;
     temp_a3 = temp_a1 + 8;
     temp_a1->unk0 = (s32) (((((ptr_video_settings2->unk18 + -1) & 0x3ff) << 0xe) | 0xf6000000) | (((ptr_video_settings2->unk1A + -1) & 0x3ff) * 4));
     temp_a1->unk4 = 0;
@@ -1810,9 +1816,9 @@ s32 insert_generic_fillrect(void *arg0)
 GLOBAL_ASM(
 .text
 glabel insert_generic_fillrect
-/* 004AF8 70003EF8 3C0EBA00 */  lui   $t6, (0xBA001402 >> 16) # lui $t6, 0xba00
+/* 004AF8 70003EF8 3C0EBA00 */  lui   $t6, (0xBA001402 >> 16) # lui $t6, 0xba00				#gsDPSetCycleType
 /* 004AFC 70003EFC 35CE1402 */  ori   $t6, (0xBA001402 & 0xFFFF) # ori $t6, $t6, 0x1402
-/* 004B00 70003F00 3C0F0030 */  lui   $t7, 0x30
+/* 004B00 70003F00 3C0F0030 */  lui   $t7, 0x30												#G_CYC_1CYCLE
 /* 004B04 70003F04 AC8F0004 */  sw    $t7, 4($a0)
 /* 004B08 70003F08 AC8E0000 */  sw    $t6, ($a0)
 /* 004B0C 70003F0C 3C068002 */  lui   $a2, %hi(ptr_video_settings2) # $a2, 0x8002
@@ -1864,8 +1870,8 @@ void *setupscreensfornumplayers(void *arg0)
     void *phi_s0_4;
 
     temp_s0 = arg0 + 8;
-    arg0->unk4 = 0x300000;
-    arg0->unk0 = 0xba001402;
+    //arg0->unk4 = 0x300000;
+    //arg0->unk0 = 0xba001402;
     *temp_s0 = 0xed000000;
     sp60 = temp_s0;
     temp_s0 = temp_s0 + 8;
