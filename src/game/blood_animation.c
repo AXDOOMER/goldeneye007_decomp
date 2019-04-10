@@ -185,7 +185,7 @@ char die_blood_image_1[] = {
     0xE5,0xE5,0xE5,0xE5
 };
 
-s32 dword_D_8002C50C = 0;
+s32 D_8002C50C = 0;
 
 #ifdef NONMATCHING
 void insert_imageDL(void) {

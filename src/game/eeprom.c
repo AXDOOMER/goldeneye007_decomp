@@ -1,117 +1,57 @@
 #include "ultra64.h"
+#include "game/eeprom.h"
 
-/*
-struct save_data
-{
-  int chksum1;
-  int chksum2;
-  char completion_bitflags;
-  char flag_007;
-  char music_vol;
-  char sfx_vol;
-  char controller_config;
-  char options;
-  char unlocked_cheats_1;
-  char unlocked_cheats_2;
-  char unlocked_cheats_3;
-  char field_11;
-  unsigned agent_dam_time :10;
-  unsigned agent_facility_time :10;
-  unsigned agent_runway_time :10;
-  unsigned agent_surface1_time :10;
-  unsigned agent_bunker1_time :10;
-  unsigned agent_silo_time :10;
-  unsigned agent_frigate_time :10;
-  unsigned agent_surface2_time :10;
-  unsigned agent_bunker2_time :10;
-  unsigned agent_statue_time :10;
-  unsigned agent_archives_time :10;
-  unsigned agent_streets_time :10;
-  unsigned agent_depot_time :10;
-  unsigned agent_train_time :10;
-  unsigned agent_jungle_time :10;
-  unsigned agent_control_time :10;
-  unsigned agent_caverns_time :10;
-  unsigned agent_cradle_time :10;
-  unsigned agent_aztec_time :10;
-  unsigned agent_egyptian_time :10;
+// bss
+//CODE.bss:80069920
+struct save_data save1;
+//CODE.bss:80069980
+struct save_data save2;
+//CODE.bss:800699E0
+struct save_data save3;
+//CODE.bss:80069A40
+struct save_data save4;
+//CODE.bss:80069AA0
+struct save_data save5;
+//CODE.bss:80069B00
+struct save_data save6;
 
-  unsigned secretagent_dam_time :10;
-  unsigned secretagent_facility_time :10;
-  unsigned secretagent_runway_time :10;
-  unsigned secretagent_surface1_time :10;
-  unsigned secretagent_bunker1_time :10;
-  unsigned secretagent_silo_time :10;
-  unsigned secretagent_frigate_time :10;
-  unsigned secretagent_surface2_time :10;
-  unsigned secretagent_bunker2_time :10;
-  unsigned secretagent_statue_time :10;
-  unsigned secretagent_archives_time :10;
-  unsigned secretagent_streets_time :10;
-  unsigned secretagent_depot_time :10;
-  unsigned secretagent_train_time :10;
-  unsigned secretagent_jungle_time :10;
-  unsigned secretagent_control_time :10;
-  unsigned secretagent_caverns_time :10;
-  unsigned secretagent_cradle_time :10;
-  unsigned secretagent_aztec_time :10;
-  unsigned secretagent_egyptian_time :10;
+//CODE.bss:80069B60
+u32 dword_CODE_bss_80069B60;
 
-  unsigned agent00_dam_time :10;
-  unsigned agent00_facility_time :10;
-  unsigned agent00_runway_time :10;
-  unsigned agent00_surface1_time :10;
-  unsigned agent00_bunker1_time :10;
-  unsigned agent00_silo_time :10;
-  unsigned agent00_frigate_time :10;
-  unsigned agent00_surface2_time :10;
-  unsigned agent00_bunker2_time :10;
-  unsigned agent00_statue_time :10;
-  unsigned agent00_archives_time :10;
-  unsigned agent00_streets_time :10;
-  unsigned agent00_depot_time :10;
-  unsigned agent00_train_time :10;
-  unsigned agent00_jungle_time :10;
-  unsigned agent00_control_time :10;
-  unsigned agent00_caverns_time :10;
-  unsigned agent00_cradle_time :10;
-  unsigned agent00_aztec_time :10;
-  unsigned agent00_egyptian_time :10;
 
-  char unused1;
-  char unused2;
-  char unused3;
-};
+//data
+//D:8002C510
+u32 save1_selected_bond = 0;
+//D:8002C514
+u32 save2_selected_bond = 0;
+//D:8002C518
+u32 save3_selected_bond = 0;
+//D:8002C51C
+u32 save4_selected_bond = 0;
 
-*/
+//D:8002C520
+struct save_data D_8002C520 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C580
+struct save_data D_8002C580 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C5E0
+struct save_data D_8002C5E0 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C640
+struct save_data D_8002C640 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C660
+struct save_data D_8002C660 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C6C0
+struct save_data D_8002C6C0 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C720
+struct save_data D_8002C720 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C780
+struct save_data D_8002C780 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C7E0
+struct save_data D_8002C7E0 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C840
+struct save_data D_8002C840 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C8A0
+struct save_data blank_eeprom = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-/* bss
-CODE.bss:80069920     save1:          save_data <?>
-CODE.bss:80069980     save2:          save_data <?>
-CODE.bss:800699E0     save3:          save_data <?>
-CODE.bss:80069A40     save4:          save_data <?>
-CODE.bss:80069AA0     save5:          save_data <?>
-CODE.bss:80069B00     save6:          save_data <?>
-CODE.bss:80069B60     dword_CODE_bss_80069B60:.space 4
-*/
-
-/*
-D:8002C510     save1_selected_bond:.word 0
-D:8002C514     save2_selected_bond:.word 0
-D:8002C518     save3_selected_bond:.word 0
-D:8002C51C     save4_selected_bond:.word 0
-D:8002C520     stru_D_8002C520:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C580     stru_D_8002C580:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C5E0     stru_D_8002C5E0:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C640     stru_D_8002C640:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C660     stru_D_8002C660:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C6C0     stru_D_8002C6C0:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C720     stru_D_8002C720:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C780     stru_D_8002C780:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C7E0     stru_D_8002C7E0:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C840     stru_D_8002C840:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C8A0     blank_eeprom:   save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-*/
 
 
 
@@ -1659,12 +1599,12 @@ glabel sub_GAME_7F01DF90
 /* 052BF0 7F01E0C0 0C0031EF */  jal   save_7000C7BC
 /* 052BF4 7F01E0C4 240601E0 */   li    $a2, 480
 /* 052BF8 7F01E0C8 3C108007 */  lui   $s0, %hi(save1) # $s0, 0x8007
-/* 052BFC 7F01E0CC 3C138007 */  lui   $s3, %hi(D_80069928) # $s3, 0x8007
+/* 052BFC 7F01E0CC 3C138007 */  lui   $s3, %hi(save1+8) # $s3, 0x8007
 /* 052C00 7F01E0D0 3C128007 */  lui   $s2, %hi(save2) # $s2, 0x8007
 /* 052C04 7F01E0D4 3C148007 */  lui   $s4, %hi(dword_CODE_bss_80069B60) # $s4, 0x8007
 /* 052C08 7F01E0D8 26949B60 */  addiu $s4, %lo(dword_CODE_bss_80069B60) # addiu $s4, $s4, -0x64a0
 /* 052C0C 7F01E0DC 26529980 */  addiu $s2, %lo(save2) # addiu $s2, $s2, -0x6680
-/* 052C10 7F01E0E0 26739928 */  addiu $s3, %lo(D_80069928) # addiu $s3, $s3, -0x66d8
+/* 052C10 7F01E0E0 26739928 */  addiu $s3, %lo(save1+8) # addiu $s3, $s3, -0x66d8
 /* 052C14 7F01E0E4 26109920 */  addiu $s0, %lo(save1) # addiu $s0, $s0, -0x66e0
 .L7F01E0E8:
 /* 052C18 7F01E0E8 24110001 */  li    $s1, 1

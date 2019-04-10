@@ -3,18 +3,20 @@
 s32 if_positive_last_mp_weapon_set_num;
 
 //.section .rodata
+
+const char aNochr[] = "-nochr";
+const char aNoprop[] = "-noprop";
+const char aNoobj[] = "-noobj";
+const char aNoprop_0[] = "-noprop";
 /*
-aNochr: .asciiz "-nochr"
-aNoprop: .asciiz "-noprop"
-aNoobj: .asciiz "-noobj"
-aNoprop_0: .asciiz "-noprop"
 only_read_by_stageload:
 .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-aMp_: .asciiz "mp_"
 */
+const char aMp_[] = "mp_";
+
 const f32 D_8004EEB4 = 0.000001;
 /*
 jpt_700366F0:

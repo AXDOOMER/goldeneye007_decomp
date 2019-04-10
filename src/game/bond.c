@@ -15178,11 +15178,11 @@ void *sub_GAME_7F081478(void) {
         phi_v0_2 = ptr_BONDdata;
     }
     // Node 13
-    stanDoLineLog = 0;
+    stanlinelog_flag = 0;
     sp2C = (?32) phi_v0_2->unk488;
-    sp28 = (?32) stanDoLineLog;
+    sp28 = (?32) stanlinelog_flag;
     sub_GAME_7F0B0BE4(&sp2C, phi_v0_2->unk48C, phi_v0_2->unk494, phi_v0_2->unk4B4, (f32) phi_v0_2->unk4BC);
-    stanDoLineLog = sp28;
+    stanlinelog_flag = sp28;
     ptr_BONDdata->unk4D8 = sp2C;
     ptr_BONDdata->unk4A4 = (f32) ptr_BONDdata->unk4B4;
     ptr_BONDdata->unk4AC = (f32) ptr_BONDdata->unk4BC;
@@ -15280,8 +15280,8 @@ glabel sub_GAME_7F081478
 /* 0B608C 7F08155C 8D020000 */  lw    $v0, ($t0)
 /* 0B6090 7F081560 8C5900D8 */  lw    $t9, 0xd8($v0)
 .L7F081564:
-/* 0B6094 7F081564 3C038004 */  lui   $v1, %hi(stanDoLineLog) # $v1, 0x8004
-/* 0B6098 7F081568 24630FB4 */  addiu $v1, %lo(stanDoLineLog) # addiu $v1, $v1, 0xfb4
+/* 0B6094 7F081564 3C038004 */  lui   $v1, %hi(stanlinelog_flag) # $v1, 0x8004
+/* 0B6098 7F081568 24630FB4 */  addiu $v1, %lo(stanlinelog_flag) # addiu $v1, $v1, 0xfb4
 /* 0B609C 7F08156C 53200015 */  beql  $t9, $zero, .L7F0815C4
 /* 0B60A0 7F081570 44801000 */   mtc1  $zero, $f2
 /* 0B60A4 7F081574 44801000 */  mtc1  $zero, $f2
@@ -15335,9 +15335,9 @@ glabel sub_GAME_7F081478
 /* 0B615C 7F08162C E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 0B6160 7F081630 8FAB0028 */  lw    $t3, 0x28($sp)
 /* 0B6164 7F081634 3C088008 */  lui   $t0, %hi(ptr_BONDdata) # $t0, 0x8008
-/* 0B6168 7F081638 3C018004 */  lui   $at, %hi(stanDoLineLog) # $at, 0x8004
+/* 0B6168 7F081638 3C018004 */  lui   $at, %hi(stanlinelog_flag) # $at, 0x8004
 /* 0B616C 7F08163C 2508A0B0 */  addiu $t0, %lo(ptr_BONDdata) # addiu $t0, $t0, -0x5f50
-/* 0B6170 7F081640 AC2B0FB4 */  sw    $t3, %lo(stanDoLineLog)($at)
+/* 0B6170 7F081640 AC2B0FB4 */  sw    $t3, %lo(stanlinelog_flag)($at)
 /* 0B6174 7F081644 8D0D0000 */  lw    $t5, ($t0)
 /* 0B6178 7F081648 8FAC002C */  lw    $t4, 0x2c($sp)
 /* 0B617C 7F08164C ADAC04D8 */  sw    $t4, 0x4d8($t5)

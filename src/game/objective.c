@@ -36,9 +36,11 @@ u32 D_80032308 = 0;
 const u32 D_80053610[10] = {0};
 //D:80053640
 const u32 D_80053640 = 0;
+//D:80053644
+const char aSAC[] = "%s Ç%c ";
+//D:8005364C
+const char aSC[] = "%s %c: ";
 /*
-D:80053644     aSAC:           .ascii "%s Ç%c "<0>      # DATA XREF: display_objective_status_text_on_status_change+84o
-D:8005364C     aSC:            .ascii "%s %c: "<0>      # DATA XREF: display_objective_status_text_on_status_change+114o
 D:80053654     jpt_objectives_microcode_handler:.word objective_microcode_type_17_18_1F_default
 D:80053654                                              # DATA XREF: get_status_of_objective+78r
 D:80053654                     .word objective_microcode_type_17_18_1F_default  # jump table for switch statement

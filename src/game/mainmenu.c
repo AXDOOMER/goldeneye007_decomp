@@ -6271,7 +6271,7 @@ void *constructor_menu05_fileselect(void *arg0)
     temp_t7 = arg0;
     arg0 = (void *) (temp_t7 + 8);
     temp_t7->unk4 = -0xec;
-    temp_t7->unk0 = &D_FB00000C;
+    temp_t7->unk0 = &0xFB00000C;
     temp_ret_2 = sub_GAME_7F007CC8(arg0, (s32) truncf(((f32) get_video2_settings_txtClipW() * -80.0f) / 1280.0f), &sp1A8, &sp19C);
     arg0 = (void *) (temp_ret_2 + 8);
     temp_v0_2 = temp_ret_2;
@@ -6587,7 +6587,7 @@ glabel constructor_menu05_fileselect
 /* 040FD0 7F00C4A0 AC4D0000 */  sw    $t5, ($v0)
 /* 040FD4 7F00C4A4 AC580004 */  sw    $t8, 4($v0)
 /* 040FD8 7F00C4A8 8FAF01B8 */  lw    $t7, 0x1b8($sp)
-/* 040FDC 7F00C4AC 3C19FB00 */  lui   $t9, %hi(D_FB00000C) # $t9, 0xfb00
+/* 040FDC 7F00C4AC 3C19FB00 */  lui   $t9, %hi(0xFB00000C) # $t9, 0xfb00
 /* 040FE0 7F00C4B0 240AFF14 */  li    $t2, -236
 /* 040FE4 7F00C4B4 25EE0008 */  addiu $t6, $t7, 8
 /* 040FE8 7F00C4B8 AFAE01B8 */  sw    $t6, 0x1b8($sp)
@@ -6618,8 +6618,8 @@ glabel constructor_menu05_fileselect
 /* 04104C 7F00C51C AC4B0004 */  sw    $t3, 4($v0)
 /* 041050 7F00C520 AC450000 */  sw    $a1, ($v0)
 /* 041054 7F00C524 8FAC01B8 */  lw    $t4, 0x1b8($sp)
-/* 041058 7F00C528 3C180100 */  lui   $t8, %hi(D_01000040) # $t8, 0x100
-/* 04105C 7F00C52C 27180040 */  addiu $t8, %lo(D_01000040) # addiu $t8, $t8, 0x40
+/* 041058 7F00C528 3C180100 */  lui   $t8, 0x100
+/* 04105C 7F00C52C 27180040 */  addiu $t8, $t8, 0x40
 /* 041060 7F00C530 258D0008 */  addiu $t5, $t4, 8
 /* 041064 7F00C534 AFAD01B8 */  sw    $t5, 0x1b8($sp)
 /* 041068 7F00C538 3C128003 */  lui   $s2, %hi(D_8002A968) # $s2, 0x8003
@@ -6636,7 +6636,7 @@ glabel constructor_menu05_fileselect
 /* 041090 7F00C560 268E003C */  addiu $t6, $s4, 0x3c
 .L7F00C564:
 /* 041094 7F00C564 8F210000 */  lw    $at, ($t9)
-/* 041098 7F00C568 2739000C */  addiu $t9, %lo(D_FB00000C) # addiu $t9, $t9, 0xc
+/* 041098 7F00C568 2739000C */  addiu $t9, %lo(0xFB00000C) # addiu $t9, $t9, 0xc
 /* 04109C 7F00C56C 254A000C */  addiu $t2, $t2, 0xc
 /* 0410A0 7F00C570 AD41FFF4 */  sw    $at, -0xc($t2)
 /* 0410A4 7F00C574 8F21FFF8 */  lw    $at, -8($t9)

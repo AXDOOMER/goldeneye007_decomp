@@ -1,5 +1,6 @@
 #include "ultra64.h"
-#include "bondview.h"
+#include "game/bondview.h"
+#include "game/cheat_buttons_objectrelated.h"
 
 // bss
 s32 dword_CODE_bss_80075DB0;
@@ -33,14 +34,19 @@ u32 size_left_item_buffer = 0x14820;
 
 //D:80032464
 u32 D_80032464[] ={0x7530, 0x7530};
+
+
 /*
-D:8003246C     ejected_cartridge:ejected_cart <GcartridgeZ_struct, aGcartridgez> # "GcartridgeZ"
-D:80032474                     ejected_cart <GcartrifleZ_struct, aGcartriflez>  # "GcartrifleZ"
-D:8003247C                     ejected_cart <GcartblueZ_struct, aGcartbluez>  # "GcartblueZ"
-D:80032484                     ejected_cart <GcartshellZ_struct, aGcartshellz>  # "GcartshellZ"
-D:8003248C                     ejected_cart <0, aGnocartZ>  # ""
+//D:8003246C
+struct ejected_cart ejected_cartridge[] = {
+	{&GcartridgeZ_struct, "GcartridgeZ"},
+	{&GcartrifleZ_struct, "GcartrifleZ"},
+	{&GcartblueZ_struct, "GcartblueZ"},
+	{&GcartshellZ_struct, "GcartshellZ"},
+	{0, ""}
+};
 */
-/*
+
 //D:80032494
 struct weapon_stats stru_D_80032494 = {
 	1.0, 0.0, 0.0, 0.0, 3.0, 3.0, 8.5, 0, 0, 0xFF00, 1, 0, 0, 0, 1.0, 0.0, 0.0, 0.80000001, 0.89999998, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 4.0, 0.0, 0x110
@@ -57,6 +63,7 @@ struct weapon_stats GknifeZ_stats = {
 struct weapon_stats GthrowknifeZ_stats = {
 	1.0, 14.0, -24.799999, -34.0, 3.0, 3.0, 8.5, 0xA, 1, 0xFF06, 1, 0, 0, 0, 3.0, 0.0, 0.0, 0.80000001, 0.85000002, 1.0, 0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0,2.0, 4.0, 1.0, 0x560D83
 };
+/*
 //D:80032654
 struct weapon_stats GwppkZ_stats = {
 	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF10, 1, 0, 0x6B, GcartridgeZ_struct, 1.0, 1.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x4080300, 3.0, 10.0, 29.999998, 1.0, 12.0, 2.0, 2.0, 4.0, 0.0, 0x170FB9
@@ -105,14 +112,17 @@ struct weapon_stats Gfnp90Z_stats = {
 struct weapon_stats GshotgunZ_stats = {
 	4.0, 11.0, -20.6, -19.5, 3.0, 3.0, 8.5, 4, 5, 0xFF0A, 1, 0, 0x79, GcartshellZ_struct, 0.40000001, 20.0, 0.0, 0.80000001, 0.89999998, 1.0, 0x812080C, 9.0, 10.0, 0.0, 2.0, 25.0, 4.0, 2.0, 4.0, 5.0, 0x170AF9
 };
+*/
 //D:80032B94
 struct weapon_stats GautoshotZ_stats = {
 	4.0, 12.0, -24.1, -19.0, 3.0, 3.0, 8.5, 4, 5, 0xFF0A, 1, 0, 0x74, 0, 0.60000002, 16.0, 0.0, 0.80000001, 0.89999998, 1.0, 0x812080C, 4.5, 3.0, 0.0, 2.0, 20.0, 3.0, 2.0, 4.0, 5.0, 0x170AF9
 };
+/*
 //D:80032C04
 struct weapon_stats GsniperrifleZ_stats = {
 	6.0, 11.0, -20.700001, -31.5, 3.0, 3.0, 8.5, 3, 8, 0xFF10, 1, 0, 0x2E, GcartblueZ_struct, 1.0, 0.0, 15.0, 0.80000001, 0.91000003, 0.25, 0, 0.0, 0.0, 0.0, 0.0, 7.0, 1.2, 2.0, 4.0, 0.0, 0x178A70
 };
+*/
 //D:80032C74
 struct weapon_stats GrugerZ_stats = {
 	2.0, 12.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 0xC, 6, 0xFF14, 0xA, 0, 0x6F, 0, 2.0, 0.0, 0.0, 0.80000001, 0.86000001, 1.0, 0x81000FF, 12.0, 35.0, 0.0, 2.0, 20.0, 3.0, 2.0, 4.0, 6.0, 0x170FB9
@@ -121,6 +131,7 @@ struct weapon_stats GrugerZ_stats = {
 struct weapon_stats GgoldengunZ_stats = {
 	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 0xD, 1, 0xFF00, 1, 0, 0x75, 0, 100.0, 0.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x40800FF, 5.0, 10.0, 0.0, 1.0, 9.0, 1.5, 2.0, 4.0, 0.0, 0x170F99
 };
+/*
 //D:80032D54
 struct weapon_stats GsilverwppkZ_stats = {
 	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF10, 0xA, 0, 0x6B, GcartridgeZ_struct, 2.0, 1.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x4080300, 3.0, 10.0, 29.999998, 1.0, 12.0, 2.0, 2.0, 4.0, 0.0, 0x170FB9
@@ -129,6 +140,7 @@ struct weapon_stats GsilverwppkZ_stats = {
 struct weapon_stats GgoldwppkZ_stats = {
 	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF10, 1, 0, 0x6B, GcartridgeZ_struct, 100.0, 1.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x4080300,3.0, 10.0, 29.999998, 1.0, 12.0, 2.0, 2.0, 4.0, 0.0, 0x170FB9
 };
+*/
 //D:80032E34
 struct weapon_stats GlaserZ_stats = {
 	1.0, 11.0, -19.5, -28.0, 3.0, 3.0, 8.5, 0, 0, 0xFF06, 2, 0, 0xE4, 0, 2.0, 0.0, 0.0, 0.80000001, 0.88999999, 1.0, 0x6000606, 0.0, 0.0, 0.0, 2.0, 16.0, 2.0, 2.0, 4.0, 2.0, 0x170B99
@@ -229,199 +241,100 @@ struct weapon_stats stru_D_80033844 = {
 struct weapon_stats stru_D_800338B4 = {
 	1.0, 11.0, -41.799999, -33.0, 3.0, 3.0, 8.5, 0x1D, 0, 0xFF00, 1, 0, 0, 0, 1.0, 0.0, 0.0, 0.80000001, 0.85000002, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 4.0, 0.0, 0x82182
 };
-*/
+
 /*
-D:80033924     gitem_structs:  gitem_data_struct <0, 0, 1, 0, 0x9883, 0x9811, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9811, 0x9811,\
-D:80033924                                              # DATA XREF: get_ptr_item_statistics+8o
-D:80033924                                              # debug_gun_watch_move_related+C8o
-D:80033924                                              # debug_gun_watch_move_related2+C0o
-D:80033924                                        10.0, 10.0, 1000.0>
-D:8003395C                     gitem_data_struct <GfistZ_header, aGfistz, 0, GfistZ_stats, 0x9883, 0x9876, 0.0, 0.0, \  # "GfistZ"
-D:8003395C                                        1000.0, 0.0, 0.0, 0x9876, 0x98CD, 10.0, 10.0, 1000.0>
-D:80033994                     gitem_data_struct <GknifeZ_header, aGknifez, 0, GknifeZ_stats, 0x9883, 0x9846, 200.0, \  # "GknifeZ"
-D:80033994                                        39.0, 1327.0, 0.0, 0.0, 0x9840, 0x98A8, 38.0, 118.0, 800.0>
-D:800339CC                     gitem_data_struct <GthrowknifeZ_struct, aGthrowknifez, 0, GthrowknifeZ_stats, 0x9871, \  # "GthrowknifeZ"
-D:800339CC                                        0x9806, 200.0, 51.0, 1327.0, 0.0, 0.0, 0x9870, 0x98CA, 38.0, 118.0, \
-D:800339CC                                        800.0>
-D:80033A04                     gitem_data_struct <GwppkZ_struct, aGwppkz, 0, GwppkZ_stats, 0x9857, 0x9801, 20.0, 97.0, \  # "GwppkZ"
-D:80033A04                                        579.0, 0.0, 0.0, 0x9856, 0x98BA, 94.0, 2.0, 356.0>
-D:80033A3C                     gitem_data_struct <GwppksilZ_struct, aGwppksilz, 0, GwppksilZ_stats, 0x9803, 0x9810, 26.0,\  # "GwppksilZ"
-D:80033A3C                                        162.0, 668.0, 0.0, 0.0, 0x9855, 0x98B9, 169.0, 5.0, 535.0>
-D:80033A74                     gitem_data_struct <Gtt33Z_struct, aGtt33z, 0, Gtt33Z_stats, 0x9804, 0x9832, 22.0, 128.0, \  # "Gtt33Z"
-D:80033A74                                        709.0, 0.0, 0.0, 0x982A, 0x989A, 124.0, 14.0, 455.0>
-D:80033AAC                     gitem_data_struct <GskorpianZ_struct, aGskorpionz, 0, GskorpianZ_stats, 0x9883, 0x986B, \  # "GskorpionZ"
-D:80033AAC                                        46.0, 124.0, 785.0, 0.0, 0.0, 0x986B, 0x98C6, 124.0, 32.0, 545.0>
-D:80033AE4                     gitem_data_struct <Gak47Z_struct, aGak47z, 0, Gak47Z_stats, 0x9808, 0x9868, -29.0, 307.0, \  # "Gak47Z"
-D:80033AE4                                        1410.0, 0.0, 0.0, 0x9842, 0x98AB, 304.0, -31.0, 1020.0>
-D:80033B1C                     gitem_data_struct <GuziZ_struct, aGuziz, 0, GuziZ_stats, 0x9883, 0x9882, -18.0, 57.0, \  # "GuziZ"
-D:80033B1C                                        1198.0, 0.0, 0.0, 0x9882, 0x98D7, 68.0, -49.0, 667.0>
-D:80033B54                     gitem_data_struct <Gmp5kZ_struct, aGmp5kz, 0, Gmp5kZ_stats, 0x9800, 0x982F, 12.0, 112.0, \  # "Gmp5kZ"
-D:80033B54                                        1300.0, 0.0, 0.0, 0x9829, 0x9896, 123.0, -2.0, 628.0>
-D:80033B8C                     gitem_data_struct <Gmp5ksilZ_struct, aGmp5ksilz, 0, Gmp5ksilZ_stats, 0x9800, 0x9810, 14.0,\  # "Gmp5ksilZ"
-D:80033B8C                                        227.0, 1300.0, 0.0, 0.0, 0x9828, 0x9895, 226.0, -10.0, 834.0>
-D:80033BC4                     gitem_data_struct <GspectreZ_struct, aGspectrez, 0, GspectreZ_stats, 0x9883, 0x9858, -4.0,\  # "GspectreZ"
-D:80033BC4                                        144.0, 1128.0, 0.0, 0.0, 0x9858, 0x98B4, 146.0, -18.0, 801.0>
-D:80033BFC                     gitem_data_struct <Gm16Z_struct, aGm16z, 0, Gm16Z_stats, 0x9875, 0x9812, 25.0, 251.0, \  # "Gm16Z"
-D:80033BFC                                        1796.0, 0.0, 0.0, 0x9874, 0x9884, 246.0, -45.0, 1497.0>
-D:80033C34                     gitem_data_struct <Gfnp90Z_struct, aGfnp90z, 0, Gfnp90Z_stats, 0x9883, 0x985E, 88.0, \  # "Gfnp90Z"
-D:80033C34                                        -44.0, 1107.0, 0.0, 0.0, 0x985E, 0x98BC, -44.0, 31.0, 867.0>
-D:80033C6C                     gitem_data_struct <GshotgunZ_struct, aGshotgunz, 0, GshotgunZ_stats, 0x9883, 0x9864, 39.0,\  # "GshotgunZ"
-D:80033C6C                                        283.0, 1224.0, 0.0, 0.0, 0x9864, 0x98C1, 284.0, -22.0, 999.0>
-D:80033CA4                     gitem_data_struct <GautoshotZ_struct, aGautoshotz, 0, GautoshotZ_stats, 0x9816, 0x980C, \  # "GautoshotZ"
-D:80033CA4                                        73.0, 285.0, 1224.0, 0.0, 0.0, 0x9815, 0x9886, 284.0, 4.0, 980.0>
-D:80033CDC                     gitem_data_struct <GsniperrifleZ_struct, aGsniperriflez, 0, GsniperrifleZ_stats, 0x9867, \  # "GsniperrifleZ"
-D:80033CDC                                        0x980A, 49.0, 265.0, 1760.0, 0.0, 0.0, 0x9866, 0x98C3, 268.0, 14.0, \
-D:80033CDC                                        1497.0>
-D:80033D14                     gitem_data_struct <GrugerZ_struct, aGrugerz, 0, GrugerZ_stats, 0x9826, 0x984C, 47.0, \  # "GrugerZ"
-D:80033D14                                        184.0, 769.0, 0.0, 0.0, 0x9825, 0x9893, 182.0, 36.0, 604.0>
-D:80033D4C                     gitem_data_struct <GgoldengunZ_struct, aGgoldengunz, 0, GgoldengunZ_stats, 0x983B, 0x9805,\  # "GgoldengunZ"
-D:80033D4C                                        29.0, 146.0, 629.0, 0.0, 0.0, 0x9839, 0x98A3, 144.0, 18.0, 464.0>
-D:80033D84                     gitem_data_struct <GsilverwppkZ_struct, aGsilverwppkz, 0, GsilverwppkZ_stats, 0x9883, \  # "GsilverwppkZ"
-D:80033D84                                        0x9865, 20.0, 97.0, 579.0, 0.0, 0.0, 0x9865, 0x98C2, 94.0, 2.0, 356.0>
-D:80033DBC                     gitem_data_struct <GgoldwppkZ_struct, aGgoldwppkz, 0, GgoldwppkZ_stats, 0x9883, 0x9838, \  # "GgoldwppkZ"
-D:80033DBC                                        20.0, 97.0, 579.0, 0.0, 0.0, 0x9838, 0x98A2, 94.0, 2.0, 356.0>
-D:80033DF4                     gitem_data_struct <GlaserZ_struct, aGlaserz, 0, GlaserZ_stats, 0x9852, 0x9847, 67.0, \  # "GlaserZ"
-D:80033DF4                                        106.0, 738.0, 0.0, 0.0, 0x9851, 0x98AC, 103.0, 21.0, 545.0>
-D:80033E2C                     gitem_data_struct <GwatchlaserZ_struct, aGwatchlaserz, 0, GwatchlaserZ_stats, 0x987F, \  # "GwatchlaserZ"
-D:80033E2C                                        0x9847, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x987B, 0x98D2, 0.0, -40.0, \
-D:80033E2C                                        1383.0>
-D:80033E64                     gitem_data_struct <GgrenadelaunchZ_struct, aGgrenadelaunchz, 0, GgrenadelaunchZ_stats, \  # "GgrenadelaunchZ"
-D:80033E64                                        0x983D, 0x9848, 27.0, 279.0, 1152.0, 0.0, 0.0, 0x983C, 0x98A5, 284.0, \
-D:80033E64                                        -22.0, 960.0>
-D:80033E9C                     gitem_data_struct <GrocketlaunchZ_struct, aGrocketlaunchz, 0, GrocketlaunchZ_stats, \  # "GrocketlaunchZ"
-D:80033E9C                                        0x980B, 0x9848, 111.0, -50.0, 1624.0, 0.0, 0.0, 0x9861, 0x98BF, -42.0, \
-D:80033E9C                                        16.0, 1381.0>
-D:80033ED4                     gitem_data_struct <GgrenadeZ_struct, aGgrenadez, 0, GgrenadeZ_stats, 0x9883, 0x983D, \  # "GgrenadeZ"
-D:80033ED4                                        180.0, 0.0, 2745.0, 0.0, 90.0, 0x983E, 0x98A6, 0.0, 48.0, 1468.0>
-D:80033F0C                     gitem_data_struct <GtimedmineZ_struct, aGtimedminez, 0, GtimedmineZ_stats, 0x9809, 0x980F,\  # "GtimedmineZ"
-D:80033F0C                                        8.0, 0.0, 364.0, 90.0, 0.0, 0x9872, 0x98CB, 0.0, -3.0, 179.0>
-D:80033F44                     gitem_data_struct <GproximitymineZ_struct, aGproximityminez, 0, GproximitymineZ_stats, \  # "GproximitymineZ"
-D:80033F44                                        0x9802, 0x980D, 8.0, 0.0, 364.0, 90.0, 0.0, 0x985D, 0x98BB, 0.0, -3.0, \
-D:80033F44                                        179.0>
-D:80033F7C                     gitem_data_struct <GremotemineZ_struct, aGremoteminez, 0, GremotemineZ_stats, 0x9807, \  # "GremotemineZ"
-D:80033F7C                                        0x980E, 8.0, 0.0, 364.0, 90.0, 0.0, 0x9860, 0x98BE, 0.0, -3.0, 179.0>
-D:80033FB4                     gitem_data_struct <GtriggerZ_struct, aGtriggerz, 0, GtriggerZ_stats, 0x9883, 0x982E, 82.0,\  # "GtriggerZ"
-D:80033FB4                                        0.0, 2857.0, 0.0, 90.0, 0x982E, 0x989B, 0.0, -40.0, 1383.0>
-D:80033FEC                     gitem_data_struct <GtaserZ_struct, aGtaserz, 0, GtaserZ_stats, 0x9883, 0x986F, 107.0, \  # "GtaserZ"
-D:80033FEC                                        49.0, 568.0, 0.0, 0.0, 0x986F, 0x98C9, 64.0, 80.0, 333.0>
-D:80034024                     gitem_data_struct <0, 0, 0, GtankZ_stats, 0x9883, 0x986E, 20.0, 97.0, 579.0, 0.0, 0.0, \
-D:80034024                                        0x986E, 0x98C8, 94.0, 2.0, 356.0>
-D:8003405C                     gitem_data_struct <GbombcaseZ_struct, aGbombcasez, 0, GbombcaseZ_stats, 0x9883, 0x981A, \  # "GbombcaseZ"
-D:8003405C                                        16.0, 0.0, 568.0, 0.0, 90.0, 0x981A, 0x988A, 0.0, -8.0, 323.0>
-D:80034094                     gitem_data_struct <GplastiqueZ_struct, aGplastiquez, 0, GplastiqueZ_stats, 0x9883, 0x985B,\  # "GplastiqueZ"
-D:80034094                                        28.0, 0.0, 1062.0, 80.0, 90.0, 0x985B, 0x98B7, 0.0, -16.0, 739.0>
-D:800340CC                     gitem_data_struct <GflarepistolZ_struct, aGflarepistolz, 0, GflarepistolZ_stats, 0x9883, \  # "GflarepistolZ"
-D:800340CC                                        0x9834, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9834, 0x989F, 0.0, 0.0, 1000.0>
-D:80034104                     gitem_data_struct <GpitongunZ_struct, aGpitongunz, 0, GpitongunZ_stats, 0x9883, 0x9859, \  # "GpitongunZ"
-D:80034104                                        0.0, 0.0, 1000.0, 0.0, 0.0, 0x9859, 0x98B5, 0.0, 0.0, 1000.0>
-D:8003413C                     gitem_data_struct <GbungeeZ_struct, aGbungeez, 1, 0, 0x9883, 0x981F, 0.0, 0.0, 1000.0, \  # "GbungeeZ"
-D:8003413C                                        0.0, 0.0, 0x981F, 0x988F, 0.0, 0.0, 1000.0>
-D:80034174                     gitem_data_struct <GdoordecoderZ_struct, aGdoordecoderz, 1, 0, 0x9883, 0x9830, 12.0, 0.0, \  # "GdoordecoderZ"
-D:80034174                                        364.0, 90.0, 90.0, 0x9830, 0x989C, 0.0, -6.0, 199.0>
-D:800341AC                     gitem_data_struct <GbombdefuserZ_struct, aGbombdefuserz, 1, 0, 0x9883, 0x981B, 14.0, 0.0, \  # "GbombdefuserZ"
-D:800341AC                                        379.0, 90.0, 90.0, 0x981B, 0x988B, 0.0, 0.0, 279.0>
-D:800341E4                     gitem_data_struct <GcameraZ_struct, aGcameraz, 0, GcameraZ_stats, 0x9883, 0x9820, 4.0, \  # "GcameraZ"
-D:800341E4                                        0.0, 195.0, 20.0, 90.0, 0x9820, 0x9890, 0.0, -2.0, 144.0>
-D:8003421C                     gitem_data_struct <GlockexploderZ_struct, aGlockexploderz, 1, 0, 0x9883, 0x984A, 0.0, 0.0,\  # "GlockexploderZ"
-D:8003421C                                        1000.0, 0.0, 0.0, 0x984A, 0x98AE, 0.0, 0.0, 1000.0>
-D:80034254                     gitem_data_struct <GdoorexploderZ_struct, aGdoorexploderz, 1, 0, 0x9883, 0x9831, 0.0, 0.0,\  # "GdoorexploderZ"
-D:80034254                                        1000.0, 0.0, 0.0, 0x9831, 0x989D, 0.0, 0.0, 1000.0>
-D:8003428C                     gitem_data_struct <GbriefcaseZ_struct, aGbriefcasez, 1, 0, 0x9883, 0x981C, 16.0, 0.0, \  # "GbriefcaseZ"
-D:8003428C                                        568.0, 0.0, 90.0, 0x981C, 0x988C, 0.0, -8.0, 323.0>
-D:800342C4                     gitem_data_struct <GweaponcaseZ_struct, aGweaponcasez, 1, 0, 0x9883, 0x9880, 16.0, 0.0, \  # "GweaponcaseZ"
-D:800342C4                                        568.0, 0.0, 90.0, 0x9880, 0x98D5, 0.0, -8.0, 323.0>
-D:800342FC                     gitem_data_struct <GsafecrackercaseZ_struct, aGsafecrackercasez, 1, 0, 0x9883, 0x9863, \  # "GsafecrackercaseZ"
-D:800342FC                                        16.0, 0.0, 568.0, 0.0, 90.0, 0x9862, 0x98C0, 0.0, -8.0, 323.0>
-D:80034334                     gitem_data_struct <GkeyanalysercaseZ_struct, aGkeyanalysercasez, 1, 0, 0x9883, 0x9844, \  # "GkeyanalysercaseZ"
-D:80034334                                        16.0, 0.0, 568.0, 0.0, 90.0, 0x9843, 0x98A9, 0.0, -8.0, 323.0>
-D:8003436C                     gitem_data_struct <GbugZ_struct, aGbugz, 0, GbugZ_stats, 0x9883, 0x981E, 16.0, 0.0, 513.0,\  # "GbugZ"
-D:8003436C                                        0.0, 90.0, 0x981E, 0x988E, 0.0, -6.0, 387.0>
-D:800343A4                     gitem_data_struct <GmicrocameraZ_struct, aGmicrocameraz, 0, GmicrocameraZ_stats, 0x9883, \  # "GmicrocameraZ"
-D:800343A4                                        0x984E, 8.0, 0.0, 310.0, 0.0, 270.0, 0x984E, 0x98B0, 0.0, -8.0, 229.0>
-D:800343DC                     gitem_data_struct <GbugdetectorZ_struct, aGbugdetectorz, 1, 0, 0x9883, 0x981D, 0.0, 0.0, \  # "GbugdetectorZ"
-D:800343DC                                        1000.0, 0.0, 0.0, 0x981D, 0x988D, 0.0, 0.0, 1000.0>
-D:80034414                     gitem_data_struct <GexplosivefloppyZ_struct, aGexplosivefloppyz, 1, 0, 0x9883, 0x9833, \  # "GexplosivefloppyZ"
-D:80034414                                        12.0, 0.0, 336.0, 0.0, 90.0, 0x9833, 0x989E, 0.0, -4.0, 176.0>
-D:8003444C                     gitem_data_struct <GpolarizedglassesZ_struct, aGpolarizedglassesz, 1, 0, 0x9883, 0x985C, \  # "GpolarizedglassesZ"
-D:8003444C                                        2.0, 0.0, 183.0, 15.0, 90.0, 0x985C, 0x98B8, 0.0, 0.0, 147.0>
-D:80034484                     gitem_data_struct <GdarkglassesZ_struct, aGdarkglassesz, 1, 0, 0x9883, 0x982B, 0.0, 0.0, \  # "GdarkglassesZ"
-D:80034484                                        1000.0, 0.0, 0.0, 0x982B, 0x9897, 0.0, 0.0, 1000.0>
-D:800344BC                     gitem_data_struct <GcreditcardZ_struct, aGcreditcardz, 1, 0, 0x9883, 0x9827, 0.0, 0.0, \  # "GcreditcardZ"
-D:800344BC                                        1000.0, 0.0, 0.0, 0x9827, 0x9894, 0.0, 0.0, 1000.0>
-D:800344F4                     gitem_data_struct <GgaskeyringZ_struct, aGgaskeyringz, 1, 0, 0x9883, 0x9835, 26.0, 0.0, \  # "GgaskeyringZ"
-D:800344F4                                        769.0, 90.0, 90.0, 0x9835, 0x98A0, 0.0, -8.0, 387.0>
-D:8003452C                     gitem_data_struct <GdatathiefZ_struct, aGdatathiefz, 1, 0, 0x9883, 0x982D, 16.0, 0.0, \  # "GdatathiefZ"
-D:8003452C                                        474.0, 80.0, 0.0, 0x982D, 0x9899, 0.0, -6.0, 350.0>
-D:80034564                     gitem_data_struct <GwatchidentifierZ_struct, aGwatchidentifierz, 1, 0, 0x987F, 0x9841, \  # "GwatchidentifierZ"
-D:80034564                                        82.0, 0.0, 2857.0, 0.0, 90.0, 0x987A, 0x98D1, 0.0, -40.0, 1383.0>
-D:8003459C                     gitem_data_struct <GwatchcommunicatorZ_struct, aGwatchcommunicatorz, 1, 0, 0x987F, 0x9823,\  # "GwatchcommunicatorZ"
-D:8003459C                                        82.0, 0.0, 2857.0, 0.0, 90.0, 0x9878, 0x98CF, 0.0, -40.0, 1383.0>
-D:800345D4                     gitem_data_struct <GwatchgeigercounterZ_struct, aGwatchgeigercounterz, 1, 0, 0x987F, \  # "GwatchgeigercounterZ"
-D:800345D4                                        0x9836, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x9879, 0x98D0, 0.0, -40.0, \
-D:800345D4                                        1383.0>
-D:8003460C                     gitem_data_struct <GwatchmagnetrepelZ_struct, aGwatchmagnetrepelz, 1, 0, 0x987F, 0x984B, \  # "GwatchmagnetrepelZ"
-D:8003460C                                        82.0, 0.0, 2857.0, 0.0, 90.0, 0x987D, 0x98D4, 0.0, -40.0, 1383.0>
-D:80034644                     gitem_data_struct <GwatchmagnetattractZ_struct, aGwatchmagnetattractz, 0, \  # "GwatchmagnetattractZ"
-D:80034644                                        GwatchmagnetattractZ_stats, 0x987E, 0x9813, 80.0, 0.0, 3036.0, 0.0, \
-D:80034644                                        90.0, 0x987C, 0x98D3, 0.0, -40.0, 1383.0>
-D:8003467C                     gitem_data_struct <GgoldeneyekeyZ_struct, aGgoldeneyekeyz, 0, GgoldeneyekeyZ_stats, \  # "GgoldeneyekeyZ"
-D:8003467C                                        0x9883, 0x983A, 18.0, 0.0, 560.0, 80.0, 0.0, 0x983A, 0x98A4, 0.0, -4.0,\
-D:8003467C                                        310.0>
-D:800346B4                     gitem_data_struct <GblackboxZ_struct, aGblackboxz, 1, 0, 0x9883, 0x9817, 18.0, 0.0, 545.0,\  # "GblackboxZ"
-D:800346B4                                        0.0, 90.0, 0x9817, 0x9887, 0.0, -8.0, 380.0>
-D:800346EC                     gitem_data_struct <GcircuitboardZ_struct, aGcircuitboardz, 1, 0, 0x9883, 0x9821, 20.0, \  # "GcircuitboardZ"
-D:800346EC                                        0.0, 568.0, 80.0, 0.0, 0x9821, 0x9891, 0.0, 0.0, 394.0>
-D:80034724                     gitem_data_struct <GclipboardZ_struct, aGclipboardz, 1, 0, 0x9883, 0x9822, 40.0, 0.0, \  # "GclipboardZ"
-D:80034724                                        1151.0, 80.0, 90.0, 0x9822, 0x9892, 0.0, -20.0, 580.0>
-D:8003475C                     gitem_data_struct <GstafflistZ_struct, aGstafflistz, 1, 0, 0x9883, 0x986C, 44.0, 0.0, \  # "GstafflistZ"
-D:8003475C                                        1274.0, 80.0, 90.0, 0x986C, 0x98C7, 0.0, -16.0, 681.0>
-D:80034794                     gitem_data_struct <GdossierredZ_struct, aGdossierredz, 1, 0, 0x9883, 0x985F, 38.0, 0.0, \  # "GdossierredZ"
-D:80034794                                        1084.0, 350.0, 90.0, 0x985F, 0x98BD, 0.0, -12.0, 580.0>
-D:800347CC                     gitem_data_struct <GplansZ_struct, aGplansz, 1, 0, 0x9883, 0x985A, 18.0, 0.0, 464.0, \  # "GplansZ"
-D:800347CC                                        350.0, 90.0, 0x985A, 0x98B6, 0.0, -2.0, 253.0>
-D:80034804                     gitem_data_struct <GspyfileZ_struct, aGspyfilez, 1, 0, 0x9883, 0x986A, 0.0, 0.0, 1000.0, \  # "GspyfileZ"
-D:80034804                                        0.0, 0.0, 0x986A, 0x98C5, 0.0, 0.0, 1000.0>
-D:8003483C                     gitem_data_struct <GblueprintsZ_struct, aGblueprintsz, 1, 0, 0x9883, 0x9818, 18.0, 0.0, \  # "GblueprintsZ"
-D:8003483C                                        579.0, 350.0, 90.0, 0x9818, 0x9888, 0.0, -8.0, 364.0>
-D:80034874                     gitem_data_struct <GmapZ_struct, aGmapz, 1, 0, 0x9883, 0x984D, 18.0, 0.0, 579.0, 350.0, \  # "GmapZ"
-D:80034874                                        90.0, 0x984D, 0x98AF, 0.0, -6.0, 364.0>
-D:800348AC                     gitem_data_struct <GaudiotapeZ_struct, aGaudiotapez, 1, 0, 0x9883, 0x9814, 16.0, 0.0, \  # "GaudiotapeZ"
-D:800348AC                                        428.0, 90.0, 90.0, 0x9814, 0x9885, 0.0, -2.0, 292.0>
-D:800348E4                     gitem_data_struct <GvideotapeZ_struct, aGvideotapez, 1, 0, 0x9883, 0x9877, 26.0, 0.0, \  # "GvideotapeZ"
-D:800348E4                                        753.0, 90.0, 0.0, 0x9877, 0x98CE, 0.0, -8.0, 395.0>
-D:8003491C                     gitem_data_struct <GdattapeZ_struct, aGdattapez, 1, 0, 0x9883, 0x982C, 14.0, 0.0, 387.0, \  # "GdattapeZ"
-D:8003491C                                        90.0, 90.0, 0x982C, 0x9898, 0.0, 0.0, 238.0>
-D:80034954                     gitem_data_struct <GspooltapeZ_struct, aGspooltapez, 1, 0, 0x9883, 0x9869, 0.0, 0.0, \  # "GspooltapeZ"
-D:80034954                                        1000.0, 0.0, 0.0, 0x9869, 0x98C4, 0.0, 0.0, 1000.0>
-D:8003498C                     gitem_data_struct <GmicrofilmZ_struct, aGmicrofilmz, 1, 0, 0x9883, 0x9850, 0.0, 0.0, \  # "GmicrofilmZ"
-D:8003498C                                        1000.0, 0.0, 0.0, 0x9850, 0x98B2, 0.0, 0.0, 1000.0>
-D:800349C4                     gitem_data_struct <GmicrocodeZ_struct, aGmicrocodez, 1, 0, 0x9883, 0x984F, 0.0, 0.0, \  # "GmicrocodeZ"
-D:800349C4                                        1000.0, 0.0, 0.0, 0x984F, 0x98B1, 0.0, 0.0, 1000.0>
-D:800349FC                     gitem_data_struct <GlectreZ_struct, aGlectrez, 1, 0, 0x9883, 0x9849, 0.0, 0.0, 1000.0, \  # "GlectreZ"
-D:800349FC                                        0.0, 0.0, 0x9849, 0x98AD, 0.0, 0.0, 1000.0>
-D:80034A34                     gitem_data_struct <GmoneyZ_struct, aGmoneyz, 1, 0, 0x9883, 0x9853, 0.0, 0.0, 1000.0, 0.0, \  # "GmoneyZ"
-D:80034A34                                        0.0, 0x9853, 0x98B3, 0.0, 0.0, 1000.0>
-D:80034A6C                     gitem_data_struct <GgoldbarZ_struct, aGgoldbarz, 1, 0, 0x9883, 0x9837, 0.0, 0.0, 1000.0, \  # "GgoldbarZ"
-D:80034A6C                                        0.0, 0.0, 0x9837, 0x98A1, 0.0, 0.0, 1000.0>
-D:80034AA4                     gitem_data_struct <GheroinZ_struct, aGheroinz, 1, 0, 0x9883, 0x983F, 0.0, 0.0, 1000.0, \  # "GheroinZ"
-D:80034AA4                                        0.0, 0.0, 0x983F, 0x98A7, 0.0, 0.0, 1000.0>
-D:80034ADC                     gitem_data_struct <GkeycardZ_struct, aGkeycardz, 1, 0, 0x9883, 0x9845, 24.0, 0.0, 556.0, \  # "GkeycardZ"
-D:80034ADC                                        80.0, 90.0, 0x9845, 0x98AA, 0.0, -6.0, 411.0>
-D:80034B14                     gitem_data_struct <GkeyyaleZ_struct, aGkeyyalez, 1, 0, 0x9883, 0x9881, 64.0, 0.0, 1912.0, \  # "GkeyyaleZ"
-D:80034B14                                        260.0, 90.0, 0x9881, 0x98D6, 0.0, -18.0, 1568.0>
-D:80034B4C                     gitem_data_struct <GkeyboltZ_struct, aGkeyboltz, 1, 0, 0x9883, 0x9819, 78.0, 0.0, 3518.0, \  # "GkeyboltZ"
-D:80034B4C                                        80.0, 90.0, 0x9819, 0x9889, 0.0, -12.0, 2582.0>
-D:80034B84                     gitem_data_struct <Csuit_lf_handz_struct, aCsuit_lf_handz, 0, Csuit_lf_handz_stats, \  # "Csuit_lf_handZ"
-D:80034B84                                        0x9883, 0x986D, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0,\
-D:80034B84                                        1000.0>
-D:80034BBC                     gitem_data_struct <GjoypadZ_struct, aGjoypadz, 0, GjoypadZ_stats, 0x9883, 0x9824, 0.0, \  # "GjoypadZ"
-D:80034BBC                                        0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0>
-D:80034BF4                     gitem_data_struct <0, 0, 0, stru_D_800337D4, 0x9883, 0x9854, 0.0, 0.0, 1000.0, 0.0, 0.0, \
-D:80034BF4                                        0x9883, 0x9883, 10.0, 10.0, 1000.0>
-D:80034C2C                     gitem_data_struct <0, 0, 0, stru_D_80033844, 0x9883, 0x9854, 0.0, 0.0, 1000.0, 0.0, 0.0, \
-D:80034C2C                                        0x9883, 0x9883, 10.0, 10.0, 1000.0>
-D:80034C64                     gitem_data_struct <0, 0, 0, stru_D_800338B4, 0x9883, 0x9873, 12.0, 0.0, 528.0, 80.0, 0.0, \
-D:80034C64                                        0x9873, 0x98CC, 0.0, -4.0, 310.0>
+//D:80033924
+struct gitem_data_struct gitem_structs[] = {
+	{0, 0, 1, 0, 0x9883, 0x9811, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9811, 0x9811, 10.0, 10.0, 1000.0},
+	{GfistZ_header,          "GfistZ", 0, &GfistZ_stats, 0x9883, 0x9876, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9876, 0x98CD, 10.0, 10.0, 1000.0},
+	{GknifeZ_header,         "GknifeZ", 0, &GknifeZ_stats, 0x9883, 0x9846, 200.0, 39.0, 1327.0, 0.0, 0.0, 0x9840, 0x98A8, 38.0, 118.0, 800.0},
+	{GthrowknifeZ_struct,    "GthrowknifeZ", 0, &GthrowknifeZ_stats, 0x9871, 0x9806, 200.0, 51.0, 1327.0, 0.0, 0.0, 0x9870, 0x98CA, 38.0, 118.0, 800.0},
+	{GwppkZ_struct,          "GwppkZ", 0, &GwppkZ_stats, 0x9857, 0x9801, 20.0, 97.0, 579.0, 0.0, 0.0, 0x9856, 0x98BA, 94.0, 2.0, 356.0},
+	{GwppksilZ_struct,       "GwppksilZ", 0, &GwppksilZ_stats, 0x9803, 0x9810, 26.0, 162.0, 668.0, 0.0, 0.0, 0x9855, 0x98B9, 169.0, 5.0, 535.0},
+	{Gtt33Z_struct,          "Gtt33Z", 0, &Gtt33Z_stats, 0x9804, 0x9832, 22.0, 128.0, 709.0, 0.0, 0.0, 0x982A, 0x989A, 124.0, 14.0, 455.0},
+	{GskorpianZ_struct,      "GskorpionZ", 0, &GskorpianZ_stats, 0x9883, 0x986B, 46.0, 124.0, 785.0, 0.0, 0.0, 0x986B, 0x98C6, 124.0, 32.0, 545.0},
+	{Gak47Z_struct,          "Gak47Z", 0, &Gak47Z_stats, 0x9808, 0x9868, -29.0, 307.0, 1410.0, 0.0, 0.0, 0x9842, 0x98AB, 304.0, -31.0, 1020.0},
+	{GuziZ_struct,           "GuziZ", 0, &GuziZ_stats, 0x9883, 0x9882, -18.0, 57.0, 1198.0, 0.0, 0.0, 0x9882, 0x98D7, 68.0, -49.0, 667.0},
+	{Gmp5kZ_struct,          "Gmp5kZ", 0, &Gmp5kZ_stats, 0x9800, 0x982F, 12.0, 112.0, 1300.0, 0.0, 0.0, 0x9829, 0x9896, 123.0, -2.0, 628.0},
+	{Gmp5ksilZ_struct,       "Gmp5ksilZ", 0, &Gmp5ksilZ_stats, 0x9800, 0x9810, 14.0, 227.0, 1300.0, 0.0, 0.0, 0x9828, 0x9895, 226.0, -10.0, 834.0},
+	{GspectreZ_struct,       "GspectreZ", 0, &GspectreZ_stats, 0x9883, 0x9858, -4.0, 144.0, 1128.0, 0.0, 0.0, 0x9858, 0x98B4, 146.0, -18.0, 801.0},
+	{Gm16Z_struct,           "Gm16Z", 0, &Gm16Z_stats, 0x9875, 0x9812, 25.0, 251.0, 1796.0, 0.0, 0.0, 0x9874, 0x9884, 246.0, -45.0, 1497.0},
+	{Gfnp90Z_struct,         "Gfnp90Z", 0, &Gfnp90Z_stats, 0x9883, 0x985E, 88.0, -44.0, 1107.0, 0.0, 0.0, 0x985E, 0x98BC, -44.0, 31.0, 867.0},
+	{GshotgunZ_struct,       "GshotgunZ", 0, &GshotgunZ_stats, 0x9883, 0x9864, 39.0, 283.0, 1224.0, 0.0, 0.0, 0x9864, 0x98C1, 284.0, -22.0, 999.0},
+	{GautoshotZ_struct,      "GautoshotZ", 0, &GautoshotZ_stats, 0x9816, 0x980C, 73.0, 285.0, 1224.0, 0.0, 0.0, 0x9815, 0x9886, 284.0, 4.0, 980.0},
+	{GsniperrifleZ_struct,   "GsniperrifleZ", 0, &GsniperrifleZ_stats, 0x9867, 0x980A, 49.0, 265.0, 1760.0, 0.0, 0.0, 0x9866, 0x98C3, 268.0, 14.0, 1497.0},
+	{GrugerZ_struct,         "GrugerZ", 0, &GrugerZ_stats, 0x9826, 0x984C, 47.0, 184.0, 769.0, 0.0, 0.0, 0x9825, 0x9893, 182.0, 36.0, 604.0},
+	{GgoldengunZ_struct,     "GgoldengunZ", 0, &GgoldengunZ_stats, 0x983B, 0x9805, 29.0, 146.0, 629.0, 0.0, 0.0, 0x9839, 0x98A3, 144.0, 18.0, 464.0},
+	{GsilverwppkZ_struct,    "GsilverwppkZ", 0, &GsilverwppkZ_stats, 0x9883, 0x9865, 20.0, 97.0, 579.0, 0.0, 0.0, 0x9865, 0x98C2, 94.0, 2.0, 356.0},
+	{GgoldwppkZ_struct,      "GgoldwppkZ", 0, &GgoldwppkZ_stats, 0x9883, 0x9838, 20.0, 97.0, 579.0, 0.0, 0.0, 0x9838, 0x98A2, 94.0, 2.0, 356.0},
+	{GlaserZ_struct,         "GlaserZ", 0, &GlaserZ_stats, 0x9852, 0x9847, 67.0, 106.0, 738.0, 0.0, 0.0, 0x9851, 0x98AC, 103.0, 21.0, 545.0},
+	{GwatchlaserZ_struct,    "GwatchlaserZ", 0, &GwatchlaserZ_stats, 0x987F, 0x9847, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x987B, 0x98D2, 0.0, -40.0, 1383.0},
+	{GgrenadelaunchZ_struct, "GgrenadelaunchZ", 0, &GgrenadelaunchZ_stats, 0x983D, 0x9848, 27.0, 279.0, 1152.0, 0.0, 0.0, 0x983C, 0x98A5, 284.0, -22.0, 960.0},
+	{GrocketlaunchZ_struct, "GrocketlaunchZ", 0, &GrocketlaunchZ_stats, 0x980B, 0x9848, 111.0, -50.0, 1624.0, 0.0, 0.0, 0x9861, 0x98BF, -42.0, 16.0, 1381.0},
+	{GgrenadeZ_struct, "GgrenadeZ", 0, &GgrenadeZ_stats, 0x9883, 0x983D, 180.0, 0.0, 2745.0, 0.0, 90.0, 0x983E, 0x98A6, 0.0, 48.0, 1468.0},
+	{GtimedmineZ_struct, "GtimedmineZ", 0, &GtimedmineZ_stats, 0x9809, 0x980F, 8.0, 0.0, 364.0, 90.0, 0.0, 0x9872, 0x98CB, 0.0, -3.0, 179.0},
+	{GproximitymineZ_struct, "GproximitymineZ", 0, &GproximitymineZ_stats, 0x9802, 0x980D, 8.0, 0.0, 364.0, 90.0, 0.0, 0x985D, 0x98BB, 0.0, -3.0, 179.0},
+	{GremotemineZ_struct, "GremotemineZ", 0, &GremotemineZ_stats, 0x9807,  0x980E, 8.0, 0.0, 364.0, 90.0, 0.0, 0x9860, 0x98BE, 0.0, -3.0, 179.0},
+	{GtriggerZ_struct, "GtriggerZ", 0, &GtriggerZ_stats, 0x9883, 0x982E, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x982E, 0x989B, 0.0, -40.0, 1383.0},
+	{GtaserZ_struct, "GtaserZ", 0, &GtaserZ_stats, 0x9883, 0x986F, 107.0, 49.0, 568.0, 0.0, 0.0, 0x986F, 0x98C9, 64.0, 80.0, 333.0},
+	{0, "", 0, GtankZ_stats, 0x9883, 0x986E, 20.0, 97.0, 579.0, 0.0, 0.0, 0x986E, 0x98C8, 94.0, 2.0, 356.0},
+	{GbombcaseZ_struct, "GbombcaseZ", 0, &GbombcaseZ_stats, 0x9883, 0x981A, 16.0, 0.0, 568.0, 0.0, 90.0, 0x981A, 0x988A, 0.0, -8.0, 323.0},
+	{GplastiqueZ_struct, "GplastiqueZ", 0, &GplastiqueZ_stats, 0x9883, 0x985B, 28.0, 0.0, 1062.0, 80.0, 90.0, 0x985B, 0x98B7, 0.0, -16.0, 739.0},
+	{GflarepistolZ_struct, "GflarepistolZ", 0, &GflarepistolZ_stats, 0x9883, 0x9834, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9834, 0x989F, 0.0, 0.0, 1000.0},
+	{GpitongunZ_struct, "GpitongunZ", 0, &GpitongunZ_stats, 0x9883, 0x9859, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9859, 0x98B5, 0.0, 0.0, 1000.0},
+	{GbungeeZ_struct, "GbungeeZ", 1, 0, 0x9883, 0x981F, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x981F, 0x988F, 0.0, 0.0, 1000.0},
+	{GdoordecoderZ_struct, "GdoordecoderZ", 1, 0, 0x9883, 0x9830, 12.0, 0.0, 364.0, 90.0, 90.0, 0x9830, 0x989C, 0.0, -6.0, 199.0},
+	{GbombdefuserZ_struct, "GbombdefuserZ", 1, 0, 0x9883, 0x981B, 14.0, 0.0, 379.0, 90.0, 90.0, 0x981B, 0x988B, 0.0, 0.0, 279.0},
+	{GcameraZ_struct, "GcameraZ", 0, &GcameraZ_stats, 0x9883, 0x9820, 4.0, 0.0, 195.0, 20.0, 90.0, 0x9820, 0x9890, 0.0, -2.0, 144.0},
+	{GlockexploderZ_struct, "GlockexploderZ", 1, 0, 0x9883, 0x984A, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x984A, 0x98AE, 0.0, 0.0, 1000.0},
+	{GdoorexploderZ_struct, "GdoorexploderZ", 1, 0, 0x9883, 0x9831, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9831, 0x989D, 0.0, 0.0, 1000.0},
+	{GbriefcaseZ_struct, "GbriefcaseZ", 1, 0, 0x9883, 0x981C, 16.0, 0.0, 568.0, 0.0, 90.0, 0x981C, 0x988C, 0.0, -8.0, 323.0},
+	{GweaponcaseZ_struct, "GweaponcaseZ", 1, 0, 0x9883, 0x9880, 16.0, 0.0, 568.0, 0.0, 90.0, 0x9880, 0x98D5, 0.0, -8.0, 323.0},
+	{GsafecrackercaseZ_struct, "GsafecrackercaseZ", 1, 0, 0x9883, 0x9863, 16.0, 0.0, 568.0, 0.0, 90.0, 0x9862, 0x98C0, 0.0, -8.0, 323.0},
+	{GkeyanalysercaseZ_struct, "GkeyanalysercaseZ", 1, 0, 0x9883, 0x9844, 16.0, 0.0, 568.0, 0.0, 90.0, 0x9843, 0x98A9, 0.0, -8.0, 323.0},
+	{GbugZ_struct, "GbugZ", 0, &GbugZ_stats, 0x9883, 0x981E, 16.0, 0.0, 513.0, 0.0, 90.0, 0x981E, 0x988E, 0.0, -6.0, 387.0},
+	{GmicrocameraZ_struct, "GmicrocameraZ", 0, &GmicrocameraZ_stats, 0x9883, 0x984E, 8.0, 0.0, 310.0, 0.0, 270.0, 0x984E, 0x98B0, 0.0, -8.0, 229.0},
+	{GbugdetectorZ_struct, "GbugdetectorZ", 1, 0, 0x9883, 0x981D, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x981D, 0x988D, 0.0, 0.0, 1000.0},
+	{GexplosivefloppyZ_struct, "GexplosivefloppyZ", 1, 0, 0x9883, 0x9833, 12.0, 0.0, 336.0, 0.0, 90.0, 0x9833, 0x989E, 0.0, -4.0, 176.0},
+	{GpolarizedglassesZ_struct, "GpolarizedglassesZ", 1, 0, 0x9883, 0x985C, 2.0, 0.0, 183.0, 15.0, 90.0, 0x985C, 0x98B8, 0.0, 0.0, 147.0},
+	{GdarkglassesZ_struct, "GdarkglassesZ", 1, 0, 0x9883, 0x982B, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x982B, 0x9897, 0.0, 0.0, 1000.0},
+	{GcreditcardZ_struct, "GcreditcardZ", 1, 0, 0x9883, 0x9827, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9827, 0x9894, 0.0, 0.0, 1000.0},
+	{GgaskeyringZ_struct, "GgaskeyringZ", 1, 0, 0x9883, 0x9835, 26.0, 0.0, 769.0, 90.0, 90.0, 0x9835, 0x98A0, 0.0, -8.0, 387.0},
+	{GdatathiefZ_struct, "GdatathiefZ", 1, 0, 0x9883, 0x982D, 16.0, 0.0, 474.0, 80.0, 0.0, 0x982D, 0x9899, 0.0, -6.0, 350.0},
+	{GwatchidentifierZ_struct, "GwatchidentifierZ", 1, 0, 0x987F, 0x9841, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x987A, 0x98D1, 0.0, -40.0, 1383.0},
+	{GwatchcommunicatorZ_struct, "GwatchcommunicatorZ", 1, 0, 0x987F, 0x9823, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x9878, 0x98CF, 0.0, -40.0, 1383.0},
+	{GwatchgeigercounterZ_struct, "GwatchgeigercounterZ", 1, 0, 0x987F, 0x9836, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x9879, 0x98D0, 0.0, -40.0, 1383.0},
+	{GwatchmagnetrepelZ_struct, "GwatchmagnetrepelZ", 1, 0, 0x987F, 0x984B, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x987D, 0x98D4, 0.0, -40.0, 1383.0},
+	{GwatchmagnetattractZ_struct, "GwatchmagnetattractZ", 0, &GwatchmagnetattractZ_stats, 0x987E, 0x9813, 80.0, 0.0, 3036.0, 0.0, 90.0, 0x987C, 0x98D3, 0.0, -40.0, 1383.0},
+	{GgoldeneyekeyZ_struct, "GgoldeneyekeyZ", 0, &GgoldeneyekeyZ_stats, 0x9883, 0x983A, 18.0, 0.0, 560.0, 80.0, 0.0, 0x983A, 0x98A4, 0.0, -4.0, 310.0},
+	{GblackboxZ_struct, "GblackboxZ", 1, 0, 0x9883, 0x9817, 18.0, 0.0, 545.0, 0.0, 90.0, 0x9817, 0x9887, 0.0, -8.0, 380.0},
+	{GcircuitboardZ_struct, "GcircuitboardZ", 1, 0, 0x9883, 0x9821, 20.0, 0.0, 568.0, 80.0, 0.0, 0x9821, 0x9891, 0.0, 0.0, 394.0},
+	{GclipboardZ_struct, "GclipboardZ", 1, 0, 0x9883, 0x9822, 40.0, 0.0, 1151.0, 80.0, 90.0, 0x9822, 0x9892, 0.0, -20.0, 580.0},
+	{GstafflistZ_struct, "GstafflistZ", 1, 0, 0x9883, 0x986C, 44.0, 0.0, 1274.0, 80.0, 90.0, 0x986C, 0x98C7, 0.0, -16.0, 681.0},
+	{GdossierredZ_struct, "GdossierredZ", 1, 0, 0x9883, 0x985F, 38.0, 0.0, 1084.0, 350.0, 90.0, 0x985F, 0x98BD, 0.0, -12.0, 580.0},
+	{GplansZ_struct, "GplansZ", 1, 0, 0x9883, 0x985A, 18.0, 0.0, 464.0, 350.0, 90.0, 0x985A, 0x98B6, 0.0, -2.0, 253.0},
+	{GspyfileZ_struct, "GspyfileZ", 1, 0, 0x9883, 0x986A, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x986A, 0x98C5, 0.0, 0.0, 1000.0},
+	{GblueprintsZ_struct, "GblueprintsZ", 1, 0, 0x9883, 0x9818, 18.0, 0.0, 579.0, 350.0, 90.0, 0x9818, 0x9888, 0.0, -8.0, 364.0},
+	{GmapZ_struct, "GmapZ", 1, 0, 0x9883, 0x984D, 18.0, 0.0, 579.0, 350.0, 90.0, 0x984D, 0x98AF, 0.0, -6.0, 364.0},
+	{GaudiotapeZ_struct, "GaudiotapeZ", 1, 0, 0x9883, 0x9814, 16.0, 0.0, 428.0, 90.0, 90.0, 0x9814, 0x9885, 0.0, -2.0, 292.0},
+	{GvideotapeZ_struct, "GvideotapeZ", 1, 0, 0x9883, 0x9877, 26.0, 0.0, 753.0, 90.0, 0.0, 0x9877, 0x98CE, 0.0, -8.0, 395.0},
+	{GdattapeZ_struct, "GdattapeZ", 1, 0, 0x9883, 0x982C, 14.0, 0.0, 387.0, 90.0, 90.0, 0x982C, 0x9898, 0.0, 0.0, 238.0},
+	{GspooltapeZ_struct, "GspooltapeZ", 1, 0, 0x9883, 0x9869, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9869, 0x98C4, 0.0, 0.0, 1000.0},
+	{GmicrofilmZ_struct, "GmicrofilmZ", 1, 0, 0x9883, 0x9850, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9850, 0x98B2, 0.0, 0.0, 1000.0},
+	{GmicrocodeZ_struct, "GmicrocodeZ", 1, 0, 0x9883, 0x984F, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x984F, 0x98B1, 0.0, 0.0, 1000.0},
+	{GlectreZ_struct, "GlectreZ", 1, 0, 0x9883, 0x9849, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9849, 0x98AD, 0.0, 0.0, 1000.0},
+	{GmoneyZ_struct, "GmoneyZ", 1, 0, 0x9883, 0x9853, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9853, 0x98B3, 0.0, 0.0, 1000.0},
+	{GgoldbarZ_struct, "GgoldbarZ", 1, 0, 0x9883, 0x9837, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9837, 0x98A1, 0.0, 0.0, 1000.0},
+	{GheroinZ_struct, "GheroinZ", 1, 0, 0x9883, 0x983F, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x983F, 0x98A7, 0.0, 0.0, 1000.0},
+	{GkeycardZ_struct, "GkeycardZ", 1, 0, 0x9883, 0x9845, 24.0, 0.0, 556.0, 80.0, 90.0, 0x9845, 0x98AA, 0.0, -6.0, 411.0},
+	{GkeyyaleZ_struct, "GkeyyaleZ", 1, 0, 0x9883, 0x9881, 64.0, 0.0, 1912.0, 260.0, 90.0, 0x9881, 0x98D6, 0.0, -18.0, 1568.0},
+	{GkeyboltZ_struct, "GkeyboltZ", 1, 0, 0x9883, 0x9819, 78.0, 0.0, 3518.0, 80.0, 90.0, 0x9819, 0x9889, 0.0, -12.0, 2582.0},
+	{Csuit_lf_handz_struct, "Csuit_lf_handZ", 0, &Csuit_lf_handz_stats, 0x9883, 0x986D, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
+	{GjoypadZ_struct, "GjoypadZ", 0, &GjoypadZ_stats, 0x9883, 0x9824, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
+	{0              ,          0, 0, &stru_D_800337D4, 0x9883, 0x9854, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
+	{0              ,          0, 0, &stru_D_80033844, 0x9883, 0x9854, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
+	{0              ,          0, 0, &stru_D_800338B4, 0x9883, 0x9873, 12.0, 0.0, 528.0, 80.0, 0.0, 0x9873, 0x98CC, 0.0, -4.0, 310.0}
+};
 */
 //D:80034C9C
 u32 cartridges_eject = 0;
@@ -1081,12 +994,16 @@ D:80053BC0     aGkeyyalez:     .ascii "GkeyyaleZ"<0><0><0>  # DATA XREF: D:80034
 D:80053BCC     aGkeyboltz:     .ascii "GkeyboltZ"<0><0><0>  # DATA XREF: D:80034B4Co
 D:80053BD8     aCsuit_lf_handz:.ascii "Csuit_lf_handZ"<0><0>  # DATA XREF: D:80034B84o
 D:80053BE8     aGjoypadz:      .ascii "GjoypadZ"<0><0><0><0>  # DATA XREF: D:80034BBCo
-D:80053BF4     aD_9:           .ascii "%d\n"<0>         # DATA XREF: display_ammo_total_in_a1+20o
-D:80053BF8     aSD:            .ascii "%s: %d\n"<0>     # DATA XREF: increment_num_kills_display_text_in_MP+64o
-D:80053C00     aSDS:           .ascii "%s %d %s\n"      # DATA XREF: increment_num_deaths+78o
-D:80053C00                     .ascii <0><0><0>
-D:80053C0C     aSD_0:          .ascii "%s: %d\n"<0>     # DATA XREF: increment_num_suicides_display_MP+4Co
 */
+//D:80053BF4
+const char aD_9[] = "%d\n";
+//D:80053BF8
+const char aSD[] = "%s: %d\n";
+//D:80053C00
+const char aSDS[] = "%s %d %s\n";
+//D:80053C0C
+const char aSD_0[] = "%s: %d\n";
+
 //D:80053C14
 const f32 D_80053C14 = 0.079999998;
 //D:80053C18
@@ -1957,8 +1874,8 @@ GLOBAL_ASM(
 glabel get_ptr_item_statistics
 /* 0913E4 7F05C8B4 000470C0 */  sll   $t6, $a0, 3
 /* 0913E8 7F05C8B8 01C47023 */  subu  $t6, $t6, $a0
-/* 0913EC 7F05C8BC 3C0F8003 */  lui   $t7, %hi(D_80033924) # $t7, 0x8003
-/* 0913F0 7F05C8C0 25EF3924 */  addiu $t7, %lo(D_80033924) # addiu $t7, $t7, 0x3924
+/* 0913EC 7F05C8BC 3C0F8003 */  lui   $t7, %hi(gitem_structs) # $t7, 0x8003
+/* 0913F0 7F05C8C0 25EF3924 */  addiu $t7, %lo(gitem_structs) # addiu $t7, $t7, 0x3924
 /* 0913F4 7F05C8C4 000E70C0 */  sll   $t6, $t6, 3
 /* 0913F8 7F05C8C8 01CF1821 */  addu  $v1, $t6, $t7
 /* 0913FC 7F05C8CC 8C780008 */  lw    $t8, 8($v1)

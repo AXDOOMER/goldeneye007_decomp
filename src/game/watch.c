@@ -250,20 +250,32 @@ s32 D_80040E7C = 0;
 
 
 
-/* rodata
-D:80057760     aDD:            .ascii "%d, %d\n"
-D:80057768     aDDDF:          .ascii "%d, %d\n%d %f\n"
-D:80057778     aA:             .ascii "(A)\n"
-D:80057780     aB:             .ascii "(B)\n"
-D:80057788     aZ:             .ascii "(Z)\n"
-D:80057790     aL:             .ascii "(L)\n"
-D:80057798     aR:             .ascii "(R)\n"
-D:800577A0     aC:             .ascii "(C)\n"
-D:800577A8     asc_D_800577A8: .ascii "(+)\n"
-D:800577B0     aS_0:           .ascii "(S)\n"
-D:800577B8     a3d:            .ascii "(3D)\n"
-D:800577C0     asc_D_800577C0: .ascii "\n"<0>           # DATA XREF: sub_CODE_7F0AC168+D8o
-D:800577C2                     .half 0
+// rodata
+//D:80057760
+const char aDD[] =  "%d, %d\n";
+//D:80057768
+const char aDDDF[] =  "%d, %d\n%d %f\n";
+//D:80057778
+const char aA[] =  "(A)\n";
+//D:80057780
+const char aB[] =  "(B)\n";
+//D:80057788
+const char aZ[] =  "(Z)\n";
+//D:80057790
+const char aL[] =  "(L)\n";
+//D:80057798
+const char aR[] =  "(R)\n";
+//D:800577A0
+const char aC[] =  "(C)\n";
+//D:800577A8
+const char D_800577A8[] =  "(+)\n";
+//D:800577B0
+const char aS_0[] =  "(S)\n";
+//D:800577B8
+const char a3d[] =  "(3D)\n";
+//D:800577C0
+const char D_800577C0[] =  "\n";
+/*
 D:800577C4                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:800577C4                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:800577C4                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -300,12 +312,17 @@ D:80057FC0                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:80057FC0                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:80057FC0                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:80057FC0                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:80058440     asc_D_80058440: .ascii " \n"
-D:80058444     asc_D_80058444: .ascii " \n\n"
-D:80058448     aC_2:           .ascii "%c: "
-D:80058450     asc_D_80058450: .ascii " \n"
-D:80058454     asc_D_80058454: .ascii " \n\n"
 */
+//D:80058440
+const char D_80058440[] = " \n";
+//D:80058444
+const char D_80058444[] = " \n\n";
+//D:80058448
+const char aC_2[] = "%c: ";
+//D:80058450
+const char D_80058450[] = " \n";
+//D:80058454
+const char D_80058454[] = " \n\n";
 //D:80058458
 const f32 D_80058458 = 4.5999999;
 //D:8005845C
@@ -5330,8 +5347,8 @@ glabel debug_gun_watch_move_related
 /* 0DCA94 7F0A7F64 00002025 */   move  $a0, $zero
 /* 0DCA98 7F0A7F68 0002C0C0 */  sll   $t8, $v0, 3
 /* 0DCA9C 7F0A7F6C 0302C023 */  subu  $t8, $t8, $v0
-/* 0DCAA0 7F0A7F70 3C198003 */  lui   $t9, %hi(D_80033924) # $t9, 0x8003
-/* 0DCAA4 7F0A7F74 27393924 */  addiu $t9, %lo(D_80033924) # addiu $t9, $t9, 0x3924
+/* 0DCAA0 7F0A7F70 3C198003 */  lui   $t9, %hi(gitem_structs) # $t9, 0x8003
+/* 0DCAA4 7F0A7F74 27393924 */  addiu $t9, %lo(gitem_structs) # addiu $t9, $t9, 0x3924
 /* 0DCAA8 7F0A7F78 0018C0C0 */  sll   $t8, $t8, 3
 /* 0DCAAC 7F0A7F7C 03191821 */  addu  $v1, $t8, $t9
 /* 0DCAB0 7F0A7F80 AFA3004C */  sw    $v1, 0x4c($sp)
@@ -5725,8 +5742,8 @@ glabel debug_gun_watch_move_related2
 /* 0DD008 7F0A84D8 00002025 */   move  $a0, $zero
 /* 0DD00C 7F0A84DC 000270C0 */  sll   $t6, $v0, 3
 /* 0DD010 7F0A84E0 01C27023 */  subu  $t6, $t6, $v0
-/* 0DD014 7F0A84E4 3C0F8003 */  lui   $t7, %hi(D_80033924) # $t7, 0x8003
-/* 0DD018 7F0A84E8 25EF3924 */  addiu $t7, %lo(D_80033924) # addiu $t7, $t7, 0x3924
+/* 0DD014 7F0A84E4 3C0F8003 */  lui   $t7, %hi(gitem_structs) # $t7, 0x8003
+/* 0DD018 7F0A84E8 25EF3924 */  addiu $t7, %lo(gitem_structs) # addiu $t7, $t7, 0x3924
 /* 0DD01C 7F0A84EC 000E70C0 */  sll   $t6, $t6, 3
 /* 0DD020 7F0A84F0 01CF8021 */  addu  $s0, $t6, $t7
 /* 0DD024 7F0A84F4 00002025 */  move  $a0, $zero
@@ -7440,8 +7457,8 @@ void sub_GAME_7F0A9AB8(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0A9AB8
-/* 0DE5E8 7F0A9AB8 3C0E8004 */  lui   $t6, %hi(cur.play.up_down.setting) # $t6, 0x8004
-/* 0DE5EC 7F0A9ABC 8DCE0A84 */  lw    $t6, %lo(cur.play.up_down.setting)($t6)
+/* 0DE5E8 7F0A9AB8 3C0E8004 */  lui   $t6, %hi(cur_player_look_vertical_inverted) # $t6, 0x8004
+/* 0DE5EC 7F0A9ABC 8DCE0A84 */  lw    $t6, %lo(cur_player_look_vertical_inverted)($t6)
 /* 0DE5F0 7F0A9AC0 27BDFF50 */  addiu $sp, $sp, -0xb0
 /* 0DE5F4 7F0A9AC4 AFB00038 */  sw    $s0, 0x38($sp)
 /* 0DE5F8 7F0A9AC8 24010001 */  li    $at, 1
