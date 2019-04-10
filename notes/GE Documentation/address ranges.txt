@@ -597,7 +597,7 @@ set to 3 for fade-in, 2 to restart the swirl animation, 1 to do the cameras
 	display timer is 11DC offset of BONDData (unlike upper text window's timer)
 800368A0	copy of 1st font table
 800368A4	copy of second font table
-800368A8
+800368A8	upper text buffer index
 800368AC	display upper text window
 	queued number of items to display (max=2, disabled=0)
 800368B0	timer for upper text window
