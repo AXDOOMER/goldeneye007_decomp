@@ -1,7 +1,7 @@
 #include "libultra_internal.h"
 #include "hardware.h"
 extern OSViContext *__osViNext;
-extern OSViContext *D_80334910;
+extern OSViContext *__osViCurr;
 void __osViSwapContext()
 {
     register OSViMode *s0;
