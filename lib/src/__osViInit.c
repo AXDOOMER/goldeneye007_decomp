@@ -6,7 +6,7 @@ extern u32 osTvType;
 #endif 
 
 OSViContext D_803348B0[2] = {0};
-OSViContext *D_80334910 = &D_803348B0[0];
+OSViContext *__osViCurr = &D_803348B0[0];
 OSViContext *__osViNext = &D_803348B0[1];
 u32 D_80334918 = TV_TYPE_NTSC;
 u32 D_8033491C = 0x02E6D354;
@@ -20,10 +20,10 @@ void __osViInit(void)
     D_80334918 = osTvType;
 #endif
     bzero(D_803348B0, sizeof(D_803348B0));
-    D_80334910 = &D_803348B0[0];
+    __osViCurr = &D_803348B0[0];
     __osViNext = &D_803348B0[1];
     __osViNext->retraceCount = 1;
-    D_80334910->retraceCount = 1;
+    __osViCurr->retraceCount = 1;
 #ifdef VERSION_JP
     if (D_80334918 != TV_TYPE_PAL)
 #else
@@ -43,7 +43,7 @@ void __osViInit(void)
 #endif
     }
     __osViNext->unk00 = 32;
-    __osViNext->features = D_80334914->unk08->comRegs.ctrl;
+    __osViNext->control = __osViNext->unk08->comRegs.ctrl;
 #ifdef VERSION_US
     while (HW_REG(VI_CURRENT_REG, u32) > 0xa)
         ;
