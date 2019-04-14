@@ -237,8 +237,8 @@ void *video_related_7(void)
         }
     }
     temp_lo = D_800232B0 * D_800232B4;
-    viMode->unk30 = (s32) (((((s32) dword_CODE_bss_80060884 >> 0x10) + temp_lo) << 0x10) | ((dword_CODE_bss_80060884 + temp_lo) & 0xffff));
-    viMode->unk44 = (s32) (((((s32) dword_CODE_bss_80060888 >> 0x10) + temp_lo) << 0x10) | ((dword_CODE_bss_80060888 + temp_lo) & 0xffff));
+    viMode->OSViCommonRegs.hstart /*unk30*/ = (s32) (((((s32) dword_CODE_bss_80060884 >> 0x10) + temp_lo) << 0x10) | ((dword_CODE_bss_80060884 + temp_lo) & 0xffff));
+    viMode->OSViFieldRegs[0].origin /*unk44*/ = (s32) (((((s32) dword_CODE_bss_80060888 >> 0x10) + temp_lo) << 0x10) | ((dword_CODE_bss_80060888 + temp_lo) & 0xffff));
     osViSetMode(viMode, &viMode);
     osViBlack(*(D_800232BC + 3));
     if (D_800232BC != 0)
@@ -408,8 +408,8 @@ void video_related_8(void)
                     }
                     temp_v0 = *&viMode;
                     dword_CODE_bss_80060880 = (s32) temp_v0->unk1C;
-                    dword_CODE_bss_80060884 = (s32) temp_v0->unk30;
-                    dword_CODE_bss_80060888 = (s32) temp_v0->unk44;
+                    dword_CODE_bss_80060884 = (s32) temp_v0->OSViCommonRegs.hstart/*unk30*/;
+                    dword_CODE_bss_80060888 = (s32) temp_v0->OSViFieldRegs[0].origin/*unk44*/;
                     osViBlack(0);
                 }
             }
