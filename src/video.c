@@ -1790,26 +1790,34 @@ glabel video_related_10
 
 
 #ifdef NONMATCHING
-s32 insert_generic_fillrect(void *arg0)
+s32 insert_generic_fillrect(void *arg0) //either of type Dynamic Struct or GFX Array, however Im betting Dynamic since Dynamic can contain a GFX plus other settings
 {
     void *temp_a1;
     void *temp_a3;
+	
+	// copied from a demo of what is probably going on here
+	/*
+	 * pointers to build the display list.
+	 /
+	dynamicp = &dynamic; //<arg0?
+	glistp = &(dynamicp->glist[0]);
+	*/
+	// so arg0 is probably pointer to dynamic struct containing glist.
+	// nothing is actually returned per say since its added to glist at a higher level.
 
     //arg0->unk4 = 0x300000;
     //arg0->unk0 = 0xba001402;
-    //
-	arg0->unk0 = gsDPSetCycleType(G_CYC_1CYCLE);
-	// OR
-	gDPSetCycleType(Gfx *arg0, G_CYC_1CYCLE);
-	//------------------------------------------------------------------------------
-	
-	temp_a1 = arg0 + 8;
-    temp_a3 = temp_a1 + 8;
-    temp_a1->unk0 = (s32) (((((ptr_video_settings2->unk18 + -1) & 0x3ff) << 0xe) | 0xf6000000) | (((ptr_video_settings2->unk1A + -1) & 0x3ff) * 4));
-    temp_a1->unk4 = 0;
-    temp_a3->unk0 = 0xe7000000;
-    temp_a3->unk4 = 0;
-    return temp_a3 + 8;
+	gDPSetCycleType(glistp++, G_CYC_1CYCLE);
+
+	//temp_a1 = arg0 + 8;	
+    //temp_a3 = temp_a1 + 8;
+    //temp_a1->unk0 = (s32) (((((ptr_video_settings2->unk18 + -1) & 0x3ff) << 0xe) | 0xf6000000) | (((ptr_video_settings2->unk1A + -1) & 0x3ff) * 4));
+    //temp_a1->unk4 = 0;
+	gDPFillRectangle(glistp++, 0, 0, SCREEN_WD-1, SCREEN_HT-1);
+    //temp_a3->unk0 = 0xe7000000;
+    //temp_a3->unk4 = 0;
+	gDPPipeSync(glistp++);
+    //return temp_a3 + 8;
 }
 
 #else
