@@ -82,7 +82,7 @@ void __osTimerInterrupt()
                 osSendMesg(node->mq, node->msg, OS_MESG_NOBLOCK);
             }
 
-            // Reinsert into the linked list
+            // Reinsert into the linked list if it's an interval timer
             if (node->interval != 0)
             {
                 node->remaining = node->interval;
@@ -122,22 +122,30 @@ u64 __osInsertTimer(OSTimer *newTimer)
     // We are entering a critical section because shared ressources are accessed.
     saveMask = __osDisableInt();
 
-    // What's the purpose of decreasing "newRemainer"?
-    for (node = firstTimer->next, newRemainer = newTimer->remaining;
-         node != firstTimer && newRemainer > node->remaining;
-         newRemainer -= node->remaining, node = node->next)
+    // Iterate over the timers. If the remaining time of the new timer
+    // is bigger than the remaining time of the iterated node, then decrease
+    // the remaining time of the new timer.
+    node = firstTimer->next;
+    newRemainer = newTimer->remaining;
+
+    while (node != firstTimer && newRemainer > node->remaining)
     {
-        ;
+        newRemainer -= node->remaining;
+
+        // move forward in list
+        node = node->next;
     }
 
-    // Why is it doing this?
     newTimer->remaining = newRemainer;
+
+    // Decrase the remaining time of the last iterated node by the same amount
+    // as the remaining time of the new timer
     if (node != firstTimer)
     {
         node->remaining -= newRemainer;
     }
 
-    // Insert the timer in the linked list
+    // Insert the timer in the linked list, before the last iterated node
     newTimer->next = node;
     newTimer->prev = node->prev;
     node->prev->next = newTimer;

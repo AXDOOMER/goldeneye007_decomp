@@ -9,14 +9,14 @@ OSTime osGetTime()
     u32 diff;
     OSTime time;
 
-    register u32 int_disabled;
-    int_disabled = __osDisableInt();
+    register u32 saveMask;
+    saveMask = __osDisableInt();
 
     count = osGetCount();
     diff = count - lastViCount;
     time = _osCurrentTime;
 
-    __osRestoreInt(int_disabled);
+    __osRestoreInt(saveMask);
 
     return time + diff;
 }
