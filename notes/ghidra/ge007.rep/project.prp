@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<FILE_INFO>
-    <BASIC_INFO>
-        <STATE NAME="OWNER" TYPE="string" VALUE="khold" />
-        <STATE NAME="SERVER" TYPE="string" VALUE="192.168.1.112" />
-        <STATE NAME="REPOSITORY_NAME" TYPE="string" VALUE="ge007" />
-        <STATE NAME="PORT_NUMBER" TYPE="int" VALUE="13100" />
-    </BASIC_INFO>
-</FILE_INFO>

@@ -1,16 +1,24 @@
 #include "ultra64.h"
 
-/* data
-D:80036AD0     dword_D_80036AD0:.word 0x4144, 0x41180000, 0x41D80000, 0, 0
-D:80036AD0                                              # DATA XREF: sets_a_bunch_of_BONDdata_values_to_default+CCo
-D:80036AD0                                              # sets_a_bunch_of_BONDdata_values_to_default+33Co
-D:80036AD0                                              # sub_CODE_7F08E8BCo
-D:80036AD0                                              # sub_CODE_7F08E8BC+20o
-D:80036AD0                                              # sub_CODE_7F08EAF8+70o
-D:80036AE4     dword_D_80036AE4:.word 0x3FC00000, 0x4070, 0x40F00000, 0x41880000, 0
-D:80036AF8                     .word 0x3FC00000
-D:80036AFC                     .word 0x42C80000
-*/
+// data
+//D:80036AD0
+u32 D_80036AD0 = 0x4144;
+u32 D_80036AD4 = 0x41180000;
+u32 D_80036AD8 = 0x41D80000;
+u32 D_80036ADC = 0;
+u32 D_80036AE0 = 0;
+
+//D:80036AE4
+u32 D_80036AE4 = 0x3FC00000;
+u32 D_80036AE8 = 0x4070;
+u32 D_80036AEC = 0x40F00000;
+u32 D_80036AF0 = 0x41880000;
+u32 D_80036AF4 = 0;
+//D:80036AF8
+u32 D_80036AF8 = 0x3FC00000;
+//D:80036AFC
+u32 D_80036AFC =  0x42C80000;
+
 //D:80036B00
 u32 D_80036B00 = 0;
 //D:80036B04

@@ -404,35 +404,38 @@ s32 D_800368A8 = 0;
 //D:800368AC
 s32 D_800368AC = 0;
 //D:800368B0
-s32 D_800368B0[] = {0xFFFFFFFF, 0};
+s32 D_800368B0 = 0xFFFFFFFF;
+s32 D_800368B4 = 0;
 //D:800368B8
 u16 D_800368B8[] = {0x6E00, 0x006E, 0x6500, 0x6500, 0x73, 0x6500, 0x7300, 0x0073, 0x7700, 0x7700, 0x6E, 0x7700, 0x6E00, 0x0000, 0x0000, 0x0000};
 /*
-D:800368D8     pistol_firing_animation_group1_ptr:struct_25 <pistol_firing_animation_group1, 0, 0.1, 79.0, 87.0>
-D:800368D8                                              # DATA XREF: sub_CODE_7F08B0F0+720o
-D:800368EC                     struct_25 <stru_D_800306F0, 0, 0.5, 0.0, -1.0>
-D:80036900                     struct_25 <stru_D_80030738, 0, 0.5, 0.0, -1.0>
-D:80036914                     struct_25 <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
-D:80036928                     struct_25 <stru_D_800308E8, 0, 0.5, 0.0, -1.0>
-D:8003693C                     struct_25 <crouched_pistol_firing_animation_group1, 0, 0.1, 56.0, 68.0>
-D:80036950                     struct_25 <rifle_firing_animation_group1, 0, 0.050000001, 35.0, 40.0>
-D:80036964                     struct_25 <stru_D_80030660, 0, 0.5, 0.0, -1.0>
-D:80036978                     struct_25 <stru_D_800306A8, 0, 0.5, 0.0, -1.0>
-D:8003698C                     struct_25 <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
-D:800369A0                     struct_25 <stru_D_800308E8, 0, 0.5, 0.0, -1.0>
-D:800369B4                     struct_25 <stru_D_8002F7A8, 0, 0.1, 45.0, 55.0>
-D:800369C8                     struct_25 <0, 0x8194, 0.25, 0.0, -1.0>
-D:800369DC                     struct_25 <0, 0x8204, 0.5, 0.0, -1.0>
-D:800369F0                     struct_25 <0, 0x777C, 0.5, 0.0, -1.0>
-D:80036A04                     struct_25 <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
-D:80036A18                     struct_25 <stru_D_800308E8, 0, 0.5, 0.0, -1.0>
-D:80036A2C                     struct_25 <0, 0x6C18, 0.050000001, 28.0, 29.0>
-D:80036A40                     struct_25 <doubles_firing_animation_group1, 0, 0.1, 32.0, 42.0>
-D:80036A54                     struct_25 <stru_D_80030780, 0, 0.5, 0.0, -1.0>
-D:80036A68                     struct_25 <stru_D_800307C8, 0, 0.5, 0.0, -1.0>
-D:80036A7C                     struct_25 <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
-D:80036A90                     struct_25 <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
-D:80036AA4                     struct_25 <crouched_doubles_firing_animation_group1, 0, 0.1, 37.0, 47.0>
+//D:800368D8
+struct firing_anim_struct firing_animation_groups[] = {
+    {pistol_firing_animation_group1, 0, 0.1, 79.0, 87.0},
+    {stru_D_800306F0, 0, 0.5, 0.0, -1.0},
+    {stru_D_80030738, 0, 0.5, 0.0, -1.0},
+    {stru_D_800308A0, 0, 0.5, 0.0, -1.0},
+    {stru_D_800308E8, 0, 0.5, 0.0, -1.0},
+    {crouched_pistol_firing_animation_group1, 0, 0.1, 56.0, 68.0},
+    {rifle_firing_animation_group1, 0, 0.050000001, 35.0, 40.0},
+    {stru_D_80030660, 0, 0.5, 0.0, -1.0},
+    {stru_D_800306A8, 0, 0.5, 0.0, -1.0},
+    {stru_D_800308A0, 0, 0.5, 0.0, -1.0},
+    {stru_D_800308E8, 0, 0.5, 0.0, -1.0},
+    {stru_D_8002F7A8, 0, 0.1, 45.0, 55.0},
+    {0, 0x8194, 0.25, 0.0, -1.0},
+    {0, 0x8204, 0.5, 0.0, -1.0},
+    {0, 0x777C, 0.5, 0.0, -1.0},
+    {stru_D_800308A0, 0, 0.5, 0.0, -1.0},
+    {stru_D_800308E8, 0, 0.5, 0.0, -1.0},
+    {0, 0x6C18, 0.050000001, 28.0, 29.0},
+    {doubles_firing_animation_group1, 0, 0.1, 32.0, 42.0},
+    {stru_D_80030780, 0, 0.5, 0.0, -1.0},
+    {stru_D_800307C8, 0, 0.5, 0.0, -1.0},
+    {stru_D_800308A0, 0, 0.5, 0.0, -1.0},
+    {stru_D_800308A0, 0, 0.5, 0.0, -1.0},
+    {crouched_doubles_firing_animation_group1, 0, 0.1, 37.0, 47.0}
+};
 */
 //D:80036AB8
 s32 D_80036AB8 = 2;
@@ -811,7 +814,7 @@ D:80055290                     .word mp_spawntype_intro_camera
 //D:800552AC
 const f32 D_800552AC = -0.000099999997;
 //D:800552B0
-const f32 D_800552B0 = 3.1415927;
+const f32 pi_800552B0 = 3.1415927;
 //D:800552B4
 const f32 twopi_800552B4 = 6.2831855;
 //D:800552B8
@@ -18625,10 +18628,10 @@ glabel sub_GAME_7F084360
 /* 0B8EA8 7F084378 AC8F0000 */  sw    $t7, ($a0)
 /* 0B8EAC 7F08437C 8F186444 */  lw    $t8, %lo(D_80036444)($t8)
 /* 0B8EB0 7F084380 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0B8EB4 7F084384 3C198003 */  lui   $t9, %hi(D_800364B4) # $t9, 0x8003
+/* 0B8EB4 7F084384 3C198003 */  lui   $t9, %hi(disable_player_pickups_flag) # $t9, 0x8003
 /* 0B8EB8 7F084388 530000AC */  beql  $t8, $zero, .L7F08463C
 /* 0B8EBC 7F08438C 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 0B8EC0 7F084390 8F3964B4 */  lw    $t9, %lo(D_800364B4)($t9)
+/* 0B8EC0 7F084390 8F3964B4 */  lw    $t9, %lo(disable_player_pickups_flag)($t9)
 /* 0B8EC4 7F084394 3C088008 */  lui   $t0, %hi(dword_CODE_bss_8007999C) # $t0, 0x8008
 /* 0B8EC8 7F084398 3C098005 */  lui   $t1, %hi(global_timer) # $t1, 0x8005
 /* 0B8ECC 7F08439C 572000A7 */  bnezl $t9, .L7F08463C
@@ -25521,10 +25524,10 @@ glabel record_damage_kills
 /* 0BE5E8 7F089AB8 55A000E1 */  bnezl $t5, .L7F089E40
 /* 0BE5EC 7F089ABC 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0BE5F0 7F089AC0 8C4E00D8 */  lw    $t6, 0xd8($v0)
-/* 0BE5F4 7F089AC4 3C0F8003 */  lui   $t7, %hi(D_800364B4) # $t7, 0x8003
+/* 0BE5F4 7F089AC4 3C0F8003 */  lui   $t7, %hi(disable_player_pickups_flag) # $t7, 0x8003
 /* 0BE5F8 7F089AC8 55C000DD */  bnezl $t6, .L7F089E40
 /* 0BE5FC 7F089ACC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0BE600 7F089AD0 8DEF64B4 */  lw    $t7, %lo(D_800364B4)($t7)
+/* 0BE600 7F089AD0 8DEF64B4 */  lw    $t7, %lo(disable_player_pickups_flag)($t7)
 /* 0BE604 7F089AD4 55E000DA */  bnezl $t7, .L7F089E40
 /* 0BE608 7F089AD8 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0BE60C 7F089ADC 8C5800F4 */  lw    $t8, 0xf4($v0)
@@ -25564,8 +25567,8 @@ glabel record_damage_kills
 /* 0BE690 7F089B60 C7AE0048 */   lwc1  $f14, 0x48($sp)
 /* 0BE694 7F089B64 3C014334 */  li    $at, 0x43340000 # 180.000000
 /* 0BE698 7F089B68 44815000 */  mtc1  $at, $f10
-/* 0BE69C 7F089B6C 3C018005 */  lui   $at, %hi(D_800552B0) # $at, 0x8005
-/* 0BE6A0 7F089B70 C43052B0 */  lwc1  $f16, %lo(D_800552B0)($at)
+/* 0BE69C 7F089B6C 3C018005 */  lui   $at, %hi(pi_800552B0) # $at, 0x8005
+/* 0BE6A0 7F089B70 C43052B0 */  lwc1  $f16, %lo(pi_800552B0)($at)
 /* 0BE6A4 7F089B74 460A0182 */  mul.s $f6, $f0, $f10
 /* 0BE6A8 7F089B78 8FA80038 */  lw    $t0, 0x38($sp)
 /* 0BE6AC 7F089B7C 3C0143B4 */  li    $at, 0x43B40000 # 360.000000
@@ -25882,8 +25885,8 @@ glabel get_curplay_horizontal_rotation_in_degrees
 /* 0BEA1C 7F089EEC 3C0143B4 */  li    $at, 0x43B40000 # 360.000000
 /* 0BEA20 7F089EF0 44811000 */  mtc1  $at, $f2
 /* 0BEA24 7F089EF4 C5C40148 */  lwc1  $f4, 0x148($t6)
-/* 0BEA28 7F089EF8 3C018005 */  lui   $at, %hi(D_800552B4) # $at, 0x8005
-/* 0BEA2C 7F089EFC C42852B4 */  lwc1  $f8, %lo(D_800552B4)($at)
+/* 0BEA28 7F089EF8 3C018005 */  lui   $at, %hi(twopi_800552B4) # $at, 0x8005
+/* 0BEA2C 7F089EFC C42852B4 */  lwc1  $f8, %lo(twopi_800552B4)($at)
 /* 0BEA30 7F089F00 46041181 */  sub.s $f6, $f2, $f4
 /* 0BEA34 7F089F04 46083282 */  mul.s $f10, $f6, $f8
 /* 0BEA38 7F089F08 03E00008 */  jr    $ra

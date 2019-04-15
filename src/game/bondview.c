@@ -13257,8 +13257,8 @@ Weapon_shooting_throwable:
 /* 09A92C 7F065DFC 0FC173AF */  jal   sub_GAME_7F05CEBC
 /* 09A930 7F065E00 8FA401D0 */   lw    $a0, 0x1d0($sp)
 /* 09A934 7F065E04 1040002D */  beqz  $v0, .L7F065EBC
-/* 09A938 7F065E08 3C0C8003 */   lui   $t4, %hi(D_800364B4) # $t4, 0x8003
-/* 09A93C 7F065E0C 8D8C64B4 */  lw    $t4, %lo(D_800364B4)($t4)
+/* 09A938 7F065E08 3C0C8003 */   lui   $t4, %hi(disable_player_pickups_flag) # $t4, 0x8003
+/* 09A93C 7F065E0C 8D8C64B4 */  lw    $t4, %lo(disable_player_pickups_flag)($t4)
 /* 09A940 7F065E10 2A21003E */  slti  $at, $s1, 0x3e
 /* 09A944 7F065E14 5580002A */  bnezl $t4, .L7F065EC0
 /* 09A948 7F065E18 8E0E0020 */   lw    $t6, 0x20($s0)
@@ -13495,8 +13495,8 @@ weapon_switchstyle_NONE:
 /* 09AC84 7F066154 0FC173AF */  jal   sub_GAME_7F05CEBC
 /* 09AC88 7F066158 8FA401D0 */   lw    $a0, 0x1d0($sp)
 /* 09AC8C 7F06615C 10400018 */  beqz  $v0, .L7F0661C0
-/* 09AC90 7F066160 3C0B8003 */   lui   $t3, %hi(D_800364B4) # $t3, 0x8003
-/* 09AC94 7F066164 8D6B64B4 */  lw    $t3, %lo(D_800364B4)($t3)
+/* 09AC90 7F066160 3C0B8003 */   lui   $t3, %hi(disable_player_pickups_flag) # $t3, 0x8003
+/* 09AC94 7F066164 8D6B64B4 */  lw    $t3, %lo(disable_player_pickups_flag)($t3)
 /* 09AC98 7F066168 2A21003E */  slti  $at, $s1, 0x3e
 /* 09AC9C 7F06616C 55600015 */  bnezl $t3, .L7F0661C4
 /* 09ACA0 7F066170 8E0C0020 */   lw    $t4, 0x20($s0)

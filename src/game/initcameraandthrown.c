@@ -259,8 +259,8 @@ glabel load_camera_intro_type_values
 /* 03A4BC 7F00598C 3C018003 */  lui   $at, %hi(D_800364B0) # $at, 0x8003
 /* 03A4C0 7F005990 240D0001 */  li    $t5, 1
 /* 03A4C4 7F005994 AC2D64B0 */  sw    $t5, %lo(D_800364B0)($at)
-/* 03A4C8 7F005998 3C018003 */  lui   $at, %hi(D_800364B4) # $at, 0x8003
-/* 03A4CC 7F00599C AC2064B4 */  sw    $zero, %lo(D_800364B4)($at)
+/* 03A4C8 7F005998 3C018003 */  lui   $at, %hi(disable_player_pickups_flag) # $at, 0x8003
+/* 03A4CC 7F00599C AC2064B4 */  sw    $zero, %lo(disable_player_pickups_flag)($at)
 /* 03A4D0 7F0059A0 3C018003 */  lui   $at, %hi(cameramode) # $at, 0x8003
 /* 03A4D4 7F0059A4 AC206494 */  sw    $zero, %lo(cameramode)($at)
 /* 03A4D8 7F0059A8 3C018003 */  lui   $at, %hi(D_80036498) # $at, 0x8003
