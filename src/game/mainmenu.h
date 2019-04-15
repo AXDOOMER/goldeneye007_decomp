@@ -601,9 +601,9 @@ extern s32 dword_CODE_bss_80069780;
 //CODE.bss:80069784
 extern s32 mission_difficulty_highlighted;
 //CODE.bss:80069788
-extern s32 dword_CODE_bss_80069788;
+extern s32 teamsize;
 //CODE.bss:8006978C
-extern s32 dword_CODE_bss_8006978C;
+extern s32 ptrbriefingdata;
 //CODE.bss:80069790
 extern s32 newcheatunlocked;
 //CODE.bss:80069794

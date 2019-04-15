@@ -3,8 +3,8 @@
 
 
 // .rodata
-const f32 F32_8004F200 = 1.3497647e-11;
-const f32 F32_8004F204 = 1.3497647e-11;
+const f32 D_8004F200 = 1.3497647e-11;
+const f32 D_8004F204 = 1.3497647e-11;
 
 #ifdef NONMATCHING
 void set_mt_tex_alloc(void) {

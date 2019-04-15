@@ -1,54 +1,19 @@
 #include "ultra64.h"
+#include "game/initobjects.h"
+#include "game/actionblock.h"
 //this file may very well be a few different sub files
 
 //data
 //come back to when i know more about the structure
 //define struct in proper file
-/*
-struct object_animation_controller
-{
-  void *unknown_object_animation_controller;
-  s32 anonymous_0;
-  s32 anonymous_1;
-  s32 anonymous_2;
-  f32 anonymous_3;
-  f32 anonymous_4;
-  f32 anonymous_5;
-  f32 anonymous_6;
-  f32 anonymous_7;
-  f32 anonymous_8;
-  f32 anonymous_9;
-  f32 anonymous_10;
-  f32 anonymous_11;
-  f32 anonymous_12;
-  f32 anonymous_13;
-  f32 anonymous_14;
-  f32 anonymous_15;
-  f32 anonymous_16;
-  f32 anonymous_17;
-  f32 anonymous_18;
-  f32 anonymous_19;
-  f32 anonymous_20;
-  f32 anonymous_21;
-  f32 anonymous_22;
-  s32 anonymous_23;
-  s32 anonymous_24;
-  s32 anonymous_25;
-  f32 anonymous_26;
-};
 
 
-ptr_monitorimageobjectanimationcontroller:object_animation_controller <monitor_animation_microcode, 0xFFFF, 0, 0, 1.0, 0.0, 0.0, \
-                                             1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 0.5, \
-                                             0.5, 0.0, 0.0, 0.5, 0.5, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, \
-                                             1.0>
-unknown_object_animation_controller:object_animation_controller <dword_D_80031F00, 0xFFFF, 0, 0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0,\
-                                             0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, \
-                                             0.5, 0.5, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 1.0>
-taser_object_animation_controller:object_animation_controller <dword_D_80031F44, 0xFFFF, 0, 0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0,\
-                                             0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, \
-                                             0.5, 0.5, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 1.0>
-*/
+
+
+struct object_animation_controller ptr_monitorimageobjectanimationcontroller = {&monitor_animation_microcode, 0, 0xFFFF, 0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 1.0, 0.0};
+struct object_animation_controller unknown_object_animation_controller = {&dword_D_80031F00, 0xFFFF, 0, 0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 1.0};
+struct object_animation_controller taser_object_animation_controller = {&dword_D_80031F44, 0xFFFF, 0, 0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 1.0};
+
 f32 scale_1_0_item_related = 1.0;
 
 
@@ -451,9 +416,9 @@ GLOBAL_ASM(
 .text
 glabel write_monitor_ani_control_blocks
 /* 036488 7F001958 27BDFEA0 */  addiu $sp, $sp, -0x160
-/* 03648C 7F00195C 3C0E8003 */  lui   $t6, %hi(ptr_monitorimageobjectanimationcontroller) # $t6, 0x8003
+/* 03648C 7F00195C 3C0E8003 */  lui   $t6, 0x8003
 /* 036490 7F001960 27A200EC */  addiu $v0, $sp, 0xec
-/* 036494 7F001964 25CEA260 */  addiu $t6, %lo(ptr_monitorimageobjectanimationcontroller) # addiu $t6, $t6, -0x5da0
+/* 036494 7F001964 25CEA260 */  addiu $t6, $t6, -0x5da0
 /* 036498 7F001968 27A30078 */  addiu $v1, $sp, 0x78
 /* 03649C 7F00196C 27A40004 */  addiu $a0, $sp, 4
 /* 0364A0 7F001970 25D9006C */  addiu $t9, $t6, 0x6c

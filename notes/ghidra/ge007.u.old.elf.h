@@ -9888,8 +9888,8 @@ typedef struct MP_sight_aim_settings MP_sight_aim_settings, *PMP_sight_aim_setti
 struct MP_sight_aim_settings {
     char anonymous_0;
     char field_1;
-    char field_2;
-    char field_3;
+    char sight;
+    char autoaim;
 };
 
 typedef struct $4131C7287544E0031FFD60902D16EE66 $4131C7287544E0031FFD60902D16EE66, *P$4131C7287544E0031FFD60902D16EE66;
@@ -15036,7 +15036,7 @@ void proc_7F0061F0(void);
 void alloc_additional_item_slots(int additionalentries);
 void proc_7F0062C0(int param_1,int param_2,int param_3,int *param_4);
 void sets_a_bunch_of_BONDdata_values_to_default(void);
-ulonglong proc_7F0067C0(float *param_1,byte *param_2,int **param_3);
+ulonglong init_pathtable_something(float *param_1,byte *param_2,int **param_3);
 void init_path_table_links(void);
 void alloc_explosion_smoke_casing_scorch_impact_buffers(void);
 void proc_7F007180(void);
@@ -16985,7 +16985,7 @@ float proc_7F0B2D14(int param_1);
 void removed_7F0B2D38(u32 param_1,u32 param_2,u32 param_3);
 undefined8 proc_7F0B2D48(undefined8 param_1);
 void proc_7F0B2D50(byte *param_1,ushort *param_2,byte *param_3);
-int * proc_7F0B2E58(byte *param_1);
+int * stanMatchTileName(byte *param_1);
 void proc_7F0B2F00(int **param_1);
 void load_stan(int ptr_clipfile,int param_2,int param_3);
 ulonglong proc_7F0B2FD8(int param_1);

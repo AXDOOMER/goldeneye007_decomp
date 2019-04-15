@@ -2,7 +2,10 @@
 
 // bss
 //CODE.bss:80075D30
-char objective_ptrs[0x50];
+char objective_ptrs[0x28];
+u32 dword_CODE_bss_80075D58;
+u32 dword_CODE_bss_80075D5C;
+char dword_CODE_bss_80075D60[0x20];
 //CODE.bss:80075D80
 u32 *ptr_last_tag_entry_type16;
 //CODE.bss:80075D84
@@ -122,12 +125,12 @@ glabel something_with_stage_objectives
 .L7F004F1C:
 /* 039A4C 7F004F1C 3C018007 */  lui   $at, %hi(objective_ptrs) # $at, 0x8007
 /* 039A50 7F004F20 AC205D30 */  sw    $zero, %lo(objective_ptrs)($at)
-/* 039A54 7F004F24 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D34) # $at, 0x8007
-/* 039A58 7F004F28 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80075D38) # $v0, 0x8007
+/* 039A54 7F004F24 3C018007 */  lui   $at, %hi(objective_ptrs+4) # $at, 0x8007
+/* 039A58 7F004F28 3C028007 */  lui   $v0, %hi(objective_ptrs+8) # $v0, 0x8007
 /* 039A5C 7F004F2C 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80075D58) # $v1, 0x8007
 /* 039A60 7F004F30 24635D58 */  addiu $v1, %lo(dword_CODE_bss_80075D58) # addiu $v1, $v1, 0x5d58
-/* 039A64 7F004F34 24425D38 */  addiu $v0, %lo(dword_CODE_bss_80075D38) # addiu $v0, $v0, 0x5d38
-/* 039A68 7F004F38 AC205D34 */  sw    $zero, %lo(dword_CODE_bss_80075D34)($at)
+/* 039A64 7F004F34 24425D38 */  addiu $v0, %lo(objective_ptrs+8) # addiu $v0, $v0, 0x5d38
+/* 039A68 7F004F38 AC205D34 */  sw    $zero, %lo(objective_ptrs+4)($at)
 .L7F004F3C:
 /* 039A6C 7F004F3C 24420010 */  addiu $v0, $v0, 0x10
 /* 039A70 7F004F40 AC40FFF4 */  sw    $zero, -0xc($v0)

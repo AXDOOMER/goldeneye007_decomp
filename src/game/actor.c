@@ -6600,7 +6600,7 @@ glabel expand_09_characters
 /* 058328 7F0237F8 0FC16A8C */  jal   convert_angle_using_inverse
 /* 05832C 7F0237FC C44E0020 */   lwc1  $f14, 0x20($v0)
 /* 058330 7F023800 E7A0003C */  swc1  $f0, 0x3c($sp)
-/* 058334 7F023804 0FC0D4E6 */  jal   sub_GAME_7F035398
+/* 058334 7F023804 0FC0D4E6 */  jal   LoadNext_PrevActionBlock
 /* 058338 7F023808 9604000A */   lhu   $a0, 0xa($s0)
 /* 05833C 7F02380C 8FA40038 */  lw    $a0, 0x38($sp)
 /* 058340 7F023810 27A50048 */  addiu $a1, $sp, 0x48

@@ -12,14 +12,14 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0072B0
 /* 03BDE0 7F0072B0 3C018008 */  lui   $at, %hi(off_CODE_bss_80079E30) # $at, 0x8008
 /* 03BDE4 7F0072B4 A0209E30 */  sb    $zero, %lo(off_CODE_bss_80079E30)($at)
-/* 03BDE8 7F0072B8 3C018008 */  lui   $at, %hi(byte_CODE_bss_80079E31) # $at, 0x8008
-/* 03BDEC 7F0072BC A0209E31 */  sb    $zero, %lo(byte_CODE_bss_80079E31)($at)
-/* 03BDF0 7F0072C0 3C018008 */  lui   $at, %hi(byte_CODE_bss_80079E32) # $at, 0x8008
-/* 03BDF4 7F0072C4 3C038008 */  lui   $v1, %hi(byte_CODE_bss_80079E33) # $v1, 0x8008
-/* 03BDF8 7F0072C8 3C028008 */  lui   $v0, %hi(byte_CODE_bss_80079E7B) # $v0, 0x8008
-/* 03BDFC 7F0072CC 24429E7B */  addiu $v0, %lo(byte_CODE_bss_80079E7B) # addiu $v0, $v0, -0x6185
-/* 03BE00 7F0072D0 24639E33 */  addiu $v1, %lo(byte_CODE_bss_80079E33) # addiu $v1, $v1, -0x61cd
-/* 03BE04 7F0072D4 A0209E32 */  sb    $zero, %lo(byte_CODE_bss_80079E32)($at)
+/* 03BDE8 7F0072B8 3C018008 */  lui   $at, %hi(off_CODE_bss_80079E30+1) # $at, 0x8008
+/* 03BDEC 7F0072BC A0209E31 */  sb    $zero, %lo(off_CODE_bss_80079E30+1)($at)
+/* 03BDF0 7F0072C0 3C018008 */  lui   $at, %hi(off_CODE_bss_80079E30+2) # $at, 0x8008
+/* 03BDF4 7F0072C4 3C038008 */  lui   $v1, %hi(off_CODE_bss_80079E30+3) # $v1, 0x8008
+/* 03BDF8 7F0072C8 3C028008 */  lui   $v0, %hi(off_CODE_bss_80079E30+0x4b) # $v0, 0x8008
+/* 03BDFC 7F0072CC 24429E7B */  addiu $v0, %lo(off_CODE_bss_80079E30+0x4b) # addiu $v0, $v0, -0x6185
+/* 03BE00 7F0072D0 24639E33 */  addiu $v1, %lo(off_CODE_bss_80079E30+3) # addiu $v1, $v1, -0x61cd
+/* 03BE04 7F0072D4 A0209E32 */  sb    $zero, %lo(off_CODE_bss_80079E30+2)($at)
 .L7F0072D8:
 /* 03BE08 7F0072D8 24630004 */  addiu $v1, $v1, 4
 /* 03BE0C 7F0072DC A060FFFD */  sb    $zero, -3($v1)

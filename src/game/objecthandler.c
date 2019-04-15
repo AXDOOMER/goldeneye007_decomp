@@ -1,22 +1,37 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:80076A50     dword_CODE_bss_80076A50:.space 0xC       # DATA XREF: sub_CODE_7F005450o
-CODE.bss:80076A5C     dword_CODE_bss_80076A5C:.space 4         # DATA XREF: sub_CODE_7F005450+1Cw
-CODE.bss:80076A60                     .space 4
-CODE.bss:80076A64     dword_CODE_bss_80076A64:.space 0xC       # DATA XREF: sub_CODE_7F005450+14o
-CODE.bss:80076A70     dword_CODE_bss_80076A70:.space 4         # DATA XREF: sub_CODE_7F005450+24w
-CODE.bss:80076A74     dword_CODE_bss_80076A74:.space 4         # DATA XREF: sub_CODE_7F005450+2Cw
-CODE.bss:80076A78     dword_CODE_bss_80076A78:.space 0xC       # DATA XREF: sub_CODE_7F005450+20o
-CODE.bss:80076A84     dword_CODE_bss_80076A84:.space 4         # DATA XREF: sub_CODE_7F005450+3Cw
-CODE.bss:80076A88     dword_CODE_bss_80076A88:.space 4         # DATA XREF: sub_CODE_7F005450+70w
-CODE.bss:80076A8C     dword_CODE_bss_80076A8C:.space 0x14      # DATA XREF: sub_CODE_7F005450+38o
-CODE.bss:80076AA0     dword_CODE_bss_80076AA0:.space 0x14      # DATA XREF: sub_CODE_7F005450+6Co
-CODE.bss:80076AB4     dword_CODE_bss_80076AB4:.space 0x14      # DATA XREF: sub_CODE_7F005450+68o
-CODE.bss:80076AC8     dword_CODE_bss_80076AC8:.space 0x14      # DATA XREF: sub_CODE_7F005450+64o
-CODE.bss:80076ADC     dword_CODE_bss_80076ADC:.space 0x2E2C    # DATA XREF: sub_CODE_7F005450+60o
-CODE.bss:80079908     dword_CODE_bss_80079908:.space 0x28      # DATA XREF: sub_CODE_7F005450+B8o
-*/
+// bss
+//CODE.bss:80076A50
+char dword_CODE_bss_80076A50[0xC];
+//CODE.bss:80076A5C
+u32 dword_CODE_bss_80076A5C;
+//CODE.bss:80076A60
+u32 dword_CODE_bss_80076A60;
+//CODE.bss:80076A64
+char dword_CODE_bss_80076A64[0xC];
+//CODE.bss:80076A70
+u32 dword_CODE_bss_80076A70;
+//CODE.bss:80076A74
+u32 dword_CODE_bss_80076A74;
+//CODE.bss:80076A78
+char dword_CODE_bss_80076A78[0xC];
+//CODE.bss:80076A84
+u32 dword_CODE_bss_80076A84;
+//CODE.bss:80076A88
+u32 dword_CODE_bss_80076A88;
+//CODE.bss:80076A8C
+char dword_CODE_bss_80076A8C[0x14];
+//CODE.bss:80076AA0
+char dword_CODE_bss_80076AA0[0x14];
+//CODE.bss:80076AB4
+char dword_CODE_bss_80076AB4[0x14];
+//CODE.bss:80076AC8
+char dword_CODE_bss_80076AC8[0x14];
+//CODE.bss:80076ADC
+char dword_CODE_bss_80076ADC[0x2E2C];
+//CODE.bss:80079908
+char dword_CODE_bss_80079908[0x28];
+
 //CODE.bss:80079930
 void * ptr_allocation_0;
 //CODE.bss:80079934

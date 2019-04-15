@@ -36,28 +36,44 @@ u8 dword_CODE_bss_80069DA4[0x7874];
 void *ptr_room_lookup_buffer_maybe;
 //CODE.bss:8007161C
 u32 dword_CODE_bss_8007161C;
-/*
-CODE.bss:80071620     dword_CODE_bss_80071620:.space 0x94
-CODE.bss:800716B4     dword_CODE_bss_800716B4:.space 0x73C
-CODE.bss:80071DF0     dword_CODE_bss_80071DF0:.space 4
-CODE.bss:80071DF4     dword_CODE_bss_80071DF4:.space 4
-CODE.bss:80071DF8     dword_CODE_bss_80071DF8:.space 4
-CODE.bss:80071DFC                     .align 4
-CODE.bss:80071E00     dword_CODE_bss_80071E00:.space 4
-CODE.bss:80071E04     dword_CODE_bss_80071E04:.space 4
-CODE.bss:80071E08     dword_CODE_bss_80071E08:.space 0x70
-CODE.bss:80071E78     gas_damage_flag:.space 4
-CODE.bss:80071E7C     gas_cutoff_flag:.space 4
-CODE.bss:80071E80     ProjectileData_start_address:.space 0xFF0
-CODE.bss:80072E70     dword_CODE_bss_80072E70:.space 0x500
-CODE.bss:80073370     dword_CODE_bss_80073370:.space 0xA50
-CODE.bss:80073DC0     dword_CODE_bss_80073DC0:.space 0x1270
-CODE.bss:80075030     dword_CODE_bss_80075030:.space 0xB40
-CODE.bss:80075B70      # int *objinst
-CODE.bss:80075B70     objinst:        .space 4
-CODE.bss:80075B74      # int dword_CODE_bss_80075B74
-CODE.bss:80075B74     dword_CODE_bss_80075B74:.space 4
-*/
+
+//CODE.bss:80071620
+char dword_CODE_bss_80071620[0x94];
+//CODE.bss:800716B4
+char dword_CODE_bss_800716B4[0x73C];
+//CODE.bss:80071DF0
+u32 dword_CODE_bss_80071DF0;
+//CODE.bss:80071DF4
+u32 dword_CODE_bss_80071DF4;
+//CODE.bss:80071DF8
+u32 dword_CODE_bss_80071DF8;
+//CODE.bss:80071DFC
+u32 dword_CODE_bss_80071DFC;
+//CODE.bss:80071E00
+u32 dword_CODE_bss_80071E00;
+//CODE.bss:80071E04
+u32 dword_CODE_bss_80071E04;
+//CODE.bss:80071E08
+char dword_CODE_bss_80071E08[0x70];
+
+//CODE.bss:80071E78
+u32 gas_damage_flag;
+//CODE.bss:80071E7C
+u32 gas_cutoff_flag;
+//CODE.bss:80071E80
+char ProjectileData_start_address[0xFF0];
+//CODE.bss:80072E70
+char dword_CODE_bss_80072E70[0x500];
+//CODE.bss:80073370
+char dword_CODE_bss_80073370[0xA50];
+//CODE.bss:80073DC0
+char dword_CODE_bss_80073DC0[0x1270];
+//CODE.bss:80075030
+char dword_CODE_bss_80075030[0xB40];
+//CODE.bss:80075B70
+u32 objinst;
+//CODE.bss:80075B74
+u32 dword_CODE_bss_80075B74;
 //CODE.bss:80075B78
 f32 flt_CODE_bss_80075B78;
 //CODE.bss:80075B7C
@@ -72,12 +88,16 @@ f32 flt_CODE_bss_80075B8C;
 //CODE.bss:80075B90
 f32 flt_CODE_bss_80075B90;
 //CODE.bss:80075B94                     .align 3
-/*
-CODE.bss:80075B98     dword_CODE_bss_80075B98:.space 0x6C
-CODE.bss:80075C04     dword_CODE_bss_80075C04:.space 0xC
-CODE.bss:80075C10     dword_CODE_bss_80075C10:.space 0x78
-CODE.bss:80075C88     dword_CODE_bss_80075C88:.space 0x78
-*/
+
+//CODE.bss:80075B98
+char dword_CODE_bss_80075B98[0x6C];
+//CODE.bss:80075C04
+char dword_CODE_bss_80075C04[0xC];
+//CODE.bss:80075C10
+char dword_CODE_bss_80075C10[0x78];
+//CODE.bss:80075C88
+char dword_CODE_bss_80075C88[0x78];
+
 //CODE.bss:80075D00
 void * ptr_setup_path_tbl;
 //CODE.bss:80075D04
@@ -153,43 +173,47 @@ f32 solo_ammo_multiplier = 1.0;
 s16 Throwing_knife_SFX_1 = 0x5F;
 s16 Throwing_knife_SFX_2 = 0x60;
 s16 Throwing_knife_SFX_3 = 0x61;
+
+u16 Throwing_knife_SFX_4[] = {
+     0,     0,     1,     3,     0,      0,    0,     0,     0,
+     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     0,     0,     0,     0,     0,     0,     0,     0     
+};
+
+u32 monitor_animation_microcode[] = {
+         7,         0,         1,     0x400,      0x14,         8,      0x14,         2,
+     0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14,         5,
+     0x200,      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14,
+         8,      0x14,         5,     0x400,      0x14,         6,     0x400,      0x14,
+         8,      0x14,       0xB,         7,       0xC,         1,     0x400,      0x14,
+         8,      0x14,         2,     0x400,      0x14,       0xD,      0xFF,      0x14,
+         8,      0x14,         5,     0x200,      0x14,         6,     0x200,      0x14,
+       0xD,0xFFFFFFFF,      0x14,         8,      0x14,         5,     0x400,      0x14,
+         6,     0x400,      0x14,         8,      0x14,         7,       0xD,         1,
+     0x400,      0x14,         8,      0x14,         2,     0x400,      0x14,       0xD,
+      0xFF,      0x14,         8,      0x14,         5,     0x200,      0x14,         6,
+     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14,         8,      0x14,         5,
+     0x400,      0x14,         6,     0x400,      0x14,         8,      0x14,         7,
+       0xE,         1,     0x400,      0x14,         8,      0x14,         2,     0x400,
+      0x14,       0xD,      0xFF,      0x14,         8,      0x14,         5,     0x200,
+      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14,         8,
+      0x14,         5,     0x400,      0x14,         6,     0x400,      0x14,         8,
+      0x14,         7,       0xF,         1,     0x400,      0x14,         8,      0x14,
+         2,     0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14,
+         5,     0x200,      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,
+      0x14,         8,      0x14,         5,     0x400,      0x14,         6,     0x400,
+      0x14,         8,      0x14,       0xB,         7,      0x11,         8,      0x50,
+         7,      0x12,         8,      0x50,         7,      0x13,         8,      0x50,
+         7,      0x14,         8,      0x50,         7,      0x15,         8,      0x50,
+         7,      0x16,         8,      0x50,         7,      0x17,         8,      0x50,
+         7,      0x18,         8,      0x50,         7,      0x19,         8,      0x50,
+         7,      0x1A,         8,      0x50,       0xB,         7,         7,         8,
+      0x50,         7,         8,         8,      0x50,         7,         9,         8,
+      0x50,         7,       0xC,         8,      0x50,         7,       0xD,         8,
+      0x50,         8,      0x50,         7,      0x19,         8,      0x50,         7,
+      0x14,         8,      0x50,       0xB
+};
 /*
-Throwing_knife_SFX_4:.half      0,
-     0,     1,     3,     0,      0,
-                .half      0,     0,     0,     0,     0,     0,     0,     0,     0,     0
-                .half      0,     0,     0,     0,     0,     0,     0,     0,     0,     0
-                .half      0,     0
-monitor_animation_microcode:.word          7,         0,         1,     0x400,      0x14,         8,      0x14,         2
-                .word      0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14,         5
-                .word      0x200,      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14
-                .word          8,      0x14,         5,     0x400,      0x14,         6,     0x400,      0x14
-                .word          8,      0x14,       0xB,         7,       0xC,         1,     0x400,      0x14
-                .word          8,      0x14,         2,     0x400,      0x14,       0xD,      0xFF,      0x14
-                .word          8,      0x14,         5,     0x200,      0x14,         6,     0x200,      0x14
-                .word        0xD,0xFFFFFFFF,      0x14,         8,      0x14,         5,     0x400,      0x14
-                .word          6,     0x400,      0x14,         8,      0x14,         7,       0xD,         1
-                .word      0x400,      0x14,         8,      0x14,         2,     0x400,      0x14,       0xD
-                .word       0xFF,      0x14,         8,      0x14,         5,     0x200,      0x14,         6
-                .word      0x200,      0x14,       0xD,0xFFFFFFFF,      0x14,         8,      0x14,         5
-                .word      0x400,      0x14,         6,     0x400,      0x14,         8,      0x14,         7
-                .word        0xE,         1,     0x400,      0x14,         8,      0x14,         2,     0x400
-                .word       0x14,       0xD,      0xFF,      0x14,         8,      0x14,         5,     0x200
-                .word       0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14,         8
-                .word       0x14,         5,     0x400,      0x14,         6,     0x400,      0x14,         8
-                .word       0x14,         7,       0xF,         1,     0x400,      0x14,         8,      0x14
-                .word          2,     0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14
-                .word          5,     0x200,      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF
-                .word       0x14,         8,      0x14,         5,     0x400,      0x14,         6,     0x400
-                .word       0x14,         8,      0x14,       0xB,         7,      0x11,         8,      0x50
-                .word          7,      0x12,         8,      0x50,         7,      0x13,         8,      0x50
-                .word          7,      0x14,         8,      0x50,         7,      0x15,         8,      0x50
-                .word          7,      0x16,         8,      0x50,         7,      0x17,         8,      0x50
-                .word          7,      0x18,         8,      0x50,         7,      0x19,         8,      0x50
-                .word          7,      0x1A,         8,      0x50,       0xB,         7,         7,         8
-                .word       0x50,         7,         8,         8,      0x50,         7,         9,         8
-                .word       0x50,         7,       0xC,         8,      0x50,         7,       0xD,         8
-                .word       0x50,         8,      0x50,         7,      0x19,         8,      0x50,         7
-                .word       0x14,         8,      0x50,       0xB
 dword_D_80030F44:.word        0xD,0x202020FF,         1,         7,      0x1C,         1,     0x800,      0x78
                 .word          8,      0x78,         5,     0x100,         1,         6,     0x200,      0x3C
                 .word          1,0xFFFFE000,      0x78,         8,      0x78,         5,     0x400,         1
@@ -404,18 +428,25 @@ dword_D_80031E78:.word          7,      0x31,         5,     0x200,         0,  
 stru_D_80031EB0:struct_24 <7, 0x31, 5, 0x200, 0, 6, 0x200, 0, 0xD, 0x32C8, 0x32FF, 0xA, 8, 0xA, 0xB, 0, 7,\
                            0, 0xD, 0xFF, 0>
                 .word 0xC
-dword_D_80031F00:.word          5,     0x400,         0,         6,     0x400,         0,         8,         1
-                .word          5,    0x1000,      0x14,         6,    0x1000,      0x14,         8,      0x14
-                .word        0xB
-dword_D_80031F44:.word          7,         0,         1,     0x400,      0x14,         8,      0x14,         2
-                .word      0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14,         5
-                .word      0x200,      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14
-                .word          8,      0x14,         5,     0x400,      0x14,         6,     0x400,      0x14
-                .word          8,      0x14,       0xB,         0,         1,         3,         0,         0
-                .word          0,         0,         0,         0,         0,         0,         0,         0
-                .word          0,         0,         0,         0,         0,         0,         0,         0
-                .word          0,         0,         0,         0,         0,         0,         0,         0
-                .word          0,         0
+*/
+u32 dword_D_80031F00[] = {
+     5,     0x400,         0,         6,     0x400,         0,         8,         1,
+     5,    0x1000,      0x14,         6,    0x1000,      0x14,         8,      0x14,
+     0xB
+};
+
+u32 dword_D_80031F44[] = {
+         7,         0,         1,     0x400,      0x14,         8,      0x14,         2,
+     0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14,         5,
+     0x200,      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14,
+         8,      0x14,         5,     0x400,      0x14,         6,     0x400,      0x14,
+         8,      0x14,       0xB,         0,         1,         3,         0,         0,
+         0,         0,         0,         0,         0,         0,         0,         0,
+         0,         0,         0,         0,         0,         0,         0,         0,
+         0,         0,         0,         0,         0,         0,         0,         0,
+         0,         0
+};
+/*
 dword_D_8003204C:.word 0x7FFF, 0x7FFF, 0x7FFF, 0xFFFF8000, 0xFFFF8000, 0xFFFF8000, 0, 0, 0
 dword_D_80032070:.word 0x7FFF, 0x7FFF, 0x7FFF, 0xFFFF8000, 0xFFFF8000, 0xFFFF8000, 0, 0, 0
 blank_07_object:.word  0x1000007,    0xFFFF,         1,         0,         0,         0,0x3F800000,         0
@@ -430,19 +461,28 @@ blank_11_object:.word  0x1000011,         0,    0x4000,         0,         0,   
                 .word          0,         0,         0,         0,         0,0x447A0000
 dword_D_8003218C:.word 0xFFFFFF00
                 .word 0xFFFFFF00
-blank_08_object_preset_1:.word  0x1000008,         1,         0,         0,         0,         0,0x3F800000,         0
-                .word          0,         0,         0,0x3F800000,         0,         0,         0,         0
-                .word 0x3F800000,         0,         0,         0,         0,0x3F800000,         0,         0
-                .word          0,         0,         0,         0,         0,0x447A0000,0xFFFFFF00,0xFFFFFF00
-                .word   0xFFFFFF
-dword_D_80032218:.word 0
-blank_08_object_preset_4001:.word  0x1000008,    0x4001,         0,         0,         0,         0,0x3F800000,         0
-                .word          0,         0,         0,0x3F800000,         0,         0,         0,         0
-                .word 0x3F800000,         0,         0,         0,         0,0x3F800000,         0,         0
-                .word          0,         0,         0,         0,         0,0x447A0000,0xFFFFFF00,0xFFFFFF00
-                .word   0xFFFFFF
-dword_D_800322A0:.word 0
-dword_D_800322A4:.word 0
+*/
+u32 blank_08_object_preset_1[] = {
+     0x1000008,         1,         0,         0,         0,         0,0x3F800000,         0,
+              0,         0,         0,0x3F800000,         0,         0,         0,         0,
+     0x3F800000,         0,         0,         0,         0,0x3F800000,         0,         0,
+              0,         0,         0,         0,         0,0x447A0000,0xFFFFFF00,0xFFFFFF00,
+       0xFFFFFF
+};
+
+u32 D_80032218 = 0;
+
+u32 blank_08_object_preset_4001[] = {
+     0x1000008,    0x4001,         0,         0,         0,         0,0x3F800000,         0,
+               0,         0,         0,0x3F800000,         0,         0,         0,         0,
+      0x3F800000,         0,         0,         0,         0,0x3F800000,         0,         0,
+               0,         0,         0,         0,         0,0x447A0000,0xFFFFFF00,0xFFFFFF00,
+        0xFFFFFF
+};
+
+u32 D_800322A0 = 0;
+u32 D_800322A4 = 0;
+/*
 dword_D_800322A8:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 */
 
@@ -2613,7 +2653,7 @@ glabel true_if_sucessfully_performing_action
 
 
 #ifdef NONMATCHING
-//sub_GAME/_7F035398
+//LoadNext_PrevActionBlock
 void LoadNext_PrevActionBlock(void) {
 
 }
@@ -15750,7 +15790,7 @@ glabel sub_GAME_7F03FC80
 /* 0747C4 7F03FC94 24845030 */  addiu $a0, %lo(dword_CODE_bss_80075030) # addiu $a0, $a0, 0x5030
 /* 0747C8 7F03FC98 24423DC0 */  addiu $v0, %lo(dword_CODE_bss_80073DC0) # addiu $v0, $v0, 0x3dc0
 /* 0747CC 7F03FC9C 00002825 */  move  $a1, $zero
-/* 0747D0 7F03FCA0 3C038000 */  lui   $v1, %hi(D_80000001) # $v1, 0x8000
+/* 0747D0 7F03FCA0 3C038000 */  lui   $v1, 0x8000
 .L7F03FCA4:
 /* 0747D4 7F03FCA4 8C4E0000 */  lw    $t6, ($v0)
 /* 0747D8 7F03FCA8 244200EC */  addiu $v0, $v0, 0xec
@@ -15777,7 +15817,7 @@ glabel sub_GAME_7F03FC80
 .L7F03FCF8:
 /* 074828 7F03FCF8 8C5800E4 */  lw    $t8, 0xe4($v0)
 /* 07482C 7F03FCFC 5300000D */  beql  $t8, $zero, .L7F03FD34
-/* 074830 7F03FD00 24630001 */   addiu $v1, %lo(D_80000001) # addiu $v1, $v1, 1
+/* 074830 7F03FD00 24630001 */   addiu $v1, $v1, 1
 /* 074834 7F03FD04 04C2000A */  bltzl $a2, .L7F03FD30
 /* 074838 7F03FD08 00603025 */   move  $a2, $v1
 /* 07483C 7F03FD0C 00C50019 */  multu $a2, $a1
@@ -23506,7 +23546,7 @@ glabel object_interaction
 /* 07AE00 7F0462D0 8D4A8374 */  lw    $t2, %lo(clock_timer)($t2)
 /* 07AE04 7F0462D4 59400005 */  blezl $t2, .L7F0462EC
 /* 07AE08 7F0462D8 3C013F80 */   li    $at, 0x3F800000 # 1.000000
-/* 07AE0C 7F0462DC C42A2AB0 */  lwc1  $f10, %lo(D_3F802AB0)($at)
+/* 07AE0C 7F0462DC C42A2AB0 */  lwc1  $f10, %lo(0x3F802AB0)($at)
 /* 07AE10 7F0462E0 460A1102 */  mul.s $f4, $f2, $f10
 /* 07AE14 7F0462E4 E6040064 */  swc1  $f4, 0x64($s0)
 /* 07AE18 7F0462E8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -33340,7 +33380,7 @@ glabel sub_GAME_7F04EA68
 /* 08369C 7F04EB6C 8C6F0014 */  lw    $t7, 0x14($v1)
 /* 0836A0 7F04EB70 27A40060 */  addiu $a0, $sp, 0x60
 /* 0836A4 7F04EB74 24050001 */  li    $a1, 1
-/* 0836A8 7F04EB78 3C0641D0 */  lui   $a2, %hi(D_41D00011) # $a2, 0x41d0
+/* 0836A8 7F04EB78 3C0641D0 */  lui   $a2, 0x41d0
 /* 0836AC 7F04EB7C 0FC28F87 */  jal   sub_GAME_7F0A3E1C
 /* 0836B0 7F04EB80 91E70003 */   lbu   $a3, 3($t7)
 /* 0836B4 7F04EB84 0FC13BCD */  jal   check_if_object_has_not_been_destroyed
@@ -33403,7 +33443,7 @@ glabel sub_GAME_7F04EA68
 /* 083788 7F04EC58 83A30057 */  lb    $v1, 0x57($sp)
 /* 08378C 7F04EC5C AFA80010 */  sw    $t0, 0x10($sp)
 /* 083790 7F04EC60 8E0E0040 */  lw    $t6, 0x40($s0)
-/* 083794 7F04EC64 24C60011 */  addiu $a2, %lo(D_41D00011) # addiu $a2, $a2, 0x11
+/* 083794 7F04EC64 24C60011 */  addiu $a2, $a2, 0x11
 /* 083798 7F04EC68 00066400 */  sll   $t4, $a2, 0x10
 /* 08379C 7F04EC6C 000C3403 */  sra   $a2, $t4, 0x10
 /* 0837A0 7F04EC70 26040010 */  addiu $a0, $s0, 0x10
@@ -43023,8 +43063,8 @@ GLOBAL_ASM(
 glabel set_unset_clock_lock_bits
 /* 08AC90 7F056160 10A00008 */  beqz  $a1, .L7F056184
 /* 08AC94 7F056164 3C028003 */   lui   $v0, 0x8003
-/* 08AC98 7F056168 3C028003 */  lui   $v0, %hi(clock) # $v0, 0x8003
-/* 08AC9C 7F05616C 24420AE8 */  addiu $v0, %lo(clock) # addiu $v0, $v0, 0xae8
+/* 08AC98 7F056168 3C028003 */  lui   $v0, %hi(clock_drawn_flag) # $v0, 0x8003
+/* 08AC9C 7F05616C 24420AE8 */  addiu $v0, %lo(clock_drawn_flag) # addiu $v0, $v0, 0xae8
 /* 08ACA0 7F056170 8C4E0000 */  lw    $t6, ($v0)
 /* 08ACA4 7F056174 00807827 */  not   $t7, $a0
 /* 08ACA8 7F056178 01CFC024 */  and   $t8, $t6, $t7
@@ -43053,8 +43093,8 @@ void is_clock_drawn_onscreen(void) {
 GLOBAL_ASM(
 .text
 glabel is_clock_drawn_onscreen
-/* 08ACCC 7F05619C 3C028003 */  lui   $v0, %hi(clock) # $v0, 0x8003
-/* 08ACD0 7F0561A0 8C420AE8 */  lw    $v0, %lo(clock)($v0)
+/* 08ACCC 7F05619C 3C028003 */  lui   $v0, %hi(clock_drawn_flag) # $v0, 0x8003
+/* 08ACD0 7F0561A0 8C420AE8 */  lw    $v0, %lo(clock_drawn_flag)($v0)
 /* 08ACD4 7F0561A4 2C4E0001 */  sltiu $t6, $v0, 1
 /* 08ACD8 7F0561A8 03E00008 */  jr    $ra
 /* 08ACDC 7F0561AC 01C01025 */   move  $v0, $t6
@@ -43173,8 +43213,8 @@ void sub_GAME_7F056210(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F056210
-/* 08AD40 7F056210 3C0E8003 */  lui   $t6, %hi(clock) # $t6, 0x8003
-/* 08AD44 7F056214 8DCE0AE8 */  lw    $t6, %lo(clock)($t6)
+/* 08AD40 7F056210 3C0E8003 */  lui   $t6, %hi(clock_drawn_flag) # $t6, 0x8003
+/* 08AD44 7F056214 8DCE0AE8 */  lw    $t6, %lo(clock_drawn_flag)($t6)
 /* 08AD48 7F056218 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 08AD4C 7F05621C AFB10028 */  sw    $s1, 0x28($sp)
 /* 08AD50 7F056220 00808825 */  move  $s1, $a0

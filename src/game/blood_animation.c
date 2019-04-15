@@ -338,8 +338,8 @@ glabel die_blood_image_routine
 /* 050DC8 7F01C298 3C118008 */  lui   $s1, %hi(ptr_BONDdata) # $s1, 0x8008
 /* 050DCC 7F01C29C 2631A0B0 */  addiu $s1, %lo(ptr_BONDdata) # addiu $s1, $s1, -0x5f50
 /* 050DD0 7F01C2A0 8E2F0000 */  lw    $t7, ($s1)
-/* 050DD4 7F01C2A4 3C0E8003 */  lui   $t6, %hi(die_blood_images) # $t6, 0x8003
-/* 050DD8 7F01C2A8 25CEBB30 */  addiu $t6, %lo(die_blood_images) # addiu $t6, $t6, -0x44d0
+/* 050DD4 7F01C2A4 3C0E8003 */  lui   $t6, %hi(die_blood_image_1) # $t6, 0x8003
+/* 050DD8 7F01C2A8 25CEBB30 */  addiu $t6, %lo(die_blood_image_1) # addiu $t6, $t6, -0x44d0
 /* 050DDC 7F01C2AC 1000000D */  b     .L7F01C2E4
 /* 050DE0 7F01C2B0 ADEE11A8 */   sw    $t6, 0x11a8($t7)
 .L7F01C2B4:

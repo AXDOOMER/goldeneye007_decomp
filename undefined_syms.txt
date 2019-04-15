@@ -1,161 +1,146 @@
-gspFast3DDataStart = 0x8005c820;
+_bootSegmentRomStart = 0x00000000;
+_bootSegmentRomEnd = 0x00001000;
+_codeSegmentRomStart = 0x00001000;
+_codeSegmentRomEnd = 0x00021990;
+_cdataSegmentRomStart = 0x00021990;
+_cdataSegmentRomEnd = 0x00033590;
+_rarezipSegmentRomStart = 0x00033590;
+_unknown117880SegmentRomStart = 0x00117880;
+_unknown117880SegmentRomEnd = 0x00117940;
+_unknown117940SegmentRomStart = 0x00117940;
+_unknown117940SegmentRomEnd = 0x00123040;
+_unknown123040SegmentRomStart = 0x00123040;
+_unknown123040SegmentRomEnd = 0x00124ac0;
+_animation_tableSegmentRomStart = 0x00124ac0;
+_animation_tableSegmentRomEnd = 0x0028e980;
+_animation_dataSegmentRomStart = 0x0028e980;
+_animation_dataSegmentRomEnd = 0x0029d160;
+_GlobalimagetableSegmentRomStart = 0x0029d160;
+_GlobalimagetableSegmentRomEnd = 0x0029e560;
+_GlobalimagetablecmdblkSegmentRomStart = 0x0029e560;
+_GlobalimagetablecmdblkSegmentRomEnd = 0x002a4d50;
+
+_ramromDam1SegmentRomStart = 0x002bf2d0;
+_fonttablectlsmall1SegmentRomStart = 0x002e63f0;
+_fonttablectllarge1SegmentRomStart = 0x002e88a0;
+_sfxctlSegmentRomStart = 0x002EBDE0;
+_sfxctlSegmentRomEnd = 0x002F19A0;
+_sfxtblSegmentRomStart = 0x002F19A0;
+_rarezipSegmentRomEnd = 0x0034B30;
+_sfxtblSegmentRomEnd = 0x003B4450;
+_instrumentsctlSegmentRomStart = 0x003B4450;
+_instrumentsctlSegmentRomEnd = 0x003B87F0;
+_instrumentstblSegmentRomStart = 0x003B87F0;
+_instrumentstblSegmentRomEnd = 0x00419790;
+_musicsampletblSegmentRomStart = 0x00419790;
 
 _bootSegmentStart = 0x04000000;
-_bootSegmentRomStart = 0x00000000;
 _bootSegmentEnd = 0x04001000;
-_bootSegmentRomEnd = 0x00001000;
+
+_codeSegmentVaddrStart = 0x70000450;
+set_hardwire_TLB_to_2 = 0x70001BB0;
+_codeSegmentVaddrEnd = 0x70020D90;
+_rarezipSegmentStart = 0x70200000;
+_rarezipSegmentEnd = 0x7020159C;
+
+display_debug_menu_text_onscreen = 0x7F090490;
+debug_menu_processor = 0x7F0905A0;
+get_memusage_display_flag = 0x7F090F34;
+get_linemode_flag = 0x7F090FDC;
+get_debug_taskgrab_val = 0x7F09106C;
+
+osTvType = 0x80000300;
 
 _codeSegmentStart = 0x80000400;
-_codeSegmentRomStart = 0x00001000;
 _codeSegmentEnd = 0x80020D90;
-_codeSegmentRomEnd = 0x00021990;
-_codeSegmentVaddrStart = 0x70000450;
-_codeSegmentVaddrEnd = 0x70020D90;
 
-/*_cdataSegmentStart = */
-_cdataSegmentRomStart = 0x00021990;
 _cdataSegmentVaddrStart = 0x80020D90;
-/*_cdataSegmentEnd = */
-_cdataSegmentRomEnd = 0x00033590;
+something_with_osVI = 0x800230B0;
+ejected_cartridge = 0x8003246C;
+GsniperrifleZ_stats = 0x80032C04;
+D_80032C20 = 0x80032C20;
+gitem_structs = 0x80033924;
+D_80034CA4 = 0x80034CA4;
+D_80034E0C = 0x80034E0C;
+D_80034F74 = 0x80034F74;
+D_8003504C = 0x8003504C;
+D_80035124 = 0x80035124;
+D_800351FC = 0x800351FC;
+D_800352D4 = 0x800352D4;
+D_800353AC = 0x800353AC;
+D_800354A8 = 0x800354A8;
+D_80035610 = 0x80035610;
+D_80035778 = 0x80035778;
+D_80035904 = 0x80035904;
+D_80035A90 = 0x80035A90;
+D_80035B68 = 0x80035B68;
+D_80035D40 = 0x80035D40;
+D_80035D80 = 0x80035D80;
+D_80035D8C = 0x80035D8C;
+D_80035D98 = 0x80035D98;
+D_80035DA4 = 0x80035DA4;
+D_80035DB0 = 0x80035DB0;
+D_80035DBC = 0x80035DBC;
+D_80035DC8 = 0x80035DC8;
+D_80035DD4 = 0x80035DD4;
+D_80035DE0 = 0x80035DE0;
+D_80035DEC = 0x80035DEC;
+D_80035DF8 = 0x80035DF8;
+D_800368D4 = 0x800368D4;
+D_800368D8 = 0x800368D8;
+D_8003E14C = 0x8003E14C;
+D_8003F80C = 0x8003F80C;
+D_8003F81C = 0x8003F81C;
+D_8003FCC0 = 0x8003FCC0;
+D_8003FD28 = 0x8003FD28;
+D_8003FD94 = 0x8003FD94;
+D_8003FDA0 = 0x8003FDA0;
+D_8004017C = 0x8004017C;
+D_80040284 = 0x80040284;
+D_800407FC = 0x800407FC;
+D_80040800 = 0x80040800;
+D_80040804 = 0x80040804;
+D_80040808 = 0x80040808;
+D_8004080C = 0x8004080C;
+D_80040900 = 0x80040900;
+D_80040910 = 0x80040910;
+D_80040920 = 0x80040920;
+D_80040930 = 0x80040930;
+D_80040940 = 0x80040940;
+D_80040960 = 0x80040960;
+D_80040980 = 0x80040980;
+D_80040994 = 0x80040994;
+D_80040998 = 0x80040998;
+D_8004099C = 0x8004099C;
+D_80040C44 = 0x80040C44;
+D_80040D20 = 0x80040D20;
+D_80041415 = 0x80041415;
+D_80041417 = 0x80041417;
+D_80041464 = 0x80041464;
+D_80041467 = 0x80041467;
+D_800414B4 = 0x800414B4;
+D_80058378 = 0x80058378;
+
+gspFast3DDataStart = 0x8005c820;
 _cdataSegmentVaddrEnd = 0x8005D2E0;
 
+D_80079F4C = 0x80079F4C;
+D_80079F54 = 0x80079F54;
+D_80079FBC = 0x80079FBC;
+D_80079FC4 = 0x80079FC4;
+D_8007A02C = 0x8007A02C;
+D_8007A034 = 0x8007A034;
+D_8007A0A4 = 0x8007A0A4;
+D_8007A0DE = 0x8007A0DE;
+dword_CODE_bss_800825B8 = 0x800825B8;
 room_model_buffer = 0x8008E360;
-
 _decompressBuffer = 0x80300000;
-_rarezipSegmentStart = 0x70200000;
-_rarezipSegmentRomStart = 0x00033590;
-_rarezipSegmentEnd = 0x7020159C;
-_rarezipSegmentRomEnd = 0x34B30;
-
-sp_main = 0x803AB950;
 sp_boot = 0x803AB400;
 sp_rmon = 0x803AB410;
 sp_idle = 0x803AB710;
 sp_shed = 0x803AB750;
+sp_main = 0x803AB950;
 sp_audi = 0x803B3950;
 sp_debug = 0x803B4950;
-
-osTvType = 0x80000300;
 cfb_16_a = 0x803B5000;
 cfb_16_b = 0x803DA800;
-
-set_hardwire_TLB_to_2 = 0x70001BB0;
-debug_menu_processor = 0x7F0905A0;
-get_linemode_flag = 0x7F090FDC;
-get_memusage_display_flag = 0x7F090F34;
-display_debug_menu_text_onscreen = 0x7F090490;
-get_debug_taskgrab_val = 0x7F09106C;
-something_with_osVI = 0x800230B0;
-
-_unknown117880SegmentRomStart = 0x117880;
-_unknown117880SegmentRomEnd = 0x117940;
-
-_unknown117940SegmentRomStart = 0x117940;
-_unknown117940SegmentRomEnd = 0x123040;
-
-_unknown123040SegmentRomStart = 0x123040;
-_unknown123040SegmentRomEnd = 0x124ac0;
-
-_animation_tableSegmentRomStart = 0x124ac0;
-_animation_tableSegmentRomEnd = 0x28e980;
-
-_animation_dataSegmentRomStart = 0x28e980;
-_animation_dataSegmentRomEnd = 0x29d160;
-
-_GlobalimagetableSegmentRomStart = 0x29d160;
-_GlobalimagetableSegmentRomEnd = 0x29e560;
-
-_sfxctlSegmentRomStart = 0x2EBDE0;
-_sfxctlSegmentRomEnd = 0x2F19A0;
-
-_sfxtblSegmentRomStart = 0x2F19A0;
-_sfxtblSegmentRomEnd = 0x3B4450;
-
-_instrumentsctlSegmentRomStart = 0x3B4450;
-_instrumentsctlSegmentRomEnd = 0x3B87F0;
-
-_instrumentstblSegmentRomStart = 0x3B87F0;
-_instrumentstblSegmentRomEnd = 0x419790;
-
-_musicsampletblSegmentRomStart = 0x419790;
-
-_fonttablectlsmall1SegmentRomStart = 0x2e63f0;
-
-
-_fonttablectllarge1SegmentRomStart = 0x2e88a0;
-
-
-D_80041464 = 0x80041464;
-D_80041415 = 0x80041415;
-dword_CODE_bss_800825B8 = 0x800825B8;
-D_80041467 = 0x80041467;
-D_800414B4 = 0x800414B4;
-D_80041417 = 0x80041417;
-D_80040994 = 0x80040994;
-D_80058378 = 0x80058378;
-D_8004099C = 0x8004099C;
-D_80040998 = 0x80040998;
-D_80040D20 = 0x80040D20;
-D_80040C44 = 0x80040C44;
-gitem_structs = 0x80033924;
-D_80040980 = 0x80040980;
-D_80040960 = 0x80040960;
-D_80040940 = 0x80040940;
-D_8004080C = 0x8004080C;
-D_80040808 = 0x80040808;
-D_80040930 = 0x80040930;
-D_80040804 = 0x80040804;
-D_80040920 = 0x80040920;
-D_80040800 = 0x80040800;
-D_8004017C = 0x8004017C;
-D_80040910 = 0x80040910;
-D_80040900 = 0x80040900;
-D_800407FC = 0x800407FC;
-D_80040284 = 0x80040284;
-D_8007A0DE = 0x8007A0DE;
-/*invisible_to_guards_flag = 0x800364C4;*/
-D_8003FDA0 = 0x8003FDA0;
-D_8007A0A4 = 0x8007A0A4;
-D_8007A02C = 0x8007A02C;
-D_8007A034 = 0x8007A034;
-D_80079FBC = 0x80079FBC;
-D_80079FC4 = 0x80079FC4;
-D_80079F4C = 0x80079F4C;
-D_80079F54 = 0x80079F54;
-D_8003FD94 = 0x8003FD94;
-D_8003FD28 = 0x8003FD28;
-D_8003FCC0 = 0x8003FCC0;
-D_8003F81C = 0x8003F81C;
-D_8003F80C = 0x8003F80C;
-/*D_800368D8 firing_animation_groups*/
-D_800368D8 = 0x800368D8; 
-D_800368D4 = 0x800368D4;
-D_8003E14C = 0x8003E14C;
-GsniperrifleZ_stats = 0x80032C04;
-D_80032C20 = 0x80032C20;
-D_800353AC = 0x800353AC;
-D_800352D4 = 0x800352D4;
-D_8003504C = 0x8003504C;
-D_80034F74 = 0x80034F74;
-D_800351FC = 0x800351FC;
-D_80035124 = 0x80035124;
-D_80035610 = 0x80035610;
-D_80035904 = 0x80035904;
-D_800354A8 = 0x800354A8;
-D_80035778 = 0x80035778;
-D_80034E0C = 0x80034E0C;
-D_80034CA4 = 0x80034CA4;
-D_80035B68 = 0x80035B68;
-D_80035A90 = 0x80035A90;
-D_80035DF8 = 0x80035DF8;
-D_80035DEC = 0x80035DEC;
-D_80035DE0 = 0x80035DE0;
-D_80035DD4 = 0x80035DD4;
-D_80035DC8 = 0x80035DC8;
-D_80035DBC = 0x80035DBC;
-D_80035DB0 = 0x80035DB0;
-D_80035DA4 = 0x80035DA4;
-D_80035D98 = 0x80035D98;
-D_80035D8C = 0x80035D8C;
-D_80035D80 = 0x80035D80;
-D_80035D40 = 0x80035D40;

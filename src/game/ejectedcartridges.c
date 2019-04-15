@@ -31,8 +31,8 @@ glabel something_with_ejected_cartridges
 /* 039BA4 7F005074 AC40FFFC */   sw    $zero, -4($v0)
 /* 039BA8 7F005078 3C0E8003 */  lui   $t6, %hi(ejected_cartridge) # $t6, 0x8003
 /* 039BAC 7F00507C 8DCE246C */  lw    $t6, %lo(ejected_cartridge)($t6)
-/* 039BB0 7F005080 3C018003 */  lui   $at, %hi(D_80034C9C) # $at, 0x8003
-/* 039BB4 7F005084 AC204C9C */  sw    $zero, %lo(D_80034C9C)($at)
+/* 039BB0 7F005080 3C018003 */  lui   $at, %hi(cartridges_eject) # $at, 0x8003
+/* 039BB4 7F005084 AC204C9C */  sw    $zero, %lo(cartridges_eject)($at)
 /* 039BB8 7F005088 3C018003 */  lui   $at, %hi(D_80034CA0) # $at, 0x8003
 /* 039BBC 7F00508C 11C0000B */  beqz  $t6, .L7F0050BC
 /* 039BC0 7F005090 AC204CA0 */   sw    $zero, %lo(D_80034CA0)($at)

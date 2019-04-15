@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "game/bondview.h"
 #include "game/cheat_buttons_objectrelated.h"
+#include "bondgame.h"
 
 // bss
 s32 dword_CODE_bss_80075DB0;
@@ -15,18 +16,22 @@ char dword_CODE_bss_80075E68[0xBE0];
 s32 dword_CODE_bss_80076A48;
 
 
-/* data
-D:80032440     stru_D_80032440:rgba_val <0x96, 0x96, 0x96, 0>
-D:80032440                                              # DATA XREF: sub_CODE_7F062BE4+140o
-D:80032440                                              # set_enviro_fog_for_items_in_solo_watch_menu+370o
-D:80032444                     rgba_val <0x96, 0x96, 0x96, 0>
-D:80032448     stru_D_80032448:rgba_val <0xFF, 0xFF, 0xFF, 0>
-D:80032448                                              # DATA XREF: sub_CODE_7F062BE4+124o
-D:80032448                                              # set_enviro_fog_for_items_in_solo_watch_menu+358o
-D:8003244C                     rgba_val <0xFF, 0xFF, 0xFF, 0>
-D:80032450                     .word 0xB24D2E00
-D:80032454                     .word 0
-*/
+// data
+//D:80032440
+struct rgba_val D_80032440[] = {
+	{0x96, 0x96, 0x96, 0},
+	{0x96, 0x96, 0x96, 0}
+};
+
+//D:80032448
+struct rgba_val D_80032448[] = {
+	{0xFF, 0xFF, 0xFF, 0},
+	{0xFF, 0xFF, 0xFF, 0},
+	{0xB2, 0x4D, 0x2E, 0}
+};
+//D:80032454
+u32 D_80032454 = 0;
+
 //D:80032458
 u32 D_80032458 = 0;
 
@@ -783,14 +788,28 @@ u32 D_80035C98 = 0;
 u32 D_80035C9C = 0;
 //D:80035CA0
 u32 D_80035CA0 = 0;
+//D:80035CA4
+s32 D_80035CA4 = 0xFFFFFFFF;
+//D:80035CA8
+u32 D_80035CA8 = 0;
+//D:80035CAC
+u32 D_80035CAC = 0;
+//D:80035CB0
+u32 D_80035CB0 = 0;
+//D:80035CB4
+u32 D_80035CB4 = 0;
+//D:80035CB8
+u32 D_80035CB8 = 0;
+//D:80035CBC
+u32 D_80035CBC = 0;
+//D:80035CC0
+u32 D_80035CC0 = 0;
 /*
-D:80035CA4     dword_D_80035CA4:.word 0xFFFFFFFF, 0, 0, 0, 0, 0, 0, 0
-D:80035CA4                                              # DATA XREF: sub_CODE_7F061E18+44r
-D:80035CA4                                              # sub_CODE_7F061E18+5Co
-D:80035CA4                                              # sub_CODE_7F061E18+64r
-D:80035CA4                                              # sub_CODE_7F061E18+7Cr
-D:80035CA4                                              # sub_CODE_7F061E18+78r
-D:80035CC4     dword_D_80035CC4:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+D:80035CC4     dword_D_80035CC4:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+*/
+//D:80035D00
+u32 D_80035D00 = 0;
+/*
 D:80035D04     dword_D_80035D04:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:80035D44     dword_D_80035D44:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:80035D44                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -1688,8 +1707,8 @@ void sub_GAME_7F05C614(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F05C614
-/* 091144 7F05C614 3C0E8003 */  lui   $t6, %hi(D_80034C9C) # $t6, 0x8003
-/* 091148 7F05C618 8DCE4C9C */  lw    $t6, %lo(D_80034C9C)($t6)
+/* 091144 7F05C614 3C0E8003 */  lui   $t6, %hi(cartridges_eject) # $t6, 0x8003
+/* 091148 7F05C618 8DCE4C9C */  lw    $t6, %lo(cartridges_eject)($t6)
 /* 09114C 7F05C61C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 091150 7F05C620 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 091154 7F05C624 11C00020 */  beqz  $t6, .L7F05C6A8
@@ -1723,8 +1742,8 @@ glabel sub_GAME_7F05C614
 /* 0911C4 7F05C694 01AE2021 */  addu  $a0, $t5, $t6
 /* 0911C8 7F05C698 0FC16266 */  jal   copies_first_3_floats_from_a0_to_a1_plus_0x30
 /* 0911CC 7F05C69C 24A508EC */   addiu $a1, $a1, 0x8ec
-/* 0911D0 7F05C6A0 3C018003 */  lui   $at, %hi(D_80034C9C) # $at, 0x8003
-/* 0911D4 7F05C6A4 AC204C9C */  sw    $zero, %lo(D_80034C9C)($at)
+/* 0911D0 7F05C6A0 3C018003 */  lui   $at, %hi(cartridges_eject) # $at, 0x8003
+/* 0911D4 7F05C6A4 AC204C9C */  sw    $zero, %lo(cartridges_eject)($at)
 .L7F05C6A8:
 /* 0911D8 7F05C6A8 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0911DC 7F05C6AC 27BD0018 */  addiu $sp, $sp, 0x18
@@ -1922,8 +1941,8 @@ glabel get_ptr_item_statistics
 /* 09140C 7F05C8DC 8C62000C */   lw    $v0, 0xc($v1)
 
 .L7F05C8E0:
-/* 091410 7F05C8E0 3C028003 */  lui   $v0, %hi(D_80032494) # $v0, 0x8003
-/* 091414 7F05C8E4 24422494 */  addiu $v0, %lo(D_80032494) # addiu $v0, $v0, 0x2494
+/* 091410 7F05C8E0 3C028003 */  lui   $v0, %hi(stru_D_80032494) # $v0, 0x8003
+/* 091414 7F05C8E4 24422494 */  addiu $v0, %lo(stru_D_80032494) # addiu $v0, $v0, 0x2494
 /* 091418 7F05C8E8 03E00008 */  jr    $ra
 /* 09141C 7F05C8EC 00000000 */   nop   
 )
@@ -7532,8 +7551,8 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 09590C 7F060DDC 0FC16008 */  jal   sub_GAME_7F058020
 /* 095910 7F060DE0 8FA502A4 */   lw    $a1, 0x2a4($sp)
 /* 095914 7F060DE4 8FAF01A0 */  lw    $t7, 0x1a0($sp)
-/* 095918 7F060DE8 3C0E8004 */  lui   $t6, %hi(weapon_gun_ruger_grenade) # $t6, 0x8004
-/* 09591C 7F060DEC 25CEC76C */  addiu $t6, %lo(weapon_gun_ruger_grenade) # addiu $t6, $t6, -0x3894
+/* 095918 7F060DE8 3C0E8004 */  lui   $t6, %hi(weapon_gun_revolver) # $t6, 0x8004
+/* 09591C 7F060DEC 25CEC76C */  addiu $t6, %lo(weapon_gun_revolver) # addiu $t6, $t6, -0x3894
 /* 095920 7F060DF0 8DF80004 */  lw    $t8, 4($t7)
 /* 095924 7F060DF4 55D80078 */  bnel  $t6, $t8, .L7F060FD8
 /* 095928 7F060DF8 8FA2010C */   lw    $v0, 0x10c($sp)
@@ -10029,8 +10048,8 @@ glabel set_enviro_fog_for_items_in_solo_watch_menu
 /* 097CAC 7F06317C 0FC16008 */  jal   sub_GAME_7F058020
 /* 097CB0 7F063180 02002825 */   move  $a1, $s0
 /* 097CB4 7F063184 8E580004 */  lw    $t8, 4($s2)
-/* 097CB8 7F063188 3C198004 */  lui   $t9, %hi(weapon_gun_ruger_grenade) # $t9, 0x8004
-/* 097CBC 7F06318C 2739C76C */  addiu $t9, %lo(weapon_gun_ruger_grenade) # addiu $t9, $t9, -0x3894
+/* 097CB8 7F063188 3C198004 */  lui   $t9, %hi(weapon_gun_revolver) # $t9, 0x8004
+/* 097CBC 7F06318C 2739C76C */  addiu $t9, %lo(weapon_gun_revolver) # addiu $t9, $t9, -0x3894
 /* 097CC0 7F063190 57380018 */  bnel  $t9, $t8, .L7F0631F4
 /* 097CC4 7F063194 8E420008 */   lw    $v0, 8($s2)
 /* 097CC8 7F063198 8E420008 */  lw    $v0, 8($s2)
