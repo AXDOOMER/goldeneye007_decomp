@@ -6,10 +6,10 @@ extern u32 osTvType;
 #endif 
 
 OSViContext D_803348B0[2] = {0};
-OSViContext *D_80334910 = &D_803348B0[0];
-OSViContext *D_80334914 = &D_803348B0[1];
-u32 D_80334918 = TV_TYPE_NTSC;
-u32 D_8033491C = 0x02E6D354;
+OSViContext *__osViCurr = &D_803348B0[0];
+OSViContext *__osViNext = &D_803348B0[1];
+u32 osTvType = TV_TYPE_NTSC;
+u32 osViClock = 0x02E6D354;
 
 extern OSViMode D_80334990;
 extern OSViMode D_803349E0;
@@ -17,33 +17,33 @@ void __osViInit(void)
 {
 //#ifdef VERSION_JP
 #ifdef VERSION_US
-    D_80334918 = osTvType;
+    osTvType = osTvType;
 #endif
     bzero(D_803348B0, sizeof(D_803348B0));
-    D_80334910 = &D_803348B0[0];
-    D_80334914 = &D_803348B0[1];
-    D_80334914->retraceCount = 1;
-    D_80334910->retraceCount = 1;
+    __osViCurr = &D_803348B0[0];
+    __osViNext = &D_803348B0[1];
+    __osViNext->retraceCount = 1;
+    __osViCurr->retraceCount = 1;
 #ifdef VERSION_JP
-    if (D_80334918 != TV_TYPE_PAL)
+    if (osTvType != TV_TYPE_PAL)
 #else
-    if (D_80334918 == TV_TYPE_NTSC)
+    if (osTvType == TV_TYPE_NTSC)
 #endif
     {
-        D_80334914->unk08 = &D_80334990;
-        D_8033491C = 0x02E6D354;
+        __osViNext->unk08 = &D_80334990;
+        osViClock = 0x02E6D354;
     }
     else
     {
-        D_80334914->unk08 = &D_803349E0;
+        __osViNext->unk08 = &D_803349E0;
 #ifdef VERSION_JP
-        D_8033491C = 0x02F5B2D2;
+        osViClock = 0x02F5B2D2;
 #else
-        D_8033491C = 0x02E6025C;
+        osViClock = 0x02E6025C;
 #endif
     }
-    D_80334914->unk00 = 32;
-    D_80334914->features = D_80334914->unk08->comRegs.ctrl;
+    __osViNext->unk00 = 32;
+    __osViNext->control = __osViNext->unk08->comRegs.ctrl;
 #ifdef VERSION_US
     while (HW_REG(VI_CURRENT_REG, u32) > 0xa)
         ;
