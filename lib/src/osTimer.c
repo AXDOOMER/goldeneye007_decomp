@@ -10,7 +10,8 @@ OSTime _osCurrentTime;
 // Count at last VI manager loop
 u32 lastViCount;
 
-// These are accessed in other files using externs
+// This variable is set to 0 here, incremented in viMgrMain, but never read from.
+// Looks useless.
 u32 D_80365DAC;
 
 // Count at last interrupt
