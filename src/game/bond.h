@@ -2729,6 +2729,13 @@ struct firing_anim_struct {
     f32 z;
 };
 
+struct struct_4 {
+    int anonymous_0;
+    float anonymous_1;
+    float anonymous_2;
+    float anonymous_3;
+};
+
 //D:80036424
 extern s32 camera_80036424;
 //D:80036428
@@ -2857,8 +2864,12 @@ D:80036604                     .align 5
 D:80036620                     .byte 0x44
 D:80036621                     .byte 0x7A, 0, 0
 D:80036624                     .word 0xFFFFFF00, 0xFFFFFF00, 0x4FFFFFF
-D:80036630     D_80036630:.word 0
-D:80036634     D_80036634:.word 0
+*/
+//D:80036630
+extern u32 D_80036630;
+//D:80036634
+extern u32 D_80036634;
+/*
 D:80036638                     .byte 0
 D:80036639                     .byte 0, 0, 0xA
 D:8003663C                     .word 0x3C, 0x3F19999A, 0
