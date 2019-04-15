@@ -9,7 +9,8 @@ s32 dword_CODE_bss_80075DB8;
 s32 dword_CODE_bss_80075DBC;
 s32 dword_CODE_bss_80075DC0;
 s32 dword_CODE_bss_80075DC4;
-char dword_CODE_bss_80075DC8[0xA0];
+char dword_CODE_bss_80075DC8[0x9C];
+s32 dword_CODE_bss_80075E64;
 char dword_CODE_bss_80075E68[0xBE0];
 s32 dword_CODE_bss_80076A48;
 
@@ -25,8 +26,10 @@ D:80032448                                              # set_enviro_fog_for_ite
 D:8003244C                     rgba_val <0xFF, 0xFF, 0xFF, 0>
 D:80032450                     .word 0xB24D2E00
 D:80032454                     .word 0
-D:80032458     dword_D_80032458:.word 0                 # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+164r
 */
+//D:80032458
+u32 D_80032458 = 0;
+
 //D:8003245C
 u32 size_right_item_buffer = 0x14820;
 //D:80032460
@@ -792,66 +795,100 @@ D:80035D04     dword_D_80035D04:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 D:80035D44     dword_D_80035D44:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:80035D44                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:80035D44                     .word 0, 0
-D:80035E04     dword_D_80035E04:.word 0x1B001C, 0x1D001E, 0x1B001C, 0x1D001E, 0x1B001C, 0x1D001E, 0x230024
-D:80035E04                                              # DATA XREF: recall_joy2_hits_edit_detail_edit_flag:loc_CODE_7F064518o
-D:80035E04                     .word 0x250026, 0x270028, 0x29002A, 0x2F0030, 0x310000, 0x450045, 0x5C005D
-D:80035E04                     .word 0x130014, 0x150016, 0x170018, 0x19001A, 0x170018, 0x19001A, 0x170018
-D:80035E04                     .word 0x19001A, 0x1F0020, 0x200021, 0x1F0020, 0x200021, 0x1F0020, 0x200021
-D:80035E04                     .word 0x230024, 0x250026, 0x270028, 0x29002A, 0xA400A5, 0xA600A7, 0xA80000
-D:80035E04                     .word 0x5C005D, 0x5F0060, 0x610000, 0, 0, 0, 0, 0, 0
-D:80035EB4                     .word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:80035EEC     dword_D_80035EEC:.word 0                 # DATA XREF: sub_CODE_7F068EC4+40o
-D:80035EF0     ammo_related:   .half      0,     0,     0,     0
-D:80035EF0                                              # DATA XREF: set_max_ammo_for_cur_player+18o
-D:80035EF0                                              # generate_ammo_total_microcode+ECo
-D:80035EF0                                              # generate_ammo_total_microcode+3CCo
-D:80035EF0                                              # sub_CODE_7F06A334+74o
-D:80035EF0                     .half      0,     0,     0, 0x320
-D:80035EF0                     .half  0x200, 0xC84,     0,     0
-D:80035EF0                     .half      0,  0xC8,     0,     0
-D:80035EF0                     .half      0,     0,     0, 0x190
-D:80035EF0                     .half  0x200, 0xC90,0xC000,     0
-D:80035EF0                     .half      0,  0x64, 0x200, 0xC9C
-D:80035EF0                     .half      0,     0,     0,   0xC
-D:80035EF0                     .half  0x200, 0xCD8,     0,     0
-D:80035EF0                     .half      0,     3, 0x200, 0xCC0
-D:80035EF0                     .half 0xC000,     0,     0,   0xA
-D:80035EF0                     .half  0x200, 0xCFC,0x3F80,     0
-D:80035EF0                     .half      0,   0xA, 0x200, 0xD14
-D:80035EF0                     .half 0x3F80,     0,     0,   0xA
-D:80035EF0                     .half  0x200, 0xD08,0x3F80,     0
-D:80035EF0                     .half      0,   0xA, 0x200, 0xCA8
-D:80035EF0                     .half      0,     0,     0,   0xC
-D:80035EF0                     .half  0x200, 0xCB4,     0,     0
-D:80035EF0                     .half      0,  0xC8, 0x200, 0xCE4
-D:80035EF0                     .half      0,     0,     0,  0x64
-D:80035EF0                     .half  0x200, 0xCF0,     0,     0
-D:80035EF0                     .half      0,  0x32,     0,     0
-D:80035EF0                     .half      0,     0,     0,   0xA
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,     2,     0,     0
-D:80035EF0                     .half      0,     0,     0,     8
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,     6,     0,     0
-D:80035EF0                     .half      0,     0,     0,   0xA
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,   0xA,     0,     0
-D:80035EF0                     .half      0,     0,     0,   0xA
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,     1,     0,     0
-D:80035EF0                     .half      0,     0,     0,   0xA
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0, 0x3E8,     0,     0
-D:80035EF0                     .half      0,     0,     0,   0xA
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,   0xA,     0,     0
-D:80035EF0                     .half      0,     0,     0,   0xA
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,  0x32, 0x200, 0xD20
-D:80035EF0                     .half 0xBF80,     0,     0,     1
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,     0,     0,     0
 */
+//D:80035E04
+u16 D_80035E04[] = {
+	0x1B, 0x1C, 0x1D, 0x1E, 0x1B, 0x1C, 0x1D, 0x1E, 0x1B, 0x1C, 0x1D, 0x1E, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28
+};
+//D:80035E28
+u16 D_80035E28[] = {0x29, 0x2A};
+//D:80035E2C
+u16 D_80035E2C[] = {0x2F, 0x30};
+//D:80035E30
+u16 D_80035E30[] = {0x31, 0};
+//D:80035E34
+u16 D_80035E34[] = {0x45, 0x45};
+//D:80035E38
+u16 D_80035E38[] = {0x5C, 0x5D};
+//D:80035E3C
+u16 D_80035E3C[] = {
+	0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x17, 0x18, 0x19, 0x1A, 0x17, 0x18, 0x19, 0x1A, 0x1F, 0x20, 0x20, 0x21, 0x1F, 0x20, 0x20, 0x21, 0x1F, 0x20, 0x20, 0x21, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2A
+};
+//D:80035E84
+u16 D_80035E84[] = {0xA4, 0xA5};
+//D:80035E88
+u16 D_80035E88[] = {0xA6, 0xA7};
+//D:80035E8C
+u16 D_80035E8C[] = {0xA8, 0};
+//D:80035E90
+u16 D_80035E90[] = {0x5C, 0x5D};
+//D:80035E94
+u16 D_80035E94[] = {0x5F, 0x60};
+//D:80035E98
+u16 D_80035E98[] = {0x61, 0};
+//D:80035E9C
+u32 D_80035E9C = 0;
+//D:80035EA0
+u32 D_80035EA0 = 0;
+//D:80035EA4
+u32 D_80035EA4 = 0;
+//D:80035EA8
+u32 D_80035EA8 = 0;
+//D:80035EAC
+u32 D_80035EAC = 0;
+//D:80035EB0
+u32 D_80035EB0[] = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:80035EEC
+u32 dword_D_80035EEC = 0;
+//D:80035EF0
+u16 ammo_related[]  = {
+	      0,     0,     0,     0,
+	      0,     0,     0, 0x320,
+	  0x200, 0xC84,     0,     0,
+	      0,  0xC8,     0,     0,
+	      0,     0,     0, 0x190,
+	  0x200, 0xC90,0xC000,     0,
+	      0,  0x64, 0x200, 0xC9C,
+	      0,     0,     0,   0xC,
+	  0x200, 0xCD8,     0,     0,
+	      0,     3, 0x200, 0xCC0,
+	 0xC000,     0,     0,   0xA,
+	  0x200, 0xCFC,0x3F80,     0,
+	      0,   0xA, 0x200, 0xD14,
+	 0x3F80,     0,     0,   0xA,
+	  0x200, 0xD08,0x3F80,     0,
+	      0,   0xA, 0x200, 0xCA8,
+	      0,     0,     0,   0xC,
+	  0x200, 0xCB4,     0,     0,
+	      0,  0xC8, 0x200, 0xCE4,
+	      0,     0,     0,  0x64,
+	  0x200, 0xCF0,     0,     0,
+	      0,  0x32,     0,     0,
+	      0,     0,     0,   0xA,
+	      0,     0,     0,     0,
+	      0,     2,     0,     0,
+	      0,     0,     0,     8,
+	      0,     0,     0,     0,
+	      0,     6,     0,     0,
+	      0,     0,     0,   0xA,
+	      0,     0,     0,     0,
+	      0,   0xA,     0,     0,
+	      0,     0,     0,   0xA,
+	      0,     0,     0,     0,
+	      0,     1,     0,     0,
+	      0,     0,     0,   0xA,
+	      0,     0,     0,     0,
+	      0, 0x3E8,     0,     0,
+	      0,     0,     0,   0xA,
+	      0,     0,     0,     0,
+	      0,   0xA,     0,     0,
+	      0,     0,     0,   0xA,
+	      0,     0,     0,     0,
+	      0,  0x32, 0x200, 0xD20,
+	 0xBF80,     0,     0,     1,
+	      0,     0,     0,     0,
+	      0,     0,     0,     0};
+
 
 //i may belong to objecthandler.c
 //D:80036060
@@ -16824,8 +16861,8 @@ glabel sub_GAME_7F068508
 .L7F0688C8:
 /* 09D3F8 7F0688C8 3C018005 */  lui   $at, %hi(D_800543D4) # $at, 0x8005
 /* 09D3FC 7F0688CC C43243D4 */  lwc1  $f18, %lo(D_800543D4)($at)
-/* 09D400 7F0688D0 3C018005 */  lui   $at, %hi(D_800543D8) # $at, 0x8005
-/* 09D404 7F0688D4 C42443D8 */  lwc1  $f4, %lo(D_800543D8)($at)
+/* 09D400 7F0688D0 3C018005 */  lui   $at, %hi(expended_shell_initial_gravity_modifier_pistol) # $at, 0x8005
+/* 09D404 7F0688D4 C42443D8 */  lwc1  $f4, %lo(expended_shell_initial_gravity_modifier_pistol)($at)
 /* 09D408 7F0688D8 46125003 */  div.s $f0, $f10, $f18
 /* 09D40C 7F0688DC 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 09D410 7F0688E0 44819000 */  mtc1  $at, $f18
@@ -17042,8 +17079,8 @@ glabel sub_GAME_7F068508
 .L7F068C10:
 /* 09D740 7F068C10 3C018005 */  lui   $at, %hi(D_800543FC) # $at, 0x8005
 /* 09D744 7F068C14 C43243FC */  lwc1  $f18, %lo(D_800543FC)($at)
-/* 09D748 7F068C18 3C018005 */  lui   $at, %hi(D_80054400) # $at, 0x8005
-/* 09D74C 7F068C1C C4244400 */  lwc1  $f4, %lo(D_80054400)($at)
+/* 09D748 7F068C18 3C018005 */  lui   $at, %hi(expended_shell_initial_gravity_modifier_non_pistol) # $at, 0x8005
+/* 09D74C 7F068C1C C4244400 */  lwc1  $f4, %lo(expended_shell_initial_gravity_modifier_non_pistol)($at)
 /* 09D750 7F068C20 46123003 */  div.s $f0, $f6, $f18
 /* 09D754 7F068C24 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 09D758 7F068C28 44819000 */  mtc1  $at, $f18
@@ -17127,8 +17164,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F068D20
 /* 09D850 7F068D20 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 09D854 7F068D24 C4228378 */  lwc1  $f2, %lo(global_timer_delta)($at)
-/* 09D858 7F068D28 3C018005 */  lui   $at, %hi(D_80054404) # $at, 0x8005
-/* 09D85C 7F068D2C C4244404 */  lwc1  $f4, %lo(D_80054404)($at)
+/* 09D858 7F068D28 3C018005 */  lui   $at, %hi(expended_shell_initial_gravity_modifier_all) # $at, 0x8005
+/* 09D85C 7F068D2C C4244404 */  lwc1  $f4, %lo(expended_shell_initial_gravity_modifier_all)($at)
 /* 09D860 7F068D30 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 09D864 7F068D34 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 09D868 7F068D38 46041182 */  mul.s $f6, $f2, $f4
@@ -17657,9 +17694,9 @@ glabel set_max_ammo_for_cur_player
 /* 09DE24 7F0692F4 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 09DE28 7F0692F8 AFB20020 */  sw    $s2, 0x20($sp)
 /* 09DE2C 7F0692FC AFB00018 */  sw    $s0, 0x18($sp)
-/* 09DE30 7F069300 3C118003 */  lui   $s1, %hi(D_80035EF0) # $s1, 0x8003
+/* 09DE30 7F069300 3C118003 */  lui   $s1, %hi(ammo_related) # $s1, 0x8003
 /* 09DE34 7F069304 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 09DE38 7F069308 26315EF0 */  addiu $s1, %lo(D_80035EF0) # addiu $s1, $s1, 0x5ef0
+/* 09DE38 7F069308 26315EF0 */  addiu $s1, %lo(ammo_related) # addiu $s1, $s1, 0x5ef0
 /* 09DE3C 7F06930C 00008025 */  move  $s0, $zero
 /* 09DE40 7F069310 2412001E */  li    $s2, 30
 .L7F069314:
@@ -18837,7 +18874,7 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                             if (check_special_attributes(sp60, 0x80000) == 0)
                             {
                                 // Node 12
-                                temp_v1 = ((sp5C * 0xc) + &D_80035EF0);
+                                temp_v1 = ((sp5C * 0xc) + &ammo_related);
                                 sp44 = 5;
                                 if (temp_v1->unk4 != 0)
                                 {
@@ -18936,7 +18973,7 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                             if (check_special_attributes(sp64, 0x80000) == 0)
                             {
                                 // Node 34
-                                temp_v1_2 = ((sp5C * 0xc) + &D_80035EF0);
+                                temp_v1_2 = ((sp5C * 0xc) + &ammo_related);
                                 sp3C = 5;
                                 if (temp_v1_2->unk4 != 0)
                                 {
@@ -19086,8 +19123,8 @@ glabel generate_ammo_total_microcode
 /* 09E904 7F069DD4 8FAF005C */   lw    $t7, 0x5c($sp)
 /* 09E908 7F069DD8 000FC080 */  sll   $t8, $t7, 2
 /* 09E90C 7F069DDC 030FC023 */  subu  $t8, $t8, $t7
-/* 09E910 7F069DE0 3C198003 */  lui   $t9, %hi(D_80035EF0) # $t9, 0x8003
-/* 09E914 7F069DE4 27395EF0 */  addiu $t9, %lo(D_80035EF0) # addiu $t9, $t9, 0x5ef0
+/* 09E910 7F069DE0 3C198003 */  lui   $t9, %hi(ammo_related) # $t9, 0x8003
+/* 09E914 7F069DE4 27395EF0 */  addiu $t9, %lo(ammo_related) # addiu $t9, $t9, 0x5ef0
 /* 09E918 7F069DE8 0018C080 */  sll   $t8, $t8, 2
 /* 09E91C 7F069DEC 03191821 */  addu  $v1, $t8, $t9
 /* 09E920 7F069DF0 8C620004 */  lw    $v0, 4($v1)
@@ -19281,8 +19318,8 @@ glabel generate_ammo_total_microcode
 /* 09EBE4 7F06A0B4 8FAA005C */   lw    $t2, 0x5c($sp)
 /* 09EBE8 7F06A0B8 000A5880 */  sll   $t3, $t2, 2
 /* 09EBEC 7F06A0BC 016A5823 */  subu  $t3, $t3, $t2
-/* 09EBF0 7F06A0C0 3C098003 */  lui   $t1, %hi(D_80035EF0) # $t1, 0x8003
-/* 09EBF4 7F06A0C4 25295EF0 */  addiu $t1, %lo(D_80035EF0) # addiu $t1, $t1, 0x5ef0
+/* 09EBF0 7F06A0C0 3C098003 */  lui   $t1, %hi(ammo_related) # $t1, 0x8003
+/* 09EBF4 7F06A0C4 25295EF0 */  addiu $t1, %lo(ammo_related) # addiu $t1, $t1, 0x5ef0
 /* 09EBF8 7F06A0C8 000B5880 */  sll   $t3, $t3, 2
 /* 09EBFC 7F06A0CC 01691821 */  addu  $v1, $t3, $t1
 /* 09EC00 7F06A0D0 8C620004 */  lw    $v0, 4($v1)
@@ -19507,7 +19544,7 @@ s32 sub_GAME_7F06A334(s32 arg0) {
                     if (check_special_attributes(sp50, 0x80000) == 0)
                     {
                         // Node 5
-                        temp_v0 = ((sp4C * 0xc) + &D_80035EF0);
+                        temp_v0 = ((sp4C * 0xc) + &ammo_related);
                         sp3C = 5;
                         sp30 = temp_v0;
                         sp40 = (void *) temp_v0->unk4;
@@ -19618,8 +19655,8 @@ glabel sub_GAME_7F06A334
 /* 09EECC 7F06A39C 8FAF004C */   lw    $t7, 0x4c($sp)
 /* 09EED0 7F06A3A0 000FC080 */  sll   $t8, $t7, 2
 /* 09EED4 7F06A3A4 030FC023 */  subu  $t8, $t8, $t7
-/* 09EED8 7F06A3A8 3C198003 */  lui   $t9, %hi(D_80035EF0) # $t9, 0x8003
-/* 09EEDC 7F06A3AC 27395EF0 */  addiu $t9, %lo(D_80035EF0) # addiu $t9, $t9, 0x5ef0
+/* 09EED8 7F06A3A8 3C198003 */  lui   $t9, %hi(ammo_related) # $t9, 0x8003
+/* 09EEDC 7F06A3AC 27395EF0 */  addiu $t9, %lo(ammo_related) # addiu $t9, $t9, 0x5ef0
 /* 09EEE0 7F06A3B0 0018C080 */  sll   $t8, $t8, 2
 /* 09EEE4 7F06A3B4 03191021 */  addu  $v0, $t8, $t9
 /* 09EEE8 7F06A3B8 8C480004 */  lw    $t0, 4($v0)
