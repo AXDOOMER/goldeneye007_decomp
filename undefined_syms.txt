@@ -123,7 +123,8 @@ D_80058378 = 0x80058378;
 
 gspFast3DDataStart = 0x8005c820;
 _cdataSegmentVaddrEnd = 0x8005D2E0;
-
+__osContLastCmd = 0x80067CE0;
+__osPfsPifRam = 0x80067D70;
 D_80079F4C = 0x80079F4C;
 D_80079F54 = 0x80079F54;
 D_80079FBC = 0x80079FBC;

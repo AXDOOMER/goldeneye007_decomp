@@ -38,6 +38,39 @@ struct struct_12 {
     void * anonymous_7;
 };
 
+struct struct_16 {
+    int anonymous_0;
+    int anonymous_1;
+    int anonymous_2;
+    int anonymous_3;
+    int anonymous_4;
+    int anonymous_5;
+    void * anonymous_6;
+};
+
+struct struct_20 {
+    int anonymous_0;
+    int anonymous_1;
+    int anonymous_2;
+    int anonymous_3;
+    int anonymous_4;
+    int anonymous_5;
+    int anonymous_6;
+    int anonymous_7;
+    int anonymous_8;
+    int anonymous_9;
+    int anonymous_10;
+    int anonymous_11;
+    int anonymous_12;
+    int anonymous_13;
+    int anonymous_14;
+    int anonymous_15;
+    int anonymous_16;
+    int anonymous_17;
+    int anonymous_18;
+    void * anonymous_19;
+};
+
 extern u32 D_800312A0[];
 extern u32 D_800312B4[];
 extern u32 D_800312C8[];
@@ -60,6 +93,7 @@ extern struct struct_12 D_80031B24[];
 extern struct struct_12 D_80031B38[];
 extern struct struct_12 D_80031B4C[];
 extern u32 D_80031B60[];
+extern u32 D_80031D30[];
 extern u32 monitor_animation_microcode[];
 extern u32 dword_D_80031F00[];
 extern u32 dword_D_80031F44[];
