@@ -174,8 +174,10 @@ s16 Throwing_knife_SFX_1 = 0x5F;
 s16 Throwing_knife_SFX_2 = 0x60;
 s16 Throwing_knife_SFX_3 = 0x61;
 
-u16 Throwing_knife_SFX_4[] = {
-     0,     0,     1,     3,     0,      0,    0,     0,     0,
+u16 Throwing_knife_SFX_4 = 0;
+
+u32 D_80030B34[] = {
+     0,     1,     3,     0,      0,    0,     0,     0,
      0,     0,     0,     0,     0,     0,     0,     0,     0,
      0,     0,     0,     0,     0,     0,     0,     0     
 };
@@ -185,7 +187,11 @@ u32 monitor_animation_microcode[] = {
      0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14,         5,
      0x200,      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14,
          8,      0x14,         5,     0x400,      0x14,         6,     0x400,      0x14,
-         8,      0x14,       0xB,         7,       0xC,         1,     0x400,      0x14,
+         8,      0x14,       0xB
+};
+
+u32 D_80030C00[] = {
+         7,       0xC,         1,     0x400,      0x14,
          8,      0x14,         2,     0x400,      0x14,       0xD,      0xFF,      0x14,
          8,      0x14,         5,     0x200,      0x14,         6,     0x200,      0x14,
        0xD,0xFFFFFFFF,      0x14,         8,      0x14,         5,     0x400,      0x14,
@@ -202,152 +208,175 @@ u32 monitor_animation_microcode[] = {
          2,     0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14,
          5,     0x200,      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,
       0x14,         8,      0x14,         5,     0x400,      0x14,         6,     0x400,
-      0x14,         8,      0x14,       0xB,         7,      0x11,         8,      0x50,
+      0x14,         8,      0x14,       0xB,
+};
+
+u32 D_80030E24[] = {
+         7,      0x11,         8,      0x50,
          7,      0x12,         8,      0x50,         7,      0x13,         8,      0x50,
          7,      0x14,         8,      0x50,         7,      0x15,         8,      0x50,
          7,      0x16,         8,      0x50,         7,      0x17,         8,      0x50,
          7,      0x18,         8,      0x50,         7,      0x19,         8,      0x50,
-         7,      0x1A,         8,      0x50,       0xB,         7,         7,         8,
+         7,      0x1A,         8,      0x50,       0xB,
+};
+
+u32 D_80030EC8[] = {
+         7,         7,         8,
       0x50,         7,         8,         8,      0x50,         7,         9,         8,
       0x50,         7,       0xC,         8,      0x50,         7,       0xD,         8,
       0x50,         8,      0x50,         7,      0x19,         8,      0x50,         7,
       0x14,         8,      0x50,       0xB
 };
+
+u32 D_80030F44[] = {
+     0xD,0x202020FF,         1,         7,      0x1C,         1,     0x800,      0x78,
+     8,      0x78,         5,     0x100,         1,         6,     0x200,      0x3C,
+     1,0xFFFFE000,      0x78,         8,      0x78,         5,     0x400,         1,
+     6,     0x400,      0x3C,         6,     0x400,      0x3C,         1,     0x800,
+     0x78,         8,      0x78,         5,      0x80,         1,         6,     0x800,
+     0x3C,         6,     0x400,      0x78,         2,     0x400,      0x3C,         1,
+     0x200,      0x78,         8,      0x78,       0xB
+};
+
+u32 D_80031018[] = {
+     0xD, 0x202020FF, 1, 7, 0x1C, 5, 0x80, 1, 6, 0x800, 0x3C, 6, 0x400, 0x78,
+     2, 0x400, 0xA, 1, 0x200, 0x28, 8, 0x78, 0xB
+};
+
+u32 D_80031074[] = {
+     7, 0x1D, 0xD, 0x8000FF, 1, 2, 0xFFFFFE00, 0x50, 8, 0x78, 2, 0xFFFFFF00,
+     0x14, 8, 0x78, 2, 0xFFFFFF80, 0xA, 8, 0x28, 2, 0xFFFFFE00, 0x28, 8, 0x3C,
+     2, 0xFFFFFFC0, 0x1E, 8, 0x78, 0xB
+};
+
+u32 D_800310F0[] = {
+     7, 0x1D, 0xD, 0x280000FF, 1, 2, 0x200, 0x50, 8, 0x78, 2, 0x100, 0x14,
+     8, 0x78, 2, 0x80, 0xA, 8, 0x28, 2, 0x200, 0x28, 8, 0x3C, 2, 0x40, 0x1E,
+     8, 0x78, 2, 0x100, 0x14, 8, 0x78, 2, 0x80, 0xA, 0xB
+};
+
+u32 D_8003118C[] = {
+     7, 0x1D, 0xD, 0x3C00FF, 1, 2, 0x200, 0x50, 8, 0x78, 2, 0x80, 0xA, 8,
+     0x28, 2, 0x100, 0x14, 8, 0x78, 2, 0x80, 0xA, 8, 0x28, 2, 0x200, 0x28,
+     8, 0x3C, 2, 0x40, 0x1E, 8, 0x78, 0xB
+};
+
+u32 D_8003121C[] = {
+     7, 0x1E, 0xD, 0x404000FF, 1, 1, 0x280, 1, 8, 0xA, 0xB
+};
+
+u32 D_80031248[] = {
+     7, 0x1E, 0xD, 0x4040FF, 1, 1, 0x280, 1, 8, 0xA, 0xB
+};
+
+u32 D_80031274[] = {
+     7,      0x1E,       0xD,0x406440FF,         1,         1,0xFFFFFD80,
+     1,         8,       0xA,       0xB
+};
+
+u32 D_800312A0[] = {
+     0xD, 0xAFF0AFE, 0x14, 9, &D_800312C8
+};
+
+u32 D_800312B4[] = {
+     0xD, 0xA640AFE, 0x14, 9, (u32)&D_800312C8
+};
+
+u32 D_800312C8[] = {
+     0xF, 0xB6, 8, 1, 0xA, &D_800312A0, 0x51E, 0xA, &D_800312B4, 0x147A, 0xB
+};
+
+u32 D_800312F4[] = {
+     7, 0x30, 0xD, 0xA960AFE, 1, 9, &D_800312B4
+};
+
+u32 D_80031310[] = {
+     7, 0x10, 0xD, 0x303080FF, 0x1E, 8, 5, 7, 0x2D, 8, 5, 7, 0x2E, 8, 5, 7, 0x2F, 8, 5, 0xB
+};
+
+u32 D_80031360[] = {
+     7,      0x2C,       0xD,0x308030FF,      0x1E,         1,0xFFFFFC00,     0x400,
+     8,     0x5A0,         3,     0x288,     0x168,         4,     0x3AA,     0x168,
+     5,      0x80,     0x12C,         6,      0x80,     0x12C,       0xD,      0xFF,
+     0x3C,         8,      0x3C,       0xD,0x808080FF,       0xA,         8,      0x5A,
+     0xD,0x38C838FF,      0x1E,         8,      0x1E,       0xD,0x803838FF,      0x3C,
+     8,      0x3C,       0xD,0x808080FF,      0x3C,         8,      0x3C,         3,
+     0x200,     0x168,         4,     0x200,     0x168,         5,     0x400,     0x2D0,
+     6,     0x400,     0x2D0,         8,     0x12C,         7,      0x2C,         8,
+     0x1A4,       0xD,  0xC800FF,      0x1E,         8,      0x1E,       0xD,0x1E381EFF,
+     0x3C,         8,      0x3C,       0xB
+};
+
+u32 D_80031490[] = {
+     0xD,      0xFF,         1,       0xD,0xC8C8C8FF,     0x190,         7,         1,
+     8,     0x2A8,         7,         2,         8,     0x2A8,         7,         4,
+     8,      0xB4,       0xD,0x808032FF,         1,         7,         4,         8,
+     0xC8,       0xB
+};
+
+u32 D_800314F8[] = {
+     5,     0x400,         1,         6,     0x400,         1,       0xD,0xC81414FF,
+     1,         7,         6,         8,     0x258,       0xD,0xC8C8C8FF,         5,
+     8,         5,       0xD,0x383838FF,      0x3C,         7,      0x1B,       0xD,
+     0xA0A0AFF,      0x64,         8,     0x190,       0xB
+};
+
+u32 D_8003156C[] = {
+     0xD, 0xA960AFF,         0,         7,      0x28,         8,         5,         7,
+     0x29,         8,         5,         7,      0x2A,         8,         5,         7,
+     0x2B,         8,       0xA,         7,      0x29,         8,         5,       0xB
+};
+
+u32 D_800315CC[] = {
+     7,      0x24,       0xD, 0xA960AFF,         0,         8,         3,       0xD,
+     0x87808FF,         0,         8,         2,       0xD, 0xA960AFF,         0,         8,
+     3,       0xD, 0x87808FF,         0,         8,         2,         1,     0x264,
+     0x1E,         7,      0x25,       0xD, 0xA960AFF,         0,         8,         3,
+     0xD, 0x87808FF,         0,         8,         2,         7,      0x26,       0xD,
+     0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,         0,         8,
+     2,         7,      0x27,       0xD, 0xA960AFF,         0,         8,         3,
+     0xD, 0x87808FF,         0,         8,         2,       0xD, 0xA960AFF,         0,
+     8,         3,       0xD, 0x87808FF,         0,         8,         2,       0xD,
+     0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,         0,         8,
+     2,       0xD, 0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,
+     0,         8,         2,         1,     0x19C,      0x28,         7,      0x26,
+     0xD, 0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,         0,
+     8,         2,       0xD, 0xA960AFF,         0,         8,         3,       0xD,
+     0x87808FF,         0,         8,         2,         7,      0x25,       0xD, 0xA960AFF,
+     0,         8,         3,       0xD, 0x87808FF,         0,         8,         2,
+     0xD, 0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,         0,
+     8,         2,       0xD, 0xA960AFF,         0,         8,         3,       0xD,
+     0x87808FF,         0,         8,         2,       0xD, 0xA960AFF,         0,         8,
+     3,       0xD, 0x87808FF,         0,         8,         2,       0xB
+};
+
+u32 D_80031848[] = {
+     0x0000000D, 0x0A780AFF,
+     0x00000000, 0x00000007,
+     0x00000020, 0x00000008,
+     0x00000005, 0x00000007,
+     0x00000021, 0x00000008,
+     0x00000005, 0x00000007,
+     0x00000022, 0x00000008,
+     0x00000005, 0x00000007,
+     0x00000023, 0x00000008,
+     0x00000005, 0x0000000B
+};
+
+u32 D_80031898[] = {7, 0x1C, 0xD, 0x800000, 1, 8, 5, 0xB};
 /*
-dword_D_80030F44:.word        0xD,0x202020FF,         1,         7,      0x1C,         1,     0x800,      0x78
-                .word          8,      0x78,         5,     0x100,         1,         6,     0x200,      0x3C
-                .word          1,0xFFFFE000,      0x78,         8,      0x78,         5,     0x400,         1
-                .word          6,     0x400,      0x3C,         6,     0x400,      0x3C,         1,     0x800
-                .word       0x78,         8,      0x78,         5,      0x80,         1,         6,     0x800
-                .word       0x3C,         6,     0x400,      0x78,         2,     0x400,      0x3C,         1
-                .word      0x200,      0x78,         8,      0x78,       0xB
-dword_D_80031018:.word 0xD, 0x202020FF, 1, 7, 0x1C, 5, 0x80, 1, 6, 0x800, 0x3C, 6, 0x400, 0x78
-                .word 2, 0x400, 0xA, 1, 0x200, 0x28, 8, 0x78, 0xB
-dword_D_80031074:.word 7, 0x1D, 0xD, 0x8000FF, 1, 2, 0xFFFFFE00, 0x50, 8, 0x78, 2, 0xFFFFFF00
-                .word 0x14, 8, 0x78, 2, 0xFFFFFF80, 0xA, 8, 0x28, 2, 0xFFFFFE00, 0x28, 8, 0x3C
-                .word 2, 0xFFFFFFC0, 0x1E, 8, 0x78, 0xB
-dword_D_800310F0:.word 7, 0x1D, 0xD, 0x280000FF, 1, 2, 0x200, 0x50, 8, 0x78, 2, 0x100, 0x14
-                .word 8, 0x78, 2, 0x80, 0xA, 8, 0x28, 2, 0x200, 0x28, 8, 0x3C, 2, 0x40, 0x1E
-                .word 8, 0x78, 2, 0x100, 0x14, 8, 0x78, 2, 0x80, 0xA, 0xB
-dword_D_8003118C:.word 7, 0x1D, 0xD, 0x3C00FF, 1, 2, 0x200, 0x50, 8, 0x78, 2, 0x80, 0xA, 8
-                .word 0x28, 2, 0x100, 0x14, 8, 0x78, 2, 0x80, 0xA, 8, 0x28, 2, 0x200, 0x28
-                .word 8, 0x3C, 2, 0x40, 0x1E, 8, 0x78, 0xB
-dword_D_8003121C:.word 7, 0x1E, 0xD, 0x404000FF, 1, 1, 0x280, 1, 8, 0xA, 0xB
-dword_D_80031248:.word 7, 0x1E, 0xD, 0x4040FF, 1, 1, 0x280, 1, 8, 0xA, 0xB
-dword_D_80031274:.word          7,      0x1E,       0xD,0x406440FF,         1,         1,0xFFFFFD80
-                .word          1,         8,       0xA,       0xB
-dword_D_800312A0:.word 0xD
-                .word 0xAFF0AFE
-                .word 0x14
-                .word 9
-                .word dword_D_800312C8
-dword_D_800312B4:.word 0xD
-                .word 0xA640AFE
-                .word 0x14
-                .word 9
-                .word dword_D_800312C8
-dword_D_800312C8:.word 0xF
-                .word 0xB6
-                .word 8
-                .word 1
-                .word 0xA
-                .word dword_D_800312A0
-                .word 0x51E
-                .word 0xA
-                .word dword_D_800312B4
-                .word 0x147A
+stru_D_800318B8:struct_5 <0xA, D_80031018, 0x1999>
+                struct_5 <0xA, D_8003156C, 0x1999>
+                struct_5 <0xA, D_8003121C, 0x1999>
+                struct_5 <0xA, D_80031248, 0x1999>
+                struct_5 <0xA, D_80031274, 0x1999>
+                struct_5 <0xA, D_800310F0, 0x3333>
+                struct_5 <0xA, D_8003118C, 0x6666>
+                struct_5 <0xA, D_80031074, 0xFFFF>
                 .word 0xB
-dword_D_800312F4:.word 7
-                .word 0x30
-                .word 0xD
-                .word 0xA960AFE
-                .word 1
-                .word 9
-                .word dword_D_800312B4
-dword_D_80031310:.word 7
-                .word 0x10
-                .word 0xD
-                .word 0x303080FF
-                .word 0x1E
-                .word 8
-                .word 5
-                .word 7
-                .word 0x2D
-                .word 8
-                .word 5
-                .word 7
-                .word 0x2E
-                .word 8
-                .word 5
-                .word 7
-                .word 0x2F
-                .word 8
-                .word 5
-                .word 0xB
-dword_D_80031360:.word          7,      0x2C,       0xD,0x308030FF,      0x1E,         1,0xFFFFFC00,     0x400
-                .word          8,     0x5A0,         3,     0x288,     0x168,         4,     0x3AA,     0x168
-                .word          5,      0x80,     0x12C,         6,      0x80,     0x12C,       0xD,      0xFF
-                .word       0x3C,         8,      0x3C,       0xD,0x808080FF,       0xA,         8,      0x5A
-                .word        0xD,0x38C838FF,      0x1E,         8,      0x1E,       0xD,0x803838FF,      0x3C
-                .word          8,      0x3C,       0xD,0x808080FF,      0x3C,         8,      0x3C,         3
-                .word      0x200,     0x168,         4,     0x200,     0x168,         5,     0x400,     0x2D0
-                .word          6,     0x400,     0x2D0,         8,     0x12C,         7,      0x2C,         8
-                .word      0x1A4,       0xD,  0xC800FF,      0x1E,         8,      0x1E,       0xD,0x1E381EFF
-                .word       0x3C,         8,      0x3C,       0xB
-dword_D_80031490:.word        0xD,      0xFF,         1,       0xD,0xC8C8C8FF,     0x190,         7,         1
-                .word          8,     0x2A8,         7,         2,         8,     0x2A8,         7,         4
-                .word          8,      0xB4,       0xD,0x808032FF,         1,         7,         4,         8
-                .word       0xC8,       0xB
-dword_D_800314F8:.word          5,     0x400,         1,         6,     0x400,         1,       0xD,0xC81414FF
-                .word          1,         7,         6,         8,     0x258,       0xD,0xC8C8C8FF,         5
-                .word          8,         5,       0xD,0x383838FF,      0x3C,         7,      0x1B,       0xD
-                .word  0xA0A0AFF,      0x64,         8,     0x190,       0xB
-dword_D_8003156C:.word        0xD, 0xA960AFF,         0,         7,      0x28,         8,         5,         7
-                .word       0x29,         8,         5,         7,      0x2A,         8,         5,         7
-                .word       0x2B,         8,       0xA,         7,      0x29,         8,         5,       0xB
-                .word          7,      0x24,       0xD, 0xA960AFF,         0,         8,         3,       0xD
-                .word  0x87808FF,         0,         8,         2,       0xD, 0xA960AFF,         0,         8
-                .word          3,       0xD, 0x87808FF,         0,         8,         2,         1,     0x264
-                .word       0x1E,         7,      0x25,       0xD, 0xA960AFF,         0,         8,         3
-                .word        0xD, 0x87808FF,         0,         8,         2,         7,      0x26,       0xD
-                .word  0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,         0,         8
-                .word          2,         7,      0x27,       0xD, 0xA960AFF,         0,         8,         3
-                .word        0xD, 0x87808FF,         0,         8,         2,       0xD, 0xA960AFF,         0
-                .word          8,         3,       0xD, 0x87808FF,         0,         8,         2,       0xD
-                .word  0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,         0,         8
-                .word          2,       0xD, 0xA960AFF,         0,         8,         3,       0xD, 0x87808FF
-                .word          0,         8,         2,         1,     0x19C,      0x28,         7,      0x26
-                .word        0xD, 0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,         0
-                .word          8,         2,       0xD, 0xA960AFF,         0,         8,         3,       0xD
-                .word  0x87808FF,         0,         8,         2,         7,      0x25,       0xD, 0xA960AFF
-                .word          0,         8,         3,       0xD, 0x87808FF,         0,         8,         2
-                .word        0xD, 0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,         0
-                .word          8,         2,       0xD, 0xA960AFF,         0,         8,         3,       0xD
-                .word  0x87808FF,         0,         8,         2,       0xD, 0xA960AFF,         0,         8
-                .word          3,       0xD, 0x87808FF,         0,         8,         2,       0xB
-byte_D_80031848:.byte    0,   0,   0, 0xD, 0xA,0x78, 0xA,0xFF
-                .byte    0,   0,   0,   0,   0,   0,   0,   7
-                .byte    0,   0,   0,0x20,   0,   0,   0,   8
-                .byte    0,   0,   0,   5,   0,   0,   0,   7
-                .byte    0,   0,   0,0x21,   0,   0,   0,   8
-                .byte    0,   0,   0,   5,   0,   0,   0,   7
-                .byte    0,   0,   0,0x22,   0,   0,   0,   8
-                .byte    0,   0,   0,   5,   0,   0,   0,   7
-                .byte    0,   0,   0,0x23,   0,   0,   0,   8
-                .byte    0,   0,   0,   5,   0,   0,   0, 0xB
-dword_D_80031898:.word 7, 0x1C, 0xD, 0x800000, 1, 8, 5, 0xB
-stru_D_800318B8:struct_5 <0xA, dword_D_80031018, 0x1999>
-                struct_5 <0xA, dword_D_8003156C, 0x1999>
-                struct_5 <0xA, dword_D_8003121C, 0x1999>
-                struct_5 <0xA, dword_D_80031248, 0x1999>
-                struct_5 <0xA, dword_D_80031274, 0x1999>
-                struct_5 <0xA, dword_D_800310F0, 0x3333>
-                struct_5 <0xA, dword_D_8003118C, 0x6666>
-                struct_5 <0xA, dword_D_80031074, 0xFFFF>
-                .word 0xB
-stru_D_8003191C:struct_5 <0xA, dword_D_80030F44, 0x51E>
-                struct_5 <0xA, dword_D_8003121C, 0x51E>
-                struct_5 <0xA, dword_D_80031074, 0x51E>
+stru_D_8003191C:struct_5 <0xA, D_80030F44, 0x51E>
+                struct_5 <0xA, D_8003121C, 0x51E>
+                struct_5 <0xA, D_80031074, 0x51E>
                 struct_5 <0xA, stru_D_80031950, 0x9999>
                 .word 0xB
 stru_D_80031950:struct_5 <0xA, stru_D_800319D4, 0x1999>
@@ -8928,8 +8957,8 @@ glabel sub_GAME_7F03A6F4
 /* 06F39C 7F03A86C 3C158007 */  lui   $s5, %hi(dword_CODE_bss_80071DF0) # $s5, 0x8007
 /* 06F3A0 7F03A870 26B51DF0 */  addiu $s5, %lo(dword_CODE_bss_80071DF0) # addiu $s5, $s5, 0x1df0
 /* 06F3A4 7F03A874 8EAD0000 */  lw    $t5, ($s5)
-/* 06F3A8 7F03A878 3C0E8007 */  lui   $t6, %hi(D_80071621) # $t6, 0x8007
-/* 06F3AC 7F03A87C 25CE1621 */  addiu $t6, %lo(D_80071621) # addiu $t6, $t6, 0x1621
+/* 06F3A8 7F03A878 3C0E8007 */  lui   $t6, %hi(dword_CODE_bss_80071620+1) # $t6, 0x8007
+/* 06F3AC 7F03A87C 25CE1621 */  addiu $t6, %lo(dword_CODE_bss_80071620+1) # addiu $t6, $t6, 0x1621
 /* 06F3B0 7F03A880 01AE082B */  sltu  $at, $t5, $t6
 /* 06F3B4 7F03A884 14200030 */  bnez  $at, .L7F03A948
 /* 06F3B8 7F03A888 26731620 */   addiu $s3, $s3, 0x1620
@@ -22640,7 +22669,7 @@ glabel object_interaction
 /* 07A0BC 7F04558C 014C7021 */  addu  $t6, $t2, $t4
 /* 07A0C0 7F045590 AE0E00A8 */  sw    $t6, 0xa8($s0)
 /* 07A0C4 7F045594 C6260018 */  lwc1  $f6, 0x18($s1)
-/* 07A0C8 7F045598 3C018005 */  lui   $at, %hi(D_80052A98) # $at, 0x8005
+/* 07A0C8 7F045598 3C018005 */  lui   $at, %hi(rocket_initial_gravity_modifier) # $at, 0x8005
 /* 07A0CC 7F04559C E7A6062C */  swc1  $f6, 0x62c($sp)
 /* 07A0D0 7F0455A0 C62A001C */  lwc1  $f10, 0x1c($s1)
 /* 07A0D4 7F0455A4 E7AA0630 */  swc1  $f10, 0x630($sp)
@@ -22650,7 +22679,7 @@ glabel object_interaction
 /* 07A0E4 7F0455B4 306D0020 */  andi  $t5, $v1, 0x20
 /* 07A0E8 7F0455B8 11A0004B */  beqz  $t5, .L7F0456E8
 /* 07A0EC 7F0455BC 00000000 */   nop   
-/* 07A0F0 7F0455C0 C4322A98 */  lwc1  $f18, %lo(D_80052A98)($at)
+/* 07A0F0 7F0455C0 C4322A98 */  lwc1  $f18, %lo(rocket_initial_gravity_modifier)($at)
 /* 07A0F4 7F0455C4 C600001C */  lwc1  $f0, 0x1c($s0)
 /* 07A0F8 7F0455C8 3C028005 */  lui   $v0, %hi(global_timer_delta) # $v0, 0x8005
 /* 07A0FC 7F0455CC 24428378 */  addiu $v0, %lo(global_timer_delta) # addiu $v0, $v0, -0x7c88
@@ -22730,9 +22759,9 @@ glabel object_interaction
 .L7F0456E8:
 /* 07A218 7F0456E8 3C028005 */  lui   $v0, %hi(global_timer_delta) # $v0, 0x8005
 /* 07A21C 7F0456EC 24428378 */  addiu $v0, %lo(global_timer_delta) # addiu $v0, $v0, -0x7c88
-/* 07A220 7F0456F0 3C018005 */  lui   $at, %hi(D_80052AA4) # $at, 0x8005
+/* 07A220 7F0456F0 3C018005 */  lui   $at, %hi(prop_projectile_gravity_modifier) # $at, 0x8005
 /* 07A224 7F0456F4 306B0010 */  andi  $t3, $v1, 0x10
-/* 07A228 7F0456F8 C4322AA4 */  lwc1  $f18, %lo(D_80052AA4)($at)
+/* 07A228 7F0456F8 C4322AA4 */  lwc1  $f18, %lo(prop_projectile_gravity_modifier)($at)
 /* 07A22C 7F0456FC C4420000 */  lwc1  $f2, ($v0)
 /* 07A230 7F045700 C600001C */  lwc1  $f0, 0x1c($s0)
 /* 07A234 7F045704 15600015 */  bnez  $t3, .L7F04575C
@@ -25473,8 +25502,8 @@ glabel object_interaction
 /* 07CA18 7F047EE8 0FC1B303 */  jal   setsuboffset
 /* 07CA1C 7F047EEC AFA50070 */   sw    $a1, 0x70($sp)
 /* 07CA20 7F047EF0 8E300014 */  lw    $s0, 0x14($s1)
-/* 07CA24 7F047EF4 3C0E8003 */  lui   $t6, %hi(D_8002A050) # $t6, 0x8003
-/* 07CA28 7F047EF8 8DCEA050 */  lw    $t6, %lo(D_8002A050)($t6)
+/* 07CA24 7F047EF4 3C0E8003 */  lui   $t6, %hi(animation_table_ptrs2+4) # $t6, 0x8003
+/* 07CA28 7F047EF8 8DCEA050 */  lw    $t6, %lo(animation_table_ptrs2+4)($t6)
 /* 07CA2C 7F047EFC 8E0A0020 */  lw    $t2, 0x20($s0)
 /* 07CA30 7F047F00 3C054127 */  lui   $a1, (0x4127020C >> 16) # lui $a1, 0x4127
 /* 07CA34 7F047F04 02002025 */  move  $a0, $s0
