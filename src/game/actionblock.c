@@ -364,51 +364,66 @@ u32 D_80031848[] = {
 };
 
 u32 D_80031898[] = {7, 0x1C, 0xD, 0x800000, 1, 8, 5, 0xB};
+
+struct struct_5 D_800318B8[] = {
+     {0xA, D_80031018, 0x1999},
+     {0xA, D_8003156C, 0x1999},
+     {0xA, D_8003121C, 0x1999},
+     {0xA, D_80031248, 0x1999},
+     {0xA, D_80031274, 0x1999},
+     {0xA, D_800310F0, 0x3333},
+     {0xA, D_8003118C, 0x6666},
+     {0xA, D_80031074, 0xFFFF}
+};
+
+u32 D_80031918 = 0xB;
+
+struct struct_5 D_8003191C[] = {
+     {0xA, D_80030F44, 0x51E},
+     {0xA, D_8003121C, 0x51E},
+     {0xA, D_80031074, 0x51E},
+     {0xA, &D_80031950, 0x9999}
+};
+
+u32 D_8003194C = 0xB;
+
+struct struct_5 D_80031950[] = {
+     {0xA, &D_800319D4, 0x1999},
+     {0xA, &D_800319F0, 0x1999},
+     {0xA, &D_80031A0C, 0x1999},
+     {0xA, &D_80031A28, 0x1999},
+     {0xA, &D_80031A44, 0x1999},
+     {0xA, &D_80031A60, 0x1999},
+     {0xA, &D_80031A7C, 0x1999},
+     {0xA, &D_80031A98, 0x1999},
+     {0xA, &D_80031AB4, 0x1999},
+     {0xA, &D_80031AD0, 0x1999}
+};
+u32 D_800319C8[] = {8, 0x64, 0xB};
+
+struct struct_0 D_800319D4 = {7, 0x11, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
+struct struct_0 D_800319F0 = {7, 0x12, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
+struct struct_0 D_80031A0C = {7, 0x13, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
+struct struct_0 D_80031A28 = {7, 0x14, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
+struct struct_0 D_80031A44 = {7, 0x15, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
+struct struct_0 D_80031A60 = {7, 0x16, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
+struct struct_0 D_80031A7C = {7, 0x17, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
+struct struct_0 D_80031A98 = {7, 0x18, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
+struct struct_0 D_80031AB4 = {7, 0x19, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
+struct struct_0 D_80031AD0 = {7, 0x1A, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
+
+struct struct_5 D_80031AEC[] = {
+     {0xA, &D_80031B24, 0x1999},
+     {0xA, &D_80031B38, 0x1999},
+     {0xA, &D_80031B4C, 0x1999}
+};
+
+struct struct_12 D_80031B20[] = {0xD, 0xC8, 0xC8, 0xC8, 0xFF, 0x3C, 9, D_80031B60};
+struct struct_12 D_80031B24[] = {0xD, 0xC8, 0x32, 0x32, 0xFF, 0x3C, 9, D_80031B60};
+struct struct_12 D_80031B38[] = {0xD, 0x32, 0xC8, 0x32, 0xFF, 0x3C, 9, D_80031B60};
+struct struct_12 D_80031B4C[] = {0xD, 0x32, 0x32, 0xC8, 0xFF, 0x3C, 9, D_80031B60};
+u32 D_80031B60[] = {8, 0x32};
 /*
-stru_D_800318B8:struct_5 <0xA, D_80031018, 0x1999>
-                struct_5 <0xA, D_8003156C, 0x1999>
-                struct_5 <0xA, D_8003121C, 0x1999>
-                struct_5 <0xA, D_80031248, 0x1999>
-                struct_5 <0xA, D_80031274, 0x1999>
-                struct_5 <0xA, D_800310F0, 0x3333>
-                struct_5 <0xA, D_8003118C, 0x6666>
-                struct_5 <0xA, D_80031074, 0xFFFF>
-                .word 0xB
-stru_D_8003191C:struct_5 <0xA, D_80030F44, 0x51E>
-                struct_5 <0xA, D_8003121C, 0x51E>
-                struct_5 <0xA, D_80031074, 0x51E>
-                struct_5 <0xA, stru_D_80031950, 0x9999>
-                .word 0xB
-stru_D_80031950:struct_5 <0xA, stru_D_800319D4, 0x1999>
-                struct_5 <0xA, stru_D_800319F0, 0x1999>
-                struct_5 <0xA, stru_D_80031A0C, 0x1999>
-                struct_5 <0xA, stru_D_80031A28, 0x1999>
-                struct_5 <0xA, stru_D_80031A44, 0x1999>
-                struct_5 <0xA, stru_D_80031A60, 0x1999>
-                struct_5 <0xA, stru_D_80031A7C, 0x1999>
-                struct_5 <0xA, stru_D_80031A98, 0x1999>
-                struct_5 <0xA, stru_D_80031AB4, 0x1999>
-                struct_5 <0xA, stru_D_80031AD0, 0x1999>
-                .word 8, 0x64, 0xB
-stru_D_800319D4:struct_0 <7, 0x11, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-stru_D_800319F0:struct_0 <7, 0x12, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-stru_D_80031A0C:struct_0 <7, 0x13, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-stru_D_80031A28:struct_0 <7, 0x14, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-stru_D_80031A44:struct_0 <7, 0x15, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-stru_D_80031A60:struct_0 <7, 0x16, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-stru_D_80031A7C:struct_0 <7, 0x17, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-stru_D_80031A98:struct_0 <7, 0x18, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-stru_D_80031AB4:struct_0 <7, 0x19, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-stru_D_80031AD0:struct_0 <7, 0x1A, 8, 0x14, 0xA, stru_D_80031AEC, 0xFFFF>
-stru_D_80031AEC:struct_5 <0xA, stru_D_80031B24, 0x1999>
-                struct_5 <0xA, stru_D_80031B38, 0x1999>
-                struct_5 <0xA, stru_D_80031B4C, 0x1999>
-                struct_12 <0xD, 0xC8, 0xC8, 0xC8, 0xFF, 0x3C, 9, dword_D_80031B60>
-stru_D_80031B24:struct_12 <0xD, 0xC8, 0x32, 0x32, 0xFF, 0x3C, 9, dword_D_80031B60>
-stru_D_80031B38:struct_12 <0xD, 0x32, 0xC8, 0x32, 0xFF, 0x3C, 9, dword_D_80031B60>
-stru_D_80031B4C:struct_12 <0xD, 0x32, 0x32, 0xC8, 0xFF, 0x3C, 9, dword_D_80031B60>
-dword_D_80031B60:.word 8
-                .word 0x32
                 struct_5 <0xA, stru_D_80031BB4, 0x1999>
                 struct_5 <0xA, stru_D_80031BD0, 0x1999>
                 struct_5 <0xA, stru_D_80031BEC, 0x1999>
@@ -418,6 +433,7 @@ dword_D_80031B60:.word 8
                 .word 0x12C
                 .word 9
                 .word dword_D_80031D30
+                
 stru_D_80031BB4:struct_16 <1, 0x800, 0x78, 8, 0x78, 9, dword_D_80031D30>
 stru_D_80031BD0:struct_16 <2, 0x2000, 0x32, 8, 0xC8, 9, dword_D_80031D30>
 stru_D_80031BEC:struct_16 <2, 0x2000, 0xC8, 8, 0xC8, 9, dword_D_80031D30>
