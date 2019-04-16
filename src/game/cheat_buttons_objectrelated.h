@@ -114,6 +114,12 @@ struct player_gait_position_entry {
     struct player_gait_header * ptr_header;
     u32 field_0x18;
 };
+
+struct struct_13 {
+    void * anonymous_0;
+    int anonymous_1;
+};
+
 extern struct item_related prop_cctv_related;
 extern struct item_related prop_console_one_screen_related;
 extern struct item_related prop_console_four_screen_related;
