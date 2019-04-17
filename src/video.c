@@ -3,8 +3,8 @@
 #include "video.h"
 
 //data
-struct video_settings video1_settings = {0, 0x140, 0xF0, 60.0f, 1.3333334f, 30.0f, 10000.0f, 0x140, 0xF0, 0x140, 0xF0, 0, 0, 1, 0};
-struct video_settings video2_settings = {0, 0x140, 0xF0, 60.0f, 1.3333334f, 30.0f, 10000.0f, 0x140, 0xF0, 0x140, 0xF0, 0, 0, 1, 0};
+struct video_settings video1_settings = {0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0};
+struct video_settings video2_settings = {0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0};
 s32 D_8002329C = 0;
 s32 D_800232A0 = 0;
 video_settings * ptr_video_settings1 = &video1_settings;
@@ -21,7 +21,7 @@ s32 rgb_16bit_grabnum = 1;
 s32 rgb_32bit_grabnum = 1;
 
 //rodata
-const u32 D_80028480[] = {0x1400140, 0x2800000, 0xF000F0, 0x1E00000};
+const u32 D_80028480[] = {0x1400140, 0x2800000, 0xF000F0, 0x1E00000}; //is this not 16bit and a list of 320x240 and 640x480 - 3 widths, 3 heights
 const char aGrab_D_jpeg_1[] = "grab.%d.jpeg";
 const char aGrab_D_temp_uix[] = "grab.%d.temp.uix";
 const char aUix2pixGrab_D_temp_uix[] = "uix2pix grab.%d.temp.uix";
