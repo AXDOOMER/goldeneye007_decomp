@@ -4,6 +4,7 @@
 #include "game/debugmenu_090490.h"
 
 /* data */
+u32 filler[4] = {0};
 u32 boss_c_ptr_debug_notice_list_entry = 0;
 u32 debug_and_update_stage_flag = 0;
 s32 current_stage_num = 0x5A;
@@ -53,7 +54,11 @@ struct memallocstring
 { 0x1B7, "-ml0 -me0 -mgfx130 -mvtx100 -mt440 -ma220"},
 { 0x1B2, "-ml0 -me0 -mgfx90  -mvtx100 -mt550 -ma230"},
 { 0x1B0, "-ml0 -me0 -mgfx110 -mvtx100 -mt350 -ma400"},
-{   0x0, "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"}};
+{   0x0, "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"},
+{ 0x0, ""},
+{ 0x0, ""},
+{ 0x0, ""}
+};
 
 s32 loadedstage = -1;
 s32 debug_feature_flag = 0;

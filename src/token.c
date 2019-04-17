@@ -8,7 +8,7 @@ s32 strstr_ptrcurrent_string = 0;
 u32 D_80024478[34] = {0};
 
 
-const s32 D_800291F0 = 0;
+
 const char aD_6[] = "-d";
 const char aS_2[] = "-s";
 const char aJ[] = "-j";
@@ -133,6 +133,9 @@ glabel check_string_something
 .L7000A584:
 /* 00B184 7000A584 03E00008 */  jr    $ra
 /* 00B188 7000A588 00801025 */   move  $v0, $a0
+.late_rodata
+glabel D_800291F0
+.word  0
 )
 #endif
 
