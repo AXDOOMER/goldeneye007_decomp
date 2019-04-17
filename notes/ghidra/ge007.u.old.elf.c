@@ -8969,7 +8969,7 @@ void osInitialize(void)
   u32 pifdata;
   
   clock = 0;
-  __osFinalrom = 1;
+  __osFinalRom = 1;
   tmpSR = __osGetSR();
   __osSetSR(tmpSR | 0x20000000);
   __osSetFpcCsr(0x1000800);
@@ -9354,14 +9354,14 @@ void viMgrMain(void *arg)
     }
     __osViIntrCount += 1;
     if (false) {
-      ___osCurrentTime._4_4_ = osGetCount();
-      ___osCurrentTime._0_4_ = 0;
+      __osCurrentTime._4_4_ = osGetCount();
+      __osCurrentTime._0_4_ = 0;
     }
     Count = __osBaseCounter;
     __osBaseCounter = osGetCount();
-    uVar2 = (__osBaseCounter - Count) + ___osCurrentTime._4_4_;
-    ___osCurrentTime._0_4_ = (uint)(uVar2 < ___osCurrentTime._4_4_) + ___osCurrentTime._0_4_;
-    ___osCurrentTime._4_4_ = uVar2;
+    uVar2 = (__osBaseCounter - Count) + __osCurrentTime._4_4_;
+    __osCurrentTime._0_4_ = (uint)(uVar2 < __osCurrentTime._4_4_) + __osCurrentTime._0_4_;
+    __osCurrentTime._4_4_ = uVar2;
   } while( true );
 }
 
@@ -9383,8 +9383,8 @@ void osSetEventMesg(enumOSEvent e,OSMesgQueue *mq,enumOSEventMsg m)
   u32 saveMask;
   
   saveMask = __osDisableInt();
-  *(OSMesgQueue **)((int)(char)e * 8 + -0x7ff995f0) = mq;
-  *(int *)((int)(char)e * 8 + -0x7ff995ec) = (int)(short)m;
+  __OSEventStateTab[(int)(char)e].messageQueue = mq;
+  __OSEventStateTab[(int)(char)e].message = (OSMesg)(int)(short)m;
   __osRestoreInt(saveMask);
   return;
 }
@@ -10007,8 +10007,8 @@ OSTime osGetTime(void)
   
   savedMask = __osDisableInt();
   CurrentCount = osGetCount();
-  uVar2 = ___osCurrentTime._4_4_;
-  iVar1 = ___osCurrentTime._0_4_;
+  uVar2 = __osCurrentTime._4_4_;
+  iVar1 = __osCurrentTime._0_4_;
   elapseCount = CurrentCount - __osBaseCounter;
   __osRestoreInt(savedMask);
   return (longlong)(int)((uint)(elapseCount + uVar2 < uVar2) + iVar1);
@@ -10783,107 +10783,11 @@ void _bcopy(void *__src,void *__dest,size_t __n)
 }
 
 
-
-void guPerspectiveF(float mf [4] [4],u16 *perspNorm,float fovy,float aspect,float near,float far,
-                   float scale)
-
-{
-  double dVar1;
-  float *pfVar2;
-  int iVar3;
-  float fVar5;
-  double dVar4;
-  float fVar6;
-  float fVar7;
-  uint uVar8;
-  uint uVar9;
-  float fVar10;
-  uint in_register_00001050;
-  float __x;
-  float fVar11;
-  float fVar12;
-  
-  guMtxIdentF(fovy);
-  uVar8 = (uint)((ulonglong)dbl_80029430 >> 0x20);
-  uVar9 = (uint)((ulonglong)((double)far * dbl_80029430) >> 0x20);
-  __x = (float)((double)far * dbl_80029430) / 2.00000000;
-  fVar5 = cosf(__x);
-  __x = sinf(__x);
-  *(undefined4 *)(perspNorm + 0x16) = 0xbf800000;
-  *(float *)(perspNorm + 10) = fVar5 / __x;
-  *(float *)(perspNorm + 0x14) = (mf[0][0] + mf[0][1]) / (mf[0][0] - mf[0][1]);
-  *(float *)perspNorm = (fVar5 / __x) / scale;
-  *(undefined4 *)(perspNorm + 0x1e) = 0;
-  *(float *)(perspNorm + 0x1c) = (mf[0][0] * 2.00000000 * mf[0][1]) / (mf[0][0] - mf[0][1]);
-  iVar3 = 1;
-  fVar12 = *(float *)(perspNorm + 2);
-  fVar5 = *(float *)perspNorm * mf[0][2];
-  __x = *(float *)(perspNorm + 4);
-  fVar11 = *(float *)(perspNorm + 6);
-  pfVar2 = (float *)perspNorm;
-  if (true) {
-    do {
-      fVar10 = fVar12 * mf[0][2];
-      fVar12 = pfVar2[5];
-      fVar7 = __x * mf[0][2];
-      __x = pfVar2[6];
-      iVar3 += 1;
-      fVar6 = fVar11 * mf[0][2];
-      fVar11 = pfVar2[7];
-      *pfVar2 = fVar5;
-      fVar5 = pfVar2[4] * mf[0][2];
-      pfVar2[1] = fVar10;
-      pfVar2[2] = fVar7;
-      perspNorm = (u16 *)(pfVar2 + 4);
-      pfVar2[3] = fVar6;
-      pfVar2 = (float *)perspNorm;
-    } while (iVar3 != 4);
-  }
-  *(float *)perspNorm = fVar5;
-  ((float *)perspNorm)[1] = fVar12 * mf[0][2];
-  ((float *)perspNorm)[2] = __x * mf[0][2];
-  ((float *)perspNorm)[3] = fVar11 * mf[0][2];
-  if (near == 0.00000000) {
-    return;
-  }
-  dVar4 = (double)(mf[0][0] + mf[0][1]);
-  if (dVar4 <= (double)((ulonglong)uVar9 << 0x20)) {
-    *(undefined2 *)near = 0xffff;
-    return;
-  }
-  dVar4 = (double)((ulonglong)in_register_00001050 << 0x20) / dVar4;
-  if (false) {
-    dVar1 = ROUND(dVar4);
-  }
-  else {
-    dVar1 = FLOOR(dVar4);
-  }
-  uVar9 = (uint)dVar1;
-  if (false) {
-    dVar4 = dVar4 - (double)((ulonglong)uVar8 << 0x20);
-    if (false) {
-      dVar4 = ROUND(dVar4);
-    }
-    else {
-      dVar4 = FLOOR(dVar4);
-    }
-    if (true) {
-      uVar9 = (int)dVar4 | 0x80000000;
-      goto LAB_7000fe8c;
-    }
-  }
-  else {
-    if (-1 < (int)uVar9) goto LAB_7000fe8c;
-  }
-  uVar9 = 0xffffffff;
-LAB_7000fe8c:
-  *(short *)near = (short)uVar9;
-  if ((uVar9 & 0xffff) == 0) {
-    *(undefined2 *)near = 1;
-  }
-  return;
-}
-
+/*
+Unable to decompile 'guPerspectiveF'
+Cause: 
+Low-level Error: Symbol $$undef00000013 extends beyond the end of the address space
+*/
 
 
 void guPerspective(Mtx *m,u16 *perspNorm,float fovy,float aspect,float near,float far,float scale)
@@ -10957,7 +10861,7 @@ void guMtxF2L(float mf [4] [4],Mtx *m)
 
 
 
-void guMtxIdentF(float mf_4__4_)
+void guMtxIdentF(float mf [4] [4])
 
 {
   int iVar1;
@@ -11001,11 +10905,11 @@ void guMtxIdent(Mtx *m)
 
 {
   undefined4 unaff_retaddr;
-  float mf_4__4_;
   undefined4 in_stack_ffffffb8;
   undefined in_stack_ffffffc0 [56];
   
-  guMtxIdentF(mf_4__4_);
+  guMtxIdentF((float  [4] [4])CONCAT856(CONCAT44(in_stack_ffffffb8,unaff_retaddr),in_stack_ffffffc0)
+             );
   guMtxF2L((float  [4] [4])CONCAT856(CONCAT44(in_stack_ffffffb8,unaff_retaddr),in_stack_ffffffc0),
            (Mtx *)&stack0xffffffc0);
   return;
@@ -11076,16 +10980,16 @@ void __osExceptionPreamble(void)
 void __osException(void)
 
 {
-  undefined8 in_at;
+  u64 in_at;
   undefined8 in_v0;
   undefined8 in_v1;
   undefined8 in_a0;
   undefined8 in_a1;
   undefined8 in_a2;
   undefined8 in_a3;
-  undefined8 in_t0;
-  undefined8 in_t1;
-  undefined8 in_t2;
+  u64 in_t0;
+  u64 in_t1;
+  u64 in_t2;
   uint uVar1;
   undefined8 in_t3;
   undefined8 in_t4;
@@ -11128,18 +11032,19 @@ void __osException(void)
   undefined auStackX0 [16];
   
   new = __osRunningThread;
-  flt_80069608 = Status;
-  setCopReg(0,CONCAT44(uRegister00002060,Status),(longlong)Status & 0xfffffffffffffffc,0);
-  DAT_80068e48 = 0;
-  DAT_80068e50 = in_at;
-  DAT_80068e88 = in_t0;
-  dword_80069550 = in_t1;
-  matrix_buffer_0 = in_t2;
-  *(undefined8 *)((int)&(__osRunningThread->context).at + 4) = in_at;
-  *(ulonglong *)&(new->context).pc = CONCAT44(flt_80069608,_flt_8006960C);
-  *(undefined8 *)((int)&(new->context).t0 + 4) = DAT_80068e88;
-  *(undefined8 *)((int)&(new->context).t1 + 4) = dword_80069550;
-  *(undefined8 *)((int)&(new->context).t2 + 4) = matrix_buffer_0;
+  __osThreadSave.context.pc = Status;
+  setCopReg(0,CONCAT44(uRegister00002060,Status),(longlong)(int)Status & 0xfffffffffffffffc,0);
+  __osThreadSave.fp = 0;
+  __osThreadSave.context._4_8_ = in_at;
+  __osThreadSave.context._60_8_ = in_t0;
+  __osThreadSave.context._68_8_ = in_t1;
+  __osThreadSave.context._76_8_ = in_t2;
+  *(u64 *)((int)&(__osRunningThread->context).at + 4) = in_at;
+  *(ulonglong *)&(new->context).pc =
+       CONCAT44(__osThreadSave.context.pc,__osThreadSave.context.cause);
+  *(u64 *)((int)&(new->context).t0 + 4) = __osThreadSave.context._60_8_;
+  *(u64 *)((int)&(new->context).t1 + 4) = __osThreadSave.context._68_8_;
+  *(u64 *)((int)&(new->context).t2 + 4) = __osThreadSave.context._76_8_;
   uVar2 = (new->context).pc;
   *(undefined8 *)((int)&(new->context).lo + 4) = in_lo;
   *(undefined8 *)((int)&(new->context).v0 + 4) = in_v0;
@@ -11259,7 +11164,7 @@ void send_mesg(void)
   int iVar3;
   code *UNRECOVERED_JUMPTABLE;
   
-  list = *(OSThread **)(in_a0_lo + -0x7ff995f0);
+  list = *(OSThread **)((int)&__OSEventStateTab[0].messageQueue + in_a0_lo);
   if (list != NULL) {
     pOVar1 = (OSThread_s *)list->queue;
     iVar2 = *(int *)&list->state;
@@ -11271,7 +11176,8 @@ void send_mesg(void)
       if ((iVar2 == -1) && (iVar3 == -0x80000000)) {
         trap(0x1800);
       }
-      *(undefined4 *)(list->id + (iVar3 % iVar2) * 4) = *(undefined4 *)(in_a0_lo + -0x7ff995ec);
+      *(undefined4 *)(list->id + (iVar3 % iVar2) * 4) =
+           *(undefined4 *)((int)&__OSEventStateTab[0].message + in_a0_lo);
       *(OSThread_s **)&list->queue = (OSThread_s *)((int)&pOVar1->next + 1);
       if (list->next->next != NULL) {
         list = __osPopThread(list);
@@ -15658,28 +15564,39 @@ void __osPackRamReadData(int channel,u16 address)
 
 
 
+// WARNING: Restarted to delay deadcode elimination for space: stack
+
 void guAlignF(float mf [4] [4],float a,float x,float y,float z)
 
 {
   float in_a2_lo;
   float in_a3_lo;
+  undefined4 unaff_s0_lo;
+  undefined4 unaff_retaddr;
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  float mf_4__4_;
+  undefined4 uStackX0;
   float fStackX8;
   float fStackX12;
+  undefined8 in_stack_ffffffe0;
+  undefined4 in_stack_fffffff0;
   
   DAT_80067dd0 = flt_800297F0;
   fStackX8 = in_a2_lo;
   fStackX12 = in_a3_lo;
-  guNormalize(&fStackX8,&fStackX12,mf);
+  guNormalize(&fStackX8,&fStackX12,(float *)mf);
   z = z * DAT_80067dd0;
   fVar1 = sinf(z);
   fVar2 = cosf(z);
   fVar3 = sqrtf(fStackX8 * fStackX8 + mf[0][0] * mf[0][0]);
-  guMtxIdentF(mf_4__4_);
+  guMtxIdentF((float  [4] [4])
+              CONCAT3232(CONCAT284(CONCAT244(CONCAT204(CONCAT164(CONCAT124(CONCAT84(
+                                                  in_stack_ffffffe0,unaff_s0_lo),unaff_retaddr),
+                                                  in_stack_fffffff0),fVar3),fVar2),fVar1),
+                         CONCAT2012(CONCAT164(CONCAT124(CONCAT84(CONCAT44(uStackX0,z),fStackX8),
+                                                        fStackX12),mf[0][0]),mf[0]._4_12_)));
   if (fVar3 != 0.00000000) {
     fVar4 = 1.00000000 / fVar3;
     *(float *)y = (-mf[0][0] * fVar2 - fVar1 * fStackX12 * fStackX8) * fVar4;
@@ -15723,11 +15640,14 @@ void guAlign(Mtx *m,float a,float x,float y,float z)
 
 
 
+// WARNING: Restarted to delay deadcode elimination for space: stack
+
 void guOrthoF(float mf [4] [4],float l,float r,float b,float t,float n,float f,float scale)
 
 {
   float *pfVar1;
   int iVar2;
+  undefined4 unaff_retaddr;
   float fVar3;
   float fVar4;
   float fVar5;
@@ -15735,8 +15655,13 @@ void guOrthoF(float mf [4] [4],float l,float r,float b,float t,float n,float f,f
   float fVar7;
   float fVar8;
   float fVar9;
+  undefined4 in_stack_fffffff8;
   
-  guMtxIdentF(l);
+  guMtxIdentF((float  [4] [4])
+              CONCAT856(CONCAT44(in_stack_fffffff8,unaff_retaddr),
+                        CONCAT3224(CONCAT284(CONCAT244(CONCAT204(CONCAT164(CONCAT124(CONCAT84(
+                                                  CONCAT44(b,t),n),f),mf[0][0]),mf[0][1]),mf[0][2]),
+                                             mf[0][3]),mf._16_24_)));
   *(float *)b = 2.00000000 / (n - t);
   *(float *)((int)b + 0x28) = -2.00000000 / (mf[0][2] - mf[0][1]);
   *(float *)((int)b + 0x14) = 2.00000000 / (mf[0][0] - f);
@@ -15833,13 +15758,21 @@ short sins(ushort x)
 
 
 
+// WARNING: Restarted to delay deadcode elimination for space: stack
+
 void guTranslateF(float mf_4__4_,float x,float y,float z)
 
 {
   undefined4 in_a2_lo;
   undefined4 in_a3_lo;
+  undefined4 unaff_retaddr;
+  undefined in_stack_00000010 [40];
+  undefined4 in_stack_fffffff8;
   
-  guMtxIdentF(mf_4__4_);
+  guMtxIdentF((float  [4] [4])
+              CONCAT856(CONCAT44(in_stack_fffffff8,unaff_retaddr),
+                        CONCAT1640(CONCAT124(CONCAT84(CONCAT44(y,z),in_a2_lo),in_a3_lo),
+                                   in_stack_00000010)));
   *(float *)((int)y + 0x30) = z;
   *(undefined4 *)((int)y + 0x34) = in_a2_lo;
   *(undefined4 *)((int)y + 0x38) = in_a3_lo;
@@ -15856,7 +15789,8 @@ void guTranslate(Mtx *m,float x,float y,float z)
   undefined in_stack_ffffffb0 [56];
   float fStack16;
   
-  guMtxIdentF(x);
+  guMtxIdentF((float  [4] [4])CONCAT856(CONCAT44(in_stack_ffffffa8,unaff_retaddr),in_stack_ffffffb0)
+             );
   fStack16 = z;
   guMtxF2L((float  [4] [4])CONCAT856(CONCAT44(in_stack_ffffffa8,unaff_retaddr),in_stack_ffffffb0),
            (Mtx *)&stack0xffffffc0);
@@ -15969,13 +15903,21 @@ int _bcmp(void *__s1,void *__s2,size_t __n)
 
 
 
+// WARNING: Restarted to delay deadcode elimination for space: stack
+
 void guScaleF(float mf_4__4_,float x,float y,float z)
 
 {
   undefined4 in_a2_lo;
   undefined4 in_a3_lo;
+  undefined4 unaff_retaddr;
+  undefined in_stack_00000010 [40];
+  undefined4 in_stack_fffffff8;
   
-  guMtxIdentF(mf_4__4_);
+  guMtxIdentF((float  [4] [4])
+              CONCAT856(CONCAT44(in_stack_fffffff8,unaff_retaddr),
+                        CONCAT1640(CONCAT124(CONCAT84(CONCAT44(y,z),in_a2_lo),in_a3_lo),
+                                   in_stack_00000010)));
   *(float *)y = z;
   *(undefined4 *)((int)y + 0x14) = in_a2_lo;
   *(undefined4 *)((int)y + 0x3c) = 0x3f800000;
@@ -16001,10 +15943,13 @@ void guScale(Mtx *m,float x,float y,float z)
 
 
 
+// WARNING: Restarted to delay deadcode elimination for space: stack
+
 void guLookAtReflectF(float mf [4] [4],LookAt *l,float xEye,float yEye,float zEye,float xAt,
                      float yAt,float zAt,float xUp,float yUp,float zUp)
 
 {
+  undefined4 unaff_retaddr;
   float fVar1;
   double dVar2;
   uint uVar3;
@@ -16015,12 +15960,23 @@ void guLookAtReflectF(float mf [4] [4],LookAt *l,float xEye,float yEye,float zEy
   uint in_register_00001080;
   float fVar7;
   float fVar8;
+  undefined8 unaff_f20;
+  undefined8 unaff_f22;
+  undefined8 unaff_f24;
+  undefined8 unaff_f26;
   float fVar9;
+  undefined8 unaff_f28;
   float fVar10;
+  undefined8 unaff_f30;
   float fVar11;
+  undefined4 in_stack_fffffff8;
   
   uVar3 = (uint)((ulonglong)in_f8 >> 0x20);
-  guMtxIdentF(xEye);
+  guMtxIdentF((float  [4] [4])
+              CONCAT568(CONCAT524(CONCAT484(CONCAT408(CONCAT328(CONCAT248(CONCAT168(CONCAT88(
+                                                  unaff_f20,unaff_f22),unaff_f24),unaff_f26),
+                                                  unaff_f28),unaff_f30),in_stack_fffffff8),
+                                  unaff_retaddr),CONCAT44(l,zEye)));
   mf[0][1] = mf[0][1] - xAt;
   mf[0][2] = mf[0][2] - yAt;
   mf[0][3] = mf[0][3] - mf[0][0];
@@ -16150,6 +16106,8 @@ void guLookAtF(float mf [4] [4],float xEye,float yEye,float zEye,float xAt,float
               float xUp,float yUp,float zUp)
 
 {
+  undefined4 unaff_s0_lo;
+  undefined4 unaff_retaddr;
   float fVar1;
   float fVar2;
   double dVar3;
@@ -16157,12 +16115,23 @@ void guLookAtF(float mf [4] [4],float xEye,float yEye,float zEye,float xAt,float
   undefined8 in_f8;
   float fVar5;
   float fVar6;
+  undefined8 unaff_f20;
+  undefined8 unaff_f22;
+  undefined8 unaff_f24;
+  undefined8 unaff_f26;
   float fVar7;
+  undefined8 unaff_f28;
   float fVar8;
+  undefined8 unaff_f30;
   float fVar9;
+  undefined8 in_stack_ffffffc0;
   
   uVar4 = (uint)((ulonglong)in_f8 >> 0x20);
-  guMtxIdentF(xEye);
+  guMtxIdentF((float  [4] [4])
+              CONCAT604(CONCAT564(CONCAT488(CONCAT408(CONCAT328(CONCAT248(CONCAT168(CONCAT88(
+                                                  in_stack_ffffffc0,unaff_f20),unaff_f22),unaff_f24)
+                                                  ,unaff_f26),unaff_f28),unaff_f30),unaff_s0_lo),
+                        unaff_retaddr));
   mf[0][0] = mf[0][0] - xAt;
   mf[0][1] = mf[0][1] - yAt;
   mf[0][2] = mf[0][2] - zAt;
@@ -16238,24 +16207,30 @@ void guLookAt(Mtx *m,float xEye,float yEye,float zEye,float xAt,float yAt,float 
 
 
 
+// WARNING: Restarted to delay deadcode elimination for space: stack
+
 void guRotateF(float mf [4] [4],float a,float x,float y,float z)
 
 {
   float in_a2_lo;
   float in_a3_lo;
+  undefined4 unaff_s0_lo;
+  undefined4 unaff_retaddr;
   float fVar1;
   float fVar2;
   float fVar3;
-  float mf_4__4_;
   float fVar4;
   float fVar5;
+  undefined4 uStackX0;
   float fStackX8;
   float fStackX12;
+  undefined8 in_stack_ffffffd8;
+  undefined4 in_stack_ffffffe8;
   
   DAT_80067de0 = flt_80029810;
   fStackX8 = in_a2_lo;
   fStackX12 = in_a3_lo;
-  guNormalize(&fStackX8,&fStackX12,mf);
+  guNormalize(&fStackX8,&fStackX12,(float *)mf);
   z = z * DAT_80067de0;
   fVar1 = sinf(z);
   fVar2 = cosf(z);
@@ -16263,7 +16238,13 @@ void guRotateF(float mf [4] [4],float a,float x,float y,float z)
   fVar4 = fStackX8 * fStackX12 * fVar3;
   fVar5 = fStackX12 * mf[0][0] * fVar3;
   fVar3 = mf[0][0] * fStackX8 * fVar3;
-  guMtxIdentF(mf_4__4_);
+  guMtxIdentF((float  [4] [4])
+              CONCAT4024(CONCAT364(CONCAT324(CONCAT284(CONCAT244(CONCAT204(CONCAT164(CONCAT124(
+                                                  CONCAT84(in_stack_ffffffd8,unaff_s0_lo),
+                                                  unaff_retaddr),in_stack_ffffffe8),fVar3),fVar5),
+                                                  fVar4),fVar2),fVar1),
+                         CONCAT204(CONCAT164(CONCAT124(CONCAT84(CONCAT44(uStackX0,z),fStackX8),
+                                                       fStackX12),mf[0][0]),mf[0][1])));
   *(float *)y = (1.00000000 - fStackX8 * fStackX8) * fVar2 + fStackX8 * fStackX8;
   *(float *)((int)y + 0x24) = fVar5 - fStackX8 * fVar1;
   *(float *)((int)y + 0x18) = fStackX8 * fVar1 + fVar5;
@@ -16848,8 +16829,8 @@ void __osTimerServicesInit(void)
   undefined4 uVar1;
   OSTimer *pOVar2;
   
-  ___osCurrentTime._4_4_ = 0;
-  ___osCurrentTime._0_4_ = 0;
+  __osCurrentTime._4_4_ = 0;
+  __osCurrentTime._0_4_ = 0;
   __osBaseCounter = 0;
   __osViIntrCount = 0;
   *(OSTimer **)&__osTimerList->prev = __osTimerList;
@@ -62626,163 +62607,163 @@ void set_ptr_monitor_img_to_obj_ani_slot(undefined4 *slot,undefined4 image)
 void set_ptr_monitor_img_to_obj_ani_slot(undefined4 *param_1,undefined4 param_2)
 
 {
-  undefined8 *image;
+  undefined4 *image;
   
   image = &monitor_animation_microcode;
   if (true) {
     switch(param_2) {
     case 1:
-      image = (undefined8 *)&DAT_80030c00;
+      image = &DAT_80030c00;
       break;
     case 2:
-      image = (undefined8 *)&DAT_80030e24;
+      image = &DAT_80030e24;
       break;
     case 3:
-      image = (undefined8 *)&dword_80030F44;
+      image = &dword_80030F44;
       break;
     case 4:
-      image = (undefined8 *)&dword_80031018;
+      image = &dword_80031018;
       break;
     case 5:
-      image = (undefined8 *)&dword_80031074;
+      image = &dword_80031074;
       break;
     case 6:
-      image = (undefined8 *)&dword_800310F0;
+      image = &dword_800310F0;
       break;
     case 7:
-      image = (undefined8 *)&dword_8003118C;
+      image = &dword_8003118C;
       break;
     case 8:
-      image = (undefined8 *)&dword_8003121C;
+      image = &dword_8003121C;
       break;
     case 9:
-      image = (undefined8 *)&dword_80031248;
+      image = &dword_80031248;
       break;
     case 10:
-      image = (undefined8 *)&dword_80031274;
+      image = &dword_80031274;
       break;
     case 0xb:
-      image = (undefined8 *)&DAT_800312f4;
+      image = &DAT_800312f4;
       break;
     case 0xc:
-      image = (undefined8 *)&DAT_80031310;
+      image = &DAT_80031310;
       break;
     case 0xd:
-      image = (undefined8 *)&dword_80031490;
+      image = &dword_80031490;
       break;
     case 0xe:
-      image = (undefined8 *)&dword_800314F8;
+      image = &dword_800314F8;
       break;
     case 0xf:
-      image = (undefined8 *)&DAT_80030ec8;
+      image = &DAT_80030ec8;
       break;
     case 0x10:
-      image = (undefined8 *)&DAT_80031360;
+      image = &DAT_80031360;
       break;
     case 0x11:
-      image = (undefined8 *)&dword_8003156C;
+      image = &dword_8003156C;
       break;
     case 0x12:
-      image = (undefined8 *)&DAT_800315cc;
+      image = &DAT_800315cc;
       break;
     case 0x13:
-      image = (undefined8 *)&DAT_80031848;
+      image = &DAT_80031848;
       break;
     case 0x14:
-      image = (undefined8 *)&dword_80031898;
+      image = &dword_80031898;
       break;
     case 0x15:
-      image = (undefined8 *)&stru_800318B8;
+      image = &stru_800318B8;
       break;
     case 0x16:
-      image = (undefined8 *)&stru_8003191C;
+      image = &stru_8003191C;
       break;
     case 0x17:
-      image = (undefined8 *)&stru_80031950;
+      image = &stru_80031950;
       break;
     case 0x18:
-      image = (undefined8 *)&stru_800319D4;
+      image = &stru_800319D4;
       break;
     case 0x19:
-      image = (undefined8 *)&stru_800319F0;
+      image = &stru_800319F0;
       break;
     case 0x1a:
-      image = (undefined8 *)&stru_80031A0C;
+      image = &stru_80031A0C;
       break;
     case 0x1b:
-      image = (undefined8 *)&stru_80031A28;
+      image = &stru_80031A28;
       break;
     case 0x1c:
-      image = (undefined8 *)&stru_80031A44;
+      image = &stru_80031A44;
       break;
     case 0x1d:
-      image = (undefined8 *)&stru_80031A60;
+      image = &stru_80031A60;
       break;
     case 0x1e:
-      image = (undefined8 *)&stru_80031A7C;
+      image = &stru_80031A7C;
       break;
     case 0x1f:
-      image = (undefined8 *)&stru_80031A98;
+      image = &stru_80031A98;
       break;
     case 0x20:
-      image = (undefined8 *)&stru_80031AB4;
+      image = &stru_80031AB4;
       break;
     case 0x21:
-      image = (undefined8 *)&stru_80031AD0;
+      image = &stru_80031AD0;
       break;
     case 0x22:
-      image = (undefined8 *)&stru_80031AEC;
+      image = &stru_80031AEC;
       break;
     case 0x23:
-      image = (undefined8 *)&stru_80031B24;
+      image = (undefined4 *)&stru_80031B24;
       break;
     case 0x24:
-      image = (undefined8 *)&stru_80031B38;
+      image = (undefined4 *)&stru_80031B38;
       break;
     case 0x25:
-      image = (undefined8 *)&stru_80031B4C;
+      image = (undefined4 *)&stru_80031B4C;
       break;
     case 0x26:
-      image = (undefined8 *)&dword_80031B60;
+      image = (undefined4 *)&dword_80031B60;
       break;
     case 0x27:
-      image = (undefined8 *)&stru_80031BB4;
+      image = &stru_80031BB4;
       break;
     case 0x28:
-      image = (undefined8 *)&stru_80031BD0;
+      image = (undefined4 *)&stru_80031BD0;
       break;
     case 0x29:
-      image = (undefined8 *)&stru_80031BEC;
+      image = (undefined4 *)&stru_80031BEC;
       break;
     case 0x2a:
-      image = (undefined8 *)&stru_80031C08;
+      image = &stru_80031C08;
       break;
     case 0x2b:
-      image = (undefined8 *)&stru_80031C80;
+      image = (undefined4 *)&stru_80031C80;
       break;
     case 0x2c:
-      image = (undefined8 *)&dword_80031D30;
+      image = (undefined4 *)&dword_80031D30;
       break;
     case 0x2d:
-      image = (undefined8 *)&dword_80031D58;
+      image = (undefined4 *)&dword_80031D58;
       break;
     case 0x2e:
-      image = (undefined8 *)&dword_80031DA8;
+      image = (undefined4 *)&dword_80031DA8;
       break;
     case 0x2f:
-      image = (undefined8 *)&dword_80031DF4;
+      image = &dword_80031DF4;
       break;
     case 0x30:
-      image = (undefined8 *)&dword_80031E40;
+      image = &dword_80031E40;
       break;
     case 0x31:
-      image = (undefined8 *)&dword_80031E78;
+      image = &dword_80031E78;
       break;
     case 0x32:
-      image = (undefined8 *)&DAT_80031eb0;
+      image = &DAT_80031eb0;
       break;
     case 0x33:
-      image = (undefined8 *)&DAT_80031ee8;
+      image = &DAT_80031ee8;
     }
   }
   set_ptr_monitor_img_to_obj_ani_slot(param_1,image);
@@ -65223,32 +65204,31 @@ void proc_7F04E0CC(int param_1,float param_2,float *param_3,int param_4,int para
 
 // WARNING: Instruction at (ram,0x7f04e280) overlaps instruction at (ram,0x7f04e27c)
 // 
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
 void maybe_detonate_object(int objdata,float param_2,float *param_3,int param_4,int param_5)
 
 {
   ushort uVar1;
-  undefined4 *puVar2;
+  dword *pdVar2;
   int iVar3;
   int iVar5;
   longlong lVar4;
   uint uVar6;
-  undefined4 *puVar7;
+  dword *pdVar7;
   undefined *puVar8;
   char cVar10;
   int iVar9;
   uint uVar11;
-  undefined4 *puVar12;
-  undefined4 *puVar13;
-  undefined4 *puVar14;
+  dword *pdVar12;
+  dword *pdVar13;
+  dword *pdVar14;
   float *pfVar15;
   f32 scale;
   float fVar16;
   int in_stack_00000010;
-  undefined4 auStack164 [30];
-  undefined4 auStack44 [3];
-  undefined4 *puStack32;
+  dword adStack164 [30];
+  dword adStack44 [3];
+  dword *pdStack32;
   uint uStack28;
   uint uStack24;
   
@@ -65352,45 +65332,45 @@ LAB_7f04e3e8:
         else {
           uStack28 = uVar6;
           uStack24 = uVar11;
-          puVar7 = (undefined4 *)proc_7F0518D0();
-          if (puVar7 != NULL) {
+          pdVar7 = (dword *)proc_7F0518D0();
+          if (pdVar7 != NULL) {
             uVar1 = *(ushort *)(iVar5 + 0x80);
-            puVar13 = &blank_07_object;
-            puVar2 = auStack164;
+            pdVar13 = blank_07_object;
+            pdVar2 = adStack164;
             do {
-              puVar12 = puVar2;
-              puVar14 = puVar13;
-              *puVar12 = *puVar14;
-              puVar12[1] = puVar14[1];
-              puVar12[2] = puVar14[2];
-              puVar13 = puVar14 + 3;
-              puVar2 = puVar12 + 3;
-            } while (puVar14 + 3 != (undefined4 *)&dword_8003210C);
-            puVar12[3] = _dword_8003210C;
-            puVar12[4] = puVar14[4];
-            puVar13 = auStack164;
-            puVar2 = puVar7;
+              pdVar12 = pdVar2;
+              pdVar14 = pdVar13;
+              *pdVar12 = *pdVar14;
+              pdVar12[1] = pdVar14[1];
+              pdVar12[2] = pdVar14[2];
+              pdVar13 = pdVar14 + 3;
+              pdVar2 = pdVar12 + 3;
+            } while (pdVar14 + 3 != &DWORD_8003210c);
+            pdVar12[3] = DWORD_8003210c;
+            pdVar12[4] = pdVar14[4];
+            pdVar13 = adStack164;
+            pdVar2 = pdVar7;
             do {
-              puVar14 = puVar2;
-              puVar12 = puVar13;
-              puVar13 = puVar12 + 3;
-              *puVar14 = *puVar12;
-              puVar14[1] = puVar12[1];
-              puVar14[2] = puVar12[2];
-              puVar2 = puVar14 + 3;
-            } while (puVar13 != auStack44);
-            puVar14[3] = *puVar13;
-            puVar14[4] = puVar12[4];
-            *(ushort *)(puVar7 + 1) = uVar1;
-            puVar7[0x20] = uStack28 + 1;
+              pdVar14 = pdVar2;
+              pdVar12 = pdVar13;
+              pdVar13 = pdVar12 + 3;
+              *pdVar14 = *pdVar12;
+              pdVar14[1] = pdVar12[1];
+              pdVar14[2] = pdVar12[2];
+              pdVar2 = pdVar14 + 3;
+            } while (pdVar13 != adStack44);
+            pdVar14[3] = *pdVar13;
+            pdVar14[4] = pdVar12[4];
+            *(ushort *)(pdVar7 + 1) = uVar1;
+            pdVar7[0x20] = uStack28 + 1;
             if (uStack28 + 1 == 2) {
-              puVar7[0x20] = 1;
+              pdVar7[0x20] = 1;
             }
-            puStack32 = puVar7;
-            puVar8 = proc_7F0406F8((int)puVar7,(ushort **)PitemZ_entries[(uint)uVar1].header);
+            pdStack32 = pdVar7;
+            puVar8 = proc_7F0406F8((int)pdVar7,(ushort **)PitemZ_entries[(uint)uVar1].header);
             if (puVar8 != NULL) {
-              set_obj_instance_controller_scale(puStack32[5],scale);
-              proc_7F03A5A4(puStack32[4],*(int *)(objdata + 0x10));
+              set_obj_instance_controller_scale(pdStack32[5],scale);
+              proc_7F03A5A4(pdStack32[4],*(int *)(objdata + 0x10));
               cVar10 = *(char *)(objdata + 3);
               goto LAB_7f04e544;
             }
@@ -67185,31 +67165,30 @@ undefined * proc_7F051084(ushort *param_1,int param_2)
 undefined * proc_7F0510C0(undefined2 *param_1,int param_2,uint param_3)
 
 {
-  undefined4 *puVar1;
+  dword *pdVar1;
   object_standard *poVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
-  undefined4 *puVar5;
+  dword *pdVar3;
+  dword *pdVar4;
+  dword *pdVar5;
   int *ptrobjinstance;
-  undefined4 *puVar6;
-  undefined4 auStack144 [30];
-  undefined4 auStack24 [5];
+  dword *pdVar6;
+  dword adStack144 [30];
+  dword adStack24 [5];
   PitemZ_header *pPStack4;
   
   pPStack4 = PitemZ_entries[param_2].header;
   load_model(param_2);
   poVar2 = remove_last_obj_pos_data_entry();
   ptrobjinstance = (int *)get_obj_instance_controller_for_header(pPStack4);
-  puVar3 = (undefined4 *)
-           proc_7F0515B0((ulonglong)(poVar2 == NULL),(ulonglong)(ptrobjinstance == NULL),
-                         (int)pPStack4);
+  pdVar3 = (dword *)proc_7F0515B0((ulonglong)(poVar2 == NULL),(ulonglong)(ptrobjinstance == NULL),
+                                  (int)pPStack4);
   if (poVar2 == NULL) {
     poVar2 = remove_last_obj_pos_data_entry();
   }
   if (ptrobjinstance == NULL) {
     ptrobjinstance = (int *)get_obj_instance_controller_for_header(pPStack4);
   }
-  if (((puVar3 == NULL) || (poVar2 == NULL)) || (ptrobjinstance == NULL)) {
+  if (((pdVar3 == NULL) || (poVar2 == NULL)) || (ptrobjinstance == NULL)) {
     if (ptrobjinstance != NULL) {
       set_obj_instance_scale_to_zero(ptrobjinstance);
     }
@@ -67219,37 +67198,37 @@ undefined * proc_7F0510C0(undefined2 *param_1,int param_2,uint param_3)
     }
   }
   else {
-    puVar5 = &blank_11_object;
-    puVar1 = auStack144;
+    pdVar5 = blank_11_object;
+    pdVar1 = adStack144;
     do {
-      puVar4 = puVar1;
-      puVar6 = puVar5;
-      *puVar4 = *puVar6;
-      puVar4[1] = puVar6[1];
-      puVar4[2] = puVar6[2];
-      puVar5 = puVar6 + 3;
-      puVar1 = puVar4 + 3;
-    } while (puVar6 + 3 != &UNK_8003218c);
-    puVar4[3] = UNK_8003218c;
-    puVar4[4] = puVar6[4];
-    puVar5 = auStack144;
-    puVar1 = puVar3;
+      pdVar4 = pdVar1;
+      pdVar6 = pdVar5;
+      *pdVar4 = *pdVar6;
+      pdVar4[1] = pdVar6[1];
+      pdVar4[2] = pdVar6[2];
+      pdVar5 = pdVar6 + 3;
+      pdVar1 = pdVar4 + 3;
+    } while (pdVar6 + 3 != &DWORD_8003218c);
+    pdVar4[3] = DWORD_8003218c;
+    pdVar4[4] = pdVar6[4];
+    pdVar5 = adStack144;
+    pdVar1 = pdVar3;
     do {
-      puVar6 = puVar1;
-      puVar4 = puVar5;
-      puVar5 = puVar4 + 3;
-      *puVar6 = *puVar4;
-      puVar6[1] = puVar4[1];
-      puVar6[2] = puVar4[2];
-      puVar1 = puVar6 + 3;
-    } while (puVar5 != auStack24);
-    puVar6[3] = *puVar5;
-    puVar6[4] = puVar4[4];
-    *(short *)(puVar3 + 1) = (short)param_2;
-    puVar3[2] = param_3 | 0x4000;
-    *(undefined2 *)((int)puVar3 + 6) = *param_1;
+      pdVar6 = pdVar1;
+      pdVar4 = pdVar5;
+      pdVar5 = pdVar4 + 3;
+      *pdVar6 = *pdVar4;
+      pdVar6[1] = pdVar4[1];
+      pdVar6[2] = pdVar4[2];
+      pdVar1 = pdVar6 + 3;
+    } while (pdVar5 != adStack24);
+    pdVar6[3] = *pdVar5;
+    pdVar6[4] = pdVar4[4];
+    *(short *)(pdVar3 + 1) = (short)param_2;
+    pdVar3[2] = param_3 | 0x4000;
+    *(undefined2 *)((int)pdVar3 + 6) = *param_1;
     poVar2 = (object_standard *)
-             proc_7F050F50((ushort *)puVar3,(int)param_1,(ushort **)pPStack4,(undefined *)poVar2,
+             proc_7F050F50((ushort *)pdVar3,(int)param_1,(ushort **)pPStack4,(undefined *)poVar2,
                            (uint)ptrobjinstance);
   }
   return (undefined *)poVar2;
