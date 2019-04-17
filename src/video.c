@@ -654,7 +654,7 @@ block_43:
     D_800232C0 = (s32) phi_t9_4;
     if (coloroutputmode != 0)
     {
-        fast3d_related_array->unk58 = (void *) ptr_video_settings2->unk28;
+        fast3d_related_array->unk58 = (void *) ptr_video_settings2->frameb;
     }
     else
     {
@@ -688,7 +688,7 @@ block_43:
     temp_a1 = (&video1_settings + (off_CODE_bss_80060879 * 0x2c));
     *&ptr_video_settings2 = temp_a1;
     _bcopy(*&ptr_video_settings2, temp_a1, 0x2c, &video1_settings);
-    ptr_video_settings2->unk28 = (s32) ((off_CODE_bss_80060879 * 0x25800) + &cfb_16_a);
+    ptr_video_settings2->frameb = (s32) ((off_CODE_bss_80060879 * 0x25800) + &cfb_16_a);
 }
 #else
 GLOBAL_ASM(
@@ -1426,39 +1426,16 @@ glabel setVideoWidthHeightToMode
 
 
 
-#ifdef NONMATCHING
 void coloroutputmode_1(void)
 {
     coloroutputmode = 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel coloroutputmode_1
-/* 004800 70003C00 240E0001 */  li    $t6, 1
-/* 004804 70003C04 3C018002 */  lui   $at, %hi(coloroutputmode)
-/* 004808 70003C08 03E00008 */  jr    $ra
-/* 00480C 70003C0C AC2E32AC */   sw    $t6, %lo(coloroutputmode)($at)
-)
-#endif
 
-
-
-
-#ifdef NONMATCHING
 void coloroutputmode_0(void)
 {
     coloroutputmode = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel coloroutputmode_0
-/* 004810 70003C10 3C018002 */  lui   $at, %hi(coloroutputmode)
-/* 004814 70003C14 03E00008 */  jr    $ra
-/* 004818 70003C18 AC2032AC */   sw    $zero, %lo(coloroutputmode)($at)
-)
-#endif
+
 
 
 
@@ -1466,7 +1443,7 @@ glabel coloroutputmode_0
 #ifdef NONMATCHING
 ? get_video2buf_offset28(void)
 {
-    return ptr_video_settings2->unk28;
+    return ptr_video_settings2->frameb;
 }
 #else
 GLOBAL_ASM(
@@ -1504,7 +1481,7 @@ glabel get_video1buf_offset28
 #ifdef NONMATCHING
 void set_video2buf_offset28(s32 arg0)
 {
-    ptr_video_settings2->unk28 = arg0;
+    ptr_video_settings2->frameb = arg0;
 }
 #else
 GLOBAL_ASM(
@@ -1559,7 +1536,7 @@ void *video_related_F(void *arg0)
     arg0->unk4 = (s32) ((ptr_BONDdata + (off_CODE_bss_80060879 * 0x10)) + 0x800007d0);
     temp_s0 = arg0 + 8;
     m = sub_GAME_7F0BD6E0(&off_CODE_bss_80060879, &ptr_BONDdata);
-    guPerspectiveF(&dword_CODE_bss_800607E0, &word_CODE_bss_80060824, ptr_video_settings2->unk8, ptr_video_settings2->unkC, (f32) ptr_video_settings2->unk10, (f32) ptr_video_settings2->unk14, 1.0f);
+    guPerspectiveF(&dword_CODE_bss_800607E0, &word_CODE_bss_80060824, ptr_video_settings2->far, ptr_video_settings2->scale, (f32) ptr_video_settings2->aspect, (f32) ptr_video_settings2->unk14, 1.0f);
     guMtxF2L(&dword_CODE_bss_800607E0, m);
     temp_v0 = temp_s0;
     temp_v0->unk0 = 0x1030040;
@@ -1576,7 +1553,7 @@ void *video_related_F(void *arg0)
     {
         temp_v0_3 = temp_s0;
         temp_v0_3->unk0 = (s32) (((ptr_video_settings2->unk18 + -1) & 0xfff) | 0xff100000);
-        temp_v0_3->unk4 = (s32) (ptr_video_settings2->unk28 + 0x80000000);
+        temp_v0_3->unk4 = (s32) (ptr_video_settings2->frameb + 0x80000000);
         phi_s0 = temp_s0 + 8;
     }
     else
@@ -2260,7 +2237,7 @@ glabel set_D_800232A0
 #endif
 
 #ifdef NONMATCHING
-? get_D_800232A0(void)
+s32 get_D_800232A0(void)
 {
     return D_800232A0;
 }
@@ -2290,7 +2267,7 @@ glabel set_D_8002329C
 #endif
 
 #ifdef NONMATCHING
-? get_D_8002329C(void)
+s32 get_D_8002329C(void)
 {
     return D_8002329C;
 }
@@ -2585,8 +2562,8 @@ glabel set_video2_settings_offset_24
 #ifdef NONMATCHING
 void video_related_1F(f32 arg0)
 {
-    ptr_video_settings2->unk8 = arg0;
-    sub_GAME_7F077C30(ptr_video_settings2->unk10, ptr_video_settings2->unk8, ptr_video_settings2->unkC);
+    ptr_video_settings2->far = arg0;
+    sub_GAME_7F077C30(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
     sub_GAME_7F077C5C();
 }
 #else
@@ -2618,8 +2595,8 @@ glabel video_related_1F
 #ifdef NONMATCHING
 void video_related_21(f32 arg0)
 {
-    ptr_video_settings2->unkC = arg0;
-    sub_GAME_7F077C30(ptr_video_settings2->unk10, ptr_video_settings2->unk8, ptr_video_settings2->unkC);
+    ptr_video_settings2->scale = arg0;
+    sub_GAME_7F077C30(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
     sub_GAME_7F077C5C();
 }
 #else
@@ -2651,7 +2628,7 @@ glabel video_related_21
 #ifdef NONMATCHING
 ? video_related_23(void)
 {
-    return ptr_video_settings2->unk8;
+    return ptr_video_settings2->far;
 }
 #else
 GLOBAL_ASM(
@@ -2667,9 +2644,9 @@ glabel video_related_23
 #ifdef NONMATCHING
 void video_related_24(f32 arg0, f32 arg1)
 {
-    ptr_video_settings2->unk8 = arg1;
-    ptr_video_settings2->unkC = (f32) (arg0 / arg1);
-    sub_GAME_7F077C30(ptr_video_settings2->unk10, ptr_video_settings2->unk8, ptr_video_settings2->unkC);
+    ptr_video_settings2->far = arg1;
+    ptr_video_settings2->scale = (f32) (arg0 / arg1);
+    sub_GAME_7F077C30(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
     sub_GAME_7F077C5C();
 }
 #else
@@ -2707,9 +2684,9 @@ glabel video_related_24
 #ifdef NONMATCHING
 void set_page_height(f32 arg0, f32 arg1)
 {
-    ptr_video_settings2->unk10 = arg0;
+    ptr_video_settings2->aspect = arg0;
     ptr_video_settings2->unk14 = arg1;
-    sub_GAME_7F077C30(ptr_video_settings2->unk10, ptr_video_settings2->unk8, ptr_video_settings2->unkC);
+    sub_GAME_7F077C30(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
     sub_GAME_7F077C5C();
 }
 #else
@@ -2745,7 +2722,7 @@ glabel set_page_height
 #ifdef NONMATCHING
 void *video_related_27(void *arg0)
 {
-    arg0->unk0 = (f32) ptr_video_settings2->unk10;
+    arg0->unk0 = (f32) ptr_video_settings2->aspect;
     arg0->unk4 = (f32) ptr_video_settings2->unk14;
     return &ptr_video_settings2;
 }
@@ -2827,28 +2804,28 @@ glabel set_setfillcolor
 #ifdef NONMATCHING
 void indy_grab_jpg_16bit(void)
 {
-    ? sp38;
+    char iFileName[256];
     ? sp34;
 
 loop_1:
-    sprintf(&sp38, &aGrab_D_jpeg_1, jpg_16bit_grabnum);
-    if (check_file_found_on_indy(&sp38, &sp34) != 0)
+    sprintf(&iFileName, &aGrab_D_jpeg_1, jpg_16bit_grabnum);
+    if (check_file_found_on_indy(&iFileName, &sp34) != 0)
     {
         jpg_16bit_grabnum = (s32) (jpg_16bit_grabnum + 1);
         goto loop_1;
     }
-    sprintf(&sp38, &aGrab_D_temp_uix, jpg_16bit_grabnum);
-    indy_send_capture_data(&sp38, ptr_video_settings2->unk28, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 2);
-    sprintf(&sp38, &aUix2pixGrab_D_temp_uix, jpg_16bit_grabnum);
-    response_from_command_string(&sp38);
-    sprintf(&sp38, &aFromaliasGrab_D_temp_pixGrab_D_tem, jpg_16bit_grabnum, jpg_16bit_grabnum);
-    response_from_command_string(&sp38);
-    sprintf(&sp38, &aImgcopyFjfifGrab_D_temp_rgbGrab_D_, jpg_16bit_grabnum, jpg_16bit_grabnum);
-    response_from_command_string(&sp38);
-    sprintf(&sp38, &aRmGrab_D_temp_uixGrab_D_temp_pixGr, jpg_16bit_grabnum, jpg_16bit_grabnum);
-    response_from_command_string(&sp38);
-    sprintf(&sp38, &aImgviewGrab_D_jpeg, jpg_16bit_grabnum);
-    response_from_command_string(&sp38);
+    sprintf(&iFileName, &aGrab_D_temp_uix, jpg_16bit_grabnum);
+    indy_send_capture_data(&iFileName, ptr_video_settings2->frameb, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 2);
+    sprintf(&iFileName, &aUix2pixGrab_D_temp_uix, jpg_16bit_grabnum);
+    response_from_command_string(&iFileName);
+    sprintf(&iFileName, &aFromaliasGrab_D_temp_pixGrab_D_tem, jpg_16bit_grabnum, jpg_16bit_grabnum);
+    response_from_command_string(&iFileName);
+    sprintf(&iFileName, &aImgcopyFjfifGrab_D_temp_rgbGrab_D_, jpg_16bit_grabnum, jpg_16bit_grabnum);
+    response_from_command_string(&iFileName);
+    sprintf(&iFileName, &aRmGrab_D_temp_uixGrab_D_temp_pixGr, jpg_16bit_grabnum, jpg_16bit_grabnum);
+    response_from_command_string(&iFileName);
+    sprintf(&iFileName, &aImgviewGrab_D_jpeg, jpg_16bit_grabnum);
+    response_from_command_string(&iFileName);
 }
 #else
 GLOBAL_ASM(
@@ -2957,28 +2934,28 @@ glabel indy_grab_jpg_16bit
 #ifdef NONMATCHING
 void indy_grab_jpg_32bit(void)
 {
-    ? sp38;
+    char iFileName [256];
     ? sp34;
 
 loop_1:
-    sprintf(&sp38, &aGrab_D_jpeg, jpg_32bit_grabnum);
-    if (check_file_found_on_indy(&sp38, &sp34) != 0)
+    sprintf(&iFileName, &aGrab_D_jpeg, jpg_32bit_grabnum);
+    if (check_file_found_on_indy(&iFileName, &sp34) != 0)
     {
         jpg_32bit_grabnum = (s32) (jpg_32bit_grabnum + 1);
         goto loop_1;
     }
-    sprintf(&sp38, &aGrab_D_temp_uix_0, jpg_32bit_grabnum);
-    indy_send_capture_data(&sp38, &cfb_16_a, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 4);
-    sprintf(&sp38, &aUix2pixXsDGrab_D_temp_uix, get_video2_settings_txtClipW(), jpg_32bit_grabnum);
-    response_from_command_string(&sp38);
-    sprintf(&sp38, &aFromaliasGrab_D_temp_pixGrab_D_t_0, jpg_32bit_grabnum, jpg_32bit_grabnum);
-    response_from_command_string(&sp38);
-    sprintf(&sp38, &aImgcopyFjfifGrab_D_temp_rgbGrab__0, jpg_32bit_grabnum, jpg_32bit_grabnum);
-    response_from_command_string(&sp38);
-    sprintf(&sp38, &aRmGrab_D_temp_uixGrab_D_temp_pix_0, jpg_32bit_grabnum, jpg_32bit_grabnum);
-    response_from_command_string(&sp38);
-    sprintf(&sp38, &aImgviewGrab_D_jpeg_0, jpg_32bit_grabnum);
-    response_from_command_string(&sp38);
+    sprintf(&iFileName, &aGrab_D_temp_uix_0, jpg_32bit_grabnum);
+    indy_send_capture_data(&iFileName, &cfb_16_a, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 4);
+    sprintf(&iFileName, &aUix2pixXsDGrab_D_temp_uix, get_video2_settings_txtClipW(), jpg_32bit_grabnum);
+    response_from_command_string(&iFileName);
+    sprintf(&iFileName, &aFromaliasGrab_D_temp_pixGrab_D_t_0, jpg_32bit_grabnum, jpg_32bit_grabnum);
+    response_from_command_string(&iFileName);
+    sprintf(&iFileName, &aImgcopyFjfifGrab_D_temp_rgbGrab__0, jpg_32bit_grabnum, jpg_32bit_grabnum);
+    response_from_command_string(&iFileName);
+    sprintf(&iFileName, &aRmGrab_D_temp_uixGrab_D_temp_pix_0, jpg_32bit_grabnum, jpg_32bit_grabnum);
+    response_from_command_string(&iFileName);
+    sprintf(&iFileName, &aImgviewGrab_D_jpeg_0, jpg_32bit_grabnum);
+    response_from_command_string(&iFileName);
 }
 #else
 GLOBAL_ASM(
@@ -3102,7 +3079,7 @@ loop_1:
         goto loop_1;
     }
     sprintf(&sp30, &aGrab_D_temp_uix_1, rgb_16bit_grabnum);
-    indy_send_capture_data(&sp30, ptr_video_settings2->unk28, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 2);
+    indy_send_capture_data(&sp30, ptr_video_settings2->frameb, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 2);
     sprintf(&sp30, &aUix2pixGrab_D_temp_uix_0, rgb_16bit_grabnum);
     response_from_command_string(&sp30);
     sprintf(&sp30, &aFromaliasGrab_D_temp_pixGrab_D_rgb, rgb_16bit_grabnum, rgb_16bit_grabnum);
