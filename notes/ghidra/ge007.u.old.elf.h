@@ -14353,7 +14353,7 @@ void video_related_7(void);
 void video_related_8(void);
 void video_related_9(float param_1);
 void receive_vi_c_msgs(int msgcount);
-void video_related_B(int param_1);
+void setVideoWidthHeightToMode(int videomode);
 void set_coloroutputmode_on(void);
 void set_coloroutputmode_off(void);
 int get_video_settings2_frameb(void);

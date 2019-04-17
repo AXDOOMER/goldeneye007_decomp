@@ -2311,16 +2311,16 @@ void receive_vi_c_msgs(int msgcount)
 
 
 
-void video_related_B(int param_1)
+void setVideoWidthHeightToMode(int videomode)
 
 {
   u16 uVar1;
   
-  *(char *)&ptr_video_settings2->anonymous_0 = (char)param_1;
-  uVar1 = widths_80028480[param_1];
+  *(char *)&ptr_video_settings2->anonymous_0 = (char)videomode;
+  uVar1 = widths_80028480[videomode];
   ptr_video_settings2->anonymous_7 = uVar1;
   ptr_video_settings2->txtClipW = uVar1;
-  uVar1 = heights_80028488[param_1];
+  uVar1 = heights_80028488[videomode];
   ptr_video_settings2->anonymous_8 = uVar1;
   ptr_video_settings2->txtClipH = uVar1;
   return;
@@ -132071,7 +132071,7 @@ void stage_load(LEVELID stagenum)
   }
   proc_7F005534(0);
   remove_viewport_buffer();
-  video_related_B(1);
+  setVideoWidthHeightToMode(1);
   flt_80048368 = 1.00000000;
   set_controls_locked_flag(0);
   return;

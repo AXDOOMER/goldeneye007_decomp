@@ -6,3 +6,4 @@ build/*
 .vscode/c_cpp_properties.json
 *.tmp
 .vscode/ipch/*
+ge007.u.bin

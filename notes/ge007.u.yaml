@@ -141,7 +141,7 @@ labels:
    - [0x70003298, "video_related_8"]
    - [0x70003B04, "video_related_9"]
    - [0x70003B64, "receive_vi_c_msgs"]
-   - [0x70003BB0, "video_related_B"]
+   - [0x70003BB0, "setVideoWidthHeightToMode"]
    - [0x70003C00, "coloroutputmode_1"]
    - [0x70003C10, "coloroutputmode_0"]
    - [0x70003C1C, "get_video2buf_offset28"]

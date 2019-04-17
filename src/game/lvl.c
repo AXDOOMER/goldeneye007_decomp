@@ -728,7 +728,7 @@ glabel stage_load
 /* 0F29E4 7F0BDEB4 00002025 */   move  $a0, $zero
 /* 0F29E8 7F0BDEB8 0FC348E0 */  jal   remove_viewport_buffer
 /* 0F29EC 7F0BDEBC 00000000 */   nop   
-/* 0F29F0 7F0BDEC0 0C000EEC */  jal   video_related_B
+/* 0F29F0 7F0BDEC0 0C000EEC */  jal   setVideoWidthHeightToMode
 /* 0F29F4 7F0BDEC4 24040001 */   li    $a0, 1
 /* 0F29F8 7F0BDEC8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0F29FC 7F0BDECC 44818000 */  mtc1  $at, $f16

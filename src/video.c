@@ -1383,26 +1383,23 @@ glabel receive_vi_c_msgs
 #endif
 
 #ifdef NONMATCHING
-s16 video_related_B(s8 arg0)
+void setVideoWidthHeightToMode(int videomode)
 {
-    s32 temp_v1;
-    void *temp_v0;
-    void *temp_v0_2;
-
-    temp_v1 = arg0 * 2;
-    ptr_video_settings2->unk0 = arg0;
-    temp_v0 = 0x80030000 + temp_v1;
-    ptr_video_settings2->unk18 = (s16) temp_v0->unk-7B80;
-    ptr_video_settings2->unk4 = (s16) temp_v0->unk-7B80;
-    temp_v0_2 = 0x80030000 + temp_v1;
-    ptr_video_settings2->unk1A = (s16) temp_v0_2->unk-7B78;
-    ptr_video_settings2->unk6 = (s16) temp_v0_2->unk-7B78;
-    return temp_v0_2->unk-7B78;
+  u16 uVar1;
+  
+  *(char *)&ptr_video_settings2->anonymous_0 = (char)videomode;
+  uVar1 = widths_80028480[videomode];
+  ptr_video_settings2->anonymous_7 = uVar1;
+  ptr_video_settings2->txtClipW = uVar1;
+  uVar1 = heights_80028488[videomode];
+  ptr_video_settings2->anonymous_8 = uVar1;
+  ptr_video_settings2->txtClipH = uVar1;
+  return;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel video_related_B
+glabel setVideoWidthHeightToMode
 /* 0047B0 70003BB0 3C058002 */  lui   $a1, %hi(ptr_video_settings2) # $a1, 0x8002
 /* 0047B4 70003BB4 24A532A8 */  addiu $a1, %lo(ptr_video_settings2) # addiu $a1, $a1, 0x32a8
 /* 0047B8 70003BB8 8CAE0000 */  lw    $t6, ($a1)
