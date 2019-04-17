@@ -2314,15 +2314,15 @@ void receive_vi_c_msgs(int msgcount)
 void video_related_B(int param_1)
 
 {
-  short sVar1;
+  u16 uVar1;
   
   *(char *)&ptr_video_settings2->anonymous_0 = (char)param_1;
-  sVar1 = *(short *)(param_1 * 2 + -0x7ffd7b80);
-  ptr_video_settings2->anonymous_7 = sVar1;
-  ptr_video_settings2->txtClipW = sVar1;
-  sVar1 = *(short *)(&word_80028488 + param_1 * 2);
-  ptr_video_settings2->anonymous_8 = sVar1;
-  ptr_video_settings2->txtClipH = sVar1;
+  uVar1 = widths_80028480[param_1];
+  ptr_video_settings2->anonymous_7 = uVar1;
+  ptr_video_settings2->txtClipW = uVar1;
+  uVar1 = heights_80028488[param_1];
+  ptr_video_settings2->anonymous_8 = uVar1;
+  ptr_video_settings2->txtClipH = uVar1;
   return;
 }
 
@@ -4583,7 +4583,7 @@ void music_related_2nd_block_0(void)
   int iVar1;
   
   if (bootswitch_sound == 0) {
-    dword_80024350 = 0;
+    music2_playing = FALSE;
     if ((music2_track_num != 0) &&
        (iVar1 = ultra_proc_70012230(ptr_2nd_music_ctrl_block), iVar1 == 1)) {
       alSeqpStop((ALSeqPlayer *)ptr_2nd_music_ctrl_block);
@@ -4643,12 +4643,12 @@ void music_related_6(float param_1)
 {
   ulonglong uVar1;
   
-  if (-1 < dword_80024350) {
+  if (-1 < (int)music2_playing) {
     uVar1 = get_music2len();
     DAT_80063846 = (undefined2)uVar1;
     DAT_8006384c = 0;
     DAT_80063854 = (int)(param_1 * 60.00000000);
-    dword_80024350 = -1;
+    music2_playing = ~FALSE;
   }
   return;
 }
@@ -4658,7 +4658,7 @@ void music_related_6(float param_1)
 void music_related_8(float param_1,undefined8 param_2,short param_3)
 
 {
-  if (dword_80024350 < 1) {
+  if ((int)music2_playing < 1) {
     alCSPPlay(ptr_2nd_music_ctrl_block);
     DAT_8006384c = param_3;
     if (param_3 == -1) {
@@ -4666,7 +4666,7 @@ void music_related_8(float param_1,undefined8 param_2,short param_3)
     }
     DAT_80063846 = 0;
     DAT_80063854 = (int)(param_1 * 60.00000000);
-    dword_80024350 = 1;
+    music2_playing = TRUE;
   }
   return;
 }
@@ -4722,7 +4722,7 @@ void music_related_3rd_block_0(void)
   int iVar1;
   
   if (bootswitch_sound == 0) {
-    dword_80024354 = 0;
+    music3_playing = FALSE;
     if ((music3_track_num != 0) &&
        (iVar1 = ultra_proc_70012230(ptr_3rd_music_ctrl_block), iVar1 == 1)) {
       alSeqpStop((ALSeqPlayer *)ptr_3rd_music_ctrl_block);
@@ -4782,12 +4782,12 @@ void music_related_11(float param_1)
 {
   ulonglong uVar1;
   
-  if (-1 < dword_80024354) {
+  if (-1 < (int)music3_playing) {
     uVar1 = get_music3len();
     music3_len = (undefined2)uVar1;
     DAT_8006384e = 0;
     DAT_80063858 = (int)(param_1 * 60.00000000);
-    dword_80024354 = -1;
+    music3_playing = ~FALSE;
   }
   return;
 }
@@ -4797,7 +4797,7 @@ void music_related_11(float param_1)
 void music_related_13(float param_1,undefined8 param_2,short param_3)
 
 {
-  if (dword_80024354 < 1) {
+  if ((int)music3_playing < 1) {
     alCSPPlay(ptr_3rd_music_ctrl_block);
     DAT_8006384e = param_3;
     if (param_3 == -1) {
@@ -4805,7 +4805,7 @@ void music_related_13(float param_1,undefined8 param_2,short param_3)
     }
     music3_len = 0;
     DAT_80063858 = (int)(param_1 * 60.00000000);
-    dword_80024354 = 1;
+    music3_playing = TRUE;
   }
   return;
 }
@@ -4832,7 +4832,7 @@ void music_related_15(void)
       music1_playing = FALSE;
     }
   }
-  if (dword_80024350 != 0) {
+  if (music2_playing != FALSE) {
     uVar2 = get_music2len();
     uVar2 = (longlong)
             ((int)uVar2 + (int)((float)((uint)DAT_8006384c - (int)uVar2) / (float)DAT_80063854)) &
@@ -4844,10 +4844,10 @@ void music_related_15(void)
         alSeqpStop((ALSeqPlayer *)ptr_2nd_music_ctrl_block);
       }
       DAT_80063854 = 0;
-      dword_80024350 = 0;
+      music2_playing = FALSE;
     }
   }
-  if (dword_80024354 != 0) {
+  if (music3_playing != FALSE) {
     uVar2 = get_music3len();
     uVar2 = (longlong)
             ((int)uVar2 + (int)((float)((uint)DAT_8006384e - (int)uVar2) / (float)DAT_80063858)) &
@@ -4859,7 +4859,7 @@ void music_related_15(void)
         alSeqpStop((ALSeqPlayer *)ptr_3rd_music_ctrl_block);
       }
       DAT_80063858 = 0;
-      dword_80024354 = 0;
+      music3_playing = FALSE;
     }
   }
   return;
@@ -100727,7 +100727,7 @@ undefined4 * maybe_mp_interface(void)
             musicTrack1Vol(sVar13);
             music1_playing = FALSE;
             music_related_2nd_block_1(0);
-            dword_80024350 = 0;
+            music2_playing = FALSE;
             musicTrack1Play(M_DEATHSOLO);
           }
           else {

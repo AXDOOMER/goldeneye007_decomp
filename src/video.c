@@ -21,8 +21,8 @@ s32 rgb_16bit_grabnum = 1;
 s32 rgb_32bit_grabnum = 1;
 
 //rodata
-const u16 widths_80028480[] = {320, 320, 640, 0};
-const u16 heights_80028488[] = {240, 240, 480, 0}; //is this not 16bit and a list of 320x240 and 640x480 - 3 widths, 3 heights
+const u16 widths_80028480[] = {320, 320, 640};
+const u16 heights_80028488[] = {240, 240, 480}; //is this not 16bit and a list of 320x240 and 640x480 - 3 widths, 3 heights
 const char aGrab_D_jpeg_1[] = "grab.%d.jpeg";
 const char aGrab_D_temp_uix[] = "grab.%d.temp.uix";
 const char aUix2pixGrab_D_temp_uix[] = "uix2pix grab.%d.temp.uix";
