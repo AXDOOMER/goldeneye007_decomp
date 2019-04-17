@@ -7,12 +7,23 @@ OSTimer *firstTimer = &aTimer;
 
 OSTime _osCurrentTime;
 
+
 // Count at last VI manager loop
 u32 lastViCount;
+/* 
+ * Global variable  for the count reigster value from last retrace 
+ * interrupt
+ */
+//u32	__osBaseCounter;
 
 // This variable is set to 0 here, incremented in viMgrMain, but never read from.
 // Looks useless.
-u32 D_80365DAC;
+//u32 D_80365DAC;
+u32	__osViIntrCount;	/* # of  VI interrupts */
+
+//Its nice to see these files coming out more or less exactly as source is written.
+//now just need to refactor variable names to original
+
 
 // Count at last interrupt
 u32 lastIntCount;
@@ -21,7 +32,7 @@ void __osTimerServicesInit()
 {
     _osCurrentTime = 0;
     lastViCount = 0;
-    D_80365DAC = 0;
+    __osViIntrCount = 0;
 
     // Init the Circular Linked List
     firstTimer->prev = firstTimer;
