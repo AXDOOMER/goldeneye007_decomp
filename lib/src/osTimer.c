@@ -29,7 +29,7 @@ void __osTimerServicesInit()
 
     // Init the first element of this list
     firstTimer->remaining = 0;
-    firstTimer->interval = 0;
+    firstTimer->interval = firstTimer->remaining;
     firstTimer->mq = NULL;
     firstTimer->msg = NULL;
 }
