@@ -1,12 +1,14 @@
 //FIXME i still need all sorts of love
 #include "ultra64.h"
+#include "video.h"
 
-u32 video1_settings[] = 0;
-u32 video2_settings[] = 0;
+//data
+struct video_settings video1_settings = {0, 0x140, 0xF0, 60.0f, 1.3333334f, 30.0f, 10000.0f, 0x140, 0xF0, 0x140, 0xF0, 0, 0, 1, 0};
+struct video_settings video2_settings = {0, 0x140, 0xF0, 60.0f, 1.3333334f, 30.0f, 10000.0f, 0x140, 0xF0, 0x140, 0xF0, 0, 0, 1, 0};
 s32 D_8002329C = 0;
 s32 D_800232A0 = 0;
-u32 ptr_video_settings1 = &video1_settings;
-u32 ptr_video_settings2 = &video1_settings;
+video_settings * ptr_video_settings1 = &video1_settings;
+video_settings * ptr_video_settings2 = &video1_settings;
 s32 coloroutputmode = 1;
 s32 D_800232B0 = 1;
 s32 D_800232B4 = 0;
@@ -18,6 +20,7 @@ s32 jpg_32bit_grabnum = 1;
 s32 rgb_16bit_grabnum = 1;
 s32 rgb_32bit_grabnum = 1;
 
+//rodata
 const u32 D_80028480[] = {0x1400140, 0x2800000, 0xF000F0, 0x1E00000};
 const char aGrab_D_jpeg_1[] = "grab.%d.jpeg";
 const char aGrab_D_temp_uix[] = "grab.%d.temp.uix";
@@ -47,7 +50,7 @@ const char aRmGrab_D_temp_uixGrab_D_temp_pix_1[] = "rm grab.%d.temp.Uix grab.%d.
 const char aImgviewGrab_D_rgb_0[] = "imgview grab.%d.rgb";
 
 
-
+//bss
 char dword_CODE_bss_800607E0[0x40];
 Mtx *m;
 s32 word_CODE_bss_80060824;

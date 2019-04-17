@@ -65,10 +65,10 @@ SECTIONS
    .c_data __romPos : AT(__romPos) {
       * (.c_data);
    }
-   __romPos += SIZEOF(.c_data);
+   __romPos += 0x11c00;
    
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
-   .text_rarezip 0x70200000 : AT(0x33590) {
+   .text_rarezip 0x70200000 : AT(__romPos) {
       build/rarezip/rarezip.o (.text);
       build/rarezip/rarezip.o (.data);
    }
@@ -212,7 +212,7 @@ SECTIONS
 
    __csegtempPos = 0xC00000;
    __ramPos += 0x80000000;
-   .csegment __ramPos : AT(__csegtempPos){
+   .csegment 0x80020d90 : AT(__csegtempPos){
       build/rspboot.o (.text);
       build/gspboot.o (.text);
       build/aspboot.o (.text);

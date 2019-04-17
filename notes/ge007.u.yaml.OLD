@@ -921,7 +921,7 @@ ranges:
    - [0xC03270, 0xC033EC, "ptr", "std_error_font_bitcode"]
    - [0xC033EC, 0xC033F0, "ptr", "ptr_videobuffer1"]
    - [0xC033F0, 0xC03410, "ptr", "ptr_videobuffer2"]
-   - [0xC03410, 0xC03414, "ptr", "D_800241A0"]
+   - [0xC03410, 0xC03414, "ptr", "boss_c_ptr_debug_notice_list_entry"]
    - [0xC03414, 0xC03418, "ptr", "debug_and_update_stage_flag"]
    - [0xC03418, 0xC0341C, "ptr", "current_stage_num"]
    - [0xC0341C, 0xC03420, "ptr", "current_m_malloc_value"]
