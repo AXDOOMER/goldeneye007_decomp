@@ -888,6 +888,11 @@ OSViMode osViModeTable[] = {
                    /*vIntr*/ 2}}}
 #endif
 };
+
+//==================================================
+// file break, file above = VITBL.C, file below = VIMGR.C
+//=======================================================
+
 #define OS_VI_MANAGER_MESSAGE_BUFF_SIZE 5
 OSMgrArgs viMgrMainArgs = {0};
 OSThread viMgrThread;
@@ -909,7 +914,7 @@ extern void __osTimerServicesInit(void);
 extern void __osTimerInterrupt(void);
 extern OSTime _osCurrentTime;
 extern u32 D_80365DA8;
-extern u32 D_80365DAC;
+extern u32 __osViIntrCount;
 void viMgrMain(void *);
 //glabel osCreateViManager
 void osCreateViManager(OSPri pri)
@@ -986,7 +991,7 @@ void viMgrMain(void *vargs)
                 }
                 viEventCounterMesg.unk14 = context->retraceCount;
             }
-            D_80365DAC++;
+            __osViIntrCount++;
             if (sp28)
             {
                 sp24 = osGetCount();
