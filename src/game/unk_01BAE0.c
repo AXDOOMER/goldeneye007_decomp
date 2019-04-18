@@ -1,7 +1,5 @@
 #include "ultra64.h"
 
-// .rodata
-const f32 PI_80051D00 = 3.1415927; //D_80051D00
 
 #ifdef NONMATCHING
 void sub_GAME_7F01BAE0(void) {
@@ -9,6 +7,9 @@ void sub_GAME_7F01BAE0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel PI_80051D00
+.word 0x40490FDB /*3.1415927*/
 .text
 glabel sub_GAME_7F01BAE0
 /* 050610 7F01BAE0 27BDFFA0 */  addiu $sp, $sp, -0x60

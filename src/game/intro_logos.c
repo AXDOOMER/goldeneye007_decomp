@@ -111,10 +111,7 @@ u32 D_8002A8B0 = 0;
 
 
 //.section .rodata
-const f32 D_8004F2D0 =  0.91000003;
-const f32 D_8004F2D4 =  10000.0;
-const f32 D_8004F2D8 =  5000.0;
-const f32 D_8004F2DC =  0.91000003;
+
 /*
 jpt_7003D1CC:   .word .L7F0092A4
 .word .L7F009344
@@ -124,9 +121,7 @@ jpt_7003D1CC:   .word .L7F0092A4
 .word .L7F009610
 .word .L7F0096D8
 */
-const f32 D_8004F2FC = 1390.0;
-const f32 D_8004F300 = 1276.0;
-const f32 D_8004F304 = 5.8183274;
+
 
 
 #ifdef NONMATCHING
@@ -516,6 +511,15 @@ void sub_GAME_7F007F30(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8004F2D0
+.word 0x3f68f5c3
+glabel D_8004F2D4
+.word 0x461c4000
+glabel D_8004F2D8
+.word 0x459c4000
+glabel D_8004F2DC
+.word 0x3f68f5c3
 .text
 glabel sub_GAME_7F007F30
 /* 03CA60 7F007F30 27BDFEE0 */  addiu $sp, $sp, -0x120
@@ -1891,6 +1895,13 @@ void sub_GAME_7F009254(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8004F2FC
+.word 0x44adc000
+glabel D_8004F300
+.word 0x449f8000
+glabel D_8004F304
+.word 0x40ba2fbd
 .text
 glabel sub_GAME_7F009254
 /* 03DD84 7F009254 3C028003 */  lui   $v0, %hi(D_8002A7D0) # $v0, 0x8003

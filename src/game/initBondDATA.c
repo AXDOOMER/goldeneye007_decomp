@@ -16,9 +16,7 @@ struct  BONDdata_item_control_blocks BONDdata_item_control_blocks_initdata = {
 };
 
 
-// .rodata
-const f32 D_8004F0E0 = 0.89999998;
-const f32 fl_neg_pi = -3.1415927;
+
 
 
 
@@ -29,6 +27,11 @@ void init_player_BONDdata_stats(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8004F0E0
+.word 0x3f666666
+glabel fl_neg_pi
+.word 0xc0490fdb
 .text
 glabel init_player_BONDdata_stats
 /* 039C00 7F0050D0 27BDFC30 */  addiu $sp, $sp, -0x3d0

@@ -1,14 +1,11 @@
 #include "ultra64.h"
 
 
-
+//data
 s32 D_8002A790[] = { 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 
-// .rodata
-const f32 D_8004F1F0 = 0.10000001;
-const f32 D_8004F1F4 = 14.285716;
-const f32 D_8004F1F8 = 0.93000001;
+
 
 
 #ifdef NONMATCHING
@@ -83,6 +80,13 @@ void sets_a_bunch_of_BONDdata_values_to_default(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8004F1F0
+.word 0x3dccccce
+glabel D_8004F1F4
+.word 0x4164924b
+glabel D_8004F1F8
+.word 0x3f6e147b
 .text
 glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03AEBC 7F00638C 27BDFF20 */  addiu $sp, $sp, -0xe0

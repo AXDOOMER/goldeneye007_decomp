@@ -267,6 +267,12 @@ struct intro_animation {
     int camera_preset;
 };
 
+struct solo_target_times {
+    u16 agent_time;
+    u16 secret_agent_time;
+    u16 OO_agent_time;
+};
+
 extern f32 flt_CODE_bss_800695A0;
 //CODE.bss:800695A4
 extern f32 flt_CODE_bss_800695A4;

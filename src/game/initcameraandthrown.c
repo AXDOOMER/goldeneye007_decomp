@@ -27,7 +27,7 @@ default, default,
 default, bug,
 microcamera };
 */
-const f32 default_zoom_speed = 0.90909088;
+
 /*
 jpt_700399A4:   .word spawn_point
                 .word weapon
@@ -39,11 +39,7 @@ jpt_700399A4:   .word spawn_point
                 .word watch_time
                 .word credits
 */
-const f32 D_8004F1D0 = -0.000099999997;
-const f32 D_8004F1D4 = 6.2831855;
-const f32 D_8004F1D8 = 6.2831855;
-const f32 D_8004F1DC = 0.17000002;
-const f32 D_8004F1E0 = 0.10000002;
+
 /*                .align 4
 */
 
@@ -139,6 +135,19 @@ void load_camera_intro_type_values(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel default_zoom_speed
+.word 0x3f68ba2e
+glabel D_8004F1D0
+.word 0xb8d1b717
+glabel D_8004F1D4
+.word 0x40c90fdb
+glabel D_8004F1D8
+.word 0x40c90fdb
+glabel D_8004F1DC
+.word 0x3e2e147c
+glabel D_8004F1E0
+.word 0x3dccccd0
 .text
 glabel load_camera_intro_type_values
 /* 03A2F4 7F0057C4 27BDFF68 */  addiu $sp, $sp, -0x98

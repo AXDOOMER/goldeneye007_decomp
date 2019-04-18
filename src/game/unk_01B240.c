@@ -16,8 +16,7 @@ s32 D_8002BB2C = 0;
 
 
 
-// .rodata
-const f32 D_80051CF0 = 299.0;
+
 
 
 
@@ -31,6 +30,9 @@ void sub_GAME_7F01B240(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051CF0
+.word 0x43958000
 .text
 glabel sub_GAME_7F01B240
 /* 04FD70 7F01B240 27BDFFB8 */  addiu $sp, $sp, -0x48

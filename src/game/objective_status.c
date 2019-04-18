@@ -1,10 +1,88 @@
 #include "ultra64.h"
 
+// bss
+//CODE.bss:80075D30
+char objective_ptrs[0x28];
+u32 dword_CODE_bss_80075D58;
+u32 dword_CODE_bss_80075D5C;
+char dword_CODE_bss_80075D60[0x20];
+//CODE.bss:80075D80
+u32 *ptr_last_tag_entry_type16;
+//CODE.bss:80075D84
+u32 *ptr_last_briefing_setup_entry_type23;
+//CODE.bss:80075D88
+u32 *ptr_last_enter_room_subobject_entry_type20;
+//CODE.bss:80075D8C
+u32 *ptr_last_deposit_in_room_subobject_entry_type21;
+//CODE.bss:80075D90
+u32 *ptr_last_photo_obj_in_room_subobject_entry_type1E;
 
+// data
+s32 num_objective_ptrs = 0xFFFFFFFF;
+/*
+D:800322F4                     .word 0
+D:800322F8                     .word 0
+D:800322FC                     .word 0
+//file possibly split at sub_CODE_7F057AC0
+*/
+//D:80032300
+u32 D_80032300 = 0;
+//D:80032304
+u32 D_80032304 = 0;
+//D:80032308
+u32 D_80032308 = 0;
 
-
-
-
+// rodata
+//D:80053610
+const u32 D_80053610[10] = {0};
+//D:80053640
+const u32 D_80053640 = 0;
+//D:80053644
+const char aSAC[] = "%s Ç%c ";
+//D:8005364C
+const char aSC[] = "%s %c: ";
+/*
+D:80053654     jpt_objectives_microcode_handler:.word objective_microcode_type_17_18_1F_default
+D:80053654                                              # DATA XREF: get_status_of_objective+78r
+D:80053654                     .word objective_microcode_type_17_18_1F_default  # jump table for switch statement
+D:80053654                     .word objective_microcode_type_19_destroy_object
+D:80053654                     .word objective_microcode_type_1A_complete_if_true
+D:80053654                     .word objective_microcode_type_1B_fail_if_true
+D:80053654                     .word objective_microcode_type_1C_collect_object
+D:80053654                     .word objective_microcode_type_1D_deposit_object
+D:80053654                     .word objective_microcode_type_1E_photograph_object
+D:80053654                     .word objective_microcode_type_17_18_1F_default
+D:80053654                     .word objective_microcode_type_20_enter_room
+D:80053654                     .word objective_microcode_type_21_deposit_object_in_room
+D:80053654                     .word objective_microcode_type_22_use_key_analyzer_on_object
+D:80053684                     .word 0
+D:80053688                     .word 0
+D:8005368C                     .word 0
+*/
+//D:80053690
+const f32 D_80053690 = 6.2831855;
+//D:80053694
+const f32 D_80053694 = 0.098174773;
+//D:80053698
+const f32 D_80053698 = 6.2831855;
+//D:8005369C
+const f32 D_8005369C = 0.098174773;
+//D:800536A0
+const f32 D_800536A0 = 6.2831855;
+//D:800536A4
+const f32 D_800536A4 = 0.098174773;
+//D:800536A8
+const f32 D_800536A8 = 1.6666666;
+//D:800536AC
+const f32 D_800536AC = 3.3333333;
+//D:800536B0
+const f32 D_800536B0 = 1.6666666;
+//D:800536B4
+const f32 D_800536B4 = 1.6666666;
+//D:800536B8
+const f32 D_800536B8 = 3.3333333;
+//D:800536BC
+const f32 npc_gravity_modifier = 0.27777779;
 
 
 

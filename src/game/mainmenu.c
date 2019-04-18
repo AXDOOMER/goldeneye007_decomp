@@ -815,28 +815,30 @@ s32 unlock_control_style = 1;
 s32 unlock_aim_sight = 1;
 
 u32 D_8002B560 = 0;
-/*
-                solo_target_times <0, 160, 0>
-                solo_target_times <0, 0, 125>
-                solo_target_times <300, 0, 0>
-                solo_target_times <0, 210, 0>
-                solo_target_times <0, 0, 240>
-                solo_target_times <180, 0, 0>
-                solo_target_times <0, 270, 0>
-                solo_target_times <0, 0, 255>
-                solo_target_times <90, 0, 0>
-                solo_target_times <0, 195, 0>
-                solo_target_times <0, 0, 80>
-                solo_target_times <105, 0, 0>
-                solo_target_times <0, 100, 0>
-                solo_target_times <0, 0, 325>
-                solo_target_times <225, 0, 0>
-                solo_target_times <0, 600, 0>
-                solo_target_times <0, 0, 570>
-                solo_target_times <135, 0, 0>
-                solo_target_times <0, 540, 0>
-                solo_target_times <0, 0, 360>
-                */
+
+struct solo_target_times solo_target_time_array[] = {
+    {0, 160, 0},
+    {0, 0, 125},
+    {300, 0, 0},
+    {0, 210, 0},
+    {0, 0, 240},
+    {180, 0, 0},
+    {0, 270, 0},
+    {0, 0, 255},
+    {90, 0, 0},
+    {0, 195, 0},
+    {0, 0, 80},
+    {105, 0, 0},
+    {0, 100, 0},
+    {0, 0, 325},
+    {225, 0, 0},
+    {0, 600, 0},
+    {0, 0, 570},
+    {135, 0, 0},
+    {0, 540, 0},
+    {0, 0, 360}
+};
+
 u32 D_8002B5DC = 0;
 u32 D_8002B5E0 = 0;
 
@@ -987,7 +989,7 @@ const char a02d02d[] = "%02d:%02d";
 const char aS[] = "     [%s]";
 const char a02d02d_0[] = "%02d:%02d";
 const char aS02d02d[] = "     (%s  %02d:%02d)";
-const char D_80051848[] = 0;
+const char D_80051848[] = "";
 const char a02d02d_1[] = "%02d:%02d";
 const char a_1f[] = "%.1f%%";
 const char aX2[] = " x 2\n";
@@ -1024,44 +1026,7 @@ cheat_available_table:
  .word default_nonmenucheats, default_nonmenucheats
  */
 
-const f32 folder_menu_x_dim = 0.075000003;
-const f32 folder_menu_z_dim = 0.075000003;
-const f32 D_800519D0 = 0.075000003;
-const f32 D_800519D4 = 0.075000003;
-const f32 tab1_max_x_coord = 130.5;
-const f32 tab2_first_x_coord = 399.0;
-const f32 tab2_bottom_y_coord = 130.5;
-const f32 D_800519E4 = 1.3333334;
-const f32 D_800519E8 = 10000.0;
-const f32 D_800519EC = 1.3333334;
-const f32 D_800519F0 = 10000.0;
-const f32 D_800519F4 = -1.3962635;
-const f32 D_800519F8 = 0.018333333;
-const f32 D_800519FC = 1.3333334;
-const f32 D_80051A00 = 10000.0;
-const f32 D_80051A04 = 0.017453292;
-const f32 D_80051A08 = 1.1;
-const f32 D_80051A0C = 1.07977;
-const f32 D_80051A10 = 1.3333334;
-const f32 D_80051A14 = 10000.0;
-const f32 D_80051A18 = 1.2;
-const f32 D_80051A1C = 1.3333334;
-const f32 D_80051A20 = 10000.0;
-const f32 D_80051A24 = 0.37;
-const f32 D_80051A28 = 285.0;
-const f32 D_80051A2C = 335.0;
-const f32 D_80051A30 = 285.0;
-const f32 D_80051A34 = 285.0;
-const f32 D_80051A38 = 1.3333334;
-const f32 D_80051A3C = 10000.0;
-const f32 D_80051A40 = 275.0;
-const f32 D_80051A44 = 1.3333334;
-const f32 D_80051A48 = 10000.0;
-const f32 D_80051A4C = 1.3333334;
-const f32 D_80051A50 = 10000.0;
-const f32 D_80051A54 = 275.0;
-const f32 D_80051A58 = 1.3333334;
-const f32 D_80051A5C = 10000.0;
+
 
 /* deal with
 jpt_scenario_specific_settings_mp:
@@ -1075,22 +1040,7 @@ jpt_scenario_specific_settings_mp:
  .word .L7F0104DC
 */
 
-const f32 D_80051A80 = 1.3333334;
-const f32 D_80051A84 = 10000.0;
-const f32 D_80051A88 = 1.3333334;
-const f32 D_80051A8C = 10000.0;
-const f32 D_80051A90 = 1.3333334;
-const f32 D_80051A94 = 10000.0;
-const f32 D_80051A98 = 1.3333334;
-const f32 D_80051A9C = 10000.0;
-const f32 D_80051AA0 = 1.3333334;
-const f32 D_80051AA4 = 10000.0;
-const f32 D_80051AA8 = 1.3333334;
-const f32 D_80051AAC = 10000.0;
-const f32 D_80051AB0 = 1.3333334;
-const f32 D_80051AB4 = 10000.0;
-const f32 D_80051AB8 = 1.3333334;
-const f32 D_80051ABC = 10000.0;
+
 
 /* deal with
 jpt_briefingpage_name:
@@ -1101,12 +1051,7 @@ jpt_briefingpage_name:
  .word .L7F015E54
 */
 
-const f32 D_80051AD4 = 1.3333334;
-const f32 D_80051AD8 = 10000.0;
-const f32 D_80051ADC = 1.3333334;
-const f32 D_80051AE0 = 10000.0;
-const f32 D_80051AE4 = 1.3333334;
-const f32 D_80051AE8 = 10000.0;
+
 
 /* deal with
 jpt_intro_bond_head:
@@ -1117,25 +1062,7 @@ jpt_intro_bond_head:
  .word set_body_5
 */
 
-const f32 D_80051B00 = 6.2831855;
-const f32 D_80051B04 = 2.5132742;
-const f32 D_80051B08 = 1.3333334;
-const f32 D_80051B0C = 6.2831855;
-const f32 D_80051B10 = 0.2;
-const f32 D_80051B14 = 0.2;
-const f32 D_80051B18 = 0.2;
-const f32 D_80051B1C = 0.2;
-const f32 D_80051B20 = 0.050000012;
-const f32 D_80051B24 = 0.050000012;
-const f32 D_80051B28 = 0.94999999;
-const f32 D_80051B2C = 0.94999999;
-const f32 D_80051B30 = 0.94999999;
-const f32 D_80051B34 = 0.050000012;
-const f32 D_80051B38 = 3.1415927;
-const f32 D_80051B3C = 1.3333334;
-const f32 D_80051B40 = 10000.0;
-const f32 D_80051B44 = 1.3333334;
-const f32 D_80051B48 = 1.3333334;
+
 
 /* deal with
 jpt_menu_update:
@@ -1873,6 +1800,83 @@ void menu_control_stick_tracking(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel folder_menu_x_dim
+.word 0x3D99999A /* 0.075000003;*/
+glabel folder_menu_z_dim
+.word 0x3D99999A /* 0.075000003;*/
+glabel D_800519D0
+.word 0x3D99999A /* 0.075000003;*/
+glabel D_800519D4
+.word 0x3D99999A /* 0.075000003;*/
+glabel tab1_max_x_coord
+.word 0x43028000 /* 130.5;*/
+glabel tab2_first_x_coord
+.word 0x43C78000 /* 399.0;*/
+glabel tab2_bottom_y_coord
+.word 0x43028000 /* 130.5;*/
+glabel D_800519E4
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_800519E8
+.word 0x461C4000 /* 10000.0;*/
+glabel D_800519EC
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_800519F0
+.word 0x461C4000 /* 10000.0;*/
+glabel D_800519F4
+.word 0xBFB2B8C3 /* -1.3962635;*/
+glabel D_800519F8
+.word 0x3C962FC9 /* 0.018333333;*/
+glabel D_800519FC
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A00
+.word 0x461C4000 /* 10000.0;*/
+glabel D_80051A04
+.word 0x3C8EFA35 /* 0.017453292;*/
+glabel D_80051A08
+.word 0x3F8CCCCD /* 1.1;*/
+glabel D_80051A0C
+.word 0x3F8A35E7 /* 1.07977;*/
+glabel D_80051A10
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A14
+.word 0x461C4000 /* 10000.0;*/
+glabel D_80051A18
+.word 0x3F99999A /* 1.2;*/
+glabel D_80051A1C
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A20
+.word 0x461C4000 /* 10000.0;*/
+glabel D_80051A24
+.word 0x3EBD70A4 /* 0.37;*/
+glabel D_80051A28
+.word 0x438E8000 /* 285.0;*/
+glabel D_80051A2C
+.word 0x43A78000 /* 335.0;*/
+glabel D_80051A30
+.word 0x438E8000 /* 285.0;*/
+glabel D_80051A34
+.word 0x438E8000 /* 285.0;*/
+glabel D_80051A38
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A3C
+.word 0x461C4000 /* 10000.0;*/
+glabel D_80051A40
+.word 0x43898000 /* 275.0;*/
+glabel D_80051A44
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A48
+.word 0x461C4000 /* 10000.0;*/
+glabel D_80051A4C
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A50
+.word 0x461C4000 /* 10000.0;*/
+glabel D_80051A54
+.word 0x43898000 /* 275.0;*/
+glabel D_80051A58
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A5C
+.word 0x461C4000 /* 10000.0;*/
 .text
 glabel menu_control_stick_tracking
 /* 03E6B4 7F009B84 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -13744,6 +13748,39 @@ loop_65:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A80
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051A84
+.word 0x461C4000 /*10000.0;*/
+glabel D_80051A88
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051A8C
+.word 0x461C4000 /*10000.0;*/
+glabel D_80051A90
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051A94
+.word 0x461C4000 /*10000.0;*/
+glabel D_80051A98
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051A9C
+.word 0x461C4000 /*10000.0;*/
+glabel D_80051AA0
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051AA4
+.word 0x461C4000 /*10000.0;*/
+glabel D_80051AA8
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051AAC
+.word 0x461C4000 /*10000.0;*/
+glabel D_80051AB0
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051AB4
+.word 0x461C4000 /*10000.0;*/
+glabel D_80051AB8
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051ABC
+.word 0x461C4000 /*10000.0;*/
 .text
 glabel interface_menu0E_mpoptions
 /* 045378 7F010848 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -22959,6 +22996,19 @@ void interface_menu0C_missionfailed(void)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051AD4
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051AD8
+.word 0x461C4000 /*10000.0;*/
+glabel D_80051ADC
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051AE0
+.word 0x461C4000 /*10000.0;*/
+glabel D_80051AE4
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051AE8
+.word 0x461C4000 /*10000.0;*/
 .text
 glabel interface_menu0C_missionfailed
 /* 04AC40 7F016110 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -26305,6 +26355,45 @@ void init_menu18_displaycast(void)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051B00
+.word 0x40C90FDB /*6.2831855;*/
+glabel D_80051B04
+.word 0x4020D97C /*2.5132742;*/
+glabel D_80051B08
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051B0C
+.word 0x40C90FDB /*6.2831855;*/
+glabel D_80051B10
+.word 0x3E4CCCCD /*0.2;*/
+glabel D_80051B14
+.word 0x3E4CCCCD /*0.2;*/
+glabel D_80051B18
+.word 0x3E4CCCCD /*0.2;*/
+glabel D_80051B1C
+.word 0x3E4CCCCD /*0.2;*/
+glabel D_80051B20
+.word 0x3D4CCCD0 /*0.050000012;*/
+glabel D_80051B24
+.word 0x3D4CCCD0 /*0.050000012;*/
+glabel D_80051B28
+.word 0x3F733333 /*0.94999999;*/
+glabel D_80051B2C
+.word 0x3F733333 /*0.94999999;*/
+glabel D_80051B30
+.word 0x3F733333 /*0.94999999;*/
+glabel D_80051B34
+.word 0x3D4CCCD0 /*0.050000012;*/
+glabel D_80051B38
+.word 0x40490FDB /*3.1415927;*/
+glabel D_80051B3C
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051B40
+.word 0x461C4000 /*10000.0;*/
+glabel D_80051B44
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051B48
+.word 0x3FAAAAAB /*1.3333334;*/
 .text
 glabel init_menu18_displaycast
 /* 04D1CC 7F01869C 3C0E8003 */  lui   $t6, %hi(ptr_logo_and_walletbond_DL) # $t6, 0x8003

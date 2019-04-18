@@ -2,31 +2,32 @@
 
 
 
-// .rodata
-const f32 D_8004F200 = 1.3497647e-11;
-const f32 D_8004F204 = 1.3497647e-11;
-
 #ifdef NONMATCHING
 void set_mt_tex_alloc(void) {
 
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel str_Mt
+.word 0x2d6d7400 /*-mt*/
+glabel str_Mt_0
+.word 0x2d6d7400 /*-mt*/
 .text
 glabel set_mt_tex_alloc
 /* 03BE50 7F007320 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 03BE54 7F007324 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 03BE58 7F007328 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008D090) # $at, 0x8009
-/* 03BE5C 7F00732C 3C058005 */  lui   $a1, %hi(D_8004F200) # $a1, 0x8005
+/* 03BE5C 7F00732C 3C058005 */  lui   $a1, %hi(str_Mt) # $a1, 0x8005
 /* 03BE60 7F007330 AC20D090 */  sw    $zero, %lo(dword_CODE_bss_8008D090)($at)
-/* 03BE64 7F007334 24A5F200 */  addiu $a1, %lo(D_8004F200) # addiu $a1, $a1, -0xe00
+/* 03BE64 7F007334 24A5F200 */  addiu $a1, %lo(str_Mt) # addiu $a1, $a1, -0xe00
 /* 03BE68 7F007338 0C0029A8 */  jal   check_token
 /* 03BE6C 7F00733C 24040001 */   li    $a0, 1
 /* 03BE70 7F007340 1040000B */  beqz  $v0, .L7F007370
 /* 03BE74 7F007344 24040001 */   li    $a0, 1
-/* 03BE78 7F007348 3C058005 */  lui   $a1, %hi(D_8004F204) # $a1, 0x8005
+/* 03BE78 7F007348 3C058005 */  lui   $a1, %hi(str_Mt_0) # $a1, 0x8005
 /* 03BE7C 7F00734C 0C0029A8 */  jal   check_token
-/* 03BE80 7F007350 24A5F204 */   addiu $a1, %lo(D_8004F204) # addiu $a1, $a1, -0xdfc
+/* 03BE80 7F007350 24A5F204 */   addiu $a1, %lo(str_Mt_0) # addiu $a1, $a1, -0xdfc
 /* 03BE84 7F007354 00402025 */  move  $a0, $v0
 /* 03BE88 7F007358 00002825 */  move  $a1, $zero
 /* 03BE8C 7F00735C 0C002A78 */  jal   strtol
