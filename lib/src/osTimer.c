@@ -10,11 +10,6 @@ OSTime _osCurrentTime;
 
 // Count at last VI manager loop
 u32 lastViCount;
-/* 
- * Global variable  for the count reigster value from last retrace 
- * interrupt
- */
-//u32	__osBaseCounter;
 
 // This variable is set to 0 here, incremented in viMgrMain, but never read from.
 // Looks useless.
