@@ -909,7 +909,7 @@ extern void __osTimerServicesInit(void);
 extern void __osTimerInterrupt(void);
 extern OSTime _osCurrentTime;
 extern u32 lastViCount;
-extern u32 D_80365DAC;
+extern u32 __osViSwapCount;
 void viMgrMain(void *);
 //glabel osCreateViManager
 void osCreateViManager(OSPri pri)
@@ -991,7 +991,7 @@ void viMgrMain(void *vargs)
                 viEventCounterMesg.unk14 = context->retraceCount;
             }
 
-            D_80365DAC++;
+            __osViSwapCount++;
 
             // This will never be executed because "setTimetoCount" is always false
             if (setTimetoCount)

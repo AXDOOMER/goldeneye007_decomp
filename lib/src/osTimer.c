@@ -18,12 +18,8 @@ u32 lastViCount;
 
 // This variable is set to 0 here, incremented in viMgrMain, but never read from.
 // Looks useless.
-//u32 D_80365DAC;
-u32	__osViIntrCount;	/* # of  VI interrupts */
-
-//Its nice to see these files coming out more or less exactly as source is written.
-//now just need to refactor variable names to original
-
+// It counts how many times __osViSwapContext was called in viMgrMain.
+u32	__osViSwapCount;
 
 // Count at last interrupt
 u32 lastIntCount;
@@ -32,7 +28,7 @@ void __osTimerServicesInit()
 {
     _osCurrentTime = 0;
     lastViCount = 0;
-    __osViIntrCount = 0;
+    __osViSwapCount = 0;
 
     // Init the Circular Linked List
     firstTimer->prev = firstTimer;
