@@ -29,6 +29,8 @@ struct debug_handler_entry debug_handler_table[] =
 	{&sp_shed, "shed"},
 	{&sp_main, "main"},
 	{&sp_audi, "audi"},
+    {0, ""},
+    {0, ""}
 };
 
 #ifdef NONMATCHING

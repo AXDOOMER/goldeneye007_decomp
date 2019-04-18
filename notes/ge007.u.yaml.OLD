@@ -1292,7 +1292,7 @@ ranges:
    - [0xC08450, 0xC08454, "ascii", "aD_3"]
    - [0xC08454, 0xC08458, "ascii", "a___"]
    - [0xC08458, 0xC08460, "ascii", "aD_5"]
-   - [0xC08460, 0xC08464, "ptr", "D_800291F0"]
+   - [0xC08460, 0xC08464, "ptr", "str_empty"]
    - [0xC08464, 0xC08468, "ascii", "aD_6"]
    - [0xC08468, 0xC0846C, "ascii", "aS_2"]
    - [0xC0846C, 0xC08470, "ascii", "aJ"]

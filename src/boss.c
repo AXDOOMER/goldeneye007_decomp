@@ -55,9 +55,9 @@ struct memallocstring
 { 0x1B2, "-ml0 -me0 -mgfx90  -mvtx100 -mt550 -ma230"},
 { 0x1B0, "-ml0 -me0 -mgfx110 -mvtx100 -mt350 -ma400"},
 {   0x0, "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"},
-{ 0x0, ""},
-{ 0x0, ""},
-{ 0x0, ""}
+{ 0x0, },
+{ 0x0, },
+{ 0x0, }
 };
 
 s32 loadedstage = -1;

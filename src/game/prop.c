@@ -9,7 +9,7 @@ const char aNoprop[] = "-noprop";
 const char aNoobj[] = "-noobj";
 const char aNoprop_0[] = "-noprop";
 
-u32 only_read_by_stageload[] = {
+const u32 only_read_by_stageload[] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -18,7 +18,7 @@ u32 only_read_by_stageload[] = {
 
 const char aMp_[] = "mp_";
 
-const f32 D_8004EEB4 = 0.000001;
+
 /*
 jpt_700366F0:
 .word .L7F0027C8
@@ -61,12 +61,8 @@ jpt_mp_ammo_crate_expansion:
 .word .L7F002870
 .word .L7F002870
 */
-const f32 D_8004EF50 = 6.2831855;
-const f32 D_8004EF54 = 6.2831855;
-const f32 D_8004EF58 = 0.36651915;
-const f32 D_8004EF5C = 1.5707964;
-const f32 D_8004EF60 = 1.5707964;
-const f32 D_8004EF64 = 0.000001;
+
+
 /*
 jpt_object_type_expansion:
 .word door_expand
@@ -117,8 +113,7 @@ jpt_object_type_expansion:
 .word type2E_viewport_pos
 .word type2F_tinted_glass
 */
-f32 D_8004F024 = 6.2831855;
-f32 D_8004F028 = 0.17000002;
+
 /*
 jpt_70038A94:
 .word .L7F004B6C
@@ -399,6 +394,9 @@ void prepare_load_objects(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8004EEB4
+.word 0x358637bd
 .text
 glabel prepare_load_objects
 /* 0368CC 7F001D9C 27BDFF08 */  addiu $sp, $sp, -0xf8
@@ -1352,6 +1350,20 @@ void sub_GAME_7F002A3C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8004EF50
+.word 0x40c90fdb
+glabel D_8004EF54
+.word 0x40c90fdb
+glabel D_8004EF58
+.word 0x3ebba866
+glabel D_8004EF5C
+.word 0x3fc90fdb
+glabel D_8004EF60
+.word 0x3fc90fdb
+glabel D_8004EF64
+.word 0x358637bd
+
 .text
 glabel sub_GAME_7F002A3C
 /* 03756C 7F002A3C 27BDFFA8 */  addiu $sp, $sp, -0x58
@@ -2620,6 +2632,11 @@ void stage_loading_setup_objparse_cleanupafter(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8004F024
+.word 0x40c90fdb
+glabel D_8004F028
+.word 0x3e2e147c
 .text
 glabel stage_loading_setup_objparse_cleanupafter
 /* 038720 7F003BF0 27BDFD80 */  addiu $sp, $sp, -0x280

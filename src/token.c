@@ -8,7 +8,7 @@ s32 strstr_ptrcurrent_string = 0;
 u32 D_80024478[34] = {0};
 
 
-
+const char str_empty[] = "";
 const char aD_6[] = "-d";
 const char aS_2[] = "-s";
 const char aJ[] = "-j";
@@ -33,7 +33,7 @@ void *check_string_something(void *arg0)
     void *phi_a0_5;
     void *phi_a0_6;
 
-    strstr_ptrcurrent_string = &D_800291F0;
+    strstr_ptrcurrent_string = &str_empty;
     strstr_numstings = 1;
     phi_v0 = *arg0;
     phi_a0_4 = arg0;
@@ -90,10 +90,10 @@ GLOBAL_ASM(
 glabel check_string_something
 /* 00B0F0 7000A4F0 3C058002 */  lui   $a1, %hi(strstr_ptrcurrent_string) # $a1, 0x8002
 /* 00B0F4 7000A4F4 3C068002 */  lui   $a2, %hi(strstr_numstings) # $a2, 0x8002
-/* 00B0F8 7000A4F8 3C0E8003 */  lui   $t6, %hi(D_800291F0) # $t6, 0x8003
+/* 00B0F8 7000A4F8 3C0E8003 */  lui   $t6, %hi(str_empty) # $t6, 0x8003
 /* 00B0FC 7000A4FC 24C64470 */  addiu $a2, %lo(strstr_numstings) # addiu $a2, $a2, 0x4470
 /* 00B100 7000A500 24A54474 */  addiu $a1, %lo(strstr_ptrcurrent_string) # addiu $a1, $a1, 0x4474
-/* 00B104 7000A504 25CE91F0 */  addiu $t6, %lo(D_800291F0) # addiu $t6, $t6, -0x6e10
+/* 00B104 7000A504 25CE91F0 */  addiu $t6, %lo(str_empty) # addiu $t6, $t6, -0x6e10
 /* 00B108 7000A508 240F0001 */  li    $t7, 1
 /* 00B10C 7000A50C ACAE0000 */  sw    $t6, ($a1)
 /* 00B110 7000A510 ACCF0000 */  sw    $t7, ($a2)
@@ -133,9 +133,6 @@ glabel check_string_something
 .L7000A584:
 /* 00B184 7000A584 03E00008 */  jr    $ra
 /* 00B188 7000A588 00801025 */   move  $v0, $a0
-.late_rodata
-glabel D_800291F0
-.word  0
 )
 #endif
 
