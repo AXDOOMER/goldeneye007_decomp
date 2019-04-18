@@ -914,7 +914,7 @@ extern void __osTimerServicesInit(void);
 extern void __osTimerInterrupt(void);
 extern OSTime _osCurrentTime;
 extern u32 D_80365DA8;
-extern u32 __osViIntrCount;
+extern u32 __osViSwapCount;
 void viMgrMain(void *);
 //glabel osCreateViManager
 void osCreateViManager(OSPri pri)
@@ -991,7 +991,7 @@ void viMgrMain(void *vargs)
                 }
                 viEventCounterMesg.unk14 = context->retraceCount;
             }
-            __osViIntrCount++;
+            __osViSwapCount++;
             if (sp28)
             {
                 sp24 = osGetCount();
