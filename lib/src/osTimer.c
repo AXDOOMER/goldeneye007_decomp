@@ -106,8 +106,8 @@ void __osSetTimerIntr(u64 remaining)
     // Interesting because a timer cannot be set to trigger on a more than 92 seconds interval
     tmp = remaining + lastIntCount;
 
-    // Note that __osSetCompare takes a u32, not a u64, as a parameter.
-    __osSetCompare(tmp);
+    // Note that __osSetCompare takes a u32
+    __osSetCompare((u32)tmp);
     __osRestoreInt(saveMask);
 }
 
