@@ -129,7 +129,7 @@ u64 __osInsertTimer(OSTimer *newTimer)
     // the remaining time of the new timer.
     for (node = firstTimer->next, newRemainer = newTimer->remaining;
          node != firstTimer && newRemainer > node->remaining;
-         newRemainer -= node->remaining, node = node->next;)
+         newRemainer -= node->remaining, node = node->next)
     {
         ;
     }
