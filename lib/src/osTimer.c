@@ -7,7 +7,6 @@ OSTimer *firstTimer = &aTimer;
 
 OSTime _osCurrentTime;
 
-
 // Count at last VI manager loop
 u32 lastViCount;
 

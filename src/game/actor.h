@@ -187,7 +187,7 @@ struct weapon_firing_animation_table
   f32 anonymous_17;
 };
 
-extern struct animation_something D_8002C914[];
+extern struct animation_something D_8002C914;
 
 
 extern struct struck_animation_table D_8002CE54[];

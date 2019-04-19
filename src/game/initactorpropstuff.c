@@ -1,10 +1,6 @@
 #include "ultra64.h"
 
 
-//rodata 
-const f32 F32_8004ED70 = 6.2831855;
-const f32 F32_8004ED74 = 0.000095873802;
-const f32 F32_8004ED78 = 0.10000001;
 
 
 
@@ -202,6 +198,11 @@ void sub_GAME_7F00032C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel F32_8004ED70
+.word 0x40c90fdb
+glabel F32_8004ED74
+.word 0x38c90fdb
 .text
 glabel sub_GAME_7F00032C
 /* 034E5C 7F00032C 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -374,6 +375,9 @@ void somethingwith_weapon_animation_groups(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel F32_8004ED78
+.word 0x3dccccce
 .text
 glabel somethingwith_weapon_animation_groups
 /* 035048 7F000518 27BDFFC0 */  addiu $sp, $sp, -0x40

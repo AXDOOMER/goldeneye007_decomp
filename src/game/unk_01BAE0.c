@@ -1,7 +1,5 @@
 #include "ultra64.h"
 
-// .rodata
-const f32 F32_80051D00 = 3.1415927;
 
 #ifdef NONMATCHING
 void sub_GAME_7F01BAE0(void) {
@@ -9,6 +7,9 @@ void sub_GAME_7F01BAE0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel PI_80051D00
+.word 0x40490FDB /*3.1415927*/
 .text
 glabel sub_GAME_7F01BAE0
 /* 050610 7F01BAE0 27BDFFA0 */  addiu $sp, $sp, -0x60
@@ -31,8 +32,8 @@ glabel sub_GAME_7F01BAE0
 /* 050654 7F01BB24 00009025 */   move  $s2, $zero
 /* 050658 7F01BB28 3C014280 */  li    $at, 0x42800000 # 64.000000
 /* 05065C 7F01BB2C 4481F000 */  mtc1  $at, $f30
-/* 050660 7F01BB30 3C018005 */  lui   $at, %hi(D_80051D00) # $at, 0x8005
-/* 050664 7F01BB34 C43C1D00 */  lwc1  $f28, %lo(D_80051D00)($at)
+/* 050660 7F01BB30 3C018005 */  lui   $at, %hi(PI_80051D00) # $at, 0x8005
+/* 050664 7F01BB34 C43C1D00 */  lwc1  $f28, %lo(PI_80051D00)($at)
 /* 050668 7F01BB38 3C01C2DE */  li    $at, 0xC2DE0000 # -111.000000
 /* 05066C 7F01BB3C 44952000 */  mtc1  $s5, $f4
 /* 050670 7F01BB40 4481C000 */  mtc1  $at, $f24

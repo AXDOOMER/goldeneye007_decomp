@@ -2,6 +2,11 @@
 #define _DEBUGMENU_090490_H_
 #include "ultra64.h"
 
+struct mcm_layout {
+    int xpos;
+    int ypos;
+};
+
 s32 get_debug_render_raster(void);
 s32 get_debug_freeze_processing(void);
 s32 get_debug_limit_controller_input(void);

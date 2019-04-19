@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "deb.h"
 
 void *ptr_model_room_buf_secondary;
 u32 size_modelroom_buf;
@@ -20,9 +21,7 @@ s32 dword_CODE_bss_80064C24;
 void *ptr_mema_c_debug_notice_list = 0;
 
 
-const char aD_3[] = "%d ";
-const char a___[] = "...";
-const char aD_5[] = "[%d]";
+
 
 
 
@@ -539,6 +538,9 @@ void something_with_mema_c_debug(void) {
 }
 
 
+const char aD_3[] = "%d ";
+const char a___[] = "...";
+const char aD_5[] = "[%d]";
 
 #ifdef NONMATCHING
 void *reset_memtable_base_allocation(s32 arg0, s32 arg1) {

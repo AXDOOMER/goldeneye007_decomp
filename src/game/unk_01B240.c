@@ -1,23 +1,22 @@
 #include "ultra64.h"
 
 
-s32 dword_D_8002BB00 = 0;
-s32 dword_D_8002BB04 = 0;
-s32 dword_D_8002BB08 = 0;
-f32 flt_D_8002BB0C = 255.0;
-f32 flt_D_8002BB10 = 255.0;
-f32 flt_D_8002BB14 = 255.0;
-s32 dword_D_8002BB18 = 0;
-s32 dword_D_8002BB1C = 0;
-s32 dword_D_8002BB20 = 0;
-s32 dword_D_8002BB24 = 0;
-s32 dword_D_8002BB28 = 0;
-s32 dword_D_8002BB2C = 0;
+s32 D_8002BB00 = 0;
+s32 D_8002BB04 = 0;
+s32 D_8002BB08 = 0;
+f32 D_8002BB0C = 255.0;
+f32 D_8002BB10 = 255.0;
+f32 D_8002BB14 = 255.0;
+s32 D_8002BB18 = 0;
+s32 D_8002BB1C = 0;
+s32 D_8002BB20 = 0;
+s32 D_8002BB24 = 0;
+s32 D_8002BB28 = 0;
+s32 D_8002BB2C = 0;
 
 
 
-// .rodata
-const f32 F32_80051CF0 = 299.0;
+
 
 
 
@@ -31,6 +30,9 @@ void sub_GAME_7F01B240(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051CF0
+.word 0x43958000
 .text
 glabel sub_GAME_7F01B240
 /* 04FD70 7F01B240 27BDFFB8 */  addiu $sp, $sp, -0x48

@@ -49,7 +49,8 @@ char dword_CODE_bss_8007BA10[0x580];
 
 // data
 //D:80040F30
-s32 D_80040F30[] = {0x8D8604C5, 0x9DA40000, 0, 0, 0};
+s32 D_80040F30[] = {0x8D8604C5, 0x9DA40000, 0, 0};
+s32 stan_c_debug_notice_list_entry = 0;
 //D:80040F44
 f32 D_80040F44 = 1.0;
 //D:80040F48
@@ -109,15 +110,15 @@ const char aStan_c_debug[] = "stan_c_debug";
 //D:800585BC
 const char aStanlinelog[] = "-stanlinelog";
 //D:800585CC
-const f32 flt_D_800585CC = 32767.0;
+const f32 D_800585CC = 32767.0;
 //D:800585D0
-const f32 flt_D_800585D0 = -3.4028235e38;
+const f32 D_800585D0 = -3.4028235e38;
 //D:800585D4
-const f32 flt_D_800585D4 = -32767.0;
+const f32 D_800585D4 = -32767.0;
 //D:800585D8
-const f32 flt_D_800585D8 = 0.1;
+const f32 D_800585D8 = 0.1;
 //D:800585DC
-const f32 flt_D_800585DC = 0.89999998;
+const f32 D_800585DC = 0.89999998;
 
 
 #ifdef NONMATCHING
@@ -261,7 +262,7 @@ glabel stanRemovedAnimationRoutine
 
 #ifdef NONMATCHING
 void something_stan_c_debug_related(void) {
-    get_ptr_debug_notice_list_entry(&D_80040F40, &aStan_c_debug);
+    get_ptr_debug_notice_list_entry(&stan_c_debug_notice_list_entry, "stan_c_debug");
 }
 
 #else
@@ -270,11 +271,11 @@ GLOBAL_ASM(
 glabel something_stan_c_debug_related
 /* 0E3B3C 7F0AF00C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0E3B40 7F0AF010 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E3B44 7F0AF014 3C048004 */  lui   $a0, %hi(D_80040F40) # $a0, 0x8004
+/* 0E3B44 7F0AF014 3C048004 */  lui   $a0, %hi(stan_c_debug_notice_list_entry) # $a0, 0x8004
 /* 0E3B48 7F0AF018 3C058006 */  lui   $a1, %hi(aStan_c_debug) # $a1, 0x8006
 /* 0E3B4C 7F0AF01C 24A585AC */  addiu $a1, %lo(aStan_c_debug) # addiu $a1, $a1, -0x7a54
 /* 0E3B50 7F0AF020 0C001398 */  jal   get_ptr_debug_notice_list_entry
-/* 0E3B54 7F0AF024 24840F40 */   addiu $a0, %lo(D_80040F40) # addiu $a0, $a0, 0xf40
+/* 0E3B54 7F0AF024 24840F40 */   addiu $a0, %lo(stan_c_debug_notice_list_entry) # addiu $a0, $a0, 0xf40
 /* 0E3B58 7F0AF028 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0E3B5C 7F0AF02C 27BD0018 */  addiu $sp, $sp, 0x18
 /* 0E3B60 7F0AF030 03E00008 */  jr    $ra
@@ -835,7 +836,7 @@ void stanLoadFile(void *arg0) {
     base_ptr_connection_vals = (s32) (arg0->unk4 + -0x80);
     if (check_token(1, "-stanlinelog") != 0)
     {
-        stanDoLineLog = 1;
+        stanlinelog_flag = 1;
     }
     sub_GAME_7F0AF038();
     sub_GAME_7F0B2950(1.0);
@@ -863,8 +864,8 @@ glabel stanLoadFile
 /* 0E4124 7F0AF5F4 24040001 */   li    $a0, 1
 /* 0E4128 7F0AF5F8 10400003 */  beqz  $v0, .L7F0AF608
 /* 0E412C 7F0AF5FC 24080001 */   li    $t0, 1
-/* 0E4130 7F0AF600 3C018004 */  lui   $at, %hi(stanDoLineLog) # $at, 0x8004
-/* 0E4134 7F0AF604 AC280FB4 */  sw    $t0, %lo(stanDoLineLog)($at)
+/* 0E4130 7F0AF600 3C018004 */  lui   $at, %hi(stanlinelog_flag) # $at, 0x8004
+/* 0E4134 7F0AF604 AC280FB4 */  sw    $t0, %lo(stanlinelog_flag)($at)
 .L7F0AF608:
 /* 0E4138 7F0AF608 0FC2BC0E */  jal   sub_GAME_7F0AF038
 /* 0E413C 7F0AF60C 00000000 */   nop   

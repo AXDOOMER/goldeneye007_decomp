@@ -1,95 +1,403 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:80076A50     dword_CODE_bss_80076A50:.space 0xC       # DATA XREF: sub_CODE_7F005450o
-CODE.bss:80076A5C     dword_CODE_bss_80076A5C:.space 4         # DATA XREF: sub_CODE_7F005450+1Cw
-CODE.bss:80076A60                     .space 4
-CODE.bss:80076A64     dword_CODE_bss_80076A64:.space 0xC       # DATA XREF: sub_CODE_7F005450+14o
-CODE.bss:80076A70     dword_CODE_bss_80076A70:.space 4         # DATA XREF: sub_CODE_7F005450+24w
-CODE.bss:80076A74     dword_CODE_bss_80076A74:.space 4         # DATA XREF: sub_CODE_7F005450+2Cw
-CODE.bss:80076A78     dword_CODE_bss_80076A78:.space 0xC       # DATA XREF: sub_CODE_7F005450+20o
-CODE.bss:80076A84     dword_CODE_bss_80076A84:.space 4         # DATA XREF: sub_CODE_7F005450+3Cw
-CODE.bss:80076A88     dword_CODE_bss_80076A88:.space 4         # DATA XREF: sub_CODE_7F005450+70w
-CODE.bss:80076A8C     dword_CODE_bss_80076A8C:.space 0x14      # DATA XREF: sub_CODE_7F005450+38o
-CODE.bss:80076AA0     dword_CODE_bss_80076AA0:.space 0x14      # DATA XREF: sub_CODE_7F005450+6Co
-CODE.bss:80076AB4     dword_CODE_bss_80076AB4:.space 0x14      # DATA XREF: sub_CODE_7F005450+68o
-CODE.bss:80076AC8     dword_CODE_bss_80076AC8:.space 0x14      # DATA XREF: sub_CODE_7F005450+64o
-CODE.bss:80076ADC     dword_CODE_bss_80076ADC:.space 0x2E2C    # DATA XREF: sub_CODE_7F005450+60o
-CODE.bss:80079908     dword_CODE_bss_80079908:.space 0x28      # DATA XREF: sub_CODE_7F005450+B8o
-CODE.bss:80079930     ptr_allocation_0:.space 4                # DATA XREF: sub_CODE_7F005624+4Co
-CODE.bss:80079930                                              # sub_CODE_7F005624+54w
-CODE.bss:80079930                                              # sub_CODE_7F005624+68r
-CODE.bss:80079930                                              # get_aircraft_obj_instance_controller+44r
-CODE.bss:80079930                                              # get_aircraft_obj_instance_controller+DCr
-CODE.bss:80079934     ptr_allocation_1:.space 4                # DATA XREF: sub_CODE_7F005540+44o
-CODE.bss:80079934                                              # sub_CODE_7F005540+4Cw
-CODE.bss:80079934                                              # sub_CODE_7F005540+60r
-CODE.bss:80079934                                              # get_obj_instance_controller_for_header+64r
-CODE.bss:80079934                                              # get_obj_instance_controller_for_header+F0o
-CODE.bss:80079934                                              # get_obj_instance_controller_for_header+F4r
-*/
+// bss
+//CODE.bss:80076A50
+char dword_CODE_bss_80076A50[0xC];
+//CODE.bss:80076A5C
+u32 dword_CODE_bss_80076A5C;
+//CODE.bss:80076A60
+u32 dword_CODE_bss_80076A60;
+//CODE.bss:80076A64
+char dword_CODE_bss_80076A64[0xC];
+//CODE.bss:80076A70
+u32 dword_CODE_bss_80076A70;
+//CODE.bss:80076A74
+u32 dword_CODE_bss_80076A74;
+//CODE.bss:80076A78
+char dword_CODE_bss_80076A78[0xC];
+//CODE.bss:80076A84
+u32 dword_CODE_bss_80076A84;
+//CODE.bss:80076A88
+u32 dword_CODE_bss_80076A88;
+//CODE.bss:80076A8C
+char dword_CODE_bss_80076A8C[0x14];
+//CODE.bss:80076AA0
+char dword_CODE_bss_80076AA0[0x14];
+//CODE.bss:80076AB4
+char dword_CODE_bss_80076AB4[0x14];
+//CODE.bss:80076AC8
+char dword_CODE_bss_80076AC8[0x14];
+//CODE.bss:80076ADC
+char dword_CODE_bss_80076ADC[0x2E2C];
+//CODE.bss:80079908
+char dword_CODE_bss_80079908[0x28];
 
-/* data
-D:80036070     dword_D_80036070:.word 0
-D:80036074     dword_D_80036074:.word 0
-D:80036078     dword_D_80036078:.word 0
+//CODE.bss:80079930
+void * ptr_allocation_0;
+//CODE.bss:80079934
+void * ptr_allocation_1;
+
+
+// data
+//D:80036070
+u32 D_80036070 = 0;
+//D:80036074
+u32 D_80036074 = 0;
+//D:80036078
+u32 D_80036078 = 0;
+/*
 D:8003607C                     .word 0
 D:80036080                     .word 0
-D:80036084     dword_D_80036084:.word 0
-D:80036088     flt_D_80036088: .float 1.0
-D:8003608C     dword_D_8003608C:.word 0
-D:80036090     dword_D_80036090:.word 0
-D:80036094     dword_D_80036094:.word 0
-D:80036098     dword_D_80036098:.word 0
-D:8003609C     dword_D_8003609C:.word 0
-D:800360A0     dword_D_800360A0:.word 0
-D:800360A4     dword_D_800360A4:.word 0
-D:800360A8     dword_D_800360A8:.word 0
-D:800360AC     dword_D_800360AC:.word 0
-D:800360B0     dword_D_800360B0:.word 0
-D:800360B4     dword_D_800360B4:.word 0
-D:800360B8     dword_D_800360B8:.word 0
-D:800360BC     dword_D_800360BC:.word 0
-D:800360C0     dword_D_800360C0:.word 0
-D:800360C4     dword_D_800360C4:.word 0
-D:800360C8                     .word 0
-D:800360CC                     .word 0x10, 1, 0x1000, 0xD, 1, 0x1000, 0xD, 9, 0x800, 0xC, 9, 0x800, 0xC, 0x19
-D:800360CC                     .word 0x400, 0xB, 0x19, 0x400, 0xB, 0x39, 0x400, 0xB, 0x39, 0x400, 0xB, 0x59
-D:800360CC                     .word 0x400, 0xB, 0x59, 0x400, 0xB, 0x79, 0x400, 0xB, 0x79, 0x400, 0xB, 0x99
-D:800360CC                     .word 0x400, 0xB, 0x99, 0x400, 0xB, 0xB9, 0x400, 0xB, 0xB9, 0x400, 0xB, 0xD9
-D:800360CC                     .word 0x400, 0xB, 0xD9, 0x400, 0xB, 0xF9, 0x400, 0xB, 0xF9, 0x400, 0xB, 0x119
-D:800360CC                     .word 0x400, 0xB, 0x119, 0x400, 0xB, 0x139, 0x400, 0xB, 0x139, 0x400, 0xB
-D:800360CC                     .word 0x159, 0x400, 0xB, 0x159, 0x400, 0xB, 0x179, 0x800, 0xC, 0x179, 0x800
-D:800360CC                     .word 0xC, 0x189, 0x1000, 0xD, 0x189, 0x1000, 0xD, 0x191, 0
-D:80036240                     .word 0x10
-D:80036244     dword_D_80036244:.word 0                 # DATA XREF: sub_CODE_7F06F878+D0o
-D:80036244                                              # sub_CODE_7F06F878+D4r
-D:80036248     dword_D_80036248:.word 0                 # DATA XREF: sub_CODE_7F06F878+F0r
-D:8003624C     dword_D_8003624C:.word 0                 # DATA XREF: sub_CODE_7F06F878+100r
-D:80036250     dword_D_80036250:.word 1, 0, 0, 0, 0, 0  # DATA XREF: sub_CODE_7F0701D4+8w
-D:80036250                                              # sub_CODE_7F0701E0+8r
-D:80036250                                              # sub_CODE_7F0701EC+408r
-D:80036250                                              # sub_CODE_7F0701EC+78o
-D:80036250                                              # sub_CODE_7F0701EC+A8r
-D:80036250                                              # sub_CODE_7F0701EC+ACr
-D:80036250                                              # sub_CODE_7F0701EC+B4r
-D:80036268                     .word 0x10, 1, 0x1000, 0xD, 1, 0x1000, 0xD, 9, 0x800, 0xC, 9, 0x800, 0xC, 0x19
-D:80036268                     .word 0x800, 0xC, 0x19, 0x800, 0xC, 0x29, 0x800, 0xC, 0x29, 0x800, 0xC, 0x39
-D:80036268                     .word 0x800, 0xC, 0x39, 0x800, 0xC, 0x49, 0x800, 0xC, 0x49, 0x800, 0xC, 0x59
-D:80036268                     .word 0x1000, 0xD, 0x59, 0x1000, 0xD, 0x61, 0
+*/
+//D:80036084
+u32 D_80036084 = 0;
+//D:80036088
+f32 D_80036088 = 1.0;
+//D:8003608C
+u32 D_8003608C = 0;
+//D:80036090
+u32 D_80036090 = 0;
+//D:80036094
+u32 D_80036094 = 0;
+//D:80036098
+u32 D_80036098 = 0;
+//D:8003609C
+u32 D_8003609C = 0;
+//D:800360A0
+u32 D_800360A0 = 0;
+//D:800360A4
+u32 D_800360A4 = 0;
+//D:800360A8
+u32 D_800360A8 = 0;
+//D:800360AC
+u32 D_800360AC = 0;
+//D:800360B0
+u32 D_800360B0 = 0;
+//D:800360B4
+u32 D_800360B4 = 0;
+//D:800360B8
+u32 D_800360B8 = 0;
+//D:800360BC
+u32 D_800360BC = 0;
+//D:800360C0
+u32 D_800360C0 = 0;
+//D:800360C4
+u32 D_800360C4 = 0;
+//D:800360C8
+u32 D_800360C8 = 0;
+//D:800360CC
+u32 D_800360CC = 0x10;
+//D:800360D0
+u32 D_800360D0 = 1;
+//D:800360D4
+u32 D_800360D4 = 0x1000;
+//D:800360D8
+u32 D_800360D8 = 0xD;
+//D:800360DC
+u32 D_800360DC = 1;
+//D:800360E0
+u32 D_800360E0 = 0x1000;
+//D:800360E4
+u32 D_800360E4 = 0xD;
+//D:800360E8
+u32 D_800360E8 = 9;
+//D:800360EC
+u32 D_800360EC = 0x800;
+//D:800360F0
+u32 D_800360F0 = 0xC;
+//D:800360F4
+u32 D_800360F4 = 9;
+//D:800360F8
+u32 D_800360F8 = 0x800;
+//D:800360FC
+u32 D_800360FC = 0xC;
+//D:80036100
+u32 D_80036100 = 0x19;
+//D:80036104
+u32 D_80036104 = 0x400;
+//D:80036108
+u32 D_80036108 = 0xB;
+//D:8003610C
+u32 D_8003610C = 0x19;
+//D:80036110
+u32 D_80036110 = 0x400;
+//D:80036114
+u32 D_80036114 = 0xB;
+//D:80036118
+u32 D_80036118 = 0x39;
+//D:8003611C
+u32 D_8003611C = 0x400;
+//D:80036120
+u32 D_80036120 = 0xB;
+//D:80036124
+u32 D_80036124 = 0x39;
+//D:80036128
+u32 D_80036128 = 0x400;
+//D:8003612C
+u32 D_8003612C = 0xB;
+//D:80036130
+u32 D_80036130 = 0x59;
+//D:80036134
+u32 D_80036134 = 0x400;
+//D:80036138
+u32 D_80036138 = 0xB;
+//D:8003613C
+u32 D_8003613C = 0x59;
+//D:80036140
+u32 D_80036140 = 0x400;
+//D:80036144
+u32 D_80036144 = 0xB;
+//D:80036148
+u32 D_80036148 = 0x79;
+//D:8003614C
+u32 D_8003614C = 0x400;
+//D:80036150
+u32 D_80036150 = 0xB;
+//D:80036154
+u32 D_80036154 = 0x79;
+//D:80036158
+u32 D_80036158 = 0x400;
+//D:8003615C
+u32 D_8003615C = 0xB;
+//D:80036160
+u32 D_80036160 = 0x99;
+//D:80036164
+u32 D_80036164 = 0x400;
+//D:80036168
+u32 D_80036168 = 0xB;
+//D:8003616C
+u32 D_8003616C = 0x99;
+//D:80036170
+u32 D_80036170 = 0x400;
+//D:80036174
+u32 D_80036174 = 0xB;
+//D:80036178
+u32 D_80036178 = 0xB9;
+//D:8003617C
+u32 D_8003617C = 0x400;
+//D:80036180
+u32 D_80036180 = 0xB;
+//D:80036184
+u32 D_80036184 = 0xB9;
+//D:80036188
+u32 D_80036188 = 0x400;
+//D:8003618C
+u32 D_8003618C = 0xB;
+//D:80036190
+u32 D_80036190 = 0xD9;
+//D:80036194
+u32 D_80036194 = 0x400;
+//D:80036198
+u32 D_80036198 = 0xB;
+//D:8003619C
+u32 D_8003619C = 0xD9;
+//D:800361A0
+u32 D_800361A0 = 0x400;
+//D:800361A4
+u32 D_800361A4 = 0xB;
+//D:800361A8
+u32 D_800361A8 = 0xF9;
+//D:800361AC
+u32 D_800361AC = 0x400;
+//D:800361B0
+u32 D_800361B0 = 0xB;
+//D:800361B4
+u32 D_800361B4 = 0xF9;
+//D:800361B8
+u32 D_800361B8 = 0x400;
+//D:800361BC
+u32 D_800361BC = 0xB;
+//D:800361C0
+u32 D_800361C0 = 0x119;
+//D:800361C4
+u32 D_800361C4 = 0x400;
+//D:800361C8
+u32 D_800361C8 = 0xB;
+//D:800361CC
+u32 D_800361CC = 0x119;
+//D:800361D0
+u32 D_800361D0 = 0x400;
+//D:800361D4
+u32 D_800361D4 = 0xB;
+//D:800361D8
+u32 D_800361D8 = 0x139;
+//D:800361DC
+u32 D_800361DC = 0x400;
+//D:800361E0
+u32 D_800361E0 = 0xB;
+//D:800361E4
+u32 D_800361E4 = 0x139;
+//D:800361E8
+u32 D_800361E8 = 0x400;
+//D:800361EC
+u32 D_800361EC = 0xB;
+//D:800361F0
+u32 D_800361F0 = 0x159;
+//D:800361F4
+u32 D_800361F4 = 0x400;
+//D:800361F8
+u32 D_800361F8 = 0xB;
+//D:800361FC
+u32 D_800361FC = 0x159;
+//D:80036200
+u32 D_80036200 = 0x400;
+//D:80036204
+u32 D_80036204 = 0xB;
+//D:80036208
+u32 D_80036208 = 0x179;
+//D:8003620C
+u32 D_8003620C = 0x800;
+//D:80036210
+u32 D_80036210 = 0xC;
+//D:80036214
+u32 D_80036214 = 0x179;
+//D:80036218
+u32 D_80036218 = 0x800;
+//D:8003621C
+u32 D_8003621C = 0xC;
+//D:80036220
+u32 D_80036220 = 0x189;
+//D:80036224
+u32 D_80036224 = 0x1000;
+//D:80036228
+u32 D_80036228 = 0xD;
+//D:8003622C
+u32 D_8003622C = 0x189;
+//D:80036230
+u32 D_80036230 = 0x1000;
+//D:80036234
+u32 D_80036234 = 0xD;
+//D:80036238
+u32 D_80036238 = 0x191;
+//D:8003623C
+u32 D_8003623C = 0;
+//D:80036240
+u32 D_80036240 = 0x10;
+//D:80036244
+u32 D_80036244 = 0;
+//D:80036248
+u32 D_80036248 = 0;
+//D:8003624C
+u32 D_8003624C = 0;
+//D:80036250
+u32 D_80036250 = 1;
+//D:80036254
+u32 D_80036254 = 0;
+//D:80036258
+u32 D_80036258 = 0;
+//D:8003625C
+u32 D_8003625C = 0;
+//D:80036260
+u32 D_80036260 = 0;
+//D:80036264
+u32 D_80036264 = 0;
+//D:80036268
+u32 D_80036268 = 0x10;
+//D:8003626C
+u32 D_8003626C = 1;
+//D:80036270
+u32 D_80036270 = 0x1000;
+//D:80036274
+u32 D_80036274 = 0xD;
+//D:80036278
+u32 D_80036278 = 1;
+//D:8003627C
+u32 D_8003627C = 0x1000;
+//D:80036280
+u32 D_80036280 = 0xD;
+//D:80036284
+u32 D_80036284 = 9;
+//D:80036288
+u32 D_80036288 = 0x800;
+//D:8003628C
+u32 D_8003628C = 0xC;
+//D:80036290
+u32 D_80036290 = 9;
+//D:80036294
+u32 D_80036294 = 0x800;
+//D:80036298
+u32 D_80036298 = 0xC;
+//D:8003629C
+u32 D_8003629C = 0x19;
+//D:800362A0
+u32 D_800362A0 = 0x800;
+//D:800362A4
+u32 D_800362A4 = 0xC;
+//D:800362A8
+u32 D_800362A8 = 0x19;
+//D:800362AC
+u32 D_800362AC = 0x800;
+//D:800362B0
+u32 D_800362B0 = 0xC;
+//D:800362B4
+u32 D_800362B4 = 0x29;
+//D:800362B8
+u32 D_800362B8 = 0x800;
+//D:800362BC
+u32 D_800362BC = 0xC;
+//D:800362C0
+u32 D_800362C0 = 0x29;
+//D:800362C4
+u32 D_800362C4 = 0x800;
+//D:800362C8
+u32 D_800362C8 = 0xC;
+//D:800362CC
+u32 D_800362CC = 0x39;
+//D:800362D0
+u32 D_800362D0 = 0x800;
+//D:800362D4
+u32 D_800362D4 = 0xC;
+//D:800362D8
+u32 D_800362D8 = 0x39;
+//D:800362DC
+u32 D_800362DC = 0x800;
+//D:800362E0
+u32 D_800362E0 = 0xC;
+//D:800362E4
+u32 D_800362E4 = 0x49;
+//D:800362E8
+u32 D_800362E8 = 0x800;
+//D:800362EC
+u32 D_800362EC = 0xC;
+//D:800362F0
+u32 D_800362F0 = 0x49;
+//D:800362F4
+u32 D_800362F4 = 0x800;
+//D:800362F8
+u32 D_800362F8 = 0xC;
+//D:800362FC
+u32 D_800362FC = 0x59;
+//D:80036300
+u32 D_80036300 = 0x1000;
+//D:80036304
+u32 D_80036304 = 0xD;
+//D:80036308
+u32 D_80036308 = 0x59;
+//D:8003630C
+u32 D_8003630C = 0x1000;
+//D:80036310
+u32 D_80036310 = 0xD;
+//D:80036314
+u32 D_80036314 = 0x61;
+//D:80036318
+u32 D_80036318 = 0;
+/*
 D:8003631C     dword_D_8003631C:.word 0x10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 D:8003631C                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003631C                     .word 0, 0, 0, 0, 0, 0, 0
-D:800363EC     dword_D_800363EC:.word 0xFFFFFFFF        # DATA XREF: dogfnegx+4Cr
-D:800363F0     dword_D_800363F0:.word 0x50              # DATA XREF: sub_CODE_7F073FC8+8w
-D:800363F0                                              # doshadowo
-D:800363F0                                              # doshadow+8r
-D:800363F0                                              # doshadow+84o
-D:800363F0                                              # doshadow+B4r
-D:800363F0                                              # doshadow+BCr
-D:800363F4                     .word 0
+D:8003631C                     .word 0, 0, 0, 0
 */
-
+//D:800363EC0
+u32 D_800363E0 = 0;
+//D:800363E4
+u32 D_800363E4 = 0;
+//D:800363E8
+u32 D_800363E8 = 0;
+//D:800363EC
+u32 D_800363EC = 0xFFFFFFFF;
+//D:800363F0
+u32 D_800363F0 = 0x50;
+//D:800363F4
+u32 D_800363F4 = 0;
 //D:800363F8
 u32 D_800363F8 =  0;
 //D:800363FC
@@ -99,7 +407,7 @@ u32 D_80036400 =  0;
 //D:80036404
 u32 D_80036404 =  0xFFFFFF50;
 //D:80036408
-f32 D_80036408 =  0x3F800000;
+f32 D_80036408 =  1.0f;
 //D:8003640C
 u32 D_8003640C =  0;
 //D:80036410
@@ -112,15 +420,14 @@ u32 D_80036418 =  0;
 u32 D_8003641C =  0;
 
 
-/* rodata
-D:80054420     aDrawjointlistNoGfxlist:.ascii "drawjointlist: no gfxlist!\n"<0>
-D:80054420                                              # DATA XREF: drawjointlist+34o
-D:8005443C     aDrawjointlistNoObject0xX:.ascii "drawjointlist: no object! (0x%X)\n"<0>
-D:8005443C                                              # DATA XREF: drawjointlist+58o
-D:8005445E                     .half 0
-D:80054460     aDrawjointlistObjectNotInitialised0:.ascii "drawjointlist: object not initialised! (0x%X)\n"<0>
-D:80054460                                              # DATA XREF: drawjointlist+94o
-D:8005448F                     .byte 0
+// rodata
+//D:80054420
+const char aDrawjointlistNoGfxlist[] = "drawjointlist: no gfxlist!\n";
+//D:8005443C
+const char aDrawjointlistNoObject0xX[] = "drawjointlist: no object! (0x%X)\n";
+//D:80054460
+const char aDrawjointlistObjectNotInitialised0[] = "drawjointlist: object not initialised! (0x%X)\n";
+/*
 D:80054490     jpt_7009F09C:   .word loc_CODE_7F06B174  # DATA XREF: sub_CODE_7F06B120+40r
 D:80054490                     .word loc_CODE_7F06B174  # jump table for switch statement
 D:80054490                     .word loc_CODE_7F06B174
@@ -213,102 +520,86 @@ D:80054598                     .word def_7F06BEEC
 D:80054598                     .word loc_CODE_7F06BFBC
 D:80054598                     .word def_7F06BEEC
 D:800545F8                     .align 4
-D:80054600     aGetsubmatrixNoObjinst:.ascii "getsubmatrix: no objinst!\n"
-D:80054600                                              # DATA XREF: getsubmatrix+18o
-D:80054600                     .ascii <0><0>
-D:8005461C     aGetsubmatrixObjinstHasNoObject:.ascii "getsubmatrix: objinst has no object!\n"
-D:8005461C                     .ascii <0><0><0>
-D:80054644     aGetpartoffsetNoObjinst:.ascii "getpartoffset: no objinst!"<0><0>
-D:80054644                                              # DATA XREF: getpartoffset+10o
-D:80054660     aGetpartoffsetNoPartdesc:.ascii "getpartoffset: no partdesc!"<0>
-D:80054660                                              # DATA XREF: getpartoffset+3Co
-D:8005467C     aSetpartoffsetNoObjinst:.ascii "setpartoffset: no objinst!"<0><0>
-D:8005467C                                              # DATA XREF: setpartoffset+10o
-D:80054698     aSetpartoffsetNoPartdesc:.ascii "setpartoffset: no partdesc!"<0>
-D:80054698                                              # DATA XREF: setpartoffset+3Co
-D:800546B4     aGetsuboffsetNoObjinst:.ascii "getsuboffset: no objinst!"<0><0><0>
-D:800546B4                                              # DATA XREF: getsuboffset+1Co
-D:800546D0     aGetsuboffsetObjinstHasNoObject:.ascii "getsuboffset: objinst has no object!"<0><0><0><0>
-D:800546F8     aSetsuboffsetNoObjinst:.ascii "setsuboffset: no objinst!"<0><0><0>
-D:800546F8                                              # DATA XREF: setsuboffset+1Co
-D:80054714     aSetsuboffsetObjinstHasNoObject:.ascii "setsuboffset: objinst has no object!"<0><0><0><0>
-D:8005473C     aGetsubrotyNoObjinst:.ascii "getsubroty: no objinst!"<0>
-D:8005473C                                              # DATA XREF: getsubroty+18o
-D:80054754     aGetsubrotyObjinstHasNoObject:.ascii "getsubroty: objinst has no object!"<0><0>
-D:80054754                                              # DATA XREF: getsubroty+3Co
-D:80054778     aGetsubrotyObjinstHasNoRootPart:.ascii "getsubroty: objinst has no root part!"<0><0><0>
-D:80054778                                              # DATA XREF: getsubroty+64o
-D:800547A0     aSetsubrotyNoObjinst:.ascii "setsubroty: no objinst!"<0>
-D:800547A0                                              # DATA XREF: setsubroty+1Co
-D:800547B8     aSetsubrotyObjinstHasNoObject:.ascii "setsubroty: objinst has no object!"<0><0>
-D:800547B8                                              # DATA XREF: setsubroty+40o
-D:800547DC     aSetsubrotyObjinstHasNoRootPart:.ascii "setsubroty: objinst has no root part!"<0><0><0>
-D:800547DC                                              # DATA XREF: setsubroty+68o
-D:80054804     aGetjointsizeNoObjinst:.ascii "getjointsize: no objinst!\n"
-D:80054804                                              # DATA XREF: getjointsize+10o
-D:80054804                     .ascii <0><0>
-D:80054820     aGetinstsizeNoObjinst:.ascii "getinstsize: no objinst!\n"
-D:80054820                                              # DATA XREF: getinstsize+18o
-D:80054820                     .ascii <0><0><0>
-D:8005483C     aGetinstsizeNoObjdesc:.ascii "getinstsize: no objdesc!\n"
-D:8005483C                                              # DATA XREF: getinstsize+3Co
-D:8005483C                     .ascii <0><0><0>
-D:80054858     aSubcalcposNoObjanim:.ascii "subcalcpos: no objanim!\n"
-D:80054858                                              # DATA XREF: subcalcpos+18o
-D:80054858                     .ascii <0><0><0><0>
-D:80054874     aSubcalcposNoObjdesc:.ascii "subcalcpos: no objdesc!\n"
-D:80054874                                              # DATA XREF: subcalcpos+3Co
-D:80054874                     .ascii <0><0><0><0>
-D:80054890     aInstcalcmatricesNoObjinst:.ascii "instcalcmatrices: no objinst!\n"
-D:80054890                                              # DATA XREF: instcalcmatrices+20o
-D:80054890                     .ascii <0><0>
-D:800548B0     aInstcalcmatricesNoBasemtx:.ascii "instcalcmatrices: no basemtx!\n"
-D:800548B0                                              # DATA XREF: instcalcmatrices+40o
-D:800548B0                     .ascii <0><0>
-D:800548D0     aInstcalcmatricesNoMtxlist:.ascii "instcalcmatrices: no mtxlist!\n"<0>
-D:800548D0                                              # DATA XREF: instcalcmatrices+60o
-D:800548EF                     .byte 0
-D:800548F0     aSubcalcmatricesNoObjanim:.ascii "subcalcmatrices: no objanim!\n"<0>
-D:800548F0                                              # DATA XREF: subcalcmatrices+20o
-D:8005490E                     .half 0
-D:80054910     aSubcalcmatricesNoBasemtx:.ascii "subcalcmatrices: no basemtx!\n"<0>
-D:80054910                                              # DATA XREF: subcalcmatrices+44o
-D:8005492E                     .half 0
-D:80054930     aSubcalcmatricesNoMtxlist:.ascii "subcalcmatrices: no mtxlist!\n"<0>
-D:80054930                                              # DATA XREF: subcalcmatrices+68o
-D:8005494E                     .half 0
-D:80054950     aSubcalcmatricesNoAttachForObjinst:.ascii "subcalcmatrices: no attach for objinst!\n"<0>
-D:80054950                                              # DATA XREF: subcalcmatrices+A0o
-D:80054979                     .byte 0, 0, 0
-D:8005497C     aSubcalcmatricesFrameaOutOfRange:.ascii "subcalcmatrices: framea out of range!\n"<0>
-D:8005497C                                              # DATA XREF: subcalcmatrices+D4o
-D:800549A3                     .byte 0
-D:800549A4     aSubcalcmatricesFramebOutOfRange:.ascii "subcalcmatrices: frameb out of range!\n"<0>
-D:800549A4                                              # DATA XREF: subcalcmatrices+108o
-D:800549CB                     .byte 0
-D:800549CC     aSubcalcmatricesNoAnim2:.ascii "subcalcmatrices: no anim2!\n"<0>
-D:800549CC                                              # DATA XREF: subcalcmatrices+154o
-D:800549E8     aSubcalcmatricesFrame2aOutOfRange:.ascii "subcalcmatrices: frame2a out of range!\n"<0>
-D:800549E8                                              # DATA XREF: subcalcmatrices+198o
-D:80054A10     aSubcalcmatricesFrame2bOutOfRange:.ascii "subcalcmatrices: frame2b out of range!\n"<0>
-D:80054A10                                              # DATA XREF: subcalcmatrices+1E8o
-D:80054A38     aDorottexNoVtxAllocator:.ascii "dorottex: no vtx allocator!\n"<0>
-D:80054A38                                              # DATA XREF: dorottex_+70o
-D:80054A55                     .byte 0, 0, 0
-D:80054A58     aDotubeNoVtxAllocator:.ascii "dotube: no vtx allocator!\n"<0>
-D:80054A58                                              # DATA XREF: dotube+368o
-D:80054A73                     .byte 0
-D:80054A74     aDogfnegxNoVtxAllocator:.ascii "dogfnegx: no vtx allocator!\n"<0>
-D:80054A74                                              # DATA XREF: dogfnegx+32Co
-D:80054A91                     .byte 0, 0, 0
-D:80054A94     aDoshadowNoVtxAllocator:.ascii "doshadow: no vtx allocator!\n"<0>
-D:80054A94                                              # DATA XREF: doshadow+1A0o
-D:80054AB1                     .byte 0, 0, 0
-D:80054AB4     aSubdrawNoGfxlist:.ascii "subdraw: no gfxlist!\n"<0>  # DATA XREF: subdraw+34o
-D:80054ACA                     .half 0
-D:80054ACC     aSubdrawObjectNotInitialised0xX:.ascii "subdraw: object not initialised! (0x%X)\n"<0>
-D:80054ACC                                              # DATA XREF: subdraw+48o
-D:80054AF5                     .byte 0, 0, 0
+*/
+//D:80054600
+const char aGetsubmatrixNoObjinst[] = "getsubmatrix: no objinst!\n";
+//D:8005461C
+const char aGetsubmatrixObjinstHasNoObject[] = "getsubmatrix: objinst has no object!\n";
+//D:80054644
+const char aGetpartoffsetNoObjinst[] = "getpartoffset: no objinst!";
+//D:80054660
+const char aGetpartoffsetNoPartdesc[] = "getpartoffset: no partdesc!";
+//D:8005467C
+const char aSetpartoffsetNoObjinst[] = "setpartoffset: no objinst!";
+//D:80054698
+const char aSetpartoffsetNoPartdesc[] = "setpartoffset: no partdesc!";
+//D:800546B4
+const char aGetsuboffsetNoObjinst[] = "getsuboffset: no objinst!";
+//D:800546D0
+const char aGetsuboffsetObjinstHasNoObject[] = "getsuboffset: objinst has no object!";
+//D:800546F8
+const char aSetsuboffsetNoObjinst[] = "setsuboffset: no objinst!";
+//D:80054714
+const char aSetsuboffsetObjinstHasNoObject[] = "setsuboffset: objinst has no object!";
+//D:8005473C
+const char aGetsubrotyNoObjinst[] = "getsubroty: no objinst!";
+//D:80054754
+const char aGetsubrotyObjinstHasNoObject[] = "getsubroty: objinst has no object!";
+//D:80054778
+const char aGetsubrotyObjinstHasNoRootPart[] = "getsubroty: objinst has no root part!";
+//D:800547A0
+const char aSetsubrotyNoObjinst[] = "setsubroty: no objinst!";
+//D:800547B8
+const char aSetsubrotyObjinstHasNoObject[] = "setsubroty: objinst has no object!";
+//D:800547DC
+const char aSetsubrotyObjinstHasNoRootPart[] = "setsubroty: objinst has no root part!";
+//D:80054804
+const char aGetjointsizeNoObjinst[] = "getjointsize: no objinst!\n";
+//D:80054820
+const char aGetinstsizeNoObjinst[] = "getinstsize: no objinst!\n";
+//D:8005483C
+const char aGetinstsizeNoObjdesc[] = "getinstsize: no objdesc!\n";
+//D:80054858
+const char aSubcalcposNoObjanim[] = "subcalcpos: no objanim!\n";
+//D:80054874
+const char aSubcalcposNoObjdesc[] = "subcalcpos: no objdesc!\n";
+//D:80054890
+const char aInstcalcmatricesNoObjinst[] = "instcalcmatrices: no objinst!\n";
+//D:800548B0
+const char aInstcalcmatricesNoBasemtx[] = "instcalcmatrices: no basemtx!\n";
+//D:800548D0
+const char aInstcalcmatricesNoMtxlist[] = "instcalcmatrices: no mtxlist!\n";
+//D:800548F0
+const char aSubcalcmatricesNoObjanim[] = "subcalcmatrices: no objanim!\n";
+//D:80054910
+const char aSubcalcmatricesNoBasemtx[] = "subcalcmatrices: no basemtx!\n";
+//D:80054930
+const char aSubcalcmatricesNoMtxlist[] = "subcalcmatrices: no mtxlist!\n";
+//D:80054950
+const char aSubcalcmatricesNoAttachForObjinst[] = "subcalcmatrices: no attach for objinst!\n";
+//D:8005497C
+const char aSubcalcmatricesFrameaOutOfRange[] = "subcalcmatrices: framea out of range!\n";
+//D:800549A4
+const char aSubcalcmatricesFramebOutOfRange[] = "subcalcmatrices: frameb out of range!\n";
+//D:800549CC
+const char aSubcalcmatricesNoAnim2[] = "subcalcmatrices: no anim2!\n";
+//D:800549E8
+const char aSubcalcmatricesFrame2aOutOfRange[] = "subcalcmatrices: frame2a out of range!\n";
+//D:80054A10
+const char aSubcalcmatricesFrame2bOutOfRange[] = "subcalcmatrices: frame2b out of range!\n";
+//D:80054A38
+const char aDorottexNoVtxAllocator[] = "dorottex: no vtx allocator!\n";
+//D:80054A58
+const char aDotubeNoVtxAllocator[] = "dotube: no vtx allocator!\n";
+//D:80054A74
+const char aDogfnegxNoVtxAllocator[] = "dogfnegx: no vtx allocator!\n";
+//D:80054A94
+const char aDoshadowNoVtxAllocator[] = "doshadow: no vtx allocator!\n";
+//D:80054AB4
+const char aSubdrawNoGfxlist[] = "subdraw: no gfxlist!\n";
+//D:80054ACC
+const char aSubdrawObjectNotInitialised0xX[] = "subdraw: object not initialised! (0x%X)\n";
+/*
 D:80054AF8     jpt_obj_struct_microcode_id:.word loc_CODE_7F06C7D8
 D:80054AF8                                              # DATA XREF: extract_id_from_object_structure_microcode+28r
 D:80054AF8                     .word def_7F06C7D0       # jump table for switch statement
@@ -334,8 +625,12 @@ D:80054AF8                     .word def_7F06C7D0
 D:80054AF8                     .word def_7F06C7D0
 D:80054AF8                     .word loc_CODE_7F06C838
 D:80054AF8                     .word loc_CODE_7F06C7E4
-D:80054B58     flt_D_80054B58: .float 6.2831855         # DATA XREF: setsubroty+C4r
-D:80054B5C     flt_D_80054B5C: .float 6.2831855         # DATA XREF: setsubroty:loc_CODE_7F06CE0Cr
+*/
+//D:80054B58
+const f32 D_80054B58 = 6.2831855;
+//D:80054B5C
+const f32 D_80054B5C = 6.2831855;
+/*
 D:80054B60     jpt_getjointsize:.word loc_CODE_7F06CEF8  # DATA XREF: getjointsize+54r
 D:80054B60                     .word loc_CODE_7F06CF10  # jump table for switch statement
 D:80054B60                     .word loc_CODE_7F06CF28
@@ -357,33 +652,62 @@ D:80054B60                     .word def_7F06CEF0
 D:80054B60                     .word def_7F06CEF0
 D:80054B60                     .word def_7F06CEF0
 D:80054B60                     .word loc_CODE_7F06CF40
-D:80054BB4     flt_D_80054BB4: .float 6.2831855         # DATA XREF: sub_CODE_7F06D0CC+1Cr
-D:80054BB8     flt_D_80054BB8: .float 6.2831855         # DATA XREF: sub_CODE_7F06D0CC:loc_CODE_7F06D0F0r
-D:80054BBC     flt_D_80054BBC: .float 3.1415927         # DATA XREF: sub_CODE_7F06D0CC+2Cr
-D:80054BC0     flt_D_80054BC0: .float 6.2831855         # DATA XREF: sub_CODE_7F06D3F4:loc_CODE_7F06D46Cr
-D:80054BC4     flt_D_80054BC4: .float 3.1415927         # DATA XREF: sub_CODE_7F06D8B0+1A4r
-D:80054BC8     flt_D_80054BC8: .float 6.2831855         # DATA XREF: sub_CODE_7F06D8B0:loc_CODE_7F06DA90r
-D:80054BCC     flt_D_80054BCC: .float 6.2831855         # DATA XREF: sub_CODE_7F06D8B0+1F0r
-D:80054BD0     flt_D_80054BD0: .float 3.1415927         # DATA XREF: sub_CODE_7F06D8B0+210r
-D:80054BD4     flt_D_80054BD4: .float 6.2831855         # DATA XREF: sub_CODE_7F06D8B0+228r
-D:80054BD8     flt_D_80054BD8: .float 0.890118          # DATA XREF: sub_CODE_7F06D8B0:loc_CODE_7F06DAE0r
-D:80054BDC     flt_D_80054BDC: .float 3.1415927         # DATA XREF: sub_CODE_7F06DB5C+1A4r
-D:80054BE0     flt_D_80054BE0: .float 6.2831855         # DATA XREF: sub_CODE_7F06DB5C:loc_CODE_7F06DD38r
-D:80054BE4     flt_D_80054BE4: .float 6.2831855         # DATA XREF: sub_CODE_7F06DB5C+1ECr
-D:80054BE8     flt_D_80054BE8: .float 3.1415927         # DATA XREF: sub_CODE_7F06DB5C+20Cr
-D:80054BEC     flt_D_80054BEC: .float 6.2831855         # DATA XREF: sub_CODE_7F06DB5C+224r
-D:80054BF0     flt_D_80054BF0: .float 0.890118          # DATA XREF: sub_CODE_7F06DB5C:loc_CODE_7F06DD88r
-D:80054BF4     flt_D_80054BF4: .float 6.2831855         # DATA XREF: sub_CODE_7F06DEC0+B8r
-D:80054BF8     flt_D_80054BF8: .float 3.1415927         # DATA XREF: sub_CODE_7F06E2B8:loc_CODE_7F06E3A4r
-D:80054BFC     flt_D_80054BFC: .float 6.2831855         # DATA XREF: sub_CODE_7F06E2B8:loc_CODE_7F06E3DCr
-D:80054C00     flt_D_80054C00: .float 6.2831855         # DATA XREF: sub_CODE_7F06E2B8+134r
-D:80054C04     flt_D_80054C04: .float 3.1415927         # DATA XREF: sub_CODE_7F06E2B8+1E4r
-D:80054C08     flt_D_80054C08: .float 6.2831855         # DATA XREF: sub_CODE_7F06E2B8+200r
-D:80054C0C     flt_D_80054C0C: .float 0.890118          # DATA XREF: sub_CODE_7F06E2B8:loc_CODE_7F06E4C0r
-D:80054C10     flt_D_80054C10: .float 6.2831855         # DATA XREF: sub_CODE_7F06E540+B0r
-D:80054C14     flt_D_80054C14: .float 6.2831855         # DATA XREF: sub_CODE_7F06E540:loc_CODE_7F06E62Cr
-D:80054C18     flt_D_80054C18: .float 6.2831855         # DATA XREF: process_07_unknown+10Cr
-D:80054C1C     flt_D_80054C1C: .float 6.2831855         # DATA XREF: process_07_unknown:loc_CODE_7F06EE0Cr
+*/
+//D:80054BB4
+const f32 D_80054BB4 = 6.2831855;
+//D:80054BB8
+const f32 D_80054BB8 = 6.2831855;
+//D:80054BBC
+const f32 D_80054BBC = 3.1415927;
+//D:80054BC0
+const f32 D_80054BC0 = 6.2831855;
+//D:80054BC4
+const f32 D_80054BC4 = 3.1415927;
+//D:80054BC8
+const f32 D_80054BC8 = 6.2831855;
+//D:80054BCC
+const f32 D_80054BCC = 6.2831855;
+//D:80054BD0
+const f32 D_80054BD0 = 3.1415927;
+//D:80054BD4
+const f32 D_80054BD4 = 6.2831855;
+//D:80054BD8
+const f32 D_80054BD8 = 0.890118;
+//D:80054BDC
+const f32 D_80054BDC = 3.1415927;
+//D:80054BE0
+const f32 D_80054BE0 = 6.2831855;
+//D:80054BE4
+const f32 D_80054BE4 = 6.2831855;
+//D:80054BE8
+const f32 D_80054BE8 = 3.1415927;
+//D:80054BEC
+const f32 D_80054BEC = 6.2831855;
+//D:80054BF0
+const f32 D_80054BF0 = 0.890118;
+//D:80054BF4
+const f32 D_80054BF4 = 6.2831855;
+//D:80054BF8
+const f32 D_80054BF8 = 3.1415927;
+//D:80054BFC
+const f32 D_80054BFC = 6.2831855;
+//D:80054C00
+const f32 D_80054C00 = 6.2831855;
+//D:80054C04
+const f32 D_80054C04 = 3.1415927;
+//D:80054C08
+const f32 D_80054C08 = 6.2831855;
+//D:80054C0C
+const f32 D_80054C0C = 0.890118;
+//D:80054C10
+const f32 D_80054C10 = 6.2831855;
+//D:80054C14
+const f32 D_80054C14 = 6.2831855;
+//D:80054C18
+const f32 D_80054C18 = 6.2831855;
+//D:80054C1C
+const f32 D_80054C1C = 6.2831855;
+/*
 D:80054C20     jpt_700A2E24:   .word loc_CODE_7F06EEFC  # DATA XREF: sub_CODE_7F06EEA4+44r
 D:80054C20                     .word loc_CODE_7F06EEFC  # jump table for switch statement
 D:80054C20                     .word loc_CODE_7F06EEFC
@@ -456,11 +780,18 @@ D:80054CE0                     .word loc_CODE_7F06F170
 D:80054CE0                     .word def_7F06F120
 D:80054CE0                     .word loc_CODE_7F06F1D8
 D:80054CE0                     .word def_7F06F120
-D:80054D40     flt_D_80054D40: .float 6.2831855         # DATA XREF: sub_CODE_7F06F878+234r
-D:80054D44     flt_D_80054D44: .float 6.2831855         # DATA XREF: sub_CODE_7F06F878+34Cr
-D:80054D48     flt_D_80054D48: .float 6.2831855         # DATA XREF: sub_CODE_7F06F878+364r
-D:80054D4C     flt_D_80054D4C: .float 6.2831855         # DATA XREF: sub_CODE_7F0701EC+198r
-D:80054D50     flt_D_80054D50: .float 6.2831855         # DATA XREF: dogfnegx+29Cr
+*/
+//D:80054D40
+const f32 D_80054D40 = 6.2831855;
+//D:80054D44
+const f32 D_80054D44 = 6.2831855;
+//D:80054D48
+const f32 D_80054D48 = 6.2831855;
+//D:80054D4C
+const f32 D_80054D4C = 6.2831855;
+//D:80054D50
+const f32 D_80054D50 = 6.2831855;
+/*
 D:80054D54     jpt_700A8494:   .word def_7F074564       # DATA XREF: sub_CODE_7F074534+24r
 D:80054D54                     .word def_7F074564       # jump table for switch statement
 D:80054D54                     .word def_7F074564

@@ -23,12 +23,14 @@ u32 cart_hw_address = 0x10000000;
 
 struct debug_handler_entry debug_handler_table[] = 
 {
-	{&sp_boot, "Boot"},
-	{&sp_rmon, "Rmon"},
-	{&sp_idle, "Idle"},
-	{&sp_shed, "Shed"},
-	{&sp_main, "Main"},
-	{&sp_audi, "Audi"},
+	{&sp_boot, "boot"},
+	{&sp_rmon, "rmon"},
+	{&sp_idle, "idle"},
+	{&sp_shed, "shed"},
+	{&sp_main, "main"},
+	{&sp_audi, "audi"},
+    {0, ""},
+    {0, ""}
 };
 
 #ifdef NONMATCHING

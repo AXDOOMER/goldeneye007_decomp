@@ -3,7 +3,7 @@
 #include "sfx.h"
 
 
-
+s32 music_unused = 0;
 s32 music1_track_num = 0;
 s32 music1len = 0x7FFF0000;
 s32 music2_track_num = 0;

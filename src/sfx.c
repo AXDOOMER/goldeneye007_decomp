@@ -2,6 +2,7 @@
 #include "music.h"
 #include "sfx.h"
 
+s32 sfx_unused = 0;
 s32 D_800243E4 = 0;
 s32 D_800243E8 = 0;
 s32 D_800243EC = 0;

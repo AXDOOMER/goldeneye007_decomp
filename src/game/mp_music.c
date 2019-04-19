@@ -525,8 +525,21 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5D20 7F0C11F0 27BD0018 */  addiu $sp, $sp, 0x18
 /* 0F5D24 7F0C11F4 03E00008 */  jr    $ra
 /* 0F5D28 7F0C11F8 00000000 */   nop   
+)
+#endif
 
-sub_GAME_7F0C11FC:
+
+
+
+
+#ifdef NONMATCHING
+void sub_GAME_7F0C11FC(void) {
+
+}
+#else
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F0C11FC
 /* 0F5D2C 7F0C11FC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F5D30 7F0C1200 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F5D34 7F0C1204 0C001BF4 */  jal   musicTrack1Stop

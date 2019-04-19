@@ -4,86 +4,89 @@
 
 // data
 //D:80036BA4
-s32 ptr_mcm_groupings[] = {8, 0x13, 0x1E, 0x2B, 0x32, 0x39, 0x45, 0x4D, -1};
-/*
-D:80036BC8     ptr_mcm_positions:mcm_layout <8, 5>      # DATA XREF: display_debug_menu_text_onscreen+18o
-D:80036BD0                     mcm_layout <8, 6>
-D:80036BD8                     mcm_layout <8, 7>
-D:80036BE0                     mcm_layout <8, 8>
-D:80036BE8                     mcm_layout <8, 9>
-D:80036BF0                     mcm_layout <8, 0xA>
-D:80036BF8                     mcm_layout <8, 0xB>
-D:80036C00                     mcm_layout <8, 0xC>
-D:80036C08                     mcm_layout <0x19, 5>
-D:80036C10                     mcm_layout <0x19, 6>
-D:80036C18                     mcm_layout <0x19, 7>
-D:80036C20                     mcm_layout <0x19, 8>
-D:80036C28                     mcm_layout <0x19, 9>
-D:80036C30                     mcm_layout <0x19, 0xA>
-D:80036C38                     mcm_layout <0x19, 0xB>
-D:80036C40                     mcm_layout <0x19, 0xC>
-D:80036C48                     mcm_layout <0x19, 0xD>
-D:80036C50                     mcm_layout <0x19, 0xE>
-D:80036C58                     mcm_layout <0x19, 0xF>
-D:80036C60                     mcm_layout <0x28, 5>
-D:80036C68                     mcm_layout <0x28, 6>
-D:80036C70                     mcm_layout <0x28, 7>
-D:80036C78                     mcm_layout <0x28, 8>
-D:80036C80                     mcm_layout <0x28, 9>
-D:80036C88                     mcm_layout <0x28, 0xA>
-D:80036C90                     mcm_layout <0x28, 0xB>
-D:80036C98                     mcm_layout <0x28, 0xC>
-D:80036CA0                     mcm_layout <0x28, 0xD>
-D:80036CA8                     mcm_layout <0x28, 0xE>
-D:80036CB0                     mcm_layout <0x28, 0xF>
-D:80036CB8                     mcm_layout <0x39, 5>
-D:80036CC0                     mcm_layout <0x39, 6>
-D:80036CC8                     mcm_layout <0x39, 7>
-D:80036CD0                     mcm_layout <0x39, 8>
-D:80036CD8                     mcm_layout <0x39, 9>
-D:80036CE0                     mcm_layout <0x39, 0xA>
-D:80036CE8                     mcm_layout <0x39, 0xB>
-D:80036CF0                     mcm_layout <0x39, 0xC>
-D:80036CF8                     mcm_layout <0x39, 0xD>
-D:80036D00                     mcm_layout <0x39, 0xE>
-D:80036D08                     mcm_layout <0x39, 0xF>
-D:80036D10                     mcm_layout <0x39, 0x10>
-D:80036D18                     mcm_layout <0x39, 0x11>
-D:80036D20                     mcm_layout <8, 0x14>
-D:80036D28                     mcm_layout <8, 0x15>
-D:80036D30                     mcm_layout <8, 0x16>
-D:80036D38                     mcm_layout <8, 0x17>
-D:80036D40                     mcm_layout <8, 0x18>
-D:80036D48                     mcm_layout <8, 0x19>
-D:80036D50                     mcm_layout <8, 0x1A>
-D:80036D58                     mcm_layout <0x19, 0x14>
-D:80036D60                     mcm_layout <0x19, 0x15>
-D:80036D68                     mcm_layout <0x19, 0x16>
-D:80036D70                     mcm_layout <0x19, 0x17>
-D:80036D78                     mcm_layout <0x19, 0x18>
-D:80036D80                     mcm_layout <0x19, 0x19>
-D:80036D88                     mcm_layout <0x19, 0x1A>
-D:80036D90                     mcm_layout <0x28, 0x14>
-D:80036D98                     mcm_layout <0x28, 0x15>
-D:80036DA0                     mcm_layout <0x28, 0x16>
-D:80036DA8                     mcm_layout <0x28, 0x17>
-D:80036DB0                     mcm_layout <0x28, 0x18>
-D:80036DB8                     mcm_layout <0x28, 0x19>
-D:80036DC0                     mcm_layout <0x28, 0x1A>
-D:80036DC8                     mcm_layout <0x28, 0x1B>
-D:80036DD0                     mcm_layout <0x28, 0x1C>
-D:80036DD8                     mcm_layout <0x28, 0x1D>
-D:80036DE0                     mcm_layout <0x28, 0x1E>
-D:80036DE8                     mcm_layout <0x28, 0x1F>
-D:80036DF0                     mcm_layout <0x39, 0x14>
-D:80036DF8                     mcm_layout <0x39, 0x15>
-D:80036E00                     mcm_layout <0x39, 0x16>
-D:80036E08                     mcm_layout <0x39, 0x17>
-D:80036E10                     mcm_layout <0x39, 0x18>
-D:80036E18                     mcm_layout <0x39, 0x19>
-D:80036E20                     mcm_layout <0x39, 0x1A>
-D:80036E28                     mcm_layout <0x39, 0x1B>
-*/
+s32 mcm_column_groupings[] = {8, 0x13, 0x1E, 0x2B, 0x32, 0x39, 0x45, 0x4D, -1};
+
+//D:80036BC8
+struct mcm_layout mcm_onscreen_positions[] = {
+    {8, 5},
+    {8, 6},
+    {8, 7},
+    {8, 8},
+    {8, 9},
+    {8, 0xA},
+    {8, 0xB},
+    {8, 0xC},
+    {0x19, 5},
+    {0x19, 6},
+    {0x19, 7},
+    {0x19, 8},
+    {0x19, 9},
+    {0x19, 0xA},
+    {0x19, 0xB},
+    {0x19, 0xC},
+    {0x19, 0xD},
+    {0x19, 0xE},
+    {0x19, 0xF},
+    {0x28, 5},
+    {0x28, 6},
+    {0x28, 7},
+    {0x28, 8},
+    {0x28, 9},
+    {0x28, 0xA},
+    {0x28, 0xB},
+    {0x28, 0xC},
+    {0x28, 0xD},
+    {0x28, 0xE},
+    {0x28, 0xF},
+    {0x39, 5},
+    {0x39, 6},
+    {0x39, 7},
+    {0x39, 8},
+    {0x39, 9},
+    {0x39, 0xA},
+    {0x39, 0xB},
+    {0x39, 0xC},
+    {0x39, 0xD},
+    {0x39, 0xE},
+    {0x39, 0xF},
+    {0x39, 0x10},
+    {0x39, 0x11},
+    {8, 0x14},
+    {8, 0x15},
+    {8, 0x16},
+    {8, 0x17},
+    {8, 0x18},
+    {8, 0x19},
+    {8, 0x1A},
+    {0x19, 0x14},
+    {0x19, 0x15},
+    {0x19, 0x16},
+    {0x19, 0x17},
+    {0x19, 0x18},
+    {0x19, 0x19},
+    {0x19, 0x1A},
+    {0x28, 0x14},
+    {0x28, 0x15},
+    {0x28, 0x16},
+    {0x28, 0x17},
+    {0x28, 0x18},
+    {0x28, 0x19},
+    {0x28, 0x1A},
+    {0x28, 0x1B},
+    {0x28, 0x1C},
+    {0x28, 0x1D},
+    {0x28, 0x1E},
+    {0x28, 0x1F},
+    {0x39, 0x14},
+    {0x39, 0x15},
+    {0x39, 0x16},
+    {0x39, 0x17},
+    {0x39, 0x18},
+    {0x39, 0x19},
+    {0x39, 0x1A},
+    {0x39, 0x1B}
+};
+
 //D:80036E30
 u32 *mcm_strings[] = {
      "move view",
@@ -235,8 +238,11 @@ s32 debug_portal_flag = 0;
 u32 dword_D_80036FD8[] = {
     0x80500000,
     0x40000,
-    &initGameData,
-    0x7F100000,
+    0x7F000000,
+    0x7F100000
+};
+
+u32 dword_D_80036FE8[] = {
     0x80600000,
     0x40000,
     0x70000000,
@@ -244,17 +250,17 @@ u32 dword_D_80036FD8[] = {
 };
 
 //D:80036FF8
-s32 dword_D_80036FF8 = 0;
+s32 show_debug_menu_flag = 0;
 //D:80036FFC
 s32 grab_rgb_screenshot_flag = 0;
 //D:80037000
 s32 grab_jpeg_screenshot_flag = 0;
 //D:80037004
-s32 dword_D_80037004 = 0;
+s32 D_80037004 = 0;
 //D:80037008
-s32 dword_D_80037008 = 0;
+s32 D_80037008 = 0;
 //D:8003700C
-s32 dword_D_8003700C = 0;
+s32 D_8003700C = 0;
 
 
 
@@ -285,11 +291,10 @@ D:80055830                     .word def_7F090EA8
 */
 
 #ifdef NONMATCHING
-void display_debug_menu_text_onscreen(void) {
-    // Node 0
-    return init_debug_menu_values(&mcm_strings, &D_80036BC8, &D_80036BA4);
+void display_debug_menu_text_onscreen(void)
+{
+  init_debug_menu_values((char *)mcm_strings,mcm_onscreen_positions,mcm_column_groupings);
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -297,10 +302,10 @@ glabel display_debug_menu_text_onscreen
 /* 0C4FC0 7F090490 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0C4FC4 7F090494 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C4FC8 7F090498 3C048003 */  lui   $a0, %hi(mcm_strings) # $a0, 0x8003
-/* 0C4FCC 7F09049C 3C058003 */  lui   $a1, %hi(D_80036BC8) # $a1, 0x8003
-/* 0C4FD0 7F0904A0 3C068003 */  lui   $a2, %hi(D_80036BA4) # $a2, 0x8003
-/* 0C4FD4 7F0904A4 24C66BA4 */  addiu $a2, %lo(D_80036BA4) # addiu $a2, $a2, 0x6ba4
-/* 0C4FD8 7F0904A8 24A56BC8 */  addiu $a1, %lo(D_80036BC8) # addiu $a1, $a1, 0x6bc8
+/* 0C4FCC 7F09049C 3C058003 */  lui   $a1, %hi(mcm_onscreen_positions) # $a1, 0x8003
+/* 0C4FD0 7F0904A0 3C068003 */  lui   $a2, %hi(mcm_column_groupings) # $a2, 0x8003
+/* 0C4FD4 7F0904A4 24C66BA4 */  addiu $a2, %lo(mcm_column_groupings) # addiu $a2, $a2, 0x6ba4
+/* 0C4FD8 7F0904A8 24A56BC8 */  addiu $a1, %lo(mcm_onscreen_positions) # addiu $a1, $a1, 0x6bc8
 /* 0C4FDC 7F0904AC 0FC23F85 */  jal   init_debug_menu_values
 /* 0C4FE0 7F0904B0 24846E30 */   addiu $a0, %lo(mcm_strings) # addiu $a0, $a0, 0x6e30
 /* 0C4FE4 7F0904B4 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -479,8 +484,8 @@ GLOBAL_ASM(
 .text
 glabel debug_menu_processor
 /* 0C50D0 7F0905A0 27BDFFA0 */  addiu $sp, $sp, -0x60
-/* 0C50D4 7F0905A4 3C038003 */  lui   $v1, %hi(grabrgb_flag) # $v1, 0x8003
-/* 0C50D8 7F0905A8 8C636FFC */  lw    $v1, %lo(grabrgb_flag)($v1)
+/* 0C50D4 7F0905A4 3C038003 */  lui   $v1, %hi(grab_rgb_screenshot_flag) # $v1, 0x8003
+/* 0C50D8 7F0905A8 8C636FFC */  lw    $v1, %lo(grab_rgb_screenshot_flag)($v1)
 /* 0C50DC 7F0905AC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C50E0 7F0905B0 AFA40060 */  sw    $a0, 0x60($sp)
 /* 0C50E4 7F0905B4 AFA50064 */  sw    $a1, 0x64($sp)
@@ -489,37 +494,37 @@ glabel debug_menu_processor
 /* 0C50F0 7F0905C0 AFA7006C */   sw    $a3, 0x6c($sp)
 /* 0C50F4 7F0905C4 38620003 */  xori  $v0, $v1, 3
 /* 0C50F8 7F0905C8 24630001 */  addiu $v1, $v1, 1
-/* 0C50FC 7F0905CC 3C018003 */  lui   $at, %hi(grabrgb_flag) # $at, 0x8003
+/* 0C50FC 7F0905CC 3C018003 */  lui   $at, %hi(grab_rgb_screenshot_flag) # $at, 0x8003
 /* 0C5100 7F0905D0 14400008 */  bnez  $v0, .L7F0905F4
-/* 0C5104 7F0905D4 AC236FFC */   sw    $v1, %lo(grabrgb_flag)($at)
+/* 0C5104 7F0905D4 AC236FFC */   sw    $v1, %lo(grab_rgb_screenshot_flag)($at)
 /* 0C5108 7F0905D8 0C0012ED */  jal   indy_grab_rgb_32bit
 /* 0C510C 7F0905DC 00000000 */   nop   
-/* 0C5110 7F0905E0 3C018003 */  lui   $at, %hi(grabrgb_flag) # $at, 0x8003
+/* 0C5110 7F0905E0 3C018003 */  lui   $at, %hi(grab_rgb_screenshot_flag) # $at, 0x8003
 /* 0C5114 7F0905E4 0C000F00 */  jal   coloroutputmode_1
-/* 0C5118 7F0905E8 AC206FFC */   sw    $zero, %lo(grabrgb_flag)($at)
+/* 0C5118 7F0905E8 AC206FFC */   sw    $zero, %lo(grab_rgb_screenshot_flag)($at)
 /* 0C511C 7F0905EC 0C0038B4 */  jal   osViBlack
 /* 0C5120 7F0905F0 00002025 */   move  $a0, $zero
 .L7F0905F4:
-/* 0C5124 7F0905F4 3C038003 */  lui   $v1, %hi(grabjpeg_flag) # $v1, 0x8003
-/* 0C5128 7F0905F8 8C637000 */  lw    $v1, %lo(grabjpeg_flag)($v1)
-/* 0C512C 7F0905FC 3C018003 */  lui   $at, %hi(grabjpeg_flag) # $at, 0x8003
+/* 0C5124 7F0905F4 3C038003 */  lui   $v1, %hi(grab_jpeg_screenshot_flag) # $v1, 0x8003
+/* 0C5128 7F0905F8 8C637000 */  lw    $v1, %lo(grab_jpeg_screenshot_flag)($v1)
+/* 0C512C 7F0905FC 3C018003 */  lui   $at, %hi(grab_jpeg_screenshot_flag) # $at, 0x8003
 /* 0C5130 7F090600 1060000B */  beqz  $v1, .L7F090630
 /* 0C5134 7F090604 38620003 */   xori  $v0, $v1, 3
 /* 0C5138 7F090608 24630001 */  addiu $v1, $v1, 1
 /* 0C513C 7F09060C 14400008 */  bnez  $v0, .L7F090630
-/* 0C5140 7F090610 AC237000 */   sw    $v1, %lo(grabjpeg_flag)($at)
+/* 0C5140 7F090610 AC237000 */   sw    $v1, %lo(grab_jpeg_screenshot_flag)($at)
 /* 0C5144 7F090614 0C001235 */  jal   indy_grab_jpg_32bit
 /* 0C5148 7F090618 00000000 */   nop   
-/* 0C514C 7F09061C 3C018003 */  lui   $at, %hi(grabjpeg_flag) # $at, 0x8003
+/* 0C514C 7F09061C 3C018003 */  lui   $at, %hi(grab_jpeg_screenshot_flag) # $at, 0x8003
 /* 0C5150 7F090620 0C000F00 */  jal   coloroutputmode_1
-/* 0C5154 7F090624 AC207000 */   sw    $zero, %lo(grabjpeg_flag)($at)
+/* 0C5154 7F090624 AC207000 */   sw    $zero, %lo(grab_jpeg_screenshot_flag)($at)
 /* 0C5158 7F090628 0C0038B4 */  jal   osViBlack
 /* 0C515C 7F09062C 00002025 */   move  $a0, $zero
 .L7F090630:
-/* 0C5160 7F090630 3C0E8003 */  lui   $t6, %hi(D_80036FF8) # $t6, 0x8003
-/* 0C5164 7F090634 8DCE6FF8 */  lw    $t6, %lo(D_80036FF8)($t6)
+/* 0C5160 7F090630 3C0E8003 */  lui   $t6, %hi(show_debug_menu_flag) # $t6, 0x8003
+/* 0C5164 7F090634 8DCE6FF8 */  lw    $t6, %lo(show_debug_menu_flag)($t6)
 /* 0C5168 7F090638 3C048003 */  lui   $a0, %hi(debug_limit_controller_input) # $a0, 0x8003
-/* 0C516C 7F09063C 3C018003 */  lui   $at, %hi(D_80036FF8) # $at, 0x8003
+/* 0C516C 7F09063C 3C018003 */  lui   $at, %hi(show_debug_menu_flag) # $at, 0x8003
 /* 0C5170 7F090640 15C00010 */  bnez  $t6, .L7F090684
 /* 0C5174 7F090644 24846F6C */   addiu $a0, %lo(debug_limit_controller_input) # addiu $a0, $a0, 0x6f6c
 /* 0C5178 7F090648 97A4006A */  lhu   $a0, 0x6a($sp)
@@ -532,13 +537,13 @@ glabel debug_menu_processor
 /* 0C5194 7F090664 03001025 */  move  $v0, $t8
 .L7F090668:
 /* 0C5198 7F090668 10400003 */  beqz  $v0, .L7F090678
-/* 0C519C 7F09066C AC226FF8 */   sw    $v0, %lo(D_80036FF8)($at)
+/* 0C519C 7F09066C AC226FF8 */   sw    $v0, %lo(show_debug_menu_flag)($at)
 /* 0C51A0 7F090670 0FC301F5 */  jal   stop_recording_ramrom
 /* 0C51A4 7F090674 00000000 */   nop   
 .L7F090678:
-/* 0C51A8 7F090678 3C028003 */  lui   $v0, %hi(D_80036FF8) # $v0, 0x8003
+/* 0C51A8 7F090678 3C028003 */  lui   $v0, %hi(show_debug_menu_flag) # $v0, 0x8003
 /* 0C51AC 7F09067C 1000021B */  b     .L7F090EEC
-/* 0C51B0 7F090680 8C426FF8 */   lw    $v0, %lo(D_80036FF8)($v0)
+/* 0C51B0 7F090680 8C426FF8 */   lw    $v0, %lo(show_debug_menu_flag)($v0)
 .L7F090684:
 /* 0C51B4 7F090684 8C820000 */  lw    $v0, ($a0)
 /* 0C51B8 7F090688 2403FFFE */  li    $v1, -2
@@ -679,8 +684,8 @@ debug_music:
 /* 0C5398 7F090868 10000182 */  b     .L7F090E74
 /* 0C539C 7F09086C AC226F70 */   sw    $v0, %lo(debug_unknown)($at)
 portal_close_inf_approx:
-/* 0C53A0 7F090870 3C028003 */  lui   $v0, %hi(D_80036FD4) # $v0, 0x8003
-/* 0C53A4 7F090874 24426FD4 */  addiu $v0, %lo(D_80036FD4) # addiu $v0, $v0, 0x6fd4
+/* 0C53A0 7F090870 3C028003 */  lui   $v0, %hi(debug_portal_flag) # $v0, 0x8003
+/* 0C53A4 7F090874 24426FD4 */  addiu $v0, %lo(debug_portal_flag) # addiu $v0, $v0, 0x6fd4
 /* 0C53A8 7F090878 8C480000 */  lw    $t0, ($v0)
 /* 0C53AC 7F09087C 39090001 */  xori  $t1, $t0, 1
 /* 0C53B0 7F090880 1000017C */  b     .L7F090E74
@@ -761,8 +766,8 @@ debug_maxammo:
 /* 0C54B8 7F090988 1000013B */  b     .L7F090E78
 /* 0C54BC 7F09098C 8FB80018 */   lw    $t8, 0x18($sp)
 debug_displayspeed:
-/* 0C54C0 7F090990 3C028003 */  lui   $v0, %hi(debug_fps_counter_membars) # $v0, 0x8003
-/* 0C54C4 7F090994 24426F74 */  addiu $v0, %lo(debug_fps_counter_membars) # addiu $v0, $v0, 0x6f74
+/* 0C54C0 7F090990 3C028003 */  lui   $v0, %hi(memusage_display_flag) # $v0, 0x8003
+/* 0C54C4 7F090994 24426F74 */  addiu $v0, %lo(memusage_display_flag) # addiu $v0, $v0, 0x6f74
 /* 0C54C8 7F090998 8C580000 */  lw    $t8, ($v0)
 /* 0C54CC 7F09099C 3B190001 */  xori  $t9, $t8, 1
 /* 0C54D0 7F0909A0 17200134 */  bnez  $t9, .L7F090E74
@@ -786,36 +791,36 @@ debug_dodrawobj:
 /* 0C5510 7F0909E0 10000124 */  b     .L7F090E74
 /* 0C5514 7F0909E4 AC4C0000 */   sw    $t4, ($v0)
 debug_stanhit:
-/* 0C5518 7F0909E8 3C028003 */  lui   $v0, %hi(line_mode) # $v0, 0x8003
-/* 0C551C 7F0909EC 24426F84 */  addiu $v0, %lo(line_mode) # addiu $v0, $v0, 0x6f84
+/* 0C5518 7F0909E8 3C028003 */  lui   $v0, %hi(debug_stanhit_flag) # $v0, 0x8003
+/* 0C551C 7F0909EC 24426F84 */  addiu $v0, %lo(debug_stanhit_flag) # addiu $v0, $v0, 0x6f84
 /* 0C5520 7F0909F0 8C4D0000 */  lw    $t5, ($v0)
 /* 0C5524 7F0909F4 39AE0001 */  xori  $t6, $t5, 1
 /* 0C5528 7F0909F8 1000011E */  b     .L7F090E74
 /* 0C552C 7F0909FC AC4E0000 */   sw    $t6, ($v0)
 debug_stanregion:
-/* 0C5530 7F090A00 3C028003 */  lui   $v0, %hi(debug_man_pos) # $v0, 0x8003
-/* 0C5534 7F090A04 24426F88 */  addiu $v0, %lo(debug_man_pos) # addiu $v0, $v0, 0x6f88
+/* 0C5530 7F090A00 3C028003 */  lui   $v0, %hi(debug_stanregion_flag) # $v0, 0x8003
+/* 0C5534 7F090A04 24426F88 */  addiu $v0, %lo(debug_stanregion_flag) # addiu $v0, $v0, 0x6f88
 /* 0C5538 7F090A08 8C4F0000 */  lw    $t7, ($v0)
 /* 0C553C 7F090A0C 39F80001 */  xori  $t8, $t7, 1
 /* 0C5540 7F090A10 10000118 */  b     .L7F090E74
 /* 0C5544 7F090A14 AC580000 */   sw    $t8, ($v0)
 debug_turbo:
-/* 0C5548 7F090A18 3C028003 */  lui   $v0, %hi(turbo_mode) # $v0, 0x8003
-/* 0C554C 7F090A1C 24426F8C */  addiu $v0, %lo(turbo_mode) # addiu $v0, $v0, 0x6f8c
+/* 0C5548 7F090A18 3C028003 */  lui   $v0, %hi(turbo_mode_flag) # $v0, 0x8003
+/* 0C554C 7F090A1C 24426F8C */  addiu $v0, %lo(turbo_mode_flag) # addiu $v0, $v0, 0x6f8c
 /* 0C5550 7F090A20 8C590000 */  lw    $t9, ($v0)
 /* 0C5554 7F090A24 3B280001 */  xori  $t0, $t9, 1
 /* 0C5558 7F090A28 10000112 */  b     .L7F090E74
 /* 0C555C 7F090A2C AC480000 */   sw    $t0, ($v0)
 debug_printmanpos:
-/* 0C5560 7F090A30 3C028003 */  lui   $v0, %hi(D_80036F90) # $v0, 0x8003
-/* 0C5564 7F090A34 24426F90 */  addiu $v0, %lo(D_80036F90) # addiu $v0, $v0, 0x6f90
+/* 0C5560 7F090A30 3C028003 */  lui   $v0, %hi(debug_man_pos_flag) # $v0, 0x8003
+/* 0C5564 7F090A34 24426F90 */  addiu $v0, %lo(debug_man_pos_flag) # addiu $v0, $v0, 0x6f90
 /* 0C5568 7F090A38 8C490000 */  lw    $t1, ($v0)
 /* 0C556C 7F090A3C 392A0001 */  xori  $t2, $t1, 1
 /* 0C5570 7F090A40 1000010C */  b     .L7F090E74
 /* 0C5574 7F090A44 AC4A0000 */   sw    $t2, ($v0)
 debug_testingmanpos:
-/* 0C5578 7F090A48 3C028003 */  lui   $v0, %hi(D_80036FC8) # $v0, 0x8003
-/* 0C557C 7F090A4C 24426FC8 */  addiu $v0, %lo(D_80036FC8) # addiu $v0, $v0, 0x6fc8
+/* 0C5578 7F090A48 3C028003 */  lui   $v0, %hi(debug_testingmanpos_flag) # $v0, 0x8003
+/* 0C557C 7F090A4C 24426FC8 */  addiu $v0, %lo(debug_testingmanpos_flag) # addiu $v0, $v0, 0x6fc8
 /* 0C5580 7F090A50 8C4B0000 */  lw    $t3, ($v0)
 /* 0C5584 7F090A54 396C0001 */  xori  $t4, $t3, 1
 /* 0C5588 7F090A58 10000106 */  b     .L7F090E74
@@ -831,8 +836,8 @@ debug_bonddie:
 /* 0C55A8 7F090A78 100000FF */  b     .L7F090E78
 /* 0C55AC 7F090A7C 8FB80018 */   lw    $t8, 0x18($sp)
 debug_prroomloads:
-/* 0C55B0 7F090A80 3C028003 */  lui   $v0, %hi(D_80036F94) # $v0, 0x8003
-/* 0C55B4 7F090A84 24426F94 */  addiu $v0, %lo(D_80036F94) # addiu $v0, $v0, 0x6f94
+/* 0C55B0 7F090A80 3C028003 */  lui   $v0, %hi(debug_prroomloads_flag) # $v0, 0x8003
+/* 0C55B4 7F090A84 24426F94 */  addiu $v0, %lo(debug_prroomloads_flag) # addiu $v0, $v0, 0x6f94
 /* 0C55B8 7F090A88 8C4D0000 */  lw    $t5, ($v0)
 /* 0C55BC 7F090A8C 39AE0001 */  xori  $t6, $t5, 1
 /* 0C55C0 7F090A90 100000F8 */  b     .L7F090E74
@@ -849,8 +854,8 @@ debug_showmembars:
 /* 0C55E4 7F090AB4 8FB80018 */   lw    $t8, 0x18($sp)
 debug_grabrgb:
 /* 0C55E8 7F090AB8 24030001 */  li    $v1, 1
-/* 0C55EC 7F090ABC 3C018003 */  lui   $at, %hi(grabrgb_flag) # $at, 0x8003
-/* 0C55F0 7F090AC0 AC236FFC */  sw    $v1, %lo(grabrgb_flag)($at)
+/* 0C55EC 7F090ABC 3C018003 */  lui   $at, %hi(grab_rgb_screenshot_flag) # $at, 0x8003
+/* 0C55F0 7F090AC0 AC236FFC */  sw    $v1, %lo(grab_rgb_screenshot_flag)($at)
 /* 0C55F4 7F090AC4 0C0038B4 */  jal   osViBlack
 /* 0C55F8 7F090AC8 24040001 */   li    $a0, 1
 /* 0C55FC 7F090ACC 0C000F04 */  jal   coloroutputmode_0
@@ -859,8 +864,8 @@ debug_grabrgb:
 /* 0C5608 7F090AD8 8FB80018 */   lw    $t8, 0x18($sp)
 debug_grabjpeg:
 /* 0C560C 7F090ADC 24030001 */  li    $v1, 1
-/* 0C5610 7F090AE0 3C018003 */  lui   $at, %hi(grabjpeg_flag) # $at, 0x8003
-/* 0C5614 7F090AE4 AC237000 */  sw    $v1, %lo(grabjpeg_flag)($at)
+/* 0C5610 7F090AE0 3C018003 */  lui   $at, %hi(grab_jpeg_screenshot_flag) # $at, 0x8003
+/* 0C5614 7F090AE4 AC237000 */  sw    $v1, %lo(grab_jpeg_screenshot_flag)($at)
 /* 0C5618 7F090AE8 0C0038B4 */  jal   osViBlack
 /* 0C561C 7F090AEC 24040001 */   li    $a0, 1
 /* 0C5620 7F090AF0 0C000F04 */  jal   coloroutputmode_0
@@ -868,8 +873,8 @@ debug_grabjpeg:
 /* 0C5628 7F090AF8 100000DF */  b     .L7F090E78
 /* 0C562C 7F090AFC 8FB80018 */   lw    $t8, 0x18($sp)
 debug_taskgrab:
-/* 0C5630 7F090B00 3C028003 */  lui   $v0, %hi(debug_walk_through_doors) # $v0, 0x8003
-/* 0C5634 7F090B04 24426FC4 */  addiu $v0, %lo(debug_walk_through_doors) # addiu $v0, $v0, 0x6fc4
+/* 0C5630 7F090B00 3C028003 */  lui   $v0, %hi(debug_enable_taskgrab_flag) # $v0, 0x8003
+/* 0C5634 7F090B04 24426FC4 */  addiu $v0, %lo(debug_enable_taskgrab_flag) # addiu $v0, $v0, 0x6fc4
 /* 0C5638 7F090B08 8C4F0000 */  lw    $t7, ($v0)
 /* 0C563C 7F090B0C 39F80001 */  xori  $t8, $t7, 1
 /* 0C5640 7F090B10 100000D8 */  b     .L7F090E74
@@ -924,36 +929,36 @@ debug_autoxaim:
 /* 0C56E0 7F090BB0 100000B1 */  b     .L7F090E78
 /* 0C56E4 7F090BB4 8FB80018 */   lw    $t8, 0x18($sp)
 debug_007:
-/* 0C56E8 7F090BB8 3C028003 */  lui   $v0, %hi(D_80036FAC) # $v0, 0x8003
-/* 0C56EC 7F090BBC 24426FAC */  addiu $v0, %lo(D_80036FAC) # addiu $v0, $v0, 0x6fac
+/* 0C56E8 7F090BB8 3C028003 */  lui   $v0, %hi(debug_007_unlock_flag) # $v0, 0x8003
+/* 0C56EC 7F090BBC 24426FAC */  addiu $v0, %lo(debug_007_unlock_flag) # addiu $v0, $v0, 0x6fac
 /* 0C56F0 7F090BC0 8C590000 */  lw    $t9, ($v0)
 /* 0C56F4 7F090BC4 3B280001 */  xori  $t0, $t9, 1
 /* 0C56F8 7F090BC8 100000AA */  b     .L7F090E74
 /* 0C56FC 7F090BCC AC480000 */   sw    $t0, ($v0)
 debug_agent:
-/* 0C5700 7F090BD0 3C028003 */  lui   $v0, %hi(debug_enable_agent_levels) # $v0, 0x8003
-/* 0C5704 7F090BD4 24426FB0 */  addiu $v0, %lo(debug_enable_agent_levels) # addiu $v0, $v0, 0x6fb0
+/* 0C5700 7F090BD0 3C028003 */  lui   $v0, %hi(debug_enable_agent_levels_flag) # $v0, 0x8003
+/* 0C5704 7F090BD4 24426FB0 */  addiu $v0, %lo(debug_enable_agent_levels_flag) # addiu $v0, $v0, 0x6fb0
 /* 0C5708 7F090BD8 8C490000 */  lw    $t1, ($v0)
 /* 0C570C 7F090BDC 392A0001 */  xori  $t2, $t1, 1
 /* 0C5710 7F090BE0 100000A4 */  b     .L7F090E74
 /* 0C5714 7F090BE4 AC4A0000 */   sw    $t2, ($v0)
 debug_all:
-/* 0C5718 7F090BE8 3C028003 */  lui   $v0, %hi(debug_enable_all_levels) # $v0, 0x8003
-/* 0C571C 7F090BEC 24426FB4 */  addiu $v0, %lo(debug_enable_all_levels) # addiu $v0, $v0, 0x6fb4
+/* 0C5718 7F090BE8 3C028003 */  lui   $v0, %hi(debug_enable_all_levels_flag) # $v0, 0x8003
+/* 0C571C 7F090BEC 24426FB4 */  addiu $v0, %lo(debug_enable_all_levels_flag) # addiu $v0, $v0, 0x6fb4
 /* 0C5720 7F090BF0 8C4B0000 */  lw    $t3, ($v0)
 /* 0C5724 7F090BF4 396C0001 */  xori  $t4, $t3, 1
 /* 0C5728 7F090BF8 1000009E */  b     .L7F090E74
 /* 0C572C 7F090BFC AC4C0000 */   sw    $t4, ($v0)
 fast_bond_debug:
-/* 0C5730 7F090C00 3C028003 */  lui   $v0, %hi(debug_fast_bond) # $v0, 0x8003
-/* 0C5734 7F090C04 24426FCC */  addiu $v0, %lo(debug_fast_bond) # addiu $v0, $v0, 0x6fcc
+/* 0C5730 7F090C00 3C028003 */  lui   $v0, %hi(debug_fast_bond_flag) # $v0, 0x8003
+/* 0C5734 7F090C04 24426FCC */  addiu $v0, %lo(debug_fast_bond_flag) # addiu $v0, $v0, 0x6fcc
 /* 0C5738 7F090C08 8C4D0000 */  lw    $t5, ($v0)
 /* 0C573C 7F090C0C 39AE0001 */  xori  $t6, $t5, 1
 /* 0C5740 7F090C10 10000098 */  b     .L7F090E74
 /* 0C5744 7F090C14 AC4E0000 */   sw    $t6, ($v0)
 debug_objectives:
-/* 0C5748 7F090C18 3C028003 */  lui   $v0, %hi(debug_all_obj_complete) # $v0, 0x8003
-/* 0C574C 7F090C1C 24426FD0 */  addiu $v0, %lo(debug_all_obj_complete) # addiu $v0, $v0, 0x6fd0
+/* 0C5748 7F090C18 3C028003 */  lui   $v0, %hi(debug_all_obj_complete_flag) # $v0, 0x8003
+/* 0C574C 7F090C1C 24426FD0 */  addiu $v0, %lo(debug_all_obj_complete_flag) # addiu $v0, $v0, 0x6fd0
 /* 0C5750 7F090C20 8C4F0000 */  lw    $t7, ($v0)
 /* 0C5754 7F090C24 39F80001 */  xori  $t8, $t7, 1
 /* 0C5758 7F090C28 10000092 */  b     .L7F090E74
@@ -1028,43 +1033,43 @@ debug_chrkeypos:
 /* 0C5854 7F090D24 10000053 */  b     .L7F090E74
 /* 0C5858 7F090D28 AC226F70 */   sw    $v0, %lo(debug_unknown)($at)
 debug_chrnum:
-/* 0C585C 7F090D2C 3C028003 */  lui   $v0, %hi(D_80036FB8) # $v0, 0x8003
-/* 0C5860 7F090D30 24426FB8 */  addiu $v0, %lo(D_80036FB8) # addiu $v0, $v0, 0x6fb8
+/* 0C585C 7F090D2C 3C028003 */  lui   $v0, %hi(debug_chrnum_flag) # $v0, 0x8003
+/* 0C5860 7F090D30 24426FB8 */  addiu $v0, %lo(debug_chrnum_flag) # addiu $v0, $v0, 0x6fb8
 /* 0C5864 7F090D34 8C490000 */  lw    $t1, ($v0)
 /* 0C5868 7F090D38 392A0001 */  xori  $t2, $t1, 1
 /* 0C586C 7F090D3C 1000004D */  b     .L7F090E74
 /* 0C5870 7F090D40 AC4A0000 */   sw    $t2, ($v0)
 debug_viscvc:
-/* 0C5874 7F090D44 3C028003 */  lui   $v0, %hi(D_80036FA8) # $v0, 0x8003
-/* 0C5878 7F090D48 24426FA8 */  addiu $v0, %lo(D_80036FA8) # addiu $v0, $v0, 0x6fa8
+/* 0C5874 7F090D44 3C028003 */  lui   $v0, %hi(linemode_flag) # $v0, 0x8003
+/* 0C5878 7F090D48 24426FA8 */  addiu $v0, %lo(linemode_flag) # addiu $v0, $v0, 0x6fa8
 /* 0C587C 7F090D4C 8C4B0000 */  lw    $t3, ($v0)
 /* 0C5880 7F090D50 396C0001 */  xori  $t4, $t3, 1
 /* 0C5884 7F090D54 10000047 */  b     .L7F090E74
 /* 0C5888 7F090D58 AC4C0000 */   sw    $t4, ($v0)
 debug_joy2skyedit:
-/* 0C588C 7F090D5C 3C028003 */  lui   $v0, %hi(D_80036F98) # $v0, 0x8003
-/* 0C5890 7F090D60 24426F98 */  addiu $v0, %lo(D_80036F98) # addiu $v0, $v0, 0x6f98
+/* 0C588C 7F090D5C 3C028003 */  lui   $v0, %hi(debug_joy2skyedit_flag) # $v0, 0x8003
+/* 0C5890 7F090D60 24426F98 */  addiu $v0, %lo(debug_joy2skyedit_flag) # addiu $v0, $v0, 0x6f98
 /* 0C5894 7F090D64 8C4D0000 */  lw    $t5, ($v0)
 /* 0C5898 7F090D68 39AE0001 */  xori  $t6, $t5, 1
 /* 0C589C 7F090D6C 10000041 */  b     .L7F090E74
 /* 0C58A0 7F090D70 AC4E0000 */   sw    $t6, ($v0)
 debug_joy2hitsedit:
-/* 0C58A4 7F090D74 3C028003 */  lui   $v0, %hi(D_80036F9C) # $v0, 0x8003
-/* 0C58A8 7F090D78 24426F9C */  addiu $v0, %lo(D_80036F9C) # addiu $v0, $v0, 0x6f9c
+/* 0C58A4 7F090D74 3C028003 */  lui   $v0, %hi(debug_joy2hitsedit_flag) # $v0, 0x8003
+/* 0C58A8 7F090D78 24426F9C */  addiu $v0, %lo(debug_joy2hitsedit_flag) # addiu $v0, $v0, 0x6f9c
 /* 0C58AC 7F090D7C 8C4F0000 */  lw    $t7, ($v0)
 /* 0C58B0 7F090D80 39F80001 */  xori  $t8, $t7, 1
 /* 0C58B4 7F090D84 1000003B */  b     .L7F090E74
 /* 0C58B8 7F090D88 AC580000 */   sw    $t8, ($v0)
 debug_joy2detailedit:
-/* 0C58BC 7F090D8C 3C028003 */  lui   $v0, %hi(D_80036FA0) # $v0, 0x8003
-/* 0C58C0 7F090D90 24426FA0 */  addiu $v0, %lo(D_80036FA0) # addiu $v0, $v0, 0x6fa0
+/* 0C58BC 7F090D8C 3C028003 */  lui   $v0, %hi(debug_joy2detailedit_flag) # $v0, 0x8003
+/* 0C58C0 7F090D90 24426FA0 */  addiu $v0, %lo(debug_joy2detailedit_flag) # addiu $v0, $v0, 0x6fa0
 /* 0C58C4 7F090D94 8C590000 */  lw    $t9, ($v0)
 /* 0C58C8 7F090D98 3B280001 */  xori  $t0, $t9, 1
 /* 0C58CC 7F090D9C 10000035 */  b     .L7F090E74
 /* 0C58D0 7F090DA0 AC480000 */   sw    $t0, ($v0)
 debug_explosioninfo:
-/* 0C58D4 7F090DA4 3C028003 */  lui   $v0, %hi(D_80036FA4) # $v0, 0x8003
-/* 0C58D8 7F090DA8 24426FA4 */  addiu $v0, %lo(D_80036FA4) # addiu $v0, $v0, 0x6fa4
+/* 0C58D4 7F090DA4 3C028003 */  lui   $v0, %hi(debug_explosioninfo_flag) # $v0, 0x8003
+/* 0C58D8 7F090DA8 24426FA4 */  addiu $v0, %lo(debug_explosioninfo_flag) # addiu $v0, $v0, 0x6fa4
 /* 0C58DC 7F090DAC 8C490000 */  lw    $t1, ($v0)
 /* 0C58E0 7F090DB0 392A0001 */  xori  $t2, $t1, 1
 /* 0C58E4 7F090DB4 1000002F */  b     .L7F090E74
@@ -1082,8 +1087,8 @@ debug_fog:
 /* 0C590C 7F090DDC 10000025 */  b     .L7F090E74
 /* 0C5910 7F090DE0 AC226F70 */   sw    $v0, %lo(debug_unknown)($at)
 debug_gunwatchpos:
-/* 0C5914 7F090DE4 3C028003 */  lui   $v0, %hi(D_80036FBC) # $v0, 0x8003
-/* 0C5918 7F090DE8 24426FBC */  addiu $v0, %lo(D_80036FBC) # addiu $v0, $v0, 0x6fbc
+/* 0C5914 7F090DE4 3C028003 */  lui   $v0, %hi(debug_gunwatchpos_flag) # $v0, 0x8003
+/* 0C5918 7F090DE8 24426FBC */  addiu $v0, %lo(debug_gunwatchpos_flag) # addiu $v0, $v0, 0x6fbc
 /* 0C591C 7F090DEC 8C4B0000 */  lw    $t3, ($v0)
 /* 0C5920 7F090DF0 396C0001 */  xori  $t4, $t3, 1
 /* 0C5924 7F090DF4 1000001F */  b     .L7F090E74
@@ -1094,8 +1099,8 @@ debug_roomblocks:
 /* 0C5934 7F090E04 1000001C */  b     .L7F090E78
 /* 0C5938 7F090E08 8FB80018 */   lw    $t8, 0x18($sp)
 debug_profile:
-/* 0C593C 7F090E0C 3C028003 */  lui   $v0, %hi(D_80036FC0) # $v0, 0x8003
-/* 0C5940 7F090E10 24426FC0 */  addiu $v0, %lo(D_80036FC0) # addiu $v0, $v0, 0x6fc0
+/* 0C593C 7F090E0C 3C028003 */  lui   $v0, %hi(debug_profile_flag) # $v0, 0x8003
+/* 0C5940 7F090E10 24426FC0 */  addiu $v0, %lo(debug_profile_flag) # addiu $v0, $v0, 0x6fc0
 /* 0C5944 7F090E14 8C4D0000 */  lw    $t5, ($v0)
 /* 0C5948 7F090E18 39AE0001 */  xori  $t6, $t5, 1
 /* 0C594C 7F090E1C 11C00005 */  beqz  $t6, .L7F090E34
@@ -1146,22 +1151,22 @@ def_7F090EA8:
 .L7F090EB0:
 /* 0C59E0 7F090EB0 8FA90018 */  lw    $t1, 0x18($sp)
 .L7F090EB4:
-/* 0C59E4 7F090EB4 3C0B8003 */  lui   $t3, %hi(D_80036FF8) # $t3, 0x8003
+/* 0C59E4 7F090EB4 3C0B8003 */  lui   $t3, %hi(show_debug_menu_flag) # $t3, 0x8003
 /* 0C59E8 7F090EB8 312A1000 */  andi  $t2, $t1, 0x1000
 /* 0C59EC 7F090EBC 11400009 */  beqz  $t2, .L7F090EE4
 /* 0C59F0 7F090EC0 00000000 */   nop   
-/* 0C59F4 7F090EC4 8D6B6FF8 */  lw    $t3, %lo(D_80036FF8)($t3)
+/* 0C59F4 7F090EC4 8D6B6FF8 */  lw    $t3, %lo(show_debug_menu_flag)($t3)
 /* 0C59F8 7F090EC8 24010001 */  li    $at, 1
 /* 0C59FC 7F090ECC 15610003 */  bne   $t3, $at, .L7F090EDC
 /* 0C5A00 7F090ED0 00000000 */   nop   
 /* 0C5A04 7F090ED4 0C002BC0 */  jal   debug_text_related_1
 /* 0C5A08 7F090ED8 00000000 */   nop   
 .L7F090EDC:
-/* 0C5A0C 7F090EDC 3C018003 */  lui   $at, %hi(D_80036FF8) # $at, 0x8003
-/* 0C5A10 7F090EE0 AC206FF8 */  sw    $zero, %lo(D_80036FF8)($at)
+/* 0C5A0C 7F090EDC 3C018003 */  lui   $at, %hi(show_debug_menu_flag) # $at, 0x8003
+/* 0C5A10 7F090EE0 AC206FF8 */  sw    $zero, %lo(show_debug_menu_flag)($at)
 .L7F090EE4:
-/* 0C5A14 7F090EE4 3C028003 */  lui   $v0, %hi(D_80036FF8) # $v0, 0x8003
-/* 0C5A18 7F090EE8 8C426FF8 */  lw    $v0, %lo(D_80036FF8)($v0)
+/* 0C5A14 7F090EE4 3C028003 */  lui   $v0, %hi(show_debug_menu_flag) # $v0, 0x8003
+/* 0C5A18 7F090EE8 8C426FF8 */  lw    $v0, %lo(show_debug_menu_flag)($v0)
 .L7F090EEC:
 /* 0C5A1C 7F090EEC 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0C5A20 7F090EF0 27BD0060 */  addiu $sp, $sp, 0x60
