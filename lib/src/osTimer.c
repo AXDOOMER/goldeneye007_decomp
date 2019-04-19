@@ -97,7 +97,7 @@ void __osTimerInterrupt()
 void __osSetTimerIntr(u64 remaining)
 {
     u64 tmp;
-    s32 saveMask = __osDisableInt();
+    u32 saveMask = __osDisableInt();
 
     // http://n64devkit.square7.ch/n64man/os/osGetCount.htm
     lastIntCount = osGetCount();
@@ -117,12 +117,9 @@ u64 __osInsertTimer(OSTimer *newTimer)
 
     u64 newRemainer;
 
-    // The interrupt's mask.
-    s32 saveMask;
-
     // Low priority interrupts are masked, this is how they are disabled.
     // We are entering a critical section because shared ressources are accessed.
-    saveMask = __osDisableInt();
+    u32 saveMask = __osDisableInt();
 
     // Iterate over the timers. If the remaining time of the new timer
     // is bigger than the remaining time of the iterated node, then decrease
