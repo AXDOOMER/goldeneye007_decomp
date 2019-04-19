@@ -3,108 +3,130 @@
 // bss
 char off_CODE_bss_80079E30[0x4C];
 
-/* data
-D:80037070     dword_D_80037070:.word 0x14002100        # DATA XREF: D:stru_D_8003744Co
-D:80037074                     .word 0x10201, 0x3010104
-D:8003707C     dword_D_8003707C:.word 0x2110301         # DATA XREF: D:80037454o
-D:80037080                     .word 0x11040000
-D:80037084     dword_D_80037084:.word 0x2010330         # DATA XREF: D:8003745Co
-D:80037088                     .word 0xFD112F06
-D:8003708C                     .word 0x1010206
-D:80037090                     .word 0x32073E0D
-D:80037094                     .word 0x3F0E4610
-D:80037098                     .word 0x3A0D3B0D
-D:8003709C                     .word 0xB033335
-D:800370A0                     .word 0x1030600
-D:800370A4                     .word 0x205FD00, 0x3020301, 0x1021033, 0x357F0706, 0x205FD, 0xA0207, 0x6000205
-D:800370A4                     .word 0xFD000602, 0xD060002, 0x5FD0008, 0x20E0600, 0x205FD00, 0xB021105, 0xFD000104
-D:800370DC     dword_D_800370DC:.word 0x33353203, 0xA009A00, 0xC118, 0x10000202, 0x3356403, 0xA009B00, 0x12618
-D:800370DC                                              # DATA XREF: D:80037464o
-D:800370DC                     .word 0x10000202, 0x3359603, 0xA009C00, 0xB718, 0x10000202, 0x335C803, 0xA009D00
-D:800370DC                     .word 0x7B18, 0x10000202, 0x335FA03, 0xA009E00, 0x3818, 0x10000202, 0x30A009F
-D:800370DC                     .word 0x89, 0x18100002, 0x2020704
-D:8003713C     dword_D_8003713C:.word 0x33353C03, 0xA00AC00, 0x4500, 0x10000202, 0x3357803, 0xA00AD00, 0x4A00
-D:8003713C                                              # DATA XREF: D:8003746Co
-D:8003713C                     .word 0x10000202, 0x335B403, 0xA00AE00, 0x4F00, 0x10000202, 0x30A00AF, 0x59
-D:8003713C                     .word 0x100002, 0x2020704
-D:8003717C     dword_D_8003717C:.word 0x201032F, 0x6010102, 0x632073E, 0xD46103A, 0xD3B0D01, 0x1021033, 0x357F0706
-D:8003717C                                              # DATA XREF: D:80037474o
-D:8003717C                     .word 0x205FD, 0xA0207, 0x6000205, 0xFD000602, 0xD060002, 0x5FD0008, 0x4000000
-D:800371B4     dword_D_800371B4:.word 0x96010333, 0x3520030C, 0x94010702, 0x394011A, 0x2020333, 0x350A0313
-D:800371B4                                              # DATA XREF: D:8003747Co
-D:800371B4                     .word 0x2020333, 0x350A030F, 0x2020333, 0x3519030E, 0x2020333, 0x35320310
-D:800371B4                     .word 0x2020333, 0x35400311, 0x2020335, 0x7F031202, 0x2033335, 0x7F0B1400
-D:800371B4                     .word 0x1000002, 0x20B1500, 0x1000002, 0x2020704
-D:8003720C     dword_D_8003720C:.word 0x94012801, 0x7020103, 0x2F063207, 0x1010207, 0x5FD0006, 0x2060704
-D:8003720C                                              # DATA XREF: D:8003748Co
-D:80037224     dword_D_80037224:.word 0x9401410E, 0x5FD0008, 0x20E31F9, 0xE05FD00, 0x2020EC1, 0xFD000C03, 0x5FD0008
-D:80037224                                              # DATA XREF: D:800374A4o
-D:80037224                     .word 0x20305FD, 0x20400
-D:80037248     dword_D_80037248:.word 0x6000205, 0xFD000804  # DATA XREF: D:800374ACo
-D:80037250     dword_D_80037250:.word 0x2010332, 0x73E0D3F, 0xD460D3A, 0xD3B0D01, 0x1020706, 0x205FD, 0x6020D
-D:80037250                                              # DATA XREF: D:80037484o
-D:80037250                     .word 0x6000205, 0xFD000802, 0xE060002, 0x5FD000B, 0x4000000
-D:80037280     dword_D_80037280:.word 0x201032F, 0x6010102, 0x6320F7B, 0x103F10, 0x3A103B10, 0x1010210, 0x79000F0D
-D:80037280                                              # DATA XREF: D:80037494o
-D:80037280                     .word 0x204032F, 0xF010402, 0xF1C2328, 0x203032F, 0x2010302, 0x24EFD00, 0xA232802
-D:80037280                     .word 0x24232805, 0x20205, 0x32F0201, 0x5020206, 0x205FD, 0x80400
-D:800372D0     dword_D_800372D0:.word 0xD020103, 0x2F020101, 0x20205FD, 0x80400
-D:800372D0                                              # DATA XREF: D:8003749Co
-D:800372E0     dword_D_800372E0:.word 0x228281B, 0xAD6E6F20, 0x676F210A, 0x21B03, 0x3C062F02, 0x11B0201, 0x378062D
-D:800372E0                                              # DATA XREF: D:800374B4o
-D:800372E0                     .word 0x9F000000, 0x102F022D, 0x2F064C00, 0xC8030101, 0x2030128, 0x2063C03
-D:800372E0                     .word 0x20224, 0x34B0032, 0x32F0301, 0x2802039F, 0x10, 0x2F022B33, 0x350A031A
-D:800372E0                     .word 0x2020335, 0x32030E02, 0x203353C, 0x3130202, 0x3355003, 0x13020203, 0x35640311
-D:800372E0                     .word 0x2020335, 0x96031202, 0x20335C8, 0x3140001, 0x202, 0x3150001, 0x202
-D:800372E0                     .word 0x23C0300, 0x1B021B03, 0x3335A003, 0x1C0203, 0x3010102, 0x1CAE281D, 0x21D032F
-D:800372E0                     .word 0x3B40000, 0x3C03011D, 0x20308AD, 0x77616974, 0xA009504, 0x3335A003
-D:800372E0                     .word 0x94040203, 0xAE021E03, 0x3C034603, 0x3B30002, 0x58049604, 0x5012802
-D:800372E0                     .word 0x5011C02, 0x4011E02, 0x3010102, 0x2F780603, 0x9E000000, 0x10020301
-D:800372E0                     .word 0x2B040000
-D:800373D0     dword_D_800373D0:.word 0xAE021B03, 0xB400003C, 0x3011B02, 0x3070400
-D:800373D0                                              # DATA XREF: D:800374BCo
-D:800373E0     dword_D_800373E0:.word 0xD205FD00, 0x1040000  # DATA XREF: D:800374C4o
-D:800373E8     dword_D_800373E8:.word 0x91289332, 0x2031700, 0x1000003, 0x203AE02, 0x1B03B400, 0x140301, 0x1B02030A
-D:800373E8                                              # DATA XREF: D:800374CCo
-D:800373E8                     .word 0x420000, 0x140410, 0x21C032F, 0x3011C02, 0x3BF00CD, 0x6000000, 0x30203
-D:800373E8                     .word 0x14002100, 0x30203, 0x16000100, 0x30203, 0x21E032F, 0x3011E02, 0x3060002
-D:800373E8                     .word 0x5FD0008, 0x4000000
-D:80037444     dword_D_80037444:.word 0x23FD05FD        # DATA XREF: D:800374D4o
-D:80037448                     .word 0x10400
-D:8003744C     stru_D_8003744C:struct_13 <dword_D_80037070, 0>
-D:8003744C                                              # DATA XREF: sub_CODE_7F035244+6Co
-D:8003744C                                              # sub_CODE_7F035244+78r
-D:8003744C                                              # sub_CODE_7F035398:loc_CODE_7F0353F0r
-D:8003744C                                              # sub_CODE_7F035398+5Co
-D:8003744C                                              # sub_CODE_7F035398+6Cr
-D:80037454                     struct_13 <dword_D_8003707C, 1>
-D:8003745C                     struct_13 <dword_D_80037084, 2>
-D:80037464                     struct_13 <dword_D_800370DC, 3>
-D:8003746C                     struct_13 <dword_D_8003713C, 4>
-D:80037474                     struct_13 <dword_D_8003717C, 5>
-D:8003747C                     struct_13 <dword_D_800371B4, 6>
-D:80037484                     struct_13 <dword_D_80037250, 7>
-D:8003748C                     struct_13 <dword_D_8003720C, 8>
-D:80037494                     struct_13 <dword_D_80037280, 9>
-D:8003749C                     struct_13 <dword_D_800372D0, 0xA>
-D:800374A4                     struct_13 <dword_D_80037224, 0xB>
-D:800374AC                     struct_13 <dword_D_80037248, 0xC>
-D:800374B4                     struct_13 <dword_D_800372E0, 0xD>
-D:800374BC                     struct_13 <dword_D_800373D0, 0xE>
-D:800374C4                     struct_13 <dword_D_800373E0, 0xF>
-D:800374CC                     struct_13 <dword_D_800373E8, 0x10>
-D:800374D4                     struct_13 <dword_D_80037444, 0x11>
-D:800374DC                     struct_13 <0>
-D:800374E4     setup_text_pointers:.word 0,0,0,0,0,0,0,0,0,aUsetupsevbunkerz,0,0,0,0,0,0,0,0,0,0,aUsetupsiloz
-D:800374E4                                              # DATA XREF: stage_loading_setup_objparse_cleanupafter+D4o
-D:800374E4                     .word aUsetupsevbunkerz_0,aUsetupstatuez,aUsetupcontrolz,aUsetuparchz,aUsetuptraz  # "UsetupsevbunkerZ"
-D:800374E4                     .word aUsetupdestz,aUsetupsevbz,aUsetupaztz,aUsetuppetez,aUsetupdepoz,aUsetuprefz
-D:800374E4                     .word aUsetupcrypz,aUsetupdamz,aUsetuparkz,aUsetuprunz,aUsetupsevxz,aUsetupjunz
-D:800374E4                     .word aUsetupdishz,aUsetupcavez,aUsetupcatz,aUsetupcradz,aUsetupshoz,aUsetupsevxbz
-D:800374E4                     .word aUsetupeldz,aUsetupimpz,aUsetupashz,aUsetupluez,aUsetupamez,aUsetupritz
-D:800374E4                     .word aUsetupoatz,aUsetupearz,aUsetupleez,aUsetuplipz,aUsetuplenz,aUsetupwaxz
-D:800374E4                     .word aUsetuppamz,0,0
-*/
+// data
+//D:80037070
+u32 dword_D_80037070[] = {0x14002100, 0x10201, 0x3010104};
+//D:8003707C
+u32 dword_D_8003707C[] = {0x2110301, 0x11040000};
+//D:80037084
+u32 dword_D_80037084[] = {
+    0x2010330, 0xFD112F06, 0x1010206, 0x32073E0D, 0x3F0E4610, 0x3A0D3B0D, 0xB033335, 0x1030600,
+    0x205FD00, 0x3020301, 0x1021033, 0x357F0706, 0x205FD, 0xA0207, 0x6000205, 0xFD000602, 0xD060002,
+    0x5FD0008, 0x20E0600, 0x205FD00, 0xB021105, 0xFD000104
+};
+//D:800370DC
+u32 dword_D_800370DC[] = {
+    0x33353203, 0x0A009A00, 0x0000C118, 0x10000202, 0x03356403, 0x0A009B00, 0x00012618,
+    0x10000202, 0x03359603, 0x0A009C00, 0x0000B718, 0x10000202, 0x0335C803, 0x0A009D00,
+    0x00007B18, 0x10000202, 0x0335FA03, 0x0A009E00, 0x00003818, 0x10000202, 0x030A009F,
+    0x00000089, 0x18100002, 0x02020704
+};
+//D:8003713C
+u32 dword_D_8003713C[] = {
+    0x33353C03, 0xA00AC00, 0x4500, 0x10000202, 0x3357803, 0xA00AD00, 0x4A00,
+    0x10000202, 0x335B403, 0xA00AE00, 0x4F00, 0x10000202, 0x30A00AF, 0x59,
+    0x100002, 0x2020704
+};
+//D:8003717C
+u32 dword_D_8003717C[] = {
+    0x201032F, 0x6010102, 0x632073E, 0xD46103A, 0xD3B0D01, 0x1021033, 0x357F0706,
+    0x205FD, 0xA0207, 0x6000205, 0xFD000602, 0xD060002, 0x5FD0008, 0x4000000
+};
+//D:800371B4
+u32 dword_D_800371B4[] = {
+    0x96010333, 0x3520030C, 0x94010702, 0x394011A, 0x2020333, 0x350A0313,
+    0x2020333, 0x350A030F, 0x2020333, 0x3519030E, 0x2020333, 0x35320310,
+    0x2020333, 0x35400311, 0x2020335, 0x7F031202, 0x2033335, 0x7F0B1400,
+    0x1000002, 0x20B1500, 0x1000002, 0x2020704
+};
+//D:8003720C
+u32 dword_D_8003720C[] = {
+    0x94012801, 0x7020103, 0x2F063207, 0x1010207, 0x5FD0006, 0x2060704
+};
+//D:80037224
+u32 dword_D_80037224[] = {
+    0x9401410E, 0x5FD0008, 0x20E31F9, 0xE05FD00, 0x2020EC1, 0xFD000C03, 0x5FD0008,
+    0x20305FD, 0x20400
+};
+//D:80037248
+u32 dword_D_80037248[] = {0x6000205, 0xFD000804};
+//D:80037250
+u32 dword_D_80037250[] = {
+    0x2010332, 0x73E0D3F, 0xD460D3A, 0xD3B0D01, 0x1020706, 0x205FD, 0x6020D,
+    0x6000205, 0xFD000802, 0xE060002, 0x5FD000B, 0x4000000
+};
+//D:80037280
+u32 dword_D_80037280[] = {
+    0x201032F, 0x6010102, 0x6320F7B, 0x103F10, 0x3A103B10, 0x1010210, 0x79000F0D,
+    0x204032F, 0xF010402, 0xF1C2328, 0x203032F, 0x2010302, 0x24EFD00, 0xA232802,
+    0x24232805, 0x20205, 0x32F0201, 0x5020206, 0x205FD, 0x80400
+};
+//D:800372D0
+u32 dword_D_800372D0[] = {
+    0xD020103, 0x2F020101, 0x20205FD, 0x80400
+};
+//D:800372E0
+u32 dword_D_800372E0[] = {
+    0x228281B, 0xAD6E6F20, 0x676F210A, 0x21B03, 0x3C062F02, 0x11B0201, 0x378062D,
+    0x9F000000, 0x102F022D, 0x2F064C00, 0xC8030101, 0x2030128, 0x2063C03,
+    0x20224, 0x34B0032, 0x32F0301, 0x2802039F, 0x10, 0x2F022B33, 0x350A031A,
+    0x2020335, 0x32030E02, 0x203353C, 0x3130202, 0x3355003, 0x13020203, 0x35640311,
+    0x2020335, 0x96031202, 0x20335C8, 0x3140001, 0x202, 0x3150001, 0x202,
+    0x23C0300, 0x1B021B03, 0x3335A003, 0x1C0203, 0x3010102, 0x1CAE281D, 0x21D032F,
+    0x3B40000, 0x3C03011D, 0x20308AD, 0x77616974, 0xA009504, 0x3335A003,
+    0x94040203, 0xAE021E03, 0x3C034603, 0x3B30002, 0x58049604, 0x5012802,
+    0x5011C02, 0x4011E02, 0x3010102, 0x2F780603, 0x9E000000, 0x10020301,
+    0x2B040000
+};
+//D:800373D0
+u32 dword_D_800373D0[] = {0xAE021B03, 0xB400003C, 0x3011B02, 0x3070400};
+//D:800373E0
+u32 dword_D_800373E0[] = {0xD205FD00, 0x1040000};
+//D:800373E8
+u32 dword_D_800373E8[] = {
+    0x91289332, 0x2031700, 0x1000003, 0x203AE02, 0x1B03B400, 0x140301, 0x1B02030A,
+    0x420000, 0x140410, 0x21C032F, 0x3011C02, 0x3BF00CD, 0x6000000, 0x30203,
+    0x14002100, 0x30203, 0x16000100, 0x30203, 0x21E032F, 0x3011E02, 0x3060002,
+    0x5FD0008, 0x4000000
+};
+
+//D:80037444
+u32 dword_D_80037444[] = {0x23FD05FD, 0x10400};
+
+//D:8003744C
+struct struct_13 D_8003744C[] = {
+    {dword_D_80037070, 0},
+    {dword_D_8003707C, 1},
+    {dword_D_80037084, 2},
+    {dword_D_800370DC, 3},
+    {dword_D_8003713C, 4},
+    {dword_D_8003717C, 5},
+    {dword_D_800371B4, 6},
+    {dword_D_80037250, 7},
+    {dword_D_8003720C, 8},
+    {dword_D_80037280, 9},
+    {dword_D_800372D0, 0xA},
+    {dword_D_80037224, 0xB},
+    {dword_D_80037248, 0xC},
+    {dword_D_800372E0, 0xD},
+    {dword_D_800373D0, 0xE},
+    {dword_D_800373E0, 0xF},
+    {dword_D_800373E8, 0x10},
+    {dword_D_80037444, 0x11}
+};
+//D:800374DC                     struct_13 <0>
+
+//D:800374E4
+char * setup_text_pointers[] = {0,0,0,0,0,0,0,0,0,"UsetupsevbunkerZ",0,0,0,0,0,0,0,0,0,0,"UsetupsiloZ",
+    "UsetupsevbunkerZ","UsetupstatueZ","UsetupcontrolZ","UsetuparchZ","UsetuptraZ",
+    "UsetupdestZ","UsetupsevbZ","UsetupaztZ","UsetuppeteZ","UsetupdepoZ","UsetuprefZ",
+    "UsetupcrypZ","UsetupdamZ","UsetuparkZ","UsetuprunZ","UsetupsevxZ","UsetupjunZ",
+    "UsetupdishZ","UsetupcaveZ","UsetupcatZ","UsetupcradZ","UsetupshoZ","UsetupsevxbZ",
+    "UsetupeldZ","UsetupimpZ","UsetupashZ","UsetuplueZ","UsetupameZ","UsetupritZ",
+    "UsetupoatZ","UsetupearZ","UsetupleeZ","UsetuplipZ","UsetuplenZ","UsetupwaxZ",
+    "UsetuppamZ",0,0
+};
+
 
 //D:800375D0
 struct PitemZ_header Palarm1z_header = {0, &model_object_standard_object, 0, 1, 304.6402, 2, 0, 0};
@@ -1569,110 +1591,203 @@ struct item_related weapon_gun_kf7 = {0x7, 0x0000, dword_D_8003C780, 0x12, 0x000
 /*
 D:8003C7B8                     .word 0
 D:8003C7BC                     .word 0
-D:8003C7C0     GwppkZ_struct:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0xC, 0, 0>
-D:8003C7E0     GwppksilZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 438.66476, 0xC, 0, 0>
-D:8003C800     Gtt33Z_struct:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 438.16788, 0xF, 0, 0>
-D:8003C820     GskorpianZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 390.40039, 0xC, 0, 0>
-D:8003C840     Gak47Z_struct:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 941.9339, 0x12, 0, 0>
-D:8003C860     GuziZ_struct:   itemheader <0, weapon_gun_kf7, 0, 0x24, 5, 436.95404, 0xC, 0, 0>
-D:8003C880     Gmp5kZ_struct:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 499.24536, 9, 0, 0>
-D:8003C8A0     Gmp5ksilZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 655.97717, 9, 0, 0>
-D:8003C8C0     Gm16Z_struct:   itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 1096.2413, 8, 0, 0>
-D:8003C8E0     Gfnp90Z_struct: itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 460.81909, 0xA, 0, 0>
-D:8003C900                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 238.62167, 4, 0, 0>
-D:8003C920     GrugerZ_struct: itemheader <0, weapon_gun_revolver, 0, 0x24, 6, 553.44312, 0xE, 0, 0>
-D:8003C940     GgoldengunZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 5, 384.92172, 0xB, 0, 0>
-D:8003C960     GshotgunZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 4, 919.33038, 0xD, 0, 0>
-D:8003C980     GautoshotZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 840.15125, 0x10, 0, 0>
-D:8003C9A0     GgrenadelaunchZ_struct:itemheader <0, weapon_gun_revolver, 0, 0x24, 5, 768.33496, 0xF, 0, 0>
-D:8003C9C0     GspectreZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 598.42865, 0xB, 0, 0>
-D:8003C9E0     GlaserZ_struct: itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 442.81848, 0xD, 0, 0>
-D:8003CA00     GrocketlaunchZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 566.51208, 0xA, 0, 0>
-D:8003CA20     GknifeZ_header: itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 376.97263, 9, 0, 0>
-D:8003CA40     GthrowknifeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 373.31387, 9, 0, 0>
-D:8003CA60     GtaserZ_struct: itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 182.78622, 0x11, 0, 0>
-D:8003CA80     GremotemineZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 50.999378, 3, 0, 0>
-D:8003CAA0     GproximitymineZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 51.00029, 3, 0, 0>
-D:8003CAC0     GtimedmineZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 49.368877, 4, 0, 0>
-D:8003CAE0     GtriggerZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 283.9006, 0x16, 0, 0>
-D:8003CB00     GgrenadeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 427.27081, 5, 0, 0>
-D:8003CB20     GfistZ_header:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 243.84764, 0xE, 0, 0>
-D:8003CB40     GsniperrifleZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 808.03253, 7, 0, 0>
-D:8003CB60     GcartridgeZ_struct:itemheader <0, weapon_gun_unassigned, 0, 0, 1, 14.128822, 2, 0, 0>
-D:8003CB80     GcartrifleZ_struct:itemheader <0, weapon_gun_unassigned, 0, 0, 1, 30.122747, 2, 0, 0>
-D:8003CBA0     GcartblueZ_struct:itemheader <0, weapon_gun_unassigned, 0, 0, 1, 30.122747, 2, 0, 0>
-D:8003CBC0     GcartshellZ_struct:itemheader <0, weapon_gun_unassigned, 0, 0, 1, 29.8451, 2, 0, 0>
-D:8003CBE0     GjoypadZ_struct:itemheader <0, weapon_gun_controller, 0, 0xE, 0xD, 523.96826, 4, 0, 0>
-D:8003CC00                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CC20                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CC40     GbombcaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003CC60     GflarepistolZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CC80     GpitongunZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CCA0                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CCC0     GsilverwppkZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0xB, 0, 0>
-D:8003CCE0     GgoldwppkZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0xB, 0, 0>
-D:8003CD00                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CD20     GbungeeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CD40     GdoordecoderZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 60.850407, 0x10, 0, 0>
-D:8003CD60     GbombdefuserZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 84.370705, 0xC, 0, 0>
-D:8003CD80     GbugdetectorZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CDA0     GsafecrackercaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003CDC0     GcameraZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 52.775627, 0xB, 0, 0>
-D:8003CDE0     GlockexploderZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CE00     GdoorexploderZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CE20     GkeyanalysercaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003CE40     GweaponcaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003CE60     GkeycardZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 123.08884, 2, 0, 0>
-D:8003CE80     GkeyyaleZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 414.25156, 1, 0, 0>
-D:8003CEA0     GkeyboltZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 759.26581, 1, 0, 0>
-D:8003CEC0     GbugZ_struct:   itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 106.2163, 6, 0, 0>
-D:8003CEE0     GmicrocameraZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 70.039436, 7, 0, 0>
-D:8003CF00     GexplosivefloppyZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 60.902443, 5, 0, 0>
-D:8003CF20     GgoldeneyekeyZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 98.987083, 5, 0, 0>
-D:8003CF40     GpolarizedglassesZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 53.776386, 2, 0, 0>
-D:8003CF60     GcreditcardZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CF80     GdarkglassesZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CFA0     GwatchidentifierZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0>
-D:8003CFC0     GwatchcommunicatorZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0>
-D:8003CFE0     GwatchlaserZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 283.9006, 0x16, 0, 0>
-D:8003D000     GwatchgeigercounterZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0>
-D:8003D020     GwatchmagnetrepelZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0>
-D:8003D040     GwatchmagnetattractZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1D, 3, 384.9288, 9, 0, 0>
-D:8003D060     GgaskeyringZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 111.59859, 9, 0, 0>
-D:8003D080     GdatathiefZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 119.78231, 3, 0, 0>
-D:8003D0A0     GbriefcaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003D0C0     GblackboxZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 128.31796, 5, 0, 0>
-D:8003D0E0     GplastiqueZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 255.35242, 3, 0, 0>
-D:8003D100     GvideotapeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 122.69632, 9, 0, 0>
-D:8003D120     GclipboardZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 190.41742, 3, 0, 0>
-D:8003D140     GstafflistZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 215.17534, 4, 0, 0>
-D:8003D160     GdossierredZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 183.54231, 4, 0, 0>
-D:8003D180     GaudiotapeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 97.531075, 9, 0, 0>
-D:8003D1A0     GdattapeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 79.868584, 4, 0, 0>
-D:8003D1C0     GplansZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 81.950996, 5, 0, 0>
-D:8003D1E0     GspyfileZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D200     GblueprintsZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 125.3834, 4, 0, 0>
-D:8003D220     GcircuitboardZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 138.90285, 3, 0, 0>
-D:8003D240     GmapZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 125.3834, 4, 0, 0>
-D:8003D260     GspooltapeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D280     GmicrofilmZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D2A0     GmicrocodeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D2C0     GlectreZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D2E0     GmoneyZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D300     GgoldbarZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D320     GheroinZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-
-D:8003D340     dword_D_8003D340:.word    0x20000,         2,   0x30003,   0x20006
-D:8003D340                                              # DATA XREF: D:8003D394o
-D:8003D340                     .word    0x60002,   0x90009,   0x2000C,   0xC0002
-D:8003D340                     .word    0xF000F,   0x20012,  0x120002,  0x150015
-D:8003D340                     .word    0x20018,  0x180002,  0x1B001B,   0x2001E
-D:8003D340                     .word   0x1E0002,  0x210021,   0x20024,  0x240000
-D:8003D390     weapon_gun_controller:.word 0xD0000      # DATA XREF: D:GjoypadZ_structo
-D:8003D394                     .word dword_D_8003D340
-D:8003D398                     .word 0x270000
-D:8003D39C                     .word 0
 */
+//D:8003C7C0
+struct Gitemheader GwppkZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0xC, 0, 0};
+//D:8003C7E0
+struct Gitemheader GwppksilZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 438.66476, 0xC, 0, 0};
+//D:8003C800
+struct Gitemheader Gtt33Z_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 438.16788, 0xF, 0, 0};
+//D:8003C820
+struct Gitemheader GskorpianZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 390.40039, 0xC, 0, 0};
+//D:8003C840
+struct Gitemheader Gak47Z_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 941.9339, 0x12, 0, 0};
+//D:8003C860
+struct Gitemheader GuziZ_struct = {0, &weapon_gun_kf7, 0, 0x24, 5, 436.95404, 0xC, 0, 0};
+//D:8003C880
+struct Gitemheader Gmp5kZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 499.24536, 9, 0, 0};
+//D:8003C8A0
+struct Gitemheader Gmp5ksilZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 655.97717, 9, 0, 0};
+//D:8003C8C0
+struct Gitemheader Gm16Z_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 1096.2413, 8, 0, 0};
+//D:8003C8E0
+struct Gitemheader Gfnp90Z_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 460.81909, 0xA, 0, 0};
+//D:8003C900
+struct Gitemheader G8003C900_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 238.62167, 4, 0, 0};
+//D:8003C920
+struct Gitemheader GrugerZ_struct = {0, &weapon_gun_revolver, 0, 0x24, 6, 553.44312, 0xE, 0, 0};
+//D:8003C940
+struct Gitemheader GgoldengunZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 5, 384.92172, 0xB, 0, 0};
+//D:8003C960
+struct Gitemheader GshotgunZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 4, 919.33038, 0xD, 0, 0};
+//D:8003C980
+struct Gitemheader GautoshotZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 840.15125, 0x10, 0, 0};
+//D:8003C9A0
+struct Gitemheader GgrenadelaunchZ_struct = {0, &weapon_gun_revolver, 0, 0x24, 5, 768.33496, 0xF, 0, 0};
+//D:8003C9C0
+struct Gitemheader GspectreZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 598.42865, 0xB, 0, 0};
+//D:8003C9E0
+struct Gitemheader GlaserZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 442.81848, 0xD, 0, 0};
+//D:8003CA00
+struct Gitemheader GrocketlaunchZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 566.51208, 0xA, 0, 0};
+//D:8003CA20
+struct Gitemheader GknifeZ_header = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 376.97263, 9, 0, 0};
+//D:8003CA40
+struct Gitemheader GthrowknifeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 373.31387, 9, 0, 0};
+//D:8003CA60
+struct Gitemheader GtaserZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 182.78622, 0x11, 0, 0};
+//D:8003CA80
+struct Gitemheader GremotemineZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 50.999378, 3, 0, 0};
+//D:8003CAA0
+struct Gitemheader GproximitymineZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 51.00029, 3, 0, 0};
+//D:8003CAC0
+struct Gitemheader GtimedmineZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 49.368877, 4, 0, 0};
+//D:8003CAE0
+struct Gitemheader GtriggerZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 283.9006, 0x16, 0, 0};
+//D:8003CB00
+struct Gitemheader GgrenadeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 427.27081, 5, 0, 0};
+//D:8003CB20
+struct Gitemheader GfistZ_header = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 243.84764, 0xE, 0, 0};
+//D:8003CB40
+struct Gitemheader GsniperrifleZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 808.03253, 7, 0, 0};
+//D:8003CB60
+struct Gitemheader GcartridgeZ_struct = {0, &weapon_gun_unassigned, 0, 0, 1, 14.128822, 2, 0, 0};
+//D:8003CB80
+struct Gitemheader GcartrifleZ_struct = {0, &weapon_gun_unassigned, 0, 0, 1, 30.122747, 2, 0, 0};
+//D:8003CBA0
+struct Gitemheader GcartblueZ_struct = {0, &weapon_gun_unassigned, 0, 0, 1, 30.122747, 2, 0, 0};
+//D:8003CBC0
+struct Gitemheader GcartshellZ_struct = {0, &weapon_gun_unassigned, 0, 0, 1, 29.8451, 2, 0, 0};
+//D:8003CBE0
+struct Gitemheader GjoypadZ_struct = {0, &weapon_gun_controller, 0, 0xE, 0xD, 523.96826, 4, 0, 0};
+//D:8003CC00
+struct Gitemheader G8003CC00_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003CC20
+struct Gitemheader G8003CC20_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003CC40
+struct Gitemheader GbombcaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0};
+//D:8003CC60
+struct Gitemheader GflarepistolZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003CC80
+struct Gitemheader GpitongunZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003CCA0
+struct Gitemheader G8003CCA0_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003CCC0
+struct Gitemheader GsilverwppkZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0xB, 0, 0};
+//D:8003CCE0
+struct Gitemheader GgoldwppkZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0xB, 0, 0};
+//D:8003CD00
+struct Gitemheader G8003CD00_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003CD20
+struct Gitemheader GbungeeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003CD40
+struct Gitemheader GdoordecoderZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 60.850407, 0x10, 0, 0};
+//D:8003CD60
+struct Gitemheader GbombdefuserZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 84.370705, 0xC, 0, 0};
+//D:8003CD80
+struct Gitemheader GbugdetectorZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003CDA0
+struct Gitemheader GsafecrackercaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0};
+//D:8003CDC0
+struct Gitemheader GcameraZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 52.775627, 0xB, 0, 0};
+//D:8003CDE0
+struct Gitemheader GlockexploderZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003CE00
+struct Gitemheader GdoorexploderZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003CE20
+struct Gitemheader GkeyanalysercaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0};
+//D:8003CE40
+struct Gitemheader GweaponcaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0};
+//D:8003CE60
+struct Gitemheader GkeycardZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 123.08884, 2, 0, 0};
+//D:8003CE80
+struct Gitemheader GkeyyaleZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 414.25156, 1, 0, 0};
+//D:8003CEA0
+struct Gitemheader GkeyboltZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 759.26581, 1, 0, 0};
+//D:8003CEC0
+struct Gitemheader GbugZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 106.2163, 6, 0, 0};
+//D:8003CEE0
+struct Gitemheader GmicrocameraZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 70.039436, 7, 0, 0};
+//D:8003CF00
+struct Gitemheader GexplosivefloppyZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 60.902443, 5, 0, 0};
+//D:8003CF20
+struct Gitemheader GgoldeneyekeyZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 98.987083, 5, 0, 0};
+//D:8003CF40
+struct Gitemheader GpolarizedglassesZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 53.776386, 2, 0, 0};
+//D:8003CF60
+struct Gitemheader GcreditcardZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003CF80
+struct Gitemheader GdarkglassesZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003CFA0
+struct Gitemheader GwatchidentifierZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0};
+//D:8003CFC0
+struct Gitemheader GwatchcommunicatorZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0};
+//D:8003CFE0
+struct Gitemheader GwatchlaserZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 283.9006, 0x16, 0, 0};
+//D:8003D000
+struct Gitemheader GwatchgeigercounterZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0};
+//D:8003D020
+struct Gitemheader GwatchmagnetrepelZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0};
+//D:8003D040
+struct Gitemheader GwatchmagnetattractZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1D, 3, 384.9288, 9, 0, 0};
+//D:8003D060
+struct Gitemheader GgaskeyringZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 111.59859, 9, 0, 0};
+//D:8003D080
+struct Gitemheader GdatathiefZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 119.78231, 3, 0, 0};
+//D:8003D0A0
+struct Gitemheader GbriefcaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0};
+//D:8003D0C0
+struct Gitemheader GblackboxZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 128.31796, 5, 0, 0};
+//D:8003D0E0
+struct Gitemheader GplastiqueZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 255.35242, 3, 0, 0};
+//D:8003D100
+struct Gitemheader GvideotapeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 122.69632, 9, 0, 0};
+//D:8003D120
+struct Gitemheader GclipboardZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 190.41742, 3, 0, 0};
+//D:8003D140
+struct Gitemheader GstafflistZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 215.17534, 4, 0, 0};
+//D:8003D160
+struct Gitemheader GdossierredZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 183.54231, 4, 0, 0};
+//D:8003D180
+struct Gitemheader GaudiotapeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 97.531075, 9, 0, 0};
+//D:8003D1A0
+struct Gitemheader GdattapeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 79.868584, 4, 0, 0};
+//D:8003D1C0
+struct Gitemheader GplansZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 81.950996, 5, 0, 0};
+//D:8003D1E0
+struct Gitemheader GspyfileZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003D200
+struct Gitemheader GblueprintsZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 125.3834, 4, 0, 0};
+//D:8003D220
+struct Gitemheader GcircuitboardZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 138.90285, 3, 0, 0};
+//D:8003D240
+struct Gitemheader GmapZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 125.3834, 4, 0, 0};
+//D:8003D260
+struct Gitemheader GspooltapeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003D280
+struct Gitemheader GmicrofilmZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003D2A0
+struct Gitemheader GmicrocodeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003D2C0
+struct Gitemheader GlectreZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003D2E0
+struct Gitemheader GmoneyZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003D300
+struct Gitemheader GgoldbarZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+//D:8003D320
+struct Gitemheader GheroinZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0};
+
+//D:8003D340
+u32 dword_D_8003D340[] = {0x20000,         2,   0x30003,   0x20006,
+                          0x60002,   0x90009,   0x2000C,   0xC0002,
+                          0xF000F,   0x20012,  0x120002,  0x150015,
+                          0x20018,  0x180002,  0x1B001B,   0x2001E,
+                          0x1E0002,  0x210021,   0x20024,  0x240000};
+
+//D:8003D390
+struct model_data weapon_gun_controller = {0xD0000, dword_D_8003D340, 0x270000};
+//D:8003D39C                     .word 0
+
 u32 dword_D_8003D3A0[] = {0x4010000,         2,         0,   0x20003,
                           0x30002,   0x60006,   0x20009,   0xC0002,
                           0xC0009,   0x2000F,  0x120002,  0x12000F,
@@ -1930,265 +2045,274 @@ struct c_itementry c_item_entries[] = {
     {&CspicebondZ_struct, "CspicebondZ", 0.94999999, 0.96609998, 0x10000},
 };
 
+
+//D:8003E450
+u32 D_8003E450 = 0;
+u32 D_8003E454 = 0;
+//D:8003E458
+f32 D_8003E458 = 1.0;
+//D:8003E45C
+u32 D_8003E45C = 0;
+//D:8003E460
+u32 D_8003E460 = 0;
+
+//D:8003E464
+f32 D_8003E464[] = {
+    -0.076300003, 0.77999997,-1.2696    , 1.1694109,
+     1.120654  , 1.05959   ,-0.25760001,-0.47319999,
+    -1.5686001 , 1.132916  , 1.0       , 1.080207,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.039999999, 0.74000001,
+    -0.63999999, 1.132795  , 1.167207  , 1.035167,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.033500001, 0.24959999,
+     0.16599999, 1.115045  , 0.94169998, 1.042492,
+    -0.070299998, 0.4919    ,-0.83359998, 1.072812,
+     1.088326  , 0.926121  ,-0.1       , 0.42750001,
+    -0.48249999, 1.033368  , 0.96552098, 0.929905,
+     0.18000001, 0.0       , 0.0       , 1.072214,
+     1.0       , 1.0       , 0.237     , 0.977,
+    -0.44      , 1.178463  , 1.14061   , 1.143465,
+    -0.090300001, 0.23190001, 0.12639999, 0.99080002,
+     1.02      , 0.8466    , 0.0       , 0.1485,
+     0.3793    , 1.1548001 , 0.99190003, 0.95139998,
+    -0.14820001, 0.44100001, 0.1727    , 1.050034,
+     1.0       , 1.05445   ,-0.4941    ,-0.26409999,
+    -0.18000001, 0.90368301, 0.72551203, 1.001314,
+     0.1318    , 0.30100101, 1.572699  , 0.98799503,
+     1.0       , 1.05445   , 0.0       , 0.73019999,
+     0.71740001, 1.1923    , 1.1834    , 1.091924,
+    -0.0942    ,-0.74190003, 0.94260001, 0.98659998,
+     0.91689998, 0.94760001, 0.0535    , 0.61510003,
+     1.076     , 1.05092   , 0.90002   , 1.122508,
+    -0.079999998, 0.1085    ,-0.56629997, 1.192598,
+     1.079134  , 1.199971  ,-0.35640001,-0.28709999,
+    -0.36950001, 1.035176  , 0.838543  , 1.121092,
+     0.065300003,-0.4664    , 0.72000003, 1.050106,
+     1.0       , 1.11042   ,-0.079999998, 0.4885,
+     0.093699999, 1.158567  , 1.2356189 , 1.194388,
+    -0.0942    ,-0.3017    , 0.59450001, 1.0671999,
+     1.0218    , 1.0174    , 0.12      ,-0.1515,
+     0.95370001, 1.124017  , 0.966048  , 1.206121,
+    -0.19310001, 0.2334    ,-0.64850003, 1.1800359,
+     1.0401829 , 1.154537  ,-0.36230001,-0.133,
+    -0.486     , 1.0536211 , 1.0       , 1.1495841,
+     0.0955    , 0.68099999, 0.78799999, 1.0152,
+     1.1926    , 1.1308    ,-0.0823    , 0.36700001,
+     0.37400001, 1.311748  , 1.115972  , 1.166244,
+    -0.0942    , 0.1768    , 0.5248    , 1.0470001,
+     1.0218    , 0.99800003, 0.0       ,-0.0964,
+     0.82999998, 1.1109999 , 0.85180199, 1.180503,
+    -0.1832    , 0.32120001,-1.2381001 , 1.125683,
+     1.091681  , 0.98079097,-0.55049998,-0.60839999,
+    -1.189499  , 1.023566  , 0.8326    , 1.0637,
+     0.076800004, 0.32120001,-0.118101  , 1.059677,
+     1.091681  , 1.000479  , 0.0       , 0.29890001,
+    -0.67299998, 1.1367    , 1.0526    , 0.99227399,
+    -0.0942    , 0.032000002,-0.29699999, 1.0402,
+     0.92860001, 0.88690001, 0.0       , 0.26879999,
+     0.057399999, 1.041842  , 0.81959999, 0.99637401,
+     0.079700001, 0.3511    , 0.0       , 1.0,
+     1.0       , 1.0835    , 0.14      , 0.1965,
+    -0.058398999, 1.012674  , 0.96799999, 1.098917,
+     0.1629    , 0.78799999, 1.0746    , 0.92205501,
+     1.0688    , 1.055297  ,-0.074500002, 0.8477,
+     0.71810001, 1.154819  , 1.177258  , 1.031684,
+    -0.0145    , 0.047699999, 0.89810002, 1.0404,
+     1.0       , 0.94309998, 0.32550001, 0.36770001,
+     0.93809998, 1.044217  , 0.97841102, 1.127771,
+    -0.1832    ,-0.058800001,-1.5781    , 1.095929,
+     0.96300697, 0.92348999,-0.4411    ,-0.64840001,
+    -1.839099  , 1.059271  , 0.8326    , 0.96849501,
+     0.19679999,-0.3188    ,-0.43810099, 1.070675,
+     1.053777  , 0.88628101, 0.0       , 0.29890001,
+    -0.83139998, 1.1154    , 1.0328    , 1.0036,
+    -0.0942    ,-0.1275    ,-0.52109998, 1.0402,
+     0.92180002, 0.8617    , 0.079999998,-0.2383,
+    -0.22940101, 1.063022  , 0.80879998, 0.90789998,
+     0.1165    , 0.58780003,-1.3096    , 1.136481,
+     1.0409    , 1.065612  ,-0.070600003, 0.0152,
+    -1.2391    , 1.002256  , 0.76669598, 1.029659,
+     0.2218    , 0.0       , 0.0       , 1.0852,
+     1.0       , 1.0       , 0.063000001, 0.7561,
+    -0.45269999, 1.2085    , 1.1014    , 1.0664001,
+     0.065499999,-0.1097    ,-0.3497    , 1.0404,
+     0.90915602, 0.94940001, 0.0       , 0.336,
+     0.082999997, 1.150862  , 0.94169998, 1.0,
+    -0.054200001, 0.27079999,-0.082099997, 1.0367,
+     1.0367    , 1.0367    , 0.34119999,-0.55879998,
+    -0.3044    , 1.113436  , 0.96799999, 1.076647,
+     0.0495    , 0.63980001, 1.2178    , 0.95099998,
+     1.1126    , 1.0413001 , 0.0       , 0.53640002,
+     0.75220001, 1.1976    , 1.1463    , 1.1374,
+    -0.0145    ,-0.64749998, 1.0477999 , 0.95289999,
+     0.92180002, 0.90579998, 0.16      , 0.61830002,
+     1.128299  , 1.083438  , 0.91670603, 1.0666929,
+    -0.2586    , 0.93580002,-0.2463    , 1.1057,
+     1.0116    , 1.0927    ,-0.1788    ,-0.31310001,
+    -0.55299997, 1.1071    , 1.0       , 1.071945,
+     0.0955    , 0.16230001, 0.50150001, 1.0506001,
+     1.0       , 1.1032    , 0.081200004, 0.2269,
+     0.50700003, 1.1071    , 1.178908  , 1.189239,
+    -0.0145    ,-0.68440002, 0.54070002, 1.0470001,
+     0.92699999, 1.027078  , 0.0       ,-0.0164,
+     0.66399997, 1.2108999 , 1.0       , 1.0729001,
+    -0.1487    , 0.88779998,-0.41060001, 1.110018,
+     0.98460901, 1.110518  , 0.0012000001,-0.61879998,
+    -0.34439901, 1.099178  , 0.916071  , 1.054984,
+     0.0429    , 0.2149    , 0.4298    , 1.0455,
+     1.0688    , 1.1514    , 0.0012000001,-0.0188,
+     0.65560102, 1.1957231 , 1.079964  , 1.200996,
+    -0.0145    ,-0.48769999, 0.44909999, 1.003074,
+     1.0       , 0.98259997, 0.0       , 0.396,
+     0.8362    , 1.1622    , 0.91339999, 1.066853,
+    -0.29030001, 1.0714999 ,-0.3504    , 1.125893,
+     1.127159  , 1.177758  , 0.0       ,-0.079999998,
+    -0.373     , 1.099718  , 1.0       , 1.0947551,
+     0.0       , 0.78799999, 0.64469999, 1.0,
+     1.0       , 1.0963    ,-0.074699998, 1.5436,
+     0.1979    , 1.1497999 , 1.1835999 , 1.0791,
+    -0.090300001,-0.1085    , 0.68959999, 1.024099,
+     1.0       , 0.98965299, 0.0       , 0.63230002,
+     0.7913    , 1.1081001 , 0.93440002, 1.0779999,
+     0.12      , 0.40000001, 0.039999999, 1.022947,
+     0.92226201, 1.004824  , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0429    , 0.75889999, 1.2895    , 0.94440001,
+     1.0       , 1.0551    , 0.0       , 0.546,
+     0.79729998, 1.1483001 , 1.1267999 , 1.1388,
+     0.065099999,-0.54320002, 1.1224999 , 0.93949997,
+     0.92699999, 0.93040001, 0.1265    , 0.36359999,
+     1.079     , 1.1109999 , 1.0       , 1.1166,
+    -0.278     , 1.272301  ,-0.55269998, 1.24701,
+     1.0737129 , 1.118222  ,-0.23639999, 0.58200002,
+    -0.30950001, 1.225595  , 1.077682  , 1.066005,
+    -0.0845    , 0.68099999, 0.64469999, 1.1204081,
+     1.1927    , 1.1308    ,-0.1364    , 1.021999,
+     0.5905    , 1.153587  , 1.226897  , 1.2252491,
+    -0.2534    , 0.57560003, 0.3856    , 1.0405,
+     1.0405    , 1.0585999 ,-0.1265    , 0.6081,
+     0.71200001, 1.222     , 1.0       , 1.111666,
+    -0.4637    , 1.3971    ,-0.49270001, 1.1752,
+     1.0116    , 1.1762    ,-0.2976    ,-0.1049,
+    -0.49649999, 1.2345999 , 0.86470801, 1.077117,
+    -0.1151    , 0.7353    , 0.57309997, 1.0759,
+     1.0       , 1.1308    ,-0.189     , 0.99910003,
+     0.2396    , 1.2269    , 1.2039    , 1.1698999,
+    -0.2534    ,-0.0647    , 0.30070001, 1.0470001,
+     0.92699999, 1.0124    ,-0.1265    , 0.61260003,
+     0.76700002, 1.2108999 , 1.0       , 1.096216,
+    -0.51429999, 1.0894001 ,-0.082099997, 1.1003,
+     1.0316    , 1.0278    ,-0.53280002,-0.13060001,
+    -0.25999999, 1.080464  , 1.0       , 1.019003,
+    -0.1969    , 0.45930001, 0.64469999, 0.96219999,
+     1.0       , 1.0895    ,-0.32690001, 1.1438,
+     0.46720001, 1.1339    , 1.1339    , 1.0436,
+    -0.29879999, 0.0       , 0.41429999, 0.96219999,
+     1.0       , 0.95630002,-0.17640001, 0.39500001,
+     0.86699998, 1.0972    , 0.94625998, 1.0529979,
+     0.02      , 0.56910002,-0.25299999, 1.1205291,
+     0.999475  , 1.072994  ,-0.0823    ,-0.3784,
+    -0.38249999, 1.077682  , 1.0       , 1.066239,
+     0.02      ,-0.1909    , 0.90700001, 1.049657,
+     0.999475  , 1.072994  , 0.0       , 0.60549998,
+     0.47510001, 1.1236    , 1.1236    , 1.1236,
+    -0.0942    , 0.077600002, 0.5248    , 1.0403,
+     0.95950001, 0.98580003, 0.0       , 0.20550001,
+     0.8951    , 1.1519721 , 0.92378497, 1.0316401,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0836    ,-0.66259998, 0.14210001, 0.95139998,
+     1.090098  , 0.92760003, 0.1141    ,-1.1931,
+    -0.25400001, 0.98102301, 0.83667898, 0.88798702,
+     0.1481    ,-0.15360001, 1.1461999 , 0.91399997,
+     1.0       , 0.94489998, 0.0       ,-0.53250003,
+     0.3563    , 1.0727    , 1.0526    , 1.0228,
+    -0.0942    ,-0.6857    , 1.1224999 , 0.95959997,
+     0.92860001, 0.88690001, 0.079999998,-0.7396,
+     0.963     , 1.1032    , 0.875673  , 0.97771698,
+    -0.29030001, 1.0714999 ,-0.3504    , 1.125893,
+     1.127159  , 1.177758  , 0.0       ,-0.079999998,
+    -0.373     , 1.099718  , 1.0       , 1.0947551,
+     0.0       , 0.78799999, 0.64469999, 1.0,
+     1.0       , 1.0963    ,-0.074699998, 1.5436,
+     0.1979    , 1.1497999 , 1.1835999 , 1.0791,
+    -0.090300001,-0.1085    , 0.68959999, 1.024099,
+     1.0       , 0.98965299, 0.0       , 0.63230002,
+     0.7913    , 1.1081001 , 0.93440002, 1.0779999,
+    -0.13699999, 0.286001  ,-0.32229999, 1.142894,
+     0.89638299, 1.15      ,-0.16680001,-0.1365,
+    -0.43650001, 1.1452    , 1.0       , 1.061306,
+     0.1376    , 0.0       , 0.71600002, 1.05312,
+     1.0       , 1.0687751 ,-0.074699998, 0.9393,
+     0.2658    , 1.1815    , 1.1216    , 1.0822999,
+    -0.103     ,-0.2269    , 0.5722    , 0.99080002,
+     1.02      , 1.0034    , 0.0       , 0.1373,
+     0.79430002, 1.1813999 , 0.86186302, 1.0998,
+     0.12      , 0.40000001, 0.039999999, 1.022947,
+     0.92226201, 1.004824  , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0429    , 0.75889999, 1.2895    , 0.94440001,
+     1.0       , 1.0551    , 0.0       , 0.546,
+     0.79729998, 1.1483001 , 1.1267999 , 1.1388,
+     0.065099999,-0.54320002, 1.1224999 , 0.93949997,
+     0.92699999, 0.93040001, 0.1265    , 0.36359999,
+     1.079     , 1.1109999 , 1.0       , 1.1166,
+     0.0836    ,-0.66259998, 0.14210001, 0.95139998,
+     1.090098  , 0.92760003, 0.1141    ,-1.1931,
+    -0.25400001, 0.98102301, 0.83667898, 0.88798702,
+     0.1481    ,-0.15360001, 1.1461999 , 0.91399997,
+     1.0       , 0.94489998, 0.0       ,-0.53250003,
+     0.3563    , 1.0727    , 1.0526    , 1.0228,
+    -0.0942    ,-0.6857    , 1.1224999 , 0.95959997,
+     0.92860001, 0.88690001, 0.079999998,-0.7396,
+     0.963     , 1.1032    , 0.875673  , 0.97771698,
+    -0.29030001, 1.0714999 ,-0.3504    , 1.125893,
+     1.127159  , 1.177758  , 0.0       ,-0.079999998,
+    -0.373     , 1.099718  , 1.0       , 1.0947551,
+     0.0       , 0.78799999, 0.64469999, 1.0,
+     1.0       , 1.0963    ,-0.074699998, 1.5436,
+     0.1979    , 1.1497999 , 1.1835999 , 1.0791,
+    -0.090300001,-0.1085    , 0.68959999, 1.024099,
+     1.0       , 0.98965299, 0.0       , 0.63230002,
+     0.7913    , 1.1081001 , 0.93440002, 1.0779999,
+     0.0836    ,-0.66259998, 0.14210001, 0.95139998,
+     1.090098  , 0.92760003, 0.1141    ,-1.1931,
+    -0.25400001, 0.98102301, 0.83667898, 0.88798702,
+     0.1481    ,-0.15360001, 1.1461999 , 0.91399997,
+     1.0       , 0.94489998, 0.0       ,-0.53250003,
+     0.3563    , 1.0727    , 1.0526    , 1.0228,
+    -0.0942    ,-0.6857    , 1.1224999 , 0.95959997,
+     0.92860001, 0.88690001, 0.079999998,-0.7396,
+     0.963     , 1.1032    , 0.875673  , 0.97771698,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0
+};
 /*
-D:8003E450                     .word 0, 0
-D:8003E458                     .float 1.0
-D:8003E45C                     .word 0
-D:8003E460                     .word 0
-D:8003E464     flt_D_8003E464: .float -0.076300003, 0.77999997,-1.2696    , 1.1694109 
-D:8003E464                                              # DATA XREF: sub_CODE_7F020EF0+738o
-D:8003E464                     .float  1.120654  , 1.05959   ,-0.25760001,-0.47319999
-D:8003E464                     .float -1.5686001 , 1.132916  , 1.0       , 1.080207
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.039999999, 0.74000001
-D:8003E464                     .float -0.63999999, 1.132795  , 1.167207  , 1.035167
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.033500001, 0.24959999
-D:8003E464                     .float  0.16599999, 1.115045  , 0.94169998, 1.042492
-D:8003E464                     .float -0.070299998, 0.4919    ,-0.83359998, 1.072812
-D:8003E464                     .float  1.088326  , 0.926121  ,-0.1       , 0.42750001
-D:8003E464                     .float -0.48249999, 1.033368  , 0.96552098, 0.929905
-D:8003E464                     .float  0.18000001, 0.0       , 0.0       , 1.072214
-D:8003E464                     .float  1.0       , 1.0       , 0.237     , 0.977
-D:8003E464                     .float -0.44      , 1.178463  , 1.14061   , 1.143465
-D:8003E464                     .float -0.090300001, 0.23190001, 0.12639999, 0.99080002
-D:8003E464                     .float  1.02      , 0.8466    , 0.0       , 0.1485
-D:8003E464                     .float  0.3793    , 1.1548001 , 0.99190003, 0.95139998
-D:8003E464                     .float -0.14820001, 0.44100001, 0.1727    , 1.050034
-D:8003E464                     .float  1.0       , 1.05445   ,-0.4941    ,-0.26409999
-D:8003E464                     .float -0.18000001, 0.90368301, 0.72551203, 1.001314
-D:8003E464                     .float  0.1318    , 0.30100101, 1.572699  , 0.98799503
-D:8003E464                     .float  1.0       , 1.05445   , 0.0       , 0.73019999
-D:8003E464                     .float  0.71740001, 1.1923    , 1.1834    , 1.091924
-D:8003E464                     .float -0.0942    ,-0.74190003, 0.94260001, 0.98659998
-D:8003E464                     .float  0.91689998, 0.94760001, 0.0535    , 0.61510003
-D:8003E464                     .float  1.076     , 1.05092   , 0.90002   , 1.122508
-D:8003E464                     .float -0.079999998, 0.1085    ,-0.56629997, 1.192598
-D:8003E464                     .float  1.079134  , 1.199971  ,-0.35640001,-0.28709999
-D:8003E464                     .float -0.36950001, 1.035176  , 0.838543  , 1.121092
-D:8003E464                     .float  0.065300003,-0.4664    , 0.72000003, 1.050106
-D:8003E464                     .float  1.0       , 1.11042   ,-0.079999998, 0.4885
-D:8003E464                     .float  0.093699999, 1.158567  , 1.2356189 , 1.194388
-D:8003E464                     .float -0.0942    ,-0.3017    , 0.59450001, 1.0671999
-D:8003E464                     .float  1.0218    , 1.0174    , 0.12      ,-0.1515
-D:8003E464                     .float  0.95370001, 1.124017  , 0.966048  , 1.206121
-D:8003E464                     .float -0.19310001, 0.2334    ,-0.64850003, 1.1800359
-D:8003E464                     .float  1.0401829 , 1.154537  ,-0.36230001,-0.133
-D:8003E464                     .float -0.486     , 1.0536211 , 1.0       , 1.1495841
-D:8003E464                     .float  0.0955    , 0.68099999, 0.78799999, 1.0152
-D:8003E464                     .float  1.1926    , 1.1308    ,-0.0823    , 0.36700001
-D:8003E464                     .float  0.37400001, 1.311748  , 1.115972  , 1.166244
-D:8003E464                     .float -0.0942    , 0.1768    , 0.5248    , 1.0470001
-D:8003E464                     .float  1.0218    , 0.99800003, 0.0       ,-0.0964
-D:8003E464                     .float  0.82999998, 1.1109999 , 0.85180199, 1.180503
-D:8003E464                     .float -0.1832    , 0.32120001,-1.2381001 , 1.125683
-D:8003E464                     .float  1.091681  , 0.98079097,-0.55049998,-0.60839999
-D:8003E464                     .float -1.189499  , 1.023566  , 0.8326    , 1.0637
-D:8003E464                     .float  0.076800004, 0.32120001,-0.118101  , 1.059677
-D:8003E464                     .float  1.091681  , 1.000479  , 0.0       , 0.29890001
-D:8003E464                     .float -0.67299998, 1.1367    , 1.0526    , 0.99227399
-D:8003E464                     .float -0.0942    , 0.032000002,-0.29699999, 1.0402
-D:8003E464                     .float  0.92860001, 0.88690001, 0.0       , 0.26879999
-D:8003E464                     .float  0.057399999, 1.041842  , 0.81959999, 0.99637401
-D:8003E464                     .float  0.079700001, 0.3511    , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0835    , 0.14      , 0.1965
-D:8003E464                     .float -0.058398999, 1.012674  , 0.96799999, 1.098917
-D:8003E464                     .float  0.1629    , 0.78799999, 1.0746    , 0.92205501
-D:8003E464                     .float  1.0688    , 1.055297  ,-0.074500002, 0.8477
-D:8003E464                     .float  0.71810001, 1.154819  , 1.177258  , 1.031684
-D:8003E464                     .float -0.0145    , 0.047699999, 0.89810002, 1.0404
-D:8003E464                     .float  1.0       , 0.94309998, 0.32550001, 0.36770001
-D:8003E464                     .float  0.93809998, 1.044217  , 0.97841102, 1.127771
-D:8003E464                     .float -0.1832    ,-0.058800001,-1.5781    , 1.095929
-D:8003E464                     .float  0.96300697, 0.92348999,-0.4411    ,-0.64840001
-D:8003E464                     .float -1.839099  , 1.059271  , 0.8326    , 0.96849501
-D:8003E464                     .float  0.19679999,-0.3188    ,-0.43810099, 1.070675
-D:8003E464                     .float  1.053777  , 0.88628101, 0.0       , 0.29890001
-D:8003E464                     .float -0.83139998, 1.1154    , 1.0328    , 1.0036
-D:8003E464                     .float -0.0942    ,-0.1275    ,-0.52109998, 1.0402
-D:8003E464                     .float  0.92180002, 0.8617    , 0.079999998,-0.2383
-D:8003E464                     .float -0.22940101, 1.063022  , 0.80879998, 0.90789998
-D:8003E464                     .float  0.1165    , 0.58780003,-1.3096    , 1.136481
-D:8003E464                     .float  1.0409    , 1.065612  ,-0.070600003, 0.0152
-D:8003E464                     .float -1.2391    , 1.002256  , 0.76669598, 1.029659
-D:8003E464                     .float  0.2218    , 0.0       , 0.0       , 1.0852
-D:8003E464                     .float  1.0       , 1.0       , 0.063000001, 0.7561
-D:8003E464                     .float -0.45269999, 1.2085    , 1.1014    , 1.0664001
-D:8003E464                     .float  0.065499999,-0.1097    ,-0.3497    , 1.0404
-D:8003E464                     .float  0.90915602, 0.94940001, 0.0       , 0.336
-D:8003E464                     .float  0.082999997, 1.150862  , 0.94169998, 1.0
-D:8003E464                     .float -0.054200001, 0.27079999,-0.082099997, 1.0367
-D:8003E464                     .float  1.0367    , 1.0367    , 0.34119999,-0.55879998
-D:8003E464                     .float -0.3044    , 1.113436  , 0.96799999, 1.076647
-D:8003E464                     .float  0.0495    , 0.63980001, 1.2178    , 0.95099998
-D:8003E464                     .float  1.1126    , 1.0413001 , 0.0       , 0.53640002
-D:8003E464                     .float  0.75220001, 1.1976    , 1.1463    , 1.1374
-D:8003E464                     .float -0.0145    ,-0.64749998, 1.0477999 , 0.95289999
-D:8003E464                     .float  0.92180002, 0.90579998, 0.16      , 0.61830002
-D:8003E464                     .float  1.128299  , 1.083438  , 0.91670603, 1.0666929
-D:8003E464                     .float -0.2586    , 0.93580002,-0.2463    , 1.1057
-D:8003E464                     .float  1.0116    , 1.0927    ,-0.1788    ,-0.31310001
-D:8003E464                     .float -0.55299997, 1.1071    , 1.0       , 1.071945
-D:8003E464                     .float  0.0955    , 0.16230001, 0.50150001, 1.0506001
-D:8003E464                     .float  1.0       , 1.1032    , 0.081200004, 0.2269
-D:8003E464                     .float  0.50700003, 1.1071    , 1.178908  , 1.189239
-D:8003E464                     .float -0.0145    ,-0.68440002, 0.54070002, 1.0470001
-D:8003E464                     .float  0.92699999, 1.027078  , 0.0       ,-0.0164
-D:8003E464                     .float  0.66399997, 1.2108999 , 1.0       , 1.0729001
-D:8003E464                     .float -0.1487    , 0.88779998,-0.41060001, 1.110018
-D:8003E464                     .float  0.98460901, 1.110518  , 0.0012000001,-0.61879998
-D:8003E464                     .float -0.34439901, 1.099178  , 0.916071  , 1.054984
-D:8003E464                     .float  0.0429    , 0.2149    , 0.4298    , 1.0455
-D:8003E464                     .float  1.0688    , 1.1514    , 0.0012000001,-0.0188
-D:8003E464                     .float  0.65560102, 1.1957231 , 1.079964  , 1.200996
-D:8003E464                     .float -0.0145    ,-0.48769999, 0.44909999, 1.003074
-D:8003E464                     .float  1.0       , 0.98259997, 0.0       , 0.396
-D:8003E464                     .float  0.8362    , 1.1622    , 0.91339999, 1.066853
-D:8003E464                     .float -0.29030001, 1.0714999 ,-0.3504    , 1.125893
-D:8003E464                     .float  1.127159  , 1.177758  , 0.0       ,-0.079999998
-D:8003E464                     .float -0.373     , 1.099718  , 1.0       , 1.0947551
-D:8003E464                     .float  0.0       , 0.78799999, 0.64469999, 1.0
-D:8003E464                     .float  1.0       , 1.0963    ,-0.074699998, 1.5436
-D:8003E464                     .float  0.1979    , 1.1497999 , 1.1835999 , 1.0791
-D:8003E464                     .float -0.090300001,-0.1085    , 0.68959999, 1.024099
-D:8003E464                     .float  1.0       , 0.98965299, 0.0       , 0.63230002
-D:8003E464                     .float  0.7913    , 1.1081001 , 0.93440002, 1.0779999
-D:8003E464                     .float  0.12      , 0.40000001, 0.039999999, 1.022947
-D:8003E464                     .float  0.92226201, 1.004824  , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0429    , 0.75889999, 1.2895    , 0.94440001
-D:8003E464                     .float  1.0       , 1.0551    , 0.0       , 0.546
-D:8003E464                     .float  0.79729998, 1.1483001 , 1.1267999 , 1.1388
-D:8003E464                     .float  0.065099999,-0.54320002, 1.1224999 , 0.93949997
-D:8003E464                     .float  0.92699999, 0.93040001, 0.1265    , 0.36359999
-D:8003E464                     .float  1.079     , 1.1109999 , 1.0       , 1.1166
-D:8003E464                     .float -0.278     , 1.272301  ,-0.55269998, 1.24701
-D:8003E464                     .float  1.0737129 , 1.118222  ,-0.23639999, 0.58200002
-D:8003E464                     .float -0.30950001, 1.225595  , 1.077682  , 1.066005
-D:8003E464                     .float -0.0845    , 0.68099999, 0.64469999, 1.1204081
-D:8003E464                     .float  1.1927    , 1.1308    ,-0.1364    , 1.021999
-D:8003E464                     .float  0.5905    , 1.153587  , 1.226897  , 1.2252491
-D:8003E464                     .float -0.2534    , 0.57560003, 0.3856    , 1.0405
-D:8003E464                     .float  1.0405    , 1.0585999 ,-0.1265    , 0.6081
-D:8003E464                     .float  0.71200001, 1.222     , 1.0       , 1.111666
-D:8003E464                     .float -0.4637    , 1.3971    ,-0.49270001, 1.1752
-D:8003E464                     .float  1.0116    , 1.1762    ,-0.2976    ,-0.1049
-D:8003E464                     .float -0.49649999, 1.2345999 , 0.86470801, 1.077117
-D:8003E464                     .float -0.1151    , 0.7353    , 0.57309997, 1.0759
-D:8003E464                     .float  1.0       , 1.1308    ,-0.189     , 0.99910003
-D:8003E464                     .float  0.2396    , 1.2269    , 1.2039    , 1.1698999
-D:8003E464                     .float -0.2534    ,-0.0647    , 0.30070001, 1.0470001
-D:8003E464                     .float  0.92699999, 1.0124    ,-0.1265    , 0.61260003
-D:8003E464                     .float  0.76700002, 1.2108999 , 1.0       , 1.096216
-D:8003E464                     .float -0.51429999, 1.0894001 ,-0.082099997, 1.1003
-D:8003E464                     .float  1.0316    , 1.0278    ,-0.53280002,-0.13060001
-D:8003E464                     .float -0.25999999, 1.080464  , 1.0       , 1.019003
-D:8003E464                     .float -0.1969    , 0.45930001, 0.64469999, 0.96219999
-D:8003E464                     .float  1.0       , 1.0895    ,-0.32690001, 1.1438
-D:8003E464                     .float  0.46720001, 1.1339    , 1.1339    , 1.0436
-D:8003E464                     .float -0.29879999, 0.0       , 0.41429999, 0.96219999
-D:8003E464                     .float  1.0       , 0.95630002,-0.17640001, 0.39500001
-D:8003E464                     .float  0.86699998, 1.0972    , 0.94625998, 1.0529979
-D:8003E464                     .float  0.02      , 0.56910002,-0.25299999, 1.1205291
-D:8003E464                     .float  0.999475  , 1.072994  ,-0.0823    ,-0.3784
-D:8003E464                     .float -0.38249999, 1.077682  , 1.0       , 1.066239
-D:8003E464                     .float  0.02      ,-0.1909    , 0.90700001, 1.049657
-D:8003E464                     .float  0.999475  , 1.072994  , 0.0       , 0.60549998
-D:8003E464                     .float  0.47510001, 1.1236    , 1.1236    , 1.1236
-D:8003E464                     .float -0.0942    , 0.077600002, 0.5248    , 1.0403
-D:8003E464                     .float  0.95950001, 0.98580003, 0.0       , 0.20550001
-D:8003E464                     .float  0.8951    , 1.1519721 , 0.92378497, 1.0316401
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0836    ,-0.66259998, 0.14210001, 0.95139998
-D:8003E464                     .float  1.090098  , 0.92760003, 0.1141    ,-1.1931
-D:8003E464                     .float -0.25400001, 0.98102301, 0.83667898, 0.88798702
-D:8003E464                     .float  0.1481    ,-0.15360001, 1.1461999 , 0.91399997
-D:8003E464                     .float  1.0       , 0.94489998, 0.0       ,-0.53250003
-D:8003E464                     .float  0.3563    , 1.0727    , 1.0526    , 1.0228
-D:8003E464                     .float -0.0942    ,-0.6857    , 1.1224999 , 0.95959997
-D:8003E464                     .float  0.92860001, 0.88690001, 0.079999998,-0.7396
-D:8003E464                     .float  0.963     , 1.1032    , 0.875673  , 0.97771698
-D:8003E464                     .float -0.29030001, 1.0714999 ,-0.3504    , 1.125893
-D:8003E464                     .float  1.127159  , 1.177758  , 0.0       ,-0.079999998
-D:8003E464                     .float -0.373     , 1.099718  , 1.0       , 1.0947551
-D:8003E464                     .float  0.0       , 0.78799999, 0.64469999, 1.0
-D:8003E464                     .float  1.0       , 1.0963    ,-0.074699998, 1.5436
-D:8003E464                     .float  0.1979    , 1.1497999 , 1.1835999 , 1.0791
-D:8003E464                     .float -0.090300001,-0.1085    , 0.68959999, 1.024099
-D:8003E464                     .float  1.0       , 0.98965299, 0.0       , 0.63230002
-D:8003E464                     .float  0.7913    , 1.1081001 , 0.93440002, 1.0779999
-D:8003E464                     .float -0.13699999, 0.286001  ,-0.32229999, 1.142894
-D:8003E464                     .float  0.89638299, 1.15      ,-0.16680001,-0.1365
-D:8003E464                     .float -0.43650001, 1.1452    , 1.0       , 1.061306
-D:8003E464                     .float  0.1376    , 0.0       , 0.71600002, 1.05312
-D:8003E464                     .float  1.0       , 1.0687751 ,-0.074699998, 0.9393
-D:8003E464                     .float  0.2658    , 1.1815    , 1.1216    , 1.0822999
-D:8003E464                     .float -0.103     ,-0.2269    , 0.5722    , 0.99080002
-D:8003E464                     .float  1.02      , 1.0034    , 0.0       , 0.1373
-D:8003E464                     .float  0.79430002, 1.1813999 , 0.86186302, 1.0998
-D:8003E464                     .float  0.12      , 0.40000001, 0.039999999, 1.022947
-D:8003E464                     .float  0.92226201, 1.004824  , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0429    , 0.75889999, 1.2895    , 0.94440001
-D:8003E464                     .float  1.0       , 1.0551    , 0.0       , 0.546
-D:8003E464                     .float  0.79729998, 1.1483001 , 1.1267999 , 1.1388
-D:8003E464                     .float  0.065099999,-0.54320002, 1.1224999 , 0.93949997
-D:8003E464                     .float  0.92699999, 0.93040001, 0.1265    , 0.36359999
-D:8003E464                     .float  1.079     , 1.1109999 , 1.0       , 1.1166
-D:8003E464                     .float  0.0836    ,-0.66259998, 0.14210001, 0.95139998
-D:8003E464                     .float  1.090098  , 0.92760003, 0.1141    ,-1.1931
-D:8003E464                     .float -0.25400001, 0.98102301, 0.83667898, 0.88798702
-D:8003E464                     .float  0.1481    ,-0.15360001, 1.1461999 , 0.91399997
-D:8003E464                     .float  1.0       , 0.94489998, 0.0       ,-0.53250003
-D:8003E464                     .float  0.3563    , 1.0727    , 1.0526    , 1.0228
-D:8003E464                     .float -0.0942    ,-0.6857    , 1.1224999 , 0.95959997
-D:8003E464                     .float  0.92860001, 0.88690001, 0.079999998,-0.7396
-D:8003E464                     .float  0.963     , 1.1032    , 0.875673  , 0.97771698
-D:8003E464                     .float -0.29030001, 1.0714999 ,-0.3504    , 1.125893
-D:8003E464                     .float  1.127159  , 1.177758  , 0.0       ,-0.079999998
-D:8003E464                     .float -0.373     , 1.099718  , 1.0       , 1.0947551
-D:8003E464                     .float  0.0       , 0.78799999, 0.64469999, 1.0
-D:8003E464                     .float  1.0       , 1.0963    ,-0.074699998, 1.5436
-D:8003E464                     .float  0.1979    , 1.1497999 , 1.1835999 , 1.0791
-D:8003E464                     .float -0.090300001,-0.1085    , 0.68959999, 1.024099
-D:8003E464                     .float  1.0       , 0.98965299, 0.0       , 0.63230002
-D:8003E464                     .float  0.7913    , 1.1081001 , 0.93440002, 1.0779999
-D:8003E464                     .float  0.0836    ,-0.66259998, 0.14210001, 0.95139998
-D:8003E464                     .float  1.090098  , 0.92760003, 0.1141    ,-1.1931
-D:8003E464                     .float -0.25400001, 0.98102301, 0.83667898, 0.88798702
-D:8003E464                     .float  0.1481    ,-0.15360001, 1.1461999 , 0.91399997
-D:8003E464                     .float  1.0       , 0.94489998, 0.0       ,-0.53250003
-D:8003E464                     .float  0.3563    , 1.0727    , 1.0526    , 1.0228
-D:8003E464                     .float -0.0942    ,-0.6857    , 1.1224999 , 0.95959997
-D:8003E464                     .float  0.92860001, 0.88690001, 0.079999998,-0.7396
-D:8003E464                     .float  0.963     , 1.1032    , 0.875673  , 0.97771698
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0
 D:8003F430     dword_D_8003F430:.word 0x320028          # DATA XREF: D:stru_D_8003F80Co
 D:8003F434                     .word 0x2300120
 D:8003F438                     .word 0x4100032
@@ -2463,8 +2587,10 @@ D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlo
 D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
 D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
 D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800573D8      # f32 finalamount
-D:800573D8     finalamount:    .float 0.050000001       # DATA XREF: sub_CODE_7F091B64+5F0r
+*/
+//D:800573D8
+const f32 finalamount = 0.050000001;
+/*
 D:800573DC     jpt_700C6400:   .word cheat_button_default, cheat_button_invincibility, cheat_button_all_guns
 D:800573DC                                              # DATA XREF: sub_CODE_7F092438+8Cr
 D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_line_mode  # jump table for switch statement
@@ -2485,8 +2611,10 @@ D:800573DC                     .word cheat_button_default, cheat_button_default,
 D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
 D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
 D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:80057504     flt_D_80057504: .float 0.80000001        # DATA XREF: sub_CODE_7F0927F4+38r
 */
+//D:80057504
+const f32 D_80057504 = 0.80000001;
+
 
 
 
@@ -3291,9 +3419,9 @@ cheats_cheat_goldpp7:
 cheats_cheat_invisibility_mp:
 /* 0C6C74 7F092144 3C014396 */  li    $at, 0x43960000 # 300.000000
 /* 0C6C78 7F092148 44816000 */  mtc1  $at, $f12
-/* 0C6C7C 7F09214C 3C018005 */  lui   $at, %hi(D_800573D8) # $at, 0x8005
+/* 0C6C7C 7F09214C 3C018005 */  lui   $at, %hi(finalamount) # $at, 0x8005
 /* 0C6C80 7F092150 0FC20284 */  jal   set_curplayer_fade
-/* 0C6C84 7F092154 C42E73D8 */   lwc1  $f14, %lo(D_800573D8)($at)
+/* 0C6C84 7F092154 C42E73D8 */   lwc1  $f14, %lo(finalamount)($at)
 /* 0C6C88 7F092158 100000B4 */  b     .L7F09242C
 /* 0C6C8C 7F09215C 8FBF0014 */   lw    $ra, 0x14($sp)
 cheats_cheat_fast:

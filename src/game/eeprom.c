@@ -1,131 +1,68 @@
 #include "ultra64.h"
+#include "game/eeprom.h"
 
-/*
-struct save_data
-{
-  int chksum1;
-  int chksum2;
-  char completion_bitflags;
-  char flag_007;
-  char music_vol;
-  char sfx_vol;
-  char controller_config;
-  char options;
-  char unlocked_cheats_1;
-  char unlocked_cheats_2;
-  char unlocked_cheats_3;
-  char field_11;
-  unsigned agent_dam_time :10;
-  unsigned agent_facility_time :10;
-  unsigned agent_runway_time :10;
-  unsigned agent_surface1_time :10;
-  unsigned agent_bunker1_time :10;
-  unsigned agent_silo_time :10;
-  unsigned agent_frigate_time :10;
-  unsigned agent_surface2_time :10;
-  unsigned agent_bunker2_time :10;
-  unsigned agent_statue_time :10;
-  unsigned agent_archives_time :10;
-  unsigned agent_streets_time :10;
-  unsigned agent_depot_time :10;
-  unsigned agent_train_time :10;
-  unsigned agent_jungle_time :10;
-  unsigned agent_control_time :10;
-  unsigned agent_caverns_time :10;
-  unsigned agent_cradle_time :10;
-  unsigned agent_aztec_time :10;
-  unsigned agent_egyptian_time :10;
+// bss
+//CODE.bss:80069920
+struct save_data save1;
+//CODE.bss:80069980
+struct save_data save2;
+//CODE.bss:800699E0
+struct save_data save3;
+//CODE.bss:80069A40
+struct save_data save4;
+//CODE.bss:80069AA0
+struct save_data save5;
+//CODE.bss:80069B00
+struct save_data save6;
 
-  unsigned secretagent_dam_time :10;
-  unsigned secretagent_facility_time :10;
-  unsigned secretagent_runway_time :10;
-  unsigned secretagent_surface1_time :10;
-  unsigned secretagent_bunker1_time :10;
-  unsigned secretagent_silo_time :10;
-  unsigned secretagent_frigate_time :10;
-  unsigned secretagent_surface2_time :10;
-  unsigned secretagent_bunker2_time :10;
-  unsigned secretagent_statue_time :10;
-  unsigned secretagent_archives_time :10;
-  unsigned secretagent_streets_time :10;
-  unsigned secretagent_depot_time :10;
-  unsigned secretagent_train_time :10;
-  unsigned secretagent_jungle_time :10;
-  unsigned secretagent_control_time :10;
-  unsigned secretagent_caverns_time :10;
-  unsigned secretagent_cradle_time :10;
-  unsigned secretagent_aztec_time :10;
-  unsigned secretagent_egyptian_time :10;
+//CODE.bss:80069B60
+u32 dword_CODE_bss_80069B60;
 
-  unsigned agent00_dam_time :10;
-  unsigned agent00_facility_time :10;
-  unsigned agent00_runway_time :10;
-  unsigned agent00_surface1_time :10;
-  unsigned agent00_bunker1_time :10;
-  unsigned agent00_silo_time :10;
-  unsigned agent00_frigate_time :10;
-  unsigned agent00_surface2_time :10;
-  unsigned agent00_bunker2_time :10;
-  unsigned agent00_statue_time :10;
-  unsigned agent00_archives_time :10;
-  unsigned agent00_streets_time :10;
-  unsigned agent00_depot_time :10;
-  unsigned agent00_train_time :10;
-  unsigned agent00_jungle_time :10;
-  unsigned agent00_control_time :10;
-  unsigned agent00_caverns_time :10;
-  unsigned agent00_cradle_time :10;
-  unsigned agent00_aztec_time :10;
-  unsigned agent00_egyptian_time :10;
 
-  char unused1;
-  char unused2;
-  char unused3;
-};
+//data
+//D:8002C510
+u32 save1_selected_bond = 0;
+//D:8002C514
+u32 save2_selected_bond = 0;
+//D:8002C518
+u32 save3_selected_bond = 0;
+//D:8002C51C
+u32 save4_selected_bond = 0;
 
-*/
+//D:8002C520
+struct save_data D_8002C520 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C580
+struct save_data D_8002C580 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C5E0
+struct save_data D_8002C5E0 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C640
+struct save_data D_8002C640 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C660
+struct save_data D_8002C660 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C6C0
+struct save_data D_8002C6C0 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C720
+struct save_data D_8002C720 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C780
+struct save_data D_8002C780 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C7E0
+struct save_data D_8002C7E0 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C840
+struct save_data D_8002C840 = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:8002C8A0
+struct save_data blank_eeprom = {0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-/* bss
-CODE.bss:80069920     save1:          save_data <?>
-CODE.bss:80069980     save2:          save_data <?>
-CODE.bss:800699E0     save3:          save_data <?>
-CODE.bss:80069A40     save4:          save_data <?>
-CODE.bss:80069AA0     save5:          save_data <?>
-CODE.bss:80069B00     save6:          save_data <?>
-CODE.bss:80069B60     dword_CODE_bss_80069B60:.space 4
-*/
-
-/*
-D:8002C510     save1_selected_bond:.word 0
-D:8002C514     save2_selected_bond:.word 0
-D:8002C518     save3_selected_bond:.word 0
-D:8002C51C     save4_selected_bond:.word 0
-D:8002C520     stru_D_8002C520:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C580     stru_D_8002C580:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C5E0     stru_D_8002C5E0:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C640     D_8002C640.word 0
-D:8002C644     D_8002C644.word 0
-D:8002C648     flt_D_8002C648: .float 32.0
-D:8002C64C     dword_D_8002C64C:.word 0
-D:8002C650     dword_D_8002C650:.word 0
-D:8002C654     dword_D_8002C654:.word 0
-D:8002C658     dword_D_8002C658:.word 0
-D:8002C65C     dword_D_8002C65C:.word 0
-D:8002C660     stru_D_8002C660:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C6C0     stru_D_8002C6C0:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C720     stru_D_8002C720:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C780     stru_D_8002C780:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C7E0     stru_D_8002C7E0:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C840     stru_D_8002C840:save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-D:8002C8A0     blank_eeprom:   save_data_struct <0, 0, 0x8000FFFF, 0x3A0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
-*/
 
 
 
 
 #ifdef NONMATCHING
-void get_007_reaction_speed(void) {
-
+f32 get_007_reaction_speed(void)
+{
+  if (get_current_difficulty() != DIFFICULTY_007) {
+    slider_007_mode_reaction = 0.00000000;
+  }
+  return slider_007_mode_reaction;
 }
 #else
 GLOBAL_ASM(
@@ -153,8 +90,12 @@ glabel get_007_reaction_speed
 
 
 #ifdef NONMATCHING
-void get_007_health_mod(void) {
-
+f32 get_007_health_mod(void)
+{
+  if (get_current_difficulty() != DIFFICULTY_007) {
+    slider_007_mode_health = 1.00000000;
+  }
+  return slider_007_mode_health;
 }
 #else
 GLOBAL_ASM(
@@ -183,8 +124,12 @@ glabel get_007_health_mod
 
 
 #ifdef NONMATCHING
-void get_007_damage_mod(void) {
-
+f32 get_007_damage_mod(void)
+{
+  if (get_current_difficulty() != DIFFICULTY_007) {
+    slider_007_mode_accuracy = 1.00000000;
+  }
+  return slider_007_mode_accuracy;
 }
 #else
 GLOBAL_ASM(
@@ -213,8 +158,12 @@ glabel get_007_damage_mod
 
 
 #ifdef NONMATCHING
-void get_007_accuracy_mod(void) {
-
+f32 get_007_accuracy_mod(void)
+{
+  if (get_current_difficulty() != DIFFICULTY_007) {
+    slider_007_mode_damage = 1.00000000;
+  }
+  return slider_007_mode_damage;
 }
 #else
 GLOBAL_ASM(
@@ -243,8 +192,35 @@ glabel get_007_accuracy_mod
 
 
 #ifdef NONMATCHING
-void end_of_mission_briefing(void) {
+void end_of_mission_briefing(void)
 
+{
+  short sVar1;
+  int iVar3;
+  save_file *folder;
+  ulonglong uVar2;
+  
+  if (((-1 < briefingpage) && (selected_difficulty != DIFFICULTY_007)) && (append_cheat_sp == FALSE)
+     ) {
+    sVar1 = (&solo_target_times_ARRAY_8002b564
+              [mission_folder_setup_entries[briefingpage].mission_num].agent_time)
+            [selected_difficulty];
+
+    unlock_stage_in_folder_on_difficulty
+              (selected_folder_num,(longlong)mission_folder_setup_entries[briefingpage].mission_num,
+               (longlong)selected_difficulty,getMissiontime() / 0x3c);
+
+    if ((longlong)(getMissiontime() / 0x3c) <= (longlong)sVar1) {
+      folder = getEEPROMforFoldernum(selected_folder_num);
+      if (check_if_cheat_unlocked(folder,(longlong)mission_folder_setup_entries[briefingpage].mission_num) == 0) {
+        proc_7F01E760(selected_folder_num,(longlong)mission_folder_setup_entries[briefingpage].mission_num);
+        newcheatunlocked = 1;
+        return;
+      }
+    }
+    newcheatunlocked = 0;
+  }
+  return;
 }
 #else
 GLOBAL_ASM(
@@ -330,12 +306,12 @@ glabel end_of_mission_briefing
 /* 052000 7F01D4D0 0FC079D8 */  jal   sub_GAME_7F01E760
 /* 052004 7F01D4D4 8CA5ABF8 */   lw    $a1, -0x5408($a1)
 /* 052008 7F01D4D8 24090001 */  li    $t1, 1
-/* 05200C 7F01D4DC 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069790) # $at, 0x8007
+/* 05200C 7F01D4DC 3C018007 */  lui   $at, %hi(newcheatunlocked) # $at, 0x8007
 /* 052010 7F01D4E0 10000003 */  b     .L7F01D4F0
-/* 052014 7F01D4E4 AC299790 */   sw    $t1, %lo(dword_CODE_bss_80069790)($at)
+/* 052014 7F01D4E4 AC299790 */   sw    $t1, %lo(newcheatunlocked)($at)
 .L7F01D4E8:
-/* 052018 7F01D4E8 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069790) # $at, 0x8007
-/* 05201C 7F01D4EC AC209790 */  sw    $zero, %lo(dword_CODE_bss_80069790)($at)
+/* 052018 7F01D4E8 3C018007 */  lui   $at, %hi(newcheatunlocked) # $at, 0x8007
+/* 05201C 7F01D4EC AC209790 */  sw    $zero, %lo(newcheatunlocked)($at)
 .L7F01D4F0:
 /* 052020 7F01D4F0 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F01D4F4:
@@ -348,8 +324,9 @@ glabel end_of_mission_briefing
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01D500(void) {
-
+void proc_7F01D500(void)
+{
+  get_screen_ratio_settings_for_mpgame_from_folder(selected_folder_num);
 }
 #else
 GLOBAL_ASM(
@@ -370,13 +347,14 @@ glabel sub_GAME_7F01D500
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01D524(void) {
-
+void deleteCurrentSelectedFolder(void)
+{
+  delete_update_eeprom_file(selected_folder_num);
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F01D524
+glabel deleteCurrentSelectedFolder
 /* 052054 7F01D524 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 052058 7F01D528 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 05205C 7F01D52C 3C048003 */  lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
@@ -392,13 +370,14 @@ glabel sub_GAME_7F01D524
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01D548(void) {
-
+void copyCurrentEEPROMtoStack(void)
+{
+  copy_eeprom_to_stack_set_folder_num(selected_folder_num);
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F01D548
+glabel copyCurrentEEPROMtoStack
 /* 052078 7F01D548 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 05207C 7F01D54C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 052080 7F01D550 3C048003 */  lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
@@ -414,13 +393,18 @@ glabel sub_GAME_7F01D548
 
 
 #ifdef NONMATCHING
-void would_have_returned_bond_for_folder_num(void) {
-
+u8 getSelectedFolderBond(void)
+{
+  u32 uVar1;
+  u8 bond;
+  
+  uVar1 = removed_would_have_returned_bond_for_folder_num(selected_folder_num);
+  return (u8)uVar1;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel would_have_returned_bond_for_folder_num
+glabel getSelectedFolderBond
 /* 05209C 7F01D56C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0520A0 7F01D570 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0520A4 7F01D574 3C048003 */  lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
@@ -436,13 +420,14 @@ glabel would_have_returned_bond_for_folder_num
 
 
 #ifdef NONMATCHING
-void get_selected_folder_num(void) {
-
+void set_selected_folder_num(u32 foldernum)
+{
+  selected_folder_num = foldernum;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel get_selected_folder_num
+glabel set_selected_folder_num
 /* 0520C0 7F01D590 3C018003 */  lui   $at, 0x8003
 /* 0520C4 7F01D594 03E00008 */  jr    $ra
 /* 0520C8 7F01D598 AC24A8E8 */   sw    $a0, -0x5718($at)
@@ -452,13 +437,29 @@ glabel get_selected_folder_num
 
 
 #ifdef NONMATCHING
-void get_difficulty(void) {
-
+void set_selected_difficulty(DIFFICULTY difficulty)
+{
+  if (difficulty != DIFFICULTY_AGENT) {
+    if (difficulty == DIFFICULTY_SECRET) {
+      selected_difficulty = DIFFICULTY_SECRET;
+      return;
+    }
+    if (difficulty == DIFFICULTY_00) {
+      selected_difficulty = DIFFICULTY_00;
+      return;
+    }
+    if (difficulty == DIFFICULTY_007) {
+      selected_difficulty = DIFFICULTY_007;
+      return;
+    }
+  }
+  selected_difficulty = DIFFICULTY_AGENT;
+  return;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel get_difficulty
+glabel set_selected_difficulty
 /* 0520CC 7F01D59C 10800009 */  beqz  $a0, .L7F01D5C4
 /* 0520D0 7F01D5A0 24020001 */   li    $v0, 1
 /* 0520D4 7F01D5A4 1082000A */  beq   $a0, $v0, .L7F01D5D0
@@ -492,8 +493,11 @@ glabel get_difficulty
 
 
 #ifdef NONMATCHING
-void set_solo_and_ptr_briefing(void) {
-
+void set_solo_and_ptr_briefing(LEVELID stage)
+{
+  gamemode = GAMEMODE_SOLO;
+  selected_stage = stage;
+  briefingpage = pull_and_display_text_for_folder_a0((undefined *)stage);
 }
 #else
 GLOBAL_ASM(
@@ -517,8 +521,10 @@ glabel set_solo_and_ptr_briefing
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01D61C(void) {
-
+void sub_GAME_7F01D61C(save_file *savefile)
+{
+  copy_eeprom_from_to(selected_folder_num,(int)savefile);
+  return;
 }
 #else
 GLOBAL_ASM(
@@ -540,8 +546,13 @@ glabel sub_GAME_7F01D61C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01D644(void) {
+void sub_GAME_7F01D644(save_file *eeprom)
 
+{
+  selected_folder_num_copy = selected_folder_num;
+  selected_folder_num = 100;
+  copy_eepromfile_a0_from_a1_to_buffer(100,eeprom);
+  return;
 }
 #else
 GLOBAL_ASM(
@@ -568,8 +579,13 @@ glabel sub_GAME_7F01D644
 
 
 #ifdef NONMATCHING
-void store_favorite_weapon_current_player(void) {
-
+void store_favorite_weapon_current_player(u32 right,u32 left)
+{
+  u32 playerNum;
+  
+  playerNum = get_cur_playernum();
+  (&fav_weapon_player1)[playerNum].right = right;
+  (&fav_weapon_player1)[playerNum].left = left;
 }
 #else
 GLOBAL_ASM(
@@ -1583,12 +1599,12 @@ glabel sub_GAME_7F01DF90
 /* 052BF0 7F01E0C0 0C0031EF */  jal   save_7000C7BC
 /* 052BF4 7F01E0C4 240601E0 */   li    $a2, 480
 /* 052BF8 7F01E0C8 3C108007 */  lui   $s0, %hi(save1) # $s0, 0x8007
-/* 052BFC 7F01E0CC 3C138007 */  lui   $s3, %hi(D_80069928) # $s3, 0x8007
+/* 052BFC 7F01E0CC 3C138007 */  lui   $s3, %hi(save1+8) # $s3, 0x8007
 /* 052C00 7F01E0D0 3C128007 */  lui   $s2, %hi(save2) # $s2, 0x8007
 /* 052C04 7F01E0D4 3C148007 */  lui   $s4, %hi(dword_CODE_bss_80069B60) # $s4, 0x8007
 /* 052C08 7F01E0D8 26949B60 */  addiu $s4, %lo(dword_CODE_bss_80069B60) # addiu $s4, $s4, -0x64a0
 /* 052C0C 7F01E0DC 26529980 */  addiu $s2, %lo(save2) # addiu $s2, $s2, -0x6680
-/* 052C10 7F01E0E0 26739928 */  addiu $s3, %lo(D_80069928) # addiu $s3, $s3, -0x66d8
+/* 052C10 7F01E0E0 26739928 */  addiu $s3, %lo(save1+8) # addiu $s3, $s3, -0x66d8
 /* 052C14 7F01E0E4 26109920 */  addiu $s0, %lo(save1) # addiu $s0, $s0, -0x66e0
 .L7F01E0E8:
 /* 052C18 7F01E0E8 24110001 */  li    $s1, 1

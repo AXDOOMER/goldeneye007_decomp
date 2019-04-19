@@ -4,7 +4,8 @@
 #include "game/debugmenu_090490.h"
 
 /* data */
-u32 D_800241A0 = 0;
+u32 filler[4] = {0};
+u32 boss_c_ptr_debug_notice_list_entry = 0;
 u32 debug_and_update_stage_flag = 0;
 s32 current_stage_num = 0x5A;
 u32 current_m_malloc_value = 0x234800;
@@ -53,7 +54,11 @@ struct memallocstring
 { 0x1B7, "-ml0 -me0 -mgfx130 -mvtx100 -mt440 -ma220"},
 { 0x1B2, "-ml0 -me0 -mgfx90  -mvtx100 -mt550 -ma230"},
 { 0x1B0, "-ml0 -me0 -mgfx110 -mvtx100 -mt350 -ma400"},
-{   0x0, "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"}};
+{   0x0, "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"},
+{ 0x0, },
+{ 0x0, },
+{ 0x0, }
+};
 
 s32 loadedstage = -1;
 s32 debug_feature_flag = 0;
@@ -450,12 +455,12 @@ void mainloop(void)
     if (current_stage_num != 0x5a)
     {
         sub_GAME_7F01DF90();
-        get_selected_folder_num(0);
-        get_difficulty(0);
+        set_selected_folder_num(0);
+        set_selected_difficulty(0);
         set_solo_and_ptr_briefing(current_stage_num);
         if (check_token(1, &aHard) != 0)
         {
-            get_difficulty(*check_token(1, &aHard_1) + -0x30);
+            set_selected_difficulty(*check_token(1, &aHard_1) + -0x30);
             set_difficulty(*check_token(1, &aHard_2) + -0x30);
         }
     }
@@ -815,9 +820,9 @@ glabel mainloop
 /* 006CEC 700060EC 00000000 */   nop   
 /* 006CF0 700060F0 0FC077E4 */  jal   sub_GAME_7F01DF90
 /* 006CF4 700060F4 00000000 */   nop   
-/* 006CF8 700060F8 0FC07564 */  jal   get_selected_folder_num
+/* 006CF8 700060F8 0FC07564 */  jal   set_selected_folder_num
 /* 006CFC 700060FC 00002025 */   move  $a0, $zero
-/* 006D00 70006100 0FC07567 */  jal   get_difficulty
+/* 006D00 70006100 0FC07567 */  jal   set_selected_difficulty
 /* 006D04 70006104 00002025 */   move  $a0, $zero
 /* 006D08 70006108 3C048002 */  lui   $a0, %hi(current_stage_num) # $a0, 0x8002
 /* 006D0C 7000610C 0FC0757B */  jal   set_solo_and_ptr_briefing
@@ -832,7 +837,7 @@ glabel mainloop
 /* 006D30 70006130 0C0029A8 */  jal   check_token
 /* 006D34 70006134 24A5911C */   addiu $a1, %lo(aHard_1) # addiu $a1, $a1, -0x6ee4
 /* 006D38 70006138 90440000 */  lbu   $a0, ($v0)
-/* 006D3C 7000613C 0FC07567 */  jal   get_difficulty
+/* 006D3C 7000613C 0FC07567 */  jal   set_selected_difficulty
 /* 006D40 70006140 2484FFD0 */   addiu $a0, $a0, -0x30
 /* 006D44 70006144 3C058003 */  lui   $a1, %hi(aHard_2) # $a1, 0x8003
 /* 006D48 70006148 24A59124 */  addiu $a1, %lo(aHard_2) # addiu $a1, $a1, -0x6edc
@@ -1413,7 +1418,7 @@ s32 get_debug_parse_flag(void) {
 }
 
 void something_with_boss_c_debug(void) {
-    get_ptr_debug_notice_list_entry(D_800241A0, "boss_c_debug");
+    get_ptr_debug_notice_list_entry(boss_c_ptr_debug_notice_list_entry, "boss_c_debug");
 }
 
 

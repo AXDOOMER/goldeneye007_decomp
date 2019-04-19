@@ -116,7 +116,7 @@ void *stack_ptrs_1[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 void *stack_ptrs_2[] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &sp_debug};
 void *stack_ptrs_3[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 
-u32 stderr_buffer[0x570] = {0x0};
+char stderr_buffer[2280] = {0x0};
 
 u32 std_error_font_bitcode[] = {
 0x00000000, 0x22220200, 0x55000000,  0x5F5F500, 0x27427200,

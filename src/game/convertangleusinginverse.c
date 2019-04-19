@@ -3,26 +3,62 @@
 
 // rodata
 //D:80053700
-const f32 flt_D_80053700 = 3.1415927;
+const f32 D_80053700 = 3.1415927;
 //D:80053704
-const f32 flt_D_80053704 = 1.5707964;
+const f32 D_80053704 = 1.5707964;
 //D:80053708
-const f32 flt_D_80053708 = 4.712389;
+const f32 D_80053708 = 4.712389;
 //D:8005370C
-const f32 flt_D_8005370C = 6.2831855;
+const f32 D_8005370C = 6.2831855;
 //D:80053710
-const f32 flt_D_80053710 = 1.5707964;
+const f32 D_80053710 = 1.5707964;
 //D:80053714
-const f32 flt_D_80053714 = 3.1415927;
+const f32 D_80053714 = 3.1415927;
 //D:80053718
-const f32 flt_D_80053718 = 6.2831855;
+const f32 D_80053718 = 6.2831855;
 
 
 
 
 #ifdef NONMATCHING
-void convert_angle_using_inverse(void) {
-
+float convert_angle_using_inverse(f32 vector1,f32 vector2)
+{
+  float fVar1;
+  
+  if ((float)vector1 == 0.00000000) {
+    fVar1 = flt_80053700;
+    if (0.00000000 <= (float)vector2) {
+      fVar1 = 0.00000000;
+    }
+  }
+  else {
+    if ((float)vector2 == 0.00000000) {
+      fVar1 = flt_80053704;
+      if ((float)vector1 <= 0.00000000) {
+        fVar1 = flt_80053708;
+      }
+    }
+    else {
+      fVar1 = sqrtf((float)vector1 * (float)vector1 + (float)vector2 * (float)vector2);
+      if ((float)vector2 < (float)vector1) {
+        fVar1 = proc_7F05ACB0((float)vector2 / fVar1);
+        if ((float)vector1 < 0.00000000) {
+          fVar1 = flt_8005370C - fVar1;
+        }
+      }
+      else {
+        fVar1 = proc_7F05ACB0((float)vector1 / fVar1);
+        fVar1 = flt_80053710 - fVar1;
+        if ((float)vector2 < 0.00000000) {
+          fVar1 = flt_80053714 - fVar1;
+        }
+        if (fVar1 < 0.00000000) {
+          fVar1 = fVar1 + flt_80053718;
+        }
+      }
+    }
+  }
+  return fVar1;
 }
 #else
 GLOBAL_ASM(

@@ -1,19 +1,21 @@
 #include "ultra64.h"
 
-/* bss
-CODE.bss:8007A160     dword_CODE_bss_8007A160:.space 4
-CODE.bss:8007A164     dword_CODE_bss_8007A164:.space 4
-CODE.bss:8007A168                     .align 4
-CODE.bss:8007A170     dword_CODE_bss_8007A170:.space 4
-CODE.bss:8007A174     word_CODE_bss_8007A174:.space 2
-CODE.bss:8007A176                     .align 2
-CODE.bss:8007A178                     .space 0x368
-CODE.bss:8007A4E0     dword_CODE_bss_8007A4E0:.space 4
-CODE.bss:8007A4E4     word_CODE_bss_8007A4E4:.space 2
-CODE.bss:8007A4E6                     .align 2
-CODE.bss:8007A4E8                     .space 0xBB0
-CODE.bss:8007B098     dword_CODE_bss_8007B098:.space 8
-*/
+// bss
+//CODE.bss:8007A160
+u32 dword_CODE_bss_8007A160;
+//CODE.bss:8007A164
+u32 dword_CODE_bss_8007A164;
+//CODE.bss:8007A168
+u32 dword_CODE_bss_8007A168;
+//CODE.bss:8007A16C
+u32 dword_CODE_bss_8007A16C;
+//CODE.bss:8007A170
+u8 dword_CODE_bss_8007A170[0x370];
+//CODE.bss:8007A4E0
+u8 dword_CODE_bss_8007A4E0[0xBB8];
+//CODE.bss:8007B098
+u8 dword_CODE_bss_8007B098[8];
+
 
 /* data
 D:80040940     dword_D_80040940:.word          0,         0,         0,         0
@@ -22,25 +24,41 @@ D:80040960     dword_D_80040960:.word 0xFFFFFFFF, 0xFFFFC8FF, 0xFF0000FF, 0xFFFF
 D:80040960                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 */
 
-/* rodata
-D:80057710     flt_D_80057710: .float 0.1
-D:80057714     flt_D_80057714: .float 0.69999999
-D:80057718     flt_D_80057718: .float 1.12
-D:8005771C     flt_D_8005771C: .float 0.12
-D:80057720     flt_D_80057720: .float 6.2831855
-D:80057724     flt_D_80057724: .float 0.1
-D:80057728     flt_D_80057728: .float 30000.0
-D:8005772C     flt_D_8005772C: .float -30000.0
-D:80057730     flt_D_80057730: .float 0.1
+// rodata
+//D:80057710
+f32 D_80057710 = 0.1;
+//D:80057714
+f32 D_80057714 = 0.69999999;
+//D:80057718
+f32 D_80057718 = 1.12;
+//D:8005771C
+f32 D_8005771C = 0.12;
+//D:80057720
+f32 D_80057720 = 6.2831855;
+//D:80057724
+f32 D_80057724 = 0.1;
+//D:80057728
+f32 D_80057728 = 30000.0;
+//D:8005772C
+f32 D_8005772C = -30000.0;
+//D:80057730
+f32 D_80057730 = 0.1;
+/*
 D:80057734                     .word 0
 D:80057738                     .word 0
 D:8005773C                     .word 0
-D:80057740     dbl_D_80057740: .double 142.5
-D:80057748     flt_D_80057748: .float 3.1415927
-D:8005774C     flt_D_8005774C: .float 3.1415927
-D:80057750     flt_D_80057750: .float 6.2831855
-D:80057754     flt_D_80057754: .float 1.41412
 */
+//D:80057740
+f64 D_80057740 = 142.5;
+//D:80057748
+f32 D_80057748 = 3.1415927;
+//D:8005774C
+f32 D_8005774C = 3.1415927;
+//D:80057750
+f32 D_80057750 = 6.2831855;
+//D:80057754
+f32 D_80057754 = 1.41412;
+
 
 #ifdef NONMATCHING
 void sub_GAME_7F0A1DA0(void) {

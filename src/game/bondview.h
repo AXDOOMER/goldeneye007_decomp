@@ -1,6 +1,7 @@
 #ifndef _BONDVIEW_H_
 #define _BONDVIEW_H_
 #include "ultra64.h"
+#include "game/cheat_buttons_objectrelated.h"
 
 struct weapon_stats
 {
@@ -56,6 +57,10 @@ struct gitem_data_struct
   f32 equip_watch_y;
   f32 equip_watch_z;
 };
-
-
+/*
+struct ejected_cart {
+    Gitemheader * header;
+    char * text;
+};
+*/
 #endif

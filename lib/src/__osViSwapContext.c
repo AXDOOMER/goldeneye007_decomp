@@ -1,7 +1,7 @@
 #include "libultra_internal.h"
 #include "hardware.h"
-extern OSViContext *D_80334914;
-extern OSViContext *D_80334910;
+extern OSViContext *__osViNext;
+extern OSViContext *__osViCurr;
 void __osViSwapContext()
 {
     register OSViMode *s0;
@@ -12,7 +12,7 @@ void __osViSwapContext()
     u32 field;
     register u32 s2;
     field = 0;
-    s1 = D_80334914;
+    s1 = __osViNext;
     s0 = s1->unk08;
     field = HW_REG(VI_V_CURRENT_LINE_REG, u32) & 1;
     s2 = osVirtualToPhysical(s1->buffer);

@@ -888,6 +888,11 @@ OSViMode osViModeTable[] = {
                    /*vIntr*/ 2}}}
 #endif
 };
+
+//==================================================
+// file break, file above = VITBL.C, file below = VIMGR.C
+//=======================================================
+
 #define OS_VI_MANAGER_MESSAGE_BUFF_SIZE 5
 OSMgrArgs viMgrMainArgs = {0};
 OSThread viMgrThread;

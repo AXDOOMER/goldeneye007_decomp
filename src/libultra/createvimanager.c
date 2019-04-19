@@ -44,16 +44,16 @@ void osCreateViManager(s32 arg0, s32 argC) {
         }
         // Node 3
         __osViDevMgr = 1;
-        __osViDevMgr.unk4 = &vi_thread;
+        __osViDevMgr.unk4 = &viThread;
         __osViDevMgr.unk8 = &viEventQueue;
         __osViDevMgr.unkC = &viEventQueue;
         sp2C = __osDisableInt();
         __osViDevMgr.unk10 = 0;
         __osViDevMgr.unk14 = 0;
         __osViDevMgr.unk18 = 0;
-        osCreateThread(&vi_thread, 0, &viMgrMain, &__osViDevMgr, (s32) (&viThreadStack + 0x1000), argC);
+        osCreateThread(&viThread, 0, &viMgrMain, &__osViDevMgr, (s32) (&viThreadStack + 0x1000), argC);
         __osViInit();
-        osStartThread(&vi_thread);
+        osStartThread(&viThread);
         __osRestoreInt(sp2C);
         if (sp28 != -1)
         {
@@ -125,10 +125,10 @@ glabel osCreateViManager
 /* 00E5BC 7000D9BC 00000000 */   nop   
 /* 00E5C0 7000D9C0 3C018002 */  lui   $at, %hi(__osViDevMgr) # $at, 0x8002
 /* 00E5C4 7000D9C4 3C0C8006 */  lui   $t4, %hi(viEventQueue) # $t4, 0x8006
-/* 00E5C8 7000D9C8 3C0B8006 */  lui   $t3, %hi(vi_thread) # $t3, 0x8006
+/* 00E5C8 7000D9C8 3C0B8006 */  lui   $t3, %hi(viThread) # $t3, 0x8006
 /* 00E5CC 7000D9CC 258C69A0 */  addiu $t4, %lo(viEventQueue) # addiu $t4, $t4, 0x69a0
 /* 00E5D0 7000D9D0 240A0001 */  li    $t2, 1
-/* 00E5D4 7000D9D4 256B57F0 */  addiu $t3, %lo(vi_thread) # addiu $t3, $t3, 0x57f0
+/* 00E5D4 7000D9D4 256B57F0 */  addiu $t3, %lo(viThread) # addiu $t3, $t3, 0x57f0
 /* 00E5D8 7000D9D8 AC2A69A0 */  sw    $t2, 0($at)
 /* 00E5DC 7000D9DC AC2B69A4 */  sw    $t3, 4($at)
 /* 00E5E0 7000D9E0 AC2C69A8 */  sw    $t4, 8($at)
@@ -153,9 +153,9 @@ glabel osCreateViManager
 /* 00E62C 7000DA2C AFAF0014 */   sw    $t7, 0x14($sp)
 /* 00E630 7000DA30 0C006294 */  jal   __osViInit
 /* 00E634 7000DA34 00000000 */   nop   
-/* 00E638 7000DA38 3C048006 */  lui   $a0, %hi(vi_thread) # $a0, 0x8006
+/* 00E638 7000DA38 3C048006 */  lui   $a0, %hi(viThread) # $a0, 0x8006
 /* 00E63C 7000DA3C 0C003560 */  jal   osStartThread
-/* 00E640 7000DA40 248457F0 */   addiu $a0, %lo(vi_thread) # addiu $a0, $a0, 0x57f0
+/* 00E640 7000DA40 248457F0 */   addiu $a0, %lo(viThread) # addiu $a0, $a0, 0x57f0
 /* 00E644 7000DA44 0C006184 */  jal   __osRestoreInt
 /* 00E648 7000DA48 8FA4002C */   lw    $a0, 0x2c($sp)
 /* 00E64C 7000DA4C 8FB80028 */  lw    $t8, 0x28($sp)
@@ -190,13 +190,13 @@ glabel viMgrMain
 /* 00E690 7000DA90 AFA00028 */   sw    $zero, 0x28($sp)
 /* 00E694 7000DA94 AFA20034 */  sw    $v0, 0x34($sp)
 /* 00E698 7000DA98 8FAE0034 */  lw    $t6, 0x34($sp)
-/* 00E69C 7000DA9C 3C018006 */  lui   $at, %hi(word_CODE_bss_80066A00) # $at, 0x8006
+/* 00E69C 7000DA9C 3C018006 */  lui   $at, %hi(retrace) # $at, 0x8006
 /* 00E6A0 7000DAA0 95CF0002 */  lhu   $t7, 2($t6)
 /* 00E6A4 7000DAA4 15E00004 */  bnez  $t7, .L7000DAB8
-/* 00E6A8 7000DAA8 A42F6A00 */   sh    $t7, %lo(word_CODE_bss_80066A00)($at)
+/* 00E6A8 7000DAA8 A42F6A00 */   sh    $t7, %lo(retrace)($at)
 /* 00E6AC 7000DAAC 24180001 */  li    $t8, 1
-/* 00E6B0 7000DAB0 3C018006 */  lui   $at, %hi(word_CODE_bss_80066A00) # $at, 0x8006
-/* 00E6B4 7000DAB4 A4386A00 */  sh    $t8, %lo(word_CODE_bss_80066A00)($at)
+/* 00E6B0 7000DAB0 3C018006 */  lui   $at, %hi(retrace) # $at, 0x8006
+/* 00E6B4 7000DAB4 A4386A00 */  sh    $t8, %lo(retrace)($at)
 .L7000DAB8:
 /* 00E6B8 7000DAB8 8FB90038 */  lw    $t9, 0x38($sp)
 /* 00E6BC 7000DABC AFB90030 */  sw    $t9, 0x30($sp)
@@ -218,13 +218,13 @@ glabel viMgrMain
 .L7000DAF8:
 /* 00E6F8 7000DAF8 0C0062DC */  jal   __osViSwapContext
 /* 00E6FC 7000DAFC 00000000 */   nop   
-/* 00E700 7000DB00 3C0A8006 */  lui   $t2, %hi(word_CODE_bss_80066A00) # $t2, 0x8006
-/* 00E704 7000DB04 954A6A00 */  lhu   $t2, %lo(word_CODE_bss_80066A00)($t2)
-/* 00E708 7000DB08 3C018006 */  lui   $at, %hi(word_CODE_bss_80066A00) # $at, 0x8006
+/* 00E700 7000DB00 3C0A8006 */  lui   $t2, %hi(retrace) # $t2, 0x8006
+/* 00E704 7000DB04 954A6A00 */  lhu   $t2, %lo(retrace)($t2)
+/* 00E708 7000DB08 3C018006 */  lui   $at, %hi(retrace) # $at, 0x8006
 /* 00E70C 7000DB0C 254BFFFF */  addiu $t3, $t2, -1
 /* 00E710 7000DB10 316CFFFF */  andi  $t4, $t3, 0xffff
 /* 00E714 7000DB14 15800010 */  bnez  $t4, .L7000DB58
-/* 00E718 7000DB18 A42B6A00 */   sh    $t3, %lo(word_CODE_bss_80066A00)($at)
+/* 00E718 7000DB18 A42B6A00 */   sh    $t3, %lo(retrace)($at)
 /* 00E71C 7000DB1C 0C0062D8 */  jal   __osViGetCurrentContext
 /* 00E720 7000DB20 00000000 */   nop   
 /* 00E724 7000DB24 AFA20034 */  sw    $v0, 0x34($sp)
@@ -238,9 +238,9 @@ glabel viMgrMain
 /* 00E744 7000DB44 00003025 */   move  $a2, $zero
 .L7000DB48:
 /* 00E748 7000DB48 8FAF0034 */  lw    $t7, 0x34($sp)
-/* 00E74C 7000DB4C 3C018006 */  lui   $at, %hi(word_CODE_bss_80066A00) # $at, 0x8006
+/* 00E74C 7000DB4C 3C018006 */  lui   $at, %hi(retrace) # $at, 0x8006
 /* 00E750 7000DB50 95F80002 */  lhu   $t8, 2($t7)
-/* 00E754 7000DB54 A4386A00 */  sh    $t8, %lo(word_CODE_bss_80066A00)($at)
+/* 00E754 7000DB54 A4386A00 */  sh    $t8, %lo(retrace)($at)
 .L7000DB58:
 /* 00E758 7000DB58 3C198007 */  lui   $t9, %hi(__osViIntrCount) # $t9, 0x8007
 /* 00E75C 7000DB5C 8F398E1C */  lw    $t9, %lo(__osViIntrCount)($t9)
@@ -256,9 +256,9 @@ glabel viMgrMain
 /* 00E784 7000DB84 240C0000 */  li    $t4, 0
 /* 00E788 7000DB88 3C018007 */  lui   $at, %hi(__osCurrentTime) # $at, 0x8007
 /* 00E78C 7000DB8C AC2C8E10 */  sw    $t4, %lo(__osCurrentTime)($at)
-/* 00E790 7000DB90 3C018007 */  lui   $at, %hi(D_80068E14) # $at, 0x8007
+/* 00E790 7000DB90 3C018007 */  lui   $at, %hi(__osCurrentTime+4) # $at, 0x8007
 /* 00E794 7000DB94 01406825 */  move  $t5, $t2
-/* 00E798 7000DB98 AC2D8E14 */  sw    $t5, %lo(D_80068E14)($at)
+/* 00E798 7000DB98 AC2D8E14 */  sw    $t5, %lo(__osCurrentTime+4)($at)
 /* 00E79C 7000DB9C AFA00028 */  sw    $zero, 0x28($sp)
 .L7000DBA0:
 /* 00E7A0 7000DBA0 3C0B8007 */  lui   $t3, %hi(__osBaseCounter) # $t3, 0x8007
@@ -270,8 +270,8 @@ glabel viMgrMain
 /* 00E7B8 7000DBB8 3C0E8007 */  lui   $t6, %hi(__osBaseCounter) # $t6, 0x8007
 /* 00E7BC 7000DBBC 8DCE8E18 */  lw    $t6, %lo(__osBaseCounter)($t6)
 /* 00E7C0 7000DBC0 8FAF0024 */  lw    $t7, 0x24($sp)
-/* 00E7C4 7000DBC4 3C0B8007 */  lui   $t3, %hi(D_80068E14) # $t3, 0x8007
-/* 00E7C8 7000DBC8 8D6B8E14 */  lw    $t3, %lo(D_80068E14)($t3)
+/* 00E7C4 7000DBC4 3C0B8007 */  lui   $t3, %hi(__osCurrentTime+4) # $t3, 0x8007
+/* 00E7C8 7000DBC8 8D6B8E14 */  lw    $t3, %lo(__osCurrentTime+4)($t3)
 /* 00E7CC 7000DBCC 01CFC023 */  subu  $t8, $t6, $t7
 /* 00E7D0 7000DBD0 03004825 */  move  $t1, $t8
 /* 00E7D4 7000DBD4 3C0A8007 */  lui   $t2, %hi(__osCurrentTime) # $t2, 0x8007
@@ -283,10 +283,10 @@ glabel viMgrMain
 /* 00E7EC 7000DBEC 3C018007 */  lui   $at, %hi(__osCurrentTime) # $at, 0x8007
 /* 00E7F0 7000DBF0 018A6021 */  addu  $t4, $t4, $t2
 /* 00E7F4 7000DBF4 AC2C8E10 */  sw    $t4, %lo(__osCurrentTime)($at)
-/* 00E7F8 7000DBF8 3C018007 */  lui   $at, %hi(D_80068E14) # $at, 0x8007
+/* 00E7F8 7000DBF8 3C018007 */  lui   $at, %hi(__osCurrentTime+4) # $at, 0x8007
 /* 00E7FC 7000DBFC AFB80024 */  sw    $t8, 0x24($sp)
 /* 00E800 7000DC00 1000FFAF */  b     .L7000DAC0
-/* 00E804 7000DC04 AC2D8E14 */   sw    $t5, %lo(D_80068E14)($at)
+/* 00E804 7000DC04 AC2D8E14 */   sw    $t5, %lo(__osCurrentTime+4)($at)
 .L7000DC08:
 /* 00E808 7000DC08 0C0061AF */  jal   __osTimerInterrupt
 /* 00E80C 7000DC0C 00000000 */   nop   

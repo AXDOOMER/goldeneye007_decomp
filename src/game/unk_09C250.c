@@ -16,10 +16,14 @@ u32 *ptr_scorch_buf;
 //CODE.bss:8007A154
 u32 *ptr_bullet_impact_buf;
 
-/* data
-D:80040170     dword_D_80040170:.word 0
-D:80040174     dword_D_80040174:.word 0
-D:80040178     flt_D_80040178: .float 1.0
+// data
+//D:80040170
+s32 D_80040170 = 0;
+//D:80040174
+s32 D_80040174 = 0;
+//D:80040178
+f32 D_80040178 = 1.0;
+/*
 D:8004017C     dword_D_8004017C:.word    0x1003C,  0x630000,         0,0x80808000
 D:8004017C                     .word 0x3E99999A,  0xB40000, 0x1E0003C,  0x2D003C
 D:8004017C                     .word 0x3CA3D70A,0x50506000,0x3E99999A,  0xB40000
@@ -152,53 +156,53 @@ D:8004093C     dword_D_8004093C:.word 0xDC
 
 // rodata
 //D:800576B0
-const f32 flt_D_800576B0 = 999999.88;
+const f32 D_800576B0 = 999999.88;
 //D:800576B4
-const f32 flt_D_800576B4 = 6.2831855;
+const f32 D_800576B4 = 6.2831855;
 //D:800576B8
-const f32 flt_D_800576B8 = 0.80000001;
+const f32 D_800576B8 = 0.80000001;
 //D:800576BC
-const f32 flt_D_800576BC = 6.2831855;
+const f32 D_800576BC = 6.2831855;
 //D:800576C0
-const f32 flt_D_800576C0 = 30000.0;
+const f32 D_800576C0 = 30000.0;
 //D:800576C4
-const f32 flt_D_800576C4 = 30000.0;
+const f32 D_800576C4 = 30000.0;
 //D:800576C8
-const f32 flt_D_800576C8 = -30000.0;
+const f32 D_800576C8 = -30000.0;
 //D:800576CC
-const f32 flt_D_800576CC = 0.15000001;
+const f32 D_800576CC = 0.15000001;
 //D:800576D0
-const f32 flt_D_800576D0 = 0.30000001;
+const f32 D_800576D0 = 0.30000001;
 //D:800576D4
-const f32 flt_D_800576D4 = 0.0099999998;
+const f32 D_800576D4 = 0.0099999998;
 //D:800576D8
-const f32 flt_D_800576D8 = 0.02;
+const f32 D_800576D8 = 0.02;
 //D:800576DC
-const f32 flt_D_800576DC = 6.2831855;
+const f32 D_800576DC = 6.2831855;
 //D:800576E0
-const f32 flt_D_800576E0 = 1.12;
+const f32 D_800576E0 = 1.12;
 //D:800576E4
-const f32 flt_D_800576E4 = 0.12;
+const f32 D_800576E4 = 0.12;
 //D:800576E8
-const f32 flt_D_800576E8 = 6.2831855;
+const f32 D_800576E8 = 6.2831855;
 //D:800576EC
-const f32 flt_D_800576EC = 0.1;
+const f32 D_800576EC = 0.1;
 //D:800576F0
-const f32 flt_D_800576F0 = 30000.0;
+const f32 D_800576F0 = 30000.0;
 //D:800576F4
-const f32 flt_D_800576F4 = -30000.0;
+const f32 D_800576F4 = -30000.0;
 //D:800576F8
-const f32 flt_D_800576F8 = 0.2;
+const f32 D_800576F8 = 0.2;
 //D:800576FC
-const f32 flt_D_800576FC = -20000.0;
+const f32 D_800576FC = -20000.0;
 //D:80057700
-const f32 flt_D_80057700 = 20000.0;
+const f32 D_80057700 = 20000.0;
 //D:80057704
-const f32 flt_D_80057704 = 6.2831855;
+const f32 D_80057704 = 6.2831855;
 //D:80057708
-const f32 flt_D_80057708 = 0.2;
+const f32 D_80057708 = 0.2;
 //D:8005770C
-const f32 flt_D_8005770C = 0.80000001;
+const f32 D_8005770C = 0.80000001;
 
 #ifdef NONMATCHING
 void sub_GAME_7F09C250(void) {
@@ -4627,8 +4631,8 @@ glabel sub_GAME_7F0A0034
 /* 0D4BC8 7F0A0098 26100008 */   addiu $s0, $s0, 8
 /* 0D4BCC 7F0A009C 02001825 */  move  $v1, $s0
 /* 0D4BD0 7F0A00A0 AE220004 */  sw    $v0, 4($s1)
-/* 0D4BD4 7F0A00A4 3C080200 */  lui   $t0, %hi(D_02000A50) # $t0, 0x200
-/* 0D4BD8 7F0A00A8 25080A50 */  addiu $t0, %lo(D_02000A50) # addiu $t0, $t0, 0xa50
+/* 0D4BD4 7F0A00A4 3C080200 */  lui   $t0, 0x200
+/* 0D4BD8 7F0A00A8 25080A50 */  addiu $t0, $t0, 0xa50
 /* 0D4BDC 7F0A00AC 26100008 */  addiu $s0, $s0, 8
 /* 0D4BE0 7F0A00B0 3C190600 */  lui   $t9, 0x600
 /* 0D4BE4 7F0A00B4 AC790000 */  sw    $t9, ($v1)

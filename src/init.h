@@ -16,7 +16,7 @@ extern u32 cart_hw_address;
 struct debug_handler_entry
 {
   void *address;
-  void *ptr_name;
+  char *ptr_name;
 };
 
 void init(void);

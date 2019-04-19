@@ -2721,6 +2721,20 @@ struct BONDdata
   s32 field_2A7C;
 };
 
+struct firing_anim_struct {
+    u32 * pointer;
+    u32 anim;
+    f32 x;
+    f32 y;
+    f32 z;
+};
+
+struct struct_4 {
+    int anonymous_0;
+    float anonymous_1;
+    float anonymous_2;
+    float anonymous_3;
+};
 
 //D:80036424
 extern s32 camera_80036424;
@@ -2822,7 +2836,7 @@ extern s32 D_80036510;
 //D:80036514
 extern s32 D_80036514;
 /*
-D:80036518     stru_D_80036518:struct_4 <0x5744, 95.0, -1.0, 0.02>
+D:80036518     stage_intro_anim_table:struct_4 <0x5744, 95.0, -1.0, 0.02>
 D:80036528                     struct_4 <0x6254, 7.0, 40.0, 0.5>
 D:80036538                     struct_4 <0x78C8, 0.0, -1.0, 0.5>
 D:80036548                     struct_4 <0x7AA8, 0.0, -1.0, 0.5>
@@ -2831,7 +2845,7 @@ D:80036568                     struct_4 <0x7D04, 0.0, -1.0, 0.5>
 D:80036578                     struct_4 <0x7F0C, 0.0, -1.0, 0.5>
 D:80036588                     struct_4 <0x7FB4, 0.0, -1.0, 0.5>
 D:80036598                     struct_4 <0xD89C, 0.0, -1.0, 0.5>
-D:800365A8     flt_D_800365A8: .float 0.90909088
+D:800365A8     flt_watch_transition_time: .float 0.90909088
 D:800365AC     dummy_08_pp7_obj:.word 0x1000008
 D:800365B0                     .word 0xBF4000
 D:800365B4                     .word 0, 0, 0, 0
@@ -2850,8 +2864,12 @@ D:80036604                     .align 5
 D:80036620                     .byte 0x44
 D:80036621                     .byte 0x7A, 0, 0
 D:80036624                     .word 0xFFFFFF00, 0xFFFFFF00, 0x4FFFFFF
-D:80036630     D_80036630:.word 0
-D:80036634     D_80036634:.word 0
+*/
+//D:80036630
+extern u32 D_80036630;
+//D:80036634
+extern u32 D_80036634;
+/*
 D:80036638                     .byte 0
 D:80036639                     .byte 0, 0, 0xA
 D:8003663C                     .word 0x3C, 0x3F19999A, 0
@@ -2983,35 +3001,36 @@ extern s32 D_800368A8;
 //D:800368AC
 extern s32 D_800368AC;
 //D:800368B0
-extern s32 D_800368B0[];
+extern s32 D_800368B0;
+extern s32 D_800368B4;
 //D:800368B8
 extern u16 D_800368B8[];
 /*
-D:800368D8     pistol_firing_animation_group1_ptr:struct_25 <pistol_firing_animation_group1, 0, 0.1, 79.0, 87.0>
+D:800368D8     firing_animation_groups:firing_anim_struct <pistol_firing_animation_group1, 0, 0.1, 79.0, 87.0>
 D:800368D8                                              # DATA XREF: sub_CODE_7F08B0F0+720o
-D:800368EC                     struct_25 <stru_D_800306F0, 0, 0.5, 0.0, -1.0>
-D:80036900                     struct_25 <stru_D_80030738, 0, 0.5, 0.0, -1.0>
-D:80036914                     struct_25 <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
-D:80036928                     struct_25 <stru_D_800308E8, 0, 0.5, 0.0, -1.0>
-D:8003693C                     struct_25 <crouched_pistol_firing_animation_group1, 0, 0.1, 56.0, 68.0>
-D:80036950                     struct_25 <rifle_firing_animation_group1, 0, 0.050000001, 35.0, 40.0>
-D:80036964                     struct_25 <stru_D_80030660, 0, 0.5, 0.0, -1.0>
-D:80036978                     struct_25 <stru_D_800306A8, 0, 0.5, 0.0, -1.0>
-D:8003698C                     struct_25 <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
-D:800369A0                     struct_25 <stru_D_800308E8, 0, 0.5, 0.0, -1.0>
-D:800369B4                     struct_25 <stru_D_8002F7A8, 0, 0.1, 45.0, 55.0>
-D:800369C8                     struct_25 <0, 0x8194, 0.25, 0.0, -1.0>
-D:800369DC                     struct_25 <0, 0x8204, 0.5, 0.0, -1.0>
-D:800369F0                     struct_25 <0, 0x777C, 0.5, 0.0, -1.0>
-D:80036A04                     struct_25 <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
-D:80036A18                     struct_25 <stru_D_800308E8, 0, 0.5, 0.0, -1.0>
-D:80036A2C                     struct_25 <0, 0x6C18, 0.050000001, 28.0, 29.0>
-D:80036A40                     struct_25 <doubles_firing_animation_group1, 0, 0.1, 32.0, 42.0>
-D:80036A54                     struct_25 <stru_D_80030780, 0, 0.5, 0.0, -1.0>
-D:80036A68                     struct_25 <stru_D_800307C8, 0, 0.5, 0.0, -1.0>
-D:80036A7C                     struct_25 <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
-D:80036A90                     struct_25 <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
-D:80036AA4                     struct_25 <crouched_doubles_firing_animation_group1, 0, 0.1, 37.0, 47.0>
+D:800368EC                     firing_anim_struct <stru_D_800306F0, 0, 0.5, 0.0, -1.0>
+D:80036900                     firing_anim_struct <stru_D_80030738, 0, 0.5, 0.0, -1.0>
+D:80036914                     firing_anim_struct <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
+D:80036928                     firing_anim_struct <stru_D_800308E8, 0, 0.5, 0.0, -1.0>
+D:8003693C                     firing_anim_struct <crouched_pistol_firing_animation_group1, 0, 0.1, 56.0, 68.0>
+D:80036950                     firing_anim_struct <rifle_firing_animation_group1, 0, 0.050000001, 35.0, 40.0>
+D:80036964                     firing_anim_struct <stru_D_80030660, 0, 0.5, 0.0, -1.0>
+D:80036978                     firing_anim_struct <stru_D_800306A8, 0, 0.5, 0.0, -1.0>
+D:8003698C                     firing_anim_struct <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
+D:800369A0                     firing_anim_struct <stru_D_800308E8, 0, 0.5, 0.0, -1.0>
+D:800369B4                     firing_anim_struct <stru_D_8002F7A8, 0, 0.1, 45.0, 55.0>
+D:800369C8                     firing_anim_struct <0, 0x8194, 0.25, 0.0, -1.0>
+D:800369DC                     firing_anim_struct <0, 0x8204, 0.5, 0.0, -1.0>
+D:800369F0                     firing_anim_struct <0, 0x777C, 0.5, 0.0, -1.0>
+D:80036A04                     firing_anim_struct <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
+D:80036A18                     firing_anim_struct <stru_D_800308E8, 0, 0.5, 0.0, -1.0>
+D:80036A2C                     firing_anim_struct <0, 0x6C18, 0.050000001, 28.0, 29.0>
+D:80036A40                     firing_anim_struct <doubles_firing_animation_group1, 0, 0.1, 32.0, 42.0>
+D:80036A54                     firing_anim_struct <stru_D_80030780, 0, 0.5, 0.0, -1.0>
+D:80036A68                     firing_anim_struct <stru_D_800307C8, 0, 0.5, 0.0, -1.0>
+D:80036A7C                     firing_anim_struct <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
+D:80036A90                     firing_anim_struct <stru_D_800308A0, 0, 0.5, 0.0, -1.0>
+D:80036AA4                     firing_anim_struct <crouched_doubles_firing_animation_group1, 0, 0.1, 37.0, 47.0>
 */
 //D:80036AB8
 extern s32 D_80036AB8;
