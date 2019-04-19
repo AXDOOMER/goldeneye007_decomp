@@ -128,20 +128,16 @@ u64 __osInsertTimer(OSTimer *newTimer)
     // Iterate over the timers. If the remaining time of the new timer
     // is bigger than the remaining time of the iterated node, then decrease
     // the remaining time of the new timer.
-    node = firstTimer->next;
-    newRemainer = newTimer->remaining;
-
-    while (node != firstTimer && newRemainer > node->remaining)
+    for (node = firstTimer->next, newRemainer = newTimer->remaining;
+         node != firstTimer && newRemainer > node->remaining;
+         newRemainer -= node->remaining, node = node->next;)
     {
-        newRemainer -= node->remaining;
-
-        // move forward in list
-        node = node->next;
+        ;
     }
 
     newTimer->remaining = newRemainer;
 
-    // Decrase the remaining time of the last iterated node by the same amount
+    // Decrease the remaining time of the last iterated node by the same amount
     // as the remaining time of the new timer
     if (node != firstTimer)
     {
