@@ -293,7 +293,7 @@ u32 D_80044824[] = {0x32C2E32, 0x373E3F4E, 0x56595D72, 0x76797AFF, 0x11003AFF};
 //D:80044838
 s32 current_room_maybe = 1;
 //D:8004483C
-s32 D_8004483C = 0;
+s32 NumberOfRoomsDrawn = 0;
 //D:80044840
 u32 D_80044840[] = {0x96969600, 0x96969600};
 //D:80044848
@@ -899,8 +899,8 @@ glabel sub_GAME_7F0B39BC
 /* 0E8528 7F0B39F8 1000003D */  b     .L7F0B3AF0
 /* 0E852C 7F0B39FC 00001025 */   move  $v0, $zero
 .L7F0B3A00:
-/* 0E8530 7F0B3A00 3C078004 */  lui   $a3, %hi(D_8004483C) # $a3, 0x8004
-/* 0E8534 7F0B3A04 24E7483C */  addiu $a3, %lo(D_8004483C) # addiu $a3, $a3, 0x483c
+/* 0E8530 7F0B3A00 3C078004 */  lui   $a3, %hi(NumberOfRoomsDrawn) # $a3, 0x8004
+/* 0E8534 7F0B3A04 24E7483C */  addiu $a3, %lo(NumberOfRoomsDrawn) # addiu $a3, $a3, 0x483c
 /* 0E8538 7F0B3A08 8CE40000 */  lw    $a0, ($a3)
 /* 0E853C 7F0B3A0C 00001025 */  move  $v0, $zero
 /* 0E8540 7F0B3A10 3C0D8008 */  lui   $t5, %hi(dword_CODE_bss_8007FFA0) # $t5, 0x8008
@@ -1075,7 +1075,7 @@ void *sub_GAME_7F0B3BC4(void) {
     void *phi_v1;
 
     // Node 0
-    D_8004483C = 0;
+    NumberOfRoomsDrawn = 0;
     D_80041417 = (u8)0;
     D_80041467 = (u8)0;
     phi_v1 = &D_800414B4;
@@ -1098,8 +1098,8 @@ loop_1:
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B3BC4
-/* 0E86F4 7F0B3BC4 3C018004 */  lui   $at, %hi(D_8004483C) # $at, 0x8004
-/* 0E86F8 7F0B3BC8 AC20483C */  sw    $zero, %lo(D_8004483C)($at)
+/* 0E86F4 7F0B3BC4 3C018004 */  lui   $at, %hi(NumberOfRoomsDrawn) # $at, 0x8004
+/* 0E86F8 7F0B3BC8 AC20483C */  sw    $zero, %lo(NumberOfRoomsDrawn)($at)
 /* 0E86FC 7F0B3BCC 3C018004 */  lui   $at, %hi(D_80041417) # $at, 0x8004
 /* 0E8700 7F0B3BD0 A0201417 */  sb    $zero, %lo(D_80041417)($at)
 /* 0E8704 7F0B3BD4 3C018004 */  lui   $at, %hi(D_80041467) # $at, 0x8004
@@ -1132,8 +1132,8 @@ void sub_GAME_7F0B3C0C(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B3C0C
-/* 0E873C 7F0B3C0C 3C038004 */  lui   $v1, %hi(D_8004483C) # $v1, 0x8004
-/* 0E8740 7F0B3C10 8C63483C */  lw    $v1, %lo(D_8004483C)($v1)
+/* 0E873C 7F0B3C0C 3C038004 */  lui   $v1, %hi(NumberOfRoomsDrawn) # $v1, 0x8004
+/* 0E8740 7F0B3C10 8C63483C */  lw    $v1, %lo(NumberOfRoomsDrawn)($v1)
 /* 0E8744 7F0B3C14 00A03025 */  move  $a2, $a1
 /* 0E8748 7F0B3C18 3C058008 */  lui   $a1, %hi(dword_CODE_bss_8007FFA0) # $a1, 0x8008
 /* 0E874C 7F0B3C1C 18600013 */  blez  $v1, .L7F0B3C6C
@@ -1184,8 +1184,8 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B3C8C
 /* 0E87BC 7F0B3C8C 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 0E87C0 7F0B3C90 3C028004 */  lui   $v0, %hi(D_8004483C) # $v0, 0x8004
-/* 0E87C4 7F0B3C94 8C42483C */  lw    $v0, %lo(D_8004483C)($v0)
+/* 0E87C0 7F0B3C90 3C028004 */  lui   $v0, %hi(NumberOfRoomsDrawn) # $v0, 0x8004
+/* 0E87C4 7F0B3C94 8C42483C */  lw    $v0, %lo(NumberOfRoomsDrawn)($v0)
 /* 0E87C8 7F0B3C98 AFB70038 */  sw    $s7, 0x38($sp)
 /* 0E87CC 7F0B3C9C AFB60034 */  sw    $s6, 0x34($sp)
 /* 0E87D0 7F0B3CA0 AFB0001C */  sw    $s0, 0x1c($sp)
@@ -1314,8 +1314,8 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8994 7F0B3E64 24060002 */   li    $a2, 2
 /* 0E8998 7F0B3E68 00408025 */  move  $s0, $v0
 .L7F0B3E6C:
-/* 0E899C 7F0B3E6C 3C028004 */  lui   $v0, %hi(D_8004483C) # $v0, 0x8004
-/* 0E89A0 7F0B3E70 8C42483C */  lw    $v0, %lo(D_8004483C)($v0)
+/* 0E899C 7F0B3E6C 3C028004 */  lui   $v0, %hi(NumberOfRoomsDrawn) # $v0, 0x8004
+/* 0E89A0 7F0B3E70 8C42483C */  lw    $v0, %lo(NumberOfRoomsDrawn)($v0)
 /* 0E89A4 7F0B3E74 26730001 */  addiu $s3, $s3, 1
 .L7F0B3E78:
 /* 0E89A8 7F0B3E78 0262082A */  slt   $at, $s3, $v0
@@ -1349,9 +1349,9 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8A10 7F0B3EE0 00402025 */   move  $a0, $v0
 /* 0E8A14 7F0B3EE4 00408025 */  move  $s0, $v0
 .L7F0B3EE8:
-/* 0E8A18 7F0B3EE8 3C028004 */  lui   $v0, %hi(D_8004483C) # $v0, 0x8004
+/* 0E8A18 7F0B3EE8 3C028004 */  lui   $v0, %hi(NumberOfRoomsDrawn) # $v0, 0x8004
 /* 0E8A1C 7F0B3EEC 02D7082A */  slt   $at, $s6, $s7
-/* 0E8A20 7F0B3EF0 8C42483C */  lw    $v0, %lo(D_8004483C)($v0)
+/* 0E8A20 7F0B3EF0 8C42483C */  lw    $v0, %lo(NumberOfRoomsDrawn)($v0)
 /* 0E8A24 7F0B3EF4 14200043 */  bnez  $at, .L7F0B4004
 /* 0E8A28 7F0B3EF8 02C0A825 */   move  $s5, $s6
 /* 0E8A2C 7F0B3EFC 26F6FFFF */  addiu $s6, $s7, -1
@@ -1416,8 +1416,8 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8B08 7F0B3FD8 24060001 */   li    $a2, 1
 /* 0E8B0C 7F0B3FDC 00408025 */  move  $s0, $v0
 .L7F0B3FE0:
-/* 0E8B10 7F0B3FE0 3C028004 */  lui   $v0, %hi(D_8004483C) # $v0, 0x8004
-/* 0E8B14 7F0B3FE4 8C42483C */  lw    $v0, %lo(D_8004483C)($v0)
+/* 0E8B10 7F0B3FE0 3C028004 */  lui   $v0, %hi(NumberOfRoomsDrawn) # $v0, 0x8004
+/* 0E8B14 7F0B3FE4 8C42483C */  lw    $v0, %lo(NumberOfRoomsDrawn)($v0)
 /* 0E8B18 7F0B3FE8 26730001 */  addiu $s3, $s3, 1
 .L7F0B3FEC:
 /* 0E8B1C 7F0B3FEC 0262082A */  slt   $at, $s3, $v0
@@ -9546,7 +9546,7 @@ void sub_GAME_7F0B8D78(s32 arg0, s32 arg1) {
     {
         // Node 1
         phi_a1 = arg1;
-        if (D_8004483C > 0)
+        if (NumberOfRoomsDrawn > 0)
         {
             // Node 2
             phi_v0 = &dword_CODE_bss_8007FFA0;
@@ -9566,7 +9566,7 @@ loop_3:
                 phi_v0 = (phi_v0 + 0x1c);
                 phi_v1 = temp_v1;
                 phi_a1 = 0x23;
-                if (temp_v1 < D_8004483C)
+                if (temp_v1 < NumberOfRoomsDrawn)
                 {
                     goto loop_3;
                 }
@@ -9587,8 +9587,8 @@ glabel sub_GAME_7F0B8D78
 /* 0ED8B8 7F0B8D88 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0ED8BC 7F0B8D8C 15C10011 */  bne   $t6, $at, .L7F0B8DD4
 /* 0ED8C0 7F0B8D90 00803025 */   move  $a2, $a0
-/* 0ED8C4 7F0B8D94 3C048004 */  lui   $a0, %hi(D_8004483C) # $a0, 0x8004
-/* 0ED8C8 7F0B8D98 8C84483C */  lw    $a0, %lo(D_8004483C)($a0)
+/* 0ED8C4 7F0B8D94 3C048004 */  lui   $a0, %hi(NumberOfRoomsDrawn) # $a0, 0x8004
+/* 0ED8C8 7F0B8D98 8C84483C */  lw    $a0, %lo(NumberOfRoomsDrawn)($a0)
 /* 0ED8CC 7F0B8D9C 3C028008 */  lui   $v0, %hi(dword_CODE_bss_8007FFA0) # $v0, 0x8008
 /* 0ED8D0 7F0B8DA0 2442FFA0 */  addiu $v0, %lo(dword_CODE_bss_8007FFA0) # addiu $v0, $v0, -0x60
 /* 0ED8D4 7F0B8DA4 1880000B */  blez  $a0, .L7F0B8DD4
