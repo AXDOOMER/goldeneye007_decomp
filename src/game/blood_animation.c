@@ -857,8 +857,17 @@ glabel sub_GAME_7F01C670
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01CA18(void) {
-
+void sub_GAME_7F01CA18(Gfx *glistp) //BloodRed_Dl_Setup
+{
+	sub_GAME_7F01C1A4();
+	//1 cycle settings
+	gDPSetRenderMode(glistp++, G_RM_CLD_SURF, G_RM_CLD_SURF2);
+	gDPSetCombineMode(glistp++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+	gDPSetPrimColor(glistp++, 0, 0, 150, 00, 00, 180); //dark red
+	gDPSetColorDither(glistp++, G_CD_MAGICSQ);
+	
+	get_video2_settings_txtClipW();
+	//...
 }
 #else
 GLOBAL_ASM(
@@ -881,7 +890,7 @@ glabel sub_GAME_7F01CA18
 /* 051580 7F01CA50 352900B4 */  ori   $t1, (0x960000B4 & 0xFFFF) # ori $t1, $t1, 0xb4
 /* 051584 7F01CA54 3C08FA00 */  lui   $t0, 0xfa00
 /* 051588 7F01CA58 354A0602 */  ori   $t2, (0xBA000602 & 0xFFFF) # ori $t2, $t2, 0x602
-/* 05158C 7F01CA5C AC4E0000 */  sw    $t6, ($v0)
+/* 05158C 7F01CA5C AC4E0000 */  sw    $t6, ($v0)		#$v0 = gfx glist
 /* 051590 7F01CA60 AC4F0004 */  sw    $t7, 4($v0)
 /* 051594 7F01CA64 AC580008 */  sw    $t8, 8($v0)
 /* 051598 7F01CA68 AC59000C */  sw    $t9, 0xc($v0)
