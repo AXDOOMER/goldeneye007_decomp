@@ -42,9 +42,7 @@ s32 D_8002CCAC = 0;
 s32 D_8002CCB0 = 0;
 s32 D_8002CCB4 = 0;
 u8 D_8002CCB8 = 0x5A;
-u8 D_8002CCB9 = 0;
-u8 D_8002CCBA = 0;
-u8 D_8002CCBB = 0;
+
 u32 D_8002CCBC = 0;
 u32 D_8002CCC0[] = {1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 s32 D_8002CCF8 = 0;
@@ -1034,88 +1032,31 @@ s16 female_guard_yelps[] = {
 s32 male_guard_yelp_counter = 0;
 s32 female_guard_yelp_counter = 0;
 
-s16 metal_ricochet_SFX1 = 0xEF;
-s16 metal_ricochet_SFX2 = 0x48;
-s16 metal_ricochet_SFX3 = 0x49;
-s16 D_80030A42 = 0;
+s16 metal_ricochet_SFX[] = {0xEF, 0x48, 0x49};
+
 
 s32 D_80030A44 = 0;
 s32 D_80030A48 = 0;
 s32 D_80030A4C = 0;
 
-s16 body_hit_SFX1 = 0x7B;
-s16 body_hit_SFX2 = 0x7C;
-s16 body_hit_SFX3 = 0x7D;
-s16 body_hit_SFX4 = 0x7E;
-s16 body_hit_SFX5 = 0x7F;
-s16 body_hit_SFX6 = 0x80;
-s16 body_hit_SFX7 = 0x81;
-s16 body_hit_SFX8 = 0x82;
-s16 body_hit_SFX9 = 0x83;
-s16 body_hit_SFXA = 0x84;
-s16 body_hit_SFXB = 0x85;
-s16 body_hit_SFXC = 0;
+s16 body_hit_SFX[] = {0x7B, 0x7C, 0x7D, 0x7E, 0x7F, 0x80, 0x81, 0x82, 0x83, 0x84, 0x85};
 
 s32 D_80030A68 = 0;
 
 
 
 //.section .rodata
-const f32 D_80051D10 = 0.10000002;
-const f32 D_80051D14 = 0.10000002;
-const f32 D_80051D18 = 0.89999998;
-const f32 D_80051D1C = 0.1;
-const f32 D_80051D20 = 0.10000002;
-const f32 D_80051D24 = -0.1;
-const f32 D_80051D28 = 6.2831855;
-const f32 D_80051D2C = 6.2831855;
-const f32 D_80051D30 = 1.0471976;
-const f32 D_80051D34 = -0.87266463;
-const f32 D_80051D38 = 0.87266463;
-const f32 D_80051D3C = 1.0471976;
-const f32 D_80051D40 = -0.87266463;
-const f32 D_80051D44 = 6.2831855;
-const f32 D_80051D48 = 6.2831855;
-const f32 D_80051D4C = 6.2831855;
-const f32 D_80051D50 = 6.2831855;
-const f32 D_80051D54 = 6.2831855;
-const f32 D_80051D58 = 0.02;
-const f32 D_80051D5C = 0.02;
-const f32 D_80051D60 = 0.02;
-const f32 D_80051D64 = 0.02;
-const f32 D_80051D68 = 0.02;
-const f32 D_80051D6C = 0.02;
-const f32 D_80051D70 = 0.995;
-const f32 D_80051D74 = 1.005;
-const f32 D_80051D78 = 0.995;
-const f32 D_80051D7C = 1.005;
-const f32 D_80051D80 = 0.995;
-const f32 D_80051D84 = 1.005;
-const f32 D_80051D88 = 21.299999;
+
 /*
 .word 0
 */
-const f32 D_80051D90 = 0.10000001;
-const f32 D_80051D94 = 0.80000001;
+
 /*
 .word 0
 .word 0
 */
-const f32 D_80051DA0 = 0.17453294;
-const f32 D_80051DA4 = 6.1086526;
-const f32 D_80051DA8 = 0.60000002;
-const f32 D_80051DAC = 6.2831855;
-const f32 D_80051DB0 = 6.2831855;
-const f32 D_80051DB4 = 6.2831855;
-const f32 D_80051DB8 = 6.2831855;
-const f32 D_80051DBC = 1.5707964;
-const f32 D_80051DC0 = 4.712389;
-const f32 D_80051DC4 = 6.2831855;
-const f32 D_80051DC8 = 3.1415927;
-const f32 D_80051DCC = 0.17453294;
-const f32 D_80051DD0 = 0.17453294;
-const f32 D_80051DD4 = 2.3561945;
-const f32 D_80051DD8 = 3.926991;
+
+
 const f32 D_80051DDC = 1.0471976;
 const f32 D_80051DE0 = 5.2359877;
 const f32 D_80051DE4 = 2.0943952;
@@ -1885,6 +1826,69 @@ void sub_GAME_7F01FC10(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051D10
+.word 0x3dccccd0 /*0.10000002*/
+glabel D_80051D14
+.word 0x3dccccd0 /*0.10000002*/
+glabel D_80051D18
+.word 0x3f666666 /*0.89999998*/
+glabel D_80051D1C
+.word 0x3dcccccd /*0.1*/
+glabel D_80051D20
+.word 0x3dccccd0 /*0.10000002*/
+glabel D_80051D24
+.word 0xbdcccccd /*-0.1*/
+glabel D_80051D28
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051D2C
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051D30
+.word 0x3f860a92 /*1.0471976*/
+glabel D_80051D34
+.word 0xbf5f66f3 /*-0.87266463*/
+glabel D_80051D38
+.word 0x3f5f66f3 /*0.87266463*/
+glabel D_80051D3C
+.word 0x3f860a92 /*1.0471976*/
+glabel D_80051D40
+.word 0xbf5f66f3 /*-0.87266463*/
+glabel D_80051D44
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051D48
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051D4C
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051D50
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051D54
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051D58
+.word 0x3ca3d70a /*0.02*/
+glabel D_80051D5C
+.word 0x3ca3d70a /*0.02*/
+glabel D_80051D60
+.word 0x3ca3d70a /*0.02*/
+glabel D_80051D64
+.word 0x3ca3d70a /*0.02*/
+glabel D_80051D68
+.word 0x3ca3d70a /*0.02*/
+glabel D_80051D6C
+.word 0x3ca3d70a /*0.02*/
+glabel D_80051D70
+.word 0x3f7eb852 /*0.995*/
+glabel D_80051D74
+.word 0x3f80a3d7 /*1.005*/
+glabel D_80051D78
+.word 0x3f7eb852 /*0.995*/
+glabel D_80051D7C
+.word 0x3f80a3d7 /*1.005*/
+glabel D_80051D80
+.word 0x3f7eb852 /*0.995*/
+glabel D_80051D84
+.word 0x3f80a3d7 /*1.005*/
+glabel D_80051D88
+.word 0x41aa6666 /*21.299999*/
 .text
 glabel sub_GAME_7F01FC10
 /* 054740 7F01FC10 27BDFFC8 */  addiu $sp, $sp, -0x38
@@ -6168,6 +6172,11 @@ void maybe_load_models_for_guards(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051D90
+.word 0x3dccccce /*0.10000001*/
+glabel D_80051D94
+.word 0x3f4ccccd /*0.80000001*/
 .text
 glabel maybe_load_models_for_guards
 /* 057E18 7F0232E8 00047880 */  sll   $t7, $a0, 2
@@ -7608,6 +7617,11 @@ void actor_shuffle_feet(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051DA0
+.word 0x3e32b8c3 /*0.17453294*/
+glabel D_80051DA4
+.word 0x40c37a15 /*6.1086526*/
 .text
 glabel actor_shuffle_feet
 /* 058F48 7F024418 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -7714,6 +7728,9 @@ void actor_look_flustered(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051DA8
+.word 0x3f19999a /*0.60000002*/
 .text
 glabel actor_look_flustered
 /* 059078 7F024548 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -8598,6 +8615,11 @@ void sub_GAME_7F0250BC(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051DAC
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051DB0
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F0250BC
 /* 059BEC 7F0250BC 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -8660,6 +8682,11 @@ void sub_GAME_7F02516C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051DB4
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051DB8
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F02516C
 /* 059C9C 7F02516C 27BDFF70 */  addiu $sp, $sp, -0x90
@@ -10140,6 +10167,23 @@ void triggered_on_shot_hit(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051DBC
+.word 0x3fc90fdb /*1.5707964*/
+glabel D_80051DC0
+.word 0x4096cbe4 /*4.712389*/
+glabel D_80051DC4
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051DC8
+.word 0x40490fdb /*3.1415927*/
+glabel D_80051DCC
+.word 0x3e32b8c3 /*0.17453294*/
+glabel D_80051DD0
+.word 0x3e32b8c3 /*0.17453294*/
+glabel D_80051DD4
+.word 0x4016cbe4 /*2.3561945*/
+glabel D_80051DD8
+.word 0x407b53d2 /*3.926991*/
 .text
 glabel triggered_on_shot_hit
 /* 05B038 7F026508 27BDFF60 */  addiu $sp, $sp, -0xa0
@@ -11116,7 +11160,7 @@ glabel handles_shot_actors
 .L7F0272D0:
 /* 05BE00 7F0272D0 24010003 */  li    $at, 3
 /* 05BE04 7F0272D4 10410008 */  beq   $v0, $at, .L7F0272F8
-/* 05BE08 7F0272D8 3C0A8003 */   lui   $t2, %hi(metal_ricochet_SFX1) # $t2, 0x8003
+/* 05BE08 7F0272D8 3C0A8003 */   lui   $t2, %hi(metal_ricochet_SFX) # $t2, 0x8003
 /* 05BE0C 7F0272DC 8E0401D8 */  lw    $a0, 0x1d8($s0)
 /* 05BE10 7F0272E0 0FC12FF4 */  jal   sub_GAME_7F04BFD0
 /* 05BE14 7F0272E4 24050004 */   li    $a1, 4
@@ -11125,7 +11169,7 @@ glabel handles_shot_actors
 /* 05BE20 7F0272F0 10000016 */  b     .L7F02734C
 /* 05BE24 7F0272F4 A6080012 */   sh    $t0, 0x12($s0)
 .L7F0272F8:
-/* 05BE28 7F0272F8 254A0A3C */  addiu $t2, %lo(metal_ricochet_SFX1) # addiu $t2, $t2, 0xa3c
+/* 05BE28 7F0272F8 254A0A3C */  addiu $t2, %lo(metal_ricochet_SFX) # addiu $t2, $t2, 0xa3c
 /* 05BE2C 7F0272FC 8D410000 */  lw    $at, ($t2)
 /* 05BE30 7F027300 27A90054 */  addiu $t1, $sp, 0x54
 /* 05BE34 7F027304 AD210000 */  sw    $at, ($t1)
@@ -16791,11 +16835,11 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F02B9A4
 /* 0604D4 7F02B9A4 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 0604D8 7F02B9A8 3C0F8003 */  lui   $t7, %hi(body_hit_SFX1) # $t7, 0x8003
+/* 0604D8 7F02B9A8 3C0F8003 */  lui   $t7, %hi(body_hit_SFX) # $t7, 0x8003
 /* 0604DC 7F02B9AC AFBF0024 */  sw    $ra, 0x24($sp)
 /* 0604E0 7F02B9B0 AFB10020 */  sw    $s1, 0x20($sp)
 /* 0604E4 7F02B9B4 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 0604E8 7F02B9B8 25EF0A50 */  addiu $t7, %lo(body_hit_SFX1) # addiu $t7, $t7, 0xa50
+/* 0604E8 7F02B9B8 25EF0A50 */  addiu $t7, %lo(body_hit_SFX) # addiu $t7, $t7, 0xa50
 /* 0604EC 7F02B9BC 8DE10000 */  lw    $at, ($t7)
 /* 0604F0 7F02B9C0 8C91001C */  lw    $s1, 0x1c($a0)
 /* 0604F4 7F02B9C4 27AE0038 */  addiu $t6, $sp, 0x38

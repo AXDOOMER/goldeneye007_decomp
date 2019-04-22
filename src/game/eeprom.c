@@ -38,7 +38,7 @@ struct save_data D_8002C5E0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0
 //D:8002C640
 struct save_data D_8002C640 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0x00, 0, 0, 0, 0, 0};
 //D:8002C6A0
-u32 filler[] = {0, 0, 0, 0, 0, 0, 0, 0};
+u32 filler_8002C6A0[] = {0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C6C0
 struct save_data D_8002C6C0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C720
@@ -2054,8 +2054,8 @@ glabel unlock_stage_in_folder_on_difficulty
 /* 05317C 7F01E64C 28C10004 */   slti  $at, $a2, 4
 /* 053180 7F01E650 1020003A */  beqz  $at, .L7F01E73C
 /* 053184 7F01E654 27B10038 */   addiu $s1, $sp, 0x38
-/* 053188 7F01E658 3C0E8003 */  lui   $t6, %hi(D_8002C660) # $t6, 0x8003
-/* 05318C 7F01E65C 25CEC660 */  addiu $t6, %lo(D_8002C660) # addiu $t6, $t6, -0x39a0
+/* 053188 7F01E658 3C0E8003 */  lui   $t6, %hi(D_8002C640+0x20) # $t6, 0x8003
+/* 05318C 7F01E65C 25CEC660 */  addiu $t6, %lo(D_8002C640+0x20) # addiu $t6, $t6, -0x39a0
 /* 053190 7F01E660 25D80060 */  addiu $t8, $t6, 0x60
 /* 053194 7F01E664 0220C825 */  move  $t9, $s1
 .L7F01E668:
