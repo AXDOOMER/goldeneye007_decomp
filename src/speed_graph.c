@@ -2,7 +2,7 @@
 
 
 /* tempory types confirm me */
-s32 dword_CODE_bss_8005F3F0[4];
+s32 dword_CODE_bss_8005F3F0[4]; //Gfx Tiles_Setup? oh... unless thats what the next 2 are... the first command I recognised did start at 8005f400...
 s32 displaylist_0[0x214];
 s32 displaylist_1[0x214];
 s32 displaylist_bank;
