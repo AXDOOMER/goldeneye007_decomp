@@ -294,12 +294,13 @@ u32 D_80044824[] = {0x32C2E32, 0x373E3F4E, 0x56595D72, 0x76797AFF, 0x11003AFF};
 s32 current_room_maybe = 1;
 //D:8004483C
 s32 NumberOfRoomsDrawn = 0;
-
-
-Lights1 GlobalLight = gdSPDefLights1(
-	150,150,150        /* ambient color grey */ //D:80044840
-	255,255,255,77,77,46    /* white light from the upper west-south-west (42 up, 244') */ //D:80044848
-);
+//back for now to build till rom is compiling and this can be determined
+//D:80044840
+u32 GlobalLight[] = {0x96969600, 0x96969600, 0xFFFFFF00, 0xFFFFFF00, 0x4D4D2E00, 0};
+//Lights1 GlobalLight = gdSPDefLights1(
+//	150,150,150        /* ambient color grey */ //D:80044840
+//	255,255,255,77,77,46    /* white light from the upper west-south-west (42 up, 244') */ //D:80044848
+//);
 // OR
 //Lights1 GlobalLight = { 255,255,255, 0xff,		/* diffuse */ 
 //	77,77,46,    0, 		/* direction */
@@ -2764,15 +2765,15 @@ glabel sub_GAME_7F0B4E40
 /* 0E9990 7F0B4E60 AC4E0000 */  sw    $t6, ($v0)
 /* 0E9994 7F0B4E64 AC4F0004 */  sw    $t7, 4($v0)
 /* 0E9998 7F0B4E68 3C180386 */  lui   $t8, (0x03860010 >> 16) # lui $t8, 0x386
-/* 0E999C 7F0B4E6C 3C198004 */  lui   $t9, %hi(GlobalLight.l[0]) # $t9, 0x8004
-/* 0E99A0 7F0B4E70 27394848 */  addiu $t9, %lo(GlobalLight.l[0]) # addiu $t9, $t9, 0x4848
+/* 0E999C 7F0B4E6C 3C198004 */  lui   $t9, %hi(GlobalLight+0x8) # $t9, 0x8004
+/* 0E99A0 7F0B4E70 27394848 */  addiu $t9, %lo(GlobalLight+0x8) # addiu $t9, $t9, 0x4848
 /* 0E99A4 7F0B4E74 37180010 */  ori   $t8, (0x03860010 & 0xFFFF) # ori $t8, $t8, 0x10
 /* 0E99A8 7F0B4E78 24650008 */  addiu $a1, $v1, 8
 /* 0E99AC 7F0B4E7C AC780000 */  sw    $t8, ($v1)
 /* 0E99B0 7F0B4E80 AC790004 */  sw    $t9, 4($v1)
 /* 0E99B4 7F0B4E84 3C080388 */  lui   $t0, (0x03880010 >> 16) # lui $t0, 0x388
-/* 0E99B8 7F0B4E88 3C098004 */  lui   $t1, %hi(GlobalLight.a) # $t1, 0x8004
-/* 0E99BC 7F0B4E8C 25294840 */  addiu $t1, %lo(GlobalLight.a) # addiu $t1, $t1, 0x4840
+/* 0E99B8 7F0B4E88 3C098004 */  lui   $t1, %hi(GlobalLight) # $t1, 0x8004
+/* 0E99BC 7F0B4E8C 25294840 */  addiu $t1, %lo(GlobalLight) # addiu $t1, $t1, 0x4840
 /* 0E99C0 7F0B4E90 35080010 */  ori   $t0, (0x03880010 & 0xFFFF) # ori $t0, $t0, 0x10
 /* 0E99C4 7F0B4E94 24A60008 */  addiu $a2, $a1, 8
 /* 0E99C8 7F0B4E98 3C0A0384 */  lui   $t2, (0x03840010 >> 16) # lui $t2, 0x384

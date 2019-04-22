@@ -1056,19 +1056,14 @@ s32 D_80030A68 = 0;
 .word 0
 */
 
-
-const f32 D_80051DDC = 1.0471976;
-const f32 D_80051DE0 = 5.2359877;
-const f32 D_80051DE4 = 2.0943952;
-const f32 D_80051DE8 = 4.1887903;
-const f32 D_80051DEC = 6.2831855;
-const f32 D_80051DF0 = 6.2831855;
-const f32 D_80051DF4 = 9.999999;
 const f32 D_80051DF8 = 10000.0;
+
 const f32 D_80051DFC = 6.2831855;
 const f32 D_80051E00 = 1.7453293;
 const f32 D_80051E04 = 4.5378561;
+
 const f32 D_80051E08 = 1.2;
+
 const f32 D_80051E0C = 6.2831855;
 const f32 D_80051E10 = 1.9198622;
 const f32 D_80051E14 = 4.3633232;
@@ -1080,20 +1075,27 @@ const f32 D_80051E28 = 5.4977875;
 const f32 D_80051E2C = 3.1415927;
 const f32 D_80051E30 = 6.2831855;
 const f32 D_80051E34 = 6.2831855;
+
 const f32 D_80051E38 = 6.2831855;
 const f32 D_80051E3C = 0.78539819;
 const f32 D_80051E40 = 5.4977875;
 const f32 D_80051E44 = 2.3561945;
 const f32 D_80051E48 = 3.926991;
+
 const f32 D_80051E4C = 6.2831855;
 const f32 D_80051E50 = 0.78539819;
 const f32 D_80051E54 = 5.4977875;
 const f32 D_80051E58 = 2.3561945;
 const f32 D_80051E5C = 3.926991;
+
 const f32 D_80051E60 = 1000000.0;
+
 const f32 D_80051E64 = 1000000.0;
+
 const f32 D_80051E68 = 40000.0;
+
 const f32 D_80051E6C = 1.1;
+
 const f32 D_80051E70 = 0.34906587;
 const f32 D_80051E74 = 5.9341197;
 const f32 D_80051E78 = 6.2831855;
@@ -1102,14 +1104,20 @@ const f32 D_80051E80 = 6.2831855;
 const f32 D_80051E84 = 6.2831855;
 const f32 D_80051E88 = 6.2831855;
 const f32 D_80051E8C = 6.2831855;
+
 const f32 D_80051E90 = 4000000.0;
+
 const f32 D_80051E94 = 0.30000001;
+
 const f32 D_80051E98 = 6.2831855;
+
 const f32 D_80051E9C = 6.2831855;
+
 const f32 D_80051EA0 = 0.062831856;
 const f32 D_80051EA4 = 6.2831855;
 const f32 D_80051EA8 = 6.2831855;
 const f32 D_80051EAC = 3.1415927;
+
 const f32 D_80051EB0 = 160000.0;
 const f32 D_80051EB4 = 0.1;
 const f32 D_80051EB8 = 0.55000001;
@@ -1140,7 +1148,9 @@ const f32 D_80051F18 = 6.2831855;
 const f32 D_80051F1C = 6.2831855;
 const f32 D_80051F20 = 6.2831855;
 const f32 D_80051F24 = 6.2831855;
+
 const f32 D_80051F28 = 3.1415927;
+
 const f32 D_80051F2C = 2560000.0;
 const f32 D_80051F30 = 0.018755777;
 const f32 D_80051F34 = 640000.0;
@@ -1150,10 +1160,12 @@ const f32 D_80051F40 = 0.074799828;
 const f32 D_80051F44 = 40000.0;
 const f32 D_80051F48 = 0.14959966;
 const f32 D_80051F4C = 0.25132743;
+
 const f32 D_80051F50 = 6.2831855;
 const f32 D_80051F54 = 6.2831855;
 const f32 D_80051F58 = 0.16;
 const f32 D_80051F5C = 10.001;
+
 const f32 D_80051F60 = 160000.0;
 const f32 D_80051F64 = 1.111111;
 const f32 D_80051F68 = 160000.0;
@@ -11134,6 +11146,15 @@ void handles_shot_actors(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051DDC
+.word 0x3f860a92 /*1.0471976*/
+glabel D_80051DE0
+.word 0x40a78d36 /*5.2359877*/
+glabel D_80051DE4
+.word 0x40060a92 /*2.0943952*/
+glabel D_80051DE8
+.word 0x40860a92 /*4.1887903*/
 .text
 glabel handles_shot_actors
 /* 05BDAC 7F02727C 27BDFF98 */  addiu $sp, $sp, -0x68
@@ -11536,6 +11557,11 @@ void sub_GAME_7F027804(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051DEC
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051DF0
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F027804
 /* 05C334 7F027804 27BDFFA8 */  addiu $sp, $sp, -0x58
@@ -12172,6 +12198,9 @@ void sub_GAME_7F027FA8(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051DF4
+.word 0x411fffff /*9.999999*/
 .text
 glabel sub_GAME_7F027FA8
 /* 05CAD8 7F027FA8 27BDFFD0 */  addiu $sp, $sp, -0x30
