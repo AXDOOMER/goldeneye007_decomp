@@ -1,100 +1,152 @@
 #include "libultra_internal.h"
 
-//TODO: document 
-OSTimer D_80365D80;
-OSTimer *D_80334830 = &D_80365D80;
+OSTimer aTimer;
+
+// This timer is the first node in a circular doubly-linked list of timers
+OSTimer *firstTimer = &aTimer;
+
 OSTime _osCurrentTime;
-u32 D_80365DA8;
-u32 __osViSwapCount;
-u32 D_80365DB0;
+
+// Count at last VI manager loop
+u32 lastViCount;
+
+// This variable is set to 0 here, incremented in viMgrMain, but never read from.
+// Looks useless.
+// It counts how many times __osViSwapContext was called in viMgrMain.
+u32	__osViSwapCount;
+
+// Count at last interrupt
+u32 lastIntCount;
+
 void __osTimerServicesInit()
 {
     _osCurrentTime = 0;
-    D_80365DA8 = 0;
+    lastViCount = 0;
     __osViSwapCount = 0;
-    D_80334830->prev = D_80334830;
-    D_80334830->next = D_80334830->prev;
-    D_80334830->remaining = 0;
-    D_80334830->interval = D_80334830->remaining;
-    D_80334830->mq = NULL;
-    D_80334830->msg = NULL;
+
+    // Init the Circular Linked List
+    firstTimer->prev = firstTimer;
+    firstTimer->next = firstTimer->prev;
+
+    // Init the first element of this list
+    firstTimer->remaining = 0;
+    firstTimer->interval = firstTimer->remaining;
+    firstTimer->mq = NULL;
+    firstTimer->msg = NULL;
 }
 
 void __osTimerInterrupt()
 {
-    OSTimer *sp24;
-    u32 sp20;
-    u32 sp1c;
-    if (D_80334830->next == D_80334830)
+    // Pointer used to iterate on the list of timers
+    OSTimer *node;
+    u32 newCount;
+
+    // Difference between the new count and the count from the last call to
+    // osGetCount() in __osSetTimerIntr(u64 a0)
+    u32 diff;
+
+    // The list of timers is empty
+    if (firstTimer->next == firstTimer)
         return;
+
     while (1)
     {
-        sp24 = D_80334830->next;
-        if (sp24 == D_80334830)
+        node = firstTimer->next;
+        if (node == firstTimer)
         {
             __osSetCompare(0);
-            D_80365DB0 = 0;
+            lastIntCount = 0;
             break;
         }
-        sp20 = osGetCount();
-        sp1c = sp20 - D_80365DB0;
-        D_80365DB0 = sp20;
-        if (sp1c < sp24->remaining)
+
+        // Get the count register of CPU with osGetCount()
+        newCount = osGetCount();
+        diff = newCount - lastIntCount;
+        lastIntCount = newCount;
+
+        if (diff < node->remaining)
         {
-            sp24->remaining -= sp1c;
-            __osSetTimerIntr(sp24->remaining);
+            node->remaining -= diff;
+            __osSetTimerIntr(node->remaining);
             return;
         }
         else
         {
-            sp24->prev->next = sp24->next;
-            sp24->next->prev = sp24->prev;
-            sp24->next = NULL;
-            sp24->prev = NULL;
-            if (sp24->mq != NULL)
+            // Unlink this timer from the list
+            node->prev->next = node->next;
+            node->next->prev = node->prev;
+            node->next = NULL;
+            node->prev = NULL;
+
+            // Copy the timer's message to the message queue
+            if (node->mq != NULL)
             {
-                osSendMesg(sp24->mq, sp24->msg, OS_MESG_NOBLOCK);
+                osSendMesg(node->mq, node->msg, OS_MESG_NOBLOCK);
             }
-            if (sp24->interval != 0)
+
+            // Reinsert into the linked list if it's an interval timer
+            if (node->interval != 0)
             {
-                sp24->remaining = sp24->interval;
-                __osInsertTimer(sp24);
+                node->remaining = node->interval;
+                __osInsertTimer(node);
             }
         }
     }
 }
 
-void __osSetTimerIntr(u64 a0)
+void __osSetTimerIntr(u64 remaining)
 {
     u64 tmp;
-    s32 intDisabled = __osDisableInt();
-    D_80365DB0 = osGetCount();
-    tmp = a0 + D_80365DB0;
-    __osSetCompare(tmp);
-    __osRestoreInt(intDisabled);
+    u32 saveMask = __osDisableInt();
+
+    // http://n64devkit.square7.ch/n64man/os/osGetCount.htm
+    lastIntCount = osGetCount();
+
+    // Interesting because a timer cannot be set to trigger on a more than 92 seconds interval
+    tmp = remaining + lastIntCount;
+
+    // Note that __osSetCompare takes a u32
+    __osSetCompare((u32)tmp);
+    __osRestoreInt(saveMask);
 }
 
-u64 __osInsertTimer(OSTimer *a0)
+u64 __osInsertTimer(OSTimer *newTimer)
 {
-    OSTimer *sp34;
-    u64 sp28;
-    s32 intDisabled;
-    intDisabled = __osDisableInt();
-    for (sp34 = D_80334830->next, sp28 = a0->remaining;
-         sp34 != D_80334830 && sp28 > sp34->remaining;
-         sp28 -= sp34->remaining, sp34 = sp34->next)
+    // Used to iterate over the timers
+    OSTimer *node;
+
+    u64 newRemainer;
+
+    // Low priority interrupts are masked, this is how they are disabled.
+    // We are entering a critical section because shared ressources are accessed.
+    u32 saveMask = __osDisableInt();
+
+    // Iterate over the timers. If the remaining time of the new timer
+    // is bigger than the remaining time of the iterated node, then decrease
+    // the remaining time of the new timer.
+    for (node = firstTimer->next, newRemainer = newTimer->remaining;
+         node != firstTimer && newRemainer > node->remaining;
+         newRemainer -= node->remaining, node = node->next)
     {
         ;
     }
-    a0->remaining = sp28;
-    if (sp34 != D_80334830)
+
+    newTimer->remaining = newRemainer;
+
+    // Decrease the remaining time of the last iterated node by the same amount
+    // as the remaining time of the new timer
+    if (node != firstTimer)
     {
-        sp34->remaining -= sp28;
+        node->remaining -= newRemainer;
     }
-    a0->next = sp34;
-    a0->prev = sp34->prev;
-    sp34->prev->next = a0;
-    sp34->prev = a0;
-    __osRestoreInt(intDisabled);
-    return sp28;
+
+    // Insert the timer in the linked list, before the last iterated node
+    newTimer->next = node;
+    newTimer->prev = node->prev;
+    node->prev->next = newTimer;
+    node->prev = newTimer;
+
+    // Restore the interrupts with the mask
+    __osRestoreInt(saveMask);
+    return newRemainer;
 }
