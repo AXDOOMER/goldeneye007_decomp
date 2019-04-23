@@ -1,11 +1,62 @@
 #include "ultra64.h"
+/*   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    | Snippet of building glist buffers   |
+    |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
 
+== H file ==
+#define	GLIST_LEN	2048 // GE seems to be 266
 
+/*
+ * Layout of dynamic data.
+ *
+ * This structure holds the things which change per frame. It is advantageous
+ * to keep dynamic data together so that we may selectively write back dirty
+ * data cache lines to DRAM prior to processing by the RCP.
+ *
+ * /
+typedef struct {
+	Mtx	projection;
+	Mtx	modeling;
+	Mtx	modeling2;
+	Mtx	viewing;
+	LookAt	lookat;
+	Hilite	hilite;
+	Lightsn	light;          //Oh interesting, since we found this and LookAt, it seems dynamic gfx should astart right after.
+	Gfx	glist[GLIST_LEN];
+} Dynamic;
+
+extern Dynamic	dynamic;
+
+== H file End ==
+
+/*
+ * global variables
+ *
+Gfx		*glistp;	/* RSP display list pointer * /
+//Dynamic		dynamic;	/* dynamic data * /
+/ *
+ * Double-buffered dynamic segments
+ * /
+Dynamic	dynamic[2];
+...
+
+// some function()
+{
+    ...
+    int		current = 0;
+    dynamicp = &dynamic[current];
+    glistp = dynamicp->glist;
+    //example gfx build
+    gSPSegment(glistp++, 0, 0x0); // glist++ ready for next instruction (held in dynamic 1 or 2)
+}
+*/
+    
 /* tempory types confirm me */
 s32 dword_CODE_bss_8005F3F0[4]; //Gfx Tiles_Setup? oh... unless thats what the next 2 are... the first command I recognised did start at 8005f400...
-s32 displaylist_0[0x214];
-s32 displaylist_1[0x214];
-s32 displaylist_bank;
+// dynamic glist, though it lacks the format above...
+Gfx displaylist_0[266];
+Gfx displaylist_1[266];
+s32 displaylist_bank; //0 or 1? current?
 s32 dword_CODE_bss_800604A4;
 u32 dword_CODE_bss_800604A8;
 u32 dword_CODE_bss_800604AC;
@@ -55,10 +106,8 @@ void displaylist_related(void)
     void *phi_v1;
     void *phi_v0;
 
-    displaylist_0 = 0xb8000000;
-    displaylist_0.unk4 = 0;
-    displaylist_0.unk850 = 0xb8000000;
-    displaylist_0.unk854 = 0;
+    gSPEndDisplayList(displaylist_0++);
+    displaylist_0.unk850 = 0xb800000000000000; //? is this not dlist2?
     displaylist_bank = 0;
     phi_v1 = &dword_CODE_bss_800607B0;
     phi_v0 = &dword_CODE_bss_800607D0;
