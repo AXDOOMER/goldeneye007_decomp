@@ -6424,6 +6424,15 @@ typedef struct $62F109188EB304B8EC258AA93B51CC96 $62F109188EB304B8EC258AA93B51CC
 struct $62F109188EB304B8EC258AA93B51CC96 {
 };
 
+typedef struct rgba_val rgba_val, *Prgba_val;
+
+struct rgba_val {
+    char R;
+    char G;
+    char B;
+    char A;
+};
+
 typedef enum LEVEL_SOLO_SEQUENCE {
     LEVEL_ARCHIVES=16,
     LEVEL_AZTEC=26,
@@ -10528,15 +10537,6 @@ struct OSScTask_s {
     OSMesg msg;
 };
 
-typedef struct rgba_val rgba_val, *Prgba_val;
-
-struct rgba_val {
-    char R;
-    char G;
-    char B;
-    char A;
-};
-
 typedef struct $31E12A8E501C96F6AFEABF3D9309C7AB $31E12A8E501C96F6AFEABF3D9309C7AB, *P$31E12A8E501C96F6AFEABF3D9309C7AB;
 
 struct $31E12A8E501C96F6AFEABF3D9309C7AB {
@@ -14364,8 +14364,8 @@ uint * proc_70003C58(uint *param_1);
 undefined4 * proc_70003EB4(undefined4 *param_1);
 undefined4 * insert_generic_fillrect(undefined4 *param_1);
 uint * setupscreensfornumplayers(undefined4 *param_1);
-void set_video_mp_related_800232A0(undefined4 param_1);
-undefined4 get_video_mp_related_800232A0(void);
+void set_video_mp_related_800232A0(s32 param_1);
+s32 get_video_mp_related_800232A0(void);
 void set_video_mp_related_8002329C(undefined4 param_1);
 undefined4 get_video_mp_related_8002329C(void);
 void set_video2_settings_offset_18_1A(short param_1,short param_2);
@@ -14384,13 +14384,13 @@ void set_video2_settings_offset_24(int param_1);
 void video_related_1F(f32 param_1);
 void video_related_21(f32 param_1);
 undefined4 video_related_23(void);
-void video_related_24(float param_1,float param_2,undefined8 param_3,undefined8 param_4);
+void video_related_24(float param_1,float param_2,float param_3);
 void set_page_height(f32 param_1,f32 param_2);
 void video_related_27(undefined4 *param_1);
 undefined4 * set_setfillcolor(undefined4 *DL,uint red,uint green,int blue);
-undefined4 indy_grab_jpg_16bit(void);
-undefined4 indy_grab_jpg_32bit(void);
-undefined4 indy_grab_rgb_16bit(void);
+void indy_grab_jpg_16bit(void);
+void indy_grab_jpg_32bit(void);
+void indy_grab_rgb_16bit(void);
 undefined4 indy_grab_rgb_32bit(void);
 int * return_match_in_debug_notice_list(int *name,int *data);
 undefined * get_entry_of_size_in_debug_notice_list(int size);
@@ -15055,9 +15055,9 @@ void unload_something_7f007920(void);
 void unload_removed_7f007970(void);
 void unload_music_related_7F007980(void);
 undefined4 * something_with_gunbarrel_and_rareware_logo_matrix_manip(undefined4 *displaylist);
-undefined4 * insert_sight_backdrop_eye_intro(undefined4 *param_1);
+Gfx * insert_sight_backdrop_eye_intro(Gfx *glistp);
 undefined4 * proc_7F007CC8(undefined4 *param_1,int param_2,int *param_3,int *param_4);
-undefined4 * insert_sniper_sight_eye_intro(undefined4 *param_1);
+Gfx * insert_sniper_sight_eye_intro(Gfx *glistp);
 undefined4 * proc_7F007E70(undefined4 *param_1,uint param_2);
 undefined4 proc_7F007F30(void);
 void insert_bond_eye_intro(undefined4 *displaylist);
@@ -15239,11 +15239,11 @@ undefined4 * proc_7F01B6E0(undefined4 *param_1,int param_2,int param_3);
 void proc_7F01BAE0(short *param_1,int param_2);
 uint * proc_7F01BFF8(uint *param_1,uint param_2,int param_3);
 undefined4 * insert_imageDL(undefined4 *param_1);
-undefined4 * proc_7F01C1A4(undefined4 *param_1);
+undefined4 * proc_7F01C1A4(Gfx *glistp);
 ulonglong die_blood_image_routine(int param_1);
 undefined4 * proc_7F01C400(undefined4 *param_1);
 undefined4 * proc_7F01C670(undefined4 *param_1);
-undefined4 * proc_7F01CA18(undefined4 *param_1);
+void proc_7F01CA18(Gfx *glistp);
 byte * decrypt_bleeding_animation_data(char *param_1,byte param_2,uint param_3,byte *param_4,char *param_5);
 void proc_7F01CC94(byte *param_1,short param_2,byte *param_3);
 void proc_7F01CCEC(int param_1,uint param_2,uint param_3,int param_4,byte param_5);

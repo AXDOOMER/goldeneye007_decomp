@@ -1056,123 +1056,6 @@ s32 D_80030A68 = 0;
 .word 0
 */
 
-const f32 D_80051DF8 = 10000.0;
-
-const f32 D_80051DFC = 6.2831855;
-const f32 D_80051E00 = 1.7453293;
-const f32 D_80051E04 = 4.5378561;
-
-const f32 D_80051E08 = 1.2;
-
-const f32 D_80051E0C = 6.2831855;
-const f32 D_80051E10 = 1.9198622;
-const f32 D_80051E14 = 4.3633232;
-const f32 D_80051E18 = 40000.0;
-const f32 D_80051E1C = 1.9198622;
-const f32 D_80051E20 = 4.3633232;
-const f32 D_80051E24 = 0.78539819;
-const f32 D_80051E28 = 5.4977875;
-const f32 D_80051E2C = 3.1415927;
-const f32 D_80051E30 = 6.2831855;
-const f32 D_80051E34 = 6.2831855;
-
-const f32 D_80051E38 = 6.2831855;
-const f32 D_80051E3C = 0.78539819;
-const f32 D_80051E40 = 5.4977875;
-const f32 D_80051E44 = 2.3561945;
-const f32 D_80051E48 = 3.926991;
-
-const f32 D_80051E4C = 6.2831855;
-const f32 D_80051E50 = 0.78539819;
-const f32 D_80051E54 = 5.4977875;
-const f32 D_80051E58 = 2.3561945;
-const f32 D_80051E5C = 3.926991;
-
-const f32 D_80051E60 = 1000000.0;
-
-const f32 D_80051E64 = 1000000.0;
-
-const f32 D_80051E68 = 40000.0;
-
-const f32 D_80051E6C = 1.1;
-
-const f32 D_80051E70 = 0.34906587;
-const f32 D_80051E74 = 5.9341197;
-const f32 D_80051E78 = 6.2831855;
-const f32 D_80051E7C = 0.78539819;
-const f32 D_80051E80 = 6.2831855;
-const f32 D_80051E84 = 6.2831855;
-const f32 D_80051E88 = 6.2831855;
-const f32 D_80051E8C = 6.2831855;
-
-const f32 D_80051E90 = 4000000.0;
-
-const f32 D_80051E94 = 0.30000001;
-
-const f32 D_80051E98 = 6.2831855;
-
-const f32 D_80051E9C = 6.2831855;
-
-const f32 D_80051EA0 = 0.062831856;
-const f32 D_80051EA4 = 6.2831855;
-const f32 D_80051EA8 = 6.2831855;
-const f32 D_80051EAC = 3.1415927;
-
-const f32 D_80051EB0 = 160000.0;
-const f32 D_80051EB4 = 0.1;
-const f32 D_80051EB8 = 0.55000001;
-const f32 D_80051EBC = 0.1;
-const f32 D_80051EC0 = 0.15000001;
-const f32 D_80051EC4 = 0.1;
-const f32 D_80051EC8 = 0.050000001;
-const f32 D_80051ECC = 0.025;
-const f32 D_80051ED0 = 1000000.0;
-const f32 D_80051ED4 = 0.1;
-const f32 D_80051ED8 = 0.050000001;
-const f32 D_80051EDC = 0.55000001;
-const f32 D_80051EE0 = 0.050000001;
-const f32 D_80051EE4 = 0.1;
-const f32 D_80051EE8 = 0.55000001;
-const f32 D_80051EEC = 0.1;
-const f32 D_80051EF0 = 0.15000001;
-const f32 D_80051EF4 = 0.1;
-const f32 D_80051EF8 = 0.050000001;
-const f32 D_80051EFC = 3.1415927;
-const f32 D_80051F00 = 6.2831855;
-const f32 D_80051F04 = 1000000.0;
-const f32 D_80051F08 = 6.2831855;
-const f32 D_80051F0C = 6.2831855;
-const f32 D_80051F10 = 6.2831855;
-const f32 D_80051F14 = 6.2831855;
-const f32 D_80051F18 = 6.2831855;
-const f32 D_80051F1C = 6.2831855;
-const f32 D_80051F20 = 6.2831855;
-const f32 D_80051F24 = 6.2831855;
-
-const f32 D_80051F28 = 3.1415927;
-
-const f32 D_80051F2C = 2560000.0;
-const f32 D_80051F30 = 0.018755777;
-const f32 D_80051F34 = 640000.0;
-const f32 D_80051F38 = 0.037623864;
-const f32 D_80051F3C = 160000.0;
-const f32 D_80051F40 = 0.074799828;
-const f32 D_80051F44 = 40000.0;
-const f32 D_80051F48 = 0.14959966;
-const f32 D_80051F4C = 0.25132743;
-
-const f32 D_80051F50 = 6.2831855;
-const f32 D_80051F54 = 6.2831855;
-const f32 D_80051F58 = 0.16;
-const f32 D_80051F5C = 10.001;
-
-const f32 D_80051F60 = 160000.0;
-const f32 D_80051F64 = 1.111111;
-const f32 D_80051F68 = 160000.0;
-const f32 D_80051F6C = 33.333332;
-const f32 D_80051F70 = 0.30000001;
-const f32 D_80051F74 = 0.13333333;
-const f32 D_80051F78 = 10000.0;
 /*
 jpt_700620FC:
  .word weapon_guard_fires_bullet_projectile
@@ -1195,48 +1078,56 @@ jpt_700620FC:
  .word weapon_guard_fires_bullet_projectile
  .word weapon_guard_fires_bullet_projectile
  */
-const f32 D_80051FC8 = 6.2831855;
-const f32 D_80051FCC = 0.2;
-const f32 D_80051FD0 = 6.2831855;
-const f32 D_80051FD4 = 3.1415927;
-const f32 D_80051FD8 = 6.2831855;
-const f32 D_80051FDC = 0.29919931;
-const f32 D_80051FE0 = 0.014959966;
-const f32 D_80051FE4 = 0.39269909;
-const f32 D_80051FE8 = 0.019634955;
-const f32 D_80051FEC = 1.2566371;
-const f32 D_80051FF0 = 0.098174773;
-const f32 D_80051FF4 = 0.19634955;
-const f32 D_80051FF8 = 0.014959966;
-const f32 D_80051FFC = 0.39269909;
-const f32 D_80052000 = 0.0098174773;
-const f32 D_80052004 = 1.2566371;
-const f32 D_80052008 = 0.049087387;
-const f32 D_8005200C = 0.12566371;
-const f32 D_80052010 = 0.0098174773;
-const f32 D_80052014 = 0.94999999;
-const f32 D_80052018 = 0.94999999;
-const f32 D_8005201C = 1.2;
-const f32 D_80052020 = 1.2;
-const f32 D_80052024 = 0.94999999;
-const f32 D_80052028 = 0.94999999;
-const f32 D_8005202C = 1.2;
-const f32 D_80052030 = 1.2;
-const f32 D_80052034 = 0.78539819;
-const f32 D_80052038 = 6.2831855;
-const f32 D_8005203C = 3.1415927;
-const f32 D_80052040 = 6.2831855;
-const f32 D_80052044 = 1.2;
-const f32 D_80052048 = 1.05;
-const f32 D_8005204C = 1.2;
-const f32 D_80052050 = 1.05;
-const f32 D_80052054 = 1.2;
-const f32 D_80052058 = 1.05;
-const f32 D_8005205C = 1.1;
-const f32 D_80052060 = 1.1;
-const f32 D_80052064 = 40000.0;
-const f32 D_80052068 = 1.2;
-const f32 D_8005206C = 1.2;
+const f32 D_80051FC8 = 40c90fdb 6.2831855;
+
+const f32 D_80051FCC = 3e4ccccd 0.2;
+
+const f32 D_80051FD0 = 40c90fdb 6.2831855;
+
+const f32 D_80051FD4 = 40490fdb 3.1415927;
+const f32 D_80051FD8 = 40c90fdb 6.2831855;
+const f32 D_80051FDC = 3e9930a7 0.29919931;
+const f32 D_80051FE0 = 3c751aa5 0.014959966;
+const f32 D_80051FE4 = 3ec90fdb 0.39269909;
+const f32 D_80051FE8 = 3ca0d97c 0.019634955;
+const f32 D_80051FEC = 3fa0d97c 1.2566371;
+const f32 D_80051FF0 = 3dc90fdb 0.098174773;
+const f32 D_80051FF4 = 3e490fdb 0.19634955;
+const f32 D_80051FF8 = 3c751aa5 0.014959966;
+const f32 D_80051FFC = 3ec90fdb 0.39269909;
+const f32 D_80052000 = 3c20d97c 0.0098174773;
+const f32 D_80052004 = 3fa0d97c 1.2566371;
+const f32 D_80052008 = 3d490fdb 0.049087387;
+const f32 D_8005200C = 3e00adfd 0.12566371;
+const f32 D_80052010 = 3c20d97c 0.0098174773;
+
+const f32 D_80052014 = 3f733333 0.94999999;
+const f32 D_80052018 = 3f733333 0.94999999;
+const f32 D_8005201C = 3f99999a 1.2;
+const f32 D_80052020 = 3f99999a 1.2;
+
+const f32 D_80052024 = 3f733333 0.94999999;
+const f32 D_80052028 = 3f733333 0.94999999;
+const f32 D_8005202C = 3f99999a 1.2;
+const f32 D_80052030 = 3f99999a 1.2;
+
+const f32 D_80052034 = 3f490fdb 0.78539819;
+const f32 D_80052038 = 40c90fdb 6.2831855;
+
+const f32 D_8005203C = 40490fdb 3.1415927;
+const f32 D_80052040 = 40c90fdb 6.2831855;
+const f32 D_80052044 = 3f99999a 1.2;
+const f32 D_80052048 = 3f866666 1.05;
+const f32 D_8005204C = 3f99999a 1.2;
+const f32 D_80052050 = 3f866666 1.05;
+const f32 D_80052054 = 3f99999a 1.2;
+const f32 D_80052058 = 3f866666 1.05;
+const f32 D_8005205C = 3f8ccccd 1.1;
+const f32 D_80052060 = 3f8ccccd 1.1;
+const f32 D_80052064 = 471c4000 40000.0;
+
+const f32 D_80052068 = 3f99999a 1.2;
+const f32 D_8005206C = 3f99999a 1.2;
 /*
 jpt_700666B0:
  .word .L7F032788
@@ -13613,6 +13504,9 @@ void set_actor_on_path(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051DF8
+.word 0x461c4000 /*10000.0*/
 .text
 glabel set_actor_on_path
 /* 05DC28 7F0290F8 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -14058,6 +13952,13 @@ void sub_GAME_7F02969C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051DFC
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051E00
+.word 0x3fdf66f3 /*1.7453293*/
+glabel D_80051E04
+.word 0x4091361e /*4.5378561*/
 .text
 glabel sub_GAME_7F02969C
 /* 05E1CC 7F02969C 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -14189,6 +14090,9 @@ void sub_GAME_7F02982C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051E08
+.word 0x3f99999a /*1.2*/
 .text
 glabel sub_GAME_7F02982C
 /* 05E35C 7F02982C 27BDFF80 */  addiu $sp, $sp, -0x80
@@ -14613,6 +14517,29 @@ void sub_GAME_7F029D70(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051E0C
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051E10
+.word 0x3ff5be0b /*1.9198622*/
+glabel D_80051E14
+.word 0x408ba058 /*4.3633232*/
+glabel D_80051E18
+.word 0x471c4000 /*40000.0*/
+glabel D_80051E1C
+.word 0x3ff5be0b /*1.9198622*/
+glabel D_80051E20
+.word 0x408ba058 /*4.3633232*/
+glabel D_80051E24
+.word 0x3f490fdb /*0.78539819*/
+glabel D_80051E28
+.word 0x40afede0 /*5.4977875*/
+glabel D_80051E2C
+.word 0x40490fdb /*3.1415927*/
+glabel D_80051E30
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051E34
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F029D70
 /* 05E8A0 7F029D70 27BDFFA8 */  addiu $sp, $sp, -0x58
@@ -15064,6 +14991,17 @@ void actor_steps_sideways(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051E38
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051E3C
+.word 0x3f490fdb /*0.78539819*/
+glabel D_80051E40
+.word 0x40afede0 /*5.4977875*/
+glabel D_80051E44
+.word 0x4016cbe4 /*2.3561945*/
+glabel D_80051E48
+.word 0x407b53d2 /*3.926991*/
 .text
 glabel actor_steps_sideways
 /* 05EDF8 7F02A2C8 27BDFFB0 */  addiu $sp, $sp, -0x50
@@ -15170,6 +15108,17 @@ void actor_hops_sideways(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051E4C
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051E50
+.word 0x3f490fdb /*0.78539819*/
+glabel D_80051E54
+.word 0x40afede0 /*5.4977875*/
+glabel D_80051E58
+.word 0x4016cbe4 /*2.3561945*/
+glabel D_80051E5C
+.word 0x407b53d2 /*3.926991*/
 .text
 glabel actor_hops_sideways
 /* 05EF58 7F02A428 27BDFFB0 */  addiu $sp, $sp, -0x50
@@ -15388,6 +15337,9 @@ void actor_walks_and_fires(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051E60
+.word 0x49742400 /*1000000.0*/
 .text
 glabel actor_walks_and_fires
 /* 05F234 7F02A704 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -15465,6 +15417,9 @@ void actor_runs_and_fires(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051E64
+.word 0x49742400 /*1000000.0*/
 .text
 glabel actor_runs_and_fires
 /* 05F328 7F02A7F8 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -15542,6 +15497,9 @@ void actor_rolls_fires_crouched(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051E68
+.word 0x471c4000 /*40000.0*/
 .text
 glabel actor_rolls_fires_crouched
 /* 05F41C 7F02A8EC 27BDFFB8 */  addiu $sp, $sp, -0x48
@@ -15799,6 +15757,9 @@ void actor_moves_to_preset_at_speed(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051E6C
+.word 0x3f8ccccd /*1.1*/
 .text
 glabel actor_moves_to_preset_at_speed
 /* 05F6E4 7F02ABB4 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -15953,6 +15914,23 @@ void sub_GAME_7F02AD98(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051E70
+.word 0x3eb2b8c3 /*0.34906587*/
+glabel D_80051E74
+.word 0x40bde44f /*5.9341197*/
+glabel D_80051E78
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051E7C
+.word 0x3f490fdb /*0.78539819*/
+glabel D_80051E80
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051E84
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051E88
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051E8C
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F02AD98
 /* 05F8C8 7F02AD98 27BDFF50 */  addiu $sp, $sp, -0xb0
@@ -16732,6 +16710,9 @@ void sub_GAME_7F02B800(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051E90
+.word 0x4a742400 /*4000000.0*/
 .text
 glabel sub_GAME_7F02B800
 /* 060330 7F02B800 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -16861,6 +16842,9 @@ void sub_GAME_7F02B9A4(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051E94
+.word 0x3e99999a /*0.30000001*/
 .text
 glabel sub_GAME_7F02B9A4
 /* 0604D4 7F02B9A4 27BDFFA8 */  addiu $sp, $sp, -0x58
@@ -17514,6 +17498,9 @@ void sub_GAME_7F02C190(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051E98
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F02C190
 /* 060CC0 7F02C190 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -17595,6 +17582,9 @@ void sub_GAME_7F02C27C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051E9C
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F02C27C
 /* 060DAC 7F02C27C C4840144 */  lwc1  $f4, 0x144($a0)
@@ -17622,6 +17612,15 @@ void sub_GAME_7F02C2B0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051EA0
+.word 0x3d80adfd /*0.062831856*/
+glabel D_80051EA4
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051EA8
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051EAC
+.word 0x40490fdb /*3.1415927*/
 .text
 glabel sub_GAME_7F02C2B0
 /* 060DE0 7F02C2B0 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -17781,6 +17780,69 @@ void sub_GAME_7F02C4C0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051EB0
+.word 0x481c4000 /*160000.0*/
+glabel D_80051EB4
+.word 0x3dcccccd /*0.1*/
+glabel D_80051EB8
+.word 0x3f0ccccd /*0.55000001*/
+glabel D_80051EBC
+.word 0x3dcccccd /*0.1*/
+glabel D_80051EC0
+.word 0x3e19999a /*0.15000001*/
+glabel D_80051EC4
+.word 0x3dcccccd /*0.1*/
+glabel D_80051EC8
+.word 0x3d4ccccd /*0.050000001*/
+glabel D_80051ECC
+.word 0x3ccccccd /*0.025*/
+glabel D_80051ED0
+.word 0x49742400 /*1000000.0*/
+glabel D_80051ED4
+.word 0x3dcccccd /*0.1*/
+glabel D_80051ED8
+.word 0x3d4ccccd /*0.050000001*/
+glabel D_80051EDC
+.word 0x3f0ccccd /*0.55000001*/
+glabel D_80051EE0
+.word 0x3d4ccccd /*0.050000001*/
+glabel D_80051EE4
+.word 0x3dcccccd /*0.1*/
+glabel D_80051EE8
+.word 0x3f0ccccd /*0.55000001*/
+glabel D_80051EEC
+.word 0x3dcccccd /*0.1*/
+glabel D_80051EF0
+.word 0x3e19999a /*0.15000001*/
+glabel D_80051EF4
+.word 0x3dcccccd /*0.1*/
+glabel D_80051EF8
+.word 0x3d4ccccd /*0.050000001*/
+glabel D_80051EFC
+.word 0x40490fdb /*3.1415927*/
+glabel D_80051F00
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051F04
+.word 0x49742400 /*1000000.0*/
+glabel D_80051F08
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051F0C
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051F10
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051F14
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051F18
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051F1C
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051F20
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051F24
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051F28
+.word 0x40490fdb /*3.1415927*/
 .text
 glabel sub_GAME_7F02C4C0
 /* 060FF0 7F02C4C0 27BDFE98 */  addiu $sp, $sp, -0x168
@@ -18795,6 +18857,25 @@ void sub_GAME_7F02D244(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051F2C
+.word 0x4a1c4000 /*2560000.0*/
+glabel D_80051F30
+.word 0x3c99a5b7 /*0.018755777*/
+glabel D_80051F34
+.word 0x491c4000 /*640000.0*/
+glabel D_80051F38
+.word 0x3d1a1b7b /*0.037623864*/
+glabel D_80051F3C
+.word 0x481c4000 /*160000.0*/
+glabel D_80051F40
+.word 0x3d9930a7 /*0.074799828*/
+glabel D_80051F44
+.word 0x471c4000 /*40000.0*/
+glabel D_80051F48
+.word 0x3e1930a7 /*0.14959966*/
+glabel D_80051F4C
+.word 0x3e80adfd /*0.25132743*/
 .text
 glabel sub_GAME_7F02D244
 /* 061D74 7F02D244 3C018005 */  lui   $at, %hi(D_80051F2C) # $at, 0x8005
@@ -18856,6 +18937,15 @@ void sub_GAME_7F02D2E4(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051F50
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051F54
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80051F58
+.word 0x3e23d70a /*0.16*/
+glabel D_80051F5C
+.word 0x41200419 /*10.001*/
 .text
 glabel sub_GAME_7F02D2E4
 /* 061E14 7F02D2E4 27BDFFA0 */  addiu $sp, $sp, -0x60
@@ -19178,6 +19268,21 @@ void sub_GAME_7F02D734(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051F60
+.word 0x481c4000 /*160000.0*/
+glabel D_80051F64
+.word 0x3f8e38e3 /*1.111111*/
+glabel D_80051F68
+.word 0x481c4000 /*160000.0*/
+glabel D_80051F6C
+.word 0x42055555 /*33.333332*/
+glabel D_80051F70
+.word 0x3e99999a /*0.30000001*/
+glabel D_80051F74
+.word 0x3e088888 /*0.13333333*/
+glabel D_80051F78
+.word 0x461c4000 /*10000.0*/
 .text
 glabel sub_GAME_7F02D734
 /* 062264 7F02D734 27BDFD78 */  addiu $sp, $sp, -0x288
@@ -20152,6 +20257,9 @@ void sub_GAME_7F02E4C0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051FC8
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F02E4C0
 /* 062FF0 7F02E4C0 27BDFF90 */  addiu $sp, $sp, -0x70

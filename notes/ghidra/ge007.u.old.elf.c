@@ -1973,14 +1973,14 @@ void video_related_8(void)
   bool bVar1;
   short sVar2;
   u32 uVar3;
+  s32 sVar4;
   video_settings *__src;
-  int iVar4;
-  u32 *puVar5;
-  char cVar6;
-  u32 *puVar7;
-  int iVar8;
-  uint uVar9;
-  int iVar10;
+  int iVar5;
+  u32 *puVar6;
+  char cVar7;
+  u32 *puVar8;
+  int iVar9;
+  uint uVar10;
   OSViMode *pOVar11;
   OSViMode *pOVar12;
   int iVar13;
@@ -1988,83 +1988,83 @@ void video_related_8(void)
   u32 *puVar15;
   float fVar16;
   
-  cVar6 = *(char *)&ptr_video_settings2->anonymous_0;
-  if (cVar6 == *(char *)&ptr_video_settings1->anonymous_0) {
+  cVar7 = *(char *)&ptr_video_settings2->anonymous_0;
+  if (cVar7 == *(char *)&ptr_video_settings1->anonymous_0) {
     sVar2 = ptr_video_settings2->txtClipW;
   }
   else {
-    if (cVar6 == 0) {
+    if (cVar7 == 0) {
       osViSetYScale(1.00000000);
       osViBlack(1);
     }
     else {
-      if (cVar6 == 1) {
+      if (cVar7 == 1) {
         if (coloroutputmode == 0) {
           if (_osTVType == 2) {
             pOVar12 = &OS_VI_MPAL_LAN2;
-            puVar5 = &DAT_80060828;
+            puVar6 = &DAT_80060828;
             do {
-              puVar7 = puVar5;
+              puVar8 = puVar6;
               pOVar11 = pOVar12;
               pOVar12 = (OSViMode *)&(pOVar11->comRegs).burst;
-              *puVar7 = *(u32 *)pOVar11;
-              puVar7[1] = (pOVar11->comRegs).ctrl;
-              puVar7[2] = (pOVar11->comRegs).width;
-              puVar5 = puVar7 + 3;
+              *puVar8 = *(u32 *)pOVar11;
+              puVar8[1] = (pOVar11->comRegs).ctrl;
+              puVar8[2] = (pOVar11->comRegs).width;
+              puVar6 = puVar8 + 3;
             } while (pOVar12 != (OSViMode *)&OS_VI_MPAL_LAN2.fldRegs[1].vBurst);
             uVar3 = (pOVar11->comRegs).vSync;
-            puVar7[3] = OS_VI_MPAL_LAN2.fldRegs[1].vBurst;
-            puVar7[4] = uVar3;
+            puVar8[3] = OS_VI_MPAL_LAN2.fldRegs[1].vBurst;
+            puVar8[4] = uVar3;
           }
           else {
             pOVar12 = &OS_VI_NTSC_LAN2;
-            puVar5 = &DAT_80060828;
+            puVar6 = &DAT_80060828;
             do {
-              puVar7 = puVar5;
+              puVar8 = puVar6;
               pOVar11 = pOVar12;
               pOVar12 = (OSViMode *)&(pOVar11->comRegs).burst;
-              *puVar7 = *(u32 *)pOVar11;
-              puVar7[1] = (pOVar11->comRegs).ctrl;
-              puVar7[2] = (pOVar11->comRegs).width;
-              puVar5 = puVar7 + 3;
+              *puVar8 = *(u32 *)pOVar11;
+              puVar8[1] = (pOVar11->comRegs).ctrl;
+              puVar8[2] = (pOVar11->comRegs).width;
+              puVar6 = puVar8 + 3;
             } while (pOVar12 != (OSViMode *)&OS_VI_NTSC_LAN2.fldRegs[1].vBurst);
             uVar3 = (pOVar11->comRegs).vSync;
-            puVar7[3] = OS_VI_NTSC_LAN2.fldRegs[1].vBurst;
-            puVar7[4] = uVar3;
+            puVar8[3] = OS_VI_NTSC_LAN2.fldRegs[1].vBurst;
+            puVar8[4] = uVar3;
           }
         }
         else {
           if (_osTVType == 2) {
             pOVar12 = &OS_VI_MPAL_LAN1;
-            puVar5 = &DAT_80060828;
+            puVar6 = &DAT_80060828;
             do {
-              puVar7 = puVar5;
+              puVar8 = puVar6;
               pOVar11 = pOVar12;
               pOVar12 = (OSViMode *)&(pOVar11->comRegs).burst;
-              *puVar7 = *(u32 *)pOVar11;
-              puVar7[1] = (pOVar11->comRegs).ctrl;
-              puVar7[2] = (pOVar11->comRegs).width;
-              puVar5 = puVar7 + 3;
+              *puVar8 = *(u32 *)pOVar11;
+              puVar8[1] = (pOVar11->comRegs).ctrl;
+              puVar8[2] = (pOVar11->comRegs).width;
+              puVar6 = puVar8 + 3;
             } while (pOVar12 != (OSViMode *)&OS_VI_MPAL_LAN1.fldRegs[1].vBurst);
             uVar3 = (pOVar11->comRegs).vSync;
-            puVar7[3] = OS_VI_MPAL_LAN1.fldRegs[1].vBurst;
-            puVar7[4] = uVar3;
+            puVar8[3] = OS_VI_MPAL_LAN1.fldRegs[1].vBurst;
+            puVar8[4] = uVar3;
           }
           else {
             pOVar12 = &OS_VI_NTSC_LAN1;
-            puVar5 = &DAT_80060828;
+            puVar6 = &DAT_80060828;
             do {
-              puVar7 = puVar5;
+              puVar8 = puVar6;
               pOVar11 = pOVar12;
               pOVar12 = (OSViMode *)&(pOVar11->comRegs).burst;
-              *puVar7 = *(u32 *)pOVar11;
-              puVar7[1] = (pOVar11->comRegs).ctrl;
-              puVar7[2] = (pOVar11->comRegs).width;
-              puVar5 = puVar7 + 3;
+              *puVar8 = *(u32 *)pOVar11;
+              puVar8[1] = (pOVar11->comRegs).ctrl;
+              puVar8[2] = (pOVar11->comRegs).width;
+              puVar6 = puVar8 + 3;
             } while (pOVar12 != (OSViMode *)&OS_VI_NTSC_LAN1.fldRegs[1].vBurst);
             uVar3 = (pOVar11->comRegs).vSync;
-            puVar7[3] = OS_VI_NTSC_LAN1.fldRegs[1].vBurst;
-            puVar7[4] = uVar3;
+            puVar8[3] = OS_VI_NTSC_LAN1.fldRegs[1].vBurst;
+            puVar8[4] = uVar3;
           }
         }
         viMode._0_4_ = (OSViMode *)&DAT_80060828;
@@ -2074,7 +2074,7 @@ void video_related_8(void)
         video_store_A0_plus_2_to_off_D_800232BC(0);
       }
       else {
-        if (cVar6 == 2) {
+        if (cVar7 == 2) {
           if (_osTVType == 2) {
             viMode._0_4_ = &OS_VI_MPAL_HAF1;
           }
@@ -2089,51 +2089,51 @@ void video_related_8(void)
       }
     }
     osViSetSpecialFeatures(0x42);
-    cVar6 = *(char *)&ptr_video_settings2->anonymous_0;
+    cVar7 = *(char *)&ptr_video_settings2->anonymous_0;
     sVar2 = ptr_video_settings2->txtClipW;
   }
   __src = ptr_video_settings2;
   fVar16 = (float)(int)ptr_video_settings2->txtClipH / (float)(int)ptr_video_settings2->anonymous_8;
-  if (cVar6 == 0) {
+  if (cVar7 == 0) {
     fVar16 = 1.00000000;
   }
-  iVar8 = dword_800232C0 * 4;
+  iVar9 = dword_800232C0 * 4;
   dword_800230B0[dword_800232C0 + 1] =
        (float)(int)sVar2 / (float)(int)ptr_video_settings2->anonymous_7;
   dword_800230B0[dword_800232C0 + 3] = fVar16;
-  iVar4 = coloroutputmode;
+  iVar5 = coloroutputmode;
   if (*(char *)&__src->anonymous_0 == 1) {
     bVar1 = coloroutputmode == 0;
-    *(undefined4 *)(iVar8 + -0x7ffa2420) = 0x80060828;
+    *(undefined4 *)(iVar9 + -0x7ffa2420) = 0x80060828;
     if (bVar1) {
       if (_osTVType == 2) {
-        puVar7 = (u32 *)(dword_800232C0 * 0x50 + -0x7ffa24c0);
+        puVar8 = (u32 *)(dword_800232C0 * 0x50 + -0x7ffa24c0);
         pOVar12 = &OS_VI_MPAL_LAN2;
-        puVar5 = puVar7;
+        puVar6 = puVar8;
         do {
-          puVar15 = puVar5;
+          puVar15 = puVar6;
           pOVar11 = pOVar12;
           pOVar12 = (OSViMode *)&(pOVar11->comRegs).burst;
           *puVar15 = *(u32 *)pOVar11;
           puVar15[1] = (pOVar11->comRegs).ctrl;
           puVar15[2] = (pOVar11->comRegs).width;
-          puVar5 = puVar15 + 3;
+          puVar6 = puVar15 + 3;
         } while (pOVar12 != (OSViMode *)&OS_VI_MPAL_LAN2.fldRegs[1].vBurst);
         puVar15[3] = OS_VI_MPAL_LAN2.fldRegs[1].vBurst;
         puVar15[4] = (pOVar11->comRegs).vSync;
       }
       else {
-        puVar7 = (u32 *)(dword_800232C0 * 0x50 + -0x7ffa24c0);
+        puVar8 = (u32 *)(dword_800232C0 * 0x50 + -0x7ffa24c0);
         pOVar12 = &OS_VI_NTSC_LAN2;
-        puVar5 = puVar7;
+        puVar6 = puVar8;
         do {
-          puVar15 = puVar5;
+          puVar15 = puVar6;
           pOVar11 = pOVar12;
           pOVar12 = (OSViMode *)&(pOVar11->comRegs).burst;
           *puVar15 = *(u32 *)pOVar11;
           puVar15[1] = (pOVar11->comRegs).ctrl;
           puVar15[2] = (pOVar11->comRegs).width;
-          puVar5 = puVar15 + 3;
+          puVar6 = puVar15 + 3;
         } while (pOVar12 != (OSViMode *)&OS_VI_NTSC_LAN2.fldRegs[1].vBurst);
         puVar15[3] = OS_VI_NTSC_LAN2.fldRegs[1].vBurst;
         puVar15[4] = (pOVar11->comRegs).vSync;
@@ -2141,42 +2141,42 @@ void video_related_8(void)
     }
     else {
       if (_osTVType == 2) {
-        puVar7 = (u32 *)(dword_800232C0 * 0x50 + -0x7ffa24c0);
+        puVar8 = (u32 *)(dword_800232C0 * 0x50 + -0x7ffa24c0);
         pOVar12 = &OS_VI_MPAL_LAN1;
-        puVar5 = puVar7;
+        puVar6 = puVar8;
         do {
-          puVar15 = puVar5;
+          puVar15 = puVar6;
           pOVar11 = pOVar12;
           pOVar12 = (OSViMode *)&(pOVar11->comRegs).burst;
           *puVar15 = *(u32 *)pOVar11;
           puVar15[1] = (pOVar11->comRegs).ctrl;
           puVar15[2] = (pOVar11->comRegs).width;
-          puVar5 = puVar15 + 3;
+          puVar6 = puVar15 + 3;
         } while (pOVar12 != (OSViMode *)&OS_VI_MPAL_LAN1.fldRegs[1].vBurst);
         puVar15[3] = OS_VI_MPAL_LAN1.fldRegs[1].vBurst;
         puVar15[4] = (pOVar11->comRegs).vSync;
       }
       else {
-        puVar7 = (u32 *)(dword_800232C0 * 0x50 + -0x7ffa24c0);
+        puVar8 = (u32 *)(dword_800232C0 * 0x50 + -0x7ffa24c0);
         pOVar12 = &OS_VI_NTSC_LAN1;
-        puVar5 = puVar7;
+        puVar6 = puVar8;
         do {
-          puVar15 = puVar5;
+          puVar15 = puVar6;
           pOVar11 = pOVar12;
           pOVar12 = (OSViMode *)&(pOVar11->comRegs).burst;
           *puVar15 = *(u32 *)pOVar11;
           puVar15[1] = (pOVar11->comRegs).ctrl;
           puVar15[2] = (pOVar11->comRegs).width;
-          puVar5 = puVar15 + 3;
+          puVar6 = puVar15 + 3;
         } while (pOVar12 != (OSViMode *)&OS_VI_NTSC_LAN1.fldRegs[1].vBurst);
         puVar15[3] = OS_VI_NTSC_LAN1.fldRegs[1].vBurst;
         puVar15[4] = (pOVar11->comRegs).vSync;
       }
     }
-    puVar7[2] = (int)__src->anonymous_7;
-    puVar7[8] = ((int)__src->anonymous_7 << 10) / 0x280;
+    puVar8[2] = (int)__src->anonymous_7;
+    puVar8[8] = ((int)__src->anonymous_7 << 10) / 0x280;
     iVar13 = (int)__src->anonymous_8 << 0xb;
-    puVar7[0xb] = iVar13 / 0x1e0;
+    puVar8[0xb] = iVar13 / 0x1e0;
     if (false) {
       trap(0x1c00);
     }
@@ -2184,23 +2184,23 @@ void video_related_8(void)
       trap(0x1800);
     }
     iVar13 = (int)__src->anonymous_8 << 0xb;
-    puVar7[0x10] = iVar13 / 0x1e0;
+    puVar8[0x10] = iVar13 / 0x1e0;
     if (false) {
       trap(0x1c00);
     }
     if ((false) && (iVar13 == -0x80000000)) {
       trap(0x1800);
     }
-    puVar7[10] = (int)__src->anonymous_7 << 1;
-    puVar7[0xf] = (int)__src->anonymous_7 << 1;
-    iVar13 = ((int)puVar7[7] >> 0x10 & 0xffffU) + video_mp_related_8002329C;
+    puVar8[10] = (int)__src->anonymous_7 << 1;
+    puVar8[0xf] = (int)__src->anonymous_7 << 1;
+    iVar13 = ((int)puVar8[7] >> 0x10 & 0xffffU) + video_mp_related_8002329C;
     if (false) {
       trap(0x1c00);
     }
     if ((false) && (iVar13 == -0x80000000)) {
       trap(0x1800);
     }
-    iVar14 = (puVar7[7] & 0xffff) + video_mp_related_8002329C;
+    iVar14 = (puVar8[7] & 0xffff) + video_mp_related_8002329C;
     if (false) {
       trap(0x1c00);
     }
@@ -2208,51 +2208,51 @@ void video_related_8(void)
       trap(0x1800);
     }
     viMode.comRegs.ctrl = iVar13 % 0xffff << 0x10 | iVar14 % 0xffff;
-    puVar7[7] = viMode.comRegs.ctrl;
-    iVar13 = video_mp_related_800232A0;
-    iVar14 = ((int)puVar7[0xc] >> 0x10 & 0xffffU) + video_mp_related_800232A0;
-    if (false) {
-      trap(0x1c00);
-    }
-    if ((false) && (iVar14 == -0x80000000)) {
-      trap(0x1800);
-    }
-    iVar10 = (puVar7[0xc] & 0xffff) + video_mp_related_800232A0;
-    if (false) {
-      trap(0x1c00);
-    }
-    if ((false) && (iVar10 == -0x80000000)) {
-      trap(0x1800);
-    }
-    viMode.comRegs.width = iVar14 % 0xffff << 0x10 | iVar10 % 0xffff;
-    puVar7[0xc] = viMode.comRegs.width;
-    iVar14 = ((int)puVar7[0x11] >> 0x10 & 0xffffU) + iVar13;
-    if (false) {
-      trap(0x1c00);
-    }
-    if ((false) && (iVar14 == -0x80000000)) {
-      trap(0x1800);
-    }
-    iVar13 = (puVar7[0x11] & 0xffff) + iVar13;
+    puVar8[7] = viMode.comRegs.ctrl;
+    sVar4 = video_mp_related_800232A0;
+    iVar13 = ((int)puVar8[0xc] >> 0x10 & 0xffffU) + video_mp_related_800232A0;
     if (false) {
       trap(0x1c00);
     }
     if ((false) && (iVar13 == -0x80000000)) {
       trap(0x1800);
     }
-    viMode.comRegs.burst = iVar14 % 0xffff << 0x10 | iVar13 % 0xffff;
-    puVar7[0x11] = viMode.comRegs.burst;
-    *(undefined4 *)(iVar8 + -0x7ffdcf3c) = 1;
+    iVar14 = (puVar8[0xc] & 0xffff) + video_mp_related_800232A0;
+    if (false) {
+      trap(0x1c00);
+    }
+    if ((false) && (iVar14 == -0x80000000)) {
+      trap(0x1800);
+    }
+    viMode.comRegs.width = iVar13 % 0xffff << 0x10 | iVar14 % 0xffff;
+    puVar8[0xc] = viMode.comRegs.width;
+    iVar13 = ((int)puVar8[0x11] >> 0x10 & 0xffffU) + sVar4;
+    if (false) {
+      trap(0x1c00);
+    }
+    if ((false) && (iVar13 == -0x80000000)) {
+      trap(0x1800);
+    }
+    iVar14 = (puVar8[0x11] & 0xffff) + sVar4;
+    if (false) {
+      trap(0x1c00);
+    }
+    if ((false) && (iVar14 == -0x80000000)) {
+      trap(0x1800);
+    }
+    viMode.comRegs.burst = iVar13 % 0xffff << 0x10 | iVar14 % 0xffff;
+    puVar8[0x11] = viMode.comRegs.burst;
+    *(undefined4 *)(iVar9 + -0x7ffdcf3c) = 1;
   }
   else {
-    *(undefined4 *)(iVar8 + -0x7ffdcf3c) = 0;
+    *(undefined4 *)(iVar9 + -0x7ffdcf3c) = 0;
   }
-  uVar9 = dword_800232C0 + 1;
-  dword_800232C0 = uVar9 & 1;
-  if (((int)uVar9 < 0) && (dword_800232C0 != 0)) {
+  uVar10 = dword_800232C0 + 1;
+  dword_800232C0 = uVar10 & 1;
+  if (((int)uVar10 < 0) && (dword_800232C0 != 0)) {
     dword_800232C0 -= 2;
   }
-  if (iVar4 == 0) {
+  if (iVar5 == 0) {
     *(undefined4 *)(fast3d_related_array + 0x58) = 0x803b5000;
   }
   else {
@@ -2591,7 +2591,7 @@ uint * setupscreensfornumplayers(undefined4 *param_1)
 
 
 
-void set_video_mp_related_800232A0(undefined4 param_1)
+void set_video_mp_related_800232A0(s32 param_1)
 
 {
   video_mp_related_800232A0 = param_1;
@@ -2600,7 +2600,7 @@ void set_video_mp_related_800232A0(undefined4 param_1)
 
 
 
-undefined4 get_video_mp_related_800232A0(void)
+s32 get_video_mp_related_800232A0(void)
 
 {
   return video_mp_related_800232A0;
@@ -2786,16 +2786,16 @@ undefined4 video_related_23(void)
 
 
 
-void video_related_24(float param_1,float param_2,undefined8 param_3,undefined8 param_4)
+void video_related_24(float param_1,float param_2,float param_3)
 
 {
+  undefined4 in_a1_lo;
   undefined8 in_a3;
   undefined4 in_stack_fffffff8;
   
   ptr_video_settings2->far = param_2;
   ptr_video_settings2->scale = param_1 / param_2;
-  proc_7F077C30(param_3._4_4_,param_4._4_4_,(longlong)(int)ptr_video_settings2->scale,in_a3,
-                in_stack_fffffff8);
+  proc_7F077C30(param_3,in_a1_lo,(longlong)(int)ptr_video_settings2->scale,in_a3,in_stack_fffffff8);
   proc_7F077C5C();
   return;
 }
@@ -2848,13 +2848,12 @@ undefined4 * set_setfillcolor(undefined4 *DL,uint red,uint green,int blue)
 
 
 
-undefined4 indy_grab_jpg_16bit(void)
+void indy_grab_jpg_16bit(void)
 
 {
   int iVar1;
   short iWidth;
   short iHeight;
-  undefined4 uVar2;
   undefined4 iFileSize;
   char iFileName [256];
   
@@ -2879,20 +2878,19 @@ undefined4 indy_grab_jpg_16bit(void)
           jpg_16bit_grabnum);
   send_command_string(iFileName);
   sprintf(iFileName,aImgviewGrab_D_jpeg,jpg_16bit_grabnum);
-  uVar2 = send_command_string(iFileName);
-  return uVar2;
+  send_command_string(iFileName);
+  return;
 }
 
 
 
-undefined4 indy_grab_jpg_32bit(void)
+void indy_grab_jpg_32bit(void)
 
 {
   int iVar1;
   short iWidth;
   short iHeight;
-  undefined2 uVar3;
-  undefined4 uVar2;
+  undefined2 uVar2;
   undefined4 iFileSize;
   char iFileName [256];
   
@@ -2906,8 +2904,8 @@ undefined4 indy_grab_jpg_32bit(void)
   iWidth = get_video2_settings_txtClipW();
   iHeight = get_video2_settings_txtClipH();
   indy_send_capture_data(iFileName,cfb_16_a,(int)iHeight * (int)iWidth * 4);
-  uVar3 = get_video2_settings_txtClipW();
-  sprintf(iFileName,aUix2pixXsDGrab_D_temp_uix,uVar3,jpg_32bit_grabnum);
+  uVar2 = get_video2_settings_txtClipW();
+  sprintf(iFileName,aUix2pixXsDGrab_D_temp_uix,uVar2,jpg_32bit_grabnum);
   send_command_string(iFileName);
   sprintf(iFileName,aFromaliasGrab_D_temp_pixGrab_D_t_0,jpg_32bit_grabnum);
   send_command_string(iFileName);
@@ -2917,19 +2915,18 @@ undefined4 indy_grab_jpg_32bit(void)
           jpg_32bit_grabnum);
   send_command_string(iFileName);
   sprintf(iFileName,aImgviewGrab_D_jpeg_0,jpg_32bit_grabnum);
-  uVar2 = send_command_string(iFileName);
-  return uVar2;
+  send_command_string(iFileName);
+  return;
 }
 
 
 
-undefined4 indy_grab_rgb_16bit(void)
+void indy_grab_rgb_16bit(void)
 
 {
   int iVar1;
   short iWidth;
   short iHeight;
-  undefined4 uVar2;
   undefined4 iFileSize;
   char iFileName [256];
   
@@ -2951,8 +2948,8 @@ undefined4 indy_grab_rgb_16bit(void)
   sprintf(iFileName,aRmGrab_D_temp_uixGrab_D_temp_pix,rgb_16bit_grabnum,rgb_16bit_grabnum);
   send_command_string(iFileName);
   sprintf(iFileName,aImgviewGrab_D_rgb,rgb_16bit_grabnum);
-  uVar2 = send_command_string(iFileName);
-  return uVar2;
+  send_command_string(iFileName);
+  return;
 }
 
 
@@ -27956,6 +27953,7 @@ void unload_music_related_7F007980(void)
 undefined4 * something_with_gunbarrel_and_rareware_logo_matrix_manip(undefined4 *displaylist)
 
 {
+  Gfx *glistp;
   undefined4 *puVar1;
   u32 uVar2;
   float x;
@@ -27968,8 +27966,8 @@ undefined4 * something_with_gunbarrel_and_rareware_logo_matrix_manip(undefined4 
   guTranslate((Mtx *)(DAT_8002a7d0 * 0x40 + matrix_buffer_gunbarrel_1),x_00,y_00,DAT_8006957c);
   *displaylist = 0x6000000;
   displaylist[1] = 0x1000000;
-  puVar1 = insert_imageDL(displaylist + 2);
-  puVar1 = proc_7F01C1A4(puVar1);
+  glistp = (Gfx *)insert_imageDL(displaylist + 2);
+  puVar1 = proc_7F01C1A4(glistp);
   *puVar1 = 0xfcffffff;
   puVar1[1] = 0xfffdf6fb;
   puVar1[2] = 0xfa000000;
@@ -27986,7 +27984,7 @@ undefined4 * something_with_gunbarrel_and_rareware_logo_matrix_manip(undefined4 
 
 
 
-undefined4 * insert_sight_backdrop_eye_intro(undefined4 *param_1)
+Gfx * insert_sight_backdrop_eye_intro(Gfx *glistp)
 
 {
   undefined4 *puVar1;
@@ -27999,17 +27997,17 @@ undefined4 * insert_sight_backdrop_eye_intro(undefined4 *param_1)
   guTranslate((Mtx *)(DAT_8002a7d0 * 0x40 + matrix_buffer_rarelogo_2),x,y,
               num_obj_position_data_entries + 768.00000000);
   guScale((Mtx *)(DAT_8002a7d0 * 0x40 + matrix_buffer_gunbarrel_1),x_00,y_00,2.70000005);
-  param_1[1] = 0x1000000;
-  *param_1 = 0x6000000;
-  param_1[3] = 0x1000040;
-  param_1[2] = 0x6000000;
-  puVar1 = proc_7F01C1A4(param_1 + 4);
+  *(undefined4 *)(*glistp + 4) = 0x1000000;
+  *(undefined4 *)*glistp = 0x6000000;
+  *(undefined4 *)(*glistp + 0xc) = 0x1000040;
+  *(undefined4 *)(*glistp + 8) = 0x6000000;
+  puVar1 = proc_7F01C1A4(glistp + 1);
   *puVar1 = 0x1000040;
   uVar2 = osVirtualToPhysical((void *)(DAT_8002a7d0 * 0x40 + matrix_buffer_gunbarrel_1));
   puVar1[1] = uVar2;
   puVar1[2] = 0x6000000;
   puVar1[3] = DAT_80069554 + -0x80000000;
-  return puVar1 + 4;
+  return (Gfx *)(puVar1 + 4);
 }
 
 
@@ -28035,12 +28033,13 @@ undefined4 * proc_7F007CC8(undefined4 *param_1,int param_2,int *param_3,int *par
 
 
 
-undefined4 * insert_sniper_sight_eye_intro(undefined4 *param_1)
+Gfx * insert_sniper_sight_eye_intro(Gfx *glistp)
 
 {
   undefined4 *puVar1;
-  short sVar2;
-  float fVar3;
+  short sVar3;
+  Gfx *pabVar2;
+  float fVar4;
   int iStack24;
   undefined4 uStack20;
   undefined4 uStack16;
@@ -28054,15 +28053,15 @@ undefined4 * insert_sniper_sight_eye_intro(undefined4 *param_1)
   iStack24 = dword_8002A7E8;
   uStack20 = DAT_8002a7ec;
   uStack16 = DAT_8002a7f0;
-  *param_1 = 0x6000000;
-  param_1[1] = 0x1000000;
-  puVar1 = insert_imageDL(param_1 + 2);
+  *(undefined4 *)*glistp = 0x6000000;
+  *(undefined4 *)(*glistp + 4) = 0x1000000;
+  puVar1 = insert_imageDL((undefined4 *)(*glistp + 8));
   puVar1[1] = 0xfffff7fb;
   *puVar1 = 0xfc11fe23;
-  sVar2 = get_video2_settings_txtClipW();
-  fVar3 = truncf(((float)(int)sVar2 * num_obj_position_data_entries) / 1280.00000000);
-  puVar1 = proc_7F007CC8(puVar1 + 2,(int)fVar3,&iStack12,&iStack24);
-  return puVar1;
+  sVar3 = get_video2_settings_txtClipW();
+  fVar4 = truncf(((float)(int)sVar3 * num_obj_position_data_entries) / 1280.00000000);
+  pabVar2 = (Gfx *)proc_7F007CC8(puVar1 + 2,(int)fVar4,&iStack12,&iStack24);
+  return pabVar2;
 }
 
 
@@ -28074,7 +28073,7 @@ undefined4 * proc_7F007E70(undefined4 *param_1,uint param_2)
   short sVar2;
   short sVar3;
   
-  puVar1 = proc_7F01C1A4(param_1);
+  puVar1 = proc_7F01C1A4((Gfx *)param_1);
   *puVar1 = 0xb900031d;
   puVar1[1] = 0x504340;
   puVar1[2] = 0xfcffffff;
@@ -28647,16 +28646,17 @@ longlong proc_7F009254(longlong param_1)
 {
   bool bVar1;
   ulonglong uVar2;
-  short sVar3;
-  undefined4 *displaylist;
+  short sVar4;
+  Gfx *glistp;
+  undefined4 *puVar3;
   ushort x;
   
-  displaylist = (undefined4 *)param_1;
+  glistp = (Gfx *)param_1;
   DAT_8002a7d0 = 1 - DAT_8002a7d0;
   switch(dword_8002A7D4) {
   case 2:
-    displaylist = something_with_gunbarrel_and_rareware_logo_matrix_manip(displaylist);
-    param_1 = (longlong)(int)displaylist;
+    puVar3 = something_with_gunbarrel_and_rareware_logo_matrix_manip((undefined4 *)glistp);
+    param_1 = (longlong)(int)puVar3;
     num_obj_position_data_entries = num_obj_position_data_entries + 6.00000000;
     if (DAT_80069584 < 0) {
       DAT_80069584 = 200;
@@ -28671,18 +28671,18 @@ longlong proc_7F009254(longlong param_1)
     }
     break;
   case 3:
-    *displaylist = 0x6000000;
-    displaylist[1] = 0x1000000;
-    displaylist = insert_imageDL(displaylist + 2);
-    displaylist = insert_imageDL(displaylist);
-    displaylist = insert_imageDL(displaylist);
-    displaylist = insert_imageDL(displaylist);
-    displaylist = insert_imageDL(displaylist);
-    displaylist = insert_sniper_sight_eye_intro(displaylist);
-    displaylist = insert_sight_backdrop_eye_intro(displaylist);
-    param_1 = (longlong)(int)displaylist;
+    *(undefined4 *)*glistp = 0x6000000;
+    *(undefined4 *)(*glistp + 4) = 0x1000000;
+    puVar3 = insert_imageDL((undefined4 *)(*glistp + 8));
+    puVar3 = insert_imageDL(puVar3);
+    puVar3 = insert_imageDL(puVar3);
+    puVar3 = insert_imageDL(puVar3);
+    glistp = (Gfx *)insert_imageDL(puVar3);
+    glistp = insert_sniper_sight_eye_intro(glistp);
+    glistp = insert_sight_backdrop_eye_intro(glistp);
+    param_1 = (longlong)(int)glistp;
     if (num_obj_position_data_entries < 600.00000000) {
-      insert_bond_eye_intro(displaylist);
+      insert_bond_eye_intro((undefined4 *)glistp);
     }
     num_obj_position_data_entries = num_obj_position_data_entries - flt_8004F304;
     if (num_obj_position_data_entries <= -80.00000000) {
@@ -28691,10 +28691,10 @@ longlong proc_7F009254(longlong param_1)
     }
     break;
   case 4:
-    displaylist = insert_sniper_sight_eye_intro(displaylist);
-    displaylist = insert_sight_backdrop_eye_intro(displaylist);
-    param_1 = (longlong)(int)displaylist;
-    insert_bond_eye_intro(displaylist);
+    glistp = insert_sniper_sight_eye_intro(glistp);
+    glistp = insert_sight_backdrop_eye_intro(glistp);
+    param_1 = (longlong)(int)glistp;
+    insert_bond_eye_intro((undefined4 *)glistp);
     intro_eye_counter -= 1;
     if ((int)intro_eye_counter < 0) {
       dword_8002A7D4 += 1;
@@ -28711,11 +28711,11 @@ longlong proc_7F009254(longlong param_1)
       intro_state_blood_animation = (int)uVar2;
       intro_eye_counter = 2;
     }
-    displaylist = insert_sniper_sight_eye_intro(displaylist);
-    displaylist = insert_sight_backdrop_eye_intro(displaylist);
-    insert_bond_eye_intro(displaylist);
-    displaylist = proc_7F01C400(displaylist);
-    param_1 = (longlong)(int)displaylist;
+    glistp = insert_sniper_sight_eye_intro(glistp);
+    glistp = insert_sight_backdrop_eye_intro(glistp);
+    insert_bond_eye_intro((undefined4 *)glistp);
+    puVar3 = proc_7F01C400((undefined4 *)glistp);
+    param_1 = (longlong)(int)puVar3;
     if (intro_state_blood_animation != 0) {
       dword_8002A7D4 += 1;
       DAT_80069584 = 0;
@@ -28727,14 +28727,14 @@ longlong proc_7F009254(longlong param_1)
     intro_eye_counter += 1;
     x = DAT_80069584 + 0x38e;
     DAT_80069584 = DAT_80069584 + 0x38e;
-    sVar3 = sins(x);
+    sVar4 = sins(x);
     num_obj_position_data_entries =
-         ((float)(int)sVar3 * 64.00000000) / 32768.00000000 + DAT_8006957c;
-    displaylist = insert_sniper_sight_eye_intro(displaylist);
-    displaylist = insert_sight_backdrop_eye_intro(displaylist);
-    insert_bond_eye_intro(displaylist);
-    displaylist = proc_7F01CA18(displaylist);
-    param_1 = (longlong)(int)displaylist;
+         ((float)(int)sVar4 * 64.00000000) / 32768.00000000 + DAT_8006957c;
+    glistp = insert_sniper_sight_eye_intro(glistp);
+    glistp = insert_sight_backdrop_eye_intro(glistp);
+    param_1 = (longlong)(int)glistp;
+    insert_bond_eye_intro((undefined4 *)glistp);
+    proc_7F01CA18((Gfx *)param_1);
     if (0x6b < (int)intro_eye_counter) {
       intro_eye_counter = 0;
       dword_8002A7D4 += 1;
@@ -28743,26 +28743,26 @@ longlong proc_7F009254(longlong param_1)
   case '\a':
     x = DAT_80069584 + 0x38e;
     DAT_80069584 = DAT_80069584 + 0x38e;
-    sVar3 = sins(x);
+    sVar4 = sins(x);
     num_obj_position_data_entries =
-         ((float)(int)sVar3 * 64.00000000) / 32768.00000000 + DAT_8006957c;
-    displaylist = insert_sniper_sight_eye_intro(displaylist);
-    displaylist = insert_sight_backdrop_eye_intro(displaylist);
-    insert_bond_eye_intro(displaylist);
-    displaylist = proc_7F01CA18(displaylist);
+         ((float)(int)sVar4 * 64.00000000) / 32768.00000000 + DAT_8006957c;
+    glistp = insert_sniper_sight_eye_intro(glistp);
+    glistp = insert_sight_backdrop_eye_intro(glistp);
+    insert_bond_eye_intro((undefined4 *)glistp);
+    proc_7F01CA18(glistp);
     intro_eye_counter += 8;
-    displaylist = proc_7F007E70(displaylist,intro_eye_counter);
-    param_1 = (longlong)(int)displaylist;
+    puVar3 = proc_7F007E70((undefined4 *)glistp,intro_eye_counter);
+    param_1 = (longlong)(int)puVar3;
     if (0xf6 < (int)intro_eye_counter) {
       intro_eye_counter = 0;
       dword_8002A7D4 += 1;
     }
     break;
   case '\b':
-    *displaylist = 0x6000000;
-    displaylist[1] = 0x1000000;
-    displaylist = insert_imageDL(displaylist + 2);
-    param_1 = (longlong)(int)displaylist;
+    *(undefined4 *)*glistp = 0x6000000;
+    *(undefined4 *)(*glistp + 4) = 0x1000000;
+    puVar3 = insert_imageDL((undefined4 *)(*glistp + 8));
+    param_1 = (longlong)(int)puVar3;
     bVar1 = 0x1d < (int)intro_eye_counter;
     intro_eye_counter += 1;
     if (bVar1) {
@@ -38594,26 +38594,26 @@ undefined4 * insert_imageDL(undefined4 *param_1)
 
 
 
-undefined4 * proc_7F01C1A4(undefined4 *param_1)
+undefined4 * proc_7F01C1A4(Gfx *glistp)
 
 {
   u32 uVar1;
   
-  *param_1 = 0x1030040;
+  *(undefined4 *)*glistp = 0x1030040;
   uVar1 = osVirtualToPhysical(matrix_buffer_gunbarrel_0);
-  param_1[1] = uVar1;
-  param_1[2] = 0x1020040;
+  *(u32 *)(*glistp + 4) = uVar1;
+  *(undefined4 *)(*glistp + 8) = 0x1020040;
   uVar1 = osVirtualToPhysical((void *)(DAT_8002a7d0 * 0x40 + matrix_buffer_rarelogo_2));
-  param_1[3] = uVar1;
-  param_1[5] = 0;
-  param_1[4] = 0xe7000000;
-  param_1[6] = 0xba001402;
-  param_1[7] = 0;
-  param_1[8] = 0xb900031d;
-  param_1[9] = 0x552048;
-  param_1[0xb] = 0x204;
-  param_1[10] = 0xb7000000;
-  return param_1 + 0xc;
+  *(u32 *)(*glistp + 0xc) = uVar1;
+  *(undefined4 *)(glistp + 1 + 4) = 0;
+  *(undefined4 *)(glistp + 1) = 0xe7000000;
+  *(undefined4 *)(glistp + 1 + 8) = 0xba001402;
+  *(undefined4 *)(glistp + 1 + 0xc) = 0;
+  *(undefined4 *)(glistp + 2) = 0xb900031d;
+  *(undefined4 *)(glistp + 2 + 4) = 0x552048;
+  *(undefined4 *)(glistp + 2 + 0xc) = 0x204;
+  *(undefined4 *)(glistp + 2 + 8) = 0xb7000000;
+  return (undefined4 *)(glistp + 3);
 }
 
 
@@ -38668,7 +38668,7 @@ undefined4 * proc_7F01C400(undefined4 *param_1)
   param_1[1] = 0;
   param_1[3] = 0x2000;
   param_1[2] = 0xba000c02;
-  puVar1 = proc_7F01C1A4(param_1 + 4);
+  puVar1 = proc_7F01C1A4((Gfx *)(param_1 + 4));
   *puVar1 = 0xbb000001;
   puVar1[1] = 0x80008000;
   puVar1[2] = 0xb900031d;
@@ -38805,14 +38805,14 @@ undefined4 * proc_7F01C670(undefined4 *param_1)
 
 
 
-undefined4 * proc_7F01CA18(undefined4 *param_1)
+void proc_7F01CA18(Gfx *glistp)
 
 {
   undefined4 *puVar1;
   short sVar2;
   short sVar3;
   
-  puVar1 = proc_7F01C1A4(param_1);
+  puVar1 = proc_7F01C1A4(glistp);
   *puVar1 = 0xb900031d;
   puVar1[1] = 0x504340;
   puVar1[2] = 0xfcffffff;
@@ -38825,7 +38825,7 @@ undefined4 * proc_7F01CA18(undefined4 *param_1)
   sVar3 = get_video2_settings_txtClipH();
   puVar1[8] = ((int)sVar3 & 0x3ffU) << 2 | 0xf6000000 | ((int)sVar2 & 0x3ffU) << 0xe;
   puVar1[9] = 0;
-  return puVar1 + 10;
+  return;
 }
 
 
@@ -45957,7 +45957,7 @@ undefined8 proc_7F02727C(void)
   int iStackX4;
   int in_stack_00000010;
   undefined4 uStack20;
-  undefined2 uStack16;
+  word wStack16;
   int iStack8;
   
   iStackX4 = (int)in_a1;
@@ -45969,8 +45969,8 @@ undefined8 proc_7F02727C(void)
     }
     else {
       if (lVar3 == 3) {
-        uStack20 = metal_ricochet_SFX1;
-        uStack16 = metal_ricochet_SFX3._0_2_;
+        uStack20 = metal_ricochet_SFX._0_4_;
+        wStack16 = metal_ricochet_SFX[2];
         uVar4 = get_random_value();
         ppiVar5 = play_sfx_a1((longlong)(int)ptr_sfx_buf,
                               *(short *)((int)&uStack20 + (uVar4 % 3) * 2),NULL);
@@ -48654,25 +48654,25 @@ void proc_7F02B9A4(void)
   float extraout_f12_00;
   float extraout_f14;
   float fVar5;
-  undefined *puStack32;
-  undefined *puStack28;
-  undefined *puStack24;
-  undefined *puStack20;
-  undefined *puStack16;
-  undefined2 uStack12;
+  undefined4 uStack32;
+  undefined4 uStack28;
+  undefined4 uStack24;
+  undefined4 uStack20;
+  undefined4 uStack16;
+  s16 sStack12;
   
   iVar1 = *(int *)(in_a0_lo + 0xe);
-  puStack32 = body_hit_SFX1;
-  puStack24 = body_hit_SFX5;
-  puStack28 = body_hit_SFX3;
-  puStack16 = body_hit_SFX9;
-  puStack20 = body_hit_SFX7;
-  uStack12 = body_hit_SFXB._0_2_;
+  uStack32 = body_hit_SFX._0_4_;
+  uStack24 = body_hit_SFX._8_4_;
+  uStack28 = body_hit_SFX._4_4_;
+  uStack16 = body_hit_SFX._16_4_;
+  uStack20 = body_hit_SFX._12_4_;
+  sStack12 = body_hit_SFX[10];
   if (0.00000000 <= *(float *)(in_a0_lo + 0x18)) {
     proc_7F06F5BC(iVar1);
     if (*(float *)(in_a0_lo + 0x18) <= in_f0) {
       ppiVar3 = play_sfx_a1((longlong)(int)ptr_sfx_buf,
-                            *(short *)((int)&puStack32 + dword_80030A68 * 2),NULL);
+                            *(short *)((int)&uStack32 + dword_80030A68 * 2),NULL);
       proc_7F053A10((int)ppiVar3,(float *)(*(int *)(in_a0_lo + 0xc) + 8));
       dword_80030A68 += 1;
       if (10 < dword_80030A68) {
@@ -48689,8 +48689,8 @@ void proc_7F02B9A4(void)
     fVar5 = *(float *)(in_a0_lo + 0x1a);
   }
   if ((0.00000000 <= fVar5) && (proc_7F06F5BC(iVar1), *(float *)(in_a0_lo + 0x1a) <= in_f0)) {
-    ppiVar3 = play_sfx_a1((longlong)(int)ptr_sfx_buf,
-                          *(short *)((int)&puStack32 + dword_80030A68 * 2),NULL);
+    ppiVar3 = play_sfx_a1((longlong)(int)ptr_sfx_buf,*(short *)((int)&uStack32 + dword_80030A68 * 2)
+                          ,NULL);
     proc_7F053A10((int)ppiVar3,(float *)(*(int *)(in_a0_lo + 0xc) + 8));
     dword_80030A68 += 1;
     if (10 < dword_80030A68) {
@@ -125027,16 +125027,16 @@ uint proc_7F0B39BC(int param_1,int param_2,float *param_3,uint param_4)
 
 {
   uint uVar1;
-  int iVar2;
+  s32 sVar2;
   int iVar3;
   int *piVar4;
   float fVar5;
   
   (&roominformationblock)[param_1 * 0x50] = 1;
-  iVar2 = DAT_8004483c;
+  sVar2 = NumberOfRoomsDrawn;
   if ((&DAT_80041448)[param_1 * 0x50] == 0) {
     iVar3 = 0;
-    if (0 < DAT_8004483c) {
+    if (0 < NumberOfRoomsDrawn) {
       piVar4 = &DAT_8007ffa0;
       do {
         iVar3 += 1;
@@ -125055,18 +125055,18 @@ uint proc_7F0B39BC(int param_1,int param_2,float *param_3,uint param_4)
           return uVar1;
         }
         piVar4 = piVar4 + 7;
-      } while (iVar3 < DAT_8004483c);
+      } while (iVar3 < NumberOfRoomsDrawn);
     }
-    (&DAT_8007ffa0)[DAT_8004483c * 7] = param_1;
-    (&DAT_8007ffa4)[DAT_8004483c * 7] = param_2;
-    *(float *)(&DAT_8007ffa8 + DAT_8004483c * 7) = *param_3;
-    *(float *)(&DAT_8007ffac + DAT_8004483c * 7) = param_3[1];
-    *(float *)(&DAT_8007ffb0 + DAT_8004483c * 7) = param_3[2];
+    (&DAT_8007ffa0)[NumberOfRoomsDrawn * 7] = param_1;
+    (&DAT_8007ffa4)[NumberOfRoomsDrawn * 7] = param_2;
+    *(float *)(&DAT_8007ffa8 + NumberOfRoomsDrawn * 7) = *param_3;
+    *(float *)(&DAT_8007ffac + NumberOfRoomsDrawn * 7) = param_3[1];
+    *(float *)(&DAT_8007ffb0 + NumberOfRoomsDrawn * 7) = param_3[2];
     fVar5 = param_3[3];
-    iVar3 = DAT_8004483c * 7;
-    DAT_8004483c = DAT_8004483c + 1;
+    iVar3 = NumberOfRoomsDrawn * 7;
+    NumberOfRoomsDrawn = NumberOfRoomsDrawn + 1;
     (&DAT_8007ffb8)[iVar3] = param_4;
-    *(float *)(&DAT_8007ffb4 + iVar2 * 7) = fVar5;
+    *(float *)(&DAT_8007ffb4 + sVar2 * 7) = fVar5;
   }
   return 0;
 }
@@ -125123,7 +125123,7 @@ void proc_7F0B3BC4(void)
 {
   u32 *puVar1;
   
-  DAT_8004483c = 0;
+  NumberOfRoomsDrawn = 0;
   DAT_80041417 = 0;
   DAT_80041467 = 0;
   puVar1 = (u32 *)&DAT_800414b4;
@@ -125147,7 +125147,7 @@ undefined8 proc_7F0B3C0C(int param_1,int *param_2)
   int *piVar2;
   
   iVar1 = 0;
-  if (0 < DAT_8004483c) {
+  if (0 < NumberOfRoomsDrawn) {
     piVar2 = &DAT_8007ffa0;
     do {
       iVar1 += 1;
@@ -125159,7 +125159,7 @@ undefined8 proc_7F0B3C0C(int param_1,int *param_2)
         return 1;
       }
       piVar2 = piVar2 + 7;
-    } while (iVar1 < DAT_8004483c);
+    } while (iVar1 < NumberOfRoomsDrawn);
   }
   *param_2 = 0;
   param_2[1] = 0;
@@ -125173,11 +125173,11 @@ undefined8 proc_7F0B3C0C(int param_1,int *param_2)
 longlong proc_7F0B3C8C(longlong param_1)
 
 {
+  s32 sVar1;
   void *virtualAddress;
-  uint *puVar1;
+  uint *puVar2;
   uint *DL;
-  u32 uVar2;
-  int iVar3;
+  u32 uVar3;
   undefined4 *puVar4;
   BOOL BVar5;
   int iVar6;
@@ -125196,7 +125196,7 @@ longlong proc_7F0B3C8C(longlong param_1)
   puVar4 = (undefined4 *)param_1;
   uVar13 = 99999999;
   uVar11 = 0;
-  if (0 < DAT_8004483c) {
+  if (0 < NumberOfRoomsDrawn) {
     uVar12 = uVar11;
     uVar10 = DAT_8007ffa4;
     puVar8 = &DAT_8007ffa0;
@@ -125209,113 +125209,115 @@ longlong proc_7F0B3C8C(longlong param_1)
         uVar10 = uVar13;
       }
       uVar13 = uVar10;
-      if (&DAT_8007ffa0 + DAT_8004483c * 7 <= puVar8 + 7) break;
+      if (&DAT_8007ffa0 + NumberOfRoomsDrawn * 7 <= puVar8 + 7) break;
       uVar10 = puVar8[8];
       uVar12 = uVar11;
       puVar8 = puVar8 + 7;
     }
   }
   if ((int)uVar13 <= (int)uVar11) {
-    iVar3 = DAT_8004483c;
+    sVar1 = NumberOfRoomsDrawn;
     uVar10 = uVar13;
     do {
       iVar9 = 0;
-      if (0 < iVar3) {
-        puVar1 = &DAT_8007ffa0;
+      if (0 < sVar1) {
+        puVar2 = &DAT_8007ffa0;
         do {
-          if (uVar10 == puVar1[1]) {
+          if (uVar10 == puVar2[1]) {
             puVar4 = (undefined4 *)param_1;
             *puVar4 = 0x1030040;
             virtualAddress = (void *)proc_7F078374();
-            uVar2 = osVirtualToPhysical(virtualAddress);
-            puVar4[1] = uVar2;
+            uVar3 = osVirtualToPhysical(virtualAddress);
+            puVar4[1] = uVar3;
             puVar4 = proc_7F0BB298(puVar4 + 2);
             BVar5 = get_debug_do_draw_obj();
-            if ((BVar5 != FALSE) && (iVar3 = proc_7F0BD8F0(), iVar3 != 0)) {
-              lVar7 = proc_7F03A6F4((longlong)(int)puVar4,*puVar1,0);
+            if ((BVar5 != FALSE) && (iVar6 = proc_7F0BD8F0(), iVar6 != 0)) {
+              lVar7 = proc_7F03A6F4((longlong)(int)puVar4,*puVar2,0);
               puVar4 = (undefined4 *)lVar7;
             }
             *puVar4 = 0x1030040;
             virtualAddress = (void *)proc_7F078394();
-            uVar2 = osVirtualToPhysical(virtualAddress);
-            puVar4[1] = uVar2;
-            DL = proc_7F0B4FF4(puVar4 + 2,extraout_f12,extraout_f14,(float)puVar1[2],
-                               (float)puVar1[3]);
+            uVar3 = osVirtualToPhysical(virtualAddress);
+            puVar4[1] = uVar3;
+            DL = proc_7F0B4FF4(puVar4 + 2,extraout_f12,extraout_f14,(float)puVar2[2],
+                               (float)puVar2[3]);
             puVar4 = proc_7F0BB070(DL,0);
             BVar5 = get_debug_do_draw_bg();
-            if ((BVar5 != FALSE) && (iVar3 = proc_7F0BD8F0(), iVar3 != 0)) {
-              puVar4 = proc_7F0B677C(puVar4,*puVar1);
+            if ((BVar5 != FALSE) && (iVar6 = proc_7F0BD8F0(), iVar6 != 0)) {
+              puVar4 = proc_7F0B677C(puVar4,*puVar2);
             }
             *puVar4 = 0x1030040;
             virtualAddress = (void *)proc_7F078374();
-            uVar2 = osVirtualToPhysical(virtualAddress);
-            puVar4[1] = uVar2;
+            uVar3 = osVirtualToPhysical(virtualAddress);
+            puVar4[1] = uVar3;
             puVar4 = proc_7F0BB298(puVar4 + 2);
             param_1 = (longlong)(int)puVar4;
             BVar5 = get_debug_do_draw_obj();
-            iVar3 = DAT_8004483c;
-            if ((BVar5 != FALSE) && (iVar6 = proc_7F0BD8F0(), iVar3 = DAT_8004483c, iVar6 != 0)) {
-              param_1 = proc_7F03A6F4(param_1,*puVar1,2);
-              iVar3 = DAT_8004483c;
+            sVar1 = NumberOfRoomsDrawn;
+            if ((BVar5 != FALSE) &&
+               (iVar6 = proc_7F0BD8F0(), sVar1 = NumberOfRoomsDrawn, iVar6 != 0)) {
+              param_1 = proc_7F03A6F4(param_1,*puVar2,2);
+              sVar1 = NumberOfRoomsDrawn;
             }
           }
           iVar9 += 1;
-          puVar1 = puVar1 + 7;
-        } while (iVar9 < iVar3);
+          puVar2 = puVar2 + 7;
+        } while (iVar9 < sVar1);
       }
       puVar4 = (undefined4 *)param_1;
       uVar10 += 1;
     } while (uVar11 + 1 != uVar10);
   }
-  puVar1 = proc_7F0BB298(puVar4);
-  DL = proc_7F0B4FB4(puVar1);
-  puVar1 = DL + 2;
+  puVar2 = proc_7F0BB298(puVar4);
+  DL = proc_7F0B4FB4(puVar2);
+  puVar2 = DL + 2;
   *DL = 0x1030040;
   virtualAddress = (void *)proc_7F078394();
-  uVar2 = osVirtualToPhysical(virtualAddress);
-  DL[1] = uVar2;
-  iVar3 = proc_7F0BD8F0();
-  if (iVar3 != 0) {
-    puVar4 = proc_7F0A0AB4(puVar1);
-    puVar1 = proc_7F0A1D78(puVar4);
+  uVar3 = osVirtualToPhysical(virtualAddress);
+  DL[1] = uVar3;
+  iVar9 = proc_7F0BD8F0();
+  if (iVar9 != 0) {
+    puVar4 = proc_7F0A0AB4(puVar2);
+    puVar2 = proc_7F0A1D78(puVar4);
   }
-  lVar7 = (longlong)(int)puVar1;
+  lVar7 = (longlong)(int)puVar2;
   if ((int)uVar13 <= (int)uVar11) {
-    iVar3 = DAT_8004483c;
+    sVar1 = NumberOfRoomsDrawn;
     do {
       iVar9 = 0;
-      if (0 < iVar3) {
-        puVar1 = &DAT_8007ffa0;
+      if (0 < sVar1) {
+        puVar2 = &DAT_8007ffa0;
         do {
-          if (uVar11 == puVar1[1]) {
+          if (uVar11 == puVar2[1]) {
             puVar4 = (undefined4 *)lVar7;
             *puVar4 = 0x1030040;
             virtualAddress = (void *)proc_7F078394();
-            uVar2 = osVirtualToPhysical(virtualAddress);
-            puVar4[1] = uVar2;
-            DL = proc_7F0B4FF4(puVar4 + 2,extraout_f12_00,extraout_f14_00,(float)puVar1[2],
-                               (float)puVar1[3]);
+            uVar3 = osVirtualToPhysical(virtualAddress);
+            puVar4[1] = uVar3;
+            DL = proc_7F0B4FF4(puVar4 + 2,extraout_f12_00,extraout_f14_00,(float)puVar2[2],
+                               (float)puVar2[3]);
             puVar4 = proc_7F0BB070(DL,1);
             BVar5 = get_debug_do_draw_bg();
-            if ((BVar5 != FALSE) && (iVar3 = proc_7F0BD8F0(), iVar3 != 0)) {
-              puVar4 = proc_7F0B6898(puVar4,*puVar1);
+            if ((BVar5 != FALSE) && (iVar6 = proc_7F0BD8F0(), iVar6 != 0)) {
+              puVar4 = proc_7F0B6898(puVar4,*puVar2);
             }
             *puVar4 = 0x1030040;
             virtualAddress = (void *)proc_7F078374();
-            uVar2 = osVirtualToPhysical(virtualAddress);
-            puVar4[1] = uVar2;
+            uVar3 = osVirtualToPhysical(virtualAddress);
+            puVar4[1] = uVar3;
             puVar4 = proc_7F0BB298(puVar4 + 2);
             lVar7 = (longlong)(int)puVar4;
             BVar5 = get_debug_do_draw_obj();
-            iVar3 = DAT_8004483c;
-            if ((BVar5 != FALSE) && (iVar6 = proc_7F0BD8F0(), iVar3 = DAT_8004483c, iVar6 != 0)) {
-              lVar7 = proc_7F03A6F4(lVar7,*puVar1,1);
-              iVar3 = DAT_8004483c;
+            sVar1 = NumberOfRoomsDrawn;
+            if ((BVar5 != FALSE) &&
+               (iVar6 = proc_7F0BD8F0(), sVar1 = NumberOfRoomsDrawn, iVar6 != 0)) {
+              lVar7 = proc_7F03A6F4(lVar7,*puVar2,1);
+              sVar1 = NumberOfRoomsDrawn;
             }
           }
           iVar9 += 1;
-          puVar1 = puVar1 + 7;
-        } while (iVar9 < iVar3);
+          puVar2 = puVar2 + 7;
+        } while (iVar9 < sVar1);
       }
       uVar11 -= 1;
     } while (uVar11 != uVar13 - 1);
@@ -128617,7 +128619,7 @@ uint * proc_7F0B8D78(longlong param_1)
   if (levelentry_index == LEVEL_INDEX_DAM) {
     piVar2 = &DAT_8007ffa0;
     iVar4 = 0;
-    if (0 < DAT_8004483c) {
+    if (0 < NumberOfRoomsDrawn) {
       do {
         iVar4 += 1;
         if (*piVar2 == 0x23) {
@@ -128625,7 +128627,7 @@ uint * proc_7F0B8D78(longlong param_1)
           break;
         }
         piVar2 = piVar2 + 7;
-      } while (iVar4 < DAT_8004483c);
+      } while (iVar4 < NumberOfRoomsDrawn);
     }
   }
   lVar1 = proc_7F0B3C8C(param_1);
