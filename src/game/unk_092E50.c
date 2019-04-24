@@ -9,7 +9,7 @@ f32 flt_CODE_bss_80079E84;
 f32 flt_CODE_bss_80079E88;
 
 
-/* data
+/* data //Gfx MipMap2C_Something_Setup[]={};
 D:8003FCC0     qword_D_8003FCC0:.dword 0xF580080000018060,0xF580080001018060,0xF200200200000000,0xF200200201000000
 D:8003FCC0                                              # DATA XREF: sub_CODE_7F092E50+14Co
 D:8003FCC0                                              # sub_CODE_7F092E50+310o
@@ -18,13 +18,16 @@ D:8003FCC0                                              # sub_CODE_7F09343C+10o
 D:8003FCC0                     .dword 0xFA00000FFFFFFFFF,0xBA00110200000000,0xBA000C0200002000,0xFC272C041F1093FF
 D:8003FCC0                     .dword 0xB900031D0C192078,0xBA00100100000000,0xBA00140200100000,0xB700000000002000
 D:8003FCC0                     .dword 0xB800000000000000
+//Gfx MipMap2C_Something2_Setup[]={};
 D:8003FD28     qword_D_8003FD28:.dword 0xF548040000014050,0xF548040001014050,0xF200200200000000,0xF200200201000000
 D:8003FD28                                              # DATA XREF: sub_CODE_7F092E50+30Co
 D:8003FD28                                              # sub_CODE_7F092E50+53Co
 D:8003FD28                                              # sub_CODE_7F09365C+10o
 D:8003FD28                     .dword 0xFA00000FFFFFFFFF,0xBA00110200000000,0xBA000C0200002000,0xFC272C041F1093FF
 D:8003FD28                     .dword 0xB900031D0C192078,0xBA00100100000000,0xBA00140200100000,0xB700000000002000
-D:8003FD28                     .dword 0xB800000000000000,                 0,                 0,        0xFFFFFFFF
+D:8003FD28                     .dword 0xB800000000000000
+//End Dl means this gfx list cannot go any further. perhaps below is a vtx array?
+,                 0,                 0,        0xFFFFFFFF
 D:8003FD28                     .dword              0x100,                 0,                 0,                 0
 D:8003FD28                     .dword                  0,                 0,                 0,                 0
 D:8003FD28                     .dword                  0,                 0,                 0,                 0
