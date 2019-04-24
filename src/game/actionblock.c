@@ -170,18 +170,13 @@ f32 D_80030B1C = 1.0;
 f32 D_80030B20 = 1.0;
 f32 D_80030B24 = 1.0;
 f32 solo_ammo_multiplier = 1.0;
-s16 Throwing_knife_SFX_1 = 0x5F;
-s16 Throwing_knife_SFX_2 = 0x60;
-s16 Throwing_knife_SFX_3 = 0x61;
-
-u16 Throwing_knife_SFX_4 = 0;
+s16 Throwing_knife_SFX[] = {0x5F, 0x60, 0x61};
 
 u32 D_80030B34[] = {
      0,     1,     3,     0,      0,    0,     0,     0,
-     0,     0,     0,     0,     0,     0,     0,     0,     0,
-     0,     0,     0,     0,     0,     0,     0,     0     
+     0,     0,     0,     0,     0,     0,     0,     0    
 };
-
+//80030b74
 u32 monitor_animation_microcode[] = {
          7,         0,         1,     0x400,      0x14,         8,      0x14,         2,
      0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14,         5,
@@ -418,22 +413,25 @@ struct struct_5 D_80031AEC[] = {
      {0xA, &D_80031B4C, 0x1999}
 };
 
-struct struct_12 D_80031B20[] = {0xD, 0xC8, 0xC8, 0xC8, 0xFF, 0x3C, 9, D_80031B60};
+struct struct_12 D_80031B10[] = {0xD, 0xC8, 0xC8, 0xC8, 0xFF, 0x3C, 9, D_80031B60};
 struct struct_12 D_80031B24[] = {0xD, 0xC8, 0x32, 0x32, 0xFF, 0x3C, 9, D_80031B60};
 struct struct_12 D_80031B38[] = {0xD, 0x32, 0xC8, 0x32, 0xFF, 0x3C, 9, D_80031B60};
 struct struct_12 D_80031B4C[] = {0xD, 0x32, 0x32, 0xC8, 0xFF, 0x3C, 9, D_80031B60};
 u32 D_80031B60[] = {8, 0x32};
-/*
-                struct_5 <0xA, stru_D_80031BB4, 0x1999>
-                struct_5 <0xA, stru_D_80031BD0, 0x1999>
-                struct_5 <0xA, stru_D_80031BEC, 0x1999>
-                struct_5 <0xA, stru_D_80031C08, 0x1999>
-                struct_5 <0xA, dword_D_80031C80, 0x1999>
-                .word 8
-                .word 0x12C
-                .word 9
-                .word dword_D_80031D30
-*/
+
+//80031B68
+struct struct_5 D_80031B68 = {0xA, &D_80031BB4, 0x1999};
+//80031B74
+struct struct_5 D_80031B74 = {0xA, &D_80031BD0, 0x1999};
+//80031B80
+struct struct_5 D_80031B80 = {0xA, &D_80031BEC, 0x1999};
+//80031B8C
+struct struct_5 D_80031B8C = {0xA, &D_80031C08, 0x1999};
+//80031B98
+struct struct_5 D_80031B98 = {0xA, &D_80031C80, 0x1999};
+//80031BA4
+u32 D_80031BA4[] = {8, 0x12C, 9, &D_80031D30};
+
 struct struct_16 D_80031BB4 = {1, 0x800, 0x78, 8, 0x78, 9, D_80031D30};
 struct struct_16 D_80031BD0 = {2, 0x2000, 0x32, 8, 0xC8, 9, D_80031D30};
 struct struct_16 D_80031BEC = {2, 0x2000, 0xC8, 8, 0xC8, 9, D_80031D30};
@@ -468,10 +466,23 @@ u32 D_80031DA8[] = {
      8,       0xA,       0xB
 };
 
-u32 D_80031DF4[] = {7, 0x31, 5, 0x200, 0, 6, 0x200, 0, 0xD, 0x32C832FF, 0x3C, 8, 0x3C, 0xD, 0x3232, 0x32FF, 0xA, 8, 0xA, 0xB};
-u32 D_80031E40[] = {7, 0x31, 5, 0x200, 0, 6, 0x200, 0, 0xD, 0x323232FF, 0xA, 8, 0xA, 0xB};
-u32 D_80031E78[] = {7, 0x31, 5, 0x200, 0, 6, 0x200, 0, 0xD, 0xDC2828FF, 0xA, 8, 0xA, 0xB};
-u32 D_80031EB0[] = {7, 0x31, 5, 0x200, 0, 6, 0x200, 0, 0xD, 0x32C832FF, 0xA, 8, 0xA, 0xB};
+u32 D_80031DF4[] = {7, 0x31, 5, 0x200, 0, 6, 0x200, 0, 
+                    0xD, 0x32C832FF, 0x3C, 8, 0x3C,
+                    0xD, 0x323232FF, 0xA, 8, 0xA, 0xB
+};
+
+u32 D_80031E40[] = {7, 0x31, 5, 0x200, 0, 6, 0x200, 0,
+                    0xD, 0x323232FF, 0xA, 8, 0xA, 0xB
+};
+
+u32 D_80031E78[] = {7, 0x31, 5, 0x200, 0, 6, 0x200, 0,
+                    0xD, 0xDC2828FF, 0xA, 8, 0xA, 0xB
+};
+
+u32 D_80031EB0[] = {7, 0x31, 5, 0x200, 0, 6, 0x200, 0,
+                    0xD, 0x32C832FF, 0xA, 8, 0xA, 0xB
+};
+
 u32 D_80031EE8[] = {7, 0, 0xD, 0xFF, 0, 0xC};
 
 u32 dword_D_80031F00[] = {
@@ -567,9 +578,9 @@ u32 blank_08_object_preset_4001[] = {
 
 u32 D_800322A0 = 0;
 u32 D_800322A4 = 0;
-/*
-dword_D_800322A8:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-*/
+
+u32 D_800322A8[] = {1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
 
 /*rodata 
 D:80052100     jpt_7006894C:   .word action00_length, action01_length, locret_CODE_7F034A34, locret_CODE_7F034A3C
@@ -637,8 +648,7 @@ D:80052100                     .word locret_CODE_7F0351BC, locret_CODE_7F0351C4,
 D:80052100                     .word locret_CODE_7F0351DC, locret_CODE_7F0351E4, locret_CODE_7F0351EC, locret_CODE_7F0351F4
 D:80052100                     .word actionFC_length
 */
-//D:800524F4
-const f32 D_800524F4 = 6.2831855;
+
 /*
 D:800524F8     jpt_700694DC:   .word Action00_GoToLabel, Action01_GoToLabelFromTop, Action02_Label
 D:800524F8                     .word loc_CODE_7F0355F8, action04_end, loc_CODE_7F03563C, loc_CODE_7F0356B0  # jump table for switch statement
@@ -708,14 +718,7 @@ D:800524F8                     .word actionF6_trigger_explosions_around_players,
 D:800524F8                     .word actionF8_if_guardID_shot_at_unset_flag_and_return, actionF9_set_killed_in_action_flag
 D:800524F8                     .word action_FA_use_fawn_on_shoulder_animation, actionFB_switch_to_xsky, loc_CODE_7F03A134
 */
-//D:800528EC
-const f32 D_800528EC = 0.1;
-//D:800528F0
-const f32 D_800528F0 = 0.1;
-//D:800528F4
-const f32 D_800528F4 = 0.1;
-//D:800528F8
-const f32 D_800528F8 = 0.1;
+
 /*
 D:800528FC     jpt_7006CB34:   .word loc_CODE_7F038C0C
 D:800528FC                     .word loc_CODE_7F038C0C
@@ -748,10 +751,7 @@ D:800528FC                     .word loc_CODE_7F038C0C
 D:800528FC                     .word loc_CODE_7F038C0C
 D:800528FC                     .word loc_CODE_7F038C0C
 */
-//D:80052974
-const f32 D_80052974 = 0.016666666;
-//D:80052978
-const f32 D_80052978 = 0.29166666;
+
 /*
 //probably multiple files
 D:80052980     jpt_7007045C:   .word loc_CODE_7F03C534
@@ -771,33 +771,11 @@ D:800529A0                     .word def_7F03D13C
 D:800529A0                     .word def_7F03D13C
 D:800529A0                     .word def_7F03D13C
 */
-//D:800529C0
-const f32 D_800529C0 = 0.175;
-//D:800529C4
-const f32 D_800529C4 = 0.82499999;
-/*
+
+/* rodata
 D:800529C8                     .align 4
 */
-//D:800529D0
-u32 D_800529D0 = 0xA000000;
-//D:800529D4
-u32 D_800529D4 = 0x2E0A0000;
 
-//D:800529D8
-u32 D_800529D8[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//D:80052A38
-u32 D_80052A38 = 0;
-//D:80052A3C
-u32 D_80052A3C = 0;
-//D:80052A40
-u32 D_80052A40 = 0xA000000;
-
-//D:80052A44
-const f32 D_80052A44 = 0.00052642822;
-//D:80052A48
-const f32 D_80052A48 = 0.050000001;
-//D:80052A4C
-const f32 D_80052A4C = 3.1415927;
 //D:80052A50
 const f32 D_80052A50 = 4.712389;
 //D:80052A54
@@ -2860,6 +2838,21 @@ void parse_handle_actionblocks(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800524F4
+.word 0x40c90fdb /*6.2831855*/
+glabel D_800528EC
+.word 0x3dcccccd /*0.1*/
+glabel D_800528F0
+.word 0x3dcccccd /*0.1*/
+glabel D_800528F4
+.word 0x3dcccccd /*0.1*/
+glabel D_800528F8
+.word 0x3dcccccd /*0.1*/
+glabel D_80052974
+.word 0x3c888888 /*0.016666666*/
+glabel D_80052978
+.word 0x3e955555 /*0.29166666*/
 .text
 glabel parse_handle_actionblocks
 /* 069FB4 7F035484 27BDF848 */  addiu $sp, $sp, -0x7b8
@@ -12256,6 +12249,11 @@ void sub_GAME_7F03D188(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800529C0
+.word 0x3e333333 /*0.175*/
+glabel D_800529C4
+.word 0x3f533333 /*0.82499999*/
 .text
 glabel sub_GAME_7F03D188
 /* 071CB8 7F03D188 27BDFF50 */  addiu $sp, $sp, -0xb0
@@ -15824,6 +15822,9 @@ void sub_GAME_7F03FBFC(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80052A48
+.word 0x3d4ccccd /*0.050000001*/
 .text
 glabel sub_GAME_7F03FBFC
 /* 07472C 7F03FBFC 44800000 */  mtc1  $zero, $f0
@@ -16986,6 +16987,9 @@ void sub_GAME_7F04088C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80052A4C
+.word 0x40490fdb /*3.1415927*/
 .text
 glabel sub_GAME_7F04088C
 /* 0753BC 7F04088C 27BDFF58 */  addiu $sp, $sp, -0xa8
@@ -20396,8 +20400,8 @@ glabel sub_GAME_7F043650
 /* 0781C0 7F043690 5F20004E */  bgtzl $t9, .L7F0437CC
 /* 0781C4 7F043694 00414024 */   and   $t0, $v0, $at
 /* 0781C8 7F043698 1100004B */  beqz  $t0, .L7F0437C8
-/* 0781CC 7F04369C 3C0A8003 */   lui   $t2, %hi(Throwing_knife_SFX_1) # $t2, 0x8003
-/* 0781D0 7F0436A0 254A0B2C */  addiu $t2, %lo(Throwing_knife_SFX_1) # addiu $t2, $t2, 0xb2c
+/* 0781CC 7F04369C 3C0A8003 */   lui   $t2, %hi(Throwing_knife_SFX) # $t2, 0x8003
+/* 0781D0 7F0436A0 254A0B2C */  addiu $t2, %lo(Throwing_knife_SFX) # addiu $t2, $t2, 0xb2c
 /* 0781D4 7F0436A4 8D410000 */  lw    $at, ($t2)
 /* 0781D8 7F0436A8 27A90038 */  addiu $t1, $sp, 0x38
 /* 0781DC 7F0436AC AD210000 */  sw    $at, ($t1)
@@ -34601,6 +34605,11 @@ void display_ammo_type_collection_text(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800529D0
+.word 0xA000000 /*"\n"*/
+glabel D_800529D4
+.word 0x2E0A0000 /*".\n"*/
 .text
 glabel display_ammo_type_collection_text
 /* 084450 7F04F920 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -34674,6 +34683,11 @@ void display_text_when_ammo_collected(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800529D8
+.word 0, 0, 0, 0, 0, 0, 0, 0
+      /*0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0*/
+
 .text
 glabel display_text_when_ammo_collected
 /* 084528 7F04F9F8 27BDFF80 */  addiu $sp, $sp, -0x80
@@ -35023,6 +35037,13 @@ void generate_language_specific_text_for_weapon(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80052A38
+.word 0
+glabel D_80052A3C
+.word 0
+glabel D_80052A40
+.word 0xA000000 /*"\n"*/
 .text
 glabel generate_language_specific_text_for_weapon
 /* 084910 7F04FDE0 3C0E8005 */  lui   $t6, %hi(j_text_trigger) # $t6, 0x8005
@@ -43303,6 +43324,9 @@ void sub_GAME_7F056210(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80052A44
+.word 0x3A0A0000 /*":\n"*/
 .text
 glabel sub_GAME_7F056210
 /* 08AD40 7F056210 3C0E8003 */  lui   $t6, %hi(clock_drawn_flag) # $t6, 0x8003

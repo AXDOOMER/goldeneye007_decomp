@@ -1113,8 +1113,8 @@ jpt_700666B0:
 
 
 #ifdef NONMATCHING
-void get_numguards(void) {
-
+u32 get_numguards(void){
+  return num_guards;
 }
 #else
 GLOBAL_ASM(
@@ -1150,8 +1150,9 @@ glabel get_ptr_allocated_block_for_vertices
 
 
 #ifdef NONMATCHING
-void set_show_patrols_flag(void) {
-
+void set_show_patrols_flag(BOOL flag){
+  show_patrols_flag = flag;
+  return;
 }
 #else
 GLOBAL_ASM(
@@ -1166,8 +1167,8 @@ glabel set_show_patrols_flag
 
 
 #ifdef NONMATCHING
-void get_show_patrols_flag(void) {
-
+u32 get_show_patrols_flag(void){
+  return show_patrols_flag;
 }
 #else
 GLOBAL_ASM(
@@ -1227,8 +1228,13 @@ glabel sub_GAME_7F01F574
 
 
 #ifdef NONMATCHING
-void set_or_unset_GUARDdata_flag(void) {
-
+void set_or_unset_GUARDdata_flag(GUARDdata *guard,longlong param_2){
+  if (param_2 == 0) {
+    guard->special_bitflags = guard->special_bitflags | 0x100;
+    return;
+  }
+  guard->special_bitflags = guard->special_bitflags & 0xfeff;
+  return;
 }
 #else
 GLOBAL_ASM(
