@@ -912,9 +912,9 @@ viMesgStruct viEventViMesg;
 viMesgStruct viEventCounterMesg;
 extern void __osTimerServicesInit(void);
 extern void __osTimerInterrupt(void);
-extern OSTime _osCurrentTime;
+extern OSTime osCurrentTime;
 extern u32 lastViCount;
-extern u32 __osViSwapCount;
+extern u32 osViSwapCount;
 void viMgrMain(void *);
 //glabel osCreateViManager
 void osCreateViManager(OSPri pri)
@@ -996,20 +996,20 @@ void viMgrMain(void *vargs)
                 viEventCounterMesg.unk14 = context->retraceCount;
             }
 
-            __osViSwapCount++;
+            osViSwapCount++;
 
             // This will never be executed because "setTimetoCount" is always false
             if (setTimetoCount)
             {
                 oldCount = osGetCount();
-                _osCurrentTime = oldCount;
+                osCurrentTime = oldCount;
                 setTimetoCount = 0;
             }
 
             oldCount = lastViCount;
             lastViCount = osGetCount();
             oldCount = lastViCount - oldCount;
-            _osCurrentTime = _osCurrentTime + oldCount;
+            osCurrentTime = osCurrentTime + oldCount;
             break;
         case 14:
             __osTimerInterrupt();
