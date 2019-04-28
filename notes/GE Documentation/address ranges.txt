@@ -557,6 +557,7 @@ Listed are fixed areas of memory and registers for functions.
 80036474	(float) tied to tank?	SP+CC
 
 80036494	current camera mode.
+	0	1st person mode - mp
 	1	intro camera
 	2	fade-out to swirl
 	3	swirl
@@ -1670,6 +1671,16 @@ set to 3 for fade-in, 2 to restart the swirl animation, 1 to do the cameras
 
 800799E0	starting right-hand weapon
 800799E4	starting left-hand weapon (when applicable)
+
+80079A00	cuba camera - lateral rotation (float - radians)
+80079A04	cuba camera - lateral rotation speed (float - radians per tick)
+80079A08	cuba camera - lateral distance from target (float)
+80079A0C	cuba camera - vertical distance from target (float)
+80079A10	cuba camera - vertical offset from target (float)
+80079A14	cuba camera - target preset
+
+80079A18	camera - focus on bond flag (1 - target bond) - set by D5 sub-action (first 2 argument bytes)
+80079A1C	camera - unused last 2 bytes for D5 sub-action argument (probably was lat/vert target flags then combined into 1 flag)
 
 80079A20	SP current time, from 0.  long value in seconds.
 80079A24	watch time
