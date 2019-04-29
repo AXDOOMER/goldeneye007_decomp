@@ -1,6 +1,6 @@
 #include "libultra_internal.h"
 
-extern OSTime _osCurrentTime;
+extern OSTime osCurrentTime;
 extern u32 lastViCount;
 
 OSTime osGetTime()
@@ -14,7 +14,7 @@ OSTime osGetTime()
 
     count = osGetCount();
     diff = count - lastViCount;
-    time = _osCurrentTime;
+    time = osCurrentTime;
 
     __osRestoreInt(saveMask);
 

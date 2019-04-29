@@ -6,17 +6,17 @@
 
 .section .text, "ax" 
 
-; There are more notes in "__osDisableInt.s". See this file for better understanding.
+# There are more notes in "__osDisableInt.s". See this file for better understanding.
 
 
-; Restore all interrupts
+# Restore all interrupts
 glabel __osRestoreInt
-	mfc0  $t0, $12             ; move cp0 status reg $12 to $t0
-	or    $t0, $t0, $a0        ; $t0 = $t0 | $a0
-	mtc0  $t0, $12             ; move $t0 to cp0 status reg $12
+	mfc0  $t0, $12             # move cp0 status reg $12 to $t0
+	or    $t0, $t0, $a0        # $t0 = $t0 | $a0
+	mtc0  $t0, $12             # move $t0 to cp0 status reg $12
 	nop   
 	nop   
-	jr    $ra                  ; return to caller
+	jr    $ra                  # return to caller
 	 nop   
 
 	nop   

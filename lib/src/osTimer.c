@@ -5,7 +5,7 @@ OSTimer aTimer;
 // This timer is the first node in a circular doubly-linked list of timers
 OSTimer *firstTimer = &aTimer;
 
-OSTime _osCurrentTime;
+OSTime osCurrentTime;
 
 // Count at last VI manager loop
 u32 lastViCount;
@@ -13,16 +13,16 @@ u32 lastViCount;
 // This variable is set to 0 here, incremented in viMgrMain, but never read from.
 // Looks useless.
 // It counts how many times __osViSwapContext was called in viMgrMain.
-u32	__osViSwapCount;
+u32	osViSwapCount;
 
 // Count at last interrupt
 u32 lastIntCount;
 
 void __osTimerServicesInit()
 {
-    _osCurrentTime = 0;
+    osCurrentTime = 0;
     lastViCount = 0;
-    __osViSwapCount = 0;
+    osViSwapCount = 0;
 
     // Init the Circular Linked List
     firstTimer->prev = firstTimer;
