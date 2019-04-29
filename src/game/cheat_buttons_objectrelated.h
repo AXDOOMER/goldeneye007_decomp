@@ -1,5 +1,5 @@
-#ifndef _BONDVIEW_H_
-#define _BONDVIEW_H_
+#ifndef _CHEAT_BUTTONS_OBJECTRELATED_H_
+#define _CHEAT_BUTTONS_OBJECTRELATED_H_
 #include "ultra64.h"
 
 struct prop_pos_data {
@@ -238,5 +238,86 @@ extern struct Gitemheader GmoneyZ_struct;
 extern struct Gitemheader GgoldbarZ_struct;
 extern struct Gitemheader GheroinZ_struct;
 extern struct model_data weapon_gun_controller;
+
+extern struct object_header CcamguardZ_struct;
+extern struct object_header CgreyguardZ_struct;
+extern struct object_header ColiveguardZ_struct;
+extern struct object_header CrusguardZ_struct;
+extern struct object_header CtrevguardZ_struct;
+extern struct object_header CborisZ_struct;
+extern struct object_header CorumovZ_struct;
+extern struct object_header CtrevelyanZ_struct;
+extern struct object_header CboilertrevZ_struct;
+extern struct object_header CvalentinZ_struct;
+extern struct object_header CxeniaZ_struct;
+extern struct object_header CbaronsamediZ_struct;
+extern struct object_header CjawsZ_struct;
+extern struct object_header CmaydayZ_struct;
+extern struct object_header CoddjobZ_struct;
+extern struct object_header CnatalyaZ_struct;
+extern struct object_header CarmourguardZ_struct;
+extern struct object_header CcommguardZ_struct;
+extern struct object_header CgreatguardZ_struct;
+extern struct object_header CnavyguardZ_struct;
+extern struct object_header CsnowguardZ_struct;
+extern struct object_header CbluewomanZ_struct;
+extern struct object_header CfattechwomanZ_struct;
+extern struct object_header CtechwomanZ_struct;
+extern struct object_header CjeanwomanZ_struct;
+extern struct object_header CgreymanZ_struct;
+extern struct object_header CbluemanZ_struct;
+extern struct object_header CredmanZ_struct;
+extern struct object_header CcardimanZ_struct;
+extern struct object_header CcheckmanZ_struct;
+extern struct object_header CtechmanZ_struct;
+extern struct object_header CpilotZ_struct;
+extern struct object_header Cgreatguard2Z_struct;
+extern struct object_header CbluecamguardZ_struct;
+extern struct object_header CmoonguardZ_struct;
+extern struct object_header CmoonfemaleZ_struct;
+extern struct object_header CboilerbondZ_struct;
+extern struct object_header CsuitbondZ_struct;
+extern struct object_header CtimberbondZ_struct;
+extern struct object_header CsnowbondZ_struct;
+extern struct object_header CdjbondZ_struct;
+extern struct object_header Csuit_lf_handz_struct;
+extern struct object_header CheadkarlZ_struct;
+extern struct object_header CheadalanZ_struct;
+extern struct object_header CheadpeteZ_struct;
+extern struct object_header CheadmartinZ_struct;
+extern struct object_header stru_D_8003D9D0;
+extern struct object_header stru_D_8003D9F0;
+extern struct object_header stru_D_8003DA10;
+extern struct object_header stru_D_8003DA30;
+extern struct object_header stru_D_8003DA50;
+extern struct object_header stru_D_8003DA70;
+extern struct object_header stru_D_8003DA90;
+extern struct object_header stru_D_8003DAB0;
+extern struct object_header stru_D_8003DAD0;
+extern struct object_header stru_D_8003DAF0;
+extern struct object_header stru_D_8003DB10;
+extern struct object_header stru_D_8003DB30;
+extern struct object_header stru_D_8003DB50;
+extern struct object_header stru_D_8003DB70;
+extern struct object_header stru_D_8003DB90;
+extern struct object_header stru_D_8003DBB0;
+extern struct object_header stru_D_8003DBD0;
+extern struct object_header stru_D_8003DBF0;
+extern struct object_header stru_D_8003DC10;
+extern struct object_header stru_D_8003DC30;
+extern struct object_header stru_D_8003DC50;
+extern struct object_header stru_D_8003DC70;
+extern struct object_header stru_D_8003DC90;
+extern struct object_header stru_D_8003DCB0;
+extern struct object_header stru_D_8003DCD0;
+extern struct object_header stru_D_8003DCF0;
+extern struct object_header stru_D_8003DD10;
+extern struct object_header stru_D_8003DD30;
+extern struct object_header stru_D_8003DD50;
+extern struct object_header CheadbrosnansuitZ_struct;
+extern struct object_header CheadbrosnantimberZ_struct;
+extern struct object_header CheadbrosnansnowZ_struct;
+extern struct object_header CheadbrosnanZ_struct;
+extern struct object_header CspicebondZ_struct;
 
 #endif

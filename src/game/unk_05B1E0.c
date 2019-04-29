@@ -9,16 +9,6 @@ s32 D_80032434 = 2;
 
 
 // rodata
-//D:80053740
-const f32 D_80053740 = 0.000095873802;
-//D:80053744
-const f32 D_80053744 = -0.99998999;
-//D:80053748
-const f32 D_80053748 = 0.99998999;
-//D:8005374C
-const f32 D_8005374C = -0.99998999;
-//D:80053750
-const f32 D_80053750 = 0.99998999;
 
 
 
@@ -28,6 +18,11 @@ void sub_GAME_7F05B1E0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053740
+.word 0x38c90fdb /*0.000095873802*/
+glabel D_80053744
+.word 0xbf7fff58 /*-0.99998999*/
 .text
 glabel sub_GAME_7F05B1E0
 /* 08FD10 7F05B1E0 27BDFFB8 */  addiu $sp, $sp, -0x48
@@ -680,6 +675,11 @@ void sub_GAME_7F05BA08(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053748
+.word 0x3f7fff58 /*0.99998999*/
+glabel D_8005374C
+.word 0xbf7fff58 /*-0.99998999*/
 .text
 glabel sub_GAME_7F05BA08
 /* 090538 7F05BA08 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -850,6 +850,9 @@ void sub_GAME_7F05BC68(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053750
+.word 0x3f7fff58 /*0.99998999*/
 .text
 glabel sub_GAME_7F05BC68
 /* 090798 7F05BC68 27BDFFC8 */  addiu $sp, $sp, -0x38

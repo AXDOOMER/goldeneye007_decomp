@@ -61431,7 +61431,7 @@ void proc_7F043650(int param_1)
       }
     }
     else {
-      uStack8 = _Throwing_knife_SFX_1;
+      uStack8 = _Throwing_knife_SFX;
       uStack4 = Throwing_knife_SFX_3;
       iVar5 = *(int *)(*(int *)(param_1 + 0x6c) + 0xa4);
       uVar3 = get_random_value();

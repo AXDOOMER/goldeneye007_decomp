@@ -1,5 +1,6 @@
 #include "ultra64.h"
 
+/*data*/
 
 /* rodata
 D:80053490     jpt_object_setup_size:.word object_size_type_01

@@ -2,20 +2,7 @@
 
 
 // rodata
-//D:80053700
-const f32 D_80053700 = 3.1415927;
-//D:80053704
-const f32 D_80053704 = 1.5707964;
-//D:80053708
-const f32 D_80053708 = 4.712389;
-//D:8005370C
-const f32 D_8005370C = 6.2831855;
-//D:80053710
-const f32 D_80053710 = 1.5707964;
-//D:80053714
-const f32 D_80053714 = 3.1415927;
-//D:80053718
-const f32 D_80053718 = 6.2831855;
+
 
 
 
@@ -62,6 +49,21 @@ float convert_angle_using_inverse(f32 vector1,f32 vector2)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053700
+.word 0x40490fdb /*3.1415927*/
+glabel D_80053704
+.word 0x3fc90fdb /*1.5707964*/
+glabel D_80053708
+.word 0x4096cbe4 /*4.712389*/
+glabel D_8005370C
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053710
+.word 0x3fc90fdb /*1.5707964*/
+glabel D_80053714
+.word 0x40490fdb /*3.1415927*/
+glabel D_80053718
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel convert_angle_using_inverse
 /* 08F560 7F05AA30 44808000 */  mtc1  $zero, $f16

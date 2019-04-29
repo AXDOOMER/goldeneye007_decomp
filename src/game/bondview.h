@@ -57,10 +57,10 @@ struct gitem_data_struct
   f32 equip_watch_y;
   f32 equip_watch_z;
 };
-/*
+
 struct ejected_cart {
-    Gitemheader * header;
+    struct Gitemheader *header;
     char * text;
 };
-*/
+
 #endif
