@@ -560,10 +560,10 @@ glabel spectrum_p1controller_to_kempston
 /* 107808 7F0D2CD8 240E00FF */  li    $t6, 255
 /* 10780C 7F0D2CDC 3C018005 */  lui   $at, %hi(D_8004EC34) # $at, 0x8005
 /* 107810 7F0D2CE0 3C048005 */  lui   $a0, %hi(D_8004EC34+1) # $a0, 0x8005
-/* 107814 7F0D2CE4 3C058005 */  lui   $a1, %hi(D_8004EC3D) # $a1, 0x8005
+/* 107814 7F0D2CE4 3C058005 */  lui   $a1, %hi(D_8004EC3C+1) # $a1, 0x8005
 /* 107818 7F0D2CE8 8FA70020 */  lw    $a3, 0x20($sp)
 /* 10781C 7F0D2CEC 8FA8001C */  lw    $t0, 0x1c($sp)
-/* 107820 7F0D2CF0 24A5EC3D */  addiu $a1, %lo(D_8004EC3D) # addiu $a1, $a1, -0x13c3
+/* 107820 7F0D2CF0 24A5EC3D */  addiu $a1, %lo(D_8004EC3C+1) # addiu $a1, $a1, -0x13c3
 /* 107824 7F0D2CF4 2484EC35 */  addiu $a0, %lo(D_8004EC34+1) # addiu $a0, $a0, -0x13cb
 /* 107828 7F0D2CF8 A02EEC34 */  sb    $t6, %lo(D_8004EC34)($at)
 /* 10782C 7F0D2CFC 240300FF */  li    $v1, 255

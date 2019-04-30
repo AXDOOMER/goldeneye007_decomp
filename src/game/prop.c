@@ -19,150 +19,6 @@ const u32 only_read_by_stageload[] = {
 const char aMp_[] = "mp_";
 
 
-/*
-jpt_700366F0:
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027E0
-.word .L7F0027E0
-.word .L7F0027E0
-.word .L7F0027E0
-.word .L7F0027E0
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-jpt_mp_ammo_crate_expansion:
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-*/
-
-
-/*
-jpt_object_type_expansion:
-.word door_expand
-.word door_scale_expand
-.word obj_03_expand
-.word key_expand
-.word obj_03_expand
-.word surv_camera_expand
-.word obj_03_expand
-.word item_expand
-.word actor_expand
-.word single_screen_display_expand
-.word multi_screen_display_expand
-.word rack_expand
-.word autogun_expand
-.word other_obj_expand
-.word other_obj_expand
-.word other_obj_expand
-.word hat_expand
-.word actor_attr_expand
-.word other_obj_expand
-.word ammo_box_expand
-.word body_armor_expand
-.word tag_expand
-.word type17_objective_expand
-.word other_obj_expand
-.word other_obj_expand
-.word other_obj_expand
-.word other_obj_expand
-.word other_obj_expand
-.word other_obj_expand
-.word type1E_subobjective_expand
-.word other_obj_expand
-.word type20_subobjective_expand
-.word type21_subobjective_expand
-.word other_obj_expand
-.word type23_solo_brief_text
-.word obj_03_expand
-.word type25_rename
-.word other_obj_expand
-.word type27_wheeled_vehicle
-.word type28_aircraft
-.word obj_03_expand
-.word obj_03_expand
-.word obj_03_expand
-.word other_obj_expand
-.word type2D_tank
-.word type2E_viewport_pos
-.word type2F_tinted_glass
-*/
-
-/*
-jpt_70038A94:
-.word .L7F004B6C
-.word .L7F004B6C
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004B6C
-.word .L7F004B6C
-.word .L7F004DE4
-.word .L7F004B6C
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004BD8
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004C2C
-.word .L7F004B6C
-.word .L7F004B6C
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004B6C
-.word .L7F004DE4
-.word .L7F004D70
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004B6C
-.word .L7F004B6C
-.word .L7F004B6C
-.word .L7F004CA4
-.word .L7F004DE4
-.word .L7F004DE4
-.word .L7F004B6C
-*/
-
 
 
 
@@ -1071,6 +927,47 @@ void expand_08_obj_set_guard_MP_weapons(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel jpt_700366F0
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027E0
+.word .L7F0027E0
+.word .L7F0027E0
+.word .L7F0027E0
+.word .L7F0027E0
+.word .L7F0027C8
+.word .L7F0027C8
+.word .L7F0027C8
+glabel jpt_mp_ammo_crate_expansion
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
+.word .L7F002870
 .text
 glabel expand_08_obj_set_guard_MP_weapons
 /* 037268 7F002738 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -1104,11 +1001,12 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 0372D8 7F0027A8 2D21001E */  sltiu $at, $t1, 0x1e
 /* 0372DC 7F0027AC 1020000C */  beqz  $at, .L7F0027E0
 /* 0372E0 7F0027B0 00094880 */   sll   $t1, $t1, 2
-/* 0372E4 7F0027B4 3C018005 */  lui   $at, 0x8005
+/* 0372E4 7F0027B4 3C018005 */  lui   $at, %hi(jpt_700366F0)
 /* 0372E8 7F0027B8 00290821 */  addu  $at, $at, $t1
-/* 0372EC 7F0027BC 8C29EEB8 */  lw    $t1, -0x1148($at)
+/* 0372EC 7F0027BC 8C29EEB8 */  lw    $t1, %lo(jpt_700366F0)($at)
 /* 0372F0 7F0027C0 01200008 */  jr    $t1
 /* 0372F4 7F0027C4 00000000 */   nop   
+.L7F0027C8:
 /* 0372F8 7F0027C8 240A0019 */  li    $t2, 25
 /* 0372FC 7F0027CC 240B00D3 */  li    $t3, 211
 /* 037300 7F0027D0 240C0100 */  li    $t4, 256
@@ -1154,6 +1052,7 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 037394 7F002864 AFA50018 */   sw    $a1, 0x18($sp)
 /* 037398 7F002868 10000041 */  b     .L7F002970
 /* 03739C 7F00286C 80E40080 */   lb    $a0, 0x80($a3)
+.L7F002870:
 /* 0373A0 7F002870 0FC31985 */  jal   get_ptr_mp_weapon_set_data
 /* 0373A4 7F002874 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 0373A8 7F002878 8FA7002C */  lw    $a3, 0x2c($sp)
@@ -2633,10 +2532,107 @@ void stage_loading_setup_objparse_cleanupafter(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
+glabel jpt_object_type_expansion
+.word door_expand
+.word door_scale_expand
+.word obj_03_expand
+.word key_expand
+.word obj_03_expand
+.word surv_camera_expand
+.word obj_03_expand
+.word item_expand
+.word actor_expand
+.word single_screen_display_expand
+.word multi_screen_display_expand
+.word rack_expand
+.word autogun_expand
+.word other_obj_expand
+.word other_obj_expand
+.word other_obj_expand
+.word hat_expand
+.word actor_attr_expand
+.word other_obj_expand
+.word ammo_box_expand
+.word body_armor_expand
+.word tag_expand
+.word type17_objective_expand
+.word other_obj_expand
+.word other_obj_expand
+.word other_obj_expand
+.word other_obj_expand
+.word other_obj_expand
+.word other_obj_expand
+.word type1E_subobjective_expand
+.word other_obj_expand
+.word type20_subobjective_expand
+.word type21_subobjective_expand
+.word other_obj_expand
+.word type23_solo_brief_text
+.word obj_03_expand
+.word type25_rename
+.word other_obj_expand
+.word type27_wheeled_vehicle
+.word type28_aircraft
+.word obj_03_expand
+.word obj_03_expand
+.word obj_03_expand
+.word other_obj_expand
+.word type2D_tank
+.word type2E_viewport_pos
+.word type2F_tinted_glass
+
 glabel D_8004F024
 .word 0x40c90fdb
 glabel D_8004F028
 .word 0x3e2e147c
+
+glabel jpt_70038A94
+.word .L7F004B6C
+.word .L7F004B6C
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004B6C
+.word .L7F004B6C
+.word .L7F004DE4
+.word .L7F004B6C
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004BD8
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004C2C
+.word .L7F004B6C
+.word .L7F004B6C
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004B6C
+.word .L7F004DE4
+.word .L7F004D70
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004B6C
+.word .L7F004B6C
+.word .L7F004B6C
+.word .L7F004CA4
+.word .L7F004DE4
+.word .L7F004DE4
+.word .L7F004B6C
+
 .text
 glabel stage_loading_setup_objparse_cleanupafter
 /* 038720 7F003BF0 27BDFD80 */  addiu $sp, $sp, -0x280

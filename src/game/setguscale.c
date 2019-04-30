@@ -12,6 +12,7 @@ void set_gu_scale(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
+/*8004ed80*/
 glabel default_gu_scale
 .word 0x3dcccccd
 .text
