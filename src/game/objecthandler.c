@@ -45,10 +45,10 @@ u32 D_80036070 = 0;
 u32 D_80036074 = 0;
 //D:80036078
 u32 D_80036078 = 0;
-/*
-D:8003607C                     .word 0
-D:80036080                     .word 0
-*/
+//D:8003607C
+u32 D_8003607C = 0;
+//D:80036080
+u32 D_80036080 = 0;
 //D:80036084
 u32 D_80036084 = 0;
 //D:80036088
@@ -381,11 +381,11 @@ u32 D_80036310 = 0xD;
 u32 D_80036314 = 0x61;
 //D:80036318
 u32 D_80036318 = 0;
-/*
-D:8003631C     dword_D_8003631C:.word 0x10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003631C                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003631C                     .word 0, 0, 0, 0
-*/
+//D:8003631C
+u32 D_8003631C[] = {
+  0x10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+};
 //D:800363EC0
 u32 D_800363E0 = 0;
 //D:800363E4
@@ -626,10 +626,7 @@ D:80054AF8                     .word def_7F06C7D0
 D:80054AF8                     .word loc_CODE_7F06C838
 D:80054AF8                     .word loc_CODE_7F06C7E4
 */
-//D:80054B58
-const f32 D_80054B58 = 6.2831855;
-//D:80054B5C
-const f32 D_80054B5C = 6.2831855;
+
 /*
 D:80054B60     jpt_getjointsize:.word loc_CODE_7F06CEF8  # DATA XREF: getjointsize+54r
 D:80054B60                     .word loc_CODE_7F06CF10  # jump table for switch statement
@@ -653,60 +650,7 @@ D:80054B60                     .word def_7F06CEF0
 D:80054B60                     .word def_7F06CEF0
 D:80054B60                     .word loc_CODE_7F06CF40
 */
-//D:80054BB4
-const f32 D_80054BB4 = 6.2831855;
-//D:80054BB8
-const f32 D_80054BB8 = 6.2831855;
-//D:80054BBC
-const f32 D_80054BBC = 3.1415927;
-//D:80054BC0
-const f32 D_80054BC0 = 6.2831855;
-//D:80054BC4
-const f32 D_80054BC4 = 3.1415927;
-//D:80054BC8
-const f32 D_80054BC8 = 6.2831855;
-//D:80054BCC
-const f32 D_80054BCC = 6.2831855;
-//D:80054BD0
-const f32 D_80054BD0 = 3.1415927;
-//D:80054BD4
-const f32 D_80054BD4 = 6.2831855;
-//D:80054BD8
-const f32 D_80054BD8 = 0.890118;
-//D:80054BDC
-const f32 D_80054BDC = 3.1415927;
-//D:80054BE0
-const f32 D_80054BE0 = 6.2831855;
-//D:80054BE4
-const f32 D_80054BE4 = 6.2831855;
-//D:80054BE8
-const f32 D_80054BE8 = 3.1415927;
-//D:80054BEC
-const f32 D_80054BEC = 6.2831855;
-//D:80054BF0
-const f32 D_80054BF0 = 0.890118;
-//D:80054BF4
-const f32 D_80054BF4 = 6.2831855;
-//D:80054BF8
-const f32 D_80054BF8 = 3.1415927;
-//D:80054BFC
-const f32 D_80054BFC = 6.2831855;
-//D:80054C00
-const f32 D_80054C00 = 6.2831855;
-//D:80054C04
-const f32 D_80054C04 = 3.1415927;
-//D:80054C08
-const f32 D_80054C08 = 6.2831855;
-//D:80054C0C
-const f32 D_80054C0C = 0.890118;
-//D:80054C10
-const f32 D_80054C10 = 6.2831855;
-//D:80054C14
-const f32 D_80054C14 = 6.2831855;
-//D:80054C18
-const f32 D_80054C18 = 6.2831855;
-//D:80054C1C
-const f32 D_80054C1C = 6.2831855;
+
 /*
 D:80054C20     jpt_700A2E24:   .word loc_CODE_7F06EEFC  # DATA XREF: sub_CODE_7F06EEA4+44r
 D:80054C20                     .word loc_CODE_7F06EEFC  # jump table for switch statement
@@ -781,16 +725,7 @@ D:80054CE0                     .word def_7F06F120
 D:80054CE0                     .word loc_CODE_7F06F1D8
 D:80054CE0                     .word def_7F06F120
 */
-//D:80054D40
-const f32 D_80054D40 = 6.2831855;
-//D:80054D44
-const f32 D_80054D44 = 6.2831855;
-//D:80054D48
-const f32 D_80054D48 = 6.2831855;
-//D:80054D4C
-const f32 D_80054D4C = 6.2831855;
-//D:80054D50
-const f32 D_80054D50 = 6.2831855;
+
 /*
 D:80054D54     jpt_700A8494:   .word def_7F074564       # DATA XREF: sub_CODE_7F074534+24r
 D:80054D54                     .word def_7F074564       # jump table for switch statement
@@ -3372,6 +3307,11 @@ void setsubroty(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054B58
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054B5C
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel setsubroty
 /* 0A186C 7F06CD3C 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -3705,6 +3645,13 @@ void sub_GAME_7F06D0CC(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054BB4
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054BB8
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054BBC
+.word 0x40490fdb /*3.1415927*/
 .text
 glabel sub_GAME_7F06D0CC
 /* 0A1BFC 7F06D0CC 460C703C */  c.lt.s $f14, $f12
@@ -3980,6 +3927,9 @@ void sub_GAME_7F06D3F4(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054BC0
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F06D3F4
 /* 0A1F24 7F06D3F4 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -4360,6 +4310,19 @@ void sub_GAME_7F06D8B0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054BC4
+.word 0x40490fdb /*3.1415927*/
+glabel D_80054BC8
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054BCC
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054BD0
+.word 0x40490fdb /*3.1415927*/
+glabel D_80054BD4
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054BD8
+.word 0x3f63dec6 /*0.890118*/
 .text
 glabel sub_GAME_7F06D8B0
 /* 0A23E0 7F06D8B0 27BDFF48 */  addiu $sp, $sp, -0xb8
@@ -4561,6 +4524,19 @@ void sub_GAME_7F06DB5C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054BDC
+.word 0x40490fdb /*3.1415927*/
+glabel D_80054BE0
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054BE4
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054BE8
+.word 0x40490fdb /*3.1415927*/
+glabel D_80054BEC
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054BF0
+.word 0x3f63dec6 /*0.890118*/
 .text
 glabel sub_GAME_7F06DB5C
 /* 0A268C 7F06DB5C 27BDFF58 */  addiu $sp, $sp, -0xa8
@@ -4826,6 +4802,9 @@ void sub_GAME_7F06DEC0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054BF4
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F06DEC0
 /* 0A29F0 7F06DEC0 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -5124,6 +5103,19 @@ void sub_GAME_7F06E2B8(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054BF8
+.word 0x40490fdb /*3.1415927*/
+glabel D_80054BFC
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054C00
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054C04
+.word 0x40490fdb /*3.1415927*/
+glabel D_80054C08
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054C0C
+.word 0x3f63dec6 /*0.890118*/
 .text
 glabel sub_GAME_7F06E2B8
 /* 0A2DE8 7F06E2B8 27BDFF60 */  addiu $sp, $sp, -0xa0
@@ -5316,6 +5308,11 @@ void sub_GAME_7F06E540(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054C10
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054C14
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F06E540
 /* 0A3070 7F06E540 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -5999,6 +5996,11 @@ void process_07_unknown(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054C18
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054C1C
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel process_07_unknown
 /* 0A3828 7F06ECF8 27BDFFA8 */  addiu $sp, $sp, -0x58
@@ -7025,6 +7027,13 @@ void sub_GAME_7F06F878(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054D40
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054D44
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054D48
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F06F878
 /* 0A43A8 7F06F878 27BDFF70 */  addiu $sp, $sp, -0x90
@@ -7900,6 +7909,9 @@ void sub_GAME_7F0701EC(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054D4C
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F0701EC
 /* 0A4D1C 7F0701EC 27BDFF08 */  addiu $sp, $sp, -0xf8
@@ -11995,6 +12007,9 @@ void dogfnegx(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054D50
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel dogfnegx
 /* 0A833C 7F07380C 27BDFF00 */  addiu $sp, $sp, -0x100

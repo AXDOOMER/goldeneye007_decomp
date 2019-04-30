@@ -3,6 +3,8 @@
 #include "game/initgamedata.h"
 
 // data
+//D:80036BA0
+u32 D_80036BA0 = 0;
 //D:80036BA4
 s32 mcm_column_groupings[] = {8, 0x13, 0x1E, 0x2B, 0x32, 0x39, 0x45, 0x4D, -1};
 
@@ -214,13 +216,7 @@ s32 debug_enable_all_levels_flag = 0;
 s32 debug_chrnum_flag = 0;
 
 //D:80036FBC
-u8 debug_gunwatchpos_flag = 0;
-//D:80036FBD
-u8 B_80036FBD = 0;
-//D:80036FBE
-u8 B_80036FBE = 0;
-//D:80036FBF
-u8 move_watch_item_preview_flag = 0;
+u8 debug_gunwatchpos_flags[] = {0, 0, 0, 0};
 //D:80036FC0
 s32 debug_profile_flag = 0;
 //D:80036FC4
@@ -1087,8 +1083,8 @@ debug_fog:
 /* 0C590C 7F090DDC 10000025 */  b     .L7F090E74
 /* 0C5910 7F090DE0 AC226F70 */   sw    $v0, %lo(debug_unknown)($at)
 debug_gunwatchpos:
-/* 0C5914 7F090DE4 3C028003 */  lui   $v0, %hi(debug_gunwatchpos_flag) # $v0, 0x8003
-/* 0C5918 7F090DE8 24426FBC */  addiu $v0, %lo(debug_gunwatchpos_flag) # addiu $v0, $v0, 0x6fbc
+/* 0C5914 7F090DE4 3C028003 */  lui   $v0, %hi(debug_gunwatchpos_flags) # $v0, 0x8003
+/* 0C5918 7F090DE8 24426FBC */  addiu $v0, %lo(debug_gunwatchpos_flags) # addiu $v0, $v0, 0x6fbc
 /* 0C591C 7F090DEC 8C4B0000 */  lw    $t3, ($v0)
 /* 0C5920 7F090DF0 396C0001 */  xori  $t4, $t3, 1
 /* 0C5924 7F090DF4 1000001F */  b     .L7F090E74
@@ -1288,7 +1284,7 @@ s32 get_debug_chrnum_flag(void) {
 }
 
 s32 get_debug_gunwatchpos_flag(void) {
-    return debug_gunwatchpos_flag;
+    return debug_gunwatchpos_flags;
 }
 
 s32  get_debug_profile_flag(void) {

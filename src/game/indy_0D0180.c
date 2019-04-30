@@ -8,6 +8,11 @@ s32 D_8004EAC0 = 0;
 s32 D_8004EAC4 = 0x103;
 //D:8004EAC8
 s32 indy_ready = 0;
+//D:8004EACC
+s32 D_8004EACC = 0x0;
+//D:8004EAD0
+s32 D_8004EAD0 = 0x0;
+
 
 #ifdef NONMATCHING
 void sub_GAME_7F0D0180(void) {

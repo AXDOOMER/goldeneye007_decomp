@@ -9,64 +9,64 @@ f32 flt_CODE_bss_80079E84;
 f32 flt_CODE_bss_80079E88;
 
 
-/* data //Gfx MipMap2C_Something_Setup[]={};
-D:8003FCC0     qword_D_8003FCC0:.dword 0xF580080000018060,0xF580080001018060,0xF200200200000000,0xF200200201000000
-D:8003FCC0                                              # DATA XREF: sub_CODE_7F092E50+14Co
-D:8003FCC0                                              # sub_CODE_7F092E50+310o
-D:8003FCC0                                              # sub_CODE_7F092E50+544o
-D:8003FCC0                                              # sub_CODE_7F09343C+10o
-D:8003FCC0                     .dword 0xFA00000FFFFFFFFF,0xBA00110200000000,0xBA000C0200002000,0xFC272C041F1093FF
-D:8003FCC0                     .dword 0xB900031D0C192078,0xBA00100100000000,0xBA00140200100000,0xB700000000002000
-D:8003FCC0                     .dword 0xB800000000000000
-//Gfx MipMap2C_Something2_Setup[]={};
-D:8003FD28     qword_D_8003FD28:.dword 0xF548040000014050,0xF548040001014050,0xF200200200000000,0xF200200201000000
-D:8003FD28                                              # DATA XREF: sub_CODE_7F092E50+30Co
-D:8003FD28                                              # sub_CODE_7F092E50+53Co
-D:8003FD28                                              # sub_CODE_7F09365C+10o
-D:8003FD28                     .dword 0xFA00000FFFFFFFFF,0xBA00110200000000,0xBA000C0200002000,0xFC272C041F1093FF
-D:8003FD28                     .dword 0xB900031D0C192078,0xBA00100100000000,0xBA00140200100000,0xB700000000002000
-D:8003FD28                     .dword 0xB800000000000000
-//End Dl means this gfx list cannot go any further. perhaps below is a vtx array?
-,                 0,                 0,        0xFFFFFFFF
-D:8003FD28                     .dword              0x100,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,        0x3F800000,                 0
-D:8003FD28                     .dword                  0,0x3F80000000000000,                 0,        0x3F800000
-D:8003FD28                     .dword                  0,                 0,0x3F80000000000000,                 0
-D:8003FD28                     .dword                  0,        0xBF800000,        0x3F800000,                 0
-D:8003FD28                     .dword                  0,                 0,0xC19FFFFE00000000,0x419FFFFE00000000
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,0xBF80000000000000
-D:8003FD28                     .dword         0xBF800000,                 0,0xBF80000000000000,        0xBF800000
-D:8003FD28                     .dword         0x3F800000,                 0,0x3F80000000000000,        0x3F800000
-D:8003FD28                     .dword                  0,0x3F80000000000000,                 0,0x3F8000003F800000
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,0x447A000000000000,                 0,        0xFF000000
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0,                 0
-D:8003FD28                     .dword                  0,                 0,                 0
-*/
+// data
+//Gfx MipMap2C_Something_Setup[]={};
+//D:8003FCC0
+u64 MipMap2C_Something_Setup[] = {
+    0xF580080000018060,0xF580080001018060,0xF200200200000000,0xF200200201000000,
+    0xFA00000FFFFFFFFF,0xBA00110200000000,0xBA000C0200002000,0xFC272C041F1093FF,
+    0xB900031D0C192078,0xBA00100100000000,0xBA00140200100000,0xB700000000002000,
+    0xB800000000000000
+};
 
-// rodate
-//D:80057510
-const f32 D_80057510 = 0.1;
-//D:80057514
-const f32 D_80057514 = 6.2831802;
-//D:80057518
-const f32 D_80057518 = 0.039999999;
+//Gfx MipMap2C_Something2_Setup[]={};
+//D:8003FD28
+u64 MipMap2C_Something2_Setup[] = {
+    0xF548040000014050,0xF548040001014050,0xF200200200000000,0xF200200201000000,
+    0xFA00000FFFFFFFFF,0xBA00110200000000,0xBA000C0200002000,0xFC272C041F1093FF,
+    0xB900031D0C192078,0xBA00100100000000,0xBA00140200100000,0xB700000000002000,
+    0xB800000000000000
+};
+
+//End Dl means this gfx list cannot go any further. perhaps below is a vtx array?
+
+u32 D_8003FD90 = 0;
+u32 D_8003FD94[] = {0, 0, 0, 0, 0xFFFFFFFF};
+//D:8003FD98
+u64 D_8003FD98[] = {
+              0x100,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,        0x3F800000,                 0,
+                  0,0x3F80000000000000,                 0,        0x3F800000,
+                  0,                 0,0x3F80000000000000,                 0,
+                  0,        0xBF800000,        0x3F800000,                 0,
+                  0,                 0,0xC19FFFFE00000000,0x419FFFFE00000000,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,0xBF80000000000000,
+         0xBF800000,                 0,0xBF80000000000000,        0xBF800000,
+         0x3F800000,                 0,0x3F80000000000000,        0x3F800000,
+                  0,0x3F80000000000000,                 0,0x3F8000003F800000,
+                  0,                 0,                 0,                 0,
+                  0,0x447A000000000000,                 0,        0xFF000000,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0,                 0,
+                  0,                 0,                 0
+};
+
+// rodata
 
 
 
@@ -76,6 +76,13 @@ void sub_GAME_7F092E50(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80057510
+.word 0x3dcccccd /*0.1*/
+glabel D_80057514
+.word 0x40c90fd0 /*6.2831802*/
+glabel D_80057518
+.word 0x3d23d70a /*0.039999999*/
 .text
 glabel sub_GAME_7F092E50
 /* 0C7980 7F092E50 3C0E8005 */  lui   $t6, %hi(clock_timer) # $t6, 0x8005

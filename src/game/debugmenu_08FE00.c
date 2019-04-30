@@ -24,7 +24,6 @@ u32 mcm_yoffset_multiplier = 0x7070700;
 D:80036B94                     .word 0
 D:80036B98                     .word 0
 D:80036B9C                     .word 0
-D:80036BA0                     .word 0
 */
 
 // rodata

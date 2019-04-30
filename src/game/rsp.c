@@ -9,7 +9,7 @@ char dword_CODE_bss_8008D770[0xBA0];
 s32 D_8004E9E0 = 0;
 s32 D_8004E9E4 = 0;
 s32 D_8004E9E8 = 0;
-
+s32 D_8004E9EC = 0;
 //make me a struct
 //D:8004E9F0
 u32 fast3d_related_0[] = {

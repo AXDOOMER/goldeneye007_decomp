@@ -26,24 +26,6 @@ s32 dword_CODE_bss_8007A0CC;
 
 
 // rodata
-//D:80057520
-const f32 D_80057520 = 0.000099999997;
-//D:80057524
-const f32 D_80057524 = 0.0099999998;
-//D:80057528
-const f32 D_80057528 = 300000.0;
-//D:8005752C
-const f32 D_8005752C = 0.000099999997;
-//D:80057530
-const f32 D_80057530 = -0.0099999998;
-//D:80057534
-const f32 D_80057534 = 300000.0;
-//D:80057538
-const f32 D_80057538 = 32767.9;
-//D:8005753C
-const f32 D_8005753C = -32767.9;
-//D:80057540
-const f32 D_80057540 = 0.1;
 /*
 D:80057544     jpt_700C8968:   .word loc_CODE_7F094A48  # DATA XREF: sub_CODE_7F094488+5A4r
 D:80057544                     .word loc_CODE_7F095284  # jump table for switch statement
@@ -62,12 +44,7 @@ D:80057544                     .word loc_CODE_7F09502C
 D:80057544                     .word loc_CODE_7F094F64
 D:80057544                     .word loc_CODE_7F094A40
 */
-//D:80057584
-const f32 D_80057584 =  65535.0;
-//D:80057588
-const f32 D_80057588 =  1279.0;
-//D:8005758C
-const f32 D_8005758C =  959.0;
+
 /*
 D:80057590     jpt_700C9D3C:   .word loc_CODE_7F095E14  # DATA XREF: sub_CODE_7F094488+1978r
 D:80057590                     .word loc_CODE_7F09643C  # jump table for switch statement
@@ -86,52 +63,7 @@ D:80057590                     .word loc_CODE_7F096984
 D:80057590                     .word loc_CODE_7F0967FC
 D:80057590                     .word loc_CODE_7F095E1C
 */
-//D:800575D0
-const f32 D_800575D0 = 65535.0;
-//D:800575D4
-const f32 D_800575D4 = 32767.0;
-//D:800575D8
-const f32 D_800575D8 = 32767.0;
-//D:800575DC
-const f32 D_800575DC = 511.0;
-//D:800575E0
-const f32 D_800575E0 = -4090.0;
-//D:800575E4
-const f32 D_800575E4 = -4090.0;
-//D:800575E8
-const f32 D_800575E8 = -1878.0;
-//D:800575EC
-const f32 D_800575EC = -1878.0;
-//D:800575F0
-const f32 D_800575F0 = -1878.0;
-//D:800575F4
-const f32 D_800575F4 = 32767.0;
-//D:800575F8
-const f32 D_800575F8 = -1878.0;
-//D:800575FC
-const f32 D_800575FC = -1878.0;
-//D:80057600
-const f32 D_80057600 = -1878.0;
-//D:80057604
-const f32 D_80057604 = -1878.0;
-//D:80057608
-const f32 D_80057608 = 1877.0;
-//D:8005760C
-const f32 D_8005760C = 32767.0;
-//D:80057610
-const f32 D_80057610 = -229.18311;
-//D:80057614
-const f32 D_80057614 = 9.9999981;
-//D:80057618
-const f32 D_80057618 = 0.93000001;
-//D:8005761C
-const f32 D_8005761C = 14.285716;
-//D:80057620
-const f32 D_80057620 = 0.89999998;
-//D:80057624
-const f32 D_80057624 = -3.1415927;
-//D:80057628
-const f32 D_80057628 = 1.3333334;
+
 /*
 D:8005762C     jpt_700CF1AC:   .word weapon_multi_none  # DATA XREF: sub_CODE_7F09B244+2Cr
 D:8005762C                     .word weapon_multi_none  # jump table for switch statement
@@ -289,6 +221,13 @@ f32 sub_GAME_7F0938FC(void *arg0, void *arg1, void *arg2) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80057520
+.word 0x38d1b717 /*0.000099999997*/
+glabel D_80057524
+.word 0x3c23d70a /*0.0099999998*/
+glabel D_80057528
+.word 0x48927c00 /*300000.0*/
 .text
 glabel sub_GAME_7F0938FC
 /* 0C842C 7F0938FC 27BDFFC8 */  addiu $sp, $sp, -0x38
@@ -457,6 +396,13 @@ f32 sub_GAME_7F093A78(void *arg0, void *arg1, void *arg2) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8005752C
+.word 0x38d1b717 /*0.000099999997*/
+glabel D_80057530
+.word 0x38d1b717 /*-0.0099999998*/
+glabel D_80057534
+.word 0x48927c00 /*300000.0*/
 .text
 glabel sub_GAME_7F093A78
 /* 0C85A8 7F093A78 27BDFFC8 */  addiu $sp, $sp, -0x38
@@ -1121,6 +1067,13 @@ void sub_GAME_7F094298(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80057538
+.word 0x46ffffcd /*32767.9*/
+glabel D_8005753C
+.word 0xc6ffffcd /*-32767.9*/
+glabel D_80057540
+.word 0x3dcccccd /*0.1*/
 .text
 glabel sub_GAME_7F094298
 /* 0C8DC8 7F094298 3C018005 */  lui   $at, %hi(D_80057538) # $at, 0x8005
@@ -1313,6 +1266,27 @@ void sub_GAME_7F094488(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80057584
+.word 0x477fff00 /*65535.0*/
+glabel D_80057588
+.word 0x449fe000 /*1279.0*/
+glabel D_8005758C
+.word 0x446fc000 /*959.0*/
+
+
+glabel D_800575D0
+.word 0x477fff00 /*65535.0*/
+glabel D_800575D4
+.word 0x46fffe00 /*32767.0*/
+glabel D_800575D8
+.word 0x46fffe00 /*32767.0*/
+glabel D_800575DC
+.word 0x43ff8000 /*511.0*/
+glabel D_800575E0
+.word 0xc57fa000 /*-4090.0*/
+glabel D_800575E4
+.word 0xc57fa000 /*-4090.0*/
 .text
 glabel sub_GAME_7F094488
 /* 0C8FB8 7F094488 27BDF950 */  addiu $sp, $sp, -0x6b0
@@ -4715,6 +4689,15 @@ void sub_GAME_7F097818(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800575E8
+.word 0xc4eac000 /*-1878.0*/
+glabel D_800575EC
+.word 0xc4eac000 /*-1878.0*/
+glabel D_800575F0
+.word 0xc4eac000 /*-1878.0*/
+glabel D_800575F4
+.word 0x46fffe00 /*32767.0*/
 .text
 glabel sub_GAME_7F097818
 /* 0CC348 7F097818 27BDFB78 */  addiu $sp, $sp, -0x488
@@ -5927,6 +5910,19 @@ void sub_GAME_7F098A2C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800575F8
+.word 0xc4eac000 /*-1878.0*/
+glabel D_800575FC
+.word 0xc4eac000 /*-1878.0*/
+glabel D_80057600
+.word 0xc4eac000 /*-1878.0*/
+glabel D_80057604
+.word 0xc4eac000 /*-1878.0*/
+glabel D_80057608
+.word 0x44eaa000 /*1877.0*/
+glabel D_8005760C
+.word 0x46fffe00 /*32767.0*/
 .text
 glabel sub_GAME_7F098A2C
 /* 0CD55C 7F098A2C 27BDFB30 */  addiu $sp, $sp, -0x4d0
@@ -7678,7 +7674,7 @@ glabel init_player_data_ptrs_construct_viewports
 /* 0CEEFC 7F09A3CC 1A200006 */  blez  $s1, .L7F09A3E8
 /* 0CEF00 7F09A3D0 00008025 */   move  $s0, $zero
 .L7F09A3D4:
-/* 0CEF04 7F09A3D4 0FC2692F */  jal   sub_GAME_7F09A4BC
+/* 0CEF04 7F09A3D4 0FC2692F */  jal   initBONDdataforPlayer
 /* 0CEF08 7F09A3D8 02002025 */   move  $a0, $s0
 /* 0CEF0C 7F09A3DC 26100001 */  addiu $s0, $s0, 1
 /* 0CEF10 7F09A3E0 1611FFFC */  bne   $s0, $s1, .L7F09A3D4
@@ -7689,7 +7685,7 @@ glabel init_player_data_ptrs_construct_viewports
 /* 0CEF20 7F09A3F0 10000018 */  b     .L7F09A454
 /* 0CEF24 7F09A3F4 8FBF001C */   lw    $ra, 0x1c($sp)
 .L7F09A3F8:
-/* 0CEF28 7F09A3F8 0FC2692F */  jal   sub_GAME_7F09A4BC
+/* 0CEF28 7F09A3F8 0FC2692F */  jal   initBONDdataforPlayer
 /* 0CEF2C 7F09A3FC 00002025 */   move  $a0, $zero
 /* 0CEF30 7F09A400 0FC26C43 */  jal   set_cur_player
 /* 0CEF34 7F09A404 00002025 */   move  $a0, $zero
@@ -7766,13 +7762,28 @@ glabel get_num_players
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09A4BC(void) {
+void initBONDdataforPlayer(void) {
 
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80057610
+.word 0xc3652ee0 /*-229.18311*/
+glabel D_80057614
+.word 0x411ffffe /*9.9999981*/
+glabel D_80057618
+.word 0x3f6e147b /*0.93000001*/
+glabel D_8005761C
+.word 0x4164924b /*14.285716*/
+glabel D_80057620
+.word 0x3f666666 /*0.89999998*/
+glabel D_80057624
+.word 0xc0490fdb /*-3.1415927*/
+glabel D_80057628
+.word 0x3faaaaab /*1.3333334*/
 .text
-glabel sub_GAME_7F09A4BC
+glabel initBONDdataforPlayer
 /* 0CEFEC 7F09A4BC 27BDFC30 */  addiu $sp, $sp, -0x3d0
 /* 0CEFF0 7F09A4C0 3C0F8004 */  lui   $t7, %hi(D_8003FDA0) # $t7, 0x8004
 /* 0CEFF4 7F09A4C4 25EFFDA0 */  addiu $t7, %lo(D_8003FDA0) # addiu $t7, $t7, -0x260

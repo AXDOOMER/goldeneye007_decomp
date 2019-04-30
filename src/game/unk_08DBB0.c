@@ -57,54 +57,7 @@ u32 D_80036B6C = 0;
 
 
 // rodata
-//D:800552E0
-const f32 D_800552E0 = 0.02;
-//D:800552E4
-const f32 D_800552E4 = 0.02;
-//D:800552E8
-const f32 D_800552E8 = 0.0099999998;
-//D:800552EC
-const f32 D_800552EC = -0.0099999998;
-//D:800552F0
-const f32 D_800552F0 = -0.0099999998;
-//D:800552F4
-const f32 D_800552F4 = 0.0099999998;
-//D:800552F8
-const f32 D_800552F8 = 0.069999993;
-//D:800552FC
-const f32 master_player_perspective = 0.069999993;
-//D:80055300
-const f32 D_80055300 = 0.93000001;
-//D:80055304
-const f32 D_80055304 = 0.69999999;
-//D:80055308
-const f32 D_80055308 = 0.1;
-//D:8005530C
-const f32 D_8005530C = 0.60000002;
-//D:80055310
-const f32 D_80055310 = 0.59999996;
-//D:80055314
-const f32 D_80055314 = 0.40000001;
-//D:80055318
-const f32 D_80055318 = 0.40000001;
-//D:8005531C
-const f32 D_8005531C = 0.89999998;
-//D:80055320
-const f32 D_80055320 = 0.93000001;
-//D:80055324
-const f32 D_80055324 = 0.99000001;
-//D:80055328
-const f32 D_80055328 = 0.85000002;
-//D:8005532C
-const f32 D_8005532C = 0.99000001;
-//D:80055330
-const f32 D_80055330 = 0.0083333338;
-//D:80055334
-const f32 D_80055334 = 0.025000002;
-//D:80055338
-const f32 D_80055338 = 0.012500001;
-//D:8005533C
-const f32 D_8005533C = 0.0041666669;
+
 
 
 #ifdef NONMATCHING
@@ -136,6 +89,19 @@ void sub_GAME_7F08DBC8(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800552E0
+.word 0x3ca3d70a /*0.02*/
+glabel D_800552E4
+.word 0x3ca3d70a /*0.02*/
+glabel D_800552E8
+.word 0x3c23d70a /*0.0099999998*/
+glabel D_800552EC
+.word 0xbc23d70a  /*-0.0099999998*/
+glabel D_800552F0
+.word 0xbc23d70a  /*-0.0099999998*/
+glabel D_800552F4
+.word 0x3c23d70a /*0.0099999998*/
 .text
 glabel sub_GAME_7F08DBC8
 /* 0C26F8 7F08DBC8 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -319,6 +285,13 @@ void sub_GAME_7F08DE48(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800552F8
+.word 0x3d8f5c28 /*0.069999993*/
+glabel master_player_perspective
+.word 0x3d8f5c28 /*0.069999993*/
+glabel D_80055300
+.word 0x3f6e147b /*0.93000001*/
 .text
 glabel sub_GAME_7F08DE48
 /* 0C2978 7F08DE48 3C058008 */  lui   $a1, %hi(ptr_BONDdata) # $a1, 0x8008
@@ -625,6 +598,33 @@ void sub_GAME_7F08E240(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80055304
+.word 0x3f333333 /*0.69999999*/
+glabel D_80055308
+.word 0x3dcccccd /*0.1*/
+glabel D_8005530C
+.word 0x3f19999a /*0.60000002*/
+glabel D_80055310
+.word 0x3f199999 /*0.59999996*/
+glabel D_80055314
+.word 0x3ecccccd /*0.40000001*/
+glabel D_80055318
+.word 0x3ecccccd /*0.40000001*/
+glabel D_8005531C
+.word 0x3f666666 /*0.89999998*/
+glabel D_80055320
+.word 0x3f6e147b /*0.93000001*/
+glabel D_80055324
+.word 0x3f7d70a4 /*0.99000001*/
+glabel D_80055328
+.word 0x3f59999a /*0.85000002*/
+glabel D_8005532C
+.word 0x3f7d70a4 /*0.99000001*/
+glabel D_80055330
+.word 0x3c088889 /*0.0083333338*/
+glabel D_80055334
+.word 0x3cccccce /*0.025000002*/
 .text
 glabel sub_GAME_7F08E240
 /* 0C2D70 7F08E240 27BDFF18 */  addiu $sp, $sp, -0xe8
@@ -1260,6 +1260,11 @@ void sub_GAME_7F08EAF8(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80055338
+.word 0x3c4cccce /*0.012500001*/
+glabel D_8005533C
+.word 0x3b888889 /*0.0041666669*/
 .text
 glabel sub_GAME_7F08EAF8
 /* 0C3628 7F08EAF8 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008

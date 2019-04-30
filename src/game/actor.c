@@ -718,6 +718,9 @@ s32 ptr_doubles_firing_animation_groups[] = {
 
 struct weapon_firing_animation_table crouched_rifle_firing_animation_group1[] = {
     {0x990, 27.0, 0, 0, 0, -1.0, 35.0, 75.0, -1.0, -1.0, 31.0, 75.0, 0.87266463, -0.69813174, 0.90757126, -0.69813174, 1.5, 1.5},
+};
+
+struct weapon_firing_animation_table crouched_rifle_firing_animation_groupA[] = {
     {0xB84, 24.0, 0, 0, 0, -1.0, 46.0, 98.0, -1.0, -1.0, 41.0, 98.0, 0.87266463, -0.52359879, 1.134464, -0.69813174, 1.6, 1.6},
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };

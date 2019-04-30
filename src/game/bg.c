@@ -74,161 +74,311 @@ s32 D_80041410 = -1;
 
 //D:80041414
 u32 D_80041414 = 0;
-/*
-D:80041418     D_80041418:.word 0
-D:8004141C                     .word 0, 0
-D:80041424     room_information:room_index <0>
-D:80041474     stru_D_80041474:room_index <0>
-D:800414C4                     room_index <0>
-D:80041514                     room_index <0>
-D:80041564                     room_index <0>
-D:800415B4                     room_index <0>
-D:80041604                     room_index <0>
-D:80041654                     room_index <0>
-D:800416A4                     room_index <0>
-D:800416F4                     room_index <0>
-D:80041744                     room_index <0>
-D:80041794                     room_index <0>
-D:800417E4                     room_index <0>
-D:80041834                     room_index <0>
-D:80041884                     room_index <0>
-D:800418D4                     room_index <0>
-D:80041924                     room_index <0>
-D:80041974                     room_index <0>
-D:800419C4                     room_index <0>
-D:80041A14                     room_index <0>
-D:80041A64                     room_index <0>
-D:80041AB4                     room_index <0>
-D:80041B04                     room_index <0>
-D:80041B54                     room_index <0>
-D:80041BA4                     room_index <0>
-D:80041BF4                     room_index <0>
-D:80041C44                     room_index <0>
-D:80041C94                     room_index <0>
-D:80041CE4                     room_index <0>
-D:80041D34                     room_index <0>
-D:80041D84                     room_index <0>
-D:80041DD4                     room_index <0>
-D:80041E24                     room_index <0>
-D:80041E74                     room_index <0>
-D:80041EC4                     room_index <0>
-D:80041F14                     room_index <0>
-D:80041F64                     room_index <0>
-D:80041FB4                     room_index <0>
-D:80042004                     room_index <0>
-D:80042054                     room_index <0>
-D:800420A4                     room_index <0>
-D:800420F4                     room_index <0>
-D:80042144                     room_index <0>
-D:80042194                     room_index <0>
-D:800421E4                     room_index <0>
-D:80042234                     room_index <0>
-D:80042284                     room_index <0>
-D:800422D4                     room_index <0>
-D:80042324                     room_index <0>
-D:80042374                     room_index <0>
-D:800423C4                     room_index <0>
-D:80042414                     room_index <0>
-D:80042464                     room_index <0>
-D:800424B4                     room_index <0>
-D:80042504                     room_index <0>
-D:80042554                     room_index <0>
-D:800425A4                     room_index <0>
-D:800425F4                     room_index <0>
-D:80042644                     room_index <0>
-D:80042694                     room_index <0>
-D:800426E4                     room_index <0>
-D:80042734                     room_index <0>
-D:80042784                     room_index <0>
-D:800427D4                     room_index <0>
-D:80042824                     room_index <0>
-D:80042874                     room_index <0>
-D:800428C4                     room_index <0>
-D:80042914                     room_index <0>
-D:80042964                     room_index <0>
-D:800429B4                     room_index <0>
-D:80042A04                     room_index <0>
-D:80042A54                     room_index <0>
-D:80042AA4                     room_index <0>
-D:80042AF4                     room_index <0>
-D:80042B44                     room_index <0>
-D:80042B94                     room_index <0>
-D:80042BE4                     room_index <0>
-D:80042C34                     room_index <0>
-D:80042C84                     room_index <0>
-D:80042CD4                     room_index <0>
-D:80042D24                     room_index <0>
-D:80042D74                     room_index <0>
-D:80042DC4                     room_index <0>
-D:80042E14                     room_index <0>
-D:80042E64                     room_index <0>
-D:80042EB4                     room_index <0>
-D:80042F04                     room_index <0>
-D:80042F54                     room_index <0>
-D:80042FA4                     room_index <0>
-D:80042FF4                     room_index <0>
-D:80043044                     room_index <0>
-D:80043094                     room_index <0>
-D:800430E4                     room_index <0>
-D:80043134                     room_index <0>
-D:80043184                     room_index <0>
-D:800431D4                     room_index <0>
-D:80043224                     room_index <0>
-D:80043274                     room_index <0>
-D:800432C4                     room_index <0>
-D:80043314                     room_index <0>
-D:80043364                     room_index <0>
-D:800433B4                     room_index <0>
-D:80043404                     room_index <0>
-D:80043454                     room_index <0>
-D:800434A4                     room_index <0>
-D:800434F4                     room_index <0>
-D:80043544                     room_index <0>
-D:80043594                     room_index <0>
-D:800435E4                     room_index <0>
-D:80043634                     room_index <0>
-D:80043684                     room_index <0>
-D:800436D4                     room_index <0>
-D:80043724                     room_index <0>
-D:80043774                     room_index <0>
-D:800437C4                     room_index <0>
-D:80043814                     room_index <0>
-D:80043864                     room_index <0>
-D:800438B4                     room_index <0>
-D:80043904                     room_index <0>
-D:80043954                     room_index <0>
-D:800439A4                     room_index <0>
-D:800439F4                     room_index <0>
-D:80043A44                     room_index <0>
-D:80043A94                     room_index <0>
-D:80043AE4                     room_index <0>
-D:80043B34                     room_index <0>
-D:80043B84                     room_index <0>
-D:80043BD4                     room_index <0>
-D:80043C24                     room_index <0>
-D:80043C74                     room_index <0>
-D:80043CC4                     room_index <0>
-D:80043D14                     room_index <0>
-D:80043D64                     room_index <0>
-D:80043DB4                     room_index <0>
-D:80043E04                     room_index <0>
-D:80043E54                     room_index <0>
-D:80043EA4                     room_index <0>
-D:80043EF4                     room_index <0>
-D:80043F44                     room_index <0>
-D:80043F94                     room_index <0>
-D:80043FE4                     room_index <0>
-D:80044034                     room_index <0>
-D:80044084                     room_index <0>
-D:800440D4                     room_index <0>
-D:80044124                     room_index <0>
-D:80044174                     room_index <0>
-D:800441C4                     room_index <0>
-D:80044214                     room_index <0>
-D:80044264                     room_index <0>
-D:800442B4                     .word 0
-D:800442B8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-*/
+
+//D:80041418
+u32 D_80041418[] = {0, 0, 0};
+//D:80041424
+u8 room_information[0x50] = {0};
+//D:80041474
+u8 D_80041474[0x50] = {0};
+
+//D:800414C4
+u8 D_800414C4[0x50] = {0};
+//D:80041514
+u8 D_80041514[0x50] = {0};
+//D:80041564
+u8 D_80041564[0x50] = {0};
+//D:800415B4
+u8 D_800415B4[0x50] = {0};
+//D:80041604
+u8 D_80041604[0x50] = {0};
+//D:80041654
+u8 D_80041654[0x50] = {0};
+//D:800416A4
+u8 D_800416A4[0x50] = {0};
+//D:800416F4
+u8 D_800416F4[0x50] = {0};
+//D:80041744
+u8 D_80041744[0x50] = {0};
+//D:80041794
+u8 D_80041794[0x50] = {0};
+//D:800417E4
+u8 D_800417E4[0x50] = {0};
+//D:80041834
+u8 D_80041834[0x50] = {0};
+//D:80041884
+u8 D_80041884[0x50] = {0};
+//D:800418D4
+u8 D_800418D4[0x50] = {0};
+//D:80041924
+u8 D_80041924[0x50] = {0};
+//D:80041974
+u8 D_80041974[0x50] = {0};
+//D:800419C4
+u8 D_800419C4[0x50] = {0};
+//D:80041A14
+u8 D_80041A14[0x50] = {0};
+//D:80041A64
+u8 D_80041A64[0x50] = {0};
+//D:80041AB4
+u8 D_80041AB4[0x50] = {0};
+//D:80041B04
+u8 D_80041B04[0x50] = {0};
+//D:80041B54
+u8 D_80041B54[0x50] = {0};
+//D:80041BA4
+u8 D_80041BA4[0x50] = {0};
+//D:80041BF4
+u8 D_80041BF4[0x50] = {0};
+//D:80041C44
+u8 D_80041C44[0x50] = {0};
+//D:80041C94
+u8 D_80041C94[0x50] = {0};
+//D:80041CE4
+u8 D_80041CE4[0x50] = {0};
+//D:80041D34
+u8 D_80041D34[0x50] = {0};
+//D:80041D84
+u8 D_80041D84[0x50] = {0};
+//D:80041DD4
+u8 D_80041DD4[0x50] = {0};
+//D:80041E24
+u8 D_80041E24[0x50] = {0};
+//D:80041E74
+u8 D_80041E74[0x50] = {0};
+//D:80041EC4
+u8 D_80041EC4[0x50] = {0};
+//D:80041F14
+u8 D_80041F14[0x50] = {0};
+//D:80041F64
+u8 D_80041F64[0x50] = {0};
+//D:80041FB4
+u8 D_80041FB4[0x50] = {0};
+//D:80042004
+u8 D_80042004[0x50] = {0};
+//D:80042054
+u8 D_80042054[0x50] = {0};
+//D:800420A4
+u8 D_800420A4[0x50] = {0};
+//D:800420F4
+u8 D_800420F4[0x50] = {0};
+//D:80042144
+u8 D_80042144[0x50] = {0};
+//D:80042194
+u8 D_80042194[0x50] = {0};
+//D:800421E4
+u8 D_800421E4[0x50] = {0};
+//D:80042234
+u8 D_80042234[0x50] = {0};
+//D:80042284
+u8 D_80042284[0x50] = {0};
+//D:800422D4
+u8 D_800422D4[0x50] = {0};
+//D:80042324
+u8 D_80042324[0x50] = {0};
+//D:80042374
+u8 D_80042374[0x50] = {0};
+//D:800423C4
+u8 D_800423C4[0x50] = {0};
+//D:80042414
+u8 D_80042414[0x50] = {0};
+//D:80042464
+u8 D_80042464[0x50] = {0};
+//D:800424B4
+u8 D_800424B4[0x50] = {0};
+//D:80042504
+u8 D_80042504[0x50] = {0};
+//D:80042554
+u8 D_80042554[0x50] = {0};
+//D:800425A4
+u8 D_800425A4[0x50] = {0};
+//D:800425F4
+u8 D_800425F4[0x50] = {0};
+//D:80042644
+u8 D_80042644[0x50] = {0};
+//D:80042694
+u8 D_80042694[0x50] = {0};
+//D:800426E4
+u8 D_800426E4[0x50] = {0};
+//D:80042734
+u8 D_80042734[0x50] = {0};
+//D:80042784
+u8 D_80042784[0x50] = {0};
+//D:800427D4
+u8 D_800427D4[0x50] = {0};
+//D:80042824
+u8 D_80042824[0x50] = {0};
+//D:80042874
+u8 D_80042874[0x50] = {0};
+//D:800428C4
+u8 D_800428C4[0x50] = {0};
+//D:80042914
+u8 D_80042914[0x50] = {0};
+//D:80042964
+u8 D_80042964[0x50] = {0};
+//D:800429B4
+u8 D_800429B4[0x50] = {0};
+//D:80042A04
+u8 D_80042A04[0x50] = {0};
+//D:80042A54
+u8 D_80042A54[0x50] = {0};
+//D:80042AA4
+u8 D_80042AA4[0x50] = {0};
+//D:80042AF4
+u8 D_80042AF4[0x50] = {0};
+//D:80042B44
+u8 D_80042B44[0x50] = {0};
+//D:80042B94
+u8 D_80042B94[0x50] = {0};
+//D:80042BE4
+u8 D_80042BE4[0x50] = {0};
+//D:80042C34
+u8 D_80042C34[0x50] = {0};
+//D:80042C84
+u8 D_80042C84[0x50] = {0};
+//D:80042CD4
+u8 D_80042CD4[0x50] = {0};
+//D:80042D24
+u8 D_80042D24[0x50] = {0};
+//D:80042D74
+u8 D_80042D74[0x50] = {0};
+//D:80042DC4
+u8 D_80042DC4[0x50] = {0};
+//D:80042E14
+u8 D_80042E14[0x50] = {0};
+//D:80042E64
+u8 D_80042E64[0x50] = {0};
+//D:80042EB4
+u8 D_80042EB4[0x50] = {0};
+//D:80042F04
+u8 D_80042F04[0x50] = {0};
+//D:80042F54
+u8 D_80042F54[0x50] = {0};
+//D:80042FA4
+u8 D_80042FA4[0x50] = {0};
+//D:80042FF4
+u8 D_80042FF4[0x50] = {0};
+//D:80043044
+u8 D_80043044[0x50] = {0};
+//D:80043094
+u8 D_80043094[0x50] = {0};
+//D:800430E4
+u8 D_800430E4[0x50] = {0};
+//D:80043134
+u8 D_80043134[0x50] = {0};
+//D:80043184
+u8 D_80043184[0x50] = {0};
+//D:800431D4
+u8 D_800431D4[0x50] = {0};
+//D:80043224
+u8 D_80043224[0x50] = {0};
+//D:80043274
+u8 D_80043274[0x50] = {0};
+//D:800432C4
+u8 D_800432C4[0x50] = {0};
+//D:80043314
+u8 D_80043314[0x50] = {0};
+//D:80043364
+u8 D_80043364[0x50] = {0};
+//D:800433B4
+u8 D_800433B4[0x50] = {0};
+//D:80043404
+u8 D_80043404[0x50] = {0};
+//D:80043454
+u8 D_80043454[0x50] = {0};
+//D:800434A4
+u8 D_800434A4[0x50] = {0};
+//D:800434F4
+u8 D_800434F4[0x50] = {0};
+//D:80043544
+u8 D_80043544[0x50] = {0};
+//D:80043594
+u8 D_80043594[0x50] = {0};
+//D:800435E4
+u8 D_800435E4[0x50] = {0};
+//D:80043634
+u8 D_80043634[0x50] = {0};
+//D:80043684
+u8 D_80043684[0x50] = {0};
+//D:800436D4
+u8 D_800436D4[0x50] = {0};
+//D:80043724
+u8 D_80043724[0x50] = {0};
+//D:80043774
+u8 D_80043774[0x50] = {0};
+//D:800437C4
+u8 D_800437C4[0x50] = {0};
+//D:80043814
+u8 D_80043814[0x50] = {0};
+//D:80043864
+u8 D_80043864[0x50] = {0};
+//D:800438B4
+u8 D_800438B4[0x50] = {0};
+//D:80043904
+u8 D_80043904[0x50] = {0};
+//D:80043954
+u8 D_80043954[0x50] = {0};
+//D:800439A4
+u8 D_800439A4[0x50] = {0};
+//D:800439F4
+u8 D_800439F4[0x50] = {0};
+//D:80043A44
+u8 D_80043A44[0x50] = {0};
+//D:80043A94
+u8 D_80043A94[0x50] = {0};
+//D:80043AE4
+u8 D_80043AE4[0x50] = {0};
+//D:80043B34
+u8 D_80043B34[0x50] = {0};
+//D:80043B84
+u8 D_80043B84[0x50] = {0};
+//D:80043BD4
+u8 D_80043BD4[0x50] = {0};
+//D:80043C24
+u8 D_80043C24[0x50] = {0};
+//D:80043C74
+u8 D_80043C74[0x50] = {0};
+//D:80043CC4
+u8 D_80043CC4[0x50] = {0};
+//D:80043D14
+u8 D_80043D14[0x50] = {0};
+//D:80043D64
+u8 D_80043D64[0x50] = {0};
+//D:80043DB4
+u8 D_80043DB4[0x50] = {0};
+//D:80043E04
+u8 D_80043E04[0x50] = {0};
+//D:80043E54
+u8 D_80043E54[0x50] = {0};
+//D:80043EA4
+u8 D_80043EA4[0x50] = {0};
+//D:80043EF4
+u8 D_80043EF4[0x50] = {0};
+//D:80043F44
+u8 D_80043F44[0x50] = {0};
+//D:80043F94
+u8 D_80043F94[0x50] = {0};
+//D:80043FE4
+u8 D_80043FE4[0x50] = {0};
+//D:80044034
+u8 D_80044034[0x50] = {0};
+//D:80044084
+u8 D_80044084[0x50] = {0};
+//D:800440D4
+u8 D_800440D4[0x50] = {0};
+//D:80044124
+u8 D_80044124[0x50] = {0};
+//D:80044174
+u8 D_80044174[0x50] = {0};
+//D:800441C4
+u8 D_800441C4[0x50] = {0};
+//D:80044214
+u8 D_80044214[0x50] = {0};
+//D:80044264
+u8 D_80044264[0x50] = {0};
+//D:800442B4
+u32 D_800442B4[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
 //D:800442F4
 s32 MaxNumRooms = 0x96 ;
 //D:800442F8
@@ -371,9 +521,12 @@ s32 D_80044910 = 0xFF7FFFFF;
 s32 D_80044914 = 0xFF7FFFFF;
 //D:80044918
 s32 D_80044918 = 0xFF7FFFFF;
-//D:8004491C                     .word 0
-//D:80044920                     .word 0
-//D:80044924                     .word 0
+//D:8004491C
+u32 D_8004491C = 0;
+//D:80044920
+u32 D_80044920 = 0;
+//D:80044924
+u32 D_80044924 = 0;
 
 
 // RenderMode/Combiner Look-Up-Tables
@@ -399,11 +552,11 @@ Gfx D_80044928[] = {
     0xFC26A0041F1093FF, 0xFC232DFFFFFFFE38, 
     //gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2), 
     //gDPSetCombineLERP(TEXEL1, 0, COMBINED_ALPHA, 0, TEXEL1, 0, PRIM_LOD_FRAC, 0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    0x0,0x0
+    0x0,0x0,0x0,0x0
 };
 
 //D:80044940 - Primary
-Gfx D_80044940[] = {
+u64 D_80044940[] = {
     0xB900031D0C192078, 0xB900031DC8112078, 
     0xB900031D0C182078, 0xB900031DC8102078, 
     0xB900031D0C192D58, 0xB900031DC8112D58, 
@@ -433,11 +586,11 @@ Gfx D_80044940[] = {
     //Z-Less OPA Terrain to Z-Less Fog OPA Terrain
     gDPSetRenderMode(G_RM_PASS, G_RM_AA_OPA_TERR2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_OPA_TERR2),
     */
-    0x0, 0x0
+    0x0
 };
 
 //D:800449C8 - Secondary
-Gfx D_800449C8[] = {
+u64 D_800449C8[] = {
     0xB900031D0C184DD8, 0xB900031DC8104DD8,
     0xB900031D0C1849D8, 0xB900031DC81049D8, 
     0xB900031D0C193078, 0xB900031DC8113078,
@@ -475,12 +628,12 @@ Gfx D_800449C8[] = {
     // This one is an oddball... its extra here AND is weird using Tile1 only for Alpha
     gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGBA) , gDPSetCombineMode(TLRGB_ATile1, ModulateRGB_EnvA2),
     */
-    0x0, 0x0
+    0x0
 };
 
 //D:80044AB0
 // Loaded once on first time entering level, only once ever
-Gfx D_80044AB0[] = {
+u64 D_80044AB0[] = {
     0xFC26A0041F1093FF, 0xFC26A0041F1493FF,
     0xFC121824FF33FFFF, 0xFC121A24FF37FFFF, 
     0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD,
@@ -504,12 +657,12 @@ Gfx D_80044AB0[] = {
     gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_PASS2),
     gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA),
     */
-    0x0, 0x0
+    0x0
 };
 
 //D:80044B58
 // Loaded once on first time entering level, only once ever
-Gfx D_80044B58[] = {
+u64 D_80044B58[] = {
     0xFC26A0041F1093FF, 0xFC26A0041F1493FF, 
     0xFC121824FF33FFFF, 0xFC121A24FF37FFFF, 
     0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD,
@@ -533,11 +686,11 @@ Gfx D_80044B58[] = {
     gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_PASS2),
     gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA2),
     */
-    0x0, 0x0
+    0x0
 };
 
 //D:80044C00
-Gfx D_80044C00[] = {
+u64 D_80044C00[] = {
     0xB900031D005049D8, 0xB900031D00553078, 
     0xB900031D0C1849D8, 0xB900031D0C193078, 
     /*
@@ -546,12 +699,12 @@ Gfx D_80044C00[] = {
     //Transparent Surface to Billboard 
     gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2),
     */
-    0x0, 0x0
+    0x0
 };
 
 //D:80044C28
 //water
-Gfx D_80044C28[] = {
+u64 D_80044C28[] = {
     0xB900031D00552078, 0xB900031D00502078, 
     0xB900031D0C192078, 0xB900031D0C182078,
 	/*
@@ -560,22 +713,22 @@ Gfx D_80044C28[] = {
 	//2 cycle Opa to Particle
 	gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_PCL_SURF2),
 	*/
-    0x0, 0x0
+    0x0
 };
 
 //D:80044C50
-Gfx D_80044C50[] = {
+u64 D_80044C50[] = {
     0xB900031D0C1849D8, 0xB900031D0C184B50, 
 	/*
 	//Transparent to Cloud (Saves AA - Stops Jaggies from appearing behind BillBoard)
 	gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_ZB_CLD_SURF2),
 	*/
-	0x0, 0x0
+	0x0
 };
 
 //D:80044C68
 //(Wallet Bond - Main Menu)
-Gfx D_80044C68[] = {
+u64 D_80044C68[] = {
     0xBA00140200000000, 0xBA00140200100000, //1Cycle --> 2Cycle
     0xB900031D00502048, 0xB900031D08D02048, 
     0xFC127E24FFFFF9FC, 0xFC127FFFFFFFF838, 
@@ -585,11 +738,11 @@ Gfx D_80044C68[] = {
 	gDPSetRenderMode(G_RM_AA_PCL_SURF, G_RM_AA_PCL_SURF2), gDPSetRenderMode(AA_EN | IM_RD | CVG_DST_CLAMP | ALPHA_CVG_SEL | ZMODE_OPA | GBL_c1(G_BL_CLR_IN, G_BL_A_SHADE, G_BL_CLR_FOG, G_BL_1MA) | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
 	gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_PASS2), gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2),
 	*/
-	0x0, 0x0
+	0x0
 };
 
 //D:80044CA0
-Gfx D_80044CA0[] = {
+u64 D_80044CA0[] = {
     0xFC127E24FFFFF9FC, 0xFC137E26FFFFFBFD, 
     0xFC121824FF33FFFF, 0xFC131A26FF37FFFF, 
     0xFC127E24FFFFF9FC, 0xFC137E26FFFFFBFD,
@@ -620,7 +773,7 @@ Gfx D_80044CA0[] = {
  	gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGBA2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0, COMBINED, 0, COMBINED_ALPHA, 0, COMBINED, 0, ENVIRONMENT, 0),
  	gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2), gDPSetCombineLERP(CENTER, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
 	*/
-	0x0, 0x0
+	0x0
 };
 
 //D:80044D88
@@ -648,8 +801,7 @@ D:80058C58                     .word loc_CODE_7F0B4914
 D:80058C58                     .word def_7F0B490C
 D:80058C58                     .word loc_CODE_7F0B4914
 */
-//D:80058C7C
-const f32 D_80058C7C = 0.89999998;
+
 /*
 D:80058C80     jpt_700EC3D8:   .word if_statement       # DATA XREF: parse_global_vis_command_list+88r
 D:80058C80                     .word dont_exec_commands_even_on_return  # jump table for switch statement
@@ -705,14 +857,7 @@ D:80058CB4                     .word disable_room_range
 D:80058CB4                     .word preload_room
 D:80058CB4                     .word preload_room_range
 */
-//D:80058D54
-const f32 D_80058D54 = 3.4028235e38;
-//D:80058D58
-const f32 D_80058D58 = -3.4028235e38;
-//D:80058D5C
-const f32 D_80058D5C = 0.99900001;
-//D:80058D60
-const f32 D_80058D60 = 3.4028235e38;
+
 
 
 void something_with_bg_c_debug(void) {
@@ -3612,6 +3757,9 @@ void sub_GAME_7F0B5528(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80058C7C
+.word 0x3f666666 /*0.89999998*/
 .text
 glabel sub_GAME_7F0B5528
 /* 0EA058 7F0B5528 27BDFF50 */  addiu $sp, $sp, -0xb0
@@ -10666,6 +10814,11 @@ void sub_GAME_7F0B96CC(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80058D54
+.word 0x7f7fffff /*3.4028235e38*/
+glabel D_80058D58
+.word 0xff7fffff /*-3.4028235e38*/
 .text
 glabel sub_GAME_7F0B96CC
 /* 0EE1FC 7F0B96CC 27BDFF88 */  addiu $sp, $sp, -0x78
@@ -10855,6 +11008,9 @@ void sub_GAME_7F0B993C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80058D5C
+.word 0x3f7fbe77 /*0.99900001*/
 .text
 glabel sub_GAME_7F0B993C
 /* 0EE46C 7F0B993C 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -11612,6 +11768,9 @@ void sub_GAME_7F0B9E04(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80058D60
+.word 0x7f7fffff /*3.4028235e38*/
 .text
 glabel sub_GAME_7F0B9E04
 /* 0EE934 7F0B9E04 27BDFFB8 */  addiu $sp, $sp, -0x48

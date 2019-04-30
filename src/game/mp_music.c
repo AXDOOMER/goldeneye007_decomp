@@ -60,7 +60,7 @@ D:8005B7C8                     .word loc_CODE_7F0C0E18
 D:8005B7C8                     .word loc_CODE_7F0C0E18
 D:8005B7C8                     .word loc_CODE_7F0C0DE4
 */
-const f32 D_8005B7E4 = 0.02;
+
 /*
 D:8005B7E8     jpt_700F4D60:   .word loc_CODE_7F0C0E38  # DATA XREF: sub_CODE_7F0C0C3C+1E8r
 D:8005B7E8                     .word loc_CODE_7F0C0E58  # jump table for switch statement
@@ -147,6 +147,9 @@ void sub_GAME_7F0C0C3C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8005B7E4
+.word 0x3ca3d70a /*0.02*/
 .text
 glabel sub_GAME_7F0C0C3C
 /* 0F576C 7F0C0C3C 3C038005 */  lui   $v1, %hi(mission_state) # $v1, 0x8005

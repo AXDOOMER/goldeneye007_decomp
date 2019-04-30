@@ -3441,7 +3441,7 @@ labels:
    - [0x7F09A32C, "reset_play_data_ptrs"]
    - [0x7F09A38C, "init_player_data_ptrs_construct_viewports"]
    - [0x7F09A464, "get_num_players"]
-   - [0x7F09A4BC, "sub_GAME_7F09A4BC"]
+   - [0x7F09A4BC, "initBONDdataforPlayer"]
    - [0x7F09B10C, "set_cur_player"]
    - [0x7F09B150, "get_cur_playernum"]
    - [0x7F09B15C, "sub_GAME_7F09B15C"]

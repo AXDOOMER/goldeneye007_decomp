@@ -109,16 +109,7 @@ const char aCDCC[] = "%c%d%c%c";
 const char aStan_c_debug[] = "stan_c_debug";
 //D:800585BC
 const char aStanlinelog[] = "-stanlinelog";
-//D:800585CC
-const f32 D_800585CC = 32767.0;
-//D:800585D0
-const f32 D_800585D0 = -3.4028235e38;
-//D:800585D4
-const f32 D_800585D4 = -32767.0;
-//D:800585D8
-const f32 D_800585D8 = 0.1;
-//D:800585DC
-const f32 D_800585DC = 0.89999998;
+
 
 
 #ifdef NONMATCHING
@@ -567,6 +558,13 @@ void sub_GAME_7F0AF20C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800585CC
+.word 0x46fffe00 /*32767.0*/
+glabel D_800585D0
+.word 0xff7fffff /*-3.4028235e38*/
+glabel D_800585D4
+.word 0xc6fffe00 /*-32767.0*/
 .text
 glabel sub_GAME_7F0AF20C
 /* 0E3D3C 7F0AF20C 27BDFF38 */  addiu $sp, $sp, -0xc8
@@ -1386,6 +1384,11 @@ f32 sub_GAME_7F0AFA1C(void *arg0, s32 arg1, void *arg2) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800585D8
+.word 0x3dcccccd /*0.1*/
+glabel D_800585DC
+.word 0x3f666666 /*0.89999998*/
 .text
 glabel sub_GAME_7F0AFA1C
 /* 0E454C 7F0AFA1C 27BDFFD8 */  addiu $sp, $sp, -0x28

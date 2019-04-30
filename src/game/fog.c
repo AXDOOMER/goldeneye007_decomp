@@ -180,10 +180,7 @@ struct fog_element2 fog_tables2[] = {
 };
 
 // rodata
-//D:80058D70
-const f32 default_near_fog = 3.4028235e38;
-//D:80058D74
-const f32 D_80058D74 = 10000.0;
+
 
 
 #ifdef NONMATCHING
@@ -508,6 +505,11 @@ void load_enviroment(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel default_near_fog
+.word 0x7f7fffff  /*3.4028235e38*/
+glabel D_80058D74
+.word 0x461c4000  /*10000.0*/
 .text
 glabel load_enviroment
 /* 0EF594 7F0BAA64 27BDFFD8 */  addiu $sp, $sp, -0x28

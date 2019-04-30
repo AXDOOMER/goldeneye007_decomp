@@ -100,7 +100,7 @@ s32 D_800483EC = 0;
 struct ramrom_struct ramrom_table[] = {
     {0x2BF2D0, 0}, {0x2C44D0, 0}, {0x2C64A0, 0}, {0x2C7F50, 0}, {0x2CA330, 0}, 
     {0x2CBFA0, 0}, {0x2CE6F0, 0}, {0x2D1000, 0}, {0x2D4390, 0}, {0x2D9610, 0},
-    {0x2DB7A0, 0}, {0x2DD770, 0}, {0x2DF120, 0}, {0x2E2600, 0}
+    {0x2DB7A0, 0}, {0x2DD770, 0}, {0x2DF120, 0}, {0x2E2600, 0}, {0,0}
 };
 
 //D:80048468
@@ -144,16 +144,9 @@ const char aStanshow__3[] = "-stanshow_";
 const char aOneMinuteLeft[] = "One minute left";
 //D:8005B714
 const char aSetdetailDDDDDDDDD[] = "setdetail %d %d %d %d %d %d %d %d %d";
-//D:8005B73C
-const f32 D_8005B73C = 0.60000002;
-//D:8005B740
-const f32 D_8005B740 = 0.47500002;
-//D:8005B744
-const f32 D_8005B744 = 0.60000002;
-//D:8005B748
-const f32 D_8005B748 = 0.2;
-//D:8005B74C
-const f32 D_8005B74C = 0.2;
+
+
+
 //D:8005B750
 const char aReplayDemo_D[] = "replay/demo.%d";
 //D:8005B760
@@ -1464,6 +1457,17 @@ void sub_GAME_7F0BE8D0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8005B73C
+.word 0x3f19999a /*0.60000002*/
+glabel D_8005B740
+.word 0x3ef33334 /*0.47500002*/
+glabel D_8005B744
+.word 0x3f19999a /*0.60000002*/
+glabel D_8005B748
+.word 0x3e4ccccd /*0.2*/
+glabel D_8005B74C
+.word 0x3e4ccccd /*0.2*/
 .text
 glabel sub_GAME_7F0BE8D0
 /* 0F3400 7F0BE8D0 3C028005 */  lui   $v0, %hi(difficulty_0) # $v0, 0x8005

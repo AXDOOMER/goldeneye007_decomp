@@ -754,10 +754,6 @@ s32 file_entry_max = 0x2D7;
 
 
 // rodata
-//D:8005B66C
-const u32 rz_header_1 = 0x11720000;
-//D:8005B670
-const u32 rz_header_2 = 0x11720000;
 //D:8005B674
 const char aOb_c_debug[] = "ob_c_debug";
 
@@ -824,6 +820,11 @@ void resource_load_from_indy(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel rz_header_1
+.word 0x11720000
+glabel rz_header_2
+.word 0x11720000
 .text
 glabel resource_load_from_indy
 /* 0F1664 7F0BCB34 27BDDED8 */  addiu $sp, $sp, -0x2128

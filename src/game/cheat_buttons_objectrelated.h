@@ -31,14 +31,15 @@ struct Gitemheader {
 
 
 struct PitemZ_header {
-    int microcode_entry_num;
+    s32 microcode_entry_num;
     struct item_related * anonymous_1;
     short anonymous_2;
     short field_E;
     float drawdistance;
-    int anonymous_4;
-    int anonymous_5;
-    int anonymous_6;
+    s32 anonymous_4;
+    s32 anonymous_5;
+    s32 anonymous_6;
+    s32 anonymous_7;
 };
 
 struct p_itementry {
@@ -118,6 +119,16 @@ struct player_gait_position_entry {
 struct struct_13 {
     void * anonymous_0;
     int anonymous_1;
+};
+
+struct struct_15 {
+    char anonymous_0;
+    char field_1;
+    char field_2;
+    char field_3;
+    void * anonymous_1;
+    int anonymous_2;
+    int anonymous_3;
 };
 
 extern struct item_related prop_cctv_related;

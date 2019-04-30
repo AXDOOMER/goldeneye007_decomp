@@ -3271,7 +3271,7 @@ ranges:
    - [0xC2DD80, 0xC2DE40, "ptr", "music_setup_entries"]
    - [0xC2DE40, 0xC2DEA4, "ptr", "random_tracks"]
    - [0xC2DEA4, 0xC2DEA5, "ptr", "D_8004EC34"]
-   - [0xC2DEA5, 0xC2DEA7, "ptr", "D_8004EC35"]
+   - [0xC2DEA5, 0xC2DEA7, "ptr", "D_8004EC34+1"]
    - [0xC2DEA7, 0xC2DEA8, "ptr", "D_8004EC37"]
    - [0xC2DEA8, 0xC2DEAB, "ptr", "D_8004EC38"]
    - [0xC2DEAB, 0xC2DEAD, "ptr", "D_8004EC3B"]

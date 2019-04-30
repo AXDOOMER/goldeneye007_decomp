@@ -36,20 +36,12 @@ s16 spec_PC;
 
 
 // data
-s8 D_8004EC34 = 0xFF;
-s8 D_8004EC35 = 0xFF;
-s8 D_8004EC36 = 0xFF;
-s8 D_8004EC37 = 0xFF;
+s8 D_8004EC30 = 0x0;
+s8 D_8004EC34[] = {0xFF, 0xFF, 0xFF, 0xFF};
 
-s8 D_8004EC38 = 0xFF;
-s8 D_8004EC39 = 0xFF;
-s8 D_8004EC3A = 0xFF;
-s8 D_8004EC3B = 0xFF;
+s8 D_8004EC38[] = {0xFF, 0xFF, 0xFF, 0xFF};
 
-s8 D_8004EC3C = 0xFF;
-s8 D_8004EC3D = 0;
-s8 D_8004EC3E = 0;
-s8 D_8004EC3F = 0;
+s8 D_8004EC3C[] = {0xFF, 0x0, 0x0, 0x0};
 
 s16 D_8004EC40[] = {
         0,     0, 0x7FE, 0x3FE, 0x3FD, 0x3FB, 0x3F7, 0x3EF, 0x4F7, 0x3FD,
@@ -567,12 +559,12 @@ glabel spectrum_p1controller_to_kempston
 /* 107804 7F0D2CD4 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 107808 7F0D2CD8 240E00FF */  li    $t6, 255
 /* 10780C 7F0D2CDC 3C018005 */  lui   $at, %hi(D_8004EC34) # $at, 0x8005
-/* 107810 7F0D2CE0 3C048005 */  lui   $a0, %hi(D_8004EC35) # $a0, 0x8005
+/* 107810 7F0D2CE0 3C048005 */  lui   $a0, %hi(D_8004EC34+1) # $a0, 0x8005
 /* 107814 7F0D2CE4 3C058005 */  lui   $a1, %hi(D_8004EC3D) # $a1, 0x8005
 /* 107818 7F0D2CE8 8FA70020 */  lw    $a3, 0x20($sp)
 /* 10781C 7F0D2CEC 8FA8001C */  lw    $t0, 0x1c($sp)
 /* 107820 7F0D2CF0 24A5EC3D */  addiu $a1, %lo(D_8004EC3D) # addiu $a1, $a1, -0x13c3
-/* 107824 7F0D2CF4 2484EC35 */  addiu $a0, %lo(D_8004EC35) # addiu $a0, $a0, -0x13cb
+/* 107824 7F0D2CF4 2484EC35 */  addiu $a0, %lo(D_8004EC34+1) # addiu $a0, $a0, -0x13cb
 /* 107828 7F0D2CF8 A02EEC34 */  sb    $t6, %lo(D_8004EC34)($at)
 /* 10782C 7F0D2CFC 240300FF */  li    $v1, 255
 .L7F0D2D00:

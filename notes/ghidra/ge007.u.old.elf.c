@@ -61431,7 +61431,7 @@ void proc_7F043650(int param_1)
       }
     }
     else {
-      uStack8 = _Throwing_knife_SFX;
+      uStack8 = _Throwing_knife_SFX_1;
       uStack4 = Throwing_knife_SFX_3;
       iVar5 = *(int *)(*(int *)(param_1 + 0x6c) + 0xa4);
       uVar3 = get_random_value();
@@ -63621,10 +63621,14 @@ void proc_7F04B610(int param_1,int param_2)
     puVar19 = (uint *)(*(int *)(iVar17 + 0x10) + (uint)*(ushort *)(iVar4 + 0x1a) * 4);
     uVar9 = get_random_value();
     if ((uVar9 & 1) == 0) {
-      uVar3 = object_explosion_details[param_2 + (int)*(short *)(param_1 + 4) * 7 + 4];
+      uVar3 = *(ushort *)
+               ((int)object_explosion_details + (int)*(short *)(param_1 + 4) * 0xe + param_2 * 2 + 8
+               );
     }
     else {
-      uVar3 = object_explosion_details[param_2 + (int)*(short *)(param_1 + 4) * 7 + 1];
+      uVar3 = *(ushort *)
+               ((int)object_explosion_details + (int)*(short *)(param_1 + 4) * 0xe + param_2 * 2 + 2
+               );
     }
     uStack32 = (uint)uVar3;
     iStack88 = param_2 * 2;
@@ -64430,7 +64434,7 @@ void object_explosion_related(int param_1,float *param_2,int param_3)
     sVar2 = *(short *)(param_1 + 4);
   }
   pcStack4 = *(char **)(param_1 + 0x10);
-  sStack10 = object_explosion_details[(int)sVar2 * 7];
+  sStack10 = *(short *)((int)object_explosion_details + (int)sVar2 * 0xe);
   if (*(int *)(pcStack4 + 0x1c) == 0) {
     iStack16 = *(int *)(pcStack4 + 0x14);
     pcVar7 = pcStack4;
@@ -66253,7 +66257,7 @@ void display_text_when_ammo_collected(int ammotype,longlong amount)
   undefined4 *puVar4;
   undefined4 stringbuf [25];
   
-  puVar3 = dword_800529D8;
+  puVar3 = (undefined4 *)&dword_800529D8;
   puVar1 = stringbuf;
   do {
     puVar4 = puVar3 + 3;
@@ -75500,7 +75504,6 @@ ITEM_IDS get_value_if_watch_is_on_hand_or_not(int hand)
 
 
 
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
 // WARNING: Unknown calling convention yet parameter storage is locked
 
 int * proc_7F05E6B4(void)
@@ -75516,7 +75519,7 @@ int * proc_7F05E6B4(void)
     piVar1 = &ptr_BONDdata->unknown + hand * 0xea;
     fVar2 = (float)piVar1[0x2a1];
     if (0.00000000 < fVar2) {
-      *(float *)(piVar1 + 0x2a1) = fVar2 - _flt_80053C84 * global_timer_delta;
+      *(float *)(piVar1 + 0x2a1) = fVar2 - flt_80053C84 * global_timer_delta;
       piVar1 = &ptr_BONDdata->unknown + hand * 0xea;
       fVar2 = (float)piVar1[0x2a1];
     }
@@ -75529,7 +75532,7 @@ int * proc_7F05E6B4(void)
     fVar2 = (float)(&ptr_BONDdata->unknown + hand * 0xea)[0x2a1];
     if (fVar2 < in_f0) {
       *(float *)(&ptr_BONDdata->unknown + hand * 0xea + 0x2a1) =
-           fVar2 + _flt_80053C80 * global_timer_delta;
+           fVar2 + flt_80053C80 * global_timer_delta;
     }
     piVar1 = (int *)get_value_if_watch_is_on_hand_or_not(hand);
     if (in_f0 < (float)(&ptr_BONDdata->field_A84)[hand * 0xea]) {
@@ -75551,8 +75554,6 @@ void proc_7F05E808(int param_1)
 
 
 
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
 void proc_7F05E83C(int param_1)
 
 {
@@ -75570,7 +75571,7 @@ void proc_7F05E83C(int param_1)
     if (0 < piVar2[0x227]) {
       fVar3 = (float)piVar2[0x2a2];
       if (0.00000000 < fVar3) {
-        *(float *)(piVar2 + 0x2a2) = fVar3 - fVar4 * _flt_80053C88 * global_timer_delta;
+        *(float *)(piVar2 + 0x2a2) = fVar3 - fVar4 * flt_80053C88 * global_timer_delta;
         piVar2 = &ptr_BONDdata->unknown + param_1 * 0xea;
         fVar3 = (float)piVar2[0x2a2];
       }
@@ -75814,8 +75815,6 @@ void proc_7F05EC1C(void)
 
 
 
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
 void proc_7F05EE24(int param_1)
 
 {
@@ -75851,9 +75850,9 @@ void proc_7F05EE24(int param_1)
   proc_7F0681CC();
   pfVar3 = (float *)proc_7F078444();
   proc_7F0583D8(pfVar3,&fStack184);
-  fStack80 = fStack184 * _flt_80053C8C;
-  fStack72 = fStack176 * _flt_80053C8C;
-  fStack76 = fStack180 * _flt_80053C8C + 5.00000000;
+  fStack80 = fStack184 * flt_80053C8C;
+  fStack72 = fStack176 * flt_80053C8C;
+  fStack76 = fStack180 * flt_80053C8C + 5.00000000;
   if (0 < clock_timer) {
     fStack80 = fStack80 + (*(float *)(iVar2 + 8) - *pfStack192) / global_timer_delta;
     fStack76 = fStack76 + (*(float *)(iVar2 + 0xc) - pfStack192[1]) / global_timer_delta;
@@ -75885,8 +75884,8 @@ void proc_7F05EE24(int param_1)
     proc_7F05EC1C();
     if ((puVar5[0x19] & 0x80) != 0) {
       *(uint *)puVar5[0x1b] = *(uint *)puVar5[0x1b] | 2;
-      *(undefined4 *)(puVar5[0x1b] + 0x8c) = _flt_80053C90;
-      *(undefined4 *)(puVar5[0x1b] + 0x94) = _flt_80053C94;
+      *(float *)(puVar5[0x1b] + 0x8c) = flt_80053C90;
+      *(float *)(puVar5[0x1b] + 0x94) = flt_80053C94;
       *(undefined4 *)(puVar5[0x1b] + 0xbc) = 0x3c;
       ppiVar7 = play_sfx_a1((longlong)(int)ptr_sfx_buf,4,NULL);
       if (ppiVar7 != NULL) {
@@ -75898,8 +75897,6 @@ void proc_7F05EE24(int param_1)
 }
 
 
-
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
 void proc_7F05F09C(int param_1)
 
@@ -75957,8 +75954,8 @@ void proc_7F05F09C(int param_1)
   iStack96 = piVar3[0x2c2];
   iStack92 = piVar3[0x2c3];
   iStack88 = piVar3[0x2c4];
-  proc_7F058688(_flt_80053C98,extraout_a0,afStack160);
-  proc_7F058570(_flt_80053C9C,extraout_a0_00,(undefined4 *)&stack0xffffff08);
+  proc_7F058688(flt_80053C98,extraout_a0,afStack160);
+  proc_7F058570(flt_80053C9C,extraout_a0_00,(undefined4 *)&stack0xffffff08);
   proc_7F058068((float *)&stack0xffffff08,afStack160);
   proc_7F058020((undefined4 *)((int)&ptr_BONDdata->field_AD8 + iVar6),(undefined4 *)&stack0xffffff08
                );
@@ -75976,7 +75973,7 @@ void proc_7F05F09C(int param_1)
                                                   uStack136,in_stack_fffffee4),unaff_retaddr),
                                                   in_stack_fffffef0),iVar6),in_stack_fffffefc),
                                            pfVar8),iVar1),in_stack_ffffff08),a,x,(float)afStack68,
-            360.00000000 / (fVar7 * 0.00000000 + _flt_80053CA0));
+            360.00000000 / (fVar7 * 0.00000000 + flt_80053CA0));
   puStack4 = create_new_item_instance_of_model(0xba,3);
   if (puStack4 != NULL) {
     puStack4[0x19] = puStack4[0x19] & 0xfff9ffff;
@@ -75985,7 +75982,7 @@ void proc_7F05F09C(int param_1)
     proc_7F05EC1C();
     if ((puStack4[0x19] & 0x80) != 0) {
       *(uint *)puStack4[0x1b] = *(uint *)puStack4[0x1b] | 2;
-      *(undefined4 *)(puStack4[0x1b] + 0x8c) = _flt_80053CA4;
+      *(float *)(puStack4[0x1b] + 0x8c) = flt_80053CA4;
       *(undefined4 *)(puStack4[0x1b] + 0xbc) = 0x3c;
       puStack4[0x19] = puStack4[0x19] | 0x20;
     }
@@ -75995,8 +75992,6 @@ void proc_7F05F09C(int param_1)
 }
 
 
-
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
 void generate_player_thrown_object(int param_1)
 
@@ -76029,12 +76024,12 @@ void generate_player_thrown_object(int param_1)
   float afStack68 [17];
   
   puVar4 = NULL;
-  fStack84 = _flt_80053CA8;
+  fStack84 = flt_80053CA8;
   iStack188 = get_curplayer_positiondata();
   pfStack192 = (float *)proc_7F08A02C();
   iteminstance = get_item_in_hand(param_1);
   if (iteminstance == ITEM_GOLDENEYEKEY) {
-    fStack84 = _flt_80053CAC;
+    fStack84 = flt_80053CAC;
   }
   proc_7F057C14(&fStack80,afStack68);
   proc_7F0681CC();
@@ -81764,7 +81759,7 @@ void proc_7F068508(int param_1,undefined4 param_2)
           fVar10 = fVar10 + 4294967296.00000000;
         }
         fVar10 = fVar10 / flt_800543D4;
-        fVar8 = fVar9 - fVar10 * flt_800543D8;
+        fVar8 = fVar9 - fVar10 * expended_shell_initial_gravity_modifier_pistol;
         *(float *)(puVar4 + 5) = fVar8;
         *(float *)(puVar4 + 2) = (float)puVar4[2] + fVar10 * (fVar9 + fVar8) * 0.50000000;
         *(float *)(puVar4 + 1) = (float)puVar4[1] + fVar10 * (float)puVar4[4];
@@ -81834,7 +81829,7 @@ void proc_7F068508(int param_1,undefined4 param_2)
           fVar10 = fVar10 + 4294967296.00000000;
         }
         fVar10 = fVar10 / flt_800543FC;
-        fVar8 = fVar9 - fVar10 * flt_80054400;
+        fVar8 = fVar9 - fVar10 * expended_shell_initial_gravity_modifier_non_pistol;
         *(float *)(puVar4 + 5) = fVar8;
         *(float *)(puVar4 + 2) = (float)puVar4[2] + fVar10 * (fVar9 + fVar8) * 0.50000000;
         *(float *)(puVar4 + 1) = (float)puVar4[1] + fVar10 * (float)puVar4[4];
@@ -81869,7 +81864,7 @@ void proc_7F068D20(float *param_1)
   float fVar3;
   
   fVar1 = global_timer_delta;
-  fVar3 = param_1[5] - global_timer_delta * flt_80054404;
+  fVar3 = param_1[5] - global_timer_delta * expended_shell_initial_gravity_modifier_all;
   param_1[2] = param_1[2] + global_timer_delta * 0.50000000 * (param_1[5] + fVar3);
   if (param_1[2] < *param_1) {
     if (((DAT_80075db0 == 0) && (ptr_BONDdata->when_detonating_mines_is_0 != 2)) &&
@@ -92604,8 +92599,6 @@ void proc_7F079A60(float *xyz_1,float *xyz_2,float *xyz_3,int param_4,float *par
 
 
 
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
 void solo_char_load(void)
 
 {
@@ -92623,10 +92616,10 @@ void solo_char_load(void)
   undefined4 extraout_a2_lo_01;
   object_header *header;
   undefined4 extraout_a3_lo;
-  undefined4 *puVar7;
-  undefined4 *puVar8;
-  undefined4 *puVar9;
-  undefined4 *puVar10;
+  dword *pdVar7;
+  dword *pdVar8;
+  dword *pdVar9;
+  dword *pdVar10;
   float extraout_f12;
   f32 scale;
   float extraout_f12_00;
@@ -92638,7 +92631,7 @@ void solo_char_load(void)
   HEADS head;
   BODIES body;
   undefined *puStack208;
-  undefined4 auStack196 [34];
+  dword adStack196 [34];
   undefined4 *puStack60;
   int iStack56;
   int iStack52;
@@ -92660,18 +92653,18 @@ void solo_char_load(void)
     uStack48 = 0;
     iStack52 = proc_7F05CF48(0);
     iStack56 = proc_7F05CF48(1);
-    puVar9 = &dummy_08_pp7_obj;
-    puVar7 = auStack196;
+    pdVar9 = dummy_08_pp7_obj;
+    pdVar7 = adStack196;
     do {
-      puVar10 = puVar9 + 3;
-      puVar8 = puVar7 + 3;
-      *puVar7 = *puVar9;
-      puVar7[1] = puVar9[1];
-      puVar7[2] = puVar9[2];
-      puVar9 = puVar10;
-      puVar7 = puVar8;
-    } while (puVar10 != (undefined4 *)&dword_80036630);
-    *puVar8 = _dword_80036630;
+      pdVar10 = pdVar9 + 3;
+      pdVar8 = pdVar7 + 3;
+      *pdVar7 = *pdVar9;
+      pdVar7[1] = pdVar9[1];
+      pdVar7[2] = pdVar9[2];
+      pdVar9 = pdVar10;
+      pdVar7 = pdVar8;
+    } while (pdVar10 != &dword_80036630);
+    *pdVar8 = dword_80036630;
     puStack208 = (undefined *)return_ammo_in_hand(0);
     body = BODY_Formal_Wear;
     head = HEAD_Male_Pierce_Bond_2;
@@ -95021,12 +95014,11 @@ void zoom_to_watch_on_open(void)
 {
   f32 time;
   
-  time = (f32)(((flt_8005507C - ptr_BONDdata->watch_menu_current_size) * 45.00000000) / flt_80055080
-              );
+  time = (f32)(((final - ptr_BONDdata->watch_menu_current_size) * 45.00000000) / flt_80055080);
   if ((float)time < 0.00000000) {
     time = (f32)-(float)time;
   }
-  trigger_watch_zoom((f32)flt_8005507C,time);
+  trigger_watch_zoom((f32)final,time);
   return;
 }
 
@@ -96412,8 +96404,8 @@ void proc_7F080B34(float param_1,float param_2,undefined8 param_3,undefined8 par
     fStackX8 = 0.00000000;
   }
   proc_7F08E240(fStack4,fStackX8);
-  proc_7F058570((360.00000000 - (float)ptr_BONDdata->inclination_angle2) * flt_800550D4,extraout_a0,
-                afStack68);
+  proc_7F058570((360.00000000 - (float)ptr_BONDdata->inclination_angle2) *
+                firstperson_weapon_movement_restrictor,extraout_a0,afStack68);
   proc_7F059908(afStack132,extraout_f12_00,extraout_f14_00,0.00000000,0.00000000,0.00000000,
                 -(float)ptr_BONDdata->field_508,-(float)ptr_BONDdata->field_50C,
                 -(float)ptr_BONDdata->field_510,(float)ptr_BONDdata->field_514);
@@ -96570,7 +96562,7 @@ LAB_7f0810d8:
     local_4 = 0;
     BVar2 = get_debug_fast_bond_flag();
     if (((BVar2 == FALSE) || (DAT_80079990 != 0.00000000)) || (DAT_80079998 != 0.00000000)) {
-      local_30 = flt_800550F0;
+      local_30 = player_gravity_modifier;
     }
     else {
       local_30 = flt_800550EC;
@@ -96581,7 +96573,7 @@ LAB_7f0810d8:
     if (fVar7 < fVar4) {
       fVar5 = (float)ptr_BONDdata->field_70 - fVar4;
       fVar6 = sqrtf((float)ptr_BONDdata->field_7C * (float)ptr_BONDdata->field_7C +
-                    (((fVar5 + fVar5) * flt_800550F4) / 60.00000000) * 60.00000000);
+                    (((fVar5 + fVar5) * player_view_gravity_modifier) / 60.00000000) * 60.00000000);
       fVar6 = -fVar6;
       fVar7 = fVar4;
       if (ptr_BONDdata->field_2A6C != 0) {
@@ -98051,12 +98043,13 @@ LAB_7f083b40:
 void proc_7F083FC8(void)
 
 {
-  int iVar1;
-  int iVar2;
+  dword dVar1;
+  dword dVar2;
   int iVar3;
   int iVar4;
-  float fVar5;
-  f32 fVar6;
+  int iVar5;
+  float fVar6;
+  f32 fVar7;
   
   if (ptr_BONDdata->invincibility_timer < 0) {
     iVar4 = ptr_BONDdata->health_bar_timer;
@@ -98068,8 +98061,8 @@ void proc_7F083FC8(void)
     set_flags_in_BONDdata_stationary_intro_cam(4);
     proc_7F08A944(4);
     set_unset_clock_lock_bits(8,0);
-    fVar6 = get_BONDdata_watch_health();
-    ptr_BONDdata->field_29D4 = (int)((float)fVar6 * 8.00000000);
+    fVar7 = get_BONDdata_watch_health();
+    ptr_BONDdata->field_29D4 = (int)((float)fVar7 * 8.00000000);
     if (7 < ptr_BONDdata->field_29D4) {
       ptr_BONDdata->field_29D4 = 7;
       goto LAB_7f08406c;
@@ -98080,11 +98073,10 @@ void proc_7F083FC8(void)
 LAB_7f08406c:
     iVar4 = ptr_BONDdata->field_29D4;
   }
-  iVar4 *= 0x2c;
-  iVar2 = ptr_BONDdata->invincibility_timer;
-  if (*(int *)(iVar4 + -0x7ffc99c4) < iVar2) {
-    if (iVar2 <= *(int *)(iVar4 + -0x7ffc99b4)) {
-      iVar3 = ptr_BONDdata->player_button_control;
+  iVar3 = ptr_BONDdata->invincibility_timer;
+  if ((int)dword_80036634[iVar4 * 0xb + 2] < iVar3) {
+    if (iVar3 <= (int)dword_80036634[iVar4 * 0xb + 6]) {
+      iVar5 = ptr_BONDdata->player_button_control;
       goto LAB_7f0840c0;
     }
     ptr_BONDdata->invincibility_timer = -1;
@@ -98100,31 +98092,31 @@ LAB_7f08406c:
     set_unset_clock_lock_bits(8,1);
   }
   else {
-    iVar3 = ptr_BONDdata->player_button_control;
+    iVar5 = ptr_BONDdata->player_button_control;
 LAB_7f0840c0:
-    if (iVar3 == 0) {
-      iVar3 = *(int *)(iVar4 + -0x7ffc99bc);
-      if (iVar2 < iVar3) {
+    if (iVar5 == 0) {
+      dVar1 = dword_80036634[iVar4 * 0xb + 4];
+      if (iVar3 < (int)dVar1) {
         iVar4 = ptr_BONDdata->pause_animation_state;
       }
       else {
-        if (*(int *)(iVar4 + -0x7ffc99b4) < iVar2) {
+        if ((int)dword_80036634[iVar4 * 0xb + 6] < iVar3) {
           iVar4 = ptr_BONDdata->pause_animation_state;
         }
         else {
-          iVar1 = *(int *)(iVar4 + -0x7ffc99b8);
-          iVar2 -= iVar3;
-          iVar3 = *(int *)(iVar4 + -0x7ffc99b4) - iVar3;
-          if (iVar2 < iVar1) {
-            fVar5 = (*(float *)(iVar4 + -0x7ffc99b0) * (float)iVar2) / (float)iVar1;
+          dVar2 = dword_80036634[iVar4 * 0xb + 5];
+          iVar3 -= dVar1;
+          iVar5 = dword_80036634[iVar4 * 0xb + 6] - dVar1;
+          if (iVar3 < (int)dVar2) {
+            fVar6 = ((float)dword_80036634[iVar4 * 0xb + 7] * (float)iVar3) / (float)dVar2;
           }
           else {
-            fVar5 = (*(float *)(iVar4 + -0x7ffc99b0) * (float)(iVar3 - iVar2)) /
-                    (float)(iVar3 - iVar1);
+            fVar6 = ((float)dword_80036634[iVar4 * 0xb + 7] * (float)(iVar5 - iVar3)) /
+                    (float)(iVar5 - dVar2);
           }
-          proc_7F0807B0(*(undefined4 *)(iVar4 + -0x7ffc99ac),*(undefined4 *)(iVar4 + -0x7ffc99a8),
-                        *(undefined4 *)(iVar4 + -0x7ffc99a4),fVar5);
-          iVar2 = ptr_BONDdata->invincibility_timer;
+          proc_7F0807B0(dword_80036634[iVar4 * 0xb + 8],dword_80036634[iVar4 * 0xb + 9],
+                        dword_80036634[iVar4 * 0xb + 10],fVar6);
+          iVar3 = ptr_BONDdata->invincibility_timer;
           iVar4 = ptr_BONDdata->pause_animation_state;
         }
       }
@@ -98133,18 +98125,18 @@ LAB_7f0840c0:
       iVar4 = ptr_BONDdata->pause_animation_state;
     }
     if (iVar4 == 0) {
-      ptr_BONDdata->invincibility_timer = iVar2 + clock_timer;
+      ptr_BONDdata->invincibility_timer = iVar3 + clock_timer;
     }
     else {
-      ptr_BONDdata->invincibility_timer = iVar2 + dword_80048498;
+      ptr_BONDdata->invincibility_timer = iVar3 + dword_80048498;
     }
   }
   iVar4 = ptr_BONDdata->health_bar_timer;
 LAB_7f084204:
   if (-1 < iVar4) {
     if (iVar4 == 0) {
-      fVar6 = get_BONDdata_watch_health();
-      ptr_BONDdata->field_29B8 = (int)((float)fVar6 * 8.00000000);
+      fVar7 = get_BONDdata_watch_health();
+      ptr_BONDdata->field_29B8 = (int)((float)fVar7 * 8.00000000);
       if (ptr_BONDdata->field_29B8 < 8) {
         iVar4 = ptr_BONDdata->player_button_control;
       }
@@ -98158,11 +98150,11 @@ LAB_7f084204:
     }
     if (iVar4 == 0) {
       iVar4 = ptr_BONDdata->field_29B8;
-      iVar2 = ptr_BONDdata->health_bar_timer;
-      if ((iVar2 < (int)(&dword_80036794)[iVar4 * 3]) || ((int)(&DAT_80036798)[iVar4 * 3] < iVar2))
+      iVar3 = ptr_BONDdata->health_bar_timer;
+      if ((iVar3 < (int)(&dword_80036794)[iVar4 * 3]) || ((int)(&DAT_80036798)[iVar4 * 3] < iVar3))
       {
-        if ((iVar2 < (int)(&dword_80036794)[iVar4 * 3]) || ((int)(&DAT_8003679c)[iVar4 * 3] < iVar2)
-           ) {
+        if ((iVar3 < (int)(&dword_80036794)[iVar4 * 3]) ||
+           ((int)null_ARRAY_8003679c[iVar4 * 3] < iVar3)) {
           ptr_BONDdata->health_bar_timer = -1;
         }
         else {
@@ -129751,31 +129743,31 @@ void proc_7F0BA2D4(float *param_1,float *param_2,int *param_3,int *param_4,int p
 void proc_7F0BA5C0(int *param_1,int *param_2)
 
 {
-  undefined4 *puVar1;
+  u64 *puVar1;
   int iVar2;
   int iVar3;
   
   if (param_1 < param_2) {
     do {
-      if (dword_80044940 != 0) {
+      if (dword_80044940[0]._0_4_ != 0) {
         iVar3 = *param_1;
-        iVar2 = dword_80044940;
-        puVar1 = &dword_80044940;
+        iVar2 = dword_80044940[0]._0_4_;
+        puVar1 = dword_80044940;
         while( true ) {
           if (iVar3 == iVar2) {
-            if (param_1[1] == puVar1[1]) {
-              *param_1 = puVar1[2];
-              param_1[1] = puVar1[3];
-              iVar2 = puVar1[4];
+            if (param_1[1] == *(int *)((int)puVar1 + 4)) {
+              *param_1 = *(int *)(puVar1 + 1);
+              param_1[1] = *(int *)((int)puVar1 + 0xc);
+              iVar2 = *(int *)(puVar1 + 2);
             }
             else {
-              iVar2 = puVar1[4];
+              iVar2 = *(int *)(puVar1 + 2);
             }
           }
           else {
-            iVar2 = puVar1[4];
+            iVar2 = *(int *)(puVar1 + 2);
           }
-          puVar1 = puVar1 + 4;
+          puVar1 = puVar1 + 2;
           if (iVar2 == 0) break;
           iVar3 = *param_1;
         }

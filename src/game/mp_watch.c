@@ -19,7 +19,7 @@ u16 loaded_text_index[] = {
 
 //rodata
 const char ascii_MP_watch_menu_percentd[] = "%d";
-const char ascii_MP_watch_menu_BLANK[] = 0;
+const char ascii_MP_watch_menu_BLANK[] = "";
 const char ascii_MP_watch_menu_left_chevron[] = "<";
 const char ascii_MP_watch_menu_right_chevron[] = ">";
 const char ascii_pnum_KILLS[] = "%s%d %s";
@@ -44,10 +44,7 @@ D:8005BC60                     .word page_adv_left_yes
 D:8005BC60                     .word page_adv_left_no
 D:8005BC60                     .word page_adv_left_no
 */
-//D:8005BC80
-const f32 D_8005BC80 = 216000.0;
-//D:8005BC84
-const f32 D_8005BC84 =  100000.0;
+
 /*
 D:8005BC88     jpt_MP_overlays_scoring_scenario_0:.word green_text_normal
 D:8005BC88                                              # DATA XREF: display_text_for_playerdata_on_MP_menu+80r
@@ -866,6 +863,11 @@ void sub_GAME_7F0C2530(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8005BC80
+.word 0x4852f000 /*216000.0*/
+glabel D_8005BC84
+.word 0x47c35000 /*100000.0*/
 .text
 glabel sub_GAME_7F0C2530
 /* 0F7060 7F0C2530 27BDFE98 */  addiu $sp, $sp, -0x168

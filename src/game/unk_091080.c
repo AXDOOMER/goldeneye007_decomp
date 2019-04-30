@@ -6,6 +6,8 @@ s32 dword_CODE_bss_80079E20;
 
 
 // data
+//D:80037010
+s32 D_80037010 = 0;
 //D:80037014
 s32 D_80037014 = 0;
 //D:80037018
@@ -53,17 +55,6 @@ s32 D_80037068 = 0;
 
 
 // rodata
-//D:80055850
-const f32 D_80055850 = 0.017453292;
-//D:80055854
-const f32 D_80055854 = 0.017453292;
-//D:80055858
-const f32 D_80055858 = 0.017453292;
-//D:8005585C
-const f32 D_8005585C = 0.017453292;
-//D:80055860
-const f32 D_80055860 = 6.2831855;
-
 
 
 #ifdef NONMATCHING
@@ -72,6 +63,15 @@ void sub_GAME_7F091080(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80055850
+.word 0x3c8efa35 /*0.017453292*/
+glabel D_80055854
+.word 0x3c8efa35 /*0.017453292*/
+glabel D_80055858
+.word 0x3c8efa35 /*0.017453292*/
+glabel D_8005585C
+.word 0x3c8efa35 /*0.017453292*/
 .text
 glabel sub_GAME_7F091080
 /* 0C5BB0 7F091080 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -523,6 +523,9 @@ void sub_GAME_7F091618(void) {
 
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80055860
+.word 0x40c90fdb /*6.2831855*/
 .text
 glabel sub_GAME_7F091618
 /* 0C6148 7F091618 27BDFFE0 */  addiu $sp, $sp, -0x20

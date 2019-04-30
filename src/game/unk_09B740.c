@@ -2,6 +2,7 @@
 
 
 // data
+//D:80040160
 u64 random_val = 0xAB8D9F7781280783;
 
 
