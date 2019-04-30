@@ -161,6 +161,7 @@ glabel projectile_ptr_table
 .word bug
 .word microcamera
 .word 0
+
 /*8004f1a8*/
 glabel default_zoom_speed
 .word 0x3f68ba2e
