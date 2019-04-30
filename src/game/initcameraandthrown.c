@@ -2,30 +2,7 @@
 
 
 /*rodata
-const void *projectile_ptr_table[] = {
-throwingknife, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, default,
-grenade_launch_round, rocket,
-grenade, timed_mine,
-prox_mine, remote_mine,
-default, default,
-rocket_0, bombcase,
-plastique, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, bug,
-microcamera };
+
 */
 
 /*
@@ -62,6 +39,7 @@ void set_weapon_model_generated_thrown_object(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
 .text
 glabel set_weapon_model_generated_thrown_object
 /* 03A240 7F005710 248EFFFD */  addiu $t6, $a0, -3
@@ -136,8 +114,68 @@ void load_camera_intro_type_values(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
+glabel projectile_ptr_table
+.word throwingknife
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word grenade_launch_round
+.word rocket
+.word grenade
+.word timed_mine
+.word prox_mine
+.word remote_mine
+.word default
+.word default
+.word rocket_0
+.word bombcase
+.word plastique
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word bug
+.word microcamera
+.word 0
+/*8004f1a8*/
 glabel default_zoom_speed
 .word 0x3f68ba2e
+
+glabel jpt_700399A4
+    .word spawn_point
+    .word weapon
+    .word ammo
+    .word swirling_intro_cam
+    .word intro_ani
+    .word cuff_char
+    .word fixed_cam
+    .word watch_time
+    .word credits
+
 glabel D_8004F1D0
 .word 0xb8d1b717
 glabel D_8004F1D4
