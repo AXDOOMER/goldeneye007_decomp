@@ -1000,159 +1000,6 @@ const char aDD_2[] = "%d (%d%%)";
 const char aDD_3[] = "%d (%d%%)";
 const char aD_10[] = "%d";
 
-/* deal with
-cheat_available_table:
- .word default_nonmenucheats, cheat_invincible, cheat_allguns, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, cheat_invisible, cheat_infinite_ammo
- .word cheat_dk_mode, default_nonmenucheats, cheat_tinybond, cheat_paintball
- .word default_nonmenucheats, cheat_unlockcradle, cheat_unlockaztec, cheat_unlockegypt
- .word cheat_silverpp7, cheat_goldpp7, default_nonmenucheats, cheat_noradar
- .word cheat_turbo, default_nonmenucheats, cheat_fast, cheat_slow, cheat_enemyrockets
- .word cheat_2xrocket, cheat_2xgrenadelauncher, cheat_2xrcp90, cheat_2xthrowingknife
- .word cheat_2xhuntingknife, cheat_2xlaser, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats, default_nonmenucheats
- .word default_nonmenucheats, default_nonmenucheats
- */
-
-
-
-/* deal with
-jpt_scenario_specific_settings_mp:
- .word .L7F0104DC
- .word .L7F01051C
- .word .L7F010550
- .word .L7F010594
- .word .L7F0105C8
- .word .L7F0104DC
- .word .L7F0104DC
- .word .L7F0104DC
-*/
-
-
-
-/* deal with
-jpt_briefingpage_name:
- .word .L7F015E14
- .word .L7F015E24
- .word .L7F015E34
- .word .L7F015E44
- .word .L7F015E54
-*/
-
-
-
-/* deal with
-jpt_intro_bond_head:
- .word set_body_mp_choice_maybe
- .word set_body_default
- .word set_body_jungle
- .word set_body_snowsuit
- .word set_body_5
-*/
-
-
-
-/* deal with
-jpt_menu_update:
- .word menu_legal_screen_update
- .word menu_nintendo_logo_update
- .word menu_rareware_logo_update
- .word menu_eye_intro_update
- .word menu_goldeneye_logo_update
- .word menu_file_select_update
- .word menu_mode_select_update
- .word menu_mission_select_update
- .word menu_difficulty_update
- .word menu_007_options_update
- .word menu_briefing_update
- .word menu_switch_screen_update
- .word menu_mission_failed_update
- .word menu_mission_complete_update
- .word menu_mp_options_update
- .word menu_mp_char_select_update
- .word menu_mp_handicap_update
- .word menu_mp_control_style_update
- .word menu_mp_stage_select_update
- .word menu_mp_scenario_select_update
- .word menu_mp_teams_update
- .word menu_cheat_update
- .word menu_no_controllers_update
- .word menu_switch_screen_update
- .word menu_display_cast_update
- .word menu_spectrum_emu_update
-
-jpt_menu_init:
- .word menu_legal_screen_init
- .word menu_nintendo_logo_init
- .word menu_rareware_logo_init
- .word menu_eye_intro_init
- .word menu_goldeneye_logo_init
- .word menu_file_select_init
- .word menu_mode_select_init
- .word menu_mission_select_init
- .word menu_difficulty_init
- .word menu_007_options_init
- .word menu_briefing_init
- .word menu_runstage_init
- .word menu_mission_failed_init
- .word menu_mission_complete_init
- .word menu_mp_options_init
- .word menu_mp_char_select_init
- .word menu_mp_handicap_init
- .word menu_mp_control_style_init
- .word menu_mp_stage_select_init
- .word menu_mp_scenario_select_init
- .word menu_mp_teams_init
- .word menu_cheat_init
- .word menu_no_controllers_init
- .word menu_switch_screens_init
- .word menu_display_cast_init
- .word menu_spectrum_emu_init
-
-jpt_menu_interface:
- .word menu00_legal_interface
- .word menu01_nintendo_interface
- .word menu02_rareware_interface
- .word menu03_eye_interface
- .word menu04_goldeneye_interface
- .word menu05_filesel_interface
- .word menu06_modesel_interface
- .word menu07_missionsel_interface
- .word menu08_difficulty_interface
- .word menu09_007options_interface
- .word menu0A_briefing_interface
- .word menu0B_runstage_interface
- .word menu0C_missionfailed_interface
- .word menu0D_missioncomplete_interface
- .word menu0E_mpoptions_interface
- .word menu0F_mpcharsel_interface
- .word menu10_mphandicap_interface
- .word menu11_mpcontrol_interface
- .word menu12_mpstage_interface
- .word menu13_mpscenario_interface
- .word menu14_mpteams_interface
- .word menu15_cheat_interface
- .word menu16_nocontrollers_interface
- .word menu17_switchscreen_interface
- .word menu18_displaycast_interface
- .word menu19_spectrum_interface
-
-
-*/
-
-
 
 
 
@@ -1307,31 +1154,25 @@ ulonglong check_if_cheat_available(undefined4 cheat)
     break;
   case 2:
     folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,1);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),1);
     break;
   case 3:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,0x13);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0x13);
     break;
   case 10:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,10);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),10);
     break;
   case 0xb:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,0xf);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xf);
     break;
   case 0xc:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,2);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),2);
     break;
   case 0xe:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,7);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),7);
     break;
   case 0xf:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,0);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0);
     break;
   case 0x11:
     uVar2 = check_cradle_completed_in_folder(selected_folder_num);
@@ -1346,56 +1187,43 @@ ulonglong check_if_cheat_available(undefined4 cheat)
     uVar1 = SEXT48((int)BVar3);
     break;
   case 0x14:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,0xd);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xd);
     break;
   case 0x15:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,0x11);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0x11);
     break;
   case 0x17:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,6);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),6);
     break;
   case 0x18:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,5);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),5);
     break;
   case 0x1a:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,9);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),9);
     break;
   case 0x1b:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,0xc);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xc);
     break;
   case 0x1c:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,0xb);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xb);
     break;
   case 0x1d:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,4);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),4);
     break;
   case 0x1e:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,3);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),3);
     break;
   case 0x1f:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,0x10);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0x10);
     break;
   case 0x20:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,8);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),8);
     break;
   case 0x21:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,0xe);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xe);
     break;
   case 0x22:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(folder,0x12);
+    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0x12);
     break;
   default:
     do {
@@ -1406,6 +1234,85 @@ ulonglong check_if_cheat_available(undefined4 cheat)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+
+glabel cheat_available_table
+ .word default_nonmenucheats
+ .word cheat_invincible
+ .word cheat_allguns
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word cheat_invisible
+ .word cheat_infinite_ammo
+ .word cheat_dk_mode
+ .word default_nonmenucheats
+ .word cheat_tinybond
+ .word cheat_paintball
+ .word default_nonmenucheats
+ .word cheat_unlockcradle
+ .word cheat_unlockaztec
+ .word cheat_unlockegypt
+ .word cheat_silverpp7
+ .word cheat_goldpp7
+ .word default_nonmenucheats
+ .word cheat_noradar
+ .word cheat_turbo
+ .word default_nonmenucheats
+ .word cheat_fast
+ .word cheat_slow
+ .word cheat_enemyrockets
+ .word cheat_2xrocket
+ .word cheat_2xgrenadelauncher
+ .word cheat_2xrcp90
+ .word cheat_2xthrowingknife
+ .word cheat_2xhuntingknife
+ .word cheat_2xlaser
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ .word default_nonmenucheats
+ /*HACK FIXME*/
+/* .word default_nonmenucheats */
+/* .word default_nonmenucheats */
+/* .word default_nonmenucheats */
+/* .word default_nonmenucheats */
+/* .word default_nonmenucheats */
+/* .word default_nonmenucheats */
+/* .word default_nonmenucheats */
+/* .word default_nonmenucheats */
+/* .word default_nonmenucheats */
+/* .word default_nonmenucheats */
+
 .text
 glabel check_if_cheat_available
 /* 03E378 7F009848 248EFFFF */  addiu $t6, $a0, -1
@@ -1801,6 +1708,20 @@ void menu_control_stick_tracking(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
+/*HACK FIXME*/
+/*from above to add bytes till fixed*/
+.word default_nonmenucheats
+.word default_nonmenucheats
+.word default_nonmenucheats
+.word default_nonmenucheats
+.word default_nonmenucheats
+.word default_nonmenucheats
+.word default_nonmenucheats
+.word default_nonmenucheats
+.word default_nonmenucheats
+.word default_nonmenucheats
+/*end from above to add bytes till fixed*/
+
 glabel folder_menu_x_dim
 .word 0x3D99999A /* 0.075000003;*/
 glabel folder_menu_z_dim
@@ -13059,6 +12980,16 @@ void reset_mp_options_for_scenario(MPSCENARIOS scenario)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel jpt_scenario_specific_settings_mp
+ .word .L7F0104DC
+ .word .L7F01051C
+ .word .L7F010550
+ .word .L7F010594
+ .word .L7F0105C8
+ .word .L7F0104DC
+ .word .L7F0104DC
+ .word .L7F0104DC
 .text
 glabel reset_mp_options_for_scenario
 /* 044F98 7F010468 3C038003 */  lui   $v1, %hi(scenario) # $v1, 0x8003
@@ -13090,6 +13021,7 @@ glabel reset_mp_options_for_scenario
 /* 045000 7F0104D0 8C2E1A60 */  lw    $t6, 0x1a60($at)
 /* 045004 7F0104D4 01C00008 */  jr    $t6
 /* 045008 7F0104D8 00000000 */   nop   
+.L7F0104DC:
 /* 04500C 7F0104DC 3C028003 */  lui   $v0, %hi(game_length) # $v0, 0x8003
 /* 045010 7F0104E0 2442B538 */  addiu $v0, %lo(game_length) # addiu $v0, $v0, -0x4ac8
 /* 045014 7F0104E4 8C4F0000 */  lw    $t7, ($v0)
@@ -13107,6 +13039,7 @@ glabel reset_mp_options_for_scenario
 /* 045040 7F010510 2404000D */   li    $a0, 13
 /* 045044 7F010514 10000039 */  b     .L7F0105FC
 /* 045048 7F010518 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F01051C:
 /* 04504C 7F01051C 3C028003 */  lui   $v0, %hi(game_length) # $v0, 0x8003
 /* 045050 7F010520 2442B538 */  addiu $v0, %lo(game_length) # addiu $v0, $v0, -0x4ac8
 /* 045054 7F010524 24190007 */  li    $t9, 7
@@ -13121,6 +13054,7 @@ glabel reset_mp_options_for_scenario
 /* 045074 7F010544 3C018003 */  lui   $at, %hi(unlock_game_length) # $at, 0x8003
 /* 045078 7F010548 1000002B */  b     .L7F0105F8
 /* 04507C 7F01054C AC20B548 */   sw    $zero, %lo(unlock_game_length)($at)
+.L7F010550:
 /* 045080 7F010550 3C028003 */  lui   $v0, %hi(game_length) # $v0, 0x8003
 /* 045084 7F010554 2442B538 */  addiu $v0, %lo(game_length) # addiu $v0, $v0, -0x4ac8
 /* 045088 7F010558 8C480000 */  lw    $t0, ($v0)
@@ -13139,6 +13073,7 @@ glabel reset_mp_options_for_scenario
 /* 0450B8 7F010588 2404000D */   li    $a0, 13
 /* 0450BC 7F01058C 1000001B */  b     .L7F0105FC
 /* 0450C0 7F010590 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F010594:
 /* 0450C4 7F010594 3C028003 */  lui   $v0, %hi(game_length) # $v0, 0x8003
 /* 0450C8 7F010598 2442B538 */  addiu $v0, %lo(game_length) # addiu $v0, $v0, -0x4ac8
 /* 0450CC 7F01059C 8C4A0000 */  lw    $t2, ($v0)
@@ -13153,6 +13088,7 @@ glabel reset_mp_options_for_scenario
 /* 0450EC 7F0105BC 3C018003 */  lui   $at, %hi(unlock_weapon_select) # $at, 0x8003
 /* 0450F0 7F0105C0 1000000D */  b     .L7F0105F8
 /* 0450F4 7F0105C4 AC20B550 */   sw    $zero, %lo(unlock_weapon_select)($at)
+.L7F0105C8:
 /* 0450F8 7F0105C8 3C028003 */  lui   $v0, %hi(game_length) # $v0, 0x8003
 /* 0450FC 7F0105CC 2442B538 */  addiu $v0, %lo(game_length) # addiu $v0, $v0, -0x4ac8
 /* 045100 7F0105D0 8C4C0000 */  lw    $t4, ($v0)
@@ -22643,6 +22579,14 @@ undefined4 constructor_menu0A_briefing(undefined4 *param_1)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel jpt_briefingpage_name
+ .word .L7F015E14
+ .word .L7F015E24
+ .word .L7F015E34
+ .word .L7F015E44
+ .word .L7F015E54
+
 .text
 glabel constructor_menu0A_briefing
 /* 04A8A4 7F015D74 27BDF3F0 */  addiu $sp, $sp, -0xc10
@@ -22686,22 +22630,27 @@ glabel constructor_menu0A_briefing
 /* 04A938 7F015E08 8C291AC0 */  lw    $t1, 0x1ac0($at)
 /* 04A93C 7F015E0C 01200008 */  jr    $t1
 /* 04A940 7F015E10 00000000 */   nop   
+.L7F015E14:
 /* 04A944 7F015E14 0FC30776 */  jal   get_textptr_for_textID
 /* 04A948 7F015E18 34049C5D */   li    $a0, 40029
 /* 04A94C 7F015E1C 10000010 */  b     .L7F015E60
 /* 04A950 7F015E20 AFA20C0C */   sw    $v0, 0xc0c($sp)
+.L7F015E24:
 /* 04A954 7F015E24 0FC30776 */  jal   get_textptr_for_textID
 /* 04A958 7F015E28 34049C5E */   li    $a0, 40030
 /* 04A95C 7F015E2C 1000000C */  b     .L7F015E60
 /* 04A960 7F015E30 AFA20C0C */   sw    $v0, 0xc0c($sp)
+.L7F015E34:
 /* 04A964 7F015E34 0FC30776 */  jal   get_textptr_for_textID
 /* 04A968 7F015E38 34049C5F */   li    $a0, 40031
 /* 04A96C 7F015E3C 10000008 */  b     .L7F015E60
 /* 04A970 7F015E40 AFA20C0C */   sw    $v0, 0xc0c($sp)
+.L7F015E44:
 /* 04A974 7F015E44 0FC30776 */  jal   get_textptr_for_textID
 /* 04A978 7F015E48 34049C60 */   li    $a0, 40032
 /* 04A97C 7F015E4C 10000004 */  b     .L7F015E60
 /* 04A980 7F015E50 AFA20C0C */   sw    $v0, 0xc0c($sp)
+.L7F015E54:
 /* 04A984 7F015E54 0FC30776 */  jal   get_textptr_for_textID
 /* 04A988 7F015E58 34049C61 */   li    $a0, 40033
 /* 04A98C 7F015E5C AFA20C0C */  sw    $v0, 0xc0c($sp)
@@ -26356,6 +26305,12 @@ void init_menu18_displaycast(void)
 #else
 GLOBAL_ASM(
 .late_rodata
+glabel jpt_intro_bond_head
+ .word set_body_mp_choice_maybe
+ .word set_body_default
+ .word set_body_jungle
+ .word set_body_snowsuit
+ .word set_body_5
 glabel D_80051B00
 .word 0x40C90FDB /*6.2831855;*/
 glabel D_80051B04
@@ -29283,6 +29238,90 @@ void menu_init(undefined8 param_1,undefined8 param_2)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel jpt_menu_update
+ .word menu_legal_screen_update
+ .word menu_nintendo_logo_update
+ .word menu_rareware_logo_update
+ .word menu_eye_intro_update
+ .word menu_goldeneye_logo_update
+ .word menu_file_select_update
+ .word menu_mode_select_update
+ .word menu_mission_select_update
+ .word menu_difficulty_update
+ .word menu_007_options_update
+ .word menu_briefing_update
+ .word menu_switch_screen_update
+ .word menu_mission_failed_update
+ .word menu_mission_complete_update
+ .word menu_mp_options_update
+ .word menu_mp_char_select_update
+ .word menu_mp_handicap_update
+ .word menu_mp_control_style_update
+ .word menu_mp_stage_select_update
+ .word menu_mp_scenario_select_update
+ .word menu_mp_teams_update
+ .word menu_cheat_update
+ .word menu_no_controllers_update
+ .word menu_switch_screen_update
+ .word menu_display_cast_update
+ .word menu_spectrum_emu_update
+
+ glabel jpt_menu_init
+ .word menu_legal_screen_init
+ .word menu_nintendo_logo_init
+ .word menu_rareware_logo_init
+ .word menu_eye_intro_init
+ .word menu_goldeneye_logo_init
+ .word menu_file_select_init
+ .word menu_mode_select_init
+ .word menu_mission_select_init
+ .word menu_difficulty_init
+ .word menu_007_options_init
+ .word menu_briefing_init
+ .word menu_runstage_init
+ .word menu_mission_failed_init
+ .word menu_mission_complete_init
+ .word menu_mp_options_init
+ .word menu_mp_char_select_init
+ .word menu_mp_handicap_init
+ .word menu_mp_control_style_init
+ .word menu_mp_stage_select_init
+ .word menu_mp_scenario_select_init
+ .word menu_mp_teams_init
+ .word menu_cheat_init
+ .word menu_no_controllers_init
+ .word menu_switch_screens_init
+ .word menu_display_cast_init
+ .word menu_spectrum_emu_init
+
+glabel jpt_menu_interface
+ .word menu00_legal_interface
+ .word menu01_nintendo_interface
+ .word menu02_rareware_interface
+ .word menu03_eye_interface
+ .word menu04_goldeneye_interface
+ .word menu05_filesel_interface
+ .word menu06_modesel_interface
+ .word menu07_missionsel_interface
+ .word menu08_difficulty_interface
+ .word menu09_007options_interface
+ .word menu0A_briefing_interface
+ .word menu0B_runstage_interface
+ .word menu0C_missionfailed_interface
+ .word menu0D_missioncomplete_interface
+ .word menu0E_mpoptions_interface
+ .word menu0F_mpcharsel_interface
+ .word menu10_mphandicap_interface
+ .word menu11_mpcontrol_interface
+ .word menu12_mpstage_interface
+ .word menu13_mpscenario_interface
+ .word menu14_mpteams_interface
+ .word menu15_cheat_interface
+ .word menu16_nocontrollers_interface
+ .word menu17_switchscreen_interface
+ .word menu18_displaycast_interface
+ .word menu19_spectrum_interface
 .text
 glabel menu_init
 /* 04F14C 7F01A61C 3C0E8003 */  lui   $t6, %hi(current_menu) # $t6, 0x8003
@@ -30067,7 +30106,7 @@ longlong menu_jump_constructor_handler(void)
 }
 #else
 GLOBAL_ASM(
-.rdata
+.late_rodata
 glabel jpt_menu_constructor
  .word menu00_legal_constructor
  .word menu01_nintendo_constructor
