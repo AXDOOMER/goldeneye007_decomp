@@ -29,28 +29,12 @@ u32 D_80032304 = 0;
 u32 D_80032308 = 0;
 
 // rodata
+const u32 D_80053610[] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
 //D:80053644
-const char aSAC[] = "%s Ç%c ";
+const u32 aSAC[] = {0x25732080, 0x25632000};
 //D:8005364C
 const char aSC[] = "%s %c: ";
-/*
-D:80053654     jpt_objectives_microcode_handler:.word objective_microcode_type_17_18_1F_default
-D:80053654                                              # DATA XREF: get_status_of_objective+78r
-D:80053654                     .word objective_microcode_type_17_18_1F_default  # jump table for switch statement
-D:80053654                     .word objective_microcode_type_19_destroy_object
-D:80053654                     .word objective_microcode_type_1A_complete_if_true
-D:80053654                     .word objective_microcode_type_1B_fail_if_true
-D:80053654                     .word objective_microcode_type_1C_collect_object
-D:80053654                     .word objective_microcode_type_1D_deposit_object
-D:80053654                     .word objective_microcode_type_1E_photograph_object
-D:80053654                     .word objective_microcode_type_17_18_1F_default
-D:80053654                     .word objective_microcode_type_20_enter_room
-D:80053654                     .word objective_microcode_type_21_deposit_object_in_room
-D:80053654                     .word objective_microcode_type_22_use_key_analyzer_on_object
-D:80053684                     .word 0
-D:80053688                     .word 0
-D:8005368C                     .word 0
-*/
+
 
 
 #ifdef NONMATCHING
@@ -279,6 +263,23 @@ void get_status_of_objective(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80053654*/
+glabel jpt_objectives_microcode_handler
+.word objective_microcode_type_17_18_1F_default
+.word objective_microcode_type_17_18_1F_default
+.word objective_microcode_type_19_destroy_object
+.word objective_microcode_type_1A_complete_if_true
+.word objective_microcode_type_1B_fail_if_true
+.word objective_microcode_type_1C_collect_object
+.word objective_microcode_type_1D_deposit_object
+.word objective_microcode_type_1E_photograph_object
+.word objective_microcode_type_17_18_1F_default
+.word objective_microcode_type_20_enter_room
+.word objective_microcode_type_21_deposit_object_in_room
+.word objective_microcode_type_22_use_key_analyzer_on_object
+.word 0,0,0
+
 .text
 glabel get_status_of_objective
 /* 08BD68 7F057238 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -528,11 +529,11 @@ void display_objective_status_text_on_status_change(void) {
 }
 #else
 GLOBAL_ASM(
-.late_rodata
-glabel D_80053610
-.word 0,0,0,0,0,0,0,0,0,0
-glabel D_80053640
-.word 0
+.rdata
+/*glabel D_80053610*/
+/*.word 0,0,0,0,0,0,0,0,0,0*/
+/*glabel D_80053640*/
+/*.word 0*/
 .text
 glabel display_objective_status_text_on_status_change
 /* 08C070 7F057540 27BDFF70 */  addiu $sp, $sp, -0x90
