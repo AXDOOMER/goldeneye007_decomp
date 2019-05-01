@@ -583,612 +583,8 @@ u32 D_800322A8[] = {1, 3};
 u32 D_800322B0[] = {0, 0, 0, 0};
 u32 D_800322C0[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-/*rodata 
-D:80052100     jpt_7006894C:   .word action00_length, action01_length, locret_CODE_7F034A34, locret_CODE_7F034A3C
-D:80052100                     .word locret_CODE_7F034A44, locret_CODE_7F034A4C, locret_CODE_7F034A54, locret_CODE_7F034A5C  # jump table for switch statement
-D:80052100                     .word locret_CODE_7F034A64, locret_CODE_7F034A6C, locret_CODE_7F034A74, locret_CODE_7F034A7C
-D:80052100                     .word locret_CODE_7F034A84, locret_CODE_7F034A8C, locret_CODE_7F034A94, locret_CODE_7F034A9C
-D:80052100                     .word locret_CODE_7F034AA4, locret_CODE_7F034AAC, locret_CODE_7F034AB4, locret_CODE_7F034ABC
-D:80052100                     .word locret_CODE_7F034AC4, locret_CODE_7F034ACC, locret_CODE_7F034AE4, locret_CODE_7F034AEC
-D:80052100                     .word locret_CODE_7F034AF4, locret_CODE_7F034AFC, locret_CODE_7F034B04, locret_CODE_7F034B0C
-D:80052100                     .word locret_CODE_7F034B14, locret_CODE_7F034B1C, locret_CODE_7F034B24, locret_CODE_7F034B2C
-D:80052100                     .word locret_CODE_7F034B34, locret_CODE_7F034B3C, locret_CODE_7F034B44, locret_CODE_7F034B4C
-D:80052100                     .word locret_CODE_7F034B54, locret_CODE_7F034B5C, locret_CODE_7F034B64, locret_CODE_7F034B6C
-D:80052100                     .word locret_CODE_7F034B74, locret_CODE_7F034B7C, locret_CODE_7F034B84, locret_CODE_7F034B8C
-D:80052100                     .word locret_CODE_7F034B94, locret_CODE_7F034B9C, locret_CODE_7F034BA4, locret_CODE_7F034BAC
-D:80052100                     .word locret_CODE_7F034BB4, locret_CODE_7F034BBC, locret_CODE_7F034BC4, locret_CODE_7F034BCC
-D:80052100                     .word locret_CODE_7F034BD4, locret_CODE_7F034BDC, locret_CODE_7F034BE4, locret_CODE_7F034BEC
-D:80052100                     .word locret_CODE_7F034BF4, locret_CODE_7F034BFC, locret_CODE_7F034C04, locret_CODE_7F034C0C
-D:80052100                     .word locret_CODE_7F034C14, locret_CODE_7F034C1C, locret_CODE_7F034C24, locret_CODE_7F034C2C
-D:80052100                     .word locret_CODE_7F034C34, locret_CODE_7F034C3C, locret_CODE_7F034C44, locret_CODE_7F034C4C
-D:80052100                     .word locret_CODE_7F034C54, locret_CODE_7F034C5C, locret_CODE_7F034C64, locret_CODE_7F034C6C
-D:80052100                     .word locret_CODE_7F034C74, locret_CODE_7F034C7C, locret_CODE_7F034C84, locret_CODE_7F034C8C
-D:80052100                     .word locret_CODE_7F034C94, locret_CODE_7F034C9C, locret_CODE_7F034CA4, locret_CODE_7F034CAC
-D:80052100                     .word locret_CODE_7F034CB4, locret_CODE_7F034CBC, locret_CODE_7F034CC4, locret_CODE_7F034CCC
-D:80052100                     .word locret_CODE_7F034CD4, locret_CODE_7F034CDC, locret_CODE_7F034CE4, locret_CODE_7F034CEC
-D:80052100                     .word locret_CODE_7F034CF4, locret_CODE_7F034CFC, locret_CODE_7F034D04, locret_CODE_7F034D0C
-D:80052100                     .word locret_CODE_7F034D14, locret_CODE_7F034D1C, locret_CODE_7F034D24, locret_CODE_7F034D2C
-D:80052100                     .word locret_CODE_7F034D34, locret_CODE_7F034D3C, locret_CODE_7F034D44, locret_CODE_7F034D4C
-D:80052100                     .word locret_CODE_7F034D54, locret_CODE_7F034D5C, locret_CODE_7F034D64, locret_CODE_7F034D6C
-D:80052100                     .word locret_CODE_7F034D74, locret_CODE_7F034D7C, locret_CODE_7F034D84, locret_CODE_7F034D8C
-D:80052100                     .word locret_CODE_7F034D94, locret_CODE_7F034D9C, locret_CODE_7F034DA4, locret_CODE_7F034DAC
-D:80052100                     .word locret_CODE_7F034DB4, locret_CODE_7F034DBC, locret_CODE_7F034DC4, locret_CODE_7F034DCC
-D:80052100                     .word locret_CODE_7F034DD4, locret_CODE_7F034DDC, locret_CODE_7F034DE4, locret_CODE_7F034DEC
-D:80052100                     .word locret_CODE_7F034DF4, locret_CODE_7F034DFC, locret_CODE_7F034E04, locret_CODE_7F034E0C
-D:80052100                     .word locret_CODE_7F034E14, locret_CODE_7F034E1C, locret_CODE_7F034E24, locret_CODE_7F034E2C
-D:80052100                     .word locret_CODE_7F034E34, locret_CODE_7F034E3C, locret_CODE_7F034E44, locret_CODE_7F034E4C
-D:80052100                     .word locret_CODE_7F034E54, locret_CODE_7F034E5C, locret_CODE_7F034E64, locret_CODE_7F034E6C
-D:80052100                     .word locret_CODE_7F034E74, locret_CODE_7F034E7C, locret_CODE_7F034E84, locret_CODE_7F034E8C
-D:80052100                     .word locret_CODE_7F034E94, locret_CODE_7F034E9C, locret_CODE_7F034EA4, locret_CODE_7F034EAC
-D:80052100                     .word locret_CODE_7F034EB4, locret_CODE_7F034EBC, locret_CODE_7F034EC4, locret_CODE_7F034ECC
-D:80052100                     .word locret_CODE_7F034ED4, locret_CODE_7F034EDC, locret_CODE_7F034EE4, locret_CODE_7F034EEC
-D:80052100                     .word locret_CODE_7F034EF4, locret_CODE_7F034EFC, locret_CODE_7F034F04, locret_CODE_7F034F0C
-D:80052100                     .word locret_CODE_7F034F14, locret_CODE_7F034F1C, locret_CODE_7F034F24, locret_CODE_7F034F2C
-D:80052100                     .word locret_CODE_7F034F34, locret_CODE_7F034F3C, locret_CODE_7F034F44, locret_CODE_7F034F4C
-D:80052100                     .word locret_CODE_7F034F54, locret_CODE_7F034F5C, locret_CODE_7F034F64, locret_CODE_7F034F6C
-D:80052100                     .word locret_CODE_7F034F74, locret_CODE_7F034F7C, locret_CODE_7F034F84, locret_CODE_7F034F8C
-D:80052100                     .word locret_CODE_7F034F94, actionAD_length, locret_CODE_7F034F9C, locret_CODE_7F034FA4
-D:80052100                     .word locret_CODE_7F034FAC, locret_CODE_7F034FB4, locret_CODE_7F034FBC, locret_CODE_7F034FC4
-D:80052100                     .word locret_CODE_7F034FCC, locret_CODE_7F034FD4, locret_CODE_7F034FDC, locret_CODE_7F034FE4
-D:80052100                     .word locret_CODE_7F034FEC, locret_CODE_7F034FF4, locret_CODE_7F034FFC, locret_CODE_7F035004
-D:80052100                     .word locret_CODE_7F03500C, locret_CODE_7F035014, locret_CODE_7F03501C, locret_CODE_7F035024
-D:80052100                     .word locret_CODE_7F03502C, locret_CODE_7F035034, locret_CODE_7F03503C, locret_CODE_7F035044
-D:80052100                     .word locret_CODE_7F03504C, locret_CODE_7F035054, locret_CODE_7F03505C, locret_CODE_7F035064
-D:80052100                     .word locret_CODE_7F03506C, locret_CODE_7F035074, locret_CODE_7F03507C, locret_CODE_7F035084
-D:80052100                     .word locret_CODE_7F03508C, locret_CODE_7F035094, locret_CODE_7F03509C, locret_CODE_7F0350A4
-D:80052100                     .word locret_CODE_7F0350AC, locret_CODE_7F0350B4, locret_CODE_7F0350BC, locret_CODE_7F0350C4
-D:80052100                     .word locret_CODE_7F0350CC, locret_CODE_7F0350D4, locret_CODE_7F0350DC, locret_CODE_7F0350E4
-D:80052100                     .word locret_CODE_7F0350EC, locret_CODE_7F0350F4, locret_CODE_7F0350FC, locret_CODE_7F035104
-D:80052100                     .word locret_CODE_7F03510C, locret_CODE_7F035114, locret_CODE_7F03511C, locret_CODE_7F035124
-D:80052100                     .word locret_CODE_7F03512C, locret_CODE_7F035134, locret_CODE_7F03513C, locret_CODE_7F035144
-D:80052100                     .word locret_CODE_7F03514C, locret_CODE_7F035154, locret_CODE_7F03515C, locret_CODE_7F034ADC
-D:80052100                     .word locret_CODE_7F034AD4, locret_CODE_7F035164, locret_CODE_7F03516C, locret_CODE_7F035174
-D:80052100                     .word locret_CODE_7F03517C, locret_CODE_7F035184, locret_CODE_7F03518C, locret_CODE_7F035194
-D:80052100                     .word locret_CODE_7F03519C, locret_CODE_7F0351A4, locret_CODE_7F0351AC, locret_CODE_7F0351B4
-D:80052100                     .word locret_CODE_7F0351BC, locret_CODE_7F0351C4, locret_CODE_7F0351CC, locret_CODE_7F0351D4
-D:80052100                     .word locret_CODE_7F0351DC, locret_CODE_7F0351E4, locret_CODE_7F0351EC, locret_CODE_7F0351F4
-D:80052100                     .word actionFC_length
-*/
+//rodata 
 
-/*
-D:800524F8     jpt_700694DC:   .word Action00_GoToLabel, Action01_GoToLabelFromTop, Action02_Label
-D:800524F8                     .word loc_CODE_7F0355F8, action04_end, loc_CODE_7F03563C, loc_CODE_7F0356B0  # jump table for switch statement
-D:800524F8                     .word loc_CODE_7F03570C, loc_CODE_7F035768, loc_CODE_7F03577C, loc_CODE_7F035790
-D:800524F8                     .word loc_CODE_7F03589C, loc_CODE_7F0358D0, loc_CODE_7F0358E4, loc_CODE_7F0359E8
-D:800524F8                     .word loc_CODE_7F035A1C, loc_CODE_7F035A50, loc_CODE_7F035A84, loc_CODE_7F035AB8
-D:800524F8                     .word loc_CODE_7F035AEC, loc_CODE_7F035B20, loc_CODE_7F035B74, loc_CODE_7F035C50
-D:800524F8                     .word loc_CODE_7F035CA4, loc_CODE_7F035CF8, loc_CODE_7F035D5C, action1A_throw_grenade
-D:800524F8                     .word action1B_drop_armed_weapon, loc_CODE_7F036218, loc_CODE_7F036244, loc_CODE_7F036260
-D:800524F8                     .word loc_CODE_7F03628C, loc_CODE_7F0362B8, loc_CODE_7F035EF8, loc_CODE_7F035F0C
-D:800524F8                     .word loc_CODE_7F035F20, loc_CODE_7F035F54, loc_CODE_7F035F9C, loc_CODE_7F035FB0
-D:800524F8                     .word loc_CODE_7F035FC4, loc_CODE_7F035FF8, loc_CODE_7F036030, loc_CODE_7F036068
-D:800524F8                     .word loc_CODE_7F0360A0, loc_CODE_7F0360D4, loc_CODE_7F036110, loc_CODE_7F03614C
-D:800524F8                     .word loc_CODE_7F0358F8, loc_CODE_7F03592C, loc_CODE_7F035974, loc_CODE_7F0359B4
-D:800524F8                     .word loc_CODE_7F036188, loc_CODE_7F0361A0, loc_CODE_7F0361DC, loc_CODE_7F0362D8
-D:800524F8                     .word loc_CODE_7F03630C, loc_CODE_7F036340, loc_CODE_7F036374, loc_CODE_7F0363A8
-D:800524F8                     .word loc_CODE_7F0363DC, loc_CODE_7F036410, loc_CODE_7F036444, loc_CODE_7F036478
-D:800524F8                     .word loc_CODE_7F0364AC, loc_CODE_7F0364E0, loc_CODE_7F036540, loc_CODE_7F036578
-D:800524F8                     .word loc_CODE_7F0365B4, loc_CODE_7F0365F4, loc_CODE_7F03663C, loc_CODE_7F036670
-D:800524F8                     .word loc_CODE_7F0366A4, loc_CODE_7F036718, loc_CODE_7F03678C, loc_CODE_7F036800
-D:800524F8                     .word loc_CODE_7F036874, loc_CODE_7F0368DC, loc_CODE_7F036944, loc_CODE_7F0369D4
-D:800524F8                     .word loc_CODE_7F036A64, loc_CODE_7F036AD0, loc_CODE_7F036B3C, loc_CODE_7F036B98
-D:800524F8                     .word loc_CODE_7F036C10, loc_CODE_7F036C88, loc_CODE_7F036CD4, loc_CODE_7F036D1C
-D:800524F8                     .word loc_CODE_7F036D6C, loc_CODE_7F036DA0, loc_CODE_7F036E2C, loc_CODE_7F036E78
-D:800524F8                     .word loc_CODE_7F036EBC, loc_CODE_7F036F0C, loc_CODE_7F036F70, loc_CODE_7F036FD0
-D:800524F8                     .word loc_CODE_7F037038, loc_CODE_7F0370B4, loc_CODE_7F037118, loc_CODE_7F03714C
-D:800524F8                     .word loc_CODE_7F0371BC, loc_CODE_7F0371FC, loc_CODE_7F0372A0, loc_CODE_7F0373BC
-D:800524F8                     .word loc_CODE_7F037400, loc_CODE_7F037444, loc_CODE_7F037518, loc_CODE_7F03757C
-D:800524F8                     .word loc_CODE_7F0375C0, loc_CODE_7F037608, loc_CODE_7F037678, loc_CODE_7F0376C8
-D:800524F8                     .word loc_CODE_7F037700, loc_CODE_7F037A94, loc_CODE_7F037AD4, loc_CODE_7F037B14
-D:800524F8                     .word loc_CODE_7F037B74, loc_CODE_7F037BD4, loc_CODE_7F037C38, loc_CODE_7F037C9C
-D:800524F8                     .word loc_CODE_7F037CDC, loc_CODE_7F037738, loc_CODE_7F037778, loc_CODE_7F0377B8
-D:800524F8                     .word loc_CODE_7F0377F8, loc_CODE_7F037838, loc_CODE_7F0378C4, loc_CODE_7F037950
-D:800524F8                     .word loc_CODE_7F0379AC, loc_CODE_7F037A20, loc_CODE_7F037D1C, loc_CODE_7F037D30
-D:800524F8                     .word loc_CODE_7F037D70, loc_CODE_7F037DA4, loc_CODE_7F037DE0, loc_CODE_7F037E1C
-D:800524F8                     .word loc_CODE_7F037E30, loc_CODE_7F037E70, loc_CODE_7F037EA4, loc_CODE_7F037EE0
-D:800524F8                     .word loc_CODE_7F037F1C, loc_CODE_7F037F50, loc_CODE_7F037F80, loc_CODE_7F037F94
-D:800524F8                     .word loc_CODE_7F037FA8, loc_CODE_7F037FE8, loc_CODE_7F038028, loc_CODE_7F03803C
-D:800524F8                     .word loc_CODE_7F038050, loc_CODE_7F038064, loc_CODE_7F03807C, loc_CODE_7F038094
-D:800524F8                     .word loc_CODE_7F0380CC, loc_CODE_7F0380E8, loc_CODE_7F038104, loc_CODE_7F038140
-D:800524F8                     .word loc_CODE_7F03817C, loc_CODE_7F0381B8, loc_CODE_7F038214, loc_CODE_7F038254
-D:800524F8                     .word loc_CODE_7F038298, loc_CODE_7F0382F4, loc_CODE_7F038344, loc_CODE_7F038398
-D:800524F8                     .word loc_CODE_7F03840C, loc_CODE_7F038464, loc_CODE_7F0384C0, loc_CODE_7F03853C
-D:800524F8                     .word loc_CODE_7F038594, loc_CODE_7F0385F0, loc_CODE_7F03866C, loc_CODE_7F038684
-D:800524F8                     .word loc_CODE_7F0386A0, loc_CODE_7F0386EC, loc_CODE_7F038718, loc_CODE_7F038730
-D:800524F8                     .word loc_CODE_7F038744, loc_CODE_7F038754, actionB1_enable_loop_counter, actionB2_if_loop_counter_enabled_return
-D:800524F8                     .word actionB3_if_loop_counter_greater_than_x_return, loc_CODE_7F038840, loc_CODE_7F0388C4
-D:800524F8                     .word loc_CODE_7F0388DC, loc_CODE_7F0388F4, loc_CODE_7F038928, loc_CODE_7F03893C
-D:800524F8                     .word loc_CODE_7F038950, loc_CODE_7F038984, loc_CODE_7F0389E8, actionBD_spawn_guard
-D:800524F8                     .word actionBE_respawn_guard, loc_CODE_7F038B7C, loc_CODE_7F038C80, loc_CODE_7F038D10
-D:800524F8                     .word loc_CODE_7F038EC8, loc_CODE_7F038EF0, loc_CODE_7F038F18, loc_CODE_7F0390C4
-D:800524F8                     .word loc_CODE_7F039160, loc_CODE_7F038F58, loc_CODE_7F039008, loc_CODE_7F038F44
-D:800524F8                     .word loc_CODE_7F039260, loc_CODE_7F0392D4, loc_CODE_7F0392FC, loc_CODE_7F039360
-D:800524F8                     .word loc_CODE_7F0393BC, loc_CODE_7F039408, loc_CODE_7F039440, loc_CODE_7F0394CC
-D:800524F8                     .word action_D2_exit_level, loc_CODE_7F039550, loc_CODE_7F039564, loc_CODE_7F0395F0
-D:800524F8                     .word loc_CODE_7F039670, loc_CODE_7F0396DC, loc_CODE_7F039750, loc_CODE_7F03979C
-D:800524F8                     .word loc_CODE_7F039964, loc_CODE_7F0399A4, loc_CODE_7F0399E0, loc_CODE_7F039A24
-D:800524F8                     .word loc_CODE_7F039A80, loc_CODE_7F039AD4, loc_CODE_7F039B30, loc_CODE_7F039B58
-D:800524F8                     .word loc_CODE_7F039B98, loc_CODE_7F039BD8, loc_CODE_7F039BFC, loc_CODE_7F039C20
-D:800524F8                     .word loc_CODE_7F039C5C, loc_CODE_7F035BC8, loc_CODE_7F035C1C, actionE9_instantly_switch_to_solosky2
-D:800524F8                     .word action_EA_stop_time, actionEB_return_if_button_pressed, actionEC_disable_player_pickups
-D:800524F8                     .word actionED_hide_1st_person_display, actionEE_circular_camera, actionEF_start_credits
-D:800524F8                     .word actionF0_return_when_credits_finished, actionF1_if_objectives_complete_return
-D:800524F8                     .word actionF2_if_selected_bond_num_return, actionF3_if_player_pickups_disabled_return
-D:800524F8                     .word actionF4_play_xtheme_in_slot_for_seconds, actionF5_turn_off_music_in_slot
-D:800524F8                     .word actionF6_trigger_explosions_around_players, actionF7_if_num_less_than_civilian_deaths_return
-D:800524F8                     .word actionF8_if_guardID_shot_at_unset_flag_and_return, actionF9_set_killed_in_action_flag
-D:800524F8                     .word action_FA_use_fawn_on_shoulder_animation, actionFB_switch_to_xsky, loc_CODE_7F03A134
-*/
-
-/*
-D:800528FC     jpt_7006CB34:   .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word def_7F038C04
-D:800528FC                     .word def_7F038C04
-D:800528FC                     .word def_7F038C04
-D:800528FC                     .word def_7F038C04
-D:800528FC                     .word def_7F038C04
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-D:800528FC                     .word loc_CODE_7F038C0C
-*/
-
-/*
-//probably multiple files
-D:80052980     jpt_7007045C:   .word loc_CODE_7F03C534
-D:80052980                     .word loc_CODE_7F03C544
-D:80052980                     .word def_7F03C52C
-D:80052980                     .word loc_CODE_7F03C534
-D:80052980                     .word def_7F03C52C
-D:80052980                     .word def_7F03C52C
-D:80052980                     .word def_7F03C52C
-D:80052980                     .word def_7F03C52C
-D:800529A0     jpt_7007106C:   .word loc_CODE_7F03D144
-D:800529A0                     .word def_7F03D13C
-D:800529A0                     .word def_7F03D13C
-D:800529A0                     .word loc_CODE_7F03D154
-D:800529A0                     .word def_7F03D13C
-D:800529A0                     .word def_7F03D13C
-D:800529A0                     .word def_7F03D13C
-D:800529A0                     .word def_7F03D13C
-*/
-
-/* rodata
-D:800529C8                     .align 4
-*/
-
-
-/*
-D:80052B98     jpt_7007DBF0:   .word def_7F049CC0, loc_CODE_7F049CC8, loc_CODE_7F049CD4, loc_CODE_7F049CE0
-D:80052B98                     .word loc_CODE_7F049CEC, loc_CODE_7F049CF8, loc_CODE_7F049D04, loc_CODE_7F049D10
-D:80052B98                     .word loc_CODE_7F049D1C, loc_CODE_7F049D28, loc_CODE_7F049D34, loc_CODE_7F049D40
-D:80052B98                     .word loc_CODE_7F049D4C, loc_CODE_7F049D58, loc_CODE_7F049D64, loc_CODE_7F049D70
-D:80052B98                     .word loc_CODE_7F049D7C, loc_CODE_7F049D88, loc_CODE_7F049D94, loc_CODE_7F049DA0
-D:80052B98                     .word loc_CODE_7F049DAC, loc_CODE_7F049DB8, loc_CODE_7F049DC4, loc_CODE_7F049DD0
-D:80052B98                     .word loc_CODE_7F049DDC, loc_CODE_7F049DE8, loc_CODE_7F049DF4, loc_CODE_7F049E00
-D:80052B98                     .word loc_CODE_7F049E0C, loc_CODE_7F049E18, loc_CODE_7F049E24, loc_CODE_7F049E30
-D:80052B98                     .word loc_CODE_7F049E3C, loc_CODE_7F049E48, loc_CODE_7F049E54, loc_CODE_7F049E60
-D:80052B98                     .word loc_CODE_7F049E6C, loc_CODE_7F049E78, loc_CODE_7F049E84, loc_CODE_7F049E90
-D:80052B98                     .word loc_CODE_7F049E9C, loc_CODE_7F049EA8, loc_CODE_7F049EB4, loc_CODE_7F049EC0
-D:80052B98                     .word loc_CODE_7F049ECC, loc_CODE_7F049ED8, loc_CODE_7F049EE4, loc_CODE_7F049EF0
-D:80052B98                     .word loc_CODE_7F049EFC, loc_CODE_7F049F08, loc_CODE_7F049F14, loc_CODE_7F049F20
-*/
-
-/*
-D:80052C6C     jpt_7007DF4C:   .word command00_reset_scroll_shift
-D:80052C6C                     .word command01_horizontal_scroll
-D:80052C6C                     .word command02_vertical_scroll
-D:80052C6C                     .word command03_horizontal_pos
-D:80052C6C                     .word command04_vertical_pos
-D:80052C6C                     .word command05_zoomx
-D:80052C6C                     .word command06_zoomy
-D:80052C6C                     .word command07_use_image_from_global_monitor_table
-D:80052C6C                     .word command08_halt_processing_for_time
-D:80052C6C                     .word command09_jump
-D:80052C6C                     .word command0A_jump_conditional
-D:80052C6C                     .word command0B_restart
-D:80052C6C                     .word command0C_break
-D:80052C6C                     .word command0D_colour_transition
-D:80052C6C                     .word command0E_set_rotation
-D:80052C6C                     .word command0F_rotate
-*/
-
-/*
-D:80052D9C     jpt_70081970:   .word loc_CODE_7F04DAA4  # DATA XREF: sub_CODE_7F04D9B0+84r
-D:80052D9C                     .word def_7F04DA40       # jump table for switch statement
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word loc_CODE_7F04DAD8
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word loc_CODE_7F04DAEC
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word def_7F04DA40
-D:80052D9C                     .word loc_CODE_7F04DB00
-D:80052D9C                     .word loc_CODE_7F04DA48
-D:80052DF0     jpt_70081F20:   .word destroyable_object
-D:80052DF0                                              # DATA XREF: check_if_destroyable_object_type+14r
-D:80052DF0                     .word nondestroyable_object  # jump table for switch statement
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052DF0                     .word nondestroyable_object
-D:80052DF0                     .word destroyable_object
-D:80052EAC     jpt_70081F5C:   .word collectable_object
-D:80052EAC                                              # DATA XREF: check_if_collectable_object+14r
-D:80052EAC                     .word notcollectable_object  # jump table for switch statement
-D:80052EAC                     .word notcollectable_object
-D:80052EAC                     .word collectable_object
-D:80052EAC                     .word collectable_object
-D:80052EAC                     .word notcollectable_object
-D:80052EAC                     .word notcollectable_object
-D:80052EAC                     .word notcollectable_object
-D:80052EAC                     .word notcollectable_object
-D:80052EAC                     .word notcollectable_object
-D:80052EAC                     .word notcollectable_object
-D:80052EAC                     .word notcollectable_object
-D:80052EAC                     .word notcollectable_object
-D:80052EAC                     .word collectable_object
-D:80052EAC                     .word notcollectable_object
-D:80052EAC                     .word notcollectable_object
-D:80052EAC                     .word collectable_object
-D:80052EAC                     .word collectable_object
-*/
-
-/*
-D:80052F10     jpt_70083244:   .word text_some          # DATA XREF: append_text_ammo_amount_word+1Cr
-D:80052F10                     .word text_some          # jump table for switch statement
-D:80052F10                     .word text_some
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_an
-D:80052F10                     .word text_an
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_a
-D:80052F10                     .word text_the
-D:80052F10                     .word text_some
-D:80052F10                     .word text_NONE
-D:80052F10                     .word text_NONE
-D:80052F10                     .word text_NONE
-D:80052F10                     .word text_NONE
-D:80052F10                     .word text_NONE
-D:80052F10                     .word text_the
-D:80052F84     jpt_7008346C:   .word text_pickup_shotgun_cartridge
-D:80052F84                                              # DATA XREF: apped_text_ammotype+124r
-D:80052F84                     .word text_pickup_hand_grenade  # jump table for switch statement
-D:80052F84                     .word text_pickup_rocket
-D:80052F84                     .word text_pickup_remote_mine
-D:80052F84                     .word text_pickup_proximity_mine
-D:80052F84                     .word text_pickup_timed_mine
-D:80052F84                     .word pluralize_multiples
-D:80052F84                     .word text_pickup_grenade_round
-D:80052F84                     .word text_pickup_magnum_bullet
-D:80052F84                     .word text_pickup_golden_bullet
-D:80052F84                     .word text_pickup_dart
-D:80052F84                     .word text_pickup_explosive_pen
-D:80052F84                     .word text_pickup_explosive_case
-D:80052F84                     .word text_pickup_flare
-D:80052F84                     .word text_pickup_piton
-D:80052F84                     .word pluralize_multiples
-D:80052F84                     .word text_pickup_bug
-D:80052F84                     .word text_pickup_micro_camera
-D:80052F84                     .word text_pickup_goldeneye_key
-D:80052F84                     .word text_pickup_plastique
-D:80052F84                     .word pluralize_multiples
-D:80052F84                     .word pluralize_multiples
-D:80052F84                     .word pluralize_multiples
-D:80052F84                     .word pluralize_multiples
-D:80052F84                     .word pluralize_multiples
-D:80052F84                     .word text_pickup_token
-D:80052FEC     jpt_700836DC:   .word ammo_sfx_pickup_firearm
-D:80052FEC                                              # DATA XREF: set_sound_effect_for_ammo_collection+18r
-D:80052FEC                     .word ammo_sfx_pickup_firearm  # jump table for switch statement
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80052FEC                     .word ammo_sfx_pickup_mine
-D:80052FEC                     .word ammo_sfx_pickup_mine
-D:80052FEC                     .word ammo_sfx_pickup_mine
-D:80052FEC                     .word ammo_sfx_pickup_knife
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80052FEC                     .word ammo_sfx_pickup_mine
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80052FEC                     .word ammo_sfx_pickup_mine
-D:80052FEC                     .word ammo_sfx_pickup_mine
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80052FEC                     .word ammo_sfx_pickup_mine
-D:80052FEC                     .word ammo_sfx_pickup_default
-D:80052FEC                     .word ammo_sfx_pickup_default
-D:80052FEC                     .word ammo_sfx_pickup_default
-D:80052FEC                     .word ammo_sfx_pickup_default
-D:80052FEC                     .word ammo_sfx_pickup_default
-D:80052FEC                     .word ammo_sfx_pickup_firearm
-D:80053060     ammo_collected_from_magazine:.word magazine_has_10_rounds_type1
-D:80053060                                              # DATA XREF: get_ammo_in_magazine+20r
-D:80053060                     .word magazine_has_10_rounds_type2  # jump table for switch statement
-D:80053060                     .word magazine_has_10_rounds_type3
-D:80053060                     .word magazine_has_5_rounds_type4
-D:80053060                     .word magazine_has_default_ammo_rounds
-D:80053060                     .word magazine_has_default_ammo_rounds
-D:80053060                     .word magazine_has_default_ammo_rounds
-D:80053060                     .word magazine_has_default_ammo_rounds
-D:80053060                     .word magazine_has_default_ammo_rounds
-D:80053060                     .word magazine_has_default_ammo_rounds
-D:80053060                     .word magazine_has_default_ammo_rounds
-D:80053060                     .word magazine_has_5_rounds_typeC
-D:80053060                     .word magazine_has_3_rounds_typeD
-D:80053060                     .word magazine_has_4_rounds_typeE
-D:80053098     ammo_in_weapon: .word weapon_has_10_rounds_type1
-D:80053098                                              # DATA XREF: ammo_collected_from_weapon+44r
-D:80053098                     .word weapon_has_10_rounds_type2  # jump table for switch statement
-D:80053098                     .word weapon_has_10_rounds_type3
-D:80053098                     .word weapon_has_5_rounds_type4
-D:80053098                     .word weapon_has_default_ammo
-D:80053098                     .word weapon_has_default_ammo
-D:80053098                     .word weapon_has_default_ammo
-D:80053098                     .word weapon_has_default_ammo
-D:80053098                     .word weapon_has_default_ammo
-D:80053098                     .word weapon_has_default_ammo
-D:80053098                     .word weapon_has_3_rounds_typeB
-D:80053098                     .word weapon_has_5_rounds_typeC
-D:80053098                     .word weapon_has_3_rounds_typeD
-D:80053098                     .word weapon_has_4_rounds_typeE
-D:800530D0     jpt_70083DA4:   .word weapon_collect_msg_a_hunting_knife, weapon_collect_msg_BLANK, weapon_collect_msg_a_pp7
-D:800530D0                                              # DATA XREF: generate_language_specific_text_for_weapon+88r
-D:800530D0                     .word weapon_collect_msg_a_silenced_pp7, weapon_collect_msg_a_dd44, weapon_collect_msg_a_klobb  # jump table for switch statement
-D:800530D0                     .word weapon_collect_msg_a_kf7, weapon_collect_msg_a_zmg, weapon_collect_msg_a_d5k
-D:800530D0                     .word weapon_collect_msg_a_silenced_d5k, weapon_collect_msg_a_phantom, weapon_collect_msg_a_ar33
-D:800530D0                     .word weapon_collect_msg_a_rcp90, weapon_collect_msg_a_shotgun, weapon_collect_msg_an_auto_shotgun
-D:800530D0                     .word weapon_collect_msg_a_sniper, weapon_collect_msg_a_cougar_magnum, weapon_collect_msg_a_golden_gun
-D:800530D0                     .word weapon_collect_msg_a_silver_pp7, weapon_collect_msg_a_gold_pp7, weapon_collect_msg_a_moonraker_laser
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_grenade_launcher
-D:800530D0                     .word weapon_collect_msg_a_rocket_launcher, weapon_collect_msg_BLANK, weapon_collect_msg_BLANK
-D:800530D0                     .word weapon_collect_msg_BLANK, weapon_collect_msg_BLANK, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_BLANK
-D:800530D0                     .word weapon_collect_msg_BLANK, weapon_collect_msg_a_flare_pistol, weapon_collect_msg_a_piton_gun
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_BLANK, weapon_collect_msg_BLANK
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_BLANK, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_new_weapon, weapon_collect_msg_a_keycard
-D:800530D0                     .word weapon_collect_msg_a_yale_key, weapon_collect_msg_a_bolt_key, weapon_collect_msg_a_new_weapon
-D:800530D0                     .word weapon_collect_msg_a_new_weapon, weapon_collect_msg_BLANK, weapon_collect_msg_BLANK
-D:800530D0                     .word weapon_collect_msg_BLANK
-D:8005322C     object_interaction_table:.word interact_default_object
-D:8005322C                                              # DATA XREF: collect_or_interact_object+60r
-D:8005322C                     .word interact_key_object  # jump table for switch statement
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_magazine_object
-D:8005322C                     .word interact_weapon_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_ammobox_object
-D:8005322C                     .word interact_bodyarmor_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-D:8005322C                     .word interact_default_object
-*/
-
-/*
-D:800532F4     jpt_hat_worn:   .word model_hat_fur      # DATA XREF: get_hat_model+1Cr
-D:800532F4                     .word model_hat_fur      # jump table for switch statement
-D:800532F4                     .word model_hat_fur
-D:800532F4                     .word model_hat_greencap
-D:800532F4                     .word model_hat_greencap
-D:800532F4                     .word model_hat_combat_helmet
-D:800532F4                     .word model_hat_combat_helmet
-D:800532F4                     .word model_hat_moonraker_headgear
-D:800532F4                     .word model_hat_beret
-D:800532F4                     .word model_hat_beret
-D:800532F4                     .word model_hat_beret
-D:800532F4                     .word model_hat_officerhat
-*/
-
-/*
-D:8005334C     door_opening_sound_table_0:.word loc_CODE_7F053BEC
-D:8005334C                                              # DATA XREF: play_door_opening_soundeffect_0+60r
-D:8005334C                     .word loc_CODE_7F053C2C  # jump table for switch statement
-D:8005334C                     .word loc_CODE_7F053C6C
-D:8005334C                     .word loc_CODE_7F053CAC
-D:8005334C                     .word loc_CODE_7F053CEC
-D:8005334C                     .word loc_CODE_7F053D08
-D:8005334C                     .word loc_CODE_7F053D24
-D:8005334C                     .word loc_CODE_7F053D64
-D:8005334C                     .word loc_CODE_7F053DA4
-D:8005334C                     .word loc_CODE_7F053DC4
-D:8005334C                     .word loc_CODE_7F053DE0
-D:8005334C                     .word loc_CODE_7F053DFC
-D:8005334C                     .word loc_CODE_7F053E18
-D:8005334C                     .word loc_CODE_7F053E58
-D:8005334C                     .word loc_CODE_7F053E78
-D:8005334C                     .word loc_CODE_7F053E98
-D:8005334C                     .word loc_CODE_7F053EB4
-D:80053390     door_opening_sound_table_1:.word loc_CODE_7F053FD8
-D:80053390                                              # DATA XREF: play_door_opening_soundeffect_1+60r
-D:80053390                     .word loc_CODE_7F054018  # jump table for switch statement
-D:80053390                     .word loc_CODE_7F054058
-D:80053390                     .word loc_CODE_7F054098
-D:80053390                     .word def_7F053FD0
-D:80053390                     .word def_7F053FD0
-D:80053390                     .word loc_CODE_7F0540D8
-D:80053390                     .word loc_CODE_7F054118
-D:80053390                     .word loc_CODE_7F054158
-D:80053390                     .word def_7F053FD0
-D:80053390                     .word def_7F053FD0
-D:80053390                     .word def_7F053FD0
-D:80053390                     .word loc_CODE_7F054178
-D:80053390                     .word loc_CODE_7F0541B8
-D:80053390                     .word loc_CODE_7F0541D8
-D:80053390                     .word loc_CODE_7F0541F8
-D:80053390                     .word loc_CODE_7F054214
-D:800533D4     door_closing_sound_table_0:.word loc_CODE_7F054308
-D:800533D4                                              # DATA XREF: play_door_closing_soundeffect_0+30r
-D:800533D4                     .word loc_CODE_7F054328  # jump table for switch statement
-D:800533D4                     .word loc_CODE_7F054348
-D:800533D4                     .word loc_CODE_7F054368
-D:800533D4                     .word def_7F054300
-D:800533D4                     .word def_7F054300
-D:800533D4                     .word loc_CODE_7F054388
-D:800533D4                     .word loc_CODE_7F0543A8
-D:800533D4                     .word loc_CODE_7F0543C8
-D:800533D4                     .word def_7F054300
-D:800533D4                     .word def_7F054300
-D:800533D4                     .word def_7F054300
-D:800533D4                     .word loc_CODE_7F0543E8
-D:800533D4                     .word loc_CODE_7F054408
-D:800533D4                     .word loc_CODE_7F054428
-D:800533D4                     .word loc_CODE_7F054448
-D:800533D4                     .word loc_CODE_7F054468
-D:80053418     door_closing_sound_table_1:.word loc_CODE_7F0544FC
-D:80053418                                              # DATA XREF: play_door_closing_soundeffect_1+30r
-D:80053418                     .word loc_CODE_7F05451C  # jump table for switch statement
-D:80053418                     .word loc_CODE_7F05453C
-D:80053418                     .word loc_CODE_7F05455C
-D:80053418                     .word loc_CODE_7F05457C
-D:80053418                     .word loc_CODE_7F05459C
-D:80053418                     .word loc_CODE_7F0545BC
-D:80053418                     .word loc_CODE_7F0545DC
-D:80053418                     .word loc_CODE_7F0545FC
-D:80053418                     .word loc_CODE_7F05461C
-D:80053418                     .word loc_CODE_7F05463C
-D:80053418                     .word loc_CODE_7F05465C
-D:80053418                     .word loc_CODE_7F05467C
-D:80053418                     .word loc_CODE_7F05469C
-D:80053418                     .word loc_CODE_7F0546BC
-D:80053418                     .word loc_CODE_7F0546DC
-D:80053418                     .word loc_CODE_7F0546FC
-*/
 
 
 
@@ -1446,6 +842,263 @@ u8 get_length_of_action_block(CurrentActionByte) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*80052100*/
+glabel jpt_7006894C
+.word action00_length
+.word action01_length
+.word locret_CODE_7F034A34
+.word locret_CODE_7F034A3C
+.word locret_CODE_7F034A44
+.word locret_CODE_7F034A4C
+.word locret_CODE_7F034A54
+.word locret_CODE_7F034A5C
+.word locret_CODE_7F034A64
+.word locret_CODE_7F034A6C
+.word locret_CODE_7F034A74
+.word locret_CODE_7F034A7C
+.word locret_CODE_7F034A84
+.word locret_CODE_7F034A8C
+.word locret_CODE_7F034A94
+.word locret_CODE_7F034A9C
+.word locret_CODE_7F034AA4
+.word locret_CODE_7F034AAC
+.word locret_CODE_7F034AB4
+.word locret_CODE_7F034ABC
+.word locret_CODE_7F034AC4
+.word locret_CODE_7F034ACC
+.word locret_CODE_7F034AE4
+.word locret_CODE_7F034AEC
+.word locret_CODE_7F034AF4
+.word locret_CODE_7F034AFC
+.word locret_CODE_7F034B04
+.word locret_CODE_7F034B0C
+.word locret_CODE_7F034B14
+.word locret_CODE_7F034B1C
+.word locret_CODE_7F034B24
+.word locret_CODE_7F034B2C
+.word locret_CODE_7F034B34
+.word locret_CODE_7F034B3C
+.word locret_CODE_7F034B44
+.word locret_CODE_7F034B4C
+.word locret_CODE_7F034B54
+.word locret_CODE_7F034B5C
+.word locret_CODE_7F034B64
+.word locret_CODE_7F034B6C
+.word locret_CODE_7F034B74
+.word locret_CODE_7F034B7C
+.word locret_CODE_7F034B84
+.word locret_CODE_7F034B8C
+.word locret_CODE_7F034B94
+.word locret_CODE_7F034B9C
+.word locret_CODE_7F034BA4
+.word locret_CODE_7F034BAC
+.word locret_CODE_7F034BB4
+.word locret_CODE_7F034BBC
+.word locret_CODE_7F034BC4
+.word locret_CODE_7F034BCC
+.word locret_CODE_7F034BD4
+.word locret_CODE_7F034BDC
+.word locret_CODE_7F034BE4
+.word locret_CODE_7F034BEC
+.word locret_CODE_7F034BF4
+.word locret_CODE_7F034BFC
+.word locret_CODE_7F034C04
+.word locret_CODE_7F034C0C
+.word locret_CODE_7F034C14
+.word locret_CODE_7F034C1C
+.word locret_CODE_7F034C24
+.word locret_CODE_7F034C2C
+.word locret_CODE_7F034C34
+.word locret_CODE_7F034C3C
+.word locret_CODE_7F034C44
+.word locret_CODE_7F034C4C
+.word locret_CODE_7F034C54
+.word locret_CODE_7F034C5C
+.word locret_CODE_7F034C64
+.word locret_CODE_7F034C6C
+.word locret_CODE_7F034C74
+.word locret_CODE_7F034C7C
+.word locret_CODE_7F034C84
+.word locret_CODE_7F034C8C
+.word locret_CODE_7F034C94
+.word locret_CODE_7F034C9C
+.word locret_CODE_7F034CA4
+.word locret_CODE_7F034CAC
+.word locret_CODE_7F034CB4
+.word locret_CODE_7F034CBC
+.word locret_CODE_7F034CC4
+.word locret_CODE_7F034CCC
+.word locret_CODE_7F034CD4
+.word locret_CODE_7F034CDC
+.word locret_CODE_7F034CE4
+.word locret_CODE_7F034CEC
+.word locret_CODE_7F034CF4
+.word locret_CODE_7F034CFC
+.word locret_CODE_7F034D04
+.word locret_CODE_7F034D0C
+.word locret_CODE_7F034D14
+.word locret_CODE_7F034D1C
+.word locret_CODE_7F034D24
+.word locret_CODE_7F034D2C
+.word locret_CODE_7F034D34
+.word locret_CODE_7F034D3C
+.word locret_CODE_7F034D44
+.word locret_CODE_7F034D4C
+.word locret_CODE_7F034D54
+.word locret_CODE_7F034D5C
+.word locret_CODE_7F034D64
+.word locret_CODE_7F034D6C
+.word locret_CODE_7F034D74
+.word locret_CODE_7F034D7C
+.word locret_CODE_7F034D84
+.word locret_CODE_7F034D8C
+.word locret_CODE_7F034D94
+.word locret_CODE_7F034D9C
+.word locret_CODE_7F034DA4
+.word locret_CODE_7F034DAC
+.word locret_CODE_7F034DB4
+.word locret_CODE_7F034DBC
+.word locret_CODE_7F034DC4
+.word locret_CODE_7F034DCC
+.word locret_CODE_7F034DD4
+.word locret_CODE_7F034DDC
+.word locret_CODE_7F034DE4
+.word locret_CODE_7F034DEC
+.word locret_CODE_7F034DF4
+.word locret_CODE_7F034DFC
+.word locret_CODE_7F034E04
+.word locret_CODE_7F034E0C
+.word locret_CODE_7F034E14
+.word locret_CODE_7F034E1C
+.word locret_CODE_7F034E24
+.word locret_CODE_7F034E2C
+.word locret_CODE_7F034E34
+.word locret_CODE_7F034E3C
+.word locret_CODE_7F034E44
+.word locret_CODE_7F034E4C
+.word locret_CODE_7F034E54
+.word locret_CODE_7F034E5C
+.word locret_CODE_7F034E64
+.word locret_CODE_7F034E6C
+.word locret_CODE_7F034E74
+.word locret_CODE_7F034E7C
+.word locret_CODE_7F034E84
+.word locret_CODE_7F034E8C
+.word locret_CODE_7F034E94
+.word locret_CODE_7F034E9C
+.word locret_CODE_7F034EA4
+.word locret_CODE_7F034EAC
+.word locret_CODE_7F034EB4
+.word locret_CODE_7F034EBC
+.word locret_CODE_7F034EC4
+.word locret_CODE_7F034ECC
+.word locret_CODE_7F034ED4
+.word locret_CODE_7F034EDC
+.word locret_CODE_7F034EE4
+.word locret_CODE_7F034EEC
+.word locret_CODE_7F034EF4
+.word locret_CODE_7F034EFC
+.word locret_CODE_7F034F04
+.word locret_CODE_7F034F0C
+.word locret_CODE_7F034F14
+.word locret_CODE_7F034F1C
+.word locret_CODE_7F034F24
+.word locret_CODE_7F034F2C
+.word locret_CODE_7F034F34
+.word locret_CODE_7F034F3C
+.word locret_CODE_7F034F44
+.word locret_CODE_7F034F4C
+.word locret_CODE_7F034F54
+.word locret_CODE_7F034F5C
+.word locret_CODE_7F034F64
+.word locret_CODE_7F034F6C
+.word locret_CODE_7F034F74
+.word locret_CODE_7F034F7C
+.word locret_CODE_7F034F84
+.word locret_CODE_7F034F8C
+.word locret_CODE_7F034F94
+.word actionAD_length
+/*HACK FIXME */
+/*.word locret_CODE_7F034F9C*/
+/*.word locret_CODE_7F034FA4*/
+/*.word locret_CODE_7F034FAC*/
+/*.word locret_CODE_7F034FB4*/
+/*.word locret_CODE_7F034FBC*/
+/*.word locret_CODE_7F034FC4*/
+/*.word locret_CODE_7F034FCC*/
+/*.word locret_CODE_7F034FD4*/
+/*.word locret_CODE_7F034FDC*/
+/*.word locret_CODE_7F034FE4*/
+/*.word locret_CODE_7F034FEC*/
+/*.word locret_CODE_7F034FF4*/
+/*.word locret_CODE_7F034FFC*/
+/*.word locret_CODE_7F035004*/
+/*.word locret_CODE_7F03500C*/
+/*.word locret_CODE_7F035014*/
+/*.word locret_CODE_7F03501C*/
+/*.word locret_CODE_7F035024*/
+/*.word locret_CODE_7F03502C*/
+/*.word locret_CODE_7F035034*/
+/*.word locret_CODE_7F03503C*/
+/*.word locret_CODE_7F035044*/
+/*.word locret_CODE_7F03504C*/
+/*.word locret_CODE_7F035054*/
+/*.word locret_CODE_7F03505C*/
+/*.word locret_CODE_7F035064*/
+/*.word locret_CODE_7F03506C*/
+/*.word locret_CODE_7F035074*/
+/*.word locret_CODE_7F03507C*/
+/*.word locret_CODE_7F035084*/
+/*.word locret_CODE_7F03508C*/
+/*.word locret_CODE_7F035094*/
+/*.word locret_CODE_7F03509C*/
+/*.word locret_CODE_7F0350A4*/
+/*.word locret_CODE_7F0350AC*/
+/*.word locret_CODE_7F0350B4*/
+/*.word locret_CODE_7F0350BC*/
+/*.word locret_CODE_7F0350C4*/
+/*.word locret_CODE_7F0350CC*/
+/*.word locret_CODE_7F0350D4*/
+/*.word locret_CODE_7F0350DC*/
+/*.word locret_CODE_7F0350E4*/
+/*.word locret_CODE_7F0350EC*/
+/*.word locret_CODE_7F0350F4*/
+/*.word locret_CODE_7F0350FC*/
+/*.word locret_CODE_7F035104*/
+/*.word locret_CODE_7F03510C*/
+/*.word locret_CODE_7F035114*/
+/*.word locret_CODE_7F03511C*/
+/*.word locret_CODE_7F035124*/
+/*.word locret_CODE_7F03512C*/
+/*.word locret_CODE_7F035134*/
+/*.word locret_CODE_7F03513C*/
+/*.word locret_CODE_7F035144*/
+/*.word locret_CODE_7F03514C*/
+/*.word locret_CODE_7F035154*/
+/*.word locret_CODE_7F03515C*/
+/*.word locret_CODE_7F034ADC*/
+/*.word locret_CODE_7F034AD4*/
+/*.word locret_CODE_7F035164*/
+/*.word locret_CODE_7F03516C*/
+/*.word locret_CODE_7F035174*/
+/*.word locret_CODE_7F03517C*/
+/*.word locret_CODE_7F035184*/
+/*.word locret_CODE_7F03518C*/
+/*.word locret_CODE_7F035194*/
+/*.word locret_CODE_7F03519C*/
+/*.word locret_CODE_7F0351A4*/
+/*.word locret_CODE_7F0351AC*/
+/*.word locret_CODE_7F0351B4*/
+/*.word locret_CODE_7F0351BC*/
+/*.word locret_CODE_7F0351C4*/
+/*.word locret_CODE_7F0351CC*/
+/*.word locret_CODE_7F0351D4*/
+/*.word locret_CODE_7F0351DC*/
+/*.word locret_CODE_7F0351E4*/
+/*.word locret_CODE_7F0351EC*/
+/*.word locret_CODE_7F0351F4*/
+/*.word actionFC_length*/
 .text
 glabel get_length_of_action_block #(CurrentActionByte)
 /* 06952C 7F0349FC 00851021 */  addu  $v0, $a0, $a1      #v0 = CurrentActionByte
@@ -1461,758 +1114,756 @@ glabel get_length_of_action_block #(CurrentActionByte)
 action00_length:
 /* 069554 7F034A24 03E00008 */  jr    $ra
 /* 069558 7F034A28 24020002 */   li    $v0, 2 #return 2
-
 action01_length:
 /* 06955C 7F034A2C 03E00008 */  jr    $ra
 /* 069560 7F034A30 24020002 */   li    $v0, 2
-
+locret_CODE_7F034A34:
 /* 069564 7F034A34 03E00008 */  jr    $ra
 /* 069568 7F034A38 24020002 */   li    $v0, 2
-
+locret_CODE_7F034A3C:
 /* 06956C 7F034A3C 03E00008 */  jr    $ra
 /* 069570 7F034A40 24020001 */   li    $v0, 1
-
+locret_CODE_7F034A44:
 /* 069574 7F034A44 03E00008 */  jr    $ra
 /* 069578 7F034A48 24020001 */   li    $v0, 1
-
+locret_CODE_7F034A4C:
 /* 06957C 7F034A4C 03E00008 */  jr    $ra
 /* 069580 7F034A50 24020004 */   li    $v0, 4
-
+locret_CODE_7F034A54:
 /* 069584 7F034A54 03E00008 */  jr    $ra
 /* 069588 7F034A58 24020003 */   li    $v0, 3
-
+locret_CODE_7F034A5C:
 /* 06958C 7F034A5C 03E00008 */  jr    $ra
 /* 069590 7F034A60 24020001 */   li    $v0, 1
-
+locret_CODE_7F034A64:
 /* 069594 7F034A64 03E00008 */  jr    $ra
 /* 069598 7F034A68 24020001 */   li    $v0, 1
-
+locret_CODE_7F034A6C:
 /* 06959C 7F034A6C 03E00008 */  jr    $ra
 /* 0695A0 7F034A70 24020001 */   li    $v0, 1
-
+locret_CODE_7F034A74:
 /* 0695A4 7F034A74 03E00008 */  jr    $ra
 /* 0695A8 7F034A78 24020009 */   li    $v0, 9
-
+locret_CODE_7F034A7C:
 /* 0695AC 7F034A7C 03E00008 */  jr    $ra
 /* 0695B0 7F034A80 24020002 */   li    $v0, 2
-
+locret_CODE_7F034A84:
 /* 0695B4 7F034A84 03E00008 */  jr    $ra
 /* 0695B8 7F034A88 24020001 */   li    $v0, 1
-
+locret_CODE_7F034A8C:
 /* 0695BC 7F034A8C 03E00008 */  jr    $ra
 /* 0695C0 7F034A90 24020001 */   li    $v0, 1
-
+locret_CODE_7F034A94:
 /* 0695C4 7F034A94 03E00008 */  jr    $ra
 /* 0695C8 7F034A98 24020002 */   li    $v0, 2
-
+locret_CODE_7F034A9C:
 /* 0695CC 7F034A9C 03E00008 */  jr    $ra
 /* 0695D0 7F034AA0 24020002 */   li    $v0, 2
-
+locret_CODE_7F034AA4:
 /* 0695D4 7F034AA4 03E00008 */  jr    $ra
 /* 0695D8 7F034AA8 24020002 */   li    $v0, 2
-
+locret_CODE_7F034AAC:
 /* 0695DC 7F034AAC 03E00008 */  jr    $ra
 /* 0695E0 7F034AB0 24020002 */   li    $v0, 2
-
+locret_CODE_7F034AB4:
 /* 0695E4 7F034AB4 03E00008 */  jr    $ra
 /* 0695E8 7F034AB8 24020002 */   li    $v0, 2
-
+locret_CODE_7F034ABC:
 /* 0695EC 7F034ABC 03E00008 */  jr    $ra
 /* 0695F0 7F034AC0 24020002 */   li    $v0, 2
-
+locret_CODE_7F034AC4:
 /* 0695F4 7F034AC4 03E00008 */  jr    $ra
 /* 0695F8 7F034AC8 24020006 */   li    $v0, 6
-
+locret_CODE_7F034ACC:
 /* 0695FC 7F034ACC 03E00008 */  jr    $ra
 /* 069600 7F034AD0 24020006 */   li    $v0, 6
-
+locret_CODE_7F034AD4:
 /* 069604 7F034AD4 03E00008 */  jr    $ra
 /* 069608 7F034AD8 24020002 */   li    $v0, 2
-
+locret_CODE_7F034ADC:
 /* 06960C 7F034ADC 03E00008 */  jr    $ra
 /* 069610 7F034AE0 24020002 */   li    $v0, 2
-
+locret_CODE_7F034AE4:
 /* 069614 7F034AE4 03E00008 */  jr    $ra
 /* 069618 7F034AE8 24020006 */   li    $v0, 6
-
+locret_CODE_7F034AEC:
 /* 06961C 7F034AEC 03E00008 */  jr    $ra
 /* 069620 7F034AF0 24020006 */   li    $v0, 6
-
+locret_CODE_7F034AF4:
 /* 069624 7F034AF4 03E00008 */  jr    $ra
 /* 069628 7F034AF8 24020004 */   li    $v0, 4
-
+locret_CODE_7F034AFC:
 /* 06962C 7F034AFC 03E00008 */  jr    $ra
 /* 069630 7F034B00 24020004 */   li    $v0, 4
-
+locret_CODE_7F034B04:
 /* 069634 7F034B04 03E00008 */  jr    $ra
 /* 069638 7F034B08 24020002 */   li    $v0, 2
-
+locret_CODE_7F034B0C:
 /* 06963C 7F034B0C 03E00008 */  jr    $ra
 /* 069640 7F034B10 24020005 */   li    $v0, 5
-
+locret_CODE_7F034B14:
 /* 069644 7F034B14 03E00008 */  jr    $ra
 /* 069648 7F034B18 24020003 */   li    $v0, 3
-
+locret_CODE_7F034B1C:
 /* 06964C 7F034B1C 03E00008 */  jr    $ra
 /* 069650 7F034B20 24020001 */   li    $v0, 1
-
+locret_CODE_7F034B24:
 /* 069654 7F034B24 03E00008 */  jr    $ra
 /* 069658 7F034B28 24020003 */   li    $v0, 3
-
+locret_CODE_7F034B2C:
 /* 06965C 7F034B2C 03E00008 */  jr    $ra
 /* 069660 7F034B30 24020003 */   li    $v0, 3
-
+locret_CODE_7F034B34:
 /* 069664 7F034B34 03E00008 */  jr    $ra
 /* 069668 7F034B38 24020002 */   li    $v0, 2
-
+locret_CODE_7F034B3C:
 /* 06966C 7F034B3C 03E00008 */  jr    $ra
 /* 069670 7F034B40 24020001 */   li    $v0, 1
-
+locret_CODE_7F034B44:
 /* 069674 7F034B44 03E00008 */  jr    $ra
 /* 069678 7F034B48 24020001 */   li    $v0, 1
-
+locret_CODE_7F034B4C:
 /* 06967C 7F034B4C 03E00008 */  jr    $ra
 /* 069680 7F034B50 24020002 */   li    $v0, 2
-
+locret_CODE_7F034B54:
 /* 069684 7F034B54 03E00008 */  jr    $ra
 /* 069688 7F034B58 24020004 */   li    $v0, 4
-
+locret_CODE_7F034B5C:
 /* 06968C 7F034B5C 03E00008 */  jr    $ra
 /* 069690 7F034B60 24020001 */   li    $v0, 1
-
+locret_CODE_7F034B64:
 /* 069694 7F034B64 03E00008 */  jr    $ra
 /* 069698 7F034B68 24020001 */   li    $v0, 1
-
+locret_CODE_7F034B6C:
 /* 06969C 7F034B6C 03E00008 */  jr    $ra
 /* 0696A0 7F034B70 24020002 */   li    $v0, 2
-
+locret_CODE_7F034B74:
 /* 0696A4 7F034B74 03E00008 */  jr    $ra
 /* 0696A8 7F034B78 24020002 */   li    $v0, 2
-
+locret_CODE_7F034B7C:
 /* 0696AC 7F034B7C 03E00008 */  jr    $ra
 /* 0696B0 7F034B80 24020002 */   li    $v0, 2
-
+locret_CODE_7F034B84:
 /* 0696B4 7F034B84 03E00008 */  jr    $ra
 /* 0696B8 7F034B88 24020002 */   li    $v0, 2
-
+locret_CODE_7F034B8C:
 /* 0696BC 7F034B8C 03E00008 */  jr    $ra
 /* 0696C0 7F034B90 24020002 */   li    $v0, 2
-
+locret_CODE_7F034B94:
 /* 0696C4 7F034B94 03E00008 */  jr    $ra
 /* 0696C8 7F034B98 24020003 */   li    $v0, 3
-
+locret_CODE_7F034B9C:
 /* 0696CC 7F034B9C 03E00008 */  jr    $ra
 /* 0696D0 7F034BA0 24020003 */   li    $v0, 3
-
+locret_CODE_7F034BA4:
 /* 0696D4 7F034BA4 03E00008 */  jr    $ra
 /* 0696D8 7F034BA8 24020003 */   li    $v0, 3
-
+locret_CODE_7F034BAC:
 /* 0696DC 7F034BAC 03E00008 */  jr    $ra
 /* 0696E0 7F034BB0 24020002 */   li    $v0, 2
-
+locret_CODE_7F034BB4:
 /* 0696E4 7F034BB4 03E00008 */  jr    $ra
 /* 0696E8 7F034BB8 24020003 */   li    $v0, 3
-
+locret_CODE_7F034BBC:
 /* 0696EC 7F034BBC 03E00008 */  jr    $ra
 /* 0696F0 7F034BC0 24020003 */   li    $v0, 3
-
+locret_CODE_7F034BC4:
 /* 0696F4 7F034BC4 03E00008 */  jr    $ra
 /* 0696F8 7F034BC8 24020002 */   li    $v0, 2
-
+locret_CODE_7F034BCC:
 /* 0696FC 7F034BCC 03E00008 */  jr    $ra
 /* 069700 7F034BD0 24020001 */   li    $v0, 1
-
+locret_CODE_7F034BD4:
 /* 069704 7F034BD4 03E00008 */  jr    $ra
 /* 069708 7F034BD8 24020003 */   li    $v0, 3
-
+locret_CODE_7F034BDC:
 /* 06970C 7F034BDC 03E00008 */  jr    $ra
 /* 069710 7F034BE0 24020003 */   li    $v0, 3
-
+locret_CODE_7F034BE4:
 /* 069714 7F034BE4 03E00008 */  jr    $ra
 /* 069718 7F034BE8 24020002 */   li    $v0, 2
-
+locret_CODE_7F034BEC:
 /* 06971C 7F034BEC 03E00008 */  jr    $ra
 /* 069720 7F034BF0 24020002 */   li    $v0, 2
-
+locret_CODE_7F034BF4:
 /* 069724 7F034BF4 03E00008 */  jr    $ra
 /* 069728 7F034BF8 24020002 */   li    $v0, 2
-
+locret_CODE_7F034BFC:
 /* 06972C 7F034BFC 03E00008 */  jr    $ra
 /* 069730 7F034C00 24020002 */   li    $v0, 2
-
+locret_CODE_7F034C04:
 /* 069734 7F034C04 03E00008 */  jr    $ra
 /* 069738 7F034C08 24020002 */   li    $v0, 2
-
+locret_CODE_7F034C0C:
 /* 06973C 7F034C0C 03E00008 */  jr    $ra
 /* 069740 7F034C10 24020002 */   li    $v0, 2
-
+locret_CODE_7F034C14:
 /* 069744 7F034C14 03E00008 */  jr    $ra
 /* 069748 7F034C18 24020002 */   li    $v0, 2
-
+locret_CODE_7F034C1C:
 /* 06974C 7F034C1C 03E00008 */  jr    $ra
 /* 069750 7F034C20 24020002 */   li    $v0, 2
-
+locret_CODE_7F034C24:
 /* 069754 7F034C24 03E00008 */  jr    $ra
 /* 069758 7F034C28 24020002 */   li    $v0, 2
-
+locret_CODE_7F034C2C:
 /* 06975C 7F034C2C 03E00008 */  jr    $ra
 /* 069760 7F034C30 24020002 */   li    $v0, 2
-
+locret_CODE_7F034C34:
 /* 069764 7F034C34 03E00008 */  jr    $ra
 /* 069768 7F034C38 24020003 */   li    $v0, 3
-
+locret_CODE_7F034C3C:
 /* 06976C 7F034C3C 03E00008 */  jr    $ra
 /* 069770 7F034C40 24020002 */   li    $v0, 2
-
+locret_CODE_7F034C44:
 /* 069774 7F034C44 03E00008 */  jr    $ra
 /* 069778 7F034C48 24020002 */   li    $v0, 2
-
+locret_CODE_7F034C4C:
 /* 06977C 7F034C4C 03E00008 */  jr    $ra
 /* 069780 7F034C50 24020002 */   li    $v0, 2
-
+locret_CODE_7F034C54:
 /* 069784 7F034C54 03E00008 */  jr    $ra
 /* 069788 7F034C58 24020004 */   li    $v0, 4
-
+locret_CODE_7F034C5C:
 /* 06978C 7F034C5C 03E00008 */  jr    $ra
 /* 069790 7F034C60 24020002 */   li    $v0, 2
-
+locret_CODE_7F034C64:
 /* 069794 7F034C64 03E00008 */  jr    $ra
 /* 069798 7F034C68 24020002 */   li    $v0, 2
-
+locret_CODE_7F034C6C:
 /* 06979C 7F034C6C 03E00008 */  jr    $ra
 /* 0697A0 7F034C70 24020003 */   li    $v0, 3
-
+locret_CODE_7F034C74:
 /* 0697A4 7F034C74 03E00008 */  jr    $ra
 /* 0697A8 7F034C78 24020003 */   li    $v0, 3
-
+locret_CODE_7F034C7C:
 /* 0697AC 7F034C7C 03E00008 */  jr    $ra
 /* 0697B0 7F034C80 24020003 */   li    $v0, 3
-
+locret_CODE_7F034C84:
 /* 0697B4 7F034C84 03E00008 */  jr    $ra
 /* 0697B8 7F034C88 24020003 */   li    $v0, 3
-
+locret_CODE_7F034C8C:
 /* 0697BC 7F034C8C 03E00008 */  jr    $ra
 /* 0697C0 7F034C90 24020004 */   li    $v0, 4
-
+locret_CODE_7F034C94:
 /* 0697C4 7F034C94 03E00008 */  jr    $ra
 /* 0697C8 7F034C98 24020004 */   li    $v0, 4
-
+locret_CODE_7F034C9C:
 /* 0697CC 7F034C9C 03E00008 */  jr    $ra
 /* 0697D0 7F034CA0 24020007 */   li    $v0, 7
-
+locret_CODE_7F034CA4:
 /* 0697D4 7F034CA4 03E00008 */  jr    $ra
 /* 0697D8 7F034CA8 24020007 */   li    $v0, 7
-
+locret_CODE_7F034CAC:
 /* 0697DC 7F034CAC 03E00008 */  jr    $ra
 /* 0697E0 7F034CB0 24020005 */   li    $v0, 5
-
+locret_CODE_7F034CB4:
 /* 0697E4 7F034CB4 03E00008 */  jr    $ra
 /* 0697E8 7F034CB8 24020005 */   li    $v0, 5
-
+locret_CODE_7F034CBC:
 /* 0697EC 7F034CBC 03E00008 */  jr    $ra
 /* 0697F0 7F034CC0 24020004 */   li    $v0, 4
-
+locret_CODE_7F034CC4:
 /* 0697F4 7F034CC4 03E00008 */  jr    $ra
 /* 0697F8 7F034CC8 24020006 */   li    $v0, 6
-
+locret_CODE_7F034CCC:
 /* 0697FC 7F034CCC 03E00008 */  jr    $ra
 /* 069800 7F034CD0 24020006 */   li    $v0, 6
-
+locret_CODE_7F034CD4:
 /* 069804 7F034CD4 03E00008 */  jr    $ra
 /* 069808 7F034CD8 24020005 */   li    $v0, 5
-
+locret_CODE_7F034CDC:
 /* 06980C 7F034CDC 03E00008 */  jr    $ra
 /* 069810 7F034CE0 24020004 */   li    $v0, 4
-
+locret_CODE_7F034CE4:
 /* 069814 7F034CE4 03E00008 */  jr    $ra
 /* 069818 7F034CE8 24020003 */   li    $v0, 3
-
+locret_CODE_7F034CEC:
 /* 06981C 7F034CEC 03E00008 */  jr    $ra
 /* 069820 7F034CF0 24020003 */   li    $v0, 3
-
+locret_CODE_7F034CF4:
 /* 069824 7F034CF4 03E00008 */  jr    $ra
 /* 069828 7F034CF8 24020004 */   li    $v0, 4
-
+locret_CODE_7F034CFC:
 /* 06982C 7F034CFC 03E00008 */  jr    $ra
 /* 069830 7F034D00 24020003 */   li    $v0, 3
-
+locret_CODE_7F034D04:
 /* 069834 7F034D04 03E00008 */  jr    $ra
 /* 069838 7F034D08 24020003 */   li    $v0, 3
-
+locret_CODE_7F034D0C:
 /* 06983C 7F034D0C 03E00008 */  jr    $ra
 /* 069840 7F034D10 24020003 */   li    $v0, 3
-
+locret_CODE_7F034D14:
 /* 069844 7F034D14 03E00008 */  jr    $ra
 /* 069848 7F034D18 24020003 */   li    $v0, 3
-
+locret_CODE_7F034D1C:
 /* 06984C 7F034D1C 03E00008 */  jr    $ra
 /* 069850 7F034D20 24020003 */   li    $v0, 3
-
+locret_CODE_7F034D24:
 /* 069854 7F034D24 03E00008 */  jr    $ra
 /* 069858 7F034D28 24020002 */   li    $v0, 2
-
+locret_CODE_7F034D2C:
 /* 06985C 7F034D2C 03E00008 */  jr    $ra
 /* 069860 7F034D30 24020002 */   li    $v0, 2
-
+locret_CODE_7F034D34:
 /* 069864 7F034D34 03E00008 */  jr    $ra
 /* 069868 7F034D38 24020002 */   li    $v0, 2
-
+locret_CODE_7F034D3C:
 /* 06986C 7F034D3C 03E00008 */  jr    $ra
 /* 069870 7F034D40 24020002 */   li    $v0, 2
-
+locret_CODE_7F034D44:
 /* 069874 7F034D44 03E00008 */  jr    $ra
 /* 069878 7F034D48 24020002 */   li    $v0, 2
-
+locret_CODE_7F034D4C:
 /* 06987C 7F034D4C 03E00008 */  jr    $ra
 /* 069880 7F034D50 24020002 */   li    $v0, 2
-
+locret_CODE_7F034D54:
 /* 069884 7F034D54 03E00008 */  jr    $ra
 /* 069888 7F034D58 24020003 */   li    $v0, 3
-
+locret_CODE_7F034D5C:
 /* 06988C 7F034D5C 03E00008 */  jr    $ra
 /* 069890 7F034D60 24020004 */   li    $v0, 4
-
+locret_CODE_7F034D64:
 /* 069894 7F034D64 03E00008 */  jr    $ra
 /* 069898 7F034D68 24020002 */   li    $v0, 2
-
+locret_CODE_7F034D6C:
 /* 06989C 7F034D6C 03E00008 */  jr    $ra
 /* 0698A0 7F034D70 24020002 */   li    $v0, 2
-
+locret_CODE_7F034D74:
 /* 0698A4 7F034D74 03E00008 */  jr    $ra
 /* 0698A8 7F034D78 24020004 */   li    $v0, 4
-
+locret_CODE_7F034D7C:
 /* 0698AC 7F034D7C 03E00008 */  jr    $ra
 /* 0698B0 7F034D80 24020003 */   li    $v0, 3
-
+locret_CODE_7F034D84:
 /* 0698B4 7F034D84 03E00008 */  jr    $ra
 /* 0698B8 7F034D88 24020003 */   li    $v0, 3
-
+locret_CODE_7F034D8C:
 /* 0698BC 7F034D8C 03E00008 */  jr    $ra
 /* 0698C0 7F034D90 24020003 */   li    $v0, 3
-
+locret_CODE_7F034D94:
 /* 0698C4 7F034D94 03E00008 */  jr    $ra
 /* 0698C8 7F034D98 24020004 */   li    $v0, 4
-
+locret_CODE_7F034D9C:
 /* 0698CC 7F034D9C 03E00008 */  jr    $ra
 /* 0698D0 7F034DA0 24020003 */   li    $v0, 3
-
+locret_CODE_7F034DA4:
 /* 0698D4 7F034DA4 03E00008 */  jr    $ra
 /* 0698D8 7F034DA8 24020003 */   li    $v0, 3
-
+locret_CODE_7F034DAC:
 /* 0698DC 7F034DAC 03E00008 */  jr    $ra
 /* 0698E0 7F034DB0 24020003 */   li    $v0, 3
-
+locret_CODE_7F034DB4:
 /* 0698E4 7F034DB4 03E00008 */  jr    $ra
 /* 0698E8 7F034DB8 24020003 */   li    $v0, 3
-
+locret_CODE_7F034DBC:
 /* 0698EC 7F034DBC 03E00008 */  jr    $ra
 /* 0698F0 7F034DC0 24020003 */   li    $v0, 3
-
+locret_CODE_7F034DC4:
 /* 0698F4 7F034DC4 03E00008 */  jr    $ra
 /* 0698F8 7F034DC8 24020004 */   li    $v0, 4
-
+locret_CODE_7F034DCC:
 /* 0698FC 7F034DCC 03E00008 */  jr    $ra
 /* 069900 7F034DD0 24020004 */   li    $v0, 4
-
+locret_CODE_7F034DD4:
 /* 069904 7F034DD4 03E00008 */  jr    $ra
 /* 069908 7F034DD8 24020004 */   li    $v0, 4
-
+locret_CODE_7F034DDC:
 /* 06990C 7F034DDC 03E00008 */  jr    $ra
 /* 069910 7F034DE0 24020004 */   li    $v0, 4
-
+locret_CODE_7F034DE4:
 /* 069914 7F034DE4 03E00008 */  jr    $ra
 /* 069918 7F034DE8 24020003 */   li    $v0, 3
-
+locret_CODE_7F034DEC:
 /* 06991C 7F034DEC 03E00008 */  jr    $ra
 /* 069920 7F034DF0 24020003 */   li    $v0, 3
-
+locret_CODE_7F034DF4:
 /* 069924 7F034DF4 03E00008 */  jr    $ra
 /* 069928 7F034DF8 24020003 */   li    $v0, 3
-
+locret_CODE_7F034DFC:
 /* 06992C 7F034DFC 03E00008 */  jr    $ra
 /* 069930 7F034E00 24020003 */   li    $v0, 3
-
+locret_CODE_7F034E04:
 /* 069934 7F034E04 03E00008 */  jr    $ra
 /* 069938 7F034E08 24020003 */   li    $v0, 3
-
+locret_CODE_7F034E0C:
 /* 06993C 7F034E0C 03E00008 */  jr    $ra
 /* 069940 7F034E10 24020003 */   li    $v0, 3
-
+locret_CODE_7F034E14:
 /* 069944 7F034E14 03E00008 */  jr    $ra
 /* 069948 7F034E18 24020004 */   li    $v0, 4
-
+locret_CODE_7F034E1C:
 /* 06994C 7F034E1C 03E00008 */  jr    $ra
 /* 069950 7F034E20 24020004 */   li    $v0, 4
-
+locret_CODE_7F034E24:
 /* 069954 7F034E24 03E00008 */  jr    $ra
 /* 069958 7F034E28 24020003 */   li    $v0, 3
-
+locret_CODE_7F034E2C:
 /* 06995C 7F034E2C 03E00008 */  jr    $ra
 /* 069960 7F034E30 24020003 */   li    $v0, 3
-
+locret_CODE_7F034E34:
 /* 069964 7F034E34 03E00008 */  jr    $ra
 /* 069968 7F034E38 24020003 */   li    $v0, 3
-
+locret_CODE_7F034E3C:
 /* 06996C 7F034E3C 03E00008 */  jr    $ra
 /* 069970 7F034E40 24020002 */   li    $v0, 2
-
+locret_CODE_7F034E44:
 /* 069974 7F034E44 03E00008 */  jr    $ra
 /* 069978 7F034E48 24020002 */   li    $v0, 2
-
+locret_CODE_7F034E4C:
 /* 06997C 7F034E4C 03E00008 */  jr    $ra
 /* 069980 7F034E50 24020002 */   li    $v0, 2
-
+locret_CODE_7F034E54:
 /* 069984 7F034E54 03E00008 */  jr    $ra
 /* 069988 7F034E58 24020003 */   li    $v0, 3
-
+locret_CODE_7F034E5C:
 /* 06998C 7F034E5C 03E00008 */  jr    $ra
 /* 069990 7F034E60 24020002 */   li    $v0, 2
-
+locret_CODE_7F034E64:
 /* 069994 7F034E64 03E00008 */  jr    $ra
 /* 069998 7F034E68 24020002 */   li    $v0, 2
-
+locret_CODE_7F034E6C:
 /* 06999C 7F034E6C 03E00008 */  jr    $ra
 /* 0699A0 7F034E70 24020002 */   li    $v0, 2
-
+locret_CODE_7F034E74:
 /* 0699A4 7F034E74 03E00008 */  jr    $ra
 /* 0699A8 7F034E78 24020002 */   li    $v0, 2
-
+locret_CODE_7F034E7C:
 /* 0699AC 7F034E7C 03E00008 */  jr    $ra
 /* 0699B0 7F034E80 24020003 */   li    $v0, 3
-
+locret_CODE_7F034E84:
 /* 0699B4 7F034E84 03E00008 */  jr    $ra
 /* 0699B8 7F034E88 24020002 */   li    $v0, 2
-
+locret_CODE_7F034E8C:
 /* 0699BC 7F034E8C 03E00008 */  jr    $ra
 /* 0699C0 7F034E90 24020003 */   li    $v0, 3
-
+locret_CODE_7F034E94:
 /* 0699C4 7F034E94 03E00008 */  jr    $ra
 /* 0699C8 7F034E98 24020002 */   li    $v0, 2
-
+locret_CODE_7F034E9C:
 /* 0699CC 7F034E9C 03E00008 */  jr    $ra
 /* 0699D0 7F034EA0 24020002 */   li    $v0, 2
-
+locret_CODE_7F034EA4:
 /* 0699D4 7F034EA4 03E00008 */  jr    $ra
 /* 0699D8 7F034EA8 24020002 */   li    $v0, 2
-
+locret_CODE_7F034EAC:
 /* 0699DC 7F034EAC 03E00008 */  jr    $ra
 /* 0699E0 7F034EB0 24020003 */   li    $v0, 3
-
+locret_CODE_7F034EB4:
 /* 0699E4 7F034EB4 03E00008 */  jr    $ra
 /* 0699E8 7F034EB8 24020003 */   li    $v0, 3
-
+locret_CODE_7F034EBC:
 /* 0699EC 7F034EBC 03E00008 */  jr    $ra
 /* 0699F0 7F034EC0 24020002 */   li    $v0, 2
-
+locret_CODE_7F034EC4:
 /* 0699F4 7F034EC4 03E00008 */  jr    $ra
 /* 0699F8 7F034EC8 24020002 */   li    $v0, 2
-
+locret_CODE_7F034ECC:
 /* 0699FC 7F034ECC 03E00008 */  jr    $ra
 /* 069A00 7F034ED0 24020002 */   li    $v0, 2
-
+locret_CODE_7F034ED4:
 /* 069A04 7F034ED4 03E00008 */  jr    $ra
 /* 069A08 7F034ED8 24020002 */   li    $v0, 2
-
+locret_CODE_7F034EDC:
 /* 069A0C 7F034EDC 03E00008 */  jr    $ra
 /* 069A10 7F034EE0 24020002 */   li    $v0, 2
-
+locret_CODE_7F034EE4:
 /* 069A14 7F034EE4 03E00008 */  jr    $ra
 /* 069A18 7F034EE8 24020003 */   li    $v0, 3
-
+locret_CODE_7F034EEC:
 /* 069A1C 7F034EEC 03E00008 */  jr    $ra
 /* 069A20 7F034EF0 24020003 */   li    $v0, 3
-
+locret_CODE_7F034EF4:
 /* 069A24 7F034EF4 03E00008 */  jr    $ra
 /* 069A28 7F034EF8 24020003 */   li    $v0, 3
-
+locret_CODE_7F034EFC:
 /* 069A2C 7F034EFC 03E00008 */  jr    $ra
 /* 069A30 7F034F00 24020004 */   li    $v0, 4
-
+locret_CODE_7F034F04:
 /* 069A34 7F034F04 03E00008 */  jr    $ra
 /* 069A38 7F034F08 24020005 */   li    $v0, 5
-
+locret_CODE_7F034F0C:
 /* 069A3C 7F034F0C 03E00008 */  jr    $ra
 /* 069A40 7F034F10 24020005 */   li    $v0, 5
-
+locret_CODE_7F034F14:
 /* 069A44 7F034F14 03E00008 */  jr    $ra
 /* 069A48 7F034F18 24020006 */   li    $v0, 6
-
+locret_CODE_7F034F1C:
 /* 069A4C 7F034F1C 03E00008 */  jr    $ra
 /* 069A50 7F034F20 24020005 */   li    $v0, 5
-
+locret_CODE_7F034F24:
 /* 069A54 7F034F24 03E00008 */  jr    $ra
 /* 069A58 7F034F28 24020005 */   li    $v0, 5
-
+locret_CODE_7F034F2C:
 /* 069A5C 7F034F2C 03E00008 */  jr    $ra
 /* 069A60 7F034F30 24020006 */   li    $v0, 6
-
+locret_CODE_7F034F34:
 /* 069A64 7F034F34 03E00008 */  jr    $ra
 /* 069A68 7F034F38 24020006 */   li    $v0, 6
-
+locret_CODE_7F034F3C:
 /* 069A6C 7F034F3C 03E00008 */  jr    $ra
 /* 069A70 7F034F40 24020006 */   li    $v0, 6
-
+locret_CODE_7F034F44:
 /* 069A74 7F034F44 03E00008 */  jr    $ra
 /* 069A78 7F034F48 24020007 */   li    $v0, 7
-
+locret_CODE_7F034F4C:
 /* 069A7C 7F034F4C 03E00008 */  jr    $ra
 /* 069A80 7F034F50 24020006 */   li    $v0, 6
-
+locret_CODE_7F034F54:
 /* 069A84 7F034F54 03E00008 */  jr    $ra
 /* 069A88 7F034F58 24020006 */   li    $v0, 6
-
+locret_CODE_7F034F5C:
 /* 069A8C 7F034F5C 03E00008 */  jr    $ra
 /* 069A90 7F034F60 24020007 */   li    $v0, 7
-
+locret_CODE_7F034F64:
 /* 069A94 7F034F64 03E00008 */  jr    $ra
 /* 069A98 7F034F68 24020006 */   li    $v0, 6
-
+locret_CODE_7F034F6C:
 /* 069A9C 7F034F6C 03E00008 */  jr    $ra
 /* 069AA0 7F034F70 24020006 */   li    $v0, 6
-
+locret_CODE_7F034F74:
 /* 069AA4 7F034F74 03E00008 */  jr    $ra
 /* 069AA8 7F034F78 24020007 */   li    $v0, 7
-
+locret_CODE_7F034F7C:
 /* 069AAC 7F034F7C 03E00008 */  jr    $ra
 /* 069AB0 7F034F80 24020002 */   li    $v0, 2
-
+locret_CODE_7F034F84:
 /* 069AB4 7F034F84 03E00008 */  jr    $ra
 /* 069AB8 7F034F88 24020003 */   li    $v0, 3
-
+locret_CODE_7F034F8C:
 /* 069ABC 7F034F8C 03E00008 */  jr    $ra
 /* 069AC0 7F034F90 24020003 */   li    $v0, 3
-
+locret_CODE_7F034F94:
 /* 069AC4 7F034F94 03E00008 */  jr    $ra
 /* 069AC8 7F034F98 24020004 */   li    $v0, 4
-
+locret_CODE_7F034F9C:
 /* 069ACC 7F034F9C 03E00008 */  jr    $ra
 /* 069AD0 7F034FA0 24020001 */   li    $v0, 1
-
+locret_CODE_7F034FA4:
 /* 069AD4 7F034FA4 03E00008 */  jr    $ra
 /* 069AD8 7F034FA8 24020001 */   li    $v0, 1
-
+locret_CODE_7F034FAC:
 /* 069ADC 7F034FAC 03E00008 */  jr    $ra
 /* 069AE0 7F034FB0 24020001 */   li    $v0, 1
-
+locret_CODE_7F034FB4:
 /* 069AE4 7F034FB4 03E00008 */  jr    $ra
 /* 069AE8 7F034FB8 24020001 */   li    $v0, 1
-
+locret_CODE_7F034FBC:
 /* 069AEC 7F034FBC 03E00008 */  jr    $ra
 /* 069AF0 7F034FC0 24020002 */   li    $v0, 2
-
+locret_CODE_7F034FC4:
 /* 069AF4 7F034FC4 03E00008 */  jr    $ra
 /* 069AF8 7F034FC8 24020005 */   li    $v0, 5
-
+locret_CODE_7F034FCC:
 /* 069AFC 7F034FCC 03E00008 */  jr    $ra
 /* 069B00 7F034FD0 24020005 */   li    $v0, 5
-
+locret_CODE_7F034FD4:
 /* 069B04 7F034FD4 03E00008 */  jr    $ra
 /* 069B08 7F034FD8 24020001 */   li    $v0, 1
-
+locret_CODE_7F034FDC:
 /* 069B0C 7F034FDC 03E00008 */  jr    $ra
 /* 069B10 7F034FE0 24020001 */   li    $v0, 1
-
+locret_CODE_7F034FE4:
 /* 069B14 7F034FE4 03E00008 */  jr    $ra
 /* 069B18 7F034FE8 24020003 */   li    $v0, 3
-
+locret_CODE_7F034FEC:
 /* 069B1C 7F034FEC 03E00008 */  jr    $ra
 /* 069B20 7F034FF0 24020001 */   li    $v0, 1
-
+locret_CODE_7F034FF4:
 /* 069B24 7F034FF4 03E00008 */  jr    $ra
 /* 069B28 7F034FF8 24020001 */   li    $v0, 1
-
+locret_CODE_7F034FFC:
 /* 069B2C 7F034FFC 03E00008 */  jr    $ra
 /* 069B30 7F035000 24020002 */   li    $v0, 2
-
+locret_CODE_7F035004:
 /* 069B34 7F035004 03E00008 */  jr    $ra
 /* 069B38 7F035008 24020004 */   li    $v0, 4
-
+locret_CODE_7F03500C:
 /* 069B3C 7F03500C 03E00008 */  jr    $ra
 /* 069B40 7F035010 24020004 */   li    $v0, 4
-
+locret_CODE_7F035014:
 /* 069B44 7F035014 03E00008 */  jr    $ra
 /* 069B48 7F035018 2402000C */   li    $v0, 12
-
+locret_CODE_7F03501C:
 /* 069B4C 7F03501C 03E00008 */  jr    $ra
 /* 069B50 7F035020 2402000B */   li    $v0, 11
-
+locret_CODE_7F035024:
 /* 069B54 7F035024 03E00008 */  jr    $ra
 /* 069B58 7F035028 24020009 */   li    $v0, 9
-
+locret_CODE_7F03502C:
 /* 069B5C 7F03502C 03E00008 */  jr    $ra
 /* 069B60 7F035030 24020008 */   li    $v0, 8
-
+locret_CODE_7F035034:
 /* 069B64 7F035034 03E00008 */  jr    $ra
 /* 069B68 7F035038 24020005 */   li    $v0, 5
-
+locret_CODE_7F03503C:
 /* 069B6C 7F03503C 03E00008 */  jr    $ra
 /* 069B70 7F035040 24020003 */   li    $v0, 3
-
+locret_CODE_7F035044:
 /* 069B74 7F035044 03E00008 */  jr    $ra
 /* 069B78 7F035048 24020003 */   li    $v0, 3
-
+locret_CODE_7F03504C:
 /* 069B7C 7F03504C 03E00008 */  jr    $ra
 /* 069B80 7F035050 24020004 */   li    $v0, 4
-
+locret_CODE_7F035054:
 /* 069B84 7F035054 03E00008 */  jr    $ra
 /* 069B88 7F035058 24020005 */   li    $v0, 5
-
+locret_CODE_7F03505C:
 /* 069B8C 7F03505C 03E00008 */  jr    $ra
 /* 069B90 7F035060 24020006 */   li    $v0, 6
-
+locret_CODE_7F035064:
 /* 069B94 7F035064 03E00008 */  jr    $ra
 /* 069B98 7F035068 24020006 */   li    $v0, 6
-
+locret_CODE_7F03506C:
 /* 069B9C 7F03506C 03E00008 */  jr    $ra
 /* 069BA0 7F035070 24020006 */   li    $v0, 6
-
+locret_CODE_7F035074:
 /* 069BA4 7F035074 03E00008 */  jr    $ra
 /* 069BA8 7F035078 24020002 */   li    $v0, 2
-
+locret_CODE_7F03507C:
 /* 069BAC 7F03507C 03E00008 */  jr    $ra
 /* 069BB0 7F035080 24020005 */   li    $v0, 5
-
+locret_CODE_7F035084:
 /* 069BB4 7F035084 03E00008 */  jr    $ra
 /* 069BB8 7F035088 24020002 */   li    $v0, 2
-
+locret_CODE_7F03508C:
 /* 069BBC 7F03508C 03E00008 */  jr    $ra
 /* 069BC0 7F035090 24020005 */   li    $v0, 5
-
+locret_CODE_7F035094:
 /* 069BC4 7F035094 03E00008 */  jr    $ra
 /* 069BC8 7F035098 24020005 */   li    $v0, 5
-
+locret_CODE_7F03509C:
 /* 069BCC 7F03509C 03E00008 */  jr    $ra
 /* 069BD0 7F0350A0 24020002 */   li    $v0, 2
-
+locret_CODE_7F0350A4:
 /* 069BD4 7F0350A4 03E00008 */  jr    $ra
 /* 069BD8 7F0350A8 24020002 */   li    $v0, 2
-
+locret_CODE_7F0350AC:
 /* 069BDC 7F0350AC 03E00008 */  jr    $ra
 /* 069BE0 7F0350B0 24020004 */   li    $v0, 4
-
+locret_CODE_7F0350B4:
 /* 069BE4 7F0350B4 03E00008 */  jr    $ra
 /* 069BE8 7F0350B8 24020002 */   li    $v0, 2
-
+locret_CODE_7F0350BC:
 /* 069BEC 7F0350BC 03E00008 */  jr    $ra
 /* 069BF0 7F0350C0 24020001 */   li    $v0, 1
-
+locret_CODE_7F0350C4:
 /* 069BF4 7F0350C4 03E00008 */  jr    $ra
 /* 069BF8 7F0350C8 24020001 */   li    $v0, 1
-
+locret_CODE_7F0350CC:
 /* 069BFC 7F0350CC 03E00008 */  jr    $ra
 /* 069C00 7F0350D0 24020003 */   li    $v0, 3
-
+locret_CODE_7F0350D4:
 /* 069C04 7F0350D4 03E00008 */  jr    $ra
 /* 069C08 7F0350D8 24020006 */   li    $v0, 6
-
+locret_CODE_7F0350DC:
 /* 069C0C 7F0350DC 03E00008 */  jr    $ra
 /* 069C10 7F0350E0 24020004 */   li    $v0, 4
-
+locret_CODE_7F0350E4:
 /* 069C14 7F0350E4 03E00008 */  jr    $ra
 /* 069C18 7F0350E8 24020002 */   li    $v0, 2
-
+locret_CODE_7F0350EC:
 /* 069C1C 7F0350EC 03E00008 */  jr    $ra
 /* 069C20 7F0350F0 24020001 */   li    $v0, 1
-
+locret_CODE_7F0350F4:
 /* 069C24 7F0350F4 03E00008 */  jr    $ra
 /* 069C28 7F0350F8 24020005 */   li    $v0, 5
-
+locret_CODE_7F0350FC:
 /* 069C2C 7F0350FC 03E00008 */  jr    $ra
 /* 069C30 7F035100 24020001 */   li    $v0, 1
-
+locret_CODE_7F035104:
 /* 069C34 7F035104 03E00008 */  jr    $ra
 /* 069C38 7F035108 24020001 */   li    $v0, 1
-
+locret_CODE_7F03510C:
 /* 069C3C 7F03510C 03E00008 */  jr    $ra
 /* 069C40 7F035110 24020002 */   li    $v0, 2
-
+locret_CODE_7F035114:
 /* 069C44 7F035114 03E00008 */  jr    $ra
 /* 069C48 7F035118 24020001 */   li    $v0, 1
-
+locret_CODE_7F03511C:
 /* 069C4C 7F03511C 03E00008 */  jr    $ra
 /* 069C50 7F035120 24020001 */   li    $v0, 1
-
+locret_CODE_7F035124:
 /* 069C54 7F035124 03E00008 */  jr    $ra
 /* 069C58 7F035128 24020002 */   li    $v0, 2
-
+locret_CODE_7F03512C:
 /* 069C5C 7F03512C 03E00008 */  jr    $ra
 /* 069C60 7F035130 24020003 */   li    $v0, 3
-
+locret_CODE_7F035134:
 /* 069C64 7F035134 03E00008 */  jr    $ra
 /* 069C68 7F035138 24020003 */   li    $v0, 3
-
+locret_CODE_7F03513C:
 /* 069C6C 7F03513C 03E00008 */  jr    $ra
 /* 069C70 7F035140 24020004 */   li    $v0, 4
-
+locret_CODE_7F035144:
 /* 069C74 7F035144 03E00008 */  jr    $ra
 /* 069C78 7F035148 24020002 */   li    $v0, 2
-
+locret_CODE_7F03514C:
 /* 069C7C 7F03514C 03E00008 */  jr    $ra
 /* 069C80 7F035150 24020002 */   li    $v0, 2
-
+locret_CODE_7F035154:
 /* 069C84 7F035154 03E00008 */  jr    $ra
 /* 069C88 7F035158 24020003 */   li    $v0, 3
-
+locret_CODE_7F03515C:
 /* 069C8C 7F03515C 03E00008 */  jr    $ra
 /* 069C90 7F035160 24020005 */   li    $v0, 5
-
+locret_CODE_7F035164:
 /* 069C94 7F035164 03E00008 */  jr    $ra
 /* 069C98 7F035168 24020001 */   li    $v0, 1
-
+locret_CODE_7F03516C:
 /* 069C9C 7F03516C 03E00008 */  jr    $ra
 /* 069CA0 7F035170 24020001 */   li    $v0, 1
-
+locret_CODE_7F035174:
 /* 069CA4 7F035174 03E00008 */  jr    $ra
 /* 069CA8 7F035178 24020002 */   li    $v0, 2
-
+locret_CODE_7F03517C:
 /* 069CAC 7F03517C 03E00008 */  jr    $ra
 /* 069CB0 7F035180 24020001 */   li    $v0, 1
-
+locret_CODE_7F035184:
 /* 069CB4 7F035184 03E00008 */  jr    $ra
 /* 069CB8 7F035188 24020001 */   li    $v0, 1
-
+locret_CODE_7F03518C:
 /* 069CBC 7F03518C 03E00008 */  jr    $ra
 /* 069CC0 7F035190 2402000D */   li    $v0, 13
-
+locret_CODE_7F035194:
 /* 069CC4 7F035194 03E00008 */  jr    $ra
 /* 069CC8 7F035198 24020001 */   li    $v0, 1
-
+locret_CODE_7F03519C:
 /* 069CCC 7F03519C 03E00008 */  jr    $ra
 /* 069CD0 7F0351A0 24020002 */   li    $v0, 2
-
+locret_CODE_7F0351A4:
 /* 069CD4 7F0351A4 03E00008 */  jr    $ra
 /* 069CD8 7F0351A8 24020002 */   li    $v0, 2
-
+locret_CODE_7F0351AC:
 /* 069CDC 7F0351AC 03E00008 */  jr    $ra
 /* 069CE0 7F0351B0 24020003 */   li    $v0, 3
-
+locret_CODE_7F0351B4:
 /* 069CE4 7F0351B4 03E00008 */  jr    $ra
 /* 069CE8 7F0351B8 24020002 */   li    $v0, 2
-
+locret_CODE_7F0351BC:
 /* 069CEC 7F0351BC 03E00008 */  jr    $ra
 /* 069CF0 7F0351C0 24020004 */   li    $v0, 4
-
+locret_CODE_7F0351C4:
 /* 069CF4 7F0351C4 03E00008 */  jr    $ra
 /* 069CF8 7F0351C8 24020002 */   li    $v0, 2
-
+locret_CODE_7F0351CC:
 /* 069CFC 7F0351CC 03E00008 */  jr    $ra
 /* 069D00 7F0351D0 24020001 */   li    $v0, 1
-
+locret_CODE_7F0351D4:
 /* 069D04 7F0351D4 03E00008 */  jr    $ra
 /* 069D08 7F0351D8 24020003 */   li    $v0, 3
-
+locret_CODE_7F0351DC:
 /* 069D0C 7F0351DC 03E00008 */  jr    $ra
 /* 069D10 7F0351E0 24020003 */   li    $v0, 3
-
+locret_CODE_7F0351E4:
 /* 069D14 7F0351E4 03E00008 */  jr    $ra
 /* 069D18 7F0351E8 24020001 */   li    $v0, 1
-
+locret_CODE_7F0351EC:
 /* 069D1C 7F0351EC 03E00008 */  jr    $ra
 /* 069D20 7F0351F0 24020001 */   li    $v0, 1
-
+locret_CODE_7F0351F4:
 /* 069D24 7F0351F4 03E00008 */  jr    $ra
 /* 069D28 7F0351F8 24020001 */   li    $v0, 1
-
 actionFC_length:
 /* 069D2C 7F0351FC 03E00008 */  jr    $ra
 /* 069D30 7F035200 24020002 */   li    $v0, 2
@@ -2253,6 +1904,23 @@ void sub_GAME_7F035244(void)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*HACK FIXME */
+.word locret_CODE_7F034F9C
+.word locret_CODE_7F034FA4
+.word locret_CODE_7F034FAC
+.word locret_CODE_7F034FB4
+.word locret_CODE_7F034FBC
+.word locret_CODE_7F034FC4
+.word locret_CODE_7F034FCC
+.word locret_CODE_7F034FD4
+.word locret_CODE_7F034FDC
+.word locret_CODE_7F034FE4
+.word locret_CODE_7F034FEC
+.word locret_CODE_7F034FF4
+.word locret_CODE_7F034FFC
+.word locret_CODE_7F035004
+
 .text
 glabel sub_GAME_7F035244
 /* 069D74 7F035244 3C088007 */  lui   $t0, %hi(ptr_setup_path_tbl) # $t0, 0x8007
@@ -2319,6 +1987,22 @@ void true_if_sucessfully_performing_action(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*HACK FIXME */
+.word locret_CODE_7F03500C
+.word locret_CODE_7F035014
+.word locret_CODE_7F03501C
+.word locret_CODE_7F035024
+.word locret_CODE_7F03502C
+.word locret_CODE_7F035034
+.word locret_CODE_7F03503C
+.word locret_CODE_7F035044
+.word locret_CODE_7F03504C
+.word locret_CODE_7F035054
+.word locret_CODE_7F03505C
+.word locret_CODE_7F035064
+.word locret_CODE_7F03506C
+
 .text
 glabel true_if_sucessfully_performing_action
 /* 069E20 7F0352F0 27BDFFB8 */  addiu $sp, $sp, -0x48
@@ -2381,6 +2065,21 @@ void LoadNext_PrevActionBlock(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*HACK FIXME */
+.word locret_CODE_7F035074
+.word locret_CODE_7F03507C
+.word locret_CODE_7F035084
+.word locret_CODE_7F03508C
+.word locret_CODE_7F035094
+.word locret_CODE_7F03509C
+.word locret_CODE_7F0350A4
+.word locret_CODE_7F0350AC
+.word locret_CODE_7F0350B4
+.word locret_CODE_7F0350BC
+.word locret_CODE_7F0350C4
+.word locret_CODE_7F0350CC
+
 .text
 glabel LoadNext_PrevActionBlock
 /* 069EC8 7F035398 28810401 */  slti  $at, $a0, 0x401
@@ -2443,6 +2142,15 @@ void get_ptr_path_for_pathnum(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*HACK FIXME */
+.word locret_CODE_7F0350D4
+.word locret_CODE_7F0350DC
+.word locret_CODE_7F0350E4
+.word locret_CODE_7F0350EC
+.word locret_CODE_7F0350F4
+.word locret_CODE_7F0350FC
+
 .text
 glabel get_ptr_path_for_pathnum
 /* 069F64 7F035434 3C058007 */  lui   $a1, %hi(ptr_setup_path_sets) # $a1, 0x8007
@@ -2491,8 +2199,300 @@ void parse_handle_actionblocks(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
+/*HACK FIXME */
+.word locret_CODE_7F035104
+.word locret_CODE_7F03510C
+.word locret_CODE_7F035114
+.word locret_CODE_7F03511C
+.word locret_CODE_7F035124
+.word locret_CODE_7F03512C
+.word locret_CODE_7F035134
+.word locret_CODE_7F03513C
+.word locret_CODE_7F035144
+.word locret_CODE_7F03514C
+.word locret_CODE_7F035154
+.word locret_CODE_7F03515C
+.word locret_CODE_7F034ADC
+.word locret_CODE_7F034AD4
+.word locret_CODE_7F035164
+.word locret_CODE_7F03516C
+.word locret_CODE_7F035174
+.word locret_CODE_7F03517C
+.word locret_CODE_7F035184
+.word locret_CODE_7F03518C
+.word locret_CODE_7F035194
+.word locret_CODE_7F03519C
+.word locret_CODE_7F0351A4
+.word locret_CODE_7F0351AC
+.word locret_CODE_7F0351B4
+.word locret_CODE_7F0351BC
+.word locret_CODE_7F0351C4
+.word locret_CODE_7F0351CC
+.word locret_CODE_7F0351D4
+.word locret_CODE_7F0351DC
+.word locret_CODE_7F0351E4
+.word locret_CODE_7F0351EC
+.word locret_CODE_7F0351F4
+.word actionFC_length
+.late_rodata
 glabel D_800524F4
 .word 0x40c90fdb /*6.2831855*/
+/*D:800524F8*/
+glabel jpt_700694DC
+.word Action00_GoToLabel
+.word Action01_GoToLabelFromTop
+.word Action02_Label
+.word action03_Leave_The_Routine_When_Return_Continue_From_Spot_1
+.word Action04_End_1
+.word action05_Jump_To_Function_4
+.word action06_Set_Return_Subroutine_for_0007_Command_3
+.word action07_Jump_to_Return_Subroutine_1
+.word action08_Reset_Animation_1
+.word action09_Guard_Kneels_1
+.word action0A_Animation_9
+.word action0B_If_Guard_WastingTime_SwatFlies_RVL_2
+.word action0C_Guard_Gestures_1
+.word action0D_Guard_Looks_Around_When_Shot_At_1
+.word action0E_Guard_Steps_Sideways_RVL_2
+.word action0F_Guard_Hops_Sideways_RVL_2
+.word action10_Guard_Runs_Sideways_RVL_2
+.word action11_Guard_Walks_Firing_RVL_2
+.word action12_Guard_Runs_Firing_RVL_2
+.word action13_Guard_Rolls_On_Ground_Then_Fires_Crouched_RVL_2
+.word action14_Guard_Aims_Shoots_at_Bond_Guard_Pad_RVL_6
+.word action15_Guard_Kneels_Aims_Shoots_at_Bond_Guard_Pad_RVL_6
+.word action16_Guard_Shoots_Guards_Without_Animation_Change_RVL_6
+.word action17_Guard_Constantly_Angles_To_Face_RVL_6
+.word action18_Shoot_Guard_ID_In_Style_With_Weapon_Type_num_4
+.word action19_Guard_ID1_Shoots_Guard_ID2_In_Style_4
+.word action1A_Guard_Throws_Grenade_RVL_2
+.word action1B_Drop_Weapon_Inventory_num_RVL_5
+.word action1C_Guard_Jogs_To_Preset_3
+.word action1D_Guard_Jogs_To_Predefined_Preset_2328_1
+.word action1E_Guard_Walks_To_Preset_3
+.word action1F_Guard_Runs__To_Preset_3
+.word action20_Activate_Path_2
+.word action21_Guard_Surrenders_1
+.word action22_Guard_Set_To_Move_Fades_And_Disappear_1
+.word action23_Eliminate_Guard_ID_2
+.word action24_Activate_Object_At_Preset_RVL_If_Successful_4
+.word action25_Sound_Alarm_1
+.word action26_Turn_Off_Alarm_1
+.word action27_Return_False_Invalid_Type_2
+.word action28_Jog_To_Bond_Return_Loop_When_Reached_Bond_2
+.word action29_Walk_To_Bond_Return_Loop_When_Reached_Bond_2
+.word action2A_Run_To_Bond_Return_Loop_When_Reached_Bond_2
+.word action2B_Return_False_Invalid_Type_2
+.word action2C_Jog_To_Character_Position_RVL_On_Arrival_3
+.word action2D_Walk_To_Character_Position_RVL_On_Arrival_3
+.word action2E_Run_To_Character_Position_RVL_On_Arrival_3
+.word action2F_When_Guard_Stops_Moving_RVL_2
+.word action30_Detect_If_Guard_Killed_RVL_If_So_3
+.word action31_If_GuardID_Finish_DeathAnimation_RVL_3
+.word action32_If_Bond_In_Sight_RVL_2
+.word action33_Seed_Random_Byte_1
+.word action34_If_Seeded_Byte_LTV_Go_Into_RVL_3
+.word action35_If_Seeded_Byte_GTV_Go_Into_RVL_3
+.word action36_If_Alarm_Activated_RVL_Plus_Stack_2
+.word action37_If_Alarm_Activated_RVL_2
+.word action38_If_Toxic_Gas_Released_RVL_2
+.word action39_If_Guard_Heard_Gunfire_RVL_2
+.word action3A_If_Bond_Shoots_Another_Guard_RVL_2
+.word action3B_If_Guard_Killed_In_Front_Of_Guard_RVL_2
+.word action3C_If_Guard_In_Firing_Range_RVL_2
+.word action3D___Unused___Unknown___2
+.word action3E_If_Shot_Current_Guard_RVL_2
+.word action3F_If_Heard_Bond_RVL_2
+.word action40_If_Another_Guard_In_Same_Room_As_Guard_ID_RVL_3
+.word action41_If_Guard_Has_Been_On_Screen_RVL_2
+.word action42_If_Current_Guard_On_Screen_In_Loaded_Room_RVL_2
+.word action43_If_Guard_In_A_Room_Currently_Loaded_RVL_2
+.word action44_If_Room_Containing_Preset_Is_Loaded_RVL_4
+.word action45_Go_To_RVL_If_Bond_Has_Guard_At_Gunpoint_2
+.word action46_If_Fired_A_Shot_RVL_2
+.word action47_If_Distance_Between_Bond_And_Guard_LTV_RVL_3
+.word action48_If_Distance_Between_Bond_And_Guard_GTV_RVL_3
+.word action49_Test_if_Actor_and_Player_CCWAngle_LTV_RVL_Unused_3
+.word action4A_Test_if_Actor_and_Player_CCWAngle_GTV_RVL_Unused_3
+.word action4B_RVL_If_In_Proximity_Of_Bond_4
+.word action4C_RVL_If_Not_In_Proximity_Of_Bond_4
+.word action4D_When_Guard_In_Proximity_Of_Preset_RVL_7
+.word action4E_When_Guard_Not_In_Proximity_Of_Preset_RVL_7
+.word action4F_If_Current_Guard_Is_In_Units_Of_Guard_ID_RVL_5
+.word action50_If_Current_Guard_Is_Not_In_Units_Of_Guard_ID_RVL_5
+.word action51_SetClosestGuardUnitsGuardID_Then_RVL_IfSuccess_4
+.word action52_GoIntoRVLIf_In_Units_Of_Preset_6
+.word action53_GoIntoRVLIf_Not_In_Units_Of_Preset_6
+.word action54_GoIntoRVLIf_Guard_Is_At_Preset_5
+.word action55_GoIntoRVLIf_Entered_Room_with_Preset_4
+.word action56_GoIntoRVLIf_16_Object_num_Collected_3
+.word action57_GoIntoRVLIf_Specified_Weapon_Deposited_3
+.word action58_GoIntoRVLIf_SpecifiedWeaponDeposited_On16Object_4
+.word action59_GoIntoRVLIf_Specified_Weapon_Is_Out_3
+.word action5A_GoIntoRVLIf_Type_16_Object_num_Loaded_3
+.word action5B_GoIntoRVLIf_16_Object_num_Not_Destroyed_3
+.word action5C_GoIntoRVLIf_16_Object_num_Activated_3
+.word action5D_GoIntoRVLIf_Gadget_Used_On_16_Object_num_3
+.word action5E_16_Object_Activates_2
+.word action5F_16_Object_Explodes_2
+.word action60_Guard_Drops_16_Object_num_2
+.word action61_Kill_Guard_num_2
+.word action62_Guard_num_Throws_Equipment_2
+.word action63_Guard_Gives_Bond_16_Object_num_2
+.word action64_Type_16_Object_Equipped_On_Guard_3
+.word action65_Object_Moved_To_Preset_4
+.word action66_Open_Door_2
+.word action67_Close_Door_2
+.word action68_Check_Door_Status_RVL_If_Met_4
+.word action69_If_16_Object_Is_Valid_Door_RVL_3
+.word action6A_Set_Bits_To_Lock_On_Type_16_Door_3
+.word action6B_Unset_Bits_To_Lock_On_Type_16_Door_3
+.word action6C_If_Tagged_Locked_Door_16_Objects_Toggled_RVL_4
+.word action6D_If_Objective_num_Complete_RVL_3
+.word action6E_If_Guard_2328_Preset_RVL_3
+.word action6F_If_Guard_2328_Preset_Set_RVL_3
+.word action70_Go_Into_RVL_Difficulty_LTV_3
+.word action71_GoIntoRVLIf_Difficulty_GTV_3
+.word action72_Go_To_RVL_If_Time_LTV_4
+.word action73_Go_To_RVL_If_Time_GTV_4
+.word action74_Go_To_RVL_If_Power_On_Time_LTV_4
+.word action75_Go_To_RVL_If_Power_On_Time_GTV_4
+.word action76_Go_To_RVL_If_Stage_Number_LTV_3
+.word action77_Go_To_RVL_If_Stage_Number_GTV_3
+.word action78_Go_To_RVL_If_Guard_Shot_LTV_3
+.word action79_Go_To_RVL_If_Guard_Shot_GTV_3
+.word action7A_Go_To_RVL_If_Number_Near_Miss_Gunshots_LTV_3
+.word action7B_Go_To_RVL_If_Number_Near_Miss_Gunshots_GTV_3
+.word action7C_If_Guard_Health_Below_Value_RVL_4
+.word action7D_If_Guard_Health_Above_Value_RVL_4
+.word action7E_If_Guard_nums_Bitflag_01000000_Set_RVL_3
+.word action7F_If_Health_Below_Value_RVL_3
+.word action80_If_Health_Above_Value_RVL_3
+.word action81_Set_User_Byte_num1_2
+.word action82_Add_Value_To_User_Byte_num1_Max_To_FF_2
+.word action83_Subtract_Value_To_User_Byte_num1_Min_To_0_2
+.word action84_If_Value_GreaterThan_User_Byte_num1_RVL_3
+.word action85_If_User_Byte_num1_LessThan_Random_Value_RVL_2
+.word action86_Set_User_Byte_num2_2
+.word action87_Add_Value_To_User_Byte_num2_Max_To_FF_2
+.word action88_Subtract_Value_To_User_Byte_num2_Min_To_0_2
+.word action89_If_Value_GreaterThan_User_Byte_num2_RVL_3
+.word action8A_If_User_Byte_num2_LessThan_Random_Value_RVL_2
+.word action8B_Set_Guard_Hearing_Distance_3
+.word action8C_Set_Guard_Visible_Distance_2
+.word action8D_Set_Guard_Grenade_Probability_2
+.word action8E_Set_Guard_ID_2
+.word action8F_Set_Guard_Health_3
+.word action90_Set_Guard_Armor_Amount_3
+.word action91_Set_Character_Reaction_Speed_2
+.word action92_Set_Character_Injury_Recovery_Speed_2
+.word action93_Set_Character_Accuracy_2
+.word action94_Mask_Guard_Type_With_Value_2
+.word action95_Unmask_Guard_Type_With_Value_2
+.word action96_If_Guard_Type_Value_Is_Set_RVL_3
+.word action97_Mask_Guard_Type_Flags_With_Value_3
+.word action98_Unmask_Guard_Type_Flags_With_Value_3
+.word action99_If_Guard_Type_Flags_Set_RVL_4
+.word action9A_Set_Objective_Bits_5
+.word action9B_Unset_Objective_Value_5
+.word action9C_Check_If_Objective_Value_Return_Loop_If_So_6
+.word action9D_Set_Guard_Bit_Tags_5
+.word action9E_Unset_Guard_Bit_Tags_5
+.word action9F_Check_Guard_Bits_If_Same_RVL_6
+.word actionA0_Set_Guard_ID_Bits_6
+.word actionA1_Unset_Guard_ID_Bits_6
+.word actionA2_Check_Guard_Bits_If_Same_RVL_7
+.word actionA3_Set_State_Bits_16_Type_Object_6
+.word actionA4_Unset_State_Bits_16_Type_Object_6
+.word actionA5_Check_State_Bits_16_Type_Object_If_Same_RVL_7
+.word actionA6_Set_16_Object_States_More_6
+.word actionA7_Unset_16_Object_States_More_6
+.word actionA8_Check_16_Object_States_More_If_Same_RVL_7
+.word actionA9_Sets_To_Guard_ID_Fc_Current_Guard_2
+.word actionAA_Sets_FC_Value_For_Guard_ID_To_Guard_ID_3
+.word actionAB_Set_Current_Guards_2328_Value_To_Preset_3
+.word actionAC_Set_Guard_ID_numS_2328_Value_To_Preset_4
+.word actionAD_Debug_Comment_20
+.word actionAE_Reset_Cycle_Counter_And_Enable_It_1
+.word actionAF_Reset_Cycle_Counter_1
+.word actionB0_Disable_Cycle_Counter_1
+.word actionB1_Enable_Cycle_Counter_1
+.word actionB2_Check_Cycle_Counter_Enable_Status_2
+.word actionB3_If_Cycle_Counter_LTV_RVL_5
+.word actionB4_If_Cycle_Counter_GTV_RVL_5
+.word actionB5_Show_Timer_1
+.word actionB6_Hide_Timer_Silent_Countdown_1
+.word actionB7_Set_Timer_X_Seconds__Doesnt_Show_Timer_Yet_3
+.word actionB8_Stop_Timer_1
+.word actionB9_Start_Timer_1
+.word actionBA_Check_Timer_Enabled_Status_RVL_If_Enabled_2
+.word actionBB_Detect_If_Timer_Below_Certain_Point_RVL_If_So_4
+.word actionBC_Detect_If_Timer_Above_Certain_Point_RVL_If_So_4
+.word actionBD_Spawn_Guard_C
+.word actionBE_Respawn_Guard_with_ID_B
+.word actionBF_Spawn_Weapon_9
+.word actionC0_Spawn_Hat_8
+.word actionC1_GuardIDDoesAV_If_Gunfire_RVL_WhenComplete_5
+.word actionC2_Display_Text_Preset_Bottom_Screen_3
+.word actionC3_Display_Text_Preset_Top_Screen_3
+.word actionC4_Play_Sound_Effect_num_In_Slot_num_0_7_4
+.word actionC5_EmanateSoundSlotnumFrom16ObjectWithAudibleRV_5
+.word actionC6_EmanateSoundSlotnumFromPresetWithAudibleRV_6
+.word actionC7_Sound_In_Slot_num_Crecendos_To_Volume_Over_ms_6
+.word actionC8_Sound_In_Slot_num_Fades_To_Volume_Over_ms_6
+.word actionC9_Shut_Off_Sound_In_Slot_Number_2
+.word actionCA_If_Value_GreaterThan_Volume_7FFF_Max_RVL_5
+.word actionCB_Set_Object_Path_27_Type_Object_2
+.word actionCC_Set_Speed_Moving_Vehicle_27_Type_Object_5
+.word actionCD_Set_Speed_Aircraft_Rotor_5
+.word actionCE_Detect_If_Currently_In_Intro_Camera_RVL_If_So_2
+.word actionCF_Detect_If_Currently_In_Intro_Swirl_RVL_If_So_2
+.word actionD0_Change_Animation_Type_Of_Type_16_Monitor_4
+.word actionD1_If_Bond_In_Tank_RVL_2
+.word actionD2_Exit_Level_1
+.word actionD3_Return_From_Camera_Scene_1
+.word actionD4_Camera_Looks_At_Bond_From_Preset_3
+.word actionD5_Go_To_Camera_Position_6
+.word actionD6_If_Less_Than_Elevation_RVL_4
+.word actionD7_Disable_Text_Variable_2
+.word actionD8_Enable_All_On_Screen_Displays_1
+.word actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5
+.word actionDA_Fade_Out_From_Cut_Scene_1
+.word actionDB_Fade_In_From_Black_Reset_DA_1
+.word actionDC_RVL_When_Fade_Complete_2
+.word actionDD_Remove_All_Guards_1
+.word actionDE_Bring_Removed_Guards_Back_1
+.word actionDF_Open_Type_16_Door_Used_Cut_Scenes_2
+.word actionE0_Guard_ID_Draws_Weapon_num_3
+.word actionE1_If_Fewer_than_This_Many_Players_Playing_RVL_3
+.word actionE2_If_Ammo_Value_In_Type_Is_LTV_RVL_4
+.word actionE3_Draw_Weapon_From_Inventory_In_Game_2
+.word actionE4_Draw_Weapon_From_Inventory_Cut_Scene_2
+.word actionE5_Set_Bonds_Speed_3
+.word actionE6_If_16_Object_And_Preset_Are_In_Same_Room_RVL_5
+.word actionE7_If_Guard_Moving_And_Shooting_RVL_2
+.word actionE8_If_Guard_Is_Shooting_RVL_2
+.word actionE9_Instantly_Switch_Sky_To_Sky_2_1
+.word actionEA_Stop_Game_Time_1
+.word actionEB_If_Key_Pressed_RVL_2
+.word actionEC_Disable_Player_Pickups_1
+.word actionED_Hide_First_Person_Display_1
+.word actionEE_Cuba_Circular_Camera_Aim_D
+.word actionEF_Trigger_Credits_1
+.word actionF0_RVL_If_Credits_Completed_2
+.word actionF1_If_All_Objectives_Complete_RVL_2
+.word actionF2_Check_Current_Folder_Bond_RVL_3
+.word actionF3_If_Player_Pickups_Disabled_RVL_2
+.word actionF4_PlaysValuenum1ThemeSlot03ForValuenum2Seconds_4
+.word actionF5_Turn_Off_Music_In_Slot_num_0_3_2
+.word actionF6_Trigger_Explosions_Around_Bond_1
+.word actionF7_If_Number_Of_Hostages_Scientists_Killed_RVL_3
+.word actionF8_If_Guard_ID_00200000_Flag_Set_Unset_And_Return_3
+.word actionF9_Set_Killed_In_Action_Automatic_Mission_Failure_1
+.word actionFA_Guard_Fawns_On_Shoulder_1
+.word actionFB_SwitchToSkyValuenumAndActivateGasContainersIfExist_
+.word actionFC_Launch_Shuttle_2
+
 glabel D_800528EC
 .word 0x3dcccccd /*0.1*/
 glabel D_800528F0
@@ -2501,10 +2501,45 @@ glabel D_800528F4
 .word 0x3dcccccd /*0.1*/
 glabel D_800528F8
 .word 0x3dcccccd /*0.1*/
+
+glabel jpt_7006CB34
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word def_7F038C04
+.word def_7F038C04
+.word def_7F038C04
+.word def_7F038C04
+.word def_7F038C04
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+.word loc_CODE_7F038C0C
+
 glabel D_80052974
 .word 0x3c888888 /*0.016666666*/
 glabel D_80052978
 .word 0x3e955555 /*0.29166666*/
+.word 0
+
 .text
 glabel parse_handle_actionblocks
 /* 069FB4 7F035484 27BDF848 */  addiu $sp, $sp, -0x7b8
@@ -6463,8 +6498,10 @@ actionBF_Spawn_Weapon_9:
 /* 06D728 7F038BF8 3C018005 */  lui   $at, 0x8005
 /* 06D72C 7F038BFC 00390821 */  addu  $at, $at, $t9
 /* 06D730 7F038C00 8C3928FC */  lw    $t9, 0x28fc($at)
+def_7F038C04:
 /* 06D734 7F038C04 03200008 */  jr    $t9
 /* 06D738 7F038C08 00000000 */   nop   
+loc_CODE_7F038C0C:
 /* 06D73C 7F038C0C 02E02025 */  move  $a0, $s7
 /* 06D740 7F038C10 240500D3 */  li    $a1, 211
 /* 06D744 7F038C14 24060019 */  li    $a2, 25
@@ -10818,6 +10855,18 @@ void sub_GAME_7F03C4F0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80052980*/
+glabel jpt_7007045C
+.word loc_CODE_7F03C534
+.word loc_CODE_7F03C544
+.word def_7F03C52C
+.word loc_CODE_7F03C534
+.word def_7F03C52C
+.word def_7F03C52C
+.word def_7F03C52C
+.word def_7F03C52C
+
 .text
 glabel sub_GAME_7F03C4F0
 /* 071020 7F03C4F0 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -10837,10 +10886,12 @@ glabel sub_GAME_7F03C4F0
 /* 071058 7F03C528 8C2F2980 */  lw    $t7, 0x2980($at)
 /* 07105C 7F03C52C 01E00008 */  jr    $t7
 /* 071060 7F03C530 00000000 */   nop   
+loc_CODE_7F03C534:
 /* 071064 7F03C534 0FC13C5C */  jal   sub_GAME_7F04F170
 /* 071068 7F03C538 8FA4001C */   lw    $a0, 0x1c($sp)
 /* 07106C 7F03C53C 10000004 */  b     .L7F03C550
 /* 071070 7F03C540 00402825 */   move  $a1, $v0
+loc_CODE_7F03C544:
 /* 071074 7F03C544 0FC15710 */  jal   sub_GAME_7F055C40
 /* 071078 7F03C548 8FA4001C */   lw    $a0, 0x1c($sp)
 /* 07107C 7F03C54C 00402825 */  move  $a1, $v0
@@ -11835,6 +11886,17 @@ void sub_GAME_7F03D0D4(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:800529A0*/
+glabel jpt_7007106C
+.word loc_CODE_7F03D144
+.word def_7F03D13C
+.word def_7F03D13C
+.word loc_CODE_7F03D154
+.word def_7F03D13C
+.word def_7F03D13C
+.word def_7F03D13C
+.word def_7F03D13C
 .text
 glabel sub_GAME_7F03D0D4
 /* 071C04 7F03D0D4 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -11866,10 +11928,12 @@ glabel sub_GAME_7F03D0D4
 /* 071C68 7F03D138 8C3929A0 */  lw    $t9, 0x29a0($at)
 /* 071C6C 7F03D13C 03200008 */  jr    $t9
 /* 071C70 7F03D140 00000000 */   nop   
+loc_CODE_7F03D144:
 /* 071C74 7F03D144 0FC141B7 */  jal   object_collectability_routines
 /* 071C78 7F03D148 02202025 */   move  $a0, $s1
 /* 071C7C 7F03D14C 10000004 */  b     .L7F03D160
 /* 071C80 7F03D150 00402825 */   move  $a1, $v0
+loc_CODE_7F03D154:
 /* 071C84 7F03D154 0FC14955 */  jal   redirect_object_collectability_routines
 /* 071C88 7F03D158 02202025 */   move  $a0, $s1
 /* 071C8C 7F03D15C 00402825 */  move  $a1, $v0
@@ -11906,6 +11970,22 @@ glabel D_800529C0
 .word 0x3e333333 /*0.175*/
 glabel D_800529C4
 .word 0x3f533333 /*0.82499999*/
+glabel D_800529C8
+.word 0
+.word 0
+glabel D_800529D0
+.word 0xA000000 /*"\n"*/
+glabel D_800529D4
+.word 0x2E0A0000 /*".\n"*/
+glabel D_800529D8
+.word 0, 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+glabel D_80052A38
+.word 0
+glabel D_80052A3C
+.word 0
+glabel D_80052A40
+.word 0xA000000 /*"\n"*/
 .text
 glabel sub_GAME_7F03D188
 /* 071CB8 7F03D188 27BDFF50 */  addiu $sp, $sp, -0xb0
@@ -15475,6 +15555,8 @@ void sub_GAME_7F03FBFC(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
+glabel D_80052A44
+.word 0x3A0A0000 /*":\n"*/
 glabel D_80052A48
 .word 0x3d4ccccd /*0.050000001*/
 .text
@@ -27455,6 +27537,62 @@ void set_ptr_monitor_img_to_obj_ani_slot(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80052B98*/
+glabel jpt_7007DBF0
+.word def_7F049CC0
+.word .L7F049CC8
+.word .L7F049CD4
+.word .L7F049CE0
+.word .L7F049CEC
+.word .L7F049CF8
+.word .L7F049D04
+.word .L7F049D10
+.word .L7F049D1C
+.word .L7F049D28
+.word .L7F049D34
+.word .L7F049D40
+.word .L7F049D4C
+.word .L7F049D58
+.word .L7F049D64
+.word .L7F049D70
+.word .L7F049D7C
+.word .L7F049D88
+.word .L7F049D94
+.word .L7F049DA0
+.word .L7F049DAC
+.word .L7F049DB8
+.word .L7F049DC4
+.word .L7F049DD0
+.word .L7F049DDC
+.word .L7F049DE8
+.word .L7F049DF4
+.word .L7F049E00
+.word .L7F049E0C
+.word .L7F049E18
+.word .L7F049E24
+.word .L7F049E30
+.word .L7F049E3C
+.word .L7F049E48
+.word .L7F049E54
+.word .L7F049E60
+.word .L7F049E6C
+.word .L7F049E78
+.word .L7F049E84
+.word .L7F049E90
+.word .L7F049E9C
+.word .L7F049EA8
+.word .L7F049EB4
+.word .L7F049EC0
+.word .L7F049ECC
+.word .L7F049ED8
+.word .L7F049EE4
+.word .L7F049EF0
+.word .L7F049EFC
+.word .L7F049F08
+.word .L7F049F14
+.word .L7F049F20
+
 .text
 glabel set_ptr_monitor_img_to_obj_ani_slot
 /* 07E7C8 7F049C98 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -27469,156 +27607,207 @@ glabel set_ptr_monitor_img_to_obj_ani_slot
 /* 07E7EC 7F049CBC 8C2E2B98 */  lw    $t6, 0x2b98($at)
 /* 07E7F0 7F049CC0 01C00008 */  jr    $t6
 /* 07E7F4 7F049CC4 00000000 */   nop   
+.L7F049CC8:
 /* 07E7F8 7F049CC8 3C068003 */  lui   $a2, %hi(D_80030C00) # $a2, 0x8003
 /* 07E7FC 7F049CCC 10000096 */  b     .L7F049F28
 /* 07E800 7F049CD0 24C60C00 */   addiu $a2, %lo(D_80030C00) # addiu $a2, $a2, 0xc00
+.L7F049CD4:
 /* 07E804 7F049CD4 3C068003 */  lui   $a2, %hi(D_80030E24) # $a2, 0x8003
 /* 07E808 7F049CD8 10000093 */  b     .L7F049F28
 /* 07E80C 7F049CDC 24C60E24 */   addiu $a2, %lo(D_80030E24) # addiu $a2, $a2, 0xe24
+.L7F049CE0:
 /* 07E810 7F049CE0 3C068003 */  lui   $a2, %hi(D_80030F44) # $a2, 0x8003
 /* 07E814 7F049CE4 10000090 */  b     .L7F049F28
 /* 07E818 7F049CE8 24C60F44 */   addiu $a2, %lo(D_80030F44) # addiu $a2, $a2, 0xf44
+.L7F049CEC:
 /* 07E81C 7F049CEC 3C068003 */  lui   $a2, %hi(D_80031018) # $a2, 0x8003
 /* 07E820 7F049CF0 1000008D */  b     .L7F049F28
 /* 07E824 7F049CF4 24C61018 */   addiu $a2, %lo(D_80031018) # addiu $a2, $a2, 0x1018
+.L7F049CF8:
 /* 07E828 7F049CF8 3C068003 */  lui   $a2, %hi(D_80031074) # $a2, 0x8003
 /* 07E82C 7F049CFC 1000008A */  b     .L7F049F28
 /* 07E830 7F049D00 24C61074 */   addiu $a2, %lo(D_80031074) # addiu $a2, $a2, 0x1074
+.L7F049D04:
 /* 07E834 7F049D04 3C068003 */  lui   $a2, %hi(D_800310F0) # $a2, 0x8003
 /* 07E838 7F049D08 10000087 */  b     .L7F049F28
 /* 07E83C 7F049D0C 24C610F0 */   addiu $a2, %lo(D_800310F0) # addiu $a2, $a2, 0x10f0
+.L7F049D10:
 /* 07E840 7F049D10 3C068003 */  lui   $a2, %hi(D_8003118C) # $a2, 0x8003
 /* 07E844 7F049D14 10000084 */  b     .L7F049F28
 /* 07E848 7F049D18 24C6118C */   addiu $a2, %lo(D_8003118C) # addiu $a2, $a2, 0x118c
+.L7F049D1C:
 /* 07E84C 7F049D1C 3C068003 */  lui   $a2, %hi(D_8003121C) # $a2, 0x8003
 /* 07E850 7F049D20 10000081 */  b     .L7F049F28
 /* 07E854 7F049D24 24C6121C */   addiu $a2, %lo(D_8003121C) # addiu $a2, $a2, 0x121c
+.L7F049D28:
 /* 07E858 7F049D28 3C068003 */  lui   $a2, %hi(D_80031248) # $a2, 0x8003
 /* 07E85C 7F049D2C 1000007E */  b     .L7F049F28
 /* 07E860 7F049D30 24C61248 */   addiu $a2, %lo(D_80031248) # addiu $a2, $a2, 0x1248
+.L7F049D34:
 /* 07E864 7F049D34 3C068003 */  lui   $a2, %hi(D_80031274) # $a2, 0x8003
 /* 07E868 7F049D38 1000007B */  b     .L7F049F28
 /* 07E86C 7F049D3C 24C61274 */   addiu $a2, %lo(D_80031274) # addiu $a2, $a2, 0x1274
+.L7F049D40:
 /* 07E870 7F049D40 3C068003 */  lui   $a2, %hi(D_800312F4) # $a2, 0x8003
 /* 07E874 7F049D44 10000078 */  b     .L7F049F28
 /* 07E878 7F049D48 24C612F4 */   addiu $a2, %lo(D_800312F4) # addiu $a2, $a2, 0x12f4
+.L7F049D4C:
 /* 07E87C 7F049D4C 3C068003 */  lui   $a2, %hi(D_80031310) # $a2, 0x8003
 /* 07E880 7F049D50 10000075 */  b     .L7F049F28
 /* 07E884 7F049D54 24C61310 */   addiu $a2, %lo(D_80031310) # addiu $a2, $a2, 0x1310
+.L7F049D58:
 /* 07E888 7F049D58 3C068003 */  lui   $a2, %hi(D_80031490) # $a2, 0x8003
 /* 07E88C 7F049D5C 10000072 */  b     .L7F049F28
 /* 07E890 7F049D60 24C61490 */   addiu $a2, %lo(D_80031490) # addiu $a2, $a2, 0x1490
+.L7F049D64:
 /* 07E894 7F049D64 3C068003 */  lui   $a2, %hi(D_800314F8) # $a2, 0x8003
 /* 07E898 7F049D68 1000006F */  b     .L7F049F28
 /* 07E89C 7F049D6C 24C614F8 */   addiu $a2, %lo(D_800314F8) # addiu $a2, $a2, 0x14f8
+.L7F049D70:
 /* 07E8A0 7F049D70 3C068003 */  lui   $a2, %hi(D_80030EC8) # $a2, 0x8003
 /* 07E8A4 7F049D74 1000006C */  b     .L7F049F28
 /* 07E8A8 7F049D78 24C60EC8 */   addiu $a2, %lo(D_80030EC8) # addiu $a2, $a2, 0xec8
+.L7F049D7C:
 /* 07E8AC 7F049D7C 3C068003 */  lui   $a2, %hi(D_80031360) # $a2, 0x8003
 /* 07E8B0 7F049D80 10000069 */  b     .L7F049F28
 /* 07E8B4 7F049D84 24C61360 */   addiu $a2, %lo(D_80031360) # addiu $a2, $a2, 0x1360
+.L7F049D88:
 /* 07E8B8 7F049D88 3C068003 */  lui   $a2, %hi(D_8003156C) # $a2, 0x8003
 /* 07E8BC 7F049D8C 10000066 */  b     .L7F049F28
 /* 07E8C0 7F049D90 24C6156C */   addiu $a2, %lo(D_8003156C) # addiu $a2, $a2, 0x156c
+.L7F049D94:
 /* 07E8C4 7F049D94 3C068003 */  lui   $a2, %hi(D_800315CC) # $a2, 0x8003
 /* 07E8C8 7F049D98 10000063 */  b     .L7F049F28
 /* 07E8CC 7F049D9C 24C615CC */   addiu $a2, %lo(D_800315CC) # addiu $a2, $a2, 0x15cc
+.L7F049DA0:
 /* 07E8D0 7F049DA0 3C068003 */  lui   $a2, %hi(D_80031848) # $a2, 0x8003
 /* 07E8D4 7F049DA4 10000060 */  b     .L7F049F28
 /* 07E8D8 7F049DA8 24C61848 */   addiu $a2, %lo(D_80031848) # addiu $a2, $a2, 0x1848
+.L7F049DAC:
 /* 07E8DC 7F049DAC 3C068003 */  lui   $a2, %hi(D_80031898) # $a2, 0x8003
 /* 07E8E0 7F049DB0 1000005D */  b     .L7F049F28
 /* 07E8E4 7F049DB4 24C61898 */   addiu $a2, %lo(D_80031898) # addiu $a2, $a2, 0x1898
+.L7F049DB8:
 /* 07E8E8 7F049DB8 3C068003 */  lui   $a2, %hi(D_800318B8) # $a2, 0x8003
 /* 07E8EC 7F049DBC 1000005A */  b     .L7F049F28
 /* 07E8F0 7F049DC0 24C618B8 */   addiu $a2, %lo(D_800318B8) # addiu $a2, $a2, 0x18b8
+.L7F049DC4:
 /* 07E8F4 7F049DC4 3C068003 */  lui   $a2, %hi(D_8003191C) # $a2, 0x8003
 /* 07E8F8 7F049DC8 10000057 */  b     .L7F049F28
 /* 07E8FC 7F049DCC 24C6191C */   addiu $a2, %lo(D_8003191C) # addiu $a2, $a2, 0x191c
+.L7F049DD0:
 /* 07E900 7F049DD0 3C068003 */  lui   $a2, %hi(D_80031950) # $a2, 0x8003
 /* 07E904 7F049DD4 10000054 */  b     .L7F049F28
 /* 07E908 7F049DD8 24C61950 */   addiu $a2, %lo(D_80031950) # addiu $a2, $a2, 0x1950
+.L7F049DDC:
 /* 07E90C 7F049DDC 3C068003 */  lui   $a2, %hi(D_800319D4) # $a2, 0x8003
 /* 07E910 7F049DE0 10000051 */  b     .L7F049F28
 /* 07E914 7F049DE4 24C619D4 */   addiu $a2, %lo(D_800319D4) # addiu $a2, $a2, 0x19d4
+.L7F049DE8:
 /* 07E918 7F049DE8 3C068003 */  lui   $a2, %hi(D_800319F0) # $a2, 0x8003
 /* 07E91C 7F049DEC 1000004E */  b     .L7F049F28
 /* 07E920 7F049DF0 24C619F0 */   addiu $a2, %lo(D_800319F0) # addiu $a2, $a2, 0x19f0
+.L7F049DF4:
 /* 07E924 7F049DF4 3C068003 */  lui   $a2, %hi(D_80031A0C) # $a2, 0x8003
 /* 07E928 7F049DF8 1000004B */  b     .L7F049F28
 /* 07E92C 7F049DFC 24C61A0C */   addiu $a2, %lo(D_80031A0C) # addiu $a2, $a2, 0x1a0c
+.L7F049E00:
 /* 07E930 7F049E00 3C068003 */  lui   $a2, %hi(D_80031A28) # $a2, 0x8003
 /* 07E934 7F049E04 10000048 */  b     .L7F049F28
 /* 07E938 7F049E08 24C61A28 */   addiu $a2, %lo(D_80031A28) # addiu $a2, $a2, 0x1a28
+.L7F049E0C:
 /* 07E93C 7F049E0C 3C068003 */  lui   $a2, %hi(D_80031A44) # $a2, 0x8003
 /* 07E940 7F049E10 10000045 */  b     .L7F049F28
 /* 07E944 7F049E14 24C61A44 */   addiu $a2, %lo(D_80031A44) # addiu $a2, $a2, 0x1a44
+.L7F049E18:
 /* 07E948 7F049E18 3C068003 */  lui   $a2, %hi(D_80031A60) # $a2, 0x8003
 /* 07E94C 7F049E1C 10000042 */  b     .L7F049F28
 /* 07E950 7F049E20 24C61A60 */   addiu $a2, %lo(D_80031A60) # addiu $a2, $a2, 0x1a60
+.L7F049E24:
 /* 07E954 7F049E24 3C068003 */  lui   $a2, %hi(D_80031A7C) # $a2, 0x8003
 /* 07E958 7F049E28 1000003F */  b     .L7F049F28
 /* 07E95C 7F049E2C 24C61A7C */   addiu $a2, %lo(D_80031A7C) # addiu $a2, $a2, 0x1a7c
+.L7F049E30:
 /* 07E960 7F049E30 3C068003 */  lui   $a2, %hi(D_80031A98) # $a2, 0x8003
 /* 07E964 7F049E34 1000003C */  b     .L7F049F28
 /* 07E968 7F049E38 24C61A98 */   addiu $a2, %lo(D_80031A98) # addiu $a2, $a2, 0x1a98
+.L7F049E3C:
 /* 07E96C 7F049E3C 3C068003 */  lui   $a2, %hi(D_80031AB4) # $a2, 0x8003
 /* 07E970 7F049E40 10000039 */  b     .L7F049F28
 /* 07E974 7F049E44 24C61AB4 */   addiu $a2, %lo(D_80031AB4) # addiu $a2, $a2, 0x1ab4
+.L7F049E48:
 /* 07E978 7F049E48 3C068003 */  lui   $a2, %hi(D_80031AD0) # $a2, 0x8003
 /* 07E97C 7F049E4C 10000036 */  b     .L7F049F28
 /* 07E980 7F049E50 24C61AD0 */   addiu $a2, %lo(D_80031AD0) # addiu $a2, $a2, 0x1ad0
+.L7F049E54:
 /* 07E984 7F049E54 3C068003 */  lui   $a2, %hi(D_80031AEC) # $a2, 0x8003
 /* 07E988 7F049E58 10000033 */  b     .L7F049F28
 /* 07E98C 7F049E5C 24C61AEC */   addiu $a2, %lo(D_80031AEC) # addiu $a2, $a2, 0x1aec
+.L7F049E60:
 /* 07E990 7F049E60 3C068003 */  lui   $a2, %hi(D_80031B24) # $a2, 0x8003
 /* 07E994 7F049E64 10000030 */  b     .L7F049F28
 /* 07E998 7F049E68 24C61B24 */   addiu $a2, %lo(D_80031B24) # addiu $a2, $a2, 0x1b24
+.L7F049E6C:
 /* 07E99C 7F049E6C 3C068003 */  lui   $a2, %hi(D_80031B38) # $a2, 0x8003
 /* 07E9A0 7F049E70 1000002D */  b     .L7F049F28
 /* 07E9A4 7F049E74 24C61B38 */   addiu $a2, %lo(D_80031B38) # addiu $a2, $a2, 0x1b38
+.L7F049E78:
 /* 07E9A8 7F049E78 3C068003 */  lui   $a2, %hi(D_80031B4C) # $a2, 0x8003
 /* 07E9AC 7F049E7C 1000002A */  b     .L7F049F28
 /* 07E9B0 7F049E80 24C61B4C */   addiu $a2, %lo(D_80031B4C) # addiu $a2, $a2, 0x1b4c
+.L7F049E84:
 /* 07E9B4 7F049E84 3C068003 */  lui   $a2, %hi(D_80031B60) # $a2, 0x8003
 /* 07E9B8 7F049E88 10000027 */  b     .L7F049F28
 /* 07E9BC 7F049E8C 24C61B60 */   addiu $a2, %lo(D_80031B60) # addiu $a2, $a2, 0x1b60
+.L7F049E90:
 /* 07E9C0 7F049E90 3C068003 */  lui   $a2, %hi(D_80031BB4) # $a2, 0x8003
 /* 07E9C4 7F049E94 10000024 */  b     .L7F049F28
 /* 07E9C8 7F049E98 24C61BB4 */   addiu $a2, %lo(D_80031BB4) # addiu $a2, $a2, 0x1bb4
+.L7F049E9C:
 /* 07E9CC 7F049E9C 3C068003 */  lui   $a2, %hi(D_80031BD0) # $a2, 0x8003
 /* 07E9D0 7F049EA0 10000021 */  b     .L7F049F28
 /* 07E9D4 7F049EA4 24C61BD0 */   addiu $a2, %lo(D_80031BD0) # addiu $a2, $a2, 0x1bd0
+.L7F049EA8:
 /* 07E9D8 7F049EA8 3C068003 */  lui   $a2, %hi(D_80031BEC) # $a2, 0x8003
 /* 07E9DC 7F049EAC 1000001E */  b     .L7F049F28
 /* 07E9E0 7F049EB0 24C61BEC */   addiu $a2, %lo(D_80031BEC) # addiu $a2, $a2, 0x1bec
+.L7F049EB4:
 /* 07E9E4 7F049EB4 3C068003 */  lui   $a2, %hi(D_80031C08) # $a2, 0x8003
 /* 07E9E8 7F049EB8 1000001B */  b     .L7F049F28
 /* 07E9EC 7F049EBC 24C61C08 */   addiu $a2, %lo(D_80031C08) # addiu $a2, $a2, 0x1c08
+.L7F049EC0:
 /* 07E9F0 7F049EC0 3C068003 */  lui   $a2, %hi(D_80031C80) # $a2, 0x8003
 /* 07E9F4 7F049EC4 10000018 */  b     .L7F049F28
 /* 07E9F8 7F049EC8 24C61C80 */   addiu $a2, %lo(D_80031C80) # addiu $a2, $a2, 0x1c80
+.L7F049ECC:
 /* 07E9FC 7F049ECC 3C068003 */  lui   $a2, %hi(D_80031D30) # $a2, 0x8003
 /* 07EA00 7F049ED0 10000015 */  b     .L7F049F28
 /* 07EA04 7F049ED4 24C61D30 */   addiu $a2, %lo(D_80031D30) # addiu $a2, $a2, 0x1d30
+.L7F049ED8:
 /* 07EA08 7F049ED8 3C068003 */  lui   $a2, %hi(D_80031D58) # $a2, 0x8003
 /* 07EA0C 7F049EDC 10000012 */  b     .L7F049F28
 /* 07EA10 7F049EE0 24C61D58 */   addiu $a2, %lo(D_80031D58) # addiu $a2, $a2, 0x1d58
+.L7F049EE4:
 /* 07EA14 7F049EE4 3C068003 */  lui   $a2, %hi(D_80031DA8) # $a2, 0x8003
 /* 07EA18 7F049EE8 1000000F */  b     .L7F049F28
 /* 07EA1C 7F049EEC 24C61DA8 */   addiu $a2, %lo(D_80031DA8) # addiu $a2, $a2, 0x1da8
+.L7F049EF0:
 /* 07EA20 7F049EF0 3C068003 */  lui   $a2, %hi(D_80031DF4) # $a2, 0x8003
 /* 07EA24 7F049EF4 1000000C */  b     .L7F049F28
 /* 07EA28 7F049EF8 24C61DF4 */   addiu $a2, %lo(D_80031DF4) # addiu $a2, $a2, 0x1df4
+.L7F049EFC:
 /* 07EA2C 7F049EFC 3C068003 */  lui   $a2, %hi(D_80031E40) # $a2, 0x8003
 /* 07EA30 7F049F00 10000009 */  b     .L7F049F28
 /* 07EA34 7F049F04 24C61E40 */   addiu $a2, %lo(D_80031E40) # addiu $a2, $a2, 0x1e40
+.L7F049F08:
 /* 07EA38 7F049F08 3C068003 */  lui   $a2, %hi(D_80031E78) # $a2, 0x8003
 /* 07EA3C 7F049F0C 10000006 */  b     .L7F049F28
 /* 07EA40 7F049F10 24C61E78 */   addiu $a2, %lo(D_80031E78) # addiu $a2, $a2, 0x1e78
+.L7F049F14:
 /* 07EA44 7F049F14 3C068003 */  lui   $a2, %hi(D_80031EB0) # $a2, 0x8003
 /* 07EA48 7F049F18 10000003 */  b     .L7F049F28
 /* 07EA4C 7F049F1C 24C61EB0 */   addiu $a2, %lo(D_80031EB0) # addiu $a2, $a2, 0x1eb0
+.L7F049F20:
 /* 07EA50 7F049F20 3C068003 */  lui   $a2, %hi(D_80031EE8) # $a2, 0x8003
 /* 07EA54 7F049F24 24C61EE8 */  addiu $a2, %lo(D_80031EE8) # addiu $a2, $a2, 0x1ee8
 def_7F049CC0:
@@ -27662,6 +27851,25 @@ GLOBAL_ASM(
 .late_rodata
 glabel D_80052C68
 .word 0x40c90fdb /*6.2831855*/
+/*D:80052C6C*/
+glabel jpt_7007DF4C
+.word command00_reset_scroll_shift
+.word command01_horizontal_scroll
+.word command02_vertical_scroll
+.word command03_horizontal_pos
+.word command04_vertical_pos
+.word command05_zoomx
+.word command06_zoomy
+.word command07_use_image_from_global_monitor_table
+.word command08_halt_processing_for_time
+.word command09_jump
+.word command0A_jump_conditional
+.word command0B_restart
+.word command0C_break
+.word command0D_colour_transition
+.word command0E_set_rotation
+.word command0F_rotate
+
 glabel D_80052CAC
 .word 0x3fc90fdb /*1.5707964*/
 glabel D_80052CB0
@@ -32018,6 +32226,73 @@ GLOBAL_ASM(
 .late_rodata
 glabel D_80052D98
 .word 0x46fffe00 /*32767.0*/
+/*D:80052D9C*/
+glabel jpt_70081970
+.word loc_CODE_7F04DAA4
+.word def_7F04DA40
+.word def_7F04DA40
+.word def_7F04DA40
+.word loc_CODE_7F04DAD8
+.word def_7F04DA40
+.word def_7F04DA40
+.word def_7F04DA40
+.word def_7F04DA40
+.word def_7F04DA40
+.word def_7F04DA40
+.word def_7F04DA40
+.word def_7F04DA40
+.word def_7F04DA40
+.word loc_CODE_7F04DAEC
+.word def_7F04DA40
+.word def_7F04DA40
+.word def_7F04DA40
+.word def_7F04DA40
+.word loc_CODE_7F04DB00
+.word loc_CODE_7F04DA48
+
+/*D:80052DF0*/
+/*hack, doesn't fit in own function*/
+glabel jpt_70081F20
+.word destroyable_object
+.word nondestroyable_object
+.word destroyable_object
+.word nondestroyable_object
+.word destroyable_object
+.word destroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word destroyable_object
+.word destroyable_object
+.word destroyable_object
+.word destroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+.word destroyable_object
+.word nondestroyable_object
+.word nondestroyable_object
+
+
 .text
 glabel sub_GAME_7F04D9B0
 /* 0824E0 7F04D9B0 27BDFF08 */  addiu $sp, $sp, -0xf8
@@ -32059,6 +32334,7 @@ glabel sub_GAME_7F04D9B0
 /* 08256C 7F04DA3C 8C2F2D9C */  lw    $t7, 0x2d9c($at)
 /* 082570 7F04DA40 01E00008 */  jr    $t7
 /* 082574 7F04DA44 00000000 */   nop   
+loc_CODE_7F04DA48:
 /* 082578 7F04DA48 8E110004 */  lw    $s1, 4($s0)
 /* 08257C 7F04DA4C 02C02025 */  move  $a0, $s6
 /* 082580 7F04DA50 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
@@ -32084,6 +32360,7 @@ glabel sub_GAME_7F04D9B0
 .L7F04DA9C:
 /* 0825CC 7F04DA9C 1000001B */  b     .L7F04DB0C
 /* 0825D0 7F04DAA0 8C5E0000 */   lw    $fp, ($v0)
+loc_CODE_7F04DAA4:
 /* 0825D4 7F04DAA4 8E020004 */  lw    $v0, 4($s0)
 /* 0825D8 7F04DAA8 8C440000 */  lw    $a0, ($v0)
 /* 0825DC 7F04DAAC 10800017 */  beqz  $a0, .L7F04DB0C
@@ -32098,16 +32375,19 @@ glabel sub_GAME_7F04D9B0
 .L7F04DAD0:
 /* 082600 7F04DAD0 1000000E */  b     .L7F04DB0C
 /* 082604 7F04DAD4 0060F025 */   move  $fp, $v1
+loc_CODE_7F04DAD8:
 /* 082608 7F04DAD8 02C02025 */  move  $a0, $s6
 /* 08260C 7F04DADC 0FC1BA5C */  jal   sub_GAME_7F06E970
 /* 082610 7F04DAE0 02002825 */   move  $a1, $s0
 /* 082614 7F04DAE4 10000009 */  b     .L7F04DB0C
 /* 082618 7F04DAE8 00000000 */   nop   
+loc_CODE_7F04DAEC:
 /* 08261C 7F04DAEC 02C02025 */  move  $a0, $s6
 /* 082620 7F04DAF0 0FC1BA6F */  jal   process_12_handle_switch
 /* 082624 7F04DAF4 02002825 */   move  $a1, $s0
 /* 082628 7F04DAF8 10000004 */  b     .L7F04DB0C
 /* 08262C 7F04DAFC 00000000 */   nop   
+loc_CODE_7F04DB00:
 /* 082630 7F04DB00 02C02025 */  move  $a0, $s6
 /* 082634 7F04DB04 0FC1BA82 */  jal   process_17_pointer_to_head
 /* 082638 7F04DB08 02002825 */   move  $a1, $s0
@@ -32242,6 +32522,18 @@ void sub_GAME_7F04DCB4(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*hack, doesnt fit in own data above*/
+.word destroyable_object
+.word destroyable_object
+.word destroyable_object
+.word destroyable_object
+.word destroyable_object
+.word nondestroyable_object
+.word destroyable_object
+.word nondestroyable_object
+.word destroyable_object
+
 .text
 glabel sub_GAME_7F04DCB4
 /* 0827E4 7F04DCB4 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -32361,6 +32653,28 @@ void sub_GAME_7F04DE18(void) {
 }
 #else
 GLOBAL_ASM(
+     .late_rodata
+/*hack, part of check_if_collectable_object*/
+/*D:80052EAC*/
+glabel jpt_70081F5C
+.word collectable_object
+.word notcollectable_object
+.word notcollectable_object
+.word collectable_object
+.word collectable_object
+.word notcollectable_object
+.word notcollectable_object
+.word notcollectable_object
+.word notcollectable_object
+.word notcollectable_object
+.word notcollectable_object
+.word notcollectable_object
+.word notcollectable_object
+.word collectable_object
+.word notcollectable_object
+.word notcollectable_object
+.word collectable_object
+.word collectable_object
 .text
 glabel sub_GAME_7F04DE18
 /* 082948 7F04DE18 27BDFF68 */  addiu $sp, $sp, -0x98
@@ -32505,6 +32819,9 @@ void check_if_destroyable_object_type(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+
+
 .text
 glabel check_if_destroyable_object_type
 /* 082B00 7F04DFD0 908E0003 */  lbu   $t6, 3($a0)
@@ -33897,6 +34214,17 @@ void sub_GAME_7F04F170(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*hack, part of append_text_ammo_amount_word*/
+glabel jpt_70083244
+.word text_some
+.word text_some
+.word text_some
+.word text_a
+.word text_a
+.word text_a
+.word text_a
+
 .text
 glabel sub_GAME_7F04F170
 /* 083CA0 7F04F170 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -34060,6 +34388,38 @@ void append_text_ammo_amount_word(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80052F10*/
+/*glabel jpt_70083244*/
+/*.word text_some*/
+/*.word text_some*/
+/*.word text_some*/
+/*.word text_a*/
+/*.word text_a*/
+/*.word text_a*/
+/*.word text_a*/
+.word text_a
+.word text_a
+.word text_a
+.word text_a
+.word text_a
+.word text_a
+.word text_a
+.word text_an
+.word text_an
+.word text_a
+.word text_a
+.word text_a
+.word text_a
+.word text_a
+.word text_the
+.word text_some
+.word text_NONE
+.word text_NONE
+.word text_NONE
+.word text_NONE
+.word text_NONE
+.word text_the
 .text
 glabel append_text_ammo_amount_word
 /* 083E1C 7F04F2EC 24AEFFFF */  addiu $t6, $a1, -1
@@ -34157,6 +34517,68 @@ void apped_text_ammotype(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80052F84*/
+glabel jpt_7008346C
+.word text_pickup_shotgun_cartridge
+.word text_pickup_hand_grenade
+.word text_pickup_rocket
+.word text_pickup_remote_mine
+.word text_pickup_proximity_mine
+.word text_pickup_timed_mine
+.word pluralize_multiples
+.word text_pickup_grenade_round
+.word text_pickup_magnum_bullet
+.word text_pickup_golden_bullet
+.word text_pickup_dart
+.word text_pickup_explosive_pen
+.word text_pickup_explosive_case
+.word text_pickup_flare
+.word text_pickup_piton
+.word pluralize_multiples
+.word text_pickup_bug
+.word text_pickup_micro_camera
+.word text_pickup_goldeneye_key
+.word text_pickup_plastique
+.word pluralize_multiples
+.word pluralize_multiples
+.word pluralize_multiples
+.word pluralize_multiples
+.word pluralize_multiples
+.word text_pickup_token
+
+/*D:80052FEC*/
+glabel jpt_700836DC
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_mine
+.word ammo_sfx_pickup_mine
+.word ammo_sfx_pickup_mine
+.word ammo_sfx_pickup_knife
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_mine
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_mine
+.word ammo_sfx_pickup_mine
+.word ammo_sfx_pickup_firearm
+.word ammo_sfx_pickup_mine
+.word ammo_sfx_pickup_default
+.word ammo_sfx_pickup_default
+.word ammo_sfx_pickup_default
+.word ammo_sfx_pickup_default
+.word ammo_sfx_pickup_default
+.word ammo_sfx_pickup_firearm
+
 .text
 glabel apped_text_ammotype
 /* 083F3C 7F04F40C 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -34425,6 +34847,39 @@ void set_sound_effect_for_ammo_collection(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80052FEC*/
+/*glabel jpt_700836DC*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_mine*/
+/*.word ammo_sfx_pickup_mine*/
+/*.word ammo_sfx_pickup_mine*/
+/*.word ammo_sfx_pickup_knife*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_mine*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_mine*/
+/*.word ammo_sfx_pickup_mine*/
+/*.word ammo_sfx_pickup_firearm*/
+/*.word ammo_sfx_pickup_mine*/
+/*.word ammo_sfx_pickup_default*/
+/*.word ammo_sfx_pickup_default*/
+/*.word ammo_sfx_pickup_default*/
+/*.word ammo_sfx_pickup_default*/
+/*.word ammo_sfx_pickup_default*/
+/*.word ammo_sfx_pickup_firearm*/
+
 .text
 glabel set_sound_effect_for_ammo_collection
 /* 0842B8 7F04F788 248EFFFF */  addiu $t6, $a0, -1
@@ -34572,10 +35027,7 @@ void display_ammo_type_collection_text(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
-glabel D_800529D0
-.word 0xA000000 /*"\n"*/
-glabel D_800529D4
-.word 0x2E0A0000 /*".\n"*/
+
 .text
 glabel display_ammo_type_collection_text
 /* 084450 7F04F920 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -34650,9 +35102,7 @@ void display_text_when_ammo_collected(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
-glabel D_800529D8
-.word 0, 0, 0, 0, 0, 0, 0, 0
-      /*0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0*/
+
 
 .text
 glabel display_text_when_ammo_collected
@@ -34698,6 +35148,8 @@ void add_ammo_to_inventory(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+
 .text
 glabel add_ammo_to_inventory
 /* 084598 7F04FA68 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -34844,6 +35296,24 @@ void get_ammo_in_magazine(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80053060*/
+glabel ammo_collected_from_magazine
+.word magazine_has_10_rounds_type1
+.word magazine_has_10_rounds_type2
+.word magazine_has_10_rounds_type3
+.word magazine_has_5_rounds_type4
+.word magazine_has_default_ammo_rounds
+.word magazine_has_default_ammo_rounds
+.word magazine_has_default_ammo_rounds
+.word magazine_has_default_ammo_rounds
+.word magazine_has_default_ammo_rounds
+.word magazine_has_default_ammo_rounds
+.word magazine_has_default_ammo_rounds
+.word magazine_has_5_rounds_typeC
+.word magazine_has_3_rounds_typeD
+.word magazine_has_4_rounds_typeE
+
 .text
 glabel get_ammo_in_magazine
 /* 08476C 7F04FC3C 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -34917,6 +35387,24 @@ void ammo_collected_from_weapon(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80053098*/
+glabel ammo_in_weapon
+.word weapon_has_10_rounds_type1
+.word weapon_has_10_rounds_type2
+.word weapon_has_10_rounds_type3
+.word weapon_has_5_rounds_type4
+.word weapon_has_default_ammo
+.word weapon_has_default_ammo
+.word weapon_has_default_ammo
+.word weapon_has_default_ammo
+.word weapon_has_default_ammo
+.word weapon_has_default_ammo
+.word weapon_has_3_rounds_typeB
+.word weapon_has_5_rounds_typeC
+.word weapon_has_3_rounds_typeD
+.word weapon_has_4_rounds_typeE
+
 .text
 glabel ammo_collected_from_weapon
 /* 084828 7F04FCF8 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -35004,12 +35492,96 @@ void generate_language_specific_text_for_weapon(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
-glabel D_80052A38
-.word 0
-glabel D_80052A3C
-.word 0
-glabel D_80052A40
-.word 0xA000000 /*"\n"*/
+/*D:800530D0*/
+glabel jpt_70083DA4
+.word weapon_collect_msg_a_hunting_knife
+.word weapon_collect_msg_BLANK
+.word weapon_collect_msg_a_pp7
+.word weapon_collect_msg_a_silenced_pp7
+.word weapon_collect_msg_a_dd44
+.word weapon_collect_msg_a_klobb
+.word weapon_collect_msg_a_kf7
+.word weapon_collect_msg_a_zmg
+.word weapon_collect_msg_a_d5k
+.word weapon_collect_msg_a_silenced_d5k
+.word weapon_collect_msg_a_phantom
+.word weapon_collect_msg_a_ar33
+.word weapon_collect_msg_a_rcp90
+.word weapon_collect_msg_a_shotgun
+.word weapon_collect_msg_an_auto_shotgun
+.word weapon_collect_msg_a_sniper
+.word weapon_collect_msg_a_cougar_magnum
+.word weapon_collect_msg_a_golden_gun
+.word weapon_collect_msg_a_silver_pp7
+.word weapon_collect_msg_a_gold_pp7
+.word weapon_collect_msg_a_moonraker_laser
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_grenade_launcher
+.word weapon_collect_msg_a_rocket_launcher
+.word weapon_collect_msg_BLANK
+.word weapon_collect_msg_BLANK
+.word weapon_collect_msg_BLANK
+.word weapon_collect_msg_BLANK
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_BLANK
+.word weapon_collect_msg_BLANK
+.word weapon_collect_msg_a_flare_pistol
+.word weapon_collect_msg_a_piton_gun
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_BLANK
+.word weapon_collect_msg_BLANK
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_BLANK
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_keycard
+.word weapon_collect_msg_a_yale_key
+.word weapon_collect_msg_a_bolt_key
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_a_new_weapon
+.word weapon_collect_msg_BLANK
+.word weapon_collect_msg_BLANK
+.word weapon_collect_msg_BLANK
+
 .text
 glabel generate_language_specific_text_for_weapon
 /* 084910 7F04FDE0 3C0E8005 */  lui   $t6, %hi(j_text_trigger) # $t6, 0x8005
@@ -35360,6 +35932,55 @@ void collect_or_interact_object(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:8005322C*/
+glabel object_interaction_table
+.word interact_default_object
+.word interact_key_object
+.word interact_default_object
+.word interact_default_object
+.word interact_magazine_object
+.word interact_weapon_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_ammobox_object
+.word interact_bodyarmor_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+.word interact_default_object
+
 .text
 glabel collect_or_interact_object
 /* 084D80 7F050250 27BDFF90 */  addiu $sp, $sp, -0x70
@@ -38382,6 +39003,15 @@ void sub_GAME_7F052604(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*HACK*/
+/*D:800532F4*/
+glabel jpt_hat_worn
+.word model_hat_fur
+.word model_hat_fur
+.word model_hat_fur
+.word model_hat_greencap
+.word model_hat_greencap
 .text
 glabel sub_GAME_7F052604
 /* 087134 7F052604 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -38431,6 +39061,22 @@ void get_hat_model(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:800532F4*/
+/*glabel jpt_hat_worn*/
+/*.word model_hat_fur*/
+/*.word model_hat_fur*/
+/*.word model_hat_fur*/
+/*.word model_hat_greencap*/
+/*.word model_hat_greencap*/
+.word model_hat_combat_helmet
+.word model_hat_combat_helmet
+.word model_hat_moonraker_headgear
+.word model_hat_beret
+.word model_hat_beret
+.word model_hat_beret
+.word model_hat_officerhat
+
 .text
 glabel get_hat_model
 /* 0871B4 7F052684 8C820004 */  lw    $v0, 4($a0)
@@ -40127,6 +40773,27 @@ void play_door_opening_soundeffect_0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:8005334C*/
+glabel door_opening_sound_table_0
+.word .L7F053BEC
+.word .L7F053C2C
+.word .L7F053C6C
+.word .L7F053CAC
+.word .L7F053CEC
+.word .L7F053D08
+.word .L7F053D24
+.word .L7F053D64
+.word .L7F053DA4
+.word .L7F053DC4
+.word .L7F053DE0
+.word .L7F053DFC
+.word .L7F053E18
+.word .L7F053E58
+.word .L7F053E78
+.word .L7F053E98
+.word .L7F053EB4
+
 .text
 glabel play_door_opening_soundeffect_0
 /* 0886A8 7F053B78 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -40161,6 +40828,7 @@ glabel play_door_opening_soundeffect_0
 /* 088710 7F053BE0 8C2A334C */  lw    $t2, 0x334c($at)
 /* 088714 7F053BE4 01400008 */  jr    $t2
 /* 088718 7F053BE8 00000000 */   nop   
+.L7F053BEC:
 /* 08871C 7F053BEC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088720 7F053BF0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088724 7F053BF4 240500D2 */  li    $a1, 210
@@ -40177,6 +40845,7 @@ glabel play_door_opening_soundeffect_0
 /* 088750 7F053C20 00E03025 */   move  $a2, $a3
 /* 088754 7F053C24 100000C2 */  b     .L7F053F30
 /* 088758 7F053C28 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F053C2C:
 /* 08875C 7F053C2C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088760 7F053C30 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088764 7F053C34 240500D2 */  li    $a1, 210
@@ -40193,6 +40862,7 @@ glabel play_door_opening_soundeffect_0
 /* 088790 7F053C60 00E03025 */   move  $a2, $a3
 /* 088794 7F053C64 100000B2 */  b     .L7F053F30
 /* 088798 7F053C68 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F053C6C:
 /* 08879C 7F053C6C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0887A0 7F053C70 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0887A4 7F053C74 240500CA */  li    $a1, 202
@@ -40209,6 +40879,7 @@ glabel play_door_opening_soundeffect_0
 /* 0887D0 7F053CA0 00E03025 */   move  $a2, $a3
 /* 0887D4 7F053CA4 100000A2 */  b     .L7F053F30
 /* 0887D8 7F053CA8 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F053CAC:
 /* 0887DC 7F053CAC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0887E0 7F053CB0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0887E4 7F053CB4 240500D6 */  li    $a1, 214
@@ -40225,6 +40896,7 @@ glabel play_door_opening_soundeffect_0
 /* 088810 7F053CE0 00E03025 */   move  $a2, $a3
 /* 088814 7F053CE4 10000092 */  b     .L7F053F30
 /* 088818 7F053CE8 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F053CEC:
 /* 08881C 7F053CEC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088820 7F053CF0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088824 7F053CF4 240500BC */  li    $a1, 188
@@ -40232,6 +40904,7 @@ glabel play_door_opening_soundeffect_0
 /* 08882C 7F053CFC 00003025 */   move  $a2, $zero
 /* 088830 7F053D00 1000008A */  b     .L7F053F2C
 /* 088834 7F053D04 AFA2001C */   sw    $v0, 0x1c($sp)
+.L7F053D08:
 /* 088838 7F053D08 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 08883C 7F053D0C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088840 7F053D10 24050007 */  li    $a1, 7
@@ -40239,6 +40912,7 @@ glabel play_door_opening_soundeffect_0
 /* 088848 7F053D18 00003025 */   move  $a2, $zero
 /* 08884C 7F053D1C 10000083 */  b     .L7F053F2C
 /* 088850 7F053D20 AFA2001C */   sw    $v0, 0x1c($sp)
+.L7F053D24:
 /* 088854 7F053D24 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088858 7F053D28 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 08885C 7F053D2C 240500C0 */  li    $a1, 192
@@ -40255,6 +40929,7 @@ glabel play_door_opening_soundeffect_0
 /* 088888 7F053D58 00E03025 */   move  $a2, $a3
 /* 08888C 7F053D5C 10000074 */  b     .L7F053F30
 /* 088890 7F053D60 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F053D64:
 /* 088894 7F053D64 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088898 7F053D68 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 08889C 7F053D6C 240500BC */  li    $a1, 188
@@ -40271,6 +40946,7 @@ glabel play_door_opening_soundeffect_0
 /* 0888C8 7F053D98 00E03025 */   move  $a2, $a3
 /* 0888CC 7F053D9C 10000064 */  b     .L7F053F30
 /* 0888D0 7F053DA0 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F053DA4:
 /* 0888D4 7F053DA4 10E00061 */  beqz  $a3, .L7F053F2C
 /* 0888D8 7F053DA8 3C048006 */   lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0888DC 7F053DAC 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
@@ -40279,6 +40955,7 @@ glabel play_door_opening_soundeffect_0
 /* 0888E8 7F053DB8 00E03025 */   move  $a2, $a3
 /* 0888EC 7F053DBC 1000005C */  b     .L7F053F30
 /* 0888F0 7F053DC0 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F053DC4:
 /* 0888F4 7F053DC4 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0888F8 7F053DC8 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0888FC 7F053DCC 240500C4 */  li    $a1, 196
@@ -40286,6 +40963,7 @@ glabel play_door_opening_soundeffect_0
 /* 088904 7F053DD4 00003025 */   move  $a2, $zero
 /* 088908 7F053DD8 10000054 */  b     .L7F053F2C
 /* 08890C 7F053DDC AFA2001C */   sw    $v0, 0x1c($sp)
+.L7F053DE0:
 /* 088910 7F053DE0 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088914 7F053DE4 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088918 7F053DE8 24050007 */  li    $a1, 7
@@ -40293,6 +40971,7 @@ glabel play_door_opening_soundeffect_0
 /* 088920 7F053DF0 00003025 */   move  $a2, $zero
 /* 088924 7F053DF4 1000004D */  b     .L7F053F2C
 /* 088928 7F053DF8 AFA2001C */   sw    $v0, 0x1c($sp)
+.L7F053DFC:
 /* 08892C 7F053DFC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088930 7F053E00 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088934 7F053E04 240500C8 */  li    $a1, 200
@@ -40300,6 +40979,7 @@ glabel play_door_opening_soundeffect_0
 /* 08893C 7F053E0C 00003025 */   move  $a2, $zero
 /* 088940 7F053E10 10000046 */  b     .L7F053F2C
 /* 088944 7F053E14 AFA2001C */   sw    $v0, 0x1c($sp)
+.L7F053E18:
 /* 088948 7F053E18 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 08894C 7F053E1C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088950 7F053E20 24050007 */  li    $a1, 7
@@ -40316,6 +40996,7 @@ glabel play_door_opening_soundeffect_0
 /* 08897C 7F053E4C 00E03025 */   move  $a2, $a3
 /* 088980 7F053E50 10000037 */  b     .L7F053F30
 /* 088984 7F053E54 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F053E58:
 /* 088988 7F053E58 10E00034 */  beqz  $a3, .L7F053F2C
 /* 08898C 7F053E5C 3C048006 */   lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088990 7F053E60 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
@@ -40324,6 +41005,7 @@ glabel play_door_opening_soundeffect_0
 /* 08899C 7F053E6C 00E03025 */   move  $a2, $a3
 /* 0889A0 7F053E70 1000002F */  b     .L7F053F30
 /* 0889A4 7F053E74 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F053E78:
 /* 0889A8 7F053E78 10E0002C */  beqz  $a3, .L7F053F2C
 /* 0889AC 7F053E7C 3C048006 */   lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0889B0 7F053E80 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
@@ -40332,6 +41014,7 @@ glabel play_door_opening_soundeffect_0
 /* 0889BC 7F053E8C 00E03025 */   move  $a2, $a3
 /* 0889C0 7F053E90 10000027 */  b     .L7F053F30
 /* 0889C4 7F053E94 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F053E98:
 /* 0889C8 7F053E98 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0889CC 7F053E9C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0889D0 7F053EA0 240500D6 */  li    $a1, 214
@@ -40339,6 +41022,7 @@ glabel play_door_opening_soundeffect_0
 /* 0889D8 7F053EA8 00003025 */   move  $a2, $zero
 /* 0889DC 7F053EAC 1000001F */  b     .L7F053F2C
 /* 0889E0 7F053EB0 AFA2001C */   sw    $v0, 0x1c($sp)
+.L7F053EB4:
 /* 0889E4 7F053EB4 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0889E8 7F053EB8 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0889EC 7F053EBC 24050007 */  li    $a1, 7
@@ -40401,6 +41085,26 @@ void play_door_opening_soundeffect_1(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80053390*/
+glabel door_opening_sound_table_1
+.word .L7F053FD8
+.word .L7F054018
+.word .L7F054058
+.word .L7F054098
+.word .L7F053FD0
+.word .L7F053FD0
+.word .L7F0540D8
+.word .L7F054118
+.word .L7F054158
+.word .L7F053FD0
+.word .L7F053FD0
+.word .L7F053FD0
+.word .L7F054178
+.word .L7F0541B8
+.word .L7F0541D8
+.word .L7F0541F8
+.word .L7F054214
 .text
 glabel play_door_opening_soundeffect_1
 /* 088A94 7F053F64 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -40433,8 +41137,10 @@ glabel play_door_opening_soundeffect_1
 /* 088AF4 7F053FC4 3C018005 */  lui   $at, 0x8005
 /* 088AF8 7F053FC8 002A0821 */  addu  $at, $at, $t2
 /* 088AFC 7F053FCC 8C2A3390 */  lw    $t2, 0x3390($at)
+.L7F053FD0:
 /* 088B00 7F053FD0 01400008 */  jr    $t2
 /* 088B04 7F053FD4 00000000 */   nop   
+.L7F053FD8:
 /* 088B08 7F053FD8 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088B0C 7F053FDC 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088B10 7F053FE0 240500D2 */  li    $a1, 210
@@ -40451,6 +41157,7 @@ glabel play_door_opening_soundeffect_1
 /* 088B3C 7F05400C 00E03025 */   move  $a2, $a3
 /* 088B40 7F054010 1000009F */  b     .L7F054290
 /* 088B44 7F054014 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F054018:
 /* 088B48 7F054018 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088B4C 7F05401C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088B50 7F054020 240500D2 */  li    $a1, 210
@@ -40467,6 +41174,7 @@ glabel play_door_opening_soundeffect_1
 /* 088B7C 7F05404C 00E03025 */   move  $a2, $a3
 /* 088B80 7F054050 1000008F */  b     .L7F054290
 /* 088B84 7F054054 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F054058:
 /* 088B88 7F054058 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088B8C 7F05405C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088B90 7F054060 240500CA */  li    $a1, 202
@@ -40483,6 +41191,7 @@ glabel play_door_opening_soundeffect_1
 /* 088BBC 7F05408C 00E03025 */   move  $a2, $a3
 /* 088BC0 7F054090 1000007F */  b     .L7F054290
 /* 088BC4 7F054094 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F054098:
 /* 088BC8 7F054098 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088BCC 7F05409C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088BD0 7F0540A0 240500D6 */  li    $a1, 214
@@ -40499,6 +41208,7 @@ glabel play_door_opening_soundeffect_1
 /* 088BFC 7F0540CC 00E03025 */   move  $a2, $a3
 /* 088C00 7F0540D0 1000006F */  b     .L7F054290
 /* 088C04 7F0540D4 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F0540D8:
 /* 088C08 7F0540D8 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088C0C 7F0540DC 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088C10 7F0540E0 240500C0 */  li    $a1, 192
@@ -40515,6 +41225,7 @@ glabel play_door_opening_soundeffect_1
 /* 088C3C 7F05410C 00E03025 */   move  $a2, $a3
 /* 088C40 7F054110 1000005F */  b     .L7F054290
 /* 088C44 7F054114 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F054118:
 /* 088C48 7F054118 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088C4C 7F05411C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088C50 7F054120 240500BC */  li    $a1, 188
@@ -40531,6 +41242,7 @@ glabel play_door_opening_soundeffect_1
 /* 088C7C 7F05414C 00E03025 */   move  $a2, $a3
 /* 088C80 7F054150 1000004F */  b     .L7F054290
 /* 088C84 7F054154 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F054158:
 /* 088C88 7F054158 10E0004C */  beqz  $a3, .L7F05428C
 /* 088C8C 7F05415C 3C048006 */   lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088C90 7F054160 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
@@ -40539,6 +41251,7 @@ glabel play_door_opening_soundeffect_1
 /* 088C9C 7F05416C 00E03025 */   move  $a2, $a3
 /* 088CA0 7F054170 10000047 */  b     .L7F054290
 /* 088CA4 7F054174 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F054178:
 /* 088CA8 7F054178 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088CAC 7F05417C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088CB0 7F054180 24050007 */  li    $a1, 7
@@ -40555,6 +41268,7 @@ glabel play_door_opening_soundeffect_1
 /* 088CDC 7F0541AC 00E03025 */   move  $a2, $a3
 /* 088CE0 7F0541B0 10000037 */  b     .L7F054290
 /* 088CE4 7F0541B4 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F0541B8:
 /* 088CE8 7F0541B8 10E00034 */  beqz  $a3, .L7F05428C
 /* 088CEC 7F0541BC 3C048006 */   lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088CF0 7F0541C0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
@@ -40563,6 +41277,7 @@ glabel play_door_opening_soundeffect_1
 /* 088CFC 7F0541CC 00E03025 */   move  $a2, $a3
 /* 088D00 7F0541D0 1000002F */  b     .L7F054290
 /* 088D04 7F0541D4 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F0541D8:
 /* 088D08 7F0541D8 10E0002C */  beqz  $a3, .L7F05428C
 /* 088D0C 7F0541DC 3C048006 */   lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088D10 7F0541E0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
@@ -40571,6 +41286,7 @@ glabel play_door_opening_soundeffect_1
 /* 088D1C 7F0541EC 00E03025 */   move  $a2, $a3
 /* 088D20 7F0541F0 10000027 */  b     .L7F054290
 /* 088D24 7F0541F4 8FAC001C */   lw    $t4, 0x1c($sp)
+.L7F0541F8:
 /* 088D28 7F0541F8 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088D2C 7F0541FC 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088D30 7F054200 240500D6 */  li    $a1, 214
@@ -40578,6 +41294,7 @@ glabel play_door_opening_soundeffect_1
 /* 088D38 7F054208 00003025 */   move  $a2, $zero
 /* 088D3C 7F05420C 1000001F */  b     .L7F05428C
 /* 088D40 7F054210 AFA2001C */   sw    $v0, 0x1c($sp)
+.L7F054214:
 /* 088D44 7F054214 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088D48 7F054218 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088D4C 7F05421C 24050007 */  li    $a1, 7
@@ -40640,6 +41357,26 @@ void play_door_closing_soundeffect_0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:800533D4*/
+glabel door_closing_sound_table_0
+.word .L7F054308
+.word .L7F054328
+.word .L7F054348
+.word .L7F054368
+.word .L7F054300
+.word .L7F054300
+.word .L7F054388
+.word .L7F0543A8
+.word .L7F0543C8
+.word .L7F054300
+.word .L7F054300
+.word .L7F054300
+.word .L7F0543E8
+.word .L7F054408
+.word .L7F054428
+.word .L7F054448
+.word .L7F054468
 .text
 glabel play_door_closing_soundeffect_0
 /* 088DF4 7F0542C4 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -40657,8 +41394,10 @@ glabel play_door_closing_soundeffect_0
 /* 088E24 7F0542F4 3C018005 */  lui   $at, 0x8005
 /* 088E28 7F0542F8 002F0821 */  addu  $at, $at, $t7
 /* 088E2C 7F0542FC 8C2F33D4 */  lw    $t7, 0x33d4($at)
+.L7F054300:
 /* 088E30 7F054300 01E00008 */  jr    $t7
 /* 088E34 7F054304 00000000 */   nop   
+.L7F054308:
 /* 088E38 7F054308 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088E3C 7F05430C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088E40 7F054310 240500D2 */  li    $a1, 210
@@ -40667,6 +41406,7 @@ glabel play_door_closing_soundeffect_0
 /* 088E4C 7F05431C 00403025 */  move  $a2, $v0
 /* 088E50 7F054320 10000058 */  b     .L7F054484
 /* 088E54 7F054324 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F054328:
 /* 088E58 7F054328 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088E5C 7F05432C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088E60 7F054330 240500D2 */  li    $a1, 210
@@ -40675,6 +41415,7 @@ glabel play_door_closing_soundeffect_0
 /* 088E6C 7F05433C 00403025 */  move  $a2, $v0
 /* 088E70 7F054340 10000050 */  b     .L7F054484
 /* 088E74 7F054344 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F054348:
 /* 088E78 7F054348 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088E7C 7F05434C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088E80 7F054350 240500CB */  li    $a1, 203
@@ -40683,6 +41424,7 @@ glabel play_door_closing_soundeffect_0
 /* 088E8C 7F05435C 00403025 */  move  $a2, $v0
 /* 088E90 7F054360 10000048 */  b     .L7F054484
 /* 088E94 7F054364 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F054368:
 /* 088E98 7F054368 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088E9C 7F05436C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088EA0 7F054370 240500D7 */  li    $a1, 215
@@ -40691,6 +41433,7 @@ glabel play_door_closing_soundeffect_0
 /* 088EAC 7F05437C 00403025 */  move  $a2, $v0
 /* 088EB0 7F054380 10000040 */  b     .L7F054484
 /* 088EB4 7F054384 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F054388:
 /* 088EB8 7F054388 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088EBC 7F05438C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088EC0 7F054390 240500D2 */  li    $a1, 210
@@ -40699,6 +41442,7 @@ glabel play_door_closing_soundeffect_0
 /* 088ECC 7F05439C 00403025 */  move  $a2, $v0
 /* 088ED0 7F0543A0 10000038 */  b     .L7F054484
 /* 088ED4 7F0543A4 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F0543A8:
 /* 088ED8 7F0543A8 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088EDC 7F0543AC 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088EE0 7F0543B0 240500BB */  li    $a1, 187
@@ -40707,6 +41451,7 @@ glabel play_door_closing_soundeffect_0
 /* 088EEC 7F0543BC 00403025 */  move  $a2, $v0
 /* 088EF0 7F0543C0 10000030 */  b     .L7F054484
 /* 088EF4 7F0543C4 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F0543C8:
 /* 088EF8 7F0543C8 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088EFC 7F0543CC 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088F00 7F0543D0 240500C3 */  li    $a1, 195
@@ -40715,6 +41460,7 @@ glabel play_door_closing_soundeffect_0
 /* 088F0C 7F0543DC 00403025 */  move  $a2, $v0
 /* 088F10 7F0543E0 10000028 */  b     .L7F054484
 /* 088F14 7F0543E4 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F0543E8:
 /* 088F18 7F0543E8 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088F1C 7F0543EC 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088F20 7F0543F0 24050007 */  li    $a1, 7
@@ -40723,6 +41469,7 @@ glabel play_door_closing_soundeffect_0
 /* 088F2C 7F0543FC 00403025 */  move  $a2, $v0
 /* 088F30 7F054400 10000020 */  b     .L7F054484
 /* 088F34 7F054404 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F054408:
 /* 088F38 7F054408 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088F3C 7F05440C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088F40 7F054410 240500DB */  li    $a1, 219
@@ -40731,6 +41478,7 @@ glabel play_door_closing_soundeffect_0
 /* 088F4C 7F05441C 00403025 */  move  $a2, $v0
 /* 088F50 7F054420 10000018 */  b     .L7F054484
 /* 088F54 7F054424 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F054428:
 /* 088F58 7F054428 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088F5C 7F05442C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088F60 7F054430 240500E2 */  li    $a1, 226
@@ -40739,6 +41487,7 @@ glabel play_door_closing_soundeffect_0
 /* 088F6C 7F05443C 00403025 */  move  $a2, $v0
 /* 088F70 7F054440 10000010 */  b     .L7F054484
 /* 088F74 7F054444 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F054448:
 /* 088F78 7F054448 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088F7C 7F05444C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088F80 7F054450 240500D7 */  li    $a1, 215
@@ -40747,6 +41496,7 @@ glabel play_door_closing_soundeffect_0
 /* 088F8C 7F05445C 00403025 */  move  $a2, $v0
 /* 088F90 7F054460 10000008 */  b     .L7F054484
 /* 088F94 7F054464 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F054468:
 /* 088F98 7F054468 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 088F9C 7F05446C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 088FA0 7F054470 240500CB */  li    $a1, 203
@@ -40783,6 +41533,27 @@ void play_door_closing_soundeffect_1(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80053418*/
+glabel door_closing_sound_table_1
+.word .L7F0544FC
+.word .L7F05451C
+.word .L7F05453C
+.word .L7F05455C
+.word .L7F05457C
+.word .L7F05459C
+.word .L7F0545BC
+.word .L7F0545DC
+.word .L7F0545FC
+.word .L7F05461C
+.word .L7F05463C
+.word .L7F05465C
+.word .L7F05467C
+.word .L7F05469C
+.word .L7F0546BC
+.word .L7F0546DC
+.word .L7F0546FC
+
 .text
 glabel play_door_closing_soundeffect_1
 /* 088FE8 7F0544B8 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -40802,6 +41573,7 @@ glabel play_door_closing_soundeffect_1
 /* 089020 7F0544F0 8C2F3418 */  lw    $t7, 0x3418($at)
 /* 089024 7F0544F4 01E00008 */  jr    $t7
 /* 089028 7F0544F8 00000000 */   nop   
+.L7F0544FC:
 /* 08902C 7F0544FC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 089030 7F054500 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 089034 7F054504 240500D2 */  li    $a1, 210
@@ -40810,6 +41582,7 @@ glabel play_door_closing_soundeffect_1
 /* 089040 7F054510 00403025 */  move  $a2, $v0
 /* 089044 7F054514 10000080 */  b     .L7F054718
 /* 089048 7F054518 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F05451C:
 /* 08904C 7F05451C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 089050 7F054520 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 089054 7F054524 240500D2 */  li    $a1, 210
@@ -40818,6 +41591,7 @@ glabel play_door_closing_soundeffect_1
 /* 089060 7F054530 00403025 */  move  $a2, $v0
 /* 089064 7F054534 10000078 */  b     .L7F054718
 /* 089068 7F054538 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F05453C:
 /* 08906C 7F05453C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 089070 7F054540 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 089074 7F054544 240500CB */  li    $a1, 203
@@ -40826,6 +41600,7 @@ glabel play_door_closing_soundeffect_1
 /* 089080 7F054550 00403025 */  move  $a2, $v0
 /* 089084 7F054554 10000070 */  b     .L7F054718
 /* 089088 7F054558 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F05455C:
 /* 08908C 7F05455C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 089090 7F054560 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 089094 7F054564 240500D7 */  li    $a1, 215
@@ -40834,6 +41609,7 @@ glabel play_door_closing_soundeffect_1
 /* 0890A0 7F054570 00403025 */  move  $a2, $v0
 /* 0890A4 7F054574 10000068 */  b     .L7F054718
 /* 0890A8 7F054578 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F05457C:
 /* 0890AC 7F05457C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0890B0 7F054580 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0890B4 7F054584 240500BB */  li    $a1, 187
@@ -40842,6 +41618,7 @@ glabel play_door_closing_soundeffect_1
 /* 0890C0 7F054590 00403025 */  move  $a2, $v0
 /* 0890C4 7F054594 10000060 */  b     .L7F054718
 /* 0890C8 7F054598 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F05459C:
 /* 0890CC 7F05459C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0890D0 7F0545A0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0890D4 7F0545A4 24050007 */  li    $a1, 7
@@ -40850,6 +41627,7 @@ glabel play_door_closing_soundeffect_1
 /* 0890E0 7F0545B0 00403025 */  move  $a2, $v0
 /* 0890E4 7F0545B4 10000058 */  b     .L7F054718
 /* 0890E8 7F0545B8 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F0545BC:
 /* 0890EC 7F0545BC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0890F0 7F0545C0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0890F4 7F0545C4 240500D2 */  li    $a1, 210
@@ -40858,6 +41636,7 @@ glabel play_door_closing_soundeffect_1
 /* 089100 7F0545D0 00403025 */  move  $a2, $v0
 /* 089104 7F0545D4 10000050 */  b     .L7F054718
 /* 089108 7F0545D8 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F0545DC:
 /* 08910C 7F0545DC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 089110 7F0545E0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 089114 7F0545E4 240500BB */  li    $a1, 187
@@ -40866,6 +41645,7 @@ glabel play_door_closing_soundeffect_1
 /* 089120 7F0545F0 00403025 */  move  $a2, $v0
 /* 089124 7F0545F4 10000048 */  b     .L7F054718
 /* 089128 7F0545F8 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F0545FC:
 /* 08912C 7F0545FC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 089130 7F054600 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 089134 7F054604 240500C3 */  li    $a1, 195
@@ -40874,6 +41654,7 @@ glabel play_door_closing_soundeffect_1
 /* 089140 7F054610 00403025 */  move  $a2, $v0
 /* 089144 7F054614 10000040 */  b     .L7F054718
 /* 089148 7F054618 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F05461C:
 /* 08914C 7F05461C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 089150 7F054620 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 089154 7F054624 240500C5 */  li    $a1, 197
@@ -40882,6 +41663,7 @@ glabel play_door_closing_soundeffect_1
 /* 089160 7F054630 00403025 */  move  $a2, $v0
 /* 089164 7F054634 10000038 */  b     .L7F054718
 /* 089168 7F054638 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F05463C:
 /* 08916C 7F05463C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 089170 7F054640 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 089174 7F054644 240500C7 */  li    $a1, 199
@@ -40890,6 +41672,7 @@ glabel play_door_closing_soundeffect_1
 /* 089180 7F054650 00403025 */  move  $a2, $v0
 /* 089184 7F054654 10000030 */  b     .L7F054718
 /* 089188 7F054658 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F05465C:
 /* 08918C 7F05465C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 089190 7F054660 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 089194 7F054664 240500C9 */  li    $a1, 201
@@ -40898,6 +41681,7 @@ glabel play_door_closing_soundeffect_1
 /* 0891A0 7F054670 00403025 */  move  $a2, $v0
 /* 0891A4 7F054674 10000028 */  b     .L7F054718
 /* 0891A8 7F054678 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F05467C:
 /* 0891AC 7F05467C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0891B0 7F054680 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0891B4 7F054684 24050007 */  li    $a1, 7
@@ -40906,6 +41690,7 @@ glabel play_door_closing_soundeffect_1
 /* 0891C0 7F054690 00403025 */  move  $a2, $v0
 /* 0891C4 7F054694 10000020 */  b     .L7F054718
 /* 0891C8 7F054698 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F05469C:
 /* 0891CC 7F05469C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0891D0 7F0546A0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0891D4 7F0546A4 240500DB */  li    $a1, 219
@@ -40914,6 +41699,7 @@ glabel play_door_closing_soundeffect_1
 /* 0891E0 7F0546B0 00403025 */  move  $a2, $v0
 /* 0891E4 7F0546B4 10000018 */  b     .L7F054718
 /* 0891E8 7F0546B8 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F0546BC:
 /* 0891EC 7F0546BC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 0891F0 7F0546C0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 0891F4 7F0546C4 240500E2 */  li    $a1, 226
@@ -40922,6 +41708,7 @@ glabel play_door_closing_soundeffect_1
 /* 089200 7F0546D0 00403025 */  move  $a2, $v0
 /* 089204 7F0546D4 10000010 */  b     .L7F054718
 /* 089208 7F0546D8 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F0546DC:
 /* 08920C 7F0546DC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 089210 7F0546E0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 089214 7F0546E4 240500D7 */  li    $a1, 215
@@ -40930,6 +41717,7 @@ glabel play_door_closing_soundeffect_1
 /* 089220 7F0546F0 00403025 */  move  $a2, $v0
 /* 089224 7F0546F4 10000008 */  b     .L7F054718
 /* 089228 7F0546F8 8FA70020 */   lw    $a3, 0x20($sp)
+.L7F0546FC:
 /* 08922C 7F0546FC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
 /* 089230 7F054700 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 089234 7F054704 240500CB */  li    $a1, 203
@@ -43350,8 +44138,7 @@ void sub_GAME_7F056210(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
-glabel D_80052A44
-.word 0x3A0A0000 /*":\n"*/
+
 .text
 glabel sub_GAME_7F056210
 /* 08AD40 7F056210 3C0E8003 */  lui   $t6, %hi(clock_drawn_flag) # $t6, 0x8003
