@@ -285,7 +285,7 @@ struct gitem_data_struct gitem_structs[] = {
 	{&GremotemineZ_struct, "GremotemineZ", 0, &GremotemineZ_stats, 0x9807,  0x980E, 8.0, 0.0, 364.0, 90.0, 0.0, 0x9860, 0x98BE, 0.0, -3.0, 179.0},
 	{&GtriggerZ_struct, "GtriggerZ", 0, &GtriggerZ_stats, 0x9883, 0x982E, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x982E, 0x989B, 0.0, -40.0, 1383.0},
 	{&GtaserZ_struct, "GtaserZ", 0, &GtaserZ_stats, 0x9883, 0x986F, 107.0, 49.0, 568.0, 0.0, 0.0, 0x986F, 0x98C9, 64.0, 80.0, 333.0},
-	{0, "", 0, &GtankZ_stats, 0x9883, 0x986E, 20.0, 97.0, 579.0, 0.0, 0.0, 0x986E, 0x98C8, 94.0, 2.0, 356.0},
+	{0, 0, 0, &GtankZ_stats, 0x9883, 0x986E, 20.0, 97.0, 579.0, 0.0, 0.0, 0x986E, 0x98C8, 94.0, 2.0, 356.0},
 	{&GbombcaseZ_struct, "GbombcaseZ", 0, &GbombcaseZ_stats, 0x9883, 0x981A, 16.0, 0.0, 568.0, 0.0, 90.0, 0x981A, 0x988A, 0.0, -8.0, 323.0},
 	{&GplastiqueZ_struct, "GplastiqueZ", 0, &GplastiqueZ_stats, 0x9883, 0x985B, 28.0, 0.0, 1062.0, 80.0, 90.0, 0x985B, 0x98B7, 0.0, -16.0, 739.0},
 	{&GflarepistolZ_struct, "GflarepistolZ", 0, &GflarepistolZ_stats, 0x9883, 0x9834, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9834, 0x989F, 0.0, 0.0, 1000.0},
@@ -842,201 +842,7 @@ const char aSDS[] = "%s %d %s\n";
 //D:80053C0C
 const char aSD_0[] = "%s: %d\n";
 
-/*
-D:80053CB0     jpt_player_thrown_object:.word thrown_item_timed_mine
-D:80053CB0                                              # DATA XREF: generate_player_thrown_object+1F8r
-D:80053CB0                     .word thrown_item_proximity_mine  # jump table for switch statement
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word thrown_item_bombcase
-D:80053CB0                     .word thrown_item_plastique
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word thrown_item_bug
-D:80053CB0                     .word thrown_item_micro_camera
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word thrown_item_GE_key
-D:80053D3C     jpt_temp_obj_for_itemtype:.word generate_temp_timed_mine
-D:80053D3C                                              # DATA XREF: generate_player_thrown_object+264r
-D:80053D3C                     .word generate_temp_proximity_mine  # jump table for switch statement
-D:80053D3C                     .word generate_temp_remote_mine
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_bombcase
-D:80053D3C                     .word generate_temp_static_thrown
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_static_thrown
-D:80053D3C                     .word generate_temp_static_thrown
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_static_thrown
-*/
 
-/*
-D:80053E38     jpt_weapon_bullet_type:.word weapon_bullet_type_pistol
-D:80053E38                                              # DATA XREF: handles_firing_or_throwing_weapon_in_hand+17D8r
-D:80053E38                     .word weapon_bullet_type_pistol  # jump table for switch statement
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_shotgun_mine
-D:80053E38                     .word weapon_bullet_type_shotgun_mine
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_none
-D:80053E38                     .word weapon_bullet_type_none
-*/
-
-/*
-D:80053F24     jpt_70098CF8:   .word Weapon_function_slapper, Weapon_function_hunting_knife, Weapon_function_throwing_knife
-D:80053F24                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+294r
-D:80053F24                     .word Weapon_function_guns, Weapon_function_guns, Weapon_function_guns, Weapon_function_guns  # jump table for switch statement
-D:80053F24                     .word Weapon_function_guns, Weapon_function_guns, Weapon_function_guns, Weapon_function_guns
-D:80053F24                     .word Weapon_function_guns, Weapon_function_guns, Weapon_function_guns, Weapon_function_guns
-D:80053F24                     .word Weapon_function_guns, Weapon_function_guns, Weapon_function_magnum, Weapon_function_guns
-D:80053F24                     .word Weapon_function_guns, Weapon_function_guns, Weapon_function_guns, Weapon_function_guns
-D:80053F24                     .word Weapon_function_magnum, Weapon_function_guns, Weapon_function_grenades
-D:80053F24                     .word Weapon_function_throwable_item, Weapon_function_throwable_item, Weapon_function_throwable_item
-D:80053F24                     .word Weapon_function_guns, Weapon_function_tazer, Weapon_function_guns, Weapon_function_throwable_item
-D:80053F24                     .word Weapon_function_throwable_item, Weapon_function_guns, Weapon_function_guns
-D:80053F24                     .word Weapon_function_key, Weapon_function_key, Weapon_function_key, Weapon_function_camera
-D:80053F24                     .word Weapon_function_key, Weapon_function_key, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_key, Weapon_function_key, Weapon_function_key, Weapon_function_throwable_item
-D:80053F24                     .word Weapon_function_throwable_item, Weapon_function_key, Weapon_function_key
-D:80053F24                     .word Weapon_function_key, Weapon_function_key, Weapon_function_key, Weapon_function_key
-D:80053F24                     .word Weapon_function_key, Weapon_function_key, Weapon_function_key, Weapon_function_key
-D:80053F24                     .word Weapon_function_key, Weapon_function_guns, Weapon_function_throwable_item
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_key
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_key, Weapon_function_key
-D:80053F24                     .word Weapon_function_key, Weapon_function_collectible, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_collectible
-D:80054084     jpt_70098F10:   .word Weapon_shooting_noammo, Weapon_shooting_throwable, Weapon_shooting_pistol
-D:80054084                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+4ACr
-D:80054084                     .word Weapon_shooting_pistol, Weapon_shooting_pistol, Weapon_shooting_machinegun  # jump table for switch statement
-D:80054084                     .word Weapon_shooting_machinegun, Weapon_shooting_machinegun, Weapon_shooting_machinegun
-D:80054084                     .word Weapon_shooting_machinegun, Weapon_shooting_machinegun, Weapon_shooting_machinegun
-D:80054084                     .word Weapon_shooting_machinegun, Weapon_shooting_pistol, Weapon_shooting_pistol
-D:80054084                     .word Weapon_shooting_pistol, Weapon_shooting_pistol, Weapon_shooting_pistol
-D:80054084                     .word Weapon_shooting_pistol, Weapon_shooting_pistol, Weapon_shooting_pistol
-D:80054084                     .word Weapon_shooting_pistol, Weapon_shooting_pistol, Weapon_shooting_pistol
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_pistol, Weapon_shooting_tazer
-D:80054084                     .word Weapon_shooting_pistol, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_pistol, Weapon_shooting_pistol, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_watch_magnet
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_watch_magnet
-*/
-
-/*
-D:80054194     jpt_70099D7C:   .word weapon_switchstyle_NONE, weapon_switchstyle_NONE, weapon_playsfx_knife
-D:80054194                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1318r
-D:80054194                     .word weapon_playsfx_knife, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun  # jump table for switch statement
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_F2
-D:80054194                     .word weapon_switchstyle_NONE, weapon_playsfx_gun, weapon_playsfx_gun, weapon_switchstyle_NONE
-D:80054194                     .word weapon_playsfx_mine, weapon_playsfx_mine, weapon_playsfx_mine, weapon_switchstyle_NONE
-D:80054194                     .word weapon_switchstyle_NONE, weapon_switchstyle_NONE, weapon_switchstyle_NONE
-D:80054194                     .word weapon_switchstyle_NONE, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_switchstyle_NONE, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_switchstyle_NONE, weapon_switchstyle_NONE
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_switchstyle_NONE
-D:80054194                     .word weapon_switchstyle_NONE
-*/
-
-/*
-D:80054294     jpt_7009A0D4:   .word weapon_reload_none_sfx, weapon_reload_none_sfx, weapon_reload_none_sfx
-D:80054294                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1670r
-D:80054294                     .word weapon_reload_none_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx  # jump table for switch statement
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_none_sfx, weapon_reload_none_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_none_sfx
-D:80054294                     .word weapon_reload_none_sfx, weapon_reload_none_sfx, weapon_reload_none_sfx
-D:80054294                     .word weapon_reload_none_sfx, weapon_reload_none_sfx, weapon_reload_none_sfx
-D:80054294                     .word weapon_reload_none_sfx, weapon_reload_none_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_none_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_none_sfx
-D:80054294                     .word weapon_reload_none_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_none_sfx, weapon_reload_none_sfx
-*/
 
 
 
@@ -5243,6 +5049,81 @@ glabel D_80053CA8
 .word 0x41855555 /*16.666666*/
 glabel D_80053CAC
 .word 0x40d55555 /*6.6666665*/
+/*D:80053CB0*/
+glabel jpt_player_thrown_object
+.word thrown_item_timed_mine
+.word thrown_item_proximity_mine
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word thrown_item_bombcase
+.word thrown_item_plastique
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word thrown_item_bug
+.word thrown_item_micro_camera
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word thrown_item_GE_key
+
+/*D:80053D3C*/
+glabel jpt_temp_obj_for_itemtype
+.word generate_temp_timed_mine
+.word generate_temp_proximity_mine
+.word generate_temp_remote_mine
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_bombcase
+.word generate_temp_static_thrown
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_static_thrown
+.word generate_temp_static_thrown
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_static_thrown
 
 glabel D_80053DC8
 .word 0x3dcccccd /*0.1*/
@@ -6237,6 +6118,30 @@ glabel D_80053E30
 .word 0x40c90fdb /*6.2831855*/
 glabel D_80053E34
 .word 0x40c90fdb /*6.2831855*/
+
+/*D:80053E38*/
+glabel jpt_weapon_bullet_type
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_shotgun_mine
+.word weapon_bullet_type_shotgun_mine
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_none
+.word weapon_bullet_type_none
+
 .text
 glabel handles_firing_or_throwing_weapon_in_hand
 /* 094AF8 7F05FFC8 27BDFD58 */  addiu $sp, $sp, -0x2a8
@@ -11702,6 +11607,159 @@ void handle_weapon_id_values_possibly_1st_person_animation(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
+/*D:80053F24*/
+glabel jpt_70098CF8
+.word Weapon_function_slapper
+.word Weapon_function_hunting_knife
+.word Weapon_function_throwing_knife
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_magnum
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_magnum
+.word Weapon_function_guns
+.word Weapon_function_grenades
+.word Weapon_function_throwable_item
+.word Weapon_function_throwable_item
+.word Weapon_function_throwable_item
+.word Weapon_function_guns
+.word Weapon_function_tazer
+.word Weapon_function_guns
+.word Weapon_function_throwable_item
+.word Weapon_function_throwable_item
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_camera
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_collectible
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_throwable_item
+.word Weapon_function_throwable_item
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_guns
+.word Weapon_function_throwable_item
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_key
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+
+/*D:80054084*/
+glabel jpt_70098F10
+.word Weapon_shooting_noammo
+.word Weapon_shooting_throwable
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_pistol
+.word Weapon_shooting_tazer
+.word Weapon_shooting_pistol
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_watch_magnet
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_watch_magnet
+
 glabel D_80054170
 .word 0x40c90fdb /*6.2831855*/
 glabel D_80054174
@@ -11721,10 +11779,140 @@ glabel D_8005418C
 glabel D_80054190
 .word 0x3f32b8c3 /*0.69813174*/
 
+/*D:80054194*/
+glabel jpt_70099D7C
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+.word weapon_playsfx_knife
+.word weapon_playsfx_knife
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_F2
+.word weapon_switchstyle_NONE
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_switchstyle_NONE
+.word weapon_playsfx_mine
+.word weapon_playsfx_mine
+.word weapon_playsfx_mine
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_switchstyle_NONE
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+
 glabel D_8005428C
 .word 0x3f32b8c3 /*0.69813174*/
 glabel D_80054290
 .word 0x3f32b8c3 /*0.69813174*/
+
+/*D:80054294*/
+glabel jpt_7009A0D4
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
 
 glabel D_8005438C
 .word 0x3f32b8c3 /*0.69813174*/
