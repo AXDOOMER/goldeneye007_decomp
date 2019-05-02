@@ -100,7 +100,7 @@ GAMEFILES := game/initgamedata.c game/initweaponanigroups.c game/initactorpropst
 			game/othermodemicrocode.c game/bond.c game/unk_08DBB0.c game/debugmenu_08FE00.c game/debugmenu_090490.c game/unk_091080.c \
 			game/cheat_buttons_objectrelated.c game/unk_092890.c game/unk_092E50.c game/unk_093880.c game/unk_09B600.c game/unk_09B740.c \
 			game/unk_09B7A0.c game/unk_09C250.c game/unk_0A1DA0.c game/watch.c game/textrelated.c game/stan.c game/unk_0B3200.c \
-			game/bg.c game/fog.c game/lightfixture.c game/unk_0BC530.c game/ob.c game/dyn.c game/lvl.c game/unk_0C0A70.c \
+			game/bg.c game/fog.c game/lightfixture.c game/unk_0BC530.c game/ob.c game/dyn.c game/lvl.c game/lvl_2.c game/unk_0C0A70.c \
 			game/mp_music.c game/lvl_text.c game/mp_watch.c game/radar.c game/mp_weapon.c game/image.c game/image_bank.c \
 			game/unk_0CC4C0.c game/decompress.c game/zlib.c game/rsp.c game/indy_comms.c game/indy_0D0180.c game/game_debug.c \
 			game/compiletime.c game/unk_0D1AC0.c game/viewport.c game/music_0D2720.c game/spectrum.c
@@ -127,7 +127,7 @@ GAMEOBJECTS := build/game/initgamedata.o build/game/initweaponanigroups.o build/
 			build/game/unk_093880.o build/game/unk_09B600.o build/game/unk_09B740.o build/game/unk_09B7A0.o \
 			build/game/unk_09C250.o build/game/unk_0A1DA0.o build/game/watch.o build/game/textrelated.o build/game/stan.o \
 			build/game/unk_0B3200.o build/game/bg.o build/game/fog.o build/game/lightfixture.o build/game/unk_0BC530.o \
-			build/game/ob.o build/game/dyn.o build/game/lvl.o build/game/unk_0C0A70.o build/game/mp_music.o \
+			build/game/ob.o build/game/dyn.o build/game/lvl.o build/game/lvl_2.o build/game/unk_0C0A70.o build/game/mp_music.o \
 			build/game/lvl_text.o build/game/mp_watch.o build/game/radar.o build/game/mp_weapon.o build/game/image.o \
 			build/game/image_bank.o build/game/unk_0CC4C0.o build/game/decompress.o build/game/zlib.o build/game/rsp.o \
 			build/game/indy_comms.o build/game/indy_0D0180.o build/game/game_debug.o build/game/compiletime.o \

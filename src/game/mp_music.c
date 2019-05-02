@@ -37,67 +37,8 @@ s32 dword_CODE_bss_8008C634;
 s32 mission_state = 0;
 
 
-/* rodata
-D:8005B790     jpt_700F4B9C:   .word loc_CODE_7F0C0C74  # DATA XREF: sub_CODE_7F0C0C3C+24r
-D:8005B790                     .word loc_CODE_7F0C0D28  # jump table for switch statement
-D:8005B790                     .word loc_CODE_7F0C0E18
-D:8005B790                     .word loc_CODE_7F0C0EB0
-D:8005B790                     .word loc_CODE_7F0C0FE8
-D:8005B790                     .word loc_CODE_7F0C10B4
-D:8005B790                     .word loc_CODE_7F0C115C
-D:8005B7AC     jpt_700F4BBC:   .word loc_CODE_7F0C11EC  # DATA XREF: sub_CODE_7F0C0C3C+44r
-D:8005B7AC                     .word loc_CODE_7F0C0C94  # jump table for switch statement
-D:8005B7AC                     .word loc_CODE_7F0C0D28
-D:8005B7AC                     .word loc_CODE_7F0C0D28
-D:8005B7AC                     .word loc_CODE_7F0C0CC8
-D:8005B7AC                     .word loc_CODE_7F0C0D28
-D:8005B7AC                     .word loc_CODE_7F0C0D28
-D:8005B7C8     jpt_700F4C70:   .word loc_CODE_7F0C0D48  # DATA XREF: sub_CODE_7F0C0C3C+F8r
-D:8005B7C8                     .word loc_CODE_7F0C0E18  # jump table for switch statement
-D:8005B7C8                     .word loc_CODE_7F0C0D68
-D:8005B7C8                     .word loc_CODE_7F0C0DAC
-D:8005B7C8                     .word loc_CODE_7F0C0E18
-D:8005B7C8                     .word loc_CODE_7F0C0E18
-D:8005B7C8                     .word loc_CODE_7F0C0DE4
-*/
+// rodata
 
-/*
-D:8005B7E8     jpt_700F4D60:   .word loc_CODE_7F0C0E38  # DATA XREF: sub_CODE_7F0C0C3C+1E8r
-D:8005B7E8                     .word loc_CODE_7F0C0E58  # jump table for switch statement
-D:8005B7E8                     .word loc_CODE_7F0C11EC
-D:8005B7E8                     .word loc_CODE_7F0C0E88
-D:8005B7E8                     .word loc_CODE_7F0C0EB0
-D:8005B7E8                     .word loc_CODE_7F0C0EB0
-D:8005B7E8                     .word loc_CODE_7F0C0EB0
-D:8005B804     jpt_700F4DF8:   .word loc_CODE_7F0C0ED0  # DATA XREF: sub_CODE_7F0C0C3C+280r
-D:8005B804                     .word loc_CODE_7F0C0EF0  # jump table for switch statement
-D:8005B804                     .word loc_CODE_7F0C0F20
-D:8005B804                     .word loc_CODE_7F0C0FE8
-D:8005B804                     .word loc_CODE_7F0C0F54
-D:8005B804                     .word loc_CODE_7F0C0F9C
-D:8005B804                     .word loc_CODE_7F0C0FE8
-D:8005B820     jpt_700F4F30:   .word loc_CODE_7F0C1008  # DATA XREF: sub_CODE_7F0C0C3C+3B8r
-D:8005B820                     .word loc_CODE_7F0C10B4  # jump table for switch statement
-D:8005B820                     .word loc_CODE_7F0C10B4
-D:8005B820                     .word loc_CODE_7F0C1028
-D:8005B820                     .word loc_CODE_7F0C10B4
-D:8005B820                     .word loc_CODE_7F0C1070
-D:8005B820                     .word loc_CODE_7F0C10B4
-D:8005B83C     jpt_700F4FFC:   .word loc_CODE_7F0C10D4  # DATA XREF: sub_CODE_7F0C0C3C+484r
-D:8005B83C                     .word loc_CODE_7F0C115C  # jump table for switch statement
-D:8005B83C                     .word loc_CODE_7F0C115C
-D:8005B83C                     .word loc_CODE_7F0C10F4
-D:8005B83C                     .word loc_CODE_7F0C112C
-D:8005B83C                     .word loc_CODE_7F0C115C
-D:8005B83C                     .word loc_CODE_7F0C115C
-D:8005B858     jpt_700F50A4:   .word loc_CODE_7F0C117C  # DATA XREF: sub_CODE_7F0C0C3C+52Cr
-D:8005B858                     .word loc_CODE_7F0C119C  # jump table for switch statement
-D:8005B858                     .word loc_CODE_7F0C11E4
-D:8005B858                     .word loc_CODE_7F0C11E4
-D:8005B858                     .word loc_CODE_7F0C11E4
-D:8005B858                     .word loc_CODE_7F0C11E4
-D:8005B858                     .word loc_CODE_7F0C11CC
-*/
 
 
 #ifdef NONMATCHING
@@ -148,8 +89,90 @@ void sub_GAME_7F0C0C3C(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
+/*D:8005B790*/
+glabel jpt_700F4B9C
+.word .L7F0C0C74
+.word .L7F0C0D28
+.word .L7F0C0E18
+.word .L7F0C0EB0
+.word .L7F0C0FE8
+.word .L7F0C10B4
+.word .L7F0C115C
+
+/*D:8005B7AC*/
+glabel jpt_700F4BBC
+.word .L7F0C11EC
+.word .L7F0C0C94
+.word .L7F0C0D28
+.word .L7F0C0D28
+.word .L7F0C0CC8
+.word .L7F0C0D28
+.word .L7F0C0D28
+
+/*D:8005B7C8*/
+glabel jpt_700F4C70
+.word .L7F0C0D48
+.word .L7F0C0E18
+.word .L7F0C0D68
+.word .L7F0C0DAC
+.word .L7F0C0E18
+.word .L7F0C0E18
+.word .L7F0C0DE4
+
 glabel D_8005B7E4
 .word 0x3ca3d70a /*0.02*/
+
+/*D:8005B7E8*/
+glabel jpt_700F4D60
+.word .L7F0C0E38
+.word .L7F0C0E58
+.word .L7F0C11EC
+.word .L7F0C0E88
+.word .L7F0C0EB0
+.word .L7F0C0EB0
+.word .L7F0C0EB0
+
+/*D:8005B804*/
+glabel jpt_700F4DF8
+.word .L7F0C0ED0
+.word .L7F0C0EF0
+.word .L7F0C0F20
+.word .L7F0C0FE8
+.word .L7F0C0F54
+.word .L7F0C0F9C
+.word .L7F0C0FE8
+
+/*D:8005B820*/
+glabel jpt_700F4F30
+.word .L7F0C1008
+.word .L7F0C10B4
+.word .L7F0C10B4
+.word .L7F0C1028
+.word .L7F0C10B4
+.word .L7F0C1070
+.word .L7F0C10B4
+
+/*D:8005B83C*/
+glabel jpt_700F4FFC
+.word .L7F0C10D4
+.word .L7F0C115C
+.word .L7F0C115C
+.word .L7F0C10F4
+.word .L7F0C112C
+.word .L7F0C115C
+.word .L7F0C115C
+
+/*D:8005B858*/
+glabel jpt_700F50A4
+.word .L7F0C117C
+.word .L7F0C119C
+.word .L7F0C11E4
+.word .L7F0C11E4
+.word .L7F0C11E4
+.word .L7F0C11E4
+.word .L7F0C11CC
+
+
 .text
 glabel sub_GAME_7F0C0C3C
 /* 0F576C 7F0C0C3C 3C038005 */  lui   $v1, %hi(mission_state) # $v1, 0x8005
@@ -166,6 +189,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5798 7F0C0C68 8C2EB790 */  lw    $t6, -0x4870($at)
 /* 0F579C 7F0C0C6C 01C00008 */  jr    $t6
 /* 0F57A0 7F0C0C70 00000000 */   nop   
+.L7F0C0C74:
 /* 0F57A4 7F0C0C74 2C810007 */  sltiu $at, $a0, 7
 /* 0F57A8 7F0C0C78 1020002B */  beqz  $at, .L7F0C0D28
 /* 0F57AC 7F0C0C7C 00047880 */   sll   $t7, $a0, 2
@@ -174,6 +198,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F57B8 7F0C0C88 8C2FB7AC */  lw    $t7, -0x4854($at)
 /* 0F57BC 7F0C0C8C 01E00008 */  jr    $t7
 /* 0F57C0 7F0C0C90 00000000 */   nop   
+.L7F0C0C94:
 /* 0F57C4 7F0C0C94 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F57C8 7F0C0C98 00000000 */   nop   
 /* 0F57CC 7F0C0C9C 0C001C0F */  jal   musicTrack1Vol
@@ -187,6 +212,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F57EC 7F0C0CBC 00402025 */   move  $a0, $v0
 /* 0F57F0 7F0C0CC0 1000014B */  b     .L7F0C11F0
 /* 0F57F4 7F0C0CC4 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0CC8:
 /* 0F57F8 7F0C0CC8 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F57FC 7F0C0CCC 00000000 */   nop   
 /* 0F5800 7F0C0CD0 0C001C0F */  jal   musicTrack1Vol
@@ -220,6 +246,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F586C 7F0C0D3C 8C38B7C8 */  lw    $t8, -0x4838($at)
 /* 0F5870 7F0C0D40 03000008 */  jr    $t8
 /* 0F5874 7F0C0D44 00000000 */   nop   
+.L7F0C0D48:
 /* 0F5878 7F0C0D48 0C001BF4 */  jal   musicTrack1Stop
 /* 0F587C 7F0C0D4C 00000000 */   nop   
 /* 0F5880 7F0C0D50 0C001CD6 */  jal   musicTrack2Stop
@@ -228,6 +255,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F588C 7F0C0D5C 00000000 */   nop   
 /* 0F5890 7F0C0D60 10000123 */  b     .L7F0C11F0
 /* 0F5894 7F0C0D64 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0D68:
 /* 0F5898 7F0C0D68 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F589C 7F0C0D6C 00000000 */   nop   
 /* 0F58A0 7F0C0D70 0C001CF1 */  jal   musicTrack2Vol
@@ -245,6 +273,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F58D0 7F0C0DA0 00000000 */   nop   
 /* 0F58D4 7F0C0DA4 10000112 */  b     .L7F0C11F0
 /* 0F58D8 7F0C0DA8 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0DAC:
 /* 0F58DC 7F0C0DAC 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F58E0 7F0C0DB0 00000000 */   nop   
 /* 0F58E4 7F0C0DB4 0C001CF1 */  jal   musicTrack2Vol
@@ -259,6 +288,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5908 7F0C0DD8 00000000 */   nop   
 /* 0F590C 7F0C0DDC 10000104 */  b     .L7F0C11F0
 /* 0F5910 7F0C0DE0 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0DE4:
 /* 0F5914 7F0C0DE4 3C018006 */  lui   $at, %hi(D_8005B7E4) # $at, 0x8006
 /* 0F5918 7F0C0DE8 0C001C3E */  jal   music_related_1
 /* 0F591C 7F0C0DEC C42CB7E4 */   lwc1  $f12, %lo(D_8005B7E4)($at)
@@ -281,6 +311,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F595C 7F0C0E2C 8C39B7E8 */  lw    $t9, -0x4818($at)
 /* 0F5960 7F0C0E30 03200008 */  jr    $t9
 /* 0F5964 7F0C0E34 00000000 */   nop   
+.L7F0C0E38:
 /* 0F5968 7F0C0E38 0C001BF4 */  jal   musicTrack1Stop
 /* 0F596C 7F0C0E3C 00000000 */   nop   
 /* 0F5970 7F0C0E40 0C001CD6 */  jal   musicTrack2Stop
@@ -289,6 +320,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F597C 7F0C0E4C 00000000 */   nop   
 /* 0F5980 7F0C0E50 100000E7 */  b     .L7F0C11F0
 /* 0F5984 7F0C0E54 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0E58:
 /* 0F5988 7F0C0E58 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F598C 7F0C0E5C 00000000 */   nop   
 /* 0F5990 7F0C0E60 3C013F00 */  li    $at, 0x3F000000 # 0.500000
@@ -301,6 +333,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F59AC 7F0C0E7C 00000000 */   nop   
 /* 0F59B0 7F0C0E80 100000DB */  b     .L7F0C11F0
 /* 0F59B4 7F0C0E84 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0E88:
 /* 0F59B8 7F0C0E88 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F59BC 7F0C0E8C 00000000 */   nop   
 /* 0F59C0 7F0C0E90 0C001CF1 */  jal   musicTrack2Vol
@@ -320,6 +353,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F59F4 7F0C0EC4 8C28B804 */  lw    $t0, -0x47fc($at)
 /* 0F59F8 7F0C0EC8 01000008 */  jr    $t0
 /* 0F59FC 7F0C0ECC 00000000 */   nop   
+.L7F0C0ED0:
 /* 0F5A00 7F0C0ED0 0C001BF4 */  jal   musicTrack1Stop
 /* 0F5A04 7F0C0ED4 00000000 */   nop   
 /* 0F5A08 7F0C0ED8 0C001CD6 */  jal   musicTrack2Stop
@@ -328,6 +362,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5A14 7F0C0EE4 00000000 */   nop   
 /* 0F5A18 7F0C0EE8 100000C1 */  b     .L7F0C11F0
 /* 0F5A1C 7F0C0EEC 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0EF0:
 /* 0F5A20 7F0C0EF0 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5A24 7F0C0EF4 00000000 */   nop   
 /* 0F5A28 7F0C0EF8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -340,6 +375,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5A44 7F0C0F14 00000000 */   nop   
 /* 0F5A48 7F0C0F18 100000B5 */  b     .L7F0C11F0
 /* 0F5A4C 7F0C0F1C 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0F20:
 /* 0F5A50 7F0C0F20 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5A54 7F0C0F24 00000000 */   nop   
 /* 0F5A58 7F0C0F28 0C001CF1 */  jal   musicTrack2Vol
@@ -353,6 +389,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5A78 7F0C0F48 00402025 */   move  $a0, $v0
 /* 0F5A7C 7F0C0F4C 100000A8 */  b     .L7F0C11F0
 /* 0F5A80 7F0C0F50 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0F54:
 /* 0F5A84 7F0C0F54 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5A88 7F0C0F58 00000000 */   nop   
 /* 0F5A8C 7F0C0F5C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -371,6 +408,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5AC0 7F0C0F90 00000000 */   nop   
 /* 0F5AC4 7F0C0F94 10000096 */  b     .L7F0C11F0
 /* 0F5AC8 7F0C0F98 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0F9C:
 /* 0F5ACC 7F0C0F9C 0FC30304 */  jal   sub_GAME_7F0C0C10
 /* 0F5AD0 7F0C0FA0 00000000 */   nop   
 /* 0F5AD4 7F0C0FA4 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -399,6 +437,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5B2C 7F0C0FFC 8C29B820 */  lw    $t1, -0x47e0($at)
 /* 0F5B30 7F0C1000 01200008 */  jr    $t1
 /* 0F5B34 7F0C1004 00000000 */   nop   
+.L7F0C1008:
 /* 0F5B38 7F0C1008 0C001BF4 */  jal   musicTrack1Stop
 /* 0F5B3C 7F0C100C 00000000 */   nop   
 /* 0F5B40 7F0C1010 0C001CD6 */  jal   musicTrack2Stop
@@ -407,6 +446,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5B4C 7F0C101C 00000000 */   nop   
 /* 0F5B50 7F0C1020 10000073 */  b     .L7F0C11F0
 /* 0F5B54 7F0C1024 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C1028:
 /* 0F5B58 7F0C1028 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5B5C 7F0C102C 00000000 */   nop   
 /* 0F5B60 7F0C1030 0C001CF1 */  jal   musicTrack2Vol
@@ -425,6 +465,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5B94 7F0C1064 00000000 */   nop   
 /* 0F5B98 7F0C1068 10000061 */  b     .L7F0C11F0
 /* 0F5B9C 7F0C106C 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C1070:
 /* 0F5BA0 7F0C1070 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5BA4 7F0C1074 00000000 */   nop   
 /* 0F5BA8 7F0C1078 0C001CF1 */  jal   musicTrack2Vol
@@ -451,6 +492,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5BF8 7F0C10C8 8C2AB83C */  lw    $t2, -0x47c4($at)
 /* 0F5BFC 7F0C10CC 01400008 */  jr    $t2
 /* 0F5C00 7F0C10D0 00000000 */   nop   
+.L7F0C10D4:
 /* 0F5C04 7F0C10D4 0C001BF4 */  jal   musicTrack1Stop
 /* 0F5C08 7F0C10D8 00000000 */   nop   
 /* 0F5C0C 7F0C10DC 0C001CD6 */  jal   musicTrack2Stop
@@ -459,6 +501,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5C18 7F0C10E8 00000000 */   nop   
 /* 0F5C1C 7F0C10EC 10000040 */  b     .L7F0C11F0
 /* 0F5C20 7F0C10F0 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C10F4:
 /* 0F5C24 7F0C10F4 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5C28 7F0C10F8 00000000 */   nop   
 /* 0F5C2C 7F0C10FC 0C001CF1 */  jal   musicTrack2Vol
@@ -473,6 +516,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5C50 7F0C1120 00000000 */   nop   
 /* 0F5C54 7F0C1124 10000032 */  b     .L7F0C11F0
 /* 0F5C58 7F0C1128 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C112C:
 /* 0F5C5C 7F0C112C 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5C60 7F0C1130 00000000 */   nop   
 /* 0F5C64 7F0C1134 3C013F00 */  li    $at, 0x3F000000 # 0.500000
@@ -494,6 +538,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5CA0 7F0C1170 8C2BB858 */  lw    $t3, -0x47a8($at)
 /* 0F5CA4 7F0C1174 01600008 */  jr    $t3
 /* 0F5CA8 7F0C1178 00000000 */   nop   
+.L7F0C117C:
 /* 0F5CAC 7F0C117C 0C001BF4 */  jal   musicTrack1Stop
 /* 0F5CB0 7F0C1180 00000000 */   nop   
 /* 0F5CB4 7F0C1184 0C001CD6 */  jal   musicTrack2Stop
@@ -502,6 +547,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5CC0 7F0C1190 00000000 */   nop   
 /* 0F5CC4 7F0C1194 10000016 */  b     .L7F0C11F0
 /* 0F5CC8 7F0C1198 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C119C:
 /* 0F5CCC 7F0C119C 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5CD0 7F0C11A0 00000000 */   nop   
 /* 0F5CD4 7F0C11A4 3C014000 */  li    $at, 0x40000000 # 2.000000
@@ -514,6 +560,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5CF0 7F0C11C0 00000000 */   nop   
 /* 0F5CF4 7F0C11C4 1000000A */  b     .L7F0C11F0
 /* 0F5CF8 7F0C11C8 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C11CC:
 /* 0F5CFC 7F0C11CC 3C018002 */  lui   $at, %hi(music2_playing) # $at, 0x8002
 /* 0F5D00 7F0C11D0 AC204350 */  sw    $zero, %lo(music2_playing)($at)
 /* 0F5D04 7F0C11D4 0C001C81 */  jal   musicTrack2Play
@@ -523,6 +570,7 @@ glabel sub_GAME_7F0C0C3C
 .L7F0C11E4:
 /* 0F5D14 7F0C11E4 1000FFFF */  b     .L7F0C11E4
 /* 0F5D18 7F0C11E8 00000000 */   nop   
+.L7F0C11EC:
 /* 0F5D1C 7F0C11EC 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F0C11F0:
 /* 0F5D20 7F0C11F0 27BD0018 */  addiu $sp, $sp, 0x18

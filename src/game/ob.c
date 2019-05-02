@@ -754,8 +754,6 @@ s32 file_entry_max = 0x2D7;
 
 
 // rodata
-//D:8005B674
-const char aOb_c_debug[] = "ob_c_debug";
 
 
 #ifdef NONMATCHING
@@ -820,9 +818,11 @@ void resource_load_from_indy(void) {
 }
 #else
 GLOBAL_ASM(
-.late_rodata
+.rdata
+/*8005b66c*/
 glabel rz_header_1
 .word 0x11720000
+/*8005b670*/
 glabel rz_header_2
 .word 0x11720000
 .text
@@ -935,6 +935,11 @@ loop_2:
 }
 #else
 GLOBAL_ASM(
+.rdata
+/*D:8005B674*/
+glabel aOb_c_debug
+/*"ob_c_debug"*/
+.word 0x6F625F63, 0x5F646562, 0x75670000
 .text
 glabel ob_c_debug_setup
 /* 0F1758 7F0BCC28 27BDFFE8 */  addiu $sp, $sp, -0x18

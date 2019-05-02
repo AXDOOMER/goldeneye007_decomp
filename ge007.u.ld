@@ -169,6 +169,7 @@ SECTIONS
       build/game/ob.o (.text);
       build/game/dyn.o (.text);
       build/game/lvl.o (.text);
+      build/game/lvl_2.o (.text);
       build/game/unk_0C0A70.o (.text);
       build/game/mp_music.o (.text);
       build/game/lvl_text.o (.text);
@@ -370,6 +371,7 @@ SECTIONS
       build/game/ob.o (.data);
       build/game/dyn.o (.data);
       build/game/lvl.o (.data);
+      build/game/lvl_2.o (.data);
       build/game/unk_0C0A70.o (.data);
       build/game/mp_music.o (.data);
       build/game/lvl_text.o (.data);
@@ -483,6 +485,7 @@ SECTIONS
       build/game/ob.o (.rodata);
       build/game/dyn.o (.rodata);
       build/game/lvl.o (.rodata);
+      build/game/lvl_2.o (.rodata);
       build/game/unk_0C0A70.o (.rodata);
       build/game/mp_music.o (.rodata);
       build/game/lvl_text.o (.rodata);
@@ -631,6 +634,7 @@ SECTIONS
       build/game/ob.o (.bss);
       build/game/dyn.o (.bss);
       build/game/lvl.o (.bss);
+      build/game/lvl_2.o (.bss);
       build/game/unk_0C0A70.o (.bss);
       build/game/mp_music.o (.bss);
       build/game/lvl_text.o (.bss);
