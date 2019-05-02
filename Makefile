@@ -96,7 +96,7 @@ GAMEFILES := game/initgamedata.c game/initweaponanigroups.c game/initactorpropst
 			game/intro_logos.c game/mainmenu.c game/unk_01B0E0.c game/unk_01B240.c game/unk_01BAE0.c game/blood_animation.c \
 			game/blood_decrypt.c game/eeprom.c game/actor.c game/actionblock.c game/loadobjectmodel.c game/objective_status.c \
 			game/sin.c game/unk_057FD0.c game/unk_05A9E0.c game/convertangleusinginverse.c game/unk_05AB70.c game/unk_05ACB0.c \
-			game/unk_05AE00.c game/unk_05B1E0.c game/truncf.c game/unk_05C440.c game/bondview.c game/objecthandler.c \
+			game/unk_05AE00.c game/unk_05B1E0.c game/truncf.c game/unk_05C440.c game/bondview.c game/objecthandler.c game/objecthandler_2.c \
 			game/othermodemicrocode.c game/bond.c game/unk_08DBB0.c game/debugmenu_08FE00.c game/debugmenu_090490.c game/unk_091080.c \
 			game/cheat_buttons_objectrelated.c game/unk_092890.c game/unk_092E50.c game/unk_093880.c game/unk_09B600.c game/unk_09B740.c \
 			game/unk_09B7A0.c game/unk_09C250.c game/unk_0A1DA0.c game/watch.c game/textrelated.c game/stan.c game/unk_0B3200.c \
@@ -121,7 +121,7 @@ GAMEOBJECTS := build/game/initgamedata.o build/game/initweaponanigroups.o build/
 			build/game/actor.o build/game/actionblock.o build/game/loadobjectmodel.o build/game/objective_status.o \
 			build/game/sin.o build/game/unk_057FD0.o build/game/unk_05A9E0.o build/game/convertangleusinginverse.o \
 			build/game/unk_05AB70.o build/game/unk_05ACB0.o build/game/unk_05AE00.o build/game/unk_05B1E0.o \
-			build/game/truncf.o build/game/unk_05C440.o build/game/bondview.o build/game/objecthandler.o \
+			build/game/truncf.o build/game/unk_05C440.o build/game/bondview.o build/game/objecthandler.o build/game/objecthandler_2.o \
 			build/game/othermodemicrocode.o build/game/bond.o build/game/unk_08DBB0.o build/game/debugmenu_08FE00.o build/game/debugmenu_090490.o \
 			build/game/unk_091080.o build/game/cheat_buttons_objectrelated.o build/game/unk_092890.o build/game/unk_092E50.o \
 			build/game/unk_093880.o build/game/unk_09B600.o build/game/unk_09B740.o build/game/unk_09B7A0.o \

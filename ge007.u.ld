@@ -142,6 +142,7 @@ SECTIONS
       build/game/unk_05C440.o (.text);
       build/game/bondview.o (.text);
       build/game/objecthandler.o (.text);
+      build/game/objecthandler_2.o (.text);
       build/game/othermodemicrocode.o (.text);
       build/game/bond.o (.text);
       build/game/unk_08DBB0.o (.text);
@@ -342,6 +343,7 @@ SECTIONS
       build/game/unk_05C440.o (.data);
       build/game/bondview.o (.data);
       build/game/objecthandler.o (.data);
+      build/game/objecthandler_2.o (.data);
       build/game/othermodemicrocode.o (.data);
       build/game/bond.o (.data);
       build/game/unk_08DBB0.o (.data);
@@ -454,6 +456,7 @@ SECTIONS
       build/game/unk_05C440.o (.rodata);
       build/game/bondview.o (.rodata);
       build/game/objecthandler.o (.rodata);
+      build/game/objecthandler_2.o (.rodata);
       build/game/othermodemicrocode.o (.rodata);
       build/game/bond.o (.rodata);
       build/game/unk_08DBB0.o (.rodata);
@@ -601,6 +604,7 @@ SECTIONS
       build/game/unk_05C440.o (.bss);
       build/game/bondview.o (.bss);
       build/game/objecthandler.o (.bss);
+      build/game/objecthandler_2.o (.bss);
       build/game/othermodemicrocode.o (.bss);
       build/game/bond.o (.bss);
       build/game/unk_08DBB0.o (.bss);
