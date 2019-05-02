@@ -260,31 +260,8 @@ s32 D_8003700C = 0;
 
 
 
-/* rodata
-D:800556FC     jpt_700C46A0:   .word debug_stanview, debug_bondview, loc_CODE_7F090798, debug_level, loc_CODE_7F0907BC
-D:800556FC                     .word debug_scale, debug_playtitle, debug_bonddie, debug_selectanim, debug_gunpos  # jump table for switch statement
-D:800556FC                     .word debug_flashcolor, debug_hitcolor, debug_music, debug_sfx, debug_invincible
-D:800556FC                     .word debug_visible, debug_collisions, debug_allguns, debug_maxammo, debug_displayspeed
-D:800556FC                     .word debug_dodrawbg, debug_dodrawobj, debug_stanhit, debug_stanregion, debug_turbo
-D:800556FC                     .word debug_printmanpos, portal_close_inf_approx, portal_close_inf_approx
-D:800556FC                     .word portal_close_inf_approx, debug_prroomloads, debug_showmemuse, debug_showmembars
-D:800556FC                     .word debug_grabrgb, debug_grabjpeg, debug_taskgrab, def_7F090770, debug_recordramrom
-D:800556FC                     .word debug_ramrom_record1, debug_ramrom_record2, debug_ramrom_record3, debug_replayramrom
-D:800556FC                     .word debug_saveramrom, debug_loadramrom, debug_autoyaim, debug_autoxaim, debug_007
-D:800556FC                     .word debug_agent, debug_all, fast_bond_debug, debug_objectives, def_7F090770
-D:800556FC                     .word def_7F090770, def_7F090770, def_7F090770, def_7F090770, loc_CODE_7F090834
-D:800556FC                     .word debug_screenpos, debug_showpatrols, debug_intro, debug_introedit, debug_intropos
-D:800556FC                     .word debug_worldpos, debug_chrkeypos, debug_viscvc, debug_chrnum, debug_roomblocks
-D:800556FC                     .word debug_profile, debug_objload, debug_weaponload, debug_joy2skyedit, debug_joy2hitsedit
-D:800556FC                     .word debug_joy2detailedit, debug_explosioninfo, debug_magicfog, debug_gunwatchpos
-D:800556FC                     .word debug_testingmanpos, debug_fog
+// rodata
 
-D:80055830     jpt_700C4DD8:   .word def_7F090EA8       # DATA XREF: debug_menu_processor+8FCr
-D:80055830                     .word def_7F090EA8
-D:80055830                     .word def_7F090EA8
-D:80055830                     .word def_7F090EA8
-D:80055830                     .word def_7F090EA8
-*/
 
 #ifdef NONMATCHING
 void display_debug_menu_text_onscreen(void)
@@ -477,6 +454,95 @@ void debug_menu_processor(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:800556FC*/
+glabel jpt_700C46A0
+.word debug_stanview
+.word debug_bondview
+.word .L7F090798
+.word debug_level
+.word .L7F0907BC
+.word debug_scale
+.word debug_playtitle
+.word debug_bonddie
+.word debug_selectanim
+.word debug_gunpos
+.word debug_flashcolor
+.word debug_hitcolor
+.word debug_music
+.word debug_sfx
+.word debug_invincible
+.word debug_visible
+.word debug_collisions
+.word debug_allguns
+.word debug_maxammo
+.word debug_displayspeed
+.word debug_dodrawbg
+.word debug_dodrawobj
+.word debug_stanhit
+.word debug_stanregion
+.word debug_turbo
+.word debug_printmanpos
+.word portal_close_inf_approx
+.word portal_close_inf_approx
+.word portal_close_inf_approx
+.word debug_prroomloads
+.word debug_showmemuse
+.word debug_showmembars
+.word debug_grabrgb
+.word debug_grabjpeg
+.word debug_taskgrab
+.word def_7F090770
+.word debug_recordramrom
+.word debug_ramrom_record1
+.word debug_ramrom_record2
+.word debug_ramrom_record3
+.word debug_replayramrom
+.word debug_saveramrom
+.word debug_loadramrom
+.word debug_autoyaim
+.word debug_autoxaim
+.word debug_007
+.word debug_agent
+.word debug_all
+.word fast_bond_debug
+.word debug_objectives
+.word def_7F090770
+.word def_7F090770
+.word def_7F090770
+.word def_7F090770
+.word def_7F090770
+.word .L7F090834
+.word debug_screenpos
+.word debug_showpatrols
+.word debug_intro
+.word debug_introedit
+.word debug_intropos
+.word debug_worldpos
+.word debug_chrkeypos
+.word debug_viscvc
+.word debug_chrnum
+.word debug_roomblocks
+.word debug_profile
+.word debug_objload
+.word debug_weaponload
+.word debug_joy2skyedit
+.word debug_joy2hitsedit
+.word debug_joy2detailedit
+.word debug_explosioninfo
+.word debug_magicfog
+.word debug_gunwatchpos
+.word debug_testingmanpos
+.word debug_fog
+
+/*D:80055830*/
+glabel jpt_700C4DD8
+.word def_7F090EA8
+.word def_7F090EA8
+.word def_7F090EA8
+.word def_7F090EA8
+.word def_7F090EA8
+
 .text
 glabel debug_menu_processor
 /* 0C50D0 7F0905A0 27BDFFA0 */  addiu $sp, $sp, -0x60
@@ -617,6 +683,7 @@ debug_bondview:
 /* 0C52BC 7F09078C 00000000 */   nop   
 /* 0C52C0 7F090790 100001B9 */  b     .L7F090E78
 /* 0C52C4 7F090794 8FB80018 */   lw    $t8, 0x18($sp)
+.L7F090798:
 /* 0C52C8 7F090798 0FC24153 */  jal   sub_GAME_7F09054C
 /* 0C52CC 7F09079C 00000000 */   nop   
 /* 0C52D0 7F0907A0 100001B5 */  b     .L7F090E78
@@ -627,6 +694,7 @@ debug_level:
 /* 0C52E0 7F0907B0 3C018003 */  lui   $at, %hi(debug_unknown) # $at, 0x8003
 /* 0C52E4 7F0907B4 100001AF */  b     .L7F090E74
 /* 0C52E8 7F0907B8 AC226F70 */   sw    $v0, %lo(debug_unknown)($at)
+.L7F0907BC:
 /* 0C52EC 7F0907BC 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C52F0 7F0907C0 00000000 */   nop   
 /* 0C52F4 7F0907C4 3C018003 */  lui   $at, %hi(debug_unknown) # $at, 0x8003
@@ -662,6 +730,7 @@ debug_hitcolor:
 /* 0C5358 7F090828 3C018003 */  lui   $at, %hi(debug_unknown) # $at, 0x8003
 /* 0C535C 7F09082C 10000191 */  b     .L7F090E74
 /* 0C5360 7F090830 AC226F70 */   sw    $v0, %lo(debug_unknown)($at)
+.L7F090834:
 /* 0C5364 7F090834 0FC2406C */  jal   get_highlighted_debug_option
 /* 0C5368 7F090838 00000000 */   nop   
 /* 0C536C 7F09083C 3C018003 */  lui   $at, %hi(debug_unknown) # $at, 0x8003

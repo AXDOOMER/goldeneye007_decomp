@@ -2680,56 +2680,8 @@ struct struct_15 stru_D_8003F80C[] = {
 
 
 
-/* rodata
-D:800572B0     jpt_700C5B38:   .word cheats_cheat_extra_mp_chars, cheats_cheat_invincibility, cheats_cheat_allguns
-D:800572B0                                              # DATA XREF: sub_CODE_7F091B64+98r
-D:800572B0                     .word cheats_cheat_max_ammo, cheats_debug_return_saved_ra, cheats_cheat_deactivate_invincibility  # jump table for switch statement
-D:800572B0                     .word cheats_cheat_linemode, cheats_cheat_2x_health, cheats_cheat_2x_armor
-D:800572B0                     .word cheats_cheat_invisibility, cheats_cheat_infinite_ammo, cheats_cheat_dk_mode
-D:800572B0                     .word cheats_cheat_extra_weapons, cheats_cheat_tiny_bond, cheats_cheat_paintball
-D:800572B0                     .word cheats_cheat_10x_health, cheats_cheat_magnum, cheats_cheat_laser, cheats_cheat_goldengun
-D:800572B0                     .word cheats_cheat_silverpp7, cheats_cheat_goldpp7, cheats_cheat_invisibility_mp
-D:800572B0                     .word cheats_debug_return_saved_ra, cheats_cheat_fast, cheats_debug_pos, cheats_debug_fast_ani
-D:800572B0                     .word cheats_debug_slow_ani, cheats_debug_return_saved_ra, cheats_debug_2x_rockets
-D:800572B0                     .word cheats_debug_2x_grenade_launch, cheats_debug_2x_rcp90, cheats_debug_2x_throwing_knife
-D:800572B0                     .word cheats_debug_2x_hunting_knife, cheats_debug_2x_laser, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-*/
+// rodata
 
-/*
-D:800573DC     jpt_700C6400:   .word cheat_button_default, cheat_button_invincibility, cheat_button_all_guns
-D:800573DC                                              # DATA XREF: sub_CODE_7F092438+8Cr
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_line_mode  # jump table for switch statement
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_unknown, cheat_button_infinite_ammo
-D:800573DC                     .word cheat_button_dkmode, cheat_button_default, cheat_button_unknown_0, cheat_button_paintball
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_mp_invis, cheat_button_default
-D:800573DC                     .word cheat_button_fast_mode, cheat_button_debug_mode, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-*/
 
 
 
@@ -3127,6 +3079,86 @@ void sub_GAME_7F091B64(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
+glabel PADDINGHACKS
+.word 0,0,0,0,0,0,0,0
+/*D:800572B0*/
+glabel jpt_700C5B38
+.word cheats_cheat_extra_mp_chars
+.word cheats_cheat_invincibility
+.word cheats_cheat_allguns
+.word cheats_cheat_max_ammo
+.word cheats_debug_return_saved_ra
+.word cheats_cheat_deactivate_invincibility
+.word cheats_cheat_linemode
+.word cheats_cheat_2x_health
+.word cheats_cheat_2x_armor
+.word cheats_cheat_invisibility
+.word cheats_cheat_infinite_ammo
+.word cheats_cheat_dk_mode
+.word cheats_cheat_extra_weapons
+.word cheats_cheat_tiny_bond
+.word cheats_cheat_paintball
+.word cheats_cheat_10x_health
+.word cheats_cheat_magnum
+.word cheats_cheat_laser
+.word cheats_cheat_goldengun
+.word cheats_cheat_silverpp7
+.word cheats_cheat_goldpp7
+.word cheats_cheat_invisibility_mp
+.word cheats_debug_return_saved_ra
+.word cheats_cheat_fast
+.word cheats_debug_pos
+.word cheats_debug_fast_ani
+.word cheats_debug_slow_ani
+.word cheats_debug_return_saved_ra
+.word cheats_debug_2x_rockets
+.word cheats_debug_2x_grenade_launch
+.word cheats_debug_2x_rcp90
+.word cheats_debug_2x_throwing_knife
+.word cheats_debug_2x_hunting_knife
+.word cheats_debug_2x_laser
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+
+/*800573D8*/
 glabel finalamount
 .word 0x3d4ccccd /*0.050000001*/
 .text
@@ -3756,6 +3788,84 @@ void sub_GAME_7F092438(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:800573DC*/
+glabel jpt_700C6400
+.word cheat_button_default
+.word cheat_button_invincibility
+.word cheat_button_all_guns
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_line_mode
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_unknown
+.word cheat_button_infinite_ammo
+.word cheat_button_dkmode
+.word cheat_button_default
+.word cheat_button_unknown_0
+.word cheat_button_paintball
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_mp_invis
+.word cheat_button_default
+.word cheat_button_fast_mode
+.word cheat_button_debug_mode
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+
 .text
 glabel sub_GAME_7F092438
 /* 0C6F68 7F092438 00047100 */  sll   $t6, $a0, 4
@@ -3997,6 +4107,29 @@ loop_3:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*hack for jtbl*/
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
 .text
 glabel sub_GAME_7F0926C0
 /* 0C71F0 7F0926C0 27BDFFC8 */  addiu $sp, $sp, -0x38
@@ -4061,6 +4194,16 @@ void sub_GAME_7F092774(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*hack for jtbl*/
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
 .text
 glabel sub_GAME_7F092774
 /* 0C72A4 7F092774 00047100 */  sll   $t6, $a0, 4
@@ -4096,6 +4239,12 @@ void sub_GAME_7F0927BC(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*ugh hack for jtbl*/
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+
 .text
 glabel sub_GAME_7F0927BC
 /* 0C72EC 7F0927BC 27BDFFE8 */  addiu $sp, $sp, -0x18

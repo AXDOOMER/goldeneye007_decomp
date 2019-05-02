@@ -27,76 +27,38 @@ s32 dword_CODE_bss_8007A0CC;
 
 // rodata
 /*
-D:80057544     jpt_700C8968:   .word loc_CODE_7F094A48  # DATA XREF: sub_CODE_7F094488+5A4r
-D:80057544                     .word loc_CODE_7F095284  # jump table for switch statement
-D:80057544                     .word loc_CODE_7F0953CC
-D:80057544                     .word loc_CODE_7F094B4C
-D:80057544                     .word loc_CODE_7F095514
-D:80057544                     .word loc_CODE_7F094E60
-D:80057544                     .word def_7F094A38
-D:80057544                     .word loc_CODE_7F0951BC
-D:80057544                     .word loc_CODE_7F09565C
-D:80057544                     .word def_7F094A38
-D:80057544                     .word loc_CODE_7F094D5C
-D:80057544                     .word loc_CODE_7F0950F4
-D:80057544                     .word loc_CODE_7F094C50
-D:80057544                     .word loc_CODE_7F09502C
-D:80057544                     .word loc_CODE_7F094F64
-D:80057544                     .word loc_CODE_7F094A40
-*/
-
-/*
-D:80057590     jpt_700C9D3C:   .word loc_CODE_7F095E14  # DATA XREF: sub_CODE_7F094488+1978r
-D:80057590                     .word loc_CODE_7F09643C  # jump table for switch statement
-D:80057590                     .word loc_CODE_7F09652C
-D:80057590                     .word loc_CODE_7F096094
-D:80057590                     .word loc_CODE_7F09661C
-D:80057590                     .word loc_CODE_7F0961CC
-D:80057590                     .word def_7F095E0C
-D:80057590                     .word loc_CODE_7F096C98
-D:80057590                     .word loc_CODE_7F09670C
-D:80057590                     .word def_7F095E0C
-D:80057590                     .word loc_CODE_7F096304
-D:80057590                     .word loc_CODE_7F096B10
-D:80057590                     .word loc_CODE_7F095F58
-D:80057590                     .word loc_CODE_7F096984
-D:80057590                     .word loc_CODE_7F0967FC
-D:80057590                     .word loc_CODE_7F095E1C
-*/
-
-/*
 D:8005762C     jpt_700CF1AC:   .word weapon_multi_none  # DATA XREF: sub_CODE_7F09B244+2Cr
-D:8005762C                     .word weapon_multi_none  # jump table for switch statement
-D:8005762C                     .word weapon_multi_hunting_knife
-D:8005762C                     .word weapon_multi_throwing_knife
-D:8005762C                     .word weapon_multi_pp7
-D:8005762C                     .word weapon_multi_pp7_silent
-D:8005762C                     .word weapon_multi_dd44
-D:8005762C                     .word weapon_multi_klobb
-D:8005762C                     .word weapon_multi_kf7
-D:8005762C                     .word weapon_multi_zmg
-D:8005762C                     .word weapon_multi_d5k
-D:8005762C                     .word weapon_multi_d5k_silent
-D:8005762C                     .word weapon_multi_phantom
-D:8005762C                     .word weapon_multi_ar33
-D:8005762C                     .word weapon_multi_rcp90
-D:8005762C                     .word weapon_multi_shotgun
-D:8005762C                     .word weapon_multi_auto_shot
-D:8005762C                     .word weapon_multi_sniper
-D:8005762C                     .word weapon_multi_cougar
-D:8005762C                     .word weapon_multi_goldengun
-D:8005762C                     .word weapon_multi_pp7_special1
-D:8005762C                     .word weapon_multi_pp7_special2
-D:8005762C                     .word weapon_multi_moonraker
-D:8005762C                     .word weapon_multi_none
-D:8005762C                     .word weapon_multi_grenade_laun
-D:8005762C                     .word weapon_multi_rocket_launch
-D:8005762C                     .word weapon_multi_hand
-D:8005762C                     .word weapon_multi_timed
-D:8005762C                     .word weapon_multi_prox
-D:8005762C                     .word weapon_multi_remote
-D:8005762C                     .word weapon_multi_none
-D:8005762C                     .word weapon_multi_none
+.word weapon_multi_none
+.word weapon_multi_hunting_knife
+.word weapon_multi_throwing_knife
+.word weapon_multi_pp7
+.word weapon_multi_pp7_silent
+.word weapon_multi_dd44
+.word weapon_multi_klobb
+.word weapon_multi_kf7
+.word weapon_multi_zmg
+.word weapon_multi_d5k
+.word weapon_multi_d5k_silent
+.word weapon_multi_phantom
+.word weapon_multi_ar33
+.word weapon_multi_rcp90
+.word weapon_multi_shotgun
+.word weapon_multi_auto_shot
+.word weapon_multi_sniper
+.word weapon_multi_cougar
+.word weapon_multi_goldengun
+.word weapon_multi_pp7_special1
+.word weapon_multi_pp7_special2
+.word weapon_multi_moonraker
+.word weapon_multi_none
+.word weapon_multi_grenade_laun
+.word weapon_multi_rocket_launch
+.word weapon_multi_hand
+.word weapon_multi_timed
+.word weapon_multi_prox
+.word weapon_multi_remote
+.word weapon_multi_none
+.word weapon_multi_none
 */
 
 
@@ -1267,6 +1229,25 @@ void sub_GAME_7F094488(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
+/*D:80057544*/
+glabel jpt_700C8968
+.word .L7F094A48
+.word .L7F095284
+.word .L7F0953CC
+.word .L7F094B4C
+.word .L7F095514
+.word .L7F094E60
+.word .L7F094A38
+.word .L7F0951BC
+.word .L7F09565C
+.word .L7F094A38
+.word .L7F094D5C
+.word .L7F0950F4
+.word .L7F094C50
+.word .L7F09502C
+.word .L7F094F64
+.word .L7F094A40
+
 glabel D_80057584
 .word 0x477fff00 /*65535.0*/
 glabel D_80057588
@@ -1274,6 +1255,24 @@ glabel D_80057588
 glabel D_8005758C
 .word 0x446fc000 /*959.0*/
 
+/*D:80057590*/
+glabel jpt_700C9D3C
+.word .L7F095E14
+.word .L7F09643C
+.word .L7F09652C
+.word .L7F096094
+.word .L7F09661C
+.word .L7F0961CC
+.word .L7F095E0C
+.word .L7F096C98
+.word .L7F09670C
+.word .L7F095E0C
+.word .L7F096304
+.word .L7F096B10
+.word .L7F095F58
+.word .L7F096984
+.word .L7F0967FC
+.word .L7F095E1C
 
 glabel D_800575D0
 .word 0x477fff00 /*65535.0*/
@@ -1661,10 +1660,13 @@ glabel sub_GAME_7F094488
 /* 0C955C 7F094A2C 3C018005 */  lui   $at, 0x8005
 /* 0C9560 7F094A30 002A0821 */  addu  $at, $at, $t2
 /* 0C9564 7F094A34 8C2A7544 */  lw    $t2, 0x7544($at)
+.L7F094A38:
 /* 0C9568 7F094A38 01400008 */  jr    $t2
 /* 0C956C 7F094A3C 00000000 */   nop   
+.L7F094A40:
 /* 0C9570 7F094A40 1000035A */  b     .L7F0957AC
 /* 0C9574 7F094A44 00008825 */   move  $s1, $zero
+.L7F094A48:
 /* 0C9578 7F094A48 C7A205E4 */  lwc1  $f2, 0x5e4($sp)
 /* 0C957C 7F094A4C C7AA05E8 */  lwc1  $f10, 0x5e8($sp)
 /* 0C9580 7F094A50 C7AC05EC */  lwc1  $f12, 0x5ec($sp)
@@ -1730,6 +1732,7 @@ glabel sub_GAME_7F094488
 /* 0C9670 7F094B40 8FA50560 */   lw    $a1, 0x560($sp)
 /* 0C9674 7F094B44 10000319 */  b     .L7F0957AC
 /* 0C9678 7F094B48 00000000 */   nop   
+.L7F094B4C:
 /* 0C967C 7F094B4C C7A205E4 */  lwc1  $f2, 0x5e4($sp)
 /* 0C9680 7F094B50 C7AA05E8 */  lwc1  $f10, 0x5e8($sp)
 /* 0C9684 7F094B54 C7AC05EC */  lwc1  $f12, 0x5ec($sp)
@@ -1795,6 +1798,7 @@ glabel sub_GAME_7F094488
 /* 0C9774 7F094C44 8FA50550 */   lw    $a1, 0x550($sp)
 /* 0C9778 7F094C48 100002D8 */  b     .L7F0957AC
 /* 0C977C 7F094C4C 00000000 */   nop   
+.L7F094C50:
 /* 0C9780 7F094C50 C7B605C0 */  lwc1  $f22, 0x5c0($sp)
 /* 0C9784 7F094C54 C7AA05C4 */  lwc1  $f10, 0x5c4($sp)
 /* 0C9788 7F094C58 C7BA05C8 */  lwc1  $f26, 0x5c8($sp)
@@ -1862,6 +1866,7 @@ glabel sub_GAME_7F094488
 /* 0C9880 7F094D50 8FA50554 */   lw    $a1, 0x554($sp)
 /* 0C9884 7F094D54 10000295 */  b     .L7F0957AC
 /* 0C9888 7F094D58 00000000 */   nop   
+.L7F094D5C:
 /* 0C988C 7F094D5C C7AE05D8 */  lwc1  $f14, 0x5d8($sp)
 /* 0C9890 7F094D60 C7AA05DC */  lwc1  $f10, 0x5dc($sp)
 /* 0C9894 7F094D64 C7B005E0 */  lwc1  $f16, 0x5e0($sp)
@@ -1927,6 +1932,7 @@ glabel sub_GAME_7F094488
 /* 0C9984 7F094E54 8FA50558 */   lw    $a1, 0x558($sp)
 /* 0C9988 7F094E58 10000254 */  b     .L7F0957AC
 /* 0C998C 7F094E5C 00000000 */   nop   
+.L7F094E60:
 /* 0C9990 7F094E60 C7B205CC */  lwc1  $f18, 0x5cc($sp)
 /* 0C9994 7F094E64 C7AA05D0 */  lwc1  $f10, 0x5d0($sp)
 /* 0C9998 7F094E68 C7B405D4 */  lwc1  $f20, 0x5d4($sp)
@@ -1992,6 +1998,7 @@ glabel sub_GAME_7F094488
 /* 0C9A88 7F094F58 8FA5055C */   lw    $a1, 0x55c($sp)
 /* 0C9A8C 7F094F5C 10000213 */  b     .L7F0957AC
 /* 0C9A90 7F094F60 00000000 */   nop   
+.L7F094F64:
 /* 0C9A94 7F094F64 C7B605C0 */  lwc1  $f22, 0x5c0($sp)
 /* 0C9A98 7F094F68 C7AA05C4 */  lwc1  $f10, 0x5c4($sp)
 /* 0C9A9C 7F094F6C C7BA05C8 */  lwc1  $f26, 0x5c8($sp)
@@ -2042,6 +2049,7 @@ glabel sub_GAME_7F094488
 /* 0C9B50 7F095020 8FA50550 */   lw    $a1, 0x550($sp)
 /* 0C9B54 7F095024 100001E1 */  b     .L7F0957AC
 /* 0C9B58 7F095028 00000000 */   nop   
+.L7F09502C:
 /* 0C9B5C 7F09502C C7B205CC */  lwc1  $f18, 0x5cc($sp)
 /* 0C9B60 7F095030 C7A805D0 */  lwc1  $f8, 0x5d0($sp)
 /* 0C9B64 7F095034 C7B405D4 */  lwc1  $f20, 0x5d4($sp)
@@ -2092,6 +2100,7 @@ glabel sub_GAME_7F094488
 /* 0C9C18 7F0950E8 8FA50558 */   lw    $a1, 0x558($sp)
 /* 0C9C1C 7F0950EC 100001AF */  b     .L7F0957AC
 /* 0C9C20 7F0950F0 00000000 */   nop   
+.L7F0950F4:
 /* 0C9C24 7F0950F4 C7AE05D8 */  lwc1  $f14, 0x5d8($sp)
 /* 0C9C28 7F0950F8 C7A605DC */  lwc1  $f6, 0x5dc($sp)
 /* 0C9C2C 7F0950FC C7B005E0 */  lwc1  $f16, 0x5e0($sp)
@@ -2142,6 +2151,7 @@ glabel sub_GAME_7F094488
 /* 0C9CE0 7F0951B0 8FA5055C */   lw    $a1, 0x55c($sp)
 /* 0C9CE4 7F0951B4 1000017D */  b     .L7F0957AC
 /* 0C9CE8 7F0951B8 00000000 */   nop   
+.L7F0951BC:
 /* 0C9CEC 7F0951BC C7A205E4 */  lwc1  $f2, 0x5e4($sp)
 /* 0C9CF0 7F0951C0 C7A405E8 */  lwc1  $f4, 0x5e8($sp)
 /* 0C9CF4 7F0951C4 C7AC05EC */  lwc1  $f12, 0x5ec($sp)
@@ -2192,6 +2202,7 @@ glabel sub_GAME_7F094488
 /* 0C9DA8 7F095278 8FA50554 */   lw    $a1, 0x554($sp)
 /* 0C9DAC 7F09527C 1000014B */  b     .L7F0957AC
 /* 0C9DB0 7F095280 00000000 */   nop   
+.L7F095284:
 /* 0C9DB4 7F095284 C7B205CC */  lwc1  $f18, 0x5cc($sp)
 /* 0C9DB8 7F095288 C7AA05D0 */  lwc1  $f10, 0x5d0($sp)
 /* 0C9DBC 7F09528C C7B405D4 */  lwc1  $f20, 0x5d4($sp)
@@ -2274,6 +2285,7 @@ glabel sub_GAME_7F094488
 /* 0C9EF0 7F0953C0 8FA50558 */   lw    $a1, 0x558($sp)
 /* 0C9EF4 7F0953C4 100000F9 */  b     .L7F0957AC
 /* 0C9EF8 7F0953C8 00000000 */   nop   
+.L7F0953CC:
 /* 0C9EFC 7F0953CC C7BA05E4 */  lwc1  $f26, 0x5e4($sp)
 /* 0C9F00 7F0953D0 C7B605EC */  lwc1  $f22, 0x5ec($sp)
 /* 0C9F04 7F0953D4 C7B405D8 */  lwc1  $f20, 0x5d8($sp)
@@ -2356,6 +2368,7 @@ glabel sub_GAME_7F094488
 /* 0CA038 7F095508 8FA50554 */   lw    $a1, 0x554($sp)
 /* 0CA03C 7F09550C 100000A7 */  b     .L7F0957AC
 /* 0CA040 7F095510 00000000 */   nop   
+.L7F095514:
 /* 0CA044 7F095514 C7B605C0 */  lwc1  $f22, 0x5c0($sp)
 /* 0CA048 7F095518 C7A605C4 */  lwc1  $f6, 0x5c4($sp)
 /* 0CA04C 7F09551C C7BA05C8 */  lwc1  $f26, 0x5c8($sp)
@@ -2438,6 +2451,7 @@ glabel sub_GAME_7F094488
 /* 0CA180 7F095650 8FA50550 */   lw    $a1, 0x550($sp)
 /* 0CA184 7F095654 10000055 */  b     .L7F0957AC
 /* 0CA188 7F095658 00000000 */   nop   
+.L7F09565C:
 /* 0CA18C 7F09565C C7AE05D8 */  lwc1  $f14, 0x5d8($sp)
 /* 0CA190 7F095660 C7A805DC */  lwc1  $f8, 0x5dc($sp)
 /* 0CA194 7F095664 C7B005E0 */  lwc1  $f16, 0x5e0($sp)
@@ -2957,10 +2971,13 @@ def_7F094A38:
 /* 0CA930 7F095E00 3C018005 */  lui   $at, 0x8005
 /* 0CA934 7F095E04 002A0821 */  addu  $at, $at, $t2
 /* 0CA938 7F095E08 8C2A7590 */  lw    $t2, 0x7590($at)
+.L7F095E0C:
 /* 0CA93C 7F095E0C 01400008 */  jr    $t2
 /* 0CA940 7F095E10 00000000 */   nop   
+.L7F095E14:
 /* 0CA944 7F095E14 10000552 */  b     .L7F097360
 /* 0CA948 7F095E18 00601025 */   move  $v0, $v1
+.L7F095E1C:
 /* 0CA94C 7F095E1C C7A20644 */  lwc1  $f2, 0x644($sp)
 /* 0CA950 7F095E20 C7A60648 */  lwc1  $f6, 0x648($sp)
 /* 0CA954 7F095E24 C7AC064C */  lwc1  $f12, 0x64c($sp)
@@ -3040,6 +3057,7 @@ def_7F094A38:
 /* 0CAA7C 7F095F4C 8FA50580 */   lw    $a1, 0x580($sp)
 /* 0CAA80 7F095F50 100003B6 */  b     .L7F096E2C
 /* 0CAA84 7F095F54 8FAF06B0 */   lw    $t7, 0x6b0($sp)
+.L7F095F58:
 /* 0CAA88 7F095F58 C7A20644 */  lwc1  $f2, 0x644($sp)
 /* 0CAA8C 7F095F5C C7A60648 */  lwc1  $f6, 0x648($sp)
 /* 0CAA90 7F095F60 C7AC064C */  lwc1  $f12, 0x64c($sp)
@@ -3119,6 +3137,7 @@ def_7F094A38:
 /* 0CABB8 7F096088 8FA50570 */   lw    $a1, 0x570($sp)
 /* 0CABBC 7F09608C 10000367 */  b     .L7F096E2C
 /* 0CABC0 7F096090 8FAF06B0 */   lw    $t7, 0x6b0($sp)
+.L7F096094:
 /* 0CABC4 7F096094 C7B60620 */  lwc1  $f22, 0x620($sp)
 /* 0CABC8 7F096098 C7A60624 */  lwc1  $f6, 0x624($sp)
 /* 0CABCC 7F09609C C7A20628 */  lwc1  $f2, 0x628($sp)
@@ -3197,6 +3216,7 @@ def_7F094A38:
 /* 0CACF0 7F0961C0 8FA50574 */   lw    $a1, 0x574($sp)
 /* 0CACF4 7F0961C4 10000319 */  b     .L7F096E2C
 /* 0CACF8 7F0961C8 8FAF06B0 */   lw    $t7, 0x6b0($sp)
+.L7F0961CC:
 /* 0CACFC 7F0961CC C7AE0638 */  lwc1  $f14, 0x638($sp)
 /* 0CAD00 7F0961D0 C7A6063C */  lwc1  $f6, 0x63c($sp)
 /* 0CAD04 7F0961D4 C7B00640 */  lwc1  $f16, 0x640($sp)
@@ -3275,6 +3295,7 @@ def_7F094A38:
 /* 0CAE28 7F0962F8 8FA50578 */   lw    $a1, 0x578($sp)
 /* 0CAE2C 7F0962FC 100002CB */  b     .L7F096E2C
 /* 0CAE30 7F096300 8FAF06B0 */   lw    $t7, 0x6b0($sp)
+.L7F096304:
 /* 0CAE34 7F096304 C7B2062C */  lwc1  $f18, 0x62c($sp)
 /* 0CAE38 7F096308 C7A60630 */  lwc1  $f6, 0x630($sp)
 /* 0CAE3C 7F09630C C7B40634 */  lwc1  $f20, 0x634($sp)
@@ -3353,6 +3374,7 @@ def_7F094A38:
 /* 0CAF60 7F096430 8FA5057C */   lw    $a1, 0x57c($sp)
 /* 0CAF64 7F096434 1000027D */  b     .L7F096E2C
 /* 0CAF68 7F096438 8FAF06B0 */   lw    $t7, 0x6b0($sp)
+.L7F09643C:
 /* 0CAF6C 7F09643C C7B60620 */  lwc1  $f22, 0x620($sp)
 /* 0CAF70 7F096440 C7A60624 */  lwc1  $f6, 0x624($sp)
 /* 0CAF74 7F096444 C7A20628 */  lwc1  $f2, 0x628($sp)
@@ -3413,6 +3435,7 @@ def_7F094A38:
 /* 0CB050 7F096520 8FA50570 */   lw    $a1, 0x570($sp)
 /* 0CB054 7F096524 10000241 */  b     .L7F096E2C
 /* 0CB058 7F096528 8FAF06B0 */   lw    $t7, 0x6b0($sp)
+.L7F09652C:
 /* 0CB05C 7F09652C C7B2062C */  lwc1  $f18, 0x62c($sp)
 /* 0CB060 7F096530 C7A40630 */  lwc1  $f4, 0x630($sp)
 /* 0CB064 7F096534 C7B40634 */  lwc1  $f20, 0x634($sp)
@@ -3473,6 +3496,7 @@ def_7F094A38:
 /* 0CB140 7F096610 8FA50578 */   lw    $a1, 0x578($sp)
 /* 0CB144 7F096614 10000205 */  b     .L7F096E2C
 /* 0CB148 7F096618 8FAF06B0 */   lw    $t7, 0x6b0($sp)
+.L7F09661C:
 /* 0CB14C 7F09661C C7AE0638 */  lwc1  $f14, 0x638($sp)
 /* 0CB150 7F096620 C7AA063C */  lwc1  $f10, 0x63c($sp)
 /* 0CB154 7F096624 C7B00640 */  lwc1  $f16, 0x640($sp)
@@ -3533,6 +3557,7 @@ def_7F094A38:
 /* 0CB230 7F096700 8FA5057C */   lw    $a1, 0x57c($sp)
 /* 0CB234 7F096704 100001C9 */  b     .L7F096E2C
 /* 0CB238 7F096708 8FAF06B0 */   lw    $t7, 0x6b0($sp)
+.L7F09670C:
 /* 0CB23C 7F09670C C7A20644 */  lwc1  $f2, 0x644($sp)
 /* 0CB240 7F096710 C7A80648 */  lwc1  $f8, 0x648($sp)
 /* 0CB244 7F096714 C7AC064C */  lwc1  $f12, 0x64c($sp)
@@ -3593,6 +3618,7 @@ def_7F094A38:
 /* 0CB320 7F0967F0 8FA50574 */   lw    $a1, 0x574($sp)
 /* 0CB324 7F0967F4 1000018D */  b     .L7F096E2C
 /* 0CB328 7F0967F8 8FAF06B0 */   lw    $t7, 0x6b0($sp)
+.L7F0967FC:
 /* 0CB32C 7F0967FC C7B2062C */  lwc1  $f18, 0x62c($sp)
 /* 0CB330 7F096800 C7A60630 */  lwc1  $f6, 0x630($sp)
 /* 0CB334 7F096804 C7B40634 */  lwc1  $f20, 0x634($sp)
@@ -3691,6 +3717,7 @@ def_7F094A38:
 /* 0CB4A8 7F096978 8FA50578 */   lw    $a1, 0x578($sp)
 /* 0CB4AC 7F09697C 1000012B */  b     .L7F096E2C
 /* 0CB4B0 7F096980 8FAF06B0 */   lw    $t7, 0x6b0($sp)
+.L7F096984:
 /* 0CB4B4 7F096984 C7A20644 */  lwc1  $f2, 0x644($sp)
 /* 0CB4B8 7F096988 C7A40648 */  lwc1  $f4, 0x648($sp)
 /* 0CB4BC 7F09698C C7AC064C */  lwc1  $f12, 0x64c($sp)
@@ -3790,6 +3817,7 @@ def_7F094A38:
 /* 0CB634 7F096B04 8FA50574 */   lw    $a1, 0x574($sp)
 /* 0CB638 7F096B08 100000C8 */  b     .L7F096E2C
 /* 0CB63C 7F096B0C 8FAF06B0 */   lw    $t7, 0x6b0($sp)
+.L7F096B10:
 /* 0CB640 7F096B10 C7B60620 */  lwc1  $f22, 0x620($sp)
 /* 0CB644 7F096B14 C7AA0624 */  lwc1  $f10, 0x624($sp)
 /* 0CB648 7F096B18 C7A60628 */  lwc1  $f6, 0x628($sp)
@@ -3888,6 +3916,7 @@ def_7F094A38:
 /* 0CB7BC 7F096C8C 8FA50570 */   lw    $a1, 0x570($sp)
 /* 0CB7C0 7F096C90 10000066 */  b     .L7F096E2C
 /* 0CB7C4 7F096C94 8FAF06B0 */   lw    $t7, 0x6b0($sp)
+.L7F096C98:
 /* 0CB7C8 7F096C98 C7AE0638 */  lwc1  $f14, 0x638($sp)
 /* 0CB7CC 7F096C9C C7A6063C */  lwc1  $f6, 0x63c($sp)
 /* 0CB7D0 7F096CA0 C7B00640 */  lwc1  $f16, 0x640($sp)
@@ -8809,6 +8838,42 @@ void sub_GAME_7F09B244(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:8005762C*/
+glabel jpt_700CF1AC
+.word weapon_multi_none
+.word weapon_multi_none
+.word weapon_multi_hunting_knife
+.word weapon_multi_throwing_knife
+.word weapon_multi_pp7
+.word weapon_multi_pp7_silent
+.word weapon_multi_dd44
+.word weapon_multi_klobb
+.word weapon_multi_kf7
+.word weapon_multi_zmg
+.word weapon_multi_d5k
+.word weapon_multi_d5k_silent
+.word weapon_multi_phantom
+.word weapon_multi_ar33
+.word weapon_multi_rcp90
+.word weapon_multi_shotgun
+.word weapon_multi_auto_shot
+.word weapon_multi_sniper
+.word weapon_multi_cougar
+.word weapon_multi_goldengun
+.word weapon_multi_pp7_special1
+.word weapon_multi_pp7_special2
+.word weapon_multi_moonraker
+/*.word weapon_multi_none*/
+/*.word weapon_multi_grenade_laun*/
+/*.word weapon_multi_rocket_launch*/
+/*.word weapon_multi_hand*/
+/*.word weapon_multi_timed*/
+/*.word weapon_multi_prox*/
+/*.word weapon_multi_remote*/
+/*.word weapon_multi_none*/
+/*.word weapon_multi_none*/
+
 .text
 glabel sub_GAME_7F09B244
 /* 0CFD74 7F09B244 28810020 */  slti  $at, $a0, 0x20
@@ -8957,6 +9022,17 @@ void sub_GAME_7F09B368(s32 arg0) {
 
 #else
 GLOBAL_ASM(
+.late_rodata
+/*hack for jtbl*/
+.word weapon_multi_none
+.word weapon_multi_grenade_laun
+.word weapon_multi_rocket_launch
+/*.word weapon_multi_hand*/
+/*.word weapon_multi_timed*/
+/*.word weapon_multi_prox*/
+/*.word weapon_multi_remote*/
+/*.word weapon_multi_none*/
+/*.word weapon_multi_none*/
 .text
 glabel sub_GAME_7F09B368
 /* 0CFE98 7F09B368 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008
@@ -9023,6 +9099,15 @@ s32 sub_GAME_7F09B398(s32 arg0) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*hack for jtbl*/
+.word weapon_multi_hand
+.word weapon_multi_timed
+.word weapon_multi_prox
+.word weapon_multi_remote
+.word weapon_multi_none
+.word weapon_multi_none
+
 .text
 glabel sub_GAME_7F09B398
 /* 0CFEC8 7F09B398 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008
