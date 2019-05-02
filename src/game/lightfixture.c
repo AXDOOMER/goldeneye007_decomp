@@ -20,11 +20,7 @@ s32 dword_CODE_bss_80083318;
 s32 D_80046030[] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 /* rodata
-D:80058D80     jpt_700EF63C:   .word loc_CODE_7F0BB714  # DATA XREF: sub_CODE_7F0BB6F4+Cr
-D:80058D80                     .word loc_CODE_7F0BB7C0  # jump table for switch statement
-D:80058D80                     .word loc_CODE_7F0BB7EC
-D:80058D80                     .word loc_CODE_7F0BB818
-D:80058D80                     .word loc_CODE_7F0BB844
+
 */
 
 #ifdef NONMATCHING
@@ -279,6 +275,14 @@ void sub_GAME_7F0BB6F4(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80058D80*/
+glabel jpt_700EF63C
+.word .L7F0BB714
+.word .L7F0BB7C0
+.word .L7F0BB7EC
+.word .L7F0BB818
+.word .L7F0BB844
 .text
 glabel sub_GAME_7F0BB6F4
 /* 0F0224 7F0BB6F4 2CA10005 */  sltiu $at, $a1, 5
@@ -289,6 +293,7 @@ glabel sub_GAME_7F0BB6F4
 /* 0F0238 7F0BB708 8C2E8D80 */  lw    $t6, -0x7280($at)
 /* 0F023C 7F0BB70C 01C00008 */  jr    $t6
 /* 0F0240 7F0BB710 00000000 */   nop   
+.L7F0BB714:
 /* 0F0244 7F0BB714 2402000A */  li    $v0, 10
 /* 0F0248 7F0BB718 908F0005 */  lbu   $t7, 5($a0)
 /* 0F024C 7F0BB71C 01E2001A */  div   $zero, $t7, $v0
@@ -338,7 +343,7 @@ glabel sub_GAME_7F0BB6F4
 /* 0F02E4 7F0BB7B4 AD6A0000 */  sw    $t2, ($t3)
 /* 0F02E8 7F0BB7B8 03E00008 */  jr    $ra
 /* 0F02EC 7F0BB7BC 00000000 */   nop   
-
+.L7F0BB7C0:
 /* 0F02F0 7F0BB7C0 8C8C0004 */  lw    $t4, 4($a0)
 /* 0F02F4 7F0BB7C4 318D000F */  andi  $t5, $t4, 0xf
 /* 0F02F8 7F0BB7C8 ACCD0000 */  sw    $t5, ($a2)
@@ -350,7 +355,7 @@ glabel sub_GAME_7F0BB6F4
 /* 0F0310 7F0BB7E0 3319000F */  andi  $t9, $t8, 0xf
 /* 0F0314 7F0BB7E4 03E00008 */  jr    $ra
 /* 0F0318 7F0BB7E8 AD190000 */   sw    $t9, ($t0)
-
+.L7F0BB7EC:
 /* 0F031C 7F0BB7EC 90890006 */  lbu   $t1, 6($a0)
 /* 0F0320 7F0BB7F0 312A000F */  andi  $t2, $t1, 0xf
 /* 0F0324 7F0BB7F4 ACCA0000 */  sw    $t2, ($a2)
@@ -362,7 +367,7 @@ glabel sub_GAME_7F0BB6F4
 /* 0F033C 7F0BB80C 000D7102 */  srl   $t6, $t5, 4
 /* 0F0340 7F0BB810 03E00008 */  jr    $ra
 /* 0F0344 7F0BB814 ADEE0000 */   sw    $t6, ($t7)
-
+.L7F0BB818:
 /* 0F0348 7F0BB818 94980004 */  lhu   $t8, 4($a0)
 /* 0F034C 7F0BB81C 3319000F */  andi  $t9, $t8, 0xf
 /* 0F0350 7F0BB820 ACD90000 */  sw    $t9, ($a2)
@@ -374,7 +379,7 @@ glabel sub_GAME_7F0BB6F4
 /* 0F0368 7F0BB838 314B000F */  andi  $t3, $t2, 0xf
 /* 0F036C 7F0BB83C 03E00008 */  jr    $ra
 /* 0F0370 7F0BB840 AD8B0000 */   sw    $t3, ($t4)
-
+.L7F0BB844:
 /* 0F0374 7F0BB844 908D0004 */  lbu   $t5, 4($a0)
 /* 0F0378 7F0BB848 31AE000F */  andi  $t6, $t5, 0xf
 /* 0F037C 7F0BB84C ACCE0000 */  sw    $t6, ($a2)
