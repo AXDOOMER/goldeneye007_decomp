@@ -786,77 +786,7 @@ s32 D_80044DB0 = 0;
 
 
 // rodata
-//D:80058C48
-const char aPortD[] = "PORT%d";
-//D:80058C50
-const char aRoomD[] = "ROOM%d";
-/*
-D:80058C58     jpt_700E883C:   .word loc_CODE_7F0B4914  # DATA XREF: sub_CODE_7F0B4884+7Cr
-D:80058C58                     .word loc_CODE_7F0B4914  # jump table for switch statement
-D:80058C58                     .word loc_CODE_7F0B4914
-D:80058C58                     .word def_7F0B490C
-D:80058C58                     .word def_7F0B490C
-D:80058C58                     .word def_7F0B490C
-D:80058C58                     .word loc_CODE_7F0B4914
-D:80058C58                     .word def_7F0B490C
-D:80058C58                     .word loc_CODE_7F0B4914
-*/
 
-/*
-D:80058C80     jpt_700EC3D8:   .word if_statement       # DATA XREF: parse_global_vis_command_list+88r
-D:80058C80                     .word dont_exec_commands_even_on_return  # jump table for switch statement
-D:80058C80                     .word endif_continue_exec
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word if_statement_pull_from_stack
-D:80058C80                     .word toggle_exec_vs_ro
-D:80058C80                     .word endif
-D:80058CB4     vis_command_jpt:.word break              # DATA XREF: parse_global_vis_command_list+A8r
-D:80058CB4                     .word push_to_stack      # jump table for switch statement
-D:80058CB4                     .word pull_from_stack
-D:80058CB4                     .word and_merge_last_two_on_stack
-D:80058CB4                     .word or_merge_last_two_on_stack
-D:80058CB4                     .word not_merge_last_two_on_stack
-D:80058CB4                     .word carrot_merge_last_two_on_stack
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word push_tf_if_in_range_rooms
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word force_visible
-D:80058CB4                     .word match_portal_vis
-D:80058CB4                     .word add_visible_room
-D:80058CB4                     .word remove_vis
-D:80058CB4                     .word visible_if_seen_through_portal
-D:80058CB4                     .word not_visible_if_seen_through_portal
-D:80058CB4                     .word disable_room
-D:80058CB4                     .word disable_room_range
-D:80058CB4                     .word preload_room
-D:80058CB4                     .word preload_room_range
-*/
 
 
 
@@ -2408,6 +2338,19 @@ void sub_GAME_7F0B4884(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80058C58*/
+glabel jpt_700E883C
+.word .L7F0B4914
+.word .L7F0B4914
+.word .L7F0B4914
+.word .L7F0B490C
+.word .L7F0B490C
+.word .L7F0B490C
+.word .L7F0B4914
+.word .L7F0B490C
+.word .L7F0B4914
+
 .text
 glabel sub_GAME_7F0B4884
 /* 0E93B4 7F0B4884 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -2445,8 +2388,10 @@ glabel sub_GAME_7F0B4884
 /* 0E9430 7F0B4900 3C018006 */  lui   $at, 0x8006
 /* 0E9434 7F0B4904 002F0821 */  addu  $at, $at, $t7
 /* 0E9438 7F0B4908 8C2F8C58 */  lw    $t7, -0x73a8($at)
+.L7F0B490C:
 /* 0E943C 7F0B490C 01E00008 */  jr    $t7
 /* 0E9440 7F0B4910 00000000 */   nop   
+.L7F0B4914:
 /* 0E9444 7F0B4914 241800C8 */  li    $t8, 200
 /* 0E9448 7F0B4918 AC780000 */  sw    $t8, ($v1)
 def_7F0B490C:
@@ -4555,6 +4500,14 @@ void sub_GAME_7F0B5D7C(s32 arg0) {
 }
 #else
 GLOBAL_ASM(
+.rdata
+/*D:80058C48*/
+glabel aPortD
+/*"PORT%d"*/
+.word 0x504F5254, 0x25640000
+
+
+
 .text
 glabel sub_GAME_7F0B5D7C
 /* 0EA8AC 7F0B5D7C 3C028004 */  lui   $v0, %hi(D_80044860) # $v0, 0x8004
@@ -4601,6 +4554,12 @@ void sub_GAME_7F0B5DE0(s32 arg0) {
 }
 #else
 GLOBAL_ASM(
+.rdata
+/*D:80058C50*/
+glabel aRoomD
+/*"ROOM%d"*/
+.word 0x524F4F4D, 0x25640000
+
 .text
 glabel sub_GAME_7F0B5DE0
 /* 0EA910 7F0B5DE0 3C028004 */  lui   $v0, %hi(D_80044864) # $v0, 0x8004
@@ -8959,6 +8918,65 @@ void parse_global_vis_command_list(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80058C80*/
+glabel jpt_700EC3D8
+.word if_statement
+.word dont_exec_commands_even_on_return
+.word endif_continue_exec
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word if_statement_pull_from_stack
+.word toggle_exec_vs_ro
+.word endif
+
+/*D:80058CB4*/
+glabel vis_command_jpt
+.word break
+.word push_to_stack
+.word pull_from_stack
+.word and_merge_last_two_on_stack
+.word or_merge_last_two_on_stack
+.word not_merge_last_two_on_stack
+.word carrot_merge_last_two_on_stack
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word push_tf_if_in_range_rooms
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word force_visible
+.word match_portal_vis
+.word add_visible_room
+.word remove_vis
+.word visible_if_seen_through_portal
+.word not_visible_if_seen_through_portal
+.word disable_room
+.word disable_room_range
+.word preload_room
+.word preload_room_range
 .text
 glabel parse_global_vis_command_list
 /* 0ECF44 7F0B8414 27BDFF80 */  addiu $sp, $sp, -0x80
