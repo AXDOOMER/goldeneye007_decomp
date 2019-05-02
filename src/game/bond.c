@@ -426,17 +426,6 @@ f32 D_80036AC4 = 0.1;
 // rodata
 
 
-/*
-D:80055290     jpt_700BCB10:   .word mp_spawntype_spawn
-D:80055290                     .word mp_spawntype_weapon
-D:80055290                     .word mp_spawntype_ammo
-D:80055290                     .word mp_spawntype_intro_swirly
-D:80055290                     .word mp_spawntype_intro_anim
-D:80055290                     .word mp_spawntype_handcuff
-D:80055290                     .word mp_spawntype_intro_camera
-*/
-
-
 
 
 #ifdef NONMATCHING
