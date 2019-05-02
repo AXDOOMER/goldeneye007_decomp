@@ -3,6 +3,7 @@
 #include "video.h"
 
 //data
+u32 D_80023240 = 0;
 struct video_settings video1_settings = {0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0};
 struct video_settings video2_settings = {0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0};
 s32 D_8002329C = 0;

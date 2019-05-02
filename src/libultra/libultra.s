@@ -3738,6 +3738,7 @@ glabel guMtxF2L
 
 .section .rodata
 F64_80029430: .double 0.01745329222222222
+.word 0,0
 
 .section .text
 glabel guMtxIdentF
@@ -4485,22 +4486,21 @@ glabel __osCleanupThread
 /* 01168C 70010A8C 00000000 */  nop
 
 .section .data
-__osHwIntTable:
-__osHwIntTable:
+/*80027704*/
+glabel __osHwIntTable
 .word          0,         0,         0,         0
 .word          0,         0,         0,         0
 
 .section .rodata
-D_80029440:
-.byte    0,0x14,0x18,0x18
-.byte 0x1C,0x1C,0x1C,0x1C
-.byte 0x20,0x20,0x20,0x20
-.byte 0x20,0x20,0x20,0x20
-.byte    0,   4,   8,   8
-.byte  0xC, 0xC, 0xC, 0xC
-.byte 0x10,0x10,0x10,0x10
-.byte 0x10,0x10,0x10,0x10
-__osIntTable:
+/*80029440*/
+glabel __osIntOffTable
+.byte    0,0x14,0x18,0x18,0x1C,0x1C,0x1C,0x1C
+.byte 0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20
+.byte    0,   4,   8,   8, 0xC, 0xC, 0xC, 0xC
+.byte 0x10,0x10,0x10,0x10,0x10,0x10,0x10,0x10
+
+/*80029460*/
+glabel __osIntTable
 .word redispatch
 .word swl
 .word sw2
@@ -4510,6 +4510,7 @@ __osIntTable:
 .word IP6_Hdlr
 .word IP7_Hdlr
 .word counter
+
 
 .section .text  
 glabel __osDequeueThread

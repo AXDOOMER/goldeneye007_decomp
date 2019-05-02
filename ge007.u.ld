@@ -214,7 +214,7 @@ SECTIONS
 
    __csegtempPos = 0xC00000;
    __ramPos += 0x80000000;
-   .csegment 0x80020d90 : AT(__csegtempPos){
+   .csegment 0x80020d90 : AT(__csegtempPos) {
       build/rspboot.o (.text);
       build/gspboot.o (.text);
       build/aspboot.o (.text);
@@ -248,6 +248,7 @@ SECTIONS
       build/joy_rumble.o (.data);
       build/rmon.o (.data);
       build/libultra/libultra.o (.data);
+      build/aspboot.o (.rodata);
       build/boot.o (.rodata);
       build/init.o (.rodata);
       build/sched.o (.rodata);
@@ -510,8 +511,9 @@ SECTIONS
       build/aspboot.o (.data);
    }
    __ramPos += SIZEOF(.csegment);
-   __csegtempPos += SIZEOF(.csegment);
-   .bss __ramPos : AT(__csegtempPos){
+   __csegtempPosEnd =  (__csegtempPos + SIZEOF (.csegment));
+
+   .bss 0x8005D2E0 : AT(__csegtempPosEnd){
       build/boot.o (.bss);
       build/init.o (.bss);
       build/sched.o (.bss);

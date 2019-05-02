@@ -18,20 +18,7 @@ OSMesgQueue gfxFrameMsgQ;
 OSMesg gfxFrameMsgBuf[32];
 OSMesgQueue *sched_cmdQ;
 
-u32 unknown_init_val = 2;
-u32 cart_hw_address = 0x10000000;
 
-struct debug_handler_entry debug_handler_table[] = 
-{
-	{&sp_boot, "boot"},
-	{&sp_rmon, "rmon"},
-	{&sp_idle, "idle"},
-	{&sp_shed, "shed"},
-	{&sp_main, "main"},
-	{&sp_audi, "audi"},
-    {0, ""},
-    {0, ""}
-};
 
 #ifdef NONMATCHING
 void init(void) {
