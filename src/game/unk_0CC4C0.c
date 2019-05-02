@@ -2713,6 +2713,8 @@ void process_microcode_sort_display_modes_expand_image_calls(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
+glabel PADDINGHACKING
+.word 0
 /*D:8005BF20*/
 glabel tlb_ptr_DL_type_B1toC0
 .word .L7F0CE66C
