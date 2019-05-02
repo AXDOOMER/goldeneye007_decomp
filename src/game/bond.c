@@ -425,36 +425,6 @@ f32 D_80036AC4 = 0.1;
 
 // rodata
 
-//D:80054FB8
-//                     .word 0
-//D:80054FBC
-//                     .word 0
-//D:80054FC0
-const char a8s[] = "%8s";
-const char aX4_0f[] = "x %4.0f";
-const char aY4_0f[] = "y %4.0f";
-const char aZ4_0f[] = "z %4.0f";
-const char aS3d[] = "%s %3d";
-/*
-D:80054FE4     jpt_700ADD28:   .word loc_CODE_7F079EA4
-D:80054FE4                     .word cuff_1_brosnan
-D:80054FE4                     .word cuff_2_jungle
-D:80054FE4                     .word cuff_3_boiler
-D:80054FE4                     .word cuff_4_snowsuit
-D:80054FE4                     .word cuff_5_connery
-D:80054FE4                     .word cuff_6_moore
-D:80054FE4                     .word cuff_7_dalton
-D:80054FE4                     .word cuff_8_variable_bond_head
-D:80055008     jpt_700ADE1C:   .word loc_CODE_7F079F84
-D:80055008                     .word brosnan_tux_head_set
-D:80055008                     .word jungle_head_set
-D:80055008                     .word boiler_bond_head_set
-D:80055008                     .word loc_CODE_7F079F84
-D:80055008                     .word connery_head_set
-D:80055008                     .word moore_head_set
-D:80055008                     .word dalton_head_set
-D:80055008                     .word variable_body_head
-*/
 
 /*
 D:80055290     jpt_700BCB10:   .word mp_spawntype_spawn
@@ -1167,6 +1137,36 @@ GLOBAL_ASM(
 .late_rodata
 glabel D_80054FB4
 .word 0x40490fdb /*3.1415927*/
+glabel D_80054FB8
+.word 0
+glabel D_80054FBC
+.word 0
+
+/*D:80054FC0*/
+glabel a8s
+/*"%8s"*/
+.word 0x25387300
+
+glabel aX4_0f
+/*"x %4.0f"*/
+.word 0x78202534
+.word 0x2E306600 
+
+glabel aY4_0f
+/*"y %4.0f"*/
+.word 0x79202534
+.word 0x2E306600 
+
+glabel aZ4_0f
+/*"z %4.0f"*/
+.word 0x7A202534
+.word 0x2E306600 
+
+glabel aS3d
+/*"%s %3d"*/
+.word 0x25732025
+.word 0x33640000
+
 .text
 glabel sub_GAME_7F078258
 /* 0ACD88 7F078258 3C018005 */  lui   $at, %hi(D_80054FB4) # $at, 0x8005
@@ -4361,6 +4361,30 @@ void solo_char_load(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
+/*D:80054FE4*/
+glabel jpt_700ADD28
+.word .L7F079EA4
+.word cuff_1_brosnan
+.word cuff_2_jungle
+.word cuff_3_boiler
+.word cuff_4_snowsuit
+.word cuff_5_connery
+.word cuff_6_moore
+.word cuff_7_dalton
+.word cuff_8_variable_bond_head
+
+/*D:80055008*/
+glabel jpt_700ADE1C
+.word .L7F079F84
+.word brosnan_tux_head_set
+.word jungle_head_set
+.word boiler_bond_head_set
+.word .L7F079F84
+.word connery_head_set
+.word moore_head_set
+.word dalton_head_set
+.word variable_body_head
+
 glabel D_8005502C
 .word 0x3f7851ec /*0.97000003*/
 .text
@@ -24087,6 +24111,16 @@ glabel D_80055288
 .word 0x3e2e147c /*0.17000002*/
 glabel D_8005528C
 .word 0x3dccccd0 /*0.10000002*/
+
+/*D:80055290*/
+glabel jpt_700BCB10
+.word mp_spawntype_spawn
+.word mp_spawntype_weapon
+.word mp_spawntype_ammo
+.word mp_spawntype_intro_swirly
+.word mp_spawntype_intro_anim
+.word mp_spawntype_handcuff
+.word mp_spawntype_intro_camera
 
 glabel D_800552AC
 .word 0xb8d1b717 /*-0.000099999997*/
