@@ -142,31 +142,8 @@ u32 *D_8004E86C[] = {
 };
 
 
-/* rodata
-D:8005BF20     tlb_ptr_DL_type_B1toC0:.word loc_CODE_7F0CE66C
-D:8005BF20                                              # DATA XREF: process_microcode_sort_display_modes_expand_image_calls+ACr
-D:8005BF20                     .word loc_CODE_7F0CE720  # jump table for switch statement
-D:8005BF20                     .word loc_CODE_7F0CE720
-D:8005BF20                     .word loc_CODE_7F0CE720
-D:8005BF20                     .word loc_CODE_7F0CE720
-D:8005BF20                     .word loc_CODE_7F0CE720
-D:8005BF20                     .word loc_CODE_7F0CE720
-D:8005BF20                     .word loc_CODE_7F0CE720
-D:8005BF20                     .word loc_CODE_7F0CE720
-D:8005BF20                     .word loc_CODE_7F0CE6B8
-D:8005BF20                     .word loc_CODE_7F0CE694
-D:8005BF20                     .word loc_CODE_7F0CE720
-D:8005BF20                     .word loc_CODE_7F0CE720
-D:8005BF20                     .word loc_CODE_7F0CE720
-D:8005BF20                     .word loc_CODE_7F0CE66C
-D:8005BF20                     .word loc_CODE_7F0CE1D8
-D:8005BF60     tlb_ptr_C0_image_recall_types:.word loc_CODE_7F0CE2BC
-D:8005BF60                                              # DATA XREF: process_microcode_sort_display_modes_expand_image_calls+190r
-D:8005BF60                     .word loc_CODE_7F0CE428  # jump table for switch statement
-D:8005BF60                     .word loc_CODE_7F0CE4B8
-D:8005BF60                     .word loc_CODE_7F0CE584
-D:8005BF60                     .word loc_CODE_7F0CE5BC
-*/
+// rodata
+
 
 
 #ifdef NONMATCHING
@@ -2735,6 +2712,33 @@ void process_microcode_sort_display_modes_expand_image_calls(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:8005BF20*/
+glabel tlb_ptr_DL_type_B1toC0
+.word .L7F0CE66C
+.word .L7F0CE720
+.word .L7F0CE720
+.word .L7F0CE720
+.word .L7F0CE720
+.word .L7F0CE720
+.word .L7F0CE720
+.word .L7F0CE720
+.word .L7F0CE720
+.word .L7F0CE6B8
+.word .L7F0CE694
+.word .L7F0CE720
+.word .L7F0CE720
+.word .L7F0CE720
+.word .L7F0CE66C
+.word .L7F0CE1D8
+
+/*D:8005BF60*/
+glabel tlb_ptr_C0_image_recall_types
+.word .L7F0CE2BC
+.word .L7F0CE428
+.word .L7F0CE4B8
+.word .L7F0CE584
+.word .L7F0CE5BC
 .text
 glabel process_microcode_sort_display_modes_expand_image_calls
 /* 102C48 7F0CE118 27BDFF68 */  addiu $sp, $sp, -0x98
@@ -2788,6 +2792,7 @@ glabel process_microcode_sort_display_modes_expand_image_calls
 /* 102CFC 7F0CE1CC 8C2FBF20 */  lw    $t7, -0x40e0($at)
 /* 102D00 7F0CE1D0 01E00008 */  jr    $t7
 /* 102D04 7F0CE1D4 00000000 */   nop   
+.L7F0CE1D8:
 /* 102D08 7F0CE1D8 17C00006 */  bnez  $fp, .L7F0CE1F4
 /* 102D0C 7F0CE1DC 02001025 */   move  $v0, $s0
 /* 102D10 7F0CE1E0 3C18E700 */  lui   $t8, 0xe700
@@ -2850,6 +2855,7 @@ glabel process_microcode_sort_display_modes_expand_image_calls
 /* 102DE0 7F0CE2B0 8C2DBF60 */  lw    $t5, -0x40a0($at)
 /* 102DE4 7F0CE2B4 01A00008 */  jr    $t5
 /* 102DE8 7F0CE2B8 00000000 */   nop   
+.L7F0CE2BC:
 /* 102DEC 7F0CE2BC 8E290004 */  lw    $t1, 4($s1)
 /* 102DF0 7F0CE2C0 8EA40000 */  lw    $a0, ($s5)
 /* 102DF4 7F0CE2C4 00033582 */  srl   $a2, $v1, 0x16
@@ -2943,6 +2949,7 @@ glabel process_microcode_sort_display_modes_expand_image_calls
 /* 102F4C 7F0CE41C AFA9001C */   sw    $t1, 0x1c($sp)
 /* 102F50 7F0CE420 10000073 */  b     .L7F0CE5F0
 /* 102F54 7F0CE424 00408025 */   move  $s0, $v0
+.L7F0CE428:
 /* 102F58 7F0CE428 8E240004 */  lw    $a0, 4($s1)
 /* 102F5C 7F0CE42C 02C02825 */  move  $a1, $s6
 /* 102F60 7F0CE430 00047B02 */  srl   $t7, $a0, 0xc
@@ -2979,6 +2986,7 @@ glabel process_microcode_sort_display_modes_expand_image_calls
 /* 102FDC 7F0CE4AC 02402825 */   move  $a1, $s2
 /* 102FE0 7F0CE4B0 1000004F */  b     .L7F0CE5F0
 /* 102FE4 7F0CE4B4 00408025 */   move  $s0, $v0
+.L7F0CE4B8:
 /* 102FE8 7F0CE4B8 00033582 */  srl   $a2, $v1, 0x16
 /* 102FEC 7F0CE4BC 00033D02 */  srl   $a3, $v1, 0x14
 /* 102FF0 7F0CE4C0 00034482 */  srl   $t0, $v1, 0x12
@@ -3031,6 +3039,7 @@ glabel process_microcode_sort_display_modes_expand_image_calls
 /* 1030A8 7F0CE578 AFA80010 */   sw    $t0, 0x10($sp)
 /* 1030AC 7F0CE57C 1000001C */  b     .L7F0CE5F0
 /* 1030B0 7F0CE580 00408025 */   move  $s0, $v0
+.L7F0CE584:
 /* 1030B4 7F0CE584 00033582 */  srl   $a2, $v1, 0x16
 /* 1030B8 7F0CE588 00033D02 */  srl   $a3, $v1, 0x14
 /* 1030BC 7F0CE58C 00034482 */  srl   $t0, $v1, 0x12
@@ -3045,6 +3054,7 @@ glabel process_microcode_sort_display_modes_expand_image_calls
 /* 1030E0 7F0CE5B0 02402825 */   move  $a1, $s2
 /* 1030E4 7F0CE5B4 1000000E */  b     .L7F0CE5F0
 /* 1030E8 7F0CE5B8 00408025 */   move  $s0, $v0
+.L7F0CE5BC:
 /* 1030EC 7F0CE5BC 00033582 */  srl   $a2, $v1, 0x16
 /* 1030F0 7F0CE5C0 00033D02 */  srl   $a3, $v1, 0x14
 /* 1030F4 7F0CE5C4 00034482 */  srl   $t0, $v1, 0x12
@@ -3095,6 +3105,7 @@ def_7F0CE2B4:
 /* 103190 7F0CE660 26310008 */  addiu $s1, $s1, 8
 /* 103194 7F0CE664 10000034 */  b     .L7F0CE738
 /* 103198 7F0CE668 AE19FFFC */   sw    $t9, -4($s0)
+.L7F0CE66C:
 /* 10319C 7F0CE66C 24180001 */  li    $t8, 1
 /* 1031A0 7F0CE670 AFB8005C */  sw    $t8, 0x5c($sp)
 /* 1031A4 7F0CE674 8E210000 */  lw    $at, ($s1)
@@ -3105,6 +3116,7 @@ def_7F0CE2B4:
 /* 1031B8 7F0CE688 26310008 */  addiu $s1, $s1, 8
 /* 1031BC 7F0CE68C 1000002A */  b     .L7F0CE738
 /* 1031C0 7F0CE690 AE0FFFFC */   sw    $t7, -4($s0)
+.L7F0CE694:
 /* 1031C4 7F0CE694 AFB0008C */  sw    $s0, 0x8c($sp)
 /* 1031C8 7F0CE698 AFA0005C */  sw    $zero, 0x5c($sp)
 /* 1031CC 7F0CE69C 8E210000 */  lw    $at, ($s1)
@@ -3114,6 +3126,7 @@ def_7F0CE2B4:
 /* 1031DC 7F0CE6AC 8E2EFFFC */  lw    $t6, -4($s1)
 /* 1031E0 7F0CE6B0 10000021 */  b     .L7F0CE738
 /* 1031E4 7F0CE6B4 AE0EFFFC */   sw    $t6, -4($s0)
+.L7F0CE6B8:
 /* 1031E8 7F0CE6B8 52800013 */  beql  $s4, $zero, .L7F0CE708
 /* 1031EC 7F0CE6BC 8E210000 */   lw    $at, ($s1)
 /* 1031F0 7F0CE6C0 82220002 */  lb    $v0, 2($s1)
