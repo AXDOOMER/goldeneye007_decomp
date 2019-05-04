@@ -553,7 +553,7 @@ typedef union
 									\
 	_g->words.w0 = (_SHIFTL(G_TRI2, 24, 8)|				\
 			__gsSP1Triangle_w1f(v00, v01, v02, flag0));	\
-        _g->words.w1 =  __gsSP1Triangle_w1f(v10, v11, v12, flag1); 	\
+		_g->words.w1 =  __gsSP1Triangle_w1f(v10, v11, v12, flag1); 	\
 }
 
 #define gsSP2Triangles(v00, v01, v02, flag0, v10, v11, v12, flag1)	\
@@ -579,17 +579,17 @@ typedef union
 	Gfx *_g = (Gfx *)(pkt);						\
 									\
 	_g->words.w0 = (_SHIFTL(G_TRI2, 24, 8)|				\
-			_SHIFTL((v32)*2,12,4)|_SHIFTL((v22)*2,8,4)|_SHIFTL((v12)*2,4,4)|_SHIFTL((v02)*2,0,4);	\
-        _g->words.w1 =  _SHIFTL((v31)*2,28,4)|_SHIFTL((v30)*2,24,4)|_SHIFTL((v21)*2,20,4)|_SHIFTL((v20)*2,16,4) \
-						_SHIFTL((v11)*2,12,4)|_SHIFTL((v10)*2,8,4)|_SHIFTL((v02)*2,4,4)|_SHIFTL((v00)*2,0,4); 	\
+			_SHIFTL((v32),12,4)|_SHIFTL((v22),8,4)|_SHIFTL((v12),4,4)|_SHIFTL((v02),0,4);	\
+		_g->words.w1 =  _SHIFTL((v31),28,4)|_SHIFTL((v30),24,4)|_SHIFTL((v21),20,4)|_SHIFTL((v20),16,4) \
+						_SHIFTL((v11),12,4)|_SHIFTL((v10),8,4)|_SHIFTL((v02),4,4)|_SHIFTL((v00),0,4); 	\
 }
 
 #define gsSP4Triangles(v00, v01, v02, flag0, v10, v11, v12, flag1)	\
 {									\
 	(_SHIFTL(G_TRI2, 24, 8)|					\
-			_SHIFTL((v32)*2,12,4)|_SHIFTL((v22)*2,8,4)|_SHIFTL((v12)*2,4,4)|_SHIFTL((v02)*2,0,4)),	\
-    (_SHIFTL((v31)*2,28,4)|_SHIFTL((v30)*2,24,4)|_SHIFTL((v21)*2,20,4)|_SHIFTL((v20)*2,16,4) \
-			_SHIFTL((v11)*2,12,4)|_SHIFTL((v10)*2,8,4)|_SHIFTL((v02)*2,4,4)|_SHIFTL((v00)*2,0,4));			\
+			_SHIFTL((v32),12,4)|_SHIFTL((v22),8,4)|_SHIFTL((v12),4,4)|_SHIFTL((v02),0,4)),	\
+	(_SHIFTL((v31),28,4)|_SHIFTL((v30),24,4)|_SHIFTL((v21),20,4)|_SHIFTL((v20),16,4) \
+			_SHIFTL((v11),12,4)|_SHIFTL((v10),8,4)|_SHIFTL((v02),4,4)|_SHIFTL((v00),0,4));			\
 }
 
 #endif	/* TRI4_Ext*/
