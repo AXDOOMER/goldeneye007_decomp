@@ -543,6 +543,57 @@ typedef union
                  | _SHIFTL((v2)*10,  0, 8); \
 }
 
+#if	(defined(F3DLP_GBI)||defined(F3DEX_GBI))
+/***
+ ***  2 Triangles
+ ***/
+#define gSP2Triangles(pkt, v00, v01, v02, flag0, v10, v11, v12, flag1)	\
+{									\
+	Gfx *_g = (Gfx *)(pkt);						\
+									\
+	_g->words.w0 = (_SHIFTL(G_TRI2, 24, 8)|				\
+			__gsSP1Triangle_w1f(v00, v01, v02, flag0));	\
+        _g->words.w1 =  __gsSP1Triangle_w1f(v10, v11, v12, flag1); 	\
+}
+
+#define gsSP2Triangles(v00, v01, v02, flag0, v10, v11, v12, flag1)	\
+{									\
+	(_SHIFTL(G_TRI2, 24, 8)|					\
+	 __gsSP1Triangle_w1f(v00, v01, v02, flag0)),			\
+	 __gsSP1Triangle_w1f(v10, v11, v12, flag1)			\
+}
+
+#endif	/* F3DEX_GBI/F3DLP_GBI */
+
+#if	(defined(TRI4_Ext))
+ /***
+  ***  4 Triangles - 2Tri Extension
+  ***  Draws up to four triangles at a time.
+  ***  Expects values from 0-F, corresponding with # points declared by vertex command.
+  ***  Triangles with all points set to 0 are not drawn.
+  ***  Vertex Buffer reduced to 16 due to only being able to address 0-F
+  ***/
+#define gSP4Triangles(pkt, v00, v01, v02, v10, v11, v12, \
+							v20, v21, v22, v30, v31, v32 )	\
+{									\
+	Gfx *_g = (Gfx *)(pkt);						\
+									\
+	_g->words.w0 = (_SHIFTL(G_TRI2, 24, 8)|				\
+			_SHIFTL((v32)*2,12,4)|_SHIFTL((v22)*2,8,4)|_SHIFTL((v12)*2,4,4)|_SHIFTL((v02)*2,0,4);	\
+        _g->words.w1 =  _SHIFTL((v31)*2,28,4)|_SHIFTL((v30)*2,24,4)|_SHIFTL((v21)*2,20,4)|_SHIFTL((v20)*2,16,4) \
+						_SHIFTL((v11)*2,12,4)|_SHIFTL((v10)*2,8,4)|_SHIFTL((v02)*2,4,4)|_SHIFTL((v00)*2,0,4); 	\
+}
+
+#define gsSP4Triangles(v00, v01, v02, flag0, v10, v11, v12, flag1)	\
+{									\
+	(_SHIFTL(G_TRI2, 24, 8)|					\
+			_SHIFTL((v32)*2,12,4)|_SHIFTL((v22)*2,8,4)|_SHIFTL((v12)*2,4,4)|_SHIFTL((v02)*2,0,4)),	\
+    (_SHIFTL((v31)*2,28,4)|_SHIFTL((v30)*2,24,4)|_SHIFTL((v21)*2,20,4)|_SHIFTL((v20)*2,16,4) \
+			_SHIFTL((v11)*2,12,4)|_SHIFTL((v10)*2,8,4)|_SHIFTL((v02)*2,4,4)|_SHIFTL((v00)*2,0,4));			\
+}
+
+#endif	/* TRI4_Ext*/
+
 #define gSPTextureRectangle(pkt, xl, yl, xh, yh, tile, s, t, dsdx, dtdy) \
 {                                                                        \
     Gfx *_g = (Gfx *)(pkt);                                              \

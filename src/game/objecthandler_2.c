@@ -10084,13 +10084,13 @@ glabel dogfnegx
 /* 0A8AB8 7F073F88 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 0A8ABC 7F073F8C AE020004 */  sw    $v0, 4($s0)
 /* 0A8AC0 7F073F90 8E43000C */  lw    $v1, 0xc($s2)
-/* 0A8AC4 7F073F94 3C0DB100 */  lui   $t5, (0xB1000002 >> 16) # lui $t5, 0xb100
+/* 0A8AC4 7F073F94 3C0DB100 */  lui   $t5, (0xB1000002 >> 16) # lui $t5, 0xb100    # gSP4Triangles(6,1,2,8,2,0,1,0,0,0,0,0
 /* 0A8AC8 7F073F98 35AD0002 */  ori   $t5, (0xB1000002 & 0xFFFF) # ori $t5, $t5, 2
 /* 0A8ACC 7F073F9C 24780008 */  addiu $t8, $v1, 8
 /* 0A8AD0 7F073FA0 AE58000C */  sw    $t8, 0xc($s2)
 /* 0A8AD4 7F073FA4 240C3210 */  li    $t4, 12816
 /* 0A8AD8 7F073FA8 AC6C0004 */  sw    $t4, 4($v1)
-/* 0A8ADC 7F073FAC AC6D0000 */  sw    $t5, ($v1)
+/* 0A8ADC 7F073FAC AC6D0000 */  sw    $t5, ($v1)                                    # ),
 /* 0A8AE0 7F073FB0 8FBF0024 */  lw    $ra, 0x24($sp)
 .L7F073FB4:
 /* 0A8AE4 7F073FB4 8FB00018 */  lw    $s0, 0x18($sp)
