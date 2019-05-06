@@ -47,21 +47,17 @@ s32 dword_CODE_bss_8005E4CC;
 s32 dword_CODE_bss_8005E4D0[2];
 s32 dword_CODE_bss_8005E4D8[2];
 char dword_CODE_bss_8005E4E0[0x38];
-char dword_CODE_bss_8005E518[0x8];
-char dword_CODE_bss_8005E520[0x4];
-char dword_CODE_bss_8005E524[0xC];
+//8005e518
+char _am[0x284];
 
 
-OSThread audiThread;
-OSMesgQueue audioFrameMsgQ;
-OSMesg audioFrameMsgBuf[8];
-OSMesgQueue msgQ_Q_8005E718;
-OSMesg msgQ_buf_8005E730[8];
 
-u32 dword_CODE_bss_8005E750[0x14];
 
+
+
+//8005e7a0
 OSScClient audi_client[2];
-
+//8005e7b0
 s32 dmaState_initialized;
 s32 dmaState_firstUsed;
 s32 dmaState_firstFree[2];
@@ -143,24 +139,24 @@ loop_6:
         temp_t0_2->unk0 = (?32) temp_t7->unk0;
         temp_t0_2->unk4 = (?32) temp_t7->unk4;
         arg0->unk20 = &sp48;
-        alInit(&dword_CODE_bss_8005E750, arg0);
+        alInit(&_am+0x238, arg0);
     }
     else
     {
-        alInit(&dword_CODE_bss_8005E750, arg0);
+        alInit(&_am+0x238, arg0);
     }
-    phi_s0 = &dword_CODE_bss_8005E518;
+    phi_s0 = &_am;
 loop_10:
     phi_s0->unk8 = alHeapDBAlloc(0, 0, arg0->unk14, 1, 0x60);
     temp_s0 = phi_s0 + 4;
     *phi_s0->unk8 = alHeapDBAlloc(0, 0, arg0->unk14, 1, (s32) (maxFrameSize * 4));
     phi_s0 = temp_s0;
-    if (temp_s0 < &dword_CODE_bss_8005E524)
+    if (temp_s0 < &_am+0xC)
     {
         goto loop_10;
     }
-    osCreateMesgQueue(&msgQ_Q_8005E718, &msgQ_buf_8005E730, 8);
-    osCreateMesgQueue(&audioFrameMsgQ, &audioFrameMsgBuf, 8);
+    osCreateMesgQueue(&_am+0x200, &_am+0x218, 8);
+    osCreateMesgQueue(&_am+0x1C8, &_am+0x1E0, 8);
     osCreateMesgQueue(&audDMAMessageQ, &audDMAMessageBuf, 0x40);
     dmaBuffs.unk4 = 0;
     dmaBuffs.unk0 = 0;
@@ -180,16 +176,16 @@ loop_12:
         goto loop_12;
     }
     temp_s1->unk10 = alHeapDBAlloc(0, 0, arg0->unk14, 1, 0x200);
-    phi_s0_3 = &dword_CODE_bss_8005E518;
+    phi_s0_3 = &_am;
 loop_14:
     temp_s0_2 = phi_s0_3 + 4;
     temp_s0_2->unk-4 = alHeapDBAlloc(0, 0, arg0->unk14, 1, 0x5dc0);
     phi_s0_3 = temp_s0_2;
-    if (temp_s0_2 != &dword_CODE_bss_8005E520)
+    if (temp_s0_2 != &_am+0x8)
     {
         goto loop_14;
     }
-    osCreateThread(&audiThread, 4, &_amMain, 0, set_stack_entry(&sp_audi, 0x1000), 0x14);
+    osCreateThread(&_am+0x18, 4, &_amMain, 0, set_stack_entry(&sp_audi, 0x1000), 0x14);
 }
 #else
 GLOBAL_ASM(
@@ -285,9 +281,9 @@ glabel amCreateAudioMgr
 /* 002914 70001D14 AE8D0000 */  sw    $t5, ($s4)
 /* 002918 70001D18 926E001C */  lbu   $t6, 0x1c($s3)
 /* 00291C 70001D1C 24010006 */  li    $at, 6
-/* 002920 70001D20 3C048006 */  lui   $a0, %hi(dword_CODE_bss_8005E750) # $a0, 0x8006
+/* 002920 70001D20 3C048006 */  lui   $a0, %hi(_am+0x238) # $a0, 0x8006
 /* 002924 70001D24 15C1001A */  bne   $t6, $at, .L70001D90
-/* 002928 70001D28 2484E750 */   addiu $a0, %lo(dword_CODE_bss_8005E750) # addiu $a0, $a0, -0x18b0
+/* 002928 70001D28 2484E750 */   addiu $a0, %lo(_am+0x238) # addiu $a0, $a0, -0x18b0
 /* 00292C 70001D2C 3C0F8002 */  lui   $t7, %hi(D_80023100) # $t7, 0x8002
 /* 002930 70001D30 27A20048 */  addiu $v0, $sp, 0x48
 /* 002934 70001D34 25EF3100 */  addiu $t7, %lo(D_80023100) # addiu $t7, $t7, 0x3100
@@ -304,8 +300,8 @@ glabel amCreateAudioMgr
 /* 00295C 70001D5C 15F9FFF8 */  bne   $t7, $t9, .L70001D40
 /* 002960 70001D60 AD01FFFC */   sw    $at, -4($t0)
 /* 002964 70001D64 8DE10000 */  lw    $at, ($t7)
-/* 002968 70001D68 3C048006 */  lui   $a0, %hi(dword_CODE_bss_8005E750) # $a0, 0x8006
-/* 00296C 70001D6C 2484E750 */  addiu $a0, %lo(dword_CODE_bss_8005E750) # addiu $a0, $a0, -0x18b0
+/* 002968 70001D68 3C048006 */  lui   $a0, %hi(_am+0x238) # $a0, 0x8006
+/* 00296C 70001D6C 2484E750 */  addiu $a0, %lo(_am+0x238) # addiu $a0, $a0, -0x18b0
 /* 002970 70001D70 AD010000 */  sw    $at, ($t0)
 /* 002974 70001D74 8DF90004 */  lw    $t9, 4($t7)
 /* 002978 70001D78 02602825 */  move  $a1, $s3
@@ -318,10 +314,10 @@ glabel amCreateAudioMgr
 /* 002990 70001D90 0C003AC7 */  jal   alInit
 /* 002994 70001D94 02602825 */   move  $a1, $s3
 .L70001D98:
-/* 002998 70001D98 3C108006 */  lui   $s0, %hi(dword_CODE_bss_8005E518) # $s0, 0x8006
-/* 00299C 70001D9C 3C118006 */  lui   $s1, %hi(dword_CODE_bss_8005E524) # $s1, 0x8006
-/* 0029A0 70001DA0 2631E524 */  addiu $s1, %lo(dword_CODE_bss_8005E524) # addiu $s1, $s1, -0x1adc
-/* 0029A4 70001DA4 2610E518 */  addiu $s0, %lo(dword_CODE_bss_8005E518) # addiu $s0, $s0, -0x1ae8
+/* 002998 70001D98 3C108006 */  lui   $s0, %hi(_am) # $s0, 0x8006
+/* 00299C 70001D9C 3C118006 */  lui   $s1, %hi(_am+0xC) # $s1, 0x8006
+/* 0029A0 70001DA0 2631E524 */  addiu $s1, %lo(_am+0xC) # addiu $s1, $s1, -0x1adc
+/* 0029A4 70001DA4 2610E518 */  addiu $s0, %lo(_am) # addiu $s0, $s0, -0x1ae8
 .L70001DA8:
 /* 0029A8 70001DA8 8E660014 */  lw    $a2, 0x14($s3)
 /* 0029AC 70001DAC 24090060 */  li    $t1, 96
@@ -344,16 +340,16 @@ glabel amCreateAudioMgr
 /* 0029F0 70001DF0 0211082B */  sltu  $at, $s0, $s1
 /* 0029F4 70001DF4 1420FFEC */  bnez  $at, .L70001DA8
 /* 0029F8 70001DF8 AD820000 */   sw    $v0, ($t4)
-/* 0029FC 70001DFC 3C048006 */  lui   $a0, %hi(msgQ_Q_8005E718) # $a0, 0x8006
-/* 002A00 70001E00 3C058006 */  lui   $a1, %hi(msgQ_buf_8005E730) # $a1, 0x8006
-/* 002A04 70001E04 24A5E730 */  addiu $a1, %lo(msgQ_buf_8005E730) # addiu $a1, $a1, -0x18d0
-/* 002A08 70001E08 2484E718 */  addiu $a0, %lo(msgQ_Q_8005E718) # addiu $a0, $a0, -0x18e8
+/* 0029FC 70001DFC 3C048006 */  lui   $a0, %hi(_am+0x200) # $a0, 0x8006
+/* 002A00 70001E00 3C058006 */  lui   $a1, %hi(_am+0x218) # $a1, 0x8006
+/* 002A04 70001E04 24A5E730 */  addiu $a1, %lo(_am+0x218) # addiu $a1, $a1, -0x18d0
+/* 002A08 70001E08 2484E718 */  addiu $a0, %lo(_am+0x200) # addiu $a0, $a0, -0x18e8
 /* 002A0C 70001E0C 0C0035B4 */  jal   osCreateMesgQueue
 /* 002A10 70001E10 24060008 */   li    $a2, 8
-/* 002A14 70001E14 3C048006 */  lui   $a0, %hi(audioFrameMsgQ) # $a0, 0x8006
-/* 002A18 70001E18 3C058006 */  lui   $a1, %hi(audioFrameMsgBuf) # $a1, 0x8006
-/* 002A1C 70001E1C 24A5E6F8 */  addiu $a1, %lo(audioFrameMsgBuf) # addiu $a1, $a1, -0x1908
-/* 002A20 70001E20 2484E6E0 */  addiu $a0, %lo(audioFrameMsgQ) # addiu $a0, $a0, -0x1920
+/* 002A14 70001E14 3C048006 */  lui   $a0, %hi(_am+0x1C8) # $a0, 0x8006
+/* 002A18 70001E18 3C058006 */  lui   $a1, %hi(_am+0x1E0) # $a1, 0x8006
+/* 002A1C 70001E1C 24A5E6F8 */  addiu $a1, %lo(_am+0x1E0) # addiu $a1, $a1, -0x1908
+/* 002A20 70001E20 2484E6E0 */  addiu $a0, %lo(_am+0x1C8) # addiu $a0, $a0, -0x1920
 /* 002A24 70001E24 0C0035B4 */  jal   osCreateMesgQueue
 /* 002A28 70001E28 24060008 */   li    $a2, 8
 /* 002A2C 70001E2C 3C048006 */  lui   $a0, %hi(audDMAMessageQ) # $a0, 0x8006
@@ -396,10 +392,10 @@ glabel amCreateAudioMgr
 /* 002ABC 70001EBC 0C003AD4 */  jal   alHeapDBAlloc
 /* 002AC0 70001EC0 24070001 */   li    $a3, 1
 /* 002AC4 70001EC4 AE220010 */  sw    $v0, 0x10($s1)
-/* 002AC8 70001EC8 3C118006 */  lui   $s1, %hi(dword_CODE_bss_8005E520) # $s1, 0x8006
-/* 002ACC 70001ECC 3C108006 */  lui   $s0, %hi(dword_CODE_bss_8005E518) # $s0, 0x8006
-/* 002AD0 70001ED0 2610E518 */  addiu $s0, %lo(dword_CODE_bss_8005E518) # addiu $s0, $s0, -0x1ae8
-/* 002AD4 70001ED4 2631E520 */  addiu $s1, %lo(dword_CODE_bss_8005E520) # addiu $s1, $s1, -0x1ae0
+/* 002AC8 70001EC8 3C118006 */  lui   $s1, %hi(_am+0x8) # $s1, 0x8006
+/* 002ACC 70001ECC 3C108006 */  lui   $s0, %hi(_am) # $s0, 0x8006
+/* 002AD0 70001ED0 2610E518 */  addiu $s0, %lo(_am) # addiu $s0, $s0, -0x1ae8
+/* 002AD4 70001ED4 2631E520 */  addiu $s1, %lo(_am+0x8) # addiu $s1, $s1, -0x1ae0
 .L70001ED8:
 /* 002AD8 70001ED8 8E660014 */  lw    $a2, 0x14($s3)
 /* 002ADC 70001EDC 24185DC0 */  li    $t8, 24000
@@ -415,12 +411,12 @@ glabel amCreateAudioMgr
 /* 002B04 70001F04 24843950 */  addiu $a0, %lo(sp_audi) # addiu $a0, $a0, 0x3950
 /* 002B08 70001F08 0C0001BC */  jal   set_stack_entry
 /* 002B0C 70001F0C 24051000 */   li    $a1, 4096
-/* 002B10 70001F10 3C048006 */  lui   $a0, %hi(audiThread) # $a0, 0x8006
+/* 002B10 70001F10 3C048006 */  lui   $a0, %hi(_am+0x18) # $a0, 0x8006
 /* 002B14 70001F14 3C067000 */  lui   $a2, %hi(_amMain) # $a2, 0x7000
 /* 002B18 70001F18 24190014 */  li    $t9, 20
 /* 002B1C 70001F1C AFB90014 */  sw    $t9, 0x14($sp)
 /* 002B20 70001F20 24C61F7C */  addiu $a2, %lo(_amMain) # addiu $a2, $a2, 0x1f7c
-/* 002B24 70001F24 2484E530 */  addiu $a0, %lo(audiThread) # addiu $a0, $a0, -0x1ad0
+/* 002B24 70001F24 2484E530 */  addiu $a0, %lo(_am+0x18) # addiu $a0, $a0, -0x1ad0
 /* 002B28 70001F28 24050004 */  li    $a1, 4
 /* 002B2C 70001F2C 00003825 */  move  $a3, $zero
 /* 002B30 70001F30 0C00350C */  jal   osCreateThread
@@ -438,7 +434,7 @@ glabel amCreateAudioMgr
 
 
 void startaudiThread(void) {
-    osStartThread(&audiThread);
+    osStartThread(&_am+0x18);
 }
 
 
@@ -468,11 +464,11 @@ void _amMain(s32 arg0)
 
     sp64 = NULL;
     sp60 = 0;
-    osScAddClient(&sc, &audi_client, &audioFrameMsgQ, 1);
+    osScAddClient(&sc, &audi_client, &_am+0x1C8, 1);
     phi_s1 = 0;
     phi_s2_2 = 0;
 loop_1:
-    osRecvMesg(&audioFrameMsgQ, &sp64, 1);
+    osRecvMesg(&_am+0x1C8, &sp64, 1);
     if (*sp64 != 1)
     {
         if (*sp64 != 5)
@@ -546,7 +542,7 @@ loop_1:
 
             }
         }
-        osRecvMesg(&msgQ_Q_8005E718, &sp60, 1);
+        osRecvMesg(&_am+0x200, &sp60, 1);
         __amHandleDoneMsg(sp60);
         phi_s2 = phi_s2_2;
         phi_s1 = temp_s1;
@@ -556,7 +552,7 @@ loop_1:
     {
         goto loop_1;
     }
-    alClose(&dword_CODE_bss_8005E750);
+    alClose(&_am+0x238);
 }
 #else
 GLOBAL_ASM(
@@ -564,9 +560,9 @@ GLOBAL_ASM(
 glabel _amMain
 /* 002B7C 70001F7C 27BDFF90 */  addiu $sp, $sp, -0x70
 /* 002B80 70001F80 AFB60030 */  sw    $s6, 0x30($sp)
-/* 002B84 70001F84 3C168006 */  lui   $s6, %hi(audioFrameMsgQ) # $s6, 0x8006
+/* 002B84 70001F84 3C168006 */  lui   $s6, %hi(_am+0x1C8) # $s6, 0x8006
 /* 002B88 70001F88 AFA40070 */  sw    $a0, 0x70($sp)
-/* 002B8C 70001F8C 26D6E6E0 */  addiu $s6, %lo(audioFrameMsgQ) # addiu $s6, $s6, -0x1920
+/* 002B8C 70001F8C 26D6E6E0 */  addiu $s6, %lo(_am+0x1C8) # addiu $s6, $s6, -0x1920
 /* 002B90 70001F90 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 002B94 70001F94 AFB20020 */  sw    $s2, 0x20($sp)
 /* 002B98 70001F98 AFB1001C */  sw    $s1, 0x1c($sp)
@@ -708,7 +704,7 @@ glabel _amMain
 /* 002DA8 700021A8 8FAD0044 */  lw    $t5, 0x44($sp)
 /* 002DAC 700021AC 018A082B */  sltu  $at, $t4, $t2
 /* 002DB0 700021B0 14200008 */  bnez  $at, .L700021D4
-/* 002DB4 700021B4 3C048006 */   lui   $a0, %hi(msgQ_Q_8005E718) # $a0, 0x8006
+/* 002DB4 700021B4 3C048006 */   lui   $a0, %hi(_am+0x200) # $a0, 0x8006
 /* 002DB8 700021B8 014C082B */  sltu  $at, $t2, $t4
 /* 002DBC 700021BC 14200003 */  bnez  $at, .L700021CC
 /* 002DC0 700021C0 016D082B */   sltu  $at, $t3, $t5
@@ -718,7 +714,7 @@ glabel _amMain
 /* 002DCC 700021CC AE6C0000 */  sw    $t4, ($s3)
 /* 002DD0 700021D0 AE6D0004 */  sw    $t5, 4($s3)
 .L700021D4:
-/* 002DD4 700021D4 2484E718 */  addiu $a0, %lo(msgQ_Q_8005E718) # addiu $a0, $a0, -0x18e8
+/* 002DD4 700021D4 2484E718 */  addiu $a0, %lo(_am+0x200) # addiu $a0, $a0, -0x18e8
 /* 002DD8 700021D8 27A50060 */  addiu $a1, $sp, 0x60
 /* 002DDC 700021DC 0C003774 */  jal   osRecvMesg
 /* 002DE0 700021E0 03C03025 */   move  $a2, $fp
@@ -733,9 +729,9 @@ glabel _amMain
 .L70002200:
 /* 002E00 70002200 5240FF82 */  beql  $s2, $zero, .L7000200C
 /* 002E04 70002204 02C02025 */   move  $a0, $s6
-/* 002E08 70002208 3C048006 */  lui   $a0, %hi(dword_CODE_bss_8005E750) # $a0, 0x8006
+/* 002E08 70002208 3C048006 */  lui   $a0, %hi(_am+0x238) # $a0, 0x8006
 /* 002E0C 7000220C 0C003AB9 */  jal   alClose
-/* 002E10 70002210 2484E750 */   addiu $a0, %lo(dword_CODE_bss_8005E750) # addiu $a0, $a0, -0x18b0
+/* 002E10 70002210 2484E750 */   addiu $a0, %lo(_am+0x238) # addiu $a0, $a0, -0x18b0
 /* 002E14 70002214 8FBF003C */  lw    $ra, 0x3c($sp)
 /* 002E18 70002218 8FB00018 */  lw    $s0, 0x18($sp)
 /* 002E1C 7000221C 8FB1001C */  lw    $s1, 0x1c($sp)
@@ -775,11 +771,11 @@ void _amHandleFrameMsg(void *arg0, s32 arg1, void *argB) {
     }
     // Node 4
     arg0->unk8 = 0;
-    arg0->unk58 = &msgQ_Q_8005E718;
+    arg0->unk58 = &_am+0x200;
     arg0->unk5C = arg0;
     arg0->unk10 = 2;
-    arg0->unk48 = (?32) *(&dword_CODE_bss_8005E518 + (curAcmdList * 4));
-    arg0->unk4C = (s32) (((s32) (alAudioFrame((0x80060000 + (curAcmdList * 4))->unk-1AE8, &cmdLen, sp24, arg0->unk4) - *(&dword_CODE_bss_8005E518 + (curAcmdList * 4))) >> 3) * 8);
+    arg0->unk48 = (?32) *(&_am + (curAcmdList * 4));
+    arg0->unk4C = (s32) (((s32) (alAudioFrame((0x80060000 + (curAcmdList * 4))->unk-1AE8, &cmdLen, sp24, arg0->unk4) - *(&_am + (curAcmdList * 4))) >> 3) * 8);
     arg0->unk18 = 2;
     arg0->unk20 = &rspbootTextStart;
     arg0->unk24 = (s32) (&gsp3DTextStart - &rspbootTextStart);
@@ -789,10 +785,10 @@ void _amHandleFrameMsg(void *arg0, s32 arg1, void *argB) {
     arg0->unk34 = 0x800;
     arg0->unk50 = 0;
     arg0->unk54 = 0;
-    osSendMesg(osScGetCmdQ(&sc, &rspbootTextStart, &curAcmdList, &dword_CODE_bss_8005E518), (arg0 + 8), 0);
+    osSendMesg(osScGetCmdQ(&sc, &rspbootTextStart, &curAcmdList, &_am), (arg0 + 8), 0);
     curAcmdList = (s32) (curAcmdList ^ 1);
     return;
-    // (possible return value: osSendMesg(osScGetCmdQ(&sc, &rspbootTextStart, &curAcmdList, &dword_CODE_bss_8005E518), (arg0 + 8), 0))
+    // (possible return value: osSendMesg(osScGetCmdQ(&sc, &rspbootTextStart, &curAcmdList, &_am), (arg0 + 8), 0))
 }
 #else
 GLOBAL_ASM(
@@ -845,18 +841,18 @@ glabel _amHandleFrameMsg
 /* 002EEC 700022EC 8C84E518 */  lw    $a0, -0x1ae8($a0)
 /* 002EF0 700022F0 0C003C42 */  jal   alAudioFrame
 /* 002EF4 700022F4 8FA60024 */   lw    $a2, 0x24($sp)
-/* 002EF8 700022F8 3C0E8006 */  lui   $t6, %hi(msgQ_Q_8005E718) # $t6, 0x8006
+/* 002EF8 700022F8 3C0E8006 */  lui   $t6, %hi(_am+0x200) # $t6, 0x8006
 /* 002EFC 700022FC 24030002 */  li    $v1, 2
 /* 002F00 70002300 3C068002 */  lui   $a2, %hi(curAcmdList) # $a2, 0x8002
-/* 002F04 70002304 25CEE718 */  addiu $t6, %lo(msgQ_Q_8005E718) # addiu $t6, $t6, -0x18e8
+/* 002F04 70002304 25CEE718 */  addiu $t6, %lo(_am+0x200) # addiu $t6, $t6, -0x18e8
 /* 002F08 70002308 24C630FC */  addiu $a2, %lo(curAcmdList) # addiu $a2, $a2, 0x30fc
 /* 002F0C 7000230C AE000008 */  sw    $zero, 8($s0)
 /* 002F10 70002310 AE0E0058 */  sw    $t6, 0x58($s0)
 /* 002F14 70002314 AE10005C */  sw    $s0, 0x5c($s0)
 /* 002F18 70002318 AE030010 */  sw    $v1, 0x10($s0)
 /* 002F1C 7000231C 8CCF0000 */  lw    $t7, ($a2)
-/* 002F20 70002320 3C078006 */  lui   $a3, %hi(dword_CODE_bss_8005E518) # $a3, 0x8006
-/* 002F24 70002324 24E7E518 */  addiu $a3, %lo(dword_CODE_bss_8005E518) # addiu $a3, $a3, -0x1ae8
+/* 002F20 70002320 3C078006 */  lui   $a3, %hi(_am) # $a3, 0x8006
+/* 002F24 70002324 24E7E518 */  addiu $a3, %lo(_am) # addiu $a3, $a3, -0x1ae8
 /* 002F28 70002328 000FC080 */  sll   $t8, $t7, 2
 /* 002F2C 7000232C 00F8C821 */  addu  $t9, $a3, $t8
 /* 002F30 70002330 8F280000 */  lw    $t0, ($t9)

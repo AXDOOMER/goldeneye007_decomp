@@ -8601,7 +8601,7 @@ Linker script and memory map
                 [0x00000000800995c0]                __ramPos = (__ramPos + SIZEOF (.csegment))
                 0x0000000000c78aa0                __csegtempPosEnd = (__csegtempPos + SIZEOF (.csegment))
 
-.bss            0x000000008005d2e0    0x308e0 load address 0x0000000000c3c550
+.bss            0x000000008005d2e0    0x301a0 load address 0x0000000000c3c550
  build/boot.o(.bss)
  build/init.o(.bss)
  .bss           0x000000008005d2e0      0x760 build/init.o
@@ -8628,7 +8628,7 @@ Linker script and memory map
  build/tlb_random.o(.bss)
  build/tlb_resolve.o(.bss)
  build/audi.o(.bss)
- .bss           0x000000008005e4b0      0xf50 build/audi.o
+ .bss           0x000000008005e4b0      0xf40 build/audi.o
                 0x000000008005e4b0                dword_CODE_bss_8005E4B0
                 0x000000008005e4b8                dword_CODE_bss_8005E4B8
                 0x000000008005e4c0                dword_CODE_bss_8005E4C0
@@ -8638,209 +8638,212 @@ Linker script and memory map
                 0x000000008005e4d0                dword_CODE_bss_8005E4D0
                 0x000000008005e4d8                dword_CODE_bss_8005E4D8
                 0x000000008005e4e0                dword_CODE_bss_8005E4E0
-                0x000000008005e518                dword_CODE_bss_8005E518
-                0x000000008005e520                dword_CODE_bss_8005E520
-                0x000000008005e528                dword_CODE_bss_8005E524
-                0x000000008005e538                audiThread
-                0x000000008005e6e8                audioFrameMsgQ
-                0x000000008005e700                audioFrameMsgBuf
-                0x000000008005e720                msgQ_Q_8005E718
-                0x000000008005e738                msgQ_buf_8005E730
-                0x000000008005e758                dword_CODE_bss_8005E750
-                0x000000008005e7a8                audi_client
-                0x000000008005e7b8                dmaState_initialized
-                0x000000008005e7bc                dmaState_firstUsed
-                0x000000008005e7c0                dmaState_firstFree
-                0x000000008005e7c8                dmaBuffs
-                0x000000008005ecc8                minFrameSize
-                0x000000008005eccc                frameSize
-                0x000000008005ecd0                maxFrameSize
-                0x000000008005ecd4                cmdLen
-                0x000000008005ecd8                audDMAIOMesgBuf
-                0x000000008005f2d8                audDMAMessageQ
-                0x000000008005f2f0                audDMAMessageBuf
+                0x000000008005e518                _am
+                0x000000008005e7a0                audi_client
+                0x000000008005e7b0                dmaState_initialized
+                0x000000008005e7b4                dmaState_firstUsed
+                0x000000008005e7b8                dmaState_firstFree
+                0x000000008005e7c0                dmaBuffs
+                0x000000008005ecc0                minFrameSize
+                0x000000008005ecc4                frameSize
+                0x000000008005ecc8                maxFrameSize
+                0x000000008005eccc                cmdLen
+                0x000000008005ecd0                audDMAIOMesgBuf
+                0x000000008005f2d0                audDMAMessageQ
+                0x000000008005f2e8                audDMAMessageBuf
  build/speed_graph.o(.bss)
- .bss           0x000000008005f400     0x13f0 build/speed_graph.o
-                0x000000008005f400                dword_CODE_bss_8005F3F0
-                0x000000008005f410                displaylist_0
-                0x000000008005fc60                displaylist_1
-                0x00000000800604b0                displaylist_bank
-                0x00000000800604b4                dword_CODE_bss_800604A4
-                0x00000000800604b8                dword_CODE_bss_800604A8
-                0x00000000800604bc                dword_CODE_bss_800604AC
-                0x00000000800604c0                dword_CODE_bss_800604B0
-                0x00000000800607c0                dword_CODE_bss_800607B0
-                0x00000000800607c4                dword_CODE_bss_800607B4
-                0x00000000800607c8                dword_CODE_bss_800607B8
-                0x00000000800607cc                dword_CODE_bss_800607BC
-                0x00000000800607d0                dword_CODE_bss_800607C0
-                0x00000000800607d4                dword_CODE_bss_800607C4
-                0x00000000800607d8                dword_CODE_bss_800607C8
-                0x00000000800607dc                dword_CODE_bss_800607CC
-                0x00000000800607e0                dword_CODE_bss_800607D0
-                0x00000000800607e4                dword_CODE_bss_800607D4
-                0x00000000800607e8                dword_CODE_bss_800607D8
-                0x00000000800607ec                dword_CODE_bss_800607DC
+ .bss           0x000000008005f3f0     0x13f0 build/speed_graph.o
+                0x000000008005f3f0                dword_CODE_bss_8005F3F0
+                0x000000008005f400                displaylist_0
+                0x000000008005fc50                displaylist_1
+                0x00000000800604a0                displaylist_bank
+                0x00000000800604a4                dword_CODE_bss_800604A4
+                0x00000000800604a8                dword_CODE_bss_800604A8
+                0x00000000800604ac                dword_CODE_bss_800604AC
+                0x00000000800604b0                dword_CODE_bss_800604B0
+                0x00000000800607b0                dword_CODE_bss_800607B0
+                0x00000000800607b4                dword_CODE_bss_800607B4
+                0x00000000800607b8                dword_CODE_bss_800607B8
+                0x00000000800607bc                dword_CODE_bss_800607BC
+                0x00000000800607c0                dword_CODE_bss_800607C0
+                0x00000000800607c4                dword_CODE_bss_800607C4
+                0x00000000800607c8                dword_CODE_bss_800607C8
+                0x00000000800607cc                dword_CODE_bss_800607CC
+                0x00000000800607d0                dword_CODE_bss_800607D0
+                0x00000000800607d4                dword_CODE_bss_800607D4
+                0x00000000800607d8                dword_CODE_bss_800607D8
+                0x00000000800607dc                dword_CODE_bss_800607DC
  build/video.o(.bss)
- .bss           0x00000000800607f0       0xb0 build/video.o
-                0x00000000800607f0                dword_CODE_bss_800607E0
-                0x0000000080060830                m
-                0x0000000080060834                word_CODE_bss_80060824
-                0x0000000080060838                dword_CODE_bss_80060828
-                0x0000000080060888                off_CODE_bss_80060878
-                0x0000000080060889                off_CODE_bss_80060879
-                0x000000008006088c                viMode
-                0x0000000080060890                dword_CODE_bss_80060880
-                0x0000000080060894                dword_CODE_bss_80060884
-                0x0000000080060898                dword_CODE_bss_80060888
-                0x000000008006089c                dword_CODE_bss_8006088C
+ .bss           0x00000000800607e0       0xb0 build/video.o
+                0x00000000800607e0                dword_CODE_bss_800607E0
+                0x0000000080060820                m
+                0x0000000080060824                word_CODE_bss_80060824
+                0x0000000080060828                dword_CODE_bss_80060828
+                0x0000000080060878                off_CODE_bss_80060878
+                0x0000000080060879                off_CODE_bss_80060879
+                0x000000008006087c                viMode
+                0x0000000080060880                dword_CODE_bss_80060880
+                0x0000000080060884                dword_CODE_bss_80060884
+                0x0000000080060888                dword_CODE_bss_80060888
+                0x000000008006088c                dword_CODE_bss_8006088C
  build/deb.o(.bss)
- .bss           0x00000000800608a0     0x2e40 build/deb.o
-                0x00000000800608a0                dword_CODE_bss_80060890
-                0x0000000080060ca0                thread_video_manager_debugthread
-                0x0000000080061350                tlbStack
-                0x0000000080063650                tlbMesgQ
-                0x0000000080063668                tlbMesgBuf
-                0x000000008006366c                ptr_tlbthread_maybe
-                0x0000000080063670                dword_CODE_bss_80063660
-                0x0000000080063674                current_indy_read_buf_resourceID
-                0x0000000080063678                ptr_indy_read_buf_string1
-                0x000000008006367c                ptr_indy_read_buf_string2
-                0x0000000080063680                indy_read_buffer
+ .bss           0x0000000080060890     0x2e40 build/deb.o
+                0x0000000080060890                dword_CODE_bss_80060890
+                0x0000000080060c90                thread_video_manager_debugthread
+                0x0000000080061340                tlbStack
+                0x0000000080063640                tlbMesgQ
+                0x0000000080063658                tlbMesgBuf
+                0x000000008006365c                ptr_tlbthread_maybe
+                0x0000000080063660                dword_CODE_bss_80063660
+                0x0000000080063664                current_indy_read_buf_resourceID
+                0x0000000080063668                ptr_indy_read_buf_string1
+                0x000000008006366c                ptr_indy_read_buf_string2
+                0x0000000080063670                indy_read_buffer
  build/debug_getlastRA.o(.bss)
  build/ramrom.o(.bss)
- .bss           0x00000000800636e0       0x40 build/ramrom.o
-                0x00000000800636e0                memoryMesgMB
-                0x00000000800636f8                ptr_memorymsg
-                0x0000000080063700                memoryMesgQueue
+ .bss           0x00000000800636d0       0x40 build/ramrom.o
+                0x00000000800636d0                memoryMesgMB
+                0x00000000800636e8                ptr_memorymsg
+                0x00000000800636f0                memoryMesgQueue
  build/boss.o(.bss)
  build/music.o(.bss)
- .bss           0x0000000080063720      0x4a0 build/music.o
-                0x0000000080063720                hp
-                0x0000000080063730                ptr_sfx_buf
-                0x0000000080063734                D_80063724
-                0x0000000080063738                ptr_1st_music_ctrl_block
-                0x000000008006373c                ptr_2nd_music_ctrl_block
-                0x0000000080063740                ptr_3rd_music_ctrl_block
-                0x0000000080063744                ptr_musicdatatable
-                0x0000000080063748                D_80063738
-                0x00000000800637c8                D_800637B8
-                0x0000000080063846                D_80063836
-                0x0000000080063848                D_80063838
-                0x000000008006384c                D_8006383C
-                0x0000000080063850                D_80063840
-                0x0000000080063854                D_80063844
-                0x0000000080063856                D_80063846
-                0x0000000080063858                D_80063848
-                0x000000008006385a                music1_length
-                0x000000008006385c                music2_length
-                0x000000008006385e                music3_length
-                0x0000000080063860                music1_rate
-                0x0000000080063864                music2_rate
-                0x0000000080063868                music3_rate
-                0x000000008006386c                D_8006385C
-                0x0000000080063870                D_80063860
-                0x0000000080063968                D_80063958
-                0x0000000080063a60                D_80063A50
-                0x0000000080063b60                D_80063B50
-                0x0000000080063bb4                D_80063BA4
-                0x0000000080063bb8                D_80063BA8
+ .bss           0x0000000080063710      0x4a0 build/music.o
+                0x0000000080063710                hp
+                0x0000000080063720                ptr_sfx_buf
+                0x0000000080063724                D_80063724
+                0x0000000080063728                ptr_1st_music_ctrl_block
+                0x000000008006372c                ptr_2nd_music_ctrl_block
+                0x0000000080063730                ptr_3rd_music_ctrl_block
+                0x0000000080063734                ptr_musicdatatable
+                0x0000000080063738                D_80063738
+                0x00000000800637b8                D_800637B8
+                0x0000000080063836                D_80063836
+                0x0000000080063838                D_80063838
+                0x000000008006383c                D_8006383C
+                0x0000000080063840                D_80063840
+                0x0000000080063844                D_80063844
+                0x0000000080063846                D_80063846
+                0x0000000080063848                D_80063848
+                0x000000008006384a                music1_length
+                0x000000008006384c                music2_length
+                0x000000008006384e                music3_length
+                0x0000000080063850                music1_rate
+                0x0000000080063854                music2_rate
+                0x0000000080063858                music3_rate
+                0x000000008006385c                D_8006385C
+                0x0000000080063860                D_80063860
+                0x0000000080063958                D_80063958
+                0x0000000080063a50                D_80063A50
+                0x0000000080063b50                D_80063B50
+                0x0000000080063ba4                D_80063BA4
+                0x0000000080063ba8                D_80063BA8
  build/sfx.o(.bss)
  build/memp.o(.bss)
- .bss           0x0000000080063bc0       0x70 build/memp.o
-                0x0000000080063bc0                memory_bank_ptrs
-                0x0000000080063bc8                D_80063BB8
-                0x0000000080063bd0                D_80063BC0
-                0x0000000080063bd4                D_80063BC4
-                0x0000000080063bd8                D_80063BC8
-                0x0000000080063be0                D_80063BD0
-                0x0000000080063be4                D_80063BD4
-                0x0000000080063be8                D_80063BD8
-                0x0000000080063bf0                D_80063BE0
-                0x0000000080063bf4                D_80063BE4
-                0x0000000080063bf8                D_80063BE8
-                0x0000000080063c00                ptr_model_room_buf_pri
-                0x0000000080063c08                dword_CODE_bss_80063BF8
-                0x0000000080063c2c                dword_CODE_bss_80063C1C
+ .bss           0x0000000080063bb0       0x70 build/memp.o
+                0x0000000080063bb0                memory_bank_ptrs
+                0x0000000080063bb8                D_80063BB8
+                0x0000000080063bc0                D_80063BC0
+                0x0000000080063bc4                D_80063BC4
+                0x0000000080063bc8                D_80063BC8
+                0x0000000080063bd0                D_80063BD0
+                0x0000000080063bd4                D_80063BD4
+                0x0000000080063bd8                D_80063BD8
+                0x0000000080063be0                D_80063BE0
+                0x0000000080063be4                D_80063BE4
+                0x0000000080063be8                D_80063BE8
+                0x0000000080063bf0                ptr_model_room_buf_pri
+                0x0000000080063bf8                dword_CODE_bss_80063BF8
+                0x0000000080063c1c                dword_CODE_bss_80063C1C
  build/mema.o(.bss)
- .bss           0x0000000080063c30     0x1010 build/mema.o
-                0x0000000080063c30                ptr_model_room_buf_secondary
-                0x0000000080063c34                size_modelroom_buf
-                0x0000000080063c38                ptr_table_allocated_mem_blocks
-                0x0000000080063c3c                dword_CODE_bss_80063C2C
-                0x0000000080063c40                index_for_loadedroom
-                0x0000000080063c44                dword_CODE_bss_80063C34
-                0x0000000080063c48                ptr_first_entry_in_alloc_table
-                0x0000000080063c50                dword_CODE_bss_80063C3C
-                0x0000000080063c60                dword_CODE_bss_80063C48
-                0x0000000080064c20                dword_CODE_bss_80064C08
-                0x0000000080064c28                dword_CODE_bss_80064C10
-                0x0000000080064c30                dword_CODE_bss_80064C18
-                0x0000000080064c34                dword_CODE_bss_80064C1C
-                0x0000000080064c38                dword_CODE_bss_80064C20
-                0x0000000080064c3c                dword_CODE_bss_80064C24
+ .bss           0x0000000080063c20     0x1010 build/mema.o
+                0x0000000080063c20                ptr_model_room_buf_secondary
+                0x0000000080063c24                size_modelroom_buf
+                0x0000000080063c28                ptr_table_allocated_mem_blocks
+                0x0000000080063c2c                dword_CODE_bss_80063C2C
+                0x0000000080063c30                index_for_loadedroom
+                0x0000000080063c34                dword_CODE_bss_80063C34
+                0x0000000080063c38                ptr_first_entry_in_alloc_table
+                0x0000000080063c3c                dword_CODE_bss_80063C3C
+                0x0000000080063c40                dword_CODE_bss_80063C40
+                0x0000000080063c44                dword_CODE_bss_80063C44
+                0x0000000080063c48                dword_CODE_bss_80063C48
+                0x0000000080064c08                dword_CODE_bss_80064C08
+                0x0000000080064c10                dword_CODE_bss_80064C10
+                0x0000000080064c18                dword_CODE_bss_80064C18
+                0x0000000080064c1c                dword_CODE_bss_80064C1C
+                0x0000000080064c20                dword_CODE_bss_80064C20
+                0x0000000080064c24                dword_CODE_bss_80064C24
  build/random.o(.bss)
  build/token.o(.bss)
- .bss           0x0000000080064c40      0x280 build/token.o
-                0x0000000080064c40                boot_token_from_indy
+ .bss           0x0000000080064c30      0x280 build/token.o
+                0x0000000080064c30                boot_token_from_indy
  build/stringhandler.o(.bss)
  build/sprintf.o(.bss)
  build/pi.o(.bss)
- .bss           0x0000000080064ec0       0xd0 build/pi.o
-                0x0000000080064ec0                piCmdBuf
-                0x0000000080064ec8                piCmdQ
+ .bss           0x0000000080064eb0       0x40 build/pi.o
+                0x0000000080064eb0                piCmdBuf
+                0x0000000080064ed0                piCmdQ
  build/vi.o(.bss)
- .bss           0x0000000080064f90       0x10 build/vi.o
-                0x0000000080064f90                vi_c_debug_MSG
-                0x0000000080064f94                vi_c_debug_MQ
+ .bss           0x0000000080064ef0       0x40 build/vi.o
+                0x0000000080064ef0                vi_c_debug_MSG
+                0x0000000080064f10                vi_c_debug_MQ
  build/debugmenu.o(.bss)
  build/joy.o(.bss)
- .bss           0x0000000080064fa0      0x680 build/joy.o
-                0x0000000080064fa0                controller_input_index
-                0x0000000080065180                dword_CODE_bss_80065110
-                0x0000000080065184                dword_CODE_bss_80065114
-                0x0000000080065188                dword_CODE_bss_80065118
-                0x0000000080065190                dword_CODE_bss_8006511C
-                0x00000000800651a0                dword_CODE_bss_8006512C
-                0x0000000080065380                dword_CODE_bss_8006530C
-                0x0000000080065388                dword_CODE_bss_80065314
-                0x0000000080065398                dword_CODE_bss_80065324
-                0x00000000800653a0                contdemoMesg
-                0x00000000800653c8                contdemoMesgMQ
-                0x00000000800653e0                cont1Mesg
-                0x00000000800653e8                cont1MesgMQ
-                0x0000000080065400                cont2Mesg
-                0x0000000080065408                cont2MesgMQ
-                0x0000000080065420                cont3Mesg
-                0x0000000080065428                cont3MesgMQ
-                0x0000000080065440                cont4Mesg
-                0x0000000080065448                cont4MesgMQ
-                0x0000000080065460                player1_controllerstatus
-                0x0000000080065464                player2_controllerstatus
-                0x0000000080065468                player3_controllerstatus
-                0x000000008006546c                player4_controllerstatus
-                0x0000000080065470                player1_controller_packet
+ .bss           0x0000000080064f30      0x670 build/joy.o
+                0x0000000080064f30                controller_input_index
+                0x0000000080065110                dword_CODE_bss_80065110
+                0x0000000080065114                dword_CODE_bss_80065114
+                0x0000000080065118                dword_CODE_bss_80065118
+                0x000000008006511c                dword_CODE_bss_8006511C
+                0x0000000080065120                dword_CODE_bss_80065120
+                0x0000000080065124                dword_CODE_bss_80065124
+                0x0000000080065128                dword_CODE_bss_80065128
+                0x000000008006512c                dword_CODE_bss_8006512C
+                0x0000000080065130                dword_code_bss_80065130
+                0x0000000080065308                dword_CODE_bss_80065308
+                0x000000008006530c                dword_CODE_bss_8006530C
+                0x0000000080065310                dword_CODE_bss_80065310
+                0x0000000080065314                dword_CODE_bss_80065314
+                0x0000000080065318                dword_CODE_bss_80065318
+                0x000000008006531c                dword_CODE_bss_8006531C
+                0x0000000080065320                dword_CODE_bss_80065320
+                0x0000000080065324                dword_CODE_bss_80065324
+                0x0000000080065328                contdemoMesg
+                0x0000000080065350                contdemoMesgMQ
+                0x0000000080065368                cont1Mesg
+                0x0000000080065370                cont1MesgMQ
+                0x0000000080065388                cont2Mesg
+                0x0000000080065390                cont2MesgMQ
+                0x00000000800653a8                cont3Mesg
+                0x00000000800653b0                cont3MesgMQ
+                0x00000000800653c8                cont4Mesg
+                0x00000000800653d0                cont4MesgMQ
+                0x00000000800653e8                player1_controllerstatus
+                0x00000000800653ec                player2_controllerstatus
+                0x00000000800653f0                player3_controllerstatus
+                0x00000000800653f4                player4_controllerstatus
+                0x00000000800653f8                player1_controller_packet
  build/joy_rumble.o(.bss)
- .bss           0x0000000080065620      0x900 build/joy_rumble.o
-                0x0000000080065620                rumble_off_player1_packet_buffer
-                0x0000000080065a20                rumble_on_player_packet_buffers
-                0x0000000080065e20                rumble_on_buffer
-                0x0000000080065ea0                rumble_off_buffer
+ .bss           0x00000000800655a0      0x240 build/joy_rumble.o
+                0x00000000800655a0                rumble_off_player1_packet_buffer
+                0x00000000800656a0                rumble_on_player_packet_buffers
+                0x00000000800657a0                rumble_on_buffer
+                0x00000000800657c0                rumble_off_buffer
  build/rmon.o(.bss)
  build/libultra/libultra.o(.bss)
- .bss           0x0000000080065f20        0x0 build/libultra/libultra.o
+ .bss           0x00000000800657e0        0x0 build/libultra/libultra.o
  build/game/initgamedata.o(.bss)
  build/game/initweaponanigroups.o(.bss)
  build/game/initactorpropstuff.o(.bss)
  build/game/initnull_0009D0.o(.bss)
  build/game/initunk_0009E0.o(.bss)
  build/game/initanitable.o(.bss)
- .bss           0x0000000080065f20      0x3d0 build/game/initanitable.o
-                0x0000000080065f20                dword_CODE_bss_80069170
-                0x00000000800661f0                animMsgQ
-                0x0000000080066208                dword_CODE_bss_80069458
-                0x00000000800662c8                animMsgBuf
-                0x00000000800662e8                ptr_animation_table
+ .bss           0x00000000800657e0      0x3d0 build/game/initanitable.o
+                0x00000000800657e0                dword_CODE_bss_80069170
+                0x0000000080065ab0                animMsgQ
+                0x0000000080065ac8                dword_CODE_bss_80069458
+                0x0000000080065b88                animMsgBuf
+                0x0000000080065ba8                ptr_animation_table
  build/game/initunk_000B60.o(.bss)
  build/game/setguscale.o(.bss)
  build/game/initnull_000BC0.o(.bss)
@@ -8851,8 +8854,8 @@ Linker script and memory map
  build/game/deb_loadallmodels.o(.bss)
  build/game/initobjects.o(.bss)
  build/game/prop.o(.bss)
- .bss           0x00000000800662f0       0x10 build/game/prop.o
-                0x00000000800662f0                if_positive_last_mp_weapon_set_num
+ .bss           0x0000000080065bb0       0x10 build/game/prop.o
+                0x0000000080065bb0                if_positive_last_mp_weapon_set_num
  build/game/objective.o(.bss)
  build/game/ejectedcartridges.o(.bss)
  build/game/initBondDATA.o(.bss)
@@ -8880,319 +8883,319 @@ Linker script and memory map
  build/game/null_007970.o(.bss)
  build/game/unk_007980.o(.bss)
  build/game/intro_logos.o(.bss)
- .bss           0x0000000080066300       0x50 build/game/intro_logos.o
-                0x0000000080066300                dword_CODE_bss_80069550
-                0x0000000080066304                dword_CODE_bss_80069554
-                0x0000000080066308                matrix_buffer_rarelogo_0
-                0x000000008006630c                matrix_buffer_gunbarrel_0
-                0x0000000080066310                matrix_buffer_rarelogo_1
-                0x0000000080066314                matrix_buffer_rarelogo_2
-                0x0000000080066318                matrix_buffer_gunbarrel_1
-                0x000000008006631c                matrix_buffer_intro_backdrop
-                0x0000000080066320                matrix_buffer_intro_bond
-                0x0000000080066324                x
-                0x0000000080066328                y
-                0x000000008006632c                dword_CODE_bss_8006957C
-                0x0000000080066330                dword_CODE_bss_80069580
-                0x0000000080066334                word_CODE_bss_80069584
-                0x0000000080066338                dword_CODE_bss_80069588
-                0x000000008006633c                dword_CODE_bss_8006958C
-                0x0000000080066340                virtualaddress
-                0x0000000080066344                dword_CODE_bss_80069594
+ .bss           0x0000000080065bc0       0x50 build/game/intro_logos.o
+                0x0000000080065bc0                dword_CODE_bss_80069550
+                0x0000000080065bc4                dword_CODE_bss_80069554
+                0x0000000080065bc8                matrix_buffer_rarelogo_0
+                0x0000000080065bcc                matrix_buffer_gunbarrel_0
+                0x0000000080065bd0                matrix_buffer_rarelogo_1
+                0x0000000080065bd4                matrix_buffer_rarelogo_2
+                0x0000000080065bd8                matrix_buffer_gunbarrel_1
+                0x0000000080065bdc                matrix_buffer_intro_backdrop
+                0x0000000080065be0                matrix_buffer_intro_bond
+                0x0000000080065be4                x
+                0x0000000080065be8                y
+                0x0000000080065bec                dword_CODE_bss_8006957C
+                0x0000000080065bf0                dword_CODE_bss_80069580
+                0x0000000080065bf4                word_CODE_bss_80069584
+                0x0000000080065bf8                dword_CODE_bss_80069588
+                0x0000000080065bfc                dword_CODE_bss_8006958C
+                0x0000000080065c00                virtualaddress
+                0x0000000080065c04                dword_CODE_bss_80069594
  build/game/mainmenu.o(.bss)
- .bss           0x0000000080066350      0x360 build/game/mainmenu.o
-                0x0000000080066350                flt_CODE_bss_800695A0
-                0x0000000080066354                flt_CODE_bss_800695A4
-                0x0000000080066358                flt_CODE_bss_800695A8
-                0x000000008006635c                flt_CODE_bss_800695AC
-                0x0000000080066360                flt_CODE_bss_800695B0
-                0x0000000080066364                flt_CODE_bss_800695B4
-                0x0000000080066368                flt_CODE_bss_800695B8
-                0x000000008006636c                flt_CODE_bss_800695BC
-                0x0000000080066370                flt_CODE_bss_800695C0
-                0x0000000080066374                flt_CODE_bss_800695C8
-                0x0000000080066378                flt_CODE_bss_800695CC
-                0x000000008006637c                flt_CODE_bss_800695D0
-                0x0000000080066380                flt_CODE_bss_800695D8
-                0x0000000080066384                flt_CODE_bss_800695DC
-                0x0000000080066388                flt_CODE_bss_800695E0
-                0x000000008006638c                flt_CODE_bss_800695E4
-                0x0000000080066390                flt_CODE_bss_800695E8
-                0x0000000080066394                flt_CODE_bss_800695EC
-                0x0000000080066398                flt_CODE_bss_800695F0
-                0x000000008006639c                flt_CODE_bss_800695F8
-                0x00000000800663a0                flt_CODE_bss_800695FC
-                0x00000000800663a4                flt_CODE_bss_80069600
-                0x00000000800663a8                flt_CODE_bss_80069608
-                0x00000000800663ac                flt_CODE_bss_8006960C
-                0x00000000800663b0                flt_CODE_bss_80069610
-                0x00000000800663b4                flt_CODE_bss_80069614
-                0x00000000800663b8                flt_CODE_bss_80069618
-                0x00000000800663c0                dword_CODE_bss_80069620
-                0x00000000800663f0                CHEAT_80069650
-                0x00000000800663f1                cheat_available
-                0x00000000800663f2                CHEAT_AVAILABLE_INVINCIBLE
-                0x00000000800663f3                CHEAT_AVAILABLE_ALLGUNS
-                0x00000000800663f4                CHEAT_80069654
-                0x00000000800663f5                CHEAT_80069655
-                0x00000000800663f6                CHEAT_80069656
-                0x00000000800663f7                CHEAT_AVAILABLE_LINEMODE
-                0x00000000800663f8                CHEAT_AVAILABLE_2X_HEALTH
-                0x00000000800663f9                CHEAT_AVAILABLE_2X_ARMOR
-                0x00000000800663fa                CHEAT_AVAILABLE_BOND_INVIS
-                0x00000000800663fb                CHEAT_AVAILABLE_INFINITE_AMMO
-                0x00000000800663fc                CHEAT_AVAILABLE_DK_MODE
-                0x00000000800663fd                CHEAT_AVAILABLE_EXTRA_WEAPONS
-                0x00000000800663fe                CHEAT_AVAILABLE_TINY_BOND
-                0x00000000800663ff                CHEAT_AVAILABLE_PAINTBALL
-                0x0000000080066400                CHEAT_AVAILABLE_10X_HEALTH
-                0x0000000080066401                CHEAT_AVAILABLE_MAGNUM
-                0x0000000080066402                CHEAT_AVAILABLE_LASER
-                0x0000000080066403                CHEAT_AVAILABLE_GOLDENGUN
-                0x0000000080066404                CHEAT_AVAILABLE_SILVERPP7
-                0x0000000080066405                CHEAT_AVAILABLE_GOLDPP7
-                0x0000000080066406                CHEAT_AVAILABLE_MP_INVINCIBILITY
-                0x0000000080066407                CHEAT_AVAILABLE_NO_MP_RADAR
-                0x0000000080066408                CHEAT_AVAILABLE_TURBO
-                0x0000000080066409                CHEAT_AVAILABLE_DEBUG_MODE
-                0x000000008006640a                CHEAT_AVAILABLE_FAST_ANI
-                0x000000008006640b                CHEAT_AVAILABLE_SLOW_ANI
-                0x000000008006640c                CHEAT_AVAILABLE_ENMY_ROCKETS
-                0x000000008006640d                CHEAT_AVAILABLE_2X_ROCKET
-                0x000000008006640e                CHEAT_AVAILABLE_2X_GRENADE_LAUNCHER
-                0x000000008006640f                CHEAT_AVAILABLE_2X_RCP90
-                0x0000000080066410                CHEAT_AVAILABLE_2X_THROWING_KNIVES
-                0x0000000080066411                CHEAT_AVAILABLE_2X_HUNTING_KNIVES
-                0x0000000080066412                CHEAT_AVAILABLE_2X_LASER
-                0x0000000080066413                CHEAT_80069673
-                0x0000000080066418                CHEAT_80069674
-                0x0000000080066444                cheat_activated
-                0x0000000080066445                CHEAT_AVAILABLE_EXTRA_CHARS
-                0x0000000080066446                cheat_activated_1
-                0x0000000080066447                cheat_activated_2
-                0x0000000080066448                CHEAT_AVAILABLE_MAX_AMMO
-                0x0000000080066449                cheat_activated_4
-                0x000000008006644a                cheat_activated_5
-                0x000000008006644b                cheat_activated_6
-                0x000000008006644c                cheat_activated_7
-                0x000000008006644d                cheat_activated_8
-                0x000000008006644e                cheat_activated_9
-                0x000000008006644f                cheat_activated_10
-                0x0000000080066450                cheat_activated_11
-                0x0000000080066451                cheat_activated_12
-                0x0000000080066452                cheat_activated_13
-                0x0000000080066453                cheat_activated_14
-                0x0000000080066454                cheat_activated_15
-                0x0000000080066455                cheat_activated_16
-                0x0000000080066456                cheat_activated_17
-                0x0000000080066457                cheat_activated_18
-                0x0000000080066458                cheat_activated_19
-                0x0000000080066459                cheat_activated_20
-                0x000000008006645a                cheat_activated_21
-                0x000000008006645b                cheat_activated_22
-                0x000000008006645c                cheat_activated_23
-                0x000000008006645d                cheat_activated_24
-                0x000000008006645e                cheat_activated_25
-                0x000000008006645f                cheat_activated_26
-                0x0000000080066460                cheat_activated_27
-                0x0000000080066461                cheat_activated_28
-                0x0000000080066462                cheat_activated_29
-                0x0000000080066463                cheat_activated_30
-                0x0000000080066464                cheat_activated_31
-                0x0000000080066465                cheat_activated_32
-                0x0000000080066466                cheat_activated_33
-                0x0000000080066467                cheat_activated_34
-                0x0000000080066468                cheat_activated_35
-                0x0000000080066469                cheat_activated_36
-                0x000000008006646a                cheat_activated_37
-                0x000000008006646b                cheat_activated_38
-                0x000000008006646c                cheat_activated_39
-                0x000000008006646d                cheat_activated_40
-                0x000000008006646e                cheat_activated_41
-                0x000000008006646f                cheat_activated_42
-                0x0000000080066470                cheat_activated_43
-                0x0000000080066471                cheat_activated_44
-                0x0000000080066472                cheat_activated_45
-                0x0000000080066473                cheat_activated_46
-                0x0000000080066474                cheat_activated_47
-                0x0000000080066475                cheat_activated_48
-                0x0000000080066476                cheat_activated_49
-                0x0000000080066477                cheat_activated_50
-                0x0000000080066478                cheat_activated_51
-                0x0000000080066479                cheat_activated_52
-                0x000000008006647a                cheat_activated_53
-                0x000000008006647b                cheat_activated_54
-                0x000000008006647c                cheat_activated_55
-                0x000000008006647d                cheat_activated_56
-                0x000000008006647e                cheat_activated_57
-                0x000000008006647f                cheat_activated_58
-                0x0000000080066480                cheat_activated_59
-                0x0000000080066481                cheat_activated_60
-                0x0000000080066482                cheat_activated_61
-                0x0000000080066483                cheat_activated_62
-                0x0000000080066484                cheat_activated_63
-                0x0000000080066485                cheat_activated_64
-                0x0000000080066486                cheat_activated_65
-                0x0000000080066487                cheat_activated_66
-                0x0000000080066488                cheat_activated_67
-                0x0000000080066489                cheat_activated_68
-                0x000000008006648a                cheat_activated_69
-                0x000000008006648b                cheat_activated_70
-                0x000000008006648c                cheat_activated_71
-                0x000000008006648d                cheat_activated_72
-                0x000000008006648e                cheat_activated_73
-                0x000000008006648f                cheat_activated_74
-                0x0000000080066490                cheat_activated_75
-                0x0000000080066491                cheat_activated_76
-                0x0000000080066492                cheat_activated_77
-                0x0000000080066493                cheat_activated_78
-                0x0000000080066494                fav_weapon_right_player1
-                0x0000000080066498                fav_weapon_left_player1
-                0x000000008006649c                fav_weapon_right_player2
-                0x00000000800664a0                fav_weapon_left_player2
-                0x00000000800664a4                fav_weapon_right_player3
-                0x00000000800664a8                fav_weapon_left_player3
-                0x00000000800664ac                fav_weapon_right_player4
-                0x00000000800664b0                fav_weapon_left_player4
-                0x00000000800664b4                mp_char_cur_select_player1
-                0x00000000800664b8                mp_char_cur_select_player2
-                0x00000000800664bc                mp_char_cur_select_player3
-                0x00000000800664c0                mp_char_cur_select_player4
-                0x00000000800664c4                mp_char_prev_select_player1
-                0x00000000800664c8                mp_char_prev_select_player2
-                0x00000000800664cc                mp_char_prev_select_player3
-                0x00000000800664d0                mp_char_prev_select_player4
-                0x00000000800664d4                dword_CODE_bss_80069730
-                0x00000000800664d8                dword_CODE_bss_80069734
-                0x00000000800664dc                dword_CODE_bss_80069738
-                0x00000000800664e0                dword_CODE_bss_8006973C
-                0x00000000800664e4                has_selected_char_player1
-                0x00000000800664e8                has_selected_char_player2
-                0x00000000800664ec                has_selected_char_player3
-                0x00000000800664f0                has_selected_char_player4
-                0x00000000800664f4                size_mp_select_image_player1
-                0x00000000800664f8                size_mp_select_image_player2
-                0x00000000800664fc                size_mp_select_image_player3
-                0x0000000080066500                size_mp_select_image_player4
-                0x0000000080066504                handicap_player1
-                0x0000000080066508                handicap_player2
-                0x000000008006650c                handicap_player3
-                0x0000000080066510                handicap_player4
-                0x0000000080066514                dword_CODE_bss_80069770
-                0x0000000080066518                dword_CODE_bss_80069774
-                0x000000008006651c                dword_CODE_bss_80069778
-                0x0000000080066520                current_mp_stage_highlighted
-                0x0000000080066524                dword_CODE_bss_80069780
-                0x0000000080066528                mission_difficulty_highlighted
-                0x000000008006652c                teamsize
-                0x0000000080066530                ptrbriefingdata
-                0x0000000080066534                newcheatunlocked
-                0x0000000080066538                highlight_enemy_reaction
-                0x000000008006653c                highlight_enemy_health
-                0x0000000080066540                highlight_enemy_accuracy
-                0x0000000080066544                highlight_enemy_damage
-                0x0000000080066548                controlstyle_player1
-                0x000000008006654c                controlstyle_player2
-                0x0000000080066550                controlstyle_player3
-                0x0000000080066554                controlstyle_player4
-                0x0000000080066558                highlight_players
-                0x000000008006655c                highlight_scenario
-                0x0000000080066560                highlight_gameselect
-                0x0000000080066564                highlight_gamelength
-                0x0000000080066568                highlight_character
-                0x000000008006656c                highlight_weaponselect
-                0x0000000080066570                highlight_health
-                0x0000000080066574                highlight_controlstyle
-                0x0000000080066578                highlight_aimadjustment
-                0x0000000080066580                dword_CODE_bss_800697F0
+ .bss           0x0000000080065c10      0x360 build/game/mainmenu.o
+                0x0000000080065c10                flt_CODE_bss_800695A0
+                0x0000000080065c14                flt_CODE_bss_800695A4
+                0x0000000080065c18                flt_CODE_bss_800695A8
+                0x0000000080065c1c                flt_CODE_bss_800695AC
+                0x0000000080065c20                flt_CODE_bss_800695B0
+                0x0000000080065c24                flt_CODE_bss_800695B4
+                0x0000000080065c28                flt_CODE_bss_800695B8
+                0x0000000080065c2c                flt_CODE_bss_800695BC
+                0x0000000080065c30                flt_CODE_bss_800695C0
+                0x0000000080065c34                flt_CODE_bss_800695C8
+                0x0000000080065c38                flt_CODE_bss_800695CC
+                0x0000000080065c3c                flt_CODE_bss_800695D0
+                0x0000000080065c40                flt_CODE_bss_800695D8
+                0x0000000080065c44                flt_CODE_bss_800695DC
+                0x0000000080065c48                flt_CODE_bss_800695E0
+                0x0000000080065c4c                flt_CODE_bss_800695E4
+                0x0000000080065c50                flt_CODE_bss_800695E8
+                0x0000000080065c54                flt_CODE_bss_800695EC
+                0x0000000080065c58                flt_CODE_bss_800695F0
+                0x0000000080065c5c                flt_CODE_bss_800695F8
+                0x0000000080065c60                flt_CODE_bss_800695FC
+                0x0000000080065c64                flt_CODE_bss_80069600
+                0x0000000080065c68                flt_CODE_bss_80069608
+                0x0000000080065c6c                flt_CODE_bss_8006960C
+                0x0000000080065c70                flt_CODE_bss_80069610
+                0x0000000080065c74                flt_CODE_bss_80069614
+                0x0000000080065c78                flt_CODE_bss_80069618
+                0x0000000080065c80                dword_CODE_bss_80069620
+                0x0000000080065cb0                CHEAT_80069650
+                0x0000000080065cb1                cheat_available
+                0x0000000080065cb2                CHEAT_AVAILABLE_INVINCIBLE
+                0x0000000080065cb3                CHEAT_AVAILABLE_ALLGUNS
+                0x0000000080065cb4                CHEAT_80069654
+                0x0000000080065cb5                CHEAT_80069655
+                0x0000000080065cb6                CHEAT_80069656
+                0x0000000080065cb7                CHEAT_AVAILABLE_LINEMODE
+                0x0000000080065cb8                CHEAT_AVAILABLE_2X_HEALTH
+                0x0000000080065cb9                CHEAT_AVAILABLE_2X_ARMOR
+                0x0000000080065cba                CHEAT_AVAILABLE_BOND_INVIS
+                0x0000000080065cbb                CHEAT_AVAILABLE_INFINITE_AMMO
+                0x0000000080065cbc                CHEAT_AVAILABLE_DK_MODE
+                0x0000000080065cbd                CHEAT_AVAILABLE_EXTRA_WEAPONS
+                0x0000000080065cbe                CHEAT_AVAILABLE_TINY_BOND
+                0x0000000080065cbf                CHEAT_AVAILABLE_PAINTBALL
+                0x0000000080065cc0                CHEAT_AVAILABLE_10X_HEALTH
+                0x0000000080065cc1                CHEAT_AVAILABLE_MAGNUM
+                0x0000000080065cc2                CHEAT_AVAILABLE_LASER
+                0x0000000080065cc3                CHEAT_AVAILABLE_GOLDENGUN
+                0x0000000080065cc4                CHEAT_AVAILABLE_SILVERPP7
+                0x0000000080065cc5                CHEAT_AVAILABLE_GOLDPP7
+                0x0000000080065cc6                CHEAT_AVAILABLE_MP_INVINCIBILITY
+                0x0000000080065cc7                CHEAT_AVAILABLE_NO_MP_RADAR
+                0x0000000080065cc8                CHEAT_AVAILABLE_TURBO
+                0x0000000080065cc9                CHEAT_AVAILABLE_DEBUG_MODE
+                0x0000000080065cca                CHEAT_AVAILABLE_FAST_ANI
+                0x0000000080065ccb                CHEAT_AVAILABLE_SLOW_ANI
+                0x0000000080065ccc                CHEAT_AVAILABLE_ENMY_ROCKETS
+                0x0000000080065ccd                CHEAT_AVAILABLE_2X_ROCKET
+                0x0000000080065cce                CHEAT_AVAILABLE_2X_GRENADE_LAUNCHER
+                0x0000000080065ccf                CHEAT_AVAILABLE_2X_RCP90
+                0x0000000080065cd0                CHEAT_AVAILABLE_2X_THROWING_KNIVES
+                0x0000000080065cd1                CHEAT_AVAILABLE_2X_HUNTING_KNIVES
+                0x0000000080065cd2                CHEAT_AVAILABLE_2X_LASER
+                0x0000000080065cd3                CHEAT_80069673
+                0x0000000080065cd8                CHEAT_80069674
+                0x0000000080065d04                cheat_activated
+                0x0000000080065d05                CHEAT_AVAILABLE_EXTRA_CHARS
+                0x0000000080065d06                cheat_activated_1
+                0x0000000080065d07                cheat_activated_2
+                0x0000000080065d08                CHEAT_AVAILABLE_MAX_AMMO
+                0x0000000080065d09                cheat_activated_4
+                0x0000000080065d0a                cheat_activated_5
+                0x0000000080065d0b                cheat_activated_6
+                0x0000000080065d0c                cheat_activated_7
+                0x0000000080065d0d                cheat_activated_8
+                0x0000000080065d0e                cheat_activated_9
+                0x0000000080065d0f                cheat_activated_10
+                0x0000000080065d10                cheat_activated_11
+                0x0000000080065d11                cheat_activated_12
+                0x0000000080065d12                cheat_activated_13
+                0x0000000080065d13                cheat_activated_14
+                0x0000000080065d14                cheat_activated_15
+                0x0000000080065d15                cheat_activated_16
+                0x0000000080065d16                cheat_activated_17
+                0x0000000080065d17                cheat_activated_18
+                0x0000000080065d18                cheat_activated_19
+                0x0000000080065d19                cheat_activated_20
+                0x0000000080065d1a                cheat_activated_21
+                0x0000000080065d1b                cheat_activated_22
+                0x0000000080065d1c                cheat_activated_23
+                0x0000000080065d1d                cheat_activated_24
+                0x0000000080065d1e                cheat_activated_25
+                0x0000000080065d1f                cheat_activated_26
+                0x0000000080065d20                cheat_activated_27
+                0x0000000080065d21                cheat_activated_28
+                0x0000000080065d22                cheat_activated_29
+                0x0000000080065d23                cheat_activated_30
+                0x0000000080065d24                cheat_activated_31
+                0x0000000080065d25                cheat_activated_32
+                0x0000000080065d26                cheat_activated_33
+                0x0000000080065d27                cheat_activated_34
+                0x0000000080065d28                cheat_activated_35
+                0x0000000080065d29                cheat_activated_36
+                0x0000000080065d2a                cheat_activated_37
+                0x0000000080065d2b                cheat_activated_38
+                0x0000000080065d2c                cheat_activated_39
+                0x0000000080065d2d                cheat_activated_40
+                0x0000000080065d2e                cheat_activated_41
+                0x0000000080065d2f                cheat_activated_42
+                0x0000000080065d30                cheat_activated_43
+                0x0000000080065d31                cheat_activated_44
+                0x0000000080065d32                cheat_activated_45
+                0x0000000080065d33                cheat_activated_46
+                0x0000000080065d34                cheat_activated_47
+                0x0000000080065d35                cheat_activated_48
+                0x0000000080065d36                cheat_activated_49
+                0x0000000080065d37                cheat_activated_50
+                0x0000000080065d38                cheat_activated_51
+                0x0000000080065d39                cheat_activated_52
+                0x0000000080065d3a                cheat_activated_53
+                0x0000000080065d3b                cheat_activated_54
+                0x0000000080065d3c                cheat_activated_55
+                0x0000000080065d3d                cheat_activated_56
+                0x0000000080065d3e                cheat_activated_57
+                0x0000000080065d3f                cheat_activated_58
+                0x0000000080065d40                cheat_activated_59
+                0x0000000080065d41                cheat_activated_60
+                0x0000000080065d42                cheat_activated_61
+                0x0000000080065d43                cheat_activated_62
+                0x0000000080065d44                cheat_activated_63
+                0x0000000080065d45                cheat_activated_64
+                0x0000000080065d46                cheat_activated_65
+                0x0000000080065d47                cheat_activated_66
+                0x0000000080065d48                cheat_activated_67
+                0x0000000080065d49                cheat_activated_68
+                0x0000000080065d4a                cheat_activated_69
+                0x0000000080065d4b                cheat_activated_70
+                0x0000000080065d4c                cheat_activated_71
+                0x0000000080065d4d                cheat_activated_72
+                0x0000000080065d4e                cheat_activated_73
+                0x0000000080065d4f                cheat_activated_74
+                0x0000000080065d50                cheat_activated_75
+                0x0000000080065d51                cheat_activated_76
+                0x0000000080065d52                cheat_activated_77
+                0x0000000080065d53                cheat_activated_78
+                0x0000000080065d54                fav_weapon_right_player1
+                0x0000000080065d58                fav_weapon_left_player1
+                0x0000000080065d5c                fav_weapon_right_player2
+                0x0000000080065d60                fav_weapon_left_player2
+                0x0000000080065d64                fav_weapon_right_player3
+                0x0000000080065d68                fav_weapon_left_player3
+                0x0000000080065d6c                fav_weapon_right_player4
+                0x0000000080065d70                fav_weapon_left_player4
+                0x0000000080065d74                mp_char_cur_select_player1
+                0x0000000080065d78                mp_char_cur_select_player2
+                0x0000000080065d7c                mp_char_cur_select_player3
+                0x0000000080065d80                mp_char_cur_select_player4
+                0x0000000080065d84                mp_char_prev_select_player1
+                0x0000000080065d88                mp_char_prev_select_player2
+                0x0000000080065d8c                mp_char_prev_select_player3
+                0x0000000080065d90                mp_char_prev_select_player4
+                0x0000000080065d94                dword_CODE_bss_80069730
+                0x0000000080065d98                dword_CODE_bss_80069734
+                0x0000000080065d9c                dword_CODE_bss_80069738
+                0x0000000080065da0                dword_CODE_bss_8006973C
+                0x0000000080065da4                has_selected_char_player1
+                0x0000000080065da8                has_selected_char_player2
+                0x0000000080065dac                has_selected_char_player3
+                0x0000000080065db0                has_selected_char_player4
+                0x0000000080065db4                size_mp_select_image_player1
+                0x0000000080065db8                size_mp_select_image_player2
+                0x0000000080065dbc                size_mp_select_image_player3
+                0x0000000080065dc0                size_mp_select_image_player4
+                0x0000000080065dc4                handicap_player1
+                0x0000000080065dc8                handicap_player2
+                0x0000000080065dcc                handicap_player3
+                0x0000000080065dd0                handicap_player4
+                0x0000000080065dd4                dword_CODE_bss_80069770
+                0x0000000080065dd8                dword_CODE_bss_80069774
+                0x0000000080065ddc                dword_CODE_bss_80069778
+                0x0000000080065de0                current_mp_stage_highlighted
+                0x0000000080065de4                dword_CODE_bss_80069780
+                0x0000000080065de8                mission_difficulty_highlighted
+                0x0000000080065dec                teamsize
+                0x0000000080065df0                ptrbriefingdata
+                0x0000000080065df4                newcheatunlocked
+                0x0000000080065df8                highlight_enemy_reaction
+                0x0000000080065dfc                highlight_enemy_health
+                0x0000000080065e00                highlight_enemy_accuracy
+                0x0000000080065e04                highlight_enemy_damage
+                0x0000000080065e08                controlstyle_player1
+                0x0000000080065e0c                controlstyle_player2
+                0x0000000080065e10                controlstyle_player3
+                0x0000000080065e14                controlstyle_player4
+                0x0000000080065e18                highlight_players
+                0x0000000080065e1c                highlight_scenario
+                0x0000000080065e20                highlight_gameselect
+                0x0000000080065e24                highlight_gamelength
+                0x0000000080065e28                highlight_character
+                0x0000000080065e2c                highlight_weaponselect
+                0x0000000080065e30                highlight_health
+                0x0000000080065e34                highlight_controlstyle
+                0x0000000080065e38                highlight_aimadjustment
+                0x0000000080065e40                dword_CODE_bss_800697F0
  build/game/unk_01B0E0.o(.bss)
  build/game/unk_01B240.o(.bss)
  build/game/unk_01BAE0.o(.bss)
  build/game/blood_animation.o(.bss)
  build/game/blood_decrypt.o(.bss)
  build/game/eeprom.o(.bss)
- .bss           0x00000000800666b0      0x250 build/game/eeprom.o
-                0x00000000800666b0                save1
-                0x0000000080066710                save2
-                0x0000000080066770                save3
-                0x00000000800667d0                save4
-                0x0000000080066830                save5
-                0x0000000080066890                save6
-                0x00000000800668f0                dword_CODE_bss_80069B60
+ .bss           0x0000000080065f70      0x250 build/game/eeprom.o
+                0x0000000080065f70                save1
+                0x0000000080065fd0                save2
+                0x0000000080066030                save3
+                0x0000000080066090                save4
+                0x00000000800660f0                save5
+                0x0000000080066150                save6
+                0x00000000800661b0                dword_CODE_bss_80069B60
  build/game/actor.o(.bss)
  build/game/actionblock.o(.bss)
- .bss           0x0000000080066900     0xc1e0 build/game/actionblock.o
-                0x0000000080066900                sfx_related
-                0x00000000800669c0                ptr_list_object_lookup_indices
-                0x00000000800669c4                num_obj_position_data_entries
-                0x00000000800669c8                pos_data_entry
-                0x00000000800669f0                dword_CODE_bss_80069C5C
-                0x0000000080066a00                dword_CODE_bss_80069C6C
-                0x0000000080066a24                dword_CODE_bss_80069C90
-                0x0000000080066a28                dword_CODE_bss_80069CA0
-                0x0000000080066a50                dword_CODE_bss_80069CC4
-                0x0000000080066a60                dword_CODE_bss_80069CD4
-                0x0000000080066a98                dword_CODE_bss_80069D08
-                0x0000000080066ad0                dword_CODE_bss_80069D3C
-                0x0000000080066b08                dword_CODE_bss_80069D70
-                0x0000000080066b40                dword_CODE_bss_80069DA4
-                0x000000008006e3b4                ptr_room_lookup_buffer_maybe
-                0x000000008006e3b8                dword_CODE_bss_8007161C
-                0x000000008006e3c0                dword_CODE_bss_80071620
-                0x000000008006e458                dword_CODE_bss_800716B4
-                0x000000008006eb94                dword_CODE_bss_80071DF0
-                0x000000008006eb98                dword_CODE_bss_80071DF4
-                0x000000008006eb9c                dword_CODE_bss_80071DF8
-                0x000000008006eba0                dword_CODE_bss_80071DFC
-                0x000000008006eba4                dword_CODE_bss_80071E00
-                0x000000008006eba8                dword_CODE_bss_80071E04
-                0x000000008006ebb0                dword_CODE_bss_80071E08
-                0x000000008006ec20                gas_damage_flag
-                0x000000008006ec24                gas_cutoff_flag
-                0x000000008006ec28                ProjectileData_start_address
-                0x000000008006fc18                dword_CODE_bss_80072E70
-                0x0000000080070118                dword_CODE_bss_80073370
-                0x0000000080070b68                dword_CODE_bss_80073DC0
-                0x0000000080071dd8                dword_CODE_bss_80075030
-                0x0000000080072918                objinst
-                0x000000008007291c                dword_CODE_bss_80075B74
-                0x0000000080072920                flt_CODE_bss_80075B78
-                0x0000000080072924                flt_CODE_bss_80075B7C
-                0x0000000080072928                flt_CODE_bss_80075B80
-                0x000000008007292c                flt_CODE_bss_80075B88
-                0x0000000080072930                flt_CODE_bss_80075B8C
-                0x0000000080072934                flt_CODE_bss_80075B90
-                0x0000000080072938                dword_CODE_bss_80075B98
-                0x00000000800729a8                dword_CODE_bss_80075C04
-                0x00000000800729b8                dword_CODE_bss_80075C10
-                0x0000000080072a30                dword_CODE_bss_80075C88
-                0x0000000080072aa8                ptr_setup_path_tbl
-                0x0000000080072aac                ptr_setup_path_link
-                0x0000000080072ab0                ptr_setup_intro
-                0x0000000080072ab4                ptr_setup_objects
-                0x0000000080072ab8                ptr_setup_path_sets
-                0x0000000080072abc                ptr_setup_actions
-                0x0000000080072ac0                ptr_0xxxpresets
-                0x0000000080072ac4                ptr_2xxxpresets
-                0x0000000080072ac8                dword_CODE_bss_80075D20
-                0x0000000080072acc                dword_CODE_bss_80075D24
-                0x0000000080072ad0                dword_CODE_bss_80075D28
+ .bss           0x00000000800661c0     0xc1e0 build/game/actionblock.o
+                0x00000000800661c0                sfx_related
+                0x0000000080066280                ptr_list_object_lookup_indices
+                0x0000000080066284                num_obj_position_data_entries
+                0x0000000080066288                pos_data_entry
+                0x00000000800662b0                dword_CODE_bss_80069C5C
+                0x00000000800662c0                dword_CODE_bss_80069C6C
+                0x00000000800662e4                dword_CODE_bss_80069C90
+                0x00000000800662e8                dword_CODE_bss_80069CA0
+                0x0000000080066310                dword_CODE_bss_80069CC4
+                0x0000000080066320                dword_CODE_bss_80069CD4
+                0x0000000080066358                dword_CODE_bss_80069D08
+                0x0000000080066390                dword_CODE_bss_80069D3C
+                0x00000000800663c8                dword_CODE_bss_80069D70
+                0x0000000080066400                dword_CODE_bss_80069DA4
+                0x000000008006dc74                ptr_room_lookup_buffer_maybe
+                0x000000008006dc78                dword_CODE_bss_8007161C
+                0x000000008006dc80                dword_CODE_bss_80071620
+                0x000000008006dd18                dword_CODE_bss_800716B4
+                0x000000008006e454                dword_CODE_bss_80071DF0
+                0x000000008006e458                dword_CODE_bss_80071DF4
+                0x000000008006e45c                dword_CODE_bss_80071DF8
+                0x000000008006e460                dword_CODE_bss_80071DFC
+                0x000000008006e464                dword_CODE_bss_80071E00
+                0x000000008006e468                dword_CODE_bss_80071E04
+                0x000000008006e470                dword_CODE_bss_80071E08
+                0x000000008006e4e0                gas_damage_flag
+                0x000000008006e4e4                gas_cutoff_flag
+                0x000000008006e4e8                ProjectileData_start_address
+                0x000000008006f4d8                dword_CODE_bss_80072E70
+                0x000000008006f9d8                dword_CODE_bss_80073370
+                0x0000000080070428                dword_CODE_bss_80073DC0
+                0x0000000080071698                dword_CODE_bss_80075030
+                0x00000000800721d8                objinst
+                0x00000000800721dc                dword_CODE_bss_80075B74
+                0x00000000800721e0                flt_CODE_bss_80075B78
+                0x00000000800721e4                flt_CODE_bss_80075B7C
+                0x00000000800721e8                flt_CODE_bss_80075B80
+                0x00000000800721ec                flt_CODE_bss_80075B88
+                0x00000000800721f0                flt_CODE_bss_80075B8C
+                0x00000000800721f4                flt_CODE_bss_80075B90
+                0x00000000800721f8                dword_CODE_bss_80075B98
+                0x0000000080072268                dword_CODE_bss_80075C04
+                0x0000000080072278                dword_CODE_bss_80075C10
+                0x00000000800722f0                dword_CODE_bss_80075C88
+                0x0000000080072368                ptr_setup_path_tbl
+                0x000000008007236c                ptr_setup_path_link
+                0x0000000080072370                ptr_setup_intro
+                0x0000000080072374                ptr_setup_objects
+                0x0000000080072378                ptr_setup_path_sets
+                0x000000008007237c                ptr_setup_actions
+                0x0000000080072380                ptr_0xxxpresets
+                0x0000000080072384                ptr_2xxxpresets
+                0x0000000080072388                dword_CODE_bss_80075D20
+                0x000000008007238c                dword_CODE_bss_80075D24
+                0x0000000080072390                dword_CODE_bss_80075D28
  build/game/loadobjectmodel.o(.bss)
  build/game/objective_status.o(.bss)
- .bss           0x0000000080072ae0       0x70 build/game/objective_status.o
-                0x0000000080072ae0                objective_ptrs
-                0x0000000080072b08                dword_CODE_bss_80075D58
-                0x0000000080072b0c                dword_CODE_bss_80075D5C
-                0x0000000080072b10                dword_CODE_bss_80075D60
-                0x0000000080072b30                ptr_last_tag_entry_type16
-                0x0000000080072b34                ptr_last_briefing_setup_entry_type23
-                0x0000000080072b38                ptr_last_enter_room_subobject_entry_type20
-                0x0000000080072b3c                ptr_last_deposit_in_room_subobject_entry_type21
-                0x0000000080072b40                ptr_last_photo_obj_in_room_subobject_entry_type1E
+ .bss           0x00000000800723a0       0x70 build/game/objective_status.o
+                0x00000000800723a0                objective_ptrs
+                0x00000000800723c8                dword_CODE_bss_80075D58
+                0x00000000800723cc                dword_CODE_bss_80075D5C
+                0x00000000800723d0                dword_CODE_bss_80075D60
+                0x00000000800723f0                ptr_last_tag_entry_type16
+                0x00000000800723f4                ptr_last_briefing_setup_entry_type23
+                0x00000000800723f8                ptr_last_enter_room_subobject_entry_type20
+                0x00000000800723fc                ptr_last_deposit_in_room_subobject_entry_type21
+                0x0000000080072400                ptr_last_photo_obj_in_room_subobject_entry_type1E
  build/game/sin.o(.bss)
  build/game/unk_057FD0.o(.bss)
- .bss           0x0000000080072b50       0x10 build/game/unk_057FD0.o
-                0x0000000080072b50                flt_CODE_bss_80075DA0
+ .bss           0x0000000080072410       0x10 build/game/unk_057FD0.o
+                0x0000000080072410                flt_CODE_bss_80075DA0
  build/game/unk_05A9E0.o(.bss)
  build/game/convertangleusinginverse.o(.bss)
  build/game/unk_05AB70.o(.bss)
@@ -9202,455 +9205,455 @@ Linker script and memory map
  build/game/truncf.o(.bss)
  build/game/unk_05C440.o(.bss)
  build/game/bondview.o(.bss)
- .bss           0x0000000080072b60      0xca0 build/game/bondview.o
-                0x0000000080072b60                dword_CODE_bss_80075DB0
-                0x0000000080072b64                dword_CODE_bss_80075DB4
-                0x0000000080072b68                dword_CODE_bss_80075DB8
-                0x0000000080072b6c                dword_CODE_bss_80075DBC
-                0x0000000080072b70                dword_CODE_bss_80075DC0
-                0x0000000080072b74                dword_CODE_bss_80075DC4
-                0x0000000080072b78                dword_CODE_bss_80075DC8
-                0x0000000080072c14                dword_CODE_bss_80075E64
-                0x0000000080072c18                dword_CODE_bss_80075E68
-                0x00000000800737f8                dword_CODE_bss_80076A48
+ .bss           0x0000000080072420      0xca0 build/game/bondview.o
+                0x0000000080072420                dword_CODE_bss_80075DB0
+                0x0000000080072424                dword_CODE_bss_80075DB4
+                0x0000000080072428                dword_CODE_bss_80075DB8
+                0x000000008007242c                dword_CODE_bss_80075DBC
+                0x0000000080072430                dword_CODE_bss_80075DC0
+                0x0000000080072434                dword_CODE_bss_80075DC4
+                0x0000000080072438                dword_CODE_bss_80075DC8
+                0x00000000800724d4                dword_CODE_bss_80075E64
+                0x00000000800724d8                dword_CODE_bss_80075E68
+                0x00000000800730b8                dword_CODE_bss_80076A48
  build/game/objecthandler.o(.bss)
- .bss           0x0000000080073800     0x2f10 build/game/objecthandler.o
-                0x0000000080073800                dword_CODE_bss_80076A50
-                0x000000008007380c                dword_CODE_bss_80076A5C
-                0x0000000080073810                dword_CODE_bss_80076A60
-                0x0000000080073818                dword_CODE_bss_80076A64
-                0x0000000080073824                dword_CODE_bss_80076A70
-                0x0000000080073828                dword_CODE_bss_80076A74
-                0x0000000080073830                dword_CODE_bss_80076A78
-                0x000000008007383c                dword_CODE_bss_80076A84
-                0x0000000080073840                dword_CODE_bss_80076A88
-                0x0000000080073848                dword_CODE_bss_80076A8C
-                0x0000000080073860                dword_CODE_bss_80076AA0
-                0x0000000080073878                dword_CODE_bss_80076AB4
-                0x0000000080073890                dword_CODE_bss_80076AC8
-                0x00000000800738a8                dword_CODE_bss_80076ADC
-                0x00000000800766d8                dword_CODE_bss_80079908
-                0x0000000080076700                ptr_allocation_0
-                0x0000000080076704                ptr_allocation_1
+ .bss           0x00000000800730c0     0x2f10 build/game/objecthandler.o
+                0x00000000800730c0                dword_CODE_bss_80076A50
+                0x00000000800730cc                dword_CODE_bss_80076A5C
+                0x00000000800730d0                dword_CODE_bss_80076A60
+                0x00000000800730d8                dword_CODE_bss_80076A64
+                0x00000000800730e4                dword_CODE_bss_80076A70
+                0x00000000800730e8                dword_CODE_bss_80076A74
+                0x00000000800730f0                dword_CODE_bss_80076A78
+                0x00000000800730fc                dword_CODE_bss_80076A84
+                0x0000000080073100                dword_CODE_bss_80076A88
+                0x0000000080073108                dword_CODE_bss_80076A8C
+                0x0000000080073120                dword_CODE_bss_80076AA0
+                0x0000000080073138                dword_CODE_bss_80076AB4
+                0x0000000080073150                dword_CODE_bss_80076AC8
+                0x0000000080073168                dword_CODE_bss_80076ADC
+                0x0000000080075f98                dword_CODE_bss_80079908
+                0x0000000080075fc0                ptr_allocation_0
+                0x0000000080075fc4                ptr_allocation_1
  build/game/objecthandler_2.o(.bss)
  build/game/othermodemicrocode.o(.bss)
  build/game/bond.o(.bss)
- .bss           0x0000000080076710      0x4b0 build/game/bond.o
-                0x0000000080076710                flt_CODE_bss_80079940
-                0x0000000080076714                flt_CODE_bss_80079944
-                0x0000000080076718                flt_CODE_bss_80079948
-                0x000000008007671c                flt_CODE_bss_8007994C
-                0x0000000080076720                flt_CODE_bss_80079950
-                0x0000000080076724                flt_CODE_bss_80079954
-                0x0000000080076728                flt_CODE_bss_80079958
-                0x000000008007672c                flt_CODE_bss_8007995C
-                0x0000000080076730                flt_CODE_bss_80079960
-                0x0000000080076734                flt_CODE_bss_80079964
-                0x0000000080076738                flt_CODE_bss_80079968
-                0x000000008007673c                flt_CODE_bss_8007996C
-                0x0000000080076740                flt_CODE_bss_80079970
-                0x0000000080076744                flt_CODE_bss_80079974
-                0x0000000080076748                flt_CODE_bss_80079978
-                0x000000008007674c                flt_CODE_bss_8007997C
-                0x0000000080076750                flt_CODE_bss_80079980
-                0x0000000080076754                flt_CODE_bss_80079990
-                0x0000000080076758                flt_CODE_bss_80079994
-                0x000000008007675c                flt_CODE_bss_80079998
-                0x0000000080076760                dword_CODE_bss_8007999C
-                0x0000000080076764                dword_CODE_bss_800799A0
-                0x0000000080076768                flt_CODE_bss_800799A8
-                0x000000008007676c                flt_CODE_bss_800799AC
-                0x0000000080076770                flt_CODE_bss_800799B0
-                0x0000000080076774                dword_CODE_bss_800799B4
-                0x0000000080076778                dword_CODE_bss_800799B8
-                0x000000008007677c                flt_CODE_bss_800799BC
-                0x0000000080076780                flt_CODE_bss_800799C0
-                0x0000000080076784                flt_CODE_bss_800799C4
-                0x0000000080076788                flt_CODE_bss_800799C8
-                0x000000008007678c                flt_CODE_bss_800799D0
-                0x0000000080076790                flt_CODE_bss_800799D4
-                0x0000000080076794                flt_CODE_bss_800799D8
-                0x0000000080076798                starting_right_weapon
-                0x000000008007679c                starting_left_weapon
-                0x00000000800767a0                flt_CODE_bss_800799E8
-                0x00000000800767a4                flt_CODE_bss_800799EC
-                0x00000000800767a8                flt_CODE_bss_800799F0
-                0x00000000800767ac                dword_CODE_bss_800799F4
-                0x00000000800767b0                dword_CODE_bss_800799F8
-                0x00000000800767b4                dword_CODE_bss_800799FC
-                0x00000000800767b8                flt_CODE_bss_80079A00
-                0x00000000800767bc                flt_CODE_bss_80079A04
-                0x00000000800767c0                flt_CODE_bss_80079A08
-                0x00000000800767c4                flt_CODE_bss_80079A0C
-                0x00000000800767c8                flt_CODE_bss_80079A10
-                0x00000000800767cc                dword_CODE_bss_80079A14
-                0x00000000800767d0                dword_CODE_bss_80079A18
-                0x00000000800767d4                dword_CODE_bss_80079A1C
-                0x00000000800767d8                mission_timer
-                0x00000000800767dc                watch_time_0
-                0x00000000800767e0                dword_CODE_bss_80079A28
-                0x00000000800769e0                dword_CODE_bss_80079C28
-                0x0000000080076a08                dword_CODE_bss_80079C68
-                0x0000000080076a10                dword_CODE_bss_80079C70
-                0x0000000080076b40                dword_CODE_bss_80079DA0
-                0x0000000080076b44                dword_CODE_bss_80079DA4
-                0x0000000080076b48                dword_CODE_bss_80079DA8
-                0x0000000080076b68                dword_CODE_bss_80079DC8
-                0x0000000080076ba4                flt_CODE_bss_80079E04
-                0x0000000080076ba8                flt_CODE_bss_80079E08
-                0x0000000080076bac                flt_CODE_bss_80079E0C
-                0x0000000080076bb0                flt_CODE_bss_80079E10
+ .bss           0x0000000080075fd0      0x4b0 build/game/bond.o
+                0x0000000080075fd0                flt_CODE_bss_80079940
+                0x0000000080075fd4                flt_CODE_bss_80079944
+                0x0000000080075fd8                flt_CODE_bss_80079948
+                0x0000000080075fdc                flt_CODE_bss_8007994C
+                0x0000000080075fe0                flt_CODE_bss_80079950
+                0x0000000080075fe4                flt_CODE_bss_80079954
+                0x0000000080075fe8                flt_CODE_bss_80079958
+                0x0000000080075fec                flt_CODE_bss_8007995C
+                0x0000000080075ff0                flt_CODE_bss_80079960
+                0x0000000080075ff4                flt_CODE_bss_80079964
+                0x0000000080075ff8                flt_CODE_bss_80079968
+                0x0000000080075ffc                flt_CODE_bss_8007996C
+                0x0000000080076000                flt_CODE_bss_80079970
+                0x0000000080076004                flt_CODE_bss_80079974
+                0x0000000080076008                flt_CODE_bss_80079978
+                0x000000008007600c                flt_CODE_bss_8007997C
+                0x0000000080076010                flt_CODE_bss_80079980
+                0x0000000080076014                flt_CODE_bss_80079990
+                0x0000000080076018                flt_CODE_bss_80079994
+                0x000000008007601c                flt_CODE_bss_80079998
+                0x0000000080076020                dword_CODE_bss_8007999C
+                0x0000000080076024                dword_CODE_bss_800799A0
+                0x0000000080076028                flt_CODE_bss_800799A8
+                0x000000008007602c                flt_CODE_bss_800799AC
+                0x0000000080076030                flt_CODE_bss_800799B0
+                0x0000000080076034                dword_CODE_bss_800799B4
+                0x0000000080076038                dword_CODE_bss_800799B8
+                0x000000008007603c                flt_CODE_bss_800799BC
+                0x0000000080076040                flt_CODE_bss_800799C0
+                0x0000000080076044                flt_CODE_bss_800799C4
+                0x0000000080076048                flt_CODE_bss_800799C8
+                0x000000008007604c                flt_CODE_bss_800799D0
+                0x0000000080076050                flt_CODE_bss_800799D4
+                0x0000000080076054                flt_CODE_bss_800799D8
+                0x0000000080076058                starting_right_weapon
+                0x000000008007605c                starting_left_weapon
+                0x0000000080076060                flt_CODE_bss_800799E8
+                0x0000000080076064                flt_CODE_bss_800799EC
+                0x0000000080076068                flt_CODE_bss_800799F0
+                0x000000008007606c                dword_CODE_bss_800799F4
+                0x0000000080076070                dword_CODE_bss_800799F8
+                0x0000000080076074                dword_CODE_bss_800799FC
+                0x0000000080076078                flt_CODE_bss_80079A00
+                0x000000008007607c                flt_CODE_bss_80079A04
+                0x0000000080076080                flt_CODE_bss_80079A08
+                0x0000000080076084                flt_CODE_bss_80079A0C
+                0x0000000080076088                flt_CODE_bss_80079A10
+                0x000000008007608c                dword_CODE_bss_80079A14
+                0x0000000080076090                dword_CODE_bss_80079A18
+                0x0000000080076094                dword_CODE_bss_80079A1C
+                0x0000000080076098                mission_timer
+                0x000000008007609c                watch_time_0
+                0x00000000800760a0                dword_CODE_bss_80079A28
+                0x00000000800762a0                dword_CODE_bss_80079C28
+                0x00000000800762c8                dword_CODE_bss_80079C68
+                0x00000000800762d0                dword_CODE_bss_80079C70
+                0x0000000080076400                dword_CODE_bss_80079DA0
+                0x0000000080076404                dword_CODE_bss_80079DA4
+                0x0000000080076408                dword_CODE_bss_80079DA8
+                0x0000000080076428                dword_CODE_bss_80079DC8
+                0x0000000080076464                flt_CODE_bss_80079E04
+                0x0000000080076468                flt_CODE_bss_80079E08
+                0x000000008007646c                flt_CODE_bss_80079E0C
+                0x0000000080076470                flt_CODE_bss_80079E10
  build/game/unk_08DBB0.o(.bss)
  build/game/debugmenu_08FE00.o(.bss)
  build/game/debugmenu_090490.o(.bss)
  build/game/unk_091080.o(.bss)
- .bss           0x0000000080076bc0       0x10 build/game/unk_091080.o
-                0x0000000080076bc0                dword_CODE_bss_80079E20
+ .bss           0x0000000080076480       0x10 build/game/unk_091080.o
+                0x0000000080076480                dword_CODE_bss_80079E20
  build/game/cheat_buttons_objectrelated.o(.bss)
- .bss           0x0000000080076bd0       0x50 build/game/cheat_buttons_objectrelated.o
-                0x0000000080076bd0                off_CODE_bss_80079E30
+ .bss           0x0000000080076490       0x50 build/game/cheat_buttons_objectrelated.o
+                0x0000000080076490                off_CODE_bss_80079E30
  build/game/unk_092890.o(.bss)
  build/game/unk_092E50.o(.bss)
- .bss           0x0000000080076c20       0x10 build/game/unk_092E50.o
-                0x0000000080076c20                flt_CODE_bss_80079E80
-                0x0000000080076c24                flt_CODE_bss_80079E84
-                0x0000000080076c28                flt_CODE_bss_80079E88
+ .bss           0x00000000800764e0       0x10 build/game/unk_092E50.o
+                0x00000000800764e0                flt_CODE_bss_80079E80
+                0x00000000800764e4                flt_CODE_bss_80079E84
+                0x00000000800764e8                flt_CODE_bss_80079E88
  build/game/unk_093880.o(.bss)
- .bss           0x0000000080076c30      0x240 build/game/unk_093880.o
-                0x0000000080076c30                dword_CODE_bss_80079E90
-                0x0000000080076c34                dword_CODE_bss_80079E94
-                0x0000000080076c38                dword_CODE_bss_80079E98
-                0x0000000080076c80                ptr_BONDdata_p1
-                0x0000000080076c84                ptr_BONDdata_p2
-                0x0000000080076c88                ptr_BONDdata_p3
-                0x0000000080076c8c                ptr_BONDdata_p4
-                0x0000000080076c90                player1_player_data
-                0x0000000080076d00                player2_player_data
-                0x0000000080076d70                player3_player_data
-                0x0000000080076de0                player4_player_data
-                0x0000000080076e50                ptr_BONDdata
-                0x0000000080076e54                cur_player_stat_ptr
-                0x0000000080076e58                player_num
-                0x0000000080076e5c                random_byte
-                0x0000000080076e60                dword_CODE_bss_8007A0C0
-                0x0000000080076e64                dword_CODE_bss_8007A0C4
-                0x0000000080076e68                dword_CODE_bss_8007A0C8
-                0x0000000080076e6c                dword_CODE_bss_8007A0CC
+ .bss           0x00000000800764f0      0x240 build/game/unk_093880.o
+                0x00000000800764f0                dword_CODE_bss_80079E90
+                0x00000000800764f4                dword_CODE_bss_80079E94
+                0x00000000800764f8                dword_CODE_bss_80079E98
+                0x0000000080076540                ptr_BONDdata_p1
+                0x0000000080076544                ptr_BONDdata_p2
+                0x0000000080076548                ptr_BONDdata_p3
+                0x000000008007654c                ptr_BONDdata_p4
+                0x0000000080076550                player1_player_data
+                0x00000000800765c0                player2_player_data
+                0x0000000080076630                player3_player_data
+                0x00000000800766a0                player4_player_data
+                0x0000000080076710                ptr_BONDdata
+                0x0000000080076714                cur_player_stat_ptr
+                0x0000000080076718                player_num
+                0x000000008007671c                random_byte
+                0x0000000080076720                dword_CODE_bss_8007A0C0
+                0x0000000080076724                dword_CODE_bss_8007A0C4
+                0x0000000080076728                dword_CODE_bss_8007A0C8
+                0x000000008007672c                dword_CODE_bss_8007A0CC
  build/game/unk_09B600.o(.bss)
  build/game/unk_09B740.o(.bss)
  build/game/unk_09B7A0.o(.bss)
- .bss           0x0000000080076e70       0x30 build/game/unk_09B7A0.o
-                0x0000000080076e70                dword_CODE_bss_8007A0D0
-                0x0000000080076e74                dword_CODE_bss_8007A0D4
-                0x0000000080076e78                dword_CODE_bss_8007A0D8
-                0x0000000080076e7c                dword_CODE_bss_8007A0DC
-                0x0000000080076e80                dword_CODE_bss_8007A0E0
-                0x0000000080076e84                dword_CODE_bss_8007A0E4
-                0x0000000080076e88                dword_CODE_bss_8007A0E8
-                0x0000000080076e8c                dword_CODE_bss_8007A0EC
-                0x0000000080076e90                word_CODE_bss_8007A0F0
-                0x0000000080076e92                word_CODE_bss_8007A0F2
+ .bss           0x0000000080076730       0x30 build/game/unk_09B7A0.o
+                0x0000000080076730                dword_CODE_bss_8007A0D0
+                0x0000000080076734                dword_CODE_bss_8007A0D4
+                0x0000000080076738                dword_CODE_bss_8007A0D8
+                0x000000008007673c                dword_CODE_bss_8007A0DC
+                0x0000000080076740                dword_CODE_bss_8007A0E0
+                0x0000000080076744                dword_CODE_bss_8007A0E4
+                0x0000000080076748                dword_CODE_bss_8007A0E8
+                0x000000008007674c                dword_CODE_bss_8007A0EC
+                0x0000000080076750                word_CODE_bss_8007A0F0
+                0x0000000080076752                word_CODE_bss_8007A0F2
  build/game/unk_09C250.o(.bss)
- .bss           0x0000000080076ea0       0x60 build/game/unk_09C250.o
-                0x0000000080076ea0                dword_CODE_bss_8007A100
-                0x0000000080076ee0                ptr_smoke_buf
-                0x0000000080076ee4                ptr_explosion_buf
-                0x0000000080076ee8                max_casings
-                0x0000000080076eec                ptr_ejected_casing_buf
-                0x0000000080076ef0                ptr_scorch_buf
-                0x0000000080076ef4                ptr_bullet_impact_buf
+ .bss           0x0000000080076760       0x60 build/game/unk_09C250.o
+                0x0000000080076760                dword_CODE_bss_8007A100
+                0x00000000800767a0                ptr_smoke_buf
+                0x00000000800767a4                ptr_explosion_buf
+                0x00000000800767a8                max_casings
+                0x00000000800767ac                ptr_ejected_casing_buf
+                0x00000000800767b0                ptr_scorch_buf
+                0x00000000800767b4                ptr_bullet_impact_buf
  build/game/unk_0A1DA0.o(.bss)
- .bss           0x0000000080076f00      0xf40 build/game/unk_0A1DA0.o
-                0x0000000080076f00                dword_CODE_bss_8007A160
-                0x0000000080076f04                dword_CODE_bss_8007A164
-                0x0000000080076f08                dword_CODE_bss_8007A168
-                0x0000000080076f0c                dword_CODE_bss_8007A16C
-                0x0000000080076f10                dword_CODE_bss_8007A170
-                0x0000000080077280                dword_CODE_bss_8007A4E0
-                0x0000000080077e38                dword_CODE_bss_8007B098
+ .bss           0x00000000800767c0      0xf40 build/game/unk_0A1DA0.o
+                0x00000000800767c0                dword_CODE_bss_8007A160
+                0x00000000800767c4                dword_CODE_bss_8007A164
+                0x00000000800767c8                dword_CODE_bss_8007A168
+                0x00000000800767cc                dword_CODE_bss_8007A16C
+                0x00000000800767d0                dword_CODE_bss_8007A170
+                0x0000000080076b40                dword_CODE_bss_8007A4E0
+                0x00000000800776f8                dword_CODE_bss_8007B098
  build/game/watch.o(.bss)
- .bss           0x0000000080077e40       0x80 build/game/watch.o
-                0x0000000080077e40                dword_CODE_bss_8007B0A0
-                0x0000000080077e80                dword_CODE_bss_8007B0E0
+ .bss           0x0000000080077700       0x80 build/game/watch.o
+                0x0000000080077700                dword_CODE_bss_8007B0A0
+                0x0000000080077740                dword_CODE_bss_8007B0E0
  build/game/textrelated.o(.bss)
  build/game/stan.o(.bss)
- .bss           0x0000000080077ec0     0x2210 build/game/stan.o
-                0x0000000080077ec0                clippingfile
-                0x0000000080077ec4                ptr_firstroom
-                0x0000000080077ec8                dword_CODE_bss_8007B128
-                0x0000000080077ecc                dword_CODE_bss_8007B12C
-                0x0000000080077ed0                dword_CODE_bss_8007B130
-                0x0000000080077ed8                dword_CODE_bss_8007B134
-                0x00000000800780f8                dword_CODE_bss_8007B354
-                0x0000000080078100                dword_CODE_bss_8007B358
-                0x0000000080079b10                dword_CODE_bss_8007B9DC
-                0x0000000080079b14                dword_CODE_bss_8007B9E0
-                0x0000000080079b18                dword_CODE_bss_8007B9E4
-                0x0000000080079b1c                dword_CODE_bss_8007B9E8
-                0x0000000080079b20                dword_CODE_bss_8007B9EC
-                0x0000000080079b24                flt_CODE_bss_8007B9F0
-                0x0000000080079b28                flt_CODE_bss_8007B9F4
-                0x0000000080079b2c                flt_CODE_bss_8007B9F8
-                0x0000000080079b30                flt_CODE_bss_8007B9FC
-                0x0000000080079b34                flt_CODE_bss_8007BA00
-                0x0000000080079b38                dword_CODE_bss_8007BA04
-                0x0000000080079b3c                dword_CODE_bss_8007BA08
-                0x0000000080079b40                dword_CODE_bss_8007BA0C
-                0x0000000080079b48                dword_CODE_bss_8007BA10
+ .bss           0x0000000080077780     0x2210 build/game/stan.o
+                0x0000000080077780                clippingfile
+                0x0000000080077784                ptr_firstroom
+                0x0000000080077788                dword_CODE_bss_8007B128
+                0x000000008007778c                dword_CODE_bss_8007B12C
+                0x0000000080077790                dword_CODE_bss_8007B130
+                0x0000000080077798                dword_CODE_bss_8007B134
+                0x00000000800779b8                dword_CODE_bss_8007B354
+                0x00000000800779c0                dword_CODE_bss_8007B358
+                0x00000000800793d0                dword_CODE_bss_8007B9DC
+                0x00000000800793d4                dword_CODE_bss_8007B9E0
+                0x00000000800793d8                dword_CODE_bss_8007B9E4
+                0x00000000800793dc                dword_CODE_bss_8007B9E8
+                0x00000000800793e0                dword_CODE_bss_8007B9EC
+                0x00000000800793e4                flt_CODE_bss_8007B9F0
+                0x00000000800793e8                flt_CODE_bss_8007B9F4
+                0x00000000800793ec                flt_CODE_bss_8007B9F8
+                0x00000000800793f0                flt_CODE_bss_8007B9FC
+                0x00000000800793f4                flt_CODE_bss_8007BA00
+                0x00000000800793f8                dword_CODE_bss_8007BA04
+                0x00000000800793fc                dword_CODE_bss_8007BA08
+                0x0000000080079400                dword_CODE_bss_8007BA0C
+                0x0000000080079408                dword_CODE_bss_8007BA10
  build/game/unk_0B3200.o(.bss)
  build/game/bg.o(.bss)
- .bss           0x000000008007a0d0     0x6630 build/game/bg.o
-                0x000000008007a0d0                ptr_bg_data
-                0x000000008007a0d4                ptr_clipping
-                0x000000008007a0d8                dword_CODE_bss_8007BF98
-                0x000000008007a0e0                list_visible_rooms_in_cur_global_vis_packet
-                0x000000008007a178                num_visible_rooms_in_cur_global_vis_packet
-                0x000000008007a180                dword_CODE_bss_8007C040
-                0x000000008007a1e0                dword_CODE_bss_8007C0A0
-                0x000000008007a240                dword_CODE_bss_8007C100
-                0x000000008007e0c0                ptr_bgdata_portals
-                0x000000008007e0c4                ptr_bgdata_offsets
-                0x000000008007e0c8                dword_CODE_bss_8007FF88
-                0x000000008007e0cc                ptr_bgdata_room_fileposition_list
-                0x000000008007e0d0                dword_CODE_bss_8007FF90
-                0x000000008007e0d4                dword_CODE_bss_8007FF94
-                0x000000008007e0d8                dword_CODE_bss_8007FF98
-                0x000000008007e0dc                dword_CODE_bss_8007FFA0
-                0x000000008007e0e0                dword_CODE_bss_8007FFA4
-                0x000000008007f740                dword_CODE_bss_80081600
-                0x000000008007f758                table_for_portals
+ .bss           0x0000000080079990     0x6630 build/game/bg.o
+                0x0000000080079990                ptr_bg_data
+                0x0000000080079994                ptr_clipping
+                0x0000000080079998                dword_CODE_bss_8007BF98
+                0x00000000800799a0                list_visible_rooms_in_cur_global_vis_packet
+                0x0000000080079a38                num_visible_rooms_in_cur_global_vis_packet
+                0x0000000080079a40                dword_CODE_bss_8007C040
+                0x0000000080079aa0                dword_CODE_bss_8007C0A0
+                0x0000000080079b00                dword_CODE_bss_8007C100
+                0x000000008007d980                ptr_bgdata_portals
+                0x000000008007d984                ptr_bgdata_offsets
+                0x000000008007d988                dword_CODE_bss_8007FF88
+                0x000000008007d98c                ptr_bgdata_room_fileposition_list
+                0x000000008007d990                dword_CODE_bss_8007FF90
+                0x000000008007d994                dword_CODE_bss_8007FF94
+                0x000000008007d998                dword_CODE_bss_8007FF98
+                0x000000008007d99c                dword_CODE_bss_8007FFA0
+                0x000000008007d9a0                dword_CODE_bss_8007FFA4
+                0x000000008007f000                dword_CODE_bss_80081600
+                0x000000008007f018                table_for_portals
  build/game/fog.o(.bss)
- .bss           0x0000000080080700       0x70 build/game/fog.o
-                0x0000000080080700                sky_enabled
-                0x0000000080080704                ptr_nearfog_enviroment_values
-                0x0000000080080708                buffer_far_pervasiveness
-                0x000000008008070c                far_fog
-                0x0000000080080710                D_800825D0
-                0x0000000080080714                D_800825D4
-                0x0000000080080718                flt_CODE_bss_800825D8
-                0x000000008008071c                flt_CODE_bss_800825DC
-                0x0000000080080720                buffer_far_ambiant
-                0x0000000080080724                bg_dif_light
-                0x0000000080080728                env_table_hit
-                0x000000008008072c                env_table_match_start
-                0x0000000080080730                env_table_match_end
-                0x0000000080080734                D_800825F4
-                0x0000000080080738                dword_CODE_bss_800825F8
-                0x000000008008073c                flt_CODE_bss_800825FC
-                0x0000000080080740                flt_CODE_bss_80082600
-                0x0000000080080744                DAT_80082604
-                0x0000000080080748                DAT_80082608
-                0x000000008008074c                DAT_8008260c
-                0x0000000080080750                DAT_80082610
-                0x0000000080080754                DAT_80082614
-                0x0000000080080758                dword_CODE_bss_80082618
-                0x000000008008075c                dword_CODE_bss_8008261C
-                0x0000000080080760                off_CODE_bss_80082620
-                0x0000000080080761                byte_CODE_bss_80082621
-                0x0000000080080762                byte_CODE_bss_80082622
-                0x0000000080080763                byte_CODE_bss_80082623
+ .bss           0x000000008007ffc0       0x70 build/game/fog.o
+                0x000000008007ffc0                sky_enabled
+                0x000000008007ffc4                ptr_nearfog_enviroment_values
+                0x000000008007ffc8                buffer_far_pervasiveness
+                0x000000008007ffcc                far_fog
+                0x000000008007ffd0                D_800825D0
+                0x000000008007ffd4                D_800825D4
+                0x000000008007ffd8                flt_CODE_bss_800825D8
+                0x000000008007ffdc                flt_CODE_bss_800825DC
+                0x000000008007ffe0                buffer_far_ambiant
+                0x000000008007ffe4                bg_dif_light
+                0x000000008007ffe8                env_table_hit
+                0x000000008007ffec                env_table_match_start
+                0x000000008007fff0                env_table_match_end
+                0x000000008007fff4                D_800825F4
+                0x000000008007fff8                dword_CODE_bss_800825F8
+                0x000000008007fffc                flt_CODE_bss_800825FC
+                0x0000000080080000                flt_CODE_bss_80082600
+                0x0000000080080004                DAT_80082604
+                0x0000000080080008                DAT_80082608
+                0x000000008008000c                DAT_8008260c
+                0x0000000080080010                DAT_80082610
+                0x0000000080080014                DAT_80082614
+                0x0000000080080018                dword_CODE_bss_80082618
+                0x000000008008001c                dword_CODE_bss_8008261C
+                0x0000000080080020                off_CODE_bss_80082620
+                0x0000000080080021                byte_CODE_bss_80082621
+                0x0000000080080022                byte_CODE_bss_80082622
+                0x0000000080080023                byte_CODE_bss_80082623
  build/game/lightfixture.o(.bss)
- .bss           0x0000000080080770      0x7e0 build/game/lightfixture.o
-                0x0000000080080770                light_fixture_table
-                0x0000000080080c20                cur_entry_lightfixture_table
-                0x0000000080080c22                index_of_cur_entry_lightfixture_table
-                0x0000000080080c28                word_CODE_bss_80082B18
-                0x0000000080080f48                dword_CODE_bss_80083318
+ .bss           0x0000000080080030      0x7e0 build/game/lightfixture.o
+                0x0000000080080030                light_fixture_table
+                0x00000000800804e0                cur_entry_lightfixture_table
+                0x00000000800804e2                index_of_cur_entry_lightfixture_table
+                0x00000000800804e8                word_CODE_bss_80082B18
+                0x0000000080080808                dword_CODE_bss_80083318
  build/game/unk_0BC530.o(.bss)
- .bss           0x0000000080080f50     0x5590 build/game/unk_0BC530.o
-                0x0000000080080f50                dword_CODE_bss_80083320
-                0x0000000080081080                dword_CODE_bss_80083450
-                0x0000000080081530                dword_CODE_bss_80083900
-                0x00000000800819e0                dword_CODE_bss_80083DB0
+ .bss           0x0000000080080810     0x5590 build/game/unk_0BC530.o
+                0x0000000080080810                dword_CODE_bss_80083320
+                0x0000000080080940                dword_CODE_bss_80083450
+                0x0000000080080df0                dword_CODE_bss_80083900
+                0x00000000800812a0                dword_CODE_bss_80083DB0
  build/game/ob.o(.bss)
- .bss           0x00000000800864e0     0x3990 build/game/ob.o
-                0x00000000800864e0                ptr_resource_data
-                0x00000000800864f8                ptr_res_data_next
-                0x0000000080086510                dword_CODE_bss_800888D8
+ .bss           0x0000000080085da0     0x3990 build/game/ob.o
+                0x0000000080085da0                ptr_resource_data
+                0x0000000080085db8                ptr_res_data_next
+                0x0000000080085dd0                dword_CODE_bss_800888D8
  build/game/dyn.o(.bss)
- .bss           0x0000000080089e70       0x30 build/game/dyn.o
-                0x0000000080089e70                ptr_mgfx0_alloc_start
-                0x0000000080089e74                ptr_mgfx1_alloc_start
-                0x0000000080089e78                ptr_mgfx_end
-                0x0000000080089e7c                D_8008C23C
-                0x0000000080089e80                ptr_mvtx0_alloc_start
-                0x0000000080089e84                ptr_mvtx1_alloc_start
-                0x0000000080089e88                ptr_mvtx_end
-                0x0000000080089e8c                ptr_mvtx_cur_pos
-                0x0000000080089e90                bank_in_mgfx_alloc_table
-                0x0000000080089e94                dword_CODE_bss_8008C254
+ .bss           0x0000000080089730       0x30 build/game/dyn.o
+                0x0000000080089730                ptr_mgfx0_alloc_start
+                0x0000000080089734                ptr_mgfx1_alloc_start
+                0x0000000080089738                ptr_mgfx_end
+                0x000000008008973c                D_8008C23C
+                0x0000000080089740                ptr_mvtx0_alloc_start
+                0x0000000080089744                ptr_mvtx1_alloc_start
+                0x0000000080089748                ptr_mvtx_end
+                0x000000008008974c                ptr_mvtx_cur_pos
+                0x0000000080089750                bank_in_mgfx_alloc_table
+                0x0000000080089754                dword_CODE_bss_8008C254
  build/game/lvl.o(.bss)
- .bss           0x0000000080089ea0      0x3a0 build/game/lvl.o
-                0x0000000080089ea0                ptr_jfont_DL
-                0x0000000080089ea4                dword_CODE_bss_8008C264
-                0x0000000080089ea8                ramrom_data_target
-                0x000000008008a228                record_slot_num
-                0x000000008008a22c                address_demo_loaded
-                0x000000008008a230                dword_CODE_bss_8008C5F8
+ .bss           0x0000000080089760      0x3a0 build/game/lvl.o
+                0x0000000080089760                ptr_jfont_DL
+                0x0000000080089764                dword_CODE_bss_8008C264
+                0x0000000080089768                ramrom_data_target
+                0x0000000080089ae8                record_slot_num
+                0x0000000080089aec                address_demo_loaded
+                0x0000000080089af0                dword_CODE_bss_8008C5F8
  build/game/lvl_2.o(.bss)
  build/game/unk_0C0A70.o(.bss)
  build/game/mp_music.o(.bss)
- .bss           0x000000008008a240       0x40 build/game/mp_music.o
-                0x000000008008a240                dword_CODE_bss_8008C600
-                0x000000008008a244                dword_CODE_bss_8008C604
-                0x000000008008a248                dword_CODE_bss_8008C608
-                0x000000008008a24c                dword_CODE_bss_8008C60C
-                0x000000008008a250                dword_CODE_bss_8008C610
-                0x000000008008a254                dword_CODE_bss_8008C614
-                0x000000008008a258                dword_CODE_bss_8008C618
-                0x000000008008a25c                dword_CODE_bss_8008C61C
-                0x000000008008a260                dword_CODE_bss_8008C620
-                0x000000008008a264                dword_CODE_bss_8008C624
-                0x000000008008a268                dword_CODE_bss_8008C628
-                0x000000008008a26c                dword_CODE_bss_8008C62C
-                0x000000008008a270                dword_CODE_bss_8008C630
-                0x000000008008a274                dword_CODE_bss_8008C634
+ .bss           0x0000000080089b00       0x40 build/game/mp_music.o
+                0x0000000080089b00                dword_CODE_bss_8008C600
+                0x0000000080089b04                dword_CODE_bss_8008C604
+                0x0000000080089b08                dword_CODE_bss_8008C608
+                0x0000000080089b0c                dword_CODE_bss_8008C60C
+                0x0000000080089b10                dword_CODE_bss_8008C610
+                0x0000000080089b14                dword_CODE_bss_8008C614
+                0x0000000080089b18                dword_CODE_bss_8008C618
+                0x0000000080089b1c                dword_CODE_bss_8008C61C
+                0x0000000080089b20                dword_CODE_bss_8008C620
+                0x0000000080089b24                dword_CODE_bss_8008C624
+                0x0000000080089b28                dword_CODE_bss_8008C628
+                0x0000000080089b2c                dword_CODE_bss_8008C62C
+                0x0000000080089b30                dword_CODE_bss_8008C630
+                0x0000000080089b34                dword_CODE_bss_8008C634
  build/game/lvl_text.o(.bss)
- .bss           0x000000008008a280       0xc0 build/game/lvl_text.o
-                0x000000008008a280                ptr_text
-                0x000000008008a288                table_text_pointers
-                0x000000008008a31c                dword_CODE_bss_8008C6D8
-                0x000000008008a320                dword_CODE_bss_8008C6DC
-                0x000000008008a324                dword_CODE_bss_8008C6E0
-                0x000000008008a328                dword_CODE_bss_8008C6E4
-                0x000000008008a32c                dword_CODE_bss_8008C6E8
-                0x000000008008a330                dword_CODE_bss_8008C6EC
-                0x000000008008a334                dword_CODE_bss_8008C6F0
-                0x000000008008a338                ptr_j_char_data_buf
-                0x000000008008a33c                ptr_j_char_registry
+ .bss           0x0000000080089b40       0xc0 build/game/lvl_text.o
+                0x0000000080089b40                ptr_text
+                0x0000000080089b48                table_text_pointers
+                0x0000000080089bdc                dword_CODE_bss_8008C6D8
+                0x0000000080089be0                dword_CODE_bss_8008C6DC
+                0x0000000080089be4                dword_CODE_bss_8008C6E0
+                0x0000000080089be8                dword_CODE_bss_8008C6E4
+                0x0000000080089bec                dword_CODE_bss_8008C6E8
+                0x0000000080089bf0                dword_CODE_bss_8008C6EC
+                0x0000000080089bf4                dword_CODE_bss_8008C6F0
+                0x0000000080089bf8                ptr_j_char_data_buf
+                0x0000000080089bfc                ptr_j_char_registry
  build/game/mp_watch.o(.bss)
- .bss           0x000000008008a340       0x20 build/game/mp_watch.o
-                0x000000008008a340                stop_play_flag
-                0x000000008008a344                is_gameover_flag
-                0x000000008008a348                dword_CODE_bss_8008C708
-                0x000000008008a34c                dword_CODE_bss_8008C70C
-                0x000000008008a350                time_trigger_alt_gameover_msg
-                0x000000008008a354                dword_CODE_bss_8008C714
-                0x000000008008a358                is_paused
-                0x000000008008a35c                who_paused
+ .bss           0x0000000080089c00       0x20 build/game/mp_watch.o
+                0x0000000080089c00                stop_play_flag
+                0x0000000080089c04                is_gameover_flag
+                0x0000000080089c08                dword_CODE_bss_8008C708
+                0x0000000080089c0c                dword_CODE_bss_8008C70C
+                0x0000000080089c10                time_trigger_alt_gameover_msg
+                0x0000000080089c14                dword_CODE_bss_8008C714
+                0x0000000080089c18                is_paused
+                0x0000000080089c1c                who_paused
  build/game/radar.o(.bss)
  build/game/mp_weapon.o(.bss)
  build/game/image.o(.bss)
- .bss           0x000000008008a360     0x25a0 build/game/image.o
-                0x000000008008a360                ptr_texture_alloc_start
-                0x000000008008a364                ptr_texture_alloc_end
-                0x000000008008a368                ptr_next_available_space
-                0x000000008008a36c                ptr_last_entry_facemapping
-                0x000000008008a370                word_CODE_bss_8008C730
-                0x000000008008c8f0                dword_CODE_bss_8008D090
-                0x000000008008c8f4                dword_CODE_bss_8008D094
+ .bss           0x0000000080089c20     0x25a0 build/game/image.o
+                0x0000000080089c20                ptr_texture_alloc_start
+                0x0000000080089c24                ptr_texture_alloc_end
+                0x0000000080089c28                ptr_next_available_space
+                0x0000000080089c2c                ptr_last_entry_facemapping
+                0x0000000080089c30                word_CODE_bss_8008C730
+                0x000000008008c1b0                dword_CODE_bss_8008D090
+                0x000000008008c1b4                dword_CODE_bss_8008D094
  build/game/image_bank.o(.bss)
- .bss           0x000000008008c900       0xa0 build/game/image_bank.o
-                0x000000008008c900                dword_CODE_bss_8008D0A0
-                0x000000008008c904                dword_CODE_bss_8008D0A4
-                0x000000008008c908                dword_CODE_bss_8008D0A8
-                0x000000008008c90c                dword_CODE_bss_8008D0AC
-                0x000000008008c910                globalbank_rdram_offset
-                0x000000008008c914                ptr_explosionDL
-                0x000000008008c918                image
-                0x000000008008c91c                dword_CODE_bss_8008D0BC
-                0x000000008008c920                dword_CODE_bss_8008D0C0
-                0x000000008008c924                dword_CODE_bss_8008D0C4
-                0x000000008008c928                dword_CODE_bss_8008D0C8
-                0x000000008008c92c                dword_CODE_bss_8008D0CC
-                0x000000008008c930                dword_CODE_bss_8008D0D0
-                0x000000008008c934                dword_CODE_bss_8008D0D4
-                0x000000008008c938                dword_CODE_bss_8008D0D8
-                0x000000008008c93c                dword_CODE_bss_8008D0DC
-                0x000000008008c940                dword_CODE_bss_8008D0E0
-                0x000000008008c944                dword_CODE_bss_8008D0E4
-                0x000000008008c948                dword_CODE_bss_8008D0E8
-                0x000000008008c94c                dword_CODE_bss_8008D0EC
-                0x000000008008c950                dword_CODE_bss_8008D0F0
-                0x000000008008c954                dword_CODE_bss_8008D0F4
-                0x000000008008c958                dword_CODE_bss_8008D0F8
-                0x000000008008c95c                dword_CODE_bss_8008D0FC
-                0x000000008008c960                dword_CODE_bss_8008D100
-                0x000000008008c964                dword_CODE_bss_8008D104
-                0x000000008008c968                dword_CODE_bss_8008D108
-                0x000000008008c96c                dword_CODE_bss_8008D10C
-                0x000000008008c970                dword_CODE_bss_8008D110
-                0x000000008008c974                imgcall
-                0x000000008008c978                dword_CODE_bss_8008D118
-                0x000000008008c97c                dword_CODE_bss_8008D11C
-                0x000000008008c980                dword_CODE_bss_8008D120
-                0x000000008008c984                dword_CODE_bss_8008D124
-                0x000000008008c988                dword_CODE_bss_8008D128
-                0x000000008008c98c                dword_CODE_bss_8008D12C
-                0x000000008008c990                dword_CODE_bss_8008D130
-                0x000000008008c994                dword_CODE_bss_8008D134
+ .bss           0x000000008008c1c0       0xa0 build/game/image_bank.o
+                0x000000008008c1c0                dword_CODE_bss_8008D0A0
+                0x000000008008c1c4                dword_CODE_bss_8008D0A4
+                0x000000008008c1c8                dword_CODE_bss_8008D0A8
+                0x000000008008c1cc                dword_CODE_bss_8008D0AC
+                0x000000008008c1d0                globalbank_rdram_offset
+                0x000000008008c1d4                ptr_explosionDL
+                0x000000008008c1d8                image
+                0x000000008008c1dc                dword_CODE_bss_8008D0BC
+                0x000000008008c1e0                dword_CODE_bss_8008D0C0
+                0x000000008008c1e4                dword_CODE_bss_8008D0C4
+                0x000000008008c1e8                dword_CODE_bss_8008D0C8
+                0x000000008008c1ec                dword_CODE_bss_8008D0CC
+                0x000000008008c1f0                dword_CODE_bss_8008D0D0
+                0x000000008008c1f4                dword_CODE_bss_8008D0D4
+                0x000000008008c1f8                dword_CODE_bss_8008D0D8
+                0x000000008008c1fc                dword_CODE_bss_8008D0DC
+                0x000000008008c200                dword_CODE_bss_8008D0E0
+                0x000000008008c204                dword_CODE_bss_8008D0E4
+                0x000000008008c208                dword_CODE_bss_8008D0E8
+                0x000000008008c20c                dword_CODE_bss_8008D0EC
+                0x000000008008c210                dword_CODE_bss_8008D0F0
+                0x000000008008c214                dword_CODE_bss_8008D0F4
+                0x000000008008c218                dword_CODE_bss_8008D0F8
+                0x000000008008c21c                dword_CODE_bss_8008D0FC
+                0x000000008008c220                dword_CODE_bss_8008D100
+                0x000000008008c224                dword_CODE_bss_8008D104
+                0x000000008008c228                dword_CODE_bss_8008D108
+                0x000000008008c22c                dword_CODE_bss_8008D10C
+                0x000000008008c230                dword_CODE_bss_8008D110
+                0x000000008008c234                imgcall
+                0x000000008008c238                dword_CODE_bss_8008D118
+                0x000000008008c23c                dword_CODE_bss_8008D11C
+                0x000000008008c240                dword_CODE_bss_8008D120
+                0x000000008008c244                dword_CODE_bss_8008D124
+                0x000000008008c248                dword_CODE_bss_8008D128
+                0x000000008008c24c                dword_CODE_bss_8008D12C
+                0x000000008008c250                dword_CODE_bss_8008D130
+                0x000000008008c254                dword_CODE_bss_8008D134
  build/game/unk_0CC4C0.o(.bss)
- .bss           0x000000008008c9a0      0x210 build/game/unk_0CC4C0.o
-                0x000000008008c9a0                dword_CODE_bss_8008D140
-                0x000000008008c9a4                dword_CODE_bss_8008D144
-                0x000000008008c9a8                dword_CODE_bss_8008D148
-                0x000000008008cb08                dword_CODE_bss_8008D2A8
-                0x000000008008cba8                dword_CODE_bss_8008D348
+ .bss           0x000000008008c260      0x210 build/game/unk_0CC4C0.o
+                0x000000008008c260                dword_CODE_bss_8008D140
+                0x000000008008c264                dword_CODE_bss_8008D144
+                0x000000008008c268                dword_CODE_bss_8008D148
+                0x000000008008c3c8                dword_CODE_bss_8008D2A8
+                0x000000008008c468                dword_CODE_bss_8008D348
  build/game/decompress.o(.bss)
  build/game/zlib.o(.bss)
- .bss           0x000000008008cbb0       0x20 build/game/zlib.o
-                0x000000008008cbb0                dword_CODE_bss_8008D350
-                0x000000008008cbb4                dword_CODE_bss_8008D354
-                0x000000008008cbb8                dword_CODE_bss_8008D358
-                0x000000008008cbbc                dword_CODE_bss_8008D35C
-                0x000000008008cbc0                dword_CODE_bss_8008D360
-                0x000000008008cbc4                dword_CODE_bss_8008D364
-                0x000000008008cbc8                dword_CODE_bss_8008D368
-                0x000000008008cbcc                dword_CODE_bss_8008D36C
+ .bss           0x000000008008c470       0x20 build/game/zlib.o
+                0x000000008008c470                dword_CODE_bss_8008D350
+                0x000000008008c474                dword_CODE_bss_8008D354
+                0x000000008008c478                dword_CODE_bss_8008D358
+                0x000000008008c47c                dword_CODE_bss_8008D35C
+                0x000000008008c480                dword_CODE_bss_8008D360
+                0x000000008008c484                dword_CODE_bss_8008D364
+                0x000000008008c488                dword_CODE_bss_8008D368
+                0x000000008008c48c                dword_CODE_bss_8008D36C
  build/game/rsp.o(.bss)
- .bss           0x000000008008cbd0      0xfa0 build/game/rsp.o
-                0x000000008008cbd0                dword_CODE_bss_8008D370
-                0x000000008008cfd0                dword_CODE_bss_8008D770
+ .bss           0x000000008008c490      0xfa0 build/game/rsp.o
+                0x000000008008c490                dword_CODE_bss_8008D370
+                0x000000008008c890                dword_CODE_bss_8008D770
  build/game/indy_comms.o(.bss)
  build/game/indy_0D0180.o(.bss)
  build/game/game_debug.o(.bss)
  build/game/compiletime.o(.bss)
  build/game/unk_0D1AC0.o(.bss)
  build/game/viewport.o(.bss)
- .bss           0x000000008008db70       0x10 build/game/viewport.o
-                0x000000008008db70                viewport_img_width
-                0x000000008008db74                viewport_img_height
+ .bss           0x000000008008d430       0x10 build/game/viewport.o
+                0x000000008008d430                viewport_img_width
+                0x000000008008d434                viewport_img_height
  build/game/music_0D2720.o(.bss)
  build/game/spectrum.o(.bss)
- .bss           0x000000008008db80       0x40 build/game/spectrum.o
-                0x000000008008db80                ptr_sectrum_monitor_data_temp_buf
-                0x000000008008db84                ptr_sectrum_game_data_temp_buf
-                0x000000008008db88                ptr_spectrum_roms
-                0x000000008008db8c                ptr_300alloc
-                0x000000008008db90                ptr_6000alloc
-                0x000000008008db94                ptr_pc_keyboard_table_alloc
-                0x000000008008db98                spectrum_header16_15
-                0x000000008008db99                byte_CODE_bss_8008E339
-                0x000000008008db9a                byte_CODE_bss_8008E33A
-                0x000000008008db9b                byte_CODE_bss_8008E33B
-                0x000000008008db9c                off_CODE_bss_8008E33C
-                0x000000008008db9d                byte_CODE_bss_8008E33D
-                0x000000008008db9e                byte_CODE_bss_8008E33E
-                0x000000008008db9f                byte_CODE_bss_8008E33F
-                0x000000008008dba0                off_CODE_bss_8008E340
-                0x000000008008dba1                byte_CODE_bss_8008E341
-                0x000000008008dba2                byte_CODE_bss_8008E342
-                0x000000008008dba3                byte_CODE_bss_8008E343
-                0x000000008008dba4                off_CODE_bss_8008E344
-                0x000000008008dba5                byte_CODE_bss_8008E345
-                0x000000008008dba6                byte_CODE_bss_8008E346
-                0x000000008008dba7                byte_CODE_bss_8008E347
-                0x000000008008dba8                spec_I
-                0x000000008008dba9                byte_CODE_bss_8008E349
-                0x000000008008dbaa                spec_IFF2_lower
-                0x000000008008dbab                spec_IFF2_upper
-                0x000000008008dbac                spec_IM
-                0x000000008008dbad                byte_CODE_bss_8008E34D
-                0x000000008008dbae                spec_IX
-                0x000000008008dbb0                spec_IY
-                0x000000008008dbb2                spec_SP
-                0x000000008008dbb4                spec_PC
- .bss           0x000000008008dbc0        0x0 build/rom_header.o
- .bss           0x000000008008dbc0        0x0 build/bootcode.o
- .bss           0x000000008008dbc0        0x0 build/_start.o
- .bss           0x000000008008dbc0        0x0 build/rspboot.o
- .bss           0x000000008008dbc0        0x0 build/gspboot.o
- .bss           0x000000008008dbc0        0x0 build/aspboot.o
+ .bss           0x000000008008d440       0x40 build/game/spectrum.o
+                0x000000008008d440                ptr_sectrum_monitor_data_temp_buf
+                0x000000008008d444                ptr_sectrum_game_data_temp_buf
+                0x000000008008d448                ptr_spectrum_roms
+                0x000000008008d44c                ptr_300alloc
+                0x000000008008d450                ptr_6000alloc
+                0x000000008008d454                ptr_pc_keyboard_table_alloc
+                0x000000008008d458                spectrum_header16_15
+                0x000000008008d459                byte_CODE_bss_8008E339
+                0x000000008008d45a                byte_CODE_bss_8008E33A
+                0x000000008008d45b                byte_CODE_bss_8008E33B
+                0x000000008008d45c                off_CODE_bss_8008E33C
+                0x000000008008d45d                byte_CODE_bss_8008E33D
+                0x000000008008d45e                byte_CODE_bss_8008E33E
+                0x000000008008d45f                byte_CODE_bss_8008E33F
+                0x000000008008d460                off_CODE_bss_8008E340
+                0x000000008008d461                byte_CODE_bss_8008E341
+                0x000000008008d462                byte_CODE_bss_8008E342
+                0x000000008008d463                byte_CODE_bss_8008E343
+                0x000000008008d464                off_CODE_bss_8008E344
+                0x000000008008d465                byte_CODE_bss_8008E345
+                0x000000008008d466                byte_CODE_bss_8008E346
+                0x000000008008d467                byte_CODE_bss_8008E347
+                0x000000008008d468                spec_I
+                0x000000008008d469                byte_CODE_bss_8008E349
+                0x000000008008d46a                spec_IFF2_lower
+                0x000000008008d46b                spec_IFF2_upper
+                0x000000008008d46c                spec_IM
+                0x000000008008d46d                byte_CODE_bss_8008E34D
+                0x000000008008d46e                spec_IX
+                0x000000008008d470                spec_IY
+                0x000000008008d472                spec_SP
+                0x000000008008d474                spec_PC
+ .bss           0x000000008008d480        0x0 build/rom_header.o
+ .bss           0x000000008008d480        0x0 build/bootcode.o
+ .bss           0x000000008008d480        0x0 build/_start.o
+ .bss           0x000000008008d480        0x0 build/rspboot.o
+ .bss           0x000000008008d480        0x0 build/gspboot.o
+ .bss           0x000000008008d480        0x0 build/aspboot.o
                 [0x00000000800995c0]                __ramPos = (__ramPos + SIZEOF (.csegment))
                 [0x0000000000c3c550]                __csegtempPos = (__csegtempPos + SIZEOF (.csegment))
 
@@ -9843,7 +9846,7 @@ OUTPUT(ge007.u.elf elf32-tradbigmips)
 .gptab.data     0x0000000000000000       0x18
  .gptab.data    0x0000000000000000       0x18 build/game/game_debug.o
 
-.mdebug         0x0000000000000000    0x467c8
+.mdebug         0x0000000000000000    0x46858
  .mdebug        0x0000000000000000      0x968 build/ramrom.o
  .mdebug        0x0000000000000968      0x3b0 build/pi.o
  .mdebug        0x0000000000000d18      0x350 build/game/initweaponanigroups.o

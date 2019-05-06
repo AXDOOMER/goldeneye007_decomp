@@ -7,23 +7,42 @@ char controller_input_index[0x1E0];
 s32 dword_CODE_bss_80065110;
 s32 dword_CODE_bss_80065114;
 s32 dword_CODE_bss_80065118;
-char dword_CODE_bss_8006511C[0x10];
-char dword_CODE_bss_8006512C[0x1E0];
-char dword_CODE_bss_8006530C[8];
-char dword_CODE_bss_80065314[0x10];
+s32 dword_CODE_bss_8006511C;
+s32 dword_CODE_bss_80065120;
+s32 dword_CODE_bss_80065124;
+s32 dword_CODE_bss_80065128;
+s32 dword_CODE_bss_8006512C;
+s32 dword_code_bss_80065130[0x76];
+s32 dword_CODE_bss_80065308;
+s32 dword_CODE_bss_8006530C;
+s32 dword_CODE_bss_80065310;
+s32 dword_CODE_bss_80065314;
+s32 dword_CODE_bss_80065318;
+s32 dword_CODE_bss_8006531C;
+s32 dword_CODE_bss_80065320;
 s32 dword_CODE_bss_80065324;
+//80065328
 char contdemoMesg[0x28];
+//80065350
 OSMesgQueue contdemoMesgMQ;
 
-OSMesgQueue contdemoMesgMQ;
+//80065368
 OSMesg cont1Mesg;
 OSMesgQueue cont1MesgMQ;
+
+//80065388
 OSMesg cont2Mesg;
 OSMesgQueue cont2MesgMQ;
+
+//800653a8
 OSMesg cont3Mesg;
 OSMesgQueue cont3MesgMQ;
+
+//800653c8
 OSMesg cont4Mesg;
 OSMesgQueue cont4MesgMQ;
+
+//800653e8
 s32 player1_controllerstatus;
 s32 player2_controllerstatus;
 s32 player3_controllerstatus;

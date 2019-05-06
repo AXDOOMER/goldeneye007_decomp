@@ -1,7 +1,7 @@
 #include "ultra64.h"
 
-OSMesg vi_c_debug_MSG;
-OSMesgQueue *vi_c_debug_MQ;
+OSMesg vi_c_debug_MSG[0x8];
+OSMesgQueue vi_c_debug_MQ;
 
 /* wtf is this, should it be split? is it part of debugmenu.? */
 u32 ptr_vi_c_debug_debug_notice_list[] = {
