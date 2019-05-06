@@ -3,185 +3,392 @@ Discarded input sections
 
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/rom_header.o
+ .pdr           0x0000000000000000        0x0 build/rom_header.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/rom_header.o
  .reginfo       0x0000000000000000       0x18 build/bootcode.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/bootcode.o
+ .pdr           0x0000000000000000        0x0 build/bootcode.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/bootcode.o
  .reginfo       0x0000000000000000       0x18 build/_start.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/_start.o
+ .pdr           0x0000000000000000        0x0 build/_start.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/_start.o
+ .options       0x0000000000000000       0x20 build/boot.o
  .reginfo       0x0000000000000000       0x18 build/boot.o
+ .options       0x0000000000000000       0x20 build/init.o
  .reginfo       0x0000000000000000       0x18 build/init.o
+ .options       0x0000000000000000       0x20 build/sched.o
  .reginfo       0x0000000000000000       0x18 build/sched.o
+ .options       0x0000000000000000       0x20 build/osMapTLB.o
  .reginfo       0x0000000000000000       0x18 build/osMapTLB.o
+ .options       0x0000000000000000       0x20 build/tlb_manage.o
  .reginfo       0x0000000000000000       0x18 build/tlb_manage.o
+ .options       0x0000000000000000       0x20 build/tlb_random.o
  .reginfo       0x0000000000000000       0x18 build/tlb_random.o
+ .options       0x0000000000000000       0x20 build/tlb_resolve.o
  .reginfo       0x0000000000000000       0x18 build/tlb_resolve.o
+ .options       0x0000000000000000       0x20 build/tlb_hardware.o
  .reginfo       0x0000000000000000       0x18 build/tlb_hardware.o
+ .options       0x0000000000000000       0x20 build/audi.o
  .reginfo       0x0000000000000000       0x18 build/audi.o
+ .options       0x0000000000000000       0x20 build/speed_graph.o
  .reginfo       0x0000000000000000       0x18 build/speed_graph.o
+ .options       0x0000000000000000       0x20 build/video.o
  .reginfo       0x0000000000000000       0x18 build/video.o
+ .options       0x0000000000000000       0x20 build/deb.o
  .reginfo       0x0000000000000000       0x18 build/deb.o
+ .options       0x0000000000000000       0x20 build/debug_getlastRA.o
  .reginfo       0x0000000000000000       0x18 build/debug_getlastRA.o
+ .options       0x0000000000000000       0x20 build/ramrom.o
  .reginfo       0x0000000000000000       0x18 build/ramrom.o
+ .gptab.bss     0x0000000000000000       0x20 build/ramrom.o
+ .mdebug        0x0000000000000000      0x968 build/ramrom.o
+ .options       0x0000000000000000       0x20 build/boss.o
  .reginfo       0x0000000000000000       0x18 build/boss.o
+ .options       0x0000000000000000       0x20 build/music.o
  .reginfo       0x0000000000000000       0x18 build/music.o
+ .options       0x0000000000000000       0x20 build/sfx.o
  .reginfo       0x0000000000000000       0x18 build/sfx.o
+ .options       0x0000000000000000       0x20 build/memp.o
  .reginfo       0x0000000000000000       0x18 build/memp.o
+ .options       0x0000000000000000       0x20 build/mema.o
  .reginfo       0x0000000000000000       0x18 build/mema.o
+ .options       0x0000000000000000       0x20 build/random.o
  .reginfo       0x0000000000000000       0x18 build/random.o
+ .options       0x0000000000000000       0x20 build/token.o
  .reginfo       0x0000000000000000       0x18 build/token.o
+ .options       0x0000000000000000       0x20 build/stringhandler.o
  .reginfo       0x0000000000000000       0x18 build/stringhandler.o
+ .options       0x0000000000000000       0x20 build/sprintf.o
  .reginfo       0x0000000000000000       0x18 build/sprintf.o
+ .options       0x0000000000000000       0x20 build/pi.o
  .reginfo       0x0000000000000000       0x18 build/pi.o
+ .gptab.bss     0x0000000000000000       0x20 build/pi.o
+ .mdebug        0x0000000000000000      0x3b0 build/pi.o
+ .options       0x0000000000000000       0x20 build/vi.o
  .reginfo       0x0000000000000000       0x18 build/vi.o
+ .options       0x0000000000000000       0x20 build/debugmenu.o
  .reginfo       0x0000000000000000       0x18 build/debugmenu.o
+ .options       0x0000000000000000       0x20 build/joy.o
  .reginfo       0x0000000000000000       0x18 build/joy.o
+ .options       0x0000000000000000       0x20 build/joy_rumble.o
  .reginfo       0x0000000000000000       0x18 build/joy_rumble.o
+ .options       0x0000000000000000       0x20 build/rmon.o
  .reginfo       0x0000000000000000       0x18 build/rmon.o
  .reginfo       0x0000000000000000       0x18 build/libultra/libultra.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/libultra/libultra.o
+ .pdr           0x0000000000000000        0x0 build/libultra/libultra.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/libultra/libultra.o
+ .options       0x0000000000000000       0x20 build/rarezip/rarezip.o
  .reginfo       0x0000000000000000       0x18 build/rarezip/rarezip.o
+ .options       0x0000000000000000       0x20 build/game/initgamedata.o
  .reginfo       0x0000000000000000       0x18 build/game/initgamedata.o
+ .options       0x0000000000000000       0x20 build/game/initweaponanigroups.o
  .reginfo       0x0000000000000000       0x18 build/game/initweaponanigroups.o
+ .mdebug        0x0000000000000000      0x350 build/game/initweaponanigroups.o
+ .options       0x0000000000000000       0x20 build/game/initactorpropstuff.o
  .reginfo       0x0000000000000000       0x18 build/game/initactorpropstuff.o
+ .options       0x0000000000000000       0x20 build/game/initnull_0009D0.o
  .reginfo       0x0000000000000000       0x18 build/game/initnull_0009D0.o
+ .gptab.data    0x0000000000000000       0x18 build/game/initnull_0009D0.o
+ .mdebug        0x0000000000000000      0x2b4 build/game/initnull_0009D0.o
+ .options       0x0000000000000000       0x20 build/game/initunk_0009E0.o
  .reginfo       0x0000000000000000       0x18 build/game/initunk_0009E0.o
+ .mdebug        0x0000000000000000      0x2f0 build/game/initunk_0009E0.o
+ .options       0x0000000000000000       0x20 build/game/initanitable.o
  .reginfo       0x0000000000000000       0x18 build/game/initanitable.o
+ .options       0x0000000000000000       0x20 build/game/initunk_000B60.o
  .reginfo       0x0000000000000000       0x18 build/game/initunk_000B60.o
+ .options       0x0000000000000000       0x20 build/game/setguscale.o
  .reginfo       0x0000000000000000       0x18 build/game/setguscale.o
+ .options       0x0000000000000000       0x20 build/game/initnull_000BC0.o
  .reginfo       0x0000000000000000       0x18 build/game/initnull_000BC0.o
+ .mdebug        0x0000000000000000      0x28c build/game/initnull_000BC0.o
+ .options       0x0000000000000000       0x20 build/game/initimages.o
  .reginfo       0x0000000000000000       0x18 build/game/initimages.o
+ .options       0x0000000000000000       0x20 build/game/initintromatrices.o
  .reginfo       0x0000000000000000       0x18 build/game/initintromatrices.o
+ .options       0x0000000000000000       0x20 build/game/initmenus.o
  .reginfo       0x0000000000000000       0x18 build/game/initmenus.o
+ .options       0x0000000000000000       0x20 build/game/initguards.o
  .reginfo       0x0000000000000000       0x18 build/game/initguards.o
+ .options       0x0000000000000000       0x20 build/game/deb_loadallmodels.o
  .reginfo       0x0000000000000000       0x18 build/game/deb_loadallmodels.o
+ .options       0x0000000000000000       0x20 build/game/initobjects.o
  .reginfo       0x0000000000000000       0x18 build/game/initobjects.o
+ .options       0x0000000000000000       0x20 build/game/prop.o
  .reginfo       0x0000000000000000       0x18 build/game/prop.o
+ .options       0x0000000000000000       0x20 build/game/objective.o
  .reginfo       0x0000000000000000       0x18 build/game/objective.o
+ .options       0x0000000000000000       0x20 build/game/ejectedcartridges.o
  .reginfo       0x0000000000000000       0x18 build/game/ejectedcartridges.o
+ .options       0x0000000000000000       0x20 build/game/initBondDATA.o
  .reginfo       0x0000000000000000       0x18 build/game/initBondDATA.o
+ .options       0x0000000000000000       0x20 build/game/initunk_005450.o
  .reginfo       0x0000000000000000       0x18 build/game/initunk_005450.o
+ .options       0x0000000000000000       0x20 build/game/initunk_005520.o
  .reginfo       0x0000000000000000       0x18 build/game/initunk_005520.o
+ .options       0x0000000000000000       0x20 build/game/initcameraandthrown.o
  .reginfo       0x0000000000000000       0x18 build/game/initcameraandthrown.o
+ .options       0x0000000000000000       0x20 build/game/inititemslots.o
  .reginfo       0x0000000000000000       0x18 build/game/inititemslots.o
+ .options       0x0000000000000000       0x20 build/game/initBondDATAdefaults.o
  .reginfo       0x0000000000000000       0x18 build/game/initBondDATAdefaults.o
+ .options       0x0000000000000000       0x20 build/game/initpathtablesomething.o
  .reginfo       0x0000000000000000       0x18 build/game/initpathtablesomething.o
+ .options       0x0000000000000000       0x20 build/game/initpathtablelinks.o
  .reginfo       0x0000000000000000       0x18 build/game/initpathtablelinks.o
+ .options       0x0000000000000000       0x20 build/game/initexplosioncasing.o
  .reginfo       0x0000000000000000       0x18 build/game/initexplosioncasing.o
+ .options       0x0000000000000000       0x20 build/game/initunk_007180.o
  .reginfo       0x0000000000000000       0x18 build/game/initunk_007180.o
+ .options       0x0000000000000000       0x20 build/game/initunk_007290.o
  .reginfo       0x0000000000000000       0x18 build/game/initunk_007290.o
+ .options       0x0000000000000000       0x20 build/game/initunk_0072B0.o
  .reginfo       0x0000000000000000       0x18 build/game/initunk_0072B0.o
+ .options       0x0000000000000000       0x20 build/game/initmttex.o
  .reginfo       0x0000000000000000       0x18 build/game/initmttex.o
+ .options       0x0000000000000000       0x20 build/game/initunk_0073B0.o
  .reginfo       0x0000000000000000       0x18 build/game/initunk_0073B0.o
+ .options       0x0000000000000000       0x20 build/game/initunk_007460.o
  .reginfo       0x0000000000000000       0x18 build/game/initunk_007460.o
+ .options       0x0000000000000000       0x20 build/game/cleanup_alarms.o
  .reginfo       0x0000000000000000       0x18 build/game/cleanup_alarms.o
+ .mdebug        0x0000000000000000      0x38c build/game/cleanup_alarms.o
+ .options       0x0000000000000000       0x20 build/game/cleanup_objects.o
  .reginfo       0x0000000000000000       0x18 build/game/cleanup_objects.o
+ .options       0x0000000000000000       0x20 build/game/cleanup_objectives.o
  .reginfo       0x0000000000000000       0x18 build/game/cleanup_objectives.o
+ .options       0x0000000000000000       0x20 build/game/cleanupSFXRelated.o
  .reginfo       0x0000000000000000       0x18 build/game/cleanupSFXRelated.o
+ .mdebug        0x0000000000000000      0x3f0 build/game/cleanupSFXRelated.o
+ .options       0x0000000000000000       0x20 build/game/playerstats_007770.o
  .reginfo       0x0000000000000000       0x18 build/game/playerstats_007770.o
+ .options       0x0000000000000000       0x20 build/game/unk_007800.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_007800.o
+ .options       0x0000000000000000       0x20 build/game/unk_007920.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_007920.o
+ .options       0x0000000000000000       0x20 build/game/null_007970.o
  .reginfo       0x0000000000000000       0x18 build/game/null_007970.o
+ .mdebug        0x0000000000000000      0x28c build/game/null_007970.o
+ .options       0x0000000000000000       0x20 build/game/unk_007980.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_007980.o
+ .options       0x0000000000000000       0x20 build/game/intro_logos.o
  .reginfo       0x0000000000000000       0x18 build/game/intro_logos.o
+ .options       0x0000000000000000       0x20 build/game/mainmenu.o
  .reginfo       0x0000000000000000       0x18 build/game/mainmenu.o
+ .options       0x0000000000000000       0x20 build/game/unk_01B0E0.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_01B0E0.o
+ .options       0x0000000000000000       0x20 build/game/unk_01B240.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_01B240.o
+ .options       0x0000000000000000       0x20 build/game/unk_01BAE0.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_01BAE0.o
+ .options       0x0000000000000000       0x20 build/game/blood_animation.o
  .reginfo       0x0000000000000000       0x18 build/game/blood_animation.o
+ .options       0x0000000000000000       0x20 build/game/blood_decrypt.o
  .reginfo       0x0000000000000000       0x18 build/game/blood_decrypt.o
+ .options       0x0000000000000000       0x20 build/game/eeprom.o
  .reginfo       0x0000000000000000       0x18 build/game/eeprom.o
+ .options       0x0000000000000000       0x20 build/game/actor.o
  .reginfo       0x0000000000000000       0x18 build/game/actor.o
+ .options       0x0000000000000000       0x20 build/game/actionblock.o
  .reginfo       0x0000000000000000       0x18 build/game/actionblock.o
+ .options       0x0000000000000000       0x20 build/game/loadobjectmodel.o
  .reginfo       0x0000000000000000       0x18 build/game/loadobjectmodel.o
+ .options       0x0000000000000000       0x20 build/game/objective_status.o
  .reginfo       0x0000000000000000       0x18 build/game/objective_status.o
+ .options       0x0000000000000000       0x20 build/game/sin.o
  .reginfo       0x0000000000000000       0x18 build/game/sin.o
+ .options       0x0000000000000000       0x20 build/game/unk_057FD0.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_057FD0.o
+ .options       0x0000000000000000       0x20 build/game/unk_05A9E0.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_05A9E0.o
+ .options       0x0000000000000000       0x20 build/game/convertangleusinginverse.o
  .reginfo       0x0000000000000000       0x18 build/game/convertangleusinginverse.o
+ .options       0x0000000000000000       0x20 build/game/unk_05AB70.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_05AB70.o
+ .options       0x0000000000000000       0x20 build/game/unk_05ACB0.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_05ACB0.o
+ .options       0x0000000000000000       0x20 build/game/unk_05AE00.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_05AE00.o
+ .options       0x0000000000000000       0x20 build/game/unk_05B1E0.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_05B1E0.o
+ .options       0x0000000000000000       0x20 build/game/truncf.o
  .reginfo       0x0000000000000000       0x18 build/game/truncf.o
+ .options       0x0000000000000000       0x20 build/game/unk_05C440.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_05C440.o
+ .options       0x0000000000000000       0x20 build/game/bondview.o
  .reginfo       0x0000000000000000       0x18 build/game/bondview.o
+ .options       0x0000000000000000       0x20 build/game/objecthandler.o
  .reginfo       0x0000000000000000       0x18 build/game/objecthandler.o
+ .options       0x0000000000000000       0x20 build/game/objecthandler_2.o
  .reginfo       0x0000000000000000       0x18 build/game/objecthandler_2.o
+ .options       0x0000000000000000       0x20 build/game/othermodemicrocode.o
  .reginfo       0x0000000000000000       0x18 build/game/othermodemicrocode.o
+ .options       0x0000000000000000       0x20 build/game/bond.o
  .reginfo       0x0000000000000000       0x18 build/game/bond.o
+ .options       0x0000000000000000       0x20 build/game/unk_08DBB0.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_08DBB0.o
+ .options       0x0000000000000000       0x20 build/game/debugmenu_08FE00.o
  .reginfo       0x0000000000000000       0x18 build/game/debugmenu_08FE00.o
+ .options       0x0000000000000000       0x20 build/game/debugmenu_090490.o
  .reginfo       0x0000000000000000       0x18 build/game/debugmenu_090490.o
+ .options       0x0000000000000000       0x20 build/game/unk_091080.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_091080.o
+ .options       0x0000000000000000       0x20 build/game/cheat_buttons_objectrelated.o
  .reginfo       0x0000000000000000       0x18 build/game/cheat_buttons_objectrelated.o
+ .options       0x0000000000000000       0x20 build/game/unk_092890.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_092890.o
+ .options       0x0000000000000000       0x20 build/game/unk_092E50.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_092E50.o
+ .options       0x0000000000000000       0x20 build/game/unk_093880.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_093880.o
+ .options       0x0000000000000000       0x20 build/game/unk_09B600.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_09B600.o
+ .options       0x0000000000000000       0x20 build/game/unk_09B740.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_09B740.o
+ .options       0x0000000000000000       0x20 build/game/unk_09B7A0.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_09B7A0.o
+ .options       0x0000000000000000       0x20 build/game/unk_09C250.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_09C250.o
+ .options       0x0000000000000000       0x20 build/game/unk_0A1DA0.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_0A1DA0.o
+ .options       0x0000000000000000       0x20 build/game/watch.o
  .reginfo       0x0000000000000000       0x18 build/game/watch.o
+ .options       0x0000000000000000       0x20 build/game/textrelated.o
  .reginfo       0x0000000000000000       0x18 build/game/textrelated.o
+ .options       0x0000000000000000       0x20 build/game/stan.o
  .reginfo       0x0000000000000000       0x18 build/game/stan.o
+ .options       0x0000000000000000       0x20 build/game/unk_0B3200.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_0B3200.o
+ .options       0x0000000000000000       0x20 build/game/bg.o
  .reginfo       0x0000000000000000       0x18 build/game/bg.o
+ .options       0x0000000000000000       0x20 build/game/fog.o
  .reginfo       0x0000000000000000       0x18 build/game/fog.o
+ .options       0x0000000000000000       0x20 build/game/lightfixture.o
  .reginfo       0x0000000000000000       0x18 build/game/lightfixture.o
+ .options       0x0000000000000000       0x20 build/game/unk_0BC530.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_0BC530.o
+ .options       0x0000000000000000       0x20 build/game/ob.o
  .reginfo       0x0000000000000000       0x18 build/game/ob.o
+ .options       0x0000000000000000       0x20 build/game/dyn.o
  .reginfo       0x0000000000000000       0x18 build/game/dyn.o
+ .options       0x0000000000000000       0x20 build/game/lvl.o
  .reginfo       0x0000000000000000       0x18 build/game/lvl.o
+ .options       0x0000000000000000       0x20 build/game/lvl_2.o
  .reginfo       0x0000000000000000       0x18 build/game/lvl_2.o
+ .options       0x0000000000000000       0x20 build/game/unk_0C0A70.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_0C0A70.o
+ .options       0x0000000000000000       0x20 build/game/mp_music.o
  .reginfo       0x0000000000000000       0x18 build/game/mp_music.o
+ .options       0x0000000000000000       0x20 build/game/lvl_text.o
  .reginfo       0x0000000000000000       0x18 build/game/lvl_text.o
+ .options       0x0000000000000000       0x20 build/game/mp_watch.o
  .reginfo       0x0000000000000000       0x18 build/game/mp_watch.o
+ .options       0x0000000000000000       0x20 build/game/radar.o
  .reginfo       0x0000000000000000       0x18 build/game/radar.o
+ .options       0x0000000000000000       0x20 build/game/mp_weapon.o
  .reginfo       0x0000000000000000       0x18 build/game/mp_weapon.o
+ .options       0x0000000000000000       0x20 build/game/image.o
  .reginfo       0x0000000000000000       0x18 build/game/image.o
+ .options       0x0000000000000000       0x20 build/game/image_bank.o
  .reginfo       0x0000000000000000       0x18 build/game/image_bank.o
+ .options       0x0000000000000000       0x20 build/game/unk_0CC4C0.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_0CC4C0.o
+ .options       0x0000000000000000       0x20 build/game/decompress.o
  .reginfo       0x0000000000000000       0x18 build/game/decompress.o
+ .options       0x0000000000000000       0x20 build/game/zlib.o
  .reginfo       0x0000000000000000       0x18 build/game/zlib.o
+ .options       0x0000000000000000       0x20 build/game/rsp.o
  .reginfo       0x0000000000000000       0x18 build/game/rsp.o
+ .options       0x0000000000000000       0x20 build/game/indy_comms.o
  .reginfo       0x0000000000000000       0x18 build/game/indy_comms.o
+ .options       0x0000000000000000       0x20 build/game/indy_0D0180.o
  .reginfo       0x0000000000000000       0x18 build/game/indy_0D0180.o
+ .options       0x0000000000000000       0x20 build/game/game_debug.o
  .reginfo       0x0000000000000000       0x18 build/game/game_debug.o
+ .gptab.data    0x0000000000000000       0x18 build/game/game_debug.o
+ .mdebug        0x0000000000000000      0x70c build/game/game_debug.o
+ .options       0x0000000000000000       0x20 build/game/compiletime.o
  .reginfo       0x0000000000000000       0x18 build/game/compiletime.o
+ .mdebug        0x0000000000000000      0x294 build/game/compiletime.o
+ .options       0x0000000000000000       0x20 build/game/unk_0D1AC0.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_0D1AC0.o
+ .options       0x0000000000000000       0x20 build/game/viewport.o
  .reginfo       0x0000000000000000       0x18 build/game/viewport.o
+ .options       0x0000000000000000       0x20 build/game/music_0D2720.o
  .reginfo       0x0000000000000000       0x18 build/game/music_0D2720.o
+ .options       0x0000000000000000       0x20 build/game/spectrum.o
  .reginfo       0x0000000000000000       0x18 build/game/spectrum.o
+ .data          0x0000000000000000        0x0 build/assets/romfiles.o
  .reginfo       0x0000000000000000       0x18 build/assets/romfiles.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/assets/romfiles.o
+ .pdr           0x0000000000000000        0x0 build/assets/romfiles.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/assets/romfiles.o
+ .data          0x0000000000000000        0x0 build/assets/ramrom/ramrom.o
  .reginfo       0x0000000000000000       0x18 build/assets/ramrom/ramrom.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/assets/ramrom/ramrom.o
+ .pdr           0x0000000000000000        0x0 build/assets/ramrom/ramrom.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/assets/ramrom/ramrom.o
+ .data          0x0000000000000000        0x0 build/assets/font/font.o
  .reginfo       0x0000000000000000       0x18 build/assets/font/font.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/assets/font/font.o
+ .pdr           0x0000000000000000        0x0 build/assets/font/font.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/assets/font/font.o
+ .data          0x0000000000000000        0x0 build/assets/music/music.o
  .reginfo       0x0000000000000000       0x18 build/assets/music/music.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/assets/music/music.o
+ .pdr           0x0000000000000000        0x0 build/assets/music/music.o
  .musicdecompressed
                 0x0000000000000000    0x32538 build/assets/music/music.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/assets/music/music.o
+ .data          0x0000000000000000        0x0 build/assets/obseg/ob_seg.o
  .reginfo       0x0000000000000000       0x18 build/assets/obseg/ob_seg.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/assets/obseg/ob_seg.o
+ .pdr           0x0000000000000000        0x0 build/assets/obseg/ob_seg.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/assets/obseg/ob_seg.o
+ .data          0x0000000000000000        0x0 build/assets/images/images.o
+ .reginfo       0x0000000000000000       0x18 build/assets/images/images.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/assets/images/images.o
+ .pdr           0x0000000000000000        0x0 build/assets/images/images.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/assets/images/images.o
  .reginfo       0x0000000000000000       0x18 build/rspboot.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/rspboot.o
+ .pdr           0x0000000000000000        0x0 build/rspboot.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/rspboot.o
  .reginfo       0x0000000000000000       0x18 build/gspboot.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/gspboot.o
+ .pdr           0x0000000000000000        0x0 build/gspboot.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/gspboot.o
  .reginfo       0x0000000000000000       0x18 build/aspboot.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/aspboot.o
+ .pdr           0x0000000000000000        0x0 build/aspboot.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/aspboot.o
 
 Memory Configuration
 
@@ -448,16 +655,11 @@ Linker script and memory map
 .header         0x0000000004000000       0x40 load address 0x0000000000000000
  build/rom_header.o(.data)
  .data          0x0000000004000000       0x40 build/rom_header.o
-                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.header))
+                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.header))
 
 .data           0x0000000004000040        0x0 load address 0x0000000000000040
  .data          0x0000000004000040        0x0 build/bootcode.o
  .data          0x0000000004000040        0x0 build/_start.o
- .data          0x0000000004000040        0x0 build/assets/romfiles.o
- .data          0x0000000004000040        0x0 build/assets/ramrom/ramrom.o
- .data          0x0000000004000040        0x0 build/assets/font/font.o
- .data          0x0000000004000040        0x0 build/assets/music/music.o
- .data          0x0000000004000040        0x0 build/assets/obseg/ob_seg.o
  .data          0x0000000004000040        0x0 build/rspboot.o
 
 .boot           0x0000000004000040      0xfc0 load address 0x0000000000000040
@@ -471,15 +673,15 @@ Linker script and memory map
                 0x0000000004000980                func_04000980
                 0x0000000004000a40                func_04000A40
                 0x0000000004000ad0                func_04000AD0
-                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.boot))
-                0x0000000000000190                __ramPos = 0x190
+                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.boot))
+                0x0000000000000400                __ramPos = 0x400
 
 .text_start     0x0000000080000400       0x50 load address 0x0000000000001000
  build/_start.o(.text)
  .text          0x0000000080000400       0x50 build/_start.o
                 0x0000000080000400                _start
-                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.text_start))
-                [0x00000000800995c0]                __ramPos = (__ramPos + SIZEOF (.text_start))
+                [0x0000000000be648a]                __romPos = (__romPos + 0x50)
+                [0x000000008008e360]                __ramPos = (__ramPos + 0x50)
 
 .text_code      0x0000000070000450    0x20940 load address 0x0000000000001050
  build/boot.o(.text)
@@ -1219,12 +1421,12 @@ Linker script and memory map
                 0x0000000070020c50                ldiv
                 0x0000000070020ce0                __osResetGlobalIntMask
                 0x0000000070020d40                osEPiRawWriteIo
-                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.text_code))
-                [0x00000000800995c0]                __ramPos = (__ramPos + SIZEOF (.text_code))
+                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.text_code))
+                [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.text_code))
 
 .c_data
  *(.c_data)
-                [0x00000000008f756a]                __romPos = (__romPos + 0x11c00)
+                [0x0000000000be648a]                __romPos = (__romPos + 0x11c00)
 
 .text_rarezip   0x0000000070200000     0x15a0 load address 0x0000000000033590
  build/rarezip/rarezip.o(.text)
@@ -1255,7 +1457,7 @@ Linker script and memory map
                 0x0000000070201590                rz_data1
                 0x0000000070201594                rz_data2
                 0x0000000070201598                rz_data3
-                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.text_rarezip))
+                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.text_rarezip))
 
 .text_tlbcode   0x000000007f000000    0xe2d50 load address 0x0000000000034b30
  build/game/initgamedata.o(.text)
@@ -3994,7 +4196,8 @@ Linker script and memory map
                 0x000000007f0d37d4                nullsub_50
                 0x000000007f0d37dc                sub_GAME_7F0D37DC
                 0x000000007f0d382c                spectrum_hw_emulation
-                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.text_tlbcode))
+                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.text_tlbcode))
+                [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.text_tlbcode))
 
 .text           0x000000007f0e2d50        0x0 load address 0x0000000000117880
  .text          0x000000007f0e2d50        0x0 build/rom_header.o
@@ -4003,6 +4206,7 @@ Linker script and memory map
  .text          0x000000007f0e2d50        0x0 build/assets/font/font.o
  .text          0x000000007f0e2d50        0x0 build/assets/music/music.o
  .text          0x000000007f0e2d50        0x0 build/assets/obseg/ob_seg.o
+ .text          0x000000007f0e2d50        0x0 build/assets/images/images.o
 
 .romfiles_117880
                 0x0000000000117880   0x320dda
@@ -4112,7 +4316,7 @@ Linker script and memory map
                 0x0000000000437fa2                Msurface2_ending
                 0x000000000043823e                Mstatue_ending
                 0x00000000004383a4                Mfrigate_outro
-                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.romfiles_117880))
+                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.romfiles_117880))
 
 .ob_seg         0x0000000000438660   0x4bef10
  build/assets/obseg/ob_seg.o(.ob_seg)
@@ -4826,24 +5030,27 @@ Linker script and memory map
                 0x00000000008f7540                LwaxE
                 0x00000000008f7550                LwaxJ
                 0x00000000008f7560                ob__ob_end_seg
-                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.ob_seg))
+                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.ob_seg))
 
-.reginfo        0x00000000008f7570       0x18
- .reginfo       0x00000000008f7570       0x18 build/rom_header.o
-
-.rodata         0x00000000008f7588        0x0
- .rodata        0x00000000008f7588        0x0 build/_start.o
- .rodata        0x00000000008f7588        0x0 build/rspboot.o
- .rodata        0x00000000008f7588        0x0 build/gspboot.o
-
-.rel.dyn        0x00000000008f7588        0x0
- .rel.dyn       0x00000000008f7588        0x0 build/video.o
-
-.images         0x00000000008f7588        0x0 load address 0x00000000008f756a
- *(.images)
-                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.images))
+.images         0x00000000008f7df0   0x2eef20
+ build/assets/images/images.o(.images)
+ .images        0x00000000008f7df0   0x2eef20 build/assets/images/images.o
+                0x00000000008f7df0                images
+                0x0000000000be6d10                images_end
+                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.images))
                 0x0000000000c00000                __csegtempPos = 0xc00000
-                [0x00000000800995c0]                __ramPos = (__ramPos + 0x80000000)
+                0x0000000080020d90                __ramPos = 0x80020d90
+
+.reginfo        0x0000000000be6d10       0x18
+ .reginfo       0x0000000000be6d10       0x18 build/rom_header.o
+
+.rodata         0x0000000000be6d28        0x0
+ .rodata        0x0000000000be6d28        0x0 build/_start.o
+ .rodata        0x0000000000be6d28        0x0 build/rspboot.o
+ .rodata        0x0000000000be6d28        0x0 build/gspboot.o
+
+.rel.dyn        0x0000000000be6d28        0x0
+ .rel.dyn       0x0000000000be6d28        0x0 build/video.o
 
 .csegment       0x0000000080020d90    0x3c550 load address 0x0000000000c00000
  build/rspboot.o(.text)
@@ -9437,8 +9644,8 @@ Linker script and memory map
  build/aspboot.o(.data)
  .data          0x000000008005d020      0x2c0 build/aspboot.o
                 0x000000008005d020                aspMainDataStart
-                [0x00000000800995c0]                __ramPos = (__ramPos + SIZEOF (.csegment))
-                0x0000000000c78aa0                __csegtempPosEnd = (__csegtempPos + SIZEOF (.csegment))
+                [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.csegment))
+                0x0000000000c3c550                __csegtempPosEnd = (__csegtempPos + SIZEOF (.csegment))
 
 .bss            0x000000008005d2e0    0x31080 load address 0x0000000000c3c550
  build/boot.o(.bss)
@@ -10640,225 +10847,26 @@ Linker script and memory map
  .bss           0x000000008008e360        0x0 build/assets/font/font.o
  .bss           0x000000008008e360        0x0 build/assets/music/music.o
  .bss           0x000000008008e360        0x0 build/assets/obseg/ob_seg.o
+ .bss           0x000000008008e360        0x0 build/assets/images/images.o
  .bss           0x000000008008e360        0x0 build/rspboot.o
  .bss           0x000000008008e360        0x0 build/gspboot.o
  .bss           0x000000008008e360        0x0 build/aspboot.o
-                [0x00000000800995c0]                __ramPos = (__ramPos + SIZEOF (.csegment))
-                [0x0000000000c3c550]                __csegtempPos = (__csegtempPos + SIZEOF (.csegment))
+                [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.bss))
 
 /DISCARD/
  *(.MIPS.abiflags)
  *(.musicdecompressed)
+ *(.options)
+ *(.gnu.attributes)
+ *(.pdr)
+ *(.mdebug)
+ *(.gptab.bss)
+ *(.gptab.data)
+ build/assets/romfiles.o(.data)
+ build/assets/ramrom/ramrom.o(.data)
+ build/assets/font/font.o(.data)
+ build/assets/music/music.o(.data)
+ build/assets/music/music.o(.data)
+ build/assets/obseg/ob_seg.o(.data)
+ build/assets/images/images.o(.data)
 OUTPUT(ge007.u.elf elf32-tradbigmips)
-
-.pdr            0x0000000000000000        0x0
- .pdr           0x0000000000000000        0x0 build/rom_header.o
- .pdr           0x0000000000000000        0x0 build/bootcode.o
- .pdr           0x0000000000000000        0x0 build/_start.o
- .pdr           0x0000000000000000        0x0 build/libultra/libultra.o
- .pdr           0x0000000000000000        0x0 build/assets/romfiles.o
- .pdr           0x0000000000000000        0x0 build/assets/ramrom/ramrom.o
- .pdr           0x0000000000000000        0x0 build/assets/font/font.o
- .pdr           0x0000000000000000        0x0 build/assets/music/music.o
- .pdr           0x0000000000000000        0x0 build/assets/obseg/ob_seg.o
- .pdr           0x0000000000000000        0x0 build/rspboot.o
- .pdr           0x0000000000000000        0x0 build/gspboot.o
- .pdr           0x0000000000000000        0x0 build/aspboot.o
-
-.gnu.attributes
-                0x0000000000000000       0x10
- .gnu.attributes
-                0x0000000000000000       0x10 build/rom_header.o
- .gnu.attributes
-                0x0000000000000010       0x10 build/bootcode.o
- .gnu.attributes
-                0x0000000000000020       0x10 build/_start.o
- .gnu.attributes
-                0x0000000000000030       0x10 build/libultra/libultra.o
- .gnu.attributes
-                0x0000000000000040       0x10 build/assets/romfiles.o
- .gnu.attributes
-                0x0000000000000050       0x10 build/assets/ramrom/ramrom.o
- .gnu.attributes
-                0x0000000000000060       0x10 build/assets/font/font.o
- .gnu.attributes
-                0x0000000000000070       0x10 build/assets/music/music.o
- .gnu.attributes
-                0x0000000000000080       0x10 build/assets/obseg/ob_seg.o
- .gnu.attributes
-                0x0000000000000090       0x10 build/rspboot.o
- .gnu.attributes
-                0x00000000000000a0       0x10 build/gspboot.o
- .gnu.attributes
-                0x00000000000000b0       0x10 build/aspboot.o
-
-.options        0x0000000000000000     0x1200
- .options       0x0000000000000000       0x20 build/boot.o
- .options       0x0000000000000020       0x20 build/init.o
- .options       0x0000000000000040       0x20 build/sched.o
- .options       0x0000000000000060       0x20 build/osMapTLB.o
- .options       0x0000000000000080       0x20 build/tlb_manage.o
- .options       0x00000000000000a0       0x20 build/tlb_random.o
- .options       0x00000000000000c0       0x20 build/tlb_resolve.o
- .options       0x00000000000000e0       0x20 build/tlb_hardware.o
- .options       0x0000000000000100       0x20 build/audi.o
- .options       0x0000000000000120       0x20 build/speed_graph.o
- .options       0x0000000000000140       0x20 build/video.o
- .options       0x0000000000000160       0x20 build/deb.o
- .options       0x0000000000000180       0x20 build/debug_getlastRA.o
- .options       0x00000000000001a0       0x20 build/ramrom.o
- .options       0x00000000000001c0       0x20 build/boss.o
- .options       0x00000000000001e0       0x20 build/music.o
- .options       0x0000000000000200       0x20 build/sfx.o
- .options       0x0000000000000220       0x20 build/memp.o
- .options       0x0000000000000240       0x20 build/mema.o
- .options       0x0000000000000260       0x20 build/random.o
- .options       0x0000000000000280       0x20 build/token.o
- .options       0x00000000000002a0       0x20 build/stringhandler.o
- .options       0x00000000000002c0       0x20 build/sprintf.o
- .options       0x00000000000002e0       0x20 build/pi.o
- .options       0x0000000000000300       0x20 build/vi.o
- .options       0x0000000000000320       0x20 build/debugmenu.o
- .options       0x0000000000000340       0x20 build/joy.o
- .options       0x0000000000000360       0x20 build/joy_rumble.o
- .options       0x0000000000000380       0x20 build/rmon.o
- .options       0x00000000000003a0       0x20 build/rarezip/rarezip.o
- .options       0x00000000000003c0       0x20 build/game/initgamedata.o
- .options       0x00000000000003e0       0x20 build/game/initweaponanigroups.o
- .options       0x0000000000000400       0x20 build/game/initactorpropstuff.o
- .options       0x0000000000000420       0x20 build/game/initnull_0009D0.o
- .options       0x0000000000000440       0x20 build/game/initunk_0009E0.o
- .options       0x0000000000000460       0x20 build/game/initanitable.o
- .options       0x0000000000000480       0x20 build/game/initunk_000B60.o
- .options       0x00000000000004a0       0x20 build/game/setguscale.o
- .options       0x00000000000004c0       0x20 build/game/initnull_000BC0.o
- .options       0x00000000000004e0       0x20 build/game/initimages.o
- .options       0x0000000000000500       0x20 build/game/initintromatrices.o
- .options       0x0000000000000520       0x20 build/game/initmenus.o
- .options       0x0000000000000540       0x20 build/game/initguards.o
- .options       0x0000000000000560       0x20 build/game/deb_loadallmodels.o
- .options       0x0000000000000580       0x20 build/game/initobjects.o
- .options       0x00000000000005a0       0x20 build/game/prop.o
- .options       0x00000000000005c0       0x20 build/game/objective.o
- .options       0x00000000000005e0       0x20 build/game/ejectedcartridges.o
- .options       0x0000000000000600       0x20 build/game/initBondDATA.o
- .options       0x0000000000000620       0x20 build/game/initunk_005450.o
- .options       0x0000000000000640       0x20 build/game/initunk_005520.o
- .options       0x0000000000000660       0x20 build/game/initcameraandthrown.o
- .options       0x0000000000000680       0x20 build/game/inititemslots.o
- .options       0x00000000000006a0       0x20 build/game/initBondDATAdefaults.o
- .options       0x00000000000006c0       0x20 build/game/initpathtablesomething.o
- .options       0x00000000000006e0       0x20 build/game/initpathtablelinks.o
- .options       0x0000000000000700       0x20 build/game/initexplosioncasing.o
- .options       0x0000000000000720       0x20 build/game/initunk_007180.o
- .options       0x0000000000000740       0x20 build/game/initunk_007290.o
- .options       0x0000000000000760       0x20 build/game/initunk_0072B0.o
- .options       0x0000000000000780       0x20 build/game/initmttex.o
- .options       0x00000000000007a0       0x20 build/game/initunk_0073B0.o
- .options       0x00000000000007c0       0x20 build/game/initunk_007460.o
- .options       0x00000000000007e0       0x20 build/game/cleanup_alarms.o
- .options       0x0000000000000800       0x20 build/game/cleanup_objects.o
- .options       0x0000000000000820       0x20 build/game/cleanup_objectives.o
- .options       0x0000000000000840       0x20 build/game/cleanupSFXRelated.o
- .options       0x0000000000000860       0x20 build/game/playerstats_007770.o
- .options       0x0000000000000880       0x20 build/game/unk_007800.o
- .options       0x00000000000008a0       0x20 build/game/unk_007920.o
- .options       0x00000000000008c0       0x20 build/game/null_007970.o
- .options       0x00000000000008e0       0x20 build/game/unk_007980.o
- .options       0x0000000000000900       0x20 build/game/intro_logos.o
- .options       0x0000000000000920       0x20 build/game/mainmenu.o
- .options       0x0000000000000940       0x20 build/game/unk_01B0E0.o
- .options       0x0000000000000960       0x20 build/game/unk_01B240.o
- .options       0x0000000000000980       0x20 build/game/unk_01BAE0.o
- .options       0x00000000000009a0       0x20 build/game/blood_animation.o
- .options       0x00000000000009c0       0x20 build/game/blood_decrypt.o
- .options       0x00000000000009e0       0x20 build/game/eeprom.o
- .options       0x0000000000000a00       0x20 build/game/actor.o
- .options       0x0000000000000a20       0x20 build/game/actionblock.o
- .options       0x0000000000000a40       0x20 build/game/loadobjectmodel.o
- .options       0x0000000000000a60       0x20 build/game/objective_status.o
- .options       0x0000000000000a80       0x20 build/game/sin.o
- .options       0x0000000000000aa0       0x20 build/game/unk_057FD0.o
- .options       0x0000000000000ac0       0x20 build/game/unk_05A9E0.o
- .options       0x0000000000000ae0       0x20 build/game/convertangleusinginverse.o
- .options       0x0000000000000b00       0x20 build/game/unk_05AB70.o
- .options       0x0000000000000b20       0x20 build/game/unk_05ACB0.o
- .options       0x0000000000000b40       0x20 build/game/unk_05AE00.o
- .options       0x0000000000000b60       0x20 build/game/unk_05B1E0.o
- .options       0x0000000000000b80       0x20 build/game/truncf.o
- .options       0x0000000000000ba0       0x20 build/game/unk_05C440.o
- .options       0x0000000000000bc0       0x20 build/game/bondview.o
- .options       0x0000000000000be0       0x20 build/game/objecthandler.o
- .options       0x0000000000000c00       0x20 build/game/objecthandler_2.o
- .options       0x0000000000000c20       0x20 build/game/othermodemicrocode.o
- .options       0x0000000000000c40       0x20 build/game/bond.o
- .options       0x0000000000000c60       0x20 build/game/unk_08DBB0.o
- .options       0x0000000000000c80       0x20 build/game/debugmenu_08FE00.o
- .options       0x0000000000000ca0       0x20 build/game/debugmenu_090490.o
- .options       0x0000000000000cc0       0x20 build/game/unk_091080.o
- .options       0x0000000000000ce0       0x20 build/game/cheat_buttons_objectrelated.o
- .options       0x0000000000000d00       0x20 build/game/unk_092890.o
- .options       0x0000000000000d20       0x20 build/game/unk_092E50.o
- .options       0x0000000000000d40       0x20 build/game/unk_093880.o
- .options       0x0000000000000d60       0x20 build/game/unk_09B600.o
- .options       0x0000000000000d80       0x20 build/game/unk_09B740.o
- .options       0x0000000000000da0       0x20 build/game/unk_09B7A0.o
- .options       0x0000000000000dc0       0x20 build/game/unk_09C250.o
- .options       0x0000000000000de0       0x20 build/game/unk_0A1DA0.o
- .options       0x0000000000000e00       0x20 build/game/watch.o
- .options       0x0000000000000e20       0x20 build/game/textrelated.o
- .options       0x0000000000000e40       0x20 build/game/stan.o
- .options       0x0000000000000e60       0x20 build/game/unk_0B3200.o
- .options       0x0000000000000e80       0x20 build/game/bg.o
- .options       0x0000000000000ea0       0x20 build/game/fog.o
- .options       0x0000000000000ec0       0x20 build/game/lightfixture.o
- .options       0x0000000000000ee0       0x20 build/game/unk_0BC530.o
- .options       0x0000000000000f00       0x20 build/game/ob.o
- .options       0x0000000000000f20       0x20 build/game/dyn.o
- .options       0x0000000000000f40       0x20 build/game/lvl.o
- .options       0x0000000000000f60       0x20 build/game/lvl_2.o
- .options       0x0000000000000f80       0x20 build/game/unk_0C0A70.o
- .options       0x0000000000000fa0       0x20 build/game/mp_music.o
- .options       0x0000000000000fc0       0x20 build/game/lvl_text.o
- .options       0x0000000000000fe0       0x20 build/game/mp_watch.o
- .options       0x0000000000001000       0x20 build/game/radar.o
- .options       0x0000000000001020       0x20 build/game/mp_weapon.o
- .options       0x0000000000001040       0x20 build/game/image.o
- .options       0x0000000000001060       0x20 build/game/image_bank.o
- .options       0x0000000000001080       0x20 build/game/unk_0CC4C0.o
- .options       0x00000000000010a0       0x20 build/game/decompress.o
- .options       0x00000000000010c0       0x20 build/game/zlib.o
- .options       0x00000000000010e0       0x20 build/game/rsp.o
- .options       0x0000000000001100       0x20 build/game/indy_comms.o
- .options       0x0000000000001120       0x20 build/game/indy_0D0180.o
- .options       0x0000000000001140       0x20 build/game/game_debug.o
- .options       0x0000000000001160       0x20 build/game/compiletime.o
- .options       0x0000000000001180       0x20 build/game/unk_0D1AC0.o
- .options       0x00000000000011a0       0x20 build/game/viewport.o
- .options       0x00000000000011c0       0x20 build/game/music_0D2720.o
- .options       0x00000000000011e0       0x20 build/game/spectrum.o
-
-.gptab.bss      0x0000000000000000       0x20
- .gptab.bss     0x0000000000000000       0x20 build/ramrom.o
-
-.gptab.bss      0x0000000000000000       0x20
- .gptab.bss     0x0000000000000000       0x20 build/pi.o
-
-.gptab.data     0x0000000000000000       0x18
- .gptab.data    0x0000000000000000       0x18 build/game/initnull_0009D0.o
-
-.gptab.data     0x0000000000000000       0x18
- .gptab.data    0x0000000000000000       0x18 build/game/game_debug.o
-
-.mdebug         0x0000000000000000    0x4d8e0
- .mdebug        0x0000000000000000      0x968 build/ramrom.o
- .mdebug        0x0000000000000968      0x3b0 build/pi.o
- .mdebug        0x0000000000000d18      0x350 build/game/initweaponanigroups.o
- .mdebug        0x0000000000001068      0x2b4 build/game/initnull_0009D0.o
- .mdebug        0x000000000000131c      0x2f0 build/game/initunk_0009E0.o
- .mdebug        0x000000000000160c      0x28c build/game/initnull_000BC0.o
- .mdebug        0x0000000000001898      0x38c build/game/cleanup_alarms.o
- .mdebug        0x0000000000001c24      0x3f0 build/game/cleanupSFXRelated.o
- .mdebug        0x0000000000002014      0x28c build/game/null_007970.o
- .mdebug        0x00000000000022a0      0x70c build/game/game_debug.o
- .mdebug        0x00000000000029ac      0x294 build/game/compiletime.o

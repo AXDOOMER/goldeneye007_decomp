@@ -18,13 +18,13 @@ SECTIONS
    }
    __romPos += SIZEOF(.boot);
 
-   __ramPos = 400;
+   __ramPos = 0x400;
    /* 0x80000400, 0x80000450 */
    .text_start 0x80000400 : AT(__romPos) {
       build/_start.o (.text);
    }
-   __romPos += SIZEOF(.text_start);
-   __ramPos += SIZEOF(.text_start);
+   __romPos += 0x50;
+   __ramPos += 0x50;
 
    /* 0x70000450, 0x70020D90 001050-021990 */
    .text_code 0x70000450 : AT(0x1050) SUBALIGN(16) {
@@ -62,7 +62,7 @@ SECTIONS
    __romPos += SIZEOF(.text_code);
    __ramPos += SIZEOF(.text_code);
    
-   .c_data __romPos : AT(__romPos) {
+   .c_data 0x21990 : AT(0x21990) {
       * (.c_data);
    }
    __romPos += 0x11c00;
@@ -192,7 +192,8 @@ SECTIONS
       build/game/spectrum.o (.text);
    }
    __romPos += SIZEOF(.text_tlbcode);
-   
+   __ramPos += SIZEOF(.text_tlbcode);
+
    .romfiles_117880 0x117880 : AT(__romPos) {
       build/assets/romfiles.o (.romfiles);
       build/assets/ramrom/ramrom.o (.ramrom);
@@ -207,13 +208,13 @@ SECTIONS
    }
    __romPos += SIZEOF(.ob_seg);
 
-   .images : AT(__romPos) {
-      * (.images);
+   .images 0x008f7df0 : AT(0x008f7df0) {
+      build/assets/images/images.o (.images);
    }
    __romPos += SIZEOF(.images);
 
    __csegtempPos = 0xC00000;
-   __ramPos += 0x80000000;
+   __ramPos = 0x80020d90;
    .csegment 0x80020d90 : AT(__csegtempPos) {
       build/rspboot.o (.text);
       build/gspboot.o (.text);
@@ -248,6 +249,7 @@ SECTIONS
       build/joy_rumble.o (.data);
       build/rmon.o (.data);
       build/libultra/libultra.o (.data);
+
       build/aspboot.o (.rodata);
       build/boot.o (.rodata);
       build/init.o (.rodata);
@@ -279,6 +281,7 @@ SECTIONS
       build/joy_rumble.o (.rodata);
       build/rmon.o (.rodata);
       build/libultra/libultra.o (.rodata);
+
       build/game/initgamedata.o (.data);
       build/game/initweaponanigroups.o (.data);
       build/game/initactorpropstuff.o (.data);
@@ -393,6 +396,7 @@ SECTIONS
       build/game/viewport.o (.data);
       build/game/music_0D2720.o (.data);
       build/game/spectrum.o (.data);
+
       build/game/initgamedata.o (.rodata);
       build/game/initweaponanigroups.o (.rodata);
       build/game/initactorpropstuff.o (.rodata);
@@ -507,6 +511,7 @@ SECTIONS
       build/game/viewport.o (.rodata);
       build/game/music_0D2720.o (.rodata);
       build/game/spectrum.o (.rodata);
+
       build/gspboot.o (.data);
       build/aspboot.o (.data);
    }
@@ -658,13 +663,24 @@ SECTIONS
       build/game/music_0D2720.o (.bss);
       build/game/spectrum.o (.bss);
    }   
-   __ramPos += SIZEOF(.csegment);
-   __csegtempPos += SIZEOF(.csegment);
-
+__ramPos += SIZEOF(.bss);
 
    /*move em to end, out of the way*/
    /DISCARD/ : {
       * (.MIPS.abiflags);
       * (.musicdecompressed);
-   }
+      * (.options);
+      * (.gnu.attributes);
+      * (.pdr);
+      * (.mdebug);
+      * (.gptab.bss);
+      * (.gptab.data);
+      build/assets/romfiles.o (.data);
+      build/assets/ramrom/ramrom.o (.data);
+      build/assets/font/font.o (.data);
+      build/assets/music/music.o (.data);
+      build/assets/music/music.o (.data);
+      build/assets/obseg/ob_seg.o (.data);
+      build/assets/images/images.o (.data);
+}
 }

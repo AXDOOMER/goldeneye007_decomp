@@ -150,6 +150,9 @@ MUSIC_OBJECTS := build/assets/music/music.o
 OBSEG_FILES := assets/obseg/ob_seg.s
 OBSEG_OBJECTS := build/assets/obseg/ob_seg.o
 
+IMAGES_FILES := assets/images/images.s
+IMAGES_OBJECTS := build/assets/images/images.o
+
 RZFILES := rarezip/rarezip.c
 RZOBJECTS := build/rarezip/rarezip.o
 RZSEGMENT := rzsegment.o
@@ -157,7 +160,7 @@ RZSEGMENT := rzsegment.o
 #DATAFILES := static.c zbuffer.c cfb.c
 #DATAOBJECTS := $(DATAFILES:.c=.o)
 
-OBJECTS := $(BOOTSEGMENT) $(CODESEGMENT) $(GAMESEGMENT) $(RZSEGMENT) $(OBSEGMENT) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS)
+OBJECTS := $(BOOTSEGMENT) $(CODESEGMENT) $(GAMESEGMENT) $(RZSEGMENT) $(OBSEGMENT) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGES_OBJECTS)
 
 # other tools
 TOOLS_DIR := tools
@@ -186,7 +189,7 @@ default:	$(APPROM)
 clean:
 	rm -f $(BUILD_DIR)/ge007.$(COUNTRYCODE).map $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS)\
-	$(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)\
+	$(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) $(IMAGES_OBJECTS)\
 	$(MUSIC_RZ_FILES)
 
 install: default
@@ -209,11 +212,14 @@ build/assets/font/%.o: assets/font/%.s
 build/assets/obseg/%.o: assets/obseg/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
+build/assets/images/%.o: assets/images/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
 build/%.o: src/%.c
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
 
-build/$(OBSEGMENT): $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES)
+build/$(OBSEGMENT): $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES) $(IMAGES_OBJECTS)
 	
 #build/$(BOOTSEGMENT): $(BOOTOBJECTS)
 #	$(LD) -o build/$(BOOTSEGMENT) -r $(BOOTOBJECTS)

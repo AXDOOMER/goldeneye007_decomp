@@ -240,7 +240,7 @@ void start_rmon_thread(void)
 
 void init_scheduler(void) {
     osCreateMesgQueue(&gfxFrameMsgQ, &gfxFrameMsgBuf, 32);
-    if ((osTvType = OS_TV_MPAL)) {
+    if (osTvType = OS_TV_MPAL) {
         osCreateScheduler(&sc, &shedThread, OS_VI_MPAL_LAN1, NUM_FIELDS);
     } else {
 		osCreateScheduler(&sc, &shedThread, OS_VI_NTSC_LAN1, NUM_FIELDS);
