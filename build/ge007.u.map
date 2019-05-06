@@ -156,6 +156,23 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/game/viewport.o
  .reginfo       0x0000000000000000       0x18 build/game/music_0D2720.o
  .reginfo       0x0000000000000000       0x18 build/game/spectrum.o
+ .reginfo       0x0000000000000000       0x18 build/assets/romfiles.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/assets/romfiles.o
+ .reginfo       0x0000000000000000       0x18 build/assets/ramrom/ramrom.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/assets/ramrom/ramrom.o
+ .reginfo       0x0000000000000000       0x18 build/assets/font/font.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/assets/font/font.o
+ .reginfo       0x0000000000000000       0x18 build/assets/music/music.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/assets/music/music.o
+ .musicdecompressed
+                0x0000000000000000    0x32538 build/assets/music/music.o
+ .reginfo       0x0000000000000000       0x18 build/assets/obseg/ob_seg.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/assets/obseg/ob_seg.o
  .reginfo       0x0000000000000000       0x18 build/rspboot.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/rspboot.o
@@ -431,11 +448,16 @@ Linker script and memory map
 .header         0x0000000004000000       0x40 load address 0x0000000000000000
  build/rom_header.o(.data)
  .data          0x0000000004000000       0x40 build/rom_header.o
-                [0x00000000001fa5d0]                __romPos = (__romPos + SIZEOF (.header))
+                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.header))
 
 .data           0x0000000004000040        0x0 load address 0x0000000000000040
  .data          0x0000000004000040        0x0 build/bootcode.o
  .data          0x0000000004000040        0x0 build/_start.o
+ .data          0x0000000004000040        0x0 build/assets/romfiles.o
+ .data          0x0000000004000040        0x0 build/assets/ramrom/ramrom.o
+ .data          0x0000000004000040        0x0 build/assets/font/font.o
+ .data          0x0000000004000040        0x0 build/assets/music/music.o
+ .data          0x0000000004000040        0x0 build/assets/obseg/ob_seg.o
  .data          0x0000000004000040        0x0 build/rspboot.o
 
 .boot           0x0000000004000040      0xfc0 load address 0x0000000000000040
@@ -449,14 +471,14 @@ Linker script and memory map
                 0x0000000004000980                func_04000980
                 0x0000000004000a40                func_04000A40
                 0x0000000004000ad0                func_04000AD0
-                [0x00000000001fa5d0]                __romPos = (__romPos + SIZEOF (.boot))
+                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.boot))
                 0x0000000000000190                __ramPos = 0x190
 
 .text_start     0x0000000080000400       0x50 load address 0x0000000000001000
  build/_start.o(.text)
  .text          0x0000000080000400       0x50 build/_start.o
                 0x0000000080000400                _start
-                [0x00000000001fa5d0]                __romPos = (__romPos + SIZEOF (.text_start))
+                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.text_start))
                 [0x00000000800995c0]                __ramPos = (__ramPos + SIZEOF (.text_start))
 
 .text_code      0x0000000070000450    0x20940 load address 0x0000000000001050
@@ -1197,12 +1219,12 @@ Linker script and memory map
                 0x0000000070020c50                ldiv
                 0x0000000070020ce0                __osResetGlobalIntMask
                 0x0000000070020d40                osEPiRawWriteIo
-                [0x00000000001fa5d0]                __romPos = (__romPos + SIZEOF (.text_code))
+                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.text_code))
                 [0x00000000800995c0]                __ramPos = (__ramPos + SIZEOF (.text_code))
 
 .c_data
  *(.c_data)
-                [0x00000000001fa5d0]                __romPos = (__romPos + 0x11c00)
+                [0x00000000008f756a]                __romPos = (__romPos + 0x11c00)
 
 .text_rarezip   0x0000000070200000     0x15a0 load address 0x0000000000033590
  build/rarezip/rarezip.o(.text)
@@ -1233,7 +1255,7 @@ Linker script and memory map
                 0x0000000070201590                rz_data1
                 0x0000000070201594                rz_data2
                 0x0000000070201598                rz_data3
-                [0x00000000001fa5d0]                __romPos = (__romPos + SIZEOF (.text_rarezip))
+                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.text_rarezip))
 
 .text_tlbcode   0x000000007f000000    0xe2d50 load address 0x0000000000034b30
  build/game/initgamedata.o(.text)
@@ -3972,37 +3994,854 @@ Linker script and memory map
                 0x000000007f0d37d4                nullsub_50
                 0x000000007f0d37dc                sub_GAME_7F0D37DC
                 0x000000007f0d382c                spectrum_hw_emulation
-                [0x00000000001fa5d0]                __romPos = (__romPos + SIZEOF (.text_tlbcode))
+                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.text_tlbcode))
 
 .text           0x000000007f0e2d50        0x0 load address 0x0000000000117880
  .text          0x000000007f0e2d50        0x0 build/rom_header.o
+ .text          0x000000007f0e2d50        0x0 build/assets/romfiles.o
+ .text          0x000000007f0e2d50        0x0 build/assets/ramrom/ramrom.o
+ .text          0x000000007f0e2d50        0x0 build/assets/font/font.o
+ .text          0x000000007f0e2d50        0x0 build/assets/music/music.o
+ .text          0x000000007f0e2d50        0x0 build/assets/obseg/ob_seg.o
 
-.reginfo        0x000000007f0e2d50       0x18 load address 0x0000000000117880
- .reginfo       0x000000007f0e2d50       0x18 build/rom_header.o
+.romfiles_117880
+                0x0000000000117880   0x320dda
+ build/assets/romfiles.o(.romfiles)
+ .romfiles      0x0000000000117880   0x1a7a50 build/assets/romfiles.o
+                0x0000000000117880                jfont_dl117880
+                0x0000000000117940                jfont_chardata117940
+                0x0000000000123040                efont_chardata123040
+                0x0000000000124ac0                animation_table
+                0x000000000028e980                animation_data
+                0x000000000029d160                Globalimagetable
+                0x000000000029e560                Globalimagetable_commandblock
+                0x00000000002a4d50                unknown2
+ build/assets/ramrom/ramrom.o(.ramrom)
+ .ramrom        0x00000000002bf2d0    0x27120 build/assets/ramrom/ramrom.o
+                0x00000000002bf2d0                ramrom_Dam_1
+                0x00000000002c44d0                ramrom_Dam_2
+                0x00000000002c64a0                ramrom_Facility_1
+                0x00000000002c7f50                ramrom_Facility_2
+                0x00000000002ca330                ramrom_Facility_3
+                0x00000000002cbfa0                ramrom_Runway_1
+                0x00000000002ce6f0                ramrom_Runway_2
+                0x00000000002d1000                ramrom_BunkerI_1
+                0x00000000002d4390                ramrom_BunkerI_2
+                0x00000000002d9610                ramrom_Silo_1
+                0x00000000002db7a0                ramrom_Silo_2
+                0x00000000002dd770                ramrom_Frigate_1
+                0x00000000002df120                ramrom_Frigate_2
+                0x00000000002e2600                ramrom_Train
+ build/assets/font/font.o(.font)
+ .font          0x00000000002e63f0     0x59f0 build/assets/font/font.o
+                0x00000000002e63f0                font_first_font_table_controller_small
+                0x00000000002e6694                font_second_font_table_controller_small
+                0x00000000002e88a0                font_first_font_table_controller_large
+                0x00000000002e8b44                font_second_font_table_controller_large
+ build/assets/music/music.o(.music)
+ .music         0x00000000002ebde0   0x12dbac build/assets/music/music.o
+                0x00000000002ebde0                sfx.ctl
+                0x00000000002f19a0                sfx.tbl
+                0x00000000003b4450                instruments.ctl
+                0x00000000003b87f0                instruments.tbl
+                0x0000000000419790                number_music_samples
+                0x0000000000419794                table_music_data
+ build/assets/music/music.o(.musiccompressed)
+ .musiccompressed
+                0x000000000041998c    0x1ecce build/assets/music/music.o
+                0x000000000041998c                Mno_music
+                0x00000000004199b6                Msolo_death_abrev
+                0x0000000000419b8c                Mintro_eye
+                0x000000000041a43a                Mtrain
+                0x000000000041b024                Mdepot
+                0x000000000041bdc4                Mjungle_unused
+                0x000000000041cb5c                Mcitadel
+                0x000000000041d91c                Mfacility
+                0x000000000041e3ea                Mcontrol
+                0x000000000041ef48                Mdam
+                0x000000000041fd4c                Mfrigate
+                0x0000000000420b2c                Marchives
+                0x0000000000421480                Msilo
+                0x00000000004222f0                Mjungle_perimeter_unused
+                0x000000000042325c                Mstreets
+                0x0000000000423f5e                Mbunker1
+                0x00000000004245d0                Mbunker2
+                0x0000000000424c50                Mstatue
+                0x00000000004255e8                Melevator_control
+                0x0000000000425fc2                Mcradle
+                0x0000000000426d22                Mnull1
+                0x0000000000426d4c                Melevator_wc
+                0x0000000000427392                Megyptian
+                0x000000000042812c                Mfolders
+                0x000000000042850e                Mwatchmusic
+                0x0000000000428700                Maztec
+                0x0000000000429372                Mwatercaverns
+                0x000000000042a19e                Mdeathsolo
+                0x000000000042a504                Msurface2
+                0x000000000042b2ba                Mtrainx
+                0x000000000042bb5a                Mnull2
+                0x000000000042bb84                Mfacilityx
+                0x000000000042c4dc                Mdepotx
+                0x000000000042cc98                Mcontrolx
+                0x000000000042d1e0                Mwatercavernsx
+                0x000000000042d934                Mdamx
+                0x000000000042de54                Mfrigatex
+                0x000000000042e416                Marchivesx
+                0x000000000042eb3a                Msilox
+                0x000000000042f42e                Mnull3
+                0x000000000042f458                Mstreetsx
+                0x000000000042fac4                Mbunker1x
+                0x000000000043026a                Mbunker2x
+                0x00000000004308b8                Mjunglex
+                0x00000000004310ce                Mnint_rare_logo
+                0x0000000000431500                Mstatuex
+                0x0000000000431bb8                Maztecx
+                0x000000000043248e                Megyptianx
+                0x0000000000432d3e                Mcradlex
+                0x0000000000433408                Mcuba
+                0x0000000000433c52                Mrunway
+                0x0000000000434970                Mrunway_plane
+                0x0000000000434c4a                Msurface2x
+                0x0000000000435372                Mwindblowing
+                0x0000000000435894                Mmultideath_alt
+                0x0000000000435aa0                Mjungle
+                0x0000000000436228                Mrunwayx
+                0x000000000043684a                Msurface1
+                0x00000000004375b2                Mmultiplayerdeath
+                0x000000000043787a                Msurface1x
+                0x0000000000437fa2                Msurface2_ending
+                0x000000000043823e                Mstatue_ending
+                0x00000000004383a4                Mfrigate_outro
+                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.romfiles_117880))
 
-.rodata         0x000000007f0e2d68        0x0 load address 0x0000000000117898
- .rodata        0x000000007f0e2d68        0x0 build/_start.o
- .rodata        0x000000007f0e2d68        0x0 build/rspboot.o
- .rodata        0x000000007f0e2d68        0x0 build/gspboot.o
+.ob_seg         0x0000000000438660   0x4bef10
+ build/assets/obseg/ob_seg.o(.ob_seg)
+ .ob_seg        0x0000000000438660   0x4bef10 build/assets/obseg/ob_seg.o
+                0x0000000000438660                bg_sev_all_p_seg
+                0x0000000000449450                bg_silo_all_p_seg
+                0x000000000049a390                bg_stat_all_p_seg
+                0x00000000004bc460                bg_arec_all_p_seg
+                0x00000000004ea7e0                bg_arch_all_p_seg
+                0x00000000005102d0                bg_tra_all_p_seg
+                0x0000000000530840                bg_dest_all_p_seg
+                0x000000000055e200                bg_sevb_all_p_seg
+                0x0000000000578fa0                bg_azt_all_p_seg
+                0x000000000059a9f0                bg_pete_all_p_seg
+                0x00000000005b4620                bg_depo_all_p_seg
+                0x00000000005e0f90                bg_ref_all_p_seg
+                0x00000000005ea5a0                bg_cryp_all_p_seg
+                0x00000000005ffc50                bg_dam_all_p_seg
+                0x000000000062fdf0                bg_ark_all_p_seg
+                0x0000000000660d70                bg_run_all_p_seg
+                0x000000000066b140                bg_sevx_all_p_seg
+                0x0000000000687710                bg_jun_all_p_seg
+                0x000000000069c860                bg_dish_all_p_seg
+                0x00000000006a10d0                bg_cave_all_p_seg
+                0x00000000006c55c0                bg_cat_all_p_seg
+                0x00000000006caaf0                bg_crad_all_p_seg
+                0x00000000006dae40                bg_ash_all_p_seg
+                0x00000000006dae40                bg_ame_all_p_seg
+                0x00000000006dae40                bg_imp_all_p_seg
+                0x00000000006e4da0                bg_oat_all_p_seg
+                0x00000000006ebbf0                bg_len_all_p_seg
+                0x00000000006ecb90                CarmourguardZ
+                0x00000000006ef010                CbaronsamediZ
+                0x00000000006f2700                CbluecamguardZ
+                0x00000000006f4df0                CbluemanZ
+                0x00000000006f6c00                CbluewomanZ
+                0x00000000006f8ac0                CboilerbondZ
+                0x00000000006fb6d0                CboilertrevZ
+                0x00000000006fed50                CborisZ
+                0x0000000000701e70                CcamguardZ
+                0x0000000000704550                CcardimanZ
+                0x0000000000706350                CcheckmanZ
+                0x00000000007081d0                CcommguardZ
+                0x000000000070a7d0                CdjbondZ
+                0x000000000070d660                CfattechwomanZ
+                0x000000000070f580                Cgreatguard2Z
+                0x0000000000711ca0                CgreatguardZ
+                0x0000000000714320                CgreyguardZ
+                0x00000000007169f0                CgreymanZ
+                0x00000000007187b0                CheadalanZ
+                0x0000000000718d80                CheadbZ
+                0x00000000007192f0                CheadbalaclavaZ
+                0x00000000007196c0                CheadbikeZ
+                0x0000000000719d60                CheadbrosnanZ
+                0x000000000071aab0                CheadbrosnanboilerZ
+                0x000000000071b650                CheadbrosnansnowZ
+                0x000000000071c4d0                CheadbrosnansuitZ
+                0x000000000071d250                CheadbrosnantimberZ
+                0x000000000071de10                CheadchrisZ
+                0x000000000071e350                CheaddaveZ
+                0x000000000071e8d0                CheaddesZ
+                0x000000000071ee00                CheadduncanZ
+                0x000000000071f320                CheaddwayneZ
+                0x000000000071f8a0                CheadgrahamZ
+                0x000000000071fe10                CheadgrantZ
+                0x0000000000720340                CheadjimZ
+                0x0000000000720870                Cheadjoe2Z
+                0x0000000000720c90                CheadjoeZ
+                0x0000000000721200                CheadjoelZ
+                0x0000000000721710                CheadkarlZ
+                0x0000000000721c70                CheadkenZ
+                0x00000000007221c0                CheadleeZ
+                0x0000000000722740                CheadmandyZ
+                0x0000000000722b30                CheadmarionZ
+                0x0000000000722f40                CheadmarkZ
+                0x0000000000723470                CheadmartinZ
+                0x00000000007239d0                CheadmishkinZ
+                0x0000000000723f30                CheadneilZ
+                0x0000000000724450                CheadpeteZ
+                0x00000000007249e0                CheadrobinZ
+                0x0000000000724ef0                CheadsallyZ
+                0x00000000007252f0                CheadscottZ
+                0x0000000000725870                CheadshaunZ
+                0x0000000000725e50                CheadsteveeZ
+                0x00000000007263a0                CheadstevehZ
+                0x00000000007268f0                CheadvivienZ
+                0x0000000000726d80                CjawsZ
+                0x00000000007299c0                CjeanwomanZ
+                0x000000000072b9d0                CmaydayZ
+                0x000000000072e570                CmoonfemaleZ
+                0x00000000007306c0                CmoonguardZ
+                0x0000000000732cb0                CnatalyaZ
+                0x0000000000736570                CnavyguardZ
+                0x0000000000738c50                CoddjobZ
+                0x000000000073bd80                ColiveguardZ
+                0x000000000073e3d0                CorumovZ
+                0x0000000000741800                CpilotZ
+                0x0000000000744880                CredmanZ
+                0x0000000000746fb0                CrusguardZ
+                0x0000000000748be0                CsnowbondZ
+                0x000000000074bf10                CsnowguardZ
+                0x000000000074eb90                CspicebondZ
+                0x00000000007524b0                Csuit_lf_handZ
+                0x00000000007556d0                CsuitbondZ
+                0x0000000000758460                CtechmanZ
+                0x000000000075ab10                CtechwomanZ
+                0x000000000075cb00                CtimberbondZ
+                0x000000000075f830                CtrevelyanZ
+                0x0000000000763000                CtrevguardZ
+                0x0000000000765610                CvalentinZ
+                0x0000000000768580                CxeniaZ
+                0x000000000076bf70                Gak47Z
+                0x000000000076c980                GaudiotapeZ
+                0x000000000076cd10                GautoshotZ
+                0x000000000076e520                GblackboxZ
+                0x000000000076eb20                GblueprintsZ
+                0x000000000076ec20                GbombcaseZ
+                0x000000000076f3b0                GbombdefuserZ
+                0x000000000076f9a0                GbriefcaseZ
+                0x0000000000770130                GbugZ
+                0x0000000000770aa0                GbugdetectorZ
+                0x0000000000770df0                GbungeeZ
+                0x0000000000771140                GcameraZ
+                0x00000000007715c0                GcartblueZ
+                0x0000000000771820                GcartridgeZ
+                0x0000000000771950                GcartrifleZ
+                0x0000000000771b60                GcartshellZ
+                0x0000000000771d60                GcircuitboardZ
+                0x0000000000771ea0                GclipboardZ
+                0x0000000000772090                GcreditcardZ
+                0x00000000007723e0                GdarglassesZ
+                0x0000000000772730                GdatathiefZ
+                0x0000000000772870                GdattapeZ
+                0x00000000007729e0                GdoordecoderZ
+                0x0000000000772f60                GdoorexploderZ
+                0x00000000007732b0                GdossierredZ
+                0x0000000000773610                GdynamiteZ
+                0x0000000000773960                GexpelosivefloppyZ
+                0x0000000000773bb0                GexplosivepenZ
+                0x0000000000773f00                GextinguisherZ
+                0x00000000007746f0                GfingergunZ
+                0x0000000000774a40                GfistZ
+                0x0000000000776140                GflarepistolZ
+                0x0000000000776490                Gfnp90Z
+                0x0000000000777130                GgaskeyringZ
+                0x0000000000777b60                GgoldbarZ
+                0x0000000000777eb0                GgoldeneyekeyZ
+                0x0000000000778860                GgoldengunZ
+                0x000000000077a040                GgoldwppkZ
+                0x000000000077b9a0                GgrenadeZ
+                0x000000000077c3d0                GgrenadelaunchZ
+                0x000000000077d450                GheroinZ
+                0x000000000077d7a0                GjoypadZ
+                0x000000000077f650                GkeyanalysercaseZ
+                0x000000000077fde0                GkeyboltZ
+                0x00000000007807d0                GkeycardZ
+                0x0000000000780900                GkeyyaleZ
+                0x0000000000781650                GknifeZ
+                0x0000000000783120                GlaserZ
+                0x0000000000783f10                GlectreZ
+                0x0000000000784260                GlockexploderZ
+                0x00000000007845b0                Gm16Z
+                0x0000000000784fd0                GmapZ
+                0x00000000007850c0                GmicrocameraZ
+                0x0000000000785700                GmicrocodeZ
+                0x0000000000785a50                GmicrofilmZ
+                0x0000000000785da0                GmoneyZ
+                0x00000000007860f0                Gmp5kZ
+                0x0000000000786cd0                Gmp5ksilZ
+                0x00000000007879d0                GpitongunZ
+                0x0000000000787d20                GplansZ
+                0x0000000000787ef0                GplastiqueZ
+                0x0000000000788240                GpolarizedglassesZ
+                0x00000000007887a0                GproximitymineZ
+                0x0000000000788f90                GremotemineZ
+                0x0000000000789950                GrocketlaunchZ
+                0x000000000078ab70                GrugerZ
+                0x000000000078c900                GsafecrackercaseZ
+                0x000000000078d090                GshotgunZ
+                0x000000000078df70                GsilverwppkZ
+                0x000000000078f8d0                GskorpionZ
+                0x0000000000790ad0                GsniperrifleZ
+                0x0000000000791b40                GspecterZ
+                0x00000000007927c0                GspooltapeZ
+                0x0000000000792b10                GspyfileZ
+                0x0000000000792e60                GstafflistZ
+                0x0000000000793000                GtaserZ
+                0x0000000000794e60                GthrowknifeZ
+                0x0000000000796950                GtimedmineZ
+                0x0000000000797410                GtriggerZ
+                0x000000000079a810                Gtt33Z
+                0x000000000079c330                GuziZ
+                0x000000000079cc40                GvideotapeZ
+                0x000000000079ce50                GwatchcommunicatorZ
+                0x000000000079e2b0                GwatchgeigercounterZ
+                0x000000000079f710                GwatchidentifierZ
+                0x00000000007a0b70                GwatchlaserZ
+                0x00000000007a3f70                GwatchmagnetattractZ
+                0x00000000007a53c0                GwatchmagnetrepelZ
+                0x00000000007a6820                GweaponcaseZ
+                0x00000000007a6fb0                GwppkZ
+                0x00000000007a8c40                GwppksilZ
+                0x00000000007aa980                GwristdartZ
+                0x00000000007aacd0                PICBMZ
+                0x00000000007ad250                PICBM_noseZ
+                0x00000000007ada00                Pak47magZ
+                0x00000000007adbe0                Palarm1Z
+                0x00000000007add40                Palarm2Z
+                0x00000000007adee0                Pammo_crate1Z
+                0x00000000007ae120                Pammo_crate2Z
+                0x00000000007ae360                Pammo_crate3Z
+                0x00000000007ae5b0                Pammo_crate4Z
+                0x00000000007ae820                Pammo_crate5Z
+                0x00000000007aeae0                PapcZ
+                0x00000000007b0740                Parchsecdoor1Z
+                0x00000000007b0920                Parchsecdoor2Z
+                0x00000000007b0af0                ParticZ
+                0x00000000007b18f0                PartictrailerZ
+                0x00000000007b2200                PbarricadeZ
+                0x00000000007b2440                Pbin1Z
+                0x00000000007b2790                Pblotter1Z
+                0x00000000007b2870                PbodyarmourZ
+                0x00000000007b2d10                PbodyarmourvestZ
+                0x00000000007b3130                PbollardZ
+                0x00000000007b3330                PbombZ
+                0x00000000007b34a0                Pbook1Z
+                0x00000000007b3630                Pbookshelf1Z
+                0x00000000007b3d20                Pborg_crateZ
+                0x00000000007b3e90                PboxcartridgesZ
+                0x00000000007b4090                Pboxes2x4Z
+                0x00000000007b44c0                Pboxes3x4Z
+                0x00000000007b4900                Pboxes4x4Z
+                0x00000000007b4f60                PbrakeunitZ
+                0x00000000007b52d0                Pbridge_console1aZ
+                0x00000000007b5850                Pbridge_console1bZ
+                0x00000000007b5db0                Pbridge_console2aZ
+                0x00000000007b6330                Pbridge_console2bZ
+                0x00000000007b6820                Pbridge_console3aZ
+                0x00000000007b6d70                Pbridge_console3bZ
+                0x00000000007b7300                PcarbmwZ
+                0x00000000007b7fe0                Pcard_box1Z
+                0x00000000007b81e0                Pcard_box2Z
+                0x00000000007b8420                Pcard_box3Z
+                0x00000000007b8610                Pcard_box4Z
+                0x00000000007b87c0                Pcard_box5Z
+                0x00000000007b89c0                Pcard_box6Z
+                0x00000000007b8bb0                PcarescortZ
+                0x00000000007b97b0                PcargolfZ
+                0x00000000007ba3e0                PcarweirdZ
+                0x00000000007bb520                PcarzilZ
+                0x00000000007bcb20                PcctvZ
+                0x00000000007bcea0                PchraudiotapeZ
+                0x00000000007bd400                PchrautoshotZ
+                0x00000000007bd760                PchrblackboxZ
+                0x00000000007bdfe0                PchrblueprintsZ
+                0x00000000007be130                PchrbombcaseZ
+                0x00000000007be320                PchrbombdefuserZ
+                0x00000000007bec00                PchrbriefcaseZ
+                0x00000000007bed90                PchrbugZ
+                0x00000000007bfb40                PchrbugdetectorZ
+                0x00000000007bfcb0                PchrbungeeZ
+                0x00000000007bfe20                PchrcameraZ
+                0x00000000007c04b0                PchrcircuitboardZ
+                0x00000000007c0650                PchrclipboardZ
+                0x00000000007c08d0                PchrcreditcardZ
+                0x00000000007c0a40                PchrdarkglassesZ
+                0x00000000007c0bb0                PchrdatathiefZ
+                0x00000000007c0d50                PchrdattapeZ
+                0x00000000007c0f40                PchrdoordecoderZ
+                0x00000000007c17a0                PchrdoorexploderZ
+                0x00000000007c1910                PchrdossierredZ
+                0x00000000007c1de0                PchrdynamiteZ
+                0x00000000007c1f50                PchrexplosivepenZ
+                0x00000000007c20c0                PchrextinguisherZ
+                0x00000000007c25c0                PchrfingergunZ
+                0x00000000007c2730                PchrflarepistolZ
+                0x00000000007c28a0                Pchrfnp90Z
+                0x00000000007c2d00                PchrgaskeyringZ
+                0x00000000007c3c10                PchrgoldbarZ
+                0x00000000007c3d80                PchrgoldenZ
+                0x00000000007c3ff0                PchrgoldeneyekeyZ
+                0x00000000007c4e90                PchrgoldwppkZ
+                0x00000000007c5000                PchrgrenadeZ
+                0x00000000007c5370                PchrgrenadelaunchZ
+                0x00000000007c5700                PchrgrenaderoundZ
+                0x00000000007c5970                PchrheroinZ
+                0x00000000007c5ae0                PchrkalashZ
+                0x00000000007c5ed0                PchrkeyanalysercaseZ
+                0x00000000007c60c0                PchrkeyboltZ
+                0x00000000007c6f60                PchrkeyyaleZ
+                0x00000000007c83c0                PchrknifeZ
+                0x00000000007c85c0                PchrlaserZ
+                0x00000000007c8980                PchrlectreZ
+                0x00000000007c8af0                PchrlockexploderZ
+                0x00000000007c8c60                Pchrm16Z
+                0x00000000007c9030                PchrmapZ
+                0x00000000007c9180                PchrmicrocameraZ
+                0x00000000007c9a70                PchrmicrocodeZ
+                0x00000000007c9be0                PchrmicrofilmZ
+                0x00000000007c9d50                PchrmoneyZ
+                0x00000000007c9ec0                Pchrmp5kZ
+                0x00000000007ca240                Pchrmp5ksilZ
+                0x00000000007ca650                PchrpitongunZ
+                0x00000000007ca7c0                PchrplansZ
+                0x00000000007caa50                PchrplastiqueZ
+                0x00000000007caeb0                PchrpolarizedglassesZ
+                0x00000000007cb770                PchrproximitymineZ
+                0x00000000007cbbd0                PchrremotemineZ
+                0x00000000007cc030                PchrrocketZ
+                0x00000000007cc5e0                PchrrocketlaunchZ
+                0x00000000007cc9c0                PchrrugerZ
+                0x00000000007ccda0                PchrsafecrackercaseZ
+                0x00000000007ccf90                PchrshotgunZ
+                0x00000000007cd2e0                PchrsilverwppkZ
+                0x00000000007cd450                PchrskorpionZ
+                0x00000000007cd7d0                PchrsniperrifleZ
+                0x00000000007cdb60                PchrspectreZ
+                0x00000000007cded0                PchrspooltapeZ
+                0x00000000007ce040                PchrspyfileZ
+                0x00000000007ce1b0                PchrstafflistZ
+                0x00000000007ce3d0                PchrtesttubeZ
+                0x00000000007ce590                PchrthrowknifeZ
+                0x00000000007ce7b0                PchrtimedmineZ
+                0x00000000007cece0                Pchrtt33Z
+                0x00000000007cef70                PchruziZ
+                0x00000000007cf240                PchrvideotapeZ
+                0x00000000007cf510                PchrweaponcaseZ
+                0x00000000007cf710                PchrwppkZ
+                0x00000000007cf950                PchrwppksilZ
+                0x00000000007cfc30                PchrwristdartZ
+                0x00000000007cfda0                Pconsole1Z
+                0x00000000007d0420                Pconsole2Z
+                0x00000000007d0aa0                Pconsole3Z
+                0x00000000007d1130                Pconsole_sev2aZ
+                0x00000000007d1550                Pconsole_sev2bZ
+                0x00000000007d1a10                Pconsole_sev2cZ
+                0x00000000007d1e50                Pconsole_sev2dZ
+                0x00000000007d2280                Pconsole_sev_GEaZ
+                0x00000000007d26b0                Pconsole_sev_GEbZ
+                0x00000000007d2ae0                Pconsole_sevaZ
+                0x00000000007d2f60                Pconsole_sevbZ
+                0x00000000007d33d0                Pconsole_sevcZ
+                0x00000000007d3800                Pconsole_sevdZ
+                0x00000000007d3c30                Pcryptdoor1aZ
+                0x00000000007d3dc0                Pcryptdoor1bZ
+                0x00000000007d3f50                Pcryptdoor2aZ
+                0x00000000007d40e0                Pcryptdoor2bZ
+                0x00000000007d4270                Pcryptdoor3Z
+                0x00000000007d44e0                Pcryptdoor4Z
+                0x00000000007d4660                PdamchaindoorZ
+                0x00000000007d48e0                PdamgatedoorZ
+                0x00000000007d4b00                PdamtundoorZ
+                0x00000000007d4e70                Pdepot_door_steelZ
+                0x00000000007d5010                Pdepot_gate_entryZ
+                0x00000000007d5250                Pdesk1Z
+                0x00000000007d53d0                Pdesk2Z
+                0x00000000007d5550                Pdesk_arecibo1Z
+                0x00000000007d5790                Pdesk_lamp2Z
+                0x00000000007d5a90                Pdest_engineZ
+                0x00000000007d7380                Pdest_exocetZ
+                0x00000000007d79e0                Pdest_gunZ
+                0x00000000007d8050                Pdest_harpoonZ
+                0x00000000007d88f0                Pdest_seawolfZ
+                0x00000000007d98a0                Pdisc_readerZ
+                0x00000000007d9a60                Pdisk_drive1Z
+                0x00000000007d9bf0                Pdoor_azt_chairZ
+                0x00000000007d9d70                Pdoor_azt_deskZ
+                0x00000000007da1b0                Pdoor_azt_desk_topZ
+                0x00000000007da540                Pdoor_aztecZ
+                0x00000000007da770                Pdoor_dest1Z
+                0x00000000007daa70                Pdoor_dest2Z
+                0x00000000007dae30                Pdoor_eyelidZ
+                0x00000000007db390                Pdoor_irisZ
+                0x00000000007dbde0                Pdoor_mfZ
+                0x00000000007dc0d0                Pdoor_roller1Z
+                0x00000000007dc440                Pdoor_roller2Z
+                0x00000000007dc680                Pdoor_roller3Z
+                0x00000000007dc8c0                Pdoor_roller4Z
+                0x00000000007dcb20                Pdoor_rollertrainZ
+                0x00000000007dcc50                Pdoor_st_arec1Z
+                0x00000000007dceb0                Pdoor_st_arec2Z
+                0x00000000007dd190                Pdoor_winZ
+                0x00000000007dd330                PdoorconsoleZ
+                0x00000000007dd7a0                PdoorpanelZ
+                0x00000000007ddb10                Pdoorprison1Z
+                0x00000000007ddc60                PdoorstatgateZ
+                0x00000000007dde60                PexplosionbitZ
+                0x00000000007ddf80                Pfiling_cabinet1Z
+                0x00000000007de100                PflagZ
+                0x00000000007de230                PfloppyZ
+                0x00000000007de550                Pfnp90magZ
+                0x00000000007de6f0                Pgas_plant_met1_do1Z
+                0x00000000007dea70                Pgas_plant_sw2_do1Z
+                0x00000000007dec50                Pgas_plant_sw3_do1Z
+                0x00000000007dee50                Pgas_plant_sw4_do1Z
+                0x00000000007defb0                Pgas_plant_sw_do1Z
+                0x00000000007df240                Pgas_plant_wc_cub1Z
+                0x00000000007df450                PgasbarrelZ
+                0x00000000007df660                PgasbarrelsZ
+                0x00000000007dfba0                Pgasplant_clear_doorZ
+                0x00000000007e0100                PgastankZ
+                0x00000000007e06b0                Pglassware1Z
+                0x00000000007e0810                Pglassware2Z
+                0x00000000007e0aa0                Pglassware3Z
+                0x00000000007e0cb0                Pglassware4Z
+                0x00000000007e1230                PgoldeneyelogoZ
+                0x00000000007e20e0                PgoldenshellsZ
+                0x00000000007e22e0                PgroundgunZ
+                0x00000000007e2ab0                Pgun_runway1Z
+                0x00000000007e31f0                PhatberetZ
+                0x00000000007e3490                PhatberetblueZ
+                0x00000000007e3760                PhatberetredZ
+                0x00000000007e3a40                PhatchboltZ
+                0x00000000007e3b10                PhatchdoorZ
+                0x00000000007e3d30                PhatchsevxZ
+                0x00000000007e3ea0                PhatfurryZ
+                0x00000000007e40d0                PhatfurryblackZ
+                0x00000000007e42f0                PhatfurrybrownZ
+                0x00000000007e4500                PhathelmetZ
+                0x00000000007e4730                PhathelmetgreyZ
+                0x00000000007e4960                PhatmoonZ
+                0x00000000007e4d40                PhatpeakedZ
+                0x00000000007e5050                PhattbirdZ
+                0x00000000007e52a0                PhattbirdbrownZ
+                0x00000000007e5510                PhelicopterZ
+                0x00000000007e9730                PhindZ
+                0x00000000007eaea0                PjeepZ
+                0x00000000007ec000                Pjerry_can1Z
+                0x00000000007ec260                Pjungle3_treeZ
+                0x00000000007ec9e0                Pjungle5_treeZ
+                0x00000000007ecf10                Pkey_holderZ
+                0x00000000007ed260                Pkeyboard1Z
+                0x00000000007ed3d0                Pkit_units1Z
+                0x00000000007ed670                PlabbenchZ
+                0x00000000007eda40                PlandmineZ
+                0x00000000007edcb0                PlegalpageZ
+                0x00000000007eec70                Pletter_tray1Z
+                0x00000000007eedd0                Plocker3Z
+                0x00000000007eef60                Plocker4Z
+                0x00000000007ef0f0                Pm16magZ
+                0x00000000007ef230                PmagnumshellsZ
+                0x00000000007ef430                Pmainframe1Z
+                0x00000000007ef730                Pmainframe2Z
+                0x00000000007efa00                Pmetal_chair1Z
+                0x00000000007efd40                Pmetal_crate1Z
+                0x00000000007eff00                Pmetal_crate2Z
+                0x00000000007f00c0                Pmetal_crate3Z
+                0x00000000007f0280                Pmetal_crate4Z
+                0x00000000007f0440                PmilcopterZ
+                0x00000000007f1d20                PmiltruckZ
+                0x00000000007f4020                Pmissile_rack2Z
+                0x00000000007f4a30                Pmissile_rackZ
+                0x00000000007f4e10                PmodemboxZ
+                0x00000000007f5150                PmotorbikeZ
+                0x00000000007f6010                Pmp5kmagZ
+                0x00000000007f6160                PnintendologoZ
+                0x00000000007f8c40                Poil_drum1Z
+                0x00000000007f8eb0                Poil_drum2Z
+                0x00000000007f91a0                Poil_drum3Z
+                0x00000000007f9490                Poil_drum5Z
+                0x00000000007f9780                Poil_drum6Z
+                0x00000000007f9a90                Poil_drum7Z
+                0x00000000007f9d90                PpadlockZ
+                0x00000000007fa7e0                PpalmZ
+                0x00000000007fac30                PpalmtreeZ
+                0x00000000007fb100                Pphone1Z
+                0x00000000007fb240                PplaneZ
+                0x00000000007fd820                Pplant11Z
+                0x00000000007fdbe0                Pplant1Z
+                0x00000000007fdf70                Pplant2Z
+                0x00000000007fe2d0                Pplant2bZ
+                0x00000000007fe6e0                Pplant3Z
+                0x00000000007feb30                Pradio_unit1Z
+                0x00000000007fece0                Pradio_unit2Z
+                0x00000000007feea0                Pradio_unit3Z
+                0x00000000007ff060                Pradio_unit4Z
+                0x00000000007ff220                ProofgunZ
+                0x00000000007ff880                PsafeZ
+                0x00000000007ffbd0                PsafedoorZ
+                0x00000000008000c0                Psat1_reflectZ
+                0x0000000000801630                PsatboxZ
+                0x0000000000801750                PsatdishZ
+                0x0000000000801bb0                Psec_panelZ
+                0x0000000000801d50                Psev_door3Z
+                0x0000000000801fe0                Psev_door3_windZ
+                0x0000000000802370                Psev_door4_windZ
+                0x0000000000802750                Psev_doorZ
+                0x0000000000802aa0                Psev_door_v1Z
+                0x0000000000802dd0                Psev_trislideZ
+                0x0000000000803180                PsevdishZ
+                0x00000000008040a0                PsevdoormetslideZ
+                0x0000000000804380                PsevdoornowindZ
+                0x00000000008044f0                PsevdoorwindZ
+                0x0000000000804920                PsevdoorwoodZ
+                0x0000000000804cd0                PshuttleZ
+                0x00000000008076d0                Pshuttle_door_lZ
+                0x0000000000808300                Pshuttle_door_rZ
+                0x0000000000809000                PsilencerZ
+                0x00000000008091a0                Psilo_lift_doorZ
+                0x00000000008093e0                PsilotopdoorZ
+                0x00000000008096d0                PskorpionmagZ
+                0x0000000000809830                PspectremagZ
+                0x00000000008099a0                PspeedboatZ
+                0x000000000080a6e0                Pst_pete_room_1iZ
+                0x000000000080d820                Pst_pete_room_2iZ
+                0x0000000000810a00                Pst_pete_room_3tZ
+                0x0000000000813940                Pst_pete_room_5cZ
+                0x0000000000816ed0                Pst_pete_room_6cZ
+                0x000000000081a2e0                Psteel_door1Z
+                0x000000000081a550                Psteel_door2Z
+                0x000000000081a800                Psteel_door2bZ
+                0x000000000081aad0                Psteel_door3Z
+                0x000000000081ada0                Pstool1Z
+                0x000000000081b060                Pswipe_card2Z
+                0x000000000081b1f0                Pswivel_chair1Z
+                0x000000000081b480                PtankZ
+                0x000000000081cf20                PtigerZ
+                0x000000000081edb0                Ptorpedo_rackZ
+                0x000000000081f630                Ptrain_door2Z
+                0x000000000081fa00                Ptrain_door3Z
+                0x000000000081fe20                Ptrain_doorZ
+                0x0000000000820090                PtrainextdoorZ
+                0x00000000008203d0                Ptt33magZ
+                0x0000000000820510                Ptuning_console1Z
+                0x0000000000820a30                Ptv1Z
+                0x0000000000820c00                Ptv4screenZ
+                0x0000000000820da0                Ptv_holderZ
+                0x0000000000821470                PtvscreenZ
+                0x0000000000821540                PuzimagZ
+                0x0000000000821680                PvertdoorZ
+                0x0000000000821c90                PwalletbondZ
+                0x0000000000823240                PwindowZ
+                0x0000000000823330                Pwindow_cor11Z
+                0x0000000000823410                Pwindow_lib_lg1Z
+                0x00000000008234f0                Pwindow_lib_sm1Z
+                0x00000000008235e0                Pwood_lg_crate1Z
+                0x0000000000823860                Pwood_lg_crate2Z
+                0x0000000000823a80                Pwood_md_crate3Z
+                0x0000000000823ca0                Pwood_sm_crate4Z
+                0x0000000000823f00                Pwood_sm_crate5Z
+                0x0000000000824160                Pwood_sm_crate6Z
+                0x0000000000824380                Pwooden_table1Z
+                0x00000000008246f0                PwppkmagZ
+                0x0000000000824830                Tbg_ame_all_p_stanZ
+                0x0000000000826160                Tbg_arch_all_p_stanZ
+                0x000000000082be50                Tbg_arec_all_p_stanZ
+                0x00000000008341a0                Tbg_ark_all_p_stanZ
+                0x000000000083d160                Tbg_ash_all_p_stanZ
+                0x000000000083ea90                Tbg_azt_all_p_stanZ
+                0x0000000000844010                Tbg_cat_all_p_stanZ
+                0x0000000000846740                Tbg_cave_all_p_stanZ
+                0x000000000084b630                Tbg_crad_all_p_stanZ
+                0x000000000084df40                Tbg_cryp_all_p_stanZ
+                0x0000000000850fb0                Tbg_dam_all_p_stanZ
+                0x000000000085b390                Tbg_depo_all_p_stanZ
+                0x00000000008622d0                Tbg_dest_all_p_stanZ
+                0x0000000000868bc0                Tbg_dish_all_p_stanZ
+                0x00000000008696d0                Tbg_imp_all_p_stanZ
+                0x000000000086b000                Tbg_jun_all_p_stanZ
+                0x0000000000872150                Tbg_len_all_p_stanZ
+                0x0000000000872c10                Tbg_oat_all_p_stanZ
+                0x0000000000874510                Tbg_pete_all_p_stanZ
+                0x0000000000878ba0                Tbg_ref_all_p_stanZ
+                0x000000000087a970                Tbg_run_all_p_stanZ
+                0x000000000087c3f0                Tbg_sev_all_p_stanZ
+                0x00000000008801c0                Tbg_sevb_all_p_stanZ
+                0x0000000000885100                Tbg_sevx_all_p_stanZ
+                0x000000000088e430                Tbg_silo_all_p_stanZ
+                0x00000000008974d0                Tbg_stat_all_p_stanZ
+                0x000000000089c390                Tbg_tra_all_p_stanZ
+                0x000000000089e760                UbriefarchZ
+                0x000000000089e780                UbriefarkZ
+                0x000000000089e7a0                UbriefaztZ
+                0x000000000089e7c0                UbriefcaveZ
+                0x000000000089e7e0                UbriefcontrolZ
+                0x000000000089e800                UbriefcradZ
+                0x000000000089e820                UbriefcrypZ
+                0x000000000089e840                UbriefdamZ
+                0x000000000089e860                UbriefdepoZ
+                0x000000000089e880                UbriefdestZ
+                0x000000000089e8a0                UbriefjunZ
+                0x000000000089e8c0                UbriefpeteZ
+                0x000000000089e8e0                UbriefrunZ
+                0x000000000089e900                UbriefsevbZ
+                0x000000000089e920                UbriefsevbunkerZ
+                0x000000000089e940                UbriefsevxZ
+                0x000000000089e960                UbriefsevxbZ
+                0x000000000089e980                UbriefsiloZ
+                0x000000000089e9a0                UbriefstatueZ
+                0x000000000089e9c0                UbrieftraZ
+                0x000000000089e9e0                Ump_setupameZ
+                0x000000000089f100                Ump_setuparchZ
+                0x00000000008a1ea0                Ump_setuparkZ
+                0x00000000008a3be0                Ump_setupashZ
+                0x00000000008a42d0                Ump_setupcaveZ
+                0x00000000008a6830                Ump_setupcradZ
+                0x00000000008a7190                Ump_setupcrypZ
+                0x00000000008a7ef0                Ump_setupdishZ
+                0x00000000008a82e0                Ump_setupimpZ
+                0x00000000008a8920                Ump_setupoatZ
+                0x00000000008a8c70                Ump_setuprefZ
+                0x00000000008a9080                Ump_setupsevbZ
+                0x00000000008aa390                Ump_setupstatueZ
+                0x00000000008ab210                UsetuparchZ
+                0x00000000008af820                UsetuparkZ
+                0x00000000008b33b0                UsetupaztZ
+                0x00000000008b5cb0                UsetupcaveZ
+                0x00000000008b9b10                UsetupcontrolZ
+                0x00000000008bd610                UsetupcradZ
+                0x00000000008bf240                UsetupcrypZ
+                0x00000000008c10d0                UsetupdamZ
+                0x00000000008c53a0                UsetupdepoZ
+                0x00000000008c8330                UsetupdestZ
+                0x00000000008ca680                UsetupjunZ
+                0x00000000008cdd90                UsetuplenZ
+                0x00000000008ce360                UsetuppeteZ
+                0x00000000008d12e0                UsetuprunZ
+                0x00000000008d2b40                UsetupsevbZ
+                0x00000000008d5210                UsetupsevbunkerZ
+                0x00000000008d6c40                UsetupsevxZ
+                0x00000000008daf50                UsetupsevxbZ
+                0x00000000008df040                UsetupsiloZ
+                0x00000000008e1a90                UsetupstatueZ
+                0x00000000008e4260                UsetuptraZ
+                0x00000000008e7490                LameE
+                0x00000000008e74a0                LameJ
+                0x00000000008e74b0                LarchE
+                0x00000000008e7ac0                LarchJ
+                0x00000000008e8120                LarecE
+                0x00000000008e86d0                LarecJ
+                0x00000000008e8c60                LarkE
+                0x00000000008e92e0                LarkJ
+                0x00000000008e9990                LashE
+                0x00000000008e99a0                LashJ
+                0x00000000008e99b0                LaztE
+                0x00000000008e9de0                LaztJ
+                0x00000000008ea290                LcatE
+                0x00000000008ea2a0                LcatJ
+                0x00000000008ea2b0                LcaveE
+                0x00000000008ea690                LcaveJ
+                0x00000000008eaaf0                LcradE
+                0x00000000008eafb0                LcradJ
+                0x00000000008eb460                LcrypE
+                0x00000000008eb6a0                LcrypJ
+                0x00000000008eb960                LdamE
+                0x00000000008ebd90                LdamJ
+                0x00000000008ec200                LdepoE
+                0x00000000008ec550                LdepoJ
+                0x00000000008ec890                LdestE
+                0x00000000008ecd10                LdestJ
+                0x00000000008ed170                LdishE
+                0x00000000008ed180                LdishJ
+                0x00000000008ed190                LearE
+                0x00000000008ed1a0                LearJ
+                0x00000000008ed1b0                LeldE
+                0x00000000008ed1c0                LeldJ
+                0x00000000008ed1d0                LgunE
+                0x00000000008ed7b0                LgunJ
+                0x00000000008edf00                LimpE
+                0x00000000008edf10                LimpJ
+                0x00000000008edf20                LjunE
+                0x00000000008ee420                LjunJ
+                0x00000000008ee960                LleeE
+                0x00000000008ee970                LleeJ
+                0x00000000008ee980                LlenE
+                0x00000000008eee90                LlenJ
+                0x00000000008ef140                LlipE
+                0x00000000008ef150                LlipJ
+                0x00000000008ef160                LlueE
+                0x00000000008ef170                LlueJ
+                0x00000000008ef180                LmiscE
+                0x00000000008ef3b0                LmiscJ
+                0x00000000008ef690                LmpmenuE
+                0x00000000008ef7d0                LmpmenuJ
+                0x00000000008ef960                LmpweaponsE
+                0x00000000008ef9e0                LmpweaponsJ
+                0x00000000008efac0                LoatE
+                0x00000000008efad0                LoatJ
+                0x00000000008efae0                LoptionsE
+                0x00000000008efc90                LoptionsJ
+                0x00000000008efee0                LpamE
+                0x00000000008efef0                LpamJ
+                0x00000000008eff00                LpeteE
+                0x00000000008f0360                LpeteJ
+                0x00000000008f07d0                LpropobjE
+                0x00000000008f09e0                LpropobjJ
+                0x00000000008f0ca0                LrefE
+                0x00000000008f0cb0                LrefJ
+                0x00000000008f0cc0                LritE
+                0x00000000008f0cd0                LritJ
+                0x00000000008f0ce0                LrunE
+                0x00000000008f0f40                LrunJ
+                0x00000000008f11d0                LsevE
+                0x00000000008f1710                LsevJ
+                0x00000000008f1c20                LsevbE
+                0x00000000008f2350                LsevbJ
+                0x00000000008f2b40                LsevxE
+                0x00000000008f2f80                LsevxJ
+                0x00000000008f3340                LsevxbE
+                0x00000000008f37b0                LsevxbJ
+                0x00000000008f3c00                LshoE
+                0x00000000008f3c10                LshoJ
+                0x00000000008f3c20                LsiloE
+                0x00000000008f41c0                LsiloJ
+                0x00000000008f47a0                LstatE
+                0x00000000008f50a0                LstatJ
+                0x00000000008f5910                LtitleE
+                0x00000000008f6180                LtitleJ
+                0x00000000008f6d10                LtraE
+                0x00000000008f7120                LtraJ
+                0x00000000008f7540                LwaxE
+                0x00000000008f7550                LwaxJ
+                0x00000000008f7560                ob__ob_end_seg
+                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.ob_seg))
 
-.rel.dyn        0x000000007f0e2d68        0x0 load address 0x0000000000117898
- .rel.dyn       0x000000007f0e2d68        0x0 build/video.o
+.reginfo        0x00000000008f7570       0x18
+ .reginfo       0x00000000008f7570       0x18 build/rom_header.o
 
-.romfiles
- *(.romfiles)
- *(.ramrom)
- *(.font)
- *(.music)
- *(.musiccompressed)
-                [0x00000000001fa5d0]                __romPos = (__romPos + SIZEOF (.text_tlbcode))
+.rodata         0x00000000008f7588        0x0
+ .rodata        0x00000000008f7588        0x0 build/_start.o
+ .rodata        0x00000000008f7588        0x0 build/rspboot.o
+ .rodata        0x00000000008f7588        0x0 build/gspboot.o
 
-.ob_seg         0x0000000000438660        0x0 load address 0x00000000001fa5d0
- *(.ob_seg)
-                [0x00000000001fa5d0]                __romPos = (__romPos + SIZEOF (.ob_seg))
+.rel.dyn        0x00000000008f7588        0x0
+ .rel.dyn       0x00000000008f7588        0x0 build/video.o
 
-.images
+.images         0x00000000008f7588        0x0 load address 0x00000000008f756a
  *(.images)
-                [0x00000000001fa5d0]                __romPos = (__romPos + SIZEOF (.ob_seg))
+                [0x00000000008f756a]                __romPos = (__romPos + SIZEOF (.images))
                 0x0000000000c00000                __csegtempPos = 0xc00000
                 [0x00000000800995c0]                __ramPos = (__ramPos + 0x80000000)
 
@@ -9796,6 +10635,11 @@ Linker script and memory map
  .bss           0x000000008008e360        0x0 build/rom_header.o
  .bss           0x000000008008e360        0x0 build/bootcode.o
  .bss           0x000000008008e360        0x0 build/_start.o
+ .bss           0x000000008008e360        0x0 build/assets/romfiles.o
+ .bss           0x000000008008e360        0x0 build/assets/ramrom/ramrom.o
+ .bss           0x000000008008e360        0x0 build/assets/font/font.o
+ .bss           0x000000008008e360        0x0 build/assets/music/music.o
+ .bss           0x000000008008e360        0x0 build/assets/obseg/ob_seg.o
  .bss           0x000000008008e360        0x0 build/rspboot.o
  .bss           0x000000008008e360        0x0 build/gspboot.o
  .bss           0x000000008008e360        0x0 build/aspboot.o
@@ -9812,6 +10656,11 @@ OUTPUT(ge007.u.elf elf32-tradbigmips)
  .pdr           0x0000000000000000        0x0 build/bootcode.o
  .pdr           0x0000000000000000        0x0 build/_start.o
  .pdr           0x0000000000000000        0x0 build/libultra/libultra.o
+ .pdr           0x0000000000000000        0x0 build/assets/romfiles.o
+ .pdr           0x0000000000000000        0x0 build/assets/ramrom/ramrom.o
+ .pdr           0x0000000000000000        0x0 build/assets/font/font.o
+ .pdr           0x0000000000000000        0x0 build/assets/music/music.o
+ .pdr           0x0000000000000000        0x0 build/assets/obseg/ob_seg.o
  .pdr           0x0000000000000000        0x0 build/rspboot.o
  .pdr           0x0000000000000000        0x0 build/gspboot.o
  .pdr           0x0000000000000000        0x0 build/aspboot.o
@@ -9827,11 +10676,21 @@ OUTPUT(ge007.u.elf elf32-tradbigmips)
  .gnu.attributes
                 0x0000000000000030       0x10 build/libultra/libultra.o
  .gnu.attributes
-                0x0000000000000040       0x10 build/rspboot.o
+                0x0000000000000040       0x10 build/assets/romfiles.o
  .gnu.attributes
-                0x0000000000000050       0x10 build/gspboot.o
+                0x0000000000000050       0x10 build/assets/ramrom/ramrom.o
  .gnu.attributes
-                0x0000000000000060       0x10 build/aspboot.o
+                0x0000000000000060       0x10 build/assets/font/font.o
+ .gnu.attributes
+                0x0000000000000070       0x10 build/assets/music/music.o
+ .gnu.attributes
+                0x0000000000000080       0x10 build/assets/obseg/ob_seg.o
+ .gnu.attributes
+                0x0000000000000090       0x10 build/rspboot.o
+ .gnu.attributes
+                0x00000000000000a0       0x10 build/gspboot.o
+ .gnu.attributes
+                0x00000000000000b0       0x10 build/aspboot.o
 
 .options        0x0000000000000000     0x1200
  .options       0x0000000000000000       0x20 build/boot.o
@@ -9991,7 +10850,7 @@ OUTPUT(ge007.u.elf elf32-tradbigmips)
 .gptab.data     0x0000000000000000       0x18
  .gptab.data    0x0000000000000000       0x18 build/game/game_debug.o
 
-.mdebug         0x0000000000000000    0x47e74
+.mdebug         0x0000000000000000    0x4d8e0
  .mdebug        0x0000000000000000      0x968 build/ramrom.o
  .mdebug        0x0000000000000968      0x3b0 build/pi.o
  .mdebug        0x0000000000000d18      0x350 build/game/initweaponanigroups.o

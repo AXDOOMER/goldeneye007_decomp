@@ -134,6 +134,22 @@ GAMEOBJECTS := build/game/initgamedata.o build/game/initweaponanigroups.o build/
 			build/game/unk_0D1AC0.o build/game/viewport.o build/game/music_0D2720.o build/game/spectrum.o
 GAMESEGMENT := gamesegment.o
 
+ROMFILES := assets/romfiles.s
+ROMOBJECTS := build/assets/romfiles.o
+
+
+RAMROM_FILES := assets/ramrom/ramrom.s
+RAMROM_OBJECTS := build/assets/ramrom/ramrom.o
+
+FONT_FILES := assets/font/font.s
+FONT_OBJECTS := build/assets/font/font.o
+
+MUSIC_FILES := assets/music/music.s
+MUSIC_OBJECTS := build/assets/music/music.o
+
+OBSEG_FILES := assets/obseg/ob_seg.s
+OBSEG_OBJECTS := build/assets/obseg/ob_seg.o
+
 RZFILES := rarezip/rarezip.c
 RZOBJECTS := build/rarezip/rarezip.o
 RZSEGMENT := rzsegment.o
@@ -141,7 +157,7 @@ RZSEGMENT := rzsegment.o
 #DATAFILES := static.c zbuffer.c cfb.c
 #DATAOBJECTS := $(DATAFILES:.c=.o)
 
-OBJECTS := $(BOOTSEGMENT) $(CODESEGMENT) $(GAMESEGMENT) $(RZSEGMENT) $(OBSEGMENT)
+OBJECTS := $(BOOTSEGMENT) $(CODESEGMENT) $(GAMESEGMENT) $(RZSEGMENT) $(OBSEGMENT) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS)
 
 # other tools
 TOOLS_DIR := tools
@@ -169,8 +185,8 @@ default:	$(APPROM)
 
 clean:
 	rm -f $(BUILD_DIR)/ge007.$(COUNTRYCODE).map $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
-	$(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) \
-	$(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES) \
+	$(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS)\
+	$(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)\
 	$(MUSIC_RZ_FILES)
 
 install: default
@@ -179,6 +195,18 @@ install: default
 			Makefile 
 
 build/%.o: src/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
+build/assets/%.o: assets/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
+build/assets/ramrom/%.o: assets/ramrom/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
+build/assets/font/%.o: assets/font/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
+build/assets/obseg/%.o: assets/obseg/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
 build/%.o: src/%.c
@@ -196,7 +224,7 @@ build/$(OBSEGMENT): $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FI
 #build/$(RZSEGMENT): $(RZOBJECTS)
 #	$(LD) -o build/$(RZSEGMENT) -r $(RZOBJECTS)
 
-$(APPELF): $(ULTRAOBJECTS) $(HEADEROBJECTS) build/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS)
+$(APPELF): $(ULTRAOBJECTS) $(HEADEROBJECTS) build/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
 	$(LD) $(LDFLAGS) -o $@ 
 
 $(APPBIN): $(APPELF)

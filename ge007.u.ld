@@ -193,24 +193,24 @@ SECTIONS
    }
    __romPos += SIZEOF(.text_tlbcode);
    
-   .romfiles 0x117880 : AT(__romPos) {
-      * (.romfiles);
-      * (.ramrom);
-      * (.font);
-      * (.music);
-      * (.musiccompressed);
+   .romfiles_117880 0x117880 : AT(__romPos) {
+      build/assets/romfiles.o (.romfiles);
+      build/assets/ramrom/ramrom.o (.ramrom);
+      build/assets/font/font.o (.font);
+      build/assets/music/music.o (.music);
+      build/assets/music/music.o (.musiccompressed);
    }
-   __romPos += SIZEOF(.text_tlbcode);
+   __romPos += SIZEOF(.romfiles_117880);
 
-   .ob_seg 0x438660 : AT(__romPos) {
-      * (.ob_seg);
+   .ob_seg 0x438660 : AT(0x438660) {
+      build/assets/obseg/ob_seg.o (.ob_seg);
    }
    __romPos += SIZEOF(.ob_seg);
 
    .images : AT(__romPos) {
       * (.images);
    }
-   __romPos += SIZEOF(.ob_seg);
+   __romPos += SIZEOF(.images);
 
    __csegtempPos = 0xC00000;
    __ramPos += 0x80000000;
