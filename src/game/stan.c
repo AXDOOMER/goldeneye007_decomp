@@ -12,11 +12,15 @@ s32 dword_CODE_bss_8007B12C;
 //CODE.bss:8007B130
 s32 dword_CODE_bss_8007B130;
 //CODE.bss:8007B134
-char dword_CODE_bss_8007B134[0x220];
+char dword_CODE_bss_8007B134;
+char dword_CODE_bss_8007B135;
+char dword_CODE_bss_8007B136;
+char dword_CODE_bss_8007B137;
+char dword_CODE_bss_8007B138[0x21C];
 //CODE.bss:8007B354
 s32 dword_CODE_bss_8007B354;
 //CODE.bss:8007B358
-s32 dword_CODE_bss_8007B358[0x684];
+s32 dword_CODE_bss_8007B358[0x1a1];
 //CODE.bss:8007B9DC
 s32 dword_CODE_bss_8007B9DC;
 //CODE.bss:8007B9E0

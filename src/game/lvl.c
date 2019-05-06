@@ -7,8 +7,10 @@
 // bss
 //CODE.bss:8008C260
 u32 *ptr_jfont_DL;
-//CODE.bss:8008C264 .align 4
+//CODE.bss:8008C264
 s32 dword_CODE_bss_8008C264;
+s32 dword_CODE_bss_8008C268;
+s32 dword_CODE_bss_8008C26C;
 //CODE.bss:8008C270
 char ramrom_data_target[0x380];
 //CODE.bss:8008C5F0

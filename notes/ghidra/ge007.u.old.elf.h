@@ -17452,5 +17452,5 @@ undefined8 proc_7F0D37DC(undefined8 param_1,undefined8 param_2,char param_3,byte
 void spectrum_hw_emulation(void);
 void entry(void);
 void boot(void);
-void rspcode(void);
+void rspbootTextStart(void)
 

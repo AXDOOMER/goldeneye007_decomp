@@ -46,68 +46,68 @@ u8 off_CODE_bss_80082620;
 u8 byte_CODE_bss_80082621;
 u8 byte_CODE_bss_80082622;
 u8 byte_CODE_bss_80082623;
-/*
-        80082624                 ??         ??
-        80082625                 ??         ??
-        80082626                 ??         ??
-        80082627                 ??         ??
-        80082628                 ??         ??
-        80082629                 ??         ??
-        8008262a                 ??         ??
-        8008262b                 ??         ??
-        8008262c                 ??         ??
-        8008262d                 ??         ??
-        8008262e                 ??         ??
-        8008262f                 ??         ??
-        80082630                 ??         ??
-        80082631                 ??         ??
-        80082632                 ??         ??
-        80082633                 ??         ??
-        80082634                 ??         ??
-        80082635                 ??         ??
-        80082636                 ??         ??
-        80082637                 ??         ??
-        80082638                 ??         ??
-        80082639                 ??         ??
-        8008263a                 ??         ??
-        8008263b                 ??         ??
-        8008263c                 ??         ??
-        8008263d                 ??         ??
-        8008263e                 ??         ??
-        8008263f                 ??         ??
-        80082640                 ??         ??
-        80082641                 ??         ??
-        80082642                 ??         ??
-        80082643                 ??         ??
-        80082644                 ??         ??
-        80082645                 ??         ??
-        80082646                 ??         ??
-        80082647                 ??         ??
-        80082648                 ??         ??
-        80082649                 ??         ??
-        8008264a                 ??         ??
-        8008264b                 ??         ??
-        8008264c                 ??         ??
-        8008264d                 ??         ??
-        8008264e                 ??         ??
-        8008264f                 ??         ??
-        80082650                 ??         ??
-        80082651                 ??         ??
-        80082652                 ??         ??
-        80082653                 ??         ??
-        80082654                 ??         ??
-        80082655                 ??         ??
-        80082656                 ??         ??
-        80082657                 ??         ??
-        80082658                 ??         ??
-        80082659                 ??         ??
-        8008265a                 ??         ??
-        8008265b                 ??         ??
-        8008265c                 ??         ??
-        8008265d                 ??         ??
-        8008265e                 ??         ??
-        8008265f                 ??         ??
-*/
+
+u8 byte_CODE_bss_80082624;
+u8 byte_CODE_bss_80082625;
+u8 byte_CODE_bss_80082626;
+u8 byte_CODE_bss_80082627;
+u8 byte_CODE_bss_80082628;
+u8 byte_CODE_bss_80082629;
+u8 byte_CODE_bss_8008262a;
+u8 byte_CODE_bss_8008262b;
+u8 byte_CODE_bss_8008262c;
+u8 byte_CODE_bss_8008262d;
+u8 byte_CODE_bss_8008262e;
+u8 byte_CODE_bss_8008262f;
+u8 byte_CODE_bss_80082630;
+u8 byte_CODE_bss_80082631;
+u8 byte_CODE_bss_80082632;
+u8 byte_CODE_bss_80082633;
+u8 byte_CODE_bss_80082634;
+u8 byte_CODE_bss_80082635;
+u8 byte_CODE_bss_80082636;
+u8 byte_CODE_bss_80082637;
+u8 byte_CODE_bss_80082638;
+u8 byte_CODE_bss_80082639;
+u8 byte_CODE_bss_8008263a;
+u8 byte_CODE_bss_8008263b;
+u8 byte_CODE_bss_8008263c;
+u8 byte_CODE_bss_8008263d;
+u8 byte_CODE_bss_8008263e;
+u8 byte_CODE_bss_8008263f;
+u8 byte_CODE_bss_80082640;
+u8 byte_CODE_bss_80082641;
+u8 byte_CODE_bss_80082642;
+u8 byte_CODE_bss_80082643;
+u8 byte_CODE_bss_80082644;
+u8 byte_CODE_bss_80082645;
+u8 byte_CODE_bss_80082646;
+u8 byte_CODE_bss_80082647;
+u8 byte_CODE_bss_80082648;
+u8 byte_CODE_bss_80082649;
+u8 byte_CODE_bss_8008264a;
+u8 byte_CODE_bss_8008264b;
+u8 byte_CODE_bss_8008264c;
+u8 byte_CODE_bss_8008264d;
+u8 byte_CODE_bss_8008264e;
+u8 byte_CODE_bss_8008264f;
+u8 byte_CODE_bss_80082650;
+u8 byte_CODE_bss_80082651;
+u8 byte_CODE_bss_80082652;
+u8 byte_CODE_bss_80082653;
+u8 byte_CODE_bss_80082654;
+u8 byte_CODE_bss_80082655;
+u8 byte_CODE_bss_80082656;
+u8 byte_CODE_bss_80082657;
+u8 byte_CODE_bss_80082658;
+u8 byte_CODE_bss_80082659;
+u8 byte_CODE_bss_8008265a;
+u8 byte_CODE_bss_8008265b;
+u8 byte_CODE_bss_8008265c;
+u8 byte_CODE_bss_8008265d;
+u8 byte_CODE_bss_8008265e;
+u8 byte_CODE_bss_8008265f;
+
 
 
 // data

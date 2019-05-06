@@ -23,14 +23,16 @@ f32 flt_CODE_bss_800695B8;
 f32 flt_CODE_bss_800695BC;
 //CODE.bss:800695C0
 f32 flt_CODE_bss_800695C0;
-//CODE.bss:800695C4                     .align 3
+//CODE.bss:800695C4
+f32 flt_CODE_bss_800695C4;
 //CODE.bss:800695C8
 f32 flt_CODE_bss_800695C8;
 //CODE.bss:800695CC
 f32 flt_CODE_bss_800695CC;
 //CODE.bss:800695D0
 f32 flt_CODE_bss_800695D0;
-//CODE.bss:800695D4                     .align 3
+//CODE.bss:800695D4
+f32 flt_CODE_bss_800695D4;
 //CODE.bss:800695D8
 f32 flt_CODE_bss_800695D8;
 //CODE.bss:800695DC
@@ -45,14 +47,16 @@ f32 flt_CODE_bss_800695E8;
 f32 flt_CODE_bss_800695EC;
 //CODE.bss:800695F0
 f32 flt_CODE_bss_800695F0;
-//CODE.bss:800695F4                     .align 3
+//CODE.bss:800695F4
+f32 flt_CODE_bss_800695F4;
 //CODE.bss:800695F8
 f32 flt_CODE_bss_800695F8;
 //CODE.bss:800695FC
 f32 flt_CODE_bss_800695FC;
 //CODE.bss:80069600
 f32 flt_CODE_bss_80069600;
-//CODE.bss:80069604                     .align 3
+//CODE.bss:80069604
+f32 flt_CODE_bss_80069604;
 //CODE.bss:80069608
 f32 flt_CODE_bss_80069608;
 //CODE.bss:8006960C
@@ -63,7 +67,8 @@ f32 flt_CODE_bss_80069610;
 f32 flt_CODE_bss_80069614;
 //CODE.bss:80069618
 f32 flt_CODE_bss_80069618;
-//CODE.bss:8006961C                     .align 4
+//CODE.bss:8006961C
+f32 flt_CODE_bss_8006961C;
 //CODE.bss:80069620
 char dword_CODE_bss_80069620[0x30];
 
@@ -140,7 +145,11 @@ u8 CHEAT_AVAILABLE_2X_LASER;
 //CODE.bss:80069673
 u8 CHEAT_80069673;
 //CODE.bss:80069674
-u8 CHEAT_80069674[0x2C];
+u8 CHEAT_80069674;
+u8 CHEAT_80069675;
+u8 CHEAT_80069676;
+u8 CHEAT_80069677;
+u8 CHEAT_80069678[0x28];
 
 //CODE.bss:800696A0
 u8 cheat_activated;
@@ -360,13 +369,13 @@ s32 size_mp_select_image_player3;
 //CODE.bss:8006975C
 s32 size_mp_select_image_player4;
 //CODE.bss:80069760
-s32 handicap_player1;
+s32 dword_CODE_bss_80069760;
 //CODE.bss:80069764
-s32 handicap_player2;
+s32 dword_CODE_bss_80069764;
 //CODE.bss:80069768
-s32 handicap_player3;
+s32 dword_CODE_bss_80069768;
 //CODE.bss:8006976C
-s32 handicap_player4;
+s32 dword_CODE_bss_8006976C;
 //CODE.bss:80069770
 s32 dword_CODE_bss_80069770;
 //CODE.bss:80069774
@@ -394,7 +403,8 @@ s32 highlight_enemy_accuracy;
 //CODE.bss:800697A0
 s32 highlight_enemy_damage;
 
-//CODE.bss:800697A4                     .align 3
+//CODE.bss:800697A4
+s32 dword_CODE_bss_800697A4;
 
 //CODE.bss:800697A8
 s32 handicap_player1;
@@ -17405,23 +17415,23 @@ glabel init_menu10_mphandicap
 /* 04798C 7F012E5C AC20A8DC */  sw    $zero, %lo(tab_1_highlight)($at)
 /* 047990 7F012E60 3C018007 */  lui   $at, %hi(has_selected_char_player1) # $at, 0x8007
 /* 047994 7F012E64 AC209740 */  sw    $zero, %lo(has_selected_char_player1)($at)
-/* 047998 7F012E68 3C018007 */  lui   $at, %hi(handicap_player1) # $at, 0x8007
-/* 04799C 7F012E6C AC209760 */  sw    $zero, %lo(handicap_player1)($at)
+/* 047998 7F012E68 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069760) # $at, 0x8007
+/* 04799C 7F012E6C AC209760 */  sw    $zero, %lo(dword_CODE_bss_80069760)($at)
 /* 0479A0 7F012E70 3C018007 */  lui   $at, %hi(has_selected_char_player2) # $at, 0x8007
 /* 0479A4 7F012E74 AC209744 */  sw    $zero, %lo(has_selected_char_player2)($at)
-/* 0479A8 7F012E78 3C018007 */  lui   $at, %hi(handicap_player2) # $at, 0x8007
-/* 0479AC 7F012E7C AC209764 */  sw    $zero, %lo(handicap_player2)($at)
+/* 0479A8 7F012E78 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069764) # $at, 0x8007
+/* 0479AC 7F012E7C AC209764 */  sw    $zero, %lo(dword_CODE_bss_80069764)($at)
 /* 0479B0 7F012E80 3C018007 */  lui   $at, %hi(has_selected_char_player3) # $at, 0x8007
 /* 0479B4 7F012E84 AC209748 */  sw    $zero, %lo(has_selected_char_player3)($at)
-/* 0479B8 7F012E88 3C018007 */  lui   $at, %hi(handicap_player3) # $at, 0x8007
-/* 0479BC 7F012E8C AC209768 */  sw    $zero, %lo(handicap_player3)($at)
+/* 0479B8 7F012E88 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069768) # $at, 0x8007
+/* 0479BC 7F012E8C AC209768 */  sw    $zero, %lo(dword_CODE_bss_80069768)($at)
 /* 0479C0 7F012E90 3C018007 */  lui   $at, %hi(has_selected_char_player4) # $at, 0x8007
 /* 0479C4 7F012E94 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0479C8 7F012E98 AC20974C */  sw    $zero, %lo(has_selected_char_player4)($at)
 /* 0479CC 7F012E9C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0479D0 7F012EA0 3C018007 */  lui   $at, %hi(handicap_player4) # $at, 0x8007
+/* 0479D0 7F012EA0 3C018007 */  lui   $at, %hi(dword_CODE_bss_8006976C) # $at, 0x8007
 /* 0479D4 7F012EA4 0FC02E2B */  jal   load_walletbond
-/* 0479D8 7F012EA8 AC20976C */   sw    $zero, %lo(handicap_player4)($at)
+/* 0479D8 7F012EA8 AC20976C */   sw    $zero, %lo(dword_CODE_bss_8006976C)($at)
 /* 0479DC 7F012EAC 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0479E0 7F012EB0 27BD0018 */  addiu $sp, $sp, 0x18
 /* 0479E4 7F012EB4 03E00008 */  jr    $ra
@@ -18186,23 +18196,23 @@ glabel init_menu11_mpcontrol
 /* 0480D0 7F0135A0 AC20A8DC */  sw    $zero, %lo(tab_1_highlight)($at)
 /* 0480D4 7F0135A4 3C018007 */  lui   $at, %hi(has_selected_char_player1) # $at, 0x8007
 /* 0480D8 7F0135A8 AC209740 */  sw    $zero, %lo(has_selected_char_player1)($at)
-/* 0480DC 7F0135AC 3C018007 */  lui   $at, %hi(handicap_player1) # $at, 0x8007
-/* 0480E0 7F0135B0 AC209760 */  sw    $zero, %lo(handicap_player1)($at)
+/* 0480DC 7F0135AC 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069760) # $at, 0x8007
+/* 0480E0 7F0135B0 AC209760 */  sw    $zero, %lo(dword_CODE_bss_80069760)($at)
 /* 0480E4 7F0135B4 3C018007 */  lui   $at, %hi(has_selected_char_player2) # $at, 0x8007
 /* 0480E8 7F0135B8 AC209744 */  sw    $zero, %lo(has_selected_char_player2)($at)
-/* 0480EC 7F0135BC 3C018007 */  lui   $at, %hi(handicap_player2) # $at, 0x8007
-/* 0480F0 7F0135C0 AC209764 */  sw    $zero, %lo(handicap_player2)($at)
+/* 0480EC 7F0135BC 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069764) # $at, 0x8007
+/* 0480F0 7F0135C0 AC209764 */  sw    $zero, %lo(dword_CODE_bss_80069764)($at)
 /* 0480F4 7F0135C4 3C018007 */  lui   $at, %hi(has_selected_char_player3) # $at, 0x8007
 /* 0480F8 7F0135C8 AC209748 */  sw    $zero, %lo(has_selected_char_player3)($at)
-/* 0480FC 7F0135CC 3C018007 */  lui   $at, %hi(handicap_player3) # $at, 0x8007
-/* 048100 7F0135D0 AC209768 */  sw    $zero, %lo(handicap_player3)($at)
+/* 0480FC 7F0135CC 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069768) # $at, 0x8007
+/* 048100 7F0135D0 AC209768 */  sw    $zero, %lo(dword_CODE_bss_80069768)($at)
 /* 048104 7F0135D4 3C018007 */  lui   $at, %hi(has_selected_char_player4) # $at, 0x8007
 /* 048108 7F0135D8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 04810C 7F0135DC AC20974C */  sw    $zero, %lo(has_selected_char_player4)($at)
 /* 048110 7F0135E0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 048114 7F0135E4 3C018007 */  lui   $at, %hi(handicap_player4) # $at, 0x8007
+/* 048114 7F0135E4 3C018007 */  lui   $at, %hi(dword_CODE_bss_8006976C) # $at, 0x8007
 /* 048118 7F0135E8 0FC02E2B */  jal   load_walletbond
-/* 04811C 7F0135EC AC20976C */   sw    $zero, %lo(handicap_player4)($at)
+/* 04811C 7F0135EC AC20976C */   sw    $zero, %lo(dword_CODE_bss_8006976C)($at)
 /* 048120 7F0135F0 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 048124 7F0135F4 27BD0018 */  addiu $sp, $sp, 0x18
 /* 048128 7F0135F8 03E00008 */  jr    $ra

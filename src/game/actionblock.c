@@ -12,26 +12,60 @@ u32 num_obj_position_data_entries;
 //CODE.bss:80069C38
 u8 pos_data_entry[0x24];
 //CODE.bss:80069C5C
-u8 dword_CODE_bss_80069C5C[0x10];
+u8 dword_CODE_bss_80069C5C;
+u8 dword_CODE_bss_80069C5D;
+u8 dword_CODE_bss_80069C5E;
+u8 dword_CODE_bss_80069C5F;
+u8 dword_CODE_bss_80069C60;
+u8 dword_CODE_bss_80069C61;
+u8 dword_CODE_bss_80069C62;
+u8 dword_CODE_bss_80069C63;
+u8 dword_CODE_bss_80069C64;
+u8 dword_CODE_bss_80069C65;
+u8 dword_CODE_bss_80069C66;
+u8 dword_CODE_bss_80069C67;
+u8 dword_CODE_bss_80069C68;
+u8 dword_CODE_bss_80069C69;
+u8 dword_CODE_bss_80069C6A;
+u8 dword_CODE_bss_80069C6B;
 //CODE.bss:80069C6C
-u8 dword_CODE_bss_80069C6C[0x24];
+u8 dword_CODE_bss_80069C6C;
+u8 dword_CODE_bss_80069C6D;
+u8 dword_CODE_bss_80069C6E;
+u8 dword_CODE_bss_80069C6F;
+u8 dword_CODE_bss_80069C70[0x20];
 //CODE.bss:80069C90
-u8 dword_CODE_bss_80069C90[4];
-//CODE.bss:80069C94                     .align 4
+u8 dword_CODE_bss_80069C90[0xC];
+//CODE.bss:80069C94
+//u8 dword_CODE_bss_80069C94[8];
 //CODE.bss:80069CA0
 u8 dword_CODE_bss_80069CA0[0x24];
 //CODE.bss:80069CC4
-u8 dword_CODE_bss_80069CC4[0x10];
+u32 dword_CODE_bss_80069CC4;
+u32 dword_CODE_bss_80069CC8;
+u32 dword_CODE_bss_80069CCC;
+u32 dword_CODE_bss_80069CD0;
 //CODE.bss:80069CD4
-u8 dword_CODE_bss_80069CD4[0x34];
+u32 dword_CODE_bss_80069CD4;
+u32 dword_CODE_bss_80069CD8;
+u32 dword_CODE_bss_80069CDC;
+u8 dword_CODE_bss_80069CE0[0x28];
 //CODE.bss:80069D08
 u8 dword_CODE_bss_80069D08[0x34];
 //CODE.bss:80069D3C
-u8 dword_CODE_bss_80069D3C[0x34];
+u8 dword_CODE_bss_80069D3C;
+u8 dword_CODE_bss_80069D3D;
+u8 dword_CODE_bss_80069D3E;
+u8 dword_CODE_bss_80069D3F;
+u8 dword_CODE_bss_80069D40[0x30];
 //CODE.bss:80069D70
 u8 dword_CODE_bss_80069D70[0x34];
 //CODE.bss:80069DA4
-u8 dword_CODE_bss_80069DA4[0x7874];
+u8 dword_CODE_bss_80069DA4;
+u8 dword_CODE_bss_80069DA5;
+u8 dword_CODE_bss_80069DA6;
+u8 dword_CODE_bss_80069DA7;
+u8 dword_CODE_bss_80069DA8[0x7870];
 //CODE.bss:80071618
 void *ptr_room_lookup_buffer_maybe;
 //CODE.bss:8007161C
@@ -40,7 +74,11 @@ u32 dword_CODE_bss_8007161C;
 //CODE.bss:80071620
 char dword_CODE_bss_80071620[0x94];
 //CODE.bss:800716B4
-char dword_CODE_bss_800716B4[0x73C];
+char dword_CODE_bss_800716B4;
+char dword_CODE_bss_800716B5;
+char dword_CODE_bss_800716B6;
+char dword_CODE_bss_800716B7;
+char dword_CODE_bss_800716B8[0x738];
 //CODE.bss:80071DF0
 u32 dword_CODE_bss_80071DF0;
 //CODE.bss:80071DF4

@@ -2,8 +2,12 @@
 #include "game/ob.h"
 
 //bss
-u8 ptr_resource_data[0x14];
-u8 ptr_res_data_next[0x14];
+//800888b0
+u8 ptr_resource_data[0x13];
+//800888c4
+u32 ptr_res_data_next;
+//800888c8
+u8 dword_CODE_bss_800888c8[0x10];
 u8 dword_CODE_bss_800888D8[0x3958];
 
 // data

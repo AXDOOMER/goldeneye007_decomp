@@ -9,7 +9,7 @@ s16 cur_entry_lightfixture_table;
 s16 index_of_cur_entry_lightfixture_table;
 //CODE.bss:80082B14                     .align 3
 //CODE.bss:80082B18
-char word_CODE_bss_80082B18[800];
+char word_CODE_bss_80082B18[0x800];
 //CODE.bss:80083318
 s32 dword_CODE_bss_80083318;
 

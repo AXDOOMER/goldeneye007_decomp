@@ -1,6 +1,6 @@
 #include "ultra64.h"
 
-s32 if_positive_last_mp_weapon_set_num;
+s32 lastmpweaponnum;
 
 //.section .rodata
 
@@ -1032,8 +1032,8 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 037348 7F002818 14200054 */  bnez  $at, .L7F00296C
 /* 03734C 7F00281C 8FA7002C */   lw    $a3, 0x2c($sp)
 /* 037350 7F002820 240DFFFF */  li    $t5, -1
-/* 037354 7F002824 3C018007 */  lui   $at, %hi(if_positive_last_mp_weapon_set_num) # $at, 0x8007
-/* 037358 7F002828 AC2D9540 */  sw    $t5, %lo(if_positive_last_mp_weapon_set_num)($at)
+/* 037354 7F002824 3C018007 */  lui   $at, %hi(lastmpweaponnum) # $at, 0x8007
+/* 037358 7F002828 AC2D9540 */  sw    $t5, %lo(lastmpweaponnum)($at)
 /* 03735C 7F00282C 90E20080 */  lbu   $v0, 0x80($a3)
 /* 037360 7F002830 28410059 */  slti  $at, $v0, 0x59
 /* 037364 7F002834 14200009 */  bnez  $at, .L7F00285C
@@ -1056,14 +1056,14 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 0373A0 7F002870 0FC31985 */  jal   get_ptr_mp_weapon_set_data
 /* 0373A4 7F002874 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 0373A8 7F002878 8FA7002C */  lw    $a3, 0x2c($sp)
-/* 0373AC 7F00287C 3C018007 */  lui   $at, %hi(if_positive_last_mp_weapon_set_num) # $at, 0x8007
+/* 0373AC 7F00287C 3C018007 */  lui   $at, %hi(lastmpweaponnum) # $at, 0x8007
 /* 0373B0 7F002880 24090001 */  li    $t1, 1
 /* 0373B4 7F002884 90E40080 */  lbu   $a0, 0x80($a3)
 /* 0373B8 7F002888 2484FF10 */  addiu $a0, $a0, -0xf0
 /* 0373BC 7F00288C 00047880 */  sll   $t7, $a0, 2
 /* 0373C0 7F002890 01E47823 */  subu  $t7, $t7, $a0
 /* 0373C4 7F002894 000F78C0 */  sll   $t7, $t7, 3
-/* 0373C8 7F002898 AC249540 */  sw    $a0, %lo(if_positive_last_mp_weapon_set_num)($at)
+/* 0373C8 7F002898 AC249540 */  sw    $a0, %lo(lastmpweaponnum)($at)
 /* 0373CC 7F00289C 004F1821 */  addu  $v1, $v0, $t7
 /* 0373D0 7F0028A0 8C780000 */  lw    $t8, ($v1)
 /* 0373D4 7F0028A4 3C014380 */  li    $at, 0x43800000 # 256.000000
@@ -3427,8 +3427,8 @@ ammo_box_expand:
 /* 0392A0 7F004770 00000000 */   nop   
 /* 0392A4 7F004774 0FC31985 */  jal   get_ptr_mp_weapon_set_data
 /* 0392A8 7F004778 00000000 */   nop   
-/* 0392AC 7F00477C 3C0E8007 */  lui   $t6, %hi(if_positive_last_mp_weapon_set_num) # $t6, 0x8007
-/* 0392B0 7F004780 8DCE9540 */  lw    $t6, %lo(if_positive_last_mp_weapon_set_num)($t6)
+/* 0392AC 7F00477C 3C0E8007 */  lui   $t6, %hi(lastmpweaponnum) # $t6, 0x8007
+/* 0392B0 7F004780 8DCE9540 */  lw    $t6, %lo(lastmpweaponnum)($t6)
 /* 0392B4 7F004784 000EC080 */  sll   $t8, $t6, 2
 /* 0392B8 7F004788 030EC023 */  subu  $t8, $t8, $t6
 /* 0392BC 7F00478C 0018C0C0 */  sll   $t8, $t8, 3

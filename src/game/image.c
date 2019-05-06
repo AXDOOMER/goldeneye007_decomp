@@ -11,7 +11,7 @@ s32 ptr_next_available_space;
 //8008C72C
 s32 ptr_last_entry_facemapping;
 //8008C730
-s32 word_CODE_bss_8008C730[0x960];
+s32 word_CODE_bss_8008C730[0x258];
 //8008D090
 s32 dword_CODE_bss_8008D090;
 //8008D094

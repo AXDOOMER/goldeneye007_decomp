@@ -5,7 +5,7 @@
 char dword_CODE_bss_80069170[0x2D0];
 OSMesgQueue animMsgQ;
 char dword_CODE_bss_80069458[0xC0];
-OSMesg animMsgBuf[8];
+OSMesg animMesg[8];
 s32 *ptr_animation_table;
 
 
@@ -104,7 +104,7 @@ void alloc_load_expand_ani_table(void) {
     ? temp_ret;
 
     // Node 0
-    osCreateMesgQueue(&animMsgQ, &animMsgBuf, 8);
+    osCreateMesgQueue(&animMsgQ, &animMesg, 8);
     sub_GAME_7F0009E0(&D_80029D60, &animMsgQ, &dword_CODE_bss_80069458);
     temp_a2 = (&0x0000E7E0 - 0);
     temp_ret = allocate_bytes_in_bank(temp_a2, 6, temp_a2);
@@ -120,8 +120,8 @@ glabel alloc_load_expand_ani_table
 /* 0355DC 7F000AAC 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0355E0 7F000AB0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0355E4 7F000AB4 3C048007 */  lui   $a0, %hi(animMsgQ) # $a0, 0x8007
-/* 0355E8 7F000AB8 3C058007 */  lui   $a1, %hi(animMsgBuf) # $a1, 0x8007
-/* 0355EC 7F000ABC 24A59518 */  addiu $a1, %lo(animMsgBuf) # addiu $a1, $a1, -0x6ae8
+/* 0355E8 7F000AB8 3C058007 */  lui   $a1, %hi(animMesg) # $a1, 0x8007
+/* 0355EC 7F000ABC 24A59518 */  addiu $a1, %lo(animMesg) # addiu $a1, $a1, -0x6ae8
 /* 0355F0 7F000AC0 24849440 */  addiu $a0, %lo(animMsgQ) # addiu $a0, $a0, -0x6bc0
 /* 0355F4 7F000AC4 0C0035B4 */  jal   osCreateMesgQueue
 /* 0355F8 7F000AC8 24060008 */   li    $a2, 8

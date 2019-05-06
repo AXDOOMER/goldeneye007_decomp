@@ -5,7 +5,9 @@
 //CODE.bss:8008C640
 s32 ptr_text;
 //CODE.bss:8008C644
-char table_text_pointers[0x94];
+s32 table_text_pointers;
+//8008C648
+char dword_CODE_bss_8008C648[0x90];
 //CODE.bss:8008C6D8
 s32 dword_CODE_bss_8008C6D8;
 //CODE.bss:8008C6DC

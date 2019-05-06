@@ -5,7 +5,7 @@
 s32 * get_cdata_vaddr(void)
 
 {
-  return (s32 *)rspcode;
+  return (s32 *)rspbootTextStart;
 }
 
 
@@ -1204,7 +1204,7 @@ LAB_70001cac:
     frameSize = (frameSize & 0xfffffff0) + 0x10;
   }
   minFrameSize = frameSize - 0x10;
-  DAT_8005ecc8 = frameSize + 0x35;
+  maxFrameSize = frameSize + 0x35;
   if (c->fxType == 6) {
     lVar5 = (longlong)(int)asStack208;
     lVar8 = lVar5;
@@ -1229,7 +1229,7 @@ LAB_70001cac:
   pAVar10 = &_am;
   do {
     _alHeapDBAlloc(NULL,0,c->heap,1,0x60);
-    iVar11 = DAT_8005ecc8;
+    iVar11 = maxFrameSize;
     pAVar10->audioInfo[0] = (AudioInfo *)lVar5;
     _alHeapDBAlloc(NULL,0,c->heap,1,iVar11 << 2);
     ppAVar1 = pAVar10->audioInfo;
@@ -1285,44 +1285,44 @@ void _amMain(void)
 
 {
   short sVar1;
-  bool bVar2;
-  OSTime OVar3;
-  ulonglong uVar4;
+  OSTime OVar2;
+  ulonglong uVar3;
   undefined4 in_v1_hi;
   uint in_v1_lo;
-  uint uVar5;
-  int iVar6;
+  uint uVar4;
+  int iVar5;
   uint uStack48;
   uint uStack44;
-  AudioInfo *pAStack16;
+  AudioMsg *msg;
   OSMesg *local_c;
+  bool done;
   
-  iVar6 = 0;
-  bVar2 = false;
+  iVar5 = 0;
+  done = false;
   local_c = NULL;
-  pAStack16 = NULL;
+  msg = NULL;
   osScAddClient(&sc,&audi_client,(OSMesgQueue *)&_am.audioFrameMsgQ.validCount);
   do {
     osRecvMesg((OSMesgQueue *)&_am.audioFrameMsgQ.validCount,&local_c,1);
     sVar1 = *(short *)local_c;
     if (sVar1 == 1) {
-      OVar3 = osGetTime();
-      OSTime_8005e4d8._0_4_ = (int)OVar3;
+      OVar2 = osGetTime();
+      OSTime_8005e4d8._0_4_ = (int)OVar2;
       OSTime_8005e4d8._4_4_ = in_v1_lo;
       video_related_3(0x30000);
-      __amHandleFrameMsg(_am.audioInfo[audFrameCt % 3],pAStack16);
-      iVar6 += 1;
+      __amHandleFrameMsg(_am.audioInfo[audFrameCt % 3],(AudioInfo *)msg);
+      iVar5 += 1;
       video_related_3(0x60000);
-      OVar3 = osGetTime();
-      OSTime_8005e4e0._0_4_ = (int)OVar3;
+      OVar2 = osGetTime();
+      OSTime_8005e4e0._0_4_ = (int)OVar2;
       OSTime_8005e4c0._0_4_ =
            (OSTime_8005e4e0._0_4_ - OSTime_8005e4d8._0_4_) -
            (uint)(CONCAT44(in_v1_hi,in_v1_lo) < (ulonglong)(longlong)(int)OSTime_8005e4d8._4_4_);
       OSTime_8005e4c0._4_4_ = in_v1_lo - OSTime_8005e4d8._4_4_;
-      if (iVar6 % 0xf0 == 0) {
+      if (iVar5 % 0xf0 == 0) {
         OSTime_8005e4e0._4_4_ = in_v1_lo;
-        uVar4 = __ull_div((longlong)DAT_8005e4d0,(longlong)DAT_8005e4d4);
-        DAT_8005e4c8 = (undefined4)uVar4;
+        uVar3 = __ull_div((longlong)DAT_8005e4d0,(longlong)DAT_8005e4d4);
+        DAT_8005e4c8 = (undefined4)uVar3;
         uStack48 = (OSTime_8005e4e0._0_4_ - OSTime_8005e4d8._0_4_) -
                    (uint)(OSTime_8005e4e0._4_4_ < OSTime_8005e4d8._4_4_);
         uStack44 = OSTime_8005e4e0._4_4_ - OSTime_8005e4d8._4_4_;
@@ -1333,10 +1333,10 @@ void _amMain(void)
         DAT_8005e4cc = in_v1_lo;
       }
       else {
-        uVar5 = DAT_8005e4d4 + in_v1_lo;
-        DAT_8005e4d0 = (((uint)(uVar5 < in_v1_lo) + DAT_8005e4d0 + OSTime_8005e4e0._0_4_) -
-                       OSTime_8005e4d8._0_4_) - (uint)(uVar5 < OSTime_8005e4d8._4_4_);
-        DAT_8005e4d4 = uVar5 - OSTime_8005e4d8._4_4_;
+        uVar4 = DAT_8005e4d4 + in_v1_lo;
+        DAT_8005e4d0 = (((uint)(uVar4 < in_v1_lo) + DAT_8005e4d0 + OSTime_8005e4e0._0_4_) -
+                       OSTime_8005e4d8._0_4_) - (uint)(uVar4 < OSTime_8005e4d8._4_4_);
+        DAT_8005e4d4 = uVar4 - OSTime_8005e4d8._4_4_;
         OSTime_8005e4e0._4_4_ = in_v1_lo;
         uStack48 = OSTime_8005e4c0._0_4_;
         uStack44 = OSTime_8005e4c0._4_4_;
@@ -1345,20 +1345,20 @@ void _amMain(void)
         DAT_8005e4b8 = uStack48;
         DAT_8005e4bc = uStack44;
       }
-      osRecvMesg((OSMesgQueue *)&_am.audioReplyMsgQ.validCount,&pAStack16,1);
-      __amHandleDoneMsg(pAStack16);
+      osRecvMesg((OSMesgQueue *)&_am.audioReplyMsgQ.validCount,&msg,1);
+      __amHandleDoneMsg((AudioInfo *)msg);
     }
     else {
       if (sVar1 == 5) {
-        bVar2 = true;
+        done = true;
       }
       else {
         if (sVar1 == 10) {
-          bVar2 = true;
+          done = true;
         }
       }
     }
-  } while (!bVar2);
+  } while (!done);
   alClose((ALGlobals *)&_am.g.drvr.pFreeList.prev);
   return;
 }
@@ -1370,18 +1370,18 @@ u32 __amHandleFrameMsg(AudioInfo *info,AudioInfo *lastInfo)
 {
   short sVar1;
   s16 *outBuf;
-  uint uVar3;
+  uint samplesleft;
   Acmd AVar2;
   OSMesgQueue *sched_cmdQ;
-  u32 uVar4;
+  u32 uVar3;
   
   __clearAudioDMA();
   outBuf = (s16 *)osVirtualToPhysical(info->data);
   if (lastInfo != NULL) {
     osAiSetNextBuffer(lastInfo->data,(int)lastInfo->frameSamples << 2);
   }
-  uVar3 = osAiGetLength();
-  info->frameSamples = ((short)frameSize - (short)(uVar3 >> 2)) + 0x35U & 0xfff0;
+  samplesleft = osAiGetLength();
+  info->frameSamples = ((short)frameSize - (short)(samplesleft >> 2)) + 0x35U & 0xfff0;
   sVar1 = info->frameSamples;
   if ((longlong)sVar1 < (longlong)(int)(short)minFrameSize) {
     info->frameSamples = (short)minFrameSize;
@@ -1395,18 +1395,18 @@ u32 __amHandleFrameMsg(AudioInfo *info,AudioInfo *lastInfo)
   (info->task).list.data_ptr = _am.ACMDList[curAcmdList];
   (info->task).list.data_size = ((int)AVar2 - (int)_am.ACMDList[curAcmdList] >> 3) << 3;
   (info->task).list.type = M_AUDTASK;
-  *(code **)&(info->task).list.ucode_boot = rspcode;
+  *(code **)&(info->task).list.ucode_boot = rspbootTextStart;
   (info->task).list.ucode_boot_size = 0xd0;
   (info->task).list.flags = 0;
-  *(undefined **)&(info->task).list.ucode = &aspMainTextStart;
+  (info->task).list.ucode = aspMainTextStart;
   *(undefined **)&(info->task).list.ucode_data = &aspMainDataStart;
   (info->task).list.ucode_data_size = 0x800;
   (info->task).list.yield_data_ptr = NULL;
   (info->task).list.yield_data_size = 0;
   sched_cmdQ = _osScGetCmdQ(&sc);
-  uVar4 = osSendMesg(sched_cmdQ,&info->task,0);
+  uVar3 = osSendMesg(sched_cmdQ,&info->task,0);
   curAcmdList = curAcmdList ^ 1;
-  return uVar4;
+  return uVar3;
 }
 
 
@@ -6889,8 +6889,8 @@ char * strtok(char *__s,char *__delim)
 {
   byte *pbVar1;
   
-  textpointer_load_parse_something((char *)&OSMesg_80064c30,__s);
-  pbVar1 = check_string_something((byte *)&OSMesg_80064c30);
+  textpointer_load_parse_something((char *)&OSMesg_boot_token_from_indy_80064c30,__s);
+  pbVar1 = check_string_something((byte *)&OSMesg_boot_token_from_indy_80064c30);
   return (char *)pbVar1;
 }
 
@@ -6908,7 +6908,7 @@ uint check_boot_switches(void)
   devAddr = 0xffb000;
   BVar1 = rmon_debug_is_final_build();
   if (BVar1 == FALSE) {
-    data = &OSMesg_80064c30;
+    data = &OSMesg_boot_token_from_indy_80064c30;
     do {
       osPiReadIo(devAddr,(u32 *)data);
       data = data + 1;
@@ -6916,9 +6916,9 @@ uint check_boot_switches(void)
     } while (data != piCmdBuf);
   }
   else {
-    OSMesg_80064c30 = NULL;
+    OSMesg_boot_token_from_indy_80064c30 = NULL;
   }
-  check_string_something((byte *)&OSMesg_80064c30);
+  check_string_something((byte *)&OSMesg_boot_token_from_indy_80064c30);
   pbVar2 = check_token(1,aD_6);
   uStack16 = (uint)(pbVar2 != NULL);
   pbVar2 = check_token(1,aS_2);
@@ -8568,7 +8568,7 @@ int send_rumble_off_to_PIF(int param_1)
   
   __osSiGetAccess();
   __osContLastCmd = 3;
-  __osSiRawStartDma(1,(void *)(*(int *)(param_1 + 8) * 0x40 + -0x7ff9aa60));
+  __osSiRawStartDma(1,&rumble_off_player1_packet_buffer + *(int *)(param_1 + 8) * 0x40);
   osRecvMesg(*(OSMesgQueue **)(param_1 + 4),NULL,1);
   __osSiRawStartDma(0,&__osPfsPifRam);
   osRecvMesg(*(OSMesgQueue **)(param_1 + 4),NULL,1);
@@ -8618,7 +8618,7 @@ int controller_7000CAAC(int param_1)
   
   __osSiGetAccess();
   __osContLastCmd = 3;
-  __osSiRawStartDma(1,(void *)(*(int *)(param_1 + 8) * 0x40 + -0x7ff9a960));
+  __osSiRawStartDma(1,&rumble_on_player_packet_buffers + *(int *)(param_1 + 8) * 0x40);
   osRecvMesg(*(OSMesgQueue **)(param_1 + 4),NULL,1);
   __osSiRawStartDma(0,&__osPfsPifRam);
   osRecvMesg(*(OSMesgQueue **)(param_1 + 4),NULL,1);
@@ -8770,8 +8770,8 @@ int controller_7000CD38(OSMesgQueue *mq,undefined4 *param_2,uint channel)
   }
   if ((sVar2 == 0) && (sVar2 = __osContRamRead(mq,channel,0x400,buffer), sVar2 == 0)) {
     if (cStack9 == -0x80) {
-      puVar4 = &DAT_800657c0;
-      puVar3 = &DAT_800657a0;
+      puVar4 = &rumble_off_buffer;
+      puVar3 = &rumble_on_buffer;
       do {
         puVar3 = puVar3 + 4;
         puVar4[1] = 1;
@@ -8784,9 +8784,11 @@ int controller_7000CD38(OSMesgQueue *mq,undefined4 *param_2,uint channel)
         *puVar3 = 0;
         puVar4 = puVar4 + 4;
         puVar3 = puVar3;
-      } while (puVar3 != &DAT_800657c0);
-      controller_7000CBDC(channel,0x600,&DAT_800657c0,(undefined4 *)(channel * 0x40 + -0x7ff9a960));
-      controller_7000CBDC(channel,0x600,&DAT_800657a0,(undefined4 *)(channel * 0x40 + -0x7ff9aa60));
+      } while (puVar3 != &rumble_off_buffer);
+      controller_7000CBDC(channel,0x600,&rumble_off_buffer,
+                          (undefined4 *)(&rumble_on_player_packet_buffers + channel * 0x40));
+      controller_7000CBDC(channel,0x600,&rumble_on_buffer,
+                          (undefined4 *)(&rumble_off_player1_packet_buffer + channel * 0x40));
       sVar2 = 0;
     }
     else {
@@ -9130,7 +9132,7 @@ void osCreateThread(OSThread *t,OSId id,void *entry,void *arg,void *sp,OSPri p)
   *(int *)((int)&(t->context).a0 + 4) = (int)arg >> 0x1f;
   *(void **)&(t->context).a1 = arg;
   *(int *)&(t->context).s8 = (int)sp + -0x10;
-  *(int *)((int)&(t->context).sp + 4) = ((int)sp >> 0x1f) - (uint)(sp < &DAT_00000010);
+  *(int *)((int)&(t->context).sp + 4) = ((int)sp >> 0x1f) - (uint)(sp < &caseD_0);
   *(undefined4 *)((int)&(t->context).ra + 4) = 0;
   *(undefined4 *)&(t->context).lo = 0x70010a80;
   (t->context).pc = 0xff03;
@@ -28162,13 +28164,13 @@ undefined4 proc_7F007F30(void)
       in_v0_lo = DAT_80069594;
       if (-1 < (int)DAT_80069594) {
         DAT_80069594 = ppiVar6;
-        if (ppiVar6 == (int **)&UNK_00000089) {
+        if (ppiVar6 == (int **)((int)&USHORT_00000088 + 1)) {
           DAT_80069594 = ppiVar6;
           proc_7F06FCA8(DAT_8002a7f4,ptr_animation_table + 0x4298,0,in_f12,0x40000000,in_f14);
           in_f12 = extraout_f12;
         }
         in_v0_lo = DAT_80069594;
-        if (DAT_80069594 == (int **)&UNK_000000d4) {
+        if (DAT_80069594 == (int **)&USHORT_000000d4) {
           in_v0_lo = DAT_80069594;
           proc_7F06FE4C(DAT_8002a7f4,0x3fcccccd,in_f12);
         }
@@ -28176,7 +28178,7 @@ undefined4 proc_7F007F30(void)
       proc_7F070AEC(DAT_8002a7f4,1,1);
       in_f12 = extraout_f12_00;
       in_f14 = extraout_f14;
-      if (DAT_80069594 == (int **)&UNK_000000e6) {
+      if (DAT_80069594 == (int **)&USHORT_000000e6) {
         piVar4 = (int *)((int)&rgba + 1);
         in_v0_lo = play_sfx_a1((longlong)(int)ptr_sfx_buf,0x6f,NULL);
         in_f12 = extraout_f12_01;
@@ -33792,13 +33794,13 @@ void init_menu10_mphandicap(void)
   tab_2_highlight = FALSE;
   tab_1_highlight = FALSE;
   has_selected_char_player1 = FALSE;
-  handicap_player1 = 0;
+  dword_CODE_bss_80069760 = 0;
   has_selected_char_player2 = FALSE;
-  handicap_player2 = 0;
+  dword_CODE_bss_80069764 = 0;
   has_selected_char_player3 = FALSE;
-  handicap_player3 = 0;
+  dword_CODE_bss_80069768 = 0;
   has_selected_char_player4 = FALSE;
-  handicap_player4 = 0;
+  dword_CODE_bss_8006976C = 0;
   load_walletbond();
   return;
 }
@@ -33849,7 +33851,7 @@ void interface_menu10_mphandicap(void)
       }
       BVar4 = *pBVar5;
       if (BVar4 == FALSE) {
-        piVar6 = (int *)((int)&handicap_player1 + iVar8);
+        piVar6 = (int *)((int)&dword_CODE_bss_80069760 + iVar8);
         uVar1 = get_controller_buttons_pressed(controller,L_CBUTTONS|L_JPAD);
         if ((uVar1 == 0) &&
            ((iVar3 = get_controller_3dstick_L_R(controller,-2,1), -2 < iVar3 || (*piVar6 == 0)))) {
@@ -34020,13 +34022,13 @@ void init_menu11_mpcontrol(void)
   tab_2_highlight = FALSE;
   tab_1_highlight = FALSE;
   has_selected_char_player1 = FALSE;
-  handicap_player1 = 0;
+  dword_CODE_bss_80069760 = 0;
   has_selected_char_player2 = FALSE;
-  handicap_player2 = 0;
+  dword_CODE_bss_80069764 = 0;
   has_selected_char_player3 = FALSE;
-  handicap_player3 = 0;
+  dword_CODE_bss_80069768 = 0;
   has_selected_char_player4 = FALSE;
-  handicap_player4 = 0;
+  dword_CODE_bss_8006976C = 0;
   load_walletbond();
   return;
 }
@@ -34078,7 +34080,7 @@ void interface_menu11_mpcontrols(void)
       }
       BVar4 = *pBVar7;
       if (BVar4 == FALSE) {
-        piVar8 = (int *)((int)&handicap_player1 + iVar9);
+        piVar8 = (int *)((int)&dword_CODE_bss_80069760 + iVar9);
         uVar1 = get_controller_buttons_pressed(controller,L_CBUTTONS|L_JPAD);
         if ((uVar1 == 0) &&
            ((iVar3 = get_controller_3dstick_L_R(controller,-2,1), -2 < iVar3 || (*piVar8 == 0)))) {
@@ -111579,7 +111581,7 @@ void initBONDdataforPlayer(int player)
   (*ppBVar3)->field_1074 = 0.00000000;
   (*ppBVar3)->field_1078 = 0;
   (*ppBVar3)->field_107C = 0.00000000;
-  *(undefined4 *)(&LAB_00001080 + (int)*ppBVar3) = 0;
+  (*ppBVar3)->field_1080 = 0.00000000;
   (*ppBVar3)->sniper_zoom = 60.00000000;
   (*ppBVar3)->camera_zoom = 60.00000000;
   (*ppBVar3)->field_108C = -1;
@@ -144879,17 +144881,6 @@ void boot(void)
   TLB_write_indexed_entry(Index,EntryHi,EntryLo0,EntryLo1,PageMask);
   init((EVP_PKEY_CTX *)0x70000000);
   return;
-}
-
-
-
-// WARNING: Control flow encountered bad instruction data
-
-void rspcode(void)
-
-{
-                    // WARNING: Bad instruction - Truncating control flow here
-  halt_baddata();
 }
 
 

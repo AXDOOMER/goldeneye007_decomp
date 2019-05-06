@@ -37,7 +37,12 @@ f32 flt_CODE_bss_80079978;
 f32 flt_CODE_bss_8007997C;
 //CODE.bss:80079980
 f32 flt_CODE_bss_80079980;
-//CODE.bss:80079984                     .align 4
+//CODE.bss:80079984
+f32 flt_CODE_bss_80079984;
+//CODE.bss:80079988
+f32 flt_CODE_bss_80079988;
+//CODE.bss:8007998C
+f32 flt_CODE_bss_8007998C;
 //CODE.bss:80079990
 f32 flt_CODE_bss_80079990;
 //CODE.bss:80079994
@@ -48,7 +53,8 @@ f32 flt_CODE_bss_80079998;
 s32 dword_CODE_bss_8007999C;
 //CODE.bss:800799A0
 s32 dword_CODE_bss_800799A0;
-//CODE.bss:800799A4                     .align 3
+//CODE.bss:800799A4
+s32 dword_CODE_bss_800799A4;
 //CODE.bss:800799A8
 f32 flt_CODE_bss_800799A8;
 //CODE.bss:800799AC
@@ -67,14 +73,16 @@ f32 flt_CODE_bss_800799C0;
 f32 flt_CODE_bss_800799C4;
 //CODE.bss:800799C8
 f32 flt_CODE_bss_800799C8;
-//CODE.bss:800799CC                     .align 4
+//CODE.bss:800799CC
+f32 flt_CODE_bss_800799CC;
 //CODE.bss:800799D0
 f32 flt_CODE_bss_800799D0;
 //CODE.bss:800799D4
 f32 flt_CODE_bss_800799D4;
 //CODE.bss:800799D8
 f32 flt_CODE_bss_800799D8;
-//CODE.bss:800799DC                     .align 4
+//CODE.bss:800799DC
+f32 flt_CODE_bss_800799DC;
 //CODE.bss:800799E0
 s32 starting_right_weapon;
 //CODE.bss:800799E4
@@ -114,10 +122,11 @@ f32 watch_time_0;
 //CODE.bss:80079A28
 char dword_CODE_bss_80079A28[0x200];
 //CODE.bss:80079C28
-char dword_CODE_bss_80079C28[40];
+char dword_CODE_bss_80079C28[0x40];
 //CODE.bss:80079C68
 s32 dword_CODE_bss_80079C68;
-//CODE.bss:80079C6C                     .align 4
+//CODE.bss:80079C6C
+s32 dword_CODE_bss_80079C6C;
 //CODE.bss:80079C70
 char dword_CODE_bss_80079C70[0x130];
 //CODE.bss:80079DA0
