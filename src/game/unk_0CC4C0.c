@@ -1533,7 +1533,7 @@ glabel expland_c0_DL_psuedocommands
 /* 101CA8 7F0CD178 AC580000 */  sw    $t8, ($v0)
 /* 101CAC 7F0CD17C AC4A0004 */  sw    $t2, 4($v0)
 /* 101CB0 7F0CD180 26100008 */  addiu $s0, $s0, 8
-.L7F0CD184:
+.L7F0CD184:  /*LoadTexture(){gDPLoadSync(); gDPLoadBlock();}*/
 /* 101CB4 7F0CD184 02001025 */  move  $v0, $s0
 /* 101CB8 7F0CD188 26100008 */  addiu $s0, $s0, 8
 /* 101CBC 7F0CD18C 3C0EE600 */  lui   $t6, 0xe600

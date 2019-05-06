@@ -7,3 +7,4 @@ build/*
 *.tmp
 .vscode/ipch/*
 ge007.u.bin
+/.vs
