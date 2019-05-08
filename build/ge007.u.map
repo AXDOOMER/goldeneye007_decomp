@@ -437,64 +437,64 @@ Linker script and memory map
                 0x0000000000419790                _musicsampletblSegmentRomStart = 0x419790
                 0x0000000004000000                _bootSegmentStart = 0x4000000
                 0x0000000004001000                _bootSegmentEnd = 0x4001000
-                0x0000000004040000                SP_MEM_ADDR_REG = 0x4040000
-                0x0000000004040004                SP_DRAM_ADDR_REG = 0x4040004
-                0x0000000004040008                SP_RD_LEN_REG = 0x4040008
-                0x000000000404000c                SP_WR_LEN_REG = 0x404000c
-                0x0000000004040010                SP_STATUS_REG = 0x4040010
-                0x0000000004080000                SP_PC_REG = 0x4080000
-                0x0000000004300000                MI_INIT_MODE_REG = 0x4300000
-                0x0000000004300000                MI_MODE_REG = MI_INIT_MODE_REG
-                0x0000000004300004                MI_VERSION_REG = 0x4300004
-                0x0000000004300008                MI_INTR_REG = 0x4300008
-                0x000000000430000c                MI_INTR_MASK_REG = 0x430000c
-                0x0000000004400000                VI_STATUS_REG = 0x4400000
-                0x0000000004400000                VI_CONTROL_REG = 0x4400000
-                0x0000000004400004                VI_ORIGIN_REG = 0x4400004
-                0x0000000004400004                VI_DRAM_ADDR_REG = 0x4400004
-                0x0000000004400008                VI_WIDTH_REG = 0x4400008
-                0x0000000004400008                VI_H_WIDTH_REG = 0x4400008
-                0x000000000440000c                VI_INTR_REG = 0x440000c
-                0x000000000440000c                VI_V_INTER_REG = 0x440000c
-                0x0000000004400010                VI_CURRENT_REG = 0x4400010
-                0x0000000004400010                VI_V_CURRENT_LINE_REG = 0x4400010
-                0x0000000004400014                VI_BURST_REG = 0x4400014
-                0x0000000004400014                VI_TIMING_REG = 0x4400014
-                0x0000000004400018                VI_V_SYNC_REG = 0x4400018
-                0x000000000440001c                VI_H_SYNC_REG = 0x440001c
-                0x0000000004400020                VI_LEAP_REG = 0x4400020
-                0x0000000004400020                VI_H_SYNC_LEAP_REG = 0x4400020
-                0x0000000004400024                VI_H_START_REG = 0x4400024
-                0x0000000004400024                VI_H_VIDEO_REG = 0x4400024
-                0x0000000004400028                VI_V_START_REG = 0x4400028
-                0x0000000004400028                VI_V_VIDEO_REG = 0x4400028
-                0x000000000440002c                VI_V_BURST_REG = 0x440002c
-                0x0000000004400030                VI_X_SCALE_REG = 0x4400030
-                0x0000000004400034                VI_Y_SCALE_REG = 0x4400034
-                0x0000000004500004                AI_LEN_REG = 0x4500004
-                0x0000000004500008                AI_CONTROL_REG = 0x4500008
-                0x000000000450000c                AI_STATUS_REG = 0x450000c
-                0x0000000004500010                AI_DACRATE_REG = 0x4500010
-                0x0000000004500014                AI_BITRATE_REG = 0x4500014
-                0x0000000004600000                PI_DRAM_ADDR_REG = 0x4600000
-                0x0000000004600004                PI_CART_ADDR_REG = 0x4600004
-                0x0000000004600008                PI_RD_LEN_REG = 0x4600008
-                0x000000000460000c                PI_WR_LEN_REG = 0x460000c
-                0x0000000004600010                PI_STATUS_REG = 0x4600010
-                0x0000000004600014                PI_BSD_DOM1_LAT_REG = 0x4600014
-                0x0000000004600014                PI_DOMAIN1_REG = 0x4600014
-                0x0000000004600018                PI_BSD_DOM1_PWD_REG = 0x4600018
-                0x000000000460001c                PI_BSD_DOM1_PGS_REG = 0x460001c
-                0x0000000004600020                PI_BSD_DOM1_RLS_REG = 0x4600020
-                0x0000000004600024                PI_BSD_DOM2_LAT_REG = 0x4600024
-                0x0000000004600024                PI_DOMAIN2_REG = 0x4600024
-                0x0000000004600028                PI_BSD_DOM2_PWD_REG = 0x4600028
-                0x000000000460002c                PI_BSD_DOM2_PGS_REG = 0x460002c
-                0x0000000004600030                PI_BSD_DOM2_RLS_REG = 0x4600030
-                0x0000000004800000                SI_DRAM_ADDR_REG = 0x4800000
-                0x0000000004800004                SI_PIF_ADDR_RD64B_REG = 0x4800004
-                0x0000000004800010                SI_PIF_ADDR_WR64B_REG = 0x4800010
-                0x0000000004800018                SI_STATUS_REG = 0x4800018
+                0x00000000a4040000                SP_MEM_ADDR_REG = 0xa4040000
+                0x00000000a4040004                SP_DRAM_ADDR_REG = 0xa4040004
+                0x00000000a4040008                SP_RD_LEN_REG = 0xa4040008
+                0x00000000a404000c                SP_WR_LEN_REG = 0xa404000c
+                0x00000000a4040010                SP_STATUS_REG = 0xa4040010
+                0x00000000a4080000                SP_PC_REG = 0xa4080000
+                0x00000000a4300000                MI_INIT_MODE_REG = 0xa4300000
+                0x00000000a4300000                MI_MODE_REG = MI_INIT_MODE_REG
+                0x00000000a4300004                MI_VERSION_REG = 0xa4300004
+                0x00000000a4300008                MI_INTR_REG = 0xa4300008
+                0x00000000a430000c                MI_INTR_MASK_REG = 0xa430000c
+                0x00000000a4400000                VI_STATUS_REG = 0xa4400000
+                0x00000000a4400000                VI_CONTROL_REG = 0xa4400000
+                0x00000000a4400004                VI_ORIGIN_REG = 0xa4400004
+                0x00000000a4400004                VI_DRAM_ADDR_REG = 0xa4400004
+                0x00000000a4400008                VI_WIDTH_REG = 0xa4400008
+                0x00000000a4400008                VI_H_WIDTH_REG = 0xa4400008
+                0x00000000a440000c                VI_INTR_REG = 0xa440000c
+                0x00000000a440000c                VI_V_INTER_REG = 0xa440000c
+                0x00000000a4400010                VI_CURRENT_REG = 0xa4400010
+                0x00000000a4400010                VI_V_CURRENT_LINE_REG = 0xa4400010
+                0x00000000a4400014                VI_BURST_REG = 0xa4400014
+                0x00000000a4400014                VI_TIMING_REG = 0xa4400014
+                0x00000000a4400018                VI_V_SYNC_REG = 0xa4400018
+                0x00000000a440001c                VI_H_SYNC_REG = 0xa440001c
+                0x00000000a4400020                VI_LEAP_REG = 0xa4400020
+                0x00000000a4400020                VI_H_SYNC_LEAP_REG = 0xa4400020
+                0x00000000a4400024                VI_H_START_REG = 0xa4400024
+                0x00000000a4400024                VI_H_VIDEO_REG = 0xa4400024
+                0x00000000a4400028                VI_V_START_REG = 0xa4400028
+                0x00000000a4400028                VI_V_VIDEO_REG = 0xa4400028
+                0x00000000a440002c                VI_V_BURST_REG = 0xa440002c
+                0x00000000a4400030                VI_X_SCALE_REG = 0xa4400030
+                0x00000000a4400034                VI_Y_SCALE_REG = 0xa4400034
+                0x00000000a4500004                AI_LEN_REG = 0xa4500004
+                0x00000000a4500008                AI_CONTROL_REG = 0xa4500008
+                0x00000000a450000c                AI_STATUS_REG = 0xa450000c
+                0x00000000a4500010                AI_DACRATE_REG = 0xa4500010
+                0x00000000a4500014                AI_BITRATE_REG = 0xa4500014
+                0x00000000a4600000                PI_DRAM_ADDR_REG = 0xa4600000
+                0x00000000a4600004                PI_CART_ADDR_REG = 0xa4600004
+                0x00000000a4600008                PI_RD_LEN_REG = 0xa4600008
+                0x00000000a460000c                PI_WR_LEN_REG = 0xa460000c
+                0x00000000a4600010                PI_STATUS_REG = 0xa4600010
+                0x00000000a4600014                PI_BSD_DOM1_LAT_REG = 0xa4600014
+                0x00000000a4600014                PI_DOMAIN1_REG = 0xa4600014
+                0x00000000a4600018                PI_BSD_DOM1_PWD_REG = 0xa4600018
+                0x00000000a460001c                PI_BSD_DOM1_PGS_REG = 0xa460001c
+                0x00000000a4600020                PI_BSD_DOM1_RLS_REG = 0xa4600020
+                0x00000000a4600024                PI_BSD_DOM2_LAT_REG = 0xa4600024
+                0x00000000a4600024                PI_DOMAIN2_REG = 0xa4600024
+                0x00000000a4600028                PI_BSD_DOM2_PWD_REG = 0xa4600028
+                0x00000000a460002c                PI_BSD_DOM2_PGS_REG = 0xa460002c
+                0x00000000a4600030                PI_BSD_DOM2_RLS_REG = 0xa4600030
+                0x00000000a4800000                SI_DRAM_ADDR_REG = 0xa4800000
+                0x00000000a4800004                SI_PIF_ADDR_RD64B_REG = 0xa4800004
+                0x00000000a4800010                SI_PIF_ADDR_WR64B_REG = 0xa4800010
+                0x00000000a4800018                SI_STATUS_REG = 0xa4800018
                 0x0000000070000450                _codeSegmentVaddrStart = 0x70000450
                 0x0000000070001bb0                set_hardwire_TLB_to_2 = 0x70001bb0
                 0x0000000070020d90                _codeSegmentVaddrEnd = 0x70020d90
@@ -512,25 +512,7 @@ Linker script and memory map
                 0x0000000080000400                _codeSegmentStart = 0x80000400
                 0x0000000080020d90                _codeSegmentEnd = 0x80020d90
                 0x0000000080020d90                _cdataSegmentVaddrStart = 0x80020d90
-                0x00000000800230b0                something_with_osVI = 0x800230b0
-                0x000000008003246c                ejected_cartridge = 0x8003246c
-                0x0000000080032c04                GsniperrifleZ_stats = 0x80032c04
                 0x0000000080032c20                D_80032C20 = 0x80032c20
-                0x0000000080033924                gitem_structs = 0x80033924
-                0x0000000080034ca4                D_80034CA4 = 0x80034ca4
-                0x0000000080034e0c                D_80034E0C = 0x80034e0c
-                0x0000000080034f74                D_80034F74 = 0x80034f74
-                0x000000008003504c                D_8003504C = 0x8003504c
-                0x0000000080035124                D_80035124 = 0x80035124
-                0x00000000800351fc                D_800351FC = 0x800351fc
-                0x00000000800352d4                D_800352D4 = 0x800352d4
-                0x00000000800353ac                D_800353AC = 0x800353ac
-                0x00000000800354a8                D_800354A8 = 0x800354a8
-                0x0000000080035610                D_80035610 = 0x80035610
-                0x0000000080035778                D_80035778 = 0x80035778
-                0x0000000080035904                D_80035904 = 0x80035904
-                0x0000000080035a90                D_80035A90 = 0x80035a90
-                0x0000000080035b68                D_80035B68 = 0x80035b68
                 0x0000000080035d40                D_80035D40 = 0x80035d40
                 0x0000000080035d80                D_80035D80 = 0x80035d80
                 0x0000000080035d8c                D_80035D8C = 0x80035d8c
@@ -546,31 +528,21 @@ Linker script and memory map
                 0x00000000800368d4                D_800368D4 = 0x800368d4
                 0x00000000800368d8                D_800368D8 = 0x800368d8
                 0x000000008003e14c                D_8003E14C = 0x8003e14c
-                0x000000008003f80c                D_8003F80C = 0x8003f80c
                 0x000000008003f81c                D_8003F81C = 0x8003f81c
                 0x000000008003fcc0                D_8003FCC0 = 0x8003fcc0
                 0x000000008003fd28                D_8003FD28 = 0x8003fd28
-                0x000000008003fd94                D_8003FD94 = 0x8003fd94
                 0x000000008003fda0                D_8003FDA0 = 0x8003fda0
-                0x000000008004017c                D_8004017C = 0x8004017c
                 0x0000000080040284                D_80040284 = 0x80040284
                 0x00000000800407fc                D_800407FC = 0x800407fc
                 0x0000000080040800                D_80040800 = 0x80040800
                 0x0000000080040804                D_80040804 = 0x80040804
                 0x0000000080040808                D_80040808 = 0x80040808
-                0x000000008004080c                D_8004080C = 0x8004080c
                 0x0000000080040900                D_80040900 = 0x80040900
-                0x0000000080040910                D_80040910 = 0x80040910
-                0x0000000080040920                D_80040920 = 0x80040920
-                0x0000000080040930                D_80040930 = 0x80040930
-                0x0000000080040940                D_80040940 = 0x80040940
-                0x0000000080040960                D_80040960 = 0x80040960
                 0x0000000080040980                D_80040980 = 0x80040980
                 0x0000000080040994                D_80040994 = 0x80040994
                 0x0000000080040998                D_80040998 = 0x80040998
                 0x000000008004099c                D_8004099C = 0x8004099c
                 0x0000000080040c44                D_80040C44 = 0x80040c44
-                0x0000000080040d20                D_80040D20 = 0x80040d20
                 0x0000000080041415                D_80041415 = 0x80041415
                 0x0000000080041417                D_80041417 = 0x80041417
                 0x0000000080041464                D_80041464 = 0x80041464
@@ -5079,7 +5051,7 @@ Linker script and memory map
                 0x00000000800230a4                currentcount
                 0x00000000800230a8                setby_DPCfill_0
                 0x00000000800230ac                setby_DPCfill_1
-                0x00000000800230b0                somthing_with_osVI
+                0x00000000800230b0                something_with_osVI
                 0x00000000800230cc                D_800230CC
  build/osMapTLB.o(.data)
  build/tlb_manage.o(.data)
@@ -6285,6 +6257,7 @@ Linker script and memory map
                 0x000000008003245c                size_right_item_buffer
                 0x0000000080032460                size_left_item_buffer
                 0x0000000080032464                D_80032464
+                0x000000008003246c                ejected_cartridge
                 0x0000000080032494                stru_D_80032494
                 0x0000000080032504                GfistZ_stats
                 0x0000000080032574                GknifeZ_stats
@@ -6302,6 +6275,7 @@ Linker script and memory map
                 0x0000000080032ab4                Gfnp90Z_stats
                 0x0000000080032b24                GshotgunZ_stats
                 0x0000000080032b94                GautoshotZ_stats
+                0x0000000080032c04                GsniperrifleZ_stats
                 0x0000000080032c74                GrugerZ_stats
                 0x0000000080032ce4                GgoldengunZ_stats
                 0x0000000080032d54                GsilverwppkZ_stats
@@ -6331,8 +6305,23 @@ Linker script and memory map
                 0x00000000800337d4                stru_D_800337D4
                 0x0000000080033844                stru_D_80033844
                 0x00000000800338b4                stru_D_800338B4
+                0x0000000080033924                gitem_structs
                 0x0000000080034c9c                cartridges_eject
                 0x0000000080034ca0                D_80034CA0
+                0x0000000080034ca4                D_80034CA4
+                0x0000000080034e0c                D_80034E0C
+                0x0000000080034f74                D_80034F74
+                0x000000008003504c                D_8003504C
+                0x0000000080035124                D_80035124
+                0x00000000800351fc                D_800351FC
+                0x00000000800352d4                D_800352D4
+                0x00000000800353ac                D_800353AC
+                0x00000000800354a8                D_800354A8
+                0x0000000080035610                D_80035610
+                0x0000000080035778                D_80035778
+                0x0000000080035904                D_80035904
+                0x0000000080035a90                D_80035A90
+                0x0000000080035b68                D_80035B68
                 0x0000000080035c40                D_80035C40
                 0x0000000080035c44                D_80035C44
                 0x0000000080035c48                D_80035C48
@@ -7463,14 +7452,15 @@ Linker script and memory map
                 0x000000008003f7f8                dword_D_8003F7F8
                 0x000000008003f804                D_8003F804
                 0x000000008003f808                D_8003F808
-                0x000000008003f80c                stru_D_8003F80C
+                0x000000008003f80c                D_8003F80C
  build/game/unk_092890.o(.data)
  build/game/unk_092E50.o(.data)
  .data          0x000000008003fcc0      0x4a0 build/game/unk_092E50.o
                 0x000000008003fcc0                MipMap2C_Something_Setup
                 0x000000008003fd28                MipMap2C_Something2_Setup
                 0x000000008003fd90                D_8003FD90
-                0x000000008003fda8                D_8003FD98
+                0x000000008003fd94                D_8003FD94
+                0x000000008003fda8                D_8003FDA8
  build/game/unk_093880.o(.data)
  build/game/unk_09B600.o(.data)
  build/game/unk_09B740.o(.data)
@@ -7482,18 +7472,25 @@ Linker script and memory map
                 0x0000000080040170                D_80040170
                 0x0000000080040174                D_80040174
                 0x0000000080040178                D_80040178
+                0x000000008004017c                D_8004017C
+                0x000000008004080c                D_8004080C
                 0x000000008004090c                D_8004090C
+                0x0000000080040910                D_80040910
                 0x0000000080040914                D_80040914
                 0x0000000080040918                D_80040918
                 0x000000008004091c                D_8004091C
+                0x0000000080040920                D_80040920
                 0x0000000080040924                D_80040924
                 0x0000000080040928                D_80040928
                 0x000000008004092c                D_8004092C
+                0x0000000080040930                D_80040930
                 0x0000000080040934                D_80040934
                 0x0000000080040938                D_80040938
                 0x000000008004093c                D_8004093C
  build/game/unk_0A1DA0.o(.data)
  .data          0x0000000080040940       0x60 build/game/unk_0A1DA0.o
+                0x0000000080040940                D_80040940
+                0x0000000080040960                D_80040960
  build/game/watch.o(.data)
  .data          0x00000000800409a0      0x4e0 build/game/watch.o
                 0x00000000800409a0                D_800409A0
@@ -7585,6 +7582,7 @@ Linker script and memory map
                 0x0000000080040bb4                D_80040BB4
                 0x0000000080040d10                D_80040D10
                 0x0000000080040d1c                D_80040D1C
+                0x0000000080040d20                D_80040D20
                 0x0000000080040dec                D_80040DEC
                 0x0000000080040df8                D_80040DF8
                 0x0000000080040dfc                D_80040DFC

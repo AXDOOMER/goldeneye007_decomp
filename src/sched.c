@@ -10,7 +10,7 @@ u32 userCompareValue = 45000000;
 u32 currentcount = 0;
 u32 setby_DPCfill_0 = 0;
 u32 setby_DPCfill_1 = 0;
-f32 somthing_with_osVI[7] = {0.0,1.0,1.0,1.0,1.0,0.0,0.0};
+f32 something_with_osVI[7] = {0.0,1.0,1.0,1.0,1.0,0.0,0.0};
 u32 D_800230CC = 1;
 
 //temporary until i get proper sized structs

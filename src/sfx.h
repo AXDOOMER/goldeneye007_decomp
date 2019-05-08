@@ -2,6 +2,6 @@
 #define _SFX_H_
 #include "ultra64.h"
 
-extern s32 bootswitch_sound;
+extern s8 bootswitch_sound;
 
 #endif

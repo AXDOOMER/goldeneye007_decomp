@@ -8,7 +8,7 @@ s32 D_800243E8 = 0;
 s32 D_800243EC = 0;
 void *D_800243F0 = &D_80063B50;
 s32 D_800243F4 = 0;
-s32 bootswitch_sound = 0;
+s8 bootswitch_sound = 0;
 f32 F32_800243FC = 1.0;
 
 
