@@ -3,7 +3,9 @@ OS_VI_PAL_LAN1 = 16;
 
 _bootSegmentRomStart = 0x00000000;
 _bootSegmentRomEnd = 0x00001000;
-_codeSegmentRomStart = 0x00001000;
+_startSegmentRomStart = 0x00001000;
+_startSegmentRomEnd = 0x00001050;
+_codeSegmentRomStart = 0x00001050;
 _codeSegmentRomEnd = 0x00021990;
 _cdataSegmentRomStart = 0x00021990;
 _cdataSegmentRomEnd = 0x00033590;

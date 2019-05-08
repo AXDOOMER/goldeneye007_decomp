@@ -401,7 +401,9 @@ Linker script and memory map
                 0x0000000000000010                OS_VI_PAL_LAN1 = 0x10
                 0x0000000000000000                _bootSegmentRomStart = 0x0
                 0x0000000000001000                _bootSegmentRomEnd = 0x1000
-                0x0000000000001000                _codeSegmentRomStart = 0x1000
+                0x0000000000001000                _startSegmentRomStart = 0x1000
+                0x0000000000001050                _startSegmentRomEnd = 0x1050
+                0x0000000000001050                _codeSegmentRomStart = 0x1050
                 0x0000000000021990                _codeSegmentRomEnd = 0x21990
                 0x0000000000021990                _cdataSegmentRomStart = 0x21990
                 0x0000000000033590                _cdataSegmentRomEnd = 0x33590

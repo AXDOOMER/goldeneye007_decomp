@@ -212,7 +212,7 @@ glabel init
 
 void *set_stack_entry(u8 *stack, u32 size) 
 {
-    return &stack[size-8];
+    return stack+size-8;
 }
 
 void set_hw_address_and_unknown(void) 
