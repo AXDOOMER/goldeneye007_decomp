@@ -5093,9 +5093,10 @@ Linker script and memory map
  build/tlb_hardware.o(.data)
  build/audi.o(.data)
  .data          0x00000000800230f0       0xe0 build/audi.o
-                0x00000000800230f0                audFrameCt
-                0x00000000800230f4                nextDMA
-                0x00000000800230f8                curAcmdList
+                0x00000000800230f0                D_800230F0
+                0x00000000800230f4                audFrameCt
+                0x00000000800230f8                nextDMA
+                0x00000000800230fc                curAcmdList
                 0x0000000080023100                D_80023100
                 0x00000000800231c8                firstTime
  build/speed_graph.o(.data)
@@ -5649,8 +5650,8 @@ Linker script and memory map
                 0x000000008002a99c                D_8002A99C
                 0x000000008002a9a0                slider_007_mode_reaction
                 0x000000008002a9a4                slider_007_mode_health
-                0x000000008002a9a8                slider_007_mode_damage
-                0x000000008002a9ac                slider_007_mode_accuracy
+                0x000000008002a9a8                slider_007_mode_accuracy
+                0x000000008002a9ac                slider_007_mode_damage
                 0x000000008002a9b0                D_8002A9B0
                 0x000000008002a9b4                D_8002A9B4
                 0x000000008002a9b8                D_8002A9B8
@@ -10261,11 +10262,15 @@ Linker script and memory map
                 0x0000000080075b78                flt_CODE_bss_80075B78
                 0x0000000080075b7c                flt_CODE_bss_80075B7C
                 0x0000000080075b80                flt_CODE_bss_80075B80
-                0x0000000080075b84                flt_CODE_bss_80075B88
-                0x0000000080075b88                flt_CODE_bss_80075B8C
-                0x0000000080075b8c                flt_CODE_bss_80075B90
-                0x0000000080075b90                dword_CODE_bss_80075B98
-                0x0000000080075c00                dword_CODE_bss_80075C04
+                0x0000000080075b84                flt_CODE_bss_80075B84
+                0x0000000080075b88                flt_CODE_bss_80075B88
+                0x0000000080075b8c                flt_CODE_bss_80075B8C
+                0x0000000080075b90                flt_CODE_bss_80075B90
+                0x0000000080075b94                flt_CODE_bss_80075B94
+                0x0000000080075b98                dword_CODE_bss_80075B98
+                0x0000000080075c04                dword_CODE_bss_80075C04
+                0x0000000080075c08                dword_CODE_bss_80075C08
+                0x0000000080075c0c                dword_CODE_bss_80075C0C
                 0x0000000080075c10                dword_CODE_bss_80075C10
                 0x0000000080075c88                dword_CODE_bss_80075C88
                 0x0000000080075d00                ptr_setup_path_tbl

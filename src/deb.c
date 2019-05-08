@@ -823,9 +823,9 @@ glabel indy_file_get_address_subsequent_data
 /* 005EB8 700052B8 8DCE3670 */  lw    $t6, %lo(indy_read_buffer)($t6)
 /* 005EBC 700052BC 3C028006 */  lui   $v0, %hi(ptr_indy_read_buf_string1) # $v0, 0x8006
 /* 005EC0 700052C0 3C018006 */  lui   $at, %hi(current_indy_read_buf_resourceID) # $at, 0x8006
-/* 005EC4 700052C4 3C0F8006 */  lui   $t7, %hi(indy_read_buffer)
+/* 005EC4 700052C4 3C0F8006 */  lui   $t7, %hi(indy_read_buffer+4)
 /* 005EC8 700052C8 24423668 */  addiu $v0, %lo(ptr_indy_read_buf_string1) # addiu $v0, $v0, 0x3668
-/* 005ECC 700052CC 25E43674 */  addiu $a0, $t7, %lo(indy_read_buffer)
+/* 005ECC 700052CC 25E43674 */  addiu $a0, $t7, %lo(indy_read_buffer+4)
 /* 005ED0 700052D0 AC2E3664 */  sw    $t6, %lo(current_indy_read_buf_resourceID)($at)
 /* 005ED4 700052D4 0C001496 */  jal   return_strlen
 /* 005ED8 700052D8 AC440000 */   sw    $a0, ($v0)

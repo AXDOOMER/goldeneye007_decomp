@@ -231,8 +231,8 @@ glabel init_mainthread_data
 /* 0069D8 70005DD8 3C050001 */  lui   $a1, (0x000186A0 >> 16) # lui $a1, 1
 .L70005DDC:
 /* 0069DC 70005DDC 3C068002 */  lui   $a2, %hi(osClockRate) # $a2, 0x8002
-/* 0069E0 70005DE0 3C078002 */  lui   $a3, %hi(osClockRate) # $a3, 0x8002
-/* 0069E4 70005DE4 8CE76984 */  lw    $a3, %lo(osClockRate)($a3)
+/* 0069E0 70005DE0 3C078002 */  lui   $a3, %hi(osClockRate+4) # $a3, 0x8002
+/* 0069E4 70005DE4 8CE76984 */  lw    $a3, %lo(osClockRate+4)($a3)
 /* 0069E8 70005DE8 8CC66980 */  lw    $a2, %lo(osClockRate)($a2)
 /* 0069EC 70005DEC 34A586A0 */  ori   $a1, (0x000186A0 & 0xFFFF) # ori $a1, $a1, 0x86a0
 /* 0069F0 70005DF0 0C003B6A */  jal   __ll_mul

@@ -118,19 +118,22 @@ f32 flt_CODE_bss_80075B78;
 f32 flt_CODE_bss_80075B7C;
 //CODE.bss:80075B80
 f32 flt_CODE_bss_80075B80;
-//CODE.bss:80075B84                     .align 3
+//CODE.bss:80075B84
+f32 flt_CODE_bss_80075B84;
 //CODE.bss:80075B88
 f32 flt_CODE_bss_80075B88;
 //CODE.bss:80075B8C
 f32 flt_CODE_bss_80075B8C;
 //CODE.bss:80075B90
 f32 flt_CODE_bss_80075B90;
-//CODE.bss:80075B94                     .align 3
-
+//CODE.bss:80075B94
+f32 flt_CODE_bss_80075B94;
 //CODE.bss:80075B98
 char dword_CODE_bss_80075B98[0x6C];
 //CODE.bss:80075C04
-char dword_CODE_bss_80075C04[0xC];
+u32 dword_CODE_bss_80075C04;
+u32 dword_CODE_bss_80075C08;
+u32 dword_CODE_bss_80075C0C;
 //CODE.bss:80075C10
 char dword_CODE_bss_80075C10[0x78];
 //CODE.bss:80075C88
