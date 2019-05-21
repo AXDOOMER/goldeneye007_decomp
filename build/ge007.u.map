@@ -97,8 +97,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/game/initactorpropstuff.o
  .options       0x0000000000000000       0x20 build/game/initnull_0009D0.o
  .reginfo       0x0000000000000000       0x18 build/game/initnull_0009D0.o
- .gptab.data    0x0000000000000000       0x18 build/game/initnull_0009D0.o
- .mdebug        0x0000000000000000      0x2b4 build/game/initnull_0009D0.o
+ .mdebug        0x0000000000000000      0x28c build/game/initnull_0009D0.o
  .options       0x0000000000000000       0x20 build/game/initunk_0009E0.o
  .reginfo       0x0000000000000000       0x18 build/game/initunk_0009E0.o
  .mdebug        0x0000000000000000      0x2f0 build/game/initunk_0009E0.o
@@ -5269,6 +5268,13 @@ Linker script and memory map
                 0x0000000080026988                __osShutdown
                 0x000000008002698c                __OSGlobalIntMask
                 0x0000000080026990                osDiskExist
+                0x00000000800269a0                __osViDevMgr
+                0x00000000800269a4                D_800269A4
+                0x00000000800269a8                D_800269A8
+                0x00000000800269ac                D_800269AC
+                0x00000000800269b0                D_800269B0
+                0x00000000800269b4                D_800269B4
+                0x00000000800269b8                D_800269B8
                 0x00000000800269c0                osViModeTable
                 0x00000000800269c0                osViModeTable_osViModeNtscLpn1
                 0x0000000080026a10                osViModeTable_osViModeNtscLpf1
@@ -5313,11 +5319,46 @@ Linker script and memory map
                 0x0000000080027640                osViModeTable_osViModeMpalHpn2
                 0x0000000080027690                osViModeTable_osViModeMpalHpf2
                 0x00000000800276e0                alGlobals
+                0x00000000800276f0                B_800276F0
                 0x0000000080027700                __osHwIntTable
+                0x0000000080027720                __osThreadTail
                 0x0000000080027728                __osRunQueue
+                0x000000008002772c                __osActiveQueue
+                0x0000000080027730                __osRunningThread
+                0x0000000080027734                __osFaultedThread
+                0x0000000080027740                spaces
+                0x0000000080027764                zeros
+                0x0000000080027790                __osPiDevMgr.active
+                0x0000000080027790                __osPiDevMgr
+                0x0000000080027794                __osPiDevMgr.thread
+                0x0000000080027798                __osPiDevMgr.cmdQueue
+                0x000000008002779c                __osPiDevMgr.evtQueue
+                0x00000000800277a0                __osPiDevMgr.acsQueue
+                0x00000000800277a4                __osPiDevMgr.dma
+                0x00000000800277a8                __osPiDevMgr.edma
+                0x00000000800277ac                __osPiTable
+                0x00000000800277ac                D_800277AC
                 0x00000000800277b0                __osContinitialized
                 0x00000000800277c0                __osSiAccessQueueEnabled
+                0x00000000800277c4                sin_table
+                0x0000000080027fc4                __osTimerList
+                0x0000000080027fd0                buffer1
+                0x0000000080028030                __osViCurr
+                0x0000000080028034                __osViNext
+                0x0000000080028038                osViClock
+                0x0000000080028040                SMALLROOM_PARAMS
                 0x0000000080028040                _libultraosviSegmentDataEnd
+                0x00000000800280a8                BIGROOM_PARAMS
+                0x0000000080028130                ECHO_PARAMS
+                0x0000000080028158                CHORUS_PARAMS
+                0x0000000080028180                FLANGE_PARAMS
+                0x00000000800281a8                NULL_PARAMS
+                0x00000000800281d0                eqpower
+                0x00000000800282d0                __osPiAccessQueueEnabled
+                0x00000000800282d4                alowercase_hex_char
+                0x00000000800282e8                auppercase_hex_char
+                0x0000000080028300                osViModeNtscLan1
+                0x0000000080028350                osViModePalLan1
  build/aspboot.o(.rodata)
  .rodata        0x00000000800283b0       0x50 build/aspboot.o
                 0x00000000800283d0                aBoot
@@ -5434,16 +5475,83 @@ Linker script and memory map
  build/joy_rumble.o(.rodata)
  build/rmon.o(.rodata)
  build/libultra/libultra.o(.rodata)
- .rodata        0x00000000800293a0      0x9b0 build/libultra/libultra.o
+ .rodata        0x00000000800293a0      0x9c0 build/libultra/libultra.o
                 0x00000000800293a0                __osRcpImTable
+                0x0000000080029420                F64_80029420
+                0x0000000080029428                F64_80029428
+                0x0000000080029430                F64_80029430
                 0x0000000080029440                __osIntOffTable
                 0x0000000080029460                __osIntTable
+                0x0000000080029490                audio_related_jump_table_0
+                0x0000000080029614                audio_related_jump_table_1
+                0x0000000080029674                audio_related_jump_table_2
+                0x00000000800296c4                F32_800296C4
+                0x00000000800296d0                F64_800296D0
+                0x00000000800296d8                F64_800296D8
+                0x00000000800296e0                F32_800296E0
+                0x00000000800296e4                F32_800296E4
+                0x00000000800296f0                aHll
+                0x00000000800296f4                printf_symbols
+                0x00000000800296fc                byteshiftleft_lookup
+                0x0000000080029714                J_80029714
+                0x00000000800297f0                F32_800297F0
+                0x0000000080029800                F64_80029800
+                0x0000000080029810                F32_80029810
+                0x0000000080029820                D_80029820
+                0x0000000080029828                D_80029828
+                0x0000000080029830                J_80019520
+                0x0000000080029848                F64_80029848
+                0x0000000080029850                J_8001A628
+                0x0000000080029878                F64_80029878
+                0x0000000080029890                aAssertionFaultSSLineD
+                0x00000000800298bc                aSamples0
+                0x00000000800298cc                aEnv_c
+                0x00000000800298d4                aAssertionFaultSSLineD_0
+                0x0000000080029900                aSamplesAl_max_rsp_samples
+                0x0000000080029920                aEnv_c_0
+                0x0000000080029928                aAssertionFaultSSLineD_1
+                0x0000000080029954                aSource
+                0x000000008002995c                aEnv_c_1
+                0x0000000080029964                F32_80029964
+                0x0000000080029968                J_8001AF6C
+                0x00000000800299b0                F64_800299B0
+                0x00000000800299b8                F64_800299B8
+                0x00000000800299c0                F64_800299C0
+                0x00000000800299c8                F64_800299C8
+                0x00000000800299d0                F64_800299D0
+                0x00000000800299d8                F64_800299D8
+                0x00000000800299e0                F64_800299E0
+                0x00000000800299e8                F64_800299E8
+                0x00000000800299f0                F64_800299F0
+                0x0000000080029a00                F64_80029A00
+                0x0000000080029a08                F64_80029A08
+                0x0000000080029a10                F64_80029A10
+                0x0000000080029a18                F64_80029A18
+                0x0000000080029a20                F64_80029A20
+                0x0000000080029a28                F64_80029A28
+                0x0000000080029a30                F64_80029A30
+                0x0000000080029a38                F64_80029A38
+                0x0000000080029a40                F64_80029A40
+                0x0000000080029a50                jpt_8001C498
+                0x0000000080029bd4                jpt_8001C98C
+                0x0000000080029c28                jpt_8001CCD8
+                0x0000000080029c88                F32_80029C88
+                0x0000000080029c90                digits
+                0x0000000080029cd8                aNan
+                0x0000000080029cdc                aInf
+                0x0000000080029ce0                asc_D_80029CE0
+                0x0000000080029ce8                F64_80029CE8
+                0x0000000080029cf0                jpt_8001E80C
+                0x0000000080029d10                jpt_8001FFCC
+                0x0000000080029d30                F64_80029D30
+                0x0000000080029d38                F64_80029D38
+                0x0000000080029d40                F64_80029D40
+                0x0000000080029d50                F64_80029D50
+                0x0000000080029d58                F64_80029D58
  build/game/initgamedata.o(.data)
  build/game/initweaponanigroups.o(.data)
  build/game/initactorpropstuff.o(.data)
  build/game/initnull_0009D0.o(.data)
- .data          0x0000000080029d50       0x10 build/game/initnull_0009D0.o
-                0x0000000080029d50                unused_80029d50
  build/game/initunk_0009E0.o(.data)
  build/game/initanitable.o(.data)
  .data          0x0000000080029d60      0x300 build/game/initanitable.o
