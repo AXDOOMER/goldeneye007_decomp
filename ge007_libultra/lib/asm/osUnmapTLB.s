@@ -1,12 +1,12 @@
-#include "ultra64.h"
 
-#ifdef NONMATCHING
-void osUnmapTLB(int index){
-    
-}
-#else
-GLOBAL_ASM(
-.text
+.set noat      # allow manual use of $at
+.set noreorder # don't insert nops after branches
+.set gp=64
+
+.include "macros.inc"
+
+#void osUnmapTLB(int index)
+.section .text, "ax" 
 glabel osUnmapTLB
 /* 00DFD0 7000D3D0 40085000 */  mfc0  $t0, $10
 /* 00DFD4 7000D3D4 40840000 */  mtc0  $a0, $0
@@ -23,5 +23,4 @@ glabel osUnmapTLB
 /* 00E000 7000D400 40885000 */  mtc0  $t0, $10
 /* 00E004 7000D404 03E00008 */  jr    $ra
 /* 00E008 7000D408 00000000 */   nop   
-)
-#endif
+
