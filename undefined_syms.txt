@@ -176,8 +176,7 @@ dword_CODE_bss_800669D4 = 0x800669D4;
 viCounterMsg = 0x800669E8;
 byte_CODE_bss_800669EA = 0x800669EA;
 dword_CODE_bss_800669EC = 0x800669EC;
-__osFinalRom = 0x800657E0;
-viThread = 0x800657F0;
+
 viThread_sp_maybe = 0x800659A0;
 retrace = 0x80066A00;
 __osEventStateTab = 0x80066A10;

@@ -80,6 +80,7 @@ CODESEGMENT := codesegment.o
 #			  libultra/
 #ULTRAOBJECTS :=
 #ULTRASEGMENT := libultra.a
+LIBULTRA := lib/libultra_rom.a
 ULTRAFILES := libultra/libultra.s
 ULTRAOBJECTS := build/libultra/libultra.o
 

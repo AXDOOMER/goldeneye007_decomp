@@ -558,8 +558,6 @@ Linker script and memory map
                 0x00000000800669e8                viCounterMsg = 0x800669e8
                 0x00000000800669ea                byte_CODE_bss_800669EA = 0x800669ea
                 0x00000000800669ec                dword_CODE_bss_800669EC = 0x800669ec
-                0x00000000800657e0                __osFinalRom = 0x800657e0
-                0x00000000800657f0                viThread = 0x800657f0
                 0x00000000800659a0                viThread_sp_maybe = 0x800659a0
                 0x0000000080066a00                retrace = 0x80066a00
                 0x0000000080066a10                __osEventStateTab = 0x80066a10
@@ -9987,6 +9985,8 @@ Linker script and memory map
  build/rmon.o(.bss)
  build/libultra/libultra.o(.bss)
  .bss           0x00000000800657e0     0x3990 build/libultra/libultra.o
+                0x00000000800657e0                __osFinalRom
+                0x00000000800657f0                viThread
  build/game/initgamedata.o(.bss)
  build/game/initweaponanigroups.o(.bss)
  build/game/initactorpropstuff.o(.bss)
