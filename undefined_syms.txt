@@ -168,46 +168,13 @@ D_80058378 = 0x80058378;
 
 gspFast3DDataStart = 0x8005c820;
 _cdataSegmentVaddrEnd = 0x8005D2E0;
-viEventBuf = 0x800669B8;
-viEventQueue = 0x800669A0;
-viRetraceMsg = 0x800669D0;
+
 byte_CODE_bss_800669D2 = 0x800669D2;
 dword_CODE_bss_800669D4 = 0x800669D4;
-viCounterMsg = 0x800669E8;
 byte_CODE_bss_800669EA = 0x800669EA;
 dword_CODE_bss_800669EC = 0x800669EC;
 
-viThread_sp_maybe = 0x800659A0;
-retrace = 0x80066A00;
-__osEventStateTab = 0x80066A10;
-tp = 0x80066A90;
-piThread = 0x80066ad0;
-cmdBuf = 0x80066C80;
-pieventQueue = 0x80067c80;
-piEventBuf = 0x80067c98;
-__osContPifRam = 0x80067ca0;
-__osContLastCmd = 0x80067CE0;
-__osEepromTimer = 0x80067ce8;
-__osMaxControllers = 0x80067ce1;
-__osEepromTimerQ = 0x80067d08;
-__osEepromTimerMsg = 0x80067d20;
-__osEepPifRam = 0x80067d30;
-__osPfsPifRam = 0x80067D70;
-__osSiAccessBuf = 0x80067db0;
-__osSiAccessQueue = 0x80067db8;
-flt_CODE_bss_80067DD0 = 0x80067DD0;
-flt_CODE_bss_80067DE0 = 0x80067DE0;
-leoDiskStack = 0x80067df0;
-__osBaseTimer = 0x80068df0;
-__osCurrentTime = 0x80068E10;
-__osBaseCounter = 0x80068E18;
-__osViIntrCount = 0x80068E1C;
-__osTimerCounter = 0x80068E20;
-__osThreadSave = 0x80068E30;
-piAccessBuf = 0x80068FE0;
-__osPiAccessQueue = 0x80068fe8;
-LeoDiskHandle = 0x80069000;
-__osDiskHandle = 0x80069074;
+
 
 D_80079F4C = 0x80079F4C;
 D_80079F54 = 0x80079F54;

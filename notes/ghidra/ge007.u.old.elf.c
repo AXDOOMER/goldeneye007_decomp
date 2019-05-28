@@ -9142,8 +9142,8 @@ void osCreateThread(OSThread *t,OSId id,void *entry,void *arg,void *sp,OSPri p)
   t->state = 1;
   t->flags = 0;
   saveMask._4_4_ = __osDisableInt();
-  *(undefined **)&t->tlnext = __osActiveQueue;
-  __osActiveQueue = (undefined *)t;
+  *(OSThread **)&t->tlnext = __osActiveQueue;
+  __osActiveQueue = t;
   __osRestoreInt(saveMask._4_4_);
   return;
 }
@@ -9194,7 +9194,7 @@ void osCreateMesgQueue(OSMesgQueue *mq,OSMesg *msg,s32 msgCount)
 
 {
   mq->mtqueue = (OSThread *)0x80027720;
-  mq->fullqueue = (OSThread *)&__osThreadTail;
+  *(__OSThreadTail **)&mq->fullqueue = &__osThreadTail;
   mq->validCount = 0;
   mq->first = 0;
   mq->msgCount = msgCount;
@@ -16974,24 +16974,24 @@ OSPri osGetThreadPri(OSThread *t)
 void __osViInit(void)
 
 {
-  bzero(vi,0x60);
-  vi_buffer_next[1] = 1;
-  vi._2_2_ = 1;
+  bzero(&vi,0x60);
+  __osViCurr = &vi;
+  __osViNext = &vi_buffer_next;
+  vi_buffer_next.retraceCount = 1;
+  vi.retraceCount = 1;
   if (osTvType == 0) {
-    vi_buffer_next._8_4_ = OS_VI_PAL_LAN1;
     osViClock = 0x2f5b2d2;
+    vi_buffer_next.modep = (OSViMode *)OS_VI_PAL_LAN1;
   }
   else {
-    vi_buffer_next._8_4_ = OS_VI_NTSC_LAN1;
     osViClock = 0x2e6d354;
+    vi_buffer_next.modep = (OSViMode *)OS_VI_NTSC_LAN1;
   }
-  vi_buffer_next[0] = 0x20;
-  vi_buffer_next._12_4_ = *(undefined4 *)(vi_buffer_next._8_4_ + 4);
+  vi_buffer_next.state = 0x20;
+  vi_buffer_next.control = ((vi_buffer_next.modep)->comRegs).ctrl;
   do {
   } while (10 < _VI_CURRENT_REG);
   _VI_CONTROL_REG = 0;
-  __osViCurr = (__OSViContext *)vi;
-  __osViNext = (__OSViContext *)vi_buffer_next;
   __osViSwapContext();
   return;
 }
@@ -18792,12 +18792,12 @@ void osDestroyThread(OSThread *t)
       pOStackX0 = t;
     }
   }
-  if ((OSThread *)__osActiveQueue == pOStackX0) {
-    __osActiveQueue = *(undefined **)(__osActiveQueue + 0xc);
+  if (__osActiveQueue == pOStackX0) {
+    __osActiveQueue = (OSThread *)__osActiveQueue->tlnext;
   }
   else {
-    pOVar3 = *(OSThread **)(__osActiveQueue + 0xc);
-    pOVar2 = (OSThread *)__osActiveQueue;
+    pOVar3 = (OSThread *)__osActiveQueue->tlnext;
+    pOVar2 = __osActiveQueue;
     while (pOVar1 = pOVar3, pOVar1 != NULL) {
       if (pOVar1 == pOStackX0) {
         pOVar2->tlnext = pOStackX0->tlnext;

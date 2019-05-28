@@ -554,45 +554,25 @@ Linker script and memory map
                 0x0000000080058378                D_80058378 = 0x80058378
                 0x000000008005c820                gspFast3DDataStart = 0x8005c820
                 0x000000008005d2e0                _cdataSegmentVaddrEnd = 0x8005d2e0
-                0x00000000800669b8                viEventBuf = 0x800669b8
-                0x00000000800669a0                viEventQueue = 0x800669a0
-                0x00000000800669d0                viRetraceMsg = 0x800669d0
                 0x00000000800669d2                byte_CODE_bss_800669D2 = 0x800669d2
                 0x00000000800669d4                dword_CODE_bss_800669D4 = 0x800669d4
-                0x00000000800669e8                viCounterMsg = 0x800669e8
                 0x00000000800669ea                byte_CODE_bss_800669EA = 0x800669ea
                 0x00000000800669ec                dword_CODE_bss_800669EC = 0x800669ec
-                0x00000000800659a0                viThread_sp_maybe = 0x800659a0
-                0x0000000080066a00                retrace = 0x80066a00
-                0x0000000080066a10                __osEventStateTab = 0x80066a10
-                0x0000000080066a90                tp = 0x80066a90
-                0x0000000080066ad0                piThread = 0x80066ad0
-                0x0000000080066c80                cmdBuf = 0x80066c80
-                0x0000000080067c80                pieventQueue = 0x80067c80
-                0x0000000080067c98                piEventBuf = 0x80067c98
-                0x0000000080067ca0                __osContPifRam = 0x80067ca0
-                0x0000000080067ce0                __osContLastCmd = 0x80067ce0
-                0x0000000080067ce8                __osEepromTimer = 0x80067ce8
-                0x0000000080067ce1                __osMaxControllers = 0x80067ce1
-                0x0000000080067d08                __osEepromTimerQ = 0x80067d08
-                0x0000000080067d20                __osEepromTimerMsg = 0x80067d20
-                0x0000000080067d30                __osEepPifRam = 0x80067d30
-                0x0000000080067d70                __osPfsPifRam = 0x80067d70
-                0x0000000080067db0                __osSiAccessBuf = 0x80067db0
-                0x0000000080067db8                __osSiAccessQueue = 0x80067db8
-                0x0000000080067dd0                flt_CODE_bss_80067DD0 = 0x80067dd0
-                0x0000000080067de0                flt_CODE_bss_80067DE0 = 0x80067de0
-                0x0000000080067df0                leoDiskStack = 0x80067df0
-                0x0000000080068df0                __osBaseTimer = 0x80068df0
-                0x0000000080068e10                __osCurrentTime = 0x80068e10
-                0x0000000080068e18                __osBaseCounter = 0x80068e18
-                0x0000000080068e1c                __osViIntrCount = 0x80068e1c
-                0x0000000080068e20                __osTimerCounter = 0x80068e20
-                0x0000000080068e30                __osThreadSave = 0x80068e30
-                0x0000000080068fe0                piAccessBuf = 0x80068fe0
-                0x0000000080068fe8                __osPiAccessQueue = 0x80068fe8
-                0x0000000080069000                LeoDiskHandle = 0x80069000
-                0x0000000080069074                __osDiskHandle = 0x80069074
+                0x0000000080067db0                //__osSiAccessBuf = 0x80067db0
+                0x0000000080067db8                //__osSiAccessQueue = 0x80067db8
+                0x0000000080067dd0                //flt_CODE_bss_80067DD0 = 0x80067dd0
+                0x0000000080067de0                //flt_CODE_bss_80067DE0 = 0x80067de0
+                0x0000000080067df0                //leoDiskStack = 0x80067df0
+                0x0000000080068df0                //__osBaseTimer = 0x80068df0
+                0x0000000080068e10                //__osCurrentTime = 0x80068e10
+                0x0000000080068e18                //__osBaseCounter = 0x80068e18
+                0x0000000080068e1c                //__osViIntrCount = 0x80068e1c
+                0x0000000080068e20                //__osTimerCounter = 0x80068e20
+                0x0000000080068e30                //__osThreadSave = 0x80068e30
+                0x0000000080068fe0                //piAccessBuf = 0x80068fe0
+                0x0000000080068fe8                //__osPiAccessQueue = 0x80068fe8
+                0x0000000080069000                //LeoDiskHandle = 0x80069000
+                0x0000000080069074                //__osDiskHandle = 0x80069074
                 0x0000000080079f4c                D_80079F4C = 0x80079f4c
                 0x0000000080079f54                D_80079F54 = 0x80079f54
                 0x0000000080079fbc                D_80079FBC = 0x80079fbc
@@ -1162,7 +1142,7 @@ Linker script and memory map
                 0x0000000070010fc0                __CSPPostNextSeqEvent
                 0x0000000070011030                ultra_70011030
                 0x000000007001106c                ultra_7001106C
-                0x000000007001123c                ultra_7001123C
+                0x000000007001123c                __CSPHandleMIDIMsg
                 0x0000000070011a6c                ultra_70011A6C
                 0x0000000070012080                alCSPNew
                 0x00000000700121f0                alSeqpSetBank
@@ -1279,7 +1259,6 @@ Linker script and memory map
                 0x00000000700188a8                __osInsertTimer
                 0x0000000070018a30                osGetThreadPri
                 0x0000000070018a50                __osViInit
-                0x0000000070018b60                _libultraosviSegmentDataStart
                 0x0000000070018b60                __osViGetCurrentContext
                 0x0000000070018b70                __osViSwapContext
                 0x0000000070018ed0                __osSpGetStatus
@@ -5269,7 +5248,7 @@ Linker script and memory map
  build/joy_rumble.o(.data)
  build/rmon.o(.data)
  build/libultra/libultra.o(.data)
- .data          0x0000000080026980     0x1a30 build/libultra/libultra.o
+ .data          0x0000000080026980     0x1a50 build/libultra/libultra.o
                 0x0000000080026980                osClockRate
                 0x0000000080026988                __osShutdown
                 0x000000008002698c                __OSGlobalIntMask
@@ -5346,27 +5325,30 @@ Linker script and memory map
                 0x00000000800277ac                D_800277AC
                 0x00000000800277b0                __osContinitialized
                 0x00000000800277c0                __osSiAccessQueueEnabled
-                0x00000000800277c4                sin_table
-                0x0000000080027fc4                __osTimerList
-                0x0000000080027fd0                buffer1
-                0x0000000080028030                __osViCurr
-                0x0000000080028034                __osViNext
-                0x0000000080028038                osViClock
-                0x0000000080028040                SMALLROOM_PARAMS
-                0x0000000080028040                _libultraosviSegmentDataEnd
-                0x00000000800280a8                BIGROOM_PARAMS
-                0x0000000080028130                ECHO_PARAMS
-                0x0000000080028158                CHORUS_PARAMS
-                0x0000000080028180                FLANGE_PARAMS
-                0x00000000800281a8                NULL_PARAMS
-                0x00000000800281d0                eqpower
-                0x00000000800282d0                __osPiAccessQueueEnabled
-                0x00000000800282d4                alowercase_hex_char
-                0x00000000800282e8                auppercase_hex_char
-                0x0000000080028300                osViModeNtscLan1
-                0x0000000080028350                osViModePalLan1
+                0x00000000800277d0                sin_table
+                0x0000000080027fd0                __osTimerList
+                0x0000000080027fe0                _libultraosviSegmentDataStart
+                0x0000000080027fe0                vi
+                0x0000000080028010                vi_buffer_next
+                0x0000000080028040                __osViCurr
+                0x0000000080028044                __osViNext
+                0x0000000080028048                copy_osTvType
+                0x000000008002804c                osViClock
+                0x0000000080028050                SMALLROOM_PARAMS
+                0x0000000080028050                _libultraosviSegmentDataEnd
+                0x00000000800280b8                BIGROOM_PARAMS
+                0x0000000080028140                ECHO_PARAMS
+                0x0000000080028168                CHORUS_PARAMS
+                0x0000000080028190                FLANGE_PARAMS
+                0x00000000800281b8                NULL_PARAMS
+                0x00000000800281e0                eqpower
+                0x00000000800282e0                __osPiAccessQueueEnabled
+                0x00000000800282f0                alowercase_hex_char
+                0x0000000080028304                auppercase_hex_char
+                0x0000000080028320                osViModeNtscLan1
+                0x0000000080028370                osViModePalLan1
  build/aspboot.o(.rodata)
- .rodata        0x00000000800283b0       0x50 build/aspboot.o
+ .rodata        0x00000000800283d0       0x30 build/aspboot.o
                 0x00000000800283d0                aBoot
                 0x00000000800283d8                aRmon
                 0x00000000800283e0                aIdle
@@ -9998,6 +9980,101 @@ Linker script and memory map
  .bss           0x00000000800657e0     0x3990 build/libultra/libultra.o
                 0x00000000800657e0                __osFinalRom
                 0x00000000800657f0                viThread
+                0x00000000800659a0                viThreadStack
+                0x00000000800669a0                viEventQueue
+                0x00000000800669b8                viEventBuf
+                0x00000000800669d0                viRetraceMsg
+                0x00000000800669e8                viCounterMsg
+                0x0000000080066a00                retrace
+                0x0000000080066a10                __osEventStateTab
+                0x0000000080066a90                type
+                0x0000000080066a90                tp
+                0x0000000080066a94                flags
+                0x0000000080066a98                t_ucode_boot
+                0x0000000080066a9c                t_ucode_boot_size
+                0x0000000080066aa0                t_ucode
+                0x0000000080066aa4                t_ucode_size
+                0x0000000080066aa8                t_ucode_data
+                0x0000000080066aac                t_ucode_data_size
+                0x0000000080066ab0                t_dram_stack
+                0x0000000080066ab4                t_dram_stack_size
+                0x0000000080066ab8                t_output_buff
+                0x0000000080066abc                t_output_buff_size
+                0x0000000080066ac0                t_data_ptr
+                0x0000000080066ac4                t_data_size
+                0x0000000080066ac8                t_yield_data_ptr
+                0x0000000080066acc                t_yield_data_size
+                0x0000000080066ad0                piThread
+                0x0000000080066c80                piThreadStack
+                0x0000000080067c80                pieventQueue
+                0x0000000080067c98                piEventBuf
+                0x0000000080067ca0                __osContPifRam
+                0x0000000080067ce0                __osContLastCmd
+                0x0000000080067ce1                __osMaxControllers
+                0x0000000080067ce8                __osEepromTimer
+                0x0000000080067d08                __osEepromTimerQ
+                0x0000000080067d20                __osEepromTimerMsg
+                0x0000000080067d24                padding_80067d24
+                0x0000000080067d30                __osEepPifRam
+                0x0000000080067d70                __osPfsPifRam
+                0x0000000080067db0                __osSiAccessBuf
+                0x0000000080067db8                __osSiAccessQueue
+                0x0000000080067dd0                flt_CODE_bss_80067DD0
+                0x0000000080067de0                flt_CODE_bss_80067DE0
+                0x0000000080067df0                leoDiskStack
+                0x0000000080068df0                __osBaseTimer
+                0x0000000080068e10                __osCurrentTime
+                0x0000000080068e18                __osBaseCounter
+                0x0000000080068e1c                __osViIntrCount
+                0x0000000080068e20                __osTimerCounter
+                0x0000000080068e30                __osThreadSave
+                0x0000000080068fe0                piAccessBuf
+                0x0000000080068fe8                __osPiAccessQueue
+                0x0000000080069000                LeoDiskHandle
+                0x0000000080069074                __osDiskHandle
+                0x0000000080069080                D_80069080
+                0x0000000080069084                D_80069084
+                0x0000000080069088                D_80069088
+                0x000000008006908c                D_8006908C
+                0x0000000080069090                D_80069090
+                0x0000000080069094                D_80069094
+                0x0000000080069098                D_80069098
+                0x000000008006909c                D_8006909C
+                0x00000000800690a0                D_800690a0
+                0x00000000800690a4                D_800690a4
+                0x00000000800690a8                D_800690a8
+                0x00000000800690ac                D_800690ac
+                0x00000000800690b0                D_800690b0
+                0x00000000800690b4                D_800690b4
+                0x00000000800690b8                D_800690b8
+                0x00000000800690bc                D_800690BC
+                0x00000000800690c0                D_800690c0
+                0x00000000800690c4                D_800690C4
+                0x00000000800690c8                D_800690c8
+                0x00000000800690cc                D_800690cc
+                0x00000000800690d0                D_800690D0
+                0x00000000800690d4                D_800690D4
+                0x00000000800690d8                D_800690D8
+                0x00000000800690dc                D_800690DC
+                0x00000000800690e0                D_800690E0
+                0x00000000800690e8                D_800690E8
+                0x00000000800690ec                D_800690EC
+                0x00000000800690f0                D_800690F0
+                0x00000000800690f4                D_800690F4
+                0x00000000800690f8                D_800690F8
+                0x00000000800690fc                D_800690FC
+                0x0000000080069100                D_80069100
+                0x0000000080069104                D_80069104
+                0x0000000080069108                D_80069108
+                0x000000008006910c                D_8006910C
+                0x0000000080069110                D_80069110
+                0x0000000080069114                D_80069114
+                0x0000000080069118                D_80069118
+                0x000000008006911c                D_8006911C
+                0x0000000080069120                D_80069120
+                0x0000000080069124                D_80069124
+                0x0000000080069128                D_80069128
+                0x0000000080069130                D_80069130
  build/game/initgamedata.o(.bss)
  build/game/initweaponanigroups.o(.bss)
  build/game/initactorpropstuff.o(.bss)

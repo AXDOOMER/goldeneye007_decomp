@@ -29,7 +29,6 @@ glabel debug_handler_table
 .word 0, 0
 
 .section .rodata
-.word 0,0,0,0,0,0,0,0
 glabel aBoot
 .word 0x626F6F74, 0x00000000
 

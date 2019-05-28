@@ -763,10 +763,10 @@ glabel osCreateViManager
 /* 00E5DC 7000D9DC AC2B69A4 */  sw    $t3, %lo(D_800269A4)($at)
 /* 00E5E0 7000D9E0 AC2C69A8 */  sw    $t4, %lo(D_800269A8)($at)
 /* 00E5E4 7000D9E4 AC2C69AC */  sw    $t4, %lo(D_800269AC)($at)
-/* 00E5E8 7000D9E8 3C0D8006 */  lui   $t5, %hi(viThread_sp_maybe) # $t5, 0x8006
+/* 00E5E8 7000D9E8 3C0D8006 */  lui   $t5, %hi(viThreadStack) # $t5, 0x8006
 /* 00E5EC 7000D9EC 8FAF0030 */  lw    $t7, 0x30($sp)
 /* 00E5F0 7000D9F0 3C018002 */  lui   $at, %hi(D_800269B8) # $at, 0x8002
-/* 00E5F4 7000D9F4 25AD59A0 */  addiu $t5, %lo(viThread_sp_maybe) # addiu $t5, $t5, 0x59a0
+/* 00E5F4 7000D9F4 25AD59A0 */  addiu $t5, %lo(viThreadStack) # addiu $t5, $t5, 0x59a0
 /* 00E5F8 7000D9F8 25AE1000 */  addiu $t6, $t5, 0x1000
 /* 00E5FC 7000D9FC 3C067001 */  lui   $a2, %hi(viMgrMain) # $a2, 0x7001
 /* 00E600 7000DA00 3C078002 */  lui   $a3, %hi(__osViDevMgr) # $a3, 0x8002
@@ -945,10 +945,1165 @@ glabel D_800269B8
 .word 0
 
 .align 4
+
+
 .section .rodata
+
+
 .section .bss
 glabel viThread
 .word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+
+glabel viThreadStack
+        #[4096]
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.section .bss
+glabel viEventQueue
+.word 0, 0, 0, 0, 0, 0
+
+glabel viEventBuf
+.word 0, 0, 0, 0, 0, 0
+
+glabel viRetraceMsg
+.word 0, 0, 0, 0, 0, 0
+
+glabel viCounterMsg
+.word 0, 0, 0, 0, 0, 0
+
+glabel retrace
+.half 0
+.align 4
+
 .section .data
 glabel osViModeTable
 D_800269C0:
@@ -1163,6 +2318,130 @@ glabel osViModeTable_osViModeMpalHpf2
 .word      0xA00, 0x2000800,  0x2301FD,   0xB0202,         2
 .word     0x1400, 0x2000800,  0x2501FF,   0xE0204,         2
 
+.section .bss
+glabel __osEventStateTab
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+
 .section .text
 glabel osSetEventMesg
 /* 00E850 7000DC50 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -1202,18 +2481,18 @@ glabel osViSetEvent
 /* 00E8D0 7000DCD0 AFA60030 */  sw    $a2, 0x30($sp)
 /* 00E8D4 7000DCD4 0C00617C */  jal   __osDisableInt
 /* 00E8D8 7000DCD8 AFB00018 */   sw    $s0, 0x18($sp)
-/* 00E8DC 7000DCDC 3C0F8003 */  lui   $t7, %hi(__osViNext+0x10) # $t7, 0x8003
-/* 00E8E0 7000DCE0 8DEF8044 */  lw    $t7, %lo(__osViNext+0x10)($t7)
+/* 00E8DC 7000DCDC 3C0F8003 */  lui   $t7, %hi(__osViNext) # $t7, 0x8003
+/* 00E8E0 7000DCE0 8DEF8044 */  lw    $t7, %lo(__osViNext)($t7)
 /* 00E8E4 7000DCE4 8FAE0028 */  lw    $t6, 0x28($sp)
-/* 00E8E8 7000DCE8 3C198003 */  lui   $t9, %hi(__osViNext+0x10) # $t9, 0x8003
-/* 00E8EC 7000DCEC 3C098003 */  lui   $t1, %hi(__osViNext+0x10) # $t1, 0x8003
+/* 00E8E8 7000DCE8 3C198003 */  lui   $t9, %hi(__osViNext) # $t9, 0x8003
+/* 00E8EC 7000DCEC 3C098003 */  lui   $t1, %hi(__osViNext) # $t1, 0x8003
 /* 00E8F0 7000DCF0 ADEE0010 */  sw    $t6, 0x10($t7)
-/* 00E8F4 7000DCF4 8F398044 */  lw    $t9, %lo(__osViNext+0x10)($t9)
+/* 00E8F4 7000DCF4 8F398044 */  lw    $t9, %lo(__osViNext)($t9)
 /* 00E8F8 7000DCF8 8FB8002C */  lw    $t8, 0x2c($sp)
 /* 00E8FC 7000DCFC 00408025 */  move  $s0, $v0
 /* 00E900 7000DD00 02002025 */  move  $a0, $s0
 /* 00E904 7000DD04 AF380014 */  sw    $t8, 0x14($t9)
-/* 00E908 7000DD08 8D298044 */  lw    $t1, %lo(__osViNext+0x10)($t1)
+/* 00E908 7000DD08 8D298044 */  lw    $t1, %lo(__osViNext)($t1)
 /* 00E90C 7000DD0C 8FA80030 */  lw    $t0, 0x30($sp)
 /* 00E910 7000DD10 0C006184 */  jal   __osRestoreInt
 /* 00E914 7000DD14 A5280002 */   sh    $t0, 2($t1)
@@ -1470,17 +2749,17 @@ glabel osViSetMode
 /* 00EC68 7000E068 AFA40028 */  sw    $a0, 0x28($sp)
 /* 00EC6C 7000E06C 0C00617C */  jal   __osDisableInt
 /* 00EC70 7000E070 AFB00018 */   sw    $s0, 0x18($sp)
-/* 00EC74 7000E074 3C0F8003 */  lui   $t7, %hi(__osViNext+0x10) # $t7, 0x8003
-/* 00EC78 7000E078 8DEF8044 */  lw    $t7, %lo(__osViNext+0x10)($t7)
+/* 00EC74 7000E074 3C0F8003 */  lui   $t7, %hi(__osViNext) # $t7, 0x8003
+/* 00EC78 7000E078 8DEF8044 */  lw    $t7, %lo(__osViNext)($t7)
 /* 00EC7C 7000E07C 8FAE0028 */  lw    $t6, 0x28($sp)
-/* 00EC80 7000E080 3C198003 */  lui   $t9, %hi(__osViNext+0x10) # $t9, 0x8003
+/* 00EC80 7000E080 3C198003 */  lui   $t9, %hi(__osViNext) # $t9, 0x8003
 /* 00EC84 7000E084 24180001 */  li    $t8, 1
 /* 00EC88 7000E088 ADEE0008 */  sw    $t6, 8($t7)
-/* 00EC8C 7000E08C 8F398044 */  lw    $t9, %lo(__osViNext+0x10)($t9)
-/* 00EC90 7000E090 3C088003 */  lui   $t0, %hi(__osViNext+0x10) # $t0, 0x8003
+/* 00EC8C 7000E08C 8F398044 */  lw    $t9, %lo(__osViNext)($t9)
+/* 00EC90 7000E090 3C088003 */  lui   $t0, %hi(__osViNext) # $t0, 0x8003
 /* 00EC94 7000E094 00408025 */  move  $s0, $v0
 /* 00EC98 7000E098 A7380000 */  sh    $t8, ($t9)
-/* 00EC9C 7000E09C 8D088044 */  lw    $t0, %lo(__osViNext+0x10)($t0)
+/* 00EC9C 7000E09C 8D088044 */  lw    $t0, %lo(__osViNext)($t0)
 /* 00ECA0 7000E0A0 02002025 */  move  $a0, $s0
 /* 00ECA4 7000E0A4 8D090008 */  lw    $t1, 8($t0)
 /* 00ECA8 7000E0A8 8D2A0004 */  lw    $t2, 4($t1)
@@ -1501,18 +2780,18 @@ glabel osViSetXScale
 /* 00ECDC 7000E0DC AFB10018 */  sw    $s1, 0x18($sp)
 /* 00ECE0 7000E0E0 0C00617C */  jal   __osDisableInt
 /* 00ECE4 7000E0E4 AFB00014 */   sw    $s0, 0x14($sp)
-/* 00ECE8 7000E0E8 3C0E8003 */  lui   $t6, %hi(__osViNext+0x10) # $t6, 0x8003
-/* 00ECEC 7000E0EC 8DCE8044 */  lw    $t6, %lo(__osViNext+0x10)($t6)
+/* 00ECE8 7000E0E8 3C0E8003 */  lui   $t6, %hi(__osViNext) # $t6, 0x8003
+/* 00ECEC 7000E0EC 8DCE8044 */  lw    $t6, %lo(__osViNext)($t6)
 /* 00ECF0 7000E0F0 C7A40028 */  lwc1  $f4, 0x28($sp)
-/* 00ECF4 7000E0F4 3C0F8003 */  lui   $t7, %hi(__osViNext+0x10) # $t7, 0x8003
-/* 00ECF8 7000E0F8 3C088003 */  lui   $t0, %hi(__osViNext+0x10) # $t0, 0x8003
+/* 00ECF4 7000E0F4 3C0F8003 */  lui   $t7, %hi(__osViNext) # $t7, 0x8003
+/* 00ECF8 7000E0F8 3C088003 */  lui   $t0, %hi(__osViNext) # $t0, 0x8003
 /* 00ECFC 7000E0FC E5C40018 */  swc1  $f4, 0x18($t6)
-/* 00ED00 7000E100 8DEF8044 */  lw    $t7, %lo(__osViNext+0x10)($t7)
+/* 00ED00 7000E100 8DEF8044 */  lw    $t7, %lo(__osViNext)($t7)
 /* 00ED04 7000E104 00408825 */  move  $s1, $v0
 /* 00ED08 7000E108 95F80000 */  lhu   $t8, ($t7)
 /* 00ED0C 7000E10C 37190002 */  ori   $t9, $t8, 2
 /* 00ED10 7000E110 A5F90000 */  sh    $t9, ($t7)
-/* 00ED14 7000E114 8D088044 */  lw    $t0, %lo(__osViNext+0x10)($t0)
+/* 00ED14 7000E114 8D088044 */  lw    $t0, %lo(__osViNext)($t0)
 /* 00ED18 7000E118 8D090008 */  lw    $t1, 8($t0)
 /* 00ED1C 7000E11C C5060018 */  lwc1  $f6, 0x18($t0)
 /* 00ED20 7000E120 8D300020 */  lw    $s0, 0x20($t1)
@@ -1582,13 +2861,13 @@ glabel osViSetYScale
 /* 00EE08 7000E208 E7AC0028 */  swc1  $f12, 0x28($sp)
 /* 00EE0C 7000E20C 0C00617C */  jal   __osDisableInt
 /* 00EE10 7000E210 AFB00018 */   sw    $s0, 0x18($sp)
-/* 00EE14 7000E214 3C0E8003 */  lui   $t6, %hi(__osViNext+0x10) # $t6, 0x8003
-/* 00EE18 7000E218 8DCE8044 */  lw    $t6, %lo(__osViNext+0x10)($t6)
+/* 00EE14 7000E214 3C0E8003 */  lui   $t6, %hi(__osViNext) # $t6, 0x8003
+/* 00EE18 7000E218 8DCE8044 */  lw    $t6, %lo(__osViNext)($t6)
 /* 00EE1C 7000E21C C7A40028 */  lwc1  $f4, 0x28($sp)
-/* 00EE20 7000E220 3C0F8003 */  lui   $t7, %hi(__osViNext+0x10) # $t7, 0x8003
+/* 00EE20 7000E220 3C0F8003 */  lui   $t7, %hi(__osViNext) # $t7, 0x8003
 /* 00EE24 7000E224 00408025 */  move  $s0, $v0
 /* 00EE28 7000E228 E5C40024 */  swc1  $f4, 0x24($t6)
-/* 00EE2C 7000E22C 8DEF8044 */  lw    $t7, %lo(__osViNext+0x10)($t7)
+/* 00EE2C 7000E22C 8DEF8044 */  lw    $t7, %lo(__osViNext)($t7)
 /* 00EE30 7000E230 02002025 */  move  $a0, $s0
 /* 00EE34 7000E234 95F80000 */  lhu   $t8, ($t7)
 /* 00EE38 7000E238 37190004 */  ori   $t9, $t8, 4
@@ -1612,15 +2891,15 @@ glabel osViRepeatLine
 /* 00EE78 7000E278 00408025 */  move  $s0, $v0
 /* 00EE7C 7000E27C 11C00007 */  beqz  $t6, .L7000E29C
 /* 00EE80 7000E280 00000000 */   nop   
-/* 00EE84 7000E284 3C0F8003 */  lui   $t7, %hi(__osViNext+0x10) # $t7, 0x8003
-/* 00EE88 7000E288 8DEF8044 */  lw    $t7, %lo(__osViNext+0x10)($t7)
+/* 00EE84 7000E284 3C0F8003 */  lui   $t7, %hi(__osViNext) # $t7, 0x8003
+/* 00EE88 7000E288 8DEF8044 */  lw    $t7, %lo(__osViNext)($t7)
 /* 00EE8C 7000E28C 95F80000 */  lhu   $t8, ($t7)
 /* 00EE90 7000E290 37190040 */  ori   $t9, $t8, 0x40
 /* 00EE94 7000E294 10000007 */  b     .L7000E2B4
 /* 00EE98 7000E298 A5F90000 */   sh    $t9, ($t7)
 .L7000E29C:
-/* 00EE9C 7000E29C 3C088003 */  lui   $t0, %hi(__osViNext+0x10) # $t0, 0x8003
-/* 00EEA0 7000E2A0 8D088044 */  lw    $t0, %lo(__osViNext+0x10)($t0)
+/* 00EE9C 7000E29C 3C088003 */  lui   $t0, %hi(__osViNext) # $t0, 0x8003
+/* 00EEA0 7000E2A0 8D088044 */  lw    $t0, %lo(__osViNext)($t0)
 /* 00EEA4 7000E2A4 2401FFBF */  li    $at, -65
 /* 00EEA8 7000E2A8 95090000 */  lhu   $t1, ($t0)
 /* 00EEAC 7000E2AC 01215024 */  and   $t2, $t1, $at
@@ -1644,15 +2923,15 @@ glabel osViBlack
 /* 00EEE8 7000E2E8 00408025 */  move  $s0, $v0
 /* 00EEEC 7000E2EC 11C00007 */  beqz  $t6, .L7000E30C
 /* 00EEF0 7000E2F0 00000000 */   nop   
-/* 00EEF4 7000E2F4 3C0F8003 */  lui   $t7, %hi(__osViNext+0x10) # $t7, 0x8003
-/* 00EEF8 7000E2F8 8DEF8044 */  lw    $t7, %lo(__osViNext+0x10)($t7)
+/* 00EEF4 7000E2F4 3C0F8003 */  lui   $t7, %hi(__osViNext) # $t7, 0x8003
+/* 00EEF8 7000E2F8 8DEF8044 */  lw    $t7, %lo(__osViNext)($t7)
 /* 00EEFC 7000E2FC 95F80000 */  lhu   $t8, ($t7)
 /* 00EF00 7000E300 37190020 */  ori   $t9, $t8, 0x20
 /* 00EF04 7000E304 10000007 */  b     .L7000E324
 /* 00EF08 7000E308 A5F90000 */   sh    $t9, ($t7)
 .L7000E30C:
-/* 00EF0C 7000E30C 3C088003 */  lui   $t0, %hi(__osViNext+0x10) # $t0, 0x8003
-/* 00EF10 7000E310 8D088044 */  lw    $t0, %lo(__osViNext+0x10)($t0)
+/* 00EF0C 7000E30C 3C088003 */  lui   $t0, %hi(__osViNext) # $t0, 0x8003
+/* 00EF10 7000E310 8D088044 */  lw    $t0, %lo(__osViNext)($t0)
 /* 00EF14 7000E314 2401FFDF */  li    $at, -33
 /* 00EF18 7000E318 95090000 */  lhu   $t1, ($t0)
 /* 00EF1C 7000E31C 01215024 */  and   $t2, $t1, $at
@@ -1725,13 +3004,14 @@ glabel osDpGetCounters
 /* 00F004 7000E404 00000000 */  nop   
 /* 00F008 7000E408 00000000 */  nop   
 /* 00F00C 7000E40C 00000000 */  nop   
+
 glabel osViGetCurrentFramebuffer
 /* 00F010 7000E410 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00F014 7000E414 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 00F018 7000E418 0C00617C */  jal   __osDisableInt
 /* 00F01C 7000E41C AFB00018 */   sw    $s0, 0x18($sp)
-/* 00F020 7000E420 3C0E8003 */  lui   $t6, %hi(__osViCurr+0x10) # $t6, 0x8003
-/* 00F024 7000E424 8DCE8040 */  lw    $t6, %lo(__osViCurr+0x10)($t6)
+/* 00F020 7000E420 3C0E8003 */  lui   $t6, %hi(__osViCurr) # $t6, 0x8003
+/* 00F024 7000E424 8DCE8040 */  lw    $t6, %lo(__osViCurr)($t6)
 /* 00F028 7000E428 00408025 */  move  $s0, $v0
 /* 00F02C 7000E42C 02002025 */  move  $a0, $s0
 /* 00F030 7000E430 8DCF0004 */  lw    $t7, 4($t6)
@@ -1748,8 +3028,8 @@ glabel osViGetNextFramebuffer
 /* 00F054 7000E454 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 00F058 7000E458 0C00617C */  jal   __osDisableInt
 /* 00F05C 7000E45C AFB00018 */   sw    $s0, 0x18($sp)
-/* 00F060 7000E460 3C0E8003 */  lui   $t6, %hi(__osViNext+0x10) # $t6, 0x8003
-/* 00F064 7000E464 8DCE8044 */  lw    $t6, %lo(__osViNext+0x10)($t6)
+/* 00F060 7000E460 3C0E8003 */  lui   $t6, %hi(__osViNext) # $t6, 0x8003
+/* 00F064 7000E464 8DCE8044 */  lw    $t6, %lo(__osViNext)($t6)
 /* 00F068 7000E468 00408025 */  move  $s0, $v0
 /* 00F06C 7000E46C 02002025 */  move  $a0, $s0
 /* 00F070 7000E470 8DCF0004 */  lw    $t7, 4($t6)
@@ -1766,13 +3046,13 @@ glabel osViSwapBuffer
 /* 00F094 7000E494 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00F098 7000E498 0C00617C */  jal   __osDisableInt
 /* 00F09C 7000E49C AFA40020 */   sw    $a0, 0x20($sp)
-/* 00F0A0 7000E4A0 3C0F8003 */  lui   $t7, %hi(__osViNext+0x10) # $t7, 0x8003
-/* 00F0A4 7000E4A4 8DEF8044 */  lw    $t7, %lo(__osViNext+0x10)($t7)
+/* 00F0A0 7000E4A0 3C0F8003 */  lui   $t7, %hi(__osViNext) # $t7, 0x8003
+/* 00F0A4 7000E4A4 8DEF8044 */  lw    $t7, %lo(__osViNext)($t7)
 /* 00F0A8 7000E4A8 8FAE0020 */  lw    $t6, 0x20($sp)
 /* 00F0AC 7000E4AC AFA2001C */  sw    $v0, 0x1c($sp)
-/* 00F0B0 7000E4B0 3C188003 */  lui   $t8, %hi(__osViNext+0x10) # $t8, 0x8003
+/* 00F0B0 7000E4B0 3C188003 */  lui   $t8, %hi(__osViNext) # $t8, 0x8003
 /* 00F0B4 7000E4B4 ADEE0004 */  sw    $t6, 4($t7)
-/* 00F0B8 7000E4B8 8F188044 */  lw    $t8, %lo(__osViNext+0x10)($t8)
+/* 00F0B8 7000E4B8 8F188044 */  lw    $t8, %lo(__osViNext)($t8)
 /* 00F0BC 7000E4BC 97190000 */  lhu   $t9, ($t8)
 /* 00F0C0 7000E4C0 37280010 */  ori   $t0, $t9, 0x10
 /* 00F0C4 7000E4C4 A7080000 */  sh    $t0, ($t8)
@@ -1789,6 +3069,47 @@ glabel osDpSetStatus
 /* 00F0E8 7000E4E8 ADC4000C */   sw    $a0, 0xc($t6)
 
 /* 00F0EC 7000E4EC 00000000 */  nop   
+
+.section .bss
+.word 0,0
+glabel tp
+glabel type
+.word 0
+glabel flags
+.word 0
+glabel t_ucode_boot
+.word 0
+glabel t_ucode_boot_size
+.word 0
+glabel t_ucode
+.word 0
+glabel t_ucode_size
+.word 0
+glabel t_ucode_data
+.word 0
+glabel t_ucode_data_size
+.word 0
+glabel t_dram_stack
+.word 0
+glabel t_dram_stack_size
+.word 0
+glabel t_output_buff
+.word 0
+glabel t_output_buff_size
+.word 0
+glabel t_data_ptr
+.word 0
+glabel t_data_size
+.word 0
+glabel t_yield_data_ptr
+.word 0
+glabel t_yield_data_size
+.word 0
+
+
+
+
+.section .text
 glabel _VirtualToPhysicalTask
 /* 00F0F0 7000E4F0 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00F0F4 7000E4F4 3C0E8006 */  lui   $t6, %hi(tp) # $t6, 0x8006
@@ -3172,8 +4493,8 @@ glabel osViSetSpecialFeatures
 /* 0103CC 7000F7CC 31CF0001 */  andi  $t7, $t6, 1
 /* 0103D0 7000F7D0 11E00006 */  beqz  $t7, .L7000F7EC
 /* 0103D4 7000F7D4 00000000 */   nop   
-/* 0103D8 7000F7D8 3C188003 */  lui   $t8, %hi(__osViNext+0x10) # $t8, 0x8003
-/* 0103DC 7000F7DC 8F188044 */  lw    $t8, %lo(__osViNext+0x10)($t8)
+/* 0103D8 7000F7D8 3C188003 */  lui   $t8, %hi(__osViNext) # $t8, 0x8003
+/* 0103DC 7000F7DC 8F188044 */  lw    $t8, %lo(__osViNext)($t8)
 /* 0103E0 7000F7E0 8F19000C */  lw    $t9, 0xc($t8)
 /* 0103E4 7000F7E4 37280008 */  ori   $t0, $t9, 8
 /* 0103E8 7000F7E8 AF08000C */  sw    $t0, 0xc($t8)
@@ -3182,8 +4503,8 @@ glabel osViSetSpecialFeatures
 /* 0103F0 7000F7F0 312A0002 */  andi  $t2, $t1, 2
 /* 0103F4 7000F7F4 11400007 */  beqz  $t2, .L7000F814
 /* 0103F8 7000F7F8 00000000 */   nop   
-/* 0103FC 7000F7FC 3C0B8003 */  lui   $t3, %hi(__osViNext+0x10) # $t3, 0x8003
-/* 010400 7000F800 8D6B8044 */  lw    $t3, %lo(__osViNext+0x10)($t3)
+/* 0103FC 7000F7FC 3C0B8003 */  lui   $t3, %hi(__osViNext) # $t3, 0x8003
+/* 010400 7000F800 8D6B8044 */  lw    $t3, %lo(__osViNext)($t3)
 /* 010404 7000F804 2401FFF7 */  li    $at, -9
 /* 010408 7000F808 8D6C000C */  lw    $t4, 0xc($t3)
 /* 01040C 7000F80C 01816824 */  and   $t5, $t4, $at
@@ -3193,8 +4514,8 @@ glabel osViSetSpecialFeatures
 /* 010418 7000F818 31CF0004 */  andi  $t7, $t6, 4
 /* 01041C 7000F81C 11E00006 */  beqz  $t7, .L7000F838
 /* 010420 7000F820 00000000 */   nop   
-/* 010424 7000F824 3C198003 */  lui   $t9, %hi(__osViNext+0x10) # $t9, 0x8003
-/* 010428 7000F828 8F398044 */  lw    $t9, %lo(__osViNext+0x10)($t9)
+/* 010424 7000F824 3C198003 */  lui   $t9, %hi(__osViNext) # $t9, 0x8003
+/* 010428 7000F828 8F398044 */  lw    $t9, %lo(__osViNext)($t9)
 /* 01042C 7000F82C 8F28000C */  lw    $t0, 0xc($t9)
 /* 010430 7000F830 35180004 */  ori   $t8, $t0, 4
 /* 010434 7000F834 AF38000C */  sw    $t8, 0xc($t9)
@@ -3203,8 +4524,8 @@ glabel osViSetSpecialFeatures
 /* 01043C 7000F83C 312A0008 */  andi  $t2, $t1, 8
 /* 010440 7000F840 11400007 */  beqz  $t2, .L7000F860
 /* 010444 7000F844 00000000 */   nop   
-/* 010448 7000F848 3C0C8003 */  lui   $t4, %hi(__osViNext+0x10) # $t4, 0x8003
-/* 01044C 7000F84C 8D8C8044 */  lw    $t4, %lo(__osViNext+0x10)($t4)
+/* 010448 7000F848 3C0C8003 */  lui   $t4, %hi(__osViNext) # $t4, 0x8003
+/* 01044C 7000F84C 8D8C8044 */  lw    $t4, %lo(__osViNext)($t4)
 /* 010450 7000F850 2401FFFB */  li    $at, -5
 /* 010454 7000F854 8D8D000C */  lw    $t5, 0xc($t4)
 /* 010458 7000F858 01A15824 */  and   $t3, $t5, $at
@@ -3214,8 +4535,8 @@ glabel osViSetSpecialFeatures
 /* 010464 7000F864 31CF0010 */  andi  $t7, $t6, 0x10
 /* 010468 7000F868 11E00006 */  beqz  $t7, .L7000F884
 /* 01046C 7000F86C 00000000 */   nop   
-/* 010470 7000F870 3C088003 */  lui   $t0, %hi(__osViNext+0x10) # $t0, 0x8003
-/* 010474 7000F874 8D088044 */  lw    $t0, %lo(__osViNext+0x10)($t0)
+/* 010470 7000F870 3C088003 */  lui   $t0, %hi(__osViNext) # $t0, 0x8003
+/* 010474 7000F874 8D088044 */  lw    $t0, %lo(__osViNext)($t0)
 /* 010478 7000F878 8D18000C */  lw    $t8, 0xc($t0)
 /* 01047C 7000F87C 37190010 */  ori   $t9, $t8, 0x10
 /* 010480 7000F880 AD19000C */  sw    $t9, 0xc($t0)
@@ -3224,8 +4545,8 @@ glabel osViSetSpecialFeatures
 /* 010488 7000F888 312A0020 */  andi  $t2, $t1, 0x20
 /* 01048C 7000F88C 11400007 */  beqz  $t2, .L7000F8AC
 /* 010490 7000F890 00000000 */   nop   
-/* 010494 7000F894 3C0D8003 */  lui   $t5, %hi(__osViNext+0x10) # $t5, 0x8003
-/* 010498 7000F898 8DAD8044 */  lw    $t5, %lo(__osViNext+0x10)($t5)
+/* 010494 7000F894 3C0D8003 */  lui   $t5, %hi(__osViNext) # $t5, 0x8003
+/* 010498 7000F898 8DAD8044 */  lw    $t5, %lo(__osViNext)($t5)
 /* 01049C 7000F89C 2401FFEF */  li    $at, -17
 /* 0104A0 7000F8A0 8DAB000C */  lw    $t3, 0xc($t5)
 /* 0104A4 7000F8A4 01616024 */  and   $t4, $t3, $at
@@ -3235,14 +4556,14 @@ glabel osViSetSpecialFeatures
 /* 0104B0 7000F8B0 31CF0040 */  andi  $t7, $t6, 0x40
 /* 0104B4 7000F8B4 11E0000D */  beqz  $t7, .L7000F8EC
 /* 0104B8 7000F8B8 00000000 */   nop   
-/* 0104BC 7000F8BC 3C188003 */  lui   $t8, %hi(__osViNext+0x10) # $t8, 0x8003
-/* 0104C0 7000F8C0 8F188044 */  lw    $t8, %lo(__osViNext+0x10)($t8)
+/* 0104BC 7000F8BC 3C188003 */  lui   $t8, %hi(__osViNext) # $t8, 0x8003
+/* 0104C0 7000F8C0 8F188044 */  lw    $t8, %lo(__osViNext)($t8)
 /* 0104C4 7000F8C4 3C010001 */  lui   $at, 1
-/* 0104C8 7000F8C8 3C098003 */  lui   $t1, %hi(__osViNext+0x10) # $t1, 0x8003
+/* 0104C8 7000F8C8 3C098003 */  lui   $t1, %hi(__osViNext) # $t1, 0x8003
 /* 0104CC 7000F8CC 8F19000C */  lw    $t9, 0xc($t8)
 /* 0104D0 7000F8D0 03214025 */  or    $t0, $t9, $at
 /* 0104D4 7000F8D4 AF08000C */  sw    $t0, 0xc($t8)
-/* 0104D8 7000F8D8 8D298044 */  lw    $t1, %lo(__osViNext+0x10)($t1)
+/* 0104D8 7000F8D8 8D298044 */  lw    $t1, %lo(__osViNext)($t1)
 /* 0104DC 7000F8DC 2401FCFF */  li    $at, -769
 /* 0104E0 7000F8E0 8D2A000C */  lw    $t2, 0xc($t1)
 /* 0104E4 7000F8E4 01415824 */  and   $t3, $t2, $at
@@ -3252,15 +4573,15 @@ glabel osViSetSpecialFeatures
 /* 0104F0 7000F8F0 318D0080 */  andi  $t5, $t4, 0x80
 /* 0104F4 7000F8F4 11A00010 */  beqz  $t5, .L7000F938
 /* 0104F8 7000F8F8 00000000 */   nop   
-/* 0104FC 7000F8FC 3C0E8003 */  lui   $t6, %hi(__osViNext+0x10) # $t6, 0x8003
-/* 010500 7000F900 8DCE8044 */  lw    $t6, %lo(__osViNext+0x10)($t6)
+/* 0104FC 7000F8FC 3C0E8003 */  lui   $t6, %hi(__osViNext) # $t6, 0x8003
+/* 010500 7000F900 8DCE8044 */  lw    $t6, %lo(__osViNext)($t6)
 /* 010504 7000F904 3C01FFFE */  lui   $at, (0xFFFEFFFF >> 16) # lui $at, 0xfffe
 /* 010508 7000F908 3421FFFF */  ori   $at, (0xFFFEFFFF & 0xFFFF) # ori $at, $at, 0xffff
 /* 01050C 7000F90C 8DCF000C */  lw    $t7, 0xc($t6)
-/* 010510 7000F910 3C088003 */  lui   $t0, %hi(__osViNext+0x10) # $t0, 0x8003
+/* 010510 7000F910 3C088003 */  lui   $t0, %hi(__osViNext) # $t0, 0x8003
 /* 010514 7000F914 01E1C824 */  and   $t9, $t7, $at
 /* 010518 7000F918 ADD9000C */  sw    $t9, 0xc($t6)
-/* 01051C 7000F91C 8D088044 */  lw    $t0, %lo(__osViNext+0x10)($t0)
+/* 01051C 7000F91C 8D088044 */  lw    $t0, %lo(__osViNext)($t0)
 /* 010520 7000F920 8D0A0008 */  lw    $t2, 8($t0)
 /* 010524 7000F924 8D18000C */  lw    $t8, 0xc($t0)
 /* 010528 7000F928 8D4B0004 */  lw    $t3, 4($t2)
@@ -3268,8 +4589,8 @@ glabel osViSetSpecialFeatures
 /* 010530 7000F930 03096025 */  or    $t4, $t8, $t1
 /* 010534 7000F934 AD0C000C */  sw    $t4, 0xc($t0)
 .L7000F938:
-/* 010538 7000F938 3C0D8003 */  lui   $t5, %hi(__osViNext+0x10) # $t5, 0x8003
-/* 01053C 7000F93C 8DAD8044 */  lw    $t5, %lo(__osViNext+0x10)($t5)
+/* 010538 7000F938 3C0D8003 */  lui   $t5, %hi(__osViNext) # $t5, 0x8003
+/* 01053C 7000F93C 8DAD8044 */  lw    $t5, %lo(__osViNext)($t5)
 /* 010540 7000F940 02002025 */  move  $a0, $s0
 /* 010544 7000F944 95AF0000 */  lhu   $t7, ($t5)
 /* 010548 7000F948 35F90008 */  ori   $t9, $t7, 8
@@ -4720,8 +6041,8 @@ glabel osSetTimer
 /* 0118D8 70010CD8 AD19001C */  sw    $t9, 0x1c($t0)
 /* 0118DC 70010CDC 0C00622A */  jal   __osInsertTimer
 /* 0118E0 70010CE0 8FA40020 */   lw    $a0, 0x20($sp)
-/* 0118E4 70010CE4 3C0A8002 */  lui   $t2, %hi(__osTimerList+0xC) # $t2, 0x8002
-/* 0118E8 70010CE8 8D4A7FD0 */  lw    $t2, %lo(__osTimerList+0xC)($t2)
+/* 0118E4 70010CE4 3C0A8002 */  lui   $t2, %hi(__osTimerList) # $t2, 0x8002
+/* 0118E8 70010CE8 8D4A7FD0 */  lw    $t2, %lo(__osTimerList)($t2)
 /* 0118EC 70010CEC AFA20018 */  sw    $v0, 0x18($sp)
 /* 0118F0 70010CF0 AFA3001C */  sw    $v1, 0x1c($sp)
 /* 0118F4 70010CF4 8FA90020 */  lw    $t1, 0x20($sp)
@@ -5117,7 +6438,7 @@ glabel ultra_7001106C
 /* 011E34 70011234 03E00008 */  jr    $ra
 /* 011E38 70011238 00000000 */   nop   
 
-glabel ultra_7001123C
+glabel __CSPHandleMIDIMsg
 /* 011E3C 7001123C 27BDFF48 */  addiu $sp, $sp, -0xb8
 /* 011E40 70011240 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 011E44 70011244 91160008 */  lbu   $s6, 8($t0)
@@ -5130,9 +6451,9 @@ glabel ultra_7001123C
 /* 011E60 70011260 102001FC */  beqz  $at, .L70011A54
 /* 011E64 70011264 01C0B025 */   move  $s6, $t6
 /* 011E68 70011268 000F7880 */  sll   $t7, $t7, 2
-/* 011E6C 7001126C 3C018003 */  lui   $at, %hi(audio_related_jump_table_0+0xC) # 0x8003
+/* 011E6C 7001126C 3C018003 */  lui   $at, %hi(audio_related_jump_table_0) # 0x8003
 /* 011E70 70011270 002F0821 */  addu  $at, $at, $t7
-/* 011E74 70011274 8C2F9490 */  lw    $t7, %lo(audio_related_jump_table_0+0xC)($at) # -0x6b70
+/* 011E74 70011274 8C2F9490 */  lw    $t7, %lo(audio_related_jump_table_0)($at) # -0x6b70
 /* 011E78 70011278 01E00008 */  jr    $t7
 /* 011E7C 7001127C 00000000 */   nop   
 .L70011280:
@@ -5706,9 +7027,9 @@ glabel ultra_70011A6C
 /* 0126B0 70011AB0 2DE10018 */  sltiu $at, $t7, 0x18
 /* 0126B4 70011AB4 1020015D */  beqz  $at, .L7001202C
 /* 0126B8 70011AB8 000F7880 */   sll   $t7, $t7, 2
-/* 0126BC 70011ABC 3C018003 */  lui   $at, %hi(audio_related_jump_table_1+0xC) # 0x8003
+/* 0126BC 70011ABC 3C018003 */  lui   $at, %hi(audio_related_jump_table_1) # 0x8003
 /* 0126C0 70011AC0 002F0821 */  addu  $at, $at, $t7
-/* 0126C4 70011AC4 8C2F9614 */  lw    $t7, %lo(audio_related_jump_table_1+0xC)($at) # -0x69ec
+/* 0126C4 70011AC4 8C2F9614 */  lw    $t7, %lo(audio_related_jump_table_1)($at) # -0x69ec
 /* 0126C8 70011AC8 01E00008 */  jr    $t7
 /* 0126CC 70011ACC 00000000 */   nop   
 .L70011AD0:
@@ -5722,15 +7043,15 @@ glabel ultra_70011A6C
 /* 0126EC 70011AEC 2F210014 */  sltiu $at, $t9, 0x14
 /* 0126F0 70011AF0 1020014E */  beqz  $at, .L7001202C
 /* 0126F4 70011AF4 0019C880 */   sll   $t9, $t9, 2
-/* 0126F8 70011AF8 3C018003 */  lui   $at, %hi(audio_related_jump_table_2+0xC) # 0x8003
+/* 0126F8 70011AF8 3C018003 */  lui   $at, %hi(audio_related_jump_table_2) # 0x8003
 /* 0126FC 70011AFC 00390821 */  addu  $at, $at, $t9
-/* 012700 70011B00 8C399674 */  lw    $t9, %lo(audio_related_jump_table_2+0xC)($at) # -0x698c
+/* 012700 70011B00 8C399674 */  lw    $t9, %lo(audio_related_jump_table_2)($at) # -0x698c
 /* 012704 70011B04 03200008 */  jr    $t9
 /* 012708 70011B08 00000000 */   nop   
 .L70011B0C:
 /* 01270C 70011B0C 27A80058 */  addiu $t0, $sp, 0x58
 /* 012710 70011B10 AFB200A0 */  sw    $s2, 0xa0($sp)
-/* 012714 70011B14 0C00448F */  jal   ultra_7001123C
+/* 012714 70011B14 0C00448F */  jal   __CSPHandleMIDIMsg
 /* 012718 70011B18 AFB5004C */   sw    $s5, 0x4c($sp)
 /* 01271C 70011B1C 8FB200A0 */  lw    $s2, 0xa0($sp)
 /* 012720 70011B20 8FB5004C */  lw    $s5, 0x4c($sp)
@@ -5933,7 +7254,7 @@ glabel ultra_70011A6C
 .L70011E00:
 /* 012A00 70011E00 8FA80050 */  lw    $t0, 0x50($sp)
 /* 012A04 70011E04 AFB200A0 */  sw    $s2, 0xa0($sp)
-/* 012A08 70011E08 0C00448F */  jal   ultra_7001123C
+/* 012A08 70011E08 0C00448F */  jal   __CSPHandleMIDIMsg
 /* 012A0C 70011E0C AFB5004C */   sw    $s5, 0x4c($sp)
 /* 012A10 70011E10 8FB200A0 */  lw    $s2, 0xa0($sp)
 /* 012A14 70011E14 10000085 */  b     .L7001202C
@@ -6068,11 +7389,11 @@ glabel ultra_70011A6C
 /* 012BE4 70011FE4 A1F80008 */   sb    $t8, 8($t7)
 .L70011FE8:
 /* 012BE8 70011FE8 8E59003C */  lw    $t9, 0x3c($s2)
-/* 012BEC 70011FEC 3C018003 */  lui   $at, %hi(F32_800296C4+0xC) # $at, 0x8003
+/* 012BEC 70011FEC 3C018003 */  lui   $at, %hi(F32_800296C4) # $at, 0x8003
 /* 012BF0 70011FF0 02402025 */  move  $a0, $s2
 /* 012BF4 70011FF4 AE590018 */  sw    $t9, 0x18($s2)
 /* 012BF8 70011FF8 0C00440C */  jal   ultra_70011030
-/* 012BFC 70011FFC C42C96C4 */   lwc1  $f12, %lo(F32_800296C4+0xC)($at)
+/* 012BFC 70011FFC C42C96C4 */   lwc1  $f12, %lo(F32_800296C4)($at)
 /* 012C00 70012000 8E450020 */  lw    $a1, 0x20($s2)
 /* 012C04 70012004 50A0000A */  beql  $a1, $zero, .L70012030
 /* 012C08 70012008 02A02025 */   move  $a0, $s5
@@ -7857,11 +9178,11 @@ glabel alCents2Ratio
 /* 0143C4 700137C4 44811000 */  mtc1  $at, $f2
 /* 0143C8 700137C8 04800004 */  bltz  $a0, .L700137DC
 /* 0143CC 700137CC 3C018003 */   lui   $at, 0x8003
-/* 0143D0 700137D0 3C018003 */  lui   $at, %hi(F32_800296E4+0x10) # $at, 0x8003
+/* 0143D0 700137D0 3C018003 */  lui   $at, %hi(F32_800296E4) # $at, 0x8003
 /* 0143D4 700137D4 10000003 */  b     .L700137E4
-/* 0143D8 700137D8 C42096E0 */   lwc1  $f0, %lo(F32_800296E0+0x10)($at)
+/* 0143D8 700137D8 C42096E0 */   lwc1  $f0, %lo(F32_800296E0)($at)
 .L700137DC:
-/* 0143DC 700137DC C42096E4 */  lwc1  $f0, %lo(F32_800296E4+0x10)($at)
+/* 0143DC 700137DC C42096E4 */  lwc1  $f0, %lo(F32_800296E4)($at)
 /* 0143E0 700137E0 00042023 */  negu  $a0, $a0
 .L700137E4:
 /* 0143E4 700137E4 10800008 */  beqz  $a0, .L70013808
@@ -8429,7 +9750,7 @@ glabel _Printf
 /* 014B78 70013F78 AFB30024 */  sw    $s3, 0x24($sp)
 /* 014B7C 70013F7C AFA700EC */  sw    $a3, 0xec($sp)
 /* 014B80 70013F80 3C158002 */  lui   $s5, %hi(zeros) # $s5, 0x8002
-/* 014B84 70013F84 3C168003 */  lui   $s6, %hi(printf_symbols+0x10) # $s6, 0x8003
+/* 014B84 70013F84 3C168003 */  lui   $s6, %hi(printf_symbols) # $s6, 0x8003
 /* 014B88 70013F88 3C178002 */  lui   $s7, %hi(spaces) # $s7, 0x8002
 /* 014B8C 70013F8C 00C03825 */  move  $a3, $a2
 /* 014B90 70013F90 00A09825 */  move  $s3, $a1
@@ -8441,7 +9762,7 @@ glabel _Printf
 /* 014BA8 70013FA8 AFA600E8 */  sw    $a2, 0xe8($sp)
 /* 014BAC 70013FAC AFA000D4 */  sw    $zero, 0xd4($sp)
 /* 014BB0 70013FB0 26F77740 */  addiu $s7, %lo(spaces) # addiu $s7, $s7, 0x7740
-/* 014BB4 70013FB4 26D696F4 */  addiu $s6, %lo(printf_symbols+0x10) # addiu $s6, $s6, -0x690c
+/* 014BB4 70013FB4 26D696F4 */  addiu $s6, %lo(printf_symbols) # addiu $s6, $s6, -0x690c
 /* 014BB8 70013FB8 26B57764 */  addiu $s5, %lo(zeros) # addiu $s5, $s5, 0x7764
 /* 014BBC 70013FBC 241E000A */  li    $fp, 10
 .L70013FC0:
@@ -8508,7 +9829,7 @@ glabel _Printf
 /* 014C90 70014090 2402002A */  li    $v0, 42
 /* 014C94 70014094 8FB800EC */  lw    $t8, 0xec($sp)
 /* 014C98 70014098 144E0011 */  bne   $v0, $t6, .L700140E0
-/* 014C9C 7001409C 3C048003 */   lui   $a0, %hi(aHll+0x10) # $a0, 0x8003
+/* 014C9C 7001409C 3C048003 */   lui   $a0, %hi(aHll) # $a0, 0x8003
 /* 014CA0 700140A0 270F0003 */  addiu $t7, $t8, 3
 /* 014CA4 700140A4 2401FFFC */  li    $at, -4
 /* 014CA8 700140A8 01E1C824 */  and   $t9, $t7, $at
@@ -8603,7 +9924,7 @@ glabel _Printf
 /* 014DE4 700141E4 8FB900CC */   lw    $t9, 0xcc($sp)
 .L700141E8:
 /* 014DE8 700141E8 0C004E29 */  jal   strchr
-/* 014DEC 700141EC 248496F0 */   addiu $a0, %lo(aHll+0x10) # addiu $a0, $a0, -0x6910
+/* 014DEC 700141EC 248496F0 */   addiu $a0, %lo(aHll) # addiu $a0, $a0, -0x6910
 /* 014DF0 700141F0 10400005 */  beqz  $v0, .L70014208
 /* 014DF4 700141F4 27B000A8 */   addiu $s0, $sp, 0xa8
 /* 014DF8 700141F8 92590000 */  lbu   $t9, ($s2)
@@ -8940,8 +10261,8 @@ glabel osCreatePiManager
 /* 0151F0 700145F0 24847C80 */  addiu $a0, %lo(pieventQueue) # addiu $a0, $a0, 0x7c80
 /* 0151F4 700145F4 0C0035B4 */  jal   osCreateMesgQueue
 /* 0151F8 700145F8 24060001 */   li    $a2, 1
-/* 0151FC 700145FC 3C0F8003 */  lui   $t7, %hi(__osPiAccessQueueEnabled+0x10) # $t7, 0x8003
-/* 015200 70014600 8DEF82E0 */  lw    $t7, %lo(__osPiAccessQueueEnabled+0x10)($t7)
+/* 0151FC 700145FC 3C0F8003 */  lui   $t7, %hi(__osPiAccessQueueEnabled) # $t7, 0x8003
+/* 015200 70014600 8DEF82E0 */  lw    $t7, %lo(__osPiAccessQueueEnabled)($t7)
 /* 015204 70014604 15E00003 */  bnez  $t7, .L70014614
 /* 015208 70014608 00000000 */   nop   
 /* 01520C 7001460C 0C0075C4 */  jal   __osPiCreateAccessQueue
@@ -8980,14 +10301,14 @@ glabel osCreatePiManager
 /* 015288 70014688 AC297790 */  sw    $t1, %lo(__osPiDevMgr)($at)
 /* 01528C 7001468C AC2A7794 */  sw    $t2, %lo(__osPiDevMgr.thread)($at)
 /* 015290 70014690 AC2C779C */  sw    $t4, %lo(__osPiDevMgr.evtQueue)($at)
-/* 015294 70014694 3C188006 */  lui   $t8, %hi(cmdBuf) # $t8, 0x8006
+/* 015294 70014694 3C188006 */  lui   $t8, 0x8006 #cmdBuf
 /* 015298 70014698 AC2B7798 */  sw    $t3, %lo(__osPiDevMgr.cmdQueue)($at)
 /* 01529C 7001469C 8FA80030 */  lw    $t0, 0x30($sp)
 /* 0152A0 700146A0 3C018002 */  lui   $at, %hi(__osPiDevMgr.edma) # $at, 0x8002
 /* 0152A4 700146A4 3C0D8007 */  lui   $t5, %hi(__osPiAccessQueue) # $t5, 0x8007
 /* 0152A8 700146A8 3C0E7001 */  lui   $t6, %hi(osPiRawStartDma) # $t6, 0x7001
 /* 0152AC 700146AC 3C0F7002 */  lui   $t7, %hi(osEPiRawStartDma) # $t7, 0x7002
-/* 0152B0 700146B0 27186C80 */  addiu $t8, %lo(cmdBuf) # addiu $t8, $t8, 0x6c80
+/* 0152B0 700146B0 27186C80 */  addiu $t8, $t8, 0x6c80 #cmdBuf
 /* 0152B4 700146B4 25AD8FE8 */  addiu $t5, %lo(__osPiAccessQueue) # addiu $t5, $t5, -0x7018
 /* 0152B8 700146B8 25CECF90 */  addiu $t6, %lo(osPiRawStartDma) # addiu $t6, $t6, -0x3070
 /* 0152BC 700146BC 25EFE530 */  addiu $t7, %lo(osEPiRawStartDma) # addiu $t7, $t7, -0x1ad0
@@ -9046,6 +10367,381 @@ glabel __osPiDevMgr.edma
 glabel D_800277AC
 glabel __osPiTable
 .word 0
+.section .bss
+
+glabel piThread
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+
+glabel piThreadStack
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+
+glabel pieventQueue
+.word 0, 0, 0, 0, 0, 0
+
+glabel piEventBuf
+.word 0, 0
 
 .section .text  
 glabel osPfsInit
@@ -9433,6 +11129,151 @@ glabel __osPackRequestData
 glabel __osContinitialized
 .word 0
 .align 4
+
+.section .bss
+glabel __osContPifRam
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+glabel __osContLastCmd
+.byte 0
+
+glabel __osMaxControllers
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+glabel __osEepromTimer
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+glabel __osEepromTimerQ
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+glabel __osEepromTimerMsg
+.word 0
+glabel padding_80067d24
+.word 0, 0, 0
+
 
 .section .text  
 glabel osContStartQuery
@@ -9891,6 +11732,76 @@ glabel osEepromRead_sub
 /* 015F34 70015334 00000000 */  nop   
 /* 015F38 70015338 00000000 */  nop   
 /* 015F3C 7001533C 00000000 */  nop   
+
+.section .bss
+glabel __osEepPifRam
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+
+.section .text
 glabel osEepromWrite
 /* 015F40 70015340 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 015F44 70015344 AFA5003C */  sw    $a1, 0x3c($sp)
@@ -10640,6 +12551,28 @@ glabel __osPfsGetInitData
 /* 016A08 70015E08 A08B0000 */   sb    $t3, ($a0)
 
 /* 016A0C 70015E0C 00000000 */  nop   
+.section .bss
+glabel __osPfsPifRam
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+
+
+
+.section .text
 glabel __osSiCreateAccessQueue
 /* 016A10 70015E10 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 016A14 70015E14 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -10699,6 +12632,18 @@ glabel __osSiRelAccess
 __osSiAccessQueueEnabled:
 glabel __osSiAccessQueueEnabled
 .word 0
+
+.align 4
+.section .bss
+glabel __osSiAccessBuf
+.word 0, 0
+glabel __osSiAccessQueue
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
 
 .section .text
 glabel __osSiRawStartDma
@@ -11121,6 +13066,7 @@ glabel __osContRamWrite_sub
 /* 0170A8 700164A8 00000000 */   nop   
 
 /* 0170AC 700164AC 00000000 */  nop   
+
 glabel __osContRamRead
 /* 0170B0 700164B0 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0170B4 700164B4 3C0E8006 */  lui   $t6, %hi(__osPfsPifRam) # $t6, 0x8006
@@ -11377,10 +13323,11 @@ glabel __osContRamRead_sub
 /* 017458 70016858 00000000 */   nop   
 
 /* 01745C 7001685C 00000000 */  nop   
+
 glabel guAlignF
 /* 017460 70016860 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 017464 70016864 3C018003 */  lui   $at, %hi(F32_800297F0+0x10) # $at, 0x8003
-/* 017468 70016868 C42497F0 */  lwc1  $f4, %lo(F32_800297F0+0x10)($at)
+/* 017464 70016864 3C018003 */  lui   $at, %hi(F32_800297F0) # $at, 0x8003
+/* 017468 70016868 C42497F0 */  lwc1  $f4, %lo(F32_800297F0)($at)
 /* 01746C 7001686C AFB00018 */  sw    $s0, 0x18($sp)
 /* 017470 70016870 00808025 */  move  $s0, $a0
 /* 017474 70016874 3C018006 */  lui   $at, %hi(flt_CODE_bss_80067DD0) # $at, 0x8006
@@ -11518,6 +13465,11 @@ glabel guAlign
 glabel F32_800297F0
 .float 0.017453292
 .align 4
+
+.section .bss
+glabel flt_CODE_bss_80067DD0
+.word 0
+.word 0,0,0
 
 .section .text
 glabel guOrthoF
@@ -12778,6 +14730,11 @@ glabel F32_80029810
 .float 0.017453292
 .align 4
 
+.section .bss
+glabel flt_CODE_bss_80067DE0
+.word 0
+.word 0,0,0
+
 .section .text
 glabel __d_to_ll
 /* 018510 70017910 46206109 */  trunc.l.d $f4, $f12
@@ -13099,6 +15056,4107 @@ glabel __osSetHWIntrRoutine
 /* 018928 70017D28 03E00008 */  jr    $ra
 /* 01892C 70017D2C 00000000 */   nop   
 
+.section .bss
+glabel leoDiskStack
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+
+.section .text
 glabel __osLeoInterrupt
 /* 018930 70017D30 3C0E8002 */  lui   $t6, %hi(osDiskExist) # $t6, 0x8002
 /* 018934 70017D34 8DCE6990 */  lw    $t6, %lo(osDiskExist)($t6)
@@ -14006,6 +20064,485 @@ glabel __osInsertTimer
 glabel __osTimerList
 .word __osBaseTimer
 .align 4
+.section .bss
+glabel __osBaseTimer
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+glabel __osCurrentTime
+.word 0,0
+glabel __osBaseCounter
+.word 0
+glabel __osViIntrCount
+.word 0
+glabel __osTimerCounter
+.word 0
+.word 0,0,0
+
+#needs a proper home but works
+glabel __osThreadSave
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
 
 .section .text
 glabel osGetThreadPri
@@ -14024,31 +20561,31 @@ glabel osGetThreadPri
 glabel __osViInit
 /* 019650 70018A50 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 019654 70018A54 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 019658 70018A58 3C048002 */  lui   $a0, %hi(buffer1) # $a0, 0x8002
-/* 01965C 70018A5C 24847FE0 */  addiu $a0, %lo(buffer1) # addiu $a0, $a0, 0x7fe0
+/* 019658 70018A58 3C048002 */  lui   $a0, %hi(vi) # $a0, 0x8002
+/* 01965C 70018A5C 24847FE0 */  addiu $a0, %lo(vi) # addiu $a0, $a0, 0x7fe0
 /* 019660 70018A60 0C005F10 */  jal   _blkclr
 /* 019664 70018A64 24050060 */   li    $a1, 96
-/* 019668 70018A68 3C0E8002 */  lui   $t6, %hi(buffer1) # $t6, 0x8002
-/* 01966C 70018A6C 25CE7FE0 */  addiu $t6, %lo(buffer1) # addiu $t6, $t6, 0x7fe0
-/* 019670 70018A70 3C018003 */  lui   $at, %hi(__osViCurr+0x10) # $at, 0x8003
-/* 019674 70018A74 AC2E8040 */  sw    $t6, %lo(__osViCurr+0x10)($at)
-/* 019678 70018A78 3C018003 */  lui   $at, %hi(__osViNext+0x10) # $at, 0x8003
+/* 019668 70018A68 3C0E8002 */  lui   $t6, %hi(vi) # $t6, 0x8002
+/* 01966C 70018A6C 25CE7FE0 */  addiu $t6, %lo(vi) # addiu $t6, $t6, 0x7fe0
+/* 019670 70018A70 3C018003 */  lui   $at, %hi(__osViCurr) # $at, 0x8003
+/* 019674 70018A74 AC2E8040 */  sw    $t6, %lo(__osViCurr)($at)
+/* 019678 70018A78 3C018003 */  lui   $at, %hi(__osViNext) # $at, 0x8003
 /* 01967C 70018A7C 25CF0030 */  addiu $t7, $t6, 0x30
-/* 019680 70018A80 AC2F8044 */  sw    $t7, %lo(__osViNext+0x10)($at)
+/* 019680 70018A80 AC2F8044 */  sw    $t7, %lo(__osViNext)($at)
 /* 019684 70018A84 24180001 */  li    $t8, 1
 /* 019688 70018A88 A5D80032 */  sh    $t8, 0x32($t6)
-/* 01968C 70018A8C 3C088003 */  lui   $t0, %hi(__osViCurr+0x10) # $t0, 0x8003
-/* 019690 70018A90 8D088040 */  lw    $t0, %lo(__osViCurr+0x10)($t0)
+/* 01968C 70018A8C 3C088003 */  lui   $t0, %hi(__osViCurr) # $t0, 0x8003
+/* 019690 70018A90 8D088040 */  lw    $t0, %lo(__osViCurr)($t0)
 /* 019694 70018A94 24190001 */  li    $t9, 1
-/* 019698 70018A98 3C098003 */  lui   $t1, %hi(osTvType) # $t1, 0x8003
+/* 019698 70018A98 3C098003 */  lui   $t1, %hi(copy_osTvType) # $t1, 0x8003
 /* 01969C 70018A9C A5190002 */  sh    $t9, 2($t0)
-/* 0196A0 70018AA0 8D298048 */  lw    $t1, %lo(osTvType)($t1)
+/* 0196A0 70018AA0 8D298048 */  lw    $t1, %lo(copy_osTvType)($t1)
 /* 0196A4 70018AA4 1120000B */  beqz  $t1, .L70018AD4
 /* 0196A8 70018AA8 00000000 */   nop   
-/* 0196AC 70018AAC 3C0B8003 */  lui   $t3, %hi(__osViNext+0x10) # $t3, 0x8003
-/* 0196B0 70018AB0 8D6B8044 */  lw    $t3, %lo(__osViNext+0x10)($t3)
-/* 0196B4 70018AB4 3C0A8003 */  lui   $t2, %hi(OS_VI_NTSC_LAN1) # $t2, 0x8003
-/* 0196B8 70018AB8 254A8320 */  addiu $t2, %lo(OS_VI_NTSC_LAN1) # addiu $t2, $t2, -0x7ce0
+/* 0196AC 70018AAC 3C0B8003 */  lui   $t3, %hi(__osViNext) # $t3, 0x8003
+/* 0196B0 70018AB0 8D6B8044 */  lw    $t3, %lo(__osViNext)($t3)
+/* 0196B4 70018AB4 3C0A8003 */  lui   $t2, %hi(osViModeNtscLan1) # $t2, 0x8003
+/* 0196B8 70018AB8 254A8320 */  addiu $t2, %lo(osViModeNtscLan1) # addiu $t2, $t2, -0x7ce0
 /* 0196BC 70018ABC 3C0C02E6 */  lui   $t4, (0x02E6D354 >> 16) # lui $t4, 0x2e6
 /* 0196C0 70018AC0 358CD354 */  ori   $t4, (0x02E6D354 & 0xFFFF) # ori $t4, $t4, 0xd354
 /* 0196C4 70018AC4 3C018003 */  lui   $at, %hi(osViClock) # $at, 0x8003
@@ -14056,22 +20593,22 @@ glabel __osViInit
 /* 0196CC 70018ACC 1000000A */  b     .L70018AF8
 /* 0196D0 70018AD0 AC2C804C */   sw    $t4, %lo(osViClock)($at)
 .L70018AD4:
-/* 0196D4 70018AD4 3C0F8003 */  lui   $t7, %hi(__osViNext+0x10) # $t7, 0x8003
-/* 0196D8 70018AD8 8DEF8044 */  lw    $t7, %lo(__osViNext+0x10)($t7)
-/* 0196DC 70018ADC 3C0D8003 */  lui   $t5, %hi(OS_VI_PAL_LAN1) # $t5, 0x8003
-/* 0196E0 70018AE0 25AD8370 */  addiu $t5, %lo(OS_VI_PAL_LAN1) # addiu $t5, $t5, -0x7c90
+/* 0196D4 70018AD4 3C0F8003 */  lui   $t7, %hi(__osViNext) # $t7, 0x8003
+/* 0196D8 70018AD8 8DEF8044 */  lw    $t7, %lo(__osViNext)($t7)
+/* 0196DC 70018ADC 3C0D8003 */  lui   $t5, %hi(osViModePalLan1) # $t5, 0x8003
+/* 0196E0 70018AE0 25AD8370 */  addiu $t5, %lo(osViModePalLan1) # addiu $t5, $t5, -0x7c90
 /* 0196E4 70018AE4 3C1802F5 */  lui   $t8, (0x02F5B2D2 >> 16) # lui $t8, 0x2f5
 /* 0196E8 70018AE8 3718B2D2 */  ori   $t8, (0x02F5B2D2 & 0xFFFF) # ori $t8, $t8, 0xb2d2
 /* 0196EC 70018AEC 3C018003 */  lui   $at, %hi(osViClock) # $at, 0x8003
 /* 0196F0 70018AF0 ADED0008 */  sw    $t5, 8($t7)
 /* 0196F4 70018AF4 AC38804C */  sw    $t8, %lo(osViClock)($at)
 .L70018AF8:
-/* 0196F8 70018AF8 3C198003 */  lui   $t9, %hi(__osViNext+0x10) # $t9, 0x8003
-/* 0196FC 70018AFC 8F398044 */  lw    $t9, %lo(__osViNext+0x10)($t9)
+/* 0196F8 70018AF8 3C198003 */  lui   $t9, %hi(__osViNext) # $t9, 0x8003
+/* 0196FC 70018AFC 8F398044 */  lw    $t9, %lo(__osViNext)($t9)
 /* 019700 70018B00 240E0020 */  li    $t6, 32
-/* 019704 70018B04 3C088003 */  lui   $t0, %hi(__osViNext+0x10) # $t0, 0x8003
+/* 019704 70018B04 3C088003 */  lui   $t0, %hi(__osViNext) # $t0, 0x8003
 /* 019708 70018B08 A72E0000 */  sh    $t6, ($t9)
-/* 01970C 70018B0C 8D088044 */  lw    $t0, %lo(__osViNext+0x10)($t0)
+/* 01970C 70018B0C 8D088044 */  lw    $t0, %lo(__osViNext)($t0)
 /* 019710 70018B10 3C0BA440 */  lui   $t3, %hi(VI_CURRENT_REG) # $t3, 0xa440
 /* 019714 70018B14 8D090008 */  lw    $t1, 8($t0)
 /* 019718 70018B18 8D2A0004 */  lw    $t2, 4($t1)
@@ -14095,29 +20632,41 @@ glabel __osViInit
 /* 019758 70018B58 03E00008 */  jr    $ra
 /* 01975C 70018B5C 00000000 */   nop   
 
-glabel _libultraosviSegmentDataStart
+
 .section .data
-glabel buffer1
+glabel _libultraosviSegmentDataStart
+
+glabel vi
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
+
+glabel vi_buffer_next
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
+
 glabel __osViCurr
-.word buffer1
+.word vi
+
 glabel __osViNext
-.word buffer1+0x30
+.word vi_buffer_next
+
+glabel copy_osTvType
+.word 1
+
 glabel osViClock
 .word 48681812
-.align 4
+
 glabel _libultraosviSegmentDataEnd
+.align 4
+
 
 .section .text
 glabel __osViGetCurrentContext
@@ -14133,9 +20682,9 @@ glabel __osViSwapContext
 /* 01977C 70018B7C AFB20020 */  sw    $s2, 0x20($sp)
 /* 019780 70018B80 AFB00018 */  sw    $s0, 0x18($sp)
 /* 019784 70018B84 AFA00030 */  sw    $zero, 0x30($sp)
-/* 019788 70018B88 3C118003 */  lui   $s1, %hi(__osViNext+0x10) # $s1, 0x8003
+/* 019788 70018B88 3C118003 */  lui   $s1, %hi(__osViNext) # $s1, 0x8003
 /* 01978C 70018B8C 3C0EA440 */  lui   $t6, %hi(VI_CURRENT_REG) # $t6, 0xa440
-/* 019790 70018B90 8E318044 */  lw    $s1, %lo(__osViNext+0x10)($s1)
+/* 019790 70018B90 8E318044 */  lw    $s1, %lo(__osViNext)($s1)
 /* 019794 70018B94 8DCF0010 */  lw    $t7, %lo(VI_CURRENT_REG)($t6)
 /* 019798 70018B98 8E300008 */  lw    $s0, 8($s1)
 /* 01979C 70018B9C 31F80001 */  andi  $t8, $t7, 1
@@ -14287,7 +20836,7 @@ glabel __osViSwapContext
 /* 0199B8 70018DB8 AD0C0008 */  sw    $t4, %lo(VI_WIDTH_REG)($t0)
 /* 0199BC 70018DBC 8E0D000C */  lw    $t5, 0xc($s0)
 /* 0199C0 70018DC0 3C09A440 */  lui   $t1, %hi(VI_H_SYNC_REG) # $t1, 0xa440
-/* 0199C4 70018DC4 3C018003 */  lui   $at, %hi(__osViNext+0x10) # $at, 0x8003
+/* 0199C4 70018DC4 3C018003 */  lui   $at, %hi(__osViNext) # $at, 0x8003
 /* 0199C8 70018DC8 ADED0014 */  sw    $t5, %lo(VI_BURST_REG)($t7)
 /* 0199CC 70018DCC 8E0E0010 */  lw    $t6, 0x10($s0)
 /* 0199D0 70018DD0 AF0E0018 */  sw    $t6, %lo(VI_V_SYNC_REG)($t8)
@@ -14321,22 +20870,22 @@ glabel __osViSwapContext
 /* 019A40 70018E40 020F7021 */  addu  $t6, $s0, $t7
 /* 019A44 70018E44 8DD80038 */  lw    $t8, 0x38($t6)
 /* 019A48 70018E48 3C0DA440 */  lui   $t5, 0xa440
-/* 019A4C 70018E4C 3C0F8003 */  lui   $t7, %hi(__osViCurr+0x10) # $t7, 0x8003
+/* 019A4C 70018E4C 3C0F8003 */  lui   $t7, %hi(__osViCurr) # $t7, 0x8003
 /* 019A50 70018E50 AF38000C */  sw    $t8, %lo(VI_INTR_REG)($t9)
 /* 019A54 70018E54 8E290020 */  lw    $t1, 0x20($s1)
-/* 019A58 70018E58 3C188003 */  lui   $t8, %hi(__osViCurr+0x10) # $t8, 0x8003
-/* 019A5C 70018E5C 3C0E8003 */  lui   $t6, %hi(__osViNext+0x10) # $t6, 0x8003
+/* 019A58 70018E58 3C188003 */  lui   $t8, %hi(__osViCurr) # $t8, 0x8003
+/* 019A5C 70018E5C 3C0E8003 */  lui   $t6, %hi(__osViNext) # $t6, 0x8003
 /* 019A60 70018E60 AD490030 */  sw    $t1, %lo(VI_X_SCALE_REG)($t2)
 /* 019A64 70018E64 8E2B002C */  lw    $t3, 0x2c($s1)
 /* 019A68 70018E68 AD8B0034 */  sw    $t3, %lo(VI_Y_SCALE_REG)($t4)
 /* 019A6C 70018E6C 8E28000C */  lw    $t0, 0xc($s1)
 /* 019A70 70018E70 ADA80000 */  sw    $t0, ($t5)
-/* 019A74 70018E74 8DEF8040 */  lw    $t7, %lo(__osViCurr+0x10)($t7)
-/* 019A78 70018E78 AC2F8044 */  sw    $t7, %lo(__osViNext+0x10)($at)
-/* 019A7C 70018E7C 3C018003 */  lui   $at, %hi(__osViCurr+0x10) # $at, 0x8003
-/* 019A80 70018E80 AC318040 */  sw    $s1, %lo(__osViCurr+0x10)($at)
-/* 019A84 70018E84 8F188040 */  lw    $t8, %lo(__osViCurr+0x10)($t8)
-/* 019A88 70018E88 8DCE8044 */  lw    $t6, %lo(__osViNext+0x10)($t6)
+/* 019A74 70018E74 8DEF8040 */  lw    $t7, %lo(__osViCurr)($t7)
+/* 019A78 70018E78 AC2F8044 */  sw    $t7, %lo(__osViNext)($at)
+/* 019A7C 70018E7C 3C018003 */  lui   $at, %hi(__osViCurr) # $at, 0x8003
+/* 019A80 70018E80 AC318040 */  sw    $s1, %lo(__osViCurr)($at)
+/* 019A84 70018E84 8F188040 */  lw    $t8, %lo(__osViCurr)($t8)
+/* 019A88 70018E88 8DCE8044 */  lw    $t6, %lo(__osViNext)($t6)
 /* 019A8C 70018E8C 270A0030 */  addiu $t2, $t8, 0x30
 .L70018E90:
 /* 019A90 70018E90 8F010000 */  lw    $at, ($t8)
@@ -19697,6 +26246,7 @@ glabel alCopy
 /* 01E304 7001D704 00000000 */  nop   
 /* 01E308 7001D708 00000000 */  nop   
 /* 01E30C 7001D70C 00000000 */  nop   
+
 glabel __osPiCreateAccessQueue
 /* 01E310 7001D710 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 01E314 7001D714 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -19755,6 +26305,19 @@ glabel __osPiRelAccess
 .section .data
 glabel __osPiAccessQueueEnabled
 .word 0
+.align 4
+
+.section .bss
+glabel piAccessBuf
+.word 0
+.word 0
+glabel __osPiAccessQueue
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
 
 .section .text
 glabel _Litob
@@ -22151,6 +28714,131 @@ glabel osLeoDiskInit
 /* 0204D8 7001F8D8 27BD0020 */   addiu $sp, $sp, 0x20
 
 /* 0204DC 7001F8DC 00000000 */  nop   
+.section .bss
+glabel LeoDiskHandle
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+glabel __osDiskHandle
+.word 0
+.word 0, 0
+
+
+.section .text
 glabel __osSetCompare
 /* 0204E0 7001F8E0 40845800 */  mtc0  $a0, $11
 /* 0204E4 7001F8E4 03E00008 */  jr    $ra
@@ -23644,242 +30332,108 @@ glabel osViModePalLan1
 .word   0x5F0239,   0x9026B,         2,     0x280
 .word      0x400,  0x5F0239,   0x9026B,         2
 .word       0x10,      0x10,      0x20,         0
+
 .section .bss
-/*hacky filler*/
-glabel LIBULTRABSSFILLER_START
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-.word 0,0,0,0,0,0,0,0,0,0,0,0
-glabel LIBULTRABSSFILLER_END
-
-
-
-
-
+glabel D_80069080
+.word 0
+glabel D_80069084
+.word 0
+glabel D_80069088
+.word 0
+glabel D_8006908C
+.word 0
+glabel D_80069090
+.word 0
+glabel D_80069094
+.word 0
+glabel D_80069098
+.word 0
+glabel D_8006909C
+.word 0
+glabel D_800690a0
+.word 0
+glabel D_800690a4
+.word 0
+glabel D_800690a8
+.word 0
+glabel D_800690ac
+.word 0
+glabel D_800690b0
+.word 0
+glabel D_800690b4
+.word 0
+glabel D_800690b8
+.word 0
+glabel D_800690BC
+.word 0
+glabel D_800690c0
+.word 0
+glabel D_800690C4
+.word 0
+glabel D_800690c8
+.word 0
+glabel D_800690cc
+.word 0
+glabel D_800690D0
+.word 0
+glabel D_800690D4
+.word 0
+glabel D_800690D8
+.word 0
+glabel D_800690DC
+.word 0
+glabel D_800690E0
+.word 0
+.word 0
+glabel D_800690E8
+.word 0
+glabel D_800690EC
+.word 0
+glabel D_800690F0
+.word 0
+glabel D_800690F4
+.word 0
+glabel D_800690F8
+.word 0
+glabel D_800690FC
+.word 0
+glabel D_80069100
+.word 0
+glabel D_80069104
+.word 0
+glabel D_80069108
+.word 0
+glabel D_8006910C
+.word 0
+glabel D_80069110
+.word 0
+glabel D_80069114
+.word 0
+glabel D_80069118
+.word 0
+glabel D_8006911C
+.word 0
+glabel D_80069120
+.word 0
+glabel D_80069124
+.word 0
+glabel D_80069128
+.word 0
+.word 0
+glabel D_80069130
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
