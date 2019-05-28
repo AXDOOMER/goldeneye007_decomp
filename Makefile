@@ -61,11 +61,11 @@ BOOTOBJECTS := build/boot.o build/cfb.o
 BOOTSEGMENT := bootsegment.o
 
 CODEFILES := init.c sched.c osMapTLB.c tlb_manage.c tlb_random.c tlb_resolve.c tlb_hardware.c audi.c \
-			   speed_graph.c video.c deb.c debug_getlastRA.c ramrom.c boss.c music.c \
+			   speed_graph.c video.c deb.c debug_stuff_split.c debug_getlastRA.c ramrom.c boss.c music.c \
 			   sfx.c memp.c mema.c random.c token.c stringhandler.c sprintf.c pi.c vi.c \
 			   debugmenu.c joy.c joy_rumble.c rmon.c
 CODEOBJECTS := build/init.o build/sched.o build/osMapTLB.o build/tlb_manage.o build/tlb_random.o build/tlb_resolve.o build/tlb_hardware.o build/audi.o \
-			   build/speed_graph.o build/video.o build/deb.o build/debug_getlastRA.o build/ramrom.o build/boss.o build/music.o \
+			   build/speed_graph.o build/video.o build/deb.o build/debug_stuff_split.o build/debug_getlastRA.o build/ramrom.o build/boss.o build/music.o \
 			   build/sfx.o build/memp.o build/mema.o build/random.o build/token.o build/stringhandler.o build/sprintf.o build/pi.o build/vi.o \
 			   build/debugmenu.o build/joy.o build/joy_rumble.o build/rmon.o
 CODESEGMENT := codesegment.o

@@ -42,6 +42,10 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/video.o
  .options       0x0000000000000000       0x20 build/deb.o
  .reginfo       0x0000000000000000       0x18 build/deb.o
+ .options       0x0000000000000000       0x20 build/debug_stuff_split.o
+ .reginfo       0x0000000000000000       0x18 build/debug_stuff_split.o
+ .gptab.data    0x0000000000000000       0x40 build/debug_stuff_split.o
+ .mdebug        0x0000000000000000      0x840 build/debug_stuff_split.o
  .options       0x0000000000000000       0x20 build/debug_getlastRA.o
  .reginfo       0x0000000000000000       0x18 build/debug_getlastRA.o
  .options       0x0000000000000000       0x20 build/ramrom.o
@@ -820,6 +824,7 @@ Linker script and memory map
                 0x0000000070005984                set_ptr_video_buffers
                 0x00000000700059a4                set_video_buffer_pointers
                 0x00000000700059d0                write_stderr_to_buffer
+ build/debug_stuff_split.o(.text)
  build/debug_getlastRA.o(.text)
  .text          0x0000000070005b10       0x50 build/debug_getlastRA.o
                 0x0000000070005b10                return_last_RA_saved_to_stack
@@ -5097,10 +5102,13 @@ Linker script and memory map
                 0x00000000800232cc                rgb_16bit_grabnum
                 0x00000000800232d0                rgb_32bit_grabnum
  build/deb.o(.data)
- .data          0x00000000800232e0      0xeb0 build/deb.o
+ .data          0x00000000800232e0       0x20 build/deb.o
                 0x00000000800232e0                D_800232E0
                 0x00000000800232e8                debug_notice_list
                 0x00000000800232f8                debug_notice_list_data
+ build/debug_stuff_split.o(.data)
+ .data          0x0000000080023300      0xea0 build/debug_stuff_split.o
+                0x0000000080023300                D_80023300
                 0x0000000080023304                debug_processor_error_table
                 0x00000000800236dc                stack_ptrs_1
                 0x00000000800236f0                stack_ptrs_2
@@ -5109,11 +5117,11 @@ Linker script and memory map
                 0x0000000080024000                std_error_font_bitcode
                 0x000000008002417c                ptr_videobuffer1
                 0x0000000080024180                ptr_videobuffer2
+                0x0000000080024184                padding_80024184
  build/debug_getlastRA.o(.data)
  build/ramrom.o(.data)
  build/boss.o(.data)
- .data          0x0000000080024190      0x1a0 build/boss.o
-                0x0000000080024190                filler
+ .data          0x00000000800241a0      0x190 build/boss.o
                 0x00000000800241a0                boss_c_ptr_debug_notice_list_entry
                 0x00000000800241a4                debug_and_update_stage_flag
                 0x00000000800241a8                current_stage_num
@@ -5417,7 +5425,9 @@ Linker script and memory map
                 0x0000000080028774                aRmGrab_D_temp_uixGrab_D_temp_pix_1
                 0x000000008002879c                aImgviewGrab_D_rgb_0
  build/deb.o(.rodata)
- .rodata        0x00000000800287b0      0x2c0 build/deb.o
+ .rodata        0x00000000800287b0       0x10 build/deb.o
+ build/debug_stuff_split.o(.rodata)
+ .rodata        0x00000000800287c0      0x2b0 build/debug_stuff_split.o
  build/debug_getlastRA.o(.rodata)
  build/ramrom.o(.rodata)
  build/boss.o(.rodata)
@@ -9852,6 +9862,7 @@ Linker script and memory map
                 0x0000000080063668                ptr_indy_read_buf_string1
                 0x000000008006366c                ptr_indy_read_buf_string2
                 0x0000000080063670                indy_read_buffer
+ build/debug_stuff_split.o(.bss)
  build/debug_getlastRA.o(.bss)
  build/ramrom.o(.bss)
  .bss           0x00000000800636d0       0x40 build/ramrom.o

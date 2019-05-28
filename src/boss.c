@@ -4,7 +4,6 @@
 #include "game/debugmenu_090490.h"
 
 /* data */
-u32 filler[4] = {0};
 u32 boss_c_ptr_debug_notice_list_entry = 0;
 u32 debug_and_update_stage_flag = 0;
 s32 current_stage_num = 0x5A;
@@ -1418,7 +1417,7 @@ s32 get_debug_parse_flag(void) {
 }
 
 void something_with_boss_c_debug(void) {
-    get_ptr_debug_notice_list_entry(boss_c_ptr_debug_notice_list_entry, "boss_c_debug");
+    get_ptr_debug_notice_list_entry(&boss_c_ptr_debug_notice_list_entry, "boss_c_debug");
 }
 
 

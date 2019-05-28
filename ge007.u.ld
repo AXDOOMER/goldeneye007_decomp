@@ -40,6 +40,7 @@ SECTIONS
       build/speed_graph.o (.text);
       build/video.o (.text);
       build/deb.o (.text);
+      build/debug_stuff_split.o (.text);
       build/debug_getlastRA.o (.text);
       build/ramrom.o (.text);
       build/boss.o (.text);
@@ -231,6 +232,7 @@ SECTIONS
       build/speed_graph.o (.data);
       build/video.o (.data);
       build/deb.o (.data);
+      build/debug_stuff_split.o (.data);
       build/debug_getlastRA.o (.data);
       build/ramrom.o (.data);
       build/boss.o (.data);
@@ -263,6 +265,7 @@ SECTIONS
       build/speed_graph.o (.rodata);
       build/video.o (.rodata);
       build/deb.o (.rodata);
+      build/debug_stuff_split.o (.rodata);
       build/debug_getlastRA.o (.rodata);
       build/ramrom.o (.rodata);
       build/boss.o (.rodata);
@@ -530,6 +533,7 @@ SECTIONS
       build/speed_graph.o (.bss);
       build/video.o (.bss);
       build/deb.o (.bss);
+      build/debug_stuff_split.o (.bss);
       build/debug_getlastRA.o (.bss);
       build/ramrom.o (.bss);
       build/boss.o (.bss);
