@@ -216,7 +216,7 @@ s32 debug_enable_all_levels_flag = 0;
 s32 debug_chrnum_flag = 0;
 
 //D:80036FBC
-u8 debug_gunwatchpos_flags[] = {0, 0, 0, 0};
+s32 debug_gunwatchpos_flags = 0;
 //D:80036FC0
 s32 debug_profile_flag = 0;
 //D:80036FC4
@@ -1293,11 +1293,11 @@ void set_debug_testingmanpos_flag(s32 flag) {
 }
 
 s32 get_debug_joy2skyedit_flag(void) {
-    return get_debug_joy2skyedit_flag;
+    return debug_joy2skyedit_flag;
 }
 
 s32 get_debug_joy2hitsedit_flag(void) {
-    return get_debug_joy2hitsedit_flag;
+    return debug_joy2hitsedit_flag;
 }
 
 s32 get_debug_joy2detailedit_flag(void) {

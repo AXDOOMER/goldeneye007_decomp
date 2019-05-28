@@ -595,11 +595,11 @@ glabel sub_GAME_7F09BE4C
 /* 0D09A0 7F09BE70 14A1000E */  bne   $a1, $at, .L7F09BEAC
 /* 0D09A4 7F09BE74 3C088008 */   lui   $t0, %hi(dword_CODE_bss_8007A0E8) # $t0, 0x8008
 /* 0D09A8 7F09BE78 3C0B8008 */  lui   $t3, %hi(word_CODE_bss_8007A0F0) # $t3, 0x8008
-/* 0D09AC 7F09BE7C 3C068008 */  lui   $a2, %hi(dword_CODE_bss_8007A0DC) # $a2, 0x8008
+/* 0D09AC 7F09BE7C 3C068008 */  lui   $a2, %hi(dword_CODE_bss_8007A0D4+2) # $a2, 0x8008
 /* 0D09B0 7F09BE80 8D08A0E8 */  lw    $t0, %lo(dword_CODE_bss_8007A0E8)($t0)
 /* 0D09B4 7F09BE84 256BA0F0 */  addiu $t3, %lo(word_CODE_bss_8007A0F0) # addiu $t3, $t3, -0x5f10
 /* 0D09B8 7F09BE88 1000000A */  b     .L7F09BEB4
-/* 0D09BC 7F09BE8C 84C6A0D6 */   lh    $a2, %lo(dword_CODE_bss_8007A0DC)($a2)
+/* 0D09BC 7F09BE8C 84C6A0D6 */   lh    $a2, %lo(dword_CODE_bss_8007A0D4+2)($a2)
 .L7F09BE90:
 /* 0D09C0 7F09BE90 3C088008 */  lui   $t0, %hi(dword_CODE_bss_8007A0EC) # $t0, 0x8008
 /* 0D09C4 7F09BE94 3C0B8008 */  lui   $t3, %hi(word_CODE_bss_8007A0F2) # $t3, 0x8008

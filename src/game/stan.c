@@ -688,7 +688,7 @@ glabel sub_GAME_7F0AF20C
 /* 0E3EF8 7F0AF3C8 8CB80000 */   lw    $t8, ($a1)
 /* 0E3EFC 7F0AF3CC 91CF0000 */  lbu   $t7, ($t6)
 /* 0E3F00 7F0AF3D0 00008025 */  move  $s0, $zero
-/* 0E3F04 7F0AF3D4 01C01021 */  move  $v0, $t6
+/* 0E3F04 7F0AF3D4 01C01021 */  addu  $v0, $t6, $zero
 /* 0E3F08 7F0AF3D8 12CF000D */  beq   $s6, $t7, .L7F0AF410
 /* 0E3F0C 7F0AF3DC 00000000 */   nop   
 /* 0E3F10 7F0AF3E0 91C30000 */  lbu   $v1, ($t6)
