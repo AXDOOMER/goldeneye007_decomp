@@ -490,7 +490,7 @@ glabel stage_load
 .L7F0BDBD0:
 /* 0F2700 7F0BDBD0 3C048005 */  lui   $a0, %hi(current_stage_to_load) # $a0, 0x8005
 /* 0F2704 7F0BDBD4 8C848364 */  lw    $a0, %lo(current_stage_to_load)($a0)
-/* 0F2708 7F0BDBD8 3C018007 */  li    $at, %hi(newcheatunlocked) # -0.000000
+/* 0F2708 7F0BDBD8 3C018007 */  lui    $at, %hi(newcheatunlocked) # -0.000000
 /* 0F270C 7F0BDBDC AC209790 */  sw    $zero, %lo(newcheatunlocked)($at)
 /* 0F2710 7F0BDBE0 2401005A */  li    $at, 90
 /* 0F2714 7F0BDBE4 1081001C */  beq   $a0, $at, .L7F0BDC58
@@ -1463,7 +1463,7 @@ glabel sub_GAME_7F0BE8D0
 /* 0F3454 7F0BE924 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0F3458 7F0BE928 44816000 */  mtc1  $at, $f12
 /* 0F345C 7F0BE92C 1000000F */  b     .L7F0BE96C
-/* 0F3460 7F0BE930 3C014000 */   lui   $at, %hi(0x4000B73C) # $at, 0x4000
+/* 0F3460 7F0BE930 3C014000 */   lui   $at, 0x4000
 .L7F0BE934:
 /* 0F3464 7F0BE934 C426B73C */  lwc1  $f6, %lo(0x4000B73C)($at)
 /* 0F3468 7F0BE938 3C013F00 */  lui   $at, 0x3f00

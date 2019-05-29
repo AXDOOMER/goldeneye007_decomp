@@ -7481,7 +7481,7 @@ glabel generate_link_final_image
 /* 0FF0DC 7F0CA5AC 32060003 */  andi  $a2, $s0, 3
 /* 0FF0E0 7F0CA5B0 00C05025 */  move  $t2, $a2
 /* 0FF0E4 7F0CA5B4 02281021 */  addu  $v0, $s1, $t0
-/* 0FF0E8 7F0CA5B8 00604821 */  move  $t1, $v1
+/* 0FF0E8 7F0CA5B8 00604821 */  addu  $t1, $v1, $zero
 /* 0FF0EC 7F0CA5BC 0000C812 */  mflo  $t9
 /* 0FF0F0 7F0CA5C0 01197021 */  addu  $t6, $t0, $t9
 /* 0FF0F4 7F0CA5C4 10C0000D */  beqz  $a2, .L7F0CA5FC
@@ -7552,7 +7552,7 @@ glabel generate_link_final_image
 /* 0FF1DC 7F0CA6AC 10C0000B */  beqz  $a2, .L7F0CA6DC
 /* 0FF1E0 7F0CA6B0 02281021 */   addu  $v0, $s1, $t0
 /* 0FF1E4 7F0CA6B4 00C05025 */  move  $t2, $a2
-/* 0FF1E8 7F0CA6B8 00604821 */  move  $t1, $v1
+/* 0FF1E8 7F0CA6B8 00604821 */  addu  $t1, $v1, $zero
 .L7F0CA6BC:
 /* 0FF1EC 7F0CA6BC 904E0000 */  lbu   $t6, ($v0)
 /* 0FF1F0 7F0CA6C0 24A50001 */  addiu $a1, $a1, 1
@@ -8575,7 +8575,7 @@ glabel type6_7_generate_link_final_image
 /* 0FFF18 7F0CB3E8 32260003 */  andi  $a2, $s1, 3
 /* 0FFF1C 7F0CB3EC 10C00016 */  beqz  $a2, .L7F0CB448
 /* 0FFF20 7F0CB3F0 00C06025 */   move  $t4, $a2
-/* 0FFF24 7F0CB3F4 01605021 */  move  $t2, $t3
+/* 0FFF24 7F0CB3F4 01605021 */  addu  $t2, $t3, $zero
 .L7F0CB3F8:
 /* 0FFF28 7F0CB3F8 2A010101 */  slti  $at, $s0, 0x101
 /* 0FFF2C 7F0CB3FC 10200008 */  beqz  $at, .L7F0CB420

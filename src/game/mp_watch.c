@@ -4430,7 +4430,7 @@ def_7F0C40C0:
 /* 0FA23C 7F0C570C 10000019 */  b     .L7F0C5774
 /* 0FA240 7F0C5710 00408825 */   move  $s1, $v0
 .L7F0C5714:
-/* 0FA244 7F0C5714 8D6BA070 */  lw    $t3, %lo(player3_player_data + 0x30)($t3)
+/* 0FA244 7F0C5714 8D6BA070 */  lw    $t3, %lo(player4_player_data+0x30)($t3)
 /* 0FA248 7F0C5718 8FAD00D4 */  lw    $t5, 0xd4($sp)
 /* 0FA24C 7F0C571C 3C188008 */  lui   $t8, %hi(player1_player_data) # $t8, 0x8008
 /* 0FA250 7F0C5720 19600014 */  blez  $t3, .L7F0C5774

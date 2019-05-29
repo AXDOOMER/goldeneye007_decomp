@@ -2506,7 +2506,7 @@ glabel sub_GAME_7F0B4A50
 /* 0E958C 7F0B4A5C 30A600FF */  andi  $a2, $a1, 0xff
 /* 0E9590 7F0B4A60 110E000C */  beq   $t0, $t6, .L7F0B4A94
 /* 0E9594 7F0B4A64 00001025 */   move  $v0, $zero
-/* 0E9598 7F0B4A68 00801821 */  move  $v1, $a0
+/* 0E9598 7F0B4A68 00801821 */  addu  $v1, $a0, $zero
 /* 0E959C 7F0B4A6C 90850000 */  lbu   $a1, ($a0)
 /* 0E95A0 7F0B4A70 00C03825 */  move  $a3, $a2
 .L7F0B4A74:
@@ -4949,7 +4949,7 @@ glabel sub_GAME_7F0B5FAC
 /* 0EAB90 7F0B6060 00004812 */  mflo  $t1
 /* 0EAB94 7F0B6064 00892021 */  addu  $a0, $a0, $t1
 /* 0EAB98 7F0B6068 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
-/* 0EAB9C 7F0B606C 8C844490 */   lw    $a0, %lo(levelinfotable)($a0)
+/* 0EAB9C 7F0B606C 8C844490 */   lw    $a0, %lo(levelinfotable+4)($a0)
 /* 0EABA0 7F0B6070 8FA40018 */  lw    $a0, 0x18($sp)
 /* 0EABA4 7F0B6074 0FC2D7E3 */  jal   sub_GAME_7F0B5F8C
 /* 0EABA8 7F0B6078 8FA50034 */   lw    $a1, 0x34($sp)
@@ -5027,7 +5027,7 @@ glabel sub_GAME_7F0B609C
 /* 0EAC84 7F0B6154 00004812 */  mflo  $t1
 /* 0EAC88 7F0B6158 00892021 */  addu  $a0, $a0, $t1
 /* 0EAC8C 7F0B615C 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
-/* 0EAC90 7F0B6160 8C844490 */   lw    $a0, %lo(levelinfotable)($a0)
+/* 0EAC90 7F0B6160 8C844490 */   lw    $a0, %lo(levelinfotable+4)($a0)
 /* 0EAC94 7F0B6164 02202025 */  move  $a0, $s1
 /* 0EAC98 7F0B6168 0FC2D7E3 */  jal   sub_GAME_7F0B5F8C
 /* 0EAC9C 7F0B616C 02002825 */   move  $a1, $s0
@@ -5125,7 +5125,7 @@ glabel sub_GAME_7F0B61DC
 /* 0EADC4 7F0B6294 00004812 */  mflo  $t1
 /* 0EADC8 7F0B6298 00892021 */  addu  $a0, $a0, $t1
 /* 0EADCC 7F0B629C 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
-/* 0EADD0 7F0B62A0 8C844490 */   lw    $a0, %lo(levelinfotable)($a0)
+/* 0EADD0 7F0B62A0 8C844490 */   lw    $a0, %lo(levelinfotable+4)($a0)
 /* 0EADD4 7F0B62A4 02002025 */  move  $a0, $s0
 /* 0EADD8 7F0B62A8 0FC2D7E3 */  jal   sub_GAME_7F0B5F8C
 /* 0EADDC 7F0B62AC 02202825 */   move  $a1, $s1
