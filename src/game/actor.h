@@ -169,9 +169,9 @@ struct weapon_firing_animation_table
 {
   s32 anonymous_0;
   f32 anonymous_1;
-  s32 anonymous_2;
-  s32 anonymous_3;
-  s32 anonymous_4;
+  f32 anonymous_2;
+  f32 anonymous_3;
+  f32 anonymous_4;
   f32 anonymous_5;
   f32 anonymous_6;
   f32 anonymous_7;

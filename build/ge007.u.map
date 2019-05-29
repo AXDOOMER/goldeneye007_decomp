@@ -5117,8 +5117,7 @@ Linker script and memory map
                 0x000000008002434c                music1_playing
                 0x0000000080024350                music2_playing
                 0x0000000080024354                music3_playing
-                0x0000000080024358                music_array_tempo_maybe
-                0x000000008002435c                music_related_array
+                0x0000000080024358                music_tempo_array
  build/sfx.o(.data)
  .data          0x00000000800243e0       0x20 build/sfx.o
                 0x00000000800243e0                sfx_unused
@@ -5908,7 +5907,14 @@ Linker script and memory map
                 0x000000008002c580                D_8002C580
                 0x000000008002c5e0                D_8002C5E0
                 0x000000008002c640                D_8002C640
-                0x000000008002c6a0                filler_8002C6A0
+                0x000000008002c644                D_8002C644
+                0x000000008002c648                flt_8002C648
+                0x000000008002c64c                dword_8002C64C
+                0x000000008002c650                dword_8002C650
+                0x000000008002c654                dword_8002C654
+                0x000000008002c658                dword_8002C658
+                0x000000008002c65c                dword_8002C65C
+                0x000000008002c660                D_8002C660
                 0x000000008002c6c0                D_8002C6C0
                 0x000000008002c720                D_8002C720
                 0x000000008002c780                D_8002C780

@@ -35,8 +35,8 @@ struct PitemZ_header {
     struct item_related * anonymous_1;
     short anonymous_2;
     short field_E;
-    float drawdistance;
-    s32 anonymous_4;
+    s32 drawdistance;
+    float anonymous_4;
     s32 anonymous_5;
     s32 anonymous_6;
     s32 anonymous_7;
