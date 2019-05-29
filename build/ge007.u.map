@@ -9401,7 +9401,9 @@ Linker script and memory map
                 0x0000000080055860                D_80055860
  build/game/cheat_buttons_objectrelated.o(.rodata)
  .rodata        0x0000000080055870     0x1ca0 build/game/cheat_buttons_objectrelated.o
-                0x0000000080057290                PADDINGHACKS
+                0x0000000080055a54                spacer_string
+                0x0000000080056e74                padding_chars_for_strings
+                0x00000000800572a8                PADDINGHACKS
                 0x00000000800572b0                jpt_700C5B38
                 0x00000000800573d8                finalamount
                 0x00000000800573dc                jpt_700C6400

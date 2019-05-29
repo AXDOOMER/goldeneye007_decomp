@@ -2566,11 +2566,11 @@ glabel jpt_7006CB34
 .word loc_CODE_7F038C0C
 .word loc_CODE_7F038C0C
 .word loc_CODE_7F038C0C
-.word def_7F038C04
-.word def_7F038C04
-.word def_7F038C04
-.word def_7F038C04
-.word def_7F038C04
+.word .L7F038C24
+.word .L7F038C24
+.word .L7F038C24
+.word .L7F038C24
+.word .L7F038C24
 .word loc_CODE_7F038C0C
 .word loc_CODE_7F038C0C
 .word loc_CODE_7F038C0C
@@ -6539,7 +6539,7 @@ actionBF_Spawn_Weapon_9:
 /* 06D728 7F038BF8 3C018005 */  lui   $at, 0x8005
 /* 06D72C 7F038BFC 00390821 */  addu  $at, $at, $t9
 /* 06D730 7F038C00 8C3928FC */  lw    $t9, 0x28fc($at)
-def_7F038C04:
+.L7F038C04:
 /* 06D734 7F038C04 03200008 */  jr    $t9
 /* 06D738 7F038C08 00000000 */   nop   
 loc_CODE_7F038C0C:
@@ -31135,15 +31135,15 @@ glabel D_80052D7C
 glabel D_80052D80
 .word 0x40c90fdb /*6.2831855*/
 glabel D_80052D84
-.word 0x3dc90fdb /*0.0098174773*/
+.word 0x3C20D97C /*0.009817477*/
 glabel D_80052D88
 .word 0x40c90fdb /*6.2831855*/
 glabel D_80052D8C
-.word 0x3dc90fdb /*0.0098174773*/
+.word 0x3C20D97C /*0.009817477*/
 glabel D_80052D90
 .word 0x40c90fdb /*6.2831855*/
 glabel D_80052D94
-.word 0x3dc90fdb /*0.0098174773*/
+.word 0x3C20D97C /*0.009817477*/
 .text
 glabel sub_GAME_7F04CA44
 /* 081574 7F04CA44 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -41133,14 +41133,14 @@ glabel door_opening_sound_table_1
 .word .L7F054018
 .word .L7F054058
 .word .L7F054098
-.word .L7F053FD0
-.word .L7F053FD0
+.word .L7F05428C
+.word .L7F05428C
 .word .L7F0540D8
 .word .L7F054118
 .word .L7F054158
-.word .L7F053FD0
-.word .L7F053FD0
-.word .L7F053FD0
+.word .L7F05428C
+.word .L7F05428C
+.word .L7F05428C
 .word .L7F054178
 .word .L7F0541B8
 .word .L7F0541D8
@@ -41405,14 +41405,14 @@ glabel door_closing_sound_table_0
 .word .L7F054328
 .word .L7F054348
 .word .L7F054368
-.word .L7F054300
-.word .L7F054300
+.word .L7F054484
+.word .L7F054484
 .word .L7F054388
 .word .L7F0543A8
 .word .L7F0543C8
-.word .L7F054300
-.word .L7F054300
-.word .L7F054300
+.word .L7F054484
+.word .L7F054484
+.word .L7F054484
 .word .L7F0543E8
 .word .L7F054408
 .word .L7F054428

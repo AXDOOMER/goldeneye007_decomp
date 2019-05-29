@@ -6267,9 +6267,10 @@ struct PitemZ_header {
     short anonymous_2;
     short field_E;
     float drawdistance;
-    int anonymous_4;
+    float anonymous_4;
     int anonymous_5;
     int anonymous_6;
+    int anonymous_7;
 };
 
 struct p_itementry {

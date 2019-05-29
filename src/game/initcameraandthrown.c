@@ -135,6 +135,7 @@ glabel projectile_ptr_table
 .word default
 .word default
 .word default
+.word default
 .word grenade_launch_round
 .word rocket
 .word grenade
@@ -160,7 +161,7 @@ glabel projectile_ptr_table
 .word default
 .word bug
 .word microcamera
-.word 0
+
 
 /*8004f1a8*/
 glabel default_zoom_speed

@@ -362,7 +362,7 @@ GLOBAL_ASM(
 glabel D_8005752C
 .word 0x38d1b717 /*0.000099999997*/
 glabel D_80057530
-.word 0x38d1b717 /*-0.0099999998*/
+.word 0xbc23d70a /*-0.01*/
 glabel D_80057534
 .word 0x48927c00 /*300000.0*/
 .text
@@ -1237,10 +1237,10 @@ glabel jpt_700C8968
 .word .L7F094B4C
 .word .L7F095514
 .word .L7F094E60
-.word .L7F094A38
+.word .L7F0957A4
 .word .L7F0951BC
 .word .L7F09565C
-.word .L7F094A38
+.word .L7F0957A4
 .word .L7F094D5C
 .word .L7F0950F4
 .word .L7F094C50
@@ -1263,10 +1263,10 @@ glabel jpt_700C9D3C
 .word .L7F096094
 .word .L7F09661C
 .word .L7F0961CC
-.word .L7F095E0C
+.word .L7F096E20
 .word .L7F096C98
 .word .L7F09670C
-.word .L7F095E0C
+.word .L7F096E20
 .word .L7F096304
 .word .L7F096B10
 .word .L7F095F58

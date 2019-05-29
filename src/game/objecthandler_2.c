@@ -219,27 +219,27 @@ GLOBAL_ASM(
 /*D:80054AF8*/
 glabel jpt_obj_struct_microcode_id
 .word .L7F06C7D8
-.word .L7F06C7D0
-.word .L7F06C7D0
-.word .L7F06C7D0
-.word .L7F06C7D0
-.word .L7F06C7D0
+.word .L7F06C840
+.word .L7F06C840
+.word .L7F06C840
+.word .L7F06C840
+.word .L7F06C840
 .word .L7F06C7F0
 .word .L7F06C7FC
 .word .L7F06C814
-.word .L7F06C7D0
+.word .L7F06C840
 .word .L7F06C820
 .word .L7F06C82C
-.word .L7F06C7D0
-.word .L7F06C7D0
-.word .L7F06C7D0
-.word .L7F06C7D0
-.word .L7F06C7D0
+.word .L7F06C840
+.word .L7F06C840
+.word .L7F06C840
+.word .L7F06C840
+.word .L7F06C840
 .word .L7F06C808
-.word .L7F06C7D0
-.word .L7F06C7D0
-/*.word .L7F06C7D0*/
-/*.word .L7F06C7D0*/
+.word .L7F06C840
+.word .L7F06C840
+/*.word .L7F06C840*/
+/*.word .L7F06C840*/
 /*.word .L7F06C838*/
 /*.word .L7F06C7E4*/
 
@@ -339,8 +339,8 @@ void getpartoffset(void) {
 GLOBAL_ASM(
 .late_rodata
 /*HACKY, above jtable too big*/
-.word .L7F06C7D0
-.word .L7F06C7D0
+.word .L7F06C840
+.word .L7F06C840
 .word .L7F06C838
 .word .L7F06C7E4
 
@@ -888,23 +888,23 @@ glabel jpt_getjointsize
 .word .L7F06CEF8
 .word .L7F06CF10
 .word .L7F06CF28
-.word .L7F06CEF0
-.word .L7F06CEF0
-.word .L7F06CEF0
-.word .L7F06CEF0
-.word .L7F06CEF0
-.word .L7F06CEF0
-.word .L7F06CEF0
+.word .L7F06CFE8
+.word .L7F06CFE8
+.word .L7F06CFE8
+.word .L7F06CFE8
+.word .L7F06CFE8
+.word .L7F06CFE8
+.word .L7F06CFE8
 .word .L7F06CF58
 .word .L7F06CF70
 .word .L7F06CF88
 .word .L7F06CFA0
 .word .L7F06CFB8
 .word .L7F06CFD0
-.word .L7F06CEF0
-.word .L7F06CEF0
-.word .L7F06CEF0
-.word .L7F06CEF0
+.word .L7F06CFE8
+.word .L7F06CFE8
+.word .L7F06CFE8
+.word .L7F06CFE8
 .word .L7F06CF40
 
 .text
@@ -3599,27 +3599,27 @@ glabel jpt_700A2E24
 .word .L7F06EEFC
 .word .L7F06EEFC
 .word .L7F06EEFC
-.word .L7F06EEF4
-.word .L7F06EEF4
-.word .L7F06EEF4
+.word .L7F06EF4C
+.word .L7F06EF4C
+.word .L7F06EF4C
 .word .L7F06EF2C
 .word .L7F06EF04
 .word .L7F06EF18
-.word .L7F06EEF4
+.word .L7F06EF4C
 .word .L7F06EEFC
 .word .L7F06EEFC
 .word .L7F06EEFC
 .word .L7F06EEFC
 .word .L7F06EEFC
 .word .L7F06EEFC
-.word .L7F06EEF4
-.word .L7F06EEF4
-.word .L7F06EEF4
-.word .L7F06EEF4
+.word .L7F06EF4C
+.word .L7F06EF4C
+.word .L7F06EF4C
+.word .L7F06EF4C
 .word .L7F06EEFC
-.word .L7F06EEF4
+.word .L7F06EF4C
 .word .L7F06EF40
-/*.word .L7F06EEF4*/
+/*.word .L7F06EF4C*/
 
 .text
 glabel sub_GAME_7F06EEA4
@@ -3725,34 +3725,34 @@ void sub_GAME_7F06EFC4(void) {
 GLOBAL_ASM(
 .late_rodata
 /*hack for above jtbl being too big*/
-.word .L7F06EEF4
+.word .L7F06EF4C
 
 /*D:80054C80*/
 glabel jpt_700A2F3C
-.word .L7F06F00C
-.word .L7F06F00C
-.word .L7F06F00C
-.word .L7F06F00C
-.word .L7F06F00C
-.word .L7F06F00C
+.word .L7F06F078
+.word .L7F06F078
+.word .L7F06F078
+.word .L7F06F078
+.word .L7F06F078
+.word .L7F06F078
 .word .L7F06F03C
 .word .L7F06F014
 .word .L7F06F028
-.word .L7F06F00C
-.word .L7F06F00C
-.word .L7F06F00C
-.word .L7F06F00C
-.word .L7F06F00C
-.word .L7F06F00C
-.word .L7F06F00C
-.word .L7F06F00C
+.word .L7F06F078
+.word .L7F06F078
+.word .L7F06F078
+.word .L7F06F078
+.word .L7F06F078
+.word .L7F06F078
+.word .L7F06F078
+.word .L7F06F078
 .word .L7F06F050
-.word .L7F06F00C
-.word .L7F06F00C
-.word .L7F06F00C
-/*.word .L7F06F00C*/
+.word .L7F06F078
+.word .L7F06F078
+.word .L7F06F078
+/*.word .L7F06F078*/
 /*.word .L7F06F064*/
-/*.word .L7F06F00C*/
+/*.word .L7F06F078*/
 
 .text
 glabel sub_GAME_7F06EFC4
@@ -3853,36 +3853,36 @@ void sub_GAME_7F06F0D0(void) {
 GLOBAL_ASM(
 .late_rodata
 /*hack for above jtbl*/
-.word .L7F06F00C
+.word .L7F06F078
 .word .L7F06F064
-.word .L7F06F00C
+.word .L7F06F078
 
 /*D:80054CE0*/
 glabel jpt_700A3050
 .word .L7F06F128
 .word .L7F06F140
 .word .L7F06F158
-.word .L7F06F120
-.word .L7F06F120
-.word .L7F06F120
+.word .L7F06F1EC
+.word .L7F06F1EC
+.word .L7F06F1EC
 .word .L7F06F1B0
 .word .L7F06F188
 .word .L7F06F19C
-.word .L7F06F120
-.word .L7F06F120
-.word .L7F06F120
-.word .L7F06F120
-.word .L7F06F120
-.word .L7F06F120
-.word .L7F06F120
-.word .L7F06F120
+.word .L7F06F1EC
+.word .L7F06F1EC
+.word .L7F06F1EC
+.word .L7F06F1EC
+.word .L7F06F1EC
+.word .L7F06F1EC
+.word .L7F06F1EC
+.word .L7F06F1EC
 .word .L7F06F1C4
-.word .L7F06F120
-.word .L7F06F120
+.word .L7F06F1EC
+.word .L7F06F1EC
 .word .L7F06F170
-.word .L7F06F120
+.word .L7F06F1EC
 .word .L7F06F1D8
-.word .L7F06F120
+.word .L7F06F1EC
 
 .text
 glabel sub_GAME_7F06F0D0
@@ -10533,9 +10533,9 @@ GLOBAL_ASM(
 .late_rodata
 /*80054D54*/
 glabel jpt_700A8494
-.word .L7F074564
-.word .L7F074564
-.word .L7F074564
+.word .L7F074674
+.word .L7F074674
+.word .L7F074674
 .word .L7F07460C
 .word .L7F07464C
 .word .L7F07466C
@@ -10546,14 +10546,14 @@ glabel jpt_700A8494
 .word .L7F0745BC
 .word .L7F0745CC
 .word .L7F0745DC
-.word .L7F074564
-.word .L7F074564
-.word .L7F074564
+.word .L7F074674
+.word .L7F074674
+.word .L7F074674
 .word .L7F0745FC
 .word .L7F074580
-.word .L7F074564
+.word .L7F074674
 .word .L7F07462C
-.word .L7F074564
+.word .L7F074674
 .word .L7F07463C
 .word .L7F074594
 .word .L7F07461C
@@ -11593,30 +11593,30 @@ GLOBAL_ASM(
 .late_rodata
 /*D:80054DB4*/
 glabel jpt_700A92F4
-.word .L7F0753C4
-.word .L7F0753C4
-.word .L7F0753C4
-.word .L7F0753C4
-.word .L7F0753C4
-.word .L7F0753C4
-.word .L7F0753C4
+.word .L7F075470
+.word .L7F075470
+.word .L7F075470
+.word .L7F075470
+.word .L7F075470
+.word .L7F075470
+.word .L7F075470
 .word .L7F07543C
-.word .L7F0753C4
+.word .L7F075470
 .word .L7F0753CC
-.word .L7F0753C4
-.word .L7F0753C4
-.word .L7F0753C4
-.word .L7F0753C4
-.word .L7F0753C4
-.word .L7F0753C4
+.word .L7F075470
+.word .L7F075470
+.word .L7F075470
+.word .L7F075470
+.word .L7F075470
+.word .L7F075470
 .word .L7F075404
 .word .L7F075450
-.word .L7F0753C4
-.word .L7F0753C4
-.word .L7F0753C4
-.word .L7F0753C4
+.word .L7F075470
+.word .L7F075470
+.word .L7F075470
+.word .L7F075470
 .word .L7F075464
-.word .L7F0753C4
+.word .L7F075470
 
 .text
 glabel sub_GAME_7F0752FC
@@ -11940,20 +11940,20 @@ glabel jpt_700A95A0
 .word .L7F07583C
 .word .L7F075904
 .word .L7F07594C
-.word .L7F075670
+.word .L7F075A44
 .word .L7F0759A0
 .word .L7F0759C4
 .word .L7F0759E8
-.word .L7F075670
-.word .L7F075670
-.word .L7F075670
+.word .L7F075A44
+.word .L7F075A44
+.word .L7F075A44
 .word .L7F075980
 .word .L7F07592C
-.word .L7F075670
+.word .L7F075A44
 .word .L7F07578C
-.word .L7F075670
+.word .L7F075A44
 .word .L7F075A20
-.word .L7F075670
+.word .L7F075A44
 .word .L7F0756FC
 
 .text
@@ -12411,27 +12411,27 @@ GLOBAL_ASM(
 /*D:80054E74*/
 glabel jpt_700A9A90
 .word .L7F075B68
-.word .L7F075B60
-.word .L7F075B60
-.word .L7F075B60
-.word .L7F075B60
-.word .L7F075B60
+.word .L7F075C84
+.word .L7F075C84
+.word .L7F075C84
+.word .L7F075C84
+.word .L7F075C84
 .word .L7F075B84
 .word .L7F075BA0
 .word .L7F075C00
-.word .L7F075B60
+.word .L7F075C84
 .word .L7F075C30
 .word .L7F075C4C
-.word .L7F075B60
-.word .L7F075B60
-.word .L7F075B60
-.word .L7F075B60
-.word .L7F075B60
+.word .L7F075C84
+.word .L7F075C84
+.word .L7F075C84
+.word .L7F075C84
+.word .L7F075C84
 .word .L7F075BC0
-.word .L7F075B60
-.word .L7F075B60
-.word .L7F075B60
-.word .L7F075B60
+.word .L7F075C84
+.word .L7F075C84
+.word .L7F075C84
+.word .L7F075C84
 .word .L7F075BE0
 .word .L7F075C68
 
@@ -12626,27 +12626,27 @@ GLOBAL_ASM(
 /*D:80054ED4*/
 glabel jpt_700A9CB0
 .word .L7F075D88
-.word .L7F075D80
-.word .L7F075D80
-.word .L7F075D80
-.word .L7F075D80
-.word .L7F075D80
+.word .L7F075EF4
+.word .L7F075EF4
+.word .L7F075EF4
+.word .L7F075EF4
+.word .L7F075EF4
 .word .L7F075E00
 .word .L7F075E18
 .word .L7F075E78
-.word .L7F075D80
+.word .L7F075EF4
 .word .L7F075E9C
 .word .L7F075EB4
-.word .L7F075D80
-.word .L7F075D80
-.word .L7F075D80
-.word .L7F075D80
-.word .L7F075D80
+.word .L7F075EF4
+.word .L7F075EF4
+.word .L7F075EF4
+.word .L7F075EF4
+.word .L7F075EF4
 .word .L7F075E38
-.word .L7F075D80
-.word .L7F075D80
-.word .L7F075D80
-.word .L7F075D80
+.word .L7F075EF4
+.word .L7F075EF4
+.word .L7F075EF4
+.word .L7F075EF4
 .word .L7F075E5C
 .word .L7F075ECC
 
@@ -12999,25 +12999,25 @@ GLOBAL_ASM(
 /*D:80054F34*/
 glabel jpt_700AA050
 .word .L7F076128
-.word .L7F076120
-.word .L7F076120
-.word .L7F076120
+.word .L7F0761CC
+.word .L7F0761CC
+.word .L7F0761CC
 .word .L7F0761A0
 .word .L7F0761C0
-.word .L7F076120
-.word .L7F076120
-.word .L7F076120
-.word .L7F076120
-.word .L7F076120
-.word .L7F076120
-.word .L7F076120
-.word .L7F076120
+.word .L7F0761CC
+.word .L7F0761CC
+.word .L7F0761CC
+.word .L7F0761CC
+.word .L7F0761CC
+.word .L7F0761CC
+.word .L7F0761CC
+.word .L7F0761CC
 .word .L7F0761B0
-.word .L7F076120
-.word .L7F076120
-.word .L7F076120
+.word .L7F0761CC
+.word .L7F0761CC
+.word .L7F0761CC
 .word .L7F076188
-.word .L7F076120
+.word .L7F0761CC
 .word .L7F076158
 
 .text

@@ -20,8 +20,8 @@ struct Gitemheader {
     int offset_objtable;
     struct model_data * guntype_modeldata;
     int offset_objblock;
-    short num05soffset_entries;
-    short num_objgroups;
+    u16 num05soffset_entries;
+    u16 num_objgroups;
     float drawdistance;
     u16 num_entries;
     u16 num_images;
@@ -44,7 +44,7 @@ struct PitemZ_header {
 
 struct p_itementry {
     struct PitemZ_header * header;
-    void * filename;
+    char * filename;
     float scale;
 };
 

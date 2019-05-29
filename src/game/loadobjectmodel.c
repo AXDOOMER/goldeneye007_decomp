@@ -626,8 +626,8 @@ glabel jpt_7008AE0C
 .word .L7F056EE4
 .word .L7F056EE4
 .word .L7F056EEC
-.word .L7F056EDC
-.word .L7F056EDC
+.word .L7F056EF4
+.word .L7F056EF4
 .word .L7F056EE4
 .word .L7F056EEC
 .word .L7F056EEC

@@ -402,43 +402,43 @@ s32 D_800443C4[] = {
 //D:8004448C
 struct levelentry levelinfotable[] = {
     {LEVELID_BUNKER1,  "bg/bg_sev_all_p.seg",  "Tbg_sev_all_p_stanZ",  0.53931433,  1.0, 23.148148},
-    {LEVELID_SILO,     "bg/bg_silo_all_p_seg", "Tbg_silo_all_p_stanz", 0.47256002,  1.0, 29.069},
-    {LEVELID_STATUE,   "bg/bg_stat_all_p_seg", "Tbg_stat_all_p_stanz", 0.10720287,  1.0, 0.0801},
-    {LEVELID_CONTROL,  "bg/bg_arec_all_p_seg", "Tbg_arec_all_p_stanz", 0.49886572,  1.0, 80.645164},
-    {LEVELID_ARCHIVES, "bg/bg_arch_all_p_seg", "Tbg_arch_all_p_stanz", 0.50678575,  1.0, 54.347824},
-    {LEVELID_TRAIN,    "bg/bg_tra_all_p_seg",  "Tbg_tra_all_p_stanz",  0.15019713,  1.0, 19.53125},
-    {LEVELID_FRIGATE,  "bg/bg_dest_all_p_seg", "Tbg_dest_all_p_stanz", 0.44757429,  1.0, 36.764706},
-    {LEVELID_BUNKER2,  "bg/bg_sevb_all_p_seg", "Tbg_sevb_all_p_stanz", 0.53931433,  1.0, 23.148148},
-    {LEVELID_AZTEC,    "bg/bg_azt_all_p_seg",  "Tbg_azt_all_p_stanz",  0.35300568,  1.0, 52.083332},
-    {LEVELID_STREETS,  "bg/bg_pete_all_p_seg", "Tbg_pete_all_p_stanz", 0.34187999,  1.0, 42.372883},
-    {LEVELID_DEPOT,    "bg/bg_depo_all_p_seg", "Tbg_depo_all_p_stanz", 0.21847887,  1.0, 17.605633},
-    {LEVELID_COMPLEX,  "bg/bg_ref_all_p_seg",  "Tbg_ref_all_p_stanz",  0.94285715,  1.0, 37.878788},
-    {LEVELID_EGYPT,    "bg/bg_cryp_all_p_seg", "Tbg_cryp_all_p_stanz", 0.25608,     1.0, 23.584906},
-    {LEVELID_DAM,      "bg/bg_dam_all_p_seg",  "Tbg_dam_all_p_stanz",  0.23363999,  0.2, 100.0},
-    {LEVELID_FACILITY, "bg/bg_ark_all_p_seg",  "Tbg_ark_all_p_stanz",  1.20648,     1.0, 64.102562},
-    {LEVELID_RUNWAY,   "bg/bg_run_all_p_seg",  "Tbg_run_all_p_stanz",  0.089571431, 1.0, 4.5537338},
-    {LEVELID_SURFACE,  "bg/bg_sevx_all_p_seg", "Tbg_sevx_all_p_stanz", 0.45445713,  0.2, 22.603975},
-    {LEVELID_JUNGLE,   "bg/bg_jun_all_p_seg",  "Tbg_jun_all_p_stanz",  0.094662853, 1.0, 6.6844921},
-    {LEVELID_TEMPLE,   "bg/bg_dish_all_p_seg", "Tbg_dish_all_p_stanz", 0.47142857,  1.0, 147.05882},
-    {LEVELID_CAVERNS,  "bg/bg_cave_all_p_seg", "Tbg_cave_all_p_stanz", 0.26824287,  1.0, 13.44086},
-    {LEVELID_CITADEL,  "bg/bg_cat_all_p_seg",  "Tbg_cat_all_p_stanz",  0.76852286,  1.0, 38.461536},
-    {LEVELID_CRADLE,   "bg/bg_crad_all_p_seg", "Tbg_crad_all_p_stanz", 0.23571429,  1.0, 43.103451},
-    {LEVELID_SHO,      "bg/bg_sho_all_p_seg",  "Tbg_sho_all_p_stanz",  0.528,       1.0, 21.18644},
-    {LEVELID_SURFACE2, "bg/bg_sevx_all_p_seg", "Tbg_sevx_all_p_stanz", 0.45445713,  0.2, 22.603975},
-    {LEVELID_ELD,      "bg/bg_eld_all_p_seg",  "Tbg_eld_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_BASEMENT, "bg/bg_ame_all_p_seg",  "Tbg_ame_all_p_stanz",  0.65999997,  1.0, 37.878788},
-    {LEVELID_STACK,    "bg/bg_ame_all_p_seg",  "Tbg_ame_all_p_stanz",  0.65999997,  1.0, 37.878788},
-    {LEVELID_LUE,      "bg/bg_lue_all_p_seg",  "Tbg_lue_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_LIBRARY,  "bg/bg_ame_all_p_seg",  "Tbg_ame_all_p_stanz",  0.65999997,  1.0, 37.878788},
-    {LEVELID_RIT,      "bg/bg_rit_all_p_seg",  "Tbg_rit_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_CAVES,    "bg/bg_oat_all_p_seg",  "Tbg_oat_all_p_stanz",  0.14142857,  1.0, 10.123456},
-    {LEVELID_EAR,      "bg/bg_ear_all_p_seg",  "Tbg_ear_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_LEE,      "bg/bg_lee_all_p_seg",  "Tbg_lee_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_LIP,      "bg/bg_lip_all_p_seg",  "Tbg_lip_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_CUBA,     "bg/bg_len_all_p_seg",  "Tbg_len_all_p_stanz",  0.094662853, 1.0, 6.6844921},
-    {LEVELID_WAX,      "bg/bg_wax_all_p_seg",  "Tbg_wax_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_PAM,      "bg/bg_pam_all_p_seg",  "Tbg_pam_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_MAX,      "bg/bgx.seg",           "Tbgxz",                0.94285715,  1.0, 1.0}
+    {LEVELID_SILO,     "bg/bg_silo_all_p.seg", "Tbg_silo_all_p_stanZ", 0.47256002,  1.0, 29.069},
+    {LEVELID_STATUE,   "bg/bg_stat_all_p.seg", "Tbg_stat_all_p_stanZ", 0.107202865,  1.0, 0.0801},
+    {LEVELID_CONTROL,  "bg/bg_arec_all_p.seg", "Tbg_arec_all_p_stanZ", 0.49886572,  1.0, 80.645164},
+    {LEVELID_ARCHIVES, "bg/bg_arch_all_p.seg", "Tbg_arch_all_p_stanZ", 0.50678575,  1.0, 54.347824},
+    {LEVELID_TRAIN,    "bg/bg_tra_all_p.seg",  "Tbg_tra_all_p_stanZ",  0.15019713,  1.0, 19.53125},
+    {LEVELID_FRIGATE,  "bg/bg_dest_all_p.seg", "Tbg_dest_all_p_stanZ", 0.44757429,  1.0, 36.764706},
+    {LEVELID_BUNKER2,  "bg/bg_sevb_all_p.seg", "Tbg_sevb_all_p_stanZ", 0.53931433,  1.0, 23.148148},
+    {LEVELID_AZTEC,    "bg/bg_azt_all_p.seg",  "Tbg_azt_all_p_stanZ",  0.35300568,  1.0, 52.083332},
+    {LEVELID_STREETS,  "bg/bg_pete_all_p.seg", "Tbg_pete_all_p_stanZ", 0.34187999,  1.0, 42.372883},
+    {LEVELID_DEPOT,    "bg/bg_depo_all_p.seg", "Tbg_depo_all_p_stanZ", 0.21847887,  1.0, 17.605633},
+    {LEVELID_COMPLEX,  "bg/bg_ref_all_p.seg",  "Tbg_ref_all_p_stanZ",  0.94285715,  1.0, 37.878788},
+    {LEVELID_EGYPT,    "bg/bg_cryp_all_p.seg", "Tbg_cryp_all_p_stanZ", 0.25608,     1.0, 23.584906},
+    {LEVELID_DAM,      "bg/bg_dam_all_p.seg",  "Tbg_dam_all_p_stanZ",  0.23363999,  0.2, 100.0},
+    {LEVELID_FACILITY, "bg/bg_ark_all_p.seg",  "Tbg_ark_all_p_stanZ",  1.20648,     1.0, 64.102562},
+    {LEVELID_RUNWAY,   "bg/bg_run_all_p.seg",  "Tbg_run_all_p_stanZ",  0.089571431, 1.0, 4.5537338},
+    {LEVELID_SURFACE,  "bg/bg_sevx_all_p.seg", "Tbg_sevx_all_p_stanZ", 0.45445713,  0.2, 22.603975},
+    {LEVELID_JUNGLE,   "bg/bg_jun_all_p.seg",  "Tbg_jun_all_p_stanZ",  0.094662853, 1.0, 6.6844921},
+    {LEVELID_TEMPLE,   "bg/bg_dish_all_p.seg", "Tbg_dish_all_p_stanZ", 0.47142857,  1.0, 147.05882},
+    {LEVELID_CAVERNS,  "bg/bg_cave_all_p.seg", "Tbg_cave_all_p_stanZ", 0.26824287,  1.0, 13.44086},
+    {LEVELID_CITADEL,  "bg/bg_cat_all_p.seg",  "Tbg_cat_all_p_stanZ",  0.76852286,  1.0, 38.461536},
+    {LEVELID_CRADLE,   "bg/bg_crad_all_p.seg", "Tbg_crad_all_p_stanZ", 0.23571429,  1.0, 43.103451},
+    {LEVELID_SHO,      "bg/bg_sho_all_p.seg",  "Tbg_sho_all_p_stanZ",  0.528,       1.0, 21.18644},
+    {LEVELID_SURFACE2, "bg/bg_sevx_all_p.seg", "Tbg_sevx_all_p_stanZ", 0.45445713,  0.2, 22.603975},
+    {LEVELID_ELD,      "bg/bg_eld_all_p.seg",  "Tbg_eld_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_BASEMENT, "bg/bg_ame_all_p.seg",  "Tbg_ame_all_p_stanZ",  0.65999997,  1.0, 37.878788},
+    {LEVELID_STACK,    "bg/bg_ame_all_p.seg",  "Tbg_ame_all_p_stanZ",  0.65999997,  1.0, 37.878788},
+    {LEVELID_LUE,      "bg/bg_lue_all_p.seg",  "Tbg_lue_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_LIBRARY,  "bg/bg_ame_all_p.seg",  "Tbg_ame_all_p_stanZ",  0.65999997,  1.0, 37.878788},
+    {LEVELID_RIT,      "bg/bg_rit_all_p.seg",  "Tbg_rit_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_CAVES,    "bg/bg_oat_all_p.seg",  "Tbg_oat_all_p_stanZ",  0.14142857,  1.0, 10.123456},
+    {LEVELID_EAR,      "bg/bg_ear_all_p.seg",  "Tbg_ear_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_LEE,      "bg/bg_lee_all_p.seg",  "Tbg_lee_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_LIP,      "bg/bg_lip_all_p.seg",  "Tbg_lip_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_CUBA,     "bg/bg_len_all_p.seg",  "Tbg_len_all_p_stanZ",  0.094662853, 1.0, 6.6844921},
+    {LEVELID_WAX,      "bg/bg_wax_all_p.seg",  "Tbg_wax_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_PAM,      "bg/bg_pam_all_p.seg",  "Tbg_pam_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_MAX,      "bg/bgx.seg",           "TbgxZ",                0.94285715,  1.0, 1.0}
 };
 
 //D:8004481C
@@ -554,22 +554,22 @@ u32 D_80044924 = 0;
 */
 //D:80044928
 Gfx D_80044928[] = {
-    0xFC26A0041F1093FF, 0xFC232DFFFFFFFE38, 
+    0xFC26A004, 0x1F1093FF, 0xFC232DFF, 0xFFFFFE38, 
     //gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2), 
     //gDPSetCombineLERP(TEXEL1, 0, COMBINED_ALPHA, 0, TEXEL1, 0, PRIM_LOD_FRAC, 0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    0x0,0x0,0x0,0x0
+    0x0,0x0
 };
 
 //D:80044940 - Primary
-u64 D_80044940[] = {
-    0xB900031D0C192078, 0xB900031DC8112078, 
-    0xB900031D0C182078, 0xB900031DC8102078, 
-    0xB900031D0C192D58, 0xB900031DC8112D58, 
-    0xB900031D0C184DD8, 0xB900031DC8104DD8, 
-    0xB900031D0C1849D8, 0xB900031DC81049D8,
-    0xB900031D0C193078, 0xB900031DC8113078, 
-    0xB900031D0C192048, 0xB900031DC8112048, 
-    0xB900031D0C182048, 0xB900031DC8102048, 
+Gfx D_80044940[] = {
+    0xB900031D, 0x0C192078, 0xB900031D, 0xC8112078, 
+    0xB900031D, 0x0C182078, 0xB900031D, 0xC8102078, 
+    0xB900031D, 0x0C192D58, 0xB900031D, 0xC8112D58, 
+    0xB900031D, 0x0C184DD8, 0xB900031D, 0xC8104DD8, 
+    0xB900031D, 0x0C1849D8, 0xB900031D, 0xC81049D8,
+    0xB900031D, 0x0C193078, 0xB900031D, 0xC8113078, 
+    0xB900031D, 0x0C192048, 0xB900031D, 0xC8112048, 
+    0xB900031D, 0x0C182048, 0xB900031D, 0xC8102048, 
 
     /*
     //Add FOG to all rendermodes 
@@ -591,25 +591,25 @@ u64 D_80044940[] = {
     //Z-Less OPA Terrain to Z-Less Fog OPA Terrain
     gDPSetRenderMode(G_RM_PASS, G_RM_AA_OPA_TERR2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_OPA_TERR2),
     */
-    0x0
+0x0, 0x0
 };
 
 //D:800449C8 - Secondary
-u64 D_800449C8[] = {
-    0xB900031D0C184DD8, 0xB900031DC8104DD8,
-    0xB900031D0C1849D8, 0xB900031DC81049D8, 
-    0xB900031D0C193078, 0xB900031DC8113078,
-    0xFC26A0041F1093FF, 0xFC26A0041F1493FF, 
-    0xFC121824FF33FFFF, 0xFC121A24FF37FFFF,
-    0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD,
-    0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD,
-    0xFC26A0041F1093FF, 0xFC26A0041F1493FF,
-    0xFC121824FF33FFFF, 0xFC121A24FF37FFFF,
-    0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD,
-    0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD,
-    0xFCFFFFFFFFFE7838, 0xFCFFFFFFFFFE7A38, 
-    0xFCFFFFFFFFFE793C, 0xFCFFFFFFFFFE7B3D,
-    0xFC26E4041F10FFFF, 0xFC26E4041F14FFFF,   
+Gfx D_800449C8[] = {
+    0xB900031D, 0x0C184DD8, 0xB900031D, 0xC8104DD8,
+    0xB900031D, 0x0C1849D8, 0xB900031D, 0xC81049D8, 
+    0xB900031D, 0x0C193078, 0xB900031D, 0xC8113078,
+    0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF, 
+    0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF,
+    0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD,
+    0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD,
+    0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF,
+    0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF,
+    0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD,
+    0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD,
+    0xFCFFFFFF, 0xFFFE7838, 0xFCFFFFFF, 0xFFFE7A38, 
+    0xFCFFFFFF, 0xFFFE793C, 0xFCFFFFFF, 0xFFFE7B3D,
+    0xFC26E404, 0x1F10FFFF, 0xFC26E404, 0x1F14FFFF,   
     /*
     //Add FOG to Rendermodes
     //Transparent DECAL to  FOG Transparent DECAL
@@ -633,7 +633,7 @@ u64 D_800449C8[] = {
     // This one is an oddball... its extra here AND is weird using Tile1 only for Alpha
     gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGBA) , gDPSetCombineMode(TLRGB_ATile1, ModulateRGB_EnvA2),
     */
-    0x0
+    0x0, 0x0
 };
 
 //D:80044AB0
@@ -2349,11 +2349,11 @@ glabel jpt_700E883C
 .word .L7F0B4914
 .word .L7F0B4914
 .word .L7F0B4914
-.word .L7F0B490C
-.word .L7F0B490C
-.word .L7F0B490C
+.word .L7F0B491C
+.word .L7F0B491C
+.word .L7F0B491C
 .word .L7F0B4914
-.word .L7F0B490C
+.word .L7F0B491C
 .word .L7F0B4914
 
 .text
