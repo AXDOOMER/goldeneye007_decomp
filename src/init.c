@@ -28,7 +28,7 @@ void init(void) {
     void *dest;
     void *source;
 
-    cdata_vaddr_start = get_cdataSegmentVaddrStart();
+    cdata_vaddr_start = get_csegmentSegmentStart();
     cdata_rom_size = (get_cdataSegmentRomEnd() - get_cdataSegmentRomStart());
 
 	for (datapos = ((cdata_rom_size + (get_rarezipSegmentRomEnd() - get_rarezipSegmentRomStart())) + -1); datapos >= 0; datapos--){
@@ -80,7 +80,7 @@ glabel init
 /* 001110 70000510 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 001114 70000514 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 001118 70000518 AFB10020 */  sw    $s1, 0x20($sp)
-/* 00111C 7000051C 0C00012F */  jal   get_cdataSegmentVaddrStart
+/* 00111C 7000051C 0C00012F */  jal   get_csegmentSegmentStart
 /* 001120 70000520 AFB0001C */   sw    $s0, 0x1c($sp)
 /* 001124 70000524 0C000132 */  jal   get_cdataSegmentRomStart
 /* 001128 70000528 00408025 */   move  $s0, $v0

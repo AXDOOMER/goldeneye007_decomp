@@ -548,9 +548,9 @@ void was_opcode_In_70000450_70020D90(u32 arg0)
 {
     if ((arg0 & 3) == 0)
     {
-        if (arg0 >= &_codeSegmentVaddrStart)
+        if (arg0 >= &_codeSegmentStart)
         {
-            if (&_codeSegmentVaddrEnd >= arg0)
+            if (&_codeSegmentEnd >= arg0)
             {
                 if ((arg0->unk-8 & 0xfc00003c) == 9)
                 {
@@ -571,12 +571,12 @@ GLOBAL_ASM(
 glabel was_opcode_In_70000450_70020D90
 /* 005DE0 700051E0 308E0003 */  andi  $t6, $a0, 3
 /* 005DE4 700051E4 15C00019 */  bnez  $t6, .L7000524C
-/* 005DE8 700051E8 3C0F7000 */   lui   $t7, %hi(_codeSegmentVaddrStart) # $t7, 0x7000
-/* 005DEC 700051EC 25EF0450 */  addiu $t7, %lo(_codeSegmentVaddrStart) # addiu $t7, $t7, 0x450
+/* 005DE8 700051E8 3C0F7000 */   lui   $t7, %hi(_codeSegmentStart) # $t7, 0x7000
+/* 005DEC 700051EC 25EF0450 */  addiu $t7, %lo(_codeSegmentStart) # addiu $t7, $t7, 0x450
 /* 005DF0 700051F0 008F082B */  sltu  $at, $a0, $t7
 /* 005DF4 700051F4 14200015 */  bnez  $at, .L7000524C
-/* 005DF8 700051F8 3C187002 */   lui   $t8, %hi(_codeSegmentVaddrEnd) # $t8, 0x7002
-/* 005DFC 700051FC 27180D90 */  addiu $t8, %lo(_codeSegmentVaddrEnd) # addiu $t8, $t8, 0xd90
+/* 005DF8 700051F8 3C187002 */   lui   $t8, %hi(_codeSegmentEnd) # $t8, 0x7002
+/* 005DFC 700051FC 27180D90 */  addiu $t8, %lo(_codeSegmentEnd) # addiu $t8, $t8, 0xd90
 /* 005E00 70005200 0304082B */  sltu  $at, $t8, $a0
 /* 005E04 70005204 54200012 */  bnezl $at, .L70005250
 /* 005E08 70005208 00001025 */   move  $v0, $zero

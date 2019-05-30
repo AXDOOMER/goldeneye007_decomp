@@ -18,16 +18,22 @@ SECTIONS
    }
    __romPos += SIZEOF(.boot);
 
-   __ramPos = 0x400;
+
    /* 0x80000400, 0x80000450 */
-   .text_start 0x80000400 : AT(__romPos) {
+   _startSegmentStart = ADDR(.start);
+   _startSegmentRomStart = 0x1000;
+   .start 0x80000400 : AT(__romPos) {
       build/_start.o (.text);
    }
-   __romPos += 0x50;
-   __ramPos += 0x50;
+   _startSegmentEnd = ADDR(.start) + SIZEOF(.start);
+   _startSegmentRomEnd = 0x1000 + SIZEOF(.start);
+   __romPos = 0x1050;
+
 
    /* 0x70000450, 0x70020D90 001050-021990 */
-   .text_code 0x70000450 : AT(0x1050) SUBALIGN(16) {
+   _codeSegmentStart = ADDR(.code);
+   _codeSegmentRomStart = 0x1050;
+   .code 0x70000450 : AT(0x1050) SUBALIGN(16) {
       build/boot.o (.text);
       build/init.o (.text);
       build/sched.o (.text);
@@ -60,23 +66,41 @@ SECTIONS
       build/rmon.o (.text);
       build/libultra/libultra.o (.text);
    }
-   __romPos += SIZEOF(.text_code);
-   __ramPos += SIZEOF(.text_code);
-   
-   .c_data 0x21990 : AT(0x21990) {
+   _codeSegmentEnd = ADDR(.code) + SIZEOF(.code);
+   _codeSegmentRomEnd = 0x1050 + SIZEOF(.code);
+   __romPos = 0x21990;
+
+
+
+   _cdataSegmentStart = ADDR(.cdata);
+   _cdataSegmentRomStart = 0x21990;
+   .cdata 0x21990 : AT(0x21990) {
       build/c_data_filler.o (.data);
    }
-   __romPos += 0x11c00;
+   _cdataSegmentEnd = ADDR(.cdata) + SIZEOF(.cdata);
+   _cdataSegmentRomEnd = 0x21990 + SIZEOF(.cdata);
+   __romPos = 0x033590;
    
+
+
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
-   .text_rarezip 0x70200000 : AT(__romPos) {
+   _rarezipSegmentStart = ADDR(.rarezip);
+   _rarezipSegmentRomStart = 0x033590;
+   .rarezip 0x70200000 : AT(__romPos) {
       build/rarezip/rarezip.o (.text);
       build/rarezip/rarezip.o (.data);
    }
-   __romPos += SIZEOF(.text_rarezip);
+   _rarezipSegmentEnd = ADDR(.rarezip) + SIZEOF(.rarezip);
+   _rarezipSegmentRomEnd = 0x033590 + SIZEOF(.rarezip);
+   __romPos = 0x034B30;
+
+
+   
    
    /* (0x7F000000, 0x7F0E2D50, 0x7EFCB4D0), // 034B30-117881 [E2D51] */
-   .text_tlbcode 0x7F000000 : AT(__romPos) {
+   _gameSegmentStart = ADDR(.game);
+   _gameSegmentRomStart = 0x034B30;
+   .game 0x7F000000 : AT(__romPos) {
       build/game/initgamedata.o (.text);
       build/game/initweaponanigroups.o (.text);
       build/game/initactorpropstuff.o (.text);
@@ -192,9 +216,14 @@ SECTIONS
       build/game/music_0D2720.o (.text);
       build/game/spectrum.o (.text);
    }
-   __romPos += SIZEOF(.text_tlbcode);
-   __ramPos += SIZEOF(.text_tlbcode);
 
+   _gameSegmentEnd = ADDR(.game) + SIZEOF(.game);
+   _gameSegmentRomEnd = 0x034B30 + SIZEOF(.game);
+   __romPos = 0x117880;
+
+
+   _romfiles_117880SegmentStart = ADDR(.romfiles_117880);
+   _romfiles_117880SegmentRomStart = 0x117880;
    .romfiles_117880 0x117880 : AT(__romPos) {
       build/assets/romfiles.o (.romfiles);
       build/assets/ramrom/ramrom.o (.ramrom);
@@ -202,20 +231,37 @@ SECTIONS
       build/assets/music/music.o (.music);
       build/assets/music/music.o (.musiccompressed);
    }
-   __romPos += SIZEOF(.romfiles_117880);
+   _romfiles_117880SegmentEnd = ADDR(.romfiles_117880) + SIZEOF(.romfiles_117880);
+   _romfiles_117880SegmentRomEnd = 0x117880 + SIZEOF(.romfiles_117880);
+   __romPos = 0x438660;
 
-   .ob_seg 0x438660 : AT(0x438660) {
+
+
+   _obsegSegmentStart = ADDR(.obseg);
+   _obsegSegmentRomStart = 0x438660;
+   .obseg 0x438660 : AT(0x438660) {
       build/assets/obseg/ob_seg.o (.ob_seg);
    }
-   __romPos += SIZEOF(.ob_seg);
+   _obsegSegmentEnd = ADDR(.obseg) + SIZEOF(.obseg);
+   _obsegSegmentRomEnd = 0x438660 + SIZEOF(.obseg);
 
-   .images 0x008f7df0 : AT(0x008f7df0) {
+   __romPos = 0x8F7DF0;
+
+
+   _imagesSegmentStart = ADDR(.images);
+   _imagesSegmentRomStart = 0x8F7DF0;
+   .images 0x8F7DF0 : AT(0x8F7DF0) {
       build/assets/images/images.o (.images);
    }
-   __romPos += SIZEOF(.images);
+   _imagesSegmentEnd = ADDR(.images) + SIZEOF(.images);
+   _imagesSegmentRomEnd = 0x8F7DF0 + SIZEOF(.images);
+
+   __romPos = 0xBE6D10;
 
    __csegtempPos = 0xC00000;
    __ramPos = 0x80020d90;
+   _csegmentSegmentStart = ADDR(.csegment);
+   _csegmentSegmentRomStart = 0xC00000;
    .csegment 0x80020d90 : AT(__csegtempPos) {
       build/rspboot.o (.text);
       build/gspboot.o (.text);
@@ -518,9 +564,14 @@ SECTIONS
       build/gspboot.o (.data);
       build/aspboot.o (.data);
    }
+   _csegmentSegmentEnd = ADDR(.csegment) + SIZEOF(.csegment);
+   _csegmentSegmentRomEnd = 0xC00000 + SIZEOF(.csegment);
+
    __ramPos += SIZEOF(.csegment);
    __csegtempPosEnd =  (__csegtempPos + SIZEOF (.csegment));
 
+   _bssSegmentStart = ADDR(.bss);
+   _bssSegmentRomStart = __csegtempPosEnd;
    .bss 0x8005D2E0 : AT(__csegtempPosEnd){
       build/boot.o (.bss);
       build/init.o (.bss);
@@ -666,7 +717,10 @@ SECTIONS
       build/game/viewport.o (.bss);
       build/game/music_0D2720.o (.bss);
       build/game/spectrum.o (.bss);
-   }   
+   }
+   _bssSegmentEnd = ADDR(.bss) + SIZEOF(.bss);
+   _bssSegmentRomEnd = 0xc3c550 + SIZEOF(.bss);
+
 __ramPos += SIZEOF(.bss);
 
    /*move em to end, out of the way*/
@@ -680,12 +734,22 @@ __ramPos += SIZEOF(.bss);
       * (.gptab.bss);
       * (.gptab.data);
       * (.reginfo);
+      
+      build/assets/romfiles.o (.text);
       build/assets/romfiles.o (.data);
+      build/assets/ramrom/ramrom.o (.text);
       build/assets/ramrom/ramrom.o (.data);
+      build/assets/font/font.o (.text);
       build/assets/font/font.o (.data);
+      build/assets/music/music.o (.text);
       build/assets/music/music.o (.data);
-      build/assets/music/music.o (.data);
+      build/assets/obseg/ob_seg.o (.text);
       build/assets/obseg/ob_seg.o (.data);
+      build/assets/images/images.o (.text);
       build/assets/images/images.o (.data);
+      build/rom_header.o (.text);
+      build/bootcode.o (.data);
+      build/_start.o (.data);
+      build/rspboot.o (.data);
 }
 }

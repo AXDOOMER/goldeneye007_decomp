@@ -2,13 +2,13 @@
 #define _BOND_H_
 #include "ultra64.h"
 
-extern u32 *_codeSegmentVaddrStart;
-extern u32 *_codeSegmentVaddrEnd;
+extern u32 *_codeSegmentStart;
+extern u32 *_codeSegmentEnd;
 extern u32 *_codeSegmentRomStart;
 extern u32 *_codeSegmentRomEnd;
 
-extern u32 *_cdataSegmentVaddrStart;
-extern u32 *_cdataSegmentVaddrEnd;
+extern u32 *_csegmentSegmentStart;
+extern u32 *_csegmentSegmentEnd;
 extern u32 *_cdataSegmentRomStart;
 extern u32 *_cdataSegmentRomEnd;
 

@@ -1,18 +1,21 @@
 
 Discarded input sections
 
+ .text          0x0000000000000000        0x0 build/rom_header.o
  .reginfo       0x0000000000000000       0x18 build/rom_header.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/rom_header.o
  .pdr           0x0000000000000000        0x0 build/rom_header.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/rom_header.o
+ .data          0x0000000000000000        0x0 build/bootcode.o
  .reginfo       0x0000000000000000       0x18 build/bootcode.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/bootcode.o
  .pdr           0x0000000000000000        0x0 build/bootcode.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/bootcode.o
+ .data          0x0000000000000000        0x0 build/_start.o
  .reginfo       0x0000000000000000       0x18 build/_start.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/_start.o
@@ -335,6 +338,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/game/music_0D2720.o
  .options       0x0000000000000000       0x20 build/game/spectrum.o
  .reginfo       0x0000000000000000       0x18 build/game/spectrum.o
+ .text          0x0000000000000000        0x0 build/assets/romfiles.o
  .data          0x0000000000000000        0x0 build/assets/romfiles.o
  .reginfo       0x0000000000000000       0x18 build/assets/romfiles.o
  .MIPS.abiflags
@@ -342,6 +346,7 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/assets/romfiles.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/assets/romfiles.o
+ .text          0x0000000000000000        0x0 build/assets/ramrom/ramrom.o
  .data          0x0000000000000000        0x0 build/assets/ramrom/ramrom.o
  .reginfo       0x0000000000000000       0x18 build/assets/ramrom/ramrom.o
  .MIPS.abiflags
@@ -349,6 +354,7 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/assets/ramrom/ramrom.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/assets/ramrom/ramrom.o
+ .text          0x0000000000000000        0x0 build/assets/font/font.o
  .data          0x0000000000000000        0x0 build/assets/font/font.o
  .reginfo       0x0000000000000000       0x18 build/assets/font/font.o
  .MIPS.abiflags
@@ -356,6 +362,7 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/assets/font/font.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/assets/font/font.o
+ .text          0x0000000000000000        0x0 build/assets/music/music.o
  .data          0x0000000000000000        0x0 build/assets/music/music.o
  .reginfo       0x0000000000000000       0x18 build/assets/music/music.o
  .MIPS.abiflags
@@ -365,6 +372,7 @@ Discarded input sections
                 0x0000000000000000    0x32532 build/assets/music/music.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/assets/music/music.o
+ .text          0x0000000000000000        0x0 build/assets/obseg/ob_seg.o
  .data          0x0000000000000000        0x0 build/assets/obseg/ob_seg.o
  .reginfo       0x0000000000000000       0x18 build/assets/obseg/ob_seg.o
  .MIPS.abiflags
@@ -372,6 +380,7 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/assets/obseg/ob_seg.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/assets/obseg/ob_seg.o
+ .text          0x0000000000000000        0x0 build/assets/images/images.o
  .data          0x0000000000000000        0x0 build/assets/images/images.o
  .reginfo       0x0000000000000000       0x18 build/assets/images/images.o
  .MIPS.abiflags
@@ -379,6 +388,7 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/assets/images/images.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/assets/images/images.o
+ .data          0x0000000000000000        0x0 build/rspboot.o
  .reginfo       0x0000000000000000       0x18 build/rspboot.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/rspboot.o
@@ -409,14 +419,6 @@ Linker script and memory map
                 0x0000000000000010                OS_VI_PAL_LAN1 = 0x10
                 0x0000000000000000                _bootSegmentRomStart = 0x0
                 0x0000000000001000                _bootSegmentRomEnd = 0x1000
-                0x0000000000001000                _startSegmentRomStart = 0x1000
-                0x0000000000001050                _startSegmentRomEnd = 0x1050
-                0x0000000000001050                _codeSegmentRomStart = 0x1050
-                0x0000000000021990                _codeSegmentRomEnd = 0x21990
-                0x0000000000021990                _cdataSegmentRomStart = 0x21990
-                0x0000000000033590                _cdataSegmentRomEnd = 0x33590
-                0x0000000000033590                _rarezipSegmentRomStart = 0x33590
-                0x0000000000034b30                _rarezipSegmentRomEnd = 0x34b30
                 0x0000000000117880                _unknown117880SegmentRomStart = 0x117880
                 0x0000000000117940                _unknown117880SegmentRomEnd = 0x117940
                 0x0000000000117940                _unknown117940SegmentRomStart = 0x117940
@@ -503,23 +505,10 @@ Linker script and memory map
                 0x00000000a4800004                SI_PIF_ADDR_RD64B_REG = 0xa4800004
                 0x00000000a4800010                SI_PIF_ADDR_WR64B_REG = 0xa4800010
                 0x00000000a4800018                SI_STATUS_REG = 0xa4800018
-                0x0000000070000450                _codeSegmentVaddrStart = 0x70000450
-                0x0000000070001bb0                set_hardwire_TLB_to_2 = 0x70001bb0
-                0x0000000070020d90                _codeSegmentVaddrEnd = 0x70020d90
-                0x0000000070200000                _rarezipSegmentStart = 0x70200000
-                0x000000007020159c                _rarezipSegmentEnd = 0x7020159c
-                0x000000007f090490                display_debug_menu_text_onscreen = 0x7f090490
-                0x000000007f0905a0                debug_menu_processor = 0x7f0905a0
-                0x000000007f090f34                get_memusage_display_flag = 0x7f090f34
-                0x000000007f090fdc                get_linemode_flag = 0x7f090fdc
-                0x000000007f09106c                get_debug_taskgrab_val = 0x7f09106c
                 0x0000000080000300                osTvType = 0x80000300
                 0x0000000080000308                osRomBase = 0x80000308
                 0x000000008000030c                osResetType = 0x8000030c
                 0x000000008000031c                osAppNMIBuffer = 0x8000031c
-                0x0000000080000400                _codeSegmentStart = 0x80000400
-                0x0000000080020d90                _codeSegmentEnd = 0x80020d90
-                0x0000000080020d90                _cdataSegmentVaddrStart = 0x80020d90
                 0x0000000080032c20                D_80032C20 = 0x80032c20
                 0x0000000080035d40                D_80035D40 = 0x80035d40
                 0x0000000080035d80                D_80035D80 = 0x80035d80
@@ -558,7 +547,6 @@ Linker script and memory map
                 0x00000000800414b4                D_800414B4 = 0x800414b4
                 0x0000000080058378                D_80058378 = 0x80058378
                 0x000000008005c820                gspFast3DDataStart = 0x8005c820
-                0x000000008005d2e0                _cdataSegmentVaddrEnd = 0x8005d2e0
                 0x00000000800669d2                byte_CODE_bss_800669D2 = 0x800669d2
                 0x00000000800669d4                dword_CODE_bss_800669D4 = 0x800669d4
                 0x00000000800669ea                byte_CODE_bss_800669EA = 0x800669ea
@@ -614,20 +602,24 @@ Linker script and memory map
                 0x0000000004000a40                func_04000A40
                 0x0000000004000ad0                func_04000AD0
                 [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.boot))
-                0x0000000000000400                __ramPos = 0x400
+                0x0000000080000400                _startSegmentStart = ADDR (.start)
+                0x0000000000001000                _startSegmentRomStart = 0x1000
 
-.text_start     0x0000000080000400       0x50 load address 0x0000000000001000
+.start          0x0000000080000400       0x50 load address 0x0000000000001000
  build/_start.o(.text)
  .text          0x0000000080000400       0x50 build/_start.o
                 0x0000000080000400                _start
-                [0x0000000000be6d10]                __romPos = (__romPos + 0x50)
-                [0x000000008008e360]                __ramPos = (__ramPos + 0x50)
+                0x0000000080000450                _startSegmentEnd = (ADDR (.start) + SIZEOF (.start))
+                0x0000000000001050                _startSegmentRomEnd = (0x1000 + SIZEOF (.start))
+                0x0000000000001050                __romPos = 0x1050
+                0x0000000070000450                _codeSegmentStart = ADDR (.code)
+                0x0000000000001050                _codeSegmentRomStart = 0x1050
 
-.text_code      0x0000000070000450    0x20940 load address 0x0000000000001050
+.code           0x0000000070000450    0x20940 load address 0x0000000000001050
  build/boot.o(.text)
  .text          0x0000000070000450       0xc0 build/boot.o
                 0x0000000070000450                boot
-                0x00000000700004bc                get_cdataSegmentVaddrStart
+                0x00000000700004bc                get_csegmentSegmentStart
                 0x00000000700004c8                get_cdataSegmentRomStart
                 0x00000000700004d4                get_cdataSegmentRomEnd
                 0x00000000700004e0                get_rarezipSegmentRomStart
@@ -688,6 +680,7 @@ Linker script and memory map
                 0x0000000070001b60                resolve_TLBaddress_for_InvalidHit
  build/tlb_hardware.o(.text)
  .text          0x0000000070001bb0       0x20 build/tlb_hardware.o
+                0x0000000070001bb0                set_hardwire_TLB_to_2
  build/audi.o(.text)
  .text          0x0000000070001bd0      0xb60 build/audi.o
                 0x0000000070001bd0                amCreateAudioMgr
@@ -1361,21 +1354,23 @@ Linker script and memory map
                 0x0000000070020c50                ldiv
                 0x0000000070020ce0                __osResetGlobalIntMask
                 0x0000000070020d40                osEPiRawWriteIo
-                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.text_code))
-                [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.text_code))
+                0x0000000070020d90                _codeSegmentEnd = (ADDR (.code) + SIZEOF (.code))
+                0x0000000000021990                _codeSegmentRomEnd = (0x1050 + SIZEOF (.code))
+                0x0000000000021990                __romPos = 0x21990
+                0x0000000000021990                _cdataSegmentStart = ADDR (.cdata)
+                0x0000000000021990                _cdataSegmentRomStart = 0x21990
 
-.c_data         0x0000000000021990    0x11c00
+.cdata          0x0000000000021990    0x11c00
  build/c_data_filler.o(.data)
  .data          0x0000000000021990    0x11c00 build/c_data_filler.o
                 0x0000000000021990                c_data_array
-                [0x0000000000be6d10]                __romPos = (__romPos + 0x11c00)
+                0x0000000000033590                _cdataSegmentEnd = (ADDR (.cdata) + SIZEOF (.cdata))
+                0x0000000000033590                _cdataSegmentRomEnd = (0x21990 + SIZEOF (.cdata))
+                0x0000000000033590                __romPos = 0x33590
+                0x0000000070200000                _rarezipSegmentStart = ADDR (.rarezip)
+                0x0000000000033590                _rarezipSegmentRomStart = 0x33590
 
-.data           0x0000000000033590        0x0
- .data          0x0000000000033590        0x0 build/bootcode.o
- .data          0x0000000000033590        0x0 build/_start.o
- .data          0x0000000000033590        0x0 build/rspboot.o
-
-.text_rarezip   0x0000000070200000     0x15a0 load address 0x0000000000033590
+.rarezip        0x0000000070200000     0x15a0 load address 0x0000000000033590
  build/rarezip/rarezip.o(.text)
  .text          0x0000000070200000     0x1480 build/rarezip/rarezip.o
                 0x0000000070200000                decompress_buildtable
@@ -1404,9 +1399,13 @@ Linker script and memory map
                 0x0000000070201590                rz_data1
                 0x0000000070201594                rz_data2
                 0x0000000070201598                rz_data3
-                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.text_rarezip))
+                0x00000000702015a0                _rarezipSegmentEnd = (ADDR (.rarezip) + SIZEOF (.rarezip))
+                0x0000000000034b30                _rarezipSegmentRomEnd = (0x33590 + SIZEOF (.rarezip))
+                0x0000000000034b30                __romPos = 0x34b30
+                0x000000007f000000                _gameSegmentStart = ADDR (.game)
+                0x0000000000034b30                _gameSegmentRomStart = 0x34b30
 
-.text_tlbcode   0x000000007f000000    0xe2d50 load address 0x0000000000034b30
+.game           0x000000007f000000    0xe2d50 load address 0x0000000000034b30
  build/game/initgamedata.o(.text)
  .text          0x000000007f000000       0xe0 build/game/initgamedata.o
                 0x000000007f000000                initGameData
@@ -3243,15 +3242,18 @@ Linker script and memory map
                 0x000000007f09039c                sub_GAME_7F09039C
  build/game/debugmenu_090490.o(.text)
  .text          0x000000007f090490      0xbf0 build/game/debugmenu_090490.o
+                0x000000007f090490                display_debug_menu_text_onscreen
                 0x000000007f0904c4                sub_GAME_7F0904C4
                 0x000000007f090508                sub_GAME_7F090508
                 0x000000007f09054c                sub_GAME_7F09054C
                 0x000000007f090590                unknown_libname_68
                 0x000000007f090598                nullsub_35
+                0x000000007f0905a0                debug_menu_processor
                 0x000000007f090efc                get_debug_render_raster
                 0x000000007f090f08                get_debug_freeze_processing
                 0x000000007f090f14                get_debug_limit_controller_input
                 0x000000007f090f20                set_debug_limit_controller_input
+                0x000000007f090f34                get_memusage_display_flag
                 0x000000007f090f40                get_debug_do_draw_bg
                 0x000000007f090f4c                get_debug_do_draw_obj
                 0x000000007f090f58                get_debug_stanhit_flag
@@ -3265,6 +3267,7 @@ Linker script and memory map
                 0x000000007f090fb8                get_debug_joy2detailedit_flag
                 0x000000007f090fc4                get_debug_explosioninfo_flag
                 0x000000007f090fd0                get_debug_prroomloads_flag
+                0x000000007f090fdc                get_linemode_flag
                 0x000000007f090fe8                set_linemode_flag
                 0x000000007f090ff4                get_debug_007_unlock_flag
                 0x000000007f091000                get_debug_enable_agent_levels_flag
@@ -3276,6 +3279,7 @@ Linker script and memory map
                 0x000000007f091048                get_debug_chrnum_flag
                 0x000000007f091054                get_debug_gunwatchpos_flag
                 0x000000007f091060                get_debug_profile_flag
+                0x000000007f09106c                get_debug_taskgrab_val
  build/game/unk_091080.o(.text)
  .text          0x000000007f091080      0x6c0 build/game/unk_091080.o
                 0x000000007f091080                sub_GAME_7F091080
@@ -4143,17 +4147,11 @@ Linker script and memory map
                 0x000000007f0d37d4                nullsub_50
                 0x000000007f0d37dc                sub_GAME_7F0D37DC
                 0x000000007f0d382c                spectrum_hw_emulation
-                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.text_tlbcode))
-                [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.text_tlbcode))
-
-.text           0x000000007f0e2d50        0x0 load address 0x0000000000117880
- .text          0x000000007f0e2d50        0x0 build/rom_header.o
- .text          0x000000007f0e2d50        0x0 build/assets/romfiles.o
- .text          0x000000007f0e2d50        0x0 build/assets/ramrom/ramrom.o
- .text          0x000000007f0e2d50        0x0 build/assets/font/font.o
- .text          0x000000007f0e2d50        0x0 build/assets/music/music.o
- .text          0x000000007f0e2d50        0x0 build/assets/obseg/ob_seg.o
- .text          0x000000007f0e2d50        0x0 build/assets/images/images.o
+                0x000000007f0e2d50                _gameSegmentEnd = (ADDR (.game) + SIZEOF (.game))
+                0x0000000000117880                _gameSegmentRomEnd = (0x34b30 + SIZEOF (.game))
+                0x0000000000117880                __romPos = 0x117880
+                0x0000000000117880                _romfiles_117880SegmentStart = ADDR (.romfiles_117880)
+                0x0000000000117880                _romfiles_117880SegmentRomStart = 0x117880
 
 .romfiles_117880
                 0x0000000000117880   0x320de0
@@ -4263,9 +4261,13 @@ Linker script and memory map
                 0x0000000000437fa2                Msurface2_ending
                 0x000000000043823e                Mstatue_ending
                 0x00000000004383a4                Mfrigate_outro
-                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.romfiles_117880))
+                0x0000000000438660                _romfiles_117880SegmentEnd = (ADDR (.romfiles_117880) + SIZEOF (.romfiles_117880))
+                0x0000000000438660                _romfiles_117880SegmentRomEnd = (0x117880 + SIZEOF (.romfiles_117880))
+                0x0000000000438660                __romPos = 0x438660
+                0x0000000000438660                _obsegSegmentStart = ADDR (.obseg)
+                0x0000000000438660                _obsegSegmentRomStart = 0x438660
 
-.ob_seg         0x0000000000438660   0x4bf790
+.obseg          0x0000000000438660   0x4bf790
  build/assets/obseg/ob_seg.o(.ob_seg)
  .ob_seg        0x0000000000438660   0x4bf790 build/assets/obseg/ob_seg.o
                 0x0000000000438660                bg_sev_all_p_seg
@@ -4984,16 +4986,24 @@ Linker script and memory map
                 0x00000000008f7dc0                LwaxE
                 0x00000000008f7dd0                LwaxJ
                 0x00000000008f7de0                ob__ob_end_seg
-                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.ob_seg))
+                0x00000000008f7df0                _obsegSegmentEnd = (ADDR (.obseg) + SIZEOF (.obseg))
+                0x00000000008f7df0                _obsegSegmentRomEnd = (0x438660 + SIZEOF (.obseg))
+                0x00000000008f7df0                __romPos = 0x8f7df0
+                0x00000000008f7df0                _imagesSegmentStart = ADDR (.images)
+                0x00000000008f7df0                _imagesSegmentRomStart = 0x8f7df0
 
 .images         0x00000000008f7df0   0x2eef20
  build/assets/images/images.o(.images)
  .images        0x00000000008f7df0   0x2eef20 build/assets/images/images.o
                 0x00000000008f7df0                images
                 0x0000000000be6d10                images_end
-                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.images))
+                0x0000000000be6d10                _imagesSegmentEnd = (ADDR (.images) + SIZEOF (.images))
+                0x0000000000be6d10                _imagesSegmentRomEnd = (0x8f7df0 + SIZEOF (.images))
+                0x0000000000be6d10                __romPos = 0xbe6d10
                 0x0000000000c00000                __csegtempPos = 0xc00000
                 0x0000000080020d90                __ramPos = 0x80020d90
+                0x0000000080020d90                _csegmentSegmentStart = ADDR (.csegment)
+                0x0000000000c00000                _csegmentSegmentRomStart = 0xc00000
 
 .rodata         0x0000000000be6d10        0x0
  .rodata        0x0000000000be6d10        0x0 build/_start.o
@@ -9747,8 +9757,12 @@ Linker script and memory map
  build/aspboot.o(.data)
  .data          0x000000008005d020      0x2c0 build/aspboot.o
                 0x000000008005d020                aspMainDataStart
+                0x000000008005d2e0                _csegmentSegmentEnd = (ADDR (.csegment) + SIZEOF (.csegment))
+                0x0000000000c3c550                _csegmentSegmentRomEnd = (0xc00000 + SIZEOF (.csegment))
                 [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.csegment))
                 0x0000000000c3c550                __csegtempPosEnd = (__csegtempPos + SIZEOF (.csegment))
+                0x000000008005d2e0                _bssSegmentStart = ADDR (.bss)
+                0x0000000000c3c550                _bssSegmentRomStart = __csegtempPosEnd
 
 .bss            0x000000008005d2e0    0x31080 load address 0x0000000000c3c550
  build/boot.o(.bss)
@@ -11056,6 +11070,8 @@ Linker script and memory map
  .bss           0x000000008008e360        0x0 build/rspboot.o
  .bss           0x000000008008e360        0x0 build/gspboot.o
  .bss           0x000000008008e360        0x0 build/aspboot.o
+                0x000000008008e360                _bssSegmentEnd = (ADDR (.bss) + SIZEOF (.bss))
+                0x0000000000c6d5d0                _bssSegmentRomEnd = (0xc3c550 + SIZEOF (.bss))
                 [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.bss))
 
 /DISCARD/
@@ -11068,11 +11084,20 @@ Linker script and memory map
  *(.gptab.bss)
  *(.gptab.data)
  *(.reginfo)
+ build/assets/romfiles.o(.text)
  build/assets/romfiles.o(.data)
+ build/assets/ramrom/ramrom.o(.text)
  build/assets/ramrom/ramrom.o(.data)
+ build/assets/font/font.o(.text)
  build/assets/font/font.o(.data)
+ build/assets/music/music.o(.text)
  build/assets/music/music.o(.data)
- build/assets/music/music.o(.data)
+ build/assets/obseg/ob_seg.o(.text)
  build/assets/obseg/ob_seg.o(.data)
+ build/assets/images/images.o(.text)
  build/assets/images/images.o(.data)
+ build/rom_header.o(.text)
+ build/bootcode.o(.data)
+ build/_start.o(.data)
+ build/rspboot.o(.data)
 OUTPUT(ge007.u.elf elf32-tradbigmips)

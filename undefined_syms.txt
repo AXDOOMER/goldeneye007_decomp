@@ -3,14 +3,7 @@ OS_VI_PAL_LAN1 = 16;
 
 _bootSegmentRomStart = 0x00000000;
 _bootSegmentRomEnd = 0x00001000;
-_startSegmentRomStart = 0x00001000;
-_startSegmentRomEnd = 0x00001050;
-_codeSegmentRomStart = 0x00001050;
-_codeSegmentRomEnd = 0x00021990;
-_cdataSegmentRomStart = 0x00021990;
-_cdataSegmentRomEnd = 0x00033590;
-_rarezipSegmentRomStart = 0x00033590;
-_rarezipSegmentRomEnd = 0x00034B30;
+
 _unknown117880SegmentRomStart = 0x00117880;
 _unknown117880SegmentRomEnd = 0x00117940;
 _unknown117940SegmentRomStart = 0x00117940;
@@ -107,27 +100,12 @@ SI_PIF_ADDR_RD64B_REG = 0xA4800004;
 SI_PIF_ADDR_WR64B_REG = 0xA4800010;
 SI_STATUS_REG = 0xA4800018;
 
-_codeSegmentVaddrStart = 0x70000450;
-set_hardwire_TLB_to_2 = 0x70001BB0;
-_codeSegmentVaddrEnd = 0x70020D90;
-_rarezipSegmentStart = 0x70200000;
-_rarezipSegmentEnd = 0x7020159C;
-
-display_debug_menu_text_onscreen = 0x7F090490;
-debug_menu_processor = 0x7F0905A0;
-get_memusage_display_flag = 0x7F090F34;
-get_linemode_flag = 0x7F090FDC;
-get_debug_taskgrab_val = 0x7F09106C;
 
 osTvType = 0x80000300;
 osRomBase = 0x80000308;
 osResetType = 0x8000030C;
 osAppNMIBuffer = 0x8000031c;
 
-_codeSegmentStart = 0x80000400;
-_codeSegmentEnd = 0x80020D90;
-
-_cdataSegmentVaddrStart = 0x80020D90;
 D_80032C20 = 0x80032C20;
 D_80035D40 = 0x80035D40;
 D_80035D80 = 0x80035D80;
@@ -167,7 +145,7 @@ D_800414B4 = 0x800414B4;
 D_80058378 = 0x80058378;
 
 gspFast3DDataStart = 0x8005c820;
-_cdataSegmentVaddrEnd = 0x8005D2E0;
+
 
 byte_CODE_bss_800669D2 = 0x800669D2;
 dword_CODE_bss_800669D4 = 0x800669D4;
