@@ -1,7 +1,22 @@
 This is a working Goldeneye 007 disassembly! 
-(e1ca61c9c99138bbcc89b34747ac3e0966e20a81 and older till i finish cleanup)
 
+Due to a bug with gzip, the following is your friend for random sha1 fails
+```
+make clean && \
+git checkout build/assets/obseg/setup/UsetuparchZ.rz && \
+git checkout build/assets/obseg/setup/UsetupjunZ.rz && \
+git checkout build/assets/obseg/setup/UsetupsevbZ.rz && \
+make
+```
 
+The only real requirements should be 
+```
+sudo apt install binutils-mips-linux-gnu make
+```
+followed by
+```
+make
+```
 This repo is getting a big overhaul... expect crap to break till I remove notice
 
 
