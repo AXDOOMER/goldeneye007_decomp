@@ -4290,11 +4290,18 @@ Linker script and memory map
                 0x00000000006a10d0                bg_cave_all_p_seg
                 0x00000000006c55c0                bg_cat_all_p_seg
                 0x00000000006caaf0                bg_crad_all_p_seg
+                0x00000000006dae40                bg_sho_all_p_seg
                 0x00000000006dae40                bg_ash_all_p_seg
                 0x00000000006dae40                bg_ame_all_p_seg
                 0x00000000006dae40                bg_imp_all_p_seg
+                0x00000000006e4da0                bg_rit_all_p_seg
                 0x00000000006e4da0                bg_oat_all_p_seg
+                0x00000000006ebbf0                bg_ear_all_p_seg
+                0x00000000006ebbf0                bg_lee_all_p_seg
                 0x00000000006ebbf0                bg_len_all_p_seg
+                0x00000000006ebbf0                bg_lip_all_p_seg
+                0x00000000006ecb90                bg_pam_all_p_seg
+                0x00000000006ecb90                bg_wax_all_p_seg
                 0x00000000006ecb90                CarmourguardZ
                 0x00000000006ef010                CbaronsamediZ
                 0x00000000006f2700                CbluecamguardZ
@@ -4394,14 +4401,14 @@ Linker script and memory map
                 0x0000000000771d60                GcircuitboardZ
                 0x0000000000771ea0                GclipboardZ
                 0x0000000000772090                GcreditcardZ
-                0x00000000007723e0                GdarglassesZ
+                0x00000000007723e0                GdarkglassesZ
                 0x0000000000772730                GdatathiefZ
                 0x0000000000772870                GdattapeZ
                 0x00000000007729e0                GdoordecoderZ
                 0x0000000000772f60                GdoorexploderZ
                 0x00000000007732b0                GdossierredZ
                 0x0000000000773610                GdynamiteZ
-                0x0000000000773960                GexpelosivefloppyZ
+                0x0000000000773960                GexplosivefloppyZ
                 0x0000000000773bb0                GexplosivepenZ
                 0x0000000000773f00                GextinguisherZ
                 0x00000000007746f0                GfingergunZ
@@ -4446,7 +4453,7 @@ Linker script and memory map
                 0x000000000078df70                GsilverwppkZ
                 0x000000000078f8d0                GskorpionZ
                 0x0000000000790ad0                GsniperrifleZ
-                0x0000000000791b40                GspecterZ
+                0x0000000000791b40                GspectreZ
                 0x00000000007927c0                GspooltapeZ
                 0x0000000000792b10                GspyfileZ
                 0x0000000000792e60                GstafflistZ
