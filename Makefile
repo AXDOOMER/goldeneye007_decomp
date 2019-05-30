@@ -175,7 +175,7 @@ SHA1SUM = sha1sum
 INCLUDE := -I . -I include -I include/libultra -I src -I src/game -I src/rarezip
 
 CC := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
-CFLAGS := -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm -fullwarn -wlint -woff 819,820,852,821 -signed $(INCLUDE) -mips2
+CFLAGS := -Wo,-loopunroll,0,-r4300_mul -non_shared -G 0 -Xcpluscomm -fullwarn -wlint -woff 819,820,852,821 -signed $(INCLUDE) -mips2
 
 LD := $(TOOLCHAIN)ld
 LD_SCRIPT := ge007.$(COUNTRYCODE).ld
