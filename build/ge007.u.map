@@ -5003,7 +5003,7 @@ Linker script and memory map
                 0x0000000000c00000                __csegtempPos = 0xc00000
                 0x0000000080020d90                __ramPos = 0x80020d90
                 0x0000000080020d90                _csegmentSegmentStart = ADDR (.csegment)
-                0x0000000000c00000                _csegmentSegmentRomStart = 0xc00000
+                0x0000000000c00000                _csegmentSegmentRomStart = __csegtempPos
 
 .rodata         0x0000000000be6d10        0x0
  .rodata        0x0000000000be6d10        0x0 build/_start.o

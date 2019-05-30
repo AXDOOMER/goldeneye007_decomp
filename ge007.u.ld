@@ -261,7 +261,7 @@ SECTIONS
    __csegtempPos = 0xC00000;
    __ramPos = 0x80020d90;
    _csegmentSegmentStart = ADDR(.csegment);
-   _csegmentSegmentRomStart = 0xC00000;
+   _csegmentSegmentRomStart = __csegtempPos;
    .csegment 0x80020d90 : AT(__csegtempPos) {
       build/rspboot.o (.text);
       build/gspboot.o (.text);
