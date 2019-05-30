@@ -8,6 +8,7 @@ IRIX_ROOT := tools/irix/root
 FINAL := YES
 VERSION := US
 TOOLCHAIN := mips-linux-gnu-
+COMPARE := 1
 
 BUILD_DIR := build
 BUILD_SUB_DIRS := \
@@ -169,6 +170,7 @@ DATASEG_COMP := $(TOOLS_DIR)/data_compress.sh
 RZ_COMP := $(TOOLS_DIR)/1172compress.sh
 N64CKSUM := $(TOOLS_DIR)/n64cksum
 MAKEBG := $(TOOLS_DIR)/makebg.sh
+SHA1SUM = sha1sum
 
 INCLUDE := -I include -I include/libultra -I src -I src/game -I src/rarezip
 
@@ -184,6 +186,11 @@ ASFLAGS := -march=vr4300 -mabi=32 $(INCLUDE)
 ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 
 OBJCOPY := $(TOOLCHAIN)objcopy
+
+all: $(APPROM)
+ifeq ($(COMPARE),1)
+	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1
+endif
 
 default:	$(APPROM)
 
