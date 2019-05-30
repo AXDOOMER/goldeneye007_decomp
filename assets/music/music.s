@@ -202,6 +202,7 @@ music_fileA Msurface2_ending
 music_file Mstatue_ending
 music_fileA Mfrigate_outro
 
+.section .musiccompressed
 .half 0
 .word 0
 

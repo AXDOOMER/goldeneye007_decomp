@@ -64,7 +64,7 @@ SECTIONS
    __ramPos += SIZEOF(.text_code);
    
    .c_data 0x21990 : AT(0x21990) {
-      * (.c_data);
+      build/c_data_filler.o (.data);
    }
    __romPos += 0x11c00;
    
@@ -679,6 +679,7 @@ __ramPos += SIZEOF(.bss);
       * (.mdebug);
       * (.gptab.bss);
       * (.gptab.data);
+      * (.reginfo);
       build/assets/romfiles.o (.data);
       build/assets/ramrom/ramrom.o (.data);
       build/assets/font/font.o (.data);

@@ -1,6 +1,7 @@
 
 Discarded input sections
 
+ .reginfo       0x0000000000000000       0x18 build/rom_header.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/rom_header.o
  .pdr           0x0000000000000000        0x0 build/rom_header.o
@@ -90,6 +91,10 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/libultra/libultra.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/libultra/libultra.o
+ .options       0x0000000000000000       0x20 build/c_data_filler.o
+ .reginfo       0x0000000000000000       0x18 build/c_data_filler.o
+ .gptab.data    0x0000000000000000       0x18 build/c_data_filler.o
+ .mdebug        0x0000000000000000      0x218 build/c_data_filler.o
  .options       0x0000000000000000       0x20 build/rarezip/rarezip.o
  .reginfo       0x0000000000000000       0x18 build/rarezip/rarezip.o
  .options       0x0000000000000000       0x20 build/game/initgamedata.o
@@ -357,7 +362,7 @@ Discarded input sections
                 0x0000000000000000       0x18 build/assets/music/music.o
  .pdr           0x0000000000000000        0x0 build/assets/music/music.o
  .musicdecompressed
-                0x0000000000000000    0x32538 build/assets/music/music.o
+                0x0000000000000000    0x32532 build/assets/music/music.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/assets/music/music.o
  .data          0x0000000000000000        0x0 build/assets/obseg/ob_seg.o
@@ -595,12 +600,7 @@ Linker script and memory map
 .header         0x0000000004000000       0x40 load address 0x0000000000000000
  build/rom_header.o(.data)
  .data          0x0000000004000000       0x40 build/rom_header.o
-                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.header))
-
-.data           0x0000000004000040        0x0 load address 0x0000000000000040
- .data          0x0000000004000040        0x0 build/bootcode.o
- .data          0x0000000004000040        0x0 build/_start.o
- .data          0x0000000004000040        0x0 build/rspboot.o
+                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.header))
 
 .boot           0x0000000004000040      0xfc0 load address 0x0000000000000040
  build/bootcode.o(.text)
@@ -613,14 +613,14 @@ Linker script and memory map
                 0x0000000004000980                func_04000980
                 0x0000000004000a40                func_04000A40
                 0x0000000004000ad0                func_04000AD0
-                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.boot))
+                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.boot))
                 0x0000000000000400                __ramPos = 0x400
 
 .text_start     0x0000000080000400       0x50 load address 0x0000000000001000
  build/_start.o(.text)
  .text          0x0000000080000400       0x50 build/_start.o
                 0x0000000080000400                _start
-                [0x0000000000be6d0a]                __romPos = (__romPos + 0x50)
+                [0x0000000000be6d10]                __romPos = (__romPos + 0x50)
                 [0x000000008008e360]                __ramPos = (__ramPos + 0x50)
 
 .text_code      0x0000000070000450    0x20940 load address 0x0000000000001050
@@ -1361,12 +1361,19 @@ Linker script and memory map
                 0x0000000070020c50                ldiv
                 0x0000000070020ce0                __osResetGlobalIntMask
                 0x0000000070020d40                osEPiRawWriteIo
-                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.text_code))
+                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.text_code))
                 [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.text_code))
 
-.c_data
- *(.c_data)
-                [0x0000000000be6d0a]                __romPos = (__romPos + 0x11c00)
+.c_data         0x0000000000021990    0x11c00
+ build/c_data_filler.o(.data)
+ .data          0x0000000000021990    0x11c00 build/c_data_filler.o
+                0x0000000000021990                c_data_array
+                [0x0000000000be6d10]                __romPos = (__romPos + 0x11c00)
+
+.data           0x0000000000033590        0x0
+ .data          0x0000000000033590        0x0 build/bootcode.o
+ .data          0x0000000000033590        0x0 build/_start.o
+ .data          0x0000000000033590        0x0 build/rspboot.o
 
 .text_rarezip   0x0000000070200000     0x15a0 load address 0x0000000000033590
  build/rarezip/rarezip.o(.text)
@@ -1397,7 +1404,7 @@ Linker script and memory map
                 0x0000000070201590                rz_data1
                 0x0000000070201594                rz_data2
                 0x0000000070201598                rz_data3
-                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.text_rarezip))
+                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.text_rarezip))
 
 .text_tlbcode   0x000000007f000000    0xe2d50 load address 0x0000000000034b30
  build/game/initgamedata.o(.text)
@@ -4136,7 +4143,7 @@ Linker script and memory map
                 0x000000007f0d37d4                nullsub_50
                 0x000000007f0d37dc                sub_GAME_7F0D37DC
                 0x000000007f0d382c                spectrum_hw_emulation
-                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.text_tlbcode))
+                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.text_tlbcode))
                 [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.text_tlbcode))
 
 .text           0x000000007f0e2d50        0x0 load address 0x0000000000117880
@@ -4149,7 +4156,7 @@ Linker script and memory map
  .text          0x000000007f0e2d50        0x0 build/assets/images/images.o
 
 .romfiles_117880
-                0x0000000000117880   0x320dda
+                0x0000000000117880   0x320de0
  build/assets/romfiles.o(.romfiles)
  .romfiles      0x0000000000117880   0x1a7a50 build/assets/romfiles.o
                 0x0000000000117880                jfont_dl117880
@@ -4192,7 +4199,7 @@ Linker script and memory map
                 0x0000000000419794                table_music_data
  build/assets/music/music.o(.musiccompressed)
  .musiccompressed
-                0x000000000041998c    0x1ecce build/assets/music/music.o
+                0x000000000041998c    0x1ecd4 build/assets/music/music.o
                 0x000000000041998c                Mno_music
                 0x00000000004199b6                Msolo_death_abrev
                 0x0000000000419b8c                Mintro_eye
@@ -4256,7 +4263,7 @@ Linker script and memory map
                 0x0000000000437fa2                Msurface2_ending
                 0x000000000043823e                Mstatue_ending
                 0x00000000004383a4                Mfrigate_outro
-                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.romfiles_117880))
+                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.romfiles_117880))
 
 .ob_seg         0x0000000000438660   0x4bf790
  build/assets/obseg/ob_seg.o(.ob_seg)
@@ -4970,27 +4977,24 @@ Linker script and memory map
                 0x00000000008f7dc0                LwaxE
                 0x00000000008f7dd0                LwaxJ
                 0x00000000008f7de0                ob__ob_end_seg
-                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.ob_seg))
+                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.ob_seg))
 
 .images         0x00000000008f7df0   0x2eef20
  build/assets/images/images.o(.images)
  .images        0x00000000008f7df0   0x2eef20 build/assets/images/images.o
                 0x00000000008f7df0                images
                 0x0000000000be6d10                images_end
-                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.images))
+                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.images))
                 0x0000000000c00000                __csegtempPos = 0xc00000
                 0x0000000080020d90                __ramPos = 0x80020d90
 
-.reginfo        0x0000000000be6d10       0x18
- .reginfo       0x0000000000be6d10       0x18 build/rom_header.o
+.rodata         0x0000000000be6d10        0x0
+ .rodata        0x0000000000be6d10        0x0 build/_start.o
+ .rodata        0x0000000000be6d10        0x0 build/rspboot.o
+ .rodata        0x0000000000be6d10        0x0 build/gspboot.o
 
-.rodata         0x0000000000be6d28        0x0
- .rodata        0x0000000000be6d28        0x0 build/_start.o
- .rodata        0x0000000000be6d28        0x0 build/rspboot.o
- .rodata        0x0000000000be6d28        0x0 build/gspboot.o
-
-.rel.dyn        0x0000000000be6d28        0x0
- .rel.dyn       0x0000000000be6d28        0x0 build/video.o
+.rel.dyn        0x0000000000be6d10        0x0
+ .rel.dyn       0x0000000000be6d10        0x0 build/video.o
 
 .csegment       0x0000000080020d90    0x3c550 load address 0x0000000000c00000
  build/rspboot.o(.text)
@@ -11056,6 +11060,7 @@ Linker script and memory map
  *(.mdebug)
  *(.gptab.bss)
  *(.gptab.data)
+ *(.reginfo)
  build/assets/romfiles.o(.data)
  build/assets/ramrom/ramrom.o(.data)
  build/assets/font/font.o(.data)
