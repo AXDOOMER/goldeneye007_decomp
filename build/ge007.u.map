@@ -595,7 +595,7 @@ Linker script and memory map
 .header         0x0000000004000000       0x40 load address 0x0000000000000000
  build/rom_header.o(.data)
  .data          0x0000000004000000       0x40 build/rom_header.o
-                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.header))
+                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.header))
 
 .data           0x0000000004000040        0x0 load address 0x0000000000000040
  .data          0x0000000004000040        0x0 build/bootcode.o
@@ -613,14 +613,14 @@ Linker script and memory map
                 0x0000000004000980                func_04000980
                 0x0000000004000a40                func_04000A40
                 0x0000000004000ad0                func_04000AD0
-                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.boot))
+                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.boot))
                 0x0000000000000400                __ramPos = 0x400
 
 .text_start     0x0000000080000400       0x50 load address 0x0000000000001000
  build/_start.o(.text)
  .text          0x0000000080000400       0x50 build/_start.o
                 0x0000000080000400                _start
-                [0x0000000000be648a]                __romPos = (__romPos + 0x50)
+                [0x0000000000be6d0a]                __romPos = (__romPos + 0x50)
                 [0x000000008008e360]                __ramPos = (__ramPos + 0x50)
 
 .text_code      0x0000000070000450    0x20940 load address 0x0000000000001050
@@ -1361,12 +1361,12 @@ Linker script and memory map
                 0x0000000070020c50                ldiv
                 0x0000000070020ce0                __osResetGlobalIntMask
                 0x0000000070020d40                osEPiRawWriteIo
-                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.text_code))
+                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.text_code))
                 [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.text_code))
 
 .c_data
  *(.c_data)
-                [0x0000000000be648a]                __romPos = (__romPos + 0x11c00)
+                [0x0000000000be6d0a]                __romPos = (__romPos + 0x11c00)
 
 .text_rarezip   0x0000000070200000     0x15a0 load address 0x0000000000033590
  build/rarezip/rarezip.o(.text)
@@ -1397,7 +1397,7 @@ Linker script and memory map
                 0x0000000070201590                rz_data1
                 0x0000000070201594                rz_data2
                 0x0000000070201598                rz_data3
-                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.text_rarezip))
+                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.text_rarezip))
 
 .text_tlbcode   0x000000007f000000    0xe2d50 load address 0x0000000000034b30
  build/game/initgamedata.o(.text)
@@ -4136,7 +4136,7 @@ Linker script and memory map
                 0x000000007f0d37d4                nullsub_50
                 0x000000007f0d37dc                sub_GAME_7F0D37DC
                 0x000000007f0d382c                spectrum_hw_emulation
-                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.text_tlbcode))
+                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.text_tlbcode))
                 [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.text_tlbcode))
 
 .text           0x000000007f0e2d50        0x0 load address 0x0000000000117880
@@ -4256,11 +4256,11 @@ Linker script and memory map
                 0x0000000000437fa2                Msurface2_ending
                 0x000000000043823e                Mstatue_ending
                 0x00000000004383a4                Mfrigate_outro
-                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.romfiles_117880))
+                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.romfiles_117880))
 
-.ob_seg         0x0000000000438660   0x4bef10
+.ob_seg         0x0000000000438660   0x4bf790
  build/assets/obseg/ob_seg.o(.ob_seg)
- .ob_seg        0x0000000000438660   0x4bef10 build/assets/obseg/ob_seg.o
+ .ob_seg        0x0000000000438660   0x4bf790 build/assets/obseg/ob_seg.o
                 0x0000000000438660                bg_sev_all_p_seg
                 0x0000000000449450                bg_silo_all_p_seg
                 0x000000000049a390                bg_stat_all_p_seg
@@ -4871,113 +4871,113 @@ Linker script and memory map
                 0x00000000008c53a0                UsetupdepoZ
                 0x00000000008c8330                UsetupdestZ
                 0x00000000008ca680                UsetupjunZ
-                0x00000000008cdd90                UsetuplenZ
-                0x00000000008ce360                UsetuppeteZ
-                0x00000000008d12e0                UsetuprunZ
-                0x00000000008d2b40                UsetupsevbZ
-                0x00000000008d5210                UsetupsevbunkerZ
-                0x00000000008d6c40                UsetupsevxZ
-                0x00000000008daf50                UsetupsevxbZ
-                0x00000000008df040                UsetupsiloZ
-                0x00000000008e1a90                UsetupstatueZ
-                0x00000000008e4260                UsetuptraZ
-                0x00000000008e7490                LameE
-                0x00000000008e74a0                LameJ
-                0x00000000008e74b0                LarchE
-                0x00000000008e7ac0                LarchJ
-                0x00000000008e8120                LarecE
-                0x00000000008e86d0                LarecJ
-                0x00000000008e8c60                LarkE
-                0x00000000008e92e0                LarkJ
-                0x00000000008e9990                LashE
-                0x00000000008e99a0                LashJ
-                0x00000000008e99b0                LaztE
-                0x00000000008e9de0                LaztJ
-                0x00000000008ea290                LcatE
-                0x00000000008ea2a0                LcatJ
-                0x00000000008ea2b0                LcaveE
-                0x00000000008ea690                LcaveJ
-                0x00000000008eaaf0                LcradE
-                0x00000000008eafb0                LcradJ
-                0x00000000008eb460                LcrypE
-                0x00000000008eb6a0                LcrypJ
-                0x00000000008eb960                LdamE
-                0x00000000008ebd90                LdamJ
-                0x00000000008ec200                LdepoE
-                0x00000000008ec550                LdepoJ
-                0x00000000008ec890                LdestE
-                0x00000000008ecd10                LdestJ
-                0x00000000008ed170                LdishE
-                0x00000000008ed180                LdishJ
-                0x00000000008ed190                LearE
-                0x00000000008ed1a0                LearJ
-                0x00000000008ed1b0                LeldE
-                0x00000000008ed1c0                LeldJ
-                0x00000000008ed1d0                LgunE
-                0x00000000008ed7b0                LgunJ
-                0x00000000008edf00                LimpE
-                0x00000000008edf10                LimpJ
-                0x00000000008edf20                LjunE
-                0x00000000008ee420                LjunJ
-                0x00000000008ee960                LleeE
-                0x00000000008ee970                LleeJ
-                0x00000000008ee980                LlenE
-                0x00000000008eee90                LlenJ
-                0x00000000008ef140                LlipE
-                0x00000000008ef150                LlipJ
-                0x00000000008ef160                LlueE
-                0x00000000008ef170                LlueJ
-                0x00000000008ef180                LmiscE
-                0x00000000008ef3b0                LmiscJ
-                0x00000000008ef690                LmpmenuE
-                0x00000000008ef7d0                LmpmenuJ
-                0x00000000008ef960                LmpweaponsE
-                0x00000000008ef9e0                LmpweaponsJ
-                0x00000000008efac0                LoatE
-                0x00000000008efad0                LoatJ
-                0x00000000008efae0                LoptionsE
-                0x00000000008efc90                LoptionsJ
-                0x00000000008efee0                LpamE
-                0x00000000008efef0                LpamJ
-                0x00000000008eff00                LpeteE
-                0x00000000008f0360                LpeteJ
-                0x00000000008f07d0                LpropobjE
-                0x00000000008f09e0                LpropobjJ
-                0x00000000008f0ca0                LrefE
-                0x00000000008f0cb0                LrefJ
-                0x00000000008f0cc0                LritE
-                0x00000000008f0cd0                LritJ
-                0x00000000008f0ce0                LrunE
-                0x00000000008f0f40                LrunJ
-                0x00000000008f11d0                LsevE
-                0x00000000008f1710                LsevJ
-                0x00000000008f1c20                LsevbE
-                0x00000000008f2350                LsevbJ
-                0x00000000008f2b40                LsevxE
-                0x00000000008f2f80                LsevxJ
-                0x00000000008f3340                LsevxbE
-                0x00000000008f37b0                LsevxbJ
-                0x00000000008f3c00                LshoE
-                0x00000000008f3c10                LshoJ
-                0x00000000008f3c20                LsiloE
-                0x00000000008f41c0                LsiloJ
-                0x00000000008f47a0                LstatE
-                0x00000000008f50a0                LstatJ
-                0x00000000008f5910                LtitleE
-                0x00000000008f6180                LtitleJ
-                0x00000000008f6d10                LtraE
-                0x00000000008f7120                LtraJ
-                0x00000000008f7540                LwaxE
-                0x00000000008f7550                LwaxJ
-                0x00000000008f7560                ob__ob_end_seg
-                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.ob_seg))
+                0x00000000008cdd80                UsetuplenZ
+                0x00000000008ce350                UsetuppeteZ
+                0x00000000008d12d0                UsetuprunZ
+                0x00000000008d2b30                UsetupsevbZ
+                0x00000000008d5190                UsetupsevbunkerZ
+                0x00000000008d6bc0                UsetupsevxZ
+                0x00000000008daed0                UsetupsevxbZ
+                0x00000000008defc0                UsetupsiloZ
+                0x00000000008e1a10                UsetupstatueZ
+                0x00000000008e41e0                UsetuptraZ
+                0x00000000008e7410                LameE
+                0x00000000008e7420                LameJ
+                0x00000000008e7430                LarchE
+                0x00000000008e7a60                LarchJ
+                0x00000000008e80c0                LarecE
+                0x00000000008e8690                LarecJ
+                0x00000000008e8c20                LarkE
+                0x00000000008e92c0                LarkJ
+                0x00000000008e9970                LashE
+                0x00000000008e9980                LashJ
+                0x00000000008e9990                LaztE
+                0x00000000008e9dd0                LaztJ
+                0x00000000008ea280                LcatE
+                0x00000000008ea290                LcatJ
+                0x00000000008ea2a0                LcaveE
+                0x00000000008ea6a0                LcaveJ
+                0x00000000008eab00                LcradE
+                0x00000000008eafd0                LcradJ
+                0x00000000008eb480                LcrypE
+                0x00000000008eb6d0                LcrypJ
+                0x00000000008eb990                LdamE
+                0x00000000008ebde0                LdamJ
+                0x00000000008ec250                LdepoE
+                0x00000000008ec5c0                LdepoJ
+                0x00000000008ec900                LdestE
+                0x00000000008ecd90                LdestJ
+                0x00000000008ed1f0                LdishE
+                0x00000000008ed200                LdishJ
+                0x00000000008ed210                LearE
+                0x00000000008ed220                LearJ
+                0x00000000008ed230                LeldE
+                0x00000000008ed240                LeldJ
+                0x00000000008ed250                LgunE
+                0x00000000008ed970                LgunJ
+                0x00000000008ee0c0                LimpE
+                0x00000000008ee0d0                LimpJ
+                0x00000000008ee0e0                LjunE
+                0x00000000008ee600                LjunJ
+                0x00000000008eeb40                LleeE
+                0x00000000008eeb50                LleeJ
+                0x00000000008eeb60                LlenE
+                0x00000000008ef1a0                LlenJ
+                0x00000000008ef450                LlipE
+                0x00000000008ef460                LlipJ
+                0x00000000008ef470                LlueE
+                0x00000000008ef480                LlueJ
+                0x00000000008ef490                LmiscE
+                0x00000000008ef730                LmiscJ
+                0x00000000008efa10                LmpmenuE
+                0x00000000008efbb0                LmpmenuJ
+                0x00000000008efd40                LmpweaponsE
+                0x00000000008efe00                LmpweaponsJ
+                0x00000000008efee0                LoatE
+                0x00000000008efef0                LoatJ
+                0x00000000008eff00                LoptionsE
+                0x00000000008f0130                LoptionsJ
+                0x00000000008f0380                LpamE
+                0x00000000008f0390                LpamJ
+                0x00000000008f03a0                LpeteE
+                0x00000000008f0820                LpeteJ
+                0x00000000008f0c90                LpropobjE
+                0x00000000008f0f30                LpropobjJ
+                0x00000000008f11f0                LrefE
+                0x00000000008f1200                LrefJ
+                0x00000000008f1210                LritE
+                0x00000000008f1220                LritJ
+                0x00000000008f1230                LrunE
+                0x00000000008f14a0                LrunJ
+                0x00000000008f1730                LsevE
+                0x00000000008f1c90                LsevJ
+                0x00000000008f21a0                LsevbE
+                0x00000000008f28f0                LsevbJ
+                0x00000000008f30e0                LsevxE
+                0x00000000008f3540                LsevxJ
+                0x00000000008f3900                LsevxbE
+                0x00000000008f3d90                LsevxbJ
+                0x00000000008f41e0                LshoE
+                0x00000000008f41f0                LshoJ
+                0x00000000008f4200                LsiloE
+                0x00000000008f47b0                LsiloJ
+                0x00000000008f4d90                LstatE
+                0x00000000008f56b0                LstatJ
+                0x00000000008f5f20                LtitleE
+                0x00000000008f69e0                LtitleJ
+                0x00000000008f7570                LtraE
+                0x00000000008f79a0                LtraJ
+                0x00000000008f7dc0                LwaxE
+                0x00000000008f7dd0                LwaxJ
+                0x00000000008f7de0                ob__ob_end_seg
+                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.ob_seg))
 
 .images         0x00000000008f7df0   0x2eef20
  build/assets/images/images.o(.images)
  .images        0x00000000008f7df0   0x2eef20 build/assets/images/images.o
                 0x00000000008f7df0                images
                 0x0000000000be6d10                images_end
-                [0x0000000000be648a]                __romPos = (__romPos + SIZEOF (.images))
+                [0x0000000000be6d0a]                __romPos = (__romPos + SIZEOF (.images))
                 0x0000000000c00000                __csegtempPos = 0xc00000
                 0x0000000080020d90                __ramPos = 0x80020d90
 
