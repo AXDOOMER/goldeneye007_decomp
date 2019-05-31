@@ -237,19 +237,11 @@ glabel sub_GAME_7F0AEFE0
 
 
 
-#ifdef NONMATCHING
-void stanRemovedAnimationRoutine(s32 arg0) {
+
+u32 stanRemovedAnimationRoutine(s32 arg0) {
     return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel stanRemovedAnimationRoutine
-/* 0E3B30 7F0AF000 AFA40000 */  sw    $a0, ($sp)
-/* 0E3B34 7F0AF004 03E00008 */  jr    $ra
-/* 0E3B38 7F0AF008 00001025 */   move  $v0, $zero
-)
-#endif
+
 
 
 
@@ -4697,39 +4689,14 @@ glabel sub_GAME_7F0B1CC4
 
 
 
-#ifdef NONMATCHING
+
 s32 sub_GAME_7F0B1CE0(void) {
-    // Node 0
     return dword_CODE_bss_8007B9E4;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B1CE0
-/* 0E6810 7F0B1CE0 3C028008 */  lui   $v0, %hi(dword_CODE_bss_8007B9E4)
-/* 0E6814 7F0B1CE4 03E00008 */  jr    $ra
-/* 0E6818 7F0B1CE8 8C42B9E4 */   lw    $v0, %lo(dword_CODE_bss_8007B9E4)($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 s32 sub_GAME_7F0B1CEC(void) {
-    // Node 0
     return dword_CODE_bss_8007B9E8;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B1CEC
-/* 0E681C 7F0B1CEC 3C028008 */  lui   $v0, %hi(dword_CODE_bss_8007B9E8)
-/* 0E6820 7F0B1CF0 03E00008 */  jr    $ra
-/* 0E6824 7F0B1CF4 8C42B9E8 */   lw    $v0, %lo(dword_CODE_bss_8007B9E8)($v0)
-)
-#endif
 
 
 
@@ -6490,39 +6457,14 @@ glabel sub_GAME_7F0B2D14
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B2D38(s32 arg0, s32 arg1, ? arg2) {
-    // Node 0
+void sub_GAME_7F0B2D38(s32 arg0, s32 arg1, s32 arg2) {
     return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B2D38
-/* 0E7868 7F0B2D38 AFA40000 */  sw    $a0, ($sp)
-/* 0E786C 7F0B2D3C AFA50004 */  sw    $a1, 4($sp)
-/* 0E7870 7F0B2D40 03E00008 */  jr    $ra
-/* 0E7874 7F0B2D44 AFA60008 */   sw    $a2, 8($sp)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 s32 sub_GAME_7F0B2D48(s32 arg0) {
-    // Node 0
     return arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B2D48
-/* 0E7878 7F0B2D48 03E00008 */  jr    $ra
-/* 0E787C 7F0B2D4C 00801025 */   move  $v0, $a0
-)
-#endif
+
 
 
 
@@ -7017,36 +6959,15 @@ glabel sub_GAME_7F0B3024
 
 
 
-#ifdef NONMATCHING
+
 s32 sub_GAME_7F0B3034(s32 arg0) {
     return arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B3034
-/* 0E7B64 7F0B3034 03E00008 */  jr    $ra
-/* 0E7B68 7F0B3038 00801025 */   move  $v0, $a0
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 s32 sub_GAME_7F0B303C(s32 arg0) {
     return arg0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B303C
-/* 0E7B6C 7F0B303C 03E00008 */  jr    $ra
-/* 0E7B70 7F0B3040 00801025 */   move  $v0, $a0
-)
-#endif
 
 
 
