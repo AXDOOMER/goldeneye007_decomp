@@ -2919,7 +2919,7 @@ Linker script and memory map
  .text          0x000000007f077bd0    0x15fe0 build/game/bond.o
                 0x000000007f077bd0                nullsub_75
                 0x000000007f077bd8                set_BONDdata_screensize
-                0x000000007f077c14                sub_GAME_7F077C14
+                0x000000007f077c14                set_ulx_uly
                 0x000000007f077c30                sub_GAME_7F077C30
                 0x000000007f077c5c                sub_GAME_7F077C5C
                 0x000000007f077eec                sub_GAME_7F077EEC
@@ -3662,8 +3662,8 @@ Linker script and memory map
                 0x000000007f0b4124                sub_GAME_7F0B4124
                 0x000000007f0b47e0                sub_GAME_7F0B47E0
                 0x000000007f0b4810                sub_GAME_7F0B4810
-                0x000000007f0b4830                sub_GAME_7F0B4830
-                0x000000007f0b483c                sub_GAME_7F0B483C
+                0x000000007f0b4830                get_room_data_float2
+                0x000000007f0b483c                get_room_data_float1
                 0x000000007f0b4848                sub_GAME_7F0B4848
                 0x000000007f0b4878                sub_GAME_7F0B4878
                 0x000000007f0b4884                sub_GAME_7F0B4884
@@ -7759,8 +7759,8 @@ Linker script and memory map
  build/game/bg.o(.data)
  .data          0x00000000800413f0     0x39d0 build/game/bg.o
                 0x00000000800413f0                ptr_bg_c_debug_debug_notice_list
-                0x00000000800413f4                D_800413F4
-                0x00000000800413f8                D_800413F8
+                0x00000000800413f4                room_data_float1
+                0x00000000800413f8                room_data_float2
                 0x00000000800413fc                D_800413FC
                 0x0000000080041400                D_80041400
                 0x0000000080041404                D_80041404

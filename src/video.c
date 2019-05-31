@@ -2417,7 +2417,7 @@ void set_video2_ulx_uly(s16 arg0, s16 arg1)
 {
     ptr_video_settings2->unk20 = arg0;
     ptr_video_settings2->unk22 = arg1;
-    sub_GAME_7F077C14((f32) ptr_video_settings2->unk20, (f32) ptr_video_settings2->unk22);
+    set_ulx_uly((f32) ptr_video_settings2->unk20, (f32) ptr_video_settings2->unk22);
 }
 #else
 GLOBAL_ASM(
@@ -2439,7 +2439,7 @@ glabel set_video2_ulx_uly
 /* 0050F0 700044F0 448A2000 */  mtc1  $t2, $f4
 /* 0050F4 700044F4 448B3000 */  mtc1  $t3, $f6
 /* 0050F8 700044F8 46802320 */  cvt.s.w $f12, $f4
-/* 0050FC 700044FC 0FC1DF05 */  jal   sub_GAME_7F077C14
+/* 0050FC 700044FC 0FC1DF05 */  jal   set_ulx_uly
 /* 005100 70004500 468033A0 */   cvt.s.w $f14, $f6
 /* 005104 70004504 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 005108 70004508 27BD0018 */  addiu $sp, $sp, 0x18

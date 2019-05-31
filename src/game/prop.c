@@ -2080,7 +2080,7 @@ glabel sub_GAME_7F003480
 /* 038098 7F003568 01C02025 */   move  $a0, $t6
 /* 03809C 7F00356C 0FC2E5B3 */  jal   sub_GAME_7F0B96CC
 /* 0380A0 7F003570 27A50180 */   addiu $a1, $sp, 0x180
-/* 0380A4 7F003574 0FC2D20C */  jal   sub_GAME_7F0B4830
+/* 0380A4 7F003574 0FC2D20C */  jal   get_room_data_float2
 /* 0380A8 7F003578 00000000 */   nop   
 /* 0380AC 7F00357C C7AA018C */  lwc1  $f10, 0x18c($sp)
 /* 0380B0 7F003580 C7B20188 */  lwc1  $f18, 0x188($sp)
@@ -2887,7 +2887,7 @@ glabel stage_loading_setup_objparse_cleanupafter
 .L7F003F8C:
 /* 038ABC 7F003F8C 1140001D */  beqz  $t2, .L7F004004
 /* 038AC0 7F003F90 00000000 */   nop   
-/* 038AC4 7F003F94 0FC2D20C */  jal   sub_GAME_7F0B4830
+/* 038AC4 7F003F94 0FC2D20C */  jal   get_room_data_float2
 /* 038AC8 7F003F98 00000000 */   nop   
 /* 038ACC 7F003F9C 3C108007 */  lui   $s0, %hi(ptr_0xxxpresets) # $s0, 0x8007
 /* 038AD0 7F003FA0 8E105D18 */  lw    $s0, %lo(ptr_0xxxpresets)($s0)
@@ -2922,7 +2922,7 @@ glabel stage_loading_setup_objparse_cleanupafter
 /* 038B3C 7F00400C 8CEC001C */  lw    $t4, 0x1c($a3)
 /* 038B40 7F004010 51800033 */  beql  $t4, $zero, .L7F0040E0
 /* 038B44 7F004014 8CE50020 */   lw    $a1, 0x20($a3)
-/* 038B48 7F004018 0FC2D20C */  jal   sub_GAME_7F0B4830
+/* 038B48 7F004018 0FC2D20C */  jal   get_room_data_float2
 /* 038B4C 7F00401C 00000000 */   nop   
 /* 038B50 7F004020 3C078007 */  lui   $a3, %hi(ptr_setup_path_tbl) # $a3, 0x8007
 /* 038B54 7F004024 24E75D00 */  addiu $a3, %lo(ptr_setup_path_tbl) # addiu $a3, $a3, 0x5d00

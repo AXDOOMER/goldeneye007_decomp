@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "game/actor.h"
 // data
-s32 animation_rate = 0;
+f32 animation_rate = 0;
 s32 D_8002C904 = 0;
 s32 D_8002C908 = 0;
 s32 D_8002C90C = 0;
@@ -1048,33 +1048,10 @@ s32 D_80030A68 = 0;
 
 
 
-//.section .rodata
-
-/*
- */
-
-
-
-/*
-
- */
-
-
-
-
-#ifdef NONMATCHING
-u32 get_numguards(void){
+s32 get_numguards(void){
   return num_guards;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_numguards
-/* 054060 7F01F530 3C028003 */  lui   $v0, 0x8003
-/* 054064 7F01F534 03E00008 */  jr    $ra
-/* 054068 7F01F538 8C42CC68 */   lw    $v0, -0x3398($v0)
-)
-#endif
+
 
 
 
@@ -1099,36 +1076,14 @@ glabel get_ptr_allocated_block_for_vertices
 
 
 
-#ifdef NONMATCHING
-void set_show_patrols_flag(BOOL flag){
+void set_show_patrols_flag(s32 flag){
   show_patrols_flag = flag;
-  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_show_patrols_flag
-/* 05408C 7F01F55C 3C018003 */  lui   $at, 0x8003
-/* 054090 7F01F560 03E00008 */  jr    $ra
-/* 054094 7F01F564 AC24CC5C */   sw    $a0, -0x33a4($at)
-)
-#endif
 
-
-
-#ifdef NONMATCHING
-u32 get_show_patrols_flag(void){
+s32 get_show_patrols_flag(void){
   return show_patrols_flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_show_patrols_flag
-/* 054098 7F01F568 3C028003 */  lui   $v0, 0x8003
-/* 05409C 7F01F56C 03E00008 */  jr    $ra
-/* 0540A0 7F01F570 8C42CC5C */   lw    $v0, -0x33a4($v0)
-)
-#endif
+
 
 
 
@@ -2470,19 +2425,9 @@ glabel animation_speed_related
 
 
 
-#ifdef NONMATCHING
-void get_animation_rate(void) {
-
+f32 get_animation_rate(void) {
+  return animation_rate;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_animation_rate
-/* 055114 7F0205E4 3C018003 */  lui   $at, 0x8003
-/* 055118 7F0205E8 03E00008 */  jr    $ra
-/* 05511C 7F0205EC C420C900 */   lwc1  $f0, -0x3700($at)
-)
-#endif
 
 
 
@@ -5459,19 +5404,11 @@ glabel sub_GAME_7F022E1C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F022E24(void) {
 
+void sub_GAME_7F022E24(s32 param_1){
+  D_8002C904 = param_1;
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F022E24
-/* 057954 7F022E24 3C018003 */  lui   $at, 0x8003
-/* 057958 7F022E28 03E00008 */  jr    $ra
-/* 05795C 7F022E2C AC24C904 */   sw    $a0, -0x36fc($at)
-)
-#endif
 
 
 
@@ -5561,19 +5498,10 @@ glabel sub_GAME_7F022EC8
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F022EE0(void) {
-
+void sub_GAME_7F022EE0(s32 param_1){
+  D_8002C910 = param_1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F022EE0
-/* 057A10 7F022EE0 3C018003 */  lui   $at, 0x8003
-/* 057A14 7F022EE4 03E00008 */  jr    $ra
-/* 057A18 7F022EE8 AC24C910 */   sw    $a0, -0x36f0($at)
-)
-#endif
+
 
 
 
