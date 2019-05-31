@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "tlb_hardware.h"
 
-void set_hardwire_TLB_to_2(void);
+
 #ifdef NONMATCHING
 void set_hardwire_TLB_to_2(void) {
 

@@ -386,19 +386,11 @@ glabel translate_load_rom_from_TLBaddress
 
 
 
-#ifdef NONMATCHING
-? return_ptr_TLBmemory(void)
+u32 * return_ptr_TLBmemory(void)
 {
     return ptr_TLBallocatedblock;
 }
-#else
-GLOBAL_ASM(
-glabel return_ptr_TLBmemory
-/* 0026F8 70001AF8 3C028006 */  lui   $v0, %hi(ptr_TLBallocatedblock)
-/* 0026FC 70001AFC 03E00008 */  jr    $ra
-/* 002700 70001B00 8C42E4A8 */   lw    $v0, %lo(ptr_TLBallocatedblock)($v0)
-)
-#endif
+
 
 
 
