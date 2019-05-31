@@ -1,5 +1,5 @@
 #include "ultra64.h"
-
+#include "game/initactorpropstuff.h"
 
 
 
@@ -680,28 +680,10 @@ glabel somethingwith_weapon_animation_groups
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F000980(void) {
-    // Node 0
     sub_GAME_7F0009A0();
-    return;
-    // (possible return value: sub_GAME_7F0009A0())
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F000980
-/* 0354B0 7F000980 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0354B4 7F000984 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0354B8 7F000988 0FC00268 */  jal   sub_GAME_7F0009A0
-/* 0354BC 7F00098C 00000000 */   nop   
-/* 0354C0 7F000990 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0354C4 7F000994 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0354C8 7F000998 03E00008 */  jr    $ra
-/* 0354CC 7F00099C 00000000 */   nop   
-)
-#endif
 
 extern char dword_CODE_bss_80075DC8[20][160]; // TODO: This seems like an array of 20 of these. Fix the other files? (Aliasing violation)
 
