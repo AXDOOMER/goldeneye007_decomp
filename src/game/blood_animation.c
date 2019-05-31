@@ -212,7 +212,7 @@ glabel insert_imageDL
 /* 050C38 7F01C108 33190FFF */  andi  $t9, $t8, 0xfff
 /* 050C3C 7F01C10C 3C01FF10 */  lui   $at, 0xff10
 /* 050C40 7F01C110 03214025 */  or    $t0, $t9, $at
-/* 050C44 7F01C114 0C000F07 */  jal   get_video2buf_offset28
+/* 050C44 7F01C114 0C000F07 */  jal   get_video_settings2_frameb
 /* 050C48 7F01C118 AD280000 */   sw    $t0, ($t1)
 /* 050C4C 7F01C11C 0C003A2C */  jal   osVirtualToPhysical
 /* 050C50 7F01C120 00402025 */   move  $a0, $v0

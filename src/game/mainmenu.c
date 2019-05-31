@@ -29345,7 +29345,7 @@ glabel menu_init
 /* 04F16C 7F01A63C 3C088003 */  lui   $t0, %hi(is_emulating_spectrum) # $t0, 0x8003
 /* 04F170 7F01A640 11E0000C */  beqz  $t7, .L7F01A674
 /* 04F174 7F01A644 00000000 */   nop   
-/* 04F178 7F01A648 0C000F07 */  jal   get_video2buf_offset28
+/* 04F178 7F01A648 0C000F07 */  jal   get_video_settings2_frameb
 /* 04F17C 7F01A64C 00000000 */   nop   
 /* 04F180 7F01A650 3C18803E */  lui   $t8, %hi(cfb_16_b) # $t8, 0x803e
 /* 04F184 7F01A654 2718A800 */  addiu $t8, %lo(cfb_16_b) # addiu $t8, $t8, -0x5800
@@ -29360,7 +29360,7 @@ glabel menu_init
 /* 04F1A4 7F01A674 8D08A948 */  lw    $t0, %lo(is_emulating_spectrum)($t0)
 /* 04F1A8 7F01A678 1100000A */  beqz  $t0, .L7F01A6A4
 /* 04F1AC 7F01A67C 00000000 */   nop   
-/* 04F1B0 7F01A680 0C000F07 */  jal   get_video2buf_offset28
+/* 04F1B0 7F01A680 0C000F07 */  jal   get_video_settings2_frameb
 /* 04F1B4 7F01A684 00000000 */   nop   
 /* 04F1B8 7F01A688 3C09803B */  lui   $t1, %hi(cfb_16_a) # $t1, 0x803b
 /* 04F1BC 7F01A68C 25295000 */  addiu $t1, %lo(cfb_16_a) # addiu $t1, $t1, 0x5000
@@ -29375,7 +29375,7 @@ glabel menu_init
 /* 04F1DC 7F01A6AC 3C018005 */  lui   $at, 0x8005
 /* 04F1E0 7F01A6B0 11400020 */  beqz  $t2, .L7F01A734
 /* 04F1E4 7F01A6B4 00000000 */   nop   
-/* 04F1E8 7F01A6B8 0C000F07 */  jal   get_video2buf_offset28
+/* 04F1E8 7F01A6B8 0C000F07 */  jal   get_video_settings2_frameb
 /* 04F1EC 7F01A6BC 00000000 */   nop   
 /* 04F1F0 7F01A6C0 3C0B803E */  lui   $t3, %hi(cfb_16_b) # $t3, 0x803e
 /* 04F1F4 7F01A6C4 256BA800 */  addiu $t3, %lo(cfb_16_b) # addiu $t3, $t3, -0x5800

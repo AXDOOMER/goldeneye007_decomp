@@ -21899,7 +21899,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBB18 7F086FE8 8DCE6428 */  lw    $t6, %lo(resolution)($t6)
 /* 0BBB1C 7F086FEC 51C0000E */  beql  $t6, $zero, .L7F087028
 /* 0BBB20 7F086FF0 8C790000 */   lw    $t9, ($v1)
-/* 0BBB24 7F086FF4 0C000F07 */  jal   get_video2buf_offset28
+/* 0BBB24 7F086FF4 0C000F07 */  jal   get_video_settings2_frameb
 /* 0BBB28 7F086FF8 00000000 */   nop   
 /* 0BBB2C 7F086FFC 3C0F803E */  lui   $t7, %hi(cfb_16_b) # $t7, 0x803e
 /* 0BBB30 7F087000 25EFA800 */  addiu $t7, %lo(cfb_16_b) # addiu $t7, $t7, -0x5800
@@ -21925,7 +21925,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBB74 7F087044 28410004 */   slti  $at, $v0, 4
 /* 0BBB78 7F087048 5420000D */  bnezl $at, .L7F087080
 /* 0BBB7C 7F08704C 8C6A0000 */   lw    $t2, ($v1)
-/* 0BBB80 7F087050 0C000F07 */  jal   get_video2buf_offset28
+/* 0BBB80 7F087050 0C000F07 */  jal   get_video_settings2_frameb
 /* 0BBB84 7F087054 00000000 */   nop   
 /* 0BBB88 7F087058 3C09803B */  lui   $t1, %hi(cfb_16_a) # $t1, 0x803b
 /* 0BBB8C 7F08705C 25295000 */  addiu $t1, %lo(cfb_16_a) # addiu $t1, $t1, 0x5000
@@ -21946,7 +21946,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBBBC 7F08708C 8D8C642C */  lw    $t4, %lo(camera_8003642C)($t4)
 /* 0BBBC0 7F087090 11800009 */  beqz  $t4, .L7F0870B8
 /* 0BBBC4 7F087094 00000000 */   nop   
-/* 0BBBC8 7F087098 0C000F07 */  jal   get_video2buf_offset28
+/* 0BBBC8 7F087098 0C000F07 */  jal   get_video_settings2_frameb
 /* 0BBBCC 7F08709C 00000000 */   nop   
 /* 0BBBD0 7F0870A0 3C0D803E */  lui   $t5, %hi(cfb_16_b) # $t5, 0x803e
 /* 0BBBD4 7F0870A4 25ADA800 */  addiu $t5, %lo(cfb_16_b) # addiu $t5, $t5, -0x5800

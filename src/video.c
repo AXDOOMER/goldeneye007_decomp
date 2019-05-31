@@ -1,6 +1,7 @@
 //FIXME i still need all sorts of love
 #include "ultra64.h"
 #include "video.h"
+#include "vi.h"
 
 //data
 u32 D_80023240 = 0;
@@ -1340,48 +1341,14 @@ glabel video_related_9
 
 
 
-#ifdef NONMATCHING
-void receive_vi_c_msgs(s32 arg0)
-{
-    s32 temp_s0;
-    s32 phi_s0;
 
-    phi_s0 = arg0;
-loop_1:
-    osRecvMesg(&vi_c_debug_MQ, 0, 1);
-    temp_s0 = phi_s0 + -1;
-    phi_s0 = temp_s0;
-    if (temp_s0 > 0)
-    {
-        goto loop_1;
-    }
+void receive_vi_c_msgs(int msgcount){
+  do {
+    osRecvMesg(&vi_c_debug_MQ,NULL,1);
+    msgcount += -1;
+  } while (0 < msgcount);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel receive_vi_c_msgs
-/* 004764 70003B64 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 004768 70003B68 AFB10018 */  sw    $s1, 0x18($sp)
-/* 00476C 70003B6C AFB00014 */  sw    $s0, 0x14($sp)
-/* 004770 70003B70 3C118006 */  lui   $s1, %hi(vi_c_debug_MQ) # $s1, 0x8006
-/* 004774 70003B74 00808025 */  move  $s0, $a0
-/* 004778 70003B78 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 00477C 70003B7C 26314F10 */  addiu $s1, %lo(vi_c_debug_MQ) # addiu $s1, $s1, 0x4f10
-/* 004780 70003B80 02202025 */  move  $a0, $s1
-.L70003B84:
-/* 004784 70003B84 00002825 */  move  $a1, $zero
-/* 004788 70003B88 0C003774 */  jal   osRecvMesg
-/* 00478C 70003B8C 24060001 */   li    $a2, 1
-/* 004790 70003B90 2610FFFF */  addiu $s0, $s0, -1
-/* 004794 70003B94 5E00FFFB */  bgtzl $s0, .L70003B84
-/* 004798 70003B98 02202025 */   move  $a0, $s1
-/* 00479C 70003B9C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0047A0 70003BA0 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0047A4 70003BA4 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0047A8 70003BA8 03E00008 */  jr    $ra
-/* 0047AC 70003BAC 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
+
 
 #ifdef NONMATCHING
 void setVideoWidthHeightToMode(int videomode)
@@ -1427,54 +1394,27 @@ glabel setVideoWidthHeightToMode
 
 
 
-void coloroutputmode_1(void)
+void set_coloroutputmode_1(void)
 {
     coloroutputmode = 1;
 }
 
-void coloroutputmode_0(void)
+void set_coloroutputmode_0(void)
 {
     coloroutputmode = 0;
 }
 
 
-
-
-
-#ifdef NONMATCHING
-? get_video2buf_offset28(void)
+int get_video_settings2_frameb(void)
 {
     return ptr_video_settings2->frameb;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_video2buf_offset28
-/* 00481C 70003C1C 3C0E8002 */  lui   $t6, %hi(ptr_video_settings2) # $t6, 0x8002
-/* 004820 70003C20 8DCE32A8 */  lw    $t6, %lo(ptr_video_settings2)($t6)
-/* 004824 70003C24 03E00008 */  jr    $ra
-/* 004828 70003C28 8DC20028 */   lw    $v0, 0x28($t6)
-)
-#endif
 
-
-
-
-#ifdef NONMATCHING
-? get_video1buf_offset28(void)
+int  get_video_settings1_frameb(void)
 {
-    return ptr_video_settings1->unk28;
+    return ptr_video_settings1->frameb;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_video1buf_offset28
-/* 00482C 70003C2C 3C0E8002 */  lui   $t6, %hi(ptr_video_settings1) # $t6, 0x8002
-/* 004830 70003C30 8DCE32A4 */  lw    $t6, %lo(ptr_video_settings1)($t6)
-/* 004834 70003C34 03E00008 */  jr    $ra
-/* 004838 70003C38 8DC20028 */   lw    $v0, 0x28($t6)
-)
-#endif
+
 
 
 
