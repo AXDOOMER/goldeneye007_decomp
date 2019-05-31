@@ -10659,7 +10659,7 @@ Linker script and memory map
                 0x0000000080079e88                flt_CODE_bss_80079E88
  build/game/unk_093880.o(.bss)
  .bss           0x0000000080079e90      0x240 build/game/unk_093880.o
-                0x0000000080079e90                dword_CODE_bss_80079E90
+                0x0000000080079e90                copyof_stagenum
                 0x0000000080079e94                dword_CODE_bss_80079E94
                 0x0000000080079e98                dword_CODE_bss_80079E98
                 0x0000000080079ee0                ptr_BONDdata_p1

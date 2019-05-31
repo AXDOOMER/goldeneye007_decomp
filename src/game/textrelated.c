@@ -49,94 +49,26 @@ s32 D_80040F28 = 0;
 
 
 
-
-#ifdef NONMATCHING
 void null_init_main(void) {
 
 }
-#else
-GLOBAL_ASM(
-.text
-glabel null_init_main
-/* 0E16A0 7F0ACB70 03E00008 */  jr    $ra
-/* 0E16A4 7F0ACB74 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0ACB78(s32 arg0) {
     D_80040E84 = (s32) -arg0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0ACB78
-/* 0E16A8 7F0ACB78 00047023 */  negu  $t6, $a0
-/* 0E16AC 7F0ACB7C 3C018004 */  lui   $at, %hi(D_80040E84)
-/* 0E16B0 7F0ACB80 03E00008 */  jr    $ra
-/* 0E16B4 7F0ACB84 AC2E0E84 */   sw    $t6, %lo(D_80040E84)($at)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0ACB88(s32 arg0) {
     D_80040E88 = arg0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0ACB88
-/* 0E16B8 7F0ACB88 3C018004 */  lui   $at, %hi(D_80040E88)
-/* 0E16BC 7F0ACB8C 03E00008 */  jr    $ra
-/* 0E16C0 7F0ACB90 AC240E88 */   sw    $a0, %lo(D_80040E88)($at)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0ACB94(s32 arg0) {
     D_80040E8C = arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0ACB94
-/* 0E16C4 7F0ACB94 3C018004 */  lui   $at, %hi(D_80040E8C)
-/* 0E16C8 7F0ACB98 03E00008 */  jr    $ra
-/* 0E16CC 7F0ACB9C AC240E8C */   sw    $a0, %lo(D_80040E8C)($at)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0ACBA0(s32 arg0) {
     D_80040E90 = arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0ACBA0
-/* 0E16D0 7F0ACBA0 3C018004 */  lui   $at, %hi(D_80040E90)
-/* 0E16D4 7F0ACBA4 03E00008 */  jr    $ra
-/* 0E16D8 7F0ACBA8 AC240E90 */   sw    $a0, %lo(D_80040E90)($at)
-)
-#endif
+
 
 
 
@@ -2828,41 +2760,12 @@ glabel sub_GAME_7F0AEB64
 
 
 
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0AEF0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     // (function likely stubbed)
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AEF0C
-/* 0E3A3C 7F0AEF0C AFA40000 */  sw    $a0, ($sp)
-/* 0E3A40 7F0AEF10 AFA50004 */  sw    $a1, 4($sp)
-/* 0E3A44 7F0AEF14 AFA60008 */  sw    $a2, 8($sp)
-/* 0E3A48 7F0AEF18 03E00008 */  jr    $ra
-/* 0E3A4C 7F0AEF1C AFA7000C */   sw    $a3, 0xc($sp)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0AEF20(void) {
-
+u32 sub_GAME_7F0AEF20(u32 param_1,u32 param_2){
+  return param_1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AEF20
-/* 0E3A50 7F0AEF20 AFA50004 */  sw    $a1, 4($sp)
-/* 0E3A54 7F0AEF24 03E00008 */  jr    $ra
-/* 0E3A58 7F0AEF28 00801025 */   move  $v0, $a0
-)
-#endif
 
 

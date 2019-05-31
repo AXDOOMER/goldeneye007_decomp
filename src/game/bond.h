@@ -513,8 +513,8 @@ struct BONDdata
   s32 field_7E4;
   s32 field_7E8;
   s32 field_7EC;
-  s16 field_7F0;
-  s16 field_7F2;
+  s16 playerscreenwidth;
+  s16 playerscreenheight;
   s16 field_7F4;
   s16 field_7F6;
   s32 right_invisible;

@@ -24,21 +24,9 @@ s16 word_CODE_bss_8007A0F2;
 
 
 
-
-
-#ifdef NONMATCHING
 void null_init_main_1(void) {
 
 }
-#else
-GLOBAL_ASM(
-.text
-glabel null_init_main_1
-/* 0D02D0 7F09B7A0 03E00008 */  jr    $ra
-/* 0D02D4 7F09B7A4 00000000 */   nop   
-)
-#endif
-
 
 
 

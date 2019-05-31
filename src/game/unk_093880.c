@@ -3,7 +3,7 @@
 #include "game/bond.h"
 
 // bss
-s32 dword_CODE_bss_80079E90;
+s32 copyof_stagenum;
 s32 dword_CODE_bss_80079E94;
 char dword_CODE_bss_80079E98[0x48];
 u32 *ptr_BONDdata_p1;
@@ -1158,22 +1158,9 @@ glabel sub_GAME_7F094298
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F09442C(s32 arg0) {
-    // Node 0
-    dword_CODE_bss_80079E90 = arg0;
-    return;
+void sub_GAME_7F09442C(s32 stagenum) {
+  copyof_stagenum = stagenum;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F09442C
-/* 0C8F5C 7F09442C 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079E90)
-/* 0C8F60 7F094430 03E00008 */  jr    $ra
-/* 0C8F64 7F094434 AC249E90 */   sw    $a0, %lo(dword_CODE_bss_80079E90)($at)
-)
-#endif
 
 
 
@@ -8648,20 +8635,10 @@ glabel set_cur_player
 
 
 
-
-#ifdef NONMATCHING
 s32 get_cur_playernum(void) {
     return player_num;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_cur_playernum
-/* 0CFC80 7F09B150 3C028008 */  lui   $v0, %hi(player_num)
-/* 0CFC84 7F09B154 03E00008 */  jr    $ra
-/* 0CFC88 7F09B158 8C42A0B8 */   lw    $v0, %lo(player_num)($v0)
-)
-#endif
+
 
 
 
