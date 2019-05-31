@@ -80,6 +80,9 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x3b0 build/pi.o
  .options       0x0000000000000000       0x20 build/vi.o
  .reginfo       0x0000000000000000       0x18 build/vi.o
+ .gptab.data    0x0000000000000000       0x18 build/vi.o
+ .gptab.bss     0x0000000000000000       0x20 build/vi.o
+ .mdebug        0x0000000000000000      0x4f4 build/vi.o
  .options       0x0000000000000000       0x20 build/debugmenu.o
  .reginfo       0x0000000000000000       0x18 build/debugmenu.o
  .options       0x0000000000000000       0x20 build/joy.o
@@ -5461,7 +5464,6 @@ Linker script and memory map
  build/pi.o(.rodata)
  build/vi.o(.rodata)
  .rodata        0x0000000080029200       0x10 build/vi.o
-                0x0000000080029200                aVi_c_debug
  build/debugmenu.o(.rodata)
  .rodata        0x0000000080029210      0x180 build/debugmenu.o
  build/joy.o(.rodata)
