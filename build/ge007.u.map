@@ -938,15 +938,15 @@ Linker script and memory map
                 0x000000007000ad38                something_with_vi_c_debug
  build/debugmenu.o(.text)
  .text          0x000000007000ad80      0x7e0 build/debugmenu.o
-                0x000000007000ad80                dummied_function
-                0x000000007000ad90                dummied_function_0
-                0x000000007000ada0                null_function
+                0x000000007000ad80                dummied_function_7000AD80
+                0x000000007000ad90                dummied_function_7000AD90
+                0x000000007000ada0                null_function_7000ADA0
                 0x000000007000ada8                null_init_main_0
                 0x000000007000adb0                debug_text_related_2
                 0x000000007000add0                display_text_to_coord
                 0x000000007000aedc                debug_menu_text_related
                 0x000000007000af00                debug_text_related_1
-                0x000000007000af84                stubbed_function
+                0x000000007000af84                stubbed_function_7000AF84
                 0x000000007000af98                something_debug_info_related
                 0x000000007000b040                set_final_debug_text_positions
                 0x000000007000b06c                set_debug_text_color
@@ -3424,7 +3424,7 @@ Linker script and memory map
                 0x000000007f0a4824                sub_GAME_7F0A4824
  build/game/watch.o(.text)
  .text          0x000000007f0a4860     0x8310 build/game/watch.o
-                0x000000007f0a4860                nullsub_46
+                0x000000007f0a4860                nullsub_7F0A4860
                 0x000000007f0a4868                init_watch_at_start_of_stage
                 0x000000007f0a4a98                sub_GAME_7F0A4A98
                 0x000000007f0a4b40                sub_GAME_7F0A4B40
@@ -3452,19 +3452,19 @@ Linker script and memory map
                 0x000000007f0a4f50                is_holding_greater_than_2E_left_on_stick
                 0x000000007f0a4f74                is_holding_greater_than_2E_right_on_stick
                 0x000000007f0a4f98                get_controlstick_lr_enabled
-                0x000000007f0a4fa4                set_controlstick_lr_enabled
+                0x000000007f0a4fa4                set_controlstick_lr_enabled_0
                 0x000000007f0a4fb0                sub_GAME_7F0A4FB0
                 0x000000007f0a4fec                sub_GAME_7F0A4FEC
                 0x000000007f0a5028                sub_GAME_7F0A5028
                 0x000000007f0a504c                sub_GAME_7F0A504C
-                0x000000007f0a5070                sub_GAME_7F0A5070
-                0x000000007f0a507c                sub_GAME_7F0A507C
+                0x000000007f0a5070                get_D_80040AE0
+                0x000000007f0a507c                set_D_80040AE0_0
                 0x000000007f0a5088                sub_GAME_7F0A5088
                 0x000000007f0a50c4                sub_GAME_7F0A50C4
                 0x000000007f0a5100                sub_GAME_7F0A5100
                 0x000000007f0a5124                sub_GAME_7F0A5124
-                0x000000007f0a5148                sub_GAME_7F0A5148
-                0x000000007f0a5154                sub_GAME_7F0A5154
+                0x000000007f0a5148                get_D_80040AE4
+                0x000000007f0a5154                set_D_80040AE4_0
                 0x000000007f0a5160                sub_GAME_7F0A5160
                 0x000000007f0a519c                sub_GAME_7F0A519C
                 0x000000007f0a51d8                sub_GAME_7F0A51D8

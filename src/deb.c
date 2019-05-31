@@ -262,7 +262,7 @@ glabel scan_debug_notice_list_till_NULL
 
 
 #ifdef NONMATCHING
-void debug_stubbed(void) {
+void debug_stubbed_70004EBC(void) {
 
 }
 #else

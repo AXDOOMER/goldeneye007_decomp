@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/unk_093880.h"
+#include "game/bond.h"
 
 // bss
 s32 dword_CODE_bss_80079E90;
@@ -15,7 +16,7 @@ struct player_data player2_player_data;
 struct player_data player3_player_data;
 struct player_data player4_player_data;
 
-u32 *ptr_BONDdata;
+struct BONDdata *ptr_BONDdata;
 s32 cur_player_stat_ptr;
 s32 player_num;
 s32 random_byte;
