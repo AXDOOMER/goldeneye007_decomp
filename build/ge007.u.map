@@ -3902,7 +3902,7 @@ Linker script and memory map
  .text          0x000000007f0c0c10      0x9d0 build/game/mp_music.o
                 0x000000007f0c0c10                sub_GAME_7F0C0C10
                 0x000000007f0c0c30                get_mission_state
-                0x000000007f0c0c3c                sub_GAME_7F0C0C3C
+                0x000000007f0c0c3c                set_missionstate
                 0x000000007f0c11fc                sub_GAME_7F0C11FC
                 0x000000007f0c1268                sub_GAME_7F0C1268
                 0x000000007f0c1288                sub_GAME_7F0C1288

@@ -24236,7 +24236,7 @@ glabel maybe_mp_interface
 /* 0BDF54 7F089424 00000000 */   nop   
 /* 0BDF58 7F089428 0FC30556 */  jal   reset_music_in_slot
 /* 0BDF5C 7F08942C 2404FFFF */   li    $a0, -1
-/* 0BDF60 7F089430 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0BDF60 7F089430 0FC3030F */  jal   set_missionstate
 /* 0BDF64 7F089434 00002025 */   move  $a0, $zero
 /* 0BDF68 7F089438 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0BDF6C 7F08943C 00000000 */   nop   
@@ -24253,7 +24253,7 @@ glabel maybe_mp_interface
 /* 0BDF98 7F089468 10000003 */  b     .L7F089478
 /* 0BDF9C 7F08946C 00000000 */   nop   
 .L7F089470:
-/* 0BDFA0 7F089470 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0BDFA0 7F089470 0FC3030F */  jal   set_missionstate
 /* 0BDFA4 7F089474 24040006 */   li    $a0, 6
 .L7F089478:
 /* 0BDFA8 7F089478 3C038008 */  lui   $v1, %hi(ptr_BONDdata) # $v1, 0x8008

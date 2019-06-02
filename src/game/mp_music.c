@@ -74,7 +74,7 @@ s32 get_mission_state(void) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0C0C3C(void) {
+void set_missionstate(void) {
 
 }
 #else
@@ -165,8 +165,8 @@ glabel jpt_700F50A4
 
 
 .text
-glabel sub_GAME_7F0C0C3C
-/* 0F576C 7F0C0C3C 3C038005 */  lui   $v1, %hi(mission_state) # $v1, 0x8005
+glabel set_missionstate
+/* 0F576C set_missionstate 3C038005 */  lui   $v1, %hi(mission_state) # $v1, 0x8005
 /* 0F5770 7F0C0C40 246384C0 */  addiu $v1, %lo(mission_state) # addiu $v1, $v1, -0x7b40
 /* 0F5774 7F0C0C44 8C620000 */  lw    $v0, ($v1)
 /* 0F5778 7F0C0C48 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -599,12 +599,12 @@ glabel sub_GAME_7F0C11FC
 /* 0F5D64 7F0C1234 AC440000 */   sw    $a0, ($v0)
 /* 0F5D68 7F0C1238 04410005 */  bgez  $v0, .L7F0C1250
 /* 0F5D6C 7F0C123C 00000000 */   nop   
-/* 0F5D70 7F0C1240 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F5D70 7F0C1240 0FC3030F */  jal   set_missionstate
 /* 0F5D74 7F0C1244 24040001 */   li    $a0, 1
 /* 0F5D78 7F0C1248 10000004 */  b     .L7F0C125C
 /* 0F5D7C 7F0C124C 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F0C1250:
-/* 0F5D80 7F0C1250 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F5D80 7F0C1250 0FC3030F */  jal   set_missionstate
 /* 0F5D84 7F0C1254 24040004 */   li    $a0, 4
 /* 0F5D88 7F0C1258 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F0C125C:
@@ -618,24 +618,10 @@ glabel sub_GAME_7F0C11FC
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0C1268(void) {
-
+  set_missionstate(0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C1268
-/* 0F5D98 7F0C1268 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5D9C 7F0C126C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5DA0 7F0C1270 0FC3030F */  jal   sub_GAME_7F0C0C3C
-/* 0F5DA4 7F0C1274 00002025 */   move  $a0, $zero
-/* 0F5DA8 7F0C1278 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F5DAC 7F0C127C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5DB0 7F0C1280 03E00008 */  jr    $ra
-/* 0F5DB4 7F0C1284 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -656,12 +642,12 @@ glabel sub_GAME_7F0C1288
 /* 0F5DC8 7F0C1298 8C84C600 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F5DCC 7F0C129C 04410005 */  bgez  $v0, .L7F0C12B4
 /* 0F5DD0 7F0C12A0 00000000 */   nop   
-/* 0F5DD4 7F0C12A4 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F5DD4 7F0C12A4 0FC3030F */  jal   set_missionstate
 /* 0F5DD8 7F0C12A8 24040002 */   li    $a0, 2
 /* 0F5DDC 7F0C12AC 10000004 */  b     .L7F0C12C0
 /* 0F5DE0 7F0C12B0 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F0C12B4:
-/* 0F5DE4 7F0C12B4 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F5DE4 7F0C12B4 0FC3030F */  jal   set_missionstate
 /* 0F5DE8 7F0C12B8 24040005 */   li    $a0, 5
 /* 0F5DEC 7F0C12BC 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F0C12C0:
@@ -690,12 +676,12 @@ glabel sub_GAME_7F0C12CC
 /* 0F5E0C 7F0C12DC 8C84C600 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F5E10 7F0C12E0 04410005 */  bgez  $v0, .L7F0C12F8
 /* 0F5E14 7F0C12E4 00000000 */   nop   
-/* 0F5E18 7F0C12E8 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F5E18 7F0C12E8 0FC3030F */  jal   set_missionstate
 /* 0F5E1C 7F0C12EC 24040001 */   li    $a0, 1
 /* 0F5E20 7F0C12F0 10000004 */  b     .L7F0C1304
 /* 0F5E24 7F0C12F4 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F0C12F8:
-/* 0F5E28 7F0C12F8 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F5E28 7F0C12F8 0FC3030F */  jal   set_missionstate
 /* 0F5E2C 7F0C12FC 24040004 */   li    $a0, 4
 /* 0F5E30 7F0C1300 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F0C1304:
@@ -709,92 +695,30 @@ glabel sub_GAME_7F0C12CC
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0C1310(void) {
-
+  dword_CODE_bss_8008C604 = mission_state;
+  set_missionstate(3);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C1310
-/* 0F5E40 7F0C1310 3C0E8005 */  lui   $t6, %hi(mission_state) # $t6, 0x8005
-/* 0F5E44 7F0C1314 8DCE84C0 */  lw    $t6, %lo(mission_state)($t6)
-/* 0F5E48 7F0C1318 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5E4C 7F0C131C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5E50 7F0C1320 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C604) # $at, 0x8009
-/* 0F5E54 7F0C1324 24040003 */  li    $a0, 3
-/* 0F5E58 7F0C1328 0FC3030F */  jal   sub_GAME_7F0C0C3C
-/* 0F5E5C 7F0C132C AC2EC604 */   sw    $t6, %lo(dword_CODE_bss_8008C604)($at)
-/* 0F5E60 7F0C1330 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F5E64 7F0C1334 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5E68 7F0C1338 03E00008 */  jr    $ra
-/* 0F5E6C 7F0C133C 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0C1340(void) {
-
+  set_missionstate(dword_CODE_bss_8008C604);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C1340
-/* 0F5E70 7F0C1340 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5E74 7F0C1344 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5E78 7F0C1348 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C604) # $a0, 0x8009
-/* 0F5E7C 7F0C134C 0FC3030F */  jal   sub_GAME_7F0C0C3C
-/* 0F5E80 7F0C1350 8C84C604 */   lw    $a0, %lo(dword_CODE_bss_8008C604)($a0)
-/* 0F5E84 7F0C1354 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F5E88 7F0C1358 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5E8C 7F0C135C 03E00008 */  jr    $ra
-/* 0F5E90 7F0C1360 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0C1364(void) {
-
+  dword_CODE_bss_8008C608 = 0;
+  dword_CODE_bss_8008C618 = 0;
+  dword_CODE_bss_8008C628 = 0;
+  dword_CODE_bss_8008C60C = 0;
+  dword_CODE_bss_8008C61C = 0;
+  dword_CODE_bss_8008C62C = 0;
+  dword_CODE_bss_8008C610 = 0;
+  dword_CODE_bss_8008C620 = 0;
+  dword_CODE_bss_8008C630 = 0;
+  dword_CODE_bss_8008C614 = 0;
+  dword_CODE_bss_8008C624 = 0;
+  dword_CODE_bss_8008C634 = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C1364
-/* 0F5E94 7F0C1364 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C608) # $at, 0x8009
-/* 0F5E98 7F0C1368 AC20C608 */  sw    $zero, %lo(dword_CODE_bss_8008C608)($at)
-/* 0F5E9C 7F0C136C 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C618) # $at, 0x8009
-/* 0F5EA0 7F0C1370 AC20C618 */  sw    $zero, %lo(dword_CODE_bss_8008C618)($at)
-/* 0F5EA4 7F0C1374 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C628) # $at, 0x8009
-/* 0F5EA8 7F0C1378 AC20C628 */  sw    $zero, %lo(dword_CODE_bss_8008C628)($at)
-/* 0F5EAC 7F0C137C 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C60C) # $at, 0x8009
-/* 0F5EB0 7F0C1380 AC20C60C */  sw    $zero, %lo(dword_CODE_bss_8008C60C)($at)
-/* 0F5EB4 7F0C1384 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C61C) # $at, 0x8009
-/* 0F5EB8 7F0C1388 AC20C61C */  sw    $zero, %lo(dword_CODE_bss_8008C61C)($at)
-/* 0F5EBC 7F0C138C 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C62C) # $at, 0x8009
-/* 0F5EC0 7F0C1390 AC20C62C */  sw    $zero, %lo(dword_CODE_bss_8008C62C)($at)
-/* 0F5EC4 7F0C1394 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C610) # $at, 0x8009
-/* 0F5EC8 7F0C1398 AC20C610 */  sw    $zero, %lo(dword_CODE_bss_8008C610)($at)
-/* 0F5ECC 7F0C139C 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C620) # $at, 0x8009
-/* 0F5ED0 7F0C13A0 AC20C620 */  sw    $zero, %lo(dword_CODE_bss_8008C620)($at)
-/* 0F5ED4 7F0C13A4 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C630) # $at, 0x8009
-/* 0F5ED8 7F0C13A8 AC20C630 */  sw    $zero, %lo(dword_CODE_bss_8008C630)($at)
-/* 0F5EDC 7F0C13AC 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C614) # $at, 0x8009
-/* 0F5EE0 7F0C13B0 AC20C614 */  sw    $zero, %lo(dword_CODE_bss_8008C614)($at)
-/* 0F5EE4 7F0C13B4 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C624) # $at, 0x8009
-/* 0F5EE8 7F0C13B8 AC20C624 */  sw    $zero, %lo(dword_CODE_bss_8008C624)($at)
-/* 0F5EEC 7F0C13BC 3C018009 */  lui   $at, 0x8009
-/* 0F5EF0 7F0C13C0 03E00008 */  jr    $ra
-/* 0F5EF4 7F0C13C4 AC20C634 */   sw    $zero, -0x39cc($at)
-)
-#endif
+
 
 
 
