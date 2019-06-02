@@ -60,7 +60,7 @@ struct BONDdata
   s32 ptr_char_objectinstance;
   s32 death_flag;
   s32 current_health;
-  s32 current_armor;
+  f32 current_armor;
   s32 previous_health;
   s32 previous_armor;
   s32 hud_health;

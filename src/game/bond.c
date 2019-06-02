@@ -25657,22 +25657,9 @@ glabel get_BONDdata_watch_health
 
 
 
-
-
-#ifdef NONMATCHING
-void get_BONDdata_watch_armor(void) {
-
+f32 get_BONDdata_watch_armor(void) {
+  return ptr_BONDdata->current_armor;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_BONDdata_watch_armor
-/* 0BEE2C 7F08A2FC 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008
-/* 0BEE30 7F08A300 8DCEA0B0 */  lw    $t6, %lo(ptr_BONDdata)($t6)
-/* 0BEE34 7F08A304 03E00008 */  jr    $ra
-/* 0BEE38 7F08A308 C5C000E0 */   lwc1  $f0, 0xe0($t6)
-)
-#endif
 
 
 
@@ -28289,39 +28276,14 @@ glabel get_ptr_next_available_weapon
 
 
 
-#ifdef NONMATCHING
-void set_BONDdata_allguns_flag(void) {
-
+void set_BONDdata_allguns_flag(s32 param_1) {
+  ptr_BONDdata->flag_for_allguns = param_1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_BONDdata_allguns_flag
-/* 0C0DCC 7F08C29C 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008
-/* 0C0DD0 7F08C2A0 8DCEA0B0 */  lw    $t6, %lo(ptr_BONDdata)($t6)
-/* 0C0DD4 7F08C2A4 03E00008 */  jr    $ra
-/* 0C0DD8 7F08C2A8 ADC411EC */   sw    $a0, 0x11ec($t6)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_BONDdata_allguns_flag(void) {
-
+s32 get_BONDdata_allguns_flag(void) {
+    return ptr_BONDdata->flag_for_allguns;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_BONDdata_allguns_flag
-/* 0C0DDC 7F08C2AC 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008
-/* 0C0DE0 7F08C2B0 8DCEA0B0 */  lw    $t6, %lo(ptr_BONDdata)($t6)
-/* 0C0DE4 7F08C2B4 03E00008 */  jr    $ra
-/* 0C0DE8 7F08C2B8 8DC211EC */   lw    $v0, 0x11ec($t6)
-)
-#endif
+
 
 
 
