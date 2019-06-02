@@ -83,27 +83,11 @@ s32 dword_CODE_bss_8008D134;
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0CBF10(s32 arg0) {
-    // Node 0
     dword_CODE_bss_8008D0A0 = arg0;
     dword_CODE_bss_8008D0A4 = 0;
     dword_CODE_bss_8008D0A8 = 0;
-    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CBF10
-/* 100A40 7F0CBF10 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008D0A0) # $at, 0x8009
-/* 100A44 7F0CBF14 AC24D0A0 */  sw    $a0, %lo(dword_CODE_bss_8008D0A0)($at)
-/* 100A48 7F0CBF18 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008D0A4) # $at, 0x8009
-/* 100A4C 7F0CBF1C AC20D0A4 */  sw    $zero, %lo(dword_CODE_bss_8008D0A4)($at)
-/* 100A50 7F0CBF20 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008D0A8)
-/* 100A54 7F0CBF24 03E00008 */  jr    $ra
-/* 100A58 7F0CBF28 AC20D0A8 */   sw    $zero, %lo(dword_CODE_bss_8008D0A8)($at)
-)
-#endif
 
 
 

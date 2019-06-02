@@ -11,7 +11,7 @@ s32 init_indy_if_not_ready(void) {
 }
 
 void nullsub_48(void) {
-;
+    return;
 }
 
 void init_indy_if_ready(void) {
