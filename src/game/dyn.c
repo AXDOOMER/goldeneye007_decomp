@@ -412,20 +412,10 @@ glabel allocate_something_in_mvtx
 
 
 
-#ifdef NONMATCHING
 void removed_debug_routine(s32 arg0) {
-    // Node 0
     return;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel removed_debug_routine
-/* 0F22A4 7F0BD774 03E00008 */  jr    $ra
-/* 0F22A8 7F0BD778 AFA40000 */   sw    $a0, ($sp)
-)
-#endif
 
 
 

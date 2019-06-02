@@ -201,57 +201,17 @@ glabel sub_GAME_7F0BA720
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BA72C(void) {
-
+s32 get_ptr_currentdata(void){
+  return ptr_current_data;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BA72C
-/* 0EF25C 7F0BA72C 3C028004 */  lui   $v0, 0x8004
-/* 0EF260 7F0BA730 03E00008 */  jr    $ra
-/* 0EF264 7F0BA734 24424DCC */   addiu $v0, $v0, 0x4dcc
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0BA738(void) {
-
+f32 get_near_fog_value(void) {
+  return near_fog_value;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BA738
-/* 0EF268 7F0BA738 3C018004 */  lui   $at, 0x8004
-/* 0EF26C 7F0BA73C 03E00008 */  jr    $ra
-/* 0EF270 7F0BA740 C4204DC4 */   lwc1  $f0, 0x4dc4($at)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void square_near_fog_value(void) {
-
+f32 square_near_fog_value(void) {
+  return near_fog_value * near_fog_value;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel square_near_fog_value
-/* 0EF274 7F0BA744 3C018004 */  lui   $at, %hi(near_fog_value) # $at, 0x8004
-/* 0EF278 7F0BA748 C4224DC4 */  lwc1  $f2, %lo(near_fog_value)($at)
-/* 0EF27C 7F0BA74C 46021002 */  mul.s $f0, $f2, $f2
-/* 0EF280 7F0BA750 03E00008 */  jr    $ra
-/* 0EF284 7F0BA754 00000000 */   nop   
-)
-#endif
 
 
 
@@ -1216,19 +1176,10 @@ glabel sub_GAME_7F0BB2C8
 
 
 
-#ifdef NONMATCHING
-void return_nearfog_values(void) {
-
+u32 return_nearfog_values(void){
+  return ptr_nearfog_enviroment_values;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel return_nearfog_values
-/* 0EFEC8 7F0BB398 3C028008 */  lui   $v0, 0x8008
-/* 0EFECC 7F0BB39C 03E00008 */  jr    $ra
-/* 0EFED0 7F0BB3A0 8C4225C4 */   lw    $v0, 0x25c4($v0)
-)
-#endif
+
 
 
 

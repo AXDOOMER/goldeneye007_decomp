@@ -412,37 +412,14 @@ glabel sub_GAME_7F09054C
 
 
 
-
-
-#ifdef NONMATCHING
 void unknown_libname_68(void) {
-
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel unknown_libname_68
-/* 0C50C0 7F090590 03E00008 */  jr    $ra
-/* 0C50C4 7F090594 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void nullsub_35(void) {
-
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel nullsub_35
-/* 0C50C8 7F090598 03E00008 */  jr    $ra
-/* 0C50CC 7F09059C 00000000 */   nop   
-)
-#endif
+
 
 
 

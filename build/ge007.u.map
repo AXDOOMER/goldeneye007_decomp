@@ -3754,8 +3754,8 @@ Linker script and memory map
  build/game/fog.o(.text)
  .text          0x000000007f0ba720      0xdb0 build/game/fog.o
                 0x000000007f0ba720                sub_GAME_7F0BA720
-                0x000000007f0ba72c                sub_GAME_7F0BA72C
-                0x000000007f0ba738                sub_GAME_7F0BA738
+                0x000000007f0ba72c                get_ptr_currentdata
+                0x000000007f0ba738                get_near_fog_value
                 0x000000007f0ba744                square_near_fog_value
                 0x000000007f0ba758                copy_table1_env_to_current
                 0x000000007f0ba9d0                copy_table2_env_to_current

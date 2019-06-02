@@ -33,36 +33,13 @@ const char aMenu_cErrorTriedToCallFont_makegt[] = "menu.c: ERROR! Tried to call 
 
 
 
-#ifdef NONMATCHING
 void nullsub_32(void) {
-
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel nullsub_32
-/* 0C4930 7F08FE00 03E00008 */  jr    $ra
-/* 0C4934 7F08FE04 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F08FE08(void) {
-
+void sub_GAME_7F08FE08(s32 param_1) {
+  num_mcm_something = param_1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08FE08
-/* 0C4938 7F08FE08 3C018003 */  lui   $at, 0x8003
-/* 0C493C 7F08FE0C 03E00008 */  jr    $ra
-/* 0C4940 7F08FE10 AC246B88 */   sw    $a0, 0x6b88($at)
-)
-#endif
 
 
 
@@ -359,38 +336,14 @@ glabel sub_GAME_7F09000C
 
 
 
-
-#ifdef NONMATCHING
-void get_highlighted_debug_option(void) {
+s32 get_highlighted_debug_option(void) {
     return highlighted_debug_option;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_highlighted_debug_option
-/* 0C4CE0 7F0901B0 3C028003 */  lui   $v0, %hi(highlighted_debug_option)
-/* 0C4CE4 7F0901B4 03E00008 */  jr    $ra
-/* 0C4CE8 7F0901B8 8C426B70 */   lw    $v0, %lo(highlighted_debug_option)($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0901BC(s32 value) {
     highlighted_debug_option = value;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0901BC
-/* 0C4CEC 7F0901BC 3C018003 */  lui   $at, %hi(highlighted_debug_option)
-/* 0C4CF0 7F0901C0 03E00008 */  jr    $ra
-/* 0C4CF4 7F0901C4 AC246B70 */   sw    $a0, %lo(highlighted_debug_option)($at)
-)
-#endif
+
 
 
 
