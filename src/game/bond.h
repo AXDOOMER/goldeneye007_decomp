@@ -133,11 +133,11 @@ struct BONDdata
   s32 field_1F8;
   s32 field_1FC;
   s32 pausing_flag;
-  s32 pause_starting_angle;
+  f32 pause_starting_angle;
   s32 field_208;
   s32 pause_target_angle;
-  s32 field_210;
-  s32 field_214;
+  f32 field_210;
+  f32 field_214;
   s32 field_218;
   s32 field_21C;
   s32 step_in_view_watch_animation;

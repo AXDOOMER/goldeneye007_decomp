@@ -17,7 +17,7 @@ struct player_data player3_player_data;
 struct player_data player4_player_data;
 
 struct BONDdata *ptr_BONDdata;
-s32 cur_player_stat_ptr;
+struct player_data *cur_player_stat_ptr;
 s32 player_num;
 s32 random_byte;
 s32 dword_CODE_bss_8007A0C0;

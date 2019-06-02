@@ -3044,7 +3044,7 @@ Linker script and memory map
                 0x000000007f07eae0                get_BONDdata_paused_flag
                 0x000000007f07eaf0                sub_GAME_7F07EAF0
                 0x000000007f07ec54                sub_GAME_7F07EC54
-                0x000000007f07f860                setptrBONDdataUnk1D0to1
+                0x000000007f07f860                set_open_close_solo_watch_menu_to1
                 0x000000007f07f874                trigger_solo_watch_menu
                 0x000000007f07fcc4                sub_GAME_7F07FCC4
                 0x000000007f07fe1c                sub_GAME_7F07FE1C
@@ -3053,7 +3053,7 @@ Linker script and memory map
                 0x000000007f080228                sub_GAME_7F080228
                 0x000000007f0802c4                sub_GAME_7F0802C4
                 0x000000007f0804e0                sub_GAME_7F0804E0
-                0x000000007f0807b0                sub_GAME_7F0807B0
+                0x000000007f0807b0                set_rgba_tint
                 0x000000007f0807e0                sub_GAME_7F0807E0
                 0x000000007f080858                fade_to_over_seconds
                 0x000000007f08088c                check_if_fade_to_black_complete

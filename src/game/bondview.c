@@ -12133,7 +12133,7 @@ Weapon_function_camera:
 /* 09992C 7F064DFC 00002825 */  move  $a1, $zero
 /* 099930 7F064E00 15800005 */  bnez  $t4, .L7F064E18
 /* 099934 7F064E04 00003025 */   move  $a2, $zero
-/* 099938 7F064E08 0FC201EC */  jal   sub_GAME_7F0807B0
+/* 099938 7F064E08 0FC201EC */  jal   set_rgba_tint
 /* 09993C 7F064E0C 3C073F80 */   lui   $a3, 0x3f80
 /* 099940 7F064E10 10000063 */  b     .L7F064FA0
 /* 099944 7F064E14 AE000398 */   sw    $zero, 0x398($s0)

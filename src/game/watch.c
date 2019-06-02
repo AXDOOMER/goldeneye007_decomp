@@ -3438,7 +3438,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DB5C0 7F0A6A90 24051000 */   li    $a1, 4096
 /* 0DB5C4 7F0A6A94 10400003 */  beqz  $v0, .L7F0A6AA4
 /* 0DB5C8 7F0A6A98 00000000 */   nop   
-/* 0DB5CC 7F0A6A9C 0FC1FE18 */  jal   setptrBONDdataUnk1D0to1
+/* 0DB5CC 7F0A6A9C 0FC1FE18 */  jal   set_open_close_solo_watch_menu_to1
 /* 0DB5D0 7F0A6AA0 00000000 */   nop   
 .L7F0A6AA4:
 /* 0DB5D4 7F0A6AA4 3C0E8004 */  lui   $t6, %hi(controlstick_lr_enabled) # $t6, 0x8004
