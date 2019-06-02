@@ -147,14 +147,16 @@ extern struct item_related item_hat_related;
 extern struct item_related model_object_standard_object;
 extern struct item_related prop_weapon_related;
 extern struct model_data model_guard_character;
-extern struct player_gait_header dword_D_8003C580;
-extern struct player_gait_pos_header dword_D_8003C598;
-extern struct player_gait_pos_header dword_D_8003C5B0;
-extern struct player_gait_pos_header dword_D_8003C5C8;
-extern struct player_gait_object_entry dword_D_8003C5E0;
-extern struct player_gait_position_entry dword_D_8003C5F0;
-extern struct player_gait_position_entry dword_D_8003C60C;
-extern struct player_gait_position_entry dword_D_8003C628;
+extern struct player_gait_header player_gait_hdr;
+extern struct player_gait_pos_header player_gait_pos_hdr_1;
+extern struct player_gait_pos_header player_gait_pos_hdr_2;
+extern struct player_gait_pos_header player_gait_pos_hdr_3;
+extern struct player_gait_object_entry player_gait_obj;
+extern struct player_gait_position_entry player_gait_pos_1;
+extern struct player_gait_position_entry player_gait_pos_2;
+extern struct player_gait_position_entry player_gait_pos_3;
+
+extern struct object_header player_gait_object;
 
 extern struct Gitemheader GwppkZ_struct;
 extern struct Gitemheader GwppksilZ_struct;

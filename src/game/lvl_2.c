@@ -1079,23 +1079,12 @@ glabel test_if_recording_demos_this_stage_load
 
 
 
-#ifdef NONMATCHING
+
 void setRamRomRecordSlot(s32 arg0) {
     flag_to_record_ramrom = 1;
     record_slot_num = arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel setRamRomRecordSlot
-/* 0F52EC 7F0C07BC 240E0001 */  li    $t6, 1
-/* 0F52F0 7F0C07C0 3C018005 */  lui   $at, %hi(flag_to_record_ramrom) # $at, 0x8005
-/* 0F52F4 7F0C07C4 AC2E8488 */  sw    $t6, %lo(flag_to_record_ramrom)($at)
-/* 0F52F8 7F0C07C8 3C018009 */  lui   $at, %hi(record_slot_num)
-/* 0F52FC 7F0C07CC 03E00008 */  jr    $ra
-/* 0F5300 7F0C07D0 AC24C5F0 */   sw    $a0, %lo(record_slot_num)($at)
-)
-#endif
+
 
 
 
@@ -1202,25 +1191,10 @@ glabel replay_recorded_ramrom_at_address
 
 
 
-#ifdef NONMATCHING
 void replay_recorded_ramrom_from_indy(void) {
-    // Node 0
-    return replay_recorded_ramrom_at_address(0xf00000);
+    replay_recorded_ramrom_at_address(0xf00000);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel replay_recorded_ramrom_from_indy
-/* 0F53D8 7F0C08A8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F53DC 7F0C08AC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F53E0 7F0C08B0 0FC30207 */  jal   replay_recorded_ramrom_at_address
-/* 0F53E4 7F0C08B4 3C0400F0 */   lui   $a0, 0xf0
-/* 0F53E8 7F0C08B8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F53EC 7F0C08BC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F53F0 7F0C08C0 03E00008 */  jr    $ra
-/* 0F53F4 7F0C08C4 00000000 */   nop   
-)
-#endif
+
 
 
 

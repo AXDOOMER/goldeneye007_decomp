@@ -64,19 +64,10 @@ glabel sub_GAME_7F0C0C10
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0C0C30(void) {
-
+s32 get_mission_state(void) {
+  return mission_state;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C0C30
-/* 0F5760 7F0C0C30 3C028005 */  lui   $v0, 0x8005
-/* 0F5764 7F0C0C34 03E00008 */  jr    $ra
-/* 0F5768 7F0C0C38 8C4284C0 */   lw    $v0, -0x7b40($v0)
-)
-#endif
+
 
 
 
@@ -879,12 +870,12 @@ glabel reset_all_music_slots
 /* 0F5FC0 7F0C1490 24E70004 */   addiu $a3, $a3, 4
 /* 0F5FC4 7F0C1494 50C00016 */  beql  $a2, $zero, .L7F0C14F0
 /* 0F5FC8 7F0C1498 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F5FCC 7F0C149C 0FC3030C */  jal   sub_GAME_7F0C0C30
+/* 0F5FCC 7F0C149C 0FC3030C */  jal   get_mission_state
 /* 0F5FD0 7F0C14A0 AFAA0018 */   sw    $t2, 0x18($sp)
 /* 0F5FD4 7F0C14A4 24010002 */  li    $at, 2
 /* 0F5FD8 7F0C14A8 10410006 */  beq   $v0, $at, .L7F0C14C4
 /* 0F5FDC 7F0C14AC 8FAA0018 */   lw    $t2, 0x18($sp)
-/* 0F5FE0 7F0C14B0 0FC3030C */  jal   sub_GAME_7F0C0C30
+/* 0F5FE0 7F0C14B0 0FC3030C */  jal   get_mission_state
 /* 0F5FE4 7F0C14B4 AFAA0018 */   sw    $t2, 0x18($sp)
 /* 0F5FE8 7F0C14B8 24010005 */  li    $at, 5
 /* 0F5FEC 7F0C14BC 14410007 */  bne   $v0, $at, .L7F0C14DC

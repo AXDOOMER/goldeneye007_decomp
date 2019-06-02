@@ -1721,7 +1721,7 @@ glabel manage_mp_game
 /* 0F37EC 7F0BECBC 2401005A */  li    $at, 90
 /* 0F37F0 7F0BECC0 13010147 */  beq   $t8, $at, .L7F0BF1E0
 /* 0F37F4 7F0BECC4 00000000 */   nop   
-/* 0F37F8 7F0BECC8 0FC3030C */  jal   sub_GAME_7F0C0C30
+/* 0F37F8 7F0BECC8 0FC3030C */  jal   get_mission_state
 /* 0F37FC 7F0BECCC 00000000 */   nop   
 /* 0F3800 7F0BECD0 24010006 */  li    $at, 6
 /* 0F3804 7F0BECD4 14410029 */  bne   $v0, $at, .L7F0BED7C

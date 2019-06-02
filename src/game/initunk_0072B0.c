@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "initunk_0072B0.h"
-
+#include "game/unk_093880.h"
 
 #ifdef NONMATCHING
 void sub_GAME_7F0072B0(void) {
@@ -33,22 +33,9 @@ glabel sub_GAME_7F0072B0
 #endif
 
 
-#ifdef NONMATCHING
 void disable_onscreen_cheat_text(void)
 {
   ptr_BONDdata->something_with_cheat_text = 0;
   ptr_BONDdata->can_display_cheat_text = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel disable_onscreen_cheat_text
-/* 03BE28 7F0072F8 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
-/* 03BE2C 7F0072FC 2442A0B0 */  addiu $v0, %lo(ptr_BONDdata) # addiu $v0, $v0, -0x5f50
-/* 03BE30 7F007300 8C4E0000 */  lw    $t6, ($v0)
-/* 03BE34 7F007304 A1C012B4 */  sb    $zero, 0x12b4($t6)
-/* 03BE38 7F007308 8C4F0000 */  lw    $t7, ($v0)
-/* 03BE3C 7F00730C 03E00008 */  jr    $ra
-/* 03BE40 7F007310 A1E012B5 */   sb    $zero, 0x12b5($t7)
-)
-#endif
+

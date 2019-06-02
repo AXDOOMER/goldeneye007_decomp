@@ -105,6 +105,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/rarezip/rarezip.o
  .options       0x0000000000000000       0x20 build/game/initgamedata.o
  .reginfo       0x0000000000000000       0x18 build/game/initgamedata.o
+ .mdebug        0x0000000000000000      0x7b0 build/game/initgamedata.o
  .options       0x0000000000000000       0x20 build/game/initweaponanigroups.o
  .reginfo       0x0000000000000000       0x18 build/game/initweaponanigroups.o
  .mdebug        0x0000000000000000      0x350 build/game/initweaponanigroups.o
@@ -115,11 +116,12 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x28c build/game/initnull_0009D0.o
  .options       0x0000000000000000       0x20 build/game/initunk_0009E0.o
  .reginfo       0x0000000000000000       0x18 build/game/initunk_0009E0.o
- .mdebug        0x0000000000000000      0x2f0 build/game/initunk_0009E0.o
+ .mdebug        0x0000000000000000      0x3b0 build/game/initunk_0009E0.o
  .options       0x0000000000000000       0x20 build/game/initanitable.o
  .reginfo       0x0000000000000000       0x18 build/game/initanitable.o
  .options       0x0000000000000000       0x20 build/game/initunk_000B60.o
  .reginfo       0x0000000000000000       0x18 build/game/initunk_000B60.o
+ .mdebug        0x0000000000000000      0x3ac build/game/initunk_000B60.o
  .options       0x0000000000000000       0x20 build/game/setguscale.o
  .reginfo       0x0000000000000000       0x18 build/game/setguscale.o
  .options       0x0000000000000000       0x20 build/game/initnull_000BC0.o
@@ -129,6 +131,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/game/initimages.o
  .options       0x0000000000000000       0x20 build/game/initintromatrices.o
  .reginfo       0x0000000000000000       0x18 build/game/initintromatrices.o
+ .mdebug        0x0000000000000000      0x504 build/game/initintromatrices.o
  .options       0x0000000000000000       0x20 build/game/initmenus.o
  .reginfo       0x0000000000000000       0x18 build/game/initmenus.o
  .options       0x0000000000000000       0x20 build/game/initguards.o
@@ -3898,7 +3901,7 @@ Linker script and memory map
  build/game/mp_music.o(.text)
  .text          0x000000007f0c0c10      0x9d0 build/game/mp_music.o
                 0x000000007f0c0c10                sub_GAME_7F0C0C10
-                0x000000007f0c0c30                sub_GAME_7F0C0C30
+                0x000000007f0c0c30                get_mission_state
                 0x000000007f0c0c3c                sub_GAME_7F0C0C3C
                 0x000000007f0c11fc                sub_GAME_7F0C11FC
                 0x000000007f0c1268                sub_GAME_7F0C1268
@@ -7299,14 +7302,14 @@ Linker script and memory map
                 0x000000008003c510                dword_D_8003C510
                 0x000000008003c570                dword_D_8003C570
                 0x000000008003c57c                D_8003C57C
-                0x000000008003c580                dword_D_8003C580
-                0x000000008003c598                dword_D_8003C598
-                0x000000008003c5b0                dword_D_8003C5B0
-                0x000000008003c5c8                dword_D_8003C5C8
-                0x000000008003c5e0                dword_D_8003C5E0
-                0x000000008003c5f0                dword_D_8003C5F0
-                0x000000008003c60c                dword_D_8003C60C
-                0x000000008003c628                dword_D_8003C628
+                0x000000008003c580                player_gait_hdr
+                0x000000008003c598                player_gait_pos_hdr_1
+                0x000000008003c5b0                player_gait_pos_hdr_2
+                0x000000008003c5c8                player_gait_pos_hdr_3
+                0x000000008003c5e0                player_gait_obj
+                0x000000008003c5f0                player_gait_pos_1
+                0x000000008003c60c                player_gait_pos_2
+                0x000000008003c628                player_gait_pos_3
                 0x000000008003c644                D_8003C644
                 0x000000008003c648                D_8003C648
                 0x000000008003c64c                D_8003C64C

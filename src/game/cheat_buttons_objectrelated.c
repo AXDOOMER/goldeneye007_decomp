@@ -1654,21 +1654,21 @@ s32 D_8003C57C = 0;
 
 
 //D:8003C580
-struct player_gait_header dword_D_8003C580 = {0, 1, 0, &dword_D_8003C5E0, 0, 0, 0, &dword_D_8003C598};
+struct player_gait_header player_gait_hdr = {0, 1, 0, &player_gait_obj, 0, 0, 0, &player_gait_pos_hdr_1};
 //D:8003C598
-struct player_gait_pos_header dword_D_8003C598 = {0, 2, 0, &dword_D_8003C5F0, &dword_D_8003C580, 0, 0, &dword_D_8003C5B0};
+struct player_gait_pos_header player_gait_pos_hdr_1 = {0, 2, 0, &player_gait_pos_1, &player_gait_hdr, 0, 0, &player_gait_pos_hdr_2};
 //D:8003C5B0
-struct player_gait_pos_header dword_D_8003C5B0 = {0, 2, 0, &dword_D_8003C60C, &dword_D_8003C598, 0, 0, &dword_D_8003C5C8};
+struct player_gait_pos_header player_gait_pos_hdr_2 = {0, 2, 0, &player_gait_pos_2, &player_gait_pos_hdr_1, 0, 0, &player_gait_pos_hdr_3};
 //D:8003C5C8
-struct player_gait_pos_header dword_D_8003C5C8 = {0, 2, 0, &dword_D_8003C628, &dword_D_8003C5B0, 0, 0, 0};
+struct player_gait_pos_header player_gait_pos_hdr_3 = {0, 2, 0, &player_gait_pos_3, &player_gait_pos_hdr_2, 0, 0, 0};
 //D:8003C5E0
-struct player_gait_object_entry dword_D_8003C5E0 = {1, &dword_D_8003C598, 0, 0};
+struct player_gait_object_entry player_gait_obj = {1, &player_gait_pos_hdr_1, 0, 0};
 //D:8003C5F0
-struct player_gait_position_entry dword_D_8003C5F0 = {0.0, 0.0, 0.0, 0x0001, 0x0002, 0xFFFF, 0xFFFF, &dword_D_8003C5B0, 0};
+struct player_gait_position_entry player_gait_pos_1 = {0.0, 0.0, 0.0, 0x0001, 0x0002, 0xFFFF, 0xFFFF, &player_gait_pos_hdr_2, 0};
 //D:8003C60C
-struct player_gait_position_entry dword_D_8003C60C = {1.177982, 41.14437, 0, 0x0002, 0x0003, 0xFFFF, 0xFFFF, &dword_D_8003C5C8, 0};
+struct player_gait_position_entry player_gait_pos_2 = {1.177982, 41.14437, 0, 0x0002, 0x0003, 0xFFFF, 0xFFFF, &player_gait_pos_hdr_3, 0};
 //D:8003C628
-struct player_gait_position_entry dword_D_8003C628 = {-2.576027, 480.42902, 0, 0x0003, 0x0000, 0xFFFF, 0xFFFF, 0, 0};
+struct player_gait_position_entry player_gait_pos_3 = {-2.576027, 480.42902, 0, 0x0003, 0x0000, 0xFFFF, 0xFFFF, 0, 0};
 
 
 //D:8003C644

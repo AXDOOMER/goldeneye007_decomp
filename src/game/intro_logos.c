@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "game/intro_logos.h"
 
 // bss
 //CODE.bss:80069550
@@ -107,19 +108,6 @@ u32 D_8002A8B0 = 0;
                 .word 0
                 .word 0
                 .word 0
-*/
-
-
-//.section .rodata
-
-/*
-jpt_7003D1CC:   .word .L7F0092A4
-.word .L7F009344
-.word .L7F009428
-.word .L7F00949C
-.word .L7F009550
-.word .L7F009610
-.word .L7F0096D8
 */
 
 
