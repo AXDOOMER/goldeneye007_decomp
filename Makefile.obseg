@@ -693,11 +693,15 @@ SETUP_RZ_FILES = \
 $(BUILD_DIR)/$(OBSEG_DIR)/text/%.rz: $(OBSEG_DIR)/text/%.bin
 	$(RZ_COMP) $< $@
 
-$(OBSEG_DIR)/text/%.bin: $(OBSEG_DIR)/text/%.o
+$(OBSEG_DIR)/text/%.bin: $(OBSEG_DIR)/text/%.elf
 	$(OBJCOPY) $< $@ -O binary
+
+$(OBSEG_DIR)/text/%.elf: $(OBSEG_DIR)/text/%.o
+	$(LD) -T LnameE.ld -o $@
 
 $(OBSEG_DIR)/text/%.o: $(OBSEG_DIR)/text/%.c
 	$(CC) -c $(CFLAGS) -o $@ -O2 $<
+	mv $@ assets/obseg/text/LnameE.o
 
 TEXT_RZ_FILES := \
     $(BUILD_DIR)/$(OBSEG_DIR)/text/LameJ.rz \

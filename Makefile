@@ -246,6 +246,7 @@ $(APPELF): $(ULTRAOBJECTS) $(HEADEROBJECTS) build/$(OBSEGMENT) $(MUSIC_RZ_FILES)
 
 $(APPBIN): $(APPELF)
 	$(OBJCOPY) $< $@ -O binary --gap-fill=0xff
+	
 $(APPROM):	$(APPBIN)
 	$(DATASEG_COMP) $<
 	$(N64CKSUM) $< $@

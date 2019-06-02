@@ -23,7 +23,7 @@ s32 dword_CODE_bss_8008C5F8;
 
 // data
 //D:80048360
-s32 D_80048360 = 0;
+s32 lvl_c_debug_notice_list = 0;
 //D:80048364
 s32 current_stage_to_load = 0;
 //D:80048368
@@ -124,39 +124,15 @@ const char aSetdetailDDDDDDDDD[] = "setdetail %d %d %d %d %d %d %d %d %d";
 
 
 
-#ifdef NONMATCHING
+
 s32 sub_GAME_7F0BD8F0(void) {
     return D_800483C0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BD8F0
-/* 0F2420 7F0BD8F0 3C028005 */  lui   $v0, %hi(D_800483C0)
-/* 0F2424 7F0BD8F4 03E00008 */  jr    $ra
-/* 0F2428 7F0BD8F8 8C4283C0 */   lw    $v0, %lo(D_800483C0)($v0)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0BD8FC(s32 arg0) {
     D_800483C0 = arg0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BD8FC
-/* 0F242C 7F0BD8FC 3C018005 */  lui   $at, %hi(D_800483C0)
-/* 0F2430 7F0BD900 03E00008 */  jr    $ra
-/* 0F2434 7F0BD904 AC2483C0 */   sw    $a0, %lo(D_800483C0)($at)
-)
-#endif
 
 
 
@@ -168,9 +144,9 @@ void something_with_lvl_c_debug(void) {
     ? temp_ret;
 
     // Node 0
-    get_ptr_debug_notice_list_entry(&D_80048360, &aLv_c_debug);
+    get_ptr_debug_notice_list_entry(&lvl_c_debug_notice_list, &aLv_c_debug);
     temp_a2 = (&_unknown117880SegmentRomEnd - &_unknown117880SegmentRomStart);
-    D_80048360 = 1;
+    lvl_c_debug_notice_list = 1;
     temp_ret = allocate_bytes_in_bank(temp_a2, 6, temp_a2);
     ptr_jfont_DL = temp_ret;
     romCopy(temp_ret, &_unknown117880SegmentRomStart, sp18);
@@ -182,19 +158,19 @@ GLOBAL_ASM(
 glabel something_with_lvl_c_debug
 /* 0F2438 7F0BD908 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0F243C 7F0BD90C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F2440 7F0BD910 3C048005 */  lui   $a0, %hi(D_80048360) # $a0, 0x8005
+/* 0F2440 7F0BD910 3C048005 */  lui   $a0, %hi(lvl_c_debug_notice_list) # $a0, 0x8005
 /* 0F2444 7F0BD914 3C058006 */  lui   $a1, %hi(aLv_c_debug) # $a1, 0x8006
 /* 0F2448 7F0BD918 24A5B6B0 */  addiu $a1, %lo(aLv_c_debug) # addiu $a1, $a1, -0x4950
 /* 0F244C 7F0BD91C 0C001398 */  jal   get_ptr_debug_notice_list_entry
-/* 0F2450 7F0BD920 24848360 */   addiu $a0, %lo(D_80048360) # addiu $a0, $a0, -0x7ca0
+/* 0F2450 7F0BD920 24848360 */   addiu $a0, %lo(lvl_c_debug_notice_list) # addiu $a0, $a0, -0x7ca0
 /* 0F2454 7F0BD924 3C0F0011 */  lui   $t7, %hi(_unknown117880SegmentRomEnd) # $t7, 0x11
 /* 0F2458 7F0BD928 3C180011 */  lui   $t8, %hi(_unknown117880SegmentRomStart) # $t8, 0x11
 /* 0F245C 7F0BD92C 27187880 */  addiu $t8, %lo(_unknown117880SegmentRomStart) # addiu $t8, $t8, 0x7880
 /* 0F2460 7F0BD930 25EF7940 */  addiu $t7, %lo(_unknown117880SegmentRomEnd) # addiu $t7, $t7, 0x7940
 /* 0F2464 7F0BD934 240E0001 */  li    $t6, 1
-/* 0F2468 7F0BD938 3C018005 */  lui   $at, %hi(D_80048360) # $at, 0x8005
+/* 0F2468 7F0BD938 3C018005 */  lui   $at, %hi(lvl_c_debug_notice_list) # $at, 0x8005
 /* 0F246C 7F0BD93C 01F83023 */  subu  $a2, $t7, $t8
-/* 0F2470 7F0BD940 AC2E8360 */  sw    $t6, %lo(D_80048360)($at)
+/* 0F2470 7F0BD940 AC2E8360 */  sw    $t6, %lo(lvl_c_debug_notice_list)($at)
 /* 0F2474 7F0BD944 00C02025 */  move  $a0, $a2
 /* 0F2478 7F0BD948 AFA60018 */  sw    $a2, 0x18($sp)
 /* 0F247C 7F0BD94C 0C0025C8 */  jal   allocate_bytes_in_bank
@@ -379,29 +355,9 @@ glabel sub_GAME_7F0BDA38
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0BDA84(void) {
-    // Node 0
-    return sub_GAME_7F0BD9C4(sub_GAME_7F0D2720(current_stage_to_load));
+    sub_GAME_7F0BD9C4(sub_GAME_7F0D2720(current_stage_to_load));
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BDA84
-/* 0F25B4 7F0BDA84 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F25B8 7F0BDA88 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F25BC 7F0BDA8C 3C048005 */  lui   $a0, %hi(current_stage_to_load) # $a0, 0x8005
-/* 0F25C0 7F0BDA90 0FC349C8 */  jal   sub_GAME_7F0D2720
-/* 0F25C4 7F0BDA94 8C848364 */   lw    $a0, %lo(current_stage_to_load)($a0)
-/* 0F25C8 7F0BDA98 0FC2F671 */  jal   sub_GAME_7F0BD9C4
-/* 0F25CC 7F0BDA9C 00402025 */   move  $a0, $v0
-/* 0F25D0 7F0BDAA0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F25D4 7F0BDAA4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F25D8 7F0BDAA8 03E00008 */  jr    $ra
-/* 0F25DC 7F0BDAAC 00000000 */   nop   
-)
-#endif
 
 
 
@@ -714,21 +670,9 @@ glabel stage_load
 
 
 
-#ifdef NONMATCHING
 s32 sub_GAME_7F0BDF04(void) {
-    // Node 0
     return current_stage_to_load;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BDF04
-/* 0F2A34 7F0BDF04 3C028005 */  lui   $v0, %hi(current_stage_to_load)
-/* 0F2A38 7F0BDF08 03E00008 */  jr    $ra
-/* 0F2A3C 7F0BDF0C 8C428364 */   lw    $v0, %lo(current_stage_to_load)($v0)
-)
-#endif
 
 
 
@@ -1767,7 +1711,7 @@ glabel manage_mp_game
 /* 0F3898 7F0BED68 00000000 */   nop   
 /* 0F389C 7F0BED6C 14A60003 */  bne   $a1, $a2, .L7F0BED7C
 /* 0F38A0 7F0BED70 00000000 */   nop   
-/* 0F38A4 7F0BED74 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F38A4 7F0BED74 0FC3030F */  jal   set_missionstate
 /* 0F38A8 7F0BED78 24040001 */   li    $a0, 1
 .L7F0BED7C:
 /* 0F38AC 7F0BED7C 3C038005 */  lui   $v1, %hi(mp_time) # $v1, 0x8005

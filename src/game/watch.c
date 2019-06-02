@@ -1427,7 +1427,7 @@ glabel sub_GAME_7F0A526C
 /* 0D9ECC 7F0A539C 1040000A */  beqz  $v0, .L7F0A53C8
 /* 0D9ED0 7F0A53A0 3C018004 */   lui   $at, %hi(D_800409A4) # $at, 0x8004
 /* 0D9ED4 7F0A53A4 AC2009A4 */  sw    $zero, %lo(D_800409A4)($at)
-/* 0D9ED8 7F0A53A8 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0D9ED8 7F0A53A8 0FC3030F */  jal   set_missionstate
 /* 0D9EDC 7F0A53AC 00002025 */   move  $a0, $zero
 /* 0D9EE0 7F0A53B0 0C001A4C */  jal   run_title_stage
 /* 0D9EE4 7F0A53B4 00000000 */   nop   
