@@ -85,10 +85,6 @@ const char aHard_2[] = "-hard";
 const char aMa[] = "-ma";
 const char aMa_0[] = "-ma";
 const char aU64_taskgrab_D_core[] = "u64.taskgrab.%d.core";
-//const char aBoss_c_debug[] = "boss_c_debug";
-
-
-/* .bss */
 
 
 #ifdef NONMATCHING
