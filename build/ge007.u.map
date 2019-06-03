@@ -227,6 +227,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/game/unk_057FD0.o
  .options       0x0000000000000000       0x20 build/game/unk_05A9E0.o
  .reginfo       0x0000000000000000       0x18 build/game/unk_05A9E0.o
+ .mdebug        0x0000000000000000      0x390 build/game/unk_05A9E0.o
  .options       0x0000000000000000       0x20 build/game/convertangleusinginverse.o
  .reginfo       0x0000000000000000       0x18 build/game/convertangleusinginverse.o
  .options       0x0000000000000000       0x20 build/game/unk_05AB70.o
@@ -6877,9 +6878,9 @@ Linker script and memory map
  build/game/unk_091080.o(.data)
  .data          0x0000000080037010       0x60 build/game/unk_091080.o
                 0x0000000080037010                D_80037010
-                0x0000000080037014                D_80037014
-                0x0000000080037018                D_80037018
-                0x000000008003701c                D_8003701C
+                0x0000000080037014                stanbondx
+                0x0000000080037018                stanbondy
+                0x000000008003701c                stanbondz
                 0x0000000080037020                D_80037020
                 0x0000000080037024                D_80037024
                 0x0000000080037028                D_80037028

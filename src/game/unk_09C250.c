@@ -561,22 +561,10 @@ glabel sub_GAME_7F09C250
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F09C7AC(void) {
-
+        D_80040170 = 6;
+        D_80040174 = 6;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F09C7AC
-/* 0D12DC 7F09C7AC 24020006 */  li    $v0, 6
-/* 0D12E0 7F09C7B0 3C018004 */  lui   $at, %hi(D_80040170) # $at, 0x8004
-/* 0D12E4 7F09C7B4 AC220170 */  sw    $v0, %lo(D_80040170)($at)
-/* 0D12E8 7F09C7B8 3C018004 */  lui   $at, 0x8004
-/* 0D12EC 7F09C7BC 03E00008 */  jr    $ra
-/* 0D12F0 7F09C7C0 AC220174 */   sw    $v0, 0x174($at)
-)
-#endif
 
 
 

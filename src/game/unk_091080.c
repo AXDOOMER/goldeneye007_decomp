@@ -9,11 +9,11 @@ s32 dword_CODE_bss_80079E20;
 //D:80037010
 s32 D_80037010 = 0;
 //D:80037014
-s32 D_80037014 = 0;
+f32 stanbondx = 0.0f;
 //D:80037018
-s32 D_80037018 = 0;
+s32 stanbondy = 0;
 //D:8003701C
-s32 D_8003701C = 0;
+s32 stanbondz = 0;
 //D:80037020
 s32 D_80037020 = 0;
 //D:80037024
@@ -153,8 +153,8 @@ glabel sub_GAME_7F091080
 .L7F091190:
 /* 0C5CC0 7F091190 3C018003 */  lui   $at, %hi(D_80037040) # $at, 0x8003
 /* 0C5CC4 7F091194 C4307040 */  lwc1  $f16, %lo(D_80037040)($at)
-/* 0C5CC8 7F091198 3C048003 */  lui   $a0, %hi(D_80037014) # $a0, 0x8003
-/* 0C5CCC 7F09119C 24847014 */  addiu $a0, %lo(D_80037014) # addiu $a0, $a0, 0x7014
+/* 0C5CC8 7F091198 3C048003 */  lui   $a0, %hi(stanbondx) # $a0, 0x8003
+/* 0C5CCC 7F09119C 24847014 */  addiu $a0, %lo(stanbondx) # addiu $a0, $a0, 0x7014
 /* 0C5CD0 7F0911A0 46100102 */  mul.s $f4, $f0, $f16
 /* 0C5CD4 7F0911A4 C48A0000 */  lwc1  $f10, ($a0)
 /* 0C5CD8 7F0911A8 3C018003 */  lui   $at, %hi(D_8003703C) # $at, 0x8003
@@ -429,7 +429,7 @@ glabel sub_GAME_7F091080
 #ifdef NONMATCHING
 void sub_GAME_7F091580(s32 arg0) {
     // Node 0
-    sub_GAME_7F0876C4(&D_80037014, &D_80037020, &D_8003702C);
+    sub_GAME_7F0876C4(&stanbondx, &D_80037020, &D_8003702C);
     return arg0;
 }
 
@@ -440,13 +440,13 @@ glabel sub_GAME_7F091580
 /* 0C60B0 7F091580 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0C60B4 7F091584 AFA40018 */  sw    $a0, 0x18($sp)
 /* 0C60B8 7F091588 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C60BC 7F09158C 3C048003 */  lui   $a0, %hi(D_80037014) # $a0, 0x8003
+/* 0C60BC 7F09158C 3C048003 */  lui   $a0, %hi(stanbondx) # $a0, 0x8003
 /* 0C60C0 7F091590 3C058003 */  lui   $a1, %hi(D_80037020) # $a1, 0x8003
 /* 0C60C4 7F091594 3C068003 */  lui   $a2, %hi(D_8003702C) # $a2, 0x8003
 /* 0C60C8 7F091598 24C6702C */  addiu $a2, %lo(D_8003702C) # addiu $a2, $a2, 0x702c
 /* 0C60CC 7F09159C 24A57020 */  addiu $a1, %lo(D_80037020) # addiu $a1, $a1, 0x7020
 /* 0C60D0 7F0915A0 0FC21DB1 */  jal   sub_GAME_7F0876C4
-/* 0C60D4 7F0915A4 24847014 */   addiu $a0, %lo(D_80037014) # addiu $a0, $a0, 0x7014
+/* 0C60D4 7F0915A4 24847014 */   addiu $a0, %lo(stanbondx) # addiu $a0, $a0, 0x7014
 /* 0C60D8 7F0915A8 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0C60DC 7F0915AC 8FA20018 */  lw    $v0, 0x18($sp)
 /* 0C60E0 7F0915B0 27BD0018 */  addiu $sp, $sp, 0x18
@@ -466,9 +466,9 @@ f32 sub_GAME_7F0915BC(f32 arg0) {
     // Node 0
     temp_f0 = (D_80037058 / arg0);
     D_80037058 = arg0;
-    D_80037014 = (f32) (D_80037014 * temp_f0);
-    D_80037014.unk4 = (f32) (D_80037014.unk4 * temp_f0);
-    D_80037014.unk8 = (f32) (D_80037014.unk8 * temp_f0);
+    stanbondx = (f32) (stanbondx * temp_f0);
+    stanbondx.unk4 = (f32) (stanbondx.unk4 * temp_f0);
+    stanbondx.unk8 = (f32) (stanbondx.unk8 * temp_f0);
     D_8003705C = (f32) (1.0f / arg0);
     return;
     // (possible return value: temp_f0)
@@ -482,8 +482,8 @@ glabel sub_GAME_7F0915BC
 /* 0C60EC 7F0915BC 3C028003 */  lui   $v0, %hi(D_80037058) # $v0, 0x8003
 /* 0C60F0 7F0915C0 24427058 */  addiu $v0, %lo(D_80037058) # addiu $v0, $v0, 0x7058
 /* 0C60F4 7F0915C4 C4440000 */  lwc1  $f4, ($v0)
-/* 0C60F8 7F0915C8 3C038003 */  lui   $v1, %hi(D_80037014) # $v1, 0x8003
-/* 0C60FC 7F0915CC 24637014 */  addiu $v1, %lo(D_80037014) # addiu $v1, $v1, 0x7014
+/* 0C60F8 7F0915C8 3C038003 */  lui   $v1, %hi(stanbondx) # $v1, 0x8003
+/* 0C60FC 7F0915CC 24637014 */  addiu $v1, %lo(stanbondx) # addiu $v1, $v1, 0x7014
 /* 0C6100 7F0915D0 460C2003 */  div.s $f0, $f4, $f12
 /* 0C6104 7F0915D4 C4660000 */  lwc1  $f6, ($v1)
 /* 0C6108 7F0915D8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -564,10 +564,10 @@ void sub_GAME_7F09166C(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F09166C
-/* 0C619C 7F09166C 3C028003 */  lui   $v0, %hi(D_80037014) # $v0, 0x8003
+/* 0C619C 7F09166C 3C028003 */  lui   $v0, %hi(stanbondx) # $v0, 0x8003
 /* 0C61A0 7F091670 3C038003 */  lui   $v1, %hi(D_80037060) # $v1, 0x8003
 /* 0C61A4 7F091674 24637060 */  addiu $v1, %lo(D_80037060) # addiu $v1, $v1, 0x7060
-/* 0C61A8 7F091678 24427014 */  addiu $v0, %lo(D_80037014) # addiu $v0, $v0, 0x7014
+/* 0C61A8 7F091678 24427014 */  addiu $v0, %lo(stanbondx) # addiu $v0, $v0, 0x7014
 /* 0C61AC 7F09167C C4440000 */  lwc1  $f4, ($v0)
 /* 0C61B0 7F091680 C4660000 */  lwc1  $f6, ($v1)
 /* 0C61B4 7F091684 C4480004 */  lwc1  $f8, 4($v0)
@@ -585,8 +585,8 @@ glabel sub_GAME_7F09166C
 /* 0C61E4 7F0916B4 46062200 */  add.s $f8, $f4, $f6
 /* 0C61E8 7F0916B8 0C007DF8 */  jal   sqrtf
 /* 0C61EC 7F0916BC 460A4300 */   add.s $f12, $f8, $f10
-/* 0C61F0 7F0916C0 3C028003 */  lui   $v0, %hi(D_80037014) # $v0, 0x8003
-/* 0C61F4 7F0916C4 24427014 */  addiu $v0, %lo(D_80037014) # addiu $v0, $v0, 0x7014
+/* 0C61F0 7F0916C0 3C028003 */  lui   $v0, %hi(stanbondx) # $v0, 0x8003
+/* 0C61F4 7F0916C4 24427014 */  addiu $v0, %lo(stanbondx) # addiu $v0, $v0, 0x7014
 /* 0C61F8 7F0916C8 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0C61FC 7F0916CC 3C038003 */  lui   $v1, %hi(D_80037060) # $v1, 0x8003
 /* 0C6200 7F0916D0 C4500000 */  lwc1  $f16, ($v0)
@@ -618,8 +618,8 @@ glabel sub_GAME_7F0916F4
 /* 0C622C 7F0916FC 0FC227F5 */  jal   get_BONDdata_position
 /* 0C6230 7F091700 00000000 */   nop   
 /* 0C6234 7F091704 C4440000 */  lwc1  $f4, ($v0)
-/* 0C6238 7F091708 3C038003 */  lui   $v1, %hi(D_80037014) # $v1, 0x8003
-/* 0C623C 7F09170C 24637014 */  addiu $v1, %lo(D_80037014) # addiu $v1, $v1, 0x7014
+/* 0C6238 7F091708 3C038003 */  lui   $v1, %hi(stanbondx) # $v1, 0x8003
+/* 0C623C 7F09170C 24637014 */  addiu $v1, %lo(stanbondx) # addiu $v1, $v1, 0x7014
 /* 0C6240 7F091710 E4640000 */  swc1  $f4, ($v1)
 /* 0C6244 7F091714 C4460004 */  lwc1  $f6, 4($v0)
 /* 0C6248 7F091718 8FBF0014 */  lw    $ra, 0x14($sp)

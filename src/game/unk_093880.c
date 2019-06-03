@@ -566,27 +566,9 @@ glabel sub_GAME_7F093C48
 
 
 
-#ifdef NONMATCHING
 f32 sub_GAME_7F093C88(f32 arg0) {
-    // Node 0
     return (f32) (s32) (arg0 + 0.5f);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F093C88
-/* 0C87B8 7F093C88 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0C87BC 7F093C8C 44812000 */  mtc1  $at, $f4
-/* 0C87C0 7F093C90 00000000 */  nop   
-/* 0C87C4 7F093C94 46046180 */  add.s $f6, $f12, $f4
-/* 0C87C8 7F093C98 4600320D */  trunc.w.s $f8, $f6
-/* 0C87CC 7F093C9C 440F4000 */  mfc1  $t7, $f8
-/* 0C87D0 7F093CA0 00000000 */  nop   
-/* 0C87D4 7F093CA4 448F5000 */  mtc1  $t7, $f10
-/* 0C87D8 7F093CA8 03E00008 */  jr    $ra
-/* 0C87DC 7F093CAC 46805020 */   cvt.s.w $f0, $f10
-)
-#endif
 
 
 
@@ -8698,8 +8680,8 @@ glabel sub_GAME_7F09B15C
 #ifdef NONMATCHING
 void *set_cur_player_screen_size(s16 arg0, s16 arg1) {
     // Node 0
-    ptr_BONDdata->unk7F0 = arg0;
-    ptr_BONDdata->unk7F2 = arg1;
+    ptr_BONDdata->playerscreenwidth = arg0;
+    ptr_BONDdata->playerscreenheight = arg1;
     return &ptr_BONDdata;
 }
 #else

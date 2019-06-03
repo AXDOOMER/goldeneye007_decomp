@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "game/unk_093880.h"
 
 // bss
 char dword_CODE_bss_80083320[0x130];
@@ -89,20 +90,11 @@ glabel sub_GAME_7F0BC530
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BC624(void) {
 
+void sub_GAME_7F0BC624(s32 param_1) {
+  ptr_BONDdata->field_108C = param_1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BC624
-/* 0F1154 7F0BC624 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008
-/* 0F1158 7F0BC628 8DCEA0B0 */  lw    $t6, %lo(ptr_BONDdata)($t6)
-/* 0F115C 7F0BC62C 03E00008 */  jr    $ra
-/* 0F1160 7F0BC630 ADC4108C */   sw    $a0, 0x108c($t6)
-)
-#endif
+
 
 
 

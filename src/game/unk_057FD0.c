@@ -1335,21 +1335,9 @@ glabel sub_GAME_7F058C64
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F058C88(void) {
-
+    D_80032310 = flt_CODE_bss_80075DA0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F058C88
-/* 08D7B8 7F058C88 3C018007 */  lui   $at, %hi(flt_CODE_bss_80075DA0) # $at, 0x8007
-/* 08D7BC 7F058C8C C4245DA0 */  lwc1  $f4, %lo(flt_CODE_bss_80075DA0)($at)
-/* 08D7C0 7F058C90 3C018003 */  lui   $at, 0x8003
-/* 08D7C4 7F058C94 03E00008 */  jr    $ra
-/* 08D7C8 7F058C98 E4242310 */   swc1  $f4, 0x2310($at)
-)
-#endif
 
 
 
@@ -2646,18 +2634,10 @@ glabel sub_GAME_7F059CE8
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F059D30(void) {
-
+void sub_GAME_7F059D30(u32 arg0) {
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F059D30
-/* 08E860 7F059D30 03E00008 */  jr    $ra
-/* 08E864 7F059D34 AFA40000 */   sw    $a0, ($sp)
-)
-#endif
+
 
 
 

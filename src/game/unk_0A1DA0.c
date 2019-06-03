@@ -3225,51 +3225,15 @@ glabel sub_GAME_7F0A4768
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0A47D4(void) {
-
+    sub_GAME_7F0A3BD8();
+    sub_GAME_7F0A45D8();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A47D4
-/* 0D9304 7F0A47D4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D9308 7F0A47D8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D930C 7F0A47DC 0FC28EF6 */  jal   sub_GAME_7F0A3BD8
-/* 0D9310 7F0A47E0 00000000 */   nop   
-/* 0D9314 7F0A47E4 0FC29176 */  jal   sub_GAME_7F0A45D8
-/* 0D9318 7F0A47E8 00000000 */   nop   
-/* 0D931C 7F0A47EC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D9320 7F0A47F0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D9324 7F0A47F4 03E00008 */  jr    $ra
-/* 0D9328 7F0A47F8 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0A47FC(void) {
-
+    sub_GAME_7F0A3EA0();
+    sub_GAME_7F0A46A0();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A47FC
-/* 0D932C 7F0A47FC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D9330 7F0A4800 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D9334 7F0A4804 0FC28FA8 */  jal   sub_GAME_7F0A3EA0
-/* 0D9338 7F0A4808 00000000 */   nop   
-/* 0D933C 7F0A480C 0FC291A8 */  jal   sub_GAME_7F0A46A0
-/* 0D9340 7F0A4810 00000000 */   nop   
-/* 0D9344 7F0A4814 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D9348 7F0A4818 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D934C 7F0A481C 03E00008 */  jr    $ra
-/* 0D9350 7F0A4820 00000000 */   nop   
-)
-#endif
 
 
 

@@ -142,22 +142,10 @@ u32 *D_8004E86C[] = {
 };
 
 
-// rodata
 
-
-
-#ifdef NONMATCHING
 void nullsub_47(void) {
-
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel nullsub_47
-/* 100FF0 7F0CC4C0 03E00008 */  jr    $ra
-/* 100FF4 7F0CC4C4 00000000 */   nop   
-)
-#endif
 
 
 
@@ -285,37 +273,14 @@ glabel sub_GAME_7F0CC51C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0CC548(s32 arg0) {
-    // Node 0
-    if (arg0 == dword_CODE_bss_8008D140)
-    {
-        // Node 1
+u32 sub_GAME_7F0CC548(s32 arg0) {
+    if (arg0 == dword_CODE_bss_8008D140) {
         return 0;
     }
-    // Node 2
     dword_CODE_bss_8008D140 = arg0;
     return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CC548
-/* 101078 7F0CC548 3C038009 */  lui   $v1, %hi(dword_CODE_bss_8008D140) # $v1, 0x8009
-/* 10107C 7F0CC54C 2463D140 */  addiu $v1, %lo(dword_CODE_bss_8008D140) # addiu $v1, $v1, -0x2ec0
-/* 101080 7F0CC550 8C6E0000 */  lw    $t6, ($v1)
-/* 101084 7F0CC554 24020001 */  li    $v0, 1
-/* 101088 7F0CC558 548E0004 */  bnel  $a0, $t6, .L7F0CC56C
-/* 10108C 7F0CC55C AC640000 */   sw    $a0, ($v1)
-/* 101090 7F0CC560 03E00008 */  jr    $ra
-/* 101094 7F0CC564 00001025 */   move  $v0, $zero
 
-/* 101098 7F0CC568 AC640000 */  sw    $a0, ($v1)
-.L7F0CC56C:
-/* 10109C 7F0CC56C 03E00008 */  jr    $ra
-/* 1010A0 7F0CC570 00000000 */   nop   
-)
-#endif
 
 
 
@@ -981,46 +946,15 @@ glabel sub_GAME_7F0CCA9C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0CCACC(s32 arg0) {
-    // Node 0
-    if (arg0 == 1)
-    {
-        // Node 1
+u32 sub_GAME_7F0CCACC(s32 arg0) {
+    if (arg0 == 1) {
         return 2;
     }
-    // Node 2
-    if (arg0 == 2)
-    {
-        // Node 3
+    if (arg0 == 2) {
         return 1;
     }
-    // Node 4
     return 0;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CCACC
-/* 1015FC 7F0CCACC 24010001 */  li    $at, 1
-/* 101600 7F0CCAD0 54810004 */  bnel  $a0, $at, .L7F0CCAE4
-/* 101604 7F0CCAD4 24010002 */   li    $at, 2
-/* 101608 7F0CCAD8 03E00008 */  jr    $ra
-/* 10160C 7F0CCADC 24020002 */   li    $v0, 2
-
-/* 101610 7F0CCAE0 24010002 */  li    $at, 2
-.L7F0CCAE4:
-/* 101614 7F0CCAE4 14810003 */  bne   $a0, $at, .L7F0CCAF4
-/* 101618 7F0CCAE8 00001025 */   move  $v0, $zero
-/* 10161C 7F0CCAEC 03E00008 */  jr    $ra
-/* 101620 7F0CCAF0 24020001 */   li    $v0, 1
-
-.L7F0CCAF4:
-/* 101624 7F0CCAF4 03E00008 */  jr    $ra
-/* 101628 7F0CCAF8 00000000 */   nop   
-)
-#endif
 
 
 
