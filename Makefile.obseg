@@ -697,7 +697,7 @@ $(OBSEG_DIR)/text/%.bin: $(OBSEG_DIR)/text/%.elf
 	$(OBJCOPY) $< $@ -O binary
 
 $(OBSEG_DIR)/text/%.elf: $(OBSEG_DIR)/text/%.o
-	$(LD) -T LnameE.ld -o $@
+	$(LD) -T assets/obseg/text/LnameE.ld -o $@
 	rm assets/obseg/text/LnameE.o
 
 $(OBSEG_DIR)/text/%.o: $(OBSEG_DIR)/text/%.c
