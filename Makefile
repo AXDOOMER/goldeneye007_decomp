@@ -202,6 +202,7 @@ clean:
 	git checkout build/assets/obseg/setup/UsetuparchZ.rz
 	git checkout build/assets/obseg/setup/UsetupjunZ.rz
 	git checkout build/assets/obseg/setup/UsetupsevbZ.rz
+	git checkout build/assets/obseg/text/LcradE.rz
 
 install: default
 		$(INSTALL) -m 444 -F /usr/src/PR/ge007 \

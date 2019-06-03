@@ -20,4 +20,15 @@ SECTIONS
    }
    _LnameETextEnd = ADDR( .payload) + SIZEOF( .payload);
    _LnameETextRomEnd = _LnameEHeaderRomEnd + SIZEOF( .payload);
+
+      /DISCARD/ : {
+      * (.MIPS.abiflags);
+      * (.options);
+      * (.gnu.attributes);
+      * (.pdr);
+      * (.mdebug);
+      * (.gptab.bss);
+      * (.gptab.data);
+      * (.reginfo);
+}
 }
