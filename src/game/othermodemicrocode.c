@@ -1,17 +1,6 @@
 #include "ultra64.h"
 
 
-/* rodata */
-//D:80054F90
-const f32 D_80054F90 = 0.99999899;
-//D:80054F94
-const f32 D_80054F94 = 0.99999899;
-//D:80054F98
-const f32 D_80054F98 = 0.99999899;
-//D:80054F9C
-const f32 D_80054F9C = 0.99999899;
-
-
 
 #ifdef NONMATCHING
 void is_less_than_certain_power_of_2(void) {
@@ -100,6 +89,9 @@ s32 ceil8000(s32 arg0) {
 
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054F90
+.word 0x3f7fffef /*0.99999899*/
 .text
 glabel ceil8000
 /* 0AB178 7F076648 3C014700 */  li    $at, 0x47000000 # 32768.000000
@@ -149,6 +141,9 @@ s32 ceil4000(s32 arg0) {
 
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054F94
+.word 0x3f7fffef /*0.99999899*/
 .text
 glabel ceil4000
 /* 0AB1DC 7F0766AC 3C014680 */  li    $at, 0x46800000 # 16384.000000
@@ -198,6 +193,9 @@ s32 ceil2000(s32 arg0) {
 
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054F98
+.word 0x3f7fffef /*0.99999899*/
 .text
 glabel ceil2000
 /* 0AB240 7F076710 3C014600 */  li    $at, 0x46000000 # 8192.000000
@@ -247,6 +245,9 @@ s32 ceil1000(s32 arg0) {
 
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054F9C
+.word 0x3f7fffef /*0.99999899*/
 .text
 glabel ceil1000
 /* 0AB2A4 7F076774 3C014580 */  li    $at, 0x45800000 # 4096.000000

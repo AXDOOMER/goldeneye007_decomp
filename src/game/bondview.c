@@ -1,5 +1,7 @@
 #include "ultra64.h"
-#include "bondview.h"
+#include "game/bondview.h"
+#include "game/cheat_buttons_objectrelated.h"
+#include "bondgame.h"
 
 // bss
 s32 dword_CODE_bss_80075DB0;
@@ -8,36 +10,51 @@ s32 dword_CODE_bss_80075DB8;
 s32 dword_CODE_bss_80075DBC;
 s32 dword_CODE_bss_80075DC0;
 s32 dword_CODE_bss_80075DC4;
-char dword_CODE_bss_80075DC8[0xA0];
+char dword_CODE_bss_80075DC8[0x9C];
+s32 dword_CODE_bss_80075E64;
 char dword_CODE_bss_80075E68[0xBE0];
 s32 dword_CODE_bss_80076A48;
 
 
-/* data
-D:80032440     stru_D_80032440:rgba_val <0x96, 0x96, 0x96, 0>
-D:80032440                                              # DATA XREF: sub_CODE_7F062BE4+140o
-D:80032440                                              # set_enviro_fog_for_items_in_solo_watch_menu+370o
-D:80032444                     rgba_val <0x96, 0x96, 0x96, 0>
-D:80032448     stru_D_80032448:rgba_val <0xFF, 0xFF, 0xFF, 0>
-D:80032448                                              # DATA XREF: sub_CODE_7F062BE4+124o
-D:80032448                                              # set_enviro_fog_for_items_in_solo_watch_menu+358o
-D:8003244C                     rgba_val <0xFF, 0xFF, 0xFF, 0>
-D:80032450                     .word 0xB24D2E00
-D:80032454                     .word 0
-D:80032458     dword_D_80032458:.word 0                 # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+164r
-D:8003245C      # int *allocation_size_0
-D:8003245C     allocation_size_0:.word 0x14820          # DATA XREF: init_player_BONDdata_stats+40r
-D:80032460      # int *allocation_size_1
-D:80032460     allocation_size_1:.word 0x14820          # DATA XREF: init_player_BONDdata_stats+70r
-D:80032464     dword_D_80032464:.word 0x7530            # DATA XREF: used_to_load_1st_person_model_on_demand:loc_CODE_7F05D274o
-D:80032468                     .word 0x7530
-D:8003246C     ejected_cartridge:ejected_cart <GcartridgeZ_struct, aGcartridgez> # "GcartridgeZ"
-D:80032474                     ejected_cart <GcartrifleZ_struct, aGcartriflez>  # "GcartrifleZ"
-D:8003247C                     ejected_cart <GcartblueZ_struct, aGcartbluez>  # "GcartblueZ"
-D:80032484                     ejected_cart <GcartshellZ_struct, aGcartshellz>  # "GcartshellZ"
-D:8003248C                     ejected_cart <0, aGnocartZ>  # ""
-*/
-/*
+// data
+//D:80032440
+struct rgba_val D_80032440[] = {
+	{0x96, 0x96, 0x96, 0},
+	{0x96, 0x96, 0x96, 0}
+};
+
+//D:80032448
+struct rgba_val D_80032448[] = {
+	{0xFF, 0xFF, 0xFF, 0},
+	{0xFF, 0xFF, 0xFF, 0},
+	{0xB2, 0x4D, 0x2E, 0}
+};
+//D:80032454
+u32 D_80032454 = 0;
+
+//D:80032458
+u32 D_80032458 = 0;
+
+//D:8003245C
+u32 size_right_item_buffer = 0x14820;
+//D:80032460
+u32 size_left_item_buffer = 0x14820;
+
+//D:80032464
+u32 D_80032464[] ={0x7530, 0x7530};
+
+
+
+//D:8003246C
+struct ejected_cart ejected_cartridge[] = {
+	{&GcartridgeZ_struct, "GcartridgeZ"},
+	{&GcartrifleZ_struct, "GcartrifleZ"},
+	{&GcartblueZ_struct, "GcartblueZ"},
+	{&GcartshellZ_struct, "GcartshellZ"},
+	{0, ""}
+};
+
+
 //D:80032494
 struct weapon_stats stru_D_80032494 = {
 	1.0, 0.0, 0.0, 0.0, 3.0, 3.0, 8.5, 0, 0, 0xFF00, 1, 0, 0, 0, 1.0, 0.0, 0.0, 0.80000001, 0.89999998, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 4.0, 0.0, 0x110
@@ -54,62 +71,66 @@ struct weapon_stats GknifeZ_stats = {
 struct weapon_stats GthrowknifeZ_stats = {
 	1.0, 14.0, -24.799999, -34.0, 3.0, 3.0, 8.5, 0xA, 1, 0xFF06, 1, 0, 0, 0, 3.0, 0.0, 0.0, 0.80000001, 0.85000002, 1.0, 0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0,2.0, 4.0, 1.0, 0x560D83
 };
+
 //D:80032654
 struct weapon_stats GwppkZ_stats = {
-	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF10, 1, 0, 0x6B, GcartridgeZ_struct, 1.0, 1.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x4080300, 3.0, 10.0, 29.999998, 1.0, 12.0, 2.0, 2.0, 4.0, 0.0, 0x170FB9
+	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF10, 1, 0, 0x6B, &GcartridgeZ_struct, 1.0, 1.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x4080300, 3.0, 10.0, 29.999998, 1.0, 12.0, 2.0, 2.0, 4.0, 0.0, 0x170FB9
 };
 //D:800326C4
 struct weapon_stats GwppksilZ_stats = {
-	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF10, 1, 0, 0x2E, GcartridgeZ_struct, 1.0, 3.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x4080300, 1.5, 5.0, 29.999998, 0.0, 5.0, 1.0, 2.0, 4.0, 0.0, 0x170FB9
+	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF10, 1, 0, 0x2E, &GcartridgeZ_struct, 1.0, 3.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x4080300, 1.5, 5.0, 29.999998, 0.0, 5.0, 1.0, 2.0, 4.0, 0.0, 0x170FB9
 };
 //D:80032734
 struct weapon_stats Gtt33Z_stats = {
-	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 8, 0xFF10, 1, 0, 0x70, GcartridgeZ_struct, 1.0, 6.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x4080300, 5.0, 10.0, 59.999996, 2.0, 16.0, 3.0, 2.0, 4.0, 0.0, 0x170FB9
+	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 8, 0xFF10, 1, 0, 0x70, &GcartridgeZ_struct, 1.0, 6.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x4080300, 5.0, 10.0, 59.999996, 2.0, 16.0, 3.0, 2.0, 4.0, 0.0, 0x170FB9
 };
 //D:800327A4
 struct weapon_stats GskorpianZ_stats = {
-	2.0, 11.5, -25.0, -27.5, 3.0, 5.0, 10.0, 1, 0x14, 0x300, 1, 0xB, 0x6A, GcartridgeZ_struct, 0.60000002, 15.0, 0.0, 0.80000001, 0.88999999, 1.0, 6, 0.0, 0.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x170B79
+	2.0, 11.5, -25.0, -27.5, 3.0, 5.0, 10.0, 1, 0x14, 0x300, 1, 0xB, 0x6A, &GcartridgeZ_struct, 0.60000002, 15.0, 0.0, 0.80000001, 0.88999999, 1.0, 6, 0.0, 0.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x170B79
 };
 //D:80032814
 struct weapon_stats Gak47Z_stats = {
-	2.0, 11.0, -19.0, -16.0, 3.0, 3.0, 8.5, 3, 0x1E, 0x300, 1, 4, 0x6D, GcartrifleZ_struct, 1.0, 10.0, 30.0, 0.80000001, 0.91000003, 1.0, 0x40C0006,4.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 3.0, 0x171A7C
+	2.0, 11.0, -19.0, -16.0, 3.0, 3.0, 8.5, 3, 0x1E, 0x300, 1, 4, 0x6D, &GcartrifleZ_struct, 1.0, 10.0, 30.0, 0.80000001, 0.91000003, 1.0, 0x40C0006,4.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 3.0, 0x171A7C
 };
 //D:80032884
 struct weapon_stats GuziZ_stats = {
-	3.0, 11.0, -24.5, -37.0, 3.0, 8.0, 15.0, 1, 0x20, 0x200, 1, 4, 0x6E, GcartridgeZ_struct, 1.0, 9.0, 0.0, 0.80000001, 0.88, 1.0, 0x6120006, 4.0, 3.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171B79
+	3.0, 11.0, -24.5, -37.0, 3.0, 8.0, 15.0, 1, 0x20, 0x200, 1, 4, 0x6E, &GcartridgeZ_struct, 1.0, 9.0, 0.0, 0.80000001, 0.88, 1.0, 0x6120006, 4.0, 3.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171B79
 };
 //D:800328F4
 struct weapon_stats Gmp5kZ_stats = {
-	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x300, 1, 4, 0x75, GcartridgeZ_struct, 1.0, 7.0, 0.0, 0.80000001, 0.88999999, 1.0, 0x6120006, 4.0, 3.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
+	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x300, 1, 4, 0x75, &GcartridgeZ_struct, 1.0, 7.0, 0.0, 0.80000001, 0.88999999, 1.0, 0x6120006, 4.0, 3.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
 };
 //D:80032964
 struct weapon_stats Gmp5ksilZ_stats = {
-	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x300, 1, 4, 0x2E, GcartridgeZ_struct, 1.0, 9.0, 0.0, 0.80000001, 0.88999999, 1.0, 0x6120006, 3.5, 2.0, 0.0, 0.0, 7.0, 1.2, 2.0, 4.0, 0.0, 0x171A79
+	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x300, 1, 4, 0x2E, &GcartridgeZ_struct, 1.0, 9.0, 0.0, 0.80000001, 0.88999999, 1.0, 0x6120006, 3.5, 2.0, 0.0, 0.0, 7.0, 1.2, 2.0, 4.0, 0.0, 0x171A79
 };
 //D:800329D4
 struct weapon_stats GspectreZ_stats = {
-	2.0, 11.0, -21.9, -35.0, 3.0, 8.0, 15.0, 1, 0x32, 0x300, 1, 4, 0x6D, GcartridgeZ_struct, 1.4, 12.0, 0.0, 0.80000001, 0.88999999, 1.0, 0x40C0006, 4.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
+	2.0, 11.0, -21.9, -35.0, 3.0, 8.0, 15.0, 1, 0x32, 0x300, 1, 4, 0x6D, &GcartridgeZ_struct, 1.4, 12.0, 0.0, 0.80000001, 0.88999999, 1.0, 0x40C0006, 4.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
 };
 //D:80032A44
 struct weapon_stats Gm16Z_stats = {
-	6.0, 11.0, -19.200001, -21.5, 3.0, 3.0, 8.5, 3, 0x1E, 0x200, 2, 5, 0x71, GcartblueZ_struct, 1.4, 6.0, 20.0, 0.80000001, 0.91000003, 0.5, 0x6120208, 5.0, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 4.0, 0x171A7C
+	6.0, 11.0, -19.200001, -21.5, 3.0, 3.0, 8.5, 3, 0x1E, 0x200, 2, 5, 0x71, &GcartblueZ_struct, 1.4, 6.0, 20.0, 0.80000001, 0.91000003, 0.5, 0x6120208, 5.0, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 4.0, 0x171A7C
 };
 //D:80032AB4
 struct weapon_stats Gfnp90Z_stats = {
-	4.0, 12.5, -25.299999, -32.5, 3.0, 8.0, 15.0, 1, 0x50, 0x200, 3, 2, 0xFD, GcartridgeZ_struct, 1.8, 6.0, 0.0, 0.80000001, 0.87, 1.0, 0x4080003, 3.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 4.0, 0x171A78
+	4.0, 12.5, -25.299999, -32.5, 3.0, 8.0, 15.0, 1, 0x50, 0x200, 3, 2, 0xFD, &GcartridgeZ_struct, 1.8, 6.0, 0.0, 0.80000001, 0.87, 1.0, 0x4080003, 3.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 4.0, 0x171A78
 };
 //D:80032B24
 struct weapon_stats GshotgunZ_stats = {
-	4.0, 11.0, -20.6, -19.5, 3.0, 3.0, 8.5, 4, 5, 0xFF0A, 1, 0, 0x79, GcartshellZ_struct, 0.40000001, 20.0, 0.0, 0.80000001, 0.89999998, 1.0, 0x812080C, 9.0, 10.0, 0.0, 2.0, 25.0, 4.0, 2.0, 4.0, 5.0, 0x170AF9
+	4.0, 11.0, -20.6, -19.5, 3.0, 3.0, 8.5, 4, 5, 0xFF0A, 1, 0, 0x79, &GcartshellZ_struct, 0.40000001, 20.0, 0.0, 0.80000001, 0.89999998, 1.0, 0x812080C, 9.0, 10.0, 0.0, 2.0, 25.0, 4.0, 2.0, 4.0, 5.0, 0x170AF9
 };
+
 //D:80032B94
 struct weapon_stats GautoshotZ_stats = {
 	4.0, 12.0, -24.1, -19.0, 3.0, 3.0, 8.5, 4, 5, 0xFF0A, 1, 0, 0x74, 0, 0.60000002, 16.0, 0.0, 0.80000001, 0.89999998, 1.0, 0x812080C, 4.5, 3.0, 0.0, 2.0, 20.0, 3.0, 2.0, 4.0, 5.0, 0x170AF9
 };
+
 //D:80032C04
 struct weapon_stats GsniperrifleZ_stats = {
-	6.0, 11.0, -20.700001, -31.5, 3.0, 3.0, 8.5, 3, 8, 0xFF10, 1, 0, 0x2E, GcartblueZ_struct, 1.0, 0.0, 15.0, 0.80000001, 0.91000003, 0.25, 0, 0.0, 0.0, 0.0, 0.0, 7.0, 1.2, 2.0, 4.0, 0.0, 0x178A70
+	6.0, 11.0, -20.700001, -31.5, 3.0, 3.0, 8.5, 3, 8, 0xFF10, 1, 0, 0x2E, &GcartblueZ_struct, 1.0, 0.0, 15.0, 0.80000001, 0.91000003, 0.25, 0, 0.0, 0.0, 0.0, 0.0, 7.0, 1.2, 2.0, 4.0, 0.0, 0x178A70
 };
+
 //D:80032C74
 struct weapon_stats GrugerZ_stats = {
 	2.0, 12.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 0xC, 6, 0xFF14, 0xA, 0, 0x6F, 0, 2.0, 0.0, 0.0, 0.80000001, 0.86000001, 1.0, 0x81000FF, 12.0, 35.0, 0.0, 2.0, 20.0, 3.0, 2.0, 4.0, 6.0, 0x170FB9
@@ -118,14 +139,16 @@ struct weapon_stats GrugerZ_stats = {
 struct weapon_stats GgoldengunZ_stats = {
 	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 0xD, 1, 0xFF00, 1, 0, 0x75, 0, 100.0, 0.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x40800FF, 5.0, 10.0, 0.0, 1.0, 9.0, 1.5, 2.0, 4.0, 0.0, 0x170F99
 };
+
 //D:80032D54
 struct weapon_stats GsilverwppkZ_stats = {
-	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF10, 0xA, 0, 0x6B, GcartridgeZ_struct, 2.0, 1.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x4080300, 3.0, 10.0, 29.999998, 1.0, 12.0, 2.0, 2.0, 4.0, 0.0, 0x170FB9
+	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF10, 0xA, 0, 0x6B, &GcartridgeZ_struct, 2.0, 1.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x4080300, 3.0, 10.0, 29.999998, 1.0, 12.0, 2.0, 2.0, 4.0, 0.0, 0x170FB9
 };
 //D:80032DC4
 struct weapon_stats GgoldwppkZ_stats = {
-	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF10, 1, 0, 0x6B, GcartridgeZ_struct, 100.0, 1.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x4080300,3.0, 10.0, 29.999998, 1.0, 12.0, 2.0, 2.0, 4.0, 0.0, 0x170FB9
+	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF10, 1, 0, 0x6B, &GcartridgeZ_struct, 100.0, 1.0, 0.0, 0.80000001, 0.85000002, 1.0, 0x4080300,3.0, 10.0, 29.999998, 1.0, 12.0, 2.0, 2.0, 4.0, 0.0, 0x170FB9
 };
+
 //D:80032E34
 struct weapon_stats GlaserZ_stats = {
 	1.0, 11.0, -19.5, -28.0, 3.0, 3.0, 8.5, 0, 0, 0xFF06, 2, 0, 0xE4, 0, 2.0, 0.0, 0.0, 0.80000001, 0.88999999, 1.0, 0x6000606, 0.0, 0.0, 0.0, 2.0, 16.0, 2.0, 2.0, 4.0, 2.0, 0x170B99
@@ -226,591 +249,407 @@ struct weapon_stats stru_D_80033844 = {
 struct weapon_stats stru_D_800338B4 = {
 	1.0, 11.0, -41.799999, -33.0, 3.0, 3.0, 8.5, 0x1D, 0, 0xFF00, 1, 0, 0, 0, 1.0, 0.0, 0.0, 0.80000001, 0.85000002, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 4.0, 0.0, 0x82182
 };
-*/
-/*
-D:80033924     gitem_structs:  gitem_data_struct <0, 0, 1, 0, 0x9883, 0x9811, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9811, 0x9811,\
-D:80033924                                              # DATA XREF: get_ptr_item_statistics+8o
-D:80033924                                              # debug_gun_watch_move_related+C8o
-D:80033924                                              # debug_gun_watch_move_related2+C0o
-D:80033924                                        10.0, 10.0, 1000.0>
-D:8003395C                     gitem_data_struct <GfistZ_header, aGfistz, 0, GfistZ_stats, 0x9883, 0x9876, 0.0, 0.0, \  # "GfistZ"
-D:8003395C                                        1000.0, 0.0, 0.0, 0x9876, 0x98CD, 10.0, 10.0, 1000.0>
-D:80033994                     gitem_data_struct <GknifeZ_header, aGknifez, 0, GknifeZ_stats, 0x9883, 0x9846, 200.0, \  # "GknifeZ"
-D:80033994                                        39.0, 1327.0, 0.0, 0.0, 0x9840, 0x98A8, 38.0, 118.0, 800.0>
-D:800339CC                     gitem_data_struct <GthrowknifeZ_struct, aGthrowknifez, 0, GthrowknifeZ_stats, 0x9871, \  # "GthrowknifeZ"
-D:800339CC                                        0x9806, 200.0, 51.0, 1327.0, 0.0, 0.0, 0x9870, 0x98CA, 38.0, 118.0, \
-D:800339CC                                        800.0>
-D:80033A04                     gitem_data_struct <GwppkZ_struct, aGwppkz, 0, GwppkZ_stats, 0x9857, 0x9801, 20.0, 97.0, \  # "GwppkZ"
-D:80033A04                                        579.0, 0.0, 0.0, 0x9856, 0x98BA, 94.0, 2.0, 356.0>
-D:80033A3C                     gitem_data_struct <GwppksilZ_struct, aGwppksilz, 0, GwppksilZ_stats, 0x9803, 0x9810, 26.0,\  # "GwppksilZ"
-D:80033A3C                                        162.0, 668.0, 0.0, 0.0, 0x9855, 0x98B9, 169.0, 5.0, 535.0>
-D:80033A74                     gitem_data_struct <Gtt33Z_struct, aGtt33z, 0, Gtt33Z_stats, 0x9804, 0x9832, 22.0, 128.0, \  # "Gtt33Z"
-D:80033A74                                        709.0, 0.0, 0.0, 0x982A, 0x989A, 124.0, 14.0, 455.0>
-D:80033AAC                     gitem_data_struct <GskorpianZ_struct, aGskorpionz, 0, GskorpianZ_stats, 0x9883, 0x986B, \  # "GskorpionZ"
-D:80033AAC                                        46.0, 124.0, 785.0, 0.0, 0.0, 0x986B, 0x98C6, 124.0, 32.0, 545.0>
-D:80033AE4                     gitem_data_struct <Gak47Z_struct, aGak47z, 0, Gak47Z_stats, 0x9808, 0x9868, -29.0, 307.0, \  # "Gak47Z"
-D:80033AE4                                        1410.0, 0.0, 0.0, 0x9842, 0x98AB, 304.0, -31.0, 1020.0>
-D:80033B1C                     gitem_data_struct <GuziZ_struct, aGuziz, 0, GuziZ_stats, 0x9883, 0x9882, -18.0, 57.0, \  # "GuziZ"
-D:80033B1C                                        1198.0, 0.0, 0.0, 0x9882, 0x98D7, 68.0, -49.0, 667.0>
-D:80033B54                     gitem_data_struct <Gmp5kZ_struct, aGmp5kz, 0, Gmp5kZ_stats, 0x9800, 0x982F, 12.0, 112.0, \  # "Gmp5kZ"
-D:80033B54                                        1300.0, 0.0, 0.0, 0x9829, 0x9896, 123.0, -2.0, 628.0>
-D:80033B8C                     gitem_data_struct <Gmp5ksilZ_struct, aGmp5ksilz, 0, Gmp5ksilZ_stats, 0x9800, 0x9810, 14.0,\  # "Gmp5ksilZ"
-D:80033B8C                                        227.0, 1300.0, 0.0, 0.0, 0x9828, 0x9895, 226.0, -10.0, 834.0>
-D:80033BC4                     gitem_data_struct <GspectreZ_struct, aGspectrez, 0, GspectreZ_stats, 0x9883, 0x9858, -4.0,\  # "GspectreZ"
-D:80033BC4                                        144.0, 1128.0, 0.0, 0.0, 0x9858, 0x98B4, 146.0, -18.0, 801.0>
-D:80033BFC                     gitem_data_struct <Gm16Z_struct, aGm16z, 0, Gm16Z_stats, 0x9875, 0x9812, 25.0, 251.0, \  # "Gm16Z"
-D:80033BFC                                        1796.0, 0.0, 0.0, 0x9874, 0x9884, 246.0, -45.0, 1497.0>
-D:80033C34                     gitem_data_struct <Gfnp90Z_struct, aGfnp90z, 0, Gfnp90Z_stats, 0x9883, 0x985E, 88.0, \  # "Gfnp90Z"
-D:80033C34                                        -44.0, 1107.0, 0.0, 0.0, 0x985E, 0x98BC, -44.0, 31.0, 867.0>
-D:80033C6C                     gitem_data_struct <GshotgunZ_struct, aGshotgunz, 0, GshotgunZ_stats, 0x9883, 0x9864, 39.0,\  # "GshotgunZ"
-D:80033C6C                                        283.0, 1224.0, 0.0, 0.0, 0x9864, 0x98C1, 284.0, -22.0, 999.0>
-D:80033CA4                     gitem_data_struct <GautoshotZ_struct, aGautoshotz, 0, GautoshotZ_stats, 0x9816, 0x980C, \  # "GautoshotZ"
-D:80033CA4                                        73.0, 285.0, 1224.0, 0.0, 0.0, 0x9815, 0x9886, 284.0, 4.0, 980.0>
-D:80033CDC                     gitem_data_struct <GsniperrifleZ_struct, aGsniperriflez, 0, GsniperrifleZ_stats, 0x9867, \  # "GsniperrifleZ"
-D:80033CDC                                        0x980A, 49.0, 265.0, 1760.0, 0.0, 0.0, 0x9866, 0x98C3, 268.0, 14.0, \
-D:80033CDC                                        1497.0>
-D:80033D14                     gitem_data_struct <GrugerZ_struct, aGrugerz, 0, GrugerZ_stats, 0x9826, 0x984C, 47.0, \  # "GrugerZ"
-D:80033D14                                        184.0, 769.0, 0.0, 0.0, 0x9825, 0x9893, 182.0, 36.0, 604.0>
-D:80033D4C                     gitem_data_struct <GgoldengunZ_struct, aGgoldengunz, 0, GgoldengunZ_stats, 0x983B, 0x9805,\  # "GgoldengunZ"
-D:80033D4C                                        29.0, 146.0, 629.0, 0.0, 0.0, 0x9839, 0x98A3, 144.0, 18.0, 464.0>
-D:80033D84                     gitem_data_struct <GsilverwppkZ_struct, aGsilverwppkz, 0, GsilverwppkZ_stats, 0x9883, \  # "GsilverwppkZ"
-D:80033D84                                        0x9865, 20.0, 97.0, 579.0, 0.0, 0.0, 0x9865, 0x98C2, 94.0, 2.0, 356.0>
-D:80033DBC                     gitem_data_struct <GgoldwppkZ_struct, aGgoldwppkz, 0, GgoldwppkZ_stats, 0x9883, 0x9838, \  # "GgoldwppkZ"
-D:80033DBC                                        20.0, 97.0, 579.0, 0.0, 0.0, 0x9838, 0x98A2, 94.0, 2.0, 356.0>
-D:80033DF4                     gitem_data_struct <GlaserZ_struct, aGlaserz, 0, GlaserZ_stats, 0x9852, 0x9847, 67.0, \  # "GlaserZ"
-D:80033DF4                                        106.0, 738.0, 0.0, 0.0, 0x9851, 0x98AC, 103.0, 21.0, 545.0>
-D:80033E2C                     gitem_data_struct <GwatchlaserZ_struct, aGwatchlaserz, 0, GwatchlaserZ_stats, 0x987F, \  # "GwatchlaserZ"
-D:80033E2C                                        0x9847, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x987B, 0x98D2, 0.0, -40.0, \
-D:80033E2C                                        1383.0>
-D:80033E64                     gitem_data_struct <GgrenadelaunchZ_struct, aGgrenadelaunchz, 0, GgrenadelaunchZ_stats, \  # "GgrenadelaunchZ"
-D:80033E64                                        0x983D, 0x9848, 27.0, 279.0, 1152.0, 0.0, 0.0, 0x983C, 0x98A5, 284.0, \
-D:80033E64                                        -22.0, 960.0>
-D:80033E9C                     gitem_data_struct <GrocketlaunchZ_struct, aGrocketlaunchz, 0, GrocketlaunchZ_stats, \  # "GrocketlaunchZ"
-D:80033E9C                                        0x980B, 0x9848, 111.0, -50.0, 1624.0, 0.0, 0.0, 0x9861, 0x98BF, -42.0, \
-D:80033E9C                                        16.0, 1381.0>
-D:80033ED4                     gitem_data_struct <GgrenadeZ_struct, aGgrenadez, 0, GgrenadeZ_stats, 0x9883, 0x983D, \  # "GgrenadeZ"
-D:80033ED4                                        180.0, 0.0, 2745.0, 0.0, 90.0, 0x983E, 0x98A6, 0.0, 48.0, 1468.0>
-D:80033F0C                     gitem_data_struct <GtimedmineZ_struct, aGtimedminez, 0, GtimedmineZ_stats, 0x9809, 0x980F,\  # "GtimedmineZ"
-D:80033F0C                                        8.0, 0.0, 364.0, 90.0, 0.0, 0x9872, 0x98CB, 0.0, -3.0, 179.0>
-D:80033F44                     gitem_data_struct <GproximitymineZ_struct, aGproximityminez, 0, GproximitymineZ_stats, \  # "GproximitymineZ"
-D:80033F44                                        0x9802, 0x980D, 8.0, 0.0, 364.0, 90.0, 0.0, 0x985D, 0x98BB, 0.0, -3.0, \
-D:80033F44                                        179.0>
-D:80033F7C                     gitem_data_struct <GremotemineZ_struct, aGremoteminez, 0, GremotemineZ_stats, 0x9807, \  # "GremotemineZ"
-D:80033F7C                                        0x980E, 8.0, 0.0, 364.0, 90.0, 0.0, 0x9860, 0x98BE, 0.0, -3.0, 179.0>
-D:80033FB4                     gitem_data_struct <GtriggerZ_struct, aGtriggerz, 0, GtriggerZ_stats, 0x9883, 0x982E, 82.0,\  # "GtriggerZ"
-D:80033FB4                                        0.0, 2857.0, 0.0, 90.0, 0x982E, 0x989B, 0.0, -40.0, 1383.0>
-D:80033FEC                     gitem_data_struct <GtaserZ_struct, aGtaserz, 0, GtaserZ_stats, 0x9883, 0x986F, 107.0, \  # "GtaserZ"
-D:80033FEC                                        49.0, 568.0, 0.0, 0.0, 0x986F, 0x98C9, 64.0, 80.0, 333.0>
-D:80034024                     gitem_data_struct <0, 0, 0, GtankZ_stats, 0x9883, 0x986E, 20.0, 97.0, 579.0, 0.0, 0.0, \
-D:80034024                                        0x986E, 0x98C8, 94.0, 2.0, 356.0>
-D:8003405C                     gitem_data_struct <GbombcaseZ_struct, aGbombcasez, 0, GbombcaseZ_stats, 0x9883, 0x981A, \  # "GbombcaseZ"
-D:8003405C                                        16.0, 0.0, 568.0, 0.0, 90.0, 0x981A, 0x988A, 0.0, -8.0, 323.0>
-D:80034094                     gitem_data_struct <GplastiqueZ_struct, aGplastiquez, 0, GplastiqueZ_stats, 0x9883, 0x985B,\  # "GplastiqueZ"
-D:80034094                                        28.0, 0.0, 1062.0, 80.0, 90.0, 0x985B, 0x98B7, 0.0, -16.0, 739.0>
-D:800340CC                     gitem_data_struct <GflarepistolZ_struct, aGflarepistolz, 0, GflarepistolZ_stats, 0x9883, \  # "GflarepistolZ"
-D:800340CC                                        0x9834, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9834, 0x989F, 0.0, 0.0, 1000.0>
-D:80034104                     gitem_data_struct <GpitongunZ_struct, aGpitongunz, 0, GpitongunZ_stats, 0x9883, 0x9859, \  # "GpitongunZ"
-D:80034104                                        0.0, 0.0, 1000.0, 0.0, 0.0, 0x9859, 0x98B5, 0.0, 0.0, 1000.0>
-D:8003413C                     gitem_data_struct <GbungeeZ_struct, aGbungeez, 1, 0, 0x9883, 0x981F, 0.0, 0.0, 1000.0, \  # "GbungeeZ"
-D:8003413C                                        0.0, 0.0, 0x981F, 0x988F, 0.0, 0.0, 1000.0>
-D:80034174                     gitem_data_struct <GdoordecoderZ_struct, aGdoordecoderz, 1, 0, 0x9883, 0x9830, 12.0, 0.0, \  # "GdoordecoderZ"
-D:80034174                                        364.0, 90.0, 90.0, 0x9830, 0x989C, 0.0, -6.0, 199.0>
-D:800341AC                     gitem_data_struct <GbombdefuserZ_struct, aGbombdefuserz, 1, 0, 0x9883, 0x981B, 14.0, 0.0, \  # "GbombdefuserZ"
-D:800341AC                                        379.0, 90.0, 90.0, 0x981B, 0x988B, 0.0, 0.0, 279.0>
-D:800341E4                     gitem_data_struct <GcameraZ_struct, aGcameraz, 0, GcameraZ_stats, 0x9883, 0x9820, 4.0, \  # "GcameraZ"
-D:800341E4                                        0.0, 195.0, 20.0, 90.0, 0x9820, 0x9890, 0.0, -2.0, 144.0>
-D:8003421C                     gitem_data_struct <GlockexploderZ_struct, aGlockexploderz, 1, 0, 0x9883, 0x984A, 0.0, 0.0,\  # "GlockexploderZ"
-D:8003421C                                        1000.0, 0.0, 0.0, 0x984A, 0x98AE, 0.0, 0.0, 1000.0>
-D:80034254                     gitem_data_struct <GdoorexploderZ_struct, aGdoorexploderz, 1, 0, 0x9883, 0x9831, 0.0, 0.0,\  # "GdoorexploderZ"
-D:80034254                                        1000.0, 0.0, 0.0, 0x9831, 0x989D, 0.0, 0.0, 1000.0>
-D:8003428C                     gitem_data_struct <GbriefcaseZ_struct, aGbriefcasez, 1, 0, 0x9883, 0x981C, 16.0, 0.0, \  # "GbriefcaseZ"
-D:8003428C                                        568.0, 0.0, 90.0, 0x981C, 0x988C, 0.0, -8.0, 323.0>
-D:800342C4                     gitem_data_struct <GweaponcaseZ_struct, aGweaponcasez, 1, 0, 0x9883, 0x9880, 16.0, 0.0, \  # "GweaponcaseZ"
-D:800342C4                                        568.0, 0.0, 90.0, 0x9880, 0x98D5, 0.0, -8.0, 323.0>
-D:800342FC                     gitem_data_struct <GsafecrackercaseZ_struct, aGsafecrackercasez, 1, 0, 0x9883, 0x9863, \  # "GsafecrackercaseZ"
-D:800342FC                                        16.0, 0.0, 568.0, 0.0, 90.0, 0x9862, 0x98C0, 0.0, -8.0, 323.0>
-D:80034334                     gitem_data_struct <GkeyanalysercaseZ_struct, aGkeyanalysercasez, 1, 0, 0x9883, 0x9844, \  # "GkeyanalysercaseZ"
-D:80034334                                        16.0, 0.0, 568.0, 0.0, 90.0, 0x9843, 0x98A9, 0.0, -8.0, 323.0>
-D:8003436C                     gitem_data_struct <GbugZ_struct, aGbugz, 0, GbugZ_stats, 0x9883, 0x981E, 16.0, 0.0, 513.0,\  # "GbugZ"
-D:8003436C                                        0.0, 90.0, 0x981E, 0x988E, 0.0, -6.0, 387.0>
-D:800343A4                     gitem_data_struct <GmicrocameraZ_struct, aGmicrocameraz, 0, GmicrocameraZ_stats, 0x9883, \  # "GmicrocameraZ"
-D:800343A4                                        0x984E, 8.0, 0.0, 310.0, 0.0, 270.0, 0x984E, 0x98B0, 0.0, -8.0, 229.0>
-D:800343DC                     gitem_data_struct <GbugdetectorZ_struct, aGbugdetectorz, 1, 0, 0x9883, 0x981D, 0.0, 0.0, \  # "GbugdetectorZ"
-D:800343DC                                        1000.0, 0.0, 0.0, 0x981D, 0x988D, 0.0, 0.0, 1000.0>
-D:80034414                     gitem_data_struct <GexplosivefloppyZ_struct, aGexplosivefloppyz, 1, 0, 0x9883, 0x9833, \  # "GexplosivefloppyZ"
-D:80034414                                        12.0, 0.0, 336.0, 0.0, 90.0, 0x9833, 0x989E, 0.0, -4.0, 176.0>
-D:8003444C                     gitem_data_struct <GpolarizedglassesZ_struct, aGpolarizedglassesz, 1, 0, 0x9883, 0x985C, \  # "GpolarizedglassesZ"
-D:8003444C                                        2.0, 0.0, 183.0, 15.0, 90.0, 0x985C, 0x98B8, 0.0, 0.0, 147.0>
-D:80034484                     gitem_data_struct <GdarkglassesZ_struct, aGdarkglassesz, 1, 0, 0x9883, 0x982B, 0.0, 0.0, \  # "GdarkglassesZ"
-D:80034484                                        1000.0, 0.0, 0.0, 0x982B, 0x9897, 0.0, 0.0, 1000.0>
-D:800344BC                     gitem_data_struct <GcreditcardZ_struct, aGcreditcardz, 1, 0, 0x9883, 0x9827, 0.0, 0.0, \  # "GcreditcardZ"
-D:800344BC                                        1000.0, 0.0, 0.0, 0x9827, 0x9894, 0.0, 0.0, 1000.0>
-D:800344F4                     gitem_data_struct <GgaskeyringZ_struct, aGgaskeyringz, 1, 0, 0x9883, 0x9835, 26.0, 0.0, \  # "GgaskeyringZ"
-D:800344F4                                        769.0, 90.0, 90.0, 0x9835, 0x98A0, 0.0, -8.0, 387.0>
-D:8003452C                     gitem_data_struct <GdatathiefZ_struct, aGdatathiefz, 1, 0, 0x9883, 0x982D, 16.0, 0.0, \  # "GdatathiefZ"
-D:8003452C                                        474.0, 80.0, 0.0, 0x982D, 0x9899, 0.0, -6.0, 350.0>
-D:80034564                     gitem_data_struct <GwatchidentifierZ_struct, aGwatchidentifierz, 1, 0, 0x987F, 0x9841, \  # "GwatchidentifierZ"
-D:80034564                                        82.0, 0.0, 2857.0, 0.0, 90.0, 0x987A, 0x98D1, 0.0, -40.0, 1383.0>
-D:8003459C                     gitem_data_struct <GwatchcommunicatorZ_struct, aGwatchcommunicatorz, 1, 0, 0x987F, 0x9823,\  # "GwatchcommunicatorZ"
-D:8003459C                                        82.0, 0.0, 2857.0, 0.0, 90.0, 0x9878, 0x98CF, 0.0, -40.0, 1383.0>
-D:800345D4                     gitem_data_struct <GwatchgeigercounterZ_struct, aGwatchgeigercounterz, 1, 0, 0x987F, \  # "GwatchgeigercounterZ"
-D:800345D4                                        0x9836, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x9879, 0x98D0, 0.0, -40.0, \
-D:800345D4                                        1383.0>
-D:8003460C                     gitem_data_struct <GwatchmagnetrepelZ_struct, aGwatchmagnetrepelz, 1, 0, 0x987F, 0x984B, \  # "GwatchmagnetrepelZ"
-D:8003460C                                        82.0, 0.0, 2857.0, 0.0, 90.0, 0x987D, 0x98D4, 0.0, -40.0, 1383.0>
-D:80034644                     gitem_data_struct <GwatchmagnetattractZ_struct, aGwatchmagnetattractz, 0, \  # "GwatchmagnetattractZ"
-D:80034644                                        GwatchmagnetattractZ_stats, 0x987E, 0x9813, 80.0, 0.0, 3036.0, 0.0, \
-D:80034644                                        90.0, 0x987C, 0x98D3, 0.0, -40.0, 1383.0>
-D:8003467C                     gitem_data_struct <GgoldeneyekeyZ_struct, aGgoldeneyekeyz, 0, GgoldeneyekeyZ_stats, \  # "GgoldeneyekeyZ"
-D:8003467C                                        0x9883, 0x983A, 18.0, 0.0, 560.0, 80.0, 0.0, 0x983A, 0x98A4, 0.0, -4.0,\
-D:8003467C                                        310.0>
-D:800346B4                     gitem_data_struct <GblackboxZ_struct, aGblackboxz, 1, 0, 0x9883, 0x9817, 18.0, 0.0, 545.0,\  # "GblackboxZ"
-D:800346B4                                        0.0, 90.0, 0x9817, 0x9887, 0.0, -8.0, 380.0>
-D:800346EC                     gitem_data_struct <GcircuitboardZ_struct, aGcircuitboardz, 1, 0, 0x9883, 0x9821, 20.0, \  # "GcircuitboardZ"
-D:800346EC                                        0.0, 568.0, 80.0, 0.0, 0x9821, 0x9891, 0.0, 0.0, 394.0>
-D:80034724                     gitem_data_struct <GclipboardZ_struct, aGclipboardz, 1, 0, 0x9883, 0x9822, 40.0, 0.0, \  # "GclipboardZ"
-D:80034724                                        1151.0, 80.0, 90.0, 0x9822, 0x9892, 0.0, -20.0, 580.0>
-D:8003475C                     gitem_data_struct <GstafflistZ_struct, aGstafflistz, 1, 0, 0x9883, 0x986C, 44.0, 0.0, \  # "GstafflistZ"
-D:8003475C                                        1274.0, 80.0, 90.0, 0x986C, 0x98C7, 0.0, -16.0, 681.0>
-D:80034794                     gitem_data_struct <GdossierredZ_struct, aGdossierredz, 1, 0, 0x9883, 0x985F, 38.0, 0.0, \  # "GdossierredZ"
-D:80034794                                        1084.0, 350.0, 90.0, 0x985F, 0x98BD, 0.0, -12.0, 580.0>
-D:800347CC                     gitem_data_struct <GplansZ_struct, aGplansz, 1, 0, 0x9883, 0x985A, 18.0, 0.0, 464.0, \  # "GplansZ"
-D:800347CC                                        350.0, 90.0, 0x985A, 0x98B6, 0.0, -2.0, 253.0>
-D:80034804                     gitem_data_struct <GspyfileZ_struct, aGspyfilez, 1, 0, 0x9883, 0x986A, 0.0, 0.0, 1000.0, \  # "GspyfileZ"
-D:80034804                                        0.0, 0.0, 0x986A, 0x98C5, 0.0, 0.0, 1000.0>
-D:8003483C                     gitem_data_struct <GblueprintsZ_struct, aGblueprintsz, 1, 0, 0x9883, 0x9818, 18.0, 0.0, \  # "GblueprintsZ"
-D:8003483C                                        579.0, 350.0, 90.0, 0x9818, 0x9888, 0.0, -8.0, 364.0>
-D:80034874                     gitem_data_struct <GmapZ_struct, aGmapz, 1, 0, 0x9883, 0x984D, 18.0, 0.0, 579.0, 350.0, \  # "GmapZ"
-D:80034874                                        90.0, 0x984D, 0x98AF, 0.0, -6.0, 364.0>
-D:800348AC                     gitem_data_struct <GaudiotapeZ_struct, aGaudiotapez, 1, 0, 0x9883, 0x9814, 16.0, 0.0, \  # "GaudiotapeZ"
-D:800348AC                                        428.0, 90.0, 90.0, 0x9814, 0x9885, 0.0, -2.0, 292.0>
-D:800348E4                     gitem_data_struct <GvideotapeZ_struct, aGvideotapez, 1, 0, 0x9883, 0x9877, 26.0, 0.0, \  # "GvideotapeZ"
-D:800348E4                                        753.0, 90.0, 0.0, 0x9877, 0x98CE, 0.0, -8.0, 395.0>
-D:8003491C                     gitem_data_struct <GdattapeZ_struct, aGdattapez, 1, 0, 0x9883, 0x982C, 14.0, 0.0, 387.0, \  # "GdattapeZ"
-D:8003491C                                        90.0, 90.0, 0x982C, 0x9898, 0.0, 0.0, 238.0>
-D:80034954                     gitem_data_struct <GspooltapeZ_struct, aGspooltapez, 1, 0, 0x9883, 0x9869, 0.0, 0.0, \  # "GspooltapeZ"
-D:80034954                                        1000.0, 0.0, 0.0, 0x9869, 0x98C4, 0.0, 0.0, 1000.0>
-D:8003498C                     gitem_data_struct <GmicrofilmZ_struct, aGmicrofilmz, 1, 0, 0x9883, 0x9850, 0.0, 0.0, \  # "GmicrofilmZ"
-D:8003498C                                        1000.0, 0.0, 0.0, 0x9850, 0x98B2, 0.0, 0.0, 1000.0>
-D:800349C4                     gitem_data_struct <GmicrocodeZ_struct, aGmicrocodez, 1, 0, 0x9883, 0x984F, 0.0, 0.0, \  # "GmicrocodeZ"
-D:800349C4                                        1000.0, 0.0, 0.0, 0x984F, 0x98B1, 0.0, 0.0, 1000.0>
-D:800349FC                     gitem_data_struct <GlectreZ_struct, aGlectrez, 1, 0, 0x9883, 0x9849, 0.0, 0.0, 1000.0, \  # "GlectreZ"
-D:800349FC                                        0.0, 0.0, 0x9849, 0x98AD, 0.0, 0.0, 1000.0>
-D:80034A34                     gitem_data_struct <GmoneyZ_struct, aGmoneyz, 1, 0, 0x9883, 0x9853, 0.0, 0.0, 1000.0, 0.0, \  # "GmoneyZ"
-D:80034A34                                        0.0, 0x9853, 0x98B3, 0.0, 0.0, 1000.0>
-D:80034A6C                     gitem_data_struct <GgoldbarZ_struct, aGgoldbarz, 1, 0, 0x9883, 0x9837, 0.0, 0.0, 1000.0, \  # "GgoldbarZ"
-D:80034A6C                                        0.0, 0.0, 0x9837, 0x98A1, 0.0, 0.0, 1000.0>
-D:80034AA4                     gitem_data_struct <GheroinZ_struct, aGheroinz, 1, 0, 0x9883, 0x983F, 0.0, 0.0, 1000.0, \  # "GheroinZ"
-D:80034AA4                                        0.0, 0.0, 0x983F, 0x98A7, 0.0, 0.0, 1000.0>
-D:80034ADC                     gitem_data_struct <GkeycardZ_struct, aGkeycardz, 1, 0, 0x9883, 0x9845, 24.0, 0.0, 556.0, \  # "GkeycardZ"
-D:80034ADC                                        80.0, 90.0, 0x9845, 0x98AA, 0.0, -6.0, 411.0>
-D:80034B14                     gitem_data_struct <GkeyyaleZ_struct, aGkeyyalez, 1, 0, 0x9883, 0x9881, 64.0, 0.0, 1912.0, \  # "GkeyyaleZ"
-D:80034B14                                        260.0, 90.0, 0x9881, 0x98D6, 0.0, -18.0, 1568.0>
-D:80034B4C                     gitem_data_struct <GkeyboltZ_struct, aGkeyboltz, 1, 0, 0x9883, 0x9819, 78.0, 0.0, 3518.0, \  # "GkeyboltZ"
-D:80034B4C                                        80.0, 90.0, 0x9819, 0x9889, 0.0, -12.0, 2582.0>
-D:80034B84                     gitem_data_struct <Csuit_lf_handz_struct, aCsuit_lf_handz, 0, Csuit_lf_handz_stats, \  # "Csuit_lf_handZ"
-D:80034B84                                        0x9883, 0x986D, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0,\
-D:80034B84                                        1000.0>
-D:80034BBC                     gitem_data_struct <GjoypadZ_struct, aGjoypadz, 0, GjoypadZ_stats, 0x9883, 0x9824, 0.0, \  # "GjoypadZ"
-D:80034BBC                                        0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0>
-D:80034BF4                     gitem_data_struct <0, 0, 0, stru_D_800337D4, 0x9883, 0x9854, 0.0, 0.0, 1000.0, 0.0, 0.0, \
-D:80034BF4                                        0x9883, 0x9883, 10.0, 10.0, 1000.0>
-D:80034C2C                     gitem_data_struct <0, 0, 0, stru_D_80033844, 0x9883, 0x9854, 0.0, 0.0, 1000.0, 0.0, 0.0, \
-D:80034C2C                                        0x9883, 0x9883, 10.0, 10.0, 1000.0>
-D:80034C64                     gitem_data_struct <0, 0, 0, stru_D_800338B4, 0x9883, 0x9873, 12.0, 0.0, 528.0, 80.0, 0.0, \
-D:80034C64                                        0x9873, 0x98CC, 0.0, -4.0, 310.0>
-*/
+
+
+//D:80033924
+struct gitem_data_struct gitem_structs[] = {
+	{0, 0, 1, 0, 0x9883, 0x9811, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9811, 0x9811, 10.0, 10.0, 1000.0},
+	{&GfistZ_header,          "GfistZ", 0, &GfistZ_stats, 0x9883, 0x9876, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9876, 0x98CD, 10.0, 10.0, 1000.0},
+	{&GknifeZ_header,         "GknifeZ", 0, &GknifeZ_stats, 0x9883, 0x9846, 200.0, 39.0, 1327.0, 0.0, 0.0, 0x9840, 0x98A8, 38.0, 118.0, 800.0},
+	{&GthrowknifeZ_struct,    "GthrowknifeZ", 0, &GthrowknifeZ_stats, 0x9871, 0x9806, 200.0, 51.0, 1327.0, 0.0, 0.0, 0x9870, 0x98CA, 38.0, 118.0, 800.0},
+	{&GwppkZ_struct,          "GwppkZ", 0, &GwppkZ_stats, 0x9857, 0x9801, 20.0, 97.0, 579.0, 0.0, 0.0, 0x9856, 0x98BA, 94.0, 2.0, 356.0},
+	{&GwppksilZ_struct,       "GwppksilZ", 0, &GwppksilZ_stats, 0x9803, 0x9810, 26.0, 162.0, 668.0, 0.0, 0.0, 0x9855, 0x98B9, 169.0, 5.0, 535.0},
+	{&Gtt33Z_struct,          "Gtt33Z", 0, &Gtt33Z_stats, 0x9804, 0x9832, 22.0, 128.0, 709.0, 0.0, 0.0, 0x982A, 0x989A, 124.0, 14.0, 455.0},
+	{&GskorpianZ_struct,      "GskorpionZ", 0, &GskorpianZ_stats, 0x9883, 0x986B, 46.0, 124.0, 785.0, 0.0, 0.0, 0x986B, 0x98C6, 124.0, 32.0, 545.0},
+	{&Gak47Z_struct,          "Gak47Z", 0, &Gak47Z_stats, 0x9808, 0x9868, -29.0, 307.0, 1410.0, 0.0, 0.0, 0x9842, 0x98AB, 304.0, -31.0, 1020.0},
+	{&GuziZ_struct,           "GuziZ", 0, &GuziZ_stats, 0x9883, 0x9882, -18.0, 57.0, 1198.0, 0.0, 0.0, 0x9882, 0x98D7, 68.0, -49.0, 667.0},
+	{&Gmp5kZ_struct,          "Gmp5kZ", 0, &Gmp5kZ_stats, 0x9800, 0x982F, 12.0, 112.0, 1300.0, 0.0, 0.0, 0x9829, 0x9896, 123.0, -2.0, 628.0},
+	{&Gmp5ksilZ_struct,       "Gmp5ksilZ", 0, &Gmp5ksilZ_stats, 0x9800, 0x9810, 14.0, 227.0, 1300.0, 0.0, 0.0, 0x9828, 0x9895, 226.0, -10.0, 834.0},
+	{&GspectreZ_struct,       "GspectreZ", 0, &GspectreZ_stats, 0x9883, 0x9858, -4.0, 144.0, 1128.0, 0.0, 0.0, 0x9858, 0x98B4, 146.0, -18.0, 801.0},
+	{&Gm16Z_struct,           "Gm16Z", 0, &Gm16Z_stats, 0x9875, 0x9812, 25.0, 251.0, 1796.0, 0.0, 0.0, 0x9874, 0x9884, 246.0, -45.0, 1497.0},
+	{&Gfnp90Z_struct,         "Gfnp90Z", 0, &Gfnp90Z_stats, 0x9883, 0x985E, 88.0, -44.0, 1107.0, 0.0, 0.0, 0x985E, 0x98BC, -44.0, 31.0, 867.0},
+	{&GshotgunZ_struct,       "GshotgunZ", 0, &GshotgunZ_stats, 0x9883, 0x9864, 39.0, 283.0, 1224.0, 0.0, 0.0, 0x9864, 0x98C1, 284.0, -22.0, 999.0},
+	{&GautoshotZ_struct,      "GautoshotZ", 0, &GautoshotZ_stats, 0x9816, 0x980C, 73.0, 285.0, 1224.0, 0.0, 0.0, 0x9815, 0x9886, 284.0, 4.0, 980.0},
+	{&GsniperrifleZ_struct,   "GsniperrifleZ", 0, &GsniperrifleZ_stats, 0x9867, 0x980A, 49.0, 265.0, 1760.0, 0.0, 0.0, 0x9866, 0x98C3, 268.0, 14.0, 1497.0},
+	{&GrugerZ_struct,         "GrugerZ", 0, &GrugerZ_stats, 0x9826, 0x984C, 47.0, 184.0, 769.0, 0.0, 0.0, 0x9825, 0x9893, 182.0, 36.0, 604.0},
+	{&GgoldengunZ_struct,     "GgoldengunZ", 0, &GgoldengunZ_stats, 0x983B, 0x9805, 29.0, 146.0, 629.0, 0.0, 0.0, 0x9839, 0x98A3, 144.0, 18.0, 464.0},
+	{&GsilverwppkZ_struct,    "GsilverwppkZ", 0, &GsilverwppkZ_stats, 0x9883, 0x9865, 20.0, 97.0, 579.0, 0.0, 0.0, 0x9865, 0x98C2, 94.0, 2.0, 356.0},
+	{&GgoldwppkZ_struct,      "GgoldwppkZ", 0, &GgoldwppkZ_stats, 0x9883, 0x9838, 20.0, 97.0, 579.0, 0.0, 0.0, 0x9838, 0x98A2, 94.0, 2.0, 356.0},
+	{&GlaserZ_struct,         "GlaserZ", 0, &GlaserZ_stats, 0x9852, 0x9847, 67.0, 106.0, 738.0, 0.0, 0.0, 0x9851, 0x98AC, 103.0, 21.0, 545.0},
+	{&GwatchlaserZ_struct,    "GwatchlaserZ", 0, &GwatchlaserZ_stats, 0x987F, 0x9847, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x987B, 0x98D2, 0.0, -40.0, 1383.0},
+	{&GgrenadelaunchZ_struct, "GgrenadelaunchZ", 0, &GgrenadelaunchZ_stats, 0x983D, 0x9848, 27.0, 279.0, 1152.0, 0.0, 0.0, 0x983C, 0x98A5, 284.0, -22.0, 960.0},
+	{&GrocketlaunchZ_struct, "GrocketlaunchZ", 0, &GrocketlaunchZ_stats, 0x980B, 0x9848, 111.0, -50.0, 1624.0, 0.0, 0.0, 0x9861, 0x98BF, -42.0, 16.0, 1381.0},
+	{&GgrenadeZ_struct, "GgrenadeZ", 0, &GgrenadeZ_stats, 0x9883, 0x983D, 180.0, 0.0, 2745.0, 0.0, 90.0, 0x983E, 0x98A6, 0.0, 48.0, 1468.0},
+	{&GtimedmineZ_struct, "GtimedmineZ", 0, &GtimedmineZ_stats, 0x9809, 0x980F, 8.0, 0.0, 364.0, 90.0, 0.0, 0x9872, 0x98CB, 0.0, -3.0, 179.0},
+	{&GproximitymineZ_struct, "GproximitymineZ", 0, &GproximitymineZ_stats, 0x9802, 0x980D, 8.0, 0.0, 364.0, 90.0, 0.0, 0x985D, 0x98BB, 0.0, -3.0, 179.0},
+	{&GremotemineZ_struct, "GremotemineZ", 0, &GremotemineZ_stats, 0x9807,  0x980E, 8.0, 0.0, 364.0, 90.0, 0.0, 0x9860, 0x98BE, 0.0, -3.0, 179.0},
+	{&GtriggerZ_struct, "GtriggerZ", 0, &GtriggerZ_stats, 0x9883, 0x982E, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x982E, 0x989B, 0.0, -40.0, 1383.0},
+	{&GtaserZ_struct, "GtaserZ", 0, &GtaserZ_stats, 0x9883, 0x986F, 107.0, 49.0, 568.0, 0.0, 0.0, 0x986F, 0x98C9, 64.0, 80.0, 333.0},
+	{0, 0, 0, &GtankZ_stats, 0x9883, 0x986E, 20.0, 97.0, 579.0, 0.0, 0.0, 0x986E, 0x98C8, 94.0, 2.0, 356.0},
+	{&GbombcaseZ_struct, "GbombcaseZ", 0, &GbombcaseZ_stats, 0x9883, 0x981A, 16.0, 0.0, 568.0, 0.0, 90.0, 0x981A, 0x988A, 0.0, -8.0, 323.0},
+	{&GplastiqueZ_struct, "GplastiqueZ", 0, &GplastiqueZ_stats, 0x9883, 0x985B, 28.0, 0.0, 1062.0, 80.0, 90.0, 0x985B, 0x98B7, 0.0, -16.0, 739.0},
+	{&GflarepistolZ_struct, "GflarepistolZ", 0, &GflarepistolZ_stats, 0x9883, 0x9834, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9834, 0x989F, 0.0, 0.0, 1000.0},
+	{&GpitongunZ_struct, "GpitongunZ", 0, &GpitongunZ_stats, 0x9883, 0x9859, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9859, 0x98B5, 0.0, 0.0, 1000.0},
+	{&GbungeeZ_struct, "GbungeeZ", 1, 0, 0x9883, 0x981F, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x981F, 0x988F, 0.0, 0.0, 1000.0},
+	{&GdoordecoderZ_struct, "GdoordecoderZ", 1, 0, 0x9883, 0x9830, 12.0, 0.0, 364.0, 90.0, 90.0, 0x9830, 0x989C, 0.0, -6.0, 199.0},
+	{&GbombdefuserZ_struct, "GbombdefuserZ", 1, 0, 0x9883, 0x981B, 14.0, 0.0, 379.0, 90.0, 90.0, 0x981B, 0x988B, 0.0, 0.0, 279.0},
+	{&GcameraZ_struct, "GcameraZ", 0, &GcameraZ_stats, 0x9883, 0x9820, 4.0, 0.0, 195.0, 20.0, 90.0, 0x9820, 0x9890, 0.0, -2.0, 144.0},
+	{&GlockexploderZ_struct, "GlockexploderZ", 1, 0, 0x9883, 0x984A, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x984A, 0x98AE, 0.0, 0.0, 1000.0},
+	{&GdoorexploderZ_struct, "GdoorexploderZ", 1, 0, 0x9883, 0x9831, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9831, 0x989D, 0.0, 0.0, 1000.0},
+	{&GbriefcaseZ_struct, "GbriefcaseZ", 1, 0, 0x9883, 0x981C, 16.0, 0.0, 568.0, 0.0, 90.0, 0x981C, 0x988C, 0.0, -8.0, 323.0},
+	{&GweaponcaseZ_struct, "GweaponcaseZ", 1, 0, 0x9883, 0x9880, 16.0, 0.0, 568.0, 0.0, 90.0, 0x9880, 0x98D5, 0.0, -8.0, 323.0},
+	{&GsafecrackercaseZ_struct, "GsafecrackercaseZ", 1, 0, 0x9883, 0x9863, 16.0, 0.0, 568.0, 0.0, 90.0, 0x9862, 0x98C0, 0.0, -8.0, 323.0},
+	{&GkeyanalysercaseZ_struct, "GkeyanalysercaseZ", 1, 0, 0x9883, 0x9844, 16.0, 0.0, 568.0, 0.0, 90.0, 0x9843, 0x98A9, 0.0, -8.0, 323.0},
+	{&GbugZ_struct, "GbugZ", 0, &GbugZ_stats, 0x9883, 0x981E, 16.0, 0.0, 513.0, 0.0, 90.0, 0x981E, 0x988E, 0.0, -6.0, 387.0},
+	{&GmicrocameraZ_struct, "GmicrocameraZ", 0, &GmicrocameraZ_stats, 0x9883, 0x984E, 8.0, 0.0, 310.0, 0.0, 270.0, 0x984E, 0x98B0, 0.0, -8.0, 229.0},
+	{&GbugdetectorZ_struct, "GbugdetectorZ", 1, 0, 0x9883, 0x981D, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x981D, 0x988D, 0.0, 0.0, 1000.0},
+	{&GexplosivefloppyZ_struct, "GexplosivefloppyZ", 1, 0, 0x9883, 0x9833, 12.0, 0.0, 336.0, 0.0, 90.0, 0x9833, 0x989E, 0.0, -4.0, 176.0},
+	{&GpolarizedglassesZ_struct, "GpolarizedglassesZ", 1, 0, 0x9883, 0x985C, 2.0, 0.0, 183.0, 15.0, 90.0, 0x985C, 0x98B8, 0.0, 0.0, 147.0},
+	{&GdarkglassesZ_struct, "GdarkglassesZ", 1, 0, 0x9883, 0x982B, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x982B, 0x9897, 0.0, 0.0, 1000.0},
+	{&GcreditcardZ_struct, "GcreditcardZ", 1, 0, 0x9883, 0x9827, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9827, 0x9894, 0.0, 0.0, 1000.0},
+	{&GgaskeyringZ_struct, "GgaskeyringZ", 1, 0, 0x9883, 0x9835, 26.0, 0.0, 769.0, 90.0, 90.0, 0x9835, 0x98A0, 0.0, -8.0, 387.0},
+	{&GdatathiefZ_struct, "GdatathiefZ", 1, 0, 0x9883, 0x982D, 16.0, 0.0, 474.0, 80.0, 0.0, 0x982D, 0x9899, 0.0, -6.0, 350.0},
+	{&GwatchidentifierZ_struct, "GwatchidentifierZ", 1, 0, 0x987F, 0x9841, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x987A, 0x98D1, 0.0, -40.0, 1383.0},
+	{&GwatchcommunicatorZ_struct, "GwatchcommunicatorZ", 1, 0, 0x987F, 0x9823, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x9878, 0x98CF, 0.0, -40.0, 1383.0},
+	{&GwatchgeigercounterZ_struct, "GwatchgeigercounterZ", 1, 0, 0x987F, 0x9836, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x9879, 0x98D0, 0.0, -40.0, 1383.0},
+	{&GwatchmagnetrepelZ_struct, "GwatchmagnetrepelZ", 1, 0, 0x987F, 0x984B, 82.0, 0.0, 2857.0, 0.0, 90.0, 0x987D, 0x98D4, 0.0, -40.0, 1383.0},
+	{&GwatchmagnetattractZ_struct, "GwatchmagnetattractZ", 0, &GwatchmagnetattractZ_stats, 0x987E, 0x9813, 80.0, 0.0, 3036.0, 0.0, 90.0, 0x987C, 0x98D3, 0.0, -40.0, 1383.0},
+	{&GgoldeneyekeyZ_struct, "GgoldeneyekeyZ", 0, &GgoldeneyekeyZ_stats, 0x9883, 0x983A, 18.0, 0.0, 560.0, 80.0, 0.0, 0x983A, 0x98A4, 0.0, -4.0, 310.0},
+	{&GblackboxZ_struct, "GblackboxZ", 1, 0, 0x9883, 0x9817, 18.0, 0.0, 545.0, 0.0, 90.0, 0x9817, 0x9887, 0.0, -8.0, 380.0},
+	{&GcircuitboardZ_struct, "GcircuitboardZ", 1, 0, 0x9883, 0x9821, 20.0, 0.0, 568.0, 80.0, 0.0, 0x9821, 0x9891, 0.0, 0.0, 394.0},
+	{&GclipboardZ_struct, "GclipboardZ", 1, 0, 0x9883, 0x9822, 40.0, 0.0, 1151.0, 80.0, 90.0, 0x9822, 0x9892, 0.0, -20.0, 580.0},
+	{&GstafflistZ_struct, "GstafflistZ", 1, 0, 0x9883, 0x986C, 44.0, 0.0, 1274.0, 80.0, 90.0, 0x986C, 0x98C7, 0.0, -16.0, 681.0},
+	{&GdossierredZ_struct, "GdossierredZ", 1, 0, 0x9883, 0x985F, 38.0, 0.0, 1084.0, 350.0, 90.0, 0x985F, 0x98BD, 0.0, -12.0, 580.0},
+	{&GplansZ_struct, "GplansZ", 1, 0, 0x9883, 0x985A, 18.0, 0.0, 464.0, 350.0, 90.0, 0x985A, 0x98B6, 0.0, -2.0, 253.0},
+	{&GspyfileZ_struct, "GspyfileZ", 1, 0, 0x9883, 0x986A, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x986A, 0x98C5, 0.0, 0.0, 1000.0},
+	{&GblueprintsZ_struct, "GblueprintsZ", 1, 0, 0x9883, 0x9818, 18.0, 0.0, 579.0, 350.0, 90.0, 0x9818, 0x9888, 0.0, -8.0, 364.0},
+	{&GmapZ_struct, "GmapZ", 1, 0, 0x9883, 0x984D, 18.0, 0.0, 579.0, 350.0, 90.0, 0x984D, 0x98AF, 0.0, -6.0, 364.0},
+	{&GaudiotapeZ_struct, "GaudiotapeZ", 1, 0, 0x9883, 0x9814, 16.0, 0.0, 428.0, 90.0, 90.0, 0x9814, 0x9885, 0.0, -2.0, 292.0},
+	{&GvideotapeZ_struct, "GvideotapeZ", 1, 0, 0x9883, 0x9877, 26.0, 0.0, 753.0, 90.0, 0.0, 0x9877, 0x98CE, 0.0, -8.0, 395.0},
+	{&GdattapeZ_struct, "GdattapeZ", 1, 0, 0x9883, 0x982C, 14.0, 0.0, 387.0, 90.0, 90.0, 0x982C, 0x9898, 0.0, 0.0, 238.0},
+	{&GspooltapeZ_struct, "GspooltapeZ", 1, 0, 0x9883, 0x9869, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9869, 0x98C4, 0.0, 0.0, 1000.0},
+	{&GmicrofilmZ_struct, "GmicrofilmZ", 1, 0, 0x9883, 0x9850, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9850, 0x98B2, 0.0, 0.0, 1000.0},
+	{&GmicrocodeZ_struct, "GmicrocodeZ", 1, 0, 0x9883, 0x984F, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x984F, 0x98B1, 0.0, 0.0, 1000.0},
+	{&GlectreZ_struct, "GlectreZ", 1, 0, 0x9883, 0x9849, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9849, 0x98AD, 0.0, 0.0, 1000.0},
+	{&GmoneyZ_struct, "GmoneyZ", 1, 0, 0x9883, 0x9853, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9853, 0x98B3, 0.0, 0.0, 1000.0},
+	{&GgoldbarZ_struct, "GgoldbarZ", 1, 0, 0x9883, 0x9837, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9837, 0x98A1, 0.0, 0.0, 1000.0},
+	{&GheroinZ_struct, "GheroinZ", 1, 0, 0x9883, 0x983F, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x983F, 0x98A7, 0.0, 0.0, 1000.0},
+	{&GkeycardZ_struct, "GkeycardZ", 1, 0, 0x9883, 0x9845, 24.0, 0.0, 556.0, 80.0, 90.0, 0x9845, 0x98AA, 0.0, -6.0, 411.0},
+	{&GkeyyaleZ_struct, "GkeyyaleZ", 1, 0, 0x9883, 0x9881, 64.0, 0.0, 1912.0, 260.0, 90.0, 0x9881, 0x98D6, 0.0, -18.0, 1568.0},
+	{&GkeyboltZ_struct, "GkeyboltZ", 1, 0, 0x9883, 0x9819, 78.0, 0.0, 3518.0, 80.0, 90.0, 0x9819, 0x9889, 0.0, -12.0, 2582.0},
+	{&Csuit_lf_handz_struct, "Csuit_lf_handZ", 0, &Csuit_lf_handz_stats, 0x9883, 0x986D, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
+	{&GjoypadZ_struct, "GjoypadZ", 0, &GjoypadZ_stats, 0x9883, 0x9824, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
+	{0              ,          0, 0, &stru_D_800337D4, 0x9883, 0x9854, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
+	{0              ,          0, 0, &stru_D_80033844, 0x9883, 0x9854, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
+	{0              ,          0, 0, &stru_D_800338B4, 0x9883, 0x9873, 12.0, 0.0, 528.0, 80.0, 0.0, 0x9873, 0x98CC, 0.0, -4.0, 310.0}
+};
+
 //D:80034C9C
 u32 cartridges_eject = 0;
 //D:80034CA0
-u32 dword_D_80034CA0 = 0;
-/*
-D:80034CA4     flt_D_80034CA4: .float  0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.5       
-D:80034CA4                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1CF8o
-D:80034CA4                     .float  8.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0
-D:80034CA4                     .float  0.5       , 8.0       , 0.0       , 6.0       ,-1.5       , 0.0       , 5.6415639 , 0.23511
-D:80034CA4                     .float  0.13564   , 0.5       , 8.0       , 0.0       , 12.5      ,-3.5       , 0.0       , 6.0422268
-D:80034CA4                     .float  0.044750001, 0.55571699, 0.5       , 8.0       , 0.0       ,-10.0      ,-11.0      , 0.0
-D:80034CA4                     .float  1.241009  , 0.31698799, 1.086363  , 0.5       , 8.0       , 0.0       ,-14.0      ,-15.0
-D:80034CA4                     .float  0.0       , 1.830307  , 6.1436629 , 1.274134  , 0.5       , 10.0      , 0.0       ,-1.0
-D:80034CA4                     .float -9.0       , 0.0       , 0.38424399, 0.36032301, 0.105151  , 0.5       , 10.0      , 0.0
-D:80034CA4                     .float  0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.5       , 20.0
-D:80034CA4                     .float  0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.5
-D:80034CA4                     .float  20.0
-D:80034CA4                     .byte    0,   0,   0,   1,   0,   0,   0,   0
-D:80034CA4                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:80034CA4                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:80034CA4                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:80034CA4                     .byte    0,   0,   0,   0
-D:80034E0C     flt_D_80034E0C: .float  0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.5       
-D:80034E0C                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation:loc_CODE_7F066824o
-D:80034E0C                     .float  8.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0
-D:80034E0C                     .float  0.5       , 8.0       , 0.0       ,-8.5       ,-6.0       , 0.0       , 5.4830351 , 5.8345609
-D:80034E0C                     .float  6.0827341 , 0.5       , 8.0       , 0.0       ,-3.0       ,-3.5       , 0.0       , 0.402412
-D:80034E0C                     .float  5.7293859 , 5.6918988 , 0.5       , 8.0       , 0.0       ,-0.5       ,-8.5       , 0.0
-D:80034E0C                     .float  1.234298  , 5.7315431 , 5.608871  , 0.5       , 8.0       , 0.0       , 7.0       ,-28.5
-D:80034E0C                     .float -1.5       , 1.306924  , 5.695158  , 5.6958299 , 0.5       , 10.0      , 0.0       ,-1.5
-D:80034E0C                     .float -9.0       , 0.0       , 0.067808002, 6.2595758 , 0.203519  , 0.5       , 10.0      , 0.0
-D:80034E0C                     .float  0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.5       , 20.0
-D:80034E0C                     .float  0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.5
-D:80034E0C                     .float  20.0
-D:80034E0C                     .byte    0,   0,   0,   1,   0,   0,   0,   0
-D:80034E0C                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:80034E0C                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:80034E0C                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:80034E0C                     .byte    0,   0,   0,   0
-D:80034F74     flt_D_80034F74: .float  0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.5       
-D:80034F74                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1F8Co
-D:80034F74                                              # handle_weapon_id_values_possibly_1st_person_animation+2018o
-D:80034F74                     .float  8.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0
-D:80034F74                     .float  0.5       , 8.0       , 0.0       , 0.0       , 0.0       , 4.5       , 5.5763688 , 0.0
-D:80034F74                     .float  0.0       , 0.5       , 8.0       , 0.0       , 0.0       , 0.0       , 20.5      , 5.2620902
-D:80034F74                     .float  0.0       , 0.0       , 0.5       , 8.0       , 0.0       , 0.0       , 3.0       , 5.5
-D:80034F74                     .float  0.031374998, 0.0       , 0.0       , 0.5       , 8.0
-D:80034F74                     .byte    0,   0,   0,   1,   0,   0,   0,   0
-D:80034F74                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:80034F74                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:80034F74                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:80034F74                     .byte    0,   0,   0,   0
-D:8003504C     flt_D_8003504C: .float  0.0       , 0.0       , 0.0       , 4.5       , 5.5763688 , 0.0       , 0.0       , 0.5       
-D:8003504C                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation:loc_CODE_7F066AE0o
-D:8003504C                                              # handle_weapon_id_values_possibly_1st_person_animation+2098o
-D:8003504C                     .float  8.0       , 0.0       , 0.0       , 0.0       , 20.5      , 5.2620902 , 0.0       , 0.0
-D:8003504C                     .float  0.5       , 8.0       , 0.0       , 0.0       , 3.0       , 5.5       , 0.031374998, 0.0
-D:8003504C                     .float  0.0       , 0.5       , 8.0       , 0.0       , 0.0       ,-20.0      , 18.0      , 0.78545803
-D:8003504C                     .float  0.0       , 0.0       , 0.5       , 20.0      , 0.0       , 0.0       ,-20.0      , 18.0
-D:8003504C                     .float  0.78545803, 0.0       , 0.0       , 0.5       , 20.0
-D:8003504C                     .byte    0,   0,   0,   1,   0,   0,   0,   0
-D:8003504C                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:8003504C                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:8003504C                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:8003504C                     .byte    0,   0,   0,   0
-D:80035124     flt_D_80035124: .float  0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.5       
-D:80035124                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1E74o
-D:80035124                     .float  4.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0       , 0.0
-D:80035124                     .float  0.5       , 4.0       , 0.0       , 10.0      , 12.5      , 17.5      , 0.0       , 0.0
-D:80035124                     .float  0.0       , 0.5       , 4.0       , 0.0       , 10.0      , 34.5      , 25.5      , 0.0
-D:80035124                     .float  0.0       , 0.0       , 0.5       , 10.0      , 0.0       , 10.0      , 34.5      , 25.5
-D:80035124                     .float  0.0       , 0.0       , 0.0       , 0.5       , 10.0
-D:80035124                     .byte    0,   0,   0,   1,   0,   0,   0,   0
-D:80035124                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:80035124                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:80035124                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:80035124                     .byte    0,   0,   0,   0
-D:800351FC     flt_D_800351FC: .float  0.0       , 10.0      , 34.5      , 25.5      , 0.0       , 0.0       , 0.0       , 0.5       
-D:800351FC                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1EF4o
-D:800351FC                     .float  10.0      , 0.0       , 10.0      , 34.5      , 25.5      , 0.0       , 0.0       , 0.0
-D:800351FC                     .float  0.5       , 10.0      , 0.0       , 10.0      , 12.5      , 17.5      , 0.0       , 0.0
-D:800351FC                     .float  0.0       , 0.5       , 10.0      , 0.0       , 0.0       , 0.0       , 0.0       , 0.0
-D:800351FC                     .float  0.0       , 0.0       , 0.5       , 10.0      , 0.0       , 0.0       , 0.0       , 0.0
-D:800351FC                     .float  0.0       , 0.0       , 0.0       , 0.5       , 10.0
-D:800351FC                     .byte    0,   0,   0,   1,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x40,0x80,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x40,0x80,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x40,0x90,   0,   0,0x40,0xB2,0x71,0x9D
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x40,0x80,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x41,0xA4,   0,   0
-D:800351FC                     .byte 0x40,0xA8,0x63, 0xB,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x40,0x40,   0,   0
-D:800351FC                     .byte 0x40,0xB0,   0,   0,0x3D,   0,0x83,0x12
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   1,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x40,0x90,   0,   0,0x40,0xB2,0x71,0x9D
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x41,0xA4,   0,   0
-D:800351FC                     .byte 0x40,0xA8,0x63, 0xB,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x40,0x40,   0,   0
-D:800351FC                     .byte 0x40,0xB0,   0,   0,0x3D,   0,0x83,0x12
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0xC1,0xA0,   0,   0,0x41,0x90,   0,   0
-D:800351FC                     .byte 0x3F,0x49,0x13,0xC7,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,0xA0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,0xA0,   0,   0,   0,   0,   0,   1
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,0x20,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,0x20,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x40,0xC0,   0,   0
-D:800351FC                     .byte 0x41,0xB8,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x40,0xBD,0x4D,0x94,0x3D,0xAF,0xC8,0xB0
-D:800351FC                     .byte 0x3E,0x60,0xBF,0xE4,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,0x20,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x41,0x90,   0,   0,0x42, 0xC,   0,   0
-D:800351FC                     .byte 0x41,0x18,   0,   0,0x40,0x9F,0xF1,0x32
-D:800351FC                     .byte 0x3D,0xAC,0x72,0x9F,0x3E,0x89,0xB4,0x57
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,0x20,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0xC1,0xA0,   0,   0
-D:800351FC                     .byte 0x41,0xCC,   0,   0,0x40,0x80,   0,   0
-D:800351FC                     .byte 0x3E,   1,0x2C,0xF1,0x3E,0x9B,0xCB,0x1D
-D:800351FC                     .byte 0x3F, 0xC,0x4C,0xCF,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,0x20,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0xC1,0xE0,   0,   0,0xC0,0x80,   0,   0
-D:800351FC                     .byte 0x40,   0,   0,   0,0x3F,   1,0xBF,   5
-D:800351FC                     .byte 0x3F,   3,0xC5,0x58,0x3E,0xF7,0xDB,0xB1
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x3F,0x80,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0xC1,0xE0,   0,   0
-D:800351FC                     .byte 0xC0,0x80,   0,   0,0x40,   0,   0,   0
-D:800351FC                     .byte 0x3F,   1,0xBF,   5,0x3F,   3,0xC5,0x58
-D:800351FC                     .byte 0x3E,0xF7,0xDB,0xB1,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x3F,0x80,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,0xA0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,0xA0,   0,   0,   0,   0,   0,   1
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,0x20,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,0x20,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0xC0,0xC0,   0,   0
-D:800351FC                     .byte 0x41,0xB8,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x40,0xA2,0xC7,0x50,0x40,0xC4,0x33,0x92
-D:800351FC                     .byte 0x40,0xB1,0x19,0x9C,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,0x20,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0xC1,0x90,   0,   0,0x42, 0xC,   0,   0
-D:800351FC                     .byte 0x41,0x18,   0,   0,0x40,0x9C,0x2E,0xAE
-D:800351FC                     .byte 0x3D,0x90,0x2B,0xC7,0x40,0xB1,0x28,0x24
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,0x20,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x41,   0,   0,   0
-D:800351FC                     .byte 0x41,0xCC,   0,   0,0x40,0x80,   0,   0
-D:800351FC                     .byte 0x3D,0xDB,0x92,0x7D,0x40,0xC1,0xFE,0xDC
-D:800351FC                     .byte 0x40,0xAC,0xEF,0x69,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,0x20,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x41,0xE0,   0,   0,0xC0,0x80,   0,   0
-D:800351FC                     .byte 0x40,   0,   0,   0,0x3D,0xDB,0x92,0x7D
-D:800351FC                     .byte 0x40,0xC1,0xFE,0xDC,0x40,0xAC,0xEF,0x69
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x3F,0x80,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x41,0xE0,   0,   0
-D:800351FC                     .byte 0xC0,0x80,   0,   0,0x40,   0,   0,   0
-D:800351FC                     .byte 0x3D,0xDB,0x92,0x7D,0x40,0xC1,0xFE,0xDC
-D:800351FC                     .byte 0x40,0xAC,0xEF,0x69,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x3F,0x80,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,0xA0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,0xA0,   0,   0,   0,   0,   0,   1
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,0x10,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x41,0x18,   0,   0
-D:800351FC                     .byte 0xBF,   0,   0,   0,0x40,0x60,   0,   0
-D:800351FC                     .byte 0x3E,0x95,   4,0xE6,0x40,0xB2,0xB3,0x33
-D:800351FC                     .byte 0x40,0xC6,0xCB,0xA3,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x41,0x90,   0,   0,0x40,0xF0,   0,   0
-D:800351FC                     .byte 0x40,0x60,   0,   0,0x3E,0xE0,0xF5,0x5E
-D:800351FC                     .byte 0x40,0xBE,0x3F,0x16,0x40,0xBF,0xCC,0x1D
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0xC1,0x10,   0,   0
-D:800351FC                     .byte 0x41,   8,   0,   0,0x40,0xB0,   0,   0
-D:800351FC                     .byte 0x3F,0x34,0x6D,0xF8,0x3E,0x47,0x20,0x43
-D:800351FC                     .byte 0x40,0xC5,0x63,0xEB,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x40,0xE0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0xC1,0xE8,   0,   0,0xC0,0xB0,   0,   0
-D:800351FC                     .byte 0x40,0xB0,   0,   0,0x40,0x12,   9,0x85
-D:800351FC                     .byte 0x3F,0x8D,0x9C,0xFA,0x3F,0xBE,0xB8,0x41
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x40,0xE0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0xC2,0x66,   0,   0
-D:800351FC                     .byte 0xC1,0xDC,   0,   0,0x40,0xB0,   0,   0
-D:800351FC                     .byte 0x40,0x12,   9,0x85,0x3F,0x8D,0x9C,0xFA
-D:800351FC                     .byte 0x3F,0xBE,0xB8,0x41,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x40,0xE0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0xC1,0x9C,   0,   0,0xC1,0xA0,   0,   0
-D:800351FC                     .byte 0x40,0xB0,   0,   0,0x3F,0x9C,0xD3,   7
-D:800351FC                     .byte 0x3F,0x39,0xE0,0xD6,0x3F,0x9A,0xF8,0xA5
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,0x70,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,0xA0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,0xA0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   1,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,0x10,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0xC1,0x78,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,0x70,   0,   0,0x3F,0x6F,0x3B,0x21
-D:800351FC                     .byte 0x3F,0x20,0x27,0xFA,0x3E,0x65,0x2B, 0xA
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0xC1,0xB8,   0,   0
-D:800351FC                     .byte 0x40,   0,   0,   0,0x41,0x40,   0,   0
-D:800351FC                     .byte 0x3F,0xE6,0x9C,0x24,0x3F,0x73, 0xC,0x35
-D:800351FC                     .byte 0x3F,0x21,0x78,0x1C,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0xC1,0x90,   0,   0,0xBF,   0,   0,   0
-D:800351FC                     .byte 0x40,0x80,   0,   0,0x3F,0x59, 0xB, 0xF
-D:800351FC                     .byte 0x3F,0x6C,0xBD,0x66,0x3D,0x9E,0x9A,0x70
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x40,0xE0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x41,0x28,   0,   0
-D:800351FC                     .byte 0x40,0xA0,   0,   0,0x40,0x20,   0,   0
-D:800351FC                     .byte 0x3E,0x6A,0xE9,0x68,0x3E,0x7B,0x99,0xD4
-D:800351FC                     .byte 0x3D,0xCA,0xE1,0x8B,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x40,0xE0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x41,0x90,   0,   0,0x40,0xA0,   0,   0
-D:800351FC                     .byte 0x40,0x20,   0,   0,0x3D,   6,0x66,0xED
-D:800351FC                     .byte 0x40,0xC6,0xB2,0xE4,0x3E, 0xA,0x4E,0x38
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x40,0xE0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x41,0x18,   0,   0
-D:800351FC                     .byte 0x40,0x60,   0,   0,0xBF,0xC0,   0,   0
-D:800351FC                     .byte 0x40,0xC8,0xBE,0x5E,0x40,0xC0,0x2F,0x79
-D:800351FC                     .byte 0x3D,0xB7,0xBC,0x7F,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x40,0xE0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,0xA0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,0xA0,   0,   0,   0,   0,   0,   1
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0xC0,0xC0,   0,   0,0xC1,   0,   0,   0
-D:800351FC                     .byte 0x3E,0xE1,   1,0xF3,0x3E,0x8E,0xC2,0xAD
-D:800351FC                     .byte 0x3E,0x47,0xDC,0xBE,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0xC0,   0,   0,   0,0xC1,   0,   0,   0
-D:800351FC                     .byte 0xC1,0x20,   0,   0,0x3F,0x8D,   3,   8
-D:800351FC                     .byte 0x3E,0xEB,0xE7,0xD1,0x3F,0x12,0x2A,0x80
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0xC0,   0,   0,   0
-D:800351FC                     .byte 0xC1,   0,   0,   0,0xC1,0x20,   0,   0
-D:800351FC                     .byte 0x3F,0x8D,   3,   8,0x3E,0xEB,0xE7,0xD1
-D:800351FC                     .byte 0x3F,0x12,0x2A,0x80,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,   0,   0,   0,   0,   0,   0,   1
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0xC0,   0,   0,   0
-D:800351FC                     .byte 0xC1,   0,   0,   0,0xC1,0x20,   0,   0
-D:800351FC                     .byte 0x3F,0x8D,   3,   8,0x3E,0xEB,0xE7,0xD1
-D:800351FC                     .byte 0x3F,0x12,0x2A,0x80,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0xC0,   0,   0,   0,0xC1,   0,   0,   0
-D:800351FC                     .byte 0xC1,0x20,   0,   0,0x3F,0x8D,   3,   8
-D:800351FC                     .byte 0x3E,0xEB,0xE7,0xD1,0x3F,0x12,0x2A,0x80
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0xC0,0xC0,   0,   0,0xC1,   0,   0,   0
-D:800351FC                     .byte 0x3E,0xE1,   1,0xF3,0x3E,0x8E,0xC2,0xAD
-D:800351FC                     .byte 0x3E,0x47,0xDC,0xBE,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte 0x3F,   0,   0,   0,0x41,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,0x3F,   0,   0,   0
-D:800351FC                     .byte 0x41,   0,   0,   0,   0,   0,   0,   1
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-D:800351FC                     .byte    0,   0,   0,   0,   0,   0,   0,   0
-*/
+u32 D_80034CA0 = 0;
+
+//D:80034CA4
+u32 D_80034CA4[] = {
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41000000,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	0x3F000000,    0x41000000,           0x0,    0x40C00000,
+	0xBFC00000,           0x0,    0x40B487B1,    0x3E70C0AD,
+	0x3E0AE536,    0x3F000000,    0x41000000,           0x0,
+	0x41480000,    0xC0600000,           0x0,    0x40C159EC,
+	0x3D374BC7,    0x3F0E4378,    0x3F000000,    0x41000000,
+	       0x0,    0xC1200000,    0xC1300000,           0x0,
+	0x3F9ED962,    0x3EA24C40,    0x3F8B0DF1,    0x3F000000,
+	0x41000000,           0x0,    0xC1600000,    0xC1700000,
+	       0x0,    0x3FEA4780,    0x40C498E3,    0x3FA316D3,
+	0x3F000000,    0x41200000,           0x0,    0xBF800000,
+	0xC1100000,           0x0,    0x3EC4BBA1,    0x3EB87C42,
+	0x3DD75968,    0x3F000000,    0x41200000,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,    0x3F000000,    0x41A00000,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41A00000,           0x1,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0,           0
+};
+
+u32 D_80034E0C[] = {
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41000000,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	0x3F000000,    0x41000000,           0x0,    0xC1080000,
+	0xC0C00000,           0x0,    0x40AF7506,    0x40BAB4B9,
+	0x40C2A5C2,    0x3F000000,    0x41000000,           0x0,
+	0xC0400000,    0xC0600000,           0x0,    0x3ECE08F2,
+	0x40B75721,    0x40B62409,    0x3F000000,    0x41000000,
+	       0x0,    0xBF000000,    0xC1080000,           0x0,
+	0x3F9DFD7A,    0x40B768CD,    0x40B37BDF,    0x3F000000,
+	0x41000000,           0x0,    0x40E00000,    0xC1E40000,
+	0xBFC00000,    0x3FA74949,    0x40B63EBC,    0x40B6443D,
+	0x3F000000,    0x41200000,           0x0,    0xBFC00000,
+	0xC1100000,           0x0,    0x3D8ADEEC,    0x40C84E72,
+	0x3E506749,    0x3F000000,    0x41200000,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,    0x3F000000,    0x41A00000,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41A00000,           0x1,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+           0x0,           0x0
+};
+
+u32 D_80034F74[] = {
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41000000,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	0x3F000000,    0x41000000,           0x0,           0x0,
+	       0x0,    0x40900000,    0x40B2719D,           0x0,
+	       0x0,    0x3F000000,    0x41000000,           0x0,
+	       0x0,           0x0,    0x41A40000,    0x40A8630B,
+	       0x0,           0x0,    0x3F000000,    0x41000000,
+	       0x0,           0x0,    0x40400000,    0x40B00000,
+	0x3D008312,           0x0,           0x0,    0x3F000000,
+	0x41000000,           0x1,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+           0x0,           0x0
+};
+
+u32 D_8003504C[] = {
+
+           0x0,           0x0,           0x0,    0x40900000,
+    0x40B2719D,           0x0,           0x0,    0x3F000000,
+    0x41000000,           0x0,           0x0,           0x0,
+    0x41A40000,    0x40A8630B,           0x0,           0x0,
+    0x3F000000,    0x41000000,           0x0,           0x0,
+    0x40400000,    0x40B00000,    0x3D008312,           0x0,
+           0x0,    0x3F000000,    0x41000000,           0x0,
+           0x0,    0xC1A00000,    0x41900000,    0x3F4913C7,
+           0x0,           0x0,    0x3F000000,    0x41A00000,
+           0x0,           0x0,    0xC1A00000,    0x41900000,
+    0x3F4913C7,           0x0,           0x0,    0x3F000000,
+    0x41A00000,           0x1,           0x0,           0x0,
+           0x0,           0x0,           0x0,           0x0,
+           0x0,           0x0
+};
+
+u32 D_80035124[] = {
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x40800000,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	0x3F000000,    0x40800000,           0x0,    0x41200000,
+	0x41480000,    0x418C0000,           0x0,           0x0,
+	       0x0,    0x3F000000,    0x40800000,           0x0,
+	0x41200000,    0x420A0000,    0x41CC0000,           0x0,
+	       0x0,           0x0,    0x3F000000,    0x41200000,
+	       0x0,    0x41200000,    0x420A0000,    0x41CC0000,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41200000,           0x1,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0
+};
+
+u32 D_800351FC[] = {
+	       0x0,    0x41200000,    0x420A0000,    0x41CC0000,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41200000,           0x0,    0x41200000,    0x420A0000,
+	0x41CC0000,           0x0,           0x0,           0x0,
+	0x3F000000,    0x41200000,           0x0,    0x41200000,
+	0x41480000,    0x418C0000,           0x0,           0x0,
+	       0x0,    0x3F000000,    0x41200000,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,    0x3F000000,    0x41200000,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41200000,           0x1,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0
+};
+
+u32 D_800352D4[] = {
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x40800000,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	0x3F000000,    0x40800000,           0x0,           0x0,
+	       0x0,    0x40900000,    0x40B2719D,           0x0,
+	       0x0,    0x3F000000,    0x40800000,           0x0,
+	       0x0,           0x0,    0x41A40000,    0x40A8630B,
+	       0x0,           0x0,    0x3F000000,    0x41000000,
+	       0x0,           0x0,    0x40400000,    0x40B00000,
+	0x3D008312,           0x0,           0x0,    0x3F000000,
+	0x41000000,           0x1,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0
+};
+
+u32 D_800353AC[63] = {
+	       0x0,           0x0,           0x0,    0x40900000,
+	0x40B2719D,           0x0,           0x0,    0x3F000000,
+	0x41000000,           0x0,           0x0,           0x0,
+	0x41A40000,    0x40A8630B,           0x0,           0x0,
+	0x3F000000,    0x41000000,           0x0,           0x0,
+	0x40400000,    0x40B00000,    0x3D008312,           0x0,
+	       0x0,    0x3F000000,    0x41000000,           0x0,
+	       0x0,    0xC1A00000,    0x41900000,    0x3F4913C7,
+	       0x0,           0x0,    0x3F000000,    0x41000000,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41A00000,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	0x3F000000,    0x41A00000,           0x1,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0
+};
+
+u32 D_800354A8[90] = {
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41200000,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	0x3F000000,    0x41200000,           0x0,    0x40C00000,
+	0x41B80000,           0x0,    0x40BD4D94,    0x3DAFC8B0,
+	0x3E60BFE4,    0x3F000000,    0x41200000,           0x0,
+	0x41900000,    0x420C0000,    0x41180000,    0x409FF132,
+	0x3DAC729F,    0x3E89B457,    0x3F000000,    0x41200000,
+	       0x0,    0xC1A00000,    0x41CC0000,    0x40800000,
+	0x3E012CF1,    0x3E9BCB1D,    0x3F0C4CCF,    0x3F000000,
+	0x41200000,           0x0,    0xC1E00000,    0xC0800000,
+	0x40000000,    0x3F01BF05,    0x3F03C558,    0x3EF7DBB1,
+	0x3F000000,    0x3F800000,           0x0,    0xC1E00000,
+	0xC0800000,    0x40000000,    0x3F01BF05,    0x3F03C558,
+	0x3EF7DBB1,    0x3F000000,    0x3F800000,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,    0x3F000000,    0x41A00000,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41A00000,           0x1,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0
+};
+
+u32 D_80035610[90] = {
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41200000,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	0x3F000000,    0x41200000,           0x0,    0xC0C00000,
+	0x41B80000,           0x0,    0x40A2C750,    0x40C43392,
+	0x40B1199C,    0x3F000000,    0x41200000,           0x0,
+	0xC1900000,    0x420C0000,    0x41180000,    0x409C2EAE,
+	0x3D902BC7,    0x40B12824,    0x3F000000,    0x41200000,
+	       0x0,    0x41000000,    0x41CC0000,    0x40800000,
+	0x3DDB927D,    0x40C1FEDC,    0x40ACEF69,    0x3F000000,
+	0x41200000,           0x0,    0x41E00000,    0xC0800000,
+	0x40000000,    0x3DDB927D,    0x40C1FEDC,    0x40ACEF69,
+	0x3F000000,    0x3F800000,           0x0,    0x41E00000,
+	0xC0800000,    0x40000000,    0x3DDB927D,    0x40C1FEDC,
+	0x40ACEF69,    0x3F000000,    0x3F800000,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,    0x3F000000,    0x41A00000,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41A00000,           0x1,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0
+};
+
+u32 D_80035778[99] = {
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41100000,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	0x3F000000,    0x41000000,           0x0,    0x41180000,
+	0xBF000000,    0x40600000,    0x3E9504E6,    0x40B2B333,
+	0x40C6CBA3,    0x3F000000,    0x41000000,           0x0,
+	0x41900000,    0x40F00000,    0x40600000,    0x3EE0F55E,
+	0x40BE3F16,    0x40BFCC1D,    0x3F000000,    0x41000000,
+	       0x0,    0xC1100000,    0x41080000,    0x40B00000,
+	0x3F346DF8,    0x3E472043,    0x40C563EB,    0x3F000000,
+	0x40E00000,           0x0,    0xC1E80000,    0xC0B00000,
+	0x40B00000,    0x40120985,    0x3F8D9CFA,    0x3FBEB841,
+	0x3F000000,    0x40E00000,           0x0,    0xC2660000,
+	0xC1DC0000,    0x40B00000,    0x40120985,    0x3F8D9CFA,
+	0x3FBEB841,    0x3F000000,    0x40E00000,           0x0,
+	0xC19C0000,    0xC1A00000,    0x40B00000,    0x3F9CD307,
+	0x3F39E0D6,    0x3F9AF8A5,    0x3F000000,    0x41700000,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41A00000,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	0x3F000000,    0x41A00000,           0x1,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0
+};
+
+u32 D_80035904[99] ={
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41100000,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	0x3F000000,    0x41000000,           0x0,    0xC1780000,
+	0x3F000000,    0x41700000,    0x3F6F3B21,    0x3F2027FA,
+	0x3E652B0A,    0x3F000000,    0x41000000,           0x0,
+	0xC1B80000,    0x40000000,    0x41400000,    0x3FE69C24,
+	0x3F730C35,    0x3F21781C,    0x3F000000,    0x41000000,
+	       0x0,    0xC1900000,    0xBF000000,    0x40800000,
+	0x3F590B0F,    0x3F6CBD66,    0x3D9E9A70,    0x3F000000,
+	0x40E00000,           0x0,    0x41280000,    0x40A00000,
+	0x40200000,    0x3E6AE968,    0x3E7B99D4,    0x3DCAE18B,
+	0x3F000000,    0x40E00000,           0x0,    0x41900000,
+	0x40A00000,    0x40200000,    0x3D0666ED,    0x40C6B2E4,
+	0x3E0A4E38,    0x3F000000,    0x40E00000,           0x0,
+	0x41180000,    0x40600000,    0xBFC00000,    0x40C8BE5E,
+	0x40C02F79,    0x3DB7BC7F,    0x3F000000,    0x40E00000,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41A00000,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	0x3F000000,    0x41A00000,           0x1,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0
+};
+
+u32 D_80035A90[54] = {
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41000000,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	0x3F000000,    0x41000000,           0x0,    0x3F000000,
+	0xC0C00000,    0xC1000000,    0x3EE101F3,    0x3E8EC2AD,
+	0x3E47DCBE,    0x3F000000,    0x41000000,           0x0,
+	0xC0000000,    0xC1000000,    0xC1200000,    0x3F8D0308,
+	0x3EEBE7D1,    0x3F122A80,    0x3F000000,    0x41000000,
+	       0x0,    0xC0000000,    0xC1000000,    0xC1200000,
+	0x3F8D0308,    0x3EEBE7D1,    0x3F122A80,    0x3F000000,
+	0x41000000,           0x1,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0
+};
+
+u32 D_80035B68[54] = {
+	       0x0,    0xC0000000,    0xC1000000,    0xC1200000,
+	0x3F8D0308,    0x3EEBE7D1,    0x3F122A80,    0x3F000000,
+	0x41000000,           0x0,    0xC0000000,    0xC1000000,
+	0xC1200000,    0x3F8D0308,    0x3EEBE7D1,    0x3F122A80,
+	0x3F000000,    0x41000000,           0x0,    0x3F000000,
+	0xC0C00000,    0xC1000000,    0x3EE101F3,    0x3E8EC2AD,
+	0x3E47DCBE,    0x3F000000,    0x41000000,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,    0x3F000000,    0x41000000,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0,           0x0,    0x3F000000,
+	0x41000000,           0x1,           0x0,           0x0,
+	       0x0,           0x0,           0x0,           0x0,
+	       0x0,           0x0
+};
+
+
 //D:80035C40
 u32 D_80035C40 = 0;
 //D:80035C44
@@ -827,745 +666,183 @@ u32 D_80035C54 = 0;
 u32 D_80035C58 = 0;
 //D:80035C5C
 u32 D_80035C5C = 0;
-/*
-D:80035C60     flt_D_80035C60: .float -1.0              # DATA XREF: handles_firing_or_throwing_weapon_in_hand+228r
-D:80035C64     dword_D_80035C64:.word 0                 # DATA XREF: handles_firing_or_throwing_weapon_in_hand+20Co
-D:80035C64                                              # handles_firing_or_throwing_weapon_in_hand+238r
-D:80035C68     flt_D_80035C68: .float 1.0               # DATA XREF: handles_firing_or_throwing_weapon_in_hand+23Cr
-D:80035C6C     dword_D_80035C6C:.word 0                 # DATA XREF: handles_firing_or_throwing_weapon_in_hand+244r
-D:80035C70     flt_D_80035C70: .float 6.2536321         # DATA XREF: handles_firing_or_throwing_weapon_in_hand+9B0o
-D:80035C70                                              # handles_firing_or_throwing_weapon_in_hand+9B4r
-D:80035C74     flt_D_80035C74: .float 6.2592888         # DATA XREF: handles_firing_or_throwing_weapon_in_hand+9C4r
-D:80035C78     flt_D_80035C78: .float 0.204238          # DATA XREF: handles_firing_or_throwing_weapon_in_hand+9CCr
-D:80035C7C     flt_D_80035C7C: .float 0.25044999        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+9F8o
-D:80035C7C                                              # handles_firing_or_throwing_weapon_in_hand+9FCr
-D:80035C80     flt_D_80035C80: .float 0.90482301        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+A0Cr
-D:80035C84     flt_D_80035C84: .float 0.28716999        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+A14r
-D:80035C88     flt_D_80035C88: .float 1.715736          # DATA XREF: handles_firing_or_throwing_weapon_in_hand+A50o
-D:80035C88                                              # handles_firing_or_throwing_weapon_in_hand+A5Cr
-D:80035C8C     flt_D_80035C8C: .float 0.37460899        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+A6Cr
-D:80035C90     flt_D_80035C90: .float 0.92193699        # DATA XREF: handles_firing_or_throwing_weapon_in_hand+A74r
-D:80035C94                     .word 0
-D:80035C98     dword_D_80035C98:.word 0                 # DATA XREF: sub_CODE_7F061E18+2Co
-D:80035C98                                              # sub_CODE_7F061E18+30r
-D:80035C9C     dword_D_80035C9C:.word 0                 # DATA XREF: sub_CODE_7F061E18+34r
-D:80035CA0     dword_D_80035CA0:.word 0                 # DATA XREF: sub_CODE_7F061E18+48r
-D:80035CA4     dword_D_80035CA4:.word 0xFFFFFFFF, 0, 0, 0, 0, 0, 0, 0
-D:80035CA4                                              # DATA XREF: sub_CODE_7F061E18+44r
-D:80035CA4                                              # sub_CODE_7F061E18+5Co
-D:80035CA4                                              # sub_CODE_7F061E18+64r
-D:80035CA4                                              # sub_CODE_7F061E18+7Cr
-D:80035CA4                                              # sub_CODE_7F061E18+78r
-D:80035CC4     dword_D_80035CC4:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:80035D04     dword_D_80035D04:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:80035D44     dword_D_80035D44:.word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:80035D44                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:80035D44                     .word 0, 0
-D:80035E04     dword_D_80035E04:.word 0x1B001C, 0x1D001E, 0x1B001C, 0x1D001E, 0x1B001C, 0x1D001E, 0x230024
-D:80035E04                                              # DATA XREF: recall_joy2_hits_edit_detail_edit_flag:loc_CODE_7F064518o
-D:80035E04                     .word 0x250026, 0x270028, 0x29002A, 0x2F0030, 0x310000, 0x450045, 0x5C005D
-D:80035E04                     .word 0x130014, 0x150016, 0x170018, 0x19001A, 0x170018, 0x19001A, 0x170018
-D:80035E04                     .word 0x19001A, 0x1F0020, 0x200021, 0x1F0020, 0x200021, 0x1F0020, 0x200021
-D:80035E04                     .word 0x230024, 0x250026, 0x270028, 0x29002A, 0xA400A5, 0xA600A7, 0xA80000
-D:80035E04                     .word 0x5C005D, 0x5F0060, 0x610000, 0, 0, 0, 0, 0, 0
-D:80035EB4                     .word 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:80035EEC     dword_D_80035EEC:.word 0                 # DATA XREF: sub_CODE_7F068EC4+40o
-D:80035EF0     ammo_related:   .half      0,     0,     0,     0
-D:80035EF0                                              # DATA XREF: set_max_ammo_for_cur_player+18o
-D:80035EF0                                              # generate_ammo_total_microcode+ECo
-D:80035EF0                                              # generate_ammo_total_microcode+3CCo
-D:80035EF0                                              # sub_CODE_7F06A334+74o
-D:80035EF0                     .half      0,     0,     0, 0x320
-D:80035EF0                     .half  0x200, 0xC84,     0,     0
-D:80035EF0                     .half      0,  0xC8,     0,     0
-D:80035EF0                     .half      0,     0,     0, 0x190
-D:80035EF0                     .half  0x200, 0xC90,0xC000,     0
-D:80035EF0                     .half      0,  0x64, 0x200, 0xC9C
-D:80035EF0                     .half      0,     0,     0,   0xC
-D:80035EF0                     .half  0x200, 0xCD8,     0,     0
-D:80035EF0                     .half      0,     3, 0x200, 0xCC0
-D:80035EF0                     .half 0xC000,     0,     0,   0xA
-D:80035EF0                     .half  0x200, 0xCFC,0x3F80,     0
-D:80035EF0                     .half      0,   0xA, 0x200, 0xD14
-D:80035EF0                     .half 0x3F80,     0,     0,   0xA
-D:80035EF0                     .half  0x200, 0xD08,0x3F80,     0
-D:80035EF0                     .half      0,   0xA, 0x200, 0xCA8
-D:80035EF0                     .half      0,     0,     0,   0xC
-D:80035EF0                     .half  0x200, 0xCB4,     0,     0
-D:80035EF0                     .half      0,  0xC8, 0x200, 0xCE4
-D:80035EF0                     .half      0,     0,     0,  0x64
-D:80035EF0                     .half  0x200, 0xCF0,     0,     0
-D:80035EF0                     .half      0,  0x32,     0,     0
-D:80035EF0                     .half      0,     0,     0,   0xA
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,     2,     0,     0
-D:80035EF0                     .half      0,     0,     0,     8
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,     6,     0,     0
-D:80035EF0                     .half      0,     0,     0,   0xA
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,   0xA,     0,     0
-D:80035EF0                     .half      0,     0,     0,   0xA
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,     1,     0,     0
-D:80035EF0                     .half      0,     0,     0,   0xA
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0, 0x3E8,     0,     0
-D:80035EF0                     .half      0,     0,     0,   0xA
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,   0xA,     0,     0
-D:80035EF0                     .half      0,     0,     0,   0xA
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,  0x32, 0x200, 0xD20
-D:80035EF0                     .half 0xBF80,     0,     0,     1
-D:80035EF0                     .half      0,     0,     0,     0
-D:80035EF0                     .half      0,     0,     0,     0
-//i may belong to objecthandler.c
-D:80036060     dword_D_80036060:.word 0                 # DATA XREF: sub_CODE_7F005450+10w
-D:80036060                                              # sub_CODE_7F06B120+4o
-D:80036060                                              # sub_CODE_7F06B120+14r
-D:80036060                                              # sub_CODE_7F06B120+1Cr
-D:80036060                                              # sub_CODE_7F06B120+24r
-D:80036060                                              # sub_CODE_7F06B248+8o
-D:80036060                                              # sub_CODE_7F06B248+Cr
-D:80036060                                              # sub_CODE_7F06B248+14w
-*/
 
-/* rodata
-D:80053760     aGcartridgez:   .ascii "GcartridgeZ"<0>  # DATA XREF: D:ejected_cartridgeo
-D:8005376C     aGcartriflez:   .ascii "GcartrifleZ"<0>  # DATA XREF: D:80032474o
-D:80053778     aGcartbluez:    .ascii "GcartblueZ"<0><0>  # DATA XREF: D:8003247Co
-D:80053784     aGcartshellz:   .ascii "GcartshellZ"<0>  # DATA XREF: D:80032484o
-D:80053790     aGnocartZ:      .ascii <0><0><0><0>      # DATA XREF: D:8003248Co
-D:80053794     aGfistz:        .ascii "GfistZ"<0><0>    # DATA XREF: D:8003395Co
-D:8005379C     aGknifez:       .ascii "GknifeZ"<0>      # DATA XREF: D:80033994o
-D:800537A4     aGthrowknifez:  .ascii "GthrowknifeZ"<0><0><0><0>  # DATA XREF: D:800339CCo
-D:800537B4     aGwppkz:        .ascii "GwppkZ"<0><0>    # DATA XREF: D:80033A04o
-D:800537BC     aGwppksilz:     .ascii "GwppksilZ"<0><0><0>  # DATA XREF: D:80033A3Co
-D:800537C8     aGtt33z:        .ascii "Gtt33Z"<0>       # DATA XREF: D:80033A74o
-D:800537CF                     .byte 0
-D:800537D0     aGskorpionz:    .ascii "GskorpionZ"<0>   # DATA XREF: D:80033AACo
-D:800537DB                     .byte 0
-D:800537DC     aGak47z:        .ascii "Gak47Z"<0>       # DATA XREF: D:80033AE4o
-D:800537E3                     .byte 0
-D:800537E4     aGuziz:         .ascii "GuziZ"<0>        # DATA XREF: D:80033B1Co
-D:800537EA                     .half 0
-D:800537EC     aGmp5kz:        .ascii "Gmp5kZ"<0>       # DATA XREF: D:80033B54o
-D:800537F3                     .byte 0
-D:800537F4     aGmp5ksilz:     .ascii "Gmp5ksilZ"<0>    # DATA XREF: D:80033B8Co
-D:800537FE                     .half 0
-D:80053800     aGspectrez:     .ascii "GspectreZ"<0>    # DATA XREF: D:80033BC4o
-D:8005380A                     .half 0
-D:8005380C     aGm16z:         .ascii "Gm16Z"<0>        # DATA XREF: D:80033BFCo
-D:80053812                     .half 0
-D:80053814     aGfnp90z:       .ascii "Gfnp90Z"<0>      # DATA XREF: D:80033C34o
-D:8005381C     aGshotgunz:     .ascii "GshotgunZ"<0><0><0>  # DATA XREF: D:80033C6Co
-D:80053828     aGautoshotz:    .ascii "GautoshotZ"<0>   # DATA XREF: D:80033CA4o
-D:80053833                     .byte 0
-D:80053834     aGsniperriflez: .ascii "GsniperrifleZ"<0>  # DATA XREF: D:80033CDCo
-D:80053842                     .half 0
-D:80053844     aGrugerz:       .ascii "GrugerZ"<0>      # DATA XREF: D:80033D14o
-D:8005384C     aGgoldengunz:   .ascii "GgoldengunZ"<0>  # DATA XREF: D:80033D4Co
-D:80053858     aGsilverwppkz:  .ascii "GsilverwppkZ"<0><0><0><0>  # DATA XREF: D:80033D84o
-D:80053868     aGgoldwppkz:    .ascii "GgoldwppkZ"<0><0>  # DATA XREF: D:80033DBCo
-D:80053874     aGlaserz:       .ascii "GlaserZ"<0>      # DATA XREF: D:80033DF4o
-D:8005387C     aGwatchlaserz:  .ascii "GwatchlaserZ"<0><0><0><0>  # DATA XREF: D:80033E2Co
-D:8005388C     aGgrenadelaunchz:.ascii "GgrenadelaunchZ"<0>  # DATA XREF: D:80033E64o
-D:8005389C     aGrocketlaunchz:.ascii "GrocketlaunchZ"<0><0>  # DATA XREF: D:80033E9Co
-D:800538AC     aGgrenadez:     .ascii "GgrenadeZ"<0><0><0>  # DATA XREF: D:80033ED4o
-D:800538B8     aGtimedminez:   .ascii "GtimedmineZ"<0>  # DATA XREF: D:80033F0Co
-D:800538C4     aGproximityminez:.ascii "GproximitymineZ"<0>  # DATA XREF: D:80033F44o
-D:800538D4     aGremoteminez:  .ascii "GremotemineZ"<0><0><0><0>  # DATA XREF: D:80033F7Co
-D:800538E4     aGtriggerz:     .ascii "GtriggerZ"<0><0><0>  # DATA XREF: D:80033FB4o
-D:800538F0     aGtaserz:       .ascii "GtaserZ"<0>      # DATA XREF: D:80033FECo
-D:800538F8     aGbombcasez:    .ascii "GbombcaseZ"<0>   # DATA XREF: D:8003405Co
-D:80053903                     .byte 0
-D:80053904     aGplastiquez:   .ascii "GplastiqueZ"<0>  # DATA XREF: D:80034094o
-D:80053910     aGflarepistolz: .ascii "GflarepistolZ"<0>  # DATA XREF: D:800340CCo
-D:8005391E                     .half 0
-D:80053920     aGpitongunz:    .ascii "GpitongunZ"<0>   # DATA XREF: D:80034104o
-D:8005392B                     .byte 0
-D:8005392C     aGbungeez:      .ascii "GbungeeZ"<0>     # DATA XREF: D:8003413Co
-D:80053935                     .byte 0, 0, 0
-D:80053938     aGdoordecoderz: .ascii "GdoordecoderZ"<0>  # DATA XREF: D:80034174o
-D:80053946                     .half 0
-D:80053948     aGbombdefuserz: .ascii "GbombdefuserZ"<0>  # DATA XREF: D:800341ACo
-D:80053956                     .half 0
-D:80053958     aGcameraz:      .ascii "GcameraZ"<0>     # DATA XREF: D:800341E4o
-D:80053961                     .byte 0, 0, 0
-D:80053964     aGlockexploderz:.ascii "GlockexploderZ"<0>  # DATA XREF: D:8003421Co
-D:80053973                     .byte 0
-D:80053974     aGdoorexploderz:.ascii "GdoorexploderZ"<0>  # DATA XREF: D:80034254o
-D:80053983                     .byte 0
-D:80053984     aGbriefcasez:   .ascii "GbriefcaseZ"<0>  # DATA XREF: D:8003428Co
-D:80053990     aGweaponcasez:  .ascii "GweaponcaseZ"<0>  # DATA XREF: D:800342C4o
-D:8005399D                     .byte 0, 0, 0
-D:800539A0     aGsafecrackercasez:.ascii "GsafecrackercaseZ"<0>  # DATA XREF: D:800342FCo
-D:800539B2                     .half 0
-D:800539B4     aGkeyanalysercasez:.ascii "GkeyanalysercaseZ"<0>  # DATA XREF: D:80034334o
-D:800539C6                     .half 0
-D:800539C8     aGbugz:         .ascii "GbugZ"<0>        # DATA XREF: D:8003436Co
-D:800539CE                     .half 0
-D:800539D0     aGmicrocameraz: .ascii "GmicrocameraZ"<0>  # DATA XREF: D:800343A4o
-D:800539DE                     .half 0
-D:800539E0     aGbugdetectorz: .ascii "GbugdetectorZ"<0>  # DATA XREF: D:800343DCo
-D:800539EE                     .half 0
-D:800539F0     aGexplosivefloppyz:.ascii "GexplosivefloppyZ"<0>  # DATA XREF: D:80034414o
-D:80053A02                     .half 0
-D:80053A04     aGpolarizedglassesz:.ascii "GpolarizedglassesZ"<0>  # DATA XREF: D:8003444Co
-D:80053A17                     .byte 0
-D:80053A18     aGdarkglassesz: .ascii "GdarkglassesZ"<0>  # DATA XREF: D:80034484o
-D:80053A26                     .half 0
-D:80053A28     aGcreditcardz:  .ascii "GcreditcardZ"<0>  # DATA XREF: D:800344BCo
-D:80053A35                     .byte 0, 0, 0
-D:80053A38     aGgaskeyringz:  .ascii "GgaskeyringZ"<0>  # DATA XREF: D:800344F4o
-D:80053A45                     .byte 0, 0, 0
-D:80053A48     aGdatathiefz:   .ascii "GdatathiefZ"<0>  # DATA XREF: D:8003452Co
-D:80053A54     aGwatchidentifierz:.ascii "GwatchidentifierZ"<0>  # DATA XREF: D:80034564o
-D:80053A66                     .half 0
-D:80053A68     aGwatchcommunicatorz:.ascii "GwatchcommunicatorZ"<0>  # DATA XREF: D:8003459Co
-D:80053A7C     aGwatchgeigercounterz:.ascii "GwatchgeigercounterZ"<0>
-D:80053A7C                                              # DATA XREF: D:800345D4o
-D:80053A91                     .byte 0, 0, 0
-D:80053A94     aGwatchmagnetrepelz:.ascii "GwatchmagnetrepelZ"<0>  # DATA XREF: D:8003460Co
-D:80053AA7                     .byte 0
-D:80053AA8     aGwatchmagnetattractz:.ascii "GwatchmagnetattractZ"<0>
-D:80053AA8                                              # DATA XREF: D:80034644o
-D:80053ABD                     .byte 0, 0, 0
-D:80053AC0     aGgoldeneyekeyz:.ascii "GgoldeneyekeyZ"<0>  # DATA XREF: D:8003467Co
-D:80053ACF                     .byte 0
-D:80053AD0     aGblackboxz:    .ascii "GblackboxZ"<0>   # DATA XREF: D:800346B4o
-D:80053ADB                     .byte 0
-D:80053ADC     aGcircuitboardz:.ascii "GcircuitboardZ"<0>  # DATA XREF: D:800346ECo
-D:80053AEB                     .byte 0
-D:80053AEC     aGclipboardz:   .ascii "GclipboardZ"<0>  # DATA XREF: D:80034724o
-D:80053AF8     aGstafflistz:   .ascii "GstafflistZ"<0>  # DATA XREF: D:8003475Co
-D:80053B04     aGdossierredz:  .ascii "GdossierredZ"<0>  # DATA XREF: D:80034794o
-D:80053B11                     .byte 0, 0, 0
-D:80053B14     aGplansz:       .ascii "GplansZ"<0>      # DATA XREF: D:800347CCo
-D:80053B1C     aGspyfilez:     .ascii "GspyfileZ"<0>    # DATA XREF: D:80034804o
-D:80053B26                     .half 0
-D:80053B28     aGblueprintsz:  .ascii "GblueprintsZ"<0>  # DATA XREF: D:8003483Co
-D:80053B35                     .byte 0, 0, 0
-D:80053B38     aGmapz:         .ascii "GmapZ"<0>        # DATA XREF: D:80034874o
-D:80053B3E                     .half 0
-D:80053B40     aGaudiotapez:   .ascii "GaudiotapeZ"<0>  # DATA XREF: D:800348ACo
-D:80053B4C     aGvideotapez:   .ascii "GvideotapeZ"<0>  # DATA XREF: D:800348E4o
-D:80053B58     aGdattapez:     .ascii "GdattapeZ"<0>    # DATA XREF: D:8003491Co
-D:80053B62                     .half 0
-D:80053B64     aGspooltapez:   .ascii "GspooltapeZ"<0>  # DATA XREF: D:80034954o
-D:80053B70     aGmicrofilmz:   .ascii "GmicrofilmZ"<0>  # DATA XREF: D:8003498Co
-D:80053B7C     aGmicrocodez:   .ascii "GmicrocodeZ"<0>  # DATA XREF: D:800349C4o
-D:80053B88     aGlectrez:      .ascii "GlectreZ"<0>     # DATA XREF: D:800349FCo
-D:80053B91                     .byte 0, 0, 0
-D:80053B94     aGmoneyz:       .ascii "GmoneyZ"<0>      # DATA XREF: D:80034A34o
-D:80053B9C     aGgoldbarz:     .ascii "GgoldbarZ"<0>    # DATA XREF: D:80034A6Co
-D:80053BA6                     .half 0
-D:80053BA8     aGheroinz:      .ascii "GheroinZ"<0><0><0><0>  # DATA XREF: D:80034AA4o
-D:80053BB4     aGkeycardz:     .ascii "GkeycardZ"<0><0><0>  # DATA XREF: D:80034ADCo
-D:80053BC0     aGkeyyalez:     .ascii "GkeyyaleZ"<0><0><0>  # DATA XREF: D:80034B14o
-D:80053BCC     aGkeyboltz:     .ascii "GkeyboltZ"<0><0><0>  # DATA XREF: D:80034B4Co
-D:80053BD8     aCsuit_lf_handz:.ascii "Csuit_lf_handZ"<0><0>  # DATA XREF: D:80034B84o
-D:80053BE8     aGjoypadz:      .ascii "GjoypadZ"<0><0><0><0>  # DATA XREF: D:80034BBCo
-D:80053BF4     aD_9:           .ascii "%d\n"<0>         # DATA XREF: display_ammo_total_in_a1+20o
-D:80053BF8     aSD:            .ascii "%s: %d\n"<0>     # DATA XREF: increment_num_kills_display_text_in_MP+64o
-D:80053C00     aSDS:           .ascii "%s %d %s\n"      # DATA XREF: increment_num_deaths+78o
-D:80053C00                     .ascii <0><0><0>
-D:80053C0C     aSD_0:          .ascii "%s: %d\n"<0>     # DATA XREF: increment_num_suicides_display_MP+4Co
-*/
-//D:80053C14
-const f32 D_80053C14 = 0.079999998;
-//D:80053C18
-const f32 D_80053C18 = 0.1;
-//D:80053C1C
-const f32 D_80053C1C = 0.1;
-//D:80053C20
-const f32 D_80053C20 = 0.1;
-//D:80053C24
-const f32 D_80053C24 = 0.1;
-//D:80053C28
-const f32 D_80053C28 = 0.1;
-//D:80053C2C
-const f32 D_80053C2C = 0.1;
-//D:80053C30
-const f32 D_80053C30 = 0.1;
-//D:80053C34
-const f32 D_80053C34 = 0.80000001;
-//D:80053C38
-const f32 D_80053C38 = 0.1;
-//D:80053C3C
-const f32 D_80053C3C = 0.1;
-//D:80053C40
-const f32 D_80053C40 = 6.2831855;
-//D:80053C44
-const f32 D_80053C44 = 2.8;
-//D:80053C48
-const f32 D_80053C48 = 0.80000001;
-//D:80053C4C
-const f32 D_80053C4C = 0.2;
-//D:80053C50
-const f32 D_80053C50 = 0.1;
-//D:80053C54
-const f32 D_80053C54 = 0.30000001;
-//D:80053C58
-const f32 D_80053C58 = 0.30000001;
-//D:80053C5C
-const f32 D_80053C5C = 0.94999999;
-//D:80053C60
-const f32 D_80053C60 = 0.94999999;
-//D:80053C64
-const f32 D_80053C64 = 0.050000012;
-//D:80053C68
-const f32 D_80053C68 = 0.016666668;
-//D:80053C6C
-const f32 D_80053C6C = 0.2;
-//D:80053C70
-const f32 D_80053C70 = 0.1;
-//D:80053C74
-const f32 D_80053C74 = -0.1;
-//D:80053C78
-const f32 D_80053C78 = 0.087266468;
-//D:80053C7C
-const f32 D_80053C7C = 0.17453294;
-//D:80053C80
-const f32 D_80053C80 = 0.029088823;
-//D:80053C84
-const f32 D_80053C84 = 0.017453294;
-//D:80053C88
-const f32 D_80053C88 = 0.16666667;
-//D:80053C8C
-const f32 D_80053C8C = 16.666666;
-//D:80053C90
-const f32 D_80053C90 = 0.30000001;
-//D:80053C94
-const f32 D_80053C94 = 0.13333333;
-//D:80053C98
-const f32 D_80053C98 = 4.712389;
-//D:80053C9C
-const f32 D_80053C9C = 3.1415927;
-//D:80053CA0
-const f32 D_80053CA0 = 12.1;
-//D:80053CA4
-const f32 D_80053CA4 = 0.1;
-//D:80053CA8
-const f32 D_80053CA8 = 16.666666;
-//D:80053CAC
-const f32 D_80053CAC = 6.6666665;
-/*
-D:80053CB0     jpt_player_thrown_object:.word thrown_item_timed_mine
-D:80053CB0                                              # DATA XREF: generate_player_thrown_object+1F8r
-D:80053CB0                     .word thrown_item_proximity_mine  # jump table for switch statement
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word thrown_item_bombcase
-D:80053CB0                     .word thrown_item_plastique
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word thrown_item_bug
-D:80053CB0                     .word thrown_item_micro_camera
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word create_instance
-D:80053CB0                     .word thrown_item_GE_key
-D:80053D3C     jpt_temp_obj_for_itemtype:.word generate_temp_timed_mine
-D:80053D3C                                              # DATA XREF: generate_player_thrown_object+264r
-D:80053D3C                     .word generate_temp_proximity_mine  # jump table for switch statement
-D:80053D3C                     .word generate_temp_remote_mine
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_bombcase
-D:80053D3C                     .word generate_temp_static_thrown
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_static_thrown
-D:80053D3C                     .word generate_temp_static_thrown
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_default
-D:80053D3C                     .word generate_temp_static_thrown
-*/
-//D:80053DC8
-const f32 D_80053DC8 = 0.1;
-//D:80053DCC
-const f32 D_80053DCC = 33.333332;
-//D:80053DD0
-const f32 D_80053DD0 = 0.30000001;
-//D:80053DD4
-const f32 D_80053DD4 = 0.13333333;
-//D:80053DD8
-const f32 D_80053DD8 = 66.666664;
-//D:80053DDC
-const f32 D_80053DDC = 1.111111;
-//D:80053DE0
-const f32 D_80053DE0 = 0.94999999;
-//D:80053DE4
-const f32 D_80053DE4 = 0.050000012;
-//D:80053DE8
-const f32 D_80053DE8 = 0.60000002;
-//D:80053DEC
-const f32 D_80053DEC = 0.30000001;
-//D:80053DF0
-const f32 D_80053DF0 = 0.60000002;
-//D:80053DF4
-const f32 D_80053DF4 = 0.30000001;
-//D:80053DF8
-const f32 D_80053DF8 = 0.60000002;
-//D:80053DFC
-const f32 D_80053DFC = 0.30000001;
-//D:80053E00
-const f32 D_80053E00 = 27.799999;
-//D:80053E04
-const f32 D_80053E04 = 0.10000001;
-//D:80053E08
-const f32 D_80053E08 = 6.2831855;
-//D:80053E0C
-const f32 D_80053E0C = 6.2831855;
-//D:80053E10
-const f32 D_80053E10 = 6.2831855;
-//D:80053E14
-const f32 D_80053E14 = 0.52359879;
-//D:80053E18
-const f32 D_80053E18 = 0.52359879;
-//D:80053E1C
-const f32 D_80053E1C = 6.2831855;
-//D:80053E20
-const f32 D_80053E20 = 6.2831855;
-//D:80053E24
-const f32 D_80053E24 = 0.10000001;
-//D:80053E28
-const f32 D_80053E28 = 0.10000001;
-//D:80053E2C
-const f32 D_80053E2C = 6.2831855;
-//D:80053E30
-const f32 D_80053E30 = 6.2831855;
-//D:80053E34
-const f32 D_80053E34 = 6.2831855;
-/*
-D:80053E38     jpt_weapon_bullet_type:.word weapon_bullet_type_pistol
-D:80053E38                                              # DATA XREF: handles_firing_or_throwing_weapon_in_hand+17D8r
-D:80053E38                     .word weapon_bullet_type_pistol  # jump table for switch statement
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_shotgun_mine
-D:80053E38                     .word weapon_bullet_type_shotgun_mine
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_pistol
-D:80053E38                     .word weapon_bullet_type_none
-D:80053E38                     .word weapon_bullet_type_none
-*/
-//D:80053E88
-const f32 D_80053E88 = 10000.0;
-//D:80053E8C
-const f32 D_80053E8C = 3000.0;
-//D:80053E90
-const f32 D_80053E90 = 0.60000002;
-//D:80053E94
-const f32 D_80053E94 = 0.30000001;
-//D:80053E98
-const f32 D_80053E98 = -0.1;
-//D:80053E9C
-const f32 D_80053E9C = 3000.0;
-//D:80053EA0
-const f32 D_80053EA0 = 3000.0;
-//D:80053EA4
-const f32 D_80053EA4 = 0.2;
-//D:80053EA8
-const f32 D_80053EA8 = 0.087266468;
-//D:80053EAC
-const f32 D_80053EAC = 1.4141999;
-//D:80053EB0
-const f32 D_80053EB0 = 0.1;
-//D:80053EB4
-const f32 D_80053EB4 = 0.89999998;
-//D:80053EB8
-const f32 D_80053EB8 = 0.89999998;
-//D:80053EBC
-const f32 D_80053EBC = 0.89999998;
-//D:80053EC0
-const f32 D_80053EC0 = 0.89999998;
-//D:80053EC4
-const f32 D_80053EC4 = 0.89999998;
-//D:80053EC8
-const f32 D_80053EC8 = 0.89999998;
-//D:80053ECC
-const f32 D_80053ECC = 1.4141999;
-//D:80053ED0
-const f32 D_80053ED0 = 0.89999998;
-//D:80053ED4
-const f32 D_80053ED4 = 6.2831855;
-//D:80053ED8
-const f32 D_80053ED8 = 0.60000002;
-//D:80053EDC
-const f32 D_80053EDC = 6.2831855;
-//D:80053EE0
-const f32 D_80053EE0 = 0.60000002;
-//D:80053EE4
-const f32 D_80053EE4 = -1.0471976;
-//D:80053EE8
-const f32 D_80053EE8 = 6.2831855;
-//D:80053EEC
-const f32 D_80053EEC = 0.60000002;
-//D:80053EF0
-const f32 D_80053EF0 = 6.2831855;
-//D:80053EF4
-const f32 D_80053EF4 = 0.60000002;
-//D:80053EF8
-const f32 D_80053EF8 = -0.17453294;
-//D:80053EFC
-const f32 D_80053EFC = 1.0471976;
-//D:80053F00
-const f32 D_80053F00 = 0.17453294;
-//D:80053F04
-const f32 D_80053F04 = 1.0471976;
-//D:80053F08
-const f32 D_80053F08 = -0.17453294;
-//D:80053F0C
-const f32 D_80053F0C = 0.17453294;
-//D:80053F10
-const f32 D_80053F10 = 0.17453294;
-//D:80053F14
-const f32 D_80053F14 = -0.17453294;
-//D:80053F18
-const f32 D_80053F18 = -0.89759791;
-//D:80053F1C
-const f32 D_80053F1C = -0.17453294;
-//D:80053F20
-const f32 D_80053F20 = 3.1415927;
-/*
-D:80053F24     jpt_70098CF8:   .word Weapon_function_slapper, Weapon_function_hunting_knife, Weapon_function_throwing_knife
-D:80053F24                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+294r
-D:80053F24                     .word Weapon_function_guns, Weapon_function_guns, Weapon_function_guns, Weapon_function_guns  # jump table for switch statement
-D:80053F24                     .word Weapon_function_guns, Weapon_function_guns, Weapon_function_guns, Weapon_function_guns
-D:80053F24                     .word Weapon_function_guns, Weapon_function_guns, Weapon_function_guns, Weapon_function_guns
-D:80053F24                     .word Weapon_function_guns, Weapon_function_guns, Weapon_function_magnum, Weapon_function_guns
-D:80053F24                     .word Weapon_function_guns, Weapon_function_guns, Weapon_function_guns, Weapon_function_guns
-D:80053F24                     .word Weapon_function_magnum, Weapon_function_guns, Weapon_function_grenades
-D:80053F24                     .word Weapon_function_throwable_item, Weapon_function_throwable_item, Weapon_function_throwable_item
-D:80053F24                     .word Weapon_function_guns, Weapon_function_tazer, Weapon_function_guns, Weapon_function_throwable_item
-D:80053F24                     .word Weapon_function_throwable_item, Weapon_function_guns, Weapon_function_guns
-D:80053F24                     .word Weapon_function_key, Weapon_function_key, Weapon_function_key, Weapon_function_camera
-D:80053F24                     .word Weapon_function_key, Weapon_function_key, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_key, Weapon_function_key, Weapon_function_key, Weapon_function_throwable_item
-D:80053F24                     .word Weapon_function_throwable_item, Weapon_function_key, Weapon_function_key
-D:80053F24                     .word Weapon_function_key, Weapon_function_key, Weapon_function_key, Weapon_function_key
-D:80053F24                     .word Weapon_function_key, Weapon_function_key, Weapon_function_key, Weapon_function_key
-D:80053F24                     .word Weapon_function_key, Weapon_function_guns, Weapon_function_throwable_item
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_key
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_key, Weapon_function_key
-D:80053F24                     .word Weapon_function_key, Weapon_function_collectible, Weapon_function_collectible
-D:80053F24                     .word Weapon_function_collectible, Weapon_function_collectible, Weapon_function_collectible
-D:80054084     jpt_70098F10:   .word Weapon_shooting_noammo, Weapon_shooting_throwable, Weapon_shooting_pistol
-D:80054084                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+4ACr
-D:80054084                     .word Weapon_shooting_pistol, Weapon_shooting_pistol, Weapon_shooting_machinegun  # jump table for switch statement
-D:80054084                     .word Weapon_shooting_machinegun, Weapon_shooting_machinegun, Weapon_shooting_machinegun
-D:80054084                     .word Weapon_shooting_machinegun, Weapon_shooting_machinegun, Weapon_shooting_machinegun
-D:80054084                     .word Weapon_shooting_machinegun, Weapon_shooting_pistol, Weapon_shooting_pistol
-D:80054084                     .word Weapon_shooting_pistol, Weapon_shooting_pistol, Weapon_shooting_pistol
-D:80054084                     .word Weapon_shooting_pistol, Weapon_shooting_pistol, Weapon_shooting_pistol
-D:80054084                     .word Weapon_shooting_pistol, Weapon_shooting_pistol, Weapon_shooting_pistol
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_pistol, Weapon_shooting_tazer
-D:80054084                     .word Weapon_shooting_pistol, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_pistol, Weapon_shooting_pistol, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_watch_magnet
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_throwable, Weapon_shooting_throwable
-D:80054084                     .word Weapon_shooting_throwable, Weapon_shooting_watch_magnet
-*/
-//D:80054170
-const f32 D_80054170 = 6.2831855;
-//D:80054174
-const f32 D_80054174 = 1.5707964;
-//D:80054178
-const f32 D_80054178 = 6.2831855;
-//D:8005417C
-const f32 D_8005417C = 3.1415927;
-//D:80054180
-const f32 D_80054180 = 1.5707964;
-//D:80054184
-const f32 D_80054184 = 0.69813174;
-//D:80054188
-const f32 D_80054188 = 0.69813174;
-//D:8005418C
-const f32 D_8005418C = 0.69813174;
-//D:80054190
-const f32 D_80054190 = 0.69813174;
-/*
-D:80054194     jpt_70099D7C:   .word weapon_switchstyle_NONE, weapon_switchstyle_NONE, weapon_playsfx_knife
-D:80054194                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1318r
-D:80054194                     .word weapon_playsfx_knife, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun  # jump table for switch statement
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_F2
-D:80054194                     .word weapon_switchstyle_NONE, weapon_playsfx_gun, weapon_playsfx_gun, weapon_switchstyle_NONE
-D:80054194                     .word weapon_playsfx_mine, weapon_playsfx_mine, weapon_playsfx_mine, weapon_switchstyle_NONE
-D:80054194                     .word weapon_switchstyle_NONE, weapon_switchstyle_NONE, weapon_switchstyle_NONE
-D:80054194                     .word weapon_switchstyle_NONE, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_switchstyle_NONE, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_switchstyle_NONE, weapon_switchstyle_NONE
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun
-D:80054194                     .word weapon_playsfx_gun, weapon_playsfx_gun, weapon_playsfx_gun, weapon_switchstyle_NONE
-D:80054194                     .word weapon_switchstyle_NONE
-*/
-//D:8005428C
-const f32 D_8005428C = 0.69813174;
-//D:80054290
-const f32 D_80054290 = 0.69813174;
-/*
-D:80054294     jpt_7009A0D4:   .word weapon_reload_none_sfx, weapon_reload_none_sfx, weapon_reload_none_sfx
-D:80054294                                              # DATA XREF: handle_weapon_id_values_possibly_1st_person_animation+1670r
-D:80054294                     .word weapon_reload_none_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx  # jump table for switch statement
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_none_sfx, weapon_reload_none_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_none_sfx
-D:80054294                     .word weapon_reload_none_sfx, weapon_reload_none_sfx, weapon_reload_none_sfx
-D:80054294                     .word weapon_reload_none_sfx, weapon_reload_none_sfx, weapon_reload_none_sfx
-D:80054294                     .word weapon_reload_none_sfx, weapon_reload_none_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_none_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_none_sfx
-D:80054294                     .word weapon_reload_none_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_gun_sfx, weapon_reload_gun_sfx, weapon_reload_gun_sfx
-D:80054294                     .word weapon_reload_none_sfx, weapon_reload_none_sfx
-*/
-//D:8005438C
-const f32 D_8005438C = 0.69813174;
-//D:80054390
-const f32 D_80054390 = 0.69813174;
-//D:80054394
-const f32 D_80054394 = 0.69813174;
-//D:80054398
-const f32 D_80054398 = 0.69813174;
-//D:8005439C
-const f32 D_8005439C = 0.69813174;
-//D:800543A0
-const f32 D_800543A0 = 0.69813174;
-//D:800543A4
-const f32 D_800543A4 = 0.69813174;
-//D:800543A8
-const f32 D_800543A8 = 0.69813174;
-//D:800543AC
-const f32 D_800543AC = 0.69813174;
-//D:800543B0
-const f32 D_800543B0 = 1.3333334;
-//D:800543B4
-const f32 D_800543B4 = 0.10000001;
-//D:800543B8
-const f32 D_800543B8 = 0.5333333;
-//D:800543BC
-const f32 D_800543BC = 6.2831855;
-//D:800543C0
-const f32 D_800543C0 = 0.39269909;
-//D:800543C4
-const f32 D_800543C4 = 6.2831855;
-//D:800543C8
-const f32 D_800543C8 = 0.39269909;
-//D:800543CC
-const f32 D_800543CC = 6.2831855;
-//D:800543D0
-const f32 D_800543D0 = 0.39269909;
-//D:800543D4
-const f32 D_800543D4 = 775875.0;
-//D:800543D8
-const f32 expended_shell_initial_gravity_modifier_pistol = 0.27777779;
-//D:800543DC
-const f32 D_800543DC = 1.4166666;
-//D:800543E0
-const f32 D_800543E0 = 1.6666666;
-//D:800543E4
-const f32 D_800543E4 = 6.2831855;
-//D:800543E8
-const f32 D_800543E8 = 0.39269909;
-//D:800543EC
-const f32 D_800543EC = 6.2831855;
-//D:800543F0
-const f32 D_800543F0 = 0.39269909;
-//D:800543F4
-const f32 D_800543F4 = 6.2831855;
-//D:800543F8
-const f32 D_800543F8 = 0.39269909;
-//D:800543FC
-const f32 D_800543FC = 775875.0;
-//D:80054400
-const f32 expended_shell_initial_gravity_modifier_non_pistol = 0.27777779;
-//D:80054404
-const f32 expended_shell_initial_gravity_modifier_all = 0.27777779;
-//D:80054408
-const f32 D_80054408 = 0.10000001;
-//D:8005440C
-const f32 D_8005440C = -30000.0;
-//D:80054410
-const f32 D_80054410 = 30000.0;
+//D:80035C60
+f32 D_80035C60 = -1.0;
+//D:80035C64
+f32 D_80035C64 = 0.0;
+//D:80035C68
+f32 D_80035C68 = 1.0;
+//D:80035C6C
+f32 D_80035C6C = 0.0;
+//D:80035C70
+f32 D_80035C70 = 6.2536321;
+//D:80035C74
+f32 D_80035C74 = 6.2592888;
+//D:80035C78
+f32 D_80035C78 = 0.204238;
+//D:80035C7C
+f32 D_80035C7C = 0.25044999;
+//D:80035C80
+f32 D_80035C80 = 0.90482301;
+//D:80035C84
+f32 D_80035C84 = 0.28716999;
+//D:80035C88
+f32 D_80035C88 = 1.715736;
+//D:80035C8C
+f32 D_80035C8C = 0.37460899;
+//D:80035C90
+f32 D_80035C90 = 0.92193699;
+
+//D:80035C94
+f32 D_80035C94 = 0;
+
+
+//D:80035C98
+u32 D_80035C98 = 0;
+//D:80035C9C
+u32 D_80035C9C = 0;
+//D:80035CA0
+u32 D_80035CA0 = 0;
+//D:80035CA4
+s32 D_80035CA4 = 0xFFFFFFFF;
+//D:80035CA8
+u32 D_80035CA8 = 0;
+//D:80035CAC
+u32 D_80035CAC = 0;
+//D:80035CB0
+u32 D_80035CB0 = 0;
+//D:80035CB4
+u32 D_80035CB4 = 0;
+//D:80035CB8
+u32 D_80035CB8 = 0;
+//D:80035CBC
+u32 D_80035CBC = 0;
+//D:80035CC0
+u32 D_80035CC0 = 0;
+//D:80035CC4
+u32 D_80035CC4[] = {1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:80035D00
+u32 D_80035D00 = 0;
+//D:80035D04
+u32 D_80035D04[] = {1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:80035D44
+u32 D_80035D44[] = {
+	1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+};
+//D:80035E04
+u16 D_80035E04[] = {
+	0x1B, 0x1C, 0x1D, 0x1E, 0x1B, 0x1C, 0x1D, 0x1E, 0x1B, 0x1C, 0x1D, 0x1E, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28
+};
+//D:80035E28
+u16 D_80035E28[] = {0x29, 0x2A};
+//D:80035E2C
+u16 D_80035E2C[] = {0x2F, 0x30};
+//D:80035E30
+u16 D_80035E30[] = {0x31, 0};
+//D:80035E34
+u16 D_80035E34[] = {0x45, 0x45};
+//D:80035E38
+u16 D_80035E38[] = {0x5C, 0x5D};
+//D:80035E3C
+u16 D_80035E3C[] = {
+	0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x17, 0x18, 0x19, 0x1A, 0x17, 0x18, 0x19, 0x1A, 0x1F, 0x20, 0x20, 0x21, 0x1F, 0x20, 0x20, 0x21, 0x1F, 0x20, 0x20, 0x21, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2A
+};
+//D:80035E84
+u16 D_80035E84[] = {0xA4, 0xA5};
+//D:80035E88
+u16 D_80035E88[] = {0xA6, 0xA7};
+//D:80035E8C
+u16 D_80035E8C[] = {0xA8, 0};
+//D:80035E90
+u16 D_80035E90[] = {0x5C, 0x5D};
+//D:80035E94
+u16 D_80035E94[] = {0x5F, 0x60};
+//D:80035E98
+u16 D_80035E98[] = {0x61, 0};
+//D:80035E9C
+u32 D_80035E9C = 0;
+//D:80035EA0
+u32 D_80035EA0 = 0;
+//D:80035EA4
+u32 D_80035EA4 = 0;
+//D:80035EA8
+u32 D_80035EA8 = 0;
+//D:80035EAC
+u32 D_80035EAC = 0;
+//D:80035EB0
+u32 D_80035EB0[] = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//D:80035EEC
+u32 dword_D_80035EEC = 0;
+//D:80035EF0
+u16 ammo_related[]  = {
+	      0,     0,     0,     0,
+	      0,     0,     0, 0x320,
+	  0x200, 0xC84,     0,     0,
+	      0,  0xC8,     0,     0,
+	      0,     0,     0, 0x190,
+	  0x200, 0xC90,0xC000,     0,
+	      0,  0x64, 0x200, 0xC9C,
+	      0,     0,     0,   0xC,
+	  0x200, 0xCD8,     0,     0,
+	      0,     3, 0x200, 0xCC0,
+	 0xC000,     0,     0,   0xA,
+	  0x200, 0xCFC,0x3F80,     0,
+	      0,   0xA, 0x200, 0xD14,
+	 0x3F80,     0,     0,   0xA,
+	  0x200, 0xD08,0x3F80,     0,
+	      0,   0xA, 0x200, 0xCA8,
+	      0,     0,     0,   0xC,
+	  0x200, 0xCB4,     0,     0,
+	      0,  0xC8, 0x200, 0xCE4,
+	      0,     0,     0,  0x64,
+	  0x200, 0xCF0,     0,     0,
+	      0,  0x32,     0,     0,
+	      0,     0,     0,   0xA,
+	      0,     0,     0,     0,
+	      0,     2,     0,     0,
+	      0,     0,     0,     8,
+	      0,     0,     0,     0,
+	      0,     6,     0,     0,
+	      0,     0,     0,   0xA,
+	      0,     0,     0,     0,
+	      0,   0xA,     0,     0,
+	      0,     0,     0,   0xA,
+	      0,     0,     0,     0,
+	      0,     1,     0,     0,
+	      0,     0,     0,   0xA,
+	      0,     0,     0,     0,
+	      0, 0x3E8,     0,     0,
+	      0,     0,     0,   0xA,
+	      0,     0,     0,     0,
+	      0,   0xA,     0,     0,
+	      0,     0,     0,   0xA,
+	      0,     0,     0,     0,
+	      0,  0x32, 0x200, 0xD20,
+	 0xBF80,     0,     0,     1,
+	      0,     0,     0,     0,
+	      0,     0,     0,     0};
+
+
+//i may belong to objecthandler.c
+//D:80036060
+u32 D_80036060 = 0;
+
+
+// rodata
+
+
+//D:80053BF4
+const char aD_9[] = "%d\n";
+//D:80053BF8
+const char aSD[] = "%s: %d\n";
+//D:80053C00
+const char aSDS[] = "%s %d %s\n";
+//D:80053C0C
+const char aSD_0[] = "%s: %d\n";
+
+
 
 
 
@@ -1720,8 +997,8 @@ void sub_GAME_7F05C614(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F05C614
-/* 091144 7F05C614 3C0E8003 */  lui   $t6, %hi(D_80034C9C) # $t6, 0x8003
-/* 091148 7F05C618 8DCE4C9C */  lw    $t6, %lo(D_80034C9C)($t6)
+/* 091144 7F05C614 3C0E8003 */  lui   $t6, %hi(cartridges_eject) # $t6, 0x8003
+/* 091148 7F05C618 8DCE4C9C */  lw    $t6, %lo(cartridges_eject)($t6)
 /* 09114C 7F05C61C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 091150 7F05C620 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 091154 7F05C624 11C00020 */  beqz  $t6, .L7F05C6A8
@@ -1755,8 +1032,8 @@ glabel sub_GAME_7F05C614
 /* 0911C4 7F05C694 01AE2021 */  addu  $a0, $t5, $t6
 /* 0911C8 7F05C698 0FC16266 */  jal   copies_first_3_floats_from_a0_to_a1_plus_0x30
 /* 0911CC 7F05C69C 24A508EC */   addiu $a1, $a1, 0x8ec
-/* 0911D0 7F05C6A0 3C018003 */  lui   $at, %hi(D_80034C9C) # $at, 0x8003
-/* 0911D4 7F05C6A4 AC204C9C */  sw    $zero, %lo(D_80034C9C)($at)
+/* 0911D0 7F05C6A0 3C018003 */  lui   $at, %hi(cartridges_eject) # $at, 0x8003
+/* 0911D4 7F05C6A4 AC204C9C */  sw    $zero, %lo(cartridges_eject)($at)
 .L7F05C6A8:
 /* 0911D8 7F05C6A8 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0911DC 7F05C6AC 27BD0018 */  addiu $sp, $sp, 0x18
@@ -1943,8 +1220,8 @@ GLOBAL_ASM(
 glabel get_ptr_item_statistics
 /* 0913E4 7F05C8B4 000470C0 */  sll   $t6, $a0, 3
 /* 0913E8 7F05C8B8 01C47023 */  subu  $t6, $t6, $a0
-/* 0913EC 7F05C8BC 3C0F8003 */  lui   $t7, %hi(D_80033924) # $t7, 0x8003
-/* 0913F0 7F05C8C0 25EF3924 */  addiu $t7, %lo(D_80033924) # addiu $t7, $t7, 0x3924
+/* 0913EC 7F05C8BC 3C0F8003 */  lui   $t7, %hi(gitem_structs) # $t7, 0x8003
+/* 0913F0 7F05C8C0 25EF3924 */  addiu $t7, %lo(gitem_structs) # addiu $t7, $t7, 0x3924
 /* 0913F4 7F05C8C4 000E70C0 */  sll   $t6, $t6, 3
 /* 0913F8 7F05C8C8 01CF1821 */  addu  $v1, $t6, $t7
 /* 0913FC 7F05C8CC 8C780008 */  lw    $t8, 8($v1)
@@ -1954,8 +1231,8 @@ glabel get_ptr_item_statistics
 /* 09140C 7F05C8DC 8C62000C */   lw    $v0, 0xc($v1)
 
 .L7F05C8E0:
-/* 091410 7F05C8E0 3C028003 */  lui   $v0, %hi(D_80032494) # $v0, 0x8003
-/* 091414 7F05C8E4 24422494 */  addiu $v0, %lo(D_80032494) # addiu $v0, $v0, 0x2494
+/* 091410 7F05C8E0 3C028003 */  lui   $v0, %hi(stru_D_80032494) # $v0, 0x8003
+/* 091414 7F05C8E4 24422494 */  addiu $v0, %lo(stru_D_80032494) # addiu $v0, $v0, 0x2494
 /* 091418 7F05C8E8 03E00008 */  jr    $ra
 /* 09141C 7F05C8EC 00000000 */   nop   
 )
@@ -2037,6 +1314,15 @@ void unknown_takes_playerhand(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053C14
+.word 0x3da3d70a /*0.079999998*/
+glabel D_80053C18
+.word 0x3dcccccd /*0.1*/
+glabel D_80053C1C
+.word 0x3dcccccd /*0.1*/
+glabel D_80053C20
+.word 0x3dcccccd /*0.1*/
 .text
 glabel unknown_takes_playerhand
 /* 0914B0 7F05C980 27BDFF90 */  addiu $sp, $sp, -0x70
@@ -3896,6 +3182,11 @@ void sub_GAME_7F05DDA4(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053C24
+.word 0x3dcccccd /*0.1*/
+glabel D_80053C28
+.word 0x3dcccccd /*0.1*/
 .text
 glabel sub_GAME_7F05DDA4
 /* 0928D4 7F05DDA4 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -3974,6 +3265,11 @@ void sub_GAME_7F05DE94(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053C2C
+.word 0x3dcccccd /*0.1*/
+glabel D_80053C30
+.word 0x3dcccccd /*0.1*/
 .text
 glabel sub_GAME_7F05DE94
 /* 0929C4 7F05DE94 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -4262,6 +3558,41 @@ void sub_GAME_7F05E0E4(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053C34
+.word 0x3f4ccccd /*0.80000001*/
+glabel D_80053C38
+.word 0x3dcccccd /*0.1*/
+glabel D_80053C3C
+.word 0x3dcccccd /*0.1*/
+glabel D_80053C40
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053C44
+.word 0x40333333 /*2.8*/
+glabel D_80053C48
+.word 0x3f4ccccd /*0.80000001*/
+glabel D_80053C4C
+.word 0x3e4ccccd /*0.2*/
+glabel D_80053C50
+.word 0x3dcccccd /*0.1*/
+glabel D_80053C54
+.word 0x3e99999a /*0.30000001*/
+glabel D_80053C58
+.word 0x3e99999a /*0.30000001*/
+glabel D_80053C5C
+.word 0x3f733333 /*0.94999999*/
+glabel D_80053C60
+.word 0x3f733333 /*0.94999999*/
+glabel D_80053C64
+.word 0x3d4cccd0 /*0.050000012*/
+glabel D_80053C68
+.word 0x3c888889 /*0.016666668*/
+glabel D_80053C6C
+.word 0x3e4ccccd /*0.2*/
+glabel D_80053C70
+.word 0x3dcccccd /*0.1*/
+glabel D_80053C74
+.word 0xbdcccccd /*-0.1*/
 .text
 glabel sub_GAME_7F05E0E4
 /* 092C14 7F05E0E4 27BDFF98 */  addiu $sp, $sp, -0x68
@@ -4668,6 +3999,11 @@ void get_value_if_watch_is_on_hand_or_not(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053C78
+.word 0x3db2b8c3 /*0.087266468*/
+glabel D_80053C7C
+.word 0x3e32b8c3 /*0.17453294*/
 .text
 glabel get_value_if_watch_is_on_hand_or_not
 /* 093194 7F05E664 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -4706,6 +4042,11 @@ void sub_GAME_7F05E6B4(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053C80
+.word 0x3cee4baf /*0.029088823*/
+glabel D_80053C84
+.word 0x3c8efa36 /*0.017453294*/
 .text
 glabel sub_GAME_7F05E6B4
 /* 0931E4 7F05E6B4 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -4839,6 +4180,9 @@ void sub_GAME_7F05E83C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053C88
+.word 0x3e2aaaab /*0.16666667*/
 .text
 glabel sub_GAME_7F05E83C
 /* 09336C 7F05E83C 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -5313,6 +4657,13 @@ void sub_GAME_7F05EE24(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053C8C
+.word 0x41855555 /*16.666666*/
+glabel D_80053C90
+.word 0x3e99999a /*0.30000001*/
+glabel D_80053C94
+.word 0x3e088888 /*0.13333333*/
 .text
 glabel sub_GAME_7F05EE24
 /* 093954 7F05EE24 27BDFEC0 */  addiu $sp, $sp, -0x140
@@ -5490,6 +4841,15 @@ void sub_GAME_7F05F09C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053C98
+.word 0x4096cbe4 /*4.712389*/
+glabel D_80053C9C
+.word 0x40490fdb /*3.1415927*/
+glabel D_80053CA0
+.word 0x4141999a /*12.1*/
+glabel D_80053CA4
+.word 0x3dcccccd /*0.1*/
 .text
 glabel sub_GAME_7F05F09C
 /* 093BCC 7F05F09C 27BDFED0 */  addiu $sp, $sp, -0x130
@@ -5684,6 +5044,89 @@ void generate_player_thrown_object(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053CA8
+.word 0x41855555 /*16.666666*/
+glabel D_80053CAC
+.word 0x40d55555 /*6.6666665*/
+/*D:80053CB0*/
+glabel jpt_player_thrown_object
+.word thrown_item_timed_mine
+.word thrown_item_proximity_mine
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word thrown_item_bombcase
+.word thrown_item_plastique
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word thrown_item_bug
+.word thrown_item_micro_camera
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word create_instance
+.word thrown_item_GE_key
+
+/*D:80053D3C*/
+glabel jpt_temp_obj_for_itemtype
+.word generate_temp_timed_mine
+.word generate_temp_proximity_mine
+.word generate_temp_remote_mine
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_bombcase
+.word generate_temp_static_thrown
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_static_thrown
+.word generate_temp_static_thrown
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_default
+.word generate_temp_static_thrown
+
+glabel D_80053DC8
+.word 0x3dcccccd /*0.1*/
 .text
 glabel generate_player_thrown_object
 /* 093E88 7F05F358 27BDFEC0 */  addiu $sp, $sp, -0x140
@@ -5976,6 +5419,13 @@ void sub_GAME_7F05F73C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053DCC
+.word 0x42055555 /*33.333332*/
+glabel D_80053DD0
+.word 0x3e99999a /*0.30000001*/
+glabel D_80053DD4
+.word 0x3e088888 /*0.13333333*/
 .text
 glabel sub_GAME_7F05F73C
 /* 09426C 7F05F73C 000470C0 */  sll   $t6, $a0, 3
@@ -6309,6 +5759,11 @@ void sub_GAME_7F05FB64(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053DD8
+.word 0x42855555 /*66.666664*/
+glabel D_80053DDC
+.word 0x3f8e38e3 /*1.111111*/
 .text
 glabel sub_GAME_7F05FB64
 /* 094694 7F05FB64 000470C0 */  sll   $t6, $a0, 3
@@ -6618,6 +6073,75 @@ void handles_firing_or_throwing_weapon_in_hand(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053DE0
+.word 0x3f733333 /*0.94999999*/
+glabel D_80053DE4
+.word 0x3d4cccd0 /*0.050000012*/
+glabel D_80053DE8
+.word 0x3f19999a /*0.60000002*/
+glabel D_80053DEC
+.word 0x3e99999a /*0.30000001*/
+glabel D_80053DF0
+.word 0x3f19999a /*0.60000002*/
+glabel D_80053DF4
+.word 0x3e99999a /*0.30000001*/
+glabel D_80053DF8
+.word 0x3f19999a /*0.60000002*/
+glabel D_80053DFC
+.word 0x3e99999a /*0.30000001*/
+glabel D_80053E00
+.word 0x41de6666 /*27.799999*/
+glabel D_80053E04
+.word 0x3dccccce /*0.10000001*/
+glabel D_80053E08
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053E0C
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053E10
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053E14
+.word 0x3f060a92 /*0.52359879*/
+glabel D_80053E18
+.word 0x3f060a92 /*0.52359879*/
+glabel D_80053E1C
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053E20
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053E24
+.word 0x3dccccce /*0.10000001*/
+glabel D_80053E28
+.word 0x3dccccce /*0.10000001*/
+glabel D_80053E2C
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053E30
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053E34
+.word 0x40c90fdb /*6.2831855*/
+
+/*D:80053E38*/
+glabel jpt_weapon_bullet_type
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_shotgun_mine
+.word weapon_bullet_type_shotgun_mine
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_pistol
+.word weapon_bullet_type_none
+.word weapon_bullet_type_none
+
 .text
 glabel handles_firing_or_throwing_weapon_in_hand
 /* 094AF8 7F05FFC8 27BDFD58 */  addiu $sp, $sp, -0x2a8
@@ -7564,8 +7088,8 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 09590C 7F060DDC 0FC16008 */  jal   sub_GAME_7F058020
 /* 095910 7F060DE0 8FA502A4 */   lw    $a1, 0x2a4($sp)
 /* 095914 7F060DE4 8FAF01A0 */  lw    $t7, 0x1a0($sp)
-/* 095918 7F060DE8 3C0E8004 */  lui   $t6, %hi(weapon_gun_ruger_grenade) # $t6, 0x8004
-/* 09591C 7F060DEC 25CEC76C */  addiu $t6, %lo(weapon_gun_ruger_grenade) # addiu $t6, $t6, -0x3894
+/* 095918 7F060DE8 3C0E8004 */  lui   $t6, %hi(weapon_gun_revolver) # $t6, 0x8004
+/* 09591C 7F060DEC 25CEC76C */  addiu $t6, %lo(weapon_gun_revolver) # addiu $t6, $t6, -0x3894
 /* 095920 7F060DF0 8DF80004 */  lw    $t8, 4($t7)
 /* 095924 7F060DF4 55D80078 */  bnel  $t6, $t8, .L7F060FD8
 /* 095928 7F060DF8 8FA2010C */   lw    $v0, 0x10c($sp)
@@ -8367,6 +7891,23 @@ void sub_GAME_7F061948(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053E88
+.word 0x461c4000 /*10000.0*/
+glabel D_80053E8C
+.word 0x453b8000 /*3000.0*/
+glabel D_80053E90
+.word 0x3f19999a /*0.60000002*/
+glabel D_80053E94
+.word 0x3e99999a /*0.30000001*/
+glabel D_80053E98
+.word 0xbdcccccd /*-0.1*/
+glabel D_80053E9C
+.word 0x453b8000 /*3000.0*/
+glabel D_80053EA0
+.word 0x453b8000 /*3000.0*/
+glabel D_80053EA4
+.word 0x3e4ccccd /*0.2*/
 .text
 glabel sub_GAME_7F061948
 /* 096478 7F061948 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -8426,11 +7967,11 @@ glabel sub_GAME_7F061948
 /* 096550 7F061A20 4600103C */  c.lt.s $f2, $f0
 /* 096554 7F061A24 00000000 */  nop   
 /* 096558 7F061A28 4502000A */  bc1fl .L7F061A54
-/* 09655C 7F061A2C 3C0143FA */   lui   $at, %hi(D_43FA3E88) # $at, 0x43fa
+/* 09655C 7F061A2C 3C0143FA */   lui   $at, %hi(0x43FA3E88) # $at, 0x43fa
 /* 096560 7F061A30 10000007 */  b     .L7F061A50
 /* 096564 7F061A34 46001306 */   mov.s $f12, $f2
 .L7F061A38:
-/* 096568 7F061A38 C4223E88 */  lwc1  $f2, %lo(D_43FA3E88)($at)
+/* 096568 7F061A38 C4223E88 */  lwc1  $f2, %lo(0x43FA3E88)($at)
 /* 09656C 7F061A3C 4600103C */  c.lt.s $f2, $f0
 /* 096570 7F061A40 00000000 */  nop   
 /* 096574 7F061A44 45020003 */  bc1fl .L7F061A54
@@ -8566,6 +8107,9 @@ void sub_GAME_7F061BF4(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053EA8
+.word 0x3db2b8c3 /*0.087266468*/
 .text
 glabel sub_GAME_7F061BF4
 /* 096724 7F061BF4 000478C0 */  sll   $t7, $a0, 3
@@ -8720,6 +8264,27 @@ void sub_GAME_7F061E18(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053EAC
+.word 0x3fb50481 /*1.4141999*/
+glabel D_80053EB0
+.word 0x3dcccccd /*0.1*/
+glabel D_80053EB4
+.word 0x3f666666 /*0.89999998*/
+glabel D_80053EB8
+.word 0x3f666666 /*0.89999998*/
+glabel D_80053EBC
+.word 0x3f666666 /*0.89999998*/
+glabel D_80053EC0
+.word 0x3f666666 /*0.89999998*/
+glabel D_80053EC4
+.word 0x3f666666 /*0.89999998*/
+glabel D_80053EC8
+.word 0x3f666666 /*0.89999998*/
+glabel D_80053ECC
+.word 0x3fb50481 /*1.4141999*/
+glabel D_80053ED0
+.word 0x3f666666 /*0.89999998*/
 .text
 glabel sub_GAME_7F061E18
 /* 096948 7F061E18 27BDFEA0 */  addiu $sp, $sp, -0x160
@@ -9515,12 +9080,12 @@ glabel sub_GAME_7F061E18
 /* 097554 7F062A24 AE2D0000 */   sw    $t5, ($s1)
 /* 097558 7F062A28 AE220004 */  sw    $v0, 4($s1)
 /* 09755C 7F062A2C 8FB90160 */  lw    $t9, 0x160($sp)
-/* 097560 7F062A30 3C0EB100 */  lui   $t6, (0xB1000076 >> 16) # lui $t6, 0xb100
+/* 097560 7F062A30 3C0EB100 */  lui   $t6, (0xB1000076 >> 16) # lui $t6, 0xb100          # gSP4Triangles(8,8,6,5,1,7,2,0,0,0,0,0
 /* 097564 7F062A34 35CE0076 */  ori   $t6, (0xB1000076 & 0xFFFF) # ori $t6, $t6, 0x76
 /* 097568 7F062A38 272B0008 */  addiu $t3, $t9, 8
 /* 09756C 7F062A3C AFAB0160 */  sw    $t3, 0x160($sp)
 /* 097570 7F062A40 24185454 */  li    $t8, 21588
-/* 097574 7F062A44 AF380004 */  sw    $t8, 4($t9)
+/* 097574 7F062A44 AF380004 */  sw    $t8, 4($t9)                                       # ),
 /* 097578 7F062A48 AF2E0000 */  sw    $t6, ($t9)
 /* 09757C 7F062A4C 24090002 */  li    $t1, 2
 /* 097580 7F062A50 AFA90010 */  sw    $t1, 0x10($sp)
@@ -9530,14 +9095,14 @@ glabel sub_GAME_7F061E18
 /* 097590 7F062A60 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
 /* 097594 7F062A64 24060004 */   li    $a2, 4
 /* 097598 7F062A68 8FAA0160 */  lw    $t2, 0x160($sp)
-/* 09759C 7F062A6C 3C0FB100 */  lui   $t7, (0xB1000013 >> 16) # lui $t7, 0xb100
+/* 09759C 7F062A6C 3C0FB100 */  lui   $t7, (0xB1000013 >> 16) # lui $t7, 0xb100          # gSP4Triangles(0,2,3,3,2,1,1,0,0,0,0
 /* 0975A0 7F062A70 35EF0013 */  ori   $t7, (0xB1000013 & 0xFFFF) # ori $t7, $t7, 0x13
 /* 0975A4 7F062A74 254C0008 */  addiu $t4, $t2, 8
 /* 0975A8 7F062A78 AFAC0160 */  sw    $t4, 0x160($sp)
 /* 0975AC 7F062A7C 240D3020 */  li    $t5, 12320
 /* 0975B0 7F062A80 AD4D0004 */  sw    $t5, 4($t2)
 /* 0975B4 7F062A84 10000017 */  b     .L7F062AE4
-/* 0975B8 7F062A88 AD4F0000 */   sw    $t7, ($t2)
+/* 0975B8 7F062A88 AD4F0000 */   sw    $t7, ($t2)                                        # ),
 .L7F062A8C:
 /* 0975BC 7F062A8C 24190002 */  li    $t9, 2
 /* 0975C0 7F062A90 AFB90010 */  sw    $t9, 0x10($sp)
@@ -10061,8 +9626,8 @@ glabel set_enviro_fog_for_items_in_solo_watch_menu
 /* 097CAC 7F06317C 0FC16008 */  jal   sub_GAME_7F058020
 /* 097CB0 7F063180 02002825 */   move  $a1, $s0
 /* 097CB4 7F063184 8E580004 */  lw    $t8, 4($s2)
-/* 097CB8 7F063188 3C198004 */  lui   $t9, %hi(weapon_gun_ruger_grenade) # $t9, 0x8004
-/* 097CBC 7F06318C 2739C76C */  addiu $t9, %lo(weapon_gun_ruger_grenade) # addiu $t9, $t9, -0x3894
+/* 097CB8 7F063188 3C198004 */  lui   $t9, %hi(weapon_gun_revolver) # $t9, 0x8004
+/* 097CBC 7F06318C 2739C76C */  addiu $t9, %lo(weapon_gun_revolver) # addiu $t9, $t9, -0x3894
 /* 097CC0 7F063190 57380018 */  bnel  $t9, $t8, .L7F0631F4
 /* 097CC4 7F063194 8E420008 */   lw    $v0, 8($s2)
 /* 097CC8 7F063198 8E420008 */  lw    $v0, 8($s2)
@@ -10399,6 +9964,47 @@ void sub_GAME_7F06359C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053ED4
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053ED8
+.word 0x3f19999a /*0.60000002*/
+glabel D_80053EDC
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053EE0
+.word 0x3f19999a /*0.60000002*/
+glabel D_80053EE4
+.word 0xbf860a92 /*-1.0471976*/
+glabel D_80053EE8
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053EEC
+.word 0x3f19999a /*0.60000002*/
+glabel D_80053EF0
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053EF4
+.word 0x3f19999a /*0.60000002*/
+glabel D_80053EF8
+.word 0xbe32b8c3 /*-0.17453294*/
+glabel D_80053EFC
+.word 0x3f860a92 /*1.0471976*/
+glabel D_80053F00
+.word 0x3e32b8c3 /*0.17453294*/
+glabel D_80053F04
+.word 0x3f860a92 /*1.0471976*/
+glabel D_80053F08
+.word 0xbe32b8c3 /*-0.17453294*/
+glabel D_80053F0C
+.word 0x3e32b8c3 /*0.17453294*/
+glabel D_80053F10
+.word 0x3e32b8c3 /*0.17453294*/
+glabel D_80053F14
+.word 0xbe32b8c3 /*-0.17453294*/
+glabel D_80053F18
+.word 0xbf65c8fa /*-0.89759791*/
+glabel D_80053F1C
+.word 0xbe32b8c3 /*-0.17453294*/
+glabel D_80053F20
+.word 0x40490fdb /*3.1415927*/
 .text
 glabel sub_GAME_7F06359C
 /* 0980CC 7F06359C 27BDFAC8 */  addiu $sp, $sp, -0x538
@@ -12000,6 +11606,333 @@ void handle_weapon_id_values_possibly_1st_person_animation(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80053F24*/
+glabel jpt_70098CF8
+.word Weapon_function_slapper
+.word Weapon_function_hunting_knife
+.word Weapon_function_throwing_knife
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_magnum
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_magnum
+.word Weapon_function_guns
+.word Weapon_function_grenades
+.word Weapon_function_throwable_item
+.word Weapon_function_throwable_item
+.word Weapon_function_throwable_item
+.word Weapon_function_guns
+.word Weapon_function_tazer
+.word Weapon_function_guns
+.word Weapon_function_throwable_item
+.word Weapon_function_throwable_item
+.word Weapon_function_guns
+.word Weapon_function_guns
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_camera
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_collectible
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_throwable_item
+.word Weapon_function_throwable_item
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_guns
+.word Weapon_function_throwable_item
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_key
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_key
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+.word Weapon_function_collectible
+
+/*D:80054084*/
+glabel jpt_70098F10
+.word Weapon_shooting_noammo
+.word Weapon_shooting_throwable
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_machinegun
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_pistol
+.word Weapon_shooting_tazer
+.word Weapon_shooting_pistol
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_pistol
+.word Weapon_shooting_pistol
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_watch_magnet
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_throwable
+.word Weapon_shooting_watch_magnet
+
+glabel D_80054170
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80054174
+.word 0x3fc90fdb /*1.5707964*/
+glabel D_80054178
+.word 0x40c90fdb /*6.2831855*/
+glabel D_8005417C
+.word 0x40490fdb /*3.1415927*/
+glabel D_80054180
+.word 0x3fc90fdb /*1.5707964*/
+glabel D_80054184
+.word 0x3f32b8c3 /*0.69813174*/
+glabel D_80054188
+.word 0x3f32b8c3 /*0.69813174*/
+glabel D_8005418C
+.word 0x3f32b8c3 /*0.69813174*/
+glabel D_80054190
+.word 0x3f32b8c3 /*0.69813174*/
+
+/*D:80054194*/
+glabel jpt_70099D7C
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+.word weapon_playsfx_knife
+.word weapon_playsfx_knife
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_F2
+.word weapon_switchstyle_NONE
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_switchstyle_NONE
+.word weapon_playsfx_mine
+.word weapon_playsfx_mine
+.word weapon_playsfx_mine
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_switchstyle_NONE
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_playsfx_gun
+.word weapon_switchstyle_NONE
+.word weapon_switchstyle_NONE
+
+glabel D_8005428C
+.word 0x3f32b8c3 /*0.69813174*/
+glabel D_80054290
+.word 0x3f32b8c3 /*0.69813174*/
+
+/*D:80054294*/
+glabel jpt_7009A0D4
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_gun_sfx
+.word weapon_reload_none_sfx
+.word weapon_reload_none_sfx
+
+glabel D_8005438C
+.word 0x3f32b8c3 /*0.69813174*/
+glabel D_80054390
+.word 0x3f32b8c3 /*0.69813174*/
+glabel D_80054394
+.word 0x3f32b8c3 /*0.69813174*/
+glabel D_80054398
+.word 0x3f32b8c3 /*0.69813174*/
+glabel D_8005439C
+.word 0x3f32b8c3 /*0.69813174*/
+glabel D_800543A0
+.word 0x3f32b8c3 /*0.69813174*/
+glabel D_800543A4
+.word 0x3f32b8c3 /*0.69813174*/
+glabel D_800543A8
+.word 0x3f32b8c3 /*0.69813174*/
+glabel D_800543AC
+.word 0x3f32b8c3 /*0.69813174*/
+
 .text
 glabel handle_weapon_id_values_possibly_1st_person_animation
 /* 099658 7F064B28 000410C0 */  sll   $v0, $a0, 3
@@ -12200,7 +12133,7 @@ Weapon_function_camera:
 /* 09992C 7F064DFC 00002825 */  move  $a1, $zero
 /* 099930 7F064E00 15800005 */  bnez  $t4, .L7F064E18
 /* 099934 7F064E04 00003025 */   move  $a2, $zero
-/* 099938 7F064E08 0FC201EC */  jal   sub_GAME_7F0807B0
+/* 099938 7F064E08 0FC201EC */  jal   set_rgba_tint
 /* 09993C 7F064E0C 3C073F80 */   lui   $a3, 0x3f80
 /* 099940 7F064E10 10000063 */  b     .L7F064FA0
 /* 099944 7F064E14 AE000398 */   sw    $zero, 0x398($s0)
@@ -13326,8 +13259,8 @@ Weapon_shooting_throwable:
 /* 09A92C 7F065DFC 0FC173AF */  jal   sub_GAME_7F05CEBC
 /* 09A930 7F065E00 8FA401D0 */   lw    $a0, 0x1d0($sp)
 /* 09A934 7F065E04 1040002D */  beqz  $v0, .L7F065EBC
-/* 09A938 7F065E08 3C0C8003 */   lui   $t4, %hi(D_800364B4) # $t4, 0x8003
-/* 09A93C 7F065E0C 8D8C64B4 */  lw    $t4, %lo(D_800364B4)($t4)
+/* 09A938 7F065E08 3C0C8003 */   lui   $t4, %hi(disable_player_pickups_flag) # $t4, 0x8003
+/* 09A93C 7F065E0C 8D8C64B4 */  lw    $t4, %lo(disable_player_pickups_flag)($t4)
 /* 09A940 7F065E10 2A21003E */  slti  $at, $s1, 0x3e
 /* 09A944 7F065E14 5580002A */  bnezl $t4, .L7F065EC0
 /* 09A948 7F065E18 8E0E0020 */   lw    $t6, 0x20($s0)
@@ -13564,8 +13497,8 @@ weapon_switchstyle_NONE:
 /* 09AC84 7F066154 0FC173AF */  jal   sub_GAME_7F05CEBC
 /* 09AC88 7F066158 8FA401D0 */   lw    $a0, 0x1d0($sp)
 /* 09AC8C 7F06615C 10400018 */  beqz  $v0, .L7F0661C0
-/* 09AC90 7F066160 3C0B8003 */   lui   $t3, %hi(D_800364B4) # $t3, 0x8003
-/* 09AC94 7F066164 8D6B64B4 */  lw    $t3, %lo(D_800364B4)($t3)
+/* 09AC90 7F066160 3C0B8003 */   lui   $t3, %hi(disable_player_pickups_flag) # $t3, 0x8003
+/* 09AC94 7F066164 8D6B64B4 */  lw    $t3, %lo(disable_player_pickups_flag)($t3)
 /* 09AC98 7F066168 2A21003E */  slti  $at, $s1, 0x3e
 /* 09AC9C 7F06616C 55600015 */  bnezl $t3, .L7F0661C4
 /* 09ACA0 7F066170 8E0C0020 */   lw    $t4, 0x20($s0)
@@ -16342,6 +16275,9 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800543B0
+.word 0x3faaaaab /*1.3333334*/
 .text
 glabel sub_GAME_7F0681CC
 /* 09CCFC 7F0681CC 27BDFFC8 */  addiu $sp, $sp, -0x38
@@ -16639,6 +16575,47 @@ void sub_GAME_7F068508(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800543B4
+.word 0x3dccccce /*0.10000001*/
+glabel D_800543B8
+.word 0x3f088888 /*0.5333333*/
+glabel D_800543BC
+.word 0x40c90fdb /*6.2831855*/
+glabel D_800543C0
+.word 0x3ec90fdb /*0.39269909*/
+glabel D_800543C4
+.word 0x40c90fdb /*6.2831855*/
+glabel D_800543C8
+.word 0x3ec90fdb /*0.39269909*/
+glabel D_800543CC
+.word 0x40c90fdb /*6.2831855*/
+glabel D_800543D0
+.word 0x3ec90fdb /*0.39269909*/
+glabel D_800543D4
+.word 0x493d6c30 /*775875.0*/
+glabel expended_shell_initial_gravity_modifier_pistol
+.word 0x3e8e38e4 /*0.27777779*/
+glabel D_800543DC
+.word 0x3fb55555 /*1.4166666*/
+glabel D_800543E0
+.word 0x3fd55555 /*1.6666666*/
+glabel D_800543E4
+.word 0x40c90fdb /*6.2831855*/
+glabel D_800543E8
+.word 0x3ec90fdb /*0.39269909*/
+glabel D_800543EC
+.word 0x40c90fdb /*6.2831855*/
+glabel D_800543F0
+.word 0x3ec90fdb /*0.39269909*/
+glabel D_800543F4
+.word 0x40c90fdb /*6.2831855*/
+glabel D_800543F8
+.word 0x3ec90fdb /*0.39269909*/
+glabel D_800543FC
+.word 0x493d6c30 /*775875.0*/
+glabel expended_shell_initial_gravity_modifier_non_pistol
+.word 0x3e8e38e4 /*0.27777779*/
 .text
 glabel sub_GAME_7F068508
 /* 09D038 7F068508 27BDFF40 */  addiu $sp, $sp, -0xc0
@@ -16893,8 +16870,8 @@ glabel sub_GAME_7F068508
 .L7F0688C8:
 /* 09D3F8 7F0688C8 3C018005 */  lui   $at, %hi(D_800543D4) # $at, 0x8005
 /* 09D3FC 7F0688CC C43243D4 */  lwc1  $f18, %lo(D_800543D4)($at)
-/* 09D400 7F0688D0 3C018005 */  lui   $at, %hi(D_800543D8) # $at, 0x8005
-/* 09D404 7F0688D4 C42443D8 */  lwc1  $f4, %lo(D_800543D8)($at)
+/* 09D400 7F0688D0 3C018005 */  lui   $at, %hi(expended_shell_initial_gravity_modifier_pistol) # $at, 0x8005
+/* 09D404 7F0688D4 C42443D8 */  lwc1  $f4, %lo(expended_shell_initial_gravity_modifier_pistol)($at)
 /* 09D408 7F0688D8 46125003 */  div.s $f0, $f10, $f18
 /* 09D40C 7F0688DC 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 09D410 7F0688E0 44819000 */  mtc1  $at, $f18
@@ -17111,8 +17088,8 @@ glabel sub_GAME_7F068508
 .L7F068C10:
 /* 09D740 7F068C10 3C018005 */  lui   $at, %hi(D_800543FC) # $at, 0x8005
 /* 09D744 7F068C14 C43243FC */  lwc1  $f18, %lo(D_800543FC)($at)
-/* 09D748 7F068C18 3C018005 */  lui   $at, %hi(D_80054400) # $at, 0x8005
-/* 09D74C 7F068C1C C4244400 */  lwc1  $f4, %lo(D_80054400)($at)
+/* 09D748 7F068C18 3C018005 */  lui   $at, %hi(expended_shell_initial_gravity_modifier_non_pistol) # $at, 0x8005
+/* 09D74C 7F068C1C C4244400 */  lwc1  $f4, %lo(expended_shell_initial_gravity_modifier_non_pistol)($at)
 /* 09D750 7F068C20 46123003 */  div.s $f0, $f6, $f18
 /* 09D754 7F068C24 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 09D758 7F068C28 44819000 */  mtc1  $at, $f18
@@ -17192,12 +17169,15 @@ void sub_GAME_7F068D20(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel expended_shell_initial_gravity_modifier_all
+.word 0x3e8e38e4 /*0.27777779*/
 .text
 glabel sub_GAME_7F068D20
 /* 09D850 7F068D20 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
 /* 09D854 7F068D24 C4228378 */  lwc1  $f2, %lo(global_timer_delta)($at)
-/* 09D858 7F068D28 3C018005 */  lui   $at, %hi(D_80054404) # $at, 0x8005
-/* 09D85C 7F068D2C C4244404 */  lwc1  $f4, %lo(D_80054404)($at)
+/* 09D858 7F068D28 3C018005 */  lui   $at, %hi(expended_shell_initial_gravity_modifier_all) # $at, 0x8005
+/* 09D85C 7F068D2C C4244404 */  lwc1  $f4, %lo(expended_shell_initial_gravity_modifier_all)($at)
 /* 09D860 7F068D30 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 09D864 7F068D34 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 09D868 7F068D38 46041182 */  mul.s $f6, $f2, $f4
@@ -17333,6 +17313,13 @@ void sub_GAME_7F068EC4(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054408
+.word 0x3dccccce /*0.10000001*/
+glabel D_8005440C
+.word 0xc6ea6000 /*-30000.0*/
+glabel D_80054410
+.word 0x46ea6000 /*30000.0*/
 .text
 glabel sub_GAME_7F068EC4
 /* 09D9F4 7F068EC4 27BDFF18 */  addiu $sp, $sp, -0xe8
@@ -17726,9 +17713,9 @@ glabel set_max_ammo_for_cur_player
 /* 09DE24 7F0692F4 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 09DE28 7F0692F8 AFB20020 */  sw    $s2, 0x20($sp)
 /* 09DE2C 7F0692FC AFB00018 */  sw    $s0, 0x18($sp)
-/* 09DE30 7F069300 3C118003 */  lui   $s1, %hi(D_80035EF0) # $s1, 0x8003
+/* 09DE30 7F069300 3C118003 */  lui   $s1, %hi(ammo_related) # $s1, 0x8003
 /* 09DE34 7F069304 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 09DE38 7F069308 26315EF0 */  addiu $s1, %lo(D_80035EF0) # addiu $s1, $s1, 0x5ef0
+/* 09DE38 7F069308 26315EF0 */  addiu $s1, %lo(ammo_related) # addiu $s1, $s1, 0x5ef0
 /* 09DE3C 7F06930C 00008025 */  move  $s0, $zero
 /* 09DE40 7F069310 2412001E */  li    $s2, 30
 .L7F069314:
@@ -18906,7 +18893,7 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                             if (check_special_attributes(sp60, 0x80000) == 0)
                             {
                                 // Node 12
-                                temp_v1 = ((sp5C * 0xc) + &D_80035EF0);
+                                temp_v1 = ((sp5C * 0xc) + &ammo_related);
                                 sp44 = 5;
                                 if (temp_v1->unk4 != 0)
                                 {
@@ -19005,7 +18992,7 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                             if (check_special_attributes(sp64, 0x80000) == 0)
                             {
                                 // Node 34
-                                temp_v1_2 = ((sp5C * 0xc) + &D_80035EF0);
+                                temp_v1_2 = ((sp5C * 0xc) + &ammo_related);
                                 sp3C = 5;
                                 if (temp_v1_2->unk4 != 0)
                                 {
@@ -19155,8 +19142,8 @@ glabel generate_ammo_total_microcode
 /* 09E904 7F069DD4 8FAF005C */   lw    $t7, 0x5c($sp)
 /* 09E908 7F069DD8 000FC080 */  sll   $t8, $t7, 2
 /* 09E90C 7F069DDC 030FC023 */  subu  $t8, $t8, $t7
-/* 09E910 7F069DE0 3C198003 */  lui   $t9, %hi(D_80035EF0) # $t9, 0x8003
-/* 09E914 7F069DE4 27395EF0 */  addiu $t9, %lo(D_80035EF0) # addiu $t9, $t9, 0x5ef0
+/* 09E910 7F069DE0 3C198003 */  lui   $t9, %hi(ammo_related) # $t9, 0x8003
+/* 09E914 7F069DE4 27395EF0 */  addiu $t9, %lo(ammo_related) # addiu $t9, $t9, 0x5ef0
 /* 09E918 7F069DE8 0018C080 */  sll   $t8, $t8, 2
 /* 09E91C 7F069DEC 03191821 */  addu  $v1, $t8, $t9
 /* 09E920 7F069DF0 8C620004 */  lw    $v0, 4($v1)
@@ -19350,8 +19337,8 @@ glabel generate_ammo_total_microcode
 /* 09EBE4 7F06A0B4 8FAA005C */   lw    $t2, 0x5c($sp)
 /* 09EBE8 7F06A0B8 000A5880 */  sll   $t3, $t2, 2
 /* 09EBEC 7F06A0BC 016A5823 */  subu  $t3, $t3, $t2
-/* 09EBF0 7F06A0C0 3C098003 */  lui   $t1, %hi(D_80035EF0) # $t1, 0x8003
-/* 09EBF4 7F06A0C4 25295EF0 */  addiu $t1, %lo(D_80035EF0) # addiu $t1, $t1, 0x5ef0
+/* 09EBF0 7F06A0C0 3C098003 */  lui   $t1, %hi(ammo_related) # $t1, 0x8003
+/* 09EBF4 7F06A0C4 25295EF0 */  addiu $t1, %lo(ammo_related) # addiu $t1, $t1, 0x5ef0
 /* 09EBF8 7F06A0C8 000B5880 */  sll   $t3, $t3, 2
 /* 09EBFC 7F06A0CC 01691821 */  addu  $v1, $t3, $t1
 /* 09EC00 7F06A0D0 8C620004 */  lw    $v0, 4($v1)
@@ -19576,7 +19563,7 @@ s32 sub_GAME_7F06A334(s32 arg0) {
                     if (check_special_attributes(sp50, 0x80000) == 0)
                     {
                         // Node 5
-                        temp_v0 = ((sp4C * 0xc) + &D_80035EF0);
+                        temp_v0 = ((sp4C * 0xc) + &ammo_related);
                         sp3C = 5;
                         sp30 = temp_v0;
                         sp40 = (void *) temp_v0->unk4;
@@ -19687,8 +19674,8 @@ glabel sub_GAME_7F06A334
 /* 09EECC 7F06A39C 8FAF004C */   lw    $t7, 0x4c($sp)
 /* 09EED0 7F06A3A0 000FC080 */  sll   $t8, $t7, 2
 /* 09EED4 7F06A3A4 030FC023 */  subu  $t8, $t8, $t7
-/* 09EED8 7F06A3A8 3C198003 */  lui   $t9, %hi(D_80035EF0) # $t9, 0x8003
-/* 09EEDC 7F06A3AC 27395EF0 */  addiu $t9, %lo(D_80035EF0) # addiu $t9, $t9, 0x5ef0
+/* 09EED8 7F06A3A8 3C198003 */  lui   $t9, %hi(ammo_related) # $t9, 0x8003
+/* 09EEDC 7F06A3AC 27395EF0 */  addiu $t9, %lo(ammo_related) # addiu $t9, $t9, 0x5ef0
 /* 09EEE0 7F06A3B0 0018C080 */  sll   $t8, $t8, 2
 /* 09EEE4 7F06A3B4 03191021 */  addu  $v0, $t8, $t9
 /* 09EEE8 7F06A3B8 8C480004 */  lw    $t0, 4($v0)

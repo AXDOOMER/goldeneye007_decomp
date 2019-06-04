@@ -1,10 +1,39 @@
 #include "ultra64.h"
 
+// bss
+//CODE.bss:80075D30
+char objective_ptrs[0x28];
+u32 dword_CODE_bss_80075D58;
+u32 dword_CODE_bss_80075D5C;
+char dword_CODE_bss_80075D60[0x20];
+//CODE.bss:80075D80
+u32 *ptr_last_tag_entry_type16;
+//CODE.bss:80075D84
+u32 *ptr_last_briefing_setup_entry_type23;
+//CODE.bss:80075D88
+u32 *ptr_last_enter_room_subobject_entry_type20;
+//CODE.bss:80075D8C
+u32 *ptr_last_deposit_in_room_subobject_entry_type21;
+//CODE.bss:80075D90
+u32 *ptr_last_photo_obj_in_room_subobject_entry_type1E;
 
+// data
+s32 num_objective_ptrs[] = {0xFFFFFFFF, 0, 0, 0};
+//file possibly split at sub_CODE_7F057AC0
 
+//D:80032300
+u32 D_80032300 = 0;
+//D:80032304
+u32 D_80032304 = 0;
+//D:80032308
+u32 D_80032308 = 0;
 
-
-
+// rodata
+const u32 D_80053610[] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+//D:80053644
+const u32 aSAC[] = {0x25732080, 0x25632000};
+//D:8005364C
+const char aSC[] = "%s %c: ";
 
 
 
@@ -234,6 +263,23 @@ void get_status_of_objective(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80053654*/
+glabel jpt_objectives_microcode_handler
+.word objective_microcode_type_17_18_1F_default
+.word objective_microcode_type_17_18_1F_default
+.word objective_microcode_type_19_destroy_object
+.word objective_microcode_type_1A_complete_if_true
+.word objective_microcode_type_1B_fail_if_true
+.word objective_microcode_type_1C_collect_object
+.word objective_microcode_type_1D_deposit_object
+.word objective_microcode_type_1E_photograph_object
+.word objective_microcode_type_17_18_1F_default
+.word objective_microcode_type_20_enter_room
+.word objective_microcode_type_21_deposit_object_in_room
+.word objective_microcode_type_22_use_key_analyzer_on_object
+.word 0,0,0
+
 .text
 glabel get_status_of_objective
 /* 08BD68 7F057238 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -483,6 +529,11 @@ void display_objective_status_text_on_status_change(void) {
 }
 #else
 GLOBAL_ASM(
+.rdata
+/*glabel D_80053610*/
+/*.word 0,0,0,0,0,0,0,0,0,0*/
+/*glabel D_80053640*/
+/*.word 0*/
 .text
 glabel display_objective_status_text_on_status_change
 /* 08C070 7F057540 27BDFF70 */  addiu $sp, $sp, -0x90
@@ -919,6 +970,19 @@ void sub_GAME_7F057AC0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80053690
+.word 0x40c90fdb /*6.2831855*/
+glabel D_80053694
+.word 0x3dc90fdb /*0.098174773*/
+glabel D_80053698
+.word 0x40c90fdb /*6.2831855*/
+glabel D_8005369C
+.word 0x3dc90fdb /*0.098174773*/
+glabel D_800536A0
+.word 0x40c90fdb /*6.2831855*/
+glabel D_800536A4
+.word 0x3dc90fdb /*0.098174773*/
 .text
 glabel sub_GAME_7F057AC0
 /* 08C5F0 7F057AC0 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -1022,6 +1086,17 @@ void sub_GAME_7F057C14(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800536A8
+.word 0x3fd55555 /*1.6666666*/
+glabel D_800536AC
+.word 0x40555555 /*3.3333333*/
+glabel D_800536B0
+.word 0x3fd55555 /*1.6666666*/
+glabel D_800536B4
+.word 0x3fd55555 /*1.6666666*/
+glabel D_800536B8
+.word 0x40555555 /*3.3333333*/
 .text
 glabel sub_GAME_7F057C14
 /* 08C744 7F057C14 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -1116,11 +1191,14 @@ void sub_GAME_7F057D44(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel npc_gravity_modifier
+.word 0x3e8e38e4 /*0.27777779*/
 .text
 glabel sub_GAME_7F057D44
-/* 08C874 7F057D44 3C018005 */  lui   $at, %hi(D_800536BC) # $at, 0x8005
+/* 08C874 7F057D44 3C018005 */  lui   $at, %hi(npc_gravity_modifier) # $at, 0x8005
 /* 08C878 7F057D48 44866000 */  mtc1  $a2, $f12
-/* 08C87C 7F057D4C C42436BC */  lwc1  $f4, %lo(D_800536BC)($at)
+/* 08C87C 7F057D4C C42436BC */  lwc1  $f4, %lo(npc_gravity_modifier)($at)
 /* 08C880 7F057D50 C4A20000 */  lwc1  $f2, ($a1)
 /* 08C884 7F057D54 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 08C888 7F057D58 46046182 */  mul.s $f6, $f12, $f4

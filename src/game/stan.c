@@ -12,11 +12,15 @@ s32 dword_CODE_bss_8007B12C;
 //CODE.bss:8007B130
 s32 dword_CODE_bss_8007B130;
 //CODE.bss:8007B134
-char dword_CODE_bss_8007B134[0x220];
+char dword_CODE_bss_8007B134;
+char dword_CODE_bss_8007B135;
+char dword_CODE_bss_8007B136;
+char dword_CODE_bss_8007B137;
+char dword_CODE_bss_8007B138[0x21C];
 //CODE.bss:8007B354
 s32 dword_CODE_bss_8007B354;
 //CODE.bss:8007B358
-s32 dword_CODE_bss_8007B358[0x684];
+s32 dword_CODE_bss_8007B358[0x1a1];
 //CODE.bss:8007B9DC
 s32 dword_CODE_bss_8007B9DC;
 //CODE.bss:8007B9E0
@@ -49,7 +53,8 @@ char dword_CODE_bss_8007BA10[0x580];
 
 // data
 //D:80040F30
-s32 D_80040F30[] = {0x8D8604C5, 0x9DA40000, 0, 0, 0};
+s32 D_80040F30[] = {0x8D8604C5, 0x9DA40000, 0, 0};
+s32 stan_c_debug_notice_list_entry = 0;
 //D:80040F44
 f32 D_80040F44 = 1.0;
 //D:80040F48
@@ -108,16 +113,7 @@ const char aCDCC[] = "%c%d%c%c";
 const char aStan_c_debug[] = "stan_c_debug";
 //D:800585BC
 const char aStanlinelog[] = "-stanlinelog";
-//D:800585CC
-const f32 D_800585CC = 32767.0;
-//D:800585D0
-const f32 D_800585D0 = -3.4028235e38;
-//D:800585D4
-const f32 D_800585D4 = -32767.0;
-//D:800585D8
-const f32 D_800585D8 = 0.1;
-//D:800585DC
-const f32 D_800585DC = 0.89999998;
+
 
 
 #ifdef NONMATCHING
@@ -241,19 +237,11 @@ glabel sub_GAME_7F0AEFE0
 
 
 
-#ifdef NONMATCHING
-void stanRemovedAnimationRoutine(s32 arg0) {
+
+u32 stanRemovedAnimationRoutine(s32 arg0) {
     return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel stanRemovedAnimationRoutine
-/* 0E3B30 7F0AF000 AFA40000 */  sw    $a0, ($sp)
-/* 0E3B34 7F0AF004 03E00008 */  jr    $ra
-/* 0E3B38 7F0AF008 00001025 */   move  $v0, $zero
-)
-#endif
+
 
 
 
@@ -261,7 +249,7 @@ glabel stanRemovedAnimationRoutine
 
 #ifdef NONMATCHING
 void something_stan_c_debug_related(void) {
-    get_ptr_debug_notice_list_entry(&D_80040F40, &aStan_c_debug);
+    get_ptr_debug_notice_list_entry(&stan_c_debug_notice_list_entry, "stan_c_debug");
 }
 
 #else
@@ -270,11 +258,11 @@ GLOBAL_ASM(
 glabel something_stan_c_debug_related
 /* 0E3B3C 7F0AF00C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0E3B40 7F0AF010 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E3B44 7F0AF014 3C048004 */  lui   $a0, %hi(D_80040F40) # $a0, 0x8004
+/* 0E3B44 7F0AF014 3C048004 */  lui   $a0, %hi(stan_c_debug_notice_list_entry) # $a0, 0x8004
 /* 0E3B48 7F0AF018 3C058006 */  lui   $a1, %hi(aStan_c_debug) # $a1, 0x8006
 /* 0E3B4C 7F0AF01C 24A585AC */  addiu $a1, %lo(aStan_c_debug) # addiu $a1, $a1, -0x7a54
 /* 0E3B50 7F0AF020 0C001398 */  jal   get_ptr_debug_notice_list_entry
-/* 0E3B54 7F0AF024 24840F40 */   addiu $a0, %lo(D_80040F40) # addiu $a0, $a0, 0xf40
+/* 0E3B54 7F0AF024 24840F40 */   addiu $a0, %lo(stan_c_debug_notice_list_entry) # addiu $a0, $a0, 0xf40
 /* 0E3B58 7F0AF028 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0E3B5C 7F0AF02C 27BD0018 */  addiu $sp, $sp, 0x18
 /* 0E3B60 7F0AF030 03E00008 */  jr    $ra
@@ -566,6 +554,13 @@ void sub_GAME_7F0AF20C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800585CC
+.word 0x46fffe00 /*32767.0*/
+glabel D_800585D0
+.word 0xff7fffff /*-3.4028235e38*/
+glabel D_800585D4
+.word 0xc6fffe00 /*-32767.0*/
 .text
 glabel sub_GAME_7F0AF20C
 /* 0E3D3C 7F0AF20C 27BDFF38 */  addiu $sp, $sp, -0xc8
@@ -685,7 +680,7 @@ glabel sub_GAME_7F0AF20C
 /* 0E3EF8 7F0AF3C8 8CB80000 */   lw    $t8, ($a1)
 /* 0E3EFC 7F0AF3CC 91CF0000 */  lbu   $t7, ($t6)
 /* 0E3F00 7F0AF3D0 00008025 */  move  $s0, $zero
-/* 0E3F04 7F0AF3D4 01C01021 */  move  $v0, $t6
+/* 0E3F04 7F0AF3D4 01C01021 */  addu  $v0, $t6, $zero
 /* 0E3F08 7F0AF3D8 12CF000D */  beq   $s6, $t7, .L7F0AF410
 /* 0E3F0C 7F0AF3DC 00000000 */   nop   
 /* 0E3F10 7F0AF3E0 91C30000 */  lbu   $v1, ($t6)
@@ -835,7 +830,7 @@ void stanLoadFile(void *arg0) {
     base_ptr_connection_vals = (s32) (arg0->unk4 + -0x80);
     if (check_token(1, "-stanlinelog") != 0)
     {
-        stanDoLineLog = 1;
+        stanlinelog_flag = 1;
     }
     sub_GAME_7F0AF038();
     sub_GAME_7F0B2950(1.0);
@@ -863,8 +858,8 @@ glabel stanLoadFile
 /* 0E4124 7F0AF5F4 24040001 */   li    $a0, 1
 /* 0E4128 7F0AF5F8 10400003 */  beqz  $v0, .L7F0AF608
 /* 0E412C 7F0AF5FC 24080001 */   li    $t0, 1
-/* 0E4130 7F0AF600 3C018004 */  lui   $at, %hi(stanDoLineLog) # $at, 0x8004
-/* 0E4134 7F0AF604 AC280FB4 */  sw    $t0, %lo(stanDoLineLog)($at)
+/* 0E4130 7F0AF600 3C018004 */  lui   $at, %hi(stanlinelog_flag) # $at, 0x8004
+/* 0E4134 7F0AF604 AC280FB4 */  sw    $t0, %lo(stanlinelog_flag)($at)
 .L7F0AF608:
 /* 0E4138 7F0AF608 0FC2BC0E */  jal   sub_GAME_7F0AF038
 /* 0E413C 7F0AF60C 00000000 */   nop   
@@ -1385,6 +1380,11 @@ f32 sub_GAME_7F0AFA1C(void *arg0, s32 arg1, void *arg2) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800585D8
+.word 0x3dcccccd /*0.1*/
+glabel D_800585DC
+.word 0x3f666666 /*0.89999998*/
 .text
 glabel sub_GAME_7F0AFA1C
 /* 0E454C 7F0AFA1C 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -4689,39 +4689,14 @@ glabel sub_GAME_7F0B1CC4
 
 
 
-#ifdef NONMATCHING
+
 s32 sub_GAME_7F0B1CE0(void) {
-    // Node 0
     return dword_CODE_bss_8007B9E4;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B1CE0
-/* 0E6810 7F0B1CE0 3C028008 */  lui   $v0, %hi(dword_CODE_bss_8007B9E4)
-/* 0E6814 7F0B1CE4 03E00008 */  jr    $ra
-/* 0E6818 7F0B1CE8 8C42B9E4 */   lw    $v0, %lo(dword_CODE_bss_8007B9E4)($v0)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 s32 sub_GAME_7F0B1CEC(void) {
-    // Node 0
     return dword_CODE_bss_8007B9E8;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B1CEC
-/* 0E681C 7F0B1CEC 3C028008 */  lui   $v0, %hi(dword_CODE_bss_8007B9E8)
-/* 0E6820 7F0B1CF0 03E00008 */  jr    $ra
-/* 0E6824 7F0B1CF4 8C42B9E8 */   lw    $v0, %lo(dword_CODE_bss_8007B9E8)($v0)
-)
-#endif
 
 
 
@@ -6482,39 +6457,14 @@ glabel sub_GAME_7F0B2D14
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B2D38(s32 arg0, s32 arg1, ? arg2) {
-    // Node 0
+void sub_GAME_7F0B2D38(s32 arg0, s32 arg1, s32 arg2) {
     return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B2D38
-/* 0E7868 7F0B2D38 AFA40000 */  sw    $a0, ($sp)
-/* 0E786C 7F0B2D3C AFA50004 */  sw    $a1, 4($sp)
-/* 0E7870 7F0B2D40 03E00008 */  jr    $ra
-/* 0E7874 7F0B2D44 AFA60008 */   sw    $a2, 8($sp)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 s32 sub_GAME_7F0B2D48(s32 arg0) {
-    // Node 0
     return arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B2D48
-/* 0E7878 7F0B2D48 03E00008 */  jr    $ra
-/* 0E787C 7F0B2D4C 00801025 */   move  $v0, $a0
-)
-#endif
+
 
 
 
@@ -7009,36 +6959,15 @@ glabel sub_GAME_7F0B3024
 
 
 
-#ifdef NONMATCHING
+
 s32 sub_GAME_7F0B3034(s32 arg0) {
     return arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B3034
-/* 0E7B64 7F0B3034 03E00008 */  jr    $ra
-/* 0E7B68 7F0B3038 00801025 */   move  $v0, $a0
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 s32 sub_GAME_7F0B303C(s32 arg0) {
     return arg0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B303C
-/* 0E7B6C 7F0B303C 03E00008 */  jr    $ra
-/* 0E7B70 7F0B3040 00801025 */   move  $v0, $a0
-)
-#endif
 
 
 

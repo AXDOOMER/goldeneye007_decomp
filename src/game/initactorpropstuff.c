@@ -1,10 +1,6 @@
 #include "ultra64.h"
+#include "game/initactorpropstuff.h"
 
-
-//rodata 
-const f32 F32_8004ED70 = 6.2831855;
-const f32 F32_8004ED74 = 0.000095873802;
-const f32 F32_8004ED78 = 0.10000001;
 
 
 
@@ -202,6 +198,11 @@ void sub_GAME_7F00032C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel F32_8004ED70
+.word 0x40c90fdb
+glabel F32_8004ED74
+.word 0x38c90fdb
 .text
 glabel sub_GAME_7F00032C
 /* 034E5C 7F00032C 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -374,6 +375,9 @@ void somethingwith_weapon_animation_groups(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel F32_8004ED78
+.word 0x3dccccce
 .text
 glabel somethingwith_weapon_animation_groups
 /* 035048 7F000518 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -676,50 +680,18 @@ glabel somethingwith_weapon_animation_groups
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F000980(void) {
-    // Node 0
     sub_GAME_7F0009A0();
-    return;
-    // (possible return value: sub_GAME_7F0009A0())
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F000980
-/* 0354B0 7F000980 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0354B4 7F000984 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0354B8 7F000988 0FC00268 */  jal   sub_GAME_7F0009A0
-/* 0354BC 7F00098C 00000000 */   nop   
-/* 0354C0 7F000990 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0354C4 7F000994 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0354C8 7F000998 03E00008 */  jr    $ra
-/* 0354CC 7F00099C 00000000 */   nop   
-)
-#endif
 
+extern char dword_CODE_bss_80075DC8[20][160]; // TODO: This seems like an array of 20 of these. Fix the other files? (Aliasing violation)
 
-
-#ifdef NONMATCHING
 void sub_GAME_7F0009A0(void) {
-
+    u32 *end = &dword_CODE_bss_80075DC8[20];
+    u32 *ptr = &dword_CODE_bss_80075DC8[0];
+    while(end > ptr) {
+        ptr[39] = 0;
+        ptr += 0x28;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0009A0
-/* 0354D0 7F0009A0 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80076A48) # $v0, 0x8007
-/* 0354D4 7F0009A4 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80075DC8) # $v1, 0x8007
-/* 0354D8 7F0009A8 24426A48 */  addiu $v0, %lo(dword_CODE_bss_80076A48) # addiu $v0, $v0, 0x6a48
-/* 0354DC 7F0009AC 24635DC8 */  addiu $v1, %lo(dword_CODE_bss_80075DC8) # addiu $v1, $v1, 0x5dc8
-.L7F0009B0:
-/* 0354E0 7F0009B0 246300A0 */  addiu $v1, $v1, 0xa0
-/* 0354E4 7F0009B4 0062082B */  sltu  $at, $v1, $v0
-/* 0354E8 7F0009B8 1420FFFD */  bnez  $at, .L7F0009B0
-/* 0354EC 7F0009BC AC60FFFC */   sw    $zero, -4($v1)
-/* 0354F0 7F0009C0 03E00008 */  jr    $ra
-/* 0354F4 7F0009C4 00000000 */   nop   
-)
-#endif
-

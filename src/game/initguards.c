@@ -1,8 +1,6 @@
 #include "ultra64.h"
+#include "game/actor.h"
 
-
-
-#ifdef NONMATCHING
 void init_guards(void) {
     animation_rate = 1.0f;
     D_8002C904 = 0;
@@ -17,42 +15,6 @@ void init_guards(void) {
     init_obj_register_difficulty_vals();
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel init_guards
-/* 035970 7F000E40 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 035974 7F000E44 44812000 */  mtc1  $at, $f4
-/* 035978 7F000E48 3C018003 */  lui   $at, %hi(animation_rate) # $at, 0x8003
-/* 03597C 7F000E4C 240E1388 */  li    $t6, 5000
-/* 035980 7F000E50 E424C900 */  swc1  $f4, %lo(animation_rate)($at)
-/* 035984 7F000E54 3C018003 */  lui   $at, %hi(D_8002C904) # $at, 0x8003
-/* 035988 7F000E58 AC20C904 */  sw    $zero, %lo(D_8002C904)($at)
-/* 03598C 7F000E5C 3C018003 */  lui   $at, %hi(D_8002C908) # $at, 0x8003
-/* 035990 7F000E60 AC20C908 */  sw    $zero, %lo(D_8002C908)($at)
-/* 035994 7F000E64 3C018003 */  lui   $at, %hi(D_8002C90C) # $at, 0x8003
-/* 035998 7F000E68 AC20C90C */  sw    $zero, %lo(D_8002C90C)($at)
-/* 03599C 7F000E6C 3C018003 */  lui   $at, %hi(D_8002C910) # $at, 0x8003
-/* 0359A0 7F000E70 AC20C910 */  sw    $zero, %lo(D_8002C910)($at)
-/* 0359A4 7F000E74 3C018003 */  lui   $at, %hi(D_8002CC58) # $at, 0x8003
-/* 0359A8 7F000E78 AC20CC58 */  sw    $zero, %lo(D_8002CC58)($at)
-/* 0359AC 7F000E7C 3C018003 */  lui   $at, %hi(show_patrols_flag) # $at, 0x8003
-/* 0359B0 7F000E80 AC20CC5C */  sw    $zero, %lo(show_patrols_flag)($at)
-/* 0359B4 7F000E84 3C018003 */  lui   $at, %hi(player1_guardID) # $at, 0x8003
-/* 0359B8 7F000E88 AC2ECC60 */  sw    $t6, %lo(player1_guardID)($at)
-/* 0359BC 7F000E8C 3C018003 */  lui   $at, %hi(ptr_guard_data) # $at, 0x8003
-/* 0359C0 7F000E90 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0359C4 7F000E94 AC20CC64 */  sw    $zero, %lo(ptr_guard_data)($at)
-/* 0359C8 7F000E98 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0359CC 7F000E9C 3C018003 */  lui   $at, %hi(num_guards) # $at, 0x8003
-/* 0359D0 7F000EA0 0FC00408 */  jal   init_obj_register_difficulty_vals
-/* 0359D4 7F000EA4 AC20CC68 */   sw    $zero, %lo(num_guards)($at)
-/* 0359D8 7F000EA8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0359DC 7F000EAC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0359E0 7F000EB0 03E00008 */  jr    $ra
-/* 0359E4 7F000EB4 00000000 */   nop   
-)
-#endif
 
 
 #ifdef NONMATCHING

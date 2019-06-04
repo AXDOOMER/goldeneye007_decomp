@@ -3,99 +3,120 @@
 // bss
 char off_CODE_bss_80079E30[0x4C];
 
-/* data
-D:80037070     dword_D_80037070:.word 0x14002100        # DATA XREF: D:stru_D_8003744Co
-D:80037074                     .word 0x10201, 0x3010104
-D:8003707C     dword_D_8003707C:.word 0x2110301         # DATA XREF: D:80037454o
-D:80037080                     .word 0x11040000
-D:80037084     dword_D_80037084:.word 0x2010330         # DATA XREF: D:8003745Co
-D:80037088                     .word 0xFD112F06
-D:8003708C                     .word 0x1010206
-D:80037090                     .word 0x32073E0D
-D:80037094                     .word 0x3F0E4610
-D:80037098                     .word 0x3A0D3B0D
-D:8003709C                     .word 0xB033335
-D:800370A0                     .word 0x1030600
-D:800370A4                     .word 0x205FD00, 0x3020301, 0x1021033, 0x357F0706, 0x205FD, 0xA0207, 0x6000205
-D:800370A4                     .word 0xFD000602, 0xD060002, 0x5FD0008, 0x20E0600, 0x205FD00, 0xB021105, 0xFD000104
-D:800370DC     dword_D_800370DC:.word 0x33353203, 0xA009A00, 0xC118, 0x10000202, 0x3356403, 0xA009B00, 0x12618
-D:800370DC                                              # DATA XREF: D:80037464o
-D:800370DC                     .word 0x10000202, 0x3359603, 0xA009C00, 0xB718, 0x10000202, 0x335C803, 0xA009D00
-D:800370DC                     .word 0x7B18, 0x10000202, 0x335FA03, 0xA009E00, 0x3818, 0x10000202, 0x30A009F
-D:800370DC                     .word 0x89, 0x18100002, 0x2020704
-D:8003713C     dword_D_8003713C:.word 0x33353C03, 0xA00AC00, 0x4500, 0x10000202, 0x3357803, 0xA00AD00, 0x4A00
-D:8003713C                                              # DATA XREF: D:8003746Co
-D:8003713C                     .word 0x10000202, 0x335B403, 0xA00AE00, 0x4F00, 0x10000202, 0x30A00AF, 0x59
-D:8003713C                     .word 0x100002, 0x2020704
-D:8003717C     dword_D_8003717C:.word 0x201032F, 0x6010102, 0x632073E, 0xD46103A, 0xD3B0D01, 0x1021033, 0x357F0706
-D:8003717C                                              # DATA XREF: D:80037474o
-D:8003717C                     .word 0x205FD, 0xA0207, 0x6000205, 0xFD000602, 0xD060002, 0x5FD0008, 0x4000000
-D:800371B4     dword_D_800371B4:.word 0x96010333, 0x3520030C, 0x94010702, 0x394011A, 0x2020333, 0x350A0313
-D:800371B4                                              # DATA XREF: D:8003747Co
-D:800371B4                     .word 0x2020333, 0x350A030F, 0x2020333, 0x3519030E, 0x2020333, 0x35320310
-D:800371B4                     .word 0x2020333, 0x35400311, 0x2020335, 0x7F031202, 0x2033335, 0x7F0B1400
-D:800371B4                     .word 0x1000002, 0x20B1500, 0x1000002, 0x2020704
-D:8003720C     dword_D_8003720C:.word 0x94012801, 0x7020103, 0x2F063207, 0x1010207, 0x5FD0006, 0x2060704
-D:8003720C                                              # DATA XREF: D:8003748Co
-D:80037224     dword_D_80037224:.word 0x9401410E, 0x5FD0008, 0x20E31F9, 0xE05FD00, 0x2020EC1, 0xFD000C03, 0x5FD0008
-D:80037224                                              # DATA XREF: D:800374A4o
-D:80037224                     .word 0x20305FD, 0x20400
-D:80037248     dword_D_80037248:.word 0x6000205, 0xFD000804  # DATA XREF: D:800374ACo
-D:80037250     dword_D_80037250:.word 0x2010332, 0x73E0D3F, 0xD460D3A, 0xD3B0D01, 0x1020706, 0x205FD, 0x6020D
-D:80037250                                              # DATA XREF: D:80037484o
-D:80037250                     .word 0x6000205, 0xFD000802, 0xE060002, 0x5FD000B, 0x4000000
-D:80037280     dword_D_80037280:.word 0x201032F, 0x6010102, 0x6320F7B, 0x103F10, 0x3A103B10, 0x1010210, 0x79000F0D
-D:80037280                                              # DATA XREF: D:80037494o
-D:80037280                     .word 0x204032F, 0xF010402, 0xF1C2328, 0x203032F, 0x2010302, 0x24EFD00, 0xA232802
-D:80037280                     .word 0x24232805, 0x20205, 0x32F0201, 0x5020206, 0x205FD, 0x80400
-D:800372D0     dword_D_800372D0:.word 0xD020103, 0x2F020101, 0x20205FD, 0x80400
-D:800372D0                                              # DATA XREF: D:8003749Co
-D:800372E0     dword_D_800372E0:.word 0x228281B, 0xAD6E6F20, 0x676F210A, 0x21B03, 0x3C062F02, 0x11B0201, 0x378062D
-D:800372E0                                              # DATA XREF: D:800374B4o
-D:800372E0                     .word 0x9F000000, 0x102F022D, 0x2F064C00, 0xC8030101, 0x2030128, 0x2063C03
-D:800372E0                     .word 0x20224, 0x34B0032, 0x32F0301, 0x2802039F, 0x10, 0x2F022B33, 0x350A031A
-D:800372E0                     .word 0x2020335, 0x32030E02, 0x203353C, 0x3130202, 0x3355003, 0x13020203, 0x35640311
-D:800372E0                     .word 0x2020335, 0x96031202, 0x20335C8, 0x3140001, 0x202, 0x3150001, 0x202
-D:800372E0                     .word 0x23C0300, 0x1B021B03, 0x3335A003, 0x1C0203, 0x3010102, 0x1CAE281D, 0x21D032F
-D:800372E0                     .word 0x3B40000, 0x3C03011D, 0x20308AD, 0x77616974, 0xA009504, 0x3335A003
-D:800372E0                     .word 0x94040203, 0xAE021E03, 0x3C034603, 0x3B30002, 0x58049604, 0x5012802
-D:800372E0                     .word 0x5011C02, 0x4011E02, 0x3010102, 0x2F780603, 0x9E000000, 0x10020301
-D:800372E0                     .word 0x2B040000
-D:800373D0     dword_D_800373D0:.word 0xAE021B03, 0xB400003C, 0x3011B02, 0x3070400
-D:800373D0                                              # DATA XREF: D:800374BCo
-D:800373E0     dword_D_800373E0:.word 0xD205FD00, 0x1040000  # DATA XREF: D:800374C4o
-D:800373E8     dword_D_800373E8:.word 0x91289332, 0x2031700, 0x1000003, 0x203AE02, 0x1B03B400, 0x140301, 0x1B02030A
-D:800373E8                                              # DATA XREF: D:800374CCo
-D:800373E8                     .word 0x420000, 0x140410, 0x21C032F, 0x3011C02, 0x3BF00CD, 0x6000000, 0x30203
-D:800373E8                     .word 0x14002100, 0x30203, 0x16000100, 0x30203, 0x21E032F, 0x3011E02, 0x3060002
-D:800373E8                     .word 0x5FD0008, 0x4000000
-D:80037444     dword_D_80037444:.word 0x23FD05FD        # DATA XREF: D:800374D4o
-D:80037448                     .word 0x10400
-D:8003744C     stru_D_8003744C:struct_13 <dword_D_80037070, 0>
-D:8003744C                                              # DATA XREF: sub_CODE_7F035244+6Co
-D:8003744C                                              # sub_CODE_7F035244+78r
-D:8003744C                                              # sub_CODE_7F035398:loc_CODE_7F0353F0r
-D:8003744C                                              # sub_CODE_7F035398+5Co
-D:8003744C                                              # sub_CODE_7F035398+6Cr
-D:80037454                     struct_13 <dword_D_8003707C, 1>
-D:8003745C                     struct_13 <dword_D_80037084, 2>
-D:80037464                     struct_13 <dword_D_800370DC, 3>
-D:8003746C                     struct_13 <dword_D_8003713C, 4>
-D:80037474                     struct_13 <dword_D_8003717C, 5>
-D:8003747C                     struct_13 <dword_D_800371B4, 6>
-D:80037484                     struct_13 <dword_D_80037250, 7>
-D:8003748C                     struct_13 <dword_D_8003720C, 8>
-D:80037494                     struct_13 <dword_D_80037280, 9>
-D:8003749C                     struct_13 <dword_D_800372D0, 0xA>
-D:800374A4                     struct_13 <dword_D_80037224, 0xB>
-D:800374AC                     struct_13 <dword_D_80037248, 0xC>
-D:800374B4                     struct_13 <dword_D_800372E0, 0xD>
-D:800374BC                     struct_13 <dword_D_800373D0, 0xE>
-D:800374C4                     struct_13 <dword_D_800373E0, 0xF>
-D:800374CC                     struct_13 <dword_D_800373E8, 0x10>
-D:800374D4                     struct_13 <dword_D_80037444, 0x11>
-D:800374DC                     struct_13 <0>
-*/
+// data
+//D:80037070
+u32 dword_D_80037070[] = {0x14002100, 0x10201, 0x3010104};
+//D:8003707C
+u32 dword_D_8003707C[] = {0x2110301, 0x11040000};
+//D:80037084
+u32 dword_D_80037084[] = {
+    0x2010330, 0xFD112F06, 0x1010206, 0x32073E0D, 0x3F0E4610, 0x3A0D3B0D, 0xB033335, 0x1030600,
+    0x205FD00, 0x3020301, 0x1021033, 0x357F0706, 0x205FD, 0xA0207, 0x6000205, 0xFD000602, 0xD060002,
+    0x5FD0008, 0x20E0600, 0x205FD00, 0xB021105, 0xFD000104
+};
+//D:800370DC
+u32 dword_D_800370DC[] = {
+    0x33353203, 0x0A009A00, 0x0000C118, 0x10000202, 0x03356403, 0x0A009B00, 0x00012618,
+    0x10000202, 0x03359603, 0x0A009C00, 0x0000B718, 0x10000202, 0x0335C803, 0x0A009D00,
+    0x00007B18, 0x10000202, 0x0335FA03, 0x0A009E00, 0x00003818, 0x10000202, 0x030A009F,
+    0x00000089, 0x18100002, 0x02020704
+};
+//D:8003713C
+u32 dword_D_8003713C[] = {
+    0x33353C03, 0xA00AC00, 0x4500, 0x10000202, 0x3357803, 0xA00AD00, 0x4A00,
+    0x10000202, 0x335B403, 0xA00AE00, 0x4F00, 0x10000202, 0x30A00AF, 0x59,
+    0x100002, 0x2020704
+};
+//D:8003717C
+u32 dword_D_8003717C[] = {
+    0x201032F, 0x6010102, 0x632073E, 0xD46103A, 0xD3B0D01, 0x1021033, 0x357F0706,
+    0x205FD, 0xA0207, 0x6000205, 0xFD000602, 0xD060002, 0x5FD0008, 0x4000000
+};
+//D:800371B4
+u32 dword_D_800371B4[] = {
+    0x96010333, 0x3520030C, 0x94010702, 0x394011A, 0x2020333, 0x350A0313,
+    0x2020333, 0x350A030F, 0x2020333, 0x3519030E, 0x2020333, 0x35320310,
+    0x2020333, 0x35400311, 0x2020335, 0x7F031202, 0x2033335, 0x7F0B1400,
+    0x1000002, 0x20B1500, 0x1000002, 0x2020704
+};
+//D:8003720C
+u32 dword_D_8003720C[] = {
+    0x94012801, 0x7020103, 0x2F063207, 0x1010207, 0x5FD0006, 0x2060704
+};
+//D:80037224
+u32 dword_D_80037224[] = {
+    0x9401410E, 0x5FD0008, 0x20E31F9, 0xE05FD00, 0x2020EC1, 0xFD000C03, 0x5FD0008,
+    0x20305FD, 0x20400
+};
+//D:80037248
+u32 dword_D_80037248[] = {0x6000205, 0xFD000804};
+//D:80037250
+u32 dword_D_80037250[] = {
+    0x2010332, 0x73E0D3F, 0xD460D3A, 0xD3B0D01, 0x1020706, 0x205FD, 0x6020D,
+    0x6000205, 0xFD000802, 0xE060002, 0x5FD000B, 0x4000000
+};
+//D:80037280
+u32 dword_D_80037280[] = {
+    0x201032F, 0x6010102, 0x6320F7B, 0x103F10, 0x3A103B10, 0x1010210, 0x79000F0D,
+    0x204032F, 0xF010402, 0xF1C2328, 0x203032F, 0x2010302, 0x24EFD00, 0xA232802,
+    0x24232805, 0x20205, 0x32F0201, 0x5020206, 0x205FD, 0x80400
+};
+//D:800372D0
+u32 dword_D_800372D0[] = {
+    0xD020103, 0x2F020101, 0x20205FD, 0x80400
+};
+//D:800372E0
+u32 dword_D_800372E0[] = {
+    0x228281B, 0xAD6E6F20, 0x676F210A, 0x21B03, 0x3C062F02, 0x11B0201, 0x378062D,
+    0x9F000000, 0x102F022D, 0x2F064C00, 0xC8030101, 0x2030128, 0x2063C03,
+    0x20224, 0x34B0032, 0x32F0301, 0x2802039F, 0x10, 0x2F022B33, 0x350A031A,
+    0x2020335, 0x32030E02, 0x203353C, 0x3130202, 0x3355003, 0x13020203, 0x35640311,
+    0x2020335, 0x96031202, 0x20335C8, 0x3140001, 0x202, 0x3150001, 0x202,
+    0x23C0300, 0x1B021B03, 0x3335A003, 0x1C0203, 0x3010102, 0x1CAE281D, 0x21D032F,
+    0x3B40000, 0x3C03011D, 0x20308AD, 0x77616974, 0xA009504, 0x3335A003,
+    0x94040203, 0xAE021E03, 0x3C034603, 0x3B30002, 0x58049604, 0x5012802,
+    0x5011C02, 0x4011E02, 0x3010102, 0x2F780603, 0x9E000000, 0x10020301,
+    0x2B040000
+};
+//D:800373D0
+u32 dword_D_800373D0[] = {0xAE021B03, 0xB400003C, 0x3011B02, 0x3070400};
+//D:800373E0
+u32 dword_D_800373E0[] = {0xD205FD00, 0x1040000};
+//D:800373E8
+u32 dword_D_800373E8[] = {
+    0x91289332, 0x2031700, 0x1000003, 0x203AE02, 0x1B03B400, 0x140301, 0x1B02030A,
+    0x420000, 0x140410, 0x21C032F, 0x3011C02, 0x3BF00CD, 0x6000000, 0x30203,
+    0x14002100, 0x30203, 0x16000100, 0x30203, 0x21E032F, 0x3011E02, 0x3060002,
+    0x5FD0008, 0x4000000
+};
+
+//D:80037444
+u32 dword_D_80037444[] = {0x23FD05FD, 0x10400};
+
+//D:8003744C
+struct struct_13 D_8003744C[] = {
+    {dword_D_80037070, 0},
+    {dword_D_8003707C, 1},
+    {dword_D_80037084, 2},
+    {dword_D_800370DC, 3},
+    {dword_D_8003713C, 4},
+    {dword_D_8003717C, 5},
+    {dword_D_800371B4, 6},
+    {dword_D_80037250, 7},
+    {dword_D_8003720C, 8},
+    {dword_D_80037280, 9},
+    {dword_D_800372D0, 0xA},
+    {dword_D_80037224, 0xB},
+    {dword_D_80037248, 0xC},
+    {dword_D_800372E0, 0xD},
+    {dword_D_800373D0, 0xE},
+    {dword_D_800373E0, 0xF},
+    {dword_D_800373E8, 0x10},
+    {dword_D_80037444, 0x11}
+};
+//D:800374DC
+u32 D_800374DC[] = {0,0};
+
 //D:800374E4
 char * setup_text_pointers[] = {0,0,0,0,0,0,0,0,0,"UsetupsevbunkerZ",0,0,0,0,0,0,0,0,0,0,"UsetupsiloZ",
     "UsetupsevbunkerZ","UsetupstatueZ","UsetupcontrolZ","UsetuparchZ","UsetuptraZ",
@@ -109,685 +130,685 @@ char * setup_text_pointers[] = {0,0,0,0,0,0,0,0,0,"UsetupsevbunkerZ",0,0,0,0,0,0
 
 
 //D:800375D0
-struct PitemZ_header Palarm1z_header = {0, &model_object_standard_object, 0, 1, 304.6402, 2, 0, 0};
+struct PitemZ_header Palarm1z_header = {0, &model_object_standard_object, 0, 0, 1, 304.6402, 2, 0, 0};
 //D:800375F0
-struct PitemZ_header Palarm2Z_header = {0, &model_object_standard_object, 0, 1, 208.22205, 3, 0, 0};
+struct PitemZ_header Palarm2Z_header = {0, &model_object_standard_object, 0, 0, 1, 208.22205, 3, 0, 0};
 //D:80037610
-struct PitemZ_header PexplosionbitZ_header = {0, &model_object_standard_object, 0, 1, 208.22205, 0, 0, 0};
+struct PitemZ_header PexplosionbitZ_header = {0, &model_object_standard_object, 0, 0, 1, 208.22205, 0, 0, 0};
 //D:80037630
-struct PitemZ_header Pammo_crate1Z_header = {0, &model_object_standard_object, 0, 1, 691.83429, 3, 0, 0};
+struct PitemZ_header Pammo_crate1Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 3, 0, 0};
 //D:80037650
-struct PitemZ_header Pammo_crate2Z_header = {0, &model_object_standard_object, 0, 1, 691.83429, 4, 0, 0};
+struct PitemZ_header Pammo_crate2Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 4, 0, 0};
 //D:80037670
-struct PitemZ_header Pammo_crate3Z_header = {0, &model_object_standard_object, 0, 1, 691.83429, 4, 0, 0};
+struct PitemZ_header Pammo_crate3Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 4, 0, 0};
 //D:80037690
-struct PitemZ_header Pammo_crate4Z_header = {0, &model_object_standard_object, 0, 1, 691.83429, 5, 0, 0};
+struct PitemZ_header Pammo_crate4Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 5, 0, 0};
 //D:800376B0
-struct PitemZ_header Pammo_crate5Z_header = {0, &model_object_standard_object, 0, 1, 691.83429, 5, 0, 0};
+struct PitemZ_header Pammo_crate5Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 5, 0, 0};
 //D:800376D0
-struct PitemZ_header Pbin1Z_header = {0, &model_object_standard_object, 0, 1, 3027.6262, 2, 0, 0};
+struct PitemZ_header Pbin1Z_header = {0, &model_object_standard_object, 0, 0, 1, 3027.6262, 2, 0};
 //D:800376F0
-struct PitemZ_header Pblotter1Z_header = {0, &model_object_standard_object, 0, 1, 432.46707, 1, 0, 0};
+struct PitemZ_header Pblotter1Z_header = {0, &model_object_standard_object, 0, 0, 1, 432.46707, 1, 0, 0};
 //D:80037710
-struct PitemZ_header Pbook1Z_header = {0, &model_object_standard_object, 0, 1, 171.37482, 2, 0, 0};
+struct PitemZ_header Pbook1Z_header = {0, &model_object_standard_object, 0, 0, 1, 171.37482, 2, 0, };
 //D:80037730
-struct PitemZ_header Pbookshelf1Z_header = {0, &model_object_standard_object, 0, 1, 1166.7578, 0xD, 0, 0};
+struct PitemZ_header Pbookshelf1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1166.7578, 0xD, 0, 0};
 //D:80037750
-struct PitemZ_header Pbridge_console1aZ_header = {0, &prop_console_four_screen_related, 4, 1, 788.03992, 0xF, 0, 0};
+struct PitemZ_header Pbridge_console1aZ_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 788.03992, 0xF, 0, 0};
 //D:80037770
-struct PitemZ_header Pbridge_console1bZ_header = {0, &prop_console_one_screen_related, 1, 1, 788.03992, 0x10, 0, 0};
+struct PitemZ_header Pbridge_console1bZ_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 788.03992, 0x10, 0, 0};
 //D:80037790
-struct PitemZ_header Pbridge_console2aZ_header = {0, &prop_console_four_screen_related, 4, 1, 788.03992, 0xF, 0, 0};
+struct PitemZ_header Pbridge_console2aZ_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 788.03992, 0xF, 0, 0};
 //D:800377B0
-struct PitemZ_header Pbridge_console2bZ_header = {0, &model_object_standard_object, 0, 1, 788.03992, 0xF, 0, 0};
+struct PitemZ_header Pbridge_console2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 788.03992, 0xF, 0, 0};
 //D:800377D0
-struct PitemZ_header Pbridge_console3aZ_header = {0, &prop_console_four_screen_related, 4, 1, 788.03992, 0xF, 0, 0};
+struct PitemZ_header Pbridge_console3aZ_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 788.03992, 0xF, 0, 0};
 //D:800377F0
-struct PitemZ_header Pbridge_console3bZ_header = {0, &prop_console_four_screen_related, 4, 1, 788.03992, 0x10, 0, 0};
+struct PitemZ_header Pbridge_console3bZ_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 788.03992, 0x10, 0, 0};
 //D:80037810
-struct PitemZ_header Pcard_box1Z_header = {0, &model_object_standard_object, 0, 1, 727.4613, 5, 0, 0};
+struct PitemZ_header Pcard_box1Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 5, 0, 0};
 //D:80037830
-struct PitemZ_header Pcard_box2Z_header = {0, &model_object_standard_object, 0, 1, 727.4613, 6, 0, 0};
+struct PitemZ_header Pcard_box2Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 6, 0, 0};
 //D:80037850
-struct PitemZ_header Pcard_box3Z_header = {0, &model_object_standard_object, 0, 1, 727.4613, 5, 0, 0};
+struct PitemZ_header Pcard_box3Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 5, 0, 0};
 //D:80037870
-struct PitemZ_header Pcard_box4_lgZ_header = {0, &model_object_standard_object, 0, 1, 800.2074, 4, 0, 0};
+struct PitemZ_header Pcard_box4_lgZ_header = {0, &model_object_standard_object, 0, 0, 1, 800.2074, 4, 0, 0};
 //D:80037890
-struct PitemZ_header Pcard_box5_lgZ_header = {0, &model_object_standard_object, 0, 1, 800.2074, 5, 0, 0};
+struct PitemZ_header Pcard_box5_lgZ_header = {0, &model_object_standard_object, 0, 0, 1, 800.2074, 5, 0, 0};
 //D:800378B0
-struct PitemZ_header Pcard_box6_lgZ_header = {0, &model_object_standard_object, 0, 1, 800.2074, 5, 0, 0};
+struct PitemZ_header Pcard_box6_lgZ_header = {0, &model_object_standard_object, 0, 0, 1, 800.2074, 5, 0, 0};
 //D:800378D0
-struct PitemZ_header PcctvZ_header = {0, &prop_cctv_related, 4, 2, 558.90094, 6, 0, 0};
+struct PitemZ_header PcctvZ_header = {0, &prop_cctv_related, 0, 0, 0x40002, 558.90094, 6, 0};
 //D:800378F0
-struct PitemZ_header Pconsole1Z_header = {0, &prop_console_four_screen_related, 4, 1, 1611.2357, 0xA, 0, 0};
+struct PitemZ_header Pconsole1Z_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 1611.2357, 0xA, 0, 0};
 //D:80037910
-struct PitemZ_header Pconsole2Z_header = {0, &prop_console_four_screen_related, 4, 1, 1611.2357, 0xA, 0, 0};
+struct PitemZ_header Pconsole2Z_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 1611.2357, 0xA, 0, 0};
 //D:80037930
-struct PitemZ_header Pconsole3Z_header = {0, &prop_console_four_screen_related, 4, 1, 1611.2357, 0xA, 0, 0};
+struct PitemZ_header Pconsole3Z_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 1611.2357, 0xA, 0, 0};
 //D:80037950
-struct PitemZ_header Pconsole_sevaZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xE, 0, 0};
+struct PitemZ_header Pconsole_sevaZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xE, 0, 0};
 //D:80037970
-struct PitemZ_header Pconsole_sevbZ_header = {0, &prop_console_one_screen_related, 1, 1, 994.23688, 0xB, 0, 0};
+struct PitemZ_header Pconsole_sevbZ_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 994.23688, 0xB, 0, 0};
 //D:80037990
-struct PitemZ_header Pconsole_sevcZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xF, 0, 0};
+struct PitemZ_header Pconsole_sevcZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xF, 0, 0};
 //D:800379B0
-struct PitemZ_header Pconsole_sevdZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0};
+struct PitemZ_header Pconsole_sevdZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xD, 0, 0};
 //D:800379D0
-struct PitemZ_header Pconsole_sev2aZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0};
+struct PitemZ_header Pconsole_sev2aZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xD, 0, 0};
 //D:800379F0
-struct PitemZ_header Pconsole_sev2bZ_header = {0, &prop_console_one_screen_related, 1, 1, 994.23688, 0xD, 0, 0};
+struct PitemZ_header Pconsole_sev2bZ_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 994.23688, 0xD, 0, 0};
 //D:80037A10
-struct PitemZ_header Pconsole_sev2cZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xF, 0, 0};
+struct PitemZ_header Pconsole_sev2cZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xF, 0, 0};
 //D:80037A30
-struct PitemZ_header Pconsole_sev2dZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0};
+struct PitemZ_header Pconsole_sev2dZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xD, 0, 0};
 //D:80037A50
-struct PitemZ_header Pconsole_sev_GEaZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0};
+struct PitemZ_header Pconsole_sev_GEaZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xD, 0, 0};
 //D:80037A70
-struct PitemZ_header Pconsole_sev_GEbZ_header = {0, &model_object_standard_object, 0, 1, 994.23688, 0xD, 0, 0};
+struct PitemZ_header Pconsole_sev_GEbZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xD, 0, 0};
 //D:80037A90
-struct PitemZ_header Pdesk1Z_header = {0, &model_object_standard_object, 0, 1, 957.18225, 3, 0, 0};
+struct PitemZ_header Pdesk1Z_header = {0, &model_object_standard_object, 0, 0, 1, 957.18225, 3, 0, };
 //D:80037AB0
-struct PitemZ_header Pdesk2Z_header = {0, &model_object_standard_object, 0, 1, 957.18225, 3, 0, 0};
+struct PitemZ_header Pdesk2Z_header = {0, &model_object_standard_object, 0, 0, 1, 957.18225, 3, 0, };
 //D:80037AD0
-struct PitemZ_header Pdesk_lamp2Z_header = {0, &model_object_standard_object, 0, 1, 804.59833, 4, 0, 0};
+struct PitemZ_header Pdesk_lamp2Z_header = {0, &model_object_standard_object, 0, 0, 1, 804.59833, 4, 0, 0};
 //D:80037AF0
-struct PitemZ_header Pdisc_readerZ_header = {0, &model_object_standard_object, 0, 1, 214.33035, 6, 0, 0};
+struct PitemZ_header Pdisc_readerZ_header = {0, &model_object_standard_object, 0, 0, 1, 214.33035, 6, 0, 0};
 //D:80037B10
-struct PitemZ_header Pdisk_drive1Z_header = {0, &model_object_standard_object, 0, 1, 191.85779, 4, 0, 0};
+struct PitemZ_header Pdisk_drive1Z_header = {0, &model_object_standard_object, 0, 0, 1, 191.85779, 4, 0, 0};
 //D:80037B30
-struct PitemZ_header Pfiling_cabinet1Z_header = {0, &model_object_standard_object, 0, 1, 1055.5693, 2, 0, 0};
+struct PitemZ_header Pfiling_cabinet1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1055.5693, 2, 0, 0};
 //D:80037B50
-struct PitemZ_header Pjerry_can1Z_header = {0, &model_object_standard_object, 0, 1, 366.61932, 4, 0, 0};
+struct PitemZ_header Pjerry_can1Z_header = {0, &model_object_standard_object, 0, 0, 1, 366.61932, 4, 0, 0};
 //D:80037B70
-struct PitemZ_header Pkeyboard1Z_header = {0, &model_object_standard_object, 0, 1, 278.23227, 2, 0, 0};
+struct PitemZ_header Pkeyboard1Z_header = {0, &model_object_standard_object, 0, 0, 1, 278.23227, 2, 0, 0};
 //D:80037B90
-struct PitemZ_header Pkit_units1Z_header = {0, &model_object_standard_object, 0, 1, 1661.4763, 4, 0, 0};
+struct PitemZ_header Pkit_units1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1661.4763, 4, 0, 0};
 //D:80037BB0
-struct PitemZ_header Pletter_tray1Z_header = {0, &model_object_standard_object, 0, 1, 252.06836, 1, 0, 0};
+struct PitemZ_header Pletter_tray1Z_header = {0, &model_object_standard_object, 0, 0, 1, 252.06836, 1, 0, 0};
 //D:80037BD0
-struct PitemZ_header Pmainframe1Z_header = {0, &model_object_standard_object, 0, 1, 1119.4073, 7, 0, 0};
+struct PitemZ_header Pmainframe1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1119.4073, 7, 0, 0};
 //D:80037BF0
-struct PitemZ_header Pmainframe2Z_header = {0, &model_object_standard_object, 0, 1, 1119.4073, 7, 0, 0};
+struct PitemZ_header Pmainframe2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1119.4073, 7, 0, 0};
 //D:80037C10
-struct PitemZ_header Pmetal_chair1Z_header = {0, &model_object_standard_object, 0, 1, 639.18097, 2, 0, 0};
+struct PitemZ_header Pmetal_chair1Z_header = {0, &model_object_standard_object, 0, 0, 1, 639.18097, 2, 0, 0};
 //D:80037C30
-struct PitemZ_header Pmetal_crate1Z_header = {0, &model_object_standard_object, 0, 1, 1010.363, 3, 0, 0};
+struct PitemZ_header Pmetal_crate1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 3, 0, 0};
 //D:80037C50
-struct PitemZ_header Pmetal_crate2Z_header = {0, &model_object_standard_object, 0, 1, 1010.363, 3, 0, 0};
+struct PitemZ_header Pmetal_crate2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 3, 0, 0};
 //D:80037C70
-struct PitemZ_header Pmetal_crate3Z_header = {0, &model_object_standard_object, 0, 1, 1010.363, 2, 0, 0};
+struct PitemZ_header Pmetal_crate3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 2, 0, 0};
 //D:80037C90
-struct PitemZ_header Pmetal_crate4Z_header = {0, &model_object_standard_object, 0, 1, 1010.363, 3, 0, 0};
+struct PitemZ_header Pmetal_crate4Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 3, 0, 0};
 //D:80037CB0
-struct PitemZ_header Pmissile_rackZ_header = {0, &model_object_standard_object, 0, 1, 964.16296, 4, 0, 0};
+struct PitemZ_header Pmissile_rackZ_header = {0, &model_object_standard_object, 0, 0, 1, 964.16296, 4, 0, 0};
 //D:80037CD0
-struct PitemZ_header Pmissile_rack2Z_header = {0, &model_object_standard_object, 0, 1, 1148.4724, 4, 0, 0};
+struct PitemZ_header Pmissile_rack2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1148.4724, 4, 0, 0};
 //D:80037CF0
-struct PitemZ_header Poil_drum1Z_header = {0, &model_object_standard_object, 0, 1, 745.45892, 2, 0, 0};
+struct PitemZ_header Poil_drum1Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 2, 0, 0};
 //D:80037D10
-struct PitemZ_header Poil_drum2Z_header = {0, &model_object_standard_object, 0, 1, 745.45892, 4, 0, 0};
+struct PitemZ_header Poil_drum2Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 4, 0, 0};
 //D:80037D30
-struct PitemZ_header Poil_drum3Z_header = {0, &model_object_standard_object, 0, 1, 745.45892, 4, 0, 0};
+struct PitemZ_header Poil_drum3Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 4, 0, 0};
 //D:80037D50
-struct PitemZ_header Poil_drum5Z_header = {0, &model_object_standard_object, 0, 1, 745.45892, 3, 0, 0};
+struct PitemZ_header Poil_drum5Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 3, 0, 0};
 //D:80037D70
-struct PitemZ_header Poil_drum6Z_header = {0, &model_object_standard_object, 0, 1, 745.45892, 3, 0, 0};
+struct PitemZ_header Poil_drum6Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 3, 0, 0};
 //D:80037D90
-struct PitemZ_header Poil_drum7Z_header = {0, &model_object_standard_object, 0, 1, 745.45892, 4, 0, 0};
+struct PitemZ_header Poil_drum7Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 4, 0, 0};
 //D:80037DB0
-struct PitemZ_header PpadlockZ_header = {0, &model_object_standard_object, 0, 1, 225.64145, 4, 0, 0};
+struct PitemZ_header PpadlockZ_header = {0, &model_object_standard_object, 0, 0, 1, 225.64145, 4, 0, 0};
 //D:80037DD0
-struct PitemZ_header Pphone1Z_header = {0, &model_object_standard_object, 0, 1, 166.03481, 2, 0, 0};
+struct PitemZ_header Pphone1Z_header = {0, &model_object_standard_object, 0, 0, 1, 166.03481, 2, 0, 0};
 //D:80037DF0
-struct PitemZ_header Pradio_unit1Z_header = {0, &model_object_standard_object, 0, 1, 354.59534, 5, 0, 0};
+struct PitemZ_header Pradio_unit1Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 5, 0, 0};
 //D:80037E10
-struct PitemZ_header Pradio_unit2Z_header = {0, &model_object_standard_object, 0, 1, 354.59534, 5, 0, 0};
+struct PitemZ_header Pradio_unit2Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 5, 0, 0};
 //D:80037E30
-struct PitemZ_header Pradio_unit3Z_header = {0, &model_object_standard_object, 0, 1, 354.59534, 5, 0, 0};
+struct PitemZ_header Pradio_unit3Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 5, 0, 0};
 //D:80037E50
-struct PitemZ_header Pradio_unit4Z_header = {0, &model_object_standard_object, 0, 1, 354.59534, 5, 0, 0};
+struct PitemZ_header Pradio_unit4Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 5, 0, 0};
 //D:80037E70
-struct PitemZ_header Psat1_reflectZ_header = {0, &model_object_standard_object, 0, 1, 5185.9409, 0xD, 0, 0};
+struct PitemZ_header Psat1_reflectZ_header = {0, &model_object_standard_object, 0, 0, 1, 5185.9409, 0xD, 0, 0};
 //D:80037E90
-struct PitemZ_header PsatdishZ_header = {0, &model_object_standard_object, 0, 1, 2437.468, 2, 0, 0};
+struct PitemZ_header PsatdishZ_header = {0, &model_object_standard_object, 0, 0, 1, 2437.468, 2, 0, 0};
 //D:80037EB0
-struct PitemZ_header PsatboxZ_header = {0, &model_object_standard_object, 0, 1, 89.935875, 1, 0, 0};
+struct PitemZ_header PsatboxZ_header = {0, &model_object_standard_object, 0, 0, 1, 89.935875, 1, 0, 0};
 //D:80037ED0
-struct PitemZ_header Pstool1Z_header = {0, &model_object_standard_object, 0, 1, 353.11398, 2, 0, 0};
+struct PitemZ_header Pstool1Z_header = {0, &model_object_standard_object, 0, 0, 1, 353.11398, 2, 0, 0};
 //D:80037EF0
-struct PitemZ_header Pswivel_chair1Z_header = {0, &model_object_standard_object, 0, 1, 581.16394, 3, 0, 0};
+struct PitemZ_header Pswivel_chair1Z_header = {0, &model_object_standard_object, 0, 0, 1, 581.16394, 3, 0, 0};
 //D:80037F10
-struct PitemZ_header Ptorpedo_rackZ_header = {0, &model_object_standard_object, 0, 1, 765.61725, 3, 0, 0};
+struct PitemZ_header Ptorpedo_rackZ_header = {0, &model_object_standard_object, 0, 0, 1, 765.61725, 3, 0, 0};
 //D:80037F30
-struct PitemZ_header Ptv1Z_header = {0, &prop_console_one_screen_related, 1, 1, 347.0235, 5, 0, 0};
+struct PitemZ_header Ptv1Z_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 347.0235, 5, 0};
 //D:80037F50
-struct PitemZ_header Ptv_holderZ_header = {0, &prop_tv_holder_related, 4, 5, 1352.4841, 2, 0, 0};
+struct PitemZ_header Ptv_holderZ_header = {0, &prop_tv_holder_related, 0, 0, 0x40005, 1352.4841, 2, 0, 0};
 //D:80037F70
-struct PitemZ_header PtvscreenZ_header = {0, &prop_console_one_screen_related, 1, 1, 211.74477, 1, 0, 0};
+struct PitemZ_header PtvscreenZ_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 211.74477, 1, 0, 0};
 //D:80037F90
-struct PitemZ_header Ptv4screenZ_header = {0, &prop_console_four_screen_related, 4, 1, 211.74477, 1, 0, 0};
+struct PitemZ_header Ptv4screenZ_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 211.74477, 1, 0, 0};
 //D:80037FB0
-struct PitemZ_header Pwood_lg_crate1Z_header = {0, &model_object_standard_object, 0, 1, 1010.363, 3, 0, 0};
+struct PitemZ_header Pwood_lg_crate1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 3, 0, 0};
 //D:80037FD0
-struct PitemZ_header Pwood_lg_crate2Z_header = {0, &model_object_standard_object, 0, 1, 1010.363, 2, 0, 0};
+struct PitemZ_header Pwood_lg_crate2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 2, 0, 0};
 //D:80037FF0
-struct PitemZ_header Pwood_md_crate3Z_header = {0, &model_object_standard_object, 0, 1, 909.32666, 2, 0, 0};
+struct PitemZ_header Pwood_md_crate3Z_header = {0, &model_object_standard_object, 0, 0, 1, 909.32666, 2, 0, 0};
 //D:80038010
-struct PitemZ_header Pwood_sm_crate4Z_header = {0, &model_object_standard_object, 0, 1, 727.4613, 3, 0, 0};
+struct PitemZ_header Pwood_sm_crate4Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 3, 0, 0};
 //D:80038030
-struct PitemZ_header Pwood_sm_crate5Z_header = {0, &model_object_standard_object, 0, 1, 727.4613, 4, 0, 0};
+struct PitemZ_header Pwood_sm_crate5Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 4, 0, 0};
 //D:80038050
-struct PitemZ_header Pwood_sm_crate6Z_header = {0, &model_object_standard_object, 0, 1, 727.4613, 4, 0, 0};
+struct PitemZ_header Pwood_sm_crate6Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 4, 0, 0};
 //D:80038070
-struct PitemZ_header Pwooden_table1Z_header = {0, &model_object_standard_object, 0, 1, 1095.1365, 2, 0, 0};
+struct PitemZ_header Pwooden_table1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1095.1365, 2, 0, 0};
 //D:80038090
-struct PitemZ_header Pswipe_card2Z_header = {0, &model_object_standard_object, 0, 1, 123.08884, 2, 0, 0};
+struct PitemZ_header Pswipe_card2Z_header = {0, &model_object_standard_object, 0, 0, 1, 123.088844, 2, 0, 0};
 //D:800380B0
-struct PitemZ_header Pborg_crateZ_header = {0, &model_object_standard_object, 0, 1, 1010.363, 1, 0, 0};
+struct PitemZ_header Pborg_crateZ_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 1, 0, 0};
 //D:800380D0
-struct PitemZ_header Pboxes4x4Z_header = {0, &model_object_standard_object, 0, 1, 2424.8711, 7, 0, 0};
+struct PitemZ_header Pboxes4x4Z_header = {0, &model_object_standard_object, 0, 0, 1, 2424.8711, 7, 0, 0};
 //D:800380F0
-struct PitemZ_header Pboxes3x4Z_header = {0, &model_object_standard_object, 0, 1, 2241.0935, 6, 0, 0};
+struct PitemZ_header Pboxes3x4Z_header = {0, &model_object_standard_object, 0, 0, 1, 2241.0935, 6, 0, 0};
 //D:80038110
-struct PitemZ_header Pboxes2x4Z_header = {0, &model_object_standard_object, 0, 1, 2100.0, 6, 0, 0};
+struct PitemZ_header Pboxes2x4Z_header = {0, &model_object_standard_object, 0, 0, 1, 2100.0, 6, 0, 0};
 //D:80038130
-struct PitemZ_header Psec_panelZ_header = {0, &model_object_standard_object, 0, 1, 1567.2454, 3, 0, 0};
+struct PitemZ_header Psec_panelZ_header = {0, &model_object_standard_object, 0, 0, 1, 1567.2454, 3, 0, 0};
 //D:80038150
-struct PitemZ_header PICBM_noseZ_header = {0, &model_object_standard_object, 0, 1, 2782.7126, 8, 0, 0};
+struct PitemZ_header PICBM_noseZ_header = {0, &model_object_standard_object, 0, 0, 1, 2782.7126, 8, 0, 0};
 //D:80038170
-struct PitemZ_header PICBMZ_header = {0, &model_object_standard_object, 0, 1, 14790.535, 0xE, 0, 0};
+struct PitemZ_header PICBMZ_header = {0, &model_object_standard_object, 0, 0, 1, 14790.535, 0xE, 0};
 //D:80038190
-struct PitemZ_header Ptuning_console1Z_header = {0, &prop_console_one_screen_related, 1, 1, 1139.5872, 0xE, 0, 0};
+struct PitemZ_header Ptuning_console1Z_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 1139.5872, 0xE, 0, 0};
 //D:800381B0
-struct PitemZ_header Pdesk_arecibo1Z_header = {0, &model_object_standard_object, 0, 1, 1829.1477, 3, 0, 0};
+struct PitemZ_header Pdesk_arecibo1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1829.1477, 3, 0, 0};
 //D:800381D0
-struct PitemZ_header Plocker3Z_header = {0, &model_object_standard_object, 0, 1, 916.99805, 3, 0, 0};
+struct PitemZ_header Plocker3Z_header = {0, &model_object_standard_object, 0, 0, 1, 916.99805, 3, 0, 0};
 //D:800381F0
-struct PitemZ_header Plocker4Z_header = {0, &model_object_standard_object, 0, 1, 916.99805, 3, 0, 0};
+struct PitemZ_header Plocker4Z_header = {0, &model_object_standard_object, 0, 0, 1, 916.99805, 3, 0, 0};
 //D:80038210
-struct PitemZ_header ProofgunZ_header = {0, &prop_rotating_stuff_related, 8, 5, 1910.908, 0xE, 0, 0};
+struct PitemZ_header ProofgunZ_header = {0, &prop_rotating_stuff_related, 0, 0, 0x80005, 1910.908, 0xE, 0, 0};
 //D:80038230
-struct PitemZ_header Pdest_engineZ_header = {0, &model_object_standard_object, 0, 1, 6459.439, 0xA, 0, 0};
+struct PitemZ_header Pdest_engineZ_header = {0, &model_object_standard_object, 0, 0, 1, 6459.439, 0xA, 0, 0};
 //D:80038250
-struct PitemZ_header Pdest_exocetZ_header = {0, &model_object_standard_object, 0, 1, 1644.8435, 8, 0, 0};
+struct PitemZ_header Pdest_exocetZ_header = {0, &model_object_standard_object, 0, 0, 1, 1644.8435, 8, 0, 0};
 //D:80038270
-struct PitemZ_header Pdest_gunZ_header = {0, &model_object_standard_object, 0, 1, 2124.0735, 5, 0, 0};
+struct PitemZ_header Pdest_gunZ_header = {0, &model_object_standard_object, 0, 0, 1, 2124.0735, 5, 0, 0};
 //D:80038290
-struct PitemZ_header Pdest_harpoonZ_header = {0, &model_object_standard_object, 0, 1, 1798.7655, 5, 0, 0};
+struct PitemZ_header Pdest_harpoonZ_header = {0, &model_object_standard_object, 0, 0, 1, 1798.7655, 5, 0, 0};
 //D:800382B0
-struct PitemZ_header Pdest_seawolfZ_header = {0, &model_object_standard_object, 0, 1, 2282.0623, 0xA, 0, 0};
+struct PitemZ_header Pdest_seawolfZ_header = {0, &model_object_standard_object, 0, 0, 1, 2282.0623, 0xA, 0, 0};
 //D:800382D0
-struct PitemZ_header PwindowZ_header = {0, &model_object_standard_object, 0, 1, 423.48956, 1, 0, 0};
+struct PitemZ_header PwindowZ_header = {0, &model_object_standard_object, 0, 0, 1, 423.48956, 1, 0, 0};
 //D:800382F0
-struct PitemZ_header Pwindow_lib_lg1Z_header = {0, &model_object_standard_object, 0, 1, 835.20624, 1, 0, 0};
+struct PitemZ_header Pwindow_lib_lg1Z_header = {0, &model_object_standard_object, 0, 0, 1, 835.20624, 1, 0, 0};
 //D:80038310
-struct PitemZ_header Pwindow_lib_sm1Z_header = {0, &model_object_standard_object, 0, 1, 601.28625, 1, 0, 0};
+struct PitemZ_header Pwindow_lib_sm1Z_header = {0, &model_object_standard_object, 0, 0, 1, 601.28625, 1, 0, 0};
 //D:80038330
-struct PitemZ_header Pwindow_cor11Z_header = {0, &model_object_standard_object, 0, 1, 414.53622, 1, 0, 0};
+struct PitemZ_header Pwindow_cor11Z_header = {0, &model_object_standard_object, 0, 0, 1, 414.53622, 1, 0, 0};
 //D:80038350
-struct PitemZ_header Pjungle3_treeZ_header = {0, &model_object_standard_object, 0, 1, 28729.467, 5, 0, 0};
+struct PitemZ_header Pjungle3_treeZ_header = {0, &model_object_standard_object, 0, 0, 1, 28729.467, 5, 0, 0};
 //D:80038370
-struct PitemZ_header PpalmZ_header = {0, &model_object_standard_object, 0, 1, 15501.406, 3, 0, 0};
+struct PitemZ_header PpalmZ_header = {0, &model_object_standard_object, 0, 0, 1, 15501.406, 3, 0};
 //D:80038390
-struct PitemZ_header PpalmtreeZ_header = {0, &model_object_standard_object, 0, 1, 1781.4542, 2, 0, 0};
+struct PitemZ_header PpalmtreeZ_header = {0, &model_object_standard_object, 0, 0, 1, 1781.4542, 2, 0, 0};
 //D:800383B0
-struct PitemZ_header Pplant2bZ_header = {0, &model_object_standard_object, 0, 1, 1252.9539, 2, 0, 0};
+struct PitemZ_header Pplant2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 1252.9539, 2, 0, 0};
 //D:800383D0
-struct PitemZ_header PlabbenchZ_header = {0, &model_object_standard_object, 0, 1, 844.09717, 4, 0, 0};
+struct PitemZ_header PlabbenchZ_header = {0, &model_object_standard_object, 0, 0, 1, 844.09717, 4, 0, 0};
 //D:800383F0
-struct PitemZ_header PgasbarrelZ_header = {0, &model_object_standard_object, 0, 1, 725.94379, 2, 0, 0};
+struct PitemZ_header PgasbarrelZ_header = {0, &model_object_standard_object, 0, 0, 1, 725.94379, 2, 0, 0};
 //D:80038410
-struct PitemZ_header PgasbarrelsZ_header = {0, &model_object_standard_object, 0, 1, 1174.1927, 2, 0, 0};
+struct PitemZ_header PgasbarrelsZ_header = {0, &model_object_standard_object, 0, 0, 1, 1174.1927, 2, 0, 0};
 //D:80038430
-struct PitemZ_header PbodyarmourZ_header = {0, &model_object_standard_object, 0, 1, 246.94099, 7, 0, 0};
+struct PitemZ_header PbodyarmourZ_header = {0, &model_object_standard_object, 0, 0, 1, 246.94099, 7, 0, 0};
 //D:80038450
-struct PitemZ_header PbodyarmourvestZ_header = {0, &model_object_standard_object, 0, 1, 241.82211, 2, 0, 0};
+struct PitemZ_header PbodyarmourvestZ_header = {0, &model_object_standard_object, 0, 0, 1, 241.82211, 2, 0, 0};
 //D:80038470
-struct PitemZ_header PgastankZ_header = {0, &model_object_standard_object, 0, 1, 1130.0691, 5, 0, 0};
+struct PitemZ_header PgastankZ_header = {0, &model_object_standard_object, 0, 0, 1, 1130.0691, 5, 0, 0};
 //D:80038490
-struct PitemZ_header Pglassware1Z_header = {0, &model_object_standard_object, 0, 1, 72.111031, 1, 0, 0};
+struct PitemZ_header Pglassware1Z_header = {0, &model_object_standard_object, 0, 0, 1, 72.111031, 1, 0, 0};
 //D:800384B0
-struct PitemZ_header PhatchboltZ_header = {0, &model_object_standard_object, 0, 1, 2236.0679, 1, 0, 0};
+struct PitemZ_header PhatchboltZ_header = {0, &model_object_standard_object, 0, 0, 1, 2236.0679, 1, 0, 0};
 //D:800384D0
-struct PitemZ_header PbrakeunitZ_header = {0, &model_object_standard_object, 0, 1, 801.95074, 4, 0, 0};
+struct PitemZ_header PbrakeunitZ_header = {0, &model_object_standard_object, 0, 0, 1, 801.95074, 4, 0, 0};
 //D:800384F0
-struct PitemZ_header Pak47magZ_header = {0, &model_object_standard_object, 0, 1, 107.11019, 2, 0, 0};
+struct PitemZ_header Pak47magZ_header = {0, &model_object_standard_object, 0, 0, 1, 107.11019, 2, 0, 0};
 //D:80038510
-struct PitemZ_header Pm16magZ_header = {0, &model_object_standard_object, 0, 1, 87.934891, 2, 0, 0};
+struct PitemZ_header Pm16magZ_header = {0, &model_object_standard_object, 0, 0, 1, 87.934891, 2, 0, 0};
 //D:80038530
-struct PitemZ_header Pmp5kmagZ_header = {0, &model_object_standard_object, 0, 1, 119.54729, 2, 0, 0};
+struct PitemZ_header Pmp5kmagZ_header = {0, &model_object_standard_object, 0, 0, 1, 119.547295, 2, 0, 0};
 //D:80038550
-struct PitemZ_header PskorpionmagZ_header = {0, &model_object_standard_object, 0, 1, 58.428444, 2, 0, 0};
+struct PitemZ_header PskorpionmagZ_header = {0, &model_object_standard_object, 0, 0, 1, 58.428444, 2, 0, 0};
 //D:80038570
-struct PitemZ_header PspectremagZ_header = {0, &model_object_standard_object, 0, 1, 99.01432, 2, 0, 0};
+struct PitemZ_header PspectremagZ_header = {0, &model_object_standard_object, 0, 0, 1, 99.01432, 2, 0, 0};
 //D:80038590
-struct PitemZ_header PuzimagZ_header = {0, &model_object_standard_object, 0, 1, 74.28373, 2, 0, 0};
+struct PitemZ_header PuzimagZ_header = {0, &model_object_standard_object, 0, 0, 1, 74.28373, 2, 0, 0};
 //D:800385B0
-struct PitemZ_header PsilencerZ_header = {0, &model_object_standard_object, 0, 1, 63.915436, 3, 0, 0};
+struct PitemZ_header PsilencerZ_header = {0, &model_object_standard_object, 0, 0, 1, 63.915436, 3, 0, 0};
 //D:800385D0
-struct PitemZ_header PchrextinguisherZ_header = {0, &model_object_standard_object, 0, 1, 425.50903, 2, 0, 0};
+struct PitemZ_header PchrextinguisherZ_header = {0, &model_object_standard_object, 0, 0, 1, 425.50903, 2, 0, 0};
 //D:800385F0
-struct PitemZ_header PboxcartridgesZ_header = {0, &model_object_standard_object, 0, 1, 66.81916, 3, 0, 0};
+struct PitemZ_header PboxcartridgesZ_header = {0, &model_object_standard_object, 0, 0, 1, 66.81916, 3, 0, 0};
 //D:80038610
-struct PitemZ_header Pfnp90magZ_header = {0, &model_object_standard_object, 0, 1, 176.28201, 2, 0, 0};
+struct PitemZ_header Pfnp90magZ_header = {0, &model_object_standard_object, 0, 0, 1, 176.28201, 2, 0, 0};
 //D:80038630
-struct PitemZ_header PgoldenshellsZ_header = {0, &model_object_standard_object, 0, 1, 66.81916, 3, 0, 0};
+struct PitemZ_header PgoldenshellsZ_header = {0, &model_object_standard_object, 0, 0, 1, 66.81916, 3, 0, 0};
 //D:80038650
-struct PitemZ_header PmagnumshellsZ_header = {0, &model_object_standard_object, 0, 1, 66.81916, 3, 0, 0};
+struct PitemZ_header PmagnumshellsZ_header = {0, &model_object_standard_object, 0, 0, 1, 66.81916, 3, 0, 0};
 //D:80038670
-struct PitemZ_header PwppkmagZ_header = {0, &model_object_standard_object, 0, 1, 74.28373, 2, 0, 0};
+struct PitemZ_header PwppkmagZ_header = {0, &model_object_standard_object, 0, 0, 1, 74.28373, 2, 0, 0};
 //D:80038690
-struct PitemZ_header Ptt33magZ_header = {0, &model_object_standard_object, 0, 1, 74.28373, 2, 0, 0};
+struct PitemZ_header Ptt33magZ_header = {0, &model_object_standard_object, 0, 0, 1, 74.28373, 2, 0, 0};
 //D:800386B0
-struct PitemZ_header Psev_doorZ_header = {0, &model_object_standard_object, 0, 1, 1143.7695, 3, 0, 0};
+struct PitemZ_header Psev_doorZ_header = {0, &model_object_standard_object, 0, 0, 1, 1143.7695, 3, 0, 0};
 //D:800386D0
-struct PitemZ_header Psev_door3Z_header = {0, &model_object_standard_object, 0, 1, 1143.5603, 6, 0, 0};
+struct PitemZ_header Psev_door3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1143.5603, 6, 0, 0};
 //D:800386F0
-struct PitemZ_header Psev_door3_windZ_header = {0, &model_object_standard_object, 0, 1, 1143.5603, 5, 0, 0};
+struct PitemZ_header Psev_door3_windZ_header = {0, &model_object_standard_object, 0, 0, 1, 1143.5603, 5, 0, 0};
 //D:80038710
-struct PitemZ_header Psev_door4_windZ_header = {0, &prop_door_related, 4, 1, 1143.5603, 8, 0, 0};
+struct PitemZ_header Psev_door4_windZ_header = {0, &prop_door_related, 0, 0, 0x40001, 1143.5603, 8, 0, 0};
 //D:80038730
-struct PitemZ_header Psev_trislideZ_header = {0, &prop_door_related, 4, 1, 950.54327, 2, 0, 0};
+struct PitemZ_header Psev_trislideZ_header = {0, &prop_door_related, 0, 0, 0x40001, 950.54327, 2, 0, 0};
 //D:80038750
-struct PitemZ_header Psev_door_v1Z_header = {0, &model_object_standard_object, 0, 1, 1137.8739, 6, 0, 0};
+struct PitemZ_header Psev_door_v1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 6, 0, 0};
 //D:80038770
-struct PitemZ_header Psteel_door1Z_header = {0, &model_object_standard_object, 0, 1, 1137.8739, 4, 0, 0};
+struct PitemZ_header Psteel_door1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 4, 0, 0};
 //D:80038790
-struct PitemZ_header Psteel_door2Z_header = {0, &model_object_standard_object, 0, 1, 1137.8739, 9, 0, 0};
+struct PitemZ_header Psteel_door2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 9, 0, 0};
 //D:800387B0
-struct PitemZ_header Psteel_door3Z_header = {0, &model_object_standard_object, 0, 1, 1137.8739, 9, 0, 0};
+struct PitemZ_header Psteel_door3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 9, 0, 0};
 //D:800387D0
-struct PitemZ_header Psilo_lift_doorZ_header = {0, &model_object_standard_object, 0, 1, 600.71082, 4, 0, 0};
+struct PitemZ_header Psilo_lift_doorZ_header = {0, &model_object_standard_object, 0, 0, 1, 600.71082, 4, 0, 0};
 //D:800387F0
-struct PitemZ_header Psteel_door2bZ_header = {0, &model_object_standard_object, 0, 1, 1137.8739, 9, 0, 0};
+struct PitemZ_header Psteel_door2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 9, 0, 0};
 //D:80038810
-struct PitemZ_header Pdoor_roller1Z_header = {0, &model_object_standard_object, 0, 1, 1032.125, 4, 0, 0};
+struct PitemZ_header Pdoor_roller1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 4, 0, 0};
 //D:80038830
-struct PitemZ_header Pdoor_roller2Z_header = {0, &model_object_standard_object, 0, 1, 1032.125, 4, 0, 0};
+struct PitemZ_header Pdoor_roller2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 4, 0, 0};
 //D:80038850
-struct PitemZ_header Pdoor_roller3Z_header = {0, &model_object_standard_object, 0, 1, 1032.125, 4, 0, 0};
+struct PitemZ_header Pdoor_roller3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 4, 0, 0};
 //D:80038870
-struct PitemZ_header Pdoor_roller4Z_header = {0, &model_object_standard_object, 0, 1, 1032.125, 4, 0, 0};
+struct PitemZ_header Pdoor_roller4Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 4, 0, 0};
 //D:80038890
-struct PitemZ_header Pdoor_st_arec1Z_header = {0, &model_object_standard_object, 0, 1, 763.03589, 3, 0, 0};
+struct PitemZ_header Pdoor_st_arec1Z_header = {0, &model_object_standard_object, 0, 0, 1, 763.03589, 3, 0, 0};
 //D:800388B0
-struct PitemZ_header Pdoor_st_arec2Z_header = {0, &model_object_standard_object, 0, 1, 763.03589, 3, 0, 0};
+struct PitemZ_header Pdoor_st_arec2Z_header = {0, &model_object_standard_object, 0, 0, 1, 763.03589, 3, 0, 0};
 //D:800388D0
-struct PitemZ_header Pdoor_dest1Z_header = {0, &model_object_standard_object, 0, 1, 461.3873, 3, 0, 0};
+struct PitemZ_header Pdoor_dest1Z_header = {0, &model_object_standard_object, 0, 0, 1, 461.3873, 3, 0, 0};
 //D:800388F0
-struct PitemZ_header Pdoor_dest2Z_header = {0, &model_object_standard_object, 0, 1, 461.3873, 5, 0, 0};
+struct PitemZ_header Pdoor_dest2Z_header = {0, &model_object_standard_object, 0, 0, 1, 461.3873, 5, 0, 0};
 //D:80038910
-struct PitemZ_header Pgas_plant_sw_do1Z_header = {0, &model_object_standard_object, 0, 1, 862.29706, 4, 0, 0};
+struct PitemZ_header Pgas_plant_sw_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.29706, 4, 0, 0};
 //D:80038930
-struct PitemZ_header Pgas_plant_sw2_do1Z_header = {0, &model_object_standard_object, 0, 1, 862.88489, 2, 0, 0};
+struct PitemZ_header Pgas_plant_sw2_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 2, 0, 0};
 //D:80038950
-struct PitemZ_header Pgas_plant_sw3_do1Z_header = {0, &model_object_standard_object, 0, 1, 862.88489, 2, 0, 0};
+struct PitemZ_header Pgas_plant_sw3_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 2, 0, 0};
 //D:80038970
-struct PitemZ_header Pgas_plant_sw4_do1Z_header = {0, &model_object_standard_object, 0, 1, 862.88489, 1, 0, 0};
+struct PitemZ_header Pgas_plant_sw4_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 1, 0, 0};
 //D:80038990
-struct PitemZ_header Pgas_plant_met1_do1Z_header = {0, &model_object_standard_object, 0, 1, 862.88489, 5, 0, 0};
+struct PitemZ_header Pgas_plant_met1_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 5, 0, 0};
 //D:800389B0
-struct PitemZ_header Pgas_plant_wc_cub1Z_header = {0, &model_object_standard_object, 0, 1, 783.8501, 3, 0, 0};
+struct PitemZ_header Pgas_plant_wc_cub1Z_header = {0, &model_object_standard_object, 0, 0, 1, 783.8501, 3, 0, 0};
 //D:800389D0
-struct PitemZ_header Pgasplant_clear_doorZ_header = {0, &prop_door_related, 4, 1, 1025.0952, 2, 0, 0};
+struct PitemZ_header Pgasplant_clear_doorZ_header = {0, &prop_door_related, 0, 0, 0x40001, 1025.0952, 2, 0, 0};
 //D:800389F0
-struct PitemZ_header Ptrain_doorZ_header = {0, &model_object_standard_object, 0, 1, 456.99615, 3, 0, 0};
+struct PitemZ_header Ptrain_doorZ_header = {0, &model_object_standard_object, 0, 0, 1, 456.99615, 3, 0, 0};
 //D:80038A10
-struct PitemZ_header Ptrain_door2Z_header = {0, &prop_door_related, 4, 1, 445.98541, 3, 0, 0};
+struct PitemZ_header Ptrain_door2Z_header = {0, &prop_door_related, 0, 0, 0x40001, 445.98541, 3, 0, 0};
 //D:80038A30
-struct PitemZ_header Ptrain_door3Z_header = {0, &prop_door_related, 4, 1, 445.98541, 4, 0, 0};
+struct PitemZ_header Ptrain_door3Z_header = {0, &prop_door_related, 0, 0, 0x40001, 445.98541, 4, 0, 0};
 //D:80038A50
-struct PitemZ_header Pdoor_eyelidZ_header = {0, &prop_eyelid_door_related, 3, 3, 3165.4348, 3, 0, 0};
+struct PitemZ_header Pdoor_eyelidZ_header = {0, &prop_eyelid_door_related, 0, 0, 0x30003, 3165.4348, 3, 0, 0};
 //D:80038A70
-struct PitemZ_header Pdoor_irisZ_header = {0, &prop_iris_door_related, 0xD, 0xD, 1621.3601, 5, 0, 0};
+struct PitemZ_header Pdoor_irisZ_header = {0, &prop_iris_door_related, 0, 0, 0xD000D, 1621.3601, 5, 0, 0};
 //D:80038A90
-struct PitemZ_header PsevdoorwoodZ_header = {0, &prop_door_related, 4, 1, 851.62671, 3, 0, 0};
+struct PitemZ_header PsevdoorwoodZ_header = {0, &prop_door_related, 0, 0, 0x40001, 851.62671, 3, 0, 0};
 //D:80038AB0
-struct PitemZ_header PsevdoorwindZ_header = {0, &prop_door_related, 4, 1, 851.62671, 5, 0, 0};
+struct PitemZ_header PsevdoorwindZ_header = {0, &prop_door_related, 0, 0, 0x40001, 851.62671, 5, 0, 0};
 //D:80038AD0
-struct PitemZ_header PsevdoornowindZ_header = {0, &model_object_standard_object, 0, 1, 863.03766, 2, 0, 0};
+struct PitemZ_header PsevdoornowindZ_header = {0, &model_object_standard_object, 0, 0, 1, 863.03766, 2, 0, 0};
 //D:80038AF0
-struct PitemZ_header PsevdoormetslideZ_header = {0, &model_object_standard_object, 0, 1, 863.74707, 2, 0, 0};
+struct PitemZ_header PsevdoormetslideZ_header = {0, &model_object_standard_object, 0, 0, 1, 863.74707, 2, 0, 0};
 //D:80038B10
-struct PitemZ_header Pcryptdoor1aZ_header = {0, &model_object_standard_object, 0, 1, 502.64923, 2, 0, 0};
+struct PitemZ_header Pcryptdoor1aZ_header = {0, &model_object_standard_object, 0, 0, 1, 502.64923, 2, 0, 0};
 //D:80038B30
-struct PitemZ_header Pcryptdoor1bZ_header = {0, &model_object_standard_object, 0, 1, 400.97537, 2, 0, 0};
+struct PitemZ_header Pcryptdoor1bZ_header = {0, &model_object_standard_object, 0, 0, 1, 400.97537, 2, 0, 0};
 //D:80038B50
-struct PitemZ_header Pcryptdoor2aZ_header = {0, &model_object_standard_object, 0, 1, 502.64923, 2, 0, 0};
+struct PitemZ_header Pcryptdoor2aZ_header = {0, &model_object_standard_object, 0, 0, 1, 502.64923, 2, 0, 0};
 //D:80038B70
-struct PitemZ_header Pcryptdoor2bZ_header = {0, &model_object_standard_object, 0, 1, 400.97537, 2, 0, 0};
+struct PitemZ_header Pcryptdoor2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 400.97537, 2, 0, 0};
 //D:80038B90
-struct PitemZ_header Pcryptdoor3Z_header = {0, &model_object_standard_object, 0, 1, 801.95074, 3, 0, 0};
+struct PitemZ_header Pcryptdoor3Z_header = {0, &model_object_standard_object, 0, 0, 1, 801.95074, 3, 0, 0};
 //D:80038BB0
-struct PitemZ_header Pcryptdoor4Z_header = {0, &model_object_standard_object, 0, 1, 801.95074, 1, 0, 0};
+struct PitemZ_header Pcryptdoor4Z_header = {0, &model_object_standard_object, 0, 0, 1, 801.95074, 1, 0, 0};
 //D:80038BD0
-struct PitemZ_header PvertdoorZ_header = {0, &model_object_standard_object, 0, 1, 1997.2246, 5, 0, 0};
+struct PitemZ_header PvertdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 1997.2246, 5, 0, 0};
 //D:80038BF0
-struct PitemZ_header PhatchdoorZ_header = {0, &model_object_standard_object, 0, 1, 192.1653, 1, 0, 0};
+struct PitemZ_header PhatchdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 192.1653, 1, 0, 0};
 //D:80038C10
-struct PitemZ_header PdamgatedoorZ_header = {0, &model_object_standard_object, 0, 1, 308.36456, 3, 0, 0};
+struct PitemZ_header PdamgatedoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 308.36456, 3, 0, 0};
 //D:80038C30
-struct PitemZ_header PdamtundoorZ_header = {0, &model_object_standard_object, 0, 1, 127.89996, 4, 0, 0};
+struct PitemZ_header PdamtundoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 127.89996, 4, 0, 0};
 //D:80038C50
-struct PitemZ_header PdamchaindoorZ_header = {0, &model_object_standard_object, 0, 1, 171.36655, 2, 0, 0};
+struct PitemZ_header PdamchaindoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 171.36655, 2, 0, 0};
 //D:80038C70
-struct PitemZ_header PsilotopdoorZ_header = {0, &model_object_standard_object, 0, 1, 2675.3958, 5, 0, 0};
+struct PitemZ_header PsilotopdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 2675.3958, 5, 0, 0};
 //D:80038C90
-struct PitemZ_header Pdoorprison1Z_header = {0, &model_object_standard_object, 0, 1, 1062.0833, 1, 0, 0};
+struct PitemZ_header Pdoorprison1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1062.0833, 1, 0, 0};
 //D:80038CB0
-struct PitemZ_header PdoorstatgateZ_header = {0, &model_object_standard_object, 0, 1, 1503.9503, 3, 0, 0};
+struct PitemZ_header PdoorstatgateZ_header = {0, &model_object_standard_object, 0, 0, 1, 1503.9503, 3, 0, 0};
 //D:80038CD0
-struct PitemZ_header PchrkalashZ_header = {0, &prop_weapon_related, 3, 1, 403.53766, 8, 0, 0};
+struct PitemZ_header PchrkalashZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 403.53766, 8, 0, 0};
 //D:80038CF0
-struct PitemZ_header PchrgrenadelaunchZ_header = {0, &prop_weapon_related, 3, 1, 422.48355, 7, 0, 0};
+struct PitemZ_header PchrgrenadelaunchZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 422.48355, 7, 0, 0};
 //D:80038D10
-struct PitemZ_header PchrknifeZ_header = {0, &prop_weapon_related, 3, 1, 245.14619, 2, 0, 0};
+struct PitemZ_header PchrknifeZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 245.14619, 2, 0, 0};
 //D:80038D30
-struct PitemZ_header PchrlaserZ_header = {0, &prop_weapon_related, 3, 2, 444.66241, 8, 0, 0};
+struct PitemZ_header PchrlaserZ_header = {0, &prop_weapon_related, 0, 0, 0x30002, 444.66241, 8, 0, 0};
 //D:80038D50
-struct PitemZ_header Pchrm16Z_header = {0, &prop_weapon_related, 3, 2, 964.01367, 6, 0, 0};
+struct PitemZ_header Pchrm16Z_header = {0, &prop_weapon_related, 0, 0, 0x30002, 964.01367, 6, 0, 0};
 //D:80038D70
-struct PitemZ_header Pchrmp5kZ_header = {0, &prop_weapon_related, 3, 1, 277.32227, 9, 0, 0};
+struct PitemZ_header Pchrmp5kZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 277.32227, 9, 0, 0};
 //D:80038D90
-struct PitemZ_header PchrrugerZ_header = {0, &prop_weapon_related, 3, 1, 246.72643, 5, 0, 0};
+struct PitemZ_header PchrrugerZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 246.72643, 5, 0, 0};
 //D:80038DB0
-struct PitemZ_header PchrwppkZ_header = {0, &prop_weapon_related, 3, 1, 125.79879, 5, 0, 0};
+struct PitemZ_header PchrwppkZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 125.79879, 5, 0, 0};
 //D:80038DD0
-struct PitemZ_header PchrshotgunZ_header = {0, &prop_weapon_related, 3, 1, 488.88385, 8, 0, 0};
+struct PitemZ_header PchrshotgunZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 488.88385, 8, 0, 0};
 //D:80038DF0
-struct PitemZ_header PchrskorpionZ_header = {0, &prop_weapon_related, 3, 1, 183.37708, 7, 0, 0};
+struct PitemZ_header PchrskorpionZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 183.37708, 7, 0, 0};
 //D:80038E10
-struct PitemZ_header PchrspectreZ_header = {0, &prop_weapon_related, 3, 1, 351.26923, 6, 0, 0};
+struct PitemZ_header PchrspectreZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 351.26923, 6, 0, 0};
 //D:80038E30
-struct PitemZ_header PchruziZ_header = {0, &prop_weapon_related, 3, 1, 265.11813, 7, 0, 0};
+struct PitemZ_header PchruziZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 265.11813, 7, 0, 0};
 //D:80038E50
-struct PitemZ_header PchrgrenadeZ_header = {0, &prop_weapon_related, 3, 1, 118.18749, 2, 0, 0};
+struct PitemZ_header PchrgrenadeZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 118.18749, 2, 0, 0};
 //D:80038E70
-struct PitemZ_header Pchrfnp90Z_header = {0, &prop_weapon_related, 3, 2, 470.04633, 7, 0, 0};
+struct PitemZ_header Pchrfnp90Z_header = {0, &prop_weapon_related, 0, 0, 0x30002, 470.04633, 7, 0, 0};
 //D:80038E90
-struct PitemZ_header PchrbriefcaseZ_header = {0, &prop_weapon_related, 3, 1, 342.23688, 5, 0, 0};
+struct PitemZ_header PchrbriefcaseZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 342.23688, 5, 0, 0};
 //D:80038EB0
-struct PitemZ_header PchrremotemineZ_header = {0, &prop_weapon_related, 3, 1, 87.434036, 2, 0, 0};
+struct PitemZ_header PchrremotemineZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 87.434036, 2, 0, 0};
 //D:80038ED0
-struct PitemZ_header PchrproximitymineZ_header = {0, &prop_weapon_related, 3, 1, 87.196609, 2, 0, 0};
+struct PitemZ_header PchrproximitymineZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 87.196609, 2, 0, 0};
 //D:80038EF0
-struct PitemZ_header PchrtimedmineZ_header = {0, &prop_weapon_related, 3, 1, 87.245888, 3, 0, 0};
+struct PitemZ_header PchrtimedmineZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 87.245888, 3, 0, 0};
 //D:80038F10
-struct PitemZ_header PchrrocketZ_header = {0, &prop_weapon_related, 3, 1, 342.8634, 3, 0, 0};
+struct PitemZ_header PchrrocketZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 342.8634, 3, 0, 0};
 //D:80038F30
-struct PitemZ_header PchrgrenaderoundZ_header = {0, &prop_weapon_related, 3, 1, 96.976593, 1, 0, 0};
+struct PitemZ_header PchrgrenaderoundZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 96.976593, 1, 0, 0};
 //D:80038F50
-struct PitemZ_header PchrwppksilZ_header = {0, &prop_weapon_related, 3, 1, 219.44571, 6, 0, 0};
+struct PitemZ_header PchrwppksilZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 219.44571, 6, 0, 0};
 //D:80038F70
-struct PitemZ_header Pchrtt33Z_header = {0, &prop_weapon_related, 3, 1, 142.11539, 5, 0, 0};
+struct PitemZ_header Pchrtt33Z_header = {0, &prop_weapon_related, 0, 0, 0x30001, 142.11539, 5, 0, 0};
 //D:80038F90
-struct PitemZ_header Pchrmp5ksilZ_header = {0, &prop_weapon_related, 3, 1, 406.18033, 0xA, 0, 0};
+struct PitemZ_header Pchrmp5ksilZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 406.18033, 0xA, 0, 0};
 //D:80038FB0
-struct PitemZ_header PchrautoshotZ_header = {0, &prop_weapon_related, 3, 1, 375.50247, 8, 0, 0};
+struct PitemZ_header PchrautoshotZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 375.50247, 8, 0, 0};
 //D:80038FD0
-struct PitemZ_header PchrgoldenZ_header = {0, &prop_weapon_related, 3, 1, 157.98299, 2, 0, 0};
+struct PitemZ_header PchrgoldenZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 157.98299, 2, 0, 0};
 //D:80038FF0
-struct PitemZ_header PchrthrowknifeZ_header = {0, &prop_weapon_related, 3, 1, 217.61888, 2, 0, 0};
+struct PitemZ_header PchrthrowknifeZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 217.61888, 2, 0, 0};
 //D:80039010
-struct PitemZ_header PchrsniperrifleZ_header = {0, &prop_weapon_related, 3, 1, 616.93939, 5, 0, 0};
+struct PitemZ_header PchrsniperrifleZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 616.93939, 5, 0, 0};
 //D:80039030
-struct PitemZ_header PchrrocketlaunchZ_header = {0, &prop_weapon_related, 3, 2, 501.55179, 6, 0, 0};
+struct PitemZ_header PchrrocketlaunchZ_header = {0, &prop_weapon_related, 0, 0, 0x30002, 501.55179, 6, 0, 0};
 //D:80039050
-struct PitemZ_header PhatfurryZ_header = {0, &item_hat_related, 0, 1, 152.53136, 3, 0, 0};
+struct PitemZ_header PhatfurryZ_header = {0, &item_hat_related, 0, 0, 1, 152.53136, 3, 0, 0};
 //D:80039070
-struct PitemZ_header PhatfurrybrownZ_header = {0, &item_hat_related, 0, 1, 152.53136, 3, 0, 0};
+struct PitemZ_header PhatfurrybrownZ_header = {0, &item_hat_related, 0, 0, 1, 152.53136, 3, 0, 0};
 //D:80039090
-struct PitemZ_header PhatfurryblackZ_header = {0, &item_hat_related, 0, 1, 152.53136, 3, 0, 0};
+struct PitemZ_header PhatfurryblackZ_header = {0, &item_hat_related, 0, 0, 1, 152.53136, 3, 0, 0};
 //D:800390B0
-struct PitemZ_header PhattbirdZ_header = {0, &item_hat_related, 0, 1, 114.45274, 1, 0, 0};
+struct PitemZ_header PhattbirdZ_header = {0, &item_hat_related, 0, 0, 1, 114.45274, 1, 0, 0};
 //D:800390D0
-struct PitemZ_header PhattbirdbrownZ_header = {0, &item_hat_related, 0, 1, 122.7013, 1, 0, 0};
+struct PitemZ_header PhattbirdbrownZ_header = {0, &item_hat_related, 0, 0, 1, 122.7013, 1, 0, 0};
 //D:800390F0
-struct PitemZ_header PhathelmetZ_header = {0, &item_hat_related, 0, 1, 163.84476, 1, 0, 0};
+struct PitemZ_header PhathelmetZ_header = {0, &item_hat_related, 0, 0, 1, 163.84476, 1, 0, 0};
 //D:80039110
-struct PitemZ_header PhathelmetgreyZ_header = {0, &item_hat_related, 0, 1, 163.84476, 1, 0, 0};
+struct PitemZ_header PhathelmetgreyZ_header = {0, &item_hat_related, 0, 0, 1, 163.84476, 1, 0, 0};
 //D:80039130
-struct PitemZ_header PhatmoonZ_header = {0, &item_hat_related, 0, 1, 138.25751, 2, 0, 0};
+struct PitemZ_header PhatmoonZ_header = {0, &item_hat_related, 0, 0, 1, 138.25751, 2, 0, 0};
 //D:80039150
-struct PitemZ_header PhatberetZ_header = {0, &item_hat_related, 0, 1, 116.16043, 1, 0, 0};
+struct PitemZ_header PhatberetZ_header = {0, &item_hat_related, 0, 0, 1, 116.16043, 1, 0, 0};
 //D:80039170
-struct PitemZ_header PhatberetblueZ_header = {0, &item_hat_related, 0, 1, 116.16043, 2, 0, 0};
+struct PitemZ_header PhatberetblueZ_header = {0, &item_hat_related, 0, 0, 1, 116.16043, 2, 0, 0};
 //D:80039190
-struct PitemZ_header PhatberetredZ_header = {0, &item_hat_related, 0, 1, 115.46455, 2, 0, 0};
+struct PitemZ_header PhatberetredZ_header = {0, &item_hat_related, 0, 0, 1, 115.46455, 2, 0, 0};
 //D:800391B0
-struct PitemZ_header PhatpeakedZ_header = {0, &item_hat_related, 0, 1, 148.39027, 1, 0, 0};
+struct PitemZ_header PhatpeakedZ_header = {0, &item_hat_related, 0, 0, 1, 148.39027, 1, 0, 0};
 //D:800391D0
-struct PitemZ_header PchrwristdartZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrwristdartZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:800391F0
-struct PitemZ_header PchrexplosivepenZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrexplosivepenZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039210
-struct PitemZ_header PchrbombcaseZ_header = {0, &prop_weapon_related, 3, 1, 342.23688, 5, 0, 0};
+struct PitemZ_header PchrbombcaseZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 342.23688, 5, 0, 0};
 //D:80039230
-struct PitemZ_header PchrflarepistolZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrflarepistolZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039250
-struct PitemZ_header PchrpitongunZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrpitongunZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039270
-struct PitemZ_header PchrfingergunZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrfingergunZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039290
-struct PitemZ_header PchrsilverwppkZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrsilverwppkZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:800392B0
-struct PitemZ_header PchrgoldwppkZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrgoldwppkZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:800392D0
-struct PitemZ_header PchrdynamiteZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrdynamiteZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:800392F0
-struct PitemZ_header PchrbungeeZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrbungeeZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039310
-struct PitemZ_header PchrdoordecoderZ_header = {0, &prop_weapon_related, 3, 1, 180.27969, 0x10, 0, 0};
+struct PitemZ_header PchrdoordecoderZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 180.27969, 0x10, 0, 0};
 //D:80039330
-struct PitemZ_header PchrbombdefuserZ_header = {0, &model_object_standard_object, 0, 1, 84.370705, 0xC, 0, 0};
+struct PitemZ_header PchrbombdefuserZ_header = {0, &model_object_standard_object, 0, 0, 1, 84.370705, 0xC, 0, 0};
 //D:80039350
-struct PitemZ_header PchrbugdetectorZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrbugdetectorZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039370
-struct PitemZ_header PchrsafecrackercaseZ_header = {0, &prop_weapon_related, 3, 1, 342.23688, 5, 0, 0};
+struct PitemZ_header PchrsafecrackercaseZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 342.23688, 5, 0, 0};
 //D:80039390
-struct PitemZ_header PchrcameraZ_header = {0, &model_object_standard_object, 0, 1, 52.775627, 0xB, 0, 0};
+struct PitemZ_header PchrcameraZ_header = {0, &model_object_standard_object, 0, 0, 1, 52.775627, 0xB, 0, 0};
 //D:800393B0
-struct PitemZ_header PchrlockexploderZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrlockexploderZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:800393D0
-struct PitemZ_header PchrdoorexploderZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrdoorexploderZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:800393F0
-struct PitemZ_header PchrkeyanalysercaseZ_header = {0, &prop_weapon_related, 3, 1, 342.23688, 5, 0, 0};
+struct PitemZ_header PchrkeyanalysercaseZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 342.23688, 5, 0, 0};
 //D:80039410
-struct PitemZ_header PchrweaponcaseZ_header = {0, &model_object_standard_object, 0, 1, 274.2905, 5, 0, 0};
+struct PitemZ_header PchrweaponcaseZ_header = {0, &model_object_standard_object, 0, 0, 1, 274.2905, 5, 0, 0};
 //D:80039430
-struct PitemZ_header PchrkeyyaleZ_header = {0, &model_object_standard_object, 0, 1, 82.850311, 1, 0, 0};
+struct PitemZ_header PchrkeyyaleZ_header = {0, &model_object_standard_object, 0, 0, 1, 82.850311, 1, 0, 0};
 //D:80039450
-struct PitemZ_header PchrkeyboltZ_header = {0, &model_object_standard_object, 0, 1, 151.85315, 1, 0, 0};
+struct PitemZ_header PchrkeyboltZ_header = {0, &model_object_standard_object, 0, 0, 1, 151.85315, 1, 0, 0};
 //D:80039470
-struct PitemZ_header PchrbugZ_header = {0, &model_object_standard_object, 0, 1, 104.7203, 6, 0, 0};
+struct PitemZ_header PchrbugZ_header = {0, &model_object_standard_object, 0, 0, 1, 104.7203, 6, 0, 0};
 //D:80039490
-struct PitemZ_header PchrmicrocameraZ_header = {0, &model_object_standard_object, 0, 1, 126.49728, 7, 0, 0};
+struct PitemZ_header PchrmicrocameraZ_header = {0, &model_object_standard_object, 0, 0, 1, 126.49728, 7, 0, 0};
 //D:800394B0
-struct PitemZ_header PfloppyZ_header = {0, &model_object_standard_object, 0, 1, 60.902443, 5, 0, 0};
+struct PitemZ_header PfloppyZ_header = {0, &model_object_standard_object, 0, 0, 1, 60.902443, 5, 0, 0};
 //D:800394D0
-struct PitemZ_header PchrgoldeneyekeyZ_header = {0, &model_object_standard_object, 0, 1, 98.987083, 5, 0, 0};
+struct PitemZ_header PchrgoldeneyekeyZ_header = {0, &model_object_standard_object, 0, 0, 1, 98.987083, 5, 0, 0};
 //D:800394F0
-struct PitemZ_header PchrpolarizedglassesZ_header = {0, &model_object_standard_object, 0, 1, 53.776386, 2, 0, 0};
+struct PitemZ_header PchrpolarizedglassesZ_header = {0, &model_object_standard_object, 0, 0, 1, 53.776386, 2, 0, 0};
 //D:80039510
-struct PitemZ_header PchrcreditcardZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrcreditcardZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039530
-struct PitemZ_header PchrdarkglassesZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrdarkglassesZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039550
-struct PitemZ_header PchrgaskeyringZ_header = {0, &model_object_standard_object, 0, 1, 111.59859, 9, 0, 0};
+struct PitemZ_header PchrgaskeyringZ_header = {0, &model_object_standard_object, 0, 0, 1, 111.59859, 9, 0, 0};
 //D:80039570
-struct PitemZ_header PchrdatathiefZ_header = {0, &model_object_standard_object, 0, 1, 119.78231, 3, 0, 0};
+struct PitemZ_header PchrdatathiefZ_header = {0, &model_object_standard_object, 0, 0, 1, 119.78231, 3, 0, 0};
 //D:80039590
-struct PitemZ_header PsafeZ_header = {0, &model_object_standard_object, 0, 1, 1011.1874, 3, 0, 0};
+struct PitemZ_header PsafeZ_header = {0, &model_object_standard_object, 0, 0, 1, 1011.18744, 3, 0};
 //D:800395B0
-struct PitemZ_header PbombZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PbombZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0};
 //D:800395D0
-struct PitemZ_header PchrplansZ_header = {0, &model_object_standard_object, 0, 1, 384.74649, 5, 0, 0};
+struct PitemZ_header PchrplansZ_header = {0, &model_object_standard_object, 0, 0, 1, 384.74649, 5, 0, 0};
 //D:800395F0
-struct PitemZ_header PchrspyfileZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrspyfileZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039610
-struct PitemZ_header PchrblueprintsZ_header = {0, &model_object_standard_object, 0, 1, 588.65448, 4, 0, 0};
+struct PitemZ_header PchrblueprintsZ_header = {0, &model_object_standard_object, 0, 0, 1, 588.65448, 4, 0, 0};
 //D:80039630
-struct PitemZ_header PchrcircuitboardZ_header = {0, &model_object_standard_object, 0, 1, 138.90285, 3, 0, 0};
+struct PitemZ_header PchrcircuitboardZ_header = {0, &model_object_standard_object, 0, 0, 1, 138.90285, 3, 0, 0};
 //D:80039650
-struct PitemZ_header PchrmapZ_header = {0, &model_object_standard_object, 0, 1, 588.65448, 4, 0, 0};
+struct PitemZ_header PchrmapZ_header = {0, &model_object_standard_object, 0, 0, 1, 588.65448, 4, 0, 0};
 //D:80039670
-struct PitemZ_header PchrspooltapeZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrspooltapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039690
-struct PitemZ_header PchraudiotapeZ_header = {0, &model_object_standard_object, 0, 1, 97.531075, 9, 0, 0};
+struct PitemZ_header PchraudiotapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 97.531075, 9, 0, 0};
 //D:800396B0
-struct PitemZ_header PchrmicrofilmZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrmicrofilmZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:800396D0
-struct PitemZ_header PchrmicrocodeZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrmicrocodeZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:800396F0
-struct PitemZ_header PchrlectreZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrlectreZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039710
-struct PitemZ_header PchrmoneyZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrmoneyZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039730
-struct PitemZ_header PchrgoldbarZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrgoldbarZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039750
-struct PitemZ_header PchrheroinZ_header = {0, &model_object_standard_object, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrheroinZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
 //D:80039770
-struct PitemZ_header PchrclipboardZ_header = {0, &model_object_standard_object, 0, 1, 190.41742, 3, 0, 0};
+struct PitemZ_header PchrclipboardZ_header = {0, &model_object_standard_object, 0, 0, 1, 190.41742, 3, 0, 0};
 //D:80039790
-struct PitemZ_header PchrdossierredZ_header = {0, &model_object_standard_object, 0, 1, 183.54231, 4, 0, 0};
+struct PitemZ_header PchrdossierredZ_header = {0, &model_object_standard_object, 0, 0, 1, 183.54231, 4, 0, 0};
 //D:800397B0
-struct PitemZ_header PchrstafflistZ_header = {0, &model_object_standard_object, 0, 1, 215.17534, 4, 0, 0};
+struct PitemZ_header PchrstafflistZ_header = {0, &model_object_standard_object, 0, 0, 1, 215.17534, 4, 0, 0};
 //D:800397D0
-struct PitemZ_header PchrdattapeZ_header = {0, &model_object_standard_object, 0, 1, 79.868584, 4, 0, 0};
+struct PitemZ_header PchrdattapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 79.868584, 4, 0, 0};
 //D:800397F0
-struct PitemZ_header PchrplastiqueZ_header = {0, &model_object_standard_object, 0, 1, 143.86052, 3, 0, 0};
+struct PitemZ_header PchrplastiqueZ_header = {0, &model_object_standard_object, 0, 0, 1, 143.86052, 3, 0, 0};
 //D:80039810
-struct PitemZ_header PchrblackboxZ_header = {0, &model_object_standard_object, 0, 1, 128.31796, 5, 0, 0};
+struct PitemZ_header PchrblackboxZ_header = {0, &model_object_standard_object, 0, 0, 1, 128.31796, 5, 0, 0};
 //D:80039830
-struct PitemZ_header PchrvideotapeZ_header = {0, &model_object_standard_object, 0, 1, 122.69632, 9, 0, 0};
+struct PitemZ_header PchrvideotapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 122.69632, 9, 0, 0};
 //D:80039850
-struct PitemZ_header PnintendologoZ_header = {0, &model_object_standard_object, 0, 1, 1868.335, 1, 0, 0};
+struct PitemZ_header PnintendologoZ_header = {0, &model_object_standard_object, 0, 0, 1, 1868.335, 1, 0, 0};
 //D:80039870
-struct PitemZ_header PgoldeneyelogoZ_header = {0, &model_object_standard_object, 0, 1, 1287.1866, 2, 0, 0};
+struct PitemZ_header PgoldeneyelogoZ_header = {0, &model_object_standard_object, 0, 0, 1, 1287.1866, 2, 0, 0};
 //D:80039890
-struct PitemZ_header PwalletbondZ_header = {0, &prop_walletbond_related, 0x2B, 1, 3504.53, 0x54, 0, 0};
+struct PitemZ_header PwalletbondZ_header = {0, &prop_walletbond_related, 0, 0, 0x2B0001, 3504.53, 0x54, 0, 0};
 //D:800398B0
-struct PitemZ_header PmiltruckZ_header = {0, &prop_car_related, 0xB, 5, 4589.7188, 0x16, 0, 0};
+struct PitemZ_header PmiltruckZ_header = {0, &prop_car_related, 0, 0, 0xB0005, 4589.7188, 0x16, 0, 0};
 //D:800398D0
-struct PitemZ_header PjeepZ_header = {0, &prop_car_related, 0xB, 5, 2107.8105, 0x10, 0, 0};
+struct PitemZ_header PjeepZ_header = {0, &prop_car_related, 0, 0, 0xB0005, 2107.8105, 0x10, 0};
 //D:800398F0
-struct PitemZ_header ParticZ_header = {0, &prop_car_related, 0xB, 5, 2678.5667, 0x11, 0, 0};
+struct PitemZ_header ParticZ_header = {0, &prop_car_related, 0, 0, 0xB0005, 2678.5667, 0x11, 0, };
 //D:80039910
-struct PitemZ_header PhelicopterZ_header = {0, &prop_flying_related, 6, 4, 4955.271, 0x18, 0, 0};
+struct PitemZ_header PhelicopterZ_header = {0, &prop_flying_related, 0, 0, 0x60004, 4955.271, 0x18, 0, 0};
 //D:80039930
-struct PitemZ_header PtigerZ_header = {0, &prop_flying_related, 6, 4, 4072.0291, 0xE, 0, 0};
+struct PitemZ_header PtigerZ_header = {0, &prop_flying_related, 0, 0, 0x60004, 4072.0291, 0xE, 0, };
 //D:80039950
-struct PitemZ_header PmilcopterZ_header = {0, &prop_flying_related, 6, 4, 5316.9155, 0xF, 0, 0};
+struct PitemZ_header PmilcopterZ_header = {0, &prop_flying_related, 0, 0, 0x60004, 5316.9155, 0xF, 0, 0};
 //D:80039970
-struct PitemZ_header PhindZ_header = {0, &prop_flying_related, 6, 5, 5315.314, 0xB, 0, 0};
+struct PitemZ_header PhindZ_header = {0, &prop_flying_related, 0, 0, 0x60005, 5315.314, 0xB, 0};
 //D:80039990
-struct PitemZ_header PartictrailerZ_header = {0, &model_object_standard_object, 0, 1, 4014.6265, 0xB, 0, 0};
+struct PitemZ_header PartictrailerZ_header = {0, &model_object_standard_object, 0, 0, 1, 4014.6265, 0xB, 0, 0};
 //D:800399B0
-struct PitemZ_header PmotorbikeZ_header = {0, &model_object_standard_object, 0, 1, 1610.8706, 6, 0, 0};
+struct PitemZ_header PmotorbikeZ_header = {0, &model_object_standard_object, 0, 0, 1, 1610.8706, 6, 0, 0};
 //D:800399D0
-struct PitemZ_header PtankZ_header = {0, &item_tank_related, 9, 5, 6290.8398, 0x18, 0, 0};
+struct PitemZ_header PtankZ_header = {0, &item_tank_related, 0, 0, 0x90005, 6290.8398, 0x18, 0};
 //D:800399F0
-struct PitemZ_header PapcZ_header = {0, &model_object_standard_object, 0, 1, 3611.1035, 0xE, 0, 0};
+struct PitemZ_header PapcZ_header = {0, &model_object_standard_object, 0, 0, 1, 3611.1035, 0xE, 0};
 //D:80039A10
-struct PitemZ_header PspeedboatZ_header = {0, &model_object_standard_object, 0, 1, 1799.4586, 0xD, 0, 0};
+struct PitemZ_header PspeedboatZ_header = {0, &model_object_standard_object, 0, 0, 1, 1799.4586, 0xD, 0, 0};
 //D:80039A30
-struct PitemZ_header PplaneZ_header = {0, &prop_flying_related, 6, 3, 9285.4492, 0x1C, 0, 0};
+struct PitemZ_header PplaneZ_header = {0, &prop_flying_related, 0, 0, 0x60003, 9285.4492, 0x1C, 0, };
 //D:80039A50
-struct PitemZ_header Pgun_runway1Z_header = {0, &prop_rotating_stuff_related, 8, 5, 1927.5205, 6, 0, 0};
+struct PitemZ_header Pgun_runway1Z_header = {0, &prop_rotating_stuff_related, 0, 0, 0x80005, 1927.5205, 6, 0, 0};
 //D:80039A70
-struct PitemZ_header PsafedoorZ_header = {0, &model_object_standard_object, 0, 1, 714.14612, 4, 0, 0};
+struct PitemZ_header PsafedoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 714.14612, 4, 0, 0};
 //D:80039A90
-struct PitemZ_header Pkey_holderZ_header = {0, &model_object_standard_object, 0, 1, 223.87097, 7, 0, 0};
+struct PitemZ_header Pkey_holderZ_header = {0, &model_object_standard_object, 0, 0, 1, 223.87097, 7, 0, 0};
 //D:80039AB0
-struct PitemZ_header PhatchsevxZ_header = {0, &model_object_standard_object, 0, 1, 1224.7664, 2, 0, 0};
+struct PitemZ_header PhatchsevxZ_header = {0, &model_object_standard_object, 0, 0, 1, 1224.7664, 2, 0, 0};
 //D:80039AD0
-struct PitemZ_header PsevdishZ_header = {0, &prop_rotating_stuff_related, 8, 3, 14350.1, 7, 0, 0};
+struct PitemZ_header PsevdishZ_header = {0, &prop_rotating_stuff_related, 0, 0, 0x80003, 14350.1, 7, 0, 0};
 //D:80039AF0
-struct PitemZ_header Parchsecdoor1Z_header = {0, &model_object_standard_object, 0, 1, 455.81409, 3, 0, 0};
+struct PitemZ_header Parchsecdoor1Z_header = {0, &model_object_standard_object, 0, 0, 1, 455.81409, 3, 0, 0};
 //D:80039B10
-struct PitemZ_header Parchsecdoor2Z_header = {0, &model_object_standard_object, 0, 1, 496.99292, 3, 0, 0};
+struct PitemZ_header Parchsecdoor2Z_header = {0, &model_object_standard_object, 0, 0, 1, 496.99292, 3, 0, 0};
 //D:80039B30
-struct PitemZ_header PgroundgunZ_header = {0, &prop_rotating_stuff_related, 8, 5, 2182.6472, 4, 0, 0};
+struct PitemZ_header PgroundgunZ_header = {0, &prop_rotating_stuff_related, 0, 0, 0x80005, 2182.6472, 4, 0, 0};
 //D:80039B50
-struct PitemZ_header PtrainextdoorZ_header = {0, &model_object_standard_object, 0, 1, 587.70111, 5, 0, 0};
+struct PitemZ_header PtrainextdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 587.70111, 5, 0, 0};
 //D:80039B70
-struct PitemZ_header PcarbmwZ_header = {0, &model_object_standard_object, 0, 1, 553.08728, 0xB, 0, 0};
+struct PitemZ_header PcarbmwZ_header = {0, &model_object_standard_object, 0, 0, 1, 553.08728, 0xB, 0, 0};
 //D:80039B90
-struct PitemZ_header PcarescortZ_header = {0, &model_object_standard_object, 0, 1, 1110.5665, 9, 0, 0};
+struct PitemZ_header PcarescortZ_header = {0, &model_object_standard_object, 0, 0, 1, 1110.5665, 9, 0, 0};
 //D:80039BB0
-struct PitemZ_header PcargolfZ_header = {0, &model_object_standard_object, 0, 1, 1121.6409, 0xA, 0, 0};
+struct PitemZ_header PcargolfZ_header = {0, &model_object_standard_object, 0, 0, 1, 1121.6409, 0xA, 0, 0};
 //D:80039BD0
-struct PitemZ_header PcarweirdZ_header = {0, &model_object_standard_object, 0, 1, 984.03931, 0xD, 0, 0};
+struct PitemZ_header PcarweirdZ_header = {0, &model_object_standard_object, 0, 0, 1, 984.03931, 0xD, 0, 0};
 //D:80039BF0
-struct PitemZ_header PcarzilZ_header = {0, &prop_car_related, 0xB, 5, 1044.5764, 0xD, 0, 0};
+struct PitemZ_header PcarzilZ_header = {0, &prop_car_related, 0, 0, 0xB0005, 1044.5764, 0xD, 0, 0};
 //D:80039C10
-struct PitemZ_header Pshuttle_door_lZ_header = {0, &model_object_standard_object, 0, 1, 706.56641, 7, 0, 0};
+struct PitemZ_header Pshuttle_door_lZ_header = {0, &model_object_standard_object, 0, 0, 1, 706.56641, 7, 0, 0};
 //D:80039C30
-struct PitemZ_header Pshuttle_door_rZ_header = {0, &model_object_standard_object, 0, 1, 706.56641, 8, 0, 0};
+struct PitemZ_header Pshuttle_door_rZ_header = {0, &model_object_standard_object, 0, 0, 1, 706.56641, 8, 0, 0};
 //D:80039C50
-struct PitemZ_header Pdepot_gate_entryZ_header = {0, &model_object_standard_object, 0, 1, 811.28949, 3, 0, 0};
+struct PitemZ_header Pdepot_gate_entryZ_header = {0, &model_object_standard_object, 0, 0, 1, 811.28949, 3, 0, 0};
 //D:80039C70
-struct PitemZ_header Pdepot_door_steelZ_header = {0, &model_object_standard_object, 0, 1, 574.79651, 3, 0, 0};
+struct PitemZ_header Pdepot_door_steelZ_header = {0, &model_object_standard_object, 0, 0, 1, 574.79651, 3, 0, 0};
 //D:80039C90
-struct PitemZ_header Pglassware2Z_header = {0, &model_object_standard_object, 0, 1, 98.488579, 3, 0, 0};
+struct PitemZ_header Pglassware2Z_header = {0, &model_object_standard_object, 0, 0, 1, 98.488579, 3, 0, 0};
 //D:80039CB0
-struct PitemZ_header Pglassware3Z_header = {0, &model_object_standard_object, 0, 1, 137.92715, 1, 0, 0};
+struct PitemZ_header Pglassware3Z_header = {0, &model_object_standard_object, 0, 0, 1, 137.92715, 1, 0, 0};
 //D:80039CD0
-struct PitemZ_header Pglassware4Z_header = {0, &model_object_standard_object, 0, 1, 177.48241, 2, 0, 0};
+struct PitemZ_header Pglassware4Z_header = {0, &model_object_standard_object, 0, 0, 1, 177.48241, 2, 0, 0};
 //D:80039CF0
-struct PitemZ_header PlandmineZ_header = {0, &model_object_standard_object, 0, 1, 440.03009, 2, 0, 0};
+struct PitemZ_header PlandmineZ_header = {0, &model_object_standard_object, 0, 0, 1, 440.03009, 2, 0, 0};
 //D:80039D10
-struct PitemZ_header Pplant1Z_header = {0, &model_object_standard_object, 0, 1, 2704.1086, 1, 0, 0};
+struct PitemZ_header Pplant1Z_header = {0, &model_object_standard_object, 0, 0, 1, 2704.1086, 1, 0, 0};
 //D:80039D30
-struct PitemZ_header Pplant11Z_header = {0, &model_object_standard_object, 0, 1, 2704.1086, 1, 0, 0};
+struct PitemZ_header Pplant11Z_header = {0, &model_object_standard_object, 0, 0, 1, 2704.1086, 1, 0, 0};
 //D:80039D50
-struct PitemZ_header Pplant2Z_header = {0, &model_object_standard_object, 0, 1, 3416.248, 2, 0, 0};
+struct PitemZ_header Pplant2Z_header = {0, &model_object_standard_object, 0, 0, 1, 3416.248, 2, 0, 0};
 //D:80039D70
-struct PitemZ_header Pplant3Z_header = {0, &model_object_standard_object, 0, 1, 2986.0405, 1, 0, 0};
+struct PitemZ_header Pplant3Z_header = {0, &model_object_standard_object, 0, 0, 1, 2986.0405, 1, 0, 0};
 //D:80039D90
-struct PitemZ_header Pjungle5_treeZ_header = {0, &model_object_standard_object, 0, 1, 3277.6123, 4, 0, 0};
+struct PitemZ_header Pjungle5_treeZ_header = {0, &model_object_standard_object, 0, 0, 1, 3277.6123, 4, 0, 0};
 //D:80039DB0
-struct PitemZ_header PlegalpageZ_header = {0, &model_object_standard_object, 0, 1, 2711.7573, 5, 0, 0};
+struct PitemZ_header PlegalpageZ_header = {0, &model_object_standard_object, 0, 0, 1, 2711.7573, 5, 0, 0};
 //D:80039DD0
-struct PitemZ_header Pst_pete_room_1iZ_header = {0, &model_object_standard_object, 0, 1, 8437.5137, 0x17, 0, 0};
+struct PitemZ_header Pst_pete_room_1iZ_header = {0, &model_object_standard_object, 0, 0, 1, 8437.5137, 0x17, 0, 0};
 //D:80039DF0
-struct PitemZ_header Pst_pete_room_2iZ_header = {0, &model_object_standard_object, 0, 1, 8515.8164, 0x19, 0, 0};
+struct PitemZ_header Pst_pete_room_2iZ_header = {0, &model_object_standard_object, 0, 0, 1, 8515.8164, 0x19, 0, 0};
 //D:80039E10
-struct PitemZ_header Pst_pete_room_3tZ_header = {0, &model_object_standard_object, 0, 1, 4561.9766, 0x1B, 0, 0};
+struct PitemZ_header Pst_pete_room_3tZ_header = {0, &model_object_standard_object, 0, 0, 1, 4561.9766, 0x1B, 0, 0};
 //D:80039E30
-struct PitemZ_header Pst_pete_room_5cZ_header = {0, &model_object_standard_object, 0, 1, 4561.9766, 0x19, 0, 0};
+struct PitemZ_header Pst_pete_room_5cZ_header = {0, &model_object_standard_object, 0, 0, 1, 4561.9766, 0x19, 0, 0};
 //D:80039E50
-struct PitemZ_header Pst_pete_room_6cZ_header = {0, &model_object_standard_object, 0, 1, 5006.2896, 0x17, 0, 0};
+struct PitemZ_header Pst_pete_room_6cZ_header = {0, &model_object_standard_object, 0, 0, 1, 5006.2896, 0x17, 0, 0};
 //D:80039E70
-struct PitemZ_header Pdoor_rollertrainZ_header = {0, &model_object_standard_object, 0, 1, 1032.125, 2, 0, 0};
+struct PitemZ_header Pdoor_rollertrainZ_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 2, 0, 0};
 //D:80039E90
-struct PitemZ_header Pdoor_winZ_header = {0, &model_object_standard_object, 0, 1, 211.90215, 1, 0, 0};
+struct PitemZ_header Pdoor_winZ_header = {0, &model_object_standard_object, 0, 0, 1, 211.90215, 1, 0, 0};
 //D:80039EB0
-struct PitemZ_header Pdoor_aztecZ_header = {0, &model_object_standard_object, 0, 1, 632.48639, 1, 0, 0};
+struct PitemZ_header Pdoor_aztecZ_header = {0, &model_object_standard_object, 0, 0, 1, 632.48639, 1, 0, 0};
 //D:80039ED0
-struct PitemZ_header PshuttleZ_header = {0, &model_object_standard_object, 0, 1, 4475.1494, 9, 0, 0};
+struct PitemZ_header PshuttleZ_header = {0, &model_object_standard_object, 0, 0, 1, 4475.1494, 9, 0, 0};
 //D:80039EF0
-struct PitemZ_header Pdoor_azt_deskZ_header = {0, &model_object_standard_object, 0, 1, 860.41669, 2, 0, 0};
+struct PitemZ_header Pdoor_azt_deskZ_header = {0, &model_object_standard_object, 0, 0, 1, 860.41669, 2, 0, 0};
 //D:80039F10
-struct PitemZ_header Pdoor_azt_desk_topZ_header = {0, &model_object_standard_object, 0, 1, 565.93268, 3, 0, 0};
+struct PitemZ_header Pdoor_azt_desk_topZ_header = {0, &model_object_standard_object, 0, 0, 1, 565.93268, 3, 0, 0};
 //D:80039F30
-struct PitemZ_header Pdoor_azt_chairZ_header = {0, &model_object_standard_object, 0, 1, 94.510803, 3, 0, 0};
+struct PitemZ_header Pdoor_azt_chairZ_header = {0, &model_object_standard_object, 0, 0, 1, 94.510803, 3, 0, 0};
 //D:80039F50
-struct PitemZ_header Pdoor_mfZ_header = {0, &model_object_standard_object, 0, 1, 559.70367, 7, 0, 0};
+struct PitemZ_header Pdoor_mfZ_header = {0, &model_object_standard_object, 0, 0, 1, 559.70367, 7, 0, 0};
 //D:80039F70
-struct PitemZ_header PflagZ_header = {0, &prop_weapon_related, 3, 1, 862.30865, 2, 0, 0};
+struct PitemZ_header PflagZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 862.30865, 2, 0};
 //D:80039F90
-struct PitemZ_header PbarricadeZ_header = {0, &model_object_standard_object, 0, 1, 2047.3016, 2, 0, 0};
+struct PitemZ_header PbarricadeZ_header = {0, &model_object_standard_object, 0, 0, 1, 2047.3016, 2, 0, 0};
 //D:80039FB0
-struct PitemZ_header PmodemboxZ_header = {0, &prop_console_one_screen_related, 1, 1, 338.28839, 4, 0, 0};
+struct PitemZ_header PmodemboxZ_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 338.28839, 4, 0, 0};
 //D:80039FD0
-struct PitemZ_header PdoorpanelZ_header = {0, &prop_console_four_screen_related, 4, 1, 338.28839, 4, 0, 0};
+struct PitemZ_header PdoorpanelZ_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 338.28839, 4, 0, 0};
 //D:80039FF0
-struct PitemZ_header PdoorconsoleZ_header = {0, &prop_console_one_screen_related, 1, 1, 994.23688, 0xD, 0, 0};
+struct PitemZ_header PdoorconsoleZ_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 994.23688, 0xD, 0, 0};
 //D:8003A010
-struct PitemZ_header PchrtesttubeZ_header = {0, &prop_weapon_related, 3, 1, 136.25925, 2, 0, 0};
+struct PitemZ_header PchrtesttubeZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 136.25925, 2, 0, 0};
 //D:8003A030
-struct PitemZ_header Pbollardz_header = {0, &model_object_standard_object, 0, 1, 628.78754, 1, 0, 0};
+struct PitemZ_header Pbollardz_header = {0, &model_object_standard_object, 0, 0, 1, 628.78754, 1, 0, 0};
 
 //D:8003A050
 struct prop_pos_data word_D_8003A050[2] = {
@@ -852,19 +873,19 @@ struct item_related prop_eyelid_door_related = {3, 0, word_D_8003A0EC, 9, 0};
 
 //D:8003A10C
 struct prop_pos_data word_D_8003A10C[] = {
-    {0x0002, 0x0000, 0x0002},
-    {0x0003, 0x0003, 0x0002},
-    {0x0006, 0x0006, 0x0002},
-    {0x0009, 0x0009, 0x0002},
-    {0x000C, 0x000C, 0x0002},
-    {0x000F, 0x000F, 0x0002},
-    {0x0012, 0x0012, 0x0002},
-    {0x0015, 0x0015, 0x0002},
-    {0x0018, 0x0018, 0x0002},
-    {0x001B, 0x001B, 0x0002},
-    {0x001E, 0x001E, 0x0002},
-    {0x0021, 0x0021, 0x0002},
-    {0x0024, 0x0024, 0x0000}
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0002, 0x0009, 0x0009},
+    {0x0002, 0x000C, 0x000C},
+    {0x0002, 0x000F, 0x000F},
+    {0x0002, 0x0012, 0x0012},
+    {0x0002, 0x0015, 0x0015},
+    {0x0002, 0x0018, 0x0018},
+    {0x0002, 0x001B, 0x001B},
+    {0x0002, 0x001E, 0x001E},
+    {0x0002, 0x0021, 0x0021},
+    {0x0002, 0x0024, 0x0024}
 };
 //D:8003A15C
 struct item_related prop_iris_door_related = {0xD, 0, word_D_8003A10C, 0x27, 0};
@@ -879,11 +900,11 @@ struct item_related prop_walletbond_related = {1, 0, word_D_8003A168, 3, 0};
 
 //D:8003A17C
 struct prop_pos_data word_D_8003A17C[] = {
-    {0x0002, 0x0000, 0x0002},
-    {0x0003, 0x0003, 0x0002},
-    {0x0006, 0x0006, 0x0002},
-    {0x0009, 0x0009, 0x0002},
-    {0x000C, 0x000C, 0x0000}
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0002, 0x0009, 0x0009},
+    {0x0002, 0x000C, 0x000C}
 };
 //D:8003A19C
 struct item_related prop_car_related = {5, 0, word_D_8003A17C, 0xF, 0};
@@ -927,7 +948,7 @@ struct prop_pos_data word_D_8003A214[] = {
 //D:8003A21A                     .half 0
 //D:8003A21C
 struct item_related item_hat_related = {1, 0, word_D_8003A214, 0, 0};
-
+const u8 spacer_string[] = "\00\00\00\00\00\00\00\00";
 //D:8003A228                     .globl PitemZ_entries
 struct p_itementry PitemZ_entries[] = {
     {&Palarm1z_header, "Palarm1Z", 0.1},
@@ -1270,152 +1291,312 @@ struct p_itementry PitemZ_entries[] = {
     {&PdoorconsoleZ_header, "PdoorconsoleZ", 0.1},
     {&PchrtesttubeZ_header, "PchrtesttubeZ", 0.1},
     {&Pbollardz_header, "PbollardZ", 0.1},
-    {0, " ", 1.0}
+    {0, "", 1.0}
 };
-/*
-D:8003B224                     .word 0x6315C
-D:8003B228                     .word 0x7B6CDBFF
-D:8003B22C                     .word 0x5126FB59
-D:8003B230                     .word 0x7CA70006
-D:8003B234                     .word 0x2AFECB3E
-D:8003B238                     .word 0x73F4278F
-D:8003B23C                     .word 0x6D3A44C8
-D:8003B240                     .word 0x50000
-D:8003B244                     .word 0
-D:8003B248                     .word 0
-D:8003B24C                     .word 0xB, 0xB9B03EBA, 0xAD6275C8, 0xB70FF06E, 0xB17D9, 0xDFCC57CD, 0x82547345
-D:8003B24C                     .word 0xE011000B, 0x3779ED72, 0x688DF67B, 0x37E54F89, 0xBE277, 0x474DD1E, 0xC48486C
-D:8003B24C                     .word 0xF87D000B, 0x7C3F16BC, 0x44A91A58, 0xE4129297, 0x3DC2, 0x16B6E30D, 0xBCABC592
-D:8003B24C                     .word 0xF9B50002, 0x719C7024, 0x9EE0C175, 0xA5DDC933, 0x28E16, 0xBBCA05C0
-D:8003B24C                     .word 0x1A7381BE, 0xF8210000, 0, 0, 0
-D:8003B2CC                     .word 0x82716, 0xF5440D35, 0xC20E83D7, 0x7D730008, 0x81A1B772, 0x1B57437A
-D:8003B2CC                     .word 0x85FAB6C1, 0x827EB, 0x5A7ABD1A, 0x27EB5A7A, 0xBD1A0008, 0x98DE8C36
-D:8003B2CC                     .word 0xDDD5F74B, 0x4F0A1F14, 0x834F5, 0xF199A9F2, 0x3D27C707, 0xB9AD0008
-D:8003B2CC                     .word 0x678FDB91, 0x2A2E8D91, 0x6EEE925E, 0x4D82F, 0xF4D7546F, 0xD6C787D9
-D:8003B2CC                     .word 0x1430004, 0x100EADF2, 0x1FDD45F1, 0x4772F8C6, 0x4EF0B, 0x71BBB7F7, 0xBFA303B8
-D:8003B2CC                     .word 0xE44E0004, 0xDFD1676A, 0x8597E8AC, 0xE2109A4D, 0x4AB48, 0xDD9B4343
-D:8003B2CC                     .word 0x4B80DCC, 0x3B3D0004, 0x836B6BBF, 0x9DBB3DB7, 0x59577341, 0x70000, 0
-D:8003B2CC                     .word 0
-D:8003B380                     .word 9, 0xB1CC19E2, 0xEA5B1CC, 0x19E20EA5, 0x9F093, 0xB2DF1409, 0x271EE0B3
-D:8003B380                     .word 0x418A0009, 0x3AC20102, 0xBF013AC2, 0x102BF01, 0x93AC6, 0xE449A56E, 0xA4CFEDA0
-D:8003B380                     .word 0x17190009, 0x9BCFC333, 0x63844298, 0xD4557BFA, 0x9839E, 0xBA71466, 0xDB6DD1B3
-D:8003B380                     .word 0x12330009, 0x3F677A70, 0x83DE7052, 0x7D236FF, 0x9A409, 0x692DE286, 0xC63C82D0
-D:8003B380                     .word 0x5D070009, 0xD6CA1866, 0x839CBC6A, 0x86AD4DC6, 0x996FC, 0xA1EFA9E6
-D:8003B380                     .word 0xB9D2A3C5, 0xA0450009, 0x7D2BE7DC, 0x55DB378E, 0x4765B09C, 0x9E2AF
-D:8003B380                     .word 0x2D4371FE, 0xE39093B3, 0x57E30009, 0x9367098A, 0x3B68D6F8, 0x4EAF7B83
-D:8003B380                     .word 0xF0000, 0, 0
-D:8003B444                     .word 0xF, 0, 0, 0
-D:8003B454                     .word 0x7993D, 0xA2B25028, 0x825E25B8, 0xD8EF0006, 0x6553024D, 0xFD22D469
-D:8003B454                     .word 0x18E432F6, 0x6F742, 0xCB58ED2, 0x60216AD5, 0xAA880004, 0x6D882EF, 0x5B194147
-D:8003B454                     .word 0x5AE1374E, 0x4284D, 0x3E7C9330, 0xCF1E013F, 0x4E290006, 0xE339C0B6
-D:8003B454                     .word 0xE5FC7054, 0x83A8C118, 0x4B49F, 0x24EF6, 0x88490002, 0x70B0002, 0x2D56A1EE
-D:8003B454                     .word 0x41058AE6, 0x6A2A60DD, 0x979B2, 0xBC78B9B9, 0xC76A97A1, 0x3DA30009
-D:8003B454                     .word 0x3292DDC3, 0x926512A6, 0xE935B9BC, 0x304DB, 0x3CFDDB5C, 0x3B2950B7
-D:8003B454                     .word 0x83D10004, 0xBE6408AD, 0x150D6AED, 0x542E63B3, 0x4D7E5, 0x13695ACC
-D:8003B454                     .word 0x535A2105, 0x1BF70004, 0x72223CEE, 0x1A15122A, 0xADEC5EF3, 0x4927F
-D:8003B454                     .word 0x10B05125, 0x7F4EBBC5, 0x8088000B, 0xE89D7502, 0x9003469D, 0x19F0A5E6
-D:8003B454                     .word 0xB3771, 0xC00280FF, 0xDBF61705, 0x497A000E, 0xA954AFDE, 0xBB6CD4A6
-D:8003B454                     .word 0x9883FA27, 0xEDE9F, 0xCEF06346, 0x80FBA382, 0x14D1000E, 0x448ED4CC
-D:8003B454                     .word 0xC1B5442F, 0xC1D1EE05, 0xEC7C0, 0xF918095E, 0xECE206D4, 0xC64D000E
-D:8003B454                     .word 0xC49116EC, 0xDEA75A19, 0x9DE7FF28, 0xEE889, 0x2DA62775, 0x153CBAE6
-D:8003B454                     .word 0xCB1B0000, 0x2D56A1EE, 0x41058AE6, 0x6A2A60DD, 0x6E5E6, 0x8FB7D5FE
-D:8003B454                     .word 0xE959D656, 0xFB820007, 0x58763A4F, 0xD115A10D, 0x265D2C02, 0x7787E
-D:8003B454                     .word 0xC128D96A, 0x60C918E7, 0x99AD0007, 0x879A90E4, 0xC20F35FE, 0xC80791D8
-D:8003B454                     .word 0x740AE, 0x62B6D240, 0xAC8D47C5, 0x17D10000, 0, 0, 0
-D:8003B5F8                     .word 0x715C6, 0xB37D118A, 0x4E615D02, 0x7D500006, 0x15C6B37D, 0x118A4E61
-D:8003B5F8                     .word 0x5D027D50, 0x30000, 0, 0
-D:8003B620                     .word 3, 0x24698AE5, 0x524FE5F6, 0xBE4AC865, 0x52957, 0x1B2227C7, 0x96630DDF
-D:8003B620                     .word 0x411F0007, 0x15C6B37D, 0x118A4E61, 0x5D027D50, 0x40000, 0, 0
-D:8003B658                     .word 6, 0xF8F4F1E0, 0x473F41DD, 0xA510C9C6, 0x80000, 0, 0
-D:8003B674                     .word 4, 0x7A512382, 0x9B3629E5, 0x5921017A, 0x48666, 0x3DD9E619, 0x6134CC94
-D:8003B674                     .word 0x1A5C0004, 0x7F3931C5, 0x9AC370AB, 0x551B069, 0x3D727, 0x7AB2786B, 0xF5AD3FC4
-D:8003B674                     .word 0xD6CE0003, 0x4548D59E, 0x1EDCE88D, 0xE9E4AF76, 0x3262F, 0x491BFD57
-D:8003B674                     .word 0x6715E7ED, 0x2626000F, 0, 0, 0, 0, 0, 0
-D:8003B6E4                     .word 4, 0xBCAE0BD1, 0xFF73A30, 0x724083B7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B71C                     .word 6, 0xB2C6170A, 0xA236BBE, 0xB59382DB, 0x5275B, 0x8AD3002C, 0x27B58AD3
-D:8003B71C                     .word 0x2C0005, 0, 0, 0
-D:8003B748                     .word 0x833A1, 0x8A014D42, 0xD9CBB865, 0xB3360004, 0x8C0678FC, 0x8F9A4DF5
-D:8003B748                     .word 0x4D5322F9, 0x399E9, 0x107EF5E, 0x560E6DF, 0x4B360003, 0x31E70023, 0xB2AEA2D7
-D:8003B748                     .word 0xE54090B2, 0x80000, 0, 0
-D:8003B78C                     .word 0xD, 0, 0, 0
-D:8003B79C                     .word 0x833A1, 0x8A014D42, 0xD9CBB865, 0xB3360008, 0x33A18A01, 0x4D42D9CB
-D:8003B79C                     .word 0xB865B336, 0x833A1, 0x8A014D42, 0xD9CBB865, 0xB3360008, 0x33A18A01
-D:8003B79C                     .word 0x4D42D9CB, 0xB865B336, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B79C                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B79C                     .word 0, 0, 0, 0, 0, 0, 0
-D:8003B888                     .word 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B8B4                     .word 0x60000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B8B4                     .word 0, 0, 0, 0, 0, 0, 0
-D:8003B924                     .word 0xC0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B924                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B924                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B924                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B924                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B924                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B924                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B924                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B924                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B924                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003B924                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003BCDC                     .word 0xD0000, 0, 0, 0, 0, 0, 0
-D:8003BCF8                     .word 0x30000, 0, 0
-D:8003BD04                     .word 0xD, 0, 0, 0
-D:8003BD14                     .word 0xD0000, 0, 0
-D:8003BD20                     .word 0xD, 0, 0, 0
-D:8003BD30                     .word 0xD0000, 0, 0
-D:8003BD3C                     .word 0xD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003BD3C                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003BD3C                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003BD3C                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003BD3C                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003BD3C                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003BD3C                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003BD3C                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003BFF8                     .word 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003C04C                     .word 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003C04C                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003C04C                     .word 0, 0, 0
-D:8003C110                     .word 0xD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003C164                     .word 4, 0, 0, 0
-D:8003C174                     .word 0x40000, 0, 0
-D:8003C180                     .word 4, 0, 0, 0
-D:8003C190                     .word 0x40000, 0, 0
-D:8003C19C                     .word 4, 0, 0, 0
-D:8003C1AC                     .word 0xD0000, 0, 0
-D:8003C1B8                     .word 4, 0, 0, 0
-D:8003C1C8                     .word 0x40000, 0, 0
-D:8003C1D4                     .word 4, 0, 0, 0
-D:8003C1E4                     .word 0x40000, 0, 0
-D:8003C1F0                     .word 4, 0, 0, 0
-D:8003C200                     .word 0x40000, 0, 0
-D:8003C20C                     .word 4, 0, 0, 0
-D:8003C21C                     .word 0x40000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003C254                     .word 0xD0000, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003C27C                     .word 7, 0, 0, 0, 0, 0, 0
-D:8003C298                     .word 0xD, 0, 0, 0
-D:8003C2A8                     .word 0xD0000, 0, 0
-D:8003C2B4                     .word 0xD, 0, 0, 0
-D:8003C2C4                     .word 0xD0000, 0, 0
-D:8003C2D0                     .word 0xD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003C2D0                     .word 0, 0, 0, 0, 0
-D:8003C340                     .word 0xD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003C340                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003C340                     .word 0, 0, 0, 0, 0, 0, 0
-D:8003C414                     .word 0xD0000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:8003C414                     .word 0, 0, 0
-D:8003C474                     .word 6, 0, 0, 0
-D:8003C484                     .word 0x60000, 0, 0
-D:8003C490                     .byte 0, 0, 0, 9
-D:8003C494                     .align 4
-D:8003C4A0                     .byte 0, 0xD, 0, 0
-D:8003C4A4                     .word 0, 0, 0, 0, 0
-D:8003C4B8                     .word 0
-D:8003C4BC                     .word 0xFFFF
-D:8003C4C0                     .word 0xFFFFFFFF
-D:8003C4C4                     .word 0xFFFFFFFF
-D:8003C4C8                     .word 0xFFFF0000
-D:8003C4CC                     .word 0
-*/
+
+//D:8003b224
+u32 object_explosion_details[] = {
+    0x0006315c, 0x7b6cdbff, 0x5126fb59, 0x7ca70006,
+    0x2afecb3e, 0x73f4278f, 0x6d3a44c8, 0x00050000,
+    0x00000000, 0x00000000, 0x0000000b, 0xb9b03eba,
+    0xad6275c8, 0xb70ff06e, 0x000b17d9, 0xdfcc57cd,
+    0x82547345, 0xe011000b, 0x3779ed72, 0x688df67b,
+    0x37e54f89, 0x000be277, 0x0474dd1e, 0x0c48486c,
+    0xf87d000b, 0x7c3f16bc, 0x44a91a58, 0xe4129297,
+    0x00003dc2, 0x16b6e30d, 0xbcabc592, 0xf9b50002,
+    0x719c7024, 0x9ee0c175, 0xa5ddc933, 0x00028e16,
+    0xbbca05c0, 0x1a7381be, 0xf8210000, 0x00000000,
+    0x00000000, 0x00000000, 0x00082716, 0xf5440d35,
+    0xc20e83d7, 0x7d730008, 0x81a1b772, 0x1b57437a,
+    0x85fab6c1, 0x000827eb, 0x5a7abd1a, 0x27eb5a7a,
+    0xbd1a0008, 0x98de8c36, 0xddd5f74b, 0x4f0a1f14,
+    0x000834f5, 0xf199a9f2, 0x3d27c707, 0xb9ad0008,
+    0x678fdb91, 0x2a2e8d91, 0x6eee925e, 0x0004d82f,
+    0xf4d7546f, 0xd6c787d9, 0x01430004, 0x100eadf2,
+    0x1fdd45f1, 0x4772f8c6, 0x0004ef0b, 0x71bbb7f7,
+    0xbfa303b8, 0xe44e0004, 0xdfd1676a, 0x8597e8ac,
+    0xe2109a4d, 0x0004ab48, 0xdd9b4343, 0x04b80dcc,
+    0x3b3d0004, 0x836b6bbf, 0x9dbb3db7, 0x59577341,
+    0x00070000, 0x00000000, 0x00000000, 0x00000009,
+    0xb1cc19e2, 0x0ea5b1cc, 0x19e20ea5, 0x0009f093,
+    0xb2df1409, 0x271ee0b3, 0x418a0009, 0x3ac20102,
+    0xbf013ac2, 0x0102bf01, 0x00093ac6, 0xe449a56e,
+    0xa4cfeda0, 0x17190009, 0x9bcfc333, 0x63844298,
+    0xd4557bfa, 0x0009839e, 0x0ba71466, 0xdb6dd1b3,
+    0x12330009, 0x3f677a70, 0x83de7052, 0x07d236ff,
+    0x0009a409, 0x692de286, 0xc63c82d0, 0x5d070009,
+    0xd6ca1866, 0x839cbc6a, 0x86ad4dc6, 0x000996fc,
+    0xa1efa9e6, 0xb9d2a3c5, 0xa0450009, 0x7d2be7dc,
+    0x55db378e, 0x4765b09c, 0x0009e2af, 0x2d4371fe,
+    0xe39093b3, 0x57e30009, 0x9367098a, 0x3b68d6f8,
+    0x4eaf7b83, 0x000f0000, 0x00000000, 0x00000000,
+    0x0000000f, 0x00000000, 0x00000000, 0x00000000,
+    0x0007993d, 0xa2b25028, 0x825e25b8, 0xd8ef0006,
+    0x6553024d, 0xfd22d469, 0x18e432f6, 0x0006f742,
+    0x0cb58ed2, 0x60216ad5, 0xaa880004, 0x06d882ef,
+    0x5b194147, 0x5ae1374e, 0x0004284d, 0x3e7c9330,
+    0xcf1e013f, 0x4e290006, 0xe339c0b6, 0xe5fc7054,
+    0x83a8c118, 0x0004b49f, 0x00024ef6, 0x88490002,
+    0x070b0002, 0x2d56a1ee, 0x41058ae6, 0x6a2a60dd,
+    0x000979b2, 0xbc78b9b9, 0xc76a97a1, 0x3da30009,
+    0x3292ddc3, 0x926512a6, 0xe935b9bc, 0x000304db,
+    0x3cfddb5c, 0x3b2950b7, 0x83d10004, 0xbe6408ad,
+    0x150d6aed, 0x542e63b3, 0x0004d7e5, 0x13695acc,
+    0x535a2105, 0x1bf70004, 0x72223cee, 0x1a15122a,
+    0xadec5ef3, 0x0004927f, 0x10b05125, 0x7f4ebbc5,
+    0x8088000b, 0xe89d7502, 0x9003469d, 0x19f0a5e6,
+    0x000b3771, 0xc00280ff, 0xdbf61705, 0x497a000e,
+    0xa954afde, 0xbb6cd4a6, 0x9883fa27, 0x000ede9f,
+    0xcef06346, 0x80fba382, 0x14d1000e, 0x448ed4cc,
+    0xc1b5442f, 0xc1d1ee05, 0x000ec7c0, 0xf918095e,
+    0xece206d4, 0xc64d000e, 0xc49116ec, 0xdea75a19,
+    0x9de7ff28, 0x000ee889, 0x2da62775, 0x153cbae6,
+    0xcb1b0000, 0x2d56a1ee, 0x41058ae6, 0x6a2a60dd,
+    0x0006e5e6, 0x8fb7d5fe, 0xe959d656, 0xfb820007,
+    0x58763a4f, 0xd115a10d, 0x265d2c02, 0x0007787e,
+    0xc128d96a, 0x60c918e7, 0x99ad0007, 0x879a90e4,
+    0xc20f35fe, 0xc80791d8, 0x000740ae, 0x62b6d240,
+    0xac8d47c5, 0x17d10000, 0x00000000, 0x00000000,
+    0x00000000, 0x000715c6, 0xb37d118a, 0x4e615d02,
+    0x7d500006, 0x15c6b37d, 0x118a4e61, 0x5d027d50,
+    0x00030000, 0x00000000, 0x00000000, 0x00000003,
+    0x24698ae5, 0x524fe5f6, 0xbe4ac865, 0x00052957,
+    0x1b2227c7, 0x96630ddf, 0x411f0007, 0x15c6b37d,
+    0x118a4e61, 0x5d027d50, 0x00040000, 0x00000000,
+    0x00000000, 0x00000006, 0xf8f4f1e0, 0x473f41dd,
+    0xa510c9c6, 0x00080000, 0x00000000, 0x00000000,
+    0x00000004, 0x7a512382, 0x9b3629e5, 0x5921017a,
+    0x00048666, 0x3dd9e619, 0x6134cc94, 0x1a5c0004,
+    0x7f3931c5, 0x9ac370ab, 0x0551b069, 0x0003d727,
+    0x7ab2786b, 0xf5ad3fc4, 0xd6ce0003, 0x4548d59e,
+    0x1edce88d, 0xe9e4af76, 0x0003262f, 0x491bfd57,
+    0x6715e7ed, 0x2626000f, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000004, 0xbcae0bd1, 0x0ff73a30, 0x724083b7,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000006, 0xb2c6170a,
+    0x0a236bbe, 0xb59382db, 0x0005275b, 0x8ad3002c,
+    0x27b58ad3, 0x002c0005, 0x00000000, 0x00000000,
+    0x00000000, 0x000833a1, 0x8a014d42, 0xd9cbb865,
+    0xb3360004, 0x8c0678fc, 0x8f9a4df5, 0x4d5322f9,
+    0x000399e9, 0x0107ef5e, 0x0560e6df, 0x4b360003,
+    0x31e70023, 0xb2aea2d7, 0xe54090b2, 0x00080000,
+    0x00000000, 0x00000000, 0x0000000d, 0x00000000,
+    0x00000000, 0x00000000, 0x000833a1, 0x8a014d42,
+    0xd9cbb865, 0xb3360008, 0x33a18a01, 0x4d42d9cb,
+    0xb865b336, 0x000833a1, 0x8a014d42, 0xd9cbb865,
+    0xb3360008, 0x33a18a01, 0x4d42d9cb, 0xb865b336,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000002, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00060000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x000c0000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x000d0000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00030000, 0x00000000, 0x00000000,
+    0x0000000d, 0x00000000, 0x00000000, 0x00000000,
+    0x000d0000, 0x00000000, 0x00000000, 0x0000000d,
+    0x00000000, 0x00000000, 0x00000000, 0x000d0000,
+    0x00000000, 0x00000000, 0x0000000d, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000006, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000006, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x0000000d,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000004, 0x00000000, 0x00000000, 0x00000000,
+    0x00040000, 0x00000000, 0x00000000, 0x00000004,
+    0x00000000, 0x00000000, 0x00000000, 0x00040000,
+    0x00000000, 0x00000000, 0x00000004, 0x00000000,
+    0x00000000, 0x00000000, 0x000d0000, 0x00000000,
+    0x00000000, 0x00000004, 0x00000000, 0x00000000,
+    0x00000000, 0x00040000, 0x00000000, 0x00000000,
+    0x00000004, 0x00000000, 0x00000000, 0x00000000,
+    0x00040000, 0x00000000, 0x00000000, 0x00000004,
+    0x00000000, 0x00000000, 0x00000000, 0x00040000,
+    0x00000000, 0x00000000, 0x00000004, 0x00000000,
+    0x00000000, 0x00000000, 0x00040000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x000d0000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000007, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x0000000d, 0x00000000, 0x00000000,
+    0x00000000, 0x000d0000, 0x00000000, 0x00000000,
+    0x0000000d, 0x00000000, 0x00000000, 0x00000000,
+    0x000d0000, 0x00000000, 0x00000000, 0x0000000d,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x0000000d,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x000d0000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000006, 0x00000000, 0x00000000, 0x00000000,
+    0x00060000, 0x00000000, 0x00000000, 0x00000009,
+    0x00000000, 0x00000000, 0x00000000, 0x000d0000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x0000ffff, 0xffffffff,
+    0xffffffff, 0xffff0000, 0x00000000
+};
+
 
 //D:8003C4D0
 struct prop_pos_data word_D_8003C4D0[] = {
@@ -1424,9 +1605,12 @@ struct prop_pos_data word_D_8003C4D0[] = {
 //D:8003C4D6                     .half 0
 //D:8003C4D8
 struct item_related model_object_standard_object = {1, 0, word_D_8003C4D0, 3, 0};
-//D:8003C4E4                     .word 0
-//D:8003C4E8                     .word 0
-//D:8003C4EC                     .word 0
+//D:8003C4E4
+s32 D_8003C4E4 = 0;
+//D:8003C4E8
+s32 D_8003C4E8 = 0;
+//D:8003C4EC
+s32 D_8003C4EC = 0;
 
 //D:8003C4F0
 struct prop_pos_data word_D_8003C4F0[] = {
@@ -1435,8 +1619,10 @@ struct prop_pos_data word_D_8003C4F0[] = {
 };
 //D:8003C4FC
 struct item_related prop_weapon_related = {2, 0, word_D_8003C4F0, 0, 0};
-//D:8003C508                     .word 0
-//D:8003C50C                     .word 0
+//D:8003C508
+s32 D_8003C508 = 0;
+//D:8003C50C
+s32 D_8003C50C = 0;
 
 //D:8003C510
 struct prop_pos_data dword_D_8003C510[] = {
@@ -1462,32 +1648,36 @@ struct prop_pos_data dword_D_8003C510[] = {
 //item_related struct
 //D:8003C570
 struct item_related dword_D_8003C570 = {0x10, 0x0000, dword_D_8003C510, 0x2D, 0x0000};
+
 //D:8003C57C
-//.word 0
+s32 D_8003C57C = 0;
 
 
 //D:8003C580
-struct player_gait_header dword_D_8003C580 = {0, 1, 0, &dword_D_8003C5E0, 0, 0, 0, &dword_D_8003C598};
+struct player_gait_header player_gait_hdr = {0, 1, 0, &player_gait_obj, 0, 0, 0, &player_gait_pos_hdr_1};
 //D:8003C598
-struct player_gait_pos_header dword_D_8003C598 = {0, 2, 0, &dword_D_8003C5F0, &dword_D_8003C580, 0, 0, &dword_D_8003C5B0};
+struct player_gait_pos_header player_gait_pos_hdr_1 = {0, 2, 0, &player_gait_pos_1, &player_gait_hdr, 0, 0, &player_gait_pos_hdr_2};
 //D:8003C5B0
-struct player_gait_pos_header dword_D_8003C5B0 = {0, 2, 0, &dword_D_8003C60C, &dword_D_8003C598, 0, 0, &dword_D_8003C5C8};
+struct player_gait_pos_header player_gait_pos_hdr_2 = {0, 2, 0, &player_gait_pos_2, &player_gait_pos_hdr_1, 0, 0, &player_gait_pos_hdr_3};
 //D:8003C5C8
-struct player_gait_pos_header dword_D_8003C5C8 = {0, 2, 0, &dword_D_8003C628, &dword_D_8003C5B0, 0, 0, 0};
+struct player_gait_pos_header player_gait_pos_hdr_3 = {0, 2, 0, &player_gait_pos_3, &player_gait_pos_hdr_2, 0, 0, 0};
 //D:8003C5E0
-struct player_gait_object_entry dword_D_8003C5E0 = {1, &dword_D_8003C598, 0, 0};
+struct player_gait_object_entry player_gait_obj = {1, &player_gait_pos_hdr_1, 0, 0};
 //D:8003C5F0
-struct player_gait_position_entry dword_D_8003C5F0 = {0.0, 0.0, 0.0, 0x0001, 0x0002, 0xFFFF, 0xFFFF, &dword_D_8003C5B0, 0};
+struct player_gait_position_entry player_gait_pos_1 = {0.0, 0.0, 0.0, 0x0001, 0x0002, 0xFFFF, 0xFFFF, &player_gait_pos_hdr_2, 0};
 //D:8003C60C
-struct player_gait_position_entry dword_D_8003C60C = {1.177982, 41.14437, 0, 0x0002, 0x0003, 0xFFFF, 0xFFFF, &dword_D_8003C5C8, 0};
+struct player_gait_position_entry player_gait_pos_2 = {1.177982, 41.14437, 0, 0x0002, 0x0003, 0xFFFF, 0xFFFF, &player_gait_pos_hdr_3, 0};
 //D:8003C628
-struct player_gait_position_entry dword_D_8003C628 = {-2.576027, 480.42902, 0, 0x0003, 0x0000, 0xFFFF, 0xFFFF, 0, 0};
+struct player_gait_position_entry player_gait_pos_3 = {-2.576027, 480.42902, 0, 0x0003, 0x0000, 0xFFFF, 0xFFFF, 0, 0};
 
-/*
-D:8003C644                     .word 0
-D:8003C648                     .word 0
-D:8003C64C                     .word 0
-*/
+
+//D:8003C644
+s32 D_8003C644 = 0;
+//D:8003C648
+s32 D_8003C648 = 0;
+//D:8003C64C
+s32 D_8003C64C = 0;
+
 
 //D:8003C650
 struct object_header player_gait_object = {0, &dword_D_8003C570,0,0, 4, 41.16123,0,0,0,0};
@@ -1538,9 +1728,12 @@ struct prop_pos_data dword_D_8003C720[] = {
 //D:8003C728
 struct item_related weapon_gun_unassigned = {0x1, 0x0000, dword_D_8003C720, 0x3, 0x0000};
 
-//D:8003C734                     .word 0
-//D:8003C738                     .word 0
-//D:8003C73C                     .word 0
+//D:8003C734
+s32 D_8003C734 = 0;
+//D:8003C738
+s32 D_8003C738 = 0;
+//D:8003C73C
+s32 D_8003C73C = 0;
 //D:8003C740
 struct prop_pos_data dword_D_8003C740[] = {
     {0x0002, 0x0000, 0x0000},
@@ -1554,8 +1747,10 @@ struct prop_pos_data dword_D_8003C740[] = {
 //D:8003C76C
 struct item_related weapon_gun_revolver = {0x7, 0x0000, dword_D_8003C740, 0x15, 0x0000};
 
-//D:8003C778                     .word 0
-//D:8003C77C                     .word 0
+//D:8003C778
+s32 D_8003C778 = 0;
+//D:8003C77C
+s32 D_8003C77C = 0;
 //D:8003C780
 struct prop_pos_data dword_D_8003C780[] = {
     {0x0002, 0x0000, 0x0000},
@@ -1568,113 +1763,209 @@ struct prop_pos_data dword_D_8003C780[] = {
 };
 //D:8003C7AC
 struct item_related weapon_gun_kf7 = {0x7, 0x0000, dword_D_8003C780, 0x12, 0x0000};
-/*
-D:8003C7B8                     .word 0
-D:8003C7BC                     .word 0
-D:8003C7C0     GwppkZ_struct:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0xC, 0, 0>
-D:8003C7E0     GwppksilZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 438.66476, 0xC, 0, 0>
-D:8003C800     Gtt33Z_struct:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 438.16788, 0xF, 0, 0>
-D:8003C820     GskorpianZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 390.40039, 0xC, 0, 0>
-D:8003C840     Gak47Z_struct:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 941.9339, 0x12, 0, 0>
-D:8003C860     GuziZ_struct:   itemheader <0, weapon_gun_kf7, 0, 0x24, 5, 436.95404, 0xC, 0, 0>
-D:8003C880     Gmp5kZ_struct:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 499.24536, 9, 0, 0>
-D:8003C8A0     Gmp5ksilZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 655.97717, 9, 0, 0>
-D:8003C8C0     Gm16Z_struct:   itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 1096.2413, 8, 0, 0>
-D:8003C8E0     Gfnp90Z_struct: itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 460.81909, 0xA, 0, 0>
-D:8003C900                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 238.62167, 4, 0, 0>
-D:8003C920     GrugerZ_struct: itemheader <0, weapon_gun_revolver, 0, 0x24, 6, 553.44312, 0xE, 0, 0>
-D:8003C940     GgoldengunZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 5, 384.92172, 0xB, 0, 0>
-D:8003C960     GshotgunZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 4, 919.33038, 0xD, 0, 0>
-D:8003C980     GautoshotZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 840.15125, 0x10, 0, 0>
-D:8003C9A0     GgrenadelaunchZ_struct:itemheader <0, weapon_gun_revolver, 0, 0x24, 5, 768.33496, 0xF, 0, 0>
-D:8003C9C0     GspectreZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 598.42865, 0xB, 0, 0>
-D:8003C9E0     GlaserZ_struct: itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 442.81848, 0xD, 0, 0>
-D:8003CA00     GrocketlaunchZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 566.51208, 0xA, 0, 0>
-D:8003CA20     GknifeZ_header: itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 376.97263, 9, 0, 0>
-D:8003CA40     GthrowknifeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 373.31387, 9, 0, 0>
-D:8003CA60     GtaserZ_struct: itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 182.78622, 0x11, 0, 0>
-D:8003CA80     GremotemineZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 50.999378, 3, 0, 0>
-D:8003CAA0     GproximitymineZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 51.00029, 3, 0, 0>
-D:8003CAC0     GtimedmineZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 49.368877, 4, 0, 0>
-D:8003CAE0     GtriggerZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 283.9006, 0x16, 0, 0>
-D:8003CB00     GgrenadeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 427.27081, 5, 0, 0>
-D:8003CB20     GfistZ_header:  itemheader <0, weapon_gun_standard_gun, 0, 0x24, 3, 243.84764, 0xE, 0, 0>
-D:8003CB40     GsniperrifleZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 808.03253, 7, 0, 0>
-D:8003CB60     GcartridgeZ_struct:itemheader <0, weapon_gun_unassigned, 0, 0, 1, 14.128822, 2, 0, 0>
-D:8003CB80     GcartrifleZ_struct:itemheader <0, weapon_gun_unassigned, 0, 0, 1, 30.122747, 2, 0, 0>
-D:8003CBA0     GcartblueZ_struct:itemheader <0, weapon_gun_unassigned, 0, 0, 1, 30.122747, 2, 0, 0>
-D:8003CBC0     GcartshellZ_struct:itemheader <0, weapon_gun_unassigned, 0, 0, 1, 29.8451, 2, 0, 0>
-D:8003CBE0     GjoypadZ_struct:itemheader <0, weapon_gun_controller, 0, 0xE, 0xD, 523.96826, 4, 0, 0>
-D:8003CC00                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CC20                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CC40     GbombcaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003CC60     GflarepistolZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CC80     GpitongunZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CCA0                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CCC0     GsilverwppkZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0xB, 0, 0>
-D:8003CCE0     GgoldwppkZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0xB, 0, 0>
-D:8003CD00                     itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CD20     GbungeeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CD40     GdoordecoderZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 60.850407, 0x10, 0, 0>
-D:8003CD60     GbombdefuserZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 84.370705, 0xC, 0, 0>
-D:8003CD80     GbugdetectorZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CDA0     GsafecrackercaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003CDC0     GcameraZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 52.775627, 0xB, 0, 0>
-D:8003CDE0     GlockexploderZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CE00     GdoorexploderZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CE20     GkeyanalysercaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003CE40     GweaponcaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003CE60     GkeycardZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 123.08884, 2, 0, 0>
-D:8003CE80     GkeyyaleZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 414.25156, 1, 0, 0>
-D:8003CEA0     GkeyboltZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 759.26581, 1, 0, 0>
-D:8003CEC0     GbugZ_struct:   itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 106.2163, 6, 0, 0>
-D:8003CEE0     GmicrocameraZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 70.039436, 7, 0, 0>
-D:8003CF00     GexplosivefloppyZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 60.902443, 5, 0, 0>
-D:8003CF20     GgoldeneyekeyZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 98.987083, 5, 0, 0>
-D:8003CF40     GpolarizedglassesZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 53.776386, 2, 0, 0>
-D:8003CF60     GcreditcardZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CF80     GdarkglassesZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003CFA0     GwatchidentifierZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0>
-D:8003CFC0     GwatchcommunicatorZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0>
-D:8003CFE0     GwatchlaserZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x24, 4, 283.9006, 0x16, 0, 0>
-D:8003D000     GwatchgeigercounterZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0>
-D:8003D020     GwatchmagnetrepelZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 9, 0, 0>
-D:8003D040     GwatchmagnetattractZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1D, 3, 384.9288, 9, 0, 0>
-D:8003D060     GgaskeyringZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 111.59859, 9, 0, 0>
-D:8003D080     GdatathiefZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 119.78231, 3, 0, 0>
-D:8003D0A0     GbriefcaseZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 6, 0, 0>
-D:8003D0C0     GblackboxZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 128.31796, 5, 0, 0>
-D:8003D0E0     GplastiqueZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 255.35242, 3, 0, 0>
-D:8003D100     GvideotapeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 122.69632, 9, 0, 0>
-D:8003D120     GclipboardZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 190.41742, 3, 0, 0>
-D:8003D140     GstafflistZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 215.17534, 4, 0, 0>
-D:8003D160     GdossierredZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 183.54231, 4, 0, 0>
-D:8003D180     GaudiotapeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 97.531075, 9, 0, 0>
-D:8003D1A0     GdattapeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 79.868584, 4, 0, 0>
-D:8003D1C0     GplansZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 81.950996, 5, 0, 0>
-D:8003D1E0     GspyfileZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D200     GblueprintsZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 125.3834, 4, 0, 0>
-D:8003D220     GcircuitboardZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 138.90285, 3, 0, 0>
-D:8003D240     GmapZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x23, 3, 125.3834, 4, 0, 0>
-D:8003D260     GspooltapeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D280     GmicrofilmZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D2A0     GmicrocodeZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D2C0     GlectreZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D2E0     GmoneyZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D300     GgoldbarZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
-D:8003D320     GheroinZ_struct:itemheader <0, weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 2, 0, 0>
 
-D:8003D340     dword_D_8003D340:.word    0x20000,         2,   0x30003,   0x20006
-D:8003D340                                              # DATA XREF: D:8003D394o
-D:8003D340                     .word    0x60002,   0x90009,   0x2000C,   0xC0002
-D:8003D340                     .word    0xF000F,   0x20012,  0x120002,  0x150015
-D:8003D340                     .word    0x20018,  0x180002,  0x1B001B,   0x2001E
-D:8003D340                     .word   0x1E0002,  0x210021,   0x20024,  0x240000
-D:8003D390     weapon_gun_controller:.word 0xD0000      # DATA XREF: D:GjoypadZ_structo
-D:8003D394                     .word dword_D_8003D340
-D:8003D398                     .word 0x270000
-D:8003D39C                     .word 0
-*/
+//D:8003C7B8
+s32 D_8003C7B8 = 0;
+//D:8003C7BC
+s32 D_8003C7BC = 0;
+
+//D:8003C7C0
+struct Gitemheader GwppkZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0, 0xC, 0, 0};
+//D:8003C7E0
+struct Gitemheader GwppksilZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 438.66476, 0, 0xC, 0, 0};
+//D:8003C800
+struct Gitemheader Gtt33Z_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 438.16788, 0, 0xF, 0, 0};
+//D:8003C820
+struct Gitemheader GskorpianZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 390.40039, 0, 0xC, 0, 0};
+//D:8003C840
+struct Gitemheader Gak47Z_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 941.9339, 0, 0x12, 0, 0};
+//D:8003C860
+struct Gitemheader GuziZ_struct = {0, &weapon_gun_kf7, 0, 0x24, 5, 436.95404, 0, 0xC, 0, 0};
+//D:8003C880
+struct Gitemheader Gmp5kZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 499.24536, 0, 9, 0, 0};
+//D:8003C8A0
+struct Gitemheader Gmp5ksilZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 655.97717, 0, 9, 0, 0};
+//D:8003C8C0
+struct Gitemheader Gm16Z_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 1096.2413, 0, 8, 0, 0};
+//D:8003C8E0
+struct Gitemheader Gfnp90Z_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 460.81909, 0, 0xA, 0, 0};
+//D:8003C900
+struct Gitemheader G8003C900_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 238.62167, 0, 4, 0, 0};
+//D:8003C920
+struct Gitemheader GrugerZ_struct = {0, &weapon_gun_revolver, 0, 0x24, 6, 553.44312, 0, 0xE, 0, 0};
+//D:8003C940
+struct Gitemheader GgoldengunZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 5, 384.92172, 0, 0xB, 0, 0};
+//D:8003C960
+struct Gitemheader GshotgunZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 4, 919.33038, 0, 0xD, 0, 0};
+//D:8003C980
+struct Gitemheader GautoshotZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 840.15125, 0, 0x10, 0, 0};
+//D:8003C9A0
+struct Gitemheader GgrenadelaunchZ_struct = {0, &weapon_gun_revolver, 0, 0x24, 5, 768.33496, 0, 0xF, 0, 0};
+//D:8003C9C0
+struct Gitemheader GspectreZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 598.42865, 0, 0xB, 0, 0};
+//D:8003C9E0
+struct Gitemheader GlaserZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 442.81848, 0, 0xD, 0, 0};
+//D:8003CA00
+struct Gitemheader GrocketlaunchZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 566.51208, 0, 0xA, 0, 0};
+//D:8003CA20
+struct Gitemheader GknifeZ_header = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 376.97263, 0, 9, 0, 0};
+//D:8003CA40
+struct Gitemheader GthrowknifeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 373.31387, 0, 9, 0, 0};
+//D:8003CA60
+struct Gitemheader GtaserZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 182.78622, 0, 0x11, 0, 0};
+//D:8003CA80
+struct Gitemheader GremotemineZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 50.999378, 0, 3, 0, 0};
+//D:8003CAA0
+struct Gitemheader GproximitymineZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 51.00029, 0, 3, 0, 0};
+//D:8003CAC0
+struct Gitemheader GtimedmineZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 49.368877, 0, 4, 0, 0};
+//D:8003CAE0
+struct Gitemheader GtriggerZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 283.9006, 0, 0x16, 0, 0};
+//D:8003CB00
+struct Gitemheader GgrenadeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 427.27081, 0, 5, 0, 0};
+//D:8003CB20
+struct Gitemheader GfistZ_header = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 243.84764, 0, 0xE, 0, 0};
+//D:8003CB40
+struct Gitemheader GsniperrifleZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 808.03253, 0, 7, 0, 0};
+//D:8003CB60
+struct Gitemheader GcartridgeZ_struct = {0, &weapon_gun_unassigned, 0, 0, 1, 14.128822, 0, 2, 0, 0};
+//D:8003CB80
+struct Gitemheader GcartrifleZ_struct = {0, &weapon_gun_unassigned, 0, 0, 1, 30.122747, 0, 2, 0, 0};
+//D:8003CBA0
+struct Gitemheader GcartblueZ_struct = {0, &weapon_gun_unassigned, 0, 0, 1, 30.122747, 0, 2, 0, 0};
+//D:8003CBC0
+struct Gitemheader GcartshellZ_struct = {0, &weapon_gun_unassigned, 0, 0, 1, 29.8451, 0, 2, 0, 0};
+//D:8003CBE0
+struct Gitemheader GjoypadZ_struct = {0, &weapon_gun_controller, 0, 0xE, 0xD, 523.96826, 0, 4, 0, 0};
+//D:8003CC00
+struct Gitemheader G8003CC00_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CC20
+struct Gitemheader G8003CC20_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CC40
+struct Gitemheader GbombcaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 0, 6, 0, 0};
+//D:8003CC60
+struct Gitemheader GflarepistolZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CC80
+struct Gitemheader GpitongunZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CCA0
+struct Gitemheader G8003CCA0_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CCC0
+struct Gitemheader GsilverwppkZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0, 0xB, 0, 0};
+//D:8003CCE0
+struct Gitemheader GgoldwppkZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0, 0xB, 0, 0};
+//D:8003CD00
+struct Gitemheader G8003CD00_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CD20
+struct Gitemheader GbungeeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CD40
+struct Gitemheader GdoordecoderZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 60.850407, 0, 0x10, 0, 0};
+//D:8003CD60
+struct Gitemheader GbombdefuserZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 84.370705, 0, 0xC, 0, 0};
+//D:8003CD80
+struct Gitemheader GbugdetectorZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CDA0
+struct Gitemheader GsafecrackercaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 0, 6, 0, 0};
+//D:8003CDC0
+struct Gitemheader GcameraZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 52.775627, 0, 0xB, 0, 0};
+//D:8003CDE0
+struct Gitemheader GlockexploderZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CE00
+struct Gitemheader GdoorexploderZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CE20
+struct Gitemheader GkeyanalysercaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 0, 6, 0, 0};
+//D:8003CE40
+struct Gitemheader GweaponcaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 0, 6, 0, 0};
+//D:8003CE60
+struct Gitemheader GkeycardZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 123.088844, 0, 2, 0, 0};
+//D:8003CE80
+struct Gitemheader GkeyyaleZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 414.25156, 0, 1, 0, 0};
+//D:8003CEA0
+struct Gitemheader GkeyboltZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 759.26581, 0, 1, 0, 0};
+//D:8003CEC0
+struct Gitemheader GbugZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 106.2163, 0, 6, 0, 0};
+//D:8003CEE0
+struct Gitemheader GmicrocameraZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 70.039436, 0, 7, 0, 0};
+//D:8003CF00
+struct Gitemheader GexplosivefloppyZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 60.902443, 0, 5, 0, 0};
+//D:8003CF20
+struct Gitemheader GgoldeneyekeyZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 98.987083, 0, 5, 0, 0};
+//D:8003CF40
+struct Gitemheader GpolarizedglassesZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 53.776386, 0, 2, 0, 0};
+//D:8003CF60
+struct Gitemheader GcreditcardZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CF80
+struct Gitemheader GdarkglassesZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CFA0
+struct Gitemheader GwatchidentifierZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 0, 9, 0, 0};
+//D:8003CFC0
+struct Gitemheader GwatchcommunicatorZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 0, 9, 0, 0};
+//D:8003CFE0
+struct Gitemheader GwatchlaserZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 283.9006, 0, 0x16, 0, 0};
+//D:8003D000
+struct Gitemheader GwatchgeigercounterZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 0, 9, 0, 0};
+//D:8003D020
+struct Gitemheader GwatchmagnetrepelZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 0, 9, 0, 0};
+//D:8003D040
+struct Gitemheader GwatchmagnetattractZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1D, 3, 384.9288, 0, 9, 0, 0};
+//D:8003D060
+struct Gitemheader GgaskeyringZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 111.59859, 0, 9, 0, 0};
+//D:8003D080
+struct Gitemheader GdatathiefZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 119.78231, 0, 3, 0, 0};
+//D:8003D0A0
+struct Gitemheader GbriefcaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 0, 6, 0, 0};
+//D:8003D0C0
+struct Gitemheader GblackboxZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 128.31796, 0, 5, 0, 0};
+//D:8003D0E0
+struct Gitemheader GplastiqueZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 255.35242, 0, 3, 0, 0};
+//D:8003D100
+struct Gitemheader GvideotapeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 122.69632, 0, 9, 0, 0};
+//D:8003D120
+struct Gitemheader GclipboardZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 190.41742, 0, 3, 0, 0};
+//D:8003D140
+struct Gitemheader GstafflistZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 215.17534, 0, 4, 0, 0};
+//D:8003D160
+struct Gitemheader GdossierredZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 183.54231, 0, 4, 0, 0};
+//D:8003D180
+struct Gitemheader GaudiotapeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 97.531075, 0, 9, 0, 0};
+//D:8003D1A0
+struct Gitemheader GdattapeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 79.868584, 0, 4, 0, 0};
+//D:8003D1C0
+struct Gitemheader GplansZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 81.950996, 0, 5, 0, 0};
+//D:8003D1E0
+struct Gitemheader GspyfileZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D200
+struct Gitemheader GblueprintsZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 125.3834, 0, 4, 0, 0};
+//D:8003D220
+struct Gitemheader GcircuitboardZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 138.90285, 0, 3, 0, 0};
+//D:8003D240
+struct Gitemheader GmapZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 125.3834, 0, 4, 0, 0};
+//D:8003D260
+struct Gitemheader GspooltapeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D280
+struct Gitemheader GmicrofilmZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D2A0
+struct Gitemheader GmicrocodeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D2C0
+struct Gitemheader GlectreZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D2E0
+struct Gitemheader GmoneyZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D300
+struct Gitemheader GgoldbarZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D320
+struct Gitemheader GheroinZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+
+//D:8003D340
+u32 dword_D_8003D340[] = {0x20000,         2,   0x30003,   0x20006,
+                          0x60002,   0x90009,   0x2000C,   0xC0002,
+                          0xF000F,   0x20012,  0x120002,  0x150015,
+                          0x20018,  0x180002,  0x1B001B,   0x2001E,
+                          0x1E0002,  0x210021,   0x20024,  0x240000};
+
+//D:8003D390
+struct model_data weapon_gun_controller = {0xD0000, dword_D_8003D340, 0x270000};
+//D:8003D39C
+s32 D_8003D39C = 0;
+
 u32 dword_D_8003D3A0[] = {0x4010000,         2,         0,   0x20003,
                           0x30002,   0x60006,   0x20009,   0xC0002,
                           0xC0009,   0x2000F,  0x120002,  0x12000F,
@@ -1685,9 +1976,9 @@ u32 dword_D_8003D3A0[] = {0x4010000,         2,         0,   0x20003,
 
 //D:8003D400
      struct model_data model_guard_character = {0x100000, dword_D_8003D3A0, 0x2D0000};
-/*
-D:8003D40C                     .word 0
-*/
+//D:8003D40C
+s32 D_8003D40C = 0;
+
 //D:8003D410
 struct object_header CcamguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xE, 0, 0};
 //D:8003D430
@@ -1848,7 +2139,7 @@ struct object_header CheadbrosnansnowZ_struct = {0, 0, 0, 2, 1, 225.0605, 0, 6, 
 struct object_header CheadbrosnanZ_struct = {0, 0, 0, 2, 1, 189.48112, 0, 5, 0, 0};
 //D:8003DDF0
 struct object_header CspicebondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1208.6448, 0, 0x11, 0, 0};
-
+const char padding_chars_for_strings[] = "\00\00\00\00\00\00\00\00\00\00\00";
 struct c_itementry c_item_entries[] = {
     {&CcamguardZ_struct, "CcamguardZ", 1.0, 1.0, 0x1000000},
     {&CgreyguardZ_struct, "CgreyguardZ", 1.0, 1.0, 0x1000000},
@@ -1932,566 +2223,465 @@ struct c_itementry c_item_entries[] = {
     {&CspicebondZ_struct, "CspicebondZ", 0.94999999, 0.96609998, 0x10000},
 };
 
-/*
-D:8003E450                     .word 0, 0
-D:8003E458                     .float 1.0
-D:8003E45C                     .word 0
-D:8003E460                     .word 0
-D:8003E464     flt_D_8003E464: .float -0.076300003, 0.77999997,-1.2696    , 1.1694109 
-D:8003E464                                              # DATA XREF: sub_CODE_7F020EF0+738o
-D:8003E464                     .float  1.120654  , 1.05959   ,-0.25760001,-0.47319999
-D:8003E464                     .float -1.5686001 , 1.132916  , 1.0       , 1.080207
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.039999999, 0.74000001
-D:8003E464                     .float -0.63999999, 1.132795  , 1.167207  , 1.035167
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.033500001, 0.24959999
-D:8003E464                     .float  0.16599999, 1.115045  , 0.94169998, 1.042492
-D:8003E464                     .float -0.070299998, 0.4919    ,-0.83359998, 1.072812
-D:8003E464                     .float  1.088326  , 0.926121  ,-0.1       , 0.42750001
-D:8003E464                     .float -0.48249999, 1.033368  , 0.96552098, 0.929905
-D:8003E464                     .float  0.18000001, 0.0       , 0.0       , 1.072214
-D:8003E464                     .float  1.0       , 1.0       , 0.237     , 0.977
-D:8003E464                     .float -0.44      , 1.178463  , 1.14061   , 1.143465
-D:8003E464                     .float -0.090300001, 0.23190001, 0.12639999, 0.99080002
-D:8003E464                     .float  1.02      , 0.8466    , 0.0       , 0.1485
-D:8003E464                     .float  0.3793    , 1.1548001 , 0.99190003, 0.95139998
-D:8003E464                     .float -0.14820001, 0.44100001, 0.1727    , 1.050034
-D:8003E464                     .float  1.0       , 1.05445   ,-0.4941    ,-0.26409999
-D:8003E464                     .float -0.18000001, 0.90368301, 0.72551203, 1.001314
-D:8003E464                     .float  0.1318    , 0.30100101, 1.572699  , 0.98799503
-D:8003E464                     .float  1.0       , 1.05445   , 0.0       , 0.73019999
-D:8003E464                     .float  0.71740001, 1.1923    , 1.1834    , 1.091924
-D:8003E464                     .float -0.0942    ,-0.74190003, 0.94260001, 0.98659998
-D:8003E464                     .float  0.91689998, 0.94760001, 0.0535    , 0.61510003
-D:8003E464                     .float  1.076     , 1.05092   , 0.90002   , 1.122508
-D:8003E464                     .float -0.079999998, 0.1085    ,-0.56629997, 1.192598
-D:8003E464                     .float  1.079134  , 1.199971  ,-0.35640001,-0.28709999
-D:8003E464                     .float -0.36950001, 1.035176  , 0.838543  , 1.121092
-D:8003E464                     .float  0.065300003,-0.4664    , 0.72000003, 1.050106
-D:8003E464                     .float  1.0       , 1.11042   ,-0.079999998, 0.4885
-D:8003E464                     .float  0.093699999, 1.158567  , 1.2356189 , 1.194388
-D:8003E464                     .float -0.0942    ,-0.3017    , 0.59450001, 1.0671999
-D:8003E464                     .float  1.0218    , 1.0174    , 0.12      ,-0.1515
-D:8003E464                     .float  0.95370001, 1.124017  , 0.966048  , 1.206121
-D:8003E464                     .float -0.19310001, 0.2334    ,-0.64850003, 1.1800359
-D:8003E464                     .float  1.0401829 , 1.154537  ,-0.36230001,-0.133
-D:8003E464                     .float -0.486     , 1.0536211 , 1.0       , 1.1495841
-D:8003E464                     .float  0.0955    , 0.68099999, 0.78799999, 1.0152
-D:8003E464                     .float  1.1926    , 1.1308    ,-0.0823    , 0.36700001
-D:8003E464                     .float  0.37400001, 1.311748  , 1.115972  , 1.166244
-D:8003E464                     .float -0.0942    , 0.1768    , 0.5248    , 1.0470001
-D:8003E464                     .float  1.0218    , 0.99800003, 0.0       ,-0.0964
-D:8003E464                     .float  0.82999998, 1.1109999 , 0.85180199, 1.180503
-D:8003E464                     .float -0.1832    , 0.32120001,-1.2381001 , 1.125683
-D:8003E464                     .float  1.091681  , 0.98079097,-0.55049998,-0.60839999
-D:8003E464                     .float -1.189499  , 1.023566  , 0.8326    , 1.0637
-D:8003E464                     .float  0.076800004, 0.32120001,-0.118101  , 1.059677
-D:8003E464                     .float  1.091681  , 1.000479  , 0.0       , 0.29890001
-D:8003E464                     .float -0.67299998, 1.1367    , 1.0526    , 0.99227399
-D:8003E464                     .float -0.0942    , 0.032000002,-0.29699999, 1.0402
-D:8003E464                     .float  0.92860001, 0.88690001, 0.0       , 0.26879999
-D:8003E464                     .float  0.057399999, 1.041842  , 0.81959999, 0.99637401
-D:8003E464                     .float  0.079700001, 0.3511    , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0835    , 0.14      , 0.1965
-D:8003E464                     .float -0.058398999, 1.012674  , 0.96799999, 1.098917
-D:8003E464                     .float  0.1629    , 0.78799999, 1.0746    , 0.92205501
-D:8003E464                     .float  1.0688    , 1.055297  ,-0.074500002, 0.8477
-D:8003E464                     .float  0.71810001, 1.154819  , 1.177258  , 1.031684
-D:8003E464                     .float -0.0145    , 0.047699999, 0.89810002, 1.0404
-D:8003E464                     .float  1.0       , 0.94309998, 0.32550001, 0.36770001
-D:8003E464                     .float  0.93809998, 1.044217  , 0.97841102, 1.127771
-D:8003E464                     .float -0.1832    ,-0.058800001,-1.5781    , 1.095929
-D:8003E464                     .float  0.96300697, 0.92348999,-0.4411    ,-0.64840001
-D:8003E464                     .float -1.839099  , 1.059271  , 0.8326    , 0.96849501
-D:8003E464                     .float  0.19679999,-0.3188    ,-0.43810099, 1.070675
-D:8003E464                     .float  1.053777  , 0.88628101, 0.0       , 0.29890001
-D:8003E464                     .float -0.83139998, 1.1154    , 1.0328    , 1.0036
-D:8003E464                     .float -0.0942    ,-0.1275    ,-0.52109998, 1.0402
-D:8003E464                     .float  0.92180002, 0.8617    , 0.079999998,-0.2383
-D:8003E464                     .float -0.22940101, 1.063022  , 0.80879998, 0.90789998
-D:8003E464                     .float  0.1165    , 0.58780003,-1.3096    , 1.136481
-D:8003E464                     .float  1.0409    , 1.065612  ,-0.070600003, 0.0152
-D:8003E464                     .float -1.2391    , 1.002256  , 0.76669598, 1.029659
-D:8003E464                     .float  0.2218    , 0.0       , 0.0       , 1.0852
-D:8003E464                     .float  1.0       , 1.0       , 0.063000001, 0.7561
-D:8003E464                     .float -0.45269999, 1.2085    , 1.1014    , 1.0664001
-D:8003E464                     .float  0.065499999,-0.1097    ,-0.3497    , 1.0404
-D:8003E464                     .float  0.90915602, 0.94940001, 0.0       , 0.336
-D:8003E464                     .float  0.082999997, 1.150862  , 0.94169998, 1.0
-D:8003E464                     .float -0.054200001, 0.27079999,-0.082099997, 1.0367
-D:8003E464                     .float  1.0367    , 1.0367    , 0.34119999,-0.55879998
-D:8003E464                     .float -0.3044    , 1.113436  , 0.96799999, 1.076647
-D:8003E464                     .float  0.0495    , 0.63980001, 1.2178    , 0.95099998
-D:8003E464                     .float  1.1126    , 1.0413001 , 0.0       , 0.53640002
-D:8003E464                     .float  0.75220001, 1.1976    , 1.1463    , 1.1374
-D:8003E464                     .float -0.0145    ,-0.64749998, 1.0477999 , 0.95289999
-D:8003E464                     .float  0.92180002, 0.90579998, 0.16      , 0.61830002
-D:8003E464                     .float  1.128299  , 1.083438  , 0.91670603, 1.0666929
-D:8003E464                     .float -0.2586    , 0.93580002,-0.2463    , 1.1057
-D:8003E464                     .float  1.0116    , 1.0927    ,-0.1788    ,-0.31310001
-D:8003E464                     .float -0.55299997, 1.1071    , 1.0       , 1.071945
-D:8003E464                     .float  0.0955    , 0.16230001, 0.50150001, 1.0506001
-D:8003E464                     .float  1.0       , 1.1032    , 0.081200004, 0.2269
-D:8003E464                     .float  0.50700003, 1.1071    , 1.178908  , 1.189239
-D:8003E464                     .float -0.0145    ,-0.68440002, 0.54070002, 1.0470001
-D:8003E464                     .float  0.92699999, 1.027078  , 0.0       ,-0.0164
-D:8003E464                     .float  0.66399997, 1.2108999 , 1.0       , 1.0729001
-D:8003E464                     .float -0.1487    , 0.88779998,-0.41060001, 1.110018
-D:8003E464                     .float  0.98460901, 1.110518  , 0.0012000001,-0.61879998
-D:8003E464                     .float -0.34439901, 1.099178  , 0.916071  , 1.054984
-D:8003E464                     .float  0.0429    , 0.2149    , 0.4298    , 1.0455
-D:8003E464                     .float  1.0688    , 1.1514    , 0.0012000001,-0.0188
-D:8003E464                     .float  0.65560102, 1.1957231 , 1.079964  , 1.200996
-D:8003E464                     .float -0.0145    ,-0.48769999, 0.44909999, 1.003074
-D:8003E464                     .float  1.0       , 0.98259997, 0.0       , 0.396
-D:8003E464                     .float  0.8362    , 1.1622    , 0.91339999, 1.066853
-D:8003E464                     .float -0.29030001, 1.0714999 ,-0.3504    , 1.125893
-D:8003E464                     .float  1.127159  , 1.177758  , 0.0       ,-0.079999998
-D:8003E464                     .float -0.373     , 1.099718  , 1.0       , 1.0947551
-D:8003E464                     .float  0.0       , 0.78799999, 0.64469999, 1.0
-D:8003E464                     .float  1.0       , 1.0963    ,-0.074699998, 1.5436
-D:8003E464                     .float  0.1979    , 1.1497999 , 1.1835999 , 1.0791
-D:8003E464                     .float -0.090300001,-0.1085    , 0.68959999, 1.024099
-D:8003E464                     .float  1.0       , 0.98965299, 0.0       , 0.63230002
-D:8003E464                     .float  0.7913    , 1.1081001 , 0.93440002, 1.0779999
-D:8003E464                     .float  0.12      , 0.40000001, 0.039999999, 1.022947
-D:8003E464                     .float  0.92226201, 1.004824  , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0429    , 0.75889999, 1.2895    , 0.94440001
-D:8003E464                     .float  1.0       , 1.0551    , 0.0       , 0.546
-D:8003E464                     .float  0.79729998, 1.1483001 , 1.1267999 , 1.1388
-D:8003E464                     .float  0.065099999,-0.54320002, 1.1224999 , 0.93949997
-D:8003E464                     .float  0.92699999, 0.93040001, 0.1265    , 0.36359999
-D:8003E464                     .float  1.079     , 1.1109999 , 1.0       , 1.1166
-D:8003E464                     .float -0.278     , 1.272301  ,-0.55269998, 1.24701
-D:8003E464                     .float  1.0737129 , 1.118222  ,-0.23639999, 0.58200002
-D:8003E464                     .float -0.30950001, 1.225595  , 1.077682  , 1.066005
-D:8003E464                     .float -0.0845    , 0.68099999, 0.64469999, 1.1204081
-D:8003E464                     .float  1.1927    , 1.1308    ,-0.1364    , 1.021999
-D:8003E464                     .float  0.5905    , 1.153587  , 1.226897  , 1.2252491
-D:8003E464                     .float -0.2534    , 0.57560003, 0.3856    , 1.0405
-D:8003E464                     .float  1.0405    , 1.0585999 ,-0.1265    , 0.6081
-D:8003E464                     .float  0.71200001, 1.222     , 1.0       , 1.111666
-D:8003E464                     .float -0.4637    , 1.3971    ,-0.49270001, 1.1752
-D:8003E464                     .float  1.0116    , 1.1762    ,-0.2976    ,-0.1049
-D:8003E464                     .float -0.49649999, 1.2345999 , 0.86470801, 1.077117
-D:8003E464                     .float -0.1151    , 0.7353    , 0.57309997, 1.0759
-D:8003E464                     .float  1.0       , 1.1308    ,-0.189     , 0.99910003
-D:8003E464                     .float  0.2396    , 1.2269    , 1.2039    , 1.1698999
-D:8003E464                     .float -0.2534    ,-0.0647    , 0.30070001, 1.0470001
-D:8003E464                     .float  0.92699999, 1.0124    ,-0.1265    , 0.61260003
-D:8003E464                     .float  0.76700002, 1.2108999 , 1.0       , 1.096216
-D:8003E464                     .float -0.51429999, 1.0894001 ,-0.082099997, 1.1003
-D:8003E464                     .float  1.0316    , 1.0278    ,-0.53280002,-0.13060001
-D:8003E464                     .float -0.25999999, 1.080464  , 1.0       , 1.019003
-D:8003E464                     .float -0.1969    , 0.45930001, 0.64469999, 0.96219999
-D:8003E464                     .float  1.0       , 1.0895    ,-0.32690001, 1.1438
-D:8003E464                     .float  0.46720001, 1.1339    , 1.1339    , 1.0436
-D:8003E464                     .float -0.29879999, 0.0       , 0.41429999, 0.96219999
-D:8003E464                     .float  1.0       , 0.95630002,-0.17640001, 0.39500001
-D:8003E464                     .float  0.86699998, 1.0972    , 0.94625998, 1.0529979
-D:8003E464                     .float  0.02      , 0.56910002,-0.25299999, 1.1205291
-D:8003E464                     .float  0.999475  , 1.072994  ,-0.0823    ,-0.3784
-D:8003E464                     .float -0.38249999, 1.077682  , 1.0       , 1.066239
-D:8003E464                     .float  0.02      ,-0.1909    , 0.90700001, 1.049657
-D:8003E464                     .float  0.999475  , 1.072994  , 0.0       , 0.60549998
-D:8003E464                     .float  0.47510001, 1.1236    , 1.1236    , 1.1236
-D:8003E464                     .float -0.0942    , 0.077600002, 0.5248    , 1.0403
-D:8003E464                     .float  0.95950001, 0.98580003, 0.0       , 0.20550001
-D:8003E464                     .float  0.8951    , 1.1519721 , 0.92378497, 1.0316401
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0836    ,-0.66259998, 0.14210001, 0.95139998
-D:8003E464                     .float  1.090098  , 0.92760003, 0.1141    ,-1.1931
-D:8003E464                     .float -0.25400001, 0.98102301, 0.83667898, 0.88798702
-D:8003E464                     .float  0.1481    ,-0.15360001, 1.1461999 , 0.91399997
-D:8003E464                     .float  1.0       , 0.94489998, 0.0       ,-0.53250003
-D:8003E464                     .float  0.3563    , 1.0727    , 1.0526    , 1.0228
-D:8003E464                     .float -0.0942    ,-0.6857    , 1.1224999 , 0.95959997
-D:8003E464                     .float  0.92860001, 0.88690001, 0.079999998,-0.7396
-D:8003E464                     .float  0.963     , 1.1032    , 0.875673  , 0.97771698
-D:8003E464                     .float -0.29030001, 1.0714999 ,-0.3504    , 1.125893
-D:8003E464                     .float  1.127159  , 1.177758  , 0.0       ,-0.079999998
-D:8003E464                     .float -0.373     , 1.099718  , 1.0       , 1.0947551
-D:8003E464                     .float  0.0       , 0.78799999, 0.64469999, 1.0
-D:8003E464                     .float  1.0       , 1.0963    ,-0.074699998, 1.5436
-D:8003E464                     .float  0.1979    , 1.1497999 , 1.1835999 , 1.0791
-D:8003E464                     .float -0.090300001,-0.1085    , 0.68959999, 1.024099
-D:8003E464                     .float  1.0       , 0.98965299, 0.0       , 0.63230002
-D:8003E464                     .float  0.7913    , 1.1081001 , 0.93440002, 1.0779999
-D:8003E464                     .float -0.13699999, 0.286001  ,-0.32229999, 1.142894
-D:8003E464                     .float  0.89638299, 1.15      ,-0.16680001,-0.1365
-D:8003E464                     .float -0.43650001, 1.1452    , 1.0       , 1.061306
-D:8003E464                     .float  0.1376    , 0.0       , 0.71600002, 1.05312
-D:8003E464                     .float  1.0       , 1.0687751 ,-0.074699998, 0.9393
-D:8003E464                     .float  0.2658    , 1.1815    , 1.1216    , 1.0822999
-D:8003E464                     .float -0.103     ,-0.2269    , 0.5722    , 0.99080002
-D:8003E464                     .float  1.02      , 1.0034    , 0.0       , 0.1373
-D:8003E464                     .float  0.79430002, 1.1813999 , 0.86186302, 1.0998
-D:8003E464                     .float  0.12      , 0.40000001, 0.039999999, 1.022947
-D:8003E464                     .float  0.92226201, 1.004824  , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0429    , 0.75889999, 1.2895    , 0.94440001
-D:8003E464                     .float  1.0       , 1.0551    , 0.0       , 0.546
-D:8003E464                     .float  0.79729998, 1.1483001 , 1.1267999 , 1.1388
-D:8003E464                     .float  0.065099999,-0.54320002, 1.1224999 , 0.93949997
-D:8003E464                     .float  0.92699999, 0.93040001, 0.1265    , 0.36359999
-D:8003E464                     .float  1.079     , 1.1109999 , 1.0       , 1.1166
-D:8003E464                     .float  0.0836    ,-0.66259998, 0.14210001, 0.95139998
-D:8003E464                     .float  1.090098  , 0.92760003, 0.1141    ,-1.1931
-D:8003E464                     .float -0.25400001, 0.98102301, 0.83667898, 0.88798702
-D:8003E464                     .float  0.1481    ,-0.15360001, 1.1461999 , 0.91399997
-D:8003E464                     .float  1.0       , 0.94489998, 0.0       ,-0.53250003
-D:8003E464                     .float  0.3563    , 1.0727    , 1.0526    , 1.0228
-D:8003E464                     .float -0.0942    ,-0.6857    , 1.1224999 , 0.95959997
-D:8003E464                     .float  0.92860001, 0.88690001, 0.079999998,-0.7396
-D:8003E464                     .float  0.963     , 1.1032    , 0.875673  , 0.97771698
-D:8003E464                     .float -0.29030001, 1.0714999 ,-0.3504    , 1.125893
-D:8003E464                     .float  1.127159  , 1.177758  , 0.0       ,-0.079999998
-D:8003E464                     .float -0.373     , 1.099718  , 1.0       , 1.0947551
-D:8003E464                     .float  0.0       , 0.78799999, 0.64469999, 1.0
-D:8003E464                     .float  1.0       , 1.0963    ,-0.074699998, 1.5436
-D:8003E464                     .float  0.1979    , 1.1497999 , 1.1835999 , 1.0791
-D:8003E464                     .float -0.090300001,-0.1085    , 0.68959999, 1.024099
-D:8003E464                     .float  1.0       , 0.98965299, 0.0       , 0.63230002
-D:8003E464                     .float  0.7913    , 1.1081001 , 0.93440002, 1.0779999
-D:8003E464                     .float  0.0836    ,-0.66259998, 0.14210001, 0.95139998
-D:8003E464                     .float  1.090098  , 0.92760003, 0.1141    ,-1.1931
-D:8003E464                     .float -0.25400001, 0.98102301, 0.83667898, 0.88798702
-D:8003E464                     .float  0.1481    ,-0.15360001, 1.1461999 , 0.91399997
-D:8003E464                     .float  1.0       , 0.94489998, 0.0       ,-0.53250003
-D:8003E464                     .float  0.3563    , 1.0727    , 1.0526    , 1.0228
-D:8003E464                     .float -0.0942    ,-0.6857    , 1.1224999 , 0.95959997
-D:8003E464                     .float  0.92860001, 0.88690001, 0.079999998,-0.7396
-D:8003E464                     .float  0.963     , 1.1032    , 0.875673  , 0.97771698
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0       , 1.0
-D:8003E464                     .float  1.0       , 1.0       , 0.0       , 0.0
-D:8003E464                     .float  0.0       , 1.0       , 1.0       , 1.0
-D:8003E464                     .float  0.0       , 0.0       , 0.0
-D:8003F430     dword_D_8003F430:.word 0x320028          # DATA XREF: D:stru_D_8003F80Co
-D:8003F434                     .word 0x2300120
-D:8003F438                     .word 0x4100032
-D:8003F43C                     .word 0x280130
-D:8003F440                     .word 0x340420
-D:8003F444     dword_D_8003F444:.word 0x4200011         # DATA XREF: D:stru_D_8003F81Co
-D:8003F448                     .word 0x180120
-D:8003F44C                     .word 0x240018
-D:8003F450                     .word 0x1200410
-D:8003F454                     .word 0x2200031
-D:8003F458     dword_D_8003F458:.word 0x4300022         # DATA XREF: D:8003F82Co
-D:8003F45C                     .word 0x210032
-D:8003F460                     .word 0x4200024
-D:8003F464                     .word 0x120031
-D:8003F468                     .word 0x8100022
-D:8003F46C     dword_D_8003F46C:.word 0x310810          # DATA XREF: D:8003F83Co
-D:8003F470                     .word 0x4100410
-D:8003F474                     .word 0x310230
-D:8003F478                     .word 0x4100810
-D:8003F47C                     .word 0x310210
-D:8003F480     dword_D_8003F480:.word 0x8200011         # DATA XREF: D:8003F84Co
-D:8003F484                     .word 0x140032
-D:8003F488                     .word 0x2300130
-D:8003F48C                     .word 0x4100018
-D:8003F490                     .word 0x110430
-D:8003F494     dword_D_8003F494:.word 0x1100220         # DATA XREF: D:8003F85Co
-D:8003F498                     .word 0x2200810
-D:8003F49C                     .word 0x4200014
-D:8003F4A0                     .word 0x220031
-D:8003F4A4                     .word 0x4200028
-D:8003F4A8     dword_D_8003F4A8:.word 0x140430          # DATA XREF: D:8003F86Co
-D:8003F4AC                     .word 0x1200018
-D:8003F4B0                     .word 0x310810
-D:8003F4B4                     .word 0x4200120
-D:8003F4B8                     .word 0x120018
-D:8003F4BC     dword_D_8003F4BC:.word 0x120038          # DATA XREF: D:8003F89Co
-D:8003F4C0                     .word 0x2300830
-D:8003F4C4                     .word 0x8100022
-D:8003F4C8                     .word 0x180024
-D:8003F4CC                     .word 0x2300110
-D:8003F4D0     dword_D_8003F4D0:.word 0x280032          # DATA XREF: D:8003F95Co
-D:8003F4D4                     .word 0x8100021
-D:8003F4D8                     .word 0x120120
-D:8003F4DC                     .word 0x320021
-D:8003F4E0                     .word 0x8200034
-D:8003F4E4     dword_D_8003F4E4:.word 0x380210          # DATA XREF: D:8003FB6Co
-D:8003F4E8                     .word 0x140024
-D:8003F4EC                     .word 0x8100420
-D:8003F4F0                     .word 0x110120
-D:8003F4F4                     .word 0x1300014
-D:8003F4F8     dword_D_8003F4F8:.word 0x380012          # DATA XREF: D:8003FB7Co
-D:8003F4FC                     .word 0x2200018
-D:8003F500                     .word 0x2200014
-D:8003F504                     .word 0x210110
-D:8003F508                     .word 0x380120
-D:8003F50C     dword_D_8003F50C:.word 0x2300210         # DATA XREF: D:8003FB8Co
-D:8003F510                     .word 0x280220
-D:8003F514                     .word 0x180014
-D:8003F518                     .word 0x110110
-D:8003F51C                     .word 0x4200012
-D:8003F520     dword_D_8003F520:.word 0x120038          # DATA XREF: D:8003FB9Co
-D:8003F524                     .word 0x2200810
-D:8003F528                     .word 0x2100820
-D:8003F52C                     .word 0x140120
-D:8003F530                     .word 0x210430
-D:8003F534     dword_D_8003F534:.word 0x240110          # DATA XREF: D:8003FBACo
-D:8003F538                     .word 0x210012
-D:8003F53C                     .word 0x240230
-D:8003F540                     .word 0x210830
-D:8003F544                     .word 0x110820
-D:8003F548     dword_D_8003F548:.word 0x8200014         # DATA XREF: D:8003FBBCo
-D:8003F54C                     .word 0x2200410
-D:8003F550                     .word 0x220031
-D:8003F554                     .word 0x280110
-D:8003F558                     .word 0x1100011
-D:8003F55C     dword_D_8003F55C:.word 0x180420          # DATA XREF: D:8003FBCCo
-D:8003F560                     .word 0x110220
-D:8003F564                     .word 0x8300034
-D:8003F568                     .word 0x110810
-D:8003F56C                     .word 0x340810
-D:8003F570     dword_D_8003F570:.word 0x240031, 0x110018, 0x120120, 0x380028, 0x4300021
-D:8003F570                                              # DATA XREF: D:8003FBDCo
-D:8003F584     dword_D_8003F584:.word 0x4200410, 0x380220, 0x1300022, 0x1100028, 0x2200024
-D:8003F584                                              # DATA XREF: D:8003FBECo
-D:8003F598     dword_D_8003F598:.word 0x340034, 0x1200230, 0x2100011, 0x2300018, 0x140110
-D:8003F598                                              # DATA XREF: D:8003FBFCo
-D:8003F5AC     dword_D_8003F5AC:.word 0x2100830, 0x340210, 0x310220, 0x1300034, 0x8200014
-D:8003F5AC                                              # DATA XREF: D:8003FC0Co
-D:8003F5C0     dword_D_8003F5C0:.word 0x320021, 0x8200034, 0x110014, 0x2100014, 0x180420
-D:8003F5C0                                              # DATA XREF: D:8003FC1Co
-D:8003F5D4     dword_D_8003F5D4:.word 0x4200420, 0x140021, 0x1300012, 0x4200022, 0x210820
-D:8003F5D4                                              # DATA XREF: D:8003FC2Co
-D:8003F5E8     dword_D_8003F5E8:.word 0x2100014, 0x110230, 0x1200014, 0x2200032, 0x8200028
-D:8003F5E8                                              # DATA XREF: D:8003FC3Co
-D:8003F5FC     dword_D_8003F5FC:.word 0x140210, 0x8300110, 0x4100410, 0x8100012, 0x180230
-D:8003F5FC                                              # DATA XREF: D:8003FC4Co
-D:8003F610     dword_D_8003F610:.word 0x240410, 0x1200011, 0x140210, 0x2100018, 0x2100038
-D:8003F610                                              # DATA XREF: D:8003FC5Co
-D:8003F624     dword_D_8003F624:.word 0x4200014, 0x8300120, 0x180012, 0x8100022, 0x8200012
-D:8003F624                                              # DATA XREF: D:8003FC6Co
-D:8003F638     dword_D_8003F638:.word 0x380220, 0x4100420, 0x280420, 0x1100018, 0x220110
-D:8003F638                                              # DATA XREF: D:8003FC7Co
-D:8003F64C     dword_D_8003F64C:.word 0x140210          # DATA XREF: D:8003FC8Co
-D:8003F650                     .word 0x1200031
-D:8003F654                     .word 0x4200038
-D:8003F658                     .word 0x2200038
-D:8003F65C                     .word 0x1300022
-D:8003F660     dword_D_8003F660:.word 0x8300031         # DATA XREF: D:8003FC9Co
-D:8003F664                     .word 0x4200110
-D:8003F668                     .word 0x8100420
-D:8003F66C                     .word 0x2200021
-D:8003F670                     .word 0x310220
-D:8003F674                     .word dword_stack_80304030
-D:8003F678                     .word dword_stack_80304030
-D:8003F67C     dword_D_8003F67C:.word 0x8200008         # DATA XREF: D:8003FA2Co
-D:8003F680                     .word 0x1100032
-D:8003F684                     .word 0x8200014
-D:8003F688                     .word 0x240034
-D:8003F68C                     .word 0x8300024
-D:8003F690     dword_D_8003F690:.word 0x2100420         # DATA XREF: D:8003FA3Co
-D:8003F694                     .word 0x2000800
-D:8003F698                     .word 0x4000012
-D:8003F69C                     .word 0x220230
-D:8003F6A0                     .word 0x1300022
-D:8003F6A4     dword_D_8003F6A4:.word 0x8300001, 0x2100810, 0x8000110, 0x8000034, 0x4300032
-D:8003F6A4                                              # DATA XREF: D:8003FA4Co
-D:8003F6B8     dword_D_8003F6B8:.word 0x4100810, 0x1000034, 0x1200210, 0x2000400, 0x8000014
-D:8003F6B8                                              # DATA XREF: D:8003FA5Co
-D:8003F6CC     dword_D_8003F6CC:.word 0x1100820, 0x4000400, 0x140220, 0x220810, 0x4100012
-D:8003F6CC                                              # DATA XREF: D:8003FA6Co
-D:8003F6E0     dword_D_8003F6E0:.word 0x4200024, 0x8300014, 0x2000410, 0x240800, 0x4100120
-D:8003F6E0                                              # DATA XREF: D:8003FA7Co
-D:8003F6F4     dword_D_8003F6F4:.word 0x8100004, 0x20008, 0x4200810, 0x20100, 0x2100110
-D:8003F6F4                                              # DATA XREF: D:8003FA8Co
-D:8003F708     dword_D_8003F708:.word 0x4300410, 0x240200, 0x120034, 0x1000400, 0x140110
-D:8003F708                                              # DATA XREF: D:8003FA9Co
-D:8003F71C     dword_D_8003F71C:.word 0x120220, 0x8000130, 0x1000032, 0x320410, 0x2100012
-D:8003F71C                                              # DATA XREF: D:8003FAACo
-D:8003F730     dword_D_8003F730:.word 0x240022, 0x40001, 0x20130, 0x10830, 0x120220
-D:8003F730                                              # DATA XREF: D:8003FABCo
-D:8003F744     dword_D_8003F744:.word 0x320034, 0x220012, 0x1100230, 0x1200200, 0x320420
-D:8003F744                                              # DATA XREF: D:8003FACCo
-D:8003F758     dword_D_8003F758:.word 0x340002, 0x140004, 0x40034, 0x8300004, 0x8100820
-D:8003F758                                              # DATA XREF: D:8003FADCo
-D:8003F76C     dword_D_8003F76C:.word 0x2300230, 0x4300230, 0x10430, 0x4300420, 0x20008
-D:8003F76C                                              # DATA XREF: D:8003FAECo
-D:8003F780     dword_D_8003F780:.word 0x2200830, 0x1200830, 0x320230, 0x4300004, 0x1300230
-D:8003F780                                              # DATA XREF: D:8003FAFCo
-D:8003F794     dword_D_8003F794:.word 0x140120, 0x120110, 0x1300830, 0x4200210, 0x1200022
-D:8003F794                                              # DATA XREF: D:8003FB0Co
-D:8003F7A8     dword_D_8003F7A8:.word 0x220130, 0x10002, 0x2100024, 0x2300034, 0x8200001
-D:8003F7A8                                              # DATA XREF: D:8003FB1Co
-D:8003F7BC     dword_D_8003F7BC:.word 0x8000100, 0x2200410, 0x8200022, 0x2200001, 0x80430
-D:8003F7BC                                              # DATA XREF: D:8003FB2Co
-D:8003F7D0     dword_D_8003F7D0:.word 0x1300430, 0x8200430, 0x80810, 0x1300220, 0x4000024
-D:8003F7D0                                              # DATA XREF: D:8003FB3Co
-D:8003F7E4     dword_D_8003F7E4:.word 0x1200032, 0x4200210, 0x4100120, 0x80100, 0x1100830
-D:8003F7E4                                              # DATA XREF: D:8003FB4Co
-D:8003F7F8     dword_D_8003F7F8:.word 0x4000200, 0x80100  # DATA XREF: D:8003FB5Co
-D:8003F800                     .word 0x4200220
-D:8003F804     dword_D_8003F804:.word 0x8200002         # DATA XREF: sub_CODE_7F092774+4r
-D:8003F808     dword_D_8003F808:.word 0x2000004         # DATA XREF: sub_CODE_7F091A78+4r
-D:8003F808                                              # sub_CODE_7F091B64+4r
-D:8003F808                                              # sub_CODE_7F092438+4r
-D:8003F80C     stru_D_8003F80C:struct_15 <1, 0xA, 0, 0, dword_D_8003F430, 0, 0x31>
-D:8003F80C                                              # DATA XREF: sub_CODE_7F09177C+20o
-D:8003F80C                                              # sub_CODE_7F09177C:loc_CODE_7F0917D8r
-D:8003F80C                                              # sub_CODE_7F09177C+74r
-D:8003F81C     stru_D_8003F81C:struct_15 <2, 0xA, 0, 0, dword_D_8003F444, 0xB0000000, 6>
-D:8003F81C                                              # DATA XREF: sub_CODE_7F0926C0+40o
-D:8003F82C                     struct_15 <3, 0xA, 0, 0, dword_D_8003F458, 0xB0010000, 2>
-D:8003F83C                     struct_15 <4, 0xA, 0, 0, dword_D_8003F46C, 0, 0x16>
-D:8003F84C                     struct_15 <5, 0xA, 0, 0, dword_D_8003F480, 0, 0x16>
-D:8003F85C                     struct_15 <6, 0xA, 0, 0, dword_D_8003F494, 0, 0x34>
-D:8003F86C                     struct_15 <7, 0xA, 0, 0, dword_D_8003F4A8, 0xB0370000, 0x66>
-D:8003F87C                     struct_15 <8, 0, 0, 0, 0, 0, 0x16>
-D:8003F88C                     struct_15 <9, 0, 0, 0, 0, 0, 0x16>
-D:8003F89C                     struct_15 <0xA, 0xA, 0, 0, dword_D_8003F4BC, 0xB0040000, 0x62>
-D:8003F8AC                     struct_15 <0xB, 0, 0, 0, 0, 0xB0060000, 0x66>
-D:8003F8BC                     struct_15 <0xC, 0, 0, 0, 0, 0xB0070000, 0x26>
-D:8003F8CC                     struct_15 <0xD, 0, 0, 0, 0, 0, 0x12>
-D:8003F8DC                     struct_15 <0xE, 0, 0, 0, 0, 0xB0080000, 2>
-D:8003F8EC                     struct_15 <0xF, 0, 0, 0, 0, 0xB0380000, 0x66>
-D:8003F8FC                     struct_15 <0x10, 0, 0, 0, 0, 0, 0x16>
-D:8003F90C                     struct_15 <0x11, 0, 0, 0, 0, 0xB00A0000, 0x12>
-D:8003F91C                     struct_15 <0x12, 0, 0, 0, 0, 0xB00B0000, 0x12>
-D:8003F92C                     struct_15 <0x13, 0, 0, 0, 0, 0xB00C0000, 0x12>
-D:8003F93C                     struct_15 <0x14, 0, 0, 0, 0, 0xB00D0000, 0x12>
-D:8003F94C                     struct_15 <0x15, 0, 0, 0, 0, 0xB00E0000, 0x12>
-D:8003F95C                     struct_15 <0x16, 0xA, 0, 0, dword_D_8003F4D0, 0, 4>
-D:8003F96C                     struct_15 <0x17, 0, 0, 0, 0, 0xB0430000, 0x64>
-D:8003F97C                     struct_15 <0x18, 0, 0, 0, 0, 0xB0400000, 0x66>
-D:8003F98C                     struct_15 <0x19, 0, 0, 0, 0, 0, 0x20>
-D:8003F99C                     struct_15 <0x1A, 0, 0, 0, 0, 0xB0410000, 0x72>
-D:8003F9AC                     struct_15 <0x1B, 0, 0, 0, 0, 0xB0420000, 0x72>
-D:8003F9BC                     struct_15 <0x1C, 0, 0, 0, 0, 0xB0390000, 1>
-D:8003F9CC                     struct_15 <0x1D, 0, 0, 0, 0, 0xB03A0000, 0x12>
-D:8003F9DC                     struct_15 <0x1E, 0, 0, 0, 0, 0xB03B0000, 0x12>
-D:8003F9EC                     struct_15 <0x1F, 0, 0, 0, 0, 0xB03C0000, 0x12>
-D:8003F9FC                     struct_15 <0x20, 0, 0, 0, 0, 0xB03D0000, 0x12>
-D:8003FA0C                     struct_15 <0x21, 0, 0, 0, 0, 0xB03E0000, 0x12>
-D:8003FA1C                     struct_15 <0x22, 0, 0, 0, 0, 0xB03F0000, 0x12>
-D:8003FA2C                     struct_15 <0x23, 0xA, 0, 0, dword_D_8003F67C, 0, 0x11>
-D:8003FA3C                     struct_15 <0x24, 0xA, 0, 0, dword_D_8003F690, 0, 0x11>
-D:8003FA4C                     struct_15 <0x25, 0xA, 0, 0, dword_D_8003F6A4, 0, 0x11>
-D:8003FA5C                     struct_15 <0x26, 0xA, 0, 0, dword_D_8003F6B8, 0, 0x11>
-D:8003FA6C                     struct_15 <0x27, 0xA, 0, 0, dword_D_8003F6CC, 0, 0x11>
-D:8003FA7C                     struct_15 <0x28, 0xA, 0, 0, dword_D_8003F6E0, 0, 0x11>
-D:8003FA8C                     struct_15 <0x29, 0xA, 0, 0, dword_D_8003F6F4, 0, 0x11>
-D:8003FA9C                     struct_15 <0x2A, 0xA, 0, 0, dword_D_8003F708, 0, 0x11>
-D:8003FAAC                     struct_15 <0x2B, 0xA, 0, 0, dword_D_8003F71C, 0, 0x11>
-D:8003FABC                     struct_15 <0x2C, 0xA, 0, 0, dword_D_8003F730, 0, 0x11>
-D:8003FACC                     struct_15 <0x2D, 0xA, 0, 0, dword_D_8003F744, 0, 0x11>
-D:8003FADC                     struct_15 <0x2E, 0xA, 0, 0, dword_D_8003F758, 0, 0x11>
-D:8003FAEC                     struct_15 <0x2F, 0xA, 0, 0, dword_D_8003F76C, 0, 0x11>
-D:8003FAFC                     struct_15 <0x30, 0xA, 0, 0, dword_D_8003F780, 0, 0x11>
-D:8003FB0C                     struct_15 <0x31, 0xA, 0, 0, dword_D_8003F794, 0, 0x11>
-D:8003FB1C                     struct_15 <0x32, 0xA, 0, 0, dword_D_8003F7A8, 0, 0x11>
-D:8003FB2C                     struct_15 <0x33, 0xA, 0, 0, dword_D_8003F7BC, 0, 0x11>
-D:8003FB3C                     struct_15 <0x34, 0xA, 0, 0, dword_D_8003F7D0, 0, 0x11>
-D:8003FB4C                     struct_15 <0x35, 0xA, 0, 0, dword_D_8003F7E4, 0, 0x11>
-D:8003FB5C                     struct_15 <0x36, 0xA, 0, 0, dword_D_8003F7F8, 0, 0x11>
-D:8003FB6C                     struct_15 <0x37, 0xA, 0, 0, dword_D_8003F4E4, 0, 0x11>
-D:8003FB7C                     struct_15 <0x38, 0xA, 0, 0, dword_D_8003F4F8, 0, 0x11>
-D:8003FB8C                     struct_15 <0x39, 0xA, 0, 0, dword_D_8003F50C, 0, 0x11>
-D:8003FB9C                     struct_15 <0x3A, 0xA, 0, 0, dword_D_8003F520, 0, 0x11>
-D:8003FBAC                     struct_15 <0x3B, 0xA, 0, 0, dword_D_8003F534, 0, 0x11>
-D:8003FBBC                     struct_15 <0x3C, 0xA, 0, 0, dword_D_8003F548, 0, 0x11>
-D:8003FBCC                     struct_15 <0x3D, 0xA, 0, 0, dword_D_8003F55C, 0, 0x11>
-D:8003FBDC                     struct_15 <0x3E, 0xA, 0, 0, dword_D_8003F570, 0, 0x11>
-D:8003FBEC                     struct_15 <0x3F, 0xA, 0, 0, dword_D_8003F584, 0, 0x11>
-D:8003FBFC                     struct_15 <0x40, 0xA, 0, 0, dword_D_8003F598, 0, 0x11>
-D:8003FC0C                     struct_15 <0x41, 0xA, 0, 0, dword_D_8003F5AC, 0, 0x11>
-D:8003FC1C                     struct_15 <0x42, 0xA, 0, 0, dword_D_8003F5C0, 0, 0x11>
-D:8003FC2C                     struct_15 <0x43, 0xA, 0, 0, dword_D_8003F5D4, 0, 0x11>
-D:8003FC3C                     struct_15 <0x44, 0xA, 0, 0, dword_D_8003F5E8, 0, 0x11>
-D:8003FC4C                     struct_15 <0x45, 0xA, 0, 0, dword_D_8003F5FC, 0, 0x11>
-D:8003FC5C                     struct_15 <0x46, 0xA, 0, 0, dword_D_8003F610, 0, 0x11>
-D:8003FC6C                     struct_15 <0x47, 0xA, 0, 0, dword_D_8003F624, 0, 0x11>
-D:8003FC7C                     struct_15 <0x48, 0xA, 0, 0, dword_D_8003F638, 0, 0x11>
-D:8003FC8C                     struct_15 <0x49, 0xA, 0, 0, dword_D_8003F64C, 0, 0x11>
-D:8003FC9C                     struct_15 <0x4A, 0xA, 0, 0, dword_D_8003F660, 0, 0x11>
-D:8003FCAC                     struct_15 <0>
-D:8003FCBC                     .word 0
-*/
 
-/* rodata
+//D:8003E450
+u32 D_8003E450 = 0;
+u32 D_8003E454 = 0;
+//D:8003E458
+f32 D_8003E458 = 1.0;
+//D:8003E45C
+u32 D_8003E45C = 0;
+//D:8003E460
+u32 D_8003E460 = 0;
+
+//D:8003E464
+f32 D_8003E464[] = {
+    -0.076300003, 0.77999997,-1.2696    , 1.1694109,
+     1.120654  , 1.05959   ,-0.25760001,-0.47319999,
+    -1.5686001 , 1.132916  , 1.0       , 1.080207,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.039999999, 0.74000001,
+    -0.63999999, 1.132795  , 1.167207  , 1.035167,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.033500001, 0.24959999,
+     0.16599999, 1.115045  , 0.94169998, 1.042492,
+    -0.070299998, 0.4919    ,-0.83359998, 1.072812,
+     1.088326  , 0.926121  ,-0.1       , 0.42750001,
+    -0.48249999, 1.033368  , 0.96552098, 0.929905,
+     0.18000001, 0.0       , 0.0       , 1.072214,
+     1.0       , 1.0       , 0.237     , 0.977,
+    -0.44      , 1.178463  , 1.14061   , 1.143465,
+    -0.090300001, 0.23190001, 0.12639999, 0.99080002,
+     1.02      , 0.8466    , 0.0       , 0.1485,
+     0.3793    , 1.1548001 , 0.99190003, 0.95139998,
+    -0.14820001, 0.44100001, 0.1727    , 1.050034,
+     1.0       , 1.05445   ,-0.4941    ,-0.26409999,
+    -0.18000001, 0.90368301, 0.72551203, 1.001314,
+     0.1318    , 0.30100101, 1.572699  , 0.98799503,
+     1.0       , 1.05445   , 0.0       , 0.73019999,
+     0.71740001, 1.1923    , 1.1834    , 1.091924,
+    -0.0942    ,-0.74190003, 0.94260001, 0.98659998,
+     0.91689998, 0.94760001, 0.0535    , 0.61510003,
+     1.076     , 1.05092   , 0.90002   , 1.122508,
+    -0.079999998, 0.1085    ,-0.56629997, 1.192598,
+     1.079134  , 1.199971  ,-0.35640001,-0.28709999,
+    -0.36950001, 1.035176  , 0.838543  , 1.121092,
+     0.065300003,-0.4664    , 0.72000003, 1.050106,
+     1.0       , 1.11042   ,-0.079999998, 0.4885,
+     0.093699999, 1.158567  , 1.2356189 , 1.194388,
+    -0.0942    ,-0.3017    , 0.59450001, 1.0671999,
+     1.0218    , 1.0174    , 0.12      ,-0.1515,
+     0.95370001, 1.124017  , 0.966048  , 1.206121,
+    -0.19310001, 0.2334    ,-0.64850003, 1.1800359,
+     1.0401829 , 1.154537  ,-0.36230001,-0.133,
+    -0.486     , 1.0536211 , 1.0       , 1.1495841,
+     0.0955    , 0.68099999, 0.78799999, 1.0152,
+     1.1926    , 1.1308    ,-0.0823    , 0.36700001,
+     0.37400001, 1.311748  , 1.115972  , 1.166244,
+    -0.0942    , 0.1768    , 0.5248    , 1.0470001,
+     1.0218    , 0.99800003, 0.0       ,-0.0964,
+     0.82999998, 1.1109999 , 0.85180199, 1.180503,
+    -0.1832    , 0.32120001,-1.2381001 , 1.125683,
+     1.091681  , 0.98079097,-0.55049998,-0.60839999,
+    -1.189499  , 1.023566  , 0.8326    , 1.0637,
+     0.076800004, 0.32120001,-0.118101  , 1.059677,
+     1.091681  , 1.000479  , 0.0       , 0.29890001,
+    -0.67299998, 1.1367    , 1.0526    , 0.99227399,
+    -0.0942    , 0.032000002,-0.29699999, 1.0402,
+     0.92860001, 0.88690001, 0.0       , 0.26879999,
+     0.057399999, 1.041842  , 0.81959999, 0.99637401,
+     0.079700001, 0.3511    , 0.0       , 1.0,
+     1.0       , 1.0835    , 0.14      , 0.1965,
+    -0.058398999, 1.012674  , 0.96799999, 1.098917,
+     0.1629    , 0.78799999, 1.0746    , 0.92205501,
+     1.0688    , 1.055297  ,-0.074500002, 0.8477,
+     0.71810001, 1.154819  , 1.177258  , 1.031684,
+    -0.0145    , 0.047699999, 0.89810002, 1.0404,
+     1.0       , 0.94309998, 0.32550001, 0.36770001,
+     0.93809998, 1.044217  , 0.97841102, 1.127771,
+    -0.1832    ,-0.058800001,-1.5781    , 1.095929,
+     0.96300697, 0.92348999,-0.4411    ,-0.64840001,
+    -1.839099  , 1.059271  , 0.8326    , 0.96849501,
+     0.19679999,-0.3188    ,-0.43810099, 1.070675,
+     1.053777  , 0.88628101, 0.0       , 0.29890001,
+    -0.83139998, 1.1154    , 1.0328    , 1.0036,
+    -0.0942    ,-0.1275    ,-0.52109998, 1.0402,
+     0.92180002, 0.8617    , 0.079999998,-0.2383,
+    -0.22940101, 1.063022  , 0.80879998, 0.90789998,
+     0.1165    , 0.58780003,-1.3096    , 1.136481,
+     1.0409    , 1.065612  ,-0.070600003, 0.0152,
+    -1.2391    , 1.002256  , 0.76669598, 1.029659,
+     0.2218    , 0.0       , 0.0       , 1.0852,
+     1.0       , 1.0       , 0.063000001, 0.7561,
+    -0.45269999, 1.2085    , 1.1014    , 1.0664001,
+     0.065499999,-0.1097    ,-0.3497    , 1.0404,
+     0.90915602, 0.94940001, 0.0       , 0.336,
+     0.082999997, 1.150862  , 0.94169998, 1.0,
+    -0.054200001, 0.27079999,-0.082099997, 1.0367,
+     1.0367    , 1.0367    , 0.34119999,-0.55879998,
+    -0.3044    , 1.113436  , 0.96799999, 1.076647,
+     0.0495    , 0.63980001, 1.2178    , 0.95099998,
+     1.1126    , 1.0413001 , 0.0       , 0.53640002,
+     0.75220001, 1.1976    , 1.1463    , 1.1374,
+    -0.0145    ,-0.64749998, 1.0477999 , 0.95289999,
+     0.92180002, 0.90579998, 0.16      , 0.61830002,
+     1.128299  , 1.083438  , 0.91670603, 1.0666929,
+    -0.2586    , 0.93580002,-0.2463    , 1.1057,
+     1.0116    , 1.0927    ,-0.1788    ,-0.31310001,
+    -0.55299997, 1.1071    , 1.0       , 1.071945,
+     0.0955    , 0.16230001, 0.50150001, 1.0506001,
+     1.0       , 1.1032    , 0.081200004, 0.2269,
+     0.50700003, 1.1071    , 1.178908  , 1.189239,
+    -0.0145    ,-0.68440002, 0.54070002, 1.0470001,
+     0.92699999, 1.027078  , 0.0       ,-0.0164,
+     0.66399997, 1.2108999 , 1.0       , 1.0729001,
+    -0.1487    , 0.88779998,-0.41060001, 1.110018,
+     0.98460901, 1.110518  , 0.0012000001,-0.61879998,
+    -0.34439901, 1.099178  , 0.916071  , 1.054984,
+     0.0429    , 0.2149    , 0.4298    , 1.0455,
+     1.0688    , 1.1514    , 0.0012000001,-0.0188,
+     0.65560102, 1.1957231 , 1.079964  , 1.200996,
+    -0.0145    ,-0.48769999, 0.44909999, 1.003074,
+     1.0       , 0.98259997, 0.0       , 0.396,
+     0.8362    , 1.1622    , 0.91339999, 1.066853,
+    -0.29030001, 1.0714999 ,-0.3504    , 1.125893,
+     1.127159  , 1.177758  , 0.0       ,-0.079999998,
+    -0.373     , 1.099718  , 1.0       , 1.0947551,
+     0.0       , 0.78799999, 0.64469999, 1.0,
+     1.0       , 1.0963    ,-0.074699998, 1.5436,
+     0.1979    , 1.1497999 , 1.1835999 , 1.0791,
+    -0.090300001,-0.1085    , 0.68959999, 1.024099,
+     1.0       , 0.98965299, 0.0       , 0.63230002,
+     0.7913    , 1.1081001 , 0.93440002, 1.0779999,
+     0.12      , 0.40000001, 0.039999999, 1.022947,
+     0.92226201, 1.004824  , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0429    , 0.75889999, 1.2895    , 0.94440001,
+     1.0       , 1.0551    , 0.0       , 0.546,
+     0.79729998, 1.1483001 , 1.1267999 , 1.1388,
+     0.065099999,-0.54320002, 1.1224999 , 0.93949997,
+     0.92699999, 0.93040001, 0.1265    , 0.36359999,
+     1.079     , 1.1109999 , 1.0       , 1.1166,
+    -0.278     , 1.272301  ,-0.55269998, 1.24701,
+     1.0737129 , 1.118222  ,-0.23639999, 0.58200002,
+    -0.30950001, 1.225595  , 1.077682  , 1.066005,
+    -0.0845    , 0.68099999, 0.64469999, 1.1204081,
+     1.1927    , 1.1308    ,-0.1364    , 1.021999,
+     0.5905    , 1.153587  , 1.226897  , 1.2252491,
+    -0.2534    , 0.57560003, 0.3856    , 1.0405,
+     1.0405    , 1.0585999 ,-0.1265    , 0.6081,
+     0.71200001, 1.222     , 1.0       , 1.111666,
+    -0.4637    , 1.3971    ,-0.49270001, 1.1752,
+     1.0116    , 1.1762    ,-0.2976    ,-0.1049,
+    -0.49649999, 1.2345999 , 0.86470801, 1.077117,
+    -0.1151    , 0.7353    , 0.57309997, 1.0759,
+     1.0       , 1.1308    ,-0.189     , 0.99910003,
+     0.2396    , 1.2269    , 1.2039    , 1.1698999,
+    -0.2534    ,-0.0647    , 0.30070001, 1.0470001,
+     0.92699999, 1.0124    ,-0.1265    , 0.61260003,
+     0.76700002, 1.2108999 , 1.0       , 1.096216,
+    -0.51429999, 1.0894001 ,-0.082099997, 1.1003,
+     1.0316    , 1.0278    ,-0.53280002,-0.13060001,
+    -0.25999999, 1.080464  , 1.0       , 1.019003,
+    -0.1969    , 0.45930001, 0.64469999, 0.96219999,
+     1.0       , 1.0895    ,-0.32690001, 1.1438,
+     0.46720001, 1.1339    , 1.1339    , 1.0436,
+    -0.29879999, 0.0       , 0.41429999, 0.96219999,
+     1.0       , 0.95630002,-0.17640001, 0.39500001,
+     0.86699998, 1.0972    , 0.94625998, 1.0529979,
+     0.02      , 0.56910002,-0.25299999, 1.1205291,
+     0.999475  , 1.072994  ,-0.0823    ,-0.3784,
+    -0.38249999, 1.077682  , 1.0       , 1.066239,
+     0.02      ,-0.1909    , 0.90700001, 1.049657,
+     0.999475  , 1.072994  , 0.0       , 0.60549998,
+     0.47510001, 1.1236    , 1.1236    , 1.1236,
+    -0.0942    , 0.077600002, 0.5248    , 1.0403,
+     0.95950001, 0.98580003, 0.0       , 0.20550001,
+     0.8951    , 1.1519721 , 0.92378497, 1.0316401,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0836    ,-0.66259998, 0.14210001, 0.95139998,
+     1.090098  , 0.92760003, 0.1141    ,-1.1931,
+    -0.25400001, 0.98102301, 0.83667898, 0.88798702,
+     0.1481    ,-0.15360001, 1.1461999 , 0.91399997,
+     1.0       , 0.94489998, 0.0       ,-0.53250003,
+     0.3563    , 1.0727    , 1.0526    , 1.0228,
+    -0.0942    ,-0.6857    , 1.1224999 , 0.95959997,
+     0.92860001, 0.88690001, 0.079999998,-0.7396,
+     0.963     , 1.1032    , 0.875673  , 0.97771698,
+    -0.29030001, 1.0714999 ,-0.3504    , 1.125893,
+     1.127159  , 1.177758  , 0.0       ,-0.079999998,
+    -0.373     , 1.099718  , 1.0       , 1.0947551,
+     0.0       , 0.78799999, 0.64469999, 1.0,
+     1.0       , 1.0963    ,-0.074699998, 1.5436,
+     0.1979    , 1.1497999 , 1.1835999 , 1.0791,
+    -0.090300001,-0.1085    , 0.68959999, 1.024099,
+     1.0       , 0.98965299, 0.0       , 0.63230002,
+     0.7913    , 1.1081001 , 0.93440002, 1.0779999,
+    -0.13699999, 0.286001  ,-0.32229999, 1.142894,
+     0.89638299, 1.15      ,-0.16680001,-0.1365,
+    -0.43650001, 1.1452    , 1.0       , 1.061306,
+     0.1376    , 0.0       , 0.71600002, 1.05312,
+     1.0       , 1.0687751 ,-0.074699998, 0.9393,
+     0.2658    , 1.1815    , 1.1216    , 1.0822999,
+    -0.103     ,-0.2269    , 0.5722    , 0.99080002,
+     1.02      , 1.0034    , 0.0       , 0.1373,
+     0.79430002, 1.1813999 , 0.86186302, 1.0998,
+     0.12      , 0.40000001, 0.039999999, 1.022947,
+     0.92226201, 1.004824  , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0429    , 0.75889999, 1.2895    , 0.94440001,
+     1.0       , 1.0551    , 0.0       , 0.546,
+     0.79729998, 1.1483001 , 1.1267999 , 1.1388,
+     0.065099999,-0.54320002, 1.1224999 , 0.93949997,
+     0.92699999, 0.93040001, 0.1265    , 0.36359999,
+     1.079     , 1.1109999 , 1.0       , 1.1166,
+     0.0836    ,-0.66259998, 0.14210001, 0.95139998,
+     1.090098  , 0.92760003, 0.1141    ,-1.1931,
+    -0.25400001, 0.98102301, 0.83667898, 0.88798702,
+     0.1481    ,-0.15360001, 1.1461999 , 0.91399997,
+     1.0       , 0.94489998, 0.0       ,-0.53250003,
+     0.3563    , 1.0727    , 1.0526    , 1.0228,
+    -0.0942    ,-0.6857    , 1.1224999 , 0.95959997,
+     0.92860001, 0.88690001, 0.079999998,-0.7396,
+     0.963     , 1.1032    , 0.875673  , 0.97771698,
+    -0.29030001, 1.0714999 ,-0.3504    , 1.125893,
+     1.127159  , 1.177758  , 0.0       ,-0.079999998,
+    -0.373     , 1.099718  , 1.0       , 1.0947551,
+     0.0       , 0.78799999, 0.64469999, 1.0,
+     1.0       , 1.0963    ,-0.074699998, 1.5436,
+     0.1979    , 1.1497999 , 1.1835999 , 1.0791,
+    -0.090300001,-0.1085    , 0.68959999, 1.024099,
+     1.0       , 0.98965299, 0.0       , 0.63230002,
+     0.7913    , 1.1081001 , 0.93440002, 1.0779999,
+     0.0836    ,-0.66259998, 0.14210001, 0.95139998,
+     1.090098  , 0.92760003, 0.1141    ,-1.1931,
+    -0.25400001, 0.98102301, 0.83667898, 0.88798702,
+     0.1481    ,-0.15360001, 1.1461999 , 0.91399997,
+     1.0       , 0.94489998, 0.0       ,-0.53250003,
+     0.3563    , 1.0727    , 1.0526    , 1.0228,
+    -0.0942    ,-0.6857    , 1.1224999 , 0.95959997,
+     0.92860001, 0.88690001, 0.079999998,-0.7396,
+     0.963     , 1.1032    , 0.875673  , 0.97771698,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0       , 1.0,
+     1.0       , 1.0       , 0.0       , 0.0,
+     0.0       , 1.0       , 1.0       , 1.0,
+     0.0       , 0.0       , 0.0
+};
+
+//D:8003F430
+u32 dword_D_8003F430[] = {0x320028, 0x2300120, 0x4100032, 0x280130, 0x340420};
+//D:8003F444
+u32 dword_D_8003F444[] = {0x4200011, 0x180120, 0x240018, 0x1200410, 0x2200031};
+//D:8003F458
+u32 dword_D_8003F458[] = {0x4300022, 0x210032, 0x4200024, 0x120031, 0x8100022};
+//D:8003F46C
+u32 dword_D_8003F46C[] = {0x310810, 0x4100410, 0x310230, 0x4100810, 0x310210};
+//D:8003F480
+u32 dword_D_8003F480[] = {0x8200011, 0x140032, 0x2300130, 0x4100018, 0x110430};
+//D:8003F494
+u32 dword_D_8003F494[] = {0x1100220, 0x2200810, 0x4200014, 0x220031, 0x4200028};
+//D:8003F4A8
+u32 dword_D_8003F4A8[] = {0x140430, 0x1200018, 0x310810, 0x4200120, 0x120018};
+//D:8003F4BC
+u32 dword_D_8003F4BC[] = {0x120038, 0x2300830, 0x8100022, 0x180024, 0x2300110};
+//D:8003F4D0
+u32 dword_D_8003F4D0[] = {0x280032, 0x8100021, 0x120120, 0x320021, 0x8200034};
+//D:8003F4E4
+u32 dword_D_8003F4E4[] = {0x380210, 0x140024, 0x8100420, 0x110120, 0x1300014};
+//D:8003F4F8
+u32 dword_D_8003F4F8[] = {0x380012, 0x2200018, 0x2200014, 0x210110, 0x380120};
+//D:8003F50C
+u32 dword_D_8003F50C[] = {0x2300210, 0x280220, 0x180014, 0x110110, 0x4200012};
+//D:8003F520
+u32 dword_D_8003F520[] = {0x120038, 0x2200810, 0x2100820, 0x140120, 0x210430};
+//D:8003F534
+u32 dword_D_8003F534[] = {0x240110, 0x210012, 0x240230, 0x210830, 0x110820};
+//D:8003F548
+u32 dword_D_8003F548[] = {0x8200014, 0x2200410, 0x220031, 0x280110, 0x1100011};
+//D:8003F55C
+u32 dword_D_8003F55C[] = {0x180420, 0x110220, 0x8300034, 0x110810, 0x340810};
+//D:8003F570
+u32 dword_D_8003F570[] = {0x240031, 0x110018, 0x120120, 0x380028, 0x4300021};
+//D:8003F584
+u32 dword_D_8003F584[] = {0x4200410, 0x380220, 0x1300022, 0x1100028, 0x2200024};
+//D:8003F598
+u32 dword_D_8003F598[] = {0x340034, 0x1200230, 0x2100011, 0x2300018, 0x140110};
+//D:8003F5AC
+u32 dword_D_8003F5AC[] = {0x2100830, 0x340210, 0x310220, 0x1300034, 0x8200014};
+//D:8003F5C0
+u32 dword_D_8003F5C0[] = {0x320021, 0x8200034, 0x110014, 0x2100014, 0x180420};
+//D:8003F5D4
+u32 dword_D_8003F5D4[] = {0x4200420, 0x140021, 0x1300012, 0x4200022, 0x210820};
+//D:8003F5E8
+u32 dword_D_8003F5E8[] = {0x2100014, 0x110230, 0x1200014, 0x2200032, 0x8200028};
+//D:8003F5FC
+u32 dword_D_8003F5FC[] = {0x140210, 0x8300110, 0x4100410, 0x8100012, 0x180230};
+//D:8003F610
+u32 dword_D_8003F610[] = {0x240410, 0x1200011, 0x140210, 0x2100018, 0x2100038};
+//D:8003F624
+u32 dword_D_8003F624[] = {0x4200014, 0x8300120, 0x180012, 0x8100022, 0x8200012};
+//D:8003F638
+u32 dword_D_8003F638[] = {0x380220, 0x4100420, 0x280420, 0x1100018, 0x220110};
+//D:8003F64C
+u32 dword_D_8003F64C[] = {0x140210, 0x1200031, 0x4200038, 0x2200038, 0x1300022};
+//D:8003F660
+u32 dword_D_8003F660[] = {0x8300031, 0x4200110, 0x8100420, 0x2200021, 0x310220, 0x80304030, 0x80304030};
+//D:8003F67C
+u32 dword_D_8003F67C[] = {0x8200008, 0x1100032, 0x8200014, 0x240034, 0x8300024};
+//D:8003F690
+u32 dword_D_8003F690[] = {0x2100420, 0x2000800, 0x4000012, 0x220230, 0x1300022};
+//D:8003F6A4
+u32 dword_D_8003F6A4[] = {0x8300001, 0x2100810, 0x8000110, 0x8000034, 0x4300032};
+//D:8003F6B8
+u32 dword_D_8003F6B8[] = {0x4100810, 0x1000034, 0x1200210, 0x2000400, 0x8000014};
+//D:8003F6CC
+u32 dword_D_8003F6CC[] = {0x1100820, 0x4000400, 0x140220, 0x220810, 0x4100012};
+//D:8003F6E0
+u32 dword_D_8003F6E0[] = {0x4200024, 0x8300014, 0x2000410, 0x240800, 0x4100120};
+//D:8003F6F4
+u32 dword_D_8003F6F4[] = {0x8100004, 0x20008, 0x4200810, 0x20100, 0x2100110};
+//D:8003F708
+u32 dword_D_8003F708[] = {0x4300410, 0x240200, 0x120034, 0x1000400, 0x140110};
+//D:8003F71C
+u32 dword_D_8003F71C[] = {0x120220, 0x8000130, 0x1000032, 0x320410, 0x2100012};
+//D:8003F730
+u32 dword_D_8003F730[] = {0x240022, 0x40001, 0x20130, 0x10830, 0x120220};
+//D:8003F744
+u32 dword_D_8003F744[] = {0x320034, 0x220012, 0x1100230, 0x1200200, 0x320420};
+//D:8003F758
+u32 dword_D_8003F758[] = {0x340002, 0x140004, 0x40034, 0x8300004, 0x8100820};
+//D:8003F76C
+u32 dword_D_8003F76C[] = {0x2300230, 0x4300230, 0x10430, 0x4300420, 0x20008};
+//D:8003F780
+u32 dword_D_8003F780[] = {0x2200830, 0x1200830, 0x320230, 0x4300004, 0x1300230};
+//D:8003F794
+u32 dword_D_8003F794[] = {0x140120, 0x120110, 0x1300830, 0x4200210, 0x1200022};
+//D:8003F7A8
+u32 dword_D_8003F7A8[] = {0x220130, 0x10002, 0x2100024, 0x2300034, 0x8200001};
+//D:8003F7BC
+u32 dword_D_8003F7BC[] = {0x8000100, 0x2200410, 0x8200022, 0x2200001, 0x80430};
+//D:8003F7D0
+u32 dword_D_8003F7D0[] = {0x1300430, 0x8200430, 0x80810, 0x1300220, 0x4000024};
+//D:8003F7E4
+u32 dword_D_8003F7E4[] = {0x1200032, 0x4200210, 0x4100120, 0x80100, 0x1100830};
+//D:8003F7F8
+u32 dword_D_8003F7F8[] = {0x4000200, 0x80100, 0x4200220};
+
+//D:8003F804
+u32 D_8003F804 = 0x8200002;
+//D:8003F808
+u32 D_8003F808 = 0x2000004;
+
+//D:8003F80C
+struct struct_15 D_8003F80C[] = {
+    {1, 0xA, 0, 0, dword_D_8003F430, 0, 0x31},
+    {2, 0xA, 0, 0, dword_D_8003F444, 0xB0000000, 6},
+    {3, 0xA, 0, 0, dword_D_8003F458, 0xB0010000, 2},
+    {4, 0xA, 0, 0, dword_D_8003F46C, 0, 0x16},
+    {5, 0xA, 0, 0, dword_D_8003F480, 0, 0x16},
+    {6, 0xA, 0, 0, dword_D_8003F494, 0, 0x34},
+    {7, 0xA, 0, 0, dword_D_8003F4A8, 0xB0370000, 0x66},
+    {8, 0, 0, 0, 0, 0, 0x16},
+    {9, 0, 0, 0, 0, 0, 0x16},
+    {0xA, 0xA, 0, 0, dword_D_8003F4BC, 0xB0040000, 0x62},
+    {0xB, 0, 0, 0, 0, 0xB0060000, 0x66},
+    {0xC, 0, 0, 0, 0, 0xB0070000, 0x26},
+    {0xD, 0, 0, 0, 0, 0, 0x12},
+    {0xE, 0, 0, 0, 0, 0xB0080000, 2},
+    {0xF, 0, 0, 0, 0, 0xB0380000, 0x66},
+    {0x10, 0, 0, 0, 0, 0, 0x16},
+    {0x11, 0, 0, 0, 0, 0xB00A0000, 0x12},
+    {0x12, 0, 0, 0, 0, 0xB00B0000, 0x12},
+    {0x13, 0, 0, 0, 0, 0xB00C0000, 0x12},
+    {0x14, 0, 0, 0, 0, 0xB00D0000, 0x12},
+    {0x15, 0, 0, 0, 0, 0xB00E0000, 0x12},
+    {0x16, 0xA, 0, 0, dword_D_8003F4D0, 0, 4},
+    {0x17, 0, 0, 0, 0, 0xB0430000, 0x64},
+    {0x18, 0, 0, 0, 0, 0xB0400000, 0x66},
+    {0x19, 0, 0, 0, 0, 0, 0x20},
+    {0x1A, 0, 0, 0, 0, 0xB0410000, 0x72},
+    {0x1B, 0, 0, 0, 0, 0xB0420000, 0x72},
+    {0x1C, 0, 0, 0, 0, 0xB0390000, 1},
+    {0x1D, 0, 0, 0, 0, 0xB03A0000, 0x12},
+    {0x1E, 0, 0, 0, 0, 0xB03B0000, 0x12},
+    {0x1F, 0, 0, 0, 0, 0xB03C0000, 0x12},
+    {0x20, 0, 0, 0, 0, 0xB03D0000, 0x12},
+    {0x21, 0, 0, 0, 0, 0xB03E0000, 0x12},
+    {0x22, 0, 0, 0, 0, 0xB03F0000, 0x12},
+    {0x23, 0xA, 0, 0, dword_D_8003F67C, 0, 0x11},
+    {0x24, 0xA, 0, 0, dword_D_8003F690, 0, 0x11},
+    {0x25, 0xA, 0, 0, dword_D_8003F6A4, 0, 0x11},
+    {0x26, 0xA, 0, 0, dword_D_8003F6B8, 0, 0x11},
+    {0x27, 0xA, 0, 0, dword_D_8003F6CC, 0, 0x11},
+    {0x28, 0xA, 0, 0, dword_D_8003F6E0, 0, 0x11},
+    {0x29, 0xA, 0, 0, dword_D_8003F6F4, 0, 0x11},
+    {0x2A, 0xA, 0, 0, dword_D_8003F708, 0, 0x11},
+    {0x2B, 0xA, 0, 0, dword_D_8003F71C, 0, 0x11},
+    {0x2C, 0xA, 0, 0, dword_D_8003F730, 0, 0x11},
+    {0x2D, 0xA, 0, 0, dword_D_8003F744, 0, 0x11},
+    {0x2E, 0xA, 0, 0, dword_D_8003F758, 0, 0x11},
+    {0x2F, 0xA, 0, 0, dword_D_8003F76C, 0, 0x11},
+    {0x30, 0xA, 0, 0, dword_D_8003F780, 0, 0x11},
+    {0x31, 0xA, 0, 0, dword_D_8003F794, 0, 0x11},
+    {0x32, 0xA, 0, 0, dword_D_8003F7A8, 0, 0x11},
+    {0x33, 0xA, 0, 0, dword_D_8003F7BC, 0, 0x11},
+    {0x34, 0xA, 0, 0, dword_D_8003F7D0, 0, 0x11},
+    {0x35, 0xA, 0, 0, dword_D_8003F7E4, 0, 0x11},
+    {0x36, 0xA, 0, 0, dword_D_8003F7F8, 0, 0x11},
+    {0x37, 0xA, 0, 0, dword_D_8003F4E4, 0, 0x11},
+    {0x38, 0xA, 0, 0, dword_D_8003F4F8, 0, 0x11},
+    {0x39, 0xA, 0, 0, dword_D_8003F50C, 0, 0x11},
+    {0x3A, 0xA, 0, 0, dword_D_8003F520, 0, 0x11},
+    {0x3B, 0xA, 0, 0, dword_D_8003F534, 0, 0x11},
+    {0x3C, 0xA, 0, 0, dword_D_8003F548, 0, 0x11},
+    {0x3D, 0xA, 0, 0, dword_D_8003F55C, 0, 0x11},
+    {0x3E, 0xA, 0, 0, dword_D_8003F570, 0, 0x11},
+    {0x3F, 0xA, 0, 0, dword_D_8003F584, 0, 0x11},
+    {0x40, 0xA, 0, 0, dword_D_8003F598, 0, 0x11},
+    {0x41, 0xA, 0, 0, dword_D_8003F5AC, 0, 0x11},
+    {0x42, 0xA, 0, 0, dword_D_8003F5C0, 0, 0x11},
+    {0x43, 0xA, 0, 0, dword_D_8003F5D4, 0, 0x11},
+    {0x44, 0xA, 0, 0, dword_D_8003F5E8, 0, 0x11},
+    {0x45, 0xA, 0, 0, dword_D_8003F5FC, 0, 0x11},
+    {0x46, 0xA, 0, 0, dword_D_8003F610, 0, 0x11},
+    {0x47, 0xA, 0, 0, dword_D_8003F624, 0, 0x11},
+    {0x48, 0xA, 0, 0, dword_D_8003F638, 0, 0x11},
+    {0x49, 0xA, 0, 0, dword_D_8003F64C, 0, 0x11},
+    {0x4A, 0xA, 0, 0, dword_D_8003F660, 0, 0x11},
+    {0}
+};
+
+//D:8003FCBC
+//u32 D_8003FCBC = 0;
 
 
-D:800572B0     jpt_700C5B38:   .word cheats_cheat_extra_mp_chars, cheats_cheat_invincibility, cheats_cheat_allguns
-D:800572B0                                              # DATA XREF: sub_CODE_7F091B64+98r
-D:800572B0                     .word cheats_cheat_max_ammo, cheats_debug_return_saved_ra, cheats_cheat_deactivate_invincibility  # jump table for switch statement
-D:800572B0                     .word cheats_cheat_linemode, cheats_cheat_2x_health, cheats_cheat_2x_armor
-D:800572B0                     .word cheats_cheat_invisibility, cheats_cheat_infinite_ammo, cheats_cheat_dk_mode
-D:800572B0                     .word cheats_cheat_extra_weapons, cheats_cheat_tiny_bond, cheats_cheat_paintball
-D:800572B0                     .word cheats_cheat_10x_health, cheats_cheat_magnum, cheats_cheat_laser, cheats_cheat_goldengun
-D:800572B0                     .word cheats_cheat_silverpp7, cheats_cheat_goldpp7, cheats_cheat_invisibility_mp
-D:800572B0                     .word cheats_debug_return_saved_ra, cheats_cheat_fast, cheats_debug_pos, cheats_debug_fast_ani
-D:800572B0                     .word cheats_debug_slow_ani, cheats_debug_return_saved_ra, cheats_debug_2x_rockets
-D:800572B0                     .word cheats_debug_2x_grenade_launch, cheats_debug_2x_rcp90, cheats_debug_2x_throwing_knife
-D:800572B0                     .word cheats_debug_2x_hunting_knife, cheats_debug_2x_laser, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlockcheat, cheats_debug_unlockcheat
-D:800572B0                     .word cheats_debug_unlockcheat, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-D:800572B0                     .word cheats_debug_unlocklevel, cheats_debug_unlocklevel, cheats_debug_unlocklevel
-*/
-//D:800573D8
-const f32 finalamount = 0.050000001;
-/*
-D:800573DC     jpt_700C6400:   .word cheat_button_default, cheat_button_invincibility, cheat_button_all_guns
-D:800573DC                                              # DATA XREF: sub_CODE_7F092438+8Cr
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_line_mode  # jump table for switch statement
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_unknown, cheat_button_infinite_ammo
-D:800573DC                     .word cheat_button_dkmode, cheat_button_default, cheat_button_unknown_0, cheat_button_paintball
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_mp_invis, cheat_button_default
-D:800573DC                     .word cheat_button_fast_mode, cheat_button_debug_mode, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-D:800573DC                     .word cheat_button_default, cheat_button_default, cheat_button_default, cheat_button_default
-*/
-//D:80057504
-const f32 D_80057504 = 0.80000001;
+
+
+// rodata
+
 
 
 
@@ -2888,6 +3078,89 @@ void sub_GAME_7F091B64(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel PADDINGHACKS
+.word 0,0
+/*D:800572B0*/
+glabel jpt_700C5B38
+.word cheats_cheat_extra_mp_chars
+.word cheats_cheat_invincibility
+.word cheats_cheat_allguns
+.word cheats_cheat_max_ammo
+.word cheats_debug_return_saved_ra
+.word cheats_cheat_deactivate_invincibility
+.word cheats_cheat_linemode
+.word cheats_cheat_2x_health
+.word cheats_cheat_2x_armor
+.word cheats_cheat_invisibility
+.word cheats_cheat_infinite_ammo
+.word cheats_cheat_dk_mode
+.word cheats_cheat_extra_weapons
+.word cheats_cheat_tiny_bond
+.word cheats_cheat_paintball
+.word cheats_cheat_10x_health
+.word cheats_cheat_magnum
+.word cheats_cheat_laser
+.word cheats_cheat_goldengun
+.word cheats_cheat_silverpp7
+.word cheats_cheat_goldpp7
+.word cheats_cheat_invisibility_mp
+.word cheats_debug_return_saved_ra
+.word cheats_cheat_fast
+.word cheats_debug_pos
+.word cheats_debug_fast_ani
+.word cheats_debug_slow_ani
+.word cheats_debug_return_saved_ra
+.word cheats_debug_2x_rockets
+.word cheats_debug_2x_grenade_launch
+.word cheats_debug_2x_rcp90
+.word cheats_debug_2x_throwing_knife
+.word cheats_debug_2x_hunting_knife
+.word cheats_debug_2x_laser
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlockcheat
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+.word cheats_debug_unlocklevel
+
+/*800573D8*/
+glabel finalamount
+.word 0x3d4ccccd /*0.050000001*/
 .text
 glabel sub_GAME_7F091B64
 /* 0C6694 7F091B64 00047100 */  sll   $t6, $a0, 4
@@ -3297,9 +3570,9 @@ cheats_cheat_goldpp7:
 cheats_cheat_invisibility_mp:
 /* 0C6C74 7F092144 3C014396 */  li    $at, 0x43960000 # 300.000000
 /* 0C6C78 7F092148 44816000 */  mtc1  $at, $f12
-/* 0C6C7C 7F09214C 3C018005 */  lui   $at, %hi(D_800573D8) # $at, 0x8005
+/* 0C6C7C 7F09214C 3C018005 */  lui   $at, %hi(finalamount) # $at, 0x8005
 /* 0C6C80 7F092150 0FC20284 */  jal   set_curplayer_fade
-/* 0C6C84 7F092154 C42E73D8 */   lwc1  $f14, %lo(D_800573D8)($at)
+/* 0C6C84 7F092154 C42E73D8 */   lwc1  $f14, %lo(finalamount)($at)
 /* 0C6C88 7F092158 100000B4 */  b     .L7F09242C
 /* 0C6C8C 7F09215C 8FBF0014 */   lw    $ra, 0x14($sp)
 cheats_cheat_fast:
@@ -3515,6 +3788,84 @@ void sub_GAME_7F092438(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:800573DC*/
+glabel jpt_700C6400
+.word cheat_button_default
+.word cheat_button_invincibility
+.word cheat_button_all_guns
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_line_mode
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_unknown
+.word cheat_button_infinite_ammo
+.word cheat_button_dkmode
+.word cheat_button_default
+.word cheat_button_unknown_0
+.word cheat_button_paintball
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_mp_invis
+.word cheat_button_default
+.word cheat_button_fast_mode
+.word cheat_button_debug_mode
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+
 .text
 glabel sub_GAME_7F092438
 /* 0C6F68 7F092438 00047100 */  sll   $t6, $a0, 4
@@ -3756,6 +4107,29 @@ loop_3:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*hack for jtbl*/
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
 .text
 glabel sub_GAME_7F0926C0
 /* 0C71F0 7F0926C0 27BDFFC8 */  addiu $sp, $sp, -0x38
@@ -3820,6 +4194,16 @@ void sub_GAME_7F092774(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*hack for jtbl*/
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
+/*.word cheat_button_default*/
 .text
 glabel sub_GAME_7F092774
 /* 0C72A4 7F092774 00047100 */  sll   $t6, $a0, 4
@@ -3855,6 +4239,12 @@ void sub_GAME_7F0927BC(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*ugh hack for jtbl*/
+.word cheat_button_default
+.word cheat_button_default
+.word cheat_button_default
+
 .text
 glabel sub_GAME_7F0927BC
 /* 0C72EC 7F0927BC 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -3884,6 +4274,9 @@ void sub_GAME_7F0927F4(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80057504
+.word 0x3f4ccccd /*0.80000001*/
 .text
 glabel sub_GAME_7F0927F4
 /* 0C7324 7F0927F4 27BDFFD0 */  addiu $sp, $sp, -0x30

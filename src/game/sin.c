@@ -1,32 +1,6 @@
 #include "ultra64.h"
 
 
-// rodata
-//D:800536C0
-const f32 flt_D_800536C0 = 1.5707963;
-//D:800536C4
-const f32 flt_D_800536C4 = 0.0000026057805;
-//D:800536C8
-const f32 flt_D_800536C8 = -0.00019809602;
-//D:800536CC
-const f32 flt_D_800536CC = 0.0083330665;
-//D:800536D0
-const f32 flt_D_800536D0 = -0.1666666;
-//D:800536D4
-const f32 flt_D_800536D4 = 0.31830987;
-//D:800536D8
-const f32 flt_D_800536D8 = 3.1415927;
-//D:800536DC
-const f32 flt_D_800536DC = 3.178650856;
-//D:800536E0
-const f32 flt_D_800536E0 = 0.0000026057805;
-//D:800536E4
-const f32 flt_D_800536E4 = -0.00019809602;
-//D:800536E8
-const f32 flt_D_800536E8 = 0.0083330665;
-//D:800536EC
-const f32 flt_D_800536EC = -0.1666666;
-
 
 
 
@@ -38,6 +12,8 @@ void cosf(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+
 .text
 glabel cosf
 /* 08C9D0 7F057EA0 3C018005 */  lui   $at, %hi(D_800536C0) # $at, 0x8005
@@ -56,6 +32,31 @@ void sinf(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800536C0
+.word 0x3fc90fda /*1.5707963*/
+glabel D_800536C4
+.word 0x362edef8 /*0.0000026057805*/
+glabel D_800536C8
+.word 0xb94fb7ff /*-0.00019809602*/
+glabel D_800536CC
+.word 0x3c08876a /*0.0083330665*/
+glabel D_800536D0
+.word 0xbe2aaaa6 /*-0.1666666*/
+glabel D_800536D4
+.word 0x3ea2f983 /*0.31830987*/
+glabel D_800536D8
+.word 0x40490fdb /*3.1415927*/
+glabel D_800536DC
+.word 0x330885a3 /*3.178650856*/
+glabel D_800536E0
+.word 0x362edef8 /*0.0000026057805*/
+glabel D_800536E4
+.word 0xb94fb7ff /*-0.00019809602*/
+glabel D_800536E8
+.word 0x3c08876a /*0.0083330665*/
+glabel D_800536EC
+.word 0xbe2aaaa6 /*-0.1666666*/
 .text
 glabel sinf
 /* 08C9DC 7F057EAC 44086000 */  mfc1  $t0, $f12

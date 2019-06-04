@@ -39,16 +39,7 @@ char membars_string2[] = "=========================";
 char membars_string3[] = "-------------------------";
 
 
-// rodata
-//D:8005B68C
-const char aMgfx[] = "-mgfx";
-//D:8005B694
-const char aMgfx_1[] = "-mgfx";
-//D:8005B69C
-const char aMvtx[] = "-mvtx";
-//D:8005B6A4
-const char aMvtx_0[] = "-mvtx";
-
+//rodata
 
 void something_with_dyn_c_debug(void) {
     get_ptr_debug_notice_list_entry(&D_800482E0, "dyn_c_debug");
@@ -88,6 +79,27 @@ void set_vtx_gfx_mem_alloc(void) {
 }
 #else
 GLOBAL_ASM(
+.rdata
+/*D:8005B68C*/
+glabel aMgfx
+/*"-mgfx"*/
+.word 0x2D6D6766, 0x78000000
+
+/*D:8005B694*/
+glabel aMgfx_1
+ /*"-mgfx"*/
+.word 0x2D6D6766, 0x78000000
+
+/*D:8005B69C*/
+glabel aMvtx
+ /*"-mvtx"*/
+.word 0x2D6D7674, 0x78000000
+
+/*D:8005B6A4*/
+glabel aMvtx_0
+ /*"-mvtx"*/
+.word 0x2D6D7674, 0x78000000
+
 .text
 glabel set_vtx_gfx_mem_alloc
 /* 0F1FBC 7F0BD48C 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -400,20 +412,10 @@ glabel allocate_something_in_mvtx
 
 
 
-#ifdef NONMATCHING
 void removed_debug_routine(s32 arg0) {
-    // Node 0
     return;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel removed_debug_routine
-/* 0F22A4 7F0BD774 03E00008 */  jr    $ra
-/* 0F22A8 7F0BD778 AFA40000 */   sw    $a0, ($sp)
-)
-#endif
 
 
 

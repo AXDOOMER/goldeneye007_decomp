@@ -21,126 +21,8 @@ char indy_read_buffer[0x60];
 /* data */
 u32 D_800232E0[] = {0, 0};
 u32 debug_notice_list[] = {0, 0, 0, 0};
-u32 debug_notice_list_data[] = {&dword_CODE_bss_80060890, 0, 0};
+u32 debug_notice_list_data[] = {&dword_CODE_bss_80060890, 0};
 
-struct debug_processor_error_entry
-{
-  u32 val1;
-  u32 val2;
-  void *string
-} debug_processor_error_table[] = { 
-{0x80000000, 0x80000000, "BD"},
-{0x8000, 0x8000, "IP8"},
-{0x4000, 0x4000, "IP7"},
-{0x2000, 0x2000, "IP6"},
-{0x1000, 0x1000, "IP5"},
-{0x800, 0x800, "IP4"},
-{0x400, 0x400, "IP3"},
-{0x200, 0x200, "IP2"},
-{0x100, 0x100, "IP1"},
-{0x7C, 0, "Int"},
-{0x7C, 4, "TLBmod"},
-{0x7C, 8, "TLBload"},
-{0x7C, 0xC, "TLBstore"},
-{0x7C, 0x10, "Address error on load or instruction fetch"},
-{0x7C, 0x14, "Address error on store"},
-{0x7C, 0x18, "Bus error exception on instruction fetch"},
-{0x7C, 0x1C, "Bus error exception on data reference"},
-{0x7C, 0x20, "Syscall"},
-{0x7C, 0x24, "Brk"},
-{0x7C, 0x28, "Reserved instruction"},
-{0x7C, 0x2C, "Cop unusable"},
-{0x7C, 0x30, "Overflow"},
-{0x7C, 0x34, "Trap"},
-{0x7C, 0x38, "Virtual coherency exception on intruction fetch"},
-{0x7C, 0x3C, "Fp exception"},
-{0x7C, 0x5C, "Watchpoint"},
-{0x7C, 0x7C, "Virtual coherency exception on data reference"},
-{0, 0, ""},
-{0x80000000, 0x80000000, "CU3"},
-{0x40000000, 0x40000000, "CU2"},
-{0x20000000, 0x20000000, "CU1"},
-{0x10000000, 0x10000000, "CU0"},
-{0x8000000, 0x8000000, "RP"},
-{0x4000000, 0x4000000, "FR"},
-{0x2000000, 0x2000000, "RE"},
-{0x400000, 0x400000, "BEV"},
-{0x200000, 0x200000, "TS"},
-{0x100000, 0x100000, "SR"},
-{0x40000, 0x40000, "CH"},
-{0x20000, 0x20000, "CE"},
-{0x10000, 0x10000, "DE"},
-{0x8000, 0x8000, "IM8"},
-{0x4000, 0x4000, "IM7"},
-{0x2000, 0x2000, "IM6"},
-{0x1000, 0x1000, "IM5"},
-{0x800, 0x800, "IM4"},
-{0x400, 0x400, "IM3"},
-{0x200, 0x200, "IM2"},
-{0x100, 0x100, "IM1"},
-{0x80, 0x80, "KX"},
-{0x40, 0x40, "SX"},
-{0x20, 0x20, "UX"},
-{0x18, 0x10, "USR"},
-{0x18, 8, "SUP"},
-{0x18, 0, "KER"},
-{4, 4, "ERL"},
-{2, 2, "EXL"},
-{1, 1, "IE"},
-{0, 0, ""},
-{0x1000000, 0x1000000, "FS"},
-{0x800000, 0x800000, "C"},
-{0x20000, 0x20000, "Unimplemented"},
-{0x10000, 0x10000, "Invalid op"},
-{0x8000, 0x8000, "/ by 0.0"},
-{0x4000, 0x4000, "Overflow"},
-{0x2000, 0x2000, "Underflow"},
-{0x1000, 0x1000, "Inexact op"},
-{0x800, 0x800, "EV"},
-{0x400, 0x400, "EZ"},
-{0x200, 0x200, "EO"},
-{0x100, 0x100, "EU"},
-{0x80, 0x80, "EI"},
-{0x40, 0x40, "FV"},
-{0x20, 0x20, "FZ"},
-{0x10, 0x10, "FO"},
-{8, 8, "FU"},
-{4, 4, "FI"},
-{3, 0, "RN"},
-{3, 1, "RZ"},
-{3, 2, "RP"},
-{3, 3, "RM"},
-{0, 0, ""} };
-
-void *stack_ptrs_1[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
-void *stack_ptrs_2[] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &sp_debug};
-void *stack_ptrs_3[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
-
-u32 stderr_buffer[0x570] = {0x0};
-
-u32 std_error_font_bitcode[] = {
-0x00000000, 0x22220200, 0x55000000,  0x5F5F500, 0x27427200,
-0x05124500, 0x34255300, 0x22000000, 0x24444420, 0x42222240,
-0x06F6F600,   0x272000,      0x240,    0x70000,      0x200,
-0x11224480, 0x25555200, 0x26222700, 0x25125700, 0x61211600,
-0x33557300, 0x64611600, 0x24655200, 0x71112200, 0x25755200,
-0x25531600,   0x200200,   0x200640,  0x1242100,   0x707000,
- 0x4212400,  0x7120200, 0x25FF5700,  0x2557D00,  0x6575E00,
- 0x7445300,  0x7555600,  0x7565700,  0x7564400,  0x7C95700,
- 0x5575500,  0x7222700,  0x3111600,  0x5665500,  0x4445F00,
- 0xDFF9D00,  0xF777D00,  0x7DD5700,  0x7564600,  0x7995770,
- 0x7565500,  0x7461E00,  0x7222200,  0xD999600,  0xD552200,
- 0xDF77500,  0xD625500,  0x5622600,  0x7125700, 0x32222230,
-0x44222110, 0x62222260, 0x25000000,      0x700, 0x42200000,
-  0x67D700, 0x44755700,   0x788600, 0x117DD700,   0x6FC700,
-0x32722700,   0x7DD730, 0x44755500,  0x2622700,  0x2711130,
-0x44766500, 0x62222700,   0xFFFF00,   0x755D00,   0x6DD600,
-  0x755740,   0x799710,   0x744600,   0x775700,  0x2722300,
-  0x555700,   0x552200,   0x577500,   0x562500,   0x552220,
-  0x703700, 0x12242210,  0x2222220, 0x42212240,   0x5A0000 };
-
-void *ptr_videobuffer1 = 0;
-void *ptr_videobuffer2 = 0;
 
 
 
@@ -380,7 +262,7 @@ glabel scan_debug_notice_list_till_NULL
 
 
 #ifdef NONMATCHING
-void debug_stubbed(void) {
+void debug_stubbed_70004EBC(void) {
 
 }
 #else
@@ -666,9 +548,9 @@ void was_opcode_In_70000450_70020D90(u32 arg0)
 {
     if ((arg0 & 3) == 0)
     {
-        if (arg0 >= &_codeSegmentVaddrStart)
+        if (arg0 >= &_codeSegmentStart)
         {
-            if (&_codeSegmentVaddrEnd >= arg0)
+            if (&_codeSegmentEnd >= arg0)
             {
                 if ((arg0->unk-8 & 0xfc00003c) == 9)
                 {
@@ -689,12 +571,12 @@ GLOBAL_ASM(
 glabel was_opcode_In_70000450_70020D90
 /* 005DE0 700051E0 308E0003 */  andi  $t6, $a0, 3
 /* 005DE4 700051E4 15C00019 */  bnez  $t6, .L7000524C
-/* 005DE8 700051E8 3C0F7000 */   lui   $t7, %hi(_codeSegmentVaddrStart) # $t7, 0x7000
-/* 005DEC 700051EC 25EF0450 */  addiu $t7, %lo(_codeSegmentVaddrStart) # addiu $t7, $t7, 0x450
+/* 005DE8 700051E8 3C0F7000 */   lui   $t7, %hi(_codeSegmentStart) # $t7, 0x7000
+/* 005DEC 700051EC 25EF0450 */  addiu $t7, %lo(_codeSegmentStart) # addiu $t7, $t7, 0x450
 /* 005DF0 700051F0 008F082B */  sltu  $at, $a0, $t7
 /* 005DF4 700051F4 14200015 */  bnez  $at, .L7000524C
-/* 005DF8 700051F8 3C187002 */   lui   $t8, %hi(_codeSegmentVaddrEnd) # $t8, 0x7002
-/* 005DFC 700051FC 27180D90 */  addiu $t8, %lo(_codeSegmentVaddrEnd) # addiu $t8, $t8, 0xd90
+/* 005DF8 700051F8 3C187002 */   lui   $t8, %hi(_codeSegmentEnd) # $t8, 0x7002
+/* 005DFC 700051FC 27180D90 */  addiu $t8, %lo(_codeSegmentEnd) # addiu $t8, $t8, 0xd90
 /* 005E00 70005200 0304082B */  sltu  $at, $t8, $a0
 /* 005E04 70005204 54200012 */  bnezl $at, .L70005250
 /* 005E08 70005208 00001025 */   move  $v0, $zero
@@ -823,9 +705,9 @@ glabel indy_file_get_address_subsequent_data
 /* 005EB8 700052B8 8DCE3670 */  lw    $t6, %lo(indy_read_buffer)($t6)
 /* 005EBC 700052BC 3C028006 */  lui   $v0, %hi(ptr_indy_read_buf_string1) # $v0, 0x8006
 /* 005EC0 700052C0 3C018006 */  lui   $at, %hi(current_indy_read_buf_resourceID) # $at, 0x8006
-/* 005EC4 700052C4 3C0F8006 */  lui   $t7, %hi(indy_read_buffer)
+/* 005EC4 700052C4 3C0F8006 */  lui   $t7, %hi(indy_read_buffer+4)
 /* 005EC8 700052C8 24423668 */  addiu $v0, %lo(ptr_indy_read_buf_string1) # addiu $v0, $v0, 0x3668
-/* 005ECC 700052CC 25E43674 */  addiu $a0, $t7, %lo(indy_read_buffer)
+/* 005ECC 700052CC 25E43674 */  addiu $a0, $t7, %lo(indy_read_buffer+4)
 /* 005ED0 700052D0 AC2E3664 */  sw    $t6, %lo(current_indy_read_buf_resourceID)($at)
 /* 005ED4 700052D4 0C001496 */  jal   return_strlen
 /* 005ED8 700052D8 AC440000 */   sw    $a0, ($v0)

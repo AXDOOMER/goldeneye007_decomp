@@ -23,6 +23,10 @@ struct stringentry LsevxE[] = {
  "enter base via ventilation tower\n",
  "Severnaya Installation, Siberian Plateau\n",
  "Four years ago\n",
+ 0,
+ 0,
+ 0,
+ 0,
  "This safe is locked.\n",
  "severnaya\n",
  "bunker plans\n",
@@ -38,7 +42,5 @@ struct stringentry LsevxE[] = {
  "hut door key\n",
  "hut door key\n",
  "Hut Door Key\n",
- "Picked up a large key.\n",
- 0,
- 0
+ "Picked up a large key.\n"
 };

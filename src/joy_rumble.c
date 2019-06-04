@@ -1,9 +1,12 @@
 #include "ultra64.h"
-
-s32 rumble_off_player1_packet_buffer[256];
-s32 rumble_on_player_packet_buffers[256];
-s32 rumble_on_buffer[32];
-s32 rumble_off_buffer[32];
+//0x800655a0
+char rumble_off_player1_packet_buffer[256];
+//800656a0
+char rumble_on_player_packet_buffers[256];
+//800657a0 
+char rumble_on_buffer[32];
+//800657c0
+char rumble_off_buffer[32];
 
 
 

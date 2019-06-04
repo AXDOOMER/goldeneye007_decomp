@@ -1,6 +1,6 @@
 #include "ultra64.h"
 
-u64 tlb_random_seed = 0xAB8D9F77081280783;
+u64 tlb_random_seed = 0xAB8D9F7781280783;
 
 #ifdef NONMATCHING
 u32 return_tlb_random_value(void)

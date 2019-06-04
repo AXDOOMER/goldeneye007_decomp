@@ -1,7 +1,6 @@
 #include "ultra64.h"
 
-//late rodata
-const f32 default_gu_scale = 0.1;
+
 
 #ifdef NONMATCHING
 void set_gu_scale(void) {
@@ -12,6 +11,10 @@ void set_gu_scale(void) {
 
 #else
 GLOBAL_ASM(
+.late_rodata
+/*8004ed80*/
+glabel default_gu_scale
+.word 0x3dcccccd
 .text
 glabel set_gu_scale
 /* 0356B0 7F000B80 3C018005 */  lui   $at, %hi(default_gu_scale) # $at, 0x8005

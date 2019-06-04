@@ -18,16 +18,22 @@ SECTIONS
    }
    __romPos += SIZEOF(.boot);
 
-   __ramPos = 400;
+
    /* 0x80000400, 0x80000450 */
-   .text_start 0x80000400 : AT(__romPos) {
+   _startSegmentStart = ADDR(.start);
+   _startSegmentRomStart = 0x1000;
+   .start 0x80000400 : AT(__romPos) {
       build/_start.o (.text);
    }
-   __romPos += SIZEOF(.text_start);
-   __ramPos += SIZEOF(.text_start);
+   _startSegmentEnd = ADDR(.start) + SIZEOF(.start);
+   _startSegmentRomEnd = 0x1000 + SIZEOF(.start);
+   __romPos = 0x1050;
+
 
    /* 0x70000450, 0x70020D90 001050-021990 */
-   .text_code 0x70000450 : AT(0x1050) SUBALIGN(16) {
+   _codeSegmentStart = ADDR(.code);
+   _codeSegmentRomStart = 0x1050;
+   .code 0x70000450 : AT(0x1050) SUBALIGN(16) {
       build/boot.o (.text);
       build/init.o (.text);
       build/sched.o (.text);
@@ -40,6 +46,7 @@ SECTIONS
       build/speed_graph.o (.text);
       build/video.o (.text);
       build/deb.o (.text);
+      build/debug_stuff_split.o (.text);
       build/debug_getlastRA.o (.text);
       build/ramrom.o (.text);
       build/boss.o (.text);
@@ -59,23 +66,41 @@ SECTIONS
       build/rmon.o (.text);
       build/libultra/libultra.o (.text);
    }
-   __romPos += SIZEOF(.text_code);
-   __ramPos += SIZEOF(.text_code);
-   
-   .c_data __romPos : AT(__romPos) {
-      * (.c_data);
+   _codeSegmentEnd = ADDR(.code) + SIZEOF(.code);
+   _codeSegmentRomEnd = 0x1050 + SIZEOF(.code);
+   __romPos = 0x21990;
+
+
+
+   _cdataSegmentStart = ADDR(.cdata);
+   _cdataSegmentRomStart = 0x21990;
+   .cdata 0x21990 : AT(0x21990) {
+      build/c_data_filler.o (.data);
    }
-   __romPos += SIZEOF(.c_data);
+   _cdataSegmentEnd = ADDR(.cdata) + SIZEOF(.cdata);
+   _cdataSegmentRomEnd = 0x21990 + SIZEOF(.cdata);
+   __romPos = 0x033590;
    
+
+
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
-   .text_rarezip 0x70200000 : AT(0x33590) {
+   _rarezipSegmentStart = ADDR(.rarezip);
+   _rarezipSegmentRomStart = 0x033590;
+   .rarezip 0x70200000 : AT(__romPos) {
       build/rarezip/rarezip.o (.text);
       build/rarezip/rarezip.o (.data);
    }
-   __romPos += SIZEOF(.text_rarezip);
+   _rarezipSegmentEnd = ADDR(.rarezip) + SIZEOF(.rarezip);
+   _rarezipSegmentRomEnd = 0x033590 + SIZEOF(.rarezip);
+   __romPos = 0x034B30;
+
+
+   
    
    /* (0x7F000000, 0x7F0E2D50, 0x7EFCB4D0), // 034B30-117881 [E2D51] */
-   .text_tlbcode 0x7F000000 : AT(__romPos) {
+   _gameSegmentStart = ADDR(.game);
+   _gameSegmentRomStart = 0x034B30;
+   .game 0x7F000000 : AT(__romPos) {
       build/game/initgamedata.o (.text);
       build/game/initweaponanigroups.o (.text);
       build/game/initactorpropstuff.o (.text);
@@ -142,6 +167,7 @@ SECTIONS
       build/game/unk_05C440.o (.text);
       build/game/bondview.o (.text);
       build/game/objecthandler.o (.text);
+      build/game/objecthandler_2.o (.text);
       build/game/othermodemicrocode.o (.text);
       build/game/bond.o (.text);
       build/game/unk_08DBB0.o (.text);
@@ -168,6 +194,7 @@ SECTIONS
       build/game/ob.o (.text);
       build/game/dyn.o (.text);
       build/game/lvl.o (.text);
+      build/game/lvl_2.o (.text);
       build/game/unk_0C0A70.o (.text);
       build/game/mp_music.o (.text);
       build/game/lvl_text.o (.text);
@@ -189,30 +216,53 @@ SECTIONS
       build/game/music_0D2720.o (.text);
       build/game/spectrum.o (.text);
    }
-   __romPos += SIZEOF(.text_tlbcode);
-   
-   .romfiles 0x117880 : AT(__romPos) {
-      * (.romfiles);
-      * (.ramrom);
-      * (.font);
-      * (.music);
-      * (.musiccompressed);
-   }
-   __romPos += SIZEOF(.text_tlbcode);
 
-   .ob_seg 0x438660 : AT(__romPos) {
-      * (.ob_seg);
-   }
-   __romPos += SIZEOF(.ob_seg);
+   _gameSegmentEnd = ADDR(.game) + SIZEOF(.game);
+   _gameSegmentRomEnd = 0x034B30 + SIZEOF(.game);
+   __romPos = 0x117880;
 
-   .images : AT(__romPos) {
-      * (.images);
+
+   _romfiles_117880SegmentStart = ADDR(.romfiles_117880);
+   _romfiles_117880SegmentRomStart = 0x117880;
+   .romfiles_117880 0x117880 : AT(__romPos) {
+      build/assets/romfiles.o (.romfiles);
+      build/assets/ramrom/ramrom.o (.ramrom);
+      build/assets/font/font.o (.font);
+      build/assets/music/music.o (.music);
+      build/assets/music/music.o (.musiccompressed);
    }
-   __romPos += SIZEOF(.ob_seg);
+   _romfiles_117880SegmentEnd = ADDR(.romfiles_117880) + SIZEOF(.romfiles_117880);
+   _romfiles_117880SegmentRomEnd = 0x117880 + SIZEOF(.romfiles_117880);
+   __romPos = 0x438660;
+
+
+
+   _obsegSegmentStart = ADDR(.obseg);
+   _obsegSegmentRomStart = 0x438660;
+   .obseg 0x438660 : AT(0x438660) {
+      build/assets/obseg/ob_seg.o (.ob_seg);
+   }
+   _obsegSegmentEnd = ADDR(.obseg) + SIZEOF(.obseg);
+   _obsegSegmentRomEnd = 0x438660 + SIZEOF(.obseg);
+
+   __romPos = 0x8F7DF0;
+
+
+   _imagesSegmentStart = ADDR(.images);
+   _imagesSegmentRomStart = 0x8F7DF0;
+   .images 0x8F7DF0 : AT(0x8F7DF0) {
+      build/assets/images/images.o (.images);
+   }
+   _imagesSegmentEnd = ADDR(.images) + SIZEOF(.images);
+   _imagesSegmentRomEnd = 0x8F7DF0 + SIZEOF(.images);
+
+   __romPos = 0xBE6D10;
 
    __csegtempPos = 0xC00000;
-   __ramPos += 0x80000000;
-   .csegment __ramPos : AT(__csegtempPos){
+   __ramPos = 0x80020d90;
+   _csegmentSegmentStart = ADDR(.csegment);
+   _csegmentSegmentRomStart = __csegtempPos;
+   .csegment 0x80020d90 : AT(__csegtempPos) {
       build/rspboot.o (.text);
       build/gspboot.o (.text);
       build/aspboot.o (.text);
@@ -228,6 +278,7 @@ SECTIONS
       build/speed_graph.o (.data);
       build/video.o (.data);
       build/deb.o (.data);
+      build/debug_stuff_split.o (.data);
       build/debug_getlastRA.o (.data);
       build/ramrom.o (.data);
       build/boss.o (.data);
@@ -246,6 +297,8 @@ SECTIONS
       build/joy_rumble.o (.data);
       build/rmon.o (.data);
       build/libultra/libultra.o (.data);
+
+      build/aspboot.o (.rodata);
       build/boot.o (.rodata);
       build/init.o (.rodata);
       build/sched.o (.rodata);
@@ -258,6 +311,7 @@ SECTIONS
       build/speed_graph.o (.rodata);
       build/video.o (.rodata);
       build/deb.o (.rodata);
+      build/debug_stuff_split.o (.rodata);
       build/debug_getlastRA.o (.rodata);
       build/ramrom.o (.rodata);
       build/boss.o (.rodata);
@@ -276,6 +330,7 @@ SECTIONS
       build/joy_rumble.o (.rodata);
       build/rmon.o (.rodata);
       build/libultra/libultra.o (.rodata);
+
       build/game/initgamedata.o (.data);
       build/game/initweaponanigroups.o (.data);
       build/game/initactorpropstuff.o (.data);
@@ -342,6 +397,7 @@ SECTIONS
       build/game/unk_05C440.o (.data);
       build/game/bondview.o (.data);
       build/game/objecthandler.o (.data);
+      build/game/objecthandler_2.o (.data);
       build/game/othermodemicrocode.o (.data);
       build/game/bond.o (.data);
       build/game/unk_08DBB0.o (.data);
@@ -368,6 +424,7 @@ SECTIONS
       build/game/ob.o (.data);
       build/game/dyn.o (.data);
       build/game/lvl.o (.data);
+      build/game/lvl_2.o (.data);
       build/game/unk_0C0A70.o (.data);
       build/game/mp_music.o (.data);
       build/game/lvl_text.o (.data);
@@ -388,6 +445,7 @@ SECTIONS
       build/game/viewport.o (.data);
       build/game/music_0D2720.o (.data);
       build/game/spectrum.o (.data);
+
       build/game/initgamedata.o (.rodata);
       build/game/initweaponanigroups.o (.rodata);
       build/game/initactorpropstuff.o (.rodata);
@@ -454,6 +512,7 @@ SECTIONS
       build/game/unk_05C440.o (.rodata);
       build/game/bondview.o (.rodata);
       build/game/objecthandler.o (.rodata);
+      build/game/objecthandler_2.o (.rodata);
       build/game/othermodemicrocode.o (.rodata);
       build/game/bond.o (.rodata);
       build/game/unk_08DBB0.o (.rodata);
@@ -480,6 +539,7 @@ SECTIONS
       build/game/ob.o (.rodata);
       build/game/dyn.o (.rodata);
       build/game/lvl.o (.rodata);
+      build/game/lvl_2.o (.rodata);
       build/game/unk_0C0A70.o (.rodata);
       build/game/mp_music.o (.rodata);
       build/game/lvl_text.o (.rodata);
@@ -500,12 +560,19 @@ SECTIONS
       build/game/viewport.o (.rodata);
       build/game/music_0D2720.o (.rodata);
       build/game/spectrum.o (.rodata);
+
       build/gspboot.o (.data);
       build/aspboot.o (.data);
    }
+   _csegmentSegmentEnd = ADDR(.csegment) + SIZEOF(.csegment);
+   _csegmentSegmentRomEnd = 0xC00000 + SIZEOF(.csegment);
+
    __ramPos += SIZEOF(.csegment);
-   __csegtempPos += SIZEOF(.csegment);
-   .bss __ramPos : AT(__csegtempPos){
+   __csegtempPosEnd =  (__csegtempPos + SIZEOF (.csegment));
+
+   _bssSegmentStart = ADDR(.bss);
+   _bssSegmentRomStart = __csegtempPosEnd;
+   .bss 0x8005D2E0 : AT(__csegtempPosEnd){
       build/boot.o (.bss);
       build/init.o (.bss);
       build/sched.o (.bss);
@@ -517,6 +584,7 @@ SECTIONS
       build/speed_graph.o (.bss);
       build/video.o (.bss);
       build/deb.o (.bss);
+      build/debug_stuff_split.o (.bss);
       build/debug_getlastRA.o (.bss);
       build/ramrom.o (.bss);
       build/boss.o (.bss);
@@ -601,6 +669,7 @@ SECTIONS
       build/game/unk_05C440.o (.bss);
       build/game/bondview.o (.bss);
       build/game/objecthandler.o (.bss);
+      build/game/objecthandler_2.o (.bss);
       build/game/othermodemicrocode.o (.bss);
       build/game/bond.o (.bss);
       build/game/unk_08DBB0.o (.bss);
@@ -627,6 +696,7 @@ SECTIONS
       build/game/ob.o (.bss);
       build/game/dyn.o (.bss);
       build/game/lvl.o (.bss);
+      build/game/lvl_2.o (.bss);
       build/game/unk_0C0A70.o (.bss);
       build/game/mp_music.o (.bss);
       build/game/lvl_text.o (.bss);
@@ -647,14 +717,39 @@ SECTIONS
       build/game/viewport.o (.bss);
       build/game/music_0D2720.o (.bss);
       build/game/spectrum.o (.bss);
-   }   
-   __ramPos += SIZEOF(.csegment);
-   __csegtempPos += SIZEOF(.csegment);
+   }
+   _bssSegmentEnd = ADDR(.bss) + SIZEOF(.bss);
+   _bssSegmentRomEnd = 0xc3c550 + SIZEOF(.bss);
 
+__ramPos += SIZEOF(.bss);
 
    /*move em to end, out of the way*/
    /DISCARD/ : {
       * (.MIPS.abiflags);
       * (.musicdecompressed);
-   }
+      * (.options);
+      * (.gnu.attributes);
+      * (.pdr);
+      * (.mdebug);
+      * (.gptab.bss);
+      * (.gptab.data);
+      * (.reginfo);
+      
+      build/assets/romfiles.o (.text);
+      build/assets/romfiles.o (.data);
+      build/assets/ramrom/ramrom.o (.text);
+      build/assets/ramrom/ramrom.o (.data);
+      build/assets/font/font.o (.text);
+      build/assets/font/font.o (.data);
+      build/assets/music/music.o (.text);
+      build/assets/music/music.o (.data);
+      build/assets/obseg/ob_seg.o (.text);
+      build/assets/obseg/ob_seg.o (.data);
+      build/assets/images/images.o (.text);
+      build/assets/images/images.o (.data);
+      build/rom_header.o (.text);
+      build/bootcode.o (.data);
+      build/_start.o (.data);
+      build/rspboot.o (.data);
+}
 }

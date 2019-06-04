@@ -1,55 +1,8 @@
 #include "ultra64.h"
 
+/*data*/
 
 /* rodata
-D:80053490     jpt_object_setup_size:.word object_size_type_01
-D:80053490                                              # DATA XREF: get_size_of_setup_object_type+14r
-D:80053490                     .word object_size_type_02  # jump table for switch statement
-D:80053490                     .word object_size_type_03
-D:80053490                     .word object_size_type_04
-D:80053490                     .word object_size_type_05
-D:80053490                     .word object_size_type_06
-D:80053490                     .word object_size_type_07
-D:80053490                     .word object_size_type_08
-D:80053490                     .word object_size_type_09
-D:80053490                     .word object_size_type_0A
-D:80053490                     .word object_size_type_0B
-D:80053490                     .word object_size_type_0C
-D:80053490                     .word object_size_type_0D
-D:80053490                     .word object_size_type_0E
-D:80053490                     .word object_size_type_default
-D:80053490                     .word object_size_type_default
-D:80053490                     .word object_size_type_11
-D:80053490                     .word object_size_type_12
-D:80053490                     .word object_size_type_13
-D:80053490                     .word object_size_type_14
-D:80053490                     .word object_size_type_15
-D:80053490                     .word object_size_type_16
-D:80053490                     .word object_size_type_17
-D:80053490                     .word object_size_type_18
-D:80053490                     .word object_size_type_19
-D:80053490                     .word object_size_type_1A
-D:80053490                     .word object_size_type_1B
-D:80053490                     .word object_size_type_1C
-D:80053490                     .word object_size_type_1D
-D:80053490                     .word object_size_type_1E
-D:80053490                     .word object_size_type_1F
-D:80053490                     .word object_size_type_20
-D:80053490                     .word object_size_type_21
-D:80053490                     .word object_size_type_22
-D:80053490                     .word object_size_type_23
-D:80053490                     .word object_size_type_24
-D:80053490                     .word object_size_type_25
-D:80053490                     .word object_size_type_26
-D:80053490                     .word object_size_type_27
-D:80053490                     .word object_size_type_28
-D:80053490                     .word object_size_type_default
-D:80053490                     .word object_size_type_2A
-D:80053490                     .word object_size_type_2B
-D:80053490                     .word object_size_type_2C
-D:80053490                     .word object_size_type_2D
-D:80053490                     .word object_size_type_2E
-D:80053490                     .word object_size_type_2F
 D:8005354C     jpt_7008AE0C:   .word loc_CODE_7F056EE4  # DATA XREF: sub_CODE_7F056EA0+30r
 D:8005354C                     .word loc_CODE_7F056EEC  # jump table for switch statement
 D:8005354C                     .word loc_CODE_7F056EE4
@@ -111,6 +64,25 @@ void sub_GAME_7F056850(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80053490*/
+glabel jpt_object_setup_size
+.word object_size_type_01
+.word object_size_type_02
+.word object_size_type_03
+.word object_size_type_04
+.word object_size_type_05
+.word object_size_type_06
+.word object_size_type_07
+.word object_size_type_08
+.word object_size_type_09
+.word object_size_type_0A
+.word object_size_type_0B
+.word object_size_type_0C
+.word object_size_type_0D
+/*.word object_size_type_0E*/
+/*.word object_size_type_default*/
+/*.word object_size_type_default*/
 .text
 glabel sub_GAME_7F056850
 /* 08B380 7F056850 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -169,6 +141,57 @@ s16 get_size_of_setup_object_type(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80053490*/
+/*glabel jpt_object_setup_size*/
+/*.word object_size_type_01*/
+/*.word object_size_type_02*/
+/*.word object_size_type_03*/
+/*.word object_size_type_04*/
+/*.word object_size_type_05*/
+/*.word object_size_type_06*/
+/*.word object_size_type_07*/
+/*.word object_size_type_08*/
+/*.word object_size_type_09*/
+/*.word object_size_type_0A*/
+/*.word object_size_type_0B*/
+/*.word object_size_type_0C*/
+/*.word object_size_type_0D*/
+.word object_size_type_0E
+.word object_size_type_default
+.word object_size_type_default
+.word object_size_type_11
+.word object_size_type_12
+.word object_size_type_13
+.word object_size_type_14
+.word object_size_type_15
+.word object_size_type_16
+.word object_size_type_17
+.word object_size_type_18
+.word object_size_type_19
+.word object_size_type_1A
+.word object_size_type_1B
+.word object_size_type_1C
+.word object_size_type_1D
+.word object_size_type_1E
+.word object_size_type_1F
+.word object_size_type_20
+.word object_size_type_21
+.word object_size_type_22
+.word object_size_type_23
+.word object_size_type_24
+.word object_size_type_25
+.word object_size_type_26
+.word object_size_type_27
+.word object_size_type_28
+.word object_size_type_default
+.word object_size_type_2A
+.word object_size_type_2B
+.word object_size_type_2C
+.word object_size_type_2D
+.word object_size_type_2E
+/*.word object_size_type_2F*/
+
 .text
 glabel get_size_of_setup_object_type
 /* 08B424 7F0568F4 908E0003 */  lbu   $t6, 3($a0)
@@ -375,6 +398,10 @@ void sub_GAME_7F056A88(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*hack for above*/
+.word object_size_type_2F
+
 .text
 glabel sub_GAME_7F056A88
 /* 08B5B8 7F056A88 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -582,6 +609,49 @@ void sub_GAME_7F056CA0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*hack for below*/
+glabel jpt_7008AE0C
+.word .L7F056EE4
+.word .L7F056EEC
+.word .L7F056EE4
+.word .L7F056EE4
+.word .L7F056EE4
+.word .L7F056EE4
+.word .L7F056EE4
+.word .L7F056EE4
+.word .L7F056EEC
+.word .L7F056EE4
+.word .L7F056EE4
+.word .L7F056EE4
+.word .L7F056EE4
+.word .L7F056EEC
+.word .L7F056EF4
+.word .L7F056EF4
+.word .L7F056EE4
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EE4
+.word .L7F056EE4
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EE4
+.word .L7F056EEC
+.word .L7F056EEC
+.word .L7F056EE4
+
 .text
 glabel sub_GAME_7F056CA0
 /* 08B7D0 7F056CA0 27BDFFB0 */  addiu $sp, $sp, -0x50
@@ -732,6 +802,58 @@ void sub_GAME_7F056EA0(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:8005354C*/
+/*glabel jpt_7008AE0C*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EDC*/
+/*.word .L7F056EDC*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EE4*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EEC*/
+/*.word .L7F056EE4*/
+.word .L7F056EE4
+.word .L7F056EE4
+.word .L7F056EE4
+.word .L7F056EE4
+.word .L7F056EEC
+.word .L7F056EE4
+.word .L7F056EEC
+.word .L7F056EE4
+
+/*D:80053608                     .align 4*/
 .text
 glabel sub_GAME_7F056EA0
 /* 08B9D0 7F056EA0 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -749,10 +871,13 @@ glabel sub_GAME_7F056EA0
 /* 08BA00 7F056ED0 3C018005 */  lui   $at, 0x8005
 /* 08BA04 7F056ED4 002F0821 */  addu  $at, $at, $t7
 /* 08BA08 7F056ED8 8C2F354C */  lw    $t7, 0x354c($at)
+.L7F056EDC:
 /* 08BA0C 7F056EDC 01E00008 */  jr    $t7
 /* 08BA10 7F056EE0 00000000 */   nop   
+.L7F056EE4:
 /* 08BA14 7F056EE4 10000004 */  b     .L7F056EF8
 /* 08BA18 7F056EE8 00601025 */   move  $v0, $v1
+.L7F056EEC:
 /* 08BA1C 7F056EEC 10000002 */  b     .L7F056EF8
 /* 08BA20 7F056EF0 00001025 */   move  $v0, $zero
 def_7F056EDC:

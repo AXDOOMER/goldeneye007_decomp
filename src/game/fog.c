@@ -46,68 +46,68 @@ u8 off_CODE_bss_80082620;
 u8 byte_CODE_bss_80082621;
 u8 byte_CODE_bss_80082622;
 u8 byte_CODE_bss_80082623;
-/*
-        80082624                 ??         ??
-        80082625                 ??         ??
-        80082626                 ??         ??
-        80082627                 ??         ??
-        80082628                 ??         ??
-        80082629                 ??         ??
-        8008262a                 ??         ??
-        8008262b                 ??         ??
-        8008262c                 ??         ??
-        8008262d                 ??         ??
-        8008262e                 ??         ??
-        8008262f                 ??         ??
-        80082630                 ??         ??
-        80082631                 ??         ??
-        80082632                 ??         ??
-        80082633                 ??         ??
-        80082634                 ??         ??
-        80082635                 ??         ??
-        80082636                 ??         ??
-        80082637                 ??         ??
-        80082638                 ??         ??
-        80082639                 ??         ??
-        8008263a                 ??         ??
-        8008263b                 ??         ??
-        8008263c                 ??         ??
-        8008263d                 ??         ??
-        8008263e                 ??         ??
-        8008263f                 ??         ??
-        80082640                 ??         ??
-        80082641                 ??         ??
-        80082642                 ??         ??
-        80082643                 ??         ??
-        80082644                 ??         ??
-        80082645                 ??         ??
-        80082646                 ??         ??
-        80082647                 ??         ??
-        80082648                 ??         ??
-        80082649                 ??         ??
-        8008264a                 ??         ??
-        8008264b                 ??         ??
-        8008264c                 ??         ??
-        8008264d                 ??         ??
-        8008264e                 ??         ??
-        8008264f                 ??         ??
-        80082650                 ??         ??
-        80082651                 ??         ??
-        80082652                 ??         ??
-        80082653                 ??         ??
-        80082654                 ??         ??
-        80082655                 ??         ??
-        80082656                 ??         ??
-        80082657                 ??         ??
-        80082658                 ??         ??
-        80082659                 ??         ??
-        8008265a                 ??         ??
-        8008265b                 ??         ??
-        8008265c                 ??         ??
-        8008265d                 ??         ??
-        8008265e                 ??         ??
-        8008265f                 ??         ??
-*/
+
+u8 byte_CODE_bss_80082624;
+u8 byte_CODE_bss_80082625;
+u8 byte_CODE_bss_80082626;
+u8 byte_CODE_bss_80082627;
+u8 byte_CODE_bss_80082628;
+u8 byte_CODE_bss_80082629;
+u8 byte_CODE_bss_8008262a;
+u8 byte_CODE_bss_8008262b;
+u8 byte_CODE_bss_8008262c;
+u8 byte_CODE_bss_8008262d;
+u8 byte_CODE_bss_8008262e;
+u8 byte_CODE_bss_8008262f;
+u8 byte_CODE_bss_80082630;
+u8 byte_CODE_bss_80082631;
+u8 byte_CODE_bss_80082632;
+u8 byte_CODE_bss_80082633;
+u8 byte_CODE_bss_80082634;
+u8 byte_CODE_bss_80082635;
+u8 byte_CODE_bss_80082636;
+u8 byte_CODE_bss_80082637;
+u8 byte_CODE_bss_80082638;
+u8 byte_CODE_bss_80082639;
+u8 byte_CODE_bss_8008263a;
+u8 byte_CODE_bss_8008263b;
+u8 byte_CODE_bss_8008263c;
+u8 byte_CODE_bss_8008263d;
+u8 byte_CODE_bss_8008263e;
+u8 byte_CODE_bss_8008263f;
+u8 byte_CODE_bss_80082640;
+u8 byte_CODE_bss_80082641;
+u8 byte_CODE_bss_80082642;
+u8 byte_CODE_bss_80082643;
+u8 byte_CODE_bss_80082644;
+u8 byte_CODE_bss_80082645;
+u8 byte_CODE_bss_80082646;
+u8 byte_CODE_bss_80082647;
+u8 byte_CODE_bss_80082648;
+u8 byte_CODE_bss_80082649;
+u8 byte_CODE_bss_8008264a;
+u8 byte_CODE_bss_8008264b;
+u8 byte_CODE_bss_8008264c;
+u8 byte_CODE_bss_8008264d;
+u8 byte_CODE_bss_8008264e;
+u8 byte_CODE_bss_8008264f;
+u8 byte_CODE_bss_80082650;
+u8 byte_CODE_bss_80082651;
+u8 byte_CODE_bss_80082652;
+u8 byte_CODE_bss_80082653;
+u8 byte_CODE_bss_80082654;
+u8 byte_CODE_bss_80082655;
+u8 byte_CODE_bss_80082656;
+u8 byte_CODE_bss_80082657;
+u8 byte_CODE_bss_80082658;
+u8 byte_CODE_bss_80082659;
+u8 byte_CODE_bss_8008265a;
+u8 byte_CODE_bss_8008265b;
+u8 byte_CODE_bss_8008265c;
+u8 byte_CODE_bss_8008265d;
+u8 byte_CODE_bss_8008265e;
+u8 byte_CODE_bss_8008265f;
+
 
 
 // data
@@ -180,10 +180,7 @@ struct fog_element2 fog_tables2[] = {
 };
 
 // rodata
-//D:80058D70
-const f32 default_near_fog = 3.4028235e38;
-//D:80058D74
-const f32 D_80058D74 = 10000.0;
+
 
 
 #ifdef NONMATCHING
@@ -204,57 +201,17 @@ glabel sub_GAME_7F0BA720
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BA72C(void) {
-
+s32 get_ptr_currentdata(void){
+  return ptr_current_data;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BA72C
-/* 0EF25C 7F0BA72C 3C028004 */  lui   $v0, 0x8004
-/* 0EF260 7F0BA730 03E00008 */  jr    $ra
-/* 0EF264 7F0BA734 24424DCC */   addiu $v0, $v0, 0x4dcc
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0BA738(void) {
-
+f32 get_near_fog_value(void) {
+  return near_fog_value;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BA738
-/* 0EF268 7F0BA738 3C018004 */  lui   $at, 0x8004
-/* 0EF26C 7F0BA73C 03E00008 */  jr    $ra
-/* 0EF270 7F0BA740 C4204DC4 */   lwc1  $f0, 0x4dc4($at)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void square_near_fog_value(void) {
-
+f32 square_near_fog_value(void) {
+  return near_fog_value * near_fog_value;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel square_near_fog_value
-/* 0EF274 7F0BA744 3C018004 */  lui   $at, %hi(near_fog_value) # $at, 0x8004
-/* 0EF278 7F0BA748 C4224DC4 */  lwc1  $f2, %lo(near_fog_value)($at)
-/* 0EF27C 7F0BA74C 46021002 */  mul.s $f0, $f2, $f2
-/* 0EF280 7F0BA750 03E00008 */  jr    $ra
-/* 0EF284 7F0BA754 00000000 */   nop   
-)
-#endif
 
 
 
@@ -508,6 +465,11 @@ void load_enviroment(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel default_near_fog
+.word 0x7f7fffff  /*3.4028235e38*/
+glabel D_80058D74
+.word 0x461c4000  /*10000.0*/
 .text
 glabel load_enviroment
 /* 0EF594 7F0BAA64 27BDFFD8 */  addiu $sp, $sp, -0x28
@@ -1019,7 +981,7 @@ glabel sub_GAME_7F0BB070
 /* 0EFC78 7F0BB148 00000000 */   nop   
 /* 0EFC7C 7F0BB14C 0006000D */  break 6
 .L7F0BB150:
-/* 0EFC80 7F0BB150 01000821 */  move  $at, $t0
+/* 0EFC80 7F0BB150 01000821 */  addu  $at, $t0, $zero
 /* 0EFC84 7F0BB154 14C00002 */  bnez  $a2, .L7F0BB160
 /* 0EFC88 7F0BB158 00000000 */   nop   
 /* 0EFC8C 7F0BB15C 0007000D */  break 7
@@ -1083,7 +1045,7 @@ glabel sub_GAME_7F0BB070
 /* 0EFD64 7F0BB234 00000000 */   nop   
 /* 0EFD68 7F0BB238 0006000D */  break 6
 .L7F0BB23C:
-/* 0EFD6C 7F0BB23C 01800821 */  move  $at, $t4
+/* 0EFD6C 7F0BB23C 01800821 */  addu  $at, $t4, $zero
 /* 0EFD70 7F0BB240 14C00002 */  bnez  $a2, .L7F0BB24C
 /* 0EFD74 7F0BB244 00000000 */   nop   
 /* 0EFD78 7F0BB248 0007000D */  break 7
@@ -1214,19 +1176,10 @@ glabel sub_GAME_7F0BB2C8
 
 
 
-#ifdef NONMATCHING
-void return_nearfog_values(void) {
-
+u32 return_nearfog_values(void){
+  return ptr_nearfog_enviroment_values;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel return_nearfog_values
-/* 0EFEC8 7F0BB398 3C028008 */  lui   $v0, 0x8008
-/* 0EFECC 7F0BB39C 03E00008 */  jr    $ra
-/* 0EFED0 7F0BB3A0 8C4225C4 */   lw    $v0, 0x25c4($v0)
-)
-#endif
+
 
 
 

@@ -1,7 +1,7 @@
 #include "ultra64.h"
 
-OSMesg vi_c_debug_MSG;
-OSMesgQueue *vi_c_debug_MQ;
+OSMesg vi_c_debug_MSG[0x8];
+OSMesgQueue vi_c_debug_MQ;
 
 /* wtf is this, should it be split? is it part of debugmenu.? */
 u32 ptr_vi_c_debug_debug_notice_list[] = {
@@ -92,43 +92,18 @@ u32 ptr_vi_c_debug_debug_notice_list[] = {
          0,  0x226900,         0,    0x8B46,    0x8B00,  0x467A00,         0,         0 };
 
 
-const char aVi_c_debug[] = "vi_c_debug";
 
 
 void start_nulled_entry(void) {
     // (function likely void)
 }
 
-
-#ifdef NONMATCHING
 void something_with_vi_c_debug(void)
 {
-    get_ptr_debug_notice_list_entry(&ptr_vi_c_debug_debug_notice_list, &aVi_c_debug);
+    get_ptr_debug_notice_list_entry(&ptr_vi_c_debug_debug_notice_list, "vi_c_debug");
     osCreateMesgQueue(&vi_c_debug_MQ, &vi_c_debug_MSG, 8);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel something_with_vi_c_debug
-/* 00B938 7000AD38 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00B93C 7000AD3C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00B940 7000AD40 3C048002 */  lui   $a0, %hi(ptr_vi_c_debug_debug_notice_list) # $a0, 0x8002
-/* 00B944 7000AD44 3C058003 */  lui   $a1, %hi(aVi_c_debug) # $a1, 0x8003
-/* 00B948 7000AD48 24A59200 */  addiu $a1, %lo(aVi_c_debug) # addiu $a1, $a1, -0x6e00
-/* 00B94C 7000AD4C 0C001398 */  jal   get_ptr_debug_notice_list_entry
-/* 00B950 7000AD50 24844500 */   addiu $a0, %lo(ptr_vi_c_debug_debug_notice_list) # addiu $a0, $a0, 0x4500
-/* 00B954 7000AD54 3C048006 */  lui   $a0, %hi(vi_c_debug_MQ) # $a0, 0x8006
-/* 00B958 7000AD58 3C058006 */  lui   $a1, %hi(vi_c_debug_MSG) # $a1, 0x8006
-/* 00B95C 7000AD5C 24A54EF0 */  addiu $a1, %lo(vi_c_debug_MSG) # addiu $a1, $a1, 0x4ef0
-/* 00B960 7000AD60 24844F10 */  addiu $a0, %lo(vi_c_debug_MQ) # addiu $a0, $a0, 0x4f10
-/* 00B964 7000AD64 0C0035B4 */  jal   osCreateMesgQueue
-/* 00B968 7000AD68 24060008 */   li    $a2, 8
-/* 00B96C 7000AD6C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00B970 7000AD70 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00B974 7000AD74 03E00008 */  jr    $ra
-/* 00B978 7000AD78 00000000 */   nop   
-)
-#endif
+
 
 
 

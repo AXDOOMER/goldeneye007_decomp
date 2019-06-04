@@ -1,11 +1,62 @@
 #include "ultra64.h"
+/*   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    | Snippet of building glist buffers   |
+    |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
 
+== H file ==
+#define	GLIST_LEN	2048 // GE seems to be 266
 
+/*
+ * Layout of dynamic data.
+ *
+ * This structure holds the things which change per frame. It is advantageous
+ * to keep dynamic data together so that we may selectively write back dirty
+ * data cache lines to DRAM prior to processing by the RCP.
+ *
+ * /
+typedef struct {
+	Mtx	projection;
+	Mtx	modeling;
+	Mtx	modeling2;
+	Mtx	viewing;
+	LookAt	lookat;
+	Hilite	hilite;
+	Lightsn	light;          //Oh interesting, since we found this and LookAt, it seems dynamic gfx should astart right after.
+	Gfx	glist[GLIST_LEN];
+} Dynamic;
+
+extern Dynamic	dynamic;
+
+== H file End ==
+
+/*
+ * global variables
+ *
+Gfx		*glistp;	/* RSP display list pointer * /
+//Dynamic		dynamic;	/* dynamic data * /
+/ *
+ * Double-buffered dynamic segments
+ * /
+Dynamic	dynamic[2];
+...
+
+// some function()
+{
+    ...
+    int		current = 0;
+    dynamicp = &dynamic[current];
+    glistp = dynamicp->glist;
+    //example gfx build
+    gSPSegment(glistp++, 0, 0x0); // glist++ ready for next instruction (held in dynamic 1 or 2)
+}
+*/
+    
 /* tempory types confirm me */
-s32 dword_CODE_bss_8005F3F0[4];
-s32 displaylist_0[0x214];
-s32 displaylist_1[0x214];
-s32 displaylist_bank;
+s32 dword_CODE_bss_8005F3F0[4]; //Gfx Tiles_Setup? oh... unless thats what the next 2 are... the first command I recognised did start at 8005f400...
+// dynamic glist, though it lacks the format above...
+Gfx displaylist_0[266];
+Gfx displaylist_1[266];
+s32 displaylist_bank; //0 or 1? current?
 s32 dword_CODE_bss_800604A4;
 u32 dword_CODE_bss_800604A8;
 u32 dword_CODE_bss_800604AC;
@@ -30,7 +81,7 @@ s32 D_80023224 = 0;
 s32 D_80023228 = 0;
 s32 D_8002322C = 0;
 s32 counterforframes = 0;
-s32 D_80023234[] = { 1, 0, 0, 0 };
+s32 D_80023234 = 1;
 
 
 //GLOBAL_ASM(
@@ -55,10 +106,8 @@ void displaylist_related(void)
     void *phi_v1;
     void *phi_v0;
 
-    displaylist_0 = 0xb8000000;
-    displaylist_0.unk4 = 0;
-    displaylist_0.unk850 = 0xb8000000;
-    displaylist_0.unk854 = 0;
+    gSPEndDisplayList(displaylist_0++);
+    displaylist_0.unk850 = 0xb800000000000000; //? is this not dlist2?
     displaylist_bank = 0;
     phi_v1 = &dword_CODE_bss_800607B0;
     phi_v0 = &dword_CODE_bss_800607D0;
@@ -920,9 +969,9 @@ glabel video_DL_related_4
 /* 003A80 70002E80 1420003C */  bnez  $at, .L70002F74
 /* 003A84 70002E84 0203082B */   sltu  $at, $s0, $v1
 /* 003A88 70002E88 1420003A */  bnez  $at, .L70002F74
-/* 003A8C 70002E8C 3C198002 */   lui   $t9, %hi(D_800231D4+4) # $t9, 0x8002
+/* 003A8C 70002E8C 3C198002 */   lui   $t9, %hi(D_800231D4) # $t9, 0x8002
 /* 003A90 70002E90 8E820000 */  lw    $v0, ($s4)
-/* 003A94 70002E94 273931D4 */  addiu $t9, %lo(D_800231D4+4) # addiu $t9, $t9, 0x31d4
+/* 003A94 70002E94 273931D4 */  addiu $t9, %lo(D_800231D4) # addiu $t9, $t9, 0x31d4
 /* 003A98 70002E98 02034823 */  subu  $t1, $s0, $v1
 /* 003A9C 70002E9C 12C2000F */  beq   $s6, $v0, .L70002EDC
 /* 003AA0 70002EA0 00027900 */   sll   $t7, $v0, 4

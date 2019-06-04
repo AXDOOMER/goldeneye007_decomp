@@ -18,80 +18,16 @@ u16 loaded_text_index[] = {
 };
 
 //rodata
+/*8005BC20*/
 const char ascii_MP_watch_menu_percentd[] = "%d";
-const char ascii_MP_watch_menu_BLANK[] = 0;
+const char ascii_MP_watch_menu_BLANK[] = "";
 const char ascii_MP_watch_menu_left_chevron[] = "<";
 const char ascii_MP_watch_menu_right_chevron[] = ">";
 const char ascii_pnum_KILLS[] = "%s%d %s";
 const char ascii_pnum_LOSSES[] = "%s%d %s";
-/* rodata
-D:8005BC40     jpt_MP_menu_page_adv_right:.word page_adv_right_yes
-D:8005BC40                                              # DATA XREF: check_can_advance_right_on_mpmenu+1Cr
-D:8005BC40                     .word page_adv_right_yes  # jump table for switch statement
-D:8005BC40                     .word page_adv_right_yes
-D:8005BC40                     .word page_adv_right_gameover
-D:8005BC40                     .word page_adv_right_yes
-D:8005BC40                     .word page_adv_right_no
-D:8005BC40                     .word page_adv_right_no
-D:8005BC40                     .word page_adv_right_no
-D:8005BC60     jpt_MP_menu_page_adv_left:.word page_adv_left_no
-D:8005BC60                                              # DATA XREF: check_can_advance_left_on_mpmenu+1Cr
-D:8005BC60                     .word page_adv_left_gameover  # jump table for switch statement
-D:8005BC60                     .word page_adv_left_yes
-D:8005BC60                     .word page_adv_left_yes
-D:8005BC60                     .word page_adv_left_yes
-D:8005BC60                     .word page_adv_left_yes
-D:8005BC60                     .word page_adv_left_no
-D:8005BC60                     .word page_adv_left_no
-*/
-//D:8005BC80
-const f32 D_8005BC80 = 216000.0;
-//D:8005BC84
-const f32 D_8005BC84 =  100000.0;
-/*
-D:8005BC88     jpt_MP_overlays_scoring_scenario_0:.word green_text_normal
-D:8005BC88                                              # DATA XREF: display_text_for_playerdata_on_MP_menu+80r
-D:8005BC88                     .word green_text_highlighted  # jump table for switch statement
-D:8005BC88                     .word red_text_normal
-D:8005BC88                     .word red_text_highlighted
-D:8005BC88                     .word blue_text_normal
-D:8005BC88                     .word blue_text_highlighted
-D:8005BCA0     jpt_MP_overlays_scoring:.word num_player_kills
-D:8005BCA0                                              # DATA XREF: get_points_for_mp_player+68r
-D:8005BCA0                     .word num_deaths         # jump table for switch statement
-D:8005BCA0                     .word time_with_flag
-D:8005BCA0                     .word num_player_kills
-D:8005BCA0                     .word num_player_kills
-D:8005BCA0                     .word team_player_kills
-D:8005BCA0                     .word team_player_kills
-D:8005BCA0                     .word team_player_kills
-D:8005BCC0     jpt_MP_overlays_scoring_scenario_1:.word not_yolt
-D:8005BCC0                                              # DATA XREF: true_if_displaying_rank_in_mp+1Cr
-D:8005BCC0                     .word yolt               # jump table for switch statement
-D:8005BCC0                     .word not_yolt
-D:8005BCC0                     .word not_yolt
-D:8005BCC0                     .word not_yolt
-D:8005BCC0                     .word not_yolt
-D:8005BCC0                     .word not_yolt
-D:8005BCC0                     .word not_yolt
-D:8005BCE0     jpt_MP_overlays_scoring_scenario_2:.word not_yolt_tld
-D:8005BCE0                                              # DATA XREF: true_if_displaying_score_in_mp+1Cr
-D:8005BCE0                     .word yolt_tld           # jump table for switch statement
-D:8005BCE0                     .word yolt_tld
-D:8005BCE0                     .word not_yolt_tld
-D:8005BCE0                     .word not_yolt_tld
-D:8005BCE0                     .word not_yolt_tld
-D:8005BCE0                     .word not_yolt_tld
-D:8005BCE0                     .word not_yolt_tld
-D:8005BD00     jpt_MP_menu_window_text:.word text_play  # DATA XREF: mp_watch_menu_display+90r
-D:8005BD00                     .word text_play          # jump table for switch statement
-D:8005BD00                     .word text_play
-D:8005BD00                     .word text_play
-D:8005BD00                     .word text_pause_unpause
-D:8005BD00                     .word text_exit
-D:8005BD00                     .word text_exit
-D:8005BD00                     .word text_blank
-*/
+
+// rodata
+
 
 #ifdef NONMATCHING
 void check_can_advance_right_on_mpmenu(void) {
@@ -99,6 +35,17 @@ void check_can_advance_right_on_mpmenu(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:8005BC40*/
+glabel jpt_MP_menu_page_adv_right
+.word page_adv_right_yes
+.word page_adv_right_yes
+.word page_adv_right_yes
+.word page_adv_right_gameover
+.word page_adv_right_yes
+.word page_adv_right_no
+.word page_adv_right_no
+.word page_adv_right_no
 .text
 glabel check_can_advance_right_on_mpmenu
 /* 0F6950 7F0C1E20 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008
@@ -150,6 +97,18 @@ void check_can_advance_left_on_mpmenu(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:8005BC60*/
+glabel jpt_MP_menu_page_adv_left
+.word page_adv_left_no
+.word page_adv_left_gameover
+.word page_adv_left_yes
+.word page_adv_left_yes
+.word page_adv_left_yes
+.word page_adv_left_yes
+.word page_adv_left_no
+.word page_adv_left_no
+
 .text
 glabel check_can_advance_left_on_mpmenu
 /* 0F69BC 7F0C1E8C 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008
@@ -866,6 +825,11 @@ void sub_GAME_7F0C2530(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8005BC80
+.word 0x4852f000 /*216000.0*/
+glabel D_8005BC84
+.word 0x47c35000 /*100000.0*/
 .text
 glabel sub_GAME_7F0C2530
 /* 0F7060 7F0C2530 27BDFE98 */  addiu $sp, $sp, -0x168
@@ -885,7 +849,7 @@ glabel sub_GAME_7F0C2530
 /* 0F7098 7F0C2568 0040F025 */   move  $fp, $v0
 /* 0F709C 7F0C256C 0C002449 */  jal   music_related_30
 /* 0F70A0 7F0C2570 00408025 */   move  $s0, $v0
-/* 0F70A4 7F0C2574 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F70A4 7F0C2574 0FC3030F */  jal   set_missionstate
 /* 0F70A8 7F0C2578 00002025 */   move  $a0, $zero
 /* 0F70AC 7F0C257C 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F70B0 7F0C2580 00000000 */   nop   
@@ -2034,6 +1998,16 @@ void display_text_for_playerdata_on_MP_menu(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:8005BC88*/
+glabel jpt_MP_overlays_scoring_scenario_0
+.word green_text_normal
+.word green_text_highlighted
+.word red_text_normal
+.word red_text_highlighted
+.word blue_text_normal
+.word blue_text_highlighted
+
 .text
 glabel display_text_for_playerdata_on_MP_menu
 /* 0F80D0 7F0C35A0 27BDFFA0 */  addiu $sp, $sp, -0x60
@@ -2263,6 +2237,18 @@ void get_points_for_mp_player(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:8005BCA0*/
+glabel jpt_MP_overlays_scoring
+.word num_player_kills
+.word num_deaths
+.word time_with_flag
+.word num_player_kills
+.word num_player_kills
+.word team_player_kills
+.word team_player_kills
+.word team_player_kills
+
 .text
 glabel get_points_for_mp_player
 /* 0F8408 7F0C38D8 000470C0 */  sll   $t6, $a0, 3
@@ -2769,6 +2755,17 @@ void true_if_displaying_rank_in_mp(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:8005BCC0*/
+glabel jpt_MP_overlays_scoring_scenario_1
+.word not_yolt
+.word yolt
+.word not_yolt
+.word not_yolt
+.word not_yolt
+.word not_yolt
+.word not_yolt
+.word not_yolt
 .text
 glabel true_if_displaying_rank_in_mp
 /* 0F8A8C 7F0C3F5C 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -2818,6 +2815,17 @@ void true_if_displaying_score_in_mp(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:8005BCE0*/
+glabel jpt_MP_overlays_scoring_scenario_2
+.word not_yolt_tld
+.word yolt_tld
+.word yolt_tld
+.word not_yolt_tld
+.word not_yolt_tld
+.word not_yolt_tld
+.word not_yolt_tld
+/*.word not_yolt_tld*/
 .text
 glabel true_if_displaying_score_in_mp
 /* 0F8AFC 7F0C3FCC 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -2860,6 +2868,21 @@ void mp_watch_menu_display(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*jtbl hacks*/
+.word not_yolt_tld
+
+/*D:8005BD00*/
+glabel jpt_MP_menu_window_text
+.word text_play
+.word text_play
+.word text_play
+.word text_play
+.word text_pause_unpause
+.word text_exit
+.word text_exit
+.word text_blank
+
 .text
 glabel mp_watch_menu_display
 /* 0F8B54 7F0C4024 27BDFF28 */  addiu $sp, $sp, -0xd8
@@ -4407,7 +4430,7 @@ def_7F0C40C0:
 /* 0FA23C 7F0C570C 10000019 */  b     .L7F0C5774
 /* 0FA240 7F0C5710 00408825 */   move  $s1, $v0
 .L7F0C5714:
-/* 0FA244 7F0C5714 8D6BA070 */  lw    $t3, %lo(player3_player_data + 0x30)($t3)
+/* 0FA244 7F0C5714 8D6BA070 */  lw    $t3, %lo(player4_player_data+0x30)($t3)
 /* 0FA248 7F0C5718 8FAD00D4 */  lw    $t5, 0xd4($sp)
 /* 0FA24C 7F0C571C 3C188008 */  lui   $t8, %hi(player1_player_data) # $t8, 0x8008
 /* 0FA250 7F0C5720 19600014 */  blez  $t3, .L7F0C5774

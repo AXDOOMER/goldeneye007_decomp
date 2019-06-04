@@ -161,43 +161,13 @@ glabel sub_GAME_7F0C0B4C
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0C0BE4(s32 arg0) {
     D_800484B4 = arg0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C0BE4
-/* 0F5714 7F0C0BE4 3C018005 */  lui   $at, %hi(D_800484B4)
-/* 0F5718 7F0C0BE8 03E00008 */  jr    $ra
-/* 0F571C 7F0C0BEC AC2484B4 */   sw    $a0, %lo(D_800484B4)($at)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0C0BF0(void) {
     sub_GAME_7F0A9358();
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C0BF0
-/* 0F5720 7F0C0BF0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5724 7F0C0BF4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5728 7F0C0BF8 0FC2A4D6 */  jal   sub_GAME_7F0A9358
-/* 0F572C 7F0C0BFC 00000000 */   nop   
-/* 0F5730 7F0C0C00 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F5734 7F0C0C04 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5738 7F0C0C08 03E00008 */  jr    $ra
-/* 0F573C 7F0C0C0C 00000000 */   nop   
-)
-#endif
 
 

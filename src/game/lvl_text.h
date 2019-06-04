@@ -3,7 +3,7 @@
 #include "ultra64.h"
 
 struct stringentry {
-    void *string;
+    char *string[];
 };
 
 #endif

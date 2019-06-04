@@ -8,6 +8,7 @@ IRIX_ROOT := tools/irix/root
 FINAL := YES
 VERSION := US
 TOOLCHAIN := mips-linux-gnu-
+COMPARE := 1
 
 BUILD_DIR := build
 BUILD_SUB_DIRS := \
@@ -61,13 +62,13 @@ BOOTOBJECTS := build/boot.o build/cfb.o
 BOOTSEGMENT := bootsegment.o
 
 CODEFILES := init.c sched.c osMapTLB.c tlb_manage.c tlb_random.c tlb_resolve.c tlb_hardware.c audi.c \
-			   speed_graph.c video.c deb.c debug_getlastRA.c ramrom.c boss.c music.c \
+			   speed_graph.c video.c deb.c debug_stuff_split.c debug_getlastRA.c ramrom.c boss.c music.c \
 			   sfx.c memp.c mema.c random.c token.c stringhandler.c sprintf.c pi.c vi.c \
-			   debugmenu.c joy.c joy_rumble.c rmon.c
+			   debugmenu.c joy.c joy_rumble.c rmon.c c_data_filler.c
 CODEOBJECTS := build/init.o build/sched.o build/osMapTLB.o build/tlb_manage.o build/tlb_random.o build/tlb_resolve.o build/tlb_hardware.o build/audi.o \
-			   build/speed_graph.o build/video.o build/deb.o build/debug_getlastRA.o build/ramrom.o build/boss.o build/music.o \
+			   build/speed_graph.o build/video.o build/deb.o build/debug_stuff_split.o build/debug_getlastRA.o build/ramrom.o build/boss.o build/music.o \
 			   build/sfx.o build/memp.o build/mema.o build/random.o build/token.o build/stringhandler.o build/sprintf.o build/pi.o build/vi.o \
-			   build/debugmenu.o build/joy.o build/joy_rumble.o build/rmon.o
+			   build/debugmenu.o build/joy.o build/joy_rumble.o build/rmon.o build/c_data_filler.o
 CODESEGMENT := codesegment.o
 
 #ULTRAFILES := libultra/pirawstartdma.c libultra/pigetstatus.c libultra/initialize.c libultra/writebackdcacheall.c \
@@ -80,6 +81,7 @@ CODESEGMENT := codesegment.o
 #			  libultra/
 #ULTRAOBJECTS :=
 #ULTRASEGMENT := libultra.a
+LIBULTRA := lib/libultra_rom.a
 ULTRAFILES := libultra/libultra.s
 ULTRAOBJECTS := build/libultra/libultra.o
 
@@ -96,11 +98,11 @@ GAMEFILES := game/initgamedata.c game/initweaponanigroups.c game/initactorpropst
 			game/intro_logos.c game/mainmenu.c game/unk_01B0E0.c game/unk_01B240.c game/unk_01BAE0.c game/blood_animation.c \
 			game/blood_decrypt.c game/eeprom.c game/actor.c game/actionblock.c game/loadobjectmodel.c game/objective_status.c \
 			game/sin.c game/unk_057FD0.c game/unk_05A9E0.c game/convertangleusinginverse.c game/unk_05AB70.c game/unk_05ACB0.c \
-			game/unk_05AE00.c game/unk_05B1E0.c game/truncf.c game/unk_05C440.c game/bondview.c game/objecthandler.c \
+			game/unk_05AE00.c game/unk_05B1E0.c game/truncf.c game/unk_05C440.c game/bondview.c game/objecthandler.c game/objecthandler_2.c \
 			game/othermodemicrocode.c game/bond.c game/unk_08DBB0.c game/debugmenu_08FE00.c game/debugmenu_090490.c game/unk_091080.c \
 			game/cheat_buttons_objectrelated.c game/unk_092890.c game/unk_092E50.c game/unk_093880.c game/unk_09B600.c game/unk_09B740.c \
 			game/unk_09B7A0.c game/unk_09C250.c game/unk_0A1DA0.c game/watch.c game/textrelated.c game/stan.c game/unk_0B3200.c \
-			game/bg.c game/fog.c game/lightfixture.c game/unk_0BC530.c game/ob.c game/dyn.c game/lvl.c game/unk_0C0A70.c \
+			game/bg.c game/fog.c game/lightfixture.c game/unk_0BC530.c game/ob.c game/dyn.c game/lvl.c game/lvl_2.c game/unk_0C0A70.c \
 			game/mp_music.c game/lvl_text.c game/mp_watch.c game/radar.c game/mp_weapon.c game/image.c game/image_bank.c \
 			game/unk_0CC4C0.c game/decompress.c game/zlib.c game/rsp.c game/indy_comms.c game/indy_0D0180.c game/game_debug.c \
 			game/compiletime.c game/unk_0D1AC0.c game/viewport.c game/music_0D2720.c game/spectrum.c
@@ -121,18 +123,37 @@ GAMEOBJECTS := build/game/initgamedata.o build/game/initweaponanigroups.o build/
 			build/game/actor.o build/game/actionblock.o build/game/loadobjectmodel.o build/game/objective_status.o \
 			build/game/sin.o build/game/unk_057FD0.o build/game/unk_05A9E0.o build/game/convertangleusinginverse.o \
 			build/game/unk_05AB70.o build/game/unk_05ACB0.o build/game/unk_05AE00.o build/game/unk_05B1E0.o \
-			build/game/truncf.o build/game/unk_05C440.o build/game/bondview.o build/game/objecthandler.o \
+			build/game/truncf.o build/game/unk_05C440.o build/game/bondview.o build/game/objecthandler.o build/game/objecthandler_2.o \
 			build/game/othermodemicrocode.o build/game/bond.o build/game/unk_08DBB0.o build/game/debugmenu_08FE00.o build/game/debugmenu_090490.o \
 			build/game/unk_091080.o build/game/cheat_buttons_objectrelated.o build/game/unk_092890.o build/game/unk_092E50.o \
 			build/game/unk_093880.o build/game/unk_09B600.o build/game/unk_09B740.o build/game/unk_09B7A0.o \
 			build/game/unk_09C250.o build/game/unk_0A1DA0.o build/game/watch.o build/game/textrelated.o build/game/stan.o \
 			build/game/unk_0B3200.o build/game/bg.o build/game/fog.o build/game/lightfixture.o build/game/unk_0BC530.o \
-			build/game/ob.o build/game/dyn.o build/game/lvl.o build/game/unk_0C0A70.o build/game/mp_music.o \
+			build/game/ob.o build/game/dyn.o build/game/lvl.o build/game/lvl_2.o build/game/unk_0C0A70.o build/game/mp_music.o \
 			build/game/lvl_text.o build/game/mp_watch.o build/game/radar.o build/game/mp_weapon.o build/game/image.o \
 			build/game/image_bank.o build/game/unk_0CC4C0.o build/game/decompress.o build/game/zlib.o build/game/rsp.o \
 			build/game/indy_comms.o build/game/indy_0D0180.o build/game/game_debug.o build/game/compiletime.o \
 			build/game/unk_0D1AC0.o build/game/viewport.o build/game/music_0D2720.o build/game/spectrum.o
 GAMESEGMENT := gamesegment.o
+
+ROMFILES := assets/romfiles.s
+ROMOBJECTS := build/assets/romfiles.o
+
+
+RAMROM_FILES := assets/ramrom/ramrom.s
+RAMROM_OBJECTS := build/assets/ramrom/ramrom.o
+
+FONT_FILES := assets/font/font.s
+FONT_OBJECTS := build/assets/font/font.o
+
+MUSIC_FILES := assets/music/music.s
+MUSIC_OBJECTS := build/assets/music/music.o
+
+OBSEG_FILES := assets/obseg/ob_seg.s
+OBSEG_OBJECTS := build/assets/obseg/ob_seg.o
+
+IMAGES_FILES := assets/images/images.s
+IMAGES_OBJECTS := build/assets/images/images.o
 
 RZFILES := rarezip/rarezip.c
 RZOBJECTS := build/rarezip/rarezip.o
@@ -141,7 +162,7 @@ RZSEGMENT := rzsegment.o
 #DATAFILES := static.c zbuffer.c cfb.c
 #DATAOBJECTS := $(DATAFILES:.c=.o)
 
-OBJECTS := $(BOOTSEGMENT) $(CODESEGMENT) $(GAMESEGMENT) $(RZSEGMENT) $(OBSEGMENT)
+OBJECTS := $(BOOTSEGMENT) $(CODESEGMENT) $(GAMESEGMENT) $(RZSEGMENT) $(OBSEGMENT) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGES_OBJECTS)
 
 # other tools
 TOOLS_DIR := tools
@@ -149,11 +170,12 @@ DATASEG_COMP := $(TOOLS_DIR)/data_compress.sh
 RZ_COMP := $(TOOLS_DIR)/1172compress.sh
 N64CKSUM := $(TOOLS_DIR)/n64cksum
 MAKEBG := $(TOOLS_DIR)/makebg.sh
+SHA1SUM = sha1sum
 
-INCLUDE := -I include -I include/libultra -I src -I src/game -I src/rarezip
+INCLUDE := -I . -I include -I include/libultra -I src -I src/game -I src/rarezip
 
 CC := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
-CFLAGS := -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm -fullwarn -wlint -woff 819,820,852,821 -signed $(INCLUDE) -mips2
+CFLAGS := -Wo,-loopunroll,0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm -fullwarn -wlint -woff 819,820,852,821 -signed $(INCLUDE) -mips2
 
 LD := $(TOOLCHAIN)ld
 LD_SCRIPT := ge007.$(COUNTRYCODE).ld
@@ -165,13 +187,22 @@ ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 
 OBJCOPY := $(TOOLCHAIN)objcopy
 
+all: $(APPROM)
+ifeq ($(COMPARE),1)
+	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1
+endif
+
 default:	$(APPROM)
 
 clean:
 	rm -f $(BUILD_DIR)/ge007.$(COUNTRYCODE).map $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
-	$(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) \
-	$(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES) \
+	$(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS)\
+	$(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) $(IMAGES_OBJECTS)\
 	$(MUSIC_RZ_FILES)
+	git checkout build/assets/obseg/setup/UsetuparchZ.rz
+	git checkout build/assets/obseg/setup/UsetupjunZ.rz
+	git checkout build/assets/obseg/setup/UsetupsevbZ.rz
+	git checkout build/assets/obseg/text/LcradE.rz
 
 install: default
 		$(INSTALL) -m 444 -F /usr/src/PR/ge007 \
@@ -181,11 +212,26 @@ install: default
 build/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
+build/assets/%.o: assets/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
+build/assets/ramrom/%.o: assets/ramrom/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
+build/assets/font/%.o: assets/font/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
+build/assets/obseg/%.o: assets/obseg/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
+build/assets/images/%.o: assets/images/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
 build/%.o: src/%.c
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
 
-build/$(OBSEGMENT): $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES)
+build/$(OBSEGMENT): $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES) $(IMAGES_OBJECTS)
 	
 #build/$(BOOTSEGMENT): $(BOOTOBJECTS)
 #	$(LD) -o build/$(BOOTSEGMENT) -r $(BOOTOBJECTS)
@@ -196,12 +242,12 @@ build/$(OBSEGMENT): $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FI
 #build/$(RZSEGMENT): $(RZOBJECTS)
 #	$(LD) -o build/$(RZSEGMENT) -r $(RZOBJECTS)
 
-$(APPELF): $(ULTRAOBJECTS) $(HEADEROBJECTS) build/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS)
+$(APPELF): $(ULTRAOBJECTS) $(HEADEROBJECTS) build/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
 	$(LD) $(LDFLAGS) -o $@ 
 
 $(APPBIN): $(APPELF)
-	$(OBJCOPY) $< $@ -O binary
-
+	$(OBJCOPY) $< $@ -O binary --gap-fill=0xff
+	
 $(APPROM):	$(APPBIN)
 	$(DATASEG_COMP) $<
 	$(N64CKSUM) $< $@

@@ -2,10 +2,6 @@
 
 
 // rodata
-const f32 D_8005BD20 = 3.1415927;
-const f32 D_8005BD24 = 0.017453292;
-
-
 
 
 #ifdef NONMATCHING
@@ -14,6 +10,11 @@ void display_red_blue_on_radar(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8005BD20
+.word 0x40490fdb /*3.1415927*/
+glabel D_8005BD24
+.word 0x3c8efa35 /*0.017453292*/
 .text
 glabel display_red_blue_on_radar
 /* 0FABC0 7F0C6090 27BDFF78 */  addiu $sp, $sp, -0x88

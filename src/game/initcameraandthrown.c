@@ -2,33 +2,10 @@
 
 
 /*rodata
-const void *projectile_ptr_table[] = {
-throwingknife, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, default,
-grenade_launch_round, rocket,
-grenade, timed_mine,
-prox_mine, remote_mine,
-default, default,
-rocket_0, bombcase,
-plastique, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, default,
-default, bug,
-microcamera };
 
-default_zoom_speed:.float 0.90909088
+*/
 
+/*
 jpt_700399A4:   .word spawn_point
                 .word weapon
                 .word ammo
@@ -38,13 +15,9 @@ jpt_700399A4:   .word spawn_point
                 .word fixed_cam
                 .word watch_time
                 .word credits
+*/
 
-flt_D_8004F1D0: .float -0.000099999997
-flt_D_8004F1D4: .float 6.2831855
-flt_D_8004F1D8: .float 6.2831855
-flt_D_8004F1DC: .float 0.17000002
-flt_D_8004F1E0: .float 0.10000002
-                .align 4
+/*                .align 4
 */
 
 // data
@@ -66,6 +39,7 @@ void set_weapon_model_generated_thrown_object(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
 .text
 glabel set_weapon_model_generated_thrown_object
 /* 03A240 7F005710 248EFFFD */  addiu $t6, $a0, -3
@@ -139,6 +113,81 @@ void load_camera_intro_type_values(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel projectile_ptr_table
+.word throwingknife
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word grenade_launch_round
+.word rocket
+.word grenade
+.word timed_mine
+.word prox_mine
+.word remote_mine
+.word default
+.word default
+.word rocket_0
+.word bombcase
+.word plastique
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word default
+.word bug
+.word microcamera
+
+
+/*8004f1a8*/
+glabel default_zoom_speed
+.word 0x3f68ba2e
+
+glabel jpt_700399A4
+    .word spawn_point
+    .word weapon
+    .word ammo
+    .word swirling_intro_cam
+    .word intro_ani
+    .word cuff_char
+    .word fixed_cam
+    .word watch_time
+    .word credits
+
+glabel D_8004F1D0
+.word 0xb8d1b717
+glabel D_8004F1D4
+.word 0x40c90fdb
+glabel D_8004F1D8
+.word 0x40c90fdb
+glabel D_8004F1DC
+.word 0x3e2e147c
+glabel D_8004F1E0
+.word 0x3dccccd0
 .text
 glabel load_camera_intro_type_values
 /* 03A2F4 7F0057C4 27BDFF68 */  addiu $sp, $sp, -0x98
@@ -158,8 +207,8 @@ glabel load_camera_intro_type_values
 /* 03A32C 7F0057FC ADC80004 */  sw    $t0, 4($t6)
 /* 03A330 7F005800 3C118003 */  lui   $s1, %hi(resolution) # $s1, 0x8003
 /* 03A334 7F005804 ADC10008 */  sw    $at, 8($t6)
-/* 03A338 7F005808 3C018003 */  lui   $at, %hi(mission_kia) # $at, 0x8003
-/* 03A33C 7F00580C AC20A928 */  sw    $zero, %lo(mission_kia)($at)
+/* 03A338 7F005808 3C018003 */  lui   $at, %hi(mission_kia_flag) # $at, 0x8003
+/* 03A33C 7F00580C AC20A928 */  sw    $zero, %lo(mission_kia_flag)($at)
 /* 03A340 7F005810 3C018003 */  lui   $at, %hi(camera_80036424) # $at, 0x8003
 /* 03A344 7F005814 3C108007 */  lui   $s0, %hi(ptr_setup_intro) # $s0, 0x8007
 /* 03A348 7F005818 AC206424 */  sw    $zero, %lo(camera_80036424)($at)
@@ -209,8 +258,8 @@ glabel load_camera_intro_type_values
 /* 03A3F4 7F0058C4 AC206444 */  sw    $zero, %lo(D_80036444)($at)
 /* 03A3F8 7F0058C8 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079C68) # $at, 0x8008
 /* 03A3FC 7F0058CC AC209C68 */  sw    $zero, %lo(dword_CODE_bss_80079C68)($at)
-/* 03A400 7F0058D0 3C018003 */  lui   $at, %hi(D_80036448) # $at, 0x8003
-/* 03A404 7F0058D4 AC206448 */  sw    $zero, %lo(D_80036448)($at)
+/* 03A400 7F0058D0 3C018003 */  lui   $at, %hi(in_tank_flag) # $at, 0x8003
+/* 03A404 7F0058D4 AC206448 */  sw    $zero, %lo(in_tank_flag)($at)
 /* 03A408 7F0058D8 3C018003 */  lui   $at, %hi(D_8003644C) # $at, 0x8003
 /* 03A40C 7F0058DC AC20644C */  sw    $zero, %lo(D_8003644C)($at)
 /* 03A410 7F0058E0 44808000 */  mtc1  $zero, $f16
@@ -259,17 +308,17 @@ glabel load_camera_intro_type_values
 /* 03A4BC 7F00598C 3C018003 */  lui   $at, %hi(D_800364B0) # $at, 0x8003
 /* 03A4C0 7F005990 240D0001 */  li    $t5, 1
 /* 03A4C4 7F005994 AC2D64B0 */  sw    $t5, %lo(D_800364B0)($at)
-/* 03A4C8 7F005998 3C018003 */  lui   $at, %hi(D_800364B4) # $at, 0x8003
-/* 03A4CC 7F00599C AC2064B4 */  sw    $zero, %lo(D_800364B4)($at)
-/* 03A4D0 7F0059A0 3C018003 */  lui   $at, %hi(D_80036494) # $at, 0x8003
-/* 03A4D4 7F0059A4 AC206494 */  sw    $zero, %lo(D_80036494)($at)
+/* 03A4C8 7F005998 3C018003 */  lui   $at, %hi(disable_player_pickups_flag) # $at, 0x8003
+/* 03A4CC 7F00599C AC2064B4 */  sw    $zero, %lo(disable_player_pickups_flag)($at)
+/* 03A4D0 7F0059A0 3C018003 */  lui   $at, %hi(cameramode) # $at, 0x8003
+/* 03A4D4 7F0059A4 AC206494 */  sw    $zero, %lo(cameramode)($at)
 /* 03A4D8 7F0059A8 3C018003 */  lui   $at, %hi(D_80036498) # $at, 0x8003
 /* 03A4DC 7F0059AC AC206498 */  sw    $zero, %lo(D_80036498)($at)
 /* 03A4E0 7F0059B0 3C018003 */  lui   $at, %hi(D_8003649C) # $at, 0x8003
 /* 03A4E4 7F0059B4 AC20649C */  sw    $zero, %lo(D_8003649C)($at)
 /* 03A4E8 7F0059B8 44805000 */  mtc1  $zero, $f10
-/* 03A4EC 7F0059BC 3C018003 */  lui   $at, %hi(D_800364A0) # $at, 0x8003
-/* 03A4F0 7F0059C0 AC2064A0 */  sw    $zero, %lo(D_800364A0)($at)
+/* 03A4EC 7F0059BC 3C018003 */  lui   $at, %hi(stop_time_flag) # $at, 0x8003
+/* 03A4F0 7F0059C0 AC2064A0 */  sw    $zero, %lo(stop_time_flag)($at)
 /* 03A4F4 7F0059C4 3C018003 */  lui   $at, %hi(D_800364A4) # $at, 0x8003
 /* 03A4F8 7F0059C8 E42A64A4 */  swc1  $f10, %lo(D_800364A4)($at)
 /* 03A4FC 7F0059CC 3C018003 */  lui   $at, %hi(D_800364A8) # $at, 0x8003
@@ -283,17 +332,17 @@ glabel load_camera_intro_type_values
 /* 03A51C 7F0059EC AC2064B8 */  sw    $zero, %lo(D_800364B8)($at)
 /* 03A520 7F0059F0 3C018003 */  lui   $at, %hi(D_800364BC) # $at, 0x8003
 /* 03A524 7F0059F4 AC2064BC */  sw    $zero, %lo(D_800364BC)($at)
-/* 03A528 7F0059F8 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079A20) # $at, 0x8008
+/* 03A528 7F0059F8 3C018008 */  lui   $at, %hi(mission_timer) # $at, 0x8008
 /* 03A52C 7F0059FC 3C118008 */  lui   $s1, %hi(watch_time_0) # $s1, 0x8008
-/* 03A530 7F005A00 AC209A20 */  sw    $zero, %lo(dword_CODE_bss_80079A20)($at)
+/* 03A530 7F005A00 AC209A20 */  sw    $zero, %lo(mission_timer)($at)
 /* 03A534 7F005A04 26319A24 */  addiu $s1, %lo(watch_time_0) # addiu $s1, $s1, -0x65dc
 /* 03A538 7F005A08 AE200000 */  sw    $zero, ($s1)
 /* 03A53C 7F005A0C 3C018003 */  lui   $at, %hi(D_80036514) # $at, 0x8003
 /* 03A540 7F005A10 AC206514 */  sw    $zero, %lo(D_80036514)($at)
 /* 03A544 7F005A14 3C018005 */  lui   $at, %hi(default_zoom_speed) # $at, 0x8005
 /* 03A548 7F005A18 C430F1A8 */  lwc1  $f16, %lo(default_zoom_speed)($at)
-/* 03A54C 7F005A1C 3C018003 */  lui   $at, %hi(D_800365A8) # $at, 0x8003
-/* 03A550 7F005A20 E43065A8 */  swc1  $f16, %lo(D_800365A8)($at)
+/* 03A54C 7F005A1C 3C018003 */  lui   $at, %hi(watch_transition_time) # $at, 0x8003
+/* 03A550 7F005A20 E43065A8 */  swc1  $f16, %lo(watch_transition_time)($at)
 /* 03A554 7F005A24 3C018008 */  lui   $at, %hi(starting_left_weapon) # $at, 0x8008
 /* 03A558 7F005A28 AC2099E4 */  sw    $zero, %lo(starting_left_weapon)($at)
 /* 03A55C 7F005A2C 3C018008 */  lui   $at, %hi(starting_right_weapon) # $at, 0x8008

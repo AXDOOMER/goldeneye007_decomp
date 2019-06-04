@@ -2,11 +2,6 @@
 
 
 // rodata
-//D:800585E0
-const f32 D_800585E0 = 3.4028235e38;
-//D:800585E4
-const f32 D_800585E4 = 3.4028235e38;
-
 
 
 
@@ -89,6 +84,11 @@ void sub_GAME_7F0B32D8(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800585E0
+.word 0x7f7fffff /*3.4028235e38*/
+glabel D_800585E4
+.word 0x7f7fffff /*3.4028235e38*/
 .text
 glabel sub_GAME_7F0B32D8
 /* 0E7E08 7F0B32D8 27BDFFD0 */  addiu $sp, $sp, -0x30

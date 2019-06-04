@@ -123,7 +123,7 @@
    # file asm/game/default_BONDdata_stuff.s
    - [0x7F0062C0, "sub_GAME_7F0062C0"]
    # file asm/game/load_init_path_table.s
-   - [0x7F0067C0, "sub_GAME_7F0067C0"]
+   - [0x7F0067C0, "init_pathtable_something"]
    # file asm/game/7F006D90.s
    - [0x7F006D90, "alloc_explosion_smoke_casing_scorch_impact_buffers"]
    # file asm/game/7F007180.s

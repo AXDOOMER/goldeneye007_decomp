@@ -200,11 +200,11 @@ glabel osInitialize
 /* 00DE2C 7000D22C 03205825 */  move  $t3, $t9
 /* 00DE30 7000D230 240A0000 */  li    $t2, 0
 /* 00DE34 7000D234 AC2A6980 */  sw    $t2, %lo(osClockRate)($at)
-/* 00DE38 7000D238 AC2B6984 */  sw    $t3, %lo(osClockRate)($at)
+/* 00DE38 7000D238 AC2B6984 */  sw    $t3, %lo(osClockRate+4)($at)
 .L7000D23C:
 /* 00DE3C 7000D23C 3C048002 */  lui   $a0, %hi(osClockRate) # $a0, 0x8002
 /* 00DE40 7000D240 3C058002 */  lui   $a1, %hi(osClockRate) # $a1, 0x8002
-/* 00DE44 7000D244 8CA56984 */  lw    $a1, %lo(osClockRate)($a1)
+/* 00DE44 7000D244 8CA56984 */  lw    $a1, %lo(osClockRate+4)($a1)
 /* 00DE48 7000D248 8C846980 */  lw    $a0, %lo(osClockRate)($a0)
 /* 00DE4C 7000D24C 24060000 */  li    $a2, 0
 /* 00DE50 7000D250 0C003B6A */  jal   __ll_mul
@@ -221,7 +221,7 @@ glabel osInitialize
 /* 00DE7C 7000D27C 3C018002 */  lui   $at, %hi(osClockRate) # $at, 0x8002
 /* 00DE80 7000D280 AC226980 */  sw    $v0, %lo(osClockRate)($at)
 /* 00DE84 7000D284 15200005 */  bnez  $t1, .L7000D29C
-/* 00DE88 7000D288 AC236984 */   sw    $v1, %lo(osClockRate)($at)
+/* 00DE88 7000D288 AC236984 */   sw    $v1, %lo(osClockRate+4)($at)
 /* 00DE8C 7000D28C 3C048000 */  lui   $a0, %hi(osAppNMIBuffer) # $a0, 0x8000
 /* 00DE90 7000D290 2484031C */  addiu $a0, %lo(osAppNMIBuffer) # addiu $a0, $a0, 0x31c
 /* 00DE94 7000D294 0C005F10 */  jal   _blkclr
@@ -277,8 +277,11 @@ glabel osDiskExist
 .align 4
 .section .rodata
 .section .bss
-
-
+glabel __osFinalRom
+.word 0
+.word 0
+.word 0
+.word 0
 .section .text
 glabel osWritebackDCacheAll
 /* 00DF20 7000D320 3C088000 */  lui   $t0, 0x8000
@@ -705,32 +708,32 @@ glabel osCreateViManager
 /* 00E504 7000D904 AFA40030 */   sw    $a0, 0x30($sp)
 /* 00E508 7000D908 0C00618C */  jal   __osTimerServicesInit
 /* 00E50C 7000D90C 00000000 */   nop   
-/* 00E510 7000D910 3C048006 */  lui   $a0, %hi(interrupt_entry_buffer) # $a0, 0x8006
-/* 00E514 7000D914 3C058006 */  lui   $a1, %hi(dword_CODE_bss_800669B8) # $a1, 0x8006
-/* 00E518 7000D918 24A569B8 */  addiu $a1, %lo(dword_CODE_bss_800669B8) # addiu $a1, $a1, 0x69b8
-/* 00E51C 7000D91C 248469A0 */  addiu $a0, %lo(interrupt_entry_buffer) # addiu $a0, $a0, 0x69a0
+/* 00E510 7000D910 3C048006 */  lui   $a0, %hi(viEventQueue) # $a0, 0x8006
+/* 00E514 7000D914 3C058006 */  lui   $a1, %hi(viEventBuf) # $a1, 0x8006
+/* 00E518 7000D918 24A569B8 */  addiu $a1, %lo(viEventBuf) # addiu $a1, $a1, 0x69b8
+/* 00E51C 7000D91C 248469A0 */  addiu $a0, %lo(viEventQueue) # addiu $a0, $a0, 0x69a0
 /* 00E520 7000D920 0C0035B4 */  jal   osCreateMesgQueue
 /* 00E524 7000D924 24060005 */   li    $a2, 5
 /* 00E528 7000D928 3C018006 */  lui   $at, %hi(dword_CODE_bss_800669D4) # $at, 0x8006
 /* 00E52C 7000D92C 240F000D */  li    $t7, 13
-/* 00E530 7000D930 A42F69D0 */  sh    $t7, %lo(word_CODE_bss_800669D0)($at)
+/* 00E530 7000D930 A42F69D0 */  sh    $t7, %lo(viRetraceMsg)($at)
 /* 00E534 7000D934 A02069D2 */  sb    $zero, %lo(byte_CODE_bss_800669D2)($at)
 /* 00E538 7000D938 AC2069D4 */  sw    $zero, %lo(dword_CODE_bss_800669D4)($at)
 /* 00E53C 7000D93C 3C018006 */  lui   $at, %hi(dword_CODE_bss_800669EC) # $at, 0x8006
 /* 00E540 7000D940 2418000E */  li    $t8, 14
-/* 00E544 7000D944 3C058006 */  lui   $a1, %hi(interrupt_entry_buffer) # $a1, 0x8006
-/* 00E548 7000D948 3C068006 */  lui   $a2, %hi(word_CODE_bss_800669D0) # $a2, 0x8006
-/* 00E54C 7000D94C A43869E8 */  sh    $t8, %lo(word_CODE_bss_800669E8)($at)
+/* 00E544 7000D944 3C058006 */  lui   $a1, %hi(viEventQueue) # $a1, 0x8006
+/* 00E548 7000D948 3C068006 */  lui   $a2, %hi(viRetraceMsg) # $a2, 0x8006
+/* 00E54C 7000D94C A43869E8 */  sh    $t8, %lo(viCounterMsg)($at)
 /* 00E550 7000D950 A02069EA */  sb    $zero, %lo(byte_CODE_bss_800669EA)($at)
 /* 00E554 7000D954 AC2069EC */  sw    $zero, %lo(dword_CODE_bss_800669EC)($at)
-/* 00E558 7000D958 24C669D0 */  addiu $a2, %lo(word_CODE_bss_800669D0) # addiu $a2, $a2, 0x69d0
-/* 00E55C 7000D95C 24A569A0 */  addiu $a1, %lo(interrupt_entry_buffer) # addiu $a1, $a1, 0x69a0
+/* 00E558 7000D958 24C669D0 */  addiu $a2, %lo(viRetraceMsg) # addiu $a2, $a2, 0x69d0
+/* 00E55C 7000D95C 24A569A0 */  addiu $a1, %lo(viEventQueue) # addiu $a1, $a1, 0x69a0
 /* 00E560 7000D960 0C003714 */  jal   osSetEventMesg
 /* 00E564 7000D964 24040007 */   li    $a0, 7
-/* 00E568 7000D968 3C058006 */  lui   $a1, %hi(interrupt_entry_buffer) # $a1, 0x8006
-/* 00E56C 7000D96C 3C068006 */  lui   $a2, %hi(word_CODE_bss_800669E8) # $a2, 0x8006
-/* 00E570 7000D970 24C669E8 */  addiu $a2, %lo(word_CODE_bss_800669E8) # addiu $a2, $a2, 0x69e8
-/* 00E574 7000D974 24A569A0 */  addiu $a1, %lo(interrupt_entry_buffer) # addiu $a1, $a1, 0x69a0
+/* 00E568 7000D968 3C058006 */  lui   $a1, %hi(viEventQueue) # $a1, 0x8006
+/* 00E56C 7000D96C 3C068006 */  lui   $a2, %hi(viCounterMsg) # $a2, 0x8006
+/* 00E570 7000D970 24C669E8 */  addiu $a2, %lo(viCounterMsg) # addiu $a2, $a2, 0x69e8
+/* 00E574 7000D974 24A569A0 */  addiu $a1, %lo(viEventQueue) # addiu $a1, $a1, 0x69a0
 /* 00E578 7000D978 0C003714 */  jal   osSetEventMesg
 /* 00E57C 7000D97C 24040003 */   li    $a0, 3
 /* 00E580 7000D980 2419FFFF */  li    $t9, -1
@@ -751,19 +754,19 @@ glabel osCreateViManager
 /* 00E5B8 7000D9B8 0C00617C */  jal   __osDisableInt
 /* 00E5BC 7000D9BC 00000000 */   nop   
 /* 00E5C0 7000D9C0 3C018002 */  lui   $at, %hi(D_800269AC) # $at, 0x8002
-/* 00E5C4 7000D9C4 3C0C8006 */  lui   $t4, %hi(interrupt_entry_buffer) # $t4, 0x8006
-/* 00E5C8 7000D9C8 3C0B8006 */  lui   $t3, %hi(vi_thread) # $t3, 0x8006
-/* 00E5CC 7000D9CC 258C69A0 */  addiu $t4, %lo(interrupt_entry_buffer) # addiu $t4, $t4, 0x69a0
+/* 00E5C4 7000D9C4 3C0C8006 */  lui   $t4, %hi(viEventQueue) # $t4, 0x8006
+/* 00E5C8 7000D9C8 3C0B8006 */  lui   $t3, %hi(viThread) # $t3, 0x8006
+/* 00E5CC 7000D9CC 258C69A0 */  addiu $t4, %lo(viEventQueue) # addiu $t4, $t4, 0x69a0
 /* 00E5D0 7000D9D0 240A0001 */  li    $t2, 1
-/* 00E5D4 7000D9D4 256B57F0 */  addiu $t3, %lo(vi_thread) # addiu $t3, $t3, 0x57f0
+/* 00E5D4 7000D9D4 256B57F0 */  addiu $t3, %lo(viThread) # addiu $t3, $t3, 0x57f0
 /* 00E5D8 7000D9D8 AC2A69A0 */  sw    $t2, %lo(__osViDevMgr)($at)
 /* 00E5DC 7000D9DC AC2B69A4 */  sw    $t3, %lo(D_800269A4)($at)
 /* 00E5E0 7000D9E0 AC2C69A8 */  sw    $t4, %lo(D_800269A8)($at)
 /* 00E5E4 7000D9E4 AC2C69AC */  sw    $t4, %lo(D_800269AC)($at)
-/* 00E5E8 7000D9E8 3C0D8006 */  lui   $t5, %hi(vi_thread_sp_maybe) # $t5, 0x8006
+/* 00E5E8 7000D9E8 3C0D8006 */  lui   $t5, %hi(viThreadStack) # $t5, 0x8006
 /* 00E5EC 7000D9EC 8FAF0030 */  lw    $t7, 0x30($sp)
 /* 00E5F0 7000D9F0 3C018002 */  lui   $at, %hi(D_800269B8) # $at, 0x8002
-/* 00E5F4 7000D9F4 25AD59A0 */  addiu $t5, %lo(vi_thread_sp_maybe) # addiu $t5, $t5, 0x59a0
+/* 00E5F4 7000D9F4 25AD59A0 */  addiu $t5, %lo(viThreadStack) # addiu $t5, $t5, 0x59a0
 /* 00E5F8 7000D9F8 25AE1000 */  addiu $t6, $t5, 0x1000
 /* 00E5FC 7000D9FC 3C067001 */  lui   $a2, %hi(viMgrMain) # $a2, 0x7001
 /* 00E600 7000DA00 3C078002 */  lui   $a3, %hi(__osViDevMgr) # $a3, 0x8002
@@ -780,9 +783,9 @@ glabel osCreateViManager
 /* 00E62C 7000DA2C AFAF0014 */   sw    $t7, 0x14($sp)
 /* 00E630 7000DA30 0C006294 */  jal   __osViInit
 /* 00E634 7000DA34 00000000 */   nop   
-/* 00E638 7000DA38 3C048006 */  lui   $a0, %hi(vi_thread) # $a0, 0x8006
+/* 00E638 7000DA38 3C048006 */  lui   $a0, %hi(viThread) # $a0, 0x8006
 /* 00E63C 7000DA3C 0C003560 */  jal   osStartThread
-/* 00E640 7000DA40 248457F0 */   addiu $a0, %lo(vi_thread) # addiu $a0, $a0, 0x57f0
+/* 00E640 7000DA40 248457F0 */   addiu $a0, %lo(viThread) # addiu $a0, $a0, 0x57f0
 /* 00E644 7000DA44 0C006184 */  jal   __osRestoreInt
 /* 00E648 7000DA48 8FA4002C */   lw    $a0, 0x2c($sp)
 /* 00E64C 7000DA4C 8FB80028 */  lw    $t8, 0x28($sp)
@@ -808,13 +811,13 @@ glabel viMgrMain
 /* 00E690 7000DA90 AFA00028 */   sw    $zero, 0x28($sp)
 /* 00E694 7000DA94 AFA20034 */  sw    $v0, 0x34($sp)
 /* 00E698 7000DA98 8FAE0034 */  lw    $t6, 0x34($sp)
-/* 00E69C 7000DA9C 3C018006 */  lui   $at, %hi(word_CODE_bss_80066A00) # $at, 0x8006
+/* 00E69C 7000DA9C 3C018006 */  lui   $at, %hi(retrace) # $at, 0x8006
 /* 00E6A0 7000DAA0 95CF0002 */  lhu   $t7, 2($t6)
 /* 00E6A4 7000DAA4 15E00004 */  bnez  $t7, .L7000DAB8
-/* 00E6A8 7000DAA8 A42F6A00 */   sh    $t7, %lo(word_CODE_bss_80066A00)($at)
+/* 00E6A8 7000DAA8 A42F6A00 */   sh    $t7, %lo(retrace)($at)
 /* 00E6AC 7000DAAC 24180001 */  li    $t8, 1
-/* 00E6B0 7000DAB0 3C018006 */  lui   $at, %hi(word_CODE_bss_80066A00) # $at, 0x8006
-/* 00E6B4 7000DAB4 A4386A00 */  sh    $t8, %lo(word_CODE_bss_80066A00)($at)
+/* 00E6B0 7000DAB0 3C018006 */  lui   $at, %hi(retrace) # $at, 0x8006
+/* 00E6B4 7000DAB4 A4386A00 */  sh    $t8, %lo(retrace)($at)
 .L7000DAB8:
 /* 00E6B8 7000DAB8 8FB90038 */  lw    $t9, 0x38($sp)
 /* 00E6BC 7000DABC AFB90030 */  sw    $t9, 0x30($sp)
@@ -836,13 +839,13 @@ glabel viMgrMain
 .L7000DAF8:
 /* 00E6F8 7000DAF8 0C0062DC */  jal   __osViSwapContext
 /* 00E6FC 7000DAFC 00000000 */   nop   
-/* 00E700 7000DB00 3C0A8006 */  lui   $t2, %hi(word_CODE_bss_80066A00) # $t2, 0x8006
-/* 00E704 7000DB04 954A6A00 */  lhu   $t2, %lo(word_CODE_bss_80066A00)($t2)
-/* 00E708 7000DB08 3C018006 */  lui   $at, %hi(word_CODE_bss_80066A00) # $at, 0x8006
+/* 00E700 7000DB00 3C0A8006 */  lui   $t2, %hi(retrace) # $t2, 0x8006
+/* 00E704 7000DB04 954A6A00 */  lhu   $t2, %lo(retrace)($t2)
+/* 00E708 7000DB08 3C018006 */  lui   $at, %hi(retrace) # $at, 0x8006
 /* 00E70C 7000DB0C 254BFFFF */  addiu $t3, $t2, -1
 /* 00E710 7000DB10 316CFFFF */  andi  $t4, $t3, 0xffff
 /* 00E714 7000DB14 15800010 */  bnez  $t4, .L7000DB58
-/* 00E718 7000DB18 A42B6A00 */   sh    $t3, %lo(word_CODE_bss_80066A00)($at)
+/* 00E718 7000DB18 A42B6A00 */   sh    $t3, %lo(retrace)($at)
 /* 00E71C 7000DB1C 0C0062D8 */  jal   __osViGetCurrentContext
 /* 00E720 7000DB20 00000000 */   nop   
 /* 00E724 7000DB24 AFA20034 */  sw    $v0, 0x34($sp)
@@ -856,9 +859,9 @@ glabel viMgrMain
 /* 00E744 7000DB44 00003025 */   move  $a2, $zero
 .L7000DB48:
 /* 00E748 7000DB48 8FAF0034 */  lw    $t7, 0x34($sp)
-/* 00E74C 7000DB4C 3C018006 */  lui   $at, %hi(word_CODE_bss_80066A00) # $at, 0x8006
+/* 00E74C 7000DB4C 3C018006 */  lui   $at, %hi(retrace) # $at, 0x8006
 /* 00E750 7000DB50 95F80002 */  lhu   $t8, 2($t7)
-/* 00E754 7000DB54 A4386A00 */  sh    $t8, %lo(word_CODE_bss_80066A00)($at)
+/* 00E754 7000DB54 A4386A00 */  sh    $t8, %lo(retrace)($at)
 .L7000DB58:
 /* 00E758 7000DB58 3C198007 */  lui   $t9, %hi(__osViIntrCount) # $t9, 0x8007
 /* 00E75C 7000DB5C 8F398E1C */  lw    $t9, %lo(__osViIntrCount)($t9)
@@ -874,9 +877,9 @@ glabel viMgrMain
 /* 00E784 7000DB84 240C0000 */  li    $t4, 0
 /* 00E788 7000DB88 3C018007 */  lui   $at, %hi(__osCurrentTime) # $at, 0x8007
 /* 00E78C 7000DB8C AC2C8E10 */  sw    $t4, %lo(__osCurrentTime)($at)
-/* 00E790 7000DB90 3C018007 */  lui   $at, %hi(D_80068E14) # $at, 0x8007
+/* 00E790 7000DB90 3C018007 */  lui   $at, %hi(__osCurrentTime+4) # $at, 0x8007
 /* 00E794 7000DB94 01406825 */  move  $t5, $t2
-/* 00E798 7000DB98 AC2D8E14 */  sw    $t5, %lo(D_80068E14)($at)
+/* 00E798 7000DB98 AC2D8E14 */  sw    $t5, %lo(__osCurrentTime+4)($at)
 /* 00E79C 7000DB9C AFA00028 */  sw    $zero, 0x28($sp)
 .L7000DBA0:
 /* 00E7A0 7000DBA0 3C0B8007 */  lui   $t3, %hi(__osBaseCounter) # $t3, 0x8007
@@ -888,8 +891,8 @@ glabel viMgrMain
 /* 00E7B8 7000DBB8 3C0E8007 */  lui   $t6, %hi(__osBaseCounter) # $t6, 0x8007
 /* 00E7BC 7000DBBC 8DCE8E18 */  lw    $t6, %lo(__osBaseCounter)($t6)
 /* 00E7C0 7000DBC0 8FAF0024 */  lw    $t7, 0x24($sp)
-/* 00E7C4 7000DBC4 3C0B8007 */  lui   $t3, %hi(D_80068E14) # $t3, 0x8007
-/* 00E7C8 7000DBC8 8D6B8E14 */  lw    $t3, %lo(D_80068E14)($t3)
+/* 00E7C4 7000DBC4 3C0B8007 */  lui   $t3, %hi(__osCurrentTime+4) # $t3, 0x8007
+/* 00E7C8 7000DBC8 8D6B8E14 */  lw    $t3, %lo(__osCurrentTime+4)($t3)
 /* 00E7CC 7000DBCC 01CFC023 */  subu  $t8, $t6, $t7
 /* 00E7D0 7000DBD0 03004825 */  move  $t1, $t8
 /* 00E7D4 7000DBD4 3C0A8007 */  lui   $t2, %hi(__osCurrentTime) # $t2, 0x8007
@@ -901,10 +904,10 @@ glabel viMgrMain
 /* 00E7EC 7000DBEC 3C018007 */  lui   $at, %hi(__osCurrentTime) # $at, 0x8007
 /* 00E7F0 7000DBF0 018A6021 */  addu  $t4, $t4, $t2
 /* 00E7F4 7000DBF4 AC2C8E10 */  sw    $t4, %lo(__osCurrentTime)($at)
-/* 00E7F8 7000DBF8 3C018007 */  lui   $at, %hi(D_80068E14) # $at, 0x8007
+/* 00E7F8 7000DBF8 3C018007 */  lui   $at, %hi(__osCurrentTime+4) # $at, 0x8007
 /* 00E7FC 7000DBFC AFB80024 */  sw    $t8, 0x24($sp)
 /* 00E800 7000DC00 1000FFAF */  b     .L7000DAC0
-/* 00E804 7000DC04 AC2D8E14 */   sw    $t5, %lo(D_80068E14)($at)
+/* 00E804 7000DC04 AC2D8E14 */   sw    $t5, %lo(__osCurrentTime+4)($at)
 .L7000DC08:
 /* 00E808 7000DC08 0C0061AF */  jal   __osTimerInterrupt
 /* 00E80C 7000DC0C 00000000 */   nop   
@@ -926,16 +929,1180 @@ glabel viMgrMain
 /* 00E848 7000DC48 00000000 */  nop   
 /* 00E84C 7000DC4C 00000000 */  nop
 .section .data
-__osViDevMgr: .word 0
-D_800269A4: .word 0
-D_800269A8: .word 0
-D_800269AC: .word 0
-D_800269B0: .word 0
-D_800269B4: .word 0
-D_800269B8: .word 0
+glabel __osViDevMgr
+.word 0
+glabel D_800269A4
+.word 0
+glabel D_800269A8
+.word 0
+glabel D_800269AC
+.word 0
+glabel D_800269B0
+.word 0
+glabel D_800269B4
+.word 0
+glabel D_800269B8
+.word 0
+
 .align 4
+
+
 .section .rodata
+
+
 .section .bss
+glabel viThread
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+
+glabel viThreadStack
+        #[4096]
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.section .bss
+glabel viEventQueue
+.word 0, 0, 0, 0, 0, 0
+
+glabel viEventBuf
+.word 0, 0, 0, 0, 0, 0
+
+glabel viRetraceMsg
+.word 0, 0, 0, 0, 0, 0
+
+glabel viCounterMsg
+.word 0, 0, 0, 0, 0, 0
+
+glabel retrace
+.half 0
+.align 4
 
 .section .data
 glabel osViModeTable
@@ -1150,6 +2317,130 @@ glabel osViModeTable_osViModeMpalHpf2
 .word      0xC10, 0xC1C0C1C,  0x6C02EC,     0x400,         0
 .word      0xA00, 0x2000800,  0x2301FD,   0xB0202,         2
 .word     0x1400, 0x2000800,  0x2501FF,   0xE0204,         2
+
+.section .bss
+glabel __osEventStateTab
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
 
 .section .text
 glabel osSetEventMesg
@@ -1713,6 +3004,7 @@ glabel osDpGetCounters
 /* 00F004 7000E404 00000000 */  nop   
 /* 00F008 7000E408 00000000 */  nop   
 /* 00F00C 7000E40C 00000000 */  nop   
+
 glabel osViGetCurrentFramebuffer
 /* 00F010 7000E410 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00F014 7000E414 AFBF001C */  sw    $ra, 0x1c($sp)
@@ -1777,12 +3069,53 @@ glabel osDpSetStatus
 /* 00F0E8 7000E4E8 ADC4000C */   sw    $a0, 0xc($t6)
 
 /* 00F0EC 7000E4EC 00000000 */  nop   
+
+.section .bss
+.word 0,0
+glabel tp
+glabel type
+.word 0
+glabel flags
+.word 0
+glabel t_ucode_boot
+.word 0
+glabel t_ucode_boot_size
+.word 0
+glabel t_ucode
+.word 0
+glabel t_ucode_size
+.word 0
+glabel t_ucode_data
+.word 0
+glabel t_ucode_data_size
+.word 0
+glabel t_dram_stack
+.word 0
+glabel t_dram_stack_size
+.word 0
+glabel t_output_buff
+.word 0
+glabel t_output_buff_size
+.word 0
+glabel t_data_ptr
+.word 0
+glabel t_data_size
+.word 0
+glabel t_yield_data_ptr
+.word 0
+glabel t_yield_data_size
+.word 0
+
+
+
+
+.section .text
 glabel _VirtualToPhysicalTask
 /* 00F0F0 7000E4F0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 00F0F4 7000E4F4 3C0E8006 */  lui   $t6, %hi(dword_CODE_bss_80066A90) # $t6, 0x8006
+/* 00F0F4 7000E4F4 3C0E8006 */  lui   $t6, %hi(tp) # $t6, 0x8006
 /* 00F0F8 7000E4F8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00F0FC 7000E4FC AFA40020 */  sw    $a0, 0x20($sp)
-/* 00F100 7000E500 25CE6A90 */  addiu $t6, %lo(dword_CODE_bss_80066A90) # addiu $t6, $t6, 0x6a90
+/* 00F100 7000E500 25CE6A90 */  addiu $t6, %lo(tp) # addiu $t6, $t6, 0x6a90
 /* 00F104 7000E504 AFAE001C */  sw    $t6, 0x1c($sp)
 /* 00F108 7000E508 01C02825 */  move  $a1, $t6
 /* 00F10C 7000E50C 8FA40020 */  lw    $a0, 0x20($sp)
@@ -2088,8 +3421,8 @@ glabel osVirtualToPhysical
 
 /* 00F52C 7000E92C 00000000 */  nop   
 glabel osAiSetFrequency
-/* 00F530 7000E930 3C0E8003 */  lui   $t6, %hi(osViClock) # $t6, 0x8003
-/* 00F534 7000E934 8DCE804C */  lw    $t6, %lo(osViClock)($t6)
+/* 00F530 7000E930 3C0E8003 */  lui   $t6, %hi(0x8002804C)#%hi(osViClock) # $t6, 0x8003
+/* 00F534 7000E934 8DCE804C */  lw    $t6, %lo(0x8002804C)($t6)#%lo(osViClock)($t6)
 /* 00F538 7000E938 44844000 */  mtc1  $a0, $f8
 /* 00F53C 7000E93C 27BDFFF0 */  addiu $sp, $sp, -0x10
 /* 00F540 7000E940 448E2000 */  mtc1  $t6, $f4
@@ -2167,8 +3500,8 @@ glabel osAiSetFrequency
 /* 00F648 7000EA48 240B0001 */  li    $t3, 1
 /* 00F64C 7000EA4C 3C0CA450 */  lui   $t4, %hi(AI_CONTROL_REG) # $t4, 0xa450
 /* 00F650 7000EA50 AD8B0008 */  sw    $t3, %lo(AI_CONTROL_REG)($t4)
-/* 00F654 7000EA54 3C0D8003 */  lui   $t5, %hi(osViClock) # $t5, 0x8003
-/* 00F658 7000EA58 8DAD804C */  lw    $t5, %lo(osViClock)($t5)
+/* 00F654 7000EA54 3C0D8003 */  lui   $t5, %hi(0x8002804C) # $t5, 0x8003 #osViClock
+/* 00F658 7000EA58 8DAD804C */  lw    $t5, %lo(0x8002804C)($t5) #osViClock
 /* 00F65C 7000EA5C 01A5001A */  div   $zero, $t5, $a1
 /* 00F660 7000EA60 00001012 */  mflo  $v0
 /* 00F664 7000EA64 14A00002 */  bnez  $a1, .L7000EA70
@@ -2291,8 +3624,8 @@ glabel osGetTime
 /* 00F7D0 7000EBD0 8DEF8E18 */  lw    $t7, %lo(__osBaseCounter)($t7)
 /* 00F7D4 7000EBD4 8FAE0034 */  lw    $t6, 0x34($sp)
 /* 00F7D8 7000EBD8 3C088007 */  lui   $t0, %hi(__osCurrentTime) # $t0, 0x8007
-/* 00F7DC 7000EBDC 3C098007 */  lui   $t1, %hi(D_80068E14) # $t1, 0x8007
-/* 00F7E0 7000EBE0 8D298E14 */  lw    $t1, %lo(D_80068E14)($t1)
+/* 00F7DC 7000EBDC 3C098007 */  lui   $t1, %hi(__osCurrentTime+4) # $t1, 0x8007
+/* 00F7E0 7000EBE0 8D298E14 */  lw    $t1, %lo(__osCurrentTime+4)($t1)
 /* 00F7E4 7000EBE4 8D088E10 */  lw    $t0, %lo(__osCurrentTime)($t0)
 /* 00F7E8 7000EBE8 01CFC023 */  subu  $t8, $t6, $t7
 /* 00F7EC 7000EBEC AFB80030 */  sw    $t8, 0x30($sp)
@@ -2577,7 +3910,8 @@ glabel osAiSetNextBuffer
 /* 00FBA8 7000EFA8 00000000 */  nop   
 /* 00FBAC 7000EFAC 00000000 */  nop   
 .section .data
-B_800276F0:.byte 0
+glabel B_800276F0
+.byte 0
 .align 4
 
 .section .text
@@ -3066,8 +4400,10 @@ glabel alSynNew
 /* 01029C 7000F69C 27BD0078 */   addiu $sp, $sp, 0x78
 
 .section .rodata
-    F64_80029420: .double 1000000.0
-    F64_80029428: .double 1000000.0
+glabel F64_80029420
+.double 1000000.0
+glabel F64_80029428
+.double 1000000.0
 
 .section .text
 glabel osPiStartDma
@@ -3502,8 +4838,8 @@ glabel guPerspectiveF
 /* 010898 7000FC98 0C004004 */  jal   guMtxIdentF
 /* 01089C 7000FC9C E7AE0038 */   swc1  $f14, 0x38($sp)
 /* 0108A0 7000FCA0 C7AE0038 */  lwc1  $f14, 0x38($sp)
-/* 0108A4 7000FCA4 3C018003 */  li    $at, %hi(F64_80029430) #0x80030000
-/* 0108A8 7000FCA8 D4269430 */  ldc1  $f6, %lo(F64_80029430)($at) # -0x6bd0($at)
+/* 0108A4 7000FCA4 3C018003 */  li    $at, 0x80030000 #%hi(F64_80029430) #0x80030000
+/* 0108A8 7000FCA8 D4269430 */  ldc1  $f6, -0x6bd0($at) #%lo(F64_80029430)($at) # -0x6bd0($at)
 /* 0108AC 7000FCAC 46007121 */  cvt.d.s $f4, $f14
 /* 0108B0 7000FCB0 3C014000 */  li    $at, 0x40000000 # 2.000000
 /* 0108B4 7000FCB4 46262202 */  mul.d $f8, $f4, $f6
@@ -3737,7 +5073,9 @@ glabel guMtxF2L
 /* 010C0C 7001000C 00000000 */   nop   
 
 .section .rodata
-F64_80029430: .double 0.01745329222222222
+glabel F64_80029430
+.word 0x3f91df46, 0x9d353918 #0.017453292222222222
+.word 0,0
 
 .section .text
 glabel guMtxIdentF
@@ -4485,22 +5823,21 @@ glabel __osCleanupThread
 /* 01168C 70010A8C 00000000 */  nop
 
 .section .data
-__osHwIntTable:
-__osHwIntTable:
+/*80027704*/
+glabel __osHwIntTable
 .word          0,         0,         0,         0
 .word          0,         0,         0,         0
 
 .section .rodata
-D_80029440:
-.byte    0,0x14,0x18,0x18
-.byte 0x1C,0x1C,0x1C,0x1C
-.byte 0x20,0x20,0x20,0x20
-.byte 0x20,0x20,0x20,0x20
-.byte    0,   4,   8,   8
-.byte  0xC, 0xC, 0xC, 0xC
-.byte 0x10,0x10,0x10,0x10
-.byte 0x10,0x10,0x10,0x10
-__osIntTable:
+/*80029440*/
+glabel __osIntOffTable
+.byte    0,0x14,0x18,0x18,0x1C,0x1C,0x1C,0x1C
+.byte 0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20
+.byte    0,   4,   8,   8, 0xC, 0xC, 0xC, 0xC
+.byte 0x10,0x10,0x10,0x10,0x10,0x10,0x10,0x10
+
+/*80029460*/
+glabel __osIntTable
 .word redispatch
 .word swl
 .word sw2
@@ -4510,6 +5847,7 @@ __osIntTable:
 .word IP6_Hdlr
 .word IP7_Hdlr
 .word counter
+
 
 .section .text  
 glabel __osDequeueThread
@@ -4534,12 +5872,16 @@ glabel __osDequeueThread
 /* 0116CC 70010ACC 27BD0008 */   addiu $sp, $sp, 8
 
 .section .data
-__osThreadTail: .word 0, 0xFFFFFFFF
+glabel __osThreadTail
+.word 0, 0xFFFFFFFF
 glabel __osRunQueue
  .word __osThreadTail
-__osActiveQueue:.word __osThreadTail
-__osRunningThread:.word 0
-__osFaultedThread:.word 0
+glabel __osActiveQueue
+.word __osThreadTail
+glabel __osRunningThread
+.word 0
+glabel __osFaultedThread
+.word 0
 .align 4
 
 .section .text
@@ -5096,7 +6438,7 @@ glabel ultra_7001106C
 /* 011E34 70011234 03E00008 */  jr    $ra
 /* 011E38 70011238 00000000 */   nop   
 
-glabel ultra_7001123C
+glabel __CSPHandleMIDIMsg
 /* 011E3C 7001123C 27BDFF48 */  addiu $sp, $sp, -0xb8
 /* 011E40 70011240 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 011E44 70011244 91160008 */  lbu   $s6, 8($t0)
@@ -5114,6 +6456,7 @@ glabel ultra_7001123C
 /* 011E74 70011274 8C2F9490 */  lw    $t7, %lo(audio_related_jump_table_0)($at) # -0x6b70
 /* 011E78 70011278 01E00008 */  jr    $t7
 /* 011E7C 7001127C 00000000 */   nop   
+.L70011280:
 /* 011E80 70011280 522000E8 */  beql  $s1, $zero, .L70011624
 /* 011E84 70011284 02402025 */   move  $a0, $s2
 /* 011E88 70011288 8E58002C */  lw    $t8, 0x2c($s2)
@@ -5354,6 +6697,7 @@ glabel ultra_7001123C
 /* 012214 70011614 00000000 */   nop   
 /* 012218 70011618 1000010F */  b     .L70011A58
 /* 01221C 7001161C 8FBF0024 */   lw    $ra, 0x24($sp)
+.L70011620:
 /* 012220 70011620 02402025 */  move  $a0, $s2
 .L70011624:
 /* 012224 70011624 328500FF */  andi  $a1, $s4, 0xff
@@ -5378,6 +6722,7 @@ glabel ultra_7001123C
 /* 01226C 7001166C 8F060008 */   lw    $a2, 8($t8)
 /* 012270 70011670 100000F9 */  b     .L70011A58
 /* 012274 70011674 8FBF0024 */   lw    $ra, 0x24($sp)
+.L70011678:
 /* 012278 70011678 02402025 */  move  $a0, $s2
 /* 01227C 7001167C 328500FF */  andi  $a1, $s4, 0xff
 /* 012280 70011680 0C00709F */  jal   __lookupVoice
@@ -5403,6 +6748,7 @@ glabel ultra_7001123C
 /* 0122D0 700116D0 00403825 */   move  $a3, $v0
 /* 0122D4 700116D4 100000E0 */  b     .L70011A58
 /* 0122D8 700116D8 8FBF0024 */   lw    $ra, 0x24($sp)
+.L700116DC:
 /* 0122DC 700116DC 8E500064 */  lw    $s0, 0x64($s2)
 /* 0122E0 700116E0 520000DD */  beql  $s0, $zero, .L70011A58
 /* 0122E4 700116E4 8FBF0024 */   lw    $ra, 0x24($sp)
@@ -5434,6 +6780,7 @@ glabel ultra_7001123C
 /* 012344 70011744 920E0031 */   lbu   $t6, 0x31($s0)
 /* 012348 70011748 100000C3 */  b     .L70011A58
 /* 01234C 7001174C 8FBF0024 */   lw    $ra, 0x24($sp)
+.L70011750:
 /* 012350 70011750 24010007 */  li    $at, 7
 /* 012354 70011754 12810023 */  beq   $s4, $at, .L700117E4
 /* 012358 70011758 02801025 */   move  $v0, $s4
@@ -5592,6 +6939,7 @@ glabel ultra_7001123C
 /* 01257C 7001197C 920F0031 */   lbu   $t7, 0x31($s0)
 /* 012580 70011980 10000035 */  b     .L70011A58
 /* 012584 70011984 8FBF0024 */   lw    $ra, 0x24($sp)
+.L70011988:
 /* 012588 70011988 8E420020 */  lw    $v0, 0x20($s2)
 /* 01258C 7001198C 00147080 */  sll   $t6, $s4, 2
 /* 012590 70011990 02402025 */  move  $a0, $s2
@@ -5605,6 +6953,7 @@ glabel ultra_7001123C
 /* 0125B0 700119B0 8F05000C */   lw    $a1, 0xc($t8)
 /* 0125B4 700119B4 10000028 */  b     .L70011A58
 /* 0125B8 700119B8 8FBF0024 */   lw    $ra, 0x24($sp)
+.L700119BC:
 /* 0125BC 700119BC 8E4F0060 */  lw    $t7, 0x60($s2)
 /* 0125C0 700119C0 0016F100 */  sll   $fp, $s6, 4
 /* 0125C4 700119C4 0011C1C0 */  sll   $t8, $s1, 7
@@ -5683,6 +7032,7 @@ glabel ultra_70011A6C
 /* 0126C4 70011AC4 8C2F9614 */  lw    $t7, %lo(audio_related_jump_table_1)($at) # -0x69ec
 /* 0126C8 70011AC8 01E00008 */  jr    $t7
 /* 0126CC 70011ACC 00000000 */   nop   
+.L70011AD0:
 /* 0126D0 70011AD0 8E440018 */  lw    $a0, 0x18($s2)
 /* 0126D4 70011AD4 50800156 */  beql  $a0, $zero, .L70012030
 /* 0126D8 70011AD8 02A02025 */   move  $a0, $s5
@@ -5698,9 +7048,10 @@ glabel ultra_70011A6C
 /* 012700 70011B00 8C399674 */  lw    $t9, %lo(audio_related_jump_table_2)($at) # -0x698c
 /* 012704 70011B04 03200008 */  jr    $t9
 /* 012708 70011B08 00000000 */   nop   
+.L70011B0C:
 /* 01270C 70011B0C 27A80058 */  addiu $t0, $sp, 0x58
 /* 012710 70011B10 AFB200A0 */  sw    $s2, 0xa0($sp)
-/* 012714 70011B14 0C00448F */  jal   ultra_7001123C
+/* 012714 70011B14 0C00448F */  jal   __CSPHandleMIDIMsg
 /* 012718 70011B18 AFB5004C */   sw    $s5, 0x4c($sp)
 /* 01271C 70011B1C 8FB200A0 */  lw    $s2, 0xa0($sp)
 /* 012720 70011B20 8FB5004C */  lw    $s5, 0x4c($sp)
@@ -5708,6 +7059,7 @@ glabel ultra_70011A6C
 /* 012728 70011B28 02402025 */   move  $a0, $s2
 /* 01272C 70011B2C 10000140 */  b     .L70012030
 /* 012730 70011B30 02A02025 */   move  $a0, $s5
+.L70011B34:
 /* 012734 70011B34 0240B825 */  move  $s7, $s2
 /* 012738 70011B38 27A50058 */  addiu $a1, $sp, 0x58
 /* 01273C 70011B3C AFB200A0 */  sw    $s2, 0xa0($sp)
@@ -5719,6 +7071,7 @@ glabel ultra_70011A6C
 /* 012754 70011B54 02402025 */   move  $a0, $s2
 /* 012758 70011B58 10000135 */  b     .L70012030
 /* 01275C 70011B5C 02A02025 */   move  $a0, $s5
+.L70011B60:
 /* 012760 70011B60 240E0002 */  li    $t6, 2
 /* 012764 70011B64 AE4E002C */  sw    $t6, 0x2c($s2)
 /* 012768 70011B68 240F0010 */  li    $t7, 16
@@ -5730,10 +7083,12 @@ glabel ultra_70011A6C
 /* 012780 70011B80 27A50058 */   addiu $a1, $sp, 0x58
 /* 012784 70011B84 1000012A */  b     .L70012030
 /* 012788 70011B88 02A02025 */   move  $a0, $s5
+.L70011B8C:
 /* 01278C 70011B8C 0C0043F0 */  jal   __CSPPostNextSeqEvent
 /* 012790 70011B90 02402025 */   move  $a0, $s2
 /* 012794 70011B94 10000126 */  b     .L70012030
 /* 012798 70011B98 02A02025 */   move  $a0, $s5
+.L70011B9C:
 /* 01279C 70011B9C 24180009 */  li    $t8, 9
 /* 0127A0 70011BA0 A7B8008C */  sh    $t8, 0x8c($sp)
 /* 0127A4 70011BA4 8E46005C */  lw    $a2, 0x5c($s2)
@@ -5742,6 +7097,7 @@ glabel ultra_70011A6C
 /* 0127B0 70011BB0 27A5008C */   addiu $a1, $sp, 0x8c
 /* 0127B4 70011BB4 1000011E */  b     .L70012030
 /* 0127B8 70011BB8 02A02025 */   move  $a0, $s5
+.L70011BBC:
 /* 0127BC 70011BBC 8E50003C */  lw    $s0, 0x3c($s2)
 /* 0127C0 70011BC0 8E440014 */  lw    $a0, 0x14($s2)
 /* 0127C4 70011BC4 0C004DA4 */  jal   alSynStopVoice
@@ -5762,6 +7118,7 @@ glabel ultra_70011A6C
 /* 0127FC 70011BFC 02002825 */   move  $a1, $s0
 /* 012800 70011C00 1000010B */  b     .L70012030
 /* 012804 70011C04 02A02025 */   move  $a0, $s5
+.L70011C08:
 /* 012808 70011C08 8E50003C */  lw    $s0, 0x3c($s2)
 /* 01280C 70011C0C 240F0001 */  li    $t7, 1
 /* 012810 70011C10 8E110010 */  lw    $s1, 0x10($s0)
@@ -5788,6 +7145,7 @@ glabel ultra_70011A6C
 /* 012860 70011C60 02603825 */   move  $a3, $s3
 /* 012864 70011C64 100000F2 */  b     .L70012030
 /* 012868 70011C68 02A02025 */   move  $a0, $s5
+.L70011C6C:
 /* 01286C 70011C6C 8E590074 */  lw    $t9, 0x74($s2)
 /* 012870 70011C70 8E540040 */  lw    $s4, 0x40($s2)
 /* 012874 70011C74 8E51003C */  lw    $s1, 0x3c($s2)
@@ -5858,6 +7216,7 @@ glabel ultra_70011A6C
 /* 01296C 70011D6C 02603025 */   move  $a2, $s3
 /* 012970 70011D70 100000AF */  b     .L70012030
 /* 012974 70011D74 02A02025 */   move  $a0, $s5
+.L70011D78:
 /* 012978 70011D78 8E590074 */  lw    $t9, 0x74($s2)
 /* 01297C 70011D7C 8E540040 */  lw    $s4, 0x40($s2)
 /* 012980 70011D80 8E51003C */  lw    $s1, 0x3c($s2)
@@ -5892,13 +7251,15 @@ glabel ultra_70011A6C
 /* 0129F4 70011DF4 02603025 */   move  $a2, $s3
 /* 0129F8 70011DF8 1000008D */  b     .L70012030
 /* 0129FC 70011DFC 02A02025 */   move  $a0, $s5
+.L70011E00:
 /* 012A00 70011E00 8FA80050 */  lw    $t0, 0x50($sp)
 /* 012A04 70011E04 AFB200A0 */  sw    $s2, 0xa0($sp)
-/* 012A08 70011E08 0C00448F */  jal   ultra_7001123C
+/* 012A08 70011E08 0C00448F */  jal   __CSPHandleMIDIMsg
 /* 012A0C 70011E0C AFB5004C */   sw    $s5, 0x4c($sp)
 /* 012A10 70011E10 8FB200A0 */  lw    $s2, 0xa0($sp)
 /* 012A14 70011E14 10000085 */  b     .L7001202C
 /* 012A18 70011E18 8FB5004C */   lw    $s5, 0x4c($sp)
+.L70011E1C:
 /* 012A1C 70011E1C 0240B825 */  move  $s7, $s2
 /* 012A20 70011E20 8FA50050 */  lw    $a1, 0x50($sp)
 /* 012A24 70011E24 AFB200A0 */  sw    $s2, 0xa0($sp)
@@ -5907,6 +7268,7 @@ glabel ultra_70011A6C
 /* 012A30 70011E30 8FB200A0 */  lw    $s2, 0xa0($sp)
 /* 012A34 70011E34 1000007D */  b     .L7001202C
 /* 012A38 70011E38 8FB5004C */   lw    $s5, 0x4c($sp)
+.L70011E3C:
 /* 012A3C 70011E3C 8E510064 */  lw    $s1, 0x64($s2)
 /* 012A40 70011E40 864E003C */  lh    $t6, 0x3c($s2)
 /* 012A44 70011E44 12200079 */  beqz  $s1, .L7001202C
@@ -5933,6 +7295,7 @@ glabel ultra_70011A6C
 /* 012A94 70011E94 02202025 */   move  $a0, $s1
 /* 012A98 70011E98 10000065 */  b     .L70012030
 /* 012A9C 70011E9C 02A02025 */   move  $a0, $s5
+.L70011EA0:
 /* 012AA0 70011EA0 8E59002C */  lw    $t9, 0x2c($s2)
 /* 012AA4 70011EA4 24010001 */  li    $at, 1
 /* 012AA8 70011EA8 240E0001 */  li    $t6, 1
@@ -5942,6 +7305,7 @@ glabel ultra_70011A6C
 /* 012AB8 70011EB8 AE4E002C */   sw    $t6, 0x2c($s2)
 /* 012ABC 70011EBC 1000005C */  b     .L70012030
 /* 012AC0 70011EC0 02A02025 */   move  $a0, $s5
+.L70011EC4:
 /* 012AC4 70011EC4 8E4F002C */  lw    $t7, 0x2c($s2)
 /* 012AC8 70011EC8 24010002 */  li    $at, 2
 /* 012ACC 70011ECC 55E10058 */  bnel  $t7, $at, .L70012030
@@ -5972,6 +7336,7 @@ glabel ultra_70011A6C
 .L70011F28:
 /* 012B28 70011F28 10000040 */  b     .L7001202C
 /* 012B2C 70011F2C AE40002C */   sw    $zero, 0x2c($s2)
+.L70011F30:
 /* 012B30 70011F30 8E59002C */  lw    $t9, 0x2c($s2)
 /* 012B34 70011F34 24010001 */  li    $at, 1
 /* 012B38 70011F38 02A02025 */  move  $a0, $s5
@@ -6014,6 +7379,7 @@ glabel ultra_70011A6C
 /* 012BC0 70011FC0 27A5008C */   addiu $a1, $sp, 0x8c
 /* 012BC4 70011FC4 1000001A */  b     .L70012030
 /* 012BC8 70011FC8 02A02025 */   move  $a0, $s5
+.L70011FCC:
 /* 012BCC 70011FCC 9250003C */  lbu   $s0, 0x3c($s2)
 /* 012BD0 70011FD0 8E590060 */  lw    $t9, 0x60($s2)
 /* 012BD4 70011FD4 9258003D */  lbu   $t8, 0x3d($s2)
@@ -6021,6 +7387,7 @@ glabel ultra_70011A6C
 /* 012BDC 70011FDC 032E7821 */  addu  $t7, $t9, $t6
 /* 012BE0 70011FE0 10000012 */  b     .L7001202C
 /* 012BE4 70011FE4 A1F80008 */   sb    $t8, 8($t7)
+.L70011FE8:
 /* 012BE8 70011FE8 8E59003C */  lw    $t9, 0x3c($s2)
 /* 012BEC 70011FEC 3C018003 */  lui   $at, %hi(F32_800296C4) # $at, 0x8003
 /* 012BF0 70011FF0 02402025 */  move  $a0, $s2
@@ -6034,6 +7401,7 @@ glabel ultra_70011A6C
 /* 012C10 70012010 02402025 */   move  $a0, $s2
 /* 012C14 70012014 10000006 */  b     .L70012030
 /* 012C18 70012018 02A02025 */   move  $a0, $s5
+.L7001201C:
 /* 012C1C 7001201C 8E45003C */  lw    $a1, 0x3c($s2)
 /* 012C20 70012020 02402025 */  move  $a0, $s2
 /* 012C24 70012024 0C006F4D */  jal   __initFromBank
@@ -6160,7 +7528,8 @@ glabel alCSPNew
 /* 012DEC 700121EC 00000000 */  nop   
 
 .section .rodata
-audio_related_jump_table_0:
+.word 0,0,0
+glabel audio_related_jump_table_0
 .word .L70011620, .L70011A54, .L70011A54, .L70011A54
 .word .L70011A54, .L70011A54, .L70011A54, .L70011A54
 .word .L70011A54, .L70011A54, .L70011A54, .L70011A54
@@ -6186,7 +7555,7 @@ audio_related_jump_table_0:
 .word .L70011A54, .L70011A54, .L70011A54, .L70011A54
 .word .L70011A54, .L70011A54, .L70011A54, .L70011A54
 .word .L700119BC
-audio_related_jump_table_1:
+glabel audio_related_jump_table_1
 .word .L70011AD0
 .word .L7001202C
 .word .L70011E00
@@ -6211,7 +7580,7 @@ audio_related_jump_table_1:
 .word .L70011E00
 .word .L70011C6C
 .word .L70011D78
-audio_related_jump_table_2:
+glabel audio_related_jump_table_2
 .word .L70011B0C
 .word .L7001202C
 .word .L70011B34
@@ -6232,7 +7601,8 @@ audio_related_jump_table_2:
 .word .L70011B8C
 .word .L70011B8C
 .word .L70011B8C
-F32_800296C4: .float 500000.0
+glabel F32_800296C4
+ .float 500000.0
 .align 4
 
 .section .text
@@ -7024,8 +8394,10 @@ glabel __alCSeqNextDelta
 /* 0138FC 70012CFC 00000000 */  nop  
 
 .section .rodata
-    F64_800296D0: .double 1000000.0
-    F64_800296D8: .double 1000000.0
+glabel F64_800296D0
+.double 1000000.0
+glabel F64_800296D8
+.double 1000000.0
 
 .section .text 
 glabel alCSPSetSeq
@@ -7828,8 +9200,10 @@ glabel alCents2Ratio
 /* 014408 70013808 03E00008 */  jr    $ra
 /* 01440C 7001380C 46001006 */   mov.s $f0, $f2
 .section .rodata
-F32_800296E0: .float 1.0005778
-F32_800296E4: .float 0.99942255
+glabel F32_800296E0
+.float 1.0005778
+glabel F32_800296E4
+.float 0.99942255
 .align 4
 
 .section .text
@@ -7935,6 +9309,7 @@ glabel _Putfld
 /* 014554 70013954 8E18000C */   lw    $t8, 0xc($s0)
 /* 014558 70013958 10000178 */  b     .L70013F3C
 /* 01455C 7001395C 8E0E000C */   lw    $t6, 0xc($s0)
+.L70013960:
 /* 014560 70013960 8CD80000 */  lw    $t8, ($a2)
 /* 014564 70013964 2401FFFC */  li    $at, -4
 /* 014568 70013968 27190003 */  addiu $t9, $t8, 3
@@ -7949,6 +9324,7 @@ glabel _Putfld
 /* 01458C 7001398C 270E0001 */  addiu $t6, $t8, 1
 /* 014590 70013990 1000016F */  b     .L70013F50
 /* 014594 70013994 AE0E000C */   sw    $t6, 0xc($s0)
+.L70013998:
 /* 014598 70013998 92020034 */  lbu   $v0, 0x34($s0)
 /* 01459C 7001399C 2401006C */  li    $at, 108
 /* 0145A0 700139A0 5441000D */  bnel  $v0, $at, .L700139D8
@@ -8050,6 +9426,7 @@ glabel _Putfld
 /* 0146FC 70013AFC AE0F0008 */   sw    $t7, 8($s0)
 /* 014700 70013B00 10000114 */  b     .L70013F54
 /* 014704 70013B04 8FBF0014 */   lw    $ra, 0x14($sp)
+.L70013B08:
 /* 014708 70013B08 92020034 */  lbu   $v0, 0x34($s0)
 /* 01470C 70013B0C 2401006C */  li    $at, 108
 /* 014710 70013B10 5441000D */  bnel  $v0, $at, .L70013B48
@@ -8142,6 +9519,7 @@ glabel _Putfld
 /* 01484C 70013C4C AE0F0008 */   sw    $t7, 8($s0)
 /* 014850 70013C50 100000C0 */  b     .L70013F54
 /* 014854 70013C54 8FBF0014 */   lw    $ra, 0x14($sp)
+.L70013C58:
 /* 014858 70013C58 920E0034 */  lbu   $t6, 0x34($s0)
 /* 01485C 70013C5C 2401004C */  li    $at, 76
 /* 014860 70013C60 55C10019 */  bnel  $t6, $at, .L70013CC8
@@ -8245,6 +9623,7 @@ glabel _Putfld
 /* 0149B0 70013DB0 AE0E0008 */   sw    $t6, 8($s0)
 /* 0149B4 70013DB4 10000067 */  b     .L70013F54
 /* 0149B8 70013DB8 8FBF0014 */   lw    $ra, 0x14($sp)
+.L70013DBC:
 /* 0149BC 70013DBC 92020034 */  lbu   $v0, 0x34($s0)
 /* 0149C0 70013DC0 24010068 */  li    $at, 104
 /* 0149C4 70013DC4 5441000C */  bnel  $v0, $at, .L70013DF8
@@ -8300,6 +9679,7 @@ glabel _Putfld
 /* 014A80 70013E80 8E0F002C */  lw    $t7, 0x2c($s0)
 /* 014A84 70013E84 10000032 */  b     .L70013F50
 /* 014A88 70013E88 AF0F0000 */   sw    $t7, ($t8)
+.L70013E8C:
 /* 014A8C 70013E8C 8CD90000 */  lw    $t9, ($a2)
 /* 014A90 70013E90 2401FFFC */  li    $at, -4
 /* 014A94 70013E94 02002025 */  move  $a0, $s0
@@ -8318,6 +9698,7 @@ glabel _Putfld
 /* 014AC8 70013EC8 AE0E0008 */   sw    $t6, 8($s0)
 /* 014ACC 70013ECC 10000021 */  b     .L70013F54
 /* 014AD0 70013ED0 8FBF0014 */   lw    $ra, 0x14($sp)
+.L70013ED4:
 /* 014AD4 70013ED4 8CD80000 */  lw    $t8, ($a2)
 /* 014AD8 70013ED8 2401FFFC */  li    $at, -4
 /* 014ADC 70013EDC 27190003 */  addiu $t9, $t8, 3
@@ -8827,18 +10208,23 @@ glabel _Printf
 /* 0151A8 700145A8 00000000 */  nop   
 /* 0151AC 700145AC 00000000 */  nop   
 .section .data
-spaces:.asciiz "                                "
+glabel spaces
+.asciiz "                                "
 .align 2
-zeros:.asciiz "00000000000000000000000000000000"
+glabel zeros
+.asciiz "00000000000000000000000000000000"
 .align 4
 
 .section .rodata
-aHll:           .ascii "hlL"<0>
-printf_symbols: .ascii " +-#0"<0>
+glabel aHll
+.ascii "hlL"<0>
+glabel printf_symbols
+.ascii " +-#0"<0>
 .align 2
-byteshiftleft_lookup:.word          1,         2,         4,         8,      0x10,         0
+glabel byteshiftleft_lookup
+.word          1,         2,         4,         8,      0x10,         0
 
-J_80029714:
+glabel J_80029714
 .word .L70013C58, .L70013F38, .L70013C58, .L70013F38
 .word .L70013F38, .L70013F38, .L70013F38, .L70013F38
 .word .L70013F38, .L70013F38, .L70013F38, .L70013F38
@@ -8915,14 +10301,14 @@ glabel osCreatePiManager
 /* 015288 70014688 AC297790 */  sw    $t1, %lo(__osPiDevMgr)($at)
 /* 01528C 7001468C AC2A7794 */  sw    $t2, %lo(__osPiDevMgr.thread)($at)
 /* 015290 70014690 AC2C779C */  sw    $t4, %lo(__osPiDevMgr.evtQueue)($at)
-/* 015294 70014694 3C188006 */  lui   $t8, %hi(cmdBuf) # $t8, 0x8006
+/* 015294 70014694 3C188006 */  lui   $t8, 0x8006 #cmdBuf
 /* 015298 70014698 AC2B7798 */  sw    $t3, %lo(__osPiDevMgr.cmdQueue)($at)
 /* 01529C 7001469C 8FA80030 */  lw    $t0, 0x30($sp)
 /* 0152A0 700146A0 3C018002 */  lui   $at, %hi(__osPiDevMgr.edma) # $at, 0x8002
 /* 0152A4 700146A4 3C0D8007 */  lui   $t5, %hi(__osPiAccessQueue) # $t5, 0x8007
 /* 0152A8 700146A8 3C0E7001 */  lui   $t6, %hi(osPiRawStartDma) # $t6, 0x7001
 /* 0152AC 700146AC 3C0F7002 */  lui   $t7, %hi(osEPiRawStartDma) # $t7, 0x7002
-/* 0152B0 700146B0 27186C80 */  addiu $t8, %lo(cmdBuf) # addiu $t8, $t8, 0x6c80
+/* 0152B0 700146B0 27186C80 */  addiu $t8, $t8, 0x6c80 #cmdBuf
 /* 0152B4 700146B4 25AD8FE8 */  addiu $t5, %lo(__osPiAccessQueue) # addiu $t5, $t5, -0x7018
 /* 0152B8 700146B8 25CECF90 */  addiu $t6, %lo(osPiRawStartDma) # addiu $t6, $t6, -0x3070
 /* 0152BC 700146BC 25EFE530 */  addiu $t7, %lo(osEPiRawStartDma) # addiu $t7, $t7, -0x1ad0
@@ -8962,17 +10348,400 @@ glabel osCreatePiManager
 /* 01533C 7001473C 00000000 */  nop 
 
 .section .data
-__osPiDevMgr:
-__osPiDevMgr.active:.word 0
-__osPiDevMgr.thread:.word 0
-__osPiDevMgr.cmdQueue:.word 0
-__osPiDevMgr.evtQueue:.word 0
-__osPiDevMgr.acsQueue:.word 0
-__osPiDevMgr.dma:.word 0
-__osPiDevMgr.edma:.word 0
+glabel __osPiDevMgr
+glabel __osPiDevMgr.active
+.word 0
+glabel __osPiDevMgr.thread
+.word 0
+glabel __osPiDevMgr.cmdQueue
+.word 0
+glabel __osPiDevMgr.evtQueue
+.word 0
+glabel __osPiDevMgr.acsQueue
+.word 0
+glabel __osPiDevMgr.dma
+.word 0
+glabel __osPiDevMgr.edma
+.word 0
 
-D_800277AC:
-__osPiTable:.word 0
+glabel D_800277AC
+glabel __osPiTable
+.word 0
+.section .bss
+
+glabel piThread
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+
+glabel piThreadStack
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+.word 0, 0, 0, 0
+
+glabel pieventQueue
+.word 0, 0, 0, 0, 0, 0
+
+glabel piEventBuf
+.word 0, 0
 
 .section .text  
 glabel osPfsInit
@@ -9118,10 +10887,10 @@ glabel osContInit
 /* 015538 70014938 AC2F77B0 */   sw    $t7, %lo(__osContinitialized)($at)
 /* 01553C 7001493C 3C050007 */  lui   $a1, (0x0007A120 >> 16) # lui $a1, 7
 /* 015540 70014940 3C068002 */  lui   $a2, %hi(osClockRate) # $a2, 0x8002
-/* 015544 70014944 3C078002 */  lui   $a3, %hi(osClockRate) # $a3, 0x8002
+/* 015544 70014944 3C078002 */  lui   $a3, %hi(osClockRate+0x4) # $a3, 0x8002
 /* 015548 70014948 AFA20070 */  sw    $v0, 0x70($sp)
 /* 01554C 7001494C AFA30074 */  sw    $v1, 0x74($sp)
-/* 015550 70014950 8CE76984 */  lw    $a3, %lo(osClockRate)($a3)
+/* 015550 70014950 8CE76984 */  lw    $a3, %lo(osClockRate+0x4)($a3)
 /* 015554 70014954 8CC66980 */  lw    $a2, %lo(osClockRate)($a2)
 /* 015558 70014958 34A5A120 */  ori   $a1, (0x0007A120 & 0xFFFF) # ori $a1, $a1, 0xa120
 /* 01555C 7001495C 0C003B6A */  jal   __ll_mul
@@ -9150,8 +10919,8 @@ glabel osContInit
 /* 0155B4 700149B4 24060001 */   li    $a2, 1
 /* 0155B8 700149B8 3C050007 */  lui   $a1, (0x0007A120 >> 16) # lui $a1, 7
 /* 0155BC 700149BC 3C068002 */  lui   $a2, %hi(osClockRate) # $a2, 0x8002
-/* 0155C0 700149C0 3C078002 */  lui   $a3, %hi(osClockRate) # $a3, 0x8002
-/* 0155C4 700149C4 8CE76984 */  lw    $a3, %lo(osClockRate)($a3)
+/* 0155C0 700149C0 3C078002 */  lui   $a3, %hi(osClockRate+4) # $a3, 0x8002
+/* 0155C4 700149C4 8CE76984 */  lw    $a3, %lo(osClockRate+4)($a3)
 /* 0155C8 700149C8 8CC66980 */  lw    $a2, %lo(osClockRate)($a2)
 /* 0155CC 700149CC 34A5A120 */  ori   $a1, (0x0007A120 & 0xFFFF) # ori $a1, $a1, 0xa120
 /* 0155D0 700149D0 0C003B6A */  jal   __ll_mul
@@ -9307,7 +11076,7 @@ glabel __osPackRequestData
 /* 015800 70014C00 93397CE1 */  lbu   $t9, %lo(__osMaxControllers)($t9)
 /* 015804 70014C04 3C098006 */  lui   $t1, %hi(__osContPifRam) # $t1, 0x8006
 /* 015808 70014C08 24080001 */  li    $t0, 1
-/* 01580C 70014C0C 3C018006 */  lui   $at, %hi(dword_CODE_bss_80067CDC) # $at, 0x8006
+/* 01580C 70014C0C 3C018006 */  lui   $at, %hi(__osContPifRam+0x3c) # $at, 0x8006
 /* 015810 70014C10 25297CA0 */  addiu $t1, %lo(__osContPifRam) # addiu $t1, $t1, 0x7ca0
 /* 015814 70014C14 240A00FF */  li    $t2, 255
 /* 015818 70014C18 240B0001 */  li    $t3, 1
@@ -9316,7 +11085,7 @@ glabel __osPackRequestData
 /* 015824 70014C24 240E00FF */  li    $t6, 255
 /* 015828 70014C28 240F00FF */  li    $t7, 255
 /* 01582C 70014C2C 241800FF */  li    $t8, 255
-/* 015830 70014C30 AC287CDC */  sw    $t0, %lo(dword_CODE_bss_80067CDC)($at)
+/* 015830 70014C30 AC287CDC */  sw    $t0, %lo(__osContPifRam+0x3c)($at)
 /* 015834 70014C34 AFA9000C */  sw    $t1, 0xc($sp)
 /* 015838 70014C38 A3AA0004 */  sb    $t2, 4($sp)
 /* 01583C 70014C3C A3AB0005 */  sb    $t3, 5($sp)
@@ -9360,6 +11129,151 @@ glabel __osPackRequestData
 glabel __osContinitialized
 .word 0
 .align 4
+
+.section .bss
+glabel __osContPifRam
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+glabel __osContLastCmd
+.byte 0
+
+glabel __osMaxControllers
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+glabel __osEepromTimer
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+glabel __osEepromTimerQ
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+glabel __osEepromTimerMsg
+.word 0
+glabel padding_80067d24
+.word 0, 0, 0
+
 
 .section .text  
 glabel osContStartQuery
@@ -9447,9 +11361,9 @@ glabel osContStartReadData
 /* 0159E8 70014DE8 29210010 */  slti  $at, $t1, 0x10
 /* 0159EC 70014DEC 1420FFF6 */  bnez  $at, .L70014DC8
 /* 0159F0 70014DF0 AFA90018 */   sw    $t1, 0x18($sp)
-/* 0159F4 70014DF4 3C018006 */  lui   $at, %hi(dword_CODE_bss_80067CDC) # $at, 0x8006
+/* 0159F4 70014DF4 3C018006 */  lui   $at, %hi(__osContPifRam+0x3c) # $at, 0x8006
 /* 0159F8 70014DF8 3C058006 */  lui   $a1, %hi(__osContPifRam) # $a1, 0x8006
-/* 0159FC 70014DFC AC207CDC */  sw    $zero, %lo(dword_CODE_bss_80067CDC)($at)
+/* 0159FC 70014DFC AC207CDC */  sw    $zero, %lo(__osContPifRam+0x3c)($at)
 /* 015A00 70014E00 24A57CA0 */  addiu $a1, %lo(__osContPifRam) # addiu $a1, $a1, 0x7ca0
 /* 015A04 70014E04 0C0057B4 */  jal   __osSiRawStartDma
 /* 015A08 70014E08 00002025 */   move  $a0, $zero
@@ -9531,7 +11445,7 @@ glabel osContReadData_sub
 /* 015B18 70014F18 3C198006 */  lui   $t9, %hi(__osMaxControllers) # $t9, 0x8006
 /* 015B1C 70014F1C 93397CE1 */  lbu   $t9, %lo(__osMaxControllers)($t9)
 /* 015B20 70014F20 24090001 */  li    $t1, 1
-/* 015B24 70014F24 3C018006 */  lui   $at, %hi(dword_CODE_bss_80067CDC) # $at, 0x8006
+/* 015B24 70014F24 3C018006 */  lui   $at, %hi(__osContPifRam+0x3c) # $at, 0x8006
 /* 015B28 70014F28 240A00FF */  li    $t2, 255
 /* 015B2C 70014F2C 240B0001 */  li    $t3, 1
 /* 015B30 70014F30 240C0004 */  li    $t4, 4
@@ -9539,7 +11453,7 @@ glabel osContReadData_sub
 /* 015B38 70014F38 340EFFFF */  li    $t6, 65535
 /* 015B3C 70014F3C 240FFFFF */  li    $t7, -1
 /* 015B40 70014F40 2418FFFF */  li    $t8, -1
-/* 015B44 70014F44 AC297CDC */  sw    $t1, %lo(dword_CODE_bss_80067CDC)($at)
+/* 015B44 70014F44 AC297CDC */  sw    $t1, %lo(__osContPifRam+0x3c)($at)
 /* 015B48 70014F48 A3AA0004 */  sb    $t2, 4($sp)
 /* 015B4C 70014F4C A3AB0005 */  sb    $t3, 5($sp)
 /* 015B50 70014F50 A3AC0006 */  sb    $t4, 6($sp)
@@ -9680,9 +11594,9 @@ glabel osEepromRead
 /* 015D34 70015134 2B010010 */  slti  $at, $t8, 0x10
 /* 015D38 70015138 1420FFF6 */  bnez  $at, .L70015114
 /* 015D3C 7001513C AFB80030 */   sw    $t8, 0x30($sp)
-/* 015D40 70015140 3C018006 */  lui   $at, %hi(__osEepPifRam_end) # $at, 0x8006
+/* 015D40 70015140 3C018006 */  lui   $at, %hi(__osEepPifRam+0x3C) # $at, 0x8006
 /* 015D44 70015144 3C058006 */  lui   $a1, %hi(__osEepPifRam) # $a1, 0x8006
-/* 015D48 70015148 AC207D6C */  sw    $zero, %lo(__osEepPifRam_end)($at)
+/* 015D48 70015148 AC207D6C */  sw    $zero, %lo(__osEepPifRam+0x3C)($at)
 /* 015D4C 7001514C 24A57D30 */  addiu $a1, %lo(__osEepPifRam) # addiu $a1, $a1, 0x7d30
 /* 015D50 70015150 0C0057B4 */  jal   __osSiRawStartDma
 /* 015D54 70015154 00002025 */   move  $a0, $zero
@@ -9765,11 +11679,11 @@ glabel osEepromRead_sub
 /* 015E6C 7001526C 1420FFF6 */  bnez  $at, .L70015248
 /* 015E70 70015270 AFA90004 */   sw    $t1, 4($sp)
 /* 015E74 70015274 240A0001 */  li    $t2, 1
-/* 015E78 70015278 3C018006 */  lui   $at, %hi(__osEepPifRam_end) # $at, 0x8006
+/* 015E78 70015278 3C018006 */  lui   $at, %hi(__osEepPifRam+0x3C) # $at, 0x8006
 /* 015E7C 7001527C 240B0002 */  li    $t3, 2
 /* 015E80 70015280 240C0008 */  li    $t4, 8
 /* 015E84 70015284 240D0004 */  li    $t5, 4
-/* 015E88 70015288 AC2A7D6C */  sw    $t2, %lo(__osEepPifRam_end)($at)
+/* 015E88 70015288 AC2A7D6C */  sw    $t2, %lo(__osEepPifRam+0x3C)($at)
 /* 015E8C 7001528C A3AB0008 */  sb    $t3, 8($sp)
 /* 015E90 70015290 A3AC0009 */  sb    $t4, 9($sp)
 /* 015E94 70015294 A3AD000A */  sb    $t5, 0xa($sp)
@@ -9818,6 +11732,76 @@ glabel osEepromRead_sub
 /* 015F34 70015334 00000000 */  nop   
 /* 015F38 70015338 00000000 */  nop   
 /* 015F3C 7001533C 00000000 */  nop   
+
+.section .bss
+glabel __osEepPifRam
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+
+.section .text
 glabel osEepromWrite
 /* 015F40 70015340 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 015F44 70015344 AFA5003C */  sw    $a1, 0x3c($sp)
@@ -9889,9 +11873,9 @@ glabel osEepromWrite
 /* 016034 70015434 2B010010 */  slti  $at, $t8, 0x10
 /* 016038 70015438 1420FFF6 */  bnez  $at, .L70015414
 /* 01603C 7001543C AFB80030 */   sw    $t8, 0x30($sp)
-/* 016040 70015440 3C018006 */  lui   $at, %hi(__osEepPifRam_end) # $at, 0x8006
+/* 016040 70015440 3C018006 */  lui   $at, %hi(__osEepPifRam+0x3C) # $at, 0x8006
 /* 016044 70015444 3C058006 */  lui   $a1, %hi(__osEepPifRam) # $a1, 0x8006
-/* 016048 70015448 AC207D6C */  sw    $zero, %lo(__osEepPifRam_end)($at)
+/* 016048 70015448 AC207D6C */  sw    $zero, %lo(__osEepPifRam+0x3C)($at)
 /* 01604C 7001544C 24A57D30 */  addiu $a1, %lo(__osEepPifRam) # addiu $a1, $a1, 0x7d30
 /* 016050 70015450 0C0057B4 */  jal   __osSiRawStartDma
 /* 016054 70015454 00002025 */   move  $a0, $zero
@@ -9956,11 +11940,11 @@ glabel osEepromWrite_sub
 /* 01612C 7001552C 1420FFF6 */  bnez  $at, .L70015508
 /* 016130 70015530 AFA90004 */   sw    $t1, 4($sp)
 /* 016134 70015534 240A0001 */  li    $t2, 1
-/* 016138 70015538 3C018006 */  lui   $at, %hi(__osEepPifRam_end) # $at, 0x8006
+/* 016138 70015538 3C018006 */  lui   $at, %hi(__osEepPifRam+0x3C) # $at, 0x8006
 /* 01613C 7001553C 240B000A */  li    $t3, 10
 /* 016140 70015540 240C0001 */  li    $t4, 1
 /* 016144 70015544 240D0005 */  li    $t5, 5
-/* 016148 70015548 AC2A7D6C */  sw    $t2, %lo(__osEepPifRam_end)($at)
+/* 016148 70015548 AC2A7D6C */  sw    $t2, %lo(__osEepPifRam+0x3C)($at)
 /* 01614C 7001554C A3AB0008 */  sb    $t3, 8($sp)
 /* 016150 70015550 A3AC0009 */  sb    $t4, 9($sp)
 /* 016154 70015554 A3AD000A */  sb    $t5, 0xa($sp)
@@ -10031,9 +12015,9 @@ glabel __osEepStatus
 /* 016244 70015644 AFA80028 */   sw    $t0, 0x28($sp)
 /* 016248 70015648 3C0A8006 */  lui   $t2, %hi(__osEepPifRam) # $t2, 0x8006
 /* 01624C 7001564C 24090001 */  li    $t1, 1
-/* 016250 70015650 3C018006 */  lui   $at, %hi(__osEepPifRam_end) # $at, 0x8006
+/* 016250 70015650 3C018006 */  lui   $at, %hi(__osEepPifRam+0x3C) # $at, 0x8006
 /* 016254 70015654 254A7D30 */  addiu $t2, %lo(__osEepPifRam) # addiu $t2, $t2, 0x7d30
-/* 016258 70015658 AC297D6C */  sw    $t1, %lo(__osEepPifRam_end)($at)
+/* 016258 70015658 AC297D6C */  sw    $t1, %lo(__osEepPifRam+0x3C)($at)
 /* 01625C 7001565C AFAA0024 */  sw    $t2, 0x24($sp)
 /* 016260 70015660 AFA00028 */  sw    $zero, 0x28($sp)
 .L70015664:
@@ -10186,14 +12170,14 @@ glabel osEepromLongRead
 /* 016488 70015888 93A90047 */  lbu   $t1, 0x47($sp)
 /* 01648C 7001588C 8FAB0048 */  lw    $t3, 0x48($sp)
 /* 016490 70015890 3C068002 */  lui   $a2, %hi(osClockRate) # $a2, 0x8002
-/* 016494 70015894 3C078002 */  lui   $a3, %hi(osClockRate) # $a3, 0x8002
+/* 016494 70015894 3C078002 */  lui   $a3, %hi(osClockRate+4) # $a3, 0x8002
 /* 016498 70015898 2728FFF8 */  addiu $t0, $t9, -8
 /* 01649C 7001589C 252A0001 */  addiu $t2, $t1, 1
 /* 0164A0 700158A0 256C0008 */  addiu $t4, $t3, 8
 /* 0164A4 700158A4 AFA8004C */  sw    $t0, 0x4c($sp)
 /* 0164A8 700158A8 A3AA0047 */  sb    $t2, 0x47($sp)
 /* 0164AC 700158AC AFAC0048 */  sw    $t4, 0x48($sp)
-/* 0164B0 700158B0 8CE76984 */  lw    $a3, %lo(osClockRate)($a3)
+/* 0164B0 700158B0 8CE76984 */  lw    $a3, %lo(osClockRate+4)($a3)
 /* 0164B4 700158B4 8CC66980 */  lw    $a2, %lo(osClockRate)($a2)
 /* 0164B8 700158B8 24040000 */  li    $a0, 0
 /* 0164BC 700158BC 0C003B6A */  jal   __ll_mul
@@ -10273,14 +12257,14 @@ glabel osEepromLongWrite
 /* 0165C8 700159C8 93A90047 */  lbu   $t1, 0x47($sp)
 /* 0165CC 700159CC 8FAB0048 */  lw    $t3, 0x48($sp)
 /* 0165D0 700159D0 3C068002 */  lui   $a2, %hi(osClockRate) # $a2, 0x8002
-/* 0165D4 700159D4 3C078002 */  lui   $a3, %hi(osClockRate) # $a3, 0x8002
+/* 0165D4 700159D4 3C078002 */  lui   $a3, %hi(osClockRate+4) # $a3, 0x8002
 /* 0165D8 700159D8 2728FFF8 */  addiu $t0, $t9, -8
 /* 0165DC 700159DC 252A0001 */  addiu $t2, $t1, 1
 /* 0165E0 700159E0 256C0008 */  addiu $t4, $t3, 8
 /* 0165E4 700159E4 AFA8004C */  sw    $t0, 0x4c($sp)
 /* 0165E8 700159E8 A3AA0047 */  sb    $t2, 0x47($sp)
 /* 0165EC 700159EC AFAC0048 */  sw    $t4, 0x48($sp)
-/* 0165F0 700159F0 8CE76984 */  lw    $a3, %lo(osClockRate)($a3)
+/* 0165F0 700159F0 8CE76984 */  lw    $a3, %lo(osClockRate+4)($a3)
 /* 0165F4 700159F4 8CC66980 */  lw    $a2, %lo(osClockRate)($a2)
 /* 0165F8 700159F8 24040000 */  li    $a0, 0
 /* 0165FC 700159FC 0C003B6A */  jal   __ll_mul
@@ -10462,7 +12446,7 @@ glabel __osPfsRequestData
 /* 016880 70015C80 93397CE1 */  lbu   $t9, %lo(__osMaxControllers)($t9)
 /* 016884 70015C84 3C098006 */  lui   $t1, %hi(__osPfsPifRam) # $t1, 0x8006
 /* 016888 70015C88 24080001 */  li    $t0, 1
-/* 01688C 70015C8C 3C018006 */  lui   $at, %hi(__osPfsPifRam_end) # $at, 0x8006
+/* 01688C 70015C8C 3C018006 */  lui   $at, %hi(__osPfsPifRam+0x3c) # $at, 0x8006
 /* 016890 70015C90 25297D70 */  addiu $t1, %lo(__osPfsPifRam) # addiu $t1, $t1, 0x7d70
 /* 016894 70015C94 240A00FF */  li    $t2, 255
 /* 016898 70015C98 240B0001 */  li    $t3, 1
@@ -10471,7 +12455,7 @@ glabel __osPfsRequestData
 /* 0168A4 70015CA4 240E00FF */  li    $t6, 255
 /* 0168A8 70015CA8 240F00FF */  li    $t7, 255
 /* 0168AC 70015CAC 241800FF */  li    $t8, 255
-/* 0168B0 70015CB0 AC287DAC */  sw    $t0, %lo(__osPfsPifRam_end)($at)
+/* 0168B0 70015CB0 AC287DAC */  sw    $t0, %lo(__osPfsPifRam+0x3c)($at)
 /* 0168B4 70015CB4 AFA9000C */  sw    $t1, 0xc($sp)
 /* 0168B8 70015CB8 A3AA0004 */  sb    $t2, 4($sp)
 /* 0168BC 70015CBC A3AB0005 */  sb    $t3, 5($sp)
@@ -10567,20 +12551,42 @@ glabel __osPfsGetInitData
 /* 016A08 70015E08 A08B0000 */   sb    $t3, ($a0)
 
 /* 016A0C 70015E0C 00000000 */  nop   
+.section .bss
+glabel __osPfsPifRam
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+
+
+
+.section .text
 glabel __osSiCreateAccessQueue
 /* 016A10 70015E10 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 016A14 70015E14 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 016A18 70015E18 240E0001 */  li    $t6, 1
-/* 016A1C 70015E1C 3C018002 */  lui   $at, %hi(D_800277C0) # $at, 0x8002
-/* 016A20 70015E20 3C048006 */  lui   $a0, %hi(dword_CODE_bss_80067DB8) # $a0, 0x8006
-/* 016A24 70015E24 3C058006 */  lui   $a1, %hi(dword_CODE_bss_80067DB0) # $a1, 0x8006
-/* 016A28 70015E28 AC2E77C0 */  sw    $t6, %lo(D_800277C0)($at)
-/* 016A2C 70015E2C 24A57DB0 */  addiu $a1, %lo(dword_CODE_bss_80067DB0) # addiu $a1, $a1, 0x7db0
-/* 016A30 70015E30 24847DB8 */  addiu $a0, %lo(dword_CODE_bss_80067DB8) # addiu $a0, $a0, 0x7db8
+/* 016A1C 70015E1C 3C018002 */  lui   $at, %hi(__osSiAccessQueueEnabled) # $at, 0x8002
+/* 016A20 70015E20 3C048006 */  lui   $a0, %hi(__osSiAccessQueue) # $a0, 0x8006
+/* 016A24 70015E24 3C058006 */  lui   $a1, %hi(__osSiAccessBuf) # $a1, 0x8006
+/* 016A28 70015E28 AC2E77C0 */  sw    $t6, %lo(__osSiAccessQueueEnabled)($at)
+/* 016A2C 70015E2C 24A57DB0 */  addiu $a1, %lo(__osSiAccessBuf) # addiu $a1, $a1, 0x7db0
+/* 016A30 70015E30 24847DB8 */  addiu $a0, %lo(__osSiAccessQueue) # addiu $a0, $a0, 0x7db8
 /* 016A34 70015E34 0C0035B4 */  jal   osCreateMesgQueue
 /* 016A38 70015E38 24060001 */   li    $a2, 1
-/* 016A3C 70015E3C 3C048006 */  lui   $a0, %hi(dword_CODE_bss_80067DB8) # $a0, 0x8006
-/* 016A40 70015E40 24847DB8 */  addiu $a0, %lo(dword_CODE_bss_80067DB8) # addiu $a0, $a0, 0x7db8
+/* 016A3C 70015E3C 3C048006 */  lui   $a0, %hi(__osSiAccessQueue) # $a0, 0x8006
+/* 016A40 70015E40 24847DB8 */  addiu $a0, %lo(__osSiAccessQueue) # addiu $a0, $a0, 0x7db8
 /* 016A44 70015E44 00002825 */  move  $a1, $zero
 /* 016A48 70015E48 0C0037C4 */  jal   osSendMesg
 /* 016A4C 70015E4C 00003025 */   move  $a2, $zero
@@ -10590,8 +12596,8 @@ glabel __osSiCreateAccessQueue
 /* 016A5C 70015E5C 00000000 */   nop   
 
 glabel __osSiGetAccess
-/* 016A60 70015E60 3C0E8002 */  lui   $t6, %hi(D_800277C0) # $t6, 0x8002
-/* 016A64 70015E64 8DCE77C0 */  lw    $t6, %lo(D_800277C0)($t6)
+/* 016A60 70015E60 3C0E8002 */  lui   $t6, %hi(__osSiAccessQueueEnabled) # $t6, 0x8002
+/* 016A64 70015E64 8DCE77C0 */  lw    $t6, %lo(__osSiAccessQueueEnabled)($t6)
 /* 016A68 70015E68 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 016A6C 70015E6C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 016A70 70015E70 15C00003 */  bnez  $t6, .L70015E80
@@ -10599,8 +12605,8 @@ glabel __osSiGetAccess
 /* 016A78 70015E78 0C005784 */  jal   __osSiCreateAccessQueue
 /* 016A7C 70015E7C 00000000 */   nop   
 .L70015E80:
-/* 016A80 70015E80 3C048006 */  lui   $a0, %hi(dword_CODE_bss_80067DB8) # $a0, 0x8006
-/* 016A84 70015E84 24847DB8 */  addiu $a0, %lo(dword_CODE_bss_80067DB8) # addiu $a0, $a0, 0x7db8
+/* 016A80 70015E80 3C048006 */  lui   $a0, %hi(__osSiAccessQueue) # $a0, 0x8006
+/* 016A84 70015E84 24847DB8 */  addiu $a0, %lo(__osSiAccessQueue) # addiu $a0, $a0, 0x7db8
 /* 016A88 70015E88 27A5001C */  addiu $a1, $sp, 0x1c
 /* 016A8C 70015E8C 0C003774 */  jal   osRecvMesg
 /* 016A90 70015E90 24060001 */   li    $a2, 1
@@ -10612,8 +12618,8 @@ glabel __osSiGetAccess
 glabel __osSiRelAccess
 /* 016AA4 70015EA4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 016AA8 70015EA8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 016AAC 70015EAC 3C048006 */  lui   $a0, %hi(dword_CODE_bss_80067DB8) # $a0, 0x8006
-/* 016AB0 70015EB0 24847DB8 */  addiu $a0, %lo(dword_CODE_bss_80067DB8) # addiu $a0, $a0, 0x7db8
+/* 016AAC 70015EAC 3C048006 */  lui   $a0, %hi(__osSiAccessQueue) # $a0, 0x8006
+/* 016AB0 70015EB0 24847DB8 */  addiu $a0, %lo(__osSiAccessQueue) # addiu $a0, $a0, 0x7db8
 /* 016AB4 70015EB4 00002825 */  move  $a1, $zero
 /* 016AB8 70015EB8 0C0037C4 */  jal   osSendMesg
 /* 016ABC 70015EBC 00003025 */   move  $a2, $zero
@@ -10623,9 +12629,21 @@ glabel __osSiRelAccess
 /* 016ACC 70015ECC 00000000 */   nop   
 
 .section .data
-D_800277C0:
+__osSiAccessQueueEnabled:
 glabel __osSiAccessQueueEnabled
 .word 0
+
+.align 4
+.section .bss
+glabel __osSiAccessBuf
+.word 0, 0
+glabel __osSiAccessQueue
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
 
 .section .text
 glabel __osSiRawStartDma
@@ -10851,9 +12869,9 @@ glabel __osContRamWrite
 /* 016DCC 700161CC 29A10010 */  slti  $at, $t5, 0x10
 /* 016DD0 700161D0 1420FFF6 */  bnez  $at, .L700161AC
 /* 016DD4 700161D4 AFAD0058 */   sw    $t5, 0x58($sp)
-/* 016DD8 700161D8 3C018006 */  lui   $at, %hi(__osPfsPifRam_end) # $at, 0x8006
+/* 016DD8 700161D8 3C018006 */  lui   $at, %hi(__osPfsPifRam+0x3c) # $at, 0x8006
 /* 016DDC 700161DC 3C058006 */  lui   $a1, %hi(__osPfsPifRam) # $a1, 0x8006
-/* 016DE0 700161E0 AC207DAC */  sw    $zero, %lo(__osPfsPifRam_end)($at)
+/* 016DE0 700161E0 AC207DAC */  sw    $zero, %lo(__osPfsPifRam+0x3c)($at)
 /* 016DE4 700161E4 24A57D70 */  addiu $a1, %lo(__osPfsPifRam) # addiu $a1, $a1, 0x7d70
 /* 016DE8 700161E8 0C0057B4 */  jal   __osSiRawStartDma
 /* 016DEC 700161EC 00002025 */   move  $a0, $zero
@@ -10967,12 +12985,12 @@ glabel __osContRamWrite_sub
 /* 016F74 70016374 1420FFF7 */  bnez  $at, .L70016354
 /* 016F78 70016378 AFA80018 */   sw    $t0, 0x18($sp)
 /* 016F7C 7001637C 24090001 */  li    $t1, 1
-/* 016F80 70016380 3C018006 */  lui   $at, %hi(__osPfsPifRam_end) # $at, 0x8006
+/* 016F80 70016380 3C018006 */  lui   $at, %hi(__osPfsPifRam+0x3c) # $at, 0x8006
 /* 016F84 70016384 240A00FF */  li    $t2, 255
 /* 016F88 70016388 240B0023 */  li    $t3, 35
 /* 016F8C 7001638C 240C0001 */  li    $t4, 1
 /* 016F90 70016390 240D0003 */  li    $t5, 3
-/* 016F94 70016394 AC297DAC */  sw    $t1, %lo(__osPfsPifRam_end)($at)
+/* 016F94 70016394 AC297DAC */  sw    $t1, %lo(__osPfsPifRam+0x3c)($at)
 /* 016F98 70016398 A3AA001C */  sb    $t2, 0x1c($sp)
 /* 016F9C 7001639C A3AB001D */  sb    $t3, 0x1d($sp)
 /* 016FA0 700163A0 A3AC001E */  sb    $t4, 0x1e($sp)
@@ -11048,6 +13066,7 @@ glabel __osContRamWrite_sub
 /* 0170A8 700164A8 00000000 */   nop   
 
 /* 0170AC 700164AC 00000000 */  nop   
+
 glabel __osContRamRead
 /* 0170B0 700164B0 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0170B4 700164B4 3C0E8006 */  lui   $t6, %hi(__osPfsPifRam) # $t6, 0x8006
@@ -11092,9 +13111,9 @@ glabel __osContRamRead
 /* 017148 70016548 29610010 */  slti  $at, $t3, 0x10
 /* 01714C 7001654C 1420FFF6 */  bnez  $at, .L70016528
 /* 017150 70016550 AFAB0058 */   sw    $t3, 0x58($sp)
-/* 017154 70016554 3C018006 */  lui   $at, %hi(__osPfsPifRam_end) # $at, 0x8006
+/* 017154 70016554 3C018006 */  lui   $at, %hi(__osPfsPifRam+0x3c) # $at, 0x8006
 /* 017158 70016558 3C058006 */  lui   $a1, %hi(__osPfsPifRam) # $a1, 0x8006
-/* 01715C 7001655C AC207DAC */  sw    $zero, %lo(__osPfsPifRam_end)($at)
+/* 01715C 7001655C AC207DAC */  sw    $zero, %lo(__osPfsPifRam+0x3c)($at)
 /* 017160 70016560 24A57D70 */  addiu $a1, %lo(__osPfsPifRam) # addiu $a1, $a1, 0x7d70
 /* 017164 70016564 0C0057B4 */  jal   __osSiRawStartDma
 /* 017168 70016568 00002025 */   move  $a0, $zero
@@ -11227,12 +13246,12 @@ glabel __osContRamRead_sub
 /* 017334 70016734 1420FFF7 */  bnez  $at, .L70016714
 /* 017338 70016738 AFA80018 */   sw    $t0, 0x18($sp)
 /* 01733C 7001673C 24090001 */  li    $t1, 1
-/* 017340 70016740 3C018006 */  lui   $at, %hi(__osPfsPifRam_end) # $at, 0x8006
+/* 017340 70016740 3C018006 */  lui   $at, %hi(__osPfsPifRam+0x3c) # $at, 0x8006
 /* 017344 70016744 240A00FF */  li    $t2, 255
 /* 017348 70016748 240B0003 */  li    $t3, 3
 /* 01734C 7001674C 240C0021 */  li    $t4, 33
 /* 017350 70016750 240D0002 */  li    $t5, 2
-/* 017354 70016754 AC297DAC */  sw    $t1, %lo(__osPfsPifRam_end)($at)
+/* 017354 70016754 AC297DAC */  sw    $t1, %lo(__osPfsPifRam+0x3c)($at)
 /* 017358 70016758 A3AA001C */  sb    $t2, 0x1c($sp)
 /* 01735C 7001675C A3AB001D */  sb    $t3, 0x1d($sp)
 /* 017360 70016760 A3AC001E */  sb    $t4, 0x1e($sp)
@@ -11304,6 +13323,7 @@ glabel __osContRamRead_sub
 /* 017458 70016858 00000000 */   nop   
 
 /* 01745C 7001685C 00000000 */  nop   
+
 glabel guAlignF
 /* 017460 70016860 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 017464 70016864 3C018003 */  lui   $at, %hi(F32_800297F0) # $at, 0x8003
@@ -11442,8 +13462,14 @@ glabel guAlign
 /* 01766C 70016A6C 00000000 */   nop
 
 .section .rodata
-F32_800297F0: .float 0.017453292
+glabel F32_800297F0
+.float 0.017453292
 .align 4
+
+.section .bss
+glabel flt_CODE_bss_80067DD0
+.word 0
+.word 0,0,0
 
 .section .text
 glabel guOrthoF
@@ -11613,7 +13639,7 @@ glabel sins
 /* 0178CC 70016CCC 00000000 */   nop  
 
  .section .data
-sin_table:
+glabel sin_table
 .half      0,  0x32,  0x64,  0x96
 .half   0xC9,  0xFB, 0x12D, 0x160
 .half  0x192, 0x1C4, 0x1F7, 0x229
@@ -12360,7 +14386,8 @@ glabel guLookAtReflect
 .align 4 
 
 .section .rodata
-F64_80029800: .double 127.0
+glabel F64_80029800
+.double 127.0
 .align 4
 
 .section .text 
@@ -12699,8 +14726,14 @@ glabel guRotate
 .align 4
 
 .section .rodata
-F32_80029810: .float 0.017453292
+glabel F32_80029810
+.float 0.017453292
 .align 4
+
+.section .bss
+glabel flt_CODE_bss_80067DE0
+.word 0
+.word 0,0,0
 
 .section .text
 glabel __d_to_ll
@@ -12858,8 +14891,10 @@ glabel __ull_to_f
 /* 018714 70017B14 00000000 */   nop   
 .align 4
 .section .rodata
-D_80029820:.word 0x80000000, 0
-D_80029828:.word 0x80000000, 0
+glabel D_80029820
+.word 0x80000000, 0
+glabel D_80029828
+.word 0x80000000, 0
 
 .section .text  
 glabel __osSetSR
@@ -13021,6 +15056,4107 @@ glabel __osSetHWIntrRoutine
 /* 018928 70017D28 03E00008 */  jr    $ra
 /* 01892C 70017D2C 00000000 */   nop   
 
+.section .bss
+glabel leoDiskStack
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+
+.section .text
 glabel __osLeoInterrupt
 /* 018930 70017D30 3C0E8002 */  lui   $t6, %hi(osDiskExist) # $t6, 0x8002
 /* 018934 70017D34 8DCE6990 */  lw    $t6, %lo(osDiskExist)($t6)
@@ -13654,7 +19790,7 @@ glabel __osTimerServicesInit
 /* 019230 70018630 3C018007 */  lui   $at, %hi(__osCurrentTime) # $at, 0x8007
 /* 019234 70018634 240E0000 */  li    $t6, 0
 /* 019238 70018638 240F0000 */  li    $t7, 0
-/* 01923C 7001863C AC2F8E14 */  sw    $t7, %lo(D_80068E14)($at)
+/* 01923C 7001863C AC2F8E14 */  sw    $t7, %lo(__osCurrentTime+4)($at)
 /* 019240 70018640 AC2E8E10 */  sw    $t6, %lo(__osCurrentTime)($at)
 /* 019244 70018644 3C018007 */  lui   $at, %hi(__osBaseCounter) # $at, 0x8007
 /* 019248 70018648 3C188002 */  lui   $t8, %hi(__osTimerList) # $t8, 0x8002
@@ -13925,8 +20061,488 @@ glabel __osInsertTimer
 /* 01962C 70018A2C 27BD0038 */   addiu $sp, $sp, 0x38
 
 .section .data
-__osTimerList:  .word __osBaseTimer
+glabel __osTimerList
+.word __osBaseTimer
 .align 4
+.section .bss
+glabel __osBaseTimer
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+glabel __osCurrentTime
+.word 0,0
+glabel __osBaseCounter
+.word 0
+glabel __osViIntrCount
+.word 0
+glabel __osTimerCounter
+.word 0
+.word 0,0,0
+
+#needs a proper home but works
+glabel __osThreadSave
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
 
 .section .text
 glabel osGetThreadPri
@@ -13945,12 +20561,12 @@ glabel osGetThreadPri
 glabel __osViInit
 /* 019650 70018A50 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 019654 70018A54 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 019658 70018A58 3C048002 */  lui   $a0, %hi(buffer1) # $a0, 0x8002
-/* 01965C 70018A5C 24847FE0 */  addiu $a0, %lo(buffer1) # addiu $a0, $a0, 0x7fe0
+/* 019658 70018A58 3C048002 */  lui   $a0, %hi(vi) # $a0, 0x8002
+/* 01965C 70018A5C 24847FE0 */  addiu $a0, %lo(vi) # addiu $a0, $a0, 0x7fe0
 /* 019660 70018A60 0C005F10 */  jal   _blkclr
 /* 019664 70018A64 24050060 */   li    $a1, 96
-/* 019668 70018A68 3C0E8002 */  lui   $t6, %hi(buffer1) # $t6, 0x8002
-/* 01966C 70018A6C 25CE7FE0 */  addiu $t6, %lo(buffer1) # addiu $t6, $t6, 0x7fe0
+/* 019668 70018A68 3C0E8002 */  lui   $t6, %hi(vi) # $t6, 0x8002
+/* 01966C 70018A6C 25CE7FE0 */  addiu $t6, %lo(vi) # addiu $t6, $t6, 0x7fe0
 /* 019670 70018A70 3C018003 */  lui   $at, %hi(__osViCurr) # $at, 0x8003
 /* 019674 70018A74 AC2E8040 */  sw    $t6, %lo(__osViCurr)($at)
 /* 019678 70018A78 3C018003 */  lui   $at, %hi(__osViNext) # $at, 0x8003
@@ -13961,15 +20577,15 @@ glabel __osViInit
 /* 01968C 70018A8C 3C088003 */  lui   $t0, %hi(__osViCurr) # $t0, 0x8003
 /* 019690 70018A90 8D088040 */  lw    $t0, %lo(__osViCurr)($t0)
 /* 019694 70018A94 24190001 */  li    $t9, 1
-/* 019698 70018A98 3C098003 */  lui   $t1, %hi(osTvType) # $t1, 0x8003
+/* 019698 70018A98 3C098003 */  lui   $t1, %hi(copy_osTvType) # $t1, 0x8003
 /* 01969C 70018A9C A5190002 */  sh    $t9, 2($t0)
-/* 0196A0 70018AA0 8D298048 */  lw    $t1, %lo(osTvType)($t1)
+/* 0196A0 70018AA0 8D298048 */  lw    $t1, %lo(copy_osTvType)($t1)
 /* 0196A4 70018AA4 1120000B */  beqz  $t1, .L70018AD4
 /* 0196A8 70018AA8 00000000 */   nop   
 /* 0196AC 70018AAC 3C0B8003 */  lui   $t3, %hi(__osViNext) # $t3, 0x8003
 /* 0196B0 70018AB0 8D6B8044 */  lw    $t3, %lo(__osViNext)($t3)
-/* 0196B4 70018AB4 3C0A8003 */  lui   $t2, %hi(OS_VI_NTSC_LAN1) # $t2, 0x8003
-/* 0196B8 70018AB8 254A8320 */  addiu $t2, %lo(OS_VI_NTSC_LAN1) # addiu $t2, $t2, -0x7ce0
+/* 0196B4 70018AB4 3C0A8003 */  lui   $t2, %hi(osViModeNtscLan1) # $t2, 0x8003
+/* 0196B8 70018AB8 254A8320 */  addiu $t2, %lo(osViModeNtscLan1) # addiu $t2, $t2, -0x7ce0
 /* 0196BC 70018ABC 3C0C02E6 */  lui   $t4, (0x02E6D354 >> 16) # lui $t4, 0x2e6
 /* 0196C0 70018AC0 358CD354 */  ori   $t4, (0x02E6D354 & 0xFFFF) # ori $t4, $t4, 0xd354
 /* 0196C4 70018AC4 3C018003 */  lui   $at, %hi(osViClock) # $at, 0x8003
@@ -13979,8 +20595,8 @@ glabel __osViInit
 .L70018AD4:
 /* 0196D4 70018AD4 3C0F8003 */  lui   $t7, %hi(__osViNext) # $t7, 0x8003
 /* 0196D8 70018AD8 8DEF8044 */  lw    $t7, %lo(__osViNext)($t7)
-/* 0196DC 70018ADC 3C0D8003 */  lui   $t5, %hi(OS_VI_PAL_LAN1) # $t5, 0x8003
-/* 0196E0 70018AE0 25AD8370 */  addiu $t5, %lo(OS_VI_PAL_LAN1) # addiu $t5, $t5, -0x7c90
+/* 0196DC 70018ADC 3C0D8003 */  lui   $t5, %hi(osViModePalLan1) # $t5, 0x8003
+/* 0196E0 70018AE0 25AD8370 */  addiu $t5, %lo(osViModePalLan1) # addiu $t5, $t5, -0x7c90
 /* 0196E4 70018AE4 3C1802F5 */  lui   $t8, (0x02F5B2D2 >> 16) # lui $t8, 0x2f5
 /* 0196E8 70018AE8 3718B2D2 */  ori   $t8, (0x02F5B2D2 & 0xFFFF) # ori $t8, $t8, 0xb2d2
 /* 0196EC 70018AEC 3C018003 */  lui   $at, %hi(osViClock) # $at, 0x8003
@@ -14016,26 +20632,41 @@ glabel __osViInit
 /* 019758 70018B58 03E00008 */  jr    $ra
 /* 01975C 70018B5C 00000000 */   nop   
 
-glabel _libultraosviSegmentDataStart
+
 .section .data
-buffer1:
+glabel _libultraosviSegmentDataStart
+
+glabel vi
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
+
+glabel vi_buffer_next
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
 .byte    0,   0,   0,   0,   0,   0,   0,   0
-__osViCurr: .word buffer1
-__osViNext: .word buffer1+0x30
-osViClock:      .word 48681812
-.align 4
+
+glabel __osViCurr
+.word vi
+
+glabel __osViNext
+.word vi_buffer_next
+
+glabel copy_osTvType
+.word 1
+
+glabel osViClock
+.word 48681812
+
 glabel _libultraosviSegmentDataEnd
+.align 4
+
 
 .section .text
 glabel __osViGetCurrentContext
@@ -14732,21 +21363,27 @@ glabel alFxNew
 /* 01A11C 7001951C 8C399830 */  lw    $t9, -0x67d0($at)
 /* 01A120 70019520 03200008 */  jr    $t9
 /* 01A124 70019524 00000000 */   nop   
+.L70019528:
 /* 01A128 70019528 3C138003 */  lui   $s3, %hi(SMALLROOM_PARAMS) # $s3, 0x8003
 /* 01A12C 7001952C 1000000F */  b     .L7001956C
 /* 01A130 70019530 26738050 */   addiu $s3, %lo(SMALLROOM_PARAMS) # addiu $s3, $s3, -0x7fb0
+.L70019534:
 /* 01A134 70019534 3C138003 */  lui   $s3, %hi(BIGROOM_PARAMS) # $s3, 0x8003
 /* 01A138 70019538 1000000C */  b     .L7001956C
 /* 01A13C 7001953C 267380B8 */   addiu $s3, %lo(BIGROOM_PARAMS) # addiu $s3, $s3, -0x7f48
+.L70019540:
 /* 01A140 70019540 3C138003 */  lui   $s3, %hi(ECHO_PARAMS) # $s3, 0x8003
 /* 01A144 70019544 10000009 */  b     .L7001956C
 /* 01A148 70019548 26738140 */   addiu $s3, %lo(ECHO_PARAMS) # addiu $s3, $s3, -0x7ec0
+.L7001954C:
 /* 01A14C 7001954C 3C138003 */  lui   $s3, %hi(CHORUS_PARAMS) # $s3, 0x8003
 /* 01A150 70019550 10000006 */  b     .L7001956C
 /* 01A154 70019554 26738168 */   addiu $s3, %lo(CHORUS_PARAMS) # addiu $s3, $s3, -0x7e98
+.L70019558:
 /* 01A158 70019558 3C138003 */  lui   $s3, %hi(FLANGE_PARAMS) # $s3, 0x8003
 /* 01A15C 7001955C 10000003 */  b     .L7001956C
 /* 01A160 70019560 26738190 */   addiu $s3, %lo(FLANGE_PARAMS) # addiu $s3, $s3, -0x7e70
+.L70019564:
 /* 01A164 70019564 10000001 */  b     .L7001956C
 /* 01A168 70019568 8C530020 */   lw    $s3, 0x20($v0)
 .L7001956C:
@@ -14975,38 +21612,39 @@ glabel alFxNew
 /* 01A4BC 700198BC 00000000 */  nop
 
 .section .data
-SMALLROOM_PARAMS:
+glabel SMALLROOM_PARAMS
 .word          3,     0xFA0,         0,     0x870,    0x2666,0xFFFFD99A,         0,         0
 .word          0,         0,     0x2F8,     0x5F0,     0xCCC,0xFFFFF334,    0x3FFF,         0
 .word          0,         0,         0,     0x960,    0x1388,         0,         0,         0
 .word          0,    0x5000
-BIGROOM_PARAMS:
+glabel BIGROOM_PARAMS
 .word          4,     0xFA0,         0,     0xA50,    0x2666,0xFFFFD99A,         0,         0
 .word          0,         0,     0x370,     0x870,     0xCCC,0xFFFFF334,    0x3FFF,         0
 .word          0,         0,     0xA50,     0xE38,     0xCCC,0xFFFFF334,    0x3FFF,         0
 .word          0,         0,         0,     0xEB0,    0x1F40,         0,         0,         0
 .word          0,    0x5000
-ECHO_PARAMS:
+glabel ECHO_PARAMS
 .word          1,    0x1F40,         0,    0x1BF8,    0x2EE0,         0,    0x7FFF,         0
 .word          0,         0
-CHORUS_PARAMS:
+glabel CHORUS_PARAMS
 .word          1,     0x320,         0,      0xC8,    0x4000,         0,    0x7FFF,    0x1DB0
 .word      0x2BC,         0
-FLANGE_PARAMS:
+glabel FLANGE_PARAMS
 .word          1,     0x320,         0,      0xC8,         0,    0x5FFF,    0x7FFF,     0x17C
 .word      0x1F4,         0
-NULL_PARAMS:
+glabel NULL_PARAMS
 .word          0,         0,         0,         0,         0,         0,         0,         0
 .word          0,         0
 .section .rodata
-J_80019520:
+glabel J_80019520
 .word .L70019528
 .word .L70019534
 .word .L7001954C
 .word .L70019558
 .word .L70019540
 .word .L70019564
-F64_80029848: .double 173123.404906676
+glabel F64_80029848
+.double 173123.404906676
 
 .section .text
 glabel alSynAllocFX
@@ -15943,8 +22581,10 @@ glabel alResampleParam
 /* 01B224 7001A624 8C2E9850 */  lw    $t6, -0x67b0($at)
 /* 01B228 7001A628 01C00008 */  jr    $t6
 /* 01B22C 7001A62C 00000000 */   nop   
+.L7001A630:
 /* 01B230 7001A630 10000029 */  b     .L7001A6D8
 /* 01B234 7001A634 ACE60000 */   sw    $a2, ($a3)
+.L7001A638:
 /* 01B238 7001A638 8CE40000 */  lw    $a0, ($a3)
 /* 01B23C 7001A63C 44802000 */  mtc1  $zero, $f4
 /* 01B240 7001A640 240F0001 */  li    $t7, 1
@@ -15960,6 +22600,7 @@ glabel alResampleParam
 /* 01B268 7001A668 00000000 */  nop   
 /* 01B26C 7001A66C 1000001B */  b     .L7001A6DC
 /* 01B270 7001A670 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7001A674:
 /* 01B274 7001A674 8CE40000 */  lw    $a0, ($a3)
 /* 01B278 7001A678 24180001 */  li    $t8, 1
 /* 01B27C 7001A67C ACF80030 */  sw    $t8, 0x30($a3)
@@ -15972,10 +22613,12 @@ glabel alResampleParam
 /* 01B298 7001A698 00000000 */  nop   
 /* 01B29C 7001A69C 1000000F */  b     .L7001A6DC
 /* 01B2A0 7001A6A0 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7001A6A4:
 /* 01B2A4 7001A6A4 AFA6001C */  sw    $a2, 0x1c($sp)
 /* 01B2A8 7001A6A8 C7A6001C */  lwc1  $f6, 0x1c($sp)
 /* 01B2AC 7001A6AC 1000000A */  b     .L7001A6D8
 /* 01B2B0 7001A6B0 E4E60018 */   swc1  $f6, 0x18($a3)
+.L7001A6B4:
 /* 01B2B4 7001A6B4 24080001 */  li    $t0, 1
 /* 01B2B8 7001A6B8 10000007 */  b     .L7001A6D8
 /* 01B2BC 7001A6BC ACE8001C */   sw    $t0, 0x1c($a3)
@@ -16133,7 +22776,7 @@ glabel alResamplePull
 .align 4
 
 .section .rodata
-J_8001A628:
+glabel J_8001A628
 .word .L7001A630
 .word .L7001A6C0
 .word .L7001A6C0
@@ -16144,7 +22787,7 @@ J_8001A628:
 .word .L7001A6B4
 .word .L7001A674
 .align 3
-F64_80029878:
+glabel F64_80029878
 .double 1.99996
 .float 1.9999599
 .word 0
@@ -16607,6 +23250,7 @@ glabel alEnvmixerPull
 /* 01BB68 7001AF68 8C399968 */  lw    $t9, -0x6698($at)
 /* 01BB6C 7001AF6C 03200008 */  jr    $t9
 /* 01BB70 7001AF70 00000000 */   nop   
+.L7001AF74:
 /* 01BB74 7001AF74 846E000A */  lh    $t6, 0xa($v1)
 /* 01BB78 7001AF78 00608025 */  move  $s0, $v1
 /* 01BB7C 7001AF7C 51C00007 */  beql  $t6, $zero, .L7001AF9C
@@ -16690,6 +23334,7 @@ glabel alEnvmixerPull
 /* 01BCA8 7001B0A8 00000000 */  nop   
 /* 01BCAC 7001B0AC 100000D5 */  b     .L7001B404
 /* 01BCB0 7001B0B0 87B800BE */   lh    $t8, 0xbe($sp)
+.L7001B0B4:
 /* 01BCB4 7001B0B4 02E08025 */  move  $s0, $s7
 /* 01BCB8 7001B0B8 27B500CE */  addiu $s5, $sp, 0xce
 /* 01BCBC 7001B0BC 27B300BE */  addiu $s3, $sp, 0xbe
@@ -16847,6 +23492,7 @@ glabel alEnvmixerPull
 .L7001B2FC:
 /* 01BEFC 7001B2FC 10000040 */  b     .L7001B400
 /* 01BF00 7001B300 AEF10038 */   sw    $s1, 0x38($s7)
+.L7001B304:
 /* 01BF04 7001B304 846F000A */  lh    $t7, 0xa($v1)
 /* 01BF08 7001B308 00608025 */  move  $s0, $v1
 /* 01BF0C 7001B30C 51E00007 */  beql  $t7, $zero, .L7001B32C
@@ -16869,6 +23515,7 @@ glabel alEnvmixerPull
 /* 01BF4C 7001B34C 00003025 */  move  $a2, $zero
 /* 01BF50 7001B350 1000002C */  b     .L7001B404
 /* 01BF54 7001B354 87B800BE */   lh    $t8, 0xbe($sp)
+.L7001B358:
 /* 01BF58 7001B358 02E08025 */  move  $s0, $s7
 /* 01BF5C 7001B35C 27B500CE */  addiu $s5, $sp, 0xce
 /* 01BF60 7001B360 27B300BE */  addiu $s3, $sp, 0xbe
@@ -16885,6 +23532,7 @@ glabel alEnvmixerPull
 /* 01BF8C 7001B38C 00003025 */  move  $a2, $zero
 /* 01BF90 7001B390 1000001C */  b     .L7001B404
 /* 01BF94 7001B394 87B800BE */   lh    $t8, 0xbe($sp)
+.L7001B398:
 /* 01BF98 7001B398 8C78000C */  lw    $t8, 0xc($v1)
 /* 01BF9C 7001B39C 3C048002 */  lui   $a0, %hi(alGlobals) # $a0, 0x8002
 /* 01BFA0 7001B3A0 8C8476E0 */  lw    $a0, %lo(alGlobals)($a0)
@@ -16978,7 +23626,7 @@ glabel alEnvmixerPull
 /* 01C0DC 7001B4DC 00000000 */  nop
 
 .section .data
-eqpower:
+glabel eqpower
 .half 32767,32764,32757,32744,32727,32704,32677,32644
 .half 32607,32564,32517,32464,32407,32344,32277,32205
 .half 32127,32045,31958,31866,31770,31668,31561,31450
@@ -16997,27 +23645,36 @@ eqpower:
 .half  2833, 2429, 2025, 1620, 1216,  810,  405,    0
 
 .section .rodata
-aAssertionFaultSSLineD:
+glabel aAssertionFaultSSLineD
 .asciiz "\n--- ASSERTION FAULT - %s - %s, line %d\n\n"
 .align 2
-aSamples0:.asciiz "samples >= 0"
+glabel aSamples0
+.asciiz "samples >= 0"
 .align 2
-aEnv_c:.asciiz "env.c"
+glabel aEnv_c
+.asciiz "env.c"
 .align 2
-aAssertionFaultSSLineD_0:.asciiz "\n--- ASSERTION FAULT - %s - %s, line %d\n\n"
+glabel aAssertionFaultSSLineD_0
+.asciiz "\n--- ASSERTION FAULT - %s - %s, line %d\n\n"
 .align 4
-aSamplesAl_max_rsp_samples:.asciiz "samples <= AL_MAX_RSP_SAMPLES"
+glabel aSamplesAl_max_rsp_samples
+.asciiz "samples <= AL_MAX_RSP_SAMPLES"
 .align 4
-aEnv_c_0:.asciiz "env.c"
+glabel aEnv_c_0
+.asciiz "env.c"
 .align 2
-aAssertionFaultSSLineD_1:.asciiz "\n--- ASSERTION FAULT - %s - %s, line %d\n\n"
+glabel aAssertionFaultSSLineD_1
+.asciiz "\n--- ASSERTION FAULT - %s - %s, line %d\n\n"
 .align 2
-aSource:.asciiz "source"
+glabel aSource
+.asciiz "source"
 .align 2
-aEnv_c_1:.asciiz "env.c"
+glabel aEnv_c_1
+.asciiz "env.c"
 .align 2
-F32_80029964:.float 65535.0
-J_8001AF6C:
+glabel F32_80029964
+.float 65535.0
+glabel J_8001AF6C
 .word .L7001B398
 .word .L7001B3B8
 .word .L7001B3B8
@@ -17385,15 +24042,24 @@ glabel ultra_7001B830
 /* 01C59C 7001B99C 00000000 */  nop   
 
 .section .rodata
-    F64_800299B0: .double 1.0
-    F64_800299B8: .double -0.1666665955042776
-    F64_800299C0: .double 0.008333066246082155
-    F64_800299C8: .double -0.0001980960290193795
-    F64_800299D0: .double 0.000002605780637968037
-    F64_800299D8: .double 0.3183098861837907
-    F64_800299E0: .double 3.141592621803284
-    F64_800299E8: .double 3.178650954705639e-8
-    F64_800299F0: .double 0.0
+glabel F64_800299B0
+.double 1.0
+glabel F64_800299B8
+.word 0xbfc55554, 0xbc83656d #-0.16666659550427756
+glabel F64_800299C0
+.double 0.008333066246082155
+glabel F64_800299C8
+.double -0.0001980960290193795
+glabel F64_800299D0
+.double 0.000002605780637968037
+glabel F64_800299D8
+.double 0.3183098861837907
+glabel F64_800299E0
+.double 3.1415926218032837
+glabel F64_800299E8
+.double 3.178650954705639e-8
+glabel F64_800299F0
+.double 0.0
                     .word 0
                     .word 0
 .section .text
@@ -17412,8 +24078,8 @@ glabel ultra_7001B9A0
 /* 01C5C4 7001B9C4 14200014 */  bnez  $at, .L7001BA18
 /* 01C5C8 7001B9C8 460020A1 */   cvt.d.s $f2, $f4
 /* 01C5CC 7001B9CC 46221302 */  mul.d $f12, $f2, $f2
-/* 01C5D0 7001B9D0 3C038003 */  lui   $v1, %hi(D_80029A00) # $v1, 0x8003
-/* 01C5D4 7001B9D4 24639A00 */  addiu $v1, %lo(D_80029A00) # addiu $v1, $v1, -0x6600
+/* 01C5D0 7001B9D0 3C038003 */  lui   $v1, %hi(F64_80029A00) # $v1, 0x8003
+/* 01C5D4 7001B9D4 24639A00 */  addiu $v1, %lo(F64_80029A00) # addiu $v1, $v1, -0x6600
 /* 01C5D8 7001B9D8 D4660020 */  ldc1  $f6, 0x20($v1)
 /* 01C5DC 7001B9DC D46A0018 */  ldc1  $f10, 0x18($v1)
 /* 01C5E0 7001B9E0 D4640010 */  ldc1  $f4, 0x10($v1)
@@ -17475,8 +24141,8 @@ glabel ultra_7001B9A0
 /* 01C6A8 7001BAA8 46808021 */  cvt.d.w $f0, $f16
 /* 01C6AC 7001BAAC 3C018003 */  lui   $at, 0x8003
 /* 01C6B0 7001BAB0 D4269A38 */  ldc1  $f6, -0x65c8($at)
-/* 01C6B4 7001BAB4 3C038003 */  lui   $v1, %hi(D_80029A00) # $v1, 0x8003
-/* 01C6B8 7001BAB8 24639A00 */  addiu $v1, %lo(D_80029A00) # addiu $v1, $v1, -0x6600
+/* 01C6B4 7001BAB4 3C038003 */  lui   $v1, %hi(F64_80029A00) # $v1, 0x8003
+/* 01C6B8 7001BAB8 24639A00 */  addiu $v1, %lo(F64_80029A00) # addiu $v1, $v1, -0x6600
 /* 01C6BC 7001BABC 46320102 */  mul.d $f4, $f0, $f18
 /* 01C6C0 7001BAC0 D4680020 */  ldc1  $f8, 0x20($v1)
 /* 01C6C4 7001BAC4 D4720018 */  ldc1  $f18, 0x18($v1)
@@ -17526,15 +24192,24 @@ glabel ultra_7001B9A0
 /* 01C75C 7001BB5C 00000000 */   nop   
 
 .section .rodata
-    F64_80029A00: .double 1.0
-    F64_80029A08: .double -0.1666665955042776
-    F64_80029A10: .double 0.008333066246082155
-    F64_80029A18: .double -0.0001980960290193795
-    F64_80029A20: .double 0.000002605780637968037
-    F64_80029A28: .double 0.3183098861837907
-    F64_80029A30: .double 3.141592621803284
-    F64_80029A38: .double 3.178650954705639e-8
-    F64_80029A40: .double 0.0
+glabel F64_80029A00
+.double 1.0
+glabel F64_80029A08
+.double -0.16666659550427756
+glabel F64_80029A10
+.double 0.008333066246082155
+glabel F64_80029A18
+.double -0.0001980960290193795
+glabel F64_80029A20
+.double 0.000002605780637968037
+glabel F64_80029A28
+.double 0.3183098861837907
+glabel F64_80029A30
+.double 3.1415926218032837
+glabel F64_80029A38
+.double 3.178650954705639e-8
+glabel F64_80029A40
+.double 0.0
                     .word 0
                     .word 0
 .section .text
@@ -18216,6 +24891,7 @@ glabel __handleMIDIMsg
 /* 01D094 7001C494 8C2F9A50 */  lw    $t7, -0x65b0($at)
 /* 01D098 7001C498 01E00008 */  jr    $t7
 /* 01D09C 7001C49C 00000000 */   nop   
+.L7001C4A0:
 /* 01D0A0 7001C4A0 528000D5 */  beql  $s4, $zero, .L7001C7F8
 /* 01D0A4 7001C4A4 02202025 */   move  $a0, $s1
 /* 01D0A8 7001C4A8 8E38002C */  lw    $t8, 0x2c($s1)
@@ -18437,6 +25113,7 @@ glabel __handleMIDIMsg
 /* 01D3E8 7001C7E8 02603025 */   move  $a2, $s3
 /* 01D3EC 7001C7EC 1000011E */  b     .L7001CC68
 /* 01D3F0 7001C7F0 8FBF0024 */   lw    $ra, 0x24($sp)
+.L7001C7F4:
 /* 01D3F4 7001C7F4 02202025 */  move  $a0, $s1
 .L7001C7F8:
 /* 01D3F8 7001C7F8 326500FF */  andi  $a1, $s3, 0xff
@@ -18461,6 +25138,7 @@ glabel __handleMIDIMsg
 /* 01D440 7001C840 8F060008 */   lw    $a2, 8($t8)
 /* 01D444 7001C844 10000108 */  b     .L7001CC68
 /* 01D448 7001C848 8FBF0024 */   lw    $ra, 0x24($sp)
+.L7001C84C:
 /* 01D44C 7001C84C 02202025 */  move  $a0, $s1
 /* 01D450 7001C850 326500FF */  andi  $a1, $s3, 0xff
 /* 01D454 7001C854 0C00709F */  jal   __lookupVoice
@@ -18489,6 +25167,7 @@ glabel __handleMIDIMsg
 /* 01D4A8 7001C8A8 00403825 */   move  $a3, $v0
 /* 01D4AC 7001C8AC 100000EE */  b     .L7001CC68
 /* 01D4B0 7001C8B0 8FBF0024 */   lw    $ra, 0x24($sp)
+.L7001C8B4:
 /* 01D4B4 7001C8B4 8E300064 */  lw    $s0, 0x64($s1)
 /* 01D4B8 7001C8B8 520000EB */  beql  $s0, $zero, .L7001CC68
 /* 01D4BC 7001C8BC 8FBF0024 */   lw    $ra, 0x24($sp)
@@ -18523,6 +25202,7 @@ glabel __handleMIDIMsg
 /* 01D520 7001C920 920E0031 */   lbu   $t6, 0x31($s0)
 /* 01D524 7001C924 100000D0 */  b     .L7001CC68
 /* 01D528 7001C928 8FBF0024 */   lw    $ra, 0x24($sp)
+.L7001C92C:
 /* 01D52C 7001C92C 2A610041 */  slti  $at, $s3, 0x41
 /* 01D530 7001C930 14200008 */  bnez  $at, .L7001C954
 /* 01D534 7001C934 02601025 */   move  $v0, $s3
@@ -18551,6 +25231,7 @@ glabel __handleMIDIMsg
 /* 01D588 7001C988 8C399BD4 */  lw    $t9, -0x642c($at)
 /* 01D58C 7001C98C 03200008 */  jr    $t9
 /* 01D590 7001C990 00000000 */   nop   
+.L7001C994:
 /* 01D594 7001C994 8E2E0060 */  lw    $t6, 0x60($s1)
 /* 01D598 7001C998 0016C100 */  sll   $t8, $s6, 4
 /* 01D59C 7001C99C 01D87821 */  addu  $t7, $t6, $t8
@@ -18576,6 +25257,7 @@ glabel __handleMIDIMsg
 /* 01D5E4 7001C9E4 92190031 */   lbu   $t9, 0x31($s0)
 /* 01D5E8 7001C9E8 1000009F */  b     .L7001CC68
 /* 01D5EC 7001C9EC 8FBF0024 */   lw    $ra, 0x24($sp)
+.L7001C9F0:
 /* 01D5F0 7001C9F0 8E2E0060 */  lw    $t6, 0x60($s1)
 /* 01D5F4 7001C9F4 0016C100 */  sll   $t8, $s6, 4
 /* 01D5F8 7001C9F8 01D87821 */  addu  $t7, $t6, $t8
@@ -18617,6 +25299,7 @@ glabel __handleMIDIMsg
 /* 01D678 7001CA78 92190031 */   lbu   $t9, 0x31($s0)
 /* 01D67C 7001CA7C 1000007A */  b     .L7001CC68
 /* 01D680 7001CA80 8FBF0024 */   lw    $ra, 0x24($sp)
+.L7001CA84:
 /* 01D684 7001CA84 8E390060 */  lw    $t9, 0x60($s1)
 /* 01D688 7001CA88 00167100 */  sll   $t6, $s6, 4
 /* 01D68C 7001CA8C 032EC021 */  addu  $t8, $t9, $t6
@@ -18695,6 +25378,7 @@ glabel __handleMIDIMsg
 /* 01D78C 7001CB8C 92190031 */   lbu   $t9, 0x31($s0)
 /* 01D790 7001CB90 10000035 */  b     .L7001CC68
 /* 01D794 7001CB94 8FBF0024 */   lw    $ra, 0x24($sp)
+.L7001CB98:
 /* 01D798 7001CB98 8E220020 */  lw    $v0, 0x20($s1)
 /* 01D79C 7001CB9C 0013C080 */  sll   $t8, $s3, 2
 /* 01D7A0 7001CBA0 02202025 */  move  $a0, $s1
@@ -18708,6 +25392,7 @@ glabel __handleMIDIMsg
 /* 01D7C0 7001CBC0 8DE5000C */   lw    $a1, 0xc($t7)
 /* 01D7C4 7001CBC4 10000028 */  b     .L7001CC68
 /* 01D7C8 7001CBC8 8FBF0024 */   lw    $ra, 0x24($sp)
+.L7001CBCC:
 /* 01D7CC 7001CBCC 8E390060 */  lw    $t9, 0x60($s1)
 /* 01D7D0 7001CBD0 0016F100 */  sll   $fp, $s6, 4
 /* 01D7D4 7001CBD4 001479C0 */  sll   $t7, $s4, 7
@@ -18786,6 +25471,7 @@ glabel __seqpVoiceHandler
 /* 01D8D4 7001CCD4 8C2F9C28 */  lw    $t7, -0x63d8($at)
 /* 01D8D8 7001CCD8 01E00008 */  jr    $t7
 /* 01D8DC 7001CCDC 00000000 */   nop   
+.L7001CCE0:
 /* 01D8E0 7001CCE0 8E440018 */  lw    $a0, 0x18($s2)
 /* 01D8E4 7001CCE4 5080015A */  beql  $a0, $zero, .L7001D250
 /* 01D8E8 7001CCE8 02A02025 */   move  $a0, $s5
@@ -18832,6 +25518,7 @@ glabel __seqpVoiceHandler
 /* 01D980 7001CD80 27A50088 */   addiu $a1, $sp, 0x88
 /* 01D984 7001CD84 10000132 */  b     .L7001D250
 /* 01D988 7001CD88 02A02025 */   move  $a0, $s5
+.L7001CD8C:
 /* 01D98C 7001CD8C 240E0009 */  li    $t6, 9
 /* 01D990 7001CD90 A7AE00BC */  sh    $t6, 0xbc($sp)
 /* 01D994 7001CD94 8E46005C */  lw    $a2, 0x5c($s2)
@@ -18840,6 +25527,7 @@ glabel __seqpVoiceHandler
 /* 01D9A0 7001CDA0 27A500BC */   addiu $a1, $sp, 0xbc
 /* 01D9A4 7001CDA4 1000012A */  b     .L7001D250
 /* 01D9A8 7001CDA8 02A02025 */   move  $a0, $s5
+.L7001CDAC:
 /* 01D9AC 7001CDAC 8E50003C */  lw    $s0, 0x3c($s2)
 /* 01D9B0 7001CDB0 8E440014 */  lw    $a0, 0x14($s2)
 /* 01D9B4 7001CDB4 0C004DA4 */  jal   alSynStopVoice
@@ -18860,6 +25548,7 @@ glabel __seqpVoiceHandler
 /* 01D9EC 7001CDEC 02002825 */   move  $a1, $s0
 /* 01D9F0 7001CDF0 10000117 */  b     .L7001D250
 /* 01D9F4 7001CDF4 02A02025 */   move  $a0, $s5
+.L7001CDF8:
 /* 01D9F8 7001CDF8 8E50003C */  lw    $s0, 0x3c($s2)
 /* 01D9FC 7001CDFC 24190001 */  li    $t9, 1
 /* 01DA00 7001CE00 8E110010 */  lw    $s1, 0x10($s0)
@@ -18886,6 +25575,7 @@ glabel __seqpVoiceHandler
 /* 01DA50 7001CE50 02603825 */   move  $a3, $s3
 /* 01DA54 7001CE54 100000FE */  b     .L7001D250
 /* 01DA58 7001CE58 02A02025 */   move  $a0, $s5
+.L7001CE5C:
 /* 01DA5C 7001CE5C 8E590074 */  lw    $t9, 0x74($s2)
 /* 01DA60 7001CE60 8E540040 */  lw    $s4, 0x40($s2)
 /* 01DA64 7001CE64 8E51003C */  lw    $s1, 0x3c($s2)
@@ -18959,6 +25649,7 @@ glabel __seqpVoiceHandler
 /* 01DB60 7001CF60 02603025 */   move  $a2, $s3
 /* 01DB64 7001CF64 100000BA */  b     .L7001D250
 /* 01DB68 7001CF68 02A02025 */   move  $a0, $s5
+.L7001CF6C:
 /* 01DB6C 7001CF6C 8E590074 */  lw    $t9, 0x74($s2)
 /* 01DB70 7001CF70 8E540040 */  lw    $s4, 0x40($s2)
 /* 01DB74 7001CF74 8E51003C */  lw    $s1, 0x3c($s2)
@@ -18993,6 +25684,7 @@ glabel __seqpVoiceHandler
 /* 01DBE8 7001CFE8 02603025 */   move  $a2, $s3
 /* 01DBEC 7001CFEC 10000098 */  b     .L7001D250
 /* 01DBF0 7001CFF0 02A02025 */   move  $a0, $s5
+.L7001CFF4:
 /* 01DBF4 7001CFF4 02408825 */  move  $s1, $s2
 /* 01DBF8 7001CFF8 8FA40050 */  lw    $a0, 0x50($sp)
 /* 01DBFC 7001CFFC AFB200D0 */  sw    $s2, 0xd0($sp)
@@ -19001,11 +25693,13 @@ glabel __seqpVoiceHandler
 /* 01DC08 7001D008 8FB200D0 */  lw    $s2, 0xd0($sp)
 /* 01DC0C 7001D00C 1000008F */  b     .L7001D24C
 /* 01DC10 7001D010 8FB5004C */   lw    $s5, 0x4c($sp)
+.L7001D014:
 /* 01DC14 7001D014 02402825 */  move  $a1, $s2
 /* 01DC18 7001D018 0C00706F */  jal   __handleMetaMsg
 /* 01DC1C 7001D01C 8FA40050 */   lw    $a0, 0x50($sp)
 /* 01DC20 7001D020 1000008B */  b     .L7001D250
 /* 01DC24 7001D024 02A02025 */   move  $a0, $s5
+.L7001D028:
 /* 01DC28 7001D028 8E4F002C */  lw    $t7, 0x2c($s2)
 /* 01DC2C 7001D02C 24010001 */  li    $at, 1
 /* 01DC30 7001D030 24180001 */  li    $t8, 1
@@ -19015,6 +25709,7 @@ glabel __seqpVoiceHandler
 /* 01DC40 7001D040 AE58002C */   sw    $t8, 0x2c($s2)
 /* 01DC44 7001D044 10000082 */  b     .L7001D250
 /* 01DC48 7001D048 02A02025 */   move  $a0, $s5
+.L7001D04C:
 /* 01DC4C 7001D04C 8E4E002C */  lw    $t6, 0x2c($s2)
 /* 01DC50 7001D050 24010002 */  li    $at, 2
 /* 01DC54 7001D054 55C1007E */  bnel  $t6, $at, .L7001D250
@@ -19046,6 +25741,7 @@ glabel __seqpVoiceHandler
 /* 01DCB0 7001D0B0 AE40001C */  sw    $zero, 0x1c($s2)
 /* 01DCB4 7001D0B4 10000065 */  b     .L7001D24C
 /* 01DCB8 7001D0B8 AE40002C */   sw    $zero, 0x2c($s2)
+.L7001D0BC:
 /* 01DCBC 7001D0BC 8E4F002C */  lw    $t7, 0x2c($s2)
 /* 01DCC0 7001D0C0 24010001 */  li    $at, 1
 /* 01DCC4 7001D0C4 02A02025 */  move  $a0, $s5
@@ -19085,6 +25781,7 @@ glabel __seqpVoiceHandler
 /* 01DD40 7001D140 27A500BC */   addiu $a1, $sp, 0xbc
 /* 01DD44 7001D144 10000042 */  b     .L7001D250
 /* 01DD48 7001D148 02A02025 */   move  $a0, $s5
+.L7001D14C:
 /* 01DD4C 7001D14C 8E510064 */  lw    $s1, 0x64($s2)
 /* 01DD50 7001D150 8659003C */  lh    $t9, 0x3c($s2)
 /* 01DD54 7001D154 1220003D */  beqz  $s1, .L7001D24C
@@ -19114,6 +25811,7 @@ glabel __seqpVoiceHandler
 /* 01DDA8 7001D1A8 02202025 */   move  $a0, $s1
 /* 01DDAC 7001D1AC 10000028 */  b     .L7001D250
 /* 01DDB0 7001D1B0 02A02025 */   move  $a0, $s5
+.L7001D1B4:
 /* 01DDB4 7001D1B4 8E4E003C */  lw    $t6, 0x3c($s2)
 /* 01DDB8 7001D1B8 8E590040 */  lw    $t9, 0x40($s2)
 /* 01DDBC 7001D1BC 8E4F0044 */  lw    $t7, 0x44($s2)
@@ -19121,6 +25819,7 @@ glabel __seqpVoiceHandler
 /* 01DDC4 7001D1C4 AE590080 */  sw    $t9, 0x80($s2)
 /* 01DDC8 7001D1C8 10000020 */  b     .L7001D24C
 /* 01DDCC 7001D1CC AE4F0084 */   sw    $t7, 0x84($s2)
+.L7001D1D0:
 /* 01DDD0 7001D1D0 9250003C */  lbu   $s0, 0x3c($s2)
 /* 01DDD4 7001D1D4 8E4E0060 */  lw    $t6, 0x60($s2)
 /* 01DDD8 7001D1D8 9258003D */  lbu   $t8, 0x3d($s2)
@@ -19128,12 +25827,13 @@ glabel __seqpVoiceHandler
 /* 01DDE0 7001D1E0 01D97821 */  addu  $t7, $t6, $t9
 /* 01DDE4 7001D1E4 10000019 */  b     .L7001D24C
 /* 01DDE8 7001D1E8 A1F80008 */   sb    $t8, 8($t7)
+.L7001D1EC:
 /* 01DDEC 7001D1EC 8E45003C */  lw    $a1, 0x3c($s2)
 /* 01DDF0 7001D1F0 240F01E8 */  li    $t7, 488
-/* 01DDF4 7001D1F4 3C018003 */  lui   $at, %hi(D_80029C88) # $at, 0x8003
+/* 01DDF4 7001D1F4 3C018003 */  lui   $at, %hi(F32_80029C88) # $at, 0x8003
 /* 01DDF8 7001D1F8 10A00008 */  beqz  $a1, .L7001D21C
 /* 01DDFC 7001D1FC AE450018 */   sw    $a1, 0x18($s2)
-/* 01DE00 7001D200 C4269C88 */  lwc1  $f6, %lo(D_80029C88)($at)
+/* 01DE00 7001D200 C4269C88 */  lwc1  $f6, %lo(F32_80029C88)($at)
 /* 01DE04 7001D204 C4AA0014 */  lwc1  $f10, 0x14($a1)
 /* 01DE08 7001D208 460A3202 */  mul.s $f8, $f6, $f10
 /* 01DE0C 7001D20C 4600410D */  trunc.w.s $f4, $f8
@@ -19150,6 +25850,7 @@ glabel __seqpVoiceHandler
 /* 01DE30 7001D230 02402025 */   move  $a0, $s2
 /* 01DE34 7001D234 10000006 */  b     .L7001D250
 /* 01DE38 7001D238 02A02025 */   move  $a0, $s5
+.L7001D23C:
 /* 01DE3C 7001D23C 8E45003C */  lw    $a1, 0x3c($s2)
 /* 01DE40 7001D240 02402025 */  move  $a0, $s2
 /* 01DE44 7001D244 0C006F4D */  jal   __initFromBank
@@ -19398,7 +26099,8 @@ glabel alSeqpNew
 
 
 .section .rodata
-    jpt_8001C498:   .word .L7001C7F4, .L7001CC64, .L7001CC64, .L7001CC64
+glabel jpt_8001C498
+					.word .L7001C7F4, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
@@ -19423,19 +26125,22 @@ glabel alSeqpNew
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CBCC
-    jpt_8001C98C:   .word .L7001C9F0, .L7001CC64, .L7001CC64, .L7001C994
+glabel jpt_8001C98C
+                    .word .L7001C9F0, .L7001CC64, .L7001CC64, .L7001C994
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CC64, .L7001CA84, .L7001CC64, .L7001CC64
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CC64
-    jpt_8001CCD8:   .word .L7001CCE0, .L7001D24C, .L7001CFF4, .L7001D24C
+glabel jpt_8001CCD8
+	                .word .L7001CCE0, .L7001D24C, .L7001CFF4, .L7001D24C
                     .word .L7001D24C, .L7001CDAC, .L7001CDF8, .L7001D014
                     .word .L7001D24C, .L7001CD8C, .L7001D14C, .L7001D1B4
                     .word .L7001D1D0, .L7001D1EC, .L7001D23C, .L7001D028
                     .word .L7001D04C, .L7001D0BC, .L7001D24C, .L7001D24C
                     .word .L7001D24C, .L7001D24C, .L7001CE5C, .L7001CF6C
-    F32_80029C88: .float 500000.0
+glabel F32_80029C88
+.float 500000.0
                     .align 4
 
 .section .text
@@ -19541,15 +26246,16 @@ glabel alCopy
 /* 01E304 7001D704 00000000 */  nop   
 /* 01E308 7001D708 00000000 */  nop   
 /* 01E30C 7001D70C 00000000 */  nop   
+
 glabel __osPiCreateAccessQueue
 /* 01E310 7001D710 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 01E314 7001D714 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 01E318 7001D718 240E0001 */  li    $t6, 1
 /* 01E31C 7001D71C 3C018003 */  lui   $at, %hi(__osPiAccessQueueEnabled) # $at, 0x8003
 /* 01E320 7001D720 3C048007 */  lui   $a0, %hi(__osPiAccessQueue) # $a0, 0x8007
-/* 01E324 7001D724 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80068FE0) # $a1, 0x8007
+/* 01E324 7001D724 3C058007 */  lui   $a1, %hi(piAccessBuf) # $a1, 0x8007
 /* 01E328 7001D728 AC2E82E0 */  sw    $t6, %lo(__osPiAccessQueueEnabled)($at)
-/* 01E32C 7001D72C 24A58FE0 */  addiu $a1, %lo(dword_CODE_bss_80068FE0) # addiu $a1, $a1, -0x7020
+/* 01E32C 7001D72C 24A58FE0 */  addiu $a1, %lo(piAccessBuf) # addiu $a1, $a1, -0x7020
 /* 01E330 7001D730 24848FE8 */  addiu $a0, %lo(__osPiAccessQueue) # addiu $a0, $a0, -0x7018
 /* 01E334 7001D734 0C0035B4 */  jal   osCreateMesgQueue
 /* 01E338 7001D738 24060001 */   li    $a2, 1
@@ -19597,7 +26303,21 @@ glabel __osPiRelAccess
 /* 01E3CC 7001D7CC 00000000 */   nop   
 
 .section .data
-__osPiAccessQueueEnabled:.word 0
+glabel __osPiAccessQueueEnabled
+.word 0
+.align 4
+
+.section .bss
+glabel piAccessBuf
+.word 0
+.word 0
+glabel __osPiAccessQueue
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
+.byte 0, 0, 0, 0
 
 .section .text
 glabel _Litob
@@ -19791,12 +26511,15 @@ glabel _Litob
 /* 01E66C 7001DA6C 00000000 */  nop   
 
 .section .data
-alowercase_hex_char:.asciiz "0123456789abcdef"
+glabel alowercase_hex_char
+.asciiz "0123456789abcdef"
 .align 2
-auppercase_hex_char:.asciiz "0123456789ABCDEF"
+glabel auppercase_hex_char
+.asciiz "0123456789ABCDEF"
 .align 4
 .section .rodata
-digits: .double 10.0
+glabel digits
+ .double 10.0
  .double 100.0
  .double 10000.0
  .double 1.0e8
@@ -19805,8 +26528,11 @@ digits: .double 10.0
  .double 1.0e64
  .double 1.0e128
  .double 1.0e256
-aNan: .asciiz "NaN"
-aInf: .asciiz "Inf"
+glabel aNan
+ .asciiz "NaN"
+glabel aInf
+ .asciiz "Inf"
+
 .section .text
 glabel xldtob_sub0
 /* 01E670 7001DA70 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -19821,8 +26547,8 @@ glabel xldtob_sub0
 /* 01E694 7001DA94 01C0A025 */  move  $s4, $t6
 /* 01E698 7001DA98 1E600004 */  bgtz  $s3, .L7001DAAC
 /* 01E69C 7001DA9C AFBF0014 */   sw    $ra, 0x14($sp)
-/* 01E6A0 7001DAA0 3C118003 */  lui   $s1, %hi(D_80029CE0) # $s1, 0x8003
-/* 01E6A4 7001DAA4 26319CE0 */  addiu $s1, %lo(D_80029CE0) # addiu $s1, $s1, -0x6320
+/* 01E6A0 7001DAA0 3C118003 */  lui   $s1, %hi(asc_D_80029CE0) # $s1, 0x8003
+/* 01E6A4 7001DAA4 26319CE0 */  addiu $s1, %lo(asc_D_80029CE0) # addiu $s1, $s1, -0x6320
 /* 01E6A8 7001DAA8 24130001 */  li    $s3, 1
 .L7001DAAC:
 /* 01E6AC 7001DAAC 24020066 */  li    $v0, 102
@@ -20591,9 +27317,11 @@ glabel _Ldtob
 
 /* 01F12C 7001E52C 00000000 */  nop   
 .section .rodata
-asc_D_80029CE0: .ascii "0"<0>
+glabel asc_D_80029CE0
+ .ascii "0"<0>
  .align 3
-F64_80029CE8: .double 1.0e8
+glabel F64_80029CE8
+ .double 1.0e8
 
 .section .text
 glabel osEPiRawStartDma
@@ -20799,6 +27527,7 @@ glabel __osDevMgrMain
 /* 01F408 7001E808 8C289CF0 */  lw    $t0, -0x6310($at)
 /* 01F40C 7001E80C 01000008 */  jr    $t0
 /* 01F410 7001E810 00000000 */   nop   
+.L7001E814:
 /* 01F414 7001E814 8FAC002C */  lw    $t4, 0x2c($sp)
 /* 01F418 7001E818 27A50034 */  addiu $a1, $sp, 0x34
 /* 01F41C 7001E81C 24060001 */  li    $a2, 1
@@ -20815,6 +27544,7 @@ glabel __osDevMgrMain
 /* 01F448 7001E848 00000000 */  nop   
 /* 01F44C 7001E84C 1000003E */  b     .L7001E948
 /* 01F450 7001E850 AFA20030 */   sw    $v0, 0x30($sp)
+.L7001E854:
 /* 01F454 7001E854 8FAB002C */  lw    $t3, 0x2c($sp)
 /* 01F458 7001E858 27A50034 */  addiu $a1, $sp, 0x34
 /* 01F45C 7001E85C 24060001 */  li    $a2, 1
@@ -20830,6 +27560,7 @@ glabel __osDevMgrMain
 /* 01F484 7001E884 8DA70010 */  lw    $a3, 0x10($t5)
 /* 01F488 7001E888 1000002F */  b     .L7001E948
 /* 01F48C 7001E88C AFA20030 */   sw    $v0, 0x30($sp)
+.L7001E890:
 /* 01F490 7001E890 8FAA002C */  lw    $t2, 0x2c($sp)
 /* 01F494 7001E894 27A50034 */  addiu $a1, $sp, 0x34
 /* 01F498 7001E898 24060001 */  li    $a2, 1
@@ -20848,6 +27579,7 @@ glabel __osDevMgrMain
 /* 01F4CC 7001E8CC 00000000 */  nop   
 /* 01F4D0 7001E8D0 1000001D */  b     .L7001E948
 /* 01F4D4 7001E8D4 AFA20030 */   sw    $v0, 0x30($sp)
+.L7001E8D8:
 /* 01F4D8 7001E8D8 8FAC002C */  lw    $t4, 0x2c($sp)
 /* 01F4DC 7001E8DC 27A50034 */  addiu $a1, $sp, 0x34
 /* 01F4E0 7001E8E0 24060001 */  li    $a2, 1
@@ -20866,6 +27598,7 @@ glabel __osDevMgrMain
 /* 01F514 7001E914 00000000 */  nop   
 /* 01F518 7001E918 1000000B */  b     .L7001E948
 /* 01F51C 7001E91C AFA20030 */   sw    $v0, 0x30($sp)
+.L7001E920:
 /* 01F520 7001E920 8FAE003C */  lw    $t6, 0x3c($sp)
 /* 01F524 7001E924 00003025 */  move  $a2, $zero
 /* 01F528 7001E928 8DC40004 */  lw    $a0, 4($t6)
@@ -20909,7 +27642,7 @@ glabel __osDevMgrMain
 /* 01F5B8 7001E9B8 03E00008 */  jr    $ra
 /* 01F5BC 7001E9BC 00000000 */   nop   
 .section .rodata
-jpt_8001E80C:
+glabel jpt_8001E80C
  .word .L7001E920
  .word .L7001E814
  .word .L7001E854
@@ -21921,37 +28654,37 @@ glabel sqrtf
 /* 0203EC 7001F7EC 00000000 */  nop   
 glabel osLeoDiskInit
 /* 0203F0 7001F7F0 240E0002 */  li    $t6, 2
-/* 0203F4 7001F7F4 3C018007 */  lui   $at, %hi(D_80069004) # $at, 0x8007
-/* 0203F8 7001F7F8 A02E9004 */  sb    $t6, %lo(D_80069004)($at)
-/* 0203FC 7001F7FC 3C018007 */  lui   $at, %hi(D_8006900C) # $at, 0x8007
+/* 0203F4 7001F7F4 3C018007 */  lui   $at, %hi(LeoDiskHandle+0x4) # $at, 0x8007
+/* 0203F8 7001F7F8 A02E9004 */  sb    $t6, %lo(LeoDiskHandle+0x4)($at)
+/* 0203FC 7001F7FC 3C018007 */  lui   $at, %hi(LeoDiskHandle+0xC) # $at, 0x8007
 /* 020400 7001F800 3C0FA500 */  lui   $t7, 0xa500
-/* 020404 7001F804 AC2F900C */  sw    $t7, %lo(D_8006900C)($at)
-/* 020408 7001F808 3C018007 */  lui   $at, %hi(D_80069005) # $at, 0x8007
+/* 020404 7001F804 AC2F900C */  sw    $t7, %lo(LeoDiskHandle+0xC)($at)
+/* 020408 7001F808 3C018007 */  lui   $at, %hi(LeoDiskHandle+0x5) # $at, 0x8007
 /* 02040C 7001F80C 24180003 */  li    $t8, 3
-/* 020410 7001F810 A0389005 */  sb    $t8, %lo(D_80069005)($at)
-/* 020414 7001F814 3C018007 */  lui   $at, %hi(D_80069008) # $at, 0x8007
+/* 020410 7001F810 A0389005 */  sb    $t8, %lo(LeoDiskHandle+0x5)($at)
+/* 020414 7001F814 3C018007 */  lui   $at, %hi(LeoDiskHandle+0x8) # $at, 0x8007
 /* 020418 7001F818 24190006 */  li    $t9, 6
-/* 02041C 7001F81C A0399008 */  sb    $t9, %lo(D_80069008)($at)
-/* 020420 7001F820 3C018007 */  lui   $at, %hi(D_80069007) # $at, 0x8007
+/* 02041C 7001F81C A0399008 */  sb    $t9, %lo(LeoDiskHandle+0x8)($at)
+/* 020420 7001F820 3C018007 */  lui   $at, %hi(LeoDiskHandle+0x7) # $at, 0x8007
 /* 020424 7001F824 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 020428 7001F828 24080006 */  li    $t0, 6
 /* 02042C 7001F82C 24090002 */  li    $t1, 2
 /* 020430 7001F830 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 020434 7001F834 A0289006 */  sb    $t0, %lo(D_80069006)($at)
-/* 020438 7001F838 A0299007 */  sb    $t1, %lo(D_80069007)($at)
+/* 020434 7001F834 A0289006 */  sb    $t0, %lo(LeoDiskHandle+0x6)($at)
+/* 020438 7001F838 A0299007 */  sb    $t1, %lo(LeoDiskHandle+0x7)($at)
 /* 02043C 7001F83C 240A0003 */  li    $t2, 3
 /* 020440 7001F840 3C0BA460 */  lui   $t3, %hi(PI_BSD_DOM2_LAT_REG) # $t3, 0xa460
 /* 020444 7001F844 AD6A0024 */  sw    $t2, %lo(PI_BSD_DOM2_LAT_REG)($t3)
-/* 020448 7001F848 3C0C8007 */  lui   $t4, %hi(D_80069008) # $t4, 0x8007
-/* 02044C 7001F84C 918C9008 */  lbu   $t4, %lo(D_80069008)($t4)
+/* 020448 7001F848 3C0C8007 */  lui   $t4, %hi(LeoDiskHandle+0x8) # $t4, 0x8007
+/* 02044C 7001F84C 918C9008 */  lbu   $t4, %lo(LeoDiskHandle+0x8)($t4)
 /* 020450 7001F850 3C0DA460 */  lui   $t5, %hi(PI_BSD_DOM2_PWD_REG) # $t5, 0xa460
-/* 020454 7001F854 3C0E8007 */  lui   $t6, %hi(D_80069006) # $t6, 0x8007
+/* 020454 7001F854 3C0E8007 */  lui   $t6, %hi(LeoDiskHandle+0x6) # $t6, 0x8007
 /* 020458 7001F858 ADAC0028 */  sw    $t4, %lo(PI_BSD_DOM2_PWD_REG)($t5)
-/* 02045C 7001F85C 91CE9006 */  lbu   $t6, %lo(D_80069006)($t6)
+/* 02045C 7001F85C 91CE9006 */  lbu   $t6, %lo(LeoDiskHandle+0x6)($t6)
 /* 020460 7001F860 3C0FA460 */  lui   $t7, %hi(PI_BSD_DOM2_PGS_REG) # $t7, 0xa460
-/* 020464 7001F864 3C188007 */  lui   $t8, %hi(D_80069007) # $t8, 0x8007
+/* 020464 7001F864 3C188007 */  lui   $t8, %hi(LeoDiskHandle+0x7) # $t8, 0x8007
 /* 020468 7001F868 ADEE002C */  sw    $t6, %lo(PI_BSD_DOM2_PGS_REG)($t7)
-/* 02046C 7001F86C 93189007 */  lbu   $t8, %lo(D_80069007)($t8)
+/* 02046C 7001F86C 93189007 */  lbu   $t8, %lo(LeoDiskHandle+0x7)($t8)
 /* 020470 7001F870 3C048007 */  lui   $a0, %hi(LeoDiskHandle) # $a0, 0x8007
 /* 020474 7001F874 3C19A460 */  lui   $t9, %hi(PI_BSD_DOM2_RLS_REG) # $t9, 0xa460
 /* 020478 7001F878 24849000 */  addiu $a0, %lo(LeoDiskHandle) # addiu $a0, $a0, -0x7000
@@ -21981,6 +28714,131 @@ glabel osLeoDiskInit
 /* 0204D8 7001F8D8 27BD0020 */   addiu $sp, $sp, 0x20
 
 /* 0204DC 7001F8DC 00000000 */  nop   
+.section .bss
+glabel LeoDiskHandle
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+.byte 0
+
+glabel __osDiskHandle
+.word 0
+.word 0, 0
+
+
+.section .text
 glabel __osSetCompare
 /* 0204E0 7001F8E0 40845800 */  mtc0  $a0, $11
 /* 0204E4 7001F8E4 03E00008 */  jr    $ra
@@ -22452,6 +29310,7 @@ glabel alFxParamHdl
 /* 020BC8 7001FFC8 8C2E9D10 */  lw    $t6, -0x62f0($at)
 /* 020BCC 7001FFCC 01C00008 */  jr    $t6
 /* 020BD0 7001FFD0 00000000 */   nop   
+.L7001FFD4:
 /* 020BD4 7001FFD4 8C8F0020 */  lw    $t7, 0x20($a0)
 /* 020BD8 7001FFD8 04410003 */  bgez  $v0, .L7001FFE8
 /* 020BDC 7001FFDC 0002C0C3 */   sra   $t8, $v0, 3
@@ -22465,7 +29324,7 @@ glabel alFxParamHdl
 /* 020BF8 7001FFF8 AD030000 */  sw    $v1, ($t0)
 /* 020BFC 7001FFFC 03E00008 */  jr    $ra
 /* 020C00 70020000 00001025 */   move  $v0, $zero
-
+.L70020004:
 /* 020C04 70020004 8C890020 */  lw    $t1, 0x20($a0)
 /* 020C08 70020008 04410003 */  bgez  $v0, .L70020018
 /* 020C0C 7002000C 000250C3 */   sra   $t2, $v0, 3
@@ -22479,7 +29338,7 @@ glabel alFxParamHdl
 /* 020C28 70020028 AD830004 */  sw    $v1, 4($t4)
 /* 020C2C 7002002C 03E00008 */  jr    $ra
 /* 020C30 70020030 00001025 */   move  $v0, $zero
-
+.L70020034:
 /* 020C34 70020034 8C8D0020 */  lw    $t5, 0x20($a0)
 /* 020C38 70020038 04410003 */  bgez  $v0, .L70020048
 /* 020C3C 7002003C 000270C3 */   sra   $t6, $v0, 3
@@ -22493,7 +29352,7 @@ glabel alFxParamHdl
 /* 020C58 70020058 A5E30008 */  sh    $v1, 8($t7)
 /* 020C5C 7002005C 03E00008 */  jr    $ra
 /* 020C60 70020060 00001025 */   move  $v0, $zero
-
+.L70020064:
 /* 020C64 70020064 8C990020 */  lw    $t9, 0x20($a0)
 /* 020C68 70020068 04410003 */  bgez  $v0, .L70020078
 /* 020C6C 7002006C 000240C3 */   sra   $t0, $v0, 3
@@ -22507,7 +29366,7 @@ glabel alFxParamHdl
 /* 020C88 70020088 A523000A */  sh    $v1, 0xa($t1)
 /* 020C8C 7002008C 03E00008 */  jr    $ra
 /* 020C90 70020090 00001025 */   move  $v0, $zero
-
+.L70020094:
 /* 020C94 70020094 8C8B0020 */  lw    $t3, 0x20($a0)
 /* 020C98 70020098 04410003 */  bgez  $v0, .L700200A8
 /* 020C9C 7002009C 000260C3 */   sra   $t4, $v0, 3
@@ -22521,10 +29380,10 @@ glabel alFxParamHdl
 /* 020CB8 700200B8 A5A3000C */  sh    $v1, 0xc($t5)
 /* 020CBC 700200BC 03E00008 */  jr    $ra
 /* 020CC0 700200C0 00001025 */   move  $v0, $zero
-
+.L700200C4:
 /* 020CC4 700200C4 44832000 */  mtc1  $v1, $f4
-/* 020CC8 700200C8 3C018003 */  lui   $at, %hi(D_80029D30) # $at, 0x8003
-/* 020CCC 700200CC C4289D30 */  lwc1  $f8, %lo(D_80029D30)($at)
+/* 020CC8 700200C8 3C018003 */  lui   $at, %hi(F64_80029D30) # $at, 0x8003
+/* 020CCC 700200CC C4289D30 */  lwc1  $f8, %lo(F64_80029D30)($at)
 /* 020CD0 700200D0 468021A0 */  cvt.s.w $f6, $f4
 /* 020CD4 700200D4 8C980020 */  lw    $t8, 0x20($a0)
 /* 020CD8 700200D8 46083283 */  div.s $f10, $f6, $f8
@@ -22540,7 +29399,7 @@ glabel alFxParamHdl
 /* 020CFC 700200FC 00001025 */  move  $v0, $zero
 /* 020D00 70020100 03E00008 */  jr    $ra
 /* 020D04 70020104 E72A0010 */   swc1  $f10, 0x10($t9)
-
+.L70020108:
 /* 020D08 70020108 8C8A0020 */  lw    $t2, 0x20($a0)
 /* 020D0C 7002010C 04410003 */  bgez  $v0, .L7002011C
 /* 020D10 70020110 000248C3 */   sra   $t1, $v0, 3
@@ -22574,7 +29433,7 @@ glabel alFxParamHdl
 /* 020D78 70020178 46203220 */  cvt.s.d $f8, $f6
 /* 020D7C 7002017C 03E00008 */  jr    $ra
 /* 020D80 70020180 E4A8001C */   swc1  $f8, 0x1c($a1)
-
+.L70020184:
 /* 020D84 70020184 8C8F0020 */  lw    $t7, 0x20($a0)
 /* 020D88 70020188 04410003 */  bgez  $v0, .L70020198
 /* 020D8C 7002018C 0002C0C3 */   sra   $t8, $v0, 3
@@ -22826,7 +29685,7 @@ glabel alFxPull
 /* 021118 70020518 00000000 */  nop   
 /* 02111C 7002051C 00000000 */  nop  
 .section .rodata
-jpt_8001FFCC:
+glabel jpt_8001FFCC
  .word .L7001FFD4
  .word .L70020004
  .word .L70020064
@@ -22835,9 +29694,12 @@ jpt_8001FFCC:
  .word .L700200C4
  .word .L70020108
  .word .L70020184
-F64_80029D30: .double 4.903983392368225e55
-F64_80029D38: .double 173123.404906676
-F64_80029D40: .double 1.492225746711883e306
+glabel F64_80029D30
+ .double 4.9039833923682246e55
+glabel F64_80029D38
+ .double 173123.404906676
+glabel F64_80029D40
+ .double 1.4922257467118833e306
 .word 0
 .word 0
 
@@ -23163,8 +30025,10 @@ glabel alSeqTicksToSec
 /* 021588 70020988 03E00008 */  jr    $ra
 /* 02158C 7002098C 46204020 */   cvt.s.d $f0, $f8
 .section .rodata
-F64_80029D50: .double 1000000.0
-F64_80029D58: .double 1000000.0
+glabel F64_80029D50
+ .double 1000000.0
+glabel F64_80029D58
+ .double 1000000.0
 
 .section .text
 glabel __alSeqNextDelta
@@ -23455,13 +30319,13 @@ glabel osEPiRawWriteIo
 /* 02198C 70020D8C 00000000 */  nop   
 
 .section .data
-osViModeNtscLan1:
+glabel osViModeNtscLan1
 .word  0x2000000,    0x311E,     0x140, 0x3E52239
 .word      0x20D,     0xC15, 0xC150C15,  0x6C02EC
 .word      0x200,         0,     0x280,     0x400
 .word   0x2501FF,   0xE0204,         2,     0x280
 .word      0x400,  0x2501FF,   0xE0204,         2
-osViModePalLan1:
+glabel osViModePalLan1
 .word 0x10000000,    0x311E,     0x140, 0x404233A
 .word      0x271,  0x150C69, 0xC6F0C6E,  0x800300
 .word      0x200,         0,     0x280,     0x400
@@ -23469,3 +30333,107 @@ osViModePalLan1:
 .word      0x400,  0x5F0239,   0x9026B,         2
 .word       0x10,      0x10,      0x20,         0
 
+.section .bss
+glabel D_80069080
+.word 0
+glabel D_80069084
+.word 0
+glabel D_80069088
+.word 0
+glabel D_8006908C
+.word 0
+glabel D_80069090
+.word 0
+glabel D_80069094
+.word 0
+glabel D_80069098
+.word 0
+glabel D_8006909C
+.word 0
+glabel D_800690a0
+.word 0
+glabel D_800690a4
+.word 0
+glabel D_800690a8
+.word 0
+glabel D_800690ac
+.word 0
+glabel D_800690b0
+.word 0
+glabel D_800690b4
+.word 0
+glabel D_800690b8
+.word 0
+glabel D_800690BC
+.word 0
+glabel D_800690c0
+.word 0
+glabel D_800690C4
+.word 0
+glabel D_800690c8
+.word 0
+glabel D_800690cc
+.word 0
+glabel D_800690D0
+.word 0
+glabel D_800690D4
+.word 0
+glabel D_800690D8
+.word 0
+glabel D_800690DC
+.word 0
+glabel D_800690E0
+.word 0
+.word 0
+glabel D_800690E8
+.word 0
+glabel D_800690EC
+.word 0
+glabel D_800690F0
+.word 0
+glabel D_800690F4
+.word 0
+glabel D_800690F8
+.word 0
+glabel D_800690FC
+.word 0
+glabel D_80069100
+.word 0
+glabel D_80069104
+.word 0
+glabel D_80069108
+.word 0
+glabel D_8006910C
+.word 0
+glabel D_80069110
+.word 0
+glabel D_80069114
+.word 0
+glabel D_80069118
+.word 0
+glabel D_8006911C
+.word 0
+glabel D_80069120
+.word 0
+glabel D_80069124
+.word 0
+glabel D_80069128
+.word 0
+.word 0
+glabel D_80069130
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0
+.word 0

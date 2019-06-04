@@ -38,14 +38,19 @@ s32 dword_CODE_bss_8007FF90;
 s32 dword_CODE_bss_8007FF94;
 //CODE.bss:8007FF98
 s32 dword_CODE_bss_8007FF98;
-/*
-CODE.bss:8007FF9C                     .align 4
-*/
+
+//CODE.bss:8007FF9C
+s32 dword_CODE_bss_8007FF9C;
+
 //CODE.bss:8007FFA0
 s32 dword_CODE_bss_8007FFA0;
 
 //CODE.bss:8007FFA4
-char dword_CODE_bss_8007FFA4[0x165C];
+char dword_CODE_bss_8007FFA4;
+char dword_CODE_bss_8007FFA5;
+char dword_CODE_bss_8007FFA6;
+char dword_CODE_bss_8007FFA7;
+char dword_CODE_bss_8007FFA8[0x1658];
 //CODE.bss:80081600
 char dword_CODE_bss_80081600[0x18];
 //CODE.bss:80081618
@@ -56,9 +61,9 @@ char table_for_portals[0xFA8];
 //D:800413F0
 s32 *ptr_bg_c_debug_debug_notice_list = 0;
 //D:800413F4
-f32 D_800413F4 = 1.0;
+f32 room_data_float1 = 1.0;
 //D:800413F8
-f32 D_800413F8 = 1.0;
+f32 room_data_float2 = 1.0;
 //D:800413FC
 f32 D_800413FC = 1.0;
 //D:80041400
@@ -74,161 +79,311 @@ s32 D_80041410 = -1;
 
 //D:80041414
 u32 D_80041414 = 0;
-/*
-D:80041418     D_80041418:.word 0
-D:8004141C                     .word 0, 0
-D:80041424     room_information:room_index <0>
-D:80041474     stru_D_80041474:room_index <0>
-D:800414C4                     room_index <0>
-D:80041514                     room_index <0>
-D:80041564                     room_index <0>
-D:800415B4                     room_index <0>
-D:80041604                     room_index <0>
-D:80041654                     room_index <0>
-D:800416A4                     room_index <0>
-D:800416F4                     room_index <0>
-D:80041744                     room_index <0>
-D:80041794                     room_index <0>
-D:800417E4                     room_index <0>
-D:80041834                     room_index <0>
-D:80041884                     room_index <0>
-D:800418D4                     room_index <0>
-D:80041924                     room_index <0>
-D:80041974                     room_index <0>
-D:800419C4                     room_index <0>
-D:80041A14                     room_index <0>
-D:80041A64                     room_index <0>
-D:80041AB4                     room_index <0>
-D:80041B04                     room_index <0>
-D:80041B54                     room_index <0>
-D:80041BA4                     room_index <0>
-D:80041BF4                     room_index <0>
-D:80041C44                     room_index <0>
-D:80041C94                     room_index <0>
-D:80041CE4                     room_index <0>
-D:80041D34                     room_index <0>
-D:80041D84                     room_index <0>
-D:80041DD4                     room_index <0>
-D:80041E24                     room_index <0>
-D:80041E74                     room_index <0>
-D:80041EC4                     room_index <0>
-D:80041F14                     room_index <0>
-D:80041F64                     room_index <0>
-D:80041FB4                     room_index <0>
-D:80042004                     room_index <0>
-D:80042054                     room_index <0>
-D:800420A4                     room_index <0>
-D:800420F4                     room_index <0>
-D:80042144                     room_index <0>
-D:80042194                     room_index <0>
-D:800421E4                     room_index <0>
-D:80042234                     room_index <0>
-D:80042284                     room_index <0>
-D:800422D4                     room_index <0>
-D:80042324                     room_index <0>
-D:80042374                     room_index <0>
-D:800423C4                     room_index <0>
-D:80042414                     room_index <0>
-D:80042464                     room_index <0>
-D:800424B4                     room_index <0>
-D:80042504                     room_index <0>
-D:80042554                     room_index <0>
-D:800425A4                     room_index <0>
-D:800425F4                     room_index <0>
-D:80042644                     room_index <0>
-D:80042694                     room_index <0>
-D:800426E4                     room_index <0>
-D:80042734                     room_index <0>
-D:80042784                     room_index <0>
-D:800427D4                     room_index <0>
-D:80042824                     room_index <0>
-D:80042874                     room_index <0>
-D:800428C4                     room_index <0>
-D:80042914                     room_index <0>
-D:80042964                     room_index <0>
-D:800429B4                     room_index <0>
-D:80042A04                     room_index <0>
-D:80042A54                     room_index <0>
-D:80042AA4                     room_index <0>
-D:80042AF4                     room_index <0>
-D:80042B44                     room_index <0>
-D:80042B94                     room_index <0>
-D:80042BE4                     room_index <0>
-D:80042C34                     room_index <0>
-D:80042C84                     room_index <0>
-D:80042CD4                     room_index <0>
-D:80042D24                     room_index <0>
-D:80042D74                     room_index <0>
-D:80042DC4                     room_index <0>
-D:80042E14                     room_index <0>
-D:80042E64                     room_index <0>
-D:80042EB4                     room_index <0>
-D:80042F04                     room_index <0>
-D:80042F54                     room_index <0>
-D:80042FA4                     room_index <0>
-D:80042FF4                     room_index <0>
-D:80043044                     room_index <0>
-D:80043094                     room_index <0>
-D:800430E4                     room_index <0>
-D:80043134                     room_index <0>
-D:80043184                     room_index <0>
-D:800431D4                     room_index <0>
-D:80043224                     room_index <0>
-D:80043274                     room_index <0>
-D:800432C4                     room_index <0>
-D:80043314                     room_index <0>
-D:80043364                     room_index <0>
-D:800433B4                     room_index <0>
-D:80043404                     room_index <0>
-D:80043454                     room_index <0>
-D:800434A4                     room_index <0>
-D:800434F4                     room_index <0>
-D:80043544                     room_index <0>
-D:80043594                     room_index <0>
-D:800435E4                     room_index <0>
-D:80043634                     room_index <0>
-D:80043684                     room_index <0>
-D:800436D4                     room_index <0>
-D:80043724                     room_index <0>
-D:80043774                     room_index <0>
-D:800437C4                     room_index <0>
-D:80043814                     room_index <0>
-D:80043864                     room_index <0>
-D:800438B4                     room_index <0>
-D:80043904                     room_index <0>
-D:80043954                     room_index <0>
-D:800439A4                     room_index <0>
-D:800439F4                     room_index <0>
-D:80043A44                     room_index <0>
-D:80043A94                     room_index <0>
-D:80043AE4                     room_index <0>
-D:80043B34                     room_index <0>
-D:80043B84                     room_index <0>
-D:80043BD4                     room_index <0>
-D:80043C24                     room_index <0>
-D:80043C74                     room_index <0>
-D:80043CC4                     room_index <0>
-D:80043D14                     room_index <0>
-D:80043D64                     room_index <0>
-D:80043DB4                     room_index <0>
-D:80043E04                     room_index <0>
-D:80043E54                     room_index <0>
-D:80043EA4                     room_index <0>
-D:80043EF4                     room_index <0>
-D:80043F44                     room_index <0>
-D:80043F94                     room_index <0>
-D:80043FE4                     room_index <0>
-D:80044034                     room_index <0>
-D:80044084                     room_index <0>
-D:800440D4                     room_index <0>
-D:80044124                     room_index <0>
-D:80044174                     room_index <0>
-D:800441C4                     room_index <0>
-D:80044214                     room_index <0>
-D:80044264                     room_index <0>
-D:800442B4                     .word 0
-D:800442B8                     .word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-*/
+
+//D:80041418
+u32 D_80041418[] = {0, 0, 0};
+//D:80041424
+u8 room_information[0x50] = {0};
+//D:80041474
+u8 D_80041474[0x50] = {0};
+
+//D:800414C4
+u8 D_800414C4[0x50] = {0};
+//D:80041514
+u8 D_80041514[0x50] = {0};
+//D:80041564
+u8 D_80041564[0x50] = {0};
+//D:800415B4
+u8 D_800415B4[0x50] = {0};
+//D:80041604
+u8 D_80041604[0x50] = {0};
+//D:80041654
+u8 D_80041654[0x50] = {0};
+//D:800416A4
+u8 D_800416A4[0x50] = {0};
+//D:800416F4
+u8 D_800416F4[0x50] = {0};
+//D:80041744
+u8 D_80041744[0x50] = {0};
+//D:80041794
+u8 D_80041794[0x50] = {0};
+//D:800417E4
+u8 D_800417E4[0x50] = {0};
+//D:80041834
+u8 D_80041834[0x50] = {0};
+//D:80041884
+u8 D_80041884[0x50] = {0};
+//D:800418D4
+u8 D_800418D4[0x50] = {0};
+//D:80041924
+u8 D_80041924[0x50] = {0};
+//D:80041974
+u8 D_80041974[0x50] = {0};
+//D:800419C4
+u8 D_800419C4[0x50] = {0};
+//D:80041A14
+u8 D_80041A14[0x50] = {0};
+//D:80041A64
+u8 D_80041A64[0x50] = {0};
+//D:80041AB4
+u8 D_80041AB4[0x50] = {0};
+//D:80041B04
+u8 D_80041B04[0x50] = {0};
+//D:80041B54
+u8 D_80041B54[0x50] = {0};
+//D:80041BA4
+u8 D_80041BA4[0x50] = {0};
+//D:80041BF4
+u8 D_80041BF4[0x50] = {0};
+//D:80041C44
+u8 D_80041C44[0x50] = {0};
+//D:80041C94
+u8 D_80041C94[0x50] = {0};
+//D:80041CE4
+u8 D_80041CE4[0x50] = {0};
+//D:80041D34
+u8 D_80041D34[0x50] = {0};
+//D:80041D84
+u8 D_80041D84[0x50] = {0};
+//D:80041DD4
+u8 D_80041DD4[0x50] = {0};
+//D:80041E24
+u8 D_80041E24[0x50] = {0};
+//D:80041E74
+u8 D_80041E74[0x50] = {0};
+//D:80041EC4
+u8 D_80041EC4[0x50] = {0};
+//D:80041F14
+u8 D_80041F14[0x50] = {0};
+//D:80041F64
+u8 D_80041F64[0x50] = {0};
+//D:80041FB4
+u8 D_80041FB4[0x50] = {0};
+//D:80042004
+u8 D_80042004[0x50] = {0};
+//D:80042054
+u8 D_80042054[0x50] = {0};
+//D:800420A4
+u8 D_800420A4[0x50] = {0};
+//D:800420F4
+u8 D_800420F4[0x50] = {0};
+//D:80042144
+u8 D_80042144[0x50] = {0};
+//D:80042194
+u8 D_80042194[0x50] = {0};
+//D:800421E4
+u8 D_800421E4[0x50] = {0};
+//D:80042234
+u8 D_80042234[0x50] = {0};
+//D:80042284
+u8 D_80042284[0x50] = {0};
+//D:800422D4
+u8 D_800422D4[0x50] = {0};
+//D:80042324
+u8 D_80042324[0x50] = {0};
+//D:80042374
+u8 D_80042374[0x50] = {0};
+//D:800423C4
+u8 D_800423C4[0x50] = {0};
+//D:80042414
+u8 D_80042414[0x50] = {0};
+//D:80042464
+u8 D_80042464[0x50] = {0};
+//D:800424B4
+u8 D_800424B4[0x50] = {0};
+//D:80042504
+u8 D_80042504[0x50] = {0};
+//D:80042554
+u8 D_80042554[0x50] = {0};
+//D:800425A4
+u8 D_800425A4[0x50] = {0};
+//D:800425F4
+u8 D_800425F4[0x50] = {0};
+//D:80042644
+u8 D_80042644[0x50] = {0};
+//D:80042694
+u8 D_80042694[0x50] = {0};
+//D:800426E4
+u8 D_800426E4[0x50] = {0};
+//D:80042734
+u8 D_80042734[0x50] = {0};
+//D:80042784
+u8 D_80042784[0x50] = {0};
+//D:800427D4
+u8 D_800427D4[0x50] = {0};
+//D:80042824
+u8 D_80042824[0x50] = {0};
+//D:80042874
+u8 D_80042874[0x50] = {0};
+//D:800428C4
+u8 D_800428C4[0x50] = {0};
+//D:80042914
+u8 D_80042914[0x50] = {0};
+//D:80042964
+u8 D_80042964[0x50] = {0};
+//D:800429B4
+u8 D_800429B4[0x50] = {0};
+//D:80042A04
+u8 D_80042A04[0x50] = {0};
+//D:80042A54
+u8 D_80042A54[0x50] = {0};
+//D:80042AA4
+u8 D_80042AA4[0x50] = {0};
+//D:80042AF4
+u8 D_80042AF4[0x50] = {0};
+//D:80042B44
+u8 D_80042B44[0x50] = {0};
+//D:80042B94
+u8 D_80042B94[0x50] = {0};
+//D:80042BE4
+u8 D_80042BE4[0x50] = {0};
+//D:80042C34
+u8 D_80042C34[0x50] = {0};
+//D:80042C84
+u8 D_80042C84[0x50] = {0};
+//D:80042CD4
+u8 D_80042CD4[0x50] = {0};
+//D:80042D24
+u8 D_80042D24[0x50] = {0};
+//D:80042D74
+u8 D_80042D74[0x50] = {0};
+//D:80042DC4
+u8 D_80042DC4[0x50] = {0};
+//D:80042E14
+u8 D_80042E14[0x50] = {0};
+//D:80042E64
+u8 D_80042E64[0x50] = {0};
+//D:80042EB4
+u8 D_80042EB4[0x50] = {0};
+//D:80042F04
+u8 D_80042F04[0x50] = {0};
+//D:80042F54
+u8 D_80042F54[0x50] = {0};
+//D:80042FA4
+u8 D_80042FA4[0x50] = {0};
+//D:80042FF4
+u8 D_80042FF4[0x50] = {0};
+//D:80043044
+u8 D_80043044[0x50] = {0};
+//D:80043094
+u8 D_80043094[0x50] = {0};
+//D:800430E4
+u8 D_800430E4[0x50] = {0};
+//D:80043134
+u8 D_80043134[0x50] = {0};
+//D:80043184
+u8 D_80043184[0x50] = {0};
+//D:800431D4
+u8 D_800431D4[0x50] = {0};
+//D:80043224
+u8 D_80043224[0x50] = {0};
+//D:80043274
+u8 D_80043274[0x50] = {0};
+//D:800432C4
+u8 D_800432C4[0x50] = {0};
+//D:80043314
+u8 D_80043314[0x50] = {0};
+//D:80043364
+u8 D_80043364[0x50] = {0};
+//D:800433B4
+u8 D_800433B4[0x50] = {0};
+//D:80043404
+u8 D_80043404[0x50] = {0};
+//D:80043454
+u8 D_80043454[0x50] = {0};
+//D:800434A4
+u8 D_800434A4[0x50] = {0};
+//D:800434F4
+u8 D_800434F4[0x50] = {0};
+//D:80043544
+u8 D_80043544[0x50] = {0};
+//D:80043594
+u8 D_80043594[0x50] = {0};
+//D:800435E4
+u8 D_800435E4[0x50] = {0};
+//D:80043634
+u8 D_80043634[0x50] = {0};
+//D:80043684
+u8 D_80043684[0x50] = {0};
+//D:800436D4
+u8 D_800436D4[0x50] = {0};
+//D:80043724
+u8 D_80043724[0x50] = {0};
+//D:80043774
+u8 D_80043774[0x50] = {0};
+//D:800437C4
+u8 D_800437C4[0x50] = {0};
+//D:80043814
+u8 D_80043814[0x50] = {0};
+//D:80043864
+u8 D_80043864[0x50] = {0};
+//D:800438B4
+u8 D_800438B4[0x50] = {0};
+//D:80043904
+u8 D_80043904[0x50] = {0};
+//D:80043954
+u8 D_80043954[0x50] = {0};
+//D:800439A4
+u8 D_800439A4[0x50] = {0};
+//D:800439F4
+u8 D_800439F4[0x50] = {0};
+//D:80043A44
+u8 D_80043A44[0x50] = {0};
+//D:80043A94
+u8 D_80043A94[0x50] = {0};
+//D:80043AE4
+u8 D_80043AE4[0x50] = {0};
+//D:80043B34
+u8 D_80043B34[0x50] = {0};
+//D:80043B84
+u8 D_80043B84[0x50] = {0};
+//D:80043BD4
+u8 D_80043BD4[0x50] = {0};
+//D:80043C24
+u8 D_80043C24[0x50] = {0};
+//D:80043C74
+u8 D_80043C74[0x50] = {0};
+//D:80043CC4
+u8 D_80043CC4[0x50] = {0};
+//D:80043D14
+u8 D_80043D14[0x50] = {0};
+//D:80043D64
+u8 D_80043D64[0x50] = {0};
+//D:80043DB4
+u8 D_80043DB4[0x50] = {0};
+//D:80043E04
+u8 D_80043E04[0x50] = {0};
+//D:80043E54
+u8 D_80043E54[0x50] = {0};
+//D:80043EA4
+u8 D_80043EA4[0x50] = {0};
+//D:80043EF4
+u8 D_80043EF4[0x50] = {0};
+//D:80043F44
+u8 D_80043F44[0x50] = {0};
+//D:80043F94
+u8 D_80043F94[0x50] = {0};
+//D:80043FE4
+u8 D_80043FE4[0x50] = {0};
+//D:80044034
+u8 D_80044034[0x50] = {0};
+//D:80044084
+u8 D_80044084[0x50] = {0};
+//D:800440D4
+u8 D_800440D4[0x50] = {0};
+//D:80044124
+u8 D_80044124[0x50] = {0};
+//D:80044174
+u8 D_80044174[0x50] = {0};
+//D:800441C4
+u8 D_800441C4[0x50] = {0};
+//D:80044214
+u8 D_80044214[0x50] = {0};
+//D:80044264
+u8 D_80044264[0x50] = {0};
+//D:800442B4
+u32 D_800442B4[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
 //D:800442F4
 s32 MaxNumRooms = 0x96 ;
 //D:800442F8
@@ -247,43 +402,43 @@ s32 D_800443C4[] = {
 //D:8004448C
 struct levelentry levelinfotable[] = {
     {LEVELID_BUNKER1,  "bg/bg_sev_all_p.seg",  "Tbg_sev_all_p_stanZ",  0.53931433,  1.0, 23.148148},
-    {LEVELID_SILO,     "bg/bg_silo_all_p_seg", "Tbg_silo_all_p_stanz", 0.47256002,  1.0, 29.069},
-    {LEVELID_STATUE,   "bg/bg_stat_all_p_seg", "Tbg_stat_all_p_stanz", 0.10720287,  1.0, 0.0801},
-    {LEVELID_CONTROL,  "bg/bg_arec_all_p_seg", "Tbg_arec_all_p_stanz", 0.49886572,  1.0, 80.645164},
-    {LEVELID_ARCHIVES, "bg/bg_arch_all_p_seg", "Tbg_arch_all_p_stanz", 0.50678575,  1.0, 54.347824},
-    {LEVELID_TRAIN,    "bg/bg_tra_all_p_seg",  "Tbg_tra_all_p_stanz",  0.15019713,  1.0, 19.53125},
-    {LEVELID_FRIGATE,  "bg/bg_dest_all_p_seg", "Tbg_dest_all_p_stanz", 0.44757429,  1.0, 36.764706},
-    {LEVELID_BUNKER2,  "bg/bg_sevb_all_p_seg", "Tbg_sevb_all_p_stanz", 0.53931433,  1.0, 23.148148},
-    {LEVELID_AZTEC,    "bg/bg_azt_all_p_seg",  "Tbg_azt_all_p_stanz",  0.35300568,  1.0, 52.083332},
-    {LEVELID_STREETS,  "bg/bg_pete_all_p_seg", "Tbg_pete_all_p_stanz", 0.34187999,  1.0, 42.372883},
-    {LEVELID_DEPOT,    "bg/bg_depo_all_p_seg", "Tbg_depo_all_p_stanz", 0.21847887,  1.0, 17.605633},
-    {LEVELID_COMPLEX,  "bg/bg_ref_all_p_seg",  "Tbg_ref_all_p_stanz",  0.94285715,  1.0, 37.878788},
-    {LEVELID_EGYPT,    "bg/bg_cryp_all_p_seg", "Tbg_cryp_all_p_stanz", 0.25608,     1.0, 23.584906},
-    {LEVELID_DAM,      "bg/bg_dam_all_p_seg",  "Tbg_dam_all_p_stanz",  0.23363999,  0.2, 100.0},
-    {LEVELID_FACILITY, "bg/bg_ark_all_p_seg",  "Tbg_ark_all_p_stanz",  1.20648,     1.0, 64.102562},
-    {LEVELID_RUNWAY,   "bg/bg_run_all_p_seg",  "Tbg_run_all_p_stanz",  0.089571431, 1.0, 4.5537338},
-    {LEVELID_SURFACE,  "bg/bg_sevx_all_p_seg", "Tbg_sevx_all_p_stanz", 0.45445713,  0.2, 22.603975},
-    {LEVELID_JUNGLE,   "bg/bg_jun_all_p_seg",  "Tbg_jun_all_p_stanz",  0.094662853, 1.0, 6.6844921},
-    {LEVELID_TEMPLE,   "bg/bg_dish_all_p_seg", "Tbg_dish_all_p_stanz", 0.47142857,  1.0, 147.05882},
-    {LEVELID_CAVERNS,  "bg/bg_cave_all_p_seg", "Tbg_cave_all_p_stanz", 0.26824287,  1.0, 13.44086},
-    {LEVELID_CITADEL,  "bg/bg_cat_all_p_seg",  "Tbg_cat_all_p_stanz",  0.76852286,  1.0, 38.461536},
-    {LEVELID_CRADLE,   "bg/bg_crad_all_p_seg", "Tbg_crad_all_p_stanz", 0.23571429,  1.0, 43.103451},
-    {LEVELID_SHO,      "bg/bg_sho_all_p_seg",  "Tbg_sho_all_p_stanz",  0.528,       1.0, 21.18644},
-    {LEVELID_SURFACE2, "bg/bg_sevx_all_p_seg", "Tbg_sevx_all_p_stanz", 0.45445713,  0.2, 22.603975},
-    {LEVELID_ELD,      "bg/bg_eld_all_p_seg",  "Tbg_eld_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_BASEMENT, "bg/bg_ame_all_p_seg",  "Tbg_ame_all_p_stanz",  0.65999997,  1.0, 37.878788},
-    {LEVELID_STACK,    "bg/bg_ame_all_p_seg",  "Tbg_ame_all_p_stanz",  0.65999997,  1.0, 37.878788},
-    {LEVELID_LUE,      "bg/bg_lue_all_p_seg",  "Tbg_lue_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_LIBRARY,  "bg/bg_ame_all_p_seg",  "Tbg_ame_all_p_stanz",  0.65999997,  1.0, 37.878788},
-    {LEVELID_RIT,      "bg/bg_rit_all_p_seg",  "Tbg_rit_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_CAVES,    "bg/bg_oat_all_p_seg",  "Tbg_oat_all_p_stanz",  0.14142857,  1.0, 10.123456},
-    {LEVELID_EAR,      "bg/bg_ear_all_p_seg",  "Tbg_ear_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_LEE,      "bg/bg_lee_all_p_seg",  "Tbg_lee_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_LIP,      "bg/bg_lip_all_p_seg",  "Tbg_lip_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_CUBA,     "bg/bg_len_all_p_seg",  "Tbg_len_all_p_stanz",  0.094662853, 1.0, 6.6844921},
-    {LEVELID_WAX,      "bg/bg_wax_all_p_seg",  "Tbg_wax_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_PAM,      "bg/bg_pam_all_p_seg",  "Tbg_pam_all_p_stanz",  0.94285715,  1.0, 10.123456},
-    {LEVELID_MAX,      "bg/bgx.seg",           "Tbgxz",                0.94285715,  1.0, 1.0}
+    {LEVELID_SILO,     "bg/bg_silo_all_p.seg", "Tbg_silo_all_p_stanZ", 0.47256002,  1.0, 29.069},
+    {LEVELID_STATUE,   "bg/bg_stat_all_p.seg", "Tbg_stat_all_p_stanZ", 0.107202865,  1.0, 0.0801},
+    {LEVELID_CONTROL,  "bg/bg_arec_all_p.seg", "Tbg_arec_all_p_stanZ", 0.49886572,  1.0, 80.645164},
+    {LEVELID_ARCHIVES, "bg/bg_arch_all_p.seg", "Tbg_arch_all_p_stanZ", 0.50678575,  1.0, 54.347824},
+    {LEVELID_TRAIN,    "bg/bg_tra_all_p.seg",  "Tbg_tra_all_p_stanZ",  0.15019713,  1.0, 19.53125},
+    {LEVELID_FRIGATE,  "bg/bg_dest_all_p.seg", "Tbg_dest_all_p_stanZ", 0.44757429,  1.0, 36.764706},
+    {LEVELID_BUNKER2,  "bg/bg_sevb_all_p.seg", "Tbg_sevb_all_p_stanZ", 0.53931433,  1.0, 23.148148},
+    {LEVELID_AZTEC,    "bg/bg_azt_all_p.seg",  "Tbg_azt_all_p_stanZ",  0.35300568,  1.0, 52.083332},
+    {LEVELID_STREETS,  "bg/bg_pete_all_p.seg", "Tbg_pete_all_p_stanZ", 0.34187999,  1.0, 42.372883},
+    {LEVELID_DEPOT,    "bg/bg_depo_all_p.seg", "Tbg_depo_all_p_stanZ", 0.21847887,  1.0, 17.605633},
+    {LEVELID_COMPLEX,  "bg/bg_ref_all_p.seg",  "Tbg_ref_all_p_stanZ",  0.94285715,  1.0, 37.878788},
+    {LEVELID_EGYPT,    "bg/bg_cryp_all_p.seg", "Tbg_cryp_all_p_stanZ", 0.25608,     1.0, 23.584906},
+    {LEVELID_DAM,      "bg/bg_dam_all_p.seg",  "Tbg_dam_all_p_stanZ",  0.23363999,  0.2, 100.0},
+    {LEVELID_FACILITY, "bg/bg_ark_all_p.seg",  "Tbg_ark_all_p_stanZ",  1.20648,     1.0, 64.102562},
+    {LEVELID_RUNWAY,   "bg/bg_run_all_p.seg",  "Tbg_run_all_p_stanZ",  0.089571431, 1.0, 4.5537338},
+    {LEVELID_SURFACE,  "bg/bg_sevx_all_p.seg", "Tbg_sevx_all_p_stanZ", 0.45445713,  0.2, 22.603975},
+    {LEVELID_JUNGLE,   "bg/bg_jun_all_p.seg",  "Tbg_jun_all_p_stanZ",  0.094662853, 1.0, 6.6844921},
+    {LEVELID_TEMPLE,   "bg/bg_dish_all_p.seg", "Tbg_dish_all_p_stanZ", 0.47142857,  1.0, 147.05882},
+    {LEVELID_CAVERNS,  "bg/bg_cave_all_p.seg", "Tbg_cave_all_p_stanZ", 0.26824287,  1.0, 13.44086},
+    {LEVELID_CITADEL,  "bg/bg_cat_all_p.seg",  "Tbg_cat_all_p_stanZ",  0.76852286,  1.0, 38.461536},
+    {LEVELID_CRADLE,   "bg/bg_crad_all_p.seg", "Tbg_crad_all_p_stanZ", 0.23571429,  1.0, 43.103451},
+    {LEVELID_SHO,      "bg/bg_sho_all_p.seg",  "Tbg_sho_all_p_stanZ",  0.528,       1.0, 21.18644},
+    {LEVELID_SURFACE2, "bg/bg_sevx_all_p.seg", "Tbg_sevx_all_p_stanZ", 0.45445713,  0.2, 22.603975},
+    {LEVELID_ELD,      "bg/bg_eld_all_p.seg",  "Tbg_eld_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_BASEMENT, "bg/bg_ame_all_p.seg",  "Tbg_ame_all_p_stanZ",  0.65999997,  1.0, 37.878788},
+    {LEVELID_STACK,    "bg/bg_ame_all_p.seg",  "Tbg_ame_all_p_stanZ",  0.65999997,  1.0, 37.878788},
+    {LEVELID_LUE,      "bg/bg_lue_all_p.seg",  "Tbg_lue_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_LIBRARY,  "bg/bg_ame_all_p.seg",  "Tbg_ame_all_p_stanZ",  0.65999997,  1.0, 37.878788},
+    {LEVELID_RIT,      "bg/bg_rit_all_p.seg",  "Tbg_rit_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_CAVES,    "bg/bg_oat_all_p.seg",  "Tbg_oat_all_p_stanZ",  0.14142857,  1.0, 10.123456},
+    {LEVELID_EAR,      "bg/bg_ear_all_p.seg",  "Tbg_ear_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_LEE,      "bg/bg_lee_all_p.seg",  "Tbg_lee_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_LIP,      "bg/bg_lip_all_p.seg",  "Tbg_lip_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_CUBA,     "bg/bg_len_all_p.seg",  "Tbg_len_all_p_stanZ",  0.094662853, 1.0, 6.6844921},
+    {LEVELID_WAX,      "bg/bg_wax_all_p.seg",  "Tbg_wax_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_PAM,      "bg/bg_pam_all_p.seg",  "Tbg_pam_all_p_stanZ",  0.94285715,  1.0, 10.123456},
+    {LEVELID_MAX,      "bg/bgx.seg",           "TbgxZ",                0.94285715,  1.0, 1.0}
 };
 
 //D:8004481C
@@ -293,11 +448,22 @@ u32 D_80044824[] = {0x32C2E32, 0x373E3F4E, 0x56595D72, 0x76797AFF, 0x11003AFF};
 //D:80044838
 s32 current_room_maybe = 1;
 //D:8004483C
-s32 D_8004483C = 0;
+s32 NumberOfRoomsDrawn = 0;
+//back for now to build till rom is compiling and this can be determined
 //D:80044840
-u32 D_80044840[] = {0x96969600, 0x96969600};
-//D:80044848
-u32 D_80044848[] = {0xFFFFFF00, 0xFFFFFF00, 0x4D4D2E00, 0};
+u32 GlobalLight[] = {0x96969600, 0x96969600, 0xFFFFFF00, 0xFFFFFF00, 0x4D4D2E00, 0};
+//Lights1 GlobalLight = gdSPDefLights1(
+//	150,150,150        /* ambient color grey */ //D:80044840
+//	255,255,255,77,77,46    /* white light from the upper west-south-west (42 up, 244') */ //D:80044848
+//);
+// OR
+//Lights1 GlobalLight = { 255,255,255, 0xff,		/* diffuse */ 
+//	77,77,46,    0, 		/* direction */
+//	150,150,150 , 0xff 		/* ambient */
+//}; //to be honest, while this looks simpler but Im confused at the order...
+// Light has Ambient first then directional, its stored in mem this way too, so why is this declaired diffuse then ambient (taken from topgun.c)
+//At the end of the day though, whichever is the same as bin should be used, even if the first is as SDK wants (Def Lights)
+
 
 //D:80044858
 s32 D_80044858 = 0;
@@ -360,9 +526,12 @@ s32 D_80044910 = 0xFF7FFFFF;
 s32 D_80044914 = 0xFF7FFFFF;
 //D:80044918
 s32 D_80044918 = 0xFF7FFFFF;
-//D:8004491C                     .word 0
-//D:80044920                     .word 0
-//D:80044924                     .word 0
+//D:8004491C
+u32 D_8004491C = 0;
+//D:80044920
+u32 D_80044920 = 0;
+//D:80044924
+u32 D_80044924 = 0;
 
 
 // RenderMode/Combiner Look-Up-Tables
@@ -393,14 +562,14 @@ Gfx D_80044928[] = {
 
 //D:80044940 - Primary
 Gfx D_80044940[] = {
-    0xB900031D0C192078, 0xB900031DC8112078, 
-    0xB900031D0C182078, 0xB900031DC8102078, 
-    0xB900031D0C192D58, 0xB900031DC8112D58, 
-    0xB900031D0C184DD8, 0xB900031DC8104DD8, 
-    0xB900031D0C1849D8, 0xB900031DC81049D8,
-    0xB900031D0C193078, 0xB900031DC8113078, 
-    0xB900031D0C192048, 0xB900031DC8112048, 
-    0xB900031D0C182048, 0xB900031DC8102048, 
+    0xB900031D, 0x0C192078, 0xB900031D, 0xC8112078, 
+    0xB900031D, 0x0C182078, 0xB900031D, 0xC8102078, 
+    0xB900031D, 0x0C192D58, 0xB900031D, 0xC8112D58, 
+    0xB900031D, 0x0C184DD8, 0xB900031D, 0xC8104DD8, 
+    0xB900031D, 0x0C1849D8, 0xB900031D, 0xC81049D8,
+    0xB900031D, 0x0C193078, 0xB900031D, 0xC8113078, 
+    0xB900031D, 0x0C192048, 0xB900031D, 0xC8112048, 
+    0xB900031D, 0x0C182048, 0xB900031D, 0xC8102048, 
 
     /*
     //Add FOG to all rendermodes 
@@ -422,25 +591,25 @@ Gfx D_80044940[] = {
     //Z-Less OPA Terrain to Z-Less Fog OPA Terrain
     gDPSetRenderMode(G_RM_PASS, G_RM_AA_OPA_TERR2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_OPA_TERR2),
     */
-    0x0, 0x0
+0x0, 0x0
 };
 
 //D:800449C8 - Secondary
 Gfx D_800449C8[] = {
-    0xB900031D0C184DD8, 0xB900031DC8104DD8,
-    0xB900031D0C1849D8, 0xB900031DC81049D8, 
-    0xB900031D0C193078, 0xB900031DC8113078,
-    0xFC26A0041F1093FF, 0xFC26A0041F1493FF, 
-    0xFC121824FF33FFFF, 0xFC121A24FF37FFFF,
-    0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD,
-    0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD,
-    0xFC26A0041F1093FF, 0xFC26A0041F1493FF,
-    0xFC121824FF33FFFF, 0xFC121A24FF37FFFF,
-    0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD,
-    0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD,
-    0xFCFFFFFFFFFE7838, 0xFCFFFFFFFFFE7A38, 
-    0xFCFFFFFFFFFE793C, 0xFCFFFFFFFFFE7B3D,
-    0xFC26E4041F10FFFF, 0xFC26E4041F14FFFF,   
+    0xB900031D, 0x0C184DD8, 0xB900031D, 0xC8104DD8,
+    0xB900031D, 0x0C1849D8, 0xB900031D, 0xC81049D8, 
+    0xB900031D, 0x0C193078, 0xB900031D, 0xC8113078,
+    0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF, 
+    0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF,
+    0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD,
+    0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD,
+    0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF,
+    0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF,
+    0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD,
+    0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD,
+    0xFCFFFFFF, 0xFFFE7838, 0xFCFFFFFF, 0xFFFE7A38, 
+    0xFCFFFFFF, 0xFFFE793C, 0xFCFFFFFF, 0xFFFE7B3D,
+    0xFC26E404, 0x1F10FFFF, 0xFC26E404, 0x1F14FFFF,   
     /*
     //Add FOG to Rendermodes
     //Transparent DECAL to  FOG Transparent DECAL
@@ -469,7 +638,7 @@ Gfx D_800449C8[] = {
 
 //D:80044AB0
 // Loaded once on first time entering level, only once ever
-Gfx D_80044AB0[] = {
+u64 D_80044AB0[] = {
     0xFC26A0041F1093FF, 0xFC26A0041F1493FF,
     0xFC121824FF33FFFF, 0xFC121A24FF37FFFF, 
     0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD,
@@ -493,12 +662,12 @@ Gfx D_80044AB0[] = {
     gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_PASS2),
     gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA),
     */
-    0x0, 0x0
+    0x0
 };
 
 //D:80044B58
 // Loaded once on first time entering level, only once ever
-Gfx D_80044B58[] = {
+u64 D_80044B58[] = {
     0xFC26A0041F1093FF, 0xFC26A0041F1493FF, 
     0xFC121824FF33FFFF, 0xFC121A24FF37FFFF, 
     0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD,
@@ -522,11 +691,11 @@ Gfx D_80044B58[] = {
     gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_PASS2),
     gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA2),
     */
-    0x0, 0x0
+    0x0
 };
 
 //D:80044C00
-Gfx D_80044C00[] = {
+u64 D_80044C00[] = {
     0xB900031D005049D8, 0xB900031D00553078, 
     0xB900031D0C1849D8, 0xB900031D0C193078, 
     /*
@@ -535,12 +704,12 @@ Gfx D_80044C00[] = {
     //Transparent Surface to Billboard 
     gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2),
     */
-    0x0, 0x0
+    0x0
 };
 
 //D:80044C28
 //water
-Gfx D_80044C28[] = {
+u64 D_80044C28[] = {
     0xB900031D00552078, 0xB900031D00502078, 
     0xB900031D0C192078, 0xB900031D0C182078,
 	/*
@@ -549,22 +718,22 @@ Gfx D_80044C28[] = {
 	//2 cycle Opa to Particle
 	gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_PCL_SURF2),
 	*/
-    0x0, 0x0
+    0x0
 };
 
 //D:80044C50
-Gfx D_80044C50[] = {
+u64 D_80044C50[] = {
     0xB900031D0C1849D8, 0xB900031D0C184B50, 
 	/*
 	//Transparent to Cloud (Saves AA - Stops Jaggies from appearing behind BillBoard)
 	gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_ZB_CLD_SURF2),
 	*/
-	0x0, 0x0
+	0x0
 };
 
 //D:80044C68
 //(Wallet Bond - Main Menu)
-Gfx D_80044C68[] = {
+u64 D_80044C68[] = {
     0xBA00140200000000, 0xBA00140200100000, //1Cycle --> 2Cycle
     0xB900031D00502048, 0xB900031D08D02048, 
     0xFC127E24FFFFF9FC, 0xFC127FFFFFFFF838, 
@@ -574,11 +743,11 @@ Gfx D_80044C68[] = {
 	gDPSetRenderMode(G_RM_AA_PCL_SURF, G_RM_AA_PCL_SURF2), gDPSetRenderMode(AA_EN | IM_RD | CVG_DST_CLAMP | ALPHA_CVG_SEL | ZMODE_OPA | GBL_c1(G_BL_CLR_IN, G_BL_A_SHADE, G_BL_CLR_FOG, G_BL_1MA) | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
 	gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_PASS2), gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2),
 	*/
-	0x0, 0x0
+	0x0
 };
 
 //D:80044CA0
-Gfx D_80044CA0[] = {
+u64 D_80044CA0[] = {
     0xFC127E24FFFFF9FC, 0xFC137E26FFFFFBFD, 
     0xFC121824FF33FFFF, 0xFC131A26FF37FFFF, 
     0xFC127E24FFFFF9FC, 0xFC137E26FFFFFBFD,
@@ -609,7 +778,7 @@ Gfx D_80044CA0[] = {
  	gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGBA2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0, COMBINED, 0, COMBINED_ALPHA, 0, COMBINED, 0, ENVIRONMENT, 0),
  	gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2), gDPSetCombineLERP(CENTER, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
 	*/
-	0x0, 0x0
+	0x0
 };
 
 //D:80044D88
@@ -622,86 +791,8 @@ s32 D_80044DB0 = 0;
 
 
 // rodata
-//D:80058C48
-const char aPortD[] = "PORT%d";
-//D:80058C50
-const char aRoomD[] = "ROOM%d";
-/*
-D:80058C58     jpt_700E883C:   .word loc_CODE_7F0B4914  # DATA XREF: sub_CODE_7F0B4884+7Cr
-D:80058C58                     .word loc_CODE_7F0B4914  # jump table for switch statement
-D:80058C58                     .word loc_CODE_7F0B4914
-D:80058C58                     .word def_7F0B490C
-D:80058C58                     .word def_7F0B490C
-D:80058C58                     .word def_7F0B490C
-D:80058C58                     .word loc_CODE_7F0B4914
-D:80058C58                     .word def_7F0B490C
-D:80058C58                     .word loc_CODE_7F0B4914
-*/
-//D:80058C7C
-const f32 D_80058C7C = 0.89999998;
-/*
-D:80058C80     jpt_700EC3D8:   .word if_statement       # DATA XREF: parse_global_vis_command_list+88r
-D:80058C80                     .word dont_exec_commands_even_on_return  # jump table for switch statement
-D:80058C80                     .word endif_continue_exec
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word invalid_type_terminate
-D:80058C80                     .word if_statement_pull_from_stack
-D:80058C80                     .word toggle_exec_vs_ro
-D:80058C80                     .word endif
-D:80058CB4     vis_command_jpt:.word break              # DATA XREF: parse_global_vis_command_list+A8r
-D:80058CB4                     .word push_to_stack      # jump table for switch statement
-D:80058CB4                     .word pull_from_stack
-D:80058CB4                     .word and_merge_last_two_on_stack
-D:80058CB4                     .word or_merge_last_two_on_stack
-D:80058CB4                     .word not_merge_last_two_on_stack
-D:80058CB4                     .word carrot_merge_last_two_on_stack
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word push_tf_if_in_range_rooms
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word invalid_type_terminate
-D:80058CB4                     .word force_visible
-D:80058CB4                     .word match_portal_vis
-D:80058CB4                     .word add_visible_room
-D:80058CB4                     .word remove_vis
-D:80058CB4                     .word visible_if_seen_through_portal
-D:80058CB4                     .word not_visible_if_seen_through_portal
-D:80058CB4                     .word disable_room
-D:80058CB4                     .word disable_room_range
-D:80058CB4                     .word preload_room
-D:80058CB4                     .word preload_room_range
-*/
-//D:80058D54
-const f32 D_80058D54 = 3.4028235e38;
-//D:80058D58
-const f32 D_80058D58 = -3.4028235e38;
-//D:80058D5C
-const f32 D_80058D5C = 0.99900001;
-//D:80058D60
-const f32 D_80058D60 = 3.4028235e38;
+
+
 
 
 void something_with_bg_c_debug(void) {
@@ -899,8 +990,8 @@ glabel sub_GAME_7F0B39BC
 /* 0E8528 7F0B39F8 1000003D */  b     .L7F0B3AF0
 /* 0E852C 7F0B39FC 00001025 */   move  $v0, $zero
 .L7F0B3A00:
-/* 0E8530 7F0B3A00 3C078004 */  lui   $a3, %hi(D_8004483C) # $a3, 0x8004
-/* 0E8534 7F0B3A04 24E7483C */  addiu $a3, %lo(D_8004483C) # addiu $a3, $a3, 0x483c
+/* 0E8530 7F0B3A00 3C078004 */  lui   $a3, %hi(NumberOfRoomsDrawn) # $a3, 0x8004
+/* 0E8534 7F0B3A04 24E7483C */  addiu $a3, %lo(NumberOfRoomsDrawn) # addiu $a3, $a3, 0x483c
 /* 0E8538 7F0B3A08 8CE40000 */  lw    $a0, ($a3)
 /* 0E853C 7F0B3A0C 00001025 */  move  $v0, $zero
 /* 0E8540 7F0B3A10 3C0D8008 */  lui   $t5, %hi(dword_CODE_bss_8007FFA0) # $t5, 0x8008
@@ -1075,7 +1166,7 @@ void *sub_GAME_7F0B3BC4(void) {
     void *phi_v1;
 
     // Node 0
-    D_8004483C = 0;
+    NumberOfRoomsDrawn = 0;
     D_80041417 = (u8)0;
     D_80041467 = (u8)0;
     phi_v1 = &D_800414B4;
@@ -1098,8 +1189,8 @@ loop_1:
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B3BC4
-/* 0E86F4 7F0B3BC4 3C018004 */  lui   $at, %hi(D_8004483C) # $at, 0x8004
-/* 0E86F8 7F0B3BC8 AC20483C */  sw    $zero, %lo(D_8004483C)($at)
+/* 0E86F4 7F0B3BC4 3C018004 */  lui   $at, %hi(NumberOfRoomsDrawn) # $at, 0x8004
+/* 0E86F8 7F0B3BC8 AC20483C */  sw    $zero, %lo(NumberOfRoomsDrawn)($at)
 /* 0E86FC 7F0B3BCC 3C018004 */  lui   $at, %hi(D_80041417) # $at, 0x8004
 /* 0E8700 7F0B3BD0 A0201417 */  sb    $zero, %lo(D_80041417)($at)
 /* 0E8704 7F0B3BD4 3C018004 */  lui   $at, %hi(D_80041467) # $at, 0x8004
@@ -1132,8 +1223,8 @@ void sub_GAME_7F0B3C0C(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B3C0C
-/* 0E873C 7F0B3C0C 3C038004 */  lui   $v1, %hi(D_8004483C) # $v1, 0x8004
-/* 0E8740 7F0B3C10 8C63483C */  lw    $v1, %lo(D_8004483C)($v1)
+/* 0E873C 7F0B3C0C 3C038004 */  lui   $v1, %hi(NumberOfRoomsDrawn) # $v1, 0x8004
+/* 0E8740 7F0B3C10 8C63483C */  lw    $v1, %lo(NumberOfRoomsDrawn)($v1)
 /* 0E8744 7F0B3C14 00A03025 */  move  $a2, $a1
 /* 0E8748 7F0B3C18 3C058008 */  lui   $a1, %hi(dword_CODE_bss_8007FFA0) # $a1, 0x8008
 /* 0E874C 7F0B3C1C 18600013 */  blez  $v1, .L7F0B3C6C
@@ -1184,8 +1275,8 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B3C8C
 /* 0E87BC 7F0B3C8C 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 0E87C0 7F0B3C90 3C028004 */  lui   $v0, %hi(D_8004483C) # $v0, 0x8004
-/* 0E87C4 7F0B3C94 8C42483C */  lw    $v0, %lo(D_8004483C)($v0)
+/* 0E87C0 7F0B3C90 3C028004 */  lui   $v0, %hi(NumberOfRoomsDrawn) # $v0, 0x8004
+/* 0E87C4 7F0B3C94 8C42483C */  lw    $v0, %lo(NumberOfRoomsDrawn)($v0)
 /* 0E87C8 7F0B3C98 AFB70038 */  sw    $s7, 0x38($sp)
 /* 0E87CC 7F0B3C9C AFB60034 */  sw    $s6, 0x34($sp)
 /* 0E87D0 7F0B3CA0 AFB0001C */  sw    $s0, 0x1c($sp)
@@ -1314,8 +1405,8 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8994 7F0B3E64 24060002 */   li    $a2, 2
 /* 0E8998 7F0B3E68 00408025 */  move  $s0, $v0
 .L7F0B3E6C:
-/* 0E899C 7F0B3E6C 3C028004 */  lui   $v0, %hi(D_8004483C) # $v0, 0x8004
-/* 0E89A0 7F0B3E70 8C42483C */  lw    $v0, %lo(D_8004483C)($v0)
+/* 0E899C 7F0B3E6C 3C028004 */  lui   $v0, %hi(NumberOfRoomsDrawn) # $v0, 0x8004
+/* 0E89A0 7F0B3E70 8C42483C */  lw    $v0, %lo(NumberOfRoomsDrawn)($v0)
 /* 0E89A4 7F0B3E74 26730001 */  addiu $s3, $s3, 1
 .L7F0B3E78:
 /* 0E89A8 7F0B3E78 0262082A */  slt   $at, $s3, $v0
@@ -1349,9 +1440,9 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8A10 7F0B3EE0 00402025 */   move  $a0, $v0
 /* 0E8A14 7F0B3EE4 00408025 */  move  $s0, $v0
 .L7F0B3EE8:
-/* 0E8A18 7F0B3EE8 3C028004 */  lui   $v0, %hi(D_8004483C) # $v0, 0x8004
+/* 0E8A18 7F0B3EE8 3C028004 */  lui   $v0, %hi(NumberOfRoomsDrawn) # $v0, 0x8004
 /* 0E8A1C 7F0B3EEC 02D7082A */  slt   $at, $s6, $s7
-/* 0E8A20 7F0B3EF0 8C42483C */  lw    $v0, %lo(D_8004483C)($v0)
+/* 0E8A20 7F0B3EF0 8C42483C */  lw    $v0, %lo(NumberOfRoomsDrawn)($v0)
 /* 0E8A24 7F0B3EF4 14200043 */  bnez  $at, .L7F0B4004
 /* 0E8A28 7F0B3EF8 02C0A825 */   move  $s5, $s6
 /* 0E8A2C 7F0B3EFC 26F6FFFF */  addiu $s6, $s7, -1
@@ -1416,8 +1507,8 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8B08 7F0B3FD8 24060001 */   li    $a2, 1
 /* 0E8B0C 7F0B3FDC 00408025 */  move  $s0, $v0
 .L7F0B3FE0:
-/* 0E8B10 7F0B3FE0 3C028004 */  lui   $v0, %hi(D_8004483C) # $v0, 0x8004
-/* 0E8B14 7F0B3FE4 8C42483C */  lw    $v0, %lo(D_8004483C)($v0)
+/* 0E8B10 7F0B3FE0 3C028004 */  lui   $v0, %hi(NumberOfRoomsDrawn) # $v0, 0x8004
+/* 0E8B14 7F0B3FE4 8C42483C */  lw    $v0, %lo(NumberOfRoomsDrawn)($v0)
 /* 0E8B18 7F0B3FE8 26730001 */  addiu $s3, $s3, 1
 .L7F0B3FEC:
 /* 0E8B1C 7F0B3FEC 0262082A */  slt   $at, $s3, $v0
@@ -2139,21 +2230,21 @@ glabel sub_GAME_7F0B47E0
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B4810(f32 arg0) {
-    D_800413F4 = arg0;
-    D_800413F8 = (f32) (1.0f / arg0);
+    room_data_float1 = arg0;
+    room_data_float2 = (f32) (1.0f / arg0);
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B4810
-/* 0E9340 7F0B4810 3C018004 */  lui   $at, %hi(D_800413F4) # $at, 0x8004
-/* 0E9344 7F0B4814 E42C13F4 */  swc1  $f12, %lo(D_800413F4)($at)
+/* 0E9340 7F0B4810 3C018004 */  lui   $at, %hi(room_data_float1) # $at, 0x8004
+/* 0E9344 7F0B4814 E42C13F4 */  swc1  $f12, %lo(room_data_float1)($at)
 /* 0E9348 7F0B4818 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0E934C 7F0B481C 44812000 */  mtc1  $at, $f4
-/* 0E9350 7F0B4820 3C018004 */  lui   $at, %hi(D_800413F8)
+/* 0E9350 7F0B4820 3C018004 */  lui   $at, %hi(room_data_float2)
 /* 0E9354 7F0B4824 460C2183 */  div.s $f6, $f4, $f12
 /* 0E9358 7F0B4828 03E00008 */  jr    $ra
-/* 0E935C 7F0B482C E42613F8 */   swc1  $f6, %lo(D_800413F8)($at)
+/* 0E935C 7F0B482C E42613F8 */   swc1  $f6, %lo(room_data_float2)($at)
 )
 #endif
 
@@ -2161,38 +2252,15 @@ glabel sub_GAME_7F0B4810
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B4830(void) {
-    return D_800413F8;
+
+f32 get_room_data_float2(void){
+  return room_data_float2;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B4830
-/* 0E9360 7F0B4830 3C018004 */  lui   $at, %hi(D_800413F8)
-/* 0E9364 7F0B4834 03E00008 */  jr    $ra
-/* 0E9368 7F0B4838 C42013F8 */   lwc1  $f0, %lo(D_800413F8)($at)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0B483C(void) {
-    return D_800413F4;
+f32 get_room_data_float1(void){
+  return room_data_float1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B483C
-/* 0E936C 7F0B483C 3C018004 */  lui   $at, %hi(D_800413F4)
-/* 0E9370 7F0B4840 03E00008 */  jr    $ra
-/* 0E9374 7F0B4844 C42013F4 */   lwc1  $f0, %lo(D_800413F4)($at)
-)
-#endif
+
 
 
 
@@ -2228,19 +2296,10 @@ glabel sub_GAME_7F0B4848
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B4878(void) {
+f32 sub_GAME_7F0B4878(void) {
     return D_800413FC;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B4878
-/* 0E93A8 7F0B4878 3C018004 */  lui   $at, %hi(D_800413FC)
-/* 0E93AC 7F0B487C 03E00008 */  jr    $ra
-/* 0E93B0 7F0B4880 C42013FC */   lwc1  $f0, %lo(D_800413FC)($at)
-)
-#endif
+
 
 
 
@@ -2252,6 +2311,19 @@ void sub_GAME_7F0B4884(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80058C58*/
+glabel jpt_700E883C
+.word .L7F0B4914
+.word .L7F0B4914
+.word .L7F0B4914
+.word .L7F0B491C
+.word .L7F0B491C
+.word .L7F0B491C
+.word .L7F0B4914
+.word .L7F0B491C
+.word .L7F0B4914
+
 .text
 glabel sub_GAME_7F0B4884
 /* 0E93B4 7F0B4884 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -2289,8 +2361,10 @@ glabel sub_GAME_7F0B4884
 /* 0E9430 7F0B4900 3C018006 */  lui   $at, 0x8006
 /* 0E9434 7F0B4904 002F0821 */  addu  $at, $at, $t7
 /* 0E9438 7F0B4908 8C2F8C58 */  lw    $t7, -0x73a8($at)
+.L7F0B490C:
 /* 0E943C 7F0B490C 01E00008 */  jr    $t7
 /* 0E9440 7F0B4910 00000000 */   nop   
+.L7F0B4914:
 /* 0E9444 7F0B4914 241800C8 */  li    $t8, 200
 /* 0E9448 7F0B4918 AC780000 */  sw    $t8, ($v1)
 def_7F0B490C:
@@ -2400,7 +2474,7 @@ glabel sub_GAME_7F0B4A50
 /* 0E958C 7F0B4A5C 30A600FF */  andi  $a2, $a1, 0xff
 /* 0E9590 7F0B4A60 110E000C */  beq   $t0, $t6, .L7F0B4A94
 /* 0E9594 7F0B4A64 00001025 */   move  $v0, $zero
-/* 0E9598 7F0B4A68 00801821 */  move  $v1, $a0
+/* 0E9598 7F0B4A68 00801821 */  addu  $v1, $a0, $zero
 /* 0E959C 7F0B4A6C 90850000 */  lbu   $a1, ($a0)
 /* 0E95A0 7F0B4A70 00C03825 */  move  $a3, $a2
 .L7F0B4A74:
@@ -2710,10 +2784,10 @@ void sub_GAME_7F0B4E40(void *arg0) {
     arg0->unk4 = 0x80000040;
     temp_a1 = (temp_v1 + 8);
     *temp_v1 = 0x3860010;
-    temp_v1->unk4 = &D_80044848;
+    temp_v1->unk4 = &GlobalLight.l[0];// D_80044848;
     temp_a2 = (temp_a1 + 8);
     *temp_a1 = 0x3880010;
-    temp_a1->unk4 = &D_80044840;
+    temp_a1->unk4 = &//GlobalLight.a; //D_80044840;
     *temp_a2 = 0x3840010;
     sp20->unk4 = sub_GAME_7F078474((temp_a2 + 8), temp_a1, temp_a2);
     *arg0 = 0x3820010;
@@ -2754,15 +2828,15 @@ glabel sub_GAME_7F0B4E40
 /* 0E9990 7F0B4E60 AC4E0000 */  sw    $t6, ($v0)
 /* 0E9994 7F0B4E64 AC4F0004 */  sw    $t7, 4($v0)
 /* 0E9998 7F0B4E68 3C180386 */  lui   $t8, (0x03860010 >> 16) # lui $t8, 0x386
-/* 0E999C 7F0B4E6C 3C198004 */  lui   $t9, %hi(D_80044848) # $t9, 0x8004
-/* 0E99A0 7F0B4E70 27394848 */  addiu $t9, %lo(D_80044848) # addiu $t9, $t9, 0x4848
+/* 0E999C 7F0B4E6C 3C198004 */  lui   $t9, %hi(GlobalLight+0x8) # $t9, 0x8004
+/* 0E99A0 7F0B4E70 27394848 */  addiu $t9, %lo(GlobalLight+0x8) # addiu $t9, $t9, 0x4848
 /* 0E99A4 7F0B4E74 37180010 */  ori   $t8, (0x03860010 & 0xFFFF) # ori $t8, $t8, 0x10
 /* 0E99A8 7F0B4E78 24650008 */  addiu $a1, $v1, 8
 /* 0E99AC 7F0B4E7C AC780000 */  sw    $t8, ($v1)
 /* 0E99B0 7F0B4E80 AC790004 */  sw    $t9, 4($v1)
 /* 0E99B4 7F0B4E84 3C080388 */  lui   $t0, (0x03880010 >> 16) # lui $t0, 0x388
-/* 0E99B8 7F0B4E88 3C098004 */  lui   $t1, %hi(D_80044840) # $t1, 0x8004
-/* 0E99BC 7F0B4E8C 25294840 */  addiu $t1, %lo(D_80044840) # addiu $t1, $t1, 0x4840
+/* 0E99B8 7F0B4E88 3C098004 */  lui   $t1, %hi(GlobalLight) # $t1, 0x8004
+/* 0E99BC 7F0B4E8C 25294840 */  addiu $t1, %lo(GlobalLight) # addiu $t1, $t1, 0x4840
 /* 0E99C0 7F0B4E90 35080010 */  ori   $t0, (0x03880010 & 0xFFFF) # ori $t0, $t0, 0x10
 /* 0E99C4 7F0B4E94 24A60008 */  addiu $a2, $a1, 8
 /* 0E99C8 7F0B4E98 3C0A0384 */  lui   $t2, (0x03840010 >> 16) # lui $t2, 0x384
@@ -3531,9 +3605,9 @@ glabel sub_GAME_7F0B5208
 #ifdef NONMATCHING
 void sub_GAME_7F0B5488(void *arg0, void *arg1) {
     // Node 0
-    *arg1 = (f32) (*arg0 * D_800413F8);
-    arg1->unk4 = (f32) (arg0->unk4 * D_800413F8);
-    arg1->unk8 = (f32) (arg0->unk8 * D_800413F8);
+    *arg1 = (f32) (*arg0 * room_data_float2);
+    arg1->unk4 = (f32) (arg0->unk4 * room_data_float2);
+    arg1->unk8 = (f32) (arg0->unk8 * room_data_float2);
     sub_GAME_7F058474(get_BONDdata_field_10CC(), arg1, arg0);
     sub_GAME_7F078060(arg1, arg1);
     if (0.0f < arg1->unk8)
@@ -3554,8 +3628,8 @@ glabel sub_GAME_7F0B5488
 /* 0E9FC8 7F0B5498 0FC1E0F1 */  jal   get_BONDdata_field_10CC
 /* 0E9FCC 7F0B549C AFA40020 */   sw    $a0, 0x20($sp)
 /* 0E9FD0 7F0B54A0 8FA60020 */  lw    $a2, 0x20($sp)
-/* 0E9FD4 7F0B54A4 3C038004 */  lui   $v1, %hi(D_800413F8) # $v1, 0x8004
-/* 0E9FD8 7F0B54A8 246313F8 */  addiu $v1, %lo(D_800413F8) # addiu $v1, $v1, 0x13f8
+/* 0E9FD4 7F0B54A4 3C038004 */  lui   $v1, %hi(room_data_float2) # $v1, 0x8004
+/* 0E9FD8 7F0B54A8 246313F8 */  addiu $v1, %lo(room_data_float2) # addiu $v1, $v1, 0x13f8
 /* 0E9FDC 7F0B54AC C4660000 */  lwc1  $f6, ($v1)
 /* 0E9FE0 7F0B54B0 C4C40000 */  lwc1  $f4, ($a2)
 /* 0E9FE4 7F0B54B4 00402025 */  move  $a0, $v0
@@ -3601,6 +3675,9 @@ void sub_GAME_7F0B5528(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80058C7C
+.word 0x3f666666 /*0.89999998*/
 .text
 glabel sub_GAME_7F0B5528
 /* 0EA058 7F0B5528 27BDFF50 */  addiu $sp, $sp, -0xb0
@@ -3644,9 +3721,9 @@ glabel sub_GAME_7F0B5528
 /* 0EA0F0 7F0B55C0 5880004E */  blezl $a0, .L7F0B56FC
 /* 0EA0F4 7F0B55C4 4480B000 */   mtc1  $zero, $f22
 /* 0EA0F8 7F0B55C8 3C018006 */  lui   $at, %hi(D_80058C7C) # $at, 0x8006
-/* 0EA0FC 7F0B55CC 3C148004 */  lui   $s4, %hi(D_800413F8) # $s4, 0x8004
+/* 0EA0FC 7F0B55CC 3C148004 */  lui   $s4, %hi(room_data_float2) # $s4, 0x8004
 /* 0EA100 7F0B55D0 4480B000 */  mtc1  $zero, $f22
-/* 0EA104 7F0B55D4 269413F8 */  addiu $s4, %lo(D_800413F8) # addiu $s4, $s4, 0x13f8
+/* 0EA104 7F0B55D4 269413F8 */  addiu $s4, %lo(room_data_float2) # addiu $s4, $s4, 0x13f8
 /* 0EA108 7F0B55D8 C4388C7C */  lwc1  $f24, %lo(D_80058C7C)($at)
 /* 0EA10C 7F0B55DC 00008825 */  move  $s1, $zero
 /* 0EA110 7F0B55E0 27B70080 */  addiu $s7, $sp, 0x80
@@ -4396,6 +4473,14 @@ void sub_GAME_7F0B5D7C(s32 arg0) {
 }
 #else
 GLOBAL_ASM(
+.rdata
+/*D:80058C48*/
+glabel aPortD
+/*"PORT%d"*/
+.word 0x504F5254, 0x25640000
+
+
+
 .text
 glabel sub_GAME_7F0B5D7C
 /* 0EA8AC 7F0B5D7C 3C028004 */  lui   $v0, %hi(D_80044860) # $v0, 0x8004
@@ -4442,6 +4527,12 @@ void sub_GAME_7F0B5DE0(s32 arg0) {
 }
 #else
 GLOBAL_ASM(
+.rdata
+/*D:80058C50*/
+glabel aRoomD
+/*"ROOM%d"*/
+.word 0x524F4F4D, 0x25640000
+
 .text
 glabel sub_GAME_7F0B5DE0
 /* 0EA910 7F0B5DE0 3C028004 */  lui   $v0, %hi(D_80044864) # $v0, 0x8004
@@ -4476,20 +4567,11 @@ glabel sub_GAME_7F0B5DE0
 
 
 
-#ifdef NONMATCHING
-void getMaxNumRooms(void) {
+
+s32 getMaxNumRooms(void) {
     return MaxNumRooms;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel getMaxNumRooms
-/* 0EA974 7F0B5E44 3C028004 */  lui   $v0, %hi(MaxNumRooms)
-/* 0EA978 7F0B5E48 03E00008 */  jr    $ra
-/* 0EA97C 7F0B5E4C 8C4242F4 */   lw    $v0, %lo(MaxNumRooms)($v0)
-)
-#endif
 
 
 
@@ -4826,7 +4908,7 @@ glabel sub_GAME_7F0B5FAC
 /* 0EAB90 7F0B6060 00004812 */  mflo  $t1
 /* 0EAB94 7F0B6064 00892021 */  addu  $a0, $a0, $t1
 /* 0EAB98 7F0B6068 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
-/* 0EAB9C 7F0B606C 8C844490 */   lw    $a0, %lo(levelinfotable)($a0)
+/* 0EAB9C 7F0B606C 8C844490 */   lw    $a0, %lo(levelinfotable+4)($a0)
 /* 0EABA0 7F0B6070 8FA40018 */  lw    $a0, 0x18($sp)
 /* 0EABA4 7F0B6074 0FC2D7E3 */  jal   sub_GAME_7F0B5F8C
 /* 0EABA8 7F0B6078 8FA50034 */   lw    $a1, 0x34($sp)
@@ -4904,7 +4986,7 @@ glabel sub_GAME_7F0B609C
 /* 0EAC84 7F0B6154 00004812 */  mflo  $t1
 /* 0EAC88 7F0B6158 00892021 */  addu  $a0, $a0, $t1
 /* 0EAC8C 7F0B615C 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
-/* 0EAC90 7F0B6160 8C844490 */   lw    $a0, %lo(levelinfotable)($a0)
+/* 0EAC90 7F0B6160 8C844490 */   lw    $a0, %lo(levelinfotable+4)($a0)
 /* 0EAC94 7F0B6164 02202025 */  move  $a0, $s1
 /* 0EAC98 7F0B6168 0FC2D7E3 */  jal   sub_GAME_7F0B5F8C
 /* 0EAC9C 7F0B616C 02002825 */   move  $a1, $s0
@@ -5002,7 +5084,7 @@ glabel sub_GAME_7F0B61DC
 /* 0EADC4 7F0B6294 00004812 */  mflo  $t1
 /* 0EADC8 7F0B6298 00892021 */  addu  $a0, $a0, $t1
 /* 0EADCC 7F0B629C 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
-/* 0EADD0 7F0B62A0 8C844490 */   lw    $a0, %lo(levelinfotable)($a0)
+/* 0EADD0 7F0B62A0 8C844490 */   lw    $a0, %lo(levelinfotable+4)($a0)
 /* 0EADD4 7F0B62A4 02002025 */  move  $a0, $s0
 /* 0EADD8 7F0B62A8 0FC2D7E3 */  jal   sub_GAME_7F0B5F8C
 /* 0EADDC 7F0B62AC 02202825 */   move  $a1, $s1
@@ -7962,8 +8044,8 @@ glabel sub_GAME_7F0B7A78
 /* 0EC5DC 7F0B7AAC AFA600E0 */  sw    $a2, 0xe0($sp)
 /* 0EC5E0 7F0B7AB0 AFA0006C */  sw    $zero, 0x6c($sp)
 /* 0EC5E4 7F0B7AB4 AFAE0074 */  sw    $t6, 0x74($sp)
-/* 0EC5E8 7F0B7AB8 3C018004 */  lui   $at, %hi(D_800413F4) # $at, 0x8004
-/* 0EC5EC 7F0B7ABC C42013F4 */  lwc1  $f0, %lo(D_800413F4)($at)
+/* 0EC5E8 7F0B7AB8 3C018004 */  lui   $at, %hi(room_data_float1) # $at, 0x8004
+/* 0EC5EC 7F0B7ABC C42013F4 */  lwc1  $f0, %lo(room_data_float1)($at)
 /* 0EC5F0 7F0B7AC0 C4840000 */  lwc1  $f4, ($a0)
 /* 0EC5F4 7F0B7AC4 0006C080 */  sll   $t8, $a2, 2
 /* 0EC5F8 7F0B7AC8 0306C021 */  addu  $t8, $t8, $a2
@@ -8163,23 +8245,12 @@ glabel sub_GAME_7F0B7A78
 
 
 
-#ifdef NONMATCHING
+
 void sub_GAME_7F0B7D94(void) {
-    // Node 0
     D_800448A0 = 0;
     D_800448A4 = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B7D94
-/* 0EC8C4 7F0B7D94 3C018004 */  lui   $at, %hi(D_800448A0) # $at, 0x8004
-/* 0EC8C8 7F0B7D98 AC2048A0 */  sw    $zero, %lo(D_800448A0)($at)
-/* 0EC8CC 7F0B7D9C 3C018004 */  lui   $at, %hi(D_800448A4)
-/* 0EC8D0 7F0B7DA0 03E00008 */  jr    $ra
-/* 0EC8D4 7F0B7DA4 AC2048A4 */   sw    $zero, %lo(D_800448A4)($at)
-)
-#endif
+
 
 
 
@@ -8481,13 +8552,13 @@ glabel sub_GAME_7F0B7F84
 /* 0ECB8C 7F0B805C C6100004 */  lwc1  $f16, 4($s0)
 /* 0ECB90 7F0B8060 46062202 */  mul.s $f8, $f4, $f6
 /* 0ECB94 7F0B8064 C6060008 */  lwc1  $f6, 8($s0)
-/* 0ECB98 7F0B8068 3C018004 */  lui   $at, %hi(D_800413F4) # $at, 0x8004
+/* 0ECB98 7F0B8068 3C018004 */  lui   $at, %hi(room_data_float1) # $at, 0x8004
 /* 0ECB9C 7F0B806C 46105482 */  mul.s $f18, $f10, $f16
 /* 0ECBA0 7F0B8070 C7AA005C */  lwc1  $f10, 0x5c($sp)
 /* 0ECBA4 7F0B8074 02802025 */  move  $a0, $s4
 /* 0ECBA8 7F0B8078 460A3402 */  mul.s $f16, $f6, $f10
 /* 0ECBAC 7F0B807C 46124100 */  add.s $f4, $f8, $f18
-/* 0ECBB0 7F0B8080 C43213F4 */  lwc1  $f18, %lo(D_800413F4)($at)
+/* 0ECBB0 7F0B8080 C43213F4 */  lwc1  $f18, %lo(room_data_float1)($at)
 /* 0ECBB4 7F0B8084 46048200 */  add.s $f8, $f16, $f4
 /* 0ECBB8 7F0B8088 46124082 */  mul.s $f2, $f8, $f18
 /* 0ECBBC 7F0B808C 0FC2E664 */  jal   sub_GAME_7F0B9990
@@ -8800,6 +8871,65 @@ void parse_global_vis_command_list(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:80058C80*/
+glabel jpt_700EC3D8
+.word if_statement
+.word dont_exec_commands_even_on_return
+.word endif_continue_exec
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word if_statement_pull_from_stack
+.word toggle_exec_vs_ro
+.word endif
+
+/*D:80058CB4*/
+glabel vis_command_jpt
+.word break
+.word push_to_stack
+.word pull_from_stack
+.word and_merge_last_two_on_stack
+.word or_merge_last_two_on_stack
+.word not_merge_last_two_on_stack
+.word carrot_merge_last_two_on_stack
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word push_tf_if_in_range_rooms
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word invalid_type_terminate
+.word force_visible
+.word match_portal_vis
+.word add_visible_room
+.word remove_vis
+.word visible_if_seen_through_portal
+.word not_visible_if_seen_through_portal
+.word disable_room
+.word disable_room_range
+.word preload_room
+.word preload_room_range
 .text
 glabel parse_global_vis_command_list
 /* 0ECF44 7F0B8414 27BDFF80 */  addiu $sp, $sp, -0x80
@@ -9546,7 +9676,7 @@ void sub_GAME_7F0B8D78(s32 arg0, s32 arg1) {
     {
         // Node 1
         phi_a1 = arg1;
-        if (D_8004483C > 0)
+        if (NumberOfRoomsDrawn > 0)
         {
             // Node 2
             phi_v0 = &dword_CODE_bss_8007FFA0;
@@ -9566,7 +9696,7 @@ loop_3:
                 phi_v0 = (phi_v0 + 0x1c);
                 phi_v1 = temp_v1;
                 phi_a1 = 0x23;
-                if (temp_v1 < D_8004483C)
+                if (temp_v1 < NumberOfRoomsDrawn)
                 {
                     goto loop_3;
                 }
@@ -9587,8 +9717,8 @@ glabel sub_GAME_7F0B8D78
 /* 0ED8B8 7F0B8D88 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0ED8BC 7F0B8D8C 15C10011 */  bne   $t6, $at, .L7F0B8DD4
 /* 0ED8C0 7F0B8D90 00803025 */   move  $a2, $a0
-/* 0ED8C4 7F0B8D94 3C048004 */  lui   $a0, %hi(D_8004483C) # $a0, 0x8004
-/* 0ED8C8 7F0B8D98 8C84483C */  lw    $a0, %lo(D_8004483C)($a0)
+/* 0ED8C4 7F0B8D94 3C048004 */  lui   $a0, %hi(NumberOfRoomsDrawn) # $a0, 0x8004
+/* 0ED8C8 7F0B8D98 8C84483C */  lw    $a0, %lo(NumberOfRoomsDrawn)($a0)
 /* 0ED8CC 7F0B8D9C 3C028008 */  lui   $v0, %hi(dword_CODE_bss_8007FFA0) # $v0, 0x8008
 /* 0ED8D0 7F0B8DA0 2442FFA0 */  addiu $v0, %lo(dword_CODE_bss_8007FFA0) # addiu $v0, $v0, -0x60
 /* 0ED8D4 7F0B8DA4 1880000B */  blez  $a0, .L7F0B8DD4
@@ -10655,6 +10785,11 @@ void sub_GAME_7F0B96CC(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80058D54
+.word 0x7f7fffff /*3.4028235e38*/
+glabel D_80058D58
+.word 0xff7fffff /*-3.4028235e38*/
 .text
 glabel sub_GAME_7F0B96CC
 /* 0EE1FC 7F0B96CC 27BDFF88 */  addiu $sp, $sp, -0x78
@@ -10844,6 +10979,9 @@ void sub_GAME_7F0B993C(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80058D5C
+.word 0x3f7fbe77 /*0.99900001*/
 .text
 glabel sub_GAME_7F0B993C
 /* 0EE46C 7F0B993C 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -11559,37 +11697,14 @@ glabel sub_GAME_7F0B9DE4
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0B9DF4(s32 arg0) {
-    // Node 0
     return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B9DF4
-/* 0EE924 7F0B9DF4 03E00008 */  jr    $ra
-/* 0EE928 7F0B9DF8 AFA40000 */   sw    $a0, ($sp)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0B9DFC(s32 arg0) {
-    // Node 0
     return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B9DFC
-/* 0EE92C 7F0B9DFC 03E00008 */  jr    $ra
-/* 0EE930 7F0B9E00 AFA40000 */   sw    $a0, ($sp)
-)
-#endif
+
 
 
 
@@ -11601,6 +11716,9 @@ void sub_GAME_7F0B9E04(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80058D60
+.word 0x7f7fffff /*3.4028235e38*/
 .text
 glabel sub_GAME_7F0B9E04
 /* 0EE934 7F0B9E04 27BDFFB8 */  addiu $sp, $sp, -0x48
@@ -11702,9 +11820,9 @@ glabel sub_GAME_7F0B9F14
 /* 0EEA68 7F0B9F38 A3A0004A */   sb    $zero, 0x4a($sp)
 /* 0EEA6C 7F0B9F3C 8FA600A8 */  lw    $a2, 0xa8($sp)
 /* 0EEA70 7F0B9F40 C6100000 */  lwc1  $f16, ($s0)
-/* 0EEA74 7F0B9F44 3C018004 */  lui   $at, %hi(D_800413F4) # $at, 0x8004
+/* 0EEA74 7F0B9F44 3C018004 */  lui   $at, %hi(room_data_float1) # $at, 0x8004
 /* 0EEA78 7F0B9F48 C4CA0000 */  lwc1  $f10, ($a2)
-/* 0EEA7C 7F0B9F4C C42C13F4 */  lwc1  $f12, %lo(D_800413F4)($at)
+/* 0EEA7C 7F0B9F4C C42C13F4 */  lwc1  $f12, %lo(room_data_float1)($at)
 /* 0EEA80 7F0B9F50 93AA004B */  lbu   $t2, 0x4b($sp)
 /* 0EEA84 7F0B9F54 46105181 */  sub.s $f6, $f10, $f16
 /* 0EEA88 7F0B9F58 93AB004A */  lbu   $t3, 0x4a($sp)
@@ -12021,8 +12139,8 @@ glabel sub_GAME_7F0BA2D4
 /* 0EEE28 7F0BA2F8 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 0EEE2C 7F0BA2FC AFB00018 */  sw    $s0, 0x18($sp)
 /* 0EEE30 7F0BA300 AFA700C4 */  sw    $a3, 0xc4($sp)
-/* 0EEE34 7F0BA304 3C018004 */  lui   $at, %hi(D_800413F4) # $at, 0x8004
-/* 0EEE38 7F0BA308 C42013F4 */  lwc1  $f0, %lo(D_800413F4)($at)
+/* 0EEE34 7F0BA304 3C018004 */  lui   $at, %hi(room_data_float1) # $at, 0x8004
+/* 0EEE38 7F0BA308 C42013F4 */  lwc1  $f0, %lo(room_data_float1)($at)
 /* 0EEE3C 7F0BA30C C4840000 */  lwc1  $f4, ($a0)
 /* 0EEE40 7F0BA310 8CF10000 */  lw    $s1, ($a3)
 /* 0EEE44 7F0BA314 3C1E8004 */  lui   $fp, %hi(D_80044904) # $fp, 0x8004

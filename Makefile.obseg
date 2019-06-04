@@ -155,14 +155,14 @@ GUN_RZ_FILES = \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GcircuitboardZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GclipboardZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GcreditcardZ.rz \
-    $(BUILD_DIR)/$(OBSEG_DIR)/gun/GdarglassesZ.rz \
+    $(BUILD_DIR)/$(OBSEG_DIR)/gun/GdarkglassesZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GdatathiefZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GdattapeZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GdoordecoderZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GdoorexploderZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GdossierredZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GdynamiteZ.rz \
-    $(BUILD_DIR)/$(OBSEG_DIR)/gun/GexpelosivefloppyZ.rz \
+    $(BUILD_DIR)/$(OBSEG_DIR)/gun/GexplosivefloppyZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GexplosivepenZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GextinguisherZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GfingergunZ.rz \
@@ -207,7 +207,7 @@ GUN_RZ_FILES = \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GsilverwppkZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GskorpionZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GsniperrifleZ.rz \
-    $(BUILD_DIR)/$(OBSEG_DIR)/gun/GspecterZ.rz \
+    $(BUILD_DIR)/$(OBSEG_DIR)/gun/GspectreZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GspooltapeZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GspyfileZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/gun/GstafflistZ.rz \
@@ -693,11 +693,16 @@ SETUP_RZ_FILES = \
 $(BUILD_DIR)/$(OBSEG_DIR)/text/%.rz: $(OBSEG_DIR)/text/%.bin
 	$(RZ_COMP) $< $@
 
-$(OBSEG_DIR)/text/%.bin: $(OBSEG_DIR)/text/%.o
+$(OBSEG_DIR)/text/%.bin: $(OBSEG_DIR)/text/%.elf
 	$(OBJCOPY) $< $@ -O binary
+
+$(OBSEG_DIR)/text/%.elf: $(OBSEG_DIR)/text/%.o
+	$(LD) -T LnameE.ld -o $@
+	rm assets/obseg/text/LnameE.o
 
 $(OBSEG_DIR)/text/%.o: $(OBSEG_DIR)/text/%.c
 	$(CC) -c $(CFLAGS) -o $@ -O2 $<
+	mv $@ assets/obseg/text/LnameE.o
 
 TEXT_RZ_FILES := \
     $(BUILD_DIR)/$(OBSEG_DIR)/text/LameJ.rz \

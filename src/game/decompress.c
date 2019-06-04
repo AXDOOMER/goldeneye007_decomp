@@ -4,7 +4,7 @@
 //this definately isn't proper way this data was represented, but works for now
 // rodata
 //D:8005BF80
-u32 rz_header_bytes[] = {
+const u32 rz_header_bytes[] = {
     0x11720000, 0x11720000, 0x11720000, 0x11720000, 0x11720000,
     0x11720000, 0x11720000, 0x11720000, 0x11720000, 0x11720000
 };

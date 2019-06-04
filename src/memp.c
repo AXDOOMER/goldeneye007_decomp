@@ -49,30 +49,12 @@ const char aMe_0[] = "-me";
 
 
 
-#ifdef NONMATCHING
+
 void something_with_memp_c_debug(void) {
-    // Node 0
-    get_ptr_debug_notice_list_entry(&ptr_memp_c_debug_debug_notice_list, "memp_c_debug");
-    return;
-    // (possible return value: get_ptr_debug_notice_list_entry(&ptr_memp_c_debug_debug_notice_list, &aMemp_c_debug))
+
+    get_ptr_debug_notice_list_entry(&ptr_memp_c_debug_debug_notice_list, &aMemp_c_debug); //should be "memp_c_debug"
 }
-#else
-GLOBAL_ASM(
-.text
-glabel something_with_memp_c_debug
-/* 009F80 70009380 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 009F84 70009384 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 009F88 70009388 3C048002 */  lui   $a0, %hi(ptr_memp_c_debug_debug_notice_list) # $a0, 0x8002
-/* 009F8C 7000938C 3C058003 */  lui   $a1, %hi(aMemp_c_debug) # $a1, 0x8003
-/* 009F90 70009390 24A591A0 */  addiu $a1, %lo(aMemp_c_debug) # addiu $a1, $a1, -0x6e60
-/* 009F94 70009394 0C001398 */  jal   get_ptr_debug_notice_list_entry
-/* 009F98 70009398 24844400 */   addiu $a0, %lo(ptr_memp_c_debug_debug_notice_list) # addiu $a0, $a0, 0x4400
-/* 009F9C 7000939C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 009FA0 700093A0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 009FA4 700093A4 03E00008 */  jr    $ra
-/* 009FA8 700093A8 00000000 */   nop   
-)
-#endif
+
 
 
 

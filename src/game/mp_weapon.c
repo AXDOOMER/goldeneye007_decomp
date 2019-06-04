@@ -255,11 +255,11 @@ GLOBAL_ASM(
 glabel get_ptr_mp_weapon_set_data
 /* 0FB144 7F0C6614 3C0E8005 */  lui   $t6, %hi(mp_weapon_set) # $t6, 0x8005
 /* 0FB148 7F0C6618 8DCE9160 */  lw    $t6, %lo(mp_weapon_set)($t6)
-/* 0FB14C 7F0C661C 3C028005 */  lui   $v0, %hi(mp_weapon_set_text_table)
+/* 0FB14C 7F0C661C 3C028005 */  lui   $v0, %hi(mp_weapon_set_text_table+4)
 /* 0FB150 7F0C6620 000E78C0 */  sll   $t7, $t6, 3
 /* 0FB154 7F0C6624 004F1021 */  addu  $v0, $v0, $t7
 /* 0FB158 7F0C6628 03E00008 */  jr    $ra
-/* 0FB15C 7F0C662C 8C4290F4 */   lw    $v0, %lo(mp_weapon_set_text_table)($v0)
+/* 0FB15C 7F0C662C 8C4290F4 */   lw    $v0, %lo(mp_weapon_set_text_table+4)($v0)
 )
 #endif
 

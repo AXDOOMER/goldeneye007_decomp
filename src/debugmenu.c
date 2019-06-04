@@ -60,93 +60,27 @@ u32 D_800268B8 = 0xFF;
 
 
 
-
-
-
-#ifdef NONMATCHING
-void dummied_function(s32 arg0, s32 arg1) {
-    return 0;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel dummied_function
-/* 00B980 7000AD80 AFA40000 */  sw    $a0, ($sp)
-/* 00B984 7000AD84 AFA50004 */  sw    $a1, 4($sp)
-/* 00B988 7000AD88 03E00008 */  jr    $ra
-/* 00B98C 7000AD8C 00001025 */   move  $v0, $zero
-)
-#endif
-
-
-
-#ifdef NONMATCHING
-void dummied_function_0(s32 arg0, s32 arg1) {
+u32 dummied_function_7000AD80(s32 arg0, s32 arg1) {
     return 0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel dummied_function_0
-/* 00B990 7000AD90 AFA40000 */  sw    $a0, ($sp)
-/* 00B994 7000AD94 AFA50004 */  sw    $a1, 4($sp)
-/* 00B998 7000AD98 03E00008 */  jr    $ra
-/* 00B99C 7000AD9C 00001025 */   move  $v0, $zero
-)
-#endif
-
-
-
-#ifdef NONMATCHING
-void null_function(void) {
-
+u32 dummied_function_7000AD90(s32 arg0, s32 arg1) {
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel null_function
-/* 00B9A0 7000ADA0 03E00008 */  jr    $ra
-/* 00B9A4 7000ADA4 00000000 */   nop   
-)
-#endif
 
+void null_function_7000ADA0(void) {
+//empty
+}
 
-
-#ifdef NONMATCHING
 void null_init_main_0(void) {
-
+//empty
 }
-#else
-GLOBAL_ASM(
-.text
-glabel null_init_main_0
-/* 00B9A8 7000ADA8 03E00008 */  jr    $ra
-/* 00B9AC 7000ADAC 00000000 */   nop   
-)
-#endif
 
-
-
-#ifdef NONMATCHING
 void debug_text_related_2(void)
 {
     debug_text_related_1();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel debug_text_related_2
-/* 00B9B0 7000ADB0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00B9B4 7000ADB4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00B9B8 7000ADB8 0C002BC0 */  jal   debug_text_related_1
-/* 00B9BC 7000ADBC 00000000 */   nop   
-/* 00B9C0 7000ADC0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00B9C4 7000ADC4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00B9C8 7000ADC8 03E00008 */  jr    $ra
-/* 00B9CC 7000ADCC 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -283,29 +217,12 @@ glabel display_text_to_coord
 
 
 
-#ifdef NONMATCHING
+
 void debug_menu_text_related(void) {
-    // Node 0
-    debug_menu_x_text_pos = (s32) debug_menu_x_pos_offset;
-    debug_menu_y_text_pos = (s32) debug_menu_y_pos_offset;
-    return;
-    // (function likely void)
+    debug_menu_x_text_pos = debug_menu_x_pos_offset;
+    debug_menu_y_text_pos = debug_menu_y_pos_offset;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel debug_menu_text_related
-/* 00BADC 7000AEDC 3C0E8002 */  lui   $t6, %hi(debug_menu_x_pos_offset) # $t6, 0x8002
-/* 00BAE0 7000AEE0 8DCE4FA0 */  lw    $t6, %lo(debug_menu_x_pos_offset)($t6)
-/* 00BAE4 7000AEE4 3C018002 */  lui   $at, %hi(debug_menu_x_text_pos) # $at, 0x8002
-/* 00BAE8 7000AEE8 3C0F8002 */  lui   $t7, %hi(debug_menu_y_pos_offset) # $t7, 0x8002
-/* 00BAEC 7000AEEC 8DEF4FA4 */  lw    $t7, %lo(debug_menu_y_pos_offset)($t7)
-/* 00BAF0 7000AEF0 AC2E4FA8 */  sw    $t6, %lo(debug_menu_x_text_pos)($at)
-/* 00BAF4 7000AEF4 3C018002 */  lui   $at, 0x8002
-/* 00BAF8 7000AEF8 03E00008 */  jr    $ra
-/* 00BAFC 7000AEFC AC2F4FAC */   sw    $t7, 0x4fac($at)
-)
-#endif
+
 
 
 
@@ -328,7 +245,7 @@ void debug_text_related_1(void) {
     }
     // Node 4
     debug_menu_text_related();
-    null_function();
+    null_function_7000ADA0();
     string_formatting = 0;
     return;
     // (possible return value: null_function())
@@ -362,7 +279,7 @@ glabel debug_text_related_1
 /* 00BB4C 7000AF4C 00008025 */   move  $s0, $zero
 /* 00BB50 7000AF50 0C002BB7 */  jal   debug_menu_text_related
 /* 00BB54 7000AF54 00000000 */   nop   
-/* 00BB58 7000AF58 0C002B68 */  jal   null_function
+/* 00BB58 7000AF58 0C002B68 */  jal   null_function_7000ADA0
 /* 00BB5C 7000AF5C 00000000 */   nop   
 /* 00BB60 7000AF60 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 00BB64 7000AF64 3C018002 */  lui   $at, %hi(string_formatting) # $at, 0x8002
@@ -378,23 +295,11 @@ glabel debug_text_related_1
 
 
 
-#ifdef NONMATCHING
-void stubbed_function(s32 arg0, s32 arg1, ? arg2, ? arg3) {
-    // Node 0
+void stubbed_function_7000AF84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return;
     // (function likely void)
 }
-#else
-GLOBAL_ASM(
-.text
-glabel stubbed_function
-/* 00BB84 7000AF84 AFA40000 */  sw    $a0, ($sp)
-/* 00BB88 7000AF88 AFA50004 */  sw    $a1, 4($sp)
-/* 00BB8C 7000AF8C AFA60008 */  sw    $a2, 8($sp)
-/* 00BB90 7000AF90 03E00008 */  jr    $ra
-/* 00BB94 7000AF94 AFA7000C */   sw    $a3, 0xc($sp)
-)
-#endif
+
 
 
 
@@ -411,7 +316,7 @@ s32 something_debug_info_related(s32 arg0) {
     {
         loop_3:
         // Node 3
-        stubbed_function(0, temp_s3, 0, 0x21);
+        stubbed_function_7000AF84(0, temp_s3, 0, 0x21);
         if ((0 + 1) != 0x50)
         {
             goto loop_3;
@@ -459,7 +364,7 @@ glabel something_debug_info_related
 .L7000AFD0:
 /* 00BBD0 7000AFD0 02602825 */  move  $a1, $s3
 /* 00BBD4 7000AFD4 02003025 */  move  $a2, $s0
-/* 00BBD8 7000AFD8 0C002BE1 */  jal   stubbed_function
+/* 00BBD8 7000AFD8 0C002BE1 */  jal   stubbed_function_7000AF84
 /* 00BBDC 7000AFDC 02203825 */   move  $a3, $s1
 /* 00BBE0 7000AFE0 26100001 */  addiu $s0, $s0, 1
 /* 00BBE4 7000AFE4 5612FFFA */  bnel  $s0, $s2, .L7000AFD0

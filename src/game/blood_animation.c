@@ -185,7 +185,7 @@ char die_blood_image_1[] = {
     0xE5,0xE5,0xE5,0xE5
 };
 
-s32 dword_D_8002C50C = 0;
+s32 D_8002C50C = 0;
 
 #ifdef NONMATCHING
 void insert_imageDL(void) {
@@ -212,7 +212,7 @@ glabel insert_imageDL
 /* 050C38 7F01C108 33190FFF */  andi  $t9, $t8, 0xfff
 /* 050C3C 7F01C10C 3C01FF10 */  lui   $at, 0xff10
 /* 050C40 7F01C110 03214025 */  or    $t0, $t9, $at
-/* 050C44 7F01C114 0C000F07 */  jal   get_video2buf_offset28
+/* 050C44 7F01C114 0C000F07 */  jal   get_video_settings2_frameb
 /* 050C48 7F01C118 AD280000 */   sw    $t0, ($t1)
 /* 050C4C 7F01C11C 0C003A2C */  jal   osVirtualToPhysical
 /* 050C50 7F01C120 00402025 */   move  $a0, $v0
@@ -338,8 +338,8 @@ glabel die_blood_image_routine
 /* 050DC8 7F01C298 3C118008 */  lui   $s1, %hi(ptr_BONDdata) # $s1, 0x8008
 /* 050DCC 7F01C29C 2631A0B0 */  addiu $s1, %lo(ptr_BONDdata) # addiu $s1, $s1, -0x5f50
 /* 050DD0 7F01C2A0 8E2F0000 */  lw    $t7, ($s1)
-/* 050DD4 7F01C2A4 3C0E8003 */  lui   $t6, %hi(die_blood_images) # $t6, 0x8003
-/* 050DD8 7F01C2A8 25CEBB30 */  addiu $t6, %lo(die_blood_images) # addiu $t6, $t6, -0x44d0
+/* 050DD4 7F01C2A4 3C0E8003 */  lui   $t6, %hi(die_blood_image_1) # $t6, 0x8003
+/* 050DD8 7F01C2A8 25CEBB30 */  addiu $t6, %lo(die_blood_image_1) # addiu $t6, $t6, -0x44d0
 /* 050DDC 7F01C2AC 1000000D */  b     .L7F01C2E4
 /* 050DE0 7F01C2B0 ADEE11A8 */   sw    $t6, 0x11a8($t7)
 .L7F01C2B4:
@@ -857,8 +857,17 @@ glabel sub_GAME_7F01C670
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01CA18(void) {
-
+void sub_GAME_7F01CA18(Gfx *glistp) //BloodRed_Dl_Setup
+{
+	sub_GAME_7F01C1A4();
+	//1 cycle settings
+	gDPSetRenderMode(glistp++, G_RM_CLD_SURF, G_RM_CLD_SURF2);
+	gDPSetCombineMode(glistp++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+	gDPSetPrimColor(glistp++, 0, 0, 150, 00, 00, 180); //dark red
+	gDPSetColorDither(glistp++, G_CD_MAGICSQ);
+	
+	get_video2_settings_txtClipW();
+	//...
 }
 #else
 GLOBAL_ASM(
@@ -881,7 +890,7 @@ glabel sub_GAME_7F01CA18
 /* 051580 7F01CA50 352900B4 */  ori   $t1, (0x960000B4 & 0xFFFF) # ori $t1, $t1, 0xb4
 /* 051584 7F01CA54 3C08FA00 */  lui   $t0, 0xfa00
 /* 051588 7F01CA58 354A0602 */  ori   $t2, (0xBA000602 & 0xFFFF) # ori $t2, $t2, 0x602
-/* 05158C 7F01CA5C AC4E0000 */  sw    $t6, ($v0)
+/* 05158C 7F01CA5C AC4E0000 */  sw    $t6, ($v0)		#$v0 = gfx glist
 /* 051590 7F01CA60 AC4F0004 */  sw    $t7, 4($v0)
 /* 051594 7F01CA64 AC580008 */  sw    $t8, 8($v0)
 /* 051598 7F01CA68 AC59000C */  sw    $t9, 0xc($v0)

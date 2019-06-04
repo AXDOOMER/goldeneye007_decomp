@@ -37,67 +37,8 @@ s32 dword_CODE_bss_8008C634;
 s32 mission_state = 0;
 
 
-/* rodata
-D:8005B790     jpt_700F4B9C:   .word loc_CODE_7F0C0C74  # DATA XREF: sub_CODE_7F0C0C3C+24r
-D:8005B790                     .word loc_CODE_7F0C0D28  # jump table for switch statement
-D:8005B790                     .word loc_CODE_7F0C0E18
-D:8005B790                     .word loc_CODE_7F0C0EB0
-D:8005B790                     .word loc_CODE_7F0C0FE8
-D:8005B790                     .word loc_CODE_7F0C10B4
-D:8005B790                     .word loc_CODE_7F0C115C
-D:8005B7AC     jpt_700F4BBC:   .word loc_CODE_7F0C11EC  # DATA XREF: sub_CODE_7F0C0C3C+44r
-D:8005B7AC                     .word loc_CODE_7F0C0C94  # jump table for switch statement
-D:8005B7AC                     .word loc_CODE_7F0C0D28
-D:8005B7AC                     .word loc_CODE_7F0C0D28
-D:8005B7AC                     .word loc_CODE_7F0C0CC8
-D:8005B7AC                     .word loc_CODE_7F0C0D28
-D:8005B7AC                     .word loc_CODE_7F0C0D28
-D:8005B7C8     jpt_700F4C70:   .word loc_CODE_7F0C0D48  # DATA XREF: sub_CODE_7F0C0C3C+F8r
-D:8005B7C8                     .word loc_CODE_7F0C0E18  # jump table for switch statement
-D:8005B7C8                     .word loc_CODE_7F0C0D68
-D:8005B7C8                     .word loc_CODE_7F0C0DAC
-D:8005B7C8                     .word loc_CODE_7F0C0E18
-D:8005B7C8                     .word loc_CODE_7F0C0E18
-D:8005B7C8                     .word loc_CODE_7F0C0DE4
-*/
-const f32 D_8005B7E4 = 0.02;
-/*
-D:8005B7E8     jpt_700F4D60:   .word loc_CODE_7F0C0E38  # DATA XREF: sub_CODE_7F0C0C3C+1E8r
-D:8005B7E8                     .word loc_CODE_7F0C0E58  # jump table for switch statement
-D:8005B7E8                     .word loc_CODE_7F0C11EC
-D:8005B7E8                     .word loc_CODE_7F0C0E88
-D:8005B7E8                     .word loc_CODE_7F0C0EB0
-D:8005B7E8                     .word loc_CODE_7F0C0EB0
-D:8005B7E8                     .word loc_CODE_7F0C0EB0
-D:8005B804     jpt_700F4DF8:   .word loc_CODE_7F0C0ED0  # DATA XREF: sub_CODE_7F0C0C3C+280r
-D:8005B804                     .word loc_CODE_7F0C0EF0  # jump table for switch statement
-D:8005B804                     .word loc_CODE_7F0C0F20
-D:8005B804                     .word loc_CODE_7F0C0FE8
-D:8005B804                     .word loc_CODE_7F0C0F54
-D:8005B804                     .word loc_CODE_7F0C0F9C
-D:8005B804                     .word loc_CODE_7F0C0FE8
-D:8005B820     jpt_700F4F30:   .word loc_CODE_7F0C1008  # DATA XREF: sub_CODE_7F0C0C3C+3B8r
-D:8005B820                     .word loc_CODE_7F0C10B4  # jump table for switch statement
-D:8005B820                     .word loc_CODE_7F0C10B4
-D:8005B820                     .word loc_CODE_7F0C1028
-D:8005B820                     .word loc_CODE_7F0C10B4
-D:8005B820                     .word loc_CODE_7F0C1070
-D:8005B820                     .word loc_CODE_7F0C10B4
-D:8005B83C     jpt_700F4FFC:   .word loc_CODE_7F0C10D4  # DATA XREF: sub_CODE_7F0C0C3C+484r
-D:8005B83C                     .word loc_CODE_7F0C115C  # jump table for switch statement
-D:8005B83C                     .word loc_CODE_7F0C115C
-D:8005B83C                     .word loc_CODE_7F0C10F4
-D:8005B83C                     .word loc_CODE_7F0C112C
-D:8005B83C                     .word loc_CODE_7F0C115C
-D:8005B83C                     .word loc_CODE_7F0C115C
-D:8005B858     jpt_700F50A4:   .word loc_CODE_7F0C117C  # DATA XREF: sub_CODE_7F0C0C3C+52Cr
-D:8005B858                     .word loc_CODE_7F0C119C  # jump table for switch statement
-D:8005B858                     .word loc_CODE_7F0C11E4
-D:8005B858                     .word loc_CODE_7F0C11E4
-D:8005B858                     .word loc_CODE_7F0C11E4
-D:8005B858                     .word loc_CODE_7F0C11E4
-D:8005B858                     .word loc_CODE_7F0C11CC
-*/
+// rodata
+
 
 
 #ifdef NONMATCHING
@@ -123,33 +64,109 @@ glabel sub_GAME_7F0C0C10
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0C0C30(void) {
-
+s32 get_mission_state(void) {
+  return mission_state;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C0C30
-/* 0F5760 7F0C0C30 3C028005 */  lui   $v0, 0x8005
-/* 0F5764 7F0C0C34 03E00008 */  jr    $ra
-/* 0F5768 7F0C0C38 8C4284C0 */   lw    $v0, -0x7b40($v0)
-)
-#endif
+
 
 
 
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0C0C3C(void) {
+void set_missionstate(void) {
 
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+/*D:8005B790*/
+glabel jpt_700F4B9C
+.word .L7F0C0C74
+.word .L7F0C0D28
+.word .L7F0C0E18
+.word .L7F0C0EB0
+.word .L7F0C0FE8
+.word .L7F0C10B4
+.word .L7F0C115C
+
+/*D:8005B7AC*/
+glabel jpt_700F4BBC
+.word .L7F0C11EC
+.word .L7F0C0C94
+.word .L7F0C0D28
+.word .L7F0C0D28
+.word .L7F0C0CC8
+.word .L7F0C0D28
+.word .L7F0C0D28
+
+/*D:8005B7C8*/
+glabel jpt_700F4C70
+.word .L7F0C0D48
+.word .L7F0C0E18
+.word .L7F0C0D68
+.word .L7F0C0DAC
+.word .L7F0C0E18
+.word .L7F0C0E18
+.word .L7F0C0DE4
+
+glabel D_8005B7E4
+.word 0x3ca3d70a /*0.02*/
+
+/*D:8005B7E8*/
+glabel jpt_700F4D60
+.word .L7F0C0E38
+.word .L7F0C0E58
+.word .L7F0C11EC
+.word .L7F0C0E88
+.word .L7F0C0EB0
+.word .L7F0C0EB0
+.word .L7F0C0EB0
+
+/*D:8005B804*/
+glabel jpt_700F4DF8
+.word .L7F0C0ED0
+.word .L7F0C0EF0
+.word .L7F0C0F20
+.word .L7F0C0FE8
+.word .L7F0C0F54
+.word .L7F0C0F9C
+.word .L7F0C0FE8
+
+/*D:8005B820*/
+glabel jpt_700F4F30
+.word .L7F0C1008
+.word .L7F0C10B4
+.word .L7F0C10B4
+.word .L7F0C1028
+.word .L7F0C10B4
+.word .L7F0C1070
+.word .L7F0C10B4
+
+/*D:8005B83C*/
+glabel jpt_700F4FFC
+.word .L7F0C10D4
+.word .L7F0C115C
+.word .L7F0C115C
+.word .L7F0C10F4
+.word .L7F0C112C
+.word .L7F0C115C
+.word .L7F0C115C
+
+/*D:8005B858*/
+glabel jpt_700F50A4
+.word .L7F0C117C
+.word .L7F0C119C
+.word .L7F0C11E4
+.word .L7F0C11E4
+.word .L7F0C11E4
+.word .L7F0C11E4
+.word .L7F0C11CC
+
+
 .text
-glabel sub_GAME_7F0C0C3C
-/* 0F576C 7F0C0C3C 3C038005 */  lui   $v1, %hi(mission_state) # $v1, 0x8005
+glabel set_missionstate
+/* 0F576C set_missionstate 3C038005 */  lui   $v1, %hi(mission_state) # $v1, 0x8005
 /* 0F5770 7F0C0C40 246384C0 */  addiu $v1, %lo(mission_state) # addiu $v1, $v1, -0x7b40
 /* 0F5774 7F0C0C44 8C620000 */  lw    $v0, ($v1)
 /* 0F5778 7F0C0C48 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -163,6 +180,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5798 7F0C0C68 8C2EB790 */  lw    $t6, -0x4870($at)
 /* 0F579C 7F0C0C6C 01C00008 */  jr    $t6
 /* 0F57A0 7F0C0C70 00000000 */   nop   
+.L7F0C0C74:
 /* 0F57A4 7F0C0C74 2C810007 */  sltiu $at, $a0, 7
 /* 0F57A8 7F0C0C78 1020002B */  beqz  $at, .L7F0C0D28
 /* 0F57AC 7F0C0C7C 00047880 */   sll   $t7, $a0, 2
@@ -171,6 +189,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F57B8 7F0C0C88 8C2FB7AC */  lw    $t7, -0x4854($at)
 /* 0F57BC 7F0C0C8C 01E00008 */  jr    $t7
 /* 0F57C0 7F0C0C90 00000000 */   nop   
+.L7F0C0C94:
 /* 0F57C4 7F0C0C94 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F57C8 7F0C0C98 00000000 */   nop   
 /* 0F57CC 7F0C0C9C 0C001C0F */  jal   musicTrack1Vol
@@ -184,6 +203,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F57EC 7F0C0CBC 00402025 */   move  $a0, $v0
 /* 0F57F0 7F0C0CC0 1000014B */  b     .L7F0C11F0
 /* 0F57F4 7F0C0CC4 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0CC8:
 /* 0F57F8 7F0C0CC8 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F57FC 7F0C0CCC 00000000 */   nop   
 /* 0F5800 7F0C0CD0 0C001C0F */  jal   musicTrack1Vol
@@ -217,6 +237,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F586C 7F0C0D3C 8C38B7C8 */  lw    $t8, -0x4838($at)
 /* 0F5870 7F0C0D40 03000008 */  jr    $t8
 /* 0F5874 7F0C0D44 00000000 */   nop   
+.L7F0C0D48:
 /* 0F5878 7F0C0D48 0C001BF4 */  jal   musicTrack1Stop
 /* 0F587C 7F0C0D4C 00000000 */   nop   
 /* 0F5880 7F0C0D50 0C001CD6 */  jal   musicTrack2Stop
@@ -225,6 +246,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F588C 7F0C0D5C 00000000 */   nop   
 /* 0F5890 7F0C0D60 10000123 */  b     .L7F0C11F0
 /* 0F5894 7F0C0D64 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0D68:
 /* 0F5898 7F0C0D68 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F589C 7F0C0D6C 00000000 */   nop   
 /* 0F58A0 7F0C0D70 0C001CF1 */  jal   musicTrack2Vol
@@ -242,6 +264,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F58D0 7F0C0DA0 00000000 */   nop   
 /* 0F58D4 7F0C0DA4 10000112 */  b     .L7F0C11F0
 /* 0F58D8 7F0C0DA8 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0DAC:
 /* 0F58DC 7F0C0DAC 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F58E0 7F0C0DB0 00000000 */   nop   
 /* 0F58E4 7F0C0DB4 0C001CF1 */  jal   musicTrack2Vol
@@ -256,6 +279,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5908 7F0C0DD8 00000000 */   nop   
 /* 0F590C 7F0C0DDC 10000104 */  b     .L7F0C11F0
 /* 0F5910 7F0C0DE0 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0DE4:
 /* 0F5914 7F0C0DE4 3C018006 */  lui   $at, %hi(D_8005B7E4) # $at, 0x8006
 /* 0F5918 7F0C0DE8 0C001C3E */  jal   music_related_1
 /* 0F591C 7F0C0DEC C42CB7E4 */   lwc1  $f12, %lo(D_8005B7E4)($at)
@@ -278,6 +302,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F595C 7F0C0E2C 8C39B7E8 */  lw    $t9, -0x4818($at)
 /* 0F5960 7F0C0E30 03200008 */  jr    $t9
 /* 0F5964 7F0C0E34 00000000 */   nop   
+.L7F0C0E38:
 /* 0F5968 7F0C0E38 0C001BF4 */  jal   musicTrack1Stop
 /* 0F596C 7F0C0E3C 00000000 */   nop   
 /* 0F5970 7F0C0E40 0C001CD6 */  jal   musicTrack2Stop
@@ -286,6 +311,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F597C 7F0C0E4C 00000000 */   nop   
 /* 0F5980 7F0C0E50 100000E7 */  b     .L7F0C11F0
 /* 0F5984 7F0C0E54 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0E58:
 /* 0F5988 7F0C0E58 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F598C 7F0C0E5C 00000000 */   nop   
 /* 0F5990 7F0C0E60 3C013F00 */  li    $at, 0x3F000000 # 0.500000
@@ -298,6 +324,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F59AC 7F0C0E7C 00000000 */   nop   
 /* 0F59B0 7F0C0E80 100000DB */  b     .L7F0C11F0
 /* 0F59B4 7F0C0E84 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0E88:
 /* 0F59B8 7F0C0E88 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F59BC 7F0C0E8C 00000000 */   nop   
 /* 0F59C0 7F0C0E90 0C001CF1 */  jal   musicTrack2Vol
@@ -317,6 +344,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F59F4 7F0C0EC4 8C28B804 */  lw    $t0, -0x47fc($at)
 /* 0F59F8 7F0C0EC8 01000008 */  jr    $t0
 /* 0F59FC 7F0C0ECC 00000000 */   nop   
+.L7F0C0ED0:
 /* 0F5A00 7F0C0ED0 0C001BF4 */  jal   musicTrack1Stop
 /* 0F5A04 7F0C0ED4 00000000 */   nop   
 /* 0F5A08 7F0C0ED8 0C001CD6 */  jal   musicTrack2Stop
@@ -325,6 +353,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5A14 7F0C0EE4 00000000 */   nop   
 /* 0F5A18 7F0C0EE8 100000C1 */  b     .L7F0C11F0
 /* 0F5A1C 7F0C0EEC 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0EF0:
 /* 0F5A20 7F0C0EF0 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5A24 7F0C0EF4 00000000 */   nop   
 /* 0F5A28 7F0C0EF8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -337,6 +366,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5A44 7F0C0F14 00000000 */   nop   
 /* 0F5A48 7F0C0F18 100000B5 */  b     .L7F0C11F0
 /* 0F5A4C 7F0C0F1C 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0F20:
 /* 0F5A50 7F0C0F20 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5A54 7F0C0F24 00000000 */   nop   
 /* 0F5A58 7F0C0F28 0C001CF1 */  jal   musicTrack2Vol
@@ -350,6 +380,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5A78 7F0C0F48 00402025 */   move  $a0, $v0
 /* 0F5A7C 7F0C0F4C 100000A8 */  b     .L7F0C11F0
 /* 0F5A80 7F0C0F50 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0F54:
 /* 0F5A84 7F0C0F54 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5A88 7F0C0F58 00000000 */   nop   
 /* 0F5A8C 7F0C0F5C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -368,6 +399,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5AC0 7F0C0F90 00000000 */   nop   
 /* 0F5AC4 7F0C0F94 10000096 */  b     .L7F0C11F0
 /* 0F5AC8 7F0C0F98 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C0F9C:
 /* 0F5ACC 7F0C0F9C 0FC30304 */  jal   sub_GAME_7F0C0C10
 /* 0F5AD0 7F0C0FA0 00000000 */   nop   
 /* 0F5AD4 7F0C0FA4 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -396,6 +428,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5B2C 7F0C0FFC 8C29B820 */  lw    $t1, -0x47e0($at)
 /* 0F5B30 7F0C1000 01200008 */  jr    $t1
 /* 0F5B34 7F0C1004 00000000 */   nop   
+.L7F0C1008:
 /* 0F5B38 7F0C1008 0C001BF4 */  jal   musicTrack1Stop
 /* 0F5B3C 7F0C100C 00000000 */   nop   
 /* 0F5B40 7F0C1010 0C001CD6 */  jal   musicTrack2Stop
@@ -404,6 +437,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5B4C 7F0C101C 00000000 */   nop   
 /* 0F5B50 7F0C1020 10000073 */  b     .L7F0C11F0
 /* 0F5B54 7F0C1024 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C1028:
 /* 0F5B58 7F0C1028 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5B5C 7F0C102C 00000000 */   nop   
 /* 0F5B60 7F0C1030 0C001CF1 */  jal   musicTrack2Vol
@@ -422,6 +456,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5B94 7F0C1064 00000000 */   nop   
 /* 0F5B98 7F0C1068 10000061 */  b     .L7F0C11F0
 /* 0F5B9C 7F0C106C 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C1070:
 /* 0F5BA0 7F0C1070 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5BA4 7F0C1074 00000000 */   nop   
 /* 0F5BA8 7F0C1078 0C001CF1 */  jal   musicTrack2Vol
@@ -448,6 +483,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5BF8 7F0C10C8 8C2AB83C */  lw    $t2, -0x47c4($at)
 /* 0F5BFC 7F0C10CC 01400008 */  jr    $t2
 /* 0F5C00 7F0C10D0 00000000 */   nop   
+.L7F0C10D4:
 /* 0F5C04 7F0C10D4 0C001BF4 */  jal   musicTrack1Stop
 /* 0F5C08 7F0C10D8 00000000 */   nop   
 /* 0F5C0C 7F0C10DC 0C001CD6 */  jal   musicTrack2Stop
@@ -456,6 +492,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5C18 7F0C10E8 00000000 */   nop   
 /* 0F5C1C 7F0C10EC 10000040 */  b     .L7F0C11F0
 /* 0F5C20 7F0C10F0 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C10F4:
 /* 0F5C24 7F0C10F4 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5C28 7F0C10F8 00000000 */   nop   
 /* 0F5C2C 7F0C10FC 0C001CF1 */  jal   musicTrack2Vol
@@ -470,6 +507,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5C50 7F0C1120 00000000 */   nop   
 /* 0F5C54 7F0C1124 10000032 */  b     .L7F0C11F0
 /* 0F5C58 7F0C1128 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C112C:
 /* 0F5C5C 7F0C112C 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5C60 7F0C1130 00000000 */   nop   
 /* 0F5C64 7F0C1134 3C013F00 */  li    $at, 0x3F000000 # 0.500000
@@ -491,6 +529,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5CA0 7F0C1170 8C2BB858 */  lw    $t3, -0x47a8($at)
 /* 0F5CA4 7F0C1174 01600008 */  jr    $t3
 /* 0F5CA8 7F0C1178 00000000 */   nop   
+.L7F0C117C:
 /* 0F5CAC 7F0C117C 0C001BF4 */  jal   musicTrack1Stop
 /* 0F5CB0 7F0C1180 00000000 */   nop   
 /* 0F5CB4 7F0C1184 0C001CD6 */  jal   musicTrack2Stop
@@ -499,6 +538,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5CC0 7F0C1190 00000000 */   nop   
 /* 0F5CC4 7F0C1194 10000016 */  b     .L7F0C11F0
 /* 0F5CC8 7F0C1198 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C119C:
 /* 0F5CCC 7F0C119C 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5CD0 7F0C11A0 00000000 */   nop   
 /* 0F5CD4 7F0C11A4 3C014000 */  li    $at, 0x40000000 # 2.000000
@@ -511,6 +551,7 @@ glabel sub_GAME_7F0C0C3C
 /* 0F5CF0 7F0C11C0 00000000 */   nop   
 /* 0F5CF4 7F0C11C4 1000000A */  b     .L7F0C11F0
 /* 0F5CF8 7F0C11C8 8FBF0014 */   lw    $ra, 0x14($sp)
+.L7F0C11CC:
 /* 0F5CFC 7F0C11CC 3C018002 */  lui   $at, %hi(music2_playing) # $at, 0x8002
 /* 0F5D00 7F0C11D0 AC204350 */  sw    $zero, %lo(music2_playing)($at)
 /* 0F5D04 7F0C11D4 0C001C81 */  jal   musicTrack2Play
@@ -520,6 +561,7 @@ glabel sub_GAME_7F0C0C3C
 .L7F0C11E4:
 /* 0F5D14 7F0C11E4 1000FFFF */  b     .L7F0C11E4
 /* 0F5D18 7F0C11E8 00000000 */   nop   
+.L7F0C11EC:
 /* 0F5D1C 7F0C11EC 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F0C11F0:
 /* 0F5D20 7F0C11F0 27BD0018 */  addiu $sp, $sp, 0x18
@@ -557,12 +599,12 @@ glabel sub_GAME_7F0C11FC
 /* 0F5D64 7F0C1234 AC440000 */   sw    $a0, ($v0)
 /* 0F5D68 7F0C1238 04410005 */  bgez  $v0, .L7F0C1250
 /* 0F5D6C 7F0C123C 00000000 */   nop   
-/* 0F5D70 7F0C1240 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F5D70 7F0C1240 0FC3030F */  jal   set_missionstate
 /* 0F5D74 7F0C1244 24040001 */   li    $a0, 1
 /* 0F5D78 7F0C1248 10000004 */  b     .L7F0C125C
 /* 0F5D7C 7F0C124C 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F0C1250:
-/* 0F5D80 7F0C1250 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F5D80 7F0C1250 0FC3030F */  jal   set_missionstate
 /* 0F5D84 7F0C1254 24040004 */   li    $a0, 4
 /* 0F5D88 7F0C1258 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F0C125C:
@@ -576,24 +618,10 @@ glabel sub_GAME_7F0C11FC
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0C1268(void) {
-
+  set_missionstate(0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C1268
-/* 0F5D98 7F0C1268 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5D9C 7F0C126C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5DA0 7F0C1270 0FC3030F */  jal   sub_GAME_7F0C0C3C
-/* 0F5DA4 7F0C1274 00002025 */   move  $a0, $zero
-/* 0F5DA8 7F0C1278 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F5DAC 7F0C127C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5DB0 7F0C1280 03E00008 */  jr    $ra
-/* 0F5DB4 7F0C1284 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -614,12 +642,12 @@ glabel sub_GAME_7F0C1288
 /* 0F5DC8 7F0C1298 8C84C600 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F5DCC 7F0C129C 04410005 */  bgez  $v0, .L7F0C12B4
 /* 0F5DD0 7F0C12A0 00000000 */   nop   
-/* 0F5DD4 7F0C12A4 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F5DD4 7F0C12A4 0FC3030F */  jal   set_missionstate
 /* 0F5DD8 7F0C12A8 24040002 */   li    $a0, 2
 /* 0F5DDC 7F0C12AC 10000004 */  b     .L7F0C12C0
 /* 0F5DE0 7F0C12B0 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F0C12B4:
-/* 0F5DE4 7F0C12B4 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F5DE4 7F0C12B4 0FC3030F */  jal   set_missionstate
 /* 0F5DE8 7F0C12B8 24040005 */   li    $a0, 5
 /* 0F5DEC 7F0C12BC 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F0C12C0:
@@ -648,12 +676,12 @@ glabel sub_GAME_7F0C12CC
 /* 0F5E0C 7F0C12DC 8C84C600 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F5E10 7F0C12E0 04410005 */  bgez  $v0, .L7F0C12F8
 /* 0F5E14 7F0C12E4 00000000 */   nop   
-/* 0F5E18 7F0C12E8 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F5E18 7F0C12E8 0FC3030F */  jal   set_missionstate
 /* 0F5E1C 7F0C12EC 24040001 */   li    $a0, 1
 /* 0F5E20 7F0C12F0 10000004 */  b     .L7F0C1304
 /* 0F5E24 7F0C12F4 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F0C12F8:
-/* 0F5E28 7F0C12F8 0FC3030F */  jal   sub_GAME_7F0C0C3C
+/* 0F5E28 7F0C12F8 0FC3030F */  jal   set_missionstate
 /* 0F5E2C 7F0C12FC 24040004 */   li    $a0, 4
 /* 0F5E30 7F0C1300 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F0C1304:
@@ -667,92 +695,30 @@ glabel sub_GAME_7F0C12CC
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0C1310(void) {
-
+  dword_CODE_bss_8008C604 = mission_state;
+  set_missionstate(3);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C1310
-/* 0F5E40 7F0C1310 3C0E8005 */  lui   $t6, %hi(mission_state) # $t6, 0x8005
-/* 0F5E44 7F0C1314 8DCE84C0 */  lw    $t6, %lo(mission_state)($t6)
-/* 0F5E48 7F0C1318 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5E4C 7F0C131C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5E50 7F0C1320 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C604) # $at, 0x8009
-/* 0F5E54 7F0C1324 24040003 */  li    $a0, 3
-/* 0F5E58 7F0C1328 0FC3030F */  jal   sub_GAME_7F0C0C3C
-/* 0F5E5C 7F0C132C AC2EC604 */   sw    $t6, %lo(dword_CODE_bss_8008C604)($at)
-/* 0F5E60 7F0C1330 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F5E64 7F0C1334 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5E68 7F0C1338 03E00008 */  jr    $ra
-/* 0F5E6C 7F0C133C 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0C1340(void) {
-
+  set_missionstate(dword_CODE_bss_8008C604);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C1340
-/* 0F5E70 7F0C1340 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5E74 7F0C1344 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5E78 7F0C1348 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C604) # $a0, 0x8009
-/* 0F5E7C 7F0C134C 0FC3030F */  jal   sub_GAME_7F0C0C3C
-/* 0F5E80 7F0C1350 8C84C604 */   lw    $a0, %lo(dword_CODE_bss_8008C604)($a0)
-/* 0F5E84 7F0C1354 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F5E88 7F0C1358 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5E8C 7F0C135C 03E00008 */  jr    $ra
-/* 0F5E90 7F0C1360 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0C1364(void) {
-
+  dword_CODE_bss_8008C608 = 0;
+  dword_CODE_bss_8008C618 = 0;
+  dword_CODE_bss_8008C628 = 0;
+  dword_CODE_bss_8008C60C = 0;
+  dword_CODE_bss_8008C61C = 0;
+  dword_CODE_bss_8008C62C = 0;
+  dword_CODE_bss_8008C610 = 0;
+  dword_CODE_bss_8008C620 = 0;
+  dword_CODE_bss_8008C630 = 0;
+  dword_CODE_bss_8008C614 = 0;
+  dword_CODE_bss_8008C624 = 0;
+  dword_CODE_bss_8008C634 = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C1364
-/* 0F5E94 7F0C1364 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C608) # $at, 0x8009
-/* 0F5E98 7F0C1368 AC20C608 */  sw    $zero, %lo(dword_CODE_bss_8008C608)($at)
-/* 0F5E9C 7F0C136C 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C618) # $at, 0x8009
-/* 0F5EA0 7F0C1370 AC20C618 */  sw    $zero, %lo(dword_CODE_bss_8008C618)($at)
-/* 0F5EA4 7F0C1374 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C628) # $at, 0x8009
-/* 0F5EA8 7F0C1378 AC20C628 */  sw    $zero, %lo(dword_CODE_bss_8008C628)($at)
-/* 0F5EAC 7F0C137C 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C60C) # $at, 0x8009
-/* 0F5EB0 7F0C1380 AC20C60C */  sw    $zero, %lo(dword_CODE_bss_8008C60C)($at)
-/* 0F5EB4 7F0C1384 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C61C) # $at, 0x8009
-/* 0F5EB8 7F0C1388 AC20C61C */  sw    $zero, %lo(dword_CODE_bss_8008C61C)($at)
-/* 0F5EBC 7F0C138C 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C62C) # $at, 0x8009
-/* 0F5EC0 7F0C1390 AC20C62C */  sw    $zero, %lo(dword_CODE_bss_8008C62C)($at)
-/* 0F5EC4 7F0C1394 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C610) # $at, 0x8009
-/* 0F5EC8 7F0C1398 AC20C610 */  sw    $zero, %lo(dword_CODE_bss_8008C610)($at)
-/* 0F5ECC 7F0C139C 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C620) # $at, 0x8009
-/* 0F5ED0 7F0C13A0 AC20C620 */  sw    $zero, %lo(dword_CODE_bss_8008C620)($at)
-/* 0F5ED4 7F0C13A4 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C630) # $at, 0x8009
-/* 0F5ED8 7F0C13A8 AC20C630 */  sw    $zero, %lo(dword_CODE_bss_8008C630)($at)
-/* 0F5EDC 7F0C13AC 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C614) # $at, 0x8009
-/* 0F5EE0 7F0C13B0 AC20C614 */  sw    $zero, %lo(dword_CODE_bss_8008C614)($at)
-/* 0F5EE4 7F0C13B4 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C624) # $at, 0x8009
-/* 0F5EE8 7F0C13B8 AC20C624 */  sw    $zero, %lo(dword_CODE_bss_8008C624)($at)
-/* 0F5EEC 7F0C13BC 3C018009 */  lui   $at, 0x8009
-/* 0F5EF0 7F0C13C0 03E00008 */  jr    $ra
-/* 0F5EF4 7F0C13C4 AC20C634 */   sw    $zero, -0x39cc($at)
-)
-#endif
+
 
 
 
@@ -828,12 +794,12 @@ glabel reset_all_music_slots
 /* 0F5FC0 7F0C1490 24E70004 */   addiu $a3, $a3, 4
 /* 0F5FC4 7F0C1494 50C00016 */  beql  $a2, $zero, .L7F0C14F0
 /* 0F5FC8 7F0C1498 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F5FCC 7F0C149C 0FC3030C */  jal   sub_GAME_7F0C0C30
+/* 0F5FCC 7F0C149C 0FC3030C */  jal   get_mission_state
 /* 0F5FD0 7F0C14A0 AFAA0018 */   sw    $t2, 0x18($sp)
 /* 0F5FD4 7F0C14A4 24010002 */  li    $at, 2
 /* 0F5FD8 7F0C14A8 10410006 */  beq   $v0, $at, .L7F0C14C4
 /* 0F5FDC 7F0C14AC 8FAA0018 */   lw    $t2, 0x18($sp)
-/* 0F5FE0 7F0C14B0 0FC3030C */  jal   sub_GAME_7F0C0C30
+/* 0F5FE0 7F0C14B0 0FC3030C */  jal   get_mission_state
 /* 0F5FE4 7F0C14B4 AFAA0018 */   sw    $t2, 0x18($sp)
 /* 0F5FE8 7F0C14B8 24010005 */  li    $at, 5
 /* 0F5FEC 7F0C14BC 14410007 */  bne   $v0, $at, .L7F0C14DC

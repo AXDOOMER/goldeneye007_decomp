@@ -169,9 +169,9 @@ struct weapon_firing_animation_table
 {
   s32 anonymous_0;
   f32 anonymous_1;
-  s32 anonymous_2;
-  s32 anonymous_3;
-  s32 anonymous_4;
+  f32 anonymous_2;
+  f32 anonymous_3;
+  f32 anonymous_4;
   f32 anonymous_5;
   f32 anonymous_6;
   f32 anonymous_7;
@@ -187,7 +187,7 @@ struct weapon_firing_animation_table
   f32 anonymous_17;
 };
 
-extern struct animation_something D_8002C914[];
+extern struct animation_something D_8002C914;
 
 
 extern struct struck_animation_table D_8002CE54[];
@@ -222,5 +222,82 @@ extern struct struck_animation_table D_8002DA24[];
 extern struct struck_animation_table D_8002E530[];
 extern struct struck_animation_table D_8002DCE0[];
 extern struct struck_animation_table D_8002E5BC[];
+
+extern struct weapon_firing_animation_table rifle_firing_animation_group1[];
+extern struct weapon_firing_animation_table rifle_firing_animation_group2[];
+extern struct weapon_firing_animation_table rifle_firing_animation_group5[];
+extern struct weapon_firing_animation_table rifle_firing_animation_group3[];
+extern struct weapon_firing_animation_table rifle_firing_animation_group4[];
+extern struct weapon_firing_animation_table pistol_firing_animation_group1[];
+extern struct weapon_firing_animation_table pistol_firing_animation_group2[];
+extern struct weapon_firing_animation_table pistol_firing_animation_group3[];
+extern struct weapon_firing_animation_table pistol_firing_animation_group6[];
+extern struct weapon_firing_animation_table pistol_firing_animation_group4[];
+extern struct weapon_firing_animation_table pistol_firing_animation_group5[];
+extern struct weapon_firing_animation_table doubles_firing_animation_group1[];
+extern struct weapon_firing_animation_table doubles_firing_animation_group2[];
+extern struct weapon_firing_animation_table doubles_firing_animation_group3[];
+extern struct weapon_firing_animation_table crouched_rifle_firing_animation_group1[];
+extern struct weapon_firing_animation_table crouched_rifle_firing_animation_groupA[];
+extern struct weapon_firing_animation_table crouched_rifle_firing_animation_group2[];
+extern struct weapon_firing_animation_table crouched_rifle_firing_animation_group3[];
+extern struct weapon_firing_animation_table crouched_pistol_firing_animation_group1[];
+extern struct weapon_firing_animation_table crouched_pistol_firing_animation_group2[];
+extern struct weapon_firing_animation_table crouched_pistol_firing_animation_group3[];
+extern struct weapon_firing_animation_table crouched_doubles_firing_animation_group1[];
+extern struct weapon_firing_animation_table crouched_doubles_firing_animation_group2[];
+extern struct weapon_firing_animation_table crouched_doubles_firing_animation_group3[];
+
+
+extern struct weapon_firing_animation_table D_80030078;
+extern struct weapon_firing_animation_table D_800300C0;
+extern struct weapon_firing_animation_table D_80030108;
+extern struct weapon_firing_animation_table D_80030150;
+extern struct weapon_firing_animation_table D_80030198;
+extern struct weapon_firing_animation_table D_800301E0;
+extern struct weapon_firing_animation_table D_80030228;
+extern struct weapon_firing_animation_table D_80030270;
+extern struct weapon_firing_animation_table D_800302B8;
+extern struct weapon_firing_animation_table D_80030300;
+extern struct weapon_firing_animation_table D_80030348;
+extern struct weapon_firing_animation_table D_80030390;
+extern struct weapon_firing_animation_table D_800303D8;
+extern struct weapon_firing_animation_table D_80030420;
+extern struct weapon_firing_animation_table D_80030468;
+extern struct weapon_firing_animation_table D_800304B0;
+extern struct weapon_firing_animation_table D_800304F8;
+extern struct weapon_firing_animation_table D_80030540;
+extern struct weapon_firing_animation_table D_80030588;
+extern struct weapon_firing_animation_table D_800305D0;
+extern struct weapon_firing_animation_table D_80030618;
+extern struct weapon_firing_animation_table D_80030660;
+extern struct weapon_firing_animation_table D_800306A8;
+extern struct weapon_firing_animation_table D_800306F0;
+extern struct weapon_firing_animation_table D_80030738;
+extern struct weapon_firing_animation_table D_80030780;
+extern struct weapon_firing_animation_table D_800307C8;
+extern struct weapon_firing_animation_table D_80030810;
+extern struct weapon_firing_animation_table D_80030858;
+extern struct weapon_firing_animation_table D_800308A0;
+extern struct weapon_firing_animation_table D_800308E8;
+extern struct weapon_firing_animation_table D_80030930;
+
+extern f32 animation_rate;
+extern s32 D_8002C904;
+extern s32 D_8002C908;
+extern s32 D_8002C90C;
+extern s32 D_8002C910;
+
+extern s32 D_8002CC58;
+extern s32 show_patrols_flag;
+extern s32 player1_guardID;
+extern s32 ptr_guard_data;
+extern s32 num_guards;
+extern s32 D_8002CC6C[];
+extern s32 D_8002CCA8;
+extern s32 D_8002CCAC;
+extern s32 D_8002CCB0;
+extern s32 D_8002CCB4;
+extern u8 D_8002CCB8;
 
 #endif

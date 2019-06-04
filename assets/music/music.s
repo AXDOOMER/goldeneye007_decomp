@@ -7,22 +7,22 @@
 
 .global sfx.ctl
 sfx.ctl:
- .incbin "music/sfx.ctl"
+ .incbin "assets/music/sfx.ctl"
 sfx.ctl_end:
 
 .global sfx.tbl
 sfx.tbl:
- .incbin "music/sfx.tbl"
+ .incbin "assets/music/sfx.tbl"
 sfx.tbl_end:
 
 .global instruments.ctl
 instruments.ctl:
- .incbin "music/instruments.ctl"
+ .incbin "assets/music/instruments.ctl"
 instruments.ctl_end:
 
 .global instruments.tbl
 instruments.tbl:
- .incbin "music/instruments.tbl"
+ .incbin "assets/music/instruments.tbl"
 instruments.tbl_end:
 
 .global number_music_samples
@@ -110,12 +110,12 @@ table_music_data_end:
   .section .musiccompressed
   .global \name
   \name:
-    .incbin "music\/\name\.rz"
+    .incbin "build\/assets\/music\/\name\.rz"
   end_\name:
 
   .section .musicdecompressed
   d_\name:
-    .incbin "music\/\name\.bin"
+    .incbin "assets\/music\/\name\.bin"
   end_d_\name:
 .endm
 
@@ -128,13 +128,13 @@ music_fileA is used for the entries that end with A....the A doesn't seem to be 
   .section .musiccompressed
   .global \name
   \name:
-    .incbin "music\/\name\.rz"
+    .incbin "build\/assets\/music\/\name\.rz"
     .byte 0xA
   end_\name:
 
   .section .musicdecompressed
   d_\name:
-    .incbin "music\/\name\.bin"
+    .incbin "assets\/music\/\name\.bin"
   end_d_\name:
 .endm
 
@@ -202,6 +202,7 @@ music_fileA Msurface2_ending
 music_file Mstatue_ending
 music_fileA Mfrigate_outro
 
+.section .musiccompressed
 .half 0
 .word 0
 

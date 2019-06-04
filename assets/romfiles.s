@@ -1,33 +1,67 @@
 .section .romfiles, "a"
 
-.global unknown
-unknown:
-.incbin "bin/ge007.u.117880.unknown.bin"
-unknown_end:
+.global jfont_dl117880
+jfont_dl117880:
+.incbin "assets/ge007.u.117880.jfont_dl.bin"
+jfont_dl117880_end:
 
-.global unknown117940
-unknown117940:
-.incbin "bin/ge007.u.117940.unknown.bin"
-unknown117940_end:
+.global jfont_chardata117940
+jfont_chardata117940:
+.incbin "assets/ge007.u.117940.jfont_chardata.bin"
+jfont_chardata117940_end:
 
-.global unknown123040
-unknown123040:
-.incbin "bin/ge007.u.123040.unknown.bin"
-unknown123040_end:
+.global efont_chardata123040
+efont_chardata123040:
+.incbin "assets/ge007.u.123040.efont_chardata.bin"
+efont_chardata123040_end:
 
 .global animation_table
 animation_table:
-.incbin "bin/animationtable_entries.bin"
+.incbin "assets/animationtable_entries.bin"
 animation_table_end:
 
 .global animation_data
 animation_data:
-.incbin "bin/animationtable_data.bin"
+.incbin "assets/animationtable_data.bin"
 animation_data_end:
+
+ # enum	image_format, mappedto_2
+.set rgba, 0
+.set yuv, 1
+.set ci, 2
+.set ia, 3
+.set i, 4
+
+ # ---------------------------------------------------------------------------
+
+ # enum	image_bitdepth,	mappedto_3
+.set D_4BIT, 0
+.set D_8BIT, 1
+.set D_16BIT, 2
+.set D_32BIT, 3
+
+ # ---------------------------------------------------------------------------
+
+ # enum	cm_flags, mappedto_4
+.set clamp, 1
+.set mirror, 2
+
+.macro texture_entry index, width, height, level, format, depth, flagsS, flagsT, pad
+.word \index
+.byte \width
+.byte \height
+.byte \level
+.byte \format
+.byte \depth
+.byte \flagsS
+.byte \flagsT
+.byte \pad
+.endm
+
 
 .global Globalimagetable
 Globalimagetable:
-.incbin "bin/ge007.u.29D160.Globalimagetable.bin"
+.incbin "assets/ge007.u.29D160.Globalimagetable.bin"
 texture_entry 0x858, 0x36, 0x36, 3, ia, D_8BIT, mirror, mirror, 0
 texture_entry 0x878, 0x30, 0x30, 6, ia, D_8BIT, mirror, mirror, 0
 texture_entry 0x879, 0x40, 0x20, 7, ia, D_8BIT, mirror, mirror, 0
@@ -230,10 +264,10 @@ Globalimagetable_end:
 
 .global Globalimagetable_commandblock
 Globalimagetable_commandblock:
-.incbin "bin/ge007.u.29E560.Globalimagetable_commandblock.bin"
+.incbin "assets/ge007.u.29E560.Globalimagetable_commandblock.bin"
 Globalimagetable_commandblock_end:
 
 .global unknown2
 unknown2:
-.incbin "bin/ge007.u.2A4D50.unknown2.bin"
+.incbin "assets/ge007.u.2A4D50.usedby7F008DE4.bin"
 unknown2_end:

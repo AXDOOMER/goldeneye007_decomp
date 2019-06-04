@@ -1,68 +1,13 @@
 #include "ultra64.h"
 
-// bss
-//CODE.bss:80075D30
-char objective_ptrs[0x50];
-//CODE.bss:80075D80
-u32 *ptr_last_tag_entry_type16;
-//CODE.bss:80075D84
-u32 *ptr_last_briefing_setup_entry_type23;
-//CODE.bss:80075D88
-u32 *ptr_last_enter_room_subobject_entry_type20;
-//CODE.bss:80075D8C
-u32 *ptr_last_deposit_in_room_subobject_entry_type21;
-//CODE.bss:80075D90
-u32 *ptr_last_photo_obj_in_room_subobject_entry_type1E;
 
 
-/* data
-D:800322F0     num_objectives: .word 0xFFFFFFFF
-D:800322F4                     .word 0
-D:800322F8                     .word 0
-D:800322FC                     .word 0
-//file possibly split at sub_CODE_7F057AC0
 
-D:80032300     dword_D_80032300:.word 0                 # DATA XREF: sub_CODE_7F057AC0+10o
-D:80032300                                              # sub_CODE_7F057AC0+14r
-D:80032304     dword_D_80032304:.word 0                 # DATA XREF: sub_CODE_7F057AC0+1Cr
-D:80032308     dword_D_80032308:.word 0                 # DATA XREF: sub_CODE_7F057AC0+24r
-*/
 
-/* rodata
-D:80053610     dword_D_80053610:.word 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-D:80053610                                              # DATA XREF: display_objective_status_text_on_status_change+1Co
-D:80053640     dword_D_80053640:.word 0                 # DATA XREF: display_objective_status_text_on_status_change+44o
-D:80053644     aSAC:           .ascii "%s Ç%c "<0>      # DATA XREF: display_objective_status_text_on_status_change+84o
-D:8005364C     aSC:            .ascii "%s %c: "<0>      # DATA XREF: display_objective_status_text_on_status_change+114o
-D:80053654     jpt_objectives_microcode_handler:.word objective_microcode_type_17_18_1F_default
-D:80053654                                              # DATA XREF: get_status_of_objective+78r
-D:80053654                     .word objective_microcode_type_17_18_1F_default  # jump table for switch statement
-D:80053654                     .word objective_microcode_type_19_destroy_object
-D:80053654                     .word objective_microcode_type_1A_complete_if_true
-D:80053654                     .word objective_microcode_type_1B_fail_if_true
-D:80053654                     .word objective_microcode_type_1C_collect_object
-D:80053654                     .word objective_microcode_type_1D_deposit_object
-D:80053654                     .word objective_microcode_type_1E_photograph_object
-D:80053654                     .word objective_microcode_type_17_18_1F_default
-D:80053654                     .word objective_microcode_type_20_enter_room
-D:80053654                     .word objective_microcode_type_21_deposit_object_in_room
-D:80053654                     .word objective_microcode_type_22_use_key_analyzer_on_object
-D:80053684                     .word 0
-D:80053688                     .word 0
-D:8005368C                     .word 0
-D:80053690     flt_D_80053690: .float 6.2831855         # DATA XREF: sub_CODE_7F057AC0+58r
-D:80053694     flt_D_80053694: .float 0.098174773       # DATA XREF: sub_CODE_7F057AC0+6Cr
-D:80053698     flt_D_80053698: .float 6.2831855         # DATA XREF: sub_CODE_7F057AC0+B0r
-D:8005369C     flt_D_8005369C: .float 0.098174773       # DATA XREF: sub_CODE_7F057AC0+C4r
-D:800536A0     flt_D_800536A0: .float 6.2831855         # DATA XREF: sub_CODE_7F057AC0+108r
-D:800536A4     flt_D_800536A4: .float 0.098174773       # DATA XREF: sub_CODE_7F057AC0+11Cr
-D:800536A8     flt_D_800536A8: .float 1.6666666         # DATA XREF: sub_CODE_7F057C14+38r
-D:800536AC     flt_D_800536AC: .float 3.3333333         # DATA XREF: sub_CODE_7F057C14+4Cr
-D:800536B0     flt_D_800536B0: .float 1.6666666         # DATA XREF: sub_CODE_7F057C14+94r
-D:800536B4     flt_D_800536B4: .float 1.6666666         # DATA XREF: sub_CODE_7F057C14+E4r
-D:800536B8     flt_D_800536B8: .float 3.3333333         # DATA XREF: sub_CODE_7F057C14+F8r
-D:800536BC     npc_gravity_modifier:.float 0.27777779   # DATA XREF: sub_CODE_7F057D44+8r
-*/
+
+
+
+
 
 
 
@@ -102,12 +47,12 @@ glabel something_with_stage_objectives
 .L7F004F1C:
 /* 039A4C 7F004F1C 3C018007 */  lui   $at, %hi(objective_ptrs) # $at, 0x8007
 /* 039A50 7F004F20 AC205D30 */  sw    $zero, %lo(objective_ptrs)($at)
-/* 039A54 7F004F24 3C018007 */  lui   $at, %hi(dword_CODE_bss_80075D34) # $at, 0x8007
-/* 039A58 7F004F28 3C028007 */  lui   $v0, %hi(dword_CODE_bss_80075D38) # $v0, 0x8007
+/* 039A54 7F004F24 3C018007 */  lui   $at, %hi(objective_ptrs+4) # $at, 0x8007
+/* 039A58 7F004F28 3C028007 */  lui   $v0, %hi(objective_ptrs+8) # $v0, 0x8007
 /* 039A5C 7F004F2C 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80075D58) # $v1, 0x8007
 /* 039A60 7F004F30 24635D58 */  addiu $v1, %lo(dword_CODE_bss_80075D58) # addiu $v1, $v1, 0x5d58
-/* 039A64 7F004F34 24425D38 */  addiu $v0, %lo(dword_CODE_bss_80075D38) # addiu $v0, $v0, 0x5d38
-/* 039A68 7F004F38 AC205D34 */  sw    $zero, %lo(dword_CODE_bss_80075D34)($at)
+/* 039A64 7F004F34 24425D38 */  addiu $v0, %lo(objective_ptrs+8) # addiu $v0, $v0, 0x5d38
+/* 039A68 7F004F38 AC205D34 */  sw    $zero, %lo(objective_ptrs+4)($at)
 .L7F004F3C:
 /* 039A6C 7F004F3C 24420010 */  addiu $v0, $v0, 0x10
 /* 039A70 7F004F40 AC40FFF4 */  sw    $zero, -0xc($v0)

@@ -18,18 +18,7 @@ OSMesgQueue gfxFrameMsgQ;
 OSMesg gfxFrameMsgBuf[32];
 OSMesgQueue *sched_cmdQ;
 
-u32 unknown_init_val = 2;
-u32 cart_hw_address = 0x10000000;
 
-struct debug_handler_entry debug_handler_table[] = 
-{
-	{&sp_boot, "Boot"},
-	{&sp_rmon, "Rmon"},
-	{&sp_idle, "Idle"},
-	{&sp_shed, "Shed"},
-	{&sp_main, "Main"},
-	{&sp_audi, "Audi"},
-};
 
 #ifdef NONMATCHING
 void init(void) {
@@ -39,7 +28,7 @@ void init(void) {
     void *dest;
     void *source;
 
-    cdata_vaddr_start = get_cdataSegmentVaddrStart();
+    cdata_vaddr_start = get_csegmentSegmentStart();
     cdata_rom_size = (get_cdataSegmentRomEnd() - get_cdataSegmentRomStart());
 
 	for (datapos = ((cdata_rom_size + (get_rarezipSegmentRomEnd() - get_rarezipSegmentRomStart())) + -1); datapos >= 0; datapos--){
@@ -91,7 +80,7 @@ glabel init
 /* 001110 70000510 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 001114 70000514 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 001118 70000518 AFB10020 */  sw    $s1, 0x20($sp)
-/* 00111C 7000051C 0C00012F */  jal   get_cdataSegmentVaddrStart
+/* 00111C 7000051C 0C00012F */  jal   get_csegmentSegmentStart
 /* 001120 70000520 AFB0001C */   sw    $s0, 0x1c($sp)
 /* 001124 70000524 0C000132 */  jal   get_cdataSegmentRomStart
 /* 001128 70000528 00408025 */   move  $s0, $v0
@@ -223,7 +212,7 @@ glabel init
 
 void *set_stack_entry(u8 *stack, u32 size) 
 {
-    return &stack[size-8];
+    return stack+size-8;
 }
 
 void set_hw_address_and_unknown(void) 
@@ -249,9 +238,10 @@ void start_rmon_thread(void)
     osStartThread(&rmonThread);
 }
 
+#ifdef NONMATCHING
 void init_scheduler(void) {
     osCreateMesgQueue(&gfxFrameMsgQ, &gfxFrameMsgBuf, 32);
-    if ((osTvType = OS_TV_MPAL)) {
+    if (osTvType = OS_TV_MPAL) {
         osCreateScheduler(&sc, &shedThread, OS_VI_MPAL_LAN1, NUM_FIELDS);
     } else {
 		osCreateScheduler(&sc, &shedThread, OS_VI_NTSC_LAN1, NUM_FIELDS);
@@ -259,6 +249,58 @@ void init_scheduler(void) {
     osScAddClient(&sc, &gfxClient, &gfxFrameMsgQ);
     sched_cmdQ = osScGetCmdQ(&sc);
 }
+#else
+GLOBAL_ASM(
+.section .text
+glabel init_scheduler
+/* 0013EC 700007EC 27BDFFE8 */  addiu $sp, $sp, -0x18
+/* 0013F0 700007F0 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 0013F4 700007F4 3C048006 */  lui   $a0, %hi(gfxFrameMsgQ)
+/* 0013F8 700007F8 3C058006 */  lui   $a1, %hi(gfxFrameMsgBuf)
+/* 0013FC 700007FC 24A5D9B8 */  addiu $a1, $a1, %lo(gfxFrameMsgBuf)
+/* 001400 70000800 2484D9A0 */  addiu $a0, $a0, %lo(gfxFrameMsgQ)
+/* 001404 70000804 0C0035B4 */  jal   osCreateMesgQueue
+/* 001408 70000808 24060020 */  addiu $a2, $zero, 0x20
+/* 00140C 7000080C 3C0E8000 */  lui   $t6, %hi(osTvType)
+/* 001410 70000810 8DCE0300 */  lw    $t6, %lo(osTvType)($t6)
+/* 001414 70000814 24010002 */  addiu $at, $zero, 2
+/* 001418 70000818 3C048006 */  lui   $a0, %hi(sc)
+/* 00141C 7000081C 15C1000A */  bne   $t6, $at, .Linit_scheduler_5C
+/* 001420 70000820 2484DA40 */  addiu $a0, $a0, %lo(sc)
+/* 001424 70000824 3C048006 */  lui   $a0, %hi(sc)
+/* 001428 70000828 3C058006 */  lui   $a1, %hi(shedThread)
+/* 00142C 7000082C 24A5D7F0 */  addiu $a1, $a1, %lo(shedThread)
+/* 001430 70000830 2484DA40 */  addiu $a0, $a0, %lo(sc)
+/* 001434 70000834 2406001E */  addiu $a2, $zero, 0x1e
+/* 001438 70000838 0C0002AB */  jal   osCreateScheduler
+/* 00143C 7000083C 24070001 */  addiu $a3, $zero, 1
+/* 001440 70000840 10000006 */  b     .Linit_scheduler_70
+/* 001444 70000844 00000000 */  nop   
+.Linit_scheduler_5C:
+/* 001448 70000848 3C058006 */  lui   $a1, %hi(shedThread)
+/* 00144C 7000084C 24A5D7F0 */  addiu $a1, $a1, %lo(shedThread)
+/* 001450 70000850 24060002 */  addiu $a2, $zero, 2
+/* 001454 70000854 0C0002AB */  jal   osCreateScheduler
+/* 001458 70000858 24070001 */  addiu $a3, $zero, 1
+.Linit_scheduler_70:
+/* 00145C 7000085C 3C048006 */  lui   $a0, %hi(sc)
+/* 001460 70000860 3C058006 */  lui   $a1, %hi(gfxClient)
+/* 001464 70000864 3C068006 */  lui   $a2, %hi(gfxFrameMsgQ)
+/* 001468 70000868 24C6D9A0 */  addiu $a2, $a2, %lo(gfxFrameMsgQ)
+/* 00146C 7000086C 24A5DB18 */  addiu $a1, $a1, %lo(gfxClient)
+/* 001470 70000870 2484DA40 */  addiu $a0, $a0, %lo(sc)
+/* 001474 70000874 0C000305 */  jal   osScAddClient
+/* 001478 70000878 00003825 */  or    $a3, $zero, $zero
+/* 00147C 7000087C 3C048006 */  lui   $a0, %hi(sc)
+/* 001480 70000880 0C00033E */  jal   osScGetCmdQ
+/* 001484 70000884 2484DA40 */  addiu $a0, $a0, %lo(sc)
+/* 001488 70000888 8FBF0014 */  lw    $ra, 0x14($sp)
+/* 00148C 7000088C 3C018006 */  lui   $at, %hi(sched_cmdQ)
+/* 001490 70000890 AC22DA38 */  sw    $v0, %lo(sched_cmdQ)($at) # $v0, -0x25c8($at)
+/* 001494 70000894 03E00008 */  jr    $ra
+/* 001498 70000898 27BD0018 */  addiu $sp, $sp, 0x18
+)
+#endif
 
 void thread3_main(void *args) {
 	start_idle_thread();

@@ -7,23 +7,42 @@ char controller_input_index[0x1E0];
 s32 dword_CODE_bss_80065110;
 s32 dword_CODE_bss_80065114;
 s32 dword_CODE_bss_80065118;
-char dword_CODE_bss_8006511C[0x10];
-char dword_CODE_bss_8006512C[0x1E0];
-char dword_CODE_bss_8006530C[8];
-char dword_CODE_bss_80065314[0x10];
+s32 dword_CODE_bss_8006511C;
+s32 dword_CODE_bss_80065120;
+s32 dword_CODE_bss_80065124;
+s32 dword_CODE_bss_80065128;
+s32 dword_CODE_bss_8006512C;
+s32 dword_code_bss_80065130[0x76];
+s32 dword_CODE_bss_80065308;
+s32 dword_CODE_bss_8006530C;
+s32 dword_CODE_bss_80065310;
+s32 dword_CODE_bss_80065314;
+s32 dword_CODE_bss_80065318;
+s32 dword_CODE_bss_8006531C;
+s32 dword_CODE_bss_80065320;
 s32 dword_CODE_bss_80065324;
+//80065328
 char contdemoMesg[0x28];
+//80065350
 OSMesgQueue contdemoMesgMQ;
 
-OSMesgQueue contdemoMesgMQ;
+//80065368
 OSMesg cont1Mesg;
 OSMesgQueue cont1MesgMQ;
+
+//80065388
 OSMesg cont2Mesg;
 OSMesgQueue cont2MesgMQ;
+
+//800653a8
 OSMesg cont3Mesg;
 OSMesgQueue cont3MesgMQ;
+
+//800653c8
 OSMesg cont4Mesg;
 OSMesgQueue cont4MesgMQ;
+
+//800653e8
 s32 player1_controllerstatus;
 s32 player2_controllerstatus;
 s32 player3_controllerstatus;
@@ -36,7 +55,7 @@ s32 D_800268C0 = 0;
 void *ptr_current_point_in_controller_input_index = controller_input_index;
 s32 D_800268C8 = 0;
 s32 D_800268CC = 0;
-s32 num_controller_plugged_in_flags = 0;
+u8 num_controller_plugged_in_flags = 0;
 s32 num_controller_plugged_in_flags_0 = 0;
 s32 controller_1_rumble_inserted = 0;
 s32 controller_2_rumble_inserted = 0;
@@ -748,21 +767,11 @@ glabel controller_finding_controller_maybe
 
 
 
-#ifdef NONMATCHING
-u32 get_num_controllers_plugged_in(void)
+u8 get_num_controllers_plugged_in(void)
 {
     return num_controller_plugged_in_flags;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel get_num_controllers_plugged_in
-/* 00C670 7000BA70 3C028002 */  lui   $v0, %hi(num_controller_plugged_in_flags)
-/* 00C674 7000BA74 03E00008 */  jr    $ra
-/* 00C678 7000BA78 904268D0 */   lbu   $v0, %lo(num_controller_plugged_in_flags)($v0)
-)
-#endif
 
 
 
@@ -926,44 +935,17 @@ glabel controller_rumble_related
 
 
 
-#ifdef NONMATCHING
+
 void set_disable_all_rumble_and_something(s32 arg0, s32 arg1) {
-    // Node 0
     disable_all_rumble = arg0;
-    (void *)0x80060000->unk5324 = arg1;
-    return;
-    // (function likely void)
+    dword_CODE_bss_80065324 = arg1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_disable_all_rumble_and_something
-/* 00C7A8 7000BBA8 3C018002 */  lui   $at, %hi(disable_all_rumble) # $at, 0x8002
-/* 00C7AC 7000BBAC AC246924 */  sw    $a0, %lo(disable_all_rumble)($at)
-/* 00C7B0 7000BBB0 3C018006 */  lui   $at, 0x8006
-/* 00C7B4 7000BBB4 03E00008 */  jr    $ra
-/* 00C7B8 7000BBB8 AC255324 */   sw    $a1, 0x5324($at)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void set_ptr_tlb_ramrom_record(s32 arg0)
 {
     ptr_to_tlb_ramrom_record = arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_ptr_tlb_ramrom_record
-/* 00C7BC 7000BBBC 3C018002 */  lui   $at, %hi(ptr_to_tlb_ramrom_record)
-/* 00C7C0 7000BBC0 03E00008 */  jr    $ra
-/* 00C7C4 7000BBC4 AC246928 */   sw    $a0, %lo(ptr_to_tlb_ramrom_record)($at)
-)
-#endif
+
 
 
 

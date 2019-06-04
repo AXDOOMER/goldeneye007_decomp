@@ -11,7 +11,7 @@ s32 init_indy_if_not_ready(void) {
 }
 
 void nullsub_48(void) {
-;
+    return;
 }
 
 void init_indy_if_ready(void) {
@@ -260,13 +260,10 @@ glabel response_from_command_string
 
 
 void sub_GAME_7F0D0124(void) {
-    // Node 0
     if (indy_ready != 0)
     {
-        // Node 1
         rmon_debug_returns_neg_1();
     }
-    // Node 2
     return;
 }
 

@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "deb.h"
 
 void *ptr_model_room_buf_secondary;
 u32 size_modelroom_buf;
@@ -6,8 +7,10 @@ void *ptr_table_allocated_mem_blocks;
 s32 dword_CODE_bss_80063C2C;
 s32 index_for_loadedroom;
 s32 dword_CODE_bss_80063C34;
-s32 ptr_first_entry_in_alloc_table;
-char dword_CODE_bss_80063C3C[0xC];
+void *ptr_first_entry_in_alloc_table;
+s32 dword_CODE_bss_80063C3C;
+s32 dword_CODE_bss_80063C40;
+s32 dword_CODE_bss_80063C44;
 char dword_CODE_bss_80063C48[0xFC0];
 char dword_CODE_bss_80064C08[8];
 char dword_CODE_bss_80064C10[8];
@@ -20,9 +23,7 @@ s32 dword_CODE_bss_80064C24;
 void *ptr_mema_c_debug_notice_list = 0;
 
 
-const char aD_3[] = "%d ";
-const char a___[] = "...";
-const char aD_5[] = "[%d]";
+
 
 
 
@@ -539,6 +540,9 @@ void something_with_mema_c_debug(void) {
 }
 
 
+const char aD_3[] = "%d ";
+const char a___[] = "...";
+const char aD_5[] = "[%d]";
 
 #ifdef NONMATCHING
 void *reset_memtable_base_allocation(s32 arg0, s32 arg1) {
@@ -909,25 +913,11 @@ glabel mem_related_something_find_first_0
 
 
 
-#ifdef NONMATCHING
+
 void mem_related_model_room_buffers_0(void) {
     mem_related_model_room_buffers();
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel mem_related_model_room_buffers_0
-/* 00AC20 7000A020 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00AC24 7000A024 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00AC28 7000A028 0C00271D */  jal   mem_related_model_room_buffers
-/* 00AC2C 7000A02C 00000000 */   nop   
-/* 00AC30 7000A030 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00AC34 7000A034 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00AC38 7000A038 03E00008 */  jr    $ra
-/* 00AC3C 7000A03C 00000000 */   nop   
-)
-#endif
 
 
 

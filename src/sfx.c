@@ -2,12 +2,13 @@
 #include "music.h"
 #include "sfx.h"
 
+s32 sfx_unused = 0;
 s32 D_800243E4 = 0;
 s32 D_800243E8 = 0;
 s32 D_800243EC = 0;
 void *D_800243F0 = &D_80063B50;
 s32 D_800243F4 = 0;
-s32 bootswitch_sound = 0;
+s8 bootswitch_sound = 0;
 f32 F32_800243FC = 1.0;
 
 
@@ -2221,86 +2222,21 @@ glabel music_related_29
 
 
 
-#ifdef NONMATCHING
+
 void music_related_30(void)
 {
     music_related_29(1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel music_related_30
-/* 009D24 70009124 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 009D28 70009128 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 009D2C 7000912C 0C00241B */  jal   music_related_29
-/* 009D30 70009130 24040001 */   li    $a0, 1
-/* 009D34 70009134 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 009D38 70009138 27BD0018 */  addiu $sp, $sp, 0x18
-/* 009D3C 7000913C 03E00008 */  jr    $ra
-/* 009D40 70009140 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-
-
-
-
-#ifdef NONMATCHING
 void music_related_32(void)
 {
     music_related_29(0x11);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel music_related_32
-/* 009D44 70009144 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 009D48 70009148 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 009D4C 7000914C 0C00241B */  jal   music_related_29
-/* 009D50 70009150 24040011 */   li    $a0, 17
-/* 009D54 70009154 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 009D58 70009158 27BD0018 */  addiu $sp, $sp, 0x18
-/* 009D5C 7000915C 03E00008 */  jr    $ra
-/* 009D60 70009160 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-
-
-
-
-#ifdef NONMATCHING
 void music_related_34(void)
 {
     music_related_29(3);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel music_related_34
-/* 009D64 70009164 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 009D68 70009168 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 009D6C 7000916C 0C00241B */  jal   music_related_29
-/* 009D70 70009170 24040003 */   li    $a0, 3
-/* 009D74 70009174 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 009D78 70009178 27BD0018 */  addiu $sp, $sp, 0x18
-/* 009D7C 7000917C 03E00008 */  jr    $ra
-/* 009D80 70009180 00000000 */   nop   
-)
-#endif
-
-
-
-
-
 
 
 
@@ -2342,31 +2278,10 @@ glabel music_related_36
 
 
 
-
-
-
-
-
-
-#ifdef NONMATCHING
 void music_related_37(void)
 {
     music_related_41(0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel music_related_37
-/* 009DC8 700091C8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 009DCC 700091CC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 009DD0 700091D0 0C002499 */  jal   music_related_41
-/* 009DD4 700091D4 00002025 */   move  $a0, $zero
-/* 009DD8 700091D8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 009DDC 700091DC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 009DE0 700091E0 03E00008 */  jr    $ra
-/* 009DE4 700091E4 00000000 */   nop   
-)
-#endif
 
 
 

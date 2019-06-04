@@ -4,7 +4,7 @@
 #include "game/debugmenu_090490.h"
 
 /* data */
-u32 D_800241A0 = 0;
+u32 boss_c_ptr_debug_notice_list_entry = 0;
 u32 debug_and_update_stage_flag = 0;
 s32 current_stage_num = 0x5A;
 u32 current_m_malloc_value = 0x234800;
@@ -53,7 +53,11 @@ struct memallocstring
 { 0x1B7, "-ml0 -me0 -mgfx130 -mvtx100 -mt440 -ma220"},
 { 0x1B2, "-ml0 -me0 -mgfx90  -mvtx100 -mt550 -ma230"},
 { 0x1B0, "-ml0 -me0 -mgfx110 -mvtx100 -mt350 -ma400"},
-{   0x0, "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"}};
+{   0x0, "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"},
+{ 0x0, },
+{ 0x0, },
+{ 0x0, }
+};
 
 s32 loadedstage = -1;
 s32 debug_feature_flag = 0;
@@ -81,10 +85,6 @@ const char aHard_2[] = "-hard";
 const char aMa[] = "-ma";
 const char aMa_0[] = "-ma";
 const char aU64_taskgrab_D_core[] = "u64.taskgrab.%d.core";
-//const char aBoss_c_debug[] = "boss_c_debug";
-
-
-/* .bss */
 
 
 #ifdef NONMATCHING
@@ -226,8 +226,8 @@ glabel init_mainthread_data
 /* 0069D8 70005DD8 3C050001 */  lui   $a1, (0x000186A0 >> 16) # lui $a1, 1
 .L70005DDC:
 /* 0069DC 70005DDC 3C068002 */  lui   $a2, %hi(osClockRate) # $a2, 0x8002
-/* 0069E0 70005DE0 3C078002 */  lui   $a3, %hi(osClockRate) # $a3, 0x8002
-/* 0069E4 70005DE4 8CE76984 */  lw    $a3, %lo(osClockRate)($a3)
+/* 0069E0 70005DE0 3C078002 */  lui   $a3, %hi(osClockRate+4) # $a3, 0x8002
+/* 0069E4 70005DE4 8CE76984 */  lw    $a3, %lo(osClockRate+4)($a3)
 /* 0069E8 70005DE8 8CC66980 */  lw    $a2, %lo(osClockRate)($a2)
 /* 0069EC 70005DEC 34A586A0 */  ori   $a1, (0x000186A0 & 0xFFFF) # ori $a1, $a1, 0x86a0
 /* 0069F0 70005DF0 0C003B6A */  jal   __ll_mul
@@ -1413,7 +1413,7 @@ s32 get_debug_parse_flag(void) {
 }
 
 void something_with_boss_c_debug(void) {
-    get_ptr_debug_notice_list_entry(D_800241A0, "boss_c_debug");
+    get_ptr_debug_notice_list_entry(&boss_c_ptr_debug_notice_list_entry, "boss_c_debug");
 }
 
 

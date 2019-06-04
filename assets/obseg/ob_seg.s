@@ -3,7 +3,7 @@
 .macro obseg_file_rz path name
   .global \name
   \name:
-    .incbin "obseg\/\path\/\name\.rz"
+    .incbin "build\/assets\/obseg\/\path\/\name\.rz"
     .balign 16
   end_\name:
 .endm
@@ -11,147 +11,162 @@
 .macro obseg_file_Z path name
   .global \name
   \name:
-    .incbin "obseg\/\path\/\name"
+    .incbin "build\/assets\/obseg\/\path\/\name\.rz"
     .balign 16
   end_\name:
 .endm
 
 .global bg_sev_all_p_seg
 bg_sev_all_p_seg:
-.incbin "obseg/bg/bg_sev_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_sev_all_p.seg"
 .balign 16
 bg_sev_all_p.seg_end:
 
 .global bg_silo_all_p_seg
 bg_silo_all_p_seg:
-.incbin "obseg/bg/bg_silo_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_silo_all_p.seg"
 bg_silo_all_p.seg_end:
 
 .global bg_stat_all_p_seg
 bg_stat_all_p_seg:
-.incbin "obseg/bg/bg_stat_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_stat_all_p.seg"
 bg_stat_all_p.seg_end:
 
 .global bg_arec_all_p_seg
 bg_arec_all_p_seg:
-.incbin "obseg/bg/bg_arec_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_arec_all_p.seg"
 bg_arec_all_p.seg_end:
 
 .global bg_arch_all_p_seg
 bg_arch_all_p_seg:
-.incbin "obseg/bg/bg_arch_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_arch_all_p.seg"
 bg_arch_all_p.seg_end:
 
 .global bg_tra_all_p_seg
 bg_tra_all_p_seg:
-.incbin "obseg/bg/bg_tra_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_tra_all_p.seg"
 bg_tra_all_p.seg_end:
 
 .global bg_dest_all_p_seg
 bg_dest_all_p_seg:
-.incbin "obseg/bg/bg_dest_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_dest_all_p.seg"
 bg_dest_all_p.seg_end:
 
 .global bg_sevb_all_p_seg
 bg_sevb_all_p_seg:
-.incbin "obseg/bg/bg_sevb_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_sevb_all_p.seg"
 bg_sevb_all_p.seg_end:
 
 .global bg_azt_all_p_seg
 bg_azt_all_p_seg:
-.incbin "obseg/bg/bg_azt_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_azt_all_p.seg"
 bg_azt_all_p.seg_end:
 
 .global bg_pete_all_p_seg
 bg_pete_all_p_seg:
-.incbin "obseg/bg/bg_pete_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_pete_all_p.seg"
 bg_pete_all_p.seg_end:
 
 .global bg_depo_all_p_seg
 bg_depo_all_p_seg:
-.incbin "obseg/bg/bg_depo_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_depo_all_p.seg"
 bg_depo_all_p.seg_end:
 
 .global bg_ref_all_p_seg
 bg_ref_all_p_seg:
-.incbin "obseg/bg/bg_ref_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_ref_all_p.seg"
 bg_ref_all_p.seg_end:
 
 .global bg_cryp_all_p_seg
 bg_cryp_all_p_seg:
-.incbin "obseg/bg/bg_cryp_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_cryp_all_p.seg"
 bg_cryp_all_p.seg_end:
 
 .global bg_dam_all_p_seg
 bg_dam_all_p_seg:
-.incbin "obseg/bg/bg_dam_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_dam_all_p.seg"
 bg_dam_all_p.seg_end:
 
 .global bg_ark_all_p_seg
 bg_ark_all_p_seg:
-.incbin "obseg/bg/bg_ark_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_ark_all_p.seg"
 bg_ark_all_p.seg_end:
 
 .global bg_run_all_p_seg
 bg_run_all_p_seg:
-.incbin "obseg/bg/bg_run_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_run_all_p.seg"
 bg_run_all_p.seg_end:
 
 .global bg_sevx_all_p_seg
 bg_sevx_all_p_seg:
-.incbin "obseg/bg/bg_sevx_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_sevx_all_p.seg"
 bg_sevx_all_p.seg_end:
 
 .global bg_jun_all_p_seg
 bg_jun_all_p_seg:
-.incbin "obseg/bg/bg_jun_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_jun_all_p.seg"
 bg_jun_all_p.seg_end:
 
 .global bg_dish_all_p_seg
 bg_dish_all_p_seg:
-.incbin "obseg/bg/bg_dish_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_dish_all_p.seg"
 bg_dish_all_p.seg_end:
 
 .global bg_cave_all_p_seg
 bg_cave_all_p_seg:
-.incbin "obseg/bg/bg_cave_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_cave_all_p.seg"
 bg_cave_all_p.seg_end:
 
 .global bg_cat_all_p_seg
 bg_cat_all_p_seg:
-.incbin "obseg/bg/bg_cat_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_cat_all_p.seg"
 bg_cat_all_p.seg_end:
 
 .global bg_crad_all_p_seg
 bg_crad_all_p_seg:
-.incbin "obseg/bg/bg_crad_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_crad_all_p.seg"
 bg_crad_all_p.seg_end:
 
+.global bg_sho_all_p_seg
 .global bg_imp_all_p_seg
+bg_sho_all_p_seg:
 bg_imp_all_p_seg:
-.incbin "obseg/bg/bg_imp_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_imp_all_p.seg"
 bg_imp_all_p.seg_end:
 
 .global bg_ash_all_p_seg
 bg_ash_all_p_seg:
-.incbin "obseg/bg/bg_ash_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_ash_all_p.seg"
 bg_ash_all_p.seg_end:
 
 .global bg_ame_all_p_seg
 bg_ame_all_p_seg:
-.incbin "obseg/bg/bg_ame_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_ame_all_p.seg"
 bg_ame_all_p.seg_end:
 
+.global bg_rit_all_p_seg
 .global bg_oat_all_p_seg
+bg_rit_all_p_seg:
 bg_oat_all_p_seg:
-.incbin "obseg/bg/bg_oat_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_oat_all_p.seg"
 bg_oat_all_p.seg_end:
 
+
+.global bg_ear_all_p_seg
+.global bg_lee_all_p_seg
+.global bg_lip_all_p_seg
 .global bg_len_all_p_seg
+bg_ear_all_p_seg:
+bg_lee_all_p_seg:
+bg_lip_all_p_seg:
 bg_len_all_p_seg:
-.incbin "obseg/bg/bg_len_all_p.seg"
+.incbin "build/assets/obseg/bg/bg_len_all_p.seg"
 bg_len_all_p.seg_end:
 
+.global bg_wax_all_p_seg
+.global bg_pam_all_p_seg
+bg_wax_all_p_seg:
+bg_pam_all_p_seg:
 obseg_file_rz chr, CarmourguardZ
 obseg_file_rz chr, CbaronsamediZ
 obseg_file_rz chr, CbluecamguardZ
@@ -253,14 +268,14 @@ obseg_file_rz gun, GcartshellZ
 obseg_file_rz gun, GcircuitboardZ
 obseg_file_rz gun, GclipboardZ
 obseg_file_rz gun, GcreditcardZ
-obseg_file_rz gun, GdarglassesZ
+obseg_file_rz gun, GdarkglassesZ
 obseg_file_rz gun, GdatathiefZ
 obseg_file_rz gun, GdattapeZ
 obseg_file_rz gun, GdoordecoderZ
 obseg_file_rz gun, GdoorexploderZ
 obseg_file_rz gun, GdossierredZ
 obseg_file_rz gun, GdynamiteZ
-obseg_file_rz gun, GexpelosivefloppyZ
+obseg_file_rz gun, GexplosivefloppyZ
 obseg_file_rz gun, GexplosivepenZ
 obseg_file_rz gun, GextinguisherZ
 obseg_file_rz gun, GfingergunZ
@@ -305,7 +320,7 @@ obseg_file_rz gun, GshotgunZ
 obseg_file_rz gun, GsilverwppkZ
 obseg_file_rz gun, GskorpionZ
 obseg_file_rz gun, GsniperrifleZ
-obseg_file_rz gun, GspecterZ
+obseg_file_rz gun, GspectreZ
 obseg_file_rz gun, GspooltapeZ
 obseg_file_rz gun, GspyfileZ
 obseg_file_rz gun, GstafflistZ
@@ -848,5 +863,5 @@ obseg_file_rz text, LwaxJ
 
 .global ob__ob_end_seg
 ob__ob_end_seg:
-.incbin "obseg/ob__ob_end.seg"
+.incbin "assets/obseg/ob__ob_end.seg"
 ob__ob_end.seg_end:

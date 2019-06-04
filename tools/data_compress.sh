@@ -2,9 +2,10 @@
 
 #this script is a hacky mess that can most definately be improved
 #fixme as I will fail if vaddr of data gets moved!!!
-DATASEG_START=$(printf "%d\n" 0x$(grep  './build/ge007.map' -e '.data           0x0000000080020d90' | cut -d "x" -f 4 ))
-DATASEG_LEN=$(printf "%d\n" 0x$(grep  './build/ge007.map' -e '.data           0x0000000080020d90' | cut -d "x" -f 3 | cut -d " " -f 1))
-
+#DATASEG_START=$(printf "%d\n" 0x$(grep  './build/ge007.u.map' -e '.data           0x0000000080020d90' | cut -d "x" -f 4 ))
+#DATASEG_LEN=$(printf "%d\n" 0x$(grep  './build/ge007.u.map' -e '.data           0x0000000080020d90' | cut -d "x" -f 3 | cut -d " " -f 1))
+DATASEG_START=12582912
+DATASEG_LEN=247120
 echo "patching $1"
 echo "extract data segment"
 echo "one byte at a time is slow, sorry"
@@ -23,8 +24,11 @@ RZSIZE=$(stat -c%s "data_seg.rz")
 echo "size=${RZSIZE}"
 
 #fixme as I will fail if position of c_data gets moved!!!
-CDATA_POS=$(printf "%d\n" 0x$(grep  './build/ge007.map' -e '.c_data         0x0000000000021990' | cut -d "x" -f 2 | cut -d " " -f 1 ))
-CDATA_MAX_SIZE=$(printf "%d\n" 0x$(grep  './build/ge007.map' -e '.c_data         0x0000000000021990' | cut -d "x" -f 2 ))
+#CDATA_POS=$(printf "%d\n" 0x$(grep  './build/ge007.u.map' -e '.c_data         0x0000000000021990' | cut -d "x" -f 2 | cut -d " " -f 1 ))
+#CDATA_MAX_SIZE=$(printf "%d\n" 0x$(grep  './build/ge007.u.map' -e '.c_data         0x0000000000021990' | cut -d "x" -f 2 ))
+CDATA_POS=137616
+CDATA_MAX_SIZE=72704
+
 echo "maxsize=${CDATA_MAX_SIZE}"
 
 echo "one byte at a time is slow, sorry"

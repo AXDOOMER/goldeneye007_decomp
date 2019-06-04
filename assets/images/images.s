@@ -1,6 +1,6 @@
 .section .images, "a"
 .global images
 images:
-.incbin "images/images.bin"
+.incbin "assets/images/images.bin"
 .global images_end
 images_end:
