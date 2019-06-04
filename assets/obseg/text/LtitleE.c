@@ -288,5 +288,5 @@ struct stringentry LtitleE[] = {
  "2.4 Goodhead\n",
  "Select Control Style\n",
  "Control Style\n",
- 0
+ '\0'
 };

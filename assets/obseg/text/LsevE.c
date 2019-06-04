@@ -48,5 +48,5 @@ struct stringentry LsevE[] = {
  "Satellite Control Bunker\n",
  "Present day\n",
  "Mainframe destroyed!\nData cannot be downloaded.\n",
- 0
+ '\0'
 };

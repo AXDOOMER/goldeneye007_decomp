@@ -16,5 +16,5 @@ struct stringentry LcrypE[] = {
  "recover the golden gun\n",
  "defeat baron samedi?\n",
  "el-Saghira Temple, Egypt\n",
- 0
+ '\0'
 };
