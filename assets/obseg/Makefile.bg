@@ -1,0 +1,45 @@
+#bg
+$(BUILD_DIR)/$(OBSEG_DIR)/bg/%.seg: $(OBSEG_DIR)/bg/%.bin
+	$(MAKEBG) $< $@
+
+$(OBSEG_DIR)/bg/%.bin: $(OBSEG_DIR)/bg/%.elf
+	$(OBJCOPY) $< $@ -O binary
+
+$(OBSEG_DIR)/bg/%.elf: $(OBSEG_DIR)/bg/%.o
+	$(LD) -T assets/obseg/bg/bg_all_p.ld -o $@
+	rm assets/obseg/bg/bg_all_p.o
+
+$(OBSEG_DIR)/bg/%.o: $(OBSEG_DIR)/bg/%.c
+	$(CC) -c $(CFLAGS) -o $@ -O2 $<
+	mv $@ assets/obseg/bg/bg_all_p.o
+
+
+BG_SEG_FILES = \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_sev_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_silo_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_stat_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_arec_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_arch_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_tra_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_dest_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_sevb_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_azt_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_pete_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_depo_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_ref_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_cryp_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_dam_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_ark_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_run_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_sevx_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_jun_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_dish_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_cave_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_cat_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_crad_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_imp_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_ash_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_ame_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_oat_all_p.seg \
+	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_len_all_p.seg 
+

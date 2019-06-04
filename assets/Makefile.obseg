@@ -1,0 +1,16 @@
+BUILD_DIR := build
+
+OBSEG_RZ := $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES)
+OBSEGMENT := obsegment.o
+OBSEG_DIR := assets/obseg
+
+
+include assets/obseg/Makefile.bg
+include assets/obseg/Makefile.chr
+include assets/obseg/Makefile.gun
+include assets/obseg/Makefile.prop
+include assets/obseg/Makefile.stan
+include assets/obseg/Makefile.brief
+include assets/obseg/Makefile.setup
+include assets/obseg/Makefile.text
+
