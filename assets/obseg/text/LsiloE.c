@@ -72,5 +72,5 @@ struct stringentry LsiloE[] = {
  "Soviet Missile Silo, Kirghizstan\n",
  "Two years ago\n",
  "Silo infiltrated -\nexplosive charges automatically primed!\n",
- 0
+ '\0'
 };

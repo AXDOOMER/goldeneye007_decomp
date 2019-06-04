@@ -224,5 +224,5 @@ struct stringentry LgunE[] = {
  "died",
  "times",
  "suicide count",
-0
+ '\0'
 };

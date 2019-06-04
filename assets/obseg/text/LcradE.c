@@ -36,5 +36,5 @@ struct stringentry LcradE[] = {
  "settle the score with trevelyan\n",
  "\n",
  "Antenna Cradle, Janus Base, Cuba\n",
- 0
+ '\0'
 };
