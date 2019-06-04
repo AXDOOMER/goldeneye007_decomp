@@ -3,13 +3,13 @@ OUTPUT_ARCH (mips)
 
 SECTIONS
 {
-   _UbriefDataStart = ADDR(.data);
-   _UbriefDataRomStart = 0x0000;
+   _UstanDataStart = ADDR(.data);
+   _UstanDataRomStart = 0x0000;
    .data 0x00000000 : AT(0x0000) {
-      build/assets/obseg/brief/Ubrief.o (.data);
+      build/assets/obseg/stan/Tbg_name_all_p.o (.data);
    }
-   _UbriefDataEnd = ADDR(.data) + SIZEOF(.data);
-   _UbriefDataRomEnd = 0x0000 + SIZEOF(.data);
+   _UstanDataEnd = ADDR(.data) + SIZEOF(.data);
+   _UstanDataRomEnd = 0x0000 + SIZEOF(.data);
 
 
    /DISCARD/ : {

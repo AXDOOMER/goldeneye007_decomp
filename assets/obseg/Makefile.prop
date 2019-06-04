@@ -2,6 +2,20 @@
 $(BUILD_DIR)/$(OBSEG_DIR)/prop/%.rz: $(OBSEG_DIR)/prop/%.bin
 	$(RZ_COMP) $< $@
 
+$(BUILD_DIR)/$(OBSEG_DIR)/prop/%.rz: $(BUILD_DIR)/$(OBSEG_DIR)/prop/%.bin
+	$(RZ_COMP) $< $@
+
+$(BUILD_DIR)/$(OBSEG_DIR)/prop/%.bin: $(BUILD_DIR)/$(OBSEG_DIR)/prop/%.elf
+	$(OBJCOPY) $< $@ -O binary
+
+$(BUILD_DIR)/$(OBSEG_DIR)/prop/%.elf: $(BUILD_DIR)/$(OBSEG_DIR)/prop/%.o
+	$(LD) -T assets/obseg/prop/Pname.ld -o $@
+	rm build/assets/obseg/prop/Pname.o
+
+$(BUILD_DIR)/$(OBSEG_DIR)/prop/%.o: $(OBSEG_DIR)/prop/%.c
+	$(CC) -c $(CFLAGS) -o $@ -O2 $<
+	mv $@ build/assets/obseg/prop/Pname.o
+
 PROP_RZ_FILES = \
     $(BUILD_DIR)/$(OBSEG_DIR)/prop/Pak47magZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/prop/Palarm1Z.rz \

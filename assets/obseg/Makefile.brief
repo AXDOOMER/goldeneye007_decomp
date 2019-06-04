@@ -2,16 +2,19 @@
 $(BUILD_DIR)/$(OBSEG_DIR)/brief/%.rz: $(OBSEG_DIR)/brief/%.bin
 	$(RZ_COMP) $< $@
 
-$(OBSEG_DIR)/brief/%.bin: $(OBSEG_DIR)/brief/%.elf
+$(BUILD_DIR)/$(OBSEG_DIR)/brief/%.rz: $(BUILD_DIR)/$(OBSEG_DIR)/brief/%.bin
+	$(RZ_COMP) $< $@
+
+$(BUILD_DIR)/$(OBSEG_DIR)/brief/%.bin: $(BUILD_DIR)/$(OBSEG_DIR)/brief/%.elf
 	$(OBJCOPY) $< $@ -O binary --pad-to 0x30
 
-$(OBSEG_DIR)/brief/%.elf: $(OBSEG_DIR)/brief/%.o
+$(BUILD_DIR)/$(OBSEG_DIR)/brief/%.elf: $(BUILD_DIR)/$(OBSEG_DIR)/brief/%.o
 	$(LD) -T assets/obseg/brief/Ubrief.ld -o $@
-	rm assets/obseg/brief/Ubrief.o
+	rm build/assets/obseg/brief/Ubrief.o
 
-$(OBSEG_DIR)/brief/%.o: $(OBSEG_DIR)/brief/%.c
+$(BUILD_DIR)/$(OBSEG_DIR)/brief/%.o: $(OBSEG_DIR)/brief/%.c
 	$(CC) -c $(CFLAGS) -o $@ -O2 $<
-	mv $@ assets/obseg/brief/Ubrief.o
+	mv $@ build/assets/obseg/brief/Ubrief.o
 
 BRIEF_RZ_FILES = \
     $(BUILD_DIR)/$(OBSEG_DIR)/brief/UbriefarchZ.rz \

@@ -2,6 +2,20 @@
 $(BUILD_DIR)/$(OBSEG_DIR)/chr/%.rz: $(OBSEG_DIR)/chr/%.bin
 	$(RZ_COMP) $< $@
 
+$(BUILD_DIR)/$(OBSEG_DIR)/chr/%.rz: $(BUILD_DIR)/$(OBSEG_DIR)/chr/%.bin
+	$(RZ_COMP) $< $@
+
+$(BUILD_DIR)/$(OBSEG_DIR)/chr/%.bin: $(BUILD_DIR)/$(OBSEG_DIR)/chr/%.elf
+	$(OBJCOPY) $< $@ -O binary
+
+$(BUILD_DIR)/$(OBSEG_DIR)/chr/%.elf: $(BUILD_DIR)/$(OBSEG_DIR)/chr/%.o
+	$(LD) -T assets/obseg/chr/Cname.ld -o $@
+	rm build/assets/obseg/chr/Cname.o
+
+$(BUILD_DIR)/$(OBSEG_DIR)/chr/%.o: $(OBSEG_DIR)/chr/%.c
+	$(CC) -c $(CFLAGS) -o $@ -O2 $<
+	mv $@ build/assets/obseg/chr/Cname.o
+
 CHR_RZ_FILES = \
     $(BUILD_DIR)/$(OBSEG_DIR)/chr/CarmourguardZ.rz \
     $(BUILD_DIR)/$(OBSEG_DIR)/chr/CbaronsamediZ.rz \
