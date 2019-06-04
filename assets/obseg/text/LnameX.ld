@@ -8,18 +8,18 @@ SECTIONS
    .data 0x00000000 : AT(0x0000) {
       assets/obseg/text/LnameX.o (.data);
    }
-   _LnameEDataEnd = ADDR(.data) + SIZEOF(.data);
-   _LnameEDataRomEnd = 0x0000 + SIZEOF(.data);
+   _LnameXDataEnd = ADDR(.data) + SIZEOF(.data);
+   _LnameXDataRomEnd = 0x0000 + SIZEOF(.data);
 
 
 
    _LnameXRODataStart = ADDR(.rodata);
-   _LnameXRODataRomStart = _LnameEHeaderRomEnd;
-   .rodata : AT(_LnameEHeaderRomEnd) {
+   _LnameXRODataRomStart = _LnameXDataRomEnd;
+   .rodata : AT(_LnameXDataRomEnd) {
       assets/obseg/text/LnameX.o (.rodata);
    }
    _LnameXRODataEnd = ADDR( .rodata) + SIZEOF( .rodata);
-   _LnameXRODataRomEnd = _LnameEHeaderRomEnd + SIZEOF( .rodata);
+   _LnameXRODataRomEnd = _LnameXDataRomEnd + SIZEOF( .rodata);
 
       /DISCARD/ : {
       * (.MIPS.abiflags);
