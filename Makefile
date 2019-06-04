@@ -48,27 +48,21 @@ APPELF := ge007.$(COUNTRYCODE).elf
 APPROM := ge007.$(COUNTRYCODE).z64
 APPBIN := ge007.$(COUNTRYCODE).bin
 
-HFILES := $(foreach dir,$(CODE_DIRS),$(wildcard $(dir)/*.h))
-
-HEADERFILES := rom_header.s bootcode.s _start.s rspboot.s gspboot.s aspboot.s
+HEADERFILES := $(foreach dir,src,$(wildcard $(dir)/*.s))
 HEADEROBJECTS := $(foreach file,$(HEADERFILES),$(BUILD_DIR)/$(file:.s=.o))
 
 CODEFILES := $(foreach dir,src,$(wildcard $(dir)/*.c))
 CODEOBJECTS := $(foreach file,$(CODEFILES),$(BUILD_DIR)/$(file:.c=.o))
 
-
 LIBULTRA := lib/libultra_rom.a
 ULTRAFILES := libultra/libultra.s
 ULTRAOBJECTS := build/libultra/libultra.o
 
-
 GAMEFILES := $(foreach dir,src/game,$(wildcard $(dir)/*.c))
 GAMEOBJECTS := $(foreach file,$(GAMEFILES),$(BUILD_DIR)/$(file:.c=.o))
 
-
 ROMFILES := assets/romfiles.s
 ROMOBJECTS := build/assets/romfiles.o
-
 
 RAMROM_FILES := assets/ramrom/ramrom.s
 RAMROM_OBJECTS := build/assets/ramrom/ramrom.o
@@ -88,9 +82,6 @@ IMAGES_OBJECTS := build/assets/images/images.o
 
 RZFILES := rarezip/rarezip.c
 RZOBJECTS := $(foreach file,$(RZFILES),$(BUILD_DIR)/src/$(file:.c=.o))
-
-#DATAFILES := static.c zbuffer.c cfb.c
-#DATAOBJECTS := $(DATAFILES:.c=.o)
 
 OBJECTS := $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(OBSEGMENT) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGES_OBJECTS)
 
@@ -148,6 +139,9 @@ clean:
 	git checkout build/assets/obseg/text/LcradE.rz
 
 build/%.o: src/%.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
+build/src/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
 build/assets/%.o: assets/%.s
