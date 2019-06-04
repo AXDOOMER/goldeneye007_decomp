@@ -13,11 +13,7 @@ make
 
 Due to a bug with gzip, the following is your friend for random sha1 fails
 ```
-make clean && \
-git checkout build/assets/obseg/setup/UsetuparchZ.rz && \
-git checkout build/assets/obseg/setup/UsetupjunZ.rz && \
-git checkout build/assets/obseg/setup/UsetupsevbZ.rz && \
-make
+make clean && make
 ```
 
 
