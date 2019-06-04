@@ -22,3 +22,5 @@ make
 
 
 This decompilation was only made possible thanks to many awesome 00 Agents who will be revealed only if they wish.
+
+GE and PD documentation made by Zoinkity
