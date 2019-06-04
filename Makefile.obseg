@@ -10,6 +10,18 @@ OBSEG_DIR := assets/obseg
 $(BUILD_DIR)/$(OBSEG_DIR)/bg/%.seg: $(OBSEG_DIR)/bg/%.bin
 	$(MAKEBG) $< $@
 
+$(OBSEG_DIR)/bg/%.bin: $(OBSEG_DIR)/bg/%.elf
+	$(OBJCOPY) $< $@ -O binary
+
+$(OBSEG_DIR)/bg/%.elf: $(OBSEG_DIR)/bg/%.o
+	$(LD) -T assets/obseg/bg/bg_all_p.ld -o $@
+	rm assets/obseg/bg/bg_all_p.o
+
+$(OBSEG_DIR)/bg/%.o: $(OBSEG_DIR)/bg/%.c
+	$(CC) -c $(CFLAGS) -o $@ -O2 $<
+	mv $@ assets/obseg/bg/bg_all_p.o
+
+
 BG_SEG_FILES = \
 	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_sev_all_p.seg \
 	$(BUILD_DIR)/$(OBSEG_DIR)/bg/bg_silo_all_p.seg \
