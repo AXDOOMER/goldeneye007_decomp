@@ -1231,19 +1231,10 @@ glabel spectrum_input_handling
 
 
 
-
-#ifdef NONMATCHING
 void nullsub_50(void) {
-
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel nullsub_50
-/* 108304 7F0D37D4 03E00008 */  jr    $ra
-/* 108308 7F0D37D8 00000000 */   nop   
-)
-#endif
+
 
 
 

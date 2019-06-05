@@ -1219,28 +1219,10 @@ glabel MP_weapon_expansion_routine
 #endif
 
 
-#ifdef NONMATCHING
 void jmp_prepare_load_objects(void) {
-    // Node 0
     prepare_load_objects();
-    return;
-    // (possible return value: prepare_load_objects())
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel jmp_prepare_load_objects
-/* 03754C 7F002A1C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 037550 7F002A20 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 037554 7F002A24 0FC00767 */  jal   prepare_load_objects
-/* 037558 7F002A28 00000000 */   nop   
-/* 03755C 7F002A2C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 037560 7F002A30 27BD0018 */  addiu $sp, $sp, 0x18
-/* 037564 7F002A34 03E00008 */  jr    $ra
-/* 037568 7F002A38 00000000 */   nop   
-)
-#endif
 
 
 #ifdef NONMATCHING
@@ -1536,24 +1518,10 @@ glabel expand_type_0D_object_autoturret
 #endif
 
 
-#ifdef NONMATCHING
 void jmp_prepare_load_objects_0(void) {
-
+    prepare_load_objects();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel jmp_prepare_load_objects_0
-/* 03794C 7F002E1C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 037950 7F002E20 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 037954 7F002E24 0FC00767 */  jal   prepare_load_objects
-/* 037958 7F002E28 00000000 */   nop   
-/* 03795C 7F002E2C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 037960 7F002E30 27BD0018 */  addiu $sp, $sp, 0x18
-/* 037964 7F002E34 03E00008 */  jr    $ra
-/* 037968 7F002E38 00000000 */   nop   
-)
-#endif
+
 
 
 #ifdef NONMATCHING

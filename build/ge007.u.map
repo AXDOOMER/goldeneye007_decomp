@@ -106,7 +106,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/rarezip/rarezip.o
  .options       0x0000000000000000       0x20 build/src/game/initgamedata.o
  .reginfo       0x0000000000000000       0x18 build/src/game/initgamedata.o
- .mdebug        0x0000000000000000      0x7b0 build/src/game/initgamedata.o
+ .mdebug        0x0000000000000000      0x7ac build/src/game/initgamedata.o
  .options       0x0000000000000000       0x20 build/src/game/initweaponanigroups.o
  .reginfo       0x0000000000000000       0x18 build/src/game/initweaponanigroups.o
  .mdebug        0x0000000000000000      0x350 build/src/game/initweaponanigroups.o
@@ -969,7 +969,7 @@ Linker script and memory map
                 0x000000007000b728                osPfsChecker
                 0x000000007000b734                controller_7000B734
                 0x000000007000b810                controller_check_for_rumble_maybe
-                0x000000007000b9f8                controller_finding_controller_maybe
+                0x000000007000b9f8                get_attached_controller_count
                 0x000000007000ba70                get_num_controllers_plugged_in
                 0x000000007000ba7c                controller_rumble_related
                 0x000000007000bba8                set_disable_all_rumble_and_something
@@ -1865,7 +1865,7 @@ Linker script and memory map
                 0x000000007f01deb4                sub_GAME_7F01DEB4
                 0x000000007f01df90                sub_GAME_7F01DF90
                 0x000000007f01e28c                check_if_valid_folder_num
-                0x000000007f01e2c0                check_unlock_complete_for_eeprom_stagecomplete_difficulty
+                0x000000007f01e2c0                doesFolderHaveStageUnlockedAtDifficulty
                 0x000000007f01e504                sub_GAME_7F01E504
                 0x000000007f01e5f8                unlock_stage_in_folder_on_difficulty
                 0x000000007f01e760                sub_GAME_7F01E760
@@ -5678,7 +5678,7 @@ Linker script and memory map
                 0x000000008002a8ec                selected_folder_num_copy
                 0x000000008002a8f0                gamemode
                 0x000000008002a8f4                selected_stage
-                0x000000008002a8f8                ptr_briefingdata
+                0x000000008002a8f8                briefingpage
                 0x000000008002a8fc                selected_difficulty
                 0x000000008002a900                append_cheat_sp
                 0x000000008002a904                append_cheat_mp
@@ -5828,7 +5828,7 @@ Linker script and memory map
                 0x000000008002b198                mp_chr_setup
                 0x000000008002b498                MP_handicap_table
                 0x000000008002b4f0                MP_controller_configuration_table
-                0x000000008002b510                D_8002B510
+                0x000000008002b510                mp_sight_adjust_table
                 0x000000008002b520                selected_num_players
                 0x000000008002b524                player_1_char
                 0x000000008002b528                player_2_char
@@ -8388,12 +8388,12 @@ Linker script and memory map
                 0x0000000080051ab8                D_80051AB8
                 0x0000000080051abc                D_80051ABC
                 0x0000000080051ac0                jpt_briefingpage_name
-                0x0000000080051ad4                D_80051AD4
-                0x0000000080051ad8                D_80051AD8
-                0x0000000080051adc                D_80051ADC
-                0x0000000080051ae0                D_80051AE0
-                0x0000000080051ae4                D_80051AE4
-                0x0000000080051ae8                D_80051AE8
+                0x0000000080051ad4                menu0C_aspect
+                0x0000000080051ad8                menu0C_pageheight
+                0x0000000080051adc                menu0D_aspect
+                0x0000000080051ae0                menu0D_pageheight
+                0x0000000080051ae4                menu15_aspect
+                0x0000000080051ae8                menu15_pageheight
                 0x0000000080051aec                jpt_intro_bond_head
                 0x0000000080051b00                D_80051B00
                 0x0000000080051b04                D_80051B04
@@ -10365,10 +10365,7 @@ Linker script and memory map
                 0x00000000800697ac                handicap_player2
                 0x00000000800697b0                handicap_player3
                 0x00000000800697b4                handicap_player4
-                0x00000000800697b8                controlstyle_player1
-                0x00000000800697bc                controlstyle_player2
-                0x00000000800697c0                controlstyle_player3
-                0x00000000800697c4                controlstyle_player4
+                0x00000000800697b8                controlstyle_player
                 0x00000000800697c8                highlight_players
                 0x00000000800697cc                highlight_scenario
                 0x00000000800697d0                highlight_gameselect

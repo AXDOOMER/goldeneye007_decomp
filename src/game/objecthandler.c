@@ -66,11 +66,11 @@ u32 D_8003607C = 0;
 //D:80036080
 u32 D_80036080 = 0;
 //D:80036084
-u32 D_80036084 = 0;
+s32 D_80036084 = 0;
 //D:80036088
 f32 D_80036088 = 1.0;
 //D:8003608C
-u32 D_8003608C = 0;
+s32 D_8003608C = 0;
 //D:80036090
 u32 D_80036090 = 0;
 //D:80036094
@@ -2092,37 +2092,13 @@ glabel set_aircraft_obj_inst_scale_to_zero
 
 
 
-#ifdef NONMATCHING
-void set_80036084(void) {
-
+void set_80036084(s32 param_1) {
+  D_80036084 = param_1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_80036084
-/* 0A0F30 7F06C400 3C018003 */  lui   $at, 0x8003
-/* 0A0F34 7F06C404 03E00008 */  jr    $ra
-/* 0A0F38 7F06C408 AC246084 */   sw    $a0, 0x6084($at)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void set_float_80036088(void) {
-
+void set_float_80036088(f32 param_1) {
+  D_80036088 = param_1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_float_80036088
-/* 0A0F3C 7F06C40C 3C018003 */  lui   $at, 0x8003
-/* 0A0F40 7F06C410 03E00008 */  jr    $ra
-/* 0A0F44 7F06C414 E42C6088 */   swc1  $f12, 0x6088($at)
-)
-#endif
 
 
 
@@ -2162,36 +2138,14 @@ glabel sub_GAME_7F06C418
 
 
 
-#ifdef NONMATCHING
-void set_8003608C(void) {
-
+void set_8003608C(s32 param_1) {
+  D_8003608C = param_1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_8003608C
-/* 0A0F90 7F06C460 3C018003 */  lui   $at, 0x8003
-/* 0A0F94 7F06C464 03E00008 */  jr    $ra
-/* 0A0F98 7F06C468 AC24608C */   sw    $a0, 0x608c($at)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void return_null(void) {
-
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel return_null
-/* 0A0F9C 7F06C46C 03E00008 */  jr    $ra
-/* 0A0FA0 7F06C470 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -2269,24 +2223,9 @@ glabel sub_GAME_7F06C474
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F06C550(void) {
-
+  sub_GAME_7F06C474();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06C550
-/* 0A1080 7F06C550 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A1084 7F06C554 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A1088 7F06C558 0FC1B11D */  jal   sub_GAME_7F06C474
-/* 0A108C 7F06C55C 00000000 */   nop   
-/* 0A1090 7F06C560 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A1094 7F06C564 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A1098 7F06C568 03E00008 */  jr    $ra
-/* 0A109C 7F06C56C 00000000 */   nop   
-)
-#endif
 
 
 

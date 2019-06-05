@@ -746,7 +746,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0A4D74
 /* 0D98A4 7F0A4D74 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0D98A8 7F0A4D78 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D98AC 7F0A4D7C 0C002E7E */  jal   controller_finding_controller_maybe
+/* 0D98AC 7F0A4D7C 0C002E7E */  jal   get_attached_controller_count
 /* 0D98B0 7F0A4D80 00000000 */   nop   
 /* 0D98B4 7F0A4D84 28410002 */  slti  $at, $v0, 2
 /* 0D98B8 7F0A4D88 54200009 */  bnezl $at, .L7F0A4DB0
@@ -3310,7 +3310,7 @@ glabel D_800584B4
 glabel sub_GAME_7F0A69A8
 /* 0DB4D8 7F0A69A8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0DB4DC 7F0A69AC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0DB4E0 7F0A69B0 0C002E7E */  jal   controller_finding_controller_maybe
+/* 0DB4E0 7F0A69B0 0C002E7E */  jal   get_attached_controller_count
 /* 0DB4E4 7F0A69B4 00000000 */   nop   
 /* 0DB4E8 7F0A69B8 28410002 */  slti  $at, $v0, 2
 /* 0DB4EC 7F0A69BC 10200005 */  beqz  $at, .L7F0A69D4

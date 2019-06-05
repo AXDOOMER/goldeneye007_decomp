@@ -737,12 +737,12 @@ void copy_current_ingame_registers_before_ramrom_playback(void *arg0) {
     arg0->unkB4 = (?32) handicap_player1.unk4;
     arg0->unkB8 = (?32) handicap_player1.unk8;
     arg0->unkBC = (?32) handicap_player1.unkC;
-    arg0->unkC0 = (?32) controlstyle_player1;
-    arg0->unkC4 = (?32) controlstyle_player1.unk4;
-    arg0->unkC8 = (?32) controlstyle_player1.unk8;
-    arg0->unkCC = (?32) controlstyle_player1.unkC;
+    arg0->unkC0 = (?32) controlstyle_player;
+    arg0->unkC4 = (?32) controlstyle_player.unk4;
+    arg0->unkC8 = (?32) controlstyle_player.unk8;
+    arg0->unkCC = (?32) controlstyle_player.unkC;
     arg0->unkD0 = (?32) aim_sight_adjustment;
-    arg0->unkD4 = get_players_team_or_scenario_item_flag(0, &handicap_player1, &controlstyle_player1);
+    arg0->unkD4 = get_players_team_or_scenario_item_flag(0, &handicap_player1, &controlstyle_player);
     arg0->unkD8 = get_players_team_or_scenario_item_flag(1);
     arg0->unkDC = get_players_team_or_scenario_item_flag(2);
     arg0->unkE0 = get_players_team_or_scenario_item_flag(3);
@@ -792,8 +792,8 @@ glabel copy_current_ingame_registers_before_ramrom_playback
 /* 0F4F6C 7F0C043C 24A597A8 */  addiu $a1, %lo(handicap_player1) # addiu $a1, $a1, -0x6858
 /* 0F4F70 7F0C0440 AE0D00A0 */  sw    $t5, 0xa0($s0)
 /* 0F4F74 7F0C0444 8C6E0004 */  lw    $t6, 4($v1)
-/* 0F4F78 7F0C0448 3C068007 */  lui   $a2, %hi(controlstyle_player1) # $a2, 0x8007
-/* 0F4F7C 7F0C044C 24C697B8 */  addiu $a2, %lo(controlstyle_player1) # addiu $a2, $a2, -0x6848
+/* 0F4F78 7F0C0448 3C068007 */  lui   $a2, %hi(controlstyle_player) # $a2, 0x8007
+/* 0F4F7C 7F0C044C 24C697B8 */  addiu $a2, %lo(controlstyle_player) # addiu $a2, $a2, -0x6848
 /* 0F4F80 7F0C0450 AE0E00A4 */  sw    $t6, 0xa4($s0)
 /* 0F4F84 7F0C0454 8C6F0008 */  lw    $t7, 8($v1)
 /* 0F4F88 7F0C0458 00002025 */  move  $a0, $zero
@@ -863,12 +863,12 @@ void copy_recorded_ramrom_registers_to_proper_place_ingame(void *arg0) {
     handicap_player1.unk4 = (?32) arg0->unkB4;
     handicap_player1.unk8 = (?32) arg0->unkB8;
     handicap_player1.unkC = (?32) arg0->unkBC;
-    controlstyle_player1 = (?32) arg0->unkC0;
-    controlstyle_player1.unk4 = (?32) arg0->unkC4;
-    controlstyle_player1.unk8 = (?32) arg0->unkC8;
-    controlstyle_player1.unkC = (?32) arg0->unkCC;
+    controlstyle_player = (?32) arg0->unkC0;
+    controlstyle_player.unk4 = (?32) arg0->unkC4;
+    controlstyle_player.unk8 = (?32) arg0->unkC8;
+    controlstyle_player.unkC = (?32) arg0->unkCC;
     aim_sight_adjustment = (?32) arg0->unkD0;
-    set_players_team_or_scenario_item_flag(0, arg0->unkD4, &controlstyle_player1);
+    set_players_team_or_scenario_item_flag(0, arg0->unkD4, &controlstyle_player);
     set_players_team_or_scenario_item_flag(1, arg0->unkD8);
     set_players_team_or_scenario_item_flag(2, arg0->unkDC);
     return set_players_team_or_scenario_item_flag(3, arg0->unkE0);
@@ -919,8 +919,8 @@ glabel copy_recorded_ramrom_registers_to_proper_place_ingame
 /* 0F50C0 7F0C0590 246397A8 */  addiu $v1, %lo(handicap_player1) # addiu $v1, $v1, -0x6858
 /* 0F50C4 7F0C0594 AC4E0004 */  sw    $t6, 4($v0)
 /* 0F50C8 7F0C0598 8E0F00A8 */  lw    $t7, 0xa8($s0)
-/* 0F50CC 7F0C059C 3C068007 */  lui   $a2, %hi(controlstyle_player1) # $a2, 0x8007
-/* 0F50D0 7F0C05A0 24C697B8 */  addiu $a2, %lo(controlstyle_player1) # addiu $a2, $a2, -0x6848
+/* 0F50CC 7F0C059C 3C068007 */  lui   $a2, %hi(controlstyle_player) # $a2, 0x8007
+/* 0F50D0 7F0C05A0 24C697B8 */  addiu $a2, %lo(controlstyle_player) # addiu $a2, $a2, -0x6848
 /* 0F50D4 7F0C05A4 AC4F0008 */  sw    $t7, 8($v0)
 /* 0F50D8 7F0C05A8 8E1800AC */  lw    $t8, 0xac($s0)
 /* 0F50DC 7F0C05AC 3C018003 */  lui   $at, %hi(aim_sight_adjustment) # $at, 0x8003
@@ -994,7 +994,7 @@ glabel test_if_recording_demos_this_stage_load
 /* 0F51B0 7F0C0680 8E090000 */  lw    $t1, ($s0)
 /* 0F51B4 7F0C0684 AD240010 */  sw    $a0, 0x10($t1)
 /* 0F51B8 7F0C0688 8E0A0000 */  lw    $t2, ($s0)
-/* 0F51BC 7F0C068C 0C002E7E */  jal   controller_finding_controller_maybe
+/* 0F51BC 7F0C068C 0C002E7E */  jal   get_attached_controller_count
 /* 0F51C0 7F0C0690 AD450014 */   sw    $a1, 0x14($t2)
 /* 0F51C4 7F0C0694 8E0B0000 */  lw    $t3, ($s0)
 /* 0F51C8 7F0C0698 3C0C8009 */  lui   $t4, %hi(record_slot_num) # $t4, 0x8009

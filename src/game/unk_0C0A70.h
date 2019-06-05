@@ -9,8 +9,8 @@ extern s32 D_8004849C;
 extern s32 D_800484A0;
 extern s32 D_800484A4;
 extern s32 D_800484A8;
-extern s32 copy_of_osgetcount_value_0;
-extern s32 copy_of_osgetcount_value_1;
+extern u32 copy_of_osgetcount_value_0;
+extern u32 copy_of_osgetcount_value_1;
 extern s32 D_800484B4;
 
 #endif

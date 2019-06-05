@@ -691,7 +691,7 @@ glabel controller_check_for_rumble_maybe
 
 
 #ifdef NONMATCHING
-s32 controller_finding_controller_maybe(void)
+s32 get_attached_controller_count(void)
 {
     if (ptr_current_point_in_controller_input_index->unk1F8 >= 0)
     {
@@ -718,7 +718,7 @@ s32 controller_finding_controller_maybe(void)
 #else
 GLOBAL_ASM(
 .text
-glabel controller_finding_controller_maybe
+glabel get_attached_controller_count
 /* 00C5F8 7000B9F8 3C0E8002 */  lui   $t6, %hi(ptr_current_point_in_controller_input_index) # $t6, 0x8002
 /* 00C5FC 7000B9FC 8DCE68C4 */  lw    $t6, %lo(ptr_current_point_in_controller_input_index)($t6)
 /* 00C600 7000BA00 3C028002 */  lui   $v0, 0x8002
@@ -1958,16 +1958,16 @@ glabel controller_7000C430
 #ifdef NONMATCHING
 void controller_7000C470(void) {
     // Node 0
-    if (controller_finding_controller_maybe() > 0)
+    if (get_attached_controller_count() > 0)
     {
         loop_1:
         // Node 1
-        if ((0 + 1) < controller_finding_controller_maybe())
+        if ((0 + 1) < get_attached_controller_count())
         {
             goto loop_1;
         }
     }
-    // (possible return value: controller_finding_controller_maybe())
+    // (possible return value: get_attached_controller_count())
 }
 
 #else
@@ -1977,12 +1977,12 @@ glabel controller_7000C470
 /* 00D070 7000C470 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00D074 7000C474 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 00D078 7000C478 AFB00018 */  sw    $s0, 0x18($sp)
-/* 00D07C 7000C47C 0C002E7E */  jal   controller_finding_controller_maybe
+/* 00D07C 7000C47C 0C002E7E */  jal   get_attached_controller_count
 /* 00D080 7000C480 00008025 */   move  $s0, $zero
 /* 00D084 7000C484 58400007 */  blezl $v0, .L7000C4A4
 /* 00D088 7000C488 8FBF001C */   lw    $ra, 0x1c($sp)
 .L7000C48C:
-/* 00D08C 7000C48C 0C002E7E */  jal   controller_finding_controller_maybe
+/* 00D08C 7000C48C 0C002E7E */  jal   get_attached_controller_count
 /* 00D090 7000C490 26100001 */   addiu $s0, $s0, 1
 /* 00D094 7000C494 0202082A */  slt   $at, $s0, $v0
 /* 00D098 7000C498 1420FFFC */  bnez  $at, .L7000C48C

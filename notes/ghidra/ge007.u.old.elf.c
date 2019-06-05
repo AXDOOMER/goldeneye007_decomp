@@ -4459,7 +4459,7 @@ u16 get_music1len(void)
 
 
 
-void musicTrack1Vol(u16 param_1)
+void musicTrack1Vol(s16 param_1)
 
 {
   music1len = (u16)((longlong)param_1 & 0xffffU);
@@ -28794,7 +28794,7 @@ uint * write_text_at_abs_coord
 
 
 
-ulonglong check_if_cheat_available(undefined4 cheat)
+ulonglong check_if_cheat_available(u32 cheat)
 
 {
   ulonglong uVar1;
@@ -30460,25 +30460,25 @@ void interface_menu05_filesel(void)
 
 
 
-int get_ptr_difficulty_name(longlong difficulty)
+int get_ptr_difficulty_name(DIFFICULTY difficulty)
 
 {
   byte *return;
   
   return = NULL;
-  if (difficulty == 0) {
+  if (difficulty == DIFFICULTY_AGENT) {
     return = get_textptr_for_textID(0x9c13);
   }
   else {
-    if (difficulty == 1) {
+    if (difficulty == DIFFICULTY_SECRET) {
       return = get_textptr_for_textID(0x9c14);
     }
     else {
-      if (difficulty == 2) {
+      if (difficulty == DIFFICULTY_00) {
         return = get_textptr_for_textID(0x9c15);
       }
       else {
-        if (difficulty == 3) {
+        if (difficulty == DIFFICULTY_007) {
           return = get_textptr_for_textID(0x9c16);
         }
       }
@@ -30700,8 +30700,8 @@ uint * constructor_menu05_filesel(undefined4 *param_1)
     }
     else {
       get_highest_stage_difficulty_completed_in_folder(iStack4,&SStack200,&DStack204);
-      if ((-1 < (int)SStack200) && (-1 < (longlong)DStack204)) {
-        pcVar3 = (char *)get_ptr_difficulty_name((longlong)DStack204);
+      if ((-1 < (int)SStack200) && (-1 < DStack204)) {
+        pcVar3 = (char *)get_ptr_difficulty_name(DStack204);
         if (pcVar3 != NULL) {
           textpointer_load_parse_something((char *)abStack232,pcVar3);
           string_load_parse_something((char *)abStack232,asc_8004F488);
@@ -30896,11 +30896,10 @@ void interface_menu06_modesel(void)
 
 {
   ulonglong uVar1;
-  u32 bondID;
   BOOL BVar3;
   longlong lVar2;
   undefined *puVar4;
-  int cheat;
+  u32 cheat;
   
   is_cheat_menu_available = FALSE;
   puVar4 = &cheat_available;
@@ -30922,8 +30921,8 @@ void interface_menu06_modesel(void)
   set_page_height(100.00000000,(f32)menu06_pageheight);
   set_video2_settings_offset_24(0);
   disable_all_switches((int)ptr_folder_object_instance);
-  bondID = removed_would_have_returned_bond_for_folder_num(selected_folder_num);
-  select_load_bond_picture((int)ptr_folder_object_instance,bondID);
+  cheat = removed_would_have_returned_bond_for_folder_num(selected_folder_num);
+  select_load_bond_picture((int)ptr_folder_object_instance,cheat);
   set_item_visibility_in_objinstance((int)ptr_folder_object_instance,0,1);
   set_item_visibility_in_objinstance((int)ptr_folder_object_instance,1,1);
   set_item_visibility_in_objinstance((int)ptr_folder_object_instance,3,1);
@@ -31726,8 +31725,8 @@ uint * print_current_solo_briefing_stage_name(uint *param_1,byte *param_2)
   uint local_4;
   
   local_res0 = param_1;
-  if (-1 < (longlong)selected_difficulty) {
-    pcVar1 = (char *)get_ptr_difficulty_name((longlong)selected_difficulty);
+  if (-1 < selected_difficulty) {
+    pcVar1 = (char *)get_ptr_difficulty_name(selected_difficulty);
     textpointer_load_parse_something((char *)param_2,pcVar1);
     pbVar2 = get_textptr_for_textID(0x9c20);
     string_load_parse_something((char *)param_2,(char *)pbVar2);
@@ -32313,10 +32312,10 @@ undefined4 constructor_menu09_007options(undefined4 *param_1)
 
 
 
-undefined4 get_player_control_style(int playernum)
+u32 get_player_control_style(int playernum)
 
 {
-  return (&controlstyle_player1)[playernum];
+  return controlstyle_player[playernum];
 }
 
 
@@ -32584,8 +32583,8 @@ void init_mp_options_for_scenario(longlong numplayers)
         *(undefined4 *)((int)&handicap_player1 + iVar2) = 5;
       }
       lVar1 = (longlong)((int)lVar1 + 1);
-      if ((2 < numplayers) && (3 < *(int *)((int)&controlstyle_player1 + iVar2))) {
-        *(int *)((int)&controlstyle_player1 + iVar2) = 0;
+      if ((2 < numplayers) && (3 < *(int *)((int)controlstyle_player + iVar2))) {
+        *(int *)((int)controlstyle_player + iVar2) = 0;
       }
       iVar2 += 4;
       piVar3 = piVar3 + 1;
@@ -34087,7 +34086,7 @@ void interface_menu11_mpcontrols(void)
             }
           }
           else {
-            piVar5 = (int *)((int)&controlstyle_player1 + iVar9);
+            piVar5 = (int *)((int)controlstyle_player + iVar9);
             if ((iVar2 == 2) && (iVar6 == 0)) {
               iVar3 = *piVar5;
             }
@@ -34102,18 +34101,18 @@ void interface_menu11_mpcontrols(void)
               iVar3 = *piVar5;
             }
             if (((iVar3 < 7) && (*piVar5 = iVar3 + 1, iVar6 == 0)) &&
-               ((controlstyle_player1 == 4 && (controlstyle_player2 < 4)))) {
-              controlstyle_player2 = 4;
+               ((controlstyle_player[0] == 4 && ((int)controlstyle_player[1] < 4)))) {
+              controlstyle_player[1] = 4;
             }
           }
         }
         else {
-          piVar5 = (int *)((int)&controlstyle_player1 + iVar9);
+          piVar5 = (int *)((int)controlstyle_player + iVar9);
           iVar3 = *piVar5;
           if (0 < iVar3) {
             if (iVar2 == 2) {
               if (iVar6 == 1) {
-                if ((controlstyle_player1 < 4) || (4 < iVar3)) goto LAB_7f01376c;
+                if (((int)controlstyle_player[0] < 4) || (4 < iVar3)) goto LAB_7f01376c;
               }
               else {
                 *piVar5 = iVar3 + -1;
@@ -34123,9 +34122,9 @@ void interface_menu11_mpcontrols(void)
 LAB_7f01376c:
               *piVar5 = iVar3 + -1;
             }
-            if ((((iVar2 == 2) && (iVar6 == 0)) && (controlstyle_player1 < 4)) &&
-               (3 < controlstyle_player2)) {
-              controlstyle_player2 = 0;
+            if ((((iVar2 == 2) && (iVar6 == 0)) && ((int)controlstyle_player[0] < 4)) &&
+               (3 < (int)controlstyle_player[1])) {
+              controlstyle_player[1] = 0;
             }
           }
         }
@@ -34173,7 +34172,7 @@ undefined4 * constructor_menu11_mpcontrol(undefined4 *param_1)
   int iVar5;
   int iVar6;
   uint uVar7;
-  int *piStack96;
+  u32 *puStack96;
   BOOL *pBStack92;
   uint uStack76;
   uint uStack72;
@@ -34197,7 +34196,7 @@ undefined4 * constructor_menu11_mpcontrol(undefined4 *param_1)
   uVar7 = 0;
   if (0 < (int)uStack4) {
     pBStack92 = &has_selected_char_player1;
-    piStack96 = &controlstyle_player1;
+    puStack96 = controlstyle_player;
     do {
       iVar5 = 0x26;
       if (uStack4 == 2) {
@@ -34244,7 +34243,7 @@ undefined4 * constructor_menu11_mpcontrol(undefined4 *param_1)
                           (DL_00,&uStack52,&uStack56,pbVar1,(int)ptrSecondFontTable,
                            (int)ptrFirstFontTable,0xff,(int)sVar2,(int)sVar3,0,0);
       }
-      pbVar1 = get_textptr_for_textID((uint)*(ushort *)(mp_controller_table + *piStack96));
+      pbVar1 = get_textptr_for_textID((uint)*(ushort *)(mp_controller_table + *puStack96));
       proc_7F0AE98C(aiStack64,&iStack68,pbVar1,(int)ptrSecondFontTable,(int *)ptrFirstFontTable,0);
       uStack72 = ((iVar6 >> 1) + iVar5) - (iStack68 >> 1);
       uStack76 = (iVar4 - (aiStack64[0] >> 1)) + 0x55;
@@ -34256,7 +34255,7 @@ undefined4 * constructor_menu11_mpcontrol(undefined4 *param_1)
                          (int)ptrFirstFontTable,0xff,(int)sVar2,(int)sVar3,0,0);
       uVar7 += 1;
       pBStack92 = pBStack92 + 1;
-      piStack96 = piStack96 + 1;
+      puStack96 = puStack96 + 1;
     } while (uVar7 != uStack4);
   }
   DL = combiner_bayer_lod_perspective(DL_00);
@@ -37376,7 +37375,7 @@ undefined4 * constructor_menu19_spectrum(undefined4 *param_1)
 // WARNING: Instruction at (ram,0x7f01a5e8) overlaps instruction at (ram,0x7f01a5e4)
 // 
 
-void set_menu_to_mode(MENU menu,longlong mode)
+void set_menu_to_mode(MENU menu,u32 mode)
 
 {
   if ((menu == MENU_RUN_STAGE) || (menu == MENU_SPECTRUM_EMU)) {
@@ -84000,7 +83999,7 @@ void set_aircraft_obj_inst_scale_to_zero(int *objinstance)
 
 
 
-void set_80036084(undefined4 param_1)
+void set_80036084(s32 param_1)
 
 {
   dword_80036084 = param_1;
@@ -100714,7 +100713,7 @@ undefined4 * maybe_mp_interface(void)
           uVar2 = get_num_players();
           sVar13 = (s16)uVar2;
           if (uVar2 == 1) {
-            reset_music_in_slot(-1);
+            reset_music_in_slot(0xffffffff);
             set_missionstate(0);
             proc_7F0C0BF0();
             musicTrack1Vol(sVar13);
@@ -133422,10 +133421,10 @@ void copy_current_ingame_registers_before_ramrom_playback(ramromfilestructure *p
   param_1->p2_handi = handicap_player2;
   param_1->p3_handi = handicap_player3;
   param_1->p4_handi = handicap_player4;
-  param_1->p1_contstyle = controlstyle_player1;
-  param_1->p2_contstyle = controlstyle_player2;
-  param_1->p3_contstyle = controlstyle_player3;
-  param_1->p4_contstyle = controlstyle_player4;
+  param_1->p1_contstyle = controlstyle_player[0];
+  param_1->p2_contstyle = controlstyle_player[1];
+  param_1->p3_contstyle = controlstyle_player[2];
+  param_1->p4_contstyle = controlstyle_player[3];
   param_1->aim_option = aim_sight_adjustment;
   uVar2 = get_players_team_or_scenario_item_flag(0);
   param_1->p1_flags = (u32)uVar2;
@@ -133461,10 +133460,10 @@ void copy_recorded_ramrom_registers_to_proper_place_ingame(ramromfilestructure *
   handicap_player2 = demo->p2_handi;
   handicap_player3 = demo->p3_handi;
   handicap_player4 = demo->p4_handi;
-  controlstyle_player1 = demo->p1_contstyle;
-  controlstyle_player2 = demo->p2_contstyle;
-  controlstyle_player3 = demo->p3_contstyle;
-  controlstyle_player4 = demo->p4_contstyle;
+  controlstyle_player[0] = demo->p1_contstyle;
+  controlstyle_player[1] = demo->p2_contstyle;
+  controlstyle_player[2] = demo->p3_contstyle;
+  controlstyle_player[3] = demo->p4_contstyle;
   aim_sight_adjustment = demo->aim_option;
   set_players_team_or_scenario_item_flag(0,(char)demo->p1_flags);
   set_players_team_or_scenario_item_flag(1,(char)demo->p2_flags);
@@ -134009,11 +134008,11 @@ void set_musicslot_time(int slot,int min,int sec)
 
 
 
-void reset_music_in_slot(longlong param_1)
+void reset_music_in_slot(u32 param_1)
 
 {
-  if (-1 < param_1) {
-    (&DAT_8008c608)[(int)param_1] = 0;
+  if (-1 < (int)param_1) {
+    (&DAT_8008c608)[param_1] = 0;
     return;
   }
   DAT_8008c608 = 0;

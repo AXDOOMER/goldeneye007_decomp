@@ -37,32 +37,12 @@ s32 dword_CODE_bss_8008C634;
 s32 mission_state = 0;
 
 
-// rodata
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0C0C10(void) {
-
+  sub_GAME_7F0A9180();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C0C10
-/* 0F5740 7F0C0C10 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5744 7F0C0C14 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5748 7F0C0C18 0FC2A460 */  jal   sub_GAME_7F0A9180
-/* 0F574C 7F0C0C1C 00000000 */   nop   
-/* 0F5750 7F0C0C20 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F5754 7F0C0C24 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5758 7F0C0C28 03E00008 */  jr    $ra
-/* 0F575C 7F0C0C2C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 s32 get_mission_state(void) {
   return mission_state;
@@ -622,78 +602,25 @@ void sub_GAME_7F0C1268(void) {
   set_missionstate(0);
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0C1288(void) {
-
+  if (sub_GAME_7F0D2848(dword_CODE_bss_8008C600) < 0) {
+    set_missionstate(2);
+  }
+  else {
+    set_missionstate(5);
+  }
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C1288
-/* 0F5DB8 7F0C1288 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5DBC 7F0C128C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5DC0 7F0C1290 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600) # $a0, 0x8009
-/* 0F5DC4 7F0C1294 0FC34A12 */  jal   sub_GAME_7F0D2848
-/* 0F5DC8 7F0C1298 8C84C600 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
-/* 0F5DCC 7F0C129C 04410005 */  bgez  $v0, .L7F0C12B4
-/* 0F5DD0 7F0C12A0 00000000 */   nop   
-/* 0F5DD4 7F0C12A4 0FC3030F */  jal   set_missionstate
-/* 0F5DD8 7F0C12A8 24040002 */   li    $a0, 2
-/* 0F5DDC 7F0C12AC 10000004 */  b     .L7F0C12C0
-/* 0F5DE0 7F0C12B0 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0C12B4:
-/* 0F5DE4 7F0C12B4 0FC3030F */  jal   set_missionstate
-/* 0F5DE8 7F0C12B8 24040005 */   li    $a0, 5
-/* 0F5DEC 7F0C12BC 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0C12C0:
-/* 0F5DF0 7F0C12C0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5DF4 7F0C12C4 03E00008 */  jr    $ra
-/* 0F5DF8 7F0C12C8 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0C12CC(void) {
-
+  if (sub_GAME_7F0D2848(dword_CODE_bss_8008C600) < 0) {
+    set_missionstate(1);
+  }
+  else {
+    set_missionstate(4);
+  }
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C12CC
-/* 0F5DFC 7F0C12CC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5E00 7F0C12D0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5E04 7F0C12D4 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600) # $a0, 0x8009
-/* 0F5E08 7F0C12D8 0FC34A12 */  jal   sub_GAME_7F0D2848
-/* 0F5E0C 7F0C12DC 8C84C600 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
-/* 0F5E10 7F0C12E0 04410005 */  bgez  $v0, .L7F0C12F8
-/* 0F5E14 7F0C12E4 00000000 */   nop   
-/* 0F5E18 7F0C12E8 0FC3030F */  jal   set_missionstate
-/* 0F5E1C 7F0C12EC 24040001 */   li    $a0, 1
-/* 0F5E20 7F0C12F0 10000004 */  b     .L7F0C1304
-/* 0F5E24 7F0C12F4 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0C12F8:
-/* 0F5E28 7F0C12F8 0FC3030F */  jal   set_missionstate
-/* 0F5E2C 7F0C12FC 24040004 */   li    $a0, 4
-/* 0F5E30 7F0C1300 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0C1304:
-/* 0F5E34 7F0C1304 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5E38 7F0C1308 03E00008 */  jr    $ra
-/* 0F5E3C 7F0C130C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 void sub_GAME_7F0C1310(void) {
   dword_CODE_bss_8008C604 = mission_state;

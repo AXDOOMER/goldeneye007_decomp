@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/unk_0C0A70.h"
+#include "music.h"
 
 // bss
 s32 stop_play_flag;
@@ -294,56 +295,16 @@ glabel check_if_player_is_pressing_anything_left
 
 
 
-#ifdef NONMATCHING
 void play_watch_sfx_beep(void) {
-    // Node 0
     play_sfx_a1(ptr_sfx_buf, 0x9f, 0);
-    return;
-    // (possible return value: play_sfx_a1(ptr_sfx_buf, 0x9f, 0))
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel play_watch_sfx_beep
-/* 0F6B0C 7F0C1FDC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F6B10 7F0C1FE0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F6B14 7F0C1FE4 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 0F6B18 7F0C1FE8 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
-/* 0F6B1C 7F0C1FEC 2405009F */  li    $a1, 159
-/* 0F6B20 7F0C1FF0 0C002382 */  jal   play_sfx_a1
-/* 0F6B24 7F0C1FF4 00003025 */   move  $a2, $zero
-/* 0F6B28 7F0C1FF8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F6B2C 7F0C1FFC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F6B30 7F0C2000 03E00008 */  jr    $ra
-/* 0F6B34 7F0C2004 00000000 */   nop   
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
 void unpause_game(void) {
     stop_play_flag = 0;
     is_gameover_flag = 0;
     is_paused = 0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel unpause_game
-/* 0F6B38 7F0C2008 3C018009 */  lui   $at, %hi(stop_play_flag) # $at, 0x8009
-/* 0F6B3C 7F0C200C AC20C700 */  sw    $zero, %lo(stop_play_flag)($at)
-/* 0F6B40 7F0C2010 3C018009 */  lui   $at, %hi(is_gameover_flag) # $at, 0x8009
-/* 0F6B44 7F0C2014 AC20C704 */  sw    $zero, %lo(is_gameover_flag)($at)
-/* 0F6B48 7F0C2018 3C018009 */  lui   $at, %hi(is_paused)
-/* 0F6B4C 7F0C201C 03E00008 */  jr    $ra
-/* 0F6B50 7F0C2020 AC20C718 */   sw    $zero, %lo(is_paused)($at)
-)
-#endif
 
 
 
@@ -729,28 +690,11 @@ glabel sub_GAME_7F0C234C
 
 
 
-#ifdef NONMATCHING
 void pauseAndLockControls(void) {
     set_controls_locked_flag(1);
     is_paused = 1;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel pauseAndLockControls
-/* 0F6FC4 7F0C2494 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F6FC8 7F0C2498 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F6FCC 7F0C249C 0FC2FEFE */  jal   set_controls_locked_flag
-/* 0F6FD0 7F0C24A0 24040001 */   li    $a0, 1
-/* 0F6FD4 7F0C24A4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F6FD8 7F0C24A8 240E0001 */  li    $t6, 1
-/* 0F6FDC 7F0C24AC 3C018009 */  lui   $at, %hi(is_paused) # $at, 0x8009
-/* 0F6FE0 7F0C24B0 AC2EC718 */  sw    $t6, %lo(is_paused)($at)
-/* 0F6FE4 7F0C24B4 03E00008 */  jr    $ra
-/* 0F6FE8 7F0C24B8 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
 
@@ -799,21 +743,10 @@ glabel sub_GAME_7F0C24BC
 
 
 
-#ifdef NONMATCHING
 void set_stopplay_flag(void) {
     stop_play_flag = 1;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel set_stopplay_flag
-/* 0F7050 7F0C2520 240E0001 */  li    $t6, 1
-/* 0F7054 7F0C2524 3C018009 */  lui   $at, %hi(stop_play_flag)
-/* 0F7058 7F0C2528 03E00008 */  jr    $ra
-/* 0F705C 7F0C252C AC2EC700 */   sw    $t6, %lo(stop_play_flag)($at)
-)
-#endif
 
 
 

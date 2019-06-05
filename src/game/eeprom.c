@@ -238,8 +238,8 @@ void end_of_mission_briefing(void)
 GLOBAL_ASM(
 .text
 glabel end_of_mission_briefing
-/* 051ECC 7F01D39C 3C028003 */  lui   $v0, %hi(ptr_briefingdata) # $v0, 0x8003
-/* 051ED0 7F01D3A0 8C42A8F8 */  lw    $v0, %lo(ptr_briefingdata)($v0)
+/* 051ECC 7F01D39C 3C028003 */  lui   $v0, %hi(briefingpage) # $v0, 0x8003
+/* 051ED0 7F01D3A0 8C42A8F8 */  lw    $v0, %lo(briefingpage)($v0)
 /* 051ED4 7F01D3A4 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 051ED8 7F01D3A8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 051EDC 7F01D3AC 04400050 */  bltz  $v0, .L7F01D4F0
@@ -269,8 +269,8 @@ glabel end_of_mission_briefing
 /* 051F3C 7F01D40C A7AA001E */   sh    $t2, 0x1e($sp)
 /* 051F40 7F01D410 2401003C */  li    $at, 60
 /* 051F44 7F01D414 0041001A */  div   $zero, $v0, $at
-/* 051F48 7F01D418 3C0B8003 */  lui   $t3, %hi(ptr_briefingdata) # $t3, 0x8003
-/* 051F4C 7F01D41C 8D6BA8F8 */  lw    $t3, %lo(ptr_briefingdata)($t3)
+/* 051F48 7F01D418 3C0B8003 */  lui   $t3, %hi(briefingpage) # $t3, 0x8003
+/* 051F4C 7F01D41C 8D6BA8F8 */  lw    $t3, %lo(briefingpage)($t3)
 /* 051F50 7F01D420 3C058003 */  lui   $a1, 0x8003
 /* 051F54 7F01D424 00003812 */  mflo  $a3
 /* 051F58 7F01D428 000B60C0 */  sll   $t4, $t3, 3
@@ -295,8 +295,8 @@ glabel end_of_mission_briefing
 /* 051FA4 7F01D474 00000000 */   nop   
 /* 051FA8 7F01D478 0FC07771 */  jal   get_save_folder_ptr
 /* 051FAC 7F01D47C 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 051FB0 7F01D480 3C0F8003 */  lui   $t7, %hi(ptr_briefingdata) # $t7, 0x8003
-/* 051FB4 7F01D484 8DEFA8F8 */  lw    $t7, %lo(ptr_briefingdata)($t7)
+/* 051FB0 7F01D480 3C0F8003 */  lui   $t7, %hi(briefingpage) # $t7, 0x8003
+/* 051FB4 7F01D484 8DEFA8F8 */  lw    $t7, %lo(briefingpage)($t7)
 /* 051FB8 7F01D488 3C058003 */  lui   $a1, 0x8003
 /* 051FBC 7F01D48C 00402025 */  move  $a0, $v0
 /* 051FC0 7F01D490 000FC0C0 */  sll   $t8, $t7, 3
@@ -307,8 +307,8 @@ glabel end_of_mission_briefing
 /* 051FD4 7F01D4A4 8CA5ABF8 */   lw    $a1, -0x5408($a1)
 /* 051FD8 7F01D4A8 1440000F */  bnez  $v0, .L7F01D4E8
 /* 051FDC 7F01D4AC 3C048003 */   lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
-/* 051FE0 7F01D4B0 3C198003 */  lui   $t9, %hi(ptr_briefingdata) # $t9, 0x8003
-/* 051FE4 7F01D4B4 8F39A8F8 */  lw    $t9, %lo(ptr_briefingdata)($t9)
+/* 051FE0 7F01D4B0 3C198003 */  lui   $t9, %hi(briefingpage) # $t9, 0x8003
+/* 051FE4 7F01D4B4 8F39A8F8 */  lw    $t9, %lo(briefingpage)($t9)
 /* 051FE8 7F01D4B8 3C058003 */  lui   $a1, 0x8003
 /* 051FEC 7F01D4BC 8C84A8E8 */  lw    $a0, %lo(selected_folder_num)($a0)
 /* 051FF0 7F01D4C0 001940C0 */  sll   $t0, $t9, 3
@@ -523,8 +523,8 @@ glabel set_solo_and_ptr_briefing
 /* 052130 7F01D600 0FC03730 */  jal   pull_and_display_text_for_folder_a0
 /* 052134 7F01D604 AC24A8F4 */   sw    $a0, %lo(selected_stage)($at)
 /* 052138 7F01D608 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05213C 7F01D60C 3C018003 */  lui   $at, %hi(ptr_briefingdata) # $at, 0x8003
-/* 052140 7F01D610 AC22A8F8 */  sw    $v0, %lo(ptr_briefingdata)($at)
+/* 05213C 7F01D60C 3C018003 */  lui   $at, %hi(briefingpage) # $at, 0x8003
+/* 052140 7F01D610 AC22A8F8 */  sw    $v0, %lo(briefingpage)($at)
 /* 052144 7F01D614 03E00008 */  jr    $ra
 /* 052148 7F01D618 27BD0018 */   addiu $sp, $sp, 0x18
 )
@@ -1774,13 +1774,13 @@ glabel check_if_valid_folder_num
 
 
 #ifdef NONMATCHING
-void check_unlock_complete_for_eeprom_stagecomplete_difficulty(void) {
+void doesFolderHaveStageUnlockedAtDifficulty(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel check_unlock_complete_for_eeprom_stagecomplete_difficulty
+glabel doesFolderHaveStageUnlockedAtDifficulty
 /* 052DF0 7F01E2C0 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 052DF4 7F01E2C4 AFBF002C */  sw    $ra, 0x2c($sp)
 /* 052DF8 7F01E2C8 AFB50028 */  sw    $s5, 0x28($sp)
@@ -2318,7 +2318,7 @@ glabel check_egypt_completed_in_folder
 /* 053474 7F01E944 02402025 */  move  $a0, $s2
 .L7F01E948:
 /* 053478 7F01E948 02202825 */  move  $a1, $s1
-/* 05347C 7F01E94C 0FC078B0 */  jal   check_unlock_complete_for_eeprom_stagecomplete_difficulty
+/* 05347C 7F01E94C 0FC078B0 */  jal   doesFolderHaveStageUnlockedAtDifficulty
 /* 053480 7F01E950 02003025 */   move  $a2, $s0
 /* 053484 7F01E954 10400003 */  beqz  $v0, .L7F01E964
 /* 053488 7F01E958 26100001 */   addiu $s0, $s0, 1
@@ -2395,21 +2395,21 @@ glabel check_cradle_completed_in_folder
 /* 053528 7F01E9F8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 05352C 7F01E9FC AFA40018 */  sw    $a0, 0x18($sp)
 /* 053530 7F01EA00 24050011 */  li    $a1, 17
-/* 053534 7F01EA04 0FC078B0 */  jal   check_unlock_complete_for_eeprom_stagecomplete_difficulty
+/* 053534 7F01EA04 0FC078B0 */  jal   doesFolderHaveStageUnlockedAtDifficulty
 /* 053538 7F01EA08 00003025 */   move  $a2, $zero
 /* 05353C 7F01EA0C 384E0003 */  xori  $t6, $v0, 3
 /* 053540 7F01EA10 2DC20001 */  sltiu $v0, $t6, 1
 /* 053544 7F01EA14 1440000D */  bnez  $v0, .L7F01EA4C
 /* 053548 7F01EA18 8FA40018 */   lw    $a0, 0x18($sp)
 /* 05354C 7F01EA1C 24050011 */  li    $a1, 17
-/* 053550 7F01EA20 0FC078B0 */  jal   check_unlock_complete_for_eeprom_stagecomplete_difficulty
+/* 053550 7F01EA20 0FC078B0 */  jal   doesFolderHaveStageUnlockedAtDifficulty
 /* 053554 7F01EA24 24060001 */   li    $a2, 1
 /* 053558 7F01EA28 384F0003 */  xori  $t7, $v0, 3
 /* 05355C 7F01EA2C 2DE20001 */  sltiu $v0, $t7, 1
 /* 053560 7F01EA30 14400006 */  bnez  $v0, .L7F01EA4C
 /* 053564 7F01EA34 8FA40018 */   lw    $a0, 0x18($sp)
 /* 053568 7F01EA38 24050011 */  li    $a1, 17
-/* 05356C 7F01EA3C 0FC078B0 */  jal   check_unlock_complete_for_eeprom_stagecomplete_difficulty
+/* 05356C 7F01EA3C 0FC078B0 */  jal   doesFolderHaveStageUnlockedAtDifficulty
 /* 053570 7F01EA40 24060002 */   li    $a2, 2
 /* 053574 7F01EA44 38580003 */  xori  $t8, $v0, 3
 /* 053578 7F01EA48 2F020001 */  sltiu $v0, $t8, 1
@@ -2435,14 +2435,14 @@ glabel check_aztec_completed_in_folder_secret_00
 /* 053590 7F01EA60 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 053594 7F01EA64 AFA40018 */  sw    $a0, 0x18($sp)
 /* 053598 7F01EA68 24050012 */  li    $a1, 18
-/* 05359C 7F01EA6C 0FC078B0 */  jal   check_unlock_complete_for_eeprom_stagecomplete_difficulty
+/* 05359C 7F01EA6C 0FC078B0 */  jal   doesFolderHaveStageUnlockedAtDifficulty
 /* 0535A0 7F01EA70 24060001 */   li    $a2, 1
 /* 0535A4 7F01EA74 384E0003 */  xori  $t6, $v0, 3
 /* 0535A8 7F01EA78 2DC20001 */  sltiu $v0, $t6, 1
 /* 0535AC 7F01EA7C 14400006 */  bnez  $v0, .L7F01EA98
 /* 0535B0 7F01EA80 8FA40018 */   lw    $a0, 0x18($sp)
 /* 0535B4 7F01EA84 24050012 */  li    $a1, 18
-/* 0535B8 7F01EA88 0FC078B0 */  jal   check_unlock_complete_for_eeprom_stagecomplete_difficulty
+/* 0535B8 7F01EA88 0FC078B0 */  jal   doesFolderHaveStageUnlockedAtDifficulty
 /* 0535BC 7F01EA8C 24060002 */   li    $a2, 2
 /* 0535C0 7F01EA90 384F0003 */  xori  $t7, $v0, 3
 /* 0535C4 7F01EA94 2DE20001 */  sltiu $v0, $t7, 1
@@ -2467,7 +2467,7 @@ glabel check_egypt_completed_in_folder_00
 /* 0535D8 7F01EAA8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0535DC 7F01EAAC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0535E0 7F01EAB0 24050013 */  li    $a1, 19
-/* 0535E4 7F01EAB4 0FC078B0 */  jal   check_unlock_complete_for_eeprom_stagecomplete_difficulty
+/* 0535E4 7F01EAB4 0FC078B0 */  jal   doesFolderHaveStageUnlockedAtDifficulty
 /* 0535E8 7F01EAB8 24060002 */   li    $a2, 2
 /* 0535EC 7F01EABC 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0535F0 7F01EAC0 384E0003 */  xori  $t6, $v0, 3

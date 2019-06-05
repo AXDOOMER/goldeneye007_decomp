@@ -372,7 +372,7 @@ struct BONDdata
   s32 field_5B0;
   s32 field_5B4;
   s32 field_5B8;
-  s32 field_5BC;
+  u32 field_5BC;
   s32 field_5C0;
   s32 field_5C4;
   s32 field_5C8;
