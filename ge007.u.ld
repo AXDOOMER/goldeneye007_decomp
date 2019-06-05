@@ -751,5 +751,8 @@ __ramPos += SIZEOF(.bss);
       build/src/bootcode.o (.data);
       build/src/_start.o (.data);
       build/src/rspboot.o (.data);
+      build/src/_start.o (.rodata);
+      build/src/rspboot.o (.rodata);
+      build/src/gspboot.o (.rodata);
 }
 }
