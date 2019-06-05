@@ -314,9 +314,9 @@ glabel get_status_of_objective
 /* 08BDD4 7F0572A4 10200064 */  beqz  $at, .L7F057438
 /* 08BDD8 7F0572A8 02808825 */   move  $s1, $s4
 /* 08BDDC 7F0572AC 000E7080 */  sll   $t6, $t6, 2
-/* 08BDE0 7F0572B0 3C018005 */  lui   $at, 0x8005
+/* 08BDE0 7F0572B0 3C018005 */  lui   $at, %hi(jpt_objectives_microcode_handler)
 /* 08BDE4 7F0572B4 002E0821 */  addu  $at, $at, $t6
-/* 08BDE8 7F0572B8 8C2E3654 */  lw    $t6, 0x3654($at)
+/* 08BDE8 7F0572B8 8C2E3654 */  lw    $t6, %lo(jpt_objectives_microcode_handler)($at)
 /* 08BDEC 7F0572BC 01C00008 */  jr    $t6
 /* 08BDF0 7F0572C0 00000000 */   nop   
 objective_microcode_type_19_destroy_object:
