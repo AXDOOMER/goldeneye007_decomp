@@ -5259,9 +5259,9 @@ glabel generate_player_thrown_object
 /* 094074 7F05F544 10200014 */  beqz  $at, .L7F05F598
 /* 094078 7F05F548 240400C7 */   li    $a0, 199
 /* 09407C 7F05F54C 00084080 */  sll   $t0, $t0, 2
-/* 094080 7F05F550 3C018005 */  lui   $at, 0x8005
+/* 094080 7F05F550 3C018005 */  lui   $at, %hi(jpt_player_thrown_object)
 /* 094084 7F05F554 00280821 */  addu  $at, $at, $t0
-/* 094088 7F05F558 8C283CB0 */  lw    $t0, 0x3cb0($at)
+/* 094088 7F05F558 8C283CB0 */  lw    $t0, %lo(jpt_player_thrown_object)($at)
 /* 09408C 7F05F55C 01000008 */  jr    $t0
 /* 094090 7F05F560 00000000 */   nop   
 thrown_item_proximity_mine:
@@ -5296,9 +5296,9 @@ create_instance:
 /* 0940E0 7F05F5B0 2D210023 */  sltiu $at, $t1, 0x23
 /* 0940E4 7F05F5B4 10200031 */  beqz  $at, .L7F05F67C
 /* 0940E8 7F05F5B8 00094880 */   sll   $t1, $t1, 2
-/* 0940EC 7F05F5BC 3C018005 */  lui   $at, 0x8005
+/* 0940EC 7F05F5BC 3C018005 */  lui   $at, %hi(jpt_temp_obj_for_itemtype)
 /* 0940F0 7F05F5C0 00290821 */  addu  $at, $at, $t1
-/* 0940F4 7F05F5C4 8C293D3C */  lw    $t1, 0x3d3c($at)
+/* 0940F4 7F05F5C4 8C293D3C */  lw    $t1, %lo(jpt_temp_obj_for_itemtype)($at)
 /* 0940F8 7F05F5C8 01200008 */  jr    $t1
 /* 0940FC 7F05F5CC 00000000 */   nop   
 generate_temp_remote_mine:
@@ -7743,9 +7743,9 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 0962C4 7F061794 2DC10014 */  sltiu $at, $t6, 0x14
 /* 0962C8 7F061798 1020000E */  beqz  $at, .L7F0617D4
 /* 0962CC 7F06179C 000E7080 */   sll   $t6, $t6, 2
-/* 0962D0 7F0617A0 3C018005 */  lui   $at, 0x8005
+/* 0962D0 7F0617A0 3C018005 */  lui   $at, %hi(jpt_weapon_bullet_type)
 /* 0962D4 7F0617A4 002E0821 */  addu  $at, $at, $t6
-/* 0962D8 7F0617A8 8C2E3E38 */  lw    $t6, 0x3e38($at)
+/* 0962D8 7F0617A8 8C2E3E38 */  lw    $t6, %lo(jpt_weapon_bullet_type)($at)
 /* 0962DC 7F0617AC 01C00008 */  jr    $t6
 /* 0962E0 7F0617B0 00000000 */   nop   
 weapon_bullet_type_pistol:
@@ -11608,7 +11608,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:80053F24*/
-glabel jpt_70098CF8
+glabel jpt_80053F24
 .word Weapon_function_slapper
 .word Weapon_function_hunting_knife
 .word Weapon_function_throwing_knife
@@ -11699,7 +11699,7 @@ glabel jpt_70098CF8
 .word Weapon_function_collectible
 
 /*D:80054084*/
-glabel jpt_70098F10
+glabel jpt_80054084
 .word Weapon_shooting_noammo
 .word Weapon_shooting_throwable
 .word Weapon_shooting_pistol
@@ -11780,7 +11780,7 @@ glabel D_80054190
 .word 0x3f32b8c3 /*0.69813174*/
 
 /*D:80054194*/
-glabel jpt_70099D7C
+glabel jpt_80054194
 .word weapon_switchstyle_NONE
 .word weapon_switchstyle_NONE
 .word weapon_playsfx_knife
@@ -11850,7 +11850,7 @@ glabel D_80054290
 .word 0x3f32b8c3 /*0.69813174*/
 
 /*D:80054294*/
-glabel jpt_7009A0D4
+glabel jpt_80054294
 .word weapon_reload_none_sfx
 .word weapon_reload_none_sfx
 .word weapon_reload_none_sfx
@@ -12112,9 +12112,9 @@ glabel handle_weapon_id_values_possibly_1st_person_animation
 /* 0998E0 7F064DB0 2F010058 */  sltiu $at, $t8, 0x58
 /* 0998E4 7F064DB4 10200076 */  beqz  $at, .L7F064F90
 /* 0998E8 7F064DB8 0018C080 */   sll   $t8, $t8, 2
-/* 0998EC 7F064DBC 3C018005 */  lui   $at, 0x8005
+/* 0998EC 7F064DBC 3C018005 */  lui   $at, %hi(jpt_80053F24)
 /* 0998F0 7F064DC0 00380821 */  addu  $at, $at, $t8
-/* 0998F4 7F064DC4 8C383F24 */  lw    $t8, 0x3f24($at)
+/* 0998F4 7F064DC4 8C383F24 */  lw    $t8, %lo(jpt_80053F24)($at)
 /* 0998F8 7F064DC8 03000008 */  jr    $t8
 /* 0998FC 7F064DCC 00000000 */   nop   
 Weapon_function_magnum:
@@ -12269,9 +12269,9 @@ Weapon_function_collectible:
 /* 099AF8 7F064FC8 2DA1003B */   sltiu $at, $t5, 0x3b
 /* 099AFC 7F064FCC 102000AF */  beqz  $at, .L7F06528C
 /* 099B00 7F064FD0 000D6880 */   sll   $t5, $t5, 2
-/* 099B04 7F064FD4 3C018005 */  lui   $at, 0x8005
+/* 099B04 7F064FD4 3C018005 */  lui   $at, %hi(jpt_80054084)
 /* 099B08 7F064FD8 002D0821 */  addu  $at, $at, $t5
-/* 099B0C 7F064FDC 8C2D4084 */  lw    $t5, 0x4084($at)
+/* 099B0C 7F064FDC 8C2D4084 */  lw    $t5, %lo(jpt_80054084)($at)
 /* 099B10 7F064FE0 01A00008 */  jr    $t5
 /* 099B14 7F064FE4 00000000 */   nop   
 Weapon_shooting_watch_magnet:
@@ -13274,9 +13274,9 @@ Weapon_shooting_throwable:
 /* 09A964 7F065E34 2E21003E */  sltiu $at, $s1, 0x3e
 /* 09A968 7F065E38 1020001B */  beqz  $at, .L7F065EA8
 /* 09A96C 7F065E3C 00116880 */   sll   $t5, $s1, 2
-/* 09A970 7F065E40 3C018005 */  lui   $at, 0x8005
+/* 09A970 7F065E40 3C018005 */  lui   $at, %hi(jpt_80054194)
 /* 09A974 7F065E44 002D0821 */  addu  $at, $at, $t5
-/* 09A978 7F065E48 8C2D4194 */  lw    $t5, 0x4194($at)
+/* 09A978 7F065E48 8C2D4194 */  lw    $t5, %lo(jpt_80054194)($at)
 /* 09A97C 7F065E4C 01A00008 */  jr    $t5
 /* 09A980 7F065E50 00000000 */   nop   
 weapon_playsfx_F2:
@@ -13512,9 +13512,9 @@ weapon_switchstyle_NONE:
 /* 09ACBC 7F06618C 2E21003E */  sltiu $at, $s1, 0x3e
 /* 09ACC0 7F066190 10200006 */  beqz  $at, .L7F0661AC
 /* 09ACC4 7F066194 0011C080 */   sll   $t8, $s1, 2
-/* 09ACC8 7F066198 3C018005 */  lui   $at, 0x8005
+/* 09ACC8 7F066198 3C018005 */  lui   $at, %hi(jpt_80054294)
 /* 09ACCC 7F06619C 00380821 */  addu  $at, $at, $t8
-/* 09ACD0 7F0661A0 8C384294 */  lw    $t8, 0x4294($at)
+/* 09ACD0 7F0661A0 8C384294 */  lw    $t8, %lo(jpt_80054294)($at)
 /* 09ACD4 7F0661A4 03000008 */  jr    $t8
 /* 09ACD8 7F0661A8 00000000 */   nop   
 weapon_reload_gun_sfx:
