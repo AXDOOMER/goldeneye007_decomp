@@ -24886,9 +24886,9 @@ glabel __handleMIDIMsg
 /* 01D080 7001C480 102001F8 */  beqz  $at, .L7001CC64
 /* 01D084 7001C484 01C0B025 */   move  $s6, $t6
 /* 01D088 7001C488 000F7880 */  sll   $t7, $t7, 2
-/* 01D08C 7001C48C 3C018003 */  lui   $at, 0x8003
+/* 01D08C 7001C48C 3C018003 */  lui   $at, %hi(jpt_80029A50)
 /* 01D090 7001C490 002F0821 */  addu  $at, $at, $t7
-/* 01D094 7001C494 8C2F9A50 */  lw    $t7, -0x65b0($at)
+/* 01D094 7001C494 8C2F9A50 */  lw    $t7, %lo(jpt_80029A50)($at)
 /* 01D098 7001C498 01E00008 */  jr    $t7
 /* 01D09C 7001C49C 00000000 */   nop   
 .L7001C4A0:
@@ -25226,9 +25226,9 @@ glabel __handleMIDIMsg
 /* 01D574 7001C974 2F210015 */  sltiu $at, $t9, 0x15
 /* 01D578 7001C978 102000BA */  beqz  $at, .L7001CC64
 /* 01D57C 7001C97C 0019C880 */   sll   $t9, $t9, 2
-/* 01D580 7001C980 3C018003 */  lui   $at, 0x8003
+/* 01D580 7001C980 3C018003 */  lui   $at, %hi(jpt_80029BD4)
 /* 01D584 7001C984 00390821 */  addu  $at, $at, $t9
-/* 01D588 7001C988 8C399BD4 */  lw    $t9, -0x642c($at)
+/* 01D588 7001C988 8C399BD4 */  lw    $t9, %lo(jpt_80029BD4)($at)
 /* 01D58C 7001C98C 03200008 */  jr    $t9
 /* 01D590 7001C990 00000000 */   nop   
 .L7001C994:
@@ -25466,9 +25466,9 @@ glabel __seqpVoiceHandler
 /* 01D8C0 7001CCC0 2DE10018 */  sltiu $at, $t7, 0x18
 /* 01D8C4 7001CCC4 10200161 */  beqz  $at, .L7001D24C
 /* 01D8C8 7001CCC8 000F7880 */   sll   $t7, $t7, 2
-/* 01D8CC 7001CCCC 3C018003 */  lui   $at, 0x8003
+/* 01D8CC 7001CCCC 3C018003 */  lui   $at, %hi(jpt_80029C28)
 /* 01D8D0 7001CCD0 002F0821 */  addu  $at, $at, $t7
-/* 01D8D4 7001CCD4 8C2F9C28 */  lw    $t7, -0x63d8($at)
+/* 01D8D4 7001CCD4 8C2F9C28 */  lw    $t7, %lo(jpt_80029C28)($at)
 /* 01D8D8 7001CCD8 01E00008 */  jr    $t7
 /* 01D8DC 7001CCDC 00000000 */   nop   
 .L7001CCE0:
@@ -26099,7 +26099,7 @@ glabel alSeqpNew
 
 
 .section .rodata
-glabel jpt_8001C498
+glabel jpt_80029A50
 					.word .L7001C7F4, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
@@ -26125,14 +26125,14 @@ glabel jpt_8001C498
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CBCC
-glabel jpt_8001C98C
+glabel jpt_80029BD4
                     .word .L7001C9F0, .L7001CC64, .L7001CC64, .L7001C994
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CC64, .L7001CA84, .L7001CC64, .L7001CC64
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CC64, .L7001CC64, .L7001CC64, .L7001CC64
                     .word .L7001CC64
-glabel jpt_8001CCD8
+glabel jpt_80029C28
 	                .word .L7001CCE0, .L7001D24C, .L7001CFF4, .L7001D24C
                     .word .L7001D24C, .L7001CDAC, .L7001CDF8, .L7001D014
                     .word .L7001D24C, .L7001CD8C, .L7001D14C, .L7001D1B4
@@ -27522,9 +27522,9 @@ glabel __osDevMgrMain
 /* 01F3F4 7001E7F4 10200052 */  beqz  $at, .L7001E940
 /* 01F3F8 7001E7F8 00000000 */   nop   
 /* 01F3FC 7001E7FC 00084080 */  sll   $t0, $t0, 2
-/* 01F400 7001E800 3C018003 */  lui   $at, 0x8003
+/* 01F400 7001E800 3C018003 */  lui   $at, %hi(jpt_80029CF0)
 /* 01F404 7001E804 00280821 */  addu  $at, $at, $t0
-/* 01F408 7001E808 8C289CF0 */  lw    $t0, -0x6310($at)
+/* 01F408 7001E808 8C289CF0 */  lw    $t0, %lo(jpt_80029CF0)($at)
 /* 01F40C 7001E80C 01000008 */  jr    $t0
 /* 01F410 7001E810 00000000 */   nop   
 .L7001E814:
@@ -27642,7 +27642,7 @@ glabel __osDevMgrMain
 /* 01F5B8 7001E9B8 03E00008 */  jr    $ra
 /* 01F5BC 7001E9BC 00000000 */   nop   
 .section .rodata
-glabel jpt_8001E80C
+glabel jpt_80029CF0
  .word .L7001E920
  .word .L7001E814
  .word .L7001E854
@@ -29305,9 +29305,9 @@ glabel alFxParamHdl
 /* 020BB4 7001FFB4 10200080 */  beqz  $at, .L700201B8
 /* 020BB8 7001FFB8 8CC30000 */   lw    $v1, ($a2)
 /* 020BBC 7001FFBC 000E7080 */  sll   $t6, $t6, 2
-/* 020BC0 7001FFC0 3C018003 */  lui   $at, 0x8003
+/* 020BC0 7001FFC0 3C018003 */  lui   $at, %hi(jpt_80029D10)
 /* 020BC4 7001FFC4 002E0821 */  addu  $at, $at, $t6
-/* 020BC8 7001FFC8 8C2E9D10 */  lw    $t6, -0x62f0($at)
+/* 020BC8 7001FFC8 8C2E9D10 */  lw    $t6, %lo(jpt_80029D10)($at)
 /* 020BCC 7001FFCC 01C00008 */  jr    $t6
 /* 020BD0 7001FFD0 00000000 */   nop   
 .L7001FFD4:
@@ -29685,7 +29685,7 @@ glabel alFxPull
 /* 021118 70020518 00000000 */  nop   
 /* 02111C 7002051C 00000000 */  nop  
 .section .rodata
-glabel jpt_8001FFCC
+glabel jpt_80029D10
  .word .L7001FFD4
  .word .L70020004
  .word .L70020064
