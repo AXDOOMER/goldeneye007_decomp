@@ -1,27 +1,27 @@
 
 Discarded input sections
 
- .text          0x0000000000000000        0x0 build/rom_header.o
- .reginfo       0x0000000000000000       0x18 build/rom_header.o
+ .text          0x0000000000000000        0x0 build/src/rom_header.o
+ .reginfo       0x0000000000000000       0x18 build/src/rom_header.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/rom_header.o
- .pdr           0x0000000000000000        0x0 build/rom_header.o
+                0x0000000000000000       0x18 build/src/rom_header.o
+ .pdr           0x0000000000000000        0x0 build/src/rom_header.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/rom_header.o
- .data          0x0000000000000000        0x0 build/bootcode.o
- .reginfo       0x0000000000000000       0x18 build/bootcode.o
+                0x0000000000000000       0x10 build/src/rom_header.o
+ .data          0x0000000000000000        0x0 build/src/bootcode.o
+ .reginfo       0x0000000000000000       0x18 build/src/bootcode.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/bootcode.o
- .pdr           0x0000000000000000        0x0 build/bootcode.o
+                0x0000000000000000       0x18 build/src/bootcode.o
+ .pdr           0x0000000000000000        0x0 build/src/bootcode.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/bootcode.o
- .data          0x0000000000000000        0x0 build/_start.o
- .reginfo       0x0000000000000000       0x18 build/_start.o
+                0x0000000000000000       0x10 build/src/bootcode.o
+ .data          0x0000000000000000        0x0 build/src/_start.o
+ .reginfo       0x0000000000000000       0x18 build/src/_start.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/_start.o
- .pdr           0x0000000000000000        0x0 build/_start.o
+                0x0000000000000000       0x18 build/src/_start.o
+ .pdr           0x0000000000000000        0x0 build/src/_start.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/_start.o
+                0x0000000000000000       0x10 build/src/_start.o
  .options       0x0000000000000000       0x20 build/src/boot.o
  .reginfo       0x0000000000000000       0x18 build/src/boot.o
  .options       0x0000000000000000       0x20 build/src/init.o
@@ -395,25 +395,25 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/assets/images/images.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/assets/images/images.o
- .data          0x0000000000000000        0x0 build/rspboot.o
- .reginfo       0x0000000000000000       0x18 build/rspboot.o
+ .data          0x0000000000000000        0x0 build/src/rspboot.o
+ .reginfo       0x0000000000000000       0x18 build/src/rspboot.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/rspboot.o
- .pdr           0x0000000000000000        0x0 build/rspboot.o
+                0x0000000000000000       0x18 build/src/rspboot.o
+ .pdr           0x0000000000000000        0x0 build/src/rspboot.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/rspboot.o
- .reginfo       0x0000000000000000       0x18 build/gspboot.o
+                0x0000000000000000       0x10 build/src/rspboot.o
+ .reginfo       0x0000000000000000       0x18 build/src/gspboot.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/gspboot.o
- .pdr           0x0000000000000000        0x0 build/gspboot.o
+                0x0000000000000000       0x18 build/src/gspboot.o
+ .pdr           0x0000000000000000        0x0 build/src/gspboot.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/gspboot.o
- .reginfo       0x0000000000000000       0x18 build/aspboot.o
+                0x0000000000000000       0x10 build/src/gspboot.o
+ .reginfo       0x0000000000000000       0x18 build/src/aspboot.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/aspboot.o
- .pdr           0x0000000000000000        0x0 build/aspboot.o
+                0x0000000000000000       0x18 build/src/aspboot.o
+ .pdr           0x0000000000000000        0x0 build/src/aspboot.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/aspboot.o
+                0x0000000000000000       0x10 build/src/aspboot.o
 
 Memory Configuration
 
@@ -593,13 +593,13 @@ Linker script and memory map
                 0x0000000000000000                rom_start = .
 
 .header         0x0000000004000000       0x40 load address 0x0000000000000000
- build/rom_header.o(.data)
- .data          0x0000000004000000       0x40 build/rom_header.o
+ build/src/rom_header.o(.data)
+ .data          0x0000000004000000       0x40 build/src/rom_header.o
                 [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.header))
 
 .boot           0x0000000004000040      0xfc0 load address 0x0000000000000040
- build/bootcode.o(.text)
- .text          0x0000000004000040      0xfc0 build/bootcode.o
+ build/src/bootcode.o(.text)
+ .text          0x0000000004000040      0xfc0 build/src/bootcode.o
                 0x0000000004000688                func_00000648
                 0x0000000004000690                func_00000650
                 0x0000000004000778                func_04000778
@@ -613,8 +613,8 @@ Linker script and memory map
                 0x0000000000001000                _startSegmentRomStart = 0x1000
 
 .start          0x0000000080000400       0x50 load address 0x0000000000001000
- build/_start.o(.text)
- .text          0x0000000080000400       0x50 build/_start.o
+ build/src/_start.o(.text)
+ .text          0x0000000080000400       0x50 build/src/_start.o
                 0x0000000080000400                _start
                 0x0000000080000450                _startSegmentEnd = (ADDR (.start) + SIZEOF (.start))
                 0x0000000000001050                _startSegmentRomEnd = (0x1000 + SIZEOF (.start))
@@ -5013,22 +5013,22 @@ Linker script and memory map
                 0x0000000000c00000                _csegmentSegmentRomStart = __csegtempPos
 
 .rodata         0x0000000000be6d10        0x0
- .rodata        0x0000000000be6d10        0x0 build/_start.o
- .rodata        0x0000000000be6d10        0x0 build/rspboot.o
- .rodata        0x0000000000be6d10        0x0 build/gspboot.o
+ .rodata        0x0000000000be6d10        0x0 build/src/_start.o
+ .rodata        0x0000000000be6d10        0x0 build/src/rspboot.o
+ .rodata        0x0000000000be6d10        0x0 build/src/gspboot.o
 
 .rel.dyn        0x0000000000be6d10        0x0
  .rel.dyn       0x0000000000be6d10        0x0 build/src/video.o
 
 .csegment       0x0000000080020d90    0x3c550 load address 0x0000000000c00000
- build/rspboot.o(.text)
- .text          0x0000000080020d90       0xd0 build/rspboot.o
+ build/src/rspboot.o(.text)
+ .text          0x0000000080020d90       0xd0 build/src/rspboot.o
                 0x0000000080020d90                rspbootTextStart
- build/gspboot.o(.text)
- .text          0x0000000080020e60     0x1420 build/gspboot.o
+ build/src/gspboot.o(.text)
+ .text          0x0000000080020e60     0x1420 build/src/gspboot.o
                 0x0000000080020e60                gsp3DTextStart
- build/aspboot.o(.text)
- .text          0x0000000080022280      0xe10 build/aspboot.o
+ build/src/aspboot.o(.text)
+ .text          0x0000000080022280      0xe10 build/src/aspboot.o
                 0x0000000080022280                aspMainTextStart
                 0x0000000080023044                unknown_init_val
                 0x0000000080023048                cart_hw_address
@@ -5359,8 +5359,8 @@ Linker script and memory map
                 0x0000000080028304                auppercase_hex_char
                 0x0000000080028320                osViModeNtscLan1
                 0x0000000080028370                osViModePalLan1
- build/aspboot.o(.rodata)
- .rodata        0x00000000800283d0       0x30 build/aspboot.o
+ build/src/aspboot.o(.rodata)
+ .rodata        0x00000000800283d0       0x30 build/src/aspboot.o
                 0x00000000800283d0                aBoot
                 0x00000000800283d8                aRmon
                 0x00000000800283e0                aIdle
@@ -9757,11 +9757,11 @@ Linker script and memory map
                 0x000000008005c68c                jpt_701104EC
                 0x000000008005c6ac                jpt_70112968
                 0x000000008005c71c                jpt_70112990
- build/gspboot.o(.data)
- .data          0x000000008005c820      0x800 build/gspboot.o
+ build/src/gspboot.o(.data)
+ .data          0x000000008005c820      0x800 build/src/gspboot.o
                 0x000000008005c820                gsp3DDataStart
- build/aspboot.o(.data)
- .data          0x000000008005d020      0x2c0 build/aspboot.o
+ build/src/aspboot.o(.data)
+ .data          0x000000008005d020      0x2c0 build/src/aspboot.o
                 0x000000008005d020                aspMainDataStart
                 0x000000008005d2e0                _csegmentSegmentEnd = (ADDR (.csegment) + SIZEOF (.csegment))
                 0x0000000000c3c550                _csegmentSegmentRomEnd = (0xc00000 + SIZEOF (.csegment))
@@ -11064,18 +11064,18 @@ Linker script and memory map
                 0x000000008008e350                spec_IY
                 0x000000008008e352                spec_SP
                 0x000000008008e354                spec_PC
- .bss           0x000000008008e360        0x0 build/rom_header.o
- .bss           0x000000008008e360        0x0 build/bootcode.o
- .bss           0x000000008008e360        0x0 build/_start.o
+ .bss           0x000000008008e360        0x0 build/src/rom_header.o
+ .bss           0x000000008008e360        0x0 build/src/bootcode.o
+ .bss           0x000000008008e360        0x0 build/src/_start.o
  .bss           0x000000008008e360        0x0 build/assets/romfiles.o
  .bss           0x000000008008e360        0x0 build/assets/ramrom/ramrom.o
  .bss           0x000000008008e360        0x0 build/assets/font/font.o
  .bss           0x000000008008e360        0x0 build/assets/music/music.o
  .bss           0x000000008008e360        0x0 build/assets/obseg/ob_seg.o
  .bss           0x000000008008e360        0x0 build/assets/images/images.o
- .bss           0x000000008008e360        0x0 build/rspboot.o
- .bss           0x000000008008e360        0x0 build/gspboot.o
- .bss           0x000000008008e360        0x0 build/aspboot.o
+ .bss           0x000000008008e360        0x0 build/src/rspboot.o
+ .bss           0x000000008008e360        0x0 build/src/gspboot.o
+ .bss           0x000000008008e360        0x0 build/src/aspboot.o
                 0x000000008008e360                _bssSegmentEnd = (ADDR (.bss) + SIZEOF (.bss))
                 0x0000000000c6d5d0                _bssSegmentRomEnd = (0xc3c550 + SIZEOF (.bss))
                 [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.bss))
@@ -11102,8 +11102,8 @@ Linker script and memory map
  build/assets/obseg/ob_seg.o(.data)
  build/assets/images/images.o(.text)
  build/assets/images/images.o(.data)
- build/rom_header.o(.text)
- build/bootcode.o(.data)
- build/_start.o(.data)
- build/rspboot.o(.data)
+ build/src/rom_header.o(.text)
+ build/src/bootcode.o(.data)
+ build/src/_start.o(.data)
+ build/src/rspboot.o(.data)
 OUTPUT(ge007.u.elf elf32-tradbigmips)
