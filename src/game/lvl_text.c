@@ -154,9 +154,9 @@ glabel get_textbank_number_for_stagenum
 /* 0F6114 7F0C15E4 2DC1002E */  sltiu $at, $t6, 0x2e
 /* 0F6118 7F0C15E8 1020003C */  beqz  $at, .L7F0C16DC
 /* 0F611C 7F0C15EC 000E7080 */   sll   $t6, $t6, 2
-/* 0F6120 7F0C15F0 3C018006 */  lui   $at, 0x8006
+/* 0F6120 7F0C15F0 3C018006 */  lui   $at, %hi(jpt_stage_text)
 /* 0F6124 7F0C15F4 002E0821 */  addu  $at, $at, $t6
-/* 0F6128 7F0C15F8 8C2EBB60 */  lw    $t6, -0x44a0($at)
+/* 0F6128 7F0C15F8 8C2EBB60 */  lw    $t6, %lo(jpt_stage_text)($at)
 /* 0F612C 7F0C15FC 01C00008 */  jr    $t6
 /* 0F6130 7F0C1600 00000000 */   nop   
 .L7F0C1604:
