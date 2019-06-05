@@ -5371,7 +5371,7 @@ Linker script and memory map
  build/src/init.o(.rodata)
  build/src/sched.o(.rodata)
  .rodata        0x0000000080028400       0x20 build/src/sched.o
-                0x0000000080028400                J_80028400
+                0x0000000080028400                jpt_80028400
  build/src/osMapTLB.o(.rodata)
  build/src/tlb_manage.o(.rodata)
  build/src/tlb_random.o(.rodata)
@@ -5441,7 +5441,7 @@ Linker script and memory map
  build/src/music.o(.rodata)
  build/src/sfx.o(.rodata)
  .rodata        0x0000000080029160       0x40 build/src/sfx.o
-                0x0000000080029160                J_80029160
+                0x0000000080029160                jpt_80029160
  build/src/memp.o(.rodata)
  .rodata        0x00000000800291a0       0x30 build/src/memp.o
                 0x00000000800291a0                aMemp_c_debug
@@ -5494,15 +5494,15 @@ Linker script and memory map
                 0x00000000800296f0                aHll
                 0x00000000800296f4                printf_symbols
                 0x00000000800296fc                byteshiftleft_lookup
-                0x0000000080029714                J_80029714
+                0x0000000080029714                jpt_80029714
                 0x00000000800297f0                F32_800297F0
                 0x0000000080029800                F64_80029800
                 0x0000000080029810                F32_80029810
                 0x0000000080029820                D_80029820
                 0x0000000080029828                D_80029828
-                0x0000000080029830                J_80019520
+                0x0000000080029830                jpt_80029830
                 0x0000000080029848                F64_80029848
-                0x0000000080029850                J_8001A628
+                0x0000000080029850                jpt_80029850
                 0x0000000080029878                F64_80029878
                 0x0000000080029890                aAssertionFaultSSLineD
                 0x00000000800298bc                aSamples0
@@ -5514,7 +5514,7 @@ Linker script and memory map
                 0x0000000080029954                aSource
                 0x000000008002995c                aEnv_c_1
                 0x0000000080029964                F32_80029964
-                0x0000000080029968                J_8001AF6C
+                0x0000000080029968                jpt_80029968
                 0x00000000800299b0                F64_800299B0
                 0x00000000800299b8                F64_800299B8
                 0x00000000800299c0                F64_800299C0
@@ -8874,7 +8874,7 @@ Linker script and memory map
  build/src/game/loadobjectmodel.o(.rodata)
  .rodata        0x0000000080053490      0x180 build/src/game/loadobjectmodel.o
                 0x0000000080053490                jpt_object_setup_size
-                0x000000008005354c                jpt_7008AE0C
+                0x000000008005354c                jpt_8005354C
  build/src/game/objective_status.o(.rodata)
  .rodata        0x0000000080053610       0xb0 build/src/game/objective_status.o
                 0x0000000080053610                D_80053610
@@ -9054,8 +9054,8 @@ Linker script and memory map
                 0x0000000080053f18                D_80053F18
                 0x0000000080053f1c                D_80053F1C
                 0x0000000080053f20                D_80053F20
-                0x0000000080053f24                jpt_70098CF8
-                0x0000000080054084                jpt_70098F10
+                0x0000000080053f24                jpt_80053F24
+                0x0000000080054084                jpt_80054084
                 0x0000000080054170                D_80054170
                 0x0000000080054174                D_80054174
                 0x0000000080054178                D_80054178
@@ -9065,10 +9065,10 @@ Linker script and memory map
                 0x0000000080054188                D_80054188
                 0x000000008005418c                D_8005418C
                 0x0000000080054190                D_80054190
-                0x0000000080054194                jpt_70099D7C
+                0x0000000080054194                jpt_80054194
                 0x000000008005428c                D_8005428C
                 0x0000000080054290                D_80054290
-                0x0000000080054294                jpt_7009A0D4
+                0x0000000080054294                jpt_80054294
                 0x000000008005438c                D_8005438C
                 0x0000000080054390                D_80054390
                 0x0000000080054394                D_80054394
@@ -9108,8 +9108,8 @@ Linker script and memory map
                 0x0000000080054420                aDrawjointlistNoGfxlist
                 0x000000008005443c                aDrawjointlistNoObject0xX
                 0x0000000080054460                aDrawjointlistObjectNotInitialised0
-                0x0000000080054490                jpt_7009F09C
-                0x00000000800544e4                jpt_7009F224
+                0x0000000080054490                jpt_80054490
+                0x00000000800544e4                jpt_800544E4
                 0x0000000080054538                obj_table_jointlist
                 0x0000000080054598                jpt_damage_detail
                 0x00000000800545f8                D_800545F8
@@ -9185,20 +9185,20 @@ Linker script and memory map
                 0x0000000080054c14                D_80054C14
                 0x0000000080054c18                D_80054C18
                 0x0000000080054c1c                D_80054C1C
-                0x0000000080054c20                jpt_700A2E24
-                0x0000000080054c80                jpt_700A2F3C
-                0x0000000080054ce0                jpt_700A3050
+                0x0000000080054c20                jpt_80054C20
+                0x0000000080054c80                jpt_80054C80
+                0x0000000080054ce0                jpt_80054CE0
                 0x0000000080054d40                D_80054D40
                 0x0000000080054d44                D_80054D44
                 0x0000000080054d48                D_80054D48
                 0x0000000080054d4c                D_80054D4C
                 0x0000000080054d50                D_80054D50
-                0x0000000080054d54                jpt_700A8494
-                0x0000000080054db4                jpt_700A92F4
-                0x0000000080054e14                jpt_700A95A0
-                0x0000000080054e74                jpt_700A9A90
-                0x0000000080054ed4                jpt_700A9CB0
-                0x0000000080054f34                jpt_700AA050
+                0x0000000080054d54                jpt_80054D54
+                0x0000000080054db4                jpt_80054DB4
+                0x0000000080054e14                jpt_80054E14
+                0x0000000080054e74                jpt_80054E74
+                0x0000000080054ed4                jpt_80054ED4
+                0x0000000080054f34                jpt_80054F34
  build/src/game/othermodemicrocode.o(.rodata)
  .rodata        0x0000000080054f90       0x10 build/src/game/othermodemicrocode.o
                 0x0000000080054f90                D_80054F90
@@ -9220,8 +9220,8 @@ Linker script and memory map
                 0x0000000080054fcc                aY4_0f
                 0x0000000080054fd4                aZ4_0f
                 0x0000000080054fdc                aS3d
-                0x0000000080054fe4                jpt_700ADD28
-                0x0000000080055008                jpt_700ADE1C
+                0x0000000080054fe4                jpt_bondcuff
+                0x0000000080055008                jpt_bondhead
                 0x000000008005502c                D_8005502C
                 0x0000000080055030                D_80055030
                 0x0000000080055034                D_80055034
@@ -9375,7 +9375,7 @@ Linker script and memory map
                 0x0000000080055284                D_80055284
                 0x0000000080055288                D_80055288
                 0x000000008005528c                D_8005528C
-                0x0000000080055290                jpt_700BCB10
+                0x0000000080055290                jpt_mpspawntype
                 0x00000000800552ac                D_800552AC
                 0x00000000800552b0                pi_800552B0
                 0x00000000800552b4                twopi_800552B4
@@ -9417,8 +9417,8 @@ Linker script and memory map
                 0x0000000080055340                aMenu_cErrorTriedToCallFont_makegt
  build/src/game/debugmenu_090490.o(.rodata)
  .rodata        0x0000000080055370      0x4e0 build/src/game/debugmenu_090490.o
-                0x00000000800556fc                jpt_700C46A0
-                0x0000000080055830                jpt_700C4DD8
+                0x00000000800556fc                jpt_debug_menu_options
+                0x0000000080055830                jpt_80055830
  build/src/game/unk_091080.o(.rodata)
  .rodata        0x0000000080055850       0x20 build/src/game/unk_091080.o
                 0x0000000080055850                D_80055850
@@ -9431,9 +9431,9 @@ Linker script and memory map
                 0x0000000080055a54                spacer_string
                 0x0000000080056e74                padding_chars_for_strings
                 0x00000000800572a8                PADDINGHACKS
-                0x00000000800572b0                jpt_700C5B38
+                0x00000000800572b0                jpt_cheats_cheat
                 0x00000000800573d8                finalamount
-                0x00000000800573dc                jpt_700C6400
+                0x00000000800573dc                jpt_800573DC
                 0x0000000080057504                D_80057504
  build/src/game/unk_092890.o(.rodata)
  build/src/game/unk_092E50.o(.rodata)
@@ -9452,11 +9452,11 @@ Linker script and memory map
                 0x0000000080057538                D_80057538
                 0x000000008005753c                D_8005753C
                 0x0000000080057540                D_80057540
-                0x0000000080057544                jpt_700C8968
+                0x0000000080057544                jpt_80057544
                 0x0000000080057584                D_80057584
                 0x0000000080057588                D_80057588
                 0x000000008005758c                D_8005758C
-                0x0000000080057590                jpt_700C9D3C
+                0x0000000080057590                jpt_80057590
                 0x00000000800575d0                D_800575D0
                 0x00000000800575d4                D_800575D4
                 0x00000000800575d8                D_800575D8
@@ -9480,7 +9480,7 @@ Linker script and memory map
                 0x0000000080057620                D_80057620
                 0x0000000080057624                D_80057624
                 0x0000000080057628                D_80057628
-                0x000000008005762c                jpt_700CF1AC
+                0x000000008005762c                jpt_8005762C
  build/src/game/unk_09B600.o(.rodata)
  build/src/game/unk_09B740.o(.rodata)
  build/src/game/unk_09B7A0.o(.rodata)
@@ -9579,8 +9579,8 @@ Linker script and memory map
                 0x00000000800584c0                D_800584C0
                 0x00000000800584c4                D_800584C4
                 0x00000000800584c8                D_800584C8
-                0x00000000800584cc                jpt_700DAD2C
-                0x00000000800584e0                jpt_700DADB0
+                0x00000000800584cc                jpt_800584CC
+                0x00000000800584e0                jpt_800584E0
                 0x0000000080058508                D_80058508
                 0x000000008005850c                D_8005850C
                 0x0000000080058510                D_80058510
@@ -9607,8 +9607,8 @@ Linker script and memory map
                 0x0000000080058564                D_80058564
                 0x0000000080058568                D_80058568
                 0x000000008005856c                D_8005856C
-                0x0000000080058570                jpt_700E02E0
-                0x0000000080058584                jpt_700E09F8
+                0x0000000080058570                jpt_80058570
+                0x0000000080058584                jpt_80058584
  build/src/game/textrelated.o(.rodata)
  build/src/game/stan.o(.rodata)
  .rodata        0x00000000800585a0       0x40 build/src/game/stan.o
@@ -9628,9 +9628,9 @@ Linker script and memory map
  .rodata        0x00000000800585f0      0x780 build/src/game/bg.o
                 0x0000000080058c48                aPortD
                 0x0000000080058c50                aRoomD
-                0x0000000080058c58                jpt_700E883C
+                0x0000000080058c58                jpt_80058C58
                 0x0000000080058c7c                D_80058C7C
-                0x0000000080058c80                jpt_700EC3D8
+                0x0000000080058c80                jpt_80058C80
                 0x0000000080058cb4                vis_command_jpt
                 0x0000000080058d54                D_80058D54
                 0x0000000080058d58                D_80058D58
@@ -9642,7 +9642,7 @@ Linker script and memory map
                 0x0000000080058d74                D_80058D74
  build/src/game/lightfixture.o(.rodata)
  .rodata        0x0000000080058d80       0x20 build/src/game/lightfixture.o
-                0x0000000080058d80                jpt_700EF63C
+                0x0000000080058d80                jpt_80058D80
  build/src/game/unk_0BC530.o(.rodata)
  build/src/game/ob.o(.rodata)
  .rodata        0x0000000080058da0     0x28e0 build/src/game/ob.o
@@ -9679,15 +9679,15 @@ Linker script and memory map
  build/src/game/unk_0C0A70.o(.rodata)
  build/src/game/mp_music.o(.rodata)
  .rodata        0x000000008005b790       0xf0 build/src/game/mp_music.o
-                0x000000008005b790                jpt_700F4B9C
-                0x000000008005b7ac                jpt_700F4BBC
-                0x000000008005b7c8                jpt_700F4C70
+                0x000000008005b790                jpt_8005B790
+                0x000000008005b7ac                jpt_8005B7AC
+                0x000000008005b7c8                jpt_8005B7C8
                 0x000000008005b7e4                D_8005B7E4
-                0x000000008005b7e8                jpt_700F4D60
-                0x000000008005b804                jpt_700F4DF8
-                0x000000008005b820                jpt_700F4F30
-                0x000000008005b83c                jpt_700F4FFC
-                0x000000008005b858                jpt_700F50A4
+                0x000000008005b7e8                jpt_8005B7E8
+                0x000000008005b804                jpt_8005B804
+                0x000000008005b820                jpt_8005B820
+                0x000000008005b83c                jpt_8005B83C
+                0x000000008005b858                jpt_8005B858
  build/src/game/lvl_text.o(.rodata)
  .rodata        0x000000008005b880      0x3a0 build/src/game/lvl_text.o
                 0x000000008005bb60                jpt_stage_text
@@ -9715,15 +9715,15 @@ Linker script and memory map
  build/src/game/mp_weapon.o(.rodata)
  build/src/game/image.o(.rodata)
  .rodata        0x000000008005bd30      0x150 build/src/game/image.o
-                0x000000008005bd30                jpt_700FBF84
-                0x000000008005bd58                jpt_700FC6F4
-                0x000000008005bd7c                jpt_700FC7A4
-                0x000000008005bda0                jpt_700FDA34
-                0x000000008005bdc4                jpt_700FDD20
-                0x000000008005bde8                jpt_700FE830
-                0x000000008005be0c                jpt_700FEBEC
-                0x000000008005be30                jpt_700FF5D0
-                0x000000008005be64                jpt_700FF7D0
+                0x000000008005bd30                jpt_8005BD30
+                0x000000008005bd58                jpt_8005BD58
+                0x000000008005bd7c                jpt_8005BD7C
+                0x000000008005bda0                jpt_8005BDA0
+                0x000000008005bdc4                jpt_8005BDC4
+                0x000000008005bde8                jpt_8005BDE8
+                0x000000008005be0c                jpt_8005BE0C
+                0x000000008005be30                jpt_8005BE30
+                0x000000008005be64                jpt_8005BE64
  build/src/game/image_bank.o(.rodata)
  build/src/game/unk_0CC4C0.o(.rodata)
  .rodata        0x000000008005be80      0x100 build/src/game/unk_0CC4C0.o
@@ -9750,13 +9750,13 @@ Linker script and memory map
  .rodata        0x000000008005c020      0x800 build/src/game/spectrum.o
                 0x000000008005c114                aEmDataSpec_rom_seg_rz
                 0x000000008005c12c                spectrum_op_table
-                0x000000008005c52c                jpt_7010E33C
-                0x000000008005c62c                jpt_7010FDE8
-                0x000000008005c64c                jpt_7010FE20
-                0x000000008005c66c                jpt_7010FE40
-                0x000000008005c68c                jpt_701104EC
-                0x000000008005c6ac                jpt_70112968
-                0x000000008005c71c                jpt_70112990
+                0x000000008005c52c                jpt_8005C52C
+                0x000000008005c62c                jpt_8005C62C
+                0x000000008005c64c                jpt_8005C64C
+                0x000000008005c66c                jpt_8005C66C
+                0x000000008005c68c                jpt_8005C68C
+                0x000000008005c6ac                jpt_8005C6AC
+                0x000000008005c71c                jpt_8005C71C
  build/src/gspboot.o(.data)
  .data          0x000000008005c820      0x800 build/src/gspboot.o
                 0x000000008005c820                gsp3DDataStart
