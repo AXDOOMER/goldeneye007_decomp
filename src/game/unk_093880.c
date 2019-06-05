@@ -8762,7 +8762,7 @@ void sub_GAME_7F09B244(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:8005762C*/
-glabel jpt_8005762C
+glabel jpt_weapon_multi
 .word weapon_multi_none
 .word weapon_multi_none
 .word weapon_multi_hunting_knife
@@ -8811,9 +8811,9 @@ glabel sub_GAME_7F09B244
 /* 0CFD94 7F09B264 2C810020 */  sltiu $at, $a0, 0x20
 /* 0CFD98 7F09B268 1020003D */  beqz  $at, .L7F09B360
 /* 0CFD9C 7F09B26C 00047080 */   sll   $t6, $a0, 2
-/* 0CFDA0 7F09B270 3C018005 */  lui   $at, %hi(jpt_8005762C)
+/* 0CFDA0 7F09B270 3C018005 */  lui   $at, %hi(jpt_weapon_multi)
 /* 0CFDA4 7F09B274 002E0821 */  addu  $at, $at, $t6
-/* 0CFDA8 7F09B278 8C2E762C */  lw    $t6, %lo(jpt_8005762C)($at)
+/* 0CFDA8 7F09B278 8C2E762C */  lw    $t6, %lo(jpt_weapon_multi)($at)
 /* 0CFDAC 7F09B27C 01C00008 */  jr    $t6
 /* 0CFDB0 7F09B280 00000000 */   nop   
 weapon_multi_hunting_knife:

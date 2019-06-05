@@ -427,8 +427,6 @@ Linker script and memory map
 
                 0x0000000000000002                OS_VI_NTSC_LAN1 = 0x2
                 0x0000000000000010                OS_VI_PAL_LAN1 = 0x10
-                0x0000000000000000                _bootSegmentRomStart = 0x0
-                0x0000000000001000                _bootSegmentRomEnd = 0x1000
                 0x0000000000117880                _unknown117880SegmentRomStart = 0x117880
                 0x0000000000117940                _unknown117880SegmentRomEnd = 0x117940
                 0x0000000000117940                _unknown117940SegmentRomStart = 0x117940
@@ -455,14 +453,21 @@ Linker script and memory map
                 0x00000000003b87f0                _instrumentstblSegmentRomStart = 0x3b87f0
                 0x0000000000419790                _instrumentstblSegmentRomEnd = 0x419790
                 0x0000000000419790                _musicsampletblSegmentRomStart = 0x419790
-                0x0000000004000000                _bootSegmentStart = 0x4000000
-                0x0000000004001000                _bootSegmentEnd = 0x4001000
                 0x00000000a4040000                SP_MEM_ADDR_REG = 0xa4040000
                 0x00000000a4040004                SP_DRAM_ADDR_REG = 0xa4040004
                 0x00000000a4040008                SP_RD_LEN_REG = 0xa4040008
                 0x00000000a404000c                SP_WR_LEN_REG = 0xa404000c
                 0x00000000a4040010                SP_STATUS_REG = 0xa4040010
                 0x00000000a4080000                SP_PC_REG = 0xa4080000
+                0x00000000a4100000                DPC_REG_BASE = 0xa4100000
+                0x00000000a4100000                DPC_START_REG = 0xa4100000
+                0x00000000a4100004                DPC_END_REG = 0xa4100004
+                0x00000000a4100008                DPC_CURRENT_REG = 0xa4100008
+                0x00000000a410000c                DPC_STATUS_REG = 0xa410000c
+                0x00000000a4100010                DPC_CLOCK_REG = 0xa4100010
+                0x00000000a4100014                DPC_BUFBUSY_REG = 0xa4100014
+                0x00000000a4100018                DPC_PIPEBUSY_REG = 0xa4100018
+                0x00000000a410001c                DPC_TMEM_REG = 0xa410001c
                 0x00000000a4300000                MI_INIT_MODE_REG = 0xa4300000
                 0x00000000a4300000                MI_MODE_REG = MI_INIT_MODE_REG
                 0x00000000a4300004                MI_VERSION_REG = 0xa4300004
@@ -515,6 +520,8 @@ Linker script and memory map
                 0x00000000a4800004                SI_PIF_ADDR_RD64B_REG = 0xa4800004
                 0x00000000a4800010                SI_PIF_ADDR_WR64B_REG = 0xa4800010
                 0x00000000a4800018                SI_STATUS_REG = 0xa4800018
+                0x00000000a5000508                ASIC_STATUS = 0xa5000508
+                0x00000000a5000510                ASIC_BM_STATUS = 0xa5000510
                 0x0000000080000300                osTvType = 0x80000300
                 0x0000000080000308                osRomBase = 0x80000308
                 0x000000008000030c                osResetType = 0x8000030c
@@ -556,7 +563,6 @@ Linker script and memory map
                 0x0000000080041467                D_80041467 = 0x80041467
                 0x00000000800414b4                D_800414B4 = 0x800414b4
                 0x0000000080058378                D_80058378 = 0x80058378
-                0x000000008005c820                gspFast3DDataStart = 0x8005c820
                 0x00000000800669d2                byte_CODE_bss_800669D2 = 0x800669d2
                 0x00000000800669d4                dword_CODE_bss_800669D4 = 0x800669d4
                 0x00000000800669ea                byte_CODE_bss_800669EA = 0x800669ea
@@ -581,24 +587,17 @@ Linker script and memory map
                 0x00000000803b4950                sp_debug = 0x803b4950
                 0x00000000803b5000                cfb_16_a = 0x803b5000
                 0x00000000803da800                cfb_16_b = 0x803da800
-                0x00000000a4100000                DPC_REG_BASE = 0xa4100000
-                0x00000000a4100000                DPC_START_REG = 0xa4100000
-                0x00000000a4100004                DPC_END_REG = 0xa4100004
-                0x00000000a4100008                DPC_CURRENT_REG = 0xa4100008
-                0x00000000a410000c                DPC_STATUS_REG = 0xa410000c
-                0x00000000a4100010                DPC_CLOCK_REG = 0xa4100010
-                0x00000000a4100014                DPC_BUFBUSY_REG = 0xa4100014
-                0x00000000a4100018                DPC_PIPEBUSY_REG = 0xa4100018
-                0x00000000a410001c                DPC_TMEM_REG = 0xa410001c
-                0x00000000a5000508                ASIC_STATUS = 0xa5000508
-                0x00000000a5000510                ASIC_BM_STATUS = 0xa5000510
-                0x0000000000000000                __romPos = 0x0
-                0x0000000000000000                rom_start = .
+                0x0000000000000000                _romSegmentStart = 0x0
+                0x0000000004000000                _headerSegmentStart = ADDR (.header)
+                0x0000000000000000                _headerSegmentRomStart = _romSegmentStart
 
 .header         0x0000000004000000       0x40 load address 0x0000000000000000
  build/src/rom_header.o(.data)
  .data          0x0000000004000000       0x40 build/src/rom_header.o
-                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.header))
+                0x0000000004000040                _headerSegmentEnd = (ADDR (.header) + SIZEOF (.header))
+                0x0000000000000040                _headerSegmentRomEnd = (_headerSegmentRomStart + SIZEOF (.header))
+                0x0000000004000040                _bootSegmentStart = ADDR (.boot)
+                0x0000000000000040                _bootSegmentRomStart = _headerSegmentRomEnd
 
 .boot           0x0000000004000040      0xfc0 load address 0x0000000000000040
  build/src/bootcode.o(.text)
@@ -611,19 +610,19 @@ Linker script and memory map
                 0x0000000004000980                func_04000980
                 0x0000000004000a40                func_04000A40
                 0x0000000004000ad0                func_04000AD0
-                [0x0000000000be6d10]                __romPos = (__romPos + SIZEOF (.boot))
+                0x0000000004001000                _bootSegmentEnd = (ADDR (.boot) + SIZEOF (.boot))
+                0x0000000000001000                _bootSegmentRomEnd = (_bootSegmentRomStart + SIZEOF (.boot))
                 0x0000000080000400                _startSegmentStart = ADDR (.start)
-                0x0000000000001000                _startSegmentRomStart = 0x1000
+                0x0000000000001000                _startSegmentRomStart = _bootSegmentRomEnd
 
 .start          0x0000000080000400       0x50 load address 0x0000000000001000
  build/src/_start.o(.text)
  .text          0x0000000080000400       0x50 build/src/_start.o
                 0x0000000080000400                _start
                 0x0000000080000450                _startSegmentEnd = (ADDR (.start) + SIZEOF (.start))
-                0x0000000000001050                _startSegmentRomEnd = (0x1000 + SIZEOF (.start))
-                0x0000000000001050                __romPos = 0x1050
+                0x0000000000001050                _startSegmentRomEnd = (_startSegmentRomStart + SIZEOF (.start))
                 0x0000000070000450                _codeSegmentStart = ADDR (.code)
-                0x0000000000001050                _codeSegmentRomStart = 0x1050
+                0x0000000000001050                _codeSegmentRomStart = _startSegmentRomEnd
 
 .code           0x0000000070000450    0x20940 load address 0x0000000000001050
  build/src/boot.o(.text)
@@ -1365,20 +1364,18 @@ Linker script and memory map
                 0x0000000070020ce0                __osResetGlobalIntMask
                 0x0000000070020d40                osEPiRawWriteIo
                 0x0000000070020d90                _codeSegmentEnd = (ADDR (.code) + SIZEOF (.code))
-                0x0000000000021990                _codeSegmentRomEnd = (0x1050 + SIZEOF (.code))
-                0x0000000000021990                __romPos = 0x21990
+                0x0000000000021990                _codeSegmentRomEnd = (_codeSegmentRomStart + SIZEOF (.code))
                 0x0000000000021990                _cdataSegmentStart = ADDR (.cdata)
-                0x0000000000021990                _cdataSegmentRomStart = 0x21990
+                0x0000000000021990                _cdataSegmentRomStart = _codeSegmentRomEnd
 
 .cdata          0x0000000000021990    0x11c00
  build/src/c_data_filler.o(.data)
  .data          0x0000000000021990    0x11c00 build/src/c_data_filler.o
                 0x0000000000021990                c_data_array
                 0x0000000000033590                _cdataSegmentEnd = (ADDR (.cdata) + SIZEOF (.cdata))
-                0x0000000000033590                _cdataSegmentRomEnd = (0x21990 + SIZEOF (.cdata))
-                0x0000000000033590                __romPos = 0x33590
+                0x0000000000033590                _cdataSegmentRomEnd = (_cdataSegmentRomStart + SIZEOF (.cdata))
                 0x0000000070200000                _rarezipSegmentStart = ADDR (.rarezip)
-                0x0000000000033590                _rarezipSegmentRomStart = 0x33590
+                0x0000000000033590                _rarezipSegmentRomStart = _cdataSegmentRomEnd
 
 .rarezip        0x0000000070200000     0x15a0 load address 0x0000000000033590
  build/src/rarezip/rarezip.o(.text)
@@ -1410,10 +1407,9 @@ Linker script and memory map
                 0x0000000070201594                rz_data2
                 0x0000000070201598                rz_data3
                 0x00000000702015a0                _rarezipSegmentEnd = (ADDR (.rarezip) + SIZEOF (.rarezip))
-                0x0000000000034b30                _rarezipSegmentRomEnd = (0x33590 + SIZEOF (.rarezip))
-                0x0000000000034b30                __romPos = 0x34b30
+                0x0000000000034b30                _rarezipSegmentRomEnd = (_rarezipSegmentRomStart + SIZEOF (.rarezip))
                 0x000000007f000000                _gameSegmentStart = ADDR (.game)
-                0x0000000000034b30                _gameSegmentRomStart = 0x34b30
+                0x0000000000034b30                _gameSegmentRomStart = _rarezipSegmentRomEnd
 
 .game           0x000000007f000000    0xe2d50 load address 0x0000000000034b30
  build/src/game/initgamedata.o(.text)
@@ -4158,10 +4154,9 @@ Linker script and memory map
                 0x000000007f0d37dc                sub_GAME_7F0D37DC
                 0x000000007f0d382c                spectrum_hw_emulation
                 0x000000007f0e2d50                _gameSegmentEnd = (ADDR (.game) + SIZEOF (.game))
-                0x0000000000117880                _gameSegmentRomEnd = (0x34b30 + SIZEOF (.game))
-                0x0000000000117880                __romPos = 0x117880
+                0x0000000000117880                _gameSegmentRomEnd = (_gameSegmentRomStart + SIZEOF (.game))
                 0x0000000000117880                _romfiles_117880SegmentStart = ADDR (.romfiles_117880)
-                0x0000000000117880                _romfiles_117880SegmentRomStart = 0x117880
+                0x0000000000117880                _romfiles_117880SegmentRomStart = _gameSegmentRomEnd
 
 .romfiles_117880
                 0x0000000000117880   0x320de0
@@ -4272,10 +4267,9 @@ Linker script and memory map
                 0x000000000043823e                Mstatue_ending
                 0x00000000004383a4                Mfrigate_outro
                 0x0000000000438660                _romfiles_117880SegmentEnd = (ADDR (.romfiles_117880) + SIZEOF (.romfiles_117880))
-                0x0000000000438660                _romfiles_117880SegmentRomEnd = (0x117880 + SIZEOF (.romfiles_117880))
-                0x0000000000438660                __romPos = 0x438660
+                0x0000000000438660                _romfiles_117880SegmentRomEnd = (_romfiles_117880SegmentRomStart + SIZEOF (.romfiles_117880))
                 0x0000000000438660                _obsegSegmentStart = ADDR (.obseg)
-                0x0000000000438660                _obsegSegmentRomStart = 0x438660
+                0x0000000000438660                _obsegSegmentRomStart = _romfiles_117880SegmentRomEnd
 
 .obseg          0x0000000000438660   0x4bf790
  build/assets/obseg/ob_seg.o(.ob_seg)
@@ -4997,10 +4991,9 @@ Linker script and memory map
                 0x00000000008f7dd0                LwaxJ
                 0x00000000008f7de0                ob__ob_end_seg
                 0x00000000008f7df0                _obsegSegmentEnd = (ADDR (.obseg) + SIZEOF (.obseg))
-                0x00000000008f7df0                _obsegSegmentRomEnd = (0x438660 + SIZEOF (.obseg))
-                0x00000000008f7df0                __romPos = 0x8f7df0
+                0x00000000008f7df0                _obsegSegmentRomEnd = (_obsegSegmentRomStart + SIZEOF (.obseg))
                 0x00000000008f7df0                _imagesSegmentStart = ADDR (.images)
-                0x00000000008f7df0                _imagesSegmentRomStart = 0x8f7df0
+                0x00000000008f7df0                _imagesSegmentRomStart = _obsegSegmentRomEnd
 
 .images         0x00000000008f7df0   0x2eef20
  build/assets/images/images.o(.images)
@@ -5008,10 +5001,10 @@ Linker script and memory map
                 0x00000000008f7df0                images
                 0x0000000000be6d10                images_end
                 0x0000000000be6d10                _imagesSegmentEnd = (ADDR (.images) + SIZEOF (.images))
-                0x0000000000be6d10                _imagesSegmentRomEnd = (0x8f7df0 + SIZEOF (.images))
-                0x0000000000be6d10                __romPos = 0xbe6d10
+                0x0000000000be6d10                _imagesSegmentRomEnd = (_imagesSegmentRomStart + SIZEOF (.images))
+                0x0000000000be6d10                _romSegmentEnd = _imagesSegmentRomEnd
                 0x0000000000c00000                __csegtempPos = 0xc00000
-                0x0000000080020d90                __ramPos = 0x80020d90
+                0x0000000080020d90                __dataSegmentVaddrStart = (_codeSegmentEnd + 0x10000000)
                 0x0000000080020d90                _csegmentSegmentStart = ADDR (.csegment)
                 0x0000000000c00000                _csegmentSegmentRomStart = __csegtempPos
 
@@ -9478,7 +9471,7 @@ Linker script and memory map
                 0x0000000080057620                D_80057620
                 0x0000000080057624                D_80057624
                 0x0000000080057628                D_80057628
-                0x000000008005762c                jpt_8005762C
+                0x000000008005762c                jpt_weapon_multi
  build/src/game/unk_09B600.o(.rodata)
  build/src/game/unk_09B740.o(.rodata)
  build/src/game/unk_09B7A0.o(.rodata)
@@ -9762,11 +9755,10 @@ Linker script and memory map
  .data          0x000000008005d020      0x2c0 build/src/aspboot.o
                 0x000000008005d020                aspMainDataStart
                 0x000000008005d2e0                _csegmentSegmentEnd = (ADDR (.csegment) + SIZEOF (.csegment))
-                0x0000000000c3c550                _csegmentSegmentRomEnd = (0xc00000 + SIZEOF (.csegment))
-                [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.csegment))
-                0x0000000000c3c550                __csegtempPosEnd = (__csegtempPos + SIZEOF (.csegment))
+                0x0000000000c3c550                _csegmentSegmentRomEnd = (_csegmentSegmentRomStart + SIZEOF (.csegment))
+                0x0000000000c3c550                __dataSegmentVaddrEnd = _csegmentSegmentRomEnd
                 0x000000008005d2e0                _bssSegmentStart = ADDR (.bss)
-                0x0000000000c3c550                _bssSegmentRomStart = __csegtempPosEnd
+                0x0000000000c3c550                _bssSegmentRomStart = _csegmentSegmentRomEnd
 
 .bss            0x000000008005d2e0    0x31080 load address 0x0000000000c3c550
  build/src/boot.o(.bss)
@@ -11075,8 +11067,7 @@ Linker script and memory map
  .bss           0x000000008008e360        0x0 build/src/gspboot.o
  .bss           0x000000008008e360        0x0 build/src/aspboot.o
                 0x000000008008e360                _bssSegmentEnd = (ADDR (.bss) + SIZEOF (.bss))
-                0x0000000000c6d5d0                _bssSegmentRomEnd = (0xc3c550 + SIZEOF (.bss))
-                [0x000000008008e360]                __ramPos = (__ramPos + SIZEOF (.bss))
+                0x0000000000c6d5d0                _bssSegmentRomEnd = (_bssSegmentRomStart + SIZEOF (.bss))
 
 /DISCARD/
  *(.MIPS.abiflags)

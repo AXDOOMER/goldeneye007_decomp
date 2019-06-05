@@ -3,37 +3,45 @@ OUTPUT_ARCH (mips)
 
 SECTIONS
 {
-    __romPos = 0;
-
-	rom_start = .;
+	_romSegmentStart = 0;
    /* header */
-   .header 0x04000000 : AT(__romPos) {
+   _headerSegmentStart = ADDR(.header);
+   _headerSegmentRomStart = _romSegmentStart;
+   .header 0x04000000 : AT(_romSegmentStart) {
       build/src/rom_header.o(.data);
    }
-   __romPos += SIZEOF(.header);
+   _headerSegmentEnd =  ADDR(.header) + SIZEOF(.header);
+   _headerSegmentRomEnd = _headerSegmentRomStart + SIZEOF(.header);
+
+
 
    /* boot */
-   .boot 0x04000040 : AT(__romPos) {
+   _bootSegmentStart = ADDR(.boot);
+   _bootSegmentRomStart = _headerSegmentRomEnd;
+   .boot 0x04000040 : AT(_bootSegmentRomStart) {
       build/src/bootcode.o(.text);
    }
-   __romPos += SIZEOF(.boot);
+   _bootSegmentEnd = ADDR(.boot) + SIZEOF(.boot);
+   _bootSegmentRomEnd = _bootSegmentRomStart + SIZEOF(.boot);
+
+
 
 
    /* 0x80000400, 0x80000450 */
    _startSegmentStart = ADDR(.start);
-   _startSegmentRomStart = 0x1000;
-   .start 0x80000400 : AT(__romPos) {
+   _startSegmentRomStart = _bootSegmentRomEnd;
+   .start 0x80000400 : AT(_startSegmentRomStart) {
       build/src/_start.o (.text);
    }
    _startSegmentEnd = ADDR(.start) + SIZEOF(.start);
-   _startSegmentRomEnd = 0x1000 + SIZEOF(.start);
-   __romPos = 0x1050;
+   _startSegmentRomEnd = _startSegmentRomStart + SIZEOF(.start);
+
 
 
    /* 0x70000450, 0x70020D90 001050-021990 */
    _codeSegmentStart = ADDR(.code);
-   _codeSegmentRomStart = 0x1050;
-   .code 0x70000450 : AT(0x1050) SUBALIGN(16) {
+   _codeSegmentRomStart = _startSegmentRomEnd;
+   .code 0x70000450 : AT(_codeSegmentRomStart) SUBALIGN(16) {
       build/src/boot.o (.text);
       build/src/init.o (.text);
       build/src/sched.o (.text);
@@ -67,40 +75,37 @@ SECTIONS
       build/libultra/libultra.o (.text);
    }
    _codeSegmentEnd = ADDR(.code) + SIZEOF(.code);
-   _codeSegmentRomEnd = 0x1050 + SIZEOF(.code);
-   __romPos = 0x21990;
+   _codeSegmentRomEnd = _codeSegmentRomStart + SIZEOF(.code);
 
 
 
    _cdataSegmentStart = ADDR(.cdata);
-   _cdataSegmentRomStart = 0x21990;
-   .cdata 0x21990 : AT(0x21990) {
+   _cdataSegmentRomStart = _codeSegmentRomEnd;
+   .cdata _cdataSegmentRomStart : AT(_cdataSegmentRomStart) {
       build/src/c_data_filler.o (.data);
    }
    _cdataSegmentEnd = ADDR(.cdata) + SIZEOF(.cdata);
-   _cdataSegmentRomEnd = 0x21990 + SIZEOF(.cdata);
-   __romPos = 0x033590;
+   _cdataSegmentRomEnd = _cdataSegmentRomStart + SIZEOF(.cdata);
    
 
 
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
    _rarezipSegmentStart = ADDR(.rarezip);
-   _rarezipSegmentRomStart = 0x033590;
-   .rarezip 0x70200000 : AT(__romPos) {
+   _rarezipSegmentRomStart = _cdataSegmentRomEnd;
+   .rarezip 0x70200000 : AT(_rarezipSegmentRomStart) {
       build/src/rarezip/rarezip.o (.text);
       build/src/rarezip/rarezip.o (.data);
    }
    _rarezipSegmentEnd = ADDR(.rarezip) + SIZEOF(.rarezip);
-   _rarezipSegmentRomEnd = 0x033590 + SIZEOF(.rarezip);
-   __romPos = 0x034B30;
+   _rarezipSegmentRomEnd = _rarezipSegmentRomStart + SIZEOF(.rarezip);
 
 
    
    
    /* (0x7F000000, 0x7F0E2D50, 0x7EFCB4D0), // 034B30-117881 [E2D51] */
    _gameSegmentStart = ADDR(.game);
-   _gameSegmentRomStart = 0x034B30;
-   .game 0x7F000000 : AT(__romPos) {
+   _gameSegmentRomStart = _rarezipSegmentRomEnd;
+   .game 0x7F000000 : AT(_gameSegmentRomStart) {
       build/src/game/initgamedata.o (.text);
       build/src/game/initweaponanigroups.o (.text);
       build/src/game/initactorpropstuff.o (.text);
@@ -216,15 +221,15 @@ SECTIONS
       build/src/game/music_0D2720.o (.text);
       build/src/game/spectrum.o (.text);
    }
-
    _gameSegmentEnd = ADDR(.game) + SIZEOF(.game);
-   _gameSegmentRomEnd = 0x034B30 + SIZEOF(.game);
-   __romPos = 0x117880;
+   _gameSegmentRomEnd = _gameSegmentRomStart + SIZEOF(.game);
+
+
 
 
    _romfiles_117880SegmentStart = ADDR(.romfiles_117880);
-   _romfiles_117880SegmentRomStart = 0x117880;
-   .romfiles_117880 0x117880 : AT(__romPos) {
+   _romfiles_117880SegmentRomStart = _gameSegmentRomEnd;
+   .romfiles_117880 _romfiles_117880SegmentRomStart : AT(_romfiles_117880SegmentRomStart) {
       build/assets/romfiles.o (.romfiles);
       build/assets/ramrom/ramrom.o (.ramrom);
       build/assets/font/font.o (.font);
@@ -232,37 +237,41 @@ SECTIONS
       build/assets/music/music.o (.musiccompressed);
    }
    _romfiles_117880SegmentEnd = ADDR(.romfiles_117880) + SIZEOF(.romfiles_117880);
-   _romfiles_117880SegmentRomEnd = 0x117880 + SIZEOF(.romfiles_117880);
-   __romPos = 0x438660;
+   _romfiles_117880SegmentRomEnd = _romfiles_117880SegmentRomStart + SIZEOF(.romfiles_117880);
+
 
 
 
    _obsegSegmentStart = ADDR(.obseg);
-   _obsegSegmentRomStart = 0x438660;
-   .obseg 0x438660 : AT(0x438660) {
+   _obsegSegmentRomStart = _romfiles_117880SegmentRomEnd;
+   .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
       build/assets/obseg/ob_seg.o (.ob_seg);
    }
    _obsegSegmentEnd = ADDR(.obseg) + SIZEOF(.obseg);
-   _obsegSegmentRomEnd = 0x438660 + SIZEOF(.obseg);
+   _obsegSegmentRomEnd = _obsegSegmentRomStart + SIZEOF(.obseg);
 
-   __romPos = 0x8F7DF0;
+
 
 
    _imagesSegmentStart = ADDR(.images);
-   _imagesSegmentRomStart = 0x8F7DF0;
-   .images 0x8F7DF0 : AT(0x8F7DF0) {
+   _imagesSegmentRomStart = _obsegSegmentRomEnd;
+   .images _imagesSegmentRomStart : AT(_imagesSegmentRomStart) {
       build/assets/images/images.o (.images);
    }
    _imagesSegmentEnd = ADDR(.images) + SIZEOF(.images);
-   _imagesSegmentRomEnd = 0x8F7DF0 + SIZEOF(.images);
+   _imagesSegmentRomEnd = _imagesSegmentRomStart + SIZEOF(.images);
 
-   __romPos = 0xBE6D10;
+
+
+	_romSegmentEnd = _imagesSegmentRomEnd;
+
+
 
    __csegtempPos = 0xC00000;
-   __ramPos = 0x80020d90;
+   __dataSegmentVaddrStart = _codeSegmentEnd + 0x10000000;
    _csegmentSegmentStart = ADDR(.csegment);
    _csegmentSegmentRomStart = __csegtempPos;
-   .csegment 0x80020d90 : AT(__csegtempPos) {
+   .csegment __dataSegmentVaddrStart : AT(_csegmentSegmentRomStart) {
       build/src/rspboot.o (.text);
       build/src/gspboot.o (.text);
       build/src/aspboot.o (.text);
@@ -565,14 +574,13 @@ SECTIONS
       build/src/aspboot.o (.data);
    }
    _csegmentSegmentEnd = ADDR(.csegment) + SIZEOF(.csegment);
-   _csegmentSegmentRomEnd = 0xC00000 + SIZEOF(.csegment);
+   _csegmentSegmentRomEnd = _csegmentSegmentRomStart + SIZEOF(.csegment);
 
-   __ramPos += SIZEOF(.csegment);
-   __csegtempPosEnd =  (__csegtempPos + SIZEOF (.csegment));
+   __dataSegmentVaddrEnd = _csegmentSegmentRomEnd;
 
    _bssSegmentStart = ADDR(.bss);
-   _bssSegmentRomStart = __csegtempPosEnd;
-   .bss 0x8005D2E0 : AT(__csegtempPosEnd){
+   _bssSegmentRomStart = _csegmentSegmentRomEnd;
+   .bss _csegmentSegmentEnd : AT(_bssSegmentRomStart){
       build/src/boot.o (.bss);
       build/src/init.o (.bss);
       build/src/sched.o (.bss);
@@ -719,9 +727,9 @@ SECTIONS
       build/src/game/spectrum.o (.bss);
    }
    _bssSegmentEnd = ADDR(.bss) + SIZEOF(.bss);
-   _bssSegmentRomEnd = 0xc3c550 + SIZEOF(.bss);
+   _bssSegmentRomEnd = _bssSegmentRomStart + SIZEOF(.bss);
 
-__ramPos += SIZEOF(.bss);
+
 
    /*move em to end, out of the way*/
    /DISCARD/ : {
