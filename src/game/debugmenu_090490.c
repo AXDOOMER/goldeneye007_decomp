@@ -433,7 +433,7 @@ void debug_menu_processor(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:800556FC*/
-glabel jpt_700C46A0
+glabel jpt_debug_menu_options
 .word debug_stanview
 .word debug_bondview
 .word .L7F090798
@@ -513,7 +513,7 @@ glabel jpt_700C46A0
 .word debug_fog
 
 /*D:80055830*/
-glabel jpt_700C4DD8
+glabel jpt_80055830
 .word def_7F090EA8
 .word def_7F090EA8
 .word def_7F090EA8
@@ -645,9 +645,9 @@ glabel debug_menu_processor
 /* 0C5288 7F090758 2C41004D */  sltiu $at, $v0, 0x4d
 /* 0C528C 7F09075C 102001C5 */  beqz  $at, .L7F090E74
 /* 0C5290 7F090760 0002C880 */   sll   $t9, $v0, 2
-/* 0C5294 7F090764 3C018005 */  lui   $at, 0x8005
+/* 0C5294 7F090764 3C018005 */  lui   $at, %hi(jpt_debug_menu_options)
 /* 0C5298 7F090768 00390821 */  addu  $at, $at, $t9
-/* 0C529C 7F09076C 8C3956FC */  lw    $t9, 0x56fc($at)
+/* 0C529C 7F09076C 8C3956FC */  lw    $t9, %lo(jpt_debug_menu_options)($at)
 /* 0C52A0 7F090770 03200008 */  jr    $t9
 /* 0C52A4 7F090774 00000000 */   nop   
 debug_stanview:
@@ -1184,9 +1184,9 @@ def_7F090770:
 /* 0C59C0 7F090E90 2D010005 */  sltiu $at, $t0, 5
 /* 0C59C4 7F090E94 10200006 */  beqz  $at, .L7F090EB0
 /* 0C59C8 7F090E98 00084080 */   sll   $t0, $t0, 2
-/* 0C59CC 7F090E9C 3C018005 */  lui   $at, 0x8005
+/* 0C59CC 7F090E9C 3C018005 */  lui   $at, %hi(jpt_80055830)
 /* 0C59D0 7F090EA0 00280821 */  addu  $at, $at, $t0
-/* 0C59D4 7F090EA4 8C285830 */  lw    $t0, 0x5830($at)
+/* 0C59D4 7F090EA4 8C285830 */  lw    $t0, %lo(jpt_80055830)($at)
 /* 0C59D8 7F090EA8 01000008 */  jr    $t0
 /* 0C59DC 7F090EAC 00000000 */   nop   
 def_7F090EA8:
