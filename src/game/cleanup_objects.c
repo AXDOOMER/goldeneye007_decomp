@@ -1,7 +1,7 @@
 #include "ultra64.h"
 
 //.section .rodata
-const u32 jpt_7003B478[] = {
+const u32 jpt_8004F210[] = {
     0x7F007550,
     0x7F00755C,
     0x7F007550,
@@ -79,9 +79,9 @@ glabel cleanupObjects
 /* 03C060 7F007530 2DC1002F */  sltiu $at, $t6, 0x2f
 /* 03C064 7F007534 10200009 */  beqz  $at, .L7F00755C
 /* 03C068 7F007538 000E7080 */   sll   $t6, $t6, 2
-/* 03C06C 7F00753C 3C018005 */  lui   $at, 0x8005
+/* 03C06C 7F00753C 3C018005 */  lui   $at, %hi(jpt_8004F210)
 /* 03C070 7F007540 002E0821 */  addu  $at, $at, $t6
-/* 03C074 7F007544 8C2EF210 */  lw    $t6, -0xdf0($at)
+/* 03C074 7F007544 8C2EF210 */  lw    $t6, %lo(jpt_8004F210)($at)
 /* 03C078 7F007548 01C00008 */  jr    $t6
 /* 03C07C 7F00754C 00000000 */   nop 
 .L7F007550:
