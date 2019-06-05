@@ -5334,9 +5334,9 @@ glabel next_interrupt
 /* 010FA8 700103A8 3C018003 */  lui   $at, 0x8003
 /* 010FAC 700103AC 002A0821 */  addu  $at, $at, $t2
 /* 010FB0 700103B0 902A9440 */  lbu   $t2, -0x6bc0($at)
-/* 010FB4 700103B4 3C018003 */  lui   $at, 0x8003
+/* 010FB4 700103B4 3C018003 */  lui   $at, %hi(__osIntTable)
 /* 010FB8 700103B8 002A0821 */  addu  $at, $at, $t2
-/* 010FBC 700103BC 8C2A9460 */  lw    $t2, -0x6ba0($at)
+/* 010FBC 700103BC 8C2A9460 */  lw    $t2, %lo(__osIntTable)($at)
 /* 010FC0 700103C0 01400008 */  jr    $t2
 /* 010FC4 700103C4 00000000 */   nop   
 glabel IP6_Hdlr
@@ -9298,9 +9298,9 @@ glabel _Putfld
 /* 01452C 7001392C 2DE10034 */  sltiu $at, $t7, 0x34
 /* 014530 70013930 10200181 */  beqz  $at, .L70013F38
 /* 014534 70013934 000F7880 */   sll   $t7, $t7, 2
-/* 014538 70013938 3C018003 */  lui   $at, 0x8003
+/* 014538 70013938 3C018003 */  lui   $at, %hi(jpt_80029714)
 /* 01453C 7001393C 002F0821 */  addu  $at, $at, $t7
-/* 014540 70013940 8C2F9714 */  lw    $t7, -0x68ec($at)
+/* 014540 70013940 8C2F9714 */  lw    $t7, %lo(jpt_80029714)($at)
 /* 014544 70013944 01E00008 */  jr    $t7
 /* 014548 70013948 00000000 */   nop   
 .L7001394C:
@@ -10224,7 +10224,7 @@ glabel printf_symbols
 glabel byteshiftleft_lookup
 .word          1,         2,         4,         8,      0x10,         0
 
-glabel J_80029714
+glabel jpt_80029714
 .word .L70013C58, .L70013F38, .L70013C58, .L70013F38
 .word .L70013F38, .L70013F38, .L70013F38, .L70013F38
 .word .L70013F38, .L70013F38, .L70013F38, .L70013F38
@@ -21358,9 +21358,9 @@ glabel alFxNew
 /* 01A108 70019508 2F210006 */  sltiu $at, $t9, 6
 /* 01A10C 7001950C 10200017 */  beqz  $at, .L7001956C
 /* 01A110 70019510 0019C880 */   sll   $t9, $t9, 2
-/* 01A114 70019514 3C018003 */  lui   $at, 0x8003
+/* 01A114 70019514 3C018003 */  lui   $at, %hi(jpt_80029830)
 /* 01A118 70019518 00390821 */  addu  $at, $at, $t9
-/* 01A11C 7001951C 8C399830 */  lw    $t9, -0x67d0($at)
+/* 01A11C 7001951C 8C399830 */  lw    $t9, %lo(jpt_80029830)($at)
 /* 01A120 70019520 03200008 */  jr    $t9
 /* 01A124 70019524 00000000 */   nop   
 .L70019528:
@@ -21636,7 +21636,7 @@ glabel NULL_PARAMS
 .word          0,         0,         0,         0,         0,         0,         0,         0
 .word          0,         0
 .section .rodata
-glabel J_80019520
+glabel jpt_80029830
 .word .L70019528
 .word .L70019534
 .word .L7001954C
@@ -22576,9 +22576,9 @@ glabel alResampleParam
 /* 01B210 7001A610 1020002B */  beqz  $at, .L7001A6C0
 /* 01B214 7001A614 00803825 */   move  $a3, $a0
 /* 01B218 7001A618 000E7080 */  sll   $t6, $t6, 2
-/* 01B21C 7001A61C 3C018003 */  lui   $at, 0x8003
+/* 01B21C 7001A61C 3C018003 */  lui   $at, %hi(jpt_80029850)
 /* 01B220 7001A620 002E0821 */  addu  $at, $at, $t6
-/* 01B224 7001A624 8C2E9850 */  lw    $t6, -0x67b0($at)
+/* 01B224 7001A624 8C2E9850 */  lw    $t6, %lo(jpt_80029850)($at)
 /* 01B228 7001A628 01C00008 */  jr    $t6
 /* 01B22C 7001A62C 00000000 */   nop   
 .L7001A630:
@@ -22776,7 +22776,7 @@ glabel alResamplePull
 .align 4
 
 .section .rodata
-glabel J_8001A628
+glabel jpt_80029850
 .word .L7001A630
 .word .L7001A6C0
 .word .L7001A6C0
@@ -23245,9 +23245,9 @@ glabel alEnvmixerPull
 /* 01BB54 7001AF54 2F210011 */  sltiu $at, $t9, 0x11
 /* 01BB58 7001AF58 10200117 */  beqz  $at, .L7001B3B8
 /* 01BB5C 7001AF5C 0019C880 */   sll   $t9, $t9, 2
-/* 01BB60 7001AF60 3C018003 */  lui   $at, 0x8003
+/* 01BB60 7001AF60 3C018003 */  lui   $at, %hi(jpt_80029968)
 /* 01BB64 7001AF64 00390821 */  addu  $at, $at, $t9
-/* 01BB68 7001AF68 8C399968 */  lw    $t9, -0x6698($at)
+/* 01BB68 7001AF68 8C399968 */  lw    $t9, %lo(jpt_80029968)($at)
 /* 01BB6C 7001AF6C 03200008 */  jr    $t9
 /* 01BB70 7001AF70 00000000 */   nop   
 .L7001AF74:
@@ -23674,7 +23674,7 @@ glabel aEnv_c_1
 .align 2
 glabel F32_80029964
 .float 65535.0
-glabel J_8001AF6C
+glabel jpt_80029968
 .word .L7001B398
 .word .L7001B3B8
 .word .L7001B3B8
