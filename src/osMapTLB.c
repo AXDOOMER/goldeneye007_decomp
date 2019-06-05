@@ -4,7 +4,7 @@
 
 #ifdef NONMATCHING
 void osMapTLBRdb(void) {
-
+    //i should probably remain as assembly, maybe even moved to a .s
 }
 #else
 GLOBAL_ASM(

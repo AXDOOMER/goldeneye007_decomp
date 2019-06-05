@@ -9881,9 +9881,9 @@ Linker script and memory map
                 0x0000000080063710                hp
                 0x0000000080063720                ptr_sfx_buf
                 0x0000000080063724                D_80063724
-                0x0000000080063728                ptr_1st_music_ctrl_block
-                0x000000008006372c                ptr_2nd_music_ctrl_block
-                0x0000000080063730                ptr_3rd_music_ctrl_block
+                0x0000000080063728                seqp_1
+                0x000000008006372c                seqp_2
+                0x0000000080063730                seqp_3
                 0x0000000080063734                ptr_musicdatatable
                 0x0000000080063738                D_80063738
                 0x00000000800637b8                D_800637B8

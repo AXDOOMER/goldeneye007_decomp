@@ -81,9 +81,9 @@ extern s32 music3_playing;
 extern u32 hp[4];
 extern u32 *ptr_sfx_buf;
 extern s32 D_80063724;
-extern s32 ptr_1st_music_ctrl_block;
-extern s32 ptr_2nd_music_ctrl_block;
-extern s32 ptr_3rd_music_ctrl_block;
+extern s32 seqp_1;
+extern s32 seqp_2;
+extern s32 seqp_3;
 extern void *ptr_musicdatatable;
 
 extern char D_80063738[0x80];
