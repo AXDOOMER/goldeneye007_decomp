@@ -3082,7 +3082,7 @@ GLOBAL_ASM(
 glabel PADDINGHACKS
 .word 0,0
 /*D:800572B0*/
-glabel jpt_700C5B38
+glabel jpt_800572B0
 .word cheats_cheat_extra_mp_chars
 .word cheats_cheat_invincibility
 .word cheats_cheat_allguns
@@ -3203,9 +3203,9 @@ glabel sub_GAME_7F091B64
 /* 0C6720 7F091BF0 2F21004A */  sltiu $at, $t9, 0x4a
 /* 0C6724 7F091BF4 1020020C */  beqz  $at, .L7F092428
 /* 0C6728 7F091BF8 0019C880 */   sll   $t9, $t9, 2
-/* 0C672C 7F091BFC 3C018005 */  lui   $at, 0x8005
+/* 0C672C 7F091BFC 3C018005 */  lui   $at, %hi(jpt_800572B0)
 /* 0C6730 7F091C00 00390821 */  addu  $at, $at, $t9
-/* 0C6734 7F091C04 8C3972B0 */  lw    $t9, 0x72b0($at)
+/* 0C6734 7F091C04 8C3972B0 */  lw    $t9, %lo(jpt_800572B0)($at)
 /* 0C6738 7F091C08 03200008 */  jr    $t9
 /* 0C673C 7F091C0C 00000000 */   nop   
 cheats_cheat_extra_mp_chars:
@@ -3790,7 +3790,7 @@ void sub_GAME_7F092438(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:800573DC*/
-glabel jpt_700C6400
+glabel jpt_800573DC
 .word cheat_button_default
 .word cheat_button_invincibility
 .word cheat_button_all_guns
@@ -3905,9 +3905,9 @@ glabel sub_GAME_7F092438
 /* 0C6FE8 7F0924B8 2DE1004A */  sltiu $at, $t7, 0x4a
 /* 0C6FEC 7F0924BC 1020007C */  beqz  $at, .L7F0926B0
 /* 0C6FF0 7F0924C0 000F7880 */   sll   $t7, $t7, 2
-/* 0C6FF4 7F0924C4 3C018005 */  lui   $at, 0x8005
+/* 0C6FF4 7F0924C4 3C018005 */  lui   $at, %hi(jpt_800573DC)
 /* 0C6FF8 7F0924C8 002F0821 */  addu  $at, $at, $t7
-/* 0C6FFC 7F0924CC 8C2F73DC */  lw    $t7, 0x73dc($at)
+/* 0C6FFC 7F0924CC 8C2F73DC */  lw    $t7, %lo(jpt_800573DC)($at)
 /* 0C7000 7F0924D0 01E00008 */  jr    $t7
 /* 0C7004 7F0924D4 00000000 */   nop   
 cheat_button_invincibility:
