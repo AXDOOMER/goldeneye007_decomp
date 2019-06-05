@@ -8,13 +8,13 @@ SECTIONS
 	rom_start = .;
    /* header */
    .header 0x04000000 : AT(__romPos) {
-      build/rom_header.o(.data);
+      build/src/rom_header.o(.data);
    }
    __romPos += SIZEOF(.header);
 
    /* boot */
    .boot 0x04000040 : AT(__romPos) {
-      build/bootcode.o(.text);
+      build/src/bootcode.o(.text);
    }
    __romPos += SIZEOF(.boot);
 
@@ -23,7 +23,7 @@ SECTIONS
    _startSegmentStart = ADDR(.start);
    _startSegmentRomStart = 0x1000;
    .start 0x80000400 : AT(__romPos) {
-      build/_start.o (.text);
+      build/src/_start.o (.text);
    }
    _startSegmentEnd = ADDR(.start) + SIZEOF(.start);
    _startSegmentRomEnd = 0x1000 + SIZEOF(.start);
@@ -263,9 +263,9 @@ SECTIONS
    _csegmentSegmentStart = ADDR(.csegment);
    _csegmentSegmentRomStart = __csegtempPos;
    .csegment 0x80020d90 : AT(__csegtempPos) {
-      build/rspboot.o (.text);
-      build/gspboot.o (.text);
-      build/aspboot.o (.text);
+      build/src/rspboot.o (.text);
+      build/src/gspboot.o (.text);
+      build/src/aspboot.o (.text);
       build/src/boot.o (.data);
       build/src/init.o (.data);
       build/src/sched.o (.data);
@@ -298,7 +298,7 @@ SECTIONS
       build/src/rmon.o (.data);
       build/libultra/libultra.o (.data);
 
-      build/aspboot.o (.rodata);
+      build/src/aspboot.o (.rodata);
       build/src/boot.o (.rodata);
       build/src/init.o (.rodata);
       build/src/sched.o (.rodata);
@@ -561,8 +561,8 @@ SECTIONS
       build/src/game/music_0D2720.o (.rodata);
       build/src/game/spectrum.o (.rodata);
 
-      build/gspboot.o (.data);
-      build/aspboot.o (.data);
+      build/src/gspboot.o (.data);
+      build/src/aspboot.o (.data);
    }
    _csegmentSegmentEnd = ADDR(.csegment) + SIZEOF(.csegment);
    _csegmentSegmentRomEnd = 0xC00000 + SIZEOF(.csegment);
@@ -747,9 +747,9 @@ __ramPos += SIZEOF(.bss);
       build/assets/obseg/ob_seg.o (.data);
       build/assets/images/images.o (.text);
       build/assets/images/images.o (.data);
-      build/rom_header.o (.text);
-      build/bootcode.o (.data);
-      build/_start.o (.data);
-      build/rspboot.o (.data);
+      build/src/rom_header.o (.text);
+      build/src/bootcode.o (.data);
+      build/src/_start.o (.data);
+      build/src/rspboot.o (.data);
 }
 }
