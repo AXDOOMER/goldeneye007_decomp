@@ -2936,7 +2936,7 @@ glabel sub_GAME_7F0B4F9C
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B4FB4(void) {
-    return sub_GAME_7F0B5058(ptr_BONDdata->unk7F4, ptr_BONDdata->unk7F6, (ptr_BONDdata->unk7F4 + ptr_BONDdata->unk7F0), (s32) (ptr_BONDdata->unk7F6 + ptr_BONDdata->unk7F2));
+    return sub_GAME_7F0B5058(ptr_BONDdata->playerscreenulx, ptr_BONDdata->playerscreenuly, (ptr_BONDdata->playerscreenulx + ptr_BONDdata->unk7F0), (s32) (ptr_BONDdata->playerscreenuly + ptr_BONDdata->unk7F2));
 }
 #else
 GLOBAL_ASM(

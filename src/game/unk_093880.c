@@ -8639,116 +8639,28 @@ glabel sub_GAME_7F09B15C
 
 
 
-#ifdef NONMATCHING
-void *set_cur_player_screen_size(s16 arg0, s16 arg1) {
-    // Node 0
-    ptr_BONDdata->playerscreenwidth = arg0;
-    ptr_BONDdata->playerscreenheight = arg1;
-    return &ptr_BONDdata;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel set_cur_player_screen_size
-/* 0CFD0C 7F09B1DC 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
-/* 0CFD10 7F09B1E0 2442A0B0 */  addiu $v0, %lo(ptr_BONDdata) # addiu $v0, $v0, -0x5f50
-/* 0CFD14 7F09B1E4 8C4E0000 */  lw    $t6, ($v0)
-/* 0CFD18 7F09B1E8 A5C407F0 */  sh    $a0, 0x7f0($t6)
-/* 0CFD1C 7F09B1EC 8C4F0000 */  lw    $t7, ($v0)
-/* 0CFD20 7F09B1F0 03E00008 */  jr    $ra
-/* 0CFD24 7F09B1F4 A5E507F2 */   sh    $a1, 0x7f2($t7)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void *set_cur_player_viewport_size(s16 arg0, s16 arg1) {
-    // Node 0
-    ptr_BONDdata->unk7F4 = arg0;
-    ptr_BONDdata->unk7F6 = arg1;
-    return &ptr_BONDdata;
+void set_cur_player_screen_size(u32 width, u32 height) {
+  ptr_BONDdata->playerscreenwidth = width;
+  ptr_BONDdata->playerscreenheight = height;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel set_cur_player_viewport_size
-/* 0CFD28 7F09B1F8 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
-/* 0CFD2C 7F09B1FC 2442A0B0 */  addiu $v0, %lo(ptr_BONDdata) # addiu $v0, $v0, -0x5f50
-/* 0CFD30 7F09B200 8C4E0000 */  lw    $t6, ($v0)
-/* 0CFD34 7F09B204 A5C407F4 */  sh    $a0, 0x7f4($t6)
-/* 0CFD38 7F09B208 8C4F0000 */  lw    $t7, ($v0)
-/* 0CFD3C 7F09B20C 03E00008 */  jr    $ra
-/* 0CFD40 7F09B210 A5E507F6 */   sh    $a1, 0x7f6($t7)
-)
-#endif
+void set_cur_player_viewport_size(u32 ulx, u32 uly) {
+  ptr_BONDdata->playerscreenulx = ulx;
+  ptr_BONDdata->playerscreenuly = uly;
+}
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F09B214(f32 arg0) {
-    // Node 0
-    ptr_BONDdata->unk11D0 = arg0;
-    return;
+    ptr_BONDdata->watch_menu_current_size_unused_maybe = arg0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F09B214
-/* 0CFD44 7F09B214 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008
-/* 0CFD48 7F09B218 8DCEA0B0 */  lw    $t6, %lo(ptr_BONDdata)($t6)
-/* 0CFD4C 7F09B21C 03E00008 */  jr    $ra
-/* 0CFD50 7F09B220 E5CC11D0 */   swc1  $f12, 0x11d0($t6)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F09B224(f32 arg0) {
-    // Node 0
-    ptr_BONDdata->unk11D4 = arg0;
-    return;
+    ptr_BONDdata->field_11D4 = arg0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F09B224
-/* 0CFD54 7F09B224 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008
-/* 0CFD58 7F09B228 8DCEA0B0 */  lw    $t6, %lo(ptr_BONDdata)($t6)
-/* 0CFD5C 7F09B22C 03E00008 */  jr    $ra
-/* 0CFD60 7F09B230 E5CC11D4 */   swc1  $f12, 0x11d4($t6)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
 f32 sub_GAME_7F09B234(void) {
-    // Node 0
-    return ptr_BONDdata->unk11D0;
+    return ptr_BONDdata->watch_menu_current_size_unused_maybe;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F09B234
-/* 0CFD64 7F09B234 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata) # $t6, 0x8008
-/* 0CFD68 7F09B238 8DCEA0B0 */  lw    $t6, %lo(ptr_BONDdata)($t6)
-/* 0CFD6C 7F09B23C 03E00008 */  jr    $ra
-/* 0CFD70 7F09B240 C5C011D0 */   lwc1  $f0, 0x11d0($t6)
-)
-#endif
+
 
 
 
