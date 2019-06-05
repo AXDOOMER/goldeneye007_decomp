@@ -20,6 +20,7 @@ Discarded input sections
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/src/_start.o
  .pdr           0x0000000000000000        0x0 build/src/_start.o
+ .rodata        0x0000000000000000        0x0 build/src/_start.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/src/_start.o
  .options       0x0000000000000000       0x20 build/src/boot.o
@@ -400,12 +401,14 @@ Discarded input sections
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/src/rspboot.o
  .pdr           0x0000000000000000        0x0 build/src/rspboot.o
+ .rodata        0x0000000000000000        0x0 build/src/rspboot.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/src/rspboot.o
  .reginfo       0x0000000000000000       0x18 build/src/gspboot.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/src/gspboot.o
  .pdr           0x0000000000000000        0x0 build/src/gspboot.o
+ .rodata        0x0000000000000000        0x0 build/src/gspboot.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/src/gspboot.o
  .reginfo       0x0000000000000000       0x18 build/src/aspboot.o
@@ -5011,11 +5014,6 @@ Linker script and memory map
                 0x0000000080020d90                __ramPos = 0x80020d90
                 0x0000000080020d90                _csegmentSegmentStart = ADDR (.csegment)
                 0x0000000000c00000                _csegmentSegmentRomStart = __csegtempPos
-
-.rodata         0x0000000000be6d10        0x0
- .rodata        0x0000000000be6d10        0x0 build/src/_start.o
- .rodata        0x0000000000be6d10        0x0 build/src/rspboot.o
- .rodata        0x0000000000be6d10        0x0 build/src/gspboot.o
 
 .rel.dyn        0x0000000000be6d10        0x0
  .rel.dyn       0x0000000000be6d10        0x0 build/src/video.o
@@ -11106,4 +11104,7 @@ Linker script and memory map
  build/src/bootcode.o(.data)
  build/src/_start.o(.data)
  build/src/rspboot.o(.data)
+ build/src/_start.o(.rodata)
+ build/src/rspboot.o(.rodata)
+ build/src/gspboot.o(.rodata)
 OUTPUT(ge007.u.elf elf32-tradbigmips)
