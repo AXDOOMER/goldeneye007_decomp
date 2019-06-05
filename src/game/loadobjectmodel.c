@@ -1,63 +1,5 @@
 #include "ultra64.h"
 
-/*data*/
-
-/* rodata
-D:8005354C     jpt_7008AE0C:   .word loc_CODE_7F056EE4  # DATA XREF: sub_CODE_7F056EA0+30r
-D:8005354C                     .word loc_CODE_7F056EEC  # jump table for switch statement
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word def_7F056EDC
-D:8005354C                     .word def_7F056EDC
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EE4
-D:8005354C                     .word loc_CODE_7F056EEC
-D:8005354C                     .word loc_CODE_7F056EE4
-D:80053608                     .align 4
-*/
-
-
-
-
-
-
 #ifdef NONMATCHING
 void sub_GAME_7F056850(void) {
 
@@ -199,9 +141,9 @@ glabel get_size_of_setup_object_type
 /* 08B42C 7F0568FC 2DE1002F */  sltiu $at, $t7, 0x2f
 /* 08B430 7F056900 1020005E */  beqz  $at, .L7F056A7C
 /* 08B434 7F056904 000F7880 */   sll   $t7, $t7, 2
-/* 08B438 7F056908 3C018005 */  lui   $at, 0x8005
+/* 08B438 7F056908 3C018005 */  lui   $at, %hi(jpt_object_setup_size)
 /* 08B43C 7F05690C 002F0821 */  addu  $at, $at, $t7
-/* 08B440 7F056910 8C2F3490 */  lw    $t7, 0x3490($at)
+/* 08B440 7F056910 8C2F3490 */  lw    $t7, %lo(jpt_object_setup_size)($at)
 /* 08B444 7F056914 01E00008 */  jr    $t7
 /* 08B448 7F056918 00000000 */   nop   
 object_size_type_09:
@@ -611,7 +553,7 @@ void sub_GAME_7F056CA0(void) {
 GLOBAL_ASM(
 .late_rodata
 /*hack for below*/
-glabel jpt_7008AE0C
+glabel jpt_8005354C
 .word .L7F056EE4
 .word .L7F056EEC
 .word .L7F056EE4
@@ -804,7 +746,7 @@ void sub_GAME_7F056EA0(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:8005354C*/
-/*glabel jpt_7008AE0C*/
+/*glabel jpt_8005354C*/
 /*.word .L7F056EE4*/
 /*.word .L7F056EEC*/
 /*.word .L7F056EE4*/
@@ -868,9 +810,9 @@ glabel sub_GAME_7F056EA0
 /* 08B9F4 7F056EC4 2DE1002F */  sltiu $at, $t7, 0x2f
 /* 08B9F8 7F056EC8 1020000A */  beqz  $at, .L7F056EF4
 /* 08B9FC 7F056ECC 000F7880 */   sll   $t7, $t7, 2
-/* 08BA00 7F056ED0 3C018005 */  lui   $at, 0x8005
+/* 08BA00 7F056ED0 3C018005 */  lui   $at, %hi(jpt_8005354C)
 /* 08BA04 7F056ED4 002F0821 */  addu  $at, $at, $t7
-/* 08BA08 7F056ED8 8C2F354C */  lw    $t7, 0x354c($at)
+/* 08BA08 7F056ED8 8C2F354C */  lw    $t7, %lo(jpt_8005354C)($at)
 .L7F056EDC:
 /* 08BA0C 7F056EDC 01E00008 */  jr    $t7
 /* 08BA10 7F056EE0 00000000 */   nop   
