@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/image.h"
+#include "assets/images/image_externs.h"
 
 // bss
 //8008C720
@@ -48,6 +49,7 @@ s32 D_800492A8[] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 s32 D_800492D4[] = {0x8000, 0x8000, 0xC000, 0xC000, 0, 0, 0, 0, 0, 0, 0};
 
 //D:80049300
+//need way to calculate size at compile time from external data
 struct image_entry image_entries[] = {
     {   0,    0,  0x754,    0,    0,    0,    0},
     {   0,    0,  0x16A,    0,    0,    0,    0},

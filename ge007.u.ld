@@ -256,7 +256,7 @@ SECTIONS
    _imagesSegmentStart = ADDR(.images);
    _imagesSegmentRomStart = _obsegSegmentRomEnd;
    .images _imagesSegmentRomStart : AT(_imagesSegmentRomStart) {
-      build/assets/images/images.o (.images);
+      build/assets/images/images.o (.rodata);
    }
    _imagesSegmentEnd = ADDR(.images) + SIZEOF(.images);
    _imagesSegmentRomEnd = _imagesSegmentRomStart + SIZEOF(.images);
