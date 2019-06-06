@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include "init.h"
 #include "sched.h"
+#include "bondgame.h"
 
 u32 stderr_unused = 0;
 u32 stderr_enabled = 0;
@@ -14,16 +15,14 @@ f32 something_with_osVI[7] = {0.0,1.0,1.0,1.0,1.0,0.0,0.0};
 u32 D_800230CC = 1;
 
 //temporary until i get proper sized structs
-//OSSched sc;
+OSSched sc;
 //OSScClient gfxClient;
-char sc[0xD8];
 char gfxClient[0x18];
 
 char target_for_counters_maybe[0x10];
 char dword_CODE_bss_8005DB40[0xB0];
 
-extern u32* cfb_16_a;
-extern u32* cfb_16_b;
+
 
 void activate_stderr(u32 flag) {
 	stderr_active = flag;

@@ -50,7 +50,7 @@ typedef struct {
     OSMesg      intBuf[OS_SC_MAX_MESGS];
     OSMesgQueue cmdQ;
     OSMesg      cmdMsgBuf[OS_SC_MAX_MESGS];
-    OSThread    thread;
+    OSThread    *thread;
     OSScClient  *clientList;
     OSScTask    *audioListHead;
     OSScTask    *gfxListHead;
@@ -62,7 +62,8 @@ typedef struct {
     s32         doAudio;
 } OSSched;
 
-extern char sc[0xD8];
+extern OSSched sc;
+//extern OSScClient gfxClient;
 extern char gfxClient[0x18];
 
 void activate_stderr(u32 flag);

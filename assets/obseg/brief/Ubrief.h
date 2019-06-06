@@ -2,7 +2,7 @@
 #define _UBRIEF_H_
 
 #include "ultra64.h"
-#include "src/game/global.h"
+#include "bondgame.h"
 
 struct BriefObjectiveStruct
 {
