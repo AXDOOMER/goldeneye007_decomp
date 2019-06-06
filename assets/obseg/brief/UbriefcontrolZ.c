@@ -1,17 +1,17 @@
 #include "assets/obseg/brief/Ubrief.h"
 
-struct BriefStruct UbriefdestZ = {
+struct BriefStruct UbriefcontrolZ = {
     {                        /* Mission Briefing */
-        0x3400,              /* Background */
-        0x3401,              /* M Briefing */
-        0x3402,              /* Q Branch */
-        0x3403               /* Moneypenny */
+        0x2000,              /* Background */
+        0x2001,              /* M Briefing */
+        0x2002,              /* Q Branch */
+        0x2003               /* Moneypenny */
     },
     {                        /* Objectives (Text and Difficult) */
-        {0x3404, DIFF_A},    /* Rescue Hostages */
-        {0x3405, DIFF_SA},   /* Disarm bridge bomb */
-        {0x3406, DIFF_SA},   /* Disarm engine room bomb */
-        {0x3407, DIFF_A},    /* Plant tracking bug on helicopter */
+        {0x2004, DIFF_A},    /* Protect Natalya */
+        {0x2005, DIFF_A},    /* Disable Goldeneye satellite */
+        {0x2006, DIFF_A},    /* Destroy armored mainframes */
+        {0x0000, 0x0000},    /* Not assigned */
         {0x0000, 0x0000},    /* Not assigned */
         {0x0000, 0x0000},    /* Not assigned */
         {0x0000, 0x0000},    /* Not assigned */
