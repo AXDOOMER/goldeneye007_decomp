@@ -157,18 +157,18 @@ typedef enum LEVEL_INDEX
 } LEVEL_INDEX;
 
 typedef enum MP_STAGE_SELECTED {
-    MP_STAGE_ARCHIVES=9,
-    MP_STAGE_BASEMENT=5,
-    MP_STAGE_BUNKER=8,
-    MP_STAGE_CAVERNS=10,
-    MP_STAGE_CAVES=3,
-    MP_STAGE_COMPLEX=2,
-    MP_STAGE_EGYPT=11,
-    MP_STAGE_FACILITY=7,
-    MP_STAGE_LIBRARY=4,
-    MP_STAGE_RANDOM=0,
-    MP_STAGE_STACK=6,
-    MP_STAGE_TEMPLE=1
+    MP_STAGE_RANDOM = 0x0,
+    MP_STAGE_TEMPLE = 0x1,
+    MP_STAGE_COMPLEX = 0x2,
+    MP_STAGE_CAVES = 0x3,
+    MP_STAGE_LIBRARY = 0x4,
+    MP_STAGE_BASEMENT = 0x5,
+    MP_STAGE_STACK = 0x6,
+    MP_STAGE_FACILITY = 0x7,
+    MP_STAGE_BUNKER = 0x8,
+    MP_STAGE_ARCHIVES = 0x9,
+    MP_STAGE_CAVERNS = 0xA,
+    MP_STAGE_EGYPT = 0xB
 } MP_STAGE_SELECTED;
 
 typedef enum GENDER {FEMALE=0, MALE } GENDER;
@@ -376,14 +376,14 @@ typedef enum GAMEMODE {
 } GAMEMODE;
 
 typedef enum MPSCENARIOS {
-    SCENARIO_2v1=7,
-    SCENARIO_2v2=5,
-    SCENARIO_3v1=6,
-    SCENARIO_LTK=4,
-    SCENARIO_MWTGG=3,
     SCENARIO_NORMAL=0,
-    SCENARIO_TLD=2,
-    SCENARIO_YOLT=1
+    SCENARIO_YOLT,
+    SCENARIO_TLD,
+    SCENARIO_MWTGG,
+    SCENARIO_LTK,
+    SCENARIO_2v2,
+    SCENARIO_3v1,
+    SCENARIO_2v1
 } MPSCENARIOS;
 
 typedef enum WATCH_BRIEFING_PAGE {
@@ -560,6 +560,37 @@ typedef enum PROJECTILES
   PROJECTILES_TYPE_PLASTIQUE = 0x111,
 } PROJECTILES;
 
+typedef enum AMMOTYPES {
+    AMMO_9MM=1,
+    AMMO_9MM_2=2,
+    AMMO_RIFLE=3,
+    AMMO_SHOTGUN=4,
+    AMMO_GRENADE=5,
+    AMMO_ROCKETS=6,
+    AMMO_REMOTEMINE=7,
+    AMMO_PROXMINE=8,
+    AMMO_TIMEDMINE=9,
+    AMMO_KNIFE=10,
+    AMMO_GRENADEROUND=11,
+    AMMO_MAGNUM=12,
+    AMMO_GGUN=13,
+    AMMO_DARTS=14,
+    AMMO_EXPLOSIVEPEN=15,
+    AMMO_BOMBCASE=16,
+    AMMO_FLARE=17,
+    AMMO_PITON=18,
+    AMMO_DYNAMITE=19,
+    AMMO_BUG=20,
+    AMMO_MICRO_CAMERA=21,
+    AMMO_GEKEY=22,
+    AMMO_PLASTIQUE=23,
+    AMMO_WATCH_LASER=24,
+    AMMO_WATCH_MAGNET=25,
+    AMMO_UNK=26,
+    AMMO_CAMERA=27,
+    AMMO_TANK=28,
+    AMMO_TOKEN=29
+} AMMOTYPES;
 
 typedef enum DOORSTATE
 {
@@ -573,5 +604,72 @@ typedef enum SCREEN_SIZE
   SCREEN_SIZE_440x330 = 0x1,
 } SCREEN_SIZE;
 
+typedef enum CONTROLLER_CONFIG {
+    CONTROLLER_CONFIG_HONEY=0,
+    CONTROLLER_CONFIG_SOLITARE,
+    CONTROLLER_CONFIG_KISSY,
+    CONTROLLER_CONFIG_GOODNIGHT,
+    CONTROLLER_CONFIG_PLENTY,
+    CONTROLLER_CONFIG_GALORE,
+    CONTROLLER_CONFIG_DOMINO,
+    CONTROLLER_CONFIG_GOODHEAD,
+    CONTROLLER_CONFIG_CINEMA
+} CONTROLLER_CONFIG;
 
+typedef enum CAMERAMODE {
+    INTRO_CAM=1,
+    FADESWIRL_CAM,
+    SWIRL_CAM,
+    FP_CAM,
+    UNK5_CAM,
+    UNK6_CAM,
+    POSEND_CAM,
+    FP_NOINPUT_CAM,
+    MP_CAM,
+    UNK10_CAM,
+} CAMERAMODE;
+
+typedef enum guard_action_type {
+    None=0,
+    dying=4,
+    fade_away=5,
+    freeze=2,
+    freeze_anim=17,
+    gettingshot=6,
+    limping=7,
+    look_around=18,
+    moving=15,
+    run_roll_fire=10,
+    sidehop=12,
+    siderun=13,
+    sidestep=11,
+    standing=1,
+    standstill_fire=8,
+    surrendering=16,
+    swattingflies=3,
+    throw_grenade=20,
+    trigger_alarm=19,
+    walk_fire=9,
+    walk_path=14
+} guard_action_type;
+
+//should probably be part of libultra, i dont think its specific to ge
+typedef enum controller_buttons {
+    A_BUTTON=32768,
+    B_BUTTON=16384,
+    DUMMY_1=128,
+    DUMMY_2=64,
+    D_CBUTTONS=4,
+    D_JPAD=1024,
+    L_CBUTTONS=2,
+    L_JPAD=512,
+    L_TRIG=32,
+    R_CBUTTONS=1,
+    R_JPAD=256,
+    R_TRIG=16,
+    START_BUTTON=4096,
+    U_CBUTTONS=8,
+    U_JPAD=2048,
+    Z_TRIG=8192
+} controller_buttons;
 #endif
