@@ -72,7 +72,9 @@ OSMesgQueue audDMAMessageQ;
 char audDMAMessageBuf[0x108];
 
 
-
+/**
+ * 29D0	70001BD0
+ */
 #ifdef NONMATCHING
 void amCreateAudioMgr(void *arg0)
 {
@@ -432,7 +434,11 @@ glabel amCreateAudioMgr
 )
 #endif
 
-
+/**
+ * 2B58	70001F58
+ * insert sound manager thread
+ *	redirect to 7000D580: A0=8005E530
+ */
 #ifdef NONMATCHING
 void startaudiThread(void) {
     osStartThread(&_am+0x18);
@@ -452,10 +458,9 @@ glabel startaudiThread
 )
 #endif
 
-
-
-
-
+/**
+ * 2B7C	70001F7C
+ */
 #ifdef NONMATCHING
 void _amMain(s32 arg0)
 {
@@ -763,9 +768,10 @@ glabel _amMain
 )
 #endif
 
-
-
-
+/**
+ * 2E44	70002244
+ *	accepts: A0=, A1=p->audio packet
+ */
 #ifdef NONMATCHING
 void _amHandleFrameMsg(void *arg0, s32 arg1, void *argB) {
     s32 sp24;
@@ -919,9 +925,9 @@ glabel _amHandleFrameMsg
 )
 #endif
 
-
-
-
+/**
+ * 2FE4	700023E4
+ */
 #ifdef NONMATCHING
 void __amHandleDoneMsg(s32 arg0) {
     // Node 0
@@ -963,9 +969,9 @@ glabel __amHandleDoneMsg
 )
 #endif
 
-
-
-
+/**
+ * 3024	70002424
+ */
 #ifdef NONMATCHING
 s32 __amDMA(u32 arg0, s32 arg1, ? arg2, s32 arg14) {
     s32 sp30;
@@ -1179,9 +1185,9 @@ glabel __amDMA
 )
 #endif
 
-
-
-
+/**
+ * 31D8	700025D8
+ */
 #ifdef NONMATCHING
 void *__amDmaNew(void *arg0) {
     // Node 0
@@ -1219,9 +1225,9 @@ glabel __amDmaNew
 )
 #endif
 
-
-
-
+/**
+ *  3210	70002610
+ */
 #ifdef NONMATCHING
 void __clearAudioDMA(void) {
     ?32 sp40;

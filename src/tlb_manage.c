@@ -24,7 +24,8 @@ u32 ptr_TLBallocatedblock;
 
 
 /**
- * 23E0	700017E0	establishes 7F- TLB buffer and management table
+ * 23E0	700017E0
+ * establishes 7F- TLB buffer and management table
  */
 #ifdef NONMATCHING
 void *establish_TLB_buffer_management_table(void)
@@ -125,7 +126,8 @@ glabel establish_TLB_buffer_management_table
 #endif
 
 /**
- * 2498	70001898	???; pointless conditional tests, will reset 800230D0
+ * 2498	70001898
+ * ???; pointless conditional tests, will reset 800230D0
  */
 #ifdef NONMATCHING
 void mp_tlb_related(void) {
@@ -149,7 +151,8 @@ glabel mp_tlb_related
 #endif
 
 /**
- * 24C0	700018C0	searches TLB index for an entry matching A0
+ * 24C0	700018C0
+ * searches TLB index for an entry matching A0
  *	V0=index of match or 80000000 if not found
  *	accepts: A0=TLB pointer
  */
@@ -207,7 +210,8 @@ glabel return_TLB_index_for_entry
 #endif
 
 /**
- *  2520	70001920	find and remove TLB entry A0
+ *  2520	70001920
+ * find and remove TLB entry A0
  *	accepts: A0=TLB pointer
  *	redirects to 700018C0, 7000D3D0
  */
@@ -221,7 +225,8 @@ void find_remove_TLB_entry(u32 entry) {
 }
 
 /**
- * 2554	70001954	remove index A0 TLB entry from table at 8005E3F0
+ * 2554	70001954
+ * remove index A0 TLB entry from table at 8005E3F0
  *	table format:
  *		0x0	1 if dirty
  *		0x1	chunk # (7F000000 | chunk<<D)
@@ -289,7 +294,8 @@ glabel remove_TLB_entry_from_table
 #endif
 
 /**
- * 25D8	700019D8	loads ROM range for 7F- TLB entries
+ * 25D8	700019D8
+ * loads ROM range for 7F- TLB entries
  */
 #ifdef NONMATCHING
 void translate_load_rom_from_TLBaddress(s32 arg0) {
@@ -403,7 +409,8 @@ glabel translate_load_rom_from_TLBaddress
 #endif
 
 /**
- * 26F8	70001AF8	V0=p->TLB memory, or alternately end of free memory [8005E4A8]
+ * 26F8	70001AF8
+ * V0=p->TLB memory, or alternately end of free memory [8005E4A8]
  */
 u32 * return_ptr_TLBallocatedblock(void)
 {

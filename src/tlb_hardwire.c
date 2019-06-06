@@ -1,7 +1,17 @@
 #include "ultra64.h"
-#include "tlb_hardware.h"
+#include "tlb_hardwire.h"
+
+/**
+ * @file tlb_hardwire.c
+ * This file contains code to set tlb entries to 2
+ * -it should become an assembly file
+ */
 
 
+/**
+ * 29B0	70001BB0
+ * sets #hardwired TLB entries to 2
+ */
 #ifdef NONMATCHING
 void set_hardwire_TLB_to_2(void) {
 

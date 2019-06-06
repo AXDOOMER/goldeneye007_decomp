@@ -4,7 +4,7 @@
 #include "sched.h"
 #include "rmon.h"
 #include "tlb_resolve.h"
-#include "tlb_hardware.h"
+#include "tlb_hardwire.h"
 #include "init.h"
 
 /**
@@ -29,7 +29,8 @@ OSMesgQueue *sched_cmdQ;
 
 
 /**
- * 1110	70000510	???	initializes TLB index...
+ * 1110	70000510
+ * ???	initializes TLB index...
  *	copies compressed 21990 to virtual address 701EE400, using 70200000 to decompress
  */
 #ifdef NONMATCHING
@@ -223,7 +224,8 @@ glabel init
 #endif
 
 /**
- * 12F0	700006F0	V0= new stack pointer; A0+A1-8
+ * 12F0	700006F0
+ * V0= new stack pointer; A0+A1-8
  *	accepts: A0=base address, A1=size
  */
 void *set_stack_entry(u8 *stack, u32 size) 
@@ -232,7 +234,8 @@ void *set_stack_entry(u8 *stack, u32 size)
 }
 
 /**
- *12FC	700006FC	1->80023044, 10000000->80023048
+ * 12FC	700006FC
+ * 1->80023044, 10000000->80023048
  */
 void set_hw_address_and_unknown(void) 
 {
@@ -241,7 +244,8 @@ void set_hw_address_and_unknown(void)
 }
 
 /**
- *1318	70000718	A0->SP+0, infinite loop
+ * 1318	70000718
+ * A0->SP+0, infinite loop
  */
 void thread1_idle(void *arg) 
 {
@@ -249,7 +253,8 @@ void thread1_idle(void *arg)
 }
 
 /**
- *1338	70000738	Null thread; executes 70000718
+ * 1338	70000738
+ * Null thread; executes 70000718
  */
 void start_idle_thread(void) 
 {
@@ -258,7 +263,8 @@ void start_idle_thread(void)
 }
 
 /**
- *1390	70000790	Indi board detection thread; now forcably returns INDI_NOT_DETECTED (1)
+ * 1390	70000790
+ * Indi board detection thread; now forcably returns INDI_NOT_DETECTED (1)
  */
 void start_rmon_thread(void) 
 {
@@ -267,7 +273,7 @@ void start_rmon_thread(void)
 }
 
 /**
- *13EC	700007EC
+ * 13EC	700007EC
  */
 #ifdef NONMATCHING
 void init_scheduler(void) {

@@ -9,7 +9,8 @@
  */
 
 /**
- * 	 2380	70001780	sets TLB indexed entry 0 to mirror 1KB of rdram from 80000000 to C0000000
+ * 	 2380	70001780
+ * sets TLB indexed entry 0 to mirror 1KB of rdram from 80000000 to C0000000
  *	uncached, dirty, valid, global
  */
 #ifdef NONMATCHING

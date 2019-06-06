@@ -37,8 +37,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/tlb_random.o
  .options       0x0000000000000000       0x20 build/src/tlb_resolve.o
  .reginfo       0x0000000000000000       0x18 build/src/tlb_resolve.o
- .options       0x0000000000000000       0x20 build/src/tlb_hardware.o
- .reginfo       0x0000000000000000       0x18 build/src/tlb_hardware.o
+ .options       0x0000000000000000       0x20 build/src/tlb_hardwire.o
+ .reginfo       0x0000000000000000       0x18 build/src/tlb_hardwire.o
  .options       0x0000000000000000       0x20 build/src/audi.o
  .reginfo       0x0000000000000000       0x18 build/src/audi.o
  .options       0x0000000000000000       0x20 build/src/speed_graph.o
@@ -687,8 +687,8 @@ Linker script and memory map
  build/src/tlb_resolve.o(.text)
  .text          0x0000000070001b60       0x50 build/src/tlb_resolve.o
                 0x0000000070001b60                resolve_TLBaddress_for_InvalidHit
- build/src/tlb_hardware.o(.text)
- .text          0x0000000070001bb0       0x20 build/src/tlb_hardware.o
+ build/src/tlb_hardwire.o(.text)
+ .text          0x0000000070001bb0       0x20 build/src/tlb_hardwire.o
                 0x0000000070001bb0                set_hardwire_TLB_to_2
  build/src/audi.o(.text)
  .text          0x0000000070001bd0      0xb60 build/src/audi.o
@@ -10431,7 +10431,7 @@ Linker script and memory map
  .data          0x00000000800230e0       0x10 build/src/tlb_random.o
                 0x00000000800230e0                tlb_random_seed
  build/src/tlb_resolve.o(.data)
- build/src/tlb_hardware.o(.data)
+ build/src/tlb_hardwire.o(.data)
  build/src/audi.o(.data)
  .data          0x00000000800230f0       0xe0 build/src/audi.o
                 0x00000000800230f0                D_800230F0
@@ -10751,7 +10751,7 @@ Linker script and memory map
  build/src/tlb_manage.o(.rodata)
  build/src/tlb_random.o(.rodata)
  build/src/tlb_resolve.o(.rodata)
- build/src/tlb_hardware.o(.rodata)
+ build/src/tlb_hardwire.o(.rodata)
  build/src/audi.o(.rodata)
  build/src/speed_graph.o(.rodata)
  .rodata        0x0000000080028420       0x60 build/src/speed_graph.o

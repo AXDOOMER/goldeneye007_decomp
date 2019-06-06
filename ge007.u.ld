@@ -49,7 +49,7 @@ SECTIONS
       build/src/tlb_manage.o (.text);
       build/src/tlb_random.o (.text);
       build/src/tlb_resolve.o (.text);
-      build/src/tlb_hardware.o (.text);
+      build/src/tlb_hardwire.o (.text);
       build/src/audi.o (.text);
       build/src/speed_graph.o (.text);
       build/src/video.o (.text);
@@ -282,7 +282,7 @@ SECTIONS
       build/src/tlb_manage.o (.data);
       build/src/tlb_random.o (.data);
       build/src/tlb_resolve.o (.data);
-      build/src/tlb_hardware.o (.data);
+      build/src/tlb_hardwire.o (.data);
       build/src/audi.o (.data);
       build/src/speed_graph.o (.data);
       build/src/video.o (.data);
@@ -315,7 +315,7 @@ SECTIONS
       build/src/tlb_manage.o (.rodata);
       build/src/tlb_random.o (.rodata);
       build/src/tlb_resolve.o (.rodata);
-      build/src/tlb_hardware.o (.rodata);
+      build/src/tlb_hardwire.o (.rodata);
       build/src/audi.o (.rodata);
       build/src/speed_graph.o (.rodata);
       build/src/video.o (.rodata);

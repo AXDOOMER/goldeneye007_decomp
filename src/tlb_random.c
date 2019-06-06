@@ -1,7 +1,17 @@
 #include "ultra64.h"
 
+/**
+ * @file tlb_random.c
+ * This file contains code to get a random tlb value. 
+ * 
+ */
+
 u64 tlb_random_seed = 0xAB8D9F7781280783;
 
+/**
+ * 2710	70001B10
+ * V0= random value for TLB random entries [800230E0]
+ */
 #ifdef NONMATCHING
 u32 return_tlb_random_value(void)
 {
