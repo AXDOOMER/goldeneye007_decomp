@@ -702,13 +702,8 @@ extern s32 handicap_player3;
 //CODE.bss:800697B4
 extern s32 handicap_player4;
 //CODE.bss:800697B8
-extern s32 controlstyle_player1;
-//CODE.bss:800697BC
-extern s32 controlstyle_player2;
-//CODE.bss:800697C0
-extern s32 controlstyle_player3;
-//CODE.bss:800697C4
-extern s32 controlstyle_player4;
+extern u32 controlstyle_player[];
+
 
 //CODE.bss:800697C8
 extern s32 highlight_players;
@@ -747,7 +742,7 @@ extern s32 selected_folder_num;
 extern s32 selected_folder_num_copy;
 extern s32 gamemode;
 extern s32 selected_stage;
-extern s32 ptr_briefingdata;
+extern s32 briefingpage;
 extern s32 selected_difficulty;
 extern s32 append_cheat_sp;
 extern s32 append_cheat_mp;
@@ -995,7 +990,7 @@ MP_handicap_table:MP_handicap_menu <0x9C3D, 0, 10.0>
                 MP_controller_configuration_menu <0x9D, 0x1A, 5, 2>
                 MP_controller_configuration_menu <0x9D, 0x1B, 6, 2>
                 MP_controller_configuration_menu <0x9D, 0x1C, 7, 2>
-stru_D_8002B510:MP_sight_aim_settings <0x9C, 0x48, 0, 0>
+stru_mp_sight_adjust_table:MP_sight_aim_settings <0x9C, 0x48, 0, 0>
                 MP_sight_aim_settings <0x9C, 0x49, 1, 0>
                 MP_sight_aim_settings <0x9C, 0x4A, 0, 1>
                 MP_sight_aim_settings <0x9C, 0x4B, 1, 1>
@@ -1048,4 +1043,5 @@ extern u32 intro_animation_count;
 extern u32 objinstance;
 extern u32 ptrobjinstance;
 extern u32 full_actor_intro;
+
 #endif

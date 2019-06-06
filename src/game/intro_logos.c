@@ -1884,7 +1884,7 @@ void sub_GAME_7F009254(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
-glabel jpt_7003D1CC
+glabel jpt_8004F2E0
     .word .L7F0092A4
     .word .L7F009344
     .word .L7F009428
@@ -1915,9 +1915,9 @@ glabel sub_GAME_7F009254
 /* 03DDB4 7F009284 1020012A */  beqz  $at, .L7F009730
 /* 03DDB8 7F009288 00802825 */   move  $a1, $a0
 /* 03DDBC 7F00928C 00084080 */  sll   $t0, $t0, 2
-/* 03DDC0 7F009290 3C018005 */  lui   $at, 0x8005
+/* 03DDC0 7F009290 3C018005 */  lui   $at, %hi(jpt_8004F2E0)
 /* 03DDC4 7F009294 00280821 */  addu  $at, $at, $t0
-/* 03DDC8 7F009298 8C28F2E0 */  lw    $t0, -0xd20($at)
+/* 03DDC8 7F009298 8C28F2E0 */  lw    $t0, %lo(jpt_8004F2E0)($at)
 /* 03DDCC 7F00929C 01000008 */  jr    $t0
 /* 03DDD0 7F0092A0 00000000 */   nop   
 .L7F0092A4:

@@ -1,24 +1,6 @@
 #include "ultra64.h"
 
 
-/*rodata
-
-*/
-
-/*
-jpt_700399A4:   .word spawn_point
-                .word weapon
-                .word ammo
-                .word swirling_intro_cam
-                .word intro_ani
-                .word cuff_char
-                .word fixed_cam
-                .word watch_time
-                .word credits
-*/
-
-/*                .align 4
-*/
 
 // data
 //D:8002A780
@@ -167,7 +149,7 @@ glabel projectile_ptr_table
 glabel default_zoom_speed
 .word 0x3f68ba2e
 
-glabel jpt_700399A4
+glabel jpt_8004F1AC
     .word spawn_point
     .word weapon
     .word ammo
@@ -361,9 +343,9 @@ glabel load_camera_intro_type_values
 .L7F005A60:
 /* 03A590 7F005A60 102000DF */  beqz  $at, .L7F005DE0
 /* 03A594 7F005A64 0002C080 */   sll   $t8, $v0, 2
-/* 03A598 7F005A68 3C018005 */  lui   $at, 0x8005
+/* 03A598 7F005A68 3C018005 */  lui   $at, %hi(jpt_8004F1AC)
 /* 03A59C 7F005A6C 00380821 */  addu  $at, $at, $t8
-/* 03A5A0 7F005A70 8C38F1AC */  lw    $t8, -0xe54($at)
+/* 03A5A0 7F005A70 8C38F1AC */  lw    $t8, %lo(jpt_8004F1AC)($at)
 /* 03A5A4 7F005A74 03000008 */  jr    $t8
 /* 03A5A8 7F005A78 00000000 */   nop   
 spawn_point:

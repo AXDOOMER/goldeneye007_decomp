@@ -928,7 +928,7 @@ void expand_08_obj_set_guard_MP_weapons(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
-glabel jpt_700366F0
+glabel jpt_8004EEB8
 .word .L7F0027C8
 .word .L7F0027C8
 .word .L7F0027C8
@@ -1001,9 +1001,9 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 0372D8 7F0027A8 2D21001E */  sltiu $at, $t1, 0x1e
 /* 0372DC 7F0027AC 1020000C */  beqz  $at, .L7F0027E0
 /* 0372E0 7F0027B0 00094880 */   sll   $t1, $t1, 2
-/* 0372E4 7F0027B4 3C018005 */  lui   $at, %hi(jpt_700366F0)
+/* 0372E4 7F0027B4 3C018005 */  lui   $at, %hi(jpt_8004EEB8)
 /* 0372E8 7F0027B8 00290821 */  addu  $at, $at, $t1
-/* 0372EC 7F0027BC 8C29EEB8 */  lw    $t1, %lo(jpt_700366F0)($at)
+/* 0372EC 7F0027BC 8C29EEB8 */  lw    $t1, %lo(jpt_8004EEB8)($at)
 /* 0372F0 7F0027C0 01200008 */  jr    $t1
 /* 0372F4 7F0027C4 00000000 */   nop   
 .L7F0027C8:
@@ -1041,9 +1041,9 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 03736C 7F00283C 2DC10008 */  sltiu $at, $t6, 8
 /* 037370 7F002840 1020004A */  beqz  $at, .L7F00296C
 /* 037374 7F002844 000E7080 */   sll   $t6, $t6, 2
-/* 037378 7F002848 3C018005 */  lui   $at, 0x8005
+/* 037378 7F002848 3C018005 */  lui   $at, %hi(jpt_mp_ammo_crate_expansion)
 /* 03737C 7F00284C 002E0821 */  addu  $at, $at, $t6
-/* 037380 7F002850 8C2EEF30 */  lw    $t6, -0x10d0($at)
+/* 037380 7F002850 8C2EEF30 */  lw    $t6, %lo(jpt_mp_ammo_crate_expansion)($at)
 /* 037384 7F002854 01C00008 */  jr    $t6
 /* 037388 7F002858 00000000 */   nop   
 .L7F00285C:
@@ -1219,28 +1219,10 @@ glabel MP_weapon_expansion_routine
 #endif
 
 
-#ifdef NONMATCHING
 void jmp_prepare_load_objects(void) {
-    // Node 0
     prepare_load_objects();
-    return;
-    // (possible return value: prepare_load_objects())
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel jmp_prepare_load_objects
-/* 03754C 7F002A1C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 037550 7F002A20 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 037554 7F002A24 0FC00767 */  jal   prepare_load_objects
-/* 037558 7F002A28 00000000 */   nop   
-/* 03755C 7F002A2C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 037560 7F002A30 27BD0018 */  addiu $sp, $sp, 0x18
-/* 037564 7F002A34 03E00008 */  jr    $ra
-/* 037568 7F002A38 00000000 */   nop   
-)
-#endif
 
 
 #ifdef NONMATCHING
@@ -1536,24 +1518,10 @@ glabel expand_type_0D_object_autoturret
 #endif
 
 
-#ifdef NONMATCHING
 void jmp_prepare_load_objects_0(void) {
-
+    prepare_load_objects();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel jmp_prepare_load_objects_0
-/* 03794C 7F002E1C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 037950 7F002E20 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 037954 7F002E24 0FC00767 */  jal   prepare_load_objects
-/* 037958 7F002E28 00000000 */   nop   
-/* 03795C 7F002E2C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 037960 7F002E30 27BD0018 */  addiu $sp, $sp, 0x18
-/* 037964 7F002E34 03E00008 */  jr    $ra
-/* 037968 7F002E38 00000000 */   nop   
-)
-#endif
+
 
 
 #ifdef NONMATCHING
@@ -2586,7 +2554,7 @@ glabel D_8004F024
 glabel D_8004F028
 .word 0x3e2e147c
 
-glabel jpt_70038A94
+glabel jpt_8004F02C
 .word .L7F004B6C
 .word .L7F004B6C
 .word .L7F004DE4
@@ -3151,9 +3119,9 @@ glabel stage_loading_setup_objparse_cleanupafter
 /* 038E98 7F004368 2D01002F */  sltiu $at, $t0, 0x2f
 /* 038E9C 7F00436C 102001E3 */  beqz  $at, .L7F004AFC
 /* 038EA0 7F004370 00084080 */   sll   $t0, $t0, 2
-/* 038EA4 7F004374 3C018005 */  lui   $at, 0x8005
+/* 038EA4 7F004374 3C018005 */  lui   $at, %hi(jpt_object_type_expansion)
 /* 038EA8 7F004378 00280821 */  addu  $at, $at, $t0
-/* 038EAC 7F00437C 8C28EF68 */  lw    $t0, -0x1098($at)
+/* 038EAC 7F00437C 8C28EF68 */  lw    $t0, %lo(jpt_object_type_expansion)($at)
 /* 038EB0 7F004380 01000008 */  jr    $t0
 /* 038EB4 7F004384 00000000 */   nop   
 actor_attr_expand:
@@ -3696,9 +3664,9 @@ other_obj_expand:
 /* 03967C 7F004B4C 2D01002D */  sltiu $at, $t0, 0x2d
 /* 039680 7F004B50 102000A4 */  beqz  $at, .L7F004DE4
 /* 039684 7F004B54 00084080 */   sll   $t0, $t0, 2
-/* 039688 7F004B58 3C018005 */  lui   $at, 0x8005
+/* 039688 7F004B58 3C018005 */  lui   $at, %hi(jpt_8004F02C)
 /* 03968C 7F004B5C 00280821 */  addu  $at, $at, $t0
-/* 039690 7F004B60 8C28F02C */  lw    $t0, -0xfd4($at)
+/* 039690 7F004B60 8C28F02C */  lw    $t0, %lo(jpt_8004F02C)($at)
 /* 039694 7F004B64 01000008 */  jr    $t0
 /* 039698 7F004B68 00000000 */   nop   
 .L7F004B6C:

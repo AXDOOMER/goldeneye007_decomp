@@ -84,7 +84,7 @@ void *load_rsp_microcode(s32 arg0, s32 arg1, ? arg2, ?32 arg3) {
     fast3d_related_array->unk1C = (s32) (&gsp3DTextStart - &rspbootTextStart);
     temp_v0 = (fast3d_related_array + 0x10);
     temp_v0->unk10 = &gsp3DTextStart;
-    temp_v0->unk18 = &gspFast3DDataStart;
+    temp_v0->unk18 = &gsp3DDataStart;
     temp_v0->unk28 = (?32) D_8004E9E8;
     temp_v0->unk30 = arg0;
     temp_v0->unk34 = (s32) (((s32) (arg1 - arg0) >> 3) * 8);
@@ -121,11 +121,11 @@ glabel load_rsp_microcode
 /* 104974 7F0CFE44 01C27823 */  subu  $t7, $t6, $v0
 /* 104978 7F0CFE48 AE020018 */  sw    $v0, 0x18($s0)
 /* 10497C 7F0CFE4C 3C188002 */  lui   $t8, %hi(gsp3DTextStart) # $t8, 0x8002
-/* 104980 7F0CFE50 3C198006 */  lui   $t9, %hi(gspFast3DDataStart) # $t9, 0x8006
+/* 104980 7F0CFE50 3C198006 */  lui   $t9, %hi(gsp3DDataStart) # $t9, 0x8006
 /* 104984 7F0CFE54 AE0F001C */  sw    $t7, 0x1c($s0)
 /* 104988 7F0CFE58 26020010 */  addiu $v0, $s0, 0x10
 /* 10498C 7F0CFE5C 27180E60 */  addiu $t8, %lo(gsp3DTextStart) # addiu $t8, $t8, 0xe60
-/* 104990 7F0CFE60 2739C820 */  addiu $t9, %lo(gspFast3DDataStart) # addiu $t9, $t9, -0x37e0
+/* 104990 7F0CFE60 2739C820 */  addiu $t9, %lo(gsp3DDataStart) # addiu $t9, $t9, -0x37e0
 /* 104994 7F0CFE64 AC580010 */  sw    $t8, 0x10($v0)
 /* 104998 7F0CFE68 AC590018 */  sw    $t9, 0x18($v0)
 /* 10499C 7F0CFE6C 3C088005 */  lui   $t0, %hi(D_8004E9E8) # $t0, 0x8005

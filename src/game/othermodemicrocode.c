@@ -1755,23 +1755,9 @@ glabel likely_generate_DL_for_image_declaration
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F077BB8(s32 arg0, s32 arg1, ? arg2, ? arg3) {
-    // Node 0
+void sub_GAME_7F077BB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return;
-    // (function likely void)
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F077BB8
-/* 0AC6E8 7F077BB8 AFA40000 */  sw    $a0, ($sp)
-/* 0AC6EC 7F077BBC AFA50004 */  sw    $a1, 4($sp)
-/* 0AC6F0 7F077BC0 AFA60008 */  sw    $a2, 8($sp)
-/* 0AC6F4 7F077BC4 03E00008 */  jr    $ra
-/* 0AC6F8 7F077BC8 AFA7000C */   sw    $a3, 0xc($sp)
-)
-#endif
 
 

@@ -277,7 +277,7 @@ void sub_GAME_7F0BB6F4(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:80058D80*/
-glabel jpt_700EF63C
+glabel jpt_80058D80
 .word .L7F0BB714
 .word .L7F0BB7C0
 .word .L7F0BB7EC
@@ -288,9 +288,9 @@ glabel sub_GAME_7F0BB6F4
 /* 0F0224 7F0BB6F4 2CA10005 */  sltiu $at, $a1, 5
 /* 0F0228 7F0BB6F8 1020005C */  beqz  $at, .L7F0BB86C
 /* 0F022C 7F0BB6FC 00057080 */   sll   $t6, $a1, 2
-/* 0F0230 7F0BB700 3C018006 */  lui   $at, 0x8006
+/* 0F0230 7F0BB700 3C018006 */  lui   $at, %hi(jpt_80058D80)
 /* 0F0234 7F0BB704 002E0821 */  addu  $at, $at, $t6
-/* 0F0238 7F0BB708 8C2E8D80 */  lw    $t6, -0x7280($at)
+/* 0F0238 7F0BB708 8C2E8D80 */  lw    $t6, %lo(jpt_80058D80)($at)
 /* 0F023C 7F0BB70C 01C00008 */  jr    $t6
 /* 0F0240 7F0BB710 00000000 */   nop   
 .L7F0BB714:

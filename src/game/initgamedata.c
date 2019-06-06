@@ -7,7 +7,7 @@ void initGameData(void) {
     maybe_prev_menu = -1;
     menu_timer = 0;
     selected_stage = -1;
-    ptr_briefingdata = -1;
+    briefingpage = -1;
     selected_difficulty = -1;
     screen_size = 0;
     folder_selection_screen_option_icon = 0;

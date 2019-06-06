@@ -62,7 +62,7 @@ struct stringentry LoptionsE[] = {
  "4. Q branch\n",
  "5. moneypenny\n",
  "1. mission objectives\n",
-0,
-0,
-0
+ '\0',
+ '\0',
+ '\0'
 };

@@ -35,6 +35,6 @@ struct stringentry LdamE[] = {
  "covert modem\n",
  "Picked up a covert modem.\n",
  "Covert modem incorrectly installed.\n",
-0,
-0
+ '\0',
+ '\0'
 };

@@ -435,9 +435,9 @@ glabel music_related_18
 /* 008B9C 70007F9C 2D210010 */  sltiu $at, $t1, 0x10
 /* 008BA0 70007FA0 1020024C */  beqz  $at, .L700088D4
 /* 008BA4 70007FA4 00094880 */   sll   $t1, $t1, 2
-/* 008BA8 70007FA8 3C018003 */  lui   $at, %hi(J_80029160) # $at, 0x8003
+/* 008BA8 70007FA8 3C018003 */  lui   $at, %hi(jpt_80029160) # $at, 0x8003
 /* 008BAC 70007FAC 00290821 */  addu  $at, $at, $t1
-/* 008BB0 70007FB0 8C299160 */  lw    $t1, %lo(J_80029160)($at) # lw    $t1, -0x6ea0($at)
+/* 008BB0 70007FB0 8C299160 */  lw    $t1, %lo(jpt_80029160)($at) # lw    $t1, -0x6ea0($at)
 /* 008BB4 70007FB4 01200008 */  jr    $t1
 /* 008BB8 70007FB8 00000000 */   nop
 glabel .L70007FBC
@@ -1116,7 +1116,7 @@ glabel .L700088D4
 /* 009544 70008944 27BD00D0 */   addiu $sp, $sp, 0xd0
 
 .late_rodata
-glabel J_80029160
+glabel jpt_80029160
  .word .L70007FBC
  .word .L70008388
  .word .L700088D4

@@ -1020,24 +1020,10 @@ glabel _load_rom_index_to_membank
 
 
 
-#ifdef NONMATCHING
 void _load_resource_index_to_membank(void) {
     load_resource_index_to_buffer();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel _load_resource_index_to_membank
-/* 0F1814 7F0BCCE4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F1818 7F0BCCE8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F181C 7F0BCCEC 0FC2F3F8 */  jal   load_resource_index_to_buffer
-/* 0F1820 7F0BCCF0 00000000 */   nop   
-/* 0F1824 7F0BCCF4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F1828 7F0BCCF8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F182C 7F0BCCFC 03E00008 */  jr    $ra
-/* 0F1830 7F0BCD00 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -1657,28 +1643,9 @@ glabel something_mem_bank_a0
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0BD234(void) {
-    // Node 0
-    something_mem_bank_a0(5);
-    return;
-    // (possible return value: something_mem_bank_a0(5))
+  something_mem_bank_a0(5);
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BD234
-/* 0F1D64 7F0BD234 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F1D68 7F0BD238 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F1D6C 7F0BD23C 0FC2F46F */  jal   something_mem_bank_a0
-/* 0F1D70 7F0BD240 24040005 */   li    $a0, 5
-/* 0F1D74 7F0BD244 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F1D78 7F0BD248 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F1D7C 7F0BD24C 03E00008 */  jr    $ra
-/* 0F1D80 7F0BD250 00000000 */   nop   
-)
-#endif
 
 
 
@@ -1781,18 +1748,10 @@ glabel get_index_num_of_named_resource
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BD384(void) {
-
+void sub_GAME_7F0BD384(u32 param_1)
+{
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BD384
-/* 0F1EB4 7F0BD384 03E00008 */  jr    $ra
-/* 0F1EB8 7F0BD388 AFA40000 */   sw    $a0, ($sp)
-)
-#endif
 
 
 

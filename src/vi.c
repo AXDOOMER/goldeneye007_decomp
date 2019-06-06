@@ -95,7 +95,7 @@ u32 ptr_vi_c_debug_debug_notice_list[] = {
 
 
 void start_nulled_entry(void) {
-    // (function likely void)
+    return;
 }
 
 void something_with_vi_c_debug(void)

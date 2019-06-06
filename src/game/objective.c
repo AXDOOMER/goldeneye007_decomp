@@ -1,17 +1,6 @@
 #include "ultra64.h"
 
 
-
-
-
-
-
-
-
-
-
-
-
 #ifdef NONMATCHING
 void something_with_stage_objectives(void) {
 

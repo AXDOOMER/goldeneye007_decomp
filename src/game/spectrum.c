@@ -1231,19 +1231,10 @@ glabel spectrum_input_handling
 
 
 
-
-#ifdef NONMATCHING
 void nullsub_50(void) {
-
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel nullsub_50
-/* 108304 7F0D37D4 03E00008 */  jr    $ra
-/* 108308 7F0D37D8 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -1554,7 +1545,7 @@ glabel spectrum_op_table
 .word spectrum_op_FF
 
 /*D:8005C52C*/
-glabel jpt_7010E33C
+glabel jpt_8005C52C
 .word spectrum_op_CB_00
 .word spectrum_op_CB_01
 .word spectrum_op_CB_02
@@ -1621,7 +1612,7 @@ glabel jpt_7010E33C
 .word spectrum_op_CB_3F
 
 /*D:8005C62C*/
-glabel jpt_7010FDE8
+glabel jpt_8005C62C
 .word spectrum_op_SET_x_B
 .word spectrum_op_SET_x_C
 .word spectrum_op_SET_x_D
@@ -1632,7 +1623,7 @@ glabel jpt_7010FDE8
 .word spectrum_op_SET_x_A
 
 /*D:8005C64C*/
-glabel jpt_7010FE20
+glabel jpt_8005C64C
 .word spectrum_op_RES_x_B
 .word spectrum_op_RES_x_C
 .word spectrum_op_RES_x_D
@@ -1643,7 +1634,7 @@ glabel jpt_7010FE20
 .word spectrum_op_RES_x_A
 
 /*D:8005C66C*/
-glabel jpt_7010FE40
+glabel jpt_8005C66C
 .word spectrum_op_BIT_x_B
 .word spectrum_op_BIT_x_C
 .word spectrum_op_BIT_x_D
@@ -1654,7 +1645,7 @@ glabel jpt_7010FE40
 .word spectrum_op_BIT_x_A
 
 /*D:8005C68C*/
-glabel jpt_701104EC
+glabel jpt_8005C68C
 .word .L7F0DC5C4
 .word .L7F0DC5CC
 .word .L7F0DC5D4
@@ -1665,7 +1656,7 @@ glabel jpt_701104EC
 .word .L7F0DC5F4
 
 /*D:8005C6AC*/
-glabel jpt_70112968
+glabel jpt_8005C6AC
 .word spectrum_op_ED_A0
 .word spectrum_op_ED_A1
 .word spectrum_op_ED_A2
@@ -1696,7 +1687,7 @@ glabel jpt_70112968
 .word spectrum_op_ED_BB
 
 /*D:8005C71C*/
-glabel jpt_70112990
+glabel jpt_8005C71C
 .word spectrum_op_ED_40
 .word spectrum_op_ED_41
 .word spectrum_op_ED_42
@@ -1891,9 +1882,9 @@ glabel spectrum_hw_emulation
 /* 10854C 7F0D3A1C 10203B77 */  beqz  $at, .L7F0E27FC
 /* 108550 7F0D3A20 A3B90284 */   sb    $t9, 0x284($sp)
 /* 108554 7F0D3A24 000B5880 */  sll   $t3, $t3, 2
-/* 108558 7F0D3A28 3C018006 */  lui   $at, 0x8006
+/* 108558 7F0D3A28 3C018006 */  lui   $at, %hi(spectrum_op_table)
 /* 10855C 7F0D3A2C 002B0821 */  addu  $at, $at, $t3
-/* 108560 7F0D3A30 8C2BC12C */  lw    $t3, -0x3ed4($at)
+/* 108560 7F0D3A30 8C2BC12C */  lw    $t3, %lo(spectrum_op_table)($at)
 /* 108564 7F0D3A34 01600008 */  jr    $t3
 /* 108568 7F0D3A38 00000000 */   nop   
 spectrum_op_00:
@@ -9255,9 +9246,9 @@ spectrum_op_CB_40_FF:
 def_7F0DBF10:
 /* 10EF28 7F0DA3F8 10200867 */  beqz  $at, .L7F0DC598
 /* 10EF2C 7F0DA3FC 0019C880 */   sll   $t9, $t9, 2
-/* 10EF30 7F0DA400 3C018006 */  lui   $at, 0x8006
+/* 10EF30 7F0DA400 3C018006 */  lui   $at, %hi(jpt_8005C52C)
 /* 10EF34 7F0DA404 00390821 */  addu  $at, $at, $t9
-/* 10EF38 7F0DA408 8C39C52C */  lw    $t9, -0x3ad4($at)
+/* 10EF38 7F0DA408 8C39C52C */  lw    $t9, %lo(jpt_8005C52C)($at)
 /* 10EF3C 7F0DA40C 03200008 */  jr    $t9
 /* 10EF40 7F0DA410 00000000 */   nop   
 spectrum_op_CB_00:
@@ -11043,9 +11034,9 @@ spectrum_op_CB_3F:
 /* 1109D0 7F0DBEA0 2D010008 */  sltiu $at, $t0, 8
 /* 1109D4 7F0DBEA4 102001BC */  beqz  $at, .L7F0DC598
 /* 1109D8 7F0DBEA8 00084080 */   sll   $t0, $t0, 2
-/* 1109DC 7F0DBEAC 3C018006 */  lui   $at, 0x8006
+/* 1109DC 7F0DBEAC 3C018006 */  lui   $at, %hi(jpt_8005C62C)
 /* 1109E0 7F0DBEB0 00280821 */  addu  $at, $at, $t0
-/* 1109E4 7F0DBEB4 8C28C62C */  lw    $t0, -0x39d4($at)
+/* 1109E4 7F0DBEB4 8C28C62C */  lw    $t0, %lo(jpt_8005C62C)($at)
 /* 1109E8 7F0DBEB8 01000008 */  jr    $t0
 /* 1109EC 7F0DBEBC 00000000 */   nop   
 .L7F0DBEC0:
@@ -11058,18 +11049,18 @@ spectrum_op_CB_3F:
 /* 110A08 7F0DBED8 2D810008 */  sltiu $at, $t4, 8
 /* 110A0C 7F0DBEDC 102001AE */  beqz  $at, .L7F0DC598
 /* 110A10 7F0DBEE0 000C6080 */   sll   $t4, $t4, 2
-/* 110A14 7F0DBEE4 3C018006 */  lui   $at, 0x8006
+/* 110A14 7F0DBEE4 3C018006 */  lui   $at, %hi(jpt_8005C64C)
 /* 110A18 7F0DBEE8 002C0821 */  addu  $at, $at, $t4
-/* 110A1C 7F0DBEEC 8C2CC64C */  lw    $t4, -0x39b4($at)
+/* 110A1C 7F0DBEEC 8C2CC64C */  lw    $t4, %lo(jpt_8005C64C)($at)
 /* 110A20 7F0DBEF0 01800008 */  jr    $t4
 /* 110A24 7F0DBEF4 00000000 */   nop   
 .L7F0DBEF8:
 /* 110A28 7F0DBEF8 2D210008 */  sltiu $at, $t1, 8
 /* 110A2C 7F0DBEFC 102001A6 */  beqz  $at, .L7F0DC598
 /* 110A30 7F0DBF00 00094880 */   sll   $t1, $t1, 2
-/* 110A34 7F0DBF04 3C018006 */  lui   $at, 0x8006
+/* 110A34 7F0DBF04 3C018006 */  lui   $at, %hi(jpt_8005C66C)
 /* 110A38 7F0DBF08 00290821 */  addu  $at, $at, $t1
-/* 110A3C 7F0DBF0C 8C29C66C */  lw    $t1, -0x3994($at)
+/* 110A3C 7F0DBF0C 8C29C66C */  lw    $t1, %lo(jpt_8005C66C)($at)
 /* 110A40 7F0DBF10 01200008 */  jr    $t1
 /* 110A44 7F0DBF14 00000000 */   nop   
 spectrum_op_BIT_x_B:
@@ -11541,9 +11532,9 @@ spectrum_op_SET_x_A:
 /* 1110D4 7F0DC5A4 2DA10008 */   sltiu $at, $t5, 8
 /* 1110D8 7F0DC5A8 10201894 */  beqz  $at, .L7F0E27FC
 /* 1110DC 7F0DC5AC 000D6880 */   sll   $t5, $t5, 2
-/* 1110E0 7F0DC5B0 3C018006 */  lui   $at, 0x8006
+/* 1110E0 7F0DC5B0 3C018006 */  lui   $at, %hi(jpt_8005C68C)
 /* 1110E4 7F0DC5B4 002D0821 */  addu  $at, $at, $t5
-/* 1110E8 7F0DC5B8 8C2DC68C */  lw    $t5, -0x3974($at)
+/* 1110E8 7F0DC5B8 8C2DC68C */  lw    $t5, %lo(jpt_8005C68C)($at)
 .L7F0DC5BC:
 /* 1110EC 7F0DC5BC 01A00008 */  jr    $t5
 /* 1110F0 7F0DC5C0 00000000 */   nop   
@@ -14034,9 +14025,9 @@ spectrum_op_ED:
 /* 113550 7F0DEA20 2F21001C */  sltiu $at, $t9, 0x1c
 /* 113554 7F0DEA24 10200C11 */  beqz  $at, .L7F0E1A6C
 /* 113558 7F0DEA28 0019C880 */   sll   $t9, $t9, 2
-/* 11355C 7F0DEA2C 3C018006 */  lui   $at, 0x8006
+/* 11355C 7F0DEA2C 3C018006 */  lui   $at, %hi(jpt_8005C6AC)
 /* 113560 7F0DEA30 00390821 */  addu  $at, $at, $t9
-/* 113564 7F0DEA34 8C39C6AC */  lw    $t9, -0x3954($at)
+/* 113564 7F0DEA34 8C39C6AC */  lw    $t9, %lo(jpt_8005C6AC)($at)
 /* 113568 7F0DEA38 03200008 */  jr    $t9
 /* 11356C 7F0DEA3C 00000000 */   nop   
 .L7F0DEA40:
@@ -14045,9 +14036,9 @@ spectrum_op_ED:
 /* 113578 7F0DEA48 2DC1003F */  sltiu $at, $t6, 0x3f
 /* 11357C 7F0DEA4C 10200C07 */  beqz  $at, .L7F0E1A6C
 /* 113580 7F0DEA50 000E7080 */   sll   $t6, $t6, 2
-/* 113584 7F0DEA54 3C018006 */  lui   $at, 0x8006
+/* 113584 7F0DEA54 3C018006 */  lui   $at, %hi(jpt_8005C71C)
 /* 113588 7F0DEA58 002E0821 */  addu  $at, $at, $t6
-/* 11358C 7F0DEA5C 8C2EC71C */  lw    $t6, -0x38e4($at)
+/* 11358C 7F0DEA5C 8C2EC71C */  lw    $t6, %lo(jpt_8005C71C)($at)
 /* 113590 7F0DEA60 01C00008 */  jr    $t6
 /* 113594 7F0DEA64 00000000 */   nop   
 spectrum_op_ED_40:

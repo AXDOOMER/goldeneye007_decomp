@@ -3955,7 +3955,7 @@ void solo_char_load(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:80054FE4*/
-glabel jpt_700ADD28
+glabel jpt_bondcuff
 .word .L7F079EA4
 .word cuff_1_brosnan
 .word cuff_2_jungle
@@ -3967,7 +3967,7 @@ glabel jpt_700ADD28
 .word cuff_8_variable_bond_head
 
 /*D:80055008*/
-glabel jpt_700ADE1C
+glabel jpt_bondhead
 .word .L7F079F84
 .word brosnan_tux_head_set
 .word jungle_head_set
@@ -4046,9 +4046,9 @@ glabel solo_char_load
 /* 0AE910 7F079DE0 2C610009 */  sltiu $at, $v1, 9
 /* 0AE914 7F079DE4 1020002F */  beqz  $at, .L7F079EA4
 /* 0AE918 7F079DE8 00035880 */   sll   $t3, $v1, 2
-/* 0AE91C 7F079DEC 3C018005 */  lui   $at, 0x8005
+/* 0AE91C 7F079DEC 3C018005 */  lui   $at, %hi(jpt_bondcuff)
 /* 0AE920 7F079DF0 002B0821 */  addu  $at, $at, $t3
-/* 0AE924 7F079DF4 8C2B4FE4 */  lw    $t3, 0x4fe4($at)
+/* 0AE924 7F079DF4 8C2B4FE4 */  lw    $t3, %lo(jpt_bondcuff)($at)
 /* 0AE928 7F079DF8 01600008 */  jr    $t3
 /* 0AE92C 7F079DFC 00000000 */   nop   
 cuff_3_boiler:
@@ -4121,9 +4121,9 @@ cuff_8_variable_bond_head:
 .L7F079ED8:
 /* 0AEA08 7F079ED8 1020002A */  beqz  $at, .L7F079F84
 /* 0AEA0C 7F079EDC 0003C080 */   sll   $t8, $v1, 2
-/* 0AEA10 7F079EE0 3C018005 */  lui   $at, 0x8005
+/* 0AEA10 7F079EE0 3C018005 */  lui   $at, %hi(jpt_bondhead)
 /* 0AEA14 7F079EE4 00380821 */  addu  $at, $at, $t8
-/* 0AEA18 7F079EE8 8C385008 */  lw    $t8, 0x5008($at)
+/* 0AEA18 7F079EE8 8C385008 */  lw    $t8, %lo(jpt_bondhead)($at)
 /* 0AEA1C 7F079EEC 03000008 */  jr    $t8
 /* 0AEA20 7F079EF0 00000000 */   nop   
 boiler_bond_head_set:
@@ -23417,7 +23417,7 @@ glabel D_8005528C
 .word 0x3dccccd0 /*0.10000002*/
 
 /*D:80055290*/
-glabel jpt_700BCB10
+glabel jpt_mpspawntype
 .word mp_spawntype_spawn
 .word mp_spawntype_weapon
 .word mp_spawntype_ammo
@@ -23622,9 +23622,9 @@ glabel mp_respawn_handler
 .L7F088BCC:
 /* 0BD6FC 7F088BCC 1020002A */  beqz  $at, .L7F088C78
 /* 0BD700 7F088BD0 00024880 */   sll   $t1, $v0, 2
-/* 0BD704 7F088BD4 3C018005 */  lui   $at, 0x8005
+/* 0BD704 7F088BD4 3C018005 */  lui   $at, %hi(jpt_mpspawntype)
 /* 0BD708 7F088BD8 00290821 */  addu  $at, $at, $t1
-/* 0BD70C 7F088BDC 8C295290 */  lw    $t1, 0x5290($at)
+/* 0BD70C 7F088BDC 8C295290 */  lw    $t1, %lo(jpt_mpspawntype)($at)
 /* 0BD710 7F088BE0 01200008 */  jr    $t1
 /* 0BD714 7F088BE4 00000000 */   nop   
 mp_spawntype_spawn:

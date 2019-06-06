@@ -267,39 +267,15 @@ glabel get_ptr_mp_weapon_set_data
 
 
 
-#ifdef NONMATCHING
 void set_mp_weapon_set(s32 arg0) {
     mp_weapon_set = arg0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel set_mp_weapon_set
-/* 0FB160 7F0C6630 3C018005 */  lui   $at, %hi(mp_weapon_set)
-/* 0FB164 7F0C6634 03E00008 */  jr    $ra
-/* 0FB168 7F0C6638 AC249160 */   sw    $a0, %lo(mp_weapon_set)($at)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
 s32 get_mp_weapon_set(void) {
     return mp_weapon_set;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel get_mp_weapon_set
-/* 0FB16C 7F0C663C 3C028005 */  lui   $v0, %hi(mp_weapon_set)
-/* 0FB170 7F0C6640 03E00008 */  jr    $ra
-/* 0FB174 7F0C6644 8C429160 */   lw    $v0, %lo(mp_weapon_set)($v0)
-)
-#endif
+
 
 
 

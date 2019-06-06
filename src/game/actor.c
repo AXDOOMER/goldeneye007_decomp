@@ -19109,7 +19109,7 @@ glabel D_80051F74
 .word 0x3e088888 /*0.13333333*/
 glabel D_80051F78
 .word 0x461c4000 /*10000.0*/
-glabel jpt_700620FC
+glabel jpt_80051F7C
  .word weapon_guard_fires_bullet_projectile
  .word weapon_guard_fires_bullet_projectile
  .word weapon_guard_fires_bullet_projectile
@@ -19843,9 +19843,9 @@ glabel sub_GAME_7F02D734
 /* 062CE4 7F02E1B4 2DE10013 */  sltiu $at, $t7, 0x13
 /* 062CE8 7F02E1B8 10200009 */  beqz  $at, .L7F02E1E0
 /* 062CEC 7F02E1BC 000F7880 */   sll   $t7, $t7, 2
-/* 062CF0 7F02E1C0 3C018005 */  lui   $at, 0x8005
+/* 062CF0 7F02E1C0 3C018005 */  lui   $at, %hi(jpt_80051F7C)
 /* 062CF4 7F02E1C4 002F0821 */  addu  $at, $at, $t7
-/* 062CF8 7F02E1C8 8C2F1F7C */  lw    $t7, 0x1f7c($at)
+/* 062CF8 7F02E1C8 8C2F1F7C */  lw    $t7, %lo(jpt_80051F7C)($at)
 /* 062CFC 7F02E1CC 01E00008 */  jr    $t7
 /* 062D00 7F02E1D0 00000000 */   nop   
 weapon_guard_fires_bullet_projectile:
@@ -24975,7 +24975,7 @@ void sub_GAME_7F0326BC(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
-glabel jpt_700666B0
+glabel jpt_80052070
  .word .L7F032788
  .word .L7F032798
  .word .L7F0327A8
@@ -25051,9 +25051,9 @@ glabel sub_GAME_7F0326BC
 /* 067298 7F032768 2F210018 */  sltiu $at, $t9, 0x18
 /* 06729C 7F03276C 1020005C */  beqz  $at, .L7F0328E0
 /* 0672A0 7F032770 0019C880 */   sll   $t9, $t9, 2
-/* 0672A4 7F032774 3C018005 */  lui   $at, 0x8005
+/* 0672A4 7F032774 3C018005 */  lui   $at, %hi(jpt_80052070)
 /* 0672A8 7F032778 00390821 */  addu  $at, $at, $t9
-/* 0672AC 7F03277C 8C392070 */  lw    $t9, 0x2070($at)
+/* 0672AC 7F03277C 8C392070 */  lw    $t9, %lo(jpt_80052070)($at)
 /* 0672B0 7F032780 03200008 */  jr    $t9
 /* 0672B4 7F032784 00000000 */   nop   
 .L7F032788:

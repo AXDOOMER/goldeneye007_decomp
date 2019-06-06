@@ -2313,7 +2313,7 @@ void sub_GAME_7F0B4884(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:80058C58*/
-glabel jpt_700E883C
+glabel jpt_80058C58
 .word .L7F0B4914
 .word .L7F0B4914
 .word .L7F0B4914
@@ -2358,9 +2358,9 @@ glabel sub_GAME_7F0B4884
 /* 0E9424 7F0B48F4 10200009 */  beqz  $at, .L7F0B491C
 /* 0E9428 7F0B48F8 AC6E0000 */   sw    $t6, ($v1)
 /* 0E942C 7F0B48FC 000F7880 */  sll   $t7, $t7, 2
-/* 0E9430 7F0B4900 3C018006 */  lui   $at, 0x8006
+/* 0E9430 7F0B4900 3C018006 */  lui   $at, %hi(jpt_80058C58)
 /* 0E9434 7F0B4904 002F0821 */  addu  $at, $at, $t7
-/* 0E9438 7F0B4908 8C2F8C58 */  lw    $t7, -0x73a8($at)
+/* 0E9438 7F0B4908 8C2F8C58 */  lw    $t7, %lo(jpt_80058C58)($at)
 .L7F0B490C:
 /* 0E943C 7F0B490C 01E00008 */  jr    $t7
 /* 0E9440 7F0B4910 00000000 */   nop   
@@ -2936,7 +2936,7 @@ glabel sub_GAME_7F0B4F9C
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B4FB4(void) {
-    return sub_GAME_7F0B5058(ptr_BONDdata->unk7F4, ptr_BONDdata->unk7F6, (ptr_BONDdata->unk7F4 + ptr_BONDdata->unk7F0), (s32) (ptr_BONDdata->unk7F6 + ptr_BONDdata->unk7F2));
+    return sub_GAME_7F0B5058(ptr_BONDdata->playerscreenulx, ptr_BONDdata->playerscreenuly, (ptr_BONDdata->playerscreenulx + ptr_BONDdata->unk7F0), (s32) (ptr_BONDdata->playerscreenuly + ptr_BONDdata->unk7F2));
 }
 #else
 GLOBAL_ASM(
@@ -8873,7 +8873,7 @@ void parse_global_vis_command_list(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:80058C80*/
-glabel jpt_700EC3D8
+glabel jpt_80058C80
 .word if_statement
 .word dont_exec_commands_even_on_return
 .word endif_continue_exec
@@ -8969,18 +8969,18 @@ glabel parse_global_vis_command_list
 /* 0ECFC0 7F0B8490 2DC1000D */  sltiu $at, $t6, 0xd
 /* 0ECFC4 7F0B8494 10200156 */  beqz  $at, .L7F0B89F0
 /* 0ECFC8 7F0B8498 000E7080 */   sll   $t6, $t6, 2
-/* 0ECFCC 7F0B849C 3C018006 */  lui   $at, 0x8006
+/* 0ECFCC 7F0B849C 3C018006 */  lui   $at, %hi(jpt_80058C80)
 /* 0ECFD0 7F0B84A0 002E0821 */  addu  $at, $at, $t6
-/* 0ECFD4 7F0B84A4 8C2E8C80 */  lw    $t6, -0x7380($at)
+/* 0ECFD4 7F0B84A4 8C2E8C80 */  lw    $t6, %lo(jpt_80058C80)($at)
 /* 0ECFD8 7F0B84A8 01C00008 */  jr    $t6
 /* 0ECFDC 7F0B84AC 00000000 */   nop   
 .L7F0B84B0:
 /* 0ECFE0 7F0B84B0 2C810028 */  sltiu $at, $a0, 0x28
 /* 0ECFE4 7F0B84B4 1020014E */  beqz  $at, .L7F0B89F0
 /* 0ECFE8 7F0B84B8 00047880 */   sll   $t7, $a0, 2
-/* 0ECFEC 7F0B84BC 3C018006 */  lui   $at, 0x8006
+/* 0ECFEC 7F0B84BC 3C018006 */  lui   $at, %hi(vis_command_jpt)
 /* 0ECFF0 7F0B84C0 002F0821 */  addu  $at, $at, $t7
-/* 0ECFF4 7F0B84C4 8C2F8CB4 */  lw    $t7, -0x734c($at)
+/* 0ECFF4 7F0B84C4 8C2F8CB4 */  lw    $t7, %lo(vis_command_jpt)($at)
 /* 0ECFF8 7F0B84C8 01E00008 */  jr    $t7
 /* 0ECFFC 7F0B84CC 00000000 */   nop   
 break:

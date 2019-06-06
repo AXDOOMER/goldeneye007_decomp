@@ -4501,7 +4501,7 @@ void process_huffman_compressed_images(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:8005BD30*/
-glabel jpt_700FBF84
+glabel jpt_8005BD30
 .word huffman_type0_1
 .word huffman_type0_1
 .word huffman_type2
@@ -4672,9 +4672,9 @@ glabel process_huffman_compressed_images
 /* 0FCB70 7F0C8040 2C41000A */  sltiu $at, $v0, 0xa
 .L7F0C8044:
 /* 0FCB74 7F0C8044 1020013B */  beqz  $at, .L7F0C8534
-/* 0FCB78 7F0C8048 3C018006 */   lui   $at, 0x8006
+/* 0FCB78 7F0C8048 3C018006 */   lui   $at, %hi(jpt_8005BD30)
 /* 0FCB7C 7F0C804C 002D0821 */  addu  $at, $at, $t5
-/* 0FCB80 7F0C8050 8C2DBD30 */  lw    $t5, -0x42d0($at)
+/* 0FCB80 7F0C8050 8C2DBD30 */  lw    $t5, %lo(jpt_8005BD30)($at)
 /* 0FCB84 7F0C8054 01A00008 */  jr    $t5
 /* 0FCB88 7F0C8058 00000000 */   nop   
 huffman_type0_1:
@@ -5168,7 +5168,7 @@ void image_decompresion_related(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:8005BD58*/
-glabel jpt_700FC6F4
+glabel jpt_8005BD58
 .word .L7F0C87CC
 .word .L7F0C87F0
 .word .L7F0C87CC
@@ -5180,7 +5180,7 @@ glabel jpt_700FC6F4
 .word .L7F0C8838
 
 /*D:8005BD7C*/
-glabel jpt_700FC7A4
+glabel jpt_8005BD7C
 .word .L7F0C887C
 .word .L7F0C8A2C
 .word .L7F0C887C
@@ -5217,9 +5217,9 @@ glabel image_decompresion_related
 /* 0FD2DC 7F0C87AC 1020002A */  beqz  $at, .L7F0C8858
 /* 0FD2E0 7F0C87B0 AFAC004C */   sw    $t4, 0x4c($sp)
 /* 0FD2E4 7F0C87B4 0002C080 */  sll   $t8, $v0, 2
-/* 0FD2E8 7F0C87B8 3C018006 */  lui   $at, 0x8006
+/* 0FD2E8 7F0C87B8 3C018006 */  lui   $at, %hi(jpt_8005BD58)
 /* 0FD2EC 7F0C87BC 00380821 */  addu  $at, $at, $t8
-/* 0FD2F0 7F0C87C0 8C38BD58 */  lw    $t8, -0x42a8($at)
+/* 0FD2F0 7F0C87C0 8C38BD58 */  lw    $t8, %lo(jpt_8005BD58)($at)
 /* 0FD2F4 7F0C87C4 03000008 */  jr    $t8
 /* 0FD2F8 7F0C87C8 00000000 */   nop   
 .L7F0C87CC:
@@ -5267,9 +5267,9 @@ def_7F0C87C4:
 /* 0FD38C 7F0C885C 10200250 */  beqz  $at, .L7F0C91A0
 /* 0FD390 7F0C8860 8FB200AC */   lw    $s2, 0xac($sp)
 /* 0FD394 7F0C8864 00027080 */  sll   $t6, $v0, 2
-/* 0FD398 7F0C8868 3C018006 */  lui   $at, 0x8006
+/* 0FD398 7F0C8868 3C018006 */  lui   $at, %hi(jpt_8005BD7C)
 /* 0FD39C 7F0C886C 002E0821 */  addu  $at, $at, $t6
-/* 0FD3A0 7F0C8870 8C2EBD7C */  lw    $t6, -0x4284($at)
+/* 0FD3A0 7F0C8870 8C2EBD7C */  lw    $t6, %lo(jpt_8005BD7C)($at)
 /* 0FD3A4 7F0C8874 01C00008 */  jr    $t6
 /* 0FD3A8 7F0C8878 00000000 */   nop   
 .L7F0C887C:
@@ -6660,7 +6660,7 @@ void image_compression0_expand(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:8005BDA0*/
-glabel jpt_700FDA34
+glabel jpt_8005BDA0
 .word .L7F0C9B0C
 .word .L7F0C9BEC
 .word .L7F0C9B84
@@ -6695,9 +6695,9 @@ glabel image_compression0_expand
 /* 0FE61C 7F0C9AEC 102000A1 */  beqz  $at, .L7F0C9D74
 /* 0FE620 7F0C9AF0 0260B025 */   move  $s6, $s3
 /* 0FE624 7F0C9AF4 0007C080 */  sll   $t8, $a3, 2
-/* 0FE628 7F0C9AF8 3C018006 */  lui   $at, 0x8006
+/* 0FE628 7F0C9AF8 3C018006 */  lui   $at, %hi(jpt_8005BDA0)
 /* 0FE62C 7F0C9AFC 00380821 */  addu  $at, $at, $t8
-/* 0FE630 7F0C9B00 8C38BDA0 */  lw    $t8, -0x4260($at)
+/* 0FE630 7F0C9B00 8C38BDA0 */  lw    $t8, %lo(jpt_8005BDA0)($at)
 /* 0FE634 7F0C9B04 03000008 */  jr    $t8
 /* 0FE638 7F0C9B08 00000000 */   nop   
 .L7F0C9B0C:
@@ -6915,7 +6915,7 @@ void generate_link_final_image(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:8005BDC4*/
-glabel jpt_700FDD20
+glabel jpt_8005BDC4
 .word .L7F0C9DF8
 .word .L7F0CA138
 .word .L7F0C9FAC
@@ -6943,9 +6943,9 @@ glabel generate_link_final_image
 /* 0FE908 7F0C9DD8 102002A6 */  beqz  $at, .L7F0CA874
 /* 0FE90C 7F0C9DDC 00004025 */   move  $t0, $zero
 /* 0FE910 7F0C9DE0 000E7080 */  sll   $t6, $t6, 2
-/* 0FE914 7F0C9DE4 3C018006 */  lui   $at, 0x8006
+/* 0FE914 7F0C9DE4 3C018006 */  lui   $at, %hi(jpt_8005BDC4)
 /* 0FE918 7F0C9DE8 002E0821 */  addu  $at, $at, $t6
-/* 0FE91C 7F0C9DEC 8C2EBDC4 */  lw    $t6, -0x423c($at)
+/* 0FE91C 7F0C9DEC 8C2EBDC4 */  lw    $t6, %lo(jpt_8005BDC4)($at)
 /* 0FE920 7F0C9DF0 01C00008 */  jr    $t6
 /* 0FE924 7F0C9DF4 00000000 */   nop   
 .L7F0C9DF8:
@@ -7706,7 +7706,7 @@ void type5_generate_link_final_image(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:8005BDE8*/
-glabel jpt_700FE830
+glabel jpt_8005BDE8
 .word .L7F0CA908
 .word .L7F0CA9FC
 .word .L7F0CA97C
@@ -7743,9 +7743,9 @@ glabel type5_generate_link_final_image
 /* 0FF418 7F0CA8E8 2DC10009 */  sltiu $at, $t6, 9
 /* 0FF41C 7F0CA8EC 102000CE */  beqz  $at, .L7F0CAC28
 /* 0FF420 7F0CA8F0 000E7080 */   sll   $t6, $t6, 2
-/* 0FF424 7F0CA8F4 3C018006 */  lui   $at, 0x8006
+/* 0FF424 7F0CA8F4 3C018006 */  lui   $at, %hi(jpt_8005BDE8)
 /* 0FF428 7F0CA8F8 002E0821 */  addu  $at, $at, $t6
-/* 0FF42C 7F0CA8FC 8C2EBDE8 */  lw    $t6, -0x4218($at)
+/* 0FF42C 7F0CA8FC 8C2EBDE8 */  lw    $t6, %lo(jpt_8005BDE8)($at)
 /* 0FF430 7F0CA900 01C00008 */  jr    $t6
 /* 0FF434 7F0CA904 00000000 */   nop   
 .L7F0CA908:
@@ -8009,7 +8009,7 @@ void type6_7_generate_link_final_image(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:8005BE0C*/
-glabel jpt_700FEBEC
+glabel jpt_8005BE0C
 .word .L7F0CACC4
 .word .L7F0CB0AC
 .word .L7F0CAE90
@@ -8045,9 +8045,9 @@ glabel type6_7_generate_link_final_image
 /* 0FF7D4 7F0CACA4 2DC10009 */  sltiu $at, $t6, 9
 /* 0FF7D8 7F0CACA8 1020026F */  beqz  $at, .L7F0CB668
 /* 0FF7DC 7F0CACAC 000E7080 */   sll   $t6, $t6, 2
-/* 0FF7E0 7F0CACB0 3C018006 */  lui   $at, 0x8006
+/* 0FF7E0 7F0CACB0 3C018006 */  lui   $at, %hi(jpt_8005BE0C)
 /* 0FF7E4 7F0CACB4 002E0821 */  addu  $at, $at, $t6
-/* 0FF7E8 7F0CACB8 8C2EBE0C */  lw    $t6, -0x41f4($at)
+/* 0FF7E8 7F0CACB8 8C2EBE0C */  lw    $t6, %lo(jpt_8005BE0C)($at)
 /* 0FF7EC 7F0CACBC 01C00008 */  jr    $t6
 /* 0FF7F0 7F0CACC0 00000000 */   nop   
 .L7F0CACC4:
@@ -8777,7 +8777,7 @@ void sub_GAME_7F0CB67C(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:8005BE30*/
-glabel jpt_700FF5D0
+glabel jpt_8005BE30
 .word .L7F0CB6A8
 .word .L7F0CB6BC
 .word .L7F0CB6A8
@@ -8799,9 +8799,9 @@ glabel sub_GAME_7F0CB67C
 /* 1001B8 7F0CB688 1020001D */  beqz  $at, .L7F0CB700
 /* 1001BC 7F0CB68C 00E01825 */   move  $v1, $a3
 /* 1001C0 7F0CB690 00077080 */  sll   $t6, $a3, 2
-/* 1001C4 7F0CB694 3C018006 */  lui   $at, 0x8006
+/* 1001C4 7F0CB694 3C018006 */  lui   $at, %hi(jpt_8005BE30)
 /* 1001C8 7F0CB698 002E0821 */  addu  $at, $at, $t6
-/* 1001CC 7F0CB69C 8C2EBE30 */  lw    $t6, -0x41d0($at)
+/* 1001CC 7F0CB69C 8C2EBE30 */  lw    $t6, %lo(jpt_8005BE30)($at)
 /* 1001D0 7F0CB6A0 01C00008 */  jr    $t6
 /* 1001D4 7F0CB6A4 00000000 */   nop   
 .L7F0CB6A8:
@@ -8912,7 +8912,7 @@ void type8_9_doohick(void) {
 GLOBAL_ASM(
 .late_rodata
 /*D:8005BE64*/
-glabel jpt_700FF7D0
+glabel jpt_8005BE64
 .word .L7F0CB8A8
 .word .L7F0CB8EC
 .word .L7F0CB930
@@ -8973,9 +8973,9 @@ glabel type8_9_doohick
 .L7F0CB88C:
 /* 1003BC 7F0CB88C 1020008E */  beqz  $at, .L7F0CBAC8
 /* 1003C0 7F0CB890 00127880 */   sll   $t7, $s2, 2
-/* 1003C4 7F0CB894 3C018006 */  lui   $at, 0x8006
+/* 1003C4 7F0CB894 3C018006 */  lui   $at, %hi(jpt_8005BE64)
 /* 1003C8 7F0CB898 002F0821 */  addu  $at, $at, $t7
-/* 1003CC 7F0CB89C 8C2FBE64 */  lw    $t7, -0x419c($at)
+/* 1003CC 7F0CB89C 8C2FBE64 */  lw    $t7, %lo(jpt_8005BE64)($at)
 /* 1003D0 7F0CB8A0 01E00008 */  jr    $t7
 /* 1003D4 7F0CB8A4 00000000 */   nop   
 .L7F0CB8A8:

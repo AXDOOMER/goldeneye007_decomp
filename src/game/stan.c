@@ -213,30 +213,9 @@ glabel sub_GAME_7F0AEF3C
 
 
 
-
-#ifdef NONMATCHING
 void sub_GAME_7F0AEFE0(void) {
     sub_GAME_7F0AEF3C();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AEFE0
-/* 0E3B10 7F0AEFE0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E3B14 7F0AEFE4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E3B18 7F0AEFE8 0FC2BBCF */  jal   sub_GAME_7F0AEF3C
-/* 0E3B1C 7F0AEFEC 00000000 */   nop   
-/* 0E3B20 7F0AEFF0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E3B24 7F0AEFF4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0E3B28 7F0AEFF8 03E00008 */  jr    $ra
-/* 0E3B2C 7F0AEFFC 00000000 */   nop   
-)
-#endif
-
-
-
-
-
 
 u32 stanRemovedAnimationRoutine(s32 arg0) {
     return 0;
@@ -3312,26 +3291,10 @@ glabel sub_GAME_7F0B0C98
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0B0CEC(void) {
-    // Node 0
     sub_GAME_7F0B0C98();
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B0CEC
-/* 0E581C 7F0B0CEC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E5820 7F0B0CF0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E5824 7F0B0CF4 0FC2C326 */  jal   sub_GAME_7F0B0C98
-/* 0E5828 7F0B0CF8 00000000 */   nop   
-/* 0E582C 7F0B0CFC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E5830 7F0B0D00 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0E5834 7F0B0D04 03E00008 */  jr    $ra
-/* 0E5838 7F0B0D08 00000000 */   nop   
-)
-#endif
 
 
 
@@ -4665,30 +4628,11 @@ glabel sub_GAME_7F0B18B8
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0B1CC4(void) {
     dword_CODE_bss_8007B9E4 = 0;
     dword_CODE_bss_8007B9E8 = 0;
     D_800413BC = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B1CC4
-/* 0E67F4 7F0B1CC4 3C018008 */  lui   $at, %hi(dword_CODE_bss_8007B9E4) # $at, 0x8008
-/* 0E67F8 7F0B1CC8 AC20B9E4 */  sw    $zero, %lo(dword_CODE_bss_8007B9E4)($at)
-/* 0E67FC 7F0B1CCC 3C018008 */  lui   $at, %hi(dword_CODE_bss_8007B9E8) # $at, 0x8008
-/* 0E6800 7F0B1CD0 AC20B9E8 */  sw    $zero, %lo(dword_CODE_bss_8007B9E8)($at)
-/* 0E6804 7F0B1CD4 3C018004 */  lui   $at, %hi(D_800413BC)
-/* 0E6808 7F0B1CD8 03E00008 */  jr    $ra
-/* 0E680C 7F0B1CDC AC2013BC */   sw    $zero, %lo(D_800413BC)($at)
-)
-#endif
-
-
-
-
-
 
 s32 sub_GAME_7F0B1CE0(void) {
     return dword_CODE_bss_8007B9E4;
@@ -5414,7 +5358,7 @@ glabel sub_GAME_7F0B2314
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B239C(void *arg0) {
+void *sub_GAME_7F0B239C(void *arg0) {
     // Node 0
     return *arg0;
 }

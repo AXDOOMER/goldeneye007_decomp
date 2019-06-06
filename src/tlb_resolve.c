@@ -5,7 +5,7 @@
 
 #ifdef NONMATCHING
 void resolve_TLBaddress_for_InvalidHit(void) {
-
+    //i should probably remain as assembly, maybe even moved to a .s
 }
 #else
 GLOBAL_ASM(

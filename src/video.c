@@ -2566,21 +2566,12 @@ glabel video_related_21
 )
 #endif
 
-#ifdef NONMATCHING
-? video_related_23(void)
+
+f32 video_related_23(void)
 {
     return ptr_video_settings2->far;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel video_related_23
-/* 0051DC 700045DC 3C0E8002 */  lui   $t6, %hi(ptr_video_settings2) # $t6, 0x8002
-/* 0051E0 700045E0 8DCE32A8 */  lw    $t6, %lo(ptr_video_settings2)($t6)
-/* 0051E4 700045E4 03E00008 */  jr    $ra
-/* 0051E8 700045E8 C5C00008 */   lwc1  $f0, 8($t6)
-)
-#endif
+
 
 #ifdef NONMATCHING
 void video_related_24(f32 arg0, f32 arg1)

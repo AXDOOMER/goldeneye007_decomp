@@ -9,15 +9,15 @@ s32 D_8004849C = -1;
 s32 D_800484A0 = 0;
 s32 D_800484A4 = 0;
 s32 D_800484A8 = 0;
-s32 copy_of_osgetcount_value_0 = 0;
-s32 copy_of_osgetcount_value_1 = 0;
+u32 copy_of_osgetcount_value_0 = 0;
+u32 copy_of_osgetcount_value_1 = 0;
 s32 D_800484B4 = 1;
 
 
 
 #ifdef NONMATCHING
 void store_osgetcount(void) {
-    s32 temp_ret;
+    u32 temp_ret;
 
     temp_ret = osGetCount();
     copy_of_osgetcount_value_1 = temp_ret;

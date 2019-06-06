@@ -2681,26 +2681,19 @@ glabel sub_GAME_7F0BF800
 
 
 
-#ifdef NONMATCHING
 void unload_stage_text_data(void) {
-    // Node 0
     if (D_800483A0 != 0)
     {
-        // Node 1
         if (sfxGetArg0Unk3F(D_800483A0) != 0)
         {
-            // Node 2
             sfxSetArg0Unk3EPostEvent(D_800483A0);
         }
     }
-    // Node 3
     if (current_stage_to_load != 0x5a)
     {
-        // Node 4
         blank_text_bank(get_textbank_number_for_stagenum(current_stage_to_load));
         sub_GAME_7F007770();
     }
-    // Node 5
     sub_GAME_7F0926C0();
     cleanupGuardData();
     cleanupObjectSounds();
@@ -2715,71 +2708,6 @@ void unload_stage_text_data(void) {
     sub_GAME_7F0C1268();
     sub_GAME_7F0B47E0();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel unload_stage_text_data
-/* 0F4650 7F0BFB20 3C048005 */  lui   $a0, %hi(D_800483A0) # $a0, 0x8005
-/* 0F4654 7F0BFB24 8C8483A0 */  lw    $a0, %lo(D_800483A0)($a0)
-/* 0F4658 7F0BFB28 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F465C 7F0BFB2C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F4660 7F0BFB30 10800007 */  beqz  $a0, .L7F0BFB50
-/* 0F4664 7F0BFB34 00000000 */   nop   
-/* 0F4668 7F0BFB38 0C00237C */  jal   sfxGetArg0Unk3F
-/* 0F466C 7F0BFB3C 00000000 */   nop   
-/* 0F4670 7F0BFB40 10400003 */  beqz  $v0, .L7F0BFB50
-/* 0F4674 7F0BFB44 3C048005 */   lui   $a0, %hi(D_800483A0) # $a0, 0x8005
-/* 0F4678 7F0BFB48 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
-/* 0F467C 7F0BFB4C 8C8483A0 */   lw    $a0, %lo(D_800483A0)($a0)
-.L7F0BFB50:
-/* 0F4680 7F0BFB50 3C048005 */  lui   $a0, %hi(current_stage_to_load) # $a0, 0x8005
-/* 0F4684 7F0BFB54 8C848364 */  lw    $a0, %lo(current_stage_to_load)($a0)
-/* 0F4688 7F0BFB58 2401005A */  li    $at, 90
-/* 0F468C 7F0BFB5C 10810007 */  beq   $a0, $at, .L7F0BFB7C
-/* 0F4690 7F0BFB60 00000000 */   nop   
-/* 0F4694 7F0BFB64 0FC30578 */  jal   get_textbank_number_for_stagenum
-/* 0F4698 7F0BFB68 00000000 */   nop   
-/* 0F469C 7F0BFB6C 0FC30771 */  jal   blank_text_bank
-/* 0F46A0 7F0BFB70 00402025 */   move  $a0, $v0
-/* 0F46A4 7F0BFB74 0FC01DDC */  jal   sub_GAME_7F007770
-/* 0F46A8 7F0BFB78 00000000 */   nop   
-.L7F0BFB7C:
-/* 0F46AC 7F0BFB7C 0FC249B0 */  jal   sub_GAME_7F0926C0
-/* 0F46B0 7F0BFB80 00000000 */   nop   
-/* 0F46B4 7F0BFB84 0FC01CEC */  jal   cleanupGuardData
-/* 0F46B8 7F0BFB88 00000000 */   nop   
-/* 0F46BC 7F0BFB8C 0FC01D18 */  jal   cleanupObjectSounds
-/* 0F46C0 7F0BFB90 00000000 */   nop   
-/* 0F46C4 7F0BFB94 0FC01E00 */  jal   cleanupExplosions
-/* 0F46C8 7F0BFB98 00000000 */   nop   
-/* 0F46CC 7F0BFB9C 0FC01E48 */  jal   sub_GAME_7F007920
-/* 0F46D0 7F0BFBA0 00000000 */   nop   
-/* 0F46D4 7F0BFBA4 0FC01E5C */  jal   cleanup_REMOVED_
-/* 0F46D8 7F0BFBA8 00000000 */   nop   
-/* 0F46DC 7F0BFBAC 0FC01D34 */  jal   cleanupAlarms
-/* 0F46E0 7F0BFBB0 00000000 */   nop   
-/* 0F46E4 7F0BFBB4 3C048005 */  lui   $a0, %hi(current_stage_to_load) # $a0, 0x8005
-/* 0F46E8 7F0BFBB8 0FC01D40 */  jal   cleanupObjects
-/* 0F46EC 7F0BFBBC 8C848364 */   lw    $a0, %lo(current_stage_to_load)($a0)
-/* 0F46F0 7F0BFBC0 0FC01D64 */  jal   cleanupObjectives
-/* 0F46F4 7F0BFBC4 00000000 */   nop   
-/* 0F46F8 7F0BFBC8 0FC01DC0 */  jal   cleanupSFXRelated
-/* 0F46FC 7F0BFBCC 00000000 */   nop   
-/* 0F4700 7F0BFBD0 0FC01E60 */  jal   cleanupplayersoundrelated
-/* 0F4704 7F0BFBD4 00000000 */   nop   
-/* 0F4708 7F0BFBD8 0FC3049A */  jal   sub_GAME_7F0C1268
-/* 0F470C 7F0BFBDC 00000000 */   nop   
-/* 0F4710 7F0BFBE0 0FC2D1F8 */  jal   sub_GAME_7F0B47E0
-/* 0F4714 7F0BFBE4 00000000 */   nop   
-/* 0F4718 7F0BFBE8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F471C 7F0BFBEC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F4720 7F0BFBF0 03E00008 */  jr    $ra
-/* 0F4724 7F0BFBF4 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 void set_controls_locked_flag(s32 arg0) {
