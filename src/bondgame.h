@@ -153,7 +153,7 @@ typedef enum LEVEL_INDEX
     LEVEL_INDEX_LEN = 0x22,
     LEVEL_INDEX_WAX = 0x23,
     LEVEL_INDEX_PAM = 0x24,
-    LEVEL_INDEX_X = 0x25,
+    LEVEL_INDEX_X = 0x25
 } LEVEL_INDEX;
 
 typedef enum MP_STAGE_SELECTED {
@@ -299,7 +299,7 @@ typedef enum HEADS {
 
 typedef enum mission_setup_type {
     MISSION_PART = 0,
-    MISSION_HEADER,
+    MISSION_HEADER
 } mission_setup_type;
 
 typedef enum MUSIC_TRACKS {
@@ -420,7 +420,7 @@ typedef enum MENU {
     MENU_NO_CONTROLLERS,
     MENU_SWITCH_SCREENS,
     MENU_DISPLAY_CAST,
-    MENU_SPECTRUM_EMU,
+    MENU_SPECTRUM_EMU
 } MENU;
 
 typedef enum CONTROLLER_CONFIG
@@ -433,7 +433,7 @@ typedef enum CONTROLLER_CONFIG
     CONTROLLER_CONFIG_GALORE,
     CONTROLLER_CONFIG_DOMINO,
     CONTROLLER_CONFIG_GOODHEAD,
-    CONTROLLER_CONFIG_CINEMA,
+    CONTROLLER_CONFIG_CINEMA
 } CONTROLLER_CONFIG;
 
 typedef enum CUFF_TYPES
@@ -446,7 +446,7 @@ typedef enum CUFF_TYPES
     CUFF_WHITE,
     CUFF_TUX6,
     CUFF_TUX7,
-    CUFF_TUX8,
+    CUFF_TUX8
 } CUFF_TYPES;
 
 typedef enum ITEM_IDS
@@ -539,7 +539,7 @@ typedef enum ITEM_IDS
     ITEM_JOYPAD = 0x55,
     ITEM_56 = 0x56,
     ITEM_57 = 0x57,
-    ITEM_TOKEN = 0x58,
+    ITEM_TOKEN = 0x58
 } ITEM_IDS;
 
 typedef enum PROJECTILES
@@ -557,7 +557,7 @@ typedef enum PROJECTILES
   PROJECTILES_TYPE_BUG = 0xF5,
   PROJECTILES_TYPE_MICROCAMERA = 0xF6,
   PROJECTILES_TYPE_GE_KEY = 0xF8,
-  PROJECTILES_TYPE_PLASTIQUE = 0x111,
+  PROJECTILES_TYPE_PLASTIQUE = 0x111
 } PROJECTILES;
 
 typedef enum AMMOTYPES {
@@ -595,26 +595,14 @@ typedef enum AMMOTYPES {
 typedef enum DOORSTATE
 {
   OPEN = 0x1,
-  CLOSED = 0x2,
+  CLOSED = 0x2
 } DOORSTATE;
 
 typedef enum SCREEN_SIZE
 {
   SCREEN_SIZE_320x240 = 0x0,
-  SCREEN_SIZE_440x330 = 0x1,
+  SCREEN_SIZE_440x330 = 0x1
 } SCREEN_SIZE;
-
-typedef enum CONTROLLER_CONFIG {
-    CONTROLLER_CONFIG_HONEY=0,
-    CONTROLLER_CONFIG_SOLITARE,
-    CONTROLLER_CONFIG_KISSY,
-    CONTROLLER_CONFIG_GOODNIGHT,
-    CONTROLLER_CONFIG_PLENTY,
-    CONTROLLER_CONFIG_GALORE,
-    CONTROLLER_CONFIG_DOMINO,
-    CONTROLLER_CONFIG_GOODHEAD,
-    CONTROLLER_CONFIG_CINEMA
-} CONTROLLER_CONFIG;
 
 typedef enum CAMERAMODE {
     INTRO_CAM=1,
@@ -626,7 +614,7 @@ typedef enum CAMERAMODE {
     POSEND_CAM,
     FP_NOINPUT_CAM,
     MP_CAM,
-    UNK10_CAM,
+    UNK10_CAM
 } CAMERAMODE;
 
 typedef enum guard_action_type {
@@ -653,23 +641,5 @@ typedef enum guard_action_type {
     walk_path=14
 } guard_action_type;
 
-//should probably be part of libultra, i dont think its specific to ge
-typedef enum controller_buttons {
-    A_BUTTON=32768,
-    B_BUTTON=16384,
-    DUMMY_1=128,
-    DUMMY_2=64,
-    D_CBUTTONS=4,
-    D_JPAD=1024,
-    L_CBUTTONS=2,
-    L_JPAD=512,
-    L_TRIG=32,
-    R_CBUTTONS=1,
-    R_JPAD=256,
-    R_TRIG=16,
-    START_BUTTON=4096,
-    U_CBUTTONS=8,
-    U_JPAD=2048,
-    Z_TRIG=8192
-} controller_buttons;
+
 #endif

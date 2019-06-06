@@ -5,6 +5,10 @@
 .section .text, "ax"
 .include "macros.inc"
 
+# zoinkity note: 
+#	 1000	80000400	memset (blanks) 8005D2E0 - 8008E360, sets SP->803AB410, JR to 80000450
+#		technically, this is used in bootcode and used prior to TLB registration
+
 glabel _start
 /* 001000 80000400 3C088006 */  lui   $t0, %hi(_csegmentSegmentEnd) # $t0, 0x8006
 /* 001004 80000404 3C090003 */  lui   $t1, (0x00031080 >> 16) # lui $t1, 3

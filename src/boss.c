@@ -154,7 +154,7 @@ block_1:
         current_m_malloc_value = (s32) (strtol(check_token(1, "-m"), 0, 0) << 0xa);
     }
     temp_s0 = (osVirtualToPhysical(&room_model_buffer) | 0x80000000);
-    check_memflag_tokens(temp_s0, (return_ptr_TLBmemory() - temp_s0));
+    check_memflag_tokens(temp_s0, (return_ptr_TLBallocatedblock() - temp_s0));
     reset_mem_bank_a0(6);
     init_LnameX();
     something_with_lvl_c_debug();
@@ -311,7 +311,7 @@ glabel init_mainthread_data
 /* 006B14 70005F14 0C003A2C */  jal   osVirtualToPhysical
 /* 006B18 70005F18 2484E360 */   addiu $a0, %lo(room_model_buffer) # addiu $a0, $a0, -0x1ca0
 /* 006B1C 70005F1C 3C018000 */  lui   $at, 0x8000
-/* 006B20 70005F20 0C0006BE */  jal   return_ptr_TLBmemory
+/* 006B20 70005F20 0C0006BE */  jal   return_ptr_TLBallocatedblock
 /* 006B24 70005F24 00418025 */   or    $s0, $v0, $at
 /* 006B28 70005F28 02002025 */  move  $a0, $s0
 /* 006B2C 70005F2C 0C0024EB */  jal   check_memflag_tokens

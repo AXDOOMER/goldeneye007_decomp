@@ -3,6 +3,16 @@
 #include "sched.h"
 #include "bondgame.h"
 
+/**
+ * @file sched.c
+ * This file contains the scheduler. 
+ * 
+ * In particular, it:
+ *   - is based on but modified by rare from code included in sdk
+ *   - 
+ *   - 
+ */
+
 u32 stderr_unused = 0;
 u32 stderr_enabled = 0;
 u32 stderr_active = 0;
@@ -14,8 +24,9 @@ u32 setby_DPCfill_1 = 0;
 f32 something_with_osVI[7] = {0.0,1.0,1.0,1.0,1.0,0.0,0.0};
 u32 D_800230CC = 1;
 
-//temporary until i get proper sized structs
+
 OSSched sc;
+//temporary until i get proper sized structs
 //OSScClient gfxClient;
 char gfxClient[0x18];
 
@@ -23,23 +34,37 @@ char target_for_counters_maybe[0x10];
 char dword_CODE_bss_8005DB40[0xB0];
 
 
-
+/**
+ * 1570	70000970	A0-> stderr.activated	[80023098]; fry AT
+ */
 void activate_stderr(u32 flag) {
 	stderr_active = flag;
 }
 
+/**
+ * 157C	7000097C	A0-> stderr.enable		[80023094]; fry AT
+ */
 void enable_stderr(u32 flag) {
 	stderr_enabled = flag;
 }
 
+/**
+ * 1588	70000988	A0-> stderr.permitted	[8002309C]; fry AT
+ */
 void permit_stderr(u32 flag) {
 	stderr_permitted = flag;
 }
 
+/**
+ * 1594	70000994	A0-> user.Compare		[800230A0]; fry AT
+ */
 void setUserCompareValue(u32 value) {
 	userCompareValue = value;
 }
 
+/**
+ * 15A0	700009A0	test to display stderr and update Count
+ */
 void CheckDisplayErrorBuffer(u32 *buffer) {
 	if ((stderr_permitted && stderr_active) || stderr_enabled ){
 		write_stderr_to_buffer(buffer);
@@ -47,6 +72,9 @@ void CheckDisplayErrorBuffer(u32 *buffer) {
 	}
 }
 
+/**
+ * 15F8	700009F8	test to display stderr every 16th frame
+ */
 #ifdef NONMATCHING
 void CheckDisplayErrorBufferEvery16Frames(u32 framecount) {
 	if (framecount & 0xf) {
@@ -104,13 +132,17 @@ glabel CheckDisplayErrorBufferEvery16Frames
 )
 #endif
 
-/* Not 100% on name, came from osInitialize's call to function*/
+/**
+ * Not 100% on name, came from osInitialize's call to function
+ * 1688	70000A88	store current Count to 800230A4
+ */
 void osCreateLog(void){
 	currentcount=osGetCount();
 }
 
-
-
+/**
+ * 16AC	70000AAC	(thread management)
+ */
 #ifdef NONMATCHING
 void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u8 numFields)
 {
@@ -239,9 +271,9 @@ glabel osCreateScheduler
 )
 #endif
 
-
-
-
+/**
+ * 1814	70000C14
+ */
 #ifdef NONMATCHING
 void osScAddClient(void *arg0, void *arg1, ?32 arg2, ?32 arg3)
 {
@@ -280,10 +312,9 @@ glabel osScAddClient
 )
 #endif
 
-
-
-
-
+/**
+ * 1870	70000C70
+ */
 #ifdef NONMATCHING
 void osScRemoveClient(void *arg0, void *arg1)
 {
@@ -375,10 +406,9 @@ glabel osScRemoveClient
 )
 #endif
 
-
-
-
-
+/**
+ * 18F8	70000CF8	V0= A0+78
+ */
 #ifdef NONMATCHING
 s32 osScGetCmdQ(s32 arg0)
 {
@@ -392,11 +422,9 @@ glabel osScGetCmdQ
 )
 #endif
 
-
-
-
-
-
+/**
+ * 1900	70000D00
+ */
 #ifdef NONMATCHING
 void __scMain(void *arg0)
 {
@@ -609,10 +637,9 @@ glabel __scMain
 )
 #endif
 
-
-
-
-
+/**
+ * 1AB4	70000EB4
+ */
 #ifdef NONMATCHING
 void __scHandleRetrace(void *arg0)
 {
@@ -778,10 +805,9 @@ glabel __scHandleRetrace
 )
 #endif
 
-
-
-
-
+/**
+ * 1C14	70001014
+ */
 #ifdef NONMATCHING
 void __scHandleRSP(void *arg0)
 {
@@ -893,10 +919,9 @@ glabel __scHandleRSP
 )
 #endif
 
-
-
-
-
+/**
+ * 1D1C	7000111C	V0= 8005DB30: target for DP Cmd clock, buffer counter, pipe counter, and tmem counter
+ */
 #ifdef NONMATCHING
 void *get_counters(void)
 {
@@ -911,11 +936,9 @@ glabel get_counters
 )
 #endif
 
-
-
-
-
-
+/**
+ * 1D28	70001128
+ */
 #ifdef NONMATCHING
 void __scHandleRDP(void *arg0)
 {
@@ -991,10 +1014,9 @@ glabel __scHandleRDP
 )
 #endif
 
-
-
-
-
+/**
+ * 1DE0	700011E0
+ */
 #ifdef NONMATCHING
 s32 __scTaskReady(s32 arg0)
 {
@@ -1040,10 +1062,9 @@ glabel __scTaskReady
 )
 #endif
 
-
-
-
-
+/**
+ * 1E30	70001230
+ */
 #ifdef NONMATCHING
 void __scTaskComplete(s32 arg0, void *arg1)
 {
@@ -1239,10 +1260,9 @@ glabel __scTaskComplete
 )
 #endif
 
-
-
-
-
+/**
+ * 1FD8	700013D8
+ */
 #ifdef NONMATCHING
 s32 __scAppendList(void *arg0, void *arg1)
 {
@@ -1311,10 +1331,9 @@ glabel __scAppendList
 )
 #endif
 
-
-
-
-
+/**
+ * 2040	70001440	(DPC fill)
+ */
 #ifdef NONMATCHING
 void __scExec(void *arg0, void *arg1, void *arg2)
 {
@@ -1449,10 +1468,9 @@ glabel __scExec
 )
 #endif
 
-
-
-
-
+/**
+ * 2160	70001560
+ */
 #ifdef NONMATCHING
 void *__scYield(void *arg0)
 {
@@ -1488,10 +1506,13 @@ glabel __scYield
 )
 #endif
 
-
-
-
-
+/**
+ * 219C	7000159C	???
+ *	uses TLB pointers at 80028400
+ *	7000167C	3
+ *	70001704	2,6,7
+ *	70001758	default; 1,4,5
+ */
 #ifdef NONMATCHING
 void __scSchedule(void) {
     

@@ -3,10 +3,20 @@
 #include "bondgame.h"
 #include "rarezip/rarezip.h"
 
-/* This file sets up initial tlb mapping then jumps to boot1 */
+/**
+ * @file boot.c
+ * This file sets up initial tlb mapping then jumps to boot1. 
+ * 
+ * In particular, it:
+ *   - also contains functions that grab segment addresses
+ *   - will likely always be asm as it manipulates tlb directly
+ */
 
 
-/* This will likely always be asm as it manipulates tlb directly*/
+/**
+ * 1050	70000450	registers 70000000-70400000 in TLB, JR to 70000510
+ *	technically, this is used in bootcode and used prior to TLB registration
+ */
 GLOBAL_ASM(
 glabel boot
 /* 001050 70000450 24020001 */  li    $v0, 1
@@ -38,36 +48,57 @@ glabel boot
 /* 0010B8 700004B8 00000000 */   nop
 )
 
-/* Due to alignments the following functions are included here */
-/* these could have been assembly originally, or more likely part */
-/* of the code inserted by the custom makerom rare created*/
+/**
+ * Due to alignments the following functions are included here
+ * these could have been assembly originally, or more likely part
+ * of the code inserted by the custom makerom rare created
+ */
 
-
+/**
+ *10BC	700004BC	V0=80020D90: target address for 21990 (USA)
+ */
 u32 *get_csegmentSegmentStart(void)
 {
 	return &_csegmentSegmentStart;
 }
 
+/**
+ *10C8	700004C8	V0=21990: ROM address of main compressed block (USA)
+ */
 u32 *get_cdataSegmentRomStart(void)
 {
 	return &_cdataSegmentRomStart;
 }
 
+/**
+ *10D4	700004D4	V0=33590: ROM address of 70200000 RareZip ASM [33590-34B30 ROM] (USA)
+ */
 u32 *get_cdataSegmentRomEnd(void)
 {
 	return &_cdataSegmentRomEnd;
 }
 
+/**
+ *10E0	700004E0	V0=33590: ROM address of 70200000 RareZip ASM [33590-34B30 ROM] (USA)
+ */
 u32 *get_rarezipSegmentRomStart(void)
 {
 	return &_rarezipSegmentRomStart;
 }
 
+/**
+ *10EC	700004EC	V0=34B30: ROM address of 7F- TLB routines (USA)
+ */
 u32 *get_rarezipSegmentRomEnd(void)
 {
 	return &_rarezipSegmentRomEnd;
 }
 
+/**
+ * 10F8	700004F8	redirect to 7020141C: decompression routine
+ *	accepts: A0=p->source, A1=p->target, A2=p->buffer
+ *	sets A3=7020141C, then jumps to address
+ */
 GLOBAL_ASM(
 glabel jump_decompressfile
 /* 0010F8 700004F8 3C077020 */  lui   $a3, %hi(decompress_entry) # $a3, 0x7020

@@ -680,7 +680,7 @@ Linker script and memory map
                 0x0000000070001920                find_remove_TLB_entry
                 0x0000000070001954                remove_TLB_entry_from_table
                 0x00000000700019d8                translate_load_rom_from_TLBaddress
-                0x0000000070001af8                return_ptr_TLBmemory
+                0x0000000070001af8                return_ptr_TLBallocatedblock
  build/src/tlb_random.o(.text)
  .text          0x0000000070001b10       0x50 build/src/tlb_random.o
                 0x0000000070001b10                return_tlb_random_value
