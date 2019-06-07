@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/eeprom.h"
+#include "game/mainmenu.h"
 
 // bss
 //CODE.bss:80069920
@@ -21,13 +22,7 @@ u32 dword_CODE_bss_80069B60;
 
 //data
 //D:8002C510
-u32 save1_selected_bond = 0;
-//D:8002C514
-u32 save2_selected_bond = 0;
-//D:8002C518
-u32 save3_selected_bond = 0;
-//D:8002C51C
-u32 save4_selected_bond = 0;
+u32 save_selected_bond[] = {0,0,0,0};
 
 //D:8002C520
 struct save_data D_8002C520 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0x00, 0, 0, 0, 0, 0};
@@ -335,72 +330,22 @@ glabel end_of_mission_briefing
 
 
 
-#ifdef NONMATCHING
-void proc_7F01D500(void)
+void sub_GAME_7F01D500(void)
 {
   get_screen_ratio_settings_for_mpgame_from_folder(selected_folder_num);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01D500
-/* 052030 7F01D500 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 052034 7F01D504 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 052038 7F01D508 3C048003 */  lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
-/* 05203C 7F01D50C 0FC07C0C */  jal   get_screen_ratio_settings_for_mpgame_from_folder
-/* 052040 7F01D510 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 052044 7F01D514 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 052048 7F01D518 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05204C 7F01D51C 03E00008 */  jr    $ra
-/* 052050 7F01D520 00000000 */   nop   
-)
-#endif
 
 
-
-#ifdef NONMATCHING
 void deleteCurrentSelectedFolder(void)
 {
   delete_update_eeprom_file(selected_folder_num);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel deleteCurrentSelectedFolder
-/* 052054 7F01D524 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 052058 7F01D528 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05205C 7F01D52C 3C048003 */  lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
-/* 052060 7F01D530 0FC07C61 */  jal   delete_update_eeprom_file
-/* 052064 7F01D534 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 052068 7F01D538 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05206C 7F01D53C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 052070 7F01D540 03E00008 */  jr    $ra
-/* 052074 7F01D544 00000000 */   nop   
-)
-#endif
 
-
-
-#ifdef NONMATCHING
 void copyCurrentEEPROMtoStack(void)
 {
   copy_eeprom_to_stack_set_folder_num(selected_folder_num);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel copyCurrentEEPROMtoStack
-/* 052078 7F01D548 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05207C 7F01D54C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 052080 7F01D550 3C048003 */  lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
-/* 052084 7F01D554 0FC07CA7 */  jal   copy_eeprom_to_stack_set_folder_num
-/* 052088 7F01D558 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 05208C 7F01D55C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 052090 7F01D560 27BD0018 */  addiu $sp, $sp, 0x18
-/* 052094 7F01D564 03E00008 */  jr    $ra
-/* 052098 7F01D568 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -431,20 +376,11 @@ glabel getSelectedFolderBond
 
 
 
-#ifdef NONMATCHING
 void set_selected_folder_num(u32 foldernum)
 {
   selected_folder_num = foldernum;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_selected_folder_num
-/* 0520C0 7F01D590 3C018003 */  lui   $at, 0x8003
-/* 0520C4 7F01D594 03E00008 */  jr    $ra
-/* 0520C8 7F01D598 AC24A8E8 */   sw    $a0, -0x5718($at)
-)
-#endif
+
 
 
 
@@ -532,28 +468,10 @@ glabel set_solo_and_ptr_briefing
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F01D61C(save_file *savefile)
+void sub_GAME_7F01D61C(struct save_file *savefile)
 {
-  copy_eeprom_from_to(selected_folder_num,(int)savefile);
-  return;
+  copy_eeprom_from_to(selected_folder_num,savefile);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01D61C
-/* 05214C 7F01D61C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 052150 7F01D620 00802825 */  move  $a1, $a0
-/* 052154 7F01D624 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 052158 7F01D628 3C048003 */  lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
-/* 05215C 7F01D62C 0FC07CE5 */  jal   copy_eeprom_from_to
-/* 052160 7F01D630 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 052164 7F01D634 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 052168 7F01D638 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05216C 7F01D63C 03E00008 */  jr    $ra
-/* 052170 7F01D640 00000000 */   nop   
-)
-#endif
 
 
 
@@ -624,24 +542,10 @@ glabel store_favorite_weapon_current_player
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F01D6C0(void) {
-
+s32 sub_GAME_7F01D6C0(void) {
+  return save_7000C6FC();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01D6C0
-/* 0521F0 7F01D6C0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0521F4 7F01D6C4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0521F8 7F01D6C8 0C0031BF */  jal   save_7000C6FC
-/* 0521FC 7F01D6CC 00000000 */   nop   
-/* 052200 7F01D6D0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 052204 7F01D6D4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 052208 7F01D6D8 03E00008 */  jr    $ra
-/* 05220C 7F01D6DC 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -1714,8 +1618,8 @@ glabel sub_GAME_7F01DF90
 /* 052D5C 7F01E22C 02C02025 */   move  $a0, $s6
 /* 052D60 7F01E230 10400007 */  beqz  $v0, .L7F01E250
 /* 052D64 7F01E234 00402025 */   move  $a0, $v0
-/* 052D68 7F01E238 3C0C8003 */  lui   $t4, %hi(save1_selected_bond) # $t4, 0x8003
-/* 052D6C 7F01E23C 258CC510 */  addiu $t4, %lo(save1_selected_bond) # addiu $t4, $t4, -0x3af0
+/* 052D68 7F01E238 3C0C8003 */  lui   $t4, %hi(save_selected_bond) # $t4, 0x8003
+/* 052D6C 7F01E23C 258CC510 */  addiu $t4, %lo(save_selected_bond) # addiu $t4, $t4, -0x3af0
 /* 052D70 7F01E240 00165880 */  sll   $t3, $s6, 2
 /* 052D74 7F01E244 0FC07649 */  jal   get_selected_bond
 /* 052D78 7F01E248 016C8021 */   addu  $s0, $t3, $t4
@@ -2345,41 +2249,23 @@ glabel check_egypt_completed_in_folder
 
 
 
-#ifdef NONMATCHING
-void check_egypt_completed_any_folder(void) {
-
+u32 check_egypt_completed_any_folder(void) {
+    u32 isfound;
+    int folder;
+    u32 isunlocked;
+    
+    isunlocked = 0;
+    folder = 0;
+    while (folder != 4) {
+        isfound = check_egypt_completed_in_folder(folder);
+        folder += 1;
+        if ((int)isunlocked < (int)isfound) {
+            isunlocked = isfound;
+        }
+    };
+    return isunlocked;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_egypt_completed_any_folder
-/* 0534C8 7F01E998 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0534CC 7F01E99C AFB20020 */  sw    $s2, 0x20($sp)
-/* 0534D0 7F01E9A0 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0534D4 7F01E9A4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0534D8 7F01E9A8 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0534DC 7F01E9AC 00008825 */  move  $s1, $zero
-/* 0534E0 7F01E9B0 00008025 */  move  $s0, $zero
-/* 0534E4 7F01E9B4 24120004 */  li    $s2, 4
-.L7F01E9B8:
-/* 0534E8 7F01E9B8 0FC07A45 */  jal   check_egypt_completed_in_folder
-/* 0534EC 7F01E9BC 02002025 */   move  $a0, $s0
-/* 0534F0 7F01E9C0 0222082A */  slt   $at, $s1, $v0
-/* 0534F4 7F01E9C4 10200002 */  beqz  $at, .L7F01E9D0
-/* 0534F8 7F01E9C8 26100001 */   addiu $s0, $s0, 1
-/* 0534FC 7F01E9CC 00408825 */  move  $s1, $v0
-.L7F01E9D0:
-/* 053500 7F01E9D0 1612FFF9 */  bne   $s0, $s2, .L7F01E9B8
-/* 053504 7F01E9D4 00000000 */   nop   
-/* 053508 7F01E9D8 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 05350C 7F01E9DC 02201025 */  move  $v0, $s1
-/* 053510 7F01E9E0 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 053514 7F01E9E4 8FB00018 */  lw    $s0, 0x18($sp)
-/* 053518 7F01E9E8 8FB20020 */  lw    $s2, 0x20($sp)
-/* 05351C 7F01E9EC 03E00008 */  jr    $ra
-/* 053520 7F01E9F0 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
+
 
 
 
@@ -2479,133 +2365,65 @@ glabel check_egypt_completed_in_folder_00
 
 
 
-#ifdef NONMATCHING
-void check_cradle_completed_any_folder(void) {
-
+u32 check_cradle_completed_any_folder(void) {
+    u32 completed;
+    int folder;
+    
+    folder = 0;
+    while (folder != 4) {
+        completed = check_cradle_completed_in_folder(folder);
+        folder += 1;
+        if (completed != FALSE) {
+            return TRUE;
+        }
+    };
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_cradle_completed_any_folder
-/* 053600 7F01EAD0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 053604 7F01EAD4 AFB10018 */  sw    $s1, 0x18($sp)
-/* 053608 7F01EAD8 AFB00014 */  sw    $s0, 0x14($sp)
-/* 05360C 7F01EADC AFBF001C */  sw    $ra, 0x1c($sp)
-/* 053610 7F01EAE0 00008025 */  move  $s0, $zero
-/* 053614 7F01EAE4 24110004 */  li    $s1, 4
-.L7F01EAE8:
-/* 053618 7F01EAE8 0FC07A7D */  jal   check_cradle_completed_in_folder
-/* 05361C 7F01EAEC 02002025 */   move  $a0, $s0
-/* 053620 7F01EAF0 10400003 */  beqz  $v0, .L7F01EB00
-/* 053624 7F01EAF4 26100001 */   addiu $s0, $s0, 1
-/* 053628 7F01EAF8 10000004 */  b     .L7F01EB0C
-/* 05362C 7F01EAFC 24020001 */   li    $v0, 1
-.L7F01EB00:
-/* 053630 7F01EB00 1611FFF9 */  bne   $s0, $s1, .L7F01EAE8
-/* 053634 7F01EB04 00000000 */   nop   
-/* 053638 7F01EB08 00001025 */  move  $v0, $zero
-.L7F01EB0C:
-/* 05363C 7F01EB0C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 053640 7F01EB10 8FB00014 */  lw    $s0, 0x14($sp)
-/* 053644 7F01EB14 8FB10018 */  lw    $s1, 0x18($sp)
-/* 053648 7F01EB18 03E00008 */  jr    $ra
-/* 05364C 7F01EB1C 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 
-
-#ifdef NONMATCHING
-void check_aztec_completed_any_folder_secret_00(void) {
-
+u32 check_aztec_completed_any_folder_secret_00(void) {
+    u32 completed;
+    int folder;
+    
+    folder = 0;
+    while (folder != 4) {
+        completed = check_aztec_completed_in_folder_secret_00(folder);
+        folder += 1;
+        if (completed != FALSE) {
+            return TRUE;
+        }
+    };
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_aztec_completed_any_folder_secret_00
-/* 053650 7F01EB20 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 053654 7F01EB24 AFB10018 */  sw    $s1, 0x18($sp)
-/* 053658 7F01EB28 AFB00014 */  sw    $s0, 0x14($sp)
-/* 05365C 7F01EB2C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 053660 7F01EB30 00008025 */  move  $s0, $zero
-/* 053664 7F01EB34 24110004 */  li    $s1, 4
-.L7F01EB38:
-/* 053668 7F01EB38 0FC07A97 */  jal   check_aztec_completed_in_folder_secret_00
-/* 05366C 7F01EB3C 02002025 */   move  $a0, $s0
-/* 053670 7F01EB40 10400003 */  beqz  $v0, .L7F01EB50
-/* 053674 7F01EB44 26100001 */   addiu $s0, $s0, 1
-/* 053678 7F01EB48 10000004 */  b     .L7F01EB5C
-/* 05367C 7F01EB4C 24020001 */   li    $v0, 1
-.L7F01EB50:
-/* 053680 7F01EB50 1611FFF9 */  bne   $s0, $s1, .L7F01EB38
-/* 053684 7F01EB54 00000000 */   nop   
-/* 053688 7F01EB58 00001025 */  move  $v0, $zero
-.L7F01EB5C:
-/* 05368C 7F01EB5C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 053690 7F01EB60 8FB00014 */  lw    $s0, 0x14($sp)
-/* 053694 7F01EB64 8FB10018 */  lw    $s1, 0x18($sp)
-/* 053698 7F01EB68 03E00008 */  jr    $ra
-/* 05369C 7F01EB6C 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 
-
-#ifdef NONMATCHING
-void check_egypt_completed_any_folder_00(void) {
-
+u32 check_egypt_completed_any_folder_00(void) {
+    u32 completed;
+    int folder;
+    
+    folder = 0;
+    while (folder != 4) {
+        completed = check_egypt_completed_in_folder_00(folder);
+        folder += 1;
+        if (completed != FALSE) {
+            return TRUE;
+        }
+    };
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_egypt_completed_any_folder_00
-/* 0536A0 7F01EB70 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0536A4 7F01EB74 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0536A8 7F01EB78 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0536AC 7F01EB7C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0536B0 7F01EB80 00008025 */  move  $s0, $zero
-/* 0536B4 7F01EB84 24110004 */  li    $s1, 4
-.L7F01EB88:
-/* 0536B8 7F01EB88 0FC07AAA */  jal   check_egypt_completed_in_folder_00
-/* 0536BC 7F01EB8C 02002025 */   move  $a0, $s0
-/* 0536C0 7F01EB90 10400003 */  beqz  $v0, .L7F01EBA0
-/* 0536C4 7F01EB94 26100001 */   addiu $s0, $s0, 1
-/* 0536C8 7F01EB98 10000004 */  b     .L7F01EBAC
-/* 0536CC 7F01EB9C 24020001 */   li    $v0, 1
-.L7F01EBA0:
-/* 0536D0 7F01EBA0 1611FFF9 */  bne   $s0, $s1, .L7F01EB88
-/* 0536D4 7F01EBA4 00000000 */   nop   
-/* 0536D8 7F01EBA8 00001025 */  move  $v0, $zero
-.L7F01EBAC:
-/* 0536DC 7F01EBAC 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0536E0 7F01EBB0 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0536E4 7F01EBB4 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0536E8 7F01EBB8 03E00008 */  jr    $ra
-/* 0536EC 7F01EBBC 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 
-
-#ifdef NONMATCHING
-void removed_would_have_returned_bond_for_folder_num(void) {
-
+u32 removed_would_have_returned_bond_for_folder_num(u32 folder) {
+  return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel removed_would_have_returned_bond_for_folder_num
-/* 0536F0 7F01EBC0 AFA40000 */  sw    $a0, ($sp)
-/* 0536F4 7F01EBC4 03E00008 */  jr    $ra
-/* 0536F8 7F01EBC8 00001025 */   move  $v0, $zero
-)
-#endif
 
 
 
 #ifdef NONMATCHING
-void set_selected_bond_to_folder(void) {
-
+void set_selected_bond_to_folder(u32 folder,u32 bond) {
+  if ((-1 < folder) && (folder < 4)) {
+    save_selected_bond[folder] = 0;
+  }
 }
 #else
 GLOBAL_ASM(
@@ -2627,33 +2445,14 @@ glabel set_selected_bond_to_folder
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F01EBF4(void) {
-
+void sub_GAME_7F01EBF4(u32 unused) {
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01EBF4
-/* 053724 7F01EBF4 03E00008 */  jr    $ra
-/* 053728 7F01EBF8 AFA40000 */   sw    $a0, ($sp)
-)
-#endif
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F01EBFC(void) {
-
+void sub_GAME_7F01EBFC(u32 unused) {
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01EBFC
-/* 05372C 7F01EBFC 03E00008 */  jr    $ra
-/* 053730 7F01EC00 AFA40000 */   sw    $a0, ($sp)
-)
-#endif
+
 
 
 

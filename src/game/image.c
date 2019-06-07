@@ -2752,21 +2752,12 @@ struct image_entry image_entries[] = {
     {   0,    0, 0xFFFF,    0,    0,    0,    0}
 };
 
-// rodata
 
 
-#ifdef NONMATCHING
 void nullsub_41(void) {
-
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel nullsub_41
-/* 0FB180 7F0C6650 03E00008 */  jr    $ra
-/* 0FB184 7F0C6654 00000000 */   nop   
-)
-#endif
+
 
 
 

@@ -11301,10 +11301,7 @@ Linker script and memory map
  build/src/game/blood_decrypt.o(.data)
  build/src/game/eeprom.o(.data)
  .data          0x000000008002c510      0x3f0 build/src/game/eeprom.o
-                0x000000008002c510                save1_selected_bond
-                0x000000008002c514                save2_selected_bond
-                0x000000008002c518                save3_selected_bond
-                0x000000008002c51c                save4_selected_bond
+                0x000000008002c510                save_selected_bond
                 0x000000008002c520                D_8002C520
                 0x000000008002c580                D_8002C580
                 0x000000008002c5e0                D_8002C5E0
