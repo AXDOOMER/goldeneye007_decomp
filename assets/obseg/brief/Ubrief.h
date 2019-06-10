@@ -13,7 +13,7 @@ struct BriefObjectiveStruct
 struct BriefStruct
 {
     u16 brief[4];
-    struct BriefObjectiveStruct objective[MAX_OBJECTIVES];
+    struct BriefObjectiveStruct objective[OBJECTIVES_MAX];
 };
 
 #endif
