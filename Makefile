@@ -116,14 +116,15 @@ endif
 default:	$(APPROM)
 
 codeclean:
-	rm -f $(BUILD_DIR)/ge007.$(COUNTRYCODE).map $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS)
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS)
 	git checkout build/assets/obseg/setup/UsetuparchZ.rz
 	git checkout build/assets/obseg/setup/UsetupjunZ.rz
 	git checkout build/assets/obseg/setup/UsetupsevbZ.rz
 	git checkout build/assets/obseg/text/LcradE.rz
 
 dataclean: 
-	rm -f $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGES_OBJECTS) $(MUSIC_RZ_FILES)
 	git checkout build/assets/obseg/setup/UsetuparchZ.rz
 	git checkout build/assets/obseg/setup/UsetupjunZ.rz
@@ -131,7 +132,8 @@ dataclean:
 	git checkout build/assets/obseg/text/LcradE.rz
 
 clean:
-	rm -f $(BUILD_DIR)/ge007.$(COUNTRYCODE).map $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGES_OBJECTS) $(MUSIC_RZ_FILES)
 	git checkout build/assets/obseg/setup/UsetuparchZ.rz
 	git checkout build/assets/obseg/setup/UsetupjunZ.rz
@@ -179,6 +181,7 @@ $(APPBIN): $(APPELF)
 $(APPROM):	$(APPBIN)
 	$(DATASEG_COMP) $<
 	$(N64CKSUM) $< $@
+	rm header.tmp
 
 .PHONY: all default codeclean dataclean clean
 

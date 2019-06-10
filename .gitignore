@@ -48,5 +48,6 @@ assets/obseg/prop/*.bin
 assets/obseg/setup/*.bin
 assets/obseg/stan/*.bin
 assets/obseg/text/*.bin
+assets/obseg/ob__ob_end.seg
 assets/ramrom/*.bin
 
