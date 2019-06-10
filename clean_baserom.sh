@@ -1,15 +1,22 @@
 #!/bin/bash
-echo "cleaning up files created by extract_baserom.sh"
+if [ -z "$1" ]; then
+    DOALL="1"
+    echo "Processing Everything"
+fi
+
 true="1"
-while IFS=, read -r offset size name compressed extract
-do
-    if [ "$compressed" == "$true" ]; then
-        echo "removing $name.bin"
-        rm -f $name.bin
-    else
-    echo "removing $name"
+if [ "$DOALL" == "1" ] || [ $1 == 'files' ]; then
+    while IFS=, read -r offset size name compressed extract
+    do
+        echo "removing $name"
         rm -f $name
-    fi
-done < filelist.u.csv
+    done < filelist.u.csv
+fi
 
-
+if [ "$DOALL" == "1" ] || [ $1 == 'images' ]; then
+    while IFS=, read -r offset size name
+    do
+        echo "removing $name"
+        rm -f $name
+    done < imagelist.u.csv
+fi

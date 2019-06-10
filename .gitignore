@@ -37,6 +37,7 @@ assets/ge007.u.123040.efont_chardata.bin
 assets/ge007.u.29D160.Globalimagetable.bin
 assets/ge007.u.2A4D50.usedby7F008DE4.bin
 assets/font/*.bin
+assets/images/split/*.bin
 assets/music/*.bin
 assets/music/*.ctl
 assets/music/*.tbl
