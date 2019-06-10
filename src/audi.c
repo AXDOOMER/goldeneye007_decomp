@@ -851,7 +851,7 @@ glabel _amHandleFrameMsg
 /* 002EC0 700022C0 000A5C03 */  sra   $t3, $t2, 0x10
 /* 002EC4 700022C4 00EB082A */  slt   $at, $a3, $t3
 /* 002EC8 700022C8 10200003 */  beqz  $at, .L700022D8
-/* 002ECC 700022CC 3C048006 */   lui   $a0, 0x8006
+/* 002ECC 700022CC 3C048006 */   lui   $a0, %hi(_am)
 /* 002ED0 700022D0 A6030004 */  sh    $v1, 4($s0)
 /* 002ED4 700022D4 86070004 */  lh    $a3, 4($s0)
 .L700022D8:
@@ -860,7 +860,7 @@ glabel _amHandleFrameMsg
 /* 002EE0 700022E0 24A5ECCC */  addiu $a1, %lo(cmdLen) # addiu $a1, $a1, -0x1334
 /* 002EE4 700022E4 000C6880 */  sll   $t5, $t4, 2
 /* 002EE8 700022E8 008D2021 */  addu  $a0, $a0, $t5
-/* 002EEC 700022EC 8C84E518 */  lw    $a0, -0x1ae8($a0)
+/* 002EEC 700022EC 8C84E518 */  lw    $a0, %lo(_am)($a0)
 /* 002EF0 700022F0 0C003C42 */  jal   alAudioFrame
 /* 002EF4 700022F4 8FA60024 */   lw    $a2, 0x24($sp)
 /* 002EF8 700022F8 3C0E8006 */  lui   $t6, %hi(_am+0x200) # $t6, 0x8006
@@ -929,20 +929,13 @@ glabel _amHandleFrameMsg
  * 2FE4	700023E4
  */
 #ifdef NONMATCHING
-void __amHandleDoneMsg(s32 arg0) {
-    // Node 0
-    if ((osAiGetLength() >> 2) == 0)
-    {
-        // Node 1
-        if (firstTime == 0)
-        {
-            // Node 2
-            firstTime = 0;
-            return;
-            // (possible return value: osAiGetLength())
-        }
-    }
-    // (possible return value: osAiGetLength())
+void __amHandleDoneMsg(AudioInfo *info) {
+  int samplesLeft;
+  
+  samplesLeft = osAiGetLength();
+  if ((samplesLeft >> 2 == 0) && (firstTime == 0)) {
+    firstTime = 0;
+  }
 }
 #else
 GLOBAL_ASM(

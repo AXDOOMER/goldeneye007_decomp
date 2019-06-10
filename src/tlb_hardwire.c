@@ -14,7 +14,8 @@
  */
 #ifdef NONMATCHING
 void set_hardwire_TLB_to_2(void) {
-
+    setCopReg(0,Wired,2,0);
+    setCopReg(0,Context,0,0);
 }
 #else
 GLOBAL_ASM(

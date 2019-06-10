@@ -54,7 +54,8 @@ SECTIONS
       build/src/speed_graph.o (.text);
       build/src/video.o (.text);
       build/src/deb.o (.text);
-      build/src/debug_stuff_split.o (.text);
+      build/src/deb_video.o (.text);
+      build/src/deb_print.o (.text);
       build/src/debug_getlastRA.o (.text);
       build/src/ramrom.o (.text);
       build/src/boss.o (.text);
@@ -287,7 +288,8 @@ SECTIONS
       build/src/speed_graph.o (.data);
       build/src/video.o (.data);
       build/src/deb.o (.data);
-      build/src/debug_stuff_split.o (.data);
+      build/src/deb_video.o (.data);
+      build/src/deb_print.o (.data);
       build/src/debug_getlastRA.o (.data);
       build/src/ramrom.o (.data);
       build/src/boss.o (.data);
@@ -320,7 +322,8 @@ SECTIONS
       build/src/speed_graph.o (.rodata);
       build/src/video.o (.rodata);
       build/src/deb.o (.rodata);
-      build/src/debug_stuff_split.o (.rodata);
+      build/src/deb_video.o (.rodata);
+      build/src/deb_print.o (.rodata);
       build/src/debug_getlastRA.o (.rodata);
       build/src/ramrom.o (.rodata);
       build/src/boss.o (.rodata);
@@ -592,7 +595,8 @@ SECTIONS
       build/src/speed_graph.o (.bss);
       build/src/video.o (.bss);
       build/src/deb.o (.bss);
-      build/src/debug_stuff_split.o (.bss);
+      build/src/deb_video.o (.bss);
+      build/src/deb_print.o (.bss);
       build/src/debug_getlastRA.o (.bss);
       build/src/ramrom.o (.bss);
       build/src/boss.o (.bss);

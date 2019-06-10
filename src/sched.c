@@ -172,9 +172,9 @@ void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u8 numFields)
     osCreateViManager(0xfe);
     temp_t2 = ((mode * 0x50) + &osViModeTable);
     viMode = temp_t2;
-    dword_CODE_bss_80060880 = (?32) temp_t2->unk1C;
-    dword_CODE_bss_80060884 = (?32) temp_t2->unk30;
-    dword_CODE_bss_80060888 = (?32) temp_t2->unk44;
+    viMode+0x4 = (?32) temp_t2->unk1C;
+    viMode+0x8 = (?32) temp_t2->unk30;
+    viMode+0xC = (?32) temp_t2->unk44;
     osSetEventMesg(4, &sc->interruptQ, 0x29b);
     osSetEventMesg(9, &sc->interruptQ, 0x29c);
     osSetEventMesg(0xe, &sc->interruptQ, 0x29d);
@@ -230,18 +230,18 @@ glabel osCreateScheduler
 /* 001750 70000B50 01095021 */  addu  $t2, $t0, $t1
 /* 001754 70000B54 AC6A0000 */  sw    $t2, ($v1)
 /* 001758 70000B58 8D4B001C */  lw    $t3, 0x1c($t2)
-/* 00175C 70000B5C 3C018006 */  lui   $at, %hi(dword_CODE_bss_80060880) # $at, 0x8006
+/* 00175C 70000B5C 3C018006 */  lui   $at, %hi(viMode+0x4) # $at, 0x8006
 /* 001760 70000B60 24040004 */  li    $a0, 4
-/* 001764 70000B64 AC2B0880 */  sw    $t3, %lo(dword_CODE_bss_80060880)($at)
+/* 001764 70000B64 AC2B0880 */  sw    $t3, %lo(viMode+0x4)($at)
 /* 001768 70000B68 8D4C0030 */  lw    $t4, 0x30($t2)
-/* 00176C 70000B6C 3C018006 */  lui   $at, %hi(dword_CODE_bss_80060884) # $at, 0x8006
+/* 00176C 70000B6C 3C018006 */  lui   $at, %hi(viMode+0x8) # $at, 0x8006
 /* 001770 70000B70 02202825 */  move  $a1, $s1
-/* 001774 70000B74 AC2C0884 */  sw    $t4, %lo(dword_CODE_bss_80060884)($at)
+/* 001774 70000B74 AC2C0884 */  sw    $t4, %lo(viMode+0x8)($at)
 /* 001778 70000B78 8D4D0044 */  lw    $t5, 0x44($t2)
-/* 00177C 70000B7C 3C018006 */  lui   $at, %hi(dword_CODE_bss_80060888) # $at, 0x8006
+/* 00177C 70000B7C 3C018006 */  lui   $at, %hi(viMode+0xC) # $at, 0x8006
 /* 001780 70000B80 2406029B */  li    $a2, 667
 /* 001784 70000B84 0C003714 */  jal   osSetEventMesg
-/* 001788 70000B88 AC2D0888 */   sw    $t5, %lo(dword_CODE_bss_80060888)($at)
+/* 001788 70000B88 AC2D0888 */   sw    $t5, %lo(viMode+0xC)($at)
 /* 00178C 70000B8C 24040009 */  li    $a0, 9
 /* 001790 70000B90 02202825 */  move  $a1, $s1
 /* 001794 70000B94 0C003714 */  jal   osSetEventMesg
@@ -592,7 +592,7 @@ glabel __scMain
 /* 0019E8 70000DE8 3C0F8000 */  lui   $t7, %hi(osTvType) # $t7, 0x8000
 /* 0019EC 70000DEC 8DEF0300 */  lw    $t7, %lo(osTvType)($t7)
 /* 0019F0 70000DF0 24010002 */  li    $at, 2
-/* 0019F4 70000DF4 3C048002 */  lui   $a0, 0x8002
+/* 0019F4 70000DF4 3C048002 */  lui   $a0, %hi(osViModeTable_osViModeNtscLan1)
 /* 0019F8 70000DF8 15E10006 */  bne   $t7, $at, .L70000E14
 /* 0019FC 70000DFC 00000000 */   nop   
 /* 001A00 70000E00 3C048002 */  lui   $a0, %hi(osViModeTable_osViModeMpalLan1) # $a0, 0x8002
@@ -602,7 +602,7 @@ glabel __scMain
 /* 001A10 70000E10 3C013F80 */   lui   $at, 0x3f80
 .L70000E14:
 /* 001A14 70000E14 0C003818 */  jal   osViSetMode
-/* 001A18 70000E18 24846A60 */   addiu $a0, $a0, 0x6a60
+/* 001A18 70000E18 24846A60 */   addiu $a0, $a0, %lo(osViModeTable_osViModeNtscLan1)
 /* 001A1C 70000E1C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 .L70000E20:
 /* 001A20 70000E20 44816000 */  mtc1  $at, $f12
@@ -932,19 +932,10 @@ glabel __scHandleRSP
  * 1D1C	7000111C
  * V0= 8005DB30: target for DP Cmd clock, buffer counter, pipe counter, and tmem counter
  */
-#ifdef NONMATCHING
-void *get_counters(void)
+char *get_counters(void)
 {
     return &target_for_counters_maybe;
 }
-#else
-GLOBAL_ASM(
-glabel get_counters
-/* 001D1C 7000111C 3C028006 */  lui   $v0, %hi(target_for_counters_maybe)
-/* 001D20 70001120 03E00008 */  jr    $ra
-/* 001D24 70001124 2442DB30 */   addiu $v0, $v0, %lo(target_for_counters_maybe)
-)
-#endif
 
 /**
  * 1D28	70001128

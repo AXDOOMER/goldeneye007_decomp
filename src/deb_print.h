@@ -1,5 +1,5 @@
-#ifndef _DEBUG_STUFF_SPLIT_H_
-#define _DEBUG_STUFF_SPLIT_H_
+#ifndef _DEBUG_PRINT_H_
+#define _DEBUG_PRINT_H_
 
 #include "ultra64.h"
 

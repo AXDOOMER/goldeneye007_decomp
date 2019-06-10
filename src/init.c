@@ -161,7 +161,7 @@ glabel init
 /* 001210 70000610 00000000 */   nop   
 
 
-/* 001214 70000614 3C108000 */  lui   $s0, %hi(0x80000001) # $s0, 0x8000
+/* 001214 70000614 3C108000 */  lui   $s0, %hi(0x80000000) # $s0, 0x8000
 /* 001218 70000618 3C027000 */  lui   $v0, %hi(resolve_TLBaddress_for_InvalidHit) # $v0, 0x7000
 /* 00121C 7000061C 3C048000 */  lui   $a0, (0x80000080 >> 16) # lui $a0, 0x8000
 /* 001220 70000620 24421B60 */  addiu $v0, %lo(resolve_TLBaddress_for_InvalidHit) # addiu $v0, $v0, 0x1b60

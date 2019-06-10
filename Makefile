@@ -1,14 +1,21 @@
 # Makefile to rebuild Goldeneye 007
-include assets/Makefile.obseg
-include assets/Makefile.music
 
-QEMU_IRIX := tools/irix/qemu-irix
-IRIX_ROOT := tools/irix/root
+### Default target ###
+default: all
 
+### Build Options ###
+# Version of the game to build
 FINAL := YES
 VERSION := US
-TOOLCHAIN := mips-linux-gnu-
+# If COMPARE is 1, check the output sha1sum when building 'all'
 COMPARE := 1
+
+
+include assets/Makefile.obseg
+include assets/Makefile.music
+TOOLCHAIN := mips-linux-gnu-
+QEMU_IRIX := tools/irix/qemu-irix
+IRIX_ROOT := tools/irix/root
 
 BUILD_DIR := build
 BUILD_SUB_DIRS := \
@@ -113,7 +120,7 @@ ifeq ($(COMPARE),1)
 	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1
 endif
 
-default:	$(APPROM)
+
 
 codeclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \

@@ -47,10 +47,10 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/video.o
  .options       0x0000000000000000       0x20 build/src/deb.o
  .reginfo       0x0000000000000000       0x18 build/src/deb.o
- .options       0x0000000000000000       0x20 build/src/debug_stuff_split.o
- .reginfo       0x0000000000000000       0x18 build/src/debug_stuff_split.o
- .gptab.data    0x0000000000000000       0x40 build/src/debug_stuff_split.o
- .mdebug        0x0000000000000000      0x840 build/src/debug_stuff_split.o
+ .options       0x0000000000000000       0x20 build/src/deb_video.o
+ .reginfo       0x0000000000000000       0x18 build/src/deb_video.o
+ .options       0x0000000000000000       0x20 build/src/deb_print.o
+ .reginfo       0x0000000000000000       0x18 build/src/deb_print.o
  .options       0x0000000000000000       0x20 build/src/debug_getlastRA.o
  .reginfo       0x0000000000000000       0x18 build/src/debug_getlastRA.o
  .options       0x0000000000000000       0x20 build/src/ramrom.o
@@ -757,17 +757,19 @@ Linker script and memory map
                 0x0000000070004a60                indy_grab_rgb_16bit
                 0x0000000070004bb4                indy_grab_rgb_32bit
  build/src/deb.o(.text)
- .text          0x0000000070004d20      0xdf0 build/src/deb.o
+ .text          0x0000000070004d20      0x1c0 build/src/deb.o
                 0x0000000070004d20                return_match_in_debug_notice_list
                 0x0000000070004d80                get_entry_of_size_in_debug_notice_list
                 0x0000000070004de0                add_new_entry_to_debug_notice_list
                 0x0000000070004e2c                add_debug_notice_deb_c_debug
                 0x0000000070004e60                get_ptr_debug_notice_list_entry
                 0x0000000070004e98                scan_debug_notice_list_till_NULL
-                0x0000000070004ebc                debug_stubbed
+                0x0000000070004ebc                debug_stubbed_70004EBC
                 0x0000000070004ec4                debug_removed
+ build/src/deb_video.o(.text)
+ .text          0x0000000070004ee0      0x750 build/src/deb_video.o
                 0x0000000070004ee0                init_tlb
-                0x0000000070004f54                thread5_tlb
+                0x0000000070004f54                thread5_translate_7F_address
                 0x00000000700050ac                debug_related_8
                 0x00000000700051e0                was_opcode_In_70000450_70020D90
                 0x0000000070005258                return_strlen
@@ -784,6 +786,8 @@ Linker script and memory map
                 0x00000000700055a4                is_normal_single_precision_float
                 0x00000000700055c8                set_normality_of_single_precision_floats
                 0x0000000070005628                debug_indy_stub_2
+ build/src/deb_print.o(.text)
+ .text          0x0000000070005630      0x4e0 build/src/deb_print.o
                 0x0000000070005630                write_char_to_pos_stderr
                 0x00000000700056bc                __osRdbSend
                 0x00000000700057cc                scroll_stderr_oneline
@@ -791,7 +795,6 @@ Linker script and memory map
                 0x0000000070005984                set_ptr_video_buffers
                 0x00000000700059a4                set_video_buffer_pointers
                 0x00000000700059d0                write_stderr_to_buffer
- build/src/debug_stuff_split.o(.text)
  build/src/debug_getlastRA.o(.text)
  .text          0x0000000070005b10       0x50 build/src/debug_getlastRA.o
                 0x0000000070005b10                return_last_RA_saved_to_stack
@@ -10473,8 +10476,9 @@ Linker script and memory map
                 0x00000000800232e0                D_800232E0
                 0x00000000800232e8                debug_notice_list
                 0x00000000800232f8                debug_notice_list_data
- build/src/debug_stuff_split.o(.data)
- .data          0x0000000080023300      0xea0 build/src/debug_stuff_split.o
+ build/src/deb_video.o(.data)
+ build/src/deb_print.o(.data)
+ .data          0x0000000080023300      0xea0 build/src/deb_print.o
                 0x0000000080023300                D_80023300
                 0x0000000080023304                debug_processor_error_table
                 0x00000000800236dc                stack_ptrs_1
@@ -10795,8 +10799,9 @@ Linker script and memory map
                 0x000000008002879c                aImgviewGrab_D_rgb_0
  build/src/deb.o(.rodata)
  .rodata        0x00000000800287b0       0x10 build/src/deb.o
- build/src/debug_stuff_split.o(.rodata)
- .rodata        0x00000000800287c0      0x2b0 build/src/debug_stuff_split.o
+ build/src/deb_video.o(.rodata)
+ build/src/deb_print.o(.rodata)
+ .rodata        0x00000000800287c0      0x2b0 build/src/deb_print.o
  build/src/debug_getlastRA.o(.rodata)
  build/src/ramrom.o(.rodata)
  build/src/boss.o(.rodata)
@@ -15227,19 +15232,21 @@ Linker script and memory map
                 0x0000000080060888                dword_CODE_bss_80060888
                 0x000000008006088c                dword_CODE_bss_8006088C
  build/src/deb.o(.bss)
- .bss           0x0000000080060890     0x2e40 build/src/deb.o
+ .bss           0x0000000080060890      0x400 build/src/deb.o
                 0x0000000080060890                dword_CODE_bss_80060890
+ build/src/deb_video.o(.bss)
+ .bss           0x0000000080060c90     0x2a40 build/src/deb_video.o
                 0x0000000080060c90                thread_video_manager_debugthread
                 0x0000000080061340                tlbStack
-                0x0000000080063640                tlbMesgQ
-                0x0000000080063658                tlbMesgBuf
+                0x0000000080063640                thread5_MesgQ
+                0x0000000080063658                thread5_MesgBuf
                 0x000000008006365c                ptr_tlbthread_maybe
                 0x0000000080063660                dword_CODE_bss_80063660
                 0x0000000080063664                current_indy_read_buf_resourceID
                 0x0000000080063668                ptr_indy_read_buf_string1
                 0x000000008006366c                ptr_indy_read_buf_string2
                 0x0000000080063670                indy_read_buffer
- build/src/debug_stuff_split.o(.bss)
+ build/src/deb_print.o(.bss)
  build/src/debug_getlastRA.o(.bss)
  build/src/ramrom.o(.bss)
  .bss           0x00000000800636d0       0x40 build/src/ramrom.o
