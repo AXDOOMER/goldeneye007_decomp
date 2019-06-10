@@ -335,7 +335,6 @@ void sub_GAME_7F01D500(void)
   get_screen_ratio_settings_for_mpgame_from_folder(selected_folder_num);
 }
 
-
 void deleteCurrentSelectedFolder(void)
 {
   delete_update_eeprom_file(selected_folder_num);
@@ -346,35 +345,10 @@ void copyCurrentEEPROMtoStack(void)
   copy_eeprom_to_stack_set_folder_num(selected_folder_num);
 }
 
-
-
-
-#ifdef NONMATCHING
 u8 getSelectedFolderBond(void)
 {
-  u32 uVar1;
-  u8 bond;
-  
-  uVar1 = removed_would_have_returned_bond_for_folder_num(selected_folder_num);
-  return (u8)uVar1;
+  return removed_would_have_returned_bond_for_folder_num(selected_folder_num);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel getSelectedFolderBond
-/* 05209C 7F01D56C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0520A0 7F01D570 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0520A4 7F01D574 3C048003 */  lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
-/* 0520A8 7F01D578 0FC07AF0 */  jal   removed_would_have_returned_bond_for_folder_num
-/* 0520AC 7F01D57C 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 0520B0 7F01D580 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0520B4 7F01D584 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0520B8 7F01D588 03E00008 */  jr    $ra
-/* 0520BC 7F01D58C 00000000 */   nop   
-)
-#endif
-
-
 
 void set_selected_folder_num(u32 foldernum)
 {
@@ -2413,7 +2387,7 @@ u32 check_egypt_completed_any_folder_00(void) {
 }
 
 
-u32 removed_would_have_returned_bond_for_folder_num(u32 folder) {
+u8 removed_would_have_returned_bond_for_folder_num(u32 folder) {
   return 0;
 }
 
