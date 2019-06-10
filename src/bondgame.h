@@ -87,6 +87,7 @@ typedef enum LEVELID {
     LEVELID_WAX = 0x37,
     LEVELID_PAM = 0x38,
     LEVELID_MAX = 0x39,
+    LEVELID_TITLE = 0x5A,
     LEVELID_NONE = 0xFFFFFFFF
 } LEVELID;
 

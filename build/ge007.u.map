@@ -15251,7 +15251,7 @@ Linker script and memory map
  build/src/ramrom.o(.bss)
  .bss           0x00000000800636d0       0x40 build/src/ramrom.o
                 0x00000000800636d0                memoryMesgMB
-                0x00000000800636e8                ptr_memorymsg
+                0x00000000800636e8                memoryMesg
                 0x00000000800636f0                memoryMesgQueue
  build/src/boss.o(.bss)
  build/src/music.o(.bss)

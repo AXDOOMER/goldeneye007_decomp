@@ -5,14 +5,14 @@
 #define align_addr_even(X) (((X) | 1) ^ 1)
 
 OSIoMesg memoryMesgMB;
-OSMesg ptr_memorymsg;
+OSMesg memoryMesg;
 OSMesgQueue memoryMesgQueue;
 
 /* external */
 /* romCreateMesgQueue */
 /* creates a message queue */
 void romCreateMesgQueue(void) {
-    osCreateMesgQueue(&memoryMesgQueue, &ptr_memorymsg, 1);
+    osCreateMesgQueue(&memoryMesgQueue, &memoryMesg, 1);
 }
 
 
