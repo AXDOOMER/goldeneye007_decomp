@@ -1,5 +1,5 @@
-#ifndef _BG_AME_ALL_P_H_
-#define _BG_AME_ALL_P_H_
+#ifndef _BG_LIP_ALL_P_H_
+#define _BG_LIP_ALL_P_H_
 
 #include "ultra64.h"
 

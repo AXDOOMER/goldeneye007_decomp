@@ -127,9 +127,7 @@ bg_crad_all_p_seg:
 .incbin "build/assets/obseg/bg/bg_crad_all_p.seg"
 bg_crad_all_p.seg_end:
 
-.global bg_sho_all_p_seg
 .global bg_imp_all_p_seg
-bg_sho_all_p_seg:
 bg_imp_all_p_seg:
 .incbin "build/assets/obseg/bg/bg_imp_all_p.seg"
 bg_imp_all_p.seg_end:
@@ -139,34 +137,56 @@ bg_ash_all_p_seg:
 .incbin "build/assets/obseg/bg/bg_ash_all_p.seg"
 bg_ash_all_p.seg_end:
 
+.global bg_sho_all_p_seg
+bg_sho_all_p_seg:
+.incbin "build/assets/obseg/bg/bg_sho_all_p.seg"
+bg_sho_all_p.seg_end:
+
 .global bg_ame_all_p_seg
 bg_ame_all_p_seg:
 .incbin "build/assets/obseg/bg/bg_ame_all_p.seg"
 bg_ame_all_p.seg_end:
 
-.global bg_rit_all_p_seg
 .global bg_oat_all_p_seg
-bg_rit_all_p_seg:
 bg_oat_all_p_seg:
 .incbin "build/assets/obseg/bg/bg_oat_all_p.seg"
 bg_oat_all_p.seg_end:
 
+.global bg_rit_all_p_seg
+bg_rit_all_p_seg:
+.incbin "build/assets/obseg/bg/bg_rit_all_p.seg"
+bg_rit_all_p.seg_end:
 
-.global bg_ear_all_p_seg
-.global bg_lee_all_p_seg
-.global bg_lip_all_p_seg
 .global bg_len_all_p_seg
-bg_ear_all_p_seg:
-bg_lee_all_p_seg:
-bg_lip_all_p_seg:
 bg_len_all_p_seg:
 .incbin "build/assets/obseg/bg/bg_len_all_p.seg"
 bg_len_all_p.seg_end:
 
-.global bg_wax_all_p_seg
+.global bg_lee_all_p_seg
+bg_lee_all_p_seg:
+.incbin "build/assets/obseg/bg/bg_lee_all_p.seg"
+bg_lee_all_p.seg_end:
+
+.global bg_ear_all_p_seg
+bg_ear_all_p_seg:
+.incbin "build/assets/obseg/bg/bg_ear_all_p.seg"
+bg_ear_all_p.seg_end:
+
+.global bg_lip_all_p_seg
+bg_lip_all_p_seg:
+.incbin "build/assets/obseg/bg/bg_lip_all_p.seg"
+bg_lip_all_p.seg_end:
+
 .global bg_pam_all_p_seg
-bg_wax_all_p_seg:
 bg_pam_all_p_seg:
+.incbin "build/assets/obseg/bg/bg_pam_all_p.seg"
+bg_pam_all_p.seg_end:
+
+.global bg_wax_all_p_seg
+bg_wax_all_p_seg:
+.incbin "build/assets/obseg/bg/bg_wax_all_p.seg"
+bg_wax_all_p.seg_end:
+
 obseg_file_rz chr, CarmourguardZ
 obseg_file_rz chr, CbaronsamediZ
 obseg_file_rz chr, CbluecamguardZ

@@ -1052,29 +1052,9 @@ s32 get_numguards(void){
   return num_guards;
 }
 
-
-
-
-#ifdef NONMATCHING
-void get_ptr_allocated_block_for_vertices(void) {
-
+void get_ptr_allocated_block_for_vertices(int param_1) {
+  sub_GAME_7F0BD714(param_1 << 4);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_allocated_block_for_vertices
-/* 05406C 7F01F53C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 054070 7F01F540 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 054074 7F01F544 0FC2F5C5 */  jal   sub_GAME_7F0BD714
-/* 054078 7F01F548 00042100 */   sll   $a0, $a0, 4
-/* 05407C 7F01F54C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 054080 7F01F550 27BD0018 */  addiu $sp, $sp, 0x18
-/* 054084 7F01F554 03E00008 */  jr    $ra
-/* 054088 7F01F558 00000000 */   nop   
-)
-#endif
-
-
 
 void set_show_patrols_flag(s32 flag){
   show_patrols_flag = flag;
