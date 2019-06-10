@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "IGNORE gzip errors about crc and end of file"
 true="1"
 mkdir assets assets/font assets/music assets/ramrom assets/obseg assets/obseg/bg assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop assets/obseg/setup assets/obseg/stan assets/obseg/text
 while IFS=, read -r offset size name compressed extract
@@ -30,5 +31,5 @@ done < filelist.u.csv
 #filelist.u.csv should follow pattern of:
 #offset,size,name,compressed,extract
 #formatting matters, no comments, no extra lines, unix line endings only
-#and always end with a newline
+#and always end with no newline
 
