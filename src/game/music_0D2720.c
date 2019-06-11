@@ -84,7 +84,7 @@ glabel sub_GAME_7F0D2720
 /* 1072B0 7F0D2780 5720FFFD */  bnezl $t9, .L7F0D2778
 /* 1072B4 7F0D2784 84590002 */   lh    $t9, 2($v0)
 .L7F0D2788:
-/* 1072B8 7F0D2788 0C002914 */  jal   random_related
+/* 1072B8 7F0D2788 0C002914 */  jal   get_random_value
 /* 1072BC 7F0D278C AFA30020 */   sw    $v1, 0x20($sp)
 /* 1072C0 7F0D2790 8FA30020 */  lw    $v1, 0x20($sp)
 /* 1072C4 7F0D2794 3C048005 */  lui   $a0, 0x8005
@@ -121,7 +121,7 @@ glabel sub_GAME_7F0D2720
 /* 10732C 7F0D27FC 5560FFFD */  bnezl $t3, .L7F0D27F4
 /* 107330 7F0D2800 844B0002 */   lh    $t3, 2($v0)
 .L7F0D2804:
-/* 107334 7F0D2804 0C002914 */  jal   random_related
+/* 107334 7F0D2804 0C002914 */  jal   get_random_value
 /* 107338 7F0D2808 AFA30018 */   sw    $v1, 0x18($sp)
 /* 10733C 7F0D280C 8FA30018 */  lw    $v1, 0x18($sp)
 /* 107340 7F0D2810 3C048005 */  lui   $a0, 0x8005

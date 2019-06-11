@@ -90,7 +90,7 @@ glabel jpt_8005B7C8
 .word .L7F0C0E18
 .word .L7F0C0DE4
 
-glabel D_8005B7E4
+glabel music_rate_8005B7E4
 .word 0x3ca3d70a /*0.02*/
 
 /*D:8005B7E8*/
@@ -260,9 +260,9 @@ glabel set_missionstate
 /* 0F590C 7F0C0DDC 10000104 */  b     .L7F0C11F0
 /* 0F5910 7F0C0DE0 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F0C0DE4:
-/* 0F5914 7F0C0DE4 3C018006 */  lui   $at, %hi(D_8005B7E4) # $at, 0x8006
+/* 0F5914 7F0C0DE4 3C018006 */  lui   $at, %hi(music_rate_8005B7E4) # $at, 0x8006
 /* 0F5918 7F0C0DE8 0C001C3E */  jal   music_related_1
-/* 0F591C 7F0C0DEC C42CB7E4 */   lwc1  $f12, %lo(D_8005B7E4)($at)
+/* 0F591C 7F0C0DEC C42CB7E4 */   lwc1  $f12, %lo(music_rate_8005B7E4)($at)
 /* 0F5920 7F0C0DF0 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F5924 7F0C0DF4 00000000 */   nop   
 /* 0F5928 7F0C0DF8 0C001CF1 */  jal   musicTrack2Vol

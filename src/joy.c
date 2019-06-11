@@ -201,9 +201,9 @@ glabel something_with_joy_c_debug
 /* 00C210 7000B610 AC2E6918 */  sw    $t6, %lo(D_80026918)($at)
 /* 00C214 7000B614 3C018002 */  lui   $at, %hi(disable_all_rumble) # $at, 0x8002
 /* 00C218 7000B618 AC206924 */  sw    $zero, %lo(disable_all_rumble)($at)
-/* 00C21C 7000B61C 3C0F8006 */  lui   $t7, 0x8006
+/* 00C21C 7000B61C 3C0F8006 */  lui   $t7, %hi(controller_input_index)
 /* 00C220 7000B620 3C018002 */  lui   $at, %hi(ptr_to_tlb_ramrom_record) # $at, 0x8002
-/* 00C224 7000B624 25E24F30 */  addiu $v0, $t7, 0x4f30
+/* 00C224 7000B624 25E24F30 */  addiu $v0, $t7, %lo(controller_input_index)
 /* 00C228 7000B628 3C058006 */  lui   $a1, %hi(contdemoMesg) # $a1, 0x8006
 /* 00C22C 7000B62C AC206928 */  sw    $zero, %lo(ptr_to_tlb_ramrom_record)($at)
 /* 00C230 7000B630 24A55328 */  addiu $a1, %lo(contdemoMesg) # addiu $a1, $a1, 0x5328
@@ -305,8 +305,7 @@ glabel test_controller_presence
 
 
 #ifdef NONMATCHING
-void osPfsChecker(s32 arg0) {
-    // Node 0
+s32 osPfsChecker(s32 *arg0) {
     return;
     // (possible return value: 3)
 }
@@ -721,7 +720,7 @@ GLOBAL_ASM(
 glabel get_attached_controller_count
 /* 00C5F8 7000B9F8 3C0E8002 */  lui   $t6, %hi(ptr_current_point_in_controller_input_index) # $t6, 0x8002
 /* 00C5FC 7000B9FC 8DCE68C4 */  lw    $t6, %lo(ptr_current_point_in_controller_input_index)($t6)
-/* 00C600 7000BA00 3C028002 */  lui   $v0, 0x8002
+/* 00C600 7000BA00 3C028002 */  lui   $v0, %hi(num_controller_plugged_in_flags)
 /* 00C604 7000BA04 8DC301F8 */  lw    $v1, 0x1f8($t6)
 /* 00C608 7000BA08 04600005 */  bltz  $v1, .L7000BA20
 /* 00C60C 7000BA0C 00000000 */   nop   
@@ -731,7 +730,7 @@ glabel get_attached_controller_count
 /* 00C61C 7000BA1C 01E01025 */   move  $v0, $t7
 
 .L7000BA20:
-/* 00C620 7000BA20 904268D0 */  lbu   $v0, 0x68d0($v0)
+/* 00C620 7000BA20 904268D0 */  lbu   $v0, %lo(num_controller_plugged_in_flags)($v0)
 /* 00C624 7000BA24 30580001 */  andi  $t8, $v0, 1
 /* 00C628 7000BA28 17000003 */  bnez  $t8, .L7000BA38
 /* 00C62C 7000BA2C 30590002 */   andi  $t9, $v0, 2
@@ -2627,9 +2626,9 @@ glabel reset_cont_rumble_detect
 /* 00D518 7000C918 3C018002 */  lui   $at, %hi(controller_4_rumble_state) # $at, 0x8002
 /* 00D51C 7000C91C 24190001 */  li    $t9, 1
 /* 00D520 7000C920 AC3968F4 */  sw    $t9, %lo(controller_4_rumble_state)($at)
-/* 00D524 7000C924 3C018002 */  lui   $at, 0x8002
+/* 00D524 7000C924 3C018002 */  lui   $at, %hi( controller_4_rumble_pulse)
 /* 00D528 7000C928 03E00008 */  jr    $ra
-/* 00D52C 7000C92C AC206914 */   sw    $zero, 0x6914($at)
+/* 00D52C 7000C92C AC206914 */   sw    $zero, %lo( controller_4_rumble_pulse)($at)
 )
 #endif
 
@@ -2654,9 +2653,9 @@ glabel controller_7000C930
 /* 00D53C 7000C93C 25EF4F30 */  addiu $t7, %lo(controller_input_index) # addiu $t7, $t7, 0x4f30
 /* 00D540 7000C940 000E7080 */  sll   $t6, $t6, 2
 /* 00D544 7000C944 01CFC021 */  addu  $t8, $t6, $t7
-/* 00D548 7000C948 3C018002 */  lui   $at, 0x8002
+/* 00D548 7000C948 3C018002 */  lui   $at, %hi(ptr_current_point_in_controller_input_index)
 /* 00D54C 7000C94C 03E00008 */  jr    $ra
-/* 00D550 7000C950 AC3868C4 */   sw    $t8, 0x68c4($at)
+/* 00D550 7000C950 AC3868C4 */   sw    $t8, %lo(ptr_current_point_in_controller_input_index)($at)
 )
 #endif
 

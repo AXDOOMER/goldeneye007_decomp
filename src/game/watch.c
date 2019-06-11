@@ -1305,7 +1305,7 @@ glabel sub_GAME_7F0A5210
 /* 0D9D58 7F0A5228 2405009F */  li    $a1, 159
 /* 0D9D5C 7F0A522C 0C002382 */  jal   play_sfx_a1
 /* 0D9D60 7F0A5230 00003025 */   move  $a2, $zero
-/* 0D9D64 7F0A5234 0C002914 */  jal   random_related
+/* 0D9D64 7F0A5234 0C002914 */  jal   get_random_value
 /* 0D9D68 7F0A5238 00000000 */   nop   
 /* 0D9D6C 7F0A523C 3C0E8004 */  lui   $t6, %hi(D_80040B10) # $t6, 0x8004
 /* 0D9D70 7F0A5240 8DCE0B10 */  lw    $t6, %lo(D_80040B10)($t6)
@@ -3605,7 +3605,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DB830 7F0A6D00 3C0F8004 */  lui   $t7, %hi(D_80040B0C) # $t7, 0x8004
 /* 0DB834 7F0A6D04 8DEF0B0C */  lw    $t7, %lo(D_80040B0C)($t7)
 /* 0DB838 7F0A6D08 000FC400 */  sll   $t8, $t7, 0x10
-/* 0DB83C 7F0A6D0C 0C002914 */  jal   random_related
+/* 0DB83C 7F0A6D0C 0C002914 */  jal   get_random_value
 /* 0DB840 7F0A6D10 AFB8001C */   sw    $t8, 0x1c($sp)
 /* 0DB844 7F0A6D14 8FB9001C */  lw    $t9, 0x1c($sp)
 /* 0DB848 7F0A6D18 0322082B */  sltu  $at, $t9, $v0
@@ -3620,7 +3620,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DB868 7F0A6D38 286100E0 */  slti  $at, $v1, 0xe0
 /* 0DB86C 7F0A6D3C 5020000A */  beql  $at, $zero, .L7F0A6D68
 /* 0DB870 7F0A6D40 286100E1 */   slti  $at, $v1, 0xe1
-/* 0DB874 7F0A6D44 0C002914 */  jal   random_related
+/* 0DB874 7F0A6D44 0C002914 */  jal   get_random_value
 /* 0DB878 7F0A6D48 00000000 */   nop   
 /* 0DB87C 7F0A6D4C 3C048004 */  lui   $a0, %hi(D_80040B04) # $a0, 0x8004
 /* 0DB880 7F0A6D50 24840B04 */  addiu $a0, %lo(D_80040B04) # addiu $a0, $a0, 0xb04

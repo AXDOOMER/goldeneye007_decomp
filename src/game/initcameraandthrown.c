@@ -600,7 +600,7 @@ def_7F005A74:
 /* 03A930 7F005E00 2652A0B0 */  addiu $s2, %lo(ptr_BONDdata) # addiu $s2, $s2, -0x5f50
 /* 03A934 7F005E04 10400012 */  beqz  $v0, .L7F005E50
 /* 03A938 7F005E08 3C018003 */   lui   $at, %hi(D_800364C0) # $at, 0x8003
-/* 03A93C 7F005E0C 0C002914 */  jal   random_related
+/* 03A93C 7F005E0C 0C002914 */  jal   get_random_value
 /* 03A940 7F005E10 AC2264C0 */   sw    $v0, %lo(D_800364C0)($at)
 /* 03A944 7F005E14 3C0B8003 */  lui   $t3, %hi(D_800364BC) # $t3, 0x8003
 /* 03A948 7F005E18 8D6B64BC */  lw    $t3, %lo(D_800364BC)($t3)

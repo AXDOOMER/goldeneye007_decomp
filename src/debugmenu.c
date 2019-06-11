@@ -297,7 +297,6 @@ glabel debug_text_related_1
 
 void stubbed_function_7000AF84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return;
-    // (function likely void)
 }
 
 
@@ -417,10 +416,10 @@ glabel set_final_debug_text_positions
 /* 00BC50 7000B050 3C018002 */  lui   $at, %hi(debug_menu_x_text_pos) # $at, 0x8002
 /* 00BC54 7000B054 008E2021 */  addu  $a0, $a0, $t6
 /* 00BC58 7000B058 AC244FA8 */  sw    $a0, %lo(debug_menu_x_text_pos)($at)
-/* 00BC5C 7000B05C 3C018002 */  lui   $at, 0x8002
+/* 00BC5C 7000B05C 3C018002 */  lui   $at, %hi(debug_menu_y_text_pos)
 /* 00BC60 7000B060 00AF2821 */  addu  $a1, $a1, $t7
 /* 00BC64 7000B064 03E00008 */  jr    $ra
-/* 00BC68 7000B068 AC254FAC */   sw    $a1, 0x4fac($at)
+/* 00BC68 7000B068 AC254FAC */   sw    $a1, %lo(debug_menu_y_text_pos)($at)
 )
 #endif
 
@@ -428,59 +427,15 @@ glabel set_final_debug_text_positions
 
 
 
-#ifdef NONMATCHING
-void set_debug_text_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    // Node 0
-    (void *)0x80020000->unk68AC = (s32) ((((arg0 << 0x18) | (arg1 << 0x10)) | (arg2 << 8)) | (0xff - arg3));
-    return;
-    // (function likely void)
+
+void set_debug_text_color(s32 red,s32 blue,s32 green,s32 alpha){
+  debug_text_color = red << 0x18 | blue << 0x10 | green << 8 | 0xffU - alpha;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_debug_text_color
-/* 00BC6C 7000B06C 00047600 */  sll   $t6, $a0, 0x18
-/* 00BC70 7000B070 00057C00 */  sll   $t7, $a1, 0x10
-/* 00BC74 7000B074 01CFC025 */  or    $t8, $t6, $t7
-/* 00BC78 7000B078 0006CA00 */  sll   $t9, $a2, 8
-/* 00BC7C 7000B07C 240900FF */  li    $t1, 255
-/* 00BC80 7000B080 01275023 */  subu  $t2, $t1, $a3
-/* 00BC84 7000B084 03194025 */  or    $t0, $t8, $t9
-/* 00BC88 7000B088 010A5825 */  or    $t3, $t0, $t2
-/* 00BC8C 7000B08C 3C018002 */  lui   $at, 0x8002
-/* 00BC90 7000B090 03E00008 */  jr    $ra
-/* 00BC94 7000B094 AC2B68AC */   sw    $t3, 0x68ac($at)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void set_color_speedgraph(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    // Node 0
-    (void *)0x80020000->unk68B4 = (s32) ((((arg0 << 0x18) | (arg1 << 0x10)) | (arg2 << 8)) | (0xff - arg3));
-    return;
-    // (function likely void)
+void set_color_speedgraph(s32 red,s32 green,s32 blue,s32 alpha) {
+  speedgraph_color = red << 0x18 | green << 0x10 | blue << 8 | 0xffU - alpha;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_color_speedgraph
-/* 00BC98 7000B098 00047600 */  sll   $t6, $a0, 0x18
-/* 00BC9C 7000B09C 00057C00 */  sll   $t7, $a1, 0x10
-/* 00BCA0 7000B0A0 01CFC025 */  or    $t8, $t6, $t7
-/* 00BCA4 7000B0A4 0006CA00 */  sll   $t9, $a2, 8
-/* 00BCA8 7000B0A8 240900FF */  li    $t1, 255
-/* 00BCAC 7000B0AC 01275023 */  subu  $t2, $t1, $a3
-/* 00BCB0 7000B0B0 03194025 */  or    $t0, $t8, $t9
-/* 00BCB4 7000B0B4 010A5825 */  or    $t3, $t0, $t2
-/* 00BCB8 7000B0B8 3C018002 */  lui   $at, 0x8002
-/* 00BCBC 7000B0BC 03E00008 */  jr    $ra
-/* 00BCC0 7000B0C0 AC2B68B4 */   sw    $t3, 0x68b4($at)
-)
-#endif
+
 
 
 
@@ -885,7 +840,7 @@ loop_18:
         }
         phi_s0_3 = phi_s0_2;
         phi_s4_2 = phi_s4_3;
-        if ((u32) (random_related() & 0xff) < (u32) D_800268B8)
+        if ((u32) (get_random_value() & 0xff) < (u32) D_800268B8)
         {
             temp_v0_2 = phi_s0_2;
             phi_s0_3 = phi_s0_2;
@@ -952,8 +907,8 @@ glabel read_screen_display_block_and_write_chars
 /* 00BEBC 7000B2BC 0000A825 */  move  $s5, $zero
 /* 00BEC0 7000B2C0 00004025 */  move  $t0, $zero
 .L7000B2C4:
-/* 00BEC4 7000B2C4 3C0E8002 */  lui   $t6, 0x8002
-/* 00BEC8 7000B2C8 25C55030 */  addiu $a1, $t6, 0x5030
+/* 00BEC4 7000B2C4 3C0E8002 */  lui   $t6, %hi(stdout_debug_menu_screen_buffer)
+/* 00BEC8 7000B2C8 25C55030 */  addiu $a1, $t6, %lo(stdout_debug_menu_screen_buffer)
 /* 00BECC 7000B2CC 01052021 */  addu  $a0, $t0, $a1
 .L7000B2D0:
 /* 00BED0 7000B2D0 90820000 */  lbu   $v0, ($a0)
@@ -1054,7 +1009,7 @@ glabel read_screen_display_block_and_write_chars
 /* 00C024 7000B424 8F090004 */  lw    $t1, 4($t8)
 /* 00C028 7000B428 AE09FFFC */  sw    $t1, -4($s0)
 .L7000B42C:
-/* 00C02C 7000B42C 0C002914 */  jal   random_related
+/* 00C02C 7000B42C 0C002914 */  jal   get_random_value
 /* 00C030 7000B430 00000000 */   nop   
 /* 00C034 7000B434 3C0B8002 */  lui   $t3, %hi(D_800268B8) # $t3, 0x8002
 /* 00C038 7000B438 8D6B68B8 */  lw    $t3, %lo(D_800268B8)($t3)

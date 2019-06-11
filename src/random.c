@@ -6,13 +6,17 @@ u64 randseed = 0xAB8D9F7781280783;
 
 
 #ifdef NONMATCHING
-void random_related(void) {
-
+u32 get_random_value(void) {
+  ulonglong uVar1;
+  
+  uVar1 = ((randseed << 0x3f) >> 0x1f | (randseed << 0x1f) >> 0x20) ^ (randseed << 0x2c) >> 0x20;
+  randseed = uVar1 >> 0x14 & 0xfff ^ uVar1;
+  return (u32)randseed;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel random_related
+glabel get_random_value
 /* 00B050 7000A450 3C048002 */  lui   $a0, %hi(randseed) # $a0, 0x8002
 /* 00B054 7000A454 DC844460 */  ld    $a0, %lo(randseed)($a0)
 /* 00B058 7000A458 3C018002 */  lui   $at, %hi(randseed) # $at, 0x8002
@@ -37,8 +41,9 @@ glabel random_related
 
 
 #ifdef NONMATCHING
-void increment_random_num(void) {
-
+void increment_random_num(u64 param_1) {
+  randseed = param_1 + 1;
+  return;
 }
 #else
 GLOBAL_ASM(
@@ -55,8 +60,14 @@ glabel increment_random_num
 
 
 #ifdef NONMATCHING
-void lotsa_shifting_randomizer_related(void) {
-
+u32 lotsa_shifting_random_related(ulonglong *param_1) {
+  ulonglong uVar1;
+  
+  uVar1 = *param_1;
+  uVar1 = ((uVar1 << 0x3f) >> 0x1f | (uVar1 << 0x1f) >> 0x20) ^ (uVar1 << 0x2c) >> 0x20;
+  uVar1 = uVar1 >> 0x14 & 0xfff ^ uVar1;
+  *param_1 = uVar1;
+  return (u32)uVar1;
 }
 #else
 GLOBAL_ASM(

@@ -12962,7 +12962,7 @@ void interface_menu0E_mpoptions(void)
         if (temp_v0->unk-4F84 < 0)
         {
 loop_65:
-            temp_hi = random_related() % 0xbU;
+            temp_hi = get_random_value() % 0xbU;
             selected_stage = (?32) (0x80030000 + (temp_hi * 0x18))->unk-4F6C;
             if (check_if_mp_stage_unlocked(temp_hi + 1) == 0)
             {
@@ -13435,7 +13435,7 @@ glabel interface_menu0E_mpoptions
 /* 0458AC 7F010D7C 04410014 */  bgez  $v0, .L7F010DD0
 /* 0458B0 7F010D80 00000000 */   nop   
 .L7F010D84:
-/* 0458B4 7F010D84 0C002914 */  jal   random_related
+/* 0458B4 7F010D84 0C002914 */  jal   get_random_value
 /* 0458B8 7F010D88 00000000 */   nop   
 /* 0458BC 7F010D8C 2401000B */  li    $at, 11
 /* 0458C0 7F010D90 0041001B */  divu  $zero, $v0, $at
@@ -25345,7 +25345,7 @@ glabel init_menu18_displaycast
 /* 04D1F8 7F0186C8 8F010008 */  lw    $at, 8($t8)
 /* 04D1FC 7F0186CC ADE90004 */  sw    $t1, 4($t7)
 /* 04D200 7F0186D0 ADE10008 */  sw    $at, 8($t7)
-/* 04D204 7F0186D4 0C002914 */  jal   random_related
+/* 04D204 7F0186D4 0C002914 */  jal   get_random_value
 /* 04D208 7F0186D8 AFA0007C */   sw    $zero, 0x7c($sp)
 /* 04D20C 7F0186DC 3C0B8003 */  lui   $t3, %hi(full_actor_intro) # $t3, 0x8003
 /* 04D210 7F0186E0 8D6BB5FC */  lw    $t3, %lo(full_actor_intro)($t3)
@@ -25383,7 +25383,7 @@ glabel init_menu18_displaycast
 /* 04D288 7F018758 0523FFFA */  bgezl $t1, .L7F018744
 /* 04D28C 7F01875C 24590001 */   addiu $t9, $v0, 1
 .L7F018760:
-/* 04D290 7F018760 0C002914 */  jal   random_related
+/* 04D290 7F018760 0C002914 */  jal   get_random_value
 /* 04D294 7F018764 00000000 */   nop   
 /* 04D298 7F018768 3C038003 */  lui   $v1, %hi(intro_animation_count) # $v1, 0x8003
 /* 04D29C 7F01876C 2463B5F0 */  addiu $v1, %lo(intro_animation_count) # addiu $v1, $v1, -0x4a10
@@ -25418,7 +25418,7 @@ glabel init_menu18_displaycast
 /* 04D30C 7F0187DC AFB90088 */  sw    $t9, 0x88($sp)
 /* 04D310 7F0187E0 15010022 */  bne   $t0, $at, .L7F01886C
 /* 04D314 7F0187E4 AFA9006C */   sw    $t1, 0x6c($sp)
-/* 04D318 7F0187E8 0C002914 */  jal   random_related
+/* 04D318 7F0187E8 0C002914 */  jal   get_random_value
 /* 04D31C 7F0187EC 00000000 */   nop   
 /* 04D320 7F0187F0 24010005 */  li    $at, 5
 /* 04D324 7F0187F4 0041001B */  divu  $zero, $v0, $at
@@ -25461,7 +25461,7 @@ set_body_5:
 /* 04D3A4 7F018874 8FAD008C */  lw    $t5, 0x8c($sp)
 /* 04D3A8 7F018878 55410009 */  bnel  $t2, $at, .L7F0188A0
 /* 04D3AC 7F01887C 24010009 */   li    $at, 9
-/* 04D3B0 7F018880 0C002914 */  jal   random_related
+/* 04D3B0 7F018880 0C002914 */  jal   get_random_value
 /* 04D3B4 7F018884 00000000 */   nop   
 /* 04D3B8 7F018888 304B0001 */  andi  $t3, $v0, 1
 /* 04D3BC 7F01888C 1160000C */  beqz  $t3, .L7F0188C0
@@ -25472,7 +25472,7 @@ set_body_5:
 .L7F0188A0:
 /* 04D3D0 7F0188A0 55A10008 */  bnel  $t5, $at, .L7F0188C4
 /* 04D3D4 7F0188A4 8FB90088 */   lw    $t9, 0x88($sp)
-/* 04D3D8 7F0188A8 0C002914 */  jal   random_related
+/* 04D3D8 7F0188A8 0C002914 */  jal   get_random_value
 /* 04D3DC 7F0188AC 00000000 */   nop   
 /* 04D3E0 7F0188B0 304E0001 */  andi  $t6, $v0, 1
 /* 04D3E4 7F0188B4 11C00002 */  beqz  $t6, .L7F0188C0
@@ -25602,7 +25602,7 @@ set_body_mp_choice_maybe:
 /* 04D5C0 7F018A90 8DE10010 */  lw    $at, 0x10($t7)
 /* 04D5C4 7F018A94 8DEE0014 */  lw    $t6, 0x14($t7)
 /* 04D5C8 7F018A98 AD210010 */  sw    $at, 0x10($t1)
-/* 04D5CC 7F018A9C 0C002914 */  jal   random_related
+/* 04D5CC 7F018A9C 0C002914 */  jal   get_random_value
 /* 04D5D0 7F018AA0 AD2E0014 */   sw    $t6, 0x14($t1)
 /* 04D5D4 7F018AA4 24010006 */  li    $at, 6
 /* 04D5D8 7F018AA8 0041001B */  divu  $zero, $v0, $at
@@ -25626,7 +25626,7 @@ set_body_mp_choice_maybe:
 /* 04D618 7F018AE8 154CFFF8 */  bne   $t2, $t4, .L7F018ACC
 /* 04D61C 7F018AEC AF01FFFC */   sw    $at, -4($t8)
 /* 04D620 7F018AF0 8D410000 */  lw    $at, ($t2)
-/* 04D624 7F018AF4 0C002914 */  jal   random_related
+/* 04D624 7F018AF4 0C002914 */  jal   get_random_value
 /* 04D628 7F018AF8 AF010000 */   sw    $at, ($t8)
 /* 04D62C 7F018AFC 2401000A */  li    $at, 10
 /* 04D630 7F018B00 0041001B */  divu  $zero, $v0, $at
@@ -25762,7 +25762,7 @@ set_body_mp_choice_maybe:
 /* 04D810 7F018CE0 0FC1BF2A */  jal   sub_GAME_7F06FCA8
 /* 04D814 7F018CE4 E7A60014 */   swc1  $f6, 0x14($sp)
 /* 04D818 7F018CE8 3C018003 */  lui   $at, %hi(menu_timer) # $at, 0x8003
-/* 04D81C 7F018CEC 0C002914 */  jal   random_related
+/* 04D81C 7F018CEC 0C002914 */  jal   get_random_value
 /* 04D820 7F018CF0 AC20A8CC */   sw    $zero, %lo(menu_timer)($at)
 /* 04D824 7F018CF4 44824000 */  mtc1  $v0, $f8
 /* 04D828 7F018CF8 04410005 */  bgez  $v0, .L7F018D10
@@ -25782,7 +25782,7 @@ set_body_mp_choice_maybe:
 /* 04D85C 7F018D2C 3C018007 */  lui   $at, %hi(flt_CODE_bss_800695A4) # $at, 0x8007
 /* 04D860 7F018D30 46062202 */  mul.s $f8, $f4, $f6
 /* 04D864 7F018D34 46104280 */  add.s $f10, $f8, $f16
-/* 04D868 7F018D38 0C002914 */  jal   random_related
+/* 04D868 7F018D38 0C002914 */  jal   get_random_value
 /* 04D86C 7F018D3C E42A95A4 */   swc1  $f10, %lo(flt_CODE_bss_800695A4)($at)
 /* 04D870 7F018D40 44829000 */  mtc1  $v0, $f18
 /* 04D874 7F018D44 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -25802,7 +25802,7 @@ set_body_mp_choice_maybe:
 /* 04D8A8 7F018D78 3C018007 */  lui   $at, %hi(flt_CODE_bss_800695A8) # $at, 0x8007
 /* 04D8AC 7F018D7C 460A8482 */  mul.s $f18, $f16, $f10
 /* 04D8B0 7F018D80 46069100 */  add.s $f4, $f18, $f6
-/* 04D8B4 7F018D84 0C002914 */  jal   random_related
+/* 04D8B4 7F018D84 0C002914 */  jal   get_random_value
 /* 04D8B8 7F018D88 E42495A8 */   swc1  $f4, %lo(flt_CODE_bss_800695A8)($at)
 /* 04D8BC 7F018D8C 44824000 */  mtc1  $v0, $f8
 /* 04D8C0 7F018D90 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -25822,7 +25822,7 @@ set_body_mp_choice_maybe:
 /* 04D8F4 7F018DC4 3C018007 */  lui   $at, %hi(flt_CODE_bss_800695B0) # $at, 0x8007
 /* 04D8F8 7F018DC8 46043201 */  sub.s $f8, $f6, $f4
 /* 04D8FC 7F018DCC 460A4402 */  mul.s $f16, $f8, $f10
-/* 04D900 7F018DD0 0C002914 */  jal   random_related
+/* 04D900 7F018DD0 0C002914 */  jal   get_random_value
 /* 04D904 7F018DD4 E43095B0 */   swc1  $f16, %lo(flt_CODE_bss_800695B0)($at)
 /* 04D908 7F018DD8 44829000 */  mtc1  $v0, $f18
 /* 04D90C 7F018DDC 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -25842,7 +25842,7 @@ set_body_mp_choice_maybe:
 /* 04D940 7F018E10 3C018007 */  lui   $at, %hi(flt_CODE_bss_800695B4) # $at, 0x8007
 /* 04D944 7F018E14 46105481 */  sub.s $f18, $f10, $f16
 /* 04D948 7F018E18 46049182 */  mul.s $f6, $f18, $f4
-/* 04D94C 7F018E1C 0C002914 */  jal   random_related
+/* 04D94C 7F018E1C 0C002914 */  jal   get_random_value
 /* 04D950 7F018E20 E42695B4 */   swc1  $f6, %lo(flt_CODE_bss_800695B4)($at)
 /* 04D954 7F018E24 44824000 */  mtc1  $v0, $f8
 /* 04D958 7F018E28 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -25862,7 +25862,7 @@ set_body_mp_choice_maybe:
 /* 04D98C 7F018E5C 3C018007 */  lui   $at, %hi(flt_CODE_bss_800695BC) # $at, 0x8007
 /* 04D990 7F018E60 46062202 */  mul.s $f8, $f4, $f6
 /* 04D994 7F018E64 46104280 */  add.s $f10, $f8, $f16
-/* 04D998 7F018E68 0C002914 */  jal   random_related
+/* 04D998 7F018E68 0C002914 */  jal   get_random_value
 /* 04D99C 7F018E6C E42A95BC */   swc1  $f10, %lo(flt_CODE_bss_800695BC)($at)
 /* 04D9A0 7F018E70 44829000 */  mtc1  $v0, $f18
 /* 04D9A4 7F018E74 3C038007 */  lui   $v1, %hi(flt_CODE_bss_800695E8) # $v1, 0x8007
@@ -26147,7 +26147,7 @@ glabel interface_menu18_displaycast
 /* 04DC28 7F0190F8 00000000 */   nop   
 /* 04DC2C 7F0190FC 5440000F */  bnezl $v0, .L7F01913C
 /* 04DC30 7F019100 8E0A0000 */   lw    $t2, ($s0)
-/* 04DC34 7F019104 0C002914 */  jal   random_related
+/* 04DC34 7F019104 0C002914 */  jal   get_random_value
 /* 04DC38 7F019108 00000000 */   nop   
 /* 04DC3C 7F01910C 0053001B */  divu  $zero, $v0, $s3
 /* 04DC40 7F019110 0000C810 */  mfhi  $t9
@@ -26174,7 +26174,7 @@ glabel interface_menu18_displaycast
 /* 04DC8C 7F01915C 00000000 */   nop   
 /* 04DC90 7F019160 5440000F */  bnezl $v0, .L7F0191A0
 /* 04DC94 7F019164 8E190000 */   lw    $t9, ($s0)
-/* 04DC98 7F019168 0C002914 */  jal   random_related
+/* 04DC98 7F019168 0C002914 */  jal   get_random_value
 /* 04DC9C 7F01916C 00000000 */   nop   
 /* 04DCA0 7F019170 0053001B */  divu  $zero, $v0, $s3
 /* 04DCA4 7F019174 00007010 */  mfhi  $t6
@@ -26201,7 +26201,7 @@ glabel interface_menu18_displaycast
 /* 04DCF0 7F0191C0 00000000 */   nop   
 /* 04DCF4 7F0191C4 5440000F */  bnezl $v0, .L7F019204
 /* 04DCF8 7F0191C8 8E0E0000 */   lw    $t6, ($s0)
-/* 04DCFC 7F0191CC 0C002914 */  jal   random_related
+/* 04DCFC 7F0191CC 0C002914 */  jal   get_random_value
 /* 04DD00 7F0191D0 00000000 */   nop   
 /* 04DD04 7F0191D4 0053001B */  divu  $zero, $v0, $s3
 /* 04DD08 7F0191D8 00005810 */  mfhi  $t3
@@ -26228,7 +26228,7 @@ glabel interface_menu18_displaycast
 /* 04DD54 7F019224 00000000 */   nop   
 /* 04DD58 7F019228 5440000F */  bnezl $v0, .L7F019268
 /* 04DD5C 7F01922C 8E030000 */   lw    $v1, ($s0)
-/* 04DD60 7F019230 0C002914 */  jal   random_related
+/* 04DD60 7F019230 0C002914 */  jal   get_random_value
 /* 04DD64 7F019234 00000000 */   nop   
 /* 04DD68 7F019238 0053001B */  divu  $zero, $v0, $s3
 /* 04DD6C 7F01923C 00004010 */  mfhi  $t0

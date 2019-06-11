@@ -28,7 +28,7 @@ extern s16 D_80063836;
 extern s32 D_80063838;
 extern s32 D_8006383C;
 extern s32 D_80063840;
-extern s16 D_80063844;
+extern s16 musicTrack1_length;
 extern s16 D_80063846;
 extern s16 D_80063848;
 extern s16 music1_length;

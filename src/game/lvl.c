@@ -199,7 +199,7 @@ void sub_GAME_7F0BD984(void) {
     s32 temp_a0;
 
     // Node 0
-    temp_a0 = ((random_related() % 0x3dU) + 2);
+    temp_a0 = ((get_random_value() % 0x3dU) + 2);
     D_8004836C = temp_a0;
     return musicTrack1Play(temp_a0);
 }
@@ -209,7 +209,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0BD984
 /* 0F24B4 7F0BD984 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F24B8 7F0BD988 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F24BC 7F0BD98C 0C002914 */  jal   random_related
+/* 0F24BC 7F0BD98C 0C002914 */  jal   get_random_value
 /* 0F24C0 7F0BD990 00000000 */   nop   
 /* 0F24C4 7F0BD994 2401003D */  li    $at, 61
 /* 0F24C8 7F0BD998 0041001B */  divu  $zero, $v0, $at

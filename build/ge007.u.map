@@ -913,7 +913,7 @@ Linker script and memory map
                 0x000000007000a3dc                mem_related_1
  build/src/random.o(.text)
  .text          0x000000007000a450       0xa0 build/src/random.o
-                0x000000007000a450                random_related
+                0x000000007000a450                get_random_value
                 0x000000007000a498                increment_random_num
                 0x000000007000a4ac                lotsa_shifting_randomizer_related
  build/src/token.o(.text)
@@ -15059,7 +15059,7 @@ Linker script and memory map
                 0x000000008005b790                jpt_8005B790
                 0x000000008005b7ac                jpt_8005B7AC
                 0x000000008005b7c8                jpt_8005B7C8
-                0x000000008005b7e4                D_8005B7E4
+                0x000000008005b7e4                music_rate_8005B7E4
                 0x000000008005b7e8                jpt_8005B7E8
                 0x000000008005b804                jpt_8005B804
                 0x000000008005b820                jpt_8005B820
@@ -15269,7 +15269,7 @@ Linker script and memory map
                 0x0000000080063838                D_80063838
                 0x000000008006383c                D_8006383C
                 0x0000000080063840                D_80063840
-                0x0000000080063844                D_80063844
+                0x0000000080063844                musicTrack1_length
                 0x0000000080063846                D_80063846
                 0x0000000080063848                D_80063848
                 0x000000008006384a                music1_length

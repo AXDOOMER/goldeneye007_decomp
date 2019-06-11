@@ -40,7 +40,7 @@ s16 D_80063836;
 s32 D_80063838;
 s32 D_8006383C;
 s32 D_80063840;
-s16 D_80063844;
+s16 musicTrack1_length;
 s16 D_80063846;
 s16 D_80063848;
 s16 music1_length;
@@ -653,7 +653,7 @@ glabel musicTrack1Play
 /* 007AF8 70006EF8 3C010001 */  lui   $at, 1
 /* 007AFC 70006EFC 03295021 */  addu  $t2, $t9, $t1
 /* 007B00 70006F00 8D450004 */  lw    $a1, 4($t2)
-/* 007B04 70006F04 3C038006 */  lui   $v1, 0x8006
+/* 007B04 70006F04 3C038006 */  lui   $v1, %hi(D_80063738)
 /* 007B08 70006F08 00071040 */  sll   $v0, $a3, 1
 /* 007B0C 70006F0C 00A1082B */  sltu  $at, $a1, $at
 /* 007B10 70006F10 10200005 */  beqz  $at, .L70006F28
@@ -663,7 +663,7 @@ glabel musicTrack1Play
 /* 007B20 70006F20 10000027 */  b     .L70006FC0
 /* 007B24 70006F24 8FBF001C */   lw    $ra, 0x1c($sp)
 .L70006F28:
-/* 007B28 70006F28 94633738 */  lhu   $v1, 0x3738($v1)
+/* 007B28 70006F28 94633738 */  lhu   $v1, %lo(D_80063738)($v1)
 /* 007B2C 70006F2C 3C068006 */  lui   $a2, %hi(D_800637B8)
 /* 007B30 70006F30 00C23021 */  addu  $a2, $a2, $v0
 /* 007B34 70006F34 94C637B8 */  lhu   $a2, %lo(D_800637B8)($a2)
@@ -836,57 +836,16 @@ glabel musicTrack1Tempo
 
 
 
-#ifdef NONMATCHING
-void music_related_1(f32 arg0, f32 arg6) {
-    // Node 0
+
+void music_related_1(f32 rate) {
     if (music1_playing >= 0)
     {
-        // Node 1
-        D_80063844 = musicTrack1Length();
-        music1_length = (u16)0;
-        music1_rate = (s32) (arg6 * 60.0f);
+        musicTrack1_length = musicTrack1Length();
+        music1_length = 0;
+        music1_rate = (s32) (rate * 60.0f);
         music1_playing = -1;
-        return;
-        // (possible return value: musicTrack1Length())
     }
-    // (function likely void)
 }
-#else
-GLOBAL_ASM(
-.text
-glabel music_related_1
-/* 007CF8 700070F8 3C0E8002 */  lui   $t6, %hi(music1_playing) # $t6, 0x8002
-/* 007CFC 700070FC 8DCE434C */  lw    $t6, %lo(music1_playing)($t6)
-/* 007D00 70007100 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 007D04 70007104 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 007D08 70007108 05C00013 */  bltz  $t6, .L70007158
-/* 007D0C 7000710C E7AC0018 */   swc1  $f12, 0x18($sp)
-/* 007D10 70007110 0C001C0C */  jal   musicTrack1Length
-/* 007D14 70007114 00000000 */   nop   
-/* 007D18 70007118 3C018006 */  lui   $at, %hi(D_80063844) # $at, 0x8006
-/* 007D1C 7000711C A4223844 */  sh    $v0, %lo(D_80063844)($at)
-/* 007D20 70007120 3C018006 */  lui   $at, %hi(music1_length) # $at, 0x8006
-/* 007D24 70007124 A420384A */  sh    $zero, %lo(music1_length)($at)
-/* 007D28 70007128 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 007D2C 7000712C 44813000 */  mtc1  $at, $f6
-/* 007D30 70007130 C7A40018 */  lwc1  $f4, 0x18($sp)
-/* 007D34 70007134 3C018006 */  lui   $at, %hi(music1_rate) # $at, 0x8006
-/* 007D38 70007138 2419FFFF */  li    $t9, -1
-/* 007D3C 7000713C 46062202 */  mul.s $f8, $f4, $f6
-/* 007D40 70007140 4600428D */  trunc.w.s $f10, $f8
-/* 007D44 70007144 44185000 */  mfc1  $t8, $f10
-/* 007D48 70007148 00000000 */  nop   
-/* 007D4C 7000714C AC383850 */  sw    $t8, %lo(music1_rate)($at)
-/* 007D50 70007150 3C018002 */  lui   $at, %hi(music1_playing) # $at, 0x8002
-/* 007D54 70007154 AC39434C */  sw    $t9, %lo(music1_playing)($at)
-.L70007158:
-/* 007D58 70007158 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 007D5C 7000715C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 007D60 70007160 03E00008 */  jr    $ra
-/* 007D64 70007164 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -895,30 +854,22 @@ glabel music_related_1
 
 
 #ifdef NONMATCHING
-s16 music_related_3(f32 arg0, s32 arg1, f32 arg6, s16 arg7) {
-    // Node 0
+s16 music_related_3(f32 arg0, s32 arg1, f32 rate, s16 length) {
     if (music1_playing <= 0)
     {
-        // Node 1
         alCSPPlay(seqp_1);
-        if (arg7 == 0xffff)
+        if (length == 0xffff)
         {
-            // Node 2
-            music1_length = (s16) D_80063844;
+            music1_length = musicTrack1_length;
         }
         else
         {
-            // Node 3
-            music1_length = arg7;
+            music1_length = length;
         }
-        // Node 4
-        D_80063844 = (u16)0;
-        music1_rate = (s32) (arg6 * 60.0f);
+        musicTrack1_length = (u16)0;
+        music1_rate = (s32) (rate * 60.0f);
         music1_playing = 1;
-        return;
-        // (possible return value: arg7)
     }
-    // (function likely void)
 }
 #else
 GLOBAL_ASM(
@@ -936,10 +887,10 @@ glabel music_related_3
 /* 007D8C 7000718C 8C843728 */   lw    $a0, %lo(seqp_1)($a0)
 /* 007D90 70007190 97A2001E */  lhu   $v0, 0x1e($sp)
 /* 007D94 70007194 3401FFFF */  li    $at, 65535
-/* 007D98 70007198 3C0F8006 */  lui   $t7, %hi(D_80063844) # $t7, 0x8006
+/* 007D98 70007198 3C0F8006 */  lui   $t7, %hi(musicTrack1_length) # $t7, 0x8006
 /* 007D9C 7000719C 14410005 */  bne   $v0, $at, .L700071B4
 /* 007DA0 700071A0 00000000 */   nop   
-/* 007DA4 700071A4 95EF3844 */  lhu   $t7, %lo(D_80063844)($t7)
+/* 007DA4 700071A4 95EF3844 */  lhu   $t7, %lo(musicTrack1_length)($t7)
 /* 007DA8 700071A8 3C018006 */  lui   $at, %hi(music1_length) # $at, 0x8006
 /* 007DAC 700071AC 10000003 */  b     .L700071BC
 /* 007DB0 700071B0 A42F384A */   sh    $t7, %lo(music1_length)($at)
@@ -947,8 +898,8 @@ glabel music_related_3
 /* 007DB4 700071B4 3C018006 */  lui   $at, %hi(music1_length) # $at, 0x8006
 /* 007DB8 700071B8 A422384A */  sh    $v0, %lo(music1_length)($at)
 .L700071BC:
-/* 007DBC 700071BC 3C018006 */  lui   $at, %hi(D_80063844) # $at, 0x8006
-/* 007DC0 700071C0 A4203844 */  sh    $zero, %lo(D_80063844)($at)
+/* 007DBC 700071BC 3C018006 */  lui   $at, %hi(musicTrack1_length) # $at, 0x8006
+/* 007DC0 700071C0 A4203844 */  sh    $zero, %lo(musicTrack1_length)($at)
 /* 007DC4 700071C4 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 007DC8 700071C8 44813000 */  mtc1  $at, $f6
 /* 007DCC 700071CC C7A40018 */  lwc1  $f4, 0x18($sp)
@@ -1069,7 +1020,7 @@ glabel musicTrack2Play
 /* 007E80 70007280 3C010001 */  lui   $at, 1
 /* 007E84 70007284 03295021 */  addu  $t2, $t9, $t1
 /* 007E88 70007288 8D450004 */  lw    $a1, 4($t2)
-/* 007E8C 7000728C 3C038006 */  lui   $v1, 0x8006
+/* 007E8C 7000728C 3C038006 */  lui   $v1, %hi(D_80063738)
 /* 007E90 70007290 00071040 */  sll   $v0, $a3, 1
 /* 007E94 70007294 00A1082B */  sltu  $at, $a1, $at
 /* 007E98 70007298 10200005 */  beqz  $at, .L700072B0
@@ -1079,7 +1030,7 @@ glabel musicTrack2Play
 /* 007EA8 700072A8 10000027 */  b     .L70007348
 /* 007EAC 700072AC 8FBF001C */   lw    $ra, 0x1c($sp)
 .L700072B0:
-/* 007EB0 700072B0 94633738 */  lhu   $v1, 0x3738($v1)
+/* 007EB0 700072B0 94633738 */  lhu   $v1, %lo(D_80063738)($v1)
 /* 007EB4 700072B4 3C068006 */  lui   $a2, %hi(D_800637B8)
 /* 007EB8 700072B8 00C23021 */  addu  $a2, $a2, $v0
 /* 007EBC 700072BC 94C637B8 */  lhu   $a2, %lo(D_800637B8)($a2)
@@ -1535,7 +1486,7 @@ glabel music_related_3rd_block
 /* 008208 70007608 3C010001 */  lui   $at, 1
 /* 00820C 7000760C 03295021 */  addu  $t2, $t9, $t1
 /* 008210 70007610 8D450004 */  lw    $a1, 4($t2)
-/* 008214 70007614 3C038006 */  lui   $v1, 0x8006
+/* 008214 70007614 3C038006 */  lui   $v1, %hi(D_80063738)
 /* 008218 70007618 00071040 */  sll   $v0, $a3, 1
 /* 00821C 7000761C 00A1082B */  sltu  $at, $a1, $at
 /* 008220 70007620 10200005 */  beqz  $at, .L70007638
@@ -1545,11 +1496,11 @@ glabel music_related_3rd_block
 /* 008230 70007630 10000027 */  b     .L700076D0
 /* 008234 70007634 8FBF001C */   lw    $ra, 0x1c($sp)
 .L70007638:
-/* 008238 70007638 94633738 */  lhu   $v1, 0x3738($v1)
-/* 00823C 7000763C 3C068006 */  lui   $a2, 0x8006
+/* 008238 70007638 94633738 */  lhu   $v1, %lo(D_80063738)($v1)
+/* 00823C 7000763C 3C068006 */  lui   $a2, %hi(D_800637B8)
 /* 008240 70007640 00C23021 */  addu  $a2, $a2, $v0
-/* 008244 70007644 94C637B8 */  lhu   $a2, 0x37b8($a2)
-/* 008248 70007648 3C088006 */  lui   $t0, %hi(D_80063840) # $t0, 0x8006
+/* 008244 70007644 94C637B8 */  lhu   $a2, %lo(D_800637B8)($a2)
+/* 008248 70007648 3C088006 */  lui   $t0, %hi(D_80063840)
 /* 00824C 7000764C 2463000F */  addiu $v1, $v1, 0xf
 /* 008250 70007650 8D083840 */  lw    $t0, %lo(D_80063840)($t0)
 /* 008254 70007654 346B000F */  ori   $t3, $v1, 0xf
@@ -1567,12 +1518,12 @@ glabel music_related_3rd_block
 /* 008284 70007684 8FA52140 */  lw    $a1, 0x2140($sp)
 /* 008288 70007688 0FC339FC */  jal   decompressdata
 /* 00828C 7000768C 27A60034 */   addiu $a2, $sp, 0x34
-/* 008290 70007690 3C048006 */  lui   $a0, %hi(D_80063A50) # $a0, 0x8006
-/* 008294 70007694 3C058006 */  lui   $a1, %hi(D_80063840) # $a1, 0x8006
+/* 008290 70007690 3C048006 */  lui   $a0, %hi(D_80063A50)
+/* 008294 70007694 3C058006 */  lui   $a1, %hi(D_80063840)
 /* 008298 70007698 8CA53840 */  lw    $a1, %lo(D_80063840)($a1)
 /* 00829C 7000769C 0C0049E7 */  jal   alCSeqNew
 /* 0082A0 700076A0 24843A50 */   addiu $a0, %lo(D_80063A50) # addiu $a0, $a0, 0x3a50
-/* 0082A4 700076A4 3C058006 */  lui   $a1, %hi(D_80063A50) # $a1, 0x8006
+/* 0082A4 700076A4 3C058006 */  lui   $a1, %hi(D_80063A50)
 /* 0082A8 700076A8 24A53A50 */  addiu $a1, %lo(D_80063A50) # addiu $a1, $a1, 0x3a50
 /* 0082AC 700076AC 0C004B40 */  jal   alCSPSetSeq
 /* 0082B0 700076B0 8E040000 */   lw    $a0, ($s0)
@@ -1684,11 +1635,11 @@ GLOBAL_ASM(
 glabel musicTrack3Vol
 /* 00834C 7000774C 3C0E8002 */  lui   $t6, %hi(music3_track_num) # $t6, 0x8002
 /* 008350 70007750 8DCE4344 */  lw    $t6, %lo(music3_track_num)($t6)
-/* 008354 70007754 3C188002 */  lui   $t8, 0x8002
+/* 008354 70007754 3C188002 */  lui   $t8, %hi(music_tempo_array)
 /* 008358 70007758 3086FFFF */  andi  $a2, $a0, 0xffff
 /* 00835C 7000775C 000E7840 */  sll   $t7, $t6, 1
 /* 008360 70007760 030FC021 */  addu  $t8, $t8, $t7
-/* 008364 70007764 87184358 */  lh    $t8, 0x4358($t8)
+/* 008364 70007764 87184358 */  lh    $t8, %lo(music_tempo_array)($t8)
 /* 008368 70007768 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00836C 7000776C AFA40018 */  sw    $a0, 0x18($sp)
 /* 008370 70007770 00D80019 */  multu $a2, $t8

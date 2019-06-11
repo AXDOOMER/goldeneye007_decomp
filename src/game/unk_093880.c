@@ -7626,7 +7626,7 @@ glabel init_player_data_ptrs_construct_viewports
 /* 0CEED8 7F09A3A8 AC400000 */  sw    $zero, ($v0)
 /* 0CEEDC 7F09A3AC AC400004 */  sw    $zero, 4($v0)
 /* 0CEEE0 7F09A3B0 AC400008 */  sw    $zero, 8($v0)
-/* 0CEEE4 7F09A3B4 0C002914 */  jal   random_related
+/* 0CEEE4 7F09A3B4 0C002914 */  jal   get_random_value
 /* 0CEEE8 7F09A3B8 AC40000C */   sw    $zero, 0xc($v0)
 /* 0CEEEC 7F09A3BC 304E00FF */  andi  $t6, $v0, 0xff
 /* 0CEEF0 7F09A3C0 3C018008 */  lui   $at, %hi(random_byte) # $at, 0x8008
@@ -9019,7 +9019,7 @@ glabel sub_GAME_7F09B41C
 /* 0CFF98 7F09B468 24140003 */  li    $s4, 3
 /* 0CFF9C 7F09B46C 24130004 */  li    $s3, 4
 .L7F09B470:
-/* 0CFFA0 7F09B470 0C002914 */  jal   random_related
+/* 0CFFA0 7F09B470 0C002914 */  jal   get_random_value
 /* 0CFFA4 7F09B474 00000000 */   nop   
 /* 0CFFA8 7F09B478 02707823 */  subu  $t7, $s3, $s0
 /* 0CFFAC 7F09B47C 004F001B */  divu  $zero, $v0, $t7

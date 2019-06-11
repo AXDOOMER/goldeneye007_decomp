@@ -1323,7 +1323,7 @@ glabel select_ramrom_to_play
 /* 0F5500 7F0C09D0 5020FFF9 */  beql  $at, $zero, .L7F0C09B8
 /* 0F5504 7F0C09D4 8C480008 */   lw    $t0, 8($v0)
 .L7F0C09D8:
-/* 0F5508 7F0C09D8 0C002914 */  jal   random_related
+/* 0F5508 7F0C09D8 0C002914 */  jal   get_random_value
 /* 0F550C 7F0C09DC AFA3001C */   sw    $v1, 0x1c($sp)
 /* 0F5510 7F0C09E0 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0F5514 7F0C09E4 3C048005 */  lui   $a0, 0x8005
