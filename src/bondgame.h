@@ -155,6 +155,55 @@ typedef enum LEVEL_INDEX
     LEVEL_INDEX_X = 0x25
 } LEVEL_INDEX;
 
+typedef enum TEXTBANK_LEVEL_INDEX
+{
+    LNULL = 0x0000,       /* Null (unused) */
+    LAME = 0x4000,        /* Library (multi) */
+    LARCH = 0x8000,       /* Archives */
+    LARK = 0xC000,        /* Facility */
+    LASH = 0x1000,        /* Stack (multi) */
+    LAZT = 0x1400,        /* Aztec */
+    LCAT = 0x1800,        /* Citadel (multi) */
+    LCAVE = 0x1C00,       /* Caverns */
+    LAREC = 0x2000,       /* Control */
+    LCRAD = 0x2400,       /* Cradle */
+    LCRYP = 0x2800,       /* Egypt */
+    LDAM = 0x2C00,        /* Dam */
+    LDEPO = 0x3000,       /* Depot */
+    LDEST = 0x3400,       /* Frigate */
+    LDISH = 0x3800,       /* Temple (multi) */
+    LEAR = 0x3C00,        /* Ear (unused) */
+    LELD = 0x4000,        /* Eld (unused) */
+    LIMP = 0x4400,        /* Basement (multi) */
+    LJUN = 0x4800,        /* Jungle */
+    LLEE = 0x4C00,        /* Lee (unused) */
+    LLEN = 0x5000,        /* Cuba */
+    LLIP = 0x5400,        /* Lip (unused) */
+    LLUE = 0x5800,        /* Lue (unused) */
+    LOAT = 0x5C00,        /* Cave (multi) */
+    LPAM = 0x6000,        /* Pam (unused) */
+    LPETE = 0x6400,       /* Streets */
+    LREF = 0x6800,        /* Complex (multi) */
+    LRIT = 0x6C00,        /* Rit (unused) */
+    LRUN = 0x7000,        /* Runway */
+    LSEVB = 0x7400,       /* Bunker 2 */
+    LSEV = 0x7800,        /* Bunker 1 */
+    LSEVX = 0x7C00,       /* Surface 1 */
+    LSEVXB = 0x8000,      /* Surface 2 */
+    LSHO = 0x8400,        /* Sho (unused) */
+    LSILO = 0x8800,       /* Silo */
+    LSTAT = 0x8C00,       /* Statue */
+    LTRA = 0x9000,        /* Train */
+    LWAX = 0x9400,        /* Wax (unused) */
+    LGUN = 0x9800,        /* Guns */
+    LTITLE = 0x9C00,      /* Multi text */
+    LMPMENU = 0xA000,     /* Multi menus */
+    LPROPOBJ = 0xA400,    /* In-game pickups */
+    LMPWEAPONS = 0xA800,  /* Multi weapon select */
+    LOPTIONS = 0xAC00,    /* Solo in-game menus */
+    LMISC = 0xB000        /* Cheat options */
+} TEXTBANK_LEVEL_INDEX;
+
 typedef enum MP_STAGE_SELECTED {
     MP_STAGE_RANDOM = 0x0,
     MP_STAGE_TEMPLE = 0x1,
