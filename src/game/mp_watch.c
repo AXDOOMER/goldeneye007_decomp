@@ -1,6 +1,8 @@
 #include "ultra64.h"
 #include "game/unk_0C0A70.h"
 #include "music.h"
+#include "bondgame.h"
+
 
 // bss
 s32 stop_play_flag;
@@ -14,8 +16,9 @@ s32 who_paused;
 
 // data
 u16 loaded_text_index[] = {
-    0xA000,0xA001,0xA002,0xA003,0xA004,0xA005,0xA006,0xA007,0xA008,
-    0xA009,0xA00A,0xA00B,0xA00C,0xA00D,0xA00E,0xA00F,0xA010,0x0000
+    TEXT(LMPMENU,0),TEXT(LMPMENU,1),TEXT(LMPMENU,2),TEXT(LMPMENU,3),TEXT(LMPMENU,4),TEXT(LMPMENU,5),
+    TEXT(LMPMENU,6),TEXT(LMPMENU,7),TEXT(LMPMENU,8),TEXT(LMPMENU,9),TEXT(LMPMENU,0xA),TEXT(LMPMENU,0xB),
+    TEXT(LMPMENU,0xC),TEXT(LMPMENU,0xD),TEXT(LMPMENU,0xE),TEXT(LMPMENU,0xF),TEXT(LMPMENU,0x10),0
 };
 
 //rodata
