@@ -1,22 +1,22 @@
 #include "assets/obseg/brief/Ubrief.h"
 
 struct BriefStruct UbriefcontrolZ = {
-    {                                  /* Mission Briefing */
-        0x2000,                        /* Background */
-        0x2001,                        /* M Briefing */
-        0x2002,                        /* Q Branch */
-        0x2003                         /* Moneypenny */
+    {                                          /* Mission Briefing */
+        TEXT(LAREC, 0),                        /* Background */
+        TEXT(LAREC, 1),                        /* M Briefing */
+        TEXT(LAREC, 2),                        /* Q Branch */
+        TEXT(LAREC, 3)                         /* Moneypenny */
     },
-    {                                  /* Objectives (Text and Difficult) */
-        {0x2004, DIFFICULTY_AGENT},    /* Protect Natalya */
-        {0x2005, DIFFICULTY_AGENT},    /* Disable Goldeneye satellite */
-        {0x2006, DIFFICULTY_AGENT},    /* Destroy armored mainframes */
-        {0x0000, 0x0000},              /* Not assigned */
-        {0x0000, 0x0000},              /* Not assigned */
-        {0x0000, 0x0000},              /* Not assigned */
-        {0x0000, 0x0000},              /* Not assigned */
-        {0x0000, 0x0000},              /* Not assigned */
-        {0x0000, 0x0000},              /* Not assigned */
-        {0x0000, 0x0000}               /* Not assigned */
+    {                                          /* Objectives (Text and Difficult) */
+        {TEXT(LAREC, 4), DIFFICULTY_AGENT},    /* Protect Natalya */
+        {TEXT(LAREC, 5), DIFFICULTY_AGENT},    /* Disable Goldeneye satellite */
+        {TEXT(LAREC, 6), DIFFICULTY_AGENT},    /* Destroy armored mainframes */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0}                                 /* Not assigned */
     }
 };

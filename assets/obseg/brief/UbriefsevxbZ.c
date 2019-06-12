@@ -1,22 +1,22 @@
 #include "assets/obseg/brief/Ubrief.h"
 
 struct BriefStruct UbriefsevxbZ = {
-    {                                  /* Mission Briefing */
-        0x8000,                        /* Background */
-        0x8001,                        /* M Briefing */
-        0x8002,                        /* Q Branch */
-        0x8003                         /* Moneypenny */
+    {                                          /* Mission Briefing */
+        TEXT(LSEVXB, 0),                       /* Background */
+        TEXT(LSEVXB, 1),                       /* M Briefing */
+        TEXT(LSEVXB, 2),                       /* Q Branch */
+        TEXT(LSEVXB, 3)                        /* Moneypenny */
     },
-    {                                  /* Objectives (Text and Difficult) */
-        {0x8004, DIFFICULTY_00},       /* Disrupt all surveillance equipment */
-        {0x8005, DIFFICULTY_AGENT},    /* Break communications link to bunker */
-        {0x8006, DIFFICULTY_SECRET},   /* Disable Spetznaz support aircraft */
-        {0x8007, DIFFICULTY_AGENT},    /* Gain entry to bunker */
-        {0x0000, 0x0000},              /* Not assigned */
-        {0x0000, 0x0000},              /* Not assigned */
-        {0x0000, 0x0000},              /* Not assigned */
-        {0x0000, 0x0000},              /* Not assigned */
-        {0x0000, 0x0000},              /* Not assigned */
-        {0x0000, 0x0000}               /* Not assigned */
+    {                                          /* Objectives (Text and Difficult) */
+        {TEXT(LSEVXB, 4), DIFFICULTY_00},      /* Disrupt all surveillance equipment */
+        {TEXT(LSEVXB, 5), DIFFICULTY_AGENT},   /* Break communications link to bunker */
+        {TEXT(LSEVXB, 6), DIFFICULTY_SECRET},  /* Disable Spetznaz support aircraft */
+        {TEXT(LSEVXB, 7), DIFFICULTY_AGENT},   /* Gain entry to bunker */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0}                                 /* Not assigned */
     }
 };
