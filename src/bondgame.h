@@ -156,7 +156,7 @@ typedef enum LEVEL_INDEX
 } LEVEL_INDEX;
 
 /* language file to slot allocation */
-#define TEXT(TEXTBANK, TEXTSLOT) ((TEXTBANK * 0x4000U) + TEXTSLOT)
+#define TEXT(TEXTBANK, TEXTSLOT) ((TEXTBANK * 0x0400U) + TEXTSLOT)
 
 typedef enum TEXTBANK_LEVEL_INDEX
 {
