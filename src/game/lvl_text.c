@@ -30,51 +30,51 @@ s32 ptr_j_char_registry;
 
 s32 j_text_trigger = 0;
 void *LnameX_lookuptable[] = {
-    0, 0,
-    "LameE", "LameJ",
-    "LarchE", "LarchJ",
-    "LarkE", "LarkJ",
-    "LashE", "LashJ",
-    "LaztE", "LaztJ",
-    "LcatE", "LcatJ",
-    "LcaveE", "LcaveJ",
-    "LarecE", "LarecJ",
-    "LcradE", "LcradJ", 
-    "LcrypE", "LcrypJ", 
-    "LdamE", "LdamJ", 
-    "LdepoE", "LdepoJ", 
-    "LdestE", "LdestJ", 
-    "LdishE", "LdishJ", 
-    "LearE", "LearJ", 
-    "LeldE", "LeldJ", 
-    "LimpE", "LimpJ", 
-    "LjunE", "LjunJ", 
-    "LleeE", "LleeJ", 
-    "LlenE", "LlenJ", 
-    "LlipE", "LlipJ", 
-    "LlueE", "LlueJ", 
-    "LoatE", "LoatJ", 
-    "LpamE", "LpamJ", 
-    "LpeteE", "LpeteJ", 
-    "LrefE", "LrefJ", 
-    "LritE", "LritJ", 
-    "LrunE", "LrunJ", 
-    "LsevbE", "LsevbJ", 
-    "LsevE", "LsevJ", 
-    "LsevxE", "LsevxJ", 
-    "LsevxbE", "LsevxbJ", 
-    "LshoE", "LshoJ", 
-    "LsiloE", "LsiloJ", 
-    "LstatE", "LstatJ", 
-    "LtraE", "LtraJ", 
-    "LwaxE", "LwaxJ", 
-    "LgunE", "LgunJ", 
-    "LtitleE", "LtitleJ", 
-    "LmpmenuE", "LmpmenuJ", 
-    "LpropobjE", "LpropobjJ", 
-    "LmpweaponsE", "LmpweaponsJ", 
-    "LoptionsE", "LoptionsJ", 
-    "LmiscE", "LmiscJ"};
+    '\0', '\0',                    /* Null (unused) */
+    "LameE", "LameJ",              /* Library (multi) */
+    "LarchE", "LarchJ",            /* Archives */
+    "LarkE", "LarkJ",              /* Facility */
+    "LashE", "LashJ",              /* Stack (multi) */
+    "LaztE", "LaztJ",              /* Aztec */
+    "LcatE", "LcatJ",              /* Citadel (multi) */
+    "LcaveE", "LcaveJ",            /* Caverns */
+    "LarecE", "LarecJ",            /* Control */
+    "LcradE", "LcradJ",            /* Cradle */
+    "LcrypE", "LcrypJ",            /* Egypt */
+    "LdamE", "LdamJ",              /* Dam */
+    "LdepoE", "LdepoJ",            /* Depot */
+    "LdestE", "LdestJ",            /* Frigate */
+    "LdishE", "LdishJ",            /* Temple (multi) */
+    "LearE", "LearJ",              /* Ear (unused) */
+    "LeldE", "LeldJ",              /* Eld (unused) */
+    "LimpE", "LimpJ",              /* Basement (multi) */
+    "LjunE", "LjunJ",              /* Jungle */
+    "LleeE", "LleeJ",              /* Lee (unused) */
+    "LlenE", "LlenJ",              /* Cuba */
+    "LlipE", "LlipJ",              /* Lip (unused) */
+    "LlueE", "LlueJ",              /* Lue (unused) */
+    "LoatE", "LoatJ",              /* Cave (multi) */
+    "LpamE", "LpamJ",              /* Pam (unused) */
+    "LpeteE", "LpeteJ",            /* Streets */
+    "LrefE", "LrefJ",              /* Complex (multi) */
+    "LritE", "LritJ",              /* Rit (unused) */
+    "LrunE", "LrunJ",              /* Runway */
+    "LsevbE", "LsevbJ",            /* Bunker 2 */
+    "LsevE", "LsevJ",              /* Bunker 1 */
+    "LsevxE", "LsevxJ",            /* Surface 1 */
+    "LsevxbE", "LsevxbJ",          /* Surface 2 */
+    "LshoE", "LshoJ",              /* Sho (unused) */
+    "LsiloE", "LsiloJ",            /* Silo */
+    "LstatE", "LstatJ",            /* Statue */
+    "LtraE", "LtraJ",              /* Train */
+    "LwaxE", "LwaxJ",              /* Wax (unused) */
+    "LgunE", "LgunJ",              /* Guns */
+    "LtitleE", "LtitleJ",          /* Multi text */
+    "LmpmenuE", "LmpmenuJ",        /* Multi menus */
+    "LpropobjE", "LpropobjJ",      /* In-game pickups */
+    "LmpweaponsE", "LmpweaponsJ",  /* Multi weapon select */
+    "LoptionsE", "LoptionsJ",      /* Solo in-game menus */
+    "LmiscE", "LmiscJ"};           /* Cheat options */
 
 
 #ifdef NONMATCHING
