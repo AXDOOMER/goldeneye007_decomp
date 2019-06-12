@@ -30,67 +30,52 @@ s32 ptr_j_char_registry;
 
 s32 j_text_trigger = 0;
 void *LnameX_lookuptable[] = {
-    0, 0, "LameE", "LameJ", "LarchE", "LarchJ", "LarkE", "LarkJ", "LashE", "LashJ", "LaztE", 
-    "LaztJ", "LcatE", "LcatJ", "LcaveE", "LcaveJ", "LarecE", "LarecJ", "LcradE", "LcradJ", 
-    "LcrypE", "LcrypJ", "LdamE", "LdamJ", "LdepoE", "LdepoJ", "LdestE", "LdestJ", "LdishE", 
-    "LdishJ", "LearE", "LearJ", "LeldE", "LeldJ", "LimpE", "LimpJ", "LjunE", "LjunJ", "LleeE", 
-    "LleeJ", "LlenE", "LlenJ", "LlipE", "LlipJ", "LlueE", "LlueJ", "LoatE", "LoatJ", "LpamE", 
-    "LpamJ", "LpeteE", "LpeteJ", "LrefE", "LrefJ", "LritE", "LritJ", "LrunE", "LrunJ", "LsevbE", 
-    "LsevbJ", "LsevE", "LsevJ", "LsevxE", "LsevxJ", "LsevxbE", "LsevxbJ", "LshoE", "LshoJ", 
-    "LsiloE", "LsiloJ", "LstatE", "LstatJ", "LtraE", "LtraJ", "LwaxE", "LwaxJ", "LgunE", "LgunJ", 
-    "LtitleE", "LtitleJ", "LmpmenuE", "LmpmenuJ", "LpropobjE", "LpropobjJ", "LmpweaponsE", 
-    "LmpweaponsJ", "LoptionsE", "LoptionsJ", "LmiscE", "LmiscJ",0};
+    0, 0,
+    "LameE", "LameJ",
+    "LarchE", "LarchJ",
+    "LarkE", "LarkJ",
+    "LashE", "LashJ",
+    "LaztE", "LaztJ",
+    "LcatE", "LcatJ",
+    "LcaveE", "LcaveJ",
+    "LarecE", "LarecJ",
+    "LcradE", "LcradJ", 
+    "LcrypE", "LcrypJ", 
+    "LdamE", "LdamJ", 
+    "LdepoE", "LdepoJ", 
+    "LdestE", "LdestJ", 
+    "LdishE", "LdishJ", 
+    "LearE", "LearJ", 
+    "LeldE", "LeldJ", 
+    "LimpE", "LimpJ", 
+    "LjunE", "LjunJ", 
+    "LleeE", "LleeJ", 
+    "LlenE", "LlenJ", 
+    "LlipE", "LlipJ", 
+    "LlueE", "LlueJ", 
+    "LoatE", "LoatJ", 
+    "LpamE", "LpamJ", 
+    "LpeteE", "LpeteJ", 
+    "LrefE", "LrefJ", 
+    "LritE", "LritJ", 
+    "LrunE", "LrunJ", 
+    "LsevbE", "LsevbJ", 
+    "LsevE", "LsevJ", 
+    "LsevxE", "LsevxJ", 
+    "LsevxbE", "LsevxbJ", 
+    "LshoE", "LshoJ", 
+    "LsiloE", "LsiloJ", 
+    "LstatE", "LstatJ", 
+    "LtraE", "LtraJ", 
+    "LwaxE", "LwaxJ", 
+    "LgunE", "LgunJ", 
+    "LtitleE", "LtitleJ", 
+    "LmpmenuE", "LmpmenuJ", 
+    "LpropobjE", "LpropobjJ", 
+    "LmpweaponsE", "LmpweaponsJ", 
+    "LoptionsE", "LoptionsJ", 
+    "LmiscE", "LmiscJ"};
 
-/* rodata
-
-D:8005BB60     jpt_stage_text: .word locret_CODE_7F0C1624
-D:8005BB60                                              # DATA XREF: get_textbank_number_for_stagenum+10r
-D:8005BB60                     .word stagetext_loop     # jump table for switch statement
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C162C
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C164C
-D:8005BB60                     .word locret_CODE_7F0C167C
-D:8005BB60                     .word locret_CODE_7F0C1654
-D:8005BB60                     .word locret_CODE_7F0C166C
-D:8005BB60                     .word locret_CODE_7F0C1634
-D:8005BB60                     .word locret_CODE_7F0C1644
-D:8005BB60                     .word locret_CODE_7F0C1694
-D:8005BB60                     .word locret_CODE_7F0C165C
-D:8005BB60                     .word locret_CODE_7F0C1664
-D:8005BB60                     .word locret_CODE_7F0C16AC
-D:8005BB60                     .word locret_CODE_7F0C169C
-D:8005BB60                     .word locret_CODE_7F0C1604
-D:8005BB60                     .word locret_CODE_7F0C160C
-D:8005BB60                     .word locret_CODE_7F0C1614
-D:8005BB60                     .word locret_CODE_7F0C161C
-D:8005BB60                     .word locret_CODE_7F0C1674
-D:8005BB60                     .word locret_CODE_7F0C16A4
-D:8005BB60                     .word locret_CODE_7F0C1684
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C168C
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C163C
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C16BC
-D:8005BB60                     .word locret_CODE_7F0C16C4
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C16B4
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C16CC
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C16D4
-*/
 
 #ifdef NONMATCHING
 void get_textbank_number_for_stagenum(void) {
