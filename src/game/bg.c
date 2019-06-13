@@ -10450,7 +10450,7 @@ glabel sub_GAME_7F0B9338
 /* 0EDEA4 7F0B9374 3C188008 */  lui   $t8, %hi(dword_CODE_bss_8007B9DC) # $t8, 0x8008
 /* 0EDEA8 7F0B9378 8F18B9DC */  lw    $t8, %lo(dword_CODE_bss_8007B9DC)($t8)
 /* 0EDEAC 7F0B937C 0004C880 */  sll   $t9, $a0, 2
-/* 0EDEB0 7F0B9380 3C0B8008 */  lui   $t3, %hi9dword_CODE_bss_8007B128)
+/* 0EDEB0 7F0B9380 3C0B8008 */  lui   $t3, %hi(dword_CODE_bss_8007B128)
 /* 0EDEB4 7F0B9384 0098082A */  slt   $at, $a0, $t8
 /* 0EDEB8 7F0B9388 1020008E */  beqz  $at, .L7F0B95C4
 /* 0EDEBC 7F0B938C 01795821 */   addu  $t3, $t3, $t9
