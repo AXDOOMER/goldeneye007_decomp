@@ -1,14 +1,14 @@
 #include "game/lvl_text.h"
 
 struct stringentry LlenE[] = {
- '\0',
- '\0',
- '\0',
- '\0',
- '\0',
- '\0',
- '\0',
- '\0',
+ NULL,
+ NULL,
+ NULL,
+ NULL,
+ NULL,
+ NULL,
+ NULL,
+ NULL,
  "Natalya: James, are you alright?\n",
  "Bond: Yes, I'm fine thank you.\n",
  "Natalya: Ohhh, James...\n",
@@ -139,6 +139,6 @@ struct stringentry LlenE[] = {
  "Produced by Rare\n",
  "Presented by Nintendo\n",
  "JAMES BOND WILL RETURN\n",
- '\0',
- '\0'
+ NULL,
+ NULL
 };

@@ -1,9 +1,9 @@
 #include "game/lvl_text.h"
 
 struct stringentry LritE[] = {
- '\0',
- '\0',
- '\0',
- '\0',
- '\0'
+ NULL,
+ NULL,
+ NULL,
+ NULL,
+ NULL
 };

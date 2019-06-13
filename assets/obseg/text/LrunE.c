@@ -26,11 +26,11 @@ struct stringentry LrunE[] = {
  "ignition key\n",
  "ignition key\n",
  "Picked up an ignition key.\n",
- '\0',
- '\0',
- '\0',
- '\0',
+ NULL,
+ NULL,
+ NULL,
+ NULL,
  "This door leads back\ninto the gasplant!\n",
- '\0',
- '\0'
+ NULL,
+ NULL
 };

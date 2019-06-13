@@ -69,7 +69,7 @@ struct stringentry LarkE[] = {
  "keycard B\n",
  "keycard B\n",
  "Picked up a clearance B keycard.\n",
- '\0',
+ NULL,
  "This is a remotely locked\nsecurity door.\n",
  "Chemical Warfare Facility #2\n",
  "Double agent contact has been killed!\n"

@@ -46,7 +46,7 @@ struct stringentry LarecE[] = {
  "disable goldeneye satellite\n",
  "destroy armored mainframes\n",
  "Janus Control Center, Cuba\n",
- '\0',
- '\0',
- '\0'
+ NULL,
+ NULL,
+ NULL
 };

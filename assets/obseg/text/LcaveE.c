@@ -42,7 +42,7 @@ struct stringentry LcaveE[] = {
  "code card c\n",
  "code card (blast door c)\n",
  "Picked up a code card\n",
- '\0',
- '\0',
- '\0'
+ NULL,
+ NULL,
+ NULL
 };

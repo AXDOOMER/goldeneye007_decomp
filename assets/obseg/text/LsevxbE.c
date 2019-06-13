@@ -31,10 +31,10 @@ struct stringentry LsevxbE[] = {
  "comms room key \n",
  "comms room key \n",
  "Picked up comms room key.\n",
- '\0',
- '\0',
- '\0',
- '\0',
+ NULL,
+ NULL,
+ NULL,
+ NULL,
  "this access hatch has\nbeen welded shut.\n",
- '\0'
+ NULL
 };
