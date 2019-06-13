@@ -78,8 +78,63 @@ void *LnameX_lookuptable[] = {
 
 
 #ifdef NONMATCHING
-void get_textbank_number_for_stagenum(void) {
-
+u32 get_textbank_number_for_stagenum(LEVELID level) {
+    switch(level) {
+    case LEVELID_BUNKER1:
+      return 0x1e;
+    case LEVELID_SILO:
+      return 0x22;
+    case LEVELID_STATUE:
+      return 0x23;
+    case LEVELID_CONTROL:
+      return 8;
+    case LEVELID_ARCHIVES:
+      return 2;
+    case LEVELID_TRAIN:
+      return 0x24;
+    case LEVELID_FRIGATE:
+      return 0xd;
+    case LEVELID_BUNKER2:
+      return 0x1d;
+    case LEVELID_AZTEC:
+      return 5;
+    case LEVELID_STREETS:
+      return 0x19;
+    case LEVELID_DEPOT:
+      return 0xc;
+    case LEVELID_COMPLEX:
+      return 0x1a;
+    case LEVELID_EGYPT:
+      return 10;
+    case LEVELID_DAM:
+      return 0xb;
+    case LEVELID_FACILITY:
+      return 3;
+    case LEVELID_RUNWAY:
+      return 0x1c;
+    case LEVELID_SURFACE:
+      return 0x1f;
+    case LEVELID_JUNGLE:
+      return 0x12;
+    case LEVELID_TEMPLE:
+      return 0xe;
+    case LEVELID_CAVERNS:
+      return 7;
+    case LEVELID_CRADLE:
+      return 9;
+    case LEVELID_SURFACE2:
+      return 0x20;
+    case LEVELID_BASEMENT:
+      return 0x11;
+    case LEVELID_STACK:
+      return 4;
+    case LEVELID_LIBRARY:
+      return 1;
+    case LEVELID_CAVES:
+      return 0x17;
+    case LEVELID_CUBA:
+      return 0x14;
+    }
 }
 #else
 GLOBAL_ASM(
