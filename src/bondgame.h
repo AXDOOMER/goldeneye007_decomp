@@ -199,7 +199,7 @@ typedef enum TEXTBANK_LEVEL_INDEX
     LTRA,        /* Train */
     LWAX,        /* Wax (unused) */
     LGUN,        /* Guns */
-    LTITLE,      /* Multi text */
+    LTITLE,      /* Stage and menu titles */
     LMPMENU,     /* Multi menus */
     LPROPOBJ,    /* In-game pickups */
     LMPWEAPONS,  /* Multi weapon select */

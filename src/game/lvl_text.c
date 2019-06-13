@@ -30,7 +30,7 @@ s32 ptr_j_char_registry;
 
 s32 j_text_trigger = 0;
 void *LnameX_lookuptable[] = {
-    '\0', '\0',                    /* Null (unused) */
+    NULL, NULL,                    /* Null (unused) */
     "LameE", "LameJ",              /* Library (multi) */
     "LarchE", "LarchJ",            /* Archives */
     "LarkE", "LarkJ",              /* Facility */
@@ -69,7 +69,7 @@ void *LnameX_lookuptable[] = {
     "LtraE", "LtraJ",              /* Train */
     "LwaxE", "LwaxJ",              /* Wax (unused) */
     "LgunE", "LgunJ",              /* Guns */
-    "LtitleE", "LtitleJ",          /* Multi text */
+    "LtitleE", "LtitleJ",          /* Stage and menu titles */
     "LmpmenuE", "LmpmenuJ",        /* Multi menus */
     "LpropobjE", "LpropobjJ",      /* In-game pickups */
     "LmpweaponsE", "LmpweaponsJ",  /* Multi weapon select */
