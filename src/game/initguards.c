@@ -83,8 +83,8 @@ glabel set_new_rand_head_bodies
 /* 035A8C 7F000F5C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 035A90 7F000F60 11C00009 */  beqz  $t6, .L7F000F88
 /* 035A94 7F000F64 AFA40018 */   sw    $a0, 0x18($sp)
-/* 035A98 7F000F68 3C0F8004 */  lui   $t7, 0x8004
-/* 035A9C 7F000F6C 25E2DE10 */  addiu $v0, $t7, -0x21f0
+/* 035A98 7F000F68 3C0F8004 */  lui   $t7, %hi(c_item_entries)
+/* 035A9C 7F000F6C 25E2DE10 */  addiu $v0, $t7, %lo(c_item_entries)
 /* 035AA0 7F000F70 8C430000 */  lw    $v1, ($v0)
 /* 035AA4 7F000F74 AC600000 */  sw    $zero, ($v1)
 .L7F000F78:
