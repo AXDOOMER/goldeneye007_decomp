@@ -122,11 +122,11 @@ glabel set_vtx_gfx_mem_alloc
 /* 0F2000 7F0BD4D0 0C002A78 */  jal   strtol
 /* 0F2004 7F0BD4D4 00003025 */   move  $a2, $zero
 /* 0F2008 7F0BD4D8 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0F200C 7F0BD4DC 3C018005 */  lui   $at, 0x8005
+/* 0F200C 7F0BD4DC 3C018005 */  lui   $at, %hi(D_800482E0)
 /* 0F2010 7F0BD4E0 00027280 */  sll   $t6, $v0, 0xa
 /* 0F2014 7F0BD4E4 000FC080 */  sll   $t8, $t7, 2
 /* 0F2018 7F0BD4E8 00380821 */  addu  $at, $at, $t8
-/* 0F201C 7F0BD4EC AC2E82E0 */  sw    $t6, -0x7d20($at)
+/* 0F201C 7F0BD4EC AC2E82E0 */  sw    $t6, %lo(D_800482E0)($at)
 .L7F0BD4F0:
 /* 0F2020 7F0BD4F0 3C058006 */  lui   $a1, %hi(aMvtx) # $a1, 0x8006
 /* 0F2024 7F0BD4F4 24A5B69C */  addiu $a1, %lo(aMvtx) # addiu $a1, $a1, -0x4964
@@ -146,18 +146,18 @@ glabel set_vtx_gfx_mem_alloc
 /* 0F205C 7F0BD52C 0C002A78 */  jal   strtol
 /* 0F2060 7F0BD530 00003025 */   move  $a2, $zero
 /* 0F2064 7F0BD534 8FA80018 */  lw    $t0, 0x18($sp)
-/* 0F2068 7F0BD538 3C018005 */  lui   $at, 0x8005
+/* 0F2068 7F0BD538 3C018005 */  lui   $at, %hi(D_800482F0)
 /* 0F206C 7F0BD53C 0002CA80 */  sll   $t9, $v0, 0xa
 /* 0F2070 7F0BD540 00084880 */  sll   $t1, $t0, 2
 /* 0F2074 7F0BD544 00290821 */  addu  $at, $at, $t1
-/* 0F2078 7F0BD548 AC3982F0 */  sw    $t9, -0x7d10($at)
+/* 0F2078 7F0BD548 AC3982F0 */  sw    $t9, %lo(D_800482F0)($at)
 .L7F0BD54C:
 /* 0F207C 7F0BD54C 0FC26919 */  jal   get_num_players
 /* 0F2080 7F0BD550 00000000 */   nop   
 /* 0F2084 7F0BD554 00025080 */  sll   $t2, $v0, 2
-/* 0F2088 7F0BD558 3C048005 */  lui   $a0, 0x8005
+/* 0F2088 7F0BD558 3C048005 */  lui   $a0, %hi(D_800482E0)
 /* 0F208C 7F0BD55C 008A2021 */  addu  $a0, $a0, $t2
-/* 0F2090 7F0BD560 8C8482E0 */  lw    $a0, -0x7d20($a0)
+/* 0F2090 7F0BD560 8C8482E0 */  lw    $a0, %lo(D_800482E0)($a0)
 /* 0F2094 7F0BD564 24050004 */  li    $a1, 4
 /* 0F2098 7F0BD568 00045840 */  sll   $t3, $a0, 1
 /* 0F209C 7F0BD56C 0C0025C8 */  jal   allocate_bytes_in_bank
@@ -167,28 +167,28 @@ glabel set_vtx_gfx_mem_alloc
 /* 0F20AC 7F0BD57C AC22C230 */   sw    $v0, %lo(ptr_mgfx0_alloc_start)($at)
 /* 0F20B0 7F0BD580 3C038009 */  lui   $v1, %hi(ptr_mgfx0_alloc_start) # $v1, 0x8009
 /* 0F20B4 7F0BD584 00026080 */  sll   $t4, $v0, 2
-/* 0F20B8 7F0BD588 3C0D8005 */  lui   $t5, 0x8005
+/* 0F20B8 7F0BD588 3C0D8005 */  lui   $t5, %hi(D_800482E0)
 /* 0F20BC 7F0BD58C 01AC6821 */  addu  $t5, $t5, $t4
 /* 0F20C0 7F0BD590 2463C230 */  addiu $v1, %lo(ptr_mgfx0_alloc_start) # addiu $v1, $v1, -0x3dd0
 /* 0F20C4 7F0BD594 8C6F0000 */  lw    $t7, ($v1)
-/* 0F20C8 7F0BD598 8DAD82E0 */  lw    $t5, -0x7d20($t5)
+/* 0F20C8 7F0BD598 8DAD82E0 */  lw    $t5, %lo(D_800482E0)($t5)
 /* 0F20CC 7F0BD59C 01AF7021 */  addu  $t6, $t5, $t7
 /* 0F20D0 7F0BD5A0 0FC26919 */  jal   get_num_players
 /* 0F20D4 7F0BD5A4 AC6E0004 */   sw    $t6, 4($v1)
 /* 0F20D8 7F0BD5A8 3C038009 */  lui   $v1, %hi(ptr_mgfx0_alloc_start) # $v1, 0x8009
 /* 0F20DC 7F0BD5AC 0002C080 */  sll   $t8, $v0, 2
-/* 0F20E0 7F0BD5B0 3C088005 */  lui   $t0, 0x8005
+/* 0F20E0 7F0BD5B0 3C088005 */  lui   $t0, %hi(D_800482E0)
 /* 0F20E4 7F0BD5B4 01184021 */  addu  $t0, $t0, $t8
 /* 0F20E8 7F0BD5B8 2463C230 */  addiu $v1, %lo(ptr_mgfx0_alloc_start) # addiu $v1, $v1, -0x3dd0
 /* 0F20EC 7F0BD5BC 8C790004 */  lw    $t9, 4($v1)
-/* 0F20F0 7F0BD5C0 8D0882E0 */  lw    $t0, -0x7d20($t0)
+/* 0F20F0 7F0BD5C0 8D0882E0 */  lw    $t0, %lo(D_800482E0)($t0)
 /* 0F20F4 7F0BD5C4 01194821 */  addu  $t1, $t0, $t9
 /* 0F20F8 7F0BD5C8 0FC26919 */  jal   get_num_players
 /* 0F20FC 7F0BD5CC AC690008 */   sw    $t1, 8($v1)
 /* 0F2100 7F0BD5D0 00025080 */  sll   $t2, $v0, 2
-/* 0F2104 7F0BD5D4 3C048005 */  lui   $a0, 0x8005
+/* 0F2104 7F0BD5D4 3C048005 */  lui   $a0, %hi(D_800482F0)
 /* 0F2108 7F0BD5D8 008A2021 */  addu  $a0, $a0, $t2
-/* 0F210C 7F0BD5DC 8C8482F0 */  lw    $a0, -0x7d10($a0)
+/* 0F210C 7F0BD5DC 8C8482F0 */  lw    $a0, %lo(D_800482F0)($a0)
 /* 0F2110 7F0BD5E0 24050004 */  li    $a1, 4
 /* 0F2114 7F0BD5E4 00045840 */  sll   $t3, $a0, 1
 /* 0F2118 7F0BD5E8 0C0025C8 */  jal   allocate_bytes_in_bank
@@ -199,21 +199,21 @@ glabel set_vtx_gfx_mem_alloc
 /* 0F212C 7F0BD5FC AC620000 */   sw    $v0, ($v1)
 /* 0F2130 7F0BD600 3C038009 */  lui   $v1, %hi(ptr_mvtx0_alloc_start) # $v1, 0x8009
 /* 0F2134 7F0BD604 00026080 */  sll   $t4, $v0, 2
-/* 0F2138 7F0BD608 3C0D8005 */  lui   $t5, 0x8005
+/* 0F2138 7F0BD608 3C0D8005 */  lui   $t5, %hi(D_800482F0)
 /* 0F213C 7F0BD60C 01AC6821 */  addu  $t5, $t5, $t4
 /* 0F2140 7F0BD610 2463C240 */  addiu $v1, %lo(ptr_mvtx0_alloc_start) # addiu $v1, $v1, -0x3dc0
 /* 0F2144 7F0BD614 8C6F0000 */  lw    $t7, ($v1)
-/* 0F2148 7F0BD618 8DAD82F0 */  lw    $t5, -0x7d10($t5)
+/* 0F2148 7F0BD618 8DAD82F0 */  lw    $t5, %lo(D_800482F0)($t5)
 /* 0F214C 7F0BD61C 01AF7021 */  addu  $t6, $t5, $t7
 /* 0F2150 7F0BD620 0FC26919 */  jal   get_num_players
 /* 0F2154 7F0BD624 AC6E0004 */   sw    $t6, 4($v1)
 /* 0F2158 7F0BD628 3C038009 */  lui   $v1, %hi(ptr_mvtx0_alloc_start) # $v1, 0x8009
 /* 0F215C 7F0BD62C 0002C080 */  sll   $t8, $v0, 2
-/* 0F2160 7F0BD630 3C088005 */  lui   $t0, 0x8005
+/* 0F2160 7F0BD630 3C088005 */  lui   $t0, %hi(D_800482F0)
 /* 0F2164 7F0BD634 01184021 */  addu  $t0, $t0, $t8
 /* 0F2168 7F0BD638 2463C240 */  addiu $v1, %lo(ptr_mvtx0_alloc_start) # addiu $v1, $v1, -0x3dc0
 /* 0F216C 7F0BD63C 8C790004 */  lw    $t9, 4($v1)
-/* 0F2170 7F0BD640 8D0882F0 */  lw    $t0, -0x7d10($t0)
+/* 0F2170 7F0BD640 8D0882F0 */  lw    $t0, %lo(D_800482F0)($t0)
 /* 0F2174 7F0BD644 3C018009 */  lui   $at, %hi(bank_in_mgfx_alloc_table) # $at, 0x8009
 /* 0F2178 7F0BD648 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0F217C 7F0BD64C 01194821 */  addu  $t1, $t0, $t9
@@ -222,10 +222,10 @@ glabel set_vtx_gfx_mem_alloc
 /* 0F2188 7F0BD658 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C254) # $at, 0x8009
 /* 0F218C 7F0BD65C AC20C254 */  sw    $zero, %lo(dword_CODE_bss_8008C254)($at)
 /* 0F2190 7F0BD660 8C6A0000 */  lw    $t2, ($v1)
-/* 0F2194 7F0BD664 3C018009 */  lui   $at, 0x8009
+/* 0F2194 7F0BD664 3C018009 */  lui   $at, %hi(ptr_mvtx_cur_pos)
 /* 0F2198 7F0BD668 27BD0020 */  addiu $sp, $sp, 0x20
 /* 0F219C 7F0BD66C 03E00008 */  jr    $ra
-/* 0F21A0 7F0BD670 AC2AC24C */   sw    $t2, -0x3db4($at)
+/* 0F21A0 7F0BD670 AC2AC24C */   sw    $t2, %lo(ptr_mvtx_cur_pos)($at)
 )
 #endif
 
@@ -243,14 +243,14 @@ GLOBAL_ASM(
 glabel get_ptr_displaylist
 /* 0F21A4 7F0BD674 3C0F8009 */  lui   $t7, %hi(bank_in_mgfx_alloc_table) # $t7, 0x8009
 /* 0F21A8 7F0BD678 91EFC250 */  lbu   $t7, %lo(bank_in_mgfx_alloc_table)($t7)
-/* 0F21AC 7F0BD67C 3C028009 */  lui   $v0, 0x8009
+/* 0F21AC 7F0BD67C 3C028009 */  lui   $v0, %hi(ptr_mgfx0_alloc_start)
 /* 0F21B0 7F0BD680 240E0001 */  li    $t6, 1
 /* 0F21B4 7F0BD684 000FC080 */  sll   $t8, $t7, 2
 /* 0F21B8 7F0BD688 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C254) # $at, 0x8009
 /* 0F21BC 7F0BD68C 00581021 */  addu  $v0, $v0, $t8
 /* 0F21C0 7F0BD690 AC2EC254 */  sw    $t6, %lo(dword_CODE_bss_8008C254)($at)
 /* 0F21C4 7F0BD694 03E00008 */  jr    $ra
-/* 0F21C8 7F0BD698 8C42C230 */   lw    $v0, -0x3dd0($v0)
+/* 0F21C8 7F0BD698 8C42C230 */   lw    $v0, %lo(ptr_mgfx0_alloc_start)($v0)
 )
 #endif
 
@@ -268,10 +268,10 @@ GLOBAL_ASM(
 glabel allocate_something_in_mgfx
 /* 0F21CC 7F0BD69C 3C0E8009 */  lui   $t6, %hi(bank_in_mgfx_alloc_table) # $t6, 0x8009
 /* 0F21D0 7F0BD6A0 91CEC250 */  lbu   $t6, %lo(bank_in_mgfx_alloc_table)($t6)
-/* 0F21D4 7F0BD6A4 3C188009 */  lui   $t8, 0x8009
+/* 0F21D4 7F0BD6A4 3C188009 */  lui   $t8, %hi(ptr_mgfx1_alloc_start)
 /* 0F21D8 7F0BD6A8 000E7880 */  sll   $t7, $t6, 2
 /* 0F21DC 7F0BD6AC 030FC021 */  addu  $t8, $t8, $t7
-/* 0F21E0 7F0BD6B0 8F18C234 */  lw    $t8, -0x3dcc($t8)
+/* 0F21E0 7F0BD6B0 8F18C234 */  lw    $t8, %lo(ptr_mgfx1_alloc_start)($t8)
 /* 0F21E4 7F0BD6B4 03041023 */  subu  $v0, $t8, $a0
 /* 0F21E8 7F0BD6B8 0002C8C3 */  sra   $t9, $v0, 3
 /* 0F21EC 7F0BD6BC 03E00008 */  jr    $ra
@@ -394,7 +394,7 @@ glabel allocate_something_in_mvtx
 /* 0F226C 7F0BD73C 2442C250 */  addiu $v0, %lo(bank_in_mgfx_alloc_table) # addiu $v0, $v0, -0x3db0
 /* 0F2270 7F0BD740 904E0000 */  lbu   $t6, ($v0)
 /* 0F2274 7F0BD744 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C254) # $at, 0x8009
-/* 0F2278 7F0BD748 3C088009 */  lui   $t0, 0x8009
+/* 0F2278 7F0BD748 3C088009 */  lui   $t0, %hi(ptr_mvtx0_alloc_start)
 /* 0F227C 7F0BD74C 39CF0001 */  xori  $t7, $t6, 1
 /* 0F2280 7F0BD750 A04F0000 */  sb    $t7, ($v0)
 /* 0F2284 7F0BD754 AC20C254 */  sw    $zero, %lo(dword_CODE_bss_8008C254)($at)
@@ -402,7 +402,7 @@ glabel allocate_something_in_mvtx
 /* 0F228C 7F0BD75C 3C018009 */  lui   $at, %hi(ptr_mvtx_cur_pos)
 /* 0F2290 7F0BD760 0018C880 */  sll   $t9, $t8, 2
 /* 0F2294 7F0BD764 01194021 */  addu  $t0, $t0, $t9
-/* 0F2298 7F0BD768 8D08C240 */  lw    $t0, -0x3dc0($t0)
+/* 0F2298 7F0BD768 8D08C240 */  lw    $t0, %lo(ptr_mvtx0_alloc_start)($t0)
 /* 0F229C 7F0BD76C 03E00008 */  jr    $ra
 /* 0F22A0 7F0BD770 AC28C24C */   sw    $t0, %lo(ptr_mvtx_cur_pos)($at)
 )
@@ -432,10 +432,10 @@ GLOBAL_ASM(
 glabel num_microcode_cmds_that_fit
 /* 0F22AC 7F0BD77C 3C0E8009 */  lui   $t6, %hi(bank_in_mgfx_alloc_table) # $t6, 0x8009
 /* 0F22B0 7F0BD780 91CEC250 */  lbu   $t6, %lo(bank_in_mgfx_alloc_table)($t6)
-/* 0F22B4 7F0BD784 3C188009 */  lui   $t8, 0x8009
+/* 0F22B4 7F0BD784 3C188009 */  lui   $t8, %hi(ptr_mgfx1_alloc_start)
 /* 0F22B8 7F0BD788 000E7880 */  sll   $t7, $t6, 2
 /* 0F22BC 7F0BD78C 030FC021 */  addu  $t8, $t8, $t7
-/* 0F22C0 7F0BD790 8F18C234 */  lw    $t8, -0x3dcc($t8)
+/* 0F22C0 7F0BD790 8F18C234 */  lw    $t8, %lo(ptr_mgfx1_alloc_start)($t8)
 /* 0F22C4 7F0BD794 03041023 */  subu  $v0, $t8, $a0
 /* 0F22C8 7F0BD798 0002C8C3 */  sra   $t9, $v0, 3
 /* 0F22CC 7F0BD79C 03E00008 */  jr    $ra
@@ -459,11 +459,11 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0BD7A4
 /* 0F22D4 7F0BD7A4 3C0E8009 */  lui   $t6, %hi(bank_in_mgfx_alloc_table) # $t6, 0x8009
 /* 0F22D8 7F0BD7A8 91CEC250 */  lbu   $t6, %lo(bank_in_mgfx_alloc_table)($t6)
-/* 0F22DC 7F0BD7AC 3C188009 */  lui   $t8, 0x8009
+/* 0F22DC 7F0BD7AC 3C188009 */  lui   $t8, %hi(ptr_mvtx1_alloc_start)
 /* 0F22E0 7F0BD7B0 3C198009 */  lui   $t9, %hi(ptr_mvtx_cur_pos) # $t9, 0x8009
 /* 0F22E4 7F0BD7B4 000E7880 */  sll   $t7, $t6, 2
 /* 0F22E8 7F0BD7B8 030FC021 */  addu  $t8, $t8, $t7
-/* 0F22EC 7F0BD7BC 8F18C244 */  lw    $t8, -0x3dbc($t8)
+/* 0F22EC 7F0BD7BC 8F18C244 */  lw    $t8, %lo(ptr_mvtx1_alloc_start)($t8)
 /* 0F22F0 7F0BD7C0 8F39C24C */  lw    $t9, %lo(ptr_mvtx_cur_pos)($t9)
 /* 0F22F4 7F0BD7C4 03E00008 */  jr    $ra
 /* 0F22F8 7F0BD7C8 03191023 */   subu  $v0, $t8, $t9
