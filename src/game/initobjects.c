@@ -71,9 +71,9 @@ glabel init_load_objpos_table
 /* 036074 7F001544 27399CA0 */  addiu $t9, %lo(dword_CODE_bss_80069CA0) # addiu $t9, $t9, -0x6360
 /* 036078 7F001548 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069C90) # $at, 0x8007
 /* 03607C 7F00154C AC399C90 */  sw    $t9, %lo(dword_CODE_bss_80069C90)($at)
-/* 036080 7F001550 3C088007 */  lui   $t0, 0x8007
+/* 036080 7F001550 3C088007 */  lui   $t0, %hi(dword_CODE_bss_80069CD4)
 /* 036084 7F001554 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 036088 7F001558 25029CD4 */  addiu $v0, $t0, -0x632c
+/* 036088 7F001558 25029CD4 */  addiu $v0, $t0, %lo(dword_CODE_bss_80069CD4)
 /* 03608C 7F00155C 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069CC4) # $at, 0x8007
 /* 036090 7F001560 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80069DA4) # $v1, 0x8007
 /* 036094 7F001564 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80069D08) # $a0, 0x8007
@@ -342,10 +342,10 @@ glabel reinit_between_menus
 /* 036424 7F0018F4 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 036428 7F0018F8 3C018003 */  lui   $at, %hi(D_80030B24) # $at, 0x8003
 /* 03642C 7F0018FC E4200B24 */  swc1  $f0, %lo(D_80030B24)($at)
-/* 036430 7F001900 3C018003 */  lui   $at, 0x8003
+/* 036430 7F001900 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
 /* 036434 7F001904 27BD0018 */  addiu $sp, $sp, 0x18
 /* 036438 7F001908 03E00008 */  jr    $ra
-/* 03643C 7F00190C E4200B28 */   swc1  $f0, 0xb28($at)
+/* 03643C 7F00190C E4200B28 */   swc1  $f0, %lo(solo_ammo_multiplier)($at)
 )
 #endif
 
@@ -409,9 +409,9 @@ GLOBAL_ASM(
 .text
 glabel write_monitor_ani_control_blocks
 /* 036488 7F001958 27BDFEA0 */  addiu $sp, $sp, -0x160
-/* 03648C 7F00195C 3C0E8003 */  lui   $t6, 0x8003
+/* 03648C 7F00195C 3C0E8003 */  lui   $t6, %hi(ptr_monitorimageobjectanimationcontroller)
 /* 036490 7F001960 27A200EC */  addiu $v0, $sp, 0xec
-/* 036494 7F001964 25CEA260 */  addiu $t6, $t6, -0x5da0
+/* 036494 7F001964 25CEA260 */  addiu $t6, $t6, %lo(ptr_monitorimageobjectanimationcontroller)
 /* 036498 7F001968 27A30078 */  addiu $v1, $sp, 0x78
 /* 03649C 7F00196C 27A40004 */  addiu $a0, $sp, 4
 /* 0364A0 7F001970 25D9006C */  addiu $t9, $t6, 0x6c

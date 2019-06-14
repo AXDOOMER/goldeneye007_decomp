@@ -2593,8 +2593,8 @@ Linker script and memory map
                 0x000000007f05c4b8                sub_GAME_7F05C4B8
  build/src/game/bondview.o(.text)
  .text          0x000000007f05c520     0xec00 build/src/game/bondview.o
-                0x000000007f05c520                sub_GAME_7F05C520
-                0x000000007f05c52c                sub_GAME_7F05C52C
+                0x000000007f05c520                set_cartridges_eject
+                0x000000007f05c52c                get_cartridges_eject
                 0x000000007f05c538                nullsub_73
                 0x000000007f05c540                sub_GAME_7F05C540
                 0x000000007f05c594                sub_GAME_7F05C594
