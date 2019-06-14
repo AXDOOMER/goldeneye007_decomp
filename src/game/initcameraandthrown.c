@@ -31,9 +31,9 @@ glabel set_weapon_model_generated_thrown_object
 /* 03A250 7F005720 1020001E */  beqz  $at, .L7F00579C
 /* 03A254 7F005724 2405FFFF */   li    $a1, -1
 /* 03A258 7F005728 000E7080 */  sll   $t6, $t6, 2
-/* 03A25C 7F00572C 3C018005 */  lui   $at, 0x8005
+/* 03A25C 7F00572C 3C018005 */  lui   $at, %hi(projectile_ptr_table)
 /* 03A260 7F005730 002E0821 */  addu  $at, $at, $t6
-/* 03A264 7F005734 8C2EF0F0 */  lw    $t6, -0xf10($at)
+/* 03A264 7F005734 8C2EF0F0 */  lw    $t6, %lo(projectile_ptr_table)($at)
 /* 03A268 7F005738 01C00008 */  jr    $t6
 /* 03A26C 7F00573C 00000000 */   nop   
 throwingknife:
@@ -357,7 +357,7 @@ spawn_point:
 /* 03A5C0 7F005A90 00000000 */   nop   
 /* 03A5C4 7F005A94 8E0F0008 */  lw    $t7, 8($s0)
 /* 03A5C8 7F005A98 3C0A8007 */  lui   $t2, %hi(ptr_0xxxpresets) # $t2, 0x8007
-/* 03A5CC 7F005A9C 3C018008 */  lui   $at, 0x8008
+/* 03A5CC 7F005A9C 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079C28)
 /* 03A5D0 7F005AA0 144F0011 */  bne   $v0, $t7, .L7F005AE8
 /* 03A5D4 7F005AA4 00000000 */   nop   
 /* 03A5D8 7F005AA8 8E080004 */  lw    $t0, 4($s0)
@@ -372,7 +372,7 @@ spawn_point:
 /* 03A5FC 7F005ACC 00026080 */  sll   $t4, $v0, 2
 /* 03A600 7F005AD0 002C0821 */  addu  $at, $at, $t4
 /* 03A604 7F005AD4 012A5821 */  addu  $t3, $t1, $t2
-/* 03A608 7F005AD8 AC2B9C28 */  sw    $t3, -0x63d8($at)
+/* 03A608 7F005AD8 AC2B9C28 */  sw    $t3, %lo(dword_CODE_bss_80079C28)($at)
 /* 03A60C 7F005ADC 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079C68) # $at, 0x8008
 /* 03A610 7F005AE0 244D0001 */  addiu $t5, $v0, 1
 /* 03A614 7F005AE4 AC2D9C68 */  sw    $t5, %lo(dword_CODE_bss_80079C68)($at)
