@@ -249,24 +249,24 @@ glabel end_of_mission_briefing
 /* 051F00 7F01D3D0 01E27823 */  subu  $t7, $t7, $v0
 /* 051F04 7F01D3D4 15C00046 */  bnez  $t6, .L7F01D4F0
 /* 051F08 7F01D3D8 000F7880 */   sll   $t7, $t7, 2
-/* 051F0C 7F01D3DC 3C188003 */  lui   $t8, 0x8003
+/* 051F0C 7F01D3DC 3C188003 */  lui   $t8, %hi(mission_folder_setup_entries+0x14)
 /* 051F10 7F01D3E0 030FC021 */  addu  $t8, $t8, $t7
-/* 051F14 7F01D3E4 8F18ABF8 */  lw    $t8, -0x5408($t8)
+/* 051F14 7F01D3E4 8F18ABF8 */  lw    $t8, %lo(mission_folder_setup_entries+0x14)($t8)
 /* 051F18 7F01D3E8 00034040 */  sll   $t0, $v1, 1
-/* 051F1C 7F01D3EC 3C0A8003 */  lui   $t2, 0x8003
+/* 051F1C 7F01D3EC 3C0A8003 */  lui   $t2, %hi(solo_target_time_array)
 /* 051F20 7F01D3F0 0018C880 */  sll   $t9, $t8, 2
 /* 051F24 7F01D3F4 0338C823 */  subu  $t9, $t9, $t8
 /* 051F28 7F01D3F8 0019C840 */  sll   $t9, $t9, 1
 /* 051F2C 7F01D3FC 03284821 */  addu  $t1, $t9, $t0
 /* 051F30 7F01D400 01495021 */  addu  $t2, $t2, $t1
-/* 051F34 7F01D404 854AB564 */  lh    $t2, -0x4a9c($t2)
+/* 051F34 7F01D404 854AB564 */  lh    $t2, %lo(solo_target_time_array)($t2)
 /* 051F38 7F01D408 0FC22FEE */  jal   sub_GAME_7F08BFB8
 /* 051F3C 7F01D40C A7AA001E */   sh    $t2, 0x1e($sp)
 /* 051F40 7F01D410 2401003C */  li    $at, 60
 /* 051F44 7F01D414 0041001A */  div   $zero, $v0, $at
 /* 051F48 7F01D418 3C0B8003 */  lui   $t3, %hi(briefingpage) # $t3, 0x8003
 /* 051F4C 7F01D41C 8D6BA8F8 */  lw    $t3, %lo(briefingpage)($t3)
-/* 051F50 7F01D420 3C058003 */  lui   $a1, 0x8003
+/* 051F50 7F01D420 3C058003 */  lui   $a1, %hi(mission_folder_setup_entries+0x14)
 /* 051F54 7F01D424 00003812 */  mflo  $a3
 /* 051F58 7F01D428 000B60C0 */  sll   $t4, $t3, 3
 /* 051F5C 7F01D42C 018B6023 */  subu  $t4, $t4, $t3
@@ -277,7 +277,7 @@ glabel end_of_mission_briefing
 /* 051F70 7F01D440 8CC6A8FC */  lw    $a2, %lo(selected_difficulty)($a2)
 /* 051F74 7F01D444 8C84A8E8 */  lw    $a0, %lo(selected_folder_num)($a0)
 /* 051F78 7F01D448 0FC0797E */  jal   unlock_stage_in_folder_on_difficulty
-/* 051F7C 7F01D44C 8CA5ABF8 */   lw    $a1, -0x5408($a1)
+/* 051F7C 7F01D44C 8CA5ABF8 */   lw    $a1, %lo(mission_folder_setup_entries+0x14)($a1)
 /* 051F80 7F01D450 0FC22FEE */  jal   sub_GAME_7F08BFB8
 /* 051F84 7F01D454 00000000 */   nop   
 /* 051F88 7F01D458 2401003C */  li    $at, 60
@@ -292,26 +292,26 @@ glabel end_of_mission_briefing
 /* 051FAC 7F01D47C 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
 /* 051FB0 7F01D480 3C0F8003 */  lui   $t7, %hi(briefingpage) # $t7, 0x8003
 /* 051FB4 7F01D484 8DEFA8F8 */  lw    $t7, %lo(briefingpage)($t7)
-/* 051FB8 7F01D488 3C058003 */  lui   $a1, 0x8003
+/* 051FB8 7F01D488 3C058003 */  lui   $a1, %hi(mission_folder_setup_entries+0x14)
 /* 051FBC 7F01D48C 00402025 */  move  $a0, $v0
 /* 051FC0 7F01D490 000FC0C0 */  sll   $t8, $t7, 3
 /* 051FC4 7F01D494 030FC023 */  subu  $t8, $t8, $t7
 /* 051FC8 7F01D498 0018C080 */  sll   $t8, $t8, 2
 /* 051FCC 7F01D49C 00B82821 */  addu  $a1, $a1, $t8
 /* 051FD0 7F01D4A0 0FC07748 */  jal   check_if_cheat_unlocked
-/* 051FD4 7F01D4A4 8CA5ABF8 */   lw    $a1, -0x5408($a1)
+/* 051FD4 7F01D4A4 8CA5ABF8 */   lw    $a1, %lo(mission_folder_setup_entries+0x14)($a1)
 /* 051FD8 7F01D4A8 1440000F */  bnez  $v0, .L7F01D4E8
 /* 051FDC 7F01D4AC 3C048003 */   lui   $a0, %hi(selected_folder_num) # $a0, 0x8003
 /* 051FE0 7F01D4B0 3C198003 */  lui   $t9, %hi(briefingpage) # $t9, 0x8003
 /* 051FE4 7F01D4B4 8F39A8F8 */  lw    $t9, %lo(briefingpage)($t9)
-/* 051FE8 7F01D4B8 3C058003 */  lui   $a1, 0x8003
+/* 051FE8 7F01D4B8 3C058003 */  lui   $a1, %hi(mission_folder_setup_entries+0x14)
 /* 051FEC 7F01D4BC 8C84A8E8 */  lw    $a0, %lo(selected_folder_num)($a0)
 /* 051FF0 7F01D4C0 001940C0 */  sll   $t0, $t9, 3
 /* 051FF4 7F01D4C4 01194023 */  subu  $t0, $t0, $t9
 /* 051FF8 7F01D4C8 00084080 */  sll   $t0, $t0, 2
 /* 051FFC 7F01D4CC 00A82821 */  addu  $a1, $a1, $t0
 /* 052000 7F01D4D0 0FC079D8 */  jal   sub_GAME_7F01E760
-/* 052004 7F01D4D4 8CA5ABF8 */   lw    $a1, -0x5408($a1)
+/* 052004 7F01D4D4 8CA5ABF8 */   lw    $a1, %lo(mission_folder_setup_entries+0x14)($a1)
 /* 052008 7F01D4D8 24090001 */  li    $t1, 1
 /* 05200C 7F01D4DC 3C018007 */  lui   $at, %hi(newcheatunlocked) # $at, 0x8007
 /* 052010 7F01D4E0 10000003 */  b     .L7F01D4F0
@@ -362,21 +362,21 @@ void set_selected_folder_num(u32 foldernum)
 void set_selected_difficulty(DIFFICULTY difficulty)
 {
   if (difficulty != DIFFICULTY_AGENT) {
-    if (difficulty == DIFFICULTY_SECRET) {
-      selected_difficulty = DIFFICULTY_SECRET;
-      return;
-    }
-    if (difficulty == DIFFICULTY_00) {
-      selected_difficulty = DIFFICULTY_00;
-      return;
-    }
-    if (difficulty == DIFFICULTY_007) {
-      selected_difficulty = DIFFICULTY_007;
-      return;
-    }
+    selected_difficulty = DIFFICULTY_AGENT;
+    return;
   }
-  selected_difficulty = DIFFICULTY_AGENT;
-  return;
+  if (difficulty == DIFFICULTY_SECRET) {
+    selected_difficulty = DIFFICULTY_SECRET;
+    return;
+  }
+  if (difficulty == DIFFICULTY_00) {
+    selected_difficulty = DIFFICULTY_00;
+    return;
+  }
+  if (difficulty == DIFFICULTY_007) {
+    selected_difficulty = DIFFICULTY_007;
+    return;
+  }
 }
 #else
 GLOBAL_ASM(
@@ -385,28 +385,28 @@ glabel set_selected_difficulty
 /* 0520CC 7F01D59C 10800009 */  beqz  $a0, .L7F01D5C4
 /* 0520D0 7F01D5A0 24020001 */   li    $v0, 1
 /* 0520D4 7F01D5A4 1082000A */  beq   $a0, $v0, .L7F01D5D0
-/* 0520D8 7F01D5A8 3C018003 */   lui   $at, 0x8003
+/* 0520D8 7F01D5A8 3C018003 */   lui   $at, %hi(selected_difficulty)
 /* 0520DC 7F01D5AC 24020002 */  li    $v0, 2
 /* 0520E0 7F01D5B0 10820009 */  beq   $a0, $v0, .L7F01D5D8
-/* 0520E4 7F01D5B4 3C018003 */   lui   $at, 0x8003
+/* 0520E4 7F01D5B4 3C018003 */   lui   $at, %hi(selected_difficulty)
 /* 0520E8 7F01D5B8 24020003 */  li    $v0, 3
 /* 0520EC 7F01D5BC 10820008 */  beq   $a0, $v0, .L7F01D5E0
-/* 0520F0 7F01D5C0 3C018003 */   lui   $at, 0x8003
+/* 0520F0 7F01D5C0 3C018003 */   lui   $at, %hi(selected_difficulty)
 .L7F01D5C4:
-/* 0520F4 7F01D5C4 3C018003 */  lui   $at, 0x8003
+/* 0520F4 7F01D5C4 3C018003 */  lui   $at, %hi(selected_difficulty)
 /* 0520F8 7F01D5C8 03E00008 */  jr    $ra
-/* 0520FC 7F01D5CC AC20A8FC */   sw    $zero, -0x5704($at)
+/* 0520FC 7F01D5CC AC20A8FC */   sw    $zero, %lo(selected_difficulty)($at)
 
 .L7F01D5D0:
 /* 052100 7F01D5D0 03E00008 */  jr    $ra
-/* 052104 7F01D5D4 AC22A8FC */   sw    $v0, -0x5704($at)
+/* 052104 7F01D5D4 AC22A8FC */   sw    $v0, %lo(selected_difficulty)($at)
 
 .L7F01D5D8:
 /* 052108 7F01D5D8 03E00008 */  jr    $ra
-/* 05210C 7F01D5DC AC22A8FC */   sw    $v0, -0x5704($at)
+/* 05210C 7F01D5DC AC22A8FC */   sw    $v0, %lo(selected_difficulty)($at)
 
 .L7F01D5E0:
-/* 052110 7F01D5E0 AC22A8FC */  sw    $v0, -0x5704($at)
+/* 052110 7F01D5E0 AC22A8FC */  sw    $v0, %lo(selected_difficulty)($at)
 /* 052114 7F01D5E4 03E00008 */  jr    $ra
 /* 052118 7F01D5E8 00000000 */   nop   
 )
@@ -2408,9 +2408,9 @@ glabel set_selected_bond_to_folder
 /* 053704 7F01EBD4 28810004 */  slti  $at, $a0, 4
 /* 053708 7F01EBD8 10200004 */  beqz  $at, .L7F01EBEC
 /* 05370C 7F01EBDC 00047080 */   sll   $t6, $a0, 2
-/* 053710 7F01EBE0 3C018003 */  lui   $at, 0x8003
+/* 053710 7F01EBE0 3C018003 */  lui   $at, %hi(save_selected_bond)
 /* 053714 7F01EBE4 002E0821 */  addu  $at, $at, $t6
-/* 053718 7F01EBE8 AC20C510 */  sw    $zero, -0x3af0($at)
+/* 053718 7F01EBE8 AC20C510 */  sw    $zero, %lo(save_selected_bond)($at)
 .L7F01EBEC:
 /* 05371C 7F01EBEC 03E00008 */  jr    $ra
 /* 053720 7F01EBF0 00000000 */   nop   
@@ -3025,9 +3025,9 @@ glabel copy_eeprom_to_stack_set_folder_num
 /* 053E7C 7F01F34C 0FC07649 */  jal   get_selected_bond
 /* 053E80 7F01F350 02202025 */   move  $a0, $s1
 /* 053E84 7F01F354 00106880 */  sll   $t5, $s0, 2
-/* 053E88 7F01F358 3C058003 */  lui   $a1, 0x8003
+/* 053E88 7F01F358 3C058003 */  lui   $a1, %hi(save_selected_bond)
 /* 053E8C 7F01F35C 00AD2821 */  addu  $a1, $a1, $t5
-/* 053E90 7F01F360 8CA5C510 */  lw    $a1, -0x3af0($a1)
+/* 053E90 7F01F360 8CA5C510 */  lw    $a1, %lo(save_selected_bond)($a1)
 /* 053E94 7F01F364 50450007 */  beql  $v0, $a1, .L7F01F384
 /* 053E98 7F01F368 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 053E9C 7F01F36C 0FC0764D */  jal   set_selected_bond
