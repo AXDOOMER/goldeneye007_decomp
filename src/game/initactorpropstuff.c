@@ -667,14 +667,14 @@ glabel somethingwith_weapon_animation_groups
 .L7F000958:
 /* 035488 7F000958 46103203 */  div.s $f8, $f6, $f16
 /* 03548C 7F00095C 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 035490 7F000960 3C018003 */  lui   $at, 0x8003
+/* 035490 7F000960 3C018003 */  lui   $at, %hi(D_800309A4)
 /* 035494 7F000964 D7B40018 */  ldc1  $f20, 0x18($sp)
 /* 035498 7F000968 8FB00020 */  lw    $s0, 0x20($sp)
 /* 03549C 7F00096C 8FB10024 */  lw    $s1, 0x24($sp)
 /* 0354A0 7F000970 8FB20028 */  lw    $s2, 0x28($sp)
 /* 0354A4 7F000974 27BD0040 */  addiu $sp, $sp, 0x40
 /* 0354A8 7F000978 03E00008 */  jr    $ra
-/* 0354AC 7F00097C E42809A4 */   swc1  $f8, 0x9a4($at)
+/* 0354AC 7F00097C E42809A4 */   swc1  $f8, %lo(D_800309A4)($at)
 )
 #endif
 
