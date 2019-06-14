@@ -490,9 +490,9 @@ glabel stage_load
 /* 0F27A0 7F0BDC70 00000000 */   nop   
 /* 0F27A4 7F0BDC74 0FC3047F */  jal   sub_GAME_7F0C11FC
 /* 0F27A8 7F0BDC78 8FA40038 */   lw    $a0, 0x38($sp)
-/* 0F27AC 7F0BDC7C 3C0A8008 */  lui   $t2, 0x8008
+/* 0F27AC 7F0BDC7C 3C0A8008 */  lui   $t2, %hi(player1_player_data)
 /* 0F27B0 7F0BDC80 3C014348 */  li    $at, 0x43480000 # 200.000000
-/* 0F27B4 7F0BDC84 25529EF0 */  addiu $s2, $t2, -0x6110
+/* 0F27B4 7F0BDC84 25529EF0 */  addiu $s2, $t2, %lo(player1_player_data)
 /* 0F27B8 7F0BDC88 4481A000 */  mtc1  $at, $f20
 /* 0F27BC 7F0BDC8C 0240A025 */  move  $s4, $s2
 /* 0F27C0 7F0BDC90 24130004 */  li    $s3, 4
@@ -1399,7 +1399,7 @@ glabel sub_GAME_7F0BE8D0
 /* 0F3434 7F0BE904 46040380 */  add.s $f14, $f0, $f4
 /* 0F3438 7F0BE908 3C013E00 */  li    $at, 0x3E000000 # 0.125000
 /* 0F343C 7F0BE90C 44818000 */  mtc1  $at, $f16
-/* 0F3440 7F0BE910 3C018006 */  lui   $at, 0x8006
+/* 0F3440 7F0BE910 3C018006 */  lui   $at, %hi(D_8005B73C)
 /* 0F3444 7F0BE914 4610703E */  c.le.s $f14, $f16
 /* 0F3448 7F0BE918 00000000 */  nop   
 /* 0F344C 7F0BE91C 45000005 */  bc1f  .L7F0BE934
@@ -1409,7 +1409,7 @@ glabel sub_GAME_7F0BE8D0
 /* 0F345C 7F0BE92C 1000000F */  b     .L7F0BE96C
 /* 0F3460 7F0BE930 3C014000 */   lui   $at, 0x4000
 .L7F0BE934:
-/* 0F3464 7F0BE934 C426B73C */  lwc1  $f6, %lo(0x4000B73C)($at)
+/* 0F3464 7F0BE934 C426B73C */  lwc1  $f6, %lo(D_8005B73C)($at)
 /* 0F3468 7F0BE938 3C013F00 */  lui   $at, 0x3f00
 /* 0F346C 7F0BE93C 4606703E */  c.le.s $f14, $f6
 /* 0F3470 7F0BE940 00000000 */  nop   
@@ -2053,7 +2053,7 @@ glabel manage_mp_game
 /* 0F3D7C 7F0BF24C 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0F3D80 7F0BF250 44810000 */  mtc1  $at, $f0
 /* 0F3D84 7F0BF254 10400009 */  beqz  $v0, .L7F0BF27C
-/* 0F3D88 7F0BF258 3C038005 */   lui   $v1, 0x8005
+/* 0F3D88 7F0BF258 3C038005 */   lui   $v1, %hi(D_80048390)
 /* 0F3D8C 7F0BF25C 3C038005 */  lui   $v1, %hi(D_80048390) # $v1, 0x8005
 /* 0F3D90 7F0BF260 3C018005 */  lui   $at, %hi(D_80048388) # $at, 0x8005
 /* 0F3D94 7F0BF264 24638390 */  addiu $v1, %lo(D_80048390) # addiu $v1, $v1, -0x7c70
@@ -2063,7 +2063,7 @@ glabel manage_mp_game
 /* 0F3DA4 7F0BF274 1000000C */  b     .L7F0BF2A8
 /* 0F3DA8 7F0BF278 8C428374 */   lw    $v0, %lo(clock_timer)($v0)
 .L7F0BF27C:
-/* 0F3DAC 7F0BF27C 24638390 */  addiu $v1, $v1, -0x7c70
+/* 0F3DAC 7F0BF27C 24638390 */  addiu $v1, $v1, %lo(D_80048390)
 /* 0F3DB0 7F0BF280 3C028005 */  lui   $v0, %hi(clock_timer) # $v0, 0x8005
 /* 0F3DB4 7F0BF284 8C428374 */  lw    $v0, %lo(clock_timer)($v0)
 /* 0F3DB8 7F0BF288 8C6E0000 */  lw    $t6, ($v1)

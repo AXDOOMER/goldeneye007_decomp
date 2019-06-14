@@ -718,7 +718,7 @@ glabel something_with_LnameX
 /* 0F6750 7F0C1C20 010E1021 */   addu  $v0, $t0, $t6
 .L7F0C1C24:
 /* 0F6754 7F0C1C24 11000032 */  beqz  $t0, .L7F0C1CF0
-/* 0F6758 7F0C1C28 3C028009 */   lui   $v0, 0x8009
+/* 0F6758 7F0C1C28 3C028009 */   lui   $v0, %hi(ptr_j_char_data_buf)
 /* 0F675C 7F0C1C2C 05600030 */  bltz  $t3, .L7F0C1CF0
 /* 0F6760 7F0C1C30 000B1840 */   sll   $v1, $t3, 1
 /* 0F6764 7F0C1C34 01831021 */  addu  $v0, $t4, $v1
@@ -769,7 +769,7 @@ glabel something_with_LnameX
 /* 0F6818 7F0C1CE8 10000002 */  b     .L7F0C1CF4
 /* 0F681C 7F0C1CEC 01191021 */   addu  $v0, $t0, $t9
 .L7F0C1CF0:
-/* 0F6820 7F0C1CF0 8C42C6F4 */  lw    $v0, -0x390c($v0)
+/* 0F6820 7F0C1CF0 8C42C6F4 */  lw    $v0, %lo(ptr_j_char_data_buf)($v0)
 .L7F0C1CF4:
 /* 0F6824 7F0C1CF4 8FBF001C */  lw    $ra, 0x1c($sp)
 .L7F0C1CF8:

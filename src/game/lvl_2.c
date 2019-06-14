@@ -1326,7 +1326,7 @@ glabel select_ramrom_to_play
 /* 0F5508 7F0C09D8 0C002914 */  jal   get_random_value
 /* 0F550C 7F0C09DC AFA3001C */   sw    $v1, 0x1c($sp)
 /* 0F5510 7F0C09E0 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 0F5514 7F0C09E4 3C048005 */  lui   $a0, 0x8005
+/* 0F5514 7F0C09E4 3C048005 */  lui   $a0, %hi(ramrom_table)
 /* 0F5518 7F0C09E8 0043001B */  divu  $zero, $v0, $v1
 /* 0F551C 7F0C09EC 00005010 */  mfhi  $t2
 /* 0F5520 7F0C09F0 000A58C0 */  sll   $t3, $t2, 3
@@ -1335,7 +1335,7 @@ glabel select_ramrom_to_play
 /* 0F552C 7F0C09FC 00000000 */   nop   
 /* 0F5530 7F0C0A00 0007000D */  break 7
 .L7F0C0A04:
-/* 0F5534 7F0C0A04 8C8483F0 */  lw    $a0, -0x7c10($a0)
+/* 0F5534 7F0C0A04 8C8483F0 */  lw    $a0, %lo(ramrom_table)($a0)
 /* 0F5538 7F0C0A08 0FC30207 */  jal   replay_recorded_ramrom_at_address
 /* 0F553C 7F0C0A0C 00000000 */   nop   
 /* 0F5540 7F0C0A10 8FBF0014 */  lw    $ra, 0x14($sp)
