@@ -111,14 +111,14 @@ glabel sub_GAME_7F0BC634
 /* 0F1164 7F0BC634 00057080 */  sll   $t6, $a1, 2
 /* 0F1168 7F0BC638 01C57021 */  addu  $t6, $t6, $a1
 /* 0F116C 7F0BC63C 000E7100 */  sll   $t6, $t6, 4
-/* 0F1170 7F0BC640 3C018004 */  lui   $at, 0x8004
+/* 0F1170 7F0BC640 3C018004 */  lui   $at, %hi(room_information+38)
 /* 0F1174 7F0BC644 002E0821 */  addu  $at, $at, $t6
-/* 0F1178 7F0BC648 A424144A */  sh    $a0, 0x144a($at)
-/* 0F117C 7F0BC64C 3C018008 */  lui   $at, 0x8008
+/* 0F1178 7F0BC648 A424144A */  sh    $a0, %lo(room_information+38)($at)
+/* 0F117C 7F0BC64C 3C018008 */  lui   $at, %hi(dword_CODE_bss_80083450)
 /* 0F1180 7F0BC650 00047880 */  sll   $t7, $a0, 2
 /* 0F1184 7F0BC654 002F0821 */  addu  $at, $at, $t7
 /* 0F1188 7F0BC658 03E00008 */  jr    $ra
-/* 0F118C 7F0BC65C AC253450 */   sw    $a1, 0x3450($at)
+/* 0F118C 7F0BC65C AC253450 */   sw    $a1, %lo(dword_CODE_bss_80083450)($at)
 )
 #endif
 
@@ -137,15 +137,15 @@ glabel sub_GAME_7F0BC660
 /* 0F1190 7F0BC660 00057080 */  sll   $t6, $a1, 2
 /* 0F1194 7F0BC664 01C57021 */  addu  $t6, $t6, $a1
 /* 0F1198 7F0BC668 000E7100 */  sll   $t6, $t6, 4
-/* 0F119C 7F0BC66C 3C018004 */  lui   $at, 0x8004
+/* 0F119C 7F0BC66C 3C018004 */  lui   $at, %hi(room_information+38)
 /* 0F11A0 7F0BC670 2402FFFF */  li    $v0, -1
 /* 0F11A4 7F0BC674 002E0821 */  addu  $at, $at, $t6
-/* 0F11A8 7F0BC678 A422144A */  sh    $v0, 0x144a($at)
-/* 0F11AC 7F0BC67C 3C018008 */  lui   $at, 0x8008
+/* 0F11A8 7F0BC678 A422144A */  sh    $v0, %lo(room_information+38)($at)
+/* 0F11AC 7F0BC67C 3C018008 */  lui   $at, %hi(dword_CODE_bss_80083450)
 /* 0F11B0 7F0BC680 00047880 */  sll   $t7, $a0, 2
 /* 0F11B4 7F0BC684 002F0821 */  addu  $at, $at, $t7
 /* 0F11B8 7F0BC688 03E00008 */  jr    $ra
-/* 0F11BC 7F0BC68C AC223450 */   sw    $v0, 0x3450($at)
+/* 0F11BC 7F0BC68C AC223450 */   sw    $v0, %lo(dword_CODE_bss_80083450)($at)
 )
 #endif
 
@@ -162,9 +162,9 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BC690
 /* 0F11C0 7F0BC690 00041080 */  sll   $v0, $a0, 2
-/* 0F11C4 7F0BC694 3C058008 */  lui   $a1, 0x8008
+/* 0F11C4 7F0BC694 3C058008 */  lui   $a1, %hi(dword_CODE_bss_80083450)
 /* 0F11C8 7F0BC698 00A22821 */  addu  $a1, $a1, $v0
-/* 0F11CC 7F0BC69C 8CA53450 */  lw    $a1, 0x3450($a1)
+/* 0F11CC 7F0BC69C 8CA53450 */  lw    $a1, %lo(dword_CODE_bss_80083450)($a1)
 /* 0F11D0 7F0BC6A0 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0F11D4 7F0BC6A4 2401FFFF */  li    $at, -1
 /* 0F11D8 7F0BC6A8 10A10006 */  beq   $a1, $at, .L7F0BC6C4
@@ -175,15 +175,15 @@ glabel sub_GAME_7F0BC690
 /* 0F11EC 7F0BC6BC 8FA2001C */  lw    $v0, 0x1c($sp)
 /* 0F11F0 7F0BC6C0 8FA40020 */  lw    $a0, 0x20($sp)
 .L7F0BC6C4:
-/* 0F11F4 7F0BC6C4 3C018008 */  lui   $at, 0x8008
+/* 0F11F4 7F0BC6C4 3C018008 */  lui   $at, %hi(dword_CODE_bss_80083320)
 /* 0F11F8 7F0BC6C8 00240821 */  addu  $at, $at, $a0
 /* 0F11FC 7F0BC6CC 240E0002 */  li    $t6, 2
 /* 0F1200 7F0BC6D0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F1204 7F0BC6D4 A02E3320 */  sb    $t6, 0x3320($at)
-/* 0F1208 7F0BC6D8 3C018008 */  lui   $at, 0x8008
+/* 0F1204 7F0BC6D4 A02E3320 */  sb    $t6, %lo(dword_CODE_bss_80083320)($at)
+/* 0F1208 7F0BC6D8 3C018008 */  lui   $at, %hi(dword_CODE_bss_80083900)
 /* 0F120C 7F0BC6DC 00220821 */  addu  $at, $at, $v0
 /* 0F1210 7F0BC6E0 240FFFFF */  li    $t7, -1
-/* 0F1214 7F0BC6E4 AC2F3900 */  sw    $t7, 0x3900($at)
+/* 0F1214 7F0BC6E4 AC2F3900 */  sw    $t7, %lo(dword_CODE_bss_80083900)($at)
 /* 0F1218 7F0BC6E8 03E00008 */  jr    $ra
 /* 0F121C 7F0BC6EC 27BD0020 */   addiu $sp, $sp, 0x20
 )
@@ -349,11 +349,11 @@ glabel sub_GAME_7F0BC85C
 /* 0F13BC 7F0BC88C 3C188008 */  lui   $t8, %hi(ptr_BONDdata) # $t8, 0x8008
 /* 0F13C0 7F0BC890 8F18A0B0 */  lw    $t8, %lo(ptr_BONDdata)($t8)
 /* 0F13C4 7F0BC894 00104080 */  sll   $t0, $s0, 2
-/* 0F13C8 7F0BC898 3C098008 */  lui   $t1, 0x8008
+/* 0F13C8 7F0BC898 3C098008 */  lui   $t1, %hi(dword_CODE_bss_80083900)
 /* 0F13CC 7F0BC89C 01284821 */  addu  $t1, $t1, $t0
-/* 0F13D0 7F0BC8A0 8D293900 */  lw    $t1, 0x3900($t1)
+/* 0F13D0 7F0BC8A0 8D293900 */  lw    $t1, %lo(dword_CODE_bss_80083900)($t1)
 /* 0F13D4 7F0BC8A4 8F19108C */  lw    $t9, 0x108c($t8)
-/* 0F13D8 7F0BC8A8 3C018008 */  lui   $at, 0x8008
+/* 0F13D8 7F0BC8A8 3C018008 */  lui   $at, %hi(dword_CODE_bss_80083320)
 /* 0F13DC 7F0BC8AC 00300821 */  addu  $at, $at, $s0
 /* 0F13E0 7F0BC8B0 1329000F */  beq   $t9, $t1, .L7F0BC8F0
 /* 0F13E4 7F0BC8B4 00000000 */   nop   
@@ -369,24 +369,24 @@ glabel sub_GAME_7F0BC85C
 /* 0F1404 7F0BC8D4 00402025 */  move  $a0, $v0
 /* 0F1408 7F0BC8D8 0FC2F18D */  jal   sub_GAME_7F0BC634
 /* 0F140C 7F0BC8DC 8FA50070 */   lw    $a1, 0x70($sp)
-/* 0F1410 7F0BC8E0 3C018008 */  lui   $at, 0x8008
+/* 0F1410 7F0BC8E0 3C018008 */  lui   $at, %hi(dword_CODE_bss_80083320)
 /* 0F1414 7F0BC8E4 00300821 */  addu  $at, $at, $s0
 /* 0F1418 7F0BC8E8 10000004 */  b     .L7F0BC8FC
-/* 0F141C 7F0BC8EC A0203320 */   sb    $zero, 0x3320($at)
+/* 0F141C 7F0BC8EC A0203320 */   sb    $zero, %lo(dword_CODE_bss_80083320)($at)
 .L7F0BC8F0:
-/* 0F1420 7F0BC8F0 A0203320 */  sb    $zero, 0x3320($at)
+/* 0F1420 7F0BC8F0 A0203320 */  sb    $zero, %lo(dword_CODE_bss_80083320)($at)
 /* 0F1424 7F0BC8F4 1000002E */  b     .L7F0BC9B0
 /* 0F1428 7F0BC8F8 02001025 */   move  $v0, $s0
 .L7F0BC8FC:
 /* 0F142C 7F0BC8FC 3C0A8008 */  lui   $t2, %hi(ptr_BONDdata) # $t2, 0x8008
 /* 0F1430 7F0BC900 8D4AA0B0 */  lw    $t2, %lo(ptr_BONDdata)($t2)
 /* 0F1434 7F0BC904 00106080 */  sll   $t4, $s0, 2
-/* 0F1438 7F0BC908 3C018008 */  lui   $at, 0x8008
+/* 0F1438 7F0BC908 3C018008 */  lui   $at, %hi(dword_CODE_bss_80083900)
 /* 0F143C 7F0BC90C 8D4B108C */  lw    $t3, 0x108c($t2)
 /* 0F1440 7F0BC910 002C0821 */  addu  $at, $at, $t4
 /* 0F1444 7F0BC914 27A4002C */  addiu $a0, $sp, 0x2c
 /* 0F1448 7F0BC918 0FC15FF4 */  jal   init_0x40_bytes_data_at_address_last_word_1_0
-/* 0F144C 7F0BC91C AC2B3900 */   sw    $t3, 0x3900($at)
+/* 0F144C 7F0BC91C AC2B3900 */   sw    $t3, %lo(dword_CODE_bss_80083900)($at)
 /* 0F1450 7F0BC920 8FAE0070 */  lw    $t6, 0x70($sp)
 /* 0F1454 7F0BC924 3C018004 */  lui   $at, %hi(room_data_float2) # $at, 0x8004
 /* 0F1458 7F0BC928 C42013F8 */  lwc1  $f0, %lo(room_data_float2)($at)
