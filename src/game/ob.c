@@ -1108,9 +1108,9 @@ glabel load_bg_bytes_at_offset_to_membank
 /* 0F18C4 7F0BCD94 0002C080 */  sll   $t8, $v0, 2
 /* 0F18C8 7F0BCD98 0302C021 */  addu  $t8, $t8, $v0
 /* 0F18CC 7F0BCD9C 0018C080 */  sll   $t8, $t8, 2
-/* 0F18D0 7F0BCDA0 3C038009 */  lui   $v1, 0x8009
+/* 0F18D0 7F0BCDA0 3C038009 */  lui   $v1, %hi(ptr_resource_data)
 /* 0F18D4 7F0BCDA4 00781821 */  addu  $v1, $v1, $t8
-/* 0F18D8 7F0BCDA8 8C6388B0 */  lw    $v1, -0x7750($v1)
+/* 0F18D8 7F0BCDA8 8C6388B0 */  lw    $v1, %lo(ptr_resource_data)($v1)
 /* 0F18DC 7F0BCDAC 00027080 */  sll   $t6, $v0, 2
 /* 0F18E0 7F0BCDB0 01C27023 */  subu  $t6, $t6, $v0
 /* 0F18E4 7F0BCDB4 3C0F8004 */  lui   $t7, %hi(file_resource_table) # $t7, 0x8004
@@ -1447,10 +1447,10 @@ glabel get_temp_remaining_buffer_for_index
 /* 0F1C30 7F0BD100 00047080 */  sll   $t6, $a0, 2
 /* 0F1C34 7F0BD104 01C47021 */  addu  $t6, $t6, $a0
 /* 0F1C38 7F0BD108 000E7080 */  sll   $t6, $t6, 2
-/* 0F1C3C 7F0BD10C 3C028009 */  lui   $v0, 0x8009
+/* 0F1C3C 7F0BD10C 3C028009 */  lui   $v0, %hi(ptr_resource_data+4)
 /* 0F1C40 7F0BD110 004E1021 */  addu  $v0, $v0, $t6
 /* 0F1C44 7F0BD114 03E00008 */  jr    $ra
-/* 0F1C48 7F0BD118 8C4288B4 */   lw    $v0, -0x774c($v0)
+/* 0F1C48 7F0BD118 8C4288B4 */   lw    $v0, %lo(ptr_resource_data+4)($v0)
 )
 #endif
 
@@ -1469,10 +1469,10 @@ glabel get_remaining_buffer_for_index
 /* 0F1C4C 7F0BD11C 00047080 */  sll   $t6, $a0, 2
 /* 0F1C50 7F0BD120 01C47021 */  addu  $t6, $t6, $a0
 /* 0F1C54 7F0BD124 000E7080 */  sll   $t6, $t6, 2
-/* 0F1C58 7F0BD128 3C028009 */  lui   $v0, 0x8009
+/* 0F1C58 7F0BD128 3C028009 */  lui   $v0, %hi(ptr_resource_data+12)
 /* 0F1C5C 7F0BD12C 004E1021 */  addu  $v0, $v0, $t6
 /* 0F1C60 7F0BD130 03E00008 */  jr    $ra
-/* 0F1C64 7F0BD134 8C4288BC */   lw    $v0, -0x7744($v0)
+/* 0F1C64 7F0BD134 8C4288BC */   lw    $v0, %lo(ptr_resource_data+12)($v0)
 )
 #endif
 

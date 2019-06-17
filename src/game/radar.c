@@ -172,13 +172,13 @@ glabel display_red_blue_on_radar
 /* 0FAE08 7F0C62D8 8FA40088 */   lw    $a0, 0x88($sp)
 .L7F0C62DC:
 /* 0FAE0C 7F0C62DC 8FAC0070 */  lw    $t4, 0x70($sp)
-/* 0FAE10 7F0C62E0 3C0E8008 */  lui   $t6, 0x8008
+/* 0FAE10 7F0C62E0 3C0E8008 */  lui   $t6, %hi(player1_player_data+0x69)
 /* 0FAE14 7F0C62E4 8FA40088 */  lw    $a0, 0x88($sp)
 /* 0FAE18 7F0C62E8 000C68C0 */  sll   $t5, $t4, 3
 /* 0FAE1C 7F0C62EC 01AC6823 */  subu  $t5, $t5, $t4
 /* 0FAE20 7F0C62F0 000D6900 */  sll   $t5, $t5, 4
 /* 0FAE24 7F0C62F4 01CD7021 */  addu  $t6, $t6, $t5
-/* 0FAE28 7F0C62F8 91CE9F59 */  lbu   $t6, -0x60a7($t6)
+/* 0FAE28 7F0C62F8 91CE9F59 */  lbu   $t6, %lo(player1_player_data+0x69)($t6)
 /* 0FAE2C 7F0C62FC 26A5FFFF */  addiu $a1, $s5, -1
 /* 0FAE30 7F0C6300 26C6FFFF */  addiu $a2, $s6, -1
 /* 0FAE34 7F0C6304 15C00004 */  bnez  $t6, .L7F0C6318
@@ -217,10 +217,10 @@ glabel display_red_blue_on_radar
 /* 0FAEA8 7F0C6378 8FAA0070 */  lw    $t2, 0x70($sp)
 .L7F0C637C:
 /* 0FAEAC 7F0C637C 00135880 */  sll   $t3, $s3, 2
-/* 0FAEB0 7F0C6380 3C048008 */  lui   $a0, 0x8008
+/* 0FAEB0 7F0C6380 3C048008 */  lui   $a0, %hi(ptr_BONDdata_p1)
 /* 0FAEB4 7F0C6384 126A007A */  beq   $s3, $t2, .L7F0C6570
 /* 0FAEB8 7F0C6388 008B2021 */   addu  $a0, $a0, $t3
-/* 0FAEBC 7F0C638C 8C849EE0 */  lw    $a0, -0x6120($a0)
+/* 0FAEBC 7F0C638C 8C849EE0 */  lw    $a0, %lo(ptr_BONDdata_p1)($a0)
 /* 0FAEC0 7F0C6390 8C8C00D8 */  lw    $t4, 0xd8($a0)
 /* 0FAEC4 7F0C6394 55800077 */  bnezl $t4, .L7F0C6574
 /* 0FAEC8 7F0C6398 8FB80074 */   lw    $t8, 0x74($sp)

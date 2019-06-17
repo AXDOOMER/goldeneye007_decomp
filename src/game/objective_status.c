@@ -202,9 +202,9 @@ glabel get_text_for_objective
 /* 08BCF0 7F0571C0 1020000B */  beqz  $at, .L7F0571F0
 /* 08BCF4 7F0571C4 AFBF0014 */   sw    $ra, 0x14($sp)
 /* 08BCF8 7F0571C8 00047080 */  sll   $t6, $a0, 2
-/* 08BCFC 7F0571CC 3C028007 */  lui   $v0, 0x8007
+/* 08BCFC 7F0571CC 3C028007 */  lui   $v0, %hi(objective_ptrs)
 /* 08BD00 7F0571D0 004E1021 */  addu  $v0, $v0, $t6
-/* 08BD04 7F0571D4 8C425D30 */  lw    $v0, 0x5d30($v0)
+/* 08BD04 7F0571D4 8C425D30 */  lw    $v0, %lo(objective_ptrs)($v0)
 /* 08BD08 7F0571D8 50400006 */  beql  $v0, $zero, .L7F0571F4
 /* 08BD0C 7F0571DC 00001025 */   move  $v0, $zero
 /* 08BD10 7F0571E0 0FC30776 */  jal   get_textptr_for_textID
@@ -237,9 +237,9 @@ glabel get_difficulty_for_objective
 /* 08BD34 7F057204 2881000A */  slti  $at, $a0, 0xa
 /* 08BD38 7F057208 10200008 */  beqz  $at, .L7F05722C
 /* 08BD3C 7F05720C 00047080 */   sll   $t6, $a0, 2
-/* 08BD40 7F057210 3C038007 */  lui   $v1, 0x8007
+/* 08BD40 7F057210 3C038007 */  lui   $v1, %hi(objective_ptrs)
 /* 08BD44 7F057214 006E1821 */  addu  $v1, $v1, $t6
-/* 08BD48 7F057218 8C635D30 */  lw    $v1, 0x5d30($v1)
+/* 08BD48 7F057218 8C635D30 */  lw    $v1, %lo(objective_ptrs)($v1)
 /* 08BD4C 7F05721C 50600004 */  beql  $v1, $zero, .L7F057230
 /* 08BD50 7F057220 00001025 */   move  $v0, $zero
 /* 08BD54 7F057224 03E00008 */  jr    $ra
@@ -293,15 +293,15 @@ glabel get_status_of_objective
 /* 08BD88 7F057258 1020008A */  beqz  $at, .L7F057484
 /* 08BD8C 7F05725C 24130001 */   li    $s3, 1
 /* 08BD90 7F057260 00041080 */  sll   $v0, $a0, 2
-/* 08BD94 7F057264 3C048007 */  lui   $a0, 0x8007
+/* 08BD94 7F057264 3C048007 */  lui   $a0, %hi(objective_ptrs)
 /* 08BD98 7F057268 00822021 */  addu  $a0, $a0, $v0
-/* 08BD9C 7F05726C 8C845D30 */  lw    $a0, 0x5d30($a0)
+/* 08BD9C 7F05726C 8C845D30 */  lw    $a0, %lo(objective_ptrs)($a0)
 /* 08BDA0 7F057270 54800006 */  bnezl $a0, .L7F05728C
 /* 08BDA4 7F057274 90830003 */   lbu   $v1, 3($a0)
-/* 08BDA8 7F057278 3C138007 */  lui   $s3, 0x8007
+/* 08BDA8 7F057278 3C138007 */  lui   $s3, %hi(dword_CODE_bss_80075D58)
 /* 08BDAC 7F05727C 02629821 */  addu  $s3, $s3, $v0
 /* 08BDB0 7F057280 10000080 */  b     .L7F057484
-/* 08BDB4 7F057284 8E735D58 */   lw    $s3, 0x5d58($s3)
+/* 08BDB4 7F057284 8E735D58 */   lw    $s3, %lo(dword_CODE_bss_80075D58)($s3)
 /* 08BDB8 7F057288 90830003 */  lbu   $v1, 3($a0)
 .L7F05728C:
 /* 08BDBC 7F05728C 24010018 */  li    $at, 24

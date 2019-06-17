@@ -1032,7 +1032,7 @@ glabel sub_GAME_7F0AD0F8
 /* 0E2224 7F0AD6F4 3C068004 */  lui   $a2, %hi(D_80040E98) # $a2, 0x8004
 /* 0E2228 7F0AD6F8 24C60E98 */  addiu $a2, %lo(D_80040E98) # addiu $a2, $a2, 0xe98
 /* 0E222C 7F0AD6FC 11A0003E */  beqz  $t5, .L7F0AD7F8
-/* 0E2230 7F0AD700 3C078004 */   lui   $a3, 0x8004
+/* 0E2230 7F0AD700 3C078004 */   lui   $a3, %hi(D_80040E9C)
 /* 0E2234 7F0AD704 3C068004 */  lui   $a2, %hi(D_80040E98) # $a2, 0x8004
 /* 0E2238 7F0AD708 24C60E98 */  addiu $a2, %lo(D_80040E98) # addiu $a2, $a2, 0xe98
 /* 0E223C 7F0AD70C 8CCF0000 */  lw    $t7, ($a2)
@@ -1097,7 +1097,7 @@ glabel sub_GAME_7F0AD0F8
 .L7F0AD7F8:
 /* 0E2328 7F0AD7F8 8CCE0000 */  lw    $t6, ($a2)
 /* 0E232C 7F0AD7FC 0008C880 */  sll   $t9, $t0, 2
-/* 0E2330 7F0AD800 24E70E9C */  addiu $a3, $a3, 0xe9c
+/* 0E2330 7F0AD800 24E70E9C */  addiu $a3, $a3, %lo(D_80040E9C)
 /* 0E2334 7F0AD804 032E7821 */  addu  $t7, $t9, $t6
 /* 0E2338 7F0AD808 8CEE0000 */  lw    $t6, ($a3)
 /* 0E233C 7F0AD80C 31EC0FFF */  andi  $t4, $t7, 0xfff
@@ -1391,7 +1391,7 @@ glabel en_text_write_stuff
 /* 0E2754 7F0ADC24 28410080 */  slti  $at, $v0, 0x80
 .L7F0ADC28:
 /* 0E2758 7F0ADC28 1020001D */  beqz  $at, .L7F0ADCA0
-/* 0E275C 7F0ADC2C 3C0E8004 */   lui   $t6, 0x8004
+/* 0E275C 7F0ADC2C 3C0E8004 */   lui   $t6, %hi(D_80040EFC)
 /* 0E2760 7F0ADC30 24030018 */  li    $v1, 24
 /* 0E2764 7F0ADC34 00430019 */  multu $v0, $v1
 /* 0E2768 7F0ADC38 8FA800B8 */  lw    $t0, 0xb8($sp)
@@ -1421,7 +1421,7 @@ glabel en_text_write_stuff
 /* 0E27C8 7F0ADC98 10000034 */  b     .L7F0ADD6C
 /* 0E27CC 7F0ADC9C 26100001 */   addiu $s0, $s0, 1
 .L7F0ADCA0:
-/* 0E27D0 7F0ADCA0 25CE0EFC */  addiu $t6, $t6, 0xefc
+/* 0E27D0 7F0ADCA0 25CE0EFC */  addiu $t6, $t6, %lo(D_80040EFC)
 /* 0E27D4 7F0ADCA4 8DC10000 */  lw    $at, ($t6)
 /* 0E27D8 7F0ADCA8 920A0001 */  lbu   $t2, 1($s0)
 /* 0E27DC 7F0ADCAC 304B007F */  andi  $t3, $v0, 0x7f
@@ -2223,7 +2223,7 @@ glabel jp_text_write_stuff
 /* 0E3314 7F0AE7E4 28410080 */  slti  $at, $v0, 0x80
 .L7F0AE7E8:
 /* 0E3318 7F0AE7E8 10200021 */  beqz  $at, .L7F0AE870
-/* 0E331C 7F0AE7EC 3C0E8004 */   lui   $t6, 0x8004
+/* 0E331C 7F0AE7EC 3C0E8004 */   lui   $t6, %hi(D_80040F14)
 /* 0E3320 7F0AE7F0 24030018 */  li    $v1, 24
 /* 0E3324 7F0AE7F4 00430019 */  multu $v0, $v1
 /* 0E3328 7F0AE7F8 8FAA00A8 */  lw    $t2, 0xa8($sp)
@@ -2257,7 +2257,7 @@ glabel jp_text_write_stuff
 /* 0E3398 7F0AE868 10000038 */  b     .L7F0AE94C
 /* 0E339C 7F0AE86C 26100001 */   addiu $s0, $s0, 1
 .L7F0AE870:
-/* 0E33A0 7F0AE870 25CE0F14 */  addiu $t6, $t6, 0xf14
+/* 0E33A0 7F0AE870 25CE0F14 */  addiu $t6, $t6, %lo(D_80040F14)
 /* 0E33A4 7F0AE874 8DC10000 */  lw    $at, ($t6)
 /* 0E33A8 7F0AE878 92090001 */  lbu   $t1, 1($s0)
 /* 0E33AC 7F0AE87C 304A007F */  andi  $t2, $v0, 0x7f

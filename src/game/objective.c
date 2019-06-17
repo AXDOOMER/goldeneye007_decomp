@@ -131,11 +131,11 @@ GLOBAL_ASM(
 .text
 glabel add_ptr_to_objective
 /* 039AE8 7F004FB8 8C8E0004 */  lw    $t6, 4($a0)
-/* 039AEC 7F004FBC 3C018007 */  lui   $at, 0x8007
+/* 039AEC 7F004FBC 3C018007 */  lui   $at, %hi(objective_ptrs)
 /* 039AF0 7F004FC0 3C038003 */  lui   $v1, %hi(num_objective_ptrs) # $v1, 0x8003
 /* 039AF4 7F004FC4 000E7880 */  sll   $t7, $t6, 2
 /* 039AF8 7F004FC8 002F0821 */  addu  $at, $at, $t7
-/* 039AFC 7F004FCC AC245D30 */  sw    $a0, 0x5d30($at)
+/* 039AFC 7F004FCC AC245D30 */  sw    $a0, %lo(objective_ptrs)($at)
 /* 039B00 7F004FD0 246322F0 */  addiu $v1, %lo(num_objective_ptrs) # addiu $v1, $v1, 0x22f0
 /* 039B04 7F004FD4 8C780000 */  lw    $t8, ($v1)
 /* 039B08 7F004FD8 8C820004 */  lw    $v0, 4($a0)

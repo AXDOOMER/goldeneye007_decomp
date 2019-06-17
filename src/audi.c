@@ -363,10 +363,10 @@ glabel amCreateAudioMgr
 /* 002A44 70001E44 3C028006 */  lui   $v0, %hi(dmaBuffs) # $v0, 0x8006
 /* 002A48 70001E48 2442E7C0 */  addiu $v0, %lo(dmaBuffs) # addiu $v0, $v0, -0x1840
 /* 002A4C 70001E4C 3C118006 */  lui   $s1, %hi(dmaBuffs) # $s1, 0x8006
-/* 002A50 70001E50 3C108006 */  lui   $s0, 0x8006
+/* 002A50 70001E50 3C108006 */  lui   $s0, %hi(dmaBuffs+20)
 /* 002A54 70001E54 AC400004 */  sw    $zero, 4($v0)
 /* 002A58 70001E58 AC400000 */  sw    $zero, ($v0)
-/* 002A5C 70001E5C 2610E7D4 */  addiu $s0, $s0, -0x182c
+/* 002A5C 70001E5C 2610E7D4 */  addiu $s0, $s0, %lo(dmaBuffs+20)
 /* 002A60 70001E60 2631E7C0 */  addiu $s1, %lo(dmaBuffs) # addiu $s1, $s1, -0x1840
 /* 002A64 70001E64 00009025 */  move  $s2, $zero
 .L70001E68:
@@ -640,12 +640,12 @@ glabel _amMain
 /* 002C5C 7000205C 3C0F8002 */  lui   $t7, %hi(audFrameCt) # $t7, 0x8002
 /* 002C60 70002060 8DEF30F4 */  lw    $t7, %lo(audFrameCt)($t7)
 /* 002C64 70002064 24010003 */  li    $at, 3
-/* 002C68 70002068 3C048006 */  lui   $a0, 0x8006
+/* 002C68 70002068 3C048006 */  lui   $a0, %hi(_am+8)
 /* 002C6C 7000206C 01E1001B */  divu  $zero, $t7, $at
 /* 002C70 70002070 0000C010 */  mfhi  $t8
 /* 002C74 70002074 0018C880 */  sll   $t9, $t8, 2
 /* 002C78 70002078 00992021 */  addu  $a0, $a0, $t9
-/* 002C7C 7000207C 8C84E520 */  lw    $a0, -0x1ae0($a0)
+/* 002C7C 7000207C 8C84E520 */  lw    $a0, %lo(_am+8)($a0)
 /* 002C80 70002080 0C000891 */  jal   _amHandleFrameMsg
 /* 002C84 70002084 8FA50060 */   lw    $a1, 0x60($sp)
 /* 002C88 70002088 26310001 */  addiu $s1, $s1, 1

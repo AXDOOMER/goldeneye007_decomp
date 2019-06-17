@@ -1584,11 +1584,11 @@ glabel sub_GAME_7F0AFB78
 .L7F0AFCB8:
 /* 0E47E8 7F0AFCB8 86220006 */  lh    $v0, 6($s1)
 .L7F0AFCBC:
-/* 0E47EC 7F0AFCBC 3C0B8004 */  lui   $t3, 0x8004
+/* 0E47EC 7F0AFCBC 3C0B8004 */  lui   $t3, %hi(list_of_tilesizes)
 /* 0E47F0 7F0AFCC0 00024B03 */  sra   $t1, $v0, 0xc
 /* 0E47F4 7F0AFCC4 312A000F */  andi  $t2, $t1, 0xf
 /* 0E47F8 7F0AFCC8 016A5821 */  addu  $t3, $t3, $t2
-/* 0E47FC 7F0AFCCC 916B0F4C */  lbu   $t3, 0xf4c($t3)
+/* 0E47FC 7F0AFCCC 916B0F4C */  lbu   $t3, %lo(list_of_tilesizes)($t3)
 /* 0E4800 7F0AFCD0 01718821 */  addu  $s1, $t3, $s1
 /* 0E4804 7F0AFCD4 8E2C0000 */  lw    $t4, ($s1)
 /* 0E4808 7F0AFCD8 5580FFCB */  bnezl $t4, .L7F0AFC08
