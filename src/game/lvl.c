@@ -145,11 +145,11 @@ void something_with_lvl_c_debug(void) {
 
     // Node 0
     get_ptr_debug_notice_list_entry(&lvl_c_debug_notice_list, &aLv_c_debug);
-    temp_a2 = (&_unknown117880SegmentRomEnd - &_unknown117880SegmentRomStart);
+    temp_a2 = (&_jfontdlSegmentEnd - &_jfontdlSegmentStart);
     lvl_c_debug_notice_list = 1;
     temp_ret = allocate_bytes_in_bank(temp_a2, 6, temp_a2);
     ptr_jfont_DL = temp_ret;
-    romCopy(temp_ret, &_unknown117880SegmentRomStart, sp18);
+    romCopy(temp_ret, &_jfontdlSegmentStart, sp18);
 }
 
 #else
@@ -163,10 +163,10 @@ glabel something_with_lvl_c_debug
 /* 0F2448 7F0BD918 24A5B6B0 */  addiu $a1, %lo(aLv_c_debug) # addiu $a1, $a1, -0x4950
 /* 0F244C 7F0BD91C 0C001398 */  jal   get_ptr_debug_notice_list_entry
 /* 0F2450 7F0BD920 24848360 */   addiu $a0, %lo(lvl_c_debug_notice_list) # addiu $a0, $a0, -0x7ca0
-/* 0F2454 7F0BD924 3C0F0011 */  lui   $t7, %hi(_unknown117880SegmentRomEnd) # $t7, 0x11
-/* 0F2458 7F0BD928 3C180011 */  lui   $t8, %hi(_unknown117880SegmentRomStart) # $t8, 0x11
-/* 0F245C 7F0BD92C 27187880 */  addiu $t8, %lo(_unknown117880SegmentRomStart) # addiu $t8, $t8, 0x7880
-/* 0F2460 7F0BD930 25EF7940 */  addiu $t7, %lo(_unknown117880SegmentRomEnd) # addiu $t7, $t7, 0x7940
+/* 0F2454 7F0BD924 3C0F0011 */  lui   $t7, %hi(_jfontdlSegmentEnd) # $t7, 0x11
+/* 0F2458 7F0BD928 3C180011 */  lui   $t8, %hi(_jfontdlSegmentStart) # $t8, 0x11
+/* 0F245C 7F0BD92C 27187880 */  addiu $t8, %lo(_jfontdlSegmentStart) # addiu $t8, $t8, 0x7880
+/* 0F2460 7F0BD930 25EF7940 */  addiu $t7, %lo(_jfontdlSegmentEnd) # addiu $t7, $t7, 0x7940
 /* 0F2464 7F0BD934 240E0001 */  li    $t6, 1
 /* 0F2468 7F0BD938 3C018005 */  lui   $at, %hi(lvl_c_debug_notice_list) # $at, 0x8005
 /* 0F246C 7F0BD93C 01F83023 */  subu  $a2, $t7, $t8
@@ -177,10 +177,10 @@ glabel something_with_lvl_c_debug
 /* 0F2480 7F0BD950 24050006 */   li    $a1, 6
 /* 0F2484 7F0BD954 3C038009 */  lui   $v1, %hi(ptr_jfont_DL) # $v1, 0x8009
 /* 0F2488 7F0BD958 2463C260 */  addiu $v1, %lo(ptr_jfont_DL) # addiu $v1, $v1, -0x3da0
-/* 0F248C 7F0BD95C 3C050011 */  lui   $a1, %hi(_unknown117880SegmentRomStart) # $a1, 0x11
+/* 0F248C 7F0BD95C 3C050011 */  lui   $a1, %hi(_jfontdlSegmentStart) # $a1, 0x11
 /* 0F2490 7F0BD960 AC620000 */  sw    $v0, ($v1)
 /* 0F2494 7F0BD964 8FA60018 */  lw    $a2, 0x18($sp)
-/* 0F2498 7F0BD968 24A57880 */  addiu $a1, %lo(_unknown117880SegmentRomStart) # addiu $a1, $a1, 0x7880
+/* 0F2498 7F0BD968 24A57880 */  addiu $a1, %lo(_jfontdlSegmentStart) # addiu $a1, $a1, 0x7880
 /* 0F249C 7F0BD96C 0C001707 */  jal   romCopy
 /* 0F24A0 7F0BD970 00402025 */   move  $a0, $v0
 /* 0F24A4 7F0BD974 8FBF0014 */  lw    $ra, 0x14($sp)

@@ -5,26 +5,32 @@
 
 .section .music
 
-.global sfx.ctl
-sfx.ctl:
+.global _sfxctlSegmentRomStart
+_sfxctlSegmentRomStart:
  .incbin "assets/music/sfx.ctl"
-sfx.ctl_end:
+.global _sfxctlSegmentRomEnd
+_sfxctlSegmentRomEnd:
 
-.global sfx.tbl
-sfx.tbl:
+.global _sfxtblSegmentRomStart
+_sfxtblSegmentRomStart:
  .incbin "assets/music/sfx.tbl"
-sfx.tbl_end:
+.global _sfxtblSegmentRomEnd
+_sfxtblSegmentRomEnd:
 
-.global instruments.ctl
-instruments.ctl:
+.global _instrumentsctlSegmentRomStart
+_instrumentsctlSegmentRomStart:
  .incbin "assets/music/instruments.ctl"
-instruments.ctl_end:
+.global _instrumentsctlSegmentRomEnd
+_instrumentsctlSegmentRomEnd:
 
-.global instruments.tbl
-instruments.tbl:
+.global _instrumentstblSegmentRomStart
+_instrumentstblSegmentRomStart:
  .incbin "assets/music/instruments.tbl"
-instruments.tbl_end:
+.global _instrumentstblSegmentRomEnd
+_instrumentstblSegmentRomEnd:
 
+.global _musicsampletblSegmentRomStart
+_musicsampletblSegmentRomStart:
 .global number_music_samples
 number_music_samples:
  .half (table_music_data_end - number_music_samples)/8
@@ -104,7 +110,8 @@ table_music_data:
  music_table_entry Mstatue_ending
  music_table_entry Mfrigate_outro
 table_music_data_end:
-
+.global _musicsampletblSegmentRomEnd
+_musicsampletblSegmentRomEnd:
 
 .macro music_file name
   .section .musiccompressed

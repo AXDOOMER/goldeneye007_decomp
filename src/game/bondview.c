@@ -14492,9 +14492,9 @@ glabel sub_GAME_7F066F08
 /* 09BA74 7F066F44 24040011 */   li    $a0, 17
 /* 09BA78 7F066F48 0FC14089 */  jal   display_text_for_weapon_in_lower_left_corner
 /* 09BA7C 7F066F4C 24040011 */   li    $a0, 17
-/* 09BA80 7F066F50 3C048003 */  lui   $a0, %hi(D_80032C20) # $a0, 0x8003
+/* 09BA80 7F066F50 3C048003 */  lui   $a0, %hi(GsniperrifleZ_stats+0x1C) # $a0, 0x8003
 /* 09BA84 7F066F54 0FC1A490 */  jal   check_cur_player_ammo_amount_in_inventory
-/* 09BA88 7F066F58 8C842C20 */   lw    $a0, %lo(D_80032C20)($a0)
+/* 09BA88 7F066F58 8C842C20 */   lw    $a0, %lo(GsniperrifleZ_stats+0x1C)($a0)
 /* 09BA8C 7F066F5C 3C038003 */  lui   $v1, %hi(GsniperrifleZ_stats) # $v1, 0x8003
 /* 09BA90 7F066F60 24632C04 */  addiu $v1, %lo(GsniperrifleZ_stats) # addiu $v1, $v1, 0x2c04
 /* 09BA94 7F066F64 846E0020 */  lh    $t6, 0x20($v1)

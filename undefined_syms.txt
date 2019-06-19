@@ -1,34 +1,6 @@
 OS_VI_NTSC_LAN1 =2;
 OS_VI_PAL_LAN1 = 16;
 
-_unknown117880SegmentRomStart = 0x00117880;
-_unknown117880SegmentRomEnd = 0x00117940;
-_unknown117940SegmentRomStart = 0x00117940;
-_unknown117940SegmentRomEnd = 0x00123040;
-_unknown123040SegmentRomStart = 0x00123040;
-_unknown123040SegmentRomEnd = 0x00124ac0;
-_animation_tableSegmentRomStart = 0x00124ac0;
-_animation_tableSegmentRomEnd = 0x0028e980;
-_animation_dataSegmentRomStart = 0x0028e980;
-_animation_dataSegmentRomEnd = 0x0029d160;
-_GlobalimagetableSegmentRomStart = 0x0029d160;
-_GlobalimagetableSegmentRomEnd = 0x0029e560;
-_GlobalimagetablecmdblkSegmentRomStart = 0x0029e560;
-_GlobalimagetablecmdblkSegmentRomEnd = 0x002a4d50;
-
-_ramromDam1SegmentRomStart = 0x002bf2d0;
-_fonttablectlsmall1SegmentRomStart = 0x002e63f0;
-_fonttablectllarge1SegmentRomStart = 0x002e88a0;
-_sfxctlSegmentRomStart = 0x002EBDE0;
-_sfxctlSegmentRomEnd = 0x002F19A0;
-_sfxtblSegmentRomStart = 0x002F19A0;
-_sfxtblSegmentRomEnd = 0x003B4450;
-
-_instrumentsctlSegmentRomStart = 0x003B4450;
-_instrumentsctlSegmentRomEnd = 0x003B87F0;
-_instrumentstblSegmentRomStart = 0x003B87F0;
-_instrumentstblSegmentRomEnd = 0x00419790;
-_musicsampletblSegmentRomStart = 0x00419790;
 
 SP_MEM_ADDR_REG = 0xA4040000;
 SP_DRAM_ADDR_REG = 0xA4040004;
@@ -116,7 +88,6 @@ osAppNMIBuffer = 0x8000031c;
 
 
 
-D_80032C20 = 0x80032C20;
 D_80035D40 = 0x80035D40;
 D_80035D80 = 0x80035D80;
 D_80035D8C = 0x80035D8C;

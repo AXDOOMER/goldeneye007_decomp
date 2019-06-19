@@ -1,29 +1,34 @@
 .section .romfiles, "a"
 
-.global jfont_dl117880
-jfont_dl117880:
+.global _jfontdlSegmentStart
+_jfontdlSegmentStart:
 .incbin "assets/ge007.u.117880.jfont_dl.bin"
-jfont_dl117880_end:
+.global _jfontdlSegmentEnd
+_jfontdlSegmentEnd:
 
-.global jfont_chardata117940
-jfont_chardata117940:
+.global _jfontcharSegmentStart
+_jfontcharSegmentStart:
 .incbin "assets/ge007.u.117940.jfont_chardata.bin"
-jfont_chardata117940_end:
+.global _jfontcharSegmentEnd
+_jfontcharSegmentEnd:
 
-.global efont_chardata123040
-efont_chardata123040:
+.global _efontcharSegmentStart
+_efontcharSegmentStart:
 .incbin "assets/ge007.u.123040.efont_chardata.bin"
-efont_chardata123040_end:
+.global _efontcharSegmentEnd
+_efontcharSegmentEnd:
 
-.global animation_table
-animation_table:
+.global _animation_tableSegmentRomStart
+_animation_tableSegmentRomStart:
 .incbin "assets/animationtable_entries.bin"
-animation_table_end:
+.global _animation_tableSegmentRomEnd
+_animation_tableSegmentRomEnd:
 
-.global animation_data
-animation_data:
+.global _animation_dataSegmentRomStart
+_animation_dataSegmentRomStart:
 .incbin "assets/animationtable_data.bin"
-animation_data_end:
+.global _animation_dataSegmentRomEnd
+_animation_dataSegmentRomEnd:
 
  # enum	image_format, mappedto_2
 .set rgba, 0
@@ -59,8 +64,8 @@ animation_data_end:
 .endm
 
 
-.global Globalimagetable
-Globalimagetable:
+.global _GlobalimagetableSegmentRomStart
+_GlobalimagetableSegmentRomStart:
 .incbin "assets/ge007.u.29D160.Globalimagetable.bin"
 texture_entry 0x858, 0x36, 0x36, 3, ia, D_8BIT, mirror, mirror, 0
 texture_entry 0x878, 0x30, 0x30, 6, ia, D_8BIT, mirror, mirror, 0
@@ -260,14 +265,17 @@ texture_entry 0xA81, 0x44, 0x2C, 0, i, D_8BIT, mirror, mirror, 0
 texture_entry 0xA87, 0x44, 0x2C, 0, i, D_8BIT, mirror, mirror, 0
 .word 0
 .word 0
-Globalimagetable_end:
+.global _GlobalimagetableSegmentRomEnd
+_GlobalimagetableSegmentRomEnd:
 
-.global Globalimagetable_commandblock
-Globalimagetable_commandblock:
+.global _GlobalimagetablecmdblkSegmentRomStart
+_GlobalimagetablecmdblkSegmentRomStart:
 .incbin "assets/ge007.u.29E560.Globalimagetable_commandblock.bin"
-Globalimagetable_commandblock_end:
+.global _GlobalimagetablecmdblkSegmentRomEnd
+_GlobalimagetablecmdblkSegmentRomEnd:
 
 .global unknown2
 unknown2:
 .incbin "assets/ge007.u.2A4D50.usedby7F008DE4.bin"
+.global unknown2_end
 unknown2_end:

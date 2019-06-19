@@ -419,32 +419,6 @@ Linker script and memory map
 
                 0x0000000000000002                OS_VI_NTSC_LAN1 = 0x2
                 0x0000000000000010                OS_VI_PAL_LAN1 = 0x10
-                0x0000000000117880                _unknown117880SegmentRomStart = 0x117880
-                0x0000000000117940                _unknown117880SegmentRomEnd = 0x117940
-                0x0000000000117940                _unknown117940SegmentRomStart = 0x117940
-                0x0000000000123040                _unknown117940SegmentRomEnd = 0x123040
-                0x0000000000123040                _unknown123040SegmentRomStart = 0x123040
-                0x0000000000124ac0                _unknown123040SegmentRomEnd = 0x124ac0
-                0x0000000000124ac0                _animation_tableSegmentRomStart = 0x124ac0
-                0x000000000028e980                _animation_tableSegmentRomEnd = 0x28e980
-                0x000000000028e980                _animation_dataSegmentRomStart = 0x28e980
-                0x000000000029d160                _animation_dataSegmentRomEnd = 0x29d160
-                0x000000000029d160                _GlobalimagetableSegmentRomStart = 0x29d160
-                0x000000000029e560                _GlobalimagetableSegmentRomEnd = 0x29e560
-                0x000000000029e560                _GlobalimagetablecmdblkSegmentRomStart = 0x29e560
-                0x00000000002a4d50                _GlobalimagetablecmdblkSegmentRomEnd = 0x2a4d50
-                0x00000000002bf2d0                _ramromDam1SegmentRomStart = 0x2bf2d0
-                0x00000000002e63f0                _fonttablectlsmall1SegmentRomStart = 0x2e63f0
-                0x00000000002e88a0                _fonttablectllarge1SegmentRomStart = 0x2e88a0
-                0x00000000002ebde0                _sfxctlSegmentRomStart = 0x2ebde0
-                0x00000000002f19a0                _sfxctlSegmentRomEnd = 0x2f19a0
-                0x00000000002f19a0                _sfxtblSegmentRomStart = 0x2f19a0
-                0x00000000003b4450                _sfxtblSegmentRomEnd = 0x3b4450
-                0x00000000003b4450                _instrumentsctlSegmentRomStart = 0x3b4450
-                0x00000000003b87f0                _instrumentsctlSegmentRomEnd = 0x3b87f0
-                0x00000000003b87f0                _instrumentstblSegmentRomStart = 0x3b87f0
-                0x0000000000419790                _instrumentstblSegmentRomEnd = 0x419790
-                0x0000000000419790                _musicsampletblSegmentRomStart = 0x419790
                 0x00000000a4040000                SP_MEM_ADDR_REG = 0xa4040000
                 0x00000000a4040004                SP_DRAM_ADDR_REG = 0xa4040004
                 0x00000000a4040008                SP_RD_LEN_REG = 0xa4040008
@@ -518,7 +492,6 @@ Linker script and memory map
                 0x0000000080000308                osRomBase = 0x80000308
                 0x000000008000030c                osResetType = 0x8000030c
                 0x000000008000031c                osAppNMIBuffer = 0x8000031c
-                0x0000000080032c20                D_80032C20 = 0x80032c20
                 0x0000000080035d40                D_80035D40 = 0x80035d40
                 0x0000000080035d80                D_80035D80 = 0x80035d80
                 0x0000000080035d8c                D_80035D8C = 0x80035d8c
@@ -4157,16 +4130,25 @@ Linker script and memory map
                 0x0000000000117880   0x320de0
  build/assets/romfiles.o(.romfiles)
  .romfiles      0x0000000000117880   0x1a7a50 build/assets/romfiles.o
-                0x0000000000117880                jfont_dl117880
-                0x0000000000117940                jfont_chardata117940
-                0x0000000000123040                efont_chardata123040
-                0x0000000000124ac0                animation_table
-                0x000000000028e980                animation_data
-                0x000000000029d160                Globalimagetable
-                0x000000000029e560                Globalimagetable_commandblock
+                0x0000000000117880                _jfontdlSegmentStart
+                0x0000000000117940                _jfontdlSegmentEnd
+                0x0000000000117940                _jfontcharSegmentStart
+                0x0000000000123040                _efontcharSegmentStart
+                0x0000000000123040                _jfontcharSegmentEnd
+                0x0000000000124ac0                _efontcharSegmentEnd
+                0x0000000000124ac0                _animation_tableSegmentRomStart
+                0x000000000028e980                _animation_tableSegmentRomEnd
+                0x000000000028e980                _animation_dataSegmentRomStart
+                0x000000000029d160                _animation_dataSegmentRomEnd
+                0x000000000029d160                _GlobalimagetableSegmentRomStart
+                0x000000000029e560                _GlobalimagetablecmdblkSegmentRomStart
+                0x000000000029e560                _GlobalimagetableSegmentRomEnd
+                0x00000000002a4d50                _GlobalimagetablecmdblkSegmentRomEnd
                 0x00000000002a4d50                unknown2
+                0x00000000002bf2d0                unknown2_end
  build/assets/ramrom/ramrom.o(.ramrom)
  .ramrom        0x00000000002bf2d0    0x27120 build/assets/ramrom/ramrom.o
+                0x00000000002bf2d0                _ramromDam1SegmentRomStart
                 0x00000000002bf2d0                ramrom_Dam_1
                 0x00000000002c44d0                ramrom_Dam_2
                 0x00000000002c64a0                ramrom_Facility_1
@@ -4183,18 +4165,24 @@ Linker script and memory map
                 0x00000000002e2600                ramrom_Train
  build/assets/font/font.o(.font)
  .font          0x00000000002e63f0     0x59f0 build/assets/font/font.o
-                0x00000000002e63f0                font_first_font_table_controller_small
+                0x00000000002e63f0                _fonttablectlsmall1SegmentRomStart
                 0x00000000002e6694                font_second_font_table_controller_small
-                0x00000000002e88a0                font_first_font_table_controller_large
+                0x00000000002e88a0                _fonttablectllarge1SegmentRomStart
                 0x00000000002e8b44                font_second_font_table_controller_large
  build/assets/music/music.o(.music)
  .music         0x00000000002ebde0   0x12dbac build/assets/music/music.o
-                0x00000000002ebde0                sfx.ctl
-                0x00000000002f19a0                sfx.tbl
-                0x00000000003b4450                instruments.ctl
-                0x00000000003b87f0                instruments.tbl
+                0x00000000002ebde0                _sfxctlSegmentRomStart
+                0x00000000002f19a0                _sfxctlSegmentRomEnd
+                0x00000000002f19a0                _sfxtblSegmentRomStart
+                0x00000000003b4450                _instrumentsctlSegmentRomStart
+                0x00000000003b4450                _sfxtblSegmentRomEnd
+                0x00000000003b87f0                _instrumentstblSegmentRomStart
+                0x00000000003b87f0                _instrumentsctlSegmentRomEnd
+                0x0000000000419790                _musicsampletblSegmentRomStart
                 0x0000000000419790                number_music_samples
+                0x0000000000419790                _instrumentstblSegmentRomEnd
                 0x0000000000419794                table_music_data
+                0x000000000041998c                _musicsampletblSegmentRomEnd
  build/assets/music/music.o(.musiccompressed)
  .musiccompressed
                 0x000000000041998c    0x1ecd4 build/assets/music/music.o

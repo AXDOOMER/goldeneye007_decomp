@@ -1,5 +1,7 @@
 .section .ramrom
 
+.global _ramromDam1SegmentRomStart
+_ramromDam1SegmentRomStart:
 .global ramrom_Dam_1
 ramrom_Dam_1:
 .incbin "assets/ramrom/ramrom_Dam_1.bin"
