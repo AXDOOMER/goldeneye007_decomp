@@ -95,22 +95,3 @@ osAppNMIBuffer = 0x8000031c;
 
 
 
-
-
-
-
-
-room_model_buffer = 0x8008E360;
-_decompressBuffer = 0x80300000;
-sp_boot = 0x803AB400;
-sp_rmon = 0x803AB410;
-sp_idle = 0x803AB710;
-sp_shed = 0x803AB750;
-sp_main = 0x803AB950;
-sp_audi = 0x803B3950;
-sp_debug = 0x803B4950;
-cfb_16_a = 0x803B5000;
-cfb_16_b = 0x803DA800;
-
-
-

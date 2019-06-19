@@ -3430,6 +3430,10 @@ SECTIONS
       build/src/game/viewport.o (.bss);
       build/src/game/music_0D2720.o (.bss);
       build/src/game/spectrum.o (.bss);
+      build/src/game/room_model_buffer.o (.bss);
+      build/src/decompressbuffer.o (.bss);
+      build/src/stacks.o (.bss);
+      build/src/cfb.o (.bss);
    }
    _bssSegmentEnd = ADDR(.bss) + SIZEOF(.bss);
    _bssSegmentRomEnd = _bssSegmentRomStart + SIZEOF(.bss);
@@ -3467,5 +3471,14 @@ SECTIONS
       build/src/_start.o (.rodata);
       build/src/rspboot.o (.rodata);
       build/src/gspboot.o (.rodata);
+      build/src/_start.o (.bss);
+      build/assets/romfiles.o (.bss);
+      build/assets/ramrom/ramrom.o (.bss);
+      build/assets/font/font.o (.bss);
+      build/assets/music/music.o (.bss);
+      build/assets/obseg/ob_seg.o (.bss);
+      build/src/rspboot.o (.bss);
+      build/src/gspboot.o (.bss);
+      build/src/aspboot.o (.bss);
 }
 }
