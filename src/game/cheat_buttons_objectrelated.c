@@ -4073,7 +4073,7 @@ void sub_GAME_7F0926C0(void) {
 loop_2:
         // Node 2
         set_cur_player(phi_s3);
-        phi_s1 = &D_8003F81C;
+        phi_s1 = &D_8003F80C+0x10;
         phi_s0 = 1;
 loop_3:
         // Node 3
@@ -4149,8 +4149,8 @@ glabel sub_GAME_7F0926C0
 .L7F0926F8:
 /* 0C7228 7F0926F8 0FC26C43 */  jal   set_cur_player
 /* 0C722C 7F0926FC 02602025 */   move  $a0, $s3
-/* 0C7230 7F092700 3C118004 */  lui   $s1, %hi(D_8003F81C) # $s1, 0x8004
-/* 0C7234 7F092704 2631F81C */  addiu $s1, %lo(D_8003F81C) # addiu $s1, $s1, -0x7e4
+/* 0C7230 7F092700 3C118004 */  lui   $s1, %hi(D_8003F80C+0x10) # $s1, 0x8004
+/* 0C7234 7F092704 2631F81C */  addiu $s1, %lo(D_8003F80C+0x10) # addiu $s1, $s1, -0x7e4
 /* 0C7238 7F092708 24100001 */  li    $s0, 1
 .L7F09270C:
 /* 0C723C 7F09270C 8E2EFFFC */  lw    $t6, -4($s1)

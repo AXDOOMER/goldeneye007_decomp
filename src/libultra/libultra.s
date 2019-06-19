@@ -714,18 +714,18 @@ glabel osCreateViManager
 /* 00E51C 7000D91C 248469A0 */  addiu $a0, %lo(viEventQueue) # addiu $a0, $a0, 0x69a0
 /* 00E520 7000D920 0C0035B4 */  jal   osCreateMesgQueue
 /* 00E524 7000D924 24060005 */   li    $a2, 5
-/* 00E528 7000D928 3C018006 */  lui   $at, %hi(dword_CODE_bss_800669D4) # $at, 0x8006
+/* 00E528 7000D928 3C018006 */  lui   $at, %hi(viRetraceMsg+0x4) # $at, 0x8006
 /* 00E52C 7000D92C 240F000D */  li    $t7, 13
 /* 00E530 7000D930 A42F69D0 */  sh    $t7, %lo(viRetraceMsg)($at)
-/* 00E534 7000D934 A02069D2 */  sb    $zero, %lo(byte_CODE_bss_800669D2)($at)
-/* 00E538 7000D938 AC2069D4 */  sw    $zero, %lo(dword_CODE_bss_800669D4)($at)
-/* 00E53C 7000D93C 3C018006 */  lui   $at, %hi(dword_CODE_bss_800669EC) # $at, 0x8006
+/* 00E534 7000D934 A02069D2 */  sb    $zero, %lo(viRetraceMsg+0x2)($at)
+/* 00E538 7000D938 AC2069D4 */  sw    $zero, %lo(viRetraceMsg+0x4)($at)
+/* 00E53C 7000D93C 3C018006 */  lui   $at, %hi(viCounterMsg+0x4) # $at, 0x8006
 /* 00E540 7000D940 2418000E */  li    $t8, 14
 /* 00E544 7000D944 3C058006 */  lui   $a1, %hi(viEventQueue) # $a1, 0x8006
 /* 00E548 7000D948 3C068006 */  lui   $a2, %hi(viRetraceMsg) # $a2, 0x8006
 /* 00E54C 7000D94C A43869E8 */  sh    $t8, %lo(viCounterMsg)($at)
-/* 00E550 7000D950 A02069EA */  sb    $zero, %lo(byte_CODE_bss_800669EA)($at)
-/* 00E554 7000D954 AC2069EC */  sw    $zero, %lo(dword_CODE_bss_800669EC)($at)
+/* 00E550 7000D950 A02069EA */  sb    $zero, %lo(viCounterMsg+0x2)($at)
+/* 00E554 7000D954 AC2069EC */  sw    $zero, %lo(viCounterMsg+0x4)($at)
 /* 00E558 7000D958 24C669D0 */  addiu $a2, %lo(viRetraceMsg) # addiu $a2, $a2, 0x69d0
 /* 00E55C 7000D95C 24A569A0 */  addiu $a1, %lo(viEventQueue) # addiu $a1, $a1, 0x69a0
 /* 00E560 7000D960 0C003714 */  jal   osSetEventMesg
