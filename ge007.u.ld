@@ -3430,14 +3430,34 @@ SECTIONS
       build/src/game/viewport.o (.bss);
       build/src/game/music_0D2720.o (.bss);
       build/src/game/spectrum.o (.bss);
-      build/src/game/room_model_buffer.o (.bss);
-      build/src/decompressbuffer.o (.bss);
-      build/src/stacks.o (.bss);
-      build/src/cfb.o (.bss);
+      build/src/game/room_model_buffer.o (.bss);     
    }
    _bssSegmentEnd = ADDR(.bss) + SIZEOF(.bss);
    _bssSegmentRomEnd = _bssSegmentRomStart + SIZEOF(.bss);
 
+   _decompbufSegmentStart = ADDR(.decompbuf);
+   _decompbufSegmentRomStart = _bssSegmentRomEnd;
+   .decompbuf 0x80300000 : AT(_decompbufSegmentRomStart){
+      build/src/decompressbuffer.o (.bss);
+   }
+   _decompbufSegmentEnd = ADDR(.decompbuf) + SIZEOF(.decompbuf);
+   _decompbufSegmentRomEnd = _decompbufSegmentRomStart + SIZEOF(.decompbuf);
+
+   _stacksSegmentStart = ADDR(.stacks);
+   _stacksSegmentRomStart = _decompbufSegmentRomEnd;
+   .stacks 0x803ab400 : AT(_stacksSegmentRomStart){
+      build/src/stacks.o (.bss);
+   }
+   _stacksSegmentEnd = ADDR(.stacks) + SIZEOF(.stacks);
+   _stacksSegmentRomEnd = _stacksSegmentRomStart + SIZEOF(.stacks);
+
+   _cfbSegmentStart = ADDR(.cfb);
+   _cfbSegmentRomStart = _stacksSegmentRomEnd;
+   .cfb 0x803b5000 : AT(_cfbSegmentRomStart){
+      build/src/cfb.o (.bss);
+   }
+   _cfbSegmentEnd = ADDR(.cfb) + SIZEOF(.cfb);
+   _cfbSegmentRomEnd = _cfbSegmentRomStart + SIZEOF(.cfb);
 
 
    /*move em to end, out of the way*/
