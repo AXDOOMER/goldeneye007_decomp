@@ -145,12 +145,11 @@ void strtok(s32 arg0) {
 
 
 #ifdef NONMATCHING
-?32 check_boot_switches(void)
+s32 check_boot_switches(void)
 {
-    ?32 is_debug;
-    void *temp_s0;
-    s32 phi_s1;
-    void *phi_s0;
+    s32 is_debug;
+    s32 devAddr;
+    u32 *data;
 
     is_debug = 0;
     if (rmon_debug_is_final_build() != 0)
@@ -159,31 +158,29 @@ void strtok(s32 arg0) {
     }
     else
     {
-        phi_s1 = 0xffb000;
-        phi_s0 = &boot_token_from_indy;
-loop_3:
-        osPiReadIo(phi_s1, phi_s0);
-        temp_s0 = phi_s0 + 4;
-        phi_s1 = phi_s1 + 4;
-        phi_s0 = temp_s0;
-        if (temp_s0 != &piCmdBuf)
+        devAddr = 0xffb000;
+        data = &boot_token_from_indy;
+        while (data != &piCmdBuf)
         {
-            goto loop_3;
+            osPiReadIo(devAddr, data);
+            data = data + 4;
+            devAddr = devAddr + 4;
         }
     }
     check_string_something(&boot_token_from_indy);
-    if (check_token(1, "-d") != 0)
-    {
+
+    if (check_token(1, "-d") != 0) {
         is_debug = 1;
     }
-    if (check_token(1, "-s") != 0)
-    {
+
+    if (check_token(1, "-s") != 0) {
         bootswitch_sound = (u8)1;
     }
-    if (check_token(1, "-j") != 0)
-    {
+
+    if (check_token(1, "-j") != 0) {
         j_text_trigger = 1;
     }
+
     return is_debug;
 }
 #else

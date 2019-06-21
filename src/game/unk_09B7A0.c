@@ -25,7 +25,7 @@ s16 word_CODE_bss_8007A0F2;
 
 
 void null_init_main_1(void) {
-
+    return;
 }
 
 

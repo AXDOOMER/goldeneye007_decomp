@@ -56,7 +56,7 @@ const char aImgviewGrab_D_rgb_0[] = "imgview grab.%d.rgb";
 //bss
 char dword_CODE_bss_800607E0[0x40];
 Mtx *m;
-s32 word_CODE_bss_80060824;
+u16 word_CODE_bss_80060824;
 char dword_CODE_bss_80060828[0x50];
 u8 off_CODE_bss_80060878;
 u8 off_CODE_bss_80060879;
@@ -1440,20 +1440,11 @@ glabel set_video2buf_offset28
 
 
 
-#ifdef NONMATCHING
-? get_80060824(void)
-{
+
+u16 get_80060824(void) {
     return word_CODE_bss_80060824;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_80060824
-/* 00484C 70003C4C 3C028006 */  lui   $v0, %hi(word_CODE_bss_80060824)
-/* 004850 70003C50 03E00008 */  jr    $ra
-/* 004854 70003C54 94420824 */   lhu   $v0, %lo(word_CODE_bss_80060824)($v0)
-)
-#endif
+
 
 
 

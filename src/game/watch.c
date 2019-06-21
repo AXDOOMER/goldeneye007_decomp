@@ -6317,24 +6317,10 @@ glabel sub_GAME_7F0A8FEC
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0A9180(void) {
-
+    music_related_37();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A9180
-/* 0DDCB0 7F0A9180 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0DDCB4 7F0A9184 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0DDCB8 7F0A9188 0C002472 */  jal   music_related_37
-/* 0DDCBC 7F0A918C 00000000 */   nop   
-/* 0DDCC0 7F0A9190 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0DDCC4 7F0A9194 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0DDCC8 7F0A9198 03E00008 */  jr    $ra
-/* 0DDCCC 7F0A919C 00000000 */   nop   
-)
-#endif
+
 
 
 

@@ -883,7 +883,7 @@ Linker script and memory map
                 0x000000007000ada8                null_init_main_0
                 0x000000007000adb0                debug_text_related_2
                 0x000000007000add0                display_text_to_coord
-                0x000000007000aedc                debug_menu_text_related
+                0x000000007000aedc                debugMenuSetTextPOStoOffset
                 0x000000007000af00                debug_text_related_1
                 0x000000007000af84                stubbed_function_7000AF84
                 0x000000007000af98                something_debug_info_related

@@ -6,7 +6,7 @@
 
 /* data */
 u32 boss_c_ptr_debug_notice_list_entry = 0;
-u32 debug_and_update_stage_flag = 0;
+s32 debug_and_update_stage_flag = 0;
 LEVELID current_stage_num = LEVELID_TITLE;
 u32 current_m_malloc_value = 0x234800;
 u32 current_ma_malloc_value = 0x4B000;

@@ -28,7 +28,7 @@ u32 stdout_debug_menu_screen_buffer[1400] = {0};
 u32 stdout_primary_color_table[64] = {0};
 u32 stdout_environment_color_table[64] = {0};
 
-u32 *string_formatting[] = {0,
+char *string_formatting[] = {0,
 "\x1B[31m\x1B[40m", "\x1B[37m\x1B[40m",
 "\x1B[32m\x1B[40m", "\x1B[33m\x1B[40m",
 "\x1B[34m\x1B[40m", "\x1B[35m\x1B[40m",
@@ -218,7 +218,7 @@ glabel display_text_to_coord
 
 
 
-void debug_menu_text_related(void) {
+void debugMenuSetTextPOStoOffset(void) {
     debug_menu_x_text_pos = debug_menu_x_pos_offset;
     debug_menu_y_text_pos = debug_menu_y_pos_offset;
 }
@@ -230,27 +230,18 @@ void debug_menu_text_related(void) {
 
 #ifdef NONMATCHING
 void debug_text_related_1(void) {
-    // Node 0
-    // Node 1
-    // Node 2
-    display_text_to_coord(0, 0, 0);
-    if ((0 + 1) != 0x50)
-    {
-        goto loop_2;
+  int x;
+  int y;
+  
+  for (y = 0; y < 0x23; y++) {
+    for (x = 0; x < 0x50; x++) {
+      display_text_to_coord(x,y,'\0');
     }
-    // Node 3
-    if ((0 + 1) != 0x23)
-    {
-        goto loop_1;
-    }
-    // Node 4
-    debug_menu_text_related();
-    null_function_7000ADA0();
-    string_formatting = 0;
-    return;
-    // (possible return value: null_function())
+  }
+  debugMenuSetTextPOStoOffset();
+  null_function_7000ADA0();
+  string_formatting[0] = NULL;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -277,7 +268,7 @@ glabel debug_text_related_1
 /* 00BB44 7000AF44 26520001 */  addiu $s2, $s2, 1
 /* 00BB48 7000AF48 5653FFF7 */  bnel  $s2, $s3, .L7000AF28
 /* 00BB4C 7000AF4C 00008025 */   move  $s0, $zero
-/* 00BB50 7000AF50 0C002BB7 */  jal   debug_menu_text_related
+/* 00BB50 7000AF50 0C002BB7 */  jal   debugMenuSetTextPOStoOffset
 /* 00BB54 7000AF54 00000000 */   nop   
 /* 00BB58 7000AF58 0C002B68 */  jal   null_function_7000ADA0
 /* 00BB5C 7000AF5C 00000000 */   nop   

@@ -135,10 +135,7 @@ u32 *D_8004E86C[] = {
     "HIT_TILE",
     "HIT_METALOBJ",
     "HIT_CHR",
-    "HIT_GLASS_XLU",
-    0,
-    0,
-    0
+    "HIT_GLASS_XLU"
 };
 
 
