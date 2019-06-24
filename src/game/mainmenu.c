@@ -12686,7 +12686,7 @@ void init_menu0E_mpoptions(void)
     tab_1_highlight = FALSE;
 
     if (maybe_is_in_menu != FALSE) {
-        music_related_38(0x7fff);
+        sfx_c_700091E8(0x7fff);
         musicTrack1Vol(0x7fff);
         music1_playing = FALSE;
         musicTrack1Play(M_FOLDERS);
@@ -21874,7 +21874,7 @@ void init_menu0C_missionfailed(void)
   load_briefing_text_for_stage();
   set_cursor_pos_tab2();
   if (maybe_is_in_menu != FALSE) {
-    music_related_38(0x7fff);
+    sfx_c_700091E8(0x7fff);
     musicTrack1Vol(0x7fff);
     music1_playing = FALSE;
     musicTrack1Play(M_FOLDERS);

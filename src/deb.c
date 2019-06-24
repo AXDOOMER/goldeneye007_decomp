@@ -3,6 +3,13 @@
 #include "ramrom.h"
 #include "deb.h"
 
+/**
+ * @file deb.c
+ * This file contains debug related code. 
+ * 
+ * In particular, it seems to handle debug_notice_list
+ */
+
 /* bss */
 char dword_CODE_bss_80060890[0x400];
 
@@ -17,7 +24,11 @@ char * debug_notice_list_data = &dword_CODE_bss_80060890;
 
 
 
-
+/**
+ * 5920	70004D20
+ *     V0=p->match in debug.notice.list [800232E8] or NULL if not found
+ *     accepts: A0=p->name, A1=p->data
+ */
 #ifdef NONMATCHING
 void *return_match_in_debug_notice_list(s32 arg0)
 {
@@ -76,6 +87,11 @@ glabel return_match_in_debug_notice_list
 )
 #endif
 
+/**
+ * 5980	70004D80
+ *     V0=p->entry of size A0 allocated in debug.notice.list; entry allocated in block 6 on failure
+ *     accepts: A0=size
+ */
 #ifdef NONMATCHING
 u32 get_entry_of_size_in_debug_notice_list(s32 arg0)
 {
@@ -126,7 +142,11 @@ glabel get_entry_of_size_in_debug_notice_list
 
 
 
-
+/**
+ * 59E0	70004DE0
+ *     V0=p->new entry added in debug.notice.list
+ *     accepts: A0=p->name, A1=p->data
+ */
 #ifdef NONMATCHING
 void add_new_entry_to_debug_notice_list(s32 arg0, s32 arg1)
 {
@@ -167,7 +187,10 @@ glabel add_new_entry_to_debug_notice_list
 
 
 
-
+/**
+ * 5A2C	70004E2C
+ *     V0= p->debug.notice.list entry for boss_c_debug using data at 800241A0
+ */
 void add_debug_notice_deb_c_debug(void) {
     get_ptr_debug_notice_list_entry(&D_800232E0, "deb_c_debug");
     init_tlb();
@@ -177,7 +200,11 @@ void add_debug_notice_deb_c_debug(void) {
 
 
 
-
+/**
+ * 5A60	70004E60
+ *     V0=p->debug.notice.list entry for name A1 and data A0; generates if not found
+ *     accepts: A0=p->data, A1=p->name
+ */
 #ifdef NONMATCHING
 void get_ptr_debug_notice_list_entry(s32 arg0, s32 arg1)
 {
@@ -211,7 +238,11 @@ glabel get_ptr_debug_notice_list_entry
 
 
 
-
+/**
+ * 5A98	70004E98
+ *     V0=0; scan debug.notice.list until a NULL pointer
+ *     likely this would have executed some function for each entry...
+ */
 #ifdef NONMATCHING
 void *scan_debug_notice_list_till_NULL(void)
 {
@@ -251,11 +282,18 @@ glabel scan_debug_notice_list_till_NULL
 
 
 
-
+/**
+ * 5ABC	70004EBC
+ *     unconditional return
+ */
 void debug_stubbed_70004EBC(void) {
     return;
 }
 
+/**
+ * 5AC4	70004EC4
+ *     A0->SP+0, A1->SP+4, A2->SP+8
+ */
 void debug_removed(s32 arg0, s32 arg1, s32 arg2) {
     return;
 }

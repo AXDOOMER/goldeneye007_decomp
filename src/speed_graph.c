@@ -1,4 +1,11 @@
 #include "ultra64.h"
+/**
+ * @file speed_graph.c
+ * This file contains code to draw speedgraph. 
+ * 
+ */
+
+
 /*   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     | Snippet of building glist buffers   |
     |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
@@ -97,7 +104,9 @@ const char aIL0[] = "I=l0";
 //)
 
 
-
+/**
+ * 3330	70002730	(DL generator)
+ */
 #ifdef NONMATCHING
 void displaylist_related(void)
 {
@@ -163,7 +172,9 @@ glabel displaylist_related
 
 
 
-
+/**
+ * 33A4	700027A4
+ */
 #ifdef NONMATCHING
 void *video_related_1(void)
 {
@@ -238,7 +249,9 @@ glabel video_related_1
 #endif
 
 
-
+/**
+ * 3410	70002810
+ */
 #ifdef NONMATCHING
 void *video_related_2(void)
 {
@@ -288,7 +301,9 @@ glabel video_related_2
 #endif
 
 
-
+/**
+ * 3454	70002854
+ */
 #ifdef NONMATCHING
 void video_related_3(s32 arg0)
 {
@@ -415,7 +430,10 @@ glabel video_related_3
 #endif
 
 
-
+/**
+ * 3558	70002958	draw "display speed" display
+ *     accepts: A0=p->display list
+ */
 #ifdef NONMATCHING
 void display_speed_graph(void) {
 
@@ -667,7 +685,9 @@ glabel display_speed_graph
 #endif
 
 
-
+/**
+ * 38D8	70002CD8
+ */
 #ifdef NONMATCHING
 u32 video_DL_related_4(void)
 {

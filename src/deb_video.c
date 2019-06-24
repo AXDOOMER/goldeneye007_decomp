@@ -3,6 +3,13 @@
 #include "bondgame.h"
 #include "deb_video.h"
 
+/**
+ * @file deb_video.c
+ * This file contains code to handle tlb paging. 
+ * 
+ * I should probably be renamed...
+ */
+
 //bss
 char thread_video_manager_debugthread[0x6B0];
 char tlbStack[0x2300];
@@ -16,7 +23,9 @@ u32 *ptr_indy_read_buf_string2;
 char indy_read_buffer[0x60];
 
 
-
+/**
+ * 5AE0	70004EE0
+ */
 void init_tlb(void) {
     set_video_buffer_pointers();
     osCreateMesgQueue(&thread5_MesgQ, &thread5_MesgBuf, 1);
@@ -28,7 +37,9 @@ void init_tlb(void) {
 
 
 
-
+/**
+ * 5B54	70004F54
+ */
 #ifdef NONMATCHING
 void thread5_translate_7F_address(void) {
 
@@ -130,6 +141,11 @@ glabel thread5_translate_7F_address
 )
 #endif
 
+/**
+ * 5CAC	700050AC
+ *     V0= SP, A3=SP usage within function range (A1,A0) with initial SP A2
+ *     accepts: A0=p->opcode.cur, A1=p->opcode.start, A2=SP w/i function, A3=p->register buffer
+ */
 #ifdef NONMATCHING
 void debug_related_8(void) {
 
@@ -227,6 +243,11 @@ glabel debug_related_8
 )
 #endif
 
+/**
+ * 5DE0	700051E0
+ *     V0=TRUE if opcode that set RA A0 was a JAL or JALR type within bounds (70000450,70020D90)
+ *     accepts: A0=p->70-mapped TLB function, presumably from RA
+ */
 #ifdef NONMATCHING
 void was_opcode_In_70000450_70020D90(u32 * function)
 {
@@ -287,7 +308,11 @@ glabel was_opcode_In_70000450_70020D90
 
 
 
-
+/**
+ * 5E58	70005258
+ *     V0= strlen(A0); used exclusively for scanning ind.rea.buf
+ *     accepts: A0=p->string
+ */
 #ifdef NONMATCHING
 s32 return_strlen(void *arg0)
 {
@@ -343,7 +368,11 @@ glabel return_strlen
 
 
 
-
+/**
+ * 5E94	70005294
+ *     V0= total size of one word, two strings at hardware A0
+ *     accepts: A0=hardware address
+ */
 #ifdef NONMATCHING
 s32 indy_file_get_address_subsequent_data(s32 arg0) {
     s32 sp18;
@@ -419,7 +448,11 @@ glabel indy_file_get_address_subsequent_data
 
 
 
-
+/**
+ * 5F40	70005340
+ *     scan for and load resourceID A0 from indy.read.buf
+ *     accepts: A0=resourceID
+ */
 #ifdef NONMATCHING
 void scan_load_resourceID_from_indy_read_buf(void) {
 
@@ -472,7 +505,10 @@ glabel scan_load_resourceID_from_indy_read_buf
 
 
 
-
+/**
+ * 5FC8	700053C8
+ *     V0= TRUE if valid indy.read.buf.resourceID	[matches 826475BE]
+ */
 #ifdef NONMATCHING
 u32 is_valid_indy_read_buf_resourceID(void)
 {
@@ -503,24 +539,43 @@ glabel is_valid_indy_read_buf_resourceID
 
 
 
-
+/**
+ * 5FFC	700053FC
+ *     unconditional return
+ */
 void debug_indy_stub(void) {
     return;
 }
 
+/**
+ * 6004	70005404
+ *     unconditional return
+ */
 void debug_indy_stub_0(void) {
     return;
 }
 
+/**
+ * 600C	7000540C
+ *     unconditional return
+ */
 void debug_indy_stub_1(void) {
     return;
 }
 
+/**
+ * 6014	70005414
+ *     V0= indy.read.buf.resourceID	[80063664]
+ */
 u32 * return_indy_read_buf_resourceID(void) {
   return current_indy_read_buf_resourceID;
 }
 
-
+/**
+ * 6020	70005420
+ *     V0=hardcoded SP for debug thread A1, corrected for address range A0
+ *     accepts: A0=p->address space, A1=entry#
+ */
 #ifdef NONMATCHING
 s32 debug_sp_related_11(u32 arg0, u32 arg1)
 {
@@ -619,7 +674,11 @@ glabel debug_sp_related_11
 
 
 
-
+/**
+ * 60E4	700054E4
+ *     V0=hardcoded SP for debug thread A1, corrected for address range A0
+ *     accepts: A0=p->address space, A1=entry#
+ */
 #ifdef NONMATCHING
 s32 debug_sp_related_12(u32 arg0, u32 arg1) {
     u32 sp4;
@@ -697,8 +756,13 @@ glabel debug_sp_related_12
 #endif
 
 
+//maybe newfile, falls on 0 address and logically does different things
 
-
+/**
+ * 6160	70005560
+ *     V0= TRUE if F12 a normal single precision float
+ *     accepts: F12= single-precision float
+ */
 #ifdef NONMATCHING
 s32 _is_normal_single_precision_float(f32 arg0) {
     // Node 0
@@ -742,7 +806,11 @@ glabel _is_normal_single_precision_float
 
 
 
-
+/**
+ * 61A4	700055A4
+ *     V0= TRUE if A1 a normal single precision float; would have set result as short at A0
+ *     accepts: A0=(unused) p->target, A1=single-precision float
+ */
 #ifdef NONMATCHING
 void is_normal_single_precision_float(s32 arg0, s32 arg1) {
     _is_normal_single_precision_float(arg1);
@@ -767,7 +835,10 @@ glabel is_normal_single_precision_float
 
 
 
-
+/**
+ * 61C8	700055C8
+ *     removed: set normality of single-precision floats A1, A2, A3, SP+10 in table at A0
+ */
 #ifdef NONMATCHING
 void set_normality_of_single_precision_floats(s32 arg0, s32 arg1, ? arg2, ? arg3, s32 arg6, ? arg8, ? arg9, ? argA) {
     // Node 0
@@ -809,7 +880,10 @@ glabel set_normality_of_single_precision_floats
 )
 #endif
 
-
+/**
+ * 6228	70005628
+ *     unconditional return
+ */
 void debug_indy_stub_2(void) {
     return;
 }

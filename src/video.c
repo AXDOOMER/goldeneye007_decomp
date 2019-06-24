@@ -2,6 +2,13 @@
 #include "ultra64.h"
 #include "video.h"
 #include "vi.h"
+#include "bondgame.h"
+
+/**
+ * @file video.c
+ * This file contains video handling code. 
+ */
+
 
 //data
 u32 D_80023240 = 0;
@@ -67,7 +74,9 @@ s32 dword_CODE_bss_80060884;
 s32 dword_CODE_bss_80060888;
 s32 dword_CODE_bss_8006088C;
 
-
+/**
+ * 3C60	70003060
+ */
 #ifdef NONMATCHING
 s32 init_video_settings(void)
 {
@@ -146,7 +155,9 @@ glabel init_video_settings
 
 
 
-
+/**
+ * 3D24	70003124	initialize both video buffers
+ */
 #ifdef NONMATCHING
 void *init_both_video_buffers(void)
 {
@@ -211,7 +222,9 @@ glabel init_both_video_buffers
 )
 #endif
 
-
+/**
+ * 3D90	70003190	???; 2->800232BC
+ */
 #ifdef NONMATCHING
 void video_related_6(s32 arg0)
 {
@@ -228,7 +241,9 @@ glabel video_related_6
 )
 #endif
 
-
+/**
+ * 3DA0	700031A0
+ */
 #ifdef NONMATCHING
 void *video_related_7(void)
 {
@@ -333,7 +348,9 @@ glabel video_related_7
 
 
 
-
+/**
+ * 3E98	70003298
+ */
 #ifdef NONMATCHING
 void video_related_8(void)
 {
@@ -1287,6 +1304,11 @@ glabel video_related_8
 )
 #endif
 
+
+/**
+ * 4704	70003B04	???; 800232B4=(word)F12, 800232B8=0xA
+ *     accepts: F12=
+ */
 #ifdef NONMATCHING
 f32 video_related_9(f32 arg0)
 {
@@ -1343,7 +1365,9 @@ glabel video_related_9
 
 
 
-
+/**
+ * 4764	70003B64
+ */
 void receive_vi_c_msgs(int msgcount){
   do {
     osRecvMesg(&vi_c_debug_MQ,NULL,1);
@@ -1352,6 +1376,9 @@ void receive_vi_c_msgs(int msgcount){
 }
 
 
+/**
+ * 47B0	70003BB0
+ */
 #ifdef NONMATCHING
 void setVideoWidthHeightToMode(int videomode)
 {
@@ -1395,23 +1422,33 @@ glabel setVideoWidthHeightToMode
 
 
 
-
-void set_coloroutputmode_1(void)
+/**
+ * 4800	70003C00	sets colour output mode to 16bit	[800232AC=1]
+ */
+void set_coloroutputmode_16bit(void)
 {
-    coloroutputmode = 1;
+    coloroutputmode = MODE_16BIT;
 }
 
-void set_coloroutputmode_0(void)
+/**
+ * 4810	70003C10	sets colour output mode to 32bit	[800232AC=0]
+ */
+void set_coloroutputmode_32bit(void)
 {
-    coloroutputmode = 0;
+    coloroutputmode = MODE_32BIT;
 }
 
-
+/**
+ * 481C	70003C1C	V0= p->video2's buffer [p@800232A8+28]; fry T6
+ */
 int get_video_settings2_frameb(void)
 {
     return ptr_video_settings2->frameb;
 }
 
+/**
+ * 482C	70003C2C	V0= p->video1's buffer [p@800232A4+28]; fry T6
+ */
 int  get_video_settings1_frameb(void)
 {
     return ptr_video_settings1->frameb;
@@ -1420,7 +1457,9 @@ int  get_video_settings1_frameb(void)
 
 
 
-
+/**
+ * 483C	70003C3C	A0->video2's buffer [p@800232A8+28]; fry T6
+ */
 #ifdef NONMATCHING
 void set_video2buf_offset28(s32 arg0)
 {
@@ -1440,15 +1479,16 @@ glabel set_video2buf_offset28
 
 
 
-
+/**
+ * 484C	70003C4C	V0= halfword [80060824]
+ */
 u16 get_80060824(void) {
     return word_CODE_bss_80060824;
 }
 
-
-
-
-
+/**
+ * 4858	70003C58
+ */
 #ifdef NONMATCHING
 void *video_related_F(void *arg0)
 {
@@ -1661,7 +1701,9 @@ glabel video_related_F
 
 
 
-
+/**
+ * 4AB4	70003EB4
+ */
 #ifdef NONMATCHING
 s32 video_related_10(s32 arg0)
 {
@@ -1700,7 +1742,11 @@ glabel video_related_10
 #endif
 
 
-
+/**
+ * 4AF8	70003EF8	generate a generic fillrect; fries: AT,A1,A2,A3,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9
+ *     V0=new display list address
+ *     accepts: A0=p->display list
+ */
 #ifdef NONMATCHING
 s32 insert_generic_fillrect(void *arg0) //either of type Dynamic Struct or GFX Array, however Im betting Dynamic since Dynamic can contain a GFX plus other settings
 {
@@ -1769,7 +1815,10 @@ glabel insert_generic_fillrect
 
 
 
-
+/**
+ * 4B64	70003F64
+ *     accepts: A0=p->display list
+ */
 #ifdef NONMATCHING
 void *setupscreensfornumplayers(void *arg0)
 {
@@ -2155,56 +2204,102 @@ glabel setupscreensfornumplayers
 )
 #endif
 
-
+/**
+ * 4F84	70004384
+ *     A0->[800232A0]
+ */
 void set_D_800232A0(s32 arg0)
 {
     D_800232A0 = arg0;
 }
 
+/**
+ * 4F90	70004390
+ *     V0= [800232A0]
+ */
 s32 get_D_800232A0(void)
 {
     return D_800232A0;
 }
 
+/**
+ * 4F9C	7000439C
+ *     A0->[8002329C]
+ */
 void set_D_8002329C(s32 arg0)
 {
     D_8002329C = arg0;
 }
 
+/**
+ * 4FA8	700043A8
+ *     V0= [8002329C]
+ */
 s32 get_D_8002329C(void)
 {
     return D_8002329C;
 }
 
+/**
+ * 4FB4	700043B4
+ *     A0->[p@800232A8+18], SP+0; fry V0,T0,T1
+ *     A1->[p@800232A8+1A], SP+4
+ */
 void set_video2_settings_offset_18_1A(s16 arg0, s16 arg1)
 {
     ptr_video_settings2->anonymous_7 = arg0;
     ptr_video_settings2->anonymous_8 = arg1;
 }
 
+/**
+ * 4FD8	700043D8
+ *     V0= [p@800232A8+18]; fry T6
+ */
 s16 get_video2_settings_offset_18(void)
 {
     return ptr_video_settings2->anonymous_7;
 }
 
+/**
+ * 4FE8	700043E8
+ *     V0= [p@800232A8+1A]; fry T6
+ */
 s16 get_video2_settings_offset_1A(void)
 {
     return ptr_video_settings2->anonymous_8;
 }
 
+/**
+ * 4FF8	700043F8
+ *     set video2 text clip width (A0) and height (A1); fries V0,T0,T1
+ *     A0->[p@800232A8+4], SP+0
+ *     A1->[p@800232A8+6], SP+4
+ */
 void set_video2_text_clip_size(s16 txtClipW, s16 txtClipH) {
     ptr_video_settings2->txtClipW = txtClipW;
     ptr_video_settings2->txtClipH = txtClipH;
 }
 
+/**
+ * 501C	7000441C
+ *     V0= video2 text clip width  [p@800232A8+4]; fry T6
+ */
 s16 get_video2_settings_txtClipW(void) {
     return ptr_video_settings2->txtClipW;
 }
 
+/**
+ * 502C	7000442C
+ *     V0= video2 text clip height [p@800232A8+6]; fry T6
+ */
 s16 get_video2_settings_txtClipH(void) {
     return ptr_video_settings2->txtClipH;
 }
 
+/**
+ * 503C	7000443C
+ *     set video2 width (A0) and height (A1)
+ */
 #ifdef NONMATCHING
 void set_video2_width_height(short width,short height) {
   ptr_video_settings2->width = width;
@@ -2246,15 +2341,26 @@ glabel set_video2_width_height
 
 
 
-
+/**
+ * 509C	7000449C
+ *     V0= video2 lrx [p@800232A8+1C]; fry T6
+ */
 s16 get_video2_settings_width(void) {
     return ptr_video_settings2->width;
 }
 
+/**
+ * 50AC	700044AC
+ *     V0= video2 lry [p@800232A8+1E]; fry T6
+ */
 s16 get_video2_settings_height(void) {
     return ptr_video_settings2->height;
 }
 
+/**
+ * 50BC	700044BC
+ *     set video2 ulx (A0) and uly (A1)
+ */
 #ifdef NONMATCHING
 void set_video2_ulx_uly(s16 arg0, s16 arg1)
 {
@@ -2293,19 +2399,33 @@ glabel set_video2_ulx_uly
 
 
 
-
+/**
+ * 5114	70004514
+ *     V0= video2 ulx [p@800232A8+20]; fry T6
+ */
 s16 get_video2_settings_ulx(void) {
     return ptr_video_settings2->ulx;
 }
 
+/**
+ * 5124	70004524
+ *     V0= video2 uly [p@800232A8+22]; fry T6
+ */
 s16 get_video2_settings_uly(void) {
     return ptr_video_settings2->uly;
 }
 
+/**
+ * 5134	70004534
+ *     A0->[p@800232A8+24]; fry T6
+ */
 void set_video2_settings_offset_24(int param_1) {
   ptr_video_settings2->anonymous_12 = param_1;
 }
 
+/**
+ * 5144	70004544
+ */
 #ifdef NONMATCHING
 void video_related_1F(f32 arg0)
 {
@@ -2339,6 +2459,11 @@ glabel video_related_1F
 )
 #endif
 
+
+/**
+ * 5190	70004590
+ *     F12->video2 page width [p@800232A8+C] and something else...
+ */
 #ifdef NONMATCHING
 void video_related_21(f32 arg0)
 {
@@ -2372,13 +2497,18 @@ glabel video_related_21
 )
 #endif
 
-
+/**
+ * 51DC	700045DC
+ *     F0= [p@800232A8+8]; fry T6
+ */
 f32 video_related_23(void)
 {
     return ptr_video_settings2->far;
 }
 
-
+/**
+ * 51EC	700045EC
+ */
 #ifdef NONMATCHING
 void video_related_24(f32 arg0, f32 arg1)
 {
@@ -2419,6 +2549,9 @@ glabel video_related_24
 )
 #endif
 
+/**
+ * 5250	70004650
+ */
 #ifdef NONMATCHING
 void set_page_height(f32 arg0, f32 arg1)
 {
@@ -2457,6 +2590,10 @@ glabel set_page_height
 )
 #endif
 
+/**
+ * 52AC	700046AC
+ *     copies [p@800232A8+10-14] to A0; fries V0,T6,T7,F4,F6
+ */
 #ifdef NONMATCHING
 void *video_related_27(void *arg0)
 {
@@ -2480,6 +2617,14 @@ glabel video_related_27
 )
 #endif
 
+/**
+ * 52D0	700046D0
+ *     setfillcolour(&A0,A1,A2,A3); generates a setfillcolour op
+ *     mode determined by flag at 800232AC: 0=32bit, 1=16bit
+ *     accepts: A0=p->display list target, A1=red, A2=green, A3=blue
+ *     returns: V0=updated display list target (A0 also updated)
+ *     fries: V1,A0,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9
+ */
 #ifdef NONMATCHING
 s32 set_setfillcolor(void *arg0, s32 arg1, s32 arg2, s32 arg3)
 {
@@ -2539,6 +2684,10 @@ glabel set_setfillcolor
 )
 #endif
 
+/**
+ * 5358	70004758
+ *     image capture routine, jpeg 16bit colour
+ */
 #ifdef NONMATCHING
 void indy_grab_jpg_16bit(void)
 {
@@ -2668,6 +2817,10 @@ glabel indy_grab_jpg_16bit
 )
 #endif
 
+/**
+ * 54D4	700048D4
+ *     image capture routine, jpeg 32bit colour
+ */
 #ifdef NONMATCHING
 void indy_grab_jpg_32bit(void)
 {
@@ -2802,6 +2955,10 @@ glabel indy_grab_jpg_32bit
 )
 #endif
 
+/**
+ * 5660	70004A60
+ *     image capture routine, rgb 16bit colour
+ */
 #ifdef NONMATCHING
 void indy_grab_rgb_16bit(void)
 {
@@ -2920,6 +3077,10 @@ glabel indy_grab_rgb_16bit
 )
 #endif
 
+/**
+ * 57B4	70004BB4
+ *     image capture routine, rgb 32bit colour
+ */
 #ifdef NONMATCHING
 void indy_grab_rgb_32bit(void)
 {

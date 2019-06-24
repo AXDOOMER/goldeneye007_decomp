@@ -2,6 +2,11 @@
 #include "deb_print.h"
 #include "bondgame.h"
 
+/**
+ * @file deb_print.c
+ * This file contains the stderr manager. 
+ */
+
 //im just padding
 u32 D_80023300 = 0;
 
@@ -124,10 +129,14 @@ void *ptr_videobuffer2 = 0;
 
 u32 padding_80024184[4] = 0;
 
-//possible filebreak deb_print.c
 
 
 
+/**
+ * 6230	70005630
+ *     write char A2 to (A0,A1) in stderr
+ *     accepts: A0=xpos, A1=ypos, A2=char
+ */
 #ifdef NONMATCHING
 void write_char_to_pos_stderr(int xpos,int ypos,u8 letter) {
   if ((letter == 9) || (letter == 10)) {
@@ -192,7 +201,11 @@ glabel write_char_to_pos_stderr
 
 
 
-
+/**
+ * 62BC	700056BC
+ *     write char A0 to stderr
+ *     accepts: A0=char
+ */
 #ifdef NONMATCHING
 void __osRdbSend(void) {
 
@@ -281,7 +294,11 @@ glabel __osRdbSend
 
 
 
-
+/**
+ * 63CC	700057CC
+ *     scroll stderr down one line
+ *     accepts: A0=ypos
+ */
 #ifdef NONMATCHING
 s32 scroll_stderr_oneline(s32 arg0) {
     void *temp_a1_2;
@@ -370,7 +387,11 @@ glabel scroll_stderr_oneline
 
 
 
-
+/**
+ * 645C	7000585C
+ *     print char A2 to stderr screen position (A0,A1) in video buffer 1
+ *     accepts: A0=xpos, A1=ypos, A2=char
+ */
 #ifdef NONMATCHING
 void print_to_vidbuff1(s32 arg0, s32 arg1, ? arg2, s32 arg6, s32 arg7, s32 arg8) {
     s32 temp_at;
@@ -547,7 +568,13 @@ glabel print_to_vidbuff1
 
 
 
-
+/**
+ * 6584	70005984
+ *     set pointers to video buffers 1 & 2 to A0 and A1, respectively
+ *     sets values to uncached addresses
+ *     A0 | A0000000 -> 8002417C
+ *     A1 | A0000000 -> 80024180
+ */
 #ifdef NONMATCHING
 void set_ptr_video_buffers(s32 arg0, s32 arg1) {
     ptr_videobuffer1 = (s32) (arg0 | 0xa0000000);
@@ -571,10 +598,11 @@ glabel set_ptr_video_buffers
 
 
 
-
-
-
-
+/**
+ * 65A4	700059A4
+ *     set pointers to video buffers 1 & 2
+ *     calls 70005984: A0=803B5000, A1=803DA800
+ */
 void set_video_buffer_pointers(void) {
     set_ptr_video_buffers(&cfb_16_a, &cfb_16_b);
 }
@@ -583,7 +611,11 @@ void set_video_buffer_pointers(void) {
 
 
 
-
+/**
+ * 65D0	700059D0
+ *     write stderr to video buffer A0
+ *     accepts: A0=p->video buffer
+ */
 #ifdef NONMATCHING
 void write_stderr_to_buffer(void) {
 

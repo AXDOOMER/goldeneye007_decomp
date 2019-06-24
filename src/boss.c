@@ -4,6 +4,11 @@
 #include "bondgame.h"
 #include "game/debugmenu_090490.h"
 
+/**
+ * @file boss.c
+ * This file contains the main game loop code. 
+ */
+
 /* data */
 u32 boss_c_ptr_debug_notice_list_entry = 0;
 s32 debug_and_update_stage_flag = 0;
@@ -87,7 +92,10 @@ const char aMa[] = "-ma";
 const char aMa_0[] = "-ma";
 const char aU64_taskgrab_D_core[] = "u64.taskgrab.%d.core";
 
-
+/**
+ * 6930	70005D30
+ *     ??? - uses "-level_", "-m" strings
+ */
 #ifdef NONMATCHING
 void init_mainthread_data(void)
 {
@@ -369,15 +377,27 @@ glabel init_mainthread_data
 #endif
 
 
-
+/**
+ * 6BF4	70005FF4
+ *     1 ->"show mem use" debug memory display [800241B4]; fry AT,T6
+ */
 void enable_show_mem_use_flag(void) {
     show_mem_use_flag=TRUE;
 }
 
+/**
+ * 6C04	70006004
+ *     toggle "show mem bars" [800241B8]; fries V0,T6,T7
+ */
 void mem_bars_flag_toggle(void) {
     show_mem_bars_flag = show_mem_bars_flag ^ 1;
 }
 
+/**
+ * 6C1C	7000601C
+ *     loads primary resources and starts main program loop
+ *     this is infinite.  Loops unconditionally: JAL 70006060
+ */
 void setup_gamevalues_and_launchmainloop(void) {
     init_mainthread_data();
     allocate_init_rsp_buffers();
@@ -389,7 +409,29 @@ void setup_gamevalues_and_launchmainloop(void) {
 
 
 
-
+/**
+ * 6C60	70006060
+ *     main program loop
+ *         70006090 tests memstring for "-level_##"
+ *         700060DC if not title, tests memstring for "-hard#"
+ *         70006160 follows...
+ *         700061FC test if debug console unconnected [800241A4]
+ *         700062EC follows...
+ *         700062FC tests memstring for "-ma"
+ *         7000633C allocates "-ma" bytes to mem bank 4
+ *         7000635C reset player data pointers
+ *         70006364 offsets stage number based on number of players unless main menu
+ *         700063A0 parses and sets memory allocation, loads stage, etc.
+ *         ...
+ *         70006708 displays memory usage when active
+ *         70006724 displays in-game debugger when active
+ *         7000674C writes a full sync, end display list combo
+ *         7000676C display mem use when active	[800241B4]
+ *         700067A8 display mem bars when active	[800241B8]
+ *         700067C0 follows...
+ *         700067D8 tests if "u64.taskgrab.#.core" activated and dumps memory
+ *         70006854 follows... (700068BC - stop demos)
+ */
 #ifdef NONMATCHING
 void mainloop(void)
 {
@@ -1377,24 +1419,38 @@ glabel mainloop
 )
 #endif
 
-
-
-
+/**
+ * 7530	70006930
+ *     run title [0x5A->loaded stage#]; fry AT
+ *     redirect to 70006950: A0=0x5A
+ */
 void run_title_stage(void) {
     set_loaded_stage(LEVELID_TITLE);
 }
 
-
+/**
+ * 7550	70006950
+ *     A0->loaded stage# [800242FC]; fry AT
+ *     0x5A jumps to folder select
+ *     0x5B 
+ *     0x63 
+ */
 void set_loaded_stage(LEVELID stage){
     loadedstage = stage;
 }
 
-
+/**
+ * 755C	7000695C
+ *     V0= stage# [800241A8]
+ */
 LEVELID get_stage_num(){
     return current_stage_num;
 }
 
-
+/**
+ * 7568	70006968
+ *     return to title screen from stage
+ */
 void return_to_title_from_level_end(void) {
     if ((get_stage_num() != LEVELID_CUBA) && (check_objectives_complete() != 0x0)) {
         end_of_mission_briefing();
@@ -1402,11 +1458,18 @@ void return_to_title_from_level_end(void) {
     run_title_stage();
 }
 
-
+/**
+ * 75B4	700069B4
+ *     V0=state of debug menu (1:on; 0:off) [80024300]
+ */
 s32 get_debug_parse_flag(void) {
     return debug_feature_flag;
 }
 
+/**
+ * 75C0	700069C0
+ *     V0= p->debug.notice.list entry for boss_c_debug using data at 800241A0
+ */
 void something_with_boss_c_debug(void) {
     get_ptr_debug_notice_list_entry(&boss_c_ptr_debug_notice_list_entry, "boss_c_debug");
 }

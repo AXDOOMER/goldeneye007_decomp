@@ -221,33 +221,10 @@ u32 stanRemovedAnimationRoutine(s32 arg0) {
     return 0;
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
 void something_stan_c_debug_related(void) {
-    get_ptr_debug_notice_list_entry(&stan_c_debug_notice_list_entry, "stan_c_debug");
+    get_ptr_debug_notice_list_entry(&stan_c_debug_notice_list_entry, &aStan_c_debug);//"stan_c_debug");
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel something_stan_c_debug_related
-/* 0E3B3C 7F0AF00C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E3B40 7F0AF010 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E3B44 7F0AF014 3C048004 */  lui   $a0, %hi(stan_c_debug_notice_list_entry) # $a0, 0x8004
-/* 0E3B48 7F0AF018 3C058006 */  lui   $a1, %hi(aStan_c_debug) # $a1, 0x8006
-/* 0E3B4C 7F0AF01C 24A585AC */  addiu $a1, %lo(aStan_c_debug) # addiu $a1, $a1, -0x7a54
-/* 0E3B50 7F0AF020 0C001398 */  jal   get_ptr_debug_notice_list_entry
-/* 0E3B54 7F0AF024 24840F40 */   addiu $a0, %lo(stan_c_debug_notice_list_entry) # addiu $a0, $a0, 0xf40
-/* 0E3B58 7F0AF028 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E3B5C 7F0AF02C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0E3B60 7F0AF030 03E00008 */  jr    $ra
-/* 0E3B64 7F0AF034 00000000 */   nop   
-)
-#endif
 
 
 
@@ -857,19 +834,11 @@ glabel stanLoadFile
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0AF630(s32 arg0) {
 
+void sub_GAME_7F0AF630(s32 arg0) {
+    return;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AF630
-/* 0E4160 7F0AF630 03E00008 */  jr    $ra
-/* 0E4164 7F0AF634 AFA40000 */   sw    $a0, ($sp)
-)
-#endif
 
 
 

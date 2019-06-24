@@ -783,7 +783,7 @@ glabel sub_GAME_7F0C2530
 /* 0F7090 7F0C2560 AFB00020 */   sw    $s0, 0x20($sp)
 /* 0F7094 7F0C2564 0FC22FEE */  jal   sub_GAME_7F08BFB8
 /* 0F7098 7F0C2568 0040F025 */   move  $fp, $v0
-/* 0F709C 7F0C256C 0C002449 */  jal   music_related_30
+/* 0F709C 7F0C256C 0C002449 */  jal   sfx_c_70009124
 /* 0F70A0 7F0C2570 00408025 */   move  $s0, $v0
 /* 0F70A4 7F0C2574 0FC3030F */  jal   set_missionstate
 /* 0F70A8 7F0C2578 00002025 */   move  $a0, $zero

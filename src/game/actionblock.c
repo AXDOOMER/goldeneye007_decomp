@@ -716,7 +716,7 @@ glabel set_sound_effect_source_to_location
 /* 0693DC 7F0348AC 50CB0009 */  beql  $a2, $t3, .L7F0348D4
 /* 0693E0 7F0348B0 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 0693E4 7F0348B4 8E040000 */  lw    $a0, ($s0)
-/* 0693E8 7F0348B8 0C002461 */  jal   music_related_36
+/* 0693E8 7F0348B8 0C002461 */  jal   sfx_c_70009184
 /* 0693EC 7F0348BC AFA60024 */   sw    $a2, 0x24($sp)
 /* 0693F0 7F0348C0 8FA60024 */  lw    $a2, 0x24($sp)
 /* 0693F4 7F0348C4 10000002 */  b     .L7F0348D0
@@ -841,7 +841,7 @@ glabel sub_GAME_7F0349BC
 /* 069508 7F0349D8 000E70C0 */  sll   $t6, $t6, 3
 /* 06950C 7F0349DC 3C048007 */  lui   $a0, %hi(sfx_related)
 /* 069510 7F0349E0 008E2021 */  addu  $a0, $a0, $t6
-/* 069514 7F0349E4 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 069514 7F0349E4 0C002408 */  jal   sfxDeactivate
 /* 069518 7F0349E8 8C849B70 */   lw    $a0, %lo(sfx_related)($a0)
 .L7F0349EC:
 /* 06951C 7F0349EC 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -15552,7 +15552,7 @@ glabel sub_GAME_7F03FB70
 /* 0746D0 7F03FBA0 00000000 */   nop   
 /* 0746D4 7F03FBA4 50400004 */  beql  $v0, $zero, .L7F03FBB8
 /* 0746D8 7F03FBA8 8E04009C */   lw    $a0, 0x9c($s0)
-/* 0746DC 7F03FBAC 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 0746DC 7F03FBAC 0C002408 */  jal   sfxDeactivate
 /* 0746E0 7F03FBB0 8E040098 */   lw    $a0, 0x98($s0)
 /* 0746E4 7F03FBB4 8E04009C */  lw    $a0, 0x9c($s0)
 .L7F03FBB8:
@@ -15562,7 +15562,7 @@ glabel sub_GAME_7F03FB70
 /* 0746F4 7F03FBC4 00000000 */   nop   
 /* 0746F8 7F03FBC8 50400004 */  beql  $v0, $zero, .L7F03FBDC
 /* 0746FC 7F03FBCC 8E180000 */   lw    $t8, ($s0)
-/* 074700 7F03FBD0 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 074700 7F03FBD0 0C002408 */  jal   sfxDeactivate
 /* 074704 7F03FBD4 8E04009C */   lw    $a0, 0x9c($s0)
 /* 074708 7F03FBD8 8E180000 */  lw    $t8, ($s0)
 .L7F03FBDC:
@@ -17166,7 +17166,7 @@ glabel sub_GAME_7F040D98
 /* 075904 7F040DD4 00000000 */   nop   
 /* 075908 7F040DD8 50400004 */  beql  $v0, $zero, .L7F040DEC
 /* 07590C 7F040DDC 8E4400C8 */   lw    $a0, 0xc8($s2)
-/* 075910 7F040DE0 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 075910 7F040DE0 0C002408 */  jal   sfxDeactivate
 /* 075914 7F040DE4 8E4400C4 */   lw    $a0, 0xc4($s2)
 /* 075918 7F040DE8 8E4400C8 */  lw    $a0, 0xc8($s2)
 .L7F040DEC:
@@ -17176,7 +17176,7 @@ glabel sub_GAME_7F040D98
 /* 075928 7F040DF8 00000000 */   nop   
 /* 07592C 7F040DFC 5040004A */  beql  $v0, $zero, .L7F040F28
 /* 075930 7F040E00 8E510010 */   lw    $s1, 0x10($s2)
-/* 075934 7F040E04 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 075934 7F040E04 0C002408 */  jal   sfxDeactivate
 /* 075938 7F040E08 8E4400C8 */   lw    $a0, 0xc8($s2)
 /* 07593C 7F040E0C 10000046 */  b     .L7F040F28
 /* 075940 7F040E10 8E510010 */   lw    $s1, 0x10($s2)
@@ -17201,7 +17201,7 @@ glabel sub_GAME_7F040D98
 /* 075984 7F040E54 00000000 */   nop   
 /* 075988 7F040E58 50400004 */  beql  $v0, $zero, .L7F040E6C
 /* 07598C 7F040E5C 8E4400F8 */   lw    $a0, 0xf8($s2)
-/* 075990 7F040E60 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 075990 7F040E60 0C002408 */  jal   sfxDeactivate
 /* 075994 7F040E64 8E4400F4 */   lw    $a0, 0xf4($s2)
 /* 075998 7F040E68 8E4400F8 */  lw    $a0, 0xf8($s2)
 .L7F040E6C:
@@ -17211,7 +17211,7 @@ glabel sub_GAME_7F040D98
 /* 0759A8 7F040E78 00000000 */   nop   
 /* 0759AC 7F040E7C 5040002A */  beql  $v0, $zero, .L7F040F28
 /* 0759B0 7F040E80 8E510010 */   lw    $s1, 0x10($s2)
-/* 0759B4 7F040E84 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 0759B4 7F040E84 0C002408 */  jal   sfxDeactivate
 /* 0759B8 7F040E88 8E4400F8 */   lw    $a0, 0xf8($s2)
 /* 0759BC 7F040E8C 10000026 */  b     .L7F040F28
 /* 0759C0 7F040E90 8E510010 */   lw    $s1, 0x10($s2)
@@ -17237,7 +17237,7 @@ glabel sub_GAME_7F040D98
 /* 075A08 7F040ED8 00000000 */   nop   
 /* 075A0C 7F040EDC 50400012 */  beql  $v0, $zero, .L7F040F28
 /* 075A10 7F040EE0 8E510010 */   lw    $s1, 0x10($s2)
-/* 075A14 7F040EE4 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 075A14 7F040EE4 0C002408 */  jal   sfxDeactivate
 /* 075A18 7F040EE8 8E4400B0 */   lw    $a0, 0xb0($s2)
 /* 075A1C 7F040EEC 1000000E */  b     .L7F040F28
 /* 075A20 7F040EF0 8E510010 */   lw    $s1, 0x10($s2)
@@ -17252,7 +17252,7 @@ glabel sub_GAME_7F040D98
 /* 075A40 7F040F10 00000000 */   nop   
 /* 075A44 7F040F14 50400004 */  beql  $v0, $zero, .L7F040F28
 /* 075A48 7F040F18 8E510010 */   lw    $s1, 0x10($s2)
-/* 075A4C 7F040F1C 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 075A4C 7F040F1C 0C002408 */  jal   sfxDeactivate
 /* 075A50 7F040F20 8E4400AC */   lw    $a0, 0xac($s2)
 .L7F040F24:
 /* 075A54 7F040F24 8E510010 */  lw    $s1, 0x10($s2)
@@ -20236,7 +20236,7 @@ glabel sub_GAME_7F043650
 /* 078248 7F043718 8FA7002C */   lw    $a3, 0x2c($sp)
 /* 07824C 7F04371C 8E0A006C */  lw    $t2, 0x6c($s0)
 /* 078250 7F043720 01476021 */  addu  $t4, $t2, $a3
-/* 078254 7F043724 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 078254 7F043724 0C002408 */  jal   sfxDeactivate
 /* 078258 7F043728 8D840098 */   lw    $a0, 0x98($t4)
 .L7F04372C:
 /* 07825C 7F04372C 8FA70034 */  lw    $a3, 0x34($sp)
@@ -20291,7 +20291,7 @@ glabel sub_GAME_7F043650
 /* 078314 7F0437E4 50400005 */  beql  $v0, $zero, .L7F0437FC
 /* 078318 7F0437E8 8E09006C */   lw    $t1, 0x6c($s0)
 /* 07831C 7F0437EC 8E0B006C */  lw    $t3, 0x6c($s0)
-/* 078320 7F0437F0 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 078320 7F0437F0 0C002408 */  jal   sfxDeactivate
 /* 078324 7F0437F4 8D640098 */   lw    $a0, 0x98($t3)
 /* 078328 7F0437F8 8E09006C */  lw    $t1, 0x6c($s0)
 .L7F0437FC:
@@ -20303,7 +20303,7 @@ glabel sub_GAME_7F043650
 /* 078340 7F043810 50400005 */  beql  $v0, $zero, .L7F043828
 /* 078344 7F043814 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 078348 7F043818 8E0A006C */  lw    $t2, 0x6c($s0)
-/* 07834C 7F04381C 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 07834C 7F04381C 0C002408 */  jal   sfxDeactivate
 /* 078350 7F043820 8D44009C */   lw    $a0, 0x9c($t2)
 .L7F043824:
 /* 078354 7F043824 8FBF001C */  lw    $ra, 0x1c($sp)
@@ -24951,7 +24951,7 @@ glabel object_interaction
 /* 07C1C0 7F047690 24050008 */  li    $a1, 8
 /* 07C1C4 7F047694 5080000F */  beql  $a0, $zero, .L7F0476D4
 /* 07C1C8 7F047698 8E2400A4 */   lw    $a0, 0xa4($s1)
-/* 07C1CC 7F04769C 0C002461 */  jal   music_related_36
+/* 07C1CC 7F04769C 0C002461 */  jal   sfx_c_70009184
 /* 07C1D0 7F0476A0 02003025 */   move  $a2, $s0
 /* 07C1D4 7F0476A4 1000000B */  b     .L7F0476D4
 /* 07C1D8 7F0476A8 8E2400A4 */   lw    $a0, 0xa4($s1)
@@ -24963,7 +24963,7 @@ glabel object_interaction
 /* 07C1EC 7F0476BC 00000000 */   nop   
 /* 07C1F0 7F0476C0 50400004 */  beql  $v0, $zero, .L7F0476D4
 /* 07C1F4 7F0476C4 8E2400A4 */   lw    $a0, 0xa4($s1)
-/* 07C1F8 7F0476C8 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 07C1F8 7F0476C8 0C002408 */  jal   sfxDeactivate
 /* 07C1FC 7F0476CC 8E2400AC */   lw    $a0, 0xac($s1)
 /* 07C200 7F0476D0 8E2400A4 */  lw    $a0, 0xa4($s1)
 .L7F0476D4:
@@ -25718,7 +25718,7 @@ glabel object_interaction
 /* 07CD1C 7F0481EC 24050008 */  li    $a1, 8
 /* 07CD20 7F0481F0 5080000F */  beql  $a0, $zero, .L7F048230
 /* 07CD24 7F0481F4 92220003 */   lbu   $v0, 3($s1)
-/* 07CD28 7F0481F8 0C002461 */  jal   music_related_36
+/* 07CD28 7F0481F8 0C002461 */  jal   sfx_c_70009184
 /* 07CD2C 7F0481FC 02003025 */   move  $a2, $s0
 /* 07CD30 7F048200 1000000B */  b     .L7F048230
 /* 07CD34 7F048204 92220003 */   lbu   $v0, 3($s1)
@@ -25730,7 +25730,7 @@ glabel object_interaction
 /* 07CD48 7F048218 00000000 */   nop   
 /* 07CD4C 7F04821C 50400004 */  beql  $v0, $zero, .L7F048230
 /* 07CD50 7F048220 92220003 */   lbu   $v0, 3($s1)
-/* 07CD54 7F048224 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 07CD54 7F048224 0C002408 */  jal   sfxDeactivate
 /* 07CD58 7F048228 8E2400B0 */   lw    $a0, 0xb0($s1)
 .L7F04822C:
 /* 07CD5C 7F04822C 92220003 */  lbu   $v0, 3($s1)
@@ -26924,7 +26924,7 @@ glabel object_interaction
 /* 07DEE0 7F0493B0 00000000 */   nop   
 /* 07DEE4 7F0493B4 50400004 */  beql  $v0, $zero, .L7F0493C8
 /* 07DEE8 7F0493B8 8E0400C8 */   lw    $a0, 0xc8($s0)
-/* 07DEEC 7F0493BC 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 07DEEC 7F0493BC 0C002408 */  jal   sfxDeactivate
 /* 07DEF0 7F0493C0 8E0400C4 */   lw    $a0, 0xc4($s0)
 /* 07DEF4 7F0493C4 8E0400C8 */  lw    $a0, 0xc8($s0)
 .L7F0493C8:
@@ -26934,7 +26934,7 @@ glabel object_interaction
 /* 07DF04 7F0493D4 00000000 */   nop   
 /* 07DF08 7F0493D8 50400004 */  beql  $v0, $zero, .L7F0493EC
 /* 07DF0C 7F0493DC 8E0A00C4 */   lw    $t2, 0xc4($s0)
-/* 07DF10 7F0493E0 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 07DF10 7F0493E0 0C002408 */  jal   sfxDeactivate
 /* 07DF14 7F0493E4 8E0400C8 */   lw    $a0, 0xc8($s0)
 /* 07DF18 7F0493E8 8E0A00C4 */  lw    $t2, 0xc4($s0)
 .L7F0493EC:
@@ -40589,7 +40589,7 @@ glabel sub_GAME_7F05396C
 /* 0884C4 7F053994 00000000 */   nop   
 /* 0884C8 7F053998 8FA40018 */  lw    $a0, 0x18($sp)
 /* 0884CC 7F05399C 24050008 */  li    $a1, 8
-/* 0884D0 7F0539A0 0C002461 */  jal   music_related_36
+/* 0884D0 7F0539A0 0C002461 */  jal   sfx_c_70009184
 /* 0884D4 7F0539A4 00403025 */   move  $a2, $v0
 /* 0884D8 7F0539A8 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0884DC 7F0539AC 27BD0018 */  addiu $sp, $sp, 0x18
@@ -40732,7 +40732,7 @@ glabel sub_GAME_7F053A3C
 /* 088600 7F053AD0 11000005 */  beqz  $t0, .L7F053AE8
 /* 088604 7F053AD4 8FA6001C */   lw    $a2, 0x1c($sp)
 /* 088608 7F053AD8 8D2400F4 */  lw    $a0, 0xf4($t1)
-/* 08860C 7F053ADC 0C002461 */  jal   music_related_36
+/* 08860C 7F053ADC 0C002461 */  jal   sfx_c_70009184
 /* 088610 7F053AE0 AFA30018 */   sw    $v1, 0x18($sp)
 /* 088614 7F053AE4 8FA30018 */  lw    $v1, 0x18($sp)
 .L7F053AE8:
@@ -40740,7 +40740,7 @@ glabel sub_GAME_7F053A3C
 /* 08861C 7F053AEC 8FAA0028 */   lw    $t2, 0x28($sp)
 /* 088620 7F053AF0 8D4400F8 */  lw    $a0, 0xf8($t2)
 /* 088624 7F053AF4 24050008 */  li    $a1, 8
-/* 088628 7F053AF8 0C002461 */  jal   music_related_36
+/* 088628 7F053AF8 0C002461 */  jal   sfx_c_70009184
 /* 08862C 7F053AFC 8FA6001C */   lw    $a2, 0x1c($sp)
 .L7F053B00:
 /* 088630 7F053B00 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -40773,7 +40773,7 @@ glabel sub_GAME_7F053B10
 /* 08865C 7F053B2C 00A02025 */   move  $a0, $a1
 /* 088660 7F053B30 10400003 */  beqz  $v0, .L7F053B40
 /* 088664 7F053B34 8FAF0018 */   lw    $t7, 0x18($sp)
-/* 088668 7F053B38 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 088668 7F053B38 0C002408 */  jal   sfxDeactivate
 /* 08866C 7F053B3C 8DE400F4 */   lw    $a0, 0xf4($t7)
 .L7F053B40:
 /* 088670 7F053B40 8FB80018 */  lw    $t8, 0x18($sp)
@@ -40785,7 +40785,7 @@ glabel sub_GAME_7F053B10
 /* 088684 7F053B54 00000000 */   nop   
 /* 088688 7F053B58 10400003 */  beqz  $v0, .L7F053B68
 /* 08868C 7F053B5C 8FB90018 */   lw    $t9, 0x18($sp)
-/* 088690 7F053B60 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 088690 7F053B60 0C002408 */  jal   sfxDeactivate
 /* 088694 7F053B64 8F2400F8 */   lw    $a0, 0xf8($t9)
 .L7F053B68:
 /* 088698 7F053B68 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -43700,7 +43700,7 @@ glabel deactivate_alarm_sound_effect
 /* 08A938 7F055E08 00000000 */   nop   
 /* 08A93C 7F055E0C 10400003 */  beqz  $v0, .L7F055E1C
 /* 08A940 7F055E10 3C048003 */   lui   $a0, %hi(ptr_alarm_sfx) # $a0, 0x8003
-/* 08A944 7F055E14 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 08A944 7F055E14 0C002408 */  jal   sfxDeactivate
 /* 08A948 7F055E18 8C840AC4 */   lw    $a0, %lo(ptr_alarm_sfx)($a0)
 .L7F055E1C:
 /* 08A94C 7F055E1C 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -43821,7 +43821,7 @@ glabel sub_GAME_7F055EF8
 /* 08AA44 7F055F14 00000000 */   nop   
 /* 08AA48 7F055F18 10400003 */  beqz  $v0, .L7F055F28
 /* 08AA4C 7F055F1C 3C048003 */   lui   $a0, %hi(D_80030AE4) # $a0, 0x8003
-/* 08AA50 7F055F20 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 08AA50 7F055F20 0C002408 */  jal   sfxDeactivate
 /* 08AA54 7F055F24 8C840AE4 */   lw    $a0, %lo(D_80030AE4)($a0)
 .L7F055F28:
 /* 08AA58 7F055F28 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -43997,7 +43997,7 @@ glabel sub_GAME_7F055F64
 /* 08AC6C 7F05613C 00000000 */   nop   
 /* 08AC70 7F056140 10400003 */  beqz  $v0, .L7F056150
 /* 08AC74 7F056144 3C048003 */   lui   $a0, %hi(D_80030AE4) # $a0, 0x8003
-/* 08AC78 7F056148 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 08AC78 7F056148 0C002408 */  jal   sfxDeactivate
 /* 08AC7C 7F05614C 8C840AE4 */   lw    $a0, %lo(D_80030AE4)($a0)
 .L7F056150:
 /* 08AC80 7F056150 8FBF001C */  lw    $ra, 0x1c($sp)

@@ -63,7 +63,7 @@ s16 D_8004ED0C[] = {
     1,  0x3F,0xF801,0xF83F, 0x7C1, 0x7FF,0xFFC1,0xFFFF
 };
 //
-u32* romnames[] = {
+char* romnames[] = {
     "em/data/sabre.seg.rz",
     "em/data/atic.seg.rz",
     "em/data/jetpac.seg.rz",

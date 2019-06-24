@@ -11096,7 +11096,7 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 0990B8 7F064588 8DE40000 */  lw    $a0, ($t7)
 /* 0990BC 7F06458C 10800039 */  beqz  $a0, .L7F064674
 /* 0990C0 7F064590 00000000 */   nop   
-/* 0990C4 7F064594 0C002461 */  jal   music_related_36
+/* 0990C4 7F064594 0C002461 */  jal   sfx_c_70009184
 /* 0990C8 7F064598 8FA6006C */   lw    $a2, 0x6c($sp)
 /* 0990CC 7F06459C 10000035 */  b     .L7F064674
 /* 0990D0 7F0645A0 00000000 */   nop   
@@ -11154,7 +11154,7 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 099190 7F064660 8D640000 */  lw    $a0, ($t3)
 /* 099194 7F064664 10800003 */  beqz  $a0, .L7F064674
 /* 099198 7F064668 00000000 */   nop   
-/* 09919C 7F06466C 0C002461 */  jal   music_related_36
+/* 09919C 7F06466C 0C002461 */  jal   sfx_c_70009184
 /* 0991A0 7F064670 8FA6006C */   lw    $a2, 0x6c($sp)
 .L7F064674:
 /* 0991A4 7F064674 0FC190E8 */  jal   sub_GAME_7F0643A0
@@ -12530,7 +12530,7 @@ Weapon_shooting_throwable:
 /* 099F1C 7F0653EC 00000000 */   nop   
 /* 099F20 7F0653F0 50400004 */  beql  $v0, $zero, .L7F065404
 /* 099F24 7F0653F4 8E0401D8 */   lw    $a0, 0x1d8($s0)
-/* 099F28 7F0653F8 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 099F28 7F0653F8 0C002408 */  jal   sfxDeactivate
 /* 099F2C 7F0653FC 8E0401D4 */   lw    $a0, 0x1d4($s0)
 /* 099F30 7F065400 8E0401D8 */  lw    $a0, 0x1d8($s0)
 .L7F065404:
@@ -12540,7 +12540,7 @@ Weapon_shooting_throwable:
 /* 099F40 7F065410 00000000 */   nop   
 /* 099F44 7F065414 10400003 */  beqz  $v0, .L7F065424
 /* 099F48 7F065418 00000000 */   nop   
-/* 099F4C 7F06541C 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 099F4C 7F06541C 0C002408 */  jal   sfxDeactivate
 /* 099F50 7F065420 8E0401D8 */   lw    $a0, 0x1d8($s0)
 .L7F065424:
 /* 099F54 7F065424 0FC17805 */  jal   sub_GAME_7F05E014
@@ -15518,7 +15518,7 @@ glabel sub_GAME_7F067420
 /* 09C5AC 7F067A7C AFA70034 */   sw    $a3, 0x34($sp)
 /* 09C5B0 7F067A80 10400003 */  beqz  $v0, .L7F067A90
 /* 09C5B4 7F067A84 8FA70034 */   lw    $a3, 0x34($sp)
-/* 09C5B8 7F067A88 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 09C5B8 7F067A88 0C002408 */  jal   sfxDeactivate
 /* 09C5BC 7F067A8C 8CE401D4 */   lw    $a0, 0x1d4($a3)
 .L7F067A90:
 /* 09C5C0 7F067A90 8FBF001C */  lw    $ra, 0x1c($sp)

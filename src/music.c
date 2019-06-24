@@ -2,6 +2,10 @@
 #include "ramrom.h"
 #include "sfx.h"
 
+/**
+ * @file music.c
+ * This file contains code to handle music.
+ */
 
 s32 music_unused = 0;
 s32 music1_track_num = 0;
@@ -60,7 +64,9 @@ s32 D_80063BA8;
 
 
 
-
+/**
+ * 75F0	700069F0
+ */
 #ifdef NONMATCHING
 s32 audio_related(void *arg0, s32 arg1) {
     // Node 0
@@ -103,7 +109,10 @@ glabel audio_related
 #endif
 
 
-
+/**
+ * 7630	70006A30
+ *     loads sound and music banks into memory segment 6
+ */
 #ifdef NONMATCHING
 void setupaudio(void) {
     s32 sp38;
@@ -265,7 +274,7 @@ loop_4:
         spDC = 0x40;
         spD8 = 0x40;
         spE0 = 8;
-        music_related_16(&spD8);
+        sfx_c_70007B20(&spD8);
         startaudiThread();
     }
     // Node 8
@@ -544,7 +553,7 @@ glabel setupaudio
 /* 007A4C 70006E4C AFAC00D8 */  sw    $t4, 0xd8($sp)
 /* 007A50 70006E50 AFAD00E0 */  sw    $t5, 0xe0($sp)
 /* 007A54 70006E54 AFB000E4 */  sw    $s0, 0xe4($sp)
-/* 007A58 70006E58 0C001EC8 */  jal   music_related_16
+/* 007A58 70006E58 0C001EC8 */  jal   sfx_c_70007B20
 /* 007A5C 70006E5C 27A400D8 */   addiu $a0, $sp, 0xd8
 /* 007A60 70006E60 0C0007D6 */  jal   startaudiThread
 /* 007A64 70006E64 00000000 */   nop   
@@ -558,7 +567,10 @@ glabel setupaudio
 #endif
 
 
-
+/**
+ * 7A7C	70006E7C
+ *     play first music track A0
+ */
 #ifdef NONMATCHING
 void musicTrack1Play(s32 arg0, s32 arg852) {
     ? sp34;
@@ -710,6 +722,10 @@ glabel musicTrack1Play
 )
 #endif
 
+/**
+ * 7BD0	70006FD0
+ *     stop playing first music track
+ */
 void musicTrack1Stop(void) {
     if (bootswitch_sound == 0)
     {
@@ -725,7 +741,10 @@ void musicTrack1Stop(void) {
     }
 }
 
-
+/**
+ * 7C30	70007030
+ *     V0= [80024338]
+ */
 u16 musicTrack1Length(void) {
     return music1len;
 }
@@ -735,7 +754,11 @@ u16 musicTrack1Length(void) {
 
 
 
-
+/**
+ * 7C3C	7000703C
+ *     ??? - sets something for currently running music track...
+ *     accepts: A0=value
+ */
 #ifdef NONMATCHING
 void musicTrack1Vol(s32 arg0) {
     s16 temp_a2;
@@ -786,7 +809,9 @@ glabel musicTrack1Vol
 
 
 
-
+/**
+ * 7CA0	700070A0
+ */
 #ifdef NONMATCHING
 void *musicTrack1Tempo(void) {
     // Node 0
@@ -836,7 +861,9 @@ glabel musicTrack1Tempo
 
 
 
-
+/**
+ * 7CF8	700070F8
+ */
 void music_related_1(f32 rate) {
     if (music1_playing >= 0)
     {
@@ -852,7 +879,9 @@ void music_related_1(f32 rate) {
 
 
 
-
+/**
+ * 7D68	70007168
+ */
 #ifdef NONMATCHING
 s16 music_related_3(f32 arg0, s32 arg1, f32 rate, s16 length) {
     if (music1_playing <= 0)
@@ -925,7 +954,9 @@ glabel music_related_3
 
 
 
-
+/**
+ * 7E04	70007204
+ */
 #ifdef NONMATCHING
 void musicTrack2Play(s32 arg0, s32 arg852) {
     ? sp34;
@@ -1078,7 +1109,9 @@ glabel musicTrack2Play
 #endif
 
 
-
+/**
+ * 7F58	70007358
+ */
 #ifdef NONMATCHING
 void musicTrack2Stop(void) {
     // Node 0
@@ -1142,7 +1175,10 @@ glabel musicTrack2Stop
 
 
 
-
+/**
+ * 7FB8	700073B8
+ *     V0= [80024340]
+ */
 u16 musicTrack2Length(void) {
     return music2len;
 }
@@ -1153,7 +1189,9 @@ u16 musicTrack2Length(void) {
 
 
 
-
+/**
+ * 7FC4	700073C4
+ */
 #ifdef NONMATCHING
 void musicTrack2Vol(s32 arg0) {
     s16 temp_a2;
@@ -1202,7 +1240,9 @@ glabel musicTrack2Vol
 
 
 
-
+/**
+ * 8028	70007428
+ */
 #ifdef NONMATCHING
 void *musicTrack2Tempo(void) {
     void *phi_v0;
@@ -1255,7 +1295,9 @@ glabel musicTrack2Tempo
 #endif
 
 
-
+/**
+ * 8080	70007480
+ */
 #ifdef NONMATCHING
 void music_related_6(f32 arg0) {
     // Node 0
@@ -1311,7 +1353,9 @@ glabel music_related_6
 
 
 
-
+/**
+ * 80F0	700074F0
+ */
 #ifdef NONMATCHING
 void music_related_8(f32 arg0, s32 arg1, s16 arg_unaligned6) {
     // Node 0
@@ -1391,7 +1435,9 @@ glabel music_related_8
 
 
 
-
+/**
+ * 818C	7000758C
+ */
 #ifdef NONMATCHING
 void music_related_3rd_block(s32 arg0, s32 arg852) {
     ? sp34;
@@ -1544,7 +1590,9 @@ glabel music_related_3rd_block
 #endif
 
 
-
+/**
+ * 82E0	700076E0
+ */
 #ifdef NONMATCHING
 void musicTrack3Stop(void) {
     // Node 0
@@ -1606,7 +1654,10 @@ glabel musicTrack3Stop
 
 
 
-
+/**
+ * 8340	70007740
+ *     V0= 7FFF [80024348]
+ */
 u16 get_music3len(void) {
     return music3len;
 }
@@ -1617,7 +1668,9 @@ u16 get_music3len(void) {
 
 
 
-
+/**
+ * 834C	7000774C
+ */
 #ifdef NONMATCHING
 void musicTrack3Vol(s32 arg0) {
     s16 temp_a2;
@@ -1667,7 +1720,9 @@ glabel musicTrack3Vol
 
 
 
-
+/**
+ * 83B0	700077B0
+ */
 #ifdef NONMATCHING
 void *music_related_10(void) {
     // Node 0
@@ -1716,7 +1771,9 @@ glabel music_related_10
 #endif
 
 
-
+/**
+ * 8408	70007808
+ */
 #ifdef NONMATCHING
 void music_related_11(f32 arg0, f32 arg6) {
     // Node 0
@@ -1772,7 +1829,9 @@ glabel music_related_11
 
 
 
-
+/**
+ * 8478	70007878
+ */
 #ifdef NONMATCHING
 s16 music_related_13(f32 arg0, s32 arg1, f32 arg6, s16 arg7) {
     // Node 0
@@ -1853,7 +1912,9 @@ glabel music_related_13
 
 
 
-
+/**
+ * 8514	70007914
+ */
 #ifdef NONMATCHING
 void music_related_15(void) {
     s16 sp1E;

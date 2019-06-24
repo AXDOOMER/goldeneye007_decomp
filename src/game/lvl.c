@@ -415,7 +415,7 @@ glabel stage_load
 /* 0F2684 7F0BDB54 AFB20028 */  sw    $s2, 0x28($sp)
 /* 0F2688 7F0BDB58 F7B40018 */  sdc1  $f20, 0x18($sp)
 /* 0F268C 7F0BDB5C AFA40038 */  sw    $a0, 0x38($sp)
-/* 0F2690 7F0BDB60 0C00248E */  jal   music_related_39
+/* 0F2690 7F0BDB60 0C00248E */  jal   sfx_c_70009238
 /* 0F2694 7F0BDB64 AC2083A0 */   sw    $zero, %lo(D_800483A0)($at)
 /* 0F2698 7F0BDB68 0C001C0F */  jal   musicTrack1Vol
 /* 0F269C 7F0BDB6C 24047FFF */   li    $a0, 32767
@@ -1782,7 +1782,7 @@ glabel manage_mp_game
 /* 0F39A4 7F0BEE74 00000000 */   nop   
 /* 0F39A8 7F0BEE78 10400003 */  beqz  $v0, .L7F0BEE88
 /* 0F39AC 7F0BEE7C 3C048005 */   lui   $a0, %hi(D_800483A0) # $a0, 0x8005
-/* 0F39B0 7F0BEE80 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 0F39B0 7F0BEE80 0C002408 */  jal   sfxDeactivate
 /* 0F39B4 7F0BEE84 8C8483A0 */   lw    $a0, %lo(D_800483A0)($a0)
 .L7F0BEE88:
 /* 0F39B8 7F0BEE88 3C038005 */  lui   $v1, %hi(mp_time) # $v1, 0x8005
@@ -2425,7 +2425,7 @@ glabel manage_mp_game
 /* 0F42E4 7F0BF7B4 24050004 */   li    $a1, 4
 /* 0F42E8 7F0BF7B8 50400004 */  beql  $v0, $zero, .L7F0BF7CC
 /* 0F42EC 7F0BF7BC 00002025 */   move  $a0, $zero
-/* 0F42F0 7F0BF7C0 0C002449 */  jal   music_related_30
+/* 0F42F0 7F0BF7C0 0C002449 */  jal   sfx_c_70009124
 /* 0F42F4 7F0BF7C4 00000000 */   nop   
 /* 0F42F8 7F0BF7C8 00002025 */  move  $a0, $zero
 .L7F0BF7CC:
@@ -2686,7 +2686,7 @@ void unload_stage_text_data(void) {
     {
         if (sfxGetArg0Unk3F(D_800483A0) != 0)
         {
-            sfxSetArg0Unk3EPostEvent(D_800483A0);
+            sfxDeactivate(D_800483A0);
         }
     }
     if (current_stage_to_load != 0x5a)

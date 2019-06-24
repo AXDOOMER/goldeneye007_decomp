@@ -187,7 +187,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/game/cleanup_objectives.o
  .options       0x0000000000000000       0x20 build/src/game/cleanupSFXRelated.o
  .reginfo       0x0000000000000000       0x18 build/src/game/cleanupSFXRelated.o
- .mdebug        0x0000000000000000      0x3f0 build/src/game/cleanupSFXRelated.o
+ .mdebug        0x0000000000000000      0x3e4 build/src/game/cleanupSFXRelated.o
  .options       0x0000000000000000       0x20 build/src/game/playerstats_007770.o
  .reginfo       0x0000000000000000       0x18 build/src/game/playerstats_007770.o
  .options       0x0000000000000000       0x20 build/src/game/unk_007800.o
@@ -648,8 +648,8 @@ Linker script and memory map
                 0x0000000070003b04                video_related_9
                 0x0000000070003b64                receive_vi_c_msgs
                 0x0000000070003bb0                setVideoWidthHeightToMode
-                0x0000000070003c00                set_coloroutputmode_1
-                0x0000000070003c10                set_coloroutputmode_0
+                0x0000000070003c00                set_coloroutputmode_16bit
+                0x0000000070003c10                set_coloroutputmode_32bit
                 0x0000000070003c1c                get_video_settings2_frameb
                 0x0000000070003c2c                get_video_settings1_frameb
                 0x0000000070003c3c                set_video2buf_offset28
@@ -779,35 +779,35 @@ Linker script and memory map
                 0x0000000070007914                music_related_15
  build/src/sfx.o(.text)
  .text          0x0000000070007b20     0x1860 build/src/sfx.o
-                0x0000000070007b20                music_related_16
-                0x0000000070007ddc                music_related_17
-                0x0000000070007e80                music_related_18
+                0x0000000070007b20                sfx_c_70007B20
+                0x0000000070007ddc                sfx_c_70007DDC
+                0x0000000070007e80                sfx_c_70007E80
                 0x0000000070007fbc                .L70007FBC
                 0x0000000070008388                .L70008388
                 0x000000007000847c                .L7000847C
                 0x00000000700084f0                .L700084F0
                 0x00000000700085c8                .L700085C8
                 0x00000000700088d4                .L700088D4
-                0x0000000070008948                music_related_19
-                0x00000000700089c4                music_related_20
-                0x0000000070008a30                music_related_21
-                0x0000000070008af0                music_related_22
-                0x0000000070008b70                music_related_23
-                0x0000000070008d04                music_related_24
-                0x0000000070008dd8                music_related_25
+                0x0000000070008948                sfx_c_70008948
+                0x00000000700089c4                sfx_c_700089C4
+                0x0000000070008a30                sfx_c_70008A30
+                0x0000000070008af0                sfx_c_70008AF0
+                0x0000000070008b70                sfx_c_70008B70
+                0x0000000070008d04                sfx_c_70008D04
+                0x0000000070008dd8                sfx_c_70008DD8
                 0x0000000070008df0                sfxGetArg0Unk3F
                 0x0000000070008e08                play_sfx_a1
-                0x0000000070009020                sfxSetArg0Unk3EPostEvent
-                0x000000007000906c                music_related_29
-                0x0000000070009124                music_related_30
-                0x0000000070009144                music_related_32
-                0x0000000070009164                music_related_34
-                0x0000000070009184                music_related_36
-                0x00000000700091c8                music_related_37
-                0x00000000700091e8                music_related_38
-                0x0000000070009238                music_related_39
-                0x0000000070009264                music_related_41
-                0x0000000070009284                music_related_42
+                0x0000000070009020                sfxDeactivate
+                0x000000007000906c                sfx_c_7000906C
+                0x0000000070009124                sfx_c_70009124
+                0x0000000070009144                sfx_c_70009144
+                0x0000000070009164                sfx_c_70009164
+                0x0000000070009184                sfx_c_70009184
+                0x00000000700091c8                sfx_c_700091C8
+                0x00000000700091e8                sfx_c_700091E8
+                0x0000000070009238                sfx_c_70009238
+                0x0000000070009264                sfx_c_70009264
+                0x0000000070009284                sfx_c_70009284
  build/src/memp.o(.text)
  .text          0x0000000070009380      0x690 build/src/memp.o
                 0x0000000070009380                something_with_memp_c_debug

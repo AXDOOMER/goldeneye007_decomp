@@ -1,10 +1,31 @@
 #include "ultra64.h"
 
+/**
+ * @file debug_getlastRA.c
+ * This file contains code to get last return address on stack.
+ */
 
 
+/**
+ * 6710	70005B10
+ *     V0=value of RA previously saved to the stack or -1 if impossible to retrieve
+ *     Searches backward from caller for last instance of RA saved to stack.
+ */
 #ifdef NONMATCHING
-void return_last_RA_saved_to_stack(void) {
-
+s32 return_last_RA_saved_to_stack(undefined4 param_1) {
+  uint uVar1;
+  uint *unaff_retaddr;
+  s32 auStackX0 [4];
+  
+  while( true ) {
+    uVar1 = *unaff_retaddr >> 0x10;
+    if (uVar1 == 0x27bd) {
+      return -1;
+    }
+    if (uVar1 == 0xafbf) break;
+    unaff_retaddr = unaff_retaddr + -1;
+  }
+  return *(s32 *)((int)auStackX0 + (int)(short)*unaff_retaddr);
 }
 #else
 GLOBAL_ASM(

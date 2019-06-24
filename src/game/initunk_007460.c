@@ -20,7 +20,7 @@ loop_1:
         if (sfxGetArg0Unk3F(temp_a0) != 0)
         {
             // Node 3
-            sfxSetArg0Unk3EPostEvent(*phi_s0);
+            sfxDeactivate(*phi_s0);
         }
     }
     // Node 4
@@ -53,7 +53,7 @@ glabel cleanupObjectSounds
 /* 03BFC0 7F007490 00000000 */   nop   
 /* 03BFC4 7F007494 50400004 */  beql  $v0, $zero, .L7F0074A8
 /* 03BFC8 7F007498 26100018 */   addiu $s0, $s0, 0x18
-/* 03BFCC 7F00749C 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 03BFCC 7F00749C 0C002408 */  jal   sfxDeactivate
 /* 03BFD0 7F0074A0 8E040000 */   lw    $a0, ($s0)
 /* 03BFD4 7F0074A4 26100018 */  addiu $s0, $s0, 0x18
 .L7F0074A8:

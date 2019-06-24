@@ -539,7 +539,7 @@ glabel debug_menu_processor
 /* 0C5108 7F0905D8 0C0012ED */  jal   indy_grab_rgb_32bit
 /* 0C510C 7F0905DC 00000000 */   nop   
 /* 0C5110 7F0905E0 3C018003 */  lui   $at, %hi(grab_rgb_screenshot_flag) # $at, 0x8003
-/* 0C5114 7F0905E4 0C000F00 */  jal   set_coloroutputmode_1
+/* 0C5114 7F0905E4 0C000F00 */  jal   set_coloroutputmode_16bit
 /* 0C5118 7F0905E8 AC206FFC */   sw    $zero, %lo(grab_rgb_screenshot_flag)($at)
 /* 0C511C 7F0905EC 0C0038B4 */  jal   osViBlack
 /* 0C5120 7F0905F0 00002025 */   move  $a0, $zero
@@ -555,7 +555,7 @@ glabel debug_menu_processor
 /* 0C5144 7F090614 0C001235 */  jal   indy_grab_jpg_32bit
 /* 0C5148 7F090618 00000000 */   nop   
 /* 0C514C 7F09061C 3C018003 */  lui   $at, %hi(grab_jpeg_screenshot_flag) # $at, 0x8003
-/* 0C5150 7F090620 0C000F00 */  jal   set_coloroutputmode_1
+/* 0C5150 7F090620 0C000F00 */  jal   set_coloroutputmode_16bit
 /* 0C5154 7F090624 AC207000 */   sw    $zero, %lo(grab_jpeg_screenshot_flag)($at)
 /* 0C5158 7F090628 0C0038B4 */  jal   osViBlack
 /* 0C515C 7F09062C 00002025 */   move  $a0, $zero
@@ -900,7 +900,7 @@ debug_grabrgb:
 /* 0C55F0 7F090AC0 AC236FFC */  sw    $v1, %lo(grab_rgb_screenshot_flag)($at)
 /* 0C55F4 7F090AC4 0C0038B4 */  jal   osViBlack
 /* 0C55F8 7F090AC8 24040001 */   li    $a0, 1
-/* 0C55FC 7F090ACC 0C000F04 */  jal   set_coloroutputmode_0
+/* 0C55FC 7F090ACC 0C000F04 */  jal   set_coloroutputmode_32bit
 /* 0C5600 7F090AD0 00000000 */   nop   
 /* 0C5604 7F090AD4 100000E8 */  b     .L7F090E78
 /* 0C5608 7F090AD8 8FB80018 */   lw    $t8, 0x18($sp)
@@ -910,7 +910,7 @@ debug_grabjpeg:
 /* 0C5614 7F090AE4 AC237000 */  sw    $v1, %lo(grab_jpeg_screenshot_flag)($at)
 /* 0C5618 7F090AE8 0C0038B4 */  jal   osViBlack
 /* 0C561C 7F090AEC 24040001 */   li    $a0, 1
-/* 0C5620 7F090AF0 0C000F04 */  jal   set_coloroutputmode_0
+/* 0C5620 7F090AF0 0C000F04 */  jal   set_coloroutputmode_32bit
 /* 0C5624 7F090AF4 00000000 */   nop   
 /* 0C5628 7F090AF8 100000DF */  b     .L7F090E78
 /* 0C562C 7F090AFC 8FB80018 */   lw    $t8, 0x18($sp)

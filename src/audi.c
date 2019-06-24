@@ -2,6 +2,12 @@
 #include "ultra64.h"
 #include "sched.h"
 #include "audi.h"
+
+/**
+ * @file audi.c
+ * This file contains audio code.
+ */
+
 u32 D_800230F0 = 0;
 u32 audFrameCt = 0;
 u32 nextDMA = 0;

@@ -655,6 +655,12 @@ typedef enum SCREEN_SIZE
   SCREEN_SIZE_440x330 = 0x1
 } SCREEN_SIZE;
 
+typedef enum COLORMODE
+{
+  MODE_32BIT = 0x0,
+  MODE_16BIT = 0x1
+} COLORMODE;
+
 typedef enum CAMERAMODE {
     INTRO_CAM=1,
     FADESWIRL_CAM,
