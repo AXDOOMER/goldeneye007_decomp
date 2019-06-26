@@ -451,6 +451,18 @@ typedef enum STAGENUM {
     SP_STAGE_TRAIN=13
 } STAGENUM;
 
+typedef struct sfxdata sfxdata, *Psfxdata;
+
+typedef long s32;
+
+struct sfxdata {
+    s32 target_volume;
+    s32 audio_range_time;
+    s32 initial_volume;
+    void * preset_emitter;
+    void * object_emitter;
+};
+
 typedef struct ramromfilestructure ramromfilestructure, *Pramromfilestructure;
 
 typedef double f64;
@@ -629,6 +641,11 @@ typedef enum CAMERAMODE {
     UNK6_CAM=6
 } CAMERAMODE;
 
+typedef enum COLORMODE {
+    16BIT=1,
+    32BIT=0
+} COLORMODE;
+
 typedef struct playerfavoriteweapon playerfavoriteweapon, *Pplayerfavoriteweapon;
 
 struct playerfavoriteweapon {
@@ -793,8 +810,6 @@ typedef struct OSViFieldRegs OSViFieldRegs, *POSViFieldRegs;
 typedef struct OSThread_s OSThread_s, *POSThread_s;
 
 typedef struct OSThread_s OSThread;
-
-typedef long s32;
 
 typedef s32 OSPri;
 
@@ -14317,7 +14332,7 @@ void osCreateLog(void);
 void osCreateScheduler(OSSched *sc,void *stack,u8 mode,u8 numFields);
 void osScAddClient(OSSched *sc,OSScClient *c,OSMesgQueue *msgQ);
 void osScRemoveClient(OSSched *sc,OSScClient *c);
-OSMesgQueue * *osScGetCmdQ(OSSched *sc);
+OSMesgQueue * osScGetCmdQ(OSSched *sc);
 void __scMain(OSSched *sc);
 void proc_70000E90(undefined param_1,undefined param_2,undefined param_3,undefined param_4,undefined param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,undefined4 param_9,undefined4 param_10,undefined4 param_11,undefined4 param_12);
 void __scHandleRetrace(OSSched *sc);
@@ -14363,8 +14378,8 @@ void video_related_8(void);
 void video_related_9(float param_1);
 void receive_vi_c_msgs(int msgcount);
 void setVideoWidthHeightToMode(int videomode);
-void set_coloroutputmode_on(void);
-void set_coloroutputmode_off(void);
+void set_coloroutputmode_16bit(void);
+void set_coloroutputmode_32bit(void);
 int get_video_settings2_frameb(void);
 int get_video_settings1_frameb(void);
 void set_video_settings2_frameb(int framebuffer);
@@ -14401,7 +14416,7 @@ void indy_grab_jpg_16bit(void);
 void indy_grab_jpg_32bit(void);
 void indy_grab_rgb_16bit(void);
 undefined4 indy_grab_rgb_32bit(void);
-int * return_match_in_debug_notice_list(char *name);
+int * return_match_in_debug_notice_list(char *name,char *data);
 void get_entry_of_size_in_debug_notice_list(int size);
 void add_new_entry_to_debug_notice_list(dword name,dword data);
 void add_debug_notice_deb_c_debug(void);
@@ -14411,7 +14426,7 @@ void proc_70004EBC(void);
 void debug_removed(undefined4 param_1,undefined4 param_2,undefined4 param_3);
 void init_tlb(void);
 void translate_7F_address(void *param_1);
-int debug_related_8(uint *param_1,uint *param_2,int param_3,undefined4 *param_4);
+int debug_related_8(uint *op_cur,uint *op_start,int fn_sp,undefined4 *fn_reg);
 BOOL was_opcode_a_jal_r_within_70000450_70020D90(u32 *function);
 int return_strlen(char *str);
 uint indy_file_get_address_subsequent_data(int hardware_address);
@@ -14434,7 +14449,7 @@ void print_to_vidbuff1(int xpos,int ypos,byte char);
 void set_ptr_video_buffers(uint *buffer1,uint *buffer2);
 void set_video_buffer_pointers(void);
 void write_stderr_to_buffer(void *buffer);
-undefined4 return_last_RA_saved_to_stack(undefined4 param_1);
+s32 return_last_RA_saved_to_stack(undefined4 param_1);
 void romCreateMesgQueue(void);
 void doRomCopy(void *target,void *source,u32 size);
 void romReceiveMesg(void);
@@ -14488,7 +14503,7 @@ int ** music_related_23(undefined8 param_1,int *param_2);
 void music_related_24(int **param_1);
 void music_related_25(int param_1,undefined param_2);
 ulonglong music_related_26(int param_1);
-int ** play_sfx_a1(undefined8 buffer,short entry,int **param_3);
+int ** play_sfx_a1(void *buffer,short entry,sfxdata *data);
 void music_related_28(int param_1);
 void music_related_29(byte param_1);
 void music_related_30(void);
