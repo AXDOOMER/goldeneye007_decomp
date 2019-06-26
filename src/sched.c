@@ -418,24 +418,16 @@ glabel osScRemoveClient
  * 18F8	70000CF8
  * V0= A0+78
  */
-#ifdef NONMATCHING
-s32 osScGetCmdQ(s32 arg0)
+OSMesgQueue *osScGetCmdQ(OSSched *sc)
 {
-    return (arg0 + 0x78);
+    return &sc->cmdQ;
 }
-#else
-GLOBAL_ASM(
-glabel osScGetCmdQ
-/* 0018F8 70000CF8 03E00008 */  jr    $ra
-/* 0018FC 70000CFC 24820078 */   addiu $v0, $a0, 0x78
-)
-#endif
 
 /**
  * 1900	70000D00
  */
 #ifdef NONMATCHING
-void __scMain(void *arg0)
+void __scMain(OSSched *sc)
 {
     s32 sp4C;
     s32 temp_s3;
