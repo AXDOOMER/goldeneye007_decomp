@@ -14,9 +14,10 @@ struct weapon_stats
   f32 field_18;
   s32 ammotype;
   s16 mag_size;
-  s16 time_between_shots;
+  u8 automatic_firing_rate;
+  s8 single_firing_rate;
   u8 objects_shoot_through;
-  u8 field_25;
+  u8 sound_trigger_rate;
   s16 sound;
   s32 *ptr_cartridge_struct;
   f32 destruction_amount;

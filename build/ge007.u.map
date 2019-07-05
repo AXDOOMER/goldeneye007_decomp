@@ -2579,8 +2579,8 @@ Linker script and memory map
                 0x000000007f05de94                sub_GAME_7F05DE94
                 0x000000007f05df84                sub_GAME_7F05DF84
                 0x000000007f05dfa8                sub_GAME_7F05DFA8
-                0x000000007f05dfcc                sub_GAME_7F05DFCC
-                0x000000007f05dff0                sub_GAME_7F05DFF0
+                0x000000007f05dfcc                get_automatic_firing_rate
+                0x000000007f05dff0                get_sound_trigger_rate
                 0x000000007f05e014                sub_GAME_7F05E014
                 0x000000007f05e038                sub_GAME_7F05E038
                 0x000000007f05e05c                check_if_have_ammo_for_item
