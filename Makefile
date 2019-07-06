@@ -120,7 +120,12 @@ ifeq ($(COMPARE),1)
 	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1
 endif
 
-
+fixbadcompress:
+	git checkout build/assets/obseg/setup/UsetuparchZ.rz
+	git checkout build/assets/obseg/setup/UsetupjunZ.rz
+	git checkout build/assets/obseg/setup/UsetupsevbZ.rz
+	git checkout build/assets/obseg/text/LcradE.rz
+	rm -f build/assets/obseg/ob_seg.o
 
 codeclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
@@ -190,7 +195,7 @@ $(APPROM):	$(APPBIN)
 	$(N64CKSUM) $< $@
 	rm header.tmp
 
-.PHONY: all default codeclean dataclean clean
+.PHONY: all default codeclean dataclean clean fixbadcompress
 
 
 
