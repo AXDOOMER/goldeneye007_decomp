@@ -14,6 +14,8 @@ followed by
 ./extract_baserom.sh && make clean && make
 ```
 
+DO NOT USE -j# it will break things!!!!!!!!!
+
 If you are upgrading from an old repo, run
 ```
 ./clean_baserom.sh && ./extract_baserom.sh && make clean && make
