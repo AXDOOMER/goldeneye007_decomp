@@ -48,6 +48,24 @@ struct portal_4_point
     struct xyzpoint points[4];
 };
 
+struct portal_3_point
+{
+    char numpoints;
+    char padding1;
+    char padding2;
+    char padding3;
+    struct xyzpoint points[3];
+};
+
+struct portal_6_point
+{
+    char numpoints;
+    char padding1;
+    char padding2;
+    char padding3;
+    struct xyzpoint points[6];
+};
+
 extern struct room_data_table_entry room_data_table[];
 extern struct portal_data_table_entry portal_data_table[];
 extern u32 global_visibility_commands[];
