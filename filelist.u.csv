@@ -96,8 +96,8 @@
 4425312,69104,assets/obseg/bg/bg_sev_all_p.bin,0,0
 4494416,331584,assets/obseg/bg/bg_silo_all_p.bin,0,0
 4826000,139472,assets/obseg/bg/bg_stat_all_p.bin,0,1
-4965472,189312,assets/obseg/bg/bg_arec_all_p.bin,0,0
-5154784,154352,assets/obseg/bg/bg_arch_all_p.bin,0,0
+4965472,189312,assets/obseg/bg/bg_arec_all_p.bin,0,1
+5154784,154352,assets/obseg/bg/bg_arch_all_p.bin,0,1
 5309136,132464,assets/obseg/bg/bg_tra_all_p.bin,0,1
 5441600,186816,assets/obseg/bg/bg_dest_all_p.bin,0,1
 5628416,109984,assets/obseg/bg/bg_sevb_all_p.bin,0,0
@@ -107,12 +107,12 @@
 6164368,38416,assets/obseg/bg/bg_ref_all_p.bin,0,0
 6202784,87728,assets/obseg/bg/bg_cryp_all_p.bin,0,0
 6290512,197024,assets/obseg/bg/bg_dam_all_p.bin,0,1
-6487536,200576,assets/obseg/bg/bg_ark_all_p.bin,0,0
+6487536,200576,assets/obseg/bg/bg_ark_all_p.bin,0,1
 6688112,41936,assets/obseg/bg/bg_run_all_p.bin,0,0
 6730048,116176,assets/obseg/bg/bg_sevx_all_p.bin,0,0
 6846224,86352,assets/obseg/bg/bg_jun_all_p.bin,0,1
 6932576,18544,assets/obseg/bg/bg_dish_all_p.bin,0,0
-6951120,148720,assets/obseg/bg/bg_cave_all_p.bin,0,0
+6951120,148720,assets/obseg/bg/bg_cave_all_p.bin,0,1
 7099840,21808,assets/obseg/bg/bg_cat_all_p.bin,0,0
 7121648,66384,assets/obseg/bg/bg_crad_all_p.bin,0,0
 7188032,0,assets/obseg/bg/bg_imp_all_p.bin,0,1
