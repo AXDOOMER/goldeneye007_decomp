@@ -1175,34 +1175,12 @@ glabel sub_GAME_7F05C6FC
 
 
 
-#ifdef NONMATCHING
-void get_ptr_item_statistics(void) {
-
+void *get_ptr_item_statistics(int item) {
+    if (gitem_structs[item].has_no_model == 0) { /* weapon has model, return stats struct */
+        return gitem_structs[item].item_weapon_stats;
+    }
+    return &stru_D_80032494; /* no model, return defaults */
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_item_statistics
-/* 0913E4 7F05C8B4 000470C0 */  sll   $t6, $a0, 3
-/* 0913E8 7F05C8B8 01C47023 */  subu  $t6, $t6, $a0
-/* 0913EC 7F05C8BC 3C0F8003 */  lui   $t7, %hi(gitem_structs) # $t7, 0x8003
-/* 0913F0 7F05C8C0 25EF3924 */  addiu $t7, %lo(gitem_structs) # addiu $t7, $t7, 0x3924
-/* 0913F4 7F05C8C4 000E70C0 */  sll   $t6, $t6, 3
-/* 0913F8 7F05C8C8 01CF1821 */  addu  $v1, $t6, $t7
-/* 0913FC 7F05C8CC 8C780008 */  lw    $t8, 8($v1)
-/* 091400 7F05C8D0 17000003 */  bnez  $t8, .L7F05C8E0
-/* 091404 7F05C8D4 00000000 */   nop   
-/* 091408 7F05C8D8 03E00008 */  jr    $ra
-/* 09140C 7F05C8DC 8C62000C */   lw    $v0, 0xc($v1)
-
-.L7F05C8E0:
-/* 091410 7F05C8E0 3C028003 */  lui   $v0, %hi(stru_D_80032494) # $v0, 0x8003
-/* 091414 7F05C8E4 24422494 */  addiu $v0, %lo(stru_D_80032494) # addiu $v0, $v0, 0x2494
-/* 091418 7F05C8E8 03E00008 */  jr    $ra
-/* 09141C 7F05C8EC 00000000 */   nop   
-)
-#endif
-
 
 
 
