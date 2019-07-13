@@ -1175,7 +1175,7 @@ glabel sub_GAME_7F05C6FC
 
 
 
-void *get_ptr_item_statistics(int item) {
+struct weapon_stats *get_ptr_item_statistics(int item) {
     if (gitem_structs[item].has_no_model == 0) { /* weapon has model, return stats struct */
         return gitem_structs[item].item_weapon_stats;
     }
@@ -3333,49 +3333,17 @@ glabel sub_GAME_7F05DFA8
 
 
 
-#ifdef NONMATCHING
-void get_automatic_firing_rate(void) {
-
+s8 get_automatic_firing_rate(int item) {
+    return get_ptr_item_statistics(item)->automatic_firing_rate;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_automatic_firing_rate
-/* 092AFC 7F05DFCC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 092B00 7F05DFD0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092B04 7F05DFD4 0FC1722D */  jal   get_ptr_item_statistics
-/* 092B08 7F05DFD8 00000000 */   nop   
-/* 092B0C 7F05DFDC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 092B10 7F05DFE0 80420022 */  lb    $v0, 0x22($v0)
-/* 092B14 7F05DFE4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 092B18 7F05DFE8 03E00008 */  jr    $ra
-/* 092B1C 7F05DFEC 00000000 */   nop   
-)
-#endif
 
 
 
 
 
-#ifdef NONMATCHING
-void get_sound_trigger_rate(void) {
-
+u8 get_sound_trigger_rate(int item) {
+    return get_ptr_item_statistics(item)->sound_trigger_rate;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_sound_trigger_rate
-/* 092B20 7F05DFF0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 092B24 7F05DFF4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092B28 7F05DFF8 0FC1722D */  jal   get_ptr_item_statistics
-/* 092B2C 7F05DFFC 00000000 */   nop   
-/* 092B30 7F05E000 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 092B34 7F05E004 90420025 */  lbu   $v0, 0x25($v0)
-/* 092B38 7F05E008 27BD0018 */  addiu $sp, $sp, 0x18
-/* 092B3C 7F05E00C 03E00008 */  jr    $ra
-/* 092B40 7F05E010 00000000 */   nop   
-)
-#endif
 
 
 
