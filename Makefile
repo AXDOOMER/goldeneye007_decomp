@@ -120,37 +120,19 @@ ifeq ($(COMPARE),1)
 	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1
 endif
 
-fixbadcompress:
-	cp -f broken_zip/assets/obseg/setup/UsetuparchZ.rz build/assets/obseg/setup/UsetuparchZ.rz
-	cp -f broken_zip/assets/obseg/setup/UsetupjunZ.rz build/assets/obseg/setup/UsetupjunZ.rz
-	cp -f broken_zip/assets/obseg/setup/UsetupsevbZ.rz build/assets/obseg/setup/UsetupsevbZ.rz
-	cp -f broken_zip/assets/obseg/text/LcradE.rz build/assets/obseg/text/LcradE.rz
-	rm -f build/assets/obseg/ob_seg.o
 
 codeclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS)
-	cp -f broken_zip/assets/obseg/setup/UsetuparchZ.rz build/assets/obseg/setup/UsetuparchZ.rz
-	cp -f broken_zip/assets/obseg/setup/UsetupjunZ.rz build/assets/obseg/setup/UsetupjunZ.rz
-	cp -f broken_zip/assets/obseg/setup/UsetupsevbZ.rz build/assets/obseg/setup/UsetupsevbZ.rz
-	cp -f broken_zip/assets/obseg/text/LcradE.rz build/assets/obseg/text/LcradE.rz
 
 dataclean: 
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES)
-	cp -f broken_zip/assets/obseg/setup/UsetuparchZ.rz build/assets/obseg/setup/UsetuparchZ.rz
-	cp -f broken_zip/assets/obseg/setup/UsetupjunZ.rz build/assets/obseg/setup/UsetupjunZ.rz
-	cp -f broken_zip/assets/obseg/setup/UsetupsevbZ.rz build/assets/obseg/setup/UsetupsevbZ.rz
-	cp -f broken_zip/assets/obseg/text/LcradE.rz build/assets/obseg/text/LcradE.rz
 
 clean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES)
-	cp -f broken_zip/assets/obseg/setup/UsetuparchZ.rz build/assets/obseg/setup/UsetuparchZ.rz
-	cp -f broken_zip/assets/obseg/setup/UsetupjunZ.rz build/assets/obseg/setup/UsetupjunZ.rz
-	cp -f broken_zip/assets/obseg/setup/UsetupsevbZ.rz build/assets/obseg/setup/UsetupsevbZ.rz
-	cp -f broken_zip/assets/obseg/text/LcradE.rz build/assets/obseg/text/LcradE.rz
 
 build/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
@@ -195,7 +177,7 @@ $(APPROM):	$(APPBIN)
 	$(N64CKSUM) $< $@
 	rm header.tmp
 
-.PHONY: all default codeclean dataclean clean fixbadcompress
+.PHONY: all default codeclean dataclean clean
 
 
 
