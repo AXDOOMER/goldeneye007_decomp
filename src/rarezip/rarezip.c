@@ -1,6 +1,9 @@
 #include "ultra64.h"
 #include "rarezip/rarezip.h"
 
+//this file is modified from inflate.c found in gzip...
+//does this create a license conflict in rare's original source tree?
+
 u32 rz_ptr_source = 0x00000000;
 u32 rz_ptr_target = 0x00000000;
 u32 inptr = 0x00000000;
