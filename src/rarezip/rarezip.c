@@ -3,78 +3,48 @@
 
 u32 rz_ptr_source = 0x00000000;
 u32 rz_ptr_target = 0x00000000;
-u32 rz_curoffset = 0x00000000;
-u32 rz_decompressed_count = 0x00000000;
+u32 inptr = 0x00000000;
+u32 wp = 0x00000000;
 u32 rz_ptrbuffer = 0x00000000;
-u8 rz_order[0x14] = {0x10, 0x11, 0x12, 0x00,\
-               0x08, 0x07, 0x09, 0x06,\
-               0x0A, 0x05, 0x0B, 0x04,\
-               0x0C, 0x03, 0x0D, 0x02,\
-               0x0E, 0x01, 0x0F, 0x00};
+u8 border[0x14] = {
+        16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
 
-u16 rz_lbase[0x20] = {0x0003, 0x0004, 0x0005, 0x0006,\
-                0x0007, 0x0008, 0x0009, 0x000A,\
-                0x000B, 0x000D, 0x000F, 0x0011,\
-                0x0013, 0x0017, 0x001B, 0x001F,\
-                0x0023, 0x002B, 0x0033, 0x003B,\
-                0x0043, 0x0053, 0x0063, 0x0073,\
-                0x0083, 0x00A3, 0x00C3, 0x00E3,\
-                0x0102, 0x0000, 0x0000, 0x0000};
+u16 cplens[0x20] = {
+        3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31,
+        35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0};
 
-u8 rz_lextra[0x20] = {0x00, 0x00, 0x00, 0x00,\
-                0x00, 0x00, 0x00, 0x00,\
-                0x01, 0x01, 0x01, 0x01,\
-                0x02, 0x02, 0x02, 0x02,\
-                0x03, 0x03, 0x03, 0x03,\
-                0x04, 0x04, 0x04, 0x04,\
-                0x05, 0x05, 0x05, 0x05,\
-                0x00, 0x63, 0x63, 0x00};
+u8 cplext[0x20] = {
+        0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2,
+        3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 99, 99};
 
-u16 rz_dbase[0x1E] = {0x0001, 0x0002,\
-                0x0003, 0x0004,\
-                0x0005, 0x0007,\
-                0x0009, 0x000D,\
-                0x0011, 0x0019,\
-                0x0021, 0x0031,\
-                0x0041, 0x0061,\
-                0x0081, 0x00C1,\
-                0x0101, 0x0181,\
-                0x0201, 0x0301,\
-                0x0401, 0x0601,\
-                0x0801, 0x0C01,\
-                0x1001, 0x1801,\
-                0x2001, 0x3001,\
-                0x4001, 0x6001};
+u16 cpdist[0x1E] = {
+        1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193,
+        257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145,
+        8193, 12289, 16385, 24577};
 
-u8 rz_dextra[0x20] = {0x00, 0x00, 0x00, 0x00,\
-                0x01, 0x01, 0x02, 0x02,\
-                0x03, 0x03, 0x04, 0x04,\
-                0x05, 0x05, 0x06, 0x06,\
-                0x07, 0x07, 0x08, 0x08,\
-                0x09, 0x09, 0x0A, 0x0A,\
-                0x0B, 0x0B, 0x0C, 0x0C,\
-                0x0D, 0x0D, 0x00, 0x00};
+u8 cpdext[0x20] = {
+        0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6,
+        7, 7, 8, 8, 9, 9, 10, 10, 11, 11,
+        12, 12, 13, 13};
 
-u32 rz_sample = 0x00000000;
-u32 rz_bitsinsample = 0x00000000;
+u32 bb = 0;
+u32 bk = 0;
 
-u16 rz_masks[0x12] = {0x0000, 0x0001,\
-                0x0003, 0x0007,\
-                0x000F, 0x001F,\
-                0x003F, 0x007F,\
-                0x00FF, 0x01FF,\
-                0x03FF, 0x07FF,\
-                0x0FFF, 0x1FFF,\
-                0x3FFF, 0x7FFF,\
-                0xFFFF, 0x0000};
+u16 mask_bits[0x12] = {
+    0x0000, 0x0001, 0x0003, 0x0007,
+    0x000F, 0x001F, 0x003F, 0x007F,
+    0x00FF, 0x01FF, 0x03FF, 0x07FF,
+    0x0FFF, 0x1FFF, 0x3FFF, 0x7FFF,
+    0xFFFF, 
+};
 
-u32 rz_data1 = 0x00000009;
-u32 rz_data2 = 0x00000006;
-u32 rz_data3 = 0x00000000;
+u32 lbits = 9;
+u32 dbits = 6;
+u32 hufts = 0;
 
 
 GLOBAL_ASM(
-glabel decompress_buildtable
+glabel huft_build
 /* 033590 70200000 27BDFA10 */  addiu $sp, $sp, -0x5f0
 /* 033594 70200004 AFB20010 */  sw    $s2, 0x10($sp)
 /* 033598 70200008 00809025 */  move  $s2, $a0
@@ -295,8 +265,8 @@ glabel decompress_buildtable
 /* 0338A4 70200314 27AF05A8 */  addiu $t7, $sp, 0x5a8
 /* 0338A8 70200318 01CFC021 */  addu  $t8, $t6, $t7
 /* 0338AC 7020031C 3C1E7020 */  lui   $fp, %hi(rz_ptrbuffer) # $fp, 0x7020
-/* 0338B0 70200320 3C137020 */  lui   $s3, %hi(rz_data3) # $s3, 0x7020
-/* 0338B4 70200324 26731598 */  addiu $s3, %lo(rz_data3) # addiu $s3, $s3, 0x1598
+/* 0338B0 70200320 3C137020 */  lui   $s3, %hi(hufts) # $s3, 0x7020
+/* 0338B4 70200324 26731598 */  addiu $s3, %lo(hufts) # addiu $s3, $s3, 0x1598
 /* 0338B8 70200328 27DE1490 */  addiu $fp, %lo(rz_ptrbuffer) # addiu $fp, $fp, 0x1490
 /* 0338BC 7020032C AFB80050 */  sw    $t8, 0x50($sp)
 /* 0338C0 70200330 8FB60604 */  lw    $s6, 0x604($sp)
@@ -526,33 +496,33 @@ glabel decompress_buildtable
 )
 
 GLOBAL_ASM(
-glabel decompress_inflate
+glabel inflate_codes
 /* 033BE4 70200654 27BDFFF0 */  addiu $sp, $sp, -0x10
-/* 033BE8 70200658 3C0B7020 */  lui   $t3, %hi(rz_masks) # $t3, 0x7020
-/* 033BEC 7020065C 256B156C */  addiu $t3, %lo(rz_masks) # addiu $t3, $t3, 0x156c
+/* 033BE8 70200658 3C0B7020 */  lui   $t3, %hi(mask_bits) # $t3, 0x7020
+/* 033BEC 7020065C 256B156C */  addiu $t3, %lo(mask_bits) # addiu $t3, $t3, 0x156c
 /* 033BF0 70200660 AFB10008 */  sw    $s1, 8($sp)
 /* 033BF4 70200664 AFB00004 */  sw    $s0, 4($sp)
 /* 033BF8 70200668 00067040 */  sll   $t6, $a2, 1
 /* 033BFC 7020066C 0007C040 */  sll   $t8, $a3, 1
 /* 033C00 70200670 00C08025 */  move  $s0, $a2
 /* 033C04 70200674 00E08825 */  move  $s1, $a3
-/* 033C08 70200678 3C097020 */  lui   $t1, %hi(rz_sample) # $t1, 0x7020
-/* 033C0C 7020067C 3C087020 */  lui   $t0, %hi(rz_bitsinsample) # $t0, 0x7020
-/* 033C10 70200680 3C037020 */  lui   $v1, %hi(rz_decompressed_count) # $v1, 0x7020
+/* 033C08 70200678 3C097020 */  lui   $t1, %hi(bb) # $t1, 0x7020
+/* 033C0C 7020067C 3C087020 */  lui   $t0, %hi(bk) # $t0, 0x7020
+/* 033C10 70200680 3C037020 */  lui   $v1, %hi(wp) # $v1, 0x7020
 /* 033C14 70200684 016E7821 */  addu  $t7, $t3, $t6
 /* 033C18 70200688 0178C821 */  addu  $t9, $t3, $t8
-/* 033C1C 7020068C 3C077020 */  lui   $a3, %hi(rz_curoffset) # $a3, 0x7020
+/* 033C1C 7020068C 3C077020 */  lui   $a3, %hi(inptr) # $a3, 0x7020
 /* 033C20 70200690 3C067020 */  lui   $a2, %hi(rz_ptr_target) # $a2, 0x7020
 /* 033C24 70200694 AFB2000C */  sw    $s2, 0xc($sp)
 /* 033C28 70200698 AFA40010 */  sw    $a0, 0x10($sp)
 /* 033C2C 7020069C AFA50014 */  sw    $a1, 0x14($sp)
-/* 033C30 702006A0 8D291564 */  lw    $t1, %lo(rz_sample)($t1)
-/* 033C34 702006A4 8D081568 */  lw    $t0, %lo(rz_bitsinsample)($t0)
-/* 033C38 702006A8 8C63148C */  lw    $v1, %lo(rz_decompressed_count)($v1)
+/* 033C30 702006A0 8D291564 */  lw    $t1, %lo(bb)($t1)
+/* 033C34 702006A4 8D081568 */  lw    $t0, %lo(bk)($t0)
+/* 033C38 702006A8 8C63148C */  lw    $v1, %lo(wp)($v1)
 /* 033C3C 702006AC 95EC0000 */  lhu   $t4, ($t7)
 /* 033C40 702006B0 972D0000 */  lhu   $t5, ($t9)
 /* 033C44 702006B4 24C61484 */  addiu $a2, %lo(rz_ptr_target) # addiu $a2, $a2, 0x1484
-/* 033C48 702006B8 24E71488 */  addiu $a3, %lo(rz_curoffset) # addiu $a3, $a3, 0x1488
+/* 033C48 702006B8 24E71488 */  addiu $a3, %lo(inptr) # addiu $a3, $a3, 0x1488
 .L702006BC:
 /* 033C4C 702006BC 0110082B */  sltu  $at, $t0, $s0
 .L702006C0:
@@ -792,15 +762,15 @@ glabel decompress_inflate
 /* 033FA0 70200A10 1000FF2B */  b     .L702006C0
 /* 033FA4 70200A14 0110082B */   sltu  $at, $t0, $s0
 .L70200A18:
-/* 033FA8 70200A18 3C017020 */  lui   $at, %hi(rz_decompressed_count) # $at, 0x7020
-/* 033FAC 70200A1C AC23148C */  sw    $v1, %lo(rz_decompressed_count)($at)
-/* 033FB0 70200A20 3C017020 */  lui   $at, %hi(rz_sample) # $at, 0x7020
-/* 033FB4 70200A24 AC291564 */  sw    $t1, %lo(rz_sample)($at)
-/* 033FB8 70200A28 3C017020 */  lui   $at, %hi(rz_bitsinsample) # $at, 0x7020
+/* 033FA8 70200A18 3C017020 */  lui   $at, %hi(wp) # $at, 0x7020
+/* 033FAC 70200A1C AC23148C */  sw    $v1, %lo(wp)($at)
+/* 033FB0 70200A20 3C017020 */  lui   $at, %hi(bb) # $at, 0x7020
+/* 033FB4 70200A24 AC291564 */  sw    $t1, %lo(bb)($at)
+/* 033FB8 70200A28 3C017020 */  lui   $at, %hi(bk) # $at, 0x7020
 /* 033FBC 70200A2C 8FB00004 */  lw    $s0, 4($sp)
 /* 033FC0 70200A30 8FB10008 */  lw    $s1, 8($sp)
 /* 033FC4 70200A34 8FB2000C */  lw    $s2, 0xc($sp)
-/* 033FC8 70200A38 AC281568 */  sw    $t0, %lo(rz_bitsinsample)($at)
+/* 033FC8 70200A38 AC281568 */  sw    $t0, %lo(bk)($at)
 /* 033FCC 70200A3C 27BD0010 */  addiu $sp, $sp, 0x10
 /* 033FD0 70200A40 03E00008 */  jr    $ra
 /* 033FD4 70200A44 00001025 */   move  $v0, $zero
@@ -809,7 +779,7 @@ glabel decompress_inflate
 
 
 #ifdef NONMATCHING
-void decompress_type0(void) {
+void inflate_stored(void) {
     s32 temp_v0;
     u32 temp_a0;
     u32 temp_v1;
@@ -819,14 +789,14 @@ void decompress_type0(void) {
     s32 temp_v0_2;
 
     // Node 0
-    temp_v0 = (rz_bitsinsample & 7);
-    temp_a0 = (rz_bitsinsample - temp_v0);
-    temp_v1 = ((u32) rz_sample >> temp_v0);
+    temp_v0 = (bb & 7);
+    temp_a0 = (bb - temp_v0);
+    temp_v1 = ((u32) bk >> temp_v0);
     if (temp_a0 < 0x10U)
     {
         // Node 1
         // Node 2
-        rz_curoffset = (s32) (rz_curoffset + 1);
+        inptr = (s32) (inptr + 1);
         if ((u32) (temp_a0 + 8) < 0x10U)
         {
             goto loop_2;
@@ -838,7 +808,7 @@ void decompress_type0(void) {
     {
         // Node 4
         // Node 5
-        rz_curoffset = (s32) (rz_curoffset + 1);
+        inptr = (s32) (inptr + 1);
         if ((u32) (temp_a0_2 + 8) < 0x10U)
         {
             goto loop_5;
@@ -856,46 +826,46 @@ void decompress_type0(void) {
         {
             // Node 9
             // Node 10
-            rz_curoffset = (s32) (rz_curoffset + 1);
+            inptr = (s32) (inptr + 1);
             if ((u32) (temp_a0_3 + 8) < 8U)
             {
                 goto loop_10;
             }
         }
         // Node 11
-        *(rz_ptr_target + rz_decompressed_count) = temp_t5;
+        *(rz_ptr_target + wp) = temp_t5;
         if ((temp_v0_2 + -1) != 0)
         {
             goto loop_8;
         }
     }
     // Node 12
-    rz_decompressed_count = (s32) rz_decompressed_count;
-    rz_sample = temp_t5;
-    rz_bitsinsample = temp_a0_3;
+    wp = (s32) wp;
+    bk = temp_t5;
+    bb = temp_a0_3;
     return;
     // (possible return value: 0)
 }
 #else
 GLOBAL_ASM(
-glabel decompress_type0
-/* 033FD8 70200A48 3C097020 */  lui   $t1, %hi(rz_bitsinsample) # $t1, 0x7020
-/* 033FDC 70200A4C 25291568 */  addiu $t1, %lo(rz_bitsinsample) # addiu $t1, $t1, 0x1568
+glabel inflate_stored
+/* 033FD8 70200A48 3C097020 */  lui   $t1, %hi(bk) # $t1, 0x7020
+/* 033FDC 70200A4C 25291568 */  addiu $t1, %lo(bk) # addiu $t1, $t1, 0x1568
 /* 033FE0 70200A50 8D240000 */  lw    $a0, ($t1)
-/* 033FE4 70200A54 3C087020 */  lui   $t0, %hi(rz_sample) # $t0, 0x7020
-/* 033FE8 70200A58 25081564 */  addiu $t0, %lo(rz_sample) # addiu $t0, $t0, 0x1564
+/* 033FE4 70200A54 3C087020 */  lui   $t0, %hi(bb) # $t0, 0x7020
+/* 033FE8 70200A58 25081564 */  addiu $t0, %lo(bb) # addiu $t0, $t0, 0x1564
 /* 033FEC 70200A5C 30820007 */  andi  $v0, $a0, 7
 /* 033FF0 70200A60 8D030000 */  lw    $v1, ($t0)
-/* 033FF4 70200A64 3C0A7020 */  lui   $t2, %hi(rz_decompressed_count) # $t2, 0x7020
+/* 033FF4 70200A64 3C0A7020 */  lui   $t2, %hi(wp) # $t2, 0x7020
 /* 033FF8 70200A68 00822023 */  subu  $a0, $a0, $v0
-/* 033FFC 70200A6C 254A148C */  addiu $t2, %lo(rz_decompressed_count) # addiu $t2, $t2, 0x148c
+/* 033FFC 70200A6C 254A148C */  addiu $t2, %lo(wp) # addiu $t2, $t2, 0x148c
 /* 034000 70200A70 2C810010 */  sltiu $at, $a0, 0x10
 /* 034004 70200A74 8D450000 */  lw    $a1, ($t2)
 /* 034008 70200A78 1020000F */  beqz  $at, .L70200AB8
 /* 03400C 70200A7C 00431806 */   srlv  $v1, $v1, $v0
 /* 034010 70200A80 3C067020 */  lui   $a2, %hi(rz_ptr_source) # $a2, 0x7020
-/* 034014 70200A84 3C0B7020 */  lui   $t3, %hi(rz_curoffset) # $t3, 0x7020
-/* 034018 70200A88 256B1488 */  addiu $t3, %lo(rz_curoffset) # addiu $t3, $t3, 0x1488
+/* 034014 70200A84 3C0B7020 */  lui   $t3, %hi(inptr) # $t3, 0x7020
+/* 034018 70200A88 256B1488 */  addiu $t3, %lo(inptr) # addiu $t3, $t3, 0x1488
 /* 03401C 70200A8C 8CC61480 */  lw    $a2, %lo(rz_ptr_source)($a2)
 .L70200A90:
 /* 034020 70200A90 8D670000 */  lw    $a3, ($t3)
@@ -910,11 +880,11 @@ glabel decompress_type0
 /* 034044 70200AB4 00781825 */   or    $v1, $v1, $t8
 .L70200AB8:
 /* 034048 70200AB8 2484FFF0 */  addiu $a0, $a0, -0x10
-/* 03404C 70200ABC 3C0B7020 */  lui   $t3, %hi(rz_curoffset) # $t3, 0x7020
+/* 03404C 70200ABC 3C0B7020 */  lui   $t3, %hi(inptr) # $t3, 0x7020
 /* 034050 70200AC0 3062FFFF */  andi  $v0, $v1, 0xffff
 /* 034054 70200AC4 00036C02 */  srl   $t5, $v1, 0x10
 /* 034058 70200AC8 2C810010 */  sltiu $at, $a0, 0x10
-/* 03405C 70200ACC 256B1488 */  addiu $t3, %lo(rz_curoffset) # addiu $t3, $t3, 0x1488
+/* 03405C 70200ACC 256B1488 */  addiu $t3, %lo(inptr) # addiu $t3, $t3, 0x1488
 /* 034060 70200AD0 1020000D */  beqz  $at, .L70200B08
 /* 034064 70200AD4 01A01825 */   move  $v1, $t5
 /* 034068 70200AD8 3C067020 */  lui   $a2, %hi(rz_ptr_source) # $a2, 0x7020
@@ -977,7 +947,7 @@ glabel decompress_type0
 
 
 #ifdef NONMATCHING
-void decompress_type1(void) {
+void inflate_fixed(void) {
     ?32 sp2C;
     ?32 sp30;
     ? sp34;
@@ -1044,7 +1014,7 @@ void decompress_type1(void) {
     }
     // Node 11
     sp4B0 = 7;
-    decompress_buildtable(&sp2C, 0x120, 0x101, &rz_lbase, &rz_lextra, &sp4B8, &sp4B0);
+    huft_build(&sp2C, 0x120, 0x101, &cplens, &cplext, &sp4B8, &sp4B0);
     sp30 = 5;
     sp2C = 5;
     // Node 12
@@ -1059,14 +1029,14 @@ void decompress_type1(void) {
     }
     // Node 13
     sp4AC = 5;
-    decompress_buildtable(&sp2C, 0x1e, 0, &rz_dbase, &rz_dextra, &sp4B4, &sp4AC);
-    decompress_inflate(sp4B8, sp4B4, sp4B0, sp4AC);
+    huft_build(&sp2C, 0x1e, 0, &cpdist, &cpdext, &sp4B4, &sp4AC);
+    inflate_codes(sp4B8, sp4B4, sp4B0, sp4AC);
     return;
     // (possible return value: 0)
 }
 #else
 GLOBAL_ASM(
-glabel decompress_type1
+glabel inflate_fixed
 /* 03412C 70200B9C 27BDFB40 */  addiu $sp, $sp, -0x4c0
 /* 034130 70200BA0 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 034134 70200BA4 27A2002C */  addiu $v0, $sp, 0x2c
@@ -1112,19 +1082,19 @@ glabel decompress_type1
 /* 0341BC 70200C2C 1420FFFD */  bnez  $at, .L70200C24
 /* 0341C0 70200C30 AC43FFFC */   sw    $v1, -4($v0)
 .L70200C34:
-/* 0341C4 70200C34 3C087020 */  lui   $t0, %hi(rz_lextra) # $t0, 0x7020
-/* 0341C8 70200C38 250814E8 */  addiu $t0, %lo(rz_lextra) # addiu $t0, $t0, 0x14e8
-/* 0341CC 70200C3C 3C077020 */  lui   $a3, %hi(rz_lbase) # $a3, 0x7020
+/* 0341C4 70200C34 3C087020 */  lui   $t0, %hi(cplext) # $t0, 0x7020
+/* 0341C8 70200C38 250814E8 */  addiu $t0, %lo(cplext) # addiu $t0, $t0, 0x14e8
+/* 0341CC 70200C3C 3C077020 */  lui   $a3, %hi(cplens) # $a3, 0x7020
 /* 0341D0 70200C40 27A904B8 */  addiu $t1, $sp, 0x4b8
 /* 0341D4 70200C44 27AA04B0 */  addiu $t2, $sp, 0x4b0
 /* 0341D8 70200C48 AFB904B0 */  sw    $t9, 0x4b0($sp)
 /* 0341DC 70200C4C AFAA0018 */  sw    $t2, 0x18($sp)
 /* 0341E0 70200C50 AFA90014 */  sw    $t1, 0x14($sp)
-/* 0341E4 70200C54 24E714A8 */  addiu $a3, %lo(rz_lbase) # addiu $a3, $a3, 0x14a8
+/* 0341E4 70200C54 24E714A8 */  addiu $a3, %lo(cplens) # addiu $a3, $a3, 0x14a8
 /* 0341E8 70200C58 AFA80010 */  sw    $t0, 0x10($sp)
 /* 0341EC 70200C5C 27A4002C */  addiu $a0, $sp, 0x2c
 /* 0341F0 70200C60 24050120 */  li    $a1, 288
-/* 0341F4 70200C64 0C080000 */  jal   decompress_buildtable
+/* 0341F4 70200C64 0C080000 */  jal   huft_build
 /* 0341F8 70200C68 24060101 */   li    $a2, 257
 /* 0341FC 70200C6C 240B0005 */  li    $t3, 5
 /* 034200 70200C70 240C0005 */  li    $t4, 5
@@ -1140,25 +1110,25 @@ glabel decompress_type1
 /* 034224 70200C94 AC43FFFC */  sw    $v1, -4($v0)
 /* 034228 70200C98 1444FFFB */  bne   $v0, $a0, .L70200C88
 /* 03422C 70200C9C AC43FFF0 */   sw    $v1, -0x10($v0)
-/* 034230 70200CA0 3C0E7020 */  lui   $t6, %hi(rz_dextra) # $t6, 0x7020
+/* 034230 70200CA0 3C0E7020 */  lui   $t6, %hi(cpdext) # $t6, 0x7020
 /* 034234 70200CA4 240D0005 */  li    $t5, 5
-/* 034238 70200CA8 25CE1544 */  addiu $t6, %lo(rz_dextra) # addiu $t6, $t6, 0x1544
-/* 03423C 70200CAC 3C077020 */  lui   $a3, %hi(rz_dbase) # $a3, 0x7020
+/* 034238 70200CA8 25CE1544 */  addiu $t6, %lo(cpdext) # addiu $t6, $t6, 0x1544
+/* 03423C 70200CAC 3C077020 */  lui   $a3, %hi(cpdist) # $a3, 0x7020
 /* 034240 70200CB0 27AF04B4 */  addiu $t7, $sp, 0x4b4
 /* 034244 70200CB4 27B804AC */  addiu $t8, $sp, 0x4ac
 /* 034248 70200CB8 AFAD04AC */  sw    $t5, 0x4ac($sp)
 /* 03424C 70200CBC AFB80018 */  sw    $t8, 0x18($sp)
 /* 034250 70200CC0 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 034254 70200CC4 24E71508 */  addiu $a3, %lo(rz_dbase) # addiu $a3, $a3, 0x1508
+/* 034254 70200CC4 24E71508 */  addiu $a3, %lo(cpdist) # addiu $a3, $a3, 0x1508
 /* 034258 70200CC8 AFAE0010 */  sw    $t6, 0x10($sp)
 /* 03425C 70200CCC 27A4002C */  addiu $a0, $sp, 0x2c
 /* 034260 70200CD0 2405001E */  li    $a1, 30
-/* 034264 70200CD4 0C080000 */  jal   decompress_buildtable
+/* 034264 70200CD4 0C080000 */  jal   huft_build
 /* 034268 70200CD8 00003025 */   move  $a2, $zero
 /* 03426C 70200CDC 8FA404B8 */  lw    $a0, 0x4b8($sp)
 /* 034270 70200CE0 8FA504B4 */  lw    $a1, 0x4b4($sp)
 /* 034274 70200CE4 8FA604B0 */  lw    $a2, 0x4b0($sp)
-/* 034278 70200CE8 0C080195 */  jal   decompress_inflate
+/* 034278 70200CE8 0C080195 */  jal   inflate_codes
 /* 03427C 70200CEC 8FA704AC */   lw    $a3, 0x4ac($sp)
 /* 034280 70200CF0 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 034284 70200CF4 27BD04C0 */  addiu $sp, $sp, 0x4c0
@@ -1169,19 +1139,19 @@ glabel decompress_type1
 #endif
 
 GLOBAL_ASM(
-glabel decompress_type2
-/* 034294 70200D04 3C087020 */  lui   $t0, %hi(rz_bitsinsample) # $t0, 0x7020
-/* 034298 70200D08 8D081568 */  lw    $t0, %lo(rz_bitsinsample)($t0)
+glabel inflate_dynamic
+/* 034294 70200D04 3C087020 */  lui   $t0, %hi(bk) # $t0, 0x7020
+/* 034298 70200D08 8D081568 */  lw    $t0, %lo(bk)($t0)
 /* 03429C 70200D0C 27BDFA98 */  addiu $sp, $sp, -0x568
-/* 0342A0 70200D10 3C097020 */  lui   $t1, %hi(rz_sample) # $t1, 0x7020
+/* 0342A0 70200D10 3C097020 */  lui   $t1, %hi(bb) # $t1, 0x7020
 /* 0342A4 70200D14 2D010005 */  sltiu $at, $t0, 5
 /* 0342A8 70200D18 AFBF002C */  sw    $ra, 0x2c($sp)
 /* 0342AC 70200D1C AFB00028 */  sw    $s0, 0x28($sp)
 /* 0342B0 70200D20 1020000F */  beqz  $at, .L70200D60
-/* 0342B4 70200D24 8D291564 */   lw    $t1, %lo(rz_sample)($t1)
+/* 0342B4 70200D24 8D291564 */   lw    $t1, %lo(bb)($t1)
 /* 0342B8 70200D28 3C037020 */  lui   $v1, %hi(rz_ptr_source) # $v1, 0x7020
-/* 0342BC 70200D2C 3C0A7020 */  lui   $t2, %hi(rz_curoffset) # $t2, 0x7020
-/* 0342C0 70200D30 254A1488 */  addiu $t2, %lo(rz_curoffset) # addiu $t2, $t2, 0x1488
+/* 0342BC 70200D2C 3C0A7020 */  lui   $t2, %hi(inptr) # $t2, 0x7020
+/* 0342C0 70200D30 254A1488 */  addiu $t2, %lo(inptr) # addiu $t2, $t2, 0x1488
 /* 0342C4 70200D34 8C631480 */  lw    $v1, %lo(rz_ptr_source)($v1)
 .L70200D38:
 /* 0342C8 70200D38 8D420000 */  lw    $v0, ($t2)
@@ -1197,11 +1167,11 @@ glabel decompress_type2
 .L70200D60:
 /* 0342F0 70200D60 312E001F */  andi  $t6, $t1, 0x1f
 /* 0342F4 70200D64 2508FFFB */  addiu $t0, $t0, -5
-/* 0342F8 70200D68 3C0A7020 */  lui   $t2, %hi(rz_curoffset) # $t2, 0x7020
+/* 0342F8 70200D68 3C0A7020 */  lui   $t2, %hi(inptr) # $t2, 0x7020
 /* 0342FC 70200D6C 25CF0101 */  addiu $t7, $t6, 0x101
 /* 034300 70200D70 0009C142 */  srl   $t8, $t1, 5
 /* 034304 70200D74 2D010005 */  sltiu $at, $t0, 5
-/* 034308 70200D78 254A1488 */  addiu $t2, %lo(rz_curoffset) # addiu $t2, $t2, 0x1488
+/* 034308 70200D78 254A1488 */  addiu $t2, %lo(inptr) # addiu $t2, $t2, 0x1488
 /* 03430C 70200D7C AFAF053C */  sw    $t7, 0x53c($sp)
 /* 034310 70200D80 1020000D */  beqz  $at, .L70200DB8
 /* 034314 70200D84 03004825 */   move  $t1, $t8
@@ -1248,8 +1218,8 @@ glabel decompress_type2
 /* 0343A8 70200E18 2508FFFC */  addiu $t0, $t0, -4
 /* 0343AC 70200E1C 10C0001D */  beqz  $a2, .L70200E94
 /* 0343B0 70200E20 00002025 */   move  $a0, $zero
-/* 0343B4 70200E24 3C057020 */  lui   $a1, %hi(rz_order) # $a1, 0x7020
-/* 0343B8 70200E28 24A51494 */  addiu $a1, %lo(rz_order) # addiu $a1, $a1, 0x1494
+/* 0343B4 70200E24 3C057020 */  lui   $a1, %hi(border) # $a1, 0x7020
+/* 0343B8 70200E28 24A51494 */  addiu $a1, %lo(border) # addiu $a1, $a1, 0x1494
 /* 0343BC 70200E2C 27B00040 */  addiu $s0, $sp, 0x40
 .L70200E30:
 /* 0343C0 70200E30 2D010003 */  sltiu $at, $t0, 3
@@ -1283,10 +1253,10 @@ glabel decompress_type2
 /* 034424 70200E94 2C810013 */  sltiu $at, $a0, 0x13
 /* 034428 70200E98 1020000D */  beqz  $at, .L70200ED0
 /* 03442C 70200E9C 27B00040 */   addiu $s0, $sp, 0x40
-/* 034430 70200EA0 3C0F7020 */  lui   $t7, %hi(rz_order) # $t7, 0x7020
-/* 034434 70200EA4 25EF1494 */  addiu $t7, %lo(rz_order) # addiu $t7, $t7, 0x1494
-/* 034438 70200EA8 3C027020 */  lui   $v0, %hi(rz_order + 0x13) # $v0, 0x7020
-/* 03443C 70200EAC 244214A7 */  addiu $v0, %lo(rz_order + 0x13) # addiu $v0, $v0, 0x14a7
+/* 034430 70200EA0 3C0F7020 */  lui   $t7, %hi(border) # $t7, 0x7020
+/* 034434 70200EA4 25EF1494 */  addiu $t7, %lo(border) # addiu $t7, $t7, 0x1494
+/* 034438 70200EA8 3C027020 */  lui   $v0, %hi(border + 0x13) # $v0, 0x7020
+/* 03443C 70200EAC 244214A7 */  addiu $v0, %lo(border + 0x13) # addiu $v0, $v0, 0x14a7
 /* 034440 70200EB0 008F2821 */  addu  $a1, $a0, $t7
 .L70200EB4:
 /* 034444 70200EB4 90B90000 */  lbu   $t9, ($a1)
@@ -1309,17 +1279,17 @@ glabel decompress_type2
 /* 034484 70200EF4 00003825 */  move  $a3, $zero
 /* 034488 70200EF8 AFA00010 */  sw    $zero, 0x10($sp)
 /* 03448C 70200EFC AFA80534 */  sw    $t0, 0x534($sp)
-/* 034490 70200F00 0C080000 */  jal   decompress_buildtable
+/* 034490 70200F00 0C080000 */  jal   huft_build
 /* 034494 70200F04 AFA90530 */   sw    $t1, 0x530($sp)
 /* 034498 70200F08 8FB90548 */  lw    $t9, 0x548($sp)
 /* 03449C 70200F0C 8FAE053C */  lw    $t6, 0x53c($sp)
 /* 0344A0 70200F10 8FAF0538 */  lw    $t7, 0x538($sp)
 /* 0344A4 70200F14 3C0B7020 */  lui   $t3, 0x7020
 /* 0344A8 70200F18 0019C040 */  sll   $t8, $t9, 1
-/* 0344AC 70200F1C 3C0A7020 */  lui   $t2, %hi(rz_curoffset) # $t2, 0x7020
+/* 0344AC 70200F1C 3C0A7020 */  lui   $t2, %hi(inptr) # $t2, 0x7020
 /* 0344B0 70200F20 01785821 */  addu  $t3, $t3, $t8
 /* 0344B4 70200F24 01CF3821 */  addu  $a3, $t6, $t7
-/* 0344B8 70200F28 254A1488 */  addiu $t2, %lo(rz_curoffset) # addiu $t2, $t2, 0x1488
+/* 0344B8 70200F28 254A1488 */  addiu $t2, %lo(inptr) # addiu $t2, $t2, 0x1488
 /* 0344BC 70200F2C 8FA80534 */  lw    $t0, 0x534($sp)
 /* 0344C0 70200F30 8FA90530 */  lw    $t1, 0x530($sp)
 /* 0344C4 70200F34 956B156C */  lhu   $t3, 0x156c($t3)
@@ -1481,48 +1451,48 @@ glabel decompress_type2
 /* 0346F0 70201160 5420FF7B */  bnezl $at, .L70200F50
 /* 0346F4 70201164 8FAE0548 */   lw    $t6, 0x548($sp)
 .L70201168:
-/* 0346F8 70201168 3C017020 */  lui   $at, %hi(rz_sample) # $at, 0x7020
-/* 0346FC 7020116C 3C197020 */  lui   $t9, %hi(rz_data1) # $t9, 0x7020
-/* 034700 70201170 8F391590 */  lw    $t9, %lo(rz_data1)($t9)
-/* 034704 70201174 AC291564 */  sw    $t1, %lo(rz_sample)($at)
-/* 034708 70201178 3C187020 */  lui   $t8, %hi(rz_lextra) # $t8, 0x7020
-/* 03470C 7020117C 3C017020 */  lui   $at, %hi(rz_bitsinsample) # $at, 0x7020
-/* 034710 70201180 271814E8 */  addiu $t8, %lo(rz_lextra) # addiu $t8, $t8, 0x14e8
-/* 034714 70201184 3C077020 */  lui   $a3, %hi(rz_lbase) # $a3, 0x7020
+/* 0346F8 70201168 3C017020 */  lui   $at, %hi(bb) # $at, 0x7020
+/* 0346FC 7020116C 3C197020 */  lui   $t9, %hi(lbits) # $t9, 0x7020
+/* 034700 70201170 8F391590 */  lw    $t9, %lo(lbits)($t9)
+/* 034704 70201174 AC291564 */  sw    $t1, %lo(bb)($at)
+/* 034708 70201178 3C187020 */  lui   $t8, %hi(cplext) # $t8, 0x7020
+/* 03470C 7020117C 3C017020 */  lui   $at, %hi(bk) # $at, 0x7020
+/* 034710 70201180 271814E8 */  addiu $t8, %lo(cplext) # addiu $t8, $t8, 0x14e8
+/* 034714 70201184 3C077020 */  lui   $a3, %hi(cplens) # $a3, 0x7020
 /* 034718 70201188 27AE0550 */  addiu $t6, $sp, 0x550
 /* 03471C 7020118C 27AF0548 */  addiu $t7, $sp, 0x548
-/* 034720 70201190 AC281568 */  sw    $t0, %lo(rz_bitsinsample)($at)
+/* 034720 70201190 AC281568 */  sw    $t0, %lo(bk)($at)
 /* 034724 70201194 AFAF0018 */  sw    $t7, 0x18($sp)
 /* 034728 70201198 AFAE0014 */  sw    $t6, 0x14($sp)
-/* 03472C 7020119C 24E714A8 */  addiu $a3, %lo(rz_lbase) # addiu $a3, $a3, 0x14a8
+/* 03472C 7020119C 24E714A8 */  addiu $a3, %lo(cplens) # addiu $a3, $a3, 0x14a8
 /* 034730 702011A0 AFB80010 */  sw    $t8, 0x10($sp)
 /* 034734 702011A4 02002025 */  move  $a0, $s0
 /* 034738 702011A8 8FA5053C */  lw    $a1, 0x53c($sp)
 /* 03473C 702011AC 24060101 */  li    $a2, 257
-/* 034740 702011B0 0C080000 */  jal   decompress_buildtable
+/* 034740 702011B0 0C080000 */  jal   huft_build
 /* 034744 702011B4 AFB90548 */   sw    $t9, 0x548($sp)
-/* 034748 702011B8 3C197020 */  lui   $t9, %hi(rz_data2) # $t9, 0x7020
-/* 03474C 702011BC 8F391594 */  lw    $t9, %lo(rz_data2)($t9)
+/* 034748 702011B8 3C197020 */  lui   $t9, %hi(dbits) # $t9, 0x7020
+/* 03474C 702011BC 8F391594 */  lw    $t9, %lo(dbits)($t9)
 /* 034750 702011C0 8FB8053C */  lw    $t8, 0x53c($sp)
-/* 034754 702011C4 3C0F7020 */  lui   $t7, %hi(rz_dextra) # $t7, 0x7020
+/* 034754 702011C4 3C0F7020 */  lui   $t7, %hi(cpdext) # $t7, 0x7020
 /* 034758 702011C8 AFB90544 */  sw    $t9, 0x544($sp)
 /* 03475C 702011CC 00187080 */  sll   $t6, $t8, 2
 /* 034760 702011D0 27B80544 */  addiu $t8, $sp, 0x544
 /* 034764 702011D4 27B9054C */  addiu $t9, $sp, 0x54c
-/* 034768 702011D8 25EF1544 */  addiu $t7, %lo(rz_dextra) # addiu $t7, $t7, 0x1544
-/* 03476C 702011DC 3C077020 */  lui   $a3, %hi(rz_dbase) # $a3, 0x7020
-/* 034770 702011E0 24E71508 */  addiu $a3, %lo(rz_dbase) # addiu $a3, $a3, 0x1508
+/* 034768 702011D8 25EF1544 */  addiu $t7, %lo(cpdext) # addiu $t7, $t7, 0x1544
+/* 03476C 702011DC 3C077020 */  lui   $a3, %hi(cpdist) # $a3, 0x7020
+/* 034770 702011E0 24E71508 */  addiu $a3, %lo(cpdist) # addiu $a3, $a3, 0x1508
 /* 034774 702011E4 AFAF0010 */  sw    $t7, 0x10($sp)
 /* 034778 702011E8 AFB90014 */  sw    $t9, 0x14($sp)
 /* 03477C 702011EC AFB80018 */  sw    $t8, 0x18($sp)
 /* 034780 702011F0 020E2021 */  addu  $a0, $s0, $t6
 /* 034784 702011F4 8FA50538 */  lw    $a1, 0x538($sp)
-/* 034788 702011F8 0C080000 */  jal   decompress_buildtable
+/* 034788 702011F8 0C080000 */  jal   huft_build
 /* 03478C 702011FC 00003025 */   move  $a2, $zero
 /* 034790 70201200 8FA40550 */  lw    $a0, 0x550($sp)
 /* 034794 70201204 8FA5054C */  lw    $a1, 0x54c($sp)
 /* 034798 70201208 8FA60548 */  lw    $a2, 0x548($sp)
-/* 03479C 7020120C 0C080195 */  jal   decompress_inflate
+/* 03479C 7020120C 0C080195 */  jal   inflate_codes
 /* 0347A0 70201210 8FA70544 */   lw    $a3, 0x544($sp)
 /* 0347A4 70201214 8FBF002C */  lw    $ra, 0x2c($sp)
 /* 0347A8 70201218 8FB00028 */  lw    $s0, 0x28($sp)
@@ -1533,31 +1503,31 @@ glabel decompress_type2
 
 
 #ifdef NONMATCHING
-void decompress_table(void *arg0) {
+void inflate_block(void *arg0) {
     u32 temp_v1;
     u32 temp_t3;
     s32 temp_v0;
 
     // Node 0
-    if (rz_bitsinsample == 0)
+    if (bb == 0)
     {
         // Node 1
         // Node 2
-        rz_curoffset = (s32) (rz_curoffset + 1);
-        if ((rz_bitsinsample + 8) == 0)
+        inptr = (s32) (inptr + 1);
+        if ((bb + 8) == 0)
         {
             goto loop_2;
         }
     }
     // Node 3
-    temp_v1 = (rz_bitsinsample + -1);
-    temp_t3 = ((u32) rz_sample >> 1);
-    *arg0 = (s32) (rz_sample & 1);
+    temp_v1 = (bb + -1);
+    temp_t3 = ((u32) bk >> 1);
+    *arg0 = (s32) (bk & 1);
     if (temp_v1 < 2U)
     {
         // Node 4
         // Node 5
-        rz_curoffset = (s32) (rz_curoffset + 1);
+        inptr = (s32) (inptr + 1);
         if ((u32) (temp_v1 + 8) < 2U)
         {
             goto loop_5;
@@ -1565,30 +1535,30 @@ void decompress_table(void *arg0) {
     }
     // Node 6
     temp_v0 = (temp_t3 & 3);
-    rz_sample = (u32) (temp_t3 >> 2);
-    rz_bitsinsample = (s32) (temp_v1 + -2);
+    bk = (u32) (temp_t3 >> 2);
+    bb = (s32) (temp_v1 + -2);
     if (temp_v0 == 2)
     {
         // Node 7
-        decompress_type2(&rz_curoffset, temp_t3, arg0);
+        inflate_dynamic(&inptr, temp_t3, arg0);
         return;
-        // (possible return value: decompress_type2(&rz_curoffset, temp_t3, arg0))
+        // (possible return value: inflate_dynamic(&inptr, temp_t3, arg0))
     }
     // Node 8
     if (temp_v0 == 0)
     {
         // Node 9
-        decompress_type0(&rz_curoffset, temp_t3, arg0);
+        inflate_stored(&inptr, temp_t3, arg0);
         return;
-        // (possible return value: decompress_type0(&rz_curoffset, temp_t3, arg0))
+        // (possible return value: inflate_stored(&inptr, temp_t3, arg0))
     }
     // Node 10
     if (temp_v0 == 1)
     {
         // Node 11
-        decompress_type1(&rz_curoffset, temp_t3, arg0);
+        inflate_fixed(&inptr, temp_t3, arg0);
         return;
-        // (possible return value: decompress_type1(&rz_curoffset, temp_t3, arg0))
+        // (possible return value: inflate_fixed(&inptr, temp_t3, arg0))
     }
     // Node 12
     return;
@@ -1596,20 +1566,20 @@ void decompress_table(void *arg0) {
 }
 #else
 GLOBAL_ASM(
-glabel decompress_table
-/* 0347B8 70201228 3C097020 */  lui   $t1, %hi(rz_bitsinsample) # $t1, 0x7020
-/* 0347BC 7020122C 25291568 */  addiu $t1, %lo(rz_bitsinsample) # addiu $t1, $t1, 0x1568
+glabel inflate_block
+/* 0347B8 70201228 3C097020 */  lui   $t1, %hi(bk) # $t1, 0x7020
+/* 0347BC 7020122C 25291568 */  addiu $t1, %lo(bk) # addiu $t1, $t1, 0x1568
 /* 0347C0 70201230 8D230000 */  lw    $v1, ($t1)
-/* 0347C4 70201234 3C087020 */  lui   $t0, %hi(rz_sample) # $t0, 0x7020
-/* 0347C8 70201238 25081564 */  addiu $t0, %lo(rz_sample) # addiu $t0, $t0, 0x1564
+/* 0347C4 70201234 3C087020 */  lui   $t0, %hi(bb) # $t0, 0x7020
+/* 0347C8 70201238 25081564 */  addiu $t0, %lo(bb) # addiu $t0, $t0, 0x1564
 /* 0347CC 7020123C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0347D0 70201240 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0347D4 70201244 00803825 */  move  $a3, $a0
 /* 0347D8 70201248 1460000E */  bnez  $v1, .L70201284
 /* 0347DC 7020124C 8D050000 */   lw    $a1, ($t0)
 /* 0347E0 70201250 3C067020 */  lui   $a2, %hi(rz_ptr_source) # $a2, 0x7020
-/* 0347E4 70201254 3C047020 */  lui   $a0, %hi(rz_curoffset) # $a0, 0x7020
-/* 0347E8 70201258 24841488 */  addiu $a0, %lo(rz_curoffset) # addiu $a0, $a0, 0x1488
+/* 0347E4 70201254 3C047020 */  lui   $a0, %hi(inptr) # $a0, 0x7020
+/* 0347E8 70201258 24841488 */  addiu $a0, %lo(inptr) # addiu $a0, $a0, 0x1488
 /* 0347EC 7020125C 8CC61480 */  lw    $a2, %lo(rz_ptr_source)($a2)
 .L70201260:
 /* 0347F0 70201260 8C820000 */  lw    $v0, ($a0)
@@ -1623,11 +1593,11 @@ glabel decompress_table
 /* 034810 70201280 00B82825 */   or    $a1, $a1, $t8
 .L70201284:
 /* 034814 70201284 2463FFFF */  addiu $v1, $v1, -1
-/* 034818 70201288 3C047020 */  lui   $a0, %hi(rz_curoffset) # $a0, 0x7020
+/* 034818 70201288 3C047020 */  lui   $a0, %hi(inptr) # $a0, 0x7020
 /* 03481C 7020128C 30AA0001 */  andi  $t2, $a1, 1
 /* 034820 70201290 00055842 */  srl   $t3, $a1, 1
 /* 034824 70201294 2C610002 */  sltiu $at, $v1, 2
-/* 034828 70201298 24841488 */  addiu $a0, %lo(rz_curoffset) # addiu $a0, $a0, 0x1488
+/* 034828 70201298 24841488 */  addiu $a0, %lo(inptr) # addiu $a0, $a0, 0x1488
 /* 03482C 7020129C ACEA0000 */  sw    $t2, ($a3)
 /* 034830 702012A0 1020000D */  beqz  $at, .L702012D8
 /* 034834 702012A4 01602825 */   move  $a1, $t3
@@ -1652,21 +1622,21 @@ glabel decompress_table
 /* 034878 702012E8 AD180000 */  sw    $t8, ($t0)
 /* 03487C 702012EC 14410005 */  bne   $v0, $at, .L70201304
 /* 034880 702012F0 AD230000 */   sw    $v1, ($t1)
-/* 034884 702012F4 0C080341 */  jal   decompress_type2
+/* 034884 702012F4 0C080341 */  jal   inflate_dynamic
 /* 034888 702012F8 00000000 */   nop   
 /* 03488C 702012FC 1000000F */  b     .L7020133C
 /* 034890 70201300 8FBF0014 */   lw    $ra, 0x14($sp)
 .L70201304:
 /* 034894 70201304 14400005 */  bnez  $v0, .L7020131C
 /* 034898 70201308 24010001 */   li    $at, 1
-/* 03489C 7020130C 0C080292 */  jal   decompress_type0
+/* 03489C 7020130C 0C080292 */  jal   inflate_stored
 /* 0348A0 70201310 00000000 */   nop   
 /* 0348A4 70201314 10000009 */  b     .L7020133C
 /* 0348A8 70201318 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7020131C:
 /* 0348AC 7020131C 54410006 */  bnel  $v0, $at, .L70201338
 /* 0348B0 70201320 24020002 */   li    $v0, 2
-/* 0348B4 70201324 0C0802E7 */  jal   decompress_type1
+/* 0348B4 70201324 0C0802E7 */  jal   inflate_fixed
 /* 0348B8 70201328 00000000 */   nop   
 /* 0348BC 7020132C 10000003 */  b     .L7020133C
 /* 0348C0 70201330 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -1680,115 +1650,34 @@ glabel decompress_table
 )
 #endif
 
-#ifdef NONMATCHING
-void decompress_start(void) {
-    s32 sp34;
-    u32 temp_t7;
 
-    // Node 0
-    rz_decompressed_count = 0;
-    rz_bitsinsample = 0U;
-    rz_sample = 0;
-    // Node 1
-    rz_data3 = 0U;
-    if (decompress_table(&sp34) != 0)
-    {
-        // Node 2
-        return;
-        // (possible return value: decompress_table(&sp34))
-    }
-    // Node 3
-    if (0U < (u32) rz_data3)
-    {
-        // Node 4
-    }
-    // Node 5
-    if (sp34 == 0)
-    {
-        goto loop_1;
-    }
-    // Node 6
-    if ((u32) rz_bitsinsample >= 8U)
-    {
-        loop_7:
-        // Node 7
-        temp_t7 = (rz_bitsinsample + -8);
-        rz_bitsinsample = temp_t7;
-        rz_curoffset = (s32) (rz_curoffset + -1);
-        if (temp_t7 >= 8U)
-        {
-            goto loop_7;
-        }
-    }
-    // Node 8
-    return;
-    // (possible return value: 0)
+int inflate(void) {
+  int e;
+  int r;
+  unsigned h;
+  
+  wp = 0;
+  bk = 0;
+  bb = 0;
+
+  h = 0;
+
+  do {
+    hufts = 0;
+    
+    if ((r = inflate_block(&e)) != 0) 
+      return r;
+    if (hufts > h) 
+      h = hufts;
+  } while (!e);
+
+  while (bk >= 8) {
+    bk -= 8;
+    inptr--;
+  }
+
+  return 0;
 }
-#else
-GLOBAL_ASM(
-glabel decompress_start
-/* 0348D8 70201348 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 0348DC 7020134C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0348E0 70201350 3C017020 */  lui   $at, %hi(rz_decompressed_count) # $at, 0x7020
-/* 0348E4 70201354 3C127020 */  lui   $s2, %hi(rz_bitsinsample) # $s2, 0x7020
-/* 0348E8 70201358 AC20148C */  sw    $zero, %lo(rz_decompressed_count)($at)
-/* 0348EC 7020135C 26521568 */  addiu $s2, %lo(rz_bitsinsample) # addiu $s2, $s2, 0x1568
-/* 0348F0 70201360 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0348F4 70201364 AFB30020 */  sw    $s3, 0x20($sp)
-/* 0348F8 70201368 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0348FC 7020136C AE400000 */  sw    $zero, ($s2)
-/* 034900 70201370 3C017020 */  lui   $at, %hi(rz_sample) # $at, 0x7020
-/* 034904 70201374 3C107020 */  lui   $s0, %hi(rz_data3) # $s0, 0x7020
-/* 034908 70201378 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 03490C 7020137C AC201564 */  sw    $zero, %lo(rz_sample)($at)
-/* 034910 70201380 00008825 */  move  $s1, $zero
-/* 034914 70201384 26101598 */  addiu $s0, %lo(rz_data3) # addiu $s0, $s0, 0x1598
-/* 034918 70201388 27B30034 */  addiu $s3, $sp, 0x34
-/* 03491C 7020138C AE000000 */  sw    $zero, ($s0)
-.L70201390:
-/* 034920 70201390 0C08048A */  jal   decompress_table
-/* 034924 70201394 02602025 */   move  $a0, $s3
-/* 034928 70201398 10400003 */  beqz  $v0, .L702013A8
-/* 03492C 7020139C 8FAE0034 */   lw    $t6, 0x34($sp)
-/* 034930 702013A0 10000018 */  b     .L70201404
-/* 034934 702013A4 8FBF0024 */   lw    $ra, 0x24($sp)
-.L702013A8:
-/* 034938 702013A8 8E020000 */  lw    $v0, ($s0)
-/* 03493C 702013AC 0222082B */  sltu  $at, $s1, $v0
-/* 034940 702013B0 10200002 */  beqz  $at, .L702013BC
-/* 034944 702013B4 00000000 */   nop   
-/* 034948 702013B8 00408825 */  move  $s1, $v0
-.L702013BC:
-/* 03494C 702013BC 51C0FFF4 */  beql  $t6, $zero, .L70201390
-/* 034950 702013C0 AE000000 */   sw    $zero, ($s0)
-/* 034954 702013C4 8E430000 */  lw    $v1, ($s2)
-/* 034958 702013C8 3C027020 */  lui   $v0, %hi(rz_curoffset) # $v0, 0x7020
-/* 03495C 702013CC 24421488 */  addiu $v0, %lo(rz_curoffset) # addiu $v0, $v0, 0x1488
-/* 034960 702013D0 2C610008 */  sltiu $at, $v1, 8
-/* 034964 702013D4 5420000A */  bnezl $at, .L70201400
-/* 034968 702013D8 00001025 */   move  $v0, $zero
-.L702013DC:
-/* 03496C 702013DC 8C580000 */  lw    $t8, ($v0)
-/* 034970 702013E0 246FFFF8 */  addiu $t7, $v1, -8
-/* 034974 702013E4 2DE10008 */  sltiu $at, $t7, 8
-/* 034978 702013E8 2719FFFF */  addiu $t9, $t8, -1
-/* 03497C 702013EC AE4F0000 */  sw    $t7, ($s2)
-/* 034980 702013F0 AC590000 */  sw    $t9, ($v0)
-/* 034984 702013F4 1020FFF9 */  beqz  $at, .L702013DC
-/* 034988 702013F8 01E01825 */   move  $v1, $t7
-/* 03498C 702013FC 00001025 */  move  $v0, $zero
-.L70201400:
-/* 034990 70201400 8FBF0024 */  lw    $ra, 0x24($sp)
-.L70201404:
-/* 034994 70201404 8FB00014 */  lw    $s0, 0x14($sp)
-/* 034998 70201408 8FB10018 */  lw    $s1, 0x18($sp)
-/* 03499C 7020140C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0349A0 70201410 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0349A4 70201414 03E00008 */  jr    $ra
-/* 0349A8 70201418 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
-
 
 u32 decompress_entry(u32 source, u32 target, u32 buffer) {
 
@@ -1796,10 +1685,10 @@ u32 decompress_entry(u32 source, u32 target, u32 buffer) {
     rz_ptr_target = target;
     rz_ptrbuffer = buffer;
     rz_ptr_source = (s32) (rz_ptr_source + 2);
-    rz_decompressed_count = 0;
-    rz_curoffset = 0;
-    decompress_start();
-    return rz_decompressed_count;
+    wp = 0;
+    inptr = 0;
+    inflate();
+    return wp;
 }
 
 

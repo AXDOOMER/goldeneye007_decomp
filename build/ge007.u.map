@@ -1313,32 +1313,32 @@ Linker script and memory map
 .rarezip        0x0000000070200000     0x15a0 load address 0x0000000000033590
  build/src/rarezip/rarezip.o(.text)
  .text          0x0000000070200000     0x1480 build/src/rarezip/rarezip.o
-                0x0000000070200000                decompress_buildtable
-                0x0000000070200654                decompress_inflate
-                0x0000000070200a48                decompress_type0
-                0x0000000070200b9c                decompress_type1
-                0x0000000070200d04                decompress_type2
-                0x0000000070201228                decompress_table
-                0x0000000070201348                decompress_start
+                0x0000000070200000                huft_build
+                0x0000000070200654                inflate_codes
+                0x0000000070200a48                inflate_stored
+                0x0000000070200b9c                inflate_fixed
+                0x0000000070200d04                inflate_dynamic
+                0x0000000070201228                inflate_block
+                0x0000000070201348                inflate
                 0x000000007020141c                decompress_entry
  build/src/rarezip/rarezip.o(.data)
  .data          0x0000000070201480      0x120 build/src/rarezip/rarezip.o
                 0x0000000070201480                rz_ptr_source
                 0x0000000070201484                rz_ptr_target
-                0x0000000070201488                rz_curoffset
-                0x000000007020148c                rz_decompressed_count
+                0x0000000070201488                inptr
+                0x000000007020148c                wp
                 0x0000000070201490                rz_ptrbuffer
-                0x0000000070201494                rz_order
-                0x00000000702014a8                rz_lbase
-                0x00000000702014e8                rz_lextra
-                0x0000000070201508                rz_dbase
-                0x0000000070201544                rz_dextra
-                0x0000000070201564                rz_sample
-                0x0000000070201568                rz_bitsinsample
-                0x000000007020156c                rz_masks
-                0x0000000070201590                rz_data1
-                0x0000000070201594                rz_data2
-                0x0000000070201598                rz_data3
+                0x0000000070201494                border
+                0x00000000702014a8                cplens
+                0x00000000702014e8                cplext
+                0x0000000070201508                cpdist
+                0x0000000070201544                cpdext
+                0x0000000070201564                bb
+                0x0000000070201568                bk
+                0x000000007020156c                mask_bits
+                0x0000000070201590                lbits
+                0x0000000070201594                dbits
+                0x0000000070201598                hufts
                 0x00000000702015a0                _rarezipSegmentEnd = (ADDR (.rarezip) + SIZEOF (.rarezip))
                 0x0000000000034b30                _rarezipSegmentRomEnd = (_rarezipSegmentRomStart + SIZEOF (.rarezip))
                 0x000000007f000000                _gameSegmentStart = ADDR (.game)
