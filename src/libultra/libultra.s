@@ -3500,8 +3500,8 @@ glabel osAiSetFrequency
 /* 00F648 7000EA48 240B0001 */  li    $t3, 1
 /* 00F64C 7000EA4C 3C0CA450 */  lui   $t4, %hi(AI_CONTROL_REG) # $t4, 0xa450
 /* 00F650 7000EA50 AD8B0008 */  sw    $t3, %lo(AI_CONTROL_REG)($t4)
-/* 00F654 7000EA54 3C0D8003 */  lui   $t5, %hi(0x8002804C) # $t5, 0x8003 #osViClock
-/* 00F658 7000EA58 8DAD804C */  lw    $t5, %lo(0x8002804C)($t5) #osViClock
+/* 00F654 7000EA54 3C0D8003 */  lui   $t5, %hi(osViClock) # $t5, 0x8003 #osViClock
+/* 00F658 7000EA58 8DAD804C */  lw    $t5, %lo(osViClock)($t5) #osViClock
 /* 00F65C 7000EA5C 01A5001A */  div   $zero, $t5, $a1
 /* 00F660 7000EA60 00001012 */  mflo  $v0
 /* 00F664 7000EA64 14A00002 */  bnez  $a1, .L7000EA70
