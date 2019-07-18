@@ -11,11 +11,11 @@ baserom.u.z64
 ```
 followed by
 ```
-./extract_baserom.sh && make clean && make
+./extract_baserom.sh && make
 ```
 
 DO NOT USE make -j# it will break things!!!!!!!!!
-also downloading repo as a zip is known to break build
+
 If you are upgrading from an old repo, run
 ```
 ./clean_baserom.sh && ./extract_baserom.sh && make clean && make
@@ -27,12 +27,6 @@ name_baserom.sh files
 name_baserom.sh images
 ```
 to do just one or the other, default is both
-
-
-Due to a bug with gzip, the following is your friend for random sha1 fails
-```
-make clean && make
-```
 
 
 This decompilation was only made possible thanks to many awesome 00 Agents who will be revealed only if they wish.
