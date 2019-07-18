@@ -261,6 +261,8 @@ struct bg_portal_entry {
     struct xyzpoint point;
 };
 
+typedef ulong ulg;
+
 typedef enum SCHEDTASKS {
     M_AUDTASK=2,
     M_GFXTASK=1,
@@ -426,6 +428,8 @@ struct fog_element2 {
     f32 waterblue;
     f32 waterconcavity;
 };
+
+typedef ushort ush;
 
 typedef enum STAGENUM {
     SP_STAGE_ARCHIVES=10,
@@ -646,6 +650,8 @@ typedef enum COLORMODE {
     32BIT=0
 } COLORMODE;
 
+typedef uchar uch;
+
 typedef struct playerfavoriteweapon playerfavoriteweapon, *Pplayerfavoriteweapon;
 
 struct playerfavoriteweapon {
@@ -696,829 +702,6 @@ typedef enum enumOSEventMsg {
 
 #define __WORDSIZE 32
 
-typedef struct RamRomBuffer RamRomBuffer, *PRamRomBuffer;
-
-struct RamRomBuffer {
-    long type;
-    long length;
-    long magic;
-    char userdata[24573];
-};
-
-#define RAMROM_BUF_SIZE 4096
-
-#define RAMROM_FONTDATA_SIZE 1152
-
-#define GAME_APP_DATA_READY 10
-
-#define HOST_FAULT_ACK 15
-
-#define RAMROM_MSG_ADDR 16752640
-
-#define HOST_LOG_ACK 8
-
-#define RAMROM_RMON_WRITE_ADDR 16764928
-
-#define HOST_PIACCESS_REQ 1
-
-#define RAMROM_FONTDATA_OFFSET 2928
-
-#define RAMROM_PIF2BOOTSTRAP_OFFSET 4096
-
-#define RAMROM_CLOCKRATE_MASK 4294967280
-
-#define GAME_PRINTF_SEND 5
-
-#define HOST_PROF_ACK 13
-
-#define GAME_EXIT 16
-
-#define HOST_PROF_REQ 11
-
-#define RAMROM_BOOTADDR_OFFSET 8
-
-#define HOST_DBG_DATA_ACK 4
-
-#define GAME_LOG_SEND 7
-
-#define HOST_DBG_CMD_READY 2
-
-#define RAMROM_SIZE 16777216
-
-#define RAMROM_APP_WRITE_ADDR 16756736
-
-#define RAMROM_BOOTSTRAP_OFFSET 64
-
-#define HOST_PRINTF_ACK 6
-
-#define RAMROM_CLOCKRATE_OFFSET 4
-
-#define RAMROM_MSG_SIZE 24576
-
-#define RAMROM_RMON_READ_ADDR 16760832
-
-#define GAME_FAULT_SEND 14
-
-#define RAMROM_PRINTF_ADDR 16769024
-
-#define GAME_PROF_SEND 12
-
-#define HOST_APP_CMD_READY 9
-
-#define RAMROM_LOG_ADDR 16773120
-
-#define HOST_DATA_ACK 17
-
-#define RAMROM_GAME_OFFSET 4096
-
-#define GAME_DBG_DATA_SEND 3
-
-#define RAMROM_APP_READ_ADDR 16752640
-
-#define RAMROM_RELEASE_OFFSET 12
-
-typedef struct __OSPackId __OSPackId, *P__OSPackId;
-
-typedef ulonglong u64;
-
-struct __OSPackId {
-    u32 repaired;
-    u32 random;
-    u64 serial_mid;
-    u64 serial_low;
-    u16 deviceid;
-    u8 banks;
-    u8 version;
-    u16 checksum;
-    u16 inverted_checksum;
-};
-
-typedef struct struct struct, *Pstruct;
-
-typedef struct OSViMode OSViMode, *POSViMode;
-
-typedef struct OSMesgQueue_s OSMesgQueue_s, *POSMesgQueue_s;
-
-typedef struct OSMesgQueue_s OSMesgQueue;
-
-typedef void * OSMesg;
-
-typedef struct OSViCommonRegs OSViCommonRegs, *POSViCommonRegs;
-
-typedef struct OSViFieldRegs OSViFieldRegs, *POSViFieldRegs;
-
-typedef struct OSThread_s OSThread_s, *POSThread_s;
-
-typedef struct OSThread_s OSThread;
-
-typedef s32 OSPri;
-
-typedef s32 OSId;
-
-typedef struct __OSThreadContext __OSThreadContext, *P__OSThreadContext;
-
-typedef union __OSfp __OSfp, *P__OSfp;
-
-typedef struct _struct_2 _struct_2, *P_struct_2;
-
-struct struct {
-    u16 field_0x0;
-    u16 field_0x2;
-    void * field_0x4;
-    struct OSViMode * field_0x8;
-    u32 field_0xc;
-    OSMesgQueue * field_0x10;
-    OSMesg field_0x14;
-};
-
-struct _struct_2 {
-    f32 f_odd;
-    f32 f_even;
-};
-
-struct OSMesgQueue_s {
-    OSThread * mtqueue;
-    OSThread * fullqueue;
-    s32 validCount;
-    s32 first;
-    s32 msgCount;
-    OSMesg * msg;
-};
-
-union __OSfp {
-    struct _struct_2 f;
-    f64 d;
-};
-
-struct OSViCommonRegs {
-    u32 ctrl;
-    u32 width;
-    u32 burst;
-    u32 vSync;
-    u32 hSync;
-    u32 leap;
-    u32 hStart;
-    u32 xScale;
-    u32 vCurrent;
-};
-
-struct OSViFieldRegs {
-    u32 origin;
-    u32 yScale;
-    u32 vStart;
-    u32 vBurst;
-    u32 vIntr;
-};
-
-struct OSViMode {
-    u8 type;
-    struct OSViCommonRegs comRegs;
-    struct OSViFieldRegs fldRegs[2];
-};
-
-struct __OSThreadContext {
-    u64 at;
-    u64 v0;
-    u64 v1;
-    u64 a0;
-    u64 a1;
-    u64 a2;
-    u64 a3;
-    u64 t0;
-    u64 t1;
-    u64 t2;
-    u64 t3;
-    u64 t4;
-    u64 t5;
-    u64 t6;
-    u64 t7;
-    u64 s0;
-    u64 s1;
-    u64 s2;
-    u64 s3;
-    u64 s4;
-    u64 s5;
-    u64 s6;
-    u64 s7;
-    u64 t8;
-    u64 t9;
-    u64 gp;
-    u64 sp;
-    u64 s8;
-    u64 ra;
-    u64 lo;
-    u64 hi;
-    u32 sr;
-    u32 pc;
-    u32 cause;
-    u32 badvaddr;
-    u32 rcp;
-    u32 fpcsr;
-    union __OSfp fp0;
-    union __OSfp fp2;
-    union __OSfp fp4;
-    union __OSfp fp6;
-    union __OSfp fp8;
-    union __OSfp fp10;
-    union __OSfp fp12;
-    union __OSfp fp14;
-    union __OSfp fp16;
-    union __OSfp fp18;
-    union __OSfp fp20;
-    union __OSfp fp22;
-    union __OSfp fp24;
-    union __OSfp fp26;
-    union __OSfp fp28;
-    union __OSfp fp30;
-};
-
-struct OSThread_s {
-    struct OSThread_s * next;
-    OSPri priority;
-    struct OSThread_s * * queue;
-    struct OSThread_s * tlnext;
-    u16 state;
-    u16 flags;
-    OSId id;
-    int fp;
-    struct __OSThreadContext context;
-};
-
-typedef struct PVoice PVoice, *PPVoice;
-
-typedef struct ALLink_s ALLink_s, *PALLink_s;
-
-typedef struct ALLink_s ALLink;
-
-typedef struct ALVoice_s ALVoice_s, *PALVoice_s;
-
-typedef struct ALFilter_s ALFilter_s, *PALFilter_s;
-
-typedef struct ALADPCMFilter ALADPCMFilter, *PALADPCMFilter;
-
-typedef struct ALResampler ALResampler, *PALResampler;
-
-typedef struct ALEnvMixer_s ALEnvMixer_s, *PALEnvMixer_s;
-
-typedef struct PVoice_s PVoice_s, *PPVoice_s;
-
-typedef struct ALWaveTable_s ALWaveTable_s, *PALWaveTable_s;
-
-typedef struct ALWaveTable_s ALWaveTable;
-
-typedef short s16;
-
-typedef short ADPCM_STATE[16];
-
-typedef struct $039A3EC5794421300707C77A911A1BDF $039A3EC5794421300707C77A911A1BDF, *P$039A3EC5794421300707C77A911A1BDF;
-
-typedef struct $039A3EC5794421300707C77A911A1BDF ALADPCMloop;
-
-typedef s32 (* ALDMAproc)(s32, s32, void *);
-
-
-// WARNING! conflicting data type names: /_CAPTURED_FROM_ge007.u.old.elf/ALFilter_s - /libaudio.h/ALFilter_s
-
-typedef short RESAMPLE_STATE[16];
-
-typedef struct ALParam_s ALParam_s, *PALParam_s;
-
-typedef short ENVMIX_STATE[40];
-
-typedef union _union_109 _union_109, *P_union_109;
-
-typedef struct ALADPCMWaveInfo ALADPCMWaveInfo, *PALADPCMWaveInfo;
-
-typedef struct ALRAWWaveInfo ALRAWWaveInfo, *PALRAWWaveInfo;
-
-
-// WARNING! conflicting data type names: /libaudio.h/ALADPCMloop - /GE Current Master.h/ALADPCMloop
-
-typedef struct ALADPCMBook ALADPCMBook, *PALADPCMBook;
-
-typedef struct ALRawLoop ALRawLoop, *PALRawLoop;
-
-struct PVoice_s {
-};
-
-struct $039A3EC5794421300707C77A911A1BDF {
-};
-
-struct ALResampler {
-    struct ALFilter_s filter;
-    RESAMPLE_STATE state;
-    float ratio;
-    int upitch;
-    float delta;
-    int first;
-    struct ALParam_s * ctrlList;
-    struct ALParam_s * ctrlTail;
-};
-
-struct ALFilter_s {
-};
-
-struct ALADPCMBook {
-    s32 order;
-    s32 npredictors;
-    s16 book[1];
-};
-
-struct ALADPCMWaveInfo {
-    struct ALADPCMloop * loop;
-    struct ALADPCMBook * book;
-};
-
-struct ALRAWWaveInfo {
-    struct ALRawLoop * loop;
-};
-
-union _union_109 {
-    struct ALADPCMWaveInfo adpcmWave;
-    struct ALRAWWaveInfo rawWave;
-};
-
-struct ALWaveTable_s {
-    u8 * base;
-    s32 len;
-    u8 type;
-    u8 flags;
-    union _union_109 waveInfo;
-};
-
-struct ALLink_s {
-    struct ALLink_s * next;
-    struct ALLink_s * prev;
-};
-
-struct ALVoice_s {
-    ALLink node;
-    struct PVoice_s * pvoice;
-    ALWaveTable * table;
-    void * clientPrivate;
-    s16 state;
-    s16 priority;
-    s16 fxBus;
-    s16 unityPitch;
-};
-
-struct ALEnvMixer_s {
-    struct ALFilter_s filter;
-    ENVMIX_STATE state;
-    short pan;
-    short volume;
-    short cvolL;
-    short cvolR;
-    short dryamt;
-    short wetamt;
-    ushort lratl;
-    short lratm;
-    short ltgt;
-    ushort rratl;
-    short rratm;
-    short rtgt;
-    int delta;
-    int segEnd;
-    int first;
-    struct ALParam_s * ctrlList;
-    struct ALParam_s * ctrlTail;
-    struct ALFilter_s * * sources;
-    int motion;
-};
-
-struct ALRawLoop {
-    u32 start;
-    u32 end;
-    u32 count;
-};
-
-struct ALADPCMFilter {
-    struct ALFilter_s filter;
-    ADPCM_STATE state[AL_MAX_ADPCM_STATES];
-    ALADPCMloop loop;
-    struct ALWaveTable_s * table;
-    int bookSize;
-    ALDMAproc dma;
-    int current;
-    int sample;
-    int lastsam;
-    int first;
-    int memin;
-    int dramstart;
-};
-
-struct ALParam_s {
-};
-
-struct PVoice {
-    ALLink node;
-    struct ALVoice_s * vvoice;
-    void * rspCode;
-    struct ALFilter_s * sourceKnob;
-    struct ALFilter_s * channelKnob;
-    struct ALADPCMFilter decoder;
-    struct ALResampler resampler;
-    struct ALEnvMixer_s envmixer;
-};
-
-typedef int * ALSetParam;
-
-typedef struct __OSViContext __OSViContext, *P__OSViContext;
-
-typedef struct __OSViScale __OSViScale, *P__OSViScale;
-
-struct __OSViScale {
-    f32 factor;
-    u16 offset;
-    undefined field_0x6;
-    undefined field_0x7;
-    undefined field_0x8;
-    undefined field_0x9;
-};
-
-struct __OSViContext {
-    u16 state;
-    u16 retraceCount;
-    void * framep;
-    struct OSViMode * modep;
-    u32 control;
-    OSMesgQueue * msgq;
-    OSMesg msg;
-    struct __OSViScale x;
-    struct __OSViScale y;
-};
-
-typedef struct debug_handler_entry debug_handler_entry, *Pdebug_handler_entry;
-
-struct debug_handler_entry {
-    void * stackpointer;
-    string * name;
-};
-
-typedef enum BOOL {
-    FALSE=0,
-    TRUE=1
-} BOOL;
-
-typedef enum guard_action_type {
-    None=0,
-    dying=4,
-    fade_away=5,
-    freeze=2,
-    freeze_anim=17,
-    gettingshot=6,
-    limping=7,
-    look_around=18,
-    moving=15,
-    run_roll_fire=10,
-    sidehop=12,
-    siderun=13,
-    sidestep=11,
-    standing=1,
-    standstill_fire=8,
-    surrendering=16,
-    swattingflies=3,
-    throw_grenade=20,
-    trigger_alarm=19,
-    walk_fire=9,
-    walk_path=14
-} guard_action_type;
-
-typedef union Acmd Acmd, *PAcmd;
-
-typedef union Acmd ALCmdHandler;
-
-typedef struct Awords Awords, *PAwords;
-
-typedef struct Aadpcm Aadpcm, *PAadpcm;
-
-typedef struct Apolef Apolef, *PApolef;
-
-typedef struct Aclearbuff Aclearbuff, *PAclearbuff;
-
-typedef struct Aenvelope Aenvelope, *PAenvelope;
-
-typedef struct Ainterleave Ainterleave, *PAinterleave;
-
-typedef struct Aloadbuff Aloadbuff, *PAloadbuff;
-
-typedef struct Aenvmixer Aenvmixer, *PAenvmixer;
-
-typedef struct Aresample Aresample, *PAresample;
-
-typedef struct Areverb Areverb, *PAreverb;
-
-typedef struct Asavebuff Asavebuff, *PAsavebuff;
-
-typedef struct Asegment Asegment, *PAsegment;
-
-typedef struct Asetbuff Asetbuff, *PAsetbuff;
-
-typedef struct Asetvol Asetvol, *PAsetvol;
-
-typedef struct Admemmove Admemmove, *PAdmemmove;
-
-typedef struct Aloadadpcm Aloadadpcm, *PAloadadpcm;
-
-typedef struct Amixer Amixer, *PAmixer;
-
-typedef struct Asetloop Asetloop, *PAsetloop;
-
-typedef union anon__struct_76_bitfield_1 anon__struct_76_bitfield_1, *Panon__struct_76_bitfield_1;
-
-typedef union anon__struct_77_bitfield_1 anon__struct_77_bitfield_1, *Panon__struct_77_bitfield_1;
-
-typedef union anon__struct_79_bitfield_1 anon__struct_79_bitfield_1, *Panon__struct_79_bitfield_1;
-
-typedef union anon__struct_79_bitfield_2 anon__struct_79_bitfield_2, *Panon__struct_79_bitfield_2;
-
-typedef union anon__struct_78_bitfield_1 anon__struct_78_bitfield_1, *Panon__struct_78_bitfield_1;
-
-typedef union anon__struct_80_bitfield_1 anon__struct_80_bitfield_1, *Panon__struct_80_bitfield_1;
-
-typedef union anon__struct_80_bitfield_2 anon__struct_80_bitfield_2, *Panon__struct_80_bitfield_2;
-
-typedef union anon__struct_81_bitfield_1 anon__struct_81_bitfield_1, *Panon__struct_81_bitfield_1;
-
-typedef union anon__struct_82_bitfield_1 anon__struct_82_bitfield_1, *Panon__struct_82_bitfield_1;
-
-typedef union anon__struct_85_bitfield_1 anon__struct_85_bitfield_1, *Panon__struct_85_bitfield_1;
-
-typedef union anon__struct_86_bitfield_1 anon__struct_86_bitfield_1, *Panon__struct_86_bitfield_1;
-
-typedef union anon__struct_87_bitfield_1 anon__struct_87_bitfield_1, *Panon__struct_87_bitfield_1;
-
-typedef union anon__struct_88_bitfield_1 anon__struct_88_bitfield_1, *Panon__struct_88_bitfield_1;
-
-typedef union anon__struct_88_bitfield_2 anon__struct_88_bitfield_2, *Panon__struct_88_bitfield_2;
-
-typedef union anon__struct_89_bitfield_1 anon__struct_89_bitfield_1, *Panon__struct_89_bitfield_1;
-
-typedef union anon__struct_89_bitfield_2 anon__struct_89_bitfield_2, *Panon__struct_89_bitfield_2;
-
-typedef union anon__struct_90_bitfield_1 anon__struct_90_bitfield_1, *Panon__struct_90_bitfield_1;
-
-typedef union anon__struct_90_bitfield_2 anon__struct_90_bitfield_2, *Panon__struct_90_bitfield_2;
-
-typedef union anon__struct_91_bitfield_1 anon__struct_91_bitfield_1, *Panon__struct_91_bitfield_1;
-
-typedef union anon__struct_91_bitfield_2 anon__struct_91_bitfield_2, *Panon__struct_91_bitfield_2;
-
-typedef union anon__struct_92_bitfield_1 anon__struct_92_bitfield_1, *Panon__struct_92_bitfield_1;
-
-typedef union anon__struct_83_bitfield_1 anon__struct_83_bitfield_1, *Panon__struct_83_bitfield_1;
-
-typedef union anon__struct_83_bitfield_2 anon__struct_83_bitfield_2, *Panon__struct_83_bitfield_2;
-
-typedef union anon__struct_93_bitfield_1 anon__struct_93_bitfield_1, *Panon__struct_93_bitfield_1;
-
-union anon__struct_78_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint flags:8; // : bits 8-15
-    uint pad1:16; // : bits 16-31
-};
-
-union anon__struct_81_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint pad1:24; // : bits 8-31
-};
-
-union anon__struct_88_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint pad1:24; // : bits 8-31
-};
-
-union anon__struct_91_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint pad1:8; // : bits 8-15
-    uint dmemin:16; // : bits 16-31
-};
-
-union anon__struct_80_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint pad1:8; // : bits 8-15
-    uint pad2:16; // : bits 16-31
-};
-
-union anon__struct_80_bitfield_2 {
-    uint inL:16; // : bits 0-15
-    uint inR:16; // : bits 16-31
-};
-
-struct Ainterleave {
-    union anon__struct_80_bitfield_1 field_0x0;
-    union anon__struct_80_bitfield_2 field_0x4;
-};
-
-union anon__struct_88_bitfield_2 {
-    uint pad2:2; // : bits 0-1
-    uint number:4; // : bits 2-5
-    uint base:24; // : bits 6-29
-};
-
-struct Asegment {
-    union anon__struct_88_bitfield_1 field_0x0;
-    union anon__struct_88_bitfield_2 field_0x4;
-};
-
-union anon__struct_91_bitfield_2 {
-    uint dmemout:16; // : bits 0-15
-    uint count:16; // : bits 16-31
-};
-
-union anon__struct_77_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint flags:8; // : bits 8-15
-    uint gain:16; // : bits 16-31
-};
-
-struct Apolef {
-    union anon__struct_77_bitfield_1 field_0x0;
-    uint addr;
-};
-
-union anon__struct_83_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint flags:8; // : bits 8-15
-    uint gain:16; // : bits 16-31
-};
-
-union anon__struct_83_bitfield_2 {
-    uint dmemi:16; // : bits 0-15
-    uint dmemo:16; // : bits 16-31
-};
-
-struct Amixer {
-    union anon__struct_83_bitfield_1 field_0x0;
-    union anon__struct_83_bitfield_2 field_0x4;
-};
-
-struct Awords {
-    uint w0;
-    uint w1;
-};
-
-union anon__struct_85_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint flags:8; // : bits 8-15
-    uint pitch:16; // : bits 16-31
-};
-
-struct Aresample {
-    union anon__struct_85_bitfield_1 field_0x0;
-    uint addr;
-};
-
-union anon__struct_89_bitfield_2 {
-    uint dmemout:16; // : bits 0-15
-    uint count:16; // : bits 16-31
-};
-
-union anon__struct_89_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint flags:8; // : bits 8-15
-    uint dmemin:16; // : bits 16-31
-};
-
-struct Asetbuff {
-    union anon__struct_89_bitfield_1 field_0x0;
-    union anon__struct_89_bitfield_2 field_0x4;
-};
-
-struct Aenvelope {
-    union anon__struct_78_bitfield_1 field_0x0;
-    uint addr;
-};
-
-union anon__struct_86_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint flags:8; // : bits 8-15
-    uint pad1:16; // : bits 16-31
-};
-
-struct Areverb {
-    union anon__struct_86_bitfield_1 field_0x0;
-    uint addr;
-};
-
-union anon__struct_82_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint flags:8; // : bits 8-15
-    uint pad1:16; // : bits 16-31
-};
-
-struct Aenvmixer {
-    union anon__struct_82_bitfield_1 field_0x0;
-    uint addr;
-};
-
-union anon__struct_90_bitfield_2 {
-    uint voltgt:16; // : bits 0-15
-    uint volrate:16; // : bits 16-31
-};
-
-union anon__struct_90_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint flags:8; // : bits 8-15
-    uint vol:16; // : bits 16-31
-};
-
-struct Asetvol {
-    union anon__struct_90_bitfield_1 field_0x0;
-    union anon__struct_90_bitfield_2 field_0x4;
-};
-
-union anon__struct_76_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint flags:8; // : bits 8-15
-    uint gain:16; // : bits 16-31
-};
-
-struct Aadpcm {
-    union anon__struct_76_bitfield_1 field_0x0;
-    uint addr;
-};
-
-struct Admemmove {
-    union anon__struct_91_bitfield_1 field_0x0;
-    union anon__struct_91_bitfield_2 field_0x4;
-};
-
-union anon__struct_92_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint pad1:8; // : bits 8-15
-    uint count:16; // : bits 16-31
-};
-
-struct Aloadadpcm {
-    union anon__struct_92_bitfield_1 field_0x0;
-    uint addr;
-};
-
-union anon__struct_79_bitfield_2 {
-    uint pad2:16; // : bits 0-15
-    uint count:16; // : bits 16-31
-};
-
-union anon__struct_79_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint pad1:8; // : bits 8-15
-    uint dmem:16; // : bits 16-31
-};
-
-struct Aclearbuff {
-    union anon__struct_79_bitfield_1 field_0x0;
-    union anon__struct_79_bitfield_2 field_0x4;
-};
-
-struct Aloadbuff {
-    union anon__struct_81_bitfield_1 field_0x0;
-    uint addr;
-};
-
-union anon__struct_87_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint pad1:24; // : bits 8-31
-};
-
-struct Asavebuff {
-    union anon__struct_87_bitfield_1 field_0x0;
-    uint addr;
-};
-
-union anon__struct_93_bitfield_1 {
-    uint cmd:8; // : bits 0-7
-    uint pad1:8; // : bits 8-15
-    uint pad2:16; // : bits 16-31
-};
-
-struct Asetloop {
-    union anon__struct_93_bitfield_1 field_0x0;
-    uint addr;
-};
-
-union Acmd {
-    struct Awords words;
-    struct Aadpcm adpcm;
-    struct Apolef polef;
-    struct Aclearbuff clearbuff;
-    struct Aenvelope envelope;
-    struct Ainterleave interleave;
-    struct Aloadbuff loadbuff;
-    struct Aenvmixer envmixer;
-    struct Aresample resample;
-    struct Areverb reverb;
-    struct Asavebuff savebuff;
-    struct Asegment segment;
-    struct Asetbuff setbuff;
-    struct Asetvol setvol;
-    struct Admemmove dmemmove;
-    struct Aloadadpcm loadadpcm;
-    struct Amixer mixer;
-    struct Asetloop setloop;
-    longlong force_union_align;
-};
-
 typedef uint _Sizet;
 
 #define _D0 0
@@ -1535,54 +718,133 @@ typedef uint _Sizet;
 
 #define _LBIAS 1023
 
-typedef enum enum_179 {
-    GT_ALPHACOMPARE=1,
-    GT_ALPHADITHER=4,
-    GT_CLEAR=0,
-    GT_COMBKEY=6,
-    GT_CYCLETYPE=13,
-    GT_PIPELINE=14,
-    GT_RENDERMODE=3,
-    GT_RGBDITHER=5,
-    GT_TEXTCONV=7,
-    GT_TEXTDETAIL=11,
-    GT_TEXTFILT=8,
-    GT_TEXTLOD=10,
-    GT_TEXTLUT=9,
-    GT_TEXTPERSP=12,
-    GT_ZSRCSEL=2
-} enum_179;
+typedef struct rdbPacket rdbPacket, *PrdbPacket;
 
-typedef union gtVtxOut gtVtxOut, *PgtVtxOut;
+typedef union anon__struct_183_bitfield_1 anon__struct_183_bitfield_1, *Panon__struct_183_bitfield_1;
 
-typedef struct gtVtxOut_t gtVtxOut_t, *PgtVtxOut_t;
-
-struct gtVtxOut_t {
-    short xscrn;
-    short yscrn;
-    int zscrn;
-    short s;
-    short t;
-    u8 r;
-    u8 g;
-    u8 b;
-    u8 a;
+union anon__struct_183_bitfield_1 {
+    uint type:6; // : bits 0-5
+    uint length:2; // : bits 6-7
 };
 
-union gtVtxOut {
-    struct gtVtxOut_t v;
-    longlong force_structure_alignment;
+struct rdbPacket {
+    union anon__struct_183_bitfield_1 field_0x0;
+    char buf[3];
 };
 
-typedef enum enum_179 gtStateOthermode_t;
+#define RDB_TYPE_HtoG_KDEBUG 20
 
-typedef union gtGlobState gtGlobState, *PgtGlobState;
+#define RDB_TYPE_GtoH_RAMROM 9
 
-typedef struct gtGlobState_t gtGlobState_t, *PgtGlobState_t;
+#define RDB_TYPE_GtoH_PRINT 1
+
+#define RDB_BASE_REG 3221225472
+
+#define RDB_TYPE_INVALID 0
+
+#define RDB_WRITE_INTR_REG 3221225480
+
+#define DEBUG_COMMAND_MEMORY 1
+
+#define RDB_LOG_MAX_BLOCK_SIZE 32768
+
+#define RDB_TYPE_HtoG_DATA 16
+
+#define PROF_BLOCK_SIZE 2048
+
+#define RDB_TYPE_GtoH_FAULT 2
+
+#define DEBUG_STATE_RECEIVE 1
+
+#define GIO_RDB_BASE_REG 3209166848
+
+#define RDB_TYPE_GtoH_DEBUG_READY 11
+
+#define RDB_DATA_MAX_BLOCK_SIZE 32768
+
+#define RDB_TYPE_GtoH_KDEBUG 12
+
+#define RDB_TYPE_GtoH_READY_FOR_DATA 5
+
+#define RDB_TYPE_GtoH_DEBUG_DONE 10
+
+#define RDB_TYPE_GtoH_DATA_CT 6
+
+#define RDB_TYPE_HtoG_LOG_DONE 13
+
+#define GIO_RDB_READ_INTR_REG 3209166860
+
+#define RDB_BASE_VIRTUAL_ADDR 2147483648
+
+#define DEBUG_STATE_INVALID 255
+
+#define RDB_TYPE_GtoH_LOG_CT 3
+
+#define RDB_PROF_FLUSH_SIG 2
+
+#define DEBUG_STATE_NULL 0
+
+#define RDB_READ_INTR_REG 3221225484
+
+#define GIO_RDB_READ_INTR_BIT 1073741824
+
+#define RDB_TYPE_HtoG_DEBUG 14
+
+#define RDB_TYPE_GtoH_PROF_DATA 22
+
+#define RDB_TYPE_GtoH_DATA 7
+
+#define RDB_TYPE_GtoH_LOG 4
+
+#define RDB_TYPE_HtoG_REQ_RAMROM 18
+
+#define RDB_TYPE_HtoG_FREE_RAMROM 19
+
+#define RDB_TYPE_HtoG_DEBUG_CT 15
+
+#define DEBUG_COMMAND_NULL 0
+
+#define RDB_PROF_ACK_SIG 1
+
+#define GIO_RDB_DEBUG_MINOR 2
+
+#define DEBUG_COMMAND_REGISTER 2
+
+#define GIO_RDB_PRINT_MINOR 1
+
+#define RDB_TYPE_HtoG_PROF_SIGNAL 21
+
+#define DEBUG_COMMAND_INVALID 255
+
+#define RDB_TYPE_HtoG_DATA_DONE 17
+
+#define GIO_RDB_WRITE_INTR_BIT 2147483648
+
+#define RDB_TYPE_GtoH_DEBUG 8
+
+#define GIO_RDB_WRITE_INTR_REG 3209166856
+
+typedef struct bitmap bitmap, *Pbitmap;
+
+typedef struct bitmap Bitmap;
+
+typedef short s16;
+
+struct bitmap {
+    s16 width;
+    s16 width_img;
+    s16 s;
+    s16 t;
+    void * buf;
+    s16 actualHeight;
+    s16 LUToffset;
+};
+
+typedef struct sprite sprite, *Psprite;
+
+typedef struct sprite Sprite;
 
 typedef union Gfx Gfx, *PGfx;
-
-typedef union Vp Vp, *PVp;
 
 typedef struct Gwords Gwords, *PGwords;
 
@@ -1619,8 +881,6 @@ typedef struct Gloadtile Gloadtile, *PGloadtile;
 typedef struct Gloadtile Gsettilesize;
 
 typedef struct Gloadtile Gloadtlut;
-
-typedef struct Vp_t Vp_t, *PVp_t;
 
 typedef union anon__struct_57_bitfield_1 anon__struct_57_bitfield_1, *Panon__struct_57_bitfield_1;
 
@@ -1780,61 +1040,40 @@ struct Gsegment {
     union anon__struct_60_bitfield_2 field_0x4;
 };
 
-union anon__struct_66_bitfield_2 {
-    uint fmt:3; // : bits 0-2
-    uint siz:2; // : bits 3-4
-    uint pad:7; // : bits 5-11
-    uint wd:12; // : bits 12-23
+struct Gsetcolor {
+    union anon__struct_68_bitfield_1 field_0x0;
+    uchar pad;
+    uchar prim_min_level;
+    uchar prim_level;
+    ulong color;
 };
 
-union anon__struct_66_bitfield_1 {
+struct Gtri {
+    union anon__struct_58_bitfield_1 field_0x0;
+    struct Tri tri;
+};
+
+union anon__struct_67_bitfield_2 {
+    uint muxs0:24; // : bits 0-23
+};
+
+struct Gwords {
+    uint w0;
+    uint w1;
+};
+
+union anon__struct_67_bitfield_3 {
+    uint muxs1:32; // : bits 0-31
+};
+
+union anon__struct_67_bitfield_1 {
     int cmd:8; // : bits 0-7
 };
 
-struct Gsetimg {
-    union anon__struct_66_bitfield_1 field_0x0;
-    union anon__struct_66_bitfield_2 field_0x4;
-    uint dram;
-};
-
-union anon__struct_71_bitfield_3 {
-    int pad:5; // : bits 0-4
-};
-
-union anon__struct_71_bitfield_2 {
-    uint sl:12; // : bits 0-11
-    uint tl:12; // : bits 12-23
-};
-
-union anon__struct_71_bitfield_4 {
-    uint tile:3; // : bits 0-2
-    uint sh:12; // : bits 3-14
-    uint th:12; // : bits 15-26
-};
-
-union anon__struct_71_bitfield_1 {
-    int cmd:8; // : bits 0-7
-};
-
-struct Gloadtile {
-    union anon__struct_71_bitfield_1 field_0x0;
-    union anon__struct_71_bitfield_2 field_0x4;
-    union anon__struct_71_bitfield_3 field_0x8;
-    union anon__struct_71_bitfield_4 field_0xc;
-};
-
-struct Gperspnorm {
-    union anon__struct_65_bitfield_1 field_0x0;
-    short pad2;
-    short scale;
-};
-
-union anon__struct_69_bitfield_1 {
-    int cmd:8; // : bits 0-7
-    int x0:10; // : bits 8-17
-    int x0frac:2; // : bits 18-19
-    int y0:10; // : bits 20-29
-    int y0frac:2; // : bits 30-31
+struct Gsetcombine {
+    union anon__struct_67_bitfield_1 field_0x0;
+    union anon__struct_67_bitfield_2 field_0x4;
+    union anon__struct_67_bitfield_3 field_0x8;
 };
 
 union anon__struct_69_bitfield_2 {
@@ -1848,30 +1087,16 @@ union anon__struct_69_bitfield_3 {
     int y1frac:2; // : bits 22-23
 };
 
-struct Gfillrect {
-    union anon__struct_69_bitfield_1 field_0x0;
-    union anon__struct_69_bitfield_2 field_0x4;
-    union anon__struct_69_bitfield_3 field_0x8;
-};
-
-struct Gwords {
-    uint w0;
-    uint w1;
-};
-
-union anon__struct_57_bitfield_1 {
+union anon__struct_69_bitfield_1 {
     int cmd:8; // : bits 0-7
+    int x0:10; // : bits 8-17
+    int x0frac:2; // : bits 18-19
+    int y0:10; // : bits 20-29
+    int y0frac:2; // : bits 30-31
 };
 
-union anon__struct_57_bitfield_2 {
-    uint par:8; // : bits 0-7
-    uint len:16; // : bits 8-23
-};
-
-struct Gdma {
-    union anon__struct_57_bitfield_1 field_0x0;
-    union anon__struct_57_bitfield_2 field_0x4;
-    uint addr;
+union anon__struct_70_bitfield_1 {
+    int cmd:8; // : bits 0-7
 };
 
 union anon__struct_70_bitfield_2 {
@@ -1882,10 +1107,6 @@ union anon__struct_70_bitfield_2 {
     uint tmem:9; // : bits 15-23
     uint pad1:5; // : bits 24-28
     uint tile:3; // : bits 29-31
-};
-
-union anon__struct_70_bitfield_1 {
-    int cmd:8; // : bits 0-7
 };
 
 union anon__struct_70_bitfield_3 {
@@ -1906,17 +1127,25 @@ struct Gsettile {
     union anon__struct_70_bitfield_3 field_0x8;
 };
 
-struct Gtri {
-    union anon__struct_58_bitfield_1 field_0x0;
-    struct Tri tri;
+struct Gfillrect {
+    union anon__struct_69_bitfield_1 field_0x0;
+    union anon__struct_69_bitfield_2 field_0x4;
+    union anon__struct_69_bitfield_3 field_0x8;
 };
 
-struct Gsetcolor {
-    union anon__struct_68_bitfield_1 field_0x0;
-    uchar pad;
-    uchar prim_min_level;
-    uchar prim_level;
-    ulong color;
+union anon__struct_71_bitfield_1 {
+    int cmd:8; // : bits 0-7
+};
+
+union anon__struct_71_bitfield_2 {
+    uint sl:12; // : bits 0-11
+    uint tl:12; // : bits 12-23
+};
+
+struct Gperspnorm {
+    union anon__struct_65_bitfield_1 field_0x0;
+    short pad2;
+    short scale;
 };
 
 union anon__struct_64_bitfield_1 {
@@ -1929,22 +1158,86 @@ struct Gline3D {
     struct Tri line;
 };
 
-union anon__struct_67_bitfield_3 {
-    uint muxs1:32; // : bits 0-31
+union anon__struct_71_bitfield_3 {
+    int pad:5; // : bits 0-4
 };
 
-union anon__struct_67_bitfield_2 {
-    uint muxs0:24; // : bits 0-23
+union anon__struct_71_bitfield_4 {
+    uint tile:3; // : bits 0-2
+    uint sh:12; // : bits 3-14
+    uint th:12; // : bits 15-26
 };
 
-union anon__struct_67_bitfield_1 {
+struct Gloadtile {
+    union anon__struct_71_bitfield_1 field_0x0;
+    union anon__struct_71_bitfield_2 field_0x4;
+    union anon__struct_71_bitfield_3 field_0x8;
+    union anon__struct_71_bitfield_4 field_0xc;
+};
+
+struct sprite {
+    s16 x;
+    s16 y;
+    s16 width;
+    s16 height;
+    f32 scalex;
+    f32 scaley;
+    s16 expx;
+    s16 expy;
+    u16 attr;
+    s16 zdepth;
+    u8 red;
+    u8 green;
+    u8 blue;
+    u8 alpha;
+    s16 startTLUT;
+    s16 nTLUT;
+    int * LUT;
+    s16 istart;
+    s16 istep;
+    s16 nbitmaps;
+    s16 ndisplist;
+    s16 bmheight;
+    s16 bmHreal;
+    u8 bmfmt;
+    u8 bmsiz;
+    Bitmap * bitmap;
+    union Gfx * rsp_dl;
+    union Gfx * rsp_dl_next;
+    s16 frac_s;
+    s16 frac_t;
+};
+
+union anon__struct_66_bitfield_2 {
+    uint fmt:3; // : bits 0-2
+    uint siz:2; // : bits 3-4
+    uint pad:7; // : bits 5-11
+    uint wd:12; // : bits 12-23
+};
+
+union anon__struct_66_bitfield_1 {
     int cmd:8; // : bits 0-7
 };
 
-struct Gsetcombine {
-    union anon__struct_67_bitfield_1 field_0x0;
-    union anon__struct_67_bitfield_2 field_0x4;
-    union anon__struct_67_bitfield_3 field_0x8;
+struct Gsetimg {
+    union anon__struct_66_bitfield_1 field_0x0;
+    union anon__struct_66_bitfield_2 field_0x4;
+    uint dram;
+};
+
+union anon__struct_57_bitfield_1 {
+    int cmd:8; // : bits 0-7
+};
+
+union anon__struct_57_bitfield_2 {
+    uint par:8; // : bits 0-7
+    uint len:16; // : bits 8-23
+};
+
+struct Gdma {
+    union anon__struct_57_bitfield_1 field_0x0;
+    union anon__struct_57_bitfield_2 field_0x4;
+    uint addr;
 };
 
 union Gfx {
@@ -1968,6 +1261,1783 @@ union Gfx {
     Gloadtlut loadtlut;
     longlong force_structure_alignment;
 };
+
+#define DL_SPRITE_OVERHEAD 24
+
+#define SP_FASTCOPY 32
+
+#define SP_OVERLAP 64
+
+#define SP_CUTOUT 2
+
+#define SP_FRACPOS 256
+
+#define SP_TEXSHIFT 128
+
+#define SP_EXTERN 1024
+
+#define SP_TEXSHUF 512
+
+#define DL_BM_OVERHEAD 12
+
+#define SP_SCALE 16
+
+#define SP_TRANSPARENT 1
+
+#define SP_Z 8
+
+#define SP_HIDDEN 4
+
+typedef void * __gnuc_va_list;
+
+typedef __gnuc_va_list va_list;
+
+#define SP_DRAM_STACK_SIZE64 128
+
+#define SP_UCODE_SIZE 4096
+
+#define SP_DRAM_STACK_SIZE8 1024
+
+#define SP_UCODE_DATA_SIZE 2048
+
+typedef struct IMAGE IMAGE, *PIMAGE;
+
+struct IMAGE {
+    ushort imagic;
+    ushort type;
+    ushort dim;
+    ushort xsize;
+    ushort ysize;
+    ushort zsize;
+    ulong min;
+    ulong max;
+    ulong wastebytes;
+    char name[80];
+    ulong colormap;
+    long file;
+    ushort flags;
+    short dorev;
+    short x;
+    short y;
+    short z;
+    short cnt;
+    ushort * ptr;
+    ushort * base;
+    ushort * tmpbuf;
+    ulong offset;
+    ulong rleend;
+    ulong * rowstart;
+    long * rowsize;
+};
+
+#define CM_COLORMAP 3
+
+#define TYPEMASK 65280
+
+#define ITYPE_VERBATIM 0
+
+#define ITYPE_RLE 256
+
+#define CM_DITHERED 1
+
+#define IMAGIC 474
+
+#define RLE_NOP 0
+
+#define CM_SCREEN 2
+
+#define BPPMASK 255
+
+#define CM_NORMAL 0
+
+typedef struct _Region_s _Region_s, *P_Region_s;
+
+struct _Region_s {
+    u8 * r_startBufferAddress;
+    u8 * r_endAddress;
+    s32 r_bufferSize;
+    s32 r_bufferCount;
+    u16 r_freeList;
+    u16 r_alignSize;
+};
+
+typedef struct _Region_s OSRegion;
+
+#define OS_RG_ALIGN_DEFAULT 8
+
+#define MAX_BUFCOUNT 32768
+
+#define OS_RG_ALIGN_16B 16
+
+#define OS_RG_ALIGN_4B 4
+
+#define OS_RG_ALIGN_2B 2
+
+#define OS_RG_ALIGN_8B 8
+
+#define BUF_FREE_WO_NEXT 32768
+
+#define GT_STATE_OFF_VTXCOUNT 8
+
+#define GT_STATE_OFF_TRANSFORM 24
+
+#define GT_STATE_OFF_RENDSTATE 0
+
+#define GT_STATE_OFF_TRICOUNT 10
+
+#define GT_STATE_OFF_VTXV0 9
+
+#define GT_STATE_SIZE 88
+
+#define GT_STATE_OFF_TEXSTATE 4
+
+#define GT_STATE_OFF_OTHERMODE 16
+
+#define GT_STATE_OFF_RDPCMDS 12
+
+#define M_GFXTASK 1
+
+#define G_OFF 0
+
+#define G_ON 1
+
+#define M_VIDTASK 3
+
+#define NUM_SEGMENTS 16
+
+#define M_AUDTASK 2
+
+typedef void (* OSErrorHandler)(s16, s16, ...);
+
+#define ERR_OSPISTARTDMA_PIMGR 28
+
+#define ERR_OSCREATETHREAD_PRI 2
+
+#define ERR_OSVISETXSCALE_VALUE 39
+
+#define ERR_ALMODDELAYOVERFLOW 133
+
+#define ERR_OSVIGETNEXTFRAMEBUFFER 38
+
+#define ERR_OSSETTLBASID 13
+
+#define ERR_OSVIGETCURRENTFRAMEBUFFER 37
+
+#define ERR_ALEVENTNOFREE 124
+
+#define ERR_OSPISTARTDMA_DIR 30
+
+#define ERR_OSSETTHREADPRI 4
+
+#define ERR_OSSETTIME 75
+
+#define ERR_OSREADHOST_ADDR 70
+
+#define ERR_OSPROFILESTART_TIME 66
+
+#define ERR_OSVISETMODE 45
+
+#define ERR_ALSYN_NO_UPDATE 106
+
+#define ERR_ALSEQSYSEX 119
+
+#define ERR_OSFREE_REGION 53
+
+#define ERR_OSGETREGIONBUFCOUNT 55
+
+#define ERR_OSPISTARTDMA_PRI 29
+
+#define ERR_OSMAPTLB_INDEX 10
+
+#define ERR_OSCREATEVIMANAGER 49
+
+#define ERR_ALSEQMETA 120
+
+#define ERR_ALBNKFNEW 113
+
+#define ERR_ALCSEQZEROSTATUS 128
+
+#define ERR_OSPISTARTDMA_DEVADDR 31
+
+#define ERR_OSSETEVENTMESG 9
+
+#define ERR_ALHEAPNOFREE 125
+
+#define ERR_OSAISETNEXTBUFFER_ADDR 15
+
+#define ERR_OSSTARTTHREAD 3
+
+#define ERR_OSREADHOST_SIZE 71
+
+#define ERR_ALSEQPUNMAP 123
+
+#define ERR_OSUNMAPTLB 12
+
+#define ERR_OSAISETNEXTBUFFER_SIZE 16
+
+#define ERR_ALSNDPSETSOUND 110
+
+#define ERR_OSVISWAPBUFFER_VIMGR 48
+
+#define ERR_ALSEQNOTMIDI0 115
+
+#define ERR_OSPROFILEINIT_STR 61
+
+#define ERR_OSPROFILESTART_FLAG 67
+
+#define ERR_OSMAPTLB_ASID 11
+
+#define ERR_OSCREATETHREAD_SP 1
+
+#define ERR_OSGETREGIONBUFSIZE 56
+
+#define ERR_OSVISETEVENT 46
+
+#define ERR_OSVISETSPECIAL_VALUE 43
+
+#define ERR_OSVISETYSCALE_VALUE 41
+
+#define ERR_OSPIRAWSTARTDMA_DIR 21
+
+#define ERR_OSPIRAWWRITEIO 20
+
+#define ERR_OSPROFILESTOP_FLAG 68
+
+#define ERR_ALCSEQZEROVEL 129
+
+#define ERR_OSMALLOC 52
+
+#define ERR_OSSPTASKLOAD_OUTSIZE 59
+
+#define ERR_ALSEQNOTMIDI 114
+
+#define ERR_OSVIGETCURRENTMODE 36
+
+#define ERR_OSPIRAWSTARTDMA_ADDR 23
+
+#define ERR_OSCREATEREGION_SIZE 51
+
+#define ERR_OSPIRAWSTARTDMA_SIZE 24
+
+#define ERR_OSVISETXSCALE_VIMGR 40
+
+#define ERR_ALCSPVNOTFREE 130
+
+#define ERR_OSJAMMESG 7
+
+#define ERR_OSPISTARTDMA_RANGE 34
+
+#define ERR_ALSEQPINVALIDPROG 121
+
+#define ERR_OSPIWRITEIO 27
+
+#define ERR_OSPROFILEINIT_ORD 64
+
+#define ERR_OSPROFILEINIT_SIZ 65
+
+#define ERR_OSPIREADIO 26
+
+#define ERR_OSSPTASKLOAD_YIELD 60
+
+#define ERR_OSSTOPTIMER 77
+
+#define ERR_OSSENDMESG 6
+
+#define ERR_OSPISTARTDMA_ADDR 32
+
+#define ERR_OSVISETSPECIAL_VIMGR 44
+
+#define ERR_ALSEQTRACKHDR 118
+
+#define ERR_OSSPTASKLOAD_DRAM 57
+
+#define ERR_OSPROFILESTOP_TIMER 69
+
+#define ERR_OSAISETFREQUENCY 14
+
+#define ERR_ALSEQP_MAP_VOICE 102
+
+#define ERR_OSFREE_ADDR 54
+
+#define ERR_OSDPSETNEXTBUFFER_ADDR 17
+
+#define ERR_OSDPSETNEXTBUFFER_SIZE 18
+
+#define ERR_ALSNDPDELETE 108
+
+#define ERR_OSSPTASKLOAD_OUT 58
+
+#define ERR_OSPIRAWSTARTDMA_DEVADDR 22
+
+#define ERR_OSCREATEMESGQUEUE 5
+
+#define ERR_ALSNDPSETPRIORITY 111
+
+#define ERR_ALHEAPFIRSTBLOCK 127
+
+#define OS_ERROR_MAGIC 1801548921
+
+#define ERR_OSPIRAWSTARTDMA_RANGE 25
+
+#define ERR_ALSNDPSETPAR 112
+
+#define ERR_OSSETTIMER 76
+
+#define ERR_OSGETTIME 74
+
+#define ERR_ALSEQP_NO_SOUND 100
+
+#define ERR_ALSNDPDEALLOCATE 107
+
+#define ERR_ALSEQNUMTRACKS 116
+
+#define ERR_OSCREATEREGION_ALIGN 50
+
+#define ERR_ALSEQP_POLY_VOICE 104
+
+#define ERR_OSVISWAPBUFFER_ADDR 47
+
+#define ERR_ALSNDP_NO_VOICE 105
+
+#define ERR_ALHEAPCORRUPT 126
+
+#define ERR_ALSEQTIME 117
+
+#define ERR_ALSNDPPLAY 109
+
+#define ERR_OSPIRAWREADIO 19
+
+#define ERR_OSAISETNEXTBUFFER_ENDADDR 132
+
+#define ERR_OSPROFILEINIT_ALN 63
+
+#define ERR_OSWRITEHOST_ADDR 72
+
+#define ERR_OSWRITEHOST_SIZE 73
+
+#define ERR_ALSEQPUNKNOWNMIDI 122
+
+#define ERR_OSCREATEPIMANAGER 35
+
+#define ERR_ALSEQP_NO_VOICE 101
+
+#define ERR_ALSEQOVERRUN 131
+
+#define ERR_OSPISTARTDMA_SIZE 33
+
+#define ERR_OSPROFILEINIT_CNT 62
+
+#define ERR_ALSEQP_OFF_VOICE 103
+
+#define ERR_OSRECVMESG 8
+
+#define ERR_OSVISETYSCALE_VIMGR 42
+
+typedef struct __OSEventState __OSEventState, *P__OSEventState;
+
+typedef struct OSMesgQueue_s OSMesgQueue_s, *POSMesgQueue_s;
+
+typedef struct OSMesgQueue_s OSMesgQueue;
+
+typedef void * OSMesg;
+
+typedef struct OSThread_s OSThread_s, *POSThread_s;
+
+typedef struct OSThread_s OSThread;
+
+typedef s32 OSPri;
+
+typedef s32 OSId;
+
+typedef struct __OSThreadContext __OSThreadContext, *P__OSThreadContext;
+
+typedef ulonglong u64;
+
+typedef union __OSfp __OSfp, *P__OSfp;
+
+typedef struct _struct_2 _struct_2, *P_struct_2;
+
+struct _struct_2 {
+    f32 f_odd;
+    f32 f_even;
+};
+
+union __OSfp {
+    struct _struct_2 f;
+    f64 d;
+};
+
+struct __OSThreadContext {
+    u64 at;
+    u64 v0;
+    u64 v1;
+    u64 a0;
+    u64 a1;
+    u64 a2;
+    u64 a3;
+    u64 t0;
+    u64 t1;
+    u64 t2;
+    u64 t3;
+    u64 t4;
+    u64 t5;
+    u64 t6;
+    u64 t7;
+    u64 s0;
+    u64 s1;
+    u64 s2;
+    u64 s3;
+    u64 s4;
+    u64 s5;
+    u64 s6;
+    u64 s7;
+    u64 t8;
+    u64 t9;
+    u64 gp;
+    u64 sp;
+    u64 s8;
+    u64 ra;
+    u64 lo;
+    u64 hi;
+    u32 sr;
+    u32 pc;
+    u32 cause;
+    u32 badvaddr;
+    u32 rcp;
+    u32 fpcsr;
+    union __OSfp fp0;
+    union __OSfp fp2;
+    union __OSfp fp4;
+    union __OSfp fp6;
+    union __OSfp fp8;
+    union __OSfp fp10;
+    union __OSfp fp12;
+    union __OSfp fp14;
+    union __OSfp fp16;
+    union __OSfp fp18;
+    union __OSfp fp20;
+    union __OSfp fp22;
+    union __OSfp fp24;
+    union __OSfp fp26;
+    union __OSfp fp28;
+    union __OSfp fp30;
+};
+
+struct OSThread_s {
+    struct OSThread_s * next;
+    OSPri priority;
+    struct OSThread_s * * queue;
+    struct OSThread_s * tlnext;
+    u16 state;
+    u16 flags;
+    OSId id;
+    int fp;
+    struct __OSThreadContext context;
+};
+
+struct __OSEventState {
+    OSMesgQueue * messageQueue;
+    OSMesg message;
+};
+
+struct OSMesgQueue_s {
+    OSThread * mtqueue;
+    OSThread * fullqueue;
+    s32 validCount;
+    s32 first;
+    s32 msgCount;
+    OSMesg * msg;
+};
+
+typedef struct __OSThreadTail __OSThreadTail, *P__OSThreadTail;
+
+struct __OSThreadTail {
+    OSThread * next;
+    OSPri priority;
+};
+
+typedef struct guDLPrintCB guDLPrintCB, *PguDLPrintCB;
+
+struct guDLPrintCB {
+    int dataSize;
+    int dlType;
+    int flags;
+    u32 paddr;
+};
+
+typedef struct PositionalLight PositionalLight, *PPositionalLight;
+
+struct PositionalLight {
+    float col[3];
+    float pos[3];
+    float a1;
+    float a2;
+};
+
+typedef struct Image Image, *PImage;
+
+struct Image {
+    uchar * base;
+    int fmt;
+    int siz;
+    int xsize;
+    int ysize;
+    int lsize;
+    int addr;
+    int w;
+    int h;
+    int s;
+    int t;
+};
+
+#define GU_PARSE_GBI_TYPE 1
+
+#define GU_PARSE_MEM_BLOCK 4
+
+#define GU_PARSEGBI_NONEST 2
+
+#define GU_BLINKRDP_HILITE 1
+
+#define GU_PARSEGBI_ROWMAJOR 1
+
+#define GU_PARSEGBI_ALLMTX 16
+
+#define GU_PARSERDP_VERBOSE 1
+
+#define GU_PARSE_RDP_TYPE 2
+
+#define GU_BLINKRDP_EXTRACT 2
+
+#define GU_PARSE_READY 3
+
+#define GU_PARSERDP_PRHISTO 4
+
+#define FILTER_CLAMP 1
+
+#define GU_PARSEGBI_DUMPONLY 32
+
+#define GU_PARSEGBI_SHOWDMA 8
+
+#define GU_PARSERDP_DUMPONLY 32
+
+#define GU_PARSEGBI_FLTMTX 4
+
+#define GU_PARSE_ABI_TYPE 5
+
+#define GU_PARSERDP_PRAREA 2
+
+#define FILTER_WRAP 0
+
+#define GU_PARSE_STRING_TYPE 6
+
+typedef struct huft huft, *Phuft;
+
+typedef union _union_2 _union_2, *P_union_2;
+
+union _union_2 {
+    ush n;
+    struct huft * t;
+};
+
+struct huft {
+    uch e;
+    uch b;
+    union _union_2 v;
+};
+
+#define BMAX 16
+
+#define N_MAX 288
+
+typedef struct OSPifRam OSPifRam, *POSPifRam;
+
+struct OSPifRam {
+    u32 ramarray[15];
+    u32 pifstatus;
+};
+
+typedef union __OSInodeUnit __OSInodeUnit, *P__OSInodeUnit;
+
+typedef struct _struct_195 _struct_195, *P_struct_195;
+
+struct _struct_195 {
+    u8 bank;
+    u8 page;
+};
+
+union __OSInodeUnit {
+    struct _struct_195 inode_t;
+    u16 ipage;
+};
+
+typedef struct __OSContEepromFormat __OSContEepromFormat, *P__OSContEepromFormat;
+
+struct __OSContEepromFormat {
+    u8 txsize;
+    u8 rxsize;
+    u8 cmd;
+    u8 address;
+    u8 data[8];
+};
+
+typedef struct __OSContReadFormat __OSContReadFormat, *P__OSContReadFormat;
+
+typedef char s8;
+
+struct __OSContReadFormat {
+    u8 dummy;
+    u8 txsize;
+    u8 rxsize;
+    u8 cmd;
+    u16 button;
+    s8 stick_x;
+    s8 stick_y;
+};
+
+typedef struct __OSContRamReadFormat __OSContRamReadFormat, *P__OSContRamReadFormat;
+
+struct __OSContRamReadFormat {
+    u8 dummy;
+    u8 txsize;
+    u8 rxsize;
+    u8 cmd;
+    u16 address;
+    u8 data[32];
+    u8 datacrc;
+};
+
+typedef struct __OSInode __OSInode, *P__OSInode;
+
+struct __OSInode {
+    union __OSInodeUnit inode_page[128];
+};
+
+typedef struct __OSContRequesFormat __OSContRequesFormat, *P__OSContRequesFormat;
+
+struct __OSContRequesFormat {
+    u8 dummy;
+    u8 txsize;
+    u8 rxsize;
+    u8 cmd;
+    u8 typeh;
+    u8 typel;
+    u8 status;
+    u8 dummy1;
+};
+
+typedef struct __OSDir __OSDir, *P__OSDir;
+
+struct __OSDir {
+    u32 game_code;
+    u16 company_code;
+    union __OSInodeUnit start_page;
+    u8 status;
+    s8 reserved;
+    u16 data_sum;
+    char ext_name[4];
+    char game_name[16];
+};
+
+typedef struct __OSPackId __OSPackId, *P__OSPackId;
+
+struct __OSPackId {
+    u32 repaired;
+    u32 random;
+    u64 serial_mid;
+    u64 serial_low;
+    u16 deviceid;
+    u8 banks;
+    u8 version;
+    u16 checksum;
+    u16 inverted_checksum;
+};
+
+typedef struct __OSInodeCache __OSInodeCache, *P__OSInodeCache;
+
+struct __OSInodeCache {
+    struct __OSInode inode;
+    u8 bank;
+    u8 map[256];
+};
+
+#define CONT_EEPROM_READ 4
+
+#define CONT_SETCH 254
+
+#define PFS_64K_RAM 2
+
+#define PFS_INODE_DIST_MAP 256
+
+#define PFS_FORCE 1
+
+#define CONT_FORMAT 1
+
+#define PFS_ID_1AREA 3
+
+#define PFS_EOF 1
+
+#define PFS_SECTOR_PER_BANK 32
+
+#define EEPROM_WAIT 12000
+
+#define PFS_INODE_SIZE_PER_PAGE 128
+
+#define PFS_ID_2AREA 4
+
+#define FORMAT_END 254
+
+#define PFS_ID_3AREA 6
+
+#define CONT_RESET 255
+
+#define PFS_DELETE 1
+
+#define PFS_PAGE_SIZE 256
+
+#define PFS_SIZE_LOC 24
+
+#define PFS_32K_RAM 1
+
+#define CONT_READ 1
+
+#define PFS_LABEL_AREA 7
+
+#define CONT_RAM_READ 2
+
+#define PIFRAMSIZE 16
+
+#define PFS_PAGE_NOT_EXIST 2
+
+#define CONT_EEPROM_WRITE 5
+
+#define PFS_PAGE_NOT_USED 3
+
+#define PFS_BANK_LAPPED_BY 8
+
+#define CONT_RAM_WRITE 3
+
+#define PFS_ID_PAGE 0
+
+#define PFS_SECTOR_SIZE 4
+
+#define CHANNEL_RESET 253
+
+#define CONT_REQUEST 0
+
+#define DEF_DIR_PAGES 2
+
+#define PFS_ID_0AREA 1
+
+#define PFS_WRITTEN 2
+
+#define CON_ERR_MASK 192
+
+#define RMON_STACKSIZE 4096
+
+#define RMON_DBG_BUF_SIZE 2048
+
+typedef struct Elf32_RegInfo_MIPS Elf32_RegInfo_MIPS, *PElf32_RegInfo_MIPS;
+
+struct Elf32_RegInfo_MIPS {
+    enum Elf32_GPRMask_MIPS ri_gprmask;
+    dword field_0x4[4];
+    dword ri_gp_value;
+};
+
+typedef struct Elf32_Sym Elf32_Sym, *PElf32_Sym;
+
+struct Elf32_Sym {
+    dword st_name;
+    dword st_value;
+    dword st_size;
+    byte st_info;
+    byte st_other;
+    word st_shndx;
+};
+
+typedef struct Elf32_Shdr Elf32_Shdr, *PElf32_Shdr;
+
+typedef enum Elf_SectionHeaderType_MIPS {
+    =1879048203,
+    SHT_CHECKSUM=1879048184,
+    SHT_DYNAMIC=6,
+    SHT_DYNSYM=11,
+    SHT_FINI_ARRAY=15,
+    SHT_GNU_ATTRIBUTES=1879048181,
+    SHT_GNU_HASH=1879048182,
+    SHT_GNU_LIBLIST=1879048183,
+    SHT_GNU_verdef=1879048189,
+    SHT_GNU_verneed=1879048190,
+    SHT_GNU_versym=1879048191,
+    SHT_GROUP=17,
+    SHT_HASH=5,
+    SHT_INIT_ARRAY=14,
+    SHT_MIPS_ABIFLAGS=1879048234,
+    SHT_MIPS_AUXSYM=1879048214,
+    SHT_MIPS_CONFLICT=1879048194,
+    SHT_MIPS_CONTENT=1879048204,
+    SHT_MIPS_DEBUG=1879048197,
+    SHT_MIPS_DELTACLASS=1879048221,
+    SHT_MIPS_DELTADECL=1879048223,
+    SHT_MIPS_DELTAINST=1879048220,
+    SHT_MIPS_DELTASYM=1879048219,
+    SHT_MIPS_DENSE=1879048211,
+    SHT_MIPS_DWARF=1879048222,
+    SHT_MIPS_EH_REGION=1879048231,
+    SHT_MIPS_EVENTS=1879048225,
+    SHT_MIPS_EXTSYM=1879048210,
+    SHT_MIPS_FDESC=1879048209,
+    SHT_MIPS_GPTAB=1879048195,
+    SHT_MIPS_LIBLIST=1879048192,
+    SHT_MIPS_LINE=1879048217,
+    SHT_MIPS_LOCSTR=1879048216,
+    SHT_MIPS_LOCSYM=1879048213,
+    SHT_MIPS_MSYM=1879048193,
+    SHT_MIPS_OPTIONS=1879048205,
+    SHT_MIPS_OPTSYM=1879048215,
+    SHT_MIPS_PACKAGE=1879048199,
+    SHT_MIPS_PACKSYM=1879048200,
+    SHT_MIPS_PDESC=1879048212,
+    SHT_MIPS_PDR_EXCEPTION=1879048233,
+    SHT_MIPS_PIXIE=1879048227,
+    SHT_MIPS_REGINFO=1879048198,
+    SHT_MIPS_RELD=1879048201,
+    SHT_MIPS_RFDESC=1879048218,
+    SHT_MIPS_SHDR=1879048208,
+    SHT_MIPS_SYMBOL_LIB=1879048224,
+    SHT_MIPS_TRANSLATE=1879048226,
+    SHT_MIPS_UCODE=1879048196,
+    SHT_MIPS_WHIRL=1879048230,
+    SHT_MIPS_XLATE=1879048228,
+    SHT_MIPS_XLATE_DEBUG=1879048229,
+    SHT_MIPS_XLATE_OLD=1879048232,
+    SHT_NOBITS=8,
+    SHT_NOTE=7,
+    SHT_NULL=0,
+    SHT_PREINIT_ARRAY=16,
+    SHT_PROGBITS=1,
+    SHT_REL=9,
+    SHT_RELA=4,
+    SHT_SHLIB=10,
+    SHT_STRTAB=3,
+    SHT_SUNW_COMDAT=1879048187,
+    SHT_SUNW_move=1879048186,
+    SHT_SUNW_syminfo=1879048188,
+    SHT_SYMTAB=2,
+    SHT_SYMTAB_SHNDX=18
+} Elf_SectionHeaderType_MIPS;
+
+struct Elf32_Shdr {
+    dword sh_name;
+    enum Elf_SectionHeaderType_MIPS sh_type;
+    dword sh_flags;
+    dword sh_addr;
+    dword sh_offset;
+    dword sh_size;
+    dword sh_link;
+    dword sh_info;
+    dword sh_addralign;
+    dword sh_entsize;
+};
+
+typedef struct Elf32_Phdr Elf32_Phdr, *PElf32_Phdr;
+
+typedef enum Elf_ProgramHeaderType_MIPS {
+    PT_DYNAMIC=2,
+    PT_GNU_EH_FRAME=1685382480,
+    PT_GNU_RELRO=1685382482,
+    PT_GNU_STACK=1685382481,
+    PT_INTERP=3,
+    PT_LOAD=1,
+    PT_MIPS_ABIFLAGS=1879048195,
+    PT_MIPS_OPTIONS=1879048194,
+    PT_MIPS_REGINFO=1879048192,
+    PT_MIPS_RTPROC=1879048193,
+    PT_NOTE=4,
+    PT_NULL=0,
+    PT_PHDR=6,
+    PT_SHLIB=5,
+    PT_TLS=7
+} Elf_ProgramHeaderType_MIPS;
+
+struct Elf32_Phdr {
+    enum Elf_ProgramHeaderType_MIPS p_type;
+    dword p_offset;
+    dword p_vaddr;
+    dword p_paddr;
+    dword p_filesz;
+    dword p_memsz;
+    dword p_flags;
+    dword p_align;
+};
+
+typedef struct Elf32_Ehdr Elf32_Ehdr, *PElf32_Ehdr;
+
+struct Elf32_Ehdr {
+    byte e_ident_magic_num;
+    char e_ident_magic_str[3];
+    byte e_ident_class;
+    byte e_ident_data;
+    byte e_ident_version;
+    byte e_ident_pad[9];
+    word e_type;
+    word e_machine;
+    dword e_version;
+    dword e_entry;
+    dword e_phoff;
+    dword e_shoff;
+    dword e_flags;
+    word e_ehsize;
+    word e_phentsize;
+    word e_phnum;
+    word e_shentsize;
+    word e_shnum;
+    word e_shstrndx;
+};
+
+#define SAFE_EXP 1023
+
+#define _DMASK 32752
+
+#define _D3 3
+
+#define _D2 2
+
+#define _D1 1
+
+#define _DNAN 65528
+
+#define _DFRAC 15
+
+#define _DMAX 2047
+
+#define NAN 2
+
+#define _DSIGN 32768
+
+#define INF 1
+
+#define FINITE -1
+
+#define HUGE_EXP 1842
+
+typedef char * voidp;
+
+typedef int file_t;
+
+#define RESERVED 192
+
+#define seekable 0
+
+#define PACKED 2
+
+#define DIST_BUFSIZE 32768
+
+#define DEFLATED 8
+
+#define WARNING 2
+
+#define ORIG_NAME 8
+
+#define translate_eol 0
+
+#define MAX_MATCH 258
+
+#define CONTINUATION 2
+
+#define MIN_MATCH 3
+
+#define STORED 0
+
+#define COMMENT 16
+
+#define WSIZE 32768
+
+#define MIN_LOOKAHEAD 262
+
+#define EXTRA_FIELD 4
+
+#define ASCII 1
+
+#define INBUFSIZ 32768
+
+#define OUTBUF_EXTRA 2048
+
+#define OK 0
+
+#define MAX_DIST 32506
+
+#define ASCII_FLAG 1
+
+#define MAX_METHODS 9
+
+#define ENCRYPTED 32
+
+#define LZHED 3
+
+#define NO_FILE -1
+
+#define OUTBUFSIZ 16384
+
+#define COMPRESSED 1
+
+#define INBUF_EXTRA 64
+
+#define ERROR 1
+
+#define UNKNOWN 65535
+
+#define BINARY 0
+
+typedef struct RamRomBuffer RamRomBuffer, *PRamRomBuffer;
+
+struct RamRomBuffer {
+    long type;
+    long length;
+    long magic;
+    char userdata[24573];
+};
+
+#define RAMROM_BUF_SIZE 4096
+
+#define RAMROM_FONTDATA_SIZE 1152
+
+#define GAME_APP_DATA_READY 10
+
+#define HOST_FAULT_ACK 15
+
+#define RAMROM_MSG_ADDR 16752640
+
+#define HOST_LOG_ACK 8
+
+#define RAMROM_RMON_WRITE_ADDR 16764928
+
+#define HOST_PIACCESS_REQ 1
+
+#define RAMROM_FONTDATA_OFFSET 2928
+
+#define RAMROM_PIF2BOOTSTRAP_OFFSET 4096
+
+#define RAMROM_CLOCKRATE_MASK 4294967280
+
+#define GAME_PRINTF_SEND 5
+
+#define HOST_PROF_ACK 13
+
+#define GAME_EXIT 16
+
+#define HOST_PROF_REQ 11
+
+#define RAMROM_BOOTADDR_OFFSET 8
+
+#define HOST_DBG_DATA_ACK 4
+
+#define GAME_LOG_SEND 7
+
+#define HOST_DBG_CMD_READY 2
+
+#define RAMROM_SIZE 16777216
+
+#define RAMROM_APP_WRITE_ADDR 16756736
+
+#define RAMROM_BOOTSTRAP_OFFSET 64
+
+#define HOST_PRINTF_ACK 6
+
+#define RAMROM_CLOCKRATE_OFFSET 4
+
+#define RAMROM_MSG_SIZE 24576
+
+#define RAMROM_RMON_READ_ADDR 16760832
+
+#define GAME_FAULT_SEND 14
+
+#define RAMROM_PRINTF_ADDR 16769024
+
+#define GAME_PROF_SEND 12
+
+#define HOST_APP_CMD_READY 9
+
+#define RAMROM_LOG_ADDR 16773120
+
+#define HOST_DATA_ACK 17
+
+#define RAMROM_GAME_OFFSET 4096
+
+#define GAME_DBG_DATA_SEND 3
+
+#define RAMROM_APP_READ_ADDR 16752640
+
+#define RAMROM_RELEASE_OFFSET 12
+
+
+// WARNING! conflicting data type names: /_CAPTURED_FROM_ge007.u.old.elf/__OSPackId - /CONTROLLER.H/__OSPackId
+
+typedef struct struct struct, *Pstruct;
+
+typedef struct OSViMode OSViMode, *POSViMode;
+
+typedef struct OSViCommonRegs OSViCommonRegs, *POSViCommonRegs;
+
+typedef struct OSViFieldRegs OSViFieldRegs, *POSViFieldRegs;
+
+struct struct {
+    u16 field_0x0;
+    u16 field_0x2;
+    void * field_0x4;
+    struct OSViMode * field_0x8;
+    u32 field_0xc;
+    OSMesgQueue * field_0x10;
+    OSMesg field_0x14;
+};
+
+struct OSViFieldRegs {
+    u32 origin;
+    u32 yScale;
+    u32 vStart;
+    u32 vBurst;
+    u32 vIntr;
+};
+
+struct OSViCommonRegs {
+    u32 ctrl;
+    u32 width;
+    u32 burst;
+    u32 vSync;
+    u32 hSync;
+    u32 leap;
+    u32 hStart;
+    u32 xScale;
+    u32 vCurrent;
+};
+
+struct OSViMode {
+    u8 type;
+    struct OSViCommonRegs comRegs;
+    struct OSViFieldRegs fldRegs[2];
+};
+
+typedef struct PVoice PVoice, *PPVoice;
+
+typedef struct ALLink_s ALLink_s, *PALLink_s;
+
+typedef struct ALLink_s ALLink;
+
+typedef struct ALVoice_s ALVoice_s, *PALVoice_s;
+
+typedef struct ALFilter_s ALFilter_s, *PALFilter_s;
+
+typedef struct ALADPCMFilter ALADPCMFilter, *PALADPCMFilter;
+
+typedef struct ALResampler ALResampler, *PALResampler;
+
+typedef struct ALEnvMixer_s ALEnvMixer_s, *PALEnvMixer_s;
+
+typedef struct PVoice_s PVoice_s, *PPVoice_s;
+
+typedef struct ALWaveTable_s ALWaveTable_s, *PALWaveTable_s;
+
+typedef struct ALWaveTable_s ALWaveTable;
+
+typedef short ADPCM_STATE[16];
+
+typedef struct $039A3EC5794421300707C77A911A1BDF $039A3EC5794421300707C77A911A1BDF, *P$039A3EC5794421300707C77A911A1BDF;
+
+typedef struct $039A3EC5794421300707C77A911A1BDF ALADPCMloop;
+
+typedef s32 (* ALDMAproc)(s32, s32, void *);
+
+
+// WARNING! conflicting data type names: /_CAPTURED_FROM_ge007.u.old.elf/ALFilter_s - /libaudio.h/ALFilter_s
+
+typedef short RESAMPLE_STATE[16];
+
+typedef struct ALParam_s ALParam_s, *PALParam_s;
+
+typedef short ENVMIX_STATE[40];
+
+typedef union _union_109 _union_109, *P_union_109;
+
+typedef struct ALADPCMWaveInfo ALADPCMWaveInfo, *PALADPCMWaveInfo;
+
+typedef struct ALRAWWaveInfo ALRAWWaveInfo, *PALRAWWaveInfo;
+
+
+// WARNING! conflicting data type names: /libaudio.h/ALADPCMloop - /GE Current Master.h/ALADPCMloop
+
+typedef struct ALADPCMBook ALADPCMBook, *PALADPCMBook;
+
+typedef struct ALRawLoop ALRawLoop, *PALRawLoop;
+
+struct ALLink_s {
+    struct ALLink_s * next;
+    struct ALLink_s * prev;
+};
+
+struct ALVoice_s {
+    ALLink node;
+    struct PVoice_s * pvoice;
+    ALWaveTable * table;
+    void * clientPrivate;
+    s16 state;
+    s16 priority;
+    s16 fxBus;
+    s16 unityPitch;
+};
+
+struct ALFilter_s {
+};
+
+struct $039A3EC5794421300707C77A911A1BDF {
+};
+
+struct ALADPCMFilter {
+    struct ALFilter_s filter;
+    ADPCM_STATE state[AL_MAX_ADPCM_STATES];
+    ALADPCMloop loop;
+    struct ALWaveTable_s * table;
+    int bookSize;
+    ALDMAproc dma;
+    int current;
+    int sample;
+    int lastsam;
+    int first;
+    int memin;
+    int dramstart;
+};
+
+struct ALRAWWaveInfo {
+    struct ALRawLoop * loop;
+};
+
+struct PVoice_s {
+};
+
+struct ALEnvMixer_s {
+    struct ALFilter_s filter;
+    ENVMIX_STATE state;
+    short pan;
+    short volume;
+    short cvolL;
+    short cvolR;
+    short dryamt;
+    short wetamt;
+    ushort lratl;
+    short lratm;
+    short ltgt;
+    ushort rratl;
+    short rratm;
+    short rtgt;
+    int delta;
+    int segEnd;
+    int first;
+    struct ALParam_s * ctrlList;
+    struct ALParam_s * ctrlTail;
+    struct ALFilter_s * * sources;
+    int motion;
+};
+
+struct ALParam_s {
+};
+
+struct ALResampler {
+    struct ALFilter_s filter;
+    RESAMPLE_STATE state;
+    float ratio;
+    int upitch;
+    float delta;
+    int first;
+    struct ALParam_s * ctrlList;
+    struct ALParam_s * ctrlTail;
+};
+
+struct PVoice {
+    ALLink node;
+    struct ALVoice_s * vvoice;
+    void * rspCode;
+    struct ALFilter_s * sourceKnob;
+    struct ALFilter_s * channelKnob;
+    struct ALADPCMFilter decoder;
+    struct ALResampler resampler;
+    struct ALEnvMixer_s envmixer;
+};
+
+struct ALADPCMBook {
+    s32 order;
+    s32 npredictors;
+    s16 book[1];
+};
+
+struct ALADPCMWaveInfo {
+    struct ALADPCMloop * loop;
+    struct ALADPCMBook * book;
+};
+
+union _union_109 {
+    struct ALADPCMWaveInfo adpcmWave;
+    struct ALRAWWaveInfo rawWave;
+};
+
+struct ALWaveTable_s {
+    u8 * base;
+    s32 len;
+    u8 type;
+    u8 flags;
+    union _union_109 waveInfo;
+};
+
+struct ALRawLoop {
+    u32 start;
+    u32 end;
+    u32 count;
+};
+
+typedef int * ALSetParam;
+
+typedef struct __OSViContext __OSViContext, *P__OSViContext;
+
+typedef struct __OSViScale __OSViScale, *P__OSViScale;
+
+struct __OSViScale {
+    f32 factor;
+    u16 offset;
+    undefined field_0x6;
+    undefined field_0x7;
+    undefined field_0x8;
+    undefined field_0x9;
+};
+
+struct __OSViContext {
+    u16 state;
+    u16 retraceCount;
+    void * framep;
+    struct OSViMode * modep;
+    u32 control;
+    OSMesgQueue * msgq;
+    OSMesg msg;
+    struct __OSViScale x;
+    struct __OSViScale y;
+};
+
+typedef struct debug_handler_entry debug_handler_entry, *Pdebug_handler_entry;
+
+struct debug_handler_entry {
+    void * stackpointer;
+    string * name;
+};
+
+typedef enum BOOL {
+    FALSE=0,
+    TRUE=1
+} BOOL;
+
+typedef enum guard_action_type {
+    None=0,
+    dying=4,
+    fade_away=5,
+    freeze=2,
+    freeze_anim=17,
+    gettingshot=6,
+    limping=7,
+    look_around=18,
+    moving=15,
+    run_roll_fire=10,
+    sidehop=12,
+    siderun=13,
+    sidestep=11,
+    standing=1,
+    standstill_fire=8,
+    surrendering=16,
+    swattingflies=3,
+    throw_grenade=20,
+    trigger_alarm=19,
+    walk_fire=9,
+    walk_path=14
+} guard_action_type;
+
+typedef union Acmd Acmd, *PAcmd;
+
+typedef union Acmd ALCmdHandler;
+
+typedef struct Awords Awords, *PAwords;
+
+typedef struct Aadpcm Aadpcm, *PAadpcm;
+
+typedef struct Apolef Apolef, *PApolef;
+
+typedef struct Aclearbuff Aclearbuff, *PAclearbuff;
+
+typedef struct Aenvelope Aenvelope, *PAenvelope;
+
+typedef struct Ainterleave Ainterleave, *PAinterleave;
+
+typedef struct Aloadbuff Aloadbuff, *PAloadbuff;
+
+typedef struct Aenvmixer Aenvmixer, *PAenvmixer;
+
+typedef struct Aresample Aresample, *PAresample;
+
+typedef struct Areverb Areverb, *PAreverb;
+
+typedef struct Asavebuff Asavebuff, *PAsavebuff;
+
+typedef struct Asegment Asegment, *PAsegment;
+
+typedef struct Asetbuff Asetbuff, *PAsetbuff;
+
+typedef struct Asetvol Asetvol, *PAsetvol;
+
+typedef struct Admemmove Admemmove, *PAdmemmove;
+
+typedef struct Aloadadpcm Aloadadpcm, *PAloadadpcm;
+
+typedef struct Amixer Amixer, *PAmixer;
+
+typedef struct Asetloop Asetloop, *PAsetloop;
+
+typedef union anon__struct_76_bitfield_1 anon__struct_76_bitfield_1, *Panon__struct_76_bitfield_1;
+
+typedef union anon__struct_77_bitfield_1 anon__struct_77_bitfield_1, *Panon__struct_77_bitfield_1;
+
+typedef union anon__struct_79_bitfield_1 anon__struct_79_bitfield_1, *Panon__struct_79_bitfield_1;
+
+typedef union anon__struct_79_bitfield_2 anon__struct_79_bitfield_2, *Panon__struct_79_bitfield_2;
+
+typedef union anon__struct_78_bitfield_1 anon__struct_78_bitfield_1, *Panon__struct_78_bitfield_1;
+
+typedef union anon__struct_80_bitfield_1 anon__struct_80_bitfield_1, *Panon__struct_80_bitfield_1;
+
+typedef union anon__struct_80_bitfield_2 anon__struct_80_bitfield_2, *Panon__struct_80_bitfield_2;
+
+typedef union anon__struct_81_bitfield_1 anon__struct_81_bitfield_1, *Panon__struct_81_bitfield_1;
+
+typedef union anon__struct_82_bitfield_1 anon__struct_82_bitfield_1, *Panon__struct_82_bitfield_1;
+
+typedef union anon__struct_85_bitfield_1 anon__struct_85_bitfield_1, *Panon__struct_85_bitfield_1;
+
+typedef union anon__struct_86_bitfield_1 anon__struct_86_bitfield_1, *Panon__struct_86_bitfield_1;
+
+typedef union anon__struct_87_bitfield_1 anon__struct_87_bitfield_1, *Panon__struct_87_bitfield_1;
+
+typedef union anon__struct_88_bitfield_1 anon__struct_88_bitfield_1, *Panon__struct_88_bitfield_1;
+
+typedef union anon__struct_88_bitfield_2 anon__struct_88_bitfield_2, *Panon__struct_88_bitfield_2;
+
+typedef union anon__struct_89_bitfield_1 anon__struct_89_bitfield_1, *Panon__struct_89_bitfield_1;
+
+typedef union anon__struct_89_bitfield_2 anon__struct_89_bitfield_2, *Panon__struct_89_bitfield_2;
+
+typedef union anon__struct_90_bitfield_1 anon__struct_90_bitfield_1, *Panon__struct_90_bitfield_1;
+
+typedef union anon__struct_90_bitfield_2 anon__struct_90_bitfield_2, *Panon__struct_90_bitfield_2;
+
+typedef union anon__struct_91_bitfield_1 anon__struct_91_bitfield_1, *Panon__struct_91_bitfield_1;
+
+typedef union anon__struct_91_bitfield_2 anon__struct_91_bitfield_2, *Panon__struct_91_bitfield_2;
+
+typedef union anon__struct_92_bitfield_1 anon__struct_92_bitfield_1, *Panon__struct_92_bitfield_1;
+
+typedef union anon__struct_83_bitfield_1 anon__struct_83_bitfield_1, *Panon__struct_83_bitfield_1;
+
+typedef union anon__struct_83_bitfield_2 anon__struct_83_bitfield_2, *Panon__struct_83_bitfield_2;
+
+typedef union anon__struct_93_bitfield_1 anon__struct_93_bitfield_1, *Panon__struct_93_bitfield_1;
+
+union anon__struct_78_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint flags:8; // : bits 8-15
+    uint pad1:16; // : bits 16-31
+};
+
+union anon__struct_88_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint pad1:24; // : bits 8-31
+};
+
+union anon__struct_88_bitfield_2 {
+    uint pad2:2; // : bits 0-1
+    uint number:4; // : bits 2-5
+    uint base:24; // : bits 6-29
+};
+
+struct Asegment {
+    union anon__struct_88_bitfield_1 field_0x0;
+    union anon__struct_88_bitfield_2 field_0x4;
+};
+
+union anon__struct_85_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint flags:8; // : bits 8-15
+    uint pitch:16; // : bits 16-31
+};
+
+union anon__struct_86_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint flags:8; // : bits 8-15
+    uint pad1:16; // : bits 16-31
+};
+
+struct Areverb {
+    union anon__struct_86_bitfield_1 field_0x0;
+    uint addr;
+};
+
+union anon__struct_81_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint pad1:24; // : bits 8-31
+};
+
+struct Aloadbuff {
+    union anon__struct_81_bitfield_1 field_0x0;
+    uint addr;
+};
+
+union anon__struct_79_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint pad1:8; // : bits 8-15
+    uint dmem:16; // : bits 16-31
+};
+
+union anon__struct_79_bitfield_2 {
+    uint pad2:16; // : bits 0-15
+    uint count:16; // : bits 16-31
+};
+
+struct Aclearbuff {
+    union anon__struct_79_bitfield_1 field_0x0;
+    union anon__struct_79_bitfield_2 field_0x4;
+};
+
+union anon__struct_92_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint pad1:8; // : bits 8-15
+    uint count:16; // : bits 16-31
+};
+
+struct Aresample {
+    union anon__struct_85_bitfield_1 field_0x0;
+    uint addr;
+};
+
+struct Aloadadpcm {
+    union anon__struct_92_bitfield_1 field_0x0;
+    uint addr;
+};
+
+union anon__struct_82_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint flags:8; // : bits 8-15
+    uint pad1:16; // : bits 16-31
+};
+
+union anon__struct_93_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint pad1:8; // : bits 8-15
+    uint pad2:16; // : bits 16-31
+};
+
+struct Asetloop {
+    union anon__struct_93_bitfield_1 field_0x0;
+    uint addr;
+};
+
+struct Awords {
+    uint w0;
+    uint w1;
+};
+
+union anon__struct_89_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint flags:8; // : bits 8-15
+    uint dmemin:16; // : bits 16-31
+};
+
+union anon__struct_77_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint flags:8; // : bits 8-15
+    uint gain:16; // : bits 16-31
+};
+
+union anon__struct_87_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint pad1:24; // : bits 8-31
+};
+
+union anon__struct_90_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint flags:8; // : bits 8-15
+    uint vol:16; // : bits 16-31
+};
+
+union anon__struct_90_bitfield_2 {
+    uint voltgt:16; // : bits 0-15
+    uint volrate:16; // : bits 16-31
+};
+
+union anon__struct_80_bitfield_2 {
+    uint inL:16; // : bits 0-15
+    uint inR:16; // : bits 16-31
+};
+
+union anon__struct_80_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint pad1:8; // : bits 8-15
+    uint pad2:16; // : bits 16-31
+};
+
+union anon__struct_91_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint pad1:8; // : bits 8-15
+    uint dmemin:16; // : bits 16-31
+};
+
+struct Ainterleave {
+    union anon__struct_80_bitfield_1 field_0x0;
+    union anon__struct_80_bitfield_2 field_0x4;
+};
+
+union anon__struct_91_bitfield_2 {
+    uint dmemout:16; // : bits 0-15
+    uint count:16; // : bits 16-31
+};
+
+struct Apolef {
+    union anon__struct_77_bitfield_1 field_0x0;
+    uint addr;
+};
+
+union anon__struct_83_bitfield_2 {
+    uint dmemi:16; // : bits 0-15
+    uint dmemo:16; // : bits 16-31
+};
+
+union anon__struct_83_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint flags:8; // : bits 8-15
+    uint gain:16; // : bits 16-31
+};
+
+struct Amixer {
+    union anon__struct_83_bitfield_1 field_0x0;
+    union anon__struct_83_bitfield_2 field_0x4;
+};
+
+struct Admemmove {
+    union anon__struct_91_bitfield_1 field_0x0;
+    union anon__struct_91_bitfield_2 field_0x4;
+};
+
+struct Aenvelope {
+    union anon__struct_78_bitfield_1 field_0x0;
+    uint addr;
+};
+
+struct Aenvmixer {
+    union anon__struct_82_bitfield_1 field_0x0;
+    uint addr;
+};
+
+union anon__struct_76_bitfield_1 {
+    uint cmd:8; // : bits 0-7
+    uint flags:8; // : bits 8-15
+    uint gain:16; // : bits 16-31
+};
+
+struct Aadpcm {
+    union anon__struct_76_bitfield_1 field_0x0;
+    uint addr;
+};
+
+struct Asavebuff {
+    union anon__struct_87_bitfield_1 field_0x0;
+    uint addr;
+};
+
+struct Asetvol {
+    union anon__struct_90_bitfield_1 field_0x0;
+    union anon__struct_90_bitfield_2 field_0x4;
+};
+
+union anon__struct_89_bitfield_2 {
+    uint dmemout:16; // : bits 0-15
+    uint count:16; // : bits 16-31
+};
+
+struct Asetbuff {
+    union anon__struct_89_bitfield_1 field_0x0;
+    union anon__struct_89_bitfield_2 field_0x4;
+};
+
+union Acmd {
+    struct Awords words;
+    struct Aadpcm adpcm;
+    struct Apolef polef;
+    struct Aclearbuff clearbuff;
+    struct Aenvelope envelope;
+    struct Ainterleave interleave;
+    struct Aloadbuff loadbuff;
+    struct Aenvmixer envmixer;
+    struct Aresample resample;
+    struct Areverb reverb;
+    struct Asavebuff savebuff;
+    struct Asegment segment;
+    struct Asetbuff setbuff;
+    struct Asetvol setvol;
+    struct Admemmove dmemmove;
+    struct Aloadadpcm loadadpcm;
+    struct Amixer mixer;
+    struct Asetloop setloop;
+    longlong force_union_align;
+};
+
+typedef enum enum_179 {
+    GT_ALPHACOMPARE=1,
+    GT_ALPHADITHER=4,
+    GT_CLEAR=0,
+    GT_COMBKEY=6,
+    GT_CYCLETYPE=13,
+    GT_PIPELINE=14,
+    GT_RENDERMODE=3,
+    GT_RGBDITHER=5,
+    GT_TEXTCONV=7,
+    GT_TEXTDETAIL=11,
+    GT_TEXTFILT=8,
+    GT_TEXTLOD=10,
+    GT_TEXTLUT=9,
+    GT_TEXTPERSP=12,
+    GT_ZSRCSEL=2
+} enum_179;
+
+typedef union gtVtxOut gtVtxOut, *PgtVtxOut;
+
+typedef struct gtVtxOut_t gtVtxOut_t, *PgtVtxOut_t;
+
+struct gtVtxOut_t {
+    short xscrn;
+    short yscrn;
+    int zscrn;
+    short s;
+    short t;
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 a;
+};
+
+union gtVtxOut {
+    struct gtVtxOut_t v;
+    longlong force_structure_alignment;
+};
+
+typedef enum enum_179 gtStateOthermode_t;
+
+typedef union gtGlobState gtGlobState, *PgtGlobState;
+
+typedef struct gtGlobState_t gtGlobState_t, *PgtGlobState_t;
+
+typedef union Vp Vp, *PVp;
+
+typedef struct Vp_t Vp_t, *PVp_t;
 
 struct Vp_t {
     short vscale[4];
@@ -4464,201 +5534,6 @@ union _union_197 {
 
 #define AL_TEMP_1 320
 
-typedef struct rdbPacket rdbPacket, *PrdbPacket;
-
-typedef union anon__struct_183_bitfield_1 anon__struct_183_bitfield_1, *Panon__struct_183_bitfield_1;
-
-union anon__struct_183_bitfield_1 {
-    uint type:6; // : bits 0-5
-    uint length:2; // : bits 6-7
-};
-
-struct rdbPacket {
-    union anon__struct_183_bitfield_1 field_0x0;
-    char buf[3];
-};
-
-#define RDB_TYPE_HtoG_KDEBUG 20
-
-#define RDB_TYPE_GtoH_RAMROM 9
-
-#define RDB_TYPE_GtoH_PRINT 1
-
-#define RDB_BASE_REG 3221225472
-
-#define RDB_TYPE_INVALID 0
-
-#define RDB_WRITE_INTR_REG 3221225480
-
-#define DEBUG_COMMAND_MEMORY 1
-
-#define RDB_LOG_MAX_BLOCK_SIZE 32768
-
-#define RDB_TYPE_HtoG_DATA 16
-
-#define PROF_BLOCK_SIZE 2048
-
-#define RDB_TYPE_GtoH_FAULT 2
-
-#define DEBUG_STATE_RECEIVE 1
-
-#define GIO_RDB_BASE_REG 3209166848
-
-#define RDB_TYPE_GtoH_DEBUG_READY 11
-
-#define RDB_DATA_MAX_BLOCK_SIZE 32768
-
-#define RDB_TYPE_GtoH_KDEBUG 12
-
-#define RDB_TYPE_GtoH_READY_FOR_DATA 5
-
-#define RDB_TYPE_GtoH_DEBUG_DONE 10
-
-#define RDB_TYPE_GtoH_DATA_CT 6
-
-#define RDB_TYPE_HtoG_LOG_DONE 13
-
-#define GIO_RDB_READ_INTR_REG 3209166860
-
-#define RDB_BASE_VIRTUAL_ADDR 2147483648
-
-#define DEBUG_STATE_INVALID 255
-
-#define RDB_TYPE_GtoH_LOG_CT 3
-
-#define RDB_PROF_FLUSH_SIG 2
-
-#define DEBUG_STATE_NULL 0
-
-#define RDB_READ_INTR_REG 3221225484
-
-#define GIO_RDB_READ_INTR_BIT 1073741824
-
-#define RDB_TYPE_HtoG_DEBUG 14
-
-#define RDB_TYPE_GtoH_PROF_DATA 22
-
-#define RDB_TYPE_GtoH_DATA 7
-
-#define RDB_TYPE_GtoH_LOG 4
-
-#define RDB_TYPE_HtoG_REQ_RAMROM 18
-
-#define RDB_TYPE_HtoG_FREE_RAMROM 19
-
-#define RDB_TYPE_HtoG_DEBUG_CT 15
-
-#define DEBUG_COMMAND_NULL 0
-
-#define RDB_PROF_ACK_SIG 1
-
-#define GIO_RDB_DEBUG_MINOR 2
-
-#define DEBUG_COMMAND_REGISTER 2
-
-#define GIO_RDB_PRINT_MINOR 1
-
-#define RDB_TYPE_HtoG_PROF_SIGNAL 21
-
-#define DEBUG_COMMAND_INVALID 255
-
-#define RDB_TYPE_HtoG_DATA_DONE 17
-
-#define GIO_RDB_WRITE_INTR_BIT 2147483648
-
-#define RDB_TYPE_GtoH_DEBUG 8
-
-#define GIO_RDB_WRITE_INTR_REG 3209166856
-
-typedef struct bitmap bitmap, *Pbitmap;
-
-typedef struct bitmap Bitmap;
-
-struct bitmap {
-    s16 width;
-    s16 width_img;
-    s16 s;
-    s16 t;
-    void * buf;
-    s16 actualHeight;
-    s16 LUToffset;
-};
-
-typedef struct sprite sprite, *Psprite;
-
-typedef struct sprite Sprite;
-
-struct sprite {
-    s16 x;
-    s16 y;
-    s16 width;
-    s16 height;
-    f32 scalex;
-    f32 scaley;
-    s16 expx;
-    s16 expy;
-    u16 attr;
-    s16 zdepth;
-    u8 red;
-    u8 green;
-    u8 blue;
-    u8 alpha;
-    s16 startTLUT;
-    s16 nTLUT;
-    int * LUT;
-    s16 istart;
-    s16 istep;
-    s16 nbitmaps;
-    s16 ndisplist;
-    s16 bmheight;
-    s16 bmHreal;
-    u8 bmfmt;
-    u8 bmsiz;
-    Bitmap * bitmap;
-    union Gfx * rsp_dl;
-    union Gfx * rsp_dl_next;
-    s16 frac_s;
-    s16 frac_t;
-};
-
-#define DL_SPRITE_OVERHEAD 24
-
-#define SP_FASTCOPY 32
-
-#define SP_OVERLAP 64
-
-#define SP_CUTOUT 2
-
-#define SP_FRACPOS 256
-
-#define SP_TEXSHIFT 128
-
-#define SP_EXTERN 1024
-
-#define SP_TEXSHUF 512
-
-#define DL_BM_OVERHEAD 12
-
-#define SP_SCALE 16
-
-#define SP_TRANSPARENT 1
-
-#define SP_Z 8
-
-#define SP_HIDDEN 4
-
-typedef void * __gnuc_va_list;
-
-typedef __gnuc_va_list va_list;
-
-#define SP_DRAM_STACK_SIZE64 128
-
-#define SP_UCODE_SIZE 4096
-
-#define SP_DRAM_STACK_SIZE8 1024
-
-#define SP_UCODE_DATA_SIZE 2048
-
 #define C0_CONTEXT 4
 
 #define ICACHE_LINEMASK 31
@@ -5176,56 +6051,6 @@ typedef __gnuc_va_list va_list;
 #define CAUSE_IP5 4096
 
 #define CAUSE_IP6 8192
-
-typedef struct IMAGE IMAGE, *PIMAGE;
-
-struct IMAGE {
-    ushort imagic;
-    ushort type;
-    ushort dim;
-    ushort xsize;
-    ushort ysize;
-    ushort zsize;
-    ulong min;
-    ulong max;
-    ulong wastebytes;
-    char name[80];
-    ulong colormap;
-    long file;
-    ushort flags;
-    short dorev;
-    short x;
-    short y;
-    short z;
-    short cnt;
-    ushort * ptr;
-    ushort * base;
-    ushort * tmpbuf;
-    ulong offset;
-    ulong rleend;
-    ulong * rowstart;
-    long * rowsize;
-};
-
-#define CM_COLORMAP 3
-
-#define TYPEMASK 65280
-
-#define ITYPE_VERBATIM 0
-
-#define ITYPE_RLE 256
-
-#define CM_DITHERED 1
-
-#define IMAGIC 474
-
-#define RLE_NOP 0
-
-#define CM_SCREEN 2
-
-#define BPPMASK 255
-
-#define CM_NORMAL 0
 
 typedef struct Light_t Light_t, *PLight_t;
 
@@ -6677,8 +7502,6 @@ typedef struct $1D3114E51680E29F8350BFE921C29711 $1D3114E51680E29F8350BFE921C297
 
 typedef struct $1D3114E51680E29F8350BFE921C29711 ALKeyMap;
 
-typedef char s8;
-
 struct $1D3114E51680E29F8350BFE921C29711 {
     u8 velocityMin;
     u8 velocityMax;
@@ -6715,8 +7538,6 @@ struct enviroment_struct {
     float anonymous_20;
     float anonymous_21;
 };
-
-typedef struct $4BEAA6302150DFF77A6D6B5C2F812979 PositionalLight;
 
 typedef struct BONDdata BONDdata, *PBONDdata;
 
@@ -9868,8 +10689,6 @@ struct $DD54060F307CC511C1231C522D614BD1 {
     int t;
 };
 
-typedef struct $DD54060F307CC511C1231C522D614BD1 Image;
-
 typedef struct explosion_death_animation explosion_death_animation, *Pexplosion_death_animation;
 
 struct explosion_death_animation {
@@ -11555,7 +12374,8 @@ typedef enum mission_setup_type {
     MISSION_PART=0
 } mission_setup_type;
 
-typedef struct $1ACCFE7BBF73F7F736AAAE9683E0ED58 guDLPrintCB;
+
+// WARNING! conflicting data type names: /GE Current Master.h/guDLPrintCB - /gu.h/guDLPrintCB
 
 typedef struct point_table point_table, *Ppoint_table;
 
@@ -11571,33 +12391,6 @@ struct point_table {
     char blue;
     char alpha;
 };
-
-typedef struct _Region_s _Region_s, *P_Region_s;
-
-struct _Region_s {
-    u8 * r_startBufferAddress;
-    u8 * r_endAddress;
-    s32 r_bufferSize;
-    s32 r_bufferCount;
-    u16 r_freeList;
-    u16 r_alignSize;
-};
-
-typedef struct _Region_s OSRegion;
-
-#define OS_RG_ALIGN_DEFAULT 8
-
-#define MAX_BUFCOUNT 32768
-
-#define OS_RG_ALIGN_16B 16
-
-#define OS_RG_ALIGN_4B 4
-
-#define OS_RG_ALIGN_2B 2
-
-#define OS_RG_ALIGN_8B 8
-
-#define BUF_FREE_WO_NEXT 32768
 
 
 // WARNING! conflicting data type names: /sched.h/OSSched - /GE Current Master.h/OSSched
@@ -11672,24 +12465,6 @@ typedef u32 OSYieldResult;
 
 #define OS_TASK_USR0 16
 
-#define GT_STATE_OFF_VTXCOUNT 8
-
-#define GT_STATE_OFF_TRANSFORM 24
-
-#define GT_STATE_OFF_RENDSTATE 0
-
-#define GT_STATE_OFF_TRICOUNT 10
-
-#define GT_STATE_OFF_VTXV0 9
-
-#define GT_STATE_SIZE 88
-
-#define GT_STATE_OFF_TEXSTATE 4
-
-#define GT_STATE_OFF_OTHERMODE 16
-
-#define GT_STATE_OFF_RDPCMDS 12
-
 typedef struct lldiv_t lldiv_t, *Plldiv_t;
 
 struct lldiv_t {
@@ -11703,244 +12478,6 @@ struct ldiv_t {
     long quot;
     long rem;
 };
-
-#define M_GFXTASK 1
-
-#define G_OFF 0
-
-#define G_ON 1
-
-#define M_VIDTASK 3
-
-#define NUM_SEGMENTS 16
-
-#define M_AUDTASK 2
-
-typedef void (* OSErrorHandler)(s16, s16, ...);
-
-#define ERR_OSPISTARTDMA_PIMGR 28
-
-#define ERR_OSCREATETHREAD_PRI 2
-
-#define ERR_OSVISETXSCALE_VALUE 39
-
-#define ERR_ALMODDELAYOVERFLOW 133
-
-#define ERR_OSVIGETNEXTFRAMEBUFFER 38
-
-#define ERR_OSSETTLBASID 13
-
-#define ERR_OSVIGETCURRENTFRAMEBUFFER 37
-
-#define ERR_ALEVENTNOFREE 124
-
-#define ERR_OSPISTARTDMA_DIR 30
-
-#define ERR_OSSETTHREADPRI 4
-
-#define ERR_OSSETTIME 75
-
-#define ERR_OSREADHOST_ADDR 70
-
-#define ERR_OSPROFILESTART_TIME 66
-
-#define ERR_OSVISETMODE 45
-
-#define ERR_ALSYN_NO_UPDATE 106
-
-#define ERR_ALSEQSYSEX 119
-
-#define ERR_OSFREE_REGION 53
-
-#define ERR_OSGETREGIONBUFCOUNT 55
-
-#define ERR_OSPISTARTDMA_PRI 29
-
-#define ERR_OSMAPTLB_INDEX 10
-
-#define ERR_OSCREATEVIMANAGER 49
-
-#define ERR_ALSEQMETA 120
-
-#define ERR_ALBNKFNEW 113
-
-#define ERR_ALCSEQZEROSTATUS 128
-
-#define ERR_OSPISTARTDMA_DEVADDR 31
-
-#define ERR_OSSETEVENTMESG 9
-
-#define ERR_ALHEAPNOFREE 125
-
-#define ERR_OSAISETNEXTBUFFER_ADDR 15
-
-#define ERR_OSSTARTTHREAD 3
-
-#define ERR_OSREADHOST_SIZE 71
-
-#define ERR_ALSEQPUNMAP 123
-
-#define ERR_OSUNMAPTLB 12
-
-#define ERR_OSAISETNEXTBUFFER_SIZE 16
-
-#define ERR_ALSNDPSETSOUND 110
-
-#define ERR_OSVISWAPBUFFER_VIMGR 48
-
-#define ERR_ALSEQNOTMIDI0 115
-
-#define ERR_OSPROFILEINIT_STR 61
-
-#define ERR_OSPROFILESTART_FLAG 67
-
-#define ERR_OSMAPTLB_ASID 11
-
-#define ERR_OSCREATETHREAD_SP 1
-
-#define ERR_OSGETREGIONBUFSIZE 56
-
-#define ERR_OSVISETEVENT 46
-
-#define ERR_OSVISETSPECIAL_VALUE 43
-
-#define ERR_OSVISETYSCALE_VALUE 41
-
-#define ERR_OSPIRAWSTARTDMA_DIR 21
-
-#define ERR_OSPIRAWWRITEIO 20
-
-#define ERR_OSPROFILESTOP_FLAG 68
-
-#define ERR_ALCSEQZEROVEL 129
-
-#define ERR_OSMALLOC 52
-
-#define ERR_OSSPTASKLOAD_OUTSIZE 59
-
-#define ERR_ALSEQNOTMIDI 114
-
-#define ERR_OSVIGETCURRENTMODE 36
-
-#define ERR_OSPIRAWSTARTDMA_ADDR 23
-
-#define ERR_OSCREATEREGION_SIZE 51
-
-#define ERR_OSPIRAWSTARTDMA_SIZE 24
-
-#define ERR_OSVISETXSCALE_VIMGR 40
-
-#define ERR_ALCSPVNOTFREE 130
-
-#define ERR_OSJAMMESG 7
-
-#define ERR_OSPISTARTDMA_RANGE 34
-
-#define ERR_ALSEQPINVALIDPROG 121
-
-#define ERR_OSPIWRITEIO 27
-
-#define ERR_OSPROFILEINIT_ORD 64
-
-#define ERR_OSPROFILEINIT_SIZ 65
-
-#define ERR_OSPIREADIO 26
-
-#define ERR_OSSPTASKLOAD_YIELD 60
-
-#define ERR_OSSTOPTIMER 77
-
-#define ERR_OSSENDMESG 6
-
-#define ERR_OSPISTARTDMA_ADDR 32
-
-#define ERR_OSVISETSPECIAL_VIMGR 44
-
-#define ERR_ALSEQTRACKHDR 118
-
-#define ERR_OSSPTASKLOAD_DRAM 57
-
-#define ERR_OSPROFILESTOP_TIMER 69
-
-#define ERR_OSAISETFREQUENCY 14
-
-#define ERR_ALSEQP_MAP_VOICE 102
-
-#define ERR_OSFREE_ADDR 54
-
-#define ERR_OSDPSETNEXTBUFFER_ADDR 17
-
-#define ERR_OSDPSETNEXTBUFFER_SIZE 18
-
-#define ERR_ALSNDPDELETE 108
-
-#define ERR_OSSPTASKLOAD_OUT 58
-
-#define ERR_OSPIRAWSTARTDMA_DEVADDR 22
-
-#define ERR_OSCREATEMESGQUEUE 5
-
-#define ERR_ALSNDPSETPRIORITY 111
-
-#define ERR_ALHEAPFIRSTBLOCK 127
-
-#define OS_ERROR_MAGIC 1801548921
-
-#define ERR_OSPIRAWSTARTDMA_RANGE 25
-
-#define ERR_ALSNDPSETPAR 112
-
-#define ERR_OSSETTIMER 76
-
-#define ERR_OSGETTIME 74
-
-#define ERR_ALSEQP_NO_SOUND 100
-
-#define ERR_ALSNDPDEALLOCATE 107
-
-#define ERR_ALSEQNUMTRACKS 116
-
-#define ERR_OSCREATEREGION_ALIGN 50
-
-#define ERR_ALSEQP_POLY_VOICE 104
-
-#define ERR_OSVISWAPBUFFER_ADDR 47
-
-#define ERR_ALSNDP_NO_VOICE 105
-
-#define ERR_ALHEAPCORRUPT 126
-
-#define ERR_ALSEQTIME 117
-
-#define ERR_ALSNDPPLAY 109
-
-#define ERR_OSPIRAWREADIO 19
-
-#define ERR_OSAISETNEXTBUFFER_ENDADDR 132
-
-#define ERR_OSPROFILEINIT_ALN 63
-
-#define ERR_OSWRITEHOST_ADDR 72
-
-#define ERR_OSWRITEHOST_SIZE 73
-
-#define ERR_ALSEQPUNKNOWNMIDI 122
-
-#define ERR_OSCREATEPIMANAGER 35
-
-#define ERR_ALSEQP_NO_VOICE 101
-
-#define ERR_ALSEQOVERRUN 131
-
-#define ERR_OSPISTARTDMA_SIZE 33
-
-#define ERR_OSPROFILEINIT_CNT 62
-
-#define ERR_ALSEQP_OFF_VOICE 103
-
-#define ERR_OSRECVMESG 8
-
-#define ERR_OSVISETYSCALE_VIMGR 42
 
 typedef struct amConfig amConfig, *PamConfig;
 
@@ -11991,20 +12528,6 @@ struct amConfig {
 #define UP_MAXPVERTS 16
 
 #define UP_OBNL 32
-
-typedef struct __OSEventState __OSEventState, *P__OSEventState;
-
-struct __OSEventState {
-    OSMesgQueue * messageQueue;
-    OSMesg message;
-};
-
-typedef struct __OSThreadTail __OSThreadTail, *P__OSThreadTail;
-
-struct __OSThreadTail {
-    OSThread * next;
-    OSPri priority;
-};
 
 typedef struct AMDMAState AMDMAState, *PAMDMAState;
 
@@ -12078,55 +12601,6 @@ typedef struct evp_pkey_ctx_st EVP_PKEY_CTX;
 struct evp_pkey_ctx_st {
 };
 
-
-// WARNING! conflicting data type names: /gu.h/guDLPrintCB - /GE Current Master.h/guDLPrintCB
-
-
-// WARNING! conflicting data type names: /gu.h/PositionalLight - /GE Current Master.h/PositionalLight
-
-
-// WARNING! conflicting data type names: /gu.h/Image - /GE Current Master.h/Image
-
-#define GU_PARSE_GBI_TYPE 1
-
-#define GU_PARSE_MEM_BLOCK 4
-
-#define GU_PARSEGBI_NONEST 2
-
-#define GU_BLINKRDP_HILITE 1
-
-#define GU_PARSEGBI_ROWMAJOR 1
-
-#define GU_PARSEGBI_ALLMTX 16
-
-#define GU_PARSERDP_VERBOSE 1
-
-#define GU_PARSE_RDP_TYPE 2
-
-#define GU_BLINKRDP_EXTRACT 2
-
-#define GU_PARSE_READY 3
-
-#define GU_PARSERDP_PRHISTO 4
-
-#define FILTER_CLAMP 1
-
-#define GU_PARSEGBI_DUMPONLY 32
-
-#define GU_PARSEGBI_SHOWDMA 8
-
-#define GU_PARSERDP_DUMPONLY 32
-
-#define GU_PARSEGBI_FLTMTX 4
-
-#define GU_PARSE_ABI_TYPE 5
-
-#define GU_PARSERDP_PRAREA 2
-
-#define FILTER_WRAP 0
-
-#define GU_PARSE_STRING_TYPE 6
-
 #define LOG_SCHEDULE_GFX_TASK 101
 
 #define LOG_RDP_DONE 102
@@ -12180,176 +12654,6 @@ typedef short vs16;
 #define TRUE 1
 
 #define NULL 0
-
-typedef struct OSPifRam OSPifRam, *POSPifRam;
-
-struct OSPifRam {
-    u32 ramarray[15];
-    u32 pifstatus;
-};
-
-typedef union __OSInodeUnit __OSInodeUnit, *P__OSInodeUnit;
-
-typedef struct _struct_195 _struct_195, *P_struct_195;
-
-struct _struct_195 {
-    u8 bank;
-    u8 page;
-};
-
-union __OSInodeUnit {
-    struct _struct_195 inode_t;
-    u16 ipage;
-};
-
-typedef struct __OSContEepromFormat __OSContEepromFormat, *P__OSContEepromFormat;
-
-struct __OSContEepromFormat {
-    u8 txsize;
-    u8 rxsize;
-    u8 cmd;
-    u8 address;
-    u8 data[8];
-};
-
-typedef struct __OSContReadFormat __OSContReadFormat, *P__OSContReadFormat;
-
-struct __OSContReadFormat {
-    u8 dummy;
-    u8 txsize;
-    u8 rxsize;
-    u8 cmd;
-    u16 button;
-    s8 stick_x;
-    s8 stick_y;
-};
-
-typedef struct __OSContRamReadFormat __OSContRamReadFormat, *P__OSContRamReadFormat;
-
-struct __OSContRamReadFormat {
-    u8 dummy;
-    u8 txsize;
-    u8 rxsize;
-    u8 cmd;
-    u16 address;
-    u8 data[32];
-    u8 datacrc;
-};
-
-typedef struct __OSInode __OSInode, *P__OSInode;
-
-struct __OSInode {
-    union __OSInodeUnit inode_page[128];
-};
-
-typedef struct __OSContRequesFormat __OSContRequesFormat, *P__OSContRequesFormat;
-
-struct __OSContRequesFormat {
-    u8 dummy;
-    u8 txsize;
-    u8 rxsize;
-    u8 cmd;
-    u8 typeh;
-    u8 typel;
-    u8 status;
-    u8 dummy1;
-};
-
-typedef struct __OSDir __OSDir, *P__OSDir;
-
-struct __OSDir {
-    u32 game_code;
-    u16 company_code;
-    union __OSInodeUnit start_page;
-    u8 status;
-    s8 reserved;
-    u16 data_sum;
-    char ext_name[4];
-    char game_name[16];
-};
-
-
-// WARNING! conflicting data type names: /CONTROLLER.H/__OSPackId - /_CAPTURED_FROM_ge007.u.old.elf/__OSPackId
-
-typedef struct __OSInodeCache __OSInodeCache, *P__OSInodeCache;
-
-struct __OSInodeCache {
-    struct __OSInode inode;
-    u8 bank;
-    u8 map[256];
-};
-
-#define CONT_EEPROM_READ 4
-
-#define CONT_SETCH 254
-
-#define PFS_64K_RAM 2
-
-#define PFS_INODE_DIST_MAP 256
-
-#define PFS_FORCE 1
-
-#define CONT_FORMAT 1
-
-#define PFS_ID_1AREA 3
-
-#define PFS_EOF 1
-
-#define PFS_SECTOR_PER_BANK 32
-
-#define EEPROM_WAIT 12000
-
-#define PFS_INODE_SIZE_PER_PAGE 128
-
-#define PFS_ID_2AREA 4
-
-#define FORMAT_END 254
-
-#define PFS_ID_3AREA 6
-
-#define CONT_RESET 255
-
-#define PFS_DELETE 1
-
-#define PFS_PAGE_SIZE 256
-
-#define PFS_SIZE_LOC 24
-
-#define PFS_32K_RAM 1
-
-#define CONT_READ 1
-
-#define PFS_LABEL_AREA 7
-
-#define CONT_RAM_READ 2
-
-#define PIFRAMSIZE 16
-
-#define PFS_PAGE_NOT_EXIST 2
-
-#define CONT_EEPROM_WRITE 5
-
-#define PFS_PAGE_NOT_USED 3
-
-#define PFS_BANK_LAPPED_BY 8
-
-#define CONT_RAM_WRITE 3
-
-#define PFS_ID_PAGE 0
-
-#define PFS_SECTOR_SIZE 4
-
-#define CHANNEL_RESET 253
-
-#define CONT_REQUEST 0
-
-#define DEF_DIR_PAGES 2
-
-#define PFS_ID_0AREA 1
-
-#define PFS_WRITTEN 2
-
-#define CON_ERR_MASK 192
 
 typedef struct Apan Apan, *PApan;
 
@@ -12429,10 +12733,6 @@ struct Apan {
 #define A_ADPCM 1
 
 #define A_RESAMPLE 5
-
-#define RMON_STACKSIZE 4096
-
-#define RMON_DBG_BUF_SIZE 2048
 
 typedef struct Dynamic Dynamic, *PDynamic;
 
@@ -13794,6 +14094,14 @@ struct _Pft {
 
 #define rsp_DRAM_STACK_LO 0
 
+#define MIN_PART 3
+
+#define OS_CODE 3
+
+#define RECORD_IO 0
+
+#define MAX_SUFFIX 30
+
 typedef s16 ALSndId;
 
 
@@ -14077,191 +14385,6 @@ typedef enum AL_MIDImeta {
 #define AL_PHASE_SUSTAIN 2
 
 #define AL_HEAP_INIT 0
-
-typedef struct Elf32_RegInfo_MIPS Elf32_RegInfo_MIPS, *PElf32_RegInfo_MIPS;
-
-struct Elf32_RegInfo_MIPS {
-    enum Elf32_GPRMask_MIPS ri_gprmask;
-    dword field_0x4[4];
-    dword ri_gp_value;
-};
-
-typedef struct Elf32_Sym Elf32_Sym, *PElf32_Sym;
-
-struct Elf32_Sym {
-    dword st_name;
-    dword st_value;
-    dword st_size;
-    byte st_info;
-    byte st_other;
-    word st_shndx;
-};
-
-typedef struct Elf32_Shdr Elf32_Shdr, *PElf32_Shdr;
-
-typedef enum Elf_SectionHeaderType_MIPS {
-    =1879048203,
-    SHT_CHECKSUM=1879048184,
-    SHT_DYNAMIC=6,
-    SHT_DYNSYM=11,
-    SHT_FINI_ARRAY=15,
-    SHT_GNU_ATTRIBUTES=1879048181,
-    SHT_GNU_HASH=1879048182,
-    SHT_GNU_LIBLIST=1879048183,
-    SHT_GNU_verdef=1879048189,
-    SHT_GNU_verneed=1879048190,
-    SHT_GNU_versym=1879048191,
-    SHT_GROUP=17,
-    SHT_HASH=5,
-    SHT_INIT_ARRAY=14,
-    SHT_MIPS_ABIFLAGS=1879048234,
-    SHT_MIPS_AUXSYM=1879048214,
-    SHT_MIPS_CONFLICT=1879048194,
-    SHT_MIPS_CONTENT=1879048204,
-    SHT_MIPS_DEBUG=1879048197,
-    SHT_MIPS_DELTACLASS=1879048221,
-    SHT_MIPS_DELTADECL=1879048223,
-    SHT_MIPS_DELTAINST=1879048220,
-    SHT_MIPS_DELTASYM=1879048219,
-    SHT_MIPS_DENSE=1879048211,
-    SHT_MIPS_DWARF=1879048222,
-    SHT_MIPS_EH_REGION=1879048231,
-    SHT_MIPS_EVENTS=1879048225,
-    SHT_MIPS_EXTSYM=1879048210,
-    SHT_MIPS_FDESC=1879048209,
-    SHT_MIPS_GPTAB=1879048195,
-    SHT_MIPS_LIBLIST=1879048192,
-    SHT_MIPS_LINE=1879048217,
-    SHT_MIPS_LOCSTR=1879048216,
-    SHT_MIPS_LOCSYM=1879048213,
-    SHT_MIPS_MSYM=1879048193,
-    SHT_MIPS_OPTIONS=1879048205,
-    SHT_MIPS_OPTSYM=1879048215,
-    SHT_MIPS_PACKAGE=1879048199,
-    SHT_MIPS_PACKSYM=1879048200,
-    SHT_MIPS_PDESC=1879048212,
-    SHT_MIPS_PDR_EXCEPTION=1879048233,
-    SHT_MIPS_PIXIE=1879048227,
-    SHT_MIPS_REGINFO=1879048198,
-    SHT_MIPS_RELD=1879048201,
-    SHT_MIPS_RFDESC=1879048218,
-    SHT_MIPS_SHDR=1879048208,
-    SHT_MIPS_SYMBOL_LIB=1879048224,
-    SHT_MIPS_TRANSLATE=1879048226,
-    SHT_MIPS_UCODE=1879048196,
-    SHT_MIPS_WHIRL=1879048230,
-    SHT_MIPS_XLATE=1879048228,
-    SHT_MIPS_XLATE_DEBUG=1879048229,
-    SHT_MIPS_XLATE_OLD=1879048232,
-    SHT_NOBITS=8,
-    SHT_NOTE=7,
-    SHT_NULL=0,
-    SHT_PREINIT_ARRAY=16,
-    SHT_PROGBITS=1,
-    SHT_REL=9,
-    SHT_RELA=4,
-    SHT_SHLIB=10,
-    SHT_STRTAB=3,
-    SHT_SUNW_COMDAT=1879048187,
-    SHT_SUNW_move=1879048186,
-    SHT_SUNW_syminfo=1879048188,
-    SHT_SYMTAB=2,
-    SHT_SYMTAB_SHNDX=18
-} Elf_SectionHeaderType_MIPS;
-
-struct Elf32_Shdr {
-    dword sh_name;
-    enum Elf_SectionHeaderType_MIPS sh_type;
-    dword sh_flags;
-    dword sh_addr;
-    dword sh_offset;
-    dword sh_size;
-    dword sh_link;
-    dword sh_info;
-    dword sh_addralign;
-    dword sh_entsize;
-};
-
-typedef struct Elf32_Phdr Elf32_Phdr, *PElf32_Phdr;
-
-typedef enum Elf_ProgramHeaderType_MIPS {
-    PT_DYNAMIC=2,
-    PT_GNU_EH_FRAME=1685382480,
-    PT_GNU_RELRO=1685382482,
-    PT_GNU_STACK=1685382481,
-    PT_INTERP=3,
-    PT_LOAD=1,
-    PT_MIPS_ABIFLAGS=1879048195,
-    PT_MIPS_OPTIONS=1879048194,
-    PT_MIPS_REGINFO=1879048192,
-    PT_MIPS_RTPROC=1879048193,
-    PT_NOTE=4,
-    PT_NULL=0,
-    PT_PHDR=6,
-    PT_SHLIB=5,
-    PT_TLS=7
-} Elf_ProgramHeaderType_MIPS;
-
-struct Elf32_Phdr {
-    enum Elf_ProgramHeaderType_MIPS p_type;
-    dword p_offset;
-    dword p_vaddr;
-    dword p_paddr;
-    dword p_filesz;
-    dword p_memsz;
-    dword p_flags;
-    dword p_align;
-};
-
-typedef struct Elf32_Ehdr Elf32_Ehdr, *PElf32_Ehdr;
-
-struct Elf32_Ehdr {
-    byte e_ident_magic_num;
-    char e_ident_magic_str[3];
-    byte e_ident_class;
-    byte e_ident_data;
-    byte e_ident_version;
-    byte e_ident_pad[9];
-    word e_type;
-    word e_machine;
-    dword e_version;
-    dword e_entry;
-    dword e_phoff;
-    dword e_shoff;
-    dword e_flags;
-    word e_ehsize;
-    word e_phentsize;
-    word e_phnum;
-    word e_shentsize;
-    word e_shnum;
-    word e_shstrndx;
-};
-
-#define SAFE_EXP 1023
-
-#define _DMASK 32752
-
-#define _D3 3
-
-#define _D2 2
-
-#define _D1 1
-
-#define _DNAN 65528
-
-#define _DFRAC 15
-
-#define _DMAX 2047
-
-#define NAN 2
-
-#define _DSIGN 32768
-
-#define INF 1
-
-#define FINITE -1
-
-#define HUGE_EXP 1842
 
 #define DG_TINYMON_READ_OP 1
 
@@ -14978,13 +15101,13 @@ lldiv_t * lldiv(lldiv_t *__return_storage_ptr__,longlong __numer,longlong __deno
 ldiv_t ldiv(long __numer,long __denom);
 void __osResetGlobalIntMask(OSHWIntr interrupt);
 s32 osEPiRawWriteIo(OSPiHandle *pihandle,u32 devAddr,u32 data);
-ulonglong rarezip_seg_start(int *param_1,uint param_2,uint param_3,int param_4,int param_5,uint *param_6,uint *param_7);
-undefined8 decompress.inflate(int param_1,int param_2,ulonglong param_3,uint param_4);
-undefined8 inflate_stored(void);
-undefined8 inflate_fixed(void);
-undefined8 inflate_dynamic(void);
-undefined8 inflate_block(uint *param_1);
-longlong xinflate(void);
+int huft_build(uint *b,uint n,uint s,ush *d,ush *e,huft **t,int *m);
+int inflate_codes(huft *tl,huft *td,int bl,int bd);
+int inflate_stored(void);
+int inflate_fixed(void);
+int inflate_dynamic(void);
+int inflate_block(int *e);
+int inflate(void);
 void decompress.entry(int source,int target,int buffer);
 void initGameData(void);
 void init_weapon_animation_groups_maybe(void);
@@ -17014,9 +17137,9 @@ undefined4 proc_7F0B2FE0(int param_1);
 void proc_7F0B3004(int param_1);
 undefined8 proc_7F0B3024(undefined8 param_1);
 undefined8 proc_7F0B3034(undefined8 param_1);
-undefined8 proc_7F0B303C(undefined8 param_1);
+undefined8 stan_problems_removed(undefined8 param_1);
 undefined4 proc_7F0B3044(int param_1);
-undefined8 proc_7F0B312C(undefined8 param_1);
+undefined8 stan_region_removed(undefined8 param_1);
 void proc_7F0B3138(undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,undefined4 param_9);
 void proc_7F0B31A4(undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8);
 float proc_7F0B3200(float *param_1,float *param_2,float *param_3,float *param_4);
@@ -17414,7 +17537,7 @@ undefined8 proc_7F0D0B0C(char *param_1);
 undefined8 proc_7F0D0B54(undefined4 param_1,undefined4 param_2);
 undefined8 proc_7F0D0BA4(char *param_1,undefined4 param_2);
 undefined8 proc_7F0D0BF4(undefined4 param_1,undefined4 param_2,uint param_3,undefined *param_4);
-undefined8 post_indy__res_cmd_send_capture_data(char *param_1,uint param_2,undefined *param_3);
+undefined8 post_indy__res_cmd_send_capture_data(char *string,uint size,undefined *data);
 undefined8 proc_7F0D0CD0(undefined4 param_1);
 undefined8 post_indy__res_cmd_request_ramrom_file(char *param_1,undefined4 param_2,undefined4 param_3);
 undefined8 proc_7F0D0D74(undefined4 param_1,undefined4 param_2,undefined4 param_3);

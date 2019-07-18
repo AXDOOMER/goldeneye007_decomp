@@ -99,9 +99,9 @@ const char aU64_taskgrab_D_core[] = "u64.taskgrab.%d.core";
 #ifdef NONMATCHING
 void init_mainthread_data(void)
 {
-    ? sp9C;
-    ? sp78;
-    ? sp60;
+    OSMesg sp9C;
+    OSTimer sp78;
+    OSMesgQueue sp60;
     ? temp_ret;
     ? temp_ret_2;
     s32 temp_s0;

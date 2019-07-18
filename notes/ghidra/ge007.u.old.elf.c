@@ -85,11 +85,11 @@ int init(EVP_PKEY_CTX *ctx)
       iVar2 = index - (int)cdata_rom_end;
       index += -1;
       pcVar3 = pcVar3 + -1;
-      rarezip_seg_start[iVar2] = cVar1;
+      huft_build[iVar2] = cVar1;
     } while (-1 < index);
   }
                     // skip
-  jump_decompressfile((int)(rarezip_seg_start + -(int)cdata_rom_end),(int)cdata_vaddr_start,
+  jump_decompressfile((int)(huft_build + -(int)cdata_rom_end),(int)cdata_vaddr_start,
                       (int)&rarezip_buffer);
   if (false) {
     osPiRawStartDma(0,0x101000,(void *)0x70100400,0xfff32590);
@@ -6136,15 +6136,15 @@ void set_bank_nextentry_to_NULL(u32 bank)
 void swap_entries(memorybank *a,memorybank *b)
 
 {
-  void *pvVar1;
-  void *pvVar2;
+  void *tempstart;
+  void *tempend;
   
-  pvVar1 = a->bankstart;
-  pvVar2 = a->nextentry;
+  tempstart = a->bankstart;
+  tempend = a->nextentry;
   a->bankstart = b->bankstart;
   a->nextentry = b->nextentry;
-  b->bankstart = pvVar1;
-  b->nextentry = pvVar2;
+  b->bankstart = tempstart;
+  b->nextentry = tempend;
   return;
 }
 
@@ -22279,8 +22279,7 @@ s32 osEPiRawWriteIo(OSPiHandle *pihandle,u32 devAddr,u32 data)
 // 
 // WARNING: Could not reconcile some variable overlaps
 
-ulonglong rarezip_seg_start(int *param_1,uint param_2,uint param_3,int param_4,int param_5,
-                           uint *param_6,uint *param_7)
+int huft_build(uint *b,uint n,uint s,ush *d,ush *e,huft **t,int *m)
 
 {
   uint *puVar1;
@@ -22289,31 +22288,32 @@ ulonglong rarezip_seg_start(int *param_1,uint param_2,uint param_3,int param_4,i
   int iVar4;
   int iVar5;
   uint uVar6;
-  uint uVar7;
-  int *piVar8;
-  uint *puVar9;
-  int iVar10;
-  uint uVar11;
-  uint *puVar12;
-  uint *puVar13;
-  int iVar14;
-  undefined4 *puVar15;
-  uint uVar16;
+  int *piVar7;
+  huft *phVar8;
+  int iVar9;
+  uint uVar10;
+  uint *puVar11;
+  uint uVar12;
+  huft **pphVar13;
+  uint *puVar14;
+  int iVar15;
+  huft *phVar16;
   uint uVar17;
   uint uVar18;
   uint uVar19;
   uint uVar20;
   uint uVar21;
   uint uVar22;
-  int *piVar23;
-  uint *puVar24;
+  uint uVar23;
+  int *piVar24;
+  uint *puVar25;
   uint *puStack1440;
   uint auStack1404 [2];
   int aiStack1396 [16];
   uint auStack1332 [288];
-  uint auStack180 [16];
+  huft *aphStack180 [16];
   undefined4 uStack116;
-  uint uStack112;
+  huft *phStack112;
   uint uStack72;
   int aiStack68 [15];
   int iStack8;
@@ -22321,401 +22321,396 @@ ulonglong rarezip_seg_start(int *param_1,uint param_2,uint param_3,int param_4,i
   
   piVar3 = aiStack68;
   do {
-    piVar23 = piVar3 + 4;
+    piVar24 = piVar3 + 4;
     piVar3[1] = 0;
     piVar3[2] = 0;
     piVar3[3] = 0;
     *piVar3 = 0;
-    piVar3 = piVar23;
-  } while (piVar23 != &iStack4);
-  uVar16 = param_2;
-  piVar3 = param_1;
-  if (-(param_2 & 3) == 0) goto LAB_702000a4;
-  uVar16 = param_2;
-  piVar23 = param_1;
+    piVar3 = piVar24;
+  } while (piVar24 != &iStack4);
+  uVar17 = n;
+  puVar11 = b;
+  if (-(n & 3) == 0) goto LAB_702000a4;
+  uVar17 = n;
+  puVar25 = b;
   do {
-    iVar4 = *piVar23;
-    uVar16 -= 1;
-    piVar23 = piVar23 + 1;
-    (&uStack72)[iVar4] = (&uStack72)[iVar4] + 1;
-  } while (-(param_2 & 3) + param_2 != uVar16);
-  while (piVar3 = piVar23, uVar16 != 0) {
+    uVar21 = *puVar25;
+    uVar17 -= 1;
+    puVar25 = puVar25 + 1;
+    (&uStack72)[uVar21] = (&uStack72)[uVar21] + 1;
+  } while (-(n & 3) + n != uVar17);
+  while (puVar11 = puVar25, uVar17 != 0) {
 LAB_702000a4:
-    uVar16 -= 4;
-    piVar23 = piVar3 + 4;
-    puVar12 = &uStack72 + *piVar3;
-    *puVar12 = *puVar12 + 1;
-    puVar12 = &uStack72 + piVar3[1];
-    *puVar12 = *puVar12 + 1;
-    puVar12 = &uStack72 + piVar3[2];
-    *puVar12 = *puVar12 + 1;
-    puVar12 = &uStack72 + piVar3[3];
-    *puVar12 = *puVar12 + 1;
+    uVar17 -= 4;
+    puVar25 = puVar11 + 4;
+    puVar14 = &uStack72 + *puVar11;
+    *puVar14 = *puVar14 + 1;
+    puVar14 = &uStack72 + puVar11[1];
+    *puVar14 = *puVar14 + 1;
+    puVar14 = &uStack72 + puVar11[2];
+    *puVar14 = *puVar14 + 1;
+    puVar11 = &uStack72 + puVar11[3];
+    *puVar11 = *puVar11 + 1;
   }
-  uVar16 = 1;
-  puVar12 = (uint *)aiStack68;
-  if (param_2 == 0) {
-    *param_6 = 0;
-    *param_7 = 0;
+  uVar17 = 1;
+  puVar11 = (uint *)aiStack68;
+  if (n == 0) {
+    *t = NULL;
+    *m = 0;
     return 0;
   }
   do {
-    if (*puVar12 != 0) break;
-    uVar16 += 1;
-    puVar12 = puVar12 + 1;
-  } while (uVar16 != 0x11);
-  uVar20 = *param_7;
-  if (*param_7 < uVar16) {
-    uVar20 = uVar16;
+    if (*puVar11 != 0) break;
+    uVar17 += 1;
+    puVar11 = puVar11 + 1;
+  } while (uVar17 != 0x11);
+  uVar21 = *m;
+  if ((uint)*m < uVar17) {
+    uVar21 = uVar17;
   }
-  uVar17 = 0x10;
+  uVar18 = 0x10;
   piVar3 = &iStack8;
   do {
     if (*piVar3 != 0) break;
-    uVar17 -= 1;
+    uVar18 -= 1;
     piVar3 = piVar3 + -1;
-  } while (uVar17 != 0);
-  if (uVar17 < uVar20) {
-    uVar20 = uVar17;
+  } while (uVar18 != 0);
+  if (uVar18 < uVar21) {
+    uVar21 = uVar18;
   }
-  *param_7 = uVar20;
-  iVar4 = 1 << (uVar16 & 0x1f);
-  if (uVar16 < uVar17) {
+  *m = uVar21;
+  iVar4 = 1 << (uVar17 & 0x1f);
+  if (uVar17 < uVar18) {
     do {
-      uVar18 = *puVar12;
-      puVar12 = puVar12 + 1;
-      iVar4 = (iVar4 - uVar18) * 2;
-    } while (puVar12 < &uStack72 + uVar17);
+      uVar19 = *puVar11;
+      puVar11 = puVar11 + 1;
+      iVar4 = (iVar4 - uVar19) * 2;
+    } while (puVar11 < &uStack72 + uVar18);
   }
-  uVar18 = uVar17 - 1;
-  iVar10 = 0;
+  uVar19 = uVar18 - 1;
+  iVar9 = 0;
   iVar4 -= *piVar3;
   *piVar3 = *piVar3 + iVar4;
-  piVar23 = aiStack68;
-  piVar8 = aiStack1396;
-  puVar12 = (uint *)(piVar3 + -1);
-  if (uVar18 != 0) {
-    if (-(uVar18 & 3) != 0) {
+  piVar24 = aiStack68;
+  piVar7 = aiStack1396;
+  puVar11 = (uint *)(piVar3 + -1);
+  if (uVar19 != 0) {
+    if (-(uVar19 & 3) != 0) {
       do {
-        puVar12 = puVar12 + -1;
-        piVar3 = piVar8 + 1;
-        iVar10 += *piVar23;
-        *piVar8 = iVar10;
-        piVar23 = piVar23 + 1;
-        piVar8 = piVar3;
-      } while (&uStack72 + -(uVar18 & 3) + uVar18 != puVar12);
-      piVar8 = piVar3;
-      if (puVar12 == &uStack72) goto LAB_70200290;
+        puVar11 = puVar11 + -1;
+        piVar3 = piVar7 + 1;
+        iVar9 += *piVar24;
+        *piVar7 = iVar9;
+        piVar24 = piVar24 + 1;
+        piVar7 = piVar3;
+      } while (&uStack72 + -(uVar19 & 3) + uVar19 != puVar11);
+      piVar7 = piVar3;
+      if (puVar11 == &uStack72) goto LAB_70200290;
     }
     do {
-      iVar14 = *piVar23;
-      puVar12 = puVar12 + -4;
-      *piVar8 = iVar10 + iVar14;
-      iVar10 = iVar10 + iVar14 + piVar23[1];
-      piVar8[1] = iVar10;
-      iVar10 += piVar23[2];
-      piVar8[2] = iVar10;
-      iVar10 += piVar23[3];
-      piVar8[3] = iVar10;
-      piVar23 = piVar23 + 4;
-      piVar8 = piVar8 + 4;
-    } while (puVar12 != &uStack72);
+      iVar15 = *piVar24;
+      puVar11 = puVar11 + -4;
+      *piVar7 = iVar9 + iVar15;
+      iVar9 = iVar9 + iVar15 + piVar24[1];
+      piVar7[1] = iVar9;
+      iVar9 += piVar24[2];
+      piVar7[2] = iVar9;
+      iVar9 += piVar24[3];
+      piVar7[3] = iVar9;
+      piVar24 = piVar24 + 4;
+      piVar7 = piVar7 + 4;
+    } while (puVar11 != &uStack72);
   }
 LAB_70200290:
-  uVar18 = 0;
-  puVar12 = auStack1332;
-  iVar10 = *param_1;
+  uVar20 = 0;
+  puVar11 = auStack1332;
+  uVar19 = *b;
   while( true ) {
-    param_1 = param_1 + 1;
-    if (iVar10 != 0) {
-      uVar19 = auStack1404[iVar10];
-      puVar12[uVar19] = uVar18;
-      auStack1404[iVar10] = uVar19 + 1;
+    b = b + 1;
+    if (uVar19 != 0) {
+      uVar12 = auStack1404[uVar19];
+      puVar11[uVar12] = uVar20;
+      auStack1404[uVar19] = uVar12 + 1;
     }
-    uVar18 += 1;
-    if (param_2 <= uVar18) break;
-    iVar10 = *param_1;
+    uVar20 += 1;
+    if (n <= uVar20) break;
+    uVar19 = *b;
   }
-  uVar19 = 0;
-  iVar10 = -1;
-  uVar18 = -uVar20;
-  uVar7 = 0;
-  uVar6 = 0;
-  if ((int)uVar16 <= (int)uVar17) {
-    puStack1440 = &uStack72 + uVar16;
+  uVar20 = 0;
+  iVar9 = -1;
+  uVar19 = -uVar21;
+  phVar8 = NULL;
+  uVar12 = 0;
+  if ((int)uVar17 <= (int)uVar18) {
+    puStack1440 = &uStack72 + uVar17;
     do {
-      iVar14 = iVar10 * 4;
+      iVar15 = iVar9 * 4;
       if (*puStack1440 != 0) {
-        puVar13 = auStack1404 + iVar10;
-        uVar22 = 1 << (uVar16 + 0x1f & 0x1f);
-        puVar24 = puVar12;
-        uVar11 = *puStack1440;
+        puVar14 = auStack1404 + iVar9;
+        uVar23 = 1 << (uVar17 + 0x1f & 0x1f);
+        puVar25 = puVar11;
+        uVar10 = *puStack1440;
         do {
-          uVar21 = uVar11 - 1;
-          if ((int)(uVar18 + uVar20) < (int)uVar16) {
-            uVar2 = uVar18 + uVar20;
-            puVar12 = (uint *)((int)auStack180 + iVar14);
+          uVar22 = uVar10 - 1;
+          if ((int)(uVar19 + uVar21) < (int)uVar17) {
+            uVar2 = uVar19 + uVar21;
+            pphVar13 = (huft **)((int)aphStack180 + iVar15);
             do {
-              uVar18 = uVar2;
-              iVar10 += 1;
-              iVar14 += 4;
-              puVar13 = puVar13 + 1;
-              uVar7 = uVar17 - uVar18;
-              if (uVar20 < uVar17 - uVar18) {
-                uVar7 = uVar20;
+              uVar19 = uVar2;
+              iVar9 += 1;
+              iVar15 += 4;
+              puVar14 = puVar14 + 1;
+              uVar12 = uVar18 - uVar19;
+              if (uVar21 < uVar18 - uVar19) {
+                uVar12 = uVar21;
               }
-              uVar2 = uVar16 - uVar18;
+              uVar2 = uVar17 - uVar19;
               uVar6 = 1 << (uVar2 & 0x1f);
-              if (uVar11 < uVar6) {
-                iVar5 = (uVar6 - uVar21) + -1;
-                puVar9 = &uStack72 + uVar16;
-                while (uVar2 += 1, uVar2 < uVar7) {
-                  puVar1 = puVar9 + 1;
-                  puVar9 = puVar9 + 1;
+              if (uVar10 < uVar6) {
+                iVar5 = (uVar6 - uVar22) + -1;
+                puVar11 = &uStack72 + uVar17;
+                while (uVar2 += 1, uVar2 < uVar12) {
+                  puVar1 = puVar11 + 1;
+                  puVar11 = puVar11 + 1;
                   if ((uint)(iVar5 * 2) <= *puVar1) break;
                   iVar5 = iVar5 * 2 - *puVar1;
                 }
               }
-              uVar6 = 1 << (uVar2 & 0x1f);
-              iVar5 = rarezip_data3 * 8;
-              rarezip_data3 = rarezip_data3 + uVar6 + 1;
+              uVar12 = 1 << (uVar2 & 0x1f);
+              iVar5 = hufts * 8;
+              hufts = hufts + uVar12 + 1;
               iVar5 += rarezip_ptrbuffer;
-              uVar7 = iVar5 + 8;
-              *param_6 = uVar7;
+              phVar8 = (huft *)(iVar5 + 8);
+              *t = phVar8;
               *(undefined4 *)(iVar5 + 4) = 0;
-              param_6 = (uint *)(iVar5 + 4);
-              puVar12[1] = uVar7;
-              if (iVar10 != 0) {
-                *puVar13 = uVar19;
-                uStack116._1_3_ = CONCAT12((char)uVar20,uStack116._2_2_);
+              t = (huft **)(iVar5 + 4);
+              pphVar13[1] = phVar8;
+              if (iVar9 != 0) {
+                *puVar14 = uVar20;
+                uStack116._1_3_ = CONCAT12((char)uVar21,uStack116._2_2_);
                 uStack116 = CONCAT13((char)uVar2 + '\x10',uStack116._1_3_);
-                puVar15 = (undefined4 *)(*puVar12 + (uVar19 >> (uVar18 - uVar20 & 0x1f)) * 8);
-                *puVar15 = uStack116;
-                puVar15[1] = uVar7;
-                uStack112 = uVar7;
+                phVar16 = (huft *)((int)*pphVar13 + (uVar20 >> (uVar19 - uVar21 & 0x1f)) * 8);
+                *(undefined4 *)phVar16 = uStack116;
+                *(huft **)((int)&phVar16->v + 2) = phVar8;
+                phStack112 = phVar8;
               }
-              uVar2 = uVar18 + uVar20;
-              puVar12 = puVar12 + 1;
-            } while ((int)(uVar18 + uVar20) < (int)uVar16);
+              uVar2 = uVar19 + uVar21;
+              pphVar13 = pphVar13 + 1;
+            } while ((int)(uVar19 + uVar21) < (int)uVar17);
           }
-          uStack116._1_3_ = CONCAT12((char)(uVar16 - uVar18),uStack116._2_2_);
-          if (puVar24 < auStack1332 + param_2) {
-            uVar11 = *puVar24;
-            if (uVar11 < param_3) {
-              if (uVar11 < 0x100) {
+          uStack116._1_3_ = CONCAT12((char)(uVar17 - uVar19),uStack116._2_2_);
+          if (puVar25 < auStack1332 + n) {
+            uVar10 = *puVar25;
+            if (uVar10 < s) {
+              if (uVar10 < 0x100) {
                 uStack116 = CONCAT13(0x10,uStack116._1_3_);
               }
               else {
                 uStack116 = CONCAT13(0xf,uStack116._1_3_);
               }
-              puVar12 = puVar24 + 1;
-              uStack112 = uStack112 & 0xffff | *puVar24 << 0x10;
+              puVar11 = puVar25 + 1;
+              phStack112 = (huft *)((uint)phStack112 & 0xffff | *puVar25 << 0x10);
             }
             else {
-              puVar12 = puVar24 + 1;
-              uStack116 = CONCAT13(*(undefined *)((uVar11 - param_3) + param_5),uStack116._1_3_);
-              uStack112 = uStack112 & 0xffff |
-                          (uint)*(ushort *)(param_4 + *puVar24 * 2 + param_3 * -2) << 0x10;
+              puVar11 = puVar25 + 1;
+              uStack116 = CONCAT13(*(undefined *)((uVar10 - s) + (int)e),uStack116._1_3_);
+              phStack112 = (huft *)((uint)phStack112 & 0xffff |
+                                   (uint)d[*puVar25 + s * 0x7fffffff] << 0x10);
             }
           }
           else {
             uStack116 = CONCAT13(99,uStack116._1_3_);
-            puVar12 = puVar24;
+            puVar11 = puVar25;
           }
-          uVar11 = uVar19 >> (uVar18 & 0x1f);
-          if (uVar11 < uVar6) {
+          uVar10 = uVar20 >> (uVar19 & 0x1f);
+          if (uVar10 < uVar12) {
             do {
-              puVar15 = (undefined4 *)(uVar7 + uVar11 * 8);
-              *puVar15 = uStack116;
-              uVar11 += 1 << (uVar16 - uVar18 & 0x1f);
-              puVar15[1] = uStack112;
-            } while (uVar11 < uVar6);
+              phVar16 = (huft *)((int)phVar8 + uVar10 * 8);
+              *(undefined4 *)phVar16 = uStack116;
+              uVar10 += 1 << (uVar17 - uVar19 & 0x1f);
+              *(huft **)((int)&phVar16->v + 2) = phStack112;
+            } while (uVar10 < uVar12);
           }
-          uVar2 = uVar19 & uVar22;
-          uVar11 = uVar22;
+          uVar2 = uVar20 & uVar23;
+          uVar10 = uVar23;
           while (uVar2 != 0) {
-            uVar19 ^= uVar11;
-            uVar2 = uVar19 & uVar11 >> 1;
-            uVar11 = uVar11 >> 1;
+            uVar20 ^= uVar10;
+            uVar2 = uVar20 & uVar10 >> 1;
+            uVar10 = uVar10 >> 1;
           }
-          uVar19 ^= uVar11;
-          if ((uVar19 & (1 << (uVar18 & 0x1f)) - 1U) != *puVar13) {
+          uVar20 ^= uVar10;
+          if ((uVar20 & (1 << (uVar19 & 0x1f)) - 1U) != *puVar14) {
             do {
-              uVar18 -= uVar20;
-              puVar24 = puVar13 + -1;
-              iVar10 += -1;
-              iVar14 += -4;
-              puVar13 = puVar13 + -1;
-            } while ((uVar19 & (1 << (uVar18 & 0x1f)) - 1U) != *puVar24);
+              uVar19 -= uVar21;
+              puVar25 = puVar14 + -1;
+              iVar9 += -1;
+              iVar15 += -4;
+              puVar14 = puVar14 + -1;
+            } while ((uVar20 & (1 << (uVar19 & 0x1f)) - 1U) != *puVar25);
           }
-          puVar24 = puVar12;
-          uVar11 = uVar21;
-        } while (uVar21 != 0);
+          puVar25 = puVar11;
+          uVar10 = uVar22;
+        } while (uVar22 != 0);
       }
-      uVar16 += 1;
+      uVar17 += 1;
       puStack1440 = puStack1440 + 1;
-    } while ((int)uVar16 <= (int)uVar17);
+    } while ((int)uVar17 <= (int)uVar18);
   }
-  return (ulonglong)(iVar4 != 0 && uVar17 != 1);
+  return (int)(uint)(iVar4 != 0 && uVar18 != 1);
 }
 
 
 
-undefined8 decompress_inflate(int param_1,int param_2,ulonglong param_3,uint param_4)
+int inflate_codes(huft *tl,huft *td,int bl,int bd)
 
 {
   byte bVar1;
-  ushort uVar2;
-  ushort uVar3;
-  uint uVar4;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  byte *pbVar10;
-  ulonglong uVar11;
+  ulonglong uVar6;
+  uint uVar7;
+  huft *phVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  uint uVar11;
   uint uVar12;
-  uint uVar13;
-  uint uVar14;
+  byte *pbVar13;
+  undefined *puVar14;
   undefined *puVar15;
-  byte *pbVar16;
-  undefined *puVar17;
+  ushort ml;
+  ushort md;
   
-  uVar11 = SEXT48(rarezip_bitsinsample);
-  uVar2 = *(ushort *)(&rarezip_masks + (int)param_3 * 2);
-  uVar3 = *(ushort *)(&rarezip_masks + param_4 * 2);
+  uVar9 = SEXT48((int)bk);
+  ml = mask_bits[bl];
+  md = mask_bits[bd];
   while( true ) {
     while( true ) {
-      while (uVar14 = (uint)uVar11, uVar11 < param_3) {
-        pbVar10 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-        rarezip_curoffset += 1;
-        uVar11 = SEXT48((int)(uVar14 + 8));
-        rarezip_sample |= (uint)*pbVar10 << (uVar14 & 0x1f);
+      while (uVar12 = (uint)uVar9, uVar9 < (ulonglong)(longlong)bl) {
+        pbVar13 = (byte *)(rarezip_ptr_source + inptr);
+        inptr += 1;
+        uVar9 = SEXT48((int)(uVar12 + 8));
+        bb |= (uint)*pbVar13 << (uVar12 & 0x1f);
       }
-      pbVar10 = (byte *)((rarezip_sample & (uint)uVar2) * 8 + param_1);
-      uVar8 = (ulonglong)*pbVar10;
-      if (*pbVar10 < 0x11) {
-        bVar1 = pbVar10[1];
+      phVar8 = (huft *)((bb & (uint)ml) * 8 + (int)tl);
+      uVar6 = (ulonglong)phVar8->e;
+      if (phVar8->e < 0x11) {
+        bVar1 = phVar8->b;
       }
       else {
-        bVar1 = pbVar10[1];
+        bVar1 = phVar8->b;
         while( true ) {
-          iVar5 = (int)uVar8 + -0x10;
-          uVar14 = (int)uVar11 - (uint)bVar1;
-          rarezip_sample >>= (uint)bVar1 & 0x1f;
-          while (uVar11 = SEXT48((int)uVar14), uVar11 < (ulonglong)(longlong)iVar5) {
-            pbVar16 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-            rarezip_curoffset += 1;
-            uVar12 = uVar14 & 0x1f;
-            uVar14 += 8;
-            rarezip_sample |= (uint)*pbVar16 << uVar12;
+          iVar3 = (int)uVar6 + -0x10;
+          uVar12 = (int)uVar9 - (uint)bVar1;
+          bb >>= (uint)bVar1 & 0x1f;
+          while (uVar9 = SEXT48((int)uVar12), uVar9 < (ulonglong)(longlong)iVar3) {
+            pbVar13 = (byte *)(rarezip_ptr_source + inptr);
+            inptr += 1;
+            uVar10 = uVar12 & 0x1f;
+            uVar12 += 8;
+            bb |= (uint)*pbVar13 << uVar10;
           }
-          pbVar10 = (byte *)(((uint)*(ushort *)(&rarezip_masks + iVar5 * 2) & rarezip_sample) * 8 +
-                            *(int *)(pbVar10 + 4));
-          uVar8 = (ulonglong)*pbVar10;
-          if (*pbVar10 < 0x11) break;
-          bVar1 = pbVar10[1];
+          phVar8 = (huft *)(((uint)mask_bits[iVar3] & bb) * 8 + *(int *)((int)&phVar8->v + 2));
+          uVar6 = (ulonglong)phVar8->e;
+          if (phVar8->e < 0x11) break;
+          bVar1 = phVar8->b;
         }
-        bVar1 = pbVar10[1];
+        bVar1 = phVar8->b;
       }
-      rarezip_sample >>= (uint)bVar1 & 0x1f;
-      rarezip_bitsinsample = uVar14 - (uint)bVar1;
-      uVar11 = SEXT48(rarezip_bitsinsample);
-      if (uVar8 != 0x10) break;
-      puVar15 = (undefined *)(rarezip_ptr_target + rarezip_decompressed_count);
-      rarezip_decompressed_count += 1;
-      *puVar15 = (char)*(undefined2 *)(pbVar10 + 4);
+      bb >>= (uint)bVar1 & 0x1f;
+      bk = uVar12 - (uint)bVar1;
+      uVar9 = SEXT48((int)bk);
+      if (uVar6 != 0x10) break;
+      puVar14 = (undefined *)(rarezip_ptr_target + wp);
+      wp += 1;
+      *puVar14 = (char)*(undefined2 *)((int)&phVar8->v + 2);
     }
-    if (uVar8 == 0xf) break;
-    uVar14 = (uint)uVar8;
-    while (uVar11 < uVar8) {
-      pbVar16 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-      rarezip_curoffset += 1;
-      uVar12 = (uint)uVar11;
-      rarezip_bitsinsample = uVar12 + 8;
-      uVar11 = SEXT48(rarezip_bitsinsample);
-      rarezip_sample |= (uint)*pbVar16 << (uVar12 & 0x1f);
+    if (uVar6 == 0xf) break;
+    uVar12 = (uint)uVar6;
+    while (uVar9 < uVar6) {
+      pbVar13 = (byte *)(rarezip_ptr_source + inptr);
+      inptr += 1;
+      uVar10 = (uint)uVar9;
+      bk = uVar10 + 8;
+      uVar9 = SEXT48((int)bk);
+      bb |= (uint)*pbVar13 << (uVar10 & 0x1f);
     }
-    uVar12 = rarezip_bitsinsample - uVar14;
-    uVar13 = rarezip_sample >> (uVar14 & 0x1f);
-    uVar14 = ((uint)*(ushort *)(&rarezip_masks + uVar14 * 2) & rarezip_sample) +
-             (uint)*(ushort *)(pbVar10 + 4);
-    while (uVar12 < param_4) {
-      pbVar10 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-      rarezip_curoffset += 1;
-      uVar9 = uVar12 & 0x1f;
-      uVar12 += 8;
-      uVar13 |= (uint)*pbVar10 << uVar9;
+    uVar10 = bk - uVar12;
+    uVar11 = bb >> (uVar12 & 0x1f);
+    uVar12 = ((uint)mask_bits[uVar12] & bb) + (uint)*(ushort *)((int)&phVar8->v + 2);
+    while (uVar10 < (uint)bd) {
+      pbVar13 = (byte *)(rarezip_ptr_source + inptr);
+      inptr += 1;
+      uVar7 = uVar10 & 0x1f;
+      uVar10 += 8;
+      uVar11 |= (uint)*pbVar13 << uVar7;
     }
-    pbVar10 = (byte *)((uVar13 & (uint)uVar3) * 8 + param_2);
-    uVar11 = (ulonglong)*pbVar10;
-    if (*pbVar10 < 0x11) {
-      bVar1 = pbVar10[1];
+    phVar8 = (huft *)((uVar11 & (uint)md) * 8 + (int)td);
+    uVar9 = (ulonglong)phVar8->e;
+    if (phVar8->e < 0x11) {
+      bVar1 = phVar8->b;
     }
     else {
-      bVar1 = pbVar10[1];
+      bVar1 = phVar8->b;
       while( true ) {
-        uVar9 = (int)uVar11 - 0x10;
-        uVar12 -= (uint)bVar1;
-        uVar13 >>= (uint)bVar1 & 0x1f;
-        while (uVar12 < uVar9) {
-          pbVar16 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-          rarezip_curoffset += 1;
-          uVar4 = uVar12 & 0x1f;
-          uVar12 += 8;
-          uVar13 |= (uint)*pbVar16 << uVar4;
+        uVar7 = (int)uVar9 - 0x10;
+        uVar10 -= (uint)bVar1;
+        uVar11 >>= (uint)bVar1 & 0x1f;
+        while (uVar10 < uVar7) {
+          pbVar13 = (byte *)(rarezip_ptr_source + inptr);
+          inptr += 1;
+          uVar2 = uVar10 & 0x1f;
+          uVar10 += 8;
+          uVar11 |= (uint)*pbVar13 << uVar2;
         }
-        pbVar10 = (byte *)(((uint)*(ushort *)(&rarezip_masks + uVar9 * 2) & uVar13) * 8 +
-                          *(int *)(pbVar10 + 4));
-        uVar11 = (ulonglong)*pbVar10;
-        if (*pbVar10 < 0x11) break;
-        bVar1 = pbVar10[1];
+        phVar8 = (huft *)(((uint)mask_bits[uVar7] & uVar11) * 8 + *(int *)((int)&phVar8->v + 2));
+        uVar9 = (ulonglong)phVar8->e;
+        if (phVar8->e < 0x11) break;
+        bVar1 = phVar8->b;
       }
-      bVar1 = pbVar10[1];
+      bVar1 = phVar8->b;
     }
-    uVar12 -= (uint)bVar1;
-    uVar13 >>= (uint)bVar1 & 0x1f;
-    while ((ulonglong)(longlong)(int)uVar12 < uVar11) {
-      pbVar16 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-      rarezip_curoffset += 1;
-      uVar9 = uVar12 & 0x1f;
-      uVar12 += 8;
-      uVar13 |= (uint)*pbVar16 << uVar9;
+    uVar10 -= (uint)bVar1;
+    uVar11 >>= (uint)bVar1 & 0x1f;
+    while ((ulonglong)(longlong)(int)uVar10 < uVar9) {
+      pbVar13 = (byte *)(rarezip_ptr_source + inptr);
+      inptr += 1;
+      uVar7 = uVar10 & 0x1f;
+      uVar10 += 8;
+      uVar11 |= (uint)*pbVar13 << uVar7;
     }
-    uVar9 = (uint)uVar11;
-    uVar11 = SEXT48((int)(uVar12 - uVar9));
-    iVar5 = (rarezip_decompressed_count - (uint)*(ushort *)(pbVar10 + 4)) -
-            ((uint)*(ushort *)(&rarezip_masks + uVar9 * 2) & uVar13);
-    rarezip_sample = uVar13 >> (uVar9 & 0x1f);
+    uVar7 = (uint)uVar9;
+    uVar9 = SEXT48((int)(uVar10 - uVar7));
+    iVar3 = (wp - (uint)*(ushort *)((int)&phVar8->v + 2)) - ((uint)mask_bits[uVar7] & uVar11);
+    bb = uVar11 >> (uVar7 & 0x1f);
     while( true ) {
-      if (-(uVar14 & 3) == 0) goto LAB_70200990;
-      uVar12 = -(uVar14 & 3) + uVar14;
+      if (-(uVar12 & 3) == 0) goto LAB_70200990;
+      uVar10 = -(uVar12 & 3) + uVar12;
       do {
-        uVar14 -= 1;
-        puVar15 = (undefined *)(iVar5 + rarezip_ptr_target);
-        puVar17 = (undefined *)(rarezip_ptr_target + rarezip_decompressed_count);
-        rarezip_decompressed_count += 1;
-        iVar5 += 1;
-        *puVar17 = *puVar15;
-      } while (uVar12 != uVar14);
-      while (uVar14 != 0) {
+        uVar12 -= 1;
+        puVar14 = (undefined *)(iVar3 + rarezip_ptr_target);
+        puVar15 = (undefined *)(rarezip_ptr_target + wp);
+        wp += 1;
+        iVar3 += 1;
+        *puVar15 = *puVar14;
+      } while (uVar10 != uVar12);
+      while (uVar12 != 0) {
 LAB_70200990:
-        uVar14 -= 4;
-        *(undefined *)(rarezip_ptr_target + rarezip_decompressed_count) =
-             *(undefined *)(iVar5 + rarezip_ptr_target);
-        *(undefined *)(rarezip_ptr_target + rarezip_decompressed_count + 1) =
-             *(undefined *)(iVar5 + 1 + rarezip_ptr_target);
-        iVar6 = iVar5 + 3;
-        *(undefined *)(rarezip_ptr_target + rarezip_decompressed_count + 2) =
-             *(undefined *)(iVar5 + 2 + rarezip_ptr_target);
-        iVar7 = rarezip_decompressed_count + 3;
-        rarezip_decompressed_count += 4;
-        iVar5 += 4;
-        *(undefined *)(rarezip_ptr_target + iVar7) = *(undefined *)(iVar6 + rarezip_ptr_target);
+        uVar12 -= 4;
+        *(undefined *)(rarezip_ptr_target + wp) = *(undefined *)(iVar3 + rarezip_ptr_target);
+        *(undefined *)(rarezip_ptr_target + wp + 1) = *(undefined *)(iVar3 + 1 + rarezip_ptr_target)
+        ;
+        iVar4 = iVar3 + 3;
+        *(undefined *)(rarezip_ptr_target + wp + 2) = *(undefined *)(iVar3 + 2 + rarezip_ptr_target)
+        ;
+        iVar5 = wp + 3;
+        wp += 4;
+        iVar3 += 4;
+        *(undefined *)(rarezip_ptr_target + iVar5) = *(undefined *)(iVar4 + rarezip_ptr_target);
       }
       if (true) break;
-      uVar14 = 0;
+      uVar12 = 0;
     }
   }
   return 0;
@@ -22723,7 +22718,7 @@ LAB_70200990:
 
 
 
-undefined8 inflate_stored(void)
+int inflate_stored(void)
 
 {
   uint uVar1;
@@ -22731,66 +22726,59 @@ undefined8 inflate_stored(void)
   uint uVar3;
   byte *pbVar4;
   
-  uVar3 = rarezip_bitsinsample - (rarezip_bitsinsample & 7);
-  rarezip_sample >>= rarezip_bitsinsample & 7;
+  uVar3 = bk - (bk & 7);
+  bb >>= bk & 7;
   while (uVar3 < 0x10) {
-    pbVar4 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-    rarezip_curoffset += 1;
+    pbVar4 = (byte *)(rarezip_ptr_source + inptr);
+    inptr += 1;
     uVar2 = uVar3 & 0x1f;
     uVar3 += 8;
-    rarezip_sample |= (uint)*pbVar4 << uVar2;
+    bb |= (uint)*pbVar4 << uVar2;
   }
   uVar3 -= 0x10;
-  uVar2 = rarezip_sample & 0xffff;
-  rarezip_sample = 0;
+  uVar2 = bb & 0xffff;
+  bb = 0;
   while (uVar3 < 0x10) {
-    pbVar4 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-    rarezip_curoffset += 1;
+    pbVar4 = (byte *)(rarezip_ptr_source + inptr);
+    inptr += 1;
     uVar1 = uVar3 & 0x1f;
     uVar3 += 8;
-    rarezip_sample |= (uint)*pbVar4 << uVar1;
+    bb |= (uint)*pbVar4 << uVar1;
   }
-  rarezip_sample >>= 0x10;
-  rarezip_bitsinsample = uVar3 - 0x10;
+  bb >>= 0x10;
+  bk = uVar3 - 0x10;
   while (uVar2 != 0) {
     uVar2 -= 1;
-    uVar3 = rarezip_sample;
-    while (rarezip_bitsinsample < 8) {
-      pbVar4 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-      rarezip_curoffset += 1;
-      uVar1 = rarezip_bitsinsample & 0x1f;
-      rarezip_bitsinsample += 8;
+    uVar3 = bb;
+    while (bk < 8) {
+      pbVar4 = (byte *)(rarezip_ptr_source + inptr);
+      inptr += 1;
+      uVar1 = bk & 0x1f;
+      bk += 8;
       uVar3 |= (uint)*pbVar4 << uVar1;
     }
-    rarezip_sample = uVar3 >> 8;
-    *(undefined *)(rarezip_ptr_target + rarezip_decompressed_count) = (char)uVar3;
-    rarezip_decompressed_count += 1;
-    rarezip_bitsinsample -= 8;
+    bb = uVar3 >> 8;
+    *(undefined *)(rarezip_ptr_target + wp) = (char)uVar3;
+    wp += 1;
+    bk -= 8;
   }
   return 0;
 }
 
 
 
-undefined8 inflate_fixed(void)
+int inflate_fixed(void)
 
 {
   uint *puVar1;
   uint *puVar2;
-  undefined4 *puVar3;
-  uint uStack1172;
-  undefined4 uStack1168;
-  undefined4 auStack1164 [28];
-  undefined4 auStack1052 [114];
-  uint auStack596 [112];
-  uint auStack148 [24];
-  uint auStack52 [8];
-  uint uStack20;
-  uint uStack16;
-  uint uStack12;
-  uint auStack8 [2];
+  uint l [288];
+  int bd;
+  int bl;
+  huft *td;
+  huft *tl;
   
-  puVar1 = &uStack1172;
+  puVar1 = l;
   do {
     puVar2 = puVar1 + 4;
     puVar1[1] = 8;
@@ -22798,54 +22786,52 @@ undefined8 inflate_fixed(void)
     puVar1[3] = 8;
     *puVar1 = 8;
     puVar1 = puVar2;
-  } while (puVar2 != auStack596);
-  if (puVar2 < auStack148) {
+  } while (puVar2 != l + 0x90);
+  if (puVar2 < l + 0x100) {
     puVar1 = puVar2;
     do {
       puVar2 = puVar1 + 1;
       *puVar1 = 9;
       puVar1 = puVar2;
-    } while (puVar2 < auStack148);
+    } while (puVar2 < l + 0x100);
   }
-  if (puVar2 < auStack52) {
+  if (puVar2 < l + 0x118) {
     puVar1 = puVar2;
     do {
       puVar2 = puVar1 + 1;
       *puVar1 = 7;
       puVar1 = puVar2;
-    } while (puVar2 < auStack52);
+    } while (puVar2 < l + 0x118);
   }
-  if (puVar2 < &uStack20) {
+  if (puVar2 < &bd) {
     do {
       puVar1 = puVar2 + 1;
       *puVar2 = 8;
       puVar2 = puVar1;
-    } while (puVar1 < &uStack20);
+    } while (puVar1 < &bd);
   }
-  uStack16 = 7;
-  rarezip_seg_start((int *)&uStack1172,0x120,0x101,(int)rarezip_lbase,(int)&rarezip_lextra,auStack8,
-                    &uStack16);
-  uStack1168 = 5;
-  uStack1172 = 5;
-  puVar3 = auStack1164;
+  bl = 7;
+  huft_build(l,0x120,0x101,cplens,(ush *)cplext,&tl,&bl);
+  l[1] = 5;
+  l[0] = 5;
+  puVar1 = l + 2;
   do {
-    puVar3 = puVar3 + 4;
-    puVar3[1] = 5;
-    puVar3[2] = 5;
-    puVar3[3] = 5;
-    *puVar3 = 5;
-    puVar3 = puVar3;
-  } while (puVar3 != auStack1052);
-  uStack20 = 5;
-  rarezip_seg_start((int *)&uStack1172,0x1e,0,(int)rarezip_dbase,(int)&rarezip_dextra,&uStack12,
-                    &uStack20);
-  decompress_inflate(auStack8[0],uStack12,(longlong)(int)uStack16,uStack20);
+    puVar2 = puVar1 + 4;
+    puVar1[1] = 5;
+    puVar1[2] = 5;
+    puVar1[3] = 5;
+    *puVar1 = 5;
+    puVar1 = puVar2;
+  } while (puVar2 != l + 0x1e);
+  bd = 5;
+  huft_build(l,0x1e,0,cpdist,(ush *)cpdext,&td,&bd);
+  inflate_codes(tl,td,bl,bd);
   return 0;
 }
 
 
 
-undefined8 inflate_dynamic(void)
+int inflate_dynamic(void)
 
 {
   byte bVar1;
@@ -22857,154 +22843,154 @@ undefined8 inflate_dynamic(void)
   int iVar7;
   byte *pbVar8;
   ulonglong uVar9;
+  ulg b_;
+  ulg b;
   uint uVar10;
-  byte *pbVar11;
-  uint uVar12;
-  uint local_528 [316];
-  uint local_38;
-  uint local_34;
-  uint local_30;
-  uint local_2c;
-  uint local_24;
-  uint local_20;
-  uint local_1c;
-  uint local_18 [6];
+  uint nd;
+  uint nl;
+  uint uVar11;
+  byte *pbVar12;
+  uint uVar13;
+  uint ll [316];
+  int bd;
+  int bl;
+  huft *td;
+  huft *tl;
+  uint k;
   
-  local_34 = rarezip_bitsinsample;
-  uVar6 = rarezip_bitsinsample;
-  uVar10 = rarezip_sample;
-  if (rarezip_bitsinsample < 5) {
+  b = bk;
+  b_ = bk;
+  k = bb;
+  if (bk < 5) {
     do {
-      pbVar8 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-      rarezip_curoffset += 1;
-      local_34 = uVar6 + 8;
-      uVar10 |= (uint)*pbVar8 << (uVar6 & 0x1f);
-      uVar6 = local_34;
-    } while (local_34 < 5);
+      pbVar8 = (byte *)(rarezip_ptr_source + inptr);
+      inptr += 1;
+      b = b_ + 8;
+      k |= (uint)*pbVar8 << (b_ & 0x1f);
+      b_ = b;
+    } while (b < 5);
   }
-  local_34 -= 5;
-  local_2c = (uVar10 & 0x1f) + 0x101;
-  uVar10 >>= 5;
-  while (local_34 < 5) {
-    pbVar8 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-    rarezip_curoffset += 1;
-    uVar6 = local_34 & 0x1f;
-    local_34 += 8;
-    uVar10 |= (uint)*pbVar8 << uVar6;
+  uVar10 = b - 5;
+  nl = (k & 0x1f) + 0x101;
+  k >>= 5;
+  while (uVar10 < 5) {
+    pbVar8 = (byte *)(rarezip_ptr_source + inptr);
+    inptr += 1;
+    uVar11 = uVar10 & 0x1f;
+    uVar10 += 8;
+    k |= (uint)*pbVar8 << uVar11;
   }
-  local_34 -= 5;
-  local_30 = (uVar10 & 0x1f) + 1;
-  uVar10 >>= 5;
-  while (local_34 < 4) {
-    pbVar8 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-    rarezip_curoffset += 1;
-    uVar6 = local_34 & 0x1f;
-    local_34 += 8;
-    uVar10 |= (uint)*pbVar8 << uVar6;
+  uVar10 -= 5;
+  nd = (k & 0x1f) + 1;
+  k >>= 5;
+  while (uVar10 < 4) {
+    pbVar8 = (byte *)(rarezip_ptr_source + inptr);
+    inptr += 1;
+    uVar11 = uVar10 & 0x1f;
+    uVar10 += 8;
+    k |= (uint)*pbVar8 << uVar11;
   }
-  local_38 = uVar10 >> 4;
-  local_34 -= 4;
+  uVar11 = k >> 4;
+  uVar10 -= 4;
   uVar6 = 0;
-  if ((uVar10 & 0xf) != 0xfffffffc) {
-    pbVar8 = &rarezip_order;
+  if ((k & 0xf) != 0xfffffffc) {
+    pbVar8 = border;
     do {
       uVar6 += 1;
-      while (local_34 < 3) {
-        pbVar11 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-        rarezip_curoffset += 1;
-        uVar12 = local_34 & 0x1f;
-        local_34 += 8;
-        local_38 |= (uint)*pbVar11 << uVar12;
+      while (uVar10 < 3) {
+        pbVar12 = (byte *)(rarezip_ptr_source + inptr);
+        inptr += 1;
+        uVar13 = uVar10 & 0x1f;
+        uVar10 += 8;
+        uVar11 |= (uint)*pbVar12 << uVar13;
       }
       bVar1 = *pbVar8;
-      uVar12 = local_38 & 7;
+      uVar13 = uVar11 & 7;
       pbVar8 = pbVar8 + 1;
-      local_38 >>= 3;
-      local_528[(uint)bVar1] = uVar12;
-      local_34 -= 3;
-    } while (uVar6 != (uVar10 & 0xf) + 4);
+      uVar11 >>= 3;
+      ll[(uint)bVar1] = uVar13;
+      uVar10 -= 3;
+    } while (uVar6 != (k & 0xf) + 4);
   }
   if (uVar6 < 0x13) {
-    pbVar8 = &rarezip_order + uVar6;
+    pbVar8 = border + uVar6;
     do {
       bVar1 = *pbVar8;
       pbVar8 = pbVar8 + 1;
-      local_528[(uint)bVar1] = 0;
-    } while (pbVar8 < (byte *)0x702014a7);
+      ll[(uint)bVar1] = 0;
+    } while (pbVar8 < border + 0x13);
   }
-  local_20 = 7;
-  rarezip_seg_start((int *)local_528,0x13,0x13,0,0,local_18,&local_20);
-  uVar6 = local_2c + local_30;
-  uVar2 = *(ushort *)(&rarezip_masks + local_20 * 2);
+  bl = 7;
+  huft_build(ll,0x13,0x13,NULL,NULL,&tl,&bl);
+  uVar6 = nl + nd;
+  uVar2 = mask_bits[bl];
   uVar9 = 0;
-  uVar10 = 0;
-  rarezip_bitsinsample = local_34;
-  rarezip_sample = local_38;
+  k = 0;
   if (uVar6 != 0) {
     do {
-      while (rarezip_bitsinsample < local_20) {
-        pbVar8 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-        rarezip_curoffset += 1;
-        uVar12 = rarezip_bitsinsample & 0x1f;
-        rarezip_bitsinsample = rarezip_bitsinsample + 8;
-        rarezip_sample = rarezip_sample | (uint)*pbVar8 << uVar12;
+      while (uVar10 < (uint)bl) {
+        pbVar8 = (byte *)(rarezip_ptr_source + inptr);
+        inptr += 1;
+        uVar13 = uVar10 & 0x1f;
+        uVar10 += 8;
+        uVar11 |= (uint)*pbVar8 << uVar13;
       }
-      local_1c = (rarezip_sample & (uint)uVar2) * 8 + local_18[0];
-      rarezip_sample >>= (uint)*(byte *)(local_1c + 1) & 0x1f;
-      rarezip_bitsinsample -= (uint)*(byte *)(local_1c + 1);
-      uVar3 = *(ushort *)(local_1c + 4);
+      td = (huft *)((uVar11 & (uint)uVar2) * 8 + (int)tl);
+      uVar11 >>= (uint)td->b & 0x1f;
+      uVar10 -= (uint)td->b;
+      uVar3 = *(ushort *)((int)&td->v + 2);
       if (uVar3 < 0x10) {
-        local_528[uVar10] = (uint)uVar3;
-        uVar10 += 1;
+        ll[k] = (uint)uVar3;
+        k += 1;
         uVar9 = (ulonglong)uVar3;
 LAB_7020115c:
-        bVar4 = uVar10 < uVar6;
+        bVar4 = k < uVar6;
       }
       else {
         if (uVar3 != 0x10) {
           uVar9 = 0;
           if (uVar3 == 0x11) {
-            while (rarezip_bitsinsample < 3) {
-              pbVar8 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-              rarezip_curoffset += 1;
-              uVar12 = rarezip_bitsinsample & 0x1f;
-              rarezip_bitsinsample += 8;
-              rarezip_sample |= (uint)*pbVar8 << uVar12;
+            while (uVar10 < 3) {
+              pbVar8 = (byte *)(rarezip_ptr_source + inptr);
+              inptr += 1;
+              uVar13 = uVar10 & 0x1f;
+              uVar10 += 8;
+              uVar11 |= (uint)*pbVar8 << uVar13;
             }
-            uVar12 = rarezip_sample & 7;
-            rarezip_sample >>= 3;
-            rarezip_bitsinsample -= 3;
-            iVar7 = uVar12 + 2;
-            if (uVar12 != 0xfffffffd) {
-              puVar5 = local_528 + uVar10;
+            uVar13 = uVar11 & 7;
+            uVar11 >>= 3;
+            uVar10 -= 3;
+            iVar7 = uVar13 + 2;
+            if (uVar13 != 0xfffffffd) {
+              puVar5 = ll + k;
               do {
                 *puVar5 = 0;
-                uVar10 += 1;
+                k += 1;
                 puVar5 = puVar5 + 1;
                 bVar4 = iVar7 != 0;
                 iVar7 += -1;
               } while (bVar4);
-              bVar4 = uVar10 < uVar6;
+              bVar4 = k < uVar6;
               goto LAB_70201160;
             }
           }
           else {
-            while (rarezip_bitsinsample < 7) {
-              pbVar8 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-              rarezip_curoffset += 1;
-              uVar12 = rarezip_bitsinsample & 0x1f;
-              rarezip_bitsinsample += 8;
-              rarezip_sample |= (uint)*pbVar8 << uVar12;
+            while (uVar10 < 7) {
+              pbVar8 = (byte *)(rarezip_ptr_source + inptr);
+              inptr += 1;
+              uVar13 = uVar10 & 0x1f;
+              uVar10 += 8;
+              uVar11 |= (uint)*pbVar8 << uVar13;
             }
-            uVar12 = rarezip_sample & 0x7f;
-            rarezip_sample >>= 7;
-            rarezip_bitsinsample -= 7;
-            iVar7 = uVar12 + 10;
-            if (uVar12 != 0xfffffff5) {
-              puVar5 = local_528 + uVar10;
+            uVar13 = uVar11 & 0x7f;
+            uVar11 >>= 7;
+            uVar10 -= 7;
+            iVar7 = uVar13 + 10;
+            if (uVar13 != 0xfffffff5) {
+              puVar5 = ll + k;
               do {
                 *puVar5 = 0;
-                uVar10 += 1;
+                k += 1;
                 puVar5 = puVar5 + 1;
                 bVar4 = iVar7 != 0;
                 iVar7 += -1;
@@ -23013,118 +22999,120 @@ LAB_7020115c:
           }
           goto LAB_7020115c;
         }
-        while (rarezip_bitsinsample < 2) {
-          pbVar8 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-          rarezip_curoffset += 1;
-          uVar12 = rarezip_bitsinsample & 0x1f;
-          rarezip_bitsinsample += 8;
-          rarezip_sample |= (uint)*pbVar8 << uVar12;
+        while (uVar10 < 2) {
+          pbVar8 = (byte *)(rarezip_ptr_source + inptr);
+          inptr += 1;
+          uVar13 = uVar10 & 0x1f;
+          uVar10 += 8;
+          uVar11 |= (uint)*pbVar8 << uVar13;
         }
-        uVar12 = rarezip_sample & 3;
-        rarezip_sample >>= 2;
-        rarezip_bitsinsample -= 2;
-        iVar7 = uVar12 + 2;
-        if (uVar12 == 0xfffffffd) goto LAB_7020115c;
-        puVar5 = local_528 + uVar10;
+        uVar13 = uVar11 & 3;
+        uVar11 >>= 2;
+        uVar10 -= 2;
+        iVar7 = uVar13 + 2;
+        if (uVar13 == 0xfffffffd) goto LAB_7020115c;
+        puVar5 = ll + k;
         do {
           *puVar5 = (uint)uVar9;
-          uVar10 += 1;
+          k += 1;
           puVar5 = puVar5 + 1;
           bVar4 = iVar7 != 0;
           iVar7 += -1;
         } while (bVar4);
-        bVar4 = uVar10 < uVar6;
+        bVar4 = k < uVar6;
       }
 LAB_70201160:
     } while (bVar4);
   }
-  local_20 = rarezip_data1;
-  rarezip_seg_start((int *)local_528,local_2c,0x101,(int)rarezip_lbase,(int)&rarezip_lextra,local_18
-                    ,&local_20);
-  local_24 = rarezip_data2;
-  rarezip_seg_start((int *)(local_528 + local_2c),local_30,0,(int)rarezip_dbase,(int)&rarezip_dextra
-                    ,&local_1c,&local_24);
-  decompress_inflate(local_18[0],local_1c,(longlong)(int)local_20,local_24);
+  bl = lbits;
+  bb = uVar11;
+  bk = uVar10;
+  huft_build(ll,nl,0x101,cplens,(ush *)cplext,&tl,&bl);
+  bd = dbits;
+  huft_build(ll + nl,nd,0,cpdist,(ush *)cpdext,&td,&bd);
+  inflate_codes(tl,td,bl,bd);
   return 0;
 }
 
 
 
-undefined8 inflate_block(uint *param_1)
+int inflate_block(int *e)
 
 {
   uint uVar1;
-  undefined8 return;
-  uint uVar2;
-  byte *pbVar3;
+  uint t;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
+  byte *pbVar5;
   
-  if (rarezip_bitsinsample == 0) {
+  if (bk == 0) {
     do {
-      pbVar3 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-      rarezip_curoffset += 1;
-      uVar2 = rarezip_bitsinsample & 0x1f;
-      rarezip_bitsinsample += 8;
-      rarezip_sample |= (uint)*pbVar3 << uVar2;
-    } while (rarezip_bitsinsample == 0);
+      pbVar5 = (byte *)(rarezip_ptr_source + inptr);
+      inptr += 1;
+      uVar3 = bk & 0x1f;
+      bk += 8;
+      bb |= (uint)*pbVar5 << uVar3;
+    } while (bk == 0);
   }
-  rarezip_bitsinsample -= 1;
-  uVar2 = rarezip_sample >> 1;
-  *param_1 = rarezip_sample & 1;
-  while (rarezip_bitsinsample < 2) {
-    pbVar3 = (byte *)(rarezip_ptr_source + rarezip_curoffset);
-    rarezip_curoffset += 1;
-    uVar1 = rarezip_bitsinsample & 0x1f;
-    rarezip_bitsinsample += 8;
-    uVar2 |= (uint)*pbVar3 << uVar1;
+  uVar3 = bk - 1;
+  uVar4 = bb >> 1;
+  *e = bb & 1;
+  while (uVar3 < 2) {
+    pbVar5 = (byte *)(rarezip_ptr_source + inptr);
+    inptr += 1;
+    uVar1 = uVar3 & 0x1f;
+    uVar3 += 8;
+    uVar4 |= (uint)*pbVar5 << uVar1;
   }
-  uVar1 = uVar2 & 3;
-  rarezip_sample = uVar2 >> 2;
-  rarezip_bitsinsample -= 2;
-  if (uVar1 == 2) {
-    return = inflate_dynamic();
+  t = uVar4 & 3;
+  bb = uVar4 >> 2;
+  bk = uVar3 - 2;
+  if (t == 2) {
+    iVar2 = inflate_dynamic();
   }
   else {
-    if (uVar1 == 0) {
-      return = inflate_stored();
+    if (t == 0) {
+      iVar2 = inflate_stored();
     }
     else {
-      if (uVar1 == 1) {
-        return = inflate_fixed();
+      if (t == 1) {
+        iVar2 = inflate_fixed();
       }
       else {
-        return = 2;
+        iVar2 = 2;
       }
     }
   }
-  return return;
+  return iVar2;
 }
 
 
 
-longlong xinflate(void)
+int inflate(void)
 
 {
-  longlong lVar1;
-  uint uVar2;
-  uint uStack4;
+  int r;
+  uint h;
+  int e;
   
-  rarezip_decompressed_count = 0;
-  rarezip_bitsinsample = 0;
-  rarezip_sample = 0;
-  uVar2 = 0;
+  wp = 0;
+  bk = 0;
+  bb = 0;
+  h = 0;
   do {
-    rarezip_data3 = 0;
-    lVar1 = inflate_block(&uStack4);
-    if (lVar1 != 0) {
-      return lVar1;
+    hufts = 0;
+    r = inflate_block(&e);
+    if (r != 0) {
+      return r;
     }
-    if (uVar2 < rarezip_data3) {
-      uVar2 = rarezip_data3;
+    if (h < hufts) {
+      h = hufts;
     }
-  } while (uStack4 == 0);
-  while (7 < rarezip_bitsinsample) {
-    rarezip_bitsinsample -= 8;
-    rarezip_curoffset += -1;
+  } while (e == 0);
+  while (7 < bk) {
+    bk -= 8;
+    inptr += -1;
   }
   return 0;
 }
@@ -23135,11 +23123,11 @@ void decompress_entry(int source,int target,int buffer)
 
 {
   rarezip_ptr_source = source + 2;
-  rarezip_decompressed_count = 0;
-  rarezip_curoffset = 0;
+  wp = 0;
+  inptr = 0;
   rarezip_ptr_target = target;
   rarezip_ptrbuffer = buffer;
-  xinflate();
+  inflate();
   return;
 }
 
@@ -124631,7 +124619,7 @@ undefined8 proc_7F0B3034(undefined8 param_1)
 
 
 
-undefined8 proc_7F0B303C(undefined8 param_1)
+undefined8 stan_problems_removed(undefined8 param_1)
 
 {
   return param_1;
@@ -124667,7 +124655,7 @@ undefined4 proc_7F0B3044(int param_1)
 
 
 
-undefined8 proc_7F0B312C(undefined8 param_1)
+undefined8 stan_region_removed(undefined8 param_1)
 
 {
   return param_1;
@@ -132231,7 +132219,7 @@ uint * proc_7F0BE30C(undefined4 *param_1)
         }
         BVar6 = get_turbo_mode_flag();
         if (BVar6 != FALSE) {
-          uVar2 = proc_7F0B303C((longlong)(int)puStackX0);
+          uVar2 = stan_problems_removed((longlong)(int)puStackX0);
           puStackX0 = (uint *)uVar2;
         }
         BVar6 = get_debug_stanhit_flag();
@@ -132245,7 +132233,7 @@ uint * proc_7F0BE30C(undefined4 *param_1)
         if (BVar6 != FALSE) {
           uVar2 = proc_7F0B3034((longlong)(int)puStackX0);
           puStackX0 = (uint *)(int)uVar2;
-          uVar2 = proc_7F0B312C(uVar2);
+          uVar2 = stan_region_removed(uVar2);
           puStackX0 = (uint *)uVar2;
         }
         pbVar7 = check_token(1,aStanshow_);
@@ -142925,11 +142913,11 @@ undefined8 proc_7F0D0BF4(undefined4 param_1,undefined4 param_2,uint param_3,unde
 
 
 
-undefined8 post_indy__res_cmd_send_capture_data(char *param_1,uint param_2,undefined *param_3)
+undefined8 post_indy__res_cmd_send_capture_data(char *string,uint size,undefined *data)
 
 {
-  proc_7F0D038C((param_2 + 3 & 0xfffffffc) + 0x114,0x114);
-  proc_7F0D06C0(0x14,0x14,param_1,param_2,param_3);
+  proc_7F0D038C((size + 3 & 0xfffffffc) + 0x114,0x114);
+  proc_7F0D06C0(0x14,0x14,string,size,data);
   proc_7F0D03D4(0,0);
   return 1;
 }

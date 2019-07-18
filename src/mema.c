@@ -1,6 +1,13 @@
 #include "ultra64.h"
 #include "deb.h"
 
+/**
+ * @file mema.c
+ * This file contains memory allocation code. 
+ * 
+ */
+
+
 void *ptr_model_room_buf_secondary;
 u32 size_modelroom_buf;
 void *ptr_table_allocated_mem_blocks;

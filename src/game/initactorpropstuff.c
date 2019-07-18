@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "game/initactorpropstuff.h"
-
+#include "game/actor.h"
 
 
 
@@ -10,7 +10,28 @@
 
 #ifdef NONMATCHING
 void reset_counter_rand_body_head(void) {
-
+  num_bodies = 0;
+  if (list_of_bodies[0] >= 0 ) {
+    num_bodies = 1;
+    while (list_of_bodies[num_bodies] >= 0) {
+      num_bodies += 1;
+    }
+  }
+  num_male_heads = 0;
+  if (random_male_heads[0] >= 0) {
+    num_male_heads = 1;
+    while (random_male_heads[num_male_heads] >= 0) {
+      num_male_heads += 1;
+    }
+  }
+  num_female_heads = 0;
+  if (random_female_heads[0] >= 0) {
+    num_female_heads = 1;
+    while (random_female_heads[num_female_heads] >= 0) {
+      num_female_heads += 1;
+    }
+  }
+  return;
 }
 #else
 GLOBAL_ASM(

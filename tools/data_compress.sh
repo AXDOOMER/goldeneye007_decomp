@@ -24,9 +24,9 @@ RZSIZE=$(stat -c%s "data_seg.rz")
 echo "size=${RZSIZE}"
 
 #fixme as I will fail if position of c_data gets moved!!!
-#CDATA_POS=$(printf "%d\n" 0x$(grep  './build/ge007.u.map' -e '.c_data         0x0000000000021990' | cut -d "x" -f 2 | cut -d " " -f 1 ))
+CDATA_POS=$(printf "%d\n" 0x$(grep  './build/ge007.u.map' -e 'c_data_array' | cut -d "x" -f 2 | cut -d " " -f 1 ))
 #CDATA_MAX_SIZE=$(printf "%d\n" 0x$(grep  './build/ge007.u.map' -e '.c_data         0x0000000000021990' | cut -d "x" -f 2 ))
-CDATA_POS=137616
+#CDATA_POS=137616
 CDATA_MAX_SIZE=72704
 
 echo "maxsize=${CDATA_MAX_SIZE}"
