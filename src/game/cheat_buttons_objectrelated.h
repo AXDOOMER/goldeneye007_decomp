@@ -105,9 +105,9 @@ struct player_gait_object_entry {
 };
 
 struct player_gait_position_entry {
-    float flt_1;
-    float flt_2;
-    float flt_3;
+    float z_scale;
+    float y_offset;
+    float xy_scale;
     u16 field_0xc;
     u16 field_0xe;
     u16 field_0x10;
