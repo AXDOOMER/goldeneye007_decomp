@@ -4,8 +4,8 @@
 
 struct fileentry {
     s32 index;
-    s32 *filename;
-    s32 size;
+    char *filename;
+    void *size;
 };
 
 void something_mem_bank_a0(int);

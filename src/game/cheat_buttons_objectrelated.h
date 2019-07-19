@@ -18,7 +18,7 @@ struct item_related {
 
 struct Gitemheader {
     int offset_objtable;
-    struct model_data * guntype_modeldata;
+    void * guntype_modeldata;
     int offset_objblock;
     u16 num05soffset_entries;
     u16 num_objgroups;
@@ -63,7 +63,7 @@ struct object_header {
 
 struct c_itementry {
     struct object_header * header;
-    void * filename;
+    char * filename;
     float anonymous_1;
     float anonymous_2;
     int anonymous_3;
@@ -80,26 +80,26 @@ struct player_gait_header {
     u8 type;
     u16 field_0x2;
     void * field_0x4;
-    struct player_gait_header * previous;
+    struct player_gait_object_entry * previous;
     void * field_0xc;
     void * field_0x10;
-    struct player_gait_header * next;
+    struct player_gait_pos_header * next;
 };
 
 struct player_gait_pos_header {
     u8 field_0x0;
     u8 type;
     u16 field_0x2;
-    void * field_0x4;
-    struct player_gait_header * previous;
+    struct player_gait_position_entry * field_0x4;
+    struct player_gait_pos_header * previous;
     void * field_0xc;
     void * field_0x10;
-    struct player_gait_header * next;
+    struct player_gait_pos_header * next;
 };
 
 struct player_gait_object_entry {
     u32 field_0x0;
-    struct player_gait_header * ptr_header;
+    struct player_gait_pos_header * ptr_header;
     u32 field_0x8;
     u32 field_0xc;
 };
@@ -112,7 +112,7 @@ struct player_gait_position_entry {
     u16 field_0xe;
     u16 field_0x10;
     u16 field_0x12;
-    struct player_gait_header * ptr_header;
+    struct player_gait_pos_header * ptr_header;
     u32 field_0x18;
 };
 

@@ -1656,7 +1656,7 @@ s32 D_8003C57C = 0;
 //D:8003C580
 struct player_gait_header player_gait_hdr = {0, 1, 0, &player_gait_obj, 0, 0, 0, &player_gait_pos_hdr_1};
 //D:8003C598
-struct player_gait_pos_header player_gait_pos_hdr_1 = {0, 2, 0, &player_gait_pos_1, &player_gait_hdr, 0, 0, &player_gait_pos_hdr_2};
+struct player_gait_pos_header player_gait_pos_hdr_1 = {0, 2, 0, &player_gait_pos_1, (struct player_gait_pos_header *)&player_gait_hdr, 0, 0, &player_gait_pos_hdr_2};
 //D:8003C5B0
 struct player_gait_pos_header player_gait_pos_hdr_2 = {0, 2, 0, &player_gait_pos_2, &player_gait_pos_hdr_1, 0, 0, &player_gait_pos_hdr_3};
 //D:8003C5C8
@@ -2064,79 +2064,79 @@ struct object_header CdjbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1
 //D:8003D930
 struct object_header Csuit_lf_handz_struct = {0, &model_suit_lf_hand, 0, 0xA, 9, 12231.949, 0, 0x16, 0, 0};
 //D:8003D950
-struct object_header CheadkarlZ_struct = {0, 0, 0, 2, 1, 218.15375, 0, 6, 0, 0};
+struct object_header CheadkarlZ_struct = {0, NULL, 0, 2, 1, 218.15375, 0, 6, 0, 0};
 //D:8003D970
-struct object_header CheadalanZ_struct = {0, 0, 0, 2, 1, 215.03685, 0, 4, 0, 0};
+struct object_header CheadalanZ_struct = {0, NULL, 0, 2, 1, 215.03685, 0, 4, 0, 0};
 //D:8003D990
-struct object_header CheadpeteZ_struct = {0, 0, 0, 2, 1, 216.28949, 0, 4, 0, 0};
+struct object_header CheadpeteZ_struct = {0, NULL, 0, 2, 1, 216.28949, 0, 4, 0, 0};
 //D:8003D9B0
-struct object_header CheadmartinZ_struct = {0, 0, 0, 2, 1, 222.34796, 0, 6, 0, 0};
+struct object_header CheadmartinZ_struct = {0, NULL, 0, 2, 1, 222.34796, 0, 6, 0, 0};
 //D:8003D9D0
-struct object_header stru_D_8003D9D0 = {0, 0, 0, 2, 1, 220.2446, 0, 5, 0, 0};
+struct object_header stru_D_8003D9D0 = {0, NULL, 0, 2, 1, 220.2446, 0, 5, 0, 0};
 //D:8003D9F0
-struct object_header stru_D_8003D9F0 = {0, 0, 0, 2, 1, 201.51955, 0, 5, 0, 0};
+struct object_header stru_D_8003D9F0 = {0, NULL, 0, 2, 1, 201.51955, 0, 5, 0, 0};
 //D:8003DA10
-struct object_header stru_D_8003DA10 = {0, 0, 0, 2, 1, 212.62949, 0, 5, 0, 0};
+struct object_header stru_D_8003DA10 = {0, NULL, 0, 2, 1, 212.62949, 0, 5, 0, 0};
 //D:8003DA30
-struct object_header stru_D_8003DA30 = {0, 0, 0, 2, 1, 218.35564, 0, 4, 0, 0};
+struct object_header stru_D_8003DA30 = {0, NULL, 0, 2, 1, 218.35564, 0, 4, 0, 0};
 //D:8003DA50
-struct object_header stru_D_8003DA50 = {0, 0, 0, 2, 1, 192.53412, 0, 4, 0, 0};
+struct object_header stru_D_8003DA50 = {0, NULL, 0, 2, 1, 192.53412, 0, 4, 0, 0};
 //D:8003DA70
-struct object_header stru_D_8003DA70 = {0, 0, 0, 2, 1, 218.35564, 0, 4, 0, 0};
+struct object_header stru_D_8003DA70 = {0, NULL, 0, 2, 1, 218.35564, 0, 4, 0, 0};
 //D:8003DA90
-struct object_header stru_D_8003DA90 = {0, 0, 0, 2, 1, 227.52234, 0, 4, 0, 0};
+struct object_header stru_D_8003DA90 = {0, NULL, 0, 2, 1, 227.52234, 0, 4, 0, 0};
 //D:8003DAB0
-struct object_header stru_D_8003DAB0 = {0, 0, 0, 2, 1, 228.29831, 0, 4, 0, 0};
+struct object_header stru_D_8003DAB0 = {0, NULL, 0, 2, 1, 228.29831, 0, 4, 0, 0};
 //D:8003DAD0
-struct object_header stru_D_8003DAD0 = {0, 0, 0, 2, 1, 235.64778, 0, 6, 0, 0};
+struct object_header stru_D_8003DAD0 = {0, NULL, 0, 2, 1, 235.64778, 0, 6, 0, 0};
 //D:8003DAF0
-struct object_header stru_D_8003DAF0 = {0, 0, 0, 2, 1, 218.35564, 0, 5, 0, 0};
+struct object_header stru_D_8003DAF0 = {0, NULL, 0, 2, 1, 218.35564, 0, 5, 0, 0};
 //D:8003DB10
-struct object_header stru_D_8003DB10 = {0, 0, 0, 2, 1, 240.50017, 0, 4, 0, 0};
+struct object_header stru_D_8003DB10 = {0, NULL, 0, 2, 1, 240.50017, 0, 4, 0, 0};
 //D:8003DB30
-struct object_header stru_D_8003DB30 = {0, 0, 0, 2, 1, 234.83342, 0, 4, 0, 0};
+struct object_header stru_D_8003DB30 = {0, NULL, 0, 2, 1, 234.83342, 0, 4, 0, 0};
 //D:8003DB50
-struct object_header stru_D_8003DB50 = {0, 0, 0, 2, 1, 228.24614, 0, 4, 0, 0};
+struct object_header stru_D_8003DB50 = {0, NULL, 0, 2, 1, 228.24614, 0, 4, 0, 0};
 //D:8003DB70
-struct object_header stru_D_8003DB70 = {0, 0, 0, 2, 1, 228.55029, 0, 4, 0, 0};
+struct object_header stru_D_8003DB70 = {0, NULL, 0, 2, 1, 228.55029, 0, 4, 0, 0};
 //D:8003DB90
-struct object_header stru_D_8003DB90 = {0, 0, 0, 2, 1, 212.62949, 0, 2, 0, 0};
+struct object_header stru_D_8003DB90 = {0, NULL, 0, 2, 1, 212.62949, 0, 2, 0, 0};
 //D:8003DBB0
-struct object_header stru_D_8003DBB0 = {0, 0, 0, 2, 1, 219.82707, 0, 6, 0, 0};
+struct object_header stru_D_8003DBB0 = {0, NULL, 0, 2, 1, 219.82707, 0, 6, 0, 0};
 //D:8003DBD0
-struct object_header stru_D_8003DBD0 = {0, 0, 0, 2, 1, 193.20615, 0, 5, 0, 0};
+struct object_header stru_D_8003DBD0 = {0, NULL, 0, 2, 1, 193.20615, 0, 5, 0, 0};
 //D:8003DBF0
-struct object_header stru_D_8003DBF0 = {0, 0, 0, 2, 1, 235.64778, 0, 4, 0, 0};
+struct object_header stru_D_8003DBF0 = {0, NULL, 0, 2, 1, 235.64778, 0, 4, 0, 0};
 //D:8003DC10
-struct object_header stru_D_8003DC10 = {0, 0, 0, 2, 1, 223.18559, 0, 4, 0, 0};
+struct object_header stru_D_8003DC10 = {0, NULL, 0, 2, 1, 223.18559, 0, 4, 0, 0};
 //D:8003DC30
-struct object_header stru_D_8003DC30 = {0, 0, 0, 2, 1, 218.35564, 0, 5, 0, 0};
+struct object_header stru_D_8003DC30 = {0, NULL, 0, 2, 1, 218.35564, 0, 5, 0, 0};
 //D:8003DC50
-struct object_header stru_D_8003DC50 = {0, 0, 0, 2, 1, 193.20615, 0, 4, 0, 0};
+struct object_header stru_D_8003DC50 = {0, NULL, 0, 2, 1, 193.20615, 0, 4, 0, 0};
 //D:8003DC70
-struct object_header stru_D_8003DC70 = {0, 0, 0, 2, 1, 235.64778, 0, 5, 0, 0};
+struct object_header stru_D_8003DC70 = {0, NULL, 0, 2, 1, 235.64778, 0, 5, 0, 0};
 //D:8003DC90
-struct object_header stru_D_8003DC90 = {0, 0, 0, 2, 1, 193.20615, 0, 3, 0, 0};
+struct object_header stru_D_8003DC90 = {0, NULL, 0, 2, 1, 193.20615, 0, 3, 0, 0};
 //D:8003DCB0
-struct object_header stru_D_8003DCB0 = {0, 0, 0, 2, 1, 224.83139, 0, 3, 0, 0};
+struct object_header stru_D_8003DCB0 = {0, NULL, 0, 2, 1, 224.83139, 0, 3, 0, 0};
 //D:8003DCD0
-struct object_header stru_D_8003DCD0 = {0, 0, 0, 2, 1, 219.97256, 0, 3, 0, 0};
+struct object_header stru_D_8003DCD0 = {0, NULL, 0, 2, 1, 219.97256, 0, 3, 0, 0};
 //D:8003DCF0
-struct object_header stru_D_8003DCF0 = {0, 0, 0, 2, 1, 203.44904, 0, 3, 0, 0};
+struct object_header stru_D_8003DCF0 = {0, NULL, 0, 2, 1, 203.44904, 0, 3, 0, 0};
 //D:8003DD10
-struct object_header stru_D_8003DD10 = {0, 0, 0, 2, 1, 196.83067, 0, 3, 0, 0};
+struct object_header stru_D_8003DD10 = {0, NULL, 0, 2, 1, 196.83067, 0, 3, 0, 0};
 //D:8003DD30
-struct object_header stru_D_8003DD30 = {0, 0, 0, 2, 1, 176.67717, 0, 1, 0, 0};
+struct object_header stru_D_8003DD30 = {0, NULL, 0, 2, 1, 176.67717, 0, 1, 0, 0};
 //D:8003DD50
-struct object_header stru_D_8003DD50 = {0, 0, 0, 2, 1, 190.61967, 0, 4, 0, 0};
+struct object_header stru_D_8003DD50 = {0, NULL, 0, 2, 1, 190.61967, 0, 4, 0, 0};
 //D:8003DD70
-struct object_header CheadbrosnansuitZ_struct = {0, 0, 0, 2, 1, 212.45657, 0, 5, 0, 0};
+struct object_header CheadbrosnansuitZ_struct = {0, NULL, 0, 2, 1, 212.45657, 0, 5, 0, 0};
 //D:8003DD90
-struct object_header CheadbrosnantimberZ_struct = {0, 0, 0, 2, 1, 179.28358, 0, 4, 0, 0};
+struct object_header CheadbrosnantimberZ_struct = {0, NULL, 0, 2, 1, 179.28358, 0, 4, 0, 0};
 //D:8003DDB0
-struct object_header CheadbrosnansnowZ_struct = {0, 0, 0, 2, 1, 225.0605, 0, 6, 0, 0};
+struct object_header CheadbrosnansnowZ_struct = {0, NULL, 0, 2, 1, 225.0605, 0, 6, 0, 0};
 //D:8003DDD0
-struct object_header CheadbrosnanZ_struct = {0, 0, 0, 2, 1, 189.48112, 0, 5, 0, 0};
+struct object_header CheadbrosnanZ_struct = {0, NULL, 0, 2, 1, 189.48112, 0, 5, 0, 0};
 //D:8003DDF0
 struct object_header CspicebondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1208.6448, 0, 0x11, 0, 0};
 const char padding_chars_for_strings[] = "\00\00\00\00\00\00\00\00\00\00\00";
