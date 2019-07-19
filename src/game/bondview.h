@@ -19,7 +19,7 @@ struct weapon_stats
   u8 objects_shoot_through;
   u8 sound_trigger_rate;
   s16 sound;
-  s32 *ptr_cartridge_struct;
+  struct ejected_cart *ptr_cartridge_struct;
   f32 destruction_amount;
   f32 inaccuracy;
   f32 zoom;
@@ -41,10 +41,10 @@ struct weapon_stats
 
 struct gitem_data_struct
 {
-  s32 *item_header;
-  s32 *item_file_name;
-  s32 *has_no_model;
-  s32 *item_weapon_stats;
+  struct Gitemheader *item_header;
+  char *item_file_name;
+  s32 has_no_model;
+  struct weapon_stats *item_weapon_stats;
   u16 upper_watch_text;
   u16 lower_watch_text;
   f32 watch_pos_x;
