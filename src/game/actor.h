@@ -42,7 +42,7 @@ struct explosion_death_animation
 
 struct explosion_animation
 {
-  u32 *explosion_death_animation;
+  void *explosion_death_animation;
   s32 count;
 };
 

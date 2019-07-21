@@ -79,8 +79,8 @@ struct player_gait_header {
     u8 field_0x0;
     u8 type;
     u16 field_0x2;
-    void * field_0x4;
-    struct player_gait_object_entry * previous;
+    struct player_gait_object_entry * field_0x4;
+    struct player_gait_pos_header * previous;
     void * field_0xc;
     void * field_0x10;
     struct player_gait_pos_header * next;

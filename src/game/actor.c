@@ -9,25 +9,25 @@ s32 D_8002C910 = 0;
 
 
 //D:8002C914
-struct animation_something D_8002C914 = {0,0,0,0,0,0,0,0,0,0,0};
-struct animation_something D_8002C940 = {1, 1, 0, 17.0, 3, 0, 34.0, &D_8002CE54, 0, &D_8002DF10, 0};
-struct animation_something D_8002C96C = {2, 1, 0, 17.0, 3, 0, 39.0, &D_8002CEE0, 0, &D_8002DF64, 0};
-struct animation_something D_8002C998 = {3, 1, 0, 21.0, 3, 0, 43.0, &D_8002CF6C, 0, &D_8002DFB8, 0};
-struct animation_something D_8002C9C4 = {4, 1, 0, 17.0, 3, 0, 34.0, &D_8002D014, 0, &D_8002E028, 0};
-struct animation_something D_8002C9F0 = {5, 1, 0, 17.0, 3, 0, 39.0, &D_8002D0A0, 0, &D_8002E07C, 0};
-struct animation_something D_8002CA1C = {6, 1, 0, 21.0, 3, 0, 43.0, &D_8002D12C, 0, &D_8002E0D0, 0};
-struct animation_something D_8002CA48 = {7, 1, 0, 21.0, 3, 0, 52.0, &D_8002D1D4, 0, &D_8002E140, 0};
-struct animation_something D_8002CA74 = {8, 1, 0, 21.0, 3, 0, 43.0, &D_8002D3B0, 0, &D_8002E23C, 0};
-struct animation_something D_8002CAA0 = {9, 1, 0, 17.0, 3, 0, 34.0, &D_8002D6DC, 0, &D_8002E300, 0};
-struct animation_something D_8002CACC = {0xA, 1, 0, 17.0, 3, 0, 43.0, &D_8002D768, 0, &D_8002E354, 0};
-struct animation_something D_8002CAF8 = {0xB, 1, 0, 21.0, 3, 0, 52.0, &D_8002D7F4, 0, &D_8002E3A8, 0};
-struct animation_something D_8002CB24 = {0xC, 1, 0, 17.0, 3, 0, 34.0, &D_8002D880, 0, &D_8002E418, 0};
-struct animation_something D_8002CB50 = {0xD, 1, 0, 17.0, 3, 0, 43.0, &D_8002D90C, 0, &D_8002E46C, 0};
-struct animation_something D_8002CB7C = {0xE, 1, 0, 21.0, 3, 0, 52.0, &D_8002D998, 0, &D_8002E4C0, 0};
-struct animation_something D_8002CBA8 = {0xF, 1, 0, 26.0, 3, 0, 60.0, &D_8002DA24, 0, &D_8002E530, 0};
-struct animation_something D_8002CBD4 = {0x64, 1, 0, 26.0, 0, 0, 0.0, &D_8002DCE0, 0, &D_8002E5BC, 0};
-struct animation_something D_8002CC00 = {0x6E, 1, 0, 21.0, 0, 0, 0.0, 0, 0, 0, 0};
-struct animation_something D_8002CC2C = {0xFFFFFFFF, 0, 0, 0.0, 0, 0, 0.0, 0, 0, 0, 0};
+struct animation_something D_8002C914 = {0,0,0,0,0,0,0,NULL,0,NULL,0};
+struct animation_something D_8002C940 = {1, 1, 0, 17.0, 3, 0, 34.0, D_8002CE54, 0, D_8002DF10, 0};
+struct animation_something D_8002C96C = {2, 1, 0, 17.0, 3, 0, 39.0, D_8002CEE0, 0, D_8002DF64, 0};
+struct animation_something D_8002C998 = {3, 1, 0, 21.0, 3, 0, 43.0, D_8002CF6C, 0, D_8002DFB8, 0};
+struct animation_something D_8002C9C4 = {4, 1, 0, 17.0, 3, 0, 34.0, D_8002D014, 0, D_8002E028, 0};
+struct animation_something D_8002C9F0 = {5, 1, 0, 17.0, 3, 0, 39.0, D_8002D0A0, 0, D_8002E07C, 0};
+struct animation_something D_8002CA1C = {6, 1, 0, 21.0, 3, 0, 43.0, D_8002D12C, 0, D_8002E0D0, 0};
+struct animation_something D_8002CA48 = {7, 1, 0, 21.0, 3, 0, 52.0, D_8002D1D4, 0, D_8002E140, 0};
+struct animation_something D_8002CA74 = {8, 1, 0, 21.0, 3, 0, 43.0, D_8002D3B0, 0, D_8002E23C, 0};
+struct animation_something D_8002CAA0 = {9, 1, 0, 17.0, 3, 0, 34.0, D_8002D6DC, 0, D_8002E300, 0};
+struct animation_something D_8002CACC = {0xA, 1, 0, 17.0, 3, 0, 43.0, D_8002D768, 0, D_8002E354, 0};
+struct animation_something D_8002CAF8 = {0xB, 1, 0, 21.0, 3, 0, 52.0, D_8002D7F4, 0, D_8002E3A8, 0};
+struct animation_something D_8002CB24 = {0xC, 1, 0, 17.0, 3, 0, 34.0, D_8002D880, 0, D_8002E418, 0};
+struct animation_something D_8002CB50 = {0xD, 1, 0, 17.0, 3, 0, 43.0, D_8002D90C, 0, D_8002E46C, 0};
+struct animation_something D_8002CB7C = {0xE, 1, 0, 21.0, 3, 0, 52.0, D_8002D998, 0, D_8002E4C0, 0};
+struct animation_something D_8002CBA8 = {0xF, 1, 0, 26.0, 3, 0, 60.0, D_8002DA24, 0, D_8002E530, 0};
+struct animation_something D_8002CBD4 = {0x64, 1, 0, 26.0, 0, 0, 0.0, D_8002DCE0, 0, D_8002E5BC, 0};
+struct animation_something D_8002CC00 = {0x6E, 1, 0, 21.0, 0, 0, 0.0, NULL, 0, NULL, 0};
+struct animation_something D_8002CC2C = {0xFFFFFFFF, 0, 0, 0.0, 0, 0, 0.0, NULL, 0, NULL, 0};
 
 
 
@@ -462,9 +462,9 @@ struct weapon_firing_animation_table rifle_firing_animation_group1[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_rifle_firing_animation_group1[] = {
+void * ptr_rifle_firing_animation_group1[] = {
     &rifle_firing_animation_group1,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table rifle_firing_animation_group2[] = {
@@ -473,9 +473,9 @@ struct weapon_firing_animation_table rifle_firing_animation_group2[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_rifle_firing_animation_group2[] = {
+void * ptr_rifle_firing_animation_group2[] = {
     &rifle_firing_animation_group2,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table rifle_firing_animation_group5[] = {
@@ -484,9 +484,9 @@ struct weapon_firing_animation_table rifle_firing_animation_group5[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_rifle_firing_animation_group5[] = {
+void * ptr_rifle_firing_animation_group5[] = {
     &rifle_firing_animation_group5,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table rifle_firing_animation_group3[] = {
@@ -494,9 +494,9 @@ struct weapon_firing_animation_table rifle_firing_animation_group3[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_rifle_firing_animation_group3[] = {
+void * ptr_rifle_firing_animation_group3[] = {
     &rifle_firing_animation_group3,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table rifle_firing_animation_group4[] = {
@@ -504,12 +504,12 @@ struct weapon_firing_animation_table rifle_firing_animation_group4[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_rifle_firing_animation_group4[] = {
+void * ptr_rifle_firing_animation_group4[] = {
     &rifle_firing_animation_group4,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
-s32 ptr_rifle_firing_animation_groups[] = {
+void * ptr_rifle_firing_animation_groups[] = {
     &ptr_rifle_firing_animation_group1,
     &ptr_rifle_firing_animation_group2,
     &ptr_rifle_firing_animation_group2,
@@ -552,9 +552,9 @@ struct weapon_firing_animation_table pistol_firing_animation_group1[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_pistol_firing_animation_group1[] = {
+void * ptr_pistol_firing_animation_group1[] = {
     &pistol_firing_animation_group1,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table pistol_firing_animation_group2[] = {
@@ -563,9 +563,9 @@ struct weapon_firing_animation_table pistol_firing_animation_group2[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_pistol_firing_animation_group2[] = {
+void * ptr_pistol_firing_animation_group2[] = {
     &pistol_firing_animation_group2,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table pistol_firing_animation_group3[] = {
@@ -576,9 +576,9 @@ struct weapon_firing_animation_table pistol_firing_animation_group3[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_pistol_firing_animation_group3[] = {
+void * ptr_pistol_firing_animation_group3[] = {
     &pistol_firing_animation_group3,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table pistol_firing_animation_group6[] = {
@@ -589,9 +589,9 @@ struct weapon_firing_animation_table pistol_firing_animation_group6[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_pistol_firing_animation_group6[] = {
+void * ptr_pistol_firing_animation_group6[] = {
     &pistol_firing_animation_group6,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table pistol_firing_animation_group4[] = {
@@ -599,9 +599,9 @@ struct weapon_firing_animation_table pistol_firing_animation_group4[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_pistol_firing_animation_group4[] = {
+void * ptr_pistol_firing_animation_group4[] = {
     &pistol_firing_animation_group4,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table pistol_firing_animation_group5[] = {
@@ -609,12 +609,12 @@ struct weapon_firing_animation_table pistol_firing_animation_group5[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_pistol_firing_animation_group5[] = {
+void *  ptr_pistol_firing_animation_group5[] = {
     &pistol_firing_animation_group5,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
-s32 ptr_pistol_firing_animation_groups[] = {
+void * ptr_pistol_firing_animation_groups[] = {
     &ptr_pistol_firing_animation_group1,
     &ptr_pistol_firing_animation_group1,
     &ptr_pistol_firing_animation_group2,
@@ -654,9 +654,9 @@ struct weapon_firing_animation_table doubles_firing_animation_group1[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_doubles_firing_animation_group1[] = {
-    &doubles_firing_animation_group1,
-    0xFFFFFFFF
+void * ptr_doubles_firing_animation_group1[] = {
+    doubles_firing_animation_group1,
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table doubles_firing_animation_group2[] = {
@@ -665,9 +665,9 @@ struct weapon_firing_animation_table doubles_firing_animation_group2[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_doubles_firing_animation_group2[] = {
-    &doubles_firing_animation_group2,
-    0xFFFFFFFF
+void * ptr_doubles_firing_animation_group2[] = {
+    doubles_firing_animation_group2,
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table doubles_firing_animation_group3[] = {
@@ -676,12 +676,12 @@ struct weapon_firing_animation_table doubles_firing_animation_group3[] = {
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_doubles_firing_animation_group3[] = {
-    &doubles_firing_animation_group3,
-    0xFFFFFFFF
+void * ptr_doubles_firing_animation_group3[] = {
+    doubles_firing_animation_group3,
+    ((void *)-1)
 };
 
-s32 ptr_doubles_firing_animation_groups[] = {
+void * ptr_doubles_firing_animation_groups[] = {
     &ptr_doubles_firing_animation_group1,
     &ptr_doubles_firing_animation_group1,
     &ptr_doubles_firing_animation_group1,
@@ -725,9 +725,9 @@ struct weapon_firing_animation_table crouched_rifle_firing_animation_groupA[] = 
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_crouched_rifle_firing_animation_group1[] = {
+void * ptr_crouched_rifle_firing_animation_group1[] = {
     &crouched_rifle_firing_animation_group1,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table crouched_rifle_firing_animation_group2[] = {
@@ -735,9 +735,9 @@ struct weapon_firing_animation_table crouched_rifle_firing_animation_group2[] = 
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_crouched_rifle_firing_animation_group2[] = {
+void * ptr_crouched_rifle_firing_animation_group2[] = {
     &crouched_rifle_firing_animation_group2,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table crouched_rifle_firing_animation_group3[] = {
@@ -745,12 +745,12 @@ struct weapon_firing_animation_table crouched_rifle_firing_animation_group3[] = 
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_crouched_rifle_firing_animation_group3[] = {
+void * ptr_crouched_rifle_firing_animation_group3[] = {
     &crouched_rifle_firing_animation_group3,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
-s32 ptr_crouched_rifle_firing_animation_groups[] = {
+void * ptr_crouched_rifle_firing_animation_groups[] = {
     &ptr_crouched_rifle_firing_animation_group1,
     &ptr_crouched_rifle_firing_animation_group1,
     &ptr_crouched_rifle_firing_animation_group1,
@@ -791,9 +791,9 @@ struct weapon_firing_animation_table crouched_pistol_firing_animation_group1[] =
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_crouched_pistol_firing_animation_group1[] = {
+void * ptr_crouched_pistol_firing_animation_group1[] = {
     &crouched_pistol_firing_animation_group1,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table crouched_pistol_firing_animation_group2[] = {
@@ -803,9 +803,9 @@ struct weapon_firing_animation_table crouched_pistol_firing_animation_group2[] =
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_crouched_pistol_firing_animation_group2[] = {
+void * ptr_crouched_pistol_firing_animation_group2[] = {
     &crouched_pistol_firing_animation_group2,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table crouched_pistol_firing_animation_group3[] = {
@@ -814,12 +814,12 @@ struct weapon_firing_animation_table crouched_pistol_firing_animation_group3[] =
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_crouched_pistol_firing_animation_group3[] = {
+void * ptr_crouched_pistol_firing_animation_group3[] = {
     &crouched_pistol_firing_animation_group3,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
-s32 ptr_crouched_pistol_firing_animation_groups[] = {
+void * ptr_crouched_pistol_firing_animation_groups[] = {
     &ptr_crouched_pistol_firing_animation_group1,
     &ptr_crouched_pistol_firing_animation_group1,
     &ptr_crouched_pistol_firing_animation_group1,
@@ -860,9 +860,9 @@ struct weapon_firing_animation_table crouched_doubles_firing_animation_group1[] 
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_crouched_doubles_firing_animation_group1[] = {
+void * ptr_crouched_doubles_firing_animation_group1[] = {
     &crouched_doubles_firing_animation_group1,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table crouched_doubles_firing_animation_group2[] = {
@@ -871,9 +871,9 @@ struct weapon_firing_animation_table crouched_doubles_firing_animation_group2[] 
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_crouched_doubles_firing_animation_group2[] = {
+void * ptr_crouched_doubles_firing_animation_group2[] = {
     &crouched_doubles_firing_animation_group2,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
 struct weapon_firing_animation_table crouched_doubles_firing_animation_group3[] = {
@@ -882,12 +882,12 @@ struct weapon_firing_animation_table crouched_doubles_firing_animation_group3[] 
     {0, 0.0, 0, 0, 0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 };
 
-s32 ptr_crouched_doubles_firing_animation_group3[] = {
+void * ptr_crouched_doubles_firing_animation_group3[] = {
     &crouched_doubles_firing_animation_group3,
-    0xFFFFFFFF
+    ((void *)-1)
 };
 
-s32 ptr_crouched_doubles_firing_animation_groups[] = {
+void * ptr_crouched_doubles_firing_animation_groups[] = {
     &ptr_crouched_doubles_firing_animation_group1,
     &ptr_crouched_doubles_firing_animation_group1,
     &ptr_crouched_doubles_firing_animation_group1,

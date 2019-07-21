@@ -172,20 +172,20 @@ struct struct_2 type_C_stru_800490F0[] = {
 
 //D:800490F0
 struct struct_8 mp_weapon_set_text_table[] = {
-    {0xA8, 0, 0, 0, &type_0_stru_800490F0},
-    {0xA8, 1, 0, 0, &type_1_stru_800490F0},
-    {0xA8, 0xD, 0, 0, &type_D_stru_800490F0},
-    {0xA8, 2, 0, 0, &type_2_stru_800490F0},
-    {0xA8, 3, 0, 0, &type_3_stru_800490F0},
-    {0xA8, 4, 0, 0, &type_4_stru_800490F0},
-    {0xA8, 5, 0, 0, &type_5_stru_800490F0},
-    {0xA8, 6, 0, 0, &type_6_stru_800490F0},
-    {0xA8, 7, 0, 0, &type_7_stru_800490F0},
-    {0xA8, 8, 0, 0, &type_8_stru_800490F0},
-    {0xA8, 9, 0, 0, &type_9_stru_800490F0},
-    {0xA8, 0xA, 0, 0, &type_A_stru_800490F0},
-    {0xA8, 0xB, 0, 0, &type_B_stru_800490F0},
-    {0xA8, 0xC, 0, 0, &type_C_stru_800490F0}
+    {0xA8, 0, 0, 0, type_0_stru_800490F0},
+    {0xA8, 1, 0, 0, type_1_stru_800490F0},
+    {0xA8, 0xD, 0, 0, type_D_stru_800490F0},
+    {0xA8, 2, 0, 0, type_2_stru_800490F0},
+    {0xA8, 3, 0, 0, type_3_stru_800490F0},
+    {0xA8, 4, 0, 0, type_4_stru_800490F0},
+    {0xA8, 5, 0, 0, type_5_stru_800490F0},
+    {0xA8, 6, 0, 0, type_6_stru_800490F0},
+    {0xA8, 7, 0, 0, type_7_stru_800490F0},
+    {0xA8, 8, 0, 0, type_8_stru_800490F0},
+    {0xA8, 9, 0, 0, type_9_stru_800490F0},
+    {0xA8, 0xA, 0, 0, type_A_stru_800490F0},
+    {0xA8, 0xB, 0, 0, type_B_stru_800490F0},
+    {0xA8, 0xC, 0, 0, type_C_stru_800490F0}
 };
 
 s32 mp_weapon_set = 0xB;

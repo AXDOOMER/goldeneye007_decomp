@@ -18,7 +18,7 @@ struct struct_8
   char field_1;
   char field_2;
   char field_3;
-  u32 *anonymous_1;
+  struct struct_2 * anonymous_1;
 };
 
 

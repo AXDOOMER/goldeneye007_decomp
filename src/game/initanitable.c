@@ -10,7 +10,7 @@ s32 *ptr_animation_table;
 
 
 //data
-u32 D_80029D60[] = { 0, dword_CODE_bss_80069170, dword_CODE_bss_80069170};
+void * D_80029D60[] = {NULL, &dword_CODE_bss_80069170, &dword_CODE_bss_80069170};
 
 s32 animation_table_ptrs1[] = {
     0x1C, 0x144, 0x214, 0x318, 0x3C4, 0x610, 0x814, 0x990, 0xB84, 0xDB4,

@@ -1,6 +1,7 @@
 #ifndef _BOND_H_
 #define _BOND_H_
 #include "ultra64.h"
+#include "game/actor.h"
 
 struct BONDdata
 {
@@ -2722,7 +2723,7 @@ struct BONDdata
 };
 
 struct firing_anim_struct {
-    u32 * pointer;
+    struct weapon_firing_animation_table * pointer;
     u32 anim;
     f32 x;
     f32 y;

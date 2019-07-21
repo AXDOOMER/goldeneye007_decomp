@@ -90,7 +90,7 @@ struct mcm_layout mcm_onscreen_positions[] = {
 };
 
 //D:80036E30
-u32 *mcm_strings[] = {
+char *mcm_strings[] = {
      "move view",
      "stan view",
      "bond view",
