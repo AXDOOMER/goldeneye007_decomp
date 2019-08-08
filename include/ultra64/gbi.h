@@ -1,70 +1,61 @@
 #ifndef _ULTRA64_GBI_H_
 #define _ULTRA64_GBI_H_
-/* Note from SDK modified to include Tri4 note
- *
- * To use the F3DEX/TRI4Ext ucodes, define F3DEX_GBI or TRI4Ext (but not both) before include this file.
- *
- *     #define  F3DEX_GBI
- *     #include <ultra64.h>
- *
- *     or
- *
- *     cc -c -DF3DEX_GBI -I.... foo.c
- *
- */
 
- /* Types */
+/* Types */
 
- /* Vertex (set up for use with colors) */
+/* Vertex (set up for use with colors) */
 typedef struct
 {
-	short          ob[3];  /* x, y, z */
-	unsigned short flag;
-	short          tc[2];  /* texture coord */
-	unsigned char  cn[4];  /* color & alpha */
+    short          ob[3];  /* x, y, z */
+    unsigned short flag;
+    short          tc[2];  /* texture coord */
+    unsigned char  cn[4];  /* color & alpha */
 } Vtx_t;
 
 /* Vertex (set up for use with normals) */
 typedef struct
 {
-	short          ob[3];  /* x, y, z */
-	unsigned short flag;
-	short          tc[2];  /* texture coord */
-	signed char    n[3];   /* normal */
-	unsigned char  a;      /* alpha  */
+    short          ob[3];  /* x, y, z */
+    unsigned short flag;
+    short          tc[2];  /* texture coord */
+    signed char    n[3];   /* normal */
+    unsigned char  a;      /* alpha  */
 } Vtx_tn;
 
 typedef union
 {
-	Vtx_t         v;  /* Use this one for colors  */
-	Vtx_tn        n;  /* Use this one for normals */
-	long long int force_structure_alignment;
+    Vtx_t         v;  /* Use this one for colors  */
+    Vtx_tn        n;  /* Use this one for normals */
+    long long int force_structure_alignment;
 } Vtx;
+
 
 typedef struct
 {
-	short vscale[4];  /* scale, 2 bits fraction */
-	short vtrans[4];  /* translate, 2 bits fraction */
+    short vscale[4];  /* scale, 2 bits fraction */
+    short vtrans[4];  /* translate, 2 bits fraction */
 } Vp_t;
 
 typedef union
 {
-	Vp_t          vp;
-	long long int force_structure_alignment;
+    Vp_t          vp;
+    long long int force_structure_alignment;
 } Vp;
+
 
 typedef struct
 {
-	unsigned int w0;
-	unsigned int w1;
+    unsigned int w0;
+    unsigned int w1;
 } Gwords;
 
 /* TODO: fill in the rest of the members */
 typedef union
 {
-	Gwords words;
-	long long int force_structure_alignment;
+    Gwords words;
+    long long int force_structure_alignment;
 } Gfx;
+
 
 #define _SHIFTL(value, shift, size) \
     ((unsigned int) (((unsigned int) (value) & ((1 << size) - 1)) << shift))
@@ -78,6 +69,7 @@ typedef union
     (((b) >> 2) & 0x003E) | \
     ((a) & 0x0001))
 #define GPACK_ZDZ(z, dz) ((z) << 2 | (dz))
+
 
 #define G_ZBUFFER            0x00000001
 #define G_TEXTURE_ENABLE     0x00000002
@@ -640,50 +632,50 @@ typedef union
                  | _SHIFTL((dtdy),  0, 16);                              \
 }
 
-  /* Lights and Light Operations */
+/* Lights and Light Operations */
 
 typedef struct {
-	unsigned char col[3];
-	char          pad1;
-	unsigned char colc[3];
-	char          pad2;
-	signed char   dir[3];
-	char          pad3;
+    unsigned char col[3];
+    char          pad1;
+    unsigned char colc[3];
+    char          pad2;
+    signed char   dir[3];
+    char          pad3;
 } Light_t;
 
 typedef struct {
-	unsigned char col[3];
-	char          pad1;
-	unsigned char colc[3];
-	char          pad2;
+    unsigned char col[3];
+    char          pad1;
+    unsigned char colc[3];
+    char          pad2;
 } Ambient_t;
 
 typedef union {
-	Ambient_t l;
-	long long int force_structure_alignment[1];
+    Ambient_t l;
+    long long int force_structure_alignment[1];
 } Ambient;
 
 typedef union {
-	Light_t l;
-	long long int force_structure_alignment[2];
+    Light_t l;
+    long long int force_structure_alignment[2];
 } Light;
 
 typedef struct {
-	Ambient a;
-	Light   l[4];
+    Ambient a;
+    Light   l[4];
 } Lights4;
 
 typedef struct {
-	Light l[2];
+    Light l[2];
 } LookAt;
 
 typedef struct {
-	int x1, y1, x2, y2;
+    int x1, y1, x2, y2;
 } Hilite_t;
 
 typedef union {
-	Hilite_t h;
-	long int force_alignmnet[4];
+    Hilite_t h;
+    long int force_alignmnet[4];
 } Hilite;
 
 #define G_MOVEMEM 0x03
@@ -703,7 +695,7 @@ typedef union {
 #define LIGHT_2 2
 #define LIGHT_3 3
 #define LIGHT_4 4
-#define LIGHT_5 5
+#define LIGHT_5 5	
 #define LIGHT_6 6
 #define LIGHT_7 7
 #define LIGHT_8 8
