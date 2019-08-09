@@ -1,5 +1,5 @@
 #include "ultra64.h"
-
+#include "debugmenu.h"
 
 s32 debug_menu_x_pos_offset = 5;
 s32 debug_menu_y_pos_offset = 1;
@@ -60,21 +60,29 @@ u32 D_800268B8 = 0xFF;
 
 
 
-u32 dummied_function_7000AD80(s32 arg0, s32 arg1) {
+u32 dummied_function_7000AD80(s32 arg0, s32 arg1)
+{
     return 0;
 }
 
-u32 dummied_function_7000AD90(s32 arg0, s32 arg1) {
+
+u32 dummied_function_7000AD90(s32 arg0, s32 arg1)
+{
     return 0;
 }
 
-void null_function_7000ADA0(void) {
+
+void null_function_7000ADA0(void)
+{
 //empty
 }
 
-void null_init_main_0(void) {
+
+void null_init_main_0(void)
+{
 //empty
 }
+
 
 void debug_text_related_2(void)
 {
@@ -218,7 +226,8 @@ glabel display_text_to_coord
 
 
 
-void debugMenuSetTextPOStoOffset(void) {
+void debugMenuSetTextPOStoOffset(void)
+{
     debug_menu_x_text_pos = debug_menu_x_pos_offset;
     debug_menu_y_text_pos = debug_menu_y_pos_offset;
 }
@@ -226,15 +235,15 @@ void debugMenuSetTextPOStoOffset(void) {
 
 
 
-
-
-#ifdef NONMATCHING
-void debug_text_related_1(void) {
+void debug_text_related_1(void)
+{
   int x;
   int y;
   
-  for (y = 0; y < 0x23; y++) {
-    for (x = 0; x < 0x50; x++) {
+  for (y = 0; y < 0x23; y++)
+  {
+    for (x = 0; x < 0x50; x++)
+    {
       display_text_to_coord(x,y,'\0');
     }
   }
@@ -242,51 +251,12 @@ void debug_text_related_1(void) {
   null_function_7000ADA0();
   string_formatting[0] = NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel debug_text_related_1
-/* 00BB00 7000AF00 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 00BB04 7000AF04 AFB30020 */  sw    $s3, 0x20($sp)
-/* 00BB08 7000AF08 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 00BB0C 7000AF0C AFB10018 */  sw    $s1, 0x18($sp)
-/* 00BB10 7000AF10 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 00BB14 7000AF14 AFB00014 */  sw    $s0, 0x14($sp)
-/* 00BB18 7000AF18 24110050 */  li    $s1, 80
-/* 00BB1C 7000AF1C 00009025 */  move  $s2, $zero
-/* 00BB20 7000AF20 24130023 */  li    $s3, 35
-/* 00BB24 7000AF24 00008025 */  move  $s0, $zero
-.L7000AF28:
-/* 00BB28 7000AF28 02002025 */  move  $a0, $s0
-.L7000AF2C:
-/* 00BB2C 7000AF2C 02402825 */  move  $a1, $s2
-/* 00BB30 7000AF30 0C002B74 */  jal   display_text_to_coord
-/* 00BB34 7000AF34 00003025 */   move  $a2, $zero
-/* 00BB38 7000AF38 26100001 */  addiu $s0, $s0, 1
-/* 00BB3C 7000AF3C 5611FFFB */  bnel  $s0, $s1, .L7000AF2C
-/* 00BB40 7000AF40 02002025 */   move  $a0, $s0
-/* 00BB44 7000AF44 26520001 */  addiu $s2, $s2, 1
-/* 00BB48 7000AF48 5653FFF7 */  bnel  $s2, $s3, .L7000AF28
-/* 00BB4C 7000AF4C 00008025 */   move  $s0, $zero
-/* 00BB50 7000AF50 0C002BB7 */  jal   debugMenuSetTextPOStoOffset
-/* 00BB54 7000AF54 00000000 */   nop   
-/* 00BB58 7000AF58 0C002B68 */  jal   null_function_7000ADA0
-/* 00BB5C 7000AF5C 00000000 */   nop   
-/* 00BB60 7000AF60 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 00BB64 7000AF64 3C018002 */  lui   $at, %hi(string_formatting) # $at, 0x8002
-/* 00BB68 7000AF68 8FB00014 */  lw    $s0, 0x14($sp)
-/* 00BB6C 7000AF6C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 00BB70 7000AF70 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 00BB74 7000AF74 8FB30020 */  lw    $s3, 0x20($sp)
-/* 00BB78 7000AF78 AC206810 */  sw    $zero, %lo(string_formatting)($at)
-/* 00BB7C 7000AF7C 03E00008 */  jr    $ra
-/* 00BB80 7000AF80 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 
 
-void stubbed_function_7000AF84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+
+void stubbed_function_7000AF84(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
     return;
 }
 
@@ -296,42 +266,48 @@ void stubbed_function_7000AF84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 
 #ifdef NONMATCHING
-s32 something_debug_info_related(s32 arg0) {
-    s32 temp_s3;
+void something_debug_info_related(s32 arg0)
+{
+    s32 temp_s0;
+    s32 temp_s0_2;
+    s32 phi_s3;
+    s32 phi_s0;
+    s32 phi_s1;
+    s32 phi_s0_2;
 
-    // Node 0
-    temp_s3 = (arg0 + 0x21);
-    // Node 1
-    if ((temp_s3 >= 0) && (temp_s3 < 0x23))
+    phi_s3 = arg0 + 0x21;
+    phi_s1 = 0x21;
+loop_1:
+    if ((phi_s3 >= 0) && (phi_s3 < 0x23))
     {
-        loop_3:
-        // Node 3
-        stubbed_function_7000AF84(0, temp_s3, 0, 0x21);
-        if ((0 + 1) != 0x50)
+loop_3:
+        stubbed_function_7000AF84(phi_s0, phi_s3, phi_s0, phi_s1);
+        temp_s0 = phi_s0 + 1;
+        phi_s0 = temp_s0;
+        if (temp_s0 != 0x50)
         {
             goto loop_3;
         }
-        // Node 4
     }
     else
     {
-        // Node 5
-        // Node 6
-        display_text_to_coord(0, 0x21, 0);
-        if ((0 + 1) != 0x50)
+        phi_s0_2 = 0;
+loop_6:
+        display_text_to_coord(phi_s0_2, phi_s1, 0);
+        temp_s0_2 = phi_s0_2 + 1;
+        phi_s0_2 = temp_s0_2;
+        if (temp_s0_2 != 0x50)
         {
             goto loop_6;
         }
-        // Node 7
     }
-    // Node 8
-    if ((0x21 + -1) != 0)
+    phi_s3 = phi_s3 - 1;
+    phi_s1 = phi_s1 - 1;
+    if (phi_s1 != 0)
     {
         goto loop_1;
     }
-    // (possible return value: 0x21)
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -419,11 +395,14 @@ glabel set_final_debug_text_positions
 
 
 
-void set_debug_text_color(s32 red,s32 blue,s32 green,s32 alpha){
+void set_debug_text_color(s32 red,s32 blue,s32 green,s32 alpha)
+{
   debug_text_color = red << 0x18 | blue << 0x10 | green << 8 | 0xffU - alpha;
 }
 
-void set_color_speedgraph(s32 red,s32 green,s32 blue,s32 alpha) {
+
+void set_color_speedgraph(s32 red,s32 green,s32 blue,s32 alpha)
+{
   speedgraph_color = red << 0x18 | green << 0x10 | blue << 8 | 0xffU - alpha;
 }
 
@@ -561,32 +540,12 @@ glabel write_char_to_screen
 
 
 
-#ifdef NONMATCHING
-void debug_text_related_0(? arg2, ? arg8) {
-    // Node 0
-    set_final_debug_text_positions();
-    write_char_to_screen(arg8);
-    return;
-    // (possible return value: write_char_to_screen(arg8))
+
+void debug_printcharatpos(int x,int y, u8 character)
+{
+  set_final_debug_text_positions(x,y);
+  write_char_to_screen(character);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel debug_text_related_0
-/* 00BDC0 7000B1C0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00BDC4 7000B1C4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00BDC8 7000B1C8 0C002C10 */  jal   set_final_debug_text_positions
-/* 00BDCC 7000B1CC AFA60020 */   sw    $a2, 0x20($sp)
-/* 00BDD0 7000B1D0 0C002C31 */  jal   write_char_to_screen
-/* 00BDD4 7000B1D4 93A40023 */   lbu   $a0, 0x23($sp)
-/* 00BDD8 7000B1D8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00BDDC 7000B1DC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00BDE0 7000B1E0 03E00008 */  jr    $ra
-/* 00BDE4 7000B1E4 00000000 */   nop   
-)
-#endif
-
-
 
 
 
