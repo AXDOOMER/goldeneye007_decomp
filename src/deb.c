@@ -203,11 +203,11 @@ void add_debug_notice_deb_c_debug(void)
  *     V0=p->debug.notice.list entry for name A1 and data A0; generates if not found
  *     accepts: A0=p->data, A1=p->name
  */
-void get_ptr_debug_notice_list_entry(void* arg0, char * string)
+void get_ptr_debug_notice_list_entry(void* data, char * string)
 {
     if (return_match_in_debug_notice_list(string) == 0)
     {
-        add_new_entry_to_debug_notice_list(string, arg0);
+        add_new_entry_to_debug_notice_list(string, data);
     }
 }
 
