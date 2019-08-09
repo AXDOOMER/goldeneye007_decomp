@@ -191,13 +191,11 @@ glabel add_new_entry_to_debug_notice_list
  * 5A2C	70004E2C
  *     V0= p->debug.notice.list entry for boss_c_debug using data at 800241A0
  */
-void add_debug_notice_deb_c_debug(void) {
+void add_debug_notice_deb_c_debug(void)
+{
     get_ptr_debug_notice_list_entry(&D_800232E0, "deb_c_debug");
     init_tlb();
 }
-
-
-
 
 
 /**
@@ -205,36 +203,13 @@ void add_debug_notice_deb_c_debug(void) {
  *     V0=p->debug.notice.list entry for name A1 and data A0; generates if not found
  *     accepts: A0=p->data, A1=p->name
  */
-#ifdef NONMATCHING
-void get_ptr_debug_notice_list_entry(s32 arg0, s32 arg1)
+void get_ptr_debug_notice_list_entry(void* arg0, char * string)
 {
-    if (return_match_in_debug_notice_list(arg1) == 0)
+    if (return_match_in_debug_notice_list(string) == 0)
     {
-        add_new_entry_to_debug_notice_list(arg1, arg0);
+        add_new_entry_to_debug_notice_list(string, arg0);
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_debug_notice_list_entry
-/* 005A60 70004E60 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 005A64 70004E64 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 005A68 70004E68 AFA40018 */  sw    $a0, 0x18($sp)
-/* 005A6C 70004E6C AFA5001C */  sw    $a1, 0x1c($sp)
-/* 005A70 70004E70 0C001348 */  jal   return_match_in_debug_notice_list
-/* 005A74 70004E74 00A02025 */   move  $a0, $a1
-/* 005A78 70004E78 14400003 */  bnez  $v0, .L70004E88
-/* 005A7C 70004E7C 8FA4001C */   lw    $a0, 0x1c($sp)
-/* 005A80 70004E80 0C001378 */  jal   add_new_entry_to_debug_notice_list
-/* 005A84 70004E84 8FA50018 */   lw    $a1, 0x18($sp)
-.L70004E88:
-/* 005A88 70004E88 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 005A8C 70004E8C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 005A90 70004E90 03E00008 */  jr    $ra
-/* 005A94 70004E94 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -286,7 +261,8 @@ glabel scan_debug_notice_list_till_NULL
  * 5ABC	70004EBC
  *     unconditional return
  */
-void debug_stubbed_70004EBC(void) {
+void debug_stubbed_70004EBC(void)
+{
     return;
 }
 
@@ -294,7 +270,8 @@ void debug_stubbed_70004EBC(void) {
  * 5AC4	70004EC4
  *     A0->SP+0, A1->SP+4, A2->SP+8
  */
-void debug_removed(s32 arg0, s32 arg1, s32 arg2) {
+void debug_removed(s32 arg0, s32 arg1, s32 arg2)
+{
     return;
 }
 
