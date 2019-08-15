@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "bondgame.h"
 #include "game/lvl_text.h"
 
 // bss
@@ -78,63 +79,69 @@ void *LnameX_lookuptable[] = {
 
 
 #ifdef NONMATCHING
-u32 get_textbank_number_for_stagenum(LEVELID level) {
-    switch(level) {
-    case LEVELID_BUNKER1:
-      return 0x1e;
-    case LEVELID_SILO:
-      return 0x22;
-    case LEVELID_STATUE:
-      return 0x23;
-    case LEVELID_CONTROL:
-      return 8;
-    case LEVELID_ARCHIVES:
-      return 2;
-    case LEVELID_TRAIN:
-      return 0x24;
-    case LEVELID_FRIGATE:
-      return 0xd;
-    case LEVELID_BUNKER2:
-      return 0x1d;
-    case LEVELID_AZTEC:
-      return 5;
-    case LEVELID_STREETS:
-      return 0x19;
-    case LEVELID_DEPOT:
-      return 0xc;
-    case LEVELID_COMPLEX:
-      return 0x1a;
-    case LEVELID_EGYPT:
-      return 10;
-    case LEVELID_DAM:
-      return 0xb;
-    case LEVELID_FACILITY:
-      return 3;
-    case LEVELID_RUNWAY:
-      return 0x1c;
-    case LEVELID_SURFACE:
-      return 0x1f;
-    case LEVELID_JUNGLE:
-      return 0x12;
-    case LEVELID_TEMPLE:
-      return 0xe;
-    case LEVELID_CAVERNS:
-      return 7;
-    case LEVELID_CRADLE:
-      return 9;
-    case LEVELID_SURFACE2:
-      return 0x20;
-    case LEVELID_BASEMENT:
-      return 0x11;
-    case LEVELID_STACK:
-      return 4;
-    case LEVELID_LIBRARY:
-      return 1;
-    case LEVELID_CAVES:
-      return 0x17;
-    case LEVELID_CUBA:
-      return 0x14;
+LEVELID get_textbank_number_for_stagenum(LEVELID level) {
+    switch(level)
+    {
+        case LEVELID_BUNKER1:
+            return LSEV;
+        case LEVELID_SILO:
+            return LSILO;
+        case LEVELID_STATUE:
+            return LSTAT;
+        case LEVELID_CONTROL:
+            return LAREC;
+        case LEVELID_ARCHIVES:
+            return LARCH;
+        case LEVELID_TRAIN:
+            return LTRA;
+        case LEVELID_FRIGATE:
+            return LDEST;
+        case LEVELID_BUNKER2:
+            return LSEVB;
+        case LEVELID_AZTEC:
+            return LAZT;
+        case LEVELID_STREETS:
+            return LPETE;
+        case LEVELID_DEPOT:
+            return LDEPO;
+        case LEVELID_COMPLEX:
+            return LREF;
+        case LEVELID_EGYPT:
+            return LCRYP;
+        case LEVELID_DAM:
+            return LDAM;
+        case LEVELID_FACILITY:
+            return LARK;
+        case LEVELID_RUNWAY:
+            return LRUN;
+        case LEVELID_SURFACE:
+            return LSEVX;
+        case LEVELID_JUNGLE:
+            return LJUN;
+        case LEVELID_TEMPLE:
+            return LDISH;
+        case LEVELID_CAVERNS:
+            return LCAVE;
+        case LEVELID_CRADLE:
+            return LCRAD;
+        case LEVELID_SURFACE2:
+            return LSEVXB;
+        case LEVELID_BASEMENT:
+            return LIMP;
+        case LEVELID_STACK:
+            return LASH;
+        case LEVELID_LIBRARY:
+            return LAME;
+        case LEVELID_CAVES:
+            return LOAT;
+        case LEVELID_CUBA:
+            return LLEN;
     }
+
+	/* infinite loop on invalid text bank */
+    do {
+    } while(1);
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -869,65 +876,17 @@ glabel load_briefing_text_bank
 
 
 
-#ifdef NONMATCHING
-void blank_text_bank(s32 arg0) {
-    // Node 0
-    *(&ptr_text + (arg0 * 4)) = 0;
-    return;
-    // (function likely void)
+void blank_text_bank(s32 textBank) {
+    (&ptr_text)[textBank] = 0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel blank_text_bank
-/* 0F68F4 7F0C1DC4 00047080 */  sll   $t6, $a0, 2
-/* 0F68F8 7F0C1DC8 3C018009 */  lui   $at, %hi(ptr_text)
-/* 0F68FC 7F0C1DCC 002E0821 */  addu  $at, $at, $t6
-/* 0F6900 7F0C1DD0 03E00008 */  jr    $ra
-/* 0F6904 7F0C1DD4 AC20C640 */   sw    $zero, %lo(ptr_text)($at)
-)
-#endif
 
+u8 * get_textptr_for_textID(s32 slotID)
+{
+    u32 * textbank_ptr = (&ptr_text)[slotID >> 10]; /* get the text file bank ID index the text ptr table */
+    u32 textslot_offset = textbank_ptr[slotID & 0x03FF]; /* load the textbank ptr table then get the slot's offset */
 
-
-
-
-#ifdef NONMATCHING
-void get_textptr_for_textID(s32 arg0) {
-    // Node 0
-    if (*(*(&ptr_text + ((arg0 >> 0xa) * 4)) + ((arg0 & 0x3ff) * 4)) != 0)
-    {
-        // Node 1
-        return;
-        // (possible return value: 0)
-    }
-    // (possible return value: 0)
+    u32 output_slot = textslot_offset; /* add the text slot offset to the base ptr to get the ptr to text file's slot */
+    output_slot += (u32)textbank_ptr;
+    return (textslot_offset != 0) ? output_slot : NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_textptr_for_textID
-/* 0F6908 7F0C1DD8 00047283 */  sra   $t6, $a0, 0xa
-/* 0F690C 7F0C1DDC 000E7880 */  sll   $t7, $t6, 2
-/* 0F6910 7F0C1DE0 3C028009 */  lui   $v0, %hi(ptr_text)
-/* 0F6914 7F0C1DE4 004F1021 */  addu  $v0, $v0, $t7
-/* 0F6918 7F0C1DE8 8C42C640 */  lw    $v0, %lo(ptr_text)($v0)
-/* 0F691C 7F0C1DEC 309803FF */  andi  $t8, $a0, 0x3ff
-/* 0F6920 7F0C1DF0 0018C880 */  sll   $t9, $t8, 2
-/* 0F6924 7F0C1DF4 00594021 */  addu  $t0, $v0, $t9
-/* 0F6928 7F0C1DF8 8D030000 */  lw    $v1, ($t0)
-/* 0F692C 7F0C1DFC 00002025 */  move  $a0, $zero
-/* 0F6930 7F0C1E00 10600004 */  beqz  $v1, .L7F0C1E14
-/* 0F6934 7F0C1E04 00000000 */   nop   
-/* 0F6938 7F0C1E08 00622021 */  addu  $a0, $v1, $v0
-/* 0F693C 7F0C1E0C 03E00008 */  jr    $ra
-/* 0F6940 7F0C1E10 00801025 */   move  $v0, $a0
-
-.L7F0C1E14:
-/* 0F6944 7F0C1E14 03E00008 */  jr    $ra
-/* 0F6948 7F0C1E18 00801025 */   move  $v0, $a0
-)
-#endif
-
-
