@@ -1118,7 +1118,7 @@ glabel redirect_to_ramrom_replay_and_record_handlers_if_set
 
 
 #ifdef NONMATCHING
-void controller_7000BD88(void)
+void controllerSchedulerRelated(void)
 {
     ? sp4C;
     s32 sp40;
@@ -1265,7 +1265,7 @@ loop_22:
 #else
 GLOBAL_ASM(
 .text
-glabel controller_7000BD88
+glabel controllerSchedulerRelated
 /* 00C988 7000BD88 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 00C98C 7000BD8C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00C990 7000BD90 3C048006 */  lui   $a0, %hi(cont1MesgMQ) # $a0, 0x8006
