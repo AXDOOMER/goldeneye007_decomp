@@ -2386,20 +2386,20 @@ uint * proc_70003C58(uint *param_1)
   undefined4 local_18;
   undefined8 in_stack_ffffffec;
   
-  if (ptr_BONDdata != NULL) {
-    *(short *)(&ptr_BONDdata->field_7D0 + (uint)DAT_80060879 * 4) =
+  if (pPlayer != NULL) {
+    *(short *)(&pPlayer->field_7D0 + (uint)DAT_80060879 * 4) =
          (short)((int)ptr_video_settings2->width << 1);
-    *(short *)(&ptr_BONDdata->field_7D8 + (uint)DAT_80060879 * 4) =
+    *(short *)(&pPlayer->field_7D8 + (uint)DAT_80060879 * 4) =
          (short)((int)ptr_video_settings2->width << 1) + (short)((int)ptr_video_settings2->ulx << 2)
     ;
-    *(undefined2 *)((int)&ptr_BONDdata->field_7D0 + (uint)DAT_80060879 * 0x10 + 2) =
+    *(undefined2 *)((int)&pPlayer->field_7D0 + (uint)DAT_80060879 * 0x10 + 2) =
          (short)((int)ptr_video_settings2->height << 1);
-    *(short *)((int)&ptr_BONDdata->field_7D8 + (uint)DAT_80060879 * 0x10 + 2) =
+    *(short *)((int)&pPlayer->field_7D8 + (uint)DAT_80060879 * 0x10 + 2) =
          (short)((int)ptr_video_settings2->height << 1) +
          (short)((int)ptr_video_settings2->uly << 2);
   }
   *param_1 = 0x3800010;
-  *(int **)(param_1 + 1) = &ptr_BONDdata[0x30303].field_850 + (uint)DAT_80060879 * 4;
+  *(int **)(param_1 + 1) = &pPlayer[0x30303].field_850 + (uint)DAT_80060879 * 4;
   puVar2 = param_1;
   proc_7F0BD6E0();
   local_20 = ptr_video_settings2->aspect;
@@ -4038,8 +4038,8 @@ void mainloop(void)
                   playernum = proc_7F09B528((int)lVar15);
                   set_cur_player(playernum);
                   set_video2_width_height
-                            (ptr_BONDdata->playerscreenwidth,ptr_BONDdata->playerscreenheight);
-                  set_video2_ulx_uly(ptr_BONDdata->playerscreenulx,ptr_BONDdata->playerscreenuly);
+                            (pPlayer->playerscreenwidth,pPlayer->playerscreenheight);
+                  set_video2_ulx_uly(pPlayer->playerscreenulx,pPlayer->playerscreenuly);
                   proc_7F0BF800();
                   lVar15 = (longlong)((int)lVar15 + 1);
                   uVar1 = get_num_players();
@@ -26350,22 +26350,22 @@ void init_player_BONDdata_stats(void)
     piVar9 = piVar9 + 3;
   } while (psVar11 != (struct_18 *)&BONDdata_item_control_blocks_initdata.anonymous_0);
   pvVar2 = allocate_bytes_in_bank(size_item_buffer[0],4);
-  ptr_BONDdata->ptr_hand_weapon_buffer[0] = pvVar2;
+  pPlayer->ptr_hand_weapon_buffer[0] = pvVar2;
   uVar1 = get_num_players();
   if (uVar1 == 1) {
     pvVar2 = allocate_bytes_in_bank(size_item_buffer[1],4);
-    ptr_BONDdata->ptr_hand_weapon_buffer[1] = pvVar2;
+    pPlayer->ptr_hand_weapon_buffer[1] = pvVar2;
   }
   piVar9 = aiStack940;
-  ptr_BONDdata->hand_invisible[0] = 0;
-  ptr_BONDdata->hand_invisible[1] = 0;
-  ptr_BONDdata->hand_item[0] = 0;
-  ptr_BONDdata->hand_item[1] = 0;
-  ptr_BONDdata->field_2A44[0] = -1;
-  ptr_BONDdata->field_2A44[1] = -1;
-  ptr_BONDdata->lock_hand_model[0] = 0;
-  ptr_BONDdata->lock_hand_model[1] = 0;
-  pBVar5 = ptr_BONDdata;
+  pPlayer->hand_invisible[0] = 0;
+  pPlayer->hand_invisible[1] = 0;
+  pPlayer->hand_item[0] = 0;
+  pPlayer->hand_item[1] = 0;
+  pPlayer->field_2A44[0] = -1;
+  pPlayer->field_2A44[1] = -1;
+  pPlayer->lock_hand_model[0] = 0;
+  pPlayer->lock_hand_model[1] = 0;
+  pBVar5 = pPlayer;
   piVar6 = piVar9;
   do {
     piVar7 = piVar6 + 3;
@@ -26374,7 +26374,7 @@ void init_player_BONDdata_stats(void)
     pBVar5->previous_right_weapon = piVar6[2];
     pBVar5 = (BONDdata *)&pBVar5->zpos;
     piVar6 = piVar7;
-    pBVar8 = ptr_BONDdata;
+    pBVar8 = pPlayer;
   } while (piVar7 != &iStack4);
   do {
     piVar6 = piVar9 + 3;
@@ -26387,7 +26387,7 @@ void init_player_BONDdata_stats(void)
   } while (piVar6 != &iStack4);
   do {
     iVar4 = iVar3 + 4;
-    *(undefined4 *)((int)ptr_BONDdata->ammoheldarr + iVar3) = 0;
+    *(undefined4 *)((int)pPlayer->ammoheldarr + iVar3) = 0;
     iVar3 = iVar4;
   } while (iVar4 < 0x78);
   cur_player_stat_ptr->shots_fired = 0;
@@ -26401,52 +26401,52 @@ void init_player_BONDdata_stats(void)
   cur_player_stat_ptr->killed_civilians = 0;
   cur_player_stat_ptr->kill_count = 0;
   cur_player_stat_ptr->killed_gg_owner_count = 0;
-  ptr_BONDdata->deathcount = 0;
-  ptr_BONDdata->num_suicides = 0;
-  ptr_BONDdata->field_FC0 = 1.00000000;
-  ptr_BONDdata->field_FC4 = 1.00000000;
-  ptr_BONDdata->field_FC8 = 0;
-  ptr_BONDdata->field_FCC = 0;
-  ptr_BONDdata->field_FD0 = 0;
-  ptr_BONDdata->field_FD4 = 0;
-  ptr_BONDdata->field_FD8 = 0;
-  ptr_BONDdata->field_FDC = -1;
-  ptr_BONDdata->field_FDD = -1;
-  ptr_BONDdata->field_FDE = -1;
-  ptr_BONDdata->field_FDF = '\0';
-  ptr_BONDdata->field_FE0 = 1;
-  ptr_BONDdata->field_FE4 = 0;
-  ptr_BONDdata->field_FE8 = 0.00000000;
-  ptr_BONDdata->field_FEC = 0.00000000;
-  ptr_BONDdata->field_FF0 = 0.00000000;
-  ptr_BONDdata->field_FF4 = 0.00000000;
-  *(float *)&ptr_BONDdata->field_FF8 = fPoint9;
-  ptr_BONDdata->field_FFC = 0.00000000;
-  ptr_BONDdata->field_1000 = 0.00000000;
-  ptr_BONDdata->field_1004 = 0.00000000;
-  ptr_BONDdata->field_1008 = 0.00000000;
-  *(float *)&ptr_BONDdata->field_100C = fPoint9;
-  ptr_BONDdata->field_1010 = 0.00000000;
-  *(float *)&ptr_BONDdata->holds_neg_pi = fl_neg_pi;
-  ptr_BONDdata->field_1018 = 0.00000000;
-  ptr_BONDdata->copiedgoldeneye = 0;
-  ptr_BONDdata->field_1270 = -1;
-  ptr_BONDdata->field_106C = 0.00000000;
-  ptr_BONDdata->field_1070 = 0.00000000;
-  ptr_BONDdata->field_1074 = 0.00000000;
-  ptr_BONDdata->field_1078 = 0;
-  ptr_BONDdata->field_107C = 0.00000000;
-  ptr_BONDdata->field_1080 = 0.00000000;
+  pPlayer->deathcount = 0;
+  pPlayer->num_suicides = 0;
+  pPlayer->field_FC0 = 1.00000000;
+  pPlayer->field_FC4 = 1.00000000;
+  pPlayer->field_FC8 = 0;
+  pPlayer->field_FCC = 0;
+  pPlayer->field_FD0 = 0;
+  pPlayer->field_FD4 = 0;
+  pPlayer->field_FD8 = 0;
+  pPlayer->field_FDC = -1;
+  pPlayer->field_FDD = -1;
+  pPlayer->field_FDE = -1;
+  pPlayer->field_FDF = '\0';
+  pPlayer->field_FE0 = 1;
+  pPlayer->field_FE4 = 0;
+  pPlayer->field_FE8 = 0.00000000;
+  pPlayer->field_FEC = 0.00000000;
+  pPlayer->field_FF0 = 0.00000000;
+  pPlayer->field_FF4 = 0.00000000;
+  *(float *)&pPlayer->field_FF8 = fPoint9;
+  pPlayer->field_FFC = 0.00000000;
+  pPlayer->field_1000 = 0.00000000;
+  pPlayer->field_1004 = 0.00000000;
+  pPlayer->field_1008 = 0.00000000;
+  *(float *)&pPlayer->field_100C = fPoint9;
+  pPlayer->field_1010 = 0.00000000;
+  *(float *)&pPlayer->holds_neg_pi = fl_neg_pi;
+  pPlayer->field_1018 = 0.00000000;
+  pPlayer->copiedgoldeneye = 0;
+  pPlayer->field_1270 = -1;
+  pPlayer->field_106C = 0.00000000;
+  pPlayer->field_1070 = 0.00000000;
+  pPlayer->field_1074 = 0.00000000;
+  pPlayer->field_1078 = 0;
+  pPlayer->field_107C = 0.00000000;
+  pPlayer->field_1080 = 0.00000000;
   unknown_takes_playerhand(0);
   unknown_takes_playerhand(0);
   unknown_takes_playerhand(0);
   unknown_takes_playerhand(1);
   unknown_takes_playerhand(1);
   unknown_takes_playerhand(1);
-  ptr_BONDdata->somekinda_flags = 0;
-  ptr_BONDdata->somekinda_bitflags = 2;
-  ptr_BONDdata->sniper_zoom = GsniperrifleZ_stats.zoom;
-  ptr_BONDdata->camera_zoom = GcameraZ_stats.zoom;
+  pPlayer->somekinda_flags = 0;
+  pPlayer->somekinda_bitflags = 2;
+  pPlayer->sniper_zoom = GsniperrifleZ_stats.zoom;
+  pPlayer->camera_zoom = GcameraZ_stats.zoom;
   return;
 }
 
@@ -26748,14 +26748,14 @@ void load_camera_intro_type_values(void)
   if (true) {
     PTR_800799e0 = (undefined *)((int)&rgba + 1);
   }
-  ptr_BONDdata->field_78 = 0.00000000;
-  *(float *)&ptr_BONDdata->field_7C = flt_8004F1D0;
-  ptr_BONDdata->field_80 = 0.00000000;
+  pPlayer->field_78 = 0.00000000;
+  *(float *)&pPlayer->field_7C = flt_8004F1D0;
+  pPlayer->field_80 = 0.00000000;
   if (DAT_80079c68 < 1) {
     piStack20 = proc_7F0AFB78(&fStack12,&fStack8,&fStack4,extraout_f12);
     fVar10 = proc_7F080D60((longlong)(int)piStack20,fStack12,fStack4);
-    fStack8 = (float)ptr_BONDdata->field_29BC + fVar10;
-    *(float *)&ptr_BONDdata->field_70 = fVar10;
+    fStack8 = (float)pPlayer->field_29BC + fVar10;
+    *(float *)&pPlayer->field_70 = fVar10;
   }
   else {
     uVar2 = get_num_players();
@@ -26775,21 +26775,21 @@ void load_camera_intro_type_values(void)
     fStack4 = pfVar1[2];
     piStack20 = (int *)pfVar1[10];
     fVar10 = proc_7F080D60((longlong)(int)piStack20,fStack12,fStack4);
-    fStack8 = (float)ptr_BONDdata->field_29BC + fVar10;
-    *(float *)&ptr_BONDdata->field_70 = fVar10;
+    fStack8 = (float)pPlayer->field_29BC + fVar10;
+    *(float *)&pPlayer->field_70 = fVar10;
     pfVar1 = (float *)(&DAT_80079c28)[uVar8];
     fStack16 = convert_angle_using_inverse((f32)pfVar1[6],(f32)pfVar1[8]);
     fStack16 = flt_8004F1D4 - fStack16;
   }
-  ptr_BONDdata->azimuth_angle = (fStack16 * 360.00000000) / flt_8004F1D8;
-  *(float *)&ptr_BONDdata->clipping_height = fVar10;
-  *(float *)&ptr_BONDdata->field_6C = fVar10 / flt_8004F1DC;
-  change_player_pos_to_target(&ptr_BONDdata->ptr_tile_printmanpos,(int *)&fStack12,piStack20);
+  pPlayer->azimuth_angle = (fStack16 * 360.00000000) / flt_8004F1D8;
+  *(float *)&pPlayer->clipping_height = fVar10;
+  *(float *)&pPlayer->field_6C = fVar10 / flt_8004F1DC;
+  change_player_pos_to_target(&pPlayer->ptr_tile_printmanpos,(int *)&fStack12,piStack20);
   fVar10 = sinf(fStack16);
-  *(float *)&ptr_BONDdata->field_498 = -fVar10;
-  ptr_BONDdata->field_49C = 0;
+  *(float *)&pPlayer->field_498 = -fVar10;
+  pPlayer->field_49C = 0;
   fVar10 = cosf(fStack16);
-  *(float *)&ptr_BONDdata->field_4A0 = fVar10;
+  *(float *)&pPlayer->field_4A0 = fVar10;
   proc_7F089718(flt_800364D0);
   DAT_80079da0 = 0;
   DAT_80079da4 = 0;
@@ -26805,22 +26805,22 @@ void load_camera_intro_type_values(void)
   reset_intro_camera_message_dialogs_for_BONDdata();
   proc_7F08A900();
   poVar7 = remove_last_obj_pos_data_entry();
-  *(object_standard **)&ptr_BONDdata->position_data_pointer = poVar7;
-  *(undefined4 *)(ptr_BONDdata->position_data_pointer + 4) = 0;
-  *(undefined *)ptr_BONDdata->position_data_pointer = 6;
-  *(float *)&ptr_BONDdata->field_408 = fStack12;
-  *(float *)(ptr_BONDdata->position_data_pointer + 8) = fStack12;
-  *(float *)&ptr_BONDdata->field_40C = fStack8;
-  *(float *)(ptr_BONDdata->position_data_pointer + 0xc) = fStack8;
-  *(float *)&ptr_BONDdata->field_410 = fStack4;
-  *(float *)(ptr_BONDdata->position_data_pointer + 0x10) = fStack4;
-  *(int **)(ptr_BONDdata->position_data_pointer + 0x14) = piStack20;
-  set_current_objposdata_plus_0x28((object_standard *)ptr_BONDdata->position_data_pointer);
-  set_stateflag_0x04_for_posdata(ptr_BONDdata->position_data_pointer);
+  *(object_standard **)&pPlayer->position_data_pointer = poVar7;
+  *(undefined4 *)(pPlayer->position_data_pointer + 4) = 0;
+  *(undefined *)pPlayer->position_data_pointer = 6;
+  *(float *)&pPlayer->field_408 = fStack12;
+  *(float *)(pPlayer->position_data_pointer + 8) = fStack12;
+  *(float *)&pPlayer->field_40C = fStack8;
+  *(float *)(pPlayer->position_data_pointer + 0xc) = fStack8;
+  *(float *)&pPlayer->field_410 = fStack4;
+  *(float *)(pPlayer->position_data_pointer + 0x10) = fStack4;
+  *(int **)(pPlayer->position_data_pointer + 0x14) = piStack20;
+  set_current_objposdata_plus_0x28((object_standard *)pPlayer->position_data_pointer);
+  set_stateflag_0x04_for_posdata(pPlayer->position_data_pointer);
   fVar10 = flt_8004F1E0;
-  *(float *)&ptr_BONDdata->field_3B8 = (float)ptr_BONDdata->field_4B4 / flt_8004F1E0;
-  *(float *)&ptr_BONDdata->field_3BC = (float)ptr_BONDdata->field_4B8 / fVar10;
-  *(float *)&ptr_BONDdata->field_3C0 = (float)ptr_BONDdata->field_4BC / fVar10;
+  *(float *)&pPlayer->field_3B8 = (float)pPlayer->field_4B4 / flt_8004F1E0;
+  *(float *)&pPlayer->field_3BC = (float)pPlayer->field_4B8 / fVar10;
+  *(float *)&pPlayer->field_3C0 = (float)pPlayer->field_4BC / fVar10;
   uVar2 = get_num_players();
   if (uVar2 == 1) {
     set_camera_mode(1);
@@ -26835,9 +26835,9 @@ void load_camera_intro_type_values(void)
       total_player_death_anim += 1;
     }
   }
-  ptr_BONDdata->field_420 = 1;
-  ptr_BONDdata->field_424 = 0;
-  ptr_BONDdata->field_428 = 0;
+  pPlayer->field_420 = 1;
+  pPlayer->field_424 = 0;
+  pPlayer->field_428 = 0;
   dword_80036510 = 0;
   return;
 }
@@ -26850,16 +26850,16 @@ void proc_7F0061F0(void)
   int iVar1;
   int iVar2;
   
-  ptr_BONDdata->equipallguns = 0;
-  ptr_BONDdata->field_1200 = -1;
-  ptr_BONDdata->field_120C = -1;
+  pPlayer->equipallguns = 0;
+  pPlayer->field_1200 = -1;
+  pPlayer->field_120C = -1;
   iVar1 = 0x18;
   do {
-    *(undefined4 *)((int)&ptr_BONDdata->field_1200 + iVar1) = 0xffffffff;
-    *(undefined4 *)((int)&ptr_BONDdata->field_120C + iVar1) = 0xffffffff;
-    *(undefined4 *)((int)&ptr_BONDdata->field_1218 + iVar1) = 0xffffffff;
+    *(undefined4 *)((int)&pPlayer->field_1200 + iVar1) = 0xffffffff;
+    *(undefined4 *)((int)&pPlayer->field_120C + iVar1) = 0xffffffff;
+    *(undefined4 *)((int)&pPlayer->field_1218 + iVar1) = 0xffffffff;
     iVar2 = iVar1 + 0x30;
-    *(undefined4 *)((int)&ptr_BONDdata->field_1224 + iVar1) = 0xffffffff;
+    *(undefined4 *)((int)&pPlayer->field_1224 + iVar1) = 0xffffffff;
     iVar1 = iVar2;
   } while (iVar2 != 0x78);
   return;
@@ -26872,9 +26872,9 @@ void alloc_additional_item_slots(int additionalentries)
 {
   void *pvVar1;
   
-  ptr_BONDdata->equipmaxitems = additionalentries + 0x1e;
-  pvVar1 = allocate_bytes_in_bank((ptr_BONDdata->equipmaxitems * 0x14 + 0xfU | 0xf) ^ 0xf,4);
-  *(void **)&ptr_BONDdata->p_itemcur = pvVar1;
+  pPlayer->equipmaxitems = additionalentries + 0x1e;
+  pvVar1 = allocate_bytes_in_bank((pPlayer->equipmaxitems * 0x14 + 0xfU | 0xf) ^ 0xf,4);
+  *(void **)&pPlayer->p_itemcur = pvVar1;
   reinit_BONDdata_inventory();
   return;
 }
@@ -26936,58 +26936,58 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
   if (0x1e < ptr_player_gait_object.num_table_entries) {
     return_null();
   }
-  proc_7F075FAC((int)&ptr_BONDdata->field_598,(player_gait_header *)&ptr_player_gait_object,
-                &ptr_BONDdata->field_654);
+  proc_7F075FAC((int)&pPlayer->field_598,(player_gait_header *)&ptr_player_gait_object,
+                &pPlayer->field_654);
   fVar1 = flt_8004F1F0;
-  set_obj_instance_controller_scale((int)&ptr_BONDdata->field_598,scale);
+  set_obj_instance_controller_scale((int)&pPlayer->field_598,scale);
   fVar2 = flt_8004F1F4;
-  ptr_BONDdata->field_4E8 = 0;
-  *(float *)&ptr_BONDdata->field_4EC = flt_8004F1F8;
-  ptr_BONDdata->field_4F0 = 0;
-  ptr_BONDdata->field_4F4 = 1.00000000;
-  ptr_BONDdata->field_4F8 = 1.00000000;
-  ptr_BONDdata->scaled_velocity = 0.00000000;
-  ptr_BONDdata->field_500 = 0.00000000;
-  ptr_BONDdata->field_504 = 0.00000000;
-  ptr_BONDdata->field_508 = 0.00000000;
-  ptr_BONDdata->field_50C = 0.00000000;
-  ptr_BONDdata->field_510 = 0.00000000;
-  ptr_BONDdata->field_514 = 0.00000000;
-  ptr_BONDdata->field_518 = 0.00000000;
-  ptr_BONDdata->field_51C = 0.00000000;
-  ptr_BONDdata->velocity = 0.00000000;
-  ptr_BONDdata->field_524 = 0.00000000;
-  ptr_BONDdata->field_528 = 0.00000000;
-  ptr_BONDdata->field_52C = 0.00000000;
-  ptr_BONDdata->field_530 = 0.00000000;
-  *(float *)&ptr_BONDdata->field_534 = fVar2;
-  ptr_BONDdata->field_538 = 0;
-  *(float *)&ptr_BONDdata->field_53C = fVar2;
-  ptr_BONDdata->field_540 = 0.00000000;
-  ptr_BONDdata->field_4DC = 1;
-  ptr_BONDdata->field_4E0 = 1;
-  ptr_BONDdata->field_4E4 = 1;
-  ptr_BONDdata->field_544 = 0.00000000;
-  ptr_BONDdata->field_548 = 0.00000000;
-  ptr_BONDdata->field_54C = 0.00000000;
-  ptr_BONDdata->stationary_ground_offset = 0.00000000;
-  ptr_BONDdata->field_554 = 0.00000000;
-  ptr_BONDdata->field_558 = 0.00000000;
-  ptr_BONDdata->field_55C = 0.00000000;
-  ptr_BONDdata->field_560 = 0.00000000;
-  ptr_BONDdata->field_564 = 0.00000000;
-  ptr_BONDdata->field_568 = 0.00000000;
-  ptr_BONDdata->field_56C = 1.00000000;
-  ptr_BONDdata->field_570 = 0.00000000;
-  ptr_BONDdata->field_574 = 0.00000000;
-  ptr_BONDdata->field_578 = 1.00000000;
-  ptr_BONDdata->field_57C = 0.00000000;
-  ptr_BONDdata->field_580 = 1.00000000;
-  ptr_BONDdata->field_584 = 0.00000000;
-  ptr_BONDdata->field_588 = 0.00000000;
-  ptr_BONDdata->field_58C = 1.00000000;
-  ptr_BONDdata->field_590 = 0.00000000;
-  ptr_BONDdata->field_594 = 0;
+  pPlayer->field_4E8 = 0;
+  *(float *)&pPlayer->field_4EC = flt_8004F1F8;
+  pPlayer->field_4F0 = 0;
+  pPlayer->field_4F4 = 1.00000000;
+  pPlayer->field_4F8 = 1.00000000;
+  pPlayer->scaled_velocity = 0.00000000;
+  pPlayer->field_500 = 0.00000000;
+  pPlayer->field_504 = 0.00000000;
+  pPlayer->field_508 = 0.00000000;
+  pPlayer->field_50C = 0.00000000;
+  pPlayer->field_510 = 0.00000000;
+  pPlayer->field_514 = 0.00000000;
+  pPlayer->field_518 = 0.00000000;
+  pPlayer->field_51C = 0.00000000;
+  pPlayer->velocity = 0.00000000;
+  pPlayer->field_524 = 0.00000000;
+  pPlayer->field_528 = 0.00000000;
+  pPlayer->field_52C = 0.00000000;
+  pPlayer->field_530 = 0.00000000;
+  *(float *)&pPlayer->field_534 = fVar2;
+  pPlayer->field_538 = 0;
+  *(float *)&pPlayer->field_53C = fVar2;
+  pPlayer->field_540 = 0.00000000;
+  pPlayer->field_4DC = 1;
+  pPlayer->field_4E0 = 1;
+  pPlayer->field_4E4 = 1;
+  pPlayer->field_544 = 0.00000000;
+  pPlayer->field_548 = 0.00000000;
+  pPlayer->field_54C = 0.00000000;
+  pPlayer->stationary_ground_offset = 0.00000000;
+  pPlayer->field_554 = 0.00000000;
+  pPlayer->field_558 = 0.00000000;
+  pPlayer->field_55C = 0.00000000;
+  pPlayer->field_560 = 0.00000000;
+  pPlayer->field_564 = 0.00000000;
+  pPlayer->field_568 = 0.00000000;
+  pPlayer->field_56C = 1.00000000;
+  pPlayer->field_570 = 0.00000000;
+  pPlayer->field_574 = 0.00000000;
+  pPlayer->field_578 = 1.00000000;
+  pPlayer->field_57C = 0.00000000;
+  pPlayer->field_580 = 1.00000000;
+  pPlayer->field_584 = 0.00000000;
+  pPlayer->field_588 = 0.00000000;
+  pPlayer->field_58C = 1.00000000;
+  pPlayer->field_590 = 0.00000000;
+  pPlayer->field_594 = 0;
   piVar5 = &dword_80036AD0;
   do {
     proc_7F0062C0(*piVar5 + ptr_animation_table,(int)(float)piVar5[1],(int)(float)piVar5[2],
@@ -27008,26 +27008,26 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
     ppfVar3 = ppfVar4;
   } while (ppfVar8 != (float **)0x8002a7cc);
   *ppfVar4 = pfRam8002a7cc;
-  proc_7F06FCA8((int)&ptr_BONDdata->field_598,ptr_animation_table + 0x1c,0,extraout_f12,0,
+  proc_7F06FCA8((int)&pPlayer->field_598,ptr_animation_table + 0x1c,0,extraout_f12,0,
                 extraout_f14);
-  subcalcpos((int)&ptr_BONDdata->field_598,extraout_a1_lo,extraout_a2_lo,extraout_a3_lo);
+  subcalcpos((int)&pPlayer->field_598,extraout_a1_lo,extraout_a2_lo,extraout_a3_lo);
   apfStack80[0] = afStack144;
   proc_7F057FD0(apfStack80[0]);
-  piStack64 = &ptr_BONDdata->field_6D0;
-  subcalcmatrices((float **)apfStack80,(uint)&ptr_BONDdata->field_598,extraout_a2_lo_00,
+  piStack64 = &pPlayer->field_6D0;
+  subcalcmatrices((float **)apfStack80,(uint)&pPlayer->field_598,extraout_a2_lo_00,
                   extraout_a3_lo_00);
-  *(int *)&ptr_BONDdata->stationary_ground_offset = ptr_BONDdata->field_704;
-  ptr_BONDdata->field_554 = 0.00000000;
-  *(float *)&ptr_BONDdata->field_558 =
-       (float)ptr_BONDdata->field_744 - (float)ptr_BONDdata->field_704;
-  *(float *)&ptr_BONDdata->field_55C =
-       (float)ptr_BONDdata->field_748 - (float)ptr_BONDdata->field_708;
-  proc_7F06FCA8((int)&ptr_BONDdata->field_598,
-                (&dword_80036AD0)[ptr_BONDdata->field_4E8 * 6] + ptr_animation_table,0,
-                extraout_f12_00,(&FLOAT_80036ad4)[ptr_BONDdata->field_4E8 * 6],extraout_f14_00);
-  proc_7F06FDCC((int)&ptr_BONDdata->field_598,(&FLOAT_80036ad4)[ptr_BONDdata->field_4E8 * 6],0);
-  proc_7F06FDE8((int)&ptr_BONDdata->field_598,extraout_f12_01);
-  proc_7F06FE3C((int)&ptr_BONDdata->field_598,proc_7F08DBB0);
+  *(int *)&pPlayer->stationary_ground_offset = pPlayer->field_704;
+  pPlayer->field_554 = 0.00000000;
+  *(float *)&pPlayer->field_558 =
+       (float)pPlayer->field_744 - (float)pPlayer->field_704;
+  *(float *)&pPlayer->field_55C =
+       (float)pPlayer->field_748 - (float)pPlayer->field_708;
+  proc_7F06FCA8((int)&pPlayer->field_598,
+                (&dword_80036AD0)[pPlayer->field_4E8 * 6] + ptr_animation_table,0,
+                extraout_f12_00,(&FLOAT_80036ad4)[pPlayer->field_4E8 * 6],extraout_f14_00);
+  proc_7F06FDCC((int)&pPlayer->field_598,(&FLOAT_80036ad4)[pPlayer->field_4E8 * 6],0);
+  proc_7F06FDE8((int)&pPlayer->field_598,extraout_f12_01);
+  proc_7F06FE3C((int)&pPlayer->field_598,proc_7F08DBB0);
   proc_7F08DBC8();
   return;
 }
@@ -27533,8 +27533,8 @@ void proc_7F0072B0(void)
 void disable_onscreen_cheat_text(void)
 
 {
-  ptr_BONDdata->something_with_cheat_text = '\0';
-  ptr_BONDdata->can_display_cheat_text = '\0';
+  pPlayer->something_with_cheat_text = '\0';
+  pPlayer->can_display_cheat_text = '\0';
   return;
 }
 
@@ -38569,32 +38569,32 @@ ulonglong die_blood_image_routine(int param_1)
   char cStack1;
   
   if (param_1 == 0) {
-    ptr_BONDdata->bloodcnt = -0x7ffd44d0;
+    pPlayer->bloodcnt = -0x7ffd44d0;
   }
   else {
     if (param_1 == 1) {
-      in_v0_lo = (byte *)ptr_BONDdata->field_11AC;
+      in_v0_lo = (byte *)pPlayer->field_11AC;
       if (in_v0_lo < &dword_8002C50C) {
-        *(byte **)&ptr_BONDdata->bloodcnt = in_v0_lo;
+        *(byte **)&pPlayer->bloodcnt = in_v0_lo;
       }
     }
   }
-  ptr_BONDdata->field_11B8 = 1 - ptr_BONDdata->field_11B8;
+  pPlayer->field_11B8 = 1 - pPlayer->field_11B8;
   proc_7F0BD714(0x1e00);
-  *(byte **)(&ptr_BONDdata->field_11B0 + ptr_BONDdata->field_11B8) = in_v0_lo;
+  *(byte **)(&pPlayer->field_11B0 + pPlayer->field_11B8) = in_v0_lo;
   proc_7F0BD714(0x1e00);
   pbVar1 = decrypt_bleeding_animation_data
-                     ((char *)ptr_BONDdata->bloodcnt,0x50,0x60,in_v0_lo,&cStack1);
-  *(byte **)&ptr_BONDdata->field_11AC = pbVar1;
+                     ((char *)pPlayer->bloodcnt,0x50,0x60,in_v0_lo,&cStack1);
+  *(byte **)&pPlayer->field_11AC = pbVar1;
   proc_7F01D16C(in_v0_lo,0x50,0x60,
-                (undefined *)(&ptr_BONDdata->field_11B0)[ptr_BONDdata->field_11B8]);
-  proc_7F01D02C((&ptr_BONDdata->field_11B0)[ptr_BONDdata->field_11B8],0x50,
-                (&ptr_BONDdata->field_11B0)[ptr_BONDdata->field_11B8]);
-  proc_7F01CEEC((&ptr_BONDdata->field_11B0)[ptr_BONDdata->field_11B8],0x50,
-                (&ptr_BONDdata->field_11B0)[ptr_BONDdata->field_11B8]);
-  proc_7F01CC94((byte *)(&ptr_BONDdata->field_11B0)[ptr_BONDdata->field_11B8],0x1e00,
-                (byte *)(&ptr_BONDdata->field_11B0)[ptr_BONDdata->field_11B8]);
-  return (ulonglong)((undefined *)ptr_BONDdata->field_11AC < &dword_8002C50C) ^ 1;
+                (undefined *)(&pPlayer->field_11B0)[pPlayer->field_11B8]);
+  proc_7F01D02C((&pPlayer->field_11B0)[pPlayer->field_11B8],0x50,
+                (&pPlayer->field_11B0)[pPlayer->field_11B8]);
+  proc_7F01CEEC((&pPlayer->field_11B0)[pPlayer->field_11B8],0x50,
+                (&pPlayer->field_11B0)[pPlayer->field_11B8]);
+  proc_7F01CC94((byte *)(&pPlayer->field_11B0)[pPlayer->field_11B8],0x1e00,
+                (byte *)(&pPlayer->field_11B0)[pPlayer->field_11B8]);
+  return (ulonglong)((undefined *)pPlayer->field_11AC < &dword_8002C50C) ^ 1;
 }
 
 
@@ -38624,7 +38624,7 @@ undefined4 * proc_7F01C400(undefined4 *param_1)
   puVar1[10] = 0xba001301;
   puVar1[0xb] = 0;
   puVar1[0xc] = 0xfd900000;
-  puVar1[0xd] = (&ptr_BONDdata->field_11B0)[ptr_BONDdata->field_11B8] + -0x80000000;
+  puVar1[0xd] = (&pPlayer->field_11B0)[pPlayer->field_11B8] + -0x80000000;
   puVar1[0xe] = 0xf5900000;
   puVar1[0x10] = 0xe6000000;
   puVar1[0x12] = 0xf3000000;
@@ -38694,7 +38694,7 @@ undefined4 * proc_7F01C670(undefined4 *param_1)
   param_1[0x12] = 0xba001301;
   param_1[0x13] = 0;
   param_1[0x14] = 0xfd900000;
-  param_1[0x15] = (&ptr_BONDdata->field_11B0)[ptr_BONDdata->field_11B8] + -0x80000000;
+  param_1[0x15] = (&pPlayer->field_11B0)[pPlayer->field_11B8] + -0x80000000;
   param_1[0x16] = 0xf5900000;
   param_1[0x17] = 0x7080200;
   param_1[0x18] = 0xe6000000;
@@ -47131,13 +47131,13 @@ undefined4 proc_7F0292A8(short *param_1,undefined4 *param_2,int param_3)
       }
     }
     else {
-      proc_7F08A03C(ptr_BONDdata->position_data_pointer,0);
+      proc_7F08A03C(pPlayer->position_data_pointer,0);
       iVar2 = get_invisible_to_guards_flag();
       if (((iVar2 != 0) && (lVar1 = proc_7F0B0E24(), lVar1 != 0)) && (iStack12 == iStack16)) {
         proc_7F029298((int)param_1);
         uStack4 = 1;
       }
-      proc_7F08A03C(ptr_BONDdata->position_data_pointer,1);
+      proc_7F08A03C(pPlayer->position_data_pointer,1);
     }
     set_or_unset_GUARDdata_flag((GUARDdata *)param_1,1);
   }
@@ -47163,7 +47163,7 @@ undefined4 proc_7F0294BC(int param_1)
     iVar2 = *(int *)(param_1 + 0x18);
     iVar3 = get_curplayer_positiondata();
     set_or_unset_GUARDdata_flag((GUARDdata *)param_1,0);
-    proc_7F08A03C(ptr_BONDdata->position_data_pointer,0);
+    proc_7F08A03C(pPlayer->position_data_pointer,0);
     iVar2 = *(int *)(iVar2 + 0x14);
     lVar1 = proc_7F0B0E24();
     if ((lVar1 != 0) && (iVar2 == *(int *)(iVar3 + 0x14))) {
@@ -47171,7 +47171,7 @@ undefined4 proc_7F0294BC(int param_1)
       uStack4 = 1;
     }
     set_or_unset_GUARDdata_flag((GUARDdata *)param_1,1);
-    proc_7F08A03C(ptr_BONDdata->position_data_pointer,1);
+    proc_7F08A03C(pPlayer->position_data_pointer,1);
   }
   return uStack4;
 }
@@ -47240,13 +47240,13 @@ undefined4 proc_7F029760(int param_1)
   iVar1 = *(int *)(param_1 + 0x18);
   iVar3 = get_curplayer_positiondata();
   uStack16 = 0;
-  proc_7F08A03C(ptr_BONDdata->position_data_pointer,0);
+  proc_7F08A03C(pPlayer->position_data_pointer,0);
   iVar3 = *(int *)(iVar3 + 0x14);
   lVar2 = proc_7F0B0E24();
   if ((lVar2 != 0) && (iVar3 == *(int *)(iVar1 + 0x14))) {
     uStack16 = 1;
   }
-  proc_7F08A03C(ptr_BONDdata->position_data_pointer,1);
+  proc_7F08A03C(pPlayer->position_data_pointer,1);
   return uStack16;
 }
 
@@ -49189,7 +49189,7 @@ LAB_7f02c51c:
       param_5 = extraout_f12_08;
     }
     else {
-      fStack56 = proc_7F089780(ptr_BONDdata);
+      fStack56 = proc_7F089780(pPlayer);
       if ((*(uint *)(param_1 + 10) & 0x20) == 0) {
         if (flt_80051ED0 < vector2) {
           uVar5 = get_random_value();
@@ -52871,7 +52871,7 @@ longlong proc_7F032FAC(short *param_1,longlong param_2)
   if (param_2 != 0xfd) {
     if (param_2 != 0xf9) {
       if ((param_2 == 0xf8) &&
-         (psVar1 = *(short **)(ptr_BONDdata->position_data_pointer + 4), psVar1 != NULL)) {
+         (psVar1 = *(short **)(pPlayer->position_data_pointer + 4), psVar1 != NULL)) {
         param_2 = (longlong)*psVar1;
       }
       return param_2;
@@ -56307,7 +56307,7 @@ void proc_7F03BDEC(undefined4 param_1,longlong param_2)
   
   iStack12 = 0;
   iVar3 = get_curplayer_positiondata();
-  proc_7F089780(ptr_BONDdata);
+  proc_7F089780(pPlayer);
   ppcVar8 = (char **)(DAT_80071df0 + -4);
   if (ppcVar8 <= (char **)((int)&DAT_8007161c + 3)) {
 LAB_7f03c094:
@@ -56414,7 +56414,7 @@ void proc_7F03C0F0(undefined8 param_1)
               }
               else {
                 if (lVar1 == 0x3c) {
-                  ptr_BONDdata->field_1270 = 0;
+                  pPlayer->field_1270 = 0;
                 }
                 else {
                   inc_curplayer_hitcount_with_weapon(weapon,0);
@@ -57313,7 +57313,7 @@ float proc_7F03D188(void)
   }
   iVar5 = get_curplayer_positiondata();
   iVar1 = *(int *)(iVar5 + 0x14);
-  proc_7F089780(ptr_BONDdata);
+  proc_7F089780(pPlayer);
   proc_7F08A03C(iVar5,0);
   lVar3 = proc_7F0B0E24();
   if ((lVar3 != 0) && (iVar1 == *(int *)(in_a0_lo + 0x14))) {
@@ -66604,7 +66604,7 @@ undefined8 collect_or_interact_object(char *param_1,int param_2)
   uint uVar8;
   
   objdata = *(int *)(param_1 + 4);
-  if ((ptr_BONDdata->player_button_control != 0) || (clock_timer == 0)) {
+  if ((pPlayer->player_button_control != 0) || (clock_timer == 0)) {
     return 0;
   }
   if (false) {
@@ -66944,12 +66944,12 @@ undefined8 object_collectability_routine(void)
     }
   }
   fVar11 = get_curplay_vertical_rotation_in_degrees();
-  if ((flt_800532E0 <= fVar11) || (-1 < ptr_BONDdata->field_1270)) {
+  if ((flt_800532E0 <= fVar11) || (-1 < pPlayer->field_1270)) {
     item = get_curplayer_positiondata();
     fVar11 = *(float *)(objdata + 0x58) - *(float *)(item + 8);
     fVar13 = *(float *)(objdata + 0x5c) - *(float *)(item + 0xc);
     fVar12 = *(float *)(objdata + 0x60) - *(float *)(item + 0x10);
-    if (ptr_BONDdata->field_1270 < 0x3c) {
+    if (pPlayer->field_1270 < 0x3c) {
       bVar2 = fVar11 * fVar11 + fVar12 * fVar12 <= flt_800532E8;
       if (((bVar2) && (bVar2 = -200.00000000 <= fVar13, bVar2)) &&
          (bVar2 = false, fVar13 <= 200.00000000)) {
@@ -69926,9 +69926,9 @@ void proc_7F05522C(int param_1,float *param_2,float *param_3,int param_4)
   
   pfVar3 = (float *)(ptr_2xxxpresets + (int)*(short *)(param_1 + 6) * 0x44);
   iVar2 = get_curplayer_positiondata();
-  fVar6 = (float)ptr_BONDdata->field_498 * 30.00000000 * 1.00000000 * 0.75000000 +
+  fVar6 = (float)pPlayer->field_498 * 30.00000000 * 1.00000000 * 0.75000000 +
           *(float *)(iVar2 + 8);
-  fVar5 = (float)ptr_BONDdata->field_4A0 * 30.00000000 * 1.00000000 * 0.75000000 +
+  fVar5 = (float)pPlayer->field_4A0 * 30.00000000 * 1.00000000 * 0.75000000 +
           *(float *)(iVar2 + 0x10);
   if (param_4 == 0) {
     fStack44 = pfVar3[0xe];
@@ -70659,7 +70659,7 @@ void drop_inventory(void)
   undefined4 extraout_a3_lo;
   ulonglong uVar4;
   
-  GUARDdata = *(int **)(ptr_BONDdata->position_data_pointer + 4);
+  GUARDdata = *(int **)(pPlayer->position_data_pointer + 4);
   set_0x4_in_runtime_flags_for_item_in_guards_hand(GUARDdata,0);
   set_0x4_in_runtime_flags_for_item_in_guards_hand(GUARDdata,1);
   uVar4 = 1;
@@ -74274,10 +74274,10 @@ void proc_7F05C614(void)
 
 {
   if (cartridges_eject != 0) {
-    ptr_BONDdata->field_92C = 1;
+    pPlayer->field_92C = 1;
     proc_7F058714((float *)(DWORD_ARRAY_80035904 + DAT_80034ca0 * 9 + 4),
-                  (float *)&ptr_BONDdata->field_8EC);
-    proc_7F058998(DWORD_ARRAY_80035904 + DAT_80034ca0 * 9 + 1,(int)&ptr_BONDdata->field_8EC);
+                  (float *)&pPlayer->field_8EC);
+    proc_7F058998(DWORD_ARRAY_80035904 + DAT_80034ca0 * 9 + 1,(int)&pPlayer->field_8EC);
     cartridges_eject = 0;
   }
   return;
@@ -74427,7 +74427,7 @@ void unknown_takes_playerhand(int hand)
   
   item = get_item_in_hand(hand);
   puVar1 = get_ptr_item_statistics(item);
-  piVar3 = &ptr_BONDdata->unknown + hand * 0xea;
+  piVar3 = &pPlayer->unknown + hand * 0xea;
   fVar7 = *(float *)(puVar1 + 0x40);
   puVar5 = auStack16 + hand + 2;
   uVar4 = piVar3[0x282] + 2U & 3;
@@ -74446,57 +74446,57 @@ void unknown_takes_playerhand(int hand)
   if ((int)uVar2 < 0) {
     fVar6 = fVar6 + 4294967296.00000000;
   }
-  *(float *)(&ptr_BONDdata->field_9A8 + hand * 0xea + *puVar5 * 3) =
+  *(float *)(&pPlayer->field_9A8 + hand * 0xea + *puVar5 * 3) =
        (fVar6 * 0.00000000 - 0.50000000) * flt_80053C14 * fVar7;
   uVar2 = get_random_value();
   fVar6 = (float)uVar2;
   if ((int)uVar2 < 0) {
     fVar6 = fVar6 + 4294967296.00000000;
   }
-  *(float *)(&ptr_BONDdata->field_9AC + hand * 0xea + *puVar5 * 3) =
+  *(float *)(&pPlayer->field_9AC + hand * 0xea + *puVar5 * 3) =
        (fVar6 * 0.00000000 - 0.50000000) * flt_80053C18 * fVar7;
-  (&ptr_BONDdata->field_9B0)[hand * 0xea + *puVar5 * 3] = -0x40800000;
+  (&pPlayer->field_9B0)[hand * 0xea + *puVar5 * 3] = -0x40800000;
   uVar2 = get_random_value();
   fVar6 = (float)uVar2;
   if ((int)uVar2 < 0) {
     fVar6 = fVar6 + 4294967296.00000000;
   }
-  *(float *)(&ptr_BONDdata->field_9D8 + hand * 0xea + *puVar5 * 3) =
+  *(float *)(&pPlayer->field_9D8 + hand * 0xea + *puVar5 * 3) =
        (fVar6 * 0.00000000 - 0.50000000) * flt_80053C1C * fVar7;
-  (&ptr_BONDdata->field_9DC)[hand * 0xea + *puVar5 * 3] = 0x3f800000;
+  (&pPlayer->field_9DC)[hand * 0xea + *puVar5 * 3] = 0x3f800000;
   uVar2 = get_random_value();
   fVar6 = (float)uVar2;
   if ((int)uVar2 < 0) {
     fVar6 = fVar6 + 4294967296.00000000;
   }
-  *(float *)(&ptr_BONDdata->field_9E0 + hand * 0xea + *puVar5 * 3) =
+  *(float *)(&pPlayer->field_9E0 + hand * 0xea + *puVar5 * 3) =
        (fVar6 * 0.00000000 - 0.50000000) * flt_80053C20 * fVar7;
   uVar2 = get_random_value();
   fVar7 = (float)uVar2;
   if ((int)uVar2 < 0) {
     fVar7 = fVar7 + 4294967296.00000000;
   }
-  *(float *)(&ptr_BONDdata->field_978 + hand * 0xea + *puVar5 * 3) =
+  *(float *)(&pPlayer->field_978 + hand * 0xea + *puVar5 * 3) =
        fVar7 * 0.00000000 * 0.75000000 + 1.50000000;
   uVar2 = get_random_value();
   fVar7 = (float)uVar2;
   if ((int)uVar2 < 0) {
     fVar7 = fVar7 + 4294967296.00000000;
   }
-  *(float *)(&ptr_BONDdata->unknown + hand * 0xea + *puVar5 * 3 + 0x25f) =
-       (float)(&ptr_BONDdata->unknown + hand * 0xea)[0x285] * (fVar7 * 0.00000000 + 2.00000000);
+  *(float *)(&pPlayer->unknown + hand * 0xea + *puVar5 * 3 + 0x25f) =
+       (float)(&pPlayer->unknown + hand * 0xea)[0x285] * (fVar7 * 0.00000000 + 2.00000000);
   uVar2 = get_random_value();
   fVar7 = (float)uVar2;
   if ((int)uVar2 < 0) {
     fVar7 = fVar7 + 4294967296.00000000;
   }
-  *(float *)(&ptr_BONDdata->field_980 + hand * 0xea + *puVar5 * 3) =
+  *(float *)(&pPlayer->field_980 + hand * 0xea + *puVar5 * 3) =
        (fVar7 * 0.00000000 - 0.50000000) * 2.50000000;
-  piVar3 = &ptr_BONDdata->unknown + hand * 0xea;
+  piVar3 = &pPlayer->unknown + hand * 0xea;
   if (piVar3[0x286] < 0) {
-    *(float *)(&ptr_BONDdata->unknown + hand * 0xea + *puVar5 * 3 + 0x25e) =
-         (float)(&ptr_BONDdata->unknown + hand * 0xea + *puVar5 * 3)[0x25e] * -1.00000000;
-    piVar3 = &ptr_BONDdata->unknown + hand * 0xea;
+    *(float *)(&pPlayer->unknown + hand * 0xea + *puVar5 * 3 + 0x25e) =
+         (float)(&pPlayer->unknown + hand * 0xea + *puVar5 * 3)[0x25e] * -1.00000000;
+    piVar3 = &pPlayer->unknown + hand * 0xea;
     if (piVar3[0x286] == -2) {
       piVar3[0x286] = 1;
     }
@@ -74512,8 +74512,8 @@ void unknown_takes_playerhand(int hand)
       piVar3[0x286] = 2;
     }
   }
-  *(float *)(&ptr_BONDdata->unknown + hand * 0xea + 0x285) =
-       -(float)(&ptr_BONDdata->unknown + hand * 0xea)[0x285];
+  *(float *)(&pPlayer->unknown + hand * 0xea + 0x285) =
+       -(float)(&pPlayer->unknown + hand * 0xea)[0x285];
   return;
 }
 
@@ -74525,7 +74525,7 @@ ulonglong proc_7F05CEBC(int param_1)
   int *piVar1;
   ulonglong uVar2;
   
-  piVar1 = &ptr_BONDdata->unknown + param_1;
+  piVar1 = &pPlayer->unknown + param_1;
   uVar2 = (ulonglong)(0 < piVar1[0x1fe]);
   if ((0 >= piVar1[0x1fe]) && (uVar2 = (ulonglong)(piVar1[0x200] == 0), piVar1[0x200] == 0)) {
     uVar2 = (ulonglong)(piVar1[0xa91] < 0);
@@ -74538,7 +74538,7 @@ ulonglong proc_7F05CEBC(int param_1)
 int get_itemtype_in_hand(int hand)
 
 {
-  return ptr_BONDdata->hand_item[hand];
+  return pPlayer->hand_item[hand];
 }
 
 
@@ -74546,7 +74546,7 @@ int get_itemtype_in_hand(int hand)
 Gitemheader * get_ptr_itemheader_in_hand(int hand)
 
 {
-  return (Gitemheader *)(ptr_BONDdata->copy_of_body_obj_header + hand * 8);
+  return (Gitemheader *)(pPlayer->copy_of_body_obj_header + hand * 8);
 }
 
 
@@ -74554,7 +74554,7 @@ Gitemheader * get_ptr_itemheader_in_hand(int hand)
 void * proc_7F05CF30(int param_1)
 
 {
-  return ptr_BONDdata->ptr_hand_weapon_buffer[param_1];
+  return pPlayer->ptr_hand_weapon_buffer[param_1];
 }
 
 
@@ -74570,10 +74570,10 @@ u32 proc_7F05CF48(int param_1)
 void remove_item_in_hand(int hand)
 
 {
-  ptr_BONDdata->hand_invisible[hand] = 0;
-  ptr_BONDdata->hand_item[hand] = 0;
-  ptr_BONDdata->field_2A44[hand] = -1;
-  ptr_BONDdata->lock_hand_model[hand] = 1;
+  pPlayer->hand_invisible[hand] = 0;
+  pPlayer->hand_item[hand] = 0;
+  pPlayer->field_2A44[hand] = -1;
+  pPlayer->lock_hand_model[hand] = 1;
   return;
 }
 
@@ -74584,7 +74584,7 @@ void place_item_in_hand_swap_and_make_visible(int hand,int item)
 {
   BONDdata *local_v1_lo_16;
   
-  local_v1_lo_16 = (BONDdata *)(&ptr_BONDdata->unknown + hand);
+  local_v1_lo_16 = (BONDdata *)(&pPlayer->unknown + hand);
   if (local_v1_lo_16->lock_hand_model[0] == 0) {
     if (local_v1_lo_16->hand_invisible[0] < 0) {
       if (item != local_v1_lo_16->hand_item[0]) {
@@ -74596,7 +74596,7 @@ void place_item_in_hand_swap_and_make_visible(int hand,int item)
     else {
       if (item != local_v1_lo_16->hand_item[0]) {
         local_v1_lo_16->hand_invisible[0] = -1;
-        ptr_BONDdata->field_2A44[hand] = item;
+        pPlayer->field_2A44[hand] = item;
         return;
       }
     }
@@ -74610,7 +74610,7 @@ char * get_ptr_item_text_call_line(int item)
 
 {
   if (item == 1) {
-    item = ptr_BONDdata->field_2A38;
+    item = pPlayer->field_2A38;
   }
   return (&gitem_structs)[item].item_file_name;
 }
@@ -74621,7 +74621,7 @@ Gitemheader * get_ptr_weapon_model_header_line(int weapon)
 
 {
   if (weapon == 1) {
-    weapon = ptr_BONDdata->field_2A38;
+    weapon = pPlayer->field_2A38;
   }
   return (&gitem_structs)[weapon].item_header;
 }
@@ -74631,7 +74631,7 @@ Gitemheader * get_ptr_weapon_model_header_line(int weapon)
 int proc_7F05D078(void)
 
 {
-  return ptr_BONDdata->field_2A38;
+  return pPlayer->field_2A38;
 }
 
 
@@ -74647,7 +74647,7 @@ void used_to_load_1st_person_model_on_demand(int param_1)
   int iVar3;
   int *piVar4;
   
-  recallstring = &ptr_BONDdata->unknown + param_1;
+  recallstring = &pPlayer->unknown + param_1;
   item = recallstring[0x1fe];
   if ((item < 0) && (recallstring[0xa94] == 0)) {
     if (item < -2) {
@@ -74665,7 +74665,7 @@ void used_to_load_1st_person_model_on_demand(int param_1)
     if ((recallstring != NULL) && (piVar2 != NULL)) {
       targetloc = proc_7F05CF30(param_1);
       iVar3 = proc_7F05CF48(param_1);
-      piVar4 = &ptr_BONDdata->unknown + param_1 * 8;
+      piVar4 = &pPlayer->unknown + param_1 * 8;
       piVar4[0x204] = *piVar2;
       piVar4[0x205] = piVar2[1];
       piVar4[0x206] = piVar2[2];
@@ -74675,31 +74675,31 @@ void used_to_load_1st_person_model_on_demand(int param_1)
       piVar4[0x20a] = piVar2[6];
       piVar4[0x20b] = piVar2[7];
       if (item == 0x54) {
-        proc_7F0CBAF4(&ptr_BONDdata->field_850 + param_1 * 4,targetloc + 0xbd70,iVar3 + -0xbd70);
+        proc_7F0CBAF4(&pPlayer->field_850 + param_1 * 4,targetloc + 0xbd70,iVar3 + -0xbd70);
         load_object_fill_header
-                  ((object_header *)(ptr_BONDdata->copy_of_body_obj_header + param_1 * 8),
-                   recallstring,targetloc,0xbd70,(int)(&ptr_BONDdata->field_850 + param_1 * 4));
+                  ((object_header *)(pPlayer->copy_of_body_obj_header + param_1 * 8),
+                   recallstring,targetloc,0xbd70,(int)(&pPlayer->field_850 + param_1 * 4));
       }
       else {
         if ((item == 0x1e) || (item == 0x17)) {
-          proc_7F0CBAF4(&ptr_BONDdata->field_850 + param_1 * 4,targetloc + 0xafd0,iVar3 + -0xafd0);
+          proc_7F0CBAF4(&pPlayer->field_850 + param_1 * 4,targetloc + 0xafd0,iVar3 + -0xafd0);
           load_object_fill_header
-                    ((object_header *)(ptr_BONDdata->copy_of_body_obj_header + param_1 * 8),
-                     recallstring,targetloc,0xafd0,(int)(&ptr_BONDdata->field_850 + param_1 * 4));
+                    ((object_header *)(pPlayer->copy_of_body_obj_header + param_1 * 8),
+                     recallstring,targetloc,0xafd0,(int)(&pPlayer->field_850 + param_1 * 4));
         }
         else {
           uVar1 = (&dword_80032464)[param_1];
-          proc_7F0CBAF4(&ptr_BONDdata->field_850 + param_1 * 4,uVar1 + targetloc,iVar3 - uVar1);
+          proc_7F0CBAF4(&pPlayer->field_850 + param_1 * 4,uVar1 + targetloc,iVar3 - uVar1);
           load_object_fill_header
-                    ((object_header *)(ptr_BONDdata->copy_of_body_obj_header + param_1 * 8),
+                    ((object_header *)(pPlayer->copy_of_body_obj_header + param_1 * 8),
                      recallstring,targetloc,(&dword_80032464)[param_1],
-                     (int)(&ptr_BONDdata->field_850 + param_1 * 4));
+                     (int)(&pPlayer->field_850 + param_1 * 4));
         }
       }
     }
-    ptr_BONDdata->hand_invisible[param_1] = 1;
-    ptr_BONDdata->hand_item[param_1] = item;
-    ptr_BONDdata->field_2A44[param_1] = -1;
+    pPlayer->hand_invisible[param_1] = 1;
+    pPlayer->hand_item[param_1] = item;
+    pPlayer->field_2A44[param_1] = -1;
   }
   return;
 }
@@ -74769,7 +74769,7 @@ ITEM_IDS get_next_weapon_in_cycle_for_hand(int hand,longlong direction)
   ITEM_IDS IVar1;
   int *piVar2;
   
-  piVar2 = &ptr_BONDdata->unknown + hand * 0xea;
+  piVar2 = &pPlayer->unknown + hand * 0xea;
   if (piVar2[0x225] == 5) {
     if (((direction < 0) && (0 < piVar2[0x22e])) || ((0 < direction && (piVar2[0x22e] < 0)))) {
       IVar1 = get_item_in_hand(hand);
@@ -74798,29 +74798,29 @@ void likely_change_weapon_in_hand(int hand,int weapon,s32 direction)
   int iVar2;
   int *piVar3;
   
-  piVar3 = &ptr_BONDdata->unknown + hand * 0xea;
+  piVar3 = &pPlayer->unknown + hand * 0xea;
   if ((piVar3[0x225] == 5) || (piVar3[0x225] == 6)) {
     piVar3[0x22c] = piVar3[0x224];
     uVar1 = get_num_players();
     if (uVar1 == 1) {
-      (&ptr_BONDdata->unknown + hand * 0xea)[0x22c] =
-           (&ptr_BONDdata->unknown + hand * 0xea)[0x22c] + 0x11;
+      (&pPlayer->unknown + hand * 0xea)[0x22c] =
+           (&pPlayer->unknown + hand * 0xea)[0x22c] + 0x11;
     }
     else {
-      (&ptr_BONDdata->unknown + hand * 0xea)[0x22c] =
-           (&ptr_BONDdata->unknown + hand * 0xea)[0x22c] + 0xd;
+      (&pPlayer->unknown + hand * 0xea)[0x22c] =
+           (&pPlayer->unknown + hand * 0xea)[0x22c] + 0xd;
     }
   }
   iVar2 = get_next_weapon_in_cycle_for_hand(hand,0);
   if (iVar2 != weapon) {
-    piVar3 = &ptr_BONDdata->unknown + hand * 0xea;
+    piVar3 = &pPlayer->unknown + hand * 0xea;
     if ((piVar3[0x225] != 5) && (piVar3[0x225] != 6)) {
       piVar3[0x226] = 5;
-      piVar3 = &ptr_BONDdata->unknown + hand * 0xea;
+      piVar3 = &pPlayer->unknown + hand * 0xea;
     }
     piVar3[0x22b] = weapon;
-    (&ptr_BONDdata->right_weapon_animation_trigger)[hand * 0xea] = 1;
-    (&ptr_BONDdata->field_8B8)[hand * 0xea] = direction;
+    (&pPlayer->right_weapon_animation_trigger)[hand * 0xea] = 1;
+    (&pPlayer->field_8B8)[hand * 0xea] = direction;
   }
   return;
 }
@@ -74858,8 +74858,8 @@ void proc_7F05D650(int param_1)
 void proc_7F05D690(void)
 
 {
-  draw_item_in_hand_has_more_ammo(0,ptr_BONDdata->previous_right_weapon);
-  draw_item_in_hand_has_more_ammo(1,ptr_BONDdata->left_weapon_previous);
+  draw_item_in_hand_has_more_ammo(0,pPlayer->previous_right_weapon);
+  draw_item_in_hand_has_more_ammo(1,pPlayer->left_weapon_previous);
   return;
 }
 
@@ -74877,8 +74877,8 @@ void advance_through_inventory(void)
     proc_7F08C86C(&iStack4,&iStack8,0);
   }
   else {
-    iStack4 = ptr_BONDdata->previous_right_weapon;
-    iStack8 = ptr_BONDdata->left_weapon_previous;
+    iStack4 = pPlayer->previous_right_weapon;
+    iStack8 = pPlayer->left_weapon_previous;
   }
   likely_change_weapon_in_hand(0,iStack4,1);
   likely_change_weapon_in_hand(1,iStack8,1);
@@ -74899,8 +74899,8 @@ void backstep_through_inventory(void)
     proc_7F08CB10(&iStack4,&iStack8,0);
   }
   else {
-    iStack4 = ptr_BONDdata->previous_right_weapon;
-    iStack8 = ptr_BONDdata->left_weapon_previous;
+    iStack4 = pPlayer->previous_right_weapon;
+    iStack8 = pPlayer->left_weapon_previous;
   }
   likely_change_weapon_in_hand(0,iStack4,-1);
   likely_change_weapon_in_hand(1,iStack8,-1);
@@ -74938,8 +74938,8 @@ void autoadvance_on_deplete_all_ammo(void)
     }
   }
   else {
-    iStack12 = ptr_BONDdata->previous_right_weapon;
-    iStack16 = ptr_BONDdata->left_weapon_previous;
+    iStack12 = pPlayer->previous_right_weapon;
+    iStack16 = pPlayer->left_weapon_previous;
   }
   likely_change_weapon_in_hand(0,iStack12,1);
   likely_change_weapon_in_hand(1,iStack16,1);
@@ -74951,9 +74951,9 @@ void autoadvance_on_deplete_all_ammo(void)
 void draw_item_in_hand_has_more_ammo(int hand,ITEM_IDS item)
 
 {
-  (&ptr_BONDdata->right_weapon_current_animation)[hand * 0xea] = 5;
-  (&ptr_BONDdata->right_weapon_next_weapon)[hand * 0xea] = item;
-  (&ptr_BONDdata->right_weapon_animation_trigger)[hand * 0xea] = 0;
+  (&pPlayer->right_weapon_current_animation)[hand * 0xea] = 5;
+  (&pPlayer->right_weapon_next_weapon)[hand * 0xea] = item;
+  (&pPlayer->right_weapon_animation_trigger)[hand * 0xea] = 0;
   return;
 }
 
@@ -74967,8 +74967,8 @@ void attempt_reload_item_in_hand(int hand)
   
   weapon = get_item_in_hand(hand);
   iVar1 = get_ammo_type_for_weapon(weapon);
-  if ((iVar1 != 0) && ((&ptr_BONDdata->unknown + hand * 0xea)[0x226] == 0)) {
-    (&ptr_BONDdata->unknown + hand * 0xea)[0x226] = 9;
+  if ((iVar1 != 0) && ((&pPlayer->unknown + hand * 0xea)[0x226] == 0)) {
+    (&pPlayer->unknown + hand * 0xea)[0x226] = 9;
   }
   return;
 }
@@ -74978,7 +74978,7 @@ void attempt_reload_item_in_hand(int hand)
 ITEM_IDS get_item_in_hand(int hand)
 
 {
-  return (ITEM_IDS)(&ptr_BONDdata->right_weapon)[hand * 0xea];
+  return (ITEM_IDS)(&pPlayer->right_weapon)[hand * 0xea];
 }
 
 
@@ -74986,8 +74986,8 @@ ITEM_IDS get_item_in_hand(int hand)
 void draw_item_in_hand(int param_1,int param_2)
 
 {
-  (&ptr_BONDdata->right_weapon_current_animation)[param_1 * 0xea] = 0xe;
-  (&ptr_BONDdata->right_weapon_next_weapon)[param_1 * 0xea] = param_2;
+  (&pPlayer->right_weapon_current_animation)[param_1 * 0xea] = 0xe;
+  (&pPlayer->right_weapon_next_weapon)[param_1 * 0xea] = param_2;
   return;
 }
 
@@ -74998,9 +74998,9 @@ int return_ammo_in_hand(int hand)
 {
   int iVar1;
   
-  iVar1 = (&ptr_BONDdata->unknown + hand * 0xea)[0x21d];
+  iVar1 = (&pPlayer->unknown + hand * 0xea)[0x21d];
   if (iVar1 < 0) {
-    return (&ptr_BONDdata->unknown + hand * 0xea)[0x21c];
+    return (&pPlayer->unknown + hand * 0xea)[0x21c];
   }
   return iVar1;
 }
@@ -75011,7 +75011,7 @@ void proc_7F05DA8C(int param_1,int param_2)
 
 {
   place_item_in_hand_swap_and_make_visible(param_1,param_2);
-  (&ptr_BONDdata->right_weapon_attack)[param_1 * 0xea] = param_2;
+  (&pPlayer->right_weapon_attack)[param_1 * 0xea] = param_2;
   return;
 }
 
@@ -75020,10 +75020,10 @@ void proc_7F05DA8C(int param_1,int param_2)
 void proc_7F05DAE4(int param_1)
 
 {
-  if (-1 < (&ptr_BONDdata->unknown + param_1 * 0xea)[0x21d]) {
+  if (-1 < (&pPlayer->unknown + param_1 * 0xea)[0x21d]) {
     place_item_in_hand_swap_and_make_visible
-              (param_1,(&ptr_BONDdata->unknown + param_1 * 0xea)[0x21c]);
-    (&ptr_BONDdata->right_weapon_attack)[param_1 * 0xea] = -1;
+              (param_1,(&pPlayer->unknown + param_1 * 0xea)[0x21c]);
+    (&pPlayer->right_weapon_attack)[param_1 * 0xea] = -1;
   }
   return;
 }
@@ -75038,30 +75038,30 @@ void remove_hands_item(int param_1,int param_2)
   ulonglong uVar1;
   int iVar3;
   
-  weapon = (&ptr_BONDdata->right_weapon)[param_1 * 0xea];
+  weapon = (&pPlayer->right_weapon)[param_1 * 0xea];
   iVar2 = get_ammo_type_for_weapon(weapon);
-  if ((&ptr_BONDdata->unknown + param_1 * 0xea)[0x21d] < 0) {
+  if ((&pPlayer->unknown + param_1 * 0xea)[0x21d] < 0) {
     place_item_in_hand_swap_and_make_visible(param_1,param_2);
-    iVar3 = (&ptr_BONDdata->right_weapon_ammo_in_magazine)[param_1 * 0xea];
+    iVar3 = (&pPlayer->right_weapon_ammo_in_magazine)[param_1 * 0xea];
   }
   else {
-    iVar3 = (&ptr_BONDdata->unknown + param_1 * 0xea)[0x227];
+    iVar3 = (&pPlayer->unknown + param_1 * 0xea)[0x227];
   }
   if (0 < iVar3) {
-    (&ptr_BONDdata->unknown + iVar2)[0x44c] = (&ptr_BONDdata->unknown + iVar2)[0x44c] + iVar3;
+    (&pPlayer->unknown + iVar2)[0x44c] = (&pPlayer->unknown + iVar2)[0x44c] + iVar3;
   }
   if (weapon < 0x21) {
-    (&ptr_BONDdata->previous_right_weapon)[param_1 * 0xea] = weapon;
+    (&pPlayer->previous_right_weapon)[param_1 * 0xea] = weapon;
   }
   uVar1 = get_num_players();
   if (1 < (longlong)uVar1) {
     proc_7F09B368(param_1);
   }
   proc_7F05FB00(param_1);
-  (&ptr_BONDdata->right_weapon)[param_1 * 0xea] = param_2;
-  (&ptr_BONDdata->right_weapon_ammo_in_magazine)[param_1 * 0xea] = 0;
-  (&ptr_BONDdata->field_A4C)[param_1 * 0xea] = 0;
-  (&ptr_BONDdata->field_A50)[param_1 * 0xea] = 0;
+  (&pPlayer->right_weapon)[param_1 * 0xea] = param_2;
+  (&pPlayer->right_weapon_ammo_in_magazine)[param_1 * 0xea] = 0;
+  (&pPlayer->field_A4C)[param_1 * 0xea] = 0;
+  (&pPlayer->field_A50)[param_1 * 0xea] = 0;
   proc_7F08D8E0();
   return;
 }
@@ -75071,7 +75071,7 @@ void remove_hands_item(int param_1,int param_2)
 undefined get_hands_firing_status(int hand)
 
 {
-  return *(undefined *)(&ptr_BONDdata->right_weapon_firing_status + hand * 0xea);
+  return *(undefined *)(&pPlayer->right_weapon_firing_status + hand * 0xea);
 }
 
 
@@ -75132,18 +75132,18 @@ void proc_7F05DDA4(float param_1)
   
   iVar1 = return_ammo_in_hand(0);
   if (iVar1 == 0x11) {
-    ptr_BONDdata->sniper_zoom = ptr_BONDdata->sniper_zoom * (param_1 * flt_80053C24 + 1.00000000);
-    if (60.00000000 < ptr_BONDdata->sniper_zoom) {
-      ptr_BONDdata->sniper_zoom = 60.00000000;
+    pPlayer->sniper_zoom = pPlayer->sniper_zoom * (param_1 * flt_80053C24 + 1.00000000);
+    if (60.00000000 < pPlayer->sniper_zoom) {
+      pPlayer->sniper_zoom = 60.00000000;
     }
   }
   else {
     iVar1 = return_ammo_in_hand(0);
     if ((iVar1 == 0x28) &&
-       (ptr_BONDdata->camera_zoom =
-             ptr_BONDdata->camera_zoom * (param_1 * flt_80053C28 + 1.00000000),
-       60.00000000 < ptr_BONDdata->camera_zoom)) {
-      ptr_BONDdata->camera_zoom = 60.00000000;
+       (pPlayer->camera_zoom =
+             pPlayer->camera_zoom * (param_1 * flt_80053C28 + 1.00000000),
+       60.00000000 < pPlayer->camera_zoom)) {
+      pPlayer->camera_zoom = 60.00000000;
     }
   }
   return;
@@ -75158,18 +75158,18 @@ void proc_7F05DE94(float param_1)
   
   iVar1 = return_ammo_in_hand(0);
   if (iVar1 == 0x11) {
-    ptr_BONDdata->sniper_zoom = ptr_BONDdata->sniper_zoom / (param_1 * flt_80053C2C + 1.00000000);
-    if (ptr_BONDdata->sniper_zoom < 7.00000000) {
-      ptr_BONDdata->sniper_zoom = 7.00000000;
+    pPlayer->sniper_zoom = pPlayer->sniper_zoom / (param_1 * flt_80053C2C + 1.00000000);
+    if (pPlayer->sniper_zoom < 7.00000000) {
+      pPlayer->sniper_zoom = 7.00000000;
     }
   }
   else {
     iVar1 = return_ammo_in_hand(0);
     if ((iVar1 == 0x28) &&
-       (ptr_BONDdata->camera_zoom =
-             ptr_BONDdata->camera_zoom / (param_1 * flt_80053C30 + 1.00000000),
-       ptr_BONDdata->camera_zoom < 7.00000000)) {
-      ptr_BONDdata->camera_zoom = 7.00000000;
+       (pPlayer->camera_zoom =
+             pPlayer->camera_zoom / (param_1 * flt_80053C30 + 1.00000000),
+       pPlayer->camera_zoom < 7.00000000)) {
+      pPlayer->camera_zoom = 7.00000000;
     }
   }
   return;
@@ -75305,7 +75305,7 @@ void proc_7F05E0E4(void)
     fVar7 = -in_a2_lo;
   }
   if (flt_80053C34 < in_f14) {
-    ptr_BONDdata->field_FC0 = 1.00000000;
+    pPlayer->field_FC0 = 1.00000000;
     fStackX8 = in_a2_lo;
     fStackX12 = in_a3_lo;
   }
@@ -75314,36 +75314,36 @@ void proc_7F05E0E4(void)
       fStackX8 = in_a2_lo;
       fStackX12 = in_a3_lo;
       fVar6 = cosf(((in_f14 - flt_80053C3C) * flt_80053C40) / flt_80053C44);
-      ptr_BONDdata->field_FC0 = flt_80053C48 * (1.00000000 - fVar6) + flt_80053C4C;
+      pPlayer->field_FC0 = flt_80053C48 * (1.00000000 - fVar6) + flt_80053C4C;
     }
     else {
-      ptr_BONDdata->field_FC0 = flt_80053C3C;
+      pPlayer->field_FC0 = flt_80053C3C;
       fStackX8 = in_a2_lo;
       fStackX12 = in_a3_lo;
     }
   }
   fVar5 = get_BONDdata_field19C();
-  fVar6 = ptr_BONDdata->field_FC0;
+  fVar6 = pPlayer->field_FC0;
   if (fVar6 < (float)fVar5 * flt_80053C54) {
     fVar5 = get_BONDdata_field19C();
-    ptr_BONDdata->field_FC0 = (float)fVar5 * flt_80053C58;
-    fVar6 = ptr_BONDdata->field_FC0;
+    pPlayer->field_FC0 = (float)fVar5 * flt_80053C58;
+    fVar6 = pPlayer->field_FC0;
   }
   if (fVar6 < fVar7 * 0.50000000) {
-    ptr_BONDdata->field_FC0 = fVar7 * 0.50000000;
+    pPlayer->field_FC0 = fVar7 * 0.50000000;
   }
   fVar6 = flt_80053C5C;
   iVar2 = 0;
   if (0 < clock_timer) {
     do {
       iVar2 += 1;
-      ptr_BONDdata->field_1080 = ptr_BONDdata->field_1080 * fVar6 + ptr_BONDdata->field_FC0;
+      pPlayer->field_1080 = pPlayer->field_1080 * fVar6 + pPlayer->field_FC0;
     } while (iVar2 < clock_timer);
   }
   fVar1 = flt_80053C64;
   fVar6 = flt_80053C60;
   iVar2 = 0;
-  ptr_BONDdata->field_FC0 = ptr_BONDdata->field_1080 * flt_80053C64;
+  pPlayer->field_FC0 = pPlayer->field_1080 * flt_80053C64;
   fVar7 = flt_80053C68 * fVar7;
   if (fVar7 <= in_f12) {
     fVar7 = in_f12;
@@ -75351,81 +75351,81 @@ void proc_7F05E0E4(void)
   if (0 < clock_timer) {
     do {
       iVar2 += 1;
-      ptr_BONDdata->field_107C = ptr_BONDdata->field_107C * fVar6 + fVar7;
+      pPlayer->field_107C = pPlayer->field_107C * fVar6 + fVar7;
     } while (iVar2 < clock_timer);
   }
-  fVar7 = ptr_BONDdata->field_107C * fVar1 * global_timer_delta;
-  fStack8 = (float)ptr_BONDdata->field_A0C + fVar7;
+  fVar7 = pPlayer->field_107C * fVar1 * global_timer_delta;
+  fStack8 = (float)pPlayer->field_A0C + fVar7;
   while (1.00000000 <= fStack8) {
     unknown_takes_playerhand(0);
     fStack8 = fStack8 - 1.00000000;
-    ptr_BONDdata->field_1078 = ptr_BONDdata->field_1078 + 1;
+    pPlayer->field_1078 = pPlayer->field_1078 + 1;
   }
-  ptr_BONDdata->field_1074 = ptr_BONDdata->field_1074 + global_timer_delta;
-  if (60.00000000 < ptr_BONDdata->field_1074) {
-    ptr_BONDdata->field_1074 = 0.00000000;
+  pPlayer->field_1074 = pPlayer->field_1074 + global_timer_delta;
+  if (60.00000000 < pPlayer->field_1074) {
+    pPlayer->field_1074 = 0.00000000;
     uVar3 = get_random_value();
     fVar6 = (float)uVar3;
     if ((int)uVar3 < 0) {
       fVar6 = fVar6 + 4294967296.00000000;
     }
-    ptr_BONDdata->field_1070 = ((fVar6 * 0.00000000 - 0.50000000) * flt_80053C6C) / 60.00000000;
-    fVar6 = ptr_BONDdata->field_1070;
+    pPlayer->field_1070 = ((fVar6 * 0.00000000 - 0.50000000) * flt_80053C6C) / 60.00000000;
+    fVar6 = pPlayer->field_1070;
   }
   else {
-    fVar6 = ptr_BONDdata->field_1070;
+    fVar6 = pPlayer->field_1070;
   }
   if (0.00000000 < fVar6 + fVar7) {
-    ptr_BONDdata->field_106C = ptr_BONDdata->field_106C + fVar6;
-    fStack4 = ptr_BONDdata->field_106C;
+    pPlayer->field_106C = pPlayer->field_106C + fVar6;
+    fStack4 = pPlayer->field_106C;
   }
   else {
-    fStack4 = ptr_BONDdata->field_106C;
+    fStack4 = pPlayer->field_106C;
   }
   if (0.50000000 < fStack4) {
-    ptr_BONDdata->field_106C = 0.50000000;
-    fStack4 = ptr_BONDdata->field_106C;
+    pPlayer->field_106C = 0.50000000;
+    fStack4 = pPlayer->field_106C;
   }
   else {
     if (fStack4 < -0.50000000) {
-      ptr_BONDdata->field_106C = -0.50000000;
-      fStack4 = ptr_BONDdata->field_106C;
+      pPlayer->field_106C = -0.50000000;
+      fStack4 = pPlayer->field_106C;
     }
     else {
       if (flt_80053C70 <= fStack4) {
-        iVar2 = ptr_BONDdata->field_1078;
+        iVar2 = pPlayer->field_1078;
         goto LAB_7f05e518;
       }
       if (fStack4 <= flt_80053C74) {
-        iVar2 = ptr_BONDdata->field_1078;
+        iVar2 = pPlayer->field_1078;
         goto LAB_7f05e518;
       }
       if (0.00000000 < fStack4) {
-        ptr_BONDdata->field_106C = flt_80053C74;
-        fStack4 = ptr_BONDdata->field_106C;
+        pPlayer->field_106C = flt_80053C74;
+        fStack4 = pPlayer->field_106C;
       }
       else {
-        ptr_BONDdata->field_106C = flt_80053C70;
-        fStack4 = ptr_BONDdata->field_106C;
+        pPlayer->field_106C = flt_80053C70;
+        fStack4 = pPlayer->field_106C;
       }
     }
   }
-  iVar2 = ptr_BONDdata->field_1078;
+  iVar2 = pPlayer->field_1078;
 LAB_7f05e518:
   fStack4 = fStack8 + (float)iVar2 + fStack4;
   while (1.00000000 <= fStack4) {
     unknown_takes_playerhand(1);
     fStack4 = fStack4 - 1.00000000;
-    ptr_BONDdata->field_1078 = ptr_BONDdata->field_1078 + -1;
+    pPlayer->field_1078 = pPlayer->field_1078 + -1;
   }
   pfVar4 = &fStack8;
   iVar2 = 0;
   do {
     fVar7 = *pfVar4;
     pfVar4 = pfVar4 + 1;
-    *(float *)((int)&ptr_BONDdata->field_A0C + iVar2) = fVar7;
-    *(float *)((int)&ptr_BONDdata->field_A1C + iVar2) = fStackX12 * -1.75000000;
-    *(float *)((int)&ptr_BONDdata->field_A20 + iVar2) = fStackX8 * -2.00000000;
+    *(float *)((int)&pPlayer->field_A0C + iVar2) = fVar7;
+    *(float *)((int)&pPlayer->field_A1C + iVar2) = fStackX12 * -1.75000000;
+    *(float *)((int)&pPlayer->field_A20 + iVar2) = fStackX8 * -2.00000000;
     iVar2 = iVar2 + 0x3a8;
   } while (pfVar4 != (float *)register0x000000ec);
   return;
@@ -75439,9 +75439,9 @@ void proc_7F05E5F0(float param_1)
   float fVar1;
   
   fVar1 = cosf(param_1);
-  *(float *)&ptr_BONDdata->field_A30 = (1.00000000 - fVar1) * 5.00000000;
+  *(float *)&pPlayer->field_A30 = (1.00000000 - fVar1) * 5.00000000;
   fVar1 = cosf(param_1);
-  *(float *)&ptr_BONDdata->field_DD8 = (1.00000000 - fVar1) * 5.00000000;
+  *(float *)&pPlayer->field_DD8 = (1.00000000 - fVar1) * 5.00000000;
   return;
 }
 
@@ -75476,11 +75476,11 @@ int * proc_7F05E6B4(void)
   float fVar2;
   
   if (in_a1 == 0) {
-    piVar1 = &ptr_BONDdata->unknown + hand * 0xea;
+    piVar1 = &pPlayer->unknown + hand * 0xea;
     fVar2 = (float)piVar1[0x2a1];
     if (0.00000000 < fVar2) {
       *(float *)(piVar1 + 0x2a1) = fVar2 - flt_80053C84 * global_timer_delta;
-      piVar1 = &ptr_BONDdata->unknown + hand * 0xea;
+      piVar1 = &pPlayer->unknown + hand * 0xea;
       fVar2 = (float)piVar1[0x2a1];
     }
     if (fVar2 < 0.00000000) {
@@ -75489,15 +75489,15 @@ int * proc_7F05E6B4(void)
   }
   else {
     get_value_if_watch_is_on_hand_or_not(hand);
-    fVar2 = (float)(&ptr_BONDdata->unknown + hand * 0xea)[0x2a1];
+    fVar2 = (float)(&pPlayer->unknown + hand * 0xea)[0x2a1];
     if (fVar2 < in_f0) {
-      *(float *)(&ptr_BONDdata->unknown + hand * 0xea + 0x2a1) =
+      *(float *)(&pPlayer->unknown + hand * 0xea + 0x2a1) =
            fVar2 + flt_80053C80 * global_timer_delta;
     }
     piVar1 = (int *)get_value_if_watch_is_on_hand_or_not(hand);
-    if (in_f0 < (float)(&ptr_BONDdata->field_A84)[hand * 0xea]) {
+    if (in_f0 < (float)(&pPlayer->field_A84)[hand * 0xea]) {
       piVar1 = (int *)get_value_if_watch_is_on_hand_or_not(hand);
-      *(float *)(&ptr_BONDdata->field_A84 + hand * 0xea) = in_f0;
+      *(float *)(&pPlayer->field_A84 + hand * 0xea) = in_f0;
     }
   }
   return piVar1;
@@ -75508,7 +75508,7 @@ int * proc_7F05E6B4(void)
 void proc_7F05E808(int param_1)
 
 {
-  (&ptr_BONDdata->field_A8C)[param_1 * 0xea] = 1;
+  (&pPlayer->field_A8C)[param_1 * 0xea] = 1;
   return;
 }
 
@@ -75525,14 +75525,14 @@ void proc_7F05E83C(int param_1)
   
   item = return_ammo_in_hand(param_1);
   puVar1 = get_ptr_item_statistics(item);
-  piVar2 = &ptr_BONDdata->unknown + param_1 * 0xea;
+  piVar2 = &pPlayer->unknown + param_1 * 0xea;
   fVar4 = *(float *)(puVar1 + 0x50);
   if (piVar2[0x2a3] == 0) {
     if (0 < piVar2[0x227]) {
       fVar3 = (float)piVar2[0x2a2];
       if (0.00000000 < fVar3) {
         *(float *)(piVar2 + 0x2a2) = fVar3 - fVar4 * flt_80053C88 * global_timer_delta;
-        piVar2 = &ptr_BONDdata->unknown + param_1 * 0xea;
+        piVar2 = &pPlayer->unknown + param_1 * 0xea;
         fVar3 = (float)piVar2[0x2a2];
       }
       if (fVar3 < 0.00000000) {
@@ -75544,12 +75544,12 @@ void proc_7F05E83C(int param_1)
     fVar3 = (float)piVar2[0x2a2];
     if (fVar3 < fVar4) {
       *(float *)(piVar2 + 0x2a2) = fVar3 + fVar4 * 0.25000000 * global_timer_delta;
-      piVar2 = &ptr_BONDdata->unknown + param_1 * 0xea;
+      piVar2 = &pPlayer->unknown + param_1 * 0xea;
       fVar3 = (float)piVar2[0x2a2];
     }
     if (fVar4 <= fVar3) {
       *(float *)(piVar2 + 0x2a2) = fVar4;
-      (&ptr_BONDdata->field_A8C)[param_1 * 0xea] = 0;
+      (&pPlayer->field_A8C)[param_1 * 0xea] = 0;
     }
   }
   return;
@@ -75727,7 +75727,7 @@ void proc_7F05EC1C(void)
   
   if (*(int *)(in_a0_lo + 0x10) != 0) {
     iVar3 = get_curplayer_positiondata();
-    fVar5 = proc_7F089778((int)ptr_BONDdata);
+    fVar5 = proc_7F089778((int)pPlayer);
     iStack40 = 0;
     fVar6 = *(float *)(iVar3 + 0xc);
     fStack36 = in_a1_lo[1];
@@ -75818,19 +75818,19 @@ void proc_7F05EE24(int param_1)
     fStack76 = fStack76 + (*(float *)(iVar2 + 0xc) - pfStack192[1]) / global_timer_delta;
     fStack72 = fStack72 + (*(float *)(iVar2 + 0x10) - pfStack192[2]) / global_timer_delta;
   }
-  piVar4 = &ptr_BONDdata->unknown + param_1 * 0xea;
+  piVar4 = &pPlayer->unknown + param_1 * 0xea;
   iStack96 = piVar4[0x2c2];
   iStack92 = piVar4[0x2c3];
   iStack88 = piVar4[0x2c4];
   proc_7F057FD0(afStack160);
-  proc_7F058020(&ptr_BONDdata->field_AD8 + param_1 * 0xea,afStack256);
+  proc_7F058020(&pPlayer->field_AD8 + param_1 * 0xea,afStack256);
   uStack208 = 0;
   uStack204 = 0;
   uStack200 = 0;
   proc_7F058068(afStack256,(float *)afStack160);
   puVar5 = create_new_item_instance_of_model(0xc4,iteminstance);
   if (puVar5 != NULL) {
-    *(short *)((int)puVar5 + 0x82) = 0xf0 - (short)ptr_BONDdata->field_105C;
+    *(short *)((int)puVar5 + 0x82) = 0xf0 - (short)pPlayer->field_105C;
     if (*(short *)((int)puVar5 + 0x82) < 0) {
       *(undefined2 *)((int)puVar5 + 0x82) = 0;
       uVar1 = puVar5[0x19];
@@ -75909,14 +75909,14 @@ void proc_7F05F09C(int param_1)
     fStack72 = fStack72 + (*(float *)(iVar1 + 0x10) - pfVar7[2]) / global_timer_delta;
   }
   iVar5 = param_1 * 0x3a8;
-  piVar3 = &ptr_BONDdata->unknown + param_1 * 0xea;
+  piVar3 = &pPlayer->unknown + param_1 * 0xea;
   iStack96 = piVar3[0x2c2];
   iStack92 = piVar3[0x2c3];
   iStack88 = piVar3[0x2c4];
   proc_7F058688(flt_80053C98,extraout_a0,afStack160);
   proc_7F058570(flt_80053C9C,extraout_a0_00,(undefined4 *)&stack0xffffff08);
   proc_7F058068((float *)&stack0xffffff08,afStack160);
-  proc_7F058020((undefined4 *)((int)&ptr_BONDdata->field_AD8 + iVar5),(undefined4 *)&stack0xffffff08
+  proc_7F058020((undefined4 *)((int)&pPlayer->field_AD8 + iVar5),(undefined4 *)&stack0xffffff08
                );
   uStack200 = 0;
   uStack196 = 0;
@@ -76002,12 +76002,12 @@ void generate_player_thrown_object(int param_1)
     fStack76 = fStack76 + (*(float *)(iStack188 + 0xc) - pfStack192[1]) / global_timer_delta;
     fStack72 = fStack72 + (*(float *)(iStack188 + 0x10) - pfStack192[2]) / global_timer_delta;
   }
-  piVar3 = &ptr_BONDdata->unknown + param_1 * 0xea;
+  piVar3 = &pPlayer->unknown + param_1 * 0xea;
   iStack96 = piVar3[0x2c2];
   iStack92 = piVar3[0x2c3];
   iStack88 = piVar3[0x2c4];
   proc_7F057FD0(afStack160);
-  proc_7F058020(&ptr_BONDdata->field_AD8 + param_1 * 0xea,afStack256);
+  proc_7F058020(&pPlayer->field_AD8 + param_1 * 0xea,afStack256);
   uStack208 = 0;
   uStack204 = 0;
   uStack200 = 0;
@@ -76141,7 +76141,7 @@ void proc_7F05F73C(int param_1)
   int *local_8;
   undefined4 *local_4;
   
-  local_8 = &ptr_BONDdata->right_weapon + param_1 * 0xea;
+  local_8 = &pPlayer->right_weapon + param_1 * 0xea;
   iVar1 = get_curplayer_positiondata();
   pfVar2 = (float *)proc_7F08A02C();
   proc_7F057FD0(afStack72);
@@ -76156,7 +76156,7 @@ void proc_7F05F73C(int param_1)
     local_50 = local_50 + (*(float *)(iVar1 + 0xc) - pfVar2[1]) / global_timer_delta;
     local_4c = local_4c + (*(float *)(iVar1 + 0x10) - pfVar2[2]) / global_timer_delta;
   }
-  proc_7F058020(&ptr_BONDdata->field_AD8 + param_1 * 0xea,auStack152);
+  proc_7F058020(&pPlayer->field_AD8 + param_1 * 0xea,auStack152);
   local_68 = 0;
   local_64 = 0;
   local_60 = 0;
@@ -76194,8 +76194,8 @@ void proc_7F05F928(int param_1)
   undefined4 local_14;
   int *local_4;
   
-  iVar1 = (&ptr_BONDdata->unknown + param_1 * 0xea)[0x2a4];
-  local_4 = &ptr_BONDdata->unknown + param_1 * 0xea + 0x21c;
+  iVar1 = (&pPlayer->unknown + param_1 * 0xea)[0x2a4];
+  local_4 = &pPlayer->unknown + param_1 * 0xea + 0x21c;
   if ((iVar1 != 0) && (iVar2 = *(int *)(iVar1 + 0x10), iVar2 != 0)) {
     iVar4 = get_curplayer_positiondata();
     iVar3 = *(int *)(iVar1 + 0x14);
@@ -76228,7 +76228,7 @@ void proc_7F05FA7C(int param_1)
   undefined4 *puVar1;
   int *piVar2;
   
-  piVar2 = &ptr_BONDdata->unknown + param_1 * 0xea;
+  piVar2 = &pPlayer->unknown + param_1 * 0xea;
   if (((piVar2[0x2a4] == 0) && (0 < piVar2[0x227])) &&
      (puVar1 = create_new_item_instance_of_model(0xca,0x56), puVar1 != NULL)) {
     *(undefined4 **)(piVar2 + 0x2a4) = puVar1;
@@ -76246,7 +76246,7 @@ void proc_7F05FB00(int param_1)
   int iVar1;
   int *piVar2;
   
-  piVar2 = &ptr_BONDdata->unknown;
+  piVar2 = &pPlayer->unknown;
   iVar1 = (piVar2 + param_1 * 0xea)[0x2a4];
   if (iVar1 != 0) {
     proc_7F041024(iVar1,1);
@@ -76288,7 +76288,7 @@ int ** proc_7F05FB64(int param_1)
   int *local_8;
   int **local_4;
   
-  local_8 = &ptr_BONDdata->right_weapon + param_1 * 0xea;
+  local_8 = &pPlayer->right_weapon + param_1 * 0xea;
   local_c0 = get_curplayer_positiondata();
   local_c4 = (float *)proc_7F08A02C();
   local_c8 = get_item_in_hand(param_1);
@@ -76350,7 +76350,7 @@ LAB_7f05fd2c:
   }
   proc_7F09C7AC();
 LAB_7f05fe34:
-  proc_7F058020(&ptr_BONDdata->field_AD8 + param_1 * 0xea,auStack164);
+  proc_7F058020(&pPlayer->field_AD8 + param_1 * 0xea,auStack164);
   local_74 = 0;
   local_70 = 0;
   local_6c = 0;
@@ -76529,7 +76529,7 @@ void handles_firing_or_throwing_weapon_in_hand(int hand)
   fStack276 = dword_80035C40;
   fStack272 = (float)dword_80035C44;
   fStack268 = (float)dword_80035C48;
-  piVar8 = &ptr_BONDdata->unknown + hand * 0xea;
+  piVar8 = &pPlayer->unknown + hand * 0xea;
   piStack412 = NULL;
   piStack416 = NULL;
   posdata = piVar8 + 0x21c;
@@ -76613,9 +76613,9 @@ void handles_firing_or_throwing_weapon_in_hand(int hand)
                 (float *)(piVar22 + 0x4e),extraout_f12_01,(float *)piVar8[0x283]);
   proc_7F05AEFC((float *)(piVar24 + 0x5a),(float *)(objinst + 0x5a),(float *)(piVar23 + 0x5a),
                 (float *)(piVar22 + 0x5a),extraout_f12_02,(float *)piVar8[0x283]);
-  fStack448 = fStack448 * ptr_BONDdata->field_FC0;
-  fStack456 = fStack456 * ptr_BONDdata->field_FC0 + (float)piVar8[0x287];
-  fStack452 = fStack452 * ptr_BONDdata->field_FC0 + (float)piVar8[0x288];
+  fStack448 = fStack448 * pPlayer->field_FC0;
+  fStack456 = fStack456 * pPlayer->field_FC0 + (float)piVar8[0x287];
+  fStack452 = fStack452 * pPlayer->field_FC0 + (float)piVar8[0x288];
   proc_7F05DCB8(hand);
   fVar18 = flt_80053DE0;
   fStack456 = fStack456 + fVar11;
@@ -76660,9 +76660,9 @@ void handles_firing_or_throwing_weapon_in_hand(int hand)
   fStack272 = (float)piVar8[0x28b] + pfStack432[2] + (float)piVar8[0x24d];
   fStack268 = (float)piVar8[0x28c] + pfStack432[3] + (float)piVar8[0x24e];
   if (((iStack428 == 0x19) || (iStack428 == 0x1e)) || (iStack428 == 0x17)) {
-    fStack272 = fStack272 + (float)ptr_BONDdata->ducking_height_offset / -100.00000000;
+    fStack272 = fStack272 + (float)pPlayer->ducking_height_offset / -100.00000000;
     fStack268 = fStack268 +
-                ((float)ptr_BONDdata->ducking_height_offset * 3.00000000) / -100.00000000;
+                ((float)pPlayer->ducking_height_offset * 3.00000000) / -100.00000000;
     if ((iStack428 == 0x19) &&
        (((item = cur_player_get_screen_setting(), item == 1 ||
          (item = cur_player_get_screen_setting(), item == 2)) ||
@@ -76673,15 +76673,15 @@ void handles_firing_or_throwing_weapon_in_hand(int hand)
   else {
     if (iStack428 == 0x1f) {
       fStack272 = fStack272 +
-                  ((float)ptr_BONDdata->ducking_height_offset * 2.50000000) / -100.00000000;
+                  ((float)pPlayer->ducking_height_offset * 2.50000000) / -100.00000000;
       fStack268 = fStack268 +
-                  ((float)ptr_BONDdata->ducking_height_offset * 7.50000000) / -100.00000000;
+                  ((float)pPlayer->ducking_height_offset * 7.50000000) / -100.00000000;
     }
     else {
       fStack272 = fStack272 +
-                  ((float)ptr_BONDdata->ducking_height_offset * 5.00000000) / -100.00000000;
+                  ((float)pPlayer->ducking_height_offset * 5.00000000) / -100.00000000;
       fStack268 = fStack268 +
-                  ((float)ptr_BONDdata->ducking_height_offset * 15.00000000) / -100.00000000;
+                  ((float)pPlayer->ducking_height_offset * 15.00000000) / -100.00000000;
     }
   }
   if ((*(char *)(piVar8 + 0x21f) != '\0') &&
@@ -76712,16 +76712,16 @@ void handles_firing_or_throwing_weapon_in_hand(int hand)
   fVar13 = get_screen_width();
   fVar14 = get_ulx();
   fStack276 = fStack276 +
-              (((ptr_BONDdata->field_FFC - (float)fVar14) - (float)fVar13 * 0.50000000) *
+              (((pPlayer->field_FFC - (float)fVar14) - (float)fVar13 * 0.50000000) *
               pfStack432[6]) / ((float)fVar12 * 0.50000000);
   fVar12 = get_uly();
   fVar13 = get_screen_height();
-  if ((float)fVar13 * 0.50000000 < ptr_BONDdata->field_1000 - (float)fVar12) {
+  if ((float)fVar13 * 0.50000000 < pPlayer->field_1000 - (float)fVar12) {
     fVar13 = get_screen_height();
     fVar14 = get_screen_height();
     fVar12 = get_uly();
     fStack272 = fStack272 -
-                (((ptr_BONDdata->field_1000 - (float)fVar12) - (float)fVar14 * 0.50000000) *
+                (((pPlayer->field_1000 - (float)fVar12) - (float)fVar14 * 0.50000000) *
                 pfStack432[5]) / ((float)fVar13 * 0.50000000);
   }
   else {
@@ -76729,7 +76729,7 @@ void handles_firing_or_throwing_weapon_in_hand(int hand)
     fVar14 = get_screen_height();
     fVar12 = get_uly();
     fStack272 = fStack272 -
-                (((ptr_BONDdata->field_1000 - (float)fVar12) - (float)fVar14 * 0.50000000) *
+                (((pPlayer->field_1000 - (float)fVar12) - (float)fVar14 * 0.50000000) *
                 pfStack432[4]) / ((float)fVar13 * 0.50000000);
   }
   proc_7F05C614();
@@ -76759,7 +76759,7 @@ void handles_firing_or_throwing_weapon_in_hand(int hand)
       fVar11 = extraout_f12_03;
       fVar18 = extraout_f14;
       if (iStack428 == 1) {
-        if (ptr_BONDdata->field_2A38 != 0x11) {
+        if (pPlayer->field_2A38 != 0x11) {
           item = piVar8[0x24b];
           fVar11 = extraout_f12_03;
           fVar18 = extraout_f14;
@@ -76862,10 +76862,10 @@ LAB_7f060c74:
     cVar10 = *(char *)((int)piVar8 + 0x87f);
   }
   if (cVar10 != '\0') {
-    poStack264 = (object_header *)(&ptr_BONDdata->unknown + hand * 8 + 0x204);
+    poStack264 = (object_header *)(&pPlayer->unknown + hand * 8 + 0x204);
     lVar2 = (longlong)(int)poStack264;
     iStack424 = 0;
-    proc_7F0BD714((int)*(short *)((int)(&ptr_BONDdata->unknown + hand * 8) + 0x81e) << 6);
+    proc_7F0BD714((int)*(short *)((int)(&pPlayer->unknown + hand * 8) + 0x81e) << 6);
     puStack4 = (undefined4 *)lVar2;
     item = iStack424;
     if (0 < poStack264->num_object_grps) {
@@ -77142,7 +77142,7 @@ LAB_7f060c74:
     cVar10 = *(char *)(piVar8 + 0x21f);
   }
   if (cVar10 != '\0') {
-    fVar12 = proc_7F089778((int)ptr_BONDdata);
+    fVar12 = proc_7F089778((int)pPlayer);
     proc_7F068508(hand,fVar12);
     if (iStack428 == 0x18) {
       proc_7F05F73C(hand);
@@ -77304,7 +77304,7 @@ void proc_7F061BF4(int param_1)
   float local_18;
   int local_14;
   
-  piVar5 = &ptr_BONDdata->unknown + param_1 * 0xea;
+  piVar5 = &pPlayer->unknown + param_1 * 0xea;
   iVar2 = proc_7F0783C4();
   if ((float)piVar5[0x2d9] <=
       -(*(float *)(iVar2 + 0x38) +
@@ -77314,10 +77314,10 @@ void proc_7F061BF4(int param_1)
     IVar3 = get_item_in_hand(param_1);
     proc_7F061948((undefined *)(piVar5 + 0x295),IVar3,(float *)(piVar5 + 0x2d6),
                   (float *)(piVar5 + 0x303));
-    if ((*(int *)(ptr_BONDdata->position_data_pointer + 4) != 0) &&
+    if ((*(int *)(pPlayer->position_data_pointer + 4) != 0) &&
        (uVar1 = get_num_players(), 1 < (longlong)uVar1)) {
-      piVar4 = &ptr_BONDdata->unknown + param_1 * 3;
-      local_14 = *(int *)(ptr_BONDdata->position_data_pointer + 4);
+      piVar4 = &pPlayer->unknown + param_1 * 3;
+      local_14 = *(int *)(pPlayer->position_data_pointer + 4);
       local_20 = (float)piVar5[0x303] - (float)piVar4[0xa86];
       local_1c = (float)piVar5[0x304] - (float)piVar4[0xa87];
       local_18 = (float)piVar5[0x305] - (float)piVar4[0xa88];
@@ -77330,7 +77330,7 @@ void proc_7F061BF4(int param_1)
       if (fVar6 <= flt_80053EA8) {
         IVar3 = get_item_in_hand(param_1);
         proc_7F061948((undefined *)(local_14 + param_1 * 0x2c + 0x180),IVar3,
-                      (float *)(&ptr_BONDdata->field_2A18 + param_1 * 3),(float *)(piVar5 + 0x303));
+                      (float *)(&pPlayer->field_2A18 + param_1 * 3),(float *)(piVar5 + 0x303));
       }
     }
   }
@@ -77748,7 +77748,7 @@ void proc_7F062BE4(undefined4 *param_1)
   iVar11 = 0;
   *puVar7 = uRam80035cfc;
   do {
-    iVar10 = (int)&ptr_BONDdata->unknown + iVar11;
+    iVar10 = (int)&pPlayer->unknown + iVar11;
     item = return_ammo_in_hand(hand);
     if (*(char *)(iVar10 + 0x87f) != '\0') {
       if (item != 0x17) {
@@ -77793,9 +77793,9 @@ void proc_7F062BE4(undefined4 *param_1)
         }
       }
       uStack20 = 4;
-      uStack16 = (uint)(byte)ptr_BONDdata->field_FDF | (uint)(byte)ptr_BONDdata->field_FDC << 0x18 |
-                 (uint)(byte)ptr_BONDdata->field_FDD << 0x10 |
-                 (uint)(byte)ptr_BONDdata->field_FDE << 8;
+      uStack16 = (uint)(byte)pPlayer->field_FDF | (uint)(byte)pPlayer->field_FDC << 0x18 |
+                 (uint)(byte)pPlayer->field_FDD << 0x10 |
+                 (uint)(byte)pPlayer->field_FDE << 8;
       uStack64 = 0;
       puStack56 = puVar9;
       proc_7F058C64();
@@ -77905,8 +77905,8 @@ set_enviro_fog_for_items_in_solo_watch_menu
   }
   proc_7F05DA8C(0,weapon);
   uVar2 = proc_7F05CEBC(0);
-  if ((uVar2 != 0) && (iVar3 = get_itemtype_in_hand(0), pBVar1 = ptr_BONDdata, iVar3 != 0)) {
-    objheader = (object_header *)ptr_BONDdata->copy_of_body_obj_header;
+  if ((uVar2 != 0) && (iVar3 = get_itemtype_in_hand(0), pBVar1 = pPlayer, iVar3 != 0)) {
+    objheader = (object_header *)pPlayer->copy_of_body_obj_header;
     iVar3 = get_ptr_weapon_model_header_line(weapon);
     if ((iVar3 != 0) &&
        (puVar10 = (undefined4 *)check_special_attributes(weapon,0x4000), puVar10 == NULL)) {
@@ -78296,9 +78296,9 @@ proc_7F06359C(undefined4 param_1,float *param_2,longlong param_3,longlong param_
   proc_7F05DA8C(0,0x55);
   uVar2 = proc_7F05CEBC(0);
   if ((uVar2 != 0) && (iVar5 = get_itemtype_in_hand(0), iVar5 != 0)) {
-    poStack352 = (object_header *)ptr_BONDdata->copy_of_body_obj_header;
+    poStack352 = (object_header *)pPlayer->copy_of_body_obj_header;
     lVar3 = (longlong)(int)poStack352;
-    proc_7F0BD714((int)*(short *)((int)ptr_BONDdata->copy_of_body_obj_header + 0xe) << 6);
+    proc_7F0BD714((int)*(short *)((int)pPlayer->copy_of_body_obj_header + 0xe) << 6);
     lVar4 = lVar3;
     set_objuse_flag_compute_grp_nums_set_obj_loaded(poStack352);
     proc_7F075F68((int)auStack96,(ushort **)poStack352,auStack216);
@@ -78937,7 +78937,7 @@ void proc_7F0649D8(int param_1)
   int iVar3;
   int *piVar4;
   
-  piVar4 = &ptr_BONDdata->unknown + param_1 * 0xea;
+  piVar4 = &pPlayer->unknown + param_1 * 0xea;
   item = get_item_in_hand(param_1);
   iVar3 = piVar4[0x227];
   iVar1 = get_ammo_in_hands_weapon(param_1);
@@ -78951,11 +78951,11 @@ void proc_7F0649D8(int param_1)
   }
   iVar1 = check_special_attributes(item,0x200000);
   if (iVar1 == 0) {
-    (&ptr_BONDdata->unknown + *(int *)(puVar2 + 0x1c))[0x44c] =
-         ((&ptr_BONDdata->unknown + *(int *)(puVar2 + 0x1c))[0x44c] - piVar4[0x227]) + iVar3;
+    (&pPlayer->unknown + *(int *)(puVar2 + 0x1c))[0x44c] =
+         ((&pPlayer->unknown + *(int *)(puVar2 + 0x1c))[0x44c] - piVar4[0x227]) + iVar3;
   }
   else {
-    ptr_BONDdata->ammoheldarr[*(int *)(puVar2 + 0x1c)] = 0;
+    pPlayer->ammoheldarr[*(int *)(puVar2 + 0x1c)] = 0;
   }
   if (item == ITEM_ROCKETLAUNCH) {
     proc_7F05FA7C(param_1);
@@ -79160,7 +79160,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(uint param_1,int para
   int *local_14;
   int local_c;
   
-  piVar16 = &ptr_BONDdata->unknown + param_1 * 0xea;
+  piVar16 = &pPlayer->unknown + param_1 * 0xea;
   weapon._4_4_ = return_ammo_in_hand(param_1);
   weapon = (longlong)weapon._4_4_;
   weapon_00 = get_ammo_type_for_weapon(weapon._4_4_);
@@ -79222,10 +79222,10 @@ LAB_7f064c40:
           weapon_01 = get_controls_locked_flag();
           fVar18 = extraout_f12_01;
           if (weapon_01 == 0) {
-            if (ptr_BONDdata->mpmenuon == 0) {
+            if (pPlayer->mpmenuon == 0) {
               if (((dword_80032458 != 0) && (local_c == 1)) &&
-                 ((&ptr_BONDdata->unknown + 1)[0x44c] < 1)) {
-                (&ptr_BONDdata->unknown + 1)[0x44c] = 1;
+                 ((&pPlayer->unknown + 1)[0x44c] < 1)) {
+                (&pPlayer->unknown + 1)[0x44c] = 1;
               }
               weapon_01 = get_ammo_in_hands_weapon(param_1);
               if (0 < weapon_01) {
@@ -79235,13 +79235,13 @@ LAB_7f064c40:
                 fVar18 = extraout_f12_02;
                 goto LAB_7f064da0;
               }
-              if (ptr_BONDdata->field_FC8 == 0) {
+              if (pPlayer->field_FC8 == 0) {
                 weapon_01 = piVar16[0x225];
                 fVar18 = extraout_f12_02;
               }
               else {
                 weapon_01 = return_ammo_in_hand(1 - param_1);
-                pBVar5 = (BONDdata *)((int)ptr_BONDdata + param_1 * -0x3a8);
+                pBVar5 = (BONDdata *)((int)pPlayer + param_1 * -0x3a8);
                 if (pBVar5->field_C3C == 0) {
                   if (pBVar5->left_weapon_animation == 0) {
                     piVar6 = &pBVar5->left_weapon;
@@ -79395,7 +79395,7 @@ switchD_7f064dc8_caseD_2b:
       else {
         weapon_01 = piVar16[0x224];
       }
-      ptr_BONDdata->field_105C = weapon_01;
+      pPlayer->field_105C = weapon_01;
       piVar16[0x225] = 0x1a;
       piVar16[0x223] = 0;
       piVar16[0x224] = 0;
@@ -79528,13 +79528,13 @@ LAB_7f064fa0:
         }
         uVar2 = get_num_players();
         if ((uVar2 == 1) ||
-           ((weapon_01 = get_ispaused(), weapon_01 == 0 && (ptr_BONDdata->mpmenuon == 0)))) {
+           ((weapon_01 = get_ispaused(), weapon_01 == 0 && (pPlayer->mpmenuon == 0)))) {
           *(undefined *)((int)piVar16 + 0x87d) = 1;
         }
         weapon_01 = get_controls_locked_flag();
         bVar12 = weapon_01 == 0;
         if (bVar12) {
-          bVar12 = ptr_BONDdata->mpmenuon == 0;
+          bVar12 = pPlayer->mpmenuon == 0;
         }
         *(bool *)(piVar16 + 0x21f) = bVar12;
         proc_7F05E808(param_1);
@@ -79568,13 +79568,13 @@ LAB_7f064fa0:
           }
           uVar2 = get_num_players();
           if ((uVar2 == 1) ||
-             ((weapon_01 = get_ispaused(), weapon_01 == 0 && (ptr_BONDdata->mpmenuon == 0)))) {
+             ((weapon_01 = get_ispaused(), weapon_01 == 0 && (pPlayer->mpmenuon == 0)))) {
             *(undefined *)((int)piVar16 + 0x87d) = 1;
           }
           weapon_01 = get_controls_locked_flag();
           bVar12 = weapon_01 == 0;
           if (bVar12) {
-            bVar12 = ptr_BONDdata->mpmenuon == 0;
+            bVar12 = pPlayer->mpmenuon == 0;
           }
           *(bool *)(piVar16 + 0x21f) = bVar12;
           fVar18 = extraout_f12_18;
@@ -79596,7 +79596,7 @@ LAB_7f064fa0:
             weapon_01 = get_controls_locked_flag();
             bVar12 = weapon_01 == 0;
             if (bVar12) {
-              bVar12 = ptr_BONDdata->mpmenuon == 0;
+              bVar12 = pPlayer->mpmenuon == 0;
             }
             *(bool *)(piVar16 + 0x21f) = bVar12;
             fVar18 = extraout_f12_20;
@@ -79615,7 +79615,7 @@ LAB_7f064fa0:
           weapon_01 = get_controls_locked_flag();
           bVar12 = weapon_01 == 0;
           if (bVar12) {
-            bVar12 = ptr_BONDdata->mpmenuon == 0;
+            bVar12 = pPlayer->mpmenuon == 0;
           }
           *(bool *)(piVar16 + 0x21f) = bVar12;
           fVar18 = extraout_f12_13;
@@ -79666,7 +79666,7 @@ LAB_7f065290:
           }
         }
         else {
-          if ((global_timer != *(int *)((int)ptr_BONDdata + param_1 * -0x3a8 + 0xdf8)) &&
+          if ((global_timer != *(int *)((int)pPlayer + param_1 * -0x3a8 + 0xdf8)) &&
              (piVar16[0x293] < global_timer)) {
             uVar2 = proc_7F05DFF0(weapon._4_4_);
             piVar16[0x293] = (int)uVar2 + global_timer;
@@ -79680,7 +79680,7 @@ LAB_7f065290:
           fVar18 = extraout_f12_26;
           if (weapon_01 != 0) goto LAB_7f065548;
           fVar18 = extraout_f12_26;
-          if (ptr_BONDdata->mpmenuon != 0) {
+          if (pPlayer->mpmenuon != 0) {
             weapon_01 = piVar16[0x225];
             fVar18 = extraout_f12_26;
             goto LAB_7f06554c;
@@ -79986,8 +79986,8 @@ LAB_7f065a44:
     }
     else {
       weapon_01 = get_ammo_type_for_weapon(weapon._4_4_);
-      (&ptr_BONDdata->unknown + weapon_01)[0x44c] =
-           (&ptr_BONDdata->unknown + weapon_01)[0x44c] + piVar16[0x227];
+      (&pPlayer->unknown + weapon_01)[0x44c] =
+           (&pPlayer->unknown + weapon_01)[0x44c] + piVar16[0x227];
       piVar16[0x227] = 0;
       uVar2 = get_num_players();
       if (1 < (longlong)uVar2) {
@@ -79997,10 +79997,10 @@ LAB_7f065a44:
       piVar16[0x225] = 6;
       uVar2 = check_if_item_available(ITEM_SNIPERRIFLE);
       if (uVar2 == 0) {
-        ptr_BONDdata->field_2A38 = 1;
+        pPlayer->field_2A38 = 1;
       }
       else {
-        ptr_BONDdata->field_2A38 = 0x11;
+        pPlayer->field_2A38 = 0x11;
       }
       weapon_01 = piVar16[0x225];
       lVar1 = extraout_a0_04;
@@ -80010,7 +80010,7 @@ LAB_7f065a44:
   if ((weapon_01 == 6) || (weapon_01 == 7)) {
     if ((piVar16[0x22d] == 0) || (piVar16[0x22c] <= piVar16[0x224])) {
       if (weapon_01 == 6) {
-        pBVar5 = (BONDdata *)((int)ptr_BONDdata + param_1 * -0x3a8);
+        pBVar5 = (BONDdata *)((int)pPlayer + param_1 * -0x3a8);
         weapon_01 = pBVar5->field_C3C;
         if ((((weapon_01 != 6) && (weapon_01 != 5)) &&
             (weapon_00 = pBVar5->left_weapon_animation, weapon_00 != 5)) &&
@@ -80081,14 +80081,14 @@ LAB_7f065a44:
         proc_7F09B398(param_1);
       }
       proc_7F0649D8(param_1);
-      ptr_BONDdata->field_FC8 = 0;
+      pPlayer->field_FC8 = 0;
       if (clock_timer < 1) {
         weapon_01 = piVar16[0x224];
         lVar1 = extraout_a0_10;
         fVar18 = extraout_f12_44;
       }
       else {
-        if (ptr_BONDdata->unknown == 1) {
+        if (pPlayer->unknown == 1) {
           weapon_01 = piVar16[0x224];
           lVar1 = extraout_a0_10;
           fVar18 = extraout_f12_44;
@@ -80273,7 +80273,7 @@ LAB_7f066004:
 LAB_7f066128:
   if (weapon_01 == 0xb) {
     if (piVar16[0x223] == 0) {
-      if (ptr_BONDdata->unknown == 1) {
+      if (pPlayer->unknown == 1) {
         weapon_01 = piVar16[0x224];
       }
       else {
@@ -80375,7 +80375,7 @@ LAB_7f0662b8:
   if (weapon_01 == 0xc) {
     if (piVar16[0x223] == 0) {
       proc_7F0649D8(param_1);
-      ptr_BONDdata->field_FC8 = 0;
+      pPlayer->field_FC8 = 0;
       weapon_01 = piVar16[0x224];
       lVar1 = extraout_a0_28;
       fVar18 = extraout_f12_60;
@@ -80488,7 +80488,7 @@ LAB_7f0664e0:
           proc_7F09B398(param_1);
         }
         proc_7F0649D8(param_1);
-        ptr_BONDdata->field_FC8 = 0;
+        pPlayer->field_FC8 = 0;
         weapon_01 = piVar16[0x224];
         fVar18 = extraout_f12_68;
       }
@@ -80584,7 +80584,7 @@ LAB_7f0666dc:
   {
     weapon._4_4_ = piVar16[0x224];
     if ((weapon_01 == 0x1e) || (weapon_01 == 0x1f)) {
-      if (ptr_BONDdata->field_2A38 == 0x11) {
+      if (pPlayer->field_2A38 == 0x11) {
         local_15c = DWORD_ARRAY_80035778;
       }
       else {
@@ -80597,7 +80597,7 @@ LAB_7f0666dc:
     }
     else {
       if ((weapon_01 == 0x20) || (weapon_01 == 0x21)) {
-        if (ptr_BONDdata->field_2A38 == 0x11) {
+        if (pPlayer->field_2A38 == 0x11) {
           local_15c = DWORD_ARRAY_80035904;
         }
         else {
@@ -80843,7 +80843,7 @@ void proc_7F066E64(void)
   else {
     text = get_textptr_for_textID(0x98d8);
     display_string_in_lower_left_corner((char *)text);
-    ptr_BONDdata->copiedgoldeneye = 1;
+    pPlayer->copiedgoldeneye = 1;
     play_sfx_a1(ptr_sfx_buf,0xf5,NULL);
     draw_item_in_hand_has_more_ammo(0,ITEM_GOLDENEYEKEY);
     draw_item_in_hand_has_more_ammo(1,ITEM_UNARMED);
@@ -80856,7 +80856,7 @@ void proc_7F066E64(void)
 int get_keyanalyzer_flag(void)
 
 {
-  return ptr_BONDdata->copiedgoldeneye;
+  return pPlayer->copiedgoldeneye;
 }
 
 
@@ -81008,7 +81008,7 @@ f32 get_depth_offset_solo_watch_menu_inventory_page_for_item(int item)
 f32 proc_7F067174(int param_1)
 
 {
-  return (f32)(&ptr_BONDdata->noise)[param_1 * 0xea];
+  return (f32)(&pPlayer->noise)[param_1 * 0xea];
 }
 
 
@@ -81029,38 +81029,38 @@ void proc_7F0671A4(void)
   puVar2 = get_ptr_item_statistics(item);
   puVar3 = get_ptr_item_statistics(item_00);
   if ((item != ITEM_UNARMED) && (lVar1 = get_hands_firing_status(0), lVar1 != 0)) {
-    *(float *)&ptr_BONDdata->noise = (float)ptr_BONDdata->noise + *(float *)(puVar2 + 0x5c);
-    if (*(float *)(puVar2 + 0x58) < (float)ptr_BONDdata->noise) {
-      *(float *)&ptr_BONDdata->noise = *(float *)(puVar2 + 0x58);
+    *(float *)&pPlayer->noise = (float)pPlayer->noise + *(float *)(puVar2 + 0x5c);
+    if (*(float *)(puVar2 + 0x58) < (float)pPlayer->noise) {
+      *(float *)&pPlayer->noise = *(float *)(puVar2 + 0x58);
     }
   }
   if ((item_00 != ITEM_UNARMED) && (lVar1 = get_hands_firing_status(1), lVar1 != 0)) {
-    *(float *)&ptr_BONDdata->field_E28 = (float)ptr_BONDdata->field_E28 + *(float *)(puVar3 + 0x5c);
-    if (*(float *)(puVar3 + 0x58) < (float)ptr_BONDdata->field_E28) {
-      *(float *)&ptr_BONDdata->field_E28 = *(float *)(puVar3 + 0x58);
+    *(float *)&pPlayer->field_E28 = (float)pPlayer->field_E28 + *(float *)(puVar3 + 0x5c);
+    if (*(float *)(puVar3 + 0x58) < (float)pPlayer->field_E28) {
+      *(float *)&pPlayer->field_E28 = *(float *)(puVar3 + 0x58);
     }
   }
   fVar5 = (*(float *)(puVar2 + 0x5c) * global_timer_delta) /
           (*(float *)(puVar2 + 0x60) * 60.00000000);
-  fVar4 = (((float)ptr_BONDdata->noise - *(float *)(puVar2 + 0x54)) * global_timer_delta) /
+  fVar4 = (((float)pPlayer->noise - *(float *)(puVar2 + 0x54)) * global_timer_delta) /
           (*(float *)(puVar2 + 100) * 60.00000000);
   if (fVar4 <= fVar5) {
     fVar4 = fVar5;
   }
-  *(float *)&ptr_BONDdata->noise = (float)ptr_BONDdata->noise - fVar4;
-  if ((float)ptr_BONDdata->noise < *(float *)(puVar2 + 0x54)) {
-    *(float *)&ptr_BONDdata->noise = *(float *)(puVar2 + 0x54);
+  *(float *)&pPlayer->noise = (float)pPlayer->noise - fVar4;
+  if ((float)pPlayer->noise < *(float *)(puVar2 + 0x54)) {
+    *(float *)&pPlayer->noise = *(float *)(puVar2 + 0x54);
   }
   fVar5 = (*(float *)(puVar3 + 0x5c) * global_timer_delta) /
           (*(float *)(puVar3 + 0x60) * 60.00000000);
-  fVar4 = (((float)ptr_BONDdata->field_E28 - *(float *)(puVar3 + 0x54)) * global_timer_delta) /
+  fVar4 = (((float)pPlayer->field_E28 - *(float *)(puVar3 + 0x54)) * global_timer_delta) /
           (*(float *)(puVar3 + 100) * 60.00000000);
   if (fVar4 <= fVar5) {
     fVar4 = fVar5;
   }
-  *(float *)&ptr_BONDdata->field_E28 = (float)ptr_BONDdata->field_E28 - fVar4;
-  if ((float)ptr_BONDdata->field_E28 < *(float *)(puVar3 + 0x54)) {
-    *(float *)&ptr_BONDdata->field_E28 = *(float *)(puVar3 + 0x54);
+  *(float *)&pPlayer->field_E28 = (float)pPlayer->field_E28 - fVar4;
+  if ((float)pPlayer->field_E28 < *(float *)(puVar3 + 0x54)) {
+    *(float *)&pPlayer->field_E28 = *(float *)(puVar3 + 0x54);
   }
   return;
 }
@@ -81078,7 +81078,7 @@ ulonglong proc_7F0673B4(int param_1)
   iVar2 = get_ammo_type_for_weapon(weapon);
   bVar1 = iVar2 == 0;
   if (!bVar1) {
-    bVar1 = 0 < (&ptr_BONDdata->right_weapon_ammo_in_magazine)[param_1 * 0xea];
+    bVar1 = 0 < (&pPlayer->right_weapon_ammo_in_magazine)[param_1 * 0xea];
   }
   return (ulonglong)bVar1;
 }
@@ -81102,107 +81102,107 @@ void proc_7F067420(int param_1)
   
   aiStack8[0] = DAT_80035e9c;
   aiStack8[1] = DAT_80035ea0;
-  ptr_BONDdata->field_FD0 = ptr_BONDdata->field_FCC;
-  ptr_BONDdata->field_FCC = param_1;
-  iVar4 = ptr_BONDdata->field_FCC;
-  if ((iVar4 == 0) && (ptr_BONDdata->field_FD0 != 0)) {
-    ptr_BONDdata->field_FC8 = 1;
-    iVar4 = ptr_BONDdata->field_FCC;
+  pPlayer->field_FD0 = pPlayer->field_FCC;
+  pPlayer->field_FCC = param_1;
+  iVar4 = pPlayer->field_FCC;
+  if ((iVar4 == 0) && (pPlayer->field_FD0 != 0)) {
+    pPlayer->field_FC8 = 1;
+    iVar4 = pPlayer->field_FCC;
   }
   if (iVar4 == 0) {
-    ptr_BONDdata->field_FD4 = 0;
+    pPlayer->field_FD4 = 0;
   }
   else {
     IStack12 = get_item_in_hand(0);
     IStack16 = get_item_in_hand(1);
-    ptr_BONDdata->field_FD4 = ptr_BONDdata->field_FD4 + clock_timer;
+    pPlayer->field_FD4 = pPlayer->field_FD4 + clock_timer;
     if ((IStack12 == ITEM_UNARMED) || (IStack16 == ITEM_UNARMED)) {
-      IVar5 = get_item_in_hand(ptr_BONDdata->field_FD8);
+      IVar5 = get_item_in_hand(pPlayer->field_FD8);
       if ((IVar5 == ITEM_UNARMED) &&
-         (IVar5 = get_item_in_hand(1 - ptr_BONDdata->field_FD8), IVar5 != ITEM_UNARMED)) {
-        ptr_BONDdata->field_FD8 = 1 - ptr_BONDdata->field_FD8;
+         (IVar5 = get_item_in_hand(1 - pPlayer->field_FD8), IVar5 != ITEM_UNARMED)) {
+        pPlayer->field_FD8 = 1 - pPlayer->field_FD8;
       }
-      pBVar1 = ptr_BONDdata;
-      aiStack8[ptr_BONDdata->field_FD8] = 1;
+      pBVar1 = pPlayer;
+      aiStack8[pPlayer->field_FD8] = 1;
       aiStack8[pBVar1->field_FD8 * 0x3fffffff + 1] = 0;
     }
     else {
       iVar4 = check_special_attributes(IStack12,0x80);
       if ((iVar4 == 0) ||
-         (iVar4 = check_special_attributes(IStack16,0x80), pBVar1 = ptr_BONDdata, iVar4 == 0)) {
+         (iVar4 = check_special_attributes(IStack16,0x80), pBVar1 = pPlayer, iVar4 == 0)) {
         iVar4 = check_special_attributes(IStack12,0x80);
         if ((iVar4 == 0) &&
-           (iVar4 = check_special_attributes(IStack16,0x80), pBVar1 = ptr_BONDdata, iVar4 == 0)) {
-          if (ptr_BONDdata->field_FD4 < 0x1f) {
-            if ((ptr_BONDdata->field_FD0 == 0) &&
-               ((uVar3 = proc_7F0673B4(1 - ptr_BONDdata->field_FD8), uVar3 != 0 ||
-                (uVar3 = proc_7F0673B4(ptr_BONDdata->field_FD8), uVar3 == 0)))) {
-              ptr_BONDdata->field_FD8 = 1 - ptr_BONDdata->field_FD8;
+           (iVar4 = check_special_attributes(IStack16,0x80), pBVar1 = pPlayer, iVar4 == 0)) {
+          if (pPlayer->field_FD4 < 0x1f) {
+            if ((pPlayer->field_FD0 == 0) &&
+               ((uVar3 = proc_7F0673B4(1 - pPlayer->field_FD8), uVar3 != 0 ||
+                (uVar3 = proc_7F0673B4(pPlayer->field_FD8), uVar3 == 0)))) {
+              pPlayer->field_FD8 = 1 - pPlayer->field_FD8;
             }
-            pBVar1 = ptr_BONDdata;
-            aiStack8[ptr_BONDdata->field_FD8] = 1;
+            pBVar1 = pPlayer;
+            aiStack8[pPlayer->field_FD8] = 1;
             aiStack8[pBVar1->field_FD8 * 0x3fffffff + 1] = 0;
           }
           else {
-            aiStack8[ptr_BONDdata->field_FD8] = 1;
+            aiStack8[pPlayer->field_FD8] = 1;
             uVar3 = proc_7F0673B4(1 - pBVar1->field_FD8);
             if ((uVar3 != 0) ||
-               (*(int *)((int)ptr_BONDdata + ptr_BONDdata->field_FD8 * -0x3a8 + 0xc28) != 0)) {
-              aiStack8[ptr_BONDdata->field_FD8 * 0x3fffffff + 1] = 1;
+               (*(int *)((int)pPlayer + pPlayer->field_FD8 * -0x3a8 + 0xc28) != 0)) {
+              aiStack8[pPlayer->field_FD8 * 0x3fffffff + 1] = 1;
             }
           }
         }
         else {
-          pBVar1 = ptr_BONDdata;
-          if (ptr_BONDdata->field_FD4 < 0x1f) {
+          pBVar1 = pPlayer;
+          if (pPlayer->field_FD4 < 0x1f) {
             iVar4 = check_special_attributes(IStack12,0x80);
             uStack20 = (uint)(iVar4 == 0);
             uVar3 = proc_7F0673B4((uint)(iVar4 == 0));
             uVar2 = uStack20;
             if ((uVar3 == 0) &&
-               (iVar4 = 1 - uStack20, (&ptr_BONDdata->field_880)[uStack20 * 0xea] == 0)) {
+               (iVar4 = 1 - uStack20, (&pPlayer->field_880)[uStack20 * 0xea] == 0)) {
               uVar3 = proc_7F0673B4(iVar4);
-              if ((uVar3 == 0) && (*(int *)((int)ptr_BONDdata + uVar2 * -0x3a8 + 0xc28) == 0)) {
-                ptr_BONDdata->field_FD8 = 1 - ptr_BONDdata->field_FD8;
+              if ((uVar3 == 0) && (*(int *)((int)pPlayer + uVar2 * -0x3a8 + 0xc28) == 0)) {
+                pPlayer->field_FD8 = 1 - pPlayer->field_FD8;
               }
               else {
-                ptr_BONDdata->field_FD8 = iVar4;
+                pPlayer->field_FD8 = iVar4;
               }
             }
             else {
-              ptr_BONDdata->field_FD8 = uStack20;
+              pPlayer->field_FD8 = uStack20;
             }
-            pBVar1 = ptr_BONDdata;
-            aiStack8[ptr_BONDdata->field_FD8] = 1;
+            pBVar1 = pPlayer;
+            aiStack8[pPlayer->field_FD8] = 1;
             aiStack8[pBVar1->field_FD8 * 0x3fffffff + 1] = 0;
           }
           else {
-            aiStack8[ptr_BONDdata->field_FD8] = 1;
+            aiStack8[pPlayer->field_FD8] = 1;
             uVar3 = proc_7F0673B4(1 - pBVar1->field_FD8);
             if ((uVar3 != 0) ||
-               (*(int *)((int)ptr_BONDdata + ptr_BONDdata->field_FD8 * -0x3a8 + 0xc28) != 0)) {
-              aiStack8[ptr_BONDdata->field_FD8 * 0x3fffffff + 1] = 1;
+               (*(int *)((int)pPlayer + pPlayer->field_FD8 * -0x3a8 + 0xc28) != 0)) {
+              aiStack8[pPlayer->field_FD8 * 0x3fffffff + 1] = 1;
             }
           }
         }
       }
       else {
-        if (ptr_BONDdata->field_FD4 < 0x15) {
-          if ((ptr_BONDdata->field_FD0 == 0) &&
-             ((uVar3 = proc_7F0673B4(1 - ptr_BONDdata->field_FD8), uVar3 != 0 ||
-              (uVar3 = proc_7F0673B4(ptr_BONDdata->field_FD8), uVar3 == 0)))) {
-            ptr_BONDdata->field_FD8 = 1 - ptr_BONDdata->field_FD8;
+        if (pPlayer->field_FD4 < 0x15) {
+          if ((pPlayer->field_FD0 == 0) &&
+             ((uVar3 = proc_7F0673B4(1 - pPlayer->field_FD8), uVar3 != 0 ||
+              (uVar3 = proc_7F0673B4(pPlayer->field_FD8), uVar3 == 0)))) {
+            pPlayer->field_FD8 = 1 - pPlayer->field_FD8;
           }
-          pBVar1 = ptr_BONDdata;
-          aiStack8[ptr_BONDdata->field_FD8] = 1;
+          pBVar1 = pPlayer;
+          aiStack8[pPlayer->field_FD8] = 1;
           aiStack8[pBVar1->field_FD8 * 0x3fffffff + 1] = 0;
         }
         else {
-          aiStack8[ptr_BONDdata->field_FD8] = 1;
+          aiStack8[pPlayer->field_FD8] = 1;
           uVar3 = proc_7F0673B4(1 - pBVar1->field_FD8);
           if ((uVar3 != 0) ||
-             (*(int *)((int)ptr_BONDdata + ptr_BONDdata->field_FD8 * -0x3a8 + 0xc28) != 0)) {
-            aiStack8[ptr_BONDdata->field_FD8 * 0x3fffffff + 1] = 1;
+             (*(int *)((int)pPlayer + pPlayer->field_FD8 * -0x3a8 + 0xc28) != 0)) {
+            aiStack8[pPlayer->field_FD8 * 0x3fffffff + 1] = 1;
           }
         }
       }
@@ -81213,30 +81213,30 @@ void proc_7F067420(int param_1)
   used_to_load_1st_person_model_on_demand(0);
   used_to_load_1st_person_model_on_demand(1);
   proc_7F0671A4();
-  if (ptr_BONDdata->field_FE0 == 0) {
+  if (pPlayer->field_FE0 == 0) {
     iVar4 = get_curplayer_positiondata();
     proc_7F04009C(iVar4,abStack24);
-    proc_7F040310((byte *)&ptr_BONDdata->field_FDC,abStack24);
+    proc_7F040310((byte *)&pPlayer->field_FDC,abStack24);
   }
   else {
     iVar4 = get_curplayer_positiondata();
-    proc_7F04009C(iVar4,(byte *)&ptr_BONDdata->field_FDC);
-    ptr_BONDdata->field_FE0 = 0;
+    proc_7F04009C(iVar4,(byte *)&pPlayer->field_FDC);
+    pPlayer->field_FE0 = 0;
   }
   IVar5 = get_item_in_hand(0);
   IVar6 = get_item_in_hand(1);
   proc_7F08D9EC(IVar5,IVar6);
-  pBVar1 = ptr_BONDdata;
-  if (-1 < ptr_BONDdata->field_1270) {
-    ptr_BONDdata->field_1270 = ptr_BONDdata->field_1270 + clock_timer;
-    if (ptr_BONDdata->field_1270 < 300) {
+  pBVar1 = pPlayer;
+  if (-1 < pPlayer->field_1270) {
+    pPlayer->field_1270 = pPlayer->field_1270 + clock_timer;
+    if (pPlayer->field_1270 < 300) {
       if (((pBVar1->field_A44 == 0) || (uVar3 = music_related_26(pBVar1->field_A44), uVar3 == 0)) &&
          (iVar4 = get_controls_locked_flag(), iVar4 == 0)) {
         play_sfx_a1(ptr_sfx_buf,0xf6,(sfxdata *)&pBVar1->field_A44);
       }
     }
     else {
-      ptr_BONDdata->field_1270 = -1;
+      pPlayer->field_1270 = -1;
       if ((pBVar1->field_A44 != 0) && (uVar3 = music_related_26(pBVar1->field_A44), uVar3 != 0)) {
         music_related_28(pBVar1->field_A44);
       }
@@ -81250,7 +81250,7 @@ void proc_7F067420(int param_1)
 void proc_7F067AA4(int param_1)
 
 {
-  ptr_BONDdata->field_FE4 = param_1;
+  pPlayer->field_FE4 = param_1;
   return;
 }
 
@@ -81265,13 +81265,13 @@ void proc_7F067AB4(void)
   float in_f0;
   
   proc_7F05DCB8(0);
-  *(float *)&ptr_BONDdata->field_A38 = in_f0 + *in_a0_lo;
-  *(float *)&ptr_BONDdata->field_A3C = in_a0_lo[1];
-  *(float *)&ptr_BONDdata->field_A40 = in_a0_lo[2];
+  *(float *)&pPlayer->field_A38 = in_f0 + *in_a0_lo;
+  *(float *)&pPlayer->field_A3C = in_a0_lo[1];
+  *(float *)&pPlayer->field_A40 = in_a0_lo[2];
   proc_7F05DCB8(1);
-  *(float *)&ptr_BONDdata->field_DE0 = in_f0 + *in_a0_lo;
-  *(float *)&ptr_BONDdata->field_DE4 = in_a0_lo[1];
-  *(float *)&ptr_BONDdata->field_DE8 = in_a0_lo[2];
+  *(float *)&pPlayer->field_DE0 = in_f0 + *in_a0_lo;
+  *(float *)&pPlayer->field_DE4 = in_a0_lo[1];
+  *(float *)&pPlayer->field_DE8 = in_a0_lo[2];
   return;
 }
 
@@ -81283,14 +81283,14 @@ void proc_7F067B4C(undefined4 *param_1)
   int iVar1;
   
   iVar1 = *param_1;
-  ptr_BONDdata->left_item_related1 = iVar1;
-  ptr_BONDdata->field_FB4 = iVar1;
+  pPlayer->left_item_related1 = iVar1;
+  pPlayer->field_FB4 = iVar1;
   iVar1 = param_1[1];
-  ptr_BONDdata->left_item_related2 = iVar1;
-  ptr_BONDdata->field_FB8 = iVar1;
+  pPlayer->left_item_related2 = iVar1;
+  pPlayer->field_FB8 = iVar1;
   iVar1 = param_1[2];
-  ptr_BONDdata->left_item_related3 = iVar1;
-  ptr_BONDdata->field_FBC = iVar1;
+  pPlayer->left_item_related3 = iVar1;
+  pPlayer->field_FBC = iVar1;
   return;
 }
 
@@ -81317,81 +81317,81 @@ void caclulate_gun_crosshair_position_rotation(void)
   
   fStack8 = get_screen_width();
   fStack12 = get_screen_height();
-  if (in_a2_lo != (float)ptr_BONDdata->field_FF8) {
-    ptr_BONDdata->field_FF0 =
-         (ptr_BONDdata->field_FF0 * (1.00000000 - (float)ptr_BONDdata->field_FF8)) /
+  if (in_a2_lo != (float)pPlayer->field_FF8) {
+    pPlayer->field_FF0 =
+         (pPlayer->field_FF0 * (1.00000000 - (float)pPlayer->field_FF8)) /
          (1.00000000 - in_a2_lo);
-    ptr_BONDdata->field_FF4 =
-         (ptr_BONDdata->field_FF4 * (1.00000000 - (float)ptr_BONDdata->field_FF8)) /
+    pPlayer->field_FF4 =
+         (pPlayer->field_FF4 * (1.00000000 - (float)pPlayer->field_FF8)) /
          (1.00000000 - in_a2_lo);
-    *(float *)&ptr_BONDdata->field_FF8 = in_a2_lo;
+    *(float *)&pPlayer->field_FF8 = in_a2_lo;
   }
-  if (in_a3_lo != (float)ptr_BONDdata->field_100C) {
-    ptr_BONDdata->field_1004 =
-         (ptr_BONDdata->field_1004 * (1.00000000 - (float)ptr_BONDdata->field_100C)) /
+  if (in_a3_lo != (float)pPlayer->field_100C) {
+    pPlayer->field_1004 =
+         (pPlayer->field_1004 * (1.00000000 - (float)pPlayer->field_100C)) /
          (1.00000000 - in_a3_lo);
-    ptr_BONDdata->field_1008 =
-         (ptr_BONDdata->field_1008 * (1.00000000 - (float)ptr_BONDdata->field_100C)) /
+    pPlayer->field_1008 =
+         (pPlayer->field_1008 * (1.00000000 - (float)pPlayer->field_100C)) /
          (1.00000000 - in_a3_lo);
-    *(float *)&ptr_BONDdata->field_100C = in_a3_lo;
+    *(float *)&pPlayer->field_100C = in_a3_lo;
   }
   iVar1 = 0;
   if (0 < clock_timer) {
     do {
       iVar1 += 1;
-      ptr_BONDdata->field_FF0 = ptr_BONDdata->field_FF0 * in_a2_lo + in_f12;
-      ptr_BONDdata->field_FF4 = ptr_BONDdata->field_FF4 * in_a2_lo + in_f14;
+      pPlayer->field_FF0 = pPlayer->field_FF0 * in_a2_lo + in_f12;
+      pPlayer->field_FF4 = pPlayer->field_FF4 * in_a2_lo + in_f14;
     } while (iVar1 < clock_timer);
   }
   fVar4 = (float)fStack8 * 0.50000000;
-  ptr_BONDdata->field_FE8 =
-       ptr_BONDdata->field_FF0 * (1.00000000 - in_a2_lo) * (float)fStack8 * 0.50000000 + fVar4;
-  ptr_BONDdata->field_FEC =
-       ptr_BONDdata->field_FF4 * (1.00000000 - in_a2_lo) * (float)fStack12 * 0.50000000 +
+  pPlayer->field_FE8 =
+       pPlayer->field_FF0 * (1.00000000 - in_a2_lo) * (float)fStack8 * 0.50000000 + fVar4;
+  pPlayer->field_FEC =
+       pPlayer->field_FF4 * (1.00000000 - in_a2_lo) * (float)fStack12 * 0.50000000 +
        (float)fStack12 * 0.50000000;
-  if (ptr_BONDdata->field_FE8 < 3.00000000) {
-    ptr_BONDdata->field_FE8 = 3.00000000;
+  if (pPlayer->field_FE8 < 3.00000000) {
+    pPlayer->field_FE8 = 3.00000000;
   }
   else {
-    if (ptr_BONDdata->field_FE8 <= (float)fStack8 - 4.00000000) {
-      fVar3 = ptr_BONDdata->field_FEC;
+    if (pPlayer->field_FE8 <= (float)fStack8 - 4.00000000) {
+      fVar3 = pPlayer->field_FEC;
       goto LAB_7f067db8;
     }
-    ptr_BONDdata->field_FE8 = (float)fStack8 - 4.00000000;
+    pPlayer->field_FE8 = (float)fStack8 - 4.00000000;
   }
-  fVar3 = ptr_BONDdata->field_FEC;
+  fVar3 = pPlayer->field_FEC;
 LAB_7f067db8:
   if (fVar3 < 3.00000000) {
-    ptr_BONDdata->field_FEC = 3.00000000;
+    pPlayer->field_FEC = 3.00000000;
   }
   else {
     if ((float)fStack12 - 4.00000000 < fVar3) {
-      ptr_BONDdata->field_FEC = (float)fStack12 - 4.00000000;
+      pPlayer->field_FEC = (float)fStack12 - 4.00000000;
     }
   }
   iStack4 = 0;
   fVar2 = get_ulx();
-  ptr_BONDdata->field_FE8 = ptr_BONDdata->field_FE8 + (float)fVar2;
+  pPlayer->field_FE8 = pPlayer->field_FE8 + (float)fVar2;
   fVar2 = get_uly();
-  ptr_BONDdata->field_FEC = ptr_BONDdata->field_FEC + (float)fVar2;
+  pPlayer->field_FEC = pPlayer->field_FEC + (float)fVar2;
   iVar1 = iStack4;
   if (0 < clock_timer) {
     do {
       iVar1 += 1;
-      ptr_BONDdata->field_1004 = ptr_BONDdata->field_1004 * in_a3_lo + in_f12;
-      ptr_BONDdata->field_1008 = ptr_BONDdata->field_1008 * in_a3_lo + in_f14;
+      pPlayer->field_1004 = pPlayer->field_1004 * in_a3_lo + in_f12;
+      pPlayer->field_1008 = pPlayer->field_1008 * in_a3_lo + in_f14;
     } while (iVar1 < clock_timer);
   }
-  ptr_BONDdata->field_FFC =
-       ptr_BONDdata->field_1004 * (1.00000000 - in_a3_lo) * (float)fStack8 * 0.50000000 + fVar4;
-  ptr_BONDdata->field_1000 =
-       ptr_BONDdata->field_1008 * (1.00000000 - in_a3_lo) * (float)fStack12 * 0.50000000 +
+  pPlayer->field_FFC =
+       pPlayer->field_1004 * (1.00000000 - in_a3_lo) * (float)fStack8 * 0.50000000 + fVar4;
+  pPlayer->field_1000 =
+       pPlayer->field_1008 * (1.00000000 - in_a3_lo) * (float)fStack12 * 0.50000000 +
        (float)fStack12 * 0.50000000;
   fVar2 = get_ulx();
-  ptr_BONDdata->field_FFC = ptr_BONDdata->field_FFC + (float)fVar2;
+  pPlayer->field_FFC = pPlayer->field_FFC + (float)fVar2;
   fVar2 = get_uly();
-  ptr_BONDdata->field_1000 = ptr_BONDdata->field_1000 + (float)fVar2;
-  proc_7F077EEC(&ptr_BONDdata->field_FFC,afStack24,extraout_f12);
+  pPlayer->field_1000 = pPlayer->field_1000 + (float)fVar2;
+  proc_7F077EEC(&pPlayer->field_FFC,afStack24,extraout_f12);
   proc_7F067AB4();
   return;
 }
@@ -81427,8 +81427,8 @@ void proc_7F067FBC(undefined4 param_1,undefined4 param_2)
 void proc_7F068008(undefined4 *param_1,undefined4 *param_2)
 
 {
-  *(float *)param_1 = ptr_BONDdata->field_FE8;
-  *(float *)param_2 = ptr_BONDdata->field_FEC;
+  *(float *)param_1 = pPlayer->field_FE8;
+  *(float *)param_2 = pPlayer->field_FEC;
   return;
 }
 
@@ -81448,14 +81448,14 @@ void proc_7F06802C(void)
   fVar1 = get_ulx();
   fVar2 = get_screen_width();
   fVar3 = (float)fVar2 * 0.50000000 + (float)fVar1;
-  ptr_BONDdata->field_FE8 = fVar3;
-  ptr_BONDdata->field_FFC = fVar3;
+  pPlayer->field_FE8 = fVar3;
+  pPlayer->field_FFC = fVar3;
   fVar1 = get_uly();
   fVar2 = get_screen_height();
   fVar3 = (float)fVar2 * 0.50000000 + (float)fVar1;
-  ptr_BONDdata->field_FEC = fVar3;
-  ptr_BONDdata->field_1000 = fVar3;
-  proc_7F077EEC(&ptr_BONDdata->field_FFC,afStack12,extraout_f12);
+  pPlayer->field_FEC = fVar3;
+  pPlayer->field_1000 = fVar3;
+  proc_7F077EEC(&pPlayer->field_FFC,afStack12,extraout_f12);
   proc_7F067AB4();
   return;
 }
@@ -81469,16 +81469,16 @@ void proc_7F0680D4(float *param_1)
   float fStack8;
   float fStack4;
   
-  ptr_BONDdata->field_1010 = *param_1;
-  *(float *)&ptr_BONDdata->holds_neg_pi = param_1[1];
-  ptr_BONDdata->field_1018 = param_1[2];
-  proc_7F058714(param_1,(float *)&ptr_BONDdata->field_101C);
-  fStack12 = (float)ptr_BONDdata->field_103C * 1000.00000000;
-  fStack8 = (float)ptr_BONDdata->field_1040 * 1000.00000000;
-  fStack4 = (float)ptr_BONDdata->field_1044 * 1000.00000000;
-  proc_7F077FF4(&fStack12,&ptr_BONDdata->field_FE8);
-  ptr_BONDdata->field_FFC = ptr_BONDdata->field_FE8;
-  ptr_BONDdata->field_1000 = ptr_BONDdata->field_FEC;
+  pPlayer->field_1010 = *param_1;
+  *(float *)&pPlayer->holds_neg_pi = param_1[1];
+  pPlayer->field_1018 = param_1[2];
+  proc_7F058714(param_1,(float *)&pPlayer->field_101C);
+  fStack12 = (float)pPlayer->field_103C * 1000.00000000;
+  fStack8 = (float)pPlayer->field_1040 * 1000.00000000;
+  fStack4 = (float)pPlayer->field_1044 * 1000.00000000;
+  proc_7F077FF4(&fStack12,&pPlayer->field_FE8);
+  pPlayer->field_FFC = pPlayer->field_FE8;
+  pPlayer->field_1000 = pPlayer->field_FEC;
   proc_7F067AB4();
   return;
 }
@@ -81493,7 +81493,7 @@ void proc_7F068190(undefined4 *param_1,float *param_2)
   *param_1 = 0;
   param_1[1] = 0;
   param_1[2] = 0;
-  proc_7F077EEC(&ptr_BONDdata->field_FE8,param_2,in_f12);
+  proc_7F077EEC(&pPlayer->field_FE8,param_2,in_f12);
   return;
 }
 
@@ -81527,7 +81527,7 @@ void proc_7F0681CC(void)
   fStack16 = *(float *)(puVar1 + 0x30);
   item_00 = return_ammo_in_hand(hand);
   item_00 = check_special_attributes(item_00,0x1000);
-  if ((item_00 != 0) && ((&ptr_BONDdata->field_C08)[hand * 0xea] == 1)) {
+  if ((item_00 != 0) && ((&pPlayer->field_C08)[hand * 0xea] == 1)) {
     fStack16 = fStack16 * 0.25000000;
   }
   video_related_23();
@@ -81545,7 +81545,7 @@ void proc_7F0681CC(void)
   fVar4 = get_screen_width();
   fVar5 = proc_7F0784F4();
   fStack8 = (fVar7 * 0.00000000 * (fVar6 * 0.00000000 - 0.50000000) * in_f0 * (float)fVar4 *
-            flt_800543B0) / ((float)fVar5 * 320.00000000) + ptr_BONDdata->field_FE8;
+            flt_800543B0) / ((float)fVar5 * 320.00000000) + pPlayer->field_FE8;
   uVar2 = get_random_value();
   uVar3 = get_random_value();
   fVar6 = (float)uVar2;
@@ -81558,7 +81558,7 @@ void proc_7F0681CC(void)
   }
   fVar4 = get_screen_height();
   fStack4 = ((float)fVar4 * fVar7 * 0.00000000 * (fVar6 * 0.00000000 - 0.50000000) * in_f0) /
-            240.00000000 + ptr_BONDdata->field_FEC;
+            240.00000000 + pPlayer->field_FEC;
   *in_a0_lo = 0;
   in_a0_lo[1] = 0;
   in_a0_lo[2] = 0;
@@ -81638,16 +81638,16 @@ void proc_7F068508(int param_1,undefined4 param_2)
   puVar3 = get_ptr_item_statistics(IStack72);
   iStack80 = *(int *)(puVar3 + 0x28);
   if ((iStack80 != 0) && (uVar2 = get_num_players(), (longlong)uVar2 < 2)) {
-    if (*(int *)ptr_BONDdata->copy_of_body_obj_header[param_1 * 8 + 2] == 0) {
-      proc_7F058020(&ptr_BONDdata->field_AD8 + param_1 * 0xea,afStack68);
+    if (*(int *)pPlayer->copy_of_body_obj_header[param_1 * 8 + 2] == 0) {
+      proc_7F058020(&pPlayer->field_AD8 + param_1 * 0xea,afStack68);
     }
     else {
-      pfVar1 = *(float **)(*(int *)ptr_BONDdata->copy_of_body_obj_header[param_1 * 8 + 2] + 4);
+      pfVar1 = *(float **)(*(int *)pPlayer->copy_of_body_obj_header[param_1 * 8 + 2] + 4);
       fStack92 = *pfVar1 * flt_800543B4;
       fStack88 = pfVar1[1] * flt_800543B4;
       fStack84 = pfVar1[2] * flt_800543B4;
       init_something_copy_posdata_to_it((int *)&fStack92,(int *)afStack68);
-      proc_7F058068((float *)(&ptr_BONDdata->field_AD8 + param_1 * 0xea),afStack68);
+      proc_7F058068((float *)(&pPlayer->field_AD8 + param_1 * 0xea),afStack68);
     }
     puVar4 = (undefined4 *)proc_7F068420(iStack80,afStack68);
     if (puVar4 != NULL) {
@@ -81670,7 +81670,7 @@ void proc_7F068508(int param_1,undefined4 param_2)
         }
         puVar4[6] = 0;
         *(float *)(puVar4 + 5) = fVar8 * 0.00000000 * 2.50000000 * 0.06250000 + 2.50000000;
-        proc_7F0583D8((float *)(&ptr_BONDdata->field_AD8 + param_1 * 0xea),(float *)(puVar4 + 4));
+        proc_7F0583D8((float *)(&pPlayer->field_AD8 + param_1 * 0xea),(float *)(puVar4 + 4));
         uVar5 = get_random_value();
         fVar8 = (float)uVar5;
         if ((int)uVar5 < 0) {
@@ -81712,16 +81712,16 @@ void proc_7F068508(int param_1,undefined4 param_2)
         if (0 < clock_timer) {
           *(float *)(puVar4 + 4) =
                (float)puVar4[4] +
-               ((float)(&ptr_BONDdata->unknown + param_1 * 0xea)[0x2c2] -
-               (float)(&ptr_BONDdata->unknown + param_1 * 0xea)[0x2d2]) / global_timer_delta;
+               ((float)(&pPlayer->unknown + param_1 * 0xea)[0x2c2] -
+               (float)(&pPlayer->unknown + param_1 * 0xea)[0x2d2]) / global_timer_delta;
           *(float *)(puVar4 + 5) =
                (float)puVar4[5] +
-               ((float)(&ptr_BONDdata->unknown + param_1 * 0xea)[0x2c3] -
-               (float)(&ptr_BONDdata->unknown + param_1 * 0xea)[0x2d3]) / global_timer_delta;
+               ((float)(&pPlayer->unknown + param_1 * 0xea)[0x2c3] -
+               (float)(&pPlayer->unknown + param_1 * 0xea)[0x2d3]) / global_timer_delta;
           *(float *)(puVar4 + 6) =
                (float)puVar4[6] +
-               ((float)(&ptr_BONDdata->unknown + param_1 * 0xea)[0x2c4] -
-               (float)(&ptr_BONDdata->unknown + param_1 * 0xea)[0x2d4]) / global_timer_delta;
+               ((float)(&pPlayer->unknown + param_1 * 0xea)[0x2c4] -
+               (float)(&pPlayer->unknown + param_1 * 0xea)[0x2d4]) / global_timer_delta;
         }
       }
       else {
@@ -81740,7 +81740,7 @@ void proc_7F068508(int param_1,undefined4 param_2)
         fVar9 = fVar9 * 0.00000000 * flt_800543E0;
         puVar4[6] = 0;
         *(float *)(puVar4 + 5) = fVar9 * 0.12500000 + fVar8;
-        proc_7F0583D8((float *)(&ptr_BONDdata->field_AD8 + param_1 * 0xea),(float *)(puVar4 + 4));
+        proc_7F0583D8((float *)(&pPlayer->field_AD8 + param_1 * 0xea),(float *)(puVar4 + 4));
         uVar5 = get_random_value();
         fVar8 = (float)uVar5;
         if ((int)uVar5 < 0) {
@@ -81782,16 +81782,16 @@ void proc_7F068508(int param_1,undefined4 param_2)
         if (0 < clock_timer) {
           *(float *)(puVar4 + 4) =
                (float)puVar4[4] +
-               ((float)(&ptr_BONDdata->unknown + param_1 * 0xea)[0x2c2] -
-               (float)(&ptr_BONDdata->unknown + param_1 * 0xea)[0x2d2]) / global_timer_delta;
+               ((float)(&pPlayer->unknown + param_1 * 0xea)[0x2c2] -
+               (float)(&pPlayer->unknown + param_1 * 0xea)[0x2d2]) / global_timer_delta;
           *(float *)(puVar4 + 5) =
                (float)puVar4[5] +
-               ((float)(&ptr_BONDdata->unknown + param_1 * 0xea)[0x2c3] -
-               (float)(&ptr_BONDdata->unknown + param_1 * 0xea)[0x2d3]) / global_timer_delta;
+               ((float)(&pPlayer->unknown + param_1 * 0xea)[0x2c3] -
+               (float)(&pPlayer->unknown + param_1 * 0xea)[0x2d3]) / global_timer_delta;
           *(float *)(puVar4 + 6) =
                (float)puVar4[6] +
-               ((float)(&ptr_BONDdata->unknown + param_1 * 0xea)[0x2c4] -
-               (float)(&ptr_BONDdata->unknown + param_1 * 0xea)[0x2d4]) / global_timer_delta;
+               ((float)(&pPlayer->unknown + param_1 * 0xea)[0x2c4] -
+               (float)(&pPlayer->unknown + param_1 * 0xea)[0x2d4]) / global_timer_delta;
         }
       }
     }
@@ -81812,8 +81812,8 @@ void proc_7F068D20(float *param_1)
   fVar3 = param_1[5] - global_timer_delta * expended_shell_initial_gravity_modifier_all;
   param_1[2] = param_1[2] + global_timer_delta * 0.50000000 * (param_1[5] + fVar3);
   if (param_1[2] < *param_1) {
-    if (((DAT_80075db0 == 0) && (ptr_BONDdata->when_detonating_mines_is_0 != 2)) &&
-       (ptr_BONDdata->field_C3C != 2)) {
+    if (((DAT_80075db0 == 0) && (pPlayer->when_detonating_mines_is_0 != 2)) &&
+       (pPlayer->field_C3C != 2)) {
       play_sfx_a1(ptr_sfx_buf,0x7a,(sfxdata *)&DAT_80075db0);
     }
     param_1[0x27] = 0.00000000;
@@ -81927,9 +81927,9 @@ void proc_7F068EC4(int param_1,undefined4 *param_2)
     uStack60 = 4;
     uStack96 = uStack4;
     poStack92 = poStack12;
-    uStack56 = (uint)(byte)ptr_BONDdata->field_FDF | (uint)(byte)ptr_BONDdata->field_FDC << 0x18 |
-               (uint)(byte)ptr_BONDdata->field_FDD << 0x10 |
-               (uint)(byte)ptr_BONDdata->field_FDE << 8;
+    uStack56 = (uint)(byte)pPlayer->field_FDF | (uint)(byte)pPlayer->field_FDC << 0x18 |
+               (uint)(byte)pPlayer->field_FDD << 0x10 |
+               (uint)(byte)pPlayer->field_FDE << 8;
     subdraw((int)&uStack108,(uint)auStack44,extraout_a2_lo,extraout_a3_lo);
     *param_2 = uStack96;
     proc_7F08BD48((undefined4 *)poStack12,(int)poStack8->num_object_grps);
@@ -81964,10 +81964,10 @@ void set_unset_ammo_on_screen_setting(int flags,int isset)
 
 {
   if (isset != 0) {
-    ptr_BONDdata->somekinda_flags = ptr_BONDdata->somekinda_flags & ~flags;
+    pPlayer->somekinda_flags = pPlayer->somekinda_flags & ~flags;
     return;
   }
-  ptr_BONDdata->somekinda_flags = ptr_BONDdata->somekinda_flags | flags;
+  pPlayer->somekinda_flags = pPlayer->somekinda_flags | flags;
   return;
 }
 
@@ -81984,22 +81984,22 @@ void give_cur_player_ammo(AMMOTYPES type,int amount)
   weapon = get_item_in_hand(0);
   AVar1 = get_ammo_type_for_weapon(weapon);
   if ((AVar1 == type) && (iVar2 = check_special_attributes(weapon,0x200000), iVar2 != 0)) {
-    ptr_BONDdata->right_weapon_ammo_in_magazine =
-         ptr_BONDdata->right_weapon_ammo_in_magazine + amount;
+    pPlayer->right_weapon_ammo_in_magazine =
+         pPlayer->right_weapon_ammo_in_magazine + amount;
     puVar3 = get_ptr_item_statistics(weapon);
-    if ((longlong)*(short *)(puVar3 + 0x20) < (longlong)ptr_BONDdata->right_weapon_ammo_in_magazine)
+    if ((longlong)*(short *)(puVar3 + 0x20) < (longlong)pPlayer->right_weapon_ammo_in_magazine)
     {
       puVar3 = get_ptr_item_statistics(weapon);
-      ptr_BONDdata->right_weapon_ammo_in_magazine = (int)*(short *)(puVar3 + 0x20);
+      pPlayer->right_weapon_ammo_in_magazine = (int)*(short *)(puVar3 + 0x20);
     }
-    ptr_BONDdata->ammoheldarr[type] = 0;
+    pPlayer->ammoheldarr[type] = 0;
   }
   else {
     if ((int)(&DAT_80035ef0)[type * 3] < amount) {
-      ptr_BONDdata->ammoheldarr[type] = (&DAT_80035ef0)[type * 3];
+      pPlayer->ammoheldarr[type] = (&DAT_80035ef0)[type * 3];
     }
     else {
-      ptr_BONDdata->ammoheldarr[type] = amount;
+      pPlayer->ammoheldarr[type] = amount;
     }
   }
   return;
@@ -82010,7 +82010,7 @@ void give_cur_player_ammo(AMMOTYPES type,int amount)
 int check_cur_player_ammo_amount_in_inventory(int type)
 
 {
-  return ptr_BONDdata->ammoheldarr[type];
+  return pPlayer->ammoheldarr[type];
 }
 
 
@@ -82069,7 +82069,7 @@ void set_max_ammo_for_cur_player(void)
 int get_ammo_in_hands_magazine(int hand)
 
 {
-  return (&ptr_BONDdata->right_weapon_ammo_in_magazine)[hand * 0xea];
+  return (&pPlayer->right_weapon_ammo_in_magazine)[hand * 0xea];
 }
 
 
@@ -82084,7 +82084,7 @@ int get_ammo_in_hands_weapon(int hand)
   iVar1 = get_ammo_count_for_weapon(weapon);
   if (((weapon == ITEM_SHOTGUN) || (weapon == ITEM_AUTOSHOT)) &&
      ((weapon = get_item_in_hand(1 - hand), weapon == ITEM_SHOTGUN || (weapon == ITEM_AUTOSHOT)))) {
-    iVar1 -= *(int *)((int)ptr_BONDdata + hand * -0x3a8 + 0xc4c);
+    iVar1 -= *(int *)((int)pPlayer + hand * -0x3a8 + 0xc4c);
   }
   return iVar1;
 }
@@ -82108,7 +82108,7 @@ int get_ammo_count_for_weapon(int weapon)
   undefined *puVar1;
   
   puVar1 = get_ptr_item_statistics(weapon);
-  return ptr_BONDdata->ammoheldarr[*(int *)(puVar1 + 0x1c)];
+  return pPlayer->ammoheldarr[*(int *)(puVar1 + 0x1c)];
 }
 
 
@@ -82399,8 +82399,8 @@ int * generate_ammo_total_microcode(void)
   int local_10;
   
   local_res0 = (uint *)buffer;
-  if ((ptr_BONDdata->somekinda_flags == 0) &&
-     (local_res0 = (uint *)buffer, ptr_BONDdata->mpmenuon == 0)) {
+  if ((pPlayer->somekinda_flags == 0) &&
+     (local_res0 = (uint *)buffer, pPlayer->mpmenuon == 0)) {
     weapon = get_item_in_hand(1);
     weapon_00 = get_item_in_hand(0);
     uVar2 = get_num_players();
@@ -82422,8 +82422,8 @@ int * generate_ammo_total_microcode(void)
     local_res0 = (uint *)buffer;
     if ((((weapon_00 != ITEM_UNARMED) &&
          (iVar4 = get_ammo_type_for_weapon(weapon_00), local_res0 = (uint *)buffer, iVar4 != 0)) &&
-        (local_res0 = (uint *)buffer, ptr_BONDdata->when_detonating_mines_is_0 != 6)) &&
-       ((local_res0 = (uint *)buffer, ptr_BONDdata->when_detonating_mines_is_0 != 7 &&
+        (local_res0 = (uint *)buffer, pPlayer->when_detonating_mines_is_0 != 6)) &&
+       ((local_res0 = (uint *)buffer, pPlayer->when_detonating_mines_is_0 != 7 &&
         (iVar5 = check_special_attributes(weapon_00,0x80000), local_res0 = (uint *)buffer,
         iVar5 == 0)))) {
       local_24 = 5;
@@ -82444,14 +82444,14 @@ int * generate_ammo_total_microcode(void)
       local_res0 = microcode_constructor(local_res0);
       iVar5 = check_special_attributes(weapon_00,0x400000);
       if (iVar5 == 0) {
-        local_1c = ptr_BONDdata->right_weapon_ammo_in_magazine;
-        local_18 = ptr_BONDdata->ammoheldarr[iVar4];
+        local_1c = pPlayer->right_weapon_ammo_in_magazine;
+        local_18 = pPlayer->ammoheldarr[iVar4];
       }
       else {
         local_1c = 0;
-        local_18 = ptr_BONDdata->right_weapon_ammo_in_magazine + ptr_BONDdata->ammoheldarr[iVar4];
+        local_18 = pPlayer->right_weapon_ammo_in_magazine + pPlayer->ammoheldarr[iVar4];
         if (weapon == weapon_00) {
-          local_18 += ptr_BONDdata->left_weapon_ammo_in_magazine;
+          local_18 += pPlayer->left_weapon_ammo_in_magazine;
         }
       }
       iVar4 = check_special_attributes(weapon_00,0x400000);
@@ -82486,8 +82486,8 @@ int * generate_ammo_total_microcode(void)
       local_res0 = combiner_bayer_lod_perspective(local_res0);
     }
     if ((((weapon != ITEM_UNARMED) && (iVar4 = get_ammo_type_for_weapon(weapon), iVar4 != 0)) &&
-        (ptr_BONDdata->field_C3C != 6)) &&
-       ((ptr_BONDdata->field_C3C != 7 &&
+        (pPlayer->field_C3C != 6)) &&
+       ((pPlayer->field_C3C != 7 &&
         (iVar5 = check_special_attributes(weapon,0x80000), iVar5 == 0)))) {
       local_2c = 5;
       if ((&DAT_80035ef4)[iVar4 * 3] != 0) {
@@ -82506,14 +82506,14 @@ int * generate_ammo_total_microcode(void)
       local_res0 = microcode_constructor(local_res0);
       iVar5 = check_special_attributes(weapon,0x400000);
       if (iVar5 == 0) {
-        local_1c = ptr_BONDdata->left_weapon_ammo_in_magazine;
-        local_18 = ptr_BONDdata->ammoheldarr[iVar4];
+        local_1c = pPlayer->left_weapon_ammo_in_magazine;
+        local_18 = pPlayer->ammoheldarr[iVar4];
       }
       else {
         local_1c = 0;
-        local_18 = ptr_BONDdata->left_weapon_ammo_in_magazine + ptr_BONDdata->ammoheldarr[iVar4];
+        local_18 = pPlayer->left_weapon_ammo_in_magazine + pPlayer->ammoheldarr[iVar4];
         if (weapon == weapon_00) {
-          local_18 += ptr_BONDdata->right_weapon_ammo_in_magazine;
+          local_18 += pPlayer->right_weapon_ammo_in_magazine;
         }
       }
       iVar4 = check_special_attributes(weapon,0x400000);
@@ -82573,8 +82573,8 @@ undefined4 * proc_7F06A334(undefined4 *param_1)
   IVar3 = get_item_in_hand(1);
   weapon = get_item_in_hand(0);
   if ((((weapon != ITEM_UNARMED) && (iVar4 = get_ammo_type_for_weapon(weapon), iVar4 != 0)) &&
-      (ptr_BONDdata->when_detonating_mines_is_0 != 6)) &&
-     ((ptr_BONDdata->when_detonating_mines_is_0 != 7 &&
+      (pPlayer->when_detonating_mines_is_0 != 6)) &&
+     ((pPlayer->when_detonating_mines_is_0 != 7 &&
       (iVar5 = check_special_attributes(weapon,0x80000), iVar5 == 0)))) {
     iVar5 = (&DAT_80035ef4)[iVar4 * 3];
     uStack28 = 5;
@@ -82593,14 +82593,14 @@ undefined4 * proc_7F06A334(undefined4 *param_1)
     DL = microcode_constructor(param_1);
     iVar5 = check_special_attributes(weapon,0x400000);
     if (iVar5 == 0) {
-      iStack20 = ptr_BONDdata->right_weapon_ammo_in_magazine;
-      iStack16 = ptr_BONDdata->ammoheldarr[iVar4];
+      iStack20 = pPlayer->right_weapon_ammo_in_magazine;
+      iStack16 = pPlayer->ammoheldarr[iVar4];
     }
     else {
       iStack20 = 0;
-      iStack16 = ptr_BONDdata->right_weapon_ammo_in_magazine + ptr_BONDdata->ammoheldarr[iVar4];
+      iStack16 = pPlayer->right_weapon_ammo_in_magazine + pPlayer->ammoheldarr[iVar4];
       if (IVar3 == weapon) {
-        iStack16 += ptr_BONDdata->left_weapon_ammo_in_magazine;
+        iStack16 += pPlayer->left_weapon_ammo_in_magazine;
       }
     }
     iVar4 = check_special_attributes(weapon,0x400000);
@@ -82629,10 +82629,10 @@ void set_unset_bitflags(int bitflags,int flag)
 
 {
   if (flag != 0) {
-    ptr_BONDdata->somekinda_bitflags = ptr_BONDdata->somekinda_bitflags & ~bitflags;
+    pPlayer->somekinda_bitflags = pPlayer->somekinda_bitflags & ~bitflags;
     return;
   }
-  ptr_BONDdata->somekinda_bitflags = ptr_BONDdata->somekinda_bitflags | bitflags;
+  pPlayer->somekinda_bitflags = pPlayer->somekinda_bitflags | bitflags;
   return;
 }
 
@@ -82649,11 +82649,11 @@ void proc_7F06A5E4(uint **param_1)
   float local_8;
   uint *local_4;
   
-  if ((ptr_BONDdata->somekinda_bitflags == 0) && (ptr_BONDdata->mpmenuon == 0)) {
+  if ((pPlayer->somekinda_bitflags == 0) && (pPlayer->mpmenuon == 0)) {
     local_4 = *param_1;
     likely_generate_DL_for_image_declaration(&local_4,imgcall,4,0,0);
-    local_c = ptr_BONDdata->field_FE8;
-    local_8 = ptr_BONDdata->field_FEC;
+    local_c = pPlayer->field_FE8;
+    local_8 = pPlayer->field_FEC;
     local_14 = 16.00000000;
     local_10 = 0x41800000;
     iVar1 = get_screen_ratio();
@@ -82721,7 +82721,7 @@ void increment_num_kills_display_text_in_MP(void)
   char acStack256 [256];
   
   cur_player_stat_ptr->kill_count = cur_player_stat_ptr->kill_count + 1;
-  ptr_BONDdata->field_29F8 = ptr_BONDdata->field_29F8 + 1;
+  pPlayer->field_29F8 = pPlayer->field_29F8 + 1;
   uVar1 = get_num_players();
   if (1 < (longlong)uVar1) {
     iVar2 = getMissiontime();
@@ -82729,7 +82729,7 @@ void increment_num_kills_display_text_in_MP(void)
     sprintf(acStack256,"%s: %d\n",pbVar3,cur_player_stat_ptr->kill_count);
     display_string_in_lower_left_corner(acStack256);
     if (1 < cur_player_stat_ptr->kill_count) {
-      iVar4 = iVar2 - ptr_BONDdata->field_29E4;
+      iVar4 = iVar2 - pPlayer->field_29E4;
       if (cur_player_stat_ptr->max_time_between_kills < iVar4) {
         cur_player_stat_ptr->max_time_between_kills = iVar4;
         iVar5 = cur_player_stat_ptr->min_time_between_kills;
@@ -82742,16 +82742,16 @@ void increment_num_kills_display_text_in_MP(void)
       }
     }
     iVar4 = 1;
-    ptr_BONDdata->field_29F0 = ptr_BONDdata->field_29EC;
-    ptr_BONDdata->field_29EC = ptr_BONDdata->field_29E8;
-    ptr_BONDdata->field_29E8 = ptr_BONDdata->field_29E4;
-    ptr_BONDdata->field_29E4 = iVar2;
-    if ((ptr_BONDdata->field_29E8 != -1) &&
-       (iVar2 = ptr_BONDdata->field_29E4, iVar2 - ptr_BONDdata->field_29E8 < 0x78)) {
+    pPlayer->field_29F0 = pPlayer->field_29EC;
+    pPlayer->field_29EC = pPlayer->field_29E8;
+    pPlayer->field_29E8 = pPlayer->field_29E4;
+    pPlayer->field_29E4 = iVar2;
+    if ((pPlayer->field_29E8 != -1) &&
+       (iVar2 = pPlayer->field_29E4, iVar2 - pPlayer->field_29E8 < 0x78)) {
       iVar4 = 2;
-      if ((ptr_BONDdata->field_29EC != -1) && (iVar2 - ptr_BONDdata->field_29EC < 0x78)) {
+      if ((pPlayer->field_29EC != -1) && (iVar2 - pPlayer->field_29EC < 0x78)) {
         iVar4 = 3;
-        if ((ptr_BONDdata->field_29F0 != -1) && (iVar2 - ptr_BONDdata->field_29F0 < 0x78)) {
+        if ((pPlayer->field_29F0 != -1) && (iVar2 - pPlayer->field_29F0 < 0x78)) {
           iVar4 = 4;
         }
       }
@@ -82798,17 +82798,17 @@ void increment_num_deaths(void)
   byte *pbVar2;
   char acStack256 [256];
   
-  ptr_BONDdata->deathcount = ptr_BONDdata->deathcount + 1;
+  pPlayer->deathcount = pPlayer->deathcount + 1;
   uVar1 = get_num_players();
   if (1 < (longlong)uVar1) {
-    if (ptr_BONDdata->deathcount == 1) {
+    if (pPlayer->deathcount == 1) {
       __format = get_textptr_for_textID(0x98db);
       sprintf(acStack256,(char *)__format);
     }
     else {
       __format = get_textptr_for_textID(0x98dc);
       pbVar2 = get_textptr_for_textID(0x98dd);
-      sprintf(acStack256,"%s %d %s\n",__format,ptr_BONDdata->deathcount,pbVar2);
+      sprintf(acStack256,"%s %d %s\n",__format,pPlayer->deathcount,pbVar2);
     }
     display_string_in_lower_left_corner(acStack256);
   }
@@ -82820,7 +82820,7 @@ void increment_num_deaths(void)
 int get_curplayer_numdeaths(void)
 
 {
-  return ptr_BONDdata->deathcount;
+  return pPlayer->deathcount;
 }
 
 
@@ -82835,15 +82835,15 @@ void increment_num_suicides_display_MP(void)
   int iVar5;
   char acStack256 [256];
   
-  ptr_BONDdata->num_suicides = ptr_BONDdata->num_suicides + 1;
+  pPlayer->num_suicides = pPlayer->num_suicides + 1;
   uVar1 = get_num_players();
   if (1 < (longlong)uVar1) {
     iVar2 = getMissiontime();
     pbVar3 = get_textptr_for_textID(0x98de);
-    sprintf(acStack256,"%s: %d\n",pbVar3,ptr_BONDdata->num_suicides);
+    sprintf(acStack256,"%s: %d\n",pbVar3,pPlayer->num_suicides);
     display_string_in_lower_left_corner(acStack256);
     if (1 < cur_player_stat_ptr->kill_count) {
-      iVar4 = iVar2 - ptr_BONDdata->field_29E4;
+      iVar4 = iVar2 - pPlayer->field_29E4;
       if (cur_player_stat_ptr->max_time_between_kills < iVar4) {
         cur_player_stat_ptr->max_time_between_kills = iVar4;
         iVar5 = cur_player_stat_ptr->min_time_between_kills;
@@ -82856,16 +82856,16 @@ void increment_num_suicides_display_MP(void)
       }
     }
     iVar4 = 1;
-    ptr_BONDdata->field_29F0 = ptr_BONDdata->field_29EC;
-    ptr_BONDdata->field_29EC = ptr_BONDdata->field_29E8;
-    ptr_BONDdata->field_29E8 = ptr_BONDdata->field_29E4;
-    ptr_BONDdata->field_29E4 = iVar2;
-    if ((ptr_BONDdata->field_29E8 != -1) &&
-       (iVar2 = ptr_BONDdata->field_29E4, iVar2 - ptr_BONDdata->field_29E8 < 0x78)) {
+    pPlayer->field_29F0 = pPlayer->field_29EC;
+    pPlayer->field_29EC = pPlayer->field_29E8;
+    pPlayer->field_29E8 = pPlayer->field_29E4;
+    pPlayer->field_29E4 = iVar2;
+    if ((pPlayer->field_29E8 != -1) &&
+       (iVar2 = pPlayer->field_29E4, iVar2 - pPlayer->field_29E8 < 0x78)) {
       iVar4 = 2;
-      if ((ptr_BONDdata->field_29EC != -1) && (iVar2 - ptr_BONDdata->field_29EC < 0x78)) {
+      if ((pPlayer->field_29EC != -1) && (iVar2 - pPlayer->field_29EC < 0x78)) {
         iVar4 = 3;
-        if ((ptr_BONDdata->field_29F0 != -1) && (iVar2 - ptr_BONDdata->field_29F0 < 0x78)) {
+        if ((pPlayer->field_29F0 != -1) && (iVar2 - pPlayer->field_29F0 < 0x78)) {
           iVar4 = 4;
         }
       }
@@ -82882,7 +82882,7 @@ void increment_num_suicides_display_MP(void)
 int get_curplayer_numsuicides(void)
 
 {
-  return ptr_BONDdata->num_suicides;
+  return pPlayer->num_suicides;
 }
 
 
@@ -91341,10 +91341,10 @@ void proc_7F077BD0(void)
 void set_BONDdata_screensize(float width,float height)
 
 {
-  ptr_BONDdata->c_screenwidth = width;
-  ptr_BONDdata->c_screenheight = height;
-  ptr_BONDdata->c_halfwidth = width * 0.50000000;
-  ptr_BONDdata->c_halfheight = height * 0.50000000;
+  pPlayer->c_screenwidth = width;
+  pPlayer->c_screenheight = height;
+  pPlayer->c_halfwidth = width * 0.50000000;
+  pPlayer->c_halfheight = height * 0.50000000;
   return;
 }
 
@@ -91353,8 +91353,8 @@ void set_BONDdata_screensize(float width,float height)
 void set_ulx_uly(f32 ulx,f32 uly)
 
 {
-  *(f32 *)&ptr_BONDdata->c_screenleft = ulx;
-  *(f32 *)&ptr_BONDdata->c_screentop = uly;
+  *(f32 *)&pPlayer->c_screenleft = ulx;
+  *(f32 *)&pPlayer->c_screentop = uly;
   return;
 }
 
@@ -91363,9 +91363,9 @@ void set_ulx_uly(f32 ulx,f32 uly)
 void proc_7F077C30(f32 param_1,f32 param_2,f32 param_3,f32 param_4,f32 param_5)
 
 {
-  *(f32 *)&ptr_BONDdata->c_perspnear = param_1;
-  *(f32 *)&ptr_BONDdata->c_perspfovy = param_2;
-  *(f32 *)&ptr_BONDdata->c_perspaspect = param_5;
+  *(f32 *)&pPlayer->c_perspnear = param_1;
+  *(f32 *)&pPlayer->c_perspfovy = param_2;
+  *(f32 *)&pPlayer->c_perspaspect = param_5;
   return;
 }
 
@@ -91379,23 +91379,23 @@ void proc_7F077C5C(void)
   uint uVar3;
   
   fVar2 = flt_80054FA0;
-  fVar1 = sinf((ptr_BONDdata->c_perspfovy * flt_80054FA0) / 360.00000000);
-  fVar2 = cosf((ptr_BONDdata->c_perspfovy * fVar2) / 360.00000000);
-  *(float *)&ptr_BONDdata->field_10B8 = fVar1 / (fVar2 * ptr_BONDdata->c_halfheight);
-  *(float *)&ptr_BONDdata->field_10B4 =
-       ((float)ptr_BONDdata->field_10B8 * ptr_BONDdata->c_perspaspect * ptr_BONDdata->c_halfheight)
-       / ptr_BONDdata->c_halfwidth;
-  *(float *)&ptr_BONDdata->field_10BC = 1.00000000 / (float)ptr_BONDdata->field_10B4;
-  *(float *)&ptr_BONDdata->field_10C0 = 1.00000000 / (float)ptr_BONDdata->field_10B8;
-  ptr_BONDdata->field_10F4 = ptr_BONDdata->field_10B8;
+  fVar1 = sinf((pPlayer->c_perspfovy * flt_80054FA0) / 360.00000000);
+  fVar2 = cosf((pPlayer->c_perspfovy * fVar2) / 360.00000000);
+  *(float *)&pPlayer->field_10B8 = fVar1 / (fVar2 * pPlayer->c_halfheight);
+  *(float *)&pPlayer->field_10B4 =
+       ((float)pPlayer->field_10B8 * pPlayer->c_perspaspect * pPlayer->c_halfheight)
+       / pPlayer->c_halfwidth;
+  *(float *)&pPlayer->field_10BC = 1.00000000 / (float)pPlayer->field_10B4;
+  *(float *)&pPlayer->field_10C0 = 1.00000000 / (float)pPlayer->field_10B8;
+  pPlayer->field_10F4 = pPlayer->field_10B8;
   fVar2 = sinf(flt_80054FA4);
   fVar1 = cosf(flt_80054FA8);
-  *(float *)&ptr_BONDdata->field_10F0 = fVar2 / (fVar1 * 120.00000000);
-  *(float *)&ptr_BONDdata->field_10F8 =
-       (float)ptr_BONDdata->field_10F4 / (float)ptr_BONDdata->field_10F0;
-  fVar2 = (float)ptr_BONDdata->field_10F8 * 65536.00000000;
+  *(float *)&pPlayer->field_10F0 = fVar2 / (fVar1 * 120.00000000);
+  *(float *)&pPlayer->field_10F8 =
+       (float)pPlayer->field_10F4 / (float)pPlayer->field_10F0;
+  fVar2 = (float)pPlayer->field_10F8 * 65536.00000000;
   if (4294967296.00000000 < fVar2) {
-    ptr_BONDdata->field_10FC = -1;
+    pPlayer->field_10FC = -1;
     goto LAB_7f077e34;
   }
   if (false) {
@@ -91421,18 +91421,18 @@ LAB_7f077e10:
       uVar3 = 0xffffffff;
     }
   }
-  ptr_BONDdata->field_10FC = uVar3;
+  pPlayer->field_10FC = uVar3;
 LAB_7f077e34:
-  fVar1 = ptr_BONDdata->c_halfheight * (float)ptr_BONDdata->field_10B8;
+  fVar1 = pPlayer->c_halfheight * (float)pPlayer->field_10B8;
   fVar2 = sqrtf(fVar1 * fVar1 + 1.00000000);
-  ptr_BONDdata->x = 0;
-  *(float *)&ptr_BONDdata->y = 1.00000000 / fVar2;
-  *(float *)&ptr_BONDdata->z = fVar1 * (1.00000000 / fVar2);
-  fVar1 = -ptr_BONDdata->c_halfwidth * (float)ptr_BONDdata->field_10B4;
+  pPlayer->x = 0;
+  *(float *)&pPlayer->y = 1.00000000 / fVar2;
+  *(float *)&pPlayer->z = fVar1 * (1.00000000 / fVar2);
+  fVar1 = -pPlayer->c_halfwidth * (float)pPlayer->field_10B4;
   fVar2 = sqrtf(fVar1 * fVar1 + 1.00000000);
-  *(float *)&ptr_BONDdata->field_110C = -(1.00000000 / fVar2);
-  ptr_BONDdata->field_1110 = 0;
-  *(float *)&ptr_BONDdata->field_1114 = -fVar1 * (1.00000000 / fVar2);
+  *(float *)&pPlayer->field_110C = -(1.00000000 / fVar2);
+  pPlayer->field_1110 = 0;
+  *(float *)&pPlayer->field_1114 = -fVar1 * (1.00000000 / fVar2);
   return;
 }
 
@@ -91446,10 +91446,10 @@ void proc_7F077EEC(float *param_1,float *param_2,float param_3)
   float fVar2;
   float fVar3;
   
-  fVar2 = (ptr_BONDdata->c_halfheight - (param_1[1] - ptr_BONDdata->c_screentop)) *
-          (float)ptr_BONDdata->field_10B8;
-  fVar3 = ((*param_1 - ptr_BONDdata->c_screenleft) - ptr_BONDdata->c_halfwidth) *
-          (float)ptr_BONDdata->field_10B4;
+  fVar2 = (pPlayer->c_halfheight - (param_1[1] - pPlayer->c_screentop)) *
+          (float)pPlayer->field_10B8;
+  fVar3 = ((*param_1 - pPlayer->c_screenleft) - pPlayer->c_halfwidth) *
+          (float)pPlayer->field_10B4;
   fVar1 = sqrtf(fVar3 * fVar3 + fVar2 * fVar2 + 1.00000000);
   fVar1 = in_a2_lo / fVar1;
   *param_2 = fVar3 * fVar1;
@@ -91465,8 +91465,8 @@ void proc_7F077FB4(float *param_1,float param_2,float *param_3)
 {
   float *in_a2_lo;
   
-  in_a2_lo[1] = param_1[1] * (float)param_3 * (float)ptr_BONDdata->field_10B8;
-  *in_a2_lo = *param_1 * (float)param_3 * (float)ptr_BONDdata->field_10B4;
+  in_a2_lo[1] = param_1[1] * (float)param_3 * (float)pPlayer->field_10B8;
+  *in_a2_lo = *param_1 * (float)param_3 * (float)pPlayer->field_10B4;
   return;
 }
 
@@ -91478,10 +91478,10 @@ void proc_7F077FF4(float *param_1,float *param_2)
   float fVar1;
   
   fVar1 = param_1[2];
-  param_2[1] = param_1[1] * (1.00000000 / fVar1) * (float)ptr_BONDdata->field_10C0 +
-               ptr_BONDdata->c_screentop + ptr_BONDdata->c_halfheight;
-  *param_2 = (ptr_BONDdata->c_screenleft + ptr_BONDdata->c_halfwidth) -
-             *param_1 * (1.00000000 / fVar1) * (float)ptr_BONDdata->field_10BC;
+  param_2[1] = param_1[1] * (1.00000000 / fVar1) * (float)pPlayer->field_10C0 +
+               pPlayer->c_screentop + pPlayer->c_halfheight;
+  *param_2 = (pPlayer->c_screenleft + pPlayer->c_halfwidth) -
+             *param_1 * (1.00000000 / fVar1) * (float)pPlayer->field_10BC;
   return;
 }
 
@@ -91496,10 +91496,10 @@ void proc_7F078060(float *param_1,float *param_2)
   if (param_1[2] != 0.00000000) {
     fVar1 = 1.00000000 / param_1[2];
   }
-  param_2[1] = param_1[1] * fVar1 * (float)ptr_BONDdata->field_10C0 +
-               ptr_BONDdata->c_screentop + ptr_BONDdata->c_halfheight;
-  *param_2 = (ptr_BONDdata->c_screenleft + ptr_BONDdata->c_halfwidth) -
-             *param_1 * fVar1 * (float)ptr_BONDdata->field_10BC;
+  param_2[1] = param_1[1] * fVar1 * (float)pPlayer->field_10C0 +
+               pPlayer->c_screentop + pPlayer->c_halfheight;
+  *param_2 = (pPlayer->c_screenleft + pPlayer->c_halfwidth) -
+             *param_1 * fVar1 * (float)pPlayer->field_10BC;
   return;
 }
 
@@ -91510,8 +91510,8 @@ void proc_7F0780F0(float *param_1,float param_2,float *param_3)
 {
   float *in_a2_lo;
   
-  in_a2_lo[1] = param_1[1] * (1.00000000 / (float)param_3) * (float)ptr_BONDdata->field_10C0;
-  *in_a2_lo = *param_1 * (1.00000000 / (float)param_3) * (float)ptr_BONDdata->field_10BC;
+  in_a2_lo[1] = param_1[1] * (1.00000000 / (float)param_3) * (float)pPlayer->field_10C0;
+  *in_a2_lo = *param_1 * (1.00000000 / (float)param_3) * (float)pPlayer->field_10BC;
   return;
 }
 
@@ -91529,11 +91529,11 @@ void proc_7F078140(float *param_1,float *param_2,float param_3,float param_4,flo
   __x = (in_a3_lo * flt_80054FB0) / 360.00000000;
   fVar1 = sinf(__x);
   __x = cosf(__x);
-  fVar2 = ptr_BONDdata->c_halfheight;
+  fVar2 = pPlayer->c_halfheight;
   fVar1 = fVar1 / (__x * fVar2);
-  __x = (fVar2 - (param_1[1] - ptr_BONDdata->c_screentop)) * fVar1;
-  fVar2 = ((*param_1 - ptr_BONDdata->c_screenleft) - ptr_BONDdata->c_halfwidth) *
-          ((fVar1 * in_stack_00000010 * fVar2) / ptr_BONDdata->c_halfwidth);
+  __x = (fVar2 - (param_1[1] - pPlayer->c_screentop)) * fVar1;
+  fVar2 = ((*param_1 - pPlayer->c_screenleft) - pPlayer->c_halfwidth) *
+          ((fVar1 * in_stack_00000010 * fVar2) / pPlayer->c_halfwidth);
   fVar1 = sqrtf(fVar2 * fVar2 + __x * __x + 1.00000000);
   param_5 = param_5 / fVar1;
   *param_2 = fVar2 * param_5;
@@ -91557,11 +91557,11 @@ void proc_7F078258(float *param_1,float *param_2,float param_3,float param_4)
   __x = (in_a2_lo * flt_80054FB4) / 360.00000000;
   fVar1 = cosf(__x);
   __x = sinf(__x);
-  fVar2 = ptr_BONDdata->c_halfheight;
-  fVar3 = ptr_BONDdata->c_halfwidth;
+  fVar2 = pPlayer->c_halfheight;
+  fVar3 = pPlayer->c_halfwidth;
   fVar1 = (fVar1 * fVar2) / (param_1[2] * __x);
-  param_2[1] = param_1[1] * fVar1 + ptr_BONDdata->c_screentop + fVar2;
-  *param_2 = (ptr_BONDdata->c_screenleft + ptr_BONDdata->c_halfwidth) -
+  param_2[1] = param_1[1] * fVar1 + pPlayer->c_screentop + fVar2;
+  *param_2 = (pPlayer->c_screenleft + pPlayer->c_halfwidth) -
              *param_1 * ((fVar3 * fVar1) / (in_a3_lo * fVar2));
   return;
 }
@@ -91571,7 +91571,7 @@ void proc_7F078258(float *param_1,float *param_2,float param_3,float param_4)
 void proc_7F078324(int param_1)
 
 {
-  ptr_BONDdata->field_10C4 = param_1;
+  pPlayer->field_10C4 = param_1;
   return;
 }
 
@@ -91580,7 +91580,7 @@ void proc_7F078324(int param_1)
 int proc_7F078334(void)
 
 {
-  return ptr_BONDdata->field_10C4;
+  return pPlayer->field_10C4;
 }
 
 
@@ -91588,7 +91588,7 @@ int proc_7F078334(void)
 void proc_7F078344(int param_1)
 
 {
-  ptr_BONDdata->field_10C8 = param_1;
+  pPlayer->field_10C8 = param_1;
   return;
 }
 
@@ -91597,7 +91597,7 @@ void proc_7F078344(int param_1)
 int proc_7F078354(void)
 
 {
-  return ptr_BONDdata->field_10C8;
+  return pPlayer->field_10C8;
 }
 
 
@@ -91605,7 +91605,7 @@ int proc_7F078354(void)
 void proc_7F078364(int param_1)
 
 {
-  ptr_BONDdata->field_10D8 = param_1;
+  pPlayer->field_10D8 = param_1;
   return;
 }
 
@@ -91614,7 +91614,7 @@ void proc_7F078364(int param_1)
 int proc_7F078374(void)
 
 {
-  return ptr_BONDdata->field_10D8;
+  return pPlayer->field_10D8;
 }
 
 
@@ -91622,7 +91622,7 @@ int proc_7F078374(void)
 void proc_7F078384(int param_1)
 
 {
-  ptr_BONDdata->field_10E0 = param_1;
+  pPlayer->field_10E0 = param_1;
   return;
 }
 
@@ -91631,7 +91631,7 @@ void proc_7F078384(int param_1)
 int proc_7F078394(void)
 
 {
-  return ptr_BONDdata->field_10E0;
+  return pPlayer->field_10E0;
 }
 
 
@@ -91639,8 +91639,8 @@ int proc_7F078394(void)
 void proc_7F0783A4(int param_1)
 
 {
-  ptr_BONDdata->field_10E8 = ptr_BONDdata->field_10CC;
-  ptr_BONDdata->field_10CC = param_1;
+  pPlayer->field_10E8 = pPlayer->field_10CC;
+  pPlayer->field_10CC = param_1;
   return;
 }
 
@@ -91649,7 +91649,7 @@ void proc_7F0783A4(int param_1)
 int proc_7F0783C4(void)
 
 {
-  return ptr_BONDdata->field_10CC;
+  return pPlayer->field_10CC;
 }
 
 
@@ -91657,7 +91657,7 @@ int proc_7F0783C4(void)
 void proc_7F0783D4(int param_1)
 
 {
-  ptr_BONDdata->field_10DC = param_1;
+  pPlayer->field_10DC = param_1;
   return;
 }
 
@@ -91666,7 +91666,7 @@ void proc_7F0783D4(int param_1)
 int proc_7F0783E4(void)
 
 {
-  return ptr_BONDdata->field_10DC;
+  return pPlayer->field_10DC;
 }
 
 
@@ -91674,7 +91674,7 @@ int proc_7F0783E4(void)
 int proc_7F0783F4(void)
 
 {
-  return ptr_BONDdata->field_10E8;
+  return pPlayer->field_10E8;
 }
 
 
@@ -91682,7 +91682,7 @@ int proc_7F0783F4(void)
 void proc_7F078404(int param_1)
 
 {
-  ptr_BONDdata->field_10D0 = param_1;
+  pPlayer->field_10D0 = param_1;
   return;
 }
 
@@ -91691,7 +91691,7 @@ void proc_7F078404(int param_1)
 int proc_7F078414(void)
 
 {
-  return ptr_BONDdata->field_10D0;
+  return pPlayer->field_10D0;
 }
 
 
@@ -91699,8 +91699,8 @@ int proc_7F078414(void)
 void proc_7F078424(int param_1)
 
 {
-  ptr_BONDdata->field_10EC = ptr_BONDdata->field_10D4;
-  ptr_BONDdata->field_10D4 = param_1;
+  pPlayer->field_10EC = pPlayer->field_10D4;
+  pPlayer->field_10D4 = param_1;
   return;
 }
 
@@ -91709,7 +91709,7 @@ void proc_7F078424(int param_1)
 int proc_7F078444(void)
 
 {
-  return ptr_BONDdata->field_10D4;
+  return pPlayer->field_10D4;
 }
 
 
@@ -91717,7 +91717,7 @@ int proc_7F078444(void)
 int proc_7F078454(void)
 
 {
-  return ptr_BONDdata->field_10EC;
+  return pPlayer->field_10EC;
 }
 
 
@@ -91725,7 +91725,7 @@ int proc_7F078454(void)
 void proc_7F078464(int param_1)
 
 {
-  ptr_BONDdata->field_10E4 = param_1;
+  pPlayer->field_10E4 = param_1;
   return;
 }
 
@@ -91734,7 +91734,7 @@ void proc_7F078464(int param_1)
 int proc_7F078474(void)
 
 {
-  return ptr_BONDdata->field_10E4;
+  return pPlayer->field_10E4;
 }
 
 
@@ -91742,7 +91742,7 @@ int proc_7F078474(void)
 f32 proc_7F078484(void)
 
 {
-  return ptr_BONDdata->field_10F8;
+  return pPlayer->field_10F8;
 }
 
 
@@ -91750,7 +91750,7 @@ f32 proc_7F078484(void)
 int proc_7F078494(void)
 
 {
-  return ptr_BONDdata->field_10FC;
+  return pPlayer->field_10FC;
 }
 
 
@@ -91758,7 +91758,7 @@ int proc_7F078494(void)
 f32 get_screen_width(void)
 
 {
-  return (f32)ptr_BONDdata->c_screenwidth;
+  return (f32)pPlayer->c_screenwidth;
 }
 
 
@@ -91766,7 +91766,7 @@ f32 get_screen_width(void)
 f32 get_screen_height(void)
 
 {
-  return (f32)ptr_BONDdata->c_screenheight;
+  return (f32)pPlayer->c_screenheight;
 }
 
 
@@ -91774,7 +91774,7 @@ f32 get_screen_height(void)
 f32 get_ulx(void)
 
 {
-  return (f32)ptr_BONDdata->c_screenleft;
+  return (f32)pPlayer->c_screenleft;
 }
 
 
@@ -91782,7 +91782,7 @@ f32 get_ulx(void)
 f32 get_uly(void)
 
 {
-  return (f32)ptr_BONDdata->c_screentop;
+  return (f32)pPlayer->c_screentop;
 }
 
 
@@ -91790,7 +91790,7 @@ f32 get_uly(void)
 f32 proc_7F0784E4(void)
 
 {
-  return (f32)ptr_BONDdata->c_perspfovy;
+  return (f32)pPlayer->c_perspfovy;
 }
 
 
@@ -91798,7 +91798,7 @@ f32 proc_7F0784E4(void)
 f32 proc_7F0784F4(void)
 
 {
-  return (f32)ptr_BONDdata->c_perspaspect;
+  return (f32)pPlayer->c_perspaspect;
 }
 
 
@@ -91806,9 +91806,9 @@ f32 proc_7F0784F4(void)
 void proc_7F078504(xyzpoint *param_1)
 
 {
-  *(int *)&param_1->x = ptr_BONDdata->x;
-  *(int *)&param_1->y = ptr_BONDdata->y;
-  *(int *)&param_1->z = ptr_BONDdata->z;
+  *(int *)&param_1->x = pPlayer->x;
+  *(int *)&param_1->y = pPlayer->y;
+  *(int *)&param_1->z = pPlayer->z;
   return;
 }
 
@@ -91817,9 +91817,9 @@ void proc_7F078504(xyzpoint *param_1)
 void proc_7F078534(xyzpoint *param_1)
 
 {
-  *(int *)&param_1->x = ptr_BONDdata->x;
-  param_1->y = -(float)ptr_BONDdata->y;
-  *(int *)&param_1->z = ptr_BONDdata->z;
+  *(int *)&param_1->x = pPlayer->x;
+  param_1->y = -(float)pPlayer->y;
+  *(int *)&param_1->z = pPlayer->z;
   return;
 }
 
@@ -91828,9 +91828,9 @@ void proc_7F078534(xyzpoint *param_1)
 void proc_7F078568(undefined4 *param_1)
 
 {
-  *param_1 = ptr_BONDdata->field_110C;
-  param_1[1] = ptr_BONDdata->field_1110;
-  param_1[2] = ptr_BONDdata->field_1114;
+  *param_1 = pPlayer->field_110C;
+  param_1[1] = pPlayer->field_1110;
+  param_1[2] = pPlayer->field_1114;
   return;
 }
 
@@ -91839,9 +91839,9 @@ void proc_7F078568(undefined4 *param_1)
 void proc_7F078598(float *param_1)
 
 {
-  *param_1 = -(float)ptr_BONDdata->field_110C;
-  *(int *)(param_1 + 1) = ptr_BONDdata->field_1110;
-  *(int *)(param_1 + 2) = ptr_BONDdata->field_1114;
+  *param_1 = -(float)pPlayer->field_110C;
+  *(int *)(param_1 + 1) = pPlayer->field_1110;
+  *(int *)(param_1 + 2) = pPlayer->field_1114;
   return;
 }
 
@@ -91850,7 +91850,7 @@ void proc_7F078598(float *param_1)
 f32 proc_7F0785CC(void)
 
 {
-  return (f32)ptr_BONDdata->c_perspnear;
+  return (f32)pPlayer->c_perspnear;
 }
 
 
@@ -91865,49 +91865,49 @@ void proc_7F0785DC(void)
   float fVar5;
   float fVar6;
   
-  fVar5 = ptr_BONDdata->c_halfheight * (float)ptr_BONDdata->field_10B8;
+  fVar5 = pPlayer->c_halfheight * (float)pPlayer->field_10B8;
   fVar4 = sqrtf(fVar5 * fVar5 + 1.00000000);
   fVar5 = fVar5 * (1.00000000 / fVar4);
   fVar4 = -(1.00000000 / fVar4);
   fVar6 = -fVar4;
-  DAT_80079940 = *(float *)(ptr_BONDdata->field_10D4 + 0x20) * fVar5 +
-                 fVar6 * *(float *)(ptr_BONDdata->field_10D4 + 0x10);
-  DAT_80079944 = *(float *)(ptr_BONDdata->field_10D4 + 0x24) * fVar5 +
-                 fVar6 * *(float *)(ptr_BONDdata->field_10D4 + 0x14);
-  DAT_80079948 = *(float *)(ptr_BONDdata->field_10D4 + 0x28) * fVar5 +
-                 fVar6 * *(float *)(ptr_BONDdata->field_10D4 + 0x18);
-  iVar1 = ptr_BONDdata->field_10D4;
+  DAT_80079940 = *(float *)(pPlayer->field_10D4 + 0x20) * fVar5 +
+                 fVar6 * *(float *)(pPlayer->field_10D4 + 0x10);
+  DAT_80079944 = *(float *)(pPlayer->field_10D4 + 0x24) * fVar5 +
+                 fVar6 * *(float *)(pPlayer->field_10D4 + 0x14);
+  DAT_80079948 = *(float *)(pPlayer->field_10D4 + 0x28) * fVar5 +
+                 fVar6 * *(float *)(pPlayer->field_10D4 + 0x18);
+  iVar1 = pPlayer->field_10D4;
   DAT_8007994c = *(float *)(iVar1 + 0x38) * DAT_80079948 +
                  DAT_80079940 * *(float *)(iVar1 + 0x30) + DAT_80079944 * *(float *)(iVar1 + 0x34);
-  DAT_80079950 = *(float *)(ptr_BONDdata->field_10D4 + 0x20) * fVar5 +
-                 fVar4 * *(float *)(ptr_BONDdata->field_10D4 + 0x10);
-  DAT_80079954 = *(float *)(ptr_BONDdata->field_10D4 + 0x24) * fVar5 +
-                 fVar4 * *(float *)(ptr_BONDdata->field_10D4 + 0x14);
-  DAT_80079958 = *(float *)(ptr_BONDdata->field_10D4 + 0x28) * fVar5 +
-                 fVar4 * *(float *)(ptr_BONDdata->field_10D4 + 0x18);
-  iVar1 = ptr_BONDdata->field_10D4;
+  DAT_80079950 = *(float *)(pPlayer->field_10D4 + 0x20) * fVar5 +
+                 fVar4 * *(float *)(pPlayer->field_10D4 + 0x10);
+  DAT_80079954 = *(float *)(pPlayer->field_10D4 + 0x24) * fVar5 +
+                 fVar4 * *(float *)(pPlayer->field_10D4 + 0x14);
+  DAT_80079958 = *(float *)(pPlayer->field_10D4 + 0x28) * fVar5 +
+                 fVar4 * *(float *)(pPlayer->field_10D4 + 0x18);
+  iVar1 = pPlayer->field_10D4;
   DAT_8007995c = *(float *)(iVar1 + 0x38) * DAT_80079958 +
                  DAT_80079950 * *(float *)(iVar1 + 0x30) + DAT_80079954 * *(float *)(iVar1 + 0x34);
-  fVar5 = -ptr_BONDdata->c_halfwidth * (float)ptr_BONDdata->field_10B4;
+  fVar5 = -pPlayer->c_halfwidth * (float)pPlayer->field_10B4;
   fVar4 = sqrtf(fVar5 * fVar5 + 1.00000000);
   fVar5 = fVar5 * (1.00000000 / fVar4);
   fVar4 = -(1.00000000 / fVar4);
   fVar6 = -fVar4;
-  DAT_80079960 = fVar4 * *(float *)ptr_BONDdata->field_10D4 -
-                 ((float *)ptr_BONDdata->field_10D4)[8] * fVar5;
-  DAT_80079964 = fVar4 * *(float *)(ptr_BONDdata->field_10D4 + 4) -
-                 *(float *)(ptr_BONDdata->field_10D4 + 0x24) * fVar5;
-  DAT_80079968 = fVar4 * *(float *)(ptr_BONDdata->field_10D4 + 8) -
-                 *(float *)(ptr_BONDdata->field_10D4 + 0x28) * fVar5;
-  iVar1 = ptr_BONDdata->field_10D4;
-  DAT_80079970 = fVar6 * *(float *)ptr_BONDdata->field_10D4 -
-                 ((float *)ptr_BONDdata->field_10D4)[8] * fVar5;
-  flt_8007A034 = fVar6 * *(float *)(ptr_BONDdata->field_10D4 + 4) -
-                 *(float *)(ptr_BONDdata->field_10D4 + 0x24) * fVar5;
-  DAT_80079978 = fVar6 * *(float *)(ptr_BONDdata->field_10D4 + 8) -
-                 *(float *)(ptr_BONDdata->field_10D4 + 0x28) * fVar5;
-  iVar2 = ptr_BONDdata->field_10D4;
-  iVar3 = ptr_BONDdata->field_10D4;
+  DAT_80079960 = fVar4 * *(float *)pPlayer->field_10D4 -
+                 ((float *)pPlayer->field_10D4)[8] * fVar5;
+  DAT_80079964 = fVar4 * *(float *)(pPlayer->field_10D4 + 4) -
+                 *(float *)(pPlayer->field_10D4 + 0x24) * fVar5;
+  DAT_80079968 = fVar4 * *(float *)(pPlayer->field_10D4 + 8) -
+                 *(float *)(pPlayer->field_10D4 + 0x28) * fVar5;
+  iVar1 = pPlayer->field_10D4;
+  DAT_80079970 = fVar6 * *(float *)pPlayer->field_10D4 -
+                 ((float *)pPlayer->field_10D4)[8] * fVar5;
+  flt_8007A034 = fVar6 * *(float *)(pPlayer->field_10D4 + 4) -
+                 *(float *)(pPlayer->field_10D4 + 0x24) * fVar5;
+  DAT_80079978 = fVar6 * *(float *)(pPlayer->field_10D4 + 8) -
+                 *(float *)(pPlayer->field_10D4 + 0x28) * fVar5;
+  iVar2 = pPlayer->field_10D4;
+  iVar3 = pPlayer->field_10D4;
   flt_8007A02C = *(float *)(iVar1 + 0x38) * DAT_80079968 +
                  DAT_80079960 * *(float *)(iVar1 + 0x30) + DAT_80079964 * *(float *)(iVar1 + 0x34);
   DAT_8007997c = *(float *)(iVar2 + 0x38) * DAT_80079978 +
@@ -91971,9 +91971,9 @@ void proc_7F0789E0(undefined4 *param_1,undefined4 *param_2)
 void proc_7F078A10(undefined4 *param_1,undefined4 *param_2)
 
 {
-  *param_1 = *(undefined4 *)(ptr_BONDdata->field_10D4 + 0x20);
-  param_1[1] = *(undefined4 *)(ptr_BONDdata->field_10D4 + 0x24);
-  param_1[2] = *(undefined4 *)(ptr_BONDdata->field_10D4 + 0x28);
+  *param_1 = *(undefined4 *)(pPlayer->field_10D4 + 0x20);
+  param_1[1] = *(undefined4 *)(pPlayer->field_10D4 + 0x24);
+  param_1[2] = *(undefined4 *)(pPlayer->field_10D4 + 0x28);
   *param_2 = DAT_80079980;
   return;
 }
@@ -91991,7 +91991,7 @@ undefined8 proc_7F078A58(float *param_1,float param_2)
   
   fVar3 = *param_1;
   fVar4 = param_1[1];
-  iVar1 = ptr_BONDdata->field_10D4;
+  iVar1 = pPlayer->field_10D4;
   fVar2 = param_1[2];
   if (DAT_80079980 + in_a1_lo <
       fVar2 * *(float *)(iVar1 + 0x28) +
@@ -92030,79 +92030,79 @@ undefined8 proc_7F078BF4(float *param_1,float param_2,float *param_3)
   float fVar5;
   float fVar6;
   
-  iVar1 = ptr_BONDdata->field_10D4;
+  iVar1 = pPlayer->field_10D4;
   if (DAT_80079980 + (float)param_3 <
       param_1[2] * *(float *)(iVar1 + 0x28) +
       *(float *)(iVar1 + 0x20) * *param_1 + *(float *)(iVar1 + 0x24) * param_1[1]) {
     uVar2 = 0;
   }
   else {
-    fVar4 = ((*in_a2_lo - ptr_BONDdata->c_screenleft) - ptr_BONDdata->c_halfwidth) *
-            (float)ptr_BONDdata->field_10B4;
+    fVar4 = ((*in_a2_lo - pPlayer->c_screenleft) - pPlayer->c_halfwidth) *
+            (float)pPlayer->field_10B4;
     fVar3 = sqrtf(fVar4 * fVar4 + 1.00000000);
     fVar4 = fVar4 * (1.00000000 / fVar3);
     fVar6 = -(1.00000000 / fVar3);
-    fVar5 = fVar6 * *(float *)ptr_BONDdata->field_10D4 -
-            ((float *)ptr_BONDdata->field_10D4)[8] * fVar4;
-    fVar3 = fVar6 * *(float *)(ptr_BONDdata->field_10D4 + 4) -
-            *(float *)(ptr_BONDdata->field_10D4 + 0x24) * fVar4;
-    fVar4 = fVar6 * *(float *)(ptr_BONDdata->field_10D4 + 8) -
-            *(float *)(ptr_BONDdata->field_10D4 + 0x28) * fVar4;
-    iVar1 = ptr_BONDdata->field_10D4;
+    fVar5 = fVar6 * *(float *)pPlayer->field_10D4 -
+            ((float *)pPlayer->field_10D4)[8] * fVar4;
+    fVar3 = fVar6 * *(float *)(pPlayer->field_10D4 + 4) -
+            *(float *)(pPlayer->field_10D4 + 0x24) * fVar4;
+    fVar4 = fVar6 * *(float *)(pPlayer->field_10D4 + 8) -
+            *(float *)(pPlayer->field_10D4 + 0x28) * fVar4;
+    iVar1 = pPlayer->field_10D4;
     if (*(float *)(iVar1 + 0x38) * fVar4 +
         fVar5 * *(float *)(iVar1 + 0x30) + fVar3 * *(float *)(iVar1 + 0x34) + (float)param_3 <
         param_1[2] * fVar4 + fVar5 * *param_1 + fVar3 * param_1[1]) {
       uVar2 = 0;
     }
     else {
-      fVar4 = -((in_a2_lo[2] - ptr_BONDdata->c_screenleft) - ptr_BONDdata->c_halfwidth) *
-              (float)ptr_BONDdata->field_10B4;
+      fVar4 = -((in_a2_lo[2] - pPlayer->c_screenleft) - pPlayer->c_halfwidth) *
+              (float)pPlayer->field_10B4;
       fVar3 = sqrtf(fVar4 * fVar4 + 1.00000000);
       fVar4 = fVar4 * (1.00000000 / fVar3);
       fVar3 = --(1.00000000 / fVar3);
-      fVar5 = fVar3 * *(float *)ptr_BONDdata->field_10D4 -
-              ((float *)ptr_BONDdata->field_10D4)[8] * fVar4;
-      fVar6 = fVar3 * *(float *)(ptr_BONDdata->field_10D4 + 4) -
-              *(float *)(ptr_BONDdata->field_10D4 + 0x24) * fVar4;
-      fVar3 = fVar3 * *(float *)(ptr_BONDdata->field_10D4 + 8) -
-              *(float *)(ptr_BONDdata->field_10D4 + 0x28) * fVar4;
-      iVar1 = ptr_BONDdata->field_10D4;
+      fVar5 = fVar3 * *(float *)pPlayer->field_10D4 -
+              ((float *)pPlayer->field_10D4)[8] * fVar4;
+      fVar6 = fVar3 * *(float *)(pPlayer->field_10D4 + 4) -
+              *(float *)(pPlayer->field_10D4 + 0x24) * fVar4;
+      fVar3 = fVar3 * *(float *)(pPlayer->field_10D4 + 8) -
+              *(float *)(pPlayer->field_10D4 + 0x28) * fVar4;
+      iVar1 = pPlayer->field_10D4;
       if (*(float *)(iVar1 + 0x38) * fVar3 +
           fVar5 * *(float *)(iVar1 + 0x30) + fVar6 * *(float *)(iVar1 + 0x34) + (float)param_3 <
           param_1[2] * fVar3 + fVar5 * *param_1 + fVar6 * param_1[1]) {
         uVar2 = 0;
       }
       else {
-        fVar4 = (ptr_BONDdata->c_halfheight - (in_a2_lo[1] - ptr_BONDdata->c_screentop)) *
-                (float)ptr_BONDdata->field_10B8;
+        fVar4 = (pPlayer->c_halfheight - (in_a2_lo[1] - pPlayer->c_screentop)) *
+                (float)pPlayer->field_10B8;
         fVar3 = sqrtf(fVar4 * fVar4 + 1.00000000);
         fVar4 = fVar4 * (1.00000000 / fVar3);
         fVar3 = --(1.00000000 / fVar3);
-        fVar5 = *(float *)(ptr_BONDdata->field_10D4 + 0x20) * fVar4 +
-                fVar3 * *(float *)(ptr_BONDdata->field_10D4 + 0x10);
-        fVar6 = *(float *)(ptr_BONDdata->field_10D4 + 0x24) * fVar4 +
-                fVar3 * *(float *)(ptr_BONDdata->field_10D4 + 0x14);
-        fVar3 = *(float *)(ptr_BONDdata->field_10D4 + 0x28) * fVar4 +
-                fVar3 * *(float *)(ptr_BONDdata->field_10D4 + 0x18);
-        iVar1 = ptr_BONDdata->field_10D4;
+        fVar5 = *(float *)(pPlayer->field_10D4 + 0x20) * fVar4 +
+                fVar3 * *(float *)(pPlayer->field_10D4 + 0x10);
+        fVar6 = *(float *)(pPlayer->field_10D4 + 0x24) * fVar4 +
+                fVar3 * *(float *)(pPlayer->field_10D4 + 0x14);
+        fVar3 = *(float *)(pPlayer->field_10D4 + 0x28) * fVar4 +
+                fVar3 * *(float *)(pPlayer->field_10D4 + 0x18);
+        iVar1 = pPlayer->field_10D4;
         if (*(float *)(iVar1 + 0x38) * fVar3 +
             fVar5 * *(float *)(iVar1 + 0x30) + fVar6 * *(float *)(iVar1 + 0x34) + (float)param_3 <
             param_1[2] * fVar3 + fVar5 * *param_1 + fVar6 * param_1[1]) {
           uVar2 = 0;
         }
         else {
-          fVar4 = -(ptr_BONDdata->c_halfheight - (in_a2_lo[3] - ptr_BONDdata->c_screentop)) *
-                  (float)ptr_BONDdata->field_10B8;
+          fVar4 = -(pPlayer->c_halfheight - (in_a2_lo[3] - pPlayer->c_screentop)) *
+                  (float)pPlayer->field_10B8;
           fVar3 = sqrtf(fVar4 * fVar4 + 1.00000000);
           fVar4 = fVar4 * (1.00000000 / fVar3);
           fVar6 = -(1.00000000 / fVar3);
-          fVar3 = *(float *)(ptr_BONDdata->field_10D4 + 0x20) * fVar4 +
-                  fVar6 * *(float *)(ptr_BONDdata->field_10D4 + 0x10);
-          fVar5 = *(float *)(ptr_BONDdata->field_10D4 + 0x24) * fVar4 +
-                  fVar6 * *(float *)(ptr_BONDdata->field_10D4 + 0x14);
-          fVar4 = *(float *)(ptr_BONDdata->field_10D4 + 0x28) * fVar4 +
-                  fVar6 * *(float *)(ptr_BONDdata->field_10D4 + 0x18);
-          iVar1 = ptr_BONDdata->field_10D4;
+          fVar3 = *(float *)(pPlayer->field_10D4 + 0x20) * fVar4 +
+                  fVar6 * *(float *)(pPlayer->field_10D4 + 0x10);
+          fVar5 = *(float *)(pPlayer->field_10D4 + 0x24) * fVar4 +
+                  fVar6 * *(float *)(pPlayer->field_10D4 + 0x14);
+          fVar4 = *(float *)(pPlayer->field_10D4 + 0x28) * fVar4 +
+                  fVar6 * *(float *)(pPlayer->field_10D4 + 0x18);
+          iVar1 = pPlayer->field_10D4;
           uVar2 = 1;
           if (*(float *)(iVar1 + 0x38) * fVar4 +
               fVar3 * *(float *)(iVar1 + 0x30) + fVar5 * *(float *)(iVar1 + 0x34) + (float)param_3 <
@@ -92141,12 +92141,12 @@ uint proc_7F0790F0(void)
       iVar7 += 1;
       bVar2 = false;
       uVar5 = 0;
-      ptr_BONDdata->field_29E0 = ptr_BONDdata->field_29E0 + 1;
-      uStack20 = ptr_BONDdata->field_29E0 % DAT_80079c68;
+      pPlayer->field_29E0 = pPlayer->field_29E0 + 1;
+      uStack20 = pPlayer->field_29E0 % DAT_80079c68;
       if (DAT_80079c68 == 0) {
         trap(0x1c00);
       }
-      if ((DAT_80079c68 == 0xffffffff) && (ptr_BONDdata->field_29E0 == -0x80000000)) {
+      if ((DAT_80079c68 == 0xffffffff) && (pPlayer->field_29E0 == -0x80000000)) {
         trap(0x1800);
       }
       if (0 < (longlong)uVar3) {
@@ -92182,12 +92182,12 @@ uint proc_7F0790F0(void)
       iVar7 += 1;
       bVar2 = false;
       uVar5 = 0;
-      ptr_BONDdata->field_29E0 = ptr_BONDdata->field_29E0 + 1;
-      uStack20 = ptr_BONDdata->field_29E0 % DAT_80079c68;
+      pPlayer->field_29E0 = pPlayer->field_29E0 + 1;
+      uStack20 = pPlayer->field_29E0 % DAT_80079c68;
       if (DAT_80079c68 == 0) {
         trap(0x1c00);
       }
-      if ((DAT_80079c68 == 0xffffffff) && (ptr_BONDdata->field_29E0 == -0x80000000)) {
+      if ((DAT_80079c68 == 0xffffffff) && (pPlayer->field_29E0 == -0x80000000)) {
         trap(0x1800);
       }
       if (0 < (longlong)uVar3) {
@@ -92241,146 +92241,146 @@ void init_player_BONDdata(void)
   if (1 < (longlong)uVar1) {
     playernum = get_cur_playernum();
     iVar2 = get_player_control_style(playernum);
-    ptr_BONDdata->controlstyle = iVar2;
+    pPlayer->controlstyle = iVar2;
     playernum = get_cur_playernum();
     iVar2 = get_player_control_style(playernum);
     cur_player_set_control_type(iVar2);
   }
-  ptr_BONDdata->current_model_xpos = 0.00000000;
-  ptr_BONDdata->current_model_ypos = 0.00000000;
-  ptr_BONDdata->current_model_zpos = 0.00000000;
-  ptr_BONDdata->previous_model_xpos = 0.00000000;
-  ptr_BONDdata->previous_model_ypos = 0.00000000;
-  ptr_BONDdata->previous_model_zpos = 0.00000000;
-  ptr_BONDdata->current_room_xpos = 0.00000000;
-  ptr_BONDdata->current_room_ypos = 0.00000000;
-  ptr_BONDdata->current_room_zpos = 0.00000000;
-  ptr_BONDdata->unknown = 0;
-  ptr_BONDdata->xpos = 0.00000000;
-  ptr_BONDdata->ypos = 0.00000000;
-  ptr_BONDdata->zpos = 0.00000000;
-  ptr_BONDdata->xpos2 = 0.00000000;
-  ptr_BONDdata->ypos2 = 0.00000000;
-  ptr_BONDdata->zpos2 = 1.00000000;
-  ptr_BONDdata->xoffset = 0.00000000;
-  ptr_BONDdata->yoffset = 1.00000000;
-  ptr_BONDdata->zoffset = 0.00000000;
-  ptr_BONDdata->xpos3 = 0.00000000;
-  ptr_BONDdata->ypos3 = 0.00000000;
-  ptr_BONDdata->zpos3 = 0.00000000;
-  ptr_BONDdata->room_pointer = 0;
-  ptr_BONDdata->field_3C4 = 0.00000000;
-  ptr_BONDdata->field_3C8 = 0.00000000;
-  ptr_BONDdata->field_3CC = 1.00000000;
-  ptr_BONDdata->field_84 = 0.00000000;
-  ptr_BONDdata->field_88 = 0.00000000;
-  ptr_BONDdata->field_8C = 0;
-  ptr_BONDdata->field_90 = 0.00000000;
-  ptr_BONDdata->field_94 = 0;
-  ptr_BONDdata->field_98 = 0.00000000;
-  ptr_BONDdata->field_1274 = 0.00000000;
-  ptr_BONDdata->field_1278 = 0.00000000;
-  ptr_BONDdata->field_127C = 0.00000000;
-  ptr_BONDdata->crouchposition = 2;
-  ptr_BONDdata->field_29FC = 2;
-  ptr_BONDdata->ducking_height_offset = 0.00000000;
-  ptr_BONDdata->field_A4 = 0.00000000;
-  ptr_BONDdata->field_AC = 1;
-  ptr_BONDdata->field_D0 = 0;
-  ptr_BONDdata->player_button_control = 0;
-  ptr_BONDdata->current_health = 1.00000000;
-  ptr_BONDdata->current_armor = 0.00000000;
-  ptr_BONDdata->previous_health = 1.00000000;
-  ptr_BONDdata->previous_armor = 0.00000000;
-  ptr_BONDdata->mp_watch_health_total = 1.00000000;
-  ptr_BONDdata->mp_watch_armor_total = 0.00000000;
-  ptr_BONDdata->invincibility_timer = -1;
-  ptr_BONDdata->health_bar_timer = -1;
-  ptr_BONDdata->field_1C0 = 0;
-  ptr_BONDdata->field_1C4 = 0;
-  ptr_BONDdata->pause_animation_state = 0;
-  ptr_BONDdata->paused_flag = 1;
-  ptr_BONDdata->open_close_solo_watch_menu = 0;
-  ptr_BONDdata->field_1A0 = 0;
-  ptr_BONDdata->field_19C = 0.00000000;
-  ptr_BONDdata->azimuth_turning_direction = 0.00000000;
-  ptr_BONDdata->azimuth_cosine = 1.00000000;
-  ptr_BONDdata->azimuth_sine = 0.00000000;
-  ptr_BONDdata->inclination_angle1 = -4.00000000;
-  *(float *)&ptr_BONDdata->inclination_angle2 = ptr_BONDdata->inclination_angle1;
-  if ((float)ptr_BONDdata->inclination_angle2 < 0.00000000) {
-    *(float *)&ptr_BONDdata->inclination_angle2 =
-         (float)ptr_BONDdata->inclination_angle2 + 360.00000000;
-    ptr_BONDdata->inclination_turning_direction = 0.00000000;
+  pPlayer->current_model_xpos = 0.00000000;
+  pPlayer->current_model_ypos = 0.00000000;
+  pPlayer->current_model_zpos = 0.00000000;
+  pPlayer->previous_model_xpos = 0.00000000;
+  pPlayer->previous_model_ypos = 0.00000000;
+  pPlayer->previous_model_zpos = 0.00000000;
+  pPlayer->current_room_xpos = 0.00000000;
+  pPlayer->current_room_ypos = 0.00000000;
+  pPlayer->current_room_zpos = 0.00000000;
+  pPlayer->unknown = 0;
+  pPlayer->xpos = 0.00000000;
+  pPlayer->ypos = 0.00000000;
+  pPlayer->zpos = 0.00000000;
+  pPlayer->xpos2 = 0.00000000;
+  pPlayer->ypos2 = 0.00000000;
+  pPlayer->zpos2 = 1.00000000;
+  pPlayer->xoffset = 0.00000000;
+  pPlayer->yoffset = 1.00000000;
+  pPlayer->zoffset = 0.00000000;
+  pPlayer->xpos3 = 0.00000000;
+  pPlayer->ypos3 = 0.00000000;
+  pPlayer->zpos3 = 0.00000000;
+  pPlayer->room_pointer = 0;
+  pPlayer->field_3C4 = 0.00000000;
+  pPlayer->field_3C8 = 0.00000000;
+  pPlayer->field_3CC = 1.00000000;
+  pPlayer->field_84 = 0.00000000;
+  pPlayer->field_88 = 0.00000000;
+  pPlayer->field_8C = 0;
+  pPlayer->field_90 = 0.00000000;
+  pPlayer->field_94 = 0;
+  pPlayer->field_98 = 0.00000000;
+  pPlayer->field_1274 = 0.00000000;
+  pPlayer->field_1278 = 0.00000000;
+  pPlayer->field_127C = 0.00000000;
+  pPlayer->crouchposition = 2;
+  pPlayer->field_29FC = 2;
+  pPlayer->ducking_height_offset = 0.00000000;
+  pPlayer->field_A4 = 0.00000000;
+  pPlayer->field_AC = 1;
+  pPlayer->field_D0 = 0;
+  pPlayer->player_button_control = 0;
+  pPlayer->current_health = 1.00000000;
+  pPlayer->current_armor = 0.00000000;
+  pPlayer->previous_health = 1.00000000;
+  pPlayer->previous_armor = 0.00000000;
+  pPlayer->mp_watch_health_total = 1.00000000;
+  pPlayer->mp_watch_armor_total = 0.00000000;
+  pPlayer->invincibility_timer = -1;
+  pPlayer->health_bar_timer = -1;
+  pPlayer->field_1C0 = 0;
+  pPlayer->field_1C4 = 0;
+  pPlayer->pause_animation_state = 0;
+  pPlayer->paused_flag = 1;
+  pPlayer->open_close_solo_watch_menu = 0;
+  pPlayer->field_1A0 = 0;
+  pPlayer->field_19C = 0.00000000;
+  pPlayer->azimuth_turning_direction = 0.00000000;
+  pPlayer->azimuth_cosine = 1.00000000;
+  pPlayer->azimuth_sine = 0.00000000;
+  pPlayer->inclination_angle1 = -4.00000000;
+  *(float *)&pPlayer->inclination_angle2 = pPlayer->inclination_angle1;
+  if ((float)pPlayer->inclination_angle2 < 0.00000000) {
+    *(float *)&pPlayer->inclination_angle2 =
+         (float)pPlayer->inclination_angle2 + 360.00000000;
+    pPlayer->inclination_turning_direction = 0.00000000;
   }
   else {
-    ptr_BONDdata->inclination_turning_direction = 0.00000000;
+    pPlayer->inclination_turning_direction = 0.00000000;
   }
-  ptr_BONDdata->inclination_cosine = 1.00000000;
-  ptr_BONDdata->inclination_sine = 0.00000000;
-  ptr_BONDdata->strafe_speed_multiplier = 0.00000000;
-  ptr_BONDdata->strafe_movement_direction = 0.00000000;
-  ptr_BONDdata->forward_speed_multiplier = 0.00000000;
-  ptr_BONDdata->field_2A4C = 0.00000000;
-  ptr_BONDdata->forward_speed_multiplier_2 = 1.00000000;
-  ptr_BONDdata->forward_speed_frame_counter = 0;
-  ptr_BONDdata->boost_factor_x = 0.00000000;
-  ptr_BONDdata->boost_factor_y = 0.00000000;
-  ptr_BONDdata->boost_factor_z = 0.00000000;
-  ptr_BONDdata->field_104 = 0;
-  ptr_BONDdata->field_108 = 0;
-  ptr_BONDdata->field_10C = 0;
-  ptr_BONDdata->field_110 = 0;
-  ptr_BONDdata->field_114 = 1;
-  ptr_BONDdata->look_ahead_setting = 1;
-  ptr_BONDdata->field_11C = 0;
-  ptr_BONDdata->field_120 = 1;
-  ptr_BONDdata->insightaimmode = 0;
-  ptr_BONDdata->autoyaimenabled = 1;
-  ptr_BONDdata->autoaimy = 0.00000000;
-  ptr_BONDdata->field_130 = 0;
-  ptr_BONDdata->field_134 = -1;
-  ptr_BONDdata->autoxaimenabled = 1;
-  ptr_BONDdata->autoaimx = 0.00000000;
-  ptr_BONDdata->field_140 = 0;
-  ptr_BONDdata->field_144 = -1;
-  *(undefined4 *)&ptr_BONDdata->field_3D0 = 0xff;
-  *(undefined4 *)&ptr_BONDdata->field_3D4 = 0xff;
-  *(undefined4 *)&ptr_BONDdata->field_3D8 = 0xff;
-  ptr_BONDdata->tint_alpha = 0.00000000;
-  ptr_BONDdata->field_3E0 = -1.00000000;
-  ptr_BONDdata->timer_for_fade = -1.00000000;
-  ptr_BONDdata->field_3E8 = 0xff;
-  ptr_BONDdata->field_3EC = 0xff;
-  ptr_BONDdata->field_3F0 = 0xff;
-  ptr_BONDdata->field_3F4 = 0xff;
-  ptr_BONDdata->field_3F8 = 0xff;
-  ptr_BONDdata->field_3FC = 0xff;
-  ptr_BONDdata->field_400 = 0.00000000;
-  ptr_BONDdata->field_404 = 0.00000000;
-  ptr_BONDdata->viewport_alpha = -1.00000000;
-  ptr_BONDdata->rate_of_change = -1.00000000;
-  ptr_BONDdata->time_for_change = 0.00000000;
-  ptr_BONDdata->final_alpha_level = 0.00000000;
-  ptr_BONDdata->field_42C = 2;
-  ptr_BONDdata->controlstyle = 0;
-  ptr_BONDdata->pause_starting_angle = 0.00000000;
-  ptr_BONDdata->field_208 = 0.00000000;
-  ptr_BONDdata->pause_target_angle = 0.00000000;
-  ptr_BONDdata->field_210 = 0.00000000;
-  ptr_BONDdata->field_214 = 0.00000000;
-  ptr_BONDdata->field_218 = 0;
-  ptr_BONDdata->step_in_view_watch_animation = 0;
-  ptr_BONDdata->pause_animation_counter = 0.00000000;
-  ptr_BONDdata->pausing_flag = 0;
-  ptr_BONDdata->field_3B4 = 0;
-  ptr_BONDdata->field_3B6 = 0;
-  ptr_BONDdata->field_29C0 = 15.00000000;
-  *(undefined2 *)&ptr_BONDdata->field_2A04 = 0xffff;
-  ptr_BONDdata->field_2A08 = 0.00000000;
-  ptr_BONDdata->field_2A0C = 0.00000000;
-  ptr_BONDdata->field_2A6C = 0;
-  ptr_BONDdata->field_2A70 = 0;
+  pPlayer->inclination_cosine = 1.00000000;
+  pPlayer->inclination_sine = 0.00000000;
+  pPlayer->strafe_speed_multiplier = 0.00000000;
+  pPlayer->strafe_movement_direction = 0.00000000;
+  pPlayer->forward_speed_multiplier = 0.00000000;
+  pPlayer->field_2A4C = 0.00000000;
+  pPlayer->forward_speed_multiplier_2 = 1.00000000;
+  pPlayer->forward_speed_frame_counter = 0;
+  pPlayer->boost_factor_x = 0.00000000;
+  pPlayer->boost_factor_y = 0.00000000;
+  pPlayer->boost_factor_z = 0.00000000;
+  pPlayer->field_104 = 0;
+  pPlayer->field_108 = 0;
+  pPlayer->field_10C = 0;
+  pPlayer->field_110 = 0;
+  pPlayer->field_114 = 1;
+  pPlayer->look_ahead_setting = 1;
+  pPlayer->field_11C = 0;
+  pPlayer->field_120 = 1;
+  pPlayer->insightaimmode = 0;
+  pPlayer->autoyaimenabled = 1;
+  pPlayer->autoaimy = 0.00000000;
+  pPlayer->field_130 = 0;
+  pPlayer->field_134 = -1;
+  pPlayer->autoxaimenabled = 1;
+  pPlayer->autoaimx = 0.00000000;
+  pPlayer->field_140 = 0;
+  pPlayer->field_144 = -1;
+  *(undefined4 *)&pPlayer->field_3D0 = 0xff;
+  *(undefined4 *)&pPlayer->field_3D4 = 0xff;
+  *(undefined4 *)&pPlayer->field_3D8 = 0xff;
+  pPlayer->tint_alpha = 0.00000000;
+  pPlayer->field_3E0 = -1.00000000;
+  pPlayer->timer_for_fade = -1.00000000;
+  pPlayer->field_3E8 = 0xff;
+  pPlayer->field_3EC = 0xff;
+  pPlayer->field_3F0 = 0xff;
+  pPlayer->field_3F4 = 0xff;
+  pPlayer->field_3F8 = 0xff;
+  pPlayer->field_3FC = 0xff;
+  pPlayer->field_400 = 0.00000000;
+  pPlayer->field_404 = 0.00000000;
+  pPlayer->viewport_alpha = -1.00000000;
+  pPlayer->rate_of_change = -1.00000000;
+  pPlayer->time_for_change = 0.00000000;
+  pPlayer->final_alpha_level = 0.00000000;
+  pPlayer->field_42C = 2;
+  pPlayer->controlstyle = 0;
+  pPlayer->pause_starting_angle = 0.00000000;
+  pPlayer->field_208 = 0.00000000;
+  pPlayer->pause_target_angle = 0.00000000;
+  pPlayer->field_210 = 0.00000000;
+  pPlayer->field_214 = 0.00000000;
+  pPlayer->field_218 = 0;
+  pPlayer->step_in_view_watch_animation = 0;
+  pPlayer->pause_animation_counter = 0.00000000;
+  pPlayer->pausing_flag = 0;
+  pPlayer->field_3B4 = 0;
+  pPlayer->field_3B6 = 0;
+  pPlayer->field_29C0 = 15.00000000;
+  *(undefined2 *)&pPlayer->field_2A04 = 0xffff;
+  pPlayer->field_2A08 = 0.00000000;
+  pPlayer->field_2A0C = 0.00000000;
+  pPlayer->field_2A6C = 0;
+  pPlayer->field_2A70 = 0;
   return;
 }
 
@@ -92392,18 +92392,18 @@ void proc_7F0798B8(void)
   int iVar2;
   ulonglong uVar1;
   
-  *(float *)&ptr_BONDdata->field_29BC =
+  *(float *)&pPlayer->field_29BC =
        cur_player_stat_ptr->player_perspective_height * 185.00000000 * 1.00000000 - 10.00000000;
-  ptr_BONDdata->field_29F8 = 0;
+  pPlayer->field_29F8 = 0;
   iVar2 = getMissiontime();
-  ptr_BONDdata->field_29F4 = iVar2;
-  ptr_BONDdata->healthdisplaytime = 0;
+  pPlayer->field_29F4 = iVar2;
+  pPlayer->healthdisplaytime = 0;
   add_item_to_inventory(ITEM_FIST);
   uVar1 = get_num_players();
   if (1 < (longlong)uVar1) {
     draw_item_in_hand_has_more_ammo(1,(ITEM_IDS)flt_8007A0A4);
     draw_item_in_hand_has_more_ammo(0,(ITEM_IDS)PTR_800799e0);
-    if (ptr_BONDdata->ptr_char_objectinstance == 0) {
+    if (pPlayer->ptr_char_objectinstance == 0) {
       solo_char_load();
     }
   }
@@ -92415,7 +92415,7 @@ void proc_7F0798B8(void)
 void proc_7F079988(int param_1)
 
 {
-  *(float *)&ptr_BONDdata->field_1274 = (float)param_1 * 75.00000000;
+  *(float *)&pPlayer->field_1274 = (float)param_1 * 75.00000000;
   return;
 }
 
@@ -92424,13 +92424,13 @@ void proc_7F079988(int param_1)
 void change_crouch_position(int position)
 
 {
-  ptr_BONDdata->crouchposition = ptr_BONDdata->crouchposition + position;
-  if (ptr_BONDdata->crouchposition < 0) {
-    ptr_BONDdata->crouchposition = 0;
+  pPlayer->crouchposition = pPlayer->crouchposition + position;
+  if (pPlayer->crouchposition < 0) {
+    pPlayer->crouchposition = 0;
     return;
   }
-  if (2 < ptr_BONDdata->crouchposition) {
-    ptr_BONDdata->crouchposition = 2;
+  if (2 < pPlayer->crouchposition) {
+    pPlayer->crouchposition = 2;
   }
   return;
 }
@@ -92440,10 +92440,10 @@ void change_crouch_position(int position)
 int proc_7F0799F0(void)
 
 {
-  if (ptr_BONDdata->crouchposition < ptr_BONDdata->field_29FC) {
-    return ptr_BONDdata->crouchposition;
+  if (pPlayer->crouchposition < pPlayer->field_29FC) {
+    return pPlayer->crouchposition;
   }
-  return ptr_BONDdata->field_29FC;
+  return pPlayer->field_29FC;
 }
 
 
@@ -92467,7 +92467,7 @@ int proc_7F079A1C(int param_1)
 void proc_7F079A50(int param_1)
 
 {
-  ptr_BONDdata->unknown = param_1;
+  pPlayer->unknown = param_1;
   return;
 }
 
@@ -92485,49 +92485,49 @@ void proc_7F079A60(float *xyz_1,float *xyz_2,float *xyz_3,int param_4,float *par
   int iStack8;
   int iStack4;
   
-  if ((((((*xyz_1 != (float)ptr_BONDdata->xpos) || (xyz_1[1] != (float)ptr_BONDdata->ypos)) ||
-        (xyz_1[2] != (float)ptr_BONDdata->zpos)) ||
-       ((*xyz_2 != (float)ptr_BONDdata->xpos2 || (xyz_2[1] != (float)ptr_BONDdata->ypos2)))) ||
-      ((xyz_2[2] != (float)ptr_BONDdata->zpos2 ||
-       ((*xyz_3 != (float)ptr_BONDdata->xoffset || (xyz_3[1] != (float)ptr_BONDdata->yoffset))))))
-     || ((xyz_3[2] != (float)ptr_BONDdata->zoffset || (ptr_BONDdata->room_pointer == 0)))) {
+  if ((((((*xyz_1 != (float)pPlayer->xpos) || (xyz_1[1] != (float)pPlayer->ypos)) ||
+        (xyz_1[2] != (float)pPlayer->zpos)) ||
+       ((*xyz_2 != (float)pPlayer->xpos2 || (xyz_2[1] != (float)pPlayer->ypos2)))) ||
+      ((xyz_2[2] != (float)pPlayer->zpos2 ||
+       ((*xyz_3 != (float)pPlayer->xoffset || (xyz_3[1] != (float)pPlayer->yoffset))))))
+     || ((xyz_3[2] != (float)pPlayer->zoffset || (pPlayer->room_pointer == 0)))) {
     lVar1 = (longlong)(int)param_5;
     iStack4 = param_4;
     proc_7F0B0BE4(&iStack4,in_f12,in_f14,*param_5,param_5[2]);
     if (lVar1 == 0) {
-      lVar1 = (longlong)(int)ptr_BONDdata;
-      if (ptr_BONDdata->room_pointer == 0) {
-        ptr_BONDdata->room_pointer = iStack4;
+      lVar1 = (longlong)(int)pPlayer;
+      if (pPlayer->room_pointer == 0) {
+        pPlayer->room_pointer = iStack4;
       }
       else {
-        iStack8 = ptr_BONDdata->room_pointer;
-        proc_7F0B0BE4(&iStack8,extraout_f12,extraout_f14,(float)ptr_BONDdata->xpos,
-                      (float)ptr_BONDdata->zpos);
+        iStack8 = pPlayer->room_pointer;
+        proc_7F0B0BE4(&iStack8,extraout_f12,extraout_f14,(float)pPlayer->xpos,
+                      (float)pPlayer->zpos);
         if (lVar1 == 0) {
-          ptr_BONDdata->room_pointer = iStack4;
+          pPlayer->room_pointer = iStack4;
         }
         else {
-          ptr_BONDdata->room_pointer = iStack8;
+          pPlayer->room_pointer = iStack8;
         }
       }
     }
     else {
       proc_7F0B0518(iStack4,extraout_f12,extraout_f14);
-      ptr_BONDdata->room_pointer = iStack4;
+      pPlayer->room_pointer = iStack4;
     }
-    *(float *)&ptr_BONDdata->xpos = *xyz_1;
-    *(float *)&ptr_BONDdata->ypos = xyz_1[1];
-    *(float *)&ptr_BONDdata->zpos = xyz_1[2];
-    *(float *)&ptr_BONDdata->xpos2 = *xyz_2;
-    *(float *)&ptr_BONDdata->ypos2 = xyz_2[1];
-    *(float *)&ptr_BONDdata->zpos2 = xyz_2[2];
-    *(float *)&ptr_BONDdata->xoffset = *xyz_3;
-    *(float *)&ptr_BONDdata->yoffset = xyz_3[1];
-    *(float *)&ptr_BONDdata->zoffset = xyz_3[2];
-    ptr_BONDdata->xpos3 = ptr_BONDdata->xpos;
-    ptr_BONDdata->zpos3 = ptr_BONDdata->zpos;
+    *(float *)&pPlayer->xpos = *xyz_1;
+    *(float *)&pPlayer->ypos = xyz_1[1];
+    *(float *)&pPlayer->zpos = xyz_1[2];
+    *(float *)&pPlayer->xpos2 = *xyz_2;
+    *(float *)&pPlayer->ypos2 = xyz_2[1];
+    *(float *)&pPlayer->zpos2 = xyz_2[2];
+    *(float *)&pPlayer->xoffset = *xyz_3;
+    *(float *)&pPlayer->yoffset = xyz_3[1];
+    *(float *)&pPlayer->zoffset = xyz_3[2];
+    pPlayer->xpos3 = pPlayer->xpos;
+    pPlayer->zpos3 = pPlayer->zpos;
     fVar2 = (f32)proc_7F0B2970();
-    ptr_BONDdata->ypos3 = fVar2;
+    pPlayer->ypos3 = fVar2;
   }
   return;
 }
@@ -92581,7 +92581,7 @@ void solo_char_load(void)
   float fStack4;
   
   fStack4 = get_curplay_horizontal_rotation_in_degrees();
-  guard = *(GUARDdata **)(ptr_BONDdata->position_data_pointer + 4);
+  guard = *(GUARDdata **)(pPlayer->position_data_pointer + 4);
   if (guard == NULL) {
     iStack40 = proc_7F05CF30(0);
     iStack44 = proc_7F05CF30(1);
@@ -92604,12 +92604,12 @@ void solo_char_load(void)
     body = BODY_Formal_Wear;
     head = HEAD_Male_Pierce_Bond_2;
     uStack224 = 0;
-    proc_7F07DE64(ptr_BONDdata);
+    proc_7F07DE64(pPlayer);
     uVar2 = get_num_players();
     if (uVar2 == 1) {
       selectedbond = getSelectedFolderBond();
       if (true) {
-        switch(ptr_BONDdata->cuff_value) {
+        switch(pPlayer->cuff_value) {
         case 1:
           body = BODY_Tuxedo;
           break;
@@ -92654,7 +92654,7 @@ void solo_char_load(void)
       }
       if (selectedbond == '\0') {
         if (true) {
-          switch(ptr_BONDdata->cuff_value) {
+          switch(pPlayer->cuff_value) {
           case 1:
             head = HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT;
             break;
@@ -92765,17 +92765,17 @@ void solo_char_load(void)
       }
     }
     uVar5 = maybe_load_models_for_guards(body,head,poStack28,header,0,uStack224);
-    ptr_BONDdata->ptr_char_objectinstance = uVar5;
-    set_obj_instance_controller_scale(ptr_BONDdata->ptr_char_objectinstance,scale);
+    pPlayer->ptr_char_objectinstance = uVar5;
+    set_obj_instance_controller_scale(pPlayer->ptr_char_objectinstance,scale);
     init_GUARDdata_with_set_values
-              (ptr_BONDdata->position_data_pointer,ptr_BONDdata->ptr_char_objectinstance,
-               ptr_BONDdata->position_data_pointer + 8,(u32)fStack4);
-    *(undefined *)ptr_BONDdata->position_data_pointer = 6;
-    pGStack8 = *(GUARDdata **)(ptr_BONDdata->position_data_pointer + 4);
+              (pPlayer->position_data_pointer,pPlayer->ptr_char_objectinstance,
+               pPlayer->position_data_pointer + 8,(u32)fStack4);
+    *(undefined *)pPlayer->position_data_pointer = 6;
+    pGStack8 = *(GUARDdata **)(pPlayer->position_data_pointer + 4);
     pGStack8->guard_bitflags = pGStack8->guard_bitflags | 1;
-    setsuboffset(ptr_BONDdata->ptr_char_objectinstance,
-                 (float *)(ptr_BONDdata->position_data_pointer + 8),pGStack8,&ptr_BONDdata);
-    setsubroty(ptr_BONDdata->ptr_char_objectinstance,extraout_f12_00,fStack4,extraout_a2_lo);
+    setsuboffset(pPlayer->ptr_char_objectinstance,
+                 (float *)(pPlayer->position_data_pointer + 8),pGStack8,&pPlayer);
+    setsubroty(pPlayer->ptr_char_objectinstance,extraout_f12_00,fStack4,extraout_a2_lo);
     lVar3 = proc_7F09B244((longlong)(int)puStack208);
     iVar4 = (int)lVar3;
     fVar11 = extraout_f12_01;
@@ -92814,10 +92814,10 @@ void solo_char_load(void)
     if (*(int *)(guard->MODELdata_pointer + 0x20) == 0) {
       guard->guard_bitflags = guard->guard_bitflags | 1;
       proc_7F023A94(guard,extraout_f12);
-      setsuboffset(ptr_BONDdata->ptr_char_objectinstance,
-                   (float *)(ptr_BONDdata->position_data_pointer + 8),extraout_a2_lo_00,
+      setsuboffset(pPlayer->ptr_char_objectinstance,
+                   (float *)(pPlayer->position_data_pointer + 8),extraout_a2_lo_00,
                    extraout_a3_lo);
-      setsubroty(ptr_BONDdata->ptr_char_objectinstance,extraout_f12_03,fStack4,extraout_a2_lo_01);
+      setsubroty(pPlayer->ptr_char_objectinstance,extraout_f12_03,fStack4,extraout_a2_lo_01);
     }
   }
   return;
@@ -92830,13 +92830,13 @@ void maybe_solo_intro_camera_handler(void)
 {
   ulonglong uVar1;
   
-  if ((*(int *)(ptr_BONDdata->position_data_pointer + 4) != 0) &&
+  if ((*(int *)(pPlayer->position_data_pointer + 4) != 0) &&
      (uVar1 = get_num_players(), uVar1 == 1)) {
-    disable_sounds_attached_to_player_then_something(ptr_BONDdata->position_data_pointer);
-    *(undefined4 *)(ptr_BONDdata->position_data_pointer + 4) = 0;
-    ptr_BONDdata->ptr_char_objectinstance = 0;
+    disable_sounds_attached_to_player_then_something(pPlayer->position_data_pointer);
+    *(undefined4 *)(pPlayer->position_data_pointer + 4) = 0;
+    pPlayer->ptr_char_objectinstance = 0;
     camera_80036424 = 1;
-    proc_7F07DE9C(ptr_BONDdata);
+    proc_7F07DE9C(pPlayer);
   }
   return;
 }
@@ -92881,7 +92881,7 @@ longlong proc_7F07A534(undefined4 param_1,float *param_2,char *param_3,float *pa
   fVar8 = flt_80055030;
   cur_player_stat_ptr = param_1;
   do {
-    fVar9 = (float)ptr_BONDdata->collision_radius;
+    fVar9 = (float)pPlayer->collision_radius;
     iVar4 = 0;
     fStack16 = flt_80055034 + fVar9;
     uVar2 = get_random_value();
@@ -92925,7 +92925,7 @@ longlong proc_7F07A534(undefined4 param_1,float *param_2,char *param_3,float *pa
           PTR_800799e8 = (undefined *)(fStack36 * fVar5 + *param_2);
           DAT_800799ec = param_2[1];
           uStack24 = param_5;
-          ptr_BONDdata = fStack28 * fVar5 + param_2[2];
+          pPlayer = fStack28 * fVar5 + param_2[2];
           proc_7F03D058(param_3,0);
           lVar1 = proc_7F0B0E24();
           proc_7F03D058(param_3,1);
@@ -93007,7 +93007,7 @@ void set_camera_mode(int param_1)
       fade_to_over_seconds(60.00000000,0.00000000);
       stagenum = get_stage_num();
       load_enviroment(stagenum,1);
-      ptr_BONDdata->room_pointer = 0;
+      pPlayer->room_pointer = 0;
     }
   }
   else {
@@ -93045,18 +93045,18 @@ void set_camera_mode(int param_1)
             set_curplayer_fade(0.00000000,1.00000000);
             solo_char_load();
             fStack16 = stage_intro_anim_table[selected_stage_intro_anim].anonymous_2;
-            proc_7F06FCA8(ptr_BONDdata->ptr_char_objectinstance,
+            proc_7F06FCA8(pPlayer->ptr_char_objectinstance,
                           stage_intro_anim_table[selected_stage_intro_anim].anonymous_0 +
                           ptr_animation_table,0,fStack16,
                           stage_intro_anim_table[selected_stage_intro_anim].anonymous_1,extraout_f14
                          );
             if (0.00000000 < fStack16) {
-              proc_7F06FDE8(ptr_BONDdata->ptr_char_objectinstance,fStack16);
+              proc_7F06FDE8(pPlayer->ptr_char_objectinstance,fStack16);
             }
-            iVar4 = *(int *)(ptr_BONDdata->position_data_pointer + 4);
+            iVar4 = *(int *)(pPlayer->position_data_pointer + 4);
             *(undefined *)(iVar4 + 7) = 0x17;
             *(undefined *)(iVar4 + 8) = 0;
-            ptr_BONDdata->room_pointer = 0;
+            pPlayer->room_pointer = 0;
           }
         }
         else {
@@ -93078,7 +93078,7 @@ void set_camera_mode(int param_1)
               stagenum = get_stage_num();
               load_enviroment(stagenum,0);
             }
-            if (ptr_BONDdata->pause_animation_state == 0) {
+            if (pPlayer->pause_animation_state == 0) {
               draw_item_in_hand_has_more_ammo(1,(ITEM_IDS)flt_8007A0A4);
               draw_item_in_hand_has_more_ammo(0,(ITEM_IDS)PTR_800799e0);
             }
@@ -93093,9 +93093,9 @@ void set_camera_mode(int param_1)
               fade_to_over_seconds(60.00000000,0.00000000);
               if ((dword_8003648C == 0) || (fVar12 = extraout_f12, ptr_playerstank == NULL)) {
                 in_tank_flag = FALSE;
-                pBVar8 = (BONDdata *)&ptr_BONDdata->current_room_ypos;
-                pBVar11 = ptr_BONDdata;
-                pBVar9 = ptr_BONDdata;
+                pBVar8 = (BONDdata *)&pPlayer->current_room_ypos;
+                pBVar11 = pPlayer;
+                pBVar9 = pPlayer;
                 do {
                   pBVar10 = (BONDdata *)&pBVar9->zpos;
                   pBVar11->ptr_tile_printmanpos = pBVar9->field_434;
@@ -93104,44 +93104,44 @@ void set_camera_mode(int param_1)
                   pBVar11 = (BONDdata *)&pBVar11->zpos;
                   pBVar9 = pBVar10;
                 } while (pBVar10 != pBVar8);
-                *(int *)&ptr_BONDdata->azimuth_angle = ptr_BONDdata->field_414;
-                *(int *)&ptr_BONDdata->inclination_angle1 = ptr_BONDdata->field_418;
-                *(f32 *)(ptr_BONDdata->position_data_pointer + 8) = ptr_BONDdata->positionx;
-                *(int *)(ptr_BONDdata->position_data_pointer + 0xc) = ptr_BONDdata->positiony;
-                *(int *)(ptr_BONDdata->position_data_pointer + 0x10) = ptr_BONDdata->positionz;
-                *(int *)(ptr_BONDdata->position_data_pointer + 0x14) =
-                     ptr_BONDdata->ptr_tile_printmanpos;
+                *(int *)&pPlayer->azimuth_angle = pPlayer->field_414;
+                *(int *)&pPlayer->inclination_angle1 = pPlayer->field_418;
+                *(f32 *)(pPlayer->position_data_pointer + 8) = pPlayer->positionx;
+                *(int *)(pPlayer->position_data_pointer + 0xc) = pPlayer->positiony;
+                *(int *)(pPlayer->position_data_pointer + 0x10) = pPlayer->positionz;
+                *(int *)(pPlayer->position_data_pointer + 0x14) =
+                     pPlayer->ptr_tile_printmanpos;
                 proc_7F081790();
                 proc_7F080B34(0.00000000,0.00000000,extraout_a0,extraout_a1,0.00000000);
                 proc_7F081478();
                 set_curplayer_fade(0.00000000,1.00000000);
                 solo_char_load();
-                uVar5 = proc_7F06F5AC((int)&ptr_BONDdata->field_598);
-                uVar6 = proc_7F06F5B4((int)&ptr_BONDdata->field_598);
-                proc_7F06FCA8(ptr_BONDdata->ptr_char_objectinstance,uVar5,uVar6,extraout_f12_00,0,
+                uVar5 = proc_7F06F5AC((int)&pPlayer->field_598);
+                uVar6 = proc_7F06F5B4((int)&pPlayer->field_598);
+                proc_7F06FCA8(pPlayer->ptr_char_objectinstance,uVar5,uVar6,extraout_f12_00,0,
                               extraout_f14_00);
-                iVar4 = *(int *)(ptr_BONDdata->position_data_pointer + 4);
+                iVar4 = *(int *)(pPlayer->position_data_pointer + 4);
                 *(undefined *)(iVar4 + 7) = 0x18;
                 *(undefined *)(iVar4 + 8) = 0;
                 *(uint *)(iVar4 + 0x14) = *(uint *)(iVar4 + 0x14) | 1;
-                setsuboffset(ptr_BONDdata->ptr_char_objectinstance,
-                             (float *)(ptr_BONDdata->position_data_pointer + 8),extraout_a2_lo,
+                setsuboffset(pPlayer->ptr_char_objectinstance,
+                             (float *)(pPlayer->position_data_pointer + 8),extraout_a2_lo,
                              extraout_a3_lo);
                 fVar12 = get_curplay_horizontal_rotation_in_degrees();
-                setsubroty(ptr_BONDdata->ptr_char_objectinstance,extraout_f12_01,fVar12,
+                setsubroty(pPlayer->ptr_char_objectinstance,extraout_f12_01,fVar12,
                            extraout_a2_lo_00);
                 fVar12 = extraout_f12_02;
               }
               if ((dword_8003648C == 0) || (ptr_playerstank == NULL)) {
-                pcStack36 = (char *)ptr_BONDdata->position_data_pointer;
-                fStack48 = ptr_BONDdata->field_3C4;
-                fStack44 = ptr_BONDdata->field_3C8;
-                fStack40 = ptr_BONDdata->field_3CC;
-                fStack64 = ptr_BONDdata->positionx;
-                iStack60 = ptr_BONDdata->positiony;
-                iStack56 = ptr_BONDdata->positionz;
-                iVar4 = ptr_BONDdata->ptr_tile_printmanpos;
-                pcVar7 = (char *)ptr_BONDdata->position_data_pointer;
+                pcStack36 = (char *)pPlayer->position_data_pointer;
+                fStack48 = pPlayer->field_3C4;
+                fStack44 = pPlayer->field_3C8;
+                fStack40 = pPlayer->field_3CC;
+                fStack64 = pPlayer->positionx;
+                iStack60 = pPlayer->positiony;
+                iStack56 = pPlayer->positionz;
+                iVar4 = pPlayer->ptr_tile_printmanpos;
+                pcVar7 = (char *)pPlayer->position_data_pointer;
               }
               else {
                 pcStack36 = ptr_playerstank;
@@ -93182,7 +93182,7 @@ void set_camera_mode(int param_1)
                 if (param_1 == 7) {
                   cameramode = param_1;
                   solo_char_load();
-                  ptr_BONDdata->room_pointer = 0;
+                  pPlayer->room_pointer = 0;
                 }
                 else {
                   if (param_1 == 8) {
@@ -93295,7 +93295,7 @@ void proc_7F07B2A0(int param_1,float param_2,float *param_3,float *param_4)
                         *(float *)(ptr_firstcommand_rotatingcam + param_1 * 0x20 + 0x18));
   }
   do {
-    pBVar1 = ptr_BONDdata;
+    pBVar1 = pPlayer;
     puVar4 = puVar7 + iVar6 * 0x20;
     if (iVar6 < 0) {
       puVar2 = puVar4;
@@ -93331,8 +93331,8 @@ LAB_7f07b354:
     }
     else {
       *(float *)(puVar5 + 0xc) =
-           (float)ptr_BONDdata->field_4A0 * *(float *)(puVar3 + 8) +
-           *(float *)(puVar3 + 0x10) * (float)ptr_BONDdata->field_498;
+           (float)pPlayer->field_4A0 * *(float *)(puVar3 + 8) +
+           *(float *)(puVar3 + 0x10) * (float)pPlayer->field_498;
       *(undefined4 *)(puVar5 + 0x10) = *(undefined4 *)(puVar3 + 0xc);
       *(float *)(puVar5 + 0x14) =
            *(float *)(puVar3 + 0x10) * (float)pBVar1->field_4A0 -
@@ -93341,12 +93341,12 @@ LAB_7f07b354:
     puVar5 = puVar5 + 0xc;
     if (iVar6 == 3) {
       proc_7F05B024(local_30,afStack36,afStack24,afStack12,(float)param_3,in_f14,local_38);
-      *param_4 = *param_4 + (float)ptr_BONDdata->field_3C4;
-      param_4[1] = param_4[1] + (float)ptr_BONDdata->field_3C8;
-      param_4[2] = param_4[2] + (float)ptr_BONDdata->field_3CC;
-      *in_a3_lo = ptr_BONDdata->field_3C4;
-      in_a3_lo[1] = ptr_BONDdata->field_3C8;
-      in_a3_lo[2] = ptr_BONDdata->field_3CC;
+      *param_4 = *param_4 + (float)pPlayer->field_3C4;
+      param_4[1] = param_4[1] + (float)pPlayer->field_3C8;
+      param_4[2] = param_4[2] + (float)pPlayer->field_3CC;
+      *in_a3_lo = pPlayer->field_3C4;
+      in_a3_lo[1] = pPlayer->field_3C8;
+      in_a3_lo[2] = pPlayer->field_3CC;
       puVar8 = ptr_firstcommand_rotatingcam + param_1 * 0x20;
       if ((*(uint *)(puVar8 + 4) & 4) == 0) {
         if ((*(uint *)(puVar8 + 0x24) & 4) == 0) {
@@ -93362,11 +93362,11 @@ LAB_7f07b354:
         }
       }
       *(float *)in_a3_lo =
-           (float)*in_a3_lo + (float)ptr_BONDdata->field_4C0 * 40.00000000 * (float)local_38;
+           (float)*in_a3_lo + (float)pPlayer->field_4C0 * 40.00000000 * (float)local_38;
       *(float *)(in_a3_lo + 1) =
-           (float)in_a3_lo[1] + (float)ptr_BONDdata->field_4C4 * 40.00000000 * (float)local_38;
+           (float)in_a3_lo[1] + (float)pPlayer->field_4C4 * 40.00000000 * (float)local_38;
       *(float *)(in_a3_lo + 2) =
-           (float)in_a3_lo[2] + (float)ptr_BONDdata->field_4C8 * 40.00000000 * (float)local_38;
+           (float)in_a3_lo[2] + (float)pPlayer->field_4C8 * 40.00000000 * (float)local_38;
       return;
     }
   } while( true );
@@ -93435,7 +93435,7 @@ void proc_7F07B56C(void)
       }
     }
     else {
-      if (ptr_BONDdata->timer_for_fade < 0.00000000) {
+      if (pPlayer->timer_for_fade < 0.00000000) {
         enable_move_after_cinema = 1;
       }
     }
@@ -93489,20 +93489,20 @@ void proc_7F07B56C(void)
           }
         } while (iVar2 < clock_timer);
       }
-      __x = ((DAT_80079e08 - ptr_BONDdata->azimuth_angle) * flt_80055050) / 180.00000000;
+      __x = ((DAT_80079e08 - pPlayer->azimuth_angle) * flt_80055050) / 180.00000000;
       fVar6 = sinf(__x);
-      *in_a2_lo = fVar6 * DAT_80079e10 + (float)ptr_BONDdata->field_4B4;
-      in_a2_lo[1] = (float)ptr_BONDdata->field_4B8 + DAT_80079e10 * flt_80055054;
+      *in_a2_lo = fVar6 * DAT_80079e10 + (float)pPlayer->field_4B4;
+      in_a2_lo[1] = (float)pPlayer->field_4B8 + DAT_80079e10 * flt_80055054;
       fVar6 = cosf(__x);
-      in_a2_lo[2] = fVar6 * DAT_80079e10 + (float)ptr_BONDdata->field_4BC;
-      *(int *)in_a3_lo = ptr_BONDdata->field_4B4;
-      *(int *)(in_a3_lo + 1) = ptr_BONDdata->field_4B8;
-      *(int *)(in_a3_lo + 2) = ptr_BONDdata->field_4BC;
-      *in_stack_00000014 = *(f32 *)(ptr_BONDdata->position_data_pointer + 0x14);
-      *(int *)in_stack_00000018 = ptr_BONDdata->field_4B4;
+      in_a2_lo[2] = fVar6 * DAT_80079e10 + (float)pPlayer->field_4BC;
+      *(int *)in_a3_lo = pPlayer->field_4B4;
+      *(int *)(in_a3_lo + 1) = pPlayer->field_4B8;
+      *(int *)(in_a3_lo + 2) = pPlayer->field_4BC;
+      *in_stack_00000014 = *(f32 *)(pPlayer->position_data_pointer + 0x14);
+      *(int *)in_stack_00000018 = pPlayer->field_4B4;
       *(float *)(in_stack_00000018 + 1) =
-           (float)ptr_BONDdata->field_4B8 + DAT_80079e10 * flt_80055058;
-      *(int *)(in_stack_00000018 + 2) = ptr_BONDdata->field_4BC;
+           (float)pPlayer->field_4B8 + DAT_80079e10 * flt_80055058;
+      *(int *)(in_stack_00000018 + 2) = pPlayer->field_4BC;
       if (DAT_80079e10 < 5.00000000) {
         enable_move_after_cinema = 1;
       }
@@ -93553,10 +93553,10 @@ LAB_7f07bbe4:
             (iVar2 = get_controls_locked_flag(), __x = extraout_f12_01, iVar2 == 0)) &&
            (__x = extraout_f12_01, (uStackX2 & ~uStackX6 & 0xf030) != 0)) {
           dword_8003649C = 1;
-          proc_7F0807B0(0,0,0,ptr_BONDdata->tint_alpha);
+          proc_7F0807B0(0,0,0,pPlayer->tint_alpha);
           uVar1 = check_if_fade_to_black_complete();
           if (uVar1 == 0) {
-            fade_to_over_seconds(ptr_BONDdata->field_3E0,1.00000000);
+            fade_to_over_seconds(pPlayer->field_3E0,1.00000000);
             __x = extraout_f12_03;
           }
           else {
@@ -93566,10 +93566,10 @@ LAB_7f07bbe4:
         }
         proc_7F07B2A0(dword_800364A8,__x,dword_800364A4,in_a2_lo);
         if (*(int *)(ptr_firstcommand_rotatingcam + dword_800364A8 * 0x20 + 0x1c) < 0) {
-          *(int *)in_stack_00000014 = ptr_BONDdata->ptr_tile_printmanpos;
-          *in_stack_00000018 = ptr_BONDdata->positionx;
-          *(int *)(in_stack_00000018 + 1) = ptr_BONDdata->positiony;
-          *(int *)(in_stack_00000018 + 2) = ptr_BONDdata->positionz;
+          *(int *)in_stack_00000014 = pPlayer->ptr_tile_printmanpos;
+          *in_stack_00000018 = pPlayer->positionx;
+          *(int *)(in_stack_00000018 + 1) = pPlayer->positiony;
+          *(int *)(in_stack_00000018 + 2) = pPlayer->positionz;
         }
         else {
           pfVar4 = (f32 *)(ptr_0xxxpresets +
@@ -93585,21 +93585,21 @@ LAB_7f07bbe4:
         if ((cameramode == UNK5_CAM) || (cameramode == UNK6_CAM)) {
           if (cameramode == UNK5_CAM) {
             dword_800364A4 = (float *)((float)dword_800364A4 + global_timer_delta);
-            if (ptr_BONDdata->ptr_char_objectinstance == 0) {
+            if (pPlayer->ptr_char_objectinstance == 0) {
               if (180.00000000 <= (float)dword_800364A4) {
                 enable_move_after_cinema = 1;
               }
             }
             else {
-              proc_7F06F5BC(ptr_BONDdata->ptr_char_objectinstance);
-              fVar6 = proc_7F06F5C4(ptr_BONDdata->ptr_char_objectinstance);
+              proc_7F06F5BC(pPlayer->ptr_char_objectinstance);
+              fVar6 = proc_7F06F5C4(pPlayer->ptr_char_objectinstance);
               if (fVar6 <= in_f0) {
                 enable_move_after_cinema = 1;
               }
             }
             if ((((uStackX2 & ~uStackX6 & 0xf000) != 0) &&
-                (ptr_BONDdata->player_button_control != 0)) &&
-               ((ptr_BONDdata->field_424 != 0 && (ptr_BONDdata->field_428 != 0)))) {
+                (pPlayer->player_button_control != 0)) &&
+               ((pPlayer->field_424 != 0 && (pPlayer->field_428 != 0)))) {
               enable_move_after_cinema = 1;
               dword_80036510 = 2;
             }
@@ -93607,33 +93607,33 @@ LAB_7f07bbe4:
           else {
             if (cameramode == UNK6_CAM) {
               dword_800364A4 = (float *)((float)dword_800364A4 + global_timer_delta);
-              if (ptr_BONDdata->timer_for_fade < 0.00000000) {
+              if (pPlayer->timer_for_fade < 0.00000000) {
                 enable_move_after_cinema = 1;
               }
               if (((((uStackX2 & ~uStackX6 & 0xf000) != 0) &&
-                   (ptr_BONDdata->player_button_control != 0)) && (ptr_BONDdata->field_424 != 0)) &&
-                 (ptr_BONDdata->field_428 != 0)) {
+                   (pPlayer->player_button_control != 0)) && (pPlayer->field_424 != 0)) &&
+                 (pPlayer->field_428 != 0)) {
                 dword_80036510 = 2;
               }
             }
           }
           *(undefined **)in_a2_lo = PTR_800799e8;
           in_a2_lo[1] = DAT_800799ec;
-          in_a2_lo[2] = ptr_BONDdata;
-          if (cur_player_stat_ptr == ptr_BONDdata->position_data_pointer) {
-            *in_a3_lo = ptr_BONDdata->field_3C4;
-            in_a3_lo[1] = ptr_BONDdata->field_3C8;
-            in_a3_lo[2] = ptr_BONDdata->field_3CC;
+          in_a2_lo[2] = pPlayer;
+          if (cur_player_stat_ptr == pPlayer->position_data_pointer) {
+            *in_a3_lo = pPlayer->field_3C4;
+            in_a3_lo[1] = pPlayer->field_3C8;
+            in_a3_lo[2] = pPlayer->field_3CC;
           }
           else {
             *in_a3_lo = *(f32 *)(cur_player_stat_ptr + 8);
             in_a3_lo[1] = *(f32 *)(cur_player_stat_ptr + 0xc);
             in_a3_lo[2] = *(f32 *)(cur_player_stat_ptr + 0x10);
           }
-          *(int *)in_stack_00000014 = ptr_BONDdata->ptr_tile_printmanpos;
-          *in_stack_00000018 = ptr_BONDdata->positionx;
-          *(int *)(in_stack_00000018 + 1) = ptr_BONDdata->positiony;
-          *(int *)(in_stack_00000018 + 2) = ptr_BONDdata->positionz;
+          *(int *)in_stack_00000014 = pPlayer->ptr_tile_printmanpos;
+          *in_stack_00000018 = pPlayer->positionx;
+          *(int *)(in_stack_00000018 + 1) = pPlayer->positiony;
+          *(int *)(in_stack_00000018 + 2) = pPlayer->positionz;
         }
         else {
           if (cameramode == POSEND_CAM) {
@@ -93686,9 +93686,9 @@ LAB_7f07bbe4:
                 in_stack_00000018[1] = pfVar4[1];
                 in_stack_00000018[2] = pfVar4[2];
                 if (dword_8007A0D8 == 1) {
-                  *in_a3_lo = ptr_BONDdata->field_3C4;
-                  in_a3_lo[1] = ptr_BONDdata->field_3C8;
-                  in_a3_lo[2] = ptr_BONDdata->field_3CC;
+                  *in_a3_lo = pPlayer->field_3C4;
+                  in_a3_lo[1] = pPlayer->field_3C8;
+                  in_a3_lo[2] = pPlayer->field_3CC;
                 }
                 else {
                   fVar6 = cosf(*(float *)(random_byte + 0x14));
@@ -93706,9 +93706,9 @@ LAB_7f07bbe4:
               *(f32 *)in_a2_lo = *player_num;
               *(f32 *)(in_a2_lo + 1) = player_num[1];
               *(f32 *)(in_a2_lo + 2) = player_num[2];
-              *in_a3_lo = ptr_BONDdata->field_3C4;
-              in_a3_lo[1] = ptr_BONDdata->field_3C8;
-              in_a3_lo[2] = ptr_BONDdata->field_3CC;
+              *in_a3_lo = pPlayer->field_3C4;
+              in_a3_lo[1] = pPlayer->field_3C8;
+              in_a3_lo[2] = pPlayer->field_3CC;
               *in_stack_00000014 = player_num[10];
               *in_stack_00000018 = *player_num;
               in_stack_00000018[1] = player_num[1];
@@ -93727,7 +93727,7 @@ LAB_7f07bbe4:
 void proc_7F07C540(int param_1)
 
 {
-  ptr_BONDdata->field_42C = param_1;
+  pPlayer->field_42C = param_1;
   return;
 }
 
@@ -93736,7 +93736,7 @@ void proc_7F07C540(int param_1)
 void set_BONDdata_lookahead_setting(int param_1)
 
 {
-  ptr_BONDdata->look_ahead_setting = param_1;
+  pPlayer->look_ahead_setting = param_1;
   return;
 }
 
@@ -93745,7 +93745,7 @@ void set_BONDdata_lookahead_setting(int param_1)
 int get_BONDdata_lookahead_setting(void)
 
 {
-  return ptr_BONDdata->look_ahead_setting;
+  return pPlayer->look_ahead_setting;
 }
 
 
@@ -93753,7 +93753,7 @@ int get_BONDdata_lookahead_setting(void)
 void set_BONDdata_autoaim_y(int param_1)
 
 {
-  ptr_BONDdata->autoyaimenabled = param_1;
+  pPlayer->autoyaimenabled = param_1;
   return;
 }
 
@@ -93766,7 +93766,7 @@ ulonglong get_BONDdata_autoaim_y(void)
   
   uVar1 = get_num_players();
   if (uVar1 == 1) {
-    uVar1 = SEXT48(ptr_BONDdata->autoyaimenabled);
+    uVar1 = SEXT48(pPlayer->autoyaimenabled);
   }
   else {
     uVar1 = (ulonglong)(byte)cur_player_stat_ptr->autoaim;
@@ -93788,7 +93788,7 @@ void redirect_get_BONDdata_autoaim(void)
 int get_BONDdata_is_aiming(void)
 
 {
-  return ptr_BONDdata->insightaimmode;
+  return pPlayer->insightaimmode;
 }
 
 
@@ -93798,21 +93798,21 @@ void proc_7F07C5F0(int param_1,float param_2)
 {
   int iVar1;
   
-  if (ptr_BONDdata->field_134 < 0) {
-    iVar1 = ptr_BONDdata->field_130;
+  if (pPlayer->field_134 < 0) {
+    iVar1 = pPlayer->field_130;
   }
   else {
-    ptr_BONDdata->field_134 = ptr_BONDdata->field_134 - clock_timer;
-    iVar1 = ptr_BONDdata->field_130;
+    pPlayer->field_134 = pPlayer->field_134 - clock_timer;
+    iVar1 = pPlayer->field_130;
   }
   if (param_1 == iVar1) {
-    ptr_BONDdata->autoaimy = param_2;
+    pPlayer->autoaimy = param_2;
   }
   else {
-    if (ptr_BONDdata->field_134 < 0) {
-      ptr_BONDdata->field_134 = 0x1e;
-      ptr_BONDdata->field_130 = param_1;
-      ptr_BONDdata->autoaimy = param_2;
+    if (pPlayer->field_134 < 0) {
+      pPlayer->field_134 = 0x1e;
+      pPlayer->field_130 = param_1;
+      pPlayer->autoaimy = param_2;
     }
   }
   return;
@@ -93823,7 +93823,7 @@ void proc_7F07C5F0(int param_1,float param_2)
 void set_BONDdata_autoaim_x(int param_1)
 
 {
-  ptr_BONDdata->autoxaimenabled = param_1;
+  pPlayer->autoxaimenabled = param_1;
   return;
 }
 
@@ -93836,7 +93836,7 @@ ulonglong get_BONDdata_autoaim_x(void)
   
   uVar1 = get_num_players();
   if (uVar1 == 1) {
-    uVar1 = SEXT48(ptr_BONDdata->autoxaimenabled);
+    uVar1 = SEXT48(pPlayer->autoxaimenabled);
   }
   else {
     uVar1 = (ulonglong)(byte)cur_player_stat_ptr->autoaim;
@@ -93860,21 +93860,21 @@ void proc_7F07C6C8(int param_1,float param_2)
 {
   int iVar1;
   
-  if (ptr_BONDdata->field_144 < 0) {
-    iVar1 = ptr_BONDdata->field_140;
+  if (pPlayer->field_144 < 0) {
+    iVar1 = pPlayer->field_140;
   }
   else {
-    ptr_BONDdata->field_144 = ptr_BONDdata->field_144 - clock_timer;
-    iVar1 = ptr_BONDdata->field_140;
+    pPlayer->field_144 = pPlayer->field_144 - clock_timer;
+    iVar1 = pPlayer->field_140;
   }
   if (param_1 == iVar1) {
-    ptr_BONDdata->autoaimx = param_2;
+    pPlayer->autoaimx = param_2;
   }
   else {
-    if (ptr_BONDdata->field_144 < 0) {
-      ptr_BONDdata->field_144 = 0x1e;
-      ptr_BONDdata->field_140 = param_1;
-      ptr_BONDdata->autoaimx = param_2;
+    if (pPlayer->field_144 < 0) {
+      pPlayer->field_144 = 0x1e;
+      pPlayer->field_140 = param_1;
+      pPlayer->autoaimx = param_2;
     }
   }
   return;
@@ -94110,7 +94110,7 @@ undefined8 related_printmanpos(float *param_1,float param_2,undefined4 *param_3)
   int *in_a2_lo;
   float extraout_f12;
   
-  iVar1 = ptr_BONDdata->ptr_tile_printmanpos;
+  iVar1 = pPlayer->ptr_tile_printmanpos;
   lVar2 = proc_7F0B0E24();
   if ((lVar2 != 0) && (proc_7F07CDA8(param_1,iVar1,extraout_f12), lVar2 != 0)) {
     *in_a2_lo = iVar1;
@@ -94203,37 +94203,37 @@ undefined4 proc_7F07CF8C(void)
     uVar1 = related_printmanpos(in_a0_lo,in_f12,dword_80036464);
     return (int)uVar1;
   }
-  local_8 = ptr_BONDdata->ptr_tile_printmanpos;
+  local_8 = pPlayer->ptr_tile_printmanpos;
   if (obj_collision_flag == FALSE) {
     local_c = 0;
   }
   else {
     local_c = 0x1f;
   }
-  proc_7F08A274(ptr_BONDdata->position_data_pointer,&local_18,&local_10,&local_14);
+  proc_7F08A274(pPlayer->position_data_pointer,&local_18,&local_10,&local_14);
   if (dword_8003644C != NULL) {
     proc_7F03D058(dword_8003644C,0);
   }
-  proc_7F03D058((char *)ptr_BONDdata->position_data_pointer,0);
+  proc_7F03D058((char *)pPlayer->position_data_pointer,0);
   local_1c = proc_7F0B2314(&local_8,extraout_f12,extraout_f14,*in_a0_lo,(undefined4 *)in_a0_lo[2]);
   iVar3 = proc_7F0B239C(auStack92);
   if (iVar3 != 0) {
-    ptr_BONDdata->field_29FC = 0;
+    pPlayer->field_29FC = 0;
   }
   lVar2 = proc_7F0B0E24();
   if (((lVar2 == 0) || (lVar2 = proc_7F0B18B8(), -1 < lVar2)) ||
-     (((float)ptr_BONDdata->ducking_height_offset != -100.00000000 && (-1 < (int)local_1c)))) {
+     (((float)pPlayer->ducking_height_offset != -100.00000000 && (-1 < (int)local_1c)))) {
 LAB_7f07d1b4:
     if (ptr_playerstank != 0) {
-      pcVar4 = (char *)ptr_BONDdata->position_data_pointer;
+      pcVar4 = (char *)pPlayer->position_data_pointer;
       goto LAB_7f07d200;
     }
     if (DAT_8007ba04 == NULL) {
-      pcVar4 = (char *)ptr_BONDdata->position_data_pointer;
+      pcVar4 = (char *)pPlayer->position_data_pointer;
       goto LAB_7f07d200;
     }
     if (*DAT_8007ba04 != '\x01') {
-      pcVar4 = (char *)ptr_BONDdata->position_data_pointer;
+      pcVar4 = (char *)pPlayer->position_data_pointer;
       goto LAB_7f07d200;
     }
     if (*(char *)(*(int *)(DAT_8007ba04 + 4) + 3) == '-') {
@@ -94249,7 +94249,7 @@ LAB_7f07d1b4:
     *in_a1_lo = local_8;
     local_4 = 1;
   }
-  pcVar4 = (char *)ptr_BONDdata->position_data_pointer;
+  pcVar4 = (char *)pPlayer->position_data_pointer;
 LAB_7f07d200:
   proc_7F03D058(pcVar4,1);
   if (dword_8003644C != NULL) {
@@ -94272,9 +94272,9 @@ ulonglong proc_7F07D234(undefined4 *param_1,float *param_2,float *param_3)
     proc_7F0B28B0(param_2,param_3);
   }
   else {
-    ptr_BONDdata->ptr_tile_printmanpos = iStack4;
-    ptr_BONDdata->positionx = *param_1;
-    ptr_BONDdata->positionz = param_1[2];
+    pPlayer->ptr_tile_printmanpos = iStack4;
+    pPlayer->positionx = *param_1;
+    pPlayer->positionz = param_1[2];
   }
   return (ulonglong)(lVar1 != 0);
 }
@@ -94305,12 +94305,12 @@ undefined8 proc_7F07D2B4(float *param_1,float *param_2,float *param_3,float *par
   float fStack8;
   int iStack4;
   
-  proc_7F08A274(ptr_BONDdata->position_data_pointer,afStack80,&fStack8,&uStack12);
-  fStack72 = *param_1 - (float)ptr_BONDdata->positionx;
+  proc_7F08A274(pPlayer->position_data_pointer,afStack80,&fStack8,&uStack12);
+  fStack72 = *param_1 - (float)pPlayer->positionx;
   fStack48 = afStack80[0];
-  fStack68 = param_1[2] - (float)ptr_BONDdata->positionz;
-  fStack44 = ptr_BONDdata->positionx;
-  iStack40 = ptr_BONDdata->positionz;
+  fStack68 = param_1[2] - (float)pPlayer->positionz;
+  fStack44 = pPlayer->positionx;
+  iStack40 = pPlayer->positionz;
   fStack56 = *param_2;
   fStack52 = param_2[2];
   fStack64 = *param_3;
@@ -94318,8 +94318,8 @@ undefined8 proc_7F07D2B4(float *param_1,float *param_2,float *param_3,float *par
   fStack36 = fStack72;
   fStack28 = fStack68;
   fVar3 = proc_7F0B33DC(&fStack48,&fStack56,&fStack64,&fStack72);
-  fStack24 = fStack36 * fVar3 * 0.25000000 + (float)ptr_BONDdata->positionx;
-  fStack16 = fStack28 * fVar3 * 0.25000000 + (float)ptr_BONDdata->positionz;
+  fStack24 = fStack36 * fVar3 * 0.25000000 + (float)pPlayer->positionx;
+  fStack16 = fStack28 * fVar3 * 0.25000000 + (float)pPlayer->positionz;
   lVar1 = proc_7F07CF8C();
   if (lVar1 == 0) {
     proc_7F0B28B0(param_4,param_5);
@@ -94331,9 +94331,9 @@ undefined8 proc_7F07D2B4(float *param_1,float *param_2,float *param_3,float *par
   }
   else {
     uVar2 = 1;
-    ptr_BONDdata->ptr_tile_printmanpos = iStack4;
-    *(float *)&ptr_BONDdata->positionx = fStack24;
-    *(float *)&ptr_BONDdata->positionz = fStack16;
+    pPlayer->ptr_tile_printmanpos = iStack4;
+    *(float *)&pPlayer->positionx = fStack24;
+    *(float *)&pPlayer->positionz = fStack16;
   }
   return uVar2;
 }
@@ -94355,27 +94355,27 @@ undefined8 proc_7F07D4C0(float *param_1,float *param_2,float *param_3)
   int local_2c;
   
   fVar4 = *param_1;
-  fVar7 = (float)ptr_BONDdata->positionx;
+  fVar7 = (float)pPlayer->positionx;
   fVar6 = param_1[2];
-  fVar8 = (float)ptr_BONDdata->positionz;
+  fVar8 = (float)pPlayer->positionz;
   if ((*param_2 != *param_3) || (uVar2 = 0xffffffffffffffff, param_2[2] != param_3[2])) {
     fVar5 = *param_3 - *param_2;
     fVar9 = param_3[2] - param_2[2];
     fVar3 = sqrtf(fVar9 * fVar9 + fVar5 * fVar5);
     fVar5 = fVar5 * (1.00000000 / fVar3);
     fVar9 = fVar9 * (1.00000000 / fVar3);
-    fVar3 = (float)ptr_BONDdata->positionx;
+    fVar3 = (float)pPlayer->positionx;
     fVar7 = fVar9 * (fVar6 - fVar8) + (fVar4 - fVar7) * fVar5;
-    fVar4 = (float)ptr_BONDdata->positionz;
+    fVar4 = (float)pPlayer->positionz;
     lVar1 = proc_7F07CF8C();
     if (lVar1 == 0) {
       uVar2 = 0;
     }
     else {
       uVar2 = 1;
-      ptr_BONDdata->ptr_tile_printmanpos = local_2c;
-      *(float *)&ptr_BONDdata->positionx = fVar5 * fVar7 + fVar3;
-      *(float *)&ptr_BONDdata->positionz = fVar9 * fVar7 + fVar4;
+      pPlayer->ptr_tile_printmanpos = local_2c;
+      *(float *)&pPlayer->positionx = fVar5 * fVar7 + fVar3;
+      *(float *)&pPlayer->positionz = fVar9 * fVar7 + fVar4;
     }
   }
   return uVar2;
@@ -94399,13 +94399,13 @@ undefined8 proc_7F07D61C(float *param_1,float *param_2,float *param_3)
   float fStack12;
   float fStack4;
   
-  proc_7F08A274(ptr_BONDdata->position_data_pointer,&fStack56,&fStack40,&uStack44);
-  fStack12 = *param_1 - (float)ptr_BONDdata->positionx;
-  fStack4 = param_1[2] - (float)ptr_BONDdata->positionz;
+  proc_7F08A274(pPlayer->position_data_pointer,&fStack56,&fStack40,&uStack44);
+  fStack12 = *param_1 - (float)pPlayer->positionx;
+  fStack4 = param_1[2] - (float)pPlayer->positionz;
   if ((param_2[2] - param_1[2]) * (param_2[2] - param_1[2]) +
       (*param_2 - *param_1) * (*param_2 - *param_1) <= fStack56 * fStack56) {
-    if (*param_2 == (float)ptr_BONDdata->positionx) {
-      if (param_2[2] == (float)ptr_BONDdata->positionz) {
+    if (*param_2 == (float)pPlayer->positionx) {
+      if (param_2[2] == (float)pPlayer->positionz) {
         return 0;
       }
       fVar2 = param_2[2];
@@ -94413,29 +94413,29 @@ undefined8 proc_7F07D61C(float *param_1,float *param_2,float *param_3)
     else {
       fVar2 = param_2[2];
     }
-    fStack24 = -(fVar2 - (float)ptr_BONDdata->positionz);
-    fStack16 = *param_2 - (float)ptr_BONDdata->positionx;
+    fStack24 = -(fVar2 - (float)pPlayer->positionz);
+    fStack16 = *param_2 - (float)pPlayer->positionx;
     fVar2 = sqrtf(fStack16 * fStack16 + fStack24 * fStack24);
     fStack24 = fStack24 * (1.00000000 / fVar2);
     fStack16 = fStack16 * (1.00000000 / fVar2);
     fVar2 = fStack16 * fStack4 + fStack12 * fStack24;
     fStack24 = fStack24 * fVar2;
     fStack16 = fStack16 * fVar2;
-    fStack36 = fStack24 + (float)ptr_BONDdata->positionx;
-    fStack28 = fStack16 + (float)ptr_BONDdata->positionz;
+    fStack36 = fStack24 + (float)pPlayer->positionx;
+    fStack28 = fStack16 + (float)pPlayer->positionz;
     lVar1 = proc_7F07CF8C();
     if (lVar1 != 0) {
-      ptr_BONDdata->ptr_tile_printmanpos = iStack52;
-      *(float *)&ptr_BONDdata->positionx = fStack36;
-      *(float *)&ptr_BONDdata->positionz = fStack28;
+      pPlayer->ptr_tile_printmanpos = iStack52;
+      *(float *)&pPlayer->positionx = fStack36;
+      *(float *)&pPlayer->positionz = fStack28;
       return 1;
     }
   }
   else {
     if ((param_3[2] - param_1[2]) * (param_3[2] - param_1[2]) +
         (*param_3 - *param_1) * (*param_3 - *param_1) <= fStack56 * fStack56) {
-      if (*param_3 == (float)ptr_BONDdata->positionx) {
-        if (param_3[2] == (float)ptr_BONDdata->positionz) {
+      if (*param_3 == (float)pPlayer->positionx) {
+        if (param_3[2] == (float)pPlayer->positionz) {
           return 0;
         }
         fVar2 = param_3[2];
@@ -94443,21 +94443,21 @@ undefined8 proc_7F07D61C(float *param_1,float *param_2,float *param_3)
       else {
         fVar2 = param_3[2];
       }
-      fStack24 = -(fVar2 - (float)ptr_BONDdata->positionz);
-      fStack16 = *param_3 - (float)ptr_BONDdata->positionx;
+      fStack24 = -(fVar2 - (float)pPlayer->positionz);
+      fStack16 = *param_3 - (float)pPlayer->positionx;
       fVar2 = sqrtf(fStack16 * fStack16 + fStack24 * fStack24);
       fStack24 = fStack24 * (1.00000000 / fVar2);
       fStack16 = fStack16 * (1.00000000 / fVar2);
       fVar2 = fStack16 * fStack4 + fStack12 * fStack24;
       fStack24 = fStack24 * fVar2;
       fStack16 = fStack16 * fVar2;
-      fStack36 = fStack24 + (float)ptr_BONDdata->positionx;
-      fStack28 = fStack16 + (float)ptr_BONDdata->positionz;
+      fStack36 = fStack24 + (float)pPlayer->positionx;
+      fStack28 = fStack16 + (float)pPlayer->positionz;
       lVar1 = proc_7F07CF8C();
       if (lVar1 != 0) {
-        ptr_BONDdata->ptr_tile_printmanpos = iStack52;
-        *(float *)&ptr_BONDdata->positionx = fStack36;
-        *(float *)&ptr_BONDdata->positionz = fStack28;
+        pPlayer->ptr_tile_printmanpos = iStack52;
+        *(float *)&pPlayer->positionx = fStack36;
+        *(float *)&pPlayer->positionz = fStack28;
         return 1;
       }
     }
@@ -94525,19 +94525,19 @@ void proc_7F07D960(float *param_1,int param_2)
   float local_c [2];
   float local_4;
   
-  *(f32 *)&ptr_BONDdata->field_408 = ptr_BONDdata->positionx;
-  ptr_BONDdata->field_40C = ptr_BONDdata->positiony;
-  ptr_BONDdata->field_410 = ptr_BONDdata->positionz;
-  local_c[0] = *param_1 + (float)ptr_BONDdata->positionx;
+  *(f32 *)&pPlayer->field_408 = pPlayer->positionx;
+  pPlayer->field_40C = pPlayer->positiony;
+  pPlayer->field_410 = pPlayer->positionz;
+  local_c[0] = *param_1 + (float)pPlayer->positionx;
   dword_80036480 = 0;
-  local_4 = param_1[2] + (float)ptr_BONDdata->positionz;
-  ptr_BONDdata->field_29FC = 2;
+  local_4 = param_1[2] + (float)pPlayer->positionz;
+  pPlayer->field_29FC = 2;
   if (dword_8003644C == NULL) goto LAB_7f07dbf0;
   proc_7F03CCB0(dword_8003644C,(int **)&local_28,&local_2c);
   if (((in_tank_flag != TRUE) &&
-      (lVar2 = proc_7F03CCD8((float *)&ptr_BONDdata->positionx,local_28,local_2c), lVar2 == 0)) &&
-     (lVar2 = proc_7F044718((longlong)(int)&ptr_BONDdata->positionx,
-                            (longlong)ptr_BONDdata->collision_radius,local_28,local_2c), lVar2 == 0)
+      (lVar2 = proc_7F03CCD8((float *)&pPlayer->positionx,local_28,local_2c), lVar2 == 0)) &&
+     (lVar2 = proc_7F044718((longlong)(int)&pPlayer->positionx,
+                            (longlong)pPlayer->collision_radius,local_28,local_2c), lVar2 == 0)
      ) {
     if (ptr_playerstank != NULL) {
       dword_8003644C = NULL;
@@ -94562,7 +94562,7 @@ LAB_7f07dad8:
   else {
     local_40 = fVar13;
     local_3c = iVar9;
-    lVar2 = proc_7F03CCD8((float *)&ptr_BONDdata->positionx,(float *)(iVar10 + 0x84),
+    lVar2 = proc_7F03CCD8((float *)&pPlayer->positionx,(float *)(iVar10 + 0x84),
                           *(uint *)(iVar10 + 0x80));
     fVar13 = local_40;
     if (lVar2 != 0) {
@@ -94625,17 +94625,17 @@ LAB_7f07dbf0:
       }
     }
   }
-  lVar2 = proc_7F0B0518(ptr_BONDdata->ptr_tile_printmanpos,fVar13,fVar12);
+  lVar2 = proc_7F0B0518(pPlayer->ptr_tile_printmanpos,fVar13,fVar12);
   if (lVar2 != 0) {
 LAB_7f07de28:
-    proc_7F07DE9C(ptr_BONDdata);
-    if (ptr_BONDdata->ptr_tile_printmanpos != 0) {
-      proc_7F057744((ulonglong)*(byte *)(ptr_BONDdata->ptr_tile_printmanpos + 3));
+    proc_7F07DE9C(pPlayer);
+    if (pPlayer->ptr_tile_printmanpos != 0) {
+      proc_7F057744((ulonglong)*(byte *)(pPlayer->ptr_tile_printmanpos + 3));
     }
     return;
   }
   iVar9 = 0;
-  iVar10 = ptr_BONDdata->ptr_tile_printmanpos;
+  iVar10 = pPlayer->ptr_tile_printmanpos;
   sVar1 = *(short *)(iVar10 + 6);
   do {
     uVar7 = 0;
@@ -94674,7 +94674,7 @@ LAB_7f07de28:
     }
     lVar2 = proc_7F0B0518(iVar10,extraout_f12_08,extraout_f14_08);
     if (lVar2 != 0) {
-      ptr_BONDdata->ptr_tile_printmanpos = iVar10;
+      pPlayer->ptr_tile_printmanpos = iVar10;
       goto LAB_7f07de28;
     }
     iVar9 += 1;
@@ -94719,9 +94719,9 @@ void proc_7F07DE9C(BONDdata *param_1)
 void proc_7F07DEFC(void)
 
 {
-  *(float *)&ptr_BONDdata->pause_starting_angle = ptr_BONDdata->inclination_angle1;
-  ptr_BONDdata->field_210 = 0.00000000;
-  ptr_BONDdata->field_218 = 0;
+  *(float *)&pPlayer->pause_starting_angle = pPlayer->inclination_angle1;
+  pPlayer->field_210 = 0.00000000;
+  pPlayer->field_218 = 0;
   return;
 }
 
@@ -94733,14 +94733,14 @@ float proc_7F07DF28(longlong param_1)
   float fVar1;
   
   if (param_1 == 0) {
-    ptr_BONDdata->field_208 = ptr_BONDdata->pause_starting_angle;
-    *(float *)&ptr_BONDdata->pause_target_angle = ptr_BONDdata->inclination_angle1;
+    pPlayer->field_208 = pPlayer->pause_starting_angle;
+    *(float *)&pPlayer->pause_target_angle = pPlayer->inclination_angle1;
   }
   else {
-    *(float *)&ptr_BONDdata->field_208 = ptr_BONDdata->inclination_angle1;
-    ptr_BONDdata->pause_target_angle = -40.00000000;
+    *(float *)&pPlayer->field_208 = pPlayer->inclination_angle1;
+    pPlayer->pause_target_angle = -40.00000000;
   }
-  fVar1 = (float)ptr_BONDdata->field_208 - (float)ptr_BONDdata->pause_target_angle;
+  fVar1 = (float)pPlayer->field_208 - (float)pPlayer->pause_target_angle;
   if (fVar1 < 0.00000000) {
     fVar1 = -fVar1;
   }
@@ -94760,9 +94760,9 @@ void proc_7F07E010(undefined4 param_1)
 {
   f32 in_f12;
   
-  ptr_BONDdata->field_210 = 0.00000000;
-  ptr_BONDdata->field_214 = in_f12;
-  ptr_BONDdata->field_218 = 1;
+  pPlayer->field_210 = 0.00000000;
+  pPlayer->field_214 = in_f12;
+  pPlayer->field_218 = 1;
   return;
 }
 
@@ -94773,9 +94773,9 @@ void proc_7F07E03C(undefined4 param_1)
 {
   f32 in_f12;
   
-  ptr_BONDdata->field_210 = 0.00000000;
-  ptr_BONDdata->field_214 = in_f12;
-  ptr_BONDdata->field_218 = 2;
+  pPlayer->field_210 = 0.00000000;
+  pPlayer->field_214 = in_f12;
+  pPlayer->field_218 = 2;
   return;
 }
 
@@ -94784,7 +94784,7 @@ void proc_7F07E03C(undefined4 param_1)
 ulonglong proc_7F07E068(void)
 
 {
-  return (ulonglong)(ptr_BONDdata->field_218 != 0 && ptr_BONDdata->field_218 != 3);
+  return (ulonglong)(pPlayer->field_218 != 0 && pPlayer->field_218 != 3);
 }
 
 
@@ -94795,72 +94795,72 @@ void proc_7F07E090(void)
   float fVar1;
   float fVar2;
   
-  fVar2 = ptr_BONDdata->inclination_angle1;
-  if (ptr_BONDdata->field_218 == 1) {
-    *(float *)&ptr_BONDdata->field_210 =
-         (float)ptr_BONDdata->field_210 + global_timer_delta * watch_transition_time;
-    if ((float)ptr_BONDdata->field_210 < (float)ptr_BONDdata->field_214) {
-      fVar1 = cosf(((float)ptr_BONDdata->field_210 / (float)ptr_BONDdata->field_214) * flt_8005506C
+  fVar2 = pPlayer->inclination_angle1;
+  if (pPlayer->field_218 == 1) {
+    *(float *)&pPlayer->field_210 =
+         (float)pPlayer->field_210 + global_timer_delta * watch_transition_time;
+    if ((float)pPlayer->field_210 < (float)pPlayer->field_214) {
+      fVar1 = cosf(((float)pPlayer->field_210 / (float)pPlayer->field_214) * flt_8005506C
                    * 0.50000000);
-      ptr_BONDdata->inclination_angle1 =
-           (float)ptr_BONDdata->field_208 +
-           ((float)ptr_BONDdata->pause_target_angle - (float)ptr_BONDdata->field_208) *
+      pPlayer->inclination_angle1 =
+           (float)pPlayer->field_208 +
+           ((float)pPlayer->pause_target_angle - (float)pPlayer->field_208) *
            (1.00000000 - fVar1) * 0.50000000;
     }
     else {
-      *(f32 *)&ptr_BONDdata->inclination_angle1 = ptr_BONDdata->pause_target_angle;
-      ptr_BONDdata->field_218 = 3;
+      *(f32 *)&pPlayer->inclination_angle1 = pPlayer->pause_target_angle;
+      pPlayer->field_218 = 3;
     }
-    fVar1 = ptr_BONDdata->inclination_angle1;
+    fVar1 = pPlayer->inclination_angle1;
   }
   else {
     fVar1 = fVar2;
-    if (ptr_BONDdata->field_218 == 2) {
-      *(float *)&ptr_BONDdata->field_210 =
-           (float)ptr_BONDdata->field_210 + global_timer_delta * watch_transition_time;
-      if ((float)ptr_BONDdata->field_210 < (float)ptr_BONDdata->field_214) {
-        fVar1 = cosf(((float)ptr_BONDdata->field_210 / (float)ptr_BONDdata->field_214) *
+    if (pPlayer->field_218 == 2) {
+      *(float *)&pPlayer->field_210 =
+           (float)pPlayer->field_210 + global_timer_delta * watch_transition_time;
+      if ((float)pPlayer->field_210 < (float)pPlayer->field_214) {
+        fVar1 = cosf(((float)pPlayer->field_210 / (float)pPlayer->field_214) *
                      flt_80055070 * 0.50000000);
-        ptr_BONDdata->inclination_angle1 =
-             (float)ptr_BONDdata->pause_target_angle +
-             ((float)ptr_BONDdata->field_208 - (float)ptr_BONDdata->pause_target_angle) *
+        pPlayer->inclination_angle1 =
+             (float)pPlayer->pause_target_angle +
+             ((float)pPlayer->field_208 - (float)pPlayer->pause_target_angle) *
              (1.00000000 - fVar1) * 0.50000000;
-        fVar1 = ptr_BONDdata->inclination_angle1;
+        fVar1 = pPlayer->inclination_angle1;
       }
       else {
-        *(f32 *)&ptr_BONDdata->inclination_angle1 = ptr_BONDdata->field_208;
-        ptr_BONDdata->field_218 = 0;
-        fVar1 = ptr_BONDdata->inclination_angle1;
+        *(f32 *)&pPlayer->inclination_angle1 = pPlayer->field_208;
+        pPlayer->field_218 = 0;
+        fVar1 = pPlayer->inclination_angle1;
       }
     }
   }
   if (fVar1 < -180.00000000) {
-    ptr_BONDdata->inclination_angle1 = fVar1 + 360.00000000;
+    pPlayer->inclination_angle1 = fVar1 + 360.00000000;
   }
   else {
     if (180.00000000 <= fVar1) {
-      ptr_BONDdata->inclination_angle1 = fVar1 - 360.00000000;
+      pPlayer->inclination_angle1 = fVar1 - 360.00000000;
     }
   }
   if (0 < clock_timer) {
-    ptr_BONDdata->inclination_turning_direction = ptr_BONDdata->inclination_angle1 - fVar2;
-    fVar2 = ptr_BONDdata->inclination_turning_direction;
+    pPlayer->inclination_turning_direction = pPlayer->inclination_angle1 - fVar2;
+    fVar2 = pPlayer->inclination_turning_direction;
     if (fVar2 < 0.00000000) {
-      ptr_BONDdata->inclination_turning_direction = fVar2 + 360.00000000;
-      fVar2 = ptr_BONDdata->inclination_turning_direction;
+      pPlayer->inclination_turning_direction = fVar2 + 360.00000000;
+      fVar2 = pPlayer->inclination_turning_direction;
     }
     if (180.00000000 < fVar2) {
-      ptr_BONDdata->inclination_turning_direction = fVar2 - 360.00000000;
-      fVar2 = ptr_BONDdata->inclination_turning_direction;
+      pPlayer->inclination_turning_direction = fVar2 - 360.00000000;
+      fVar2 = pPlayer->inclination_turning_direction;
     }
     fVar1 = flt_80055074;
-    ptr_BONDdata->inclination_turning_direction = fVar2 / (global_timer_delta + global_timer_delta);
-    if (ptr_BONDdata->inclination_turning_direction < fVar1) {
-      ptr_BONDdata->inclination_turning_direction = fVar1;
+    pPlayer->inclination_turning_direction = fVar2 / (global_timer_delta + global_timer_delta);
+    if (pPlayer->inclination_turning_direction < fVar1) {
+      pPlayer->inclination_turning_direction = fVar1;
     }
     else {
-      if (flt_80055078 < ptr_BONDdata->inclination_turning_direction) {
-        ptr_BONDdata->inclination_turning_direction = flt_80055078;
+      if (flt_80055078 < pPlayer->inclination_turning_direction) {
+        pPlayer->inclination_turning_direction = flt_80055078;
       }
     }
   }
@@ -94874,9 +94874,9 @@ float proc_7F07E388(void)
 {
   int iVar1;
   
-  iVar1 = ptr_BONDdata->field_218;
+  iVar1 = pPlayer->field_218;
   if (iVar1 == 1) {
-    return (float)ptr_BONDdata->field_210 / (float)ptr_BONDdata->field_214;
+    return (float)pPlayer->field_210 / (float)pPlayer->field_214;
   }
   if (iVar1 != 2) {
     if (iVar1 == 3) {
@@ -94884,7 +94884,7 @@ float proc_7F07E388(void)
     }
     return 0.00000000;
   }
-  return 1.00000000 - (float)ptr_BONDdata->field_210 / (float)ptr_BONDdata->field_214;
+  return 1.00000000 - (float)pPlayer->field_210 / (float)pPlayer->field_214;
 }
 
 
@@ -94892,10 +94892,10 @@ float proc_7F07E388(void)
 void trigger_watch_zoom(f32 final,f32 time)
 
 {
-  ptr_BONDdata->zoomintime = 0.00000000;
-  ptr_BONDdata->zoomintimemax = time;
-  ptr_BONDdata->zoominfovyold = ptr_BONDdata->zoominfovy;
-  ptr_BONDdata->zoominfovynew = final;
+  pPlayer->zoomintime = 0.00000000;
+  pPlayer->zoomintimemax = time;
+  pPlayer->zoominfovyold = pPlayer->zoominfovy;
+  pPlayer->zoominfovynew = final;
   return;
 }
 
@@ -94904,10 +94904,10 @@ void trigger_watch_zoom(f32 final,f32 time)
 BONDdata * proc_7F07E438(void)
 
 {
-  if ((float)ptr_BONDdata->zoomintimemax <= ptr_BONDdata->zoomintime) {
-    return ptr_BONDdata;
+  if ((float)pPlayer->zoomintimemax <= pPlayer->zoomintime) {
+    return pPlayer;
   }
-  return ptr_BONDdata;
+  return pPlayer;
 }
 
 
@@ -94923,7 +94923,7 @@ void proc_7F07E46C(void)
   
   proc_7F07E438();
   if (in_f0 != final) {
-    fVar1 = ptr_BONDdata->zoominfovy;
+    fVar1 = pPlayer->zoominfovy;
     if (final < fVar1) {
       trigger_watch_zoom((f32)final,(f32)(((fVar1 - final) * 15.00000000) / 30.00000000));
     }
@@ -94950,7 +94950,7 @@ void zoom_to_watch_on_open(void)
 {
   f32 time;
   
-  time = (f32)(((final - ptr_BONDdata->zoominfovy) * 45.00000000) / flt_80055080);
+  time = (f32)(((final - pPlayer->zoominfovy) * 45.00000000) / flt_80055080);
   if ((float)time < 0.00000000) {
     time = (f32)-(float)time;
   }
@@ -94965,7 +94965,7 @@ void zoom_from_watch_on_exit(void)
 {
   f32 time;
   
-  time = (f32)(((60.00000000 - ptr_BONDdata->zoominfovy) * 45.00000000) / flt_80055084);
+  time = (f32)(((60.00000000 - pPlayer->zoominfovy) * 45.00000000) / flt_80055084);
   if ((float)time < 0.00000000) {
     time = (f32)-(float)time;
   }
@@ -94978,7 +94978,7 @@ void zoom_from_watch_on_exit(void)
 ulonglong check_watch_page_transistion_running(void)
 
 {
-  return (ulonglong)(ptr_BONDdata->zoomintime < (float)ptr_BONDdata->zoomintimemax);
+  return (ulonglong)(pPlayer->zoomintime < (float)pPlayer->zoomintimemax);
 }
 
 
@@ -94990,35 +94990,35 @@ void proc_7F07E62C(void)
   float fVar2;
   float fVar3;
   
-  fVar2 = ptr_BONDdata->zoomintime;
-  if (fVar2 < (float)ptr_BONDdata->zoomintimemax) {
-    if ((ptr_BONDdata->pause_animation_state == 5) || (ptr_BONDdata->pause_animation_state == 0xc))
+  fVar2 = pPlayer->zoomintime;
+  if (fVar2 < (float)pPlayer->zoomintimemax) {
+    if ((pPlayer->pause_animation_state == 5) || (pPlayer->pause_animation_state == 0xc))
     {
-      ptr_BONDdata->zoomintime = fVar2 + (float)dword_80048498;
+      pPlayer->zoomintime = fVar2 + (float)dword_80048498;
     }
     else {
-      ptr_BONDdata->zoomintime = fVar2 + (float)dword_80048498 * watch_transition_time;
+      pPlayer->zoomintime = fVar2 + (float)dword_80048498 * watch_transition_time;
     }
-    fVar2 = (float)ptr_BONDdata->zoomintimemax;
-    fVar3 = ptr_BONDdata->zoomintime;
+    fVar2 = (float)pPlayer->zoomintimemax;
+    fVar3 = pPlayer->zoomintime;
     if (fVar2 < fVar3) {
-      ptr_BONDdata->zoomintime = fVar2;
-      fVar3 = ptr_BONDdata->zoomintime;
-      fVar2 = (float)ptr_BONDdata->zoomintimemax;
-      fVar1 = ptr_BONDdata->zoominfovyold;
+      pPlayer->zoomintime = fVar2;
+      fVar3 = pPlayer->zoomintime;
+      fVar2 = (float)pPlayer->zoomintimemax;
+      fVar1 = pPlayer->zoominfovyold;
     }
     else {
-      fVar1 = ptr_BONDdata->zoominfovyold;
+      fVar1 = pPlayer->zoominfovyold;
     }
-    ptr_BONDdata->zoominfovy =
-         fVar1 + (fVar3 * ((float)ptr_BONDdata->zoominfovynew - fVar1)) / fVar2;
+    pPlayer->zoominfovy =
+         fVar1 + (fVar3 * ((float)pPlayer->zoominfovynew - fVar1)) / fVar2;
   }
   else {
-    *(f32 *)&ptr_BONDdata->zoomintime = ptr_BONDdata->zoomintimemax;
-    *(f32 *)&ptr_BONDdata->zoominfovy = ptr_BONDdata->zoominfovynew;
+    *(f32 *)&pPlayer->zoomintime = pPlayer->zoomintimemax;
+    *(f32 *)&pPlayer->zoominfovy = pPlayer->zoominfovynew;
   }
-  set_watch_menu_current_size_unused_maybe((f32)ptr_BONDdata->zoominfovy);
-  video_related_1F((f32)ptr_BONDdata->zoominfovy);
+  set_watch_menu_current_size_unused_maybe((f32)pPlayer->zoominfovy);
+  video_related_1F((f32)pPlayer->zoominfovy);
   return;
 }
 
@@ -95032,13 +95032,13 @@ float proc_7F07E740(void)
 {
   int iVar1;
   
-  iVar1 = ptr_BONDdata->pause_animation_state;
+  iVar1 = pPlayer->pause_animation_state;
   if (iVar1 == 4) {
-    return ((45.00000000 - (float)ptr_BONDdata->zoomintimemax) + ptr_BONDdata->zoomintime) /
+    return ((45.00000000 - (float)pPlayer->zoomintimemax) + pPlayer->zoomintime) /
            45.00000000;
   }
   if (iVar1 == 6) {
-    return ((float)ptr_BONDdata->zoomintimemax - ptr_BONDdata->zoomintime) / 45.00000000;
+    return ((float)pPlayer->zoomintimemax - pPlayer->zoomintime) / 45.00000000;
   }
   if ((iVar1 != 5) && (iVar1 != 0xc)) {
     return 0.00000000;
@@ -95061,12 +95061,12 @@ void proc_7F07E7CC(void)
   if (0x32 < objheader->num_table_entries) {
     return_null();
   }
-  proc_7F075FAC((int)&ptr_BONDdata->something_with_watch_object_instance,
-                (player_gait_header *)objheader,&ptr_BONDdata->field_2EC);
-  set_obj_instance_controller_scale((int)&ptr_BONDdata->something_with_watch_object_instance,scale);
-  proc_7F06FCA8((int)&ptr_BONDdata->something_with_watch_object_instance,
+  proc_7F075FAC((int)&pPlayer->something_with_watch_object_instance,
+                (player_gait_header *)objheader,&pPlayer->field_2EC);
+  set_obj_instance_controller_scale((int)&pPlayer->something_with_watch_object_instance,scale);
+  proc_7F06FCA8((int)&pPlayer->something_with_watch_object_instance,
                 ptr_animation_table + 0x42c8,0,extraout_f12,0,extraout_f14);
-  ptr_BONDdata->step_in_view_watch_animation = 0;
+  pPlayer->step_in_view_watch_animation = 0;
   return;
 }
 
@@ -95075,14 +95075,14 @@ void proc_7F07E7CC(void)
 void proc_7F07E8B0(float param_1)
 
 {
-  if (ptr_BONDdata->step_in_view_watch_animation == 0) {
-    *(float *)&ptr_BONDdata->field_22C = 20.00000000 / param_1;
+  if (pPlayer->step_in_view_watch_animation == 0) {
+    *(float *)&pPlayer->field_22C = 20.00000000 / param_1;
   }
   else {
-    *(float *)&ptr_BONDdata->field_22C = (20.00000000 - (float)ptr_BONDdata->field_258) / param_1;
+    *(float *)&pPlayer->field_22C = (20.00000000 - (float)pPlayer->field_258) / param_1;
   }
-  ptr_BONDdata->step_in_view_watch_animation = 1;
-  *(float *)&ptr_BONDdata->field_228 = param_1;
+  pPlayer->step_in_view_watch_animation = 1;
+  *(float *)&pPlayer->field_228 = param_1;
   return;
 }
 
@@ -95091,14 +95091,14 @@ void proc_7F07E8B0(float param_1)
 void proc_7F07E910(float param_1)
 
 {
-  if (ptr_BONDdata->step_in_view_watch_animation == 3) {
-    *(float *)&ptr_BONDdata->field_22C = 20.00000000 / param_1;
+  if (pPlayer->step_in_view_watch_animation == 3) {
+    *(float *)&pPlayer->field_22C = 20.00000000 / param_1;
   }
   else {
-    *(float *)&ptr_BONDdata->field_22C = (float)ptr_BONDdata->field_258 / param_1;
+    *(float *)&pPlayer->field_22C = (float)pPlayer->field_258 / param_1;
   }
-  ptr_BONDdata->step_in_view_watch_animation = 2;
-  *(float *)&ptr_BONDdata->field_228 = param_1;
+  pPlayer->step_in_view_watch_animation = 2;
+  *(float *)&pPlayer->field_228 = param_1;
   return;
 }
 
@@ -95111,28 +95111,28 @@ void proc_7F07E964(void)
   float in_f12;
   float in_f14;
   
-  iVar1 = ptr_BONDdata->step_in_view_watch_animation;
+  iVar1 = pPlayer->step_in_view_watch_animation;
   if ((iVar1 != 0) && (iVar1 != 3)) {
     if (iVar1 == 1) {
-      *(float *)&ptr_BONDdata->pause_animation_counter =
-           (float)ptr_BONDdata->pause_animation_counter +
-           global_timer_delta * watch_transition_time * (float)ptr_BONDdata->field_22C;
-      if (20.00000000 < (float)ptr_BONDdata->pause_animation_counter) {
-        ptr_BONDdata->pause_animation_counter = 20.00000000;
-        ptr_BONDdata->step_in_view_watch_animation = 3;
+      *(float *)&pPlayer->pause_animation_counter =
+           (float)pPlayer->pause_animation_counter +
+           global_timer_delta * watch_transition_time * (float)pPlayer->field_22C;
+      if (20.00000000 < (float)pPlayer->pause_animation_counter) {
+        pPlayer->pause_animation_counter = 20.00000000;
+        pPlayer->step_in_view_watch_animation = 3;
       }
     }
     else {
       if ((iVar1 == 2) &&
-         (*(float *)&ptr_BONDdata->pause_animation_counter =
-               (float)ptr_BONDdata->pause_animation_counter -
-               global_timer_delta * watch_transition_time * (float)ptr_BONDdata->field_22C,
-         (float)ptr_BONDdata->pause_animation_counter < 0.00000000)) {
-        ptr_BONDdata->pause_animation_counter = 0.00000000;
-        ptr_BONDdata->step_in_view_watch_animation = 0;
+         (*(float *)&pPlayer->pause_animation_counter =
+               (float)pPlayer->pause_animation_counter -
+               global_timer_delta * watch_transition_time * (float)pPlayer->field_22C,
+         (float)pPlayer->pause_animation_counter < 0.00000000)) {
+        pPlayer->pause_animation_counter = 0.00000000;
+        pPlayer->step_in_view_watch_animation = 0;
       }
     }
-    proc_7F070090((int)&ptr_BONDdata->something_with_watch_object_instance,in_f12,in_f14);
+    proc_7F070090((int)&pPlayer->something_with_watch_object_instance,in_f12,in_f14);
   }
   return;
 }
@@ -95147,14 +95147,14 @@ float proc_7F07EA78(void)
 {
   int iVar1;
   
-  iVar1 = ptr_BONDdata->step_in_view_watch_animation;
+  iVar1 = pPlayer->step_in_view_watch_animation;
   if ((iVar1 != 1) && (iVar1 != 2)) {
     if (iVar1 != 3) {
       return 0.00000000;
     }
     return 1.00000000;
   }
-  return (float)ptr_BONDdata->pause_animation_counter / 20.00000000;
+  return (float)pPlayer->pause_animation_counter / 20.00000000;
 }
 
 
@@ -95162,7 +95162,7 @@ float proc_7F07EA78(void)
 void set_BONDdata_paused_flag(int ispaused)
 
 {
-  ptr_BONDdata->paused_flag = ispaused;
+  pPlayer->paused_flag = ispaused;
   return;
 }
 
@@ -95171,7 +95171,7 @@ void set_BONDdata_paused_flag(int ispaused)
 int get_BONDdata_paused_flag(void)
 
 {
-  return ptr_BONDdata->paused_flag;
+  return pPlayer->paused_flag;
 }
 
 
@@ -95191,7 +95191,7 @@ void proc_7F07EAF0(void)
   proc_7F055EF8();
   iVar6 = 0;
   do {
-    iVar4 = (int)&ptr_BONDdata->unknown + iVar6;
+    iVar4 = (int)&pPlayer->unknown + iVar6;
     iVar2 = *(int *)(iVar4 + 0xa44);
     if ((iVar2 != 0) && (uVar3 = music_related_26(iVar2), uVar3 != 0)) {
       music_related_28(*(int *)(iVar4 + 0xa44));
@@ -95288,7 +95288,7 @@ void probably_look_at_watch(void)
   float fVar8;
   float local_14;
   
-  iVar6 = ptr_BONDdata->pause_animation_state;
+  iVar6 = pPlayer->pause_animation_state;
   if (iVar6 == 0) goto LAB_7f07f80c;
   IVar3 = get_item_in_hand(0);
   bVar1 = IVar3 == ITEM_TRIGGER;
@@ -95300,16 +95300,16 @@ void probably_look_at_watch(void)
   if (bVar1) {
     iVar6 = 0x23;
   }
-  ptr_BONDdata->field_1C4 = ptr_BONDdata->field_1C4 + clock_timer;
-  ptr_BONDdata->field_1C0 = ptr_BONDdata->field_1C0 + 1;
-  ptr_BONDdata->pausing_flag = 0;
-  if (ptr_BONDdata->pause_animation_state == 1) {
-    ptr_BONDdata->pausing_flag = 0;
-    if (ptr_BONDdata->field_1C0 == 1) {
+  pPlayer->field_1C4 = pPlayer->field_1C4 + clock_timer;
+  pPlayer->field_1C0 = pPlayer->field_1C0 + 1;
+  pPlayer->pausing_flag = 0;
+  if (pPlayer->pause_animation_state == 1) {
+    pPlayer->pausing_flag = 0;
+    if (pPlayer->field_1C0 == 1) {
       draw_item_in_hand(1,0x54);
     }
     else {
-      if (ptr_BONDdata->field_1C0 == 2) {
+      if (pPlayer->field_1C0 == 2) {
         if (bVar1) {
           draw_item_in_hand(0,0);
         }
@@ -95319,56 +95319,56 @@ void probably_look_at_watch(void)
         if ((((iVar4 == 0x54) && (uVar2 = proc_7F05CEBC(1), uVar2 != 0)) &&
             ((!bVar1 ||
              ((iVar4 = return_ammo_in_hand(0), iVar4 == 0 && (uVar2 = proc_7F05CEBC(0), uVar2 != 0))
-             )))) && (iVar6 <= ptr_BONDdata->field_1C4)) {
-          ptr_BONDdata->pause_animation_state = 2;
-          ptr_BONDdata->field_1C0 = 1;
-          ptr_BONDdata->field_1C4 = 0;
+             )))) && (iVar6 <= pPlayer->field_1C4)) {
+          pPlayer->pause_animation_state = 2;
+          pPlayer->field_1C0 = 1;
+          pPlayer->field_1C4 = 0;
         }
       }
     }
   }
-  if (ptr_BONDdata->pause_animation_state == 2) {
-    ptr_BONDdata->pausing_flag = 0;
-    if (ptr_BONDdata->field_1C0 == 1) {
+  if (pPlayer->pause_animation_state == 2) {
+    pPlayer->pausing_flag = 0;
+    if (pPlayer->field_1C0 == 1) {
       set_unset_bitflags(8,0);
       set_unset_ammo_on_screen_setting(4,0);
       set_flags_in_BONDdata_stationary_intro_cam(1);
       proc_7F08A944(1);
       set_unset_clock_lock_bits(4,0);
-      iVar6 = ptr_BONDdata->field_218;
+      iVar6 = pPlayer->field_218;
       if (((iVar6 == 0) || (iVar6 == 2)) || (iVar6 == 3)) {
         proc_7F07DF28(1);
         proc_7F07E010(extraout_a0_lo);
-        fVar8 = (float)ptr_BONDdata->field_214;
+        fVar8 = (float)pPlayer->field_214;
       }
       else {
-        fVar8 = (float)ptr_BONDdata->field_214;
+        fVar8 = (float)pPlayer->field_214;
       }
     }
     else {
-      fVar8 = (float)ptr_BONDdata->field_214;
+      fVar8 = (float)pPlayer->field_214;
     }
-    if (fVar8 - (float)ptr_BONDdata->field_210 < 30.00000000) {
-      ptr_BONDdata->pause_animation_state = 3;
-      ptr_BONDdata->field_1C0 = 1;
-      ptr_BONDdata->field_1C4 = 0;
+    if (fVar8 - (float)pPlayer->field_210 < 30.00000000) {
+      pPlayer->pause_animation_state = 3;
+      pPlayer->field_1C0 = 1;
+      pPlayer->field_1C4 = 0;
       proc_7F07E7CC();
-      iVar6 = ptr_BONDdata->pause_animation_state;
+      iVar6 = pPlayer->pause_animation_state;
     }
     else {
-      iVar6 = ptr_BONDdata->pause_animation_state;
+      iVar6 = pPlayer->pause_animation_state;
     }
   }
   else {
-    iVar6 = ptr_BONDdata->pause_animation_state;
+    iVar6 = pPlayer->pause_animation_state;
   }
   if (iVar6 == 3) {
-    if (ptr_BONDdata->field_1C0 == 1) {
-      iVar6 = ptr_BONDdata->field_218;
+    if (pPlayer->field_1C0 == 1) {
+      iVar6 = pPlayer->field_218;
       fVar8 = 40.00000000;
-      if ((ptr_BONDdata->step_in_view_watch_animation != 0) &&
-         (fVar8 = 40.00000000, ptr_BONDdata->step_in_view_watch_animation != 3)) {
-        fVar8 = ((20.00000000 - (float)ptr_BONDdata->field_258) * 40.00000000) / 20.00000000;
+      if ((pPlayer->step_in_view_watch_animation != 0) &&
+         (fVar8 = 40.00000000, pPlayer->step_in_view_watch_animation != 3)) {
+        fVar8 = ((20.00000000 - (float)pPlayer->field_258) * 40.00000000) / 20.00000000;
       }
       if (((iVar6 == 0) || (iVar6 == 2)) || (local_14 = fVar8, iVar6 == 3)) {
         fVar7 = proc_7F07DF28(1);
@@ -95383,65 +95383,65 @@ void probably_look_at_watch(void)
         }
       }
       proc_7F07E8B0(local_14);
-      iVar6 = ptr_BONDdata->step_in_view_watch_animation;
+      iVar6 = pPlayer->step_in_view_watch_animation;
     }
     else {
-      iVar6 = ptr_BONDdata->step_in_view_watch_animation;
+      iVar6 = pPlayer->step_in_view_watch_animation;
     }
     if (((iVar6 == 0) || (iVar6 == 3)) && (uVar2 = proc_7F07E068(), uVar2 == 0)) {
-      ptr_BONDdata->pause_animation_state = 4;
-      ptr_BONDdata->field_1C0 = 1;
-      ptr_BONDdata->field_1C4 = 0;
-      iVar6 = ptr_BONDdata->pause_animation_state;
+      pPlayer->pause_animation_state = 4;
+      pPlayer->field_1C0 = 1;
+      pPlayer->field_1C4 = 0;
+      iVar6 = pPlayer->pause_animation_state;
     }
     else {
-      ptr_BONDdata->pausing_flag = 1;
-      iVar6 = ptr_BONDdata->pause_animation_state;
+      pPlayer->pausing_flag = 1;
+      iVar6 = pPlayer->pause_animation_state;
     }
   }
   if (iVar6 == 4) {
-    if ((ptr_BONDdata->field_1C0 == 1) && (ptr_BONDdata->field_21C != 0)) {
+    if ((pPlayer->field_1C0 == 1) && (pPlayer->field_21C != 0)) {
       play_sfx_a1(ptr_sfx_buf,0xed,NULL);
-      ptr_BONDdata->field_21C = 0;
+      pPlayer->field_21C = 0;
     }
     zoom_to_watch_on_open();
     uVar2 = check_watch_page_transistion_running();
     if (uVar2 == 0) {
-      ptr_BONDdata->pause_animation_state = 5;
-      ptr_BONDdata->field_1C0 = 1;
-      ptr_BONDdata->field_1C4 = 0;
-      ptr_BONDdata->field_21C = 1;
-      iVar6 = ptr_BONDdata->pause_animation_state;
+      pPlayer->pause_animation_state = 5;
+      pPlayer->field_1C0 = 1;
+      pPlayer->field_1C4 = 0;
+      pPlayer->field_21C = 1;
+      iVar6 = pPlayer->pause_animation_state;
     }
     else {
-      ptr_BONDdata->pausing_flag = 1;
-      iVar6 = ptr_BONDdata->pause_animation_state;
+      pPlayer->pausing_flag = 1;
+      iVar6 = pPlayer->pause_animation_state;
     }
   }
   if (iVar6 == 5) {
-    if (ptr_BONDdata->field_1C0 == 1) {
+    if (pPlayer->field_1C0 == 1) {
       proc_7F0C1310();
     }
-    ptr_BONDdata->pausing_flag = 1;
-    iVar6 = ptr_BONDdata->pause_animation_state;
+    pPlayer->pausing_flag = 1;
+    iVar6 = pPlayer->pause_animation_state;
   }
   if (iVar6 == 0xc) {
-    ptr_BONDdata->pausing_flag = 1;
-    if (2 < ptr_BONDdata->field_1C0) {
-      ptr_BONDdata->pause_animation_state = 6;
-      ptr_BONDdata->field_1C0 = 1;
-      ptr_BONDdata->field_1C4 = 0;
+    pPlayer->pausing_flag = 1;
+    if (2 < pPlayer->field_1C0) {
+      pPlayer->pause_animation_state = 6;
+      pPlayer->field_1C0 = 1;
+      pPlayer->field_1C4 = 0;
       play_sfx_a1(ptr_sfx_buf,0xee,NULL);
       goto LAB_7f07f1d8;
     }
-    iVar6 = ptr_BONDdata->pause_animation_state;
+    iVar6 = pPlayer->pause_animation_state;
   }
   else {
 LAB_7f07f1d8:
-    iVar6 = ptr_BONDdata->pause_animation_state;
+    iVar6 = pPlayer->pause_animation_state;
   }
   if (iVar6 == 6) {
-    if (ptr_BONDdata->field_1C0 == 1) {
+    if (pPlayer->field_1C0 == 1) {
       zoom_from_watch_on_exit();
       if (bVar1) {
         draw_item_in_hand(0,0);
@@ -95452,43 +95452,43 @@ LAB_7f07f1d8:
     }
     uVar2 = check_watch_page_transistion_running();
     if (uVar2 == 0) {
-      ptr_BONDdata->pause_animation_state = 7;
-      ptr_BONDdata->field_1C0 = 1;
-      ptr_BONDdata->field_1C4 = 0;
-      ptr_BONDdata->field_21C = 1;
-      iVar6 = ptr_BONDdata->pause_animation_state;
+      pPlayer->pause_animation_state = 7;
+      pPlayer->field_1C0 = 1;
+      pPlayer->field_1C4 = 0;
+      pPlayer->field_21C = 1;
+      iVar6 = pPlayer->pause_animation_state;
     }
     else {
-      ptr_BONDdata->pausing_flag = 1;
-      iVar6 = ptr_BONDdata->pause_animation_state;
+      pPlayer->pausing_flag = 1;
+      iVar6 = pPlayer->pause_animation_state;
     }
   }
   if (iVar6 == 7) {
-    if (ptr_BONDdata->field_1C0 == 1) {
+    if (pPlayer->field_1C0 == 1) {
       proc_7F07DF28(0);
       fVar8 = 40.00000000;
-      if ((ptr_BONDdata->step_in_view_watch_animation != 0) &&
-         (ptr_BONDdata->step_in_view_watch_animation != 3)) {
-        fVar8 = ((float)ptr_BONDdata->field_258 * 40.00000000) / 20.00000000;
+      if ((pPlayer->step_in_view_watch_animation != 0) &&
+         (pPlayer->step_in_view_watch_animation != 3)) {
+        fVar8 = ((float)pPlayer->field_258 * 40.00000000) / 20.00000000;
       }
       proc_7F07E03C(extraout_a0_lo_01);
       proc_7F07E910(fVar8);
     }
-    if ((ptr_BONDdata->step_in_view_watch_animation == 0) ||
-       (ptr_BONDdata->step_in_view_watch_animation == 3)) {
-      ptr_BONDdata->pause_animation_state = 8;
-      ptr_BONDdata->field_1C0 = 1;
-      ptr_BONDdata->field_1C4 = 0;
-      iVar6 = ptr_BONDdata->pause_animation_state;
+    if ((pPlayer->step_in_view_watch_animation == 0) ||
+       (pPlayer->step_in_view_watch_animation == 3)) {
+      pPlayer->pause_animation_state = 8;
+      pPlayer->field_1C0 = 1;
+      pPlayer->field_1C4 = 0;
+      iVar6 = pPlayer->pause_animation_state;
     }
     else {
-      ptr_BONDdata->pausing_flag = 1;
-      iVar6 = ptr_BONDdata->pause_animation_state;
+      pPlayer->pausing_flag = 1;
+      iVar6 = pPlayer->pause_animation_state;
     }
   }
   if (iVar6 == 8) {
-    ptr_BONDdata->pausing_flag = 0;
-    if (ptr_BONDdata->field_1C0 == 1) {
+    pPlayer->pausing_flag = 0;
+    if (pPlayer->field_1C0 == 1) {
       IVar3 = return_ammo_in_hand(1);
       IVar5 = get_item_in_hand(1);
       if ((IVar5 != IVar3) && (uVar2 = proc_7F05CEBC(1), uVar2 != 0)) {
@@ -95524,16 +95524,16 @@ LAB_7f07f1d8:
           proc_7F08A380(1);
           proc_7F08A928(1);
           set_unset_clock_lock_bits(4,1);
-          ptr_BONDdata->pause_animation_state = 0;
-          ptr_BONDdata->field_1C0 = 0;
-          ptr_BONDdata->field_1C4 = 0;
+          pPlayer->pause_animation_state = 0;
+          pPlayer->field_1C0 = 0;
+          pPlayer->field_1C4 = 0;
         }
       }
     }
   }
 LAB_7f07f548:
-  if (ptr_BONDdata->pause_animation_state == 9) {
-    ptr_BONDdata->pausing_flag = 0;
+  if (pPlayer->pause_animation_state == 9) {
+    pPlayer->pausing_flag = 0;
     IVar3 = get_item_in_hand(1);
     IVar5 = return_ammo_in_hand(1);
     if ((IVar5 != IVar3) && (uVar2 = proc_7F05CEBC(1), uVar2 != 0)) {
@@ -95542,15 +95542,15 @@ LAB_7f07f548:
         IVar5 = return_ammo_in_hand(0);
         if ((IVar5 == IVar3) || (uVar2 = proc_7F05CEBC(0), uVar2 == 0)) goto LAB_7f07f5ec;
       }
-      ptr_BONDdata->pause_animation_state = 8;
-      ptr_BONDdata->field_1C0 = 0;
-      ptr_BONDdata->field_1C4 = 0;
+      pPlayer->pause_animation_state = 8;
+      pPlayer->field_1C0 = 0;
+      pPlayer->field_1C4 = 0;
     }
   }
 LAB_7f07f5ec:
-  if (ptr_BONDdata->pause_animation_state == 10) {
-    ptr_BONDdata->pausing_flag = 0;
-    if (ptr_BONDdata->field_1C0 == 1) {
+  if (pPlayer->pause_animation_state == 10) {
+    pPlayer->pausing_flag = 0;
+    if (pPlayer->field_1C0 == 1) {
       proc_7F07DF28(0);
       proc_7F07E03C(extraout_a0_lo_02);
     }
@@ -95562,14 +95562,14 @@ LAB_7f07f5ec:
         IVar5 = return_ammo_in_hand(0);
         if ((IVar5 == IVar3) || (uVar2 = proc_7F05CEBC(0), uVar2 == 0)) goto LAB_7f07f6b8;
       }
-      ptr_BONDdata->pause_animation_state = 8;
-      ptr_BONDdata->field_1C0 = 0;
-      ptr_BONDdata->field_1C4 = 0;
+      pPlayer->pause_animation_state = 8;
+      pPlayer->field_1C0 = 0;
+      pPlayer->field_1C4 = 0;
     }
   }
 LAB_7f07f6b8:
-  if (ptr_BONDdata->pause_animation_state == 0xb) {
-    ptr_BONDdata->pausing_flag = 0;
+  if (pPlayer->pause_animation_state == 0xb) {
+    pPlayer->pausing_flag = 0;
     IVar3 = get_item_in_hand(1);
     IVar5 = return_ammo_in_hand(1);
     if ((IVar5 == IVar3) && (uVar2 = proc_7F05CEBC(1), uVar2 != 0)) {
@@ -95578,27 +95578,27 @@ LAB_7f07f6b8:
         IVar5 = return_ammo_in_hand(0);
         if ((IVar5 != IVar3) || (uVar2 = proc_7F05CEBC(0), uVar2 == 0)) goto LAB_7f07f760;
       }
-      ptr_BONDdata->pause_animation_state = 1;
-      ptr_BONDdata->field_1C0 = 0;
-      ptr_BONDdata->field_1C4 = 0;
+      pPlayer->pause_animation_state = 1;
+      pPlayer->field_1C0 = 0;
+      pPlayer->field_1C4 = 0;
     }
   }
 LAB_7f07f760:
-  if (ptr_BONDdata->pause_animation_state == 0xd) {
-    ptr_BONDdata->pausing_flag = 0;
+  if (pPlayer->pause_animation_state == 0xd) {
+    pPlayer->pausing_flag = 0;
     uVar2 = proc_7F05CEBC(1);
     if (((((uVar2 != 0) && (uVar2 = proc_7F05CEBC(0), uVar2 != 0)) &&
-         (iVar6 = ptr_BONDdata->field_C3C, iVar6 != 5)) && ((iVar6 != 6 && (iVar6 != 7)))) &&
+         (iVar6 = pPlayer->field_C3C, iVar6 != 5)) && ((iVar6 != 6 && (iVar6 != 7)))) &&
        (iVar6 != 8)) {
-      ptr_BONDdata->pause_animation_state = 1;
-      ptr_BONDdata->field_1C0 = 0;
-      ptr_BONDdata->field_1C4 = 0;
+      pPlayer->pause_animation_state = 1;
+      pPlayer->field_1C0 = 0;
+      pPlayer->field_1C4 = 0;
     }
   }
   proc_7F07E090();
   proc_7F07E964();
   proc_7F07E62C();
-  iVar6 = ptr_BONDdata->pause_animation_state;
+  iVar6 = pPlayer->pause_animation_state;
 LAB_7f07f80c:
   if (iVar6 == 5) {
     set_controls_locked_flag(1);
@@ -95620,7 +95620,7 @@ LAB_7f07f80c:
 void set_open_close_solo_watch_menu_to_1(void)
 
 {
-  ptr_BONDdata->open_close_solo_watch_menu = 1;
+  pPlayer->open_close_solo_watch_menu = 1;
   return;
 }
 
@@ -95639,7 +95639,7 @@ void trigger_solo_watch_menu(longlong param_1)
   float extraout_f12;
   float extraout_f12_00;
   
-  iVar6 = ptr_BONDdata->pause_animation_state;
+  iVar6 = pPlayer->pause_animation_state;
   if (iVar6 == 0) {
     if (param_1 == 0) {
       watch_transition_time = watch_transition_time * flt_80055090;
@@ -95648,27 +95648,27 @@ void trigger_solo_watch_menu(longlong param_1)
       }
       uVar2 = proc_7F05CEBC(1);
       if ((((uVar2 == 0) || (uVar2 = proc_7F05CEBC(0), uVar2 == 0)) ||
-          (iVar6 = ptr_BONDdata->field_C3C, iVar6 == 5)) ||
+          (iVar6 = pPlayer->field_C3C, iVar6 == 5)) ||
          (((iVar6 == 6 || (iVar6 == 7)) || (iVar6 == 8)))) {
-        ptr_BONDdata->pause_animation_state = 0xd;
+        pPlayer->pause_animation_state = 0xd;
       }
       else {
-        ptr_BONDdata->pause_animation_state = 1;
+        pPlayer->pause_animation_state = 1;
       }
-      ptr_BONDdata->field_1C0 = 0;
-      ptr_BONDdata->field_1C4 = 0;
+      pPlayer->field_1C0 = 0;
+      pPlayer->field_1C4 = 0;
       proc_7F07DEFC();
       proc_7F07E504();
       get_BONDdata_watch_armor();
-      proc_7F0A2F30((short *)&ptr_BONDdata->related_to_armor_display,0x2e,1,extraout_f12);
-      proc_7F0A3330(&ptr_BONDdata->field_19F8,(int)&ptr_BONDdata[0x30303].field_1338,0x2e);
+      proc_7F0A2F30((short *)&pPlayer->related_to_armor_display,0x2e,1,extraout_f12);
+      proc_7F0A3330(&pPlayer->field_19F8,(int)&pPlayer[0x30303].field_1338,0x2e);
       get_BONDdata_watch_health();
-      proc_7F0A2F30((short *)&ptr_BONDdata->related_to_health_display,0x2e,-1,extraout_f12_00);
-      proc_7F0A3330(&ptr_BONDdata->field_2128,(int)&ptr_BONDdata[0x30303].field_1618,0x2e);
+      proc_7F0A2F30((short *)&pPlayer->related_to_health_display,0x2e,-1,extraout_f12_00);
+      proc_7F0A3330(&pPlayer->field_2128,(int)&pPlayer[0x30303].field_1618,0x2e);
       proc_7F0A69A8();
       iVar6 = 0;
-      piVar4 = &ptr_BONDdata->buffer_for_watch_greenbackdrop_DL;
-      piVar7 = &ptr_BONDdata->buffer_for_watch_greenbackdrop_vertices;
+      piVar4 = &pPlayer->buffer_for_watch_greenbackdrop_DL;
+      piVar7 = &pPlayer->buffer_for_watch_greenbackdrop_vertices;
       do {
         piVar3 = (int *)proc_7F0A3AB8((short *)piVar7,(short)iVar6,0,100,0x14,-299,0x136);
         piVar4 = proc_7F0A3B40(piVar4,piVar7 + -0x20000000);
@@ -95677,9 +95677,9 @@ void trigger_solo_watch_menu(longlong param_1)
       } while (iVar6 != 0x271);
       *piVar4 = -0x48000000;
       piVar4[1] = 0;
-      pBVar1 = ptr_BONDdata;
-      piVar7 = &ptr_BONDdata->field_2998;
-      proc_7F0A3AB8((short *)&ptr_BONDdata->field_19B8,0,0,0x398,0x14,-0x1cc,0);
+      pBVar1 = pPlayer;
+      piVar7 = &pPlayer->field_2998;
+      proc_7F0A3AB8((short *)&pPlayer->field_19B8,0,0,0x398,0x14,-0x1cc,0);
       puVar5 = proc_7F0A3B40(piVar7,&pBVar1[0x30303].field_1A38);
       *puVar5 = 0xb8000000;
       puVar5[1] = 0;
@@ -95687,90 +95687,90 @@ void trigger_solo_watch_menu(longlong param_1)
   }
   else {
     if (iVar6 == 1) {
-      ptr_BONDdata->pause_animation_state = 9;
-      ptr_BONDdata->field_1C0 = 0;
-      ptr_BONDdata->field_1C4 = 0;
+      pPlayer->pause_animation_state = 9;
+      pPlayer->field_1C0 = 0;
+      pPlayer->field_1C4 = 0;
     }
     else {
       if (iVar6 == 2) {
-        ptr_BONDdata->pause_animation_state = 10;
-        ptr_BONDdata->field_1C0 = 0;
-        ptr_BONDdata->field_1C4 = 0;
+        pPlayer->pause_animation_state = 10;
+        pPlayer->field_1C0 = 0;
+        pPlayer->field_1C4 = 0;
       }
       else {
         if (iVar6 == 3) {
-          ptr_BONDdata->pause_animation_state = 7;
-          ptr_BONDdata->field_1C0 = 0;
-          ptr_BONDdata->field_1C4 = 0;
+          pPlayer->pause_animation_state = 7;
+          pPlayer->field_1C0 = 0;
+          pPlayer->field_1C4 = 0;
         }
         else {
           if (iVar6 == 4) {
-            ptr_BONDdata->pause_animation_state = 6;
-            ptr_BONDdata->field_1C0 = 0;
-            ptr_BONDdata->field_1C4 = 0;
+            pPlayer->pause_animation_state = 6;
+            pPlayer->field_1C0 = 0;
+            pPlayer->field_1C4 = 0;
           }
           else {
             if (iVar6 == 5) {
               deleteCurrentSelectedFolder();
               proc_7F0C1340();
-              ptr_BONDdata->pause_animation_state = 0xc;
-              ptr_BONDdata->field_1C0 = 0;
-              ptr_BONDdata->field_1C4 = 0;
-              ptr_BONDdata->open_close_solo_watch_menu = 0;
+              pPlayer->pause_animation_state = 0xc;
+              pPlayer->field_1C0 = 0;
+              pPlayer->field_1C4 = 0;
+              pPlayer->open_close_solo_watch_menu = 0;
             }
             else {
               if (iVar6 != 0xc) {
                 if (iVar6 == 6) {
                   if (param_1 == 0) {
-                    ptr_BONDdata->pause_animation_state = 4;
-                    ptr_BONDdata->field_1C0 = 0;
-                    ptr_BONDdata->field_1C4 = 0;
+                    pPlayer->pause_animation_state = 4;
+                    pPlayer->field_1C0 = 0;
+                    pPlayer->field_1C4 = 0;
                     proc_7F0A69A8();
                   }
                 }
                 else {
                   if (iVar6 == 7) {
                     if (param_1 == 0) {
-                      ptr_BONDdata->pause_animation_state = 3;
-                      ptr_BONDdata->field_1C0 = 0;
-                      ptr_BONDdata->field_1C4 = 0;
+                      pPlayer->pause_animation_state = 3;
+                      pPlayer->field_1C0 = 0;
+                      pPlayer->field_1C4 = 0;
                       proc_7F0A69A8();
                     }
                   }
                   else {
                     if (iVar6 == 8) {
                       if (param_1 == 0) {
-                        ptr_BONDdata->pause_animation_state = 0xb;
-                        ptr_BONDdata->field_1C0 = 0;
-                        ptr_BONDdata->field_1C4 = 0;
+                        pPlayer->pause_animation_state = 0xb;
+                        pPlayer->field_1C0 = 0;
+                        pPlayer->field_1C4 = 0;
                         proc_7F0A69A8();
                       }
                     }
                     else {
                       if (iVar6 == 9) {
                         if (param_1 == 0) {
-                          ptr_BONDdata->pause_animation_state = 1;
-                          ptr_BONDdata->field_1C0 = 0;
-                          ptr_BONDdata->field_1C4 = 0;
+                          pPlayer->pause_animation_state = 1;
+                          pPlayer->field_1C0 = 0;
+                          pPlayer->field_1C4 = 0;
                         }
                       }
                       else {
                         if (iVar6 == 10) {
                           if (param_1 == 0) {
-                            ptr_BONDdata->pause_animation_state = 1;
-                            ptr_BONDdata->field_1C0 = 0;
-                            ptr_BONDdata->field_1C4 = 0;
+                            pPlayer->pause_animation_state = 1;
+                            pPlayer->field_1C0 = 0;
+                            pPlayer->field_1C4 = 0;
                           }
                         }
                         else {
                           if (iVar6 == 0xb) {
-                            ptr_BONDdata->pause_animation_state = 8;
-                            ptr_BONDdata->field_1C0 = 0;
-                            ptr_BONDdata->field_1C4 = 0;
+                            pPlayer->pause_animation_state = 8;
+                            pPlayer->field_1C0 = 0;
+                            pPlayer->field_1C4 = 0;
                           }
                           else {
                             if (iVar6 == 0xd) {
-                              ptr_BONDdata->pause_animation_state = 0;
+                              pPlayer->pause_animation_state = 0;
                             }
                           }
                         }
@@ -95796,45 +95796,45 @@ void proc_7F07FCC4(longlong param_1)
   float fVar1;
   
   if (param_1 == -1) {
-    ptr_BONDdata->strafe_movement_direction =
-         ptr_BONDdata->strafe_movement_direction - global_timer_delta;
-    fVar1 = ptr_BONDdata->strafe_movement_direction;
+    pPlayer->strafe_movement_direction =
+         pPlayer->strafe_movement_direction - global_timer_delta;
+    fVar1 = pPlayer->strafe_movement_direction;
     if (fVar1 < -1.00000000) {
-      ptr_BONDdata->strafe_movement_direction = -1.00000000;
-      fVar1 = ptr_BONDdata->strafe_movement_direction;
+      pPlayer->strafe_movement_direction = -1.00000000;
+      fVar1 = pPlayer->strafe_movement_direction;
     }
   }
   else {
     if (param_1 == 1) {
-      ptr_BONDdata->strafe_movement_direction =
-           ptr_BONDdata->strafe_movement_direction + global_timer_delta;
-      fVar1 = ptr_BONDdata->strafe_movement_direction;
+      pPlayer->strafe_movement_direction =
+           pPlayer->strafe_movement_direction + global_timer_delta;
+      fVar1 = pPlayer->strafe_movement_direction;
       if (1.00000000 < fVar1) {
-        ptr_BONDdata->strafe_movement_direction = 1.00000000;
-        fVar1 = ptr_BONDdata->strafe_movement_direction;
+        pPlayer->strafe_movement_direction = 1.00000000;
+        fVar1 = pPlayer->strafe_movement_direction;
       }
     }
     else {
-      fVar1 = ptr_BONDdata->strafe_movement_direction;
+      fVar1 = pPlayer->strafe_movement_direction;
       if (0.00000000 < fVar1) {
-        ptr_BONDdata->strafe_movement_direction = fVar1 - global_timer_delta;
-        fVar1 = ptr_BONDdata->strafe_movement_direction;
+        pPlayer->strafe_movement_direction = fVar1 - global_timer_delta;
+        fVar1 = pPlayer->strafe_movement_direction;
         if (fVar1 < 0.00000000) {
-          ptr_BONDdata->strafe_movement_direction = 0.00000000;
-          fVar1 = ptr_BONDdata->strafe_movement_direction;
+          pPlayer->strafe_movement_direction = 0.00000000;
+          fVar1 = pPlayer->strafe_movement_direction;
         }
       }
       else {
-        ptr_BONDdata->strafe_movement_direction = fVar1 + global_timer_delta;
-        fVar1 = ptr_BONDdata->strafe_movement_direction;
+        pPlayer->strafe_movement_direction = fVar1 + global_timer_delta;
+        fVar1 = pPlayer->strafe_movement_direction;
         if (0.00000000 < fVar1) {
-          ptr_BONDdata->strafe_movement_direction = 0.00000000;
-          fVar1 = ptr_BONDdata->strafe_movement_direction;
+          pPlayer->strafe_movement_direction = 0.00000000;
+          fVar1 = pPlayer->strafe_movement_direction;
         }
       }
     }
   }
-  ptr_BONDdata->strafe_speed_multiplier = fVar1;
+  pPlayer->strafe_speed_multiplier = fVar1;
   return;
 }
 
@@ -95847,43 +95847,43 @@ void proc_7F07FE1C(longlong param_1)
   float fVar2;
   
   if (param_1 == 1) {
-    *(float *)&ptr_BONDdata->field_2A4C = (float)ptr_BONDdata->field_2A4C + global_timer_delta;
-    fVar1 = ptr_BONDdata->field_2A4C;
+    *(float *)&pPlayer->field_2A4C = (float)pPlayer->field_2A4C + global_timer_delta;
+    fVar1 = pPlayer->field_2A4C;
     if (1.00000000 < (float)fVar1) {
-      ptr_BONDdata->field_2A4C = 1.00000000;
-      fVar1 = ptr_BONDdata->field_2A4C;
+      pPlayer->field_2A4C = 1.00000000;
+      fVar1 = pPlayer->field_2A4C;
     }
   }
   else {
     if (param_1 == -1) {
-      *(float *)&ptr_BONDdata->field_2A4C = (float)ptr_BONDdata->field_2A4C - global_timer_delta;
-      fVar1 = ptr_BONDdata->field_2A4C;
+      *(float *)&pPlayer->field_2A4C = (float)pPlayer->field_2A4C - global_timer_delta;
+      fVar1 = pPlayer->field_2A4C;
       if ((float)fVar1 < -1.00000000) {
-        ptr_BONDdata->field_2A4C = -1.00000000;
-        fVar1 = ptr_BONDdata->field_2A4C;
+        pPlayer->field_2A4C = -1.00000000;
+        fVar1 = pPlayer->field_2A4C;
       }
     }
     else {
-      fVar2 = (float)ptr_BONDdata->field_2A4C;
+      fVar2 = (float)pPlayer->field_2A4C;
       if (0.00000000 < fVar2) {
-        *(float *)&ptr_BONDdata->field_2A4C = fVar2 - global_timer_delta;
-        fVar1 = ptr_BONDdata->field_2A4C;
+        *(float *)&pPlayer->field_2A4C = fVar2 - global_timer_delta;
+        fVar1 = pPlayer->field_2A4C;
         if ((float)fVar1 < 0.00000000) {
-          ptr_BONDdata->field_2A4C = 0.00000000;
-          fVar1 = ptr_BONDdata->field_2A4C;
+          pPlayer->field_2A4C = 0.00000000;
+          fVar1 = pPlayer->field_2A4C;
         }
       }
       else {
-        *(float *)&ptr_BONDdata->field_2A4C = fVar2 + global_timer_delta;
-        fVar1 = ptr_BONDdata->field_2A4C;
+        *(float *)&pPlayer->field_2A4C = fVar2 + global_timer_delta;
+        fVar1 = pPlayer->field_2A4C;
         if (0.00000000 < (float)fVar1) {
-          ptr_BONDdata->field_2A4C = 0.00000000;
-          fVar1 = ptr_BONDdata->field_2A4C;
+          pPlayer->field_2A4C = 0.00000000;
+          fVar1 = pPlayer->field_2A4C;
         }
       }
     }
   }
-  *(f32 *)&ptr_BONDdata->forward_speed_multiplier = fVar1;
+  *(f32 *)&pPlayer->forward_speed_multiplier = fVar1;
   return;
 }
 
@@ -95930,48 +95930,48 @@ void proc_7F080010(void)
   in_f0 = in_f0 / 60.00000000;
   fVar1 = (float)proc_7F07FF74();
   if (0.00000000 < in_f12) {
-    fVar2 = ptr_BONDdata->inclination_turning_direction;
+    fVar2 = pPlayer->inclination_turning_direction;
     if (0.00000000 < fVar2) {
-      ptr_BONDdata->inclination_turning_direction =
+      pPlayer->inclination_turning_direction =
            fVar2 - flt_8005509C * global_timer_delta * in_f0;
     }
     else {
-      ptr_BONDdata->inclination_turning_direction =
+      pPlayer->inclination_turning_direction =
            fVar2 - flt_800550A0 * global_timer_delta * in_f0;
     }
-    if (ptr_BONDdata->inclination_turning_direction < fVar1) {
-      ptr_BONDdata->inclination_turning_direction = fVar1;
+    if (pPlayer->inclination_turning_direction < fVar1) {
+      pPlayer->inclination_turning_direction = fVar1;
     }
   }
   else {
     if (in_f12 < 0.00000000) {
-      fVar2 = ptr_BONDdata->inclination_turning_direction;
+      fVar2 = pPlayer->inclination_turning_direction;
       if (fVar2 < 0.00000000) {
-        ptr_BONDdata->inclination_turning_direction =
+        pPlayer->inclination_turning_direction =
              fVar2 + flt_800550A4 * global_timer_delta * in_f0;
       }
       else {
-        ptr_BONDdata->inclination_turning_direction =
+        pPlayer->inclination_turning_direction =
              fVar2 + flt_800550A8 * global_timer_delta * in_f0;
       }
-      if (fVar1 < ptr_BONDdata->inclination_turning_direction) {
-        ptr_BONDdata->inclination_turning_direction = fVar1;
+      if (fVar1 < pPlayer->inclination_turning_direction) {
+        pPlayer->inclination_turning_direction = fVar1;
       }
     }
     else {
-      fVar2 = ptr_BONDdata->inclination_turning_direction;
+      fVar2 = pPlayer->inclination_turning_direction;
       if (fVar1 < fVar2) {
-        ptr_BONDdata->inclination_turning_direction =
+        pPlayer->inclination_turning_direction =
              fVar2 - flt_800550AC * global_timer_delta * in_f0;
-        if (ptr_BONDdata->inclination_turning_direction < fVar1) {
-          ptr_BONDdata->inclination_turning_direction = fVar1;
+        if (pPlayer->inclination_turning_direction < fVar1) {
+          pPlayer->inclination_turning_direction = fVar1;
         }
       }
       else {
-        ptr_BONDdata->inclination_turning_direction =
+        pPlayer->inclination_turning_direction =
              fVar2 + flt_800550B0 * global_timer_delta * in_f0;
-        if (fVar1 < ptr_BONDdata->inclination_turning_direction) {
-          ptr_BONDdata->inclination_turning_direction = fVar1;
+        if (fVar1 < pPlayer->inclination_turning_direction) {
+          pPlayer->inclination_turning_direction = fVar1;
         }
       }
     }
@@ -96022,42 +96022,42 @@ void proc_7F0802C4(void)
   in_f0 = in_f0 / 60.00000000;
   fVar1 = (float)proc_7F080228();
   if (0.00000000 < in_f12) {
-    fVar2 = ptr_BONDdata->azimuth_turning_direction;
+    fVar2 = pPlayer->azimuth_turning_direction;
     if (0.00000000 < fVar2) {
-      ptr_BONDdata->azimuth_turning_direction = fVar2 - flt_800550BC * global_timer_delta * in_f0;
+      pPlayer->azimuth_turning_direction = fVar2 - flt_800550BC * global_timer_delta * in_f0;
     }
     else {
-      ptr_BONDdata->azimuth_turning_direction = fVar2 - flt_800550C0 * global_timer_delta * in_f0;
+      pPlayer->azimuth_turning_direction = fVar2 - flt_800550C0 * global_timer_delta * in_f0;
     }
-    if (ptr_BONDdata->azimuth_turning_direction < fVar1) {
-      ptr_BONDdata->azimuth_turning_direction = fVar1;
+    if (pPlayer->azimuth_turning_direction < fVar1) {
+      pPlayer->azimuth_turning_direction = fVar1;
     }
   }
   else {
     if (in_f12 < 0.00000000) {
-      fVar2 = ptr_BONDdata->azimuth_turning_direction;
+      fVar2 = pPlayer->azimuth_turning_direction;
       if (fVar2 < 0.00000000) {
-        ptr_BONDdata->azimuth_turning_direction = fVar2 + flt_800550C4 * global_timer_delta * in_f0;
+        pPlayer->azimuth_turning_direction = fVar2 + flt_800550C4 * global_timer_delta * in_f0;
       }
       else {
-        ptr_BONDdata->azimuth_turning_direction = fVar2 + flt_800550C8 * global_timer_delta * in_f0;
+        pPlayer->azimuth_turning_direction = fVar2 + flt_800550C8 * global_timer_delta * in_f0;
       }
-      if (fVar1 < ptr_BONDdata->azimuth_turning_direction) {
-        ptr_BONDdata->azimuth_turning_direction = fVar1;
+      if (fVar1 < pPlayer->azimuth_turning_direction) {
+        pPlayer->azimuth_turning_direction = fVar1;
       }
     }
     else {
-      fVar2 = ptr_BONDdata->azimuth_turning_direction;
+      fVar2 = pPlayer->azimuth_turning_direction;
       if (fVar1 < fVar2) {
-        ptr_BONDdata->azimuth_turning_direction = fVar2 - flt_800550CC * global_timer_delta * in_f0;
-        if (ptr_BONDdata->azimuth_turning_direction < fVar1) {
-          ptr_BONDdata->azimuth_turning_direction = fVar1;
+        pPlayer->azimuth_turning_direction = fVar2 - flt_800550CC * global_timer_delta * in_f0;
+        if (pPlayer->azimuth_turning_direction < fVar1) {
+          pPlayer->azimuth_turning_direction = fVar1;
         }
       }
       else {
-        ptr_BONDdata->azimuth_turning_direction = fVar2 + flt_800550D0 * global_timer_delta * in_f0;
-        if (fVar1 < ptr_BONDdata->azimuth_turning_direction) {
-          ptr_BONDdata->azimuth_turning_direction = fVar1;
+        pPlayer->azimuth_turning_direction = fVar2 + flt_800550D0 * global_timer_delta * in_f0;
+        if (fVar1 < pPlayer->azimuth_turning_direction) {
+          pPlayer->azimuth_turning_direction = fVar1;
         }
       }
     }
@@ -96082,10 +96082,10 @@ undefined4 * proc_7F0804E0(undefined4 *param_1)
   uint uVar7;
   float fVar8;
   
-  fVar8 = ptr_BONDdata->tint_alpha;
-  iVar5 = *(int *)&ptr_BONDdata->field_3D0;
-  uVar6 = *(uint *)&ptr_BONDdata->field_3D4;
-  uVar7 = *(uint *)&ptr_BONDdata->field_3D8;
+  fVar8 = pPlayer->tint_alpha;
+  iVar5 = *(int *)&pPlayer->field_3D0;
+  uVar6 = *(uint *)&pPlayer->field_3D4;
+  uVar7 = *(uint *)&pPlayer->field_3D8;
   if ((camera_80036430 != 0) || (camera_80036434 != 0)) {
     fVar8 = 1.00000000;
     uVar7 = 0;
@@ -96147,10 +96147,10 @@ undefined4 * proc_7F0804E0(undefined4 *param_1)
 void proc_7F0807B0(undefined4 param_1,undefined4 param_2,undefined4 param_3,float param_4)
 
 {
-  *(undefined4 *)&ptr_BONDdata->field_3D0 = param_1;
-  *(undefined4 *)&ptr_BONDdata->field_3D4 = param_2;
-  *(undefined4 *)&ptr_BONDdata->field_3D8 = param_3;
-  ptr_BONDdata->tint_alpha = param_4;
+  *(undefined4 *)&pPlayer->field_3D0 = param_1;
+  *(undefined4 *)&pPlayer->field_3D4 = param_2;
+  *(undefined4 *)&pPlayer->field_3D8 = param_3;
+  pPlayer->tint_alpha = param_4;
   return;
 }
 
@@ -96163,16 +96163,16 @@ void proc_7F0807E0(undefined4 param_1,undefined8 param_2,int param_3,int param_4
 {
   float in_f12;
   
-  ptr_BONDdata->field_3E0 = 0.00000000;
-  ptr_BONDdata->timer_for_fade = in_f12;
-  ptr_BONDdata->field_3E8 = *(int *)&ptr_BONDdata->field_3D0;
-  ptr_BONDdata->field_3EC = param_2._4_4_;
-  ptr_BONDdata->field_3F0 = *(int *)&ptr_BONDdata->field_3D4;
-  ptr_BONDdata->field_3F4 = param_3;
-  ptr_BONDdata->field_3F8 = *(int *)&ptr_BONDdata->field_3D8;
-  ptr_BONDdata->field_3FC = param_4;
-  *(float *)&ptr_BONDdata->field_400 = ptr_BONDdata->tint_alpha;
-  ptr_BONDdata->field_404 = param_5;
+  pPlayer->field_3E0 = 0.00000000;
+  pPlayer->timer_for_fade = in_f12;
+  pPlayer->field_3E8 = *(int *)&pPlayer->field_3D0;
+  pPlayer->field_3EC = param_2._4_4_;
+  pPlayer->field_3F0 = *(int *)&pPlayer->field_3D4;
+  pPlayer->field_3F4 = param_3;
+  pPlayer->field_3F8 = *(int *)&pPlayer->field_3D8;
+  pPlayer->field_3FC = param_4;
+  *(float *)&pPlayer->field_400 = pPlayer->tint_alpha;
+  pPlayer->field_404 = param_5;
   return;
 }
 
@@ -96189,8 +96189,8 @@ void fade_to_over_seconds(f32 seconds,f32 fadeto)
   undefined in_stack_fffffff7;
   undefined in_stack_fffffffb;
   
-  proc_7F0807E0(in_a0_lo,(longlong)*(int *)&ptr_BONDdata->field_3D0,
-                *(undefined4 *)&ptr_BONDdata->field_3D4,*(undefined4 *)&ptr_BONDdata->field_3D8,
+  proc_7F0807E0(in_a0_lo,(longlong)*(int *)&pPlayer->field_3D0,
+                *(undefined4 *)&pPlayer->field_3D4,*(undefined4 *)&pPlayer->field_3D8,
                 fadeto,in_stack_fffffff7,in_stack_fffffffb,unaff_retaddr,in_stack_00000003,
                 in_stack_00000007,in_stack_00000008);
   return;
@@ -96201,7 +96201,7 @@ void fade_to_over_seconds(f32 seconds,f32 fadeto)
 ulonglong check_if_fade_to_black_complete(void)
 
 {
-  return (ulonglong)(ptr_BONDdata->timer_for_fade < 0.00000000);
+  return (ulonglong)(pPlayer->timer_for_fade < 0.00000000);
 }
 
 
@@ -96211,29 +96211,29 @@ void proc_7F0808BC(void)
 {
   float fVar1;
   
-  if (0.00000000 <= ptr_BONDdata->timer_for_fade) {
-    *(float *)&ptr_BONDdata->field_3E0 = (float)ptr_BONDdata->field_3E0 + global_timer_delta;
-    if ((float)ptr_BONDdata->field_3E0 < ptr_BONDdata->timer_for_fade) {
-      fVar1 = (float)ptr_BONDdata->field_3E0 / ptr_BONDdata->timer_for_fade;
-      ptr_BONDdata->tint_alpha =
-           (float)ptr_BONDdata->field_400 +
-           ((float)ptr_BONDdata->field_404 - (float)ptr_BONDdata->field_400) * fVar1;
-      *(int *)&ptr_BONDdata->field_3D0 =
-           ptr_BONDdata->field_3E8 +
-           (int)((float)(ptr_BONDdata->field_3EC - ptr_BONDdata->field_3E8) * fVar1);
-      *(int *)&ptr_BONDdata->field_3D4 =
-           ptr_BONDdata->field_3F0 +
-           (int)((float)(ptr_BONDdata->field_3F4 - ptr_BONDdata->field_3F0) * fVar1);
-      *(int *)&ptr_BONDdata->field_3D8 =
-           ptr_BONDdata->field_3F8 +
-           (int)((float)(ptr_BONDdata->field_3FC - ptr_BONDdata->field_3F8) * fVar1);
+  if (0.00000000 <= pPlayer->timer_for_fade) {
+    *(float *)&pPlayer->field_3E0 = (float)pPlayer->field_3E0 + global_timer_delta;
+    if ((float)pPlayer->field_3E0 < pPlayer->timer_for_fade) {
+      fVar1 = (float)pPlayer->field_3E0 / pPlayer->timer_for_fade;
+      pPlayer->tint_alpha =
+           (float)pPlayer->field_400 +
+           ((float)pPlayer->field_404 - (float)pPlayer->field_400) * fVar1;
+      *(int *)&pPlayer->field_3D0 =
+           pPlayer->field_3E8 +
+           (int)((float)(pPlayer->field_3EC - pPlayer->field_3E8) * fVar1);
+      *(int *)&pPlayer->field_3D4 =
+           pPlayer->field_3F0 +
+           (int)((float)(pPlayer->field_3F4 - pPlayer->field_3F0) * fVar1);
+      *(int *)&pPlayer->field_3D8 =
+           pPlayer->field_3F8 +
+           (int)((float)(pPlayer->field_3FC - pPlayer->field_3F8) * fVar1);
       return;
     }
-    *(f32 *)&ptr_BONDdata->tint_alpha = ptr_BONDdata->field_404;
-    *(int *)&ptr_BONDdata->field_3D0 = ptr_BONDdata->field_3EC;
-    *(int *)&ptr_BONDdata->field_3D4 = ptr_BONDdata->field_3F4;
-    *(int *)&ptr_BONDdata->field_3D8 = ptr_BONDdata->field_3FC;
-    ptr_BONDdata->timer_for_fade = -1.00000000;
+    *(f32 *)&pPlayer->tint_alpha = pPlayer->field_404;
+    *(int *)&pPlayer->field_3D0 = pPlayer->field_3EC;
+    *(int *)&pPlayer->field_3D4 = pPlayer->field_3F4;
+    *(int *)&pPlayer->field_3D8 = pPlayer->field_3FC;
+    pPlayer->timer_for_fade = -1.00000000;
   }
   return;
 }
@@ -96246,16 +96246,16 @@ void set_curplayer_fade(f32 timer,f32 finalamount)
   int iVar1;
   float fVar2;
   
-  iVar1 = *(int *)(ptr_BONDdata->position_data_pointer + 4);
+  iVar1 = *(int *)(pPlayer->position_data_pointer + 4);
   if (iVar1 != 0) {
-    ptr_BONDdata->viewport_alpha = 0.00000000;
-    ptr_BONDdata->rate_of_change = timer;
+    pPlayer->viewport_alpha = 0.00000000;
+    pPlayer->rate_of_change = timer;
     fVar2 = (float)(uint)*(byte *)(iVar1 + 0xc);
     if (false) {
       fVar2 = fVar2 + 4294967296.00000000;
     }
-    *(float *)&ptr_BONDdata->time_for_change = fVar2 / 255.00000000;
-    ptr_BONDdata->final_alpha_level = finalamount;
+    *(float *)&pPlayer->time_for_change = fVar2 / 255.00000000;
+    pPlayer->final_alpha_level = finalamount;
   }
   return;
 }
@@ -96268,18 +96268,18 @@ void proc_7F080A80(void)
   int iVar1;
   float fVar2;
   
-  if (0.00000000 <= (float)ptr_BONDdata->rate_of_change) {
-    iVar1 = *(int *)(ptr_BONDdata->position_data_pointer + 4);
-    *(float *)&ptr_BONDdata->viewport_alpha =
-         (float)ptr_BONDdata->viewport_alpha + global_timer_delta;
-    if ((float)ptr_BONDdata->viewport_alpha < (float)ptr_BONDdata->rate_of_change) {
-      fVar2 = (float)ptr_BONDdata->time_for_change +
-              (((float)ptr_BONDdata->final_alpha_level - (float)ptr_BONDdata->time_for_change) *
-              (float)ptr_BONDdata->viewport_alpha) / (float)ptr_BONDdata->rate_of_change;
+  if (0.00000000 <= (float)pPlayer->rate_of_change) {
+    iVar1 = *(int *)(pPlayer->position_data_pointer + 4);
+    *(float *)&pPlayer->viewport_alpha =
+         (float)pPlayer->viewport_alpha + global_timer_delta;
+    if ((float)pPlayer->viewport_alpha < (float)pPlayer->rate_of_change) {
+      fVar2 = (float)pPlayer->time_for_change +
+              (((float)pPlayer->final_alpha_level - (float)pPlayer->time_for_change) *
+              (float)pPlayer->viewport_alpha) / (float)pPlayer->rate_of_change;
     }
     else {
-      fVar2 = (float)ptr_BONDdata->final_alpha_level;
-      ptr_BONDdata->rate_of_change = -1.00000000;
+      fVar2 = (float)pPlayer->final_alpha_level;
+      pPlayer->rate_of_change = -1.00000000;
     }
     if (iVar1 != 0) {
       *(undefined *)(iVar1 + 0xc) = (char)(int)(fVar2 * 255.00000000);
@@ -96313,7 +96313,7 @@ void proc_7F080B34(float param_1,float param_2,undefined8 param_3,undefined8 par
   float fStack4;
   
   fStack4 = 0.00000000;
-  if (ptr_BONDdata->player_button_control == 0) {
+  if (pPlayer->player_button_control == 0) {
     proc_7F08E8BC(param_1);
     fStackX8 = param_5;
     if (param_1 != 0.00000000) {
@@ -96322,7 +96322,7 @@ void proc_7F080B34(float param_1,float param_2,undefined8 param_3,undefined8 par
     }
   }
   else {
-    if (ptr_BONDdata->field_420 != 0) {
+    if (pPlayer->field_420 != 0) {
       uVar1 = get_random_value();
       uVar2 = get_random_value();
       if (total_player_death_anim == 0) {
@@ -96330,27 +96330,27 @@ void proc_7F080B34(float param_1,float param_2,undefined8 param_3,undefined8 par
       }
       proc_7F08EA48(player_death_ani_list[uVar1 % total_player_death_anim] + ptr_animation_table,
                     (byte)uVar2 & 1,extraout_f12,extraout_f14);
-      ptr_BONDdata->field_420 = 0;
+      pPlayer->field_420 = 0;
     }
     proc_7F08EAB8(0.50000000);
     fStackX8 = 0.00000000;
   }
   proc_7F08E240(fStack4,fStackX8);
-  proc_7F058570((360.00000000 - (float)ptr_BONDdata->inclination_angle2) *
+  proc_7F058570((360.00000000 - (float)pPlayer->inclination_angle2) *
                 firstperson_weapon_movement_restrictor,extraout_a0,afStack68);
   proc_7F059908(afStack132,extraout_f12_00,extraout_f14_00,0.00000000,0.00000000,0.00000000,
-                -(float)ptr_BONDdata->field_508,-(float)ptr_BONDdata->field_50C,
-                -(float)ptr_BONDdata->field_510,(float)ptr_BONDdata->field_514);
+                -(float)pPlayer->field_508,-(float)pPlayer->field_50C,
+                -(float)pPlayer->field_510,(float)pPlayer->field_514);
   proc_7F058068(afStack132,afStack68);
-  proc_7F0585FC((360.00000000 - ptr_BONDdata->azimuth_angle) * flt_800550D8,extraout_a0_00,
+  proc_7F0585FC((360.00000000 - pPlayer->azimuth_angle) * flt_800550D8,extraout_a0_00,
                 afStack132);
   proc_7F058068(afStack132,afStack68);
-  ptr_BONDdata->field_4C0 = iStack36;
-  ptr_BONDdata->field_4C4 = iStack32;
-  ptr_BONDdata->field_4C8 = iStack28;
-  ptr_BONDdata->field_4CC = iStack52;
-  ptr_BONDdata->field_4D0 = iStack48;
-  ptr_BONDdata->field_4D4 = iStack44;
+  pPlayer->field_4C0 = iStack36;
+  pPlayer->field_4C4 = iStack32;
+  pPlayer->field_4C8 = iStack28;
+  pPlayer->field_4CC = iStack52;
+  pPlayer->field_4D0 = iStack48;
+  pPlayer->field_4D4 = iStack44;
   return;
 }
 
@@ -96362,7 +96362,7 @@ float proc_7F080D60(undefined8 param_1,undefined4 param_2,undefined4 param_3)
   float fVar1;
   
   if (ptr_playerstank == 0) {
-    if (ptr_BONDdata->field_2A6C == 0) {
+    if (pPlayer->field_2A6C == 0) {
       fVar1 = (float)proc_7F0B2970();
     }
     else {
@@ -96404,92 +96404,92 @@ void proc_7F080DF8(void)
   int local_4;
   
   if (in_tank_flag == TRUE) {
-    fVar4 = proc_7F080D60((longlong)ptr_BONDdata->ptr_tile_printmanpos,ptr_BONDdata->positionx,
-                          ptr_BONDdata->positionz);
+    fVar4 = proc_7F080D60((longlong)pPlayer->ptr_tile_printmanpos,pPlayer->positionx,
+                          pPlayer->positionz);
     fVar5 = flt_800550DC;
-    *(float *)&ptr_BONDdata->clipping_height = fVar4;
+    *(float *)&pPlayer->clipping_height = fVar4;
     iVar3 = 0;
-    *(float *)&ptr_BONDdata->field_6C = (float)ptr_BONDdata->field_70 / fVar5;
+    *(float *)&pPlayer->field_6C = (float)pPlayer->field_70 / fVar5;
     fVar4 = flt_800550E0;
     if (0 < clock_timer) {
       do {
         iVar3 += 1;
-        *(float *)&ptr_BONDdata->field_6C =
-             (float)ptr_BONDdata->field_6C * fVar4 + (float)ptr_BONDdata->clipping_height;
+        *(float *)&pPlayer->field_6C =
+             (float)pPlayer->field_6C * fVar4 + (float)pPlayer->clipping_height;
       } while (iVar3 < clock_timer);
     }
     local_4 = 0;
-    *(float *)&ptr_BONDdata->field_70 = (float)ptr_BONDdata->field_6C * fVar5;
+    *(float *)&pPlayer->field_70 = (float)pPlayer->field_6C * fVar5;
     goto LAB_7f08139c;
   }
   if (in_a0 == 0) {
-    local_10 = ptr_BONDdata->ptr_tile_printmanpos;
-    proc_7F08A274(ptr_BONDdata->position_data_pointer,&local_14,&fStack24,&uStack28);
-    local_c = proc_7F080D60((longlong)ptr_BONDdata->ptr_tile_printmanpos,ptr_BONDdata->positionx,
-                            ptr_BONDdata->positionz);
-    proc_7F089780(ptr_BONDdata);
-    proc_7F0B26B8(&local_10,extraout_f12,extraout_f14,(float)ptr_BONDdata->positionx,
-                  (float)ptr_BONDdata->positionz);
+    local_10 = pPlayer->ptr_tile_printmanpos;
+    proc_7F08A274(pPlayer->position_data_pointer,&local_14,&fStack24,&uStack28);
+    local_c = proc_7F080D60((longlong)pPlayer->ptr_tile_printmanpos,pPlayer->positionx,
+                            pPlayer->positionz);
+    proc_7F089780(pPlayer);
+    proc_7F0B26B8(&local_10,extraout_f12,extraout_f14,(float)pPlayer->positionx,
+                  (float)pPlayer->positionz);
     fVar5 = local_c;
-    if ((-1 < in_v0) && (fVar5 = (float)ptr_BONDdata->clipping_height, fVar5 <= local_c)) {
+    if ((-1 < in_v0) && (fVar5 = (float)pPlayer->clipping_height, fVar5 <= local_c)) {
       fVar5 = local_c;
     }
-    *(float *)&ptr_BONDdata->clipping_height = fVar5;
+    *(float *)&pPlayer->clipping_height = fVar5;
 LAB_7f080fdc:
-    iVar3 = ptr_BONDdata->field_2A6C;
+    iVar3 = pPlayer->field_2A6C;
   }
   else {
-    *(float *)&ptr_BONDdata->clipping_height = (float)ptr_BONDdata->clipping_height + in_a1_lo;
-    fVar5 = proc_7F080D60((longlong)ptr_BONDdata->ptr_tile_printmanpos,ptr_BONDdata->positionx,
-                          ptr_BONDdata->positionz);
-    if ((float)ptr_BONDdata->clipping_height < fVar5) {
-      *(float *)&ptr_BONDdata->clipping_height = fVar5;
+    *(float *)&pPlayer->clipping_height = (float)pPlayer->clipping_height + in_a1_lo;
+    fVar5 = proc_7F080D60((longlong)pPlayer->ptr_tile_printmanpos,pPlayer->positionx,
+                          pPlayer->positionz);
+    if ((float)pPlayer->clipping_height < fVar5) {
+      *(float *)&pPlayer->clipping_height = fVar5;
       goto LAB_7f080fdc;
     }
-    iVar3 = ptr_BONDdata->field_2A6C;
+    iVar3 = pPlayer->field_2A6C;
   }
   if (iVar3 == 0) {
-    fVar5 = (float)ptr_BONDdata->field_7C;
+    fVar5 = (float)pPlayer->field_7C;
   }
   else {
-    if ((float)ptr_BONDdata->field_70 < (float)ptr_BONDdata->clipping_height) {
-      ptr_BONDdata->field_2A6C = 0;
-      ptr_BONDdata->ptr_tile_printmanpos = ptr_BONDdata->field_2A70;
-      ptr_BONDdata->field_2A70 = 0;
-      fVar5 = (float)ptr_BONDdata->field_7C;
+    if ((float)pPlayer->field_70 < (float)pPlayer->clipping_height) {
+      pPlayer->field_2A6C = 0;
+      pPlayer->ptr_tile_printmanpos = pPlayer->field_2A70;
+      pPlayer->field_2A70 = 0;
+      fVar5 = (float)pPlayer->field_7C;
     }
     else {
-      fVar5 = (float)ptr_BONDdata->field_7C;
+      fVar5 = (float)pPlayer->field_7C;
     }
   }
   fVar4 = flt_800550E4;
-  fVar7 = (float)ptr_BONDdata->field_70;
-  if ((0.00000000 <= fVar5) || (fVar5 = (float)ptr_BONDdata->clipping_height, fVar7 < fVar5)) {
+  fVar7 = (float)pPlayer->field_70;
+  if ((0.00000000 <= fVar5) || (fVar5 = (float)pPlayer->clipping_height, fVar7 < fVar5)) {
     iVar3 = 0;
-    *(float *)&ptr_BONDdata->field_6C = fVar7 / flt_800550E4;
+    *(float *)&pPlayer->field_6C = fVar7 / flt_800550E4;
     fVar5 = flt_800550E8;
     if (0 < clock_timer) {
       do {
         iVar3 += 1;
-        *(float *)&ptr_BONDdata->field_6C =
-             (float)ptr_BONDdata->field_6C * fVar5 + (float)ptr_BONDdata->clipping_height;
+        *(float *)&pPlayer->field_6C =
+             (float)pPlayer->field_6C * fVar5 + (float)pPlayer->clipping_height;
       } while (iVar3 < clock_timer);
     }
-    fVar7 = (float)ptr_BONDdata->field_70;
-    if (fVar7 < (float)ptr_BONDdata->clipping_height) {
-      *(float *)&ptr_BONDdata->field_70 = (float)ptr_BONDdata->field_6C * fVar4;
-      fVar7 = (float)ptr_BONDdata->field_70;
-      fVar5 = (float)ptr_BONDdata->clipping_height;
+    fVar7 = (float)pPlayer->field_70;
+    if (fVar7 < (float)pPlayer->clipping_height) {
+      *(float *)&pPlayer->field_70 = (float)pPlayer->field_6C * fVar4;
+      fVar7 = (float)pPlayer->field_70;
+      fVar5 = (float)pPlayer->clipping_height;
       goto LAB_7f0810d8;
     }
-    bVar1 = (float)ptr_BONDdata->clipping_height < fVar7;
+    bVar1 = (float)pPlayer->clipping_height < fVar7;
   }
   else {
 LAB_7f0810d8:
     bVar1 = fVar5 < fVar7;
   }
   local_4 = 0;
-  fVar5 = (float)ptr_BONDdata->field_7C;
+  fVar5 = (float)pPlayer->field_7C;
   if (bVar1) {
     local_4 = 0;
     BVar2 = get_debug_fast_bond_flag();
@@ -96499,93 +96499,93 @@ LAB_7f0810d8:
     else {
       local_30 = flt_800550EC;
     }
-    fVar4 = (float)ptr_BONDdata->clipping_height;
+    fVar4 = (float)pPlayer->clipping_height;
     fVar6 = fVar5 - global_timer_delta * local_30;
     fVar7 = fVar7 + global_timer_delta * (fVar5 + fVar6) * 0.50000000;
     if (fVar7 < fVar4) {
-      fVar5 = (float)ptr_BONDdata->field_70 - fVar4;
-      fVar6 = sqrtf((float)ptr_BONDdata->field_7C * (float)ptr_BONDdata->field_7C +
+      fVar5 = (float)pPlayer->field_70 - fVar4;
+      fVar6 = sqrtf((float)pPlayer->field_7C * (float)pPlayer->field_7C +
                     (((fVar5 + fVar5) * player_view_gravity_modifier) / 60.00000000) * 60.00000000);
       fVar6 = -fVar6;
       fVar7 = fVar4;
-      if (ptr_BONDdata->field_2A6C != 0) {
-        ptr_BONDdata->field_2A6C = 0;
-        ptr_BONDdata->ptr_tile_printmanpos = ptr_BONDdata->field_2A70;
-        ptr_BONDdata->field_2A70 = 0;
+      if (pPlayer->field_2A6C != 0) {
+        pPlayer->field_2A6C = 0;
+        pPlayer->ptr_tile_printmanpos = pPlayer->field_2A70;
+        pPlayer->field_2A70 = 0;
         fVar7 = fVar4;
       }
     }
-    *(float *)&ptr_BONDdata->field_70 = fVar7;
-    *(float *)&ptr_BONDdata->field_7C = fVar6;
-    fVar5 = (float)ptr_BONDdata->field_7C;
+    *(float *)&pPlayer->field_70 = fVar7;
+    *(float *)&pPlayer->field_7C = fVar6;
+    fVar5 = (float)pPlayer->field_7C;
   }
   if (fVar5 < 0.00000000) {
-    if ((float)ptr_BONDdata->field_70 <= (float)ptr_BONDdata->clipping_height) {
+    if ((float)pPlayer->field_70 <= (float)pPlayer->clipping_height) {
       if (fVar5 < flt_800550F8) {
-        ptr_BONDdata->field_8C = 0xf;
-        ptr_BONDdata->field_90 = -90.00000000;
+        pPlayer->field_8C = 0xf;
+        pPlayer->field_90 = -90.00000000;
 LAB_7f08130c:
-        ptr_BONDdata->field_7C = 0.00000000;
+        pPlayer->field_7C = 0.00000000;
       }
       else {
         if (fVar5 < -5.00000000) {
-          ptr_BONDdata->field_8C = 0xf;
-          *(float *)&ptr_BONDdata->field_90 =
-               ((-5.00000000 - (float)ptr_BONDdata->field_7C) * -90.00000000) / flt_800550FC;
+          pPlayer->field_8C = 0xf;
+          *(float *)&pPlayer->field_90 =
+               ((-5.00000000 - (float)pPlayer->field_7C) * -90.00000000) / flt_800550FC;
           goto LAB_7f08130c;
         }
-        ptr_BONDdata->field_7C = 0.00000000;
+        pPlayer->field_7C = 0.00000000;
       }
-      iVar3 = ptr_BONDdata->field_2A6C;
+      iVar3 = pPlayer->field_2A6C;
     }
     else {
-      iVar3 = ptr_BONDdata->field_2A6C;
+      iVar3 = pPlayer->field_2A6C;
     }
   }
   else {
-    iVar3 = ptr_BONDdata->field_2A6C;
+    iVar3 = pPlayer->field_2A6C;
   }
   if (iVar3 != 0) {
-    fVar5 = proc_7F089780(ptr_BONDdata);
+    fVar5 = proc_7F089780(pPlayer);
     fVar4 = (float)proc_7F0B2970();
-    if ((float)ptr_BONDdata->field_70 + fVar5 < fVar4) {
-      ptr_BONDdata->field_2A6C = 0;
-      ptr_BONDdata->ptr_tile_printmanpos = ptr_BONDdata->field_2A70;
-      ptr_BONDdata->field_2A70 = 0;
+    if ((float)pPlayer->field_70 + fVar5 < fVar4) {
+      pPlayer->field_2A6C = 0;
+      pPlayer->ptr_tile_printmanpos = pPlayer->field_2A70;
+      pPlayer->field_2A70 = 0;
     }
   }
 LAB_7f08139c:
   fVar5 = flt_80055100;
   if (0 < clock_timer) {
     do {
-      if (ptr_BONDdata->field_8C < 1) {
-        fVar4 = (float)ptr_BONDdata->field_90;
+      if (pPlayer->field_8C < 1) {
+        fVar4 = (float)pPlayer->field_90;
         if (fVar4 < 0.00000000) {
-          *(float *)&ptr_BONDdata->field_90 = fVar4 - -4.50000000;
-          fVar4 = (float)ptr_BONDdata->field_90;
+          *(float *)&pPlayer->field_90 = fVar4 - -4.50000000;
+          fVar4 = (float)pPlayer->field_90;
           if (0.00000000 <= fVar4) {
-            ptr_BONDdata->field_90 = 0.00000000;
-            fVar4 = (float)ptr_BONDdata->field_90;
-            fVar7 = (float)ptr_BONDdata->field_84;
+            pPlayer->field_90 = 0.00000000;
+            fVar4 = (float)pPlayer->field_90;
+            fVar7 = (float)pPlayer->field_84;
           }
           else {
-            fVar7 = (float)ptr_BONDdata->field_84;
+            fVar7 = (float)pPlayer->field_84;
           }
         }
         else {
-          fVar7 = (float)ptr_BONDdata->field_84;
+          fVar7 = (float)pPlayer->field_84;
         }
-        *(float *)&ptr_BONDdata->field_84 = fVar7 * fVar5 + fVar4;
+        *(float *)&pPlayer->field_84 = fVar7 * fVar5 + fVar4;
       }
       else {
-        *(float *)&ptr_BONDdata->field_84 =
-             (float)ptr_BONDdata->field_84 * fVar5 + (float)ptr_BONDdata->field_90;
-        ptr_BONDdata->field_8C = ptr_BONDdata->field_8C + -1;
+        *(float *)&pPlayer->field_84 =
+             (float)pPlayer->field_84 * fVar5 + (float)pPlayer->field_90;
+        pPlayer->field_8C = pPlayer->field_8C + -1;
       }
       local_4 += 1;
     } while (local_4 < clock_timer);
   }
-  *(float *)&ptr_BONDdata->field_88 = (float)ptr_BONDdata->field_84 * flt_80055104;
+  *(float *)&pPlayer->field_88 = (float)pPlayer->field_84 * flt_80055104;
   return;
 }
 
@@ -96604,75 +96604,75 @@ void proc_7F081478(void)
   int local_c [3];
   
   fVar4 = 30.00000000;
-  *(float *)&ptr_BONDdata->field_29BC =
-       (float)ptr_BONDdata->field_500 * cur_player_stat_ptr->player_perspective_height + 7.00000000;
-  fVar3 = (float)ptr_BONDdata->field_29BC +
-          ((float)ptr_BONDdata->field_88 + (float)ptr_BONDdata->ducking_height_offset) *
+  *(float *)&pPlayer->field_29BC =
+       (float)pPlayer->field_500 * cur_player_stat_ptr->player_perspective_height + 7.00000000;
+  fVar3 = (float)pPlayer->field_29BC +
+          ((float)pPlayer->field_88 + (float)pPlayer->ducking_height_offset) *
           cur_player_stat_ptr->player_perspective_height;
   if (fVar3 < 30.00000000) {
-    fVar5 = (float)ptr_BONDdata->field_70;
+    fVar5 = (float)pPlayer->field_70;
   }
   else {
-    fVar5 = (float)ptr_BONDdata->field_70;
+    fVar5 = (float)pPlayer->field_70;
     fVar4 = fVar3;
   }
-  *(float *)&ptr_BONDdata->positiony = fVar5 + fVar4;
+  *(float *)&pPlayer->positiony = fVar5 + fVar4;
   if ((((cameramode == UNK5_CAM) || (cameramode == UNK6_CAM)) || (cameramode == POSEND_CAM)) &&
-     (ptr_BONDdata->ptr_char_objectinstance != 0)) {
-    iVar2 = ptr_BONDdata->player_button_control;
+     (pPlayer->ptr_char_objectinstance != 0)) {
+    iVar2 = pPlayer->player_button_control;
   }
   else {
-    *(f32 *)&ptr_BONDdata->field_4B4 = ptr_BONDdata->positionx;
-    ptr_BONDdata->field_4B8 = ptr_BONDdata->positiony;
-    ptr_BONDdata->field_4BC = ptr_BONDdata->positionz;
-    iVar2 = ptr_BONDdata->player_button_control;
+    *(f32 *)&pPlayer->field_4B4 = pPlayer->positionx;
+    pPlayer->field_4B8 = pPlayer->positiony;
+    pPlayer->field_4BC = pPlayer->positionz;
+    iVar2 = pPlayer->player_button_control;
   }
-  if (((iVar2 != 0) && (0.00000000 < (float)ptr_BONDdata->field_29C0)) &&
-     (*(float *)&ptr_BONDdata->field_29C0 = (float)ptr_BONDdata->field_29C0 - 0.25000000,
-     (float)ptr_BONDdata->field_29C0 < 0.00000000)) {
-    ptr_BONDdata->field_29C0 = 0.00000000;
+  if (((iVar2 != 0) && (0.00000000 < (float)pPlayer->field_29C0)) &&
+     (*(float *)&pPlayer->field_29C0 = (float)pPlayer->field_29C0 - 0.25000000,
+     (float)pPlayer->field_29C0 < 0.00000000)) {
+    pPlayer->field_29C0 = 0.00000000;
   }
-  if (ptr_BONDdata->inclination_angle1 < 0.00000000) {
-    *(float *)&ptr_BONDdata->field_4B8 =
-         (float)ptr_BONDdata->field_4B8 +
-         -(1.00000000 - (float)ptr_BONDdata->inclination_cosine) * (float)ptr_BONDdata->field_29C0;
-    local_c[0] = ptr_BONDdata->ptr_tile_printmanpos;
+  if (pPlayer->inclination_angle1 < 0.00000000) {
+    *(float *)&pPlayer->field_4B8 =
+         (float)pPlayer->field_4B8 +
+         -(1.00000000 - (float)pPlayer->inclination_cosine) * (float)pPlayer->field_29C0;
+    local_c[0] = pPlayer->ptr_tile_printmanpos;
   }
   else {
-    local_c[0] = ptr_BONDdata->ptr_tile_printmanpos;
+    local_c[0] = pPlayer->ptr_tile_printmanpos;
   }
   uVar1 = do_stanlinelog;
   do_stanlinelog = 0;
-  proc_7F0B0BE4(local_c,in_f12,in_f14,(float)ptr_BONDdata->positionx,(float)ptr_BONDdata->positionz)
+  proc_7F0B0BE4(local_c,in_f12,in_f14,(float)pPlayer->positionx,(float)pPlayer->positionz)
   ;
   do_stanlinelog = uVar1;
-  ptr_BONDdata->room_tile_ptr = local_c[0];
-  ptr_BONDdata->field_4A4 = ptr_BONDdata->field_4B4;
-  ptr_BONDdata->field_4AC = ptr_BONDdata->field_4BC;
-  fVar4 = proc_7F080D60((longlong)ptr_BONDdata->room_tile_ptr,ptr_BONDdata->field_4B4,
-                        ptr_BONDdata->field_4BC);
-  *(float *)&ptr_BONDdata->field_4A8 = fVar4;
+  pPlayer->room_tile_ptr = local_c[0];
+  pPlayer->field_4A4 = pPlayer->field_4B4;
+  pPlayer->field_4AC = pPlayer->field_4BC;
+  fVar4 = proc_7F080D60((longlong)pPlayer->room_tile_ptr,pPlayer->field_4B4,
+                        pPlayer->field_4BC);
+  *(float *)&pPlayer->field_4A8 = fVar4;
   iVar2 = 0;
-  *(int *)(ptr_BONDdata->position_data_pointer + 0x14) = ptr_BONDdata->ptr_tile_printmanpos;
-  *(f32 *)(ptr_BONDdata->position_data_pointer + 8) = ptr_BONDdata->positionx;
-  *(int *)(ptr_BONDdata->position_data_pointer + 0xc) = ptr_BONDdata->positiony;
-  *(int *)(ptr_BONDdata->position_data_pointer + 0x10) = ptr_BONDdata->positionz;
+  *(int *)(pPlayer->position_data_pointer + 0x14) = pPlayer->ptr_tile_printmanpos;
+  *(f32 *)(pPlayer->position_data_pointer + 8) = pPlayer->positionx;
+  *(int *)(pPlayer->position_data_pointer + 0xc) = pPlayer->positiony;
+  *(int *)(pPlayer->position_data_pointer + 0x10) = pPlayer->positionz;
   fVar4 = flt_80055108;
   if (0 < clock_timer) {
     do {
       iVar2 += 1;
-      *(float *)&ptr_BONDdata->field_3B8 =
-           (float)ptr_BONDdata->field_4B4 + fVar4 * (float)ptr_BONDdata->field_3B8;
-      *(float *)&ptr_BONDdata->field_3BC =
-           (float)ptr_BONDdata->field_4B8 + fVar4 * (float)ptr_BONDdata->field_3BC;
-      *(float *)&ptr_BONDdata->field_3C0 =
-           (float)ptr_BONDdata->field_4BC + fVar4 * (float)ptr_BONDdata->field_3C0;
+      *(float *)&pPlayer->field_3B8 =
+           (float)pPlayer->field_4B4 + fVar4 * (float)pPlayer->field_3B8;
+      *(float *)&pPlayer->field_3BC =
+           (float)pPlayer->field_4B8 + fVar4 * (float)pPlayer->field_3BC;
+      *(float *)&pPlayer->field_3C0 =
+           (float)pPlayer->field_4BC + fVar4 * (float)pPlayer->field_3C0;
     } while (iVar2 < clock_timer);
   }
   fVar4 = flt_8005510C;
-  *(float *)&ptr_BONDdata->field_3C4 = (float)ptr_BONDdata->field_3B8 * flt_8005510C;
-  *(float *)&ptr_BONDdata->field_3C8 = (float)ptr_BONDdata->field_3BC * fVar4;
-  *(float *)&ptr_BONDdata->field_3CC = (float)ptr_BONDdata->field_3C0 * fVar4;
+  *(float *)&pPlayer->field_3C4 = (float)pPlayer->field_3B8 * flt_8005510C;
+  *(float *)&pPlayer->field_3C8 = (float)pPlayer->field_3BC * fVar4;
+  *(float *)&pPlayer->field_3CC = (float)pPlayer->field_3C0 * fVar4;
   return;
 }
 
@@ -96683,40 +96683,40 @@ void proc_7F081790(void)
 {
   float fVar1;
   
-  fVar1 = ptr_BONDdata->inclination_angle1;
+  fVar1 = pPlayer->inclination_angle1;
   while (fVar1 < -180.00000000) {
-    ptr_BONDdata->inclination_angle1 = fVar1 + 360.00000000;
-    fVar1 = ptr_BONDdata->inclination_angle1;
+    pPlayer->inclination_angle1 = fVar1 + 360.00000000;
+    fVar1 = pPlayer->inclination_angle1;
   }
   while (180.00000000 <= fVar1) {
-    ptr_BONDdata->inclination_angle1 = fVar1 - 360.00000000;
-    fVar1 = ptr_BONDdata->inclination_angle1;
+    pPlayer->inclination_angle1 = fVar1 - 360.00000000;
+    fVar1 = pPlayer->inclination_angle1;
   }
   if (90.00000000 < fVar1) {
-    ptr_BONDdata->inclination_angle1 = 90.00000000;
+    pPlayer->inclination_angle1 = 90.00000000;
   }
   else {
     if (fVar1 < -90.00000000) {
-      ptr_BONDdata->inclination_angle1 = -90.00000000;
+      pPlayer->inclination_angle1 = -90.00000000;
     }
   }
-  fVar1 = cosf(ptr_BONDdata->azimuth_angle * flt_80055110);
-  *(float *)&ptr_BONDdata->azimuth_cosine = fVar1;
-  fVar1 = sinf(ptr_BONDdata->azimuth_angle * flt_80055114);
-  *(float *)&ptr_BONDdata->azimuth_sine = fVar1;
-  *(float *)&ptr_BONDdata->inclination_angle2 = ptr_BONDdata->inclination_angle1;
-  fVar1 = (float)ptr_BONDdata->inclination_angle2;
+  fVar1 = cosf(pPlayer->azimuth_angle * flt_80055110);
+  *(float *)&pPlayer->azimuth_cosine = fVar1;
+  fVar1 = sinf(pPlayer->azimuth_angle * flt_80055114);
+  *(float *)&pPlayer->azimuth_sine = fVar1;
+  *(float *)&pPlayer->inclination_angle2 = pPlayer->inclination_angle1;
+  fVar1 = (float)pPlayer->inclination_angle2;
   if (fVar1 < 0.00000000) {
-    *(float *)&ptr_BONDdata->inclination_angle2 = fVar1 + 360.00000000;
-    fVar1 = (float)ptr_BONDdata->inclination_angle2;
+    *(float *)&pPlayer->inclination_angle2 = fVar1 + 360.00000000;
+    fVar1 = (float)pPlayer->inclination_angle2;
   }
   fVar1 = cosf(fVar1 * flt_80055118);
-  *(float *)&ptr_BONDdata->inclination_cosine = fVar1;
-  fVar1 = sinf((float)ptr_BONDdata->inclination_angle2 * flt_8005511C);
-  *(float *)&ptr_BONDdata->inclination_sine = fVar1;
-  *(float *)&ptr_BONDdata->field_498 = -(float)ptr_BONDdata->azimuth_sine;
-  ptr_BONDdata->field_49C = 0;
-  *(f32 *)&ptr_BONDdata->field_4A0 = ptr_BONDdata->azimuth_cosine;
+  *(float *)&pPlayer->inclination_cosine = fVar1;
+  fVar1 = sinf((float)pPlayer->inclination_angle2 * flt_8005511C);
+  *(float *)&pPlayer->inclination_sine = fVar1;
+  *(float *)&pPlayer->field_498 = -(float)pPlayer->azimuth_sine;
+  pPlayer->field_49C = 0;
+  *(f32 *)&pPlayer->field_4A0 = pPlayer->azimuth_cosine;
   return;
 }
 
@@ -96890,16 +96890,16 @@ void controller_gameplay_interaction(void)
   iStack144 = (int)in_a1_lo;
   iStack152 = iStack160;
   iStack148 = iStack156;
-  if (((ptr_BONDdata->player_button_control == 0) &&
+  if (((pPlayer->player_button_control == 0) &&
       (iStack152 = iStack160, iStack148 = iStack156, camera_80036424 < 1)) &&
-     ((((ptr_BONDdata->pause_animation_state != 5 && ((in_a2_lo & ~in_a3_lo & 0x1000) != 0)) ||
-       ((iStack152 = iStack160, iStack148 = iStack156, ptr_BONDdata->pause_animation_state == 5 &&
-        (iStack152 = iStack160, iStack148 = iStack156, ptr_BONDdata->open_close_solo_watch_menu != 0
+     ((((pPlayer->pause_animation_state != 5 && ((in_a2_lo & ~in_a3_lo & 0x1000) != 0)) ||
+       ((iStack152 = iStack160, iStack148 = iStack156, pPlayer->pause_animation_state == 5 &&
+        (iStack152 = iStack160, iStack148 = iStack156, pPlayer->open_close_solo_watch_menu != 0
         )))) && (iStack152 = iStack160, iStack148 = iStack156, uVar11 = get_num_players(),
                 uVar11 == 1)))) {
     trigger_solo_watch_menu(0);
   }
-  if (((ptr_BONDdata->pause_animation_state == 0) && (ptr_BONDdata->player_button_control == 0)) &&
+  if (((pPlayer->pause_animation_state == 0) && (pPlayer->player_button_control == 0)) &&
      ((uVar11 = get_num_players(), uVar11 == 1 || ((stop_play_flag == 0 && (is_gameover_flag == 0)))
       ))) {
     iVar13 = cur_player_get_control_type();
@@ -96923,7 +96923,7 @@ void controller_gameplay_interaction(void)
                           R_CBUTTONS|L_CBUTTONS|D_CBUTTONS|U_CBUTTONS|R_TRIG|L_TRIG|DUMMY_2|DUMMY_1|
                           R_JPAD|L_JPAD|D_JPAD|U_JPAD|START_BUTTON|Z_TRIG|B_BUTTON|A_BUTTON);
       uStack164 = (ushort)uVar11;
-      uStack166 = ptr_BONDdata->field_3B6;
+      uStack166 = pPlayer->field_3B6;
       if (cStack161 < -5) {
         iStack172 = (int)cStack161 + 5;
       }
@@ -96944,7 +96944,7 @@ void controller_gameplay_interaction(void)
       }
       else {
         if (in_tank_flag == TRUE) {
-          if (ptr_BONDdata->insightaimmode == 0) {
+          if (pPlayer->insightaimmode == 0) {
             iStack148 = iStack172;
           }
           else {
@@ -96980,14 +96980,14 @@ void controller_gameplay_interaction(void)
       if ((iVar13 == 0) && (lVar12 = proc_7F0C24BC(), lVar12 != 0)) {
         iVar13 = cur_player_get_aim_control();
         if (iVar13 == 0) {
-          ptr_BONDdata->insightaimmode = uStack188;
+          pPlayer->insightaimmode = uStack188;
         }
         else {
           if (uStack192 != 0) {
-            ptr_BONDdata->insightaimmode = (uint)(ptr_BONDdata->insightaimmode == 0);
+            pPlayer->insightaimmode = (uint)(pPlayer->insightaimmode == 0);
           }
         }
-        iStack88 = ptr_BONDdata->insightaimmode;
+        iStack88 = pPlayer->insightaimmode;
         bVar4 = (uVar19 & 0x4000) != 0;
         uStack120 = (uint)(iStack88 == 0);
         bVar1 = bVar4;
@@ -97030,7 +97030,7 @@ void controller_gameplay_interaction(void)
         uStack4 = uStack120;
         item = get_item_in_hand(0);
         iVar13 = check_special_attributes(item,0x8000);
-        if ((iVar13 != 0) && (ptr_BONDdata->insightaimmode != 0)) {
+        if ((iVar13 != 0) && (pPlayer->insightaimmode != 0)) {
           if (iStack176 < 0) {
             fStack92 = (float)-iStack176 / 70.00000000;
             if (1.00000000 < fStack92) {
@@ -97054,14 +97054,14 @@ void controller_gameplay_interaction(void)
         iVar13 = check_special_attributes(item,0x8000);
         uStack100 = (uint)(iVar13 == 0);
         if ((iVar13 == 0) &&
-           (bVar3 = ptr_BONDdata->insightaimmode != 0, uStack100 = (uint)bVar3, bVar3)) {
+           (bVar3 = pPlayer->insightaimmode != 0, uStack100 = (uint)bVar3, bVar3)) {
           uStack100 = (uint)(cStack162 < -0x1e);
         }
         item = get_item_in_hand(0);
         iVar13 = check_special_attributes(item,0x8000);
         uStack104 = (uint)(iVar13 == 0);
         if ((iVar13 == 0) &&
-           (bVar3 = ptr_BONDdata->insightaimmode != 0, uStack104 = (uint)bVar3, bVar3)) {
+           (bVar3 = pPlayer->insightaimmode != 0, uStack104 = (uint)bVar3, bVar3)) {
           uStack104 = (uint)(cStack162 < '\x1f') ^ 1;
         }
         if ((((((bVar1) && (bVar4)) || (((in_a2_lo & 0x4000) != 0 && (bVar2)))) ||
@@ -97073,7 +97073,7 @@ void controller_gameplay_interaction(void)
           uStack80 = 0;
           uStack16 = 0;
         }
-        if ((in_tank_flag == TRUE) && (ptr_BONDdata->insightaimmode != 0)) {
+        if ((in_tank_flag == TRUE) && (pPlayer->insightaimmode != 0)) {
           item = get_item_in_hand(0);
           if (item == ITEM_TANKSHELLS) {
             iStack140 = 0;
@@ -97097,7 +97097,7 @@ void controller_gameplay_interaction(void)
       }
       uStack12 = (uint)(uStack180 != 0);
       if (uStack180 != 0) {
-        bVar4 = ptr_BONDdata->pause_animation_state == 0;
+        bVar4 = pPlayer->pause_animation_state == 0;
         if (bVar4) {
           bVar4 = (in_a2_lo & 0x8000) == 0;
           uStack12 = (uint)bVar4;
@@ -97108,7 +97108,7 @@ void controller_gameplay_interaction(void)
       }
 LAB_7f0822a8:
       iStack128 = 1;
-      ptr_BONDdata->field_3B6 = uStack164;
+      pPlayer->field_3B6 = uStack164;
     }
     else {
       iVar13 = cur_player_get_control_type();
@@ -97127,14 +97127,14 @@ LAB_7f0822a8:
         uVar19 = in_a2_lo & ~in_a3_lo;
         iVar13 = cur_player_get_aim_control();
         if (iVar13 == 0) {
-          ptr_BONDdata->insightaimmode = (uint)((in_a2_lo & uStack196) != 0);
+          pPlayer->insightaimmode = (uint)((in_a2_lo & uStack196) != 0);
         }
         else {
           if ((uVar19 & uStack196) != 0) {
-            ptr_BONDdata->insightaimmode = (uint)(ptr_BONDdata->insightaimmode == 0);
+            pPlayer->insightaimmode = (uint)(pPlayer->insightaimmode == 0);
           }
         }
-        iStack8 = ptr_BONDdata->insightaimmode;
+        iStack8 = pPlayer->insightaimmode;
         bVar4 = (uVar19 & 0x4000) != 0;
         uStack120 = (uint)(iStack8 == 0);
         uStack16 = (uint)bVar4;
@@ -97144,7 +97144,7 @@ LAB_7f0822a8:
           bVar1 = (in_a2_lo & 0x202) != 0;
           uVar20 = (uint)bVar1;
           if (bVar1) {
-            if (ptr_BONDdata->insightaimmode == 0) {
+            if (pPlayer->insightaimmode == 0) {
               if (in_tank_flag == TRUE) {
                 fStack68 = 1.00000000;
               }
@@ -97158,7 +97158,7 @@ LAB_7f0822a8:
           }
           bVar2 = (in_a2_lo & 0x101) != 0;
           uStack380 = (uint)bVar2;
-          iStack88 = ptr_BONDdata->insightaimmode;
+          iStack88 = pPlayer->insightaimmode;
           if (bVar2) {
             if (iStack88 == 0) {
               if (in_tank_flag == TRUE) {
@@ -97201,7 +97201,7 @@ LAB_7f0822a8:
           if (bVar2) {
             fStack56 = 1.00000000;
           }
-          iStack88 = ptr_BONDdata->insightaimmode;
+          iStack88 = pPlayer->insightaimmode;
           bVar3 = iStack88 == 0;
           uStack44 = (uint)(bVar3 && bVar1);
           uStack380 = (uint)bVar2;
@@ -97254,7 +97254,7 @@ LAB_7f0822a8:
         item = get_item_in_hand(0);
         iVar13 = check_special_attributes(item,0x8000);
         if (iVar13 != 0) {
-          if (ptr_BONDdata->insightaimmode != 0) {
+          if (pPlayer->insightaimmode != 0) {
             if ((in_a2_lo & 0x404) != 0) {
               fStack92 = 1.00000000;
             }
@@ -97267,17 +97267,17 @@ LAB_7f0822a8:
         iVar13 = check_special_attributes(item,0x8000);
         uStack100 = (uint)(iVar13 == 0);
         if ((iVar13 == 0) &&
-           (bVar2 = ptr_BONDdata->insightaimmode != 0, uStack100 = (uint)bVar2, bVar2)) {
+           (bVar2 = pPlayer->insightaimmode != 0, uStack100 = (uint)bVar2, bVar2)) {
           uStack100 = (uint)((in_a2_lo & 0x404) != 0);
         }
         item = get_item_in_hand(0);
         iVar13 = check_special_attributes(item,0x8000);
         uStack104 = (uint)(iVar13 == 0);
         if ((iVar13 == 0) &&
-           (bVar2 = ptr_BONDdata->insightaimmode != 0, uStack104 = (uint)bVar2, bVar2)) {
+           (bVar2 = pPlayer->insightaimmode != 0, uStack104 = (uint)bVar2, bVar2)) {
           uStack104 = (uint)((~in_a2_lo & 0x808) != 0);
         }
-        bVar2 = ptr_BONDdata->insightaimmode != 0;
+        bVar2 = pPlayer->insightaimmode != 0;
         uStack112 = (uint)bVar2;
         uStack108 = uStack112;
         if (bVar2) {
@@ -97291,7 +97291,7 @@ LAB_7f0822a8:
           uStack80 = 0;
           uStack16 = 0;
         }
-        if ((in_tank_flag == TRUE) && (ptr_BONDdata->insightaimmode != 0)) {
+        if ((in_tank_flag == TRUE) && (pPlayer->insightaimmode != 0)) {
           item = get_item_in_hand(0);
           if (item == ITEM_TANKSHELLS) {
             iStack140 = 0;
@@ -97314,7 +97314,7 @@ LAB_7f0822a8:
       bVar4 = (in_a2_lo & uStack194) != 0;
       uStack12 = (uint)bVar4;
       if ((bVar4) &&
-         (bVar4 = ptr_BONDdata->pause_animation_state == 0, uStack12 = (uint)bVar4, bVar4)) {
+         (bVar4 = pPlayer->pause_animation_state == 0, uStack12 = (uint)bVar4, bVar4)) {
         uStack12 = (uint)((in_a2_lo & uStack198) == 0);
       }
       iVar13 = cur_player_get_control_type();
@@ -97323,7 +97323,7 @@ LAB_7f0822a8:
       }
     }
   }
-  ptr_BONDdata->field_D0 = 0;
+  pPlayer->field_D0 = 0;
   if (uStack16 != 0) {
     if (in_tank_flag == TRUE) {
       iStack204 = *(int *)(ptr_playerstank + 4);
@@ -97339,21 +97339,21 @@ LAB_7f0822a8:
       }
       *(undefined4 *)(iStack204 + 0xc4) = 0;
       in_tank_flag = FALSE;
-      ptr_BONDdata->strafe_speed_multiplier = 0.00000000;
-      ptr_BONDdata->forward_speed_multiplier = 0.00000000;
-      ptr_BONDdata->azimuth_turning_direction = 0.00000000;
+      pPlayer->strafe_speed_multiplier = 0.00000000;
+      pPlayer->forward_speed_multiplier = 0.00000000;
+      pPlayer->azimuth_turning_direction = 0.00000000;
       iVar13 = 0;
       do {
         iVar16 = iVar13 + 4;
-        *(undefined4 *)((int)&ptr_BONDdata->boost_factor_x + iVar13) = 0;
+        *(undefined4 *)((int)&pPlayer->boost_factor_x + iVar13) = 0;
         iVar13 = iVar16;
       } while (iVar16 != 0xc);
-      ptr_BONDdata->crouchposition = 2;
+      pPlayer->crouchposition = 2;
     }
     else {
       if ((((ptr_playerstank == NULL) || (*ptr_playerstank != '\x01')) ||
           (*(char *)(*(int *)(ptr_playerstank + 4) + 3) != '-')) || (dword_80036480 == 0)) {
-        ptr_BONDdata->field_D0 = 1;
+        pPlayer->field_D0 = 1;
       }
       else {
         iStack212 = *(int *)(ptr_playerstank + 4);
@@ -97370,17 +97370,17 @@ LAB_7f0822a8:
         dword_80036460 = 0.00000000;
         in_tank_flag = TRUE;
         DAT_800799b8 = 0;
-        ptr_BONDdata->strafe_speed_multiplier = 0.00000000;
-        ptr_BONDdata->forward_speed_multiplier = 0.00000000;
-        ptr_BONDdata->azimuth_turning_direction = 0.00000000;
-        ptr_BONDdata->crouchposition = 1;
+        pPlayer->strafe_speed_multiplier = 0.00000000;
+        pPlayer->forward_speed_multiplier = 0.00000000;
+        pPlayer->azimuth_turning_direction = 0.00000000;
+        pPlayer->crouchposition = 1;
         DAT_800799bc = 0;
         f32_800799c0 = 1.00000000;
-        copy_bond_azimuth = ptr_BONDdata->azimuth_angle;
-        copy_bond_inclination_angle1 = ptr_BONDdata->inclination_angle1;
-        copy_bond_posx = ptr_BONDdata->positionx;
-        copy_bond_posy = ptr_BONDdata->positiony;
-        copy_bond_posz = ptr_BONDdata->positionz;
+        copy_bond_azimuth = pPlayer->azimuth_angle;
+        copy_bond_inclination_angle1 = pPlayer->inclination_angle1;
+        copy_bond_posx = pPlayer->positionx;
+        copy_bond_posy = pPlayer->positiony;
+        copy_bond_posz = pPlayer->positionz;
         dword_80036490 = 0;
         proc_7F07C7B4();
       }
@@ -97420,7 +97420,7 @@ LAB_7f0822a8:
   if (0.00000000 < fStack96) {
     proc_7F05DE94(fStack96);
   }
-  if (ptr_BONDdata->pause_animation_state == 0) {
+  if (pPlayer->pause_animation_state == 0) {
     if (iStack88 != 0) {
       proc_7F05DD38();
     }
@@ -97452,7 +97452,7 @@ LAB_7f0822a8:
         }
       }
       fVar23 = 1.00000000;
-      if (ptr_BONDdata->insightaimmode == 0) {
+      if (pPlayer->insightaimmode == 0) {
         if (uStack20 == 0) {
           fVar22 = fVar23;
           if ((uStack36 == 0) && (fVar22 = 0.00000000, uStack40 != 0)) {
@@ -97477,23 +97477,23 @@ LAB_7f0822a8:
           dword_80036490 -= clock_timer;
           vector1 = vector1 * 0.50000000;
         }
-        fVar22 = ptr_BONDdata->forward_speed_multiplier;
+        fVar22 = pPlayer->forward_speed_multiplier;
         if (vector1 != fVar22) {
           if (fVar22 < vector1) {
-            ptr_BONDdata->forward_speed_multiplier =
+            pPlayer->forward_speed_multiplier =
                  fVar22 + (((((vector1 - fVar22) * 0.25000000) / 15.00000000 + 0.50000000) * fVar23
                            * 10.00000000) / 60.00000000) * global_timer_delta;
-            if (vector1 < ptr_BONDdata->forward_speed_multiplier) {
-              ptr_BONDdata->forward_speed_multiplier = vector1;
+            if (vector1 < pPlayer->forward_speed_multiplier) {
+              pPlayer->forward_speed_multiplier = vector1;
             }
           }
           else {
             if ((vector1 < fVar22) &&
-               (ptr_BONDdata->forward_speed_multiplier =
+               (pPlayer->forward_speed_multiplier =
                      fVar22 + (((((fVar22 - vector1) * 0.25000000) / 15.00000000 + 0.50000000) *
                                 fVar23 * -10.00000000) / 60.00000000) * global_timer_delta,
-               ptr_BONDdata->forward_speed_multiplier < vector1)) {
-              ptr_BONDdata->forward_speed_multiplier = vector1;
+               pPlayer->forward_speed_multiplier < vector1)) {
+              pPlayer->forward_speed_multiplier = vector1;
             }
           }
         }
@@ -97513,7 +97513,7 @@ LAB_7f0822a8:
       proc_7F07FCC4(-1);
     }
     if (uStack24 != 0) {
-      ptr_BONDdata->strafe_speed_multiplier = (float)iStack156 / 70.00000000;
+      pPlayer->strafe_speed_multiplier = (float)iStack156 / 70.00000000;
     }
     if (uStack36 == 0) {
       if (uStack40 == 0) {
@@ -97525,40 +97525,40 @@ LAB_7f0822a8:
     }
     else {
       proc_7F07FE1C(1);
-      ptr_BONDdata->forward_speed_frame_counter =
-           ptr_BONDdata->forward_speed_frame_counter + clock_timer;
+      pPlayer->forward_speed_frame_counter =
+           pPlayer->forward_speed_frame_counter + clock_timer;
     }
     if (uStack20 != 0) {
-      ptr_BONDdata->forward_speed_multiplier = (float)iStack160 / 70.00000000;
+      pPlayer->forward_speed_multiplier = (float)iStack160 / 70.00000000;
       if (iStack160 < 0x3d) {
-        ptr_BONDdata->forward_speed_frame_counter = 0;
+        pPlayer->forward_speed_frame_counter = 0;
       }
       else {
-        ptr_BONDdata->forward_speed_frame_counter =
-             ptr_BONDdata->forward_speed_frame_counter + clock_timer;
+        pPlayer->forward_speed_frame_counter =
+             pPlayer->forward_speed_frame_counter + clock_timer;
       }
     }
-    fVar23 = ptr_BONDdata->forward_speed_multiplier;
+    fVar23 = pPlayer->forward_speed_multiplier;
     if (1.00000000 < fVar23) {
-      ptr_BONDdata->forward_speed_multiplier = 1.00000000;
-      fVar23 = ptr_BONDdata->forward_speed_multiplier;
+      pPlayer->forward_speed_multiplier = 1.00000000;
+      fVar23 = pPlayer->forward_speed_multiplier;
     }
     if (fVar23 < -1.00000000) {
-      ptr_BONDdata->forward_speed_multiplier = -1.00000000;
+      pPlayer->forward_speed_multiplier = -1.00000000;
     }
-    fVar23 = ptr_BONDdata->strafe_speed_multiplier;
+    fVar23 = pPlayer->strafe_speed_multiplier;
     if (1.00000000 < fVar23) {
-      ptr_BONDdata->strafe_speed_multiplier = 1.00000000;
-      fVar23 = ptr_BONDdata->strafe_speed_multiplier;
+      pPlayer->strafe_speed_multiplier = 1.00000000;
+      fVar23 = pPlayer->strafe_speed_multiplier;
     }
     if (fVar23 < -1.00000000) {
-      ptr_BONDdata->strafe_speed_multiplier = -1.00000000;
+      pPlayer->strafe_speed_multiplier = -1.00000000;
     }
-    ptr_BONDdata->forward_speed_multiplier = ptr_BONDdata->forward_speed_multiplier * flt_80055134;
-    ptr_BONDdata->forward_speed_multiplier =
-         ptr_BONDdata->forward_speed_multiplier * (float)ptr_BONDdata->forward_speed_multiplier_2;
+    pPlayer->forward_speed_multiplier = pPlayer->forward_speed_multiplier * flt_80055134;
+    pPlayer->forward_speed_multiplier =
+         pPlayer->forward_speed_multiplier * (float)pPlayer->forward_speed_multiplier_2;
     if ((uStack20 == 0) && (uStack36 == 0)) {
-      ptr_BONDdata->forward_speed_frame_counter = 0;
+      pPlayer->forward_speed_frame_counter = 0;
     }
     if (uStack108 == 0) {
       if (uStack112 == 0) {
@@ -97580,51 +97580,51 @@ LAB_7f0822a8:
       change_crouch_position(-2);
     }
   }
-  if (ptr_BONDdata->forward_speed_frame_counter < 0xb4) {
-    fVar23 = (float)ptr_BONDdata->forward_speed_multiplier_2;
+  if (pPlayer->forward_speed_frame_counter < 0xb4) {
+    fVar23 = (float)pPlayer->forward_speed_multiplier_2;
     if (1.00000000 < fVar23) {
-      *(float *)&ptr_BONDdata->forward_speed_multiplier_2 =
+      *(float *)&pPlayer->forward_speed_multiplier_2 =
            fVar23 - FLOAT_8005513c * global_timer_delta;
-      fVar23 = (float)ptr_BONDdata->forward_speed_multiplier_2;
+      fVar23 = (float)pPlayer->forward_speed_multiplier_2;
     }
     if (fVar23 < 1.00000000) {
-      ptr_BONDdata->forward_speed_multiplier_2 = 1.00000000;
+      pPlayer->forward_speed_multiplier_2 = 1.00000000;
       goto LAB_7f083468;
     }
-    iVar13 = ptr_BONDdata->pause_animation_state;
+    iVar13 = pPlayer->pause_animation_state;
   }
   else {
-    fVar23 = (float)ptr_BONDdata->forward_speed_multiplier_2;
+    fVar23 = (float)pPlayer->forward_speed_multiplier_2;
     if (fVar23 < 1.25000000) {
-      *(float *)&ptr_BONDdata->forward_speed_multiplier_2 =
+      *(float *)&pPlayer->forward_speed_multiplier_2 =
            fVar23 + flt_80055138 * global_timer_delta;
-      fVar23 = (float)ptr_BONDdata->forward_speed_multiplier_2;
+      fVar23 = (float)pPlayer->forward_speed_multiplier_2;
     }
     if (1.25000000 < fVar23) {
-      ptr_BONDdata->forward_speed_multiplier_2 = 1.25000000;
+      pPlayer->forward_speed_multiplier_2 = 1.25000000;
 LAB_7f083468:
-      iVar13 = ptr_BONDdata->pause_animation_state;
+      iVar13 = pPlayer->pause_animation_state;
     }
     else {
-      iVar13 = ptr_BONDdata->pause_animation_state;
+      iVar13 = pPlayer->pause_animation_state;
     }
   }
   if (iVar13 != 0) goto LAB_7f083b40;
   fVar22 = -4.00000000;
-  if (ptr_BONDdata->field_114 != 0) {
-    iStack256 = ptr_BONDdata->ptr_tile_printmanpos;
+  if (pPlayer->field_114 != 0) {
+    iStack256 = pPlayer->ptr_tile_printmanpos;
     fStack260 = 300.00000000;
     fStack252 = -4.00000000;
-    proc_7F08A274(ptr_BONDdata->position_data_pointer,&uStack288,&fStack280,&uStack284);
-    fStack276 = (float)ptr_BONDdata->field_498 * 300.00000000 + (float)ptr_BONDdata->positionx;
-    fStack272 = (float)ptr_BONDdata->positiony;
-    fStack268 = (float)ptr_BONDdata->field_4A0 * 300.00000000 + (float)ptr_BONDdata->positionz;
+    proc_7F08A274(pPlayer->position_data_pointer,&uStack288,&fStack280,&uStack284);
+    fStack276 = (float)pPlayer->field_498 * 300.00000000 + (float)pPlayer->positionx;
+    fStack272 = (float)pPlayer->positiony;
+    fStack268 = (float)pPlayer->field_4A0 * 300.00000000 + (float)pPlayer->positionz;
     proc_7F0B1CC4();
     lVar12 = proc_7F0B0E24();
     if (lVar12 == 0) {
-      proc_7F026298((float *)&ptr_BONDdata->positionx,(float *)&ptr_BONDdata->field_498,&fStack276);
-      fVar23 = fStack276 - (float)ptr_BONDdata->positionx;
-      fVar22 = fStack268 - (float)ptr_BONDdata->positionz;
+      proc_7F026298((float *)&pPlayer->positionx,(float *)&pPlayer->field_498,&fStack276);
+      fVar23 = fStack276 - (float)pPlayer->positionx;
+      fVar22 = fStack268 - (float)pPlayer->positionz;
       fStack260 = sqrtf(fVar23 * fVar23 + fVar22 * fVar22);
       fVar23 = proc_7F080D60((longlong)iStack256,fStack276,fStack268);
     }
@@ -97634,7 +97634,7 @@ LAB_7f083468:
     fVar22 = fStack252;
     fStack272 = fVar23;
     if (((0.00000000 < fStack260) &&
-        (vector1 = fVar23 - (float)ptr_BONDdata->clipping_height, fVar22 = fStack252,
+        (vector1 = fVar23 - (float)pPlayer->clipping_height, fVar22 = fStack252,
         fStack272 = fVar23, -300.00000000 < vector1)) &&
        (fVar22 = fStack252, fStack272 = fVar23, vector1 < 500.00000000)) {
       fStack272 = fVar23;
@@ -97648,92 +97648,92 @@ LAB_7f083468:
       }
     }
   }
-  if (((ptr_BONDdata->field_110 != 0) && (iStack160 < 0x28)) && (-0x28 < iStack160)) {
-    ptr_BONDdata->field_110 = 0;
+  if (((pPlayer->field_110 != 0) && (iStack160 < 0x28)) && (-0x28 < iStack160)) {
+    pPlayer->field_110 = 0;
   }
   if (in_tank_flag == FALSE) {
     if (fStack60 <= 0.00000000) {
       if (0.00000000 < fStack64) {
-        ptr_BONDdata->field_104 = 0;
+        pPlayer->field_104 = 0;
         goto LAB_7f0836e8;
       }
       if (iStack128 != 0) {
-        ptr_BONDdata->field_120 = 0;
+        pPlayer->field_120 = 0;
         goto LAB_7f083830;
       }
-      if (ptr_BONDdata->look_ahead_setting == 0) {
-        if (ptr_BONDdata->field_11C == 0) {
-          ptr_BONDdata->field_10C = 0;
+      if (pPlayer->look_ahead_setting == 0) {
+        if (pPlayer->field_11C == 0) {
+          pPlayer->field_10C = 0;
         }
         else {
           if ((uStack20 != 0) && ((0x3c < iStack160 || (iStack160 < -0x3c)))) {
-            fVar23 = ptr_BONDdata->inclination_angle1;
+            fVar23 = pPlayer->inclination_angle1;
             if (fVar23 <= fVar22 + 5.00000000) {
               if (fVar22 + -10.00000000 <= fVar23) {
-                ptr_BONDdata->field_10C = 0;
+                pPlayer->field_10C = 0;
                 goto LAB_7f083838;
               }
-              iVar13 = ptr_BONDdata->field_110;
+              iVar13 = pPlayer->field_110;
             }
             else {
-              iVar13 = ptr_BONDdata->field_110;
+              iVar13 = pPlayer->field_110;
             }
             if (iVar13 != 0) {
-              ptr_BONDdata->field_10C = 0;
+              pPlayer->field_10C = 0;
               goto LAB_7f083838;
             }
-            ptr_BONDdata->field_104 = 1;
+            pPlayer->field_104 = 1;
           }
 LAB_7f083830:
-          ptr_BONDdata->field_10C = 0;
+          pPlayer->field_10C = 0;
         }
       }
       else {
         if (uStack20 == 0) {
 LAB_7f08374c:
-          iVar13 = ptr_BONDdata->field_120;
+          iVar13 = pPlayer->field_120;
         }
         else {
           if ((0x3c < iStack160) || (iStack160 < -0x3c)) {
-            ptr_BONDdata->field_120 = 1;
+            pPlayer->field_120 = 1;
             goto LAB_7f08374c;
           }
-          iVar13 = ptr_BONDdata->field_120;
+          iVar13 = pPlayer->field_120;
         }
         if (iVar13 == 0) {
-          ptr_BONDdata->field_10C = 0;
+          pPlayer->field_10C = 0;
         }
         else {
-          fVar23 = ptr_BONDdata->inclination_angle1;
+          fVar23 = pPlayer->inclination_angle1;
           if (fVar23 <= fVar22 + 5.00000000) {
             if (fVar22 + -10.00000000 <= fVar23) {
-              ptr_BONDdata->field_10C = 0;
+              pPlayer->field_10C = 0;
               goto LAB_7f083838;
             }
-            iVar13 = ptr_BONDdata->field_110;
+            iVar13 = pPlayer->field_110;
           }
           else {
-            iVar13 = ptr_BONDdata->field_110;
+            iVar13 = pPlayer->field_110;
           }
           if (iVar13 == 0) {
-            ptr_BONDdata->field_104 = 1;
+            pPlayer->field_104 = 1;
             goto LAB_7f083830;
           }
-          ptr_BONDdata->field_10C = 0;
+          pPlayer->field_10C = 0;
         }
       }
     }
     else {
-      ptr_BONDdata->field_104 = 0;
+      pPlayer->field_104 = 0;
 LAB_7f0836e8:
-      ptr_BONDdata->field_10C = 1;
-      ptr_BONDdata->field_120 = 0;
+      pPlayer->field_10C = 1;
+      pPlayer->field_120 = 0;
     }
 LAB_7f083838:
-    iVar13 = ptr_BONDdata->field_104;
+    iVar13 = pPlayer->field_104;
   }
   else {
-    iVar13 = ptr_BONDdata->field_104;
+    iVar13 = pPlayer->field_104;
   }
   if (iVar13 == 0) {
     if (uStack32 == 0) {
@@ -97741,7 +97741,7 @@ LAB_7f083838:
         if (0.00000000 < fStack64) {
           fVar23 = (float)proc_7F080010();
           if ((uStack20 != 0) && ((0x3c < iStack160 || (iStack160 < 0x3c)))) {
-            ptr_BONDdata->field_110 = 1;
+            pPlayer->field_110 = 1;
           }
         }
         else {
@@ -97751,7 +97751,7 @@ LAB_7f083838:
       else {
         fVar23 = (float)proc_7F080010();
         if ((uStack20 != 0) && ((0x3c < iStack160 || (iStack160 < 0x3c)))) {
-          ptr_BONDdata->field_110 = 1;
+          pPlayer->field_110 = 1;
         }
       }
     }
@@ -97775,26 +97775,26 @@ LAB_7f083838:
       if (!bVar4) {
         vector1 = -fVar22;
       }
-      ptr_BONDdata->inclination_turning_direction = -(fVar22 * vector1) * (fVar23 / 60.00000000);
+      pPlayer->inclination_turning_direction = -(fVar22 * vector1) * (fVar23 / 60.00000000);
     }
-    ptr_BONDdata->inclination_angle1 =
-         ptr_BONDdata->inclination_angle1 +
-         ptr_BONDdata->inclination_turning_direction * global_timer_delta * 3.50000000;
+    pPlayer->inclination_angle1 =
+         pPlayer->inclination_angle1 +
+         pPlayer->inclination_turning_direction * global_timer_delta * 3.50000000;
     if (((in_tank_flag == TRUE) && (DAT_800799b8 == 2)) &&
-       (fVar23 = -20.00000000, ptr_BONDdata->inclination_angle1 < -20.00000000)) {
-      ptr_BONDdata->inclination_angle1 = -20.00000000;
+       (fVar23 = -20.00000000, pPlayer->inclination_angle1 < -20.00000000)) {
+      pPlayer->inclination_angle1 = -20.00000000;
     }
   }
   else {
     if (in_tank_flag == FALSE) {
-      fVar23 = (ptr_BONDdata->inclination_turning_direction *
-                ptr_BONDdata->inclination_turning_direction * 0.50000000) / flt_80055148;
-      if (fVar22 + fVar23 < ptr_BONDdata->inclination_angle1) {
+      fVar23 = (pPlayer->inclination_turning_direction *
+                pPlayer->inclination_turning_direction * 0.50000000) / flt_80055148;
+      if (fVar22 + fVar23 < pPlayer->inclination_angle1) {
         fStack252 = fVar22;
         proc_7F080010();
       }
       else {
-        if (ptr_BONDdata->inclination_angle1 < fVar22 - fVar23) {
+        if (pPlayer->inclination_angle1 < fVar22 - fVar23) {
           fStack252 = fVar22;
           proc_7F080010();
         }
@@ -97803,27 +97803,27 @@ LAB_7f083838:
           proc_7F080010();
         }
       }
-      fVar23 = ptr_BONDdata->inclination_angle1;
-      fVar22 = ptr_BONDdata->inclination_turning_direction * global_timer_delta;
+      fVar23 = pPlayer->inclination_angle1;
+      fVar22 = pPlayer->inclination_turning_direction * global_timer_delta;
       fVar22 = fVar23 + fVar22 + fVar22;
       if ((fVar23 <= fStack252) || (fVar22 <= fStack252)) {
         if (fVar23 < fStack252) {
           if (fVar22 < fStack252) {
-            ptr_BONDdata->inclination_angle1 = fVar22;
+            pPlayer->inclination_angle1 = fVar22;
             goto LAB_7f083b40;
           }
-          ptr_BONDdata->inclination_angle1 = fStack252;
+          pPlayer->inclination_angle1 = fStack252;
         }
         else {
-          ptr_BONDdata->inclination_angle1 = fStack252;
+          pPlayer->inclination_angle1 = fStack252;
         }
-        ptr_BONDdata->inclination_turning_direction = 0.00000000;
-        if (ptr_BONDdata->field_10C == 0) {
-          ptr_BONDdata->field_104 = 0;
+        pPlayer->inclination_turning_direction = 0.00000000;
+        if (pPlayer->field_10C == 0) {
+          pPlayer->field_104 = 0;
         }
       }
       else {
-        ptr_BONDdata->inclination_angle1 = fVar22;
+        pPlayer->inclination_angle1 = fVar22;
       }
     }
   }
@@ -97857,7 +97857,7 @@ LAB_7f083b40:
     if (vector1 < 0.00000000) {
       fVar22 = -vector1;
     }
-    ptr_BONDdata->azimuth_turning_direction = vector1 * fVar22 * (fVar23 / 60.00000000);
+    pPlayer->azimuth_turning_direction = vector1 * fVar22 * (fVar23 / 60.00000000);
   }
   if (in_tank_flag == TRUE) {
     if (DAT_800799b8 == 2) {
@@ -97875,7 +97875,7 @@ LAB_7f083b40:
         }
       }
       else {
-        fVar23 = ptr_BONDdata->azimuth_turning_direction * flt_8005514C;
+        fVar23 = pPlayer->azimuth_turning_direction * flt_8005514C;
       }
       if (0 < clock_timer) {
         iVar13 = 1;
@@ -97888,15 +97888,15 @@ LAB_7f083b40:
         }
         dword_80036460 = dword_80036460 + fVar23;
       }
-      ptr_BONDdata->azimuth_turning_direction = dword_80036460 * flt_8005515C;
+      pPlayer->azimuth_turning_direction = dword_80036460 * flt_8005515C;
     }
     else {
-      ptr_BONDdata->azimuth_turning_direction = 0.00000000;
+      pPlayer->azimuth_turning_direction = 0.00000000;
     }
   }
   if (iStack116 != 0) {
-    ptr_BONDdata->when_detonating_mines_is_0 = 0;
-    ptr_BONDdata->right_weapon_current_animation = 0;
+    pPlayer->when_detonating_mines_is_0 = 0;
+    pPlayer->right_weapon_current_animation = 0;
     trigger_remote_mine_detonation();
   }
   uVar11 = get_num_players();
@@ -97928,13 +97928,13 @@ LAB_7f083b40:
   }
   if (uStack4 == 0) {
     if (iStack8 != 0) {
-      ptr_BONDdata->controlstyle = 2;
+      pPlayer->controlstyle = 2;
     }
   }
   else {
-    ptr_BONDdata->controlstyle = 0;
+    pPlayer->controlstyle = 0;
   }
-  lVar12 = (longlong)ptr_BONDdata->controlstyle;
+  lVar12 = (longlong)pPlayer->controlstyle;
   if (lVar12 == 0) {
     proc_7F067AA4(0);
     uVar15 = extraout_a0_lo;
@@ -97942,7 +97942,7 @@ LAB_7f083b40:
     if (((uStack120 != 0) &&
         (redirect_get_BONDdata_autoaim_x(), uVar15 = extraout_a0_lo_00, uVar18 = extraout_a1_lo_00,
         lVar12 != 0)) &&
-       (uVar15 = extraout_a0_lo_00, uVar18 = extraout_a1_lo_00, ptr_BONDdata->field_140 != 0)) {
+       (uVar15 = extraout_a0_lo_00, uVar18 = extraout_a1_lo_00, pPlayer->field_140 != 0)) {
       item = get_item_in_hand(0);
       iVar13 = check_special_attributes(item,8);
       lVar12 = (longlong)iVar13;
@@ -97952,7 +97952,7 @@ LAB_7f083b40:
     if (((uStack120 != 0) &&
         (redirect_get_BONDdata_autoaim(), uVar15 = extraout_a0_lo_02, uVar18 = extraout_a1_lo_02,
         lVar12 != 0)) &&
-       (uVar15 = extraout_a0_lo_02, uVar18 = extraout_a1_lo_02, ptr_BONDdata->field_130 != 0)) {
+       (uVar15 = extraout_a0_lo_02, uVar18 = extraout_a1_lo_02, pPlayer->field_130 != 0)) {
       item = get_item_in_hand(0);
       check_special_attributes(item,8);
       uVar15 = extraout_a0_lo_03;
@@ -97984,38 +97984,38 @@ void proc_7F083FC8(void)
   float fVar6;
   f32 fVar7;
   
-  if (ptr_BONDdata->invincibility_timer < 0) {
-    iVar4 = ptr_BONDdata->health_bar_timer;
+  if (pPlayer->invincibility_timer < 0) {
+    iVar4 = pPlayer->health_bar_timer;
     goto LAB_7f084204;
   }
-  if (ptr_BONDdata->invincibility_timer == 0) {
+  if (pPlayer->invincibility_timer == 0) {
     set_unset_ammo_on_screen_setting(8,0);
     set_unset_bitflags(0x10,0);
     set_flags_in_BONDdata_stationary_intro_cam(4);
     proc_7F08A944(4);
     set_unset_clock_lock_bits(8,0);
     fVar7 = get_BONDdata_watch_health();
-    ptr_BONDdata->damagetype = (int)((float)fVar7 * 8.00000000);
-    if (7 < ptr_BONDdata->damagetype) {
-      ptr_BONDdata->damagetype = 7;
+    pPlayer->damagetype = (int)((float)fVar7 * 8.00000000);
+    if (7 < pPlayer->damagetype) {
+      pPlayer->damagetype = 7;
       goto LAB_7f08406c;
     }
-    iVar4 = ptr_BONDdata->damagetype;
+    iVar4 = pPlayer->damagetype;
   }
   else {
 LAB_7f08406c:
-    iVar4 = ptr_BONDdata->damagetype;
+    iVar4 = pPlayer->damagetype;
   }
-  iVar3 = ptr_BONDdata->invincibility_timer;
+  iVar3 = pPlayer->invincibility_timer;
   if ((int)dword_80036634[iVar4 * 0xb + 2] < iVar3) {
     if (iVar3 <= (int)dword_80036634[iVar4 * 0xb + 6]) {
-      iVar5 = ptr_BONDdata->player_button_control;
+      iVar5 = pPlayer->player_button_control;
       goto LAB_7f0840c0;
     }
-    ptr_BONDdata->invincibility_timer = -1;
+    pPlayer->invincibility_timer = -1;
     proc_7F0807B0(0xff,0xff,0xff,0);
-    if (ptr_BONDdata->player_button_control != 0) {
-      iVar4 = ptr_BONDdata->health_bar_timer;
+    if (pPlayer->player_button_control != 0) {
+      iVar4 = pPlayer->health_bar_timer;
       goto LAB_7f084204;
     }
     set_unset_ammo_on_screen_setting(8,1);
@@ -98025,16 +98025,16 @@ LAB_7f08406c:
     set_unset_clock_lock_bits(8,1);
   }
   else {
-    iVar5 = ptr_BONDdata->player_button_control;
+    iVar5 = pPlayer->player_button_control;
 LAB_7f0840c0:
     if (iVar5 == 0) {
       dVar1 = dword_80036634[iVar4 * 0xb + 4];
       if (iVar3 < (int)dVar1) {
-        iVar4 = ptr_BONDdata->pause_animation_state;
+        iVar4 = pPlayer->pause_animation_state;
       }
       else {
         if ((int)dword_80036634[iVar4 * 0xb + 6] < iVar3) {
-          iVar4 = ptr_BONDdata->pause_animation_state;
+          iVar4 = pPlayer->pause_animation_state;
         }
         else {
           dVar2 = dword_80036634[iVar4 * 0xb + 5];
@@ -98049,61 +98049,61 @@ LAB_7f0840c0:
           }
           proc_7F0807B0(dword_80036634[iVar4 * 0xb + 8],dword_80036634[iVar4 * 0xb + 9],
                         dword_80036634[iVar4 * 0xb + 10],fVar6);
-          iVar3 = ptr_BONDdata->invincibility_timer;
-          iVar4 = ptr_BONDdata->pause_animation_state;
+          iVar3 = pPlayer->invincibility_timer;
+          iVar4 = pPlayer->pause_animation_state;
         }
       }
     }
     else {
-      iVar4 = ptr_BONDdata->pause_animation_state;
+      iVar4 = pPlayer->pause_animation_state;
     }
     if (iVar4 == 0) {
-      ptr_BONDdata->invincibility_timer = iVar3 + clock_timer;
+      pPlayer->invincibility_timer = iVar3 + clock_timer;
     }
     else {
-      ptr_BONDdata->invincibility_timer = iVar3 + dword_80048498;
+      pPlayer->invincibility_timer = iVar3 + dword_80048498;
     }
   }
-  iVar4 = ptr_BONDdata->health_bar_timer;
+  iVar4 = pPlayer->health_bar_timer;
 LAB_7f084204:
   if (-1 < iVar4) {
     if (iVar4 == 0) {
       fVar7 = get_BONDdata_watch_health();
-      ptr_BONDdata->field_29B8 = (int)((float)fVar7 * 8.00000000);
-      if (ptr_BONDdata->field_29B8 < 8) {
-        iVar4 = ptr_BONDdata->player_button_control;
+      pPlayer->field_29B8 = (int)((float)fVar7 * 8.00000000);
+      if (pPlayer->field_29B8 < 8) {
+        iVar4 = pPlayer->player_button_control;
       }
       else {
-        ptr_BONDdata->field_29B8 = 7;
-        iVar4 = ptr_BONDdata->player_button_control;
+        pPlayer->field_29B8 = 7;
+        iVar4 = pPlayer->player_button_control;
       }
     }
     else {
-      iVar4 = ptr_BONDdata->player_button_control;
+      iVar4 = pPlayer->player_button_control;
     }
     if (iVar4 == 0) {
-      iVar4 = ptr_BONDdata->field_29B8;
-      iVar3 = ptr_BONDdata->health_bar_timer;
+      iVar4 = pPlayer->field_29B8;
+      iVar3 = pPlayer->health_bar_timer;
       if ((iVar3 < (int)(&dword_80036794)[iVar4 * 3]) || ((int)(&DAT_80036798)[iVar4 * 3] < iVar3))
       {
         if ((iVar3 < (int)(&dword_80036794)[iVar4 * 3]) ||
            ((int)null_ARRAY_8003679c[iVar4 * 3] < iVar3)) {
-          ptr_BONDdata->health_bar_timer = -1;
+          pPlayer->health_bar_timer = -1;
         }
         else {
-          ptr_BONDdata->mp_watch_health_total = ptr_BONDdata->current_health;
-          ptr_BONDdata->mp_watch_armor_total = ptr_BONDdata->current_armor;
-          ptr_BONDdata->health_bar_timer = ptr_BONDdata->health_bar_timer + clock_timer;
+          pPlayer->mp_watch_health_total = pPlayer->current_health;
+          pPlayer->mp_watch_armor_total = pPlayer->current_armor;
+          pPlayer->health_bar_timer = pPlayer->health_bar_timer + clock_timer;
         }
       }
       else {
-        ptr_BONDdata->mp_watch_health_total = ptr_BONDdata->previous_health;
-        ptr_BONDdata->mp_watch_armor_total = ptr_BONDdata->previous_armor;
-        ptr_BONDdata->health_bar_timer = ptr_BONDdata->health_bar_timer + clock_timer;
+        pPlayer->mp_watch_health_total = pPlayer->previous_health;
+        pPlayer->mp_watch_armor_total = pPlayer->previous_armor;
+        pPlayer->health_bar_timer = pPlayer->health_bar_timer + clock_timer;
       }
     }
     else {
-      ptr_BONDdata->health_bar_timer = -1;
+      pPlayer->health_bar_timer = -1;
     }
   }
   return;
@@ -98124,9 +98124,9 @@ void proc_7F084360(void)
   DAT_800799a0 += 1;
   if (((dword_80036444 != 0) && (disable_player_pickups_flag == 0)) && (DAT_8007999c < global_timer)
      ) {
-    local_c = *(float *)(ptr_BONDdata->position_data_pointer + 8);
-    local_8 = *(float *)(ptr_BONDdata->position_data_pointer + 0xc);
-    local_4 = *(float *)(ptr_BONDdata->position_data_pointer + 0x10);
+    local_c = *(float *)(pPlayer->position_data_pointer + 8);
+    local_8 = *(float *)(pPlayer->position_data_pointer + 0xc);
+    local_4 = *(float *)(pPlayer->position_data_pointer + 0x10);
     uVar2 = DAT_800799a0 & 3;
     if (((int)DAT_800799a0 < 0) && (uVar2 != 0)) {
       uVar2 -= 4;
@@ -98175,8 +98175,8 @@ void proc_7F084360(void)
       fVar3 = fVar3 + 4294967296.00000000;
     }
     local_8 = local_8 + (fVar3 * 0.00000000 * 200.00000000 - 100.00000000);
-    proc_7F09C250(0,&local_c,*(int *)(ptr_BONDdata->position_data_pointer + 0x14),0x12,0,0,
-                  (char *)(ptr_BONDdata->position_data_pointer + 0x2c),0);
+    proc_7F09C250(0,&local_c,*(int *)(pPlayer->position_data_pointer + 0x14),0x12,0,0,
+                  (char *)(pPlayer->position_data_pointer + 0x2c),0);
     uVar1 = get_random_value();
     DAT_8007999c = uVar1 % 0xf + global_timer + 0xf;
   }
@@ -98347,8 +98347,8 @@ void MoveBond(char param_1,char param_2,ushort param_3,ushort param_4)
   iVar13 = camera_80036424 + 1;
   if ((0 < camera_80036424) && (camera_80036424 = iVar13, 3 < iVar13)) {
     camera_80036424 = 0;
-    ptr_BONDdata->lock_hand_model[1] = 0;
-    ptr_BONDdata->lock_hand_model[0] = 0;
+    pPlayer->lock_hand_model[1] = 0;
+    pPlayer->lock_hand_model[0] = 0;
     IVar5 = get_item_in_hand(1);
     remove_hands_item(1,IVar5);
     IVar5 = get_item_in_hand(0);
@@ -98362,39 +98362,39 @@ void MoveBond(char param_1,char param_2,ushort param_3,ushort param_4)
   if (iVar13 != 0) {
     proc_7F07EAF0();
   }
-  if (ptr_BONDdata->pause_animation_state != 0) {
+  if (pPlayer->pause_animation_state != 0) {
     probably_look_at_watch();
   }
   if (in_tank_flag == FALSE) {
     iVar13 = proc_7F0799F0();
     if (iVar13 == 0) {
-      ptr_BONDdata->forward_speed_multiplier = ptr_BONDdata->forward_speed_multiplier * 0.50000000;
-      ptr_BONDdata->strafe_speed_multiplier = ptr_BONDdata->strafe_speed_multiplier * 0.50000000;
+      pPlayer->forward_speed_multiplier = pPlayer->forward_speed_multiplier * 0.50000000;
+      pPlayer->strafe_speed_multiplier = pPlayer->strafe_speed_multiplier * 0.50000000;
     }
-    __x = (float)ptr_BONDdata->boost_factor_x;
+    __x = (float)pPlayer->boost_factor_x;
     if (__x == 0.00000000) {
-      if ((float)ptr_BONDdata->boost_factor_z == 0.00000000) goto LAB_7f08497c;
-      fVar14 = (float)ptr_BONDdata->boost_factor_z;
+      if ((float)pPlayer->boost_factor_z == 0.00000000) goto LAB_7f08497c;
+      fVar14 = (float)pPlayer->boost_factor_z;
     }
     else {
-      fVar14 = (float)ptr_BONDdata->boost_factor_z;
+      fVar14 = (float)pPlayer->boost_factor_z;
     }
-    fStack44 = fVar14 * (float)ptr_BONDdata->azimuth_cosine +
-               -__x * (float)ptr_BONDdata->azimuth_sine;
-    fStack48 = -__x * (float)ptr_BONDdata->azimuth_cosine -
-               fVar14 * (float)ptr_BONDdata->azimuth_sine;
+    fStack44 = fVar14 * (float)pPlayer->azimuth_cosine +
+               -__x * (float)pPlayer->azimuth_sine;
+    fStack48 = -__x * (float)pPlayer->azimuth_cosine -
+               fVar14 * (float)pPlayer->azimuth_sine;
     fVar14 = sqrtf(fVar14 * fVar14 + __x * __x);
     iVar13 = 0;
-    ptr_BONDdata->forward_speed_multiplier = ptr_BONDdata->forward_speed_multiplier + fStack44;
-    ptr_BONDdata->strafe_speed_multiplier = ptr_BONDdata->strafe_speed_multiplier + fStack48;
+    pPlayer->forward_speed_multiplier = pPlayer->forward_speed_multiplier + fStack44;
+    pPlayer->strafe_speed_multiplier = pPlayer->strafe_speed_multiplier + fStack48;
     __x = flt_8005516C;
     do {
-      iVar6 = (int)&ptr_BONDdata->unknown + iVar13;
+      iVar6 = (int)&pPlayer->unknown + iVar13;
       fVar15 = *(float *)(iVar6 + 0x180);
       if (fVar15 != 0.00000000) {
         if (0.00000000 < fVar15) {
           *(float *)(iVar6 + 0x180) = fVar15 - (__x * global_timer_delta * fVar15) / fVar14;
-          iVar6 = (int)&ptr_BONDdata->unknown + iVar13;
+          iVar6 = (int)&pPlayer->unknown + iVar13;
           if (*(float *)(iVar6 + 0x180) < 0.00000000) {
             *(undefined4 *)(iVar6 + 0x180) = 0;
           }
@@ -98402,7 +98402,7 @@ void MoveBond(char param_1,char param_2,ushort param_3,ushort param_4)
         else {
           if (fVar15 < 0.00000000) {
             *(float *)(iVar6 + 0x180) = fVar15 - (__x * global_timer_delta * fVar15) / fVar14;
-            iVar6 = (int)&ptr_BONDdata->unknown + iVar13;
+            iVar6 = (int)&pPlayer->unknown + iVar13;
             if (0.00000000 < *(float *)(iVar6 + 0x180)) {
               *(undefined4 *)(iVar6 + 0x180) = 0;
             }
@@ -98414,7 +98414,7 @@ void MoveBond(char param_1,char param_2,ushort param_3,ushort param_4)
   }
 LAB_7f08497c:
   if (in_tank_flag == TRUE) {
-    fStack96 = ptr_BONDdata->azimuth_turning_direction * global_timer_delta * flt_80055174 *
+    fStack96 = pPlayer->azimuth_turning_direction * global_timer_delta * flt_80055174 *
                3.50000000;
     puStack92 = (undefined4 *)((float)dword_80036464 + fStack96);
     if ((float)flt_80055170 <= (float)puStack92) {
@@ -98422,12 +98422,12 @@ LAB_7f08497c:
     }
     if ((float)puStack92 < 0.00000000) {
       puStack92 = (undefined4 *)((float)puStack92 + (float)flt_80055170);
-      iVar13 = ptr_BONDdata->ptr_tile_printmanpos;
+      iVar13 = pPlayer->ptr_tile_printmanpos;
     }
     else {
-      iVar13 = ptr_BONDdata->ptr_tile_printmanpos;
+      iVar13 = pPlayer->ptr_tile_printmanpos;
     }
-    iVar13 = proc_7F07CAC8(&ptr_BONDdata->positionx,iVar13,(float)flt_80055170,puStack92,afStack68);
+    iVar13 = proc_7F07CAC8(&pPlayer->positionx,iVar13,(float)flt_80055170,puStack92,afStack68);
     if (iVar13 == 0) {
       fStack156 = -1.00000000;
       fStack180 = -1.00000000;
@@ -98437,15 +98437,15 @@ LAB_7f08497c:
       __x = sqrtf(fStack128 * fStack128 + fStack132 * fStack132);
       fStack148 = fStack132 * (1.00000000 / __x);
       fStack152 = -(fStack128 * (1.00000000 / __x));
-      __x = ((float)ptr_BONDdata->positionz - fStack72) * fStack152 +
-            ((float)ptr_BONDdata->positionx - fStack80) * fStack148;
+      __x = ((float)pPlayer->positionz - fStack72) * fStack152 +
+            ((float)pPlayer->positionx - fStack80) * fStack148;
       if (__x < 0.00000000) {
         fStack148 = -fStack148;
         fStack152 = -fStack152;
         __x = -__x;
       }
-      fVar14 = ((float)ptr_BONDdata->positionz - fStack104) * fStack152 +
-               ((float)ptr_BONDdata->positionx - afStack112[0]) * fStack148;
+      fVar14 = ((float)pPlayer->positionz - fStack104) * fStack152 +
+               ((float)pPlayer->positionx - afStack112[0]) * fStack148;
       if (fVar14 < __x) {
         fStack156 = __x - fVar14;
       }
@@ -98454,8 +98454,8 @@ LAB_7f08497c:
       __x = sqrtf(fStack128 * fStack128 + fStack132 * fStack132);
       fStack172 = fStack132 * (1.00000000 / __x);
       fStack176 = -(fStack128 * (1.00000000 / __x));
-      z = (float)ptr_BONDdata->positionz;
-      __x = (float)ptr_BONDdata->positionx;
+      z = (float)pPlayer->positionz;
+      __x = (float)pPlayer->positionx;
       fVar14 = (z - fStack72) * fStack176 + (__x - fStack80) * fStack172;
       if (fVar14 < 0.00000000) {
         fStack172 = -fStack172;
@@ -98481,7 +98481,7 @@ LAB_7f08497c:
         proc_7F07D960(&fStack12,1);
         fStack12 = 0.00000000;
         fStack4 = 0.00000000;
-        iVar13 = proc_7F07CAC8(&ptr_BONDdata->positionx,ptr_BONDdata->ptr_tile_printmanpos,
+        iVar13 = proc_7F07CAC8(&pPlayer->positionx,pPlayer->ptr_tile_printmanpos,
                                extraout_f12,puStack92,afStack68);
         if (iVar13 == 0) {
           fStack96 = 0.00000000;
@@ -98504,10 +98504,10 @@ LAB_7f08497c:
     }
     if (dword_80036484 < 0.00000000) {
       dword_80036484 = dword_80036484 + flt_80055180;
-      __x = ptr_BONDdata->azimuth_turning_direction;
+      __x = pPlayer->azimuth_turning_direction;
     }
     else {
-      __x = ptr_BONDdata->azimuth_turning_direction;
+      __x = pPlayer->azimuth_turning_direction;
     }
     __x = __x * 3.50000000 * flt_80055184 * 4.00000000 + dword_80036484;
     if (__x < 0.00000000) {
@@ -98546,12 +98546,12 @@ LAB_7f08497c:
     if (dword_80036474 < 0.00000000) {
       dword_80036474 = dword_80036474 + flt_800551A0;
       dword_80036478 = dword_80036474 / flt_8005519C;
-      iVar13 = ptr_BONDdata->ptr_tile_printmanpos;
+      iVar13 = pPlayer->ptr_tile_printmanpos;
     }
     else {
-      iVar13 = ptr_BONDdata->ptr_tile_printmanpos;
+      iVar13 = pPlayer->ptr_tile_printmanpos;
     }
-    proc_7F07CDA8((float *)&ptr_BONDdata->positionx,iVar13,__x);
+    proc_7F07CDA8((float *)&pPlayer->positionx,iVar13,__x);
     if (lVar3 == 0) {
       dword_80036474 = fStack100;
       dword_80036484 = fStack100;
@@ -98587,23 +98587,23 @@ LAB_7f08497c:
       }
       dword_8003647C = dword_8003647C + dword_80036488 / global_timer_delta;
     }
-    ptr_BONDdata->azimuth_angle =
+    pPlayer->azimuth_angle =
          (((float)dword_80036464 + dword_80036474 +
-           ptr_BONDdata->azimuth_turning_direction * 3.50000000 * flt_800551D4 * 4.00000000 +
+           pPlayer->azimuth_turning_direction * 3.50000000 * flt_800551D4 * 4.00000000 +
           dword_8003647C * flt_800551D0 * 4.00000000) * 360.00000000) / flt_800551D8;
-    __x = ptr_BONDdata->azimuth_angle;
+    __x = pPlayer->azimuth_angle;
     while (__x < 0.00000000) {
-      ptr_BONDdata->azimuth_angle = __x + 360.00000000;
-      __x = ptr_BONDdata->azimuth_angle;
+      pPlayer->azimuth_angle = __x + 360.00000000;
+      __x = pPlayer->azimuth_angle;
     }
     while (360.00000000 <= __x) {
-      ptr_BONDdata->azimuth_angle = __x - 360.00000000;
-      __x = ptr_BONDdata->azimuth_angle;
+      pPlayer->azimuth_angle = __x - 360.00000000;
+      __x = pPlayer->azimuth_angle;
     }
   }
   else {
-    __x = ptr_BONDdata->azimuth_angle +
-          ptr_BONDdata->azimuth_turning_direction * global_timer_delta * 3.50000000;
+    __x = pPlayer->azimuth_angle +
+          pPlayer->azimuth_turning_direction * global_timer_delta * 3.50000000;
     while (__x < 0.00000000) {
       __x = __x + 360.00000000;
     }
@@ -98611,10 +98611,10 @@ LAB_7f08497c:
       do {
         __x = __x - 360.00000000;
       } while (360.00000000 <= __x);
-      ptr_BONDdata->azimuth_angle = __x;
+      pPlayer->azimuth_angle = __x;
     }
     else {
-      ptr_BONDdata->azimuth_angle = __x;
+      pPlayer->azimuth_angle = __x;
     }
   }
   proc_7F081790();
@@ -98641,17 +98641,17 @@ LAB_7f08497c:
       fVar14 = extraout_f14_01;
     }
   }
-  ducking_offset = (float)ptr_BONDdata->ducking_height_offset;
-  lVar3 = (longlong)(int)&ptr_BONDdata->ducking_height_offset;
+  ducking_offset = (float)pPlayer->ducking_height_offset;
+  lVar3 = (longlong)(int)&pPlayer->ducking_height_offset;
   if ((float)pfStack268 != ducking_offset) {
-    proc_7F042F18((float *)&ptr_BONDdata->ducking_height_offset,__x,pfStack268,fVar14,
-                  (float)&ptr_BONDdata->field_A4,0.50000000);
-    ducking_offset = (float)ptr_BONDdata->ducking_height_offset;
+    proc_7F042F18((float *)&pPlayer->ducking_height_offset,__x,pfStack268,fVar14,
+                  (float)&pPlayer->field_A4,0.50000000);
+    ducking_offset = (float)pPlayer->ducking_height_offset;
     lVar3 = extraout_a0_02;
     uVar11 = extraout_a1_02;
   }
   if ((float)pfStack268 == ducking_offset) {
-    ptr_BONDdata->field_A4 = 0.00000000;
+    pPlayer->field_A4 = 0.00000000;
   }
   if (in_tank_flag == TRUE) {
     if (DAT_800799b8 == 0) {
@@ -98670,8 +98670,8 @@ LAB_7f08497c:
         fStack344 = fStack344 + *(float *)(iVar13 + 0x5c);
         fStack340 = fStack340 + *(float *)(iVar13 + 0x60);
         fStack352 = (((float)dword_80036464 + dword_80036474) * 360.00000000) / flt_800551E0;
-        if (-20.00000000 <= ptr_BONDdata->inclination_angle1) {
-          fStack356 = ptr_BONDdata->inclination_angle1;
+        if (-20.00000000 <= pPlayer->inclination_angle1) {
+          fStack356 = pPlayer->inclination_angle1;
         }
         DAT_800799bc = DAT_800799bc + global_timer_delta / 45.00000000;
         if (1.00000000 <= DAT_800799bc) {
@@ -98679,7 +98679,7 @@ LAB_7f08497c:
         }
         __x = cosf(DAT_800799bc * flt_800551E4 * 0.50000000);
         f32_800799c0 = (f32)((__x + 1.00000000) * 0.50000000);
-        ptr_BONDdata->inclination_angle1 =
+        pPlayer->inclination_angle1 =
              (float)f32_800799c0 * copy_bond_inclination_angle1 +
              (1.00000000 - (float)f32_800799c0) * fStack356;
         __x = fStack352;
@@ -98689,21 +98689,21 @@ LAB_7f08497c:
         if (fStack352 - copy_bond_azimuth < -180.00000000) {
           __x = __x + 360.00000000;
         }
-        ptr_BONDdata->azimuth_angle =
+        pPlayer->azimuth_angle =
              (float)f32_800799c0 * copy_bond_azimuth + (1.00000000 - (float)f32_800799c0) * __x;
-        __x = ptr_BONDdata->azimuth_angle;
+        __x = pPlayer->azimuth_angle;
         if (360.00000000 <= __x) {
-          ptr_BONDdata->azimuth_angle = __x - 360.00000000;
-          __x = ptr_BONDdata->azimuth_angle;
+          pPlayer->azimuth_angle = __x - 360.00000000;
+          __x = pPlayer->azimuth_angle;
         }
         if (__x < 0.00000000) {
-          ptr_BONDdata->azimuth_angle = __x + 360.00000000;
+          pPlayer->azimuth_angle = __x + 360.00000000;
         }
         uStack8 = 0;
         fStack12 = ((float)f32_800799c0 * copy_bond_posx +
-                   (1.00000000 - (float)f32_800799c0) * fStack348) - (float)ptr_BONDdata->positionx;
+                   (1.00000000 - (float)f32_800799c0) * fStack348) - (float)pPlayer->positionx;
         fStack4 = ((float)f32_800799c0 * copy_bond_posz +
-                  (1.00000000 - (float)f32_800799c0) * fStack340) - (float)ptr_BONDdata->positionz;
+                  (1.00000000 - (float)f32_800799c0) * fStack340) - (float)pPlayer->positionz;
         lVar3 = extraout_a0_04;
         lVar9 = extraout_a1_03;
       }
@@ -98723,8 +98723,8 @@ LAB_7f08497c:
         lVar9 = extraout_a1_04;
       }
       else {
-        fVar14 = ptr_BONDdata->forward_speed_multiplier / 15.00000000;
-        __x = ptr_BONDdata->azimuth_turning_direction / flt_800551E8;
+        fVar14 = pPlayer->forward_speed_multiplier / 15.00000000;
+        __x = pPlayer->azimuth_turning_direction / flt_800551E8;
         if (fVar14 < 0.00000000) {
           fVar14 = -fVar14;
         }
@@ -98784,7 +98784,7 @@ LAB_7f08497c:
         }
         IVar5 = get_item_in_hand(0);
         if (IVar5 == ITEM_TANKSHELLS) {
-          dword_8003646C = (float)ptr_BONDdata->field_2A08 + flt_80055210;
+          dword_8003646C = (float)pPlayer->field_2A08 + flt_80055210;
         }
         __x = flt_80055214;
         if (dword_8003646C <= flt_80055214) {
@@ -98810,26 +98810,26 @@ LAB_7f08497c:
         lVar9 = extraout_a1_05;
       }
     }
-    *(float *)&ptr_BONDdata->field_19C =
-         (float)ptr_BONDdata->field_19C - (global_timer_delta * 0.75000000) / flt_80055224;
-    if ((float)ptr_BONDdata->field_19C < 0.00000000) {
-      ptr_BONDdata->field_19C = 0.00000000;
+    *(float *)&pPlayer->field_19C =
+         (float)pPlayer->field_19C - (global_timer_delta * 0.75000000) / flt_80055224;
+    if ((float)pPlayer->field_19C < 0.00000000) {
+      pPlayer->field_19C = 0.00000000;
     }
     proc_7F080B34(0.00000000,0.00000000,lVar3,lVar9,0.00000000);
     __x = sinf(flt_80055228 - (float)dword_80036464);
-    fStack12 = fStack12 + ptr_BONDdata->forward_speed_multiplier * __x * global_timer_delta;
+    fStack12 = fStack12 + pPlayer->forward_speed_multiplier * __x * global_timer_delta;
     __x = cosf(flt_8005522C - (float)dword_80036464);
-    fStack4 = fStack4 + ptr_BONDdata->forward_speed_multiplier * __x * global_timer_delta;
+    fStack4 = fStack4 + pPlayer->forward_speed_multiplier * __x * global_timer_delta;
     proc_7F07D960(&fStack12,1);
     if ((DAT_800799b8 == 2) && (0 < clock_timer)) {
-      __x = ((float)ptr_BONDdata->positionx - (float)ptr_BONDdata->field_408) / global_timer_delta;
-      fVar14 = ((float)ptr_BONDdata->positionz - (float)ptr_BONDdata->field_410) /
+      __x = ((float)pPlayer->positionx - (float)pPlayer->field_408) / global_timer_delta;
+      fVar14 = ((float)pPlayer->positionz - (float)pPlayer->field_410) /
                global_timer_delta;
       __x = sqrtf(__x * __x + fVar14 * fVar14);
-      if (ptr_BONDdata->forward_speed_multiplier < 0.00000000) {
+      if (pPlayer->forward_speed_multiplier < 0.00000000) {
         __x = -__x;
       }
-      ptr_BONDdata->forward_speed_multiplier = __x;
+      pPlayer->forward_speed_multiplier = __x;
     }
     goto LAB_7f0863ac;
   }
@@ -98860,19 +98860,19 @@ LAB_7f085bb4:
     lVar3 = extraout_a0_07;
     uVar11 = extraout_a1_10;
   }
-  fStack24 = ptr_BONDdata->strafe_speed_multiplier * DAT_80036af4 * 0.50000000 * global_timer_delta;
-  fStack408 = (float)ptr_BONDdata->field_4A0 * -(float)ptr_BONDdata->field_1274 -
-              (float)ptr_BONDdata->field_1278;
-  fStack412 = (float)ptr_BONDdata->field_498 * (float)ptr_BONDdata->field_1274 -
-              (float)ptr_BONDdata->field_127C;
+  fStack24 = pPlayer->strafe_speed_multiplier * DAT_80036af4 * 0.50000000 * global_timer_delta;
+  fStack408 = (float)pPlayer->field_4A0 * -(float)pPlayer->field_1274 -
+              (float)pPlayer->field_1278;
+  fStack412 = (float)pPlayer->field_498 * (float)pPlayer->field_1274 -
+              (float)pPlayer->field_127C;
   fStack416 = fStack408 * fStack408 + fStack412 * fStack412;
   if (100.00000000 <= fStack416) {
     fStack408 = fStack408 * flt_80055230;
     fStack412 = fStack412 * flt_80055230;
   }
-  fVar14 = ptr_BONDdata->forward_speed_multiplier;
-  fStack32 = ptr_BONDdata->strafe_speed_multiplier * flt_80055234;
-  __x = ptr_BONDdata->azimuth_turning_direction * flt_80055234;
+  fVar14 = pPlayer->forward_speed_multiplier;
+  fStack32 = pPlayer->strafe_speed_multiplier * flt_80055234;
+  __x = pPlayer->azimuth_turning_direction * flt_80055234;
   if (fStack32 < 0.00000000) {
     fStack32 = -fStack32;
   }
@@ -98893,58 +98893,58 @@ LAB_7f085bb4:
     fStack32 = flt_80055234;
   }
   if (0.75000000 <= fStack32) {
-    *(float *)&ptr_BONDdata->field_19C =
-         (float)ptr_BONDdata->field_19C +
+    *(float *)&pPlayer->field_19C =
+         (float)pPlayer->field_19C +
          ((fStack32 - 0.75000000) * global_timer_delta) / 900.00000000;
   }
   else {
-    *(float *)&ptr_BONDdata->field_19C =
-         (float)ptr_BONDdata->field_19C -
+    *(float *)&pPlayer->field_19C =
+         (float)pPlayer->field_19C -
          ((0.75000000 - fStack32) * global_timer_delta) / flt_8005523C;
   }
-  if ((float)ptr_BONDdata->field_19C < 0.00000000) {
-    ptr_BONDdata->field_19C = 0.00000000;
+  if ((float)pPlayer->field_19C < 0.00000000) {
+    pPlayer->field_19C = 0.00000000;
   }
   else {
-    if (1.00000000 < (float)ptr_BONDdata->field_19C) {
-      ptr_BONDdata->field_19C = 1.00000000;
+    if (1.00000000 < (float)pPlayer->field_19C) {
+      pPlayer->field_19C = 1.00000000;
     }
   }
-  proc_7F080B34(fStack32,ptr_BONDdata->forward_speed_multiplier,lVar3,uVar11,fStack24);
+  proc_7F080B34(fStack32,pPlayer->forward_speed_multiplier,lVar3,uVar11,fStack24);
   fStack12 = fStack12 +
-             ((float)ptr_BONDdata->field_504 * (float)ptr_BONDdata->field_498 -
-             (float)ptr_BONDdata->scaled_velocity * (float)ptr_BONDdata->field_4A0) *
+             ((float)pPlayer->field_504 * (float)pPlayer->field_498 -
+             (float)pPlayer->scaled_velocity * (float)pPlayer->field_4A0) *
              global_timer_delta + fStack408;
-  fStack4 = fStack4 + ((float)ptr_BONDdata->field_504 * (float)ptr_BONDdata->field_4A0 +
-                      (float)ptr_BONDdata->scaled_velocity * (float)ptr_BONDdata->field_498) *
+  fStack4 = fStack4 + ((float)pPlayer->field_504 * (float)pPlayer->field_4A0 +
+                      (float)pPlayer->scaled_velocity * (float)pPlayer->field_498) *
                       global_timer_delta + fStack412;
-  fStack432 = (float)ptr_BONDdata->positionx;
-  puStack436 = (undefined4 *)ptr_BONDdata->positionz;
-  iStack440 = ptr_BONDdata->ptr_tile_printmanpos;
+  fStack432 = (float)pPlayer->positionx;
+  puStack436 = (undefined4 *)pPlayer->positionz;
+  iStack440 = pPlayer->ptr_tile_printmanpos;
   BVar8 = get_debug_fast_bond_flag();
   if (BVar8 != FALSE) {
     fStack12 = fStack12 +
-               ((float)ptr_BONDdata->field_498 * ptr_BONDdata->forward_speed_multiplier -
-               (float)ptr_BONDdata->field_4A0 * ptr_BONDdata->strafe_speed_multiplier) *
+               ((float)pPlayer->field_498 * pPlayer->forward_speed_multiplier -
+               (float)pPlayer->field_4A0 * pPlayer->strafe_speed_multiplier) *
                global_timer_delta * 10.00000000;
-    fStack4 = fStack4 + ((float)ptr_BONDdata->field_4A0 * ptr_BONDdata->forward_speed_multiplier +
-                        (float)ptr_BONDdata->field_498 * ptr_BONDdata->strafe_speed_multiplier) *
+    fStack4 = fStack4 + ((float)pPlayer->field_4A0 * pPlayer->forward_speed_multiplier +
+                        (float)pPlayer->field_498 * pPlayer->strafe_speed_multiplier) *
                         global_timer_delta * 10.00000000;
   }
-  proc_7F07D960(&fStack12,(uint)((float)ptr_BONDdata->field_1274 == 0.00000000));
+  proc_7F07D960(&fStack12,(uint)((float)pPlayer->field_1274 == 0.00000000));
   proc_7F0B2314(&iStack440,extraout_f12_03,extraout_f14_02,fStack432,puStack436);
   iVar13 = proc_7F0B23A4((int)auStack516);
   if (iVar13 != 0) {
     uStack36 = 1;
   }
-  proc_7F0B2314(&ptr_BONDdata->ptr_tile_printmanpos,extraout_f12_04,extraout_f14_03,
-                (float)ptr_BONDdata->positionx,(undefined4 *)ptr_BONDdata->positionz);
+  proc_7F0B2314(&pPlayer->ptr_tile_printmanpos,extraout_f12_04,extraout_f14_03,
+                (float)pPlayer->positionx,(undefined4 *)pPlayer->positionz);
   iVar13 = proc_7F0B23A4((int)auStack516);
   if (iVar13 != 0) {
     uStack36 = 1;
   }
-  proc_7F0B2314(&ptr_BONDdata->ptr_tile_printmanpos,extraout_f12_05,extraout_f14_04,
-                (float)ptr_BONDdata->positionx,(undefined4 *)ptr_BONDdata->positionz);
+  proc_7F0B2314(&pPlayer->ptr_tile_printmanpos,extraout_f12_05,extraout_f14_04,
+                (float)pPlayer->positionx,(undefined4 *)pPlayer->positionz);
   iVar13 = proc_7F0B23A4((int)auStack516);
   if (iVar13 == 0) {
     proc_7F0B2314(&iStack440,extraout_f12_06,extraout_f14_05,fStack432,puStack436);
@@ -98953,7 +98953,7 @@ LAB_7f085bb4:
   if (iVar13 != 0) {
     uStack36 = 1;
     proc_7F0B2420(aiStack580,&iStack584,(int)&fStack564);
-    if ((float)ptr_BONDdata->clipping_height <= fStack536) {
+    if ((float)pPlayer->clipping_height <= fStack536) {
       fStack588 = fStack544 - fStack556;
       fStack592 = fStack564 - fStack552;
       __x = sqrtf(fStack588 * fStack588 + fStack592 * fStack592);
@@ -98977,7 +98977,7 @@ LAB_7f085bb4:
           fStack568 = 0.00000000;
         }
         else {
-          fVar15 = (float)ptr_BONDdata->collision_radius;
+          fVar15 = (float)pPlayer->collision_radius;
           if (fVar15 < __x) {
             fStack568 = 0.00000000;
           }
@@ -98997,8 +98997,8 @@ LAB_7f085bb4:
         fVar15 = (1.00000000 - fStack568) * fVar14;
         fStack40 = fVar15 * 0.25000000;
         __x = fStack568;
-        if (fStack536 <= (float)ptr_BONDdata->clipping_height + fStack40) {
-          fStack40 = fStack536 - (float)ptr_BONDdata->clipping_height;
+        if (fStack536 <= (float)pPlayer->clipping_height + fStack40) {
+          fStack40 = fStack536 - (float)pPlayer->clipping_height;
           __x = fStack568 + (fVar15 - fStack40 / 0.25000000) / fVar14;
         }
       }
@@ -99014,27 +99014,27 @@ LAB_7f085bb4:
       fVar14 = fStack40 / (fStack536 - fStack560);
       fStack12 = fVar14 * fStack528 + fStack12 * __x;
       fStack4 = fVar14 * fStack520 + fStack4 * __x;
-      *(float *)&ptr_BONDdata->positionx = fStack432;
-      *(undefined4 **)&ptr_BONDdata->positionz = puStack436;
-      ptr_BONDdata->ptr_tile_printmanpos = iStack440;
-      proc_7F07D960(&fStack12,(uint)((float)ptr_BONDdata->field_1274 == 0.00000000));
+      *(float *)&pPlayer->positionx = fStack432;
+      *(undefined4 **)&pPlayer->positionz = puStack436;
+      pPlayer->ptr_tile_printmanpos = iStack440;
+      proc_7F07D960(&fStack12,(uint)((float)pPlayer->field_1274 == 0.00000000));
     }
   }
-  fVar14 = (float)ptr_BONDdata->positionx - fStack432;
-  fVar15 = (float)ptr_BONDdata->positionz - (float)puStack436;
+  fVar14 = (float)pPlayer->positionx - fStack432;
+  fVar15 = (float)pPlayer->positionz - (float)puStack436;
   __x = fStack4 * fStack4 + fStack12 * fStack12;
   if (__x != 0.00000000) {
     __x = (fVar14 * fVar14 + fVar15 * fVar15) / __x;
   }
   __x = sqrtf(__x);
-  *(float *)&ptr_BONDdata->field_1278 = (float)ptr_BONDdata->field_1278 + __x * fStack408;
-  *(float *)&ptr_BONDdata->field_127C = (float)ptr_BONDdata->field_127C + __x * fStack412;
+  *(float *)&pPlayer->field_1278 = (float)pPlayer->field_1278 + __x * fStack408;
+  *(float *)&pPlayer->field_127C = (float)pPlayer->field_127C + __x * fStack412;
 LAB_7f0863ac:
-  fStack628 = ptr_BONDdata->inclination_turning_direction / flt_8005524C +
-              (float)ptr_BONDdata->field_A4 / 5.00000000;
+  fStack628 = pPlayer->inclination_turning_direction / flt_8005524C +
+              (float)pPlayer->field_A4 / 5.00000000;
   proc_7F08EAF8();
   proc_7F05E0E4();
-  proc_7F05E5F0((float)ptr_BONDdata->inclination_angle2 * flt_80055254);
+  proc_7F05E5F0((float)pPlayer->inclination_angle2 * flt_80055254);
   if (((ptr_playerstank != 0) && (in_tank_flag == TRUE)) && (DAT_800799b8 == 2)) {
     iVar13 = *(int *)(ptr_playerstank + 4);
     iStack648 = *(int *)(*(int *)(*(int *)(*(int *)(*(int *)(iVar13 + 0x14) + 8) + 8) + 0x14) + 4);
@@ -99059,11 +99059,11 @@ LAB_7f0863ac:
     fStack720 = -DAT_800799ac;
     fStack716 = -dword_8007A070;
     proc_7F0583D8(afStack712,&fStack724);
-    fStack724 = fStack724 + (float)ptr_BONDdata->positionx;
-    fStack716 = fStack716 + (float)ptr_BONDdata->positionz;
-    *(int *)(*(int *)(iStack640 + 0x10) + 0x14) = ptr_BONDdata->ptr_tile_printmanpos;
+    fStack724 = fStack724 + (float)pPlayer->positionx;
+    fStack716 = fStack716 + (float)pPlayer->positionz;
+    *(int *)(*(int *)(iStack640 + 0x10) + 0x14) = pPlayer->ptr_tile_printmanpos;
     proc_7F0B0BE4((int *)(*(int *)(iStack640 + 0x10) + 0x14),extraout_f12_07,extraout_f14_06,
-                  (float)ptr_BONDdata->positionx,(float)ptr_BONDdata->positionz);
+                  (float)pPlayer->positionx,(float)pPlayer->positionz);
     fVar14 = (float)proc_7F0B2970();
     *(float *)(iVar13 + 0xd4) = fVar14;
     __x = flt_8005525C;
@@ -99090,7 +99090,7 @@ LAB_7f0863ac:
     *(float *)(iStack640 + 0x60) = fStack716;
     proc_7F056CA0(iStack640);
     proc_7F040484(iStack640);
-    proc_7F07C888(afStack772,(float *)&ptr_BONDdata->positionx,extraout_f12_08);
+    proc_7F07C888(afStack772,(float *)&pPlayer->positionx,extraout_f12_08);
     proc_7F03CB8C(*(char **)(iStack640 + 0x10),auStack804);
     proc_7F03E3FC((int *)auStack804);
     sVar1 = *ptr_list_object_lookup_indices;
@@ -99154,8 +99154,8 @@ LAB_7f0863ac:
   BVar8 = get_debug_man_pos_flag();
   if (BVar8 != FALSE) {
     copy_tile_RGB_as_24bit
-              ((int *)ptr_BONDdata->ptr_tile_printmanpos,(int)ptr_BONDdata->positionx,
-               ptr_BONDdata->positionz,&tStack860);
+              ((int *)pPlayer->ptr_tile_printmanpos,(int)pPlayer->positionx,
+               pPlayer->positionz,&tStack860);
   }
   return;
 }
@@ -99204,12 +99204,12 @@ void proc_7F086990(undefined8 param_1,undefined8 param_2,ushort param_3,ushort p
     fStack40 = fStack40 + DAT_80079998 * global_timer_delta;
   }
   fStack48 = fStack48 +
-             ((float)ptr_BONDdata->field_504 * (float)ptr_BONDdata->field_498 -
-             (float)ptr_BONDdata->scaled_velocity * (float)ptr_BONDdata->field_4A0) *
+             ((float)pPlayer->field_504 * (float)pPlayer->field_498 -
+             (float)pPlayer->scaled_velocity * (float)pPlayer->field_4A0) *
              global_timer_delta;
   fStack40 = fStack40 +
-             ((float)ptr_BONDdata->field_504 * (float)ptr_BONDdata->field_4A0 +
-             (float)ptr_BONDdata->scaled_velocity * (float)ptr_BONDdata->field_498) *
+             ((float)pPlayer->field_504 * (float)pPlayer->field_4A0 +
+             (float)pPlayer->scaled_velocity * (float)pPlayer->field_498) *
              global_timer_delta;
   proc_7F07D960(&fStack48,1);
   proc_7F080DF8();
@@ -99537,52 +99537,52 @@ LAB_7f087330:
     if (uVar6 == 0) {
       missiontime += clock_timer;
     }
-    MoveBond(param_1,param_2,param_3,ptr_BONDdata->field_3B4);
+    MoveBond(param_1,param_2,param_3,pPlayer->field_3B4);
   }
   else {
-    proc_7F086990((longlong)param_1,(longlong)param_2,param_3,ptr_BONDdata->field_3B4);
+    proc_7F086990((longlong)param_1,(longlong)param_2,param_3,pPlayer->field_3B4);
   }
   watch_time += dword_80048498;
   if (stop_time_flag != 0) {
     isset = get_controls_locked_flag();
-    if ((isset == 0) && ((param_3 & ~ptr_BONDdata->field_3B4 & 0xf030) != 0)) {
+    if ((isset == 0) && ((param_3 & ~pPlayer->field_3B4 & 0xf030) != 0)) {
       stop_time_flag = 2;
       uVar3 = check_if_fade_to_black_complete();
       if (uVar3 == 0) {
-        if ((float)ptr_BONDdata->field_404 == 0.00000000) {
-          fade_to_over_seconds(ptr_BONDdata->field_3E0,1.00000000);
+        if ((float)pPlayer->field_404 == 0.00000000) {
+          fade_to_over_seconds(pPlayer->field_3E0,1.00000000);
         }
       }
       else {
-        if (ptr_BONDdata->tint_alpha == 0.00000000) {
+        if (pPlayer->tint_alpha == 0.00000000) {
           proc_7F0807B0(0,0,0,0);
           fade_to_over_seconds(60.00000000,1.00000000);
         }
       }
     }
     if (((stop_time_flag == 2) && (uVar3 = check_if_fade_to_black_complete(), uVar3 != 0)) &&
-       (ptr_BONDdata->tint_alpha == 1.00000000)) {
+       (pPlayer->tint_alpha == 1.00000000)) {
       return_to_title_from_level_end();
     }
   }
   if (enable_move_after_cinema != 0) {
     proc_7F07B1A4();
   }
-  if (ptr_BONDdata->player_button_control != 0) {
-    isset = ptr_BONDdata->field_424;
+  if (pPlayer->player_button_control != 0) {
+    isset = pPlayer->field_424;
     if (isset == 0) {
       draw_item_in_hand_has_more_ammo(1,ITEM_UNARMED);
       draw_item_in_hand_has_more_ammo(0,ITEM_UNARMED);
-      isset = ptr_BONDdata->field_424;
+      isset = pPlayer->field_424;
     }
-    if (((isset != 0) && (ptr_BONDdata->field_428 != 0)) && (2 < dword_80036510)) {
+    if (((isset != 0) && (pPlayer->field_428 != 0)) && (2 < dword_80036510)) {
       run_title_stage();
     }
   }
   if ((cameramode == UNK10_CAM) && (uVar3 = check_if_fade_to_black_complete(), uVar3 != 0)) {
     run_title_stage();
   }
-  ptr_BONDdata->field_3B4 = param_3;
+  pPlayer->field_3B4 = param_3;
   return;
 }
 
@@ -99596,16 +99596,16 @@ void proc_7F0875E4(void)
   int in_a0_lo;
   f32 fVar1;
   
-  proc_7F0BCA34(in_a0_lo,(float *)&ptr_BONDdata->current_model_xpos);
+  proc_7F0BCA34(in_a0_lo,(float *)&pPlayer->current_model_xpos);
   fVar1 = proc_7F0B483C();
-  *(float *)&ptr_BONDdata->current_room_xpos =
-       (float)fVar1 * (float)ptr_BONDdata->current_model_xpos;
+  *(float *)&pPlayer->current_room_xpos =
+       (float)fVar1 * (float)pPlayer->current_model_xpos;
   fVar1 = proc_7F0B483C();
-  *(float *)&ptr_BONDdata->current_room_ypos =
-       (float)fVar1 * (float)ptr_BONDdata->current_model_ypos;
+  *(float *)&pPlayer->current_room_ypos =
+       (float)fVar1 * (float)pPlayer->current_model_ypos;
   fVar1 = proc_7F0B483C();
-  *(float *)&ptr_BONDdata->current_room_zpos =
-       (float)fVar1 * (float)ptr_BONDdata->current_model_zpos;
+  *(float *)&pPlayer->current_room_zpos =
+       (float)fVar1 * (float)pPlayer->current_model_zpos;
   proc_7F0BC624(in_a0_lo);
   return;
 }
@@ -99617,11 +99617,11 @@ void store_BONDdata_curpos_to_previous(void)
 {
   float *pfVar1;
   
-  ptr_BONDdata->previous_model_xpos = ptr_BONDdata->current_model_xpos;
-  ptr_BONDdata->previous_model_ypos = ptr_BONDdata->current_model_ypos;
-  ptr_BONDdata->previous_model_zpos = ptr_BONDdata->current_model_zpos;
+  pPlayer->previous_model_xpos = pPlayer->current_model_xpos;
+  pPlayer->previous_model_ypos = pPlayer->current_model_ypos;
+  pPlayer->previous_model_zpos = pPlayer->current_model_zpos;
   pfVar1 = (float *)proc_7F0783C4();
-  proc_7F0583D8(pfVar1,(float *)&ptr_BONDdata->previous_model_xpos);
+  proc_7F0583D8(pfVar1,(float *)&pPlayer->previous_model_xpos);
   return;
 }
 
@@ -99672,17 +99672,17 @@ void proc_7F0876C4(float *param_1,float *param_2,float *param_3)
   get_cur_players_room();
   pLStack68 = (LookAt *)proc_7F0875E4();
   proc_7F0BD6E0();
-  *(LookAt **)&ptr_BONDdata->field_5C = pLStack68;
+  *(LookAt **)&pPlayer->field_5C = pLStack68;
   proc_7F0BD6E0();
-  *(LookAt **)&ptr_BONDdata->field_60 = pLStack68;
+  *(LookAt **)&pPlayer->field_60 = pLStack68;
   proc_7F0BD6E0();
-  *(LookAt **)&ptr_BONDdata->field_64 = pLStack68;
+  *(LookAt **)&pPlayer->field_64 = pLStack68;
   proc_7F0BD6E0();
-  *(LookAt **)&ptr_BONDdata->field_68 = pLStack68;
+  *(LookAt **)&pPlayer->field_68 = pLStack68;
   proc_7F0BD6F8(2);
-  fStack156 = (*param_1 - (float)ptr_BONDdata->current_model_xpos) * flt_800364CC;
-  fStack152 = (param_1[1] - (float)ptr_BONDdata->current_model_ypos) * flt_800364CC;
-  fStack148 = (param_1[2] - (float)ptr_BONDdata->current_model_zpos) * flt_800364CC;
+  fStack156 = (*param_1 - (float)pPlayer->current_model_xpos) * flt_800364CC;
+  fStack152 = (param_1[1] - (float)pPlayer->current_model_ypos) * flt_800364CC;
+  fStack148 = (param_1[2] - (float)pPlayer->current_model_zpos) * flt_800364CC;
   fStack144 = *param_2 + fStack156;
   fStack140 = param_2[1] + fStack152;
   fStack136 = param_2[2] + fStack148;
@@ -99692,7 +99692,7 @@ void proc_7F0876C4(float *param_1,float *param_2,float *param_3)
   guLookAtReflect((Mtx *)abStack64,pLStack68,xEye,yEye,fStack156,fStack152,fStack148,fStack144,
                   fStack140,fStack136,*param_3);
   pfVar1 = param_1;
-  proc_7F059424((float *)ptr_BONDdata->field_64,extraout_f12_00,extraout_f14_00,*param_1,param_1[1],
+  proc_7F059424((float *)pPlayer->field_64,extraout_f12_00,extraout_f14_00,*param_1,param_1[1],
                 param_1[2],*param_2,param_2[1],param_2[2],*param_3);
   fVar11 = *param_2;
   fVar12 = param_2[1];
@@ -99700,7 +99700,7 @@ void proc_7F0876C4(float *param_1,float *param_2,float *param_3)
   fVar7 = *param_3;
   fVar6 = param_3[1];
   fVar9 = param_3[2];
-  proc_7F059708((float *)ptr_BONDdata->field_68,extraout_f12_01,extraout_f14_01,*param_1,param_1[1],
+  proc_7F059708((float *)pPlayer->field_68,extraout_f12_01,extraout_f14_01,*param_1,param_1[1],
                 param_1[2],fVar11,fVar12,fVar10,fVar7);
   proc_7F0BD6E0();
   pfVar4 = (float *)proc_7F0783E4();
@@ -99740,11 +99740,11 @@ void proc_7F0876C4(float *param_1,float *param_2,float *param_3)
                                                   in_stack_fffffee4),unaff_s0_lo),unaff_s1_lo),
                                          unaff_s2_lo),unaff_retaddr),in_stack_ffffff00),
            (Mtx *)afStack132);
-  proc_7F059334((uint *)ptr_BONDdata->field_5C,ptr_BONDdata->field_60);
-  proc_7F078344(ptr_BONDdata->field_5C);
-  proc_7F078324(ptr_BONDdata->field_60);
-  proc_7F0783A4(ptr_BONDdata->field_64);
-  proc_7F078424(ptr_BONDdata->field_68);
+  proc_7F059334((uint *)pPlayer->field_5C,pPlayer->field_60);
+  proc_7F078344(pPlayer->field_5C);
+  proc_7F078324(pPlayer->field_60);
+  proc_7F0783A4(pPlayer->field_64);
+  proc_7F078424(pPlayer->field_68);
   proc_7F078464(pLStack68);
   proc_7F0785DC();
   store_BONDdata_curpos_to_previous();
@@ -99776,24 +99776,24 @@ undefined4 proc_7F087A08(undefined4 param_1)
   f32 local_8;
   f32 local_4;
   
-  if (ptr_BONDdata->unknown == 1) {
-    local_c = ptr_BONDdata->xpos;
-    local_8 = ptr_BONDdata->ypos;
-    local_4 = ptr_BONDdata->zpos;
-    local_18 = (float)ptr_BONDdata->xpos2 - (float)ptr_BONDdata->xpos;
-    local_14 = (float)ptr_BONDdata->ypos2 - (float)ptr_BONDdata->ypos;
-    local_10 = (float)ptr_BONDdata->zpos2 - (float)ptr_BONDdata->zpos;
-    local_24 = ptr_BONDdata->xoffset;
-    local_20 = ptr_BONDdata->yoffset;
-    local_1c = ptr_BONDdata->zoffset;
+  if (pPlayer->unknown == 1) {
+    local_c = pPlayer->xpos;
+    local_8 = pPlayer->ypos;
+    local_4 = pPlayer->zpos;
+    local_18 = (float)pPlayer->xpos2 - (float)pPlayer->xpos;
+    local_14 = (float)pPlayer->ypos2 - (float)pPlayer->ypos;
+    local_10 = (float)pPlayer->zpos2 - (float)pPlayer->zpos;
+    local_24 = pPlayer->xoffset;
+    local_20 = pPlayer->yoffset;
+    local_1c = pPlayer->zoffset;
   }
   else {
-    local_28 = &ptr_BONDdata->ptr_tile_printmanpos;
+    local_28 = &pPlayer->ptr_tile_printmanpos;
     local_34 = dword_80036830;
     local_30 = dword_80036834;
     local_2c = dword_80036838;
-    if (ptr_BONDdata->player_button_control == 0) {
-      proc_7F09C7C4((float *)&ptr_BONDdata->field_4B4,(float *)&ptr_BONDdata->field_4C0,&local_34);
+    if (pPlayer->player_button_control == 0) {
+      proc_7F09C7C4((float *)&pPlayer->field_4B4,(float *)&pPlayer->field_4C0,&local_34);
     }
     else {
       video_related_9(0.00000000);
@@ -99817,12 +99817,12 @@ undefined4 proc_7F087A08(undefined4 param_1)
   if (flt_8005526C <= vector2) {
     vector2 = vector2 - flt_80055270;
   }
-  *(float *)&ptr_BONDdata->field_2A08 = vector2;
+  *(float *)&pPlayer->field_2A08 = vector2;
   vector2 = convert_angle_using_inverse((f32)-local_40,(f32)-local_38);
   if (flt_80055274 <= vector2) {
     vector2 = vector2 - flt_80055278;
   }
-  *(float *)&ptr_BONDdata->field_2A0C = vector2;
+  *(float *)&pPlayer->field_2A0C = vector2;
   return param_1;
 }
 
@@ -99852,7 +99852,7 @@ void seems_to_load_cuff_microcode(void)
   }
   else {
     puVar1 = (uint *)extract_id_from_object_structure_microcode(objinst,*ppuVar2);
-    *puVar1 = (uint)(ptr_BONDdata->cuff_value == 3);
+    *puVar1 = (uint)(pPlayer->cuff_value == 3);
     iVar3 = *(int *)(in_a1_lo + 8);
     ppuVar2 = (ushort **)(iVar3 + iVar4);
     puVar5 = ppuVar2[1];
@@ -99860,7 +99860,7 @@ void seems_to_load_cuff_microcode(void)
   if (puVar5 != NULL) {
     puVar1 = (uint *)extract_id_from_object_structure_microcode
                                (objinst,*(ushort **)(iVar3 + (in_a2_lo + 1) * 4));
-    iVar3 = ptr_BONDdata->cuff_value;
+    iVar3 = pPlayer->cuff_value;
     if (iVar3 == 1) {
       *puVar1 = (uint)(iVar3 == 1);
     }
@@ -99888,7 +99888,7 @@ void seems_to_load_cuff_microcode(void)
   if (ppuVar2[2] != NULL) {
     puVar1 = (uint *)extract_id_from_object_structure_microcode
                                (objinst,*(ushort **)(iVar3 + (in_a2_lo + 2) * 4));
-    iVar3 = ptr_BONDdata->cuff_value;
+    iVar3 = pPlayer->cuff_value;
     if (iVar3 == 5) {
       *puVar1 = (uint)(iVar3 == 5);
     }
@@ -99906,21 +99906,21 @@ void seems_to_load_cuff_microcode(void)
   if (ppuVar2[3] != NULL) {
     puVar1 = (uint *)extract_id_from_object_structure_microcode
                                (objinst,*(ushort **)(iVar3 + (in_a2_lo + 3) * 4));
-    *puVar1 = (uint)(ptr_BONDdata->cuff_value == 0);
+    *puVar1 = (uint)(pPlayer->cuff_value == 0);
     iVar3 = *(int *)(in_a1_lo + 8);
     ppuVar2 = (ushort **)(iVar3 + iVar4);
   }
   if (ppuVar2[4] != NULL) {
     puVar1 = (uint *)extract_id_from_object_structure_microcode
                                (objinst,*(ushort **)(iVar3 + (in_a2_lo + 4) * 4));
-    *puVar1 = (uint)(ptr_BONDdata->cuff_value == 2);
+    *puVar1 = (uint)(pPlayer->cuff_value == 2);
     iVar3 = *(int *)(in_a1_lo + 8);
     ppuVar2 = (ushort **)(iVar3 + iVar4);
   }
   if (ppuVar2[5] != NULL) {
     puVar1 = (uint *)extract_id_from_object_structure_microcode
                                (objinst,*(ushort **)(iVar3 + (in_a2_lo + 5) * 4));
-    *puVar1 = (uint)(ptr_BONDdata->cuff_value == 4);
+    *puVar1 = (uint)(pPlayer->cuff_value == 4);
   }
   return;
 }
@@ -99989,11 +99989,11 @@ undefined4 * proc_7F087E74(undefined4 *param_1)
   uint local_c;
   
   local_res0 = param_1;
-  if (ptr_BONDdata->pause_animation_state != 0) {
+  if (pPlayer->pause_animation_state != 0) {
     ppfVar9 = (float **)&dword_8003683C;
     ppfVar7 = &local_40;
     local_res0 = param_1;
-    if (ptr_BONDdata->pausing_flag != 0) {
+    if (pPlayer->pausing_flag != 0) {
       do {
         ppfVar10 = ppfVar9 + 3;
         ppfVar8 = ppfVar7 + 3;
@@ -100009,38 +100009,38 @@ undefined4 * proc_7F087E74(undefined4 *param_1)
       local_84 = (float)DAT_80036884;
       local_98 = get_ptr_itemheader_in_hand(1);
       local_a4 = (Mtx *)extract_id_from_object_structure_microcode
-                                  ((int)&ptr_BONDdata->something_with_watch_object_instance,
+                                  ((int)&pPlayer->something_with_watch_object_instance,
                                    *(ushort **)(local_98->offset_objblock + 0xc));
       local_a0 = local_a4;
       proc_7F0BD6E0();
-      guPerspective(local_a4,&local_a6,fovy,aspect,ptr_BONDdata->zoominfovy,1.45454550,10.00000000);
+      guPerspective(local_a4,&local_a6,fovy,aspect,pPlayer->zoominfovy,1.45454550,10.00000000);
       *param_1 = 0x1030040;
       *(Mtx **)(param_1 + 1) = local_a4 + -0x2000000;
       param_1[2] = 0xbc00000e;
       param_1[3] = (uint)local_a6;
       local_34 = param_1 + 4;
-      *(int *)*local_a0 = ptr_BONDdata->paused_flag;
-      local_8c = (float)ptr_BONDdata->field_498 * ((float)ptr_BONDdata->field_54C + -12.00000000) +
-                 (float)ptr_BONDdata->positionx +
-                 (float)ptr_BONDdata->field_544 * -(float)ptr_BONDdata->field_4A0;
-      local_88 = (float)ptr_BONDdata->field_548 + (float)ptr_BONDdata->positiony;
-      local_84 = (float)ptr_BONDdata->field_4A0 * ((float)ptr_BONDdata->field_54C + -12.00000000) +
-                 (float)ptr_BONDdata->positionz +
-                 (float)ptr_BONDdata->field_544 * (float)ptr_BONDdata->field_498;
+      *(int *)*local_a0 = pPlayer->paused_flag;
+      local_8c = (float)pPlayer->field_498 * ((float)pPlayer->field_54C + -12.00000000) +
+                 (float)pPlayer->positionx +
+                 (float)pPlayer->field_544 * -(float)pPlayer->field_4A0;
+      local_88 = (float)pPlayer->field_548 + (float)pPlayer->positiony;
+      local_84 = (float)pPlayer->field_4A0 * ((float)pPlayer->field_54C + -12.00000000) +
+                 (float)pPlayer->positionz +
+                 (float)pPlayer->field_544 * (float)pPlayer->field_498;
       proc_7F0584D0(&local_8c,extraout_f12,
-                    (float *)((360.00000000 - ptr_BONDdata->azimuth_angle) * flt_8005527C));
+                    (float *)((360.00000000 - pPlayer->azimuth_angle) * flt_8005527C));
       local_94 = (float *)proc_7F0783C4();
       proc_7F058098(local_94,afStack128);
       proc_7F0BD714((int)local_98->num_objgroups << 6);
       seems_to_load_cuff_microcode();
       local_40 = afStack128;
       local_30 = local_94;
-      subcalcmatrices(&local_40,(uint)&ptr_BONDdata->something_with_watch_object_instance,
+      subcalcmatrices(&local_40,(uint)&pPlayer->something_with_watch_object_instance,
                       extraout_a2_lo,extraout_a3_lo);
       local_90 = (float *)0x3f800000;
       pfVar11 = *(float **)(*(int *)local_98->offset_objblock + 4);
       local_168 = watch_time;
-      pfVar6 = (float *)((float)ptr_BONDdata->field_258 / 20.00000000);
+      pfVar6 = (float *)((float)pPlayer->field_258 / 20.00000000);
       if (1.00000000 < (float)pfVar6) {
         fVar12 = *pfVar11;
       }
@@ -100048,19 +100048,19 @@ undefined4 * proc_7F087E74(undefined4 *param_1)
         fVar12 = *pfVar11;
         local_90 = pfVar6;
       }
-      local_144 = (((float)ptr_BONDdata->field_1D4 -
-                   fVar12 * (float)ptr_BONDdata->watch_scale_destination) - local_94[0xc]) *
+      local_144 = (((float)pPlayer->field_1D4 -
+                   fVar12 * (float)pPlayer->watch_scale_destination) - local_94[0xc]) *
                   (float)local_90 + local_94[0xc];
-      local_140 = (((float)ptr_BONDdata->field_1D8 +
-                   pfVar11[2] * (float)ptr_BONDdata->watch_scale_destination) - local_94[0xd]) *
+      local_140 = (((float)pPlayer->field_1D8 +
+                   pfVar11[2] * (float)pPlayer->watch_scale_destination) - local_94[0xd]) *
                   (float)local_90 + local_94[0xd];
       fVar12 = local_94[0xe];
-      local_13c = (((float)ptr_BONDdata->pause_watch_position -
-                   pfVar11[1] * (float)ptr_BONDdata->watch_scale_destination) - fVar12) *
+      local_13c = (((float)pPlayer->pause_watch_position -
+                   pfVar11[1] * (float)pPlayer->watch_scale_destination) - fVar12) *
                   (float)local_90 + fVar12;
       proc_7F059908(afStack240,fVar12,(float)local_90,0.00000000,0.00000000,0.00000000,
-                    (float)ptr_BONDdata->field_1E0,(float)ptr_BONDdata->field_1E4,
-                    (float)ptr_BONDdata->field_1E8,(float)ptr_BONDdata->field_1EC);
+                    (float)pPlayer->field_1E0,(float)pPlayer->field_1E4,
+                    (float)pPlayer->field_1E8,(float)pPlayer->field_1EC);
       proc_7F058860(local_94,afStack252);
       proc_7F058860(afStack240,afStack264);
       proc_7F05B3F4(afStack252,afStack280);
@@ -100069,7 +100069,7 @@ undefined4 * proc_7F087E74(undefined4 *param_1)
       proc_7F05BA08(afStack280,afStack296,extraout_f12_00,local_90);
       proc_7F05B628(afStack312,local_94);
       proc_7F058998(&local_144,(int)local_94);
-      matrix_multiply_A1_by_F12((float)ptr_BONDdata->watch_scale_destination,extraout_a0,local_94);
+      matrix_multiply_A1_by_F12((float)pPlayer->watch_scale_destination,extraout_a0,local_94);
       iVar2 = local_168 / 0x3c;
       if (false) {
         trap(0x1c00);
@@ -100124,17 +100124,17 @@ undefined4 * proc_7F087E74(undefined4 *param_1)
       local_38 = 3;
       local_3c = 0;
       local_10 = 4;
-      if ((ptr_BONDdata->pause_animation_state == 5) || (ptr_BONDdata->pause_animation_state == 0xc)
+      if ((pPlayer->pause_animation_state == 5) || (pPlayer->pause_animation_state == 0xc)
          ) {
         local_c = 0xcd;
       }
       else {
-        local_c = (uint)(byte)ptr_BONDdata->field_FDF | (uint)(byte)ptr_BONDdata->field_FDC << 0x18
-                  | (uint)(byte)ptr_BONDdata->field_FDD << 0x10 |
-                  (uint)(byte)ptr_BONDdata->field_FDE << 8;
+        local_c = (uint)(byte)pPlayer->field_FDF | (uint)(byte)pPlayer->field_FDC << 0x18
+                  | (uint)(byte)pPlayer->field_FDD << 0x10 |
+                  (uint)(byte)pPlayer->field_FDE << 8;
       }
-      pBVar5 = ptr_BONDdata;
-      subdraw((int)&local_40,(uint)&ptr_BONDdata->something_with_watch_object_instance,
+      pBVar5 = pPlayer;
+      subdraw((int)&local_40,(uint)&pPlayer->something_with_watch_object_instance,
               extraout_a2_lo_00,extraout_a3_lo_00);
       puVar3 = local_34;
       local_16c = *(int **)(*(int *)(local_98->offset_objblock + 8) + 4);
@@ -100145,11 +100145,11 @@ undefined4 * proc_7F087E74(undefined4 *param_1)
       proc_7F058C9C((int)afStack428,(uint *)pBVar5);
       proc_7F058C88();
       lVar4 = proc_7F0ACA28((longlong)(int)puVar3,(int)pBVar5,
-                            (uint)(ptr_BONDdata->pause_animation_state == 5 ||
-                                  ptr_BONDdata->pause_animation_state == 0xc));
+                            (uint)(pPlayer->pause_animation_state == 5 ||
+                                  pPlayer->pause_animation_state == 0xc));
       local_res0 = (undefined4 *)lVar4;
       proc_7F058C64();
-      proc_7F08BD48((undefined4 *)ptr_BONDdata->field_23C,(int)local_98->num_objgroups);
+      proc_7F08BD48((undefined4 *)pPlayer->field_23C,(int)local_98->num_objgroups);
       proc_7F058C88();
     }
   }
@@ -100173,10 +100173,10 @@ undefined4 * proc_7F088618(undefined4 *param_1)
   Mtx *pabStack8;
   Mtx *pabStack4;
   
-  proc_7F0A2F30((short *)&ptr_BONDdata->related_to_armor_display,0x2e,1,in_f12);
-  proc_7F0A3330(&ptr_BONDdata->field_19F8,(int)&ptr_BONDdata[0x30303].field_1338,0x2e);
-  proc_7F0A2F30((short *)&ptr_BONDdata->related_to_health_display,0x2e,-1,extraout_f12);
-  pabStack8 = (Mtx *)proc_7F0A3330(&ptr_BONDdata->field_2128,(int)&ptr_BONDdata[0x30303].field_1618,
+  proc_7F0A2F30((short *)&pPlayer->related_to_armor_display,0x2e,1,in_f12);
+  proc_7F0A3330(&pPlayer->field_19F8,(int)&pPlayer[0x30303].field_1338,0x2e);
+  proc_7F0A2F30((short *)&pPlayer->related_to_health_display,0x2e,-1,extraout_f12);
+  pabStack8 = (Mtx *)proc_7F0A3330(&pPlayer->field_2128,(int)&pPlayer[0x30303].field_1618,
                                    0x2e);
   proc_7F0BD6E0();
   pabStack4 = pabStack8;
@@ -100207,9 +100207,9 @@ undefined4 * proc_7F088618(undefined4 *param_1)
   param_1[0x10] = 0xb6000000;
   param_1[0x11] = 0x3000;
   param_1[0x12] = 0x6000000;
-  *(int **)(param_1 + 0x13) = &ptr_BONDdata[0x30303].field_1A78;
+  *(int **)(param_1 + 0x13) = &pPlayer[0x30303].field_1A78;
   param_1[0x14] = 0x6000000;
-  *(int **)(param_1 + 0x15) = &ptr_BONDdata[0x30303].field_21A8;
+  *(int **)(param_1 + 0x15) = &pPlayer[0x30303].field_21A8;
   param_1[0x16] = 0x1030040;
   virtualAddress = (void *)proc_7F078374();
   uVar1 = osVirtualToPhysical(virtualAddress);
@@ -100241,14 +100241,14 @@ void proc_7F0888E8(void)
   iStack4 = DAT_80036894;
   init_player_BONDdata();
   proc_7F0798B8();
-  ptr_BONDdata->player_button_control = 0;
-  ptr_BONDdata->field_428 = 0;
-  ptr_BONDdata->field_424 = 0;
-  ptr_BONDdata->field_420 = 1;
-  ptr_BONDdata->field_29B8 = 7;
-  ptr_BONDdata->damagetype = 7;
-  ptr_BONDdata->somekinda_flags = 0;
-  ptr_BONDdata->somekinda_bitflags = 2;
+  pPlayer->player_button_control = 0;
+  pPlayer->field_428 = 0;
+  pPlayer->field_424 = 0;
+  pPlayer->field_420 = 1;
+  pPlayer->field_29B8 = 7;
+  pPlayer->damagetype = 7;
+  pPlayer->somekinda_flags = 0;
+  pPlayer->somekinda_bitflags = 2;
   proc_7F08A380(0xffffffff);
   proc_7F08A928(0xffffffff);
   uVar1 = get_num_players();
@@ -100268,44 +100268,44 @@ void proc_7F0888E8(void)
   iStack4 = tile[2];
   tile = (int *)tile[10];
   fVar7 = proc_7F080D60((longlong)(int)tile,iStack12,iStack4);
-  fStack8 = (float)ptr_BONDdata->field_29BC + fVar7;
-  *(float *)&ptr_BONDdata->field_70 = fVar7;
+  fStack8 = (float)pPlayer->field_29BC + fVar7;
+  *(float *)&pPlayer->field_70 = fVar7;
   uVar3 = get_random_value();
   __x = (float)uVar3;
   if ((int)uVar3 < 0) {
     __x = __x + 4294967296.00000000;
   }
   __x = __x * 0.00000000 * flt_80055284;
-  ptr_BONDdata->azimuth_angle = (__x * 360.00000000) / flt_80055284;
-  *(float *)&ptr_BONDdata->clipping_height = fVar7;
-  *(float *)&ptr_BONDdata->field_6C = fVar7 / flt_80055288;
-  change_player_pos_to_target(&ptr_BONDdata->ptr_tile_printmanpos,&iStack12,tile);
+  pPlayer->azimuth_angle = (__x * 360.00000000) / flt_80055284;
+  *(float *)&pPlayer->clipping_height = fVar7;
+  *(float *)&pPlayer->field_6C = fVar7 / flt_80055288;
+  change_player_pos_to_target(&pPlayer->ptr_tile_printmanpos,&iStack12,tile);
   fVar7 = sinf(__x);
-  *(float *)&ptr_BONDdata->field_498 = -fVar7;
-  ptr_BONDdata->field_49C = 0;
+  *(float *)&pPlayer->field_498 = -fVar7;
+  pPlayer->field_49C = 0;
   __x = cosf(__x);
   fVar7 = flt_8005528C;
-  *(float *)&ptr_BONDdata->field_4A0 = __x;
-  ptr_BONDdata->field_408 = iStack12;
-  *(int *)(ptr_BONDdata->position_data_pointer + 8) = iStack12;
-  *(float *)&ptr_BONDdata->field_40C = fStack8;
-  *(float *)(ptr_BONDdata->position_data_pointer + 0xc) = fStack8;
-  ptr_BONDdata->field_410 = iStack4;
-  *(int *)(ptr_BONDdata->position_data_pointer + 0x10) = iStack4;
-  *(int **)(ptr_BONDdata->position_data_pointer + 0x14) = tile;
-  *(float *)&ptr_BONDdata->field_3B8 = (float)ptr_BONDdata->field_4B4 / fVar7;
-  *(float *)&ptr_BONDdata->field_3BC = (float)ptr_BONDdata->field_4B8 / fVar7;
-  *(float *)&ptr_BONDdata->field_3C0 = (float)ptr_BONDdata->field_4BC / fVar7;
+  *(float *)&pPlayer->field_4A0 = __x;
+  pPlayer->field_408 = iStack12;
+  *(int *)(pPlayer->position_data_pointer + 8) = iStack12;
+  *(float *)&pPlayer->field_40C = fStack8;
+  *(float *)(pPlayer->position_data_pointer + 0xc) = fStack8;
+  pPlayer->field_410 = iStack4;
+  *(int *)(pPlayer->position_data_pointer + 0x10) = iStack4;
+  *(int **)(pPlayer->position_data_pointer + 0x14) = tile;
+  *(float *)&pPlayer->field_3B8 = (float)pPlayer->field_4B4 / fVar7;
+  *(float *)&pPlayer->field_3BC = (float)pPlayer->field_4B8 / fVar7;
+  *(float *)&pPlayer->field_3C0 = (float)pPlayer->field_4BC / fVar7;
   reinit_BONDdata_inventory();
-  ptr_BONDdata->ammoheldarr[0] = 0;
-  ptr_BONDdata->ammoheldarr[1] = 0;
+  pPlayer->ammoheldarr[0] = 0;
+  pPlayer->ammoheldarr[1] = 0;
   iVar4 = 8;
   do {
-    *(undefined4 *)((int)ptr_BONDdata->ammoheldarr + iVar4) = 0;
-    *(undefined4 *)((int)ptr_BONDdata->ammoheldarr + iVar4 + 4) = 0;
-    *(undefined4 *)((int)ptr_BONDdata->ammoheldarr + iVar4 + 8) = 0;
+    *(undefined4 *)((int)pPlayer->ammoheldarr + iVar4) = 0;
+    *(undefined4 *)((int)pPlayer->ammoheldarr + iVar4 + 4) = 0;
+    *(undefined4 *)((int)pPlayer->ammoheldarr + iVar4 + 8) = 0;
     iVar5 = iVar4 + 0x10;
-    *(undefined4 *)((int)ptr_BONDdata->ammoheldarr + iVar4 + 0xc) = 0;
+    *(undefined4 *)((int)pPlayer->ammoheldarr + iVar4 + 0xc) = 0;
     iVar4 = iVar5;
   } while (iVar5 != 0x78);
   if (puVar6 != NULL) {
@@ -100321,9 +100321,9 @@ void proc_7F0888E8(void)
       uVar2 = *puVar6;
     }
   }
-  ptr_BONDdata->field_78 = 0.00000000;
-  *(float *)&ptr_BONDdata->field_7C = flt_800552AC;
-  ptr_BONDdata->field_80 = 0.00000000;
+  pPlayer->field_78 = 0.00000000;
+  *(float *)&pPlayer->field_7C = flt_800552AC;
+  pPlayer->field_80 = 0.00000000;
   set_curplayer_fade(120.00000000,1.00000000);
   return;
 }
@@ -100589,7 +100589,7 @@ undefined4 * maybe_mp_interface(void)
   undefined in_stack_ffffffcb;
   undefined4 in_stack_ffffffd0;
   
-  if (ptr_BONDdata->unknown == 1) {
+  if (pPlayer->unknown == 1) {
     local_res0 = in_a0_lo;
     proc_7F08A4E4();
     local_res0 = proc_7F08A5FC(local_res0);
@@ -100605,7 +100605,7 @@ undefined4 * maybe_mp_interface(void)
     proc_7F06908C((undefined4 *)register0x000000ec);
     proc_7F062BE4((undefined4 *)register0x000000ec);
     local_res0 = proc_7F087E74(local_res0);
-    if (ptr_BONDdata->mpmenuon != 0) {
+    if (pPlayer->mpmenuon != 0) {
       sVar7 = get_video2_settings_ulx();
       sVar8 = get_video2_settings_uly();
       sVar9 = get_video2_settings_ulx();
@@ -100619,17 +100619,17 @@ undefined4 * maybe_mp_interface(void)
                               (longlong)((int)sVar10 + (int)sVar9),(int)sVar12 + (int)sVar11,0xa0);
     }
     uVar2 = check_if_healthbar_timer_greater_than_0();
-    if ((uVar2 == 0) || (ptr_BONDdata->pause_animation_state != 0)) {
+    if ((uVar2 == 0) || (pPlayer->pause_animation_state != 0)) {
       uVar2 = proc_7F0C6048();
       if (uVar2 != 0) {
         local_res0 = proc_7F088618(local_res0);
-        iVar4 = ptr_BONDdata->healthdisplaytime;
+        iVar4 = pPlayer->healthdisplaytime;
         if (0 < iVar4) {
-          ptr_BONDdata->healthdisplaytime = iVar4 - clock_timer;
-          iVar4 = ptr_BONDdata->healthdisplaytime;
+          pPlayer->healthdisplaytime = iVar4 - clock_timer;
+          iVar4 = pPlayer->healthdisplaytime;
         }
         if (iVar4 < 0) {
-          ptr_BONDdata->healthdisplaytime = 0;
+          pPlayer->healthdisplaytime = 0;
         }
       }
     }
@@ -100640,10 +100640,10 @@ undefined4 * maybe_mp_interface(void)
     if (uVar2 == 1) {
       display_objective_status_text_on_status_change();
     }
-    if (ptr_BONDdata->player_button_control != 0) {
-      if (ptr_BONDdata->field_428 == 0) {
-        if (ptr_BONDdata->player_button_control == 1) {
-          ptr_BONDdata->player_button_control = 2;
+    if (pPlayer->player_button_control != 0) {
+      if (pPlayer->field_428 == 0) {
+        if (pPlayer->player_button_control == 1) {
+          pPlayer->player_button_control = 2;
           die_blood_image_routine(0);
           uVar2 = get_num_players();
           sVar13 = (s16)uVar2;
@@ -100662,14 +100662,14 @@ undefined4 * maybe_mp_interface(void)
           }
         }
         else {
-          if (ptr_BONDdata->field_424 == 0) {
+          if (pPlayer->field_424 == 0) {
             iVar4 = 2;
             if (0 < clock_timer) {
               iVar4 = 1;
             }
             uVar2 = die_blood_image_routine(iVar4);
             if (uVar2 != 0) {
-              ptr_BONDdata->field_424 = 1;
+              pPlayer->field_424 = 1;
             }
             local_res0 = proc_7F01C670(local_res0);
           }
@@ -100678,11 +100678,11 @@ undefined4 * maybe_mp_interface(void)
           }
         }
       }
-      proc_7F06F5BC((int)&ptr_BONDdata->field_598);
-      fVar16 = proc_7F06F5C4((int)&ptr_BONDdata->field_598);
-      if ((fVar16 <= local_34) && (ptr_BONDdata->field_424 != 0)) {
-        if (ptr_BONDdata->field_428 == 0) {
-          ptr_BONDdata->field_428 = 1;
+      proc_7F06F5BC((int)&pPlayer->field_598);
+      fVar16 = proc_7F06F5C4((int)&pPlayer->field_598);
+      if ((fVar16 <= local_34) && (pPlayer->field_424 != 0)) {
+        if (pPlayer->field_428 == 0) {
+          pPlayer->field_428 = 1;
           proc_7F0807E0(extraout_a0_lo,0,0,0,0x3f800000,in_stack_ffffffbf,in_stack_ffffffc3,
                         unaff_retaddr,in_stack_ffffffcb,SUB41(local_34,0),in_stack_ffffffd0);
           set_curplayer_fade(120.00000000,0.00000000);
@@ -100754,9 +100754,9 @@ void proc_7F089718(float param_1)
   float *pfVar1;
   BONDdata *pBVar2;
   
-  pBVar2 = ptr_BONDdata;
-  pfVar1 = (float *)&ptr_BONDdata->positionz;
-  *(float *)&ptr_BONDdata->positionx = (float)ptr_BONDdata->positionx * (flt_800364D0 / param_1);
+  pBVar2 = pPlayer;
+  pfVar1 = (float *)&pPlayer->positionz;
+  *(float *)&pPlayer->positionx = (float)pPlayer->positionx * (flt_800364D0 / param_1);
   *(float *)&pBVar2->positionz = *pfVar1 * (flt_800364D0 / param_1);
   flt_800364D0 = param_1;
   flt_800364D4 = 1.00000000 / param_1;
@@ -100794,7 +100794,7 @@ float proc_7F089780(BONDdata *param_1)
 int get_curplayer_positiondata(void)
 
 {
-  return ptr_BONDdata->position_data_pointer;
+  return pPlayer->position_data_pointer;
 }
 
 
@@ -100808,15 +100808,15 @@ void kill_current_player(void)
   BONDdata *pBVar4;
   BONDdata *pBVar5;
   
-  if ((ptr_BONDdata->bondinvincible == '\0') && (ptr_BONDdata->player_button_control == 0)) {
-    if (ptr_BONDdata->pause_animation_state != 0) {
+  if ((pPlayer->bondinvincible == '\0') && (pPlayer->player_button_control == 0)) {
+    if (pPlayer->pause_animation_state != 0) {
       trigger_solo_watch_menu(1);
     }
     mission_kia = TRUE;
-    ptr_BONDdata->player_button_control = 1;
-    pBVar2 = (BONDdata *)&ptr_BONDdata->current_room_ypos;
-    pBVar5 = ptr_BONDdata;
-    pBVar3 = ptr_BONDdata;
+    pPlayer->player_button_control = 1;
+    pBVar2 = (BONDdata *)&pPlayer->current_room_ypos;
+    pBVar5 = pPlayer;
+    pBVar3 = pPlayer;
     do {
       pBVar4 = (BONDdata *)&pBVar3->zpos;
       pBVar5->field_434 = pBVar3->ptr_tile_printmanpos;
@@ -100825,20 +100825,20 @@ void kill_current_player(void)
       pBVar5 = (BONDdata *)&pBVar5->zpos;
       pBVar3 = pBVar4;
     } while (pBVar4 != pBVar2);
-    *(float *)&ptr_BONDdata->field_414 = ptr_BONDdata->azimuth_angle;
-    *(float *)&ptr_BONDdata->field_418 = ptr_BONDdata->inclination_angle1;
+    *(float *)&pPlayer->field_414 = pPlayer->azimuth_angle;
+    *(float *)&pPlayer->field_418 = pPlayer->inclination_angle1;
     if (ptr_playerstank != 0) {
       dword_8003648C = 1;
     }
     draw_item_in_hand_has_more_ammo(1,ITEM_UNARMED);
     draw_item_in_hand_has_more_ammo(0,ITEM_UNARMED);
     iVar1 = getMissiontime();
-    if (iVar1 - ptr_BONDdata->field_29F4 < cur_player_stat_ptr->shortest_inning) {
+    if (iVar1 - pPlayer->field_29F4 < cur_player_stat_ptr->shortest_inning) {
       iVar1 = getMissiontime();
-      cur_player_stat_ptr->shortest_inning = iVar1 - ptr_BONDdata->field_29F4;
+      cur_player_stat_ptr->shortest_inning = iVar1 - pPlayer->field_29F4;
     }
     iVar1 = getMissiontime();
-    ptr_BONDdata->field_29F4 = iVar1;
+    pPlayer->field_29F4 = iVar1;
   }
   return;
 }
@@ -100882,11 +100882,11 @@ ulonglong record_damage_kills(void)
   float fStack4;
   
   fStack4 = cur_player_stat_ptr->handicap * in_f12;
-  if (ptr_BONDdata->pause_animation_state != 0) {
+  if (pPlayer->pause_animation_state != 0) {
     get_BONDdata_watch_armor();
-    proc_7F0A2F30((short *)&ptr_BONDdata->related_to_armor_display,0x2e,1,extraout_f12);
+    proc_7F0A2F30((short *)&pPlayer->related_to_armor_display,0x2e,1,extraout_f12);
     get_BONDdata_watch_health();
-    proc_7F0A2F30((short *)&ptr_BONDdata->related_to_health_display,0x2e,-1,extraout_f12_00);
+    proc_7F0A2F30((short *)&pPlayer->related_to_health_display,0x2e,-1,extraout_f12_00);
   }
   uVar2 = get_num_players();
   if (1 < (longlong)uVar2) {
@@ -100900,7 +100900,7 @@ ulonglong record_damage_kills(void)
   if (in_tank_flag == TRUE) {
     fStack4 = fStack4 * 0.25000000;
   }
-  if ((ptr_BONDdata->player_button_control == 0) && (ptr_BONDdata->bondinvincible == '\0')) {
+  if ((pPlayer->player_button_control == 0) && (pPlayer->bondinvincible == '\0')) {
     playernum = get_cur_playernum();
     controller_7000C854(playernum,extraout_f12_01);
     iVar4 = cur_player_get_control_type();
@@ -100912,32 +100912,32 @@ ulonglong record_damage_kills(void)
   }
   uVar2 = get_num_players();
   if ((1 < (longlong)uVar2) && (iVar4 = get_scenario(), iVar4 == 4)) {
-    fStack4 = (float)ptr_BONDdata->current_health * (float)ptr_BONDdata->actual_health +
-              (float)ptr_BONDdata->current_armor * (float)ptr_BONDdata->actual_armor;
+    fStack4 = (float)pPlayer->current_health * (float)pPlayer->actual_health +
+              (float)pPlayer->current_armor * (float)pPlayer->actual_armor;
   }
-  lVar3 = (longlong)(int)ptr_BONDdata;
-  if (ptr_BONDdata->bondinvincible != '\0') {
+  lVar3 = (longlong)(int)pPlayer;
+  if (pPlayer->bondinvincible != '\0') {
     return lVar3;
   }
-  if (ptr_BONDdata->player_button_control != 0) {
+  if (pPlayer->player_button_control != 0) {
     return lVar3;
   }
   if (disable_player_pickups_flag != 0) {
     return lVar3;
   }
-  if (ptr_BONDdata->invincibility_timer < 0) {
-    iVar4 = ptr_BONDdata->pause_animation_state;
+  if (pPlayer->invincibility_timer < 0) {
+    iVar4 = pPlayer->pause_animation_state;
   }
   else {
     uVar2 = get_num_players();
     if ((longlong)uVar2 < 2) {
       return ZEXT48(&DAT_80080000);
     }
-    lVar3 = (longlong)(int)ptr_BONDdata;
-    if (ptr_BONDdata->invincibility_timer != 0) {
+    lVar3 = (longlong)(int)pPlayer;
+    if (pPlayer->invincibility_timer != 0) {
       return lVar3;
     }
-    iVar4 = ptr_BONDdata->pause_animation_state;
+    iVar4 = pPlayer->pause_animation_state;
   }
   if (iVar4 == 5) {
     return lVar3;
@@ -100946,7 +100946,7 @@ ulonglong record_damage_kills(void)
     return lVar3;
   }
   *(undefined4 *)((int)lVar3 + 0xe4) = *(undefined4 *)((int)lVar3 + 0xdc);
-  ptr_BONDdata->previous_armor = ptr_BONDdata->current_armor;
+  pPlayer->previous_armor = pPlayer->current_armor;
   uVar2 = get_num_players();
   if (1 < (longlong)uVar2) {
     playernum = get_cur_playernum();
@@ -100969,14 +100969,14 @@ LAB_7f089c1c:
   if (in_stack_00000010 == 0) {
 LAB_7f089c68:
     if (in_stack_00000010 != 0) {
-      fStack4 = fStack4 - (float)ptr_BONDdata->current_armor / (float)ptr_BONDdata->actual_armor;
-      ptr_BONDdata->current_armor = 0.00000000;
-      ptr_BONDdata->actual_armor = 1.00000000;
+      fStack4 = fStack4 - (float)pPlayer->current_armor / (float)pPlayer->actual_armor;
+      pPlayer->current_armor = 0.00000000;
+      pPlayer->actual_armor = 1.00000000;
     }
-    *(float *)&ptr_BONDdata->current_health =
-         (float)ptr_BONDdata->current_health - fStack4 / (float)ptr_BONDdata->actual_health;
-    if (0.00000000 < (float)ptr_BONDdata->current_health) {
-      iVar4 = ptr_BONDdata->invincibility_timer;
+    *(float *)&pPlayer->current_health =
+         (float)pPlayer->current_health - fStack4 / (float)pPlayer->actual_health;
+    if (0.00000000 < (float)pPlayer->current_health) {
+      iVar4 = pPlayer->invincibility_timer;
       goto LAB_7f089ddc;
     }
     uVar2 = get_num_players();
@@ -101010,21 +101010,21 @@ LAB_7f089c68:
     kill_current_player();
   }
   else {
-    if ((float)ptr_BONDdata->current_armor * (float)ptr_BONDdata->actual_armor < fStack4)
+    if ((float)pPlayer->current_armor * (float)pPlayer->actual_armor < fStack4)
     goto LAB_7f089c68;
-    *(float *)&ptr_BONDdata->current_armor =
-         (float)ptr_BONDdata->current_armor - fStack4 / (float)ptr_BONDdata->actual_armor;
+    *(float *)&pPlayer->current_armor =
+         (float)pPlayer->current_armor - fStack4 / (float)pPlayer->actual_armor;
   }
-  iVar4 = ptr_BONDdata->invincibility_timer;
+  iVar4 = pPlayer->invincibility_timer;
 LAB_7f089ddc:
   if (iVar4 < 0) {
-    *(float *)&ptr_BONDdata->boost_factor_x =
-         (float)ptr_BONDdata->boost_factor_x + (float)vector1 + (float)vector1;
-    *(float *)&ptr_BONDdata->boost_factor_z =
-         (float)ptr_BONDdata->boost_factor_z + vector2 + vector2;
+    *(float *)&pPlayer->boost_factor_x =
+         (float)pPlayer->boost_factor_x + (float)vector1 + (float)vector1;
+    *(float *)&pPlayer->boost_factor_z =
+         (float)pPlayer->boost_factor_z + vector2 + vector2;
   }
-  ptr_BONDdata->invincibility_timer = 0;
-  ptr_BONDdata->health_bar_timer = 0;
+  pPlayer->invincibility_timer = 0;
+  pPlayer->health_bar_timer = 0;
   ppiVar5 = play_sfx_a1(ptr_sfx_buf,0x44,NULL);
   return (longlong)(int)ppiVar5;
 }
@@ -101048,7 +101048,7 @@ void proc_7F089E4C(undefined4 param_1,float param_2,undefined8 param_3,undefined
 ulonglong check_if_bond_is_invincible(void)
 
 {
-  return (ulonglong)(ptr_BONDdata->invincibility_timer < 0) ^ 1;
+  return (ulonglong)(pPlayer->invincibility_timer < 0) ^ 1;
 }
 
 
@@ -101056,7 +101056,7 @@ ulonglong check_if_bond_is_invincible(void)
 ulonglong check_if_healthbar_timer_greater_than_0(void)
 
 {
-  return (ulonglong)(0 < ptr_BONDdata->health_bar_timer);
+  return (ulonglong)(0 < pPlayer->health_bar_timer);
 }
 
 
@@ -101064,7 +101064,7 @@ ulonglong check_if_healthbar_timer_greater_than_0(void)
 f32 get_BONDdata_field19C(void)
 
 {
-  return ptr_BONDdata->field_19C;
+  return pPlayer->field_19C;
 }
 
 
@@ -101072,7 +101072,7 @@ f32 get_BONDdata_field19C(void)
 float get_curplay_horizontal_rotation_in_degrees(void)
 
 {
-  return ((360.00000000 - ptr_BONDdata->azimuth_angle) * flt_800552B4) / 360.00000000;
+  return ((360.00000000 - pPlayer->azimuth_angle) * flt_800552B4) / 360.00000000;
 }
 
 
@@ -101080,7 +101080,7 @@ float get_curplay_horizontal_rotation_in_degrees(void)
 float get_curplay_vertical_rotation_in_degrees(void)
 
 {
-  return (ptr_BONDdata->inclination_angle1 * flt_800552B8) / 360.00000000;
+  return (pPlayer->inclination_angle1 * flt_800552B8) / 360.00000000;
 }
 
 
@@ -101088,7 +101088,7 @@ float get_curplay_vertical_rotation_in_degrees(void)
 int proc_7F089F38(void)
 
 {
-  return ptr_BONDdata->field_D0;
+  return pPlayer->field_D0;
 }
 
 
@@ -101096,7 +101096,7 @@ int proc_7F089F38(void)
 void set_bondata_invincible_flag(char param_1)
 
 {
-  ptr_BONDdata->bondinvincible = param_1;
+  pPlayer->bondinvincible = param_1;
   return;
 }
 
@@ -101105,7 +101105,7 @@ void set_bondata_invincible_flag(char param_1)
 ulonglong get_bondata_invincible_flag(void)
 
 {
-  return (ulonglong)(byte)ptr_BONDdata->bondinvincible;
+  return (ulonglong)(byte)pPlayer->bondinvincible;
 }
 
 
@@ -101149,14 +101149,14 @@ ulonglong get_cur_players_room(void)
 {
   int iVar1;
   
-  if (ptr_BONDdata->unknown == 1) {
-    if (ptr_BONDdata->room_pointer != 0) {
-      return (ulonglong)*(byte *)(ptr_BONDdata->room_pointer + 3);
+  if (pPlayer->unknown == 1) {
+    if (pPlayer->room_pointer != 0) {
+      return (ulonglong)*(byte *)(pPlayer->room_pointer + 3);
     }
-    iVar1 = ptr_BONDdata->room_tile_ptr;
+    iVar1 = pPlayer->room_tile_ptr;
   }
   else {
-    iVar1 = ptr_BONDdata->room_tile_ptr;
+    iVar1 = pPlayer->room_tile_ptr;
   }
   return (ulonglong)*(byte *)(iVar1 + 3);
 }
@@ -101166,10 +101166,10 @@ ulonglong get_cur_players_room(void)
 xyzpoint * get_BONDdata_position(void)
 
 {
-  if (ptr_BONDdata->unknown == 1) {
-    return (xyzpoint *)&ptr_BONDdata->xpos;
+  if (pPlayer->unknown == 1) {
+    return (xyzpoint *)&pPlayer->xpos;
   }
-  return (xyzpoint *)&ptr_BONDdata->field_4B4;
+  return (xyzpoint *)&pPlayer->field_4B4;
 }
 
 
@@ -101177,10 +101177,10 @@ xyzpoint * get_BONDdata_position(void)
 int * get_BONDdata_position3(void)
 
 {
-  if (ptr_BONDdata->unknown == 1) {
-    return (int *)&ptr_BONDdata->xpos3;
+  if (pPlayer->unknown == 1) {
+    return (int *)&pPlayer->xpos3;
   }
-  return &ptr_BONDdata->field_4A4;
+  return &pPlayer->field_4A4;
 }
 
 
@@ -101188,7 +101188,7 @@ int * get_BONDdata_position3(void)
 int proc_7F08A02C(void)
 
 {
-  return (int)&ptr_BONDdata->field_408;
+  return (int)&pPlayer->field_408;
 }
 
 
@@ -101249,21 +101249,21 @@ void proc_7F08A19C(void)
   float in_f12;
   
   if (in_tank_flag == TRUE) {
-    proc_7F07C888((float *)&ptr_BONDdata->field_B0,(float *)&ptr_BONDdata->positionx,in_f12);
+    proc_7F07C888((float *)&pPlayer->field_B0,(float *)&pPlayer->positionx,in_f12);
   }
   else {
-    *(float *)&ptr_BONDdata->field_B0 =
-         (float)ptr_BONDdata->positionx + (float)ptr_BONDdata->collision_radius;
-    ptr_BONDdata->zpos_0 = ptr_BONDdata->positionz;
-    *(f32 *)&ptr_BONDdata->xpos_0 = ptr_BONDdata->positionx;
-    *(float *)&ptr_BONDdata->field_BC =
-         (float)ptr_BONDdata->positionz + (float)ptr_BONDdata->collision_radius;
-    *(float *)&ptr_BONDdata->field_C0 =
-         (float)ptr_BONDdata->positionx - (float)ptr_BONDdata->collision_radius;
-    ptr_BONDdata->zpos_1 = ptr_BONDdata->positionz;
-    *(f32 *)&ptr_BONDdata->xpos_1 = ptr_BONDdata->positionx;
-    *(float *)&ptr_BONDdata->field_CC =
-         (float)ptr_BONDdata->positionz - (float)ptr_BONDdata->collision_radius;
+    *(float *)&pPlayer->field_B0 =
+         (float)pPlayer->positionx + (float)pPlayer->collision_radius;
+    pPlayer->zpos_0 = pPlayer->positionz;
+    *(f32 *)&pPlayer->xpos_0 = pPlayer->positionx;
+    *(float *)&pPlayer->field_BC =
+         (float)pPlayer->positionz + (float)pPlayer->collision_radius;
+    *(float *)&pPlayer->field_C0 =
+         (float)pPlayer->positionx - (float)pPlayer->collision_radius;
+    pPlayer->zpos_1 = pPlayer->positionz;
+    *(f32 *)&pPlayer->xpos_1 = pPlayer->positionx;
+    *(float *)&pPlayer->field_CC =
+         (float)pPlayer->positionz - (float)pPlayer->collision_radius;
   }
   return;
 }
@@ -101289,7 +101289,7 @@ void proc_7F08A274(int param_1,undefined4 *param_2,float *param_3,undefined4 *pa
 f32 get_BONDdata_watch_health(void)
 
 {
-  return ptr_BONDdata->current_health;
+  return pPlayer->current_health;
 }
 
 
@@ -101297,7 +101297,7 @@ f32 get_BONDdata_watch_health(void)
 f32 get_BONDdata_watch_armor(void)
 
 {
-  return ptr_BONDdata->current_armor;
+  return pPlayer->current_armor;
 }
 
 
@@ -101306,7 +101306,7 @@ void add_BONDdata_watch_armor(f32 amount)
 
 {
   cur_player_stat_ptr->body_armor_pickups = cur_player_stat_ptr->body_armor_pickups + (float)amount;
-  ptr_BONDdata->current_armor = amount;
+  pPlayer->current_armor = amount;
   return;
 }
 
@@ -101315,8 +101315,8 @@ void add_BONDdata_watch_armor(f32 amount)
 void reset_intro_camera_message_dialogs_for_BONDdata(void)
 
 {
-  ptr_BONDdata->hudmessoff = 0;
-  ptr_BONDdata->bondmesscnt = -1;
+  pPlayer->hudmessoff = 0;
+  pPlayer->bondmesscnt = -1;
   status_bar_text_buffer_index = 0;
   display_statusbar = FALSE;
   copy_1stfonttable = D_80040EAC;
@@ -101329,7 +101329,7 @@ void reset_intro_camera_message_dialogs_for_BONDdata(void)
 void proc_7F08A380(uint param_1)
 
 {
-  ptr_BONDdata->hudmessoff = ptr_BONDdata->hudmessoff & ~param_1;
+  pPlayer->hudmessoff = pPlayer->hudmessoff & ~param_1;
   return;
 }
 
@@ -101338,7 +101338,7 @@ void proc_7F08A380(uint param_1)
 void set_flags_in_BONDdata_stationary_intro_cam(uint param_1)
 
 {
-  ptr_BONDdata->hudmessoff = ptr_BONDdata->hudmessoff | param_1;
+  pPlayer->hudmessoff = pPlayer->hudmessoff | param_1;
   return;
 }
 
@@ -101376,7 +101376,7 @@ ulonglong display_string_in_lower_left_corner(char *text)
   else {
     uVar5 = get_cur_playernum();
     pcVar4 = something_with_strings(dword_8007A0E8 + uVar5 * 0x65,text,100);
-    pBVar2 = ptr_BONDdata;
+    pBVar2 = pPlayer;
     uVar3 = SEXT48((int)pcVar4);
     dword_8007A0E8[uVar5 * 0x65 + 100] = 0;
     pBVar2->bondmesscnt = 0x78;
@@ -101391,29 +101391,29 @@ void proc_7F08A4E4(void)
 {
   ulonglong uVar1;
   
-  if ((ptr_BONDdata->hudmessoff == 0) && (ptr_BONDdata->mpmenuon == 0)) {
-    if (-1 < ptr_BONDdata->bondmesscnt) {
-      ptr_BONDdata->bondmesscnt = ptr_BONDdata->bondmesscnt - clock_timer;
+  if ((pPlayer->hudmessoff == 0) && (pPlayer->mpmenuon == 0)) {
+    if (-1 < pPlayer->bondmesscnt) {
+      pPlayer->bondmesscnt = pPlayer->bondmesscnt - clock_timer;
       uVar1 = get_num_players();
       if (uVar1 == 1) {
-        if (ptr_BONDdata->bondmesscnt < 0) {
+        if (pPlayer->bondmesscnt < 0) {
           status_bar_text_buffer_index = (status_bar_text_buffer_index + 1) % 5;
           display_statusbar += ~FALSE;
         }
         else {
-          if ((1 < (int)display_statusbar) && (0x1e < ptr_BONDdata->bondmesscnt)) {
-            ptr_BONDdata->bondmesscnt = 0x1e;
+          if ((1 < (int)display_statusbar) && (0x1e < pPlayer->bondmesscnt)) {
+            pPlayer->bondmesscnt = 0x1e;
           }
         }
       }
     }
     uVar1 = get_num_players();
-    if (((uVar1 == 1) && (ptr_BONDdata->bondmesscnt < 0)) && (0 < (int)display_statusbar)) {
+    if (((uVar1 == 1) && (pPlayer->bondmesscnt < 0)) && (0 < (int)display_statusbar)) {
       if ((int)display_statusbar < 2) {
-        ptr_BONDdata->bondmesscnt = 0x78;
+        pPlayer->bondmesscnt = 0x78;
       }
       else {
-        ptr_BONDdata->bondmesscnt = 0x1e;
+        pPlayer->bondmesscnt = 0x1e;
       }
     }
   }
@@ -101443,8 +101443,8 @@ undefined4 * proc_7F08A5FC(undefined4 *param_1)
   int local_4;
   
   local_res0 = param_1;
-  if (((ptr_BONDdata->hudmessoff == 0) && (local_res0 = param_1, -1 < ptr_BONDdata->bondmesscnt)) &&
-     (local_res0 = param_1, ptr_BONDdata->mpmenuon == 0)) {
+  if (((pPlayer->hudmessoff == 0) && (local_res0 = param_1, -1 < pPlayer->bondmesscnt)) &&
+     (local_res0 = param_1, pPlayer->mpmenuon == 0)) {
     local_4 = 0;
     uVar1 = get_num_players();
     if (uVar1 == 1) {
@@ -101455,7 +101455,7 @@ undefined4 * proc_7F08A5FC(undefined4 *param_1)
     }
     else {
       iVar2 = local_4;
-      if (-1 < ptr_BONDdata->bondmesscnt) {
+      if (-1 < pPlayer->bondmesscnt) {
         status_bar_text_buffer_index = get_cur_playernum();
         iVar2 = 1;
       }
@@ -101576,7 +101576,7 @@ void proc_7F08A9F8(void)
 {
   uint uVar1;
   
-  if ((DAT_800368b4 == 0) && (ptr_BONDdata->mpmenuon == 0)) {
+  if ((DAT_800368b4 == 0) && (pPlayer->mpmenuon == 0)) {
     if (-1 < upper_text_window_timer) {
       upper_text_window_timer -= clock_timer;
       if (upper_text_window_timer < 0) {
@@ -101646,7 +101646,7 @@ undefined4 * proc_7F08AAE8(void)
   int local_4;
   
   if ((((DAT_800368b4 == 0) && (-1 < upper_text_window_timer)) &&
-      (ARRAY_80079c70[upper_text_buffer_index * 0x97] != '\0')) && (ptr_BONDdata->mpmenuon == 0)) {
+      (ARRAY_80079c70[upper_text_buffer_index * 0x97] != '\0')) && (pPlayer->mpmenuon == 0)) {
     DL = microcode_constructor(DL_01);
     local_14 = 0;
     local_10 = 0;
@@ -101685,7 +101685,7 @@ undefined4 * proc_7F08AAE8(void)
     BVar3 = get_debug_testingmanpos_flag();
     if (BVar3 != FALSE) {
       fVar7 = convert_angle_using_inverse
-                        ((f32)-(float)ptr_BONDdata->field_498,(f32)ptr_BONDdata->field_4A0);
+                        ((f32)-(float)pPlayer->field_498,(f32)pPlayer->field_4A0);
       uStack130._2_4_ = (int)((fVar7 * 180.00000000) / flt_800552BC);
       local_9c = dword_800368B8;
       local_98 = DAT_800368bc;
@@ -101698,11 +101698,11 @@ undefined4 * proc_7F08AAE8(void)
       *(uint *)puVar2 =
            *(uint *)puVar2 & 0xffffffffU >> (uVar1 + 1) * 8 |
            (DAT_800368c8 & 0xff000000 | DAT_800368d0 >> 8) << (3 - uVar1) * 8;
-      pcVar4 = proc_7F0B5DE0((ulonglong)*(byte *)(ptr_BONDdata->ptr_tile_printmanpos + 3));
+      pcVar4 = proc_7F0B5DE0((ulonglong)*(byte *)(pPlayer->ptr_tile_printmanpos + 3));
       sprintf((char *)abStack36,"%8s",pcVar4);
-      sprintf((char *)abStack52,"x %4.0f",in_f5,SUB84((double)(float)ptr_BONDdata->positionx,0));
-      sprintf((char *)abStack68,"y %4.0f",in_f9,SUB84((double)(float)ptr_BONDdata->positiony,0));
-      sprintf((char *)abStack84,"z %4.0f",in_f17,SUB84((double)(float)ptr_BONDdata->positionz,0));
+      sprintf((char *)abStack52,"x %4.0f",in_f5,SUB84((double)(float)pPlayer->positionx,0));
+      sprintf((char *)abStack68,"y %4.0f",in_f9,SUB84((double)(float)pPlayer->positiony,0));
+      sprintf((char *)abStack84,"z %4.0f",in_f17,SUB84((double)(float)pPlayer->positionz,0));
       sprintf((char *)abStack100,"%s %3d",
               (undefined **)((int)&local_9c + ((uStack130._2_4_ + 0x16) / 0x2d) * 3));
       sVar5 = get_video2_settings_ulx();
@@ -102228,7 +102228,7 @@ undefined4 * proc_7F08BCF4(undefined4 *param_1)
 
 {
   *param_1 = 0x1020040;
-  param_1[1] = ptr_BONDdata->field_5C;
+  param_1[1] = pPlayer->field_5C;
   return param_1 + 2;
 }
 
@@ -102277,9 +102277,9 @@ void proc_7F08BDC4(uint *param_1)
   float fStack8;
   
   proc_7F058020(param_1,auStack64);
-  fStack16 = fStack16 - (float)ptr_BONDdata->previous_model_xpos;
-  fStack12 = fStack12 - (float)ptr_BONDdata->previous_model_ypos;
-  fStack8 = fStack8 - (float)ptr_BONDdata->previous_model_zpos;
+  fStack16 = fStack16 - (float)pPlayer->previous_model_xpos;
+  fStack12 = fStack12 - (float)pPlayer->previous_model_ypos;
+  fStack8 = fStack8 - (float)pPlayer->previous_model_zpos;
   proc_7F058C9C((int)auStack64,param_1);
   return;
 }
@@ -102301,9 +102301,9 @@ void proc_7F08BE2C(undefined4 *param_1,int param_2)
     puVar2 = param_1;
     do {
       proc_7F058020(puVar2,auStack64);
-      fStack16 = fStack16 - (float)ptr_BONDdata->previous_model_xpos;
-      fStack12 = fStack12 - (float)ptr_BONDdata->previous_model_ypos;
-      fStack8 = fStack8 - (float)ptr_BONDdata->previous_model_zpos;
+      fStack16 = fStack16 - (float)pPlayer->previous_model_xpos;
+      fStack12 = fStack12 - (float)pPlayer->previous_model_ypos;
+      fStack8 = fStack8 - (float)pPlayer->previous_model_zpos;
       proc_7F058C9C((int)auStack64,param_1 + iVar1 * 0x10);
       iVar1 += 1;
       puVar2 = puVar2 + 0x10;
@@ -102331,9 +102331,9 @@ void proc_7F08BEEC(float *param_1,int param_2)
     do {
       pfVar1 = (float *)proc_7F078444();
       proc_7F05818C(pfVar1,pfVar2,(int)auStack64);
-      fStack16 = fStack16 - (float)ptr_BONDdata->current_model_xpos;
-      fStack12 = fStack12 - (float)ptr_BONDdata->current_model_ypos;
-      fStack8 = fStack8 - (float)ptr_BONDdata->current_model_zpos;
+      fStack16 = fStack16 - (float)pPlayer->current_model_xpos;
+      fStack12 = fStack12 - (float)pPlayer->current_model_ypos;
+      fStack8 = fStack8 - (float)pPlayer->current_model_zpos;
       proc_7F058C9C((int)auStack64,(uint *)(param_1 + iVar3 * 0x10));
       iVar3 += 1;
       pfVar2 = pfVar2 + 0x10;
@@ -102372,22 +102372,22 @@ void reinit_BONDdata_inventory(void)
   
   iVar1 = 0;
   iVar2 = 0;
-  if (ptr_BONDdata->equipmaxitems < 1) {
-    ptr_BONDdata->ptr_inventory_first_in_cycle = 0;
+  if (pPlayer->equipmaxitems < 1) {
+    pPlayer->ptr_inventory_first_in_cycle = 0;
   }
   else {
-    iVar3 = ptr_BONDdata->p_itemcur;
+    iVar3 = pPlayer->p_itemcur;
     while( true ) {
       iVar1 += 1;
       *(undefined4 *)(iVar3 + iVar2) = 0xffffffff;
       iVar2 += 0x14;
-      if (ptr_BONDdata->equipmaxitems <= iVar1) break;
-      iVar3 = ptr_BONDdata->p_itemcur;
+      if (pPlayer->equipmaxitems <= iVar1) break;
+      iVar3 = pPlayer->p_itemcur;
     }
-    ptr_BONDdata->ptr_inventory_first_in_cycle = 0;
+    pPlayer->ptr_inventory_first_in_cycle = 0;
   }
-  ptr_BONDdata->field_11F4 = 0;
-  ptr_BONDdata->field_11F0 = 0;
+  pPlayer->field_11F4 = 0;
+  pPlayer->field_11F0 = 0;
   return;
 }
 
@@ -102423,7 +102423,7 @@ void proc_7F08C054(int *param_1)
     }
   }
   piVar5 = (int *)param_1[3];
-  if (piVar5 != (int *)ptr_BONDdata->ptr_inventory_first_in_cycle) {
+  if (piVar5 != (int *)pPlayer->ptr_inventory_first_in_cycle) {
     do {
       iVar1 = *piVar5;
       iVar6 = -1;
@@ -102458,8 +102458,8 @@ LAB_7f08c104:
         piVar7 = (int *)piVar5[3];
       }
       if (param_1 == piVar7) {
-        *(int **)&ptr_BONDdata->ptr_inventory_first_in_cycle = piVar5;
-        piVar7 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+        *(int **)&pPlayer->ptr_inventory_first_in_cycle = piVar5;
+        piVar7 = (int *)pPlayer->ptr_inventory_first_in_cycle;
 LAB_7f08c17c:
         piVar5 = (int *)param_1[3];
       }
@@ -102470,10 +102470,10 @@ LAB_7f08c17c:
         *(int **)(piVar5 + 3) = param_1;
         *(int **)(param_1[3] + 0x10) = param_1;
         *(int **)(piVar5[4] + 0xc) = piVar5;
-        piVar7 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+        piVar7 = (int *)pPlayer->ptr_inventory_first_in_cycle;
         if (param_1 == piVar7) {
-          *(int **)&ptr_BONDdata->ptr_inventory_first_in_cycle = piVar5;
-          piVar7 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+          *(int **)&pPlayer->ptr_inventory_first_in_cycle = piVar5;
+          piVar7 = (int *)pPlayer->ptr_inventory_first_in_cycle;
           goto LAB_7f08c17c;
         }
         piVar5 = (int *)param_1[3];
@@ -102490,18 +102490,18 @@ void add_additional_weapon_slot_to_player_inventory_documentation_guess(int *par
 {
   int iVar1;
   
-  iVar1 = ptr_BONDdata->ptr_inventory_first_in_cycle;
+  iVar1 = pPlayer->ptr_inventory_first_in_cycle;
   if (iVar1 == 0) {
     *(int **)(param_1 + 3) = param_1;
     *(int **)(param_1 + 4) = param_1;
   }
   else {
     param_1[3] = iVar1;
-    param_1[4] = *(int *)(ptr_BONDdata->ptr_inventory_first_in_cycle + 0x10);
+    param_1[4] = *(int *)(pPlayer->ptr_inventory_first_in_cycle + 0x10);
     *(int **)(iVar1 + 0x10) = param_1;
     *(int **)(param_1[4] + 0xc) = param_1;
   }
-  *(int **)&ptr_BONDdata->ptr_inventory_first_in_cycle = param_1;
+  *(int **)&pPlayer->ptr_inventory_first_in_cycle = param_1;
   proc_7F08C054(param_1);
   return;
 }
@@ -102516,12 +102516,12 @@ void reorder_inventory_ptrs_based_on_id_code(undefined4 *param_1)
   
   puVar1 = (undefined4 *)param_1[3];
   iVar2 = param_1[4];
-  if (param_1 == (undefined4 *)ptr_BONDdata->ptr_inventory_first_in_cycle) {
+  if (param_1 == (undefined4 *)pPlayer->ptr_inventory_first_in_cycle) {
     if (param_1 == puVar1) {
-      ptr_BONDdata->ptr_inventory_first_in_cycle = 0;
+      pPlayer->ptr_inventory_first_in_cycle = 0;
     }
     else {
-      *(undefined4 **)&ptr_BONDdata->ptr_inventory_first_in_cycle = puVar1;
+      *(undefined4 **)&pPlayer->ptr_inventory_first_in_cycle = puVar1;
     }
     puVar1[4] = iVar2;
   }
@@ -102544,18 +102544,18 @@ int get_ptr_next_available_weapon(void)
   int *piVar4;
   
   iVar2 = 0;
-  if (0 < ptr_BONDdata->equipmaxitems) {
+  if (0 < pPlayer->equipmaxitems) {
     iVar3 = 0;
-    piVar4 = (int *)ptr_BONDdata->p_itemcur;
+    piVar4 = (int *)pPlayer->p_itemcur;
     do {
       iVar1 = *piVar4;
       iVar2 += 1;
       piVar4 = piVar4 + 5;
       if (iVar1 == -1) {
-        return (int)(int *)ptr_BONDdata->p_itemcur + iVar3;
+        return (int)(int *)pPlayer->p_itemcur + iVar3;
       }
       iVar3 += 0x14;
-    } while (iVar2 < ptr_BONDdata->equipmaxitems);
+    } while (iVar2 < pPlayer->equipmaxitems);
   }
   return 0;
 }
@@ -102565,7 +102565,7 @@ int get_ptr_next_available_weapon(void)
 void set_BONDdata_allguns_flag(int param_1)
 
 {
-  ptr_BONDdata->equipallguns = param_1;
+  pPlayer->equipallguns = param_1;
   return;
 }
 
@@ -102574,7 +102574,7 @@ void set_BONDdata_allguns_flag(int param_1)
 int get_BONDdata_allguns_flag(void)
 
 {
-  return ptr_BONDdata->equipallguns;
+  return pPlayer->equipallguns;
 }
 
 
@@ -102586,7 +102586,7 @@ int * get_ptr_inventory_item(int item)
   int *piVar2;
   int iVar3;
   
-  piVar1 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+  piVar1 = (int *)pPlayer->ptr_inventory_first_in_cycle;
   if (piVar1 != NULL) {
     iVar3 = *piVar1;
     piVar2 = piVar1;
@@ -102627,7 +102627,7 @@ int * get_ptr_inventory_for_item_in_hand(int item,int hand)
   int *piVar2;
   int iVar3;
   
-  piVar1 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+  piVar1 = (int *)pPlayer->ptr_inventory_first_in_cycle;
   if (piVar1 != NULL) {
     iVar3 = *piVar1;
     piVar2 = piVar1;
@@ -102672,7 +102672,7 @@ ulonglong check_if_item_available(ITEM_IDS weaponid)
   ulonglong uVar1;
   BOOL BVar2;
   
-  if (((ptr_BONDdata->equipallguns == 0) || (weaponid == ITEM_UNARMED)) || (0x20 < (int)weaponid)) {
+  if (((pPlayer->equipallguns == 0) || (weaponid == ITEM_UNARMED)) || (0x20 < (int)weaponid)) {
     BVar2 = is_weapon_in_inv((weaponid)weaponid);
     uVar1 = SEXT48((int)BVar2);
   }
@@ -102690,7 +102690,7 @@ ulonglong check_if_item_for_hand_available(ITEM_IDS item,int hand)
   ulonglong uVar1;
   int iVar2;
   
-  if ((((ptr_BONDdata->equipallguns != 0) && ((int)item < 0x21)) && (item == hand)) &&
+  if ((((pPlayer->equipallguns != 0) && ((int)item < 0x21)) && (item == hand)) &&
      ((uVar1 = get_num_players(), uVar1 == 1 &&
       (iVar2 = check_special_attributes(item,0x100000), iVar2 != 0)))) {
     return 1;
@@ -102716,7 +102716,7 @@ undefined8 add_item_to_inventory(ITEM_IDS item)
       piVar3[1] = item;
       add_additional_weapon_slot_to_player_inventory_documentation_guess(piVar3);
     }
-    if ((ptr_BONDdata->equipallguns == 0) || (0x20 < (int)item)) {
+    if ((pPlayer->equipallguns == 0) || (0x20 < (int)item)) {
       uVar1 = 1;
     }
     else {
@@ -102764,7 +102764,7 @@ int proc_7F08C570(char param_1)
   int iVar2;
   int *piVar3;
   
-  piVar1 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+  piVar1 = (int *)pPlayer->ptr_inventory_first_in_cycle;
   if (piVar1 != NULL) {
     piVar3 = (int *)piVar1[3];
     do {
@@ -102793,7 +102793,7 @@ void proc_7F08C61C(longlong param_1)
   int *piVar3;
   int *piVar4;
   
-  piVar3 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+  piVar3 = (int *)pPlayer->ptr_inventory_first_in_cycle;
   if (piVar3 != NULL) {
     piVar4 = (int *)piVar3[3];
     do {
@@ -102803,13 +102803,13 @@ void proc_7F08C61C(longlong param_1)
             (iVar2 = *(int *)((char *)piVar4[1] + 4), *(char *)(iVar2 + 3) == '\b')) &&
            (param_1 == (longlong)*(char *)(iVar2 + 0x80))) {
           reorder_inventory_ptrs_based_on_id_code(piVar4);
-          piVar3 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+          piVar3 = (int *)pPlayer->ptr_inventory_first_in_cycle;
         }
       }
       else {
         if ((*piVar4 == 1) && (param_1 == (longlong)piVar4[1])) {
           reorder_inventory_ptrs_based_on_id_code(piVar4);
-          piVar3 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+          piVar3 = (int *)pPlayer->ptr_inventory_first_in_cycle;
         }
       }
     } while ((piVar4 != piVar3) && (piVar4 = piVar1, piVar3 != NULL));
@@ -102893,7 +102893,7 @@ void proc_7F08C86C(int *param_1,int *param_2,longlong param_3)
   int iVar5;
   int iVar6;
   
-  piVar4 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+  piVar4 = (int *)pPlayer->ptr_inventory_first_in_cycle;
   iVar5 = *param_1;
   iVar6 = *param_2;
   if (piVar4 != NULL) {
@@ -102925,9 +102925,9 @@ void proc_7F08C86C(int *param_1,int *param_2,longlong param_3)
       }
 LAB_7f08c968:
       piVar4 = (int *)piVar4[3];
-      if (piVar4 == (int *)ptr_BONDdata->ptr_inventory_first_in_cycle) {
+      if (piVar4 == (int *)pPlayer->ptr_inventory_first_in_cycle) {
         if (param_3 != 0) {
-          item_00 = ptr_BONDdata->equipallguns;
+          item_00 = pPlayer->equipallguns;
           goto LAB_7f08c99c;
         }
         iVar5 = -1;
@@ -102937,7 +102937,7 @@ LAB_7f08c968:
       item_00 = *piVar4;
     } while( true );
   }
-  item_00 = ptr_BONDdata->equipallguns;
+  item_00 = pPlayer->equipallguns;
 LAB_7f08c99c:
   item = iVar5;
   iVar3 = iVar6;
@@ -103009,8 +103009,8 @@ void proc_7F08CB10(int *param_1,int *param_2,longlong param_3)
   
   iVar4 = *param_1;
   iVar7 = *param_2;
-  if (ptr_BONDdata->ptr_inventory_first_in_cycle != 0) {
-    piVar1 = *(int **)(ptr_BONDdata->ptr_inventory_first_in_cycle + 0x10);
+  if (pPlayer->ptr_inventory_first_in_cycle != 0) {
+    piVar1 = *(int **)(pPlayer->ptr_inventory_first_in_cycle + 0x10);
     do {
       if (*piVar1 == 1) {
         item = piVar1[1];
@@ -103034,9 +103034,9 @@ void proc_7F08CB10(int *param_1,int *param_2,longlong param_3)
         goto code_r0x7f08cc1c;
       }
 LAB_7f08cc2c:
-      if (piVar1 == (int *)ptr_BONDdata->ptr_inventory_first_in_cycle) {
+      if (piVar1 == (int *)pPlayer->ptr_inventory_first_in_cycle) {
         if (param_3 != 0) {
-          item = ptr_BONDdata->equipallguns;
+          item = pPlayer->equipallguns;
           goto LAB_7f08cc5c;
         }
         iVar4 = 1000;
@@ -103046,7 +103046,7 @@ LAB_7f08cc2c:
     } while( true );
   }
 LAB_7f08cc58:
-  item = ptr_BONDdata->equipallguns;
+  item = pPlayer->equipallguns;
 LAB_7f08cc5c:
   if (item != 0) {
     item = *param_1;
@@ -103131,7 +103131,7 @@ undefined8 proc_7F08CE70(uint param_1)
   int *piVar3;
   int iVar4;
   
-  piVar1 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+  piVar1 = (int *)pPlayer->ptr_inventory_first_in_cycle;
   uVar2 = 0;
   if (piVar1 != NULL) {
     iVar4 = *piVar1;
@@ -103177,7 +103177,7 @@ undefined8 proc_7F08CF0C(void)
   int *piVar2;
   int iVar3;
   
-  piVar1 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+  piVar1 = (int *)pPlayer->ptr_inventory_first_in_cycle;
   if (piVar1 != NULL) {
     iVar3 = *piVar1;
     piVar2 = piVar1;
@@ -103212,7 +103212,7 @@ ulonglong proc_7F08CF80(void)
   BOOL BVar2;
   
   uVar1 = 0;
-  if (ptr_BONDdata->player_button_control == 0) {
+  if (pPlayer->player_button_control == 0) {
     BVar2 = is_weapon_in_inv(0x58);
     uVar1 = SEXT48((int)BVar2);
   }
@@ -103237,7 +103237,7 @@ undefined8 proc_7F08CFE0(int param_1)
   int *piVar2;
   int iVar3;
   
-  piVar1 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+  piVar1 = (int *)pPlayer->ptr_inventory_first_in_cycle;
   if (piVar1 != NULL) {
     iVar3 = *piVar1;
     piVar2 = piVar1;
@@ -103270,10 +103270,10 @@ int proc_7F08D038(void)
   int *piVar5;
   
   iVar4 = 0;
-  if (ptr_BONDdata->equipallguns != 0) {
+  if (pPlayer->equipallguns != 0) {
     iVar4 = 0x20;
   }
-  piVar1 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+  piVar1 = (int *)pPlayer->ptr_inventory_first_in_cycle;
   if (piVar1 == NULL) {
     return iVar4;
   }
@@ -103304,7 +103304,7 @@ LAB_7f08d0ec:
     }
     else {
       if (iVar2 == 1) {
-        if ((ptr_BONDdata->equipallguns == 0) || (0x20 < piVar5[1])) goto LAB_7f08d0ec;
+        if ((pPlayer->equipallguns == 0) || (0x20 < piVar5[1])) goto LAB_7f08d0ec;
         piVar5 = (int *)piVar5[3];
       }
       else {
@@ -103333,15 +103333,15 @@ int * proc_7F08D108(int param_1)
   int *piVar5;
   
   bVar4 = param_1 < 0x20;
-  if (ptr_BONDdata->equipallguns == 0) {
-    piVar1 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+  if (pPlayer->equipallguns == 0) {
+    piVar1 = (int *)pPlayer->ptr_inventory_first_in_cycle;
   }
   else {
     param_1 += -0x20;
     if (bVar4) {
       return NULL;
     }
-    piVar1 = (int *)ptr_BONDdata->ptr_inventory_first_in_cycle;
+    piVar1 = (int *)pPlayer->ptr_inventory_first_in_cycle;
   }
   if (piVar1 == NULL) {
     return NULL;
@@ -103381,7 +103381,7 @@ LAB_7f08d1fc:
     }
     else {
       if (iVar2 == 1) {
-        if ((ptr_BONDdata->equipallguns == 0) || (0x20 < piVar5[1])) {
+        if ((pPlayer->equipallguns == 0) || (0x20 < piVar5[1])) {
           if (param_1 == 0) {
             return piVar5;
           }
@@ -103411,7 +103411,7 @@ int proc_7F08D21C(int param_1)
   int iVar1;
   int iVar2;
   
-  iVar1 = ptr_BONDdata->field_11F4;
+  iVar1 = pPlayer->field_11F4;
   if (iVar1 != 0) {
     iVar2 = *(int *)(iVar1 + 0x24);
     while( true ) {
@@ -103434,7 +103434,7 @@ int proc_7F08D25C(int param_1)
   int iVar1;
   int iVar2;
   
-  iVar1 = ptr_BONDdata->field_11F4;
+  iVar1 = pPlayer->field_11F4;
   if (iVar1 != 0) {
     iVar2 = *(int *)(iVar1 + 4);
     while( true ) {
@@ -103464,7 +103464,7 @@ int proc_7F08D2A8(int param_1)
   
   piVar1 = proc_7F08D108(param_1);
   if (piVar1 == NULL) {
-    if (ptr_BONDdata->equipallguns == 0) {
+    if (pPlayer->equipallguns == 0) {
       param_1 = 0;
     }
     else {
@@ -103511,7 +103511,7 @@ int proc_7F08D340(int param_1)
   piVar1 = proc_7F08D108(param_1);
   item = 0;
   if (piVar1 == NULL) {
-    if ((ptr_BONDdata->equipallguns != 0) && (param_1 < 0x20)) {
+    if ((pPlayer->equipallguns != 0) && (param_1 < 0x20)) {
       item = get_ptr_short_watch_text_for_item(param_1 + 1);
       return item;
     }
@@ -103556,7 +103556,7 @@ int proc_7F08D434(int param_1)
   piVar1 = proc_7F08D108(param_1);
   item = 0;
   if (piVar1 == NULL) {
-    if ((ptr_BONDdata->equipallguns != 0) && (param_1 < 0x20)) {
+    if ((pPlayer->equipallguns != 0) && (param_1 < 0x20)) {
       item = get_ptr_long_watch_text_for_item(param_1 + 1);
       return item;
     }
@@ -103649,7 +103649,7 @@ int proc_7F08D5C8(int param_1)
   piVar1 = proc_7F08D108(param_1);
   item = 0;
   if (piVar1 == NULL) {
-    if ((ptr_BONDdata->equipallguns != 0) && (param_1 < 0x20)) {
+    if ((pPlayer->equipallguns != 0) && (param_1 < 0x20)) {
       item = get_ptr_first_title_line_item(param_1 + 1);
       return item;
     }
@@ -103694,7 +103694,7 @@ int proc_7F08D6BC(int param_1)
   piVar1 = proc_7F08D108(param_1);
   item = 0;
   if (piVar1 == NULL) {
-    if ((ptr_BONDdata->equipallguns != 0) && (param_1 < 0x20)) {
+    if ((pPlayer->equipallguns != 0) && (param_1 < 0x20)) {
       item = get_ptr_second_title_line_item(param_1 + 1);
       return item;
     }
@@ -103803,8 +103803,8 @@ int proc_7F08D878(int param_1)
 void proc_7F08D8A0(int param_1)
 
 {
-  *(int *)(param_1 + 0x20) = ptr_BONDdata->field_11F4;
-  ptr_BONDdata->field_11F4 = param_1;
+  *(int *)(param_1 + 0x20) = pPlayer->field_11F4;
+  pPlayer->field_11F4 = param_1;
   return;
 }
 
@@ -103813,7 +103813,7 @@ void proc_7F08D8A0(int param_1)
 int proc_7F08D8C0(void)
 
 {
-  return ptr_BONDdata->field_11F0;
+  return pPlayer->field_11F0;
 }
 
 
@@ -103821,7 +103821,7 @@ int proc_7F08D8C0(void)
 void proc_7F08D8D0(int param_1)
 
 {
-  ptr_BONDdata->field_11F0 = param_1;
+  pPlayer->field_11F0 = param_1;
   return;
 }
 
@@ -103837,13 +103837,13 @@ void proc_7F08D8E0(void)
   
   IVar1 = get_item_in_hand(0);
   iVar4 = 0;
-  ptr_BONDdata->field_11F0 = 0;
+  pPlayer->field_11F0 = 0;
   iVar2 = proc_7F08D038();
   if (0 < iVar2) {
     do {
       IVar3 = proc_7F08D2A8(iVar4);
       if (IVar3 == IVar1) {
-        ptr_BONDdata->field_11F0 = iVar4;
+        pPlayer->field_11F0 = iVar4;
         return;
       }
       iVar4 += 1;
@@ -103910,7 +103910,7 @@ void proc_7F08D9EC(int param_1,int param_2)
       param_2 = 0;
     }
     iVar3 = 0;
-    pBVar4 = ptr_BONDdata;
+    pBVar4 = pPlayer;
     do {
       iVar5 = pBVar4->field_1200;
       if (iVar5 < 0) {
@@ -103935,9 +103935,9 @@ void proc_7F08D9EC(int param_1,int param_2)
       iVar5 = iVar3;
     } while (iVar3 < 10);
     if (iVar5 == 10) {
-      (&ptr_BONDdata->field_1200)[iVar6 * 3] = clock_timer;
-      (&ptr_BONDdata->index_time_spent_using_item)[iVar6 * 3] = param_1;
-      (&ptr_BONDdata->field_11FC)[iVar6 * 3] = param_2;
+      (&pPlayer->field_1200)[iVar6 * 3] = clock_timer;
+      (&pPlayer->index_time_spent_using_item)[iVar6 * 3] = param_1;
+      (&pPlayer->field_11FC)[iVar6 * 3] = param_2;
     }
   }
   return;
@@ -103958,7 +103958,7 @@ void proc_7F08DB08(undefined4 *param_1,undefined4 *param_2)
   *param_2 = 0;
   iVar4 = 0;
   do {
-    iVar3 = (int)&ptr_BONDdata->unknown + iVar4;
+    iVar3 = (int)&pPlayer->unknown + iVar4;
     iVar1 = *(int *)(iVar3 + 0x1200);
     if (iVar1 < 0) {
 LAB_7f08db64:
@@ -103967,8 +103967,8 @@ LAB_7f08db64:
     else {
       if (iVar2 < iVar1) {
         *param_1 = *(undefined4 *)(iVar3 + 0x11f8);
-        *param_2 = *(undefined4 *)((int)&ptr_BONDdata->field_11FC + iVar4);
-        iVar3 = (int)&ptr_BONDdata->unknown + iVar4;
+        *param_2 = *(undefined4 *)((int)&pPlayer->field_11FC + iVar4);
+        iVar3 = (int)&pPlayer->unknown + iVar4;
         iVar2 = iVar1;
         goto LAB_7f08db64;
       }
@@ -103976,7 +103976,7 @@ LAB_7f08db64:
     }
     if ((-1 < iVar1) && (iVar2 < iVar1)) {
       *param_1 = *(undefined4 *)(iVar3 + 0x1204);
-      *param_2 = *(undefined4 *)((int)&ptr_BONDdata->field_1208 + iVar4);
+      *param_2 = *(undefined4 *)((int)&pPlayer->field_1208 + iVar4);
       iVar2 = iVar1;
     }
     iVar4 += 0x18;
@@ -103991,7 +103991,7 @@ LAB_7f08db64:
 void proc_7F08DBB0(void)
 
 {
-  *(bool *)&ptr_BONDdata->field_5BC = *(char *)&ptr_BONDdata->field_5BC == '\0';
+  *(bool *)&pPlayer->field_5BC = *(char *)&pPlayer->field_5BC == '\0';
   return;
 }
 
@@ -104008,31 +104008,31 @@ void proc_7F08DBC8(void)
   if ((int)uVar1 < 0) {
     fVar2 = fVar2 + 4294967296.00000000;
   }
-  *(float *)(&ptr_BONDdata->field_564 + ptr_BONDdata->field_594 * 3) =
+  *(float *)(&pPlayer->field_564 + pPlayer->field_594 * 3) =
        (fVar2 * 0.00000000 - 0.50000000) * flt_800552E0;
-  (&ptr_BONDdata->field_56C)[ptr_BONDdata->field_594 * 3] = 1.00000000;
+  (&pPlayer->field_56C)[pPlayer->field_594 * 3] = 1.00000000;
   uVar1 = get_random_value();
   fVar2 = (float)uVar1;
   if ((int)uVar1 < 0) {
     fVar2 = fVar2 + 4294967296.00000000;
   }
-  *(float *)(&ptr_BONDdata->field_57C + ptr_BONDdata->field_594 * 3) =
+  *(float *)(&pPlayer->field_57C + pPlayer->field_594 * 3) =
        (fVar2 * 0.00000000 - 0.50000000) * flt_800552E4;
-  (&ptr_BONDdata->field_580)[ptr_BONDdata->field_594 * 3] = 1.00000000;
-  if (ptr_BONDdata->field_594 == 0) {
+  (&pPlayer->field_580)[pPlayer->field_594 * 3] = 1.00000000;
+  if (pPlayer->field_594 == 0) {
     uVar1 = get_random_value();
     fVar2 = (float)uVar1;
     if ((int)uVar1 < 0) {
       fVar2 = fVar2 + 4294967296.00000000;
     }
-    *(float *)(&ptr_BONDdata->field_568 + ptr_BONDdata->field_594 * 3) =
+    *(float *)(&pPlayer->field_568 + pPlayer->field_594 * 3) =
          fVar2 * 0.00000000 * flt_800552F0;
     uVar1 = get_random_value();
     fVar2 = (float)uVar1;
     if ((int)uVar1 < 0) {
       fVar2 = fVar2 + 4294967296.00000000;
     }
-    *(float *)(&ptr_BONDdata->field_584 + ptr_BONDdata->field_594 * 3) =
+    *(float *)(&pPlayer->field_584 + pPlayer->field_594 * 3) =
          fVar2 * 0.00000000 * flt_800552F4;
   }
   else {
@@ -104041,17 +104041,17 @@ void proc_7F08DBC8(void)
     if ((int)uVar1 < 0) {
       fVar2 = fVar2 + 4294967296.00000000;
     }
-    *(float *)(&ptr_BONDdata->field_568 + ptr_BONDdata->field_594 * 3) =
+    *(float *)(&pPlayer->field_568 + pPlayer->field_594 * 3) =
          fVar2 * 0.00000000 * flt_800552E8;
     uVar1 = get_random_value();
     fVar2 = (float)uVar1;
     if ((int)uVar1 < 0) {
       fVar2 = fVar2 + 4294967296.00000000;
     }
-    *(float *)(&ptr_BONDdata->field_584 + ptr_BONDdata->field_594 * 3) =
+    *(float *)(&pPlayer->field_584 + pPlayer->field_594 * 3) =
          fVar2 * 0.00000000 * flt_800552EC;
   }
-  ptr_BONDdata->field_594 = 1 - ptr_BONDdata->field_594;
+  pPlayer->field_594 = 1 - pPlayer->field_594;
   return;
 }
 
@@ -104065,11 +104065,11 @@ void proc_7F08DE48(float *param_1)
   int iVar3;
   
   fVar1 = flt_800552F8;
-  if (ptr_BONDdata->field_4DC != 0) {
-    ptr_BONDdata->velocity = 0.00000000;
-    *(float *)&ptr_BONDdata->field_524 = param_1[1] / fVar1;
-    ptr_BONDdata->field_528 = 0.00000000;
-    ptr_BONDdata->field_4DC = 0;
+  if (pPlayer->field_4DC != 0) {
+    pPlayer->velocity = 0.00000000;
+    *(float *)&pPlayer->field_524 = param_1[1] / fVar1;
+    pPlayer->field_528 = 0.00000000;
+    pPlayer->field_4DC = 0;
   }
   fVar2 = flt_80055300;
   fVar1 = master_player_perspective;
@@ -104077,14 +104077,14 @@ void proc_7F08DE48(float *param_1)
   if (0 < clock_timer) {
     do {
       iVar3 += 1;
-      *(float *)&ptr_BONDdata->velocity = *param_1 + fVar2 * (float)ptr_BONDdata->velocity;
-      *(float *)&ptr_BONDdata->field_524 = param_1[1] + fVar2 * (float)ptr_BONDdata->field_524;
-      *(float *)&ptr_BONDdata->field_528 = param_1[2] + fVar2 * (float)ptr_BONDdata->field_528;
+      *(float *)&pPlayer->velocity = *param_1 + fVar2 * (float)pPlayer->velocity;
+      *(float *)&pPlayer->field_524 = param_1[1] + fVar2 * (float)pPlayer->field_524;
+      *(float *)&pPlayer->field_528 = param_1[2] + fVar2 * (float)pPlayer->field_528;
     } while (iVar3 < clock_timer);
   }
-  *(float *)&ptr_BONDdata->scaled_velocity = (float)ptr_BONDdata->velocity * fVar1;
-  *(float *)&ptr_BONDdata->field_500 = (float)ptr_BONDdata->field_524 * fVar1;
-  *(float *)&ptr_BONDdata->field_504 = (float)ptr_BONDdata->field_528 * fVar1;
+  *(float *)&pPlayer->scaled_velocity = (float)pPlayer->velocity * fVar1;
+  *(float *)&pPlayer->field_500 = (float)pPlayer->field_524 * fVar1;
+  *(float *)&pPlayer->field_504 = (float)pPlayer->field_528 * fVar1;
   return;
 }
 
@@ -104095,45 +104095,45 @@ void proc_7F08DF44(float *param_1,float *param_2)
 {
   int iVar1;
   
-  if (ptr_BONDdata->field_4E0 != 0) {
-    *(float *)&ptr_BONDdata->field_52C = *param_1 / (1.00000000 - (float)ptr_BONDdata->field_4EC);
-    *(float *)&ptr_BONDdata->field_530 = param_1[1] / (1.00000000 - (float)ptr_BONDdata->field_4EC);
-    *(float *)&ptr_BONDdata->field_534 = param_1[2] / (1.00000000 - (float)ptr_BONDdata->field_4EC);
-    *(float *)&ptr_BONDdata->field_538 = *param_2 / (1.00000000 - (float)ptr_BONDdata->field_4EC);
-    *(float *)&ptr_BONDdata->field_53C = param_2[1] / (1.00000000 - (float)ptr_BONDdata->field_4EC);
-    *(float *)&ptr_BONDdata->field_540 = param_2[2] / (1.00000000 - (float)ptr_BONDdata->field_4EC);
-    ptr_BONDdata->field_4E0 = 0;
+  if (pPlayer->field_4E0 != 0) {
+    *(float *)&pPlayer->field_52C = *param_1 / (1.00000000 - (float)pPlayer->field_4EC);
+    *(float *)&pPlayer->field_530 = param_1[1] / (1.00000000 - (float)pPlayer->field_4EC);
+    *(float *)&pPlayer->field_534 = param_1[2] / (1.00000000 - (float)pPlayer->field_4EC);
+    *(float *)&pPlayer->field_538 = *param_2 / (1.00000000 - (float)pPlayer->field_4EC);
+    *(float *)&pPlayer->field_53C = param_2[1] / (1.00000000 - (float)pPlayer->field_4EC);
+    *(float *)&pPlayer->field_540 = param_2[2] / (1.00000000 - (float)pPlayer->field_4EC);
+    pPlayer->field_4E0 = 0;
   }
   iVar1 = 0;
   if (0 < clock_timer) {
     do {
       iVar1 += 1;
-      *(float *)&ptr_BONDdata->field_52C =
-           *param_1 + (float)ptr_BONDdata->field_4EC * (float)ptr_BONDdata->field_52C;
-      *(float *)&ptr_BONDdata->field_530 =
-           param_1[1] + (float)ptr_BONDdata->field_4EC * (float)ptr_BONDdata->field_530;
-      *(float *)&ptr_BONDdata->field_534 =
-           param_1[2] + (float)ptr_BONDdata->field_4EC * (float)ptr_BONDdata->field_534;
-      *(float *)&ptr_BONDdata->field_538 =
-           *param_2 + (float)ptr_BONDdata->field_4EC * (float)ptr_BONDdata->field_538;
-      *(float *)&ptr_BONDdata->field_53C =
-           param_2[1] + (float)ptr_BONDdata->field_4EC * (float)ptr_BONDdata->field_53C;
-      *(float *)&ptr_BONDdata->field_540 =
-           param_2[2] + (float)ptr_BONDdata->field_4EC * (float)ptr_BONDdata->field_540;
+      *(float *)&pPlayer->field_52C =
+           *param_1 + (float)pPlayer->field_4EC * (float)pPlayer->field_52C;
+      *(float *)&pPlayer->field_530 =
+           param_1[1] + (float)pPlayer->field_4EC * (float)pPlayer->field_530;
+      *(float *)&pPlayer->field_534 =
+           param_1[2] + (float)pPlayer->field_4EC * (float)pPlayer->field_534;
+      *(float *)&pPlayer->field_538 =
+           *param_2 + (float)pPlayer->field_4EC * (float)pPlayer->field_538;
+      *(float *)&pPlayer->field_53C =
+           param_2[1] + (float)pPlayer->field_4EC * (float)pPlayer->field_53C;
+      *(float *)&pPlayer->field_540 =
+           param_2[2] + (float)pPlayer->field_4EC * (float)pPlayer->field_540;
     } while (iVar1 < clock_timer);
   }
-  *(float *)&ptr_BONDdata->field_508 =
-       (float)ptr_BONDdata->field_52C * (1.00000000 - (float)ptr_BONDdata->field_4EC);
-  *(float *)&ptr_BONDdata->field_50C =
-       (float)ptr_BONDdata->field_530 * (1.00000000 - (float)ptr_BONDdata->field_4EC);
-  *(float *)&ptr_BONDdata->field_510 =
-       (float)ptr_BONDdata->field_534 * (1.00000000 - (float)ptr_BONDdata->field_4EC);
-  *(float *)&ptr_BONDdata->field_514 =
-       (float)ptr_BONDdata->field_538 * (1.00000000 - (float)ptr_BONDdata->field_4EC);
-  *(float *)&ptr_BONDdata->field_518 =
-       (float)ptr_BONDdata->field_53C * (1.00000000 - (float)ptr_BONDdata->field_4EC);
-  *(float *)&ptr_BONDdata->field_51C =
-       (float)ptr_BONDdata->field_540 * (1.00000000 - (float)ptr_BONDdata->field_4EC);
+  *(float *)&pPlayer->field_508 =
+       (float)pPlayer->field_52C * (1.00000000 - (float)pPlayer->field_4EC);
+  *(float *)&pPlayer->field_50C =
+       (float)pPlayer->field_530 * (1.00000000 - (float)pPlayer->field_4EC);
+  *(float *)&pPlayer->field_510 =
+       (float)pPlayer->field_534 * (1.00000000 - (float)pPlayer->field_4EC);
+  *(float *)&pPlayer->field_514 =
+       (float)pPlayer->field_538 * (1.00000000 - (float)pPlayer->field_4EC);
+  *(float *)&pPlayer->field_518 =
+       (float)pPlayer->field_53C * (1.00000000 - (float)pPlayer->field_4EC);
+  *(float *)&pPlayer->field_51C =
+       (float)pPlayer->field_540 * (1.00000000 - (float)pPlayer->field_4EC);
   return;
 }
 
@@ -104144,21 +104144,21 @@ void proc_7F08E164(float param_1)
 {
   float fVar1;
   
-  if (param_1 != (float)ptr_BONDdata->field_4EC) {
+  if (param_1 != (float)pPlayer->field_4EC) {
     fVar1 = 1.00000000 - param_1;
-    *(float *)&ptr_BONDdata->field_52C =
-         ((float)ptr_BONDdata->field_52C * (1.00000000 - (float)ptr_BONDdata->field_4EC)) / fVar1;
-    *(float *)&ptr_BONDdata->field_530 =
-         ((float)ptr_BONDdata->field_530 * (1.00000000 - (float)ptr_BONDdata->field_4EC)) / fVar1;
-    *(float *)&ptr_BONDdata->field_534 =
-         ((float)ptr_BONDdata->field_534 * (1.00000000 - (float)ptr_BONDdata->field_4EC)) / fVar1;
-    *(float *)&ptr_BONDdata->field_538 =
-         ((float)ptr_BONDdata->field_538 * (1.00000000 - (float)ptr_BONDdata->field_4EC)) / fVar1;
-    *(float *)&ptr_BONDdata->field_53C =
-         ((float)ptr_BONDdata->field_53C * (1.00000000 - (float)ptr_BONDdata->field_4EC)) / fVar1;
-    *(float *)&ptr_BONDdata->field_540 =
-         ((float)ptr_BONDdata->field_540 * (1.00000000 - (float)ptr_BONDdata->field_4EC)) / fVar1;
-    *(float *)&ptr_BONDdata->field_4EC = param_1;
+    *(float *)&pPlayer->field_52C =
+         ((float)pPlayer->field_52C * (1.00000000 - (float)pPlayer->field_4EC)) / fVar1;
+    *(float *)&pPlayer->field_530 =
+         ((float)pPlayer->field_530 * (1.00000000 - (float)pPlayer->field_4EC)) / fVar1;
+    *(float *)&pPlayer->field_534 =
+         ((float)pPlayer->field_534 * (1.00000000 - (float)pPlayer->field_4EC)) / fVar1;
+    *(float *)&pPlayer->field_538 =
+         ((float)pPlayer->field_538 * (1.00000000 - (float)pPlayer->field_4EC)) / fVar1;
+    *(float *)&pPlayer->field_53C =
+         ((float)pPlayer->field_53C * (1.00000000 - (float)pPlayer->field_4EC)) / fVar1;
+    *(float *)&pPlayer->field_540 =
+         ((float)pPlayer->field_540 * (1.00000000 - (float)pPlayer->field_4EC)) / fVar1;
+    *(float *)&pPlayer->field_4EC = param_1;
   }
   return;
 }
@@ -104217,33 +104217,33 @@ void proc_7F08E240(float param_1,float param_2)
   fStack36 = dword_80036B18;
   fStack32 = flt_80036B1C;
   fStack28 = dword_80036B20;
-  fStack40 = proc_7F06F618((int)&ptr_BONDdata->field_598);
+  fStack40 = proc_7F06F618((int)&pPlayer->field_598);
   ppfVar3 = (f32 **)&dword_80036B24;
   ppfVar5 = apfStack104;
-  if (ptr_BONDdata->field_4E8 == 0) {
+  if (pPlayer->field_4E8 == 0) {
     if (flt_80055304 < fStack40) {
-      ptr_BONDdata->field_4F4 = 1.00000000;
+      pPlayer->field_4F4 = 1.00000000;
     }
     else {
       if (flt_80055308 < fStack40) {
-        *(float *)&ptr_BONDdata->field_4F4 =
+        *(float *)&pPlayer->field_4F4 =
              ((fStack40 - flt_80055308) * flt_8005530C) / flt_80055310 + flt_80055314;
       }
       else {
-        *(float *)&ptr_BONDdata->field_4F4 = flt_80055318;
+        *(float *)&pPlayer->field_4F4 = flt_80055318;
       }
     }
-    ptr_BONDdata->field_4F8 = ptr_BONDdata->field_4F4;
+    pPlayer->field_4F8 = pPlayer->field_4F4;
     ppfVar3 = (f32 **)&dword_80036B24;
   }
   else {
-    if (ptr_BONDdata->field_4E8 == 1) {
-      *(float *)&ptr_BONDdata->field_4F4 = flt_8005531C;
-      ptr_BONDdata->field_4F8 = 0.50000000;
+    if (pPlayer->field_4E8 == 1) {
+      *(float *)&pPlayer->field_4F4 = flt_8005531C;
+      pPlayer->field_4F8 = 0.50000000;
     }
     else {
-      ptr_BONDdata->field_4F4 = 1.00000000;
-      ptr_BONDdata->field_4F8 = ptr_BONDdata->field_4F4;
+      pPlayer->field_4F4 = 1.00000000;
+      pPlayer->field_4F8 = pPlayer->field_4F4;
     }
   }
   do {
@@ -104260,55 +104260,55 @@ void proc_7F08E240(float param_1,float param_2)
   uStack176 = dword_80036B68;
   fStack172 = dword_80036B6C;
   uVar1 = proc_7F0701E0();
-  ptr_BONDdata->field_4E4 = 0;
+  pPlayer->field_4E4 = 0;
   proc_7F0701D4(0);
-  proc_7F070AEC((int)&ptr_BONDdata->field_598,clock_timer,1);
+  proc_7F070AEC((int)&pPlayer->field_598,clock_timer,1);
   proc_7F0701D4(uVar1);
-  subcalcpos((int)&ptr_BONDdata->field_598,extraout_a1_lo,extraout_a2_lo,extraout_a3_lo);
+  subcalcpos((int)&pPlayer->field_598,extraout_a1_lo,extraout_a2_lo,extraout_a3_lo);
   proc_7F057FD0(afStack168);
   apfStack104[0] = afStack168;
-  piStack88 = &ptr_BONDdata->field_6D0;
-  subcalcmatrices((float **)apfStack104,(uint)&ptr_BONDdata->field_598,extraout_a2_lo_00,
+  piStack88 = &pPlayer->field_6D0;
+  subcalcmatrices((float **)apfStack104,(uint)&pPlayer->field_598,extraout_a2_lo_00,
                   extraout_a3_lo_00);
-  ptr_BONDdata->field_544 = ptr_BONDdata->field_554;
-  ptr_BONDdata->field_548 = ptr_BONDdata->field_558;
-  ptr_BONDdata->field_54C = ptr_BONDdata->field_55C;
-  getsuboffset((int)&ptr_BONDdata->field_598,&fStack180,extraout_a2_lo_01,extraout_a3_lo_01);
-  fStack180 = fStack180 - (float)ptr_BONDdata->field_700;
-  fStack172 = fStack172 - (float)ptr_BONDdata->field_708;
-  setsuboffset((int)&ptr_BONDdata->field_598,&fStack180,extraout_a2_lo_02,extraout_a3_lo_02);
+  pPlayer->field_544 = pPlayer->field_554;
+  pPlayer->field_548 = pPlayer->field_558;
+  pPlayer->field_54C = pPlayer->field_55C;
+  getsuboffset((int)&pPlayer->field_598,&fStack180,extraout_a2_lo_01,extraout_a3_lo_01);
+  fStack180 = fStack180 - (float)pPlayer->field_700;
+  fStack172 = fStack172 - (float)pPlayer->field_708;
+  setsuboffset((int)&pPlayer->field_598,&fStack180,extraout_a2_lo_02,extraout_a3_lo_02);
   if (0.00000000 < fStack40) {
-    *(float *)&ptr_BONDdata->field_700 = (float)ptr_BONDdata->field_700 + param_2;
-    *(float *)&ptr_BONDdata->field_708 = (float)ptr_BONDdata->field_708 * param_1;
+    *(float *)&pPlayer->field_700 = (float)pPlayer->field_700 + param_2;
+    *(float *)&pPlayer->field_708 = (float)pPlayer->field_708 * param_1;
     if (0 < clock_timer) {
-      *(float *)&ptr_BONDdata->field_700 = (float)ptr_BONDdata->field_700 / global_timer_delta;
-      *(float *)&ptr_BONDdata->field_708 = (float)ptr_BONDdata->field_708 / global_timer_delta;
+      *(float *)&pPlayer->field_700 = (float)pPlayer->field_700 / global_timer_delta;
+      *(float *)&pPlayer->field_708 = (float)pPlayer->field_708 / global_timer_delta;
     }
-    fStack12 = (float)ptr_BONDdata->field_700 * (float)ptr_BONDdata->field_4F4;
-    fStack8 = (f32)(((float)ptr_BONDdata->field_704 - (float)ptr_BONDdata->stationary_ground_offset)
-                    * (float)ptr_BONDdata->field_4F4 + (float)ptr_BONDdata->stationary_ground_offset
+    fStack12 = (float)pPlayer->field_700 * (float)pPlayer->field_4F4;
+    fStack8 = (f32)(((float)pPlayer->field_704 - (float)pPlayer->stationary_ground_offset)
+                    * (float)pPlayer->field_4F4 + (float)pPlayer->stationary_ground_offset
                    );
-    fStack4 = (float)ptr_BONDdata->field_708 * (float)ptr_BONDdata->field_4F4;
-    if (ptr_BONDdata->field_4E8 < 0) {
-      fStack24 = (float)ptr_BONDdata->field_6F0;
-      fStack20 = (float)ptr_BONDdata->field_6F4;
-      fStack16 = (float)ptr_BONDdata->field_6F8;
-      fStack36 = (float)ptr_BONDdata->field_6E0;
-      fStack32 = (float)ptr_BONDdata->field_6E4;
-      fStack28 = (float)ptr_BONDdata->field_6E8;
+    fStack4 = (float)pPlayer->field_708 * (float)pPlayer->field_4F4;
+    if (pPlayer->field_4E8 < 0) {
+      fStack24 = (float)pPlayer->field_6F0;
+      fStack20 = (float)pPlayer->field_6F4;
+      fStack16 = (float)pPlayer->field_6F8;
+      fStack36 = (float)pPlayer->field_6E0;
+      fStack32 = (float)pPlayer->field_6E4;
+      fStack28 = (float)pPlayer->field_6E8;
       proc_7F08E164(flt_80055328);
     }
     else {
-      fStack24 = (float)ptr_BONDdata->field_6F0 * (float)ptr_BONDdata->field_4F8;
-      fStack20 = (float)ptr_BONDdata->field_6F4 * (float)ptr_BONDdata->field_4F4;
-      fStack16 = ((float)ptr_BONDdata->field_6F8 - 1.00000000) * (float)ptr_BONDdata->field_4F4 +
+      fStack24 = (float)pPlayer->field_6F0 * (float)pPlayer->field_4F8;
+      fStack20 = (float)pPlayer->field_6F4 * (float)pPlayer->field_4F4;
+      fStack16 = ((float)pPlayer->field_6F8 - 1.00000000) * (float)pPlayer->field_4F4 +
                  1.00000000;
-      fStack36 = (float)ptr_BONDdata->field_6E0 * (float)ptr_BONDdata->field_4F4;
-      fStack32 = ((float)ptr_BONDdata->field_6E4 - 1.00000000) * (float)ptr_BONDdata->field_4F4 +
+      fStack36 = (float)pPlayer->field_6E0 * (float)pPlayer->field_4F4;
+      fStack32 = ((float)pPlayer->field_6E4 - 1.00000000) * (float)pPlayer->field_4F4 +
                  1.00000000;
-      fStack28 = (float)ptr_BONDdata->field_6E8 * (float)ptr_BONDdata->field_4F4;
-      ptr_BONDdata->field_4F0 = ptr_BONDdata->field_4F0 + clock_timer;
-      if (ptr_BONDdata->field_4F0 < 0x3d) {
+      fStack28 = (float)pPlayer->field_6E8 * (float)pPlayer->field_4F4;
+      pPlayer->field_4F0 = pPlayer->field_4F0 + clock_timer;
+      if (pPlayer->field_4F0 < 0x3d) {
         proc_7F08E164(flt_80055324);
       }
       else {
@@ -104317,39 +104317,39 @@ void proc_7F08E240(float param_1,float param_2)
     }
   }
   else {
-    ptr_BONDdata->field_544 = ptr_BONDdata->field_554;
-    ptr_BONDdata->field_548 = ptr_BONDdata->field_558;
-    ptr_BONDdata->field_54C = ptr_BONDdata->field_55C;
+    pPlayer->field_544 = pPlayer->field_554;
+    pPlayer->field_548 = pPlayer->field_558;
+    pPlayer->field_54C = pPlayer->field_55C;
     fStack12 = 0.00000000;
-    fStack8 = ptr_BONDdata->stationary_ground_offset;
+    fStack8 = pPlayer->stationary_ground_offset;
     fStack4 = 0.00000000;
-    ptr_BONDdata->field_4F0 = 0;
+    pPlayer->field_4F0 = 0;
     proc_7F08E164(flt_8005532C);
     fVar7 = get_BONDdata_field19C();
-    *(float *)&ptr_BONDdata->field_560 =
-         (float)ptr_BONDdata->field_560 +
+    *(float *)&pPlayer->field_560 =
+         (float)pPlayer->field_560 +
          (flt_80055330 + flt_80055334 * (float)fVar7) * global_timer_delta;
-    pfVar8 = (float *)ptr_BONDdata->field_560;
+    pfVar8 = (float *)pPlayer->field_560;
     if (1.00000000 <= (float)pfVar8) {
       proc_7F08DBC8();
-      *(float *)&ptr_BONDdata->field_560 = (float)ptr_BONDdata->field_560 - 1.00000000;
-      pfVar8 = (float *)ptr_BONDdata->field_560;
-      iVar2 = ptr_BONDdata->field_594;
+      *(float *)&pPlayer->field_560 = (float)pPlayer->field_560 - 1.00000000;
+      pfVar8 = (float *)pPlayer->field_560;
+      iVar2 = pPlayer->field_594;
       fVar9 = extraout_f12_00;
     }
     else {
-      iVar2 = ptr_BONDdata->field_594;
+      iVar2 = pPlayer->field_594;
       fVar9 = extraout_f12;
     }
-    proc_7F05AE00((float *)(&ptr_BONDdata->field_564 + iVar2 * 3),
-                  (float *)((int)ptr_BONDdata + iVar2 * -0xc + 0x570),fVar9,pfVar8);
+    proc_7F05AE00((float *)(&pPlayer->field_564 + iVar2 * 3),
+                  (float *)((int)pPlayer + iVar2 * -0xc + 0x570),fVar9,pfVar8);
     fVar7 = get_BONDdata_field19C();
     fStack24 = fStack24 * ((float)fVar7 * 5.00000000 + 1.00000000);
     fVar7 = get_BONDdata_field19C();
     fStack20 = fStack20 * ((float)fVar7 * 5.00000000 + 1.00000000);
-    proc_7F05AE00((float *)(&ptr_BONDdata->field_57C + ptr_BONDdata->field_594 * 3),
-                  (float *)((int)ptr_BONDdata + ptr_BONDdata->field_594 * -0xc + 0x588),
-                  extraout_f12_01,(float *)ptr_BONDdata->field_560);
+    proc_7F05AE00((float *)(&pPlayer->field_57C + pPlayer->field_594 * 3),
+                  (float *)((int)pPlayer + pPlayer->field_594 * -0xc + 0x588),
+                  extraout_f12_01,(float *)pPlayer->field_560);
     fVar7 = get_BONDdata_field19C();
     fStack36 = fStack36 * ((float)fVar7 * 5.00000000 + 1.00000000);
     fVar7 = get_BONDdata_field19C();
@@ -104377,23 +104377,23 @@ void proc_7F08E8BC(float param_1)
   do {
     fVar4 = (float)piVar3[3];
     if (param_1 <= fVar4 * (float)piVar3[5]) {
-      iVar1 = ptr_BONDdata->field_4E8;
+      iVar1 = pPlayer->field_4E8;
       if (iVar2 != iVar1) {
         fVar4 = 0.00000000;
         if (-1 < iVar1) {
           fVar4 = ((float)piVar3[2] - (float)piVar3[1]) *
-                  (((float)ptr_BONDdata->field_5C0 - (&FLOAT_80036ad4)[iVar1 * 6]) /
+                  (((float)pPlayer->field_5C0 - (&FLOAT_80036ad4)[iVar1 * 6]) /
                   ((&FLOAT_80036ad8)[iVar1 * 6] - (&FLOAT_80036ad4)[iVar1 * 6])) + (float)piVar3[1];
         }
-        proc_7F06FCA8((int)&ptr_BONDdata->field_598,*piVar3 + ptr_animation_table,
-                      *(undefined *)&ptr_BONDdata->field_5BC,param_1,fVar4,fVar4);
-        proc_7F06FDCC((int)&ptr_BONDdata->field_598,piVar3[1],0);
-        proc_7F06FDE8((int)&ptr_BONDdata->field_598,extraout_f12);
-        proc_7F06FE3C((int)&ptr_BONDdata->field_598,proc_7F08DBB0);
-        ptr_BONDdata->field_4E8 = iVar2;
+        proc_7F06FCA8((int)&pPlayer->field_598,*piVar3 + ptr_animation_table,
+                      *(undefined *)&pPlayer->field_5BC,param_1,fVar4,fVar4);
+        proc_7F06FDCC((int)&pPlayer->field_598,piVar3[1],0);
+        proc_7F06FDE8((int)&pPlayer->field_598,extraout_f12);
+        proc_7F06FE3C((int)&pPlayer->field_598,proc_7F08DBB0);
+        pPlayer->field_4E8 = iVar2;
         fVar4 = (float)piVar3[3];
       }
-      proc_7F06FE4C((int)&ptr_BONDdata->field_598,(param_1 / fVar4) * 0.50000000,param_1 / fVar4);
+      proc_7F06FE4C((int)&pPlayer->field_598,(param_1 / fVar4) * 0.50000000,param_1 / fVar4);
       return;
     }
     iVar2 += 1;
@@ -104410,8 +104410,8 @@ void proc_7F08EA48(undefined4 param_1,undefined param_2,float param_3,float para
   float in_a2_lo;
   float in_a3_lo;
   
-  proc_7F06FCA8((int)&ptr_BONDdata->field_598,param_1,param_2,in_a2_lo,in_a2_lo,in_a3_lo);
-  ptr_BONDdata->field_4E8 = -1;
+  proc_7F06FCA8((int)&pPlayer->field_598,param_1,param_2,in_a2_lo,in_a2_lo,in_a3_lo);
+  pPlayer->field_4E8 = -1;
   return;
 }
 
@@ -104420,7 +104420,7 @@ void proc_7F08EA48(undefined4 param_1,undefined param_2,float param_3,float para
 void proc_7F08EAB8(float param_1)
 
 {
-  proc_7F06FE4C((int)&ptr_BONDdata->field_598,param_1 * 0.50000000,param_1);
+  proc_7F06FE4C((int)&pPlayer->field_598,param_1 * 0.50000000,param_1);
   return;
 }
 
@@ -104435,16 +104435,16 @@ float proc_7F08EAF8(void)
   float fVar2;
   float fVar3;
   
-  if (ptr_BONDdata->field_4E8 < 0) {
+  if (pPlayer->field_4E8 < 0) {
     fVar3 = 0.00000000;
   }
   else {
     fVar1 = get_BONDdata_field19C();
     fVar3 = (float)fVar1 * flt_80055338 + flt_8005533C;
-    fVar2 = proc_7F06F618((int)&ptr_BONDdata->field_598);
+    fVar2 = proc_7F06F618((int)&pPlayer->field_598);
     if ((0.00000000 < fVar2) &&
-       (fVar2 = fVar2 / ((&FLOAT_80036ad8)[ptr_BONDdata->field_4E8 * 6] -
-                        (&FLOAT_80036ad4)[ptr_BONDdata->field_4E8 * 6]), fVar3 <= fVar2)) {
+       (fVar2 = fVar2 / ((&FLOAT_80036ad8)[pPlayer->field_4E8 * 6] -
+                        (&FLOAT_80036ad4)[pPlayer->field_4E8 * 6]), fVar3 <= fVar2)) {
       fVar3 = fVar2;
     }
   }
@@ -106567,7 +106567,7 @@ void proc_7F09177C(void)
       cVar8 = psVar9[1].anonymous_0;
     }
     else {
-      if ((ulonglong)(byte)ptr_BONDdata->can_display_cheat_text < uVar7) {
+      if ((ulonglong)(byte)pPlayer->can_display_cheat_text < uVar7) {
         cVar8 = psVar9[1].anonymous_0;
       }
       else {
@@ -106576,7 +106576,7 @@ void proc_7F09177C(void)
         }
         else {
           uVar6 = 0;
-          iVar2 = ((uint)(byte)ptr_BONDdata->something_with_cheat_text - (uint)bVar1) + 0x14;
+          iVar2 = ((uint)(byte)pPlayer->something_with_cheat_text - (uint)bVar1) + 0x14;
           if (false) {
             trap(0x1c00);
           }
@@ -106588,7 +106588,7 @@ void proc_7F09177C(void)
             do {
               iVar3 = iVar2 % 0x14;
               iVar2 = iVar3 + 1;
-              if (*(short *)((int)&ptr_BONDdata->field_128C + iVar3 * 2) != *psVar5) break;
+              if (*(short *)((int)&pPlayer->field_128C + iVar3 * 2) != *psVar5) break;
               if (false) {
                 trap(0x1c00);
               }
@@ -106600,7 +106600,7 @@ void proc_7F09177C(void)
             } while ((longlong)uVar6 < (longlong)uVar7);
           }
           if (uVar6 == uVar7) {
-            ptr_BONDdata->can_display_cheat_text = '\0';
+            pPlayer->can_display_cheat_text = '\0';
             uVar4 = proc_7F0927BC((uint)(byte)psVar9->anonymous_0);
             if ((uVar4 == 0) || ((psVar9->anonymous_3 & 0x10U) != 0)) {
               proc_7F091B64();
@@ -106657,17 +106657,17 @@ void proc_7F09193C(void)
       iVar5 = proc_7F091740((uint)(ushort)((ushort)uVar2 & ~uVar1));
       if (iVar5 == 1) {
         *(ushort *)
-         ((int)&ptr_BONDdata->field_128C + (uint)(byte)ptr_BONDdata->something_with_cheat_text * 2)
+         ((int)&pPlayer->field_128C + (uint)(byte)pPlayer->something_with_cheat_text * 2)
              = (ushort)uVar3 | uVar1;
-        ptr_BONDdata->something_with_cheat_text =
-             (char)((int)((uint)(byte)ptr_BONDdata->something_with_cheat_text + 1) % 0x14);
-        if ((byte)ptr_BONDdata->can_display_cheat_text < 0x14) {
-          ptr_BONDdata->can_display_cheat_text = ptr_BONDdata->can_display_cheat_text + 1;
+        pPlayer->something_with_cheat_text =
+             (char)((int)((uint)(byte)pPlayer->something_with_cheat_text + 1) % 0x14);
+        if ((byte)pPlayer->can_display_cheat_text < 0x14) {
+          pPlayer->can_display_cheat_text = pPlayer->can_display_cheat_text + 1;
         }
         goto LAB_7f091a44;
       }
     }
-    ptr_BONDdata->can_display_cheat_text = '\0';
+    pPlayer->can_display_cheat_text = '\0';
   }
 LAB_7f091a44:
   proc_7F09177C();
@@ -106824,21 +106824,21 @@ void proc_7F091B64(void)
       set_linemode_flag(1);
       break;
     case 8:
-      if (((float)ptr_BONDdata->actual_health == 1.00000000) ||
-         ((float)ptr_BONDdata->current_health < 1.00000000)) {
+      if (((float)pPlayer->actual_health == 1.00000000) ||
+         ((float)pPlayer->current_health < 1.00000000)) {
         text = get_textptr_for_textID(0xb012);
         display_string_in_lower_left_corner((char *)text);
-        ptr_BONDdata->current_health = 1.00000000;
-        ptr_BONDdata->actual_health = 2.00000000;
+        pPlayer->current_health = 1.00000000;
+        pPlayer->actual_health = 2.00000000;
       }
       break;
     case 9:
-      if (((float)ptr_BONDdata->actual_armor == 1.00000000) ||
-         ((float)ptr_BONDdata->current_armor < 1.00000000)) {
+      if (((float)pPlayer->actual_armor == 1.00000000) ||
+         ((float)pPlayer->current_armor < 1.00000000)) {
         text = get_textptr_for_textID(0xb013);
         display_string_in_lower_left_corner((char *)text);
-        ptr_BONDdata->current_armor = 1.00000000;
-        ptr_BONDdata->actual_armor = 2.00000000;
+        pPlayer->current_armor = 1.00000000;
+        pPlayer->actual_armor = 2.00000000;
       }
       break;
     case 10:
@@ -106882,8 +106882,8 @@ void proc_7F091B64(void)
         text = get_textptr_for_textID(0xb019);
         display_string_in_lower_left_corner((char *)text);
         cur_player_stat_ptr->player_perspective_height = 0.50000000;
-        if (ptr_BONDdata->ptr_char_objectinstance != 0) {
-          set_obj_instance_controller_scale(ptr_BONDdata->ptr_char_objectinstance,scale);
+        if (pPlayer->ptr_char_objectinstance != 0) {
+          set_obj_instance_controller_scale(pPlayer->ptr_char_objectinstance,scale);
         }
       }
       break;
@@ -106892,12 +106892,12 @@ void proc_7F091B64(void)
       display_string_in_lower_left_corner((char *)text);
       break;
     case 0x10:
-      if (((float)ptr_BONDdata->actual_health == 1.00000000) ||
-         ((float)ptr_BONDdata->current_health < 1.00000000)) {
+      if (((float)pPlayer->actual_health == 1.00000000) ||
+         ((float)pPlayer->current_health < 1.00000000)) {
         text = get_textptr_for_textID(0xb01b);
         display_string_in_lower_left_corner((char *)text);
-        ptr_BONDdata->current_health = 1.00000000;
-        ptr_BONDdata->actual_health = 10.00000000;
+        pPlayer->current_health = 1.00000000;
+        pPlayer->actual_health = 10.00000000;
       }
       break;
     case 0x11:
@@ -107140,8 +107140,8 @@ void proc_7F092438(int param_1)
         text = get_textptr_for_textID(0xb024);
         display_string_in_lower_left_corner((char *)text);
         cur_player_stat_ptr->player_perspective_height = 1.00000000;
-        if (ptr_BONDdata->ptr_char_objectinstance != 0) {
-          set_obj_instance_controller_scale(ptr_BONDdata->ptr_char_objectinstance,scale);
+        if (pPlayer->ptr_char_objectinstance != 0) {
+          set_obj_instance_controller_scale(pPlayer->ptr_char_objectinstance,scale);
         }
       }
       break;
@@ -108518,12 +108518,12 @@ uint * proc_7F094488(void)
     puStackX0[2] = 0xba001402;
     puStackX0[5] = 0;
     puStackX0[4] = 0xb900031d;
-    puStackX0[6] = (((int)ptr_BONDdata->playerscreenulx + (int)ptr_BONDdata->playerscreenwidth) - 1U
+    puStackX0[6] = (((int)pPlayer->playerscreenulx + (int)pPlayer->playerscreenwidth) - 1U
                    & 0x3ff) << 0xe | 0xf6000000 |
-                   (((int)ptr_BONDdata->playerscreenuly + (int)ptr_BONDdata->playerscreenheight) -
+                   (((int)pPlayer->playerscreenuly + (int)pPlayer->playerscreenheight) -
                     1U & 0x3ff) << 2;
-    puStackX0[7] = ((int)ptr_BONDdata->playerscreenulx & 0x3ffU) << 0xe |
-                   ((int)ptr_BONDdata->playerscreenuly & 0x3ffU) << 2;
+    puStackX0[7] = ((int)pPlayer->playerscreenulx & 0x3ffU) << 0xe |
+                   ((int)pPlayer->playerscreenuly & 0x3ffU) << 2;
     puStackX0[9] = 0;
     puStackX0[8] = 0xe7000000;
     return puStackX0 + 10;
@@ -111135,7 +111135,7 @@ void reset_play_data_ptrs(void)
   ptr_BONDdata_p2 = NULL;
   ptr_BONDdata_p3 = NULL;
   ptr_BONDdata_p4 = NULL;
-  ptr_BONDdata = NULL;
+  pPlayer = NULL;
   cur_player_stat_ptr = NULL;
   player_num = 0;
   random_byte = 0;
@@ -111605,7 +111605,7 @@ void initBONDdataforPlayer(int player)
 void set_cur_player(int playernum)
 
 {
-  ptr_BONDdata = (&ptr_BONDdata_p1)[playernum];
+  pPlayer = (&ptr_BONDdata_p1)[playernum];
   cur_player_stat_ptr = &player1_playerdata + playernum;
   player_num = playernum;
   return;
@@ -111653,8 +111653,8 @@ LAB_7f09b1c0:
 void set_cur_player_screen_size(short width,short height)
 
 {
-  ptr_BONDdata->playerscreenwidth = width;
-  ptr_BONDdata->playerscreenheight = height;
+  pPlayer->playerscreenwidth = width;
+  pPlayer->playerscreenheight = height;
   return;
 }
 
@@ -111663,8 +111663,8 @@ void set_cur_player_screen_size(short width,short height)
 void set_cur_player_viewport_size(short ulx,short uly)
 
 {
-  ptr_BONDdata->playerscreenulx = ulx;
-  ptr_BONDdata->playerscreenuly = uly;
+  pPlayer->playerscreenulx = ulx;
+  pPlayer->playerscreenuly = uly;
   return;
 }
 
@@ -111673,7 +111673,7 @@ void set_cur_player_viewport_size(short ulx,short uly)
 void set_watch_menu_current_size_unused_maybe(f32 size)
 
 {
-  ptr_BONDdata->fovy = size;
+  pPlayer->fovy = size;
   return;
 }
 
@@ -111682,7 +111682,7 @@ void set_watch_menu_current_size_unused_maybe(f32 size)
 void proc_7F09B224(f32 param_1)
 
 {
-  ptr_BONDdata->aspect = param_1;
+  pPlayer->aspect = param_1;
   return;
 }
 
@@ -111691,7 +111691,7 @@ void proc_7F09B224(f32 param_1)
 f32 get_watch_menu_current_size_unused_maybe(void)
 
 {
-  return ptr_BONDdata->fovy;
+  return pPlayer->fovy;
 }
 
 
@@ -111725,7 +111725,7 @@ void proc_7F09B368(int param_1)
 
 {
   set_0x4_in_runtime_flags_for_item_in_guards_hand
-            (*(int **)(ptr_BONDdata->position_data_pointer + 4),param_1);
+            (*(int **)(pPlayer->position_data_pointer + 4),param_1);
   return;
 }
 
@@ -111740,7 +111740,7 @@ longlong proc_7F09B398(uint param_1)
   undefined *puVar4;
   uint uVar5;
   
-  puVar1 = *(undefined2 **)(ptr_BONDdata->position_data_pointer + 4);
+  puVar1 = *(undefined2 **)(pPlayer->position_data_pointer + 4);
   lVar2 = (longlong)(int)puVar1;
   if (*(int *)(puVar1 + param_1 * 2 + 0xb0) == 0) {
     IVar3 = get_item_in_hand(param_1);
@@ -115583,9 +115583,9 @@ undefined4 * proc_7F0A2C44(undefined4 *param_1)
         proc_7F0BD6E0();
         proc_7F05892C((undefined4 *)(DAT_8007a164 + iVar5 + 4),
                       (float *)(DAT_8007a164 + iVar5 + 0x10),afStack64);
-        fStack16 = fStack16 - (float)ptr_BONDdata->current_model_xpos;
-        fStack12 = fStack12 - (float)ptr_BONDdata->current_model_ypos;
-        fStack8 = fStack8 - (float)ptr_BONDdata->current_model_zpos;
+        fStack16 = fStack16 - (float)pPlayer->current_model_xpos;
+        fStack12 = fStack12 - (float)pPlayer->current_model_ypos;
+        fStack8 = fStack8 - (float)pPlayer->current_model_zpos;
         proc_7F058C9C((int)afStack64,virtualAddress_00);
         puVar1 = puStackX0;
         *puStackX0 = 0x1020040;
@@ -116643,11 +116643,11 @@ void init_watch_at_start_of_stage(void)
   dword_800409CC = 0;
   dword_800409D0 = 0xffffffff;
   DAT_800409d4 = 0;
-  ptr_BONDdata->neg_vspacing_for_control_type_entry = 0;
-  ptr_BONDdata->cur_player_control_type_1 = 0;
-  ptr_BONDdata->cur_player_control_type_0 = 0;
-  ptr_BONDdata->cur_player_control_type_2 = 0.00000000;
-  ptr_BONDdata->has_set_control_type_data = 1;
+  pPlayer->neg_vspacing_for_control_type_entry = 0;
+  pPlayer->cur_player_control_type_1 = 0;
+  pPlayer->cur_player_control_type_0 = 0;
+  pPlayer->cur_player_control_type_2 = 0.00000000;
+  pPlayer->has_set_control_type_data = 1;
   dword_800409D8 = 8;
   controlstick_lr_enabled = 0;
   dword_80040AE0 = 0;
@@ -116790,7 +116790,7 @@ undefined8 proc_7F0A4D74(void)
 int cur_player_get_control_type(void)
 
 {
-  return ptr_BONDdata->cur_player_control_type_0;
+  return pPlayer->cur_player_control_type_0;
 }
 
 
@@ -116800,15 +116800,15 @@ void cur_player_set_control_type(int param_1)
 {
   int iVar1;
   
-  ptr_BONDdata->cur_player_control_type_0 = param_1;
+  pPlayer->cur_player_control_type_0 = param_1;
   iVar1 = 10;
-  ptr_BONDdata->cur_player_control_type_1 = param_1;
-  ptr_BONDdata->cur_player_control_type_2 = (float)param_1;
+  pPlayer->cur_player_control_type_1 = param_1;
+  pPlayer->cur_player_control_type_2 = (float)param_1;
   if (j_text_trigger != 0) {
     iVar1 = 0xe;
   }
-  ptr_BONDdata->neg_vspacing_for_control_type_entry = -(iVar1 * param_1);
-  ptr_BONDdata->has_set_control_type_data = 1;
+  pPlayer->neg_vspacing_for_control_type_entry = -(iVar1 * param_1);
+  pPlayer->has_set_control_type_data = 1;
   return;
 }
 
@@ -118294,8 +118294,8 @@ undefined4 * proc_7F0A714C(void)
   y = extraout_f14;
   if (in_a2_lo == 1) {
     dword_80040B04 = 0xe0;
-    if ((ptr_BONDdata->pause_animation_state == 4) ||
-       (y = extraout_f14, ptr_BONDdata->pause_animation_state == 6)) {
+    if ((pPlayer->pause_animation_state == 4) ||
+       (y = extraout_f14, pPlayer->pause_animation_state == 6)) {
       proc_7F07E740();
       x = extraout_f12;
       y = extraout_f14_00;
@@ -118309,9 +118309,9 @@ undefined4 * proc_7F0A714C(void)
     in_a0_lo[0xf] = 0x3000;
     *puVar5 = 0xb6000000;
     in_a0_lo[0x10] = 0x6000000;
-    *(int **)(in_a0_lo + 0x11) = &ptr_BONDdata[0x30303].field_1A78;
+    *(int **)(in_a0_lo + 0x11) = &pPlayer[0x30303].field_1A78;
     in_a0_lo[0x12] = 0x6000000;
-    *(int **)(in_a0_lo + 0x13) = &ptr_BONDdata[0x30303].field_21A8;
+    *(int **)(in_a0_lo + 0x13) = &pPlayer[0x30303].field_21A8;
     puVar5 = in_a0_lo + 0x14;
   }
   guScale((Mtx *)&DAT_8007b0e0,1.00000000,y_00,1.00000000);
@@ -118322,9 +118322,9 @@ undefined4 * proc_7F0A714C(void)
     puVar5[3] = 0x3000;
     *puVar6 = 0xb6000000;
     puVar5[4] = 0x6000000;
-    *(int **)(puVar5 + 5) = &ptr_BONDdata[0x30303].field_1A78;
+    *(int **)(puVar5 + 5) = &pPlayer[0x30303].field_1A78;
     puVar5[6] = 0x6000000;
-    *(int **)(puVar5 + 7) = &ptr_BONDdata[0x30303].field_21A8;
+    *(int **)(puVar5 + 7) = &pPlayer[0x30303].field_21A8;
     puVar6 = puVar5 + 8;
   }
   proc_7F0A33F8((short *)puVar1,0x1e,extraout_f12_00,0x3f6b851f);
@@ -118363,7 +118363,7 @@ undefined4 * proc_7F0A714C(void)
   puVar6[0x15] = 0xfffe793c;
   puVar6[0x16] = 0x6000000;
   puVar5 = puVar6 + 0x18;
-  *(int **)(puVar6 + 0x17) = &ptr_BONDdata[0x30303].field_28D8;
+  *(int **)(puVar6 + 0x17) = &pPlayer[0x30303].field_28D8;
   iVar4 = 2;
   *(undefined *)((int)in_v0_lo + 0xf) = (char)dword_80040B04;
   *(undefined *)((int)puVar1 + 0xf) = (char)dword_80040B04;
@@ -118385,11 +118385,11 @@ undefined4 * proc_7F0A714C(void)
     puVar3 = puVar3 + 0x10;
   } while (iVar4 != 0x1e);
   if (dword_80040B04 < 0xe0) {
-    proc_7F0A68D8((short *)&ptr_BONDdata->field_19B8);
+    proc_7F0A68D8((short *)&pPlayer->field_19B8);
     *puVar5 = 0xb900031d;
     puVar6[0x19] = 0x5041c8;
     puVar6[0x1a] = 0x6000000;
-    *(int **)(puVar6 + 0x1b) = &ptr_BONDdata[0x30303].field_2A18;
+    *(int **)(puVar6 + 0x1b) = &pPlayer[0x30303].field_2A18;
     puVar5 = puVar6 + 0x1c;
   }
   return puVar5;
@@ -119530,9 +119530,9 @@ uint * proc_7F0A97D0(undefined4 *param_1)
     if (j_text_trigger != 0) {
       iVar5 = 0xe;
     }
-    proc_7F0A611C(&ptr_BONDdata->cur_player_control_type_2,&ptr_BONDdata->cur_player_control_type_0,
-                  dword_800409D8,&ptr_BONDdata->neg_vspacing_for_control_type_entry,
-                  &ptr_BONDdata->cur_player_control_type_1,&ptr_BONDdata->has_set_control_type_data,
+    proc_7F0A611C(&pPlayer->cur_player_control_type_2,&pPlayer->cur_player_control_type_0,
+                  dword_800409D8,&pPlayer->neg_vspacing_for_control_type_entry,
+                  &pPlayer->cur_player_control_type_1,&pPlayer->has_set_control_type_data,
                   0,1,iVar5);
   }
   iStack2016 = 0xaa;
@@ -119558,9 +119558,9 @@ uint * proc_7F0A97D0(undefined4 *param_1)
   }
   puStackX0 = en_text_write_stuff(param_1,&iStack2016,&iStack2020,abStack2012,iVar2,(int)piVar1,
                                   (uint)&DAT_00aa00b0,iStack2036,iVar5,
-                                  ptr_BONDdata->neg_vspacing_for_control_type_entry,iVar4);
-  if (ptr_BONDdata->has_set_control_type_data != 0) {
-    pbVar3 = get_textptr_for_textID((&word_800409DC)[ptr_BONDdata->cur_player_control_type_0 * 10]);
+                                  pPlayer->neg_vspacing_for_control_type_entry,iVar4);
+  if (pPlayer->has_set_control_type_data != 0) {
+    pbVar3 = get_textptr_for_textID((&word_800409DC)[pPlayer->cur_player_control_type_0 * 10]);
     if (j_text_trigger == 0) {
       iVar5 = 10;
     }
@@ -119570,7 +119570,7 @@ uint * proc_7F0A97D0(undefined4 *param_1)
     proc_7F0AE98C(aiStack2032,&iStack2036,pbVar3,iVar2,piVar1,iVar5);
     iStack2016 = 0xaa;
     iStack2020 = 0x1a;
-    pbVar3 = get_textptr_for_textID((&word_800409DC)[ptr_BONDdata->cur_player_control_type_0 * 10]);
+    pbVar3 = get_textptr_for_textID((&word_800409DC)[pPlayer->cur_player_control_type_0 * 10]);
     if (j_text_trigger == 0) {
       iVar5 = 10;
     }
@@ -119611,16 +119611,16 @@ uint * proc_7F0A9AB8(undefined4 *displaylist)
   uVar2 = get_controller_buttons_held('\0',L_TRIG);
   if (uVar2 == 0) {
     pbVar4 = get_textptr_for_textID
-                       (*(u16 *)(&DAT_800409e4 + ptr_BONDdata->cur_player_control_type_0 * 0x14));
+                       (*(u16 *)(&DAT_800409e4 + pPlayer->cur_player_control_type_0 * 0x14));
     puVar5 = proc_7F0A9398(puVar3,0x32,0x52,pbVar4,(uint)&DAT_00aa00b0,0,0xffffffff,0,0,
                            (uint)&DAT_003000b0,0);
   }
   else {
     pbVar4 = get_textptr_for_textID
-                       (*(u16 *)(&DAT_800409e4 + ptr_BONDdata->cur_player_control_type_0 * 0x14));
+                       (*(u16 *)(&DAT_800409e4 + pPlayer->cur_player_control_type_0 * 0x14));
     puVar5 = proc_7F0A9398(puVar3,0x32,0x52,pbVar4,0xffffffff,1,(uint)&DAT_007000a0,0,0,
                            (uint)&DAT_003000b0,0);
-    if (*(short *)(&DAT_800409e4 + ptr_BONDdata->cur_player_control_type_0 * 0x14) == -0x53ff) {
+    if (*(short *)(&DAT_800409e4 + pPlayer->cur_player_control_type_0 * 0x14) == -0x53ff) {
       bVar1 = true;
     }
   }
@@ -119643,14 +119643,14 @@ uint * proc_7F0A9AB8(undefined4 *displaylist)
       }
       else {
         local_58 = local_8;
-        if (*(short *)(&DAT_800409ea + ptr_BONDdata->cur_player_control_type_0 * 0x14) == -0x53fb) {
+        if (*(short *)(&DAT_800409ea + pPlayer->cur_player_control_type_0 * 0x14) == -0x53fb) {
           local_58 = get_textptr_for_textID(0xac31);
         }
       }
     }
     else {
       local_58 = local_4;
-      if (*(short *)(&DAT_800409ea + ptr_BONDdata->cur_player_control_type_0 * 0x14) == -0x53fb) {
+      if (*(short *)(&DAT_800409ea + pPlayer->cur_player_control_type_0 * 0x14) == -0x53fb) {
         local_58 = get_textptr_for_textID(0xac30);
       }
     }
@@ -119659,43 +119659,43 @@ uint * proc_7F0A9AB8(undefined4 *displaylist)
   }
   else {
     pbVar4 = get_textptr_for_textID
-                       (*(u16 *)(&DAT_800409ea + ptr_BONDdata->cur_player_control_type_0 * 0x14));
+                       (*(u16 *)(&DAT_800409ea + pPlayer->cur_player_control_type_0 * 0x14));
     puVar5 = proc_7F0A9398(puVar5,0x32,0x6b,pbVar4,(uint)&DAT_00aa00b0,0,0xffffffff,0,0,
                            (uint)&DAT_003000b0,0);
   }
   pbVar4 = get_textptr_for_textID
-                     (*(u16 *)(ptr_BONDdata->cur_player_control_type_0 * 0x14 + -0x7ffbf614));
+                     (*(u16 *)(pPlayer->cur_player_control_type_0 * 0x14 + -0x7ffbf614));
   puVar5 = proc_7F0A9398(puVar5,0x32,0x84,pbVar4,(uint)&DAT_00aa00b0,0,0xffffffff,0,0,
                          (uint)&DAT_003000b0,0);
   uVar2 = get_controller_buttons_held('\0',Z_TRIG);
   if (uVar2 == 0) {
     pbVar4 = get_textptr_for_textID
-                       (*(u16 *)(&DAT_800409e2 + ptr_BONDdata->cur_player_control_type_0 * 0x14));
+                       (*(u16 *)(&DAT_800409e2 + pPlayer->cur_player_control_type_0 * 0x14));
     puVar5 = proc_7F0A9398(puVar5,0x32,0x9d,pbVar4,(uint)&DAT_00aa00b0,0,0xffffffff,0,0,
                            (uint)&DAT_003000b0,0);
   }
   else {
     pbVar4 = get_textptr_for_textID
-                       (*(u16 *)(&DAT_800409e2 + ptr_BONDdata->cur_player_control_type_0 * 0x14));
+                       (*(u16 *)(&DAT_800409e2 + pPlayer->cur_player_control_type_0 * 0x14));
     puVar5 = proc_7F0A9398(puVar5,0x32,0x9d,pbVar4,0xffffffff,1,(uint)&DAT_007000a0,0,0,
                            (uint)&DAT_003000b0,0);
-    if (*(short *)(&DAT_800409e2 + ptr_BONDdata->cur_player_control_type_0 * 0x14) == -0x53ff) {
+    if (*(short *)(&DAT_800409e2 + pPlayer->cur_player_control_type_0 * 0x14) == -0x53ff) {
       bVar1 = true;
     }
   }
   uVar2 = get_controller_buttons_held('\0',R_TRIG);
   if (uVar2 == 0) {
     pbVar4 = get_textptr_for_textID
-                       (*(u16 *)(&DAT_800409e6 + ptr_BONDdata->cur_player_control_type_0 * 0x14));
+                       (*(u16 *)(&DAT_800409e6 + pPlayer->cur_player_control_type_0 * 0x14));
     puVar5 = proc_7F0A9398(puVar5,0x10e,0x52,pbVar4,(uint)&DAT_00aa00b0,0,0xffffffff,0,0,
                            (uint)&DAT_003000b0,1);
   }
   else {
     pbVar4 = get_textptr_for_textID
-                       (*(u16 *)(&DAT_800409e6 + ptr_BONDdata->cur_player_control_type_0 * 0x14));
+                       (*(u16 *)(&DAT_800409e6 + pPlayer->cur_player_control_type_0 * 0x14));
     puVar5 = proc_7F0A9398(puVar5,0x10e,0x52,pbVar4,0xffffffff,1,(uint)&DAT_007000a0,0,0,
                            (uint)&DAT_003000b0,1);
-    if (*(short *)(&DAT_800409e6 + ptr_BONDdata->cur_player_control_type_0 * 0x14) == -0x53ff) {
+    if (*(short *)(&DAT_800409e6 + pPlayer->cur_player_control_type_0 * 0x14) == -0x53ff) {
       bVar1 = true;
     }
   }
@@ -119721,7 +119721,7 @@ uint * proc_7F0A9AB8(undefined4 *displaylist)
         }
         else {
           local_54 = local_8;
-          if (*(short *)(&DAT_800409e8 + ptr_BONDdata->cur_player_control_type_0 * 0x14) == -0x53fb)
+          if (*(short *)(&DAT_800409e8 + pPlayer->cur_player_control_type_0 * 0x14) == -0x53fb)
           {
             local_54 = get_textptr_for_textID(0xac31);
           }
@@ -119729,7 +119729,7 @@ uint * proc_7F0A9AB8(undefined4 *displaylist)
       }
       else {
         local_54 = local_4;
-        if (*(short *)(&DAT_800409e8 + ptr_BONDdata->cur_player_control_type_0 * 0x14) == -0x53fb) {
+        if (*(short *)(&DAT_800409e8 + pPlayer->cur_player_control_type_0 * 0x14) == -0x53fb) {
           local_54 = get_textptr_for_textID(0xac30);
         }
       }
@@ -119738,40 +119738,40 @@ uint * proc_7F0A9AB8(undefined4 *displaylist)
     }
     else {
       pbVar4 = get_textptr_for_textID
-                         (*(u16 *)(&DAT_800409e8 + ptr_BONDdata->cur_player_control_type_0 * 0x14));
+                         (*(u16 *)(&DAT_800409e8 + pPlayer->cur_player_control_type_0 * 0x14));
       puVar5 = proc_7F0A9398(puVar5,0x10e,0x6b,pbVar4,(uint)&DAT_00aa00b0,0,0xffffffff,0,0,
                              (uint)&DAT_003000b0,1);
     }
   }
   else {
     pbVar4 = get_textptr_for_textID
-                       (*(u16 *)(&DAT_800409e8 + ptr_BONDdata->cur_player_control_type_0 * 0x14));
+                       (*(u16 *)(&DAT_800409e8 + pPlayer->cur_player_control_type_0 * 0x14));
     puVar5 = proc_7F0A9398(puVar5,0x10e,0x6b,pbVar4,(uint)&DAT_00aa00b0,0,0xffffffff,0,0,
                            (uint)&DAT_003000b0,1);
   }
   uVar2 = get_controller_buttons_held('\0',B_BUTTON);
   if (uVar2 == 0) {
     pbVar4 = get_textptr_for_textID
-                       (*(u16 *)(ptr_BONDdata->cur_player_control_type_0 * 0x14 + -0x7ffbf620));
+                       (*(u16 *)(pPlayer->cur_player_control_type_0 * 0x14 + -0x7ffbf620));
     puVar5 = proc_7F0A9398(puVar5,0x10e,0x84,pbVar4,(uint)&DAT_00aa00b0,0,0xffffffff,0,0,
                            (uint)&DAT_003000b0,1);
   }
   else {
     pbVar4 = get_textptr_for_textID
-                       (*(u16 *)(ptr_BONDdata->cur_player_control_type_0 * 0x14 + -0x7ffbf620));
+                       (*(u16 *)(pPlayer->cur_player_control_type_0 * 0x14 + -0x7ffbf620));
     puVar5 = proc_7F0A9398(puVar5,0x10e,0x84,pbVar4,0xffffffff,1,(uint)&DAT_007000a0,0,0,
                            (uint)&DAT_003000b0,1);
   }
   uVar2 = get_controller_buttons_held('\0',A_BUTTON);
   if (uVar2 == 0) {
     pbVar4 = get_textptr_for_textID
-                       (*(u16 *)(ptr_BONDdata->cur_player_control_type_0 * 0x14 + -0x7ffbf622));
+                       (*(u16 *)(pPlayer->cur_player_control_type_0 * 0x14 + -0x7ffbf622));
     puVar5 = proc_7F0A9398(puVar5,0x10e,0x9d,pbVar4,(uint)&DAT_00aa00b0,0,0xffffffff,0,0,
                            (uint)&DAT_003000b0,1);
   }
   else {
     pbVar4 = get_textptr_for_textID
-                       (*(u16 *)(ptr_BONDdata->cur_player_control_type_0 * 0x14 + -0x7ffbf622));
+                       (*(u16 *)(pPlayer->cur_player_control_type_0 * 0x14 + -0x7ffbf622));
     puVar5 = proc_7F0A9398(puVar5,0x10e,0x9d,pbVar4,0xffffffff,1,(uint)&DAT_007000a0,0,0,
                            (uint)&DAT_003000b0,1);
   }
@@ -119782,7 +119782,7 @@ uint * proc_7F0A9AB8(undefined4 *displaylist)
   }
   else {
     pbVar4 = get_textptr_for_textID
-                       (*(u16 *)(ptr_BONDdata->cur_player_control_type_0 * 0x14 + -0x7ffbf612));
+                       (*(u16 *)(pPlayer->cur_player_control_type_0 * 0x14 + -0x7ffbf612));
     puVar5 = proc_7F0A9398(puVar5,0xfa,0xc3,pbVar4,(uint)&DAT_00aa00b0,0,0xffffffff,0,0,
                            (uint)&DAT_003000b0,1);
   }
@@ -119822,8 +119822,8 @@ uint * proc_7F0AA7C8(undefined4 *param_1)
     puVar4 = proc_7F0A9398(puVar4,0x5a,0x95,pbVar3,0xffffffff,1,(uint)&DAT_007000a0,0,0,
                            (uint)&DAT_003000b0,0);
   }
-  if ((ptr_BONDdata->cur_player_control_type_0 == 4) ||
-     (ptr_BONDdata->cur_player_control_type_0 == 5)) {
+  if ((pPlayer->cur_player_control_type_0 == 4) ||
+     (pPlayer->cur_player_control_type_0 == 5)) {
     pbVar3 = get_textptr_for_textID(0xac00);
   }
   else {
@@ -119838,8 +119838,8 @@ uint * proc_7F0AA7C8(undefined4 *param_1)
     puVar4 = proc_7F0A9398(puVar4,0x5a,0xb9,pbVar3,0xffffffff,1,(uint)&DAT_007000a0,0,0,
                            (uint)&DAT_003000b0,0);
   }
-  if ((ptr_BONDdata->cur_player_control_type_0 == 4) ||
-     (ptr_BONDdata->cur_player_control_type_0 == 6)) {
+  if ((pPlayer->cur_player_control_type_0 == 4) ||
+     (pPlayer->cur_player_control_type_0 == 6)) {
     pbVar3 = get_textptr_for_textID(0xac05);
   }
   else {
@@ -119869,8 +119869,8 @@ uint * proc_7F0AA7C8(undefined4 *param_1)
     puVar4 = proc_7F0A9398(puVar4,0xe6,0x95,pbVar3,0xffffffff,1,(uint)&DAT_007000a0,0,0,
                            (uint)&DAT_003000b0,1);
   }
-  if ((ptr_BONDdata->cur_player_control_type_0 == 4) ||
-     (ptr_BONDdata->cur_player_control_type_0 == 5)) {
+  if ((pPlayer->cur_player_control_type_0 == 4) ||
+     (pPlayer->cur_player_control_type_0 == 5)) {
     pbVar3 = get_textptr_for_textID(0xac01);
   }
   else {
@@ -119885,8 +119885,8 @@ uint * proc_7F0AA7C8(undefined4 *param_1)
     puVar4 = proc_7F0A9398(puVar4,0xe6,0xb9,pbVar3,0xffffffff,1,(uint)&DAT_007000a0,0,0,
                            (uint)&DAT_003000b0,1);
   }
-  if ((ptr_BONDdata->cur_player_control_type_0 == 4) ||
-     (ptr_BONDdata->cur_player_control_type_0 == 6)) {
+  if ((pPlayer->cur_player_control_type_0 == 4) ||
+     (pPlayer->cur_player_control_type_0 == 6)) {
     pbVar3 = get_textptr_for_textID(0xac06);
   }
   else {
@@ -120836,7 +120836,7 @@ longlong proc_7F0ACA28(longlong param_1,int param_2,int param_3)
   ulonglong uVar2;
   uint *puVar3;
   
-  proc_7F0A70AC(DAT_80040994,(int)&ptr_BONDdata->buffer_for_watch_greenbackdrop_vertices);
+  proc_7F0A70AC(DAT_80040994,(int)&pPlayer->buffer_for_watch_greenbackdrop_vertices);
   lVar1 = (longlong)param_3;
   if (lVar1 == 1) {
     set_BONDdata_paused_flag(0);
@@ -124900,9 +124900,9 @@ void proc_7F0B38B4(byte param_1,byte *param_2)
         bVar2 = *param_2;
         do {
           pbVar4 = param_2;
-          lVar1 = proc_7F0B5208((uint)bVar2,&ptr_BONDdata->field_1118);
+          lVar1 = proc_7F0B5208((uint)bVar2,&pPlayer->field_1118);
           if (lVar1 != 0) {
-            proc_7F0B39BC((uint)*pbVar4,0,&ptr_BONDdata->field_1118,1);
+            proc_7F0B39BC((uint)*pbVar4,0,&pPlayer->field_1118,1);
           }
           bVar2 = pbVar4[1];
           param_2 = pbVar4 + 1;
@@ -124910,9 +124910,9 @@ void proc_7F0B38B4(byte param_1,byte *param_2)
         pbVar4 = pbVar4 + 2;
         bVar2 = *pbVar4;
         do {
-          lVar1 = proc_7F0B5208((uint)bVar2,&ptr_BONDdata->field_1118);
+          lVar1 = proc_7F0B5208((uint)bVar2,&pPlayer->field_1118);
           if (lVar1 != 0) {
-            proc_7F0B39BC((uint)*pbVar4,0,&ptr_BONDdata->field_1118,1);
+            proc_7F0B39BC((uint)*pbVar4,0,&pPlayer->field_1118,1);
           }
           bVar2 = pbVar4[1];
           pbVar4 = pbVar4 + 1;
@@ -125955,10 +125955,10 @@ uint * proc_7F0B4FB4(uint *param_1)
 {
   uint *puVar1;
   
-  puVar1 = proc_7F0B5058(param_1,(longlong)ptr_BONDdata->playerscreenulx,
-                         (longlong)ptr_BONDdata->playerscreenuly,
-                         (int)ptr_BONDdata->playerscreenulx + (int)ptr_BONDdata->playerscreenwidth,
-                         (int)ptr_BONDdata->playerscreenuly + (int)ptr_BONDdata->playerscreenheight)
+  puVar1 = proc_7F0B5058(param_1,(longlong)pPlayer->playerscreenulx,
+                         (longlong)pPlayer->playerscreenuly,
+                         (int)pPlayer->playerscreenulx + (int)pPlayer->playerscreenwidth,
+                         (int)pPlayer->playerscreenuly + (int)pPlayer->playerscreenheight)
   ;
   return puVar1;
 }
@@ -125993,24 +125993,24 @@ uint * proc_7F0B5058(uint *param_1,longlong param_2,longlong param_3,int param_4
   int local_resc;
   
   iVar3 = (int)param_2;
-  sVar1 = ptr_BONDdata->playerscreenulx;
+  sVar1 = pPlayer->playerscreenulx;
   if (param_2 < (longlong)sVar1) {
     iVar3 = (int)sVar1;
-    sVar2 = ptr_BONDdata->playerscreenuly;
+    sVar2 = pPlayer->playerscreenuly;
   }
   else {
-    sVar2 = ptr_BONDdata->playerscreenuly;
+    sVar2 = pPlayer->playerscreenuly;
   }
   iVar4 = (int)param_3;
   if (param_3 < (longlong)sVar2) {
     iVar4 = (int)sVar2;
   }
-  iVar5 = (int)sVar1 + (int)ptr_BONDdata->playerscreenwidth;
+  iVar5 = (int)sVar1 + (int)pPlayer->playerscreenwidth;
   local_resc = param_4;
   if (iVar5 < param_4) {
     local_resc = iVar5;
   }
-  iVar5 = (int)sVar2 + (int)ptr_BONDdata->playerscreenheight;
+  iVar5 = (int)sVar2 + (int)pPlayer->playerscreenheight;
   if (param_5 <= iVar5) {
     iVar5 = param_5;
   }
@@ -126399,10 +126399,10 @@ LAB_7f0b59f4:
     }
     else {
       if ((fStack256 <= fStack264) || (fStack252 <= fStack260)) {
-        fStack264 = ptr_BONDdata->field_1118;
-        fStack260 = ptr_BONDdata->field_111C;
-        fStack256 = ptr_BONDdata->field_1120;
-        fStack252 = ptr_BONDdata->field_1124;
+        fStack264 = pPlayer->field_1118;
+        fStack260 = pPlayer->field_111C;
+        fStack256 = pPlayer->field_1120;
+        fStack252 = pPlayer->field_1124;
       }
     }
     *in_a1_lo = fStack264;
@@ -127943,10 +127943,10 @@ undefined8 proc_7F0B7F84(undefined8 param_1,int param_2,int param_3,int param_4,
   }
   if (fStack32 - fVar10 < fVar11) {
     if (fVar11 < fStack28 + fVar10) {
-      fStack16 = ptr_BONDdata->field_1118;
-      fStack12 = ptr_BONDdata->field_111C;
-      fStack8 = ptr_BONDdata->field_1120;
-      fStack4 = ptr_BONDdata->field_1124;
+      fStack16 = pPlayer->field_1118;
+      fStack12 = pPlayer->field_111C;
+      fStack8 = pPlayer->field_1120;
+      fStack4 = pPlayer->field_1124;
       goto LAB_7f0b8264;
     }
     bVar1 = *(byte *)&pbVar5->controlbytes;
@@ -127960,7 +127960,7 @@ undefined8 proc_7F0B7F84(undefined8 param_1,int param_2,int param_3,int param_4,
       return param_1;
     }
     vis_is_inline_of_sight(&fStack16,param_5);
-    vis_is_inline_of_sight(&fStack16,&ptr_BONDdata->field_1118);
+    vis_is_inline_of_sight(&fStack16,&pPlayer->field_1118);
   }
   else {
     lVar2 = proc_7F0B5864();
@@ -127974,10 +127974,10 @@ undefined8 proc_7F0B7F84(undefined8 param_1,int param_2,int param_3,int param_4,
     if (lVar2 == 0) {
       return param_1;
     }
-    fStack16 = ptr_BONDdata->field_1118;
-    fStack12 = ptr_BONDdata->field_111C;
-    fStack8 = ptr_BONDdata->field_1120;
-    fStack4 = ptr_BONDdata->field_1124;
+    fStack16 = pPlayer->field_1118;
+    fStack12 = pPlayer->field_111C;
+    fStack8 = pPlayer->field_1120;
+    fStack4 = pPlayer->field_1124;
   }
   if (fStack8 <= fStack16) {
     return param_1;
@@ -128199,10 +128199,10 @@ LAB_7f0b8480:
         bVar1 = cmd[1];
       }
       else {
-        DAT_80081600 = ptr_BONDdata->field_1118;
-        DAT_80081604 = ptr_BONDdata->field_111C;
-        DAT_80081608 = ptr_BONDdata->field_1120;
-        DAT_8008160c = ptr_BONDdata->field_1124;
+        DAT_80081600 = pPlayer->field_1118;
+        DAT_80081604 = pPlayer->field_111C;
+        DAT_80081608 = pPlayer->field_1120;
+        DAT_8008160c = pPlayer->field_1124;
         current_visibility = 0;
         bVar1 = cmd[1];
       }
@@ -128215,7 +128215,7 @@ LAB_7f0b8480:
           current_visibility = 1;
         }
         else {
-          lVar4 = vis_is_inline_of_sight((float *)&DAT_80081600,&ptr_BONDdata->field_1118);
+          lVar4 = vis_is_inline_of_sight((float *)&DAT_80081600,&pPlayer->field_1118);
           if (lVar4 == 0) {
             current_visibility = 1;
           }
@@ -128268,7 +128268,7 @@ LAB_7f0b8704:
           uVar6 = (uint)cmd[1];
         }
         else {
-          lVar4 = vis_is_inline_of_sight(afStack24,&ptr_BONDdata->field_1118);
+          lVar4 = vis_is_inline_of_sight(afStack24,&pPlayer->field_1118);
           if (lVar4 != 0) {
             if (current_visibility == 0) {
               proc_7F0B5CC0((float *)&DAT_80081600,afStack24);
@@ -128292,7 +128292,7 @@ LAB_7f0b8704:
         if (current_visibility == 0) {
           lVar4 = proc_7F0B5864();
           if (((lVar4 == 0) ||
-              (lVar4 = vis_is_inline_of_sight(afStack40,&ptr_BONDdata->field_1118), lVar4 == 0)) ||
+              (lVar4 = vis_is_inline_of_sight(afStack40,&pPlayer->field_1118), lVar4 == 0)) ||
              (lVar4 = vis_is_inline_of_sight((float *)&DAT_80081600,afStack40), lVar4 == 0)) {
             current_visibility = 1;
             uVar6 = (uint)cmd[1];
@@ -128416,10 +128416,10 @@ void proc_7F0B8A6C(void)
   float fStack4;
   
   proc_7F0B908C();
-  fStack16 = ptr_BONDdata->field_1118;
-  fStack12 = ptr_BONDdata->field_111C;
-  fStack8 = ptr_BONDdata->field_1120;
-  fStack4 = ptr_BONDdata->field_1124;
+  fStack16 = pPlayer->field_1118;
+  fStack12 = pPlayer->field_111C;
+  fStack8 = pPlayer->field_1120;
+  fStack4 = pPlayer->field_1124;
   proc_7F0B3BC4();
   puVar3 = (u32 *)&roominformationblock;
   do {
@@ -128446,14 +128446,14 @@ void proc_7F0B8A6C(void)
   proc_7F0B8A24(DAT_8007ff90);
   if ((levelentry_index == LEVEL_INDEX_CRAD) || (ptr_bgdata_portals->offset_portal == NULL)) {
     if (levelentry_index == LEVEL_INDEX_CRAD) {
-      proc_7F0B39BC(9,0,&ptr_BONDdata->field_1118,1);
+      proc_7F0B39BC(9,0,&pPlayer->field_1118,1);
     }
     iVar7 = 1;
     if (1 < (int)max_num_rooms) {
       do {
-        lVar2 = proc_7F0B5208(iVar7,&ptr_BONDdata->field_1118);
+        lVar2 = proc_7F0B5208(iVar7,&pPlayer->field_1118);
         if (lVar2 != 0) {
-          proc_7F0B39BC(iVar7,0,&ptr_BONDdata->field_1118,1);
+          proc_7F0B39BC(iVar7,0,&pPlayer->field_1118,1);
         }
         iVar7 += 1;
       } while (iVar7 < (int)max_num_rooms);
@@ -128462,9 +128462,9 @@ void proc_7F0B8A6C(void)
   }
   else {
     if (levelentry_index == LEVEL_INDEX_CRAD) {
-      proc_7F0B39BC(9,0,&ptr_BONDdata->field_1118,1);
+      proc_7F0B39BC(9,0,&pPlayer->field_1118,1);
     }
-    proc_7F0B39BC(current_room_maybe,0,&ptr_BONDdata->field_1118,1);
+    proc_7F0B39BC(current_room_maybe,0,&pPlayer->field_1118,1);
     iVar8 = 0;
     iVar7 = 0;
     pbVar6 = ptr_bgdata_portals->offset_portal;
@@ -128752,46 +128752,46 @@ void proc_7F0B908C(void)
   sVar1 = get_video2_settings_txtClipH();
   fVar5 = (float)dword_80041410 + (float)(int)sVar1;
   sVar1 = get_video2_settings_ulx();
-  ptr_BONDdata->field_1118 = (float)(int)sVar1;
-  fVar3 = ptr_BONDdata->field_1118;
+  pPlayer->field_1118 = (float)(int)sVar1;
+  fVar3 = pPlayer->field_1118;
   if (fVar3 < fVar4) {
-    ptr_BONDdata->field_1118 = fVar4;
-    fVar3 = ptr_BONDdata->field_1118;
+    pPlayer->field_1118 = fVar4;
+    fVar3 = pPlayer->field_1118;
   }
   if (fVar6 < fVar3) {
-    ptr_BONDdata->field_1118 = fVar6;
+    pPlayer->field_1118 = fVar6;
   }
   sVar1 = get_video2_settings_uly();
-  ptr_BONDdata->field_111C = (float)(int)sVar1;
-  fVar3 = ptr_BONDdata->field_111C;
+  pPlayer->field_111C = (float)(int)sVar1;
+  fVar3 = pPlayer->field_111C;
   if (fVar3 < fVar7) {
-    ptr_BONDdata->field_111C = fVar7;
-    fVar3 = ptr_BONDdata->field_111C;
+    pPlayer->field_111C = fVar7;
+    fVar3 = pPlayer->field_111C;
   }
   if (fVar5 < fVar3) {
-    ptr_BONDdata->field_111C = fVar5;
+    pPlayer->field_111C = fVar5;
   }
   sVar1 = get_video2_settings_ulx();
   sVar2 = get_video2_settings_width();
-  ptr_BONDdata->field_1120 = (float)((int)sVar2 + (int)sVar1);
-  fVar3 = ptr_BONDdata->field_1120;
+  pPlayer->field_1120 = (float)((int)sVar2 + (int)sVar1);
+  fVar3 = pPlayer->field_1120;
   if (fVar3 < fVar4) {
-    ptr_BONDdata->field_1120 = fVar4;
-    fVar3 = ptr_BONDdata->field_1120;
+    pPlayer->field_1120 = fVar4;
+    fVar3 = pPlayer->field_1120;
   }
   if (fVar6 < fVar3) {
-    ptr_BONDdata->field_1120 = fVar6;
+    pPlayer->field_1120 = fVar6;
   }
   sVar1 = get_video2_settings_uly();
   sVar2 = get_video2_settings_height();
-  ptr_BONDdata->field_1124 = (float)((int)sVar2 + (int)sVar1);
-  fVar3 = ptr_BONDdata->field_1124;
+  pPlayer->field_1124 = (float)((int)sVar2 + (int)sVar1);
+  fVar3 = pPlayer->field_1124;
   if (fVar3 < fVar7) {
-    ptr_BONDdata->field_1124 = fVar7;
-    fVar3 = ptr_BONDdata->field_1124;
+    pPlayer->field_1124 = fVar7;
+    fVar3 = pPlayer->field_1124;
   }
   if (fVar5 < fVar3) {
-    ptr_BONDdata->field_1124 = fVar5;
+    pPlayer->field_1124 = fVar5;
   }
   return;
 }
@@ -130904,7 +130904,7 @@ void proc_7F0BC530(void)
 void proc_7F0BC624(int param_1)
 
 {
-  ptr_BONDdata->field_108C = param_1;
+  pPlayer->field_108C = param_1;
   return;
 }
 
@@ -131030,7 +131030,7 @@ longlong proc_7F0BC85C(int param_1)
   
   sVar1 = (&DAT_8004144a)[param_1 * 0x28];
   lVar4 = (longlong)sVar1;
-  if ((lVar4 == -1) || (ptr_BONDdata->field_108C != (&DAT_80083900)[(int)sVar1])) {
+  if ((lVar4 == -1) || (pPlayer->field_108C != (&DAT_80083900)[(int)sVar1])) {
     if (lVar4 != -1) {
       proc_7F0BC660((int)sVar1,param_1);
     }
@@ -131038,18 +131038,18 @@ longlong proc_7F0BC85C(int param_1)
     lVar4 = (longlong)iVar2;
     proc_7F0BC634(iVar2,param_1);
     (&DAT_80083320)[iVar2] = 0;
-    (&DAT_80083900)[iVar2] = ptr_BONDdata->field_108C;
+    (&DAT_80083900)[iVar2] = pPlayer->field_108C;
     proc_7F057FD0((f32 *)afStack68);
     afStack68[0] = room_data_float2;
     fStack48 = room_data_float2;
     fStack28 = room_data_float2;
     pbVar3 = ptr_bgdata_room_fileposition_list + param_1;
     fStack20 = (float)pbVar3->pPointTableBin * room_data_float2 -
-               (float)ptr_BONDdata->current_model_xpos;
+               (float)pPlayer->current_model_xpos;
     fStack16 = (float)pbVar3->pPriMappingBin * room_data_float2 -
-               (float)ptr_BONDdata->current_model_ypos;
+               (float)pPlayer->current_model_ypos;
     fStack12 = (float)pbVar3->pSecMappingBin * room_data_float2 -
-               (float)ptr_BONDdata->current_model_zpos;
+               (float)pPlayer->current_model_zpos;
     proc_7F058C9C((int)afStack68,(uint *)(&DAT_80083db0 + iVar2 * 0x40));
   }
   else {
@@ -131941,7 +131941,7 @@ void stage_load(LEVELID stagenum)
       ppVar7->killed_p2 = 0;
       ppVar7->killed_p1 = 0;
       ppVar7 = ppVar6;
-    } while (ppVar6 != (player_data *)&ptr_BONDdata);
+    } while (ppVar6 != (player_data *)&pPlayer);
   }
   something_with_stage_objectives();
   unpause_game();
@@ -132159,10 +132159,10 @@ uint * proc_7F0BE30C(undefined4 *param_1)
       do {
         playernum = proc_7F09B528(iVar13);
         set_cur_player(playernum);
-        set_video2_width_height(ptr_BONDdata->playerscreenwidth,ptr_BONDdata->playerscreenheight);
-        set_video2_ulx_uly(ptr_BONDdata->playerscreenulx,ptr_BONDdata->playerscreenuly);
-        video_related_1F(ptr_BONDdata->fovy);
-        video_related_21(ptr_BONDdata->aspect);
+        set_video2_width_height(pPlayer->playerscreenwidth,pPlayer->playerscreenheight);
+        set_video2_ulx_uly(pPlayer->playerscreenulx,pPlayer->playerscreenuly);
+        video_related_1F(pPlayer->fovy);
+        video_related_21(pPlayer->aspect);
         puStackX0 = proc_70003EB4(puStackX0);
         puStackX0 = proc_70003C58(puStackX0);
         uVar4 = get_debug_render_raster();
@@ -132892,8 +132892,8 @@ void proc_7F0BF800(void)
       }
     }
   }
-  fVar8 = *(float *)(ptr_BONDdata->position_data_pointer + 8) - (float)ptr_BONDdata->field_408;
-  fVar9 = *(float *)(ptr_BONDdata->position_data_pointer + 0x10) - (float)ptr_BONDdata->field_410;
+  fVar8 = *(float *)(pPlayer->position_data_pointer + 8) - (float)pPlayer->field_408;
+  fVar9 = *(float *)(pPlayer->position_data_pointer + 0x10) - (float)pPlayer->field_410;
   fVar8 = sqrtf(fVar8 * fVar8 + fVar9 * fVar9);
   cur_player_stat_ptr->distance_traveled = cur_player_stat_ptr->distance_traveled + fVar8;
   iVar4 = get_scenario();
@@ -132906,8 +132906,8 @@ void proc_7F0BF800(void)
       itemheld = get_item_in_hand(0);
       if ((itemheld != ITEM_TOKEN) &&
          (draw_item_in_hand_has_more_ammo(0,ITEM_TOKEN),
-         ptr_BONDdata->when_detonating_mines_is_0 == 2)) {
-        ptr_BONDdata->when_detonating_mines_is_0 = 5;
+         pPlayer->when_detonating_mines_is_0 == 2)) {
+        pPlayer->when_detonating_mines_is_0 = 5;
       }
       cur_player_stat_ptr->flag_counter = cur_player_stat_ptr->flag_counter + clock_timer;
       cur_player_stat_ptr->have_token_or_goldengun = '\x01';
@@ -134270,7 +134270,7 @@ byte * get_textptr_for_textID(u16 id)
 undefined8 MP_menu_page_adv_right(void)
 
 {
-  switch(ptr_BONDdata->mpmenumode) {
+  switch(pPlayer->mpmenumode) {
   case 0:
   case 1:
   case 2:
@@ -134296,7 +134296,7 @@ undefined8 MP_menu_page_adv_right(void)
 undefined8 MP_menu_page_adv_left(void)
 
 {
-  switch(ptr_BONDdata->mpmenumode) {
+  switch(pPlayer->mpmenumode) {
   case 0:
   case 6:
   case 7:
@@ -134328,7 +134328,7 @@ undefined8 check_if_player_is_pressing_anything_right(char param_1)
   
   iVar3 = get_controller_3dstick_L_R(param_1,-2,1);
   uVar1 = get_controller_buttons_pressed(param_1,R_CBUTTONS|R_JPAD);
-  if ((uVar1 != 0) || ((uVar2 = 0, 0 < iVar3 && (ptr_BONDdata->mpjoywascentre != 0)))) {
+  if ((uVar1 != 0) || ((uVar2 = 0, 0 < iVar3 && (pPlayer->mpjoywascentre != 0)))) {
     uVar2 = 1;
   }
   return uVar2;
@@ -134345,7 +134345,7 @@ undefined8 check_if_player_is_pressing_anything_left(char param_1)
   
   iVar3 = get_controller_3dstick_L_R(param_1,-2,1);
   uVar1 = get_controller_buttons_pressed(param_1,L_CBUTTONS|L_JPAD);
-  if ((uVar1 != 0) || ((uVar2 = 0, iVar3 < -1 && (ptr_BONDdata->mpjoywascentre != 0)))) {
+  if ((uVar1 != 0) || ((uVar2 = 0, iVar3 < -1 && (pPlayer->mpjoywascentre != 0)))) {
     uVar2 = 1;
   }
   return uVar2;
@@ -134550,7 +134550,7 @@ undefined8 proc_7F0C24BC(void)
   else {
     if (stop_play_flag == 0) {
       uVar2 = 1;
-      if (ptr_BONDdata->mpmenuon != 0) {
+      if (pPlayer->mpmenuon != 0) {
         uVar2 = 0;
       }
     }
@@ -134674,10 +134674,10 @@ void proc_7F0C2530(longlong param_1)
       uVar11 = 0;
       playernum = (int)uVar15;
       set_cur_player(playernum);
-      ptr_BONDdata->mpmenuon = 1;
-      ptr_BONDdata->mpmenumode = 3;
-      ptr_BONDdata->ptr_text_first_mp_award = 0;
-      ptr_BONDdata->ptr_text_second_mp_award = 0;
+      pPlayer->mpmenuon = 1;
+      pPlayer->mpmenumode = 3;
+      pPlayer->ptr_text_first_mp_award = 0;
+      pPlayer->ptr_text_second_mp_award = 0;
       proc_7F08DB08(&uStack20,auStack16);
       store_favorite_weapon_current_player(uStack20,auStack16[0]);
       iVar4 = get_curplayer_shot_register(0);
@@ -134940,9 +134940,9 @@ int ** proc_7F0C2E80(void)
   if (uVar6 == 1) {
     return ppiVar10;
   }
-  if ((ptr_BONDdata->player_button_control != 0) && (is_gameover_flag == NULL)) {
-    ptr_BONDdata->mpmenuon = 0;
-    ptr_BONDdata->healthdisplaytime = 0;
+  if ((pPlayer->player_button_control != 0) && (is_gameover_flag == NULL)) {
+    pPlayer->mpmenuon = 0;
+    pPlayer->healthdisplaytime = 0;
     return NULL;
   }
   if (1 < (int)is_gameover_flag) {
@@ -134961,17 +134961,17 @@ int ** proc_7F0C2E80(void)
       DAT_8008c710 = (uint)(DAT_8008c710 == 0);
     }
   }
-  if (cur_player_stat_ptr->most_killed_one_life < ptr_BONDdata->field_29F8) {
-    cur_player_stat_ptr->most_killed_one_life = ptr_BONDdata->field_29F8;
+  if (cur_player_stat_ptr->most_killed_one_life < pPlayer->field_29F8) {
+    cur_player_stat_ptr->most_killed_one_life = pPlayer->field_29F8;
   }
   iVar8 = getMissiontime();
-  if (cur_player_stat_ptr->longest_inning < iVar8 - ptr_BONDdata->field_29F4) {
+  if (cur_player_stat_ptr->longest_inning < iVar8 - pPlayer->field_29F4) {
     iVar8 = getMissiontime();
-    cur_player_stat_ptr->longest_inning = iVar8 - ptr_BONDdata->field_29F4;
-    iVar8 = ptr_BONDdata->mpmenuon;
+    cur_player_stat_ptr->longest_inning = iVar8 - pPlayer->field_29F4;
+    iVar8 = pPlayer->mpmenuon;
   }
   else {
-    iVar8 = ptr_BONDdata->mpmenuon;
+    iVar8 = pPlayer->mpmenuon;
   }
   if (iVar8 == 0) {
     uVar3 = get_controller_buttons_pressed(cStack1,START_BUTTON);
@@ -134979,39 +134979,39 @@ int ** proc_7F0C2E80(void)
       return (int **)uVar3;
     }
     ppiVar10 = play_watch_sfx_beep();
-    ptr_BONDdata->mpmenuon = 1;
-    ptr_BONDdata->mpmenumode = 3;
-    ptr_BONDdata->mpjoywascentre = 1;
-    ptr_BONDdata->mp_watch_health_total = ptr_BONDdata->current_health;
-    ptr_BONDdata->mp_watch_armor_total = ptr_BONDdata->current_armor;
+    pPlayer->mpmenuon = 1;
+    pPlayer->mpmenumode = 3;
+    pPlayer->mpjoywascentre = 1;
+    pPlayer->mp_watch_health_total = pPlayer->current_health;
+    pPlayer->mp_watch_armor_total = pPlayer->current_armor;
     return ppiVar10;
   }
   lVar4 = check_if_player_is_pressing_anything_right(cStack1);
   if ((lVar4 != 0) && (lVar4 = MP_menu_page_adv_right(), lVar4 != 0)) {
     play_watch_sfx_beep();
-    ptr_BONDdata->mpmenumode = ptr_BONDdata->mpmenumode + 1;
+    pPlayer->mpmenumode = pPlayer->mpmenumode + 1;
     goto LAB_7f0c350c;
   }
   lVar4 = check_if_player_is_pressing_anything_left(cStack1);
   if ((lVar4 != 0) && (lVar4 = MP_menu_page_adv_left(), lVar4 != 0)) {
     play_watch_sfx_beep();
-    ptr_BONDdata->mpmenumode = ptr_BONDdata->mpmenumode + -1;
+    pPlayer->mpmenumode = pPlayer->mpmenumode + -1;
     goto LAB_7f0c350c;
   }
   lVar4 = check_if_player_is_pressing_anything_right(cStack1);
-  if ((lVar4 != 0) && (ptr_BONDdata->mpmenumode == 6)) {
+  if ((lVar4 != 0) && (pPlayer->mpmenumode == 6)) {
     play_watch_sfx_beep();
-    ptr_BONDdata->mpquitconfirm = 1;
+    pPlayer->mpquitconfirm = 1;
     goto LAB_7f0c350c;
   }
   lVar4 = check_if_player_is_pressing_anything_left(cStack1);
-  if ((lVar4 != 0) && (ptr_BONDdata->mpmenumode == 6)) {
+  if ((lVar4 != 0) && (pPlayer->mpmenumode == 6)) {
     play_watch_sfx_beep();
-    ptr_BONDdata->mpquitconfirm = 0;
+    pPlayer->mpquitconfirm = 0;
     goto LAB_7f0c350c;
   }
   uVar5 = get_controller_buttons_pressed(cStack1,A_BUTTON);
-  if ((uVar5 != 0) && (ptr_BONDdata->mpmenumode == 4)) {
+  if ((uVar5 != 0) && (pPlayer->mpmenumode == 4)) {
     play_watch_sfx_beep();
     if (is_paused == 0) {
       is_paused = 1;
@@ -135027,41 +135027,41 @@ int ** proc_7F0C2E80(void)
     }
     goto LAB_7f0c350c;
   }
-  if (ptr_BONDdata->mpmenumode == 7) {
+  if (pPlayer->mpmenumode == 7) {
     uVar3 = get_controller_buttons_pressed(cStack1,B_BUTTON);
     if (uVar3 != 0) {
       play_watch_sfx_beep();
-      ptr_BONDdata->mpmenuon = 1;
-      ptr_BONDdata->mpmenumode = 3;
+      pPlayer->mpmenuon = 1;
+      pPlayer->mpmenumode = 3;
     }
     goto LAB_7f0c350c;
   }
   uVar5 = get_controller_buttons_pressed(cStack1,START_BUTTON|A_BUTTON);
   if (((uVar5 == 0) ||
-      (((iVar8 = ptr_BONDdata->mpmenumode, iVar8 == 5 || (iVar8 == 6)) &&
-       ((iVar8 != 6 || (ptr_BONDdata->mpquitconfirm == 1)))))) &&
+      (((iVar8 = pPlayer->mpmenumode, iVar8 == 5 || (iVar8 == 6)) &&
+       ((iVar8 != 6 || (pPlayer->mpquitconfirm == 1)))))) &&
      (uVar5 = get_controller_buttons_pressed(cStack1,B_BUTTON), uVar5 == 0)) {
     uVar3 = get_controller_buttons_pressed(cStack1,START_BUTTON|A_BUTTON);
-    if ((uVar3 == 0) || (ptr_BONDdata->mpmenumode != 5)) {
+    if ((uVar3 == 0) || (pPlayer->mpmenumode != 5)) {
       uVar3 = get_controller_buttons_pressed(cStack1,START_BUTTON|A_BUTTON);
-      if ((uVar3 != 0) && ((ptr_BONDdata->mpmenumode == 6 && (ptr_BONDdata->mpquitconfirm == 1)))) {
+      if ((uVar3 != 0) && ((pPlayer->mpmenumode == 6 && (pPlayer->mpquitconfirm == 1)))) {
         play_watch_sfx_beep();
-        ptr_BONDdata->mpmenuon = 0;
-        ptr_BONDdata->healthdisplaytime = 0;
+        pPlayer->mpmenuon = 0;
+        pPlayer->healthdisplaytime = 0;
         proc_7F0C2530(0);
       }
     }
     else {
       play_watch_sfx_beep();
-      ptr_BONDdata->mpmenumode = 6;
-      ptr_BONDdata->mpquitconfirm = 0;
+      pPlayer->mpmenumode = 6;
+      pPlayer->mpquitconfirm = 0;
     }
     goto LAB_7f0c350c;
   }
   play_watch_sfx_beep();
   if (is_gameover_flag == NULL) {
-    ptr_BONDdata->mpmenuon = 0;
-    ptr_BONDdata->healthdisplaytime = 0x3c;
+    pPlayer->mpmenuon = 0;
+    pPlayer->healthdisplaytime = 0x3c;
     playercount = get_cur_playernum();
     if (playercount == DAT_8008c71c) {
       is_paused = 0;
@@ -135071,7 +135071,7 @@ int ** proc_7F0C2E80(void)
   }
   uVar11 = 0;
   uVar12 = 0;
-  ptr_BONDdata->mpmenumode = 7;
+  pPlayer->mpmenumode = 7;
   if (0 < (int)uVar6) {
     if ((uVar3 & 3) != 0) {
       ppBVar9 = &ptr_BONDdata_p1;
@@ -135122,10 +135122,10 @@ LAB_7f0c33f8:
   }
 LAB_7f0c350c:
   if ((ppiVar7 == NULL) || (ppiVar7 == (int **)0xffffffff)) {
-    ptr_BONDdata->mpjoywascentre = 1;
+    pPlayer->mpjoywascentre = 1;
   }
   else {
-    ptr_BONDdata->mpjoywascentre = 0;
+    pPlayer->mpjoywascentre = 0;
   }
   return ppiVar7;
 }
@@ -135639,14 +135639,14 @@ uint * mp_watch_menu_display(uint *param_1)
   if (uVar6 == 1) {
     return param_1;
   }
-  if (ptr_BONDdata->mpmenuon == 0) {
-    if (ptr_BONDdata->player_button_control == 0) {
+  if (pPlayer->mpmenuon == 0) {
+    if (pPlayer->player_button_control == 0) {
       return param_1;
     }
-    if (ptr_BONDdata->field_428 == 0) {
+    if (pPlayer->field_428 == 0) {
       return param_1;
     }
-    if (ptr_BONDdata->field_424 == 0) {
+    if (pPlayer->field_424 == 0) {
       return param_1;
     }
     if (stop_play_flag != 0) {
@@ -135709,7 +135709,7 @@ LAB_7f0c5f0c:
   else {
     iStack48 = 0;
   }
-  switch(ptr_BONDdata->mpmenumode) {
+  switch(pPlayer->mpmenumode) {
   case 0:
   case 1:
   case 2:
@@ -135822,7 +135822,7 @@ LAB_7f0c5f0c:
                          (uint)&DAT_007000a0,(int)sVar12,(int)sVar13,0,0);
     }
   }
-  iVar16 = ptr_BONDdata->mpmenumode;
+  iVar16 = pPlayer->mpmenumode;
   if ((iVar16 == 3) || (iVar16 == 4)) {
     uVar15 = 0;
     if (0 < (int)uStack8) {
@@ -136191,7 +136191,7 @@ LAB_7f0c5f0c:
       }
       else {
         if (iVar16 != 0) {
-          iVar16 = ptr_BONDdata->mpmenumode;
+          iVar16 = pPlayer->mpmenumode;
           goto LAB_7f0c5b48;
         }
         iStack100 = iStack48;
@@ -136227,7 +136227,7 @@ LAB_7f0c5f0c:
         sVar13 = get_video2_settings_txtClipH();
         DL = en_text_write_stuff(DL,(int *)&uStack12,(int *)&uStack16,(byte *)pcStack52,D_80040EB0,
                                  (int)D_80040EAC,0xff00b0,(int)sVar12,(int)sVar13,0,0);
-        pbVar11 = (byte *)ptr_BONDdata->ptr_text_first_mp_award;
+        pbVar11 = (byte *)pPlayer->ptr_text_first_mp_award;
         if (pbVar11 != NULL) {
           pcStack52 = (char *)pbVar11;
           proc_7F0AE98C(&iStack92,&iStack96,pbVar11,D_80040EB0,D_80040EAC,0);
@@ -136240,7 +136240,7 @@ LAB_7f0c5f0c:
           DL = en_text_write_stuff(DL,(int *)&uStack12,(int *)&uStack16,(byte *)pcStack52,D_80040EB0
                                    ,(int)D_80040EAC,0xff00b0,(int)sVar12,(int)sVar13,0,0);
         }
-        pbVar11 = (byte *)ptr_BONDdata->ptr_text_second_mp_award;
+        pbVar11 = (byte *)pPlayer->ptr_text_second_mp_award;
         if (pbVar11 != NULL) {
           pcStack52 = (char *)pbVar11;
           proc_7F0AE98C(&iStack92,&iStack96,pbVar11,D_80040EB0,D_80040EAC,0);
@@ -136256,7 +136256,7 @@ LAB_7f0c5f0c:
       }
     }
   }
-  iVar16 = ptr_BONDdata->mpmenumode;
+  iVar16 = pPlayer->mpmenumode;
 LAB_7f0c5b48:
   if (iVar16 == 6) {
     pcStack52 = (char *)get_textptr_for_textID(0xa020);
@@ -136265,7 +136265,7 @@ LAB_7f0c5b48:
     uStack12 = (((int)sVar12 + iStack48) - (aiStack24[0] >> 1)) + 0x36;
     sVar12 = get_video2_settings_uly();
     uStack16 = ((int)sVar12 - (iStack28 >> 1)) + 0x36;
-    if (ptr_BONDdata->mpquitconfirm == 0) {
+    if (pPlayer->mpquitconfirm == 0) {
       sVar12 = get_video2_settings_txtClipW();
       sVar13 = get_video2_settings_txtClipH();
       DL = jp_text_stuff(DL,&uStack12,&uStack16,(byte *)pcStack52,D_80040EB0,(int)D_80040EAC,
@@ -136283,7 +136283,7 @@ LAB_7f0c5b48:
     uStack12 = (((int)sVar12 + iStack48) - (aiStack24[0] >> 1)) + 0x68;
     sVar12 = get_video2_settings_uly();
     uStack16 = ((int)sVar12 - (iStack28 >> 1)) + 0x36;
-    if (ptr_BONDdata->mpquitconfirm == 1) {
+    if (pPlayer->mpquitconfirm == 1) {
       sVar12 = get_video2_settings_txtClipW();
       sVar13 = get_video2_settings_txtClipH();
       DL = jp_text_stuff(DL,&uStack12,&uStack16,(byte *)pcStack52,D_80040EB0,(int)D_80040EAC,
@@ -136308,7 +136308,7 @@ ulonglong proc_7F0C6048(void)
   if (is_gameover_flag != 0) {
     return 0;
   }
-  return (longlong)ptr_BONDdata->mpmenuon | (ulonglong)(0 < ptr_BONDdata->healthdisplaytime);
+  return (longlong)pPlayer->mpmenuon | (ulonglong)(0 < pPlayer->healthdisplaytime);
 }
 
 
@@ -136351,7 +136351,7 @@ undefined4 * display_red_blue_on_radar(undefined4 *param_1)
   uVar3 = get_cur_playernum();
   uVar1 = get_num_players();
   uVar4 = (u32)uVar1;
-  if ((((uVar1 != 1) && (ptr_BONDdata->mpmenuon == 0)) && (ptr_BONDdata->player_button_control == 0)
+  if ((((uVar1 != 1) && (pPlayer->mpmenuon == 0)) && (pPlayer->player_button_control == 0)
       ) && (uVar5 = proc_7F0927BC(0x17), uVar5 == 0)) {
     sVar9 = get_video2_settings_ulx();
     sVar10 = get_video2_settings_width();
@@ -136398,12 +136398,12 @@ undefined4 * display_red_blue_on_radar(undefined4 *param_1)
       do {
         if ((uVar13 != uVar3) && ((&ptr_BONDdata_p1)[uVar13]->player_button_control == 0)) {
           iVar8 = (&ptr_BONDdata_p1)[uVar13]->position_data_pointer;
-          vector1 = *(float *)(iVar8 + 8) - *(float *)(ptr_BONDdata->position_data_pointer + 8);
+          vector1 = *(float *)(iVar8 + 8) - *(float *)(pPlayer->position_data_pointer + 8);
           vector2 = *(float *)(iVar8 + 0x10) -
-                    *(float *)(ptr_BONDdata->position_data_pointer + 0x10);
+                    *(float *)(pPlayer->position_data_pointer + 0x10);
           fVar17 = 16.00000000;
           fVar15 = convert_angle_using_inverse((f32)vector1,(f32)vector2);
-          fVar16 = ptr_BONDdata->azimuth_angle;
+          fVar16 = pPlayer->azimuth_angle;
           __x = (fVar15 * 180.00000000) / flt_8005BD20;
           fVar15 = sqrtf(vector1 * vector1 + vector2 * vector2);
           fVar15 = fVar15 * 0.00400000;
