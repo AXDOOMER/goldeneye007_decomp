@@ -2,6 +2,12 @@
 #define _BOND_H_
 #include "ultra64.h"
 #include "game/actor.h"
+struct xyzpoint
+{
+    f32 x;
+    f32 y;
+    f32 z;
+};
 
 struct Player
 {
@@ -44,7 +50,7 @@ struct Player
   s32 field_90;
   s32 field_94;
   s32 field_98;
-  s32 crouching_flag;
+  s32 crouchposition;
   s32 ducking_height_offset;
   s32 field_A4;
   s32 position_data_pointer;
@@ -59,7 +65,7 @@ struct Player
   s32 field_CC;
   s32 field_D0;
   s32 ptr_char_objectinstance;
-  s32 death_flag;
+  s32 bonddead;
   s32 bondhealth;
   f32 bondarmour;
   s32 oldhealth;
@@ -81,12 +87,12 @@ struct Player
   s32 insightaimmode;
   s32 autoyaimenabled;
   f32 autoaimy;
-  s32 field_130;
-  s32 field_134;
+  s32 autoyaimtime;
+  s32 autoyaimtime60;
   s32 autoxaimenabled;
   f32 autoaimx;
-  s32 field_140;
-  s32 field_144;
+  s32 autoxaimtime;
+  s32 autoxaimtime60;
   f32 vv_theta;
   f32 speedtheta;
   s32 vv_costheta;
@@ -514,10 +520,10 @@ struct Player
   s32 field_7E4;
   s32 field_7E8;
   s32 field_7EC;
-  s16 playerscreenwidth;
-  s16 playerscreenheight;
-  s16 playerscreenulx;
-  s16 playerscreenuly;
+  s16 viewx;
+  s16 viewy;
+  s16 viewleft;
+  s16 viewtop;
   s32 right_invisible;
   s32 left_invisible;
   s32 item_right;
@@ -1066,10 +1072,10 @@ struct Player
   f32 c_perspaspect;
   f32 c_halfwidth;
   f32 c_halfheight;
-  s32 field_10B4;
-  s32 field_10B8;
-  s32 field_10BC;
-  s32 field_10C0;
+  f32 c_scalex;
+  f32 c_scaley;
+  f32 c_recipscalex;
+  f32 c_recipscaley;
   s32 field_10C4;
   s32 field_10C8;
   s32 field_10CC;
@@ -1081,20 +1087,17 @@ struct Player
   s32 field_10E4;
   s32 field_10E8;
   s32 field_10EC;
-  s32 field_10F0;
-  s32 field_10F4;
-  s32 field_10F8;
-  s32 field_10FC;
-  s32 field_1100;
-  s32 field_1104;
-  s32 field_1108;
-  s32 field_110C;
-  s32 field_1110;
-  s32 field_1114;
-  f32 field_1118;
-  f32 field_111C;
-  f32 field_1120;
-  f32 field_1124;
+  f32 c_scalelod60;
+  f32 c_scalelod;
+  f32 c_lodscalez;
+  u32 c_lodscalezu32;
+  struct xyzpoint c_cameratopnorm;
+  struct xyzpoint c_cameraleftnorm;
+
+  f32 screenxminf;
+  f32 screenyminf;
+  f32 screenxmaxf;
+  f32 screenymaxf;
   s32 somekinda_bitflags;
   s32 field_112C;
   s32 ammoheldarr;
@@ -1198,7 +1201,7 @@ struct Player
   u8 can_display_cheat_text;
   u8 bondinvincible;
   u8 field_12B7;
-  s32 related_to_armor_display;
+  s32 healthdamagetype;
   s32 field_12BC;
   s32 field_12C0;
   s32 field_12C4;

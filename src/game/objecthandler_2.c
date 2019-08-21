@@ -3061,7 +3061,7 @@ glabel process_08_distance_triggers
 /* 0A33D4 7F06E8A4 10000011 */  b     .L7F06E8EC
 /* 0A33D8 7F06E8A8 8FA2002C */   lw    $v0, 0x2c($sp)
 .L7F06E8AC:
-/* 0A33DC 7F06E8AC 0FC1E121 */  jal   sub_GAME_7F078484
+/* 0A33DC 7F06E8AC 0FC1E121 */  jal   getPlayer_c_lodscalez
 /* 0A33E0 7F06E8B0 AFA30024 */   sw    $v1, 0x24($sp)
 /* 0A33E4 7F06E8B4 3C018003 */  lui   $at, %hi(D_80036088) # $at, 0x8003
 /* 0A33E8 7F06E8B8 8FA30024 */  lw    $v1, 0x24($sp)

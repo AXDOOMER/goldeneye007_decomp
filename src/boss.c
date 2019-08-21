@@ -686,7 +686,7 @@ loop_29:
 loop_44:
                                 set_cur_player(sub_GAME_7F09B528(phi_s1_2));
                                 set_video2_width_height(pPlayer->unk7F0, pPlayer->unk7F2);
-                                set_video2_ulx_uly(pPlayer->playerscreenulx, pPlayer->playerscreenuly);
+                                set_video2_ulx_uly(pPlayer->viewleft, pPlayer->viewtop);
                                 sub_GAME_7F0BF800();
                                 temp_s1 = phi_s1_2 + 1;
                                 phi_s1_2 = temp_s1;

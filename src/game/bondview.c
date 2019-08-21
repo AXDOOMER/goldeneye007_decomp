@@ -6598,11 +6598,11 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095314 7F0607E4 46049400 */  add.s $f16, $f18, $f4
 /* 095318 7F0607E8 E7B0019C */  swc1  $f16, 0x19c($sp)
 .L7F0607EC:
-/* 09531C 7F0607EC 0FC1E129 */  jal   sub_GAME_7F0784A4
+/* 09531C 7F0607EC 0FC1E129 */  jal   getPlayer_c_screenwidth
 /* 095320 7F0607F0 00000000 */   nop   
-/* 095324 7F0607F4 0FC1E129 */  jal   sub_GAME_7F0784A4
+/* 095324 7F0607F4 0FC1E129 */  jal   getPlayer_c_screenwidth
 /* 095328 7F0607F8 E7A00048 */   swc1  $f0, 0x48($sp)
-/* 09532C 7F0607FC 0FC1E131 */  jal   sub_GAME_7F0784C4
+/* 09532C 7F0607FC 0FC1E131 */  jal   getPlayer_c_screenleft
 /* 095330 7F060800 E7A0004C */   swc1  $f0, 0x4c($sp)
 /* 095334 7F060804 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 095338 7F060808 3C188008 */  lui   $t8, %hi(pPlayer) # $t8, 0x8008
@@ -6621,9 +6621,9 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 09536C 7F06083C 46023282 */  mul.s $f10, $f6, $f2
 /* 095370 7F060840 460A4483 */  div.s $f18, $f8, $f10
 /* 095374 7F060844 46122400 */  add.s $f16, $f4, $f18
-/* 095378 7F060848 0FC1E135 */  jal   sub_GAME_7F0784D4
+/* 095378 7F060848 0FC1E135 */  jal   getPlayer_c_screentop
 /* 09537C 7F06084C E7B00194 */   swc1  $f16, 0x194($sp)
-/* 095380 7F060850 0FC1E12D */  jal   sub_GAME_7F0784B4
+/* 095380 7F060850 0FC1E12D */  jal   getPlayer_c_screenheight
 /* 095384 7F060854 E7A00050 */   swc1  $f0, 0x50($sp)
 /* 095388 7F060858 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 09538C 7F06085C 3C0D8008 */  lui   $t5, %hi(pPlayer) # $t5, 0x8008
@@ -6637,11 +6637,11 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 0953AC 7F06087C 00000000 */  nop   
 /* 0953B0 7F060880 4500001A */  bc1f  .L7F0608EC
 /* 0953B4 7F060884 00000000 */   nop   
-/* 0953B8 7F060888 0FC1E12D */  jal   sub_GAME_7F0784B4
+/* 0953B8 7F060888 0FC1E12D */  jal   getPlayer_c_screenheight
 /* 0953BC 7F06088C 00000000 */   nop   
-/* 0953C0 7F060890 0FC1E12D */  jal   sub_GAME_7F0784B4
+/* 0953C0 7F060890 0FC1E12D */  jal   getPlayer_c_screenheight
 /* 0953C4 7F060894 E7A00048 */   swc1  $f0, 0x48($sp)
-/* 0953C8 7F060898 0FC1E135 */  jal   sub_GAME_7F0784D4
+/* 0953C8 7F060898 0FC1E135 */  jal   getPlayer_c_screentop
 /* 0953CC 7F06089C E7A0004C */   swc1  $f0, 0x4c($sp)
 /* 0953D0 7F0608A0 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0953D4 7F0608A4 3C0E8008 */  lui   $t6, %hi(pPlayer) # $t6, 0x8008
@@ -6663,11 +6663,11 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095414 7F0608E4 1000001A */  b     .L7F060950
 /* 095418 7F0608E8 E7B20198 */   swc1  $f18, 0x198($sp)
 .L7F0608EC:
-/* 09541C 7F0608EC 0FC1E12D */  jal   sub_GAME_7F0784B4
+/* 09541C 7F0608EC 0FC1E12D */  jal   getPlayer_c_screenheight
 /* 095420 7F0608F0 00000000 */   nop   
-/* 095424 7F0608F4 0FC1E12D */  jal   sub_GAME_7F0784B4
+/* 095424 7F0608F4 0FC1E12D */  jal   getPlayer_c_screenheight
 /* 095428 7F0608F8 E7A00048 */   swc1  $f0, 0x48($sp)
-/* 09542C 7F0608FC 0FC1E135 */  jal   sub_GAME_7F0784D4
+/* 09542C 7F0608FC 0FC1E135 */  jal   getPlayer_c_screentop
 /* 095430 7F060900 E7A0004C */   swc1  $f0, 0x4c($sp)
 /* 095434 7F060904 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 095438 7F060908 3C188008 */  lui   $t8, %hi(pPlayer) # $t8, 0x8008
@@ -15600,9 +15600,9 @@ glabel caclulate_gun_crosshair_position_rotation
 /* 09C6D4 7F067BA4 4487B000 */  mtc1  $a3, $f22
 /* 09C6D8 7F067BA8 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 09C6DC 7F067BAC E7AC0058 */  swc1  $f12, 0x58($sp)
-/* 09C6E0 7F067BB0 0FC1E129 */  jal   sub_GAME_7F0784A4
+/* 09C6E0 7F067BB0 0FC1E129 */  jal   getPlayer_c_screenwidth
 /* 09C6E4 7F067BB4 E7AE005C */   swc1  $f14, 0x5c($sp)
-/* 09C6E8 7F067BB8 0FC1E12D */  jal   sub_GAME_7F0784B4
+/* 09C6E8 7F067BB8 0FC1E12D */  jal   getPlayer_c_screenheight
 /* 09C6EC 7F067BBC E7A00050 */   swc1  $f0, 0x50($sp)
 /* 09C6F0 7F067BC0 3C078008 */  lui   $a3, %hi(pPlayer) # $a3, 0x8008
 /* 09C6F4 7F067BC4 24E7A0B0 */  addiu $a3, %lo(pPlayer) # addiu $a3, $a3, -0x5f50
@@ -15757,14 +15757,14 @@ glabel caclulate_gun_crosshair_position_rotation
 /* 09C924 7F067DF4 AFA30054 */  sw    $v1, 0x54($sp)
 .L7F067DF8:
 /* 09C928 7F067DF8 E7AC0058 */  swc1  $f12, 0x58($sp)
-/* 09C92C 7F067DFC 0FC1E131 */  jal   sub_GAME_7F0784C4
+/* 09C92C 7F067DFC 0FC1E131 */  jal   getPlayer_c_screenleft
 /* 09C930 7F067E00 E7AE005C */   swc1  $f14, 0x5c($sp)
 /* 09C934 7F067E04 3C078008 */  lui   $a3, %hi(pPlayer) # $a3, 0x8008
 /* 09C938 7F067E08 24E7A0B0 */  addiu $a3, %lo(pPlayer) # addiu $a3, $a3, -0x5f50
 /* 09C93C 7F067E0C 8CE20000 */  lw    $v0, ($a3)
 /* 09C940 7F067E10 C44A0FE8 */  lwc1  $f10, 0xfe8($v0)
 /* 09C944 7F067E14 46005200 */  add.s $f8, $f10, $f0
-/* 09C948 7F067E18 0FC1E135 */  jal   sub_GAME_7F0784D4
+/* 09C948 7F067E18 0FC1E135 */  jal   getPlayer_c_screentop
 /* 09C94C 7F067E1C E4480FE8 */   swc1  $f8, 0xfe8($v0)
 /* 09C950 7F067E20 3C078008 */  lui   $a3, %hi(pPlayer) # $a3, 0x8008
 /* 09C954 7F067E24 24E7A0B0 */  addiu $a3, %lo(pPlayer) # addiu $a3, $a3, -0x5f50
@@ -15819,14 +15819,14 @@ glabel caclulate_gun_crosshair_position_rotation
 /* 09CA10 7F067EE0 00000000 */  nop   
 /* 09CA14 7F067EE4 46141202 */  mul.s $f8, $f2, $f20
 /* 09CA18 7F067EE8 46085100 */  add.s $f4, $f10, $f8
-/* 09CA1C 7F067EEC 0FC1E131 */  jal   sub_GAME_7F0784C4
+/* 09CA1C 7F067EEC 0FC1E131 */  jal   getPlayer_c_screenleft
 /* 09CA20 7F067EF0 E4441000 */   swc1  $f4, 0x1000($v0)
 /* 09CA24 7F067EF4 3C078008 */  lui   $a3, %hi(pPlayer) # $a3, 0x8008
 /* 09CA28 7F067EF8 24E7A0B0 */  addiu $a3, %lo(pPlayer) # addiu $a3, $a3, -0x5f50
 /* 09CA2C 7F067EFC 8CE20000 */  lw    $v0, ($a3)
 /* 09CA30 7F067F00 C4460FFC */  lwc1  $f6, 0xffc($v0)
 /* 09CA34 7F067F04 46003280 */  add.s $f10, $f6, $f0
-/* 09CA38 7F067F08 0FC1E135 */  jal   sub_GAME_7F0784D4
+/* 09CA38 7F067F08 0FC1E135 */  jal   getPlayer_c_screentop
 /* 09CA3C 7F067F0C E44A0FFC */   swc1  $f10, 0xffc($v0)
 /* 09CA40 7F067F10 3C078008 */  lui   $a3, %hi(pPlayer) # $a3, 0x8008
 /* 09CA44 7F067F14 24E7A0B0 */  addiu $a3, %lo(pPlayer) # addiu $a3, $a3, -0x5f50
@@ -15962,9 +15962,9 @@ GLOBAL_ASM(
 glabel sub_GAME_7F06802C
 /* 09CB5C 7F06802C 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 09CB60 7F068030 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09CB64 7F068034 0FC1E131 */  jal   sub_GAME_7F0784C4
+/* 09CB64 7F068034 0FC1E131 */  jal   getPlayer_c_screenleft
 /* 09CB68 7F068038 00000000 */   nop   
-/* 09CB6C 7F06803C 0FC1E129 */  jal   sub_GAME_7F0784A4
+/* 09CB6C 7F06803C 0FC1E129 */  jal   getPlayer_c_screenwidth
 /* 09CB70 7F068040 E7A0001C */   swc1  $f0, 0x1c($sp)
 /* 09CB74 7F068044 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 09CB78 7F068048 44812000 */  mtc1  $at, $f4
@@ -15976,9 +15976,9 @@ glabel sub_GAME_7F06802C
 /* 09CB90 7F068060 46083080 */  add.s $f2, $f6, $f8
 /* 09CB94 7F068064 E5C20FE8 */  swc1  $f2, 0xfe8($t6)
 /* 09CB98 7F068068 8C4F0000 */  lw    $t7, ($v0)
-/* 09CB9C 7F06806C 0FC1E135 */  jal   sub_GAME_7F0784D4
+/* 09CB9C 7F06806C 0FC1E135 */  jal   getPlayer_c_screentop
 /* 09CBA0 7F068070 E5E20FFC */   swc1  $f2, 0xffc($t7)
-/* 09CBA4 7F068074 0FC1E12D */  jal   sub_GAME_7F0784B4
+/* 09CBA4 7F068074 0FC1E12D */  jal   getPlayer_c_screenheight
 /* 09CBA8 7F068078 E7A0001C */   swc1  $f0, 0x1c($sp)
 /* 09CBAC 7F06807C 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 09CBB0 7F068080 44815000 */  mtc1  $at, $f10
@@ -16157,8 +16157,8 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
     }
     // Node 7
     sp20 = (f32) ((phi_f16 * 2.3283064365386963e-10f) * ((phi_f10 * 2.3283064365386963e-10f) - 0.5f));
-    sp18 = sub_GAME_7F0784A4();
-    sp30 = (f32) (((((sp20 * sp24) * sp18) * D_800543B0) / (sub_GAME_7F0784F4() * 320.0f)) + pPlayer->unkFE8);
+    sp18 = getPlayer_c_screenwidth();
+    sp30 = (f32) (((((sp20 * sp24) * sp18) * D_800543B0) / (getPlayer_c_perspaspect() * 320.0f)) + pPlayer->unkFE8);
     sp1C = get_random_value();
     temp_ret_2 = get_random_value();
     temp_f8 = (f32) sp1C;
@@ -16178,7 +16178,7 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
     }
     // Node 11
     sp20 = (f32) ((phi_f16_2 * 2.3283064365386963e-10f) * ((phi_f8 * 2.3283064365386963e-10f) - 0.5f));
-    sp34 = (f32) (((sub_GAME_7F0784B4() * (sp20 * sp24)) / 240.0f) + pPlayer->unkFEC);
+    sp34 = (f32) (((getPlayer_c_screenheight() * (sp20 * sp24)) / 240.0f) + pPlayer->unkFEC);
     *arg0 = 0.0f;
     arg0->unk4 = 0.0f;
     arg0->unk8 = 0.0f;
@@ -16267,9 +16267,9 @@ glabel sub_GAME_7F0681CC
 /* 09CE14 7F0682E4 46008482 */  mul.s $f18, $f16, $f0
 /* 09CE18 7F0682E8 00000000 */  nop   
 /* 09CE1C 7F0682EC 46069102 */  mul.s $f4, $f18, $f6
-/* 09CE20 7F0682F0 0FC1E129 */  jal   sub_GAME_7F0784A4
+/* 09CE20 7F0682F0 0FC1E129 */  jal   getPlayer_c_screenwidth
 /* 09CE24 7F0682F4 E7A40020 */   swc1  $f4, 0x20($sp)
-/* 09CE28 7F0682F8 0FC1E13D */  jal   sub_GAME_7F0784F4
+/* 09CE28 7F0682F8 0FC1E13D */  jal   getPlayer_c_perspaspect
 /* 09CE2C 7F0682FC E7A00018 */   swc1  $f0, 0x18($sp)
 /* 09CE30 7F068300 C7A80020 */  lwc1  $f8, 0x20($sp)
 /* 09CE34 7F068304 C7AA0024 */  lwc1  $f10, 0x24($sp)
@@ -16318,7 +16318,7 @@ glabel sub_GAME_7F0681CC
 /* 09CED8 7F0683A8 46008482 */  mul.s $f18, $f16, $f0
 /* 09CEDC 7F0683AC 00000000 */  nop   
 /* 09CEE0 7F0683B0 46049182 */  mul.s $f6, $f18, $f4
-/* 09CEE4 7F0683B4 0FC1E12D */  jal   sub_GAME_7F0784B4
+/* 09CEE4 7F0683B4 0FC1E12D */  jal   getPlayer_c_screenheight
 /* 09CEE8 7F0683B8 E7A60020 */   swc1  $f6, 0x20($sp)
 /* 09CEEC 7F0683BC C7AA0020 */  lwc1  $f10, 0x20($sp)
 /* 09CEF0 7F0683C0 C7A80024 */  lwc1  $f8, 0x24($sp)
@@ -18811,8 +18811,8 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                     // Node 13
                                     sp28 = temp_v1;
                                     sp48 = (void *) (temp_v1->unk4 + globalbank_rdram_offset);
-                                    sp30 = sub_GAME_7F0784C4();
-                                    sp34 = sub_GAME_7F0784A4();
+                                    sp30 = getPlayer_c_screenleft();
+                                    sp34 = getPlayer_c_screenwidth();
                                     sp38 = get_video2_settings_uly();
                                     arg0 = set_rgba_redirect_generate_microcode(arg0, sp48, ((sp34 + sp30) - (f32) sp54), 0xbf800000, (f32) ((get_video2_settings_height() + sp38) + -0x14), 0, (f32) sp28->unk8, 1);
                                     sp44 = (s32) sp48->unk4;
@@ -18910,7 +18910,7 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                     // Node 35
                                     sp28 = temp_v1_2;
                                     sp40 = (void *) (temp_v1_2->unk4 + globalbank_rdram_offset);
-                                    sp34 = sub_GAME_7F0784C4();
+                                    sp34 = getPlayer_c_screenleft();
                                     sp38 = get_video2_settings_uly();
                                     get_video2_settings_height();
                                     arg0 = set_rgba_redirect_generate_microcode(sp28->unk8, arg0, sp40, (sp34 + (f32) sp58), 0xbf800000, 1, 1);
@@ -19065,9 +19065,9 @@ glabel generate_ammo_total_microcode
 /* 09E934 7F069E04 8D29D0B0 */  lw    $t1, %lo(globalbank_rdram_offset)($t1)
 /* 09E938 7F069E08 AFA30028 */  sw    $v1, 0x28($sp)
 /* 09E93C 7F069E0C 00491021 */  addu  $v0, $v0, $t1
-/* 09E940 7F069E10 0FC1E131 */  jal   sub_GAME_7F0784C4
+/* 09E940 7F069E10 0FC1E131 */  jal   getPlayer_c_screenleft
 /* 09E944 7F069E14 AFA20048 */   sw    $v0, 0x48($sp)
-/* 09E948 7F069E18 0FC1E129 */  jal   sub_GAME_7F0784A4
+/* 09E948 7F069E18 0FC1E129 */  jal   getPlayer_c_screenwidth
 /* 09E94C 7F069E1C E7A00030 */   swc1  $f0, 0x30($sp)
 /* 09E950 7F069E20 0C001149 */  jal   get_video2_settings_uly
 /* 09E954 7F069E24 E7A00034 */   swc1  $f0, 0x34($sp)
@@ -19260,7 +19260,7 @@ glabel generate_ammo_total_microcode
 /* 09EC14 7F06A0E4 8D8CD0B0 */  lw    $t4, %lo(globalbank_rdram_offset)($t4)
 /* 09EC18 7F06A0E8 AFA30028 */  sw    $v1, 0x28($sp)
 /* 09EC1C 7F06A0EC 004C1021 */  addu  $v0, $v0, $t4
-/* 09EC20 7F06A0F0 0FC1E131 */  jal   sub_GAME_7F0784C4
+/* 09EC20 7F06A0F0 0FC1E131 */  jal   getPlayer_c_screenleft
 /* 09EC24 7F06A0F4 AFA20040 */   sw    $v0, 0x40($sp)
 /* 09EC28 7F06A0F8 0C001149 */  jal   get_video2_settings_uly
 /* 09EC2C 7F06A0FC E7A00034 */   swc1  $f0, 0x34($sp)

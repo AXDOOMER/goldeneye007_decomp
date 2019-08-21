@@ -1656,23 +1656,23 @@ void menu_control_stick_tracking(void) {
     }
     // Node 21
     sp1E = (u8)0;
-    sp18 = sub_GAME_7F0784C4(0);
-    if (((sub_GAME_7F0784A4() + sp18) - 20.0f) < cursor_h_pos)
+    sp18 = getPlayer_c_screenleft(0);
+    if (((getPlayer_c_screenwidth() + sp18) - 20.0f) < cursor_h_pos)
     {
         // Node 22
         sp1E = sp1E;
-        sp18 = sub_GAME_7F0784C4();
-        cursor_h_pos = (f32) ((sub_GAME_7F0784A4() + sp18) - 20.0f);
+        sp18 = getPlayer_c_screenleft();
+        cursor_h_pos = (f32) ((getPlayer_c_screenwidth() + sp18) - 20.0f);
     }
     else
     {
         // Node 23
         sp1E = sp1E;
-        if (cursor_h_pos < (sub_GAME_7F0784C4() + 20.0f))
+        if (cursor_h_pos < (getPlayer_c_screenleft() + 20.0f))
         {
             // Node 24
             sp1E = sp1E;
-            cursor_h_pos = (f32) (sub_GAME_7F0784C4() + 20.0f);
+            cursor_h_pos = (f32) (getPlayer_c_screenleft() + 20.0f);
         }
     }
     // Node 25
@@ -1691,24 +1691,24 @@ void menu_control_stick_tracking(void) {
         }
     }
     // Node 29
-    sp18 = sub_GAME_7F0784D4();
-    if (((sub_GAME_7F0784B4() + sp18) - 20.0f) < cursor_v_pos)
+    sp18 = getPlayer_c_screentop();
+    if (((getPlayer_c_screenheight() + sp18) - 20.0f) < cursor_v_pos)
     {
         // Node 30
-        sp18 = sub_GAME_7F0784D4();
-        cursor_v_pos = (f32) ((sub_GAME_7F0784B4() + sp18) - 20.0f);
+        sp18 = getPlayer_c_screentop();
+        cursor_v_pos = (f32) ((getPlayer_c_screenheight() + sp18) - 20.0f);
         return;
-        // (possible return value: sub_GAME_7F0784B4())
+        // (possible return value: getPlayer_c_screenheight())
     }
     // Node 31
-    if (cursor_v_pos < (sub_GAME_7F0784D4() + 20.0f))
+    if (cursor_v_pos < (getPlayer_c_screentop() + 20.0f))
     {
         // Node 32
-        cursor_v_pos = (f32) (sub_GAME_7F0784D4() + 20.0f);
+        cursor_v_pos = (f32) (getPlayer_c_screentop() + 20.0f);
         return;
-        // (possible return value: sub_GAME_7F0784D4())
+        // (possible return value: getPlayer_c_screentop())
     }
-    // (possible return value: sub_GAME_7F0784D4())
+    // (possible return value: getPlayer_c_screentop())
 }
 #else
 GLOBAL_ASM(
@@ -1908,9 +1908,9 @@ glabel menu_control_stick_tracking
 /* 03E818 7F009CE8 46122200 */  add.s $f8, $f4, $f18
 /* 03E81C 7F009CEC E428A908 */  swc1  $f8, %lo(cursor_h_pos)($at)
 .L7F009CF0:
-/* 03E820 7F009CF0 0FC1E131 */  jal   sub_GAME_7F0784C4
+/* 03E820 7F009CF0 0FC1E131 */  jal   getPlayer_c_screenleft
 /* 03E824 7F009CF4 A3A2001E */   sb    $v0, 0x1e($sp)
-/* 03E828 7F009CF8 0FC1E129 */  jal   sub_GAME_7F0784A4
+/* 03E828 7F009CF8 0FC1E129 */  jal   getPlayer_c_screenwidth
 /* 03E82C 7F009CFC E7A00018 */   swc1  $f0, 0x18($sp)
 /* 03E830 7F009D00 C7A60018 */  lwc1  $f6, 0x18($sp)
 /* 03E834 7F009D04 3C0141A0 */  li    $at, 0x41A00000 # 20.000000
@@ -1924,9 +1924,9 @@ glabel menu_control_stick_tracking
 /* 03E854 7F009D24 00000000 */  nop   
 /* 03E858 7F009D28 4500000E */  bc1f  .L7F009D64
 /* 03E85C 7F009D2C 00000000 */   nop   
-/* 03E860 7F009D30 0FC1E131 */  jal   sub_GAME_7F0784C4
+/* 03E860 7F009D30 0FC1E131 */  jal   getPlayer_c_screenleft
 /* 03E864 7F009D34 A3A2001E */   sb    $v0, 0x1e($sp)
-/* 03E868 7F009D38 0FC1E129 */  jal   sub_GAME_7F0784A4
+/* 03E868 7F009D38 0FC1E129 */  jal   getPlayer_c_screenwidth
 /* 03E86C 7F009D3C E7A00018 */   swc1  $f0, 0x18($sp)
 /* 03E870 7F009D40 C7A80018 */  lwc1  $f8, 0x18($sp)
 /* 03E874 7F009D44 3C0141A0 */  li    $at, 0x41A00000 # 20.000000
@@ -1938,7 +1938,7 @@ glabel menu_control_stick_tracking
 /* 03E88C 7F009D5C 10000015 */  b     .L7F009DB4
 /* 03E890 7F009D60 E430A908 */   swc1  $f16, %lo(cursor_h_pos)($at)
 .L7F009D64:
-/* 03E894 7F009D64 0FC1E131 */  jal   sub_GAME_7F0784C4
+/* 03E894 7F009D64 0FC1E131 */  jal   getPlayer_c_screenleft
 /* 03E898 7F009D68 A3A2001E */   sb    $v0, 0x1e($sp)
 /* 03E89C 7F009D6C 3C018003 */  lui   $at, %hi(cursor_h_pos) # $at, 0x8003
 /* 03E8A0 7F009D70 C424A908 */  lwc1  $f4, %lo(cursor_h_pos)($at)
@@ -1950,7 +1950,7 @@ glabel menu_control_stick_tracking
 /* 03E8B8 7F009D88 00000000 */  nop   
 /* 03E8BC 7F009D8C 45000009 */  bc1f  .L7F009DB4
 /* 03E8C0 7F009D90 00000000 */   nop   
-/* 03E8C4 7F009D94 0FC1E131 */  jal   sub_GAME_7F0784C4
+/* 03E8C4 7F009D94 0FC1E131 */  jal   getPlayer_c_screenleft
 /* 03E8C8 7F009D98 A3A2001E */   sb    $v0, 0x1e($sp)
 /* 03E8CC 7F009D9C 3C0141A0 */  li    $at, 0x41A00000 # 20.000000
 /* 03E8D0 7F009DA0 44813000 */  mtc1  $at, $f6
@@ -1996,9 +1996,9 @@ glabel menu_control_stick_tracking
 /* 03E968 7F009E38 460A8100 */  add.s $f4, $f16, $f10
 /* 03E96C 7F009E3C E424A90C */  swc1  $f4, %lo(cursor_v_pos)($at)
 .L7F009E40:
-/* 03E970 7F009E40 0FC1E135 */  jal   sub_GAME_7F0784D4
+/* 03E970 7F009E40 0FC1E135 */  jal   getPlayer_c_screentop
 /* 03E974 7F009E44 00000000 */   nop   
-/* 03E978 7F009E48 0FC1E12D */  jal   sub_GAME_7F0784B4
+/* 03E978 7F009E48 0FC1E12D */  jal   getPlayer_c_screenheight
 /* 03E97C 7F009E4C E7A00018 */   swc1  $f0, 0x18($sp)
 /* 03E980 7F009E50 C7B20018 */  lwc1  $f18, 0x18($sp)
 /* 03E984 7F009E54 3C0141A0 */  li    $at, 0x41A00000 # 20.000000
@@ -2011,9 +2011,9 @@ glabel menu_control_stick_tracking
 /* 03E9A0 7F009E70 00000000 */  nop   
 /* 03E9A4 7F009E74 4500000D */  bc1f  .L7F009EAC
 /* 03E9A8 7F009E78 00000000 */   nop   
-/* 03E9AC 7F009E7C 0FC1E135 */  jal   sub_GAME_7F0784D4
+/* 03E9AC 7F009E7C 0FC1E135 */  jal   getPlayer_c_screentop
 /* 03E9B0 7F009E80 00000000 */   nop   
-/* 03E9B4 7F009E84 0FC1E12D */  jal   sub_GAME_7F0784B4
+/* 03E9B4 7F009E84 0FC1E12D */  jal   getPlayer_c_screenheight
 /* 03E9B8 7F009E88 E7A00018 */   swc1  $f0, 0x18($sp)
 /* 03E9BC 7F009E8C C7A40018 */  lwc1  $f4, 0x18($sp)
 /* 03E9C0 7F009E90 3C0141A0 */  li    $at, 0x41A00000 # 20.000000
@@ -2024,7 +2024,7 @@ glabel menu_control_stick_tracking
 /* 03E9D4 7F009EA4 10000014 */  b     .L7F009EF8
 /* 03E9D8 7F009EA8 E426A90C */   swc1  $f6, %lo(cursor_v_pos)($at)
 .L7F009EAC:
-/* 03E9DC 7F009EAC 0FC1E135 */  jal   sub_GAME_7F0784D4
+/* 03E9DC 7F009EAC 0FC1E135 */  jal   getPlayer_c_screentop
 /* 03E9E0 7F009EB0 00000000 */   nop   
 /* 03E9E4 7F009EB4 3C018003 */  lui   $at, %hi(cursor_v_pos) # $at, 0x8003
 /* 03E9E8 7F009EB8 C430A90C */  lwc1  $f16, %lo(cursor_v_pos)($at)
@@ -2036,7 +2036,7 @@ glabel menu_control_stick_tracking
 /* 03EA00 7F009ED0 00000000 */  nop   
 /* 03EA04 7F009ED4 45020009 */  bc1fl .L7F009EFC
 /* 03EA08 7F009ED8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 03EA0C 7F009EDC 0FC1E135 */  jal   sub_GAME_7F0784D4
+/* 03EA0C 7F009EDC 0FC1E135 */  jal   getPlayer_c_screentop
 /* 03EA10 7F009EE0 00000000 */   nop   
 /* 03EA14 7F009EE4 3C0141A0 */  li    $at, 0x41A00000 # 20.000000
 /* 03EA18 7F009EE8 44819000 */  mtc1  $at, $f18

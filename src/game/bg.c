@@ -2936,7 +2936,7 @@ glabel sub_GAME_7F0B4F9C
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B4FB4(void) {
-    return sub_GAME_7F0B5058(pPlayer->playerscreenulx, pPlayer->playerscreenuly, (pPlayer->playerscreenulx + pPlayer->unk7F0), (s32) (pPlayer->playerscreenuly + pPlayer->unk7F2));
+    return sub_GAME_7F0B5058(pPlayer->viewleft, pPlayer->viewtop, (pPlayer->viewleft + pPlayer->unk7F0), (s32) (pPlayer->viewtop + pPlayer->unk7F2));
 }
 #else
 GLOBAL_ASM(

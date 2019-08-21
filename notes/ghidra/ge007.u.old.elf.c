@@ -4037,8 +4037,8 @@ void mainloop(void)
                 do {
                   playernum = proc_7F09B528((int)lVar15);
                   set_cur_player(playernum);
-                  set_video2_width_height(pPlayer->playerscreenwidth,pPlayer->playerscreenheight);
-                  set_video2_ulx_uly(pPlayer->playerscreenulx,pPlayer->playerscreenuly);
+                  set_video2_width_height(pPlayer->viewx,pPlayer->viewy);
+                  set_video2_ulx_uly(pPlayer->viewleft,pPlayer->viewtop);
                   proc_7F0BF800();
                   lVar15 = (longlong)((int)lVar15 + 1);
                   uVar1 = get_num_players();
@@ -28980,17 +28980,17 @@ int menu_control_stick_tracking(void)
     cursor_h_pos = (f32)((float)cursor_h_pos +
                         ((float)iVar4 * folder_menu_x_dim + 0.50000000) * global_timer_delta);
   }
-  fVar5 = get_ulx();
-  fVar6 = get_screen_width();
+  fVar5 = getPlayer_c_screenleft();
+  fVar6 = getPlayer_c_screenwidth();
   if (((float)fVar6 + (float)fVar5) - 20.00000000 < (float)cursor_h_pos) {
-    fVar5 = get_ulx();
-    fVar6 = get_screen_width();
+    fVar5 = getPlayer_c_screenleft();
+    fVar6 = getPlayer_c_screenwidth();
     cursor_h_pos = (f32)(((float)fVar6 + (float)fVar5) - 20.00000000);
   }
   else {
-    fVar5 = get_ulx();
+    fVar5 = getPlayer_c_screenleft();
     if ((float)cursor_h_pos < (float)fVar5 + 20.00000000) {
-      cursor_h_pos = get_ulx();
+      cursor_h_pos = getPlayer_c_screenleft();
       cursor_h_pos = (f32)((float)cursor_h_pos + 20.00000000);
     }
   }
@@ -29005,17 +29005,17 @@ int menu_control_stick_tracking(void)
     cursor_v_pos = (f32)((float)cursor_v_pos +
                         ((float)iVar1 * flt_800519D0 + 0.50000000) * global_timer_delta);
   }
-  fVar5 = get_uly();
-  fVar6 = get_screen_height();
+  fVar5 = getPlayer_c_screentop();
+  fVar6 = getPlayer_c_screenheight();
   if (((float)fVar6 + (float)fVar5) - 20.00000000 < (float)cursor_v_pos) {
-    fVar5 = get_uly();
-    fVar6 = get_screen_height();
+    fVar5 = getPlayer_c_screentop();
+    fVar6 = getPlayer_c_screenheight();
     cursor_v_pos = (f32)(((float)fVar6 + (float)fVar5) - 20.00000000);
   }
   else {
-    fVar5 = get_uly();
+    fVar5 = getPlayer_c_screentop();
     if ((float)cursor_v_pos < (float)fVar5 + 20.00000000) {
-      cursor_v_pos = get_uly();
+      cursor_v_pos = getPlayer_c_screentop();
       cursor_v_pos = (f32)((float)cursor_v_pos + 20.00000000);
     }
   }
@@ -45810,7 +45810,7 @@ void proc_7F027060(int param_1)
     iStack8 = 0;
     lVar2 = proc_7F09B15C((int)*(char **)(param_1 + 0x18));
     iVar4 = iStack8;
-    if ((&ptr_BONDdata_p1)[(int)lVar2]->player_button_control != 0) {
+    if ((&ptr_BONDdata_p1)[(int)lVar2]->bonddead != 0) {
       return;
     }
   }
@@ -57219,17 +57219,17 @@ float proc_7F03D188(void)
   float fStack8;
   float fStack4;
   
-  fVar6 = get_uly();
-  fVar7 = get_screen_height();
+  fVar6 = getPlayer_c_screentop();
+  fVar7 = getPlayer_c_screenheight();
   fVar9 = (float)fVar7 * flt_800529C0 + (float)fVar6;
-  fVar6 = get_uly();
-  fVar7 = get_screen_height();
+  fVar6 = getPlayer_c_screentop();
+  fVar7 = getPlayer_c_screenheight();
   fVar8 = (float)fVar7 * flt_800529C4 + (float)fVar6;
-  fVar6 = get_ulx();
-  fVar7 = get_screen_width();
+  fVar6 = getPlayer_c_screenleft();
+  fVar7 = getPlayer_c_screenwidth();
   fVar11 = (float)fVar7 * 0.25000000 + (float)fVar6;
-  fVar6 = get_ulx();
-  fVar7 = get_screen_width();
+  fVar6 = getPlayer_c_screenleft();
+  fVar7 = getPlayer_c_screenwidth();
   fStack80 = -2.00000000;
   fVar10 = (float)fVar7 * 0.75000000 + (float)fVar6;
   proc_7F077FF4(in_a1_lo,&fStack8);
@@ -57279,13 +57279,13 @@ float proc_7F03D188(void)
         if (uVar4 == 1) {
           fStack88 = fStack88 * difficulty;
         }
-        fVar6 = get_screen_width();
-        fVar7 = get_ulx();
+        fVar6 = getPlayer_c_screenwidth();
+        fVar7 = getPlayer_c_screenleft();
         bVar2 = (afStack36[0] + afStack28[0]) * 0.50000000 - fStack88 <=
                 (float)fVar7 + (float)fVar6 * 0.50000000;
         if (bVar2) {
-          fVar6 = get_screen_width();
-          fVar7 = get_ulx();
+          fVar6 = getPlayer_c_screenwidth();
+          fVar7 = getPlayer_c_screenleft();
           bVar2 = (float)fVar7 + (float)fVar6 * 0.50000000 <=
                   (afStack36[0] + afStack28[0]) * 0.50000000 + fStack88;
           if (((bVar2) && (bVar2 = fVar11 <= fStack8, bVar2)) && (bVar2 = false, fStack8 <= fVar10))
@@ -57324,27 +57324,27 @@ float proc_7F03D188(void)
         *in_stack_00000010 = fStack8;
       }
     }
-    fVar6 = get_screen_width();
-    fVar7 = get_ulx();
+    fVar6 = getPlayer_c_screenwidth();
+    fVar7 = getPlayer_c_screenleft();
     if (afStack28[0] <= (float)fVar7 + (float)fVar6 * 0.50000000) {
-      fVar6 = get_screen_width();
-      fVar7 = get_ulx();
+      fVar6 = getPlayer_c_screenwidth();
+      fVar7 = getPlayer_c_screenleft();
       if ((float)fVar7 + (float)fVar6 * 0.50000000 <= afStack36[0]) {
         fStack80 = 1.00000000;
         goto LAB_7f03d76c;
       }
     }
-    fVar6 = get_screen_width();
-    fVar7 = get_ulx();
+    fVar6 = getPlayer_c_screenwidth();
+    fVar7 = getPlayer_c_screenleft();
     if (afStack28[0] <= (float)fVar7 + (float)fVar6 * 0.50000000) {
-      fVar6 = get_screen_width();
-      fVar7 = get_ulx();
+      fVar6 = getPlayer_c_screenwidth();
+      fVar7 = getPlayer_c_screenleft();
       fStack80 = 1.00000000 - (((float)fVar7 + (float)fVar6 * 0.50000000) - afStack36[0]) / fStack88
       ;
     }
     else {
-      fVar6 = get_ulx();
-      fVar7 = get_screen_width();
+      fVar6 = getPlayer_c_screenleft();
+      fVar7 = getPlayer_c_screenwidth();
       fStack80 = 1.00000000 - (afStack28[0] - ((float)fVar7 * 0.50000000 + (float)fVar6)) / fStack88
       ;
     }
@@ -57439,13 +57439,13 @@ LAB_7f03d8e4:
     proc_7F07C6C8(0,0);
   }
   else {
-    fVar8 = get_uly();
-    fVar9 = get_screen_height();
+    fVar8 = getPlayer_c_screentop();
+    fVar9 = getPlayer_c_screenheight();
     proc_7F07C5F0((int)pbVar7,(fStack8 - (float)fVar8) / ((float)fVar9 * 0.50000000) - 1.00000000);
     redirect_get_BONDdata_autoaim_x();
     if (in_v0 != 0) {
-      fVar8 = get_ulx();
-      fVar9 = get_screen_width();
+      fVar8 = getPlayer_c_screenleft();
+      fVar9 = getPlayer_c_screenwidth();
       proc_7F07C6C8((int)pbVar7,(fStack12 - (float)fVar8) / ((float)fVar9 * 0.50000000) - 1.00000000
                    );
     }
@@ -66598,7 +66598,7 @@ undefined8 collect_or_interact_object(char *param_1,int param_2)
   uint uVar8;
   
   objdata = *(int *)(param_1 + 4);
-  if ((pPlayer->player_button_control != 0) || (clock_timer == 0)) {
+  if ((pPlayer->bonddead != 0) || (clock_timer == 0)) {
     return 0;
   }
   if (false) {
@@ -69625,7 +69625,7 @@ int proc_7F054B80(int param_1)
   
   iVar1 = return_nearfog_values();
   if ((iVar1 != 0) && (*(float *)(iVar1 + 8) < *(float *)(param_1 + 0x18))) {
-    proc_7F078484();
+    getPlayer_c_lodscalez();
   }
   return iVar1;
 }
@@ -69654,7 +69654,7 @@ undefined4 proc_7F054C58(void)
     fVar5 = pfVar3[2] * (in_a0_lo[2] - pxVar2->z) +
             (*in_a0_lo - pxVar2->x) * *pfVar3 + (in_a0_lo[1] - pxVar2->y) * pfVar3[1];
     if ((*(float *)(iVar1 + 8) < fVar5) &&
-       (fVar4 = proc_7F078484(),
+       (fVar4 = getPlayer_c_lodscalez(),
        *(float *)(iVar1 + 4) <=
        (((fVar5 - *(float *)(iVar1 + 8)) * 100.00000000) / in_a1_lo + *(float *)(iVar1 + 8)) *
        (float)fVar4)) {
@@ -71568,25 +71568,25 @@ LAB_7f057a84:
                  (lVar3 = proc_7F050D30(*(int *)(iVar4 + 0x10),afStack20,afStack28,afStack36),
                  lVar3 == 0)) goto LAB_7f057a84;
               proc_7F03F948(afStack20,afStack28,afStack36,&fStack44,&fStack52);
-              fVar6 = get_ulx();
+              fVar6 = getPlayer_c_screenleft();
               if ((float)fVar6 < fStack44) {
-                fVar6 = get_ulx();
-                fVar7 = get_screen_width();
+                fVar6 = getPlayer_c_screenleft();
+                fVar7 = getPlayer_c_screenwidth();
                 if (fStack44 < (float)fVar7 + (float)fVar6) {
-                  fVar6 = get_ulx();
+                  fVar6 = getPlayer_c_screenleft();
                   if ((float)fVar6 < fStack52) {
-                    fVar6 = get_ulx();
-                    fVar7 = get_screen_width();
+                    fVar6 = getPlayer_c_screenleft();
+                    fVar7 = getPlayer_c_screenwidth();
                     if (fStack52 < (float)fVar7 + (float)fVar6) {
-                      fVar6 = get_uly();
+                      fVar6 = getPlayer_c_screentop();
                       if ((float)fVar6 < fStack40) {
-                        fVar6 = get_uly();
-                        fVar7 = get_screen_height();
+                        fVar6 = getPlayer_c_screentop();
+                        fVar7 = getPlayer_c_screenheight();
                         if (fStack40 < (float)fVar7 + (float)fVar6) {
-                          fVar6 = get_uly();
+                          fVar6 = getPlayer_c_screentop();
                           if ((float)fVar6 < fStack48) {
-                            fVar6 = get_uly();
-                            fVar7 = get_screen_height();
+                            fVar6 = getPlayer_c_screentop();
+                            fVar7 = getPlayer_c_screenheight();
                             if (fStack48 < (float)fVar7 + (float)fVar6) {
                               *(undefined4 *)(iVar5 + 8) = 1;
                               goto LAB_7f057a84;
@@ -76689,26 +76689,26 @@ void handles_firing_or_throwing_weapon_in_hand(int hand)
     }
     fStack268 = fStack268 + (flt_80053DFC - fVar11 * 0.00000000 * flt_80053DF8);
   }
-  fVar12 = get_screen_width();
-  fVar13 = get_screen_width();
-  fVar14 = get_ulx();
+  fVar12 = getPlayer_c_screenwidth();
+  fVar13 = getPlayer_c_screenwidth();
+  fVar14 = getPlayer_c_screenleft();
   fStack276 = fStack276 +
               (((pPlayer->field_FFC - (float)fVar14) - (float)fVar13 * 0.50000000) * pfStack432[6])
               / ((float)fVar12 * 0.50000000);
-  fVar12 = get_uly();
-  fVar13 = get_screen_height();
+  fVar12 = getPlayer_c_screentop();
+  fVar13 = getPlayer_c_screenheight();
   if ((float)fVar13 * 0.50000000 < pPlayer->field_1000 - (float)fVar12) {
-    fVar13 = get_screen_height();
-    fVar14 = get_screen_height();
-    fVar12 = get_uly();
+    fVar13 = getPlayer_c_screenheight();
+    fVar14 = getPlayer_c_screenheight();
+    fVar12 = getPlayer_c_screentop();
     fStack272 = fStack272 -
                 (((pPlayer->field_1000 - (float)fVar12) - (float)fVar14 * 0.50000000) *
                 pfStack432[5]) / ((float)fVar13 * 0.50000000);
   }
   else {
-    fVar13 = get_screen_height();
-    fVar14 = get_screen_height();
-    fVar12 = get_uly();
+    fVar13 = getPlayer_c_screenheight();
+    fVar14 = getPlayer_c_screenheight();
+    fVar12 = getPlayer_c_screentop();
     fStack272 = fStack272 -
                 (((pPlayer->field_1000 - (float)fVar12) - (float)fVar14 * 0.50000000) *
                 pfStack432[4]) / ((float)fVar13 * 0.50000000);
@@ -81294,8 +81294,8 @@ void caclulate_gun_crosshair_position_rotation(void)
   f32 fStack8;
   int iStack4;
   
-  fStack8 = get_screen_width();
-  fStack12 = get_screen_height();
+  fStack8 = getPlayer_c_screenwidth();
+  fStack12 = getPlayer_c_screenheight();
   if (in_a2_lo != (float)pPlayer->field_FF8) {
     pPlayer->field_FF0 =
          (pPlayer->field_FF0 * (1.00000000 - (float)pPlayer->field_FF8)) / (1.00000000 - in_a2_lo);
@@ -81347,9 +81347,9 @@ LAB_7f067db8:
     }
   }
   iStack4 = 0;
-  fVar2 = get_ulx();
+  fVar2 = getPlayer_c_screenleft();
   pPlayer->field_FE8 = pPlayer->field_FE8 + (float)fVar2;
-  fVar2 = get_uly();
+  fVar2 = getPlayer_c_screentop();
   pPlayer->field_FEC = pPlayer->field_FEC + (float)fVar2;
   iVar1 = iStack4;
   if (0 < clock_timer) {
@@ -81364,9 +81364,9 @@ LAB_7f067db8:
   pPlayer->field_1000 =
        pPlayer->field_1008 * (1.00000000 - in_a3_lo) * (float)fStack12 * 0.50000000 +
        (float)fStack12 * 0.50000000;
-  fVar2 = get_ulx();
+  fVar2 = getPlayer_c_screenleft();
   pPlayer->field_FFC = pPlayer->field_FFC + (float)fVar2;
-  fVar2 = get_uly();
+  fVar2 = getPlayer_c_screentop();
   pPlayer->field_1000 = pPlayer->field_1000 + (float)fVar2;
   proc_7F077EEC(&pPlayer->field_FFC,afStack24,extraout_f12);
   proc_7F067AB4();
@@ -81422,13 +81422,13 @@ void proc_7F06802C(void)
   float extraout_f12;
   float afStack12 [3];
   
-  fVar1 = get_ulx();
-  fVar2 = get_screen_width();
+  fVar1 = getPlayer_c_screenleft();
+  fVar2 = getPlayer_c_screenwidth();
   fVar3 = (float)fVar2 * 0.50000000 + (float)fVar1;
   pPlayer->field_FE8 = fVar3;
   pPlayer->field_FFC = fVar3;
-  fVar1 = get_uly();
-  fVar2 = get_screen_height();
+  fVar1 = getPlayer_c_screentop();
+  fVar2 = getPlayer_c_screenheight();
   fVar3 = (float)fVar2 * 0.50000000 + (float)fVar1;
   pPlayer->field_FEC = fVar3;
   pPlayer->field_1000 = fVar3;
@@ -81519,8 +81519,8 @@ void proc_7F0681CC(void)
   if ((int)uVar3 < 0) {
     fVar7 = fVar7 + 4294967296.00000000;
   }
-  fVar4 = get_screen_width();
-  fVar5 = proc_7F0784F4();
+  fVar4 = getPlayer_c_screenwidth();
+  fVar5 = getPlayer_c_perspaspect();
   fStack8 = (fVar7 * 0.00000000 * (fVar6 * 0.00000000 - 0.50000000) * in_f0 * (float)fVar4 *
             flt_800543B0) / ((float)fVar5 * 320.00000000) + pPlayer->field_FE8;
   uVar2 = get_random_value();
@@ -81533,7 +81533,7 @@ void proc_7F0681CC(void)
   if ((int)uVar3 < 0) {
     fVar7 = fVar7 + 4294967296.00000000;
   }
-  fVar4 = get_screen_height();
+  fVar4 = getPlayer_c_screenheight();
   fStack4 = ((float)fVar4 * fVar7 * 0.00000000 * (fVar6 * 0.00000000 - 0.50000000) * in_f0) /
             240.00000000 + pPlayer->field_FEC;
   *in_a0_lo = 0;
@@ -82403,8 +82403,8 @@ int * generate_ammo_total_microcode(void)
       local_res0 = (uint *)buffer;
       if ((&DAT_80035ef4)[iVar4 * 3] != 0) {
         imagedeclaration = (int *)((&DAT_80035ef4)[iVar4 * 3] + dword_8008D770);
-        fVar12 = get_ulx();
-        fVar11 = get_screen_width();
+        fVar12 = getPlayer_c_screenleft();
+        fVar11 = getPlayer_c_screenwidth();
         sVar8 = get_video2_settings_uly();
         sVar9 = get_video2_settings_height();
         local_res0 = (uint *)(int)sVar9;
@@ -82465,7 +82465,7 @@ int * generate_ammo_total_microcode(void)
       local_2c = 5;
       if ((&DAT_80035ef4)[iVar4 * 3] != 0) {
         imagedeclaration = (int *)((&DAT_80035ef4)[iVar4 * 3] + dword_8008D770);
-        fVar12 = get_ulx();
+        fVar12 = getPlayer_c_screenleft();
         sVar8 = get_video2_settings_uly();
         sVar9 = get_video2_settings_height();
         piVar6 = (int *)(int)sVar9;
@@ -85469,7 +85469,7 @@ void process_08_distance_triggers(void)
   puVar2 = (undefined4 *)extract_id_from_object_structure_microcode(objinst,partdesc);
   iVar3 = proc_7F06C660(objinst,partdesc,0);
   if (dword_80036084 == 0) {
-    fVar4 = proc_7F078484();
+    fVar4 = getPlayer_c_lodscalez();
     fVar5 = (float)fVar4 * -*(float *)(iVar3 + 0x38);
     if (flt_80036088 != 1.00000000) {
       fVar5 = fVar5 * flt_80036088;
@@ -91354,20 +91354,20 @@ void proc_7F077C5C(void)
   fVar2 = flt_80054FA0;
   fVar1 = sinf((pPlayer->c_perspfovy * flt_80054FA0) / 360.00000000);
   fVar2 = cosf((pPlayer->c_perspfovy * fVar2) / 360.00000000);
-  *(float *)&pPlayer->field_10B8 = fVar1 / (fVar2 * pPlayer->c_halfheight);
-  *(float *)&pPlayer->field_10B4 =
-       ((float)pPlayer->field_10B8 * pPlayer->c_perspaspect * pPlayer->c_halfheight) /
+  *(float *)&pPlayer->c_scaley = fVar1 / (fVar2 * pPlayer->c_halfheight);
+  *(float *)&pPlayer->c_scalex =
+       ((float)pPlayer->c_scaley * pPlayer->c_perspaspect * pPlayer->c_halfheight) /
        pPlayer->c_halfwidth;
-  *(float *)&pPlayer->field_10BC = 1.00000000 / (float)pPlayer->field_10B4;
-  *(float *)&pPlayer->field_10C0 = 1.00000000 / (float)pPlayer->field_10B8;
-  pPlayer->field_10F4 = pPlayer->field_10B8;
+  *(float *)&pPlayer->c_recipscalex = 1.00000000 / (float)pPlayer->c_scalex;
+  *(float *)&pPlayer->c_recipscaley = 1.00000000 / (float)pPlayer->c_scaley;
+  pPlayer->c_scalelod = pPlayer->c_scaley;
   fVar2 = sinf(flt_80054FA4);
   fVar1 = cosf(flt_80054FA8);
-  *(float *)&pPlayer->field_10F0 = fVar2 / (fVar1 * 120.00000000);
-  *(float *)&pPlayer->field_10F8 = (float)pPlayer->field_10F4 / (float)pPlayer->field_10F0;
-  fVar2 = (float)pPlayer->field_10F8 * 65536.00000000;
+  *(float *)&pPlayer->c_scalelod60 = fVar2 / (fVar1 * 120.00000000);
+  *(float *)&pPlayer->c_lodscalez = (float)pPlayer->c_scalelod / (float)pPlayer->c_scalelod60;
+  fVar2 = (float)pPlayer->c_lodscalez * 65536.00000000;
   if (4294967296.00000000 < fVar2) {
-    pPlayer->field_10FC = -1;
+    pPlayer->c_lodscalezu32 = -1;
     goto LAB_7f077e34;
   }
   if (false) {
@@ -91393,18 +91393,18 @@ LAB_7f077e10:
       uVar3 = 0xffffffff;
     }
   }
-  pPlayer->field_10FC = uVar3;
+  pPlayer->c_lodscalezu32 = uVar3;
 LAB_7f077e34:
-  fVar1 = pPlayer->c_halfheight * (float)pPlayer->field_10B8;
+  fVar1 = pPlayer->c_halfheight * (float)pPlayer->c_scaley;
   fVar2 = sqrtf(fVar1 * fVar1 + 1.00000000);
-  pPlayer->x = 0;
-  *(float *)&pPlayer->y = 1.00000000 / fVar2;
-  *(float *)&pPlayer->z = fVar1 * (1.00000000 / fVar2);
-  fVar1 = -pPlayer->c_halfwidth * (float)pPlayer->field_10B4;
+  (pPlayer->c_cameratopnorm).x = 0.00000000;
+  (pPlayer->c_cameratopnorm).y = 1.00000000 / fVar2;
+  (pPlayer->c_cameratopnorm).z = fVar1 * (1.00000000 / fVar2);
+  fVar1 = -pPlayer->c_halfwidth * (float)pPlayer->c_scalex;
   fVar2 = sqrtf(fVar1 * fVar1 + 1.00000000);
-  *(float *)&pPlayer->field_110C = -(1.00000000 / fVar2);
-  pPlayer->field_1110 = 0;
-  *(float *)&pPlayer->field_1114 = -fVar1 * (1.00000000 / fVar2);
+  (pPlayer->c_cameraleftnorm).x = -(1.00000000 / fVar2);
+  (pPlayer->c_cameraleftnorm).y = 0.00000000;
+  (pPlayer->c_cameraleftnorm).z = -fVar1 * (1.00000000 / fVar2);
   return;
 }
 
@@ -91418,9 +91418,8 @@ void proc_7F077EEC(float *param_1,float *param_2,float param_3)
   float fVar2;
   float fVar3;
   
-  fVar2 = (pPlayer->c_halfheight - (param_1[1] - pPlayer->c_screentop)) * (float)pPlayer->field_10B8
-  ;
-  fVar3 = ((*param_1 - pPlayer->c_screenleft) - pPlayer->c_halfwidth) * (float)pPlayer->field_10B4;
+  fVar2 = (pPlayer->c_halfheight - (param_1[1] - pPlayer->c_screentop)) * (float)pPlayer->c_scaley;
+  fVar3 = ((*param_1 - pPlayer->c_screenleft) - pPlayer->c_halfwidth) * (float)pPlayer->c_scalex;
   fVar1 = sqrtf(fVar3 * fVar3 + fVar2 * fVar2 + 1.00000000);
   fVar1 = in_a2_lo / fVar1;
   *param_2 = fVar3 * fVar1;
@@ -91436,8 +91435,8 @@ void proc_7F077FB4(float *param_1,float param_2,float *param_3)
 {
   float *in_a2_lo;
   
-  in_a2_lo[1] = param_1[1] * (float)param_3 * (float)pPlayer->field_10B8;
-  *in_a2_lo = *param_1 * (float)param_3 * (float)pPlayer->field_10B4;
+  in_a2_lo[1] = param_1[1] * (float)param_3 * (float)pPlayer->c_scaley;
+  *in_a2_lo = *param_1 * (float)param_3 * (float)pPlayer->c_scalex;
   return;
 }
 
@@ -91449,10 +91448,10 @@ void proc_7F077FF4(float *param_1,float *param_2)
   float fVar1;
   
   fVar1 = param_1[2];
-  param_2[1] = param_1[1] * (1.00000000 / fVar1) * (float)pPlayer->field_10C0 +
+  param_2[1] = param_1[1] * (1.00000000 / fVar1) * (float)pPlayer->c_recipscaley +
                pPlayer->c_screentop + pPlayer->c_halfheight;
   *param_2 = (pPlayer->c_screenleft + pPlayer->c_halfwidth) -
-             *param_1 * (1.00000000 / fVar1) * (float)pPlayer->field_10BC;
+             *param_1 * (1.00000000 / fVar1) * (float)pPlayer->c_recipscalex;
   return;
 }
 
@@ -91467,10 +91466,10 @@ void proc_7F078060(float *param_1,float *param_2)
   if (param_1[2] != 0.00000000) {
     fVar1 = 1.00000000 / param_1[2];
   }
-  param_2[1] = param_1[1] * fVar1 * (float)pPlayer->field_10C0 +
+  param_2[1] = param_1[1] * fVar1 * (float)pPlayer->c_recipscaley +
                pPlayer->c_screentop + pPlayer->c_halfheight;
   *param_2 = (pPlayer->c_screenleft + pPlayer->c_halfwidth) -
-             *param_1 * fVar1 * (float)pPlayer->field_10BC;
+             *param_1 * fVar1 * (float)pPlayer->c_recipscalex;
   return;
 }
 
@@ -91481,8 +91480,8 @@ void proc_7F0780F0(float *param_1,float param_2,float *param_3)
 {
   float *in_a2_lo;
   
-  in_a2_lo[1] = param_1[1] * (1.00000000 / (float)param_3) * (float)pPlayer->field_10C0;
-  *in_a2_lo = *param_1 * (1.00000000 / (float)param_3) * (float)pPlayer->field_10BC;
+  in_a2_lo[1] = param_1[1] * (1.00000000 / (float)param_3) * (float)pPlayer->c_recipscaley;
+  *in_a2_lo = *param_1 * (1.00000000 / (float)param_3) * (float)pPlayer->c_recipscalex;
   return;
 }
 
@@ -91710,23 +91709,23 @@ int proc_7F078474(void)
 
 
 
-f32 proc_7F078484(void)
+f32 getPlayer_c_lodscalez(void)
 
 {
-  return pPlayer->field_10F8;
+  return pPlayer->c_lodscalez;
 }
 
 
 
-int proc_7F078494(void)
+int getPlayer_c_lodscalezu32(void)
 
 {
-  return pPlayer->field_10FC;
+  return pPlayer->c_lodscalezu32;
 }
 
 
 
-f32 get_screen_width(void)
+f32 getPlayer_c_screenwidth(void)
 
 {
   return (f32)pPlayer->c_screenwidth;
@@ -91734,7 +91733,7 @@ f32 get_screen_width(void)
 
 
 
-f32 get_screen_height(void)
+f32 getPlayer_c_screenheight(void)
 
 {
   return (f32)pPlayer->c_screenheight;
@@ -91742,7 +91741,7 @@ f32 get_screen_height(void)
 
 
 
-f32 get_ulx(void)
+f32 getPlayer_c_screenleft(void)
 
 {
   return (f32)pPlayer->c_screenleft;
@@ -91750,7 +91749,7 @@ f32 get_ulx(void)
 
 
 
-f32 get_uly(void)
+f32 getPlayer_c_screentop(void)
 
 {
   return (f32)pPlayer->c_screentop;
@@ -91758,7 +91757,7 @@ f32 get_uly(void)
 
 
 
-f32 proc_7F0784E4(void)
+f32 getPlayer_c_perspfovy(void)
 
 {
   return (f32)pPlayer->c_perspfovy;
@@ -91766,7 +91765,7 @@ f32 proc_7F0784E4(void)
 
 
 
-f32 proc_7F0784F4(void)
+f32 getPlayer_c_perspaspect(void)
 
 {
   return (f32)pPlayer->c_perspaspect;
@@ -91777,9 +91776,9 @@ f32 proc_7F0784F4(void)
 void proc_7F078504(xyzpoint *param_1)
 
 {
-  *(int *)&param_1->x = pPlayer->x;
-  *(int *)&param_1->y = pPlayer->y;
-  *(int *)&param_1->z = pPlayer->z;
+  param_1->x = (pPlayer->c_cameratopnorm).x;
+  param_1->y = (pPlayer->c_cameratopnorm).y;
+  param_1->z = (pPlayer->c_cameratopnorm).z;
   return;
 }
 
@@ -91788,37 +91787,37 @@ void proc_7F078504(xyzpoint *param_1)
 void proc_7F078534(xyzpoint *param_1)
 
 {
-  *(int *)&param_1->x = pPlayer->x;
-  param_1->y = -(float)pPlayer->y;
-  *(int *)&param_1->z = pPlayer->z;
+  param_1->x = (pPlayer->c_cameratopnorm).x;
+  param_1->y = -(pPlayer->c_cameratopnorm).y;
+  param_1->z = (pPlayer->c_cameratopnorm).z;
   return;
 }
 
 
 
-void proc_7F078568(undefined4 *param_1)
+void proc_7F078568(xyzpoint *param_1)
 
 {
-  *param_1 = pPlayer->field_110C;
-  param_1[1] = pPlayer->field_1110;
-  param_1[2] = pPlayer->field_1114;
+  param_1->x = (pPlayer->c_cameraleftnorm).x;
+  param_1->y = (pPlayer->c_cameraleftnorm).y;
+  param_1->z = (pPlayer->c_cameraleftnorm).z;
   return;
 }
 
 
 
-void proc_7F078598(float *param_1)
+void proc_7F078598(xyzpoint *param_1)
 
 {
-  *param_1 = -(float)pPlayer->field_110C;
-  *(int *)(param_1 + 1) = pPlayer->field_1110;
-  *(int *)(param_1 + 2) = pPlayer->field_1114;
+  param_1->x = -(pPlayer->c_cameraleftnorm).x;
+  param_1->y = (pPlayer->c_cameraleftnorm).y;
+  param_1->z = (pPlayer->c_cameraleftnorm).z;
   return;
 }
 
 
 
-f32 proc_7F0785CC(void)
+f32 getPlayer_c_perspnear(void)
 
 {
   return (f32)pPlayer->c_perspnear;
@@ -91836,7 +91835,7 @@ void proc_7F0785DC(void)
   float fVar5;
   float fVar6;
   
-  fVar5 = pPlayer->c_halfheight * (float)pPlayer->field_10B8;
+  fVar5 = pPlayer->c_halfheight * (float)pPlayer->c_scaley;
   fVar4 = sqrtf(fVar5 * fVar5 + 1.00000000);
   fVar5 = fVar5 * (1.00000000 / fVar4);
   fVar4 = -(1.00000000 / fVar4);
@@ -91859,7 +91858,7 @@ void proc_7F0785DC(void)
   iVar1 = pPlayer->field_10D4;
   DAT_8007995c = *(float *)(iVar1 + 0x38) * DAT_80079958 +
                  DAT_80079950 * *(float *)(iVar1 + 0x30) + DAT_80079954 * *(float *)(iVar1 + 0x34);
-  fVar5 = -pPlayer->c_halfwidth * (float)pPlayer->field_10B4;
+  fVar5 = -pPlayer->c_halfwidth * (float)pPlayer->c_scalex;
   fVar4 = sqrtf(fVar5 * fVar5 + 1.00000000);
   fVar5 = fVar5 * (1.00000000 / fVar4);
   fVar4 = -(1.00000000 / fVar4);
@@ -92006,8 +92005,7 @@ undefined8 proc_7F078BF4(float *param_1,float param_2,float *param_3)
     uVar2 = 0;
   }
   else {
-    fVar4 = ((*in_a2_lo - pPlayer->c_screenleft) - pPlayer->c_halfwidth) *
-            (float)pPlayer->field_10B4;
+    fVar4 = ((*in_a2_lo - pPlayer->c_screenleft) - pPlayer->c_halfwidth) * (float)pPlayer->c_scalex;
     fVar3 = sqrtf(fVar4 * fVar4 + 1.00000000);
     fVar4 = fVar4 * (1.00000000 / fVar3);
     fVar6 = -(1.00000000 / fVar3);
@@ -92024,7 +92022,7 @@ undefined8 proc_7F078BF4(float *param_1,float param_2,float *param_3)
     }
     else {
       fVar4 = -((in_a2_lo[2] - pPlayer->c_screenleft) - pPlayer->c_halfwidth) *
-              (float)pPlayer->field_10B4;
+              (float)pPlayer->c_scalex;
       fVar3 = sqrtf(fVar4 * fVar4 + 1.00000000);
       fVar4 = fVar4 * (1.00000000 / fVar3);
       fVar3 = --(1.00000000 / fVar3);
@@ -92041,7 +92039,7 @@ undefined8 proc_7F078BF4(float *param_1,float param_2,float *param_3)
       }
       else {
         fVar4 = (pPlayer->c_halfheight - (in_a2_lo[1] - pPlayer->c_screentop)) *
-                (float)pPlayer->field_10B8;
+                (float)pPlayer->c_scaley;
         fVar3 = sqrtf(fVar4 * fVar4 + 1.00000000);
         fVar4 = fVar4 * (1.00000000 / fVar3);
         fVar3 = --(1.00000000 / fVar3);
@@ -92059,7 +92057,7 @@ undefined8 proc_7F078BF4(float *param_1,float param_2,float *param_3)
         }
         else {
           fVar4 = -(pPlayer->c_halfheight - (in_a2_lo[3] - pPlayer->c_screentop)) *
-                  (float)pPlayer->field_10B8;
+                  (float)pPlayer->c_scaley;
           fVar3 = sqrtf(fVar4 * fVar4 + 1.00000000);
           fVar4 = fVar4 * (1.00000000 / fVar3);
           fVar6 = -(1.00000000 / fVar3);
@@ -92254,9 +92252,9 @@ void init_player_BONDdata(void)
   pPlayer->field_A4 = 0.00000000;
   pPlayer->field_AC = 1;
   pPlayer->field_D0 = 0;
-  pPlayer->player_button_control = 0;
+  pPlayer->bonddead = 0;
   pPlayer->bondhealth = 1.00000000;
-  pPlayer->current_armor = 0.00000000;
+  pPlayer->bondarmour = 0.00000000;
   pPlayer->oldhealth = 1.00000000;
   pPlayer->oldarmour = 0.00000000;
   pPlayer->apparenthealth = 1.00000000;
@@ -92304,12 +92302,12 @@ void init_player_BONDdata(void)
   pPlayer->insightaimmode = 0;
   pPlayer->autoyaimenabled = 1;
   pPlayer->autoaimy = 0.00000000;
-  pPlayer->field_130 = 0;
-  pPlayer->field_134 = -1;
+  pPlayer->autoyaimtime = 0;
+  pPlayer->autoyaimtime60 = -1;
   pPlayer->autoxaimenabled = 1;
   pPlayer->autoaimx = 0.00000000;
-  pPlayer->field_140 = 0;
-  pPlayer->field_144 = -1;
+  pPlayer->autoxaimtime = 0;
+  pPlayer->autoxaimtime60 = -1;
   *(undefined4 *)&pPlayer->field_3D0 = 0xff;
   *(undefined4 *)&pPlayer->field_3D4 = 0xff;
   *(undefined4 *)&pPlayer->field_3D8 = 0xff;
@@ -93559,7 +93557,7 @@ LAB_7f07bbe4:
                 enable_move_after_cinema = 1;
               }
             }
-            if ((((uStackX2 & ~uStackX6 & 0xf000) != 0) && (pPlayer->player_button_control != 0)) &&
+            if ((((uStackX2 & ~uStackX6 & 0xf000) != 0) && (pPlayer->bonddead != 0)) &&
                ((pPlayer->field_424 != 0 && (pPlayer->field_428 != 0)))) {
               enable_move_after_cinema = 1;
               dword_80036510 = 2;
@@ -93571,8 +93569,8 @@ LAB_7f07bbe4:
               if (pPlayer->timer_for_fade < 0.00000000) {
                 enable_move_after_cinema = 1;
               }
-              if (((((uStackX2 & ~uStackX6 & 0xf000) != 0) && (pPlayer->player_button_control != 0))
-                  && (pPlayer->field_424 != 0)) && (pPlayer->field_428 != 0)) {
+              if (((((uStackX2 & ~uStackX6 & 0xf000) != 0) && (pPlayer->bonddead != 0)) &&
+                  (pPlayer->field_424 != 0)) && (pPlayer->field_428 != 0)) {
                 dword_80036510 = 2;
               }
             }
@@ -93758,20 +93756,20 @@ void proc_7F07C5F0(int param_1,float param_2)
 {
   int iVar1;
   
-  if (pPlayer->field_134 < 0) {
-    iVar1 = pPlayer->field_130;
+  if (pPlayer->autoyaimtime60 < 0) {
+    iVar1 = pPlayer->autoyaimtime;
   }
   else {
-    pPlayer->field_134 = pPlayer->field_134 - clock_timer;
-    iVar1 = pPlayer->field_130;
+    pPlayer->autoyaimtime60 = pPlayer->autoyaimtime60 - clock_timer;
+    iVar1 = pPlayer->autoyaimtime;
   }
   if (param_1 == iVar1) {
     pPlayer->autoaimy = param_2;
   }
   else {
-    if (pPlayer->field_134 < 0) {
-      pPlayer->field_134 = 0x1e;
-      pPlayer->field_130 = param_1;
+    if (pPlayer->autoyaimtime60 < 0) {
+      pPlayer->autoyaimtime60 = 0x1e;
+      pPlayer->autoyaimtime = param_1;
       pPlayer->autoaimy = param_2;
     }
   }
@@ -93820,20 +93818,20 @@ void proc_7F07C6C8(int param_1,float param_2)
 {
   int iVar1;
   
-  if (pPlayer->field_144 < 0) {
-    iVar1 = pPlayer->field_140;
+  if (pPlayer->autoxaimtime60 < 0) {
+    iVar1 = pPlayer->autoxaimtime;
   }
   else {
-    pPlayer->field_144 = pPlayer->field_144 - clock_timer;
-    iVar1 = pPlayer->field_140;
+    pPlayer->autoxaimtime60 = pPlayer->autoxaimtime60 - clock_timer;
+    iVar1 = pPlayer->autoxaimtime;
   }
   if (param_1 == iVar1) {
     pPlayer->autoaimx = param_2;
   }
   else {
-    if (pPlayer->field_144 < 0) {
-      pPlayer->field_144 = 0x1e;
-      pPlayer->field_140 = param_1;
+    if (pPlayer->autoxaimtime60 < 0) {
+      pPlayer->autoxaimtime60 = 0x1e;
+      pPlayer->autoxaimtime = param_1;
       pPlayer->autoaimx = param_2;
     }
   }
@@ -94863,7 +94861,7 @@ void trigger_watch_zoom(f32 final,f32 time)
 Player * proc_7F07E438(void)
 
 {
-  if ((float)pPlayer->zoomintimemax <= pPlayer->zoomintime) {
+  if ((float)pPlayer->zoomintimemax <= (float)pPlayer->zoomintime) {
     return pPlayer;
   }
   return pPlayer;
@@ -94882,7 +94880,7 @@ void proc_7F07E46C(void)
   
   proc_7F07E438();
   if (in_f0 != final) {
-    fVar1 = pPlayer->zoominfovy;
+    fVar1 = (float)pPlayer->zoominfovy;
     if (final < fVar1) {
       trigger_watch_zoom((f32)final,(f32)(((fVar1 - final) * 15.00000000) / 30.00000000));
     }
@@ -94909,7 +94907,7 @@ void zoom_to_watch_on_open(void)
 {
   f32 time;
   
-  time = (f32)(((final - pPlayer->zoominfovy) * 45.00000000) / flt_80055080);
+  time = (f32)(((final - (float)pPlayer->zoominfovy) * 45.00000000) / flt_80055080);
   if ((float)time < 0.00000000) {
     time = (f32)-(float)time;
   }
@@ -94924,7 +94922,7 @@ void zoom_from_watch_on_exit(void)
 {
   f32 time;
   
-  time = (f32)(((60.00000000 - pPlayer->zoominfovy) * 45.00000000) / flt_80055084);
+  time = (f32)(((60.00000000 - (float)pPlayer->zoominfovy) * 45.00000000) / flt_80055084);
   if ((float)time < 0.00000000) {
     time = (f32)-(float)time;
   }
@@ -94937,7 +94935,7 @@ void zoom_from_watch_on_exit(void)
 ulonglong check_watch_page_transistion_running(void)
 
 {
-  return (ulonglong)(pPlayer->zoomintime < (float)pPlayer->zoomintimemax);
+  return (ulonglong)((float)pPlayer->zoomintime < (float)pPlayer->zoomintimemax);
 }
 
 
@@ -94949,33 +94947,34 @@ void proc_7F07E62C(void)
   float fVar2;
   float fVar3;
   
-  fVar2 = pPlayer->zoomintime;
-  if (fVar2 < (float)pPlayer->zoomintimemax) {
+  fVar1 = (float)pPlayer->zoomintime;
+  if (fVar1 < (float)pPlayer->zoomintimemax) {
     if ((pPlayer->pause_animation_state == 5) || (pPlayer->pause_animation_state == 0xc)) {
-      pPlayer->zoomintime = fVar2 + (float)dword_80048498;
+      *(float *)&pPlayer->zoomintime = fVar1 + (float)dword_80048498;
     }
     else {
-      pPlayer->zoomintime = fVar2 + (float)dword_80048498 * watch_transition_time;
+      *(float *)&pPlayer->zoomintime = fVar1 + (float)dword_80048498 * watch_transition_time;
     }
-    fVar2 = (float)pPlayer->zoomintimemax;
-    fVar3 = pPlayer->zoomintime;
-    if (fVar2 < fVar3) {
-      pPlayer->zoomintime = fVar2;
-      fVar3 = pPlayer->zoomintime;
-      fVar2 = (float)pPlayer->zoomintimemax;
-      fVar1 = pPlayer->zoominfovyold;
+    fVar1 = (float)pPlayer->zoomintimemax;
+    fVar3 = (float)pPlayer->zoomintime;
+    if (fVar1 < fVar3) {
+      *(float *)&pPlayer->zoomintime = fVar1;
+      fVar3 = (float)pPlayer->zoomintime;
+      fVar1 = (float)pPlayer->zoomintimemax;
+      fVar2 = (float)pPlayer->zoominfovyold;
     }
     else {
-      fVar1 = pPlayer->zoominfovyold;
+      fVar2 = (float)pPlayer->zoominfovyold;
     }
-    pPlayer->zoominfovy = fVar1 + (fVar3 * ((float)pPlayer->zoominfovynew - fVar1)) / fVar2;
+    *(float *)&pPlayer->zoominfovy =
+         fVar2 + (fVar3 * ((float)pPlayer->zoominfovynew - fVar2)) / fVar1;
   }
   else {
-    *(f32 *)&pPlayer->zoomintime = pPlayer->zoomintimemax;
-    *(f32 *)&pPlayer->zoominfovy = pPlayer->zoominfovynew;
+    pPlayer->zoomintime = pPlayer->zoomintimemax;
+    pPlayer->zoominfovy = pPlayer->zoominfovynew;
   }
-  set_watch_menu_current_size_unused_maybe((f32)pPlayer->zoominfovy);
-  video_related_1F((f32)pPlayer->zoominfovy);
+  set_watch_menu_current_size_unused_maybe(pPlayer->zoominfovy);
+  video_related_1F(pPlayer->zoominfovy);
   return;
 }
 
@@ -94991,10 +94990,11 @@ float proc_7F07E740(void)
   
   iVar1 = pPlayer->pause_animation_state;
   if (iVar1 == 4) {
-    return ((45.00000000 - (float)pPlayer->zoomintimemax) + pPlayer->zoomintime) / 45.00000000;
+    return ((45.00000000 - (float)pPlayer->zoomintimemax) + (float)pPlayer->zoomintime) /
+           45.00000000;
   }
   if (iVar1 == 6) {
-    return ((float)pPlayer->zoomintimemax - pPlayer->zoomintime) / 45.00000000;
+    return ((float)pPlayer->zoomintimemax - (float)pPlayer->zoomintime) / 45.00000000;
   }
   if ((iVar1 != 5) && (iVar1 != 0xc)) {
     return 0.00000000;
@@ -95616,7 +95616,7 @@ void trigger_solo_watch_menu(longlong param_1)
       proc_7F07DEFC();
       proc_7F07E504();
       get_BONDdata_watch_armor();
-      proc_7F0A2F30((short *)&pPlayer->related_to_armor_display,0x2e,1,extraout_f12);
+      proc_7F0A2F30((short *)&pPlayer->healthdamagetype,0x2e,1,extraout_f12);
       proc_7F0A3330(&pPlayer->field_19F8,(int)&pPlayer[0x30303].field_1338,0x2e);
       get_BONDdata_watch_health();
       proc_7F0A2F30((short *)&pPlayer->related_to_health_display,0x2e,-1,extraout_f12_00);
@@ -96256,7 +96256,7 @@ void proc_7F080B34(float param_1,float param_2,undefined8 param_3,undefined8 par
   float fStack4;
   
   fStack4 = 0.00000000;
-  if (pPlayer->player_button_control == 0) {
+  if (pPlayer->bonddead == 0) {
     proc_7F08E8BC(param_1);
     fStackX8 = param_5;
     if (param_1 != 0.00000000) {
@@ -96560,13 +96560,13 @@ void proc_7F081478(void)
   *(float *)&pPlayer->positiony = fVar5 + fVar4;
   if ((((cameramode == UNK5_CAM) || (cameramode == UNK6_CAM)) || (cameramode == POSEND_CAM)) &&
      (pPlayer->ptr_char_objectinstance != 0)) {
-    iVar2 = pPlayer->player_button_control;
+    iVar2 = pPlayer->bonddead;
   }
   else {
     *(f32 *)&pPlayer->field_4B4 = pPlayer->positionx;
     pPlayer->field_4B8 = pPlayer->positiony;
     pPlayer->field_4BC = pPlayer->positionz;
-    iVar2 = pPlayer->player_button_control;
+    iVar2 = pPlayer->bonddead;
   }
   if (((iVar2 != 0) && (0.00000000 < (float)pPlayer->field_29C0)) &&
      (*(float *)&pPlayer->field_29C0 = (float)pPlayer->field_29C0 - 0.25000000,
@@ -96826,7 +96826,7 @@ void controller_gameplay_interaction(void)
   iStack144 = (int)in_a1_lo;
   iStack152 = iStack160;
   iStack148 = iStack156;
-  if (((pPlayer->player_button_control == 0) &&
+  if (((pPlayer->bonddead == 0) &&
       (iStack152 = iStack160, iStack148 = iStack156, camera_80036424 < 1)) &&
      ((((pPlayer->pause_animation_state != 5 && ((in_a2_lo & ~in_a3_lo & 0x1000) != 0)) ||
        ((iStack152 = iStack160, iStack148 = iStack156, pPlayer->pause_animation_state == 5 &&
@@ -96835,7 +96835,7 @@ void controller_gameplay_interaction(void)
   {
     trigger_solo_watch_menu(0);
   }
-  if (((pPlayer->pause_animation_state == 0) && (pPlayer->player_button_control == 0)) &&
+  if (((pPlayer->pause_animation_state == 0) && (pPlayer->bonddead == 0)) &&
      ((uVar11 = get_num_players(), uVar11 == 1 || ((stop_play_flag == 0 && (is_gameover_flag == 0)))
       ))) {
     iVar13 = cur_player_get_control_type();
@@ -97869,7 +97869,7 @@ LAB_7f083b40:
     if (((uStack120 != 0) &&
         (redirect_get_BONDdata_autoaim_x(), uVar15 = extraout_a0_lo_00, uVar18 = extraout_a1_lo_00,
         lVar12 != 0)) &&
-       (uVar15 = extraout_a0_lo_00, uVar18 = extraout_a1_lo_00, pPlayer->field_140 != 0)) {
+       (uVar15 = extraout_a0_lo_00, uVar18 = extraout_a1_lo_00, pPlayer->autoxaimtime != 0)) {
       item = get_item_in_hand(0);
       iVar13 = check_special_attributes(item,8);
       lVar12 = (longlong)iVar13;
@@ -97879,7 +97879,7 @@ LAB_7f083b40:
     if (((uStack120 != 0) &&
         (redirect_get_BONDdata_autoaim(), uVar15 = extraout_a0_lo_02, uVar18 = extraout_a1_lo_02,
         lVar12 != 0)) &&
-       (uVar15 = extraout_a0_lo_02, uVar18 = extraout_a1_lo_02, pPlayer->field_130 != 0)) {
+       (uVar15 = extraout_a0_lo_02, uVar18 = extraout_a1_lo_02, pPlayer->autoyaimtime != 0)) {
       item = get_item_in_hand(0);
       check_special_attributes(item,8);
       uVar15 = extraout_a0_lo_03;
@@ -97936,12 +97936,12 @@ LAB_7f08406c:
   iVar3 = pPlayer->damageshowtime;
   if ((int)dword_80036634[iVar4 * 0xb + 2] < iVar3) {
     if (iVar3 <= (int)dword_80036634[iVar4 * 0xb + 6]) {
-      iVar5 = pPlayer->player_button_control;
+      iVar5 = pPlayer->bonddead;
       goto LAB_7f0840c0;
     }
     pPlayer->damageshowtime = -1;
     proc_7F0807B0(0xff,0xff,0xff,0);
-    if (pPlayer->player_button_control != 0) {
+    if (pPlayer->bonddead != 0) {
       iVar4 = pPlayer->healthshowtime;
       goto LAB_7f084204;
     }
@@ -97952,7 +97952,7 @@ LAB_7f08406c:
     set_unset_clock_lock_bits(8,1);
   }
   else {
-    iVar5 = pPlayer->player_button_control;
+    iVar5 = pPlayer->bonddead;
 LAB_7f0840c0:
     if (iVar5 == 0) {
       dVar1 = dword_80036634[iVar4 * 0xb + 4];
@@ -97998,15 +97998,15 @@ LAB_7f084204:
       fVar7 = get_BONDdata_watch_health();
       pPlayer->field_29B8 = (int)((float)fVar7 * 8.00000000);
       if (pPlayer->field_29B8 < 8) {
-        iVar4 = pPlayer->player_button_control;
+        iVar4 = pPlayer->bonddead;
       }
       else {
         pPlayer->field_29B8 = 7;
-        iVar4 = pPlayer->player_button_control;
+        iVar4 = pPlayer->bonddead;
       }
     }
     else {
-      iVar4 = pPlayer->player_button_control;
+      iVar4 = pPlayer->bonddead;
     }
     if (iVar4 == 0) {
       iVar4 = pPlayer->field_29B8;
@@ -98019,7 +98019,7 @@ LAB_7f084204:
         }
         else {
           pPlayer->apparenthealth = pPlayer->bondhealth;
-          pPlayer->apparentarmour = pPlayer->current_armor;
+          pPlayer->apparentarmour = pPlayer->bondarmour;
           pPlayer->healthshowtime = pPlayer->healthshowtime + clock_timer;
         }
       }
@@ -99485,7 +99485,7 @@ LAB_7f087330:
   if (enable_move_after_cinema != 0) {
     proc_7F07B1A4();
   }
-  if (pPlayer->player_button_control != 0) {
+  if (pPlayer->bonddead != 0) {
     isset = pPlayer->field_424;
     if (isset == 0) {
       draw_item_in_hand_has_more_ammo(1,ITEM_UNARMED);
@@ -99706,7 +99706,7 @@ undefined4 proc_7F087A08(undefined4 param_1)
     local_34 = dword_80036830;
     local_30 = dword_80036834;
     local_2c = dword_80036838;
-    if (pPlayer->player_button_control == 0) {
+    if (pPlayer->bonddead == 0) {
       proc_7F09C7C4((float *)&pPlayer->field_4B4,(float *)&pPlayer->field_4C0,&local_34);
     }
     else {
@@ -99927,7 +99927,8 @@ undefined4 * proc_7F087E74(undefined4 *param_1)
                                    *(ushort **)(local_98->offset_objblock + 0xc));
       local_a0 = local_a4;
       proc_7F0BD6E0();
-      guPerspective(local_a4,&local_a6,fovy,aspect,pPlayer->zoominfovy,1.45454550,10.00000000);
+      guPerspective(local_a4,&local_a6,fovy,aspect,(float)pPlayer->zoominfovy,1.45454550,10.00000000
+                   );
       *param_1 = 0x1030040;
       *(Mtx **)(param_1 + 1) = local_a4 + -0x2000000;
       param_1[2] = 0xbc00000e;
@@ -100081,7 +100082,7 @@ undefined4 * proc_7F088618(undefined4 *param_1)
   Mtx *pabStack8;
   Mtx *pabStack4;
   
-  proc_7F0A2F30((short *)&pPlayer->related_to_armor_display,0x2e,1,in_f12);
+  proc_7F0A2F30((short *)&pPlayer->healthdamagetype,0x2e,1,in_f12);
   proc_7F0A3330(&pPlayer->field_19F8,(int)&pPlayer[0x30303].field_1338,0x2e);
   proc_7F0A2F30((short *)&pPlayer->related_to_health_display,0x2e,-1,extraout_f12);
   pabStack8 = (Mtx *)proc_7F0A3330(&pPlayer->field_2128,(int)&pPlayer[0x30303].field_1618,0x2e);
@@ -100148,7 +100149,7 @@ void proc_7F0888E8(void)
   iStack4 = DAT_80036894;
   init_player_BONDdata();
   proc_7F0798B8();
-  pPlayer->player_button_control = 0;
+  pPlayer->bonddead = 0;
   pPlayer->field_428 = 0;
   pPlayer->field_424 = 0;
   pPlayer->field_420 = 1;
@@ -100547,10 +100548,10 @@ undefined4 * maybe_mp_interface(void)
     if (uVar2 == 1) {
       display_objective_status_text_on_status_change();
     }
-    if (pPlayer->player_button_control != 0) {
+    if (pPlayer->bonddead != 0) {
       if (pPlayer->field_428 == 0) {
-        if (pPlayer->player_button_control == 1) {
-          pPlayer->player_button_control = 2;
+        if (pPlayer->bonddead == 1) {
+          pPlayer->bonddead = 2;
           die_blood_image_routine(0);
           uVar2 = get_num_players();
           sVar13 = (s16)uVar2;
@@ -100715,12 +100716,12 @@ void kill_current_player(void)
   Player *pPVar4;
   Player *pPVar5;
   
-  if ((pPlayer->bondinvincible == '\0') && (pPlayer->player_button_control == 0)) {
+  if ((pPlayer->bondinvincible == '\0') && (pPlayer->bonddead == 0)) {
     if (pPlayer->pause_animation_state != 0) {
       trigger_solo_watch_menu(1);
     }
     mission_kia = TRUE;
-    pPlayer->player_button_control = 1;
+    pPlayer->bonddead = 1;
     pPVar2 = (Player *)&pPlayer->current_room_ypos;
     pPVar5 = pPlayer;
     pPVar3 = pPlayer;
@@ -100791,7 +100792,7 @@ ulonglong record_damage_kills(void)
   fStack4 = cur_player_stat_ptr->handicap * in_f12;
   if (pPlayer->pause_animation_state != 0) {
     get_BONDdata_watch_armor();
-    proc_7F0A2F30((short *)&pPlayer->related_to_armor_display,0x2e,1,extraout_f12);
+    proc_7F0A2F30((short *)&pPlayer->healthdamagetype,0x2e,1,extraout_f12);
     get_BONDdata_watch_health();
     proc_7F0A2F30((short *)&pPlayer->related_to_health_display,0x2e,-1,extraout_f12_00);
   }
@@ -100807,7 +100808,7 @@ ulonglong record_damage_kills(void)
   if (in_tank_flag == TRUE) {
     fStack4 = fStack4 * 0.25000000;
   }
-  if ((pPlayer->player_button_control == 0) && (pPlayer->bondinvincible == '\0')) {
+  if ((pPlayer->bonddead == 0) && (pPlayer->bondinvincible == '\0')) {
     playernum = get_cur_playernum();
     controller_7000C854(playernum,extraout_f12_01);
     iVar4 = cur_player_get_control_type();
@@ -100820,13 +100821,13 @@ ulonglong record_damage_kills(void)
   uVar2 = get_num_players();
   if ((1 < (longlong)uVar2) && (iVar4 = get_scenario(), iVar4 == 4)) {
     fStack4 = (float)pPlayer->bondhealth * (float)pPlayer->actual_health +
-              (float)pPlayer->current_armor * (float)pPlayer->actual_armor;
+              (float)pPlayer->bondarmour * (float)pPlayer->actual_armor;
   }
   lVar3 = (longlong)(int)pPlayer;
   if (pPlayer->bondinvincible != '\0') {
     return lVar3;
   }
-  if (pPlayer->player_button_control != 0) {
+  if (pPlayer->bonddead != 0) {
     return lVar3;
   }
   if (disable_player_pickups_flag != 0) {
@@ -100853,7 +100854,7 @@ ulonglong record_damage_kills(void)
     return lVar3;
   }
   *(undefined4 *)((int)lVar3 + 0xe4) = *(undefined4 *)((int)lVar3 + 0xdc);
-  pPlayer->oldarmour = pPlayer->current_armor;
+  pPlayer->oldarmour = pPlayer->bondarmour;
   uVar2 = get_num_players();
   if (1 < (longlong)uVar2) {
     playernum = get_cur_playernum();
@@ -100876,8 +100877,8 @@ LAB_7f089c1c:
   if (in_stack_00000010 == 0) {
 LAB_7f089c68:
     if (in_stack_00000010 != 0) {
-      fStack4 = fStack4 - (float)pPlayer->current_armor / (float)pPlayer->actual_armor;
-      pPlayer->current_armor = 0.00000000;
+      fStack4 = fStack4 - (float)pPlayer->bondarmour / (float)pPlayer->actual_armor;
+      pPlayer->bondarmour = 0.00000000;
       pPlayer->actual_armor = 1.00000000;
     }
     *(float *)&pPlayer->bondhealth =
@@ -100917,9 +100918,9 @@ LAB_7f089c68:
     kill_current_player();
   }
   else {
-    if ((float)pPlayer->current_armor * (float)pPlayer->actual_armor < fStack4) goto LAB_7f089c68;
-    *(float *)&pPlayer->current_armor =
-         (float)pPlayer->current_armor - fStack4 / (float)pPlayer->actual_armor;
+    if ((float)pPlayer->bondarmour * (float)pPlayer->actual_armor < fStack4) goto LAB_7f089c68;
+    *(float *)&pPlayer->bondarmour =
+         (float)pPlayer->bondarmour - fStack4 / (float)pPlayer->actual_armor;
   }
   iVar4 = pPlayer->damageshowtime;
 LAB_7f089ddc:
@@ -101131,8 +101132,7 @@ void proc_7F08A0B0(int param_1,int **param_2,undefined4 *param_3,float *param_4,
   lVar1 = proc_7F09B15C(param_1);
   iVar3 = (int)lVar1;
   if (((&ptr_BONDdata_p1)[iVar3]->field_AC == 0) ||
-     (((uVar2 = get_num_players(), uVar2 != 1 &&
-       ((&ptr_BONDdata_p1)[iVar3]->player_button_control != 0)) ||
+     (((uVar2 = get_num_players(), uVar2 != 1 && ((&ptr_BONDdata_p1)[iVar3]->bonddead != 0)) ||
       (ppPVar4 = &ptr_BONDdata_p1 + iVar3, (*ppPVar4)->unknown == 1)))) {
     *param_3 = 0;
   }
@@ -101198,7 +101198,7 @@ f32 get_BONDdata_watch_health(void)
 f32 get_BONDdata_watch_armor(void)
 
 {
-  return pPlayer->current_armor;
+  return pPlayer->bondarmour;
 }
 
 
@@ -101207,7 +101207,7 @@ void add_BONDdata_watch_armor(f32 amount)
 
 {
   cur_player_stat_ptr->body_armor_pickups = cur_player_stat_ptr->body_armor_pickups + (float)amount;
-  pPlayer->current_armor = amount;
+  pPlayer->bondarmour = amount;
   return;
 }
 
@@ -101791,7 +101791,7 @@ LAB_7f08b198:
   pPVar13 = *ppPVar14;
   fStack108 = pPVar13->field_2A08;
   fStack112 = pPVar13->field_2A0C;
-  if (pPVar13->player_button_control == 0) {
+  if (pPVar13->bonddead == 0) {
     if ((iVar7 == 0) || (iVar8 == 0)) {
       if ((iVar7 == 0) && (iVar8 == 0)) {
         iVar5 = 2;
@@ -103112,7 +103112,7 @@ ulonglong proc_7F08CF80(void)
   BOOL BVar2;
   
   uVar1 = 0;
-  if (pPlayer->player_button_control == 0) {
+  if (pPlayer->bonddead == 0) {
     BVar2 = is_weapon_in_inv(0x58);
     uVar1 = SEXT48((int)BVar2);
   }
@@ -106725,11 +106725,11 @@ void proc_7F091B64(void)
       }
       break;
     case 9:
-      if (((float)pPlayer->actual_armor == 1.00000000) ||
-         ((float)pPlayer->current_armor < 1.00000000)) {
+      if (((float)pPlayer->actual_armor == 1.00000000) || ((float)pPlayer->bondarmour < 1.00000000))
+      {
         text = get_textptr_for_textID(0xb013);
         display_string_in_lower_left_corner((char *)text);
-        pPlayer->current_armor = 1.00000000;
+        pPlayer->bondarmour = 1.00000000;
         pPlayer->actual_armor = 2.00000000;
       }
       break;
@@ -107617,9 +107617,9 @@ void proc_7F093880(void)
   float *pfStack4;
   
   pfStack4 = (float *)proc_7F078444();
-  fVar2 = get_ulx();
+  fVar2 = getPlayer_c_screenleft();
   fStack12 = (float)fVar2 + in_f12;
-  fVar2 = get_uly();
+  fVar2 = getPlayer_c_screentop();
   puVar1 = get_ptr_currentdata();
   fStack8 = (float)puVar1[0xe] + in_f14 + (float)fVar2;
   proc_7F077EEC(&fStack12,in_a2_lo,extraout_f12);
@@ -108410,12 +108410,9 @@ uint * proc_7F094488(void)
     puStackX0[2] = 0xba001402;
     puStackX0[5] = 0;
     puStackX0[4] = 0xb900031d;
-    puStackX0[6] = (((int)pPlayer->playerscreenulx + (int)pPlayer->playerscreenwidth) - 1U & 0x3ff)
-                   << 0xe | 0xf6000000 |
-                   (((int)pPlayer->playerscreenuly + (int)pPlayer->playerscreenheight) - 1U & 0x3ff)
-                   << 2;
-    puStackX0[7] = ((int)pPlayer->playerscreenulx & 0x3ffU) << 0xe |
-                   ((int)pPlayer->playerscreenuly & 0x3ffU) << 2;
+    puStackX0[6] = (((int)pPlayer->viewleft + (int)pPlayer->viewx) - 1U & 0x3ff) << 0xe | 0xf6000000
+                   | (((int)pPlayer->viewtop + (int)pPlayer->viewy) - 1U & 0x3ff) << 2;
+    puStackX0[7] = ((int)pPlayer->viewleft & 0x3ffU) << 0xe | ((int)pPlayer->viewtop & 0x3ffU) << 2;
     puStackX0[9] = 0;
     puStackX0[8] = 0xe7000000;
     return puStackX0 + 10;
@@ -108423,13 +108420,13 @@ uint * proc_7F094488(void)
   puStackX0 = set_setfillcolor(puStackX0,(uint)*(byte *)(puVar3 + 2),
                                (uint)*(byte *)((int)puVar3 + 9),(uint)*(byte *)((int)puVar3 + 10));
   proc_7F093880();
-  get_screen_width();
+  getPlayer_c_screenwidth();
   fVar27 = flt_80057540;
   proc_7F093880();
-  get_screen_height();
+  getPlayer_c_screenheight();
   proc_7F093880();
-  get_screen_width();
-  get_screen_height();
+  getPlayer_c_screenwidth();
+  getPlayer_c_screenheight();
   proc_7F093880();
   uVar2 = proc_7F0938FC(&xStack12,&xStack108,&fStack292);
   uStack376 = (uint)uVar2;
@@ -108447,8 +108444,8 @@ uint * proc_7F094488(void)
     fStack356 = 0.00000000;
   }
   else {
-    fVar17 = get_uly();
-    fVar18 = get_screen_height();
+    fVar17 = getPlayer_c_screentop();
+    fVar18 = getPlayer_c_screenheight();
     fStack356 = (xStack12.y / (xStack12.y - xStack36.y)) * (float)fVar18 + (float)fVar17;
     proc_7F093880();
     proc_7F093BFC((float *)&xStack12,(float *)&xStack36,(float *)&xStack84);
@@ -108459,27 +108456,27 @@ uint * proc_7F094488(void)
     fStack360 = 0.00000000;
   }
   else {
-    fVar17 = get_uly();
-    fVar18 = get_screen_height();
+    fVar17 = getPlayer_c_screentop();
+    fVar18 = getPlayer_c_screenheight();
     fStack360 = (xStack24.y / (xStack24.y - xStack48.y)) * (float)fVar18 + (float)fVar17;
-    get_screen_width();
+    getPlayer_c_screenwidth();
     proc_7F093880();
     proc_7F093BFC((float *)&xStack24,(float *)&xStack48,(float *)&xStack96);
     proc_7F0938FC(&xStack96,&xStack192,&fStack320);
     proc_7F093A78((float *)&xStack96,&fStack288,&fStack352);
   }
   if (uStack376 != uStack380) {
-    get_ulx();
-    get_screen_width();
+    getPlayer_c_screenleft();
+    getPlayer_c_screenwidth();
     proc_7F093880();
     proc_7F093BFC((float *)&xStack12,(float *)&xStack24,(float *)&xStack60);
     proc_7F0938FC(&xStack60,&xStack156,&fStack308);
     proc_7F093A78((float *)&xStack60,&fStack252,&fStack340);
   }
   if (uStack384 != uStack388) {
-    get_ulx();
-    get_screen_width();
-    get_screen_height();
+    getPlayer_c_screenleft();
+    getPlayer_c_screenwidth();
+    getPlayer_c_screenheight();
     proc_7F093880();
     proc_7F093BFC((float *)&xStack36,(float *)&xStack48,(float *)&xStack72);
     proc_7F0938FC(&xStack72,&xStack168,&fStack312);
@@ -108861,26 +108858,26 @@ uint * proc_7F094488(void)
       fVar24 = extraout_f14;
       do {
         proc_7F097388(pfStack1624,afStack804,0x82,fVar20,fVar24,(float *)flt_80057584);
-        fVar17 = get_ulx();
-        fVar18 = get_ulx();
-        fVar19 = get_screen_width();
+        fVar17 = getPlayer_c_screenleft();
+        fVar18 = getPlayer_c_screenleft();
+        fVar19 = getPlayer_c_screenwidth();
         fVar20 = proc_7F093C48(*(float *)(puVar14 + 0x28),(float)fVar17 * 4.00000000,extraout_a0,
                                extraout_a1,((float)fVar19 + (float)fVar18) * 4.00000000 - 1.00000000
                               );
         *(float *)(puVar14 + 0x28) = fVar20;
-        fVar17 = get_uly();
-        fVar18 = get_uly();
-        fVar19 = get_screen_height();
+        fVar17 = getPlayer_c_screentop();
+        fVar18 = getPlayer_c_screentop();
+        fVar19 = getPlayer_c_screenheight();
         fVar20 = proc_7F093C48(*(float *)(puVar14 + 0x2c),(float)fVar17 * 4.00000000,extraout_a0_00,
                                extraout_a1_00,
                                ((float)fVar19 + (float)fVar18) * 4.00000000 - 1.00000000);
         *(float *)(puVar14 + 0x2c) = fVar20;
-        fVar17 = get_uly();
+        fVar17 = getPlayer_c_screentop();
         fVar20 = extraout_f12_39;
         fVar24 = extraout_f14_00;
         if ((float)fVar17 * 4.00000000 + 4.00000000 < *(float *)(puVar14 + 0x2c)) {
-          fVar17 = get_uly();
-          fVar18 = get_screen_height();
+          fVar17 = getPlayer_c_screentop();
+          fVar18 = getPlayer_c_screenheight();
           fVar20 = extraout_f12_40;
           fVar24 = extraout_f14_01;
           if (*(float *)(puVar14 + 0x2c) < ((float)fVar18 + (float)fVar17) * 4.00000000 - 4.00000000
@@ -109432,16 +109429,16 @@ LAB_7f095adc:
     fVar27 = extraout_f14_02;
     do {
       proc_7F097388(pfStack1624,afStack1292,0x82,fVar29,fVar27,(float *)flt_800575D0);
-      fVar17 = get_ulx();
-      fVar18 = get_ulx();
-      fVar19 = get_screen_width();
+      fVar17 = getPlayer_c_screenleft();
+      fVar18 = getPlayer_c_screenleft();
+      fVar19 = getPlayer_c_screenwidth();
       fVar29 = proc_7F093C48(*(float *)(puVar14 + 0x28),(float)fVar17 * 4.00000000,extraout_a0_01,
                              extraout_a1_01,
                              ((float)fVar19 + (float)fVar18) * 4.00000000 - 1.00000000);
       *(float *)(puVar14 + 0x28) = fVar29;
-      fVar17 = get_uly();
-      fVar18 = get_uly();
-      fVar19 = get_screen_height();
+      fVar17 = getPlayer_c_screentop();
+      fVar18 = getPlayer_c_screentop();
+      fVar19 = getPlayer_c_screenheight();
       fVar29 = proc_7F093C48(*(float *)(puVar14 + 0x2c),(float)fVar17 * 4.00000000,extraout_a0_02,
                              extraout_a1_02,
                              ((float)fVar19 + (float)fVar18) * 4.00000000 - 1.00000000);
@@ -109457,19 +109454,19 @@ LAB_7f095adc:
     if (uVar16 == 0xc) {
       if (fStack360 < fStack356) {
         if (fStack1472 + 4.00000000 <= fStack1360) {
-          fVar17 = get_ulx();
+          fVar17 = getPlayer_c_screenleft();
           fStack1532 = (float)fVar17 * 4.00000000;
-          fVar17 = get_uly();
+          fVar17 = getPlayer_c_screentop();
           fStack1528 = (float)fVar17 * 4.00000000;
-          fVar17 = get_ulx();
-          fVar18 = get_screen_width();
+          fVar17 = getPlayer_c_screenleft();
+          fVar18 = getPlayer_c_screenwidth();
           fStack1476 = ((float)fVar18 + (float)fVar17) * 4.00000000 - 1.00000000;
-          fVar17 = get_uly();
+          fVar17 = getPlayer_c_screentop();
           fStack1472 = (float)fVar17 * 4.00000000;
-          fVar17 = get_ulx();
+          fVar17 = getPlayer_c_screenleft();
           fStack1420 = (float)fVar17 * 4.00000000;
-          fVar17 = get_ulx();
-          fVar18 = get_screen_width();
+          fVar17 = getPlayer_c_screenleft();
+          fVar18 = getPlayer_c_screenwidth();
           fStack1364 = ((float)fVar18 + (float)fVar17) * 4.00000000 - 1.00000000;
           puStackX0 = proc_7F098A2C(puStackX0,(int)auStack1572,(int)auStack1516,(int)auStack1460,
                                     (int)auStack1404,extraout_f12_86);
@@ -109481,19 +109478,19 @@ LAB_7f095adc:
       }
       else {
         if (fStack1528 + 4.00000000 <= fStack1416) {
-          fVar17 = get_ulx();
+          fVar17 = getPlayer_c_screenleft();
           fStack1532 = (float)fVar17 * 4.00000000;
-          fVar17 = get_uly();
+          fVar17 = getPlayer_c_screentop();
           fStack1528 = (float)fVar17 * 4.00000000;
-          fVar17 = get_ulx();
-          fVar18 = get_screen_width();
+          fVar17 = getPlayer_c_screenleft();
+          fVar18 = getPlayer_c_screenwidth();
           fStack1476 = ((float)fVar18 + (float)fVar17) * 4.00000000 - 1.00000000;
-          fVar17 = get_uly();
+          fVar17 = getPlayer_c_screentop();
           fStack1472 = (float)fVar17 * 4.00000000;
-          fVar17 = get_ulx();
+          fVar17 = getPlayer_c_screenleft();
           fStack1420 = (float)fVar17 * 4.00000000;
-          fVar17 = get_ulx();
-          fVar18 = get_screen_width();
+          fVar17 = getPlayer_c_screenleft();
+          fVar18 = getPlayer_c_screenwidth();
           fStack1364 = ((float)fVar18 + (float)fVar17) * 4.00000000 - 1.00000000;
           puStackX0 = proc_7F098A2C(puStackX0,(int)auStack1516,(int)auStack1572,(int)auStack1404,
                                     (int)auStack1460,extraout_f12_87);
@@ -109588,12 +109585,12 @@ void proc_7F097388(float *param_1,float *param_2,uint param_3,float param_4,floa
   if (0.00000000 <= fVar19) {
     fVar2 = fVar19;
   }
-  fVar3 = get_screen_width();
-  fVar4 = get_screen_width();
-  fVar5 = get_ulx();
-  fVar6 = get_screen_height();
-  fVar7 = get_screen_height();
-  fVar8 = get_uly();
+  fVar3 = getPlayer_c_screenwidth();
+  fVar4 = getPlayer_c_screenwidth();
+  fVar5 = getPlayer_c_screenleft();
+  fVar6 = getPlayer_c_screenheight();
+  fVar7 = getPlayer_c_screenheight();
+  fVar8 = getPlayer_c_screentop();
   fVar18 = fVar14 * fVar2 * fVar11 * flt_800575DC + flt_800575DC;
   fVar9 = proc_7F093C48((float)fVar5 * 4.00000000 + (float)fVar4 * 2.00000000 +
                         fVar12 * fVar2 * fVar11 * (float)fVar3 * 2.00000000,flt_800575E0,extraout_a0
@@ -110543,7 +110540,7 @@ proc_7F098A2C(undefined4 *param_1,int param_2,int param_3,int param_4,int param_
       fStack788 = flt_80057604;
     }
     else {
-      fVar29 = get_screen_width();
+      fVar29 = getPlayer_c_screenwidth();
       fStack788 = -((float)fVar29 - 0.25000000) /
                   ((*(float *)(param_4 + 0x2c) - *(float *)(param_5 + 0x2c)) * 0.25000000);
     }
@@ -110552,23 +110549,23 @@ proc_7F098A2C(undefined4 *param_1,int param_2,int param_3,int param_4,int param_
     param_1[2] = 0xb2000000;
     param_1[3] = (int)*(float *)(param_5 + 0x2c) << 0x10 | (int)*(float *)(param_2 + 0x2c);
     param_1[4] = 0xb4000000;
-    fVar29 = get_ulx();
-    fVar30 = get_screen_width();
+    fVar29 = getPlayer_c_screenleft();
+    fVar30 = getPlayer_c_screenwidth();
     uVar4 = proc_7F094298(((float)fVar30 + (float)fVar29) - 0.25000000);
     param_1[5] = uVar4;
     param_1[6] = 0xb2000000;
     uVar4 = proc_7F094298(fStack788);
     param_1[7] = uVar4;
     param_1[8] = 0xb4000000;
-    fVar29 = get_ulx();
+    fVar29 = getPlayer_c_screenleft();
     uVar4 = proc_7F094298((float)fVar29);
     param_1[9] = uVar4;
     param_1[10] = 0xb2000000;
     uVar4 = proc_7F094298(0.00000000);
     param_1[0xb] = uVar4;
     param_1[0xc] = 0xb4000000;
-    fVar29 = get_ulx();
-    fVar30 = get_screen_width();
+    fVar29 = getPlayer_c_screenleft();
+    fVar30 = getPlayer_c_screenwidth();
     uVar4 = proc_7F094298(((float)fVar30 + (float)fVar29) - 0.25000000);
     param_1[0xd] = uVar4;
     param_1[0xe] = 0xb2000000;
@@ -110578,7 +110575,7 @@ proc_7F098A2C(undefined4 *param_1,int param_2,int param_3,int param_4,int param_
   else {
     fVar28 = flt_80057608;
     if (1.00000000 <= *(float *)(param_4 + 0x2c) - *(float *)(param_5 + 0x2c)) {
-      fVar29 = get_screen_width();
+      fVar29 = getPlayer_c_screenwidth();
       fVar28 = ((float)fVar29 - 0.25000000) /
                ((*(float *)(param_4 + 0x2c) - *(float *)(param_5 + 0x2c)) * 0.25000000);
     }
@@ -110587,22 +110584,22 @@ proc_7F098A2C(undefined4 *param_1,int param_2,int param_3,int param_4,int param_
     param_1[2] = 0xb2000000;
     param_1[3] = (int)*(float *)(param_5 + 0x2c) << 0x10 | (int)*(float *)(param_2 + 0x2c);
     param_1[4] = 0xb4000000;
-    fVar29 = get_ulx();
+    fVar29 = getPlayer_c_screenleft();
     uVar4 = proc_7F094298((float)fVar29);
     param_1[5] = uVar4;
     param_1[6] = 0xb2000000;
     uVar4 = proc_7F094298(fVar28);
     param_1[7] = uVar4;
     param_1[8] = 0xb4000000;
-    fVar29 = get_ulx();
-    fVar30 = get_screen_width();
+    fVar29 = getPlayer_c_screenleft();
+    fVar30 = getPlayer_c_screenwidth();
     uVar4 = proc_7F094298(((float)fVar30 + (float)fVar29) - 0.25000000);
     param_1[9] = uVar4;
     param_1[10] = 0xb2000000;
     uVar4 = proc_7F094298(0.00000000);
     param_1[0xb] = uVar4;
     param_1[0xc] = 0xb4000000;
-    fVar29 = get_ulx();
+    fVar29 = getPlayer_c_screenleft();
     uVar4 = proc_7F094298((float)fVar29);
     param_1[0xd] = uVar4;
     param_1[0xe] = 0xb2000000;
@@ -111172,9 +111169,9 @@ void initBONDdataforPlayer(int player)
   (*ppPVar3)->field_AC = 1;
   (*ppPVar3)->field_D0 = 0;
   (*ppPVar3)->ptr_char_objectinstance = 0;
-  (*ppPVar3)->player_button_control = 0;
+  (*ppPVar3)->bonddead = 0;
   (*ppPVar3)->bondhealth = 1.00000000;
-  (*ppPVar3)->current_armor = 0.00000000;
+  (*ppPVar3)->bondarmour = 0.00000000;
   (*ppPVar3)->oldhealth = 1.00000000;
   (*ppPVar3)->oldarmour = 0.00000000;
   (*ppPVar3)->apparenthealth = 1.00000000;
@@ -111192,12 +111189,12 @@ void initBONDdataforPlayer(int player)
   (*ppPVar3)->insightaimmode = 0;
   (*ppPVar3)->autoyaimenabled = 1;
   (*ppPVar3)->autoaimy = 0.00000000;
-  (*ppPVar3)->field_130 = 0;
-  (*ppPVar3)->field_134 = -1;
+  (*ppPVar3)->autoyaimtime = 0;
+  (*ppPVar3)->autoyaimtime60 = -1;
   (*ppPVar3)->autoxaimenabled = 1;
   (*ppPVar3)->autoaimx = 0.00000000;
-  (*ppPVar3)->field_140 = 0;
-  (*ppPVar3)->field_144 = -1;
+  (*ppPVar3)->autoxaimtime = 0;
+  (*ppPVar3)->autoxaimtime60 = -1;
   (*ppPVar3)->vv_theta = 0.00000000;
   (*ppPVar3)->speedtheta = 0.00000000;
   (*ppPVar3)->vv_costheta = 1.00000000;
@@ -111334,10 +111331,10 @@ void initBONDdataforPlayer(int player)
     *(undefined2 *)((int)&(*ppPVar3)->field_7DC + iVar1 + 2) = 0;
     iVar1 = iVar2;
   } while (iVar2 != 0x20);
-  (*ppPVar3)->playerscreenwidth = 100;
-  (*ppPVar3)->playerscreenheight = 100;
-  (*ppPVar3)->playerscreenulx = 0;
-  (*ppPVar3)->playerscreenuly = 0;
+  (*ppPVar3)->viewx = 100;
+  (*ppPVar3)->viewy = 100;
+  (*ppPVar3)->viewleft = 0;
+  (*ppPVar3)->viewtop = 0;
   (*ppPVar3)->hand_invisible[0] = 0;
   (*ppPVar3)->hand_invisible[1] = 0;
   (*ppPVar3)->hand_item[0] = 0;
@@ -111416,10 +111413,10 @@ void initBONDdataforPlayer(int player)
   (*ppPVar3)->c_perspaspect = 1.00000000;
   (*ppPVar3)->c_halfwidth = 160.00000000;
   (*ppPVar3)->c_halfheight = 120.00000000;
-  (*ppPVar3)->field_10B4 = 1.00000000;
-  (*ppPVar3)->field_10B8 = 1.00000000;
-  (*ppPVar3)->field_10BC = 1.00000000;
-  (*ppPVar3)->field_10C0 = 1.00000000;
+  (*ppPVar3)->c_scalex = 1.00000000;
+  (*ppPVar3)->c_scaley = 1.00000000;
+  (*ppPVar3)->c_recipscalex = 1.00000000;
+  (*ppPVar3)->c_recipscaley = 1.00000000;
   (*ppPVar3)->field_10C4 = 0;
   (*ppPVar3)->field_10C8 = 0;
   (*ppPVar3)->field_10CC = 0;
@@ -111431,14 +111428,14 @@ void initBONDdataforPlayer(int player)
   (*ppPVar3)->field_10E4 = 0;
   (*ppPVar3)->field_10E8 = 0;
   (*ppPVar3)->field_10EC = 0;
-  (*ppPVar3)->field_10F0 = 1.00000000;
-  (*ppPVar3)->field_10F4 = 1.00000000;
-  (*ppPVar3)->field_10F8 = 1.00000000;
-  (*ppPVar3)->field_10FC = 0x10000;
-  (*ppPVar3)->field_1118 = 0.00000000;
-  (*ppPVar3)->field_111C = 0.00000000;
-  (*ppPVar3)->field_1120 = 320.00000000;
-  (*ppPVar3)->field_1124 = 240.00000000;
+  (*ppPVar3)->c_scalelod60 = 1.00000000;
+  (*ppPVar3)->c_scalelod = 1.00000000;
+  (*ppPVar3)->c_lodscalez = 1.00000000;
+  (*ppPVar3)->c_lodscalezu32 = 0x10000;
+  (*ppPVar3)->screenxminf = 0.00000000;
+  (*ppPVar3)->screenyminf = 0.00000000;
+  (*ppPVar3)->screenxmaxf = 320.00000000;
+  (*ppPVar3)->screenymaxf = 240.00000000;
   (*ppPVar3)->somekinda_bitflags = 0;
   (*ppPVar3)->field_11B0 = 0;
   (*ppPVar3)->field_11B4 = 0;
@@ -111545,8 +111542,8 @@ LAB_7f09b1c0:
 void set_cur_player_screen_size(short width,short height)
 
 {
-  pPlayer->playerscreenwidth = width;
-  pPlayer->playerscreenheight = height;
+  pPlayer->viewx = width;
+  pPlayer->viewy = height;
   return;
 }
 
@@ -111555,8 +111552,8 @@ void set_cur_player_screen_size(short width,short height)
 void set_cur_player_viewport_size(short ulx,short uly)
 
 {
-  pPlayer->playerscreenulx = ulx;
-  pPlayer->playerscreenuly = uly;
+  pPlayer->viewleft = ulx;
+  pPlayer->viewtop = uly;
   return;
 }
 
@@ -124787,9 +124784,9 @@ void proc_7F0B38B4(byte param_1,byte *param_2)
         bVar2 = *param_2;
         do {
           pbVar4 = param_2;
-          lVar1 = proc_7F0B5208((uint)bVar2,&pPlayer->field_1118);
+          lVar1 = proc_7F0B5208((uint)bVar2,&pPlayer->screenxminf);
           if (lVar1 != 0) {
-            proc_7F0B39BC((uint)*pbVar4,0,&pPlayer->field_1118,1);
+            proc_7F0B39BC((uint)*pbVar4,0,&pPlayer->screenxminf,1);
           }
           bVar2 = pbVar4[1];
           param_2 = pbVar4 + 1;
@@ -124797,9 +124794,9 @@ void proc_7F0B38B4(byte param_1,byte *param_2)
         pbVar4 = pbVar4 + 2;
         bVar2 = *pbVar4;
         do {
-          lVar1 = proc_7F0B5208((uint)bVar2,&pPlayer->field_1118);
+          lVar1 = proc_7F0B5208((uint)bVar2,&pPlayer->screenxminf);
           if (lVar1 != 0) {
-            proc_7F0B39BC((uint)*pbVar4,0,&pPlayer->field_1118,1);
+            proc_7F0B39BC((uint)*pbVar4,0,&pPlayer->screenxminf,1);
           }
           bVar2 = pbVar4[1];
           pbVar4 = pbVar4 + 1;
@@ -125842,10 +125839,9 @@ uint * proc_7F0B4FB4(uint *param_1)
 {
   uint *puVar1;
   
-  puVar1 = proc_7F0B5058(param_1,(longlong)pPlayer->playerscreenulx,
-                         (longlong)pPlayer->playerscreenuly,
-                         (int)pPlayer->playerscreenulx + (int)pPlayer->playerscreenwidth,
-                         (int)pPlayer->playerscreenuly + (int)pPlayer->playerscreenheight);
+  puVar1 = proc_7F0B5058(param_1,(longlong)pPlayer->viewleft,(longlong)pPlayer->viewtop,
+                         (int)pPlayer->viewleft + (int)pPlayer->viewx,
+                         (int)pPlayer->viewtop + (int)pPlayer->viewy);
   return puVar1;
 }
 
@@ -125879,24 +125875,24 @@ uint * proc_7F0B5058(uint *param_1,longlong param_2,longlong param_3,int param_4
   int local_resc;
   
   iVar3 = (int)param_2;
-  sVar1 = pPlayer->playerscreenulx;
+  sVar1 = pPlayer->viewleft;
   if (param_2 < (longlong)sVar1) {
     iVar3 = (int)sVar1;
-    sVar2 = pPlayer->playerscreenuly;
+    sVar2 = pPlayer->viewtop;
   }
   else {
-    sVar2 = pPlayer->playerscreenuly;
+    sVar2 = pPlayer->viewtop;
   }
   iVar4 = (int)param_3;
   if (param_3 < (longlong)sVar2) {
     iVar4 = (int)sVar2;
   }
-  iVar5 = (int)sVar1 + (int)pPlayer->playerscreenwidth;
+  iVar5 = (int)sVar1 + (int)pPlayer->viewx;
   local_resc = param_4;
   if (iVar5 < param_4) {
     local_resc = iVar5;
   }
-  iVar5 = (int)sVar2 + (int)pPlayer->playerscreenheight;
+  iVar5 = (int)sVar2 + (int)pPlayer->viewy;
   if (param_5 <= iVar5) {
     iVar5 = param_5;
   }
@@ -126285,10 +126281,10 @@ LAB_7f0b59f4:
     }
     else {
       if ((fStack256 <= fStack264) || (fStack252 <= fStack260)) {
-        fStack264 = pPlayer->field_1118;
-        fStack260 = pPlayer->field_111C;
-        fStack256 = pPlayer->field_1120;
-        fStack252 = pPlayer->field_1124;
+        fStack264 = pPlayer->screenxminf;
+        fStack260 = pPlayer->screenyminf;
+        fStack256 = pPlayer->screenxmaxf;
+        fStack252 = pPlayer->screenymaxf;
       }
     }
     *in_a1_lo = fStack264;
@@ -127829,10 +127825,10 @@ undefined8 proc_7F0B7F84(undefined8 param_1,int param_2,int param_3,int param_4,
   }
   if (fStack32 - fVar10 < fVar11) {
     if (fVar11 < fStack28 + fVar10) {
-      fStack16 = pPlayer->field_1118;
-      fStack12 = pPlayer->field_111C;
-      fStack8 = pPlayer->field_1120;
-      fStack4 = pPlayer->field_1124;
+      fStack16 = pPlayer->screenxminf;
+      fStack12 = pPlayer->screenyminf;
+      fStack8 = pPlayer->screenxmaxf;
+      fStack4 = pPlayer->screenymaxf;
       goto LAB_7f0b8264;
     }
     bVar1 = *(byte *)&pbVar5->controlbytes;
@@ -127846,7 +127842,7 @@ undefined8 proc_7F0B7F84(undefined8 param_1,int param_2,int param_3,int param_4,
       return param_1;
     }
     vis_is_inline_of_sight(&fStack16,param_5);
-    vis_is_inline_of_sight(&fStack16,&pPlayer->field_1118);
+    vis_is_inline_of_sight(&fStack16,&pPlayer->screenxminf);
   }
   else {
     lVar2 = proc_7F0B5864();
@@ -127860,10 +127856,10 @@ undefined8 proc_7F0B7F84(undefined8 param_1,int param_2,int param_3,int param_4,
     if (lVar2 == 0) {
       return param_1;
     }
-    fStack16 = pPlayer->field_1118;
-    fStack12 = pPlayer->field_111C;
-    fStack8 = pPlayer->field_1120;
-    fStack4 = pPlayer->field_1124;
+    fStack16 = pPlayer->screenxminf;
+    fStack12 = pPlayer->screenyminf;
+    fStack8 = pPlayer->screenxmaxf;
+    fStack4 = pPlayer->screenymaxf;
   }
   if (fStack8 <= fStack16) {
     return param_1;
@@ -128085,10 +128081,10 @@ LAB_7f0b8480:
         bVar1 = cmd[1];
       }
       else {
-        DAT_80081600 = pPlayer->field_1118;
-        DAT_80081604 = pPlayer->field_111C;
-        DAT_80081608 = pPlayer->field_1120;
-        DAT_8008160c = pPlayer->field_1124;
+        DAT_80081600 = pPlayer->screenxminf;
+        DAT_80081604 = pPlayer->screenyminf;
+        DAT_80081608 = pPlayer->screenxmaxf;
+        DAT_8008160c = pPlayer->screenymaxf;
         current_visibility = 0;
         bVar1 = cmd[1];
       }
@@ -128101,7 +128097,7 @@ LAB_7f0b8480:
           current_visibility = 1;
         }
         else {
-          lVar4 = vis_is_inline_of_sight((float *)&DAT_80081600,&pPlayer->field_1118);
+          lVar4 = vis_is_inline_of_sight((float *)&DAT_80081600,&pPlayer->screenxminf);
           if (lVar4 == 0) {
             current_visibility = 1;
           }
@@ -128154,7 +128150,7 @@ LAB_7f0b8704:
           uVar6 = (uint)cmd[1];
         }
         else {
-          lVar4 = vis_is_inline_of_sight(afStack24,&pPlayer->field_1118);
+          lVar4 = vis_is_inline_of_sight(afStack24,&pPlayer->screenxminf);
           if (lVar4 != 0) {
             if (current_visibility == 0) {
               proc_7F0B5CC0((float *)&DAT_80081600,afStack24);
@@ -128178,7 +128174,7 @@ LAB_7f0b8704:
         if (current_visibility == 0) {
           lVar4 = proc_7F0B5864();
           if (((lVar4 == 0) ||
-              (lVar4 = vis_is_inline_of_sight(afStack40,&pPlayer->field_1118), lVar4 == 0)) ||
+              (lVar4 = vis_is_inline_of_sight(afStack40,&pPlayer->screenxminf), lVar4 == 0)) ||
              (lVar4 = vis_is_inline_of_sight((float *)&DAT_80081600,afStack40), lVar4 == 0)) {
             current_visibility = 1;
             uVar6 = (uint)cmd[1];
@@ -128302,10 +128298,10 @@ void proc_7F0B8A6C(void)
   float fStack4;
   
   proc_7F0B908C();
-  fStack16 = pPlayer->field_1118;
-  fStack12 = pPlayer->field_111C;
-  fStack8 = pPlayer->field_1120;
-  fStack4 = pPlayer->field_1124;
+  fStack16 = pPlayer->screenxminf;
+  fStack12 = pPlayer->screenyminf;
+  fStack8 = pPlayer->screenxmaxf;
+  fStack4 = pPlayer->screenymaxf;
   proc_7F0B3BC4();
   puVar3 = (u32 *)&roominformationblock;
   do {
@@ -128332,14 +128328,14 @@ void proc_7F0B8A6C(void)
   proc_7F0B8A24(DAT_8007ff90);
   if ((levelentry_index == LEVEL_INDEX_CRAD) || (ptr_bgdata_portals->offset_portal == NULL)) {
     if (levelentry_index == LEVEL_INDEX_CRAD) {
-      proc_7F0B39BC(9,0,&pPlayer->field_1118,1);
+      proc_7F0B39BC(9,0,&pPlayer->screenxminf,1);
     }
     iVar7 = 1;
     if (1 < (int)max_num_rooms) {
       do {
-        lVar2 = proc_7F0B5208(iVar7,&pPlayer->field_1118);
+        lVar2 = proc_7F0B5208(iVar7,&pPlayer->screenxminf);
         if (lVar2 != 0) {
-          proc_7F0B39BC(iVar7,0,&pPlayer->field_1118,1);
+          proc_7F0B39BC(iVar7,0,&pPlayer->screenxminf,1);
         }
         iVar7 += 1;
       } while (iVar7 < (int)max_num_rooms);
@@ -128348,9 +128344,9 @@ void proc_7F0B8A6C(void)
   }
   else {
     if (levelentry_index == LEVEL_INDEX_CRAD) {
-      proc_7F0B39BC(9,0,&pPlayer->field_1118,1);
+      proc_7F0B39BC(9,0,&pPlayer->screenxminf,1);
     }
-    proc_7F0B39BC(current_room_maybe,0,&pPlayer->field_1118,1);
+    proc_7F0B39BC(current_room_maybe,0,&pPlayer->screenxminf,1);
     iVar8 = 0;
     iVar7 = 0;
     pbVar6 = ptr_bgdata_portals->offset_portal;
@@ -128638,46 +128634,46 @@ void proc_7F0B908C(void)
   sVar1 = get_video2_settings_txtClipH();
   fVar5 = (float)dword_80041410 + (float)(int)sVar1;
   sVar1 = get_video2_settings_ulx();
-  pPlayer->field_1118 = (float)(int)sVar1;
-  fVar3 = pPlayer->field_1118;
+  pPlayer->screenxminf = (float)(int)sVar1;
+  fVar3 = pPlayer->screenxminf;
   if (fVar3 < fVar4) {
-    pPlayer->field_1118 = fVar4;
-    fVar3 = pPlayer->field_1118;
+    pPlayer->screenxminf = fVar4;
+    fVar3 = pPlayer->screenxminf;
   }
   if (fVar6 < fVar3) {
-    pPlayer->field_1118 = fVar6;
+    pPlayer->screenxminf = fVar6;
   }
   sVar1 = get_video2_settings_uly();
-  pPlayer->field_111C = (float)(int)sVar1;
-  fVar3 = pPlayer->field_111C;
+  pPlayer->screenyminf = (float)(int)sVar1;
+  fVar3 = pPlayer->screenyminf;
   if (fVar3 < fVar7) {
-    pPlayer->field_111C = fVar7;
-    fVar3 = pPlayer->field_111C;
+    pPlayer->screenyminf = fVar7;
+    fVar3 = pPlayer->screenyminf;
   }
   if (fVar5 < fVar3) {
-    pPlayer->field_111C = fVar5;
+    pPlayer->screenyminf = fVar5;
   }
   sVar1 = get_video2_settings_ulx();
   sVar2 = get_video2_settings_width();
-  pPlayer->field_1120 = (float)((int)sVar2 + (int)sVar1);
-  fVar3 = pPlayer->field_1120;
+  pPlayer->screenxmaxf = (float)((int)sVar2 + (int)sVar1);
+  fVar3 = pPlayer->screenxmaxf;
   if (fVar3 < fVar4) {
-    pPlayer->field_1120 = fVar4;
-    fVar3 = pPlayer->field_1120;
+    pPlayer->screenxmaxf = fVar4;
+    fVar3 = pPlayer->screenxmaxf;
   }
   if (fVar6 < fVar3) {
-    pPlayer->field_1120 = fVar6;
+    pPlayer->screenxmaxf = fVar6;
   }
   sVar1 = get_video2_settings_uly();
   sVar2 = get_video2_settings_height();
-  pPlayer->field_1124 = (float)((int)sVar2 + (int)sVar1);
-  fVar3 = pPlayer->field_1124;
+  pPlayer->screenymaxf = (float)((int)sVar2 + (int)sVar1);
+  fVar3 = pPlayer->screenymaxf;
   if (fVar3 < fVar7) {
-    pPlayer->field_1124 = fVar7;
-    fVar3 = pPlayer->field_1124;
+    pPlayer->screenymaxf = fVar7;
+    fVar3 = pPlayer->screenymaxf;
   }
   if (fVar5 < fVar3) {
-    pPlayer->field_1124 = fVar5;
+    pPlayer->screenymaxf = fVar5;
   }
   return;
 }
@@ -132045,8 +132041,8 @@ uint * proc_7F0BE30C(undefined4 *param_1)
       do {
         playernum = proc_7F09B528(iVar13);
         set_cur_player(playernum);
-        set_video2_width_height(pPlayer->playerscreenwidth,pPlayer->playerscreenheight);
-        set_video2_ulx_uly(pPlayer->playerscreenulx,pPlayer->playerscreenuly);
+        set_video2_width_height(pPlayer->viewx,pPlayer->viewy);
+        set_video2_ulx_uly(pPlayer->viewleft,pPlayer->viewtop);
         video_related_1F(pPlayer->fovy);
         video_related_21(pPlayer->aspect);
         puStackX0 = proc_70003EB4(puStackX0);
@@ -132336,7 +132332,7 @@ void manage_mp_game(void)
         do {
           pPVar4 = *ppPVar12;
           ppPVar12 = ppPVar12 + 1;
-          if ((pPVar4->player_button_control != 0) && (iVar7 += 1, pPVar4->field_424 != 0)) {
+          if ((pPVar4->bonddead != 0) && (iVar7 += 1, pPVar4->field_424 != 0)) {
             iVar20 += 1;
           }
           uVar6 = get_num_players();
@@ -132384,7 +132380,7 @@ void manage_mp_game(void)
         ppPVar12 = &ptr_BONDdata_p1;
         do {
           pPVar4 = *ppPVar12;
-          if ((pPVar4->player_button_control != 0) &&
+          if ((pPVar4->bonddead != 0) &&
              (((pPVar4->field_424 == 0 || (pPVar4->field_428 == 0)) ||
               (0.00000000 <= pPVar4->timer_for_fade)))) {
             iVar7 += 1;
@@ -132431,7 +132427,7 @@ void manage_mp_game(void)
                 iVar18 = (int)uVar17 + 1;
                 uVar17 = SEXT48(iVar18);
                 ppPVar12 = ppPVar12 + 1;
-                if (pPVar4->player_button_control == 0) {
+                if (pPVar4->bonddead == 0) {
                   cVar15 += '\x01';
                   iVar21 = piVar14[9];
                 }
@@ -132448,7 +132444,7 @@ void manage_mp_game(void)
             piVar14 = &(&player1_playerdata)[iVar18].shots_fired + iVar19;
             cVar15 = cVar16;
             do {
-              if ((*ppPVar12)->player_button_control == 0) {
+              if ((*ppPVar12)->bonddead == 0) {
                 cVar15 += '\x01';
                 pPVar4 = ppPVar12[1];
               }
@@ -132456,7 +132452,7 @@ void manage_mp_game(void)
                 pPVar4 = ppPVar12[1];
               }
               piVar1 = piVar14 + 9;
-              if (pPVar4->player_button_control == 0) {
+              if (pPVar4->bonddead == 0) {
                 cVar15 += '\x01';
                 pPVar4 = ppPVar12[2];
               }
@@ -132464,7 +132460,7 @@ void manage_mp_game(void)
                 pPVar4 = ppPVar12[2];
               }
               piVar2 = piVar14 + 0x25;
-              if (pPVar4->player_button_control == 0) {
+              if (pPVar4->bonddead == 0) {
                 cVar15 += '\x01';
                 pPVar4 = ppPVar12[3];
               }
@@ -132473,7 +132469,7 @@ void manage_mp_game(void)
               }
               piVar3 = piVar14 + 0x41;
               ppPVar12 = ppPVar12 + 4;
-              if (pPVar4->player_button_control == 0) {
+              if (pPVar4->bonddead == 0) {
                 cVar15 += '\x01';
                 iVar18 = piVar14[0x5d];
               }
@@ -134826,7 +134822,7 @@ int ** proc_7F0C2E80(void)
   if (uVar6 == 1) {
     return ppiVar10;
   }
-  if ((pPlayer->player_button_control != 0) && (is_gameover_flag == NULL)) {
+  if ((pPlayer->bonddead != 0) && (is_gameover_flag == NULL)) {
     pPlayer->mpmenuon = 0;
     pPlayer->healthdisplaytime = 0;
     return NULL;
@@ -134869,7 +134865,7 @@ int ** proc_7F0C2E80(void)
     pPlayer->mpmenumode = 3;
     pPlayer->mpjoywascentre = 1;
     pPlayer->apparenthealth = pPlayer->bondhealth;
-    pPlayer->apparentarmour = pPlayer->current_armor;
+    pPlayer->apparentarmour = pPlayer->bondarmour;
     return ppiVar10;
   }
   lVar4 = check_if_player_is_pressing_anything_right(cStack1);
@@ -135526,7 +135522,7 @@ uint * mp_watch_menu_display(uint *param_1)
     return param_1;
   }
   if (pPlayer->mpmenuon == 0) {
-    if (pPlayer->player_button_control == 0) {
+    if (pPlayer->bonddead == 0) {
       return param_1;
     }
     if (pPlayer->field_428 == 0) {
@@ -136237,7 +136233,7 @@ undefined4 * display_red_blue_on_radar(undefined4 *param_1)
   uVar3 = get_cur_playernum();
   uVar1 = get_num_players();
   uVar4 = (u32)uVar1;
-  if ((((uVar1 != 1) && (pPlayer->mpmenuon == 0)) && (pPlayer->player_button_control == 0)) &&
+  if ((((uVar1 != 1) && (pPlayer->mpmenuon == 0)) && (pPlayer->bonddead == 0)) &&
      (uVar5 = proc_7F0927BC(0x17), uVar5 == 0)) {
     sVar9 = get_video2_settings_ulx();
     sVar10 = get_video2_settings_width();
@@ -136282,7 +136278,7 @@ undefined4 * display_red_blue_on_radar(undefined4 *param_1)
     uVar13 = 0;
     if (0 < (int)uVar4) {
       do {
-        if ((uVar13 != uVar3) && ((&ptr_BONDdata_p1)[uVar13]->player_button_control == 0)) {
+        if ((uVar13 != uVar3) && ((&ptr_BONDdata_p1)[uVar13]->bonddead == 0)) {
           iVar8 = (&ptr_BONDdata_p1)[uVar13]->position_data_pointer;
           vector1 = *(float *)(iVar8 + 8) - *(float *)(pPlayer->position_data_pointer + 8);
           vector2 = *(float *)(iVar8 + 0x10) - *(float *)(pPlayer->position_data_pointer + 0x10);

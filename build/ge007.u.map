@@ -2885,19 +2885,19 @@ Linker script and memory map
                 0x000000007f078454                sub_GAME_7F078454
                 0x000000007f078464                sub_GAME_7F078464
                 0x000000007f078474                sub_GAME_7F078474
-                0x000000007f078484                sub_GAME_7F078484
-                0x000000007f078494                sub_GAME_7F078494
-                0x000000007f0784a4                sub_GAME_7F0784A4
-                0x000000007f0784b4                sub_GAME_7F0784B4
-                0x000000007f0784c4                sub_GAME_7F0784C4
-                0x000000007f0784d4                sub_GAME_7F0784D4
-                0x000000007f0784e4                sub_GAME_7F0784E4
-                0x000000007f0784f4                sub_GAME_7F0784F4
+                0x000000007f078484                getPlayer_c_lodscalez
+                0x000000007f078494                getPlayer_c_lodscalezu32
+                0x000000007f0784a4                getPlayer_c_screenwidth
+                0x000000007f0784b4                getPlayer_c_screenheight
+                0x000000007f0784c4                getPlayer_c_screenleft
+                0x000000007f0784d4                getPlayer_c_screentop
+                0x000000007f0784e4                getPlayer_c_perspfovy
+                0x000000007f0784f4                getPlayer_c_perspaspect
                 0x000000007f078504                sub_GAME_7F078504
                 0x000000007f078534                sub_GAME_7F078534
                 0x000000007f078568                sub_GAME_7F078568
                 0x000000007f078598                sub_GAME_7F078598
-                0x000000007f0785cc                sub_GAME_7F0785CC
+                0x000000007f0785cc                getPlayer_c_perspnear
                 0x000000007f0785dc                sub_GAME_7F0785DC
                 0x000000007f078950                sub_GAME_7F078950
                 0x000000007f078980                sub_GAME_7F078980

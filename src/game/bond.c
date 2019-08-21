@@ -1234,179 +1234,53 @@ s32 sub_GAME_7F078474(void) {
     return pPlayer->field_10E4;
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F078484(void) {
-    // Node 0
-    return pPlayer->field_10F8;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F078484
-/* 0ACFB4 7F078484 3C0E8008 */  lui   $t6, %hi(pPlayer) # $t6, 0x8008
-/* 0ACFB8 7F078488 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0ACFBC 7F07848C 03E00008 */  jr    $ra
-/* 0ACFC0 7F078490 C5C010F8 */   lwc1  $f0, 0x10f8($t6)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F078494(void) {
-    // Node 0
-    return pPlayer->field_10FC;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F078494
-/* 0ACFC4 7F078494 3C0E8008 */  lui   $t6, %hi(pPlayer) # $t6, 0x8008
-/* 0ACFC8 7F078498 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0ACFCC 7F07849C 03E00008 */  jr    $ra
-/* 0ACFD0 7F0784A0 8DC210FC */   lw    $v0, 0x10fc($t6)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0784A4(void) {
-    // Node 0
-    return pPlayer->field_1090;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0784A4
-/* 0ACFD4 7F0784A4 3C0E8008 */  lui   $t6, %hi(pPlayer) # $t6, 0x8008
-/* 0ACFD8 7F0784A8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0ACFDC 7F0784AC 03E00008 */  jr    $ra
-/* 0ACFE0 7F0784B0 C5C01090 */   lwc1  $f0, 0x1090($t6)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0784B4(void) {
-    // Node 0
-    return pPlayer->field_1094;
+f32 getPlayer_c_lodscalez(void) 
+{
+    return pPlayer->c_lodscalez;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0784B4
-/* 0ACFE4 7F0784B4 3C0E8008 */  lui   $t6, %hi(pPlayer) # $t6, 0x8008
-/* 0ACFE8 7F0784B8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0ACFEC 7F0784BC 03E00008 */  jr    $ra
-/* 0ACFF0 7F0784C0 C5C01094 */   lwc1  $f0, 0x1094($t6)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0784C4(void) {
-    // Node 0
-    return pPlayer->field_1098;
+u32 getPlayer_c_lodscalezu32(void)
+{
+    return pPlayer->c_lodscalezu32;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0784C4
-/* 0ACFF4 7F0784C4 3C0E8008 */  lui   $t6, %hi(pPlayer) # $t6, 0x8008
-/* 0ACFF8 7F0784C8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0ACFFC 7F0784CC 03E00008 */  jr    $ra
-/* 0AD000 7F0784D0 C5C01098 */   lwc1  $f0, 0x1098($t6)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0784D4(void) {
-    // Node 0
-    return pPlayer->field_109C;
+f32 getPlayer_c_screenwidth(void)
+{
+    return pPlayer->c_screenwidth;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0784D4
-/* 0AD004 7F0784D4 3C0E8008 */  lui   $t6, %hi(pPlayer) # $t6, 0x8008
-/* 0AD008 7F0784D8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0AD00C 7F0784DC 03E00008 */  jr    $ra
-/* 0AD010 7F0784E0 C5C0109C */   lwc1  $f0, 0x109c($t6)
-)
-#endif
 
+f32 getPlayer_c_screenheight(void)
+{
+    return pPlayer->c_screenheight;
+}
 
+f32 getPlayer_c_screenleft(void)
+{
+    return pPlayer->c_screenleft;
+}
 
+f32 getPlayer_c_screentop(void)
+{
+    return pPlayer->c_screentop;
+}
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F0784E4(void) {
-    // Node 0
+f32 getPlayer_c_perspfovy(void)
+{
     return pPlayer->c_perspfovy;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0784E4
-/* 0AD014 7F0784E4 3C0E8008 */  lui   $t6, %hi(pPlayer) # $t6, 0x8008
-/* 0AD018 7F0784E8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0AD01C 7F0784EC 03E00008 */  jr    $ra
-/* 0AD020 7F0784F0 C5C010A4 */   lwc1  $f0, 0x10a4($t6)
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0784F4(void) {
-    // Node 0
+f32 getPlayer_c_perspaspect(void)
+{
     return pPlayer->c_perspaspect;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0784F4
-/* 0AD024 7F0784F4 3C0E8008 */  lui   $t6, %hi(pPlayer) # $t6, 0x8008
-/* 0AD028 7F0784F8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0AD02C 7F0784FC 03E00008 */  jr    $ra
-/* 0AD030 7F078500 C5C010A8 */   lwc1  $f0, 0x10a8($t6)
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
-void *sub_GAME_7F078504(void *arg0) {
-    // Node 0
-    *arg0 = (f32) pPlayer->field_1100;
-    arg0->unk4 = (f32) pPlayer->field_1104;
-    arg0->unk8 = (f32) pPlayer->field_1108;
-    return &pPlayer;
+void proc_7F078504(xyzpoint *param_1)
+{
+    param_1->x = (pPlayer->c_cameratopnorm).x;
+    param_1->y = (pPlayer->c_cameratopnorm).y;
+    param_1->z = (pPlayer->c_cameratopnorm).z;
 }
 #else
 GLOBAL_ASM(
@@ -1526,21 +1400,12 @@ glabel sub_GAME_7F078598
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0785CC(void) {
-    // Node 0
+
+f32 getPlayer_c_perspnear(void)
+{
     return pPlayer->c_perspnear;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0785CC
-/* 0AD0FC 7F0785CC 3C0E8008 */  lui   $t6, %hi(pPlayer) # $t6, 0x8008
-/* 0AD100 7F0785D0 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0AD104 7F0785D4 03E00008 */  jr    $ra
-/* 0AD108 7F0785D8 C5C010A0 */   lwc1  $f0, 0x10a0($t6)
-)
-#endif
+
 
 
 
@@ -3550,51 +3415,19 @@ glabel sub_GAME_7F079988
 
 
 
-#ifdef NONMATCHING
-void *change_crouch_position(s32 arg0) {
-    // Node 0
-    pPlayer->field_9C = (s32) (pPlayer->field_9C + arg0);
-    if (pPlayer->field_9C < 0)
-    {
-        // Node 1
-        pPlayer->field_9C = 0;
-        return pPlayer;
-    }
-    // Node 2
-    if (pPlayer->field_9C >= 3)
-    {
-        // Node 3
-        pPlayer->field_9C = 2;
-    }
-    // Node 4
-    return pPlayer;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel change_crouch_position
-/* 0AE4DC 7F0799AC 3C058008 */  lui   $a1, %hi(pPlayer) # $a1, 0x8008
-/* 0AE4E0 7F0799B0 24A5A0B0 */  addiu $a1, %lo(pPlayer) # addiu $a1, $a1, -0x5f50
-/* 0AE4E4 7F0799B4 8CA20000 */  lw    $v0, ($a1)
-/* 0AE4E8 7F0799B8 8C4E009C */  lw    $t6, 0x9c($v0)
-/* 0AE4EC 7F0799BC 01C47821 */  addu  $t7, $t6, $a0
-/* 0AE4F0 7F0799C0 AC4F009C */  sw    $t7, 0x9c($v0)
-/* 0AE4F4 7F0799C4 8CA20000 */  lw    $v0, ($a1)
-/* 0AE4F8 7F0799C8 8C43009C */  lw    $v1, 0x9c($v0)
-/* 0AE4FC 7F0799CC 04610003 */  bgez  $v1, .L7F0799DC
-/* 0AE500 7F0799D0 28610003 */   slti  $at, $v1, 3
-/* 0AE504 7F0799D4 03E00008 */  jr    $ra
-/* 0AE508 7F0799D8 AC40009C */   sw    $zero, 0x9c($v0)
 
-.L7F0799DC:
-/* 0AE50C 7F0799DC 14200002 */  bnez  $at, .L7F0799E8
-/* 0AE510 7F0799E0 24180002 */   li    $t8, 2
-/* 0AE514 7F0799E4 AC58009C */  sw    $t8, 0x9c($v0)
-.L7F0799E8:
-/* 0AE518 7F0799E8 03E00008 */  jr    $ra
-/* 0AE51C 7F0799EC 00000000 */   nop   
-)
-#endif
+void change_crouch_position(int position)
+{
+  pPlayer->crouchposition = pPlayer->crouchposition + position;
+  if (pPlayer->crouchposition < 0) {
+    pPlayer->crouchposition = 0;
+    return;
+  }
+  if (2 < pPlayer->crouchposition) {
+    pPlayer->crouchposition = 2;
+  }
+  return;
+}
 
 
 
@@ -3603,10 +3436,10 @@ glabel change_crouch_position
 #ifdef NONMATCHING
 s32 sub_GAME_7F0799F0(void) {
     // Node 0
-    if (pPlayer->field_9C < pPlayer->field_29FC)
+    if (pPlayer->crouchposition < pPlayer->field_29FC)
     {
         // Node 1
-        return pPlayer->field_9C;
+        return pPlayer->crouchposition;
     }
     // Node 2
     return pPlayer->field_29FC;
@@ -6863,20 +6696,22 @@ glabel sub_GAME_7F07B56C
 
 
 
-void sub_GAME_7F07C540(s32 arg0) {
+void sub_GAME_7F07C540(s32 arg0)
+{
     pPlayer->field_42C = arg0;
 }
 
-void set_BONDdata_lookahead_setting(s32 arg0) {
+void set_BONDdata_lookahead_setting(s32 arg0)
+{
     pPlayer->automovecentreenabled = arg0;
 }
 
-s32 get_BONDdata_lookahead_setting(void) {
+s32 get_BONDdata_lookahead_setting(void)
+{
     return pPlayer->automovecentreenabled;
 }
 
 void set_BONDdata_autoaim_y(s32 param_1)
-
 {
   pPlayer->autoyaimenabled = param_1;
 }
@@ -6887,16 +6722,14 @@ void set_BONDdata_autoaim_y(s32 param_1)
 
 
 #ifdef NONMATCHING
-void get_BONDdata_autoaim_y(void) {
-    // Node 0
-    if (get_num_players() != 1)
-    {
-        // Node 2
-        // Node 3
-        return cur_player_stat_ptr->unk6A;
-    }
-    // Node 1
-    return cur_player_stat_ptr->unk6A;
+s32 get_BONDdata_autoaim_y(void)
+{
+  if (get_num_players() == 1) {
+    return pPlayer->autoyaimenabled;
+  }
+  else {
+    return cur_player_stat_ptr->autoaim;
+  }
 }
 #else
 GLOBAL_ASM(
@@ -9947,35 +9780,15 @@ glabel sub_GAME_7F07E388
 
 
 
-#ifdef NONMATCHING
-void *trigger_watch_zoom(f32 arg0, f32 arg1) {
-    // Node 0
-    pPlayer->field_11BC = 0.0f;
-    pPlayer->field_11C0 = arg1;
-    pPlayer->field_11C8 = (f32) pPlayer->field_11C4;
-    pPlayer->field_11CC = arg0;
-    return pPlayer;
+
+void trigger_watch_zoom(f32 final,f32 time)
+{
+  pPlayer->zoomintime = 0.00000000;
+  pPlayer->zoomintimemax = time;
+  pPlayer->zoominfovyold = pPlayer->zoominfovy;
+  pPlayer->zoominfovynew = final;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel trigger_watch_zoom
-/* 0B2F30 7F07E400 3C038008 */  lui   $v1, %hi(pPlayer) # $v1, 0x8008
-/* 0B2F34 7F07E404 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 0B2F38 7F07E408 8C6E0000 */  lw    $t6, ($v1)
-/* 0B2F3C 7F07E40C 44802000 */  mtc1  $zero, $f4
-/* 0B2F40 7F07E410 00000000 */  nop   
-/* 0B2F44 7F07E414 E5C411BC */  swc1  $f4, 0x11bc($t6)
-/* 0B2F48 7F07E418 8C6F0000 */  lw    $t7, ($v1)
-/* 0B2F4C 7F07E41C E5EE11C0 */  swc1  $f14, 0x11c0($t7)
-/* 0B2F50 7F07E420 8C620000 */  lw    $v0, ($v1)
-/* 0B2F54 7F07E424 C44611C4 */  lwc1  $f6, 0x11c4($v0)
-/* 0B2F58 7F07E428 E44611C8 */  swc1  $f6, 0x11c8($v0)
-/* 0B2F5C 7F07E42C 8C780000 */  lw    $t8, ($v1)
-/* 0B2F60 7F07E430 03E00008 */  jr    $ra
-/* 0B2F64 7F07E434 E70C11CC */   swc1  $f12, 0x11cc($t8)
-)
-#endif
+
 
 
 
