@@ -92,7 +92,7 @@ glabel sub_GAME_7F0BC530
 
 
 void sub_GAME_7F0BC624(s32 param_1) {
-  ptr_BONDdata->field_108C = param_1;
+  pPlayer->field_108C = param_1;
 }
 
 
@@ -346,8 +346,8 @@ glabel sub_GAME_7F0BC85C
 /* 0F13B0 7F0BC880 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0F13B4 7F0BC884 1202000C */  beq   $s0, $v0, .L7F0BC8B8
 /* 0F13B8 7F0BC888 AFA40070 */   sw    $a0, 0x70($sp)
-/* 0F13BC 7F0BC88C 3C188008 */  lui   $t8, %hi(ptr_BONDdata) # $t8, 0x8008
-/* 0F13C0 7F0BC890 8F18A0B0 */  lw    $t8, %lo(ptr_BONDdata)($t8)
+/* 0F13BC 7F0BC88C 3C188008 */  lui   $t8, %hi(pPlayer) # $t8, 0x8008
+/* 0F13C0 7F0BC890 8F18A0B0 */  lw    $t8, %lo(pPlayer)($t8)
 /* 0F13C4 7F0BC894 00104080 */  sll   $t0, $s0, 2
 /* 0F13C8 7F0BC898 3C098008 */  lui   $t1, %hi(dword_CODE_bss_80083900)
 /* 0F13CC 7F0BC89C 01284821 */  addu  $t1, $t1, $t0
@@ -378,8 +378,8 @@ glabel sub_GAME_7F0BC85C
 /* 0F1424 7F0BC8F4 1000002E */  b     .L7F0BC9B0
 /* 0F1428 7F0BC8F8 02001025 */   move  $v0, $s0
 .L7F0BC8FC:
-/* 0F142C 7F0BC8FC 3C0A8008 */  lui   $t2, %hi(ptr_BONDdata) # $t2, 0x8008
-/* 0F1430 7F0BC900 8D4AA0B0 */  lw    $t2, %lo(ptr_BONDdata)($t2)
+/* 0F142C 7F0BC8FC 3C0A8008 */  lui   $t2, %hi(pPlayer) # $t2, 0x8008
+/* 0F1430 7F0BC900 8D4AA0B0 */  lw    $t2, %lo(pPlayer)($t2)
 /* 0F1434 7F0BC904 00106080 */  sll   $t4, $s0, 2
 /* 0F1438 7F0BC908 3C018008 */  lui   $at, %hi(dword_CODE_bss_80083900)
 /* 0F143C 7F0BC90C 8D4B108C */  lw    $t3, 0x108c($t2)
@@ -400,8 +400,8 @@ glabel sub_GAME_7F0BC85C
 /* 0F1478 7F0BC948 E7A00054 */  swc1  $f0, 0x54($sp)
 /* 0F147C 7F0BC94C 01AF1821 */  addu  $v1, $t5, $t7
 /* 0F1480 7F0BC950 C464000C */  lwc1  $f4, 0xc($v1)
-/* 0F1484 7F0BC954 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
-/* 0F1488 7F0BC958 8C42A0B0 */  lw    $v0, %lo(ptr_BONDdata)($v0)
+/* 0F1484 7F0BC954 3C028008 */  lui   $v0, %hi(pPlayer) # $v0, 0x8008
+/* 0F1488 7F0BC958 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
 /* 0F148C 7F0BC95C 46002182 */  mul.s $f6, $f4, $f0
 /* 0F1490 7F0BC960 3C088008 */  lui   $t0, %hi(dword_CODE_bss_80083DB0) # $t0, 0x8008
 /* 0F1494 7F0BC964 C4480038 */  lwc1  $f8, 0x38($v0)

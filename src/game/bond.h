@@ -3,7 +3,7 @@
 #include "ultra64.h"
 #include "game/actor.h"
 
-struct BONDdata
+struct Player
 {
   s32 unknown;
   s32 xpos;
@@ -78,13 +78,13 @@ struct BONDdata
   s32 look_ahead_setting;
   s32 field_11C;
   s32 field_120;
-  s32 is_aiming_flag;
-  s32 auto_aim_flag;
-  f32 y_aim_related_float;
+  s32 insightaimmode;
+  s32 autoyaimenabled;
+  f32 autoaimy;
   s32 field_130;
   s32 field_134;
-  s32 solo_auto_aim_x_setting;
-  f32 x_aim_related_float;
+  s32 autoxaimenabled;
+  f32 autoaimx;
   s32 field_140;
   s32 field_144;
   f32 azimuth_angle;
@@ -1045,7 +1045,7 @@ struct BONDdata
   s32 field_1054;
   s32 field_1058;
   s32 field_105C;
-  s32 GEkey_analyzed;
+  s32 copiedgoldeneye;
   s32 somekinda_flags;
   s32 field_1068;
   f32 field_106C;
@@ -1057,15 +1057,15 @@ struct BONDdata
   f32 sniper_zoom;
   f32 camera_zoom;
   s32 field_108C;
-  f32 maybe_screen_width;
-  f32 maybe_screen_height;
-  f32 ulx;
-  f32 uly;
-  f32 field_10A0;
-  f32 field_10A4;
-  f32 field_10A8;
-  f32 maybe_half_screen_width;
-  f32 maybe_half_screen_height;
+  f32 c_screenwidth;
+  f32 c_screenheight;
+  f32 c_screenleft;
+  f32 c_screentop;
+  f32 c_perspnear;
+  f32 c_perspfovy;
+  f32 c_perspaspect;
+  f32 c_halfwidth;
+  f32 c_halfheight;
   s32 field_10B4;
   s32 field_10B8;
   s32 field_10BC;
@@ -1097,7 +1097,7 @@ struct BONDdata
   f32 field_1124;
   s32 somekinda_bitflags;
   s32 field_112C;
-  s32 ammo_unknown;
+  s32 ammoheldarr;
   s32 ammo_total_pistol;
   s32 ammo_total_pistol_beta;
   s32 ammo_total_rifle;
@@ -1127,24 +1127,24 @@ struct BONDdata
   s32 ammo_total_unknown2;
   s32 ammo_total_tank;
   s32 ammo_total_mp_token;
-  s32 ptr_red_screen_animation_block;
+  s32 bloodcnt;
   s32 field_11AC;
   s32 field_11B0;
   s32 field_11B4;
   s32 field_11B8;
-  f32 watch_menu_screen_swap_current_timer;
-  f32 watch_endtime;
-  f32 currentfov;
-  f32 previousfov;
-  f32 targetfov;
-  f32 watch_menu_current_size_unused_maybe;
-  f32 field_11D4;
-  s32 stationary_intro_cam_flags;
-  s32 set_neg1_by_stationary_intro_cam;
+  f32 zoomintime;
+  f32 zoomintimemax;
+  f32 zoominfovy;
+  f32 zoominfovyold;
+  f32 zoominfovynew;
+  f32 fovy;
+  f32 aspect;
+  s32 hudmessoff;
+  s32 bondmesscnt;
   s32 ptr_inventory_first_in_cycle;
   s32 p_itemcur;
-  s32 items_max;
-  s32 flag_for_allguns;
+  s32 equipmaxitems;
+  s32 equipallguns;
   s32 field_11F0;
   s32 field_11F4;
   s32 index_time_spent_using_item;
@@ -1196,7 +1196,7 @@ struct BONDdata
   s32 field_12B0;
   u8 something_with_cheat_text;
   u8 can_display_cheat_text;
-  u8 invincible_flag;
+  u8 bondinvincible;
   u8 field_12B7;
   s32 related_to_armor_display;
   s32 field_12BC;
@@ -2673,12 +2673,12 @@ struct BONDdata
   s32 field_29B8;
   s32 field_29BC;
   s32 field_29C0;
-  s32 in_mp_pause_menu;
-  s32 page_in_mp_pause_menu;
-  s32 selection_on_mp_pause_menu_page_6;
-  s32 press_stick_register;
-  s32 field_29D4;
-  s32 num_deaths;
+  s32 mpmenuon;
+  s32 mpmenumode;
+  s32 mpquitconfirm;
+  s32 mpjoywascentre;
+  s32 damagetype;
+  s32 deathcount;
   s32 num_suicides;
   s32 field_29E0;
   s32 field_29E4;
@@ -2688,7 +2688,7 @@ struct BONDdata
   s32 field_29F4;
   s32 field_29F8;
   s32 field_29FC;
-  s32 show_health_armor_timer;
+  s32 healthdisplaytime;
   s32 field_2A04;
   s32 field_2A08;
   s32 field_2A0C;

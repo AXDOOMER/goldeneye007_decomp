@@ -685,8 +685,8 @@ loop_29:
                             {
 loop_44:
                                 set_cur_player(sub_GAME_7F09B528(phi_s1_2));
-                                set_video2_width_height(ptr_BONDdata->unk7F0, ptr_BONDdata->unk7F2);
-                                set_video2_ulx_uly(ptr_BONDdata->playerscreenulx, ptr_BONDdata->playerscreenuly);
+                                set_video2_width_height(pPlayer->unk7F0, pPlayer->unk7F2);
+                                set_video2_ulx_uly(pPlayer->playerscreenulx, pPlayer->playerscreenuly);
                                 sub_GAME_7F0BF800();
                                 temp_s1 = phi_s1_2 + 1;
                                 phi_s1_2 = temp_s1;
@@ -888,8 +888,8 @@ glabel mainloop
 /* 006D68 70006168 0C002926 */  jal   increment_random_num
 /* 006D6C 7000616C 00402025 */   move  $a0, $v0
 /* 006D70 70006170 3C168003 */  lui   $s6, %hi(aU64_taskgrab_D_core) # $s6, 0x8003
-/* 006D74 70006174 3C158008 */  lui   $s5, %hi(ptr_BONDdata) # $s5, 0x8008
-/* 006D78 70006178 26B5A0B0 */  addiu $s5, %lo(ptr_BONDdata) # addiu $s5, $s5, -0x5f50
+/* 006D74 70006174 3C158008 */  lui   $s5, %hi(pPlayer) # $s5, 0x8008
+/* 006D78 70006178 26B5A0B0 */  addiu $s5, %lo(pPlayer) # addiu $s5, $s5, -0x5f50
 /* 006D7C 7000617C 26D69134 */  addiu $s6, %lo(aU64_taskgrab_D_core) # addiu $s6, $s6, -0x6ecc
 /* 006D80 70006180 27B70058 */  addiu $s7, $sp, 0x58
 /* 006D84 70006184 27B4005C */  addiu $s4, $sp, 0x5c

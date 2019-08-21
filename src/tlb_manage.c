@@ -320,9 +320,9 @@ glabel translate_load_rom_from_TLBaddress
 /* 002640 70001A40 3C0100FF */  lui   $at, (0x00FFE000 >> 16) # lui $at, 0xff
 /* 002644 70001A44 3421E000 */  ori   $at, (0x00FFE000 & 0xFFFF) # ori $at, $at, 0xe000
 /* 002648 70001A48 00104340 */  sll   $t0, $s0, 0xd
-/* 00264C 70001A4C 3C0A0003 */  lui   $t2, %hi(_rarezipSegmentRomEnd) # $t2, 3
+/* 00264C 70001A4C 3C0A0003 */  lui   $t2, %hi(_gameSegmentRomStart) # $t2, 3
 /* 002650 70001A50 00414824 */  and   $t1, $v0, $at
-/* 002654 70001A54 254A4B30 */  addiu $t2, %lo(_rarezipSegmentRomEnd) # addiu $t2, $t2, 0x4b30
+/* 002654 70001A54 254A4B30 */  addiu $t2, %lo(_gameSegmentRomStart) # addiu $t2, $t2, 0x4b30
 /* 002658 70001A58 03282021 */  addu  $a0, $t9, $t0
 /* 00265C 70001A5C AFA40034 */  sw    $a0, 0x34($sp)
 /* 002660 70001A60 012A2821 */  addu  $a1, $t1, $t2

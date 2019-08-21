@@ -891,7 +891,7 @@ Linker script and memory map
                 0x000000007000b06c                set_debug_text_color
                 0x000000007000b098                set_color_speedgraph
                 0x000000007000b0c4                write_char_to_screen
-                0x000000007000b1c0                debug_text_related_0
+                0x000000007000b1c0                debug_printcharatpos
                 0x000000007000b1e8                write_string_stdout
                 0x000000007000b230                debug_text_related
                 0x000000007000b27c                read_screen_display_block_and_write_chars
@@ -909,7 +909,7 @@ Linker script and memory map
                 0x000000007000bbbc                set_ptr_tlb_ramrom_record
                 0x000000007000bbc8                probably_ramrom_related
                 0x000000007000bd0c                redirect_to_ramrom_replay_and_record_handlers_if_set
-                0x000000007000bd88                controller_7000BD88
+                0x000000007000bd88                controllerSchedulerRelated
                 0x000000007000c0ec                get_cur_controller_horz_stick_pos
                 0x000000007000c174                controller_7000C174
                 0x000000007000c1fc                get_cur_controller_vert_stick_pos
@@ -4953,7 +4953,7 @@ Linker script and memory map
                 0x00000000008f7df0                _binary_assets_images_split_image1_bin_start
                 0x00000000008f8544                _binary_assets_images_split_image1_bin_end
                 0x00000000008f8544                _image1_end = .
-                0x00000000008f8544                _image1_size = (_image1_end - _image1_start)
+                0x0000000000000754                _image1_size = (_image1_end - _image1_start)
  build/assets/images/split/image2.o(.data)
  .data          0x00000000008f8544      0x16a build/assets/images/split/image2.o
                 0x00000000008f8544                _binary_assets_images_split_image2_bin_start
@@ -16138,7 +16138,7 @@ Linker script and memory map
                 0x000000008002858c                aGrab_D_temp_uix_0
                 0x00000000800285a0                aUix2pixXsDGrab_D_temp_uix
                 0x00000000800285c0                aFromaliasGrab_D_temp_pixGrab_D_t_0
-                0x00000000800285ec                aImgcopyFjfifGrab_D_temp_rgbGrab__0
+                0x00000000800285ec                ::aImgcopyFjfifGrab_D_temp_rgbGrab(void)
                 0x000000008002861c                aRmGrab_D_temp_uixGrab_D_temp_pix_0
                 0x0000000080028654                aImgviewGrab_D_jpeg_0
                 0x000000008002866c                aGrab_D_rgb
@@ -16166,7 +16166,7 @@ Linker script and memory map
                 0x00000000800290c8                aMl0Me0Mgfx100Mvtx50Mt700Ma400_1
                 0x00000000800290fc                aM
                 0x0000000080029100                aM_1
-                0x0000000080029104                aLevel__0
+                0x0000000080029104                ::aLevel(void)
                 0x000000008002910c                aLevel__1
                 0x0000000080029114                aHard
                 0x000000008002911c                aHard_1
@@ -20393,7 +20393,7 @@ Linker script and memory map
                 0x000000008005b6b0                aLv_c_debug
                 0x000000008005b6bc                aStanshow_
                 0x000000008005b6c8                aStanshow__5
-                0x000000008005b6d4                aStanshow__0
+                0x000000008005b6d4                ::aStanshow(void)
                 0x000000008005b6e0                aStanshow__1
                 0x000000008005b6ec                aStanshow__2
                 0x000000008005b6f8                aStanshow__3
@@ -21405,7 +21405,7 @@ Linker script and memory map
                 0x0000000080079f60                player2_player_data
                 0x0000000080079fd0                player3_player_data
                 0x000000008007a040                player4_player_data
-                0x000000008007a0b0                ptr_BONDdata
+                0x000000008007a0b0                pPlayer
                 0x000000008007a0b4                cur_player_stat_ptr
                 0x000000008007a0b8                player_num
                 0x000000008007a0bc                random_byte

@@ -45,8 +45,8 @@ glabel display_red_blue_on_radar
 /* 0FAC24 7F0C60F4 10000124 */  b     .L7F0C6588
 /* 0FAC28 7F0C60F8 8FA20088 */   lw    $v0, 0x88($sp)
 .L7F0C60FC:
-/* 0FAC2C 7F0C60FC 3C178008 */  lui   $s7, %hi(ptr_BONDdata) # $s7, 0x8008
-/* 0FAC30 7F0C6100 26F7A0B0 */  addiu $s7, %lo(ptr_BONDdata) # addiu $s7, $s7, -0x5f50
+/* 0FAC2C 7F0C60FC 3C178008 */  lui   $s7, %hi(pPlayer) # $s7, 0x8008
+/* 0FAC30 7F0C6100 26F7A0B0 */  addiu $s7, %lo(pPlayer) # addiu $s7, $s7, -0x5f50
 /* 0FAC34 7F0C6104 8EE20000 */  lw    $v0, ($s7)
 /* 0FAC38 7F0C6108 8C4E29C4 */  lw    $t6, 0x29c4($v0)
 /* 0FAC3C 7F0C610C 15C00004 */  bnez  $t6, .L7F0C6120

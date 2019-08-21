@@ -7615,13 +7615,13 @@ struct BONDdata {
     int look_ahead_setting;
     int field_11C;
     int field_120;
-    int is_aiming_flag;
-    int auto_aim_flag;
-    float y_aim_related_float;
+    int insightaimmode;
+    int autoyaimenabled;
+    float autoaimy;
     int field_130;
     int field_134;
-    int solo_auto_aim_x_setting;
-    float x_aim_related_float;
+    int autoxaimenabled;
+    float autoaimx;
     int field_140;
     int field_144;
     float azimuth_angle;
@@ -8588,7 +8588,7 @@ struct BONDdata {
     int field_1054;
     int field_1058;
     int field_105C;
-    int GEkey_analyzed;
+    int copiedgoldeneye;
     int somekinda_flags;
     int field_1068;
     float field_106C;
@@ -8600,15 +8600,15 @@ struct BONDdata {
     float sniper_zoom;
     float camera_zoom;
     int field_108C;
-    float maybe_screen_width;
-    float maybe_screen_height;
-    float ulx;
-    float uly;
-    float field_10A0;
-    float field_10A4;
-    float field_10A8;
-    float maybe_half_screen_width;
-    float maybe_half_screen_height;
+    float c_screenwidth;
+    float c_screenheight;
+    float c_screenleft;
+    float c_screentop;
+    float c_perspnear;
+    float c_perspfovy;
+    float c_perspaspect;
+    float c_halfwidth;
+    float c_halfheight;
     f32 field_10B4;
     f32 field_10B8;
     f32 field_10BC;
@@ -8640,25 +8640,25 @@ struct BONDdata {
     float field_1124;
     int somekinda_bitflags;
     int field_112C;
-    int ammo_totals[30];
-    int ptr_red_screen_animation_block;
+    int ammoheldarr[30];
+    int bloodcnt;
     int field_11AC;
     int field_11B0;
     int field_11B4;
     int field_11B8;
-    float watch_menu_screen_swap_current_timer;
-    f32 watch_endtime;
-    float watch_menu_current_size;
-    float watch_menu_initial_size;
-    f32 watch_menu_final_size;
-    f32 watch_menu_current_size_unused_maybe;
-    f32 field_11D4;
-    int stationary_intro_cam_flags;
-    int set_neg1_by_stationary_intro_cam;
+    float zoomintime;
+    f32 zoomintimemax;
+    float zoominfovy;
+    float zoominfovyold;
+    f32 zoominfovynew;
+    f32 fovy;
+    f32 aspect;
+    int hudmessoff;
+    int bondmesscnt;
     int ptr_inventory_first_in_cycle;
     int p_itemcur;
-    int items_max;
-    int flag_for_allguns;
+    int equipmaxitems;
+    int equipallguns;
     int field_11F0;
     int field_11F4;
     int index_time_spent_using_item;
@@ -8710,7 +8710,7 @@ struct BONDdata {
     int field_12B0;
     char something_with_cheat_text;
     char can_display_cheat_text;
-    char invincible_flag;
+    char bondinvincible;
     char field_12B7;
     int related_to_armor_display;
     int field_12BC;
@@ -10187,12 +10187,12 @@ struct BONDdata {
     int field_29B8;
     f32 field_29BC;
     f32 field_29C0;
-    int in_mp_pause_menu;
-    int page_in_mp_pause_menu;
-    int selection_on_mp_pause_menu_page_6;
-    int press_stick_register;
-    int field_29D4;
-    int num_deaths;
+    int mpmenuon;
+    int mpmenumode;
+    int mpquitconfirm;
+    int mpjoywascentre;
+    int damagetype;
+    int deathcount;
     int num_suicides;
     int field_29E0;
     int field_29E4;
@@ -10202,7 +10202,7 @@ struct BONDdata {
     int field_29F4;
     int field_29F8;
     int field_29FC;
-    int how_long_to_show_health;
+    int healthdisplaytime;
     int field_2A04;
     f32 field_2A08;
     f32 field_2A0C;
@@ -11317,7 +11317,33 @@ typedef struct OSScTask_s OSScTask_s, *POSScTask_s;
 
 typedef struct OSScTask_s OSScTask;
 
+typedef union OSTask OSTask, *POSTask;
+
 typedef struct OSTask_t OSTask_t, *POSTask_t;
+
+struct OSTask_t {
+    u32 type;
+    u32 flags;
+    u64 * ucode_boot;
+    u32 ucode_boot_size;
+    u64 * ucode;
+    u32 ucode_size;
+    u64 * ucode_data;
+    u32 ucode_data_size;
+    u64 * dram_stack;
+    u32 dram_stack_size;
+    u64 * output_buff;
+    u64 * output_buff_size;
+    u64 * data_ptr;
+    u32 data_size;
+    u64 * yield_data_ptr;
+    u32 yield_data_size;
+};
+
+union OSTask {
+    struct OSTask_t t;
+    longlong force_structure_alignment;
+};
 
 struct OSScMsg {
     short type;
@@ -11341,25 +11367,6 @@ struct $4DC9E63407FE56118E8436A326234A26 {
     OSScTask * curRDPTask;
 };
 
-struct OSTask_t {
-    enum SCHEDTASKS type;
-    u32 flags;
-    u64 * ucode_boot;
-    u32 ucode_boot_size;
-    u64 * ucode;
-    u32 ucode_size;
-    u64 * ucode_data;
-    u32 ucode_data_size;
-    u64 * dram_stack;
-    u32 dram_stack_size;
-    u64 * output_buff;
-    u64 * output_buff_size;
-    u64 * data_ptr;
-    u32 data_size;
-    u64 * yield_data_ptr;
-    u32 yield_data_size;
-};
-
 struct SCClient_s {
     struct SCClient_s * next;
     OSMesgQueue * msgQ;
@@ -11370,7 +11377,7 @@ struct OSScTask_s {
     u32 state;
     u32 flags;
     void * framebuffer;
-    struct OSTask_t list;
+    union OSTask list;
     OSMesgQueue * msgQ;
     OSMesg msg;
 };
@@ -12390,6 +12397,13 @@ struct point_table {
 
 // WARNING! conflicting data type names: /sched.h/OSSched - /GE Current Master.h/OSSched
 
+typedef enum enum {
+    PRE_NMI_MSG=669,
+    RDP_DONE_MSG=668,
+    RSP_DONE_MSG=667,
+    VIDEO_MSG=666
+} enum;
+
 #define OS_SC_RETRACE_MSG 1
 
 #define OS_SC_LAST_TASK 32
@@ -12434,13 +12448,6 @@ struct point_table {
 #define OS_LOG_MAX_ARGS 16
 
 #define OS_LOG_VERSION 1
-
-typedef union OSTask OSTask, *POSTask;
-
-union OSTask {
-    struct OSTask_t t;
-    longlong force_structure_alignment;
-};
 
 typedef u32 OSYieldResult;
 
@@ -14425,12 +14432,12 @@ typedef enum AL_MIDImeta {
 
 
 s32 * get_cdata_vaddr(void);
-s32 * get_cdata_rom_start(void);
-s32 * get_cdata_rom_end(void);
-s32 * get_RareZipASMRomstart(void);
-s32 get_RareZipASMRomend(void);
+u32 * get_cdata_rom_start(void);
+u32 * get_cdata_rom_end(void);
+u32 * get_RareZipASMRomstart(void);
+u32 * get_RareZipASMRomend(void);
 void jump_decompressfile(int source,int target,int buffer);
-int init(EVP_PKEY_CTX *ctx);
+void init(void);
 void * set_stack_entry(void *stack,s32 size);
 void set_hw_address_and_unknown(void);
 void thread1_idle(void);
@@ -14452,10 +14459,9 @@ void osScAddClient(OSSched *sc,OSScClient *c,OSMesgQueue *msgQ);
 void osScRemoveClient(OSSched *sc,OSScClient *c);
 OSMesgQueue * osScGetCmdQ(OSSched *sc);
 void __scMain(OSSched *sc);
-void proc_70000E90(undefined param_1,undefined param_2,undefined param_3,undefined param_4,undefined param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,undefined4 param_9,undefined4 param_10,undefined4 param_11,undefined4 param_12);
 void __scHandleRetrace(OSSched *sc);
 void __scHandleRSP(OSSched *sc);
-undefined * get_counters(void);
+void * get_counters(void);
 void __scHandleRDP(OSSched *sc);
 OSScTask * *__scTaskReady(OSScTask *__return_storage_ptr__,OSScTask *t);
 s32 __scTaskComplete(OSSched *sc,OSScTask *t);
@@ -14780,8 +14786,8 @@ s32 osSendMesg(OSMesgQueue *mq,OSMesg msg,s32 flags);
 void osViSetMode(OSViMode *modep);
 void osViSetXScale(f32 value);
 void osViSetYScale(f32 value);
-void osViRepeatLine(u8 active);
-void osViBlack(u8 active);
+void osViRepeatLine(u32 active);
+void osViBlack(u32 active);
 OSYieldResult osSpTaskYielded(OSTask *tp);
 void osDpGetCounters(u32 *array);
 void * osViGetCurrentFramebuffer(void);
@@ -16222,6 +16228,7 @@ void recall_joy2_hits_edit_flag(int param_1,float *param_2,int param_3);
 void proc_7F064934(longlong param_1);
 undefined4 proc_7F0649AC(longlong param_1);
 void proc_7F0649D8(int param_1);
+void handle_weapon_id_values_possibly_1st_person_animation(uint param_1,int param_2);
 void proc_7F066E64(void);
 int get_keyanalyzer_flag(void);
 void proc_7F066F08(void);

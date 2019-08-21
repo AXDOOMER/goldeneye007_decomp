@@ -332,13 +332,13 @@ glabel load_camera_intro_type_values
 /* 03A564 7F005A34 AC2099E0 */   sw    $zero, %lo(starting_right_weapon)($at)
 /* 03A568 7F005A38 8E020000 */  lw    $v0, ($s0)
 /* 03A56C 7F005A3C 24010009 */  li    $at, 9
-/* 03A570 7F005A40 3C128008 */  lui   $s2, %hi(ptr_BONDdata) # $s2, 0x8008
+/* 03A570 7F005A40 3C128008 */  lui   $s2, %hi(pPlayer) # $s2, 0x8008
 /* 03A574 7F005A44 104100EB */  beq   $v0, $at, .L7F005DF4
 /* 03A578 7F005A48 3C0142C8 */   li    $at, 0x42C80000 # 100.000000
 /* 03A57C 7F005A4C 4481B000 */  mtc1  $at, $f22
 /* 03A580 7F005A50 3C014780 */  li    $at, 0x47800000 # 65536.000000
 /* 03A584 7F005A54 4481A000 */  mtc1  $at, $f20
-/* 03A588 7F005A58 2652A0B0 */  addiu $s2, %lo(ptr_BONDdata) # addiu $s2, $s2, -0x5f50
+/* 03A588 7F005A58 2652A0B0 */  addiu $s2, %lo(pPlayer) # addiu $s2, $s2, -0x5f50
 /* 03A58C 7F005A5C 2C410009 */  sltiu $at, $v0, 9
 .L7F005A60:
 /* 03A590 7F005A60 102000DF */  beqz  $at, .L7F005DE0
@@ -596,8 +596,8 @@ def_7F005A74:
 .L7F005DF4:
 /* 03A924 7F005DF4 3C028003 */  lui   $v0, %hi(D_800364B8) # $v0, 0x8003
 /* 03A928 7F005DF8 8C4264B8 */  lw    $v0, %lo(D_800364B8)($v0)
-/* 03A92C 7F005DFC 3C128008 */  lui   $s2, %hi(ptr_BONDdata) # $s2, 0x8008
-/* 03A930 7F005E00 2652A0B0 */  addiu $s2, %lo(ptr_BONDdata) # addiu $s2, $s2, -0x5f50
+/* 03A92C 7F005DFC 3C128008 */  lui   $s2, %hi(pPlayer) # $s2, 0x8008
+/* 03A930 7F005E00 2652A0B0 */  addiu $s2, %lo(pPlayer) # addiu $s2, $s2, -0x5f50
 /* 03A934 7F005E04 10400012 */  beqz  $v0, .L7F005E50
 /* 03A938 7F005E08 3C018003 */   lui   $at, %hi(D_800364C0) # $at, 0x8003
 /* 03A93C 7F005E0C 0C002914 */  jal   get_random_value
