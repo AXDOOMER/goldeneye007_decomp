@@ -34,7 +34,8 @@ OSMesgQueue *sched_cmdQ;
  *	copies compressed 21990 to virtual address 701EE400, using 70200000 to decompress
  */
 #ifdef NONMATCHING
-void init(void) {
+void init(void)
+{
     s32 *cdata_vaddr_start;
     s32 cdata_rom_size;
     s32 datapos;
@@ -44,7 +45,8 @@ void init(void) {
     cdata_vaddr_start = get_csegmentSegmentStart();
     cdata_rom_size = (get_cdataSegmentRomEnd() - get_cdataSegmentRomStart());
 
-	for (datapos = ((cdata_rom_size + (get_rarezipSegmentRomEnd() - get_rarezipSegmentRomStart())) + -1); datapos >= 0; datapos--){
+	for (datapos = ((cdata_rom_size + (get_rarezipSegmentRomEnd() - get_rarezipSegmentRomStart())) + -1); datapos >= 0; datapos--)
+    {
 		_rarezipSegmentVaddrStart[-cdata_rom_size + datapos] = &cdata_vaddr_start[datapos];
 	}
 
@@ -65,7 +67,8 @@ void init(void) {
 	//UT_VEC
 	dest = (void *)0x80000000;
 	//XUT_VEC
-	while (dest != (void *)0x80000080){
+	while (dest != (void *)0x80000080)
+    {
 		dest = (dest + 0x10);
     	source = (source + 0x10);
     	dest[-0x10] = source[-0x10];
@@ -78,7 +81,8 @@ void init(void) {
     osWritebackDCacheAll();
     osInvalICache(0x80000000, 0x4000);
 
-	for (i=2; i<32; i++){
+	for (i=2; i<32; i++)
+    {
 		osUnmapTLB(i);
 	}
 

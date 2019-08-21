@@ -7539,9 +7539,471 @@ struct enviroment_struct {
     float anonymous_21;
 };
 
-typedef struct BONDdata BONDdata, *PBONDdata;
+typedef struct player_data player_data, *Pplayer_data;
 
-struct BONDdata {
+struct player_data {
+    int shots_fired;
+    int head_hits;
+    int body_hits;
+    int leg_hits;
+    int other_hit_weapon;
+    int other_hit_hat;
+    int other_hit_objects;
+    int kill_count;
+    int killed_gg_owner_count;
+    int killed_p1;
+    int killed_p2;
+    int killed_p3;
+    int killed_p4;
+    int time_other_players_on_screen;
+    float distance_traveled;
+    int damage_to_backside;
+    float body_armor_pickups;
+    int min_time_between_kills;
+    int max_time_between_kills;
+    int longest_inning;
+    s32 shortest_inning;
+    int most_killed_one_life;
+    int most_killed_one_time;
+    float handicap;
+    int flag_counter;
+    float player_perspective_height;
+    char order_out_in_yolt;
+    char have_token_or_goldengun;
+    char autoaim;
+    char sight;
+    int killed_civilians;
+};
+
+typedef enum BODIES {
+    BODY_Arctic_Commando=38,
+    BODY_Baron_Samedi=12,
+    BODY_Boris=6,
+    BODY_Civilian_1_Female=29,
+    BODY_Civilian_2=33,
+    BODY_Civilian_3=34,
+    BODY_Civilian_4=32,
+    BODY_Female_Mandy=72,
+    BODY_Female_Marion_Rosika=71,
+    BODY_Female_Sally=70,
+    BODY_Female_Vivien=73,
+    BODY_Formal_Wear=23,
+    BODY_Helicopter_Pilot=36,
+    BODY_Janus_Marine=17,
+    BODY_Janus_Special_Forces=4,
+    BODY_Jaws=13,
+    BODY_Jungle_Commando=0,
+    BODY_Jungle_Fatigues=24,
+    BODY_Left_Suit_Hand_Floating_Arm=41,
+    BODY_Male_Alan=43,
+    BODY_Male_B=50,
+    BODY_Male_Biker=61,
+    BODY_Male_Chris=54,
+    BODY_Male_Dave_Dr_Doak=51,
+    BODY_Male_Des=53,
+    BODY_Male_Duncan=47,
+    BODY_Male_Dwayne=49,
+    BODY_Male_Graeme=62,
+    BODY_Male_Grant=52,
+    BODY_Male_Jim=57,
+    BODY_Male_Joe=68,
+    BODY_Male_Joe_Altered=66,
+    BODY_Male_Joel=64,
+    BODY_Male_Karl=42,
+    BODY_Male_Ken=67,
+    BODY_Male_Lee=55,
+    BODY_Male_Mark=46,
+    BODY_Male_Martin=45,
+    BODY_Male_Mishkin=69,
+    BODY_Male_Neil=56,
+    BODY_Male_Pete=44,
+    BODY_Male_Pierce_Bond_1=74,
+    BODY_Male_Pierce_Bond_2=75,
+    BODY_Male_Pierce_Bond_3=76,
+    BODY_Male_Pierce_Bond_Parka=77,
+    BODY_Male_Pierce_Bond_Tuxedo=78,
+    BODY_Male_Robin=58,
+    BODY_Male_Scott=65,
+    BODY_Male_Shaun=48,
+    BODY_Male_Steve_Ellis=63,
+    BODY_Male_Steve_H=59,
+    BODY_Male_Terrorist=60,
+    BODY_Mayday=14,
+    BODY_Moonraker_Elite_1_Male=39,
+    BODY_Moonraker_Elite_2_Female=40,
+    BODY_Natalya_Jungle_Fatigues=79,
+    BODY_Natalya_Skirt=16,
+    BODY_Naval_Officer=20,
+    BODY_Oddjob=15,
+    BODY_Ourumov=7,
+    BODY_Parka=25,
+    BODY_Rosika=27,
+    BODY_Russian_Commandant=18,
+    BODY_Russian_Infantry=3,
+    BODY_Russian_Soldier=2,
+    BODY_Scientist_1_Male=35,
+    BODY_Scientist_2_Female=28,
+    BODY_Siberian_Guard_1_Mishkin=19,
+    BODY_Siberian_Guard_2=37,
+    BODY_Siberian_Special_Forces=21,
+    BODY_Special_Operations_Uniform=22,
+    BODY_St_Petersburg_Guard=1,
+    BODY_Trevelyan_006=9,
+    BODY_Trevelyan_Janus=8,
+    BODY_Tuxedo=5,
+    BODY_Unused_Female=26,
+    BODY_Unused_Male_1=30,
+    BODY_Unused_Male_2=31,
+    BODY_Valentin_=10,
+    BODY_Xenia=11
+} BODIES;
+
+typedef struct $2903A050EBC6442F98207E1AE6ED2D96 $2903A050EBC6442F98207E1AE6ED2D96, *P$2903A050EBC6442F98207E1AE6ED2D96;
+
+typedef struct $2903A050EBC6442F98207E1AE6ED2D96 ALSndPlayer;
+
+typedef struct ALEventQueue ALEventQueue, *PALEventQueue;
+
+typedef struct ALEvent ALEvent, *PALEvent;
+
+typedef union _union_144 _union_144, *P_union_144;
+
+typedef struct ALMIDIEvent ALMIDIEvent, *PALMIDIEvent;
+
+typedef struct ALTempoEvent ALTempoEvent, *PALTempoEvent;
+
+typedef struct ALEndEvent ALEndEvent, *PALEndEvent;
+
+typedef struct ALNoteEvent ALNoteEvent, *PALNoteEvent;
+
+typedef struct ALVolumeEvent ALVolumeEvent, *PALVolumeEvent;
+
+typedef struct ALSeqpLoopEvent ALSeqpLoopEvent, *PALSeqpLoopEvent;
+
+typedef struct ALSeqpVolEvent ALSeqpVolEvent, *PALSeqpVolEvent;
+
+typedef struct ALSeqpPriorityEvent ALSeqpPriorityEvent, *PALSeqpPriorityEvent;
+
+typedef struct ALSeqpSeqEvent ALSeqpSeqEvent, *PALSeqpSeqEvent;
+
+typedef struct ALSeqpBankEvent ALSeqpBankEvent, *PALSeqpBankEvent;
+
+typedef struct ALOscEvent ALOscEvent, *PALOscEvent;
+
+typedef struct ALSeqMarker ALSeqMarker, *PALSeqMarker;
+
+typedef struct ALBank_s ALBank_s, *PALBank_s;
+
+typedef struct ALBank_s ALBank;
+
+typedef struct ALVoiceState_s ALVoiceState_s, *PALVoiceState_s;
+
+typedef struct ALInstrument ALInstrument, *PALInstrument;
+
+typedef struct ALVoice_s ALVoice;
+
+typedef struct ALSound_s ALSound_s, *PALSound_s;
+
+typedef struct ALSound_s ALSound;
+
+typedef struct ALEnvelope ALEnvelope, *PALEnvelope;
+
+
+// WARNING! conflicting data type names: /libaudio.h/ALKeyMap - /GE Current Master.h/ALKeyMap
+
+struct ALEndEvent {
+    s32 ticks;
+    u8 status;
+    u8 type;
+    u8 len;
+};
+
+struct ALSeqpBankEvent {
+    ALBank * bank;
+};
+
+struct ALMIDIEvent {
+    s32 ticks;
+    u8 status;
+    u8 byte1;
+    u8 byte2;
+    u32 duration;
+};
+
+struct ALVolumeEvent {
+    struct ALVoice_s * voice;
+    ALMicroTime delta;
+    u8 vol;
+};
+
+struct ALSeqpPriorityEvent {
+    u8 chan;
+    u8 priority;
+};
+
+struct ALOscEvent {
+    struct ALVoiceState_s * vs;
+    void * oscState;
+    u8 chan;
+};
+
+struct ALSeqpLoopEvent {
+    struct ALSeqMarker * start;
+    struct ALSeqMarker * end;
+    s32 count;
+};
+
+struct ALTempoEvent {
+    s32 ticks;
+    u8 status;
+    u8 type;
+    u8 len;
+    u8 byte1;
+    u8 byte2;
+    u8 byte3;
+};
+
+struct ALSeqpVolEvent {
+    s16 vol;
+};
+
+struct ALNoteEvent {
+    struct ALVoice_s * voice;
+};
+
+struct ALSeqpSeqEvent {
+    void * seq;
+};
+
+union _union_144 {
+    struct ALMIDIEvent midi;
+    struct ALTempoEvent tempo;
+    struct ALEndEvent end;
+    struct ALNoteEvent note;
+    struct ALVolumeEvent vol;
+    struct ALSeqpLoopEvent loop;
+    struct ALSeqpVolEvent spvol;
+    struct ALSeqpPriorityEvent sppriority;
+    struct ALSeqpSeqEvent spseq;
+    struct ALSeqpBankEvent spbank;
+    struct ALOscEvent osc;
+};
+
+struct ALEvent {
+    s16 type;
+    union _union_144 msg;
+};
+
+struct ALBank_s {
+    s16 instCount;
+    u8 flags;
+    u8 pad;
+    s32 sampleRate;
+    struct ALInstrument * percussion;
+    struct ALInstrument * instArray[1];
+};
+
+struct ALInstrument {
+    u8 volume;
+    ALPan pan;
+    u8 priority;
+    u8 flags;
+    u8 tremType;
+    u8 tremRate;
+    u8 tremDepth;
+    u8 tremDelay;
+    u8 vibType;
+    u8 vibRate;
+    u8 vibDepth;
+    u8 vibDelay;
+    s16 bendRange;
+    s16 soundCount;
+    ALSound * soundArray[1];
+};
+
+struct ALEventQueue {
+    ALLink freeList;
+    ALLink allocList;
+    s32 eventCount;
+};
+
+struct ALEnvelope {
+    ALMicroTime attackTime;
+    ALMicroTime decayTime;
+    ALMicroTime releaseTime;
+    u8 attackVolume;
+    u8 decayVolume;
+};
+
+struct $2903A050EBC6442F98207E1AE6ED2D96 {
+    ALPlayer node;
+    struct ALEventQueue evtq;
+    struct ALEvent nextEvent;
+    struct ALSynth * drvr;
+    void * sndState;
+};
+
+struct ALVoiceState_s {
+    struct ALVoiceState_s * next;
+    ALVoice voice;
+    ALSound * sound;
+    ALMicroTime envEndTime;
+    f32 pitch;
+    f32 vibrato;
+    u8 envGain;
+    u8 channel;
+    u8 key;
+    u8 velocity;
+    u8 envPhase;
+    u8 phase;
+    u8 tremelo;
+    u8 flags;
+};
+
+struct ALSound_s {
+    struct ALEnvelope * envelope;
+    struct ALKeyMap * keyMap;
+    ALWaveTable * wavetable;
+    ALPan samplePan;
+    u8 sampleVolume;
+    u8 flags;
+};
+
+struct ALSeqMarker {
+    u8 * curPtr;
+    s32 lastTicks;
+    s32 curTicks;
+    s16 lastStatus;
+};
+
+typedef enum PROJECTILES {
+    PROJECTILES_MAX=46,
+    PROJECTILES_TYPE_BOMBCASE=226,
+    PROJECTILES_TYPE_BUG=245,
+    PROJECTILES_TYPE_GE_KEY=248,
+    PROJECTILES_TYPE_GLAUNCH_ROUND=203,
+    PROJECTILES_TYPE_GRENADE=196,
+    PROJECTILES_TYPE_KNIFE=186,
+    PROJECTILES_TYPE_MICROCAMERA=246,
+    PROJECTILES_TYPE_PLASTIQUE=273,
+    PROJECTILES_TYPE_PROX_MINE=200,
+    PROJECTILES_TYPE_REMOTE_MINE=199,
+    PROJECTILES_TYPE_ROCKET_ROUND=202,
+    PROJECTILES_TYPE_ROCKET_ROUND2=202,
+    PROJECTILES_TYPE_TIMED_MINE=201
+} PROJECTILES;
+
+typedef struct solo_target_times solo_target_times, *Psolo_target_times;
+
+struct solo_target_times {
+    short agent_time;
+    short secret_agent_time;
+    short OO_agent_time;
+};
+
+typedef enum LEVEL_INDEX {
+    LEVEL_INDEX_AME=28,
+    LEVEL_INDEX_ARCH=4,
+    LEVEL_INDEX_ARK=14,
+    LEVEL_INDEX_ASH=26,
+    LEVEL_INDEX_AZT=8,
+    LEVEL_INDEX_CAT=20,
+    LEVEL_INDEX_CAVE=19,
+    LEVEL_INDEX_CONTROL=3,
+    LEVEL_INDEX_CRAD=21,
+    LEVEL_INDEX_CRYP=12,
+    LEVEL_INDEX_DAM=13,
+    LEVEL_INDEX_DEPO=10,
+    LEVEL_INDEX_DEST=6,
+    LEVEL_INDEX_DISH=18,
+    LEVEL_INDEX_EAR=31,
+    LEVEL_INDEX_ELD=24,
+    LEVEL_INDEX_IMP=25,
+    LEVEL_INDEX_JUN=17,
+    LEVEL_INDEX_LEE=32,
+    LEVEL_INDEX_LEN=34,
+    LEVEL_INDEX_LIP=33,
+    LEVEL_INDEX_LUE=27,
+    LEVEL_INDEX_OAT=30,
+    LEVEL_INDEX_PAM=36,
+    LEVEL_INDEX_PETE=9,
+    LEVEL_INDEX_REF=11,
+    LEVEL_INDEX_RIT=29,
+    LEVEL_INDEX_RUN=15,
+    LEVEL_INDEX_SEVB=7,
+    LEVEL_INDEX_SEVBUNKER=0,
+    LEVEL_INDEX_SEVX=16,
+    LEVEL_INDEX_SEVXB=23,
+    LEVEL_INDEX_SHO=22,
+    LEVEL_INDEX_SILO=1,
+    LEVEL_INDEX_STATUE=2,
+    LEVEL_INDEX_TRA=5,
+    LEVEL_INDEX_WAX=35,
+    LEVEL_INDEX_X=37
+} LEVEL_INDEX;
+
+typedef struct ejected_cart ejected_cart, *Pejected_cart;
+
+struct ejected_cart {
+    struct Gitemheader * header;
+    void * text;
+};
+
+typedef struct mission_folder_setup mission_folder_setup, *Pmission_folder_setup;
+
+struct mission_folder_setup {
+    void * string_ptr;
+    short folder_text_preset;
+    short icon_text_preset;
+    int stage_id;
+    int unknown;
+    int type;
+    int mission_num;
+    void * briefing_name_ptr;
+};
+
+typedef struct MP_selectable_chars MP_selectable_chars, *PMP_selectable_chars;
+
+struct MP_selectable_chars {
+    short text_preset;
+    char gender;
+    char select_photo;
+    short body;
+    short head;
+    float pov;
+};
+
+typedef struct $DD54060F307CC511C1231C522D614BD1 $DD54060F307CC511C1231C522D614BD1, *P$DD54060F307CC511C1231C522D614BD1;
+
+struct $DD54060F307CC511C1231C522D614BD1 {
+    uchar * base;
+    int fmt;
+    int siz;
+    int xsize;
+    int ysize;
+    int lsize;
+    int addr;
+    int w;
+    int h;
+    int s;
+    int t;
+};
+
+typedef struct explosion_death_animation explosion_death_animation, *Pexplosion_death_animation;
+
+struct explosion_death_animation {
+    int anonymous_0;
+    int anonymous_1;
+    float anonymous_2;
+    float anonymous_3;
+    float anonymous_4;
+    float anonymous_5;
+    float anonymous_6;
+};
+
+typedef struct Player Player, *PPlayer;
+
+struct Player {
     int unknown;
     f32 xpos;
     f32 ypos;
@@ -7597,24 +8059,24 @@ struct BONDdata {
     int field_D0;
     int ptr_char_objectinstance;
     int player_button_control;
-    f32 current_health;
+    f32 bondhealth;
     f32 current_armor;
-    f32 previous_health;
-    f32 previous_armor;
-    f32 mp_watch_health_total;
-    f32 mp_watch_armor_total;
-    int invincibility_timer;
-    int health_bar_timer;
-    int field_FC;
+    f32 oldhealth;
+    f32 oldarmour;
+    f32 apparenthealth;
+    f32 apparentarmour;
+    int damageshowtime;
+    int healthshowtime;
+    int healthshowmode;
     int field_100;
     int field_104;
     int field_108;
     int field_10C;
-    int field_110;
-    int field_114;
-    int look_ahead_setting;
-    int field_11C;
-    int field_120;
+    int movecentrerelease;
+    int lookaheadcentreenabled;
+    int automovecentreenabled;
+    int fastmovecentreenabled;
+    int automovecentre;
     int insightaimmode;
     int autoyaimenabled;
     float autoaimy;
@@ -7624,28 +8086,28 @@ struct BONDdata {
     float autoaimx;
     int field_140;
     int field_144;
-    float azimuth_angle;
-    float azimuth_turning_direction;
-    f32 azimuth_cosine;
-    f32 azimuth_sine;
-    float inclination_angle1;
-    f32 inclination_angle2;
-    float inclination_turning_direction;
-    f32 inclination_cosine;
-    f32 inclination_sine;
-    float strafe_speed_multiplier;
-    float strafe_movement_direction;
-    float forward_speed_multiplier;
-    f32 forward_speed_multiplier_2;
-    int forward_speed_frame_counter;
+    float vv_theta;
+    float speedtheta;
+    f32 vv_costheta;
+    f32 vv_sintheta;
+    float vv_verta;
+    f32 vv_verta360;
+    float speedverta;
+    f32 vv_cosverta;
+    f32 vv_sinverta;
+    float speedsideways;
+    float speedstrafe;
+    float speedforwards;
+    f32 speedboost;
+    int speedmaxtime60;
     f32 boost_factor_x;
     f32 boost_factor_y;
     f32 boost_factor_z;
     f32 viewport_alpha;
-    f32 rate_of_change;
-    f32 time_for_change;
-    f32 final_alpha_level;
-    f32 field_19C;
+    f32 bondfadetime60;
+    f32 bondfadetimemax;
+    f32 bondfadefracold;
+    f32 bondfadefracnew;
     int field_1A0;
     int field_1A4;
     int field_1A8;
@@ -10232,468 +10694,6 @@ struct BONDdata {
     int field_2A74;
     int field_2A78;
     int field_2A7C;
-};
-
-typedef struct player_data player_data, *Pplayer_data;
-
-struct player_data {
-    int shots_fired;
-    int head_hits;
-    int body_hits;
-    int leg_hits;
-    int other_hit_weapon;
-    int other_hit_hat;
-    int other_hit_objects;
-    int kill_count;
-    int killed_gg_owner_count;
-    int killed_p1;
-    int killed_p2;
-    int killed_p3;
-    int killed_p4;
-    int time_other_players_on_screen;
-    float distance_traveled;
-    int damage_to_backside;
-    float body_armor_pickups;
-    int min_time_between_kills;
-    int max_time_between_kills;
-    int longest_inning;
-    s32 shortest_inning;
-    int most_killed_one_life;
-    int most_killed_one_time;
-    float handicap;
-    int flag_counter;
-    float player_perspective_height;
-    char order_out_in_yolt;
-    char have_token_or_goldengun;
-    char autoaim;
-    char sight;
-    int killed_civilians;
-};
-
-typedef enum BODIES {
-    BODY_Arctic_Commando=38,
-    BODY_Baron_Samedi=12,
-    BODY_Boris=6,
-    BODY_Civilian_1_Female=29,
-    BODY_Civilian_2=33,
-    BODY_Civilian_3=34,
-    BODY_Civilian_4=32,
-    BODY_Female_Mandy=72,
-    BODY_Female_Marion_Rosika=71,
-    BODY_Female_Sally=70,
-    BODY_Female_Vivien=73,
-    BODY_Formal_Wear=23,
-    BODY_Helicopter_Pilot=36,
-    BODY_Janus_Marine=17,
-    BODY_Janus_Special_Forces=4,
-    BODY_Jaws=13,
-    BODY_Jungle_Commando=0,
-    BODY_Jungle_Fatigues=24,
-    BODY_Left_Suit_Hand_Floating_Arm=41,
-    BODY_Male_Alan=43,
-    BODY_Male_B=50,
-    BODY_Male_Biker=61,
-    BODY_Male_Chris=54,
-    BODY_Male_Dave_Dr_Doak=51,
-    BODY_Male_Des=53,
-    BODY_Male_Duncan=47,
-    BODY_Male_Dwayne=49,
-    BODY_Male_Graeme=62,
-    BODY_Male_Grant=52,
-    BODY_Male_Jim=57,
-    BODY_Male_Joe=68,
-    BODY_Male_Joe_Altered=66,
-    BODY_Male_Joel=64,
-    BODY_Male_Karl=42,
-    BODY_Male_Ken=67,
-    BODY_Male_Lee=55,
-    BODY_Male_Mark=46,
-    BODY_Male_Martin=45,
-    BODY_Male_Mishkin=69,
-    BODY_Male_Neil=56,
-    BODY_Male_Pete=44,
-    BODY_Male_Pierce_Bond_1=74,
-    BODY_Male_Pierce_Bond_2=75,
-    BODY_Male_Pierce_Bond_3=76,
-    BODY_Male_Pierce_Bond_Parka=77,
-    BODY_Male_Pierce_Bond_Tuxedo=78,
-    BODY_Male_Robin=58,
-    BODY_Male_Scott=65,
-    BODY_Male_Shaun=48,
-    BODY_Male_Steve_Ellis=63,
-    BODY_Male_Steve_H=59,
-    BODY_Male_Terrorist=60,
-    BODY_Mayday=14,
-    BODY_Moonraker_Elite_1_Male=39,
-    BODY_Moonraker_Elite_2_Female=40,
-    BODY_Natalya_Jungle_Fatigues=79,
-    BODY_Natalya_Skirt=16,
-    BODY_Naval_Officer=20,
-    BODY_Oddjob=15,
-    BODY_Ourumov=7,
-    BODY_Parka=25,
-    BODY_Rosika=27,
-    BODY_Russian_Commandant=18,
-    BODY_Russian_Infantry=3,
-    BODY_Russian_Soldier=2,
-    BODY_Scientist_1_Male=35,
-    BODY_Scientist_2_Female=28,
-    BODY_Siberian_Guard_1_Mishkin=19,
-    BODY_Siberian_Guard_2=37,
-    BODY_Siberian_Special_Forces=21,
-    BODY_Special_Operations_Uniform=22,
-    BODY_St_Petersburg_Guard=1,
-    BODY_Trevelyan_006=9,
-    BODY_Trevelyan_Janus=8,
-    BODY_Tuxedo=5,
-    BODY_Unused_Female=26,
-    BODY_Unused_Male_1=30,
-    BODY_Unused_Male_2=31,
-    BODY_Valentin_=10,
-    BODY_Xenia=11
-} BODIES;
-
-typedef struct $2903A050EBC6442F98207E1AE6ED2D96 $2903A050EBC6442F98207E1AE6ED2D96, *P$2903A050EBC6442F98207E1AE6ED2D96;
-
-typedef struct $2903A050EBC6442F98207E1AE6ED2D96 ALSndPlayer;
-
-typedef struct ALEventQueue ALEventQueue, *PALEventQueue;
-
-typedef struct ALEvent ALEvent, *PALEvent;
-
-typedef union _union_144 _union_144, *P_union_144;
-
-typedef struct ALMIDIEvent ALMIDIEvent, *PALMIDIEvent;
-
-typedef struct ALTempoEvent ALTempoEvent, *PALTempoEvent;
-
-typedef struct ALEndEvent ALEndEvent, *PALEndEvent;
-
-typedef struct ALNoteEvent ALNoteEvent, *PALNoteEvent;
-
-typedef struct ALVolumeEvent ALVolumeEvent, *PALVolumeEvent;
-
-typedef struct ALSeqpLoopEvent ALSeqpLoopEvent, *PALSeqpLoopEvent;
-
-typedef struct ALSeqpVolEvent ALSeqpVolEvent, *PALSeqpVolEvent;
-
-typedef struct ALSeqpPriorityEvent ALSeqpPriorityEvent, *PALSeqpPriorityEvent;
-
-typedef struct ALSeqpSeqEvent ALSeqpSeqEvent, *PALSeqpSeqEvent;
-
-typedef struct ALSeqpBankEvent ALSeqpBankEvent, *PALSeqpBankEvent;
-
-typedef struct ALOscEvent ALOscEvent, *PALOscEvent;
-
-typedef struct ALSeqMarker ALSeqMarker, *PALSeqMarker;
-
-typedef struct ALBank_s ALBank_s, *PALBank_s;
-
-typedef struct ALBank_s ALBank;
-
-typedef struct ALVoiceState_s ALVoiceState_s, *PALVoiceState_s;
-
-typedef struct ALInstrument ALInstrument, *PALInstrument;
-
-typedef struct ALVoice_s ALVoice;
-
-typedef struct ALSound_s ALSound_s, *PALSound_s;
-
-typedef struct ALSound_s ALSound;
-
-typedef struct ALEnvelope ALEnvelope, *PALEnvelope;
-
-
-// WARNING! conflicting data type names: /libaudio.h/ALKeyMap - /GE Current Master.h/ALKeyMap
-
-struct ALEndEvent {
-    s32 ticks;
-    u8 status;
-    u8 type;
-    u8 len;
-};
-
-struct ALSeqpBankEvent {
-    ALBank * bank;
-};
-
-struct ALMIDIEvent {
-    s32 ticks;
-    u8 status;
-    u8 byte1;
-    u8 byte2;
-    u32 duration;
-};
-
-struct ALVolumeEvent {
-    struct ALVoice_s * voice;
-    ALMicroTime delta;
-    u8 vol;
-};
-
-struct ALSeqpPriorityEvent {
-    u8 chan;
-    u8 priority;
-};
-
-struct ALOscEvent {
-    struct ALVoiceState_s * vs;
-    void * oscState;
-    u8 chan;
-};
-
-struct ALSeqpLoopEvent {
-    struct ALSeqMarker * start;
-    struct ALSeqMarker * end;
-    s32 count;
-};
-
-struct ALTempoEvent {
-    s32 ticks;
-    u8 status;
-    u8 type;
-    u8 len;
-    u8 byte1;
-    u8 byte2;
-    u8 byte3;
-};
-
-struct ALSeqpVolEvent {
-    s16 vol;
-};
-
-struct ALNoteEvent {
-    struct ALVoice_s * voice;
-};
-
-struct ALSeqpSeqEvent {
-    void * seq;
-};
-
-union _union_144 {
-    struct ALMIDIEvent midi;
-    struct ALTempoEvent tempo;
-    struct ALEndEvent end;
-    struct ALNoteEvent note;
-    struct ALVolumeEvent vol;
-    struct ALSeqpLoopEvent loop;
-    struct ALSeqpVolEvent spvol;
-    struct ALSeqpPriorityEvent sppriority;
-    struct ALSeqpSeqEvent spseq;
-    struct ALSeqpBankEvent spbank;
-    struct ALOscEvent osc;
-};
-
-struct ALEvent {
-    s16 type;
-    union _union_144 msg;
-};
-
-struct ALBank_s {
-    s16 instCount;
-    u8 flags;
-    u8 pad;
-    s32 sampleRate;
-    struct ALInstrument * percussion;
-    struct ALInstrument * instArray[1];
-};
-
-struct ALInstrument {
-    u8 volume;
-    ALPan pan;
-    u8 priority;
-    u8 flags;
-    u8 tremType;
-    u8 tremRate;
-    u8 tremDepth;
-    u8 tremDelay;
-    u8 vibType;
-    u8 vibRate;
-    u8 vibDepth;
-    u8 vibDelay;
-    s16 bendRange;
-    s16 soundCount;
-    ALSound * soundArray[1];
-};
-
-struct ALEventQueue {
-    ALLink freeList;
-    ALLink allocList;
-    s32 eventCount;
-};
-
-struct ALEnvelope {
-    ALMicroTime attackTime;
-    ALMicroTime decayTime;
-    ALMicroTime releaseTime;
-    u8 attackVolume;
-    u8 decayVolume;
-};
-
-struct $2903A050EBC6442F98207E1AE6ED2D96 {
-    ALPlayer node;
-    struct ALEventQueue evtq;
-    struct ALEvent nextEvent;
-    struct ALSynth * drvr;
-    void * sndState;
-};
-
-struct ALVoiceState_s {
-    struct ALVoiceState_s * next;
-    ALVoice voice;
-    ALSound * sound;
-    ALMicroTime envEndTime;
-    f32 pitch;
-    f32 vibrato;
-    u8 envGain;
-    u8 channel;
-    u8 key;
-    u8 velocity;
-    u8 envPhase;
-    u8 phase;
-    u8 tremelo;
-    u8 flags;
-};
-
-struct ALSound_s {
-    struct ALEnvelope * envelope;
-    struct ALKeyMap * keyMap;
-    ALWaveTable * wavetable;
-    ALPan samplePan;
-    u8 sampleVolume;
-    u8 flags;
-};
-
-struct ALSeqMarker {
-    u8 * curPtr;
-    s32 lastTicks;
-    s32 curTicks;
-    s16 lastStatus;
-};
-
-typedef enum PROJECTILES {
-    PROJECTILES_MAX=46,
-    PROJECTILES_TYPE_BOMBCASE=226,
-    PROJECTILES_TYPE_BUG=245,
-    PROJECTILES_TYPE_GE_KEY=248,
-    PROJECTILES_TYPE_GLAUNCH_ROUND=203,
-    PROJECTILES_TYPE_GRENADE=196,
-    PROJECTILES_TYPE_KNIFE=186,
-    PROJECTILES_TYPE_MICROCAMERA=246,
-    PROJECTILES_TYPE_PLASTIQUE=273,
-    PROJECTILES_TYPE_PROX_MINE=200,
-    PROJECTILES_TYPE_REMOTE_MINE=199,
-    PROJECTILES_TYPE_ROCKET_ROUND=202,
-    PROJECTILES_TYPE_ROCKET_ROUND2=202,
-    PROJECTILES_TYPE_TIMED_MINE=201
-} PROJECTILES;
-
-typedef struct solo_target_times solo_target_times, *Psolo_target_times;
-
-struct solo_target_times {
-    short agent_time;
-    short secret_agent_time;
-    short OO_agent_time;
-};
-
-typedef enum LEVEL_INDEX {
-    LEVEL_INDEX_AME=28,
-    LEVEL_INDEX_ARCH=4,
-    LEVEL_INDEX_ARK=14,
-    LEVEL_INDEX_ASH=26,
-    LEVEL_INDEX_AZT=8,
-    LEVEL_INDEX_CAT=20,
-    LEVEL_INDEX_CAVE=19,
-    LEVEL_INDEX_CONTROL=3,
-    LEVEL_INDEX_CRAD=21,
-    LEVEL_INDEX_CRYP=12,
-    LEVEL_INDEX_DAM=13,
-    LEVEL_INDEX_DEPO=10,
-    LEVEL_INDEX_DEST=6,
-    LEVEL_INDEX_DISH=18,
-    LEVEL_INDEX_EAR=31,
-    LEVEL_INDEX_ELD=24,
-    LEVEL_INDEX_IMP=25,
-    LEVEL_INDEX_JUN=17,
-    LEVEL_INDEX_LEE=32,
-    LEVEL_INDEX_LEN=34,
-    LEVEL_INDEX_LIP=33,
-    LEVEL_INDEX_LUE=27,
-    LEVEL_INDEX_OAT=30,
-    LEVEL_INDEX_PAM=36,
-    LEVEL_INDEX_PETE=9,
-    LEVEL_INDEX_REF=11,
-    LEVEL_INDEX_RIT=29,
-    LEVEL_INDEX_RUN=15,
-    LEVEL_INDEX_SEVB=7,
-    LEVEL_INDEX_SEVBUNKER=0,
-    LEVEL_INDEX_SEVX=16,
-    LEVEL_INDEX_SEVXB=23,
-    LEVEL_INDEX_SHO=22,
-    LEVEL_INDEX_SILO=1,
-    LEVEL_INDEX_STATUE=2,
-    LEVEL_INDEX_TRA=5,
-    LEVEL_INDEX_WAX=35,
-    LEVEL_INDEX_X=37
-} LEVEL_INDEX;
-
-typedef struct ejected_cart ejected_cart, *Pejected_cart;
-
-struct ejected_cart {
-    struct Gitemheader * header;
-    void * text;
-};
-
-typedef struct mission_folder_setup mission_folder_setup, *Pmission_folder_setup;
-
-struct mission_folder_setup {
-    void * string_ptr;
-    short folder_text_preset;
-    short icon_text_preset;
-    int stage_id;
-    int unknown;
-    int type;
-    int mission_num;
-    void * briefing_name_ptr;
-};
-
-typedef struct MP_selectable_chars MP_selectable_chars, *PMP_selectable_chars;
-
-struct MP_selectable_chars {
-    short text_preset;
-    char gender;
-    char select_photo;
-    short body;
-    short head;
-    float pov;
-};
-
-typedef struct $DD54060F307CC511C1231C522D614BD1 $DD54060F307CC511C1231C522D614BD1, *P$DD54060F307CC511C1231C522D614BD1;
-
-struct $DD54060F307CC511C1231C522D614BD1 {
-    uchar * base;
-    int fmt;
-    int siz;
-    int xsize;
-    int ysize;
-    int lsize;
-    int addr;
-    int w;
-    int h;
-    int s;
-    int t;
-};
-
-typedef struct explosion_death_animation explosion_death_animation, *Pexplosion_death_animation;
-
-struct explosion_death_animation {
-    int anonymous_0;
-    int anonymous_1;
-    float anonymous_2;
-    float anonymous_3;
-    float anonymous_4;
-    float anonymous_5;
-    float anonymous_6;
 };
 
 
@@ -16551,8 +16551,8 @@ undefined8 proc_7F07D4C0(float *param_1,float *param_2,float *param_3);
 undefined8 proc_7F07D61C(float *param_1,float *param_2,float *param_3);
 f32 proc_7F07D954(u32 param_1);
 void proc_7F07D960(float *param_1,int param_2);
-void proc_7F07DE64(BONDdata *param_1);
-void proc_7F07DE9C(BONDdata *param_1);
+void proc_7F07DE64(Player *param_1);
+void proc_7F07DE9C(Player *param_1);
 void proc_7F07DEFC(void);
 float proc_7F07DF28(longlong param_1);
 void proc_7F07E010(undefined4 param_1);
@@ -16561,7 +16561,7 @@ ulonglong proc_7F07E068(void);
 void proc_7F07E090(void);
 float proc_7F07E388(void);
 void trigger_watch_zoom(f32 final,f32 time);
-BONDdata * proc_7F07E438(void);
+Player * proc_7F07E438(void);
 void proc_7F07E46C(void);
 void proc_7F07E504(void);
 void zoom_to_watch_on_open(void);
@@ -16625,7 +16625,7 @@ undefined8 write_stan_tiles_in_yellow(undefined8 param_1);
 void proc_7F089718(float param_1);
 void proc_7F08976C(f32 param_1);
 f32 proc_7F089778(int param_1);
-float proc_7F089780(BONDdata *param_1);
+float proc_7F089780(Player *param_1);
 int get_curplayer_positiondata(void);
 void kill_current_player(void);
 int proc_7F0898E8(void);

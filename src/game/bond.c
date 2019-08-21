@@ -6868,11 +6868,11 @@ void sub_GAME_7F07C540(s32 arg0) {
 }
 
 void set_BONDdata_lookahead_setting(s32 arg0) {
-    pPlayer->look_ahead_setting = arg0;
+    pPlayer->automovecentreenabled = arg0;
 }
 
 s32 get_BONDdata_lookahead_setting(void) {
-    return pPlayer->look_ahead_setting;
+    return pPlayer->automovecentreenabled;
 }
 
 void set_BONDdata_autoaim_y(s32 param_1)
@@ -25147,7 +25147,7 @@ glabel check_if_bond_is_invincible
 
 
 int check_if_healthbar_timer_greater_than_0(void) {
-  return (0 < pPlayer->health_bar_timer);
+  return (0 < pPlayer->healthshowtime);
 }
 
 
@@ -25658,7 +25658,7 @@ glabel get_BONDdata_watch_health
 
 
 f32 get_BONDdata_watch_armor(void) {
-  return pPlayer->current_armor;
+  return pPlayer->bondarmour;
 }
 
 
