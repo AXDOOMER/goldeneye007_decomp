@@ -2,6 +2,20 @@
 #include "game/eeprom.h"
 #include "game/mainmenu.h"
 
+/* EEPROM masks for in-game settings */
+#define OPTION_INVERTLOOK    0x0001
+#define OPTION_AUTOAIM       0x0002
+#define OPTION_AIMCONTROL    0x0004
+#define OPTION_SIGHTONSCREEN 0x0008
+#define OPTION_LOOKAHEAD     0x0010
+#define OPTION_DISPLAYAMMO   0x0020
+#define OPTION_SCREENWIDE    0x0040
+#define OPTION_SCREENRATIO   0x0080
+#define OPTION_CONTROLTYPE   0x0700
+#define OPTION_SCREENCINEMA  0x0800
+
+#define DEFAULT_OPTIONS (OPTION_AUTOAIM | OPTION_SIGHTONSCREEN | OPTION_LOOKAHEAD | OPTION_DISPLAYAMMO)
+
 // bss
 //CODE.bss:80069920
 struct save_data save1;
@@ -25,11 +39,11 @@ u32 dword_CODE_bss_80069B60;
 u32 save_selected_bond[] = {0,0,0,0};
 
 //D:8002C520
-struct save_data D_8002C520 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0x00, 0, 0, 0, 0, 0};
+struct save_data D_8002C520 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
 //D:8002C580
-struct save_data D_8002C580 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0x00, 0, 0, 0, 0, 0};
+struct save_data D_8002C580 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
 //D:8002C5E0
-struct save_data D_8002C5E0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0x00, 0, 0, 0, 0, 0};
+struct save_data D_8002C5E0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
 //D:8002C640
 u32 D_8002C640 = 0x00000000;
 u32 D_8002C644 = 0x00000000;
@@ -44,157 +58,53 @@ u32 dword_8002C65C = 0x00000000;
 
 
 //D:8002C660
-struct save_data D_8002C660 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0x00, 0, 0, 0, 0, 0};
+struct save_data D_8002C660 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
 
 //D:8002C6C0
-struct save_data D_8002C6C0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+struct save_data D_8002C6C0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C720
-struct save_data D_8002C720 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+struct save_data D_8002C720 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C780
-struct save_data D_8002C780 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+struct save_data D_8002C780 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C7E0
-struct save_data D_8002C7E0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+struct save_data D_8002C7E0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C840
-struct save_data D_8002C840 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+struct save_data D_8002C840 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C8A0
-struct save_data blank_eeprom = {0, 0, 0x80, 0x00, 0xFF, 0xFF, 0x00, 0x3A, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+struct save_data blank_eeprom = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 
-
-
-
-#ifdef NONMATCHING
 f32 get_007_reaction_speed(void)
 {
-  if (get_current_difficulty() != DIFFICULTY_007) {
-    slider_007_mode_reaction = 0.00000000;
-  }
-  return slider_007_mode_reaction;
+    if (get_current_difficulty() == DIFFICULTY_007) {
+        return slider_007_mode_reaction;
+    }
+    return 0.f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_007_reaction_speed
-/* 051DE0 7F01D2B0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 051DE4 7F01D2B4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 051DE8 7F01D2B8 0FC2FF04 */  jal   get_current_difficulty
-/* 051DEC 7F01D2BC 00000000 */   nop   
-/* 051DF0 7F01D2C0 24010003 */  li    $at, 3
-/* 051DF4 7F01D2C4 14410004 */  bne   $v0, $at, .L7F01D2D8
-/* 051DF8 7F01D2C8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 051DFC 7F01D2CC 3C018003 */  lui   $at, %hi(slider_007_mode_reaction) # $at, 0x8003
-/* 051E00 7F01D2D0 10000003 */  b     .L7F01D2E0
-/* 051E04 7F01D2D4 C420A9A0 */   lwc1  $f0, %lo(slider_007_mode_reaction)($at)
-.L7F01D2D8:
-/* 051E08 7F01D2D8 44800000 */  mtc1  $zero, $f0
-/* 051E0C 7F01D2DC 00000000 */  nop   
-.L7F01D2E0:
-/* 051E10 7F01D2E0 03E00008 */  jr    $ra
-/* 051E14 7F01D2E4 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
-
-
-#ifdef NONMATCHING
 f32 get_007_health_mod(void)
 {
-  if (get_current_difficulty() != DIFFICULTY_007) {
-    slider_007_mode_health = 1.00000000;
-  }
-  return slider_007_mode_health;
+    if (get_current_difficulty() == DIFFICULTY_007) {
+        return slider_007_mode_health;
+    }
+    return 1.f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_007_health_mod
-/* 051E18 7F01D2E8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 051E1C 7F01D2EC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 051E20 7F01D2F0 0FC2FF04 */  jal   get_current_difficulty
-/* 051E24 7F01D2F4 00000000 */   nop   
-/* 051E28 7F01D2F8 24010003 */  li    $at, 3
-/* 051E2C 7F01D2FC 14410004 */  bne   $v0, $at, .L7F01D310
-/* 051E30 7F01D300 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 051E34 7F01D304 3C018003 */  lui   $at, %hi(slider_007_mode_health) # $at, 0x8003
-/* 051E38 7F01D308 10000004 */  b     .L7F01D31C
-/* 051E3C 7F01D30C C420A9A4 */   lwc1  $f0, %lo(slider_007_mode_health)($at)
-.L7F01D310:
-/* 051E40 7F01D310 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 051E44 7F01D314 44810000 */  mtc1  $at, $f0
-/* 051E48 7F01D318 00000000 */  nop   
-.L7F01D31C:
-/* 051E4C 7F01D31C 03E00008 */  jr    $ra
-/* 051E50 7F01D320 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
-
-
-#ifdef NONMATCHING
 f32 get_007_damage_mod(void)
 {
-  if (get_current_difficulty() != DIFFICULTY_007) {
-    slider_007_mode_accuracy = 1.00000000;
-  }
-  return slider_007_mode_accuracy;
+    if (get_current_difficulty() == DIFFICULTY_007) {
+        return slider_007_mode_accuracy;
+    }
+    return 1.f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_007_damage_mod
-/* 051E54 7F01D324 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 051E58 7F01D328 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 051E5C 7F01D32C 0FC2FF04 */  jal   get_current_difficulty
-/* 051E60 7F01D330 00000000 */   nop   
-/* 051E64 7F01D334 24010003 */  li    $at, 3
-/* 051E68 7F01D338 14410004 */  bne   $v0, $at, .L7F01D34C
-/* 051E6C 7F01D33C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 051E70 7F01D340 3C018003 */  lui   $at, %hi(slider_007_mode_accuracy) # $at, 0x8003
-/* 051E74 7F01D344 10000004 */  b     .L7F01D358
-/* 051E78 7F01D348 C420A9A8 */   lwc1  $f0, %lo(slider_007_mode_accuracy)($at)
-.L7F01D34C:
-/* 051E7C 7F01D34C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 051E80 7F01D350 44810000 */  mtc1  $at, $f0
-/* 051E84 7F01D354 00000000 */  nop   
-.L7F01D358:
-/* 051E88 7F01D358 03E00008 */  jr    $ra
-/* 051E8C 7F01D35C 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
-
-
-#ifdef NONMATCHING
 f32 get_007_accuracy_mod(void)
 {
-  if (get_current_difficulty() != DIFFICULTY_007) {
-    slider_007_mode_damage = 1.00000000;
-  }
-  return slider_007_mode_damage;
+    if (get_current_difficulty() == DIFFICULTY_007) {
+        return slider_007_mode_damage;
+    }
+    return 1.f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_007_accuracy_mod
-/* 051E90 7F01D360 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 051E94 7F01D364 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 051E98 7F01D368 0FC2FF04 */  jal   get_current_difficulty
-/* 051E9C 7F01D36C 00000000 */   nop   
-/* 051EA0 7F01D370 24010003 */  li    $at, 3
-/* 051EA4 7F01D374 14410004 */  bne   $v0, $at, .L7F01D388
-/* 051EA8 7F01D378 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 051EAC 7F01D37C 3C018003 */  lui   $at, %hi(slider_007_mode_damage) # $at, 0x8003
-/* 051EB0 7F01D380 10000004 */  b     .L7F01D394
-/* 051EB4 7F01D384 C420A9AC */   lwc1  $f0, %lo(slider_007_mode_damage)($at)
-.L7F01D388:
-/* 051EB8 7F01D388 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 051EBC 7F01D38C 44810000 */  mtc1  $at, $f0
-/* 051EC0 7F01D390 00000000 */  nop   
-.L7F01D394:
-/* 051EC4 7F01D394 03E00008 */  jr    $ra
-/* 051EC8 7F01D398 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
 

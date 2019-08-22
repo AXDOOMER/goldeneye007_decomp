@@ -2721,7 +2721,7 @@ s32 get_controls_locked_flag(void) {
 }
 
 
-s32 get_current_difficulty(void) {
+DIFFICULTY get_current_difficulty(void) {
     return difficulty_0;
 }
 
