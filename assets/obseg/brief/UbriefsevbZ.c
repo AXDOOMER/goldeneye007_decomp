@@ -1,22 +1,22 @@
 #include "assets/obseg/brief/Ubrief.h"
 
 struct BriefStruct UbriefsevbZ = {
-    {                        /* Mission Briefing */
-        0x7400,              /* Background */
-        0x7401,              /* M Briefing */
-        0x7402,              /* Q Branch */
-        0x7403               /* Moneypenny */
+    {                                          /* Mission Briefing */
+        TEXT(LSEVB, 0),                        /* Background */
+        TEXT(LSEVB, 1),                        /* M Briefing */
+        TEXT(LSEVB, 2),                        /* Q Branch */
+        TEXT(LSEVB, 3)                         /* Moneypenny */
     },
-    {                        /* Objectives (Text and Difficult) */
-        {0x7404, DIFF_SA},   /* Compare staff / casualty lists */
-        {0x7405, DIFF_A},    /* Recover CCTV tape */
-        {0x7406, DIFF_SA},   /* Disable all security cameras */
-        {0x7407, DIFF_00A},  /* Recover Goldeneye operations manual */
-        {0x7408, DIFF_A},    /* Escape with Natalya */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000}     /* Not assigned */
+    {                                          /* Objectives (Text and Difficult) */
+        {TEXT(LSEVB, 4), DIFFICULTY_SECRET},   /* Compare staff / casualty lists */
+        {TEXT(LSEVB, 5), DIFFICULTY_AGENT},    /* Recover CCTV tape */
+        {TEXT(LSEVB, 6), DIFFICULTY_SECRET},   /* Disable all security cameras */
+        {TEXT(LSEVB, 7), DIFFICULTY_00},       /* Recover Goldeneye operations manual */
+        {TEXT(LSEVB, 8), DIFFICULTY_AGENT},    /* Escape with Natalya */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0}                                 /* Not assigned */
     }
 };

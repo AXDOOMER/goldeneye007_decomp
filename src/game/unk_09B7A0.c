@@ -25,7 +25,7 @@ s16 word_CODE_bss_8007A0F2;
 
 
 void null_init_main_1(void) {
-
+    return;
 }
 
 
@@ -591,11 +591,11 @@ glabel sub_GAME_7F09BE4C
 .L7F09BE90:
 /* 0D09C0 7F09BE90 3C088008 */  lui   $t0, %hi(dword_CODE_bss_8007A0EC) # $t0, 0x8008
 /* 0D09C4 7F09BE94 3C0B8008 */  lui   $t3, %hi(word_CODE_bss_8007A0F2) # $t3, 0x8008
-/* 0D09C8 7F09BE98 3C068008 */  lui   $a2, %hi(D_8007A0DE) # $a2, 0x8008
+/* 0D09C8 7F09BE98 3C068008 */  lui   $a2, %hi(dword_CODE_bss_8007A0DC+0x2) # $a2, 0x8008
 /* 0D09CC 7F09BE9C 8D08A0EC */  lw    $t0, %lo(dword_CODE_bss_8007A0EC)($t0)
 /* 0D09D0 7F09BEA0 256BA0F2 */  addiu $t3, %lo(word_CODE_bss_8007A0F2) # addiu $t3, $t3, -0x5f0e
 /* 0D09D4 7F09BEA4 10000003 */  b     .L7F09BEB4
-/* 0D09D8 7F09BEA8 84C6A0DE */   lh    $a2, %lo(D_8007A0DE)($a2)
+/* 0D09D8 7F09BEA8 84C6A0DE */   lh    $a2, %lo(dword_CODE_bss_8007A0DC+0x2)($a2)
 .L7F09BEAC:
 /* 0D09DC 7F09BEAC 10000060 */  b     .L7F09C030
 /* 0D09E0 7F09BEB0 00001025 */   move  $v0, $zero

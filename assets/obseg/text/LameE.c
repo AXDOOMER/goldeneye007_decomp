@@ -1,9 +1,9 @@
 #include "game/lvl_text.h"
 
 struct stringentry LameE[] = {
- '\0',
- '\0',
- '\0',
- '\0',
- '\0'
+ NULL,
+ NULL,
+ NULL,
+ NULL,
+ NULL
 };

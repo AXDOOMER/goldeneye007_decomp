@@ -327,7 +327,7 @@ glabel copy_table1_env_to_current
 /* 0EF414 7F0BA8E4 C7AA001C */  lwc1  $f10, 0x1c($sp)
 /* 0EF418 7F0BA8E8 46082183 */  div.s $f6, $f4, $f8
 /* 0EF41C 7F0BA8EC 44814000 */  mtc1  $at, $f8
-/* 0EF420 7F0BA8F0 3C018008 */  lui   $at, 0x8008
+/* 0EF420 7F0BA8F0 3C018008 */  lui   $at, %hi(ptr_nearfog_enviroment_values)
 /* 0EF424 7F0BA8F4 460A3100 */  add.s $f4, $f6, $f10
 /* 0EF428 7F0BA8F8 46082183 */  div.s $f6, $f4, $f8
 /* 0EF42C 7F0BA8FC E4660014 */  swc1  $f6, 0x14($v1)
@@ -494,8 +494,8 @@ glabel load_enviroment
 /* 0EF5DC 7F0BAAAC 3C018004 */  lui   $at, %hi(near_fog_times_intensity) # $at, 0x8004
 /* 0EF5E0 7F0BAAB0 11C0001A */  beqz  $t6, .L7F0BAB1C
 /* 0EF5E4 7F0BAAB4 E4264DC8 */   swc1  $f6, %lo(near_fog_times_intensity)($at)
-/* 0EF5E8 7F0BAAB8 3C098004 */  lui   $t1, 0x8004
-/* 0EF5EC 7F0BAABC 25234E10 */  addiu $v1, $t1, 0x4e10
+/* 0EF5E8 7F0BAAB8 3C098004 */  lui   $t1, %hi(fog_tables)
+/* 0EF5EC 7F0BAABC 25234E10 */  addiu $v1, $t1, %lo(fog_tables)
 /* 0EF5F0 7F0BAAC0 8C6F0000 */  lw    $t7, ($v1)
 /* 0EF5F4 7F0BAAC4 3C188004 */  lui   $t8, %hi(fog_tables) # $t8, 0x8004
 /* 0EF5F8 7F0BAAC8 27184E10 */  addiu $t8, %lo(fog_tables) # addiu $t8, $t8, 0x4e10
@@ -930,7 +930,7 @@ glabel sub_GAME_7F0BB070
 
 .L7F0BB088:
 /* 0EFBB8 7F0BB088 10A0003D */  beqz  $a1, .L7F0BB180
-/* 0EFBBC 7F0BB08C 3C078004 */   lui   $a3, 0x8004
+/* 0EFBBC 7F0BB08C 3C078004 */   lui   $a3, %hi(ptr_current_data)
 /* 0EFBC0 7F0BB090 3C078004 */  lui   $a3, %hi(ptr_current_data) # $a3, 0x8004
 /* 0EFBC4 7F0BB094 00801025 */  move  $v0, $a0
 /* 0EFBC8 7F0BB098 3C0FF800 */  lui   $t7, 0xf800
@@ -998,7 +998,7 @@ glabel sub_GAME_7F0BB070
 .L7F0BB180:
 /* 0EFCB0 7F0BB180 00801025 */  move  $v0, $a0
 /* 0EFCB4 7F0BB184 3C08F800 */  lui   $t0, 0xf800
-/* 0EFCB8 7F0BB188 24E74DCC */  addiu $a3, $a3, 0x4dcc
+/* 0EFCB8 7F0BB188 24E74DCC */  addiu $a3, $a3, %lo(ptr_current_data)
 /* 0EFCBC 7F0BB18C AC480000 */  sw    $t0, ($v0)
 /* 0EFCC0 7F0BB190 90E9000A */  lbu   $t1, 0xa($a3)
 /* 0EFCC4 7F0BB194 90F80009 */  lbu   $t8, 9($a3)
@@ -1206,7 +1206,7 @@ glabel if_sky_present_convert_values
 /* 0EFEF4 7F0BB3C4 3C028004 */  lui   $v0, %hi(ptr_current_data) # $v0, 0x8004
 /* 0EFEF8 7F0BB3C8 24424DCC */  addiu $v0, %lo(ptr_current_data) # addiu $v0, $v0, 0x4dcc
 /* 0EFEFC 7F0BB3CC 4602203C */  c.lt.s $f4, $f2
-/* 0EFF00 7F0BB3D0 3C038008 */  lui   $v1, 0x8008
+/* 0EFF00 7F0BB3D0 3C038008 */  lui   $v1, %hi(buffer_far_pervasiveness)
 /* 0EFF04 7F0BB3D4 45020004 */  bc1fl .L7F0BB3E8
 /* 0EFF08 7F0BB3D8 904F0008 */   lbu   $t7, 8($v0)
 /* 0EFF0C 7F0BB3DC 03E00008 */  jr    $ra
@@ -1217,7 +1217,7 @@ glabel if_sky_present_convert_values
 /* 0EFF18 7F0BB3E8 3C01437F */  li    $at, 0x437F0000 # 255.000000
 /* 0EFF1C 7F0BB3EC 44816000 */  mtc1  $at, $f12
 /* 0EFF20 7F0BB3F0 448F3000 */  mtc1  $t7, $f6
-/* 0EFF24 7F0BB3F4 246325C8 */  addiu $v1, $v1, 0x25c8
+/* 0EFF24 7F0BB3F4 246325C8 */  addiu $v1, $v1, %lo(buffer_far_pervasiveness)
 /* 0EFF28 7F0BB3F8 05E10005 */  bgez  $t7, .L7F0BB410
 /* 0EFF2C 7F0BB3FC 46803220 */   cvt.s.w $f8, $f6
 /* 0EFF30 7F0BB400 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000

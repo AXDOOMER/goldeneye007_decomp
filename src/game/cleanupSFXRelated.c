@@ -6,7 +6,7 @@ void cleanupSFXRelated(void) {
     {
         if (sfxGetArg0Unk3F(SFX_80036458) != 0)
         {
-            sfxSetArg0Unk3EPostEvent(SFX_80036458);
+            sfxDeactivate(SFX_80036458);
         }
     }
 
@@ -14,7 +14,7 @@ void cleanupSFXRelated(void) {
     {
         if (sfxGetArg0Unk3F(SFX_8003645C) != 0)
         {
-            sfxSetArg0Unk3EPostEvent(SFX_8003645C);
+            sfxDeactivate(SFX_8003645C);
         }
     }
 

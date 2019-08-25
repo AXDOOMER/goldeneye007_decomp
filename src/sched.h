@@ -50,7 +50,7 @@ typedef struct {
     OSMesg      intBuf[OS_SC_MAX_MESGS];
     OSMesgQueue cmdQ;
     OSMesg      cmdMsgBuf[OS_SC_MAX_MESGS];
-    OSThread    thread;
+    OSThread    *thread;
     OSScClient  *clientList;
     OSScTask    *audioListHead;
     OSScTask    *gfxListHead;
@@ -62,7 +62,8 @@ typedef struct {
     s32         doAudio;
 } OSSched;
 
-extern char sc[0xD8];
+extern OSSched sc;
+//extern OSScClient gfxClient;
 extern char gfxClient[0x18];
 
 void activate_stderr(u32 flag);
@@ -72,7 +73,8 @@ void setUserCompareValue(u32 value);
 extern void CheckDisplayErrorBuffer(u32 *buffer);
 extern void CheckDisplayErrorBufferEvery16Frames(u32 framecount);
 void osCreateLog(void);
-
+void __scMain(void *arg);
+void __scYield(OSSched *sc) ;
 
 void            osCreateScheduler(OSSched *s, void *stack, u8 mode, u8 numFields);
 void            osScAddClient(OSSched *s, OSScClient *c, OSMesgQueue *msgQ);

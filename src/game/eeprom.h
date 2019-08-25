@@ -10,8 +10,7 @@ struct save_data
   char flag_007;
   char music_vol;
   char sfx_vol;
-  char controller_config;
-  char options;
+  short options;
   char unlocked_cheats_1;
   char unlocked_cheats_2;
   char unlocked_cheats_3;
@@ -34,5 +33,7 @@ struct save_data
     u8 field_0x5d[3];
 
 };
+
+u8 removed_would_have_returned_bond_for_folder_num(u32 folder);
 
 #endif

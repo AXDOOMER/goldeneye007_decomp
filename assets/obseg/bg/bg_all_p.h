@@ -39,6 +39,15 @@ struct xyzpoint
 };
 
 /* 3 */
+struct portal_3_point
+{
+    char numpoints;
+    char padding1;
+    char padding2;
+    char padding3;
+    struct xyzpoint points[3];
+};
+
 struct portal_4_point
 {
     char numpoints;
@@ -46,6 +55,24 @@ struct portal_4_point
     char padding2;
     char padding3;
     struct xyzpoint points[4];
+};
+
+struct portal_5_point
+{
+    char numpoints;
+    char padding1;
+    char padding2;
+    char padding3;
+    struct xyzpoint points[5];
+};
+
+struct portal_6_point
+{
+    char numpoints;
+    char padding1;
+    char padding2;
+    char padding3;
+    struct xyzpoint points[6];
 };
 
 extern struct room_data_table_entry room_data_table[];

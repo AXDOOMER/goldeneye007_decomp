@@ -2,6 +2,12 @@
 #include "ultra64.h"
 #include "sched.h"
 #include "audi.h"
+
+/**
+ * @file audi.c
+ * This file contains audio code.
+ */
+
 u32 D_800230F0 = 0;
 u32 audFrameCt = 0;
 u32 nextDMA = 0;
@@ -72,7 +78,9 @@ OSMesgQueue audDMAMessageQ;
 char audDMAMessageBuf[0x108];
 
 
-
+/**
+ * 29D0	70001BD0
+ */
 #ifdef NONMATCHING
 void amCreateAudioMgr(void *arg0)
 {
@@ -361,10 +369,10 @@ glabel amCreateAudioMgr
 /* 002A44 70001E44 3C028006 */  lui   $v0, %hi(dmaBuffs) # $v0, 0x8006
 /* 002A48 70001E48 2442E7C0 */  addiu $v0, %lo(dmaBuffs) # addiu $v0, $v0, -0x1840
 /* 002A4C 70001E4C 3C118006 */  lui   $s1, %hi(dmaBuffs) # $s1, 0x8006
-/* 002A50 70001E50 3C108006 */  lui   $s0, 0x8006
+/* 002A50 70001E50 3C108006 */  lui   $s0, %hi(dmaBuffs+20)
 /* 002A54 70001E54 AC400004 */  sw    $zero, 4($v0)
 /* 002A58 70001E58 AC400000 */  sw    $zero, ($v0)
-/* 002A5C 70001E5C 2610E7D4 */  addiu $s0, $s0, -0x182c
+/* 002A5C 70001E5C 2610E7D4 */  addiu $s0, $s0, %lo(dmaBuffs+20)
 /* 002A60 70001E60 2631E7C0 */  addiu $s1, %lo(dmaBuffs) # addiu $s1, $s1, -0x1840
 /* 002A64 70001E64 00009025 */  move  $s2, $zero
 .L70001E68:
@@ -432,7 +440,11 @@ glabel amCreateAudioMgr
 )
 #endif
 
-
+/**
+ * 2B58	70001F58
+ * insert sound manager thread
+ *	redirect to 7000D580: A0=8005E530
+ */
 #ifdef NONMATCHING
 void startaudiThread(void) {
     osStartThread(&_am+0x18);
@@ -452,10 +464,9 @@ glabel startaudiThread
 )
 #endif
 
-
-
-
-
+/**
+ * 2B7C	70001F7C
+ */
 #ifdef NONMATCHING
 void _amMain(s32 arg0)
 {
@@ -635,12 +646,12 @@ glabel _amMain
 /* 002C5C 7000205C 3C0F8002 */  lui   $t7, %hi(audFrameCt) # $t7, 0x8002
 /* 002C60 70002060 8DEF30F4 */  lw    $t7, %lo(audFrameCt)($t7)
 /* 002C64 70002064 24010003 */  li    $at, 3
-/* 002C68 70002068 3C048006 */  lui   $a0, 0x8006
+/* 002C68 70002068 3C048006 */  lui   $a0, %hi(_am+8)
 /* 002C6C 7000206C 01E1001B */  divu  $zero, $t7, $at
 /* 002C70 70002070 0000C010 */  mfhi  $t8
 /* 002C74 70002074 0018C880 */  sll   $t9, $t8, 2
 /* 002C78 70002078 00992021 */  addu  $a0, $a0, $t9
-/* 002C7C 7000207C 8C84E520 */  lw    $a0, -0x1ae0($a0)
+/* 002C7C 7000207C 8C84E520 */  lw    $a0, %lo(_am+8)($a0)
 /* 002C80 70002080 0C000891 */  jal   _amHandleFrameMsg
 /* 002C84 70002084 8FA50060 */   lw    $a1, 0x60($sp)
 /* 002C88 70002088 26310001 */  addiu $s1, $s1, 1
@@ -763,9 +774,10 @@ glabel _amMain
 )
 #endif
 
-
-
-
+/**
+ * 2E44	70002244
+ *	accepts: A0=, A1=p->audio packet
+ */
 #ifdef NONMATCHING
 void _amHandleFrameMsg(void *arg0, s32 arg1, void *argB) {
     s32 sp24;
@@ -845,7 +857,7 @@ glabel _amHandleFrameMsg
 /* 002EC0 700022C0 000A5C03 */  sra   $t3, $t2, 0x10
 /* 002EC4 700022C4 00EB082A */  slt   $at, $a3, $t3
 /* 002EC8 700022C8 10200003 */  beqz  $at, .L700022D8
-/* 002ECC 700022CC 3C048006 */   lui   $a0, 0x8006
+/* 002ECC 700022CC 3C048006 */   lui   $a0, %hi(_am)
 /* 002ED0 700022D0 A6030004 */  sh    $v1, 4($s0)
 /* 002ED4 700022D4 86070004 */  lh    $a3, 4($s0)
 .L700022D8:
@@ -854,7 +866,7 @@ glabel _amHandleFrameMsg
 /* 002EE0 700022E0 24A5ECCC */  addiu $a1, %lo(cmdLen) # addiu $a1, $a1, -0x1334
 /* 002EE4 700022E4 000C6880 */  sll   $t5, $t4, 2
 /* 002EE8 700022E8 008D2021 */  addu  $a0, $a0, $t5
-/* 002EEC 700022EC 8C84E518 */  lw    $a0, -0x1ae8($a0)
+/* 002EEC 700022EC 8C84E518 */  lw    $a0, %lo(_am)($a0)
 /* 002EF0 700022F0 0C003C42 */  jal   alAudioFrame
 /* 002EF4 700022F4 8FA60024 */   lw    $a2, 0x24($sp)
 /* 002EF8 700022F8 3C0E8006 */  lui   $t6, %hi(_am+0x200) # $t6, 0x8006
@@ -919,24 +931,17 @@ glabel _amHandleFrameMsg
 )
 #endif
 
-
-
-
+/**
+ * 2FE4	700023E4
+ */
 #ifdef NONMATCHING
-void __amHandleDoneMsg(s32 arg0) {
-    // Node 0
-    if ((osAiGetLength() >> 2) == 0)
-    {
-        // Node 1
-        if (firstTime == 0)
-        {
-            // Node 2
-            firstTime = 0;
-            return;
-            // (possible return value: osAiGetLength())
-        }
-    }
-    // (possible return value: osAiGetLength())
+void __amHandleDoneMsg(AudioInfo *info) {
+  int samplesLeft;
+  
+  samplesLeft = osAiGetLength();
+  if ((samplesLeft >> 2 == 0) && (firstTime == 0)) {
+    firstTime = 0;
+  }
 }
 #else
 GLOBAL_ASM(
@@ -963,9 +968,9 @@ glabel __amHandleDoneMsg
 )
 #endif
 
-
-
-
+/**
+ * 3024	70002424
+ */
 #ifdef NONMATCHING
 s32 __amDMA(u32 arg0, s32 arg1, ? arg2, s32 arg14) {
     s32 sp30;
@@ -1179,9 +1184,9 @@ glabel __amDMA
 )
 #endif
 
-
-
-
+/**
+ * 31D8	700025D8
+ */
 #ifdef NONMATCHING
 void *__amDmaNew(void *arg0) {
     // Node 0
@@ -1219,9 +1224,9 @@ glabel __amDmaNew
 )
 #endif
 
-
-
-
+/**
+ *  3210	70002610
+ */
 #ifdef NONMATCHING
 void __clearAudioDMA(void) {
     ?32 sp40;

@@ -1,22 +1,22 @@
 #include "assets/obseg/brief/Ubrief.h"
 
 struct BriefStruct UbriefdamZ = {
-    {                        /* Mission Briefing */
-        0x2C00,              /* Background */
-        0x2C01,              /* M Briefing */
-        0x2C02,              /* Q Branch */
-        0x2C03               /* Moneypenny */
+    {                                          /* Mission Briefing */
+        TEXT(LDAM, 0),                         /* Background */
+        TEXT(LDAM, 1),                         /* M Briefing */
+        TEXT(LDAM, 2),                         /* Q Branch */
+        TEXT(LDAM, 3)                          /* Moneypenny */
     },
-    {                        /* Objectives (Text and Difficult) */
-        {0x2C04, DIFF_SA},   /* Neutralize all alarms */
-        {0x2C05, DIFF_00A},  /* Install covert modem */
-        {0x2C06, DIFF_00A},  /* Intercept data backup */
-        {0x2C07, DIFF_A},    /* Bungee jump from platform */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000}     /* Not assigned */
+    {                                          /* Objectives (Text and Difficult) */
+        {TEXT(LDAM, 4), DIFFICULTY_SECRET},    /* Neutralize all alarms */
+        {TEXT(LDAM, 5), DIFFICULTY_00},        /* Install covert modem */
+        {TEXT(LDAM, 6), DIFFICULTY_00},        /* Intercept data backup */
+        {TEXT(LDAM, 7), DIFFICULTY_AGENT},     /* Bungee jump from platform */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0}                                 /* Not assigned */
     }
 };

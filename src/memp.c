@@ -1,6 +1,9 @@
 #include "ultra64.h"
 #include "memp.h"
-
+/**
+ * @file memp.c
+ * This file contains code for memp.
+ */
 
 char memory_bank_ptrs[0x8];
 char D_80063BB8[0x8];
@@ -46,10 +49,10 @@ const char aMe_0[] = "-me";
 
 
 
-
-
-
-
+/**
+ * 9F80	70009380
+ *     V0=p->debug.notice.list entry for memp_c_debug
+ */
 void something_with_memp_c_debug(void) {
 
     get_ptr_debug_notice_list_entry(&ptr_memp_c_debug_debug_notice_list, &aMemp_c_debug); //should be "memp_c_debug"
@@ -60,6 +63,12 @@ void something_with_memp_c_debug(void) {
 
 
 
+/**
+ * 9FAC	700093AC
+ *     initialize memory allocation table and set font and text bank sizes
+ *     accepts: A0=p->buffer, A1=size
+ *     uses "-mf", "-ml", "-me" strings
+ */
 #ifdef NONMATCHING
 void check_memflag_tokens(s32 arg0, s32 arg1, s32 arg11) {
     ? sp20;
@@ -221,6 +230,11 @@ glabel check_memflag_tokens
 
 
 
+/**
+ * A114	70009514
+ *     initialize allocations using table A0
+ *     accepts: A0=p->allocation sizes
+ */
 #ifdef NONMATCHING
 void *memp_related_0(void *arg0) {
     s32 sp30;
@@ -458,6 +472,11 @@ glabel memp_related_0
 
 
 
+/**
+ * A320	70009720
+ *     V0=p->A0 bytes of memory allocated in bank A1; fries: AT,V0,V1,A0,A1,A2,A3,T0,T2,T5,T6,T7,T8,T9
+ *     accepts: A0=size, A1=bank
+ */
 #ifdef NONMATCHING
 void allocate_bytes_in_bank(void) {
 
@@ -536,6 +555,11 @@ glabel allocate_bytes_in_bank
 
 
 
+/**
+ * A404	70009804
+ *     ???; updates bank A2 size registry in light of entry at A0 of size A1
+ *     accepts: A0=p->allocated data, A1=size of data, A2=bank#
+ */
 #ifdef NONMATCHING
 void memp_related_1(void) {
 
@@ -618,6 +642,11 @@ glabel memp_related_1
 
 
 
+/**
+ * A4F0	700098F0
+ *     V0=8 -- loop eight times, needlessly; fries AT,T6
+ *     used by "show mem use", step 1; probably originally listed all eight memory allocations
+ */
 #ifdef NONMATCHING
 s32 nulled_list_all8_mem_alloc_banks_sizes(void) {
     // Node 0
@@ -647,6 +676,11 @@ glabel nulled_list_all8_mem_alloc_banks_sizes
 
 
 
+/**
+ * A510	70009910
+ *     V0= total allocated size of bank A0
+ *     accepts: A0=bank#
+ */
 #ifdef NONMATCHING
 s32 memp_related_3(s32 arg0) {
     // Node 0
@@ -704,6 +738,11 @@ glabel memp_related_3
 
 
 
+/**
+ * A570	70009970
+ *     allocate A0 coded #bytes in bank
+ *     accepts: A0=size/bank# entry (ssssssss ssssssss sssssssss sssssbbb)
+ */
 #ifdef NONMATCHING
 void memp_related_4(u32 arg0) {
     // Node 0
@@ -733,6 +772,11 @@ glabel memp_related_4
 
 
 
+/**
+ * A59C	7000999C
+ *     reset memory bank A0 [0-6]
+ *     copies base address for memory bank A0 to +4, fry +C
+ */
 #ifdef NONMATCHING
 void *reset_mem_bank_a0(s32 arg0) {
     void *temp_v0;
@@ -765,6 +809,10 @@ glabel reset_mem_bank_a0
 
 
 
+/**
+ * A5C4	700099C4
+ *     accepts: A0=bank#
+ */
 #ifdef NONMATCHING
 void *memp_related_6(s32 arg0, s32 arg_unaligned3) {
     void *temp_v0;

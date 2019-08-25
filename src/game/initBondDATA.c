@@ -55,8 +55,8 @@ glabel init_player_BONDdata_stats
 /* 039C44 7F005114 8C84245C */  lw    $a0, %lo(size_right_item_buffer)($a0)
 /* 039C48 7F005118 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 039C4C 7F00511C 24050004 */   li    $a1, 4
-/* 039C50 7F005120 3C108008 */  lui   $s0, %hi(ptr_BONDdata) # $s0, 0x8008
-/* 039C54 7F005124 2610A0B0 */  addiu $s0, %lo(ptr_BONDdata) # addiu $s0, $s0, -0x5f50
+/* 039C50 7F005120 3C108008 */  lui   $s0, %hi(pPlayer) # $s0, 0x8008
+/* 039C54 7F005124 2610A0B0 */  addiu $s0, %lo(pPlayer) # addiu $s0, $s0, -0x5f50
 /* 039C58 7F005128 8E090000 */  lw    $t1, ($s0)
 /* 039C5C 7F00512C 0FC26919 */  jal   get_num_players
 /* 039C60 7F005130 AD220808 */   sw    $v0, 0x808($t1)
@@ -244,16 +244,16 @@ glabel init_player_BONDdata_stats
 /* 039F28 7F0053F8 24040001 */   li    $a0, 1
 /* 039F2C 7F0053FC 8E0B0000 */  lw    $t3, ($s0)
 /* 039F30 7F005400 240C0002 */  li    $t4, 2
-/* 039F34 7F005404 3C018003 */  lui   $at, %hi(0x80032C38) # $at, 0x8003
+/* 039F34 7F005404 3C018003 */  lui   $at, %hi(GsniperrifleZ_stats+52) # $at, 0x8003
 /* 039F38 7F005408 AD601064 */  sw    $zero, 0x1064($t3)
 /* 039F3C 7F00540C 8E090000 */  lw    $t1, ($s0)
 /* 039F40 7F005410 AD2C1128 */  sw    $t4, 0x1128($t1)
 /* 039F44 7F005414 8E190000 */  lw    $t9, ($s0)
-/* 039F48 7F005418 C4262C38 */  lwc1  $f6, %lo(0x80032C38)($at)
-/* 039F4C 7F00541C 3C018003 */  lui   $at, %hi(0x800336B8) # $at, 0x8003
+/* 039F48 7F005418 C4262C38 */  lwc1  $f6, %lo(GsniperrifleZ_stats+52)($at)
+/* 039F4C 7F00541C 3C018003 */  lui   $at, %hi(GcameraZ_stats+52) # $at, 0x8003
 /* 039F50 7F005420 E7261084 */  swc1  $f6, 0x1084($t9)
 /* 039F54 7F005424 8E180000 */  lw    $t8, ($s0)
-/* 039F58 7F005428 C42836B8 */  lwc1  $f8, %lo(0x800336B8)($at)
+/* 039F58 7F005428 C42836B8 */  lwc1  $f8, %lo(GcameraZ_stats+52)($at)
 /* 039F5C 7F00542C E7081088 */  swc1  $f8, 0x1088($t8)
 /* 039F60 7F005430 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 039F64 7F005434 8FB00018 */  lw    $s0, 0x18($sp)

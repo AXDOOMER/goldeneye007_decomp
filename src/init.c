@@ -4,9 +4,18 @@
 #include "sched.h"
 #include "rmon.h"
 #include "tlb_resolve.h"
-#include "tlb_hardware.h"
+#include "tlb_hardwire.h"
 #include "init.h"
 
+/**
+ * @file init.c
+ * This file contains the initial non bootstrap code ran. 
+ * 
+ * In particular, it:
+ *   - unpacks main data payload
+ *   - starts idle and rmon loops
+ *   - starts main loop
+ */
 
 #define NUM_FIELDS  1
 
@@ -19,9 +28,14 @@ OSMesg gfxFrameMsgBuf[32];
 OSMesgQueue *sched_cmdQ;
 
 
-
+/**
+ * 1110	70000510
+ * ???	initializes TLB index...
+ *	copies compressed 21990 to virtual address 701EE400, using 70200000 to decompress
+ */
 #ifdef NONMATCHING
-void init(void) {
+void init(void)
+{
     s32 *cdata_vaddr_start;
     s32 cdata_rom_size;
     s32 datapos;
@@ -31,7 +45,8 @@ void init(void) {
     cdata_vaddr_start = get_csegmentSegmentStart();
     cdata_rom_size = (get_cdataSegmentRomEnd() - get_cdataSegmentRomStart());
 
-	for (datapos = ((cdata_rom_size + (get_rarezipSegmentRomEnd() - get_rarezipSegmentRomStart())) + -1); datapos >= 0; datapos--){
+	for (datapos = ((cdata_rom_size + (get_rarezipSegmentRomEnd() - get_rarezipSegmentRomStart())) + -1); datapos >= 0; datapos--)
+    {
 		_rarezipSegmentVaddrStart[-cdata_rom_size + datapos] = &cdata_vaddr_start[datapos];
 	}
 
@@ -52,7 +67,8 @@ void init(void) {
 	//UT_VEC
 	dest = (void *)0x80000000;
 	//XUT_VEC
-	while (dest != (void *)0x80000080){
+	while (dest != (void *)0x80000080)
+    {
 		dest = (dest + 0x10);
     	source = (source + 0x10);
     	dest[-0x10] = source[-0x10];
@@ -65,7 +81,8 @@ void init(void) {
     osWritebackDCacheAll();
     osInvalICache(0x80000000, 0x4000);
 
-	for (i=2; i<32; i++){
+	for (i=2; i<32; i++)
+    {
 		osUnmapTLB(i);
 	}
 
@@ -148,7 +165,7 @@ glabel init
 /* 001210 70000610 00000000 */   nop   
 
 
-/* 001214 70000614 3C108000 */  lui   $s0, %hi(0x80000001) # $s0, 0x8000
+/* 001214 70000614 3C108000 */  lui   $s0, %hi(0x80000000) # $s0, 0x8000
 /* 001218 70000618 3C027000 */  lui   $v0, %hi(resolve_TLBaddress_for_InvalidHit) # $v0, 0x7000
 /* 00121C 7000061C 3C048000 */  lui   $a0, (0x80000080 >> 16) # lui $a0, 0x8000
 /* 001220 70000620 24421B60 */  addiu $v0, %lo(resolve_TLBaddress_for_InvalidHit) # addiu $v0, $v0, 0x1b60
@@ -210,34 +227,58 @@ glabel init
 )
 #endif
 
+/**
+ * 12F0	700006F0
+ * V0= new stack pointer; A0+A1-8
+ *	accepts: A0=base address, A1=size
+ */
 void *set_stack_entry(u8 *stack, u32 size) 
 {
     return stack+size-8;
 }
 
+/**
+ * 12FC	700006FC
+ * 1->80023044, 10000000->80023048
+ */
 void set_hw_address_and_unknown(void) 
 {
     unknown_init_val = 1;
     cart_hw_address = 0x10000000;
 }
 
+/**
+ * 1318	70000718
+ * A0->SP+0, infinite loop
+ */
 void thread1_idle(void *arg) 
 {
 	for (;;);
 }
 
+/**
+ * 1338	70000738
+ * Null thread; executes 70000718
+ */
 void start_idle_thread(void) 
 {
     osCreateThread(&idleThread, (OSId)1, thread1_idle, 0, set_stack_entry(&sp_idle, 0x40), (OSPri)0);
     osStartThread(&idleThread);
 }
 
+/**
+ * 1390	70000790
+ * Indi board detection thread; now forcably returns INDI_NOT_DETECTED (1)
+ */
 void start_rmon_thread(void) 
 {
     osCreateThread(&rmonThread, (OSId)0, thread0_rmon, 0, set_stack_entry(&sp_rmon, 0x300), (OSPri)250);
     osStartThread(&rmonThread);
 }
 
+/**
+ * 13EC	700007EC
+ */
 #ifdef NONMATCHING
 void init_scheduler(void) {
     osCreateMesgQueue(&gfxFrameMsgQ, &gfxFrameMsgBuf, 32);
@@ -302,6 +343,12 @@ glabel init_scheduler
 )
 #endif
 
+/**
+ * 149C	7000089C	start main game setup and loop
+ *	calls command line parser, debug console setup, etc.
+ *	called by 70000510, using 7000D430: A0=8005D640, A1=3, A2=7000089C, A3=0, SP+10=[803B3948], SP+14=0xA
+ *	never returns; 7000601C is an infinite loop
+ */
 void thread3_main(void *args) {
 	start_idle_thread();
 	start_nulled_entry();
@@ -317,7 +364,10 @@ void thread3_main(void *args) {
     setup_gamevalues_and_launchmainloop();
 }
 
-
+/**
+ * 1508	70000908	V0= p->last entry in copy of debug handler code/name table; fries AT,V1,T0,T1,T6,T9
+ *	copies table from 8002304C-80023084 to stack
+ */
 #ifdef NONMATCHING
 void *setuplastentryofdebughandler(void)
 {

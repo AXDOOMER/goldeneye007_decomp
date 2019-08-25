@@ -2,7 +2,7 @@
 #define _UBRIEF_H_
 
 #include "ultra64.h"
-#include "src/game/global.h"
+#include "bondgame.h"
 
 struct BriefObjectiveStruct
 {
@@ -13,7 +13,7 @@ struct BriefObjectiveStruct
 struct BriefStruct
 {
     u16 brief[4];
-    struct BriefObjectiveStruct objective[MAX_OBJECTIVES];
+    struct BriefObjectiveStruct objective[OBJECTIVES_MAX];
 };
 
 #endif

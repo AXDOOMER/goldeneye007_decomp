@@ -15,6 +15,6 @@ struct stringentry LmpweaponsE[] = {
  "Lasers",
  "Golden Gun",
  "Throwing Knives",
- '\0',
- '\0'
+ NULL,
+ NULL
 };

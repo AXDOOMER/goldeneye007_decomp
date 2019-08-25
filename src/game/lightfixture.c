@@ -51,9 +51,9 @@ glabel init_lightfixture_tables
 /* 0F003C 7F0BB50C A460FFFC */  sh    $zero, -4($v1)
 /* 0F0040 7F0BB510 1462FFFB */  bne   $v1, $v0, .L7F0BB500
 /* 0F0044 7F0BB514 A460FFF0 */   sh    $zero, -0x10($v1)
-/* 0F0048 7F0BB518 3C018004 */  lui   $at, 0x8004
+/* 0F0048 7F0BB518 3C018004 */  lui   $at, %hi(D_80046030)
 /* 0F004C 7F0BB51C 03E00008 */  jr    $ra
-/* 0F0050 7F0BB520 AC206030 */   sw    $zero, 0x6030($at)
+/* 0F0050 7F0BB520 AC206030 */   sw    $zero, %lo(D_80046030)($at)
 )
 #endif
 
@@ -171,9 +171,9 @@ glabel save_ptrDL_enpoint_to_current_init_lightfixture_table
 /* 0F0140 7F0BB610 00027080 */   sll   $t6, $v0, 2
 /* 0F0144 7F0BB614 01C27023 */  subu  $t6, $t6, $v0
 /* 0F0148 7F0BB618 000E7080 */  sll   $t6, $t6, 2
-/* 0F014C 7F0BB61C 3C018008 */  lui   $at, 0x8008
+/* 0F014C 7F0BB61C 3C018008 */  lui   $at, %hi(light_fixture_table+8)
 /* 0F0150 7F0BB620 002E0821 */  addu  $at, $at, $t6
-/* 0F0154 7F0BB624 AC242668 */  sw    $a0, 0x2668($at)
+/* 0F0154 7F0BB624 AC242668 */  sw    $a0, %lo(light_fixture_table+8)($at)
 .L7F0BB628:
 /* 0F0158 7F0BB628 03E00008 */  jr    $ra
 /* 0F015C 7F0BB62C 00000000 */   nop   
@@ -252,9 +252,9 @@ glabel return_ptr_vertex_of_entry_room
 /* 0F01F4 7F0BB6C4 0061C024 */  and   $t8, $v1, $at
 /* 0F01F8 7F0BB6C8 3C010E00 */  lui   $at, 0xe00
 /* 0F01FC 7F0BB6CC 17010007 */  bne   $t8, $at, .L7F0BB6EC
-/* 0F0200 7F0BB6D0 3C088004 */   lui   $t0, 0x8004
+/* 0F0200 7F0BB6D0 3C088004 */   lui   $t0, %hi(D_80041418)
 /* 0F0204 7F0BB6D4 01194021 */  addu  $t0, $t0, $t9
-/* 0F0208 7F0BB6D8 8D081418 */  lw    $t0, 0x1418($t0)
+/* 0F0208 7F0BB6D8 8D081418 */  lw    $t0, %lo(D_80041418)($t0)
 /* 0F020C 7F0BB6DC 3C0100FF */  lui   $at, (0x00FFFFFF >> 16) # lui $at, 0xff
 /* 0F0210 7F0BB6E0 3421FFFF */  ori   $at, (0x00FFFFFF & 0xFFFF) # ori $at, $at, 0xffff
 /* 0F0214 7F0BB6E4 00614824 */  and   $t1, $v1, $at
@@ -492,11 +492,11 @@ glabel sub_GAME_7F0BB978
 /* 0F04A8 7F0BB978 00047080 */  sll   $t6, $a0, 2
 /* 0F04AC 7F0BB97C 01C47021 */  addu  $t6, $t6, $a0
 /* 0F04B0 7F0BB980 000E7100 */  sll   $t6, $t6, 4
-/* 0F04B4 7F0BB984 3C028004 */  lui   $v0, 0x8004
+/* 0F04B4 7F0BB984 3C028004 */  lui   $v0, %hi(D_80041418)
 /* 0F04B8 7F0BB988 004E1021 */  addu  $v0, $v0, $t6
 /* 0F04BC 7F0BB98C 3C058008 */  lui   $a1, %hi(word_CODE_bss_80082B18) # $a1, 0x8008
 /* 0F04C0 7F0BB990 3C068008 */  lui   $a2, %hi(dword_CODE_bss_80083318) # $a2, 0x8008
-/* 0F04C4 7F0BB994 8C421418 */  lw    $v0, 0x1418($v0)
+/* 0F04C4 7F0BB994 8C421418 */  lw    $v0, %lo(D_80041418)($v0)
 /* 0F04C8 7F0BB998 24C63318 */  addiu $a2, %lo(dword_CODE_bss_80083318) # addiu $a2, $a2, 0x3318
 /* 0F04CC 7F0BB99C 24A52B18 */  addiu $a1, %lo(word_CODE_bss_80082B18) # addiu $a1, $a1, 0x2b18
 /* 0F04D0 7F0BB9A0 94AF0000 */  lhu   $t7, ($a1)
@@ -561,10 +561,10 @@ glabel sub_GAME_7F0BBA20
 /* 0F0578 7F0BBA48 01C67021 */  addu  $t6, $t6, $a2
 /* 0F057C 7F0BBA4C 24A56030 */  addiu $a1, %lo(D_80046030) # addiu $a1, $a1, 0x6030
 /* 0F0580 7F0BBA50 000E7100 */  sll   $t6, $t6, 4
-/* 0F0584 7F0BBA54 3C0F8004 */  lui   $t7, 0x8004
+/* 0F0584 7F0BBA54 3C0F8004 */  lui   $t7, %hi(D_80041418)
 /* 0F0588 7F0BBA58 8CB90000 */  lw    $t9, ($a1)
 /* 0F058C 7F0BBA5C 01EE7821 */  addu  $t7, $t7, $t6
-/* 0F0590 7F0BBA60 8DEF1418 */  lw    $t7, 0x1418($t7)
+/* 0F0590 7F0BBA60 8DEF1418 */  lw    $t7, %lo(D_80041418)($t7)
 /* 0F0594 7F0BBA64 3C098008 */  lui   $t1, %hi(word_CODE_bss_80082B18) # $t1, 0x8008
 /* 0F0598 7F0BBA68 25292B18 */  addiu $t1, %lo(word_CODE_bss_80082B18) # addiu $t1, $t1, 0x2b18
 /* 0F059C 7F0BBA6C 00194080 */  sll   $t0, $t9, 2
@@ -614,9 +614,9 @@ glabel sub_GAME_7F0BBADC
 /* 0F060C 7F0BBADC 00057080 */  sll   $t6, $a1, 2
 /* 0F0610 7F0BBAE0 01C57021 */  addu  $t6, $t6, $a1
 /* 0F0614 7F0BBAE4 000E7100 */  sll   $t6, $t6, 4
-/* 0F0618 7F0BBAE8 3C0F8004 */  lui   $t7, 0x8004
+/* 0F0618 7F0BBAE8 3C0F8004 */  lui   $t7, %hi(D_80041418)
 /* 0F061C 7F0BBAEC 01EE7821 */  addu  $t7, $t7, $t6
-/* 0F0620 7F0BBAF0 8DEF1418 */  lw    $t7, 0x1418($t7)
+/* 0F0620 7F0BBAF0 8DEF1418 */  lw    $t7, %lo(D_80041418)($t7)
 /* 0F0624 7F0BBAF4 3C068008 */  lui   $a2, %hi(word_CODE_bss_80082B18) # $a2, 0x8008
 /* 0F0628 7F0BBAF8 3C038008 */  lui   $v1, %hi(dword_CODE_bss_80083318) # $v1, 0x8008
 /* 0F062C 7F0BBAFC 008F1023 */  subu  $v0, $a0, $t7
@@ -1386,9 +1386,9 @@ glabel sub_GAME_7F0BC4C4
 .L7F0BC518:
 /* 0F1048 7F0BC518 5462FFEF */  bnel  $v1, $v0, .L7F0BC4D8
 /* 0F104C 7F0BC51C 846E0000 */   lh    $t6, ($v1)
-/* 0F1050 7F0BC520 3C018008 */  lui   $at, 0x8008
+/* 0F1050 7F0BC520 3C018008 */  lui   $at, %hi(index_of_cur_entry_lightfixture_table)
 /* 0F1054 7F0BC524 03E00008 */  jr    $ra
-/* 0F1058 7F0BC528 A4242B12 */   sh    $a0, 0x2b12($at)
+/* 0F1058 7F0BC528 A4242B12 */   sh    $a0, %lo(index_of_cur_entry_lightfixture_table)($at)
 )
 #endif
 

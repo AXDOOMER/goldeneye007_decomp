@@ -145,11 +145,11 @@ void something_with_lvl_c_debug(void) {
 
     // Node 0
     get_ptr_debug_notice_list_entry(&lvl_c_debug_notice_list, &aLv_c_debug);
-    temp_a2 = (&_unknown117880SegmentRomEnd - &_unknown117880SegmentRomStart);
+    temp_a2 = (&_jfontdlSegmentEnd - &_jfontdlSegmentStart);
     lvl_c_debug_notice_list = 1;
     temp_ret = allocate_bytes_in_bank(temp_a2, 6, temp_a2);
     ptr_jfont_DL = temp_ret;
-    romCopy(temp_ret, &_unknown117880SegmentRomStart, sp18);
+    romCopy(temp_ret, &_jfontdlSegmentStart, sp18);
 }
 
 #else
@@ -163,10 +163,10 @@ glabel something_with_lvl_c_debug
 /* 0F2448 7F0BD918 24A5B6B0 */  addiu $a1, %lo(aLv_c_debug) # addiu $a1, $a1, -0x4950
 /* 0F244C 7F0BD91C 0C001398 */  jal   get_ptr_debug_notice_list_entry
 /* 0F2450 7F0BD920 24848360 */   addiu $a0, %lo(lvl_c_debug_notice_list) # addiu $a0, $a0, -0x7ca0
-/* 0F2454 7F0BD924 3C0F0011 */  lui   $t7, %hi(_unknown117880SegmentRomEnd) # $t7, 0x11
-/* 0F2458 7F0BD928 3C180011 */  lui   $t8, %hi(_unknown117880SegmentRomStart) # $t8, 0x11
-/* 0F245C 7F0BD92C 27187880 */  addiu $t8, %lo(_unknown117880SegmentRomStart) # addiu $t8, $t8, 0x7880
-/* 0F2460 7F0BD930 25EF7940 */  addiu $t7, %lo(_unknown117880SegmentRomEnd) # addiu $t7, $t7, 0x7940
+/* 0F2454 7F0BD924 3C0F0011 */  lui   $t7, %hi(_jfontdlSegmentEnd) # $t7, 0x11
+/* 0F2458 7F0BD928 3C180011 */  lui   $t8, %hi(_jfontdlSegmentStart) # $t8, 0x11
+/* 0F245C 7F0BD92C 27187880 */  addiu $t8, %lo(_jfontdlSegmentStart) # addiu $t8, $t8, 0x7880
+/* 0F2460 7F0BD930 25EF7940 */  addiu $t7, %lo(_jfontdlSegmentEnd) # addiu $t7, $t7, 0x7940
 /* 0F2464 7F0BD934 240E0001 */  li    $t6, 1
 /* 0F2468 7F0BD938 3C018005 */  lui   $at, %hi(lvl_c_debug_notice_list) # $at, 0x8005
 /* 0F246C 7F0BD93C 01F83023 */  subu  $a2, $t7, $t8
@@ -177,10 +177,10 @@ glabel something_with_lvl_c_debug
 /* 0F2480 7F0BD950 24050006 */   li    $a1, 6
 /* 0F2484 7F0BD954 3C038009 */  lui   $v1, %hi(ptr_jfont_DL) # $v1, 0x8009
 /* 0F2488 7F0BD958 2463C260 */  addiu $v1, %lo(ptr_jfont_DL) # addiu $v1, $v1, -0x3da0
-/* 0F248C 7F0BD95C 3C050011 */  lui   $a1, %hi(_unknown117880SegmentRomStart) # $a1, 0x11
+/* 0F248C 7F0BD95C 3C050011 */  lui   $a1, %hi(_jfontdlSegmentStart) # $a1, 0x11
 /* 0F2490 7F0BD960 AC620000 */  sw    $v0, ($v1)
 /* 0F2494 7F0BD964 8FA60018 */  lw    $a2, 0x18($sp)
-/* 0F2498 7F0BD968 24A57880 */  addiu $a1, %lo(_unknown117880SegmentRomStart) # addiu $a1, $a1, 0x7880
+/* 0F2498 7F0BD968 24A57880 */  addiu $a1, %lo(_jfontdlSegmentStart) # addiu $a1, $a1, 0x7880
 /* 0F249C 7F0BD96C 0C001707 */  jal   romCopy
 /* 0F24A0 7F0BD970 00402025 */   move  $a0, $v0
 /* 0F24A4 7F0BD974 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -199,7 +199,7 @@ void sub_GAME_7F0BD984(void) {
     s32 temp_a0;
 
     // Node 0
-    temp_a0 = ((random_related() % 0x3dU) + 2);
+    temp_a0 = ((get_random_value() % 0x3dU) + 2);
     D_8004836C = temp_a0;
     return musicTrack1Play(temp_a0);
 }
@@ -209,7 +209,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0BD984
 /* 0F24B4 7F0BD984 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F24B8 7F0BD988 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F24BC 7F0BD98C 0C002914 */  jal   random_related
+/* 0F24BC 7F0BD98C 0C002914 */  jal   get_random_value
 /* 0F24C0 7F0BD990 00000000 */   nop   
 /* 0F24C4 7F0BD994 2401003D */  li    $at, 61
 /* 0F24C8 7F0BD998 0041001B */  divu  $zero, $v0, $at
@@ -415,7 +415,7 @@ glabel stage_load
 /* 0F2684 7F0BDB54 AFB20028 */  sw    $s2, 0x28($sp)
 /* 0F2688 7F0BDB58 F7B40018 */  sdc1  $f20, 0x18($sp)
 /* 0F268C 7F0BDB5C AFA40038 */  sw    $a0, 0x38($sp)
-/* 0F2690 7F0BDB60 0C00248E */  jal   music_related_39
+/* 0F2690 7F0BDB60 0C00248E */  jal   sfx_c_70009238
 /* 0F2694 7F0BDB64 AC2083A0 */   sw    $zero, %lo(D_800483A0)($at)
 /* 0F2698 7F0BDB68 0C001C0F */  jal   musicTrack1Vol
 /* 0F269C 7F0BDB6C 24047FFF */   li    $a0, 32767
@@ -490,9 +490,9 @@ glabel stage_load
 /* 0F27A0 7F0BDC70 00000000 */   nop   
 /* 0F27A4 7F0BDC74 0FC3047F */  jal   sub_GAME_7F0C11FC
 /* 0F27A8 7F0BDC78 8FA40038 */   lw    $a0, 0x38($sp)
-/* 0F27AC 7F0BDC7C 3C0A8008 */  lui   $t2, 0x8008
+/* 0F27AC 7F0BDC7C 3C0A8008 */  lui   $t2, %hi(player1_player_data)
 /* 0F27B0 7F0BDC80 3C014348 */  li    $at, 0x43480000 # 200.000000
-/* 0F27B4 7F0BDC84 25529EF0 */  addiu $s2, $t2, -0x6110
+/* 0F27B4 7F0BDC84 25529EF0 */  addiu $s2, $t2, %lo(player1_player_data)
 /* 0F27B8 7F0BDC88 4481A000 */  mtc1  $at, $f20
 /* 0F27BC 7F0BDC8C 0240A025 */  move  $s4, $s2
 /* 0F27C0 7F0BDC90 24130004 */  li    $s3, 4
@@ -558,8 +558,8 @@ glabel stage_load
 /* 0F2898 7F0BDD68 AE800060 */  sw    $zero, 0x60($s4)
 /* 0F289C 7F0BDD6C E6880038 */  swc1  $f8, 0x38($s4)
 /* 0F28A0 7F0BDD70 E68A0040 */  swc1  $f10, 0x40($s4)
-/* 0F28A4 7F0BDD74 3C0B8008 */  lui   $t3, %hi(ptr_BONDdata) # $t3, 0x8008
-/* 0F28A8 7F0BDD78 256BA0B0 */  addiu $t3, %lo(ptr_BONDdata) # addiu $t3, $t3, -0x5f50
+/* 0F28A4 7F0BDD74 3C0B8008 */  lui   $t3, %hi(pPlayer) # $t3, 0x8008
+/* 0F28A8 7F0BDD78 256BA0B0 */  addiu $t3, %lo(pPlayer) # addiu $t3, $t3, -0x5f50
 /* 0F28AC 7F0BDD7C 26520070 */  addiu $s2, $s2, 0x70
 /* 0F28B0 7F0BDD80 26940070 */  addiu $s4, $s4, 0x70
 /* 0F28B4 7F0BDD84 AE40FFC0 */  sw    $zero, -0x40($s2)
@@ -1084,8 +1084,8 @@ glabel sub_GAME_7F0BE30C
 /* 0F2FF0 7F0BE4C0 AD480004 */  sw    $t0, 4($t2)
 /* 0F2FF4 7F0BE4C4 184000DF */  blez  $v0, .L7F0BE844
 /* 0F2FF8 7F0BE4C8 AD4C0000 */   sw    $t4, ($t2)
-/* 0F2FFC 7F0BE4CC 3C108008 */  lui   $s0, %hi(ptr_BONDdata) # $s0, 0x8008
-/* 0F3000 7F0BE4D0 2610A0B0 */  addiu $s0, %lo(ptr_BONDdata) # addiu $s0, $s0, -0x5f50
+/* 0F2FFC 7F0BE4CC 3C108008 */  lui   $s0, %hi(pPlayer) # $s0, 0x8008
+/* 0F3000 7F0BE4D0 2610A0B0 */  addiu $s0, %lo(pPlayer) # addiu $s0, $s0, -0x5f50
 .L7F0BE4D4:
 /* 0F3004 7F0BE4D4 0FC26D4A */  jal   sub_GAME_7F09B528
 /* 0F3008 7F0BE4D8 02202025 */   move  $a0, $s1
@@ -1399,7 +1399,7 @@ glabel sub_GAME_7F0BE8D0
 /* 0F3434 7F0BE904 46040380 */  add.s $f14, $f0, $f4
 /* 0F3438 7F0BE908 3C013E00 */  li    $at, 0x3E000000 # 0.125000
 /* 0F343C 7F0BE90C 44818000 */  mtc1  $at, $f16
-/* 0F3440 7F0BE910 3C018006 */  lui   $at, 0x8006
+/* 0F3440 7F0BE910 3C018006 */  lui   $at, %hi(D_8005B73C)
 /* 0F3444 7F0BE914 4610703E */  c.le.s $f14, $f16
 /* 0F3448 7F0BE918 00000000 */  nop   
 /* 0F344C 7F0BE91C 45000005 */  bc1f  .L7F0BE934
@@ -1409,7 +1409,7 @@ glabel sub_GAME_7F0BE8D0
 /* 0F345C 7F0BE92C 1000000F */  b     .L7F0BE96C
 /* 0F3460 7F0BE930 3C014000 */   lui   $at, 0x4000
 .L7F0BE934:
-/* 0F3464 7F0BE934 C426B73C */  lwc1  $f6, %lo(0x4000B73C)($at)
+/* 0F3464 7F0BE934 C426B73C */  lwc1  $f6, %lo(D_8005B73C)($at)
 /* 0F3468 7F0BE938 3C013F00 */  lui   $at, 0x3f00
 /* 0F346C 7F0BE93C 4606703E */  c.le.s $f14, $f6
 /* 0F3470 7F0BE940 00000000 */  nop   
@@ -1782,7 +1782,7 @@ glabel manage_mp_game
 /* 0F39A4 7F0BEE74 00000000 */   nop   
 /* 0F39A8 7F0BEE78 10400003 */  beqz  $v0, .L7F0BEE88
 /* 0F39AC 7F0BEE7C 3C048005 */   lui   $a0, %hi(D_800483A0) # $a0, 0x8005
-/* 0F39B0 7F0BEE80 0C002408 */  jal   sfxSetArg0Unk3EPostEvent
+/* 0F39B0 7F0BEE80 0C002408 */  jal   sfxDeactivate
 /* 0F39B4 7F0BEE84 8C8483A0 */   lw    $a0, %lo(D_800483A0)($a0)
 .L7F0BEE88:
 /* 0F39B8 7F0BEE88 3C038005 */  lui   $v1, %hi(mp_time) # $v1, 0x8005
@@ -2053,7 +2053,7 @@ glabel manage_mp_game
 /* 0F3D7C 7F0BF24C 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0F3D80 7F0BF250 44810000 */  mtc1  $at, $f0
 /* 0F3D84 7F0BF254 10400009 */  beqz  $v0, .L7F0BF27C
-/* 0F3D88 7F0BF258 3C038005 */   lui   $v1, 0x8005
+/* 0F3D88 7F0BF258 3C038005 */   lui   $v1, %hi(D_80048390)
 /* 0F3D8C 7F0BF25C 3C038005 */  lui   $v1, %hi(D_80048390) # $v1, 0x8005
 /* 0F3D90 7F0BF260 3C018005 */  lui   $at, %hi(D_80048388) # $at, 0x8005
 /* 0F3D94 7F0BF264 24638390 */  addiu $v1, %lo(D_80048390) # addiu $v1, $v1, -0x7c70
@@ -2063,7 +2063,7 @@ glabel manage_mp_game
 /* 0F3DA4 7F0BF274 1000000C */  b     .L7F0BF2A8
 /* 0F3DA8 7F0BF278 8C428374 */   lw    $v0, %lo(clock_timer)($v0)
 .L7F0BF27C:
-/* 0F3DAC 7F0BF27C 24638390 */  addiu $v1, $v1, -0x7c70
+/* 0F3DAC 7F0BF27C 24638390 */  addiu $v1, $v1, %lo(D_80048390)
 /* 0F3DB0 7F0BF280 3C028005 */  lui   $v0, %hi(clock_timer) # $v0, 0x8005
 /* 0F3DB4 7F0BF284 8C428374 */  lw    $v0, %lo(clock_timer)($v0)
 /* 0F3DB8 7F0BF288 8C6E0000 */  lw    $t6, ($v1)
@@ -2425,7 +2425,7 @@ glabel manage_mp_game
 /* 0F42E4 7F0BF7B4 24050004 */   li    $a1, 4
 /* 0F42E8 7F0BF7B8 50400004 */  beql  $v0, $zero, .L7F0BF7CC
 /* 0F42EC 7F0BF7BC 00002025 */   move  $a0, $zero
-/* 0F42F0 7F0BF7C0 0C002449 */  jal   music_related_30
+/* 0F42F0 7F0BF7C0 0C002449 */  jal   sfx_c_70009124
 /* 0F42F4 7F0BF7C4 00000000 */   nop   
 /* 0F42F8 7F0BF7C8 00002025 */  move  $a0, $zero
 .L7F0BF7CC:
@@ -2590,8 +2590,8 @@ glabel sub_GAME_7F0BF800
 /* 0F4510 7F0BF9E0 0FC30BA0 */  jal   sub_GAME_7F0C2E80
 /* 0F4514 7F0BF9E4 00000000 */   nop   
 .L7F0BF9E8:
-/* 0F4518 7F0BF9E8 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
-/* 0F451C 7F0BF9EC 8C42A0B0 */  lw    $v0, %lo(ptr_BONDdata)($v0)
+/* 0F4518 7F0BF9E8 3C028008 */  lui   $v0, %hi(pPlayer) # $v0, 0x8008
+/* 0F451C 7F0BF9EC 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
 /* 0F4520 7F0BF9F0 8C4300A8 */  lw    $v1, 0xa8($v0)
 /* 0F4524 7F0BF9F4 C4460408 */  lwc1  $f6, 0x408($v0)
 /* 0F4528 7F0BF9F8 C44A0410 */  lwc1  $f10, 0x410($v0)
@@ -2624,8 +2624,8 @@ glabel sub_GAME_7F0BF800
 /* 0F4594 7F0BFA64 00002025 */   move  $a0, $zero
 /* 0F4598 7F0BFA68 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
 /* 0F459C 7F0BFA6C 24050058 */   li    $a1, 88
-/* 0F45A0 7F0BFA70 3C028008 */  lui   $v0, %hi(ptr_BONDdata) # $v0, 0x8008
-/* 0F45A4 7F0BFA74 8C42A0B0 */  lw    $v0, %lo(ptr_BONDdata)($v0)
+/* 0F45A0 7F0BFA70 3C028008 */  lui   $v0, %hi(pPlayer) # $v0, 0x8008
+/* 0F45A4 7F0BFA74 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
 /* 0F45A8 7F0BFA78 24010002 */  li    $at, 2
 /* 0F45AC 7F0BFA7C 24090005 */  li    $t1, 5
 /* 0F45B0 7F0BFA80 8C480894 */  lw    $t0, 0x894($v0)
@@ -2686,7 +2686,7 @@ void unload_stage_text_data(void) {
     {
         if (sfxGetArg0Unk3F(D_800483A0) != 0)
         {
-            sfxSetArg0Unk3EPostEvent(D_800483A0);
+            sfxDeactivate(D_800483A0);
         }
     }
     if (current_stage_to_load != 0x5a)
@@ -2721,7 +2721,7 @@ s32 get_controls_locked_flag(void) {
 }
 
 
-s32 get_current_difficulty(void) {
+DIFFICULTY get_current_difficulty(void) {
     return difficulty_0;
 }
 

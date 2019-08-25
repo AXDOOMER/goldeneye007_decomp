@@ -1,22 +1,22 @@
 #include "assets/obseg/brief/Ubrief.h"
 
 struct BriefStruct UbriefrunZ = {
-    {                        /* Mission Briefing */
-        0x7000,              /* Background */
-        0x7001,              /* M Briefing */
-        0x7002,              /* Q Branch */
-        0x7003               /* Moneypenny */
+    {                                          /* Mission Briefing */
+        TEXT(LRUN, 0),                         /* Background */
+        TEXT(LRUN, 1),                         /* M Briefing */
+        TEXT(LRUN, 2),                         /* Q Branch */
+        TEXT(LRUN, 3)                          /* Moneypenny */
     },
-    {                        /* Objectives (Text and Difficult) */
-        {0x7004, DIFF_A},    /* Find plane ignition key */
-        {0x7005, DIFF_00A},  /* Destroy heavy gun emplacements */
-        {0x7006, DIFF_SA},   /* Destroy missile battery */
-        {0x7007, DIFF_A},    /* Escape in plane */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000}     /* Not assigned */
+    {                                          /* Objectives (Text and Difficult) */
+        {TEXT(LRUN, 4), DIFFICULTY_AGENT},     /* Find plane ignition key */
+        {TEXT(LRUN, 5), DIFFICULTY_00},        /* Destroy heavy gun emplacements */
+        {TEXT(LRUN, 6), DIFFICULTY_SECRET},    /* Destroy missile battery */
+        {TEXT(LRUN, 7), DIFFICULTY_AGENT},     /* Escape in plane */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0}                                 /* Not assigned */
     }
 };

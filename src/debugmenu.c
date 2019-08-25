@@ -1,5 +1,5 @@
 #include "ultra64.h"
-
+#include "debugmenu.h"
 
 s32 debug_menu_x_pos_offset = 5;
 s32 debug_menu_y_pos_offset = 1;
@@ -28,7 +28,7 @@ u32 stdout_debug_menu_screen_buffer[1400] = {0};
 u32 stdout_primary_color_table[64] = {0};
 u32 stdout_environment_color_table[64] = {0};
 
-u32 *string_formatting[] = {0,
+char *string_formatting[] = {0,
 "\x1B[31m\x1B[40m", "\x1B[37m\x1B[40m",
 "\x1B[32m\x1B[40m", "\x1B[33m\x1B[40m",
 "\x1B[34m\x1B[40m", "\x1B[35m\x1B[40m",
@@ -60,21 +60,29 @@ u32 D_800268B8 = 0xFF;
 
 
 
-u32 dummied_function_7000AD80(s32 arg0, s32 arg1) {
+u32 dummied_function_7000AD80(s32 arg0, s32 arg1)
+{
     return 0;
 }
 
-u32 dummied_function_7000AD90(s32 arg0, s32 arg1) {
+
+u32 dummied_function_7000AD90(s32 arg0, s32 arg1)
+{
     return 0;
 }
 
-void null_function_7000ADA0(void) {
+
+void null_function_7000ADA0(void)
+{
 //empty
 }
 
-void null_init_main_0(void) {
+
+void null_init_main_0(void)
+{
 //empty
 }
+
 
 void debug_text_related_2(void)
 {
@@ -218,7 +226,8 @@ glabel display_text_to_coord
 
 
 
-void debug_menu_text_related(void) {
+void debugMenuSetTextPOStoOffset(void)
+{
     debug_menu_x_text_pos = debug_menu_x_pos_offset;
     debug_menu_y_text_pos = debug_menu_y_pos_offset;
 }
@@ -226,78 +235,29 @@ void debug_menu_text_related(void) {
 
 
 
-
-
-#ifdef NONMATCHING
-void debug_text_related_1(void) {
-    // Node 0
-    // Node 1
-    // Node 2
-    display_text_to_coord(0, 0, 0);
-    if ((0 + 1) != 0x50)
+void debug_text_related_1(void)
+{
+  int x;
+  int y;
+  
+  for (y = 0; y < 0x23; y++)
+  {
+    for (x = 0; x < 0x50; x++)
     {
-        goto loop_2;
+      display_text_to_coord(x,y,'\0');
     }
-    // Node 3
-    if ((0 + 1) != 0x23)
-    {
-        goto loop_1;
-    }
-    // Node 4
-    debug_menu_text_related();
-    null_function_7000ADA0();
-    string_formatting = 0;
-    return;
-    // (possible return value: null_function())
+  }
+  debugMenuSetTextPOStoOffset();
+  null_function_7000ADA0();
+  string_formatting[0] = NULL;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel debug_text_related_1
-/* 00BB00 7000AF00 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 00BB04 7000AF04 AFB30020 */  sw    $s3, 0x20($sp)
-/* 00BB08 7000AF08 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 00BB0C 7000AF0C AFB10018 */  sw    $s1, 0x18($sp)
-/* 00BB10 7000AF10 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 00BB14 7000AF14 AFB00014 */  sw    $s0, 0x14($sp)
-/* 00BB18 7000AF18 24110050 */  li    $s1, 80
-/* 00BB1C 7000AF1C 00009025 */  move  $s2, $zero
-/* 00BB20 7000AF20 24130023 */  li    $s3, 35
-/* 00BB24 7000AF24 00008025 */  move  $s0, $zero
-.L7000AF28:
-/* 00BB28 7000AF28 02002025 */  move  $a0, $s0
-.L7000AF2C:
-/* 00BB2C 7000AF2C 02402825 */  move  $a1, $s2
-/* 00BB30 7000AF30 0C002B74 */  jal   display_text_to_coord
-/* 00BB34 7000AF34 00003025 */   move  $a2, $zero
-/* 00BB38 7000AF38 26100001 */  addiu $s0, $s0, 1
-/* 00BB3C 7000AF3C 5611FFFB */  bnel  $s0, $s1, .L7000AF2C
-/* 00BB40 7000AF40 02002025 */   move  $a0, $s0
-/* 00BB44 7000AF44 26520001 */  addiu $s2, $s2, 1
-/* 00BB48 7000AF48 5653FFF7 */  bnel  $s2, $s3, .L7000AF28
-/* 00BB4C 7000AF4C 00008025 */   move  $s0, $zero
-/* 00BB50 7000AF50 0C002BB7 */  jal   debug_menu_text_related
-/* 00BB54 7000AF54 00000000 */   nop   
-/* 00BB58 7000AF58 0C002B68 */  jal   null_function_7000ADA0
-/* 00BB5C 7000AF5C 00000000 */   nop   
-/* 00BB60 7000AF60 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 00BB64 7000AF64 3C018002 */  lui   $at, %hi(string_formatting) # $at, 0x8002
-/* 00BB68 7000AF68 8FB00014 */  lw    $s0, 0x14($sp)
-/* 00BB6C 7000AF6C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 00BB70 7000AF70 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 00BB74 7000AF74 8FB30020 */  lw    $s3, 0x20($sp)
-/* 00BB78 7000AF78 AC206810 */  sw    $zero, %lo(string_formatting)($at)
-/* 00BB7C 7000AF7C 03E00008 */  jr    $ra
-/* 00BB80 7000AF80 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 
 
-void stubbed_function_7000AF84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void stubbed_function_7000AF84(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
     return;
-    // (function likely void)
 }
 
 
@@ -306,42 +266,48 @@ void stubbed_function_7000AF84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 
 #ifdef NONMATCHING
-s32 something_debug_info_related(s32 arg0) {
-    s32 temp_s3;
+void something_debug_info_related(s32 arg0)
+{
+    s32 temp_s0;
+    s32 temp_s0_2;
+    s32 phi_s3;
+    s32 phi_s0;
+    s32 phi_s1;
+    s32 phi_s0_2;
 
-    // Node 0
-    temp_s3 = (arg0 + 0x21);
-    // Node 1
-    if ((temp_s3 >= 0) && (temp_s3 < 0x23))
+    phi_s3 = arg0 + 0x21;
+    phi_s1 = 0x21;
+loop_1:
+    if ((phi_s3 >= 0) && (phi_s3 < 0x23))
     {
-        loop_3:
-        // Node 3
-        stubbed_function_7000AF84(0, temp_s3, 0, 0x21);
-        if ((0 + 1) != 0x50)
+loop_3:
+        stubbed_function_7000AF84(phi_s0, phi_s3, phi_s0, phi_s1);
+        temp_s0 = phi_s0 + 1;
+        phi_s0 = temp_s0;
+        if (temp_s0 != 0x50)
         {
             goto loop_3;
         }
-        // Node 4
     }
     else
     {
-        // Node 5
-        // Node 6
-        display_text_to_coord(0, 0x21, 0);
-        if ((0 + 1) != 0x50)
+        phi_s0_2 = 0;
+loop_6:
+        display_text_to_coord(phi_s0_2, phi_s1, 0);
+        temp_s0_2 = phi_s0_2 + 1;
+        phi_s0_2 = temp_s0_2;
+        if (temp_s0_2 != 0x50)
         {
             goto loop_6;
         }
-        // Node 7
     }
-    // Node 8
-    if ((0x21 + -1) != 0)
+    phi_s3 = phi_s3 - 1;
+    phi_s1 = phi_s1 - 1;
+    if (phi_s1 != 0)
     {
         goto loop_1;
     }
-    // (possible return value: 0x21)
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -417,10 +383,10 @@ glabel set_final_debug_text_positions
 /* 00BC50 7000B050 3C018002 */  lui   $at, %hi(debug_menu_x_text_pos) # $at, 0x8002
 /* 00BC54 7000B054 008E2021 */  addu  $a0, $a0, $t6
 /* 00BC58 7000B058 AC244FA8 */  sw    $a0, %lo(debug_menu_x_text_pos)($at)
-/* 00BC5C 7000B05C 3C018002 */  lui   $at, 0x8002
+/* 00BC5C 7000B05C 3C018002 */  lui   $at, %hi(debug_menu_y_text_pos)
 /* 00BC60 7000B060 00AF2821 */  addu  $a1, $a1, $t7
 /* 00BC64 7000B064 03E00008 */  jr    $ra
-/* 00BC68 7000B068 AC254FAC */   sw    $a1, 0x4fac($at)
+/* 00BC68 7000B068 AC254FAC */   sw    $a1, %lo(debug_menu_y_text_pos)($at)
 )
 #endif
 
@@ -428,59 +394,18 @@ glabel set_final_debug_text_positions
 
 
 
-#ifdef NONMATCHING
-void set_debug_text_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    // Node 0
-    (void *)0x80020000->unk68AC = (s32) ((((arg0 << 0x18) | (arg1 << 0x10)) | (arg2 << 8)) | (0xff - arg3));
-    return;
-    // (function likely void)
+
+void set_debug_text_color(s32 red,s32 blue,s32 green,s32 alpha)
+{
+  debug_text_color = red << 0x18 | blue << 0x10 | green << 8 | 0xffU - alpha;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_debug_text_color
-/* 00BC6C 7000B06C 00047600 */  sll   $t6, $a0, 0x18
-/* 00BC70 7000B070 00057C00 */  sll   $t7, $a1, 0x10
-/* 00BC74 7000B074 01CFC025 */  or    $t8, $t6, $t7
-/* 00BC78 7000B078 0006CA00 */  sll   $t9, $a2, 8
-/* 00BC7C 7000B07C 240900FF */  li    $t1, 255
-/* 00BC80 7000B080 01275023 */  subu  $t2, $t1, $a3
-/* 00BC84 7000B084 03194025 */  or    $t0, $t8, $t9
-/* 00BC88 7000B088 010A5825 */  or    $t3, $t0, $t2
-/* 00BC8C 7000B08C 3C018002 */  lui   $at, 0x8002
-/* 00BC90 7000B090 03E00008 */  jr    $ra
-/* 00BC94 7000B094 AC2B68AC */   sw    $t3, 0x68ac($at)
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void set_color_speedgraph(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    // Node 0
-    (void *)0x80020000->unk68B4 = (s32) ((((arg0 << 0x18) | (arg1 << 0x10)) | (arg2 << 8)) | (0xff - arg3));
-    return;
-    // (function likely void)
+void set_color_speedgraph(s32 red,s32 green,s32 blue,s32 alpha)
+{
+  speedgraph_color = red << 0x18 | green << 0x10 | blue << 8 | 0xffU - alpha;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_color_speedgraph
-/* 00BC98 7000B098 00047600 */  sll   $t6, $a0, 0x18
-/* 00BC9C 7000B09C 00057C00 */  sll   $t7, $a1, 0x10
-/* 00BCA0 7000B0A0 01CFC025 */  or    $t8, $t6, $t7
-/* 00BCA4 7000B0A4 0006CA00 */  sll   $t9, $a2, 8
-/* 00BCA8 7000B0A8 240900FF */  li    $t1, 255
-/* 00BCAC 7000B0AC 01275023 */  subu  $t2, $t1, $a3
-/* 00BCB0 7000B0B0 03194025 */  or    $t0, $t8, $t9
-/* 00BCB4 7000B0B4 010A5825 */  or    $t3, $t0, $t2
-/* 00BCB8 7000B0B8 3C018002 */  lui   $at, 0x8002
-/* 00BCBC 7000B0BC 03E00008 */  jr    $ra
-/* 00BCC0 7000B0C0 AC2B68B4 */   sw    $t3, 0x68b4($at)
-)
-#endif
+
 
 
 
@@ -615,32 +540,12 @@ glabel write_char_to_screen
 
 
 
-#ifdef NONMATCHING
-void debug_text_related_0(? arg2, ? arg8) {
-    // Node 0
-    set_final_debug_text_positions();
-    write_char_to_screen(arg8);
-    return;
-    // (possible return value: write_char_to_screen(arg8))
+
+void debug_printcharatpos(int x,int y, u8 character)
+{
+  set_final_debug_text_positions(x,y);
+  write_char_to_screen(character);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel debug_text_related_0
-/* 00BDC0 7000B1C0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00BDC4 7000B1C4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00BDC8 7000B1C8 0C002C10 */  jal   set_final_debug_text_positions
-/* 00BDCC 7000B1CC AFA60020 */   sw    $a2, 0x20($sp)
-/* 00BDD0 7000B1D0 0C002C31 */  jal   write_char_to_screen
-/* 00BDD4 7000B1D4 93A40023 */   lbu   $a0, 0x23($sp)
-/* 00BDD8 7000B1D8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00BDDC 7000B1DC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00BDE0 7000B1E0 03E00008 */  jr    $ra
-/* 00BDE4 7000B1E4 00000000 */   nop   
-)
-#endif
-
-
 
 
 
@@ -885,7 +790,7 @@ loop_18:
         }
         phi_s0_3 = phi_s0_2;
         phi_s4_2 = phi_s4_3;
-        if ((u32) (random_related() & 0xff) < (u32) D_800268B8)
+        if ((u32) (get_random_value() & 0xff) < (u32) D_800268B8)
         {
             temp_v0_2 = phi_s0_2;
             phi_s0_3 = phi_s0_2;
@@ -952,8 +857,8 @@ glabel read_screen_display_block_and_write_chars
 /* 00BEBC 7000B2BC 0000A825 */  move  $s5, $zero
 /* 00BEC0 7000B2C0 00004025 */  move  $t0, $zero
 .L7000B2C4:
-/* 00BEC4 7000B2C4 3C0E8002 */  lui   $t6, 0x8002
-/* 00BEC8 7000B2C8 25C55030 */  addiu $a1, $t6, 0x5030
+/* 00BEC4 7000B2C4 3C0E8002 */  lui   $t6, %hi(stdout_debug_menu_screen_buffer)
+/* 00BEC8 7000B2C8 25C55030 */  addiu $a1, $t6, %lo(stdout_debug_menu_screen_buffer)
 /* 00BECC 7000B2CC 01052021 */  addu  $a0, $t0, $a1
 .L7000B2D0:
 /* 00BED0 7000B2D0 90820000 */  lbu   $v0, ($a0)
@@ -1054,7 +959,7 @@ glabel read_screen_display_block_and_write_chars
 /* 00C024 7000B424 8F090004 */  lw    $t1, 4($t8)
 /* 00C028 7000B428 AE09FFFC */  sw    $t1, -4($s0)
 .L7000B42C:
-/* 00C02C 7000B42C 0C002914 */  jal   random_related
+/* 00C02C 7000B42C 0C002914 */  jal   get_random_value
 /* 00C030 7000B430 00000000 */   nop   
 /* 00C034 7000B434 3C0B8002 */  lui   $t3, %hi(D_800268B8) # $t3, 0x8002
 /* 00C038 7000B438 8D6B68B8 */  lw    $t3, %lo(D_800268B8)($t3)

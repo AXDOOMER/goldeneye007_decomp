@@ -1,34 +1,6 @@
 OS_VI_NTSC_LAN1 =2;
 OS_VI_PAL_LAN1 = 16;
 
-_unknown117880SegmentRomStart = 0x00117880;
-_unknown117880SegmentRomEnd = 0x00117940;
-_unknown117940SegmentRomStart = 0x00117940;
-_unknown117940SegmentRomEnd = 0x00123040;
-_unknown123040SegmentRomStart = 0x00123040;
-_unknown123040SegmentRomEnd = 0x00124ac0;
-_animation_tableSegmentRomStart = 0x00124ac0;
-_animation_tableSegmentRomEnd = 0x0028e980;
-_animation_dataSegmentRomStart = 0x0028e980;
-_animation_dataSegmentRomEnd = 0x0029d160;
-_GlobalimagetableSegmentRomStart = 0x0029d160;
-_GlobalimagetableSegmentRomEnd = 0x0029e560;
-_GlobalimagetablecmdblkSegmentRomStart = 0x0029e560;
-_GlobalimagetablecmdblkSegmentRomEnd = 0x002a4d50;
-
-_ramromDam1SegmentRomStart = 0x002bf2d0;
-_fonttablectlsmall1SegmentRomStart = 0x002e63f0;
-_fonttablectllarge1SegmentRomStart = 0x002e88a0;
-_sfxctlSegmentRomStart = 0x002EBDE0;
-_sfxctlSegmentRomEnd = 0x002F19A0;
-_sfxtblSegmentRomStart = 0x002F19A0;
-_sfxtblSegmentRomEnd = 0x003B4450;
-
-_instrumentsctlSegmentRomStart = 0x003B4450;
-_instrumentsctlSegmentRomEnd = 0x003B87F0;
-_instrumentstblSegmentRomStart = 0x003B87F0;
-_instrumentstblSegmentRomEnd = 0x00419790;
-_musicsampletblSegmentRomStart = 0x00419790;
 
 SP_MEM_ADDR_REG = 0xA4040000;
 SP_DRAM_ADDR_REG = 0xA4040004;
@@ -116,73 +88,10 @@ osAppNMIBuffer = 0x8000031c;
 
 
 
-D_80032C20 = 0x80032C20;
-D_80035D40 = 0x80035D40;
-D_80035D80 = 0x80035D80;
-D_80035D8C = 0x80035D8C;
-D_80035D98 = 0x80035D98;
-D_80035DA4 = 0x80035DA4;
-D_80035DB0 = 0x80035DB0;
-D_80035DBC = 0x80035DBC;
-D_80035DC8 = 0x80035DC8;
-D_80035DD4 = 0x80035DD4;
-D_80035DE0 = 0x80035DE0;
-D_80035DEC = 0x80035DEC;
-D_80035DF8 = 0x80035DF8;
-D_800368D4 = 0x800368D4;
-D_800368D8 = 0x800368D8;
-D_8003E14C = 0x8003E14C;
-D_8003F81C = 0x8003F81C;
-D_8003FCC0 = 0x8003FCC0;
-D_8003FD28 = 0x8003FD28;
-D_8003FDA0 = 0x8003FDA0;
-D_80040284 = 0x80040284;
-D_800407FC = 0x800407FC;
-D_80040800 = 0x80040800;
-D_80040804 = 0x80040804;
-D_80040808 = 0x80040808;
-D_80040900 = 0x80040900;
-D_80040980 = 0x80040980;
-D_80040994 = 0x80040994;
-D_80040998 = 0x80040998;
-D_8004099C = 0x8004099C;
-D_80040C44 = 0x80040C44;
-D_80041415 = 0x80041415;
-D_80041417 = 0x80041417;
-D_80041464 = 0x80041464;
-D_80041467 = 0x80041467;
-D_800414B4 = 0x800414B4;
-D_80058378 = 0x80058378;
 
 
 
-byte_CODE_bss_800669D2 = 0x800669D2;
-dword_CODE_bss_800669D4 = 0x800669D4;
-byte_CODE_bss_800669EA = 0x800669EA;
-dword_CODE_bss_800669EC = 0x800669EC;
 
-
-
-D_80079F4C = 0x80079F4C;
-D_80079F54 = 0x80079F54;
-D_80079FBC = 0x80079FBC;
-D_80079FC4 = 0x80079FC4;
-D_8007A02C = 0x8007A02C;
-D_8007A034 = 0x8007A034;
-D_8007A0A4 = 0x8007A0A4;
-D_8007A0DE = 0x8007A0DE;
-dword_CODE_bss_800825B8 = 0x800825B8;
-room_model_buffer = 0x8008E360;
-_decompressBuffer = 0x80300000;
-sp_boot = 0x803AB400;
-sp_rmon = 0x803AB410;
-sp_idle = 0x803AB710;
-sp_shed = 0x803AB750;
-sp_main = 0x803AB950;
-sp_audi = 0x803B3950;
-sp_debug = 0x803B4950;
-cfb_16_a = 0x803B5000;
-cfb_16_b = 0x803DA800;
 
 
 

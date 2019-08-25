@@ -14,12 +14,12 @@ glabel alloc_explosion_smoke_casing_scorch_impact_buffers
 /* 03B8C4 7F006D94 AC200170 */  sw    $zero, %lo(D_80040170)($at)
 /* 03B8C8 7F006D98 3C018004 */  lui   $at, %hi(D_80040174) # $at, 0x8004
 /* 03B8CC 7F006D9C AC200174 */  sw    $zero, %lo(D_80040174)($at)
-/* 03B8D0 7F006DA0 3C018004 */  lui   $at, %hi(D_80040800) # $at, 0x8004
-/* 03B8D4 7F006DA4 AC200800 */  sw    $zero, %lo(D_80040800)($at)
-/* 03B8D8 7F006DA8 3C018004 */  lui   $at, %hi(D_80040804) # $at, 0x8004
-/* 03B8DC 7F006DAC AC200804 */  sw    $zero, %lo(D_80040804)($at)
-/* 03B8E0 7F006DB0 3C018004 */  lui   $at, %hi(D_80040808) # $at, 0x8004
-/* 03B8E4 7F006DB4 AC200808 */  sw    $zero, %lo(D_80040808)($at)
+/* 03B8D0 7F006DA0 3C018004 */  lui   $at, %hi(D_8004017C+0x684) # $at, 0x8004
+/* 03B8D4 7F006DA4 AC200800 */  sw    $zero, %lo(D_8004017C+0x684)($at)
+/* 03B8D8 7F006DA8 3C018004 */  lui   $at, %hi(D_8004017C+0x688) # $at, 0x8004
+/* 03B8DC 7F006DAC AC200804 */  sw    $zero, %lo(D_8004017C+0x688)($at)
+/* 03B8E0 7F006DB0 3C018004 */  lui   $at, %hi(D_8004017C+0x68C) # $at, 0x8004
+/* 03B8E4 7F006DB4 AC200808 */  sw    $zero, %lo(D_8004017C+0x68C)($at)
 /* 03B8E8 7F006DB8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 03B8EC 7F006DBC 44812000 */  mtc1  $at, $f4
 /* 03B8F0 7F006DC0 27BDFFE8 */  addiu $sp, $sp, -0x18

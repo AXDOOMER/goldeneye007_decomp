@@ -66,7 +66,7 @@ struct stringentry LpropobjE[] = {
  "body armor.\n",
  "Picked up something.\n",
  "This door is locked.\n",
- '\0',
- '\0',
- '\0'
+ NULL,
+ NULL,
+ NULL
 };

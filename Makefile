@@ -1,21 +1,28 @@
 # Makefile to rebuild Goldeneye 007
-include assets/Makefile.obseg
-include assets/Makefile.music
 
-QEMU_IRIX := tools/irix/qemu-irix
-IRIX_ROOT := tools/irix/root
+### Default target ###
+default: all
 
+### Build Options ###
+# Version of the game to build
 FINAL := YES
 VERSION := US
-TOOLCHAIN := mips-linux-gnu-
+# If COMPARE is 1, check the output sha1sum when building 'all'
 COMPARE := 1
+
+
+include assets/Makefile.obseg
+include assets/Makefile.music
+TOOLCHAIN := mips-linux-gnu-
+QEMU_IRIX := tools/irix/qemu-irix
+IRIX_ROOT := tools/irix/root
 
 BUILD_DIR := build
 BUILD_SUB_DIRS := \
 	src src/game src/rarezip libultra assets assets/obseg \
 	assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop \
 	assets/obseg/text assets/obseg/bg assets/obseg/setup assets/obseg/stan \
-	assets/music assets/ramrom assets/images assets/font
+	assets/music assets/ramrom assets/images assets/images/split assets/font
 # create build directories
 $(shell mkdir -p $(BUILD_DIR))
 $(foreach subdir,$(BUILD_SUB_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(subdir)))
@@ -77,13 +84,13 @@ OBSEG_FILES := assets/obseg/ob_seg.s
 OBSEG_OBJECTS := build/assets/obseg/ob_seg.o
 OBSEG_RZ := $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES)
 
-IMAGES_FILES := assets/images/images.s
-IMAGES_OBJECTS := build/assets/images/images.o
+IMAGE_BINS := $(foreach dir,assets/images/split,$(wildcard $(dir)/*.bin))
+IMAGE_OBJS := $(foreach file,$(IMAGE_BINS),$(BUILD_DIR)/$(file:.bin=.o))
 
 RZFILES := rarezip/rarezip.c
 RZOBJECTS := $(foreach file,$(RZFILES),$(BUILD_DIR)/src/$(file:.c=.o))
 
-OBJECTS := $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(OBSEGMENT) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGES_OBJECTS)
+OBJECTS := $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(OBSEGMENT) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS)
 
 # other tools
 TOOLS_DIR := tools
@@ -113,30 +120,19 @@ ifeq ($(COMPARE),1)
 	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1
 endif
 
-default:	$(APPROM)
 
 codeclean:
-	rm -f $(BUILD_DIR)/ge007.$(COUNTRYCODE).map $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS)
-	git checkout build/assets/obseg/setup/UsetuparchZ.rz
-	git checkout build/assets/obseg/setup/UsetupjunZ.rz
-	git checkout build/assets/obseg/setup/UsetupsevbZ.rz
-	git checkout build/assets/obseg/text/LcradE.rz
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS)
 
 dataclean: 
-	rm -f $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
-	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGES_OBJECTS) $(MUSIC_RZ_FILES)
-	git checkout build/assets/obseg/setup/UsetuparchZ.rz
-	git checkout build/assets/obseg/setup/UsetupjunZ.rz
-	git checkout build/assets/obseg/setup/UsetupsevbZ.rz
-	git checkout build/assets/obseg/text/LcradE.rz
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES)
 
 clean:
-	rm -f $(BUILD_DIR)/ge007.$(COUNTRYCODE).map $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
-	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGES_OBJECTS) $(MUSIC_RZ_FILES)
-	git checkout build/assets/obseg/setup/UsetuparchZ.rz
-	git checkout build/assets/obseg/setup/UsetupjunZ.rz
-	git checkout build/assets/obseg/setup/UsetupsevbZ.rz
-	git checkout build/assets/obseg/text/LcradE.rz
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
+	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES)
 
 build/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
@@ -156,8 +152,8 @@ build/assets/font/%.o: assets/font/%.s
 build/assets/obseg/%.o: assets/obseg/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
-build/assets/images/%.o: assets/images/%.s
-	$(AS) $(ASFLAGS) -o $@ $<
+$(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
+	$(LD) -r -b binary $< -o $@
 
 build/%.o: src/%.c
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
@@ -167,7 +163,7 @@ build/src/%.o: src/%.c
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
 
-build/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGES_OBJECTS)
+build/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
 	
 
 $(APPELF): $(ULTRAOBJECTS) $(HEADEROBJECTS) build/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
@@ -179,6 +175,7 @@ $(APPBIN): $(APPELF)
 $(APPROM):	$(APPBIN)
 	$(DATASEG_COMP) $<
 	$(N64CKSUM) $< $@
+	rm header.tmp
 
 .PHONY: all default codeclean dataclean clean
 

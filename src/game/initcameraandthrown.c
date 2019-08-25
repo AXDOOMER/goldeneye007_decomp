@@ -31,9 +31,9 @@ glabel set_weapon_model_generated_thrown_object
 /* 03A250 7F005720 1020001E */  beqz  $at, .L7F00579C
 /* 03A254 7F005724 2405FFFF */   li    $a1, -1
 /* 03A258 7F005728 000E7080 */  sll   $t6, $t6, 2
-/* 03A25C 7F00572C 3C018005 */  lui   $at, 0x8005
+/* 03A25C 7F00572C 3C018005 */  lui   $at, %hi(projectile_ptr_table)
 /* 03A260 7F005730 002E0821 */  addu  $at, $at, $t6
-/* 03A264 7F005734 8C2EF0F0 */  lw    $t6, -0xf10($at)
+/* 03A264 7F005734 8C2EF0F0 */  lw    $t6, %lo(projectile_ptr_table)($at)
 /* 03A268 7F005738 01C00008 */  jr    $t6
 /* 03A26C 7F00573C 00000000 */   nop   
 throwingknife:
@@ -332,13 +332,13 @@ glabel load_camera_intro_type_values
 /* 03A564 7F005A34 AC2099E0 */   sw    $zero, %lo(starting_right_weapon)($at)
 /* 03A568 7F005A38 8E020000 */  lw    $v0, ($s0)
 /* 03A56C 7F005A3C 24010009 */  li    $at, 9
-/* 03A570 7F005A40 3C128008 */  lui   $s2, %hi(ptr_BONDdata) # $s2, 0x8008
+/* 03A570 7F005A40 3C128008 */  lui   $s2, %hi(pPlayer) # $s2, 0x8008
 /* 03A574 7F005A44 104100EB */  beq   $v0, $at, .L7F005DF4
 /* 03A578 7F005A48 3C0142C8 */   li    $at, 0x42C80000 # 100.000000
 /* 03A57C 7F005A4C 4481B000 */  mtc1  $at, $f22
 /* 03A580 7F005A50 3C014780 */  li    $at, 0x47800000 # 65536.000000
 /* 03A584 7F005A54 4481A000 */  mtc1  $at, $f20
-/* 03A588 7F005A58 2652A0B0 */  addiu $s2, %lo(ptr_BONDdata) # addiu $s2, $s2, -0x5f50
+/* 03A588 7F005A58 2652A0B0 */  addiu $s2, %lo(pPlayer) # addiu $s2, $s2, -0x5f50
 /* 03A58C 7F005A5C 2C410009 */  sltiu $at, $v0, 9
 .L7F005A60:
 /* 03A590 7F005A60 102000DF */  beqz  $at, .L7F005DE0
@@ -357,7 +357,7 @@ spawn_point:
 /* 03A5C0 7F005A90 00000000 */   nop   
 /* 03A5C4 7F005A94 8E0F0008 */  lw    $t7, 8($s0)
 /* 03A5C8 7F005A98 3C0A8007 */  lui   $t2, %hi(ptr_0xxxpresets) # $t2, 0x8007
-/* 03A5CC 7F005A9C 3C018008 */  lui   $at, 0x8008
+/* 03A5CC 7F005A9C 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079C28)
 /* 03A5D0 7F005AA0 144F0011 */  bne   $v0, $t7, .L7F005AE8
 /* 03A5D4 7F005AA4 00000000 */   nop   
 /* 03A5D8 7F005AA8 8E080004 */  lw    $t0, 4($s0)
@@ -372,7 +372,7 @@ spawn_point:
 /* 03A5FC 7F005ACC 00026080 */  sll   $t4, $v0, 2
 /* 03A600 7F005AD0 002C0821 */  addu  $at, $at, $t4
 /* 03A604 7F005AD4 012A5821 */  addu  $t3, $t1, $t2
-/* 03A608 7F005AD8 AC2B9C28 */  sw    $t3, -0x63d8($at)
+/* 03A608 7F005AD8 AC2B9C28 */  sw    $t3, %lo(dword_CODE_bss_80079C28)($at)
 /* 03A60C 7F005ADC 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079C68) # $at, 0x8008
 /* 03A610 7F005AE0 244D0001 */  addiu $t5, $v0, 1
 /* 03A614 7F005AE4 AC2D9C68 */  sw    $t5, %lo(dword_CODE_bss_80079C68)($at)
@@ -596,11 +596,11 @@ def_7F005A74:
 .L7F005DF4:
 /* 03A924 7F005DF4 3C028003 */  lui   $v0, %hi(D_800364B8) # $v0, 0x8003
 /* 03A928 7F005DF8 8C4264B8 */  lw    $v0, %lo(D_800364B8)($v0)
-/* 03A92C 7F005DFC 3C128008 */  lui   $s2, %hi(ptr_BONDdata) # $s2, 0x8008
-/* 03A930 7F005E00 2652A0B0 */  addiu $s2, %lo(ptr_BONDdata) # addiu $s2, $s2, -0x5f50
+/* 03A92C 7F005DFC 3C128008 */  lui   $s2, %hi(pPlayer) # $s2, 0x8008
+/* 03A930 7F005E00 2652A0B0 */  addiu $s2, %lo(pPlayer) # addiu $s2, $s2, -0x5f50
 /* 03A934 7F005E04 10400012 */  beqz  $v0, .L7F005E50
 /* 03A938 7F005E08 3C018003 */   lui   $at, %hi(D_800364C0) # $at, 0x8003
-/* 03A93C 7F005E0C 0C002914 */  jal   random_related
+/* 03A93C 7F005E0C 0C002914 */  jal   get_random_value
 /* 03A940 7F005E10 AC2264C0 */   sw    $v0, %lo(D_800364C0)($at)
 /* 03A944 7F005E14 3C0B8003 */  lui   $t3, %hi(D_800364BC) # $t3, 0x8003
 /* 03A948 7F005E18 8D6B64BC */  lw    $t3, %lo(D_800364BC)($t3)

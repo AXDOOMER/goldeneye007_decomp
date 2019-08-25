@@ -30,7 +30,7 @@ struct stringentry LpeteE[] = {
  "minimize civilian casualties\n",
  "contact valentin\n",
  "St. Petersburg\n",
- '\0',
- '\0',
- '\0'
+ NULL,
+ NULL,
+ NULL
 };

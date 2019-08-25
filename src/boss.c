@@ -1,12 +1,18 @@
 #include "ultra64.h"
 #include "ramrom.h"
 #include "boss.h"
+#include "bondgame.h"
 #include "game/debugmenu_090490.h"
+
+/**
+ * @file boss.c
+ * This file contains the main game loop code. 
+ */
 
 /* data */
 u32 boss_c_ptr_debug_notice_list_entry = 0;
-u32 debug_and_update_stage_flag = 0;
-s32 current_stage_num = 0x5A;
+s32 debug_and_update_stage_flag = 0;
+LEVELID current_stage_num = LEVELID_TITLE;
 u32 current_m_malloc_value = 0x234800;
 u32 current_ma_malloc_value = 0x4B000;
 s32 show_mem_use_flag = 0;
@@ -59,7 +65,7 @@ struct memallocstring
 { 0x0, }
 };
 
-s32 loadedstage = -1;
+LEVELID loadedstage = LEVELID_NONE;
 s32 debug_feature_flag = 0;
 s32 D_80024304 = 0x20000;
 s32 D_80024308 = 0;
@@ -86,13 +92,16 @@ const char aMa[] = "-ma";
 const char aMa_0[] = "-ma";
 const char aU64_taskgrab_D_core[] = "u64.taskgrab.%d.core";
 
-
+/**
+ * 6930	70005D30
+ *     ??? - uses "-level_", "-m" strings
+ */
 #ifdef NONMATCHING
 void init_mainthread_data(void)
 {
-    ? sp9C;
-    ? sp78;
-    ? sp60;
+    OSMesg sp9C;
+    OSTimer sp78;
+    OSMesgQueue sp60;
     ? temp_ret;
     ? temp_ret_2;
     s32 temp_s0;
@@ -154,7 +163,7 @@ block_1:
         current_m_malloc_value = (s32) (strtol(check_token(1, "-m"), 0, 0) << 0xa);
     }
     temp_s0 = (osVirtualToPhysical(&room_model_buffer) | 0x80000000);
-    check_memflag_tokens(temp_s0, (return_ptr_TLBmemory() - temp_s0));
+    check_memflag_tokens(temp_s0, (return_ptr_TLBallocatedblock() - temp_s0));
     reset_mem_bank_a0(6);
     init_LnameX();
     something_with_lvl_c_debug();
@@ -311,7 +320,7 @@ glabel init_mainthread_data
 /* 006B14 70005F14 0C003A2C */  jal   osVirtualToPhysical
 /* 006B18 70005F18 2484E360 */   addiu $a0, %lo(room_model_buffer) # addiu $a0, $a0, -0x1ca0
 /* 006B1C 70005F1C 3C018000 */  lui   $at, 0x8000
-/* 006B20 70005F20 0C0006BE */  jal   return_ptr_TLBmemory
+/* 006B20 70005F20 0C0006BE */  jal   return_ptr_TLBallocatedblock
 /* 006B24 70005F24 00418025 */   or    $s0, $v0, $at
 /* 006B28 70005F28 02002025 */  move  $a0, $s0
 /* 006B2C 70005F2C 0C0024EB */  jal   check_memflag_tokens
@@ -368,17 +377,27 @@ glabel init_mainthread_data
 #endif
 
 
-
+/**
+ * 6BF4	70005FF4
+ *     1 ->"show mem use" debug memory display [800241B4]; fry AT,T6
+ */
 void enable_show_mem_use_flag(void) {
-    show_mem_use_flag=1;
+    show_mem_use_flag=TRUE;
 }
 
-
+/**
+ * 6C04	70006004
+ *     toggle "show mem bars" [800241B8]; fries V0,T6,T7
+ */
 void mem_bars_flag_toggle(void) {
-    show_mem_bars_flag = (s32) (show_mem_bars_flag ^ 1);
+    show_mem_bars_flag = show_mem_bars_flag ^ 1;
 }
 
-
+/**
+ * 6C1C	7000601C
+ *     loads primary resources and starts main program loop
+ *     this is infinite.  Loops unconditionally: JAL 70006060
+ */
 void setup_gamevalues_and_launchmainloop(void) {
     init_mainthread_data();
     allocate_init_rsp_buffers();
@@ -390,7 +409,29 @@ void setup_gamevalues_and_launchmainloop(void) {
 
 
 
-
+/**
+ * 6C60	70006060
+ *     main program loop
+ *         70006090 tests memstring for "-level_##"
+ *         700060DC if not title, tests memstring for "-hard#"
+ *         70006160 follows...
+ *         700061FC test if debug console unconnected [800241A4]
+ *         700062EC follows...
+ *         700062FC tests memstring for "-ma"
+ *         7000633C allocates "-ma" bytes to mem bank 4
+ *         7000635C reset player data pointers
+ *         70006364 offsets stage number based on number of players unless main menu
+ *         700063A0 parses and sets memory allocation, loads stage, etc.
+ *         ...
+ *         70006708 displays memory usage when active
+ *         70006724 displays in-game debugger when active
+ *         7000674C writes a full sync, end display list combo
+ *         7000676C display mem use when active	[800241B4]
+ *         700067A8 display mem bars when active	[800241B8]
+ *         700067C0 follows...
+ *         700067D8 tests if "u64.taskgrab.#.core" activated and dumps memory
+ *         70006854 follows... (700068BC - stop demos)
+ */
 #ifdef NONMATCHING
 void mainloop(void)
 {
@@ -644,8 +685,8 @@ loop_29:
                             {
 loop_44:
                                 set_cur_player(sub_GAME_7F09B528(phi_s1_2));
-                                set_video2_width_height(ptr_BONDdata->unk7F0, ptr_BONDdata->unk7F2);
-                                set_video2_ulx_uly(ptr_BONDdata->playerscreenulx, ptr_BONDdata->playerscreenuly);
+                                set_video2_width_height(pPlayer->unk7F0, pPlayer->unk7F2);
+                                set_video2_ulx_uly(pPlayer->viewleft, pPlayer->viewtop);
                                 sub_GAME_7F0BF800();
                                 temp_s1 = phi_s1_2 + 1;
                                 phi_s1_2 = temp_s1;
@@ -847,8 +888,8 @@ glabel mainloop
 /* 006D68 70006168 0C002926 */  jal   increment_random_num
 /* 006D6C 7000616C 00402025 */   move  $a0, $v0
 /* 006D70 70006170 3C168003 */  lui   $s6, %hi(aU64_taskgrab_D_core) # $s6, 0x8003
-/* 006D74 70006174 3C158008 */  lui   $s5, %hi(ptr_BONDdata) # $s5, 0x8008
-/* 006D78 70006178 26B5A0B0 */  addiu $s5, %lo(ptr_BONDdata) # addiu $s5, $s5, -0x5f50
+/* 006D74 70006174 3C158008 */  lui   $s5, %hi(pPlayer) # $s5, 0x8008
+/* 006D78 70006178 26B5A0B0 */  addiu $s5, %lo(pPlayer) # addiu $s5, $s5, -0x5f50
 /* 006D7C 7000617C 26D69134 */  addiu $s6, %lo(aU64_taskgrab_D_core) # addiu $s6, $s6, -0x6ecc
 /* 006D80 70006180 27B70058 */  addiu $s7, $sp, 0x58
 /* 006D84 70006184 27B4005C */  addiu $s4, $sp, 0x5c
@@ -902,9 +943,9 @@ glabel mainloop
 /* 006E40 70006240 00008025 */  move  $s0, $zero
 /* 006E44 70006244 3C048002 */  lui   $a0, %hi(current_stage_num) # $a0, 0x8002
 /* 006E48 70006248 1320000C */  beqz  $t9, .L7000627C
-/* 006E4C 7000624C 3C088002 */   lui   $t0, 0x8002
+/* 006E4C 7000624C 3C088002 */   lui   $t0, %hi(memallocstringtable)
 /* 006E50 70006250 8C8441A8 */  lw    $a0, %lo(current_stage_num)($a0)
-/* 006E54 70006254 250241BC */  addiu $v0, $t0, 0x41bc
+/* 006E54 70006254 250241BC */  addiu $v0, $t0, %lo(memallocstringtable)
 /* 006E58 70006258 8C430000 */  lw    $v1, ($v0)
 /* 006E5C 7000625C 24840190 */  addiu $a0, $a0, 0x190
 .L70006260:
@@ -931,8 +972,8 @@ glabel mainloop
 /* 006EA4 700062A4 00008025 */  move  $s0, $zero
 /* 006EA8 700062A8 3C048002 */  lui   $a0, %hi(current_stage_num) # $a0, 0x8002
 /* 006EAC 700062AC 1140000B */  beqz  $t2, .L700062DC
-/* 006EB0 700062B0 3C0B8002 */   lui   $t3, 0x8002
-/* 006EB4 700062B4 256241BC */  addiu $v0, $t3, 0x41bc
+/* 006EB0 700062B0 3C0B8002 */   lui   $t3, %hi(memallocstringtable)
+/* 006EB4 700062B4 256241BC */  addiu $v0, $t3, %lo(memallocstringtable)
 /* 006EB8 700062B8 8C430000 */  lw    $v1, ($v0)
 /* 006EBC 700062BC 8C8441A8 */  lw    $a0, %lo(current_stage_num)($a0)
 .L700062C0:
@@ -1042,10 +1083,10 @@ glabel mainloop
 /* 00703C 7000643C 10610009 */  beq   $v1, $at, .L70006464
 /* 007040 70006440 24010002 */   li    $at, 2
 /* 007044 70006444 10610112 */  beq   $v1, $at, .L70006890
-/* 007048 70006448 3C028002 */   lui   $v0, 0x8002
+/* 007048 70006448 3C028002 */   lui   $v0, %hi(loadedstage)
 /* 00704C 7000644C 24010005 */  li    $at, 5
 /* 007050 70006450 10610112 */  beq   $v1, $at, .L7000689C
-/* 007054 70006454 3C028002 */   lui   $v0, 0x8002
+/* 007054 70006454 3C028002 */   lui   $v0, %hi(loadedstage)
 /* 007058 70006458 3C028002 */  lui   $v0, %hi(loadedstage) # $v0, 0x8002
 /* 00705C 7000645C 10000111 */  b     .L700068A4
 /* 007060 70006460 8C4242FC */   lw    $v0, %lo(loadedstage)($v0)
@@ -1059,12 +1100,12 @@ glabel mainloop
 /* 00707C 7000647C 004D1823 */  subu  $v1, $v0, $t5
 /* 007080 70006480 0061082B */  sltu  $at, $v1, $at
 /* 007084 70006484 10200004 */  beqz  $at, .L70006498
-/* 007088 70006488 3C028002 */   lui   $v0, 0x8002
+/* 007088 70006488 3C028002 */   lui   $v0, %hi(loadedstage)
 /* 00708C 7000648C 3C028002 */  lui   $v0, %hi(loadedstage) # $v0, 0x8002
 /* 007090 70006490 10000104 */  b     .L700068A4
 /* 007094 70006494 8C4242FC */   lw    $v0, %lo(loadedstage)($v0)
 .L70006498:
-/* 007098 70006498 8C4242FC */  lw    $v0, 0x42fc($v0)
+/* 007098 70006498 8C4242FC */  lw    $v0, %lo(loadedstage)($v0)
 /* 00709C 7000649C 2FC10002 */  sltiu $at, $fp, 2
 /* 0070A0 700064A0 04410100 */  bgez  $v0, .L700068A4
 /* 0070A4 700064A4 00000000 */   nop   
@@ -1334,10 +1375,10 @@ glabel mainloop
 .L70006890:
 /* 007490 70006890 27DEFFFF */  addiu $fp, $fp, -1
 /* 007494 70006894 10000003 */  b     .L700068A4
-/* 007498 70006898 8C4242FC */   lw    $v0, 0x42fc($v0)
+/* 007498 70006898 8C4242FC */   lw    $v0, %lo(loadedstage)($v0)
 .L7000689C:
 /* 00749C 7000689C 241E0004 */  li    $fp, 4
-/* 0074A0 700068A0 8C4242FC */  lw    $v0, 0x42fc($v0)
+/* 0074A0 700068A0 8C4242FC */  lw    $v0, %lo(loadedstage)($v0)
 .L700068A4:
 /* 0074A4 700068A4 0440FEDD */  bltz  $v0, .L7000641C
 /* 0074A8 700068A8 00000000 */   nop   
@@ -1378,40 +1419,57 @@ glabel mainloop
 )
 #endif
 
-
-
-
+/**
+ * 7530	70006930
+ *     run title [0x5A->loaded stage#]; fry AT
+ *     redirect to 70006950: A0=0x5A
+ */
 void run_title_stage(void) {
-    set_loaded_stage(0x5A);
+    set_loaded_stage(LEVELID_TITLE);
 }
 
-
-void set_loaded_stage(s32 stage){
+/**
+ * 7550	70006950
+ *     A0->loaded stage# [800242FC]; fry AT
+ *     0x5A jumps to folder select
+ *     0x5B 
+ *     0x63 
+ */
+void set_loaded_stage(LEVELID stage){
     loadedstage = stage;
 }
 
-
-s32 get_stage_num(){
+/**
+ * 755C	7000695C
+ *     V0= stage# [800241A8]
+ */
+LEVELID get_stage_num(){
     return current_stage_num;
 }
 
-
+/**
+ * 7568	70006968
+ *     return to title screen from stage
+ */
 void return_to_title_from_level_end(void) {
-    if ((get_stage_num() != 0x36))
-    {
-        if ((check_objectives_complete() != 0x0))
-        {
-            end_of_mission_briefing();
-        }
+    if ((get_stage_num() != LEVELID_CUBA) && (check_objectives_complete() != 0x0)) {
+        end_of_mission_briefing();
     }
     run_title_stage();
 }
 
-
+/**
+ * 75B4	700069B4
+ *     V0=state of debug menu (1:on; 0:off) [80024300]
+ */
 s32 get_debug_parse_flag(void) {
     return debug_feature_flag;
 }
 
+/**
+ * 75C0	700069C0
+ *     V0= p->debug.notice.list entry for boss_c_debug using data at 800241A0
+ */
 void something_with_boss_c_debug(void) {
     get_ptr_debug_notice_list_entry(&boss_c_ptr_debug_notice_list_entry, "boss_c_debug");
 }

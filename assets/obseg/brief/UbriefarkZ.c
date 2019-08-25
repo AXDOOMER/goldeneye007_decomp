@@ -1,22 +1,22 @@
 #include "assets/obseg/brief/Ubrief.h"
 
 struct BriefStruct UbriefarkZ = {
-    {                        /* Mission Briefing */
-        0x0C00,              /* Background */
-        0x0C01,              /* M Briefing */
-        0x0C02,              /* Q Branch */
-        0x0C03               /* Moneypenny */
+    {                                          /* Mission Briefing */
+        TEXT(LARK, 0),                         /* Background */
+        TEXT(LARK, 1),                         /* M Briefing */
+        TEXT(LARK, 2),                         /* Q Branch */
+        TEXT(LARK, 3)                          /* Moneypenny */
     },
-    {                        /* Objectives (Text and Difficult) */
-        {0x0C04, DIFF_A},    /* Gain entry to lab area */
-        {0x0C05, DIFF_SA},   /* Contact double agent */
-        {0x0C06, DIFF_A},    /* Rendezvous with 006 */
-        {0x0C07, DIFF_A},    /* Destroy all tanks in bottling room */
-        {0x0C08, DIFF_A},    /* Minimize scientist casualties */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000},    /* Not assigned */
-        {0x0000, 0x0000}     /* Not assigned */
+    {                                          /* Objectives (Text and Difficult) */
+        {TEXT(LARK, 4), DIFFICULTY_AGENT},     /* Gain entry to lab area */
+        {TEXT(LARK, 5), DIFFICULTY_SECRET},    /* Contact double agent */
+        {TEXT(LARK, 6), DIFFICULTY_AGENT},     /* Rendezvous with 006 */
+        {TEXT(LARK, 7), DIFFICULTY_AGENT},     /* Destroy all tanks in bottling room */
+        {TEXT(LARK, 8), DIFFICULTY_AGENT},     /* Minimize scientist casualties */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0},                                /* Not assigned */
+        {0, 0}                                 /* Not assigned */
     }
 };

@@ -52,7 +52,7 @@ struct stringentry LarchE[] = {
  "interrogation room key\n",
  "interrogation room key\n",
  "Picked up a door key.\n",
- '\0',
+ NULL,
  "This safe is locked.\n",
  "flight\n",
  "recorder\n",
@@ -64,5 +64,5 @@ struct stringentry LarchE[] = {
  "safe key\n",
  "Safe Key\n",
  "Picked up a safe key.\n",
- '\0'
+ NULL
 };

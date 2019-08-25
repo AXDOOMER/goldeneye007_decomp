@@ -43,6 +43,6 @@ struct stringentry LjunE[] = {
  "blow up ammo dump\n",
  "escort natalya to janus base\n",
  "Cuban Jungle\n",
- '\0',
- '\0'
+ NULL,
+ NULL
 };

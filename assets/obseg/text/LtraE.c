@@ -46,7 +46,7 @@ struct stringentry LtraE[] = {
  "train door key\n",
  "Picked up a door key.\n",
  "Converted Missile Train, heading east\n",
- '\0',
- '\0',
- '\0'
+ NULL,
+ NULL,
+ NULL
 };

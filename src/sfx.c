@@ -2,6 +2,12 @@
 #include "music.h"
 #include "sfx.h"
 
+
+/**
+ * @file sfx.c
+ * This file contains code to deal with sfx.
+ */
+
 s32 sfx_unused = 0;
 s32 D_800243E4 = 0;
 s32 D_800243E8 = 0;
@@ -17,9 +23,12 @@ f32 F32_800243FC = 1.0;
 
 
 
+/**
+ * 8720	70007B20
+ */
 
 #ifdef NONMATCHING
-void music_related_16(void *arg0)
+void sfx_c_70007B20(void *arg0)
 {
     s16 sp38;
     s32 temp_a0;
@@ -65,7 +74,7 @@ block_1:
     (D_80063BA8 + temp_v0)->unk6 = (s16) (D_80063BA4 + temp_v0)->unk6;
     D_800243F0->unk38 = (?32) alGlobals;
     *D_800243F0 = 0;
-    D_800243F0->unk8 = &music_related_17;
+    D_800243F0->unk8 = &sfx_c_70007DDC;
     D_800243F0->unk4 = (void *) D_800243F0;
     alSynAddPlayer(D_800243F0->unk38, D_800243F0);
     sp38 = (u16)0x20;
@@ -75,7 +84,7 @@ block_1:
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_16
+glabel sfx_c_70007B20
 /* 008720 70007B20 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 008724 70007B24 AFB20028 */  sw    $s2, 0x28($sp)
 /* 008728 70007B28 3C128002 */  lui   $s2, %hi(D_800243F0) # $s2, 0x8002
@@ -215,11 +224,11 @@ glabel music_related_16
 /* 008938 70007D38 A5E50006 */  sh    $a1, 6($t7)
 /* 00893C 70007D3C 8C790000 */  lw    $t9, ($v1)
 /* 008940 70007D40 8C8A0000 */  lw    $t2, ($a0)
-/* 008944 70007D44 3C187000 */  lui   $t8, %hi(music_related_17) # $t8, 0x7000
+/* 008944 70007D44 3C187000 */  lui   $t8, %hi(sfx_c_70007DDC) # $t8, 0x7000
 /* 008948 70007D48 03224821 */  addu  $t1, $t9, $v0
 /* 00894C 70007D4C 85280006 */  lh    $t0, 6($t1)
 /* 008950 70007D50 01425821 */  addu  $t3, $t2, $v0
-/* 008954 70007D54 27187DDC */  addiu $t8, %lo(music_related_17) # addiu $t8, $t8, 0x7ddc
+/* 008954 70007D54 27187DDC */  addiu $t8, %lo(sfx_c_70007DDC) # addiu $t8, $t8, 0x7ddc
 /* 008958 70007D58 A5680006 */  sh    $t0, 6($t3)
 /* 00895C 70007D5C 8E4C0000 */  lw    $t4, ($s2)
 /* 008960 70007D60 8DAD76E0 */  lw    $t5, %lo(alGlobals)($t5)
@@ -261,9 +270,11 @@ glabel music_related_16
 
 
 
-
+/**
+ * 89DC	70007DDC
+ */
 #ifdef NONMATCHING
-void music_related_17(void *arg0)
+void sfx_c_70007DDC(void *arg0)
 {
     s16 sp3C;
     s32 temp_s1;
@@ -280,7 +291,7 @@ block_1:
     }
     else
     {
-        music_related_18(arg0, temp_s1);
+        sfx_c_70007E80(arg0, temp_s1);
     }
     temp_ret = alEvtqNextEvent(temp_s2, temp_s1);
     arg0->unk4C = temp_ret;
@@ -293,7 +304,7 @@ block_1:
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_17
+glabel sfx_c_70007DDC
 /* 0089DC 70007DDC 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 0089E0 70007DE0 AFB40028 */  sw    $s4, 0x28($sp)
 /* 0089E4 70007DE4 AFB30024 */  sw    $s3, 0x24($sp)
@@ -319,7 +330,7 @@ glabel music_related_17
 /* 008A30 70007E30 10000004 */  b     .L70007E44
 /* 008A34 70007E34 02402025 */   move  $a0, $s2
 .L70007E38:
-/* 008A38 70007E38 0C001FA0 */  jal   music_related_18
+/* 008A38 70007E38 0C001FA0 */  jal   sfx_c_70007E80
 /* 008A3C 70007E3C 02202825 */   move  $a1, $s1
 /* 008A40 70007E40 02402025 */  move  $a0, $s2
 .L70007E44:
@@ -346,15 +357,27 @@ glabel music_related_17
 
 
 
+/**
+ * 8A80	70007E80
+ *     ???
+ *     accepts: A0=???, A1=???
+ *     uses TLB pointer table at 80029160
+ *     70007FBC	entry 0
+ *     70008388	entry 1
+ *     7000847C	entry 3
+ *     700084F0	entry F
+ *     700085C8	entry 7
+ *     700088D4	default: entries 2,4,5,6,8,9,A,B,C,D,E
+ */
 
 #ifdef NONMATCHING
-void music_related_18(void) {
+void sfx_c_70007E80(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_18
+glabel sfx_c_70007E80
 /* 008A80 70007E80 27BDFF30 */  addiu $sp, $sp, -0xd0
 /* 008A84 70007E84 AFBE0038 */  sw    $fp, 0x38($sp)
 /* 008A88 70007E88 AFB70034 */  sw    $s7, 0x34($sp)
@@ -389,7 +412,7 @@ glabel music_related_18
 /* 008AF4 70007EF4 8E320008 */  lw    $s2, 8($s1)
 /* 008AF8 70007EF8 16400005 */  bnez  $s2, .L70007F10
 /* 008AFC 70007EFC 27A40072 */   addiu $a0, $sp, 0x72
-/* 008B00 70007F00 0C0022BC */  jal   music_related_22
+/* 008B00 70007F00 0C0022BC */  jal   sfx_c_70008AF0
 /* 008B04 70007F04 27A50070 */   addiu $a1, $sp, 0x70
 /* 008B08 70007F08 10000284 */  b     .L7000891C
 /* 008B0C 70007F0C 8FBF003C */   lw    $ra, 0x3c($sp)
@@ -542,12 +565,12 @@ glabel .L70007FBC
 /* 008D24 70008124 100001FD */  b     .L7000891C
 /* 008D28 70008128 8FBF003C */   lw    $ra, 0x3c($sp)
 .L7000812C:
-/* 008D2C 7000812C 0C002252 */  jal   music_related_19
+/* 008D2C 7000812C 0C002252 */  jal   sfx_c_70008948
 /* 008D30 70008130 02202025 */   move  $a0, $s1
 /* 008D34 70008134 100001F9 */  b     .L7000891C
 /* 008D38 70008138 8FBF003C */   lw    $ra, 0x3c($sp)
 .L7000813C:
-/* 008D3C 7000813C 0C002252 */  jal   music_related_19
+/* 008D3C 7000813C 0C002252 */  jal   sfx_c_70008948
 /* 008D40 70008140 02202025 */   move  $a0, $s1
 /* 008D44 70008144 100001F5 */  b     .L7000891C
 /* 008D48 70008148 8FBF003C */   lw    $ra, 0x3c($sp)
@@ -727,7 +750,7 @@ glabel .L70008388
 /* 008FCC 700083CC 10000025 */  b     .L70008464
 /* 008FD0 700083D0 24010002 */   li    $at, 2
 .L700083D4:
-/* 008FD4 700083D4 0C00228C */  jal   music_related_21
+/* 008FD4 700083D4 0C00228C */  jal   sfx_c_70008A30
 /* 008FD8 700083D8 24060040 */   li    $a2, 64
 /* 008FDC 700083DC 8E480000 */  lw    $t0, ($s2)
 /* 008FE0 700083E0 C6260028 */  lwc1  $f6, 0x28($s1)
@@ -756,13 +779,13 @@ glabel .L70008388
 /* 00903C 7000843C 10000003 */  b     .L7000844C
 /* 009040 70008440 A22D003F */   sb    $t5, 0x3f($s1)
 .L70008444:
-/* 009044 70008444 0C002252 */  jal   music_related_19
+/* 009044 70008444 0C002252 */  jal   sfx_c_70008948
 /* 009048 70008448 02202025 */   move  $a0, $s1
 .L7000844C:
 /* 00904C 7000844C 10000004 */  b     .L70008460
 /* 009050 70008450 96A30000 */   lhu   $v1, ($s5)
 .L70008454:
-/* 009054 70008454 0C002252 */  jal   music_related_19
+/* 009054 70008454 0C002252 */  jal   sfx_c_70008948
 /* 009058 70008458 02202025 */   move  $a0, $s1
 /* 00905C 7000845C 96A30000 */  lhu   $v1, ($s5)
 .L70008460:
@@ -826,7 +849,7 @@ glabel .L700084F0
 /* 009124 70008524 31980020 */  andi  $t8, $t4, 0x20
 /* 009128 70008528 53000004 */  beql  $t8, $zero, .L7000853C
 /* 00912C 7000852C 96A20000 */   lhu   $v0, ($s5)
-/* 009130 70008530 0C002271 */  jal   music_related_20
+/* 009130 70008530 0C002271 */  jal   sfx_c_700089C4
 /* 009134 70008534 02202025 */   move  $a0, $s1
 .L70008538:
 /* 009138 70008538 96A20000 */  lhu   $v0, ($s5)
@@ -1053,7 +1076,7 @@ glabel .L700085C8
 /* 00946C 7000886C 33280020 */  andi  $t0, $t9, 0x20
 /* 009470 70008870 51000004 */  beql  $t0, $zero, .L70008884
 /* 009474 70008874 96A20000 */   lhu   $v0, ($s5)
-/* 009478 70008878 0C002271 */  jal   music_related_20
+/* 009478 70008878 0C002271 */  jal   sfx_c_700089C4
 /* 00947C 7000887C 02202025 */   move  $a0, $s1
 /* 009480 70008880 96A20000 */  lhu   $v0, ($s5)
 .L70008884:
@@ -1061,7 +1084,7 @@ glabel .L700085C8
 /* 009488 70008888 10000013 */  b     .L700088D8
 /* 00948C 7000888C 01801025 */   move  $v0, $t4
 .L70008890:
-/* 009490 70008890 0C002252 */  jal   music_related_19
+/* 009490 70008890 0C002252 */  jal   sfx_c_70008948
 /* 009494 70008894 02202025 */   move  $a0, $s1
 /* 009498 70008898 96A20000 */  lhu   $v0, ($s5)
 /* 00949C 7000889C 304902D1 */  andi  $t1, $v0, 0x2d1
@@ -1142,22 +1165,25 @@ glabel jpt_80029160
 
 
 
+/**
+ * 9548	70008948
+ */
 
 #ifdef NONMATCHING
-void music_related_19(void *arg0)
+void sfx_c_70008948(void *arg0)
 {
     if ((arg0->unk3E & 4) != 0)
     {
         alSynStopVoice(D_800243F0->unk38, (arg0 + 0xc));
         alSynFreeVoice(D_800243F0->unk38, sp1C);
     }
-    music_related_24(arg0);
-    music_related_21((D_800243F0 + 0x14), arg0, 0xffff);
+    sfx_c_70008D04(arg0);
+    sfx_c_70008A30((D_800243F0 + 0x14), arg0, 0xffff);
 }
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_19
+glabel sfx_c_70008948
 /* 009548 70008948 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 00954C 7000894C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 009550 70008950 AFA40020 */  sw    $a0, 0x20($sp)
@@ -1178,13 +1204,13 @@ glabel music_related_19
 /* 00958C 7000898C 0C004DC4 */  jal   alSynFreeVoice
 /* 009590 70008990 8D040038 */   lw    $a0, 0x38($t0)
 .L70008994:
-/* 009594 70008994 0C002341 */  jal   music_related_24
+/* 009594 70008994 0C002341 */  jal   sfx_c_70008D04
 /* 009598 70008998 8FA40020 */   lw    $a0, 0x20($sp)
 /* 00959C 7000899C 3C048002 */  lui   $a0, %hi(D_800243F0) # $a0, 0x8002
 /* 0095A0 700089A0 8C8443F0 */  lw    $a0, %lo(D_800243F0)($a0)
 /* 0095A4 700089A4 8FA50020 */  lw    $a1, 0x20($sp)
 /* 0095A8 700089A8 3406FFFF */  li    $a2, 65535
-/* 0095AC 700089AC 0C00228C */  jal   music_related_21
+/* 0095AC 700089AC 0C00228C */  jal   sfx_c_70008A30
 /* 0095B0 700089B0 24840014 */   addiu $a0, $a0, 0x14
 /* 0095B4 700089B4 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0095B8 700089B8 27BD0020 */  addiu $sp, $sp, 0x20
@@ -1202,9 +1228,12 @@ glabel music_related_19
 
 
 
+/**
+ * 95C4	700089C4
+ */
 
 #ifdef NONMATCHING
-void music_related_20(void *arg0)
+void sfx_c_700089C4(void *arg0)
 {
     f32 sp28;
     s16 sp20;
@@ -1218,7 +1247,7 @@ void music_related_20(void *arg0)
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_20
+glabel sfx_c_700089C4
 /* 0095C4 700089C4 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 0095C8 700089C8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0095CC 700089CC 8C8E0008 */  lw    $t6, 8($a0)
@@ -1258,9 +1287,12 @@ glabel music_related_20
 
 
 
+/**
+ * 9630 	70008A30
+ */
 
 #ifdef NONMATCHING
-void music_related_21(void *arg0, s32 arg1, s32 arg2)
+void sfx_c_70008A30(void *arg0, s32 arg1, s32 arg2)
 {
     s32 sp30;
     void *temp_s1;
@@ -1295,7 +1327,7 @@ block_1:
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_21
+glabel sfx_c_70008A30
 /* 009630 70008A30 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 009634 70008A34 AFB20020 */  sw    $s2, 0x20($sp)
 /* 009638 70008A38 00809025 */  move  $s2, $a0
@@ -1356,9 +1388,12 @@ glabel music_related_21
 
 
 
+/**
+ * 96F0 	70008AF0
+ */
 
 #ifdef NONMATCHING
-s32 music_related_22(void *arg0, void *arg1)
+s32 sfx_c_70008AF0(void *arg0, void *arg1)
 {
     void *temp_v0;
     s16 temp_t6;
@@ -1431,7 +1466,7 @@ block_5:
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_22
+glabel sfx_c_70008AF0
 /* 0096F0 70008AF0 3C088002 */  lui   $t0, %hi(D_800243E4) # $t0, 0x8002
 /* 0096F4 70008AF4 250843E4 */  addiu $t0, %lo(D_800243E4) # addiu $t0, $t0, 0x43e4
 /* 0096F8 70008AF8 8D020000 */  lw    $v0, ($t0)
@@ -1478,9 +1513,13 @@ glabel music_related_22
 
 
 
+/**
+ * 9770	70008B70
+ *     accepts: A0=sound data offset?, A1=sample address?
+ */
 
 #ifdef NONMATCHING
-void *music_related_23(s32 arg0, void *arg1)
+void *sfx_c_70008B70(s32 arg0, void *arg1)
 {
     s32 sp28;
     s8 temp_a1;
@@ -1536,7 +1575,7 @@ void *music_related_23(s32 arg0, void *arg1)
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_23
+glabel sfx_c_70008B70
 /* 009770 70008B70 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 009774 70008B74 3C038002 */  lui   $v1, %hi(D_800243E4) # $v1, 0x8002
 /* 009778 70008B78 246343E4 */  addiu $v1, %lo(D_800243E4) # addiu $v1, $v1, 0x43e4
@@ -1656,9 +1695,12 @@ glabel music_related_23
 
 
 
+/**
+ * 9904	70008D04
+ */
 
 #ifdef NONMATCHING
-void *music_related_24(void *arg0)
+void *sfx_c_70008D04(void *arg0)
 {
     if (arg0 == D_800243E4)
     {
@@ -1700,7 +1742,7 @@ void *music_related_24(void *arg0)
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_24
+glabel sfx_c_70008D04
 /* 009904 70008D04 3C028002 */  lui   $v0, %hi(D_800243E4) # $v0, 0x8002
 /* 009908 70008D08 244243E4 */  addiu $v0, %lo(D_800243E4) # addiu $v0, $v0, 0x43e4
 /* 00990C 70008D0C 8C4E0000 */  lw    $t6, ($v0)
@@ -1772,9 +1814,14 @@ glabel music_related_24
 
 
 
+/**
+ * 99D8	70008DD8
+ *     A1->A0+0x36.  value is set in sound effect buffer?
+ *     accepts: A0=p->SE buffer?, A1=value truncated to byte
+ */
 
 #ifdef NONMATCHING
-void music_related_25(void *arg0, s32 arg1)
+void sfx_c_70008DD8(void *arg0, s32 arg1)
 {
     if (arg0 != 0)
     {
@@ -1784,7 +1831,7 @@ void music_related_25(void *arg0, s32 arg1)
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_25
+glabel sfx_c_70008DD8
 /* 0099D8 70008DD8 AFA50004 */  sw    $a1, 4($sp)
 /* 0099DC 70008DDC 10800002 */  beqz  $a0, .L70008DE8
 /* 0099E0 70008DE0 30AE00FF */   andi  $t6, $a1, 0xff
@@ -1803,6 +1850,12 @@ glabel music_related_25
 
 
 
+/**
+ * 99F0	70008DF0
+ *     V0= TRUE if SE playing flag set [A0+0x3F]
+ *     value is set only when sound defaults have been set
+ *     accepts: A0=p->SE buffer
+ */
 
 #ifdef NONMATCHING
 void sfxGetArg0Unk3F(void *arg0)
@@ -1835,6 +1888,17 @@ glabel sfxGetArg0Unk3F
 
 
 
+/**
+ * 9A08	70008E08
+ *     sets sound effect; used by sound effect routines
+ *     accepts: A0=p->SE buffer, A1=SE #, A2=p->data
+ *          data:	0x0	4	p->SE entry
+ *              0x4	4	target volume
+ *              0x8	4	audible range (timer)
+ *              0xC	4	initial volume
+ *              0x10	4	p->preset emitting sound
+ *              0x14	4	p->object emitting sound
+ */
 
 #ifdef NONMATCHING
 void *play_sfx_a1(s32 arg0, s32 arg1, void *arg2)
@@ -1873,7 +1937,7 @@ void *play_sfx_a1(s32 arg0, s32 arg1, void *arg2)
     phi_s3 = sp64;
 block_5:
     temp_t0 = (subroutine_arg3 + (phi_s1 * 4));
-    temp_ret = music_related_23(arg0, temp_t0->unkC);
+    temp_ret = sfx_c_70008B70(arg0, temp_t0->unkC);
     temp_s0 = temp_ret;
     if (temp_ret != 0)
     {
@@ -1969,7 +2033,7 @@ glabel play_sfx_a1
 /* 009A90 70008E90 03C02025 */  move  $a0, $fp
 /* 009A94 70008E94 03194021 */  addu  $t0, $t8, $t9
 /* 009A98 70008E98 8D12000C */  lw    $s2, 0xc($t0)
-/* 009A9C 70008E9C 0C0022DC */  jal   music_related_23
+/* 009A9C 70008E9C 0C0022DC */  jal   sfx_c_70008B70
 /* 009AA0 70008EA0 02402825 */   move  $a1, $s2
 /* 009AA4 70008EA4 10400028 */  beqz  $v0, .L70008F48
 /* 009AA8 70008EA8 00408025 */   move  $s0, $v0
@@ -2080,9 +2144,14 @@ glabel play_sfx_a1
 
 
 
+/**
+ * 9C20	70009020
+ *     decativates sound effect
+ *     accepts: A0=p->SE buffer
+ */
 
 #ifdef NONMATCHING
-void sfxSetArg0Unk3EPostEvent(void *arg0)
+void sfxDeactivate(void *arg0)
 {
     s16 sp18;
 
@@ -2096,7 +2165,7 @@ void sfxSetArg0Unk3EPostEvent(void *arg0)
 #else
 GLOBAL_ASM(
 .text
-glabel sfxSetArg0Unk3EPostEvent
+glabel sfxDeactivate
 /* 009C20 70009020 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 009C24 70009024 240E0400 */  li    $t6, 1024
 /* 009C28 70009028 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -2127,9 +2196,12 @@ glabel sfxSetArg0Unk3EPostEvent
 
 
 
+/**
+ * 9C6C	7000906C
+ */
 
 #ifdef NONMATCHING
-void music_related_29(s32 arg0)
+void sfx_c_7000906C(s32 arg0)
 {
     s32 sp4C;
     s16 sp3C;
@@ -2163,7 +2235,7 @@ block_2:
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_29
+glabel sfx_c_7000906C
 /* 009C6C 7000906C 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 009C70 70009070 AFB20020 */  sw    $s2, 0x20($sp)
 /* 009C74 70009074 309200FF */  andi  $s2, $a0, 0xff
@@ -2222,27 +2294,41 @@ glabel music_related_29
 
 
 
-
-void music_related_30(void)
+/**
+ * 9D24	70009124
+ *     redirect to 7000906C: A0=1
+ */
+void sfx_c_70009124(void)
 {
-    music_related_29(1);
+    sfx_c_7000906C(1);
 }
 
-void music_related_32(void)
+/**
+ * 9D44	70009144
+ *     redirect to 7000906C: A0=11
+ */
+void sfx_c_70009144(void)
 {
-    music_related_29(0x11);
+    sfx_c_7000906C(0x11);
 }
 
-void music_related_34(void)
+/**
+ * 9D64	70009164
+ *     redirect to 7000906C: A0=3
+ */
+void sfx_c_70009164(void)
 {
-    music_related_29(3);
+    sfx_c_7000906C(3);
 }
 
 
 
 
+/**
+ * 9D84	70009184
+ */
 #ifdef NONMATCHING
-void music_related_36(s32 arg0, s32 arg1, ? arg2)
+void sfx_c_70009184(s32 arg0, s32 arg1, ? arg2)
 {
     ? sp18;
 
@@ -2254,7 +2340,7 @@ void music_related_36(s32 arg0, s32 arg1, ? arg2)
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_36
+glabel sfx_c_70009184
 /* 009D84 70009184 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 009D88 70009188 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 009D8C 7000918C AFA5002C */  sw    $a1, 0x2c($sp)
@@ -2278,9 +2364,13 @@ glabel music_related_36
 
 
 
-void music_related_37(void)
+/**
+ * 9DC8	700091C8
+ *     redirect to 70009264: A0=0
+ */
+void sfx_c_700091C8(void)
 {
-    music_related_41(0);
+    sfx_c_70009264(0);
 }
 
 
@@ -2291,15 +2381,18 @@ void music_related_37(void)
 
 
 
+/**
+ * 9DE8	700091E8
+ */
 #ifdef NONMATCHING
-void music_related_38(s32 arg0)
+void sfx_c_700091E8(s32 arg0)
 {
     s32 temp_t6;
     s32 phi_s0;
 
     phi_s0 = 0;
 block_1:
-    music_related_42((phi_s0 & 0xff), ((arg0 & 0xffff) & 0xffff));
+    sfx_c_70009284((phi_s0 & 0xff), ((arg0 & 0xffff) & 0xffff));
     temp_t6 = ((phi_s0 + 1) & 0xff);
     phi_s0 = temp_t6;
     if (temp_t6 < 7)
@@ -2310,7 +2403,7 @@ block_1:
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_38
+glabel sfx_c_700091E8
 /* 009DE8 700091E8 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 009DEC 700091EC AFB10018 */  sw    $s1, 0x18($sp)
 /* 009DF0 700091F0 AFB00014 */  sw    $s0, 0x14($sp)
@@ -2320,7 +2413,7 @@ glabel music_related_38
 /* 009E00 70009200 00008025 */  move  $s0, $zero
 .L70009204:
 /* 009E04 70009204 320400FF */  andi  $a0, $s0, 0xff
-/* 009E08 70009208 0C0024A1 */  jal   music_related_42
+/* 009E08 70009208 0C0024A1 */  jal   sfx_c_70009284
 /* 009E0C 7000920C 3225FFFF */   andi  $a1, $s1, 0xffff
 /* 009E10 70009210 26100001 */  addiu $s0, $s0, 1
 /* 009E14 70009214 320E00FF */  andi  $t6, $s0, 0xff
@@ -2341,22 +2434,25 @@ glabel music_related_38
 
 
 
+/**
+ * 9E38	70009238
+ */
 #ifdef NONMATCHING
-void music_related_39(f32 arg0)
+void sfx_c_70009238(f32 arg0)
 {
     F32_800243FC = arg0;
-    music_related_38((music_related_37() & 0xffff));
+    sfx_c_700091E8((sfx_c_700091C8() & 0xffff));
 }
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_39
+glabel sfx_c_70009238
 /* 009E38 70009238 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 009E3C 7000923C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 009E40 70009240 3C018002 */  lui   $at, %hi(F32_800243FC) # $at, 0x8002
-/* 009E44 70009244 0C002472 */  jal   music_related_37
+/* 009E44 70009244 0C002472 */  jal   sfx_c_700091C8
 /* 009E48 70009248 E42C43FC */   swc1  $f12, %lo(F32_800243FC)($at)
-/* 009E4C 7000924C 0C00247A */  jal   music_related_38
+/* 009E4C 7000924C 0C00247A */  jal   sfx_c_700091E8
 /* 009E50 70009250 3044FFFF */   andi  $a0, $v0, 0xffff
 /* 009E54 70009254 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 009E58 70009258 27BD0018 */  addiu $sp, $sp, 0x18
@@ -2373,8 +2469,12 @@ glabel music_related_39
 
 
 
+/**
+ * 9E64	70009264
+ *     V0= halfword A0 in table at [80063BA8]; fries T6,T7,T8,T9
+ */
 #ifdef NONMATCHING
-void music_related_41(s32 arg0)
+void sfx_c_70009264(s32 arg0)
 {
     return *(D_80063BA8 + ((arg0 & 0xff) * 2));
 }
@@ -2382,7 +2482,7 @@ void music_related_41(s32 arg0)
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_41
+glabel sfx_c_70009264
 /* 009E64 70009264 3C0F8006 */  lui   $t7, %hi(D_80063BA8) # $t7, 0x8006
 /* 009E68 70009268 8DEF3BA8 */  lw    $t7, %lo(D_80063BA8)($t7)
 /* 009E6C 7000926C 308E00FF */  andi  $t6, $a0, 0xff
@@ -2402,8 +2502,11 @@ glabel music_related_41
 
 
 
+/**
+ * 9E84	70009284
+ */
 #ifdef NONMATCHING
-s32 music_related_42(s32 arg0, s32 arg1)
+s32 sfx_c_70009284(s32 arg0, s32 arg1)
 {
     s16 sp30;
     s32 temp_s3;
@@ -2447,7 +2550,7 @@ block_1:
 #else
 GLOBAL_ASM(
 .text
-glabel music_related_42
+glabel sfx_c_70009284
 /* 009E84 70009284 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 009E88 70009288 3C0F8006 */  lui   $t7, %hi(D_80063BA8) # $t7, 0x8006
 /* 009E8C 7000928C 8DEF3BA8 */  lw    $t7, %lo(D_80063BA8)($t7)

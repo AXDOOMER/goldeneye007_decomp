@@ -14,7 +14,7 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F09B600
 /* 0D0130 7F09B600 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 0D0134 7F09B604 3C0E8F80 */  lui   $t6, (0x8F809F47 >> 16) # lui $t6, 0x8f80
+/* 0D0134 7F09B604 3C0E8F80 */  lui   $t6, (0x8F809F47 >> 16) # lui $t6, 0x8f80 # seed for save profile checksum confirmation
 /* 0D0138 7F09B608 3C0F3108 */  lui   $t7, (0x3108B3C1 >> 16) # lui $t7, 0x3108
 /* 0D013C 7F09B60C AFB50028 */  sw    $s5, 0x28($sp)
 /* 0D0140 7F09B610 AFB40024 */  sw    $s4, 0x24($sp)
@@ -23,7 +23,7 @@ glabel sub_GAME_7F09B600
 /* 0D014C 7F09B61C AFB00014 */  sw    $s0, 0x14($sp)
 /* 0D0150 7F09B620 35EFB3C1 */  ori   $t7, (0x3108B3C1 & 0xFFFF) # ori $t7, $t7, 0xb3c1
 /* 0D0154 7F09B624 35CE9F47 */  ori   $t6, (0x8F809F47 & 0xFFFF) # ori $t6, $t6, 0x9f47
-/* 0D0158 7F09B628 0085082B */  sltu  $at, $a0, $a1
+/* 0D0158 7F09B628 0085082B */  sltu  $at, $a0, $a1 #
 /* 0D015C 7F09B62C 00A0A825 */  move  $s5, $a1
 /* 0D0160 7F09B630 AFBF002C */  sw    $ra, 0x2c($sp)
 /* 0D0164 7F09B634 AFB2001C */  sw    $s2, 0x1c($sp)
@@ -98,5 +98,4 @@ glabel sub_GAME_7F09B600
 /* 0D0268 7F09B738 27BD0058 */   addiu $sp, $sp, 0x58
 )
 #endif
-
 

@@ -1,8 +1,16 @@
 #include "ultra64.h"
 #include "tlb_resolve.h"
 
+/**
+ * @file tlb_resolve.c
+ * This file contains code to load/resolve TLBaddress. 
+ */
 
 
+/**
+ * 2760	70001B60
+ * loads/resolves TLB address, writting random entry
+ */
 #ifdef NONMATCHING
 void resolve_TLBaddress_for_InvalidHit(void) {
     //i should probably remain as assembly, maybe even moved to a .s

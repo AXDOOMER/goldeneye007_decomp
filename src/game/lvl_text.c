@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "bondgame.h"
 #include "game/lvl_text.h"
 
 // bss
@@ -30,71 +31,117 @@ s32 ptr_j_char_registry;
 
 s32 j_text_trigger = 0;
 void *LnameX_lookuptable[] = {
-    0, 0, "LameE", "LameJ", "LarchE", "LarchJ", "LarkE", "LarkJ", "LashE", "LashJ", "LaztE", 
-    "LaztJ", "LcatE", "LcatJ", "LcaveE", "LcaveJ", "LarecE", "LarecJ", "LcradE", "LcradJ", 
-    "LcrypE", "LcrypJ", "LdamE", "LdamJ", "LdepoE", "LdepoJ", "LdestE", "LdestJ", "LdishE", 
-    "LdishJ", "LearE", "LearJ", "LeldE", "LeldJ", "LimpE", "LimpJ", "LjunE", "LjunJ", "LleeE", 
-    "LleeJ", "LlenE", "LlenJ", "LlipE", "LlipJ", "LlueE", "LlueJ", "LoatE", "LoatJ", "LpamE", 
-    "LpamJ", "LpeteE", "LpeteJ", "LrefE", "LrefJ", "LritE", "LritJ", "LrunE", "LrunJ", "LsevbE", 
-    "LsevbJ", "LsevE", "LsevJ", "LsevxE", "LsevxJ", "LsevxbE", "LsevxbJ", "LshoE", "LshoJ", 
-    "LsiloE", "LsiloJ", "LstatE", "LstatJ", "LtraE", "LtraJ", "LwaxE", "LwaxJ", "LgunE", "LgunJ", 
-    "LtitleE", "LtitleJ", "LmpmenuE", "LmpmenuJ", "LpropobjE", "LpropobjJ", "LmpweaponsE", 
-    "LmpweaponsJ", "LoptionsE", "LoptionsJ", "LmiscE", "LmiscJ",0};
+    NULL, NULL,                    /* Null (unused) */
+    "LameE", "LameJ",              /* Library (multi) */
+    "LarchE", "LarchJ",            /* Archives */
+    "LarkE", "LarkJ",              /* Facility */
+    "LashE", "LashJ",              /* Stack (multi) */
+    "LaztE", "LaztJ",              /* Aztec */
+    "LcatE", "LcatJ",              /* Citadel (multi) */
+    "LcaveE", "LcaveJ",            /* Caverns */
+    "LarecE", "LarecJ",            /* Control */
+    "LcradE", "LcradJ",            /* Cradle */
+    "LcrypE", "LcrypJ",            /* Egypt */
+    "LdamE", "LdamJ",              /* Dam */
+    "LdepoE", "LdepoJ",            /* Depot */
+    "LdestE", "LdestJ",            /* Frigate */
+    "LdishE", "LdishJ",            /* Temple (multi) */
+    "LearE", "LearJ",              /* Ear (unused) */
+    "LeldE", "LeldJ",              /* Eld (unused) */
+    "LimpE", "LimpJ",              /* Basement (multi) */
+    "LjunE", "LjunJ",              /* Jungle */
+    "LleeE", "LleeJ",              /* Lee (unused) */
+    "LlenE", "LlenJ",              /* Cuba */
+    "LlipE", "LlipJ",              /* Lip (unused) */
+    "LlueE", "LlueJ",              /* Lue (unused) */
+    "LoatE", "LoatJ",              /* Cave (multi) */
+    "LpamE", "LpamJ",              /* Pam (unused) */
+    "LpeteE", "LpeteJ",            /* Streets */
+    "LrefE", "LrefJ",              /* Complex (multi) */
+    "LritE", "LritJ",              /* Rit (unused) */
+    "LrunE", "LrunJ",              /* Runway */
+    "LsevbE", "LsevbJ",            /* Bunker 2 */
+    "LsevE", "LsevJ",              /* Bunker 1 */
+    "LsevxE", "LsevxJ",            /* Surface 1 */
+    "LsevxbE", "LsevxbJ",          /* Surface 2 */
+    "LshoE", "LshoJ",              /* Sho (unused) */
+    "LsiloE", "LsiloJ",            /* Silo */
+    "LstatE", "LstatJ",            /* Statue */
+    "LtraE", "LtraJ",              /* Train */
+    "LwaxE", "LwaxJ",              /* Wax (unused) */
+    "LgunE", "LgunJ",              /* Guns */
+    "LtitleE", "LtitleJ",          /* Stage and menu titles */
+    "LmpmenuE", "LmpmenuJ",        /* Multi menus */
+    "LpropobjE", "LpropobjJ",      /* In-game pickups */
+    "LmpweaponsE", "LmpweaponsJ",  /* Multi weapon select */
+    "LoptionsE", "LoptionsJ",      /* Solo in-game menus */
+    "LmiscE", "LmiscJ"};           /* Cheat options */
 
-/* rodata
-
-D:8005BB60     jpt_stage_text: .word locret_CODE_7F0C1624
-D:8005BB60                                              # DATA XREF: get_textbank_number_for_stagenum+10r
-D:8005BB60                     .word stagetext_loop     # jump table for switch statement
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C162C
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C164C
-D:8005BB60                     .word locret_CODE_7F0C167C
-D:8005BB60                     .word locret_CODE_7F0C1654
-D:8005BB60                     .word locret_CODE_7F0C166C
-D:8005BB60                     .word locret_CODE_7F0C1634
-D:8005BB60                     .word locret_CODE_7F0C1644
-D:8005BB60                     .word locret_CODE_7F0C1694
-D:8005BB60                     .word locret_CODE_7F0C165C
-D:8005BB60                     .word locret_CODE_7F0C1664
-D:8005BB60                     .word locret_CODE_7F0C16AC
-D:8005BB60                     .word locret_CODE_7F0C169C
-D:8005BB60                     .word locret_CODE_7F0C1604
-D:8005BB60                     .word locret_CODE_7F0C160C
-D:8005BB60                     .word locret_CODE_7F0C1614
-D:8005BB60                     .word locret_CODE_7F0C161C
-D:8005BB60                     .word locret_CODE_7F0C1674
-D:8005BB60                     .word locret_CODE_7F0C16A4
-D:8005BB60                     .word locret_CODE_7F0C1684
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C168C
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C163C
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C16BC
-D:8005BB60                     .word locret_CODE_7F0C16C4
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C16B4
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C16CC
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word stagetext_loop
-D:8005BB60                     .word locret_CODE_7F0C16D4
-*/
 
 #ifdef NONMATCHING
-void get_textbank_number_for_stagenum(void) {
+LEVELID get_textbank_number_for_stagenum(LEVELID level) {
+    switch(level)
+    {
+        case LEVELID_BUNKER1:
+            return LSEV;
+        case LEVELID_SILO:
+            return LSILO;
+        case LEVELID_STATUE:
+            return LSTAT;
+        case LEVELID_CONTROL:
+            return LAREC;
+        case LEVELID_ARCHIVES:
+            return LARCH;
+        case LEVELID_TRAIN:
+            return LTRA;
+        case LEVELID_FRIGATE:
+            return LDEST;
+        case LEVELID_BUNKER2:
+            return LSEVB;
+        case LEVELID_AZTEC:
+            return LAZT;
+        case LEVELID_STREETS:
+            return LPETE;
+        case LEVELID_DEPOT:
+            return LDEPO;
+        case LEVELID_COMPLEX:
+            return LREF;
+        case LEVELID_EGYPT:
+            return LCRYP;
+        case LEVELID_DAM:
+            return LDAM;
+        case LEVELID_FACILITY:
+            return LARK;
+        case LEVELID_RUNWAY:
+            return LRUN;
+        case LEVELID_SURFACE:
+            return LSEVX;
+        case LEVELID_JUNGLE:
+            return LJUN;
+        case LEVELID_TEMPLE:
+            return LDISH;
+        case LEVELID_CAVERNS:
+            return LCAVE;
+        case LEVELID_CRADLE:
+            return LCRAD;
+        case LEVELID_SURFACE2:
+            return LSEVXB;
+        case LEVELID_BASEMENT:
+            return LIMP;
+        case LEVELID_STACK:
+            return LASH;
+        case LEVELID_LIBRARY:
+            return LAME;
+        case LEVELID_CAVES:
+            return LOAT;
+        case LEVELID_CUBA:
+            return LLEN;
+    }
 
+	/* infinite loop on invalid text bank */
+    do {
+    } while(1);
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -664,8 +711,8 @@ glabel something_with_LnameX
 /* 0F6718 7F0C1BE8 A46E0000 */  sh    $t6, ($v1)
 /* 0F671C 7F0C1BEC 3C0F8009 */  lui   $t7, %hi(ptr_j_char_data_buf) # $t7, 0x8009
 /* 0F6720 7F0C1BF0 8DEFC6F4 */  lw    $t7, %lo(ptr_j_char_data_buf)($t7)
-/* 0F6724 7F0C1BF4 3C190011 */  lui   $t9, %hi(_unknown117940SegmentRomStart) # $t9, 0x11
-/* 0F6728 7F0C1BF8 27397940 */  addiu $t9, %lo(_unknown117940SegmentRomStart) # addiu $t9, $t9, 0x7940
+/* 0F6724 7F0C1BF4 3C190011 */  lui   $t9, %hi(_jfontcharSegmentStart) # $t9, 0x11
+/* 0F6728 7F0C1BF8 27397940 */  addiu $t9, %lo(_jfontcharSegmentStart) # addiu $t9, $t9, 0x7940
 /* 0F672C 7F0C1BFC 0000C012 */  mflo  $t8
 /* 0F6730 7F0C1C00 03192821 */  addu  $a1, $t8, $t9
 /* 0F6734 7F0C1C04 AFA80024 */  sw    $t0, 0x24($sp)
@@ -678,7 +725,7 @@ glabel something_with_LnameX
 /* 0F6750 7F0C1C20 010E1021 */   addu  $v0, $t0, $t6
 .L7F0C1C24:
 /* 0F6754 7F0C1C24 11000032 */  beqz  $t0, .L7F0C1CF0
-/* 0F6758 7F0C1C28 3C028009 */   lui   $v0, 0x8009
+/* 0F6758 7F0C1C28 3C028009 */   lui   $v0, %hi(ptr_j_char_data_buf)
 /* 0F675C 7F0C1C2C 05600030 */  bltz  $t3, .L7F0C1CF0
 /* 0F6760 7F0C1C30 000B1840 */   sll   $v1, $t3, 1
 /* 0F6764 7F0C1C34 01831021 */  addu  $v0, $t4, $v1
@@ -717,8 +764,8 @@ glabel something_with_LnameX
 /* 0F67E8 7F0C1CB8 32191FFF */  andi  $t9, $s0, 0x1fff
 /* 0F67EC 7F0C1CBC 00197043 */  sra   $t6, $t9, 1
 /* 0F67F0 7F0C1CC0 01182021 */  addu  $a0, $t0, $t8
-/* 0F67F4 7F0C1CC4 3C180012 */  lui   $t8, %hi(_unknown123040SegmentRomStart) # $t8, 0x12
-/* 0F67F8 7F0C1CC8 27183040 */  addiu $t8, %lo(_unknown123040SegmentRomStart) # addiu $t8, $t8, 0x3040
+/* 0F67F4 7F0C1CC4 3C180012 */  lui   $t8, %hi(_efontcharSegmentStart) # $t8, 0x12
+/* 0F67F8 7F0C1CC8 27183040 */  addiu $t8, %lo(_efontcharSegmentStart) # addiu $t8, $t8, 0x3040
 /* 0F67FC 7F0C1CCC 000E79C0 */  sll   $t7, $t6, 7
 /* 0F6800 7F0C1CD0 01F82821 */  addu  $a1, $t7, $t8
 /* 0F6804 7F0C1CD4 0C001707 */  jal   romCopy
@@ -729,7 +776,7 @@ glabel something_with_LnameX
 /* 0F6818 7F0C1CE8 10000002 */  b     .L7F0C1CF4
 /* 0F681C 7F0C1CEC 01191021 */   addu  $v0, $t0, $t9
 .L7F0C1CF0:
-/* 0F6820 7F0C1CF0 8C42C6F4 */  lw    $v0, -0x390c($v0)
+/* 0F6820 7F0C1CF0 8C42C6F4 */  lw    $v0, %lo(ptr_j_char_data_buf)($v0)
 .L7F0C1CF4:
 /* 0F6824 7F0C1CF4 8FBF001C */  lw    $ra, 0x1c($sp)
 .L7F0C1CF8:
@@ -829,65 +876,17 @@ glabel load_briefing_text_bank
 
 
 
-#ifdef NONMATCHING
-void blank_text_bank(s32 arg0) {
-    // Node 0
-    *(&ptr_text + (arg0 * 4)) = 0;
-    return;
-    // (function likely void)
+void blank_text_bank(s32 textBank) {
+    (&ptr_text)[textBank] = 0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel blank_text_bank
-/* 0F68F4 7F0C1DC4 00047080 */  sll   $t6, $a0, 2
-/* 0F68F8 7F0C1DC8 3C018009 */  lui   $at, %hi(ptr_text)
-/* 0F68FC 7F0C1DCC 002E0821 */  addu  $at, $at, $t6
-/* 0F6900 7F0C1DD0 03E00008 */  jr    $ra
-/* 0F6904 7F0C1DD4 AC20C640 */   sw    $zero, %lo(ptr_text)($at)
-)
-#endif
 
+u8 * get_textptr_for_textID(s32 slotID)
+{
+    u32 * textbank_ptr = (&ptr_text)[slotID >> 10]; /* get the text file bank ID index the text ptr table */
+    u32 textslot_offset = textbank_ptr[slotID & 0x03FF]; /* load the textbank ptr table then get the slot's offset */
 
-
-
-
-#ifdef NONMATCHING
-void get_textptr_for_textID(s32 arg0) {
-    // Node 0
-    if (*(*(&ptr_text + ((arg0 >> 0xa) * 4)) + ((arg0 & 0x3ff) * 4)) != 0)
-    {
-        // Node 1
-        return;
-        // (possible return value: 0)
-    }
-    // (possible return value: 0)
+    u32 output_slot = textslot_offset; /* add the text slot offset to the base ptr to get the ptr to text file's slot */
+    output_slot += (u32)textbank_ptr;
+    return (textslot_offset != 0) ? output_slot : NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_textptr_for_textID
-/* 0F6908 7F0C1DD8 00047283 */  sra   $t6, $a0, 0xa
-/* 0F690C 7F0C1DDC 000E7880 */  sll   $t7, $t6, 2
-/* 0F6910 7F0C1DE0 3C028009 */  lui   $v0, %hi(ptr_text)
-/* 0F6914 7F0C1DE4 004F1021 */  addu  $v0, $v0, $t7
-/* 0F6918 7F0C1DE8 8C42C640 */  lw    $v0, %lo(ptr_text)($v0)
-/* 0F691C 7F0C1DEC 309803FF */  andi  $t8, $a0, 0x3ff
-/* 0F6920 7F0C1DF0 0018C880 */  sll   $t9, $t8, 2
-/* 0F6924 7F0C1DF4 00594021 */  addu  $t0, $v0, $t9
-/* 0F6928 7F0C1DF8 8D030000 */  lw    $v1, ($t0)
-/* 0F692C 7F0C1DFC 00002025 */  move  $a0, $zero
-/* 0F6930 7F0C1E00 10600004 */  beqz  $v1, .L7F0C1E14
-/* 0F6934 7F0C1E04 00000000 */   nop   
-/* 0F6938 7F0C1E08 00622021 */  addu  $a0, $v1, $v0
-/* 0F693C 7F0C1E0C 03E00008 */  jr    $ra
-/* 0F6940 7F0C1E10 00801025 */   move  $v0, $a0
-
-.L7F0C1E14:
-/* 0F6944 7F0C1E14 03E00008 */  jr    $ra
-/* 0F6948 7F0C1E18 00801025 */   move  $v0, $a0
-)
-#endif
-
-

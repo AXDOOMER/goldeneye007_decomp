@@ -1,7 +1,18 @@
 #include "ultra64.h"
 
+/**
+ * @file osMapTLB.c
+ * This file contains code thatsets TLB indexed entry 0 to mirror 1KB of rdram from 80000000 to C0000000. 
+ * 
+ * In particular, it:
+ *   - should be made into an assembly file
+ */
 
-
+/**
+ * 	 2380	70001780
+ * sets TLB indexed entry 0 to mirror 1KB of rdram from 80000000 to C0000000
+ *	uncached, dirty, valid, global
+ */
 #ifdef NONMATCHING
 void osMapTLBRdb(void) {
     //i should probably remain as assembly, maybe even moved to a .s

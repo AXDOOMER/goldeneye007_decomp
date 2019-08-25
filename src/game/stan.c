@@ -221,33 +221,10 @@ u32 stanRemovedAnimationRoutine(s32 arg0) {
     return 0;
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
 void something_stan_c_debug_related(void) {
-    get_ptr_debug_notice_list_entry(&stan_c_debug_notice_list_entry, "stan_c_debug");
+    get_ptr_debug_notice_list_entry(&stan_c_debug_notice_list_entry, &aStan_c_debug);//"stan_c_debug");
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel something_stan_c_debug_related
-/* 0E3B3C 7F0AF00C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E3B40 7F0AF010 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E3B44 7F0AF014 3C048004 */  lui   $a0, %hi(stan_c_debug_notice_list_entry) # $a0, 0x8004
-/* 0E3B48 7F0AF018 3C058006 */  lui   $a1, %hi(aStan_c_debug) # $a1, 0x8006
-/* 0E3B4C 7F0AF01C 24A585AC */  addiu $a1, %lo(aStan_c_debug) # addiu $a1, $a1, -0x7a54
-/* 0E3B50 7F0AF020 0C001398 */  jal   get_ptr_debug_notice_list_entry
-/* 0E3B54 7F0AF024 24840F40 */   addiu $a0, %lo(stan_c_debug_notice_list_entry) # addiu $a0, $a0, 0xf40
-/* 0E3B58 7F0AF028 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E3B5C 7F0AF02C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0E3B60 7F0AF030 03E00008 */  jr    $ra
-/* 0E3B64 7F0AF034 00000000 */   nop   
-)
-#endif
 
 
 
@@ -857,19 +834,11 @@ glabel stanLoadFile
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0AF630(s32 arg0) {
 
+void sub_GAME_7F0AF630(s32 arg0) {
+    return;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AF630
-/* 0E4160 7F0AF630 03E00008 */  jr    $ra
-/* 0E4164 7F0AF634 AFA40000 */   sw    $a0, ($sp)
-)
-#endif
 
 
 
@@ -1584,11 +1553,11 @@ glabel sub_GAME_7F0AFB78
 .L7F0AFCB8:
 /* 0E47E8 7F0AFCB8 86220006 */  lh    $v0, 6($s1)
 .L7F0AFCBC:
-/* 0E47EC 7F0AFCBC 3C0B8004 */  lui   $t3, 0x8004
+/* 0E47EC 7F0AFCBC 3C0B8004 */  lui   $t3, %hi(list_of_tilesizes)
 /* 0E47F0 7F0AFCC0 00024B03 */  sra   $t1, $v0, 0xc
 /* 0E47F4 7F0AFCC4 312A000F */  andi  $t2, $t1, 0xf
 /* 0E47F8 7F0AFCC8 016A5821 */  addu  $t3, $t3, $t2
-/* 0E47FC 7F0AFCCC 916B0F4C */  lbu   $t3, 0xf4c($t3)
+/* 0E47FC 7F0AFCCC 916B0F4C */  lbu   $t3, %lo(list_of_tilesizes)($t3)
 /* 0E4800 7F0AFCD0 01718821 */  addu  $s1, $t3, $s1
 /* 0E4804 7F0AFCD4 8E2C0000 */  lw    $t4, ($s1)
 /* 0E4808 7F0AFCD8 5580FFCB */  bnezl $t4, .L7F0AFC08

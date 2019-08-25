@@ -331,22 +331,22 @@ glabel prepare_load_objects
 /* 0369DC 7F001EAC 1561000C */  bne   $t3, $at, .L7F001EE0
 /* 0369E0 7F001EB0 000E7880 */   sll   $t7, $t6, 2
 /* 0369E4 7F001EB4 8FAC00F0 */  lw    $t4, 0xf0($sp)
-/* 0369E8 7F001EB8 3C058004 */  lui   $a1, 0x8004
+/* 0369E8 7F001EB8 3C058004 */  lui   $a1, %hi(PitemZ_entries)
 /* 0369EC 7F001EBC 02202025 */  move  $a0, $s1
 /* 0369F0 7F001EC0 000C6880 */  sll   $t5, $t4, 2
 /* 0369F4 7F001EC4 01AC6823 */  subu  $t5, $t5, $t4
 /* 0369F8 7F001EC8 000D6880 */  sll   $t5, $t5, 2
 /* 0369FC 7F001ECC 00AD2821 */  addu  $a1, $a1, $t5
 /* 036A00 7F001ED0 0FC14776 */  jal   sub_GAME_7F051DD8
-/* 036A04 7F001ED4 8CA5A228 */   lw    $a1, -0x5dd8($a1)
+/* 036A04 7F001ED4 8CA5A228 */   lw    $a1, %lo(PitemZ_entries)($a1)
 /* 036A08 7F001ED8 10000009 */  b     .L7F001F00
 /* 036A0C 7F001EDC 8E240014 */   lw    $a0, 0x14($s1)
 .L7F001EE0:
 /* 036A10 7F001EE0 01EE7823 */  subu  $t7, $t7, $t6
 /* 036A14 7F001EE4 000F7880 */  sll   $t7, $t7, 2
-/* 036A18 7F001EE8 3C058004 */  lui   $a1, 0x8004
+/* 036A18 7F001EE8 3C058004 */  lui   $a1, %hi(PitemZ_entries)
 /* 036A1C 7F001EEC 00AF2821 */  addu  $a1, $a1, $t7
-/* 036A20 7F001EF0 8CA5A228 */  lw    $a1, -0x5dd8($a1)
+/* 036A20 7F001EF0 8CA5A228 */  lw    $a1, %lo(PitemZ_entries)($a1)
 /* 036A24 7F001EF4 0FC101BE */  jal   sub_GAME_7F0406F8
 /* 036A28 7F001EF8 02202025 */   move  $a0, $s1
 /* 036A2C 7F001EFC 8E240014 */  lw    $a0, 0x14($s1)
@@ -378,22 +378,22 @@ glabel prepare_load_objects
 /* 036A8C 7F001F5C 1521000C */  bne   $t1, $at, .L7F001F90
 /* 036A90 7F001F60 000C6880 */   sll   $t5, $t4, 2
 /* 036A94 7F001F64 8FAA00F0 */  lw    $t2, 0xf0($sp)
-/* 036A98 7F001F68 3C058004 */  lui   $a1, 0x8004
+/* 036A98 7F001F68 3C058004 */  lui   $a1, %hi(PitemZ_entries)
 /* 036A9C 7F001F6C 02202025 */  move  $a0, $s1
 /* 036AA0 7F001F70 000A5880 */  sll   $t3, $t2, 2
 /* 036AA4 7F001F74 016A5823 */  subu  $t3, $t3, $t2
 /* 036AA8 7F001F78 000B5880 */  sll   $t3, $t3, 2
 /* 036AAC 7F001F7C 00AB2821 */  addu  $a1, $a1, $t3
 /* 036AB0 7F001F80 0FC14776 */  jal   sub_GAME_7F051DD8
-/* 036AB4 7F001F84 8CA5A228 */   lw    $a1, -0x5dd8($a1)
+/* 036AB4 7F001F84 8CA5A228 */   lw    $a1, %lo(PitemZ_entries)($a1)
 /* 036AB8 7F001F88 10000009 */  b     .L7F001FB0
 /* 036ABC 7F001F8C 00408025 */   move  $s0, $v0
 .L7F001F90:
 /* 036AC0 7F001F90 01AC6823 */  subu  $t5, $t5, $t4
 /* 036AC4 7F001F94 000D6880 */  sll   $t5, $t5, 2
-/* 036AC8 7F001F98 3C058004 */  lui   $a1, 0x8004
+/* 036AC8 7F001F98 3C058004 */  lui   $a1, %hi(PitemZ_entries)
 /* 036ACC 7F001F9C 00AD2821 */  addu  $a1, $a1, $t5
-/* 036AD0 7F001FA0 8CA5A228 */  lw    $a1, -0x5dd8($a1)
+/* 036AD0 7F001FA0 8CA5A228 */  lw    $a1, %lo(PitemZ_entries)($a1)
 /* 036AD4 7F001FA4 0FC101BE */  jal   sub_GAME_7F0406F8
 /* 036AD8 7F001FA8 02202025 */   move  $a0, $s1
 /* 036ADC 7F001FAC 00408025 */  move  $s0, $v0
@@ -628,9 +628,9 @@ glabel prepare_load_objects
 /* 036E50 7F002320 000B6080 */   sll   $t4, $t3, 2
 /* 036E54 7F002324 018B6023 */  subu  $t4, $t4, $t3
 /* 036E58 7F002328 000C6080 */  sll   $t4, $t4, 2
-/* 036E5C 7F00232C 3C058004 */  lui   $a1, 0x8004
+/* 036E5C 7F00232C 3C058004 */  lui   $a1, %hi(PitemZ_entries)
 /* 036E60 7F002330 00AC2821 */  addu  $a1, $a1, $t4
-/* 036E64 7F002334 8CA5A228 */  lw    $a1, -0x5dd8($a1)
+/* 036E64 7F002334 8CA5A228 */  lw    $a1, %lo(PitemZ_entries)($a1)
 /* 036E68 7F002338 0FC14776 */  jal   sub_GAME_7F051DD8
 /* 036E6C 7F00233C 02202025 */   move  $a0, $s1
 /* 036E70 7F002340 10000004 */  b     .L7F002354
@@ -830,7 +830,7 @@ glabel prepare_load_objects
 .L7F0025FC:
 /* 03712C 7F0025FC 460E6303 */  div.s $f12, $f12, $f14
 .L7F002600:
-/* 037130 7F002600 3C018005 */  li    $at, 0x80050000 # -0.000000
+/* 037130 7F002600 3C018005 */  lui    $at, %hi(D_8004EEB4)
 /* 037134 7F002604 C420EEB4 */  lwc1  $f0, %lo(D_8004EEB4)($at)
 /* 037138 7F002608 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 03713C 7F00260C 460E8403 */  div.s $f16, $f16, $f14

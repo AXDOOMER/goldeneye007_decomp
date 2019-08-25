@@ -32,5 +32,5 @@ struct stringentry LdestE[] = {
  "tracker bug\n",
  "Picked up a tracker bug.\n",
  "Mission Failure: Unacceptable hostage\ncasualties!\n",
- '\0'
+ NULL
 };

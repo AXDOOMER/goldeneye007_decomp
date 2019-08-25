@@ -1,6 +1,16 @@
 #include "ultra64.h"
 #include "ramrom.h"
 
+/**
+ * @file tlb_manage.c
+ * This file contains tlb management code. 
+ * 
+ * In particular, it:
+ *   - 
+ *   - 
+ *   - 
+ */
+
 u32 maybe_cur_TLB_entries = 0;
 u32 tlb_segment_num = 0;
 
@@ -13,7 +23,10 @@ u32 ptr_TLBallocatedblock;
 
 
 
-
+/**
+ * 23E0	700017E0
+ * establishes 7F- TLB buffer and management table
+ */
 #ifdef NONMATCHING
 void *establish_TLB_buffer_management_table(void)
 {
@@ -106,16 +119,16 @@ glabel establish_TLB_buffer_management_table
 /* 002480 70001880 2739DBF0 */  addiu $t9, %lo(TLB_managment_table_start) # addiu $t9, $t9, -0x2410
 /* 002484 70001884 34218000 */  ori   $at, (0xFFC08000 & 0xFFFF) # ori $at, $at, 0x8000
 /* 002488 70001888 03214021 */  addu  $t0, $t9, $at
-/* 00248C 7000188C 3C018006 */  lui   $at, 0x8006
+/* 00248C 7000188C 3C018006 */  lui   $at, %hi(TLB_manager_mapping_table_end)
 /* 002490 70001890 03E00008 */  jr    $ra
-/* 002494 70001894 AC28E4A4 */   sw    $t0, -0x1b5c($at)
+/* 002494 70001894 AC28E4A4 */   sw    $t0, %lo(TLB_manager_mapping_table_end)($at)
 )
 #endif
 
-
-
-
-
+/**
+ * 2498	70001898
+ * ???; pointless conditional tests, will reset 800230D0
+ */
 #ifdef NONMATCHING
 void mp_tlb_related(void) {
     
@@ -137,74 +150,45 @@ glabel mp_tlb_related
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-s32 return_TLB_index_for_entry(s32 arg0)
-{
-    s32 temp_s0;
-    s32 phi_s0;
-
-    phi_s0 = 0;
-loop_1:
-    if (__osGetTLBHi(phi_s0) == arg0)
-    {
-        return phi_s0;
-    }
-    temp_s0 = phi_s0 + 1;
-    phi_s0 = temp_s0;
-    if (temp_s0 != 0x20)
-    {
-        goto loop_1;
-    }
-    return 0x80000000;
+/**
+ * 24C0	700018C0
+ * searches TLB index for an entry matching A0
+ *	V0=index of match or 80000000 if not found
+ *	accepts: A0=TLB pointer
+ */
+s32 return_TLB_index_for_entry(int entry) {
+    s32 index = 0;
+    while (index != 0x20) {
+        if (__osGetTLBHi(index) == entry) {
+            return index;
+        }
+        index++;
+    };
+    return -0x80000000;
 }
-#else
-GLOBAL_ASM(
-glabel return_TLB_index_for_entry
-/* 0024C0 700018C0 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0024C4 700018C4 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0024C8 700018C8 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0024CC 700018CC AFB00018 */  sw    $s0, 0x18($sp)
-/* 0024D0 700018D0 00808825 */  move  $s1, $a0
-/* 0024D4 700018D4 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0024D8 700018D8 00008025 */  move  $s0, $zero
-/* 0024DC 700018DC 24120020 */  li    $s2, 32
-.L700018E0:
-/* 0024E0 700018E0 0C003A20 */  jal   __osGetTLBHi
-/* 0024E4 700018E4 02002025 */   move  $a0, $s0
-/* 0024E8 700018E8 54510004 */  bnel  $v0, $s1, .L700018FC
-/* 0024EC 700018EC 26100001 */   addiu $s0, $s0, 1
-/* 0024F0 700018F0 10000005 */  b     .L70001908
-/* 0024F4 700018F4 02001025 */   move  $v0, $s0
-/* 0024F8 700018F8 26100001 */  addiu $s0, $s0, 1
-.L700018FC:
-/* 0024FC 700018FC 1612FFF8 */  bne   $s0, $s2, .L700018E0
-/* 002500 70001900 00000000 */   nop   
-/* 002504 70001904 3C028000 */  lui   $v0, 0x8000
-.L70001908:
-/* 002508 70001908 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 00250C 7000190C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 002510 70001910 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 002514 70001914 8FB20020 */  lw    $s2, 0x20($sp)
-/* 002518 70001918 03E00008 */  jr    $ra
-/* 00251C 7000191C 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
-
+/**
+ *  2520	70001920
+ * find and remove TLB entry A0
+ *	accepts: A0=TLB pointer
+ *	redirects to 700018C0, 7000D3D0
+ */
 void find_remove_TLB_entry(u32 entry) {
-    u32 temp_ret = return_TLB_index_for_entry(entry);
+    s32 index = return_TLB_index_for_entry(entry);
 
-    if ((temp_ret & 0x80000000))
+    if ((index & 0x80000000))
         return;
 
-    osUnmapTLB(temp_ret);
+    osUnmapTLB(index);
 }
 
-
+/**
+ * 2554	70001954
+ * remove index A0 TLB entry from table at 8005E3F0
+ *	table format:
+ *		0x0	1 if dirty
+ *		0x1	chunk # (7F000000 | chunk<<D)
+ */
 #ifdef NONMATCHING
 void remove_TLB_entry_from_table(s32 arg0)
 {
@@ -253,11 +237,11 @@ glabel remove_TLB_entry_from_table
 /* 0025A8 700019A8 8FA30018 */  lw    $v1, 0x18($sp)
 .L700019AC:
 /* 0025AC 700019AC 906A0001 */  lbu   $t2, 1($v1)
-/* 0025B0 700019B0 3C018006 */  lui   $at, 0x8006
+/* 0025B0 700019B0 3C018006 */  lui   $at, %hi(TLB_managment_table_start)
 /* 0025B4 700019B4 24020001 */  li    $v0, 1
 /* 0025B8 700019B8 000A5900 */  sll   $t3, $t2, 4
 /* 0025BC 700019BC 002B0821 */  addu  $at, $at, $t3
-/* 0025C0 700019C0 AC22DBF0 */  sw    $v0, -0x2410($at)
+/* 0025C0 700019C0 AC22DBF0 */  sw    $v0, %lo(TLB_managment_table_start)($at)
 /* 0025C4 700019C4 A0620000 */  sb    $v0, ($v1)
 /* 0025C8 700019C8 8FBF0014 */  lw    $ra, 0x14($sp)
 .L700019CC:
@@ -267,10 +251,10 @@ glabel remove_TLB_entry_from_table
 )
 #endif
 
-
-
-
-
+/**
+ * 25D8	700019D8
+ * loads ROM range for 7F- TLB entries
+ */
 #ifdef NONMATCHING
 void translate_load_rom_from_TLBaddress(s32 arg0) {
     u32 sp24;
@@ -336,9 +320,9 @@ glabel translate_load_rom_from_TLBaddress
 /* 002640 70001A40 3C0100FF */  lui   $at, (0x00FFE000 >> 16) # lui $at, 0xff
 /* 002644 70001A44 3421E000 */  ori   $at, (0x00FFE000 & 0xFFFF) # ori $at, $at, 0xe000
 /* 002648 70001A48 00104340 */  sll   $t0, $s0, 0xd
-/* 00264C 70001A4C 3C0A0003 */  lui   $t2, %hi(_rarezipSegmentRomEnd) # $t2, 3
+/* 00264C 70001A4C 3C0A0003 */  lui   $t2, %hi(_gameSegmentRomStart) # $t2, 3
 /* 002650 70001A50 00414824 */  and   $t1, $v0, $at
-/* 002654 70001A54 254A4B30 */  addiu $t2, %lo(_rarezipSegmentRomEnd) # addiu $t2, $t2, 0x4b30
+/* 002654 70001A54 254A4B30 */  addiu $t2, %lo(_gameSegmentRomStart) # addiu $t2, $t2, 0x4b30
 /* 002658 70001A58 03282021 */  addu  $a0, $t9, $t0
 /* 00265C 70001A5C AFA40034 */  sw    $a0, 0x34($sp)
 /* 002660 70001A60 012A2821 */  addu  $a1, $t1, $t2
@@ -382,11 +366,11 @@ glabel translate_load_rom_from_TLBaddress
 )
 #endif
 
-
-
-
-
-u32 * return_ptr_TLBmemory(void)
+/**
+ * 26F8	70001AF8
+ * V0=p->TLB memory, or alternately end of free memory [8005E4A8]
+ */
+u32 * return_ptr_TLBallocatedblock(void)
 {
     return ptr_TLBallocatedblock;
 }
