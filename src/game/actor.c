@@ -3189,7 +3189,7 @@ glabel sub_GAME_7F020EF0
 /* 055B28 7F020FF8 10000008 */  b     .L7F02101C
 /* 055B2C 7F020FFC 00000000 */   nop   
 .L7F021000:
-/* 055B30 7F021000 0FC0C9AF */  jal   sub_GAME_7F0326BC
+/* 055B30 7F021000 0FC0C9AF */  jal   manage_actions
 /* 055B34 7F021004 02002025 */   move  $a0, $s0
 /* 055B38 7F021008 8E0B001C */  lw    $t3, 0x1c($s0)
 /* 055B3C 7F02100C 15600003 */  bnez  $t3, .L7F02101C
@@ -16643,7 +16643,7 @@ glabel sub_GAME_7F02B800
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F02B9A4(void) {
+void guard_body_hit_sfx(void) {
 
 }
 #else
@@ -16652,7 +16652,7 @@ GLOBAL_ASM(
 glabel D_80051E94
 .word 0x3e99999a /*0.30000001*/
 .text
-glabel sub_GAME_7F02B9A4
+glabel guard_body_hit_sfx
 /* 0604D4 7F02B9A4 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 0604D8 7F02B9A8 3C0F8003 */  lui   $t7, %hi(body_hit_SFX) # $t7, 0x8003
 /* 0604DC 7F02B9AC AFBF0024 */  sw    $ra, 0x24($sp)
@@ -24949,7 +24949,7 @@ glabel sub_GAME_7F032548
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0326BC(void) {
+void manage_actions(void) {
 
 }
 #else
@@ -24981,7 +24981,7 @@ glabel jpt_80052070
  .word .L7F0328C8
  .word .L7F0328D8
 .text
-glabel sub_GAME_7F0326BC
+glabel manage_actions
 /* 0671EC 7F0326BC 3C028005 */  lui   $v0, %hi(clock_timer) # $v0, 0x8005
 /* 0671F0 7F0326C0 8C428374 */  lw    $v0, %lo(clock_timer)($v0)
 /* 0671F4 7F0326C4 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -25052,7 +25052,7 @@ glabel sub_GAME_7F0326BC
 /* 0672E0 7F0327B0 1000004C */  b     .L7F0328E4
 /* 0672E4 7F0327B4 8E080014 */   lw    $t0, 0x14($s0)
 .L7F0327B8:
-/* 0672E8 7F0327B8 0FC0AE69 */  jal   sub_GAME_7F02B9A4
+/* 0672E8 7F0327B8 0FC0AE69 */  jal   guard_body_hit_sfx
 /* 0672EC 7F0327BC 02002025 */   move  $a0, $s0
 /* 0672F0 7F0327C0 10000048 */  b     .L7F0328E4
 /* 0672F4 7F0327C4 8E080014 */   lw    $t0, 0x14($s0)
@@ -25192,7 +25192,7 @@ glabel sub_GAME_7F03291C
 /* 067478 7F032948 8DEF097C */  lw    $t7, %lo(objectiveregisters2)($t7)
 /* 06747C 7F03294C AFA30024 */  sw    $v1, 0x24($sp)
 /* 067480 7F032950 AFAB0020 */  sw    $t3, 0x20($sp)
-/* 067484 7F032954 0FC0C9AF */  jal   sub_GAME_7F0326BC
+/* 067484 7F032954 0FC0C9AF */  jal   manage_actions
 /* 067488 7F032958 020F2021 */   addu  $a0, $s0, $t7
 /* 06748C 7F03295C 8FA30024 */  lw    $v1, 0x24($sp)
 /* 067490 7F032960 3C188003 */  lui   $t8, %hi(objectiveregisters3) # $t8, 0x8003
