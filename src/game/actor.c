@@ -2119,7 +2119,7 @@ glabel init_GUARDdata_with_set_values
 /* 054D6C 7F02023C 02202025 */  move  $a0, $s1
 /* 054D70 7F020240 260500F8 */  addiu $a1, $s0, 0xf8
 /* 054D74 7F020244 46120102 */  mul.s $f4, $f0, $f18
-/* 054D78 7F020248 0FC10027 */  jal   sub_GAME_7F04009C
+/* 054D78 7F020248 0FC10027 */  jal   set_color_shading_from_tile
 /* 054D7C 7F02024C E6040100 */   swc1  $f4, 0x100($s0)
 /* 054D80 7F020250 920C00F8 */  lbu   $t4, 0xf8($s0)
 /* 054D84 7F020254 920D00F9 */  lbu   $t5, 0xf9($s0)
@@ -3082,7 +3082,7 @@ glabel sub_GAME_7F020E40
 /* 0559C0 7F020E90 0FC1B5AC */  jal   subcalcpos
 /* 0559C4 7F020E94 02002025 */   move  $a0, $s0
 /* 0559C8 7F020E98 8FA40020 */  lw    $a0, 0x20($sp)
-/* 0559CC 7F020E9C 0FC10027 */  jal   sub_GAME_7F04009C
+/* 0559CC 7F020E9C 0FC10027 */  jal   set_color_shading_from_tile
 /* 0559D0 7F020EA0 262500F8 */   addiu $a1, $s1, 0xf8
 /* 0559D4 7F020EA4 8FA50020 */  lw    $a1, 0x20($sp)
 /* 0559D8 7F020EA8 02002025 */  move  $a0, $s0
@@ -3332,7 +3332,7 @@ glabel sub_GAME_7F020EF0
 /* 055D28 7F0211F8 0FC1B5AC */  jal   subcalcpos
 /* 055D2C 7F0211FC 8FA40110 */   lw    $a0, 0x110($sp)
 /* 055D30 7F021200 8FA40158 */  lw    $a0, 0x158($sp)
-/* 055D34 7F021204 0FC10027 */  jal   sub_GAME_7F04009C
+/* 055D34 7F021204 0FC10027 */  jal   set_color_shading_from_tile
 /* 055D38 7F021208 260500F8 */   addiu $a1, $s0, 0xf8
 /* 055D3C 7F02120C 8FA40110 */  lw    $a0, 0x110($sp)
 /* 055D40 7F021210 0FC1B2E6 */  jal   getsuboffset
@@ -3550,7 +3550,7 @@ glabel sub_GAME_7F020EF0
 /* 056038 7F021508 0FC1B103 */  jal   set_float_80036088
 /* 05603C 7F02150C 00000000 */   nop   
 /* 056040 7F021510 260400F4 */  addiu $a0, $s0, 0xf4
-/* 056044 7F021514 0FC100C4 */  jal   sub_GAME_7F040310
+/* 056044 7F021514 0FC100C4 */  jal   update_color_shading
 /* 056048 7F021518 8FA50030 */   lw    $a1, 0x30($sp)
 /* 05604C 7F02151C 0FC1B1DA */  jal   sub_GAME_7F06C768
 /* 056050 7F021520 8FA40110 */   lw    $a0, 0x110($sp)

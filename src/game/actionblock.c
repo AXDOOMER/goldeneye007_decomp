@@ -16068,13 +16068,13 @@ glabel sub_GAME_7F040078
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F04009C(void) {
+void set_color_shading_from_tile(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F04009C
+glabel set_color_shading_from_tile
 /* 074BCC 7F04009C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 074BD0 7F0400A0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 074BD4 7F0400A4 AFA40018 */  sw    $a0, 0x18($sp)
@@ -16241,7 +16241,7 @@ glabel sub_GAME_7F0402B4
 /* 074DF4 7F0402C4 31CF0400 */  andi  $t7, $t6, 0x400
 /* 074DF8 7F0402C8 55E0000E */  bnezl $t7, .L7F040304
 /* 074DFC 7F0402CC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 074E00 7F0402D0 0FC10027 */  jal   sub_GAME_7F04009C
+/* 074E00 7F0402D0 0FC10027 */  jal   set_color_shading_from_tile
 /* 074E04 7F0402D4 AFA5001C */   sw    $a1, 0x1c($sp)
 /* 074E08 7F0402D8 8FA5001C */  lw    $a1, 0x1c($sp)
 /* 074E0C 7F0402DC 90B80000 */  lbu   $t8, ($a1)
@@ -16266,13 +16266,13 @@ glabel sub_GAME_7F0402B4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F040310(void) {
+void update_color_shading(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F040310
+glabel update_color_shading
 /* 074E40 7F040310 90880000 */  lbu   $t0, ($a0)
 /* 074E44 7F040314 90AE0000 */  lbu   $t6, ($a1)
 /* 074E48 7F040318 90890001 */  lbu   $t1, 1($a0)
@@ -25878,7 +25878,7 @@ glabel object_interaction
 /* 07CF60 7F048430 8FAA0678 */   lw    $t2, 0x678($sp)
 /* 07CF64 7F048434 11400003 */  beqz  $t2, .L7F048444
 /* 07CF68 7F048438 26240078 */   addiu $a0, $s1, 0x78
-/* 07CF6C 7F04843C 0FC100C4 */  jal   sub_GAME_7F040310
+/* 07CF6C 7F04843C 0FC100C4 */  jal   update_color_shading
 /* 07CF70 7F048440 2625007C */   addiu $a1, $s1, 0x7c
 .L7F048444:
 /* 07CF74 7F048444 926E0001 */  lbu   $t6, 1($s3)

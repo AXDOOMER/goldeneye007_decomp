@@ -15397,7 +15397,7 @@ glabel sub_GAME_7F067420
 /* 09C4B0 7F067980 00000000 */   nop   
 /* 09C4B4 7F067984 8E050000 */  lw    $a1, ($s0)
 /* 09C4B8 7F067988 00402025 */  move  $a0, $v0
-/* 09C4BC 7F06798C 0FC10027 */  jal   sub_GAME_7F04009C
+/* 09C4BC 7F06798C 0FC10027 */  jal   set_color_shading_from_tile
 /* 09C4C0 7F067990 24A50FDC */   addiu $a1, $a1, 0xfdc
 /* 09C4C4 7F067994 8E190000 */  lw    $t9, ($s0)
 /* 09C4C8 7F067998 1000000A */  b     .L7F0679C4
@@ -15406,11 +15406,11 @@ glabel sub_GAME_7F067420
 /* 09C4D0 7F0679A0 0FC225E6 */  jal   get_curplayer_positiondata
 /* 09C4D4 7F0679A4 00000000 */   nop   
 /* 09C4D8 7F0679A8 00402025 */  move  $a0, $v0
-/* 09C4DC 7F0679AC 0FC10027 */  jal   sub_GAME_7F04009C
+/* 09C4DC 7F0679AC 0FC10027 */  jal   set_color_shading_from_tile
 /* 09C4E0 7F0679B0 27A50038 */   addiu $a1, $sp, 0x38
 /* 09C4E4 7F0679B4 8E040000 */  lw    $a0, ($s0)
 /* 09C4E8 7F0679B8 27A50038 */  addiu $a1, $sp, 0x38
-/* 09C4EC 7F0679BC 0FC100C4 */  jal   sub_GAME_7F040310
+/* 09C4EC 7F0679BC 0FC100C4 */  jal   update_color_shading
 /* 09C4F0 7F0679C0 24840FDC */   addiu $a0, $a0, 0xfdc
 .L7F0679C4:
 /* 09C4F4 7F0679C4 0FC17674 */  jal   get_item_in_hand
