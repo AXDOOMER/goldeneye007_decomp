@@ -20,13 +20,13 @@ struct animation_something
 
 struct struck_animation_table
 {
-  s32 anonymous_0;
+  void *anonymous_0;
   s32 anonymous_1;
   f32 anonymous_2;
   f32 anonymous_3;
   s32 anonymous_4;
-  f32 anonymous_5;
-  f32 anonymous_6;
+  f32 sfx1_timer_60;
+  f32 sfx2_timer_60;
 };
 
 struct explosion_death_animation
