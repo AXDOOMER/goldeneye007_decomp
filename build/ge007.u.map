@@ -1986,7 +1986,7 @@ Linker script and memory map
                 0x000000007f02b638                sub_GAME_7F02B638
                 0x000000007f02b774                manage_guard_fade
                 0x000000007f02b800                sub_GAME_7F02B800
-                0x000000007f02b9a4                sub_GAME_7F02B9A4
+                0x000000007f02b9a4                guard_body_hit_sfx
                 0x000000007f02bc80                sub_GAME_7F02BC80
                 0x000000007f02bd20                sub_GAME_7F02BD20
                 0x000000007f02bda4                sub_GAME_7F02BDA4
@@ -2034,7 +2034,7 @@ Linker script and memory map
                 0x000000007f0315a4                sub_GAME_7F0315A4
                 0x000000007f032088                sub_GAME_7F032088
                 0x000000007f032548                sub_GAME_7F032548
-                0x000000007f0326bc                sub_GAME_7F0326BC
+                0x000000007f0326bc                manage_actions
                 0x000000007f03291c                sub_GAME_7F03291C
                 0x000000007f032b68                sub_GAME_7F032B68
                 0x000000007f032ba0                sub_GAME_7F032BA0
@@ -2200,9 +2200,9 @@ Linker script and memory map
                 0x000000007f03ffc0                do_something_if_object_destroyed
                 0x000000007f03fff8                sub_GAME_7F03FFF8
                 0x000000007f040078                sub_GAME_7F040078
-                0x000000007f04009c                sub_GAME_7F04009C
+                0x000000007f04009c                set_color_shading_from_tile
                 0x000000007f0402b4                sub_GAME_7F0402B4
-                0x000000007f040310                sub_GAME_7F040310
+                0x000000007f040310                update_color_shading
                 0x000000007f040384                sub_GAME_7F040384
                 0x000000007f040484                sub_GAME_7F040484
                 0x000000007f04054c                init_standard_object

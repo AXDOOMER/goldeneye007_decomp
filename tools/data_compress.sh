@@ -2,14 +2,13 @@
 
 #this script is a hacky mess that can most definately be improved
 #fixme as I will fail if vaddr of data gets moved!!!
-#DATASEG_START=$(printf "%d\n" 0x$(grep  './build/ge007.u.map' -e '.data           0x0000000080020d90' | cut -d "x" -f 4 ))
-#DATASEG_LEN=$(printf "%d\n" 0x$(grep  './build/ge007.u.map' -e '.data           0x0000000080020d90' | cut -d "x" -f 3 | cut -d " " -f 1))
-DATASEG_START=12582912
-DATASEG_LEN=247120
+DATASEG_START=$(printf "%d\n" 0x$(grep './build/ge007.u.map' -e '__csegtempPos =' | cut -d "x" -f3))
+DATASEG_LEN=$(printf "%d\n" 0x$(grep './build/ge007.u.map' -e 'load address 0x0000000000c00000' | cut -d "x" -f3 | cut -d " " -f1))
+
+
 echo "patching $1"
 echo "extract data segment"
 echo "one byte at a time is slow, sorry"
-echo "if you changed size of data segment, change count here"
 dd skip=${DATASEG_START} count=${DATASEG_LEN} if=$1 of=data_seg bs=1
 
 echo "truncate $1 to 0x$(printf "%x\n" ${DATASEG_START})"
