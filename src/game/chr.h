@@ -207,35 +207,32 @@ struct CHRdata {
     u16 chrpreset1; /* ID FC */
     u16 chrseeshot; /* ID FA */
     u16 chrseedie; /* ID FB */
-    f32 field_11C;
-    /* 0x0120 */
-    int field_120;
-    int field_124;
-    int field_128;
-    int field_12C;
+    /* 0x011C */
+    f32 field_11C[2];
+    f32 field_124[2];
+    f32 field_12C[2];
     /* 0x0130 */
-    int field_130;
     int field_134;
     int field_138;
-    float field_13C;
+    f32 shotbondsum;
     /* 0x0140 */
-    float field_140;
-    float field_144;
-    float field_148;
-    float field_14C;
+    f32 aimuplshoulder;
+    f32 aimuprshoulder;
+    f32 aimupback;
+    f32 aimsideback;
     /* 0x0150 */
-    int field_150;
-    int field_154;
-    int field_158;
-    int field_15C;
+    f32 aimendlshoulder;
+    f32 aimendrshoulder;
+    f32 aimendback;
+    f32 aimendsideback;
     /* 0x0160 */
-    int handle_positiondata_right_gun;
-    int handle_positiondata_left_gun;
-    int ptr_SEbuffer1;
-    int ptr_SEbuffer2;
+    int * handle_positiondata_right_gun;
+    int * handle_positiondata_left_gun;
+    int * ptr_SEbuffer1;
+    int * ptr_SEbuffer2;
     /* 0x0170 */
-    int ptr_SEbuffer3;
-    int ptr_SEbuffer4;
+    int * ptr_SEbuffer3;
+    int * ptr_SEbuffer4;
     int field_178;
     int field_17C;
     /* 0x0180 */
@@ -272,7 +269,7 @@ struct CHRdata {
     /* 0x01D0 */
     int field_1D0;
     int field_1D4;
-    int handle_positiondata_hat;
+    int * handle_positiondata_hat;
 };
 
 
