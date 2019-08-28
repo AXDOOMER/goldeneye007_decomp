@@ -1,5 +1,5 @@
-#ifndef _EEPROM_H_
-#define _EEPROM_H_
+#ifndef _GAMEFILE_H_
+#define _GAMEFILE_H_
 #include "ultra64.h"
 //i am not "correct", i need proper fields for times again
 struct save_data

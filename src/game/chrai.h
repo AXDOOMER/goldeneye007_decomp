@@ -1,5 +1,5 @@
-#ifndef _ACTIONBLOCK_H_
-#define _ACTIONBLOCK_H_
+#ifndef _CHRAI_H_
+#define _CHRAI_H_
 #include "ultra64.h"
 
 struct sfx_register_struct {
