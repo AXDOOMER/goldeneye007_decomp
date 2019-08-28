@@ -1,5 +1,5 @@
-#ifndef _BONDVIEW_H_
-#define _BONDVIEW_H_
+#ifndef _BONDWALK_H_
+#define _BONDWALK_H_
 #include "ultra64.h"
 #include "game/cheat_buttons_objectrelated.h"
 

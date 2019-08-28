@@ -1,5 +1,5 @@
-#ifndef _ACTOR_H_
-#define _ACTOR_H_
+#ifndef _CHR_H_
+#define _CHR_H_
 #include "ultra64.h"
 #include "bondgame.h"
 

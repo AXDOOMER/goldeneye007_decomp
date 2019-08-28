@@ -4,8 +4,8 @@
 
 
 /**
- * @file sfx.c
- * This file contains code to deal with sfx.
+ * @file snd.c
+ * This file contains code to deal with snd.
  */
 
 s32 sfx_unused = 0;
