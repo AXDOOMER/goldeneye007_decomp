@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "game/actor.h"
+#include "game/chr.h"
 // data
 f32 animation_rate = 0;
 s32 D_8002C904 = 0;

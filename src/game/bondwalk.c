@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "game/bondview.h"
+#include "game/bondwalk.h"
 #include "game/cheat_buttons_objectrelated.h"
 #include "bondgame.h"
 

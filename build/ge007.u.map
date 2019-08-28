@@ -62,8 +62,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/boss.o
  .options       0x0000000000000000       0x20 build/src/music.o
  .reginfo       0x0000000000000000       0x18 build/src/music.o
- .options       0x0000000000000000       0x20 build/src/sfx.o
- .reginfo       0x0000000000000000       0x18 build/src/sfx.o
+ .options       0x0000000000000000       0x20 build/src/snd.o
+ .reginfo       0x0000000000000000       0x18 build/src/snd.o
  .options       0x0000000000000000       0x20 build/src/memp.o
  .reginfo       0x0000000000000000       0x18 build/src/memp.o
  .options       0x0000000000000000       0x20 build/src/mema.o
@@ -72,8 +72,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/random.o
  .options       0x0000000000000000       0x20 build/src/token.o
  .reginfo       0x0000000000000000       0x18 build/src/token.o
- .options       0x0000000000000000       0x20 build/src/stringhandler.o
- .reginfo       0x0000000000000000       0x18 build/src/stringhandler.o
+ .options       0x0000000000000000       0x20 build/src/str.o
+ .reginfo       0x0000000000000000       0x18 build/src/str.o
  .options       0x0000000000000000       0x20 build/src/sprintf.o
  .reginfo       0x0000000000000000       0x18 build/src/sprintf.o
  .options       0x0000000000000000       0x20 build/src/pi.o
@@ -180,7 +180,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/game/initunk_007460.o
  .options       0x0000000000000000       0x20 build/src/game/cleanup_alarms.o
  .reginfo       0x0000000000000000       0x18 build/src/game/cleanup_alarms.o
- .mdebug        0x0000000000000000      0x38c build/src/game/cleanup_alarms.o
+ .mdebug        0x0000000000000000      0x388 build/src/game/cleanup_alarms.o
  .options       0x0000000000000000       0x20 build/src/game/cleanup_objects.o
  .reginfo       0x0000000000000000       0x18 build/src/game/cleanup_objects.o
  .options       0x0000000000000000       0x20 build/src/game/cleanup_objectives.o
@@ -213,12 +213,12 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/game/blood_animation.o
  .options       0x0000000000000000       0x20 build/src/game/blood_decrypt.o
  .reginfo       0x0000000000000000       0x18 build/src/game/blood_decrypt.o
- .options       0x0000000000000000       0x20 build/src/game/eeprom.o
- .reginfo       0x0000000000000000       0x18 build/src/game/eeprom.o
- .options       0x0000000000000000       0x20 build/src/game/actor.o
- .reginfo       0x0000000000000000       0x18 build/src/game/actor.o
- .options       0x0000000000000000       0x20 build/src/game/actionblock.o
- .reginfo       0x0000000000000000       0x18 build/src/game/actionblock.o
+ .options       0x0000000000000000       0x20 build/src/game/gamefile.o
+ .reginfo       0x0000000000000000       0x18 build/src/game/gamefile.o
+ .options       0x0000000000000000       0x20 build/src/game/chr.o
+ .reginfo       0x0000000000000000       0x18 build/src/game/chr.o
+ .options       0x0000000000000000       0x20 build/src/game/chrai.o
+ .reginfo       0x0000000000000000       0x18 build/src/game/chrai.o
  .options       0x0000000000000000       0x20 build/src/game/loadobjectmodel.o
  .reginfo       0x0000000000000000       0x18 build/src/game/loadobjectmodel.o
  .options       0x0000000000000000       0x20 build/src/game/objective_status.o
@@ -244,8 +244,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/game/truncf.o
  .options       0x0000000000000000       0x20 build/src/game/unk_05C440.o
  .reginfo       0x0000000000000000       0x18 build/src/game/unk_05C440.o
- .options       0x0000000000000000       0x20 build/src/game/bondview.o
- .reginfo       0x0000000000000000       0x18 build/src/game/bondview.o
+ .options       0x0000000000000000       0x20 build/src/game/bondwalk.o
+ .reginfo       0x0000000000000000       0x18 build/src/game/bondwalk.o
  .options       0x0000000000000000       0x20 build/src/game/objecthandler.o
  .reginfo       0x0000000000000000       0x18 build/src/game/objecthandler.o
  .options       0x0000000000000000       0x20 build/src/game/objecthandler_2.o
@@ -777,8 +777,8 @@ Linker script and memory map
                 0x0000000070007808                music_related_11
                 0x0000000070007878                music_related_13
                 0x0000000070007914                music_related_15
- build/src/sfx.o(.text)
- .text          0x0000000070007b20     0x1860 build/src/sfx.o
+ build/src/snd.o(.text)
+ .text          0x0000000070007b20     0x1860 build/src/snd.o
                 0x0000000070007b20                sfx_c_70007B20
                 0x0000000070007ddc                sfx_c_70007DDC
                 0x0000000070007e80                sfx_c_70007E80
@@ -852,8 +852,8 @@ Linker script and memory map
                 0x000000007000a58c                strtok
                 0x000000007000a5c0                check_boot_switches
                 0x000000007000a6a0                check_token
- build/src/stringhandler.o(.text)
- .text          0x000000007000a770      0x500 build/src/stringhandler.o
+ build/src/str.o(.text)
+ .text          0x000000007000a770      0x500 build/src/str.o
                 0x000000007000a770                textpointer_load_parse_something
                 0x000000007000a7a0                something_with_strings
                 0x000000007000a7fc                string_load_parse_something
@@ -1757,8 +1757,8 @@ Linker script and memory map
                 0x000000007f01d16c                sub_GAME_7F01D16C
                 0x000000007f01d1c0                sub_GAME_7F01D1C0
                 0x000000007f01d29c                func_7F01D29C
- build/src/game/eeprom.o(.text)
- .text          0x000000007f01d2b0     0x2280 build/src/game/eeprom.o
+ build/src/game/gamefile.o(.text)
+ .text          0x000000007f01d2b0     0x2280 build/src/game/gamefile.o
                 0x000000007f01d2b0                get_007_reaction_speed
                 0x000000007f01d2e8                get_007_health_mod
                 0x000000007f01d324                get_007_damage_mod
@@ -1825,8 +1825,8 @@ Linker script and memory map
                 0x000000007f01f394                copy_eeprom_from_to
                 0x000000007f01f45c                copy_eepromfile_a0_from_a1_to_buffer
                 0x000000007f01f4a0                check_for_007_mode_unlocked
- build/src/game/actor.o(.text)
- .text          0x000000007f01f530    0x15270 build/src/game/actor.o
+ build/src/game/chr.o(.text)
+ .text          0x000000007f01f530    0x15270 build/src/game/chr.o
                 0x000000007f01f530                get_numguards
                 0x000000007f01f53c                get_ptr_allocated_block_for_vertices
                 0x000000007f01f55c                set_show_patrols_flag
@@ -2101,8 +2101,8 @@ Linker script and memory map
                 0x000000007f034514                sub_GAME_7F034514
                 0x000000007f03457c                actor_draws_throws_grenade_at_player_if_possible
                 0x000000007f0346fc                actor_drops_itemtype_setting_timer
- build/src/game/actionblock.o(.text)
- .text          0x000000007f0347a0    0x220b0 build/src/game/actionblock.o
+ build/src/game/chrai.o(.text)
+ .text          0x000000007f0347a0    0x220b0 build/src/game/chrai.o
                 0x000000007f0347a0                set_sound_effect_source_to_location
                 0x000000007f0348e4                loop_set_sound_effect_all_slots
                 0x000000007f034924                set_sound_effect_to_slot
@@ -2529,8 +2529,8 @@ Linker script and memory map
  .text          0x000000007f05c440       0xe0 build/src/game/unk_05C440.o
                 0x000000007f05c440                sub_GAME_7F05C440
                 0x000000007f05c4b8                sub_GAME_7F05C4B8
- build/src/game/bondview.o(.text)
- .text          0x000000007f05c520     0xec00 build/src/game/bondview.o
+ build/src/game/bondwalk.o(.text)
+ .text          0x000000007f05c520     0xec00 build/src/game/bondwalk.o
                 0x000000007f05c520                set_cartridges_eject
                 0x000000007f05c52c                get_cartridges_eject
                 0x000000007f05c538                nullsub_73
@@ -15881,8 +15881,8 @@ Linker script and memory map
                 0x0000000080024350                music2_playing
                 0x0000000080024354                music3_playing
                 0x0000000080024358                music_tempo_array
- build/src/sfx.o(.data)
- .data          0x00000000800243e0       0x20 build/src/sfx.o
+ build/src/snd.o(.data)
+ .data          0x00000000800243e0       0x20 build/src/snd.o
                 0x00000000800243e0                sfx_unused
                 0x00000000800243e4                D_800243E4
                 0x00000000800243e8                D_800243E8
@@ -15921,7 +15921,7 @@ Linker script and memory map
                 0x0000000080024470                strstr_numstings
                 0x0000000080024474                strstr_ptrcurrent_string
                 0x0000000080024478                D_80024478
- build/src/stringhandler.o(.data)
+ build/src/str.o(.data)
  build/src/sprintf.o(.data)
  build/src/pi.o(.data)
  build/src/vi.o(.data)
@@ -16175,8 +16175,8 @@ Linker script and memory map
                 0x0000000080029130                aMa_0
                 0x0000000080029134                aU64_taskgrab_D_core
  build/src/music.o(.rodata)
- build/src/sfx.o(.rodata)
- .rodata        0x0000000080029160       0x40 build/src/sfx.o
+ build/src/snd.o(.rodata)
+ .rodata        0x0000000080029160       0x40 build/src/snd.o
                 0x0000000080029160                jpt_80029160
  build/src/memp.o(.rodata)
  .rodata        0x00000000800291a0       0x30 build/src/memp.o
@@ -16199,7 +16199,7 @@ Linker script and memory map
                 0x00000000800291f4                aD_6
                 0x00000000800291f8                aS_2
                 0x00000000800291fc                aJ
- build/src/stringhandler.o(.rodata)
+ build/src/str.o(.rodata)
  build/src/sprintf.o(.rodata)
  build/src/pi.o(.rodata)
  build/src/vi.o(.rodata)
@@ -16660,8 +16660,8 @@ Linker script and memory map
                 0x000000008002bb30                die_blood_image_1
                 0x000000008002c50c                D_8002C50C
  build/src/game/blood_decrypt.o(.data)
- build/src/game/eeprom.o(.data)
- .data          0x000000008002c510      0x3f0 build/src/game/eeprom.o
+ build/src/game/gamefile.o(.data)
+ .data          0x000000008002c510      0x3f0 build/src/game/gamefile.o
                 0x000000008002c510                save_selected_bond
                 0x000000008002c520                D_8002C520
                 0x000000008002c580                D_8002C580
@@ -16681,8 +16681,8 @@ Linker script and memory map
                 0x000000008002c7e0                D_8002C7E0
                 0x000000008002c840                D_8002C840
                 0x000000008002c8a0                blank_eeprom
- build/src/game/actor.o(.data)
- .data          0x000000008002c900     0x4170 build/src/game/actor.o
+ build/src/game/chr.o(.data)
+ .data          0x000000008002c900     0x4170 build/src/game/chr.o
                 0x000000008002c900                animation_rate
                 0x000000008002c904                D_8002C904
                 0x000000008002c908                D_8002C908
@@ -16906,8 +16906,8 @@ Linker script and memory map
                 0x0000000080030a4c                D_80030A4C
                 0x0000000080030a50                body_hit_SFX
                 0x0000000080030a68                D_80030A68
- build/src/game/actionblock.o(.data)
- .data          0x0000000080030a70     0x1880 build/src/game/actionblock.o
+ build/src/game/chrai.o(.data)
+ .data          0x0000000080030a70     0x1880 build/src/game/chrai.o
                 0x0000000080030a70                D_80030A70
                 0x0000000080030a74                D_80030A74
                 0x0000000080030a78                D_80030A78
@@ -17097,8 +17097,8 @@ Linker script and memory map
                 0x0000000080032434                D_80032434
  build/src/game/truncf.o(.data)
  build/src/game/unk_05C440.o(.data)
- build/src/game/bondview.o(.data)
- .data          0x0000000080032440     0x3c30 build/src/game/bondview.o
+ build/src/game/bondwalk.o(.data)
+ .data          0x0000000080032440     0x3c30 build/src/game/bondwalk.o
                 0x0000000080032440                D_80032440
                 0x0000000080032448                D_80032448
                 0x0000000080032454                D_80032454
@@ -19169,9 +19169,9 @@ Linker script and memory map
                 0x0000000080051d00                PI_80051D00
  build/src/game/blood_animation.o(.rodata)
  build/src/game/blood_decrypt.o(.rodata)
- build/src/game/eeprom.o(.rodata)
- build/src/game/actor.o(.rodata)
- .rodata        0x0000000080051d10      0x3f0 build/src/game/actor.o
+ build/src/game/gamefile.o(.rodata)
+ build/src/game/chr.o(.rodata)
+ .rodata        0x0000000080051d10      0x3f0 build/src/game/chr.o
                 0x0000000080051d10                D_80051D10
                 0x0000000080051d14                D_80051D14
                 0x0000000080051d18                D_80051D18
@@ -19383,8 +19383,8 @@ Linker script and memory map
                 0x00000000800520f4                D_800520F4
                 0x00000000800520f8                D_800520F8
                 0x00000000800520fc                D_800520FC
- build/src/game/actionblock.o(.rodata)
- .rodata        0x0000000080052100     0x1390 build/src/game/actionblock.o
+ build/src/game/chrai.o(.rodata)
+ .rodata        0x0000000080052100     0x1390 build/src/game/chrai.o
                 0x0000000080052100                jpt_actionblock_lengths
                 0x00000000800524f4                D_800524F4
                 0x00000000800524f8                jpt_800524F8
@@ -19672,8 +19672,8 @@ Linker script and memory map
                 0x0000000080053750                D_80053750
  build/src/game/truncf.o(.rodata)
  build/src/game/unk_05C440.o(.rodata)
- build/src/game/bondview.o(.rodata)
- .rodata        0x0000000080053760      0xcc0 build/src/game/bondview.o
+ build/src/game/bondwalk.o(.rodata)
+ .rodata        0x0000000080053760      0xcc0 build/src/game/bondwalk.o
                 0x0000000080053bf4                aD_9
                 0x0000000080053bf8                aSD
                 0x0000000080053c00                aSDS
@@ -20641,7 +20641,7 @@ Linker script and memory map
                 0x0000000080063b50                D_80063B50
                 0x0000000080063ba4                D_80063BA4
                 0x0000000080063ba8                D_80063BA8
- build/src/sfx.o(.bss)
+ build/src/snd.o(.bss)
  build/src/memp.o(.bss)
  .bss           0x0000000080063bb0       0x70 build/src/memp.o
                 0x0000000080063bb0                memory_bank_ptrs
@@ -20681,7 +20681,7 @@ Linker script and memory map
  build/src/token.o(.bss)
  .bss           0x0000000080064c30      0x280 build/src/token.o
                 0x0000000080064c30                boot_token_from_indy
- build/src/stringhandler.o(.bss)
+ build/src/str.o(.bss)
  build/src/sprintf.o(.bss)
  build/src/pi.o(.bss)
  .bss           0x0000000080064eb0       0x40 build/src/pi.o
@@ -21125,8 +21125,8 @@ Linker script and memory map
  build/src/game/unk_01BAE0.o(.bss)
  build/src/game/blood_animation.o(.bss)
  build/src/game/blood_decrypt.o(.bss)
- build/src/game/eeprom.o(.bss)
- .bss           0x0000000080069920      0x250 build/src/game/eeprom.o
+ build/src/game/gamefile.o(.bss)
+ .bss           0x0000000080069920      0x250 build/src/game/gamefile.o
                 0x0000000080069920                save1
                 0x0000000080069980                save2
                 0x00000000800699e0                save3
@@ -21134,9 +21134,9 @@ Linker script and memory map
                 0x0000000080069aa0                save5
                 0x0000000080069b00                save6
                 0x0000000080069b60                dword_CODE_bss_80069B60
- build/src/game/actor.o(.bss)
- build/src/game/actionblock.o(.bss)
- .bss           0x0000000080069b70     0xc1c0 build/src/game/actionblock.o
+ build/src/game/chr.o(.bss)
+ build/src/game/chrai.o(.bss)
+ .bss           0x0000000080069b70     0xc1c0 build/src/game/chrai.o
                 0x0000000080069b70                sfx_related
                 0x0000000080069c30                ptr_list_object_lookup_indices
                 0x0000000080069c34                num_obj_position_data_entries
@@ -21257,8 +21257,8 @@ Linker script and memory map
  build/src/game/unk_05B1E0.o(.bss)
  build/src/game/truncf.o(.bss)
  build/src/game/unk_05C440.o(.bss)
- build/src/game/bondview.o(.bss)
- .bss           0x0000000080075db0      0xca0 build/src/game/bondview.o
+ build/src/game/bondwalk.o(.bss)
+ .bss           0x0000000080075db0      0xca0 build/src/game/bondwalk.o
                 0x0000000080075db0                dword_CODE_bss_80075DB0
                 0x0000000080075db4                dword_CODE_bss_80075DB4
                 0x0000000080075db8                dword_CODE_bss_80075DB8

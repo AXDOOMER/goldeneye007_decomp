@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "game/bond.h"
-#include "game/actor.h"
+#include "game/chr.h"
 #include "game/unk_093880.h"
 
 // bss
@@ -431,35 +431,27 @@ f32 D_80036AC0 = 1.0;
 //D:80036AC4
 f32 D_80036AC4 = 0.1;
 
-
-
-
-
-
-void nullsub_75(void) {
+void nullsub_75(void)
+{
     return;
 }
 
-
-
-
-
-
-
-void set_BONDdata_screensize(f32 width, f32 height) {
+void set_BONDdata_screensize(f32 width, f32 height)
+{
     pPlayer->c_screenwidth = width;
     pPlayer->c_screenheight = height;
     pPlayer->c_halfwidth = (f32) (width * 0.5f);
     pPlayer->c_halfheight = (f32) (height * 0.5f);
 }
 
-void *set_ulx_uly(f32 ulx, f32 uly) {
+void *set_ulx_uly(f32 ulx, f32 uly)
+{
     pPlayer->c_screenleft = ulx;
     pPlayer->c_screentop = uly;
 }
 
-void sub_GAME_7F077C30(f32 arg0, f32 arg1, f32 arg2) {
-    // Node 0
+void sub_GAME_7F077C30(f32 arg0, f32 arg1, f32 arg2)
+{
     pPlayer->c_perspnear = arg0;
     pPlayer->c_perspfovy = arg1;
     pPlayer->c_perspaspect = arg2;

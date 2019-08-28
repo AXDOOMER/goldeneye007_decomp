@@ -1,7 +1,7 @@
 #ifndef _BOND_H_
 #define _BOND_H_
 #include "ultra64.h"
-#include "game/actor.h"
+#include "game/chr.h"
 struct xyzpoint
 {
     f32 x;

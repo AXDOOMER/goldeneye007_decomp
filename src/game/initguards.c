@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "game/actor.h"
+#include "game/chr.h"
 
 void init_guards(void) {
     animation_rate = 1.0f;

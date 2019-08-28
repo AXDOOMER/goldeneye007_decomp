@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "game/initactorpropstuff.h"
-#include "game/actor.h"
+#include "game/chr.h"
 
 
 

@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "ramrom.h"
-#include "sfx.h"
+#include "snd.h"
 
 /**
  * @file music.c

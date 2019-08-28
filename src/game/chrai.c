@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "game/actionblock.h"
+#include "game/chrai.h"
 
 // bss
 //CODE.bss:80069B70
