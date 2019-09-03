@@ -2585,8 +2585,8 @@ glabel sub_GAME_7F0A3F04
 /* 0D8A70 7F0A3F40 0FC1E296 */  jal   sub_GAME_7F078A58
 /* 0D8A74 7F0A3F44 8E050024 */   lw    $a1, 0x24($s0)
 /* 0D8A78 7F0A3F48 10400171 */  beqz  $v0, .L7F0A4510
-/* 0D8A7C 7F0A3F4C 3C198004 */   lui   $t9, %hi(D_80040960+0x20) # $t9, 0x8004
-/* 0D8A80 7F0A3F50 27390980 */  addiu $t9, %lo(D_80040960+0x20) # addiu $t9, $t9, 0x980
+/* 0D8A7C 7F0A3F4C 3C198004 */   lui   $t9, %hi(D_80040980) # $t9, 0x8004
+/* 0D8A80 7F0A3F50 27390980 */  addiu $t9, %lo(D_80040980) # addiu $t9, $t9, 0x980
 /* 0D8A84 7F0A3F54 8F210000 */  lw    $at, ($t9)
 /* 0D8A88 7F0A3F58 8F290004 */  lw    $t1, 4($t9)
 /* 0D8A8C 7F0A3F5C 27B800A8 */  addiu $t8, $sp, 0xa8
