@@ -1113,7 +1113,7 @@ glabel sub_GAME_7F01F574
 
 
 #ifdef NONMATCHING
-void set_or_unset_GUARDdata_flag(GUARDdata *guard,longlong param_2){
+void set_or_unset_GUARDdata_flag(GUARDdata *guard,s32 param_2){
   if (param_2 == 0) {
     guard->special_bitflags = guard->special_bitflags | 0x100;
     return;
