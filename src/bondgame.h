@@ -41,10 +41,27 @@ struct rgba_val{
     u8 a;
 };
 
+typedef u16 PAD;
+
+#define SECS_TO_TICK60(SECS) (SECS * 60)
+#define MINS_TO_TICK60(MINS) (SECS_TO_TICK60(MINS * 60))
+
 #define OBJECTIVES_MAX 10
 
-typedef enum MISSION_BRIEFING {BRIEF_OVERVIEW = 0, BRIEF_M, BRIEF_Q, BRIEF_MONEYPENNY} MISSION_BRIEFING;
-typedef enum DIFFICULTY {DIFFICULTY_AGENT = 0, DIFFICULTY_SECRET, DIFFICULTY_00, DIFFICULTY_007, DIFFICULTY_MULTI = 0xFFFFFFFF} DIFFICULTY;
+typedef enum MISSION_BRIEFING {
+    BRIEF_OVERVIEW = 0,
+    BRIEF_M,
+    BRIEF_Q,
+    BRIEF_MONEYPENNY
+} MISSION_BRIEFING;
+
+typedef enum DIFFICULTY {
+    DIFFICULTY_AGENT = 0,
+    DIFFICULTY_SECRET,
+    DIFFICULTY_00,
+    DIFFICULTY_007,
+    DIFFICULTY_MULTI = 0xFFFFFFFF
+} DIFFICULTY;
 
 typedef enum LEVELID {
     LEVELID_BUNKER1 = 0x9,
@@ -673,30 +690,5 @@ typedef enum CAMERAMODE {
     MP_CAM,
     UNK10_CAM
 } CAMERAMODE;
-
-typedef enum guard_action_type {
-    None=0,
-    dying=4,
-    fade_away=5,
-    freeze=2,
-    freeze_anim=17,
-    gettingshot=6,
-    limping=7,
-    look_around=18,
-    moving=15,
-    run_roll_fire=10,
-    sidehop=12,
-    siderun=13,
-    sidestep=11,
-    standing=1,
-    standstill_fire=8,
-    surrendering=16,
-    swattingflies=3,
-    throw_grenade=20,
-    trigger_alarm=19,
-    walk_fire=9,
-    walk_path=14
-} guard_action_type;
-
 
 #endif
