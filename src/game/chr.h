@@ -105,7 +105,7 @@ struct CHRdata {
     u8 firecountleft;
     u8 firecountright;
     s8 headnum;
-    ACT_TYPE actiontype;
+    s8 actiontype;
     s8 sleep;
     s8 invalidmove;
     s8 numclosearghs;

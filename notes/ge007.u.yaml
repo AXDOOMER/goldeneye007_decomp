@@ -1549,7 +1549,7 @@ labels:
    - [0x7F02ABB4, "actor_moves_to_preset_at_speed"]
    - [0x7F02AD54, "if_actor_able_set_on_path"]
    - [0x7F02AD98, "sub_GAME_7F02AD98"]
-   - [0x7F02B4E0, "sub_GAME_7F02B4E0"]
+   - [0x7F02B4E0, "actor_reset_sleep"]
    - [0x7F02B4E8, "sub_GAME_7F02B4E8"]
    - [0x7F02B638, "sub_GAME_7F02B638"]
    - [0x7F02B774, "manage_guard_fade"]
