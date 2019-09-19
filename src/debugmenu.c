@@ -86,7 +86,7 @@ void null_init_main_0(void)
 
 void debug_text_related_2(void)
 {
-    debug_text_related_1();
+    blank_debug_buffer_chars();
 }
 
 
@@ -235,7 +235,7 @@ void debugMenuSetTextPOStoOffset(void)
 
 
 
-void debug_text_related_1(void)
+void blank_debug_buffer_chars(void)
 {
   int x;
   int y;
@@ -365,12 +365,10 @@ glabel something_debug_info_related
 
 
 #ifdef NONMATCHING
-void set_final_debug_text_positions(s32 arg0, s32 arg1) {
-    // Node 0
-    debug_menu_x_text_pos = (s32) (arg0 + debug_menu_x_pos_offset);
-    debug_menu_y_text_pos = (s32) (arg1 + debug_menu_y_pos_offset);
-    return;
-    // (function likely void)
+void set_final_debug_text_positions(s32 xadjust,s32 yadjust)
+{
+  debug_menu_x_text_pos = xadjust + debug_menu_x_pos_offset;
+  debug_menu_y_text_pos = yadjust + debug_menu_y_pos_offset;
 }
 #else
 GLOBAL_ASM(
@@ -411,56 +409,30 @@ void set_color_speedgraph(s32 red,s32 green,s32 blue,s32 alpha)
 
 
 #ifdef NONMATCHING
-void *write_char_to_screen(s32 arg0, s32 arg_unaligned3)
+void write_char_to_screen(u8 character)
+
 {
-    s32 sp24;
-    s32 sp20;
-    s32 sp1C;
-    s32 temp_t6;
-    s32 temp_lo;
-    s32 temp_t1;
-    s32 temp_t6_2;
-    s32 phi_t7;
-
-    temp_t6 = (get_video2_settings_txtClipW() + -0xd);
-    phi_t7 = (temp_t6 >> 2);
-    if (temp_t6 < 0)
-    {
-        phi_t7 = ((s32) (temp_t6 + 3) >> 2);
+  short txtClipW;
+  short txtClipH;
+  int start_pos;
+  
+  txtClipW = get_video2_settings_txtClipW();
+  start_pos = (int)txtClipW + -0xd;
+  if (start_pos < 0) {
+    start_pos = (int)txtClipW + -10;
+  }
+  txtClipH = get_video2_settings_txtClipH();
+  if ((character == 0) || ((0x1f < character && (character < 0x7f)))) {
+    display_text_to_coord(debug_menu_x_text_pos,debug_menu_y_text_pos,character);
+  }
+  debug_menu_x_text_pos += 1;
+  if (((character == 0xd) || (character == 10)) || (start_pos >> 2 <= debug_menu_x_text_pos)) {
+    debug_menu_y_text_pos += 1;
+    debug_menu_x_text_pos = debug_menu_x_pos_offset;
+    if (((int)txtClipH + -10) / 7 <= debug_menu_y_text_pos) {
+      debug_menu_y_text_pos = debug_menu_y_pos_offset;
     }
-    sp24 = (s32) phi_t7;
-    temp_lo = ((s32) (get_video2_settings_txtClipH() + -0xa) / 7);
-    if ((arg_unaligned3 != 0) && (arg_unaligned3 >= 0x20))
-    {
-        if (arg_unaligned3 < 0x7f)
-        {
-block_5:
-            sp1C = arg_unaligned3;
-            sp20 = temp_lo;
-            display_text_to_coord(debug_menu_x_text_pos, debug_menu_y_text_pos, arg_unaligned3, &debug_menu_y_text_pos);
-        }
-    }
-    else
-    {
-        goto block_5;
-    }
-    temp_t1 = (debug_menu_x_text_pos + 1);
-    debug_menu_x_text_pos = temp_t1;
-    if (((arg_unaligned3 == 0xd) || (arg_unaligned3 == 0xa)) || (temp_t1 >= sp24))
-    {
-        temp_t6_2 = (debug_menu_y_text_pos + 1);
-        debug_menu_y_text_pos = temp_t6_2;
-        debug_menu_x_text_pos = (s32) debug_menu_x_pos_offset;
-        if (temp_t6_2 >= temp_lo)
-        {
-            debug_menu_y_text_pos = (s32) debug_menu_y_pos_offset;
-        }
-    }
-    else
-    {
-
-    }
-    return &debug_menu_x_text_pos;
+  }
 }
 #else
 GLOBAL_ASM(

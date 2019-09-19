@@ -369,7 +369,7 @@
    - [0x7000ADB0, "debug_text_related_2"]
    - [0x7000ADD0, "display_text_to_coord"]
    - [0x7000AEDC, "debug_menu_text_related"]
-   - [0x7000AF00, "debug_text_related_1"]
+   - [0x7000AF00, "blank_debug_buffer_chars"]
    - [0x7000AF84, "stubbed_function"]
    - [0x7000AF98, "something_debug_info_related"]
    - [0x7000B040, "set_final_debug_text_positions"]

@@ -814,7 +814,7 @@ debug_displayspeed:
 /* 0C54CC 7F09099C 3B190001 */  xori  $t9, $t8, 1
 /* 0C54D0 7F0909A0 17200134 */  bnez  $t9, .L7F090E74
 /* 0C54D4 7F0909A4 AC590000 */   sw    $t9, ($v0)
-/* 0C54D8 7F0909A8 0C002BC0 */  jal   debug_text_related_1
+/* 0C54D8 7F0909A8 0C002BC0 */  jal   blank_debug_buffer_chars
 /* 0C54DC 7F0909AC 00000000 */   nop   
 /* 0C54E0 7F0909B0 10000131 */  b     .L7F090E78
 /* 0C54E4 7F0909B4 8FB80018 */   lw    $t8, 0x18($sp)
@@ -1201,7 +1201,7 @@ def_7F090EA8:
 /* 0C59F8 7F090EC8 24010001 */  li    $at, 1
 /* 0C59FC 7F090ECC 15610003 */  bne   $t3, $at, .L7F090EDC
 /* 0C5A00 7F090ED0 00000000 */   nop   
-/* 0C5A04 7F090ED4 0C002BC0 */  jal   debug_text_related_1
+/* 0C5A04 7F090ED4 0C002BC0 */  jal   blank_debug_buffer_chars
 /* 0C5A08 7F090ED8 00000000 */   nop   
 .L7F090EDC:
 /* 0C5A0C 7F090EDC 3C018003 */  lui   $at, %hi(show_debug_menu_flag) # $at, 0x8003

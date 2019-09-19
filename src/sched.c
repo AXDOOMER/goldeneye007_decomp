@@ -880,12 +880,10 @@ glabel __scHandleRDP
 
 /**
  * 1DE0	700011E0
- * this should match as it matches sdk code....getting different sp usage, 0x18 vs 0x1C
+ * 
  */
-#ifdef NONMATCHING
 OSScTask *__scTaskReady(OSScTask *t) 
 {
-    int rv = 0;
     void *a;
     void *b;    
 
@@ -899,34 +897,6 @@ OSScTask *__scTaskReady(OSScTask *t)
 
     return 0;
 }
-#else
-GLOBAL_ASM(
-glabel __scTaskReady
-/* 001DE0 700011E0 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 001DE4 700011E4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 001DE8 700011E8 1080000C */  beqz  $a0, .L7000121C
-/* 001DEC 700011EC AFA40028 */   sw    $a0, 0x28($sp)
-/* 001DF0 700011F0 0C003904 */  jal   osViGetCurrentFramebuffer
-/* 001DF4 700011F4 00000000 */   nop   
-/* 001DF8 700011F8 0C003914 */  jal   osViGetNextFramebuffer
-/* 001DFC 700011FC AFA2001C */   sw    $v0, 0x1c($sp)
-/* 001E00 70001200 8FAF001C */  lw    $t7, 0x1c($sp)
-/* 001E04 70001204 104F0003 */  beq   $v0, $t7, .L70001214
-/* 001E08 70001208 00000000 */   nop   
-/* 001E0C 7000120C 10000004 */  b     .L70001220
-/* 001E10 70001210 00001025 */   move  $v0, $zero
-.L70001214:
-/* 001E14 70001214 10000002 */  b     .L70001220
-/* 001E18 70001218 8FA20028 */   lw    $v0, 0x28($sp)
-.L7000121C:
-/* 001E1C 7000121C 00001025 */  move  $v0, $zero
-.L70001220:
-/* 001E20 70001220 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 001E24 70001224 27BD0028 */  addiu $sp, $sp, 0x28
-/* 001E28 70001228 03E00008 */  jr    $ra
-/* 001E2C 7000122C 00000000 */   nop   
-)
-#endif
 
 /**
  * 1E30	70001230

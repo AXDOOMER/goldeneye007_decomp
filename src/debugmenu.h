@@ -2,6 +2,6 @@
 #define _DEBUGMENU_H_
 
 #include <ultra64.h>
-void debug_text_related_1(void);
+void blank_debug_buffer_chars(void);
 
 #endif
