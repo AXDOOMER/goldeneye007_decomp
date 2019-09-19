@@ -16247,18 +16247,9 @@ glabel sub_GAME_7F02AD98
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02B4E0(void) {
-
+void actor_reset_sleep(PCHRdata actor) {
+    actor->sleep = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02B4E0
-/* 060010 7F02B4E0 03E00008 */  jr    $ra
-/* 060014 7F02B4E4 A0800008 */   sb    $zero, 8($a0)
-)
-#endif
 
 
 
@@ -25042,7 +25033,7 @@ glabel manage_actions
 /* 0672C0 7F032790 10000054 */  b     .L7F0328E4
 /* 0672C4 7F032794 8E080014 */   lw    $t0, 0x14($s0)
 .L7F032798:
-/* 0672C8 7F032798 0FC0AD38 */  jal   sub_GAME_7F02B4E0
+/* 0672C8 7F032798 0FC0AD38 */  jal   actor_reset_sleep
 /* 0672CC 7F03279C 02002025 */   move  $a0, $s0
 /* 0672D0 7F0327A0 10000050 */  b     .L7F0328E4
 /* 0672D4 7F0327A4 8E080014 */   lw    $t0, 0x14($s0)
