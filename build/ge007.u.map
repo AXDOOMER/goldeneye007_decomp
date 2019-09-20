@@ -884,7 +884,7 @@ Linker script and memory map
                 0x000000007000adb0                debug_text_related_2
                 0x000000007000add0                display_text_to_coord
                 0x000000007000aedc                debugMenuSetTextPOStoOffset
-                0x000000007000af00                debug_text_related_1
+                0x000000007000af00                blank_debug_buffer_chars
                 0x000000007000af84                stubbed_function_7000AF84
                 0x000000007000af98                something_debug_info_related
                 0x000000007000b040                set_final_debug_text_positions
@@ -1002,7 +1002,7 @@ Linker script and memory map
                 0x000000007000ebb0                osGetTime
                 0x000000007000ec40                __ull_rshift
                 0x000000007000ec6c                __ull_rem
-                0x000000007000eca8                ull_div
+                0x000000007000eca8                __ull_div
                 0x000000007000ece4                __ll_lshift
                 0x000000007000ed10                __ll_rem
                 0x000000007000ed4c                __ll_div
@@ -1981,7 +1981,7 @@ Linker script and memory map
                 0x000000007f02abb4                actor_moves_to_preset_at_speed
                 0x000000007f02ad54                if_actor_able_set_on_path
                 0x000000007f02ad98                sub_GAME_7F02AD98
-                0x000000007f02b4e0                sub_GAME_7F02B4E0
+                0x000000007f02b4e0                actor_reset_sleep
                 0x000000007f02b4e8                sub_GAME_7F02B4E8
                 0x000000007f02b638                sub_GAME_7F02B638
                 0x000000007f02b774                manage_guard_fade
@@ -16162,10 +16162,6 @@ Linker script and memory map
  build/src/ramrom.o(.rodata)
  build/src/boss.o(.rodata)
  .rodata        0x0000000080028a70      0x6f0 build/src/boss.o
-                0x00000000800290c0                aLevel_
-                0x00000000800290c8                aMl0Me0Mgfx100Mvtx50Mt700Ma400_1
-                0x00000000800290fc                aM
-                0x0000000080029100                aM_1
                 0x0000000080029104                ::aLevel(void)
                 0x000000008002910c                aLevel__1
                 0x0000000080029114                aHard
@@ -18340,6 +18336,14 @@ Linker script and memory map
  .data          0x0000000080040940       0x60 build/src/game/unk_0A1DA0.o
                 0x0000000080040940                D_80040940
                 0x0000000080040960                D_80040960
+                0x0000000080040980                D_80040980
+                0x0000000080040984                D_80040984
+                0x0000000080040988                D_80040988
+                0x000000008004098c                D_8004098C
+                0x0000000080040990                D_80040990
+                0x0000000080040994                D_80040994
+                0x0000000080040998                D_80040998
+                0x000000008004099c                D_8004099C
  build/src/game/watch.o(.data)
  .data          0x00000000800409a0      0x4e0 build/src/game/watch.o
                 0x00000000800409a0                D_800409A0
@@ -20502,7 +20506,7 @@ Linker script and memory map
                 0x000000008005d2e0                _bssSegmentStart = ADDR (.bss)
                 0x0000000000c3c550                _bssSegmentRomStart = _csegmentSegmentRomEnd
 
-.bss            0x000000008005d2e0   0x2a2d20 load address 0x0000000000c3c550
+.bss            0x000000008005d2e0   0x2a1080 load address 0x0000000000c3c550
  build/src/boot.o(.bss)
  build/src/init.o(.bss)
  .bss           0x000000008005d2e0      0x760 build/src/init.o
@@ -21796,25 +21800,25 @@ Linker script and memory map
                 0x000000008008e352                spec_SP
                 0x000000008008e354                spec_PC
  build/src/game/room_model_buffer.o(.bss)
- .bss           0x000000008008e360   0x271ca0 build/src/game/room_model_buffer.o
+ .bss           0x000000008008e360   0x270000 build/src/game/room_model_buffer.o
                 0x000000008008e360                room_model_buffer
- .bss           0x0000000080300000        0x0 build/src/rom_header.o
- .bss           0x0000000080300000        0x0 build/src/bootcode.o
-                0x0000000080300000                _bssSegmentEnd = (ADDR (.bss) + SIZEOF (.bss))
-                0x0000000000edf270                _bssSegmentRomEnd = (_bssSegmentRomStart + SIZEOF (.bss))
+ .bss           0x00000000802fe360        0x0 build/src/rom_header.o
+ .bss           0x00000000802fe360        0x0 build/src/bootcode.o
+                0x00000000802fe360                _bssSegmentEnd = (ADDR (.bss) + SIZEOF (.bss))
+                0x0000000000edd5d0                _bssSegmentRomEnd = (_bssSegmentRomStart + SIZEOF (.bss))
                 0x0000000080300000                _decompbufSegmentStart = ADDR (.decompbuf)
-                0x0000000000edf270                _decompbufSegmentRomStart = _bssSegmentRomEnd
+                0x0000000000edd5d0                _decompbufSegmentRomStart = _bssSegmentRomEnd
 
-.decompbuf      0x0000000080300000    0xab400 load address 0x0000000000edf270
+.decompbuf      0x0000000080300000    0xab400 load address 0x0000000000edd5d0
  build/src/decompressbuffer.o(.bss)
  .bss           0x0000000080300000    0xab400 build/src/decompressbuffer.o
                 0x0000000080300000                _decompressBuffer
                 0x00000000803ab400                _decompbufSegmentEnd = (ADDR (.decompbuf) + SIZEOF (.decompbuf))
-                0x0000000000f8a670                _decompbufSegmentRomEnd = (_decompbufSegmentRomStart + SIZEOF (.decompbuf))
+                0x0000000000f889d0                _decompbufSegmentRomEnd = (_decompbufSegmentRomStart + SIZEOF (.decompbuf))
                 0x00000000803ab400                _stacksSegmentStart = ADDR (.stacks)
-                0x0000000000f8a670                _stacksSegmentRomStart = _decompbufSegmentRomEnd
+                0x0000000000f889d0                _stacksSegmentRomStart = _decompbufSegmentRomEnd
 
-.stacks         0x00000000803ab400     0x9c00 load address 0x0000000000f8a670
+.stacks         0x00000000803ab400     0x9c00 load address 0x0000000000f889d0
  build/src/stacks.o(.bss)
  .bss           0x00000000803ab400     0x9c00 build/src/stacks.o
                 0x00000000803ab400                sp_boot
@@ -21825,17 +21829,17 @@ Linker script and memory map
                 0x00000000803b3950                sp_audi
                 0x00000000803b4950                sp_debug
                 0x00000000803b5000                _stacksSegmentEnd = (ADDR (.stacks) + SIZEOF (.stacks))
-                0x0000000000f94270                _stacksSegmentRomEnd = (_stacksSegmentRomStart + SIZEOF (.stacks))
+                0x0000000000f925d0                _stacksSegmentRomEnd = (_stacksSegmentRomStart + SIZEOF (.stacks))
                 0x00000000803b5000                _cfbSegmentStart = ADDR (.cfb)
-                0x0000000000f94270                _cfbSegmentRomStart = _stacksSegmentRomEnd
+                0x0000000000f925d0                _cfbSegmentRomStart = _stacksSegmentRomEnd
 
-.cfb            0x00000000803b5000    0x4b000 load address 0x0000000000f94270
+.cfb            0x00000000803b5000    0x4b000 load address 0x0000000000f925d0
  build/src/cfb.o(.bss)
  .bss           0x00000000803b5000    0x4b000 build/src/cfb.o
                 0x00000000803b5000                cfb_16_a
                 0x00000000803da800                cfb_16_b
                 0x0000000080400000                _cfbSegmentEnd = (ADDR (.cfb) + SIZEOF (.cfb))
-                0x0000000000fdf270                _cfbSegmentRomEnd = (_cfbSegmentRomStart + SIZEOF (.cfb))
+                0x0000000000fdd5d0                _cfbSegmentRomEnd = (_cfbSegmentRomStart + SIZEOF (.cfb))
 
 /DISCARD/
  *(.MIPS.abiflags)

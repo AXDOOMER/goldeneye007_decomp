@@ -214,7 +214,7 @@ glabel osInitialize
 /* 00DE60 7000D260 8FA50024 */  lw    $a1, 0x24($sp)
 /* 00DE64 7000D264 8FA40020 */  lw    $a0, 0x20($sp)
 /* 00DE68 7000D268 24060000 */  li    $a2, 0
-/* 00DE6C 7000D26C 0C003B2A */  jal   ull_div
+/* 00DE6C 7000D26C 0C003B2A */  jal   __ull_div
 /* 00DE70 7000D270 24070004 */   li    $a3, 4
 /* 00DE74 7000D274 3C098000 */  lui   $t1, %hi(osResetType) # $t1, 0x8000
 /* 00DE78 7000D278 8D29030C */  lw    $t1, %lo(osResetType)($t1)
@@ -3681,7 +3681,7 @@ glabel __ull_rem
 /* 00F8A0 7000ECA0 03E00008 */  jr    $ra
 /* 00F8A4 7000ECA4 0002103F */   dsra32 $v0, $v0, 0
 
-glabel ull_div
+glabel __ull_div
 /* 00F8A8 7000ECA8 AFA40000 */  sw    $a0, ($sp)
 /* 00F8AC 7000ECAC AFA50004 */  sw    $a1, 4($sp)
 /* 00F8B0 7000ECB0 AFA60008 */  sw    $a2, 8($sp)
@@ -10901,7 +10901,7 @@ glabel osContInit
 /* 015570 70014970 34E74240 */  ori   $a3, (0x000F4240 & 0xFFFF) # ori $a3, $a3, 0x4240
 /* 015574 70014974 8FA50034 */  lw    $a1, 0x34($sp)
 /* 015578 70014978 8FA40030 */  lw    $a0, 0x30($sp)
-/* 01557C 7001497C 0C003B2A */  jal   ull_div
+/* 01557C 7001497C 0C003B2A */  jal   __ull_div
 /* 015580 70014980 24060000 */   li    $a2, 0
 /* 015584 70014984 8FB80070 */  lw    $t8, 0x70($sp)
 /* 015588 70014988 8FB90074 */  lw    $t9, 0x74($sp)
@@ -10931,7 +10931,7 @@ glabel osContInit
 /* 0155E4 700149E4 34E74240 */  ori   $a3, (0x000F4240 & 0xFFFF) # ori $a3, $a3, 0x4240
 /* 0155E8 700149E8 8FA5002C */  lw    $a1, 0x2c($sp)
 /* 0155EC 700149EC 8FA40028 */  lw    $a0, 0x28($sp)
-/* 0155F0 700149F0 0C003B2A */  jal   ull_div
+/* 0155F0 700149F0 0C003B2A */  jal   __ull_div
 /* 0155F4 700149F4 24060000 */   li    $a2, 0
 /* 0155F8 700149F8 AFA20030 */  sw    $v0, 0x30($sp)
 /* 0155FC 700149FC AFA30034 */  sw    $v1, 0x34($sp)
@@ -12188,7 +12188,7 @@ glabel osEepromLongRead
 /* 0164D0 700158D0 34E74240 */  ori   $a3, (0x000F4240 & 0xFFFF) # ori $a3, $a3, 0x4240
 /* 0164D4 700158D4 8FA5002C */  lw    $a1, 0x2c($sp)
 /* 0164D8 700158D8 8FA40028 */  lw    $a0, 0x28($sp)
-/* 0164DC 700158DC 0C003B2A */  jal   ull_div
+/* 0164DC 700158DC 0C003B2A */  jal   __ull_div
 /* 0164E0 700158E0 24060000 */   li    $a2, 0
 /* 0164E4 700158E4 3C0D8006 */  lui   $t5, %hi(__osEepromTimerQ) # $t5, 0x8006
 /* 0164E8 700158E8 3C188006 */  lui   $t8, %hi(__osEepromTimerMsg) # $t8, 0x8006
@@ -12275,7 +12275,7 @@ glabel osEepromLongWrite
 /* 016610 70015A10 34E74240 */  ori   $a3, (0x000F4240 & 0xFFFF) # ori $a3, $a3, 0x4240
 /* 016614 70015A14 8FA5002C */  lw    $a1, 0x2c($sp)
 /* 016618 70015A18 8FA40028 */  lw    $a0, 0x28($sp)
-/* 01661C 70015A1C 0C003B2A */  jal   ull_div
+/* 01661C 70015A1C 0C003B2A */  jal   __ull_div
 /* 016620 70015A20 24060000 */   li    $a2, 0
 /* 016624 70015A24 3C0D8006 */  lui   $t5, %hi(__osEepromTimerQ) # $t5, 0x8006
 /* 016628 70015A28 3C188006 */  lui   $t8, %hi(__osEepromTimerMsg) # $t8, 0x8006
@@ -26415,7 +26415,7 @@ glabel _Litob
 /* 01E510 7001D910 8FA50064 */  lw    $a1, 0x64($sp)
 /* 01E514 7001D914 01203825 */  move  $a3, $t1
 /* 01E518 7001D918 000937C3 */  sra   $a2, $t1, 0x1f
-/* 01E51C 7001D91C 0C003B2A */  jal   ull_div
+/* 01E51C 7001D91C 0C003B2A */  jal   __ull_div
 /* 01E520 7001D920 AFA90070 */   sw    $t1, 0x70($sp)
 /* 01E524 7001D924 8FA90070 */  lw    $t1, 0x70($sp)
 /* 01E528 7001D928 AE230004 */  sw    $v1, 4($s1)

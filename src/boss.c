@@ -3,6 +3,7 @@
 #include "boss.h"
 #include "bondgame.h"
 #include "game/debugmenu_090490.h"
+#include "game/room_model_buffer.h"
 
 /**
  * @file boss.c
@@ -79,34 +80,36 @@ s32 taskgrab_ramdump_num = 1;
 
 /* rodata */
 
-const char aLevel_[] = "-level_";
-const char aMl0Me0Mgfx100Mvtx50Mt700Ma400_1[] = "          -ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400";
-const char aM[] = "-m";
-const char aM_1[] = "-m";
-const char aLevel__0[] = "-level_";
-const char aLevel__1[] = "-level_";
-const char aHard[] = "-hard";
-const char aHard_1[] = "-hard";
-const char aHard_2[] = "-hard";
-const char aMa[] = "-ma";
-const char aMa_0[] = "-ma";
-const char aU64_taskgrab_D_core[] = "u64.taskgrab.%d.core";
+//const char aLevel_[] = "-level_";
+//const char aMl0Me0Mgfx100Mvtx50Mt700Ma400_1[] = "          -ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400";
+//const char aM[] = "-m";
+//const char aM_1[] = "-m";
+
+//***moved to mainloop
+//const char aLevel__0[] = "-level_";
+//const char aLevel__1[] = "-level_";
+//const char aHard[] = "-hard";
+//const char aHard_1[] = "-hard";
+//const char aHard_2[] = "-hard";
+//const char aMa[] = "-ma";
+//const char aMa_0[] = "-ma";
+//const char aU64_taskgrab_D_core[] = "u64.taskgrab.%d.core";
 
 /**
  * 6930	70005D30
  *     ??? - uses "-level_", "-m" strings
  */
-#ifdef NONMATCHING
+#define OS_USEC_TO_CYCLES(n)	(((u64)(n)*(osClockRate))/1000000LL)
+//#ifdef NONMATCHING
 void init_mainthread_data(void)
 {
-    OSMesg sp9C;
-    OSTimer sp78;
-    OSMesgQueue sp60;
-    ? temp_ret;
-    ? temp_ret_2;
-    s32 temp_s0;
-    s32 phi_s0;
-    s32 phi_s0_2;
+    OSMesg bossmsg;
+    OSTimer bosstimer;
+    OSMesgQueue bossmq;
+    u32 temp_s0;
+    u32 unused;
+    s32 i;
+
 
     add_debug_notice_deb_c_debug();
     romCreateMesgQueue();
@@ -123,31 +126,22 @@ void init_mainthread_data(void)
     something_with_rsp_c_debug();
     something_with_dyn_c_debug();
     something_with_joy_c_debug();
-    osCreateMesgQueue(&sp60, &sp9C, 1);
-    phi_s0 = 0;
-block_1:
-    temp_ret = __ll_mul(0, 0x186a0, osClockRate, osClockRate);
-    temp_ret_2 = ull_div(temp_ret, temp_ret, 0, 0xf4240);
-    osSetTimer(&sp78, temp_ret_2, temp_ret_2, 0, 0);
-    osRecvMesg(&sp60, &sp9C, 1);
-    if (phi_s0 == 1)
+    osCreateMesgQueue(&bossmq, &bossmsg, 1);
+
+    for (i = 0; i != 4; i++)
     {
-        test_controller_presence();
-        phi_s0_2 = (phi_s0 + 1);
-    }
-    else
-    {
-        if (phi_s0 >= 2)
+        osSetTimer(&bosstimer, OS_USEC_TO_CYCLES(100000), 0, &bossmq, &bossmsg);
+        osRecvMesg(&bossmq, &bossmsg, 1);
+        if (i == 1)
+        {
+            test_controller_presence();
+        }
+        else if (i >= 2)
         {
             redirect_to_ramrom_replay_and_record_handlers_if_set();
         }
-        phi_s0_2 = (phi_s0 + 1);
     }
-    phi_s0 = phi_s0_2;
-    if (phi_s0_2 != 4)
-    {
-        goto block_1;
-    }
+
     if (check_token(1, "-level_") == 0)
     {
         debug_and_update_stage_flag = 1;
@@ -186,7 +180,8 @@ block_1:
     sub_GAME_7F01D6E0();
     clear_ramrom_block_buffer_heading_ptrs();
 }
-#else
+//#else
+#ifdef NONMATCHING
 GLOBAL_ASM(
 .text
 glabel init_mainthread_data
@@ -231,6 +226,7 @@ glabel init_mainthread_data
 /* 0069C8 70005DC8 02202025 */  move  $a0, $s1
 /* 0069CC 70005DCC 0C0035B4 */  jal   osCreateMesgQueue
 /* 0069D0 70005DD0 24060001 */   li    $a2, 1
+
 /* 0069D4 70005DD4 00008025 */  move  $s0, $zero
 /* 0069D8 70005DD8 3C050001 */  lui   $a1, (0x000186A0 >> 16) # lui $a1, 1
 .L70005DDC:
@@ -245,7 +241,7 @@ glabel init_mainthread_data
 /* 0069FC 70005DFC 34E74240 */  ori   $a3, (0x000F4240 & 0xFFFF) # ori $a3, $a3, 0x4240
 /* 006A00 70005E00 00402025 */  move  $a0, $v0
 /* 006A04 70005E04 00602825 */  move  $a1, $v1
-/* 006A08 70005E08 0C003B2A */  jal   ull_div
+/* 006A08 70005E08 0C003B2A */  jal   __ull_div
 /* 006A0C 70005E0C 24060000 */   li    $a2, 0
 /* 006A10 70005E10 240E0000 */  li    $t6, 0
 /* 006A14 70005E14 240F0000 */  li    $t7, 0
@@ -257,6 +253,7 @@ glabel init_mainthread_data
 /* 006A2C 70005E2C AFB10018 */  sw    $s1, 0x18($sp)
 /* 006A30 70005E30 0C004314 */  jal   osSetTimer
 /* 006A34 70005E34 AFB2001C */   sw    $s2, 0x1c($sp)
+
 /* 006A38 70005E38 02202025 */  move  $a0, $s1
 /* 006A3C 70005E3C 02402825 */  move  $a1, $s2
 /* 006A40 70005E40 0C003774 */  jal   osRecvMesg
@@ -815,6 +812,25 @@ loop_58:
 }
 #else
 GLOBAL_ASM(
+
+.rdata
+glabel aLevel__0
+.word 0x2d6c6576, 0x656c5f00 /*"-level_"*/
+glabel aLevel__1
+.word 0x2d6c6576, 0x656c5f00 /*"-level_"*/
+glabel aHard
+.word 0x2d686172, 0x64000000 /*"-hard"*/
+glabel aHard_1
+.word 0x2d686172, 0x64000000 /*"-hard"*/
+glabel aHard_2
+.word 0x2d686172, 0x64000000 /*"-hard"*/
+glabel aMa
+.word 0x2d6d6100 /*"-ma"*/
+glabel aMa_0
+.word 0x2d6d6100 /*"-ma"*/
+glabel aU64_taskgrab_D_core
+.word 0x7536342e, 0x7461736b, 0x67726162, 0x2e25642e, 0x636f7265, 0x00000000 /*"u64.taskgrab.%d.core"*/
+
 .text
 glabel mainloop
 /* 006C60 70006060 27BDFE20 */  addiu $sp, $sp, -0x1e0

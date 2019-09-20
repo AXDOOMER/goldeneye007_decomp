@@ -541,7 +541,7 @@ loop_1:
         sp4C = (u32) dword_CODE_bss_8005E4D8.unk4;
         if ((temp_s1 % 0xf0) == 0)
         {
-            temp_ret_3 = ull_div(dword_CODE_bss_8005E4D0, dword_CODE_bss_8005E4D0.unk4, 0, 0xf0);
+            temp_ret_3 = __ull_div(dword_CODE_bss_8005E4D0, dword_CODE_bss_8005E4D0.unk4, 0, 0xf0);
             dword_CODE_bss_8005E4CC = temp_ret_3;
             dword_CODE_bss_8005E4CC = temp_ret_3;
             sp44 = (u32) (dword_CODE_bss_8005E4E0.unk4 - dword_CODE_bss_8005E4D8.unk4);
@@ -683,7 +683,7 @@ glabel _amMain
 /* 002CF0 700020F0 8E040000 */  lw    $a0, ($s0)
 /* 002CF4 700020F4 8E050004 */  lw    $a1, 4($s0)
 /* 002CF8 700020F8 24060000 */  li    $a2, 0
-/* 002CFC 700020FC 0C003B2A */  jal   ull_div
+/* 002CFC 700020FC 0C003B2A */  jal   __ull_div
 /* 002D00 70002100 240700F0 */   li    $a3, 240
 /* 002D04 70002104 3C018006 */  lui   $at, %hi(dword_CODE_bss_8005E4CC) # $at, 0x8006
 /* 002D08 70002108 AC22E4C8 */  sw    $v0, %lo(dword_CODE_bss_8005E4C8)($at)
