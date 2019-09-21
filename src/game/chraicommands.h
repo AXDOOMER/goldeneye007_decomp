@@ -24,8 +24,8 @@
 // note:
 // commands with guard prefix are exclusive to chr/global ai lists, they can't be
 // executed by obj ai lists (10XX) or it will crash! commands with chr prefix can
-// be from both obj and chr ai lists exceptions to the rule are detailed in the
-// command descriptions
+// be from both obj and chr ai lists - exceptions to this rule are detailed within
+// the command description
 //===========================================================================*/
 
 #define chararray16(input) (input & 0xFF00) >> 8, input & 0x00FF
@@ -81,8 +81,7 @@
 //=============================================================================
 // info: halt the ai list - frees engine to start executing next ai list until
 //       all lists have been executed for game tick.
-// note: chr ai lists (04XX) that are idle/off screen will sleep for multiple
-//       ticks instead of one tick
+// note: offscreen/idle guards will take 14 game ticks instead of 1 tick on sleep
 //===========================================================================*/
 #define sleep_ID 0x03
 #define sleep_LENGTH 0x01
