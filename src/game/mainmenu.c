@@ -666,9 +666,9 @@ u32 cursor_ypos_table_mission_select[] = {62, 131, 201, 270};
 
 struct MP_game_length_settings multi_game_lengths[] = {
     {TEXT(LTITLE, 0x2D), 0, 0, 0},                    /* unlimited */
-    {TEXT(LTITLE, 0x2E), 0, MINS_TO_TICK60(5), 0},    /* 5 minutes */
-    {TEXT(LTITLE, 0x2F), 0, MINS_TO_TICK60(10), 0},   /* 10 minutes */
-    {TEXT(LTITLE, 0x30), 0, MINS_TO_TICK60(20), 0},   /* 20 minutes */
+    {TEXT(LTITLE, 0x2E), 0, MINS_TO_TIMER60(5), 0},   /* 5 minutes */
+    {TEXT(LTITLE, 0x2F), 0, MINS_TO_TIMER60(10), 0},  /* 10 minutes */
+    {TEXT(LTITLE, 0x30), 0, MINS_TO_TIMER60(20), 0},  /* 20 minutes */
     {TEXT(LTITLE, 0x31), 0, 0, 5},                    /* first to 5 points */
     {TEXT(LTITLE, 0x32), 0, 0, 10},                   /* first to 10 points */
     {TEXT(LTITLE, 0x33), 0, 0, 20},                   /* first to 20 points */
