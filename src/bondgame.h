@@ -1221,7 +1221,7 @@ typedef enum ANIMATIONS {
     ANIM_cradle_jump = 179,
     ANIM_cradle_fall = 180,
     ANIM_credits_bond_kissing = 181,
-    ANIM_credits_natalya_kissing = 182,
+    ANIM_credits_natalya_kissing = 182
 } ANIMATIONS;
 
 typedef enum AIRCRAFT_ANIMATIONS {

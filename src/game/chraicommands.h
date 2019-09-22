@@ -3,6 +3,9 @@
 #include "ultra64.h"
 
 /*=============================================================================
+// chr ai commands reference
+// programmed by mark edmonds and martin hollis
+//=============================================================================
 // terminology:
 // chr              character
 // obj              objective
@@ -10,19 +13,29 @@
 // obj ai lists     1000-10FF range
 // global ai lists  0000-0011 range
 //=============================================================================
-// info:
-// character ai list info -
-// chr ai lists drive the gameplay, such as attacking/chasing player. a chr ai list
-// will not execute until a guard is assigned that list (unlike obj lists). multiple
-// guards can use the same ai list - each guard is treated as a independent thread
-// with their own instance of unique data
-// objective ai list info -
-// obj ai lists run continuously in the background without a guard attached
+// character ai list info
+//=============================================================================
+// chr ai lists drive the gameplay, such as attacking/chasing player. a chr ai
+// list will not execute until a guard is assigned that list (unlike obj lists).
+// multiple guards can use the same ai list - each guard is treated as a independent
+// thread with their own instance of unique data
+//=============================================================================
+// objective ai list info
+//=============================================================================
+// obj ai lists run continuously in the background without a guard attached.
 // they still have a chr struct but lack a model/position in the level, they are
-// commonly used for level scripting (objectives) or monitoring guard spawns
+// commonly used for level scripting (objectives) or monitoring guard spawns.
+// obj ai lists cannot run guard commands due to the lack of level presence
+//=============================================================================
+// global ai list info
+//=============================================================================
+// global ai lists are 0x11 useful lists accessible with every level. the above
+// lists (chr/obj) are unique to each setup file, compared to global lists which
+// are accessible throughout the entire game. they contain generic guard ai lists
+// used for most levels
 //=============================================================================
 // note:
-// commands with guard prefix are exclusive to chr/global ai lists, they can't be
+// commands with guard prefix are exclusive to guards in levels, they can't be
 // executed by obj ai lists (10XX) or it will crash! commands with chr prefix can
 // be from both obj and chr ai lists - exceptions to this rule are detailed within
 // the command description
@@ -33,10 +46,12 @@
 
 #define CHRAI_ID_PLAYER -8
 #define CHRAI_ID_CLONE -7
-#define CHRAI_ID_SEE_SHOT -6
-#define CHRAI_ID_SEE_DIE -5
-#define CHRAI_ID_PRESET -4
+#define CHRAI_ID_SEE_SHOT -6 /* stored as chr->chrseeshot */
+#define CHRAI_ID_SEE_DIE -5 /* stored as chr->chrseedie */
+#define CHRAI_ID_PRESET -4 /* stored as chr->chrpreset1 */
 #define CHRAI_ID_SELF -3
+
+#define PAD_PRESET 9000 /* stored as chr->padpreset1 */
 
 /*=============================================================================
 // name: goto_next
@@ -105,14 +120,14 @@
 // name: goto_ai_list
 // command id: 05
 //=============================================================================
-// info: goto another list and start executing from beginning
+// info: make chr goto another list and start executing from beginning
 // note: cannot jump to obj lists (10XX)
 //===========================================================================*/
 #define goto_ai_list_ID 0x05
 #define goto_ai_list_LENGTH 0x04
-#define goto_ai_list(chr_id, ai_list) \
+#define goto_ai_list(chr_num, ai_list) \
         goto_ai_list_ID, \
-        chr_id, \
+        chr_num, \
         chararray16(ai_list),
 
 /*=============================================================================
@@ -219,7 +234,7 @@
 // name: guard_animation_looks_around_self
 // command id: 0D
 //=============================================================================
-// info: set guard to playback animation - command is used when firing around guard
+// info: set guard to playback animation - used when shots land near guard
 //===========================================================================*/
 #define guard_animation_looks_around_self_ID 0x0D
 #define guard_animation_looks_around_self_LENGTH 0x01
@@ -227,22 +242,71 @@
         guard_animation_looks_around_self_ID,
 
 /*=============================================================================
-// name: guard_jogs_to_predefined
+// name: guard_runs_to_pad
+// command id: 1C
+//=============================================================================
+// info: makes the guard run to pad
+//===========================================================================*/
+#define guard_runs_to_pad_ID 0x1C
+#define guard_runs_to_pad_LENGTH 0x03
+#define guard_runs_to_pad(pad) \
+        guard_runs_to_pad_ID, \
+        chararray16(pad),
+
+/*=============================================================================
+// name: guard_runs_to_padpreset
 // command id: 1D
 //=============================================================================
-// info: makes the guard jog to predefined pad 2328
+// info: makes the guard run to guard->padpreset1 (PAD_PRESET - 9000)
 //===========================================================================*/
-#define guard_jogs_to_predefined_ID 0x1D
-#define guard_jogs_to_predefined_LENGTH 0x01
-#define guard_jogs_to_predefined \
-        guard_jogs_to_predefined_ID,
+#define guard_runs_to_padpreset_ID 0x1D
+#define guard_runs_to_padpreset_LENGTH 0x01
+#define guard_runs_to_padpreset \
+        guard_runs_to_padpreset_ID,
 
+/*=============================================================================
+// name: guard_walks_to_pad
+// command id: 1E
+//=============================================================================
+// info: makes the guard walk to pad
+//===========================================================================*/
+#define guard_walks_to_pad_ID 0x1E
+#define guard_walks_to_pad_LENGTH 0x03
+#define guard_walks_to_pad(pad) \
+        guard_walks_to_pad_ID, \
+        chararray16(pad),
+
+/*=============================================================================
+// name: guard_sprints_to_pad
+// command id: 1F
+//=============================================================================
+// info: makes the guard sprint to pad
+//===========================================================================*/
+#define guard_sprints_to_pad_ID 0x1F
+#define guard_sprints_to_pad_LENGTH 0x03
+#define guard_sprints_to_pad(pad) \
+        guard_sprints_to_pad_ID, \
+        chararray16(pad),
+
+/*=============================================================================
+// name: guard_set_patrol
+// command id: 20
+//=============================================================================
+// info: makes guard walk a predefined path within setup
+// note: usually paired with jump to global list #0005 or #0007
+//===========================================================================*/
+#define guard_set_patrol_ID 0x20
+#define guard_set_patrol_LENGTH 0x02
+#define guard_set_patrol(path_num) \
+        guard_set_patrol_ID, \
+        path_num,
 
 /*=============================================================================
 // name: guard_surrenders
 // command id: 21
 //=============================================================================
-// info: makes a guard surrender and drop all his objects
+// info: makes a guard surrender and drop all attached and held items
+// note: will not drop items embedded within guard
 //===========================================================================*/
 #define guard_surrenders_ID 0x21
 #define guard_surrenders_LENGTH 0x01
@@ -250,52 +314,92 @@
         guard_surrenders_ID,
 
 /*=============================================================================
-// name: guard_move_disappear
+// name: guard_remove_fade
 // command id: 22
 //=============================================================================
-// info: 
+// info: sets guard to fade away - fade time is 90 ticks (1.5 seconds). when
+//       the fade finishes, automatically remove guard
+// note: guard collision is disable during fade - will not drop items
 //===========================================================================*/
-#define guard_move_disappear_ID 0x22
-#define guard_move_disappear_LENGTH 0x01
-#define guard_move_disappear \
-        guard_move_disappear_ID,
-
+#define guard_remove_fade_ID 0x22
+#define guard_remove_fade_LENGTH 0x01
+#define guard_remove_fade \
+        guard_remove_fade_ID,
 
 /*=============================================================================
-// name: activate_alarm
+// name: chr_remove_instant
+// command id: 23
+//=============================================================================
+// info: instantly remove chr unlike above command
+// note: will not drop items
+//===========================================================================*/
+#define chr_remove_instant_ID 0x23
+#define chr_remove_instant_LENGTH 0x02
+#define chr_remove_instant(chr_num) \
+        chr_remove_instant_ID, \
+        chr_num
+
+/*=============================================================================
+// name: alarm_enable
 // command id: 25
 //=============================================================================
 // info: activates alarm
 //===========================================================================*/
-
-#define activate_alarm_ID 0x25
-#define activate_alarm_LENGTH 0x01
-#define activate_alarm \
-        activate_alarm_ID,
+#define alarm_enable_ID 0x25
+#define alarm_enable_LENGTH 0x01
+#define alarm_enable \
+        alarm_enable_ID,
 
 /*=============================================================================
-// name: deactivate_alarm
+// name: alarm_disable
 // command id: 26
 //=============================================================================
 // info: deactivates alarm
 //===========================================================================*/
-
-#define deactivate_alarm_ID 0x26
-#define deactivate_alarm_LENGTH 0x01
-#define deactivate_alarm \
-        deactivate_alarm_ID,
+#define alarm_disable_ID 0x26
+#define alarm_disable_LENGTH 0x01
+#define alarm_disable \
+        alarm_disable_ID,
 
 /*=============================================================================
-// name: seed_random_byte
+// name: random_generate
 // command id: 33
 //=============================================================================
-// info: seeds random byte
+// info: generate a random byte and store to chr->random
+// note: range is 00-FF
 //===========================================================================*/
+#define random_generate_ID 0x33
+#define random_generate_LENGTH 0x01
+#define random_generate \
+        random_generate_ID,
 
-#define seed_random_byte_ID 0x33
-#define seed_random_byte_LENGTH 0x01
-#define seed_random_byte \
-        seed_random_byte_ID,
+/*=============================================================================
+// name: random_less_than
+// command id: 34
+//=============================================================================
+// info: if chr->random < byte, goto label
+// note: compare is unsigned
+//===========================================================================*/
+#define random_less_than_ID 0x34
+#define random_less_than_LENGTH 0x03
+#define random_less_than(byte, label) \
+        random_less_than_ID, \
+        byte, \
+        label,
+
+/*=============================================================================
+// name: random_greater_than
+// command id: 35
+//=============================================================================
+// info: if chr->random > byte, goto label
+// note: compare is unsigned
+//===========================================================================*/
+#define random_greater_than_ID 0x35
+#define random_greater_than_LENGTH 0x03
+#define random_greater_than(byte, label) \
+        random_greater_than_ID, \
+        byte, \
+        label,
 
 /*=============================================================================
 // name: chr_in_room_with_pad
@@ -305,9 +409,9 @@
 //===========================================================================*/
 #define chr_in_room_with_pad_ID 0x54
 #define chr_in_room_with_pad_LENGTH 0x05
-#define chr_in_room_with_pad(chr_id, pad, label) \
+#define chr_in_room_with_pad(chr_num, pad, label) \
         chr_in_room_with_pad_ID, \
-        chr_id, \
+        chr_num, \
         chararray16(pad), \
         label,
 
@@ -325,98 +429,169 @@
         label,
 
 /*=============================================================================
-// name: reset_cycle_counter_and_enable
+// name: timer_reset_start
 // command id: AE
 //=============================================================================
-// info: resets the cycle counter and enables it
+// info: reset and start chr->timer60
 //===========================================================================*/
-#define reset_cycle_counter_and_enable_ID 0xAE
-#define reset_cycle_counter_and_enable_LENGTH 0x01
-#define reset_cycle_counter_and_enable \
-        reset_cycle_counter_and_enable_ID,
+#define timer_reset_start_ID 0xAE
+#define timer_reset_start_LENGTH 0x01
+#define timer_reset_start \
+        timer_reset_start_ID,
 
 /*=============================================================================
-// name: reset_cycle_counter
+// name: timer_reset
 // command id: AF
 //=============================================================================
-// info: resets the cycle counter
+// info: reset chr->timer60
 //===========================================================================*/
-#define reset_cycle_counter_ID 0xAF
-#define reset_cycle_counter_LENGTH 0x01
-#define reset_cycle_counter \
-        reset_cycle_counter_ID,
+#define timer_reset_ID 0xAF
+#define timer_reset_LENGTH 0x01
+#define timer_reset \
+        timer_reset_ID,
 
 /*=============================================================================
-// name: disable_cycle_counter
+// name: timer_stop
 // command id: B0
 //=============================================================================
-// info: stops the cycle counter
+// info: pauses chr->timer60 (does not reset value)
 //===========================================================================*/
-#define disable_cycle_counter_ID 0xB0
-#define disable_cycle_counter_LENGTH 0x01
-#define disable_cycle_counter \
-        disable_cycle_counter_ID,
+#define timer_stop_ID 0xB0
+#define timer_stop_LENGTH 0x01
+#define timer_stop \
+        timer_stop_ID,
 
 /*=============================================================================
-// name: enable_cycle_counter
+// name: timer_start
 // command id: B1
 //=============================================================================
-// info: starts the cycle counter
+// info: start chr->timer60 (does not reset value)
 //===========================================================================*/
-#define enable_cycle_counter_ID 0xB1
-#define enable_cycle_counter_LENGTH 0x01
-#define enable_cycle_counter \
-        enable_cycle_counter_ID
+#define timer_start_ID 0xB1
+#define timer_start_LENGTH 0x01
+#define timer_start \
+        timer_start_ID,
 
 /*=============================================================================
-// name: show_timer
+// name: hud_timer_show
 // command id: B5
 //=============================================================================
-// info: shows the timer
+// info: shows the hud timer
 //===========================================================================*/
-#define show_timer_ID 0xB5
-#define show_timer_LENGTH 0x01
-#define show_timer \
-        show_timer_ID,
+#define hud_timer_show_ID 0xB5
+#define hud_timer_show_LENGTH 0x01
+#define hud_timer_show \
+        hud_timer_show_ID,
 
 /*=============================================================================
-// name: hide_timer
+// name: hud_timer_hide
 // command id: B6
 //=============================================================================
-// info: hides the timer
+// info: hides the hud timer
+// note: can be used as a hidden global timer for objective logic
 //===========================================================================*/
-#define hide_timer_ID 0xB6
-#define hide_timer_LENGTH 0x01
-#define hide_timer \
-        hide_timer_ID,
+#define hud_timer_hide_ID 0xB6
+#define hud_timer_hide_LENGTH 0x01
+#define hud_timer_hide \
+        hud_timer_hide_ID,
 
 /*=============================================================================
-// name: stop_timer
+// name: hud_timer_set
+// command id: B7
+//=============================================================================
+// info: set the hud timer
+// note: to make the timer count up, set to 0 and start timer
+//===========================================================================*/
+#define hud_timer_set_ID 0xB7
+#define hud_timer_set_LENGTH 0x03
+#define hud_timer_set(timer60) \
+        hud_timer_set_ID, \
+        chararray16(timer60),
+
+/*=============================================================================
+// name: hud_timer_stop
 // command id: B8
 //=============================================================================
-// info: stops the timer
+// info: stops the hud timer
 //===========================================================================*/
-#define stop_timer_ID 0xB8
-#define stop_timer_LENGTH 0x01
-#define stop_timer \
-        stop_timer_ID,
+#define hud_timer_stop_ID 0xB8
+#define hud_timer_stop_LENGTH 0x01
+#define hud_timer_stop \
+        hud_timer_stop_ID,
 
 /*=============================================================================
-// name: start_timer
+// name: hud_timer_start
 // command id: B9
 //=============================================================================
-// info: starts the timer
+// info: start the hud timer
 //===========================================================================*/
-#define start_timer_ID 0xB9
-#define start_timer_LENGTH 0x01
-#define start_timer \
-        start_timer_ID,
+#define hud_timer_start_ID 0xB9
+#define hud_timer_start_LENGTH 0x01
+#define hud_timer_start \
+        hud_timer_start_ID,
+
+/*=============================================================================
+// name: hud_timer_is_active
+// command id: BA
+//=============================================================================
+// info: if hud timer is active (not paused), goto label
+//===========================================================================*/
+#define hud_timer_is_active_ID 0xBA
+#define hud_timer_is_active_LENGTH 0x02
+#define hud_timer_is_active(label) \
+        hud_timer_is_active_ID, \
+        label,
+
+/*=============================================================================
+// name: hud_timer_less_than
+// command id: BB
+//=============================================================================
+// info: if hud timer < short, goto label
+// note: if short argument is 0, it will only goto label if timer is less than
+// zero (counting up). short value is unsigned and can't test negative values
+//===========================================================================*/
+#define hud_timer_less_than_ID 0xBB
+#define hud_timer_less_than_LENGTH 0x04
+#define hud_timer_less_than(short, label) \
+        hud_timer_less_than_ID, \
+        chararray16(timer60), \
+        label,
+
+/*=============================================================================
+// name: hud_timer_greater_than
+// command id: BC
+//=============================================================================
+// info: if hud timer > short, goto label
+// note: if short argument is 0, it will only goto label if timer is greater than
+// zero (counting down). short value is unsigned and can't test negative values
+//===========================================================================*/
+#define hud_timer_greater_than_ID 0xBC
+#define hud_timer_greater_than_LENGTH 0x04
+#define hud_timer_greater_than(short, label) \
+        hud_timer_greater_than_ID, \
+        chararray16(timer60), \
+        label,
+
+/*=============================================================================
+// name: bond_in_tank
+// command id: D1
+//=============================================================================
+// info: checks if bond is controlling tank, goto label if true
+//===========================================================================*/
+#define bond_in_tank_ID 0xD1
+#define bond_in_tank_LENGTH 0x02
+#define bond_in_tank(label) \
+        bond_in_tank_ID, \
+        label,
 
 /*=============================================================================
 // name: exit_level
 // command id: D2
 //=============================================================================
 // info: exits the level
+// note: recommend not to use this command, instead goto global list 0x000F for
+// exit cutscene list. retail game has a glitch with hires mode that needs to
+// execute this command in a loop, check cuba's 1000 list
 //===========================================================================*/
 #define exit_level_ID 0xD2
 #define exit_level_LENGTH 0x01
@@ -424,48 +599,68 @@
         exit_level_ID,
 
 /*=============================================================================
-// name: return_from_camera_scene
+// name: camera_return_to_bond
 // command id: D3
 //=============================================================================
-// info: 
+// info: switch back to first person view. must have 3 sleep commands before
+//       executing this command
+// note: unused command, never used in retail game. tagged items within inventory
+//       will become invalid after command - only weapons are safe
 //===========================================================================*/
-#define return_from_camera_scene_ID 0xD3
-#define return_from_camera_scene_LENGTH 0x01
-#define return_from_camera_scene \
-        return_from_camera_scene_ID,
+#define camera_return_to_bond_ID 0xD3
+#define camera_return_to_bond_LENGTH 0x01
+#define camera_return_to_bond \
+        camera_return_to_bond_ID,
 
 /*=============================================================================
-// name: enable_all_on_screen_displays
+// name: hud_show_all
 // command id: D8
 //=============================================================================
-// info:
+// info: show all hud elements that have been disabled by D7
+// note: should only be called after D7 command, since it may toggle upper/lower
+//       text displays
 //===========================================================================*/
-#define enable_all_on_screen_displays_ID 0xD8
-#define enable_all_on_screen_displays_LENGTH 0x01
-#define enable_all_on_screen_displays \
-        enable_all_on_screen_displays_ID,
+#define hud_show_all_ID 0xD8
+#define hud_show_all_LENGTH 0x01
+#define hud_show_all \
+        hud_show_all_ID,
 
 /*=============================================================================
-// name: fade_out
+// name: screen_fade_to_black
 // command id: DA
 //=============================================================================
-// info: fades the screen out
+// info: fades the screen out to black
+// note: fade duration is 1 second
 //===========================================================================*/
-#define fade_out_ID 0xDA
-#define fade_out_LENGTH 0x01
-#define fade_out \
-        fade_out_ID,
+#define screen_fade_to_black_ID 0xDA
+#define screen_fade_to_black_LENGTH 0x01
+#define screen_fade_to_black \
+        screen_fade_to_black_ID,
 
 /*=============================================================================
-// name: fade_in
+// name: screen_fade_from_black
 // command id: DB
 //=============================================================================
-// info: fades the screen in
+// info: fades the screen from black
+// note: fade duration is 1 second
 //===========================================================================*/
-#define fade_in_ID 0xDB
-#define fade_in_LENGTH 0x01
-#define fade_in \
-        fade_in_ID,
+#define screen_fade_from_black_ID 0xDB
+#define screen_fade_from_black_LENGTH 0x01
+#define screen_fade_from_black \
+        screen_fade_from_black_ID,
+
+/*=============================================================================
+// name: screen_fade_completed
+// command id: DC
+//=============================================================================
+// info: when screen fade has completed (from/to black), goto label
+// note: fade duration is 1 second
+//===========================================================================*/
+#define screen_fade_if_complete_ID 0xDC
+#define screen_fade_if_complete_LENGTH 0x02
+#define screen_fade_if_complete(label) \
+        screen_fade_if_complete_ID, \
+        label,
 
 /*=============================================================================
 // name: hide_all_chr
@@ -490,15 +685,19 @@
         show_all_chr_ID,
 
 /*=============================================================================
-// name: sky_switch_instant
+// name: trigger_gas_and_switch_fog
 // command id: E9
 //=============================================================================
-// info: instantly switches sky bank
+// info: trigger gas event and instantly switch fog to the next fog's slot
+// note: this command triggers a gas event. for the level egypt, this command
+// will not trigger a gas event, but instead will only switch the fog. this
+// command cannot be toggled after executing. level must have a fog assigned
+// or will crash!
 //===========================================================================*/
-#define sky_switch_instant_ID 0xE9
-#define sky_switch_instant_LENGTH 0x01
-#define sky_switch_instant \
-        sky_switch_instant_ID,
+#define trigger_gas_and_switch_fog_ID 0xE9
+#define trigger_gas_and_switch_fog_LENGTH 0x01
+#define trigger_gas_and_switch_fog \
+        trigger_gas_and_switch_fog_ID,
 
 /*=============================================================================
 // name: stop_game_time
@@ -512,65 +711,69 @@
         stop_game_time_ID,
 
 /*=============================================================================
-// name: bond_disable_pickups_and_damage
+// name: bond_disable_interaction
 // command id: EC
 //=============================================================================
-// info: Use this for level exit trigger, so Bond cannot die during exit cutscene.
+// info: disables bond damage and ability to pick up items
+// note: commonly used for level exit ai lists - prevents bond dying after
+//       triggering exit cutscene
 //===========================================================================*/
-#define bond_disable_pickups_and_damage_ID 0xEC
-#define bond_disable_pickups_and_damage_LENGTH 0x01
-#define bond_disable_pickups_and_damage \
-        bond_disable_pickups_and_damage_ID,
+#define bond_disable_interaction_ID 0xEC
+#define bond_disable_interaction_LENGTH 0x01
+#define bond_disable_interaction \
+        bond_disable_interaction_ID,
 
 /*=============================================================================
-// name: hide_first_person_display
+// name: bond_hide_weapons
 // command id: ED
 //=============================================================================
-// info: 
+// info: set bond's left/right weapons to be invisible
 //===========================================================================*/
-#define hide_first_person_display_ID 0xED
-#define hide_first_person_display_LENGTH 0x01
-#define hide_first_person_display \
-        hide_first_person_display_ID,
+#define bond_hide_weapons_ID 0xED
+#define bond_hide_weapons_LENGTH 0x01
+#define bond_hide_weapons \
+        bond_hide_weapons_ID,
 
 /*=============================================================================
-// name: trigger_credits
+// name: roll_credits
 // command id: EF
 //=============================================================================
-// info:
+// info: credit text and positions are stored in setup intro struct
 //===========================================================================*/
-#define trigger_credits_ID 0xEF
-#define trigger_credits_LENGTH 0x01
-#define trigger_credits \
-        trigger_credits_ID,
+#define roll_credits_ID 0xEF
+#define roll_credits_LENGTH 0x01
+#define roll_credits \
+        roll_credits_ID,
 
 /*=============================================================================
-// name: trigger_explosions
+// name: trigger_explosions_around_bond
 // command id: F6
 //=============================================================================
-// info: triggers explosions around the player
+// info: triggers explosions around the player, will continue forever
+// note: does not trigger level exit or killed in action state
 //===========================================================================*/
-#define trigger_explosions_ID 0xF6
-#define trigger_explosions_LENGTH 0x01
-#define trigger_explosions \
-        trigger_explosions_ID,
+#define trigger_explosions_around_bond_ID 0xF6
+#define trigger_explosions_around_bond_LENGTH 0x01
+#define trigger_explosions_around_bond \
+        trigger_explosions_around_bond_ID,
 
 /*=============================================================================
-// name: set_killed_in_action
+// name: bond_killed_in_action
 // command id: F9
 //=============================================================================
-// info: sets player state to KIA. Automatic mission failure
+// info: sets briefing status to killed in action, automatic mission failure
+// note: does not kill the player, only changes the mission status
 //===========================================================================*/
-#define set_killed_in_action_ID 0xF9
-#define set_killed_in_action_LENGTH 0x01
-#define set_killed_in_action \
-        set_killed_in_action_ID,
+#define bond_killed_in_action_ID 0xF9
+#define bond_killed_in_action_LENGTH 0x01
+#define bond_killed_in_action \
+        bond_killed_in_action_ID,
 
 /*=============================================================================
 // name: guard_raises_arms
 // command id: FA
 //=============================================================================
-// info: makes guard raise his arms for half a second
+// info: makes guard raise their arms for half a second
 //===========================================================================*/
 #define guard_raises_arms_ID 0xFA
 #define guard_raises_arms_LENGTH 0x01
@@ -578,15 +781,18 @@
         guard_raises_arms_ID,
 
 /*=============================================================================
-// name: sky_switch_transition
+// name: trigger_gas_and_fade_fog
 // command id: FB
 //=============================================================================
-// info: fades between sky banks
+// info: trigger gas event and slowly transition fog to the next fog's slot
+// note: this command triggers a gas event. for the level egypt, this command
+// will not trigger a gas event, but instead will only transition the fog.
+// this command cannot be toggled after executing. level must have a fog assigned
+// or will crash!
 //===========================================================================*/
-#define sky_switch_transition_ID 0xFB
-#define sky_switch_transition_LENGTH 0x01
-#define sky_switch_transition \
-        sky_switch_transition_ID,
-
+#define trigger_gas_and_fade_fog_ID 0xFB
+#define trigger_gas_and_fade_fog_LENGTH 0x01
+#define trigger_gas_and_fade_fog \
+        trigger_gas_and_fade_fog_ID,
 
 #endif
