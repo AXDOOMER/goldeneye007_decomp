@@ -1034,11 +1034,11 @@ typedef enum CAMERAMODE {
     UNK10_CAM
 } CAMERAMODE;
 
+/* motion capture actor: duncan botwood */
+/* motion capture assistance: b jones */
+/* recorded using 'flock of birds' system by ascension technology corporation, in a freezing metal barn in the depths of winter */
+/* note: animations are double handed weapon (KF7) unless specified (unarmed, one_handed_weapon, dual_wield) */
 typedef enum ANIMATIONS {
-    /* motion capture actor: duncan botwood */
-    /* motion capture assistance: b jones */
-    /* recorded using 'flock of birds' system by ascension technology corporation, in a freezing metal barn in the depths of winter */
-    /* note: animations are double handed weapon (KF7) unless specified (unarmed, one_handed_weapon, dual_wield) */
     ANIM_idle = 0,
     ANIM_fire_standing = 1,
     ANIM_fire_standing_fast = 2,
@@ -1191,7 +1191,7 @@ typedef enum ANIMATIONS {
     ANIM_aim_and_blow_one_handed_weapon = 149, /* reversed animation? */
     ANIM_aim_one_handed_weapon_left = 150,
     ANIM_aim_one_handed_weapon_right = 151,
-    ANIM_idle_chatting = 152,
+    ANIM_conversation = 152,
     ANIM_drop_weapon_and_show_fight_stance = 153, /* orthodox stance woo */
     ANIM_yawning = 154,
     ANIM_swatting_flies = 155,
@@ -1199,8 +1199,8 @@ typedef enum ANIMATIONS {
     ANIM_scratching_butt = 157,
     ANIM_adjusting_crotch = 158,
     ANIM_sneeze = 159,
-    ANIM_idle_chatting_cleaned = 160, /* cleaned up copy of ANIM_idle_chatting (compare left wrist) */
-    ANIM_idle_chatter_listener = 161,
+    ANIM_conversation_cleaned = 160, /* cleaned up copy of ANIM_conversation (compare left wrist) */
+    ANIM_conversation_listener = 161,
     ANIM_startled_and_looking_around = 162,
     ANIM_laughing_in_disbelief = 163,
     ANIM_surrendering_unarmed = 164,

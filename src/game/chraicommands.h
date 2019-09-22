@@ -9,7 +9,7 @@
 // terminology:
 // chr              character
 // obj              objective
-// chr ai lists     0400-04FF range
+// chr ai lists     0401-04FF range
 // obj ai lists     1000-10FF range
 // global ai lists  0000-0011 range
 //=============================================================================
@@ -319,7 +319,7 @@
 //=============================================================================
 // info: sets guard to fade away - fade time is 90 ticks (1.5 seconds). when
 //       the fade finishes, automatically remove guard
-// note: guard collision is disable during fade - will not drop items
+// note: guard collision is ignored during fade - will not drop items
 //===========================================================================*/
 #define guard_remove_fade_ID 0x22
 #define guard_remove_fade_LENGTH 0x01
@@ -340,26 +340,26 @@
         chr_num
 
 /*=============================================================================
-// name: alarm_enable
+// name: alarm_on
 // command id: 25
 //=============================================================================
 // info: activates alarm
 //===========================================================================*/
-#define alarm_enable_ID 0x25
-#define alarm_enable_LENGTH 0x01
-#define alarm_enable \
-        alarm_enable_ID,
+#define alarm_on_ID 0x25
+#define alarm_on_LENGTH 0x01
+#define alarm_on \
+        alarm_on_ID,
 
 /*=============================================================================
-// name: alarm_disable
+// name: alarm_off
 // command id: 26
 //=============================================================================
 // info: deactivates alarm
 //===========================================================================*/
-#define alarm_disable_ID 0x26
-#define alarm_disable_LENGTH 0x01
-#define alarm_disable \
-        alarm_disable_ID,
+#define alarm_off_ID 0x26
+#define alarm_off_LENGTH 0x01
+#define alarm_off \
+        alarm_off_ID,
 
 /*=============================================================================
 // name: random_generate
@@ -399,6 +399,20 @@
 #define random_greater_than(byte, label) \
         random_greater_than_ID, \
         byte, \
+        label,
+
+/*=============================================================================
+// name: guard_has_not_been_seen
+// command id: 41
+//=============================================================================
+// info: if guard has not been seen before on screen, goto label
+// note: when bond has seen guard, it will add a flag to chr->chrflags.
+//       the seen flag will be kept true until level exit
+//===========================================================================*/
+#define guard_has_not_been_seen_ID 0x41
+#define guard_has_not_been_seen_LENGTH 0x02
+#define guard_has_not_been_seen(label) \
+        guard_has_not_been_seen_ID, \
         label,
 
 /*=============================================================================
@@ -573,6 +587,37 @@
         label,
 
 /*=============================================================================
+// name: hud_timer_greater_than
+// command id: BC
+//=============================================================================
+// info: if hud timer > short, goto label
+// note: if short argument is 0, it will only goto label if timer is greater than
+// zero (counting down). short value is unsigned and can't test negative values
+//===========================================================================*/
+#define hud_timer_greater_than_ID 0xBC
+#define hud_timer_greater_than_LENGTH 0x04
+#define hud_timer_greater_than(short, label) \
+        hud_timer_greater_than_ID, \
+        chararray16(timer60), \
+        label,
+
+/*=============================================================================
+// name: chr_spawn_clone
+// command id: C1
+//=============================================================================
+// info: if guard has clone flag on, spawn a new guard - goto label if successful
+// note: clone flag is stored in chr->chrflags which is assigned at setup init.
+//       newly spawned guard is placed in front of original guard
+//===========================================================================*/
+#define chr_spawn_clone_ID 0xC1
+#define chr_spawn_clone_LENGTH 0x05
+#define chr_spawn_clone(chr_num, ai_list, label) \
+        chr_spawn_clone_ID, \
+        chr_num, \
+        chararray16(ai_list), \
+        label,
+
+/*=============================================================================
 // name: bond_in_tank
 // command id: D1
 //=============================================================================
@@ -663,34 +708,36 @@
         label,
 
 /*=============================================================================
-// name: hide_all_chr
+// name: chr_hide_all
 // command id: DD
 //=============================================================================
-// info: 
+// info: hide all characters in level - including bond. execute this before
+//       switching to exit camera or bond will disappear
+// note: hidden characters will halt ai list execution until unhidden
 //===========================================================================*/
-#define hide_all_chr_ID 0xDD
-#define hide_all_chr_LENGTH 0x01
-#define hide_all_chr \
-        hide_all_chr_ID,
+#define chr_hide_all_ID 0xDD
+#define chr_hide_all_LENGTH 0x01
+#define chr_hide_all \
+        chr_hide_all_ID,
 
 /*=============================================================================
-// name: show_all_chr
+// name: chr_show_all
 // command id: DE
 //=============================================================================
-// info:
+// info: show all characters previously hidden by command DD
 //===========================================================================*/
-#define show_all_chr_ID 0xDE
-#define show_all_chr_LENGTH 0x01
-#define show_all_chr \
-        show_all_chr_ID,
+#define chr_show_all_ID 0xDE
+#define chr_show_all_LENGTH 0x01
+#define chr_show_all \
+        chr_show_all_ID,
 
 /*=============================================================================
 // name: trigger_gas_and_switch_fog
 // command id: E9
 //=============================================================================
-// info: trigger gas event and instantly switch fog to the next fog's slot
-// note: this command triggers a gas event. for the level egypt, this command
-// will not trigger a gas event, but instead will only switch the fog. this
+// info: trigger gas leak and instantly switch fog to the next fog's slot
+// note: this command triggers a gas leak. for the level egypt, this command
+// will not trigger a gas leak, but instead will only switch the fog. this
 // command cannot be toggled after executing. level must have a fog assigned
 // or will crash!
 //===========================================================================*/
@@ -711,17 +758,17 @@
         stop_game_time_ID,
 
 /*=============================================================================
-// name: bond_disable_interaction
+// name: bond_disable_damage_and_pickups
 // command id: EC
 //=============================================================================
 // info: disables bond damage and ability to pick up items
 // note: commonly used for level exit ai lists - prevents bond dying after
 //       triggering exit cutscene
 //===========================================================================*/
-#define bond_disable_interaction_ID 0xEC
-#define bond_disable_interaction_LENGTH 0x01
-#define bond_disable_interaction \
-        bond_disable_interaction_ID,
+#define bond_disable_damage_and_pickups_ID 0xEC
+#define bond_disable_damage_and_pickups_LENGTH 0x01
+#define bond_disable_damage_and_pickups \
+        bond_disable_damage_and_pickups_ID,
 
 /*=============================================================================
 // name: bond_hide_weapons
@@ -784,9 +831,9 @@
 // name: trigger_gas_and_fade_fog
 // command id: FB
 //=============================================================================
-// info: trigger gas event and slowly transition fog to the next fog's slot
-// note: this command triggers a gas event. for the level egypt, this command
-// will not trigger a gas event, but instead will only transition the fog.
+// info: trigger gas leak and slowly transition fog to the next fog's slot
+// note: this command triggers a gas leak. for the level egypt, this command
+// will not trigger a gas leak, but instead will only transition the fog.
 // this command cannot be toggled after executing. level must have a fog assigned
 // or will crash!
 //===========================================================================*/
