@@ -554,6 +554,51 @@
         alarm_off_ID,
 
 /*=============================================================================
+// name: chr_dying_or_dead
+// command id: 30
+//=============================================================================
+// info: if chr has died (or in dying state), goto label
+// note: can't be used for bond - use command EB instead
+//===========================================================================*/
+#define chr_dying_or_dead_ID 0x30
+#define chr_dying_or_dead_LENGTH 0x03
+#define chr_dying_or_dead(chr_num, label) \
+        chr_dying_or_dead_ID, \
+        chr_num, \
+        label,
+
+/*=============================================================================
+// name: chr_does_not_exist
+// command id: 31
+//=============================================================================
+// info: if chr doesn't exist (died and faded/not spawned), goto label
+// note: can't be used for bond - use command EB instead. this command is used
+// to check if chr has finished dying animation and faded away, or chr num is free
+//===========================================================================*/
+#define chr_does_not_exist_ID 0x31
+#define chr_does_not_exist_LENGTH 0x03
+#define chr_does_not_exist(chr_num, label) \
+        chr_does_not_exist_ID, \
+        chr_num, \
+        label,
+
+/*=============================================================================
+// name: guard_check_vision_for_bond
+// command id: 32
+//=============================================================================
+// info: check vision for bond, goto label if spotted bond
+// note: uses chr->visionrange while checking for bond. once bond has been spotted,
+// check if bond and guard are within line of sight (ignores facing direction).
+// if bond breaks line of sight, do not goto label. if bond has broken line of
+// sight for than 10 seconds, reset spotted bond state
+//===========================================================================*/
+#define guard_check_vision_for_bond_ID 0x32
+#define guard_check_vision_for_bond_LENGTH 0x02
+#define guard_check_vision_for_bond(label) \
+        guard_check_vision_for_bond_ID, \
+        label,
+
+/*=============================================================================
 // name: random_generate
 // command id: 33
 //=============================================================================
@@ -591,6 +636,21 @@
 #define random_greater_than(byte, label) \
         random_greater_than_ID, \
         byte, \
+        label,
+
+/*=============================================================================
+// name: guard_and_bond_within_line_of_sight
+// command id: 3C
+//=============================================================================
+// info: if guard and bond are within line of sight, goto label
+// note: line of sight uses clipping - ignores facing direction of bond/guard.
+// does not use chr->visionrange for line of sight check. use command 32 to check
+// using chr->visionrange
+//===========================================================================*/
+#define guard_and_bond_within_line_of_sight_ID 0x3C
+#define guard_and_bond_within_line_of_sight_LENGTH 0x02
+#define guard_and_bond_within_line_of_sight(label) \
+        guard_and_bond_within_line_of_sight_ID, \
         label,
 
 /*=============================================================================
@@ -959,6 +1019,18 @@
 #define chr_show_all_LENGTH 0x01
 #define chr_show_all \
         chr_show_all_ID,
+
+/*=============================================================================
+// name: guard_is_firing
+// command id: E8
+//=============================================================================
+// info: if guard is in firing state (ACT_ATTACK), goto label
+//===========================================================================*/
+#define guard_is_firing_ID 0xE8
+#define guard_is_firing_LENGTH 0x02
+#define guard_is_firing(label) \
+        guard_is_firing_ID, \
+        label,
 
 /*=============================================================================
 // name: trigger_gas_and_switch_fog
