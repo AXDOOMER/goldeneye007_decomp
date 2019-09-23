@@ -38,24 +38,14 @@ s32 D_80024444 = 0;
 s32 D_80024448 = 0;
 s32 D_8002444C = 0;
 
-const char aMemp_c_debug[] = "memp_c_debug";
-const char aMf[] = "-mf";
-const char aMf_0[] = "-mf";
-const char aMl[] = "-ml";
-const char aMl_0[] = "-ml";
-const char aMe[] = "-me";
-const char aMe_0[] = "-me";
-
-
-
 
 /**
  * 9F80	70009380
  *     V0=p->debug.notice.list entry for memp_c_debug
  */
-void something_with_memp_c_debug(void) {
-
-    get_ptr_debug_notice_list_entry(&ptr_memp_c_debug_debug_notice_list, &aMemp_c_debug); //should be "memp_c_debug"
+void something_with_memp_c_debug(void)
+{
+    get_ptr_debug_notice_list_entry(&ptr_memp_c_debug_debug_notice_list, "memp_c_debug"); //should be "memp_c_debug"
 }
 
 
@@ -126,6 +116,20 @@ void check_memflag_tokens(s32 arg0, s32 arg1, s32 arg11) {
 }
 #else
 GLOBAL_ASM(
+.rdata
+glabel aMf
+.word 0x2d6d6600 /*"-mf"*/
+glabel aMf_0
+.word 0x2d6d6600 /*"-mf"*/
+glabel aMl
+.word 0x2d6d6c00 /*"-ml"*/
+glabel aMl_0
+.word 0x2d6d6c00 /*"-ml"*/
+glabel aMe
+.word 0x2d6d6500 /*"-me"*/
+glabel aMe_0
+.word 0x2d6d6500 /*"-me"*/
+
 .text
 glabel check_memflag_tokens
 /* 009FAC 700093AC 3C028006 */  lui   $v0, %hi(memory_bank_ptrs) # $v0, 0x8006
