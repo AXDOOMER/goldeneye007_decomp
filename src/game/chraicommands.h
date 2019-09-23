@@ -478,10 +478,10 @@
 // note: dropped item uses item type (08) with model number - they can be picked up.
 // grenade/mines will be dropped live - this is used for cradle (list #0411)
 //===========================================================================*/
-#define guard_throw_grenade_ID 0x1B
-#define guard_throw_grenade_LENGTH 0x05
-#define guard_throw_grenade(prop_num, item_num, label) \
-        guard_throw_grenade_ID, \
+#define guard_drop_item_ID 0x1B
+#define guard_drop_item_LENGTH 0x05
+#define guard_drop_item(prop_num, item_num, label) \
+        guard_drop_item_ID, \
         chararray16(prop_num), \
         item_num, \
         label,
