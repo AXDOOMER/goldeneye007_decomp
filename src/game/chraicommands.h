@@ -110,7 +110,8 @@
 //=============================================================================
 // info: used for ai list parser to check when list ends
 // note: not recommended to execute this command - to finish a list create an
-// infinite loop (cmds 02/03/01) or jump to global list #0001 when list completes
+// infinite loop (commands 02/03/01) or jump to global list #0001 when list has
+// finished tasks
 //===========================================================================*/
 #define ai_list_end_ID 0x04
 #define ai_list_end_LENGTH 0x01
@@ -188,7 +189,7 @@
 // tween time will set how long it will take to transition from the previous state
 // (if this value is too low it may crash! - use 0x10 if unsure)
 // start/end keyframe and tween use 60 tick units
-// bitfield:
+// bitfield (hex):
 // 01 - mirror animation
 // 02 - ?? (cancels no translation flag)
 // 04 - loop/hold last frame (required for reverse flag)
@@ -284,13 +285,153 @@
 // command id: 11
 //=============================================================================
 // info: trigger guard to walk and fire at bond, goto label if successful
-// note: bond needs to be a long distance away from guard to work
+// note: bond needs to be at long distance away from guard to work
 //===========================================================================*/
 #define guard_fire_walk_ID 0x11
 #define guard_fire_walk_LENGTH 0x02
 #define guard_fire_walk(label) \
         guard_fire_walk_ID, \
         label,
+
+/*=============================================================================
+// name: guard_fire_run
+// command id: 12
+//=============================================================================
+// info: trigger guard to run and fire at bond, goto label if successful
+// note: bond needs to be at long distance away from guard to work
+//===========================================================================*/
+#define guard_fire_run_ID 0x12
+#define guard_fire_run_LENGTH 0x02
+#define guard_fire_run(label) \
+        guard_fire_run_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_fire_roll
+// command id: 13
+//=============================================================================
+// info: trigger guard to roll on ground then fire at bond, goto label if successful
+// note: bond cannot be too close to guard or it won't work
+//===========================================================================*/
+#define guard_fire_roll_ID 0x13
+#define guard_fire_roll_LENGTH 0x02
+#define guard_fire_roll(label) \
+        guard_fire_roll_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_fire_or_aim_at_target
+// command id: 14
+//=============================================================================
+// info: make guard aim/fire at target, goto label if successful
+// note: bitfield argument is used to set the target type (pad/bond/chr)
+// bitfield (hex):
+// 0001: set target to bond (ignores target argument)
+// 0004: set target type to chr_num
+// 0008: set target type to pad
+// 0020: aim at target instead of firing
+//===========================================================================*/
+#define guard_fire_or_aim_at_target_ID 0x14
+#define guard_fire_or_aim_at_target_LENGTH 0x06
+#define guard_fire_or_aim_at_target(bitfield, target, label) \
+        guard_fire_or_aim_at_target_ID, \
+        chararray16(bitfield), \
+        chararray16(target), \
+        label,
+
+/*=============================================================================
+// name: guard_fire_or_aim_at_target_kneel
+// command id: 15
+//=============================================================================
+// info: make guard kneel and aim/fire at target, goto label if successful
+// note: bitfield argument is used to set the target type (pad/bond/chr)
+// bitfield (hex):
+// 0001: set target to bond (ignores target argument)
+// 0004: set target type to chr_num
+// 0008: set target type to pad
+// 0020: aim at target instead of firing
+//===========================================================================*/
+#define guard_fire_or_aim_at_target_kneel_ID 0x15
+#define guard_fire_or_aim_at_target_kneel_LENGTH 0x06
+#define guard_fire_or_aim_at_target_kneel(bitfield, target, label) \
+        guard_fire_or_aim_at_target_kneel_ID, \
+        chararray16(bitfield), \
+        chararray16(target), \
+        label,
+
+/*=============================================================================
+// name: guard_fire_or_aim_at_target_update
+// command id: 16
+//=============================================================================
+// info: update guard's aim/fire target, goto label if successful
+// note: this command only works if guard is currently aiming at a target
+// bitfield argument is used to set the target type (pad/bond/chr)
+// bitfield (hex):
+// 0001: set target to bond (ignores target argument)
+// 0004: set target type to chr_num
+// 0008: set target type to pad
+// 0020: aim at target instead of firing
+//===========================================================================*/
+#define guard_fire_or_aim_at_target_update_ID 0x16
+#define guard_fire_or_aim_at_target_update_LENGTH 0x06
+#define guard_fire_or_aim_at_target_update(bitfield, target, label) \
+        guard_fire_or_aim_at_target_update_ID, \
+        chararray16(bitfield), \
+        chararray16(target), \
+        label,
+
+/*=============================================================================
+// name: guard_faces_target
+// command id: 17
+//=============================================================================
+// info: make guard continuously face target, goto label if successful
+// note: if guard was shot while facing target, guard will snap out of facing state
+// bitfield argument is used to set the target type (pad/bond/chr)
+// bitfield (hex):
+// 0001: set target to bond (ignores target argument)
+// 0004: set target type to chr_num
+// 0008: set target type to pad
+//===========================================================================*/
+#define guard_faces_target_ID 0x17
+#define guard_faces_target_LENGTH 0x06
+#define guard_faces_target(bitfield, target, label) \
+        guard_faces_target_ID, \
+        chararray16(bitfield), \
+        chararray16(target), \
+        label,
+
+/*=============================================================================
+// name: chr_hit_body_part_with_item_damage
+// command id: 18
+//=============================================================================
+// info: hit chr's body part with item's damage, play reaction to hit location
+// note: can't be used for bond - command does not trigger item's fire sfx.
+// item's damage uses body part damage modifier like in-game
+// body part number (hex) and damage modifier:
+// 00: null part, no reaction - 1x
+// 01: left foot - 1x
+// 02: left leg - 1x
+// 03: left thigh - 1x
+// 04: right foot - 1x
+// 05: right leg - 1x
+// 06: right thigh - 1x
+// 07: pelvis - 1x
+// 08: head - 4x
+// 09: left hand - 1x
+// 0A: left arm - 1x
+// 0B: left shoulder - 1x
+// 0C: right hand - 1x
+// 0D: right arm - 1x
+// 0E: right shoulder - 1x
+// 0F: torso - 2x
+//===========================================================================*/
+#define chr_hit_body_part_with_item_damage_ID 0x18
+#define chr_hit_body_part_with_item_damage_LENGTH 0x04
+#define chr_hit_body_part_with_item_damage(chr_num, part_num, item_num) \
+        chr_hit_body_part_with_item_damage_ID, \
+        chr_num, \
+        part_num, \
+        item_num,
 
 /*=============================================================================
 // name: guard_runs_to_pad
@@ -651,6 +792,7 @@
 // command id: BA
 //=============================================================================
 // info: if hud timer isn't active (paused), goto label
+// note: by default, hud timer is inactive
 //===========================================================================*/
 #define hud_timer_has_stopped_ID 0xBA
 #define hud_timer_has_stopped_LENGTH 0x02
