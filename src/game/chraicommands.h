@@ -42,6 +42,7 @@
 //===========================================================================*/
 
 #define chararray16(input) (input & 0xFF00) >> 8, input & 0x00FF
+#define chararray24(input) (input & 0xFF0000) >> 16, (input & 0x00FF00) >> 8, input & 0x0000FF
 #define chararray32(input) (input & 0xFF000000) >> 24, (input & 0x00FF0000) >> 16, (input & 0x0000FF00) >> 8, input & 0x000000FF
 
 #define CHRAI_ID_PLAYER -8
@@ -199,13 +200,13 @@
 //===========================================================================*/
 #define guard_animation_ID 0x0A
 #define guard_animation_LENGTH 0x09
-#define guard_animation(animation_id, start_timer60, end_timer60, bitfield, tween_timer60) \
+#define guard_animation(animation_id, start_time60, end_time60, bitfield, tween_time60) \
         guard_animation_ID, \
         chararray16(animation_id), \
-        chararray16(start_timer60), \
-        chararray16(end_timer60), \
+        chararray16(start_time60), \
+        chararray16(end_time60), \
         bitfield, \
-        tween_timer60,
+        tween_time60,
 
 /*=============================================================================
 // name: guard_playing_animation
@@ -240,6 +241,56 @@
 #define guard_animation_looks_around_self_LENGTH 0x01
 #define guard_animation_looks_around_self \
         guard_animation_looks_around_self_ID,
+
+/*=============================================================================
+// name: guard_sidesteps
+// command id: 0E
+//=============================================================================
+// info: trigger guard to sidestep, goto label if successful
+//===========================================================================*/
+#define guard_sidesteps_ID 0x0E
+#define guard_sidesteps_LENGTH 0x02
+#define guard_sidesteps(label) \
+        guard_sidesteps_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_sideways_hop
+// command id: 0F
+//=============================================================================
+// info: trigger guard to hop sideways, goto label if successful
+//===========================================================================*/
+#define guard_sideways_hop_ID 0x0F
+#define guard_sideways_hop_LENGTH 0x02
+#define guard_sideways_hop(label) \
+        guard_sideways_hop_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_sideways_run
+// command id: 10
+//=============================================================================
+// info: trigger guard to run sideways of bond, goto label if successful
+// note: sideways direction is random
+//===========================================================================*/
+#define guard_sideways_run_ID 0x10
+#define guard_sideways_run_LENGTH 0x02
+#define guard_sideways_run(label) \
+        guard_sideways_run_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_fire_walk
+// command id: 11
+//=============================================================================
+// info: trigger guard to walk and fire at bond, goto label if successful
+// note: bond needs to be a long distance away from guard to work
+//===========================================================================*/
+#define guard_fire_walk_ID 0x11
+#define guard_fire_walk_LENGTH 0x02
+#define guard_fire_walk(label) \
+        guard_fire_walk_ID, \
+        label,
 
 /*=============================================================================
 // name: guard_runs_to_pad
@@ -407,7 +458,7 @@
 //=============================================================================
 // info: if guard has not been seen before on screen, goto label
 // note: when bond has seen guard, it will add a flag to chr->chrflags.
-//       the seen flag will be kept true until level exit
+//       the seen flag will be kept true for duration of level
 //===========================================================================*/
 #define guard_has_not_been_seen_ID 0x41
 #define guard_has_not_been_seen_LENGTH 0x02
@@ -443,48 +494,99 @@
         label,
 
 /*=============================================================================
-// name: timer_reset_start
+// name: chr_timer_reset_start
 // command id: AE
 //=============================================================================
 // info: reset and start chr->timer60
+// note: chr timer is different to hud timer. chr timer is unique for each chr,
+// while hud timer is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
-#define timer_reset_start_ID 0xAE
-#define timer_reset_start_LENGTH 0x01
-#define timer_reset_start \
-        timer_reset_start_ID,
+#define chr_timer_reset_start_ID 0xAE
+#define chr_timer_reset_start_LENGTH 0x01
+#define chr_timer_reset_start \
+        chr_timer_reset_start_ID,
 
 /*=============================================================================
-// name: timer_reset
+// name: chr_timer_reset
 // command id: AF
 //=============================================================================
 // info: reset chr->timer60
+// note: chr timer is different to hud timer. chr timer is unique for each chr,
+// while hud timer is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
-#define timer_reset_ID 0xAF
-#define timer_reset_LENGTH 0x01
-#define timer_reset \
-        timer_reset_ID,
+#define chr_timer_reset_ID 0xAF
+#define chr_timer_reset_LENGTH 0x01
+#define chr_timer_reset \
+        chr_timer_reset_ID,
 
 /*=============================================================================
-// name: timer_stop
+// name: chr_timer_stop
 // command id: B0
 //=============================================================================
 // info: pauses chr->timer60 (does not reset value)
+// note: chr timer is different to hud timer. chr timer is unique for each chr,
+// while hud timer is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
-#define timer_stop_ID 0xB0
-#define timer_stop_LENGTH 0x01
-#define timer_stop \
-        timer_stop_ID,
+#define chr_timer_stop_ID 0xB0
+#define chr_timer_stop_LENGTH 0x01
+#define chr_timer_stop \
+        chr_timer_stop_ID,
 
 /*=============================================================================
-// name: timer_start
+// name: chr_timer_start
 // command id: B1
 //=============================================================================
 // info: start chr->timer60 (does not reset value)
+// note: chr timer is different to hud timer. chr timer is unique for each chr,
+// while hud timer is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
-#define timer_start_ID 0xB1
-#define timer_start_LENGTH 0x01
-#define timer_start \
-        timer_start_ID,
+#define chr_timer_start_ID 0xB1
+#define chr_timer_start_LENGTH 0x01
+#define chr_timer_start \
+        chr_timer_start_ID,
+
+/*=============================================================================
+// name: chr_timer_has_stopped
+// command id: B2
+//=============================================================================
+// info: if chr->timer60 is not active (paused), goto label
+// note: by default, chr->timer60 is inactive
+//===========================================================================*/
+#define chr_timer_has_stopped_ID 0xB2
+#define chr_timer_has_stopped_LENGTH 0x02
+#define chr_timer_has_stopped(label) \
+        chr_timer_has_stopped_ID, \
+        label,
+
+/*=============================================================================
+// name: chr_timer_less_than
+// command id: B3
+//=============================================================================
+// info: if chr->timer60 < time60, goto label
+// note: time60 argument is converted to float from unsigned int and compared.
+//       chr->timer60 only counts up
+//===========================================================================*/
+#define chr_timer_less_than_ID 0xB3
+#define chr_timer_less_than_LENGTH 0x05
+#define chr_timer_less_than(time60, label) \
+        chr_timer_less_than_ID, \
+        chararray24(time60), \
+        label,
+
+/*=============================================================================
+// name: chr_timer_greater_than
+// command id: B4
+//=============================================================================
+// info: if chr->timer60 > time60, goto label
+// note: time60 argument is converted to float from unsigned int and compared.
+//       chr->timer60 only counts up
+//===========================================================================*/
+#define chr_timer_greater_than_ID 0xB4
+#define chr_timer_greater_than_LENGTH 0x05
+#define chr_timer_greater_than(time60, label) \
+        chr_timer_greater_than_ID, \
+        chararray24(time60), \
+        label,
 
 /*=============================================================================
 // name: hud_timer_show
@@ -518,9 +620,9 @@
 //===========================================================================*/
 #define hud_timer_set_ID 0xB7
 #define hud_timer_set_LENGTH 0x03
-#define hud_timer_set(timer60) \
+#define hud_timer_set(seconds) \
         hud_timer_set_ID, \
-        chararray16(timer60),
+        chararray16(seconds),
 
 /*=============================================================================
 // name: hud_timer_stop
@@ -545,60 +647,45 @@
         hud_timer_start_ID,
 
 /*=============================================================================
-// name: hud_timer_is_active
+// name: hud_timer_has_stopped
 // command id: BA
 //=============================================================================
-// info: if hud timer is active (not paused), goto label
+// info: if hud timer isn't active (paused), goto label
 //===========================================================================*/
-#define hud_timer_is_active_ID 0xBA
-#define hud_timer_is_active_LENGTH 0x02
-#define hud_timer_is_active(label) \
-        hud_timer_is_active_ID, \
+#define hud_timer_has_stopped_ID 0xBA
+#define hud_timer_has_stopped_LENGTH 0x02
+#define hud_timer_has_stopped(label) \
+        hud_timer_has_stopped_ID, \
         label,
 
 /*=============================================================================
 // name: hud_timer_less_than
 // command id: BB
 //=============================================================================
-// info: if hud timer < short, goto label
-// note: if short argument is 0, it will only goto label if timer is less than
-// zero (counting up). short value is unsigned and can't test negative values
+// info: if hud timer < seconds, goto label
+// note: if seconds argument is 0, it will only goto label if timer is less than
+// zero (counting up). seconds value is unsigned and can't test negative values
 //===========================================================================*/
 #define hud_timer_less_than_ID 0xBB
 #define hud_timer_less_than_LENGTH 0x04
-#define hud_timer_less_than(short, label) \
+#define hud_timer_less_than(seconds, label) \
         hud_timer_less_than_ID, \
-        chararray16(timer60), \
+        chararray16(seconds), \
         label,
 
 /*=============================================================================
 // name: hud_timer_greater_than
 // command id: BC
 //=============================================================================
-// info: if hud timer > short, goto label
-// note: if short argument is 0, it will only goto label if timer is greater than
-// zero (counting down). short value is unsigned and can't test negative values
+// info: if hud timer > seconds, goto label
+// note: if seconds argument is 0, it will only goto label if timer is greater than
+// zero (counting down). seconds value is unsigned and can't test negative values
 //===========================================================================*/
 #define hud_timer_greater_than_ID 0xBC
 #define hud_timer_greater_than_LENGTH 0x04
-#define hud_timer_greater_than(short, label) \
+#define hud_timer_greater_than(seconds, label) \
         hud_timer_greater_than_ID, \
-        chararray16(timer60), \
-        label,
-
-/*=============================================================================
-// name: hud_timer_greater_than
-// command id: BC
-//=============================================================================
-// info: if hud timer > short, goto label
-// note: if short argument is 0, it will only goto label if timer is greater than
-// zero (counting down). short value is unsigned and can't test negative values
-//===========================================================================*/
-#define hud_timer_greater_than_ID 0xBC
-#define hud_timer_greater_than_LENGTH 0x04
-#define hud_timer_greater_than(short, label) \
-        hud_timer_greater_than_ID, \
-        chararray16(timer60), \
+        chararray16(seconds), \
         label,
 
 /*=============================================================================
@@ -738,7 +825,7 @@
 // info: trigger gas leak and instantly switch fog to the next fog's slot
 // note: this command triggers a gas leak. for the level egypt, this command
 // will not trigger a gas leak, but instead will only switch the fog. this
-// command cannot be toggled after executing. level must have a fog assigned
+// command can't be stopped after executing. level must have a fog assigned
 // or will crash!
 //===========================================================================*/
 #define trigger_gas_and_switch_fog_ID 0xE9
@@ -747,15 +834,27 @@
         trigger_gas_and_switch_fog_ID,
 
 /*=============================================================================
-// name: stop_game_time
+// name: stop_mission_time_and_exit_level_on_button_input
 // command id: EA
 //=============================================================================
-// info: stops the mission time
+// info: stop the mission time and exit level if player 1 pressed any buttons
 //===========================================================================*/
-#define stop_game_time_ID 0xEA
-#define stop_game_time_LENGTH 0x01
-#define stop_game_time \
-        stop_game_time_ID,
+#define stop_mission_time_and_exit_level_on_button_input_ID 0xEA
+#define stop_mission_time_and_exit_level_on_button_input_LENGTH 0x01
+#define stop_mission_time_and_exit_level_on_button_input \
+        stop_mission_time_and_exit_level_on_button_input_ID,
+
+/*=============================================================================
+// name: bond_has_died
+// command id: EB
+//=============================================================================
+// info: if bond is dead, goto label
+//===========================================================================*/
+#define bond_has_died_ID 0xEB
+#define bond_has_died_LENGTH 0x02
+#define bond_has_died(label) \
+        bond_has_died_ID, \
+        label,
 
 /*=============================================================================
 // name: bond_disable_damage_and_pickups
@@ -782,15 +881,42 @@
         bond_hide_weapons_ID,
 
 /*=============================================================================
-// name: roll_credits
+// name: credits_roll
 // command id: EF
 //=============================================================================
-// info: credit text and positions are stored in setup intro struct
+// info: trigger credits crawl
+// note: credits text and positions are stored in setup intro struct
 //===========================================================================*/
-#define roll_credits_ID 0xEF
-#define roll_credits_LENGTH 0x01
-#define roll_credits \
-        roll_credits_ID,
+#define credits_roll_ID 0xEF
+#define credits_roll_LENGTH 0x01
+#define credits_roll \
+        credits_roll_ID,
+
+/*=============================================================================
+// name: credits_completed
+// command id: F0
+//=============================================================================
+// info: credits crawl has finished, goto label
+//===========================================================================*/
+#define credits_completed_ID 0xF0
+#define credits_completed_LENGTH 0x02
+#define credits_completed(label) \
+        credits_completed_ID, \
+        label,
+
+/*=============================================================================
+// name: objective_all_completed
+// command id: F1
+//=============================================================================
+// info: if all objectives for current difficulty has been completed, goto label
+// note: uses objective difficulty settings within setup, briefing file settings
+//       are not referenced. ensure both setup and briefing files are consistent
+//===========================================================================*/
+#define objective_all_completed_ID 0xF1
+#define objective_all_completed_LENGTH 0x02
+#define objective_all_completed(label) \
+        objective_all_completed_ID, \
+        label,
 
 /*=============================================================================
 // name: trigger_explosions_around_bond
@@ -834,7 +960,7 @@
 // info: trigger gas leak and slowly transition fog to the next fog's slot
 // note: this command triggers a gas leak. for the level egypt, this command
 // will not trigger a gas leak, but instead will only transition the fog.
-// this command cannot be toggled after executing. level must have a fog assigned
+// this command can't be stopped after executing. level must have a fog assigned
 // or will crash!
 //===========================================================================*/
 #define trigger_gas_and_fade_fog_ID 0xFB
