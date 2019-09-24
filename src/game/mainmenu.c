@@ -926,8 +926,29 @@ u32 D_8002BA2C = 0;
 u32 D_8002BA30 = 0;
 u32 D_8002BA34 = 0;
 
-u32 random_rifles_in_intro[] = {0xB8, 0xBC, 0xC5, 0xCF, 0xB9, 0xD2};
-u32 random_pistols_in_intro[] = {0xBF, 0xCC, 0xC1, 0xC3, 0xC3, 0xCD, 0xCD, 0xBE, 0xBB, 0xD0};
+PROPS random_rifles_in_intro[] = 
+{
+    PROP_chrkalash,
+    PROP_chrm16,
+    PROP_chrfnp90,
+    PROP_chrautoshot,
+    PROP_chrgrenadelaunch,
+    PROP_chrsniperrifle
+};
+
+PROPS random_pistols_in_intro[] = 
+{
+    PROP_chrwppk,
+    PROP_chrwppksil,
+    PROP_chrskorpion,
+    PROP_chruzi,
+    PROP_chruzi,
+    PROP_chrtt33,
+    PROP_chrtt33,
+    PROP_chrruger,
+    PROP_chrlaser,
+    PROP_chrgolden
+};
 
 f32 D_8002BA78 = 0.0f;
 f32 D_8002BA7C = 0.0f;
@@ -2358,7 +2379,7 @@ glabel add_tab1_start
 
 #ifdef NONMATCHING
 u32 isontab1(void) {
-  if ((390.00000000 < cursor_h_pos) && (cursor_v_pos <= tab1_max_x_coord)) {
+  if ((390.00000000f < cursor_h_pos) && (cursor_v_pos <= tab1_max_x_coord)) {
     return TRUE;
   }
   return FALSE;
@@ -2541,7 +2562,8 @@ glabel add_tab3_previous
 
 
 
-u32 isontab3(void) {
+u32 isontab3(void) 
+{
     if ((390.0f < cursor_h_pos) && (223.0f < cursor_v_pos)) {
         return 1;
     } 
@@ -2550,33 +2572,11 @@ u32 isontab3(void) {
     }
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
-void set_cursor_pos_tab2(void) {
+void set_cursor_pos_tab2(void) 
+{
   cursor_h_pos = tab2_first_x_coord;
-  cursor_v_pos = 144.00000000;
+  cursor_v_pos = 144.00000000f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_cursor_pos_tab2
-/* 03EF20 7F00A3F0 3C018005 */  lui   $at, %hi(tab2_first_x_coord) # $at, 0x8005
-/* 03EF24 7F00A3F4 C42419DC */  lwc1  $f4, %lo(tab2_first_x_coord)($at)
-/* 03EF28 7F00A3F8 3C018003 */  lui   $at, %hi(cursor_h_pos) # $at, 0x8003
-/* 03EF2C 7F00A3FC E424A908 */  swc1  $f4, %lo(cursor_h_pos)($at)
-/* 03EF30 7F00A400 3C014310 */  li    $at, 0x43100000 # 144.000000
-/* 03EF34 7F00A404 44813000 */  mtc1  $at, $f6
-/* 03EF38 7F00A408 3C018003 */  lui   $at, %hi(cursor_v_pos)
-/* 03EF3C 7F00A40C 03E00008 */  jr    $ra
-/* 03EF40 7F00A410 E426A90C */   swc1  $f6, %lo(cursor_v_pos)($at)
-)
-#endif
-
-
 
 
 #ifdef NONMATCHING
@@ -2721,51 +2721,14 @@ glabel add_tab2_next
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-BOOL isontab2(void) {
-  if (((390.00000000 < cursor_h_pos) && (tab2_bottom_y_coord < cursor_v_pos)) && (cursor_v_pos <= 223.00000000)) {
+u32 isontab2(void)
+{
+  if (((390.00000000f < cursor_h_pos) && (tab2_bottom_y_coord < cursor_v_pos)) && (cursor_v_pos <= 223.00000000f)) {
     return TRUE;
   }
   return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel isontab2
-/* 03F0A8 7F00A578 3C0143C3 */  li    $at, 0x43C30000 # 390.000000
-/* 03F0AC 7F00A57C 44812000 */  mtc1  $at, $f4
-/* 03F0B0 7F00A580 3C018003 */  lui   $at, %hi(cursor_h_pos) # $at, 0x8003
-/* 03F0B4 7F00A584 C426A908 */  lwc1  $f6, %lo(cursor_h_pos)($at)
-/* 03F0B8 7F00A588 3C018003 */  lui   $at, %hi(cursor_v_pos) # $at, 0x8003
-/* 03F0BC 7F00A58C 00001025 */  move  $v0, $zero
-/* 03F0C0 7F00A590 4606203C */  c.lt.s $f4, $f6
-/* 03F0C4 7F00A594 00000000 */  nop   
-/* 03F0C8 7F00A598 45000011 */  bc1f  .L7F00A5E0
-/* 03F0CC 7F00A59C 00000000 */   nop   
-/* 03F0D0 7F00A5A0 C420A90C */  lwc1  $f0, %lo(cursor_v_pos)($at)
-/* 03F0D4 7F00A5A4 3C018005 */  lui   $at, %hi(tab2_bottom_y_coord) # $at, 0x8005
-/* 03F0D8 7F00A5A8 C42819E0 */  lwc1  $f8, %lo(tab2_bottom_y_coord)($at)
-/* 03F0DC 7F00A5AC 3C01435F */  li    $at, 0x435F0000 # 223.000000
-/* 03F0E0 7F00A5B0 4600403C */  c.lt.s $f8, $f0
-/* 03F0E4 7F00A5B4 00000000 */  nop   
-/* 03F0E8 7F00A5B8 45000009 */  bc1f  .L7F00A5E0
-/* 03F0EC 7F00A5BC 00000000 */   nop   
-/* 03F0F0 7F00A5C0 44815000 */  mtc1  $at, $f10
-/* 03F0F4 7F00A5C4 00000000 */  nop   
-/* 03F0F8 7F00A5C8 460A003E */  c.le.s $f0, $f10
-/* 03F0FC 7F00A5CC 00000000 */  nop   
-/* 03F100 7F00A5D0 45000003 */  bc1f  .L7F00A5E0
-/* 03F104 7F00A5D4 00000000 */   nop   
-/* 03F108 7F00A5D8 03E00008 */  jr    $ra
-/* 03F10C 7F00A5DC 24020001 */   li    $v0, 1
-.L7F00A5E0:
-/* 03F110 7F00A5E0 03E00008 */  jr    $ra
-/* 03F114 7F00A5E4 00000000 */   nop   
-)
-#endif
+
 
 
 

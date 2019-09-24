@@ -16176,7 +16176,6 @@ Linker script and memory map
                 0x0000000080029160                jpt_80029160
  build/src/memp.o(.rodata)
  .rodata        0x00000000800291a0       0x30 build/src/memp.o
-                0x00000000800291a0                aMemp_c_debug
                 0x00000000800291b0                aMf
                 0x00000000800291b4                aMf_0
                 0x00000000800291b8                aMl
