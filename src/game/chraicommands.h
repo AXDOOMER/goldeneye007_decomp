@@ -654,7 +654,7 @@
 // command id: 33
 // info: generate a random byte and store to chr->random
 //=============================================================================
-// note: range is 00-FF
+// note: random byte range is 00-FF (unsigned)
 //===========================================================================*/
 #define random_generate_ID 0x33
 #define random_generate_LENGTH 0x01
@@ -735,7 +735,7 @@
 /*=============================================================================
 // name: guard_is_targeted_by_bond
 // command id: 45
-// info: if bond is looking/aiming at guard, togo label
+// info: if bond is looking/aiming at guard, goto label
 //===========================================================================*/
 #define guard_is_targeted_by_bond_ID 0x45
 #define guard_is_targeted_by_bond_LENGTH 0x02
@@ -774,7 +774,7 @@
 // info: make chr drop all concealed attachments
 //=============================================================================
 // note: item must be attached to chr in setup. embedded objects will not drop,
-// only works with attached objects. props dropped may have chance of breaking
+// only works with attached objects. dropped props can be damaged on fall
 //===========================================================================*/
 #define chr_drop_all_concealed_items_ID 0x61
 #define chr_drop_all_concealed_items_LENGTH 0x02
@@ -785,7 +785,7 @@
 /*=============================================================================
 // name: game_difficulty_less_than
 // command id: 70
-// info: if current difficulty < argument, goto label
+// info: if current difficulty < difficulty argument, goto label
 //=============================================================================
 // note: provided argument will compare the following difficult settings
 // 01: agent only
@@ -802,7 +802,7 @@
 /*=============================================================================
 // name: game_difficulty_greater_than
 // command id: 71
-// info: if current difficulty > argument, goto label
+// info: if current difficulty > difficulty argument, goto label
 //=============================================================================
 // note: provided argument will compare the following difficult settings
 // 00: secret agent/00 agent/007
@@ -814,6 +814,90 @@
 #define game_difficulty_greater_than(argument, label) \
         game_difficulty_greater_than_ID, \
         argument, \
+        label,
+
+/*=============================================================================
+// name: mission_time_less_than
+// command id: 72
+// info: if current mission time (in seconds) < seconds argument, goto label
+//=============================================================================
+// note: converts (unsigned) seconds to float and compares against mission timer
+//===========================================================================*/
+#define mission_time_less_than_ID 0x72
+#define mission_time_less_than_LENGTH 0x04
+#define mission_time_less_than(seconds, label) \
+        mission_time_less_than_ID, \
+        chararray16(seconds), \
+        label,
+
+/*=============================================================================
+// name: mission_time_greater_than
+// command id: 73
+// info: if current mission time (in seconds) > seconds argument, goto label
+//=============================================================================
+// note: converts (unsigned) seconds to float and compares against mission timer
+//===========================================================================*/
+#define mission_time_greater_than_ID 0x73
+#define mission_time_greater_than_LENGTH 0x04
+#define mission_time_greater_than(seconds, label) \
+        mission_time_greater_than_ID, \
+        chararray16(seconds), \
+        label,
+
+/*=============================================================================
+// name: system_power_time_less_than
+// command id: 74
+// info: if system powered on time (in minutes) < minutes argument, goto label
+//=============================================================================
+// note: converts (unsigned) minutes to float and compares against system time
+//===========================================================================*/
+#define system_power_time_less_than_ID 0x74
+#define system_power_time_less_than_LENGTH 0x04
+#define system_power_time_less_than(minutes, label) \
+        system_power_time_less_than_ID, \
+        chararray16(minutes), \
+        label,
+
+/*=============================================================================
+// name: system_power_time_greater_than
+// command id: 75
+// info: if system powered on time (in minutes) > minutes argument, goto label
+//=============================================================================
+// note: converts (unsigned) minutes to float and compares against system time
+//===========================================================================*/
+#define system_power_time_greater_than_ID 0x75
+#define system_power_time_greater_than_LENGTH 0x04
+#define system_power_time_greater_than(minutes, label) \
+        system_power_time_greater_than_ID, \
+        chararray16(minutes), \
+        label,
+
+/*=============================================================================
+// name: level_id_less_than
+// command id: 76
+// info: if current level id < level id argument, goto label
+//=============================================================================
+// note: level id uses LEVELID enum values, not briefing menu stage number
+//===========================================================================*/
+#define level_id_less_than_ID 0x76
+#define level_id_less_than_LENGTH 0x03
+#define level_id_less_than(level_id, label) \
+        level_id_less_than_ID, \
+        level_id, \
+        label,
+
+/*=============================================================================
+// name: level_id_greater_than
+// command id: 77
+// info: if current level id > level id argument, goto label
+//=============================================================================
+// note: level id uses LEVELID enum values, not briefing menu stage number
+//===========================================================================*/
+#define level_id_greater_than_ID 0x77
+#define level_id_greater_than_LENGTH 0x03
+#define level_id_greater_than(level_id, label) \
+        level_id_greater_than_ID, \
+        level_id, \
         label,
 
 /*=============================================================================
@@ -1176,7 +1260,7 @@
 // info: print text slot to bottom left part of screen (where pickup text is located)
 //=============================================================================
 // note: if text slot is not currently allocated in memory, game will softlock.
-// ensure that end of text has \n or it will misalign background area
+// expects string to end with \n character
 //===========================================================================*/
 #define text_print_bottom_ID 0xC2
 #define text_print_bottom_LENGTH 0x03
@@ -1190,7 +1274,7 @@
 // info: print text slot to top part of screen (speech)
 //=============================================================================
 // note: if text slot is not currently allocated in memory, game will softlock.
-// ensure that end of text has \n or it will misalign background area
+// ensure that end of text has a \n character or it will misalign background area
 //===========================================================================*/
 #define text_print_top_ID 0xC3
 #define text_print_top_LENGTH 0x03
