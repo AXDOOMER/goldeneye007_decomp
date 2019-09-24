@@ -55,6 +55,10 @@
 
 #define PAD_PRESET 9000 /* stored as chr->padpreset1 */
 
+#define AI_LIST_GLOBAL_START 0x0000
+#define AI_LIST_CHR_START 0x0401
+#define AI_LIST_OBJ_START 0x1000
+
 /*=============================================================================
 // name: goto_next
 // command id: 00
@@ -729,6 +733,17 @@
         label,
 
 /*=============================================================================
+// name: guard_is_targeted_by_bond
+// command id: 45
+// info: if bond is looking/aiming at guard, togo label
+//===========================================================================*/
+#define guard_is_targeted_by_bond_ID 0x45
+#define guard_is_targeted_by_bond_LENGTH 0x02
+#define guard_is_targeted_by_bond(label) \
+        guard_is_targeted_by_bond_ID, \
+        label,
+
+/*=============================================================================
 // name: chr_in_room_with_pad
 // command id: 54
 // info: if chr id in same room with pad, goto label
@@ -751,6 +766,54 @@
 #define bond_in_room_with_pad(pad, label) \
         bond_in_room_with_pad_ID, \
         chararray16(pad), \
+        label,
+
+/*=============================================================================
+// name: chr_drop_all_concealed_items
+// command id: 61
+// info: make chr drop all concealed attachments
+//=============================================================================
+// note: item must be attached to chr in setup. embedded objects will not drop,
+// only works with attached objects. props dropped may have chance of breaking
+//===========================================================================*/
+#define chr_drop_all_concealed_items_ID 0x61
+#define chr_drop_all_concealed_items_LENGTH 0x02
+#define chr_drop_all_concealed_items(chr_num) \
+        chr_drop_all_concealed_items_ID, \
+        chr_num,
+
+/*=============================================================================
+// name: game_difficulty_less_than
+// command id: 70
+// info: if current difficulty < argument, goto label
+//=============================================================================
+// note: provided argument will compare the following difficult settings
+// 01: agent only
+// 02: agent/secret agent
+// 03: agent/secret agent/00 agent
+//===========================================================================*/
+#define game_difficulty_less_than_ID 0x70
+#define game_difficulty_less_than_LENGTH 0x03
+#define game_difficulty_less_than(argument, label) \
+        game_difficulty_less_than_ID, \
+        argument, \
+        label,
+
+/*=============================================================================
+// name: game_difficulty_greater_than
+// command id: 71
+// info: if current difficulty > argument, goto label
+//=============================================================================
+// note: provided argument will compare the following difficult settings
+// 00: secret agent/00 agent/007
+// 01: 00 agent/007
+// 02: 007 only
+//===========================================================================*/
+#define game_difficulty_greater_than_ID 0x71
+#define game_difficulty_greater_than_LENGTH 0x03
+#define game_difficulty_greater_than(argument, label) \
+        game_difficulty_greater_than_ID, \
+        argument, \
         label,
 
 /*=============================================================================
@@ -831,7 +894,7 @@
 /*=============================================================================
 // name: guard_set_armour
 // command id: 90
-// info: set guard's armour value - the higher the value, the higher the armor.
+// info: set guard's armour value - the higher the value, the higher the armour.
 // armoured guards will not show hit reactions. they also don't instantly die
 // from explosions, instead taking damaged based on how close they are to explosions
 // like bond. to any setup designers reading this, please use armour sparingly!
@@ -842,7 +905,7 @@
 // be titled 'guard_remove_damage' but its used mostly for adding armour to guards.
 // argument is converted to float and divided by 10 before subtracting chr->damage.
 // if difficulty mode 007 is active, command will use 007 health modifier.
-// argument is unsigned - 0xFFFF will be set to 65535.f armor, or -65535.f damage
+// argument is unsigned - 0xFFFF will be set to 65535.f armour, or -65535.f damage
 //===========================================================================*/
 #define guard_set_armour_ID 0x90
 #define guard_set_armour_LENGTH 0x03
@@ -886,10 +949,10 @@
 // name: guard_set_accuracy_rating
 // command id: 93
 // info: set guard's accuracy rating - controls how accurately the guard fires
-//       their weapon. range is -128 to 127 (127 show almost no hit reaction)
+//       their weapon
 //=============================================================================
-// note: sets to chr->accuracyrating. default value is 0 - argument is signed.
-// command does not use 007 accuracy modifier
+// note: sets to chr->accuracyrating. default value is 0 and ranges from -128
+// to 127, argument is signed byte. command does not use 007 accuracy modifier
 //===========================================================================*/
 #define guard_set_accuracy_rating_ID 0x93
 #define guard_set_accuracy_rating_LENGTH 0x02
@@ -1106,6 +1169,34 @@
         chr_num, \
         chararray16(ai_list), \
         label,
+
+/*=============================================================================
+// name: text_print_bottom
+// command id: C2
+// info: print text slot to bottom left part of screen (where pickup text is located)
+//=============================================================================
+// note: if text slot is not currently allocated in memory, game will softlock.
+// ensure that end of text has \n or it will misalign background area
+//===========================================================================*/
+#define text_print_bottom_ID 0xC2
+#define text_print_bottom_LENGTH 0x03
+#define text_print_bottom(text_slot) \
+        text_print_bottom_ID, \
+        chrarray16(text_slot),
+
+/*=============================================================================
+// name: text_print_top
+// command id: C3
+// info: print text slot to top part of screen (speech)
+//=============================================================================
+// note: if text slot is not currently allocated in memory, game will softlock.
+// ensure that end of text has \n or it will misalign background area
+//===========================================================================*/
+#define text_print_top_ID 0xC3
+#define text_print_top_LENGTH 0x03
+#define text_print_top(text_slot) \
+        text_print_top_ID, \
+        chrarray16(text_slot),
 
 /*=============================================================================
 // name: bond_in_tank
