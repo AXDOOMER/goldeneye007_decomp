@@ -458,11 +458,11 @@
 /*=============================================================================
 // name: guard_throw_grenade
 // command id: 1A
-// info: makes guard throw grenade, goto label if successful
+// info: trigger guard to throw a grenade at player, goto label if successful
 //=============================================================================
 // note: a rng byte is generated and compared again chr->grenadeprob, if rng byte
-// is less than grenadeprob throw grenade and goto label, else return false.
-// chr->grenadeprob default is 0 - needs to be changed in setup or with command 8D
+// is less than grenadeprob throw grenade and goto label, else do nothing.
+// chr->grenadeprob default is 0 - to change use setup object 12 or command 8D
 //===========================================================================*/
 #define guard_throw_grenade_ID 0x1A
 #define guard_throw_grenade_LENGTH 0x02
@@ -752,6 +752,150 @@
         bond_in_room_with_pad_ID, \
         chararray16(pad), \
         label,
+
+/*=============================================================================
+// name: guard_set_hearing_scale
+// command id: 8B
+// info: set guard's hearing scale - the higher the value, the further away guard
+//       can hear gunfire
+//=============================================================================
+// note: sets to chr->hearingscale. default value is 0x03E8 (1000 dec). argument
+//       is converted to float and divided by 1000 before setting to hearingscale
+//===========================================================================*/
+#define guard_set_hearing_scale_ID 0x8B
+#define guard_set_hearing_scale_LENGTH 0x03
+#define guard_set_hearing_scale(hearing_scale) \
+        guard_set_hearing_scale_ID, \
+        chararray16(hearing_scale),
+
+/*=============================================================================
+// name: guard_set_vision_range
+// command id: 8C
+// info: set guard's vision range - the smaller the value, the longer the guard
+//       takes to detect bond with command 32. does not affect firing distance
+//=============================================================================
+// note: sets to chr->visionrange. default value is 0x0064 (100 dec). argument
+//       is converted to float before setting to hearingscale
+//===========================================================================*/
+#define guard_set_vision_range_ID 0x8C
+#define guard_set_vision_range_LENGTH 0x02
+#define guard_set_vision_range(vision_range) \
+        guard_set_vision_range_ID, \
+        vision_range,
+
+/*=============================================================================
+// name: guard_set_grenade_probability
+// command id: 8D
+// info: set guard's grenade probability - used for rng comparison by command 1A.
+//       the higher the value, the likelyhood of guard throwing a grenade
+//=============================================================================
+// note: sets to chr->grenadeprob - 0 by default. argument is unsigned. the only
+// way to make guards throw grenades is by using this command or assigning setup
+// object 0x12 to chr
+//===========================================================================*/
+#define guard_set_grenade_probability_ID 0x8D
+#define guard_set_grenade_probability_LENGTH 0x02
+#define guard_set_grenade_probability(grenade_prob) \
+        guard_set_grenade_probability_ID, \
+        grenade_prob,
+
+/*=============================================================================
+// name: guard_set_chr_num
+// command id: 8E
+// info: set guard's chr num
+//=============================================================================
+// note: sets to chr->chrnum - commonly used for respawning guards
+//===========================================================================*/
+#define guard_set_chr_num_ID 0x8E
+#define guard_set_chr_num_LENGTH 0x02
+#define guard_set_chr_num(chr_num) \
+        guard_set_chr_num_ID, \
+        chr_num,
+
+/*=============================================================================
+// name: guard_set_health_total
+// command id: 8F
+// info: set guard's total health - the higher the value, the more shots needed
+//       to kill guard. 
+//=============================================================================
+// note: sets to chr->maxdamage. default health is 4.0f (0x0028/40 dec for argument).
+// argument is converted to float and divided by 10 before setting to maxdamage.
+// if difficulty mode 007 is active, command will use 007 health modifier
+//===========================================================================*/
+#define guard_set_health_total_ID 0x8F
+#define guard_set_health_total_LENGTH 0x03
+#define guard_set_health_total(total_health) \
+        guard_set_health_total_ID, \
+        chararray16(total_health),
+
+/*=============================================================================
+// name: guard_set_armour
+// command id: 90
+// info: set guard's armour value - the higher the value, the higher the armor.
+// armoured guards will not show hit reactions. they also don't instantly die
+// from explosions, instead taking damaged based on how close they are to explosions
+// like bond. to any setup designers reading this, please use armour sparingly!
+//=============================================================================
+// note: subtracts from chr->damage - negative damage means guard has armour.
+// instead of storing armour as a separate chr variable, we reuse the current
+// damage and read negative damage as armour. technically this command should
+// be titled 'guard_remove_damage' but its used mostly for adding armour to guards.
+// argument is converted to float and divided by 10 before subtracting chr->damage.
+// if difficulty mode 007 is active, command will use 007 health modifier.
+// argument is unsigned - 0xFFFF will be set to 65535.f armor, or -65535.f damage
+//===========================================================================*/
+#define guard_set_armour_ID 0x90
+#define guard_set_armour_LENGTH 0x03
+#define guard_set_armour(armour_value) \
+        guard_set_armour_ID, \
+        chararray16(armour_value),
+
+/*=============================================================================
+// name: guard_set_speed_rating
+// command id: 91
+// info: set guard's speed rating - controls how quickly the guard animates.
+//=============================================================================
+// note: sets to chr->speedrating. default speed is 0 - argument is signed.
+// negative values will make guard animate slower - this affects firing animations.
+// command does not use 007 reaction speed modifier. do not use values above 0x60
+// or it may crash
+//===========================================================================*/
+#define guard_set_speed_rating_ID 0x91
+#define guard_set_speed_rating_LENGTH 0x02
+#define guard_set_speed_rating(speed_rating) \
+        guard_set_speed_rating_ID, \
+        speed_rating,
+
+/*=============================================================================
+// name: guard_set_argh_rating
+// command id: 92
+// info: set guard's argh rating - controls how quickly the guard recovers from
+//       being shot. range is -128 to 127 (127 show almost no hit reaction)
+//=============================================================================
+// note: sets to chr->arghrating. default value is 0 - argument is signed.
+// negative values will make guard animate slower - this affects firing animations.
+// command does not use 007 reaction speed modifier
+//===========================================================================*/
+#define guard_set_argh_rating_ID 0x92
+#define guard_set_argh_rating_LENGTH 0x02
+#define guard_set_argh_rating(speed_rating) \
+        guard_set_argh_rating_ID, \
+        speed_rating,
+
+/*=============================================================================
+// name: guard_set_accuracy_rating
+// command id: 93
+// info: set guard's accuracy rating - controls how accurately the guard fires
+//       their weapon. range is -128 to 127 (127 show almost no hit reaction)
+//=============================================================================
+// note: sets to chr->accuracyrating. default value is 0 - argument is signed.
+// command does not use 007 accuracy modifier
+//===========================================================================*/
+#define guard_set_accuracy_rating_ID 0x93
+#define guard_set_accuracy_rating_LENGTH 0x02
+#define guard_set_accuracy_rating(accuracy_rating) \
+        guard_set_accuracy_rating_ID, \
+        accuracy_rating,
 
 /*=============================================================================
 // name: chr_timer_reset_start
