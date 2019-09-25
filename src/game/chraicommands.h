@@ -30,8 +30,8 @@
 // global ai list info
 //=============================================================================
 // global ai lists are 0x11 useful lists accessible with every level. the above
-// lists (chr/obj) are unique to each setup file, compared to global lists which
-// are accessible throughout the entire game. they contain generic guard ai lists
+// lists (chr/obj) are unique to each level setup file, compared to global lists
+// which are accessible throughout the entire game. they contain generic ai lists
 // used for most levels
 //=============================================================================
 // command note
@@ -585,6 +585,22 @@
         chr_num
 
 /*=============================================================================
+// name: guard_trigger_alarm_at_pad
+// command id: 24
+// info: guard activates alarm assigned to pad, goto label if successful
+//=============================================================================
+// note: command doesn't care what object type is at pad, as long as the object
+// isn't destroyed. command also checks if guard is alive before activating alarm.
+// when triggering alarm, guard will be set to state ACT_STARTALARM and play animation
+//===========================================================================*/
+#define guard_trigger_alarm_at_pad_ID 0x24
+#define guard_trigger_alarm_at_pad_LENGTH 0x04
+#define guard_trigger_alarm_at_pad(pad, label) \
+        guard_trigger_alarm_at_pad_ID, \
+        chararray16(pad), \
+        label,
+
+/*=============================================================================
 // name: alarm_on
 // command id: 25
 // info: activates alarm
@@ -603,6 +619,129 @@
 #define alarm_off_LENGTH 0x01
 #define alarm_off \
         alarm_off_ID,
+
+/*=============================================================================
+// name: removed_command27
+// command id: 27
+// info: command no longer exists, never goto label
+//===========================================================================*/
+#define removed_command27_ID 0x27
+#define removed_command27_LENGTH 0x02
+#define removed_command27(label) \
+        removed_command27_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_runs_to_bond_position
+// command id: 28
+// info: if guard is able to run to bond, goto label
+//=============================================================================
+// note: don't goto label if guard can't run to bond (guard has died) or bond is
+//       at an unreachable area (no navigation pads in area)
+//===========================================================================*/
+#define guard_runs_to_bond_position_ID 0x28
+#define guard_runs_to_bond_position_LENGTH 0x02
+#define guard_runs_to_bond_position(label) \
+        guard_runs_to_bond_position_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_walks_to_bond_position
+// command id: 29
+// info: if guard is able to walk to bond, goto label
+//=============================================================================
+// note: don't goto label if guard can't walk to bond (guard has died) or bond is
+//       at an unreachable area (no navigation pads in area)
+//===========================================================================*/
+#define guard_walks_to_bond_position_ID 0x29
+#define guard_walks_to_bond_position_LENGTH 0x02
+#define guard_walks_to_bond_position(label) \
+        guard_walks_to_bond_position_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_sprints_to_bond_position
+// command id: 2A
+// info: if guard is able to sprint to bond, goto label
+//=============================================================================
+// note: don't goto label if guard can't sprint to bond (guard has died) or bond
+//       is at an unreachable area (no navigation pads in area)
+//===========================================================================*/
+#define guard_sprints_to_bond_position_ID 0x2A
+#define guard_sprints_to_bond_position_LENGTH 0x02
+#define guard_sprints_to_bond_position(label) \
+        guard_sprints_to_bond_position_ID, \
+        label,
+
+/*=============================================================================
+// name: removed_command2B
+// command id: 2B
+// info: command no longer exists, never goto label
+//===========================================================================*/
+#define removed_command2B_ID 0x2B
+#define removed_command2B_LENGTH 0x02
+#define removed_command2B(label) \
+        removed_command2B_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_runs_to_chr_position
+// command id: 2C
+// info: if guard is able to run to chr, goto label
+//=============================================================================
+// note: don't goto label if guard can't run to chr (guard has died) or chr is
+// at an unreachable area (no navigation pads in area) or chr doesn't exist
+//===========================================================================*/
+#define guard_runs_to_chr_position_ID 0x2C
+#define guard_runs_to_chr_position_LENGTH 0x03
+#define guard_runs_to_chr_position(chr_num, label) \
+        guard_runs_to_chr_position_ID, \
+        chr_num, \
+        label,
+
+/*=============================================================================
+// name: guard_walks_to_chr_position
+// command id: 2D
+// info: if guard is able to walk to chr, goto label
+//=============================================================================
+// note: don't goto label if guard can't walk to chr (guard has died) or chr is
+// at an unreachable area (no navigation pads in area) or chr doesn't exist
+//===========================================================================*/
+#define guard_walks_to_chr_position_ID 0x2D
+#define guard_walks_to_chr_position_LENGTH 0x03
+#define guard_walks_to_chr_position(chr_num, label) \
+        guard_walks_to_chr_position_ID, \
+        chr_num, \
+        label,
+
+/*=============================================================================
+// name: guard_sprints_to_chr_position
+// command id: 2E
+// info: if guard is able to sprint to chr, goto label
+//=============================================================================
+// note: don't goto label if guard can't sprint to chr (guard has died) or chr
+// is at an unreachable area (no navigation pads in area) or chr doesn't exist
+//===========================================================================*/
+#define guard_sprints_to_chr_position_ID 0x2E
+#define guard_sprints_to_chr_position_LENGTH 0x03
+#define guard_sprints_to_chr_position(chr_num, label) \
+        guard_sprints_to_chr_position_ID, \
+        chr_num, \
+        label,
+
+/*=============================================================================
+// name: guard_has_stopped_moving
+// command id: 2F
+// info: if guard has stopped moving, goto label
+//=============================================================================
+// note: check if guard isn't looking for bond or if guard has finished moving
+//       to destination
+//===========================================================================*/
+#define guard_has_stopped_moving_ID 0x2F
+#define guard_has_stopped_moving_LENGTH 0x02
+#define guard_has_stopped_moving(label) \
+        guard_has_stopped_moving_ID, \
+        label,
 
 /*=============================================================================
 // name: chr_dying_or_dead
@@ -641,7 +780,7 @@
 // note: uses chr->visionrange while checking for bond. once bond has been spotted,
 // check if bond and guard are within line of sight (ignores facing direction).
 // if bond breaks line of sight, do not goto label. if bond has broken line of
-// sight for than 10 seconds, reset spotted bond state
+// sight for more than 10 seconds, reset spotted bond state
 //===========================================================================*/
 #define guard_check_vision_for_bond_ID 0x32
 #define guard_check_vision_for_bond_LENGTH 0x02
@@ -687,6 +826,30 @@
 #define random_greater_than(byte, label) \
         random_greater_than_ID, \
         byte, \
+        label,
+
+/*=============================================================================
+// name: alarm_is_on_unused
+// command id: 36
+// info: if alarm is activated, goto label
+//=============================================================================
+// note: this command works but is unused in retail game, use command 37 instead
+//===========================================================================*/
+#define alarm_is_on_unused_ID 0x36
+#define alarm_is_on_unused_LENGTH 0x02
+#define alarm_is_on_unused(label) \
+        alarm_is_on_unused_ID, \
+        label,
+
+/*=============================================================================
+// name: alarm_is_on
+// command id: 37
+// info: if alarm is activated, goto label
+//===========================================================================*/
+#define alarm_is_on_ID 0x37
+#define alarm_is_on_LENGTH 0x02
+#define alarm_is_on(label) \
+        alarm_is_on_ID, \
         label,
 
 /*=============================================================================
@@ -774,7 +937,8 @@
 // info: make chr drop all concealed attachments
 //=============================================================================
 // note: item must be attached to chr in setup. embedded objects will not drop,
-// only works with attached objects. dropped props can be damaged on fall
+// only works with attached objects. props can be damaged on drop. command can't
+// be used for bond
 //===========================================================================*/
 #define chr_drop_all_concealed_items_ID 0x61
 #define chr_drop_all_concealed_items_LENGTH 0x02
@@ -1421,14 +1585,14 @@
         trigger_gas_and_switch_fog_ID,
 
 /*=============================================================================
-// name: stop_mission_time_and_exit_level_on_button_input
+// name: mission_time_stop_and_exit_level_on_button_input
 // command id: EA
 // info: stop the mission time and exit level if player 1 pressed any buttons
 //===========================================================================*/
-#define stop_mission_time_and_exit_level_on_button_input_ID 0xEA
-#define stop_mission_time_and_exit_level_on_button_input_LENGTH 0x01
-#define stop_mission_time_and_exit_level_on_button_input \
-        stop_mission_time_and_exit_level_on_button_input_ID,
+#define mission_time_stop_and_exit_level_on_button_input_ID 0xEA
+#define mission_time_stop_and_exit_level_on_button_input_LENGTH 0x01
+#define mission_time_stop_and_exit_level_on_button_input \
+        mission_time_stop_and_exit_level_on_button_input_ID,
 
 /*=============================================================================
 // name: bond_has_died
