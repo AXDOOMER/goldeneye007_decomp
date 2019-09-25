@@ -534,16 +534,16 @@
         chararray16(pad),
 
 /*=============================================================================
-// name: guard_set_patrol
+// name: guard_start_patrol
 // command id: 20
 // info: makes guard walk a predefined path within setup
 //=============================================================================
 // note: usually paired with jump to global list #0005 or #0007
 //===========================================================================*/
-#define guard_set_patrol_ID 0x20
-#define guard_set_patrol_LENGTH 0x02
-#define guard_set_patrol(path_num) \
-        guard_set_patrol_ID, \
+#define guard_start_patrol_ID 0x20
+#define guard_start_patrol_LENGTH 0x02
+#define guard_start_patrol(path_num) \
+        guard_start_patrol_ID, \
         path_num,
 
 /*=============================================================================
@@ -853,6 +853,19 @@
         label,
 
 /*=============================================================================
+// name: gas_is_leaking
+// command id: 38
+// info: if gas leak event triggered, goto label
+//=============================================================================
+// note: once gas leak event has started, always goto label
+//===========================================================================*/
+#define gas_is_leaking_ID 0x38
+#define gas_is_leaking_LENGTH 0x02
+#define gas_is_leaking(label) \
+        gas_is_leaking_ID, \
+        label,
+
+/*=============================================================================
 // name: guard_and_bond_within_line_of_sight
 // command id: 3C
 // info: if guard and bond are within line of sight, goto label
@@ -865,6 +878,19 @@
 #define guard_and_bond_within_line_of_sight_LENGTH 0x02
 #define guard_and_bond_within_line_of_sight(label) \
         guard_and_bond_within_line_of_sight_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_was_shot_recently
+// command id: 3E
+// info: if guard was shot within the last 10 seconds, goto label
+//=============================================================================
+// note: guard friendly fire will trigger this command to goto label
+//===========================================================================*/
+#define guard_was_shot_recently_ID 0x3E
+#define guard_was_shot_recently_LENGTH 0x02
+#define guard_was_shot_recently(label) \
+        guard_was_shot_recently_ID, \
         label,
 
 /*=============================================================================
@@ -884,7 +910,7 @@
 /*=============================================================================
 // name: guard_is_on_screen
 // command id: 42
-// info: if guard is currently drawn on screen, goto label
+// info: if guard is currently being rendered on screen, goto label
 //=============================================================================
 // note: portals will affect this command's output. if guard is being culled
 //       off screen, command will not goto label
@@ -896,6 +922,34 @@
         label,
 
 /*=============================================================================
+// name: guard_room_containing_self_is_on_screen
+// command id: 43
+// info: if the room containing guard is being rendered on screen, goto label
+//=============================================================================
+// note: only checks if room is being rendered, not if bond can see guard.
+//       to check if guard is being rendered use command 42 instead.
+//===========================================================================*/
+#define guard_room_containing_self_is_on_screen_ID 0x43
+#define guard_room_containing_self_is_on_screen_LENGTH 0x02
+#define guard_room_containing_self_is_on_screen(label) \
+        guard_room_containing_self_is_on_screen_ID, \
+        label,
+
+/*=============================================================================
+// name: room_containing_pad_is_on_screen
+// command id: 44
+// info: if room containing pad is being rendered on screen, goto label
+//=============================================================================
+// note: only checks if room is being rendered, not if bond can see inside room
+//===========================================================================*/
+#define room_containing_pad_is_on_screen_ID 0x44
+#define room_containing_pad_is_on_screen_LENGTH 0x04
+#define room_containing_pad_is_on_screen(pad, label) \
+        room_containing_pad_is_on_screen_ID, \
+        chararray16(pad), \
+        label,
+
+/*=============================================================================
 // name: guard_is_targeted_by_bond
 // command id: 45
 // info: if bond is looking/aiming at guard, goto label
@@ -904,6 +958,20 @@
 #define guard_is_targeted_by_bond_LENGTH 0x02
 #define guard_is_targeted_by_bond(label) \
         guard_is_targeted_by_bond_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_shot_from_bond_missed
+// command id: 46
+// info: if bond's shot missed/landed near guard, goto label
+//=============================================================================
+// note: command will sometimes goto label if guard was shot - use sub-action
+// 3E instead to check if guard was shot recently (more consistent checking).
+//===========================================================================*/
+#define guard_shot_from_bond_missed_ID 0x46
+#define guard_shot_from_bond_missed_LENGTH 0x02
+#define guard_shot_from_bond_missed(label) \
+        guard_shot_from_bond_missed_ID, \
         label,
 
 /*=============================================================================
@@ -929,6 +997,18 @@
 #define bond_in_room_with_pad(pad, label) \
         bond_in_room_with_pad_ID, \
         chararray16(pad), \
+        label,
+
+/*=============================================================================
+// name: bond_has_item_equipped
+// command id: 59
+// info: if bond has an item equipped (currently held), goto label
+//===========================================================================*/
+#define bond_has_item_equipped_ID 0x59
+#define bond_has_item_equipped_LENGTH 0x03
+#define bond_has_item_equipped(item_num, label) \
+        bond_has_item_equipped_ID, \
+        item_num, \
         label,
 
 /*=============================================================================
@@ -1570,19 +1650,19 @@
         label,
 
 /*=============================================================================
-// name: trigger_gas_and_switch_fog
+// name: gas_leak_and_switch_fog
 // command id: E9
-// info: trigger gas leak and instantly switch fog to the next fog's slot
+// info: trigger gas leak event and instantly switch fog to the next fog's slot
 //=============================================================================
 // note: this command triggers a gas leak. for the level egypt, this command
 // will not trigger a gas leak, but instead will only switch the fog. this
 // command can't be stopped after executing. level must have a fog assigned
 // or will crash!
 //===========================================================================*/
-#define trigger_gas_and_switch_fog_ID 0xE9
-#define trigger_gas_and_switch_fog_LENGTH 0x01
-#define trigger_gas_and_switch_fog \
-        trigger_gas_and_switch_fog_ID,
+#define gas_leak_and_switch_fog_fog_ID 0xE9
+#define gas_leak_and_switch_fog_fog_LENGTH 0x01
+#define gas_leak_and_switch_fog_fog \
+        gas_leak_and_switch_fog_fog_ID,
 
 /*=============================================================================
 // name: mission_time_stop_and_exit_level_on_button_input
@@ -1700,18 +1780,18 @@
         guard_raises_arms_ID,
 
 /*=============================================================================
-// name: trigger_gas_and_fade_fog
+// name: gas_leak_and_fade_fog
 // command id: FB
-// info: trigger gas leak and slowly transition fog to the next fog's slot
+// info: trigger gas leak event and slowly transition fog to the next fog's slot
 //=============================================================================
 // note: this command triggers a gas leak. for the level egypt, this command
 // will not trigger a gas leak, but instead will only transition the fog.
 // this command can't be stopped after executing. level must have a fog assigned
 // or will crash!
 //===========================================================================*/
-#define trigger_gas_and_fade_fog_ID 0xFB
-#define trigger_gas_and_fade_fog_LENGTH 0x01
-#define trigger_gas_and_fade_fog \
-        trigger_gas_and_fade_fog_ID,
+#define gas_leak_and_fade_fog_ID 0xFB
+#define gas_leak_and_fade_fog_LENGTH 0x01
+#define gas_leak_and_fade_fog \
+        gas_leak_and_fade_fog_ID,
 
 #endif

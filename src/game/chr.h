@@ -211,7 +211,7 @@ struct CHRdata {
     f32 field_11C[2];
     f32 field_124[2];
     f32 field_12C[2];
-    /* 0x0130 */
+    /* 0x0134 */
     int field_134;
     int field_138;
     f32 shotbondsum;
