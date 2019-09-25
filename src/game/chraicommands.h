@@ -1145,6 +1145,62 @@
         label,
 
 /*=============================================================================
+// name: guard_hit_less_than
+// command id: 78
+// info: if guard's hit taken total < hit_num, goto label
+//=============================================================================
+// note: compares signed byte against chr->numarghs
+//===========================================================================*/
+#define guard_hit_less_than_ID 0x78
+#define guard_hit_less_than_LENGTH 0x03
+#define guard_hit_less_than(hit_num, label) \
+        guard_hit_less_than_ID, \
+        hit_num, \
+        label,
+
+/*=============================================================================
+// name: guard_hit_greater_than
+// command id: 79
+// info: if guard's hit taken total > hit_num, goto label
+//=============================================================================
+// note: compares signed byte argument against chr->numarghs
+//===========================================================================*/
+#define guard_hit_greater_than_ID 0x79
+#define guard_hit_greater_than_LENGTH 0x03
+#define guard_hit_greater_than(hit_num, label) \
+        guard_hit_greater_than_ID, \
+        hit_num, \
+        label,
+
+/*=============================================================================
+// name: guard_missed_hit_less_than
+// command id: 7A
+// info: if guard's shot missed/landed near guard total < missed_num, goto label
+//=============================================================================
+// note: compares signed byte against chr->numclosearghs
+//===========================================================================*/
+#define guard_missed_hit_less_than_ID 0x7A
+#define guard_missed_hit_less_than_LENGTH 0x03
+#define guard_missed_hit_less_than(missed_num, label) \
+        guard_missed_hit_less_than_ID, \
+        missed_num, \
+        label,
+
+/*=============================================================================
+// name: guard_missed_hit_greater_than
+// command id: 7B
+// info: if guard hit amount > missed_num, goto label
+//=============================================================================
+// note: compares signed byte argument against chr->numclosearghs
+//===========================================================================*/
+#define guard_missed_hit_greater_than_ID 0x7B
+#define guard_missed_hit_greater_than_LENGTH 0x03
+#define guard_missed_hit_greater_than(missed_num, label) \
+        guard_missed_hit_greater_than_ID, \
+        missed_num, \
+        label,
+
+/*=============================================================================
 // name: guard_set_hearing_scale
 // command id: 8B
 // info: set guard's hearing scale - the higher the value, the further away guard
