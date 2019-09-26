@@ -1304,6 +1304,1005 @@ typedef __gnuc_va_list va_list;
 
 #define SP_UCODE_DATA_SIZE 2048
 
+typedef enum ITEM_IDS {
+    ITEM_56=86,
+    ITEM_57=87,
+    ITEM_AK47=8,
+    ITEM_AUDIOTAPE=71,
+    ITEM_AUTOSHOT=16,
+    ITEM_BLACKBOX=62,
+    ITEM_BLUEPRINTS=69,
+    ITEM_BOMBCASE=33,
+    ITEM_BOMBDEFUSER=39,
+    ITEM_BRIEFCASE=43,
+    ITEM_BUG=47,
+    ITEM_BUGDETECTOR=49,
+    ITEM_BUNGEE=37,
+    ITEM_CAMERA=40,
+    ITEM_CIRCUITBOARD=63,
+    ITEM_CLIPBOARD=64,
+    ITEM_CREDITCARD=53,
+    ITEM_DARKGLASSES=52,
+    ITEM_DATATHIEF=55,
+    ITEM_DATTAPE=73,
+    ITEM_DOORDECODER=38,
+    ITEM_DOOREXPLODER=42,
+    ITEM_DOSSIERRED=66,
+    ITEM_EXPLOSIVEFLOPPY=50,
+    ITEM_FIST=1,
+    ITEM_FLAREPISTOL=35,
+    ITEM_FNP90=14,
+    ITEM_GASKEYRING=54,
+    ITEM_GOLDBAR=79,
+    ITEM_GOLDENEYEKEY=61,
+    ITEM_GOLDENGUN=19,
+    ITEM_GOLDWPPK=21,
+    ITEM_GRENADE=26,
+    ITEM_GRENADELAUNCH=24,
+    ITEM_HEROIN=80,
+    ITEM_JOYPAD=85,
+    ITEM_KEYANALYSERCASE=46,
+    ITEM_KEYBOLT=83,
+    ITEM_KEYCARD=81,
+    ITEM_KEYYALE=82,
+    ITEM_KNIFE=2,
+    ITEM_LASER=22,
+    ITEM_LECTRE=77,
+    ITEM_LOCKEXPLODER=41,
+    ITEM_M16=13,
+    ITEM_MAP=70,
+    ITEM_MICROCAMERA=48,
+    ITEM_MICROCODE=76,
+    ITEM_MICROFILM=75,
+    ITEM_MONEY=78,
+    ITEM_MP5K=10,
+    ITEM_MP5KSIL=11,
+    ITEM_PITONGUN=36,
+    ITEM_PLANS=67,
+    ITEM_PLASTIQUE=34,
+    ITEM_POLARIZEDGLASSES=51,
+    ITEM_PROXIMITYMINE=28,
+    ITEM_REMOTEMINE=29,
+    ITEM_ROCKETLAUNCH=25,
+    ITEM_RUGER=18,
+    ITEM_SAFECRACKERCASE=45,
+    ITEM_SHOTGUN=15,
+    ITEM_SILVERWPPK=20,
+    ITEM_SKORPION=7,
+    ITEM_SNIPERRIFLE=17,
+    ITEM_SPECTRE=12,
+    ITEM_SPOOLTAPE=74,
+    ITEM_SPYFILE=68,
+    ITEM_STAFFLIST=65,
+    ITEM_SUIT_LF_HAND=84,
+    ITEM_TANKSHELLS=32,
+    ITEM_TASER=31,
+    ITEM_THROWKNIFE=3,
+    ITEM_TIMEDMINE=27,
+    ITEM_TOKEN=88,
+    ITEM_TRIGGER=30,
+    ITEM_TT33=6,
+    ITEM_UNARMED=0,
+    ITEM_UZI=9,
+    ITEM_VIDEOTAPE=72,
+    ITEM_WATCHCOMMUNICATOR=57,
+    ITEM_WATCHGEIGERCOUNTER=58,
+    ITEM_WATCHIDENTIFIER=56,
+    ITEM_WATCHLASER=23,
+    ITEM_WATCHMAGNETATTRACT=60,
+    ITEM_WATCHMAGNETREPEL=59,
+    ITEM_WEAPONCASE=44,
+    ITEM_WPPK=4,
+    ITEM_WPPKSIL=5
+} ITEM_IDS;
+
+typedef enum AIRCRAFT_ANIMATIONS {
+    ANIM_helicopter_cradle=0,
+    ANIM_helicopter_takeoff=2,
+    ANIM_plane_runway=1
+} AIRCRAFT_ANIMATIONS;
+
+typedef enum LEVEL_SOLO_SEQUENCE {
+    SP_LEVEL_ARCHIVES=11,
+    SP_LEVEL_AZTEC=19,
+    SP_LEVEL_BUNKER1=5,
+    SP_LEVEL_BUNKER2=9,
+    SP_LEVEL_CAVERNS=17,
+    SP_LEVEL_CONTROL=16,
+    SP_LEVEL_CRADLE=18,
+    SP_LEVEL_DAM=1,
+    SP_LEVEL_DEPOT=13,
+    SP_LEVEL_EGYPT=20,
+    SP_LEVEL_FACILITY=2,
+    SP_LEVEL_FRIGATE=7,
+    SP_LEVEL_JUNGLE=15,
+    SP_LEVEL_RUNWAY=3,
+    SP_LEVEL_SILO=6,
+    SP_LEVEL_STATUE=10,
+    SP_LEVEL_STREETS=12,
+    SP_LEVEL_SURFACE1=4,
+    SP_LEVEL_SURFACE2=8,
+    SP_LEVEL_TRAIN=14
+} LEVEL_SOLO_SEQUENCE;
+
+typedef enum WATCH_BRIEFING_PAGE {
+    BRIEFING_M=2,
+    BRIEFING_MONEYPENNY=4,
+    BRIEFING_OVERVIEW=1,
+    BRIEFING_Q=3,
+    BRIEFING_TITLE=0
+} WATCH_BRIEFING_PAGE;
+
+typedef enum MP_STAGE_SELECTED {
+    MP_STAGE_ARCHIVES=9,
+    MP_STAGE_BASEMENT=5,
+    MP_STAGE_BUNKER=8,
+    MP_STAGE_CAVERNS=10,
+    MP_STAGE_CAVES=3,
+    MP_STAGE_COMPLEX=2,
+    MP_STAGE_EGYPT=11,
+    MP_STAGE_FACILITY=7,
+    MP_STAGE_LIBRARY=4,
+    MP_STAGE_RANDOM=0,
+    MP_STAGE_STACK=6,
+    MP_STAGE_TEMPLE=1
+} MP_STAGE_SELECTED;
+
+typedef enum CONTROLLER_CONFIG {
+    CONTROLLER_CONFIG_CINEMA=8,
+    CONTROLLER_CONFIG_DOMINO=6,
+    CONTROLLER_CONFIG_GALORE=5,
+    CONTROLLER_CONFIG_GOODHEAD=7,
+    CONTROLLER_CONFIG_GOODNIGHT=3,
+    CONTROLLER_CONFIG_HONEY=0,
+    CONTROLLER_CONFIG_KISSY=2,
+    CONTROLLER_CONFIG_PLENTY=4,
+    CONTROLLER_CONFIG_SOLITARE=1
+} CONTROLLER_CONFIG;
+
+typedef struct rgba_val rgba_val, *Prgba_val;
+
+struct rgba_val {
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 a;
+};
+
+typedef enum MISSION_BRIEFING {
+    BRIEF_M=1,
+    BRIEF_MONEYPENNY=3,
+    BRIEF_OVERVIEW=0,
+    BRIEF_Q=2
+} MISSION_BRIEFING;
+
+typedef enum PROPS {
+    PROP_ICBM=93,
+    PROP_ICBM_nose=92,
+    PROP_ak47mag=121,
+    PROP_alarm1=0,
+    PROP_alarm2=1,
+    PROP_ammo_crate1=3,
+    PROP_ammo_crate2=4,
+    PROP_ammo_crate3=5,
+    PROP_ammo_crate4=6,
+    PROP_ammo_crate5=7,
+    PROP_apc=289,
+    PROP_archsecdoor1=297,
+    PROP_archsecdoor2=298,
+    PROP_artic=281,
+    PROP_artictrailer=286,
+    PROP_barricade=334,
+    PROP_bin1=8,
+    PROP_blotter1=9,
+    PROP_bodyarmour=115,
+    PROP_bodyarmourvest=116,
+    PROP_bollard=339,
+    PROP_bomb=255,
+    PROP_book1=10,
+    PROP_bookshelf1=11,
+    PROP_borg_crate=87,
+    PROP_boxcartridges=129,
+    PROP_boxes2x4=90,
+    PROP_boxes3x4=89,
+    PROP_boxes4x4=88,
+    PROP_brakeunit=120,
+    PROP_bridge_console1a=12,
+    PROP_bridge_console1b=13,
+    PROP_bridge_console2a=14,
+    PROP_bridge_console2b=15,
+    PROP_bridge_console3a=16,
+    PROP_bridge_console3b=17,
+    PROP_carbmw=301,
+    PROP_card_box1=18,
+    PROP_card_box2=19,
+    PROP_card_box3=20,
+    PROP_card_box4_lg=21,
+    PROP_card_box5_lg=22,
+    PROP_card_box6_lg=23,
+    PROP_carescort=302,
+    PROP_cargolf=303,
+    PROP_carweird=304,
+    PROP_carzil=305,
+    PROP_cctv=24,
+    PROP_chraudiotape=262,
+    PROP_chrautoshot=207,
+    PROP_chrblackbox=274,
+    PROP_chrblueprints=258,
+    PROP_chrbombcase=226,
+    PROP_chrbombdefuser=235,
+    PROP_chrbriefcase=198,
+    PROP_chrbug=245,
+    PROP_chrbugdetector=236,
+    PROP_chrbungee=233,
+    PROP_chrcamera=238,
+    PROP_chrcircuitboard=259,
+    PROP_chrclipboard=269,
+    PROP_chrcreditcard=250,
+    PROP_chrdarkglasses=251,
+    PROP_chrdatathief=253,
+    PROP_chrdattape=272,
+    PROP_chrdoordecoder=234,
+    PROP_chrdoorexploder=240,
+    PROP_chrdossierred=270,
+    PROP_chrdynamite=232,
+    PROP_chrexplosivepen=225,
+    PROP_chrextinguisher=128,
+    PROP_chrfingergun=229,
+    PROP_chrflarepistol=227,
+    PROP_chrfnp90=197,
+    PROP_chrgaskeyring=252,
+    PROP_chrgoldbar=267,
+    PROP_chrgolden=208,
+    PROP_chrgoldeneyekey=248,
+    PROP_chrgoldwppk=231,
+    PROP_chrgrenade=196,
+    PROP_chrgrenadelaunch=185,
+    PROP_chrgrenaderound=203,
+    PROP_chrheroin=268,
+    PROP_chrkalash=184,
+    PROP_chrkeyanalysercase=241,
+    PROP_chrkeybolt=244,
+    PROP_chrkeyyale=243,
+    PROP_chrknife=186,
+    PROP_chrlaser=187,
+    PROP_chrlectre=265,
+    PROP_chrlockexploder=239,
+    PROP_chrm16=188,
+    PROP_chrmap=260,
+    PROP_chrmicrocamera=246,
+    PROP_chrmicrocode=264,
+    PROP_chrmicrofilm=263,
+    PROP_chrmoney=266,
+    PROP_chrmp5k=189,
+    PROP_chrmp5ksil=206,
+    PROP_chrpitongun=228,
+    PROP_chrplans=256,
+    PROP_chrplastique=273,
+    PROP_chrpolarizedglasses=249,
+    PROP_chrproximitymine=200,
+    PROP_chrremotemine=199,
+    PROP_chrrocket=202,
+    PROP_chrrocketlaunch=211,
+    PROP_chrruger=190,
+    PROP_chrsafecrackercase=237,
+    PROP_chrshotgun=192,
+    PROP_chrsilverwppk=230,
+    PROP_chrskorpion=193,
+    PROP_chrsniperrifle=210,
+    PROP_chrspectre=194,
+    PROP_chrspooltape=261,
+    PROP_chrspyfile=257,
+    PROP_chrstafflist=271,
+    PROP_chrtesttube=338,
+    PROP_chrthrowknife=209,
+    PROP_chrtimedmine=201,
+    PROP_chrtt33=205,
+    PROP_chruzi=195,
+    PROP_chrvideotape=275,
+    PROP_chrweaponcase=242,
+    PROP_chrwppk=191,
+    PROP_chrwppksil=204,
+    PROP_chrwristdart=224,
+    PROP_console1=25,
+    PROP_console2=26,
+    PROP_console3=27,
+    PROP_console_sev2a=32,
+    PROP_console_sev2b=33,
+    PROP_console_sev2c=34,
+    PROP_console_sev2d=35,
+    PROP_console_sev_GEa=36,
+    PROP_console_sev_GEb=37,
+    PROP_console_seva=28,
+    PROP_console_sevb=29,
+    PROP_console_sevc=30,
+    PROP_console_sevd=31,
+    PROP_cryptdoor1a=170,
+    PROP_cryptdoor1b=171,
+    PROP_cryptdoor2a=172,
+    PROP_cryptdoor2b=173,
+    PROP_cryptdoor3=174,
+    PROP_cryptdoor4=175,
+    PROP_damchaindoor=180,
+    PROP_damgatedoor=178,
+    PROP_damtundoor=179,
+    PROP_depot_door_steel=309,
+    PROP_depot_gate_entry=308,
+    PROP_desk1=38,
+    PROP_desk2=39,
+    PROP_desk_arecibo1=95,
+    PROP_desk_lamp2=40,
+    PROP_dest_engine=99,
+    PROP_dest_exocet=100,
+    PROP_dest_gun=101,
+    PROP_dest_harpoon=102,
+    PROP_dest_seawolf=103,
+    PROP_disc_reader=41,
+    PROP_disk_drive1=42,
+    PROP_door_azt_chair=331,
+    PROP_door_azt_desk=329,
+    PROP_door_azt_desk_top=330,
+    PROP_door_aztec=327,
+    PROP_door_dest1=152,
+    PROP_door_dest2=153,
+    PROP_door_eyelid=164,
+    PROP_door_iris=165,
+    PROP_door_mf=332,
+    PROP_door_roller1=146,
+    PROP_door_roller2=147,
+    PROP_door_roller3=148,
+    PROP_door_roller4=149,
+    PROP_door_rollertrain=325,
+    PROP_door_st_arec1=150,
+    PROP_door_st_arec2=151,
+    PROP_door_win=326,
+    PROP_doorconsole=337,
+    PROP_doorpanel=336,
+    PROP_doorprison1=182,
+    PROP_doorstatgate=183,
+    PROP_explosionbit=2,
+    PROP_filing_cabinet1=43,
+    PROP_flag=333,
+    PROP_floppy=247,
+    PROP_fnp90mag=130,
+    PROP_gas_plant_met1_do1=158,
+    PROP_gas_plant_sw2_do1=155,
+    PROP_gas_plant_sw3_do1=156,
+    PROP_gas_plant_sw4_do1=157,
+    PROP_gas_plant_sw_do1=154,
+    PROP_gas_plant_wc_cub1=159,
+    PROP_gasbarrel=113,
+    PROP_gasbarrels=114,
+    PROP_gasplant_clear_door=160,
+    PROP_gastank=117,
+    PROP_glassware1=118,
+    PROP_glassware2=310,
+    PROP_glassware3=311,
+    PROP_glassware4=312,
+    PROP_goldeneyelogo=277,
+    PROP_goldenshells=131,
+    PROP_groundgun=299,
+    PROP_gun_runway1=292,
+    PROP_hatberet=220,
+    PROP_hatberetblue=221,
+    PROP_hatberetred=222,
+    PROP_hatchbolt=119,
+    PROP_hatchdoor=177,
+    PROP_hatchsevx=295,
+    PROP_hatfurry=212,
+    PROP_hatfurryblack=214,
+    PROP_hatfurrybrown=213,
+    PROP_hathelmet=217,
+    PROP_hathelmetgrey=218,
+    PROP_hatmoon=219,
+    PROP_hatpeaked=223,
+    PROP_hattbird=215,
+    PROP_hattbirdbrown=216,
+    PROP_helicopter=282,
+    PROP_hind=285,
+    PROP_jeep=280,
+    PROP_jerry_can1=44,
+    PROP_jungle3_tree=108,
+    PROP_jungle5_tree=318,
+    PROP_key_holder=294,
+    PROP_keyboard1=45,
+    PROP_kit_units1=46,
+    PROP_labbench=112,
+    PROP_landmine=313,
+    PROP_legalpage=319,
+    PROP_letter_tray1=47,
+    PROP_locker3=96,
+    PROP_locker4=97,
+    PROP_m16mag=122,
+    PROP_magnumshells=132,
+    PROP_mainframe1=48,
+    PROP_mainframe2=49,
+    PROP_metal_chair1=50,
+    PROP_metal_crate1=51,
+    PROP_metal_crate2=52,
+    PROP_metal_crate3=53,
+    PROP_metal_crate4=54,
+    PROP_milcopter=284,
+    PROP_miltruck=279,
+    PROP_missile_rack=55,
+    PROP_missile_rack2=56,
+    PROP_modembox=335,
+    PROP_motorbike=287,
+    PROP_mp5kmag=123,
+    PROP_nintendologo=276,
+    PROP_oil_drum1=57,
+    PROP_oil_drum2=58,
+    PROP_oil_drum3=59,
+    PROP_oil_drum5=60,
+    PROP_oil_drum6=61,
+    PROP_oil_drum7=62,
+    PROP_padlock=63,
+    PROP_palm=109,
+    PROP_palmtree=110,
+    PROP_phone1=64,
+    PROP_plane=291,
+    PROP_plant1=314,
+    PROP_plant11=315,
+    PROP_plant2=316,
+    PROP_plant2b=111,
+    PROP_plant3=317,
+    PROP_radio_unit1=65,
+    PROP_radio_unit2=66,
+    PROP_radio_unit3=67,
+    PROP_radio_unit4=68,
+    PROP_roofgun=98,
+    PROP_safe=254,
+    PROP_safedoor=293,
+    PROP_sat1_reflect=69,
+    PROP_satbox=71,
+    PROP_satdish=70,
+    PROP_sec_panel=91,
+    PROP_sev_door=135,
+    PROP_sev_door3=136,
+    PROP_sev_door3_wind=137,
+    PROP_sev_door4_wind=138,
+    PROP_sev_door_v1=140,
+    PROP_sev_trislide=139,
+    PROP_sevdish=296,
+    PROP_sevdoormetslide=169,
+    PROP_sevdoornowind=168,
+    PROP_sevdoorwind=167,
+    PROP_sevdoorwood=166,
+    PROP_shuttle=328,
+    PROP_shuttle_door_l=306,
+    PROP_shuttle_door_r=307,
+    PROP_silencer=127,
+    PROP_silo_lift_door=144,
+    PROP_silotopdoor=181,
+    PROP_skorpionmag=124,
+    PROP_spectremag=125,
+    PROP_speedboat=290,
+    PROP_st_pete_room_1i=320,
+    PROP_st_pete_room_2i=321,
+    PROP_st_pete_room_3t=322,
+    PROP_st_pete_room_5c=323,
+    PROP_st_pete_room_6c=324,
+    PROP_steel_door1=141,
+    PROP_steel_door2=142,
+    PROP_steel_door2b=145,
+    PROP_steel_door3=143,
+    PROP_stool1=72,
+    PROP_swipe_card2=86,
+    PROP_swivel_chair1=73,
+    PROP_tank=288,
+    PROP_tiger=283,
+    PROP_torpedo_rack=74,
+    PROP_train_door=161,
+    PROP_train_door2=162,
+    PROP_train_door3=163,
+    PROP_trainextdoor=300,
+    PROP_tt33mag=134,
+    PROP_tuning_console1=94,
+    PROP_tv1=75,
+    PROP_tv4screen=78,
+    PROP_tv_holder=76,
+    PROP_tvscreen=77,
+    PROP_uzimag=126,
+    PROP_vertdoor=176,
+    PROP_walletbond=278,
+    PROP_window=104,
+    PROP_window_cor11=107,
+    PROP_window_lib_lg1=105,
+    PROP_window_lib_sm1=106,
+    PROP_wood_lg_crate1=79,
+    PROP_wood_lg_crate2=80,
+    PROP_wood_md_crate3=81,
+    PROP_wood_sm_crate4=82,
+    PROP_wood_sm_crate5=83,
+    PROP_wood_sm_crate6=84,
+    PROP_wooden_table1=85,
+    PROP_wppkmag=133
+} PROPS;
+
+typedef enum ANIMATIONS {
+    ANIM_adjusting_crotch=158,
+    ANIM_aim_and_blow_one_handed_weapon=149,
+    ANIM_aim_one_handed_weapon_left=150,
+    ANIM_aim_one_handed_weapon_left_right=99,
+    ANIM_aim_one_handed_weapon_right=151,
+    ANIM_aim_running_left_one_handed_weapon=87,
+    ANIM_aim_running_one_handed_weapon=85,
+    ANIM_aim_running_right_one_handed_weapon=86,
+    ANIM_aim_sprinting_one_handed_weapon=88,
+    ANIM_aim_walking_left_one_handed_weapon=83,
+    ANIM_aim_walking_one_handed_weapon=82,
+    ANIM_aim_walking_right_one_handed_weapon=84,
+    ANIM_bond_eye_fire=44,
+    ANIM_bond_eye_fire_alt=176,
+    ANIM_bond_eye_walk=43,
+    ANIM_bond_watch=45,
+    ANIM_cock_one_handed_weapon_and_turn_around=100,
+    ANIM_cock_one_handed_weapon_turn_around_and_stand_up=102,
+    ANIM_conversation=152,
+    ANIM_conversation_cleaned=160,
+    ANIM_conversation_listener=161,
+    ANIM_coughing_kneel1=166,
+    ANIM_coughing_kneel2=167,
+    ANIM_coughing_standing=165,
+    ANIM_cradle_fall=180,
+    ANIM_cradle_jump=179,
+    ANIM_credits_bond_kissing=181,
+    ANIM_credits_natalya_kissing=182,
+    ANIM_dam_jump=177,
+    ANIM_dancing=170,
+    ANIM_dancing_one_handed_weapon=171,
+    ANIM_death_backward_fall_face_up1=28,
+    ANIM_death_backward_fall_face_up2=37,
+    ANIM_death_backward_spin_face_down_left=31,
+    ANIM_death_backward_spin_face_down_right=29,
+    ANIM_death_backward_spin_face_up_left=32,
+    ANIM_death_backward_spin_face_up_right=30,
+    ANIM_death_explosion_back1=133,
+    ANIM_death_explosion_back2=136,
+    ANIM_death_explosion_back_left=132,
+    ANIM_death_explosion_forward=130,
+    ANIM_death_explosion_forward_face_down=138,
+    ANIM_death_explosion_forward_right1=135,
+    ANIM_death_explosion_forward_right2=140,
+    ANIM_death_explosion_forward_right2_alt=141,
+    ANIM_death_explosion_forward_right3=142,
+    ANIM_death_explosion_forward_roll=137,
+    ANIM_death_explosion_left1=131,
+    ANIM_death_explosion_left2=139,
+    ANIM_death_explosion_right=134,
+    ANIM_death_fetal_position_left=36,
+    ANIM_death_fetal_position_right=35,
+    ANIM_death_forward_face_down=26,
+    ANIM_death_forward_face_down_hard=33,
+    ANIM_death_forward_face_down_soft=34,
+    ANIM_death_forward_spin_face_up=27,
+    ANIM_death_genitalia=22,
+    ANIM_death_head=56,
+    ANIM_death_left_leg=57,
+    ANIM_death_neck=24,
+    ANIM_death_stagger_back_to_wall=25,
+    ANIM_draw_one_handed_weapon_and_look_around=97,
+    ANIM_draw_one_handed_weapon_and_stand_up=98,
+    ANIM_draw_one_handed_weapon_and_turn_around=103,
+    ANIM_drop_weapon_and_show_fight_stance=153,
+    ANIM_extending_left_hand=61,
+    ANIM_fire_hip=3,
+    ANIM_fire_hip_forward_one_handed_weapon=70,
+    ANIM_fire_hip_one_handed_weapon_fast=68,
+    ANIM_fire_hip_one_handed_weapon_slow=69,
+    ANIM_fire_jump_to_side_left=52,
+    ANIM_fire_jump_to_side_right=53,
+    ANIM_fire_kneel_aiming_down_sights=128,
+    ANIM_fire_kneel_dual_wield=116,
+    ANIM_fire_kneel_dual_wield_hands_crossed=119,
+    ANIM_fire_kneel_dual_wield_hands_crossed_left=120,
+    ANIM_fire_kneel_dual_wield_hands_crossed_right=121,
+    ANIM_fire_kneel_dual_wield_left=117,
+    ANIM_fire_kneel_dual_wield_right=118,
+    ANIM_fire_kneel_forward_one_handed_weapon_fast=76,
+    ANIM_fire_kneel_forward_one_handed_weapon_slow=75,
+    ANIM_fire_kneel_left=9,
+    ANIM_fire_kneel_left_leg=8,
+    ANIM_fire_kneel_left_one_handed_weapon=81,
+    ANIM_fire_kneel_left_one_handed_weapon_fast=80,
+    ANIM_fire_kneel_left_one_handed_weapon_slow=79,
+    ANIM_fire_kneel_right=10,
+    ANIM_fire_kneel_right_leg=7,
+    ANIM_fire_kneel_right_one_handed_weapon_fast=78,
+    ANIM_fire_kneel_right_one_handed_weapon_slow=77,
+    ANIM_fire_roll_left=11,
+    ANIM_fire_roll_left_fast=13,
+    ANIM_fire_roll_right1=12,
+    ANIM_fire_roll_right2=39,
+    ANIM_fire_running=49,
+    ANIM_fire_running_dual_wield=110,
+    ANIM_fire_running_dual_wield_hands_crossed=111,
+    ANIM_fire_shoulder_left=4,
+    ANIM_fire_sprinting_dual_wield=112,
+    ANIM_fire_sprinting_dual_wield_hands_crossed=113,
+    ANIM_fire_standing=1,
+    ANIM_fire_standing_aiming_down_sights=127,
+    ANIM_fire_standing_draw_one_handed_weapon_fast=66,
+    ANIM_fire_standing_draw_one_handed_weapon_slow=67,
+    ANIM_fire_standing_dual_wield=122,
+    ANIM_fire_standing_dual_wield_hands_crossed_left=125,
+    ANIM_fire_standing_dual_wield_hands_crossed_right=126,
+    ANIM_fire_standing_dual_wield_left=123,
+    ANIM_fire_standing_dual_wield_right=124,
+    ANIM_fire_standing_fast=2,
+    ANIM_fire_standing_left_one_handed_weapon_fast=74,
+    ANIM_fire_standing_left_one_handed_weapon_slow=73,
+    ANIM_fire_standing_one_handed_weapon=65,
+    ANIM_fire_standing_right_one_handed_weapon=71,
+    ANIM_fire_step_right_one_handed_weapon=72,
+    ANIM_fire_throw_grenade=62,
+    ANIM_fire_turn_right1=5,
+    ANIM_fire_turn_right2=6,
+    ANIM_fire_walking=48,
+    ANIM_fire_walking_dual_wield=108,
+    ANIM_fire_walking_dual_wield_hands_crossed=109,
+    ANIM_hit_butt_long=54,
+    ANIM_hit_butt_short=55,
+    ANIM_hit_left_arm=16,
+    ANIM_hit_left_hand=18,
+    ANIM_hit_left_leg=20,
+    ANIM_hit_left_shoulder=14,
+    ANIM_hit_neck=23,
+    ANIM_hit_right_arm=17,
+    ANIM_hit_right_hand=19,
+    ANIM_hit_right_leg=21,
+    ANIM_hit_right_shoulder=15,
+    ANIM_hit_taser=129,
+    ANIM_holster_one_handed_weapon_and_adjust_suit=105,
+    ANIM_holster_one_handed_weapon_and_cross_arms=101,
+    ANIM_idle=0,
+    ANIM_idle_unarmed=106,
+    ANIM_jogging_one_handed_weapon=89,
+    ANIM_jump_backwards=60,
+    ANIM_keyboard_left_hand=174,
+    ANIM_keyboard_right_hand1=172,
+    ANIM_keyboard_right_hand2=173,
+    ANIM_keyboard_right_hand_tapping=175,
+    ANIM_laughing_in_disbelief=163,
+    ANIM_look_around=64,
+    ANIM_null143=143,
+    ANIM_null144=144,
+    ANIM_null145=145,
+    ANIM_null146=146,
+    ANIM_null169=169,
+    ANIM_null50=50,
+    ANIM_null51=51,
+    ANIM_null91=91,
+    ANIM_null92=92,
+    ANIM_null93=93,
+    ANIM_null94=94,
+    ANIM_null95=95,
+    ANIM_null96=96,
+    ANIM_running=42,
+    ANIM_running_female=115,
+    ANIM_running_hands_up=147,
+    ANIM_scratching_butt=157,
+    ANIM_scratching_leg=156,
+    ANIM_side_step_left=38,
+    ANIM_slide_left=59,
+    ANIM_slide_right=58,
+    ANIM_sneeze=159,
+    ANIM_spotting_bond=63,
+    ANIM_sprinting=41,
+    ANIM_sprinting_hands_up=148,
+    ANIM_sprinting_one_handed_weapon=90,
+    ANIM_standing_up=168,
+    ANIM_startled_and_looking_around=162,
+    ANIM_step_foward_and_hold_one_handed_weapon=104,
+    ANIM_surface_vent_jump=178,
+    ANIM_surrendering_armed=46,
+    ANIM_surrendering_armed_drop_weapon=47,
+    ANIM_surrendering_unarmed=164,
+    ANIM_swatting_flies=155,
+    ANIM_walking=40,
+    ANIM_walking_female=114,
+    ANIM_walking_unarmed=107,
+    ANIM_yawning=154
+} ANIMATIONS;
+
+
+// WARNING! conflicting data type names: /bondgame.h/COLORMODE - /COLORMODE
+
+typedef enum CUFF_TYPES {
+    CUFF_BLUE=0,
+    CUFF_BOILER=3,
+    CUFF_JUNGLE=2,
+    CUFF_SNOW=4,
+    CUFF_TUX=1,
+    CUFF_TUX6=6,
+    CUFF_TUX7=7,
+    CUFF_TUX8=8,
+    CUFF_WHITE=5
+} CUFF_TYPES;
+
+typedef enum PROJECTILES {
+    PROJECTILES_MAX=46,
+    PROJECTILES_TYPE_BOMBCASE=55,
+    PROJECTILES_TYPE_BUG=56,
+    PROJECTILES_TYPE_GE_KEY=58,
+    PROJECTILES_TYPE_GLAUNCH_ROUND=54,
+    PROJECTILES_TYPE_GRENADE=48,
+    PROJECTILES_TYPE_KNIFE=47,
+    PROJECTILES_TYPE_MICROCAMERA=57,
+    PROJECTILES_TYPE_PLASTIQUE=59,
+    PROJECTILES_TYPE_PROX_MINE=50,
+    PROJECTILES_TYPE_REMOTE_MINE=49,
+    PROJECTILES_TYPE_ROCKET_ROUND=52,
+    PROJECTILES_TYPE_ROCKET_ROUND2=53,
+    PROJECTILES_TYPE_TIMED_MINE=51
+} PROJECTILES;
+
+typedef enum GENDER {
+    FEMALE=0,
+    MALE=1
+} GENDER;
+
+typedef enum BODIES {
+    BODY_Arctic_Commando=38,
+    BODY_Baron_Samedi=12,
+    BODY_Boris=6,
+    BODY_Civilian_1_Female=29,
+    BODY_Civilian_2=33,
+    BODY_Civilian_3=34,
+    BODY_Civilian_4=32,
+    BODY_Female_Mandy=72,
+    BODY_Female_Marion_Rosika=71,
+    BODY_Female_Sally=70,
+    BODY_Female_Vivien=73,
+    BODY_Formal_Wear=23,
+    BODY_Helicopter_Pilot=36,
+    BODY_Janus_Marine=17,
+    BODY_Janus_Special_Forces=4,
+    BODY_Jaws=13,
+    BODY_Jungle_Commando=0,
+    BODY_Jungle_Fatigues=24,
+    BODY_Left_Suit_Hand_Floating_Arm=41,
+    BODY_Male_Alan=43,
+    BODY_Male_B=50,
+    BODY_Male_Biker=61,
+    BODY_Male_Chris=54,
+    BODY_Male_Dave_Dr_Doak=51,
+    BODY_Male_Des=53,
+    BODY_Male_Duncan=47,
+    BODY_Male_Dwayne=49,
+    BODY_Male_Graeme=62,
+    BODY_Male_Grant=52,
+    BODY_Male_Jim=57,
+    BODY_Male_Joe=68,
+    BODY_Male_Joe_Altered=66,
+    BODY_Male_Joel=64,
+    BODY_Male_Karl=42,
+    BODY_Male_Ken=67,
+    BODY_Male_Lee=55,
+    BODY_Male_Mark=46,
+    BODY_Male_Martin=45,
+    BODY_Male_Mishkin=69,
+    BODY_Male_Neil=56,
+    BODY_Male_Pete=44,
+    BODY_Male_Pierce_Bond_1=74,
+    BODY_Male_Pierce_Bond_2=75,
+    BODY_Male_Pierce_Bond_3=76,
+    BODY_Male_Pierce_Bond_Parka=77,
+    BODY_Male_Pierce_Bond_Tuxedo=78,
+    BODY_Male_Robin=58,
+    BODY_Male_Scott=65,
+    BODY_Male_Shaun=48,
+    BODY_Male_Steve_Ellis=63,
+    BODY_Male_Steve_H=59,
+    BODY_Male_Terrorist=60,
+    BODY_Mayday=14,
+    BODY_Moonraker_Elite_1_Male=39,
+    BODY_Moonraker_Elite_2_Female=40,
+    BODY_Natalya_Jungle_Fatigues=79,
+    BODY_Natalya_Skirt=16,
+    BODY_Naval_Officer=20,
+    BODY_Oddjob=15,
+    BODY_Ourumov=7,
+    BODY_Parka=25,
+    BODY_Rosika=27,
+    BODY_Russian_Commandant=18,
+    BODY_Russian_Infantry=3,
+    BODY_Russian_Soldier=2,
+    BODY_Scientist_1_Male=35,
+    BODY_Scientist_2_Female=28,
+    BODY_Siberian_Guard_1_Mishkin=19,
+    BODY_Siberian_Guard_2=37,
+    BODY_Siberian_Special_Forces=21,
+    BODY_Special_Operations_Uniform=22,
+    BODY_St_Petersburg_Guard=1,
+    BODY_Trevelyan_006=9,
+    BODY_Trevelyan_Janus=8,
+    BODY_Tuxedo=5,
+    BODY_Unused_Female=26,
+    BODY_Unused_Male_1=30,
+    BODY_Unused_Male_2=31,
+    BODY_Valentin_=10,
+    BODY_Xenia=11
+} BODIES;
+
+typedef enum TEXTBANK_LEVEL_INDEX {
+    LAME=1,
+    LARCH=2,
+    LAREC=8,
+    LARK=3,
+    LASH=4,
+    LAZT=5,
+    LCAT=6,
+    LCAVE=7,
+    LCRAD=9,
+    LCRYP=10,
+    LDAM=11,
+    LDEPO=12,
+    LDEST=13,
+    LDISH=14,
+    LEAR=15,
+    LELD=16,
+    LGUN=38,
+    LIMP=17,
+    LJUN=18,
+    LLEE=19,
+    LLEN=20,
+    LLIP=21,
+    LLUE=22,
+    LMISC=44,
+    LMPMENU=40,
+    LMPWEAPONS=42,
+    LNULL=0,
+    LOAT=23,
+    LOPTIONS=43,
+    LPAM=24,
+    LPETE=25,
+    LPROPOBJ=41,
+    LREF=26,
+    LRIT=27,
+    LRUN=28,
+    LSEV=30,
+    LSEVB=29,
+    LSEVX=31,
+    LSEVXB=32,
+    LSHO=33,
+    LSILO=34,
+    LSTAT=35,
+    LTITLE=39,
+    LTRA=36,
+    LWAX=37
+} TEXTBANK_LEVEL_INDEX;
+
+typedef enum DOORSTATE {
+    CLOSED=2,
+    OPEN=1
+} DOORSTATE;
+
+typedef enum HEADS {
+    HEAD_Female_Mandy=72,
+    HEAD_Female_Marion_Rosika=71,
+    HEAD_Female_Sally=70,
+    HEAD_Female_Vivien=73,
+    HEAD_Male_Alan=43,
+    HEAD_Male_B=50,
+    HEAD_Male_Biker=61,
+    HEAD_Male_Chris=54,
+    HEAD_Male_Dave_Dr_Doak=51,
+    HEAD_Male_Des=53,
+    HEAD_Male_Duncan=47,
+    HEAD_Male_Dwayne=49,
+    HEAD_Male_Graeme=62,
+    HEAD_Male_Grant=52,
+    HEAD_Male_Jim=57,
+    HEAD_Male_Joe=68,
+    HEAD_Male_Joe_Altered=66,
+    HEAD_Male_Joel=64,
+    HEAD_Male_Karl=42,
+    HEAD_Male_Ken=67,
+    HEAD_Male_Lee=55,
+    HEAD_Male_Mark=46,
+    HEAD_Male_Martin=45,
+    HEAD_Male_Mishkin=69,
+    HEAD_Male_Neil=56,
+    HEAD_Male_Pete=44,
+    HEAD_Male_Pierce_Bond_1=74,
+    HEAD_Male_Pierce_Bond_2=75,
+    HEAD_Male_Pierce_Bond_3=76,
+    HEAD_Male_Pierce_Bond_Parka=77,
+    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT=78,
+    HEAD_Male_Robin=58,
+    HEAD_Male_Scott=65,
+    HEAD_Male_Shaun=48,
+    HEAD_Male_Steve_Ellis=63,
+    HEAD_Male_Steve_H=59,
+    HEAD_Male_Terrorist=60,
+    HEAD_Natalya_Jungle_Fatigues=79
+} HEADS;
+
+typedef enum mission_setup_type {
+    MISSION_HEADER=1,
+    MISSION_PART=0
+} mission_setup_type;
+
+typedef enum LEVEL_INDEX {
+    LEVEL_INDEX_AME=28,
+    LEVEL_INDEX_ARCH=4,
+    LEVEL_INDEX_ARK=14,
+    LEVEL_INDEX_ASH=26,
+    LEVEL_INDEX_AZT=8,
+    LEVEL_INDEX_CAT=20,
+    LEVEL_INDEX_CAVE=19,
+    LEVEL_INDEX_CONTROL=3,
+    LEVEL_INDEX_CRAD=21,
+    LEVEL_INDEX_CRYP=12,
+    LEVEL_INDEX_DAM=13,
+    LEVEL_INDEX_DEPO=10,
+    LEVEL_INDEX_DEST=6,
+    LEVEL_INDEX_DISH=18,
+    LEVEL_INDEX_EAR=31,
+    LEVEL_INDEX_ELD=24,
+    LEVEL_INDEX_IMP=25,
+    LEVEL_INDEX_JUN=17,
+    LEVEL_INDEX_LEE=32,
+    LEVEL_INDEX_LEN=34,
+    LEVEL_INDEX_LIP=33,
+    LEVEL_INDEX_LUE=27,
+    LEVEL_INDEX_OAT=30,
+    LEVEL_INDEX_PAM=36,
+    LEVEL_INDEX_PETE=9,
+    LEVEL_INDEX_REF=11,
+    LEVEL_INDEX_RIT=29,
+    LEVEL_INDEX_RUN=15,
+    LEVEL_INDEX_SEVB=7,
+    LEVEL_INDEX_SEVBUNKER=0,
+    LEVEL_INDEX_SEVX=16,
+    LEVEL_INDEX_SEVXB=23,
+    LEVEL_INDEX_SHO=22,
+    LEVEL_INDEX_SILO=1,
+    LEVEL_INDEX_STATUE=2,
+    LEVEL_INDEX_TRA=5,
+    LEVEL_INDEX_WAX=35,
+    LEVEL_INDEX_X=37
+} LEVEL_INDEX;
+
+typedef enum SCREEN_SIZE {
+    SCREEN_SIZE_320x240=0,
+    SCREEN_SIZE_440x330=1
+} SCREEN_SIZE;
+
+typedef u16 PAD;
+
+typedef enum MENU {
+    MENU_007_OPTIONS=9,
+    MENU_BRIEFING=10,
+    MENU_CHEAT=21,
+    MENU_DIFFICULTY=8,
+    MENU_DISPLAY_CAST=24,
+    MENU_EYE_INTRO=3,
+    MENU_FILE_SELECT=5,
+    MENU_GOLDENEYE_LOGO=4,
+    MENU_LEGAL_SCREEN=0,
+    MENU_MISSION_COMPLETE=13,
+    MENU_MISSION_FAILED=12,
+    MENU_MISSION_SELECT=7,
+    MENU_MODE_SELECT=6,
+    MENU_MP_CHAR_SELECT=15,
+    MENU_MP_CONTROL_STYLE=17,
+    MENU_MP_HANDICAP=16,
+    MENU_MP_OPTIONS=14,
+    MENU_MP_SCENARIO_SELECT=19,
+    MENU_MP_STAGE_SELECT=18,
+    MENU_MP_TEAMS=20,
+    MENU_NINTENDO_LOGO=1,
+    MENU_NO_CONTROLLERS=22,
+    MENU_RAREWARE_LOGO=2,
+    MENU_RUN_STAGE=11,
+    MENU_SPECTRUM_EMU=25,
+    MENU_SWITCH_SCREENS=23
+} MENU;
+
+#define OBJECTIVES_MAX 10
+
 typedef struct IMAGE IMAGE, *PIMAGE;
 
 struct IMAGE {
@@ -7231,11 +8230,6 @@ struct $9574A80C820E0B95666ECD0A99E160BE {
     u8 * offset;
 };
 
-typedef enum SCREEN_SIZE {
-    SCREEN_SIZE_320x240=0,
-    SCREEN_SIZE_440x330=1
-} SCREEN_SIZE;
-
 typedef struct mp_stage_playercount mp_stage_playercount, *Pmp_stage_playercount;
 
 struct mp_stage_playercount {
@@ -7277,37 +8271,11 @@ typedef struct $62F109188EB304B8EC258AA93B51CC96 $62F109188EB304B8EC258AA93B51CC
 struct $62F109188EB304B8EC258AA93B51CC96 {
 };
 
-typedef struct rgba_val rgba_val, *Prgba_val;
 
-struct rgba_val {
-    char R;
-    char G;
-    char B;
-    char A;
-};
+// WARNING! conflicting data type names: /GE Current Master.h/rgba_val - /bondgame.h/rgba_val
 
-typedef enum LEVEL_SOLO_SEQUENCE {
-    LEVEL_ARCHIVES=16,
-    LEVEL_AZTEC=26,
-    LEVEL_BUNKER1=6,
-    LEVEL_BUNKER2=13,
-    LEVEL_CAVERNS=23,
-    LEVEL_CONTROL=22,
-    LEVEL_CRADLE=24,
-    LEVEL_DAM=1,
-    LEVEL_DEPOT=18,
-    LEVEL_EGYPT=28,
-    LEVEL_FACILITY=2,
-    LEVEL_FRIGATE=10,
-    LEVEL_JUNGLE=21,
-    LEVEL_RUNWAY=3,
-    LEVEL_SILO=8,
-    LEVEL_STATUE=15,
-    LEVEL_STREETS=17,
-    LEVEL_SURFACE1=5,
-    LEVEL_SURFACE2=12,
-    LEVEL_TRAIN=19
-} LEVEL_SOLO_SEQUENCE;
+
+// WARNING! conflicting data type names: /GE Current Master.h/LEVEL_SOLO_SEQUENCE - /bondgame.h/LEVEL_SOLO_SEQUENCE
 
 typedef struct mcm_layout mcm_layout, *Pmcm_layout;
 
@@ -7567,89 +8535,6 @@ struct enviroment_struct {
     float anonymous_21;
 };
 
-typedef enum BODIES {
-    BODY_Arctic_Commando=38,
-    BODY_Baron_Samedi=12,
-    BODY_Boris=6,
-    BODY_Civilian_1_Female=29,
-    BODY_Civilian_2=33,
-    BODY_Civilian_3=34,
-    BODY_Civilian_4=32,
-    BODY_Female_Mandy=72,
-    BODY_Female_Marion_Rosika=71,
-    BODY_Female_Sally=70,
-    BODY_Female_Vivien=73,
-    BODY_Formal_Wear=23,
-    BODY_Helicopter_Pilot=36,
-    BODY_Janus_Marine=17,
-    BODY_Janus_Special_Forces=4,
-    BODY_Jaws=13,
-    BODY_Jungle_Commando=0,
-    BODY_Jungle_Fatigues=24,
-    BODY_Left_Suit_Hand_Floating_Arm=41,
-    BODY_Male_Alan=43,
-    BODY_Male_B=50,
-    BODY_Male_Biker=61,
-    BODY_Male_Chris=54,
-    BODY_Male_Dave_Dr_Doak=51,
-    BODY_Male_Des=53,
-    BODY_Male_Duncan=47,
-    BODY_Male_Dwayne=49,
-    BODY_Male_Graeme=62,
-    BODY_Male_Grant=52,
-    BODY_Male_Jim=57,
-    BODY_Male_Joe=68,
-    BODY_Male_Joe_Altered=66,
-    BODY_Male_Joel=64,
-    BODY_Male_Karl=42,
-    BODY_Male_Ken=67,
-    BODY_Male_Lee=55,
-    BODY_Male_Mark=46,
-    BODY_Male_Martin=45,
-    BODY_Male_Mishkin=69,
-    BODY_Male_Neil=56,
-    BODY_Male_Pete=44,
-    BODY_Male_Pierce_Bond_1=74,
-    BODY_Male_Pierce_Bond_2=75,
-    BODY_Male_Pierce_Bond_3=76,
-    BODY_Male_Pierce_Bond_Parka=77,
-    BODY_Male_Pierce_Bond_Tuxedo=78,
-    BODY_Male_Robin=58,
-    BODY_Male_Scott=65,
-    BODY_Male_Shaun=48,
-    BODY_Male_Steve_Ellis=63,
-    BODY_Male_Steve_H=59,
-    BODY_Male_Terrorist=60,
-    BODY_Mayday=14,
-    BODY_Moonraker_Elite_1_Male=39,
-    BODY_Moonraker_Elite_2_Female=40,
-    BODY_Natalya_Jungle_Fatigues=79,
-    BODY_Natalya_Skirt=16,
-    BODY_Naval_Officer=20,
-    BODY_Oddjob=15,
-    BODY_Ourumov=7,
-    BODY_Parka=25,
-    BODY_Rosika=27,
-    BODY_Russian_Commandant=18,
-    BODY_Russian_Infantry=3,
-    BODY_Russian_Soldier=2,
-    BODY_Scientist_1_Male=35,
-    BODY_Scientist_2_Female=28,
-    BODY_Siberian_Guard_1_Mishkin=19,
-    BODY_Siberian_Guard_2=37,
-    BODY_Siberian_Special_Forces=21,
-    BODY_Special_Operations_Uniform=22,
-    BODY_St_Petersburg_Guard=1,
-    BODY_Trevelyan_006=9,
-    BODY_Trevelyan_Janus=8,
-    BODY_Tuxedo=5,
-    BODY_Unused_Female=26,
-    BODY_Unused_Male_1=30,
-    BODY_Unused_Male_2=31,
-    BODY_Valentin_=10,
-    BODY_Xenia=11
-} BODIES;
-
 typedef struct $2903A050EBC6442F98207E1AE6ED2D96 $2903A050EBC6442F98207E1AE6ED2D96, *P$2903A050EBC6442F98207E1AE6ED2D96;
 
 typedef struct $2903A050EBC6442F98207E1AE6ED2D96 ALSndPlayer;
@@ -7868,22 +8753,8 @@ struct ALSeqMarker {
     s16 lastStatus;
 };
 
-typedef enum PROJECTILES {
-    PROJECTILES_MAX=46,
-    PROJECTILES_TYPE_BOMBCASE=226,
-    PROJECTILES_TYPE_BUG=245,
-    PROJECTILES_TYPE_GE_KEY=248,
-    PROJECTILES_TYPE_GLAUNCH_ROUND=203,
-    PROJECTILES_TYPE_GRENADE=196,
-    PROJECTILES_TYPE_KNIFE=186,
-    PROJECTILES_TYPE_MICROCAMERA=246,
-    PROJECTILES_TYPE_PLASTIQUE=273,
-    PROJECTILES_TYPE_PROX_MINE=200,
-    PROJECTILES_TYPE_REMOTE_MINE=199,
-    PROJECTILES_TYPE_ROCKET_ROUND=202,
-    PROJECTILES_TYPE_ROCKET_ROUND2=202,
-    PROJECTILES_TYPE_TIMED_MINE=201
-} PROJECTILES;
+
+// WARNING! conflicting data type names: /GE Current Master.h/PROJECTILES - /bondgame.h/PROJECTILES
 
 typedef struct solo_target_times solo_target_times, *Psolo_target_times;
 
@@ -7893,52 +8764,11 @@ struct solo_target_times {
     short OO_agent_time;
 };
 
-typedef enum LEVEL_INDEX {
-    LEVEL_INDEX_AME=28,
-    LEVEL_INDEX_ARCH=4,
-    LEVEL_INDEX_ARK=14,
-    LEVEL_INDEX_ASH=26,
-    LEVEL_INDEX_AZT=8,
-    LEVEL_INDEX_CAT=20,
-    LEVEL_INDEX_CAVE=19,
-    LEVEL_INDEX_CONTROL=3,
-    LEVEL_INDEX_CRAD=21,
-    LEVEL_INDEX_CRYP=12,
-    LEVEL_INDEX_DAM=13,
-    LEVEL_INDEX_DEPO=10,
-    LEVEL_INDEX_DEST=6,
-    LEVEL_INDEX_DISH=18,
-    LEVEL_INDEX_EAR=31,
-    LEVEL_INDEX_ELD=24,
-    LEVEL_INDEX_IMP=25,
-    LEVEL_INDEX_JUN=17,
-    LEVEL_INDEX_LEE=32,
-    LEVEL_INDEX_LEN=34,
-    LEVEL_INDEX_LIP=33,
-    LEVEL_INDEX_LUE=27,
-    LEVEL_INDEX_OAT=30,
-    LEVEL_INDEX_PAM=36,
-    LEVEL_INDEX_PETE=9,
-    LEVEL_INDEX_REF=11,
-    LEVEL_INDEX_RIT=29,
-    LEVEL_INDEX_RUN=15,
-    LEVEL_INDEX_SEVB=7,
-    LEVEL_INDEX_SEVBUNKER=0,
-    LEVEL_INDEX_SEVX=16,
-    LEVEL_INDEX_SEVXB=23,
-    LEVEL_INDEX_SHO=22,
-    LEVEL_INDEX_SILO=1,
-    LEVEL_INDEX_STATUE=2,
-    LEVEL_INDEX_TRA=5,
-    LEVEL_INDEX_WAX=35,
-    LEVEL_INDEX_X=37
-} LEVEL_INDEX;
-
 typedef struct ejected_cart ejected_cart, *Pejected_cart;
 
 struct ejected_cart {
     struct Gitemheader * header;
-    void * text;
+    u8 * text;
 };
 
 typedef struct mission_folder_setup mission_folder_setup, *Pmission_folder_setup;
@@ -10786,35 +11616,6 @@ struct weapon_stats {
 
 // WARNING! conflicting data type names: /GE Current Master.h/RamRomBuffer - /ramrom.h/RamRomBuffer
 
-typedef enum MENU {
-    MENU_007_OPTIONS=9,
-    MENU_BRIEFING=10,
-    MENU_CHEAT=21,
-    MENU_DIFFICULTY=8,
-    MENU_DISPLAY_CAST=24,
-    MENU_EYE_INTRO=3,
-    MENU_FILE_SELECT=5,
-    MENU_GOLDENEYE_LOGO=4,
-    MENU_LEGAL_SCREEN=0,
-    MENU_MISSION_COMPLETE=13,
-    MENU_MISSION_FAILED=12,
-    MENU_MISSION_SELECT=7,
-    MENU_MODE_SELECT=6,
-    MENU_MP_CHAR_SELECT=15,
-    MENU_MP_CONTROL_STYLE=17,
-    MENU_MP_HANDICAP=16,
-    MENU_MP_OPTIONS=14,
-    MENU_MP_SCENARIO_SELECT=19,
-    MENU_MP_STAGE_SELECT=18,
-    MENU_MP_TEAMS=20,
-    MENU_NINTENDO_LOGO=1,
-    MENU_NO_CONTROLLERS=22,
-    MENU_RAREWARE_LOGO=2,
-    MENU_RUN_STAGE=11,
-    MENU_SPECTRUM_EMU=25,
-    MENU_SWITCH_SCREENS=23
-} MENU;
-
 typedef struct resource_lookup_data resource_lookup_data, *Presource_lookup_data;
 
 struct resource_lookup_data {
@@ -10842,29 +11643,6 @@ struct MP_controller_configuration_menu {
     char field_2;
     char field_3;
 };
-
-typedef enum WATCH_BRIEFING_PAGE {
-    BRIEFING_M=2,
-    BRIEFING_MONEYPENNY=4,
-    BRIEFING_OVERVIEW=1,
-    BRIEFING_Q=3,
-    BRIEFING_TITLE=0
-} WATCH_BRIEFING_PAGE;
-
-typedef enum MP_STAGE_SELECTED {
-    MP_STAGE_ARCHIVES=9,
-    MP_STAGE_BASEMENT=5,
-    MP_STAGE_BUNKER=8,
-    MP_STAGE_CAVERNS=10,
-    MP_STAGE_CAVES=3,
-    MP_STAGE_COMPLEX=2,
-    MP_STAGE_EGYPT=11,
-    MP_STAGE_FACILITY=7,
-    MP_STAGE_LIBRARY=4,
-    MP_STAGE_RANDOM=0,
-    MP_STAGE_STACK=6,
-    MP_STAGE_TEMPLE=1
-} MP_STAGE_SELECTED;
 
 typedef struct intro_char intro_char, *Pintro_char;
 
@@ -10989,23 +11767,6 @@ struct mp_stage_setup {
     int min_player;
     int max_player;
 };
-
-typedef enum CUFF_TYPES {
-    CUFF_BLUE=0,
-    CUFF_BOILER=3,
-    CUFF_JUNGLE=2,
-    CUFF_SNOW=4,
-    CUFF_TUX=1,
-    CUFF_TUX6=6,
-    CUFF_TUX7=7,
-    CUFF_TUX8=8,
-    CUFF_WHITE=5
-} CUFF_TYPES;
-
-typedef enum DOORSTATE {
-    CLOSED=2,
-    OPEN=1
-} DOORSTATE;
 
 typedef struct $3DC209F5817990864D0852F5D77FEFB7 $3DC209F5817990864D0852F5D77FEFB7, *P$3DC209F5817990864D0852F5D77FEFB7;
 
@@ -11790,47 +12551,6 @@ struct $1E48F79B8290AAF3593C164F3AF34576 {
     struct ALHeap * heap;
 };
 
-typedef enum HEADS {
-    HEAD_Female_Mandy=72,
-    HEAD_Female_Marion_Rosika=71,
-    HEAD_Female_Sally=70,
-    HEAD_Female_Vivien=73,
-    HEAD_Male_Alan=43,
-    HEAD_Male_B=50,
-    HEAD_Male_Biker=61,
-    HEAD_Male_Chris=54,
-    HEAD_Male_Dave_Dr_Doak=51,
-    HEAD_Male_Des=53,
-    HEAD_Male_Duncan=47,
-    HEAD_Male_Dwayne=49,
-    HEAD_Male_Graeme=62,
-    HEAD_Male_Grant=52,
-    HEAD_Male_Jim=57,
-    HEAD_Male_Joe=68,
-    HEAD_Male_Joe_Altered=66,
-    HEAD_Male_Joel=64,
-    HEAD_Male_Karl=42,
-    HEAD_Male_Ken=67,
-    HEAD_Male_Lee=55,
-    HEAD_Male_Mark=46,
-    HEAD_Male_Martin=45,
-    HEAD_Male_Mishkin=69,
-    HEAD_Male_Neil=56,
-    HEAD_Male_Pete=44,
-    HEAD_Male_Pierce_Bond_1=74,
-    HEAD_Male_Pierce_Bond_2=75,
-    HEAD_Male_Pierce_Bond_3=76,
-    HEAD_Male_Pierce_Bond_Parka=77,
-    HEAD_Male_Pierce_Bond_Tuxedo_DEFAULT=78,
-    HEAD_Male_Robin=58,
-    HEAD_Male_Scott=65,
-    HEAD_Male_Shaun=48,
-    HEAD_Male_Steve_Ellis=63,
-    HEAD_Male_Steve_H=59,
-    HEAD_Male_Terrorist=60,
-    HEAD_Natalya_Jungle_Fatigues=79
-} HEADS;
-
 
 // WARNING! conflicting data type names: /GE Current Master.h/ALRawLoop - /libaudio.h/ALRawLoop
 
@@ -12027,18 +12747,6 @@ struct $0120AC1DF4EE79E1F66D1E961D6B23AA {
     u8 decayVolume;
 };
 
-typedef enum CONTROLLER_CONFIG {
-    CONTROLLER_CONFIG_CINEMA=8,
-    CONTROLLER_CONFIG_DOMINO=6,
-    CONTROLLER_CONFIG_GALORE=5,
-    CONTROLLER_CONFIG_GOODHEAD=7,
-    CONTROLLER_CONFIG_GOODNIGHT=3,
-    CONTROLLER_CONFIG_HONEY=0,
-    CONTROLLER_CONFIG_KISSY=2,
-    CONTROLLER_CONFIG_PLENTY=4,
-    CONTROLLER_CONFIG_SOLITARE=1
-} CONTROLLER_CONFIG;
-
 typedef struct $698E1586F824213C2C7D30F8DE84E678 ALSynConfig;
 
 typedef struct $EF3ACF09A692D55A7037B16E3DC74014 OSLogItem;
@@ -12102,98 +12810,6 @@ struct displaymode {
 typedef enum LOGIC {
 } LOGIC;
 
-typedef enum ITEM_IDS {
-    ITEM_56=86,
-    ITEM_57=87,
-    ITEM_AK47=8,
-    ITEM_AUDIOTAPE=71,
-    ITEM_AUTOSHOT=16,
-    ITEM_BLACKBOX=62,
-    ITEM_BLUEPRINTS=69,
-    ITEM_BOMBCASE=33,
-    ITEM_BOMBDEFUSER=39,
-    ITEM_BRIEFCASE=43,
-    ITEM_BUG=47,
-    ITEM_BUGDETECTOR=49,
-    ITEM_BUNGEE=37,
-    ITEM_CAMERA=40,
-    ITEM_CIRCUITBOARD=63,
-    ITEM_CLIPBOARD=64,
-    ITEM_CREDITCARD=53,
-    ITEM_DARKGLASSES=52,
-    ITEM_DATATHIEF=55,
-    ITEM_DATTAPE=73,
-    ITEM_DOORDECODER=38,
-    ITEM_DOOREXPLODER=42,
-    ITEM_DOSSIERRED=66,
-    ITEM_EXPLOSIVEFLOPPY=50,
-    ITEM_FIST=1,
-    ITEM_FLAREPISTOL=35,
-    ITEM_FNP90=14,
-    ITEM_GASKEYRING=54,
-    ITEM_GOLDBAR=79,
-    ITEM_GOLDENEYEKEY=61,
-    ITEM_GOLDENGUN=19,
-    ITEM_GOLDWPPK=21,
-    ITEM_GRENADE=26,
-    ITEM_GRENADELAUNCH=24,
-    ITEM_HEROIN=80,
-    ITEM_JOYPAD=85,
-    ITEM_KEYANALYSERCASE=46,
-    ITEM_KEYBOLT=83,
-    ITEM_KEYCARD=81,
-    ITEM_KEYYALE=82,
-    ITEM_KNIFE=2,
-    ITEM_LASER=22,
-    ITEM_LECTRE=77,
-    ITEM_LOCKEXPLODER=41,
-    ITEM_M16=13,
-    ITEM_MAP=70,
-    ITEM_MICROCAMERA=48,
-    ITEM_MICROCODE=76,
-    ITEM_MICROFILM=75,
-    ITEM_MONEY=78,
-    ITEM_MP5K=10,
-    ITEM_MP5KSIL=11,
-    ITEM_PITONGUN=36,
-    ITEM_PLANS=67,
-    ITEM_PLASTIQUE=34,
-    ITEM_POLARIZEDGLASSES=51,
-    ITEM_PROXIMITYMINE=28,
-    ITEM_REMOTEMINE=29,
-    ITEM_ROCKETLAUNCH=25,
-    ITEM_RUGER=18,
-    ITEM_SAFECRACKERCASE=45,
-    ITEM_SHOTGUN=15,
-    ITEM_SILVERWPPK=20,
-    ITEM_SKORPION=7,
-    ITEM_SNIPERRIFLE=17,
-    ITEM_SPECTRE=12,
-    ITEM_SPOOLTAPE=74,
-    ITEM_SPYFILE=68,
-    ITEM_STAFFLIST=65,
-    ITEM_SUIT_LF_HAND=84,
-    ITEM_TANKSHELLS=32,
-    ITEM_TASER=31,
-    ITEM_THROWKNIFE=3,
-    ITEM_TIMEDMINE=27,
-    ITEM_TOKEN=88,
-    ITEM_TRIGGER=30,
-    ITEM_TT33=6,
-    ITEM_UNARMED=0,
-    ITEM_UZI=9,
-    ITEM_VIDEOTAPE=72,
-    ITEM_WATCHCOMMUNICATOR=57,
-    ITEM_WATCHGEIGERCOUNTER=58,
-    ITEM_WATCHIDENTIFIER=56,
-    ITEM_WATCHLASER=23,
-    ITEM_WATCHMAGNETATTRACT=60,
-    ITEM_WATCHMAGNETREPEL=59,
-    ITEM_WEAPONCASE=44,
-    ITEM_WPPK=4,
-    ITEM_WPPKSIL=5
-} ITEM_IDS;
-
 
 // WARNING! conflicting data type names: /GE Current Master.h/ALHeap - /libaudio.h/ALHeap
 
@@ -12252,11 +12868,6 @@ struct gitem_data_struct {
     float equip_watch_y;
     float equip_watch_z;
 };
-
-typedef enum GENDER {
-    FEMALE=0,
-    MALE=1
-} GENDER;
 
 typedef struct save_data save_data, *Psave_data;
 
@@ -12352,11 +12963,6 @@ struct save_data {
     char unused2;
     char unused3;
 };
-
-typedef enum mission_setup_type {
-    MISSION_HEADER=1,
-    MISSION_PART=0
-} mission_setup_type;
 
 
 // WARNING! conflicting data type names: /GE Current Master.h/guDLPrintCB - /gu.h/guDLPrintCB
@@ -14413,12 +15019,12 @@ typedef enum AL_MIDImeta {
 
 
 
-undefined * get_cdata_vaddr(void);
-undefined * get_cdata_rom_start(void);
-undefined * get_cdata_rom_end(void);
-undefined * get_RareZipASMRomstart(void);
-undefined4 get_RareZipASMRomend(void);
-void jump_decompressfile(void);
+u32 * get_cdata_vaddr(void);
+u32 * get_cdata_rom_start(void);
+u32 * get_cdata_rom_end(void);
+u32 * get_RareZipASMRomstart(void);
+u32 get_RareZipASMRomend(void);
+void jump_decompressfile(int source,int target,int buffer);
 int init(EVP_PKEY_CTX *ctx);
 void * set_stack_entry(void *stack,s32 size);
 void set_hw_address_and_unknown(void);
@@ -14465,8 +15071,8 @@ void set_hardwire_TLB_to_2(void);
 void amCreateAudioMgr(ALSynConfig *c,OSPri priority,amConfig *amc);
 void startaudithread(void);
 void _amMain(void);
-u32 __amHandleFrameMsg(AudioInfo *param_1,AudioInfo *param_2);
-void __amHandleDoneMsg(AudioInfo *param_1);
+u32 __amHandleFrameMsg(AudioInfo *info,AudioInfo *lastInfo);
+void __amHandleDoneMsg(AudioInfo *info);
 s32 __amDMA(s32 addr,s32 len,void *state);
 ALDMAproc __amDmaNew(AMDMAState **state);
 void __clearAudioDMA(void);
@@ -14501,13 +15107,13 @@ undefined4 get_video_mp_related_8002329C(void);
 void set_video2_settings_offset_18_1A(short param_1,short param_2);
 short get_video2_settings_offset_18(void);
 short get_video2_settings_offset_1A(void);
-void set_video2_text_clip_size(short param_1,short param_2);
+void set_video2_text_clip_size(short txtClipW,short txtClipH);
 short get_video2_settings_txtClipW(void);
 short get_video2_settings_txtClipH(void);
-void set_video2_width_height(short param_1,short param_2);
+void set_video2_width_height(short width,short height);
 short get_video2_settings_width(void);
 short get_video2_settings_height(void);
-void set_video2_ulx_uly(short param_1,short param_2);
+void set_video2_ulx_uly(short ulx,short uly);
 short get_video2_settings_ulx(void);
 short get_video2_settings_uly(void);
 void set_video2_settings_offset_24(int param_1);
@@ -14515,13 +15121,13 @@ void video_related_1F(f32 param_1);
 void video_related_21(f32 param_1);
 undefined4 video_related_23(void);
 void video_related_24(float param_1,float param_2,float param_3);
-void set_page_height(undefined4 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4);
+void set_page_height(f32 aspect,f32 param_2,f32 param_3);
 void video_related_27(undefined4 *param_1);
 undefined4 * set_setfillcolor(undefined4 *DL,uint red,uint green,int blue);
-undefined4 indy_grab_jpg_16bit(void);
-undefined4 indy_grab_jpg_32bit(void);
-undefined4 indy_grab_rgb_16bit(void);
-undefined4 indy_grab_rgb_32bit(void);
+u32 indy_grab_jpg_16bit(void);
+u32 indy_grab_jpg_32bit(void);
+u32 indy_grab_rgb_16bit(void);
+u32 indy_grab_rgb_32bit(void);
 int * return_match_in_debug_notice_list(char *name,char *data);
 void get_entry_of_size_in_debug_notice_list(int size);
 void add_new_entry_to_debug_notice_list(dword name,dword data);
@@ -14586,7 +15192,7 @@ void music_related_3(float rate,s32 param_2,short length);
 void music_related_2nd_block(int param_1);
 void music_related_2nd_block_0(void);
 ulonglong get_music2len(void);
-void music_related_2nd_block_1(ulonglong param_1);
+void musicTrack2Vol(ulonglong param_1);
 void music_related_5(void);
 void music_related_6(float param_1);
 void music_related_8(float param_1,undefined8 param_2,short param_3);
@@ -14669,7 +15275,7 @@ ulonglong strtol_related_0(byte param_1);
 ulonglong strtol_related_1(byte param_1);
 ulonglong strtol_related_2(char param_1);
 long strtol(char *__nptr,char **__endptr,int __base);
-int proutSprintf(void *param_1,void *param_2,size_t param_3);
+int proutSprintf(void *s,char *buf,size_t n);
 int sprintf(char *__s,char *__format,...);
 void start_pi_manager(void);
 void removed_7000ad30(void);
@@ -14681,7 +15287,7 @@ void removed_7000ada8(void);
 void debug_text_related_2(void);
 void display_text_to_coord(int x,int y,char char);
 void debugMenuSetTextPOStoOffset(void);
-void debug_text_related_1(void);
+void blank_debug_buffer_chars(void);
 void removed_7000af84(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4);
 int something_debug_info_related(int param_1);
 void set_final_debug_text_positions(s32 xadjust,s32 yadjust);
@@ -14792,11 +15398,11 @@ void *alHeapDBAlloc(u8 *file,s32 line,ALHeap *hp,s32 num,s32 size);
 OSTime osGetTime(void);
 longlong __ull_rshift(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4);
 longlong __ull_rem(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4);
-ulonglong __ull_div(ulonglong left,ulonglong right);
+ulonglong __ull_div(undefined4 left_u,undefined4 left_l,undefined4 right_u,undefined4 right_l);
 longlong __ll_lshift(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4);
 longlong __ll_rem(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4);
 longlong __ll_div(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4);
-longlong __ll_mul(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4);
+longlong __ll_mul(undefined4 left_u,undefined4 left_l,undefined4 right_u,undefined4 right_l);
 void __ull_divremi(ulonglong *param_1,ulonglong *param_2,undefined4 param_3,undefined4 param_4,short param_5);
 undefined4 __ll_mod(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4);
 longlong __ll_lshift(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4);
@@ -14851,7 +15457,7 @@ void proc_70011A64(void);
 ALMicroTime __CSPVoiceHandler(void *node);
 void alCSPNew(ALCSPlayer *seqp,ALSeqpConfig *c);
 void __CSPPostNextSeqEvent(int param_1);
-s32 ultra_proc_70012230(ALCSPlayer *param_1);
+s32 alCSPGetState(ALCSPlayer *seqp);
 void alCSeqGetLoc(ALCSeq *seq,ALCSeqMarker *marker);
 void alCSeqSetLoc(ALCSeq *seq,ALCSeqMarker *m);
 u8 __getTrackByte(ALCSeq *seq,u32 track);
@@ -15091,7 +15697,7 @@ int inflate_fixed(void);
 int inflate_dynamic(void);
 int inflate_block(char e);
 int inflate(void);
-void decompress.entry(void);
+void decompress.entry(int source,int target,int buffer);
 void initGameData(void);
 void init_weapon_animation_groups_maybe(void);
 void reset_counter_rand_body_head(void);
@@ -15214,27 +15820,27 @@ void init_menu00_legalscreen(void);
 void update_menu00_legalscreen(void);
 void interface_menu00_legalscreen(undefined8 param_1,undefined8 param_2);
 uint * display_aligned_white_text_to_screen(undefined4 *param_1,int param_2,int param_3,int param_4,int param_5,byte *param_6,int param_7,int param_8);
-void constructor_menu00_legalscreen(undefined4 *param_1);
+u32 * constructor_menu00_legalscreen(undefined4 *param_1);
 void reset_menutimer(void);
 void dummy7F00AAF8(void);
 void interface_menu17_switchscreens(undefined8 param_1,undefined8 param_2);
-undefined4 * constructor_menu17_switchscreens(undefined4 *param_1);
+u32 * constructor_menu17_switchscreens(undefined4 *param_1);
 void init_menu01_nintendo(void);
 void update_menu01_nintendo(void);
 void interface_menu01_nintendo(undefined8 param_1,undefined8 param_2);
-undefined4 * constructor_menu01_nintendo(undefined4 *param_1);
+u32 * constructor_menu01_nintendo(undefined4 *param_1);
 int ** init_menu02_rareware(void);
 void update_menu02_rareware(void);
 void interface_menu02_rareware(void);
-undefined4 * constructor_menu02_rareware(undefined4 *param_1);
+u32 * constructor_menu02_rareware(undefined4 *param_1);
 void init_menu03_eyeintro(void);
 void update_menu_03_eyeintro(void);
 void interface_menu03_eyeintro(void);
-void constructor_menu03_eyeintro(longlong param_1);
+u32 * constructor_menu03_eyeintro(undefined4 *param_1);
 void init_menu04_goldeneyelogo(void);
 void update_menu04_goldeneyelogo(void);
 void interface_menu04_goldeneyelogo(undefined8 param_1,undefined8 param_2);
-undefined4 * constructor_menu04_goldeneyelogo(undefined4 *param_1);
+u32 * constructor_menu04_goldeneyelogo(undefined4 *param_1);
 void disable_all_switches(int param_1);
 void set_item_visibility_in_objinstance(int objinstance,int item,undefined4 mode);
 void select_load_bond_picture(int objinstance,u32 bondID);
@@ -15246,13 +15852,13 @@ int get_chapter_briefing_entry(int briefing);
 void toggle_deletion_menu_for_folder(int param_1);
 void interface_menu05_filesel(void);
 int get_ptr_difficulty_name(DIFFICULTY difficulty);
-uint * constructor_menu05_filesel(undefined4 *param_1);
+u32 * constructor_menu05_filesel(undefined4 *param_1);
 void init_menu06_modesel(void);
 void update_menu06_modesel(void);
 void interface_menu06_modesel(void);
 undefined4 proc_7F00D5E8(undefined4 param_1);
 void set_menu_cursor_pos_to_setting(int setting);
-undefined4 constructor_menu06_modesel(undefined4 *param_1);
+u32 * constructor_menu06_modesel(undefined4 *param_1);
 int pull_and_display_text_for_folder_a0(undefined *param_1);
 BOOL check_if_stage_completed_on_difficulty(int stage,DIFFICULTY difficulty);
 longlong get_highest_unlocked_difficulty_for_level(longlong stage);
@@ -15260,17 +15866,17 @@ void init_menu07_missionsel(void);
 void update_menu07_missionsel(void);
 void interface_menu07_missionsel(undefined8 param_1,undefined8 param_2);
 void set_cursor_to_stage_solo(longlong param_1);
-undefined4 constructor_menu07_missionsel(undefined4 *param_1);
+u32 * constructor_menu07_missionsel(undefined4 *param_1);
 void init_menu08_difficulty(void);
 void update_menu08_difficulty(void);
 void interface_menu08_difficulty(void);
 uint * print_current_solo_briefing_stage_name(uint *param_1,byte *param_2);
 void set_cursor_pos_difficulty(int difficulty);
-undefined4 constructor_menu08_difficulty(undefined4 *param_1);
+u32 * constructor_menu08_difficulty(undefined4 *param_1);
 void init_menu09_007options(void);
 void update_menu09_007options(void);
 void interface_menu09_007options(undefined8 param_1,undefined8 param_2);
-undefined4 constructor_menu09_007options(undefined4 *param_1);
+u32 * constructor_menu09_007options(undefined4 *param_1);
 u32 get_player_control_style(int playernum);
 BOOL check_if_mp_stage_unlocked(int stage);
 void select_game_length(void);
@@ -15290,75 +15896,75 @@ void init_mp_options_for_scenario(longlong numplayers);
 void init_menu0E_mpoptions(void);
 void update_menu0E_mpoptions(void);
 void interface_menu0E_mpoptions(undefined8 param_1,undefined8 param_2);
-undefined4 constructor_menu0E_mpoptions(undefined4 *param_1);
+u32 * constructor_menu0E_mpoptions(undefined4 *param_1);
 BOOL hasPlayerSelectedMPChar(int playerchar);
 void init_menu0f_mpcharsel(void);
 void update_menu0F_mpcharsel(void);
 void interface_menu0F_mpcharsel(void);
 int proc_7F0122A8(int param_1,int param_2,int param_3);
 undefined4 * proc_7F01231C(void);
-undefined4 * constructor_menu0F_mpcharsel(undefined4 *param_1);
+u32 * constructor_menu0F_mpcharsel(undefined4 *param_1);
 void init_menu10_mphandicap(void);
 void update_menu10_mphandicap(void);
 void interface_menu10_mphandicap(void);
-undefined4 * constructor_menu10_mphandicap(undefined4 *param_1);
+u32 * constructor_menu10_mphandicap(undefined4 *param_1);
 void init_menu11_mpcontrol(void);
 void update_menu11_mpcontrols(void);
 void interface_menu11_mpcontrols(void);
-undefined4 * constructor_menu11_mpcontrol(undefined4 *param_1);
+u32 * constructor_menu11_mpcontrol(undefined4 *param_1);
 void init_menu12_mpstage(void);
 void update_menu12_mpstage(void);
 void interface_menu12_mpstage(undefined8 param_1,undefined8 param_2);
-undefined4 constructor_menu12_mpstage(undefined4 *param_1);
+u32 * constructor_menu12_mpstage(undefined4 *param_1);
 MPSCENARIOS get_scenario(void);
 void init_menu13_mpscenariosel(void);
 void update_menu13_mpscenario(void);
 void interface_menu13_mpscenario(undefined8 param_1,undefined8 param_2);
-undefined4 constructor_menu13_mpscenario(undefined4 *param_1);
+u32 * constructor_menu13_mpscenario(undefined4 *param_1);
 ulonglong get_players_team_or_scenario_item_flag(int player);
 void set_players_team_or_scenario_item_flag(int player,char flag);
 void init_menu14_mpteamsel(void);
 void update_menu14_mpteams(void);
 ulonglong interface_menu14_mpteams(undefined8 param_1,undefined8 param_2);
-undefined4 * constructor_menu14_mpteams(undefined4 *param_1);
+u32 * constructor_menu14_mpteams(undefined4 *param_1);
 void set_briefing_page(WATCH_BRIEFING_PAGE page);
 void load_briefing_text_for_stage(void);
 void init_menu0A_briefing(void);
 void update_menu0A_briefing(void);
 void interface_menu0A_briefing(undefined8 param_1,undefined8 param_2);
 uint * print_objectives_and_status_to_menu(uint *param_1,int param_2,byte *param_3,int param_4);
-undefined4 constructor_menu0A_briefing(undefined4 *param_1);
+u32 * constructor_menu0A_briefing(undefined4 *param_1);
 void init_menu0B_runstage(void);
 void init_menu0C_missionfailed(void);
 void update_menu0C_missionfailed(void);
 void interface_menu0C_missionfailed(undefined8 param_1,undefined8 param_2);
 undefined8 proc_7F01631C(void);
-undefined4 constructor_menu0C_missionfailed(undefined4 *param_1);
+u32 * constructor_menu0C_missionfailed(undefined4 *param_1);
 void init_menu0D_missioncomplete(void);
 void update_menu0D_missioncomplete(void);
 void interface_menu0D_missioncomplete(undefined8 param_1,undefined8 param_2);
-undefined4 constructor_menu0D_missioncomplete(void);
+u32 * constructor_menu0D_missioncomplete(undefined4 *param_1);
 void init_menu15_cheat(void);
 void update_menu15_cheat(void);
 void interface_menu15_cheat(undefined8 param_1,undefined8 param_2);
-undefined4 constructor_menu15_cheat(undefined4 *param_1);
+u32 * constructor_menu15_cheat(undefined4 *param_1);
 void init_menu16_nocontroller(void);
 void update_menu16_nocontrollers(void);
 void interface_menu16_nocontrollers(void);
-uint * constructor_menu16_nocontrollers(undefined4 *param_1);
+u32 * constructor_menu16_nocontrollers(undefined4 *param_1);
 void do_extended_cast_display(longlong param_1);
 void init_menu18_displaycast(void);
 void update_menu18_displaycast(void);
 void interface_menu18_displaycast(undefined8 param_1,undefined8 param_2);
-uint * constructor_menu18_displaycast(undefined4 *param_1);
+u32 * constructor_menu18_displaycast(undefined4 *param_1);
 void init_menu19_spectrum(void);
 void update_menu19_spectrum(void);
 void interface_menu19_spectrum(undefined8 param_1,undefined8 param_2);
-undefined4 * constructor_menu19_spectrum(undefined4 *param_1);
+u32 * constructor_menu19_spectrum(undefined4 *param_1);
 void set_menu_to_mode(longlong param_1,longlong param_2);
 MENU get_currentmenu(void);
 void menu_init(undefined8 param_1,undefined8 param_2);
-longlong menu_jump_constructor_handler(void);
+u32 * menu_jump_constructor_handler(u32 *param_1);
 void proc_7F01B0E0(ushort *param_1,byte *param_2);
 void proc_7F01B134(ushort *param_1,ushort *param_2);
 void proc_7F01B1C8(ushort *param_1,byte *param_2);
@@ -15456,8 +16062,8 @@ undefined8 proc_7F01FC10(int param_1,float *param_2,float *param_3,float *param_
 int get_next_available_guardID(void);
 void proc_7F020018(void);
 f32 get_guard_health(GUARDdata *param_1);
-void guard_calc_final_damage_recieved(GUARDdata *guard,u32 param_2);
-float proc_7F020090(int param_1);
+void guard_calc_final_damage_recieved(GUARDdata *guard,u32 damage);
+float proc_7F020090(GUARDdata *param_1);
 u32 init_GUARDdata_with_set_values(u32 param_1,u32 param_2,u32 param_3,u32 param_4);
 int replace_GUARDdata_with_actual_values(u32 param_1,u32 param_2,u32 param_3,undefined4 param_4,undefined4 param_5);
 void disable_sounds_attached_to_player_then_something(int param_1);
@@ -15642,12 +16248,12 @@ undefined8 proc_7F02FC34(float *param_1,float *param_2,float *param_3,float para
 undefined8 proc_7F02FD50(float *param_1,float *param_2,float *param_3,float param_4);
 void proc_7F02FE78(void);
 undefined4 proc_7F030128(int param_1,undefined4 *param_2,int param_3,undefined4 *param_4,int param_5,undefined4 param_6);
-undefined4 proc_7F0301FC(int param_1,float *param_2,undefined4 param_3,float *param_4,float param_5,undefined4 param_6);
+undefined4 proc_7F0301FC(int param_1,float *param_2,u32 param_3,float *param_4,float param_5,float param_6);
 undefined4 proc_7F0304AC(int param_1,undefined4 *param_2,int param_3,undefined4 *param_4,undefined4 *param_5,int param_6,undefined4 param_7);
-void proc_7F0305E0(int param_1,float *param_2,undefined4 param_3,float *param_4,float *param_5,float param_6,undefined4 param_7);
+void proc_7F0305E0(int param_1,float *param_2,u32 param_3,float *param_4,float *param_5,float param_6,undefined4 param_7);
 void proc_7F03074C(float *param_1,float *param_2,float *param_3);
-undefined4 proc_7F03081C(int param_1,float *param_2,undefined4 param_3,float *param_4,float *param_5,float *param_6,float param_7,float param_8,undefined4 param_9);
-undefined4 proc_7F030D70(int param_1,float *param_2,undefined4 param_3,float *param_4,float *param_5,float *param_6,float param_7,float param_8,undefined4 param_9);
+undefined4 proc_7F03081C(int param_1,float *param_2,u32 param_3,float *param_4,float *param_5,float *param_6,float param_7,float param_8,undefined4 param_9);
+undefined4 proc_7F030D70(int param_1,float *param_2,u32 param_3,float *param_4,float *param_5,float *param_6,float param_7,float param_8,undefined4 param_9);
 ulonglong proc_7F03130C(int param_1,float *param_2,longlong param_3,float *param_4,float param_5,int param_6,undefined4 *param_7,int param_8,float param_9,int param_10,int param_11);
 void proc_7F0315A4(int param_1,float *param_2,undefined8 param_3,char *param_4);
 void proc_7F032088(void);
@@ -16418,10 +17024,10 @@ void proc_7F076030(int param_1,int param_2,ushort *param_3,ushort **param_4);
 void proc_7F0760C4(ushort **param_1,ushort **param_2,int *param_3);
 void proc_7F07623C(undefined8 param_1,ushort *param_2,int param_3,int param_4);
 void proc_7F0762E0(undefined8 param_1,byte *param_2,int param_3,uint *param_4);
-void load_object_fill_header(object_header *objheader,int *recallstring,int targetloc,int sizeleft,int param_5);
-void load_object_into_memory(object_header *header,int *recallstring);
+void load_object_fill_header(object_header *objheader,u8 *recallstring,int targetloc,int sizeleft,int param_5);
+void load_object_into_memory(object_header *header,u8 *recallstring);
 void load_object_into_memory_unused_maybe(object_header *header,int *recallstring,int targetloc,int sizeleft);
-undefined8 is_less_than_certain_power_of_2(int number);
+s32 is_less_than_certain_power_of_2(int number);
 int ceil8000(int width);
 int ceil4000(int width);
 int ceil2000(int width);
@@ -16432,11 +17038,11 @@ int proc_7F0768B8(int param_1,int param_2,int param_3);
 int proc_7F076928(int param_1,int param_2,int param_3);
 void generate_microcode_for_othermode_setting(undefined4 *DL,int param_2,longlong param_3,longlong bowtie);
 void likely_generate_DL_for_image_declaration(uint **DLtarget,uint *imgcall,int param_3,longlong param_4,uint param_5);
-void proc_7F077BB8(void);
+void proc_7F077BB8(s32 param_1,s32 param_2,s32 param_3);
 void proc_7F077BD0(void);
 void set_BONDdata_screensize(float width,float height);
 void set_ulx_uly(f32 ulx,f32 uly);
-void proc_7F077C30(undefined4 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4,undefined4 param_5);
+void sub_GAME_7F077C30(f32 arg0,f32 arg1,f32 arg2);
 void proc_7F077C5C(void);
 void proc_7F077EEC(float *param_1,float *param_2,float param_3);
 void proc_7F077FB4(float *param_1,float param_2,float *param_3);
@@ -16498,7 +17104,7 @@ void proc_7F079A60(float *param_1,float *param_2,float *param_3,int param_4,floa
 void solo_char_load(void);
 void maybe_solo_intro_camera_handler(void);
 CAMERAMODE get_camera_mode(void);
-longlong proc_7F07A534(undefined4 param_1,float *param_2,char *param_3,float *param_4,undefined4 param_5,float param_6);
+longlong proc_7F07A534(undefined4 param_1,float *param_2,char *param_3,float *param_4,u32 param_5,float param_6);
 void set_camera_mode(int param_1);
 void proc_7F07B1A4(void);
 void proc_7F07B2A0(int param_1,float param_2,float *param_3,float *param_4);
@@ -16518,7 +17124,7 @@ void proc_7F07C6C8(int param_1,float param_2);
 void change_player_pos_to_target(int *target_posblock,int *src_pos,int *tile);
 void proc_7F07C7B4(void);
 void proc_7F07C888(float *param_1,float *param_2,float param_3);
-longlong proc_7F07CA2C(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5,undefined4 param_6,undefined4 *param_7,undefined4 *param_8);
+longlong proc_7F07CA2C(undefined8 param_1,f32 param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5,undefined4 param_6,undefined4 *param_7,undefined4 *param_8);
 undefined4 proc_7F07CAC8(float *param_1,undefined4 param_2,float param_3,undefined4 *param_4,undefined4 *param_5);
 void proc_7F07CDA8(float *param_1,undefined4 param_2,float param_3);
 undefined8 related_printmanpos(float *param_1,float param_2,undefined4 *param_3);
@@ -16941,7 +17547,7 @@ ulonglong is_holding_greater_than_2E_left_on_stick(void);
 ulonglong is_holding_greater_than_2E_right_on_stick(void);
 undefined4 get.controlstick_lr_enabled(void);
 void set.controlstick_lr_disabled(void);
-ulonglong proc_7F0A4FB0(void);
+bool proc_7F0A4FB0(void);
 ulonglong proc_7F0A4FEC(void);
 ulonglong proc_7F0A5028(void);
 ulonglong proc_7F0A504C(void);
@@ -16981,24 +17587,24 @@ float proc_7F0A6A2C(float param_1);
 void proc_7F0A6A80(void);
 undefined4 * proc_7F0A6EE8(undefined4 *param_1);
 void proc_7F0A70AC(int param_1,int param_2);
-undefined4 * proc_7F0A714C(void);
+undefined4 * proc_7F0A714C(u32 param_1,u32 param_2,u32 param_3);
 void proc_7F0A77A8(undefined8 param_1,undefined8 param_2);
 uint * proc_7F0A77C8(undefined4 *param_1);
 uint * proc_7F0A7C18(undefined4 *param_1);
 undefined8 proc_7F0A7DBC(undefined8 param_1);
 uint * proc_7F0A7DC4(undefined4 *param_1);
 uint * debug_gun_watch_move_related(void);
-undefined8 proc_7F0A830C(undefined8 param_1,undefined8 param_2);
+longlong proc_7F0A830C(undefined8 param_1,undefined8 param_2);
 int ** proc_7F0A8378(void);
 uint * debug_gun_watch_move_related2(undefined8 param_1,undefined8 param_2);
-uint * proc_7F0A8B10(undefined8 param_1,undefined4 param_2);
+uint * proc_7F0A8B10(undefined8 param_1,u32 param_2);
 void proc_7F0A8D40(undefined2 *param_1,float param_2,int param_3);
 void proc_7F0A8ED0(ushort *param_1);
 undefined4 * proc_7F0A8FEC(void);
 void proc_7F0A9180(void);
 void proc_7F0A91A0(ulonglong param_1);
 undefined4 * proc_7F0A91C8(void);
-ulonglong proc_7F0A9358(void);
+u16 proc_7F0A9358(void);
 void proc_7F0A9364(ushort param_1);
 uint * proc_7F0A9398(undefined4 *param_1,uint param_2,uint param_3,byte *param_4,uint param_5,int param_6,uint param_7,int param_8,int param_9,uint param_10,int param_11);
 float proc_7F0A95C4(float param_1,float param_2,undefined8 param_3,undefined8 param_4,float param_5);
@@ -17039,9 +17645,9 @@ uint * proc_7F0AE45C(uint *param_1,uint param_2,int param_3,int param_4,int para
 uint * jp_text_stuff(uint *param_1,uint *param_2,uint *param_3,byte *param_4,int param_5,int param_6,uint param_7,uint param_8,int param_9,int param_10,int param_11,int param_12);
 void proc_7F0AE98C(int *param_1,int *param_2,byte *param_3,int param_4,int *param_5,int param_6);
 void proc_7F0AEB64(int param_1,byte *param_2,byte *param_3,int param_4,int *param_5);
-void proc_7F0AEF0C(void);
+void proc_7F0AEF0C(u32 param_1,u32 param_2,u32 param_3,u32 param_4);
 u32 sub_GAME_7F0AEF20(u32 param_1,u32 param_2);
-undefined4 proc_7F0AEF30(undefined4 param_1);
+f32 proc_7F0AEF30(f32 param_1);
 char * proc_7F0AEF3C(ushort *param_1);
 char * proc_7F0AEFE0(ushort *param_1);
 undefined8 proc_7F0AF000(void);
@@ -17066,7 +17672,7 @@ float proc_7F0B00C4(int param_1,int param_2,float param_3,float param_4);
 float proc_7F0B0140(int param_1,int param_2,float param_3,float param_4);
 ulonglong proc_7F0B0198(int param_1,int param_2,float param_3,float param_4);
 undefined8 proc_7F0B02D8(void);
-undefined8 proc_7F0B036C(void);
+u32 proc_7F0B036C(u32 param_1,f32 param_2,f32 param_3);
 float proc_7F0B0400(int param_1,longlong param_2,float param_3,float param_4);
 undefined8 proc_7F0B0518(int param_1,float param_2,float param_3);
 undefined8 proc_7F0B05C0(float param_1,float param_2,undefined8 param_3,undefined8 param_4,float param_5,float param_6);
@@ -17078,7 +17684,7 @@ void proc_7F0B0C24(int *param_1,float param_2,float param_3,float param_4,float 
 void proc_7F0B0C98(int param_1,undefined8 param_2,uint **param_3);
 void proc_7F0B0CEC(int param_1,undefined8 param_2,uint **param_3);
 int proc_7F0B0D0C(int param_1,float param_2,float param_3,int *param_4,float param_5,float param_6,uint *param_7,int param_8);
-undefined4 proc_7F0B0E24(void);
+undefined4 proc_7F0B0E24(u32 *param_1,f32 param_2,f32 param_3,f32 param_4);
 char * proc_7F0B1410(int param_1,float param_2,float param_3,float param_4,float param_5,uint param_6);
 float proc_7F0B16C4(float param_1,float param_2,undefined8 param_3,undefined8 param_4,float param_5,float param_6,float param_7,float param_8);
 void proc_7F0B1794(float param_1,float param_2,undefined8 param_3,undefined8 param_4,float param_5,float param_6);
@@ -17116,14 +17722,14 @@ int * stanMatchTileName(byte *param_1);
 void proc_7F0B2F00(int **param_1);
 void load_stan(int param_1,int param_2,int param_3);
 ulonglong proc_7F0B2FD8(int param_1);
-undefined4 proc_7F0B2FE0(int param_1);
+uint proc_7F0B2FE0(int param_1);
 void proc_7F0B3004(int param_1);
 undefined8 proc_7F0B3024(undefined8 param_1);
 undefined8 proc_7F0B3034(undefined8 param_1);
 undefined8 stan_problems_removed(undefined8 param_1);
 undefined4 proc_7F0B3044(int param_1);
 undefined8 stan_region_removed(undefined8 param_1);
-void proc_7F0B3138(undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,undefined4 param_9);
+void proc_7F0B3138(undefined8 param_1,undefined8 param_2,f32 param_3,f32 param_4,undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,undefined4 param_9);
 void proc_7F0B31A4(undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined4 param_4,undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8);
 float proc_7F0B3200(float *param_1,float *param_2,float *param_3,float *param_4);
 float proc_7F0B32D8(float *param_1,float *param_2,float *param_3);
@@ -17143,15 +17749,15 @@ int proc_7F0B40D4(int param_1);
 void proc_7F0B4124(int param_1);
 void proc_7F0B47E0(void);
 void proc_7F0B4810(float param_1);
-undefined4 proc_7F0B4830(void);
-undefined4 proc_7F0B483C(void);
+f32 proc_7F0B4830(void);
+f32 proc_7F0B483C(void);
 float proc_7F0B4848(void);
-undefined4 proc_7F0B4878(void);
+f32 proc_7F0B4878(void);
 void proc_7F0B4884(void);
 void proc_7F0B4A50(char *param_1,char param_2);
 void proc_7F0B4AB4(float *param_1,float *param_2,byte *param_3,int param_4,uint *param_5,int *param_6,int param_7);
 undefined4 * proc_7F0B4E40(undefined4 *param_1);
-undefined4 proc_7F0B4F9C(int param_1);
+f32 proc_7F0B4F9C(int param_1);
 uint * proc_7F0B4FB4(uint *param_1);
 uint * proc_7F0B4FF4(uint *param_1,float param_2,float param_3,float param_4,float param_5);
 uint * proc_7F0B5058(uint *param_1,longlong param_2,longlong param_3,int param_4,int param_5);
@@ -17166,14 +17772,14 @@ uint * proc_7F0B5B60(uint *param_1,undefined8 param_2,undefined8 param_3,int par
 undefined8 vis_is_inline_of_sight(float *param_1,float *param_2);
 void proc_7F0B5CC0(float *param_1,float *param_2);
 void proc_7F0B5D58(undefined4 *param_1,undefined4 *param_2);
-char * proc_7F0B5D7C(undefined8 param_1);
-char * proc_7F0B5DE0(undefined8 param_1);
-u32 proc_7F0B5E44(void);
+char * print_port(undefined8 param_1);
+char * printroom(undefined8 param_1);
+u32 get_max_num_rooms(void);
 ulonglong proc_7F0B5E50(int param_1);
 ulonglong proc_7F0B5E6C(int param_1);
 int proc_7F0B5E88(int param_1);
 void generate_room_load_string(void);
-undefined4 decompressdata_with_8448buffer(int source,undefined4 target);
+undefined4 decompressdata_with_8448buffer(int source,int target);
 undefined4 proc_7F0B5FAC(int param_1,int param_2,int param_3);
 uint * proc_7F0B609C(int param_1,uint *param_2,int param_3);
 uint * proc_7F0B61DC(int param_1,uint *param_2,int param_3);
@@ -17286,7 +17892,7 @@ undefined *load_resource_index_to_buffer(int param_1,longlong param_2,undefined 
 undefined4 get_temp_remaining_buffer_for_index(int param_1);
 undefined4 get_remaining_buffer_for_index(int param_1);
 void proc_7F0BD138(int param_1,int param_2,int param_3,longlong param_4);
-undefined4 proc_7F0BD188(byte *param_1);
+undefined4 get_temp_buffer_remaining_value(byte *name);
 void something_mem_bank_a0(byte param_1);
 void proc_7F0BD234(void);
 int get_index_num_of_named_resource(byte *param_1);
@@ -17374,7 +17980,6 @@ void reset_all_music_slots(void);
 void set_musicslot_time(int slot,int min,int sec);
 void reset_music_in_slot(u32 param_1);
 undefined8 get_textbank_number_for_stagenum(LEVELID param_1);
-undefined8 proc_7F0C16E4(void);
 void init_LnameX(void);
 void something_with_LnameJ(void);
 int something_with_LnameX(uint param_1);
@@ -17468,7 +18073,7 @@ uint * proc_7F0CE064(uint *param_1,uint *param_2,int param_3,int param_4,int par
 uint * proc_7F0CE0AC(uint *param_1,uint *param_2,int param_3,int param_4,int param_5);
 uint * process_microcode_sort_display_modes_expand_image_calls(uint *param_1,int param_2,uint *param_3,uint *param_4);
 void proc_7F0CE794(int param_1,int param_2,int param_3);
-undefined4 decompressdata(int param_1,undefined4 param_2,undefined4 param_3);
+undefined4 decompressdata(int source,int target,int buffer);
 int proc_7F0CE894(void);
 ulonglong proc_7F0CE8B0(int *param_1,uint param_2,uint param_3,int param_4,int param_5,uint *param_6,uint *param_7);
 undefined8 proc_7F0CEEF0(int param_1,int param_2,ulonglong param_3,uint param_4);
@@ -17488,9 +18093,9 @@ void indy_send_capture_data(char *param_1,undefined *param_2,uint param_3);
 void indy_load_ramrom_file(char *param_1,undefined4 param_2,undefined4 param_3);
 void check_file_exported(char *param_1,undefined4 param_2,undefined4 param_3);
 undefined4 check_file_found_on_indy(char *param_1,undefined4 *param_2);
-undefined4 send_command_string(char *param_1);
+u32 send_command_string(char *param_1);
 void proc_7F0D0124(void);
-undefined4 send_indy_close_port_cmd(void);
+u32 send_indy_close_port_cmd(void);
 void proc_7F0D0180(void);
 void proc_7F0D01D0(void);
 undefined8 proc_7F0D0220(undefined *param_1,uint param_2);
