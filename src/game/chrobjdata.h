@@ -121,7 +121,15 @@ struct struct_13 {
     int ailistid;
 };
 
-
+struct headHat
+{
+    float xoffset;
+    float yoffset;
+    float zoffset;
+    float xsize;
+    float ysize;
+    float zsize;
+};
 
 extern struct item_related prop_cctv_related;
 extern struct item_related prop_console_one_screen_related;
