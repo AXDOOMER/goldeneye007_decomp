@@ -46,12 +46,12 @@
 #define chararray24(input) (input & 0xFF0000) >> 16, (input & 0x00FF00) >> 8, input & 0x0000FF
 #define chararray32(input) (input & 0xFF000000) >> 24, (input & 0x00FF0000) >> 16, (input & 0x0000FF00) >> 8, input & 0x000000FF
 
-#define CHR_NUM_PLAYER -8
-#define CHR_NUM_CLONE -7
-#define CHR_NUM_SEE_SHOT -6 /* stored as chr->chrseeshot */
-#define CHR_NUM_SEE_DIE -5 /* stored as chr->chrseedie */
-#define CHR_NUM_PRESET -4 /* stored as chr->chrpreset1 */
-#define CHR_NUM_SELF -3
+#define CHRAI_PLAYER -8
+#define CHRAI_CLONE -7
+#define CHRAI_SEE_SHOT -6 /* stored as chr->chrseeshot */
+#define CHRAI_SEE_DIE -5 /* stored as chr->chrseedie */
+#define CHRAI_PRESET -4 /* stored as chr->chrpreset1 */
+#define CHRAI_SELF -3
 
 #define PAD_PRESET 9000 /* stored as chr->padpreset1 */
 
@@ -150,7 +150,9 @@
 /*=============================================================================
 // name: goto_return_ai_list
 // command id: 07
-// info: goto the return list set in current chr struct
+// info: goto the return list set in chr struct - pointer set by command 06
+//=============================================================================
+// note: after restore, start at top of list
 //===========================================================================*/
 #define goto_return_ai_list_ID 0x07
 #define goto_return_ai_list_LENGTH 0x01
@@ -185,7 +187,7 @@
 // arguments:
 // start/end set to -1/-1 will playback the entire animation length
 // tween time will set how long it will take to transition from the previous state
-// (if this value is too low it may crash! - use 0x10 if unsure)
+// if tween time is too low it may crash! - use 0x10 if unsure
 // start/end keyframe and tween use 60 tick units
 // bitfield (hex):
 // 01 - mirror animation
@@ -315,7 +317,7 @@
 /*=============================================================================
 // name: guard_fire_or_aim_at_target
 // command id: 14
-// info: make guard aim/fire at target, goto label if successful
+// info: make guard aim/fire their weapon at target, goto label if successful
 //=============================================================================
 // note: bitfield argument is used to set the target type (pad/bond/chr)
 // bitfield (hex):
@@ -335,7 +337,7 @@
 /*=============================================================================
 // name: guard_fire_or_aim_at_target_kneel
 // command id: 15
-// info: make guard kneel and aim/fire at target, goto label if successful
+// info: make guard kneel and aim/fire their weapon at target, goto label if successful
 //=============================================================================
 // note: bitfield argument is used to set the target type (pad/bond/chr)
 // bitfield (hex):
@@ -582,7 +584,7 @@
 #define chr_remove_instant_LENGTH 0x02
 #define chr_remove_instant(chr_num) \
         chr_remove_instant_ID, \
-        chr_num
+        chr_num,
 
 /*=============================================================================
 // name: guard_trigger_alarm_at_pad
@@ -1145,58 +1147,58 @@
         label,
 
 /*=============================================================================
-// name: guard_hit_less_than
+// name: guard_hits_less_than
 // command id: 78
-// info: if guard's hit taken total < hit_num, goto label
+// info: if guard's hits taken < hit_num, goto label
 //=============================================================================
 // note: compares signed byte against chr->numarghs
 //===========================================================================*/
-#define guard_hit_less_than_ID 0x78
-#define guard_hit_less_than_LENGTH 0x03
-#define guard_hit_less_than(hit_num, label) \
-        guard_hit_less_than_ID, \
+#define guard_hits_less_than_ID 0x78
+#define guard_hits_less_than_LENGTH 0x03
+#define guard_hits_less_than(hit_num, label) \
+        guard_hits_less_than_ID, \
         hit_num, \
         label,
 
 /*=============================================================================
-// name: guard_hit_greater_than
+// name: guard_hits_greater_than
 // command id: 79
-// info: if guard's hit taken total > hit_num, goto label
+// info: if guard's hits taken > hit_num, goto label
 //=============================================================================
 // note: compares signed byte argument against chr->numarghs
 //===========================================================================*/
-#define guard_hit_greater_than_ID 0x79
-#define guard_hit_greater_than_LENGTH 0x03
-#define guard_hit_greater_than(hit_num, label) \
-        guard_hit_greater_than_ID, \
+#define guard_hits_greater_than_ID 0x79
+#define guard_hits_greater_than_LENGTH 0x03
+#define guard_hits_greater_than(hit_num, label) \
+        guard_hits_greater_than_ID, \
         hit_num, \
         label,
 
 /*=============================================================================
-// name: guard_missed_hit_less_than
+// name: guard_hits_missed_less_than
 // command id: 7A
-// info: if guard's shot missed/landed near guard total < missed_num, goto label
+// info: if bond's shot missed/landed near guard total < missed_num, goto label
 //=============================================================================
 // note: compares signed byte against chr->numclosearghs
 //===========================================================================*/
-#define guard_missed_hit_less_than_ID 0x7A
-#define guard_missed_hit_less_than_LENGTH 0x03
-#define guard_missed_hit_less_than(missed_num, label) \
-        guard_missed_hit_less_than_ID, \
+#define guard_hits_missed_less_than_ID 0x7A
+#define guard_hits_missed_less_than_LENGTH 0x03
+#define guard_hits_missed_less_than(missed_num, label) \
+        guard_hits_missed_less_than_ID, \
         missed_num, \
         label,
 
 /*=============================================================================
-// name: guard_missed_hit_greater_than
+// name: guard_hits_missed_greater_than
 // command id: 7B
-// info: if guard hit amount > missed_num, goto label
+// info: if bond's shot missed/landed near guard total > missed_num, goto label
 //=============================================================================
 // note: compares signed byte argument against chr->numclosearghs
 //===========================================================================*/
-#define guard_missed_hit_greater_than_ID 0x7B
-#define guard_missed_hit_greater_than_LENGTH 0x03
-#define guard_missed_hit_greater_than(missed_num, label) \
-        guard_missed_hit_greater_than_ID, \
+#define guard_hits_missed_greater_than_ID 0x7B
+#define guard_hits_missed_greater_than_LENGTH 0x03
+#define guard_hits_missed_greater_than(missed_num, label) \
+        guard_hits_missed_greater_than_ID, \
         missed_num, \
         label,
 
@@ -1850,4 +1852,23 @@
 #define gas_leak_and_fade_fog \
         gas_leak_and_fade_fog_ID,
 
+/*=============================================================================
+// macros and other common shortcut commands
+//===========================================================================*/
+#define goto_loop_start(label_id) \
+        label(label_id) \
+        sleep
+
+#define goto_loop_repeat(label) \
+        goto_first(label)
+
+#define goto_loop_infinite(label_id) \
+        label(label_id) \
+        sleep \
+        goto_first(label_id)
+
+#define transition_to_camera \
+        sleep \
+        sleep \
+        sleep
 #endif

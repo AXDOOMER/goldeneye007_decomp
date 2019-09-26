@@ -1,13 +1,23 @@
 #include "ultra64.h"
+#include "bondgame.h"
 #include "game/cheat_buttons_objectrelated.h"
+#include "game/chraicommands.h" /* needed for ai list commands, remove when moving global ai lists to chraicommands/chrai */
 // bss
 char off_CODE_bss_80079E30[0x4C];
 
+/* global ai lists used for all levels */
 // data
 //D:80037070
-u32 dword_D_80037070[] = {0x14002100, 0x10201, 0x3010104};
+u8 dword_D_80037070[] = { // global list #0000: aim at bond with weapon
+    guard_fire_or_aim_at_target(0x0021, 0x0000, 0x01) // aim at bond - don't fire
+    goto_loop_infinite(0x01)
+    ai_list_end
+};
 //D:8003707C
-u32 dword_D_8003707C[] = {0x2110301, 0x11040000};
+u8 dword_D_8003707C[] = { // global list #0001: end routine (loop forever)
+    goto_loop_infinite(0x11)
+    ai_list_end
+};
 //D:80037084
 u32 dword_D_80037084[] = {
     0x2010330, 0xFD112F06, 0x1010206, 0x32073E0D, 0x3F0E4610, 0x3A0D3B0D, 0xB033335, 0x1030600,
@@ -22,10 +32,25 @@ u32 dword_D_800370DC[] = {
     0x00000089, 0x18100002, 0x02020704
 };
 //D:8003713C
-u32 dword_D_8003713C[] = {
-    0x33353C03, 0xA00AC00, 0x4500, 0x10000202, 0x3357803, 0xA00AD00, 0x4A00,
-    0x10000202, 0x335B403, 0xA00AE00, 0x4F00, 0x10000202, 0x30A00AF, 0x59,
-    0x100002, 0x2020704
+u8 dword_D_8003713C[] = { // global list #0004: trigger random keyboard animation (subroutine)
+    random_generate // generate our random seed for animation trigger
+    random_greater_than(60, 0x03)
+    guard_animation(ANIM_keyboard_right_hand1, 0, 69, 0x00, 0x10) // play keyboard animation
+    goto_next(0x02) // jump to end, we're done
+    label(0x03)
+        random_greater_than(120, 0x03)
+        guard_animation(ANIM_keyboard_right_hand2, 0, 74, 0x00, 0x10) // play keyboard animation
+        goto_next(0x02) // jump to end, we're done
+    label(0x03)
+        random_greater_than(180, 0x03)
+        guard_animation(ANIM_keyboard_left_hand, 0, 79, 0x00, 0x10) // play keyboard animation
+        goto_next(0x02) // jump to end, we're done
+    label(0x03)
+        guard_animation(ANIM_keyboard_right_hand_tapping, 0, 89, 0x00, 0x10) // play keyboard animation
+        goto_next(0x02) // jump to end, we're done
+    label(0x02)
+        goto_return_ai_list
+    ai_list_end
 };
 //D:8003717C
 u32 dword_D_8003717C[] = {
@@ -49,7 +74,11 @@ u32 dword_D_80037224[] = {
     0x20305FD, 0x20400
 };
 //D:80037248
-u32 dword_D_80037248[] = {0x6000205, 0xFD000804};
+u8 dword_D_80037248[] = { // global list #000C: run to bond and attack
+    set_return_ai_list(0x0002) // set return list to global list #0002 (wait for bond detection)
+    goto_ai_list(CHRAI_SELF, 0x0008) // jump to global list #0008 (run to bond and attack subroutine)
+    ai_list_end
+};
 //D:80037250
 u32 dword_D_80037250[] = {
     0x2010332, 0x73E0D3F, 0xD460D3A, 0xD3B0D01, 0x1020706, 0x205FD, 0x6020D,
@@ -62,8 +91,14 @@ u32 dword_D_80037280[] = {
     0x24232805, 0x20205, 0x32F0201, 0x5020206, 0x205FD, 0x80400
 };
 //D:800372D0
-u32 dword_D_800372D0[] = {
-    0xD020103, 0x2F020101, 0x20205FD, 0x80400
+u8 dword_D_800372D0[] = { // global list #000A: startle actor (subroutine)
+    guard_animation_looks_around_self
+    goto_loop_start(0x01)
+        guard_has_stopped_moving(0x02)
+        goto_loop_repeat(0x01)
+    label(0x02)
+        goto_ai_list(CHRAI_SELF, 0x0008) // jump to global list #0008 (run to bond and attack subroutine)
+    ai_list_end
 };
 //D:800372E0
 u32 dword_D_800372E0[] = {
@@ -79,9 +114,21 @@ u32 dword_D_800372E0[] = {
     0x2B040000
 };
 //D:800373D0
-u32 dword_D_800373D0[] = {0xAE021B03, 0xB400003C, 0x3011B02, 0x3070400};
+u8 dword_D_800373D0[] = { // global list #000E: wait one second (subroutine)
+    chr_timer_reset_start
+    goto_loop_start(0x1B)
+        chr_timer_greater_than(SECS_TO_TIMER60(1), 0x03) // wait one second
+        goto_loop_repeat(0x1B)
+    label(0x03)
+        goto_return_ai_list
+    ai_list_end
+};
 //D:800373E0
-u32 dword_D_800373E0[] = {0xD205FD00, 0x1040000};
+u8 dword_D_800373E0[] = { // global list #000F: exit level
+    exit_level
+    goto_ai_list(CHRAI_SELF, 0x0001) // jump to global list #0001 (loop forever)
+    ai_list_end
+};
 //D:800373E8
 u32 dword_D_800373E8[] = {
     0x91289332, 0x2031700, 0x1000003, 0x203AE02, 0x1B03B400, 0x140301, 0x1B02030A,
@@ -91,7 +138,11 @@ u32 dword_D_800373E8[] = {
 };
 
 //D:80037444
-u32 dword_D_80037444[] = {0x23FD05FD, 0x10400};
+u8 dword_D_80037444[] = { // global list #0011: remove character
+    chr_remove_instant(CHRAI_SELF) // remove self
+    goto_ai_list(CHRAI_SELF, 0x0001) // jump to global list #0001 (loop forever)
+    ai_list_end
+};
 
 //D:8003744C
 struct struct_13 D_8003744C[] = {
