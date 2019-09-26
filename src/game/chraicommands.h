@@ -7,8 +7,10 @@
 // programmed by mark edmonds and martin hollis
 //=============================================================================
 // terminology:
+// list             list of ai commands - list must end with 04 command
 // chr              character
 // obj              objective
+// glist            global list
 // chr ai lists     0401-04FF range
 // obj ai lists     1000-10FF range
 // global ai lists  0000-0011 range
@@ -46,7 +48,7 @@
 #define chararray24(input) (input & 0xFF0000) >> 16, (input & 0x00FF00) >> 8, input & 0x0000FF
 #define chararray32(input) (input & 0xFF000000) >> 24, (input & 0x00FF0000) >> 16, (input & 0x0000FF00) >> 8, input & 0x000000FF
 
-#define CHRAI_PLAYER -8
+#define CHRAI_BOND -8
 #define CHRAI_CLONE -7
 #define CHRAI_SEE_SHOT -6 /* stored as chr->chrseeshot */
 #define CHRAI_SEE_DIE -5 /* stored as chr->chrseedie */
@@ -58,6 +60,29 @@
 #define AI_LIST_GLOBAL_START 0x0000
 #define AI_LIST_CHR_START 0x0401
 #define AI_LIST_OBJ_START 0x1000
+
+/*=============================================================================
+// global ai lists - glists
+//===========================================================================*/
+#define GLIST_AIM_AT_BOND                              0x0000 // continuously aim at bond with weapon
+#define GLIST_END_ROUTINE                              0x0001 // end routine (loop forever)
+#define GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE 0x0002 // wait for bond detection - spawn clone on heard gunfire
+#define GLIST_IDLE_RAND_ANIM_SUBROUTINE                0x0003 // play a random idle animation (subroutine)
+#define GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE            0x0004 // play a random use keyboard animation (subroutine)
+#define GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM   0x0005 // wait for bond detection - ignore gunfire and don't play idle animations
+#define GLIST_FIRE_RAND_ANIM_SUBROUTINE                0x0006 // fire at bond with random animation (subroutine)
+#define GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM        0x0007 // wait for bond detection - don't spawn clone and don't play idle animations
+#define GLIST_RUN_TO_BOND_SUBROUTINE                   0x0008 // run to bond (subroutine)
+#define GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM  0x0009 // run to chr->padpreset1 and activate alarm
+#define GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE   0x000A // startle character (subroutine)
+#define GLIST_SPAWN_CLONE_OR_RUN_TO_BOND               0x000B // if chr has been seen, run to bond - else spawn clone
+#define GLIST_RUN_TO_BOND_AND_FIRE                     0x000C // run to bond and fire
+#define GLIST_RUN_TO_BOND_AND_FIRE_RANDOMLY_HALT_CHR   0x000D // run to bond and fire (randomly halt - never gives up chasing bond)
+#define GLIST_WAIT_ONE_SECOND_SUBROUTINE               0x000E // wait for one second (subroutine)
+#define GLIST_EXIT_LEVEL                               0x000F // exit level
+#define GLIST_EQUIP_DD44_AND_FIRE                      0x0010 // draw dd44 and fire
+#define GLIST_REMOVE_CHR                               0x0011 // remove chr
+/*===========================================================================*/
 
 /*=============================================================================
 // name: goto_next
@@ -112,7 +137,7 @@
 // info: used for ai list parser to check when list ends
 //=============================================================================
 // note: not recommended to execute this command - to finish a list create an
-// infinite loop (commands 02/03/01) or jump to global list #0001 when list has
+// infinite loop (commands 02/03/01) or jump to glist end routine when list has
 // finished tasks
 //===========================================================================*/
 #define ai_list_end_ID 0x04
@@ -209,14 +234,14 @@
         bitfield, \
         interpol_time60,
 
-#define BITFLAG_MIRROR 0x01
-#define BITFLAG_UNKNOWN 0x02
-#define BITFLAG_LOOP_HOLD_LAST_FRAME 0x04
-#define BITFLAG_PLAY_SFX 0x08
-#define BITFLAG_IDLE_POSE_WHEN_COMPLETE 0x10
-#define BITFLAG_TRANSLATION_SCALE 0x20
-#define BITFLAG_NO_TRANSLATION 0x40
-#define BITFLAG_REVERSE_LOOPING_ANIMATION 0x80
+#define FLAG_MIRROR 0x01
+#define FLAG_UNKNOWN 0x02
+#define FLAG_LOOP_HOLD_LAST_FRAME 0x04
+#define FLAG_PLAY_SFX 0x08
+#define FLAG_IDLE_POSE_WHEN_COMPLETE 0x10
+#define FLAG_TRANSLATION_SCALE 0x20
+#define FLAG_NO_TRANSLATION 0x40
+#define FLAG_REVERSE_LOOPING_ANIMATION 0x80
 
 #define DEFAULT_INTERPOLATION 0x10
 
@@ -345,10 +370,10 @@
         chararray16(target), \
         label,
 
-#define BITFLAG_TARGET_BOND 0x0001
-#define BITFLAG_TARGET_CHR 0x0004
-#define BITFLAG_TARGET_PAD 0x0008
-#define BITFLAG_TARGET_AIM_ONLY 0x0020
+#define FLAG_TARGET_BOND 0x0001
+#define FLAG_TARGET_CHR 0x0004
+#define FLAG_TARGET_PAD 0x0008
+#define FLAG_TARGET_AIM_ONLY 0x0020
 
 /*=============================================================================
 // name: guard_fire_or_aim_at_target_kneel
@@ -556,7 +581,7 @@
 // command id: 20
 // info: makes guard walk a predefined path within setup
 //=============================================================================
-// note: usually paired with jump to global list #0005 or #0007
+// note: usually paired with goto glist 0005/0007
 //===========================================================================*/
 #define guard_start_patrol_ID 0x20
 #define guard_start_patrol_LENGTH 0x02
@@ -1616,7 +1641,7 @@
 // command id: D2
 // info: exits the level
 //=============================================================================
-// note: recommend not to use this command, instead goto global list 0x000F for
+// note: recommend not to use this command, instead goto glist exit level for
 // exit cutscene list. retail game has a glitch with hires mode that needs to
 // execute this command in a loop, check cuba's 1000 list
 //===========================================================================*/

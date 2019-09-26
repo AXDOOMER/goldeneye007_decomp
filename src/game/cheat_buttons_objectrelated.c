@@ -8,53 +8,53 @@ char off_CODE_bss_80079E30[0x4C];
 /* global ai lists used for all levels */
 // data
 //D:80037070
-u8 dword_D_80037070[] = { // global list #0000: aim at bond with weapon
-    guard_fire_or_aim_at_target(BITFLAG_TARGET_AIM_ONLY | BITFLAG_TARGET_BOND, 0x0000, 0x01)
+u8 dword_D_80037070[] = { // GLIST_AIM_AT_BOND: continuously aim at bond with weapon
+    guard_fire_or_aim_at_target(FLAG_TARGET_AIM_ONLY | FLAG_TARGET_BOND, 0x0000, 0x01)
     goto_loop_infinite(0x01)
     ai_list_end
 };
 //D:8003707C
-u8 dword_D_8003707C[] = { // global list #0001: end routine (loop forever)
+u8 dword_D_8003707C[] = { // GLIST_END_ROUTINE: end routine (loop forever)
     goto_loop_infinite(0x11)
     ai_list_end
 };
 //D:80037084
-u32 dword_D_80037084[] = {
+u32 dword_D_80037084[] = { // GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE: wait for bond detection - spawn clone on heard gunfire
     0x2010330, 0xFD112F06, 0x1010206, 0x32073E0D, 0x3F0E4610, 0x3A0D3B0D, 0xB033335, 0x1030600,
     0x205FD00, 0x3020301, 0x1021033, 0x357F0706, 0x205FD, 0xA0207, 0x6000205, 0xFD000602, 0xD060002,
     0x5FD0008, 0x20E0600, 0x205FD00, 0xB021105, 0xFD000104
 };
 //D:800370DC
-u8 dword_D_800370DC[] = { // global list #0004: random idle animation (subroutine)
+u8 dword_D_800370DC[] = { // GLIST_IDLE_RAND_ANIM_SUBROUTINE: play a random idle animation (subroutine)
     random_generate // generate our random seed for random animations
     random_greater_than(50, 0x03)
-    guard_animation(ANIM_yawning, 0, 193, BITFLAG_IDLE_POSE_WHEN_COMPLETE | BITFLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
+    guard_animation(ANIM_yawning, 0, 193, FLAG_IDLE_POSE_WHEN_COMPLETE | FLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
     goto_next(0x02) // jump to end, we're done
     label(0x03)
         random_greater_than(100, 0x03)
-        guard_animation(ANIM_swatting_flies, 0, 294, BITFLAG_IDLE_POSE_WHEN_COMPLETE | BITFLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
+        guard_animation(ANIM_swatting_flies, 0, 294, FLAG_IDLE_POSE_WHEN_COMPLETE | FLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
         goto_next(0x02) // jump to end, we're done
     label(0x03)
         random_greater_than(150, 0x03)
-        guard_animation(ANIM_scratching_leg, 0, 183, BITFLAG_IDLE_POSE_WHEN_COMPLETE | BITFLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
+        guard_animation(ANIM_scratching_leg, 0, 183, FLAG_IDLE_POSE_WHEN_COMPLETE | FLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
         goto_next(0x02) // jump to end, we're done
     label(0x03)
         random_greater_than(200, 0x03)
-        guard_animation(ANIM_scratching_butt, 0, 123, BITFLAG_IDLE_POSE_WHEN_COMPLETE | BITFLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
+        guard_animation(ANIM_scratching_butt, 0, 123, FLAG_IDLE_POSE_WHEN_COMPLETE | FLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
         goto_next(0x02) // jump to end, we're done
     label(0x03)
         random_greater_than(250, 0x03)
-        guard_animation(ANIM_adjusting_crotch, 0, 56, BITFLAG_IDLE_POSE_WHEN_COMPLETE | BITFLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
+        guard_animation(ANIM_adjusting_crotch, 0, 56, FLAG_IDLE_POSE_WHEN_COMPLETE | FLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
         goto_next(0x02) // jump to end, we're done
     label(0x03)
-        guard_animation(ANIM_sneeze, 0, 137, BITFLAG_IDLE_POSE_WHEN_COMPLETE | BITFLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
+        guard_animation(ANIM_sneeze, 0, 137, FLAG_IDLE_POSE_WHEN_COMPLETE | FLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
         goto_next(0x02) // jump to end, we're done
     label(0x02)
         goto_return_ai_list
     ai_list_end
 };
 //D:8003713C
-u8 dword_D_8003713C[] = { // global list #0004: random use keyboard animation (subroutine)
+u8 dword_D_8003713C[] = { // GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE: play a random use keyboard animation (subroutine)
     random_generate // generate our random seed for random animations
     random_greater_than(60, 0x03)
     guard_animation(ANIM_keyboard_right_hand1, 0, 69, 0x00, DEFAULT_INTERPOLATION)
@@ -75,66 +75,76 @@ u8 dword_D_8003713C[] = { // global list #0004: random use keyboard animation (s
     ai_list_end
 };
 //D:8003717C
-u32 dword_D_8003717C[] = {
+u32 dword_D_8003717C[] = { // GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM: wait for bond detection - ignore gunfire and don't play idle animations
     0x201032F, 0x6010102, 0x632073E, 0xD46103A, 0xD3B0D01, 0x1021033, 0x357F0706,
     0x205FD, 0xA0207, 0x6000205, 0xFD000602, 0xD060002, 0x5FD0008, 0x4000000
 };
 //D:800371B4
-u32 dword_D_800371B4[] = {
+u32 dword_D_800371B4[] = { // GLIST_FIRE_RAND_ANIM_SUBROUTINE: fire at bond with random animation (subroutine)
     0x96010333, 0x3520030C, 0x94010702, 0x394011A, 0x2020333, 0x350A0313,
     0x2020333, 0x350A030F, 0x2020333, 0x3519030E, 0x2020333, 0x35320310,
     0x2020333, 0x35400311, 0x2020335, 0x7F031202, 0x2033335, 0x7F0B1400,
     0x1000002, 0x20B1500, 0x1000002, 0x2020704
 };
 //D:8003720C
-u8 dword_D_8003720C[] = { // global list #000C: run to bond (subroutine)
-    0x94, 0x01, // commands yet to be converted to macros
-    guard_runs_to_bond_position(0x01) // goto loop if bond is in reachable position
-    goto_return_ai_list // if guard can't reach bond return (read guard_runs_to_bond_position command info)
+u8 dword_D_8003720C[] = { // GLIST_RUN_TO_BOND_SUBROUTINE: run to bond (subroutine)
+    0x94, 0x01, // commands yet to be converted to macro
+    guard_runs_to_bond_position(0x01) // goto loop if bond position is reachable
+    goto_return_ai_list // if guard can't reach bond, return to ai list (read guard_runs_to_bond_position command info)
     goto_loop_start(0x01)
         guard_has_stopped_moving(0x06)
         guard_check_vision_for_bond(0x07) // detected bond, goto attack list
         goto_loop_repeat(0x01)
     label(0x07)
-        goto_ai_list(CHRAI_SELF, 0x0006) // jump to global list #0006 (random attack subroutine)
+        goto_ai_list(CHRAI_SELF, GLIST_FIRE_RAND_ANIM_SUBROUTINE)
     label(0x06)
         goto_return_ai_list
     ai_list_end
 };
 //D:80037224
-u32 dword_D_80037224[] = {
-    0x9401410E, 0x5FD0008, 0x20E31F9, 0xE05FD00, 0x2020EC1, 0xFD000C03, 0x5FD0008,
-    0x20305FD, 0x20400
+u8 dword_D_80037224[] = { // GLIST_SPAWN_CLONE_OR_RUN_TO_BOND: if chr has been seen, run to bond - else spawn clone
+    0x94, 0x01, // commands yet to be converted to macro
+    guard_has_not_been_seen(0x0E) // if guard has yet to be seen by bond, goto 0E
+    goto_ai_list(CHRAI_SELF, GLIST_RUN_TO_BOND_SUBROUTINE) // guard has been seen, run to bond and fire
+    label(0x0E)
+        chr_does_not_exist(CHRAI_CLONE, 0x0E) // if clone doesn't exist, goto 0E
+        goto_ai_list(CHRAI_SELF, GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE) // continue idling
+    label(0x0E)
+        chr_spawn_clone(CHRAI_SELF, GLIST_RUN_TO_BOND_AND_FIRE, 0x03) // attempt to spawn clone with run to bond list assigned, if success goto 03
+        goto_ai_list(CHRAI_SELF, GLIST_RUN_TO_BOND_SUBROUTINE) // guard failed to spawn (not enough memory/guard doesn't have clone flag on), just run at bond anyway
+    label(0x03) // if clone spawn was successful
+        goto_ai_list(CHRAI_SELF, GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE) // set original chr to sit tight while the clone does all the work, giving the illusion that bunker ii is a crowded complex
+    ai_list_end
 };
 //D:80037248
-u8 dword_D_80037248[] = { // global list #000C: run to bond and attack
-    set_return_ai_list(0x0002) // set return list to global list #0002 (wait for bond detection)
-    goto_ai_list(CHRAI_SELF, 0x0008) // jump to global list #0008 (run to bond and attack subroutine)
+u8 dword_D_80037248[] = { // GLIST_RUN_TO_BOND_AND_FIRE: run to bond and fire
+    set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+    goto_ai_list(CHRAI_SELF, GLIST_RUN_TO_BOND_SUBROUTINE)
     ai_list_end
 };
 //D:80037250
-u32 dword_D_80037250[] = {
+u32 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for bond detection - don't spawn clone and don't play idle animations
     0x2010332, 0x73E0D3F, 0xD460D3A, 0xD3B0D01, 0x1020706, 0x205FD, 0x6020D,
     0x6000205, 0xFD000802, 0xE060002, 0x5FD000B, 0x4000000
 };
 //D:80037280
-u32 dword_D_80037280[] = {
+u32 dword_D_80037280[] = { // GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM: wait for bond detection - don't spawn clone and don't play idle animations
     0x201032F, 0x6010102, 0x6320F7B, 0x103F10, 0x3A103B10, 0x1010210, 0x79000F0D,
     0x204032F, 0xF010402, 0xF1C2328, 0x203032F, 0x2010302, 0x24EFD00, 0xA232802,
     0x24232805, 0x20205, 0x32F0201, 0x5020206, 0x205FD, 0x80400
 };
 //D:800372D0
-u8 dword_D_800372D0[] = { // global list #000A: startle actor (subroutine)
+u8 dword_D_800372D0[] = { // GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE: startle character (subroutine)
     guard_animation_looks_around_self
     goto_loop_start(0x01)
         guard_has_stopped_moving(0x02)
         goto_loop_repeat(0x01)
     label(0x02)
-        goto_ai_list(CHRAI_SELF, 0x0008) // jump to global list #0008 (run to bond and attack subroutine)
+        goto_ai_list(CHRAI_SELF, GLIST_RUN_TO_BOND_SUBROUTINE)
     ai_list_end
 };
 //D:800372E0
-u32 dword_D_800372E0[] = {
+u32 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_RANDOMLY_HALT_CHR: run to bond and fire (randomly halt - never gives up chasing bond)
     0x228281B, 0xAD6E6F20, 0x676F210A, 0x21B03, 0x3C062F02, 0x11B0201, 0x378062D,
     0x9F000000, 0x102F022D, 0x2F064C00, 0xC8030101, 0x2030128, 0x2063C03,
     0x20224, 0x34B0032, 0x32F0301, 0x2802039F, 0x10, 0x2F022B33, 0x350A031A,
@@ -147,7 +157,7 @@ u32 dword_D_800372E0[] = {
     0x2B040000
 };
 //D:800373D0
-u8 dword_D_800373D0[] = { // global list #000E: wait one second (subroutine)
+u8 dword_D_800373D0[] = { // GLIST_WAIT_ONE_SECOND_SUBROUTINE: wait for one second (subroutine)
     chr_timer_reset_start
     goto_loop_start(0x1B)
         chr_timer_greater_than(SECS_TO_TIMER60(1), 0x03) // wait one second
@@ -157,13 +167,13 @@ u8 dword_D_800373D0[] = { // global list #000E: wait one second (subroutine)
     ai_list_end
 };
 //D:800373E0
-u8 dword_D_800373E0[] = { // global list #000F: exit level
+u8 dword_D_800373E0[] = { // GLIST_EXIT_LEVEL: exit level
     exit_level
-    goto_ai_list(CHRAI_SELF, 0x0001) // jump to global list #0001 (loop forever)
+    goto_ai_list(CHRAI_SELF, GLIST_END_ROUTINE)
     ai_list_end
 };
 //D:800373E8
-u32 dword_D_800373E8[] = {
+u32 dword_D_800373E8[] = { // GLIST_EQUIP_DD44_AND_FIRE: draw dd44 and fire
     0x91289332, 0x2031700, 0x1000003, 0x203AE02, 0x1B03B400, 0x140301, 0x1B02030A,
     0x420000, 0x140410, 0x21C032F, 0x3011C02, 0x3BF00CD, 0x6000000, 0x30203,
     0x14002100, 0x30203, 0x16000100, 0x30203, 0x21E032F, 0x3011E02, 0x3060002,
@@ -171,32 +181,32 @@ u32 dword_D_800373E8[] = {
 };
 
 //D:80037444
-u8 dword_D_80037444[] = { // global list #0011: remove character
+u8 dword_D_80037444[] = { // GLIST_REMOVE_CHR: remove chr
     chr_remove_instant(CHRAI_SELF) // remove self
-    goto_ai_list(CHRAI_SELF, 0x0001) // jump to global list #0001 (loop forever)
+    goto_ai_list(CHRAI_SELF, GLIST_END_ROUTINE)
     ai_list_end
 };
 
 //D:8003744C
-struct struct_13 D_8003744C[] = {
-    {dword_D_80037070, 0},
-    {dword_D_8003707C, 1},
-    {dword_D_80037084, 2},
-    {dword_D_800370DC, 3},
-    {dword_D_8003713C, 4},
-    {dword_D_8003717C, 5},
-    {dword_D_800371B4, 6},
-    {dword_D_80037250, 7},
-    {dword_D_8003720C, 8},
-    {dword_D_80037280, 9},
-    {dword_D_800372D0, 0xA},
-    {dword_D_80037224, 0xB},
-    {dword_D_80037248, 0xC},
-    {dword_D_800372E0, 0xD},
-    {dword_D_800373D0, 0xE},
-    {dword_D_800373E0, 0xF},
-    {dword_D_800373E8, 0x10},
-    {dword_D_80037444, 0x11}
+struct struct_13 D_8003744C[] = { // global ai lists (glists)
+    {dword_D_80037070, GLIST_AIM_AT_BOND},
+    {dword_D_8003707C, GLIST_END_ROUTINE},
+    {dword_D_80037084, GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE},
+    {dword_D_800370DC, GLIST_IDLE_RAND_ANIM_SUBROUTINE},
+    {dword_D_8003713C, GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE},
+    {dword_D_8003717C, GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM},
+    {dword_D_800371B4, GLIST_FIRE_RAND_ANIM_SUBROUTINE},
+    {dword_D_80037250, GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM},
+    {dword_D_8003720C, GLIST_RUN_TO_BOND_SUBROUTINE},
+    {dword_D_80037280, GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM},
+    {dword_D_800372D0, GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE},
+    {dword_D_80037224, GLIST_SPAWN_CLONE_OR_RUN_TO_BOND},
+    {dword_D_80037248, GLIST_RUN_TO_BOND_AND_FIRE},
+    {dword_D_800372E0, GLIST_RUN_TO_BOND_AND_FIRE_RANDOMLY_HALT_CHR},
+    {dword_D_800373D0, GLIST_WAIT_ONE_SECOND_SUBROUTINE},
+    {dword_D_800373E0, GLIST_EXIT_LEVEL},
+    {dword_D_800373E8, GLIST_EQUIP_DD44_AND_FIRE},
+    {dword_D_80037444, GLIST_REMOVE_CHR}
 };
 //D:800374DC
 u32 D_800374DC[] = {0,0};
