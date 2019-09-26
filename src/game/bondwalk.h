@@ -1,7 +1,7 @@
 #ifndef _BONDWALK_H_
 #define _BONDWALK_H_
 #include "ultra64.h"
-#include "game/cheat_buttons_objectrelated.h"
+#include "game/chrobjdata.h"
 
 struct weapon_stats
 {

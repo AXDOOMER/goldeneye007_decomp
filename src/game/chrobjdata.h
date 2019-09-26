@@ -1,5 +1,5 @@
-#ifndef _CHEAT_BUTTONS_OBJECTRELATED_H_
-#define _CHEAT_BUTTONS_OBJECTRELATED_H_
+#ifndef _CHROBJDATA_H_
+#define _CHROBJDATA_H_
 #include "ultra64.h"
 
 struct prop_pos_data {
@@ -121,15 +121,7 @@ struct struct_13 {
     int ailistid;
 };
 
-struct struct_15 {
-    char anonymous_0;
-    char field_1;
-    char field_2;
-    char field_3;
-    void * anonymous_1;
-    int anonymous_2;
-    int anonymous_3;
-};
+
 
 extern struct item_related prop_cctv_related;
 extern struct item_related prop_console_one_screen_related;

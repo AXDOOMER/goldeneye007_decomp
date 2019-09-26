@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "game/bondwalk.h"
-#include "game/cheat_buttons_objectrelated.h"
+#include "game/chrobjdata.h"
 #include "bondgame.h"
 
 // bss

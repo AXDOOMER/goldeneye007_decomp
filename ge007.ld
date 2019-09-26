@@ -151,7 +151,7 @@ SECTIONS
       build/game/unk_08DBB0.o (.text);
       build/game/debugmenu_08FE00.o (.text);
       build/game/unk_091080.o (.text);
-      build/game/cheat_buttons_objectrelated.o (.text);
+      build/game/cheat_buttons.o (.text);
       build/game/unk_092890.o (.text);
       build/game/unk_092E50.o (.text);
       build/game/unk_093880.o (.text);
@@ -349,7 +349,7 @@ SECTIONS
       build/game/unk_08DBB0.o (.data);
       build/game/debugmenu_08FE00.o (.data);
       build/game/unk_091080.o (.data);
-      build/game/cheat_buttons_objectrelated.o (.data);
+      build/game/cheat_buttons.o (.data);
       build/game/unk_092890.o (.data);
       build/game/unk_092E50.o (.data);
       build/game/unk_093880.o (.data);
@@ -457,7 +457,7 @@ SECTIONS
       build/game/unk_08DBB0.o (.rodata);
       build/game/debugmenu_08FE00.o (.rodata);
       build/game/unk_091080.o (.rodata);
-      build/game/cheat_buttons_objectrelated.o (.rodata);
+      build/game/cheat_buttons.o (.rodata);
       build/game/unk_092890.o (.rodata);
       build/game/unk_092E50.o (.rodata);
       build/game/unk_093880.o (.rodata);
@@ -600,7 +600,7 @@ SECTIONS
       build/game/unk_08DBB0.o (.bss);
       build/game/debugmenu_08FE00.o (.bss);
       build/game/unk_091080.o (.bss);
-      build/game/cheat_buttons_objectrelated.o (.bss);
+      build/game/cheat_buttons.o (.bss);
       build/game/unk_092890.o (.bss);
       build/game/unk_092E50.o (.bss);
       build/game/unk_093880.o (.bss);

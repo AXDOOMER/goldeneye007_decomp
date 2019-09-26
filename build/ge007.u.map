@@ -123,7 +123,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/game/initanitable.o
  .options       0x0000000000000000       0x20 build/src/game/initunk_000B60.o
  .reginfo       0x0000000000000000       0x18 build/src/game/initunk_000B60.o
- .mdebug        0x0000000000000000      0x3ac build/src/game/initunk_000B60.o
+ .mdebug        0x0000000000000000      0x39c build/src/game/initunk_000B60.o
  .options       0x0000000000000000       0x20 build/src/game/setguscale.o
  .reginfo       0x0000000000000000       0x18 build/src/game/setguscale.o
  .options       0x0000000000000000       0x20 build/src/game/initnull_000BC0.o
@@ -262,8 +262,12 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/game/debugmenu_090490.o
  .options       0x0000000000000000       0x20 build/src/game/unk_091080.o
  .reginfo       0x0000000000000000       0x18 build/src/game/unk_091080.o
- .options       0x0000000000000000       0x20 build/src/game/cheat_buttons_objectrelated.o
- .reginfo       0x0000000000000000       0x18 build/src/game/cheat_buttons_objectrelated.o
+ .options       0x0000000000000000       0x20 build/src/game/chrobjdata.o
+ .reginfo       0x0000000000000000       0x18 build/src/game/chrobjdata.o
+ .gptab.data    0x0000000000000000      0x108 build/src/game/chrobjdata.o
+ .mdebug        0x0000000000000000     0x7968 build/src/game/chrobjdata.o
+ .options       0x0000000000000000       0x20 build/src/game/cheat_buttons.o
+ .reginfo       0x0000000000000000       0x18 build/src/game/cheat_buttons.o
  .options       0x0000000000000000       0x20 build/src/game/unk_092890.o
  .reginfo       0x0000000000000000       0x18 build/src/game/unk_092890.o
  .options       0x0000000000000000       0x20 build/src/game/unk_092E50.o
@@ -3227,8 +3231,9 @@ Linker script and memory map
                 0x000000007f091618                sub_GAME_7F091618
                 0x000000007f09166c                sub_GAME_7F09166C
                 0x000000007f0916f4                sub_GAME_7F0916F4
- build/src/game/cheat_buttons_objectrelated.o(.text)
- .text          0x000000007f091740     0x1150 build/src/game/cheat_buttons_objectrelated.o
+ build/src/game/chrobjdata.o(.text)
+ build/src/game/cheat_buttons.o(.text)
+ .text          0x000000007f091740     0x1150 build/src/game/cheat_buttons.o
                 0x000000007f091740                sub_GAME_7F091740
                 0x000000007f09177c                sub_GAME_7F09177C
                 0x000000007f09193c                sub_GAME_7F09193C
@@ -17628,8 +17633,8 @@ Linker script and memory map
                 0x0000000080037060                D_80037060
                 0x0000000080037064                D_80037064
                 0x0000000080037068                D_80037068
- build/src/game/cheat_buttons_objectrelated.o(.data)
- .data          0x0000000080037070     0x8c50 build/src/game/cheat_buttons_objectrelated.o
+ build/src/game/chrobjdata.o(.data)
+ .data          0x0000000080037070     0x83c0 build/src/game/chrobjdata.o
                 0x0000000080037070                dword_D_80037070
                 0x000000008003707c                dword_D_8003707C
                 0x0000000080037084                dword_D_80037084
@@ -18245,6 +18250,8 @@ Linker script and memory map
                 0x000000008003e45c                D_8003E45C
                 0x000000008003e460                D_8003E460
                 0x000000008003e464                D_8003E464
+ build/src/game/cheat_buttons.o(.data)
+ .data          0x000000008003f430      0x890 build/src/game/cheat_buttons.o
                 0x000000008003f430                dword_D_8003F430
                 0x000000008003f444                dword_D_8003F444
                 0x000000008003f458                dword_D_8003F458
@@ -20162,11 +20169,12 @@ Linker script and memory map
                 0x0000000080055858                D_80055858
                 0x000000008005585c                D_8005585C
                 0x0000000080055860                D_80055860
- build/src/game/cheat_buttons_objectrelated.o(.rodata)
- .rodata        0x0000000080055870     0x1ca0 build/src/game/cheat_buttons_objectrelated.o
+ build/src/game/chrobjdata.o(.rodata)
+ .rodata        0x0000000080055870     0x1a40 build/src/game/chrobjdata.o
                 0x0000000080055a54                spacer_string
                 0x0000000080056e74                padding_chars_for_strings
-                0x00000000800572a8                PADDINGHACKS
+ build/src/game/cheat_buttons.o(.rodata)
+ .rodata        0x00000000800572b0      0x260 build/src/game/cheat_buttons.o
                 0x00000000800572b0                jpt_cheats_cheat
                 0x00000000800573d8                finalamount
                 0x00000000800573dc                jpt_800573DC
@@ -21386,8 +21394,9 @@ Linker script and memory map
  build/src/game/unk_091080.o(.bss)
  .bss           0x0000000080079e20       0x10 build/src/game/unk_091080.o
                 0x0000000080079e20                dword_CODE_bss_80079E20
- build/src/game/cheat_buttons_objectrelated.o(.bss)
- .bss           0x0000000080079e30       0x50 build/src/game/cheat_buttons_objectrelated.o
+ build/src/game/chrobjdata.o(.bss)
+ build/src/game/cheat_buttons.o(.bss)
+ .bss           0x0000000080079e30       0x50 build/src/game/cheat_buttons.o
                 0x0000000080079e30                off_CODE_bss_80079E30
  build/src/game/unk_092890.o(.bss)
  build/src/game/unk_092E50.o(.bss)
