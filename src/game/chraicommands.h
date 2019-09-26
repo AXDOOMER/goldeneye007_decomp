@@ -1435,7 +1435,6 @@
 #define guard_set_accuracy_rating(accuracy_rating) \
         guard_set_accuracy_rating_ID, \
         accuracy_rating,
-
 /*=============================================================================
 // name: guard_bitfield_set_on
 // command id: 94
@@ -1447,9 +1446,9 @@
 //===========================================================================*/
 #define guard_bitfield_set_on_ID 0x94
 #define guard_bitfield_set_on_LENGTH 0x02
-#define guard_bitfield_set_on(bits) \
+#define guard_bitfield_set_on(bitfield) \
         guard_bitfield_set_on_ID, \
-        bits,
+        bitfield,
 
 /*=============================================================================
 // name: guard_bitfield_set_off
@@ -1462,9 +1461,9 @@
 //===========================================================================*/
 #define guard_bitfield_set_off_ID 0x95
 #define guard_bitfield_set_off_LENGTH 0x02
-#define guard_bitfield_set_off(bits) \
+#define guard_bitfield_set_off(bitfield) \
         guard_bitfield_set_off_ID, \
-        bits,
+        bitfield,
 
 /*=============================================================================
 // name: guard_bitfield_is_on
@@ -1473,9 +1472,9 @@
 //===========================================================================*/
 #define guard_bitfield_is_on_ID 0x96
 #define guard_bitfield_is_on_LENGTH 0x03
-#define guard_bitfield_is_on(bits, label) \
+#define guard_bitfield_is_on(bitfield, label) \
         guard_bitfield_is_on_ID, \
-        bits, \
+        bitfield, \
         label,
 
 /*=============================================================================
@@ -1489,10 +1488,10 @@
 //===========================================================================*/
 #define chr_bitfield_set_on_ID 0x97
 #define chr_bitfield_set_on_LENGTH 0x03
-#define chr_bitfield_set_on(chr_num, bits) \
+#define chr_bitfield_set_on(chr_num, bitfield) \
         chr_bitfield_set_on_ID, \
         chr_num, \
-        bits,
+        bitfield,
 
 /*=============================================================================
 // name: chr_bitfield_set_off
@@ -1505,10 +1504,10 @@
 //===========================================================================*/
 #define chr_bitfield_set_off_ID 0x98
 #define chr_bitfield_set_off_LENGTH 0x03
-#define chr_bitfield_set_off(chr_num, bits) \
+#define chr_bitfield_set_off(chr_num, bitfield) \
         chr_bitfield_set_off_ID, \
         chr_num, \
-        bits,
+        bitfield,
 
 /*=============================================================================
 // name: chr_bitfield_is_on
@@ -1517,24 +1516,160 @@
 //===========================================================================*/
 #define chr_bitfield_is_on_ID 0x99
 #define chr_bitfield_is_on_LENGTH 0x04
-#define chr_bitfield_is_on(chr_num, bits, label) \
+#define chr_bitfield_is_on(chr_num, bitfield, label) \
         chr_bitfield_is_on_ID, \
         chr_num, \
-        bits, \
+        bitfield, \
         label,
 
 /*=============================================================================
-// name: guard_set_flags
+// name: guard_flags_set_on
 // command id: 9D
-// info: set chr->chrflags
+// info: set chr->chrflags on
 //=============================================================================
-// note: 
+// note: chr->chrflags are not ai list or setup exclusive, they are controlled
+// by many parts of the engine.
+// bitfield (hex):
+// 00000002 - sunglasses
+// 00000010 - invincible
+// 00000040 - can shoot other guards
+// 00000400 - hidden
+// 00000800 - no autoaim
+// 00001000 - lock y position (no gravity, used for dam/cradle jump)
+// 00002000 - no shadow
+// 00004000 - ignore animation translation
+// 00080000 - increase sprinting speed
 //===========================================================================*/
-#define guard_set_flags_ID 0x9D
-#define guard_set_flags_LENGTH 0x05
-#define guard_set_flags(accuracy_rating) \
-        guard_set_flags_ID, \
-        accuracy_rating,
+#define guard_flags_set_on_ID 0x9D
+#define guard_flags_set_on_LENGTH 0x05
+#define guard_flags_set_on(bitfield) \
+        guard_flags_set_on_ID, \
+        chararray32(bitfield),
+
+/*=============================================================================
+// name: guard_flags_set_off
+// command id: 9E
+// info: set chr->chrflags off
+//=============================================================================
+// note: chr->chrflags are not ai list or setup exclusive, they are controlled
+// by many parts of the engine.
+// bitfield (hex):
+// 00000002 - sunglasses
+// 00000010 - invincible
+// 00000040 - can shoot other guards
+// 00000400 - hidden
+// 00000800 - no autoaim
+// 00001000 - lock y position (no gravity, used for dam/cradle jump)
+// 00002000 - no shadow
+// 00004000 - ignore animation translation
+// 00080000 - increase sprinting speed
+//===========================================================================*/
+#define guard_flags_set_off_ID 0x9E
+#define guard_flags_set_off_LENGTH 0x05
+#define guard_flags_set_off(bitfield) \
+        guard_flags_set_off_ID, \
+        chararray32(bitfield),
+
+/*=============================================================================
+// name: guard_flags_is_on
+// command id: 9F
+// info: if bits is set on in chr->chrflags, goto label
+//=============================================================================
+// note: chr->chrflags are not ai list or setup exclusive, they are controlled
+// by many parts of the engine.
+// bitfield (hex):
+// 00000002 - sunglasses
+// 00000010 - invincible
+// 00000040 - can shoot other guards
+// 00000400 - hidden
+// 00000800 - no autoaim
+// 00001000 - lock y position (no gravity, used for dam/cradle jump)
+// 00002000 - no shadow
+// 00004000 - ignore animation translation
+// 00080000 - increase sprinting speed
+//===========================================================================*/
+#define guard_flags_is_on_ID 0x9F
+#define guard_flags_is_on_LENGTH 0x06
+#define guard_flags_is_on(bitfield, label) \
+        guard_flags_is_on_ID, \
+        chararray32(bitfield), \
+        label,
+
+/*=============================================================================
+// name: chr_flags_set_on
+// command id: A0
+// info: set chr->chrflags on
+//=============================================================================
+// note: chr->chrflags are not ai list or setup exclusive, they are controlled
+// by many parts of the engine.
+// bitfield (hex):
+// 00000002 - sunglasses
+// 00000010 - invincible
+// 00000040 - can shoot other guards
+// 00000400 - hidden
+// 00000800 - no autoaim
+// 00001000 - lock y position (no gravity, used for dam/cradle jump)
+// 00002000 - no shadow
+// 00004000 - ignore animation translation
+// 00080000 - increase sprinting speed
+//===========================================================================*/
+#define chr_flags_set_on_ID 0xA0
+#define chr_flags_set_on_LENGTH 0x06
+#define chr_flags_set_on(chr_num, bitfield) \
+        chr_flags_set_on_ID, \
+        chr_num, \
+        chararray32(bitfield),
+
+/*=============================================================================
+// name: chr_flags_set_off
+// command id: A1
+// info: set chr->chrflags off
+//=============================================================================
+// note: chr->chrflags are not ai list or setup exclusive, they are controlled
+// by many parts of the engine.
+// bitfield (hex):
+// 00000002 - sunglasses
+// 00000010 - invincible
+// 00000040 - can shoot other guards
+// 00000400 - hidden
+// 00000800 - no autoaim
+// 00001000 - lock y position (no gravity, used for dam/cradle jump)
+// 00002000 - no shadow
+// 00004000 - ignore animation translation
+// 00080000 - increase sprinting speed
+//===========================================================================*/
+#define chr_flags_set_off_ID 0xA1
+#define chr_flags_set_off_LENGTH 0x06
+#define chr_flags_set_off(chr_num, bitfield) \
+        chr_flags_set_off_ID, \
+        chr_num, \
+        chararray32(bitfield),
+
+/*=============================================================================
+// name: chr_flags_is_on
+// command id: A2
+// info: if bits is set on in chr->chrflags, goto label
+//=============================================================================
+// note: chr->chrflags are not ai list or setup exclusive, they are controlled
+// by many parts of the engine.
+// bitfield (hex):
+// 00000002 - sunglasses
+// 00000010 - invincible
+// 00000040 - can shoot other guards
+// 00000400 - hidden
+// 00000800 - no autoaim
+// 00001000 - lock y position (no gravity, used for dam/cradle jump)
+// 00002000 - no shadow
+// 00004000 - ignore animation translation
+// 00080000 - increase sprinting speed
+//===========================================================================*/
+#define chr_flags_is_on_ID 0xA2
+#define chr_flags_is_on_LENGTH 0x07
+#define chr_flags_is_on(chr_num, bitfield, label) \
+        chr_flags_is_on_ID, \
+        chr_num, \
+        chararray32(bitfield), \
+        label,
 
 /*=============================================================================
 // name: chr_timer_reset_start
