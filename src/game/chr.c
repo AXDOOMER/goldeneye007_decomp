@@ -3619,8 +3619,8 @@ glabel sub_GAME_7F020EF0
 /* 05614C 7F02161C 01C47021 */  addu  $t6, $t6, $a0
 /* 056150 7F021620 000E7100 */  sll   $t6, $t6, 4
 /* 056154 7F021624 000948C0 */  sll   $t1, $t1, 3
-/* 056158 7F021628 3C0B8004 */  lui   $t3, %hi(D_8003E464) # $t3, 0x8004
-/* 05615C 7F02162C 256BE464 */  addiu $t3, %lo(D_8003E464) # addiu $t3, $t3, -0x1b9c
+/* 056158 7F021628 3C0B8004 */  lui   $t3, %hi(headHat_array_8003E464) # $t3, 0x8004
+/* 05615C 7F02162C 256BE464 */  addiu $t3, %lo(headHat_array_8003E464) # addiu $t3, $t3, -0x1b9c
 /* 056160 7F021630 01C95021 */  addu  $t2, $t6, $t1
 /* 056164 7F021634 014B1821 */  addu  $v1, $t2, $t3
 /* 056168 7F021638 0FC243BF */  jal   get_debug_render_raster
