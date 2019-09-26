@@ -38,7 +38,7 @@
 //=============================================================================
 // command note
 //=============================================================================
-// commands with guard prefix are exclusive to guards in levels, they can't be
+// commands with guard prefix are exclusive to chr ai lists, they can't be
 // executed by obj ai lists (10XX) or it will crash! commands with chr prefix can
 // be used by obj/chr ai lists - exceptions to this rule are detailed within
 // the command description
@@ -48,12 +48,12 @@
 #define chararray24(input) (input & 0xFF0000) >> 16, (input & 0x00FF00) >> 8, input & 0x0000FF
 #define chararray32(input) (input & 0xFF000000) >> 24, (input & 0x00FF0000) >> 16, (input & 0x0000FF00) >> 8, input & 0x000000FF
 
-#define CHRAI_BOND -8
-#define CHRAI_CLONE -7
-#define CHRAI_SEE_SHOT -6 /* stored as chr->chrseeshot */
-#define CHRAI_SEE_DIE -5 /* stored as chr->chrseedie */
-#define CHRAI_PRESET -4 /* stored as chr->chrpreset1 */
-#define CHRAI_SELF -3
+#define CHR_BOND -8
+#define CHR_CLONE -7
+#define CHR_SEE_SHOT -6 /* stored as chr->chrseeshot */
+#define CHR_SEE_DIE -5 /* stored as chr->chrseedie */
+#define CHR_PRESET -4 /* stored as chr->chrpreset1 */
+#define CHR_SELF -3
 
 #define PAD_PRESET 9000 /* stored as chr->padpreset1 */
 
@@ -80,9 +80,70 @@
 #define GLIST_RUN_TO_BOND_AND_FIRE_RANDOMLY_HALT_CHR   0x000D // run to bond and fire (randomly halt - never gives up chasing bond)
 #define GLIST_WAIT_ONE_SECOND_SUBROUTINE               0x000E // wait for one second (subroutine)
 #define GLIST_EXIT_LEVEL                               0x000F // exit level
-#define GLIST_EQUIP_DD44_AND_FIRE                      0x0010 // draw dd44 and fire
+#define GLIST_DRAW_DD44_AND_FIRE                       0x0010 // draw dd44 and fire
 #define GLIST_REMOVE_CHR                               0x0011 // remove chr
 /*===========================================================================*/
+
+/*=============================================================================
+// command bitflags and common settings
+//===========================================================================*/
+// command 0A animation bitflags
+#define ANIM_MIRROR                     0x01
+#define ANIM_UNKNOWN                    0x02
+#define ANIM_LOOP_HOLD_LAST_FRAME       0x04
+#define ANIM_PLAY_SFX                   0x08
+#define ANIM_IDLE_POSE_WHEN_COMPLETE    0x10
+#define ANIM_TRANSLATION_SCALE          0x20
+#define ANIM_NO_TRANSLATION             0x40
+#define ANIM_REVERSE_LOOPING_ANIMATION  0x80
+
+#define ANIM_DEFAULT_INTERPOLATION      0x10
+
+// command 14-17 target bitflags
+#define TARGET_BOND         0x0001
+#define TARGET_CHR          0x0004
+#define TARGET_PAD          0x0008
+#define TARGET_AIM_ONLY     0x0020
+
+// command 18-19 target body part values
+#define TARGET_NULL_PART        0x0 // null part, no reaction - 1x damage
+#define TARGET_LEFT_FOOT        0x1 // left foot - 1x damage
+#define TARGET_LEFT_LEG         0x2 // left leg - 1x damage
+#define TARGET_LEFT_THIGH       0x3 // left thigh - 1x damage
+#define TARGET_RIGHT_FOOT       0x4 // right foot - 1x damage
+#define TARGET_RIGHT_LEG        0x5 // right leg - 1x damage
+#define TARGET_RIGHT_THIGH      0x6 // right thigh - 1x damage
+#define TARGET_PELVIS           0x7 // pelvis - 1x damage
+#define TARGET_HEAD             0x8 // head - 4x damage
+#define TARGET_LEFT_HAND        0x9 // left hand - 1x damage
+#define TARGET_LEFT_ARM         0xA // left arm - 1x damage
+#define TARGET_LEFT_SHOULDER    0xB // left shoulder - 1x damage
+#define TARGET_RIGHT_HAND       0xC // right hand - 1x damage
+#define TARGET_RIGHT_ARM        0xD // right arm - 1x damage
+#define TARGET_RIGHT_SHOULDER   0xE // right shoulder - 1x damage
+#define TARGET_CHEST            0xF // chest - 2x damage
+
+// command 94-99 chr->bitfield - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
+#define BITFIELD_DONT_POINT_AT_BOND     0x01 // if enabled, don't point at bond
+
+// command 9D-A2 (incomplete)
+#define CHRFLAG_SUNGLASSES              0x00000002 // sunglasses
+#define CHRFLAG_INVINCIBLE              0x00000010 // invincible
+#define CHRFLAG_CAN_SHOOT_CHRS          0x00000040 // can shoot other guards
+#define CHRFLAG_HIDDEN                  0x00000400 // hidden
+#define CHRFLAG_NO_AUTOAIM              0x00000800 // no autoaim
+#define CHRFLAG_LOCK_Y_POS              0x00001000 // lock y position (no gravity, used for dam/cradle jump)
+#define CHRFLAG_NO_SHADOW               0x00002000 // no shadow
+#define CHRFLAG_IGNORE_ANIM_TRANSLATION 0x00004000 // ignore animation translation
+#define CHRFLAG_INCREASE_SPRINT_SPEED   0x00080000 // increase sprinting speed
+
+/*=============================================================================
+// ai commands macros and information
+//=============================================================================
+// name and description per command, please read carefully when creating new
+// commands. ensure that you don't cause loops without a sleep command or else
+// command parser will never release and game will softlock
+//===========================================================================*/
 
 /*=============================================================================
 // name: goto_next
@@ -175,9 +236,10 @@
 /*=============================================================================
 // name: goto_return_ai_list
 // command id: 07
-// info: goto the return list set in chr struct - pointer set by command 06
+// info: goto the return list set in chr struct - pointer set by command 06.
+//       used for subroutine lists. if list pointer isn't set, game will crash
 //=============================================================================
-// note: after restore, start at top of list
+// note: after return, set chr->aioffset to top of ai list
 //===========================================================================*/
 #define goto_return_ai_list_ID 0x07
 #define goto_return_ai_list_LENGTH 0x01
@@ -234,17 +296,6 @@
         bitfield, \
         interpol_time60,
 
-#define FLAG_MIRROR 0x01
-#define FLAG_UNKNOWN 0x02
-#define FLAG_LOOP_HOLD_LAST_FRAME 0x04
-#define FLAG_PLAY_SFX 0x08
-#define FLAG_IDLE_POSE_WHEN_COMPLETE 0x10
-#define FLAG_TRANSLATION_SCALE 0x20
-#define FLAG_NO_TRANSLATION 0x40
-#define FLAG_REVERSE_LOOPING_ANIMATION 0x80
-
-#define DEFAULT_INTERPOLATION 0x10
-
 /*=============================================================================
 // name: guard_playing_animation
 // command id: 0B
@@ -260,6 +311,9 @@
 // name: guard_points_at_bond
 // command id: 0C
 // info: guard points if bond is directly in front of guard, else command is ignored
+//=============================================================================
+// note: global ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE skips this command if
+// bitfield flag BITFIELD_DONT_POINT_AT_BOND is on
 //===========================================================================*/
 #define guard_points_at_bond_ID 0x0C
 #define guard_points_at_bond_LENGTH 0x01
@@ -370,11 +424,6 @@
         chararray16(target), \
         label,
 
-#define FLAG_TARGET_BOND 0x0001
-#define FLAG_TARGET_CHR 0x0004
-#define FLAG_TARGET_PAD 0x0008
-#define FLAG_TARGET_AIM_ONLY 0x0020
-
 /*=============================================================================
 // name: guard_fire_or_aim_at_target_kneel
 // command id: 15
@@ -459,7 +508,7 @@
 // 0C: right hand - 1x
 // 0D: right arm - 1x
 // 0E: right shoulder - 1x
-// 0F: torso - 2x
+// 0F: chest - 2x
 //===========================================================================*/
 #define chr_hit_body_part_with_item_damage_ID 0x18
 #define chr_hit_body_part_with_item_damage_LENGTH 0x04
@@ -492,7 +541,7 @@
 // 0C: right hand - 1x
 // 0D: right arm - 1x
 // 0E: right shoulder - 1x
-// 0F: torso - 2x
+// 0F: chest - 2x
 //===========================================================================*/
 #define chr_hit_chr_body_part_with_held_item_ID 0x19
 #define chr_hit_chr_body_part_with_held_item_LENGTH 0x04
@@ -1385,6 +1434,106 @@
 #define guard_set_accuracy_rating_LENGTH 0x02
 #define guard_set_accuracy_rating(accuracy_rating) \
         guard_set_accuracy_rating_ID, \
+        accuracy_rating,
+
+/*=============================================================================
+// name: guard_bitfield_set_on
+// command id: 94
+// info: set chr->BITFIELD on
+//=============================================================================
+// note: can be used to store a flag per chr, useful for missions. global lists
+// reserve flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// are free to use for each setup
+//===========================================================================*/
+#define guard_bitfield_set_on_ID 0x94
+#define guard_bitfield_set_on_LENGTH 0x02
+#define guard_bitfield_set_on(bits) \
+        guard_bitfield_set_on_ID, \
+        bits,
+
+/*=============================================================================
+// name: guard_bitfield_set_off
+// command id: 95
+// info: set chr->BITFIELD off
+//=============================================================================
+// note: can be used to store a flag per chr, useful for missions. global lists
+// reserve flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// are free to use for each setup
+//===========================================================================*/
+#define guard_bitfield_set_off_ID 0x95
+#define guard_bitfield_set_off_LENGTH 0x02
+#define guard_bitfield_set_off(bits) \
+        guard_bitfield_set_off_ID, \
+        bits,
+
+/*=============================================================================
+// name: guard_bitfield_is_on
+// command id: 96
+// info: if bits is set on in chr->BITFIELD, goto label
+//===========================================================================*/
+#define guard_bitfield_is_on_ID 0x96
+#define guard_bitfield_is_on_LENGTH 0x03
+#define guard_bitfield_is_on(bits, label) \
+        guard_bitfield_is_on_ID, \
+        bits, \
+        label,
+
+/*=============================================================================
+// name: chr_bitfield_set_on
+// command id: 97
+// info: set chr->BITFIELD on
+//=============================================================================
+// note: can be used to store a flag per chr, useful for missions. global lists
+// reserve flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// are free to use for each setup
+//===========================================================================*/
+#define chr_bitfield_set_on_ID 0x97
+#define chr_bitfield_set_on_LENGTH 0x03
+#define chr_bitfield_set_on(chr_num, bits) \
+        chr_bitfield_set_on_ID, \
+        chr_num, \
+        bits,
+
+/*=============================================================================
+// name: chr_bitfield_set_off
+// command id: 98
+// info: set chr->BITFIELD off
+//=============================================================================
+// note: can be used to store a flag per chr, useful for missions. global lists
+// reserve flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// are free to use for each setup
+//===========================================================================*/
+#define chr_bitfield_set_off_ID 0x98
+#define chr_bitfield_set_off_LENGTH 0x03
+#define chr_bitfield_set_off(chr_num, bits) \
+        chr_bitfield_set_off_ID, \
+        chr_num, \
+        bits,
+
+/*=============================================================================
+// name: chr_bitfield_is_on
+// command id: 99
+// info: if bits is set on in chr->BITFIELD, goto label
+//===========================================================================*/
+#define chr_bitfield_is_on_ID 0x99
+#define chr_bitfield_is_on_LENGTH 0x04
+#define chr_bitfield_is_on(chr_num, bits, label) \
+        chr_bitfield_is_on_ID, \
+        chr_num, \
+        bits, \
+        label,
+
+/*=============================================================================
+// name: guard_set_flags
+// command id: 9D
+// info: set chr->chrflags
+//=============================================================================
+// note: 
+//===========================================================================*/
+#define guard_set_flags_ID 0x9D
+#define guard_set_flags_LENGTH 0x05
+#define guard_set_flags(accuracy_rating) \
+        guard_set_flags_ID, \
         accuracy_rating,
 
 /*=============================================================================

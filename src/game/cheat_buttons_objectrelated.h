@@ -117,8 +117,8 @@ struct player_gait_position_entry {
 };
 
 struct struct_13 {
-    void * anonymous_0;
-    int anonymous_1;
+    void * ailist;
+    int ailistid;
 };
 
 struct struct_15 {
