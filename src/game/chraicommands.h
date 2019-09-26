@@ -186,9 +186,9 @@
 //=============================================================================
 // arguments:
 // start/end set to -1/-1 will playback the entire animation length
-// tween time will set how long it will take to transition from the previous state
-// if tween time is too low it may crash! - use 0x10 if unsure
-// start/end keyframe and tween use 60 tick units
+// interpolation time will set how long it will take to transition from the previous state
+// if interpolation time is too low it may crash! - use 0x10 if unsure
+// start/end keyframe and interpolation use 60 tick units
 // bitfield (hex):
 // 01 - mirror animation
 // 02 - ?? (cancels no translation flag)
@@ -201,13 +201,24 @@
 //===========================================================================*/
 #define guard_animation_ID 0x0A
 #define guard_animation_LENGTH 0x09
-#define guard_animation(animation_id, start_time60, end_time60, bitfield, tween_time60) \
+#define guard_animation(animation_id, start_time60, end_time60, bitfield, interpol_time60) \
         guard_animation_ID, \
         chararray16(animation_id), \
         chararray16(start_time60), \
         chararray16(end_time60), \
         bitfield, \
-        tween_time60,
+        interpol_time60,
+
+#define BITFLAG_MIRROR 0x01
+#define BITFLAG_UNKNOWN 0x02
+#define BITFLAG_LOOP_HOLD_LAST_FRAME 0x04
+#define BITFLAG_PLAY_SFX 0x08
+#define BITFLAG_IDLE_POSE_WHEN_COMPLETE 0x10
+#define BITFLAG_TRANSLATION_SCALE 0x20
+#define BITFLAG_NO_TRANSLATION 0x40
+#define BITFLAG_REVERSE_LOOPING_ANIMATION 0x80
+
+#define DEFAULT_INTERPOLATION 0x10
 
 /*=============================================================================
 // name: guard_playing_animation
@@ -333,6 +344,11 @@
         chararray16(bitfield), \
         chararray16(target), \
         label,
+
+#define BITFLAG_TARGET_BOND 0x0001
+#define BITFLAG_TARGET_CHR 0x0004
+#define BITFLAG_TARGET_PAD 0x0008
+#define BITFLAG_TARGET_AIM_ONLY 0x0020
 
 /*=============================================================================
 // name: guard_fire_or_aim_at_target_kneel

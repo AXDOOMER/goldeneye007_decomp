@@ -9,7 +9,7 @@ char off_CODE_bss_80079E30[0x4C];
 // data
 //D:80037070
 u8 dword_D_80037070[] = { // global list #0000: aim at bond with weapon
-    guard_fire_or_aim_at_target(0x0021, 0x0000, 0x01) // aim at bond - don't fire
+    guard_fire_or_aim_at_target(BITFLAG_TARGET_AIM_ONLY | BITFLAG_TARGET_BOND, 0x0000, 0x01)
     goto_loop_infinite(0x01)
     ai_list_end
 };
@@ -25,28 +25,50 @@ u32 dword_D_80037084[] = {
     0x5FD0008, 0x20E0600, 0x205FD00, 0xB021105, 0xFD000104
 };
 //D:800370DC
-u32 dword_D_800370DC[] = {
-    0x33353203, 0x0A009A00, 0x0000C118, 0x10000202, 0x03356403, 0x0A009B00, 0x00012618,
-    0x10000202, 0x03359603, 0x0A009C00, 0x0000B718, 0x10000202, 0x0335C803, 0x0A009D00,
-    0x00007B18, 0x10000202, 0x0335FA03, 0x0A009E00, 0x00003818, 0x10000202, 0x030A009F,
-    0x00000089, 0x18100002, 0x02020704
+u8 dword_D_800370DC[] = { // global list #0004: random idle animation (subroutine)
+    random_generate // generate our random seed for random animations
+    random_greater_than(50, 0x03)
+    guard_animation(ANIM_yawning, 0, 193, BITFLAG_IDLE_POSE_WHEN_COMPLETE | BITFLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
+    goto_next(0x02) // jump to end, we're done
+    label(0x03)
+        random_greater_than(100, 0x03)
+        guard_animation(ANIM_swatting_flies, 0, 294, BITFLAG_IDLE_POSE_WHEN_COMPLETE | BITFLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
+        goto_next(0x02) // jump to end, we're done
+    label(0x03)
+        random_greater_than(150, 0x03)
+        guard_animation(ANIM_scratching_leg, 0, 183, BITFLAG_IDLE_POSE_WHEN_COMPLETE | BITFLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
+        goto_next(0x02) // jump to end, we're done
+    label(0x03)
+        random_greater_than(200, 0x03)
+        guard_animation(ANIM_scratching_butt, 0, 123, BITFLAG_IDLE_POSE_WHEN_COMPLETE | BITFLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
+        goto_next(0x02) // jump to end, we're done
+    label(0x03)
+        random_greater_than(250, 0x03)
+        guard_animation(ANIM_adjusting_crotch, 0, 56, BITFLAG_IDLE_POSE_WHEN_COMPLETE | BITFLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
+        goto_next(0x02) // jump to end, we're done
+    label(0x03)
+        guard_animation(ANIM_sneeze, 0, 137, BITFLAG_IDLE_POSE_WHEN_COMPLETE | BITFLAG_PLAY_SFX, DEFAULT_INTERPOLATION)
+        goto_next(0x02) // jump to end, we're done
+    label(0x02)
+        goto_return_ai_list
+    ai_list_end
 };
 //D:8003713C
-u8 dword_D_8003713C[] = { // global list #0004: trigger random keyboard animation (subroutine)
-    random_generate // generate our random seed for animation trigger
+u8 dword_D_8003713C[] = { // global list #0004: random use keyboard animation (subroutine)
+    random_generate // generate our random seed for random animations
     random_greater_than(60, 0x03)
-    guard_animation(ANIM_keyboard_right_hand1, 0, 69, 0x00, 0x10) // play keyboard animation
+    guard_animation(ANIM_keyboard_right_hand1, 0, 69, 0x00, DEFAULT_INTERPOLATION)
     goto_next(0x02) // jump to end, we're done
     label(0x03)
         random_greater_than(120, 0x03)
-        guard_animation(ANIM_keyboard_right_hand2, 0, 74, 0x00, 0x10) // play keyboard animation
+        guard_animation(ANIM_keyboard_right_hand2, 0, 74, 0x00, DEFAULT_INTERPOLATION)
         goto_next(0x02) // jump to end, we're done
     label(0x03)
         random_greater_than(180, 0x03)
-        guard_animation(ANIM_keyboard_left_hand, 0, 79, 0x00, 0x10) // play keyboard animation
+        guard_animation(ANIM_keyboard_left_hand, 0, 79, 0x00, DEFAULT_INTERPOLATION)
         goto_next(0x02) // jump to end, we're done
     label(0x03)
-        guard_animation(ANIM_keyboard_right_hand_tapping, 0, 89, 0x00, 0x10) // play keyboard animation
+        guard_animation(ANIM_keyboard_right_hand_tapping, 0, 89, 0x00, DEFAULT_INTERPOLATION)
         goto_next(0x02) // jump to end, we're done
     label(0x02)
         goto_return_ai_list
@@ -65,8 +87,19 @@ u32 dword_D_800371B4[] = {
     0x1000002, 0x20B1500, 0x1000002, 0x2020704
 };
 //D:8003720C
-u32 dword_D_8003720C[] = {
-    0x94012801, 0x7020103, 0x2F063207, 0x1010207, 0x5FD0006, 0x2060704
+u8 dword_D_8003720C[] = { // global list #000C: run to bond (subroutine)
+    0x94, 0x01, // commands yet to be converted to macros
+    guard_runs_to_bond_position(0x01) // goto loop if bond is in reachable position
+    goto_return_ai_list // if guard can't reach bond return (read guard_runs_to_bond_position command info)
+    goto_loop_start(0x01)
+        guard_has_stopped_moving(0x06)
+        guard_check_vision_for_bond(0x07) // detected bond, goto attack list
+        goto_loop_repeat(0x01)
+    label(0x07)
+        goto_ai_list(CHRAI_SELF, 0x0006) // jump to global list #0006 (random attack subroutine)
+    label(0x06)
+        goto_return_ai_list
+    ai_list_end
 };
 //D:80037224
 u32 dword_D_80037224[] = {
