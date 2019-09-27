@@ -13,21 +13,53 @@ u8 dword_D_80037070[] = { // GLIST_AIM_AT_BOND: continuously aim at bond with we
     goto_loop_infinite(0x01)
     ai_list_end
 };
+
 //D:8003707C
 u8 dword_D_8003707C[] = { // GLIST_END_ROUTINE: end routine (loop forever)
     goto_loop_infinite(0x11)
     ai_list_end
 };
+
 //D:80037084
-u32 dword_D_80037084[] = { // GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE: wait for bond detection - spawn clone on heard gunfire
-    0x2010330, 0xFD112F06, 0x1010206, 0x32073E0D, 0x3F0E4610, 0x3A0D3B0D, 0xB033335, 0x1030600,
-    0x205FD00, 0x3020301, 0x1021033, 0x357F0706, 0x205FD, 0xA0207, 0x6000205, 0xFD000602, 0xD060002,
-    0x5FD0008, 0x20E0600, 0x205FD00, 0xB021105, 0xFD000104
+u8 dword_D_80037084[] = { // GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE: wait for bond detection - spawn clone on heard gunfire
+    goto_loop_start(0x01)
+        chr_dying_or_dead(CHR_SELF, 0x11) // guard died, safely end list
+        guard_has_stopped_moving(0x06) // guard has stopped moving, safe to continue
+        goto_loop_repeat(0x01)
+    label(0x06)
+        guard_sees_bond(0x07)
+        guard_was_shot_within_last_10_secs(0x0D)
+        guard_heard_bond_within_last_10_secs(0x0E)
+        guard_shot_from_bond_missed(0x10)
+        guard_see_guard_shot(0x0D)
+        guard_see_guard_die(0x0D)
+        guard_playing_animation(0x03) // playing idle animation
+        random_generate_greater_than(1, 0x03) // 1/255 chance of playing idle animation
+        set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+        goto_ai_list(CHR_SELF, GLIST_IDLE_RAND_ANIM_SUBROUTINE) // play idle animation and return to list
+    label(0x03)
+        goto_loop_repeat(0x01)
+    label(0x10) // bond shot near guard
+        random_generate_greater_than(127, 0x07) // 50% chance of playing looking around animation
+        set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+        goto_ai_list(CHR_SELF, GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE)
+    label(0x07) // guard sees bond
+        set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+        goto_ai_list(CHR_SELF, GLIST_FIRE_RAND_ANIM_SUBROUTINE)
+    label(0x0D) // guard saw another guard shot/die or guard was shot
+        set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+        goto_ai_list(CHR_SELF, GLIST_RUN_TO_BOND_SUBROUTINE)
+    label(0x0E) // guard heard bond, attempt to spawn clone (only if chr has clone flag)
+        set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+        goto_ai_list(CHR_SELF, GLIST_SPAWN_CLONE_OR_RUN_TO_BOND)
+    label(0x11) // guard has died, end routine
+        goto_ai_list(CHR_SELF, GLIST_END_ROUTINE)
+    ai_list_end
 };
+
 //D:800370DC
 u8 dword_D_800370DC[] = { // GLIST_IDLE_RAND_ANIM_SUBROUTINE: play a random idle animation (subroutine)
-    random_generate // generate our random seed for random animations
-    random_greater_than(50, 0x03)
+    random_generate_greater_than(50, 0x03)
     guard_animation(ANIM_yawning, 0, 193, ANIM_IDLE_POSE_WHEN_COMPLETE | ANIM_PLAY_SFX, ANIM_DEFAULT_INTERPOLATION)
     goto_next(0x02) // jump to end, we're done
     label(0x03)
@@ -53,10 +85,10 @@ u8 dword_D_800370DC[] = { // GLIST_IDLE_RAND_ANIM_SUBROUTINE: play a random idle
         goto_return_ai_list
     ai_list_end
 };
+
 //D:8003713C
 u8 dword_D_8003713C[] = { // GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE: play a random use keyboard animation (subroutine)
-    random_generate // generate our random seed for random animations
-    random_greater_than(60, 0x03)
+    random_generate_greater_than(60, 0x03)
     guard_animation(ANIM_keyboard_right_hand1, 0, 69, 0x00, ANIM_DEFAULT_INTERPOLATION)
     goto_next(0x02) // jump to end, we're done
     label(0x03)
@@ -74,16 +106,36 @@ u8 dword_D_8003713C[] = { // GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE: play a random 
         goto_return_ai_list
     ai_list_end
 };
+
 //D:8003717C
-u32 dword_D_8003717C[] = { // GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM: wait for bond detection - ignore gunfire and don't play idle animations
-    0x201032F, 0x6010102, 0x632073E, 0xD46103A, 0xD3B0D01, 0x1021033, 0x357F0706,
-    0x205FD, 0xA0207, 0x6000205, 0xFD000602, 0xD060002, 0x5FD0008, 0x4000000
+u8 dword_D_8003717C[] = { // GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM: wait for bond detection - ignore gunfire and don't play idle animations
+    goto_loop_start(0x01) // wait for guard to stop moving before branching to next logic
+        guard_has_stopped_moving(0x06)
+        goto_loop_repeat(0x01)
+    label(0x06)
+        guard_sees_bond(0x07)
+        guard_was_shot_within_last_10_secs(0x0D)
+        guard_shot_from_bond_missed(0x10)
+        guard_see_guard_shot(0x0D)
+        guard_see_guard_die(0x0D)
+        goto_loop_repeat(0x01)
+    label(0x10) // bond shot near guard
+        random_generate_greater_than(127, 0x07) // 50% chance of playing looking around animation
+        set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+        goto_ai_list(CHR_SELF, GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE)
+    label(0x07) // guard sees bond
+        set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+        goto_ai_list(CHR_SELF, GLIST_FIRE_RAND_ANIM_SUBROUTINE)
+    label(0x0D) // guard saw another guard shot/die or guard was shot
+        set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+        goto_ai_list(CHR_SELF, GLIST_RUN_TO_BOND_SUBROUTINE)
+    ai_list_end
 };
+
 //D:800371B4
 u8 dword_D_800371B4[] = { // GLIST_FIRE_RAND_ANIM_SUBROUTINE: fire at bond with random animation (subroutine)
     guard_bitfield_is_on(BITFIELD_DONT_POINT_AT_BOND, 0x03) // if guard already pointed at bond, goto label 03
-    random_generate
-    random_greater_than(32, 0x03) // 12.5% chance of pointing to bond
+    random_generate_greater_than(32, 0x03) // 12.5% chance of pointing to bond
     guard_points_at_bond
     guard_bitfield_set_on(BITFIELD_DONT_POINT_AT_BOND) // don't point again, thank you object permanence
     goto_return_ai_list // guard pointed at bond, return to list
@@ -91,31 +143,25 @@ u8 dword_D_800371B4[] = { // GLIST_FIRE_RAND_ANIM_SUBROUTINE: fire at bond with 
         guard_bitfield_set_on(BITFIELD_DONT_POINT_AT_BOND, 0x03) // set flag so we don't point at bond, only do that for first time in list
         guard_throw_grenade(0x02) // attempt to throw grenade, depends on chr->grenadeprob value
     label(0x03)
-        random_generate
-        random_greater_than(10, 0x03)
+        random_generate_greater_than(10, 0x03)
         guard_fire_roll(0x02)
     label(0x03)
-        random_generate
-        random_greater_than(10, 0x03)
+        random_generate_greater_than(10, 0x03)
         guard_sideways_hop(0x02)
     label(0x03)
-        random_generate
-        random_greater_than(25, 0x03)
+        random_generate_greater_than(25, 0x03)
         guard_sidesteps(0x02)
     label(0x03)
-        random_generate
-        random_greater_than(50, 0x03)
+        random_generate_greater_than(50, 0x03)
         guard_sideways_run(0x02)
     label(0x03)
-        random_generate
-        random_greater_than(64, 0x03)
+        random_generate_greater_than(64, 0x03)
         guard_fire_walk(0x02) // infinite ammo death sentence ;)
     label(0x03)
         random_greater_than(127, 0x03)
         guard_fire_run(0x02)
     label(0x03)
-        random_generate
-        random_greater_than(127, 0x0B)
+        random_generate_greater_than(127, 0x0B)
         guard_fire_or_aim_at_target(TARGET_BOND, 0x0000, 0x02)
     label(0x0B)
         guard_fire_or_aim_at_target_kneel(TARGET_BOND, 0x0000, 0x02)
@@ -123,6 +169,7 @@ u8 dword_D_800371B4[] = { // GLIST_FIRE_RAND_ANIM_SUBROUTINE: fire at bond with 
         goto_return_ai_list
     ai_list_end
 };
+
 //D:8003720C
 u8 dword_D_8003720C[] = { // GLIST_RUN_TO_BOND_SUBROUTINE: run to bond (subroutine)
     guard_bitfield_set_on(BITFIELD_DONT_POINT_AT_BOND) // guard is aware of bond, so don't point at him when first spotted
@@ -130,7 +177,7 @@ u8 dword_D_8003720C[] = { // GLIST_RUN_TO_BOND_SUBROUTINE: run to bond (subrouti
     goto_return_ai_list // if guard can't reach bond, return to ai list (read guard_runs_to_bond_position command info)
     goto_loop_start(0x01)
         guard_has_stopped_moving(0x06)
-        guard_check_vision_for_bond(0x07) // detected bond, goto attack list
+        guard_sees_bond(0x07) // detected bond, goto attack list
         goto_loop_repeat(0x01)
     label(0x07)
         goto_ai_list(CHR_SELF, GLIST_FIRE_RAND_ANIM_SUBROUTINE)
@@ -138,6 +185,7 @@ u8 dword_D_8003720C[] = { // GLIST_RUN_TO_BOND_SUBROUTINE: run to bond (subrouti
         goto_return_ai_list
     ai_list_end
 };
+
 //D:80037224
 u8 dword_D_80037224[] = { // GLIST_SPAWN_CLONE_OR_RUN_TO_BOND: if chr has been seen, run to bond - else spawn clone
     guard_bitfield_set_on(BITFIELD_DONT_POINT_AT_BOND) // guard is aware of bond, so don't point at him when first spotted
@@ -153,23 +201,72 @@ u8 dword_D_80037224[] = { // GLIST_SPAWN_CLONE_OR_RUN_TO_BOND: if chr has been s
         goto_ai_list(CHR_SELF, GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE) // set original chr to sit tight while the clone does all the work, giving the illusion that bunker ii is a crowded complex
     ai_list_end
 };
+
 //D:80037248
 u8 dword_D_80037248[] = { // GLIST_RUN_TO_BOND_AND_FIRE: run to bond and fire
     set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
     goto_ai_list(CHR_SELF, GLIST_RUN_TO_BOND_SUBROUTINE)
     ai_list_end
 };
+
 //D:80037250
-u32 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for bond detection - don't spawn clone and don't play idle animations
-    0x2010332, 0x73E0D3F, 0xD460D3A, 0xD3B0D01, 0x1020706, 0x205FD, 0x6020D,
-    0x6000205, 0xFD000802, 0xE060002, 0x5FD000B, 0x4000000
+u8 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for bond detection - don't spawn clone and don't play idle animations
+    goto_loop_start(0x01) // wait for guard to stop moving before branching to next logic
+        guard_sees_bond(0x07)
+        guard_was_shot_within_last_10_secs(0x0D)
+        guard_heard_bond_within_last_10_secs(0x0D)
+        guard_shot_from_bond_missed(0x0D)
+        guard_see_guard_shot(0x0D)
+        guard_see_guard_die(0x0D)
+        goto_loop_repeat(0x01)
+    label(0x07) // guard sees bond
+        set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+        goto_ai_list(CHR_SELF, GLIST_FIRE_RAND_ANIM_SUBROUTINE)
+    label(0x0D) // guard saw another guard shot/die or guard was shot
+        set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+        goto_ai_list(CHR_SELF, GLIST_RUN_TO_BOND_SUBROUTINE)
+    label(0x0E) // unused spawn clone reaction for hearing bond, likely was too difficult
+        set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+        goto_ai_list(CHR_SELF, GLIST_SPAWN_CLONE_OR_RUN_TO_BOND)
+    ai_list_end
 };
+
 //D:80037280
-u32 dword_D_80037280[] = { // GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM: wait for bond detection - don't spawn clone and don't play idle animations
-    0x201032F, 0x6010102, 0x6320F7B, 0x103F10, 0x3A103B10, 0x1010210, 0x79000F0D,
-    0x204032F, 0xF010402, 0xF1C2328, 0x203032F, 0x2010302, 0x24EFD00, 0xA232802,
-    0x24232805, 0x20205, 0x32F0201, 0x5020206, 0x205FD, 0x80400
+u8 dword_D_80037280[] = { // GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM: wait for bond detection - don't spawn clone and don't play idle animations
+    goto_loop_start(0x01) // wait for guard to stop moving before branching to next logic
+        guard_has_stopped_moving(0x06)
+        goto_loop_repeat(0x01)
+    label(0x06)
+        guard_sees_bond(0x0F)
+        guard_hits_missed_greater_than(0, 0x10)
+        guard_heard_bond_within_last_10_secs(0x10)
+        guard_see_guard_shot(0x10)
+        guard_see_guard_die(0x10)
+        goto_loop_repeat(0x01)
+    label(0x10) // a guard in sight was killed/shot, heard bond or bond shot guard
+        guard_hits_greater_than(0, 0x0F) // doesn't make sense why the guard would be curious about multiple near missed shots
+        guard_animation_looks_around_self
+    goto_loop_start(0x04) // wait for guard to stop moving before branching to next logic (triggered by look around animation)
+        guard_has_stopped_moving(0x0F)
+        goto_loop_repeat(0x04)
+    label(0x0F)
+        guard_runs_to_pad(PAD_PRESET)
+    goto_loop_start(0x03) // wait for guard to stop moving (reached destination/was shot)
+        guard_has_stopped_moving(0x02)
+        goto_loop_repeat(0x03)
+    label(0x02)
+        0x4E, 0xFD, 0x00, 0x0A, 0x23, 0x28, 0x02, // undocumented command (distance check)
+        guard_trigger_alarm_at_pad(PAD_PRESET, 0x05)
+        goto_next(0x02) // didn't activate alarm (alarm destroyed?)
+    goto_loop_start(0x05) // wait for guard to finish activating alarm
+        guard_has_stopped_moving(0x02)
+        goto_loop_repeat(0x05)
+    label(0x02)
+        set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+        goto_ai_list(CHR_SELF, GLIST_RUN_TO_BOND_SUBROUTINE)
+    ai_list_end
 };
+
 //D:800372D0
 u8 dword_D_800372D0[] = { // GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE: startle character (subroutine)
     guard_animation_looks_around_self
@@ -180,6 +277,7 @@ u8 dword_D_800372D0[] = { // GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE: start
         goto_ai_list(CHR_SELF, GLIST_RUN_TO_BOND_SUBROUTINE)
     ai_list_end
 };
+
 //D:800372E0
 u32 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_RANDOMLY_HALT_CHR: run to bond and fire (randomly halt - never gives up chasing bond)
     0x228281B, 0xAD6E6F20, 0x676F210A, 0x21B03, 0x3C062F02, 0x11B0201, 0x378062D,
@@ -193,6 +291,7 @@ u32 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_RANDOMLY_HALT_CHR: run 
     0x5011C02, 0x4011E02, 0x3010102, 0x2F780603, 0x9E000000, 0x10020301,
     0x2B040000
 };
+
 //D:800373D0
 u8 dword_D_800373D0[] = { // GLIST_WAIT_ONE_SECOND_SUBROUTINE: wait for one second (subroutine)
     chr_timer_reset_start
@@ -203,18 +302,44 @@ u8 dword_D_800373D0[] = { // GLIST_WAIT_ONE_SECOND_SUBROUTINE: wait for one seco
         goto_return_ai_list
     ai_list_end
 };
+
 //D:800373E0
 u8 dword_D_800373E0[] = { // GLIST_EXIT_LEVEL: exit level
     exit_level
     goto_ai_list(CHR_SELF, GLIST_END_ROUTINE)
     ai_list_end
 };
+
 //D:800373E8
-u32 dword_D_800373E8[] = { // GLIST_DRAW_DD44_AND_FIRE: draw dd44 and fire
-    0x91289332, 0x2031700, 0x1000003, 0x203AE02, 0x1B03B400, 0x140301, 0x1B02030A,
-    0x420000, 0x140410, 0x21C032F, 0x3011C02, 0x3BF00CD, 0x6000000, 0x30203,
-    0x14002100, 0x30203, 0x16000100, 0x30203, 0x21E032F, 0x3011E02, 0x3060002,
-    0x5FD0008, 0x4000000
+u8 dword_D_800373E8[] = { // GLIST_DRAW_DD44_AND_FIRE: draw dd44 and fire
+    guard_set_speed_rating(40) // fast boi watch out!
+    guard_set_accuracy_rating(50)
+    label(0x03)
+        guard_faces_target(TARGET_BOND, 0, 0x03)
+    label(0x03)
+        chr_timer_reset_start
+    goto_loop_start(0x1B)
+        chr_timer_greater_than(20, 0x03) // wait 1/3 of a second
+        goto_loop_repeat(0x1B)
+    label(0x03)
+        guard_animation(ANIM_fire_standing_draw_one_handed_weapon_fast, 0, 20, ANIM_LOOP_HOLD_LAST_FRAME, ANIM_DEFAULT_INTERPOLATION)
+    goto_loop_start(0x1C)
+        guard_has_stopped_moving(0x03)
+        goto_loop_repeat(0x1C)
+    label(0x03)
+        0xBF, 0x00, 0xCD, 0x06, 0x00, 0x00, 0x00, 0x00, 0x03, // undocumented spawn weapon command
+    label(0x03)
+        guard_fire_or_aim_at_target(TARGET_BOND | TARGET_AIM_ONLY, 0x0000, 0x03) // aim...
+    label(0x03)
+        guard_fire_or_aim_at_target_update(TARGET_BOND, 0x0000, 0x03) // FIRE!
+    label(0x03)
+    goto_loop_start(0x1E) // loop until guard has stopped firing at bond
+        guard_has_stopped_moving(0x03)
+        goto_loop_repeat(0x1E)
+    label(0x03)
+        set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
+        goto_ai_list(CHR_SELF, GLIST_RUN_TO_BOND_SUBROUTINE)
+    ai_list_end
 };
 
 //D:80037444

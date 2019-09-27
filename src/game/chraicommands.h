@@ -7,9 +7,9 @@
 // programmed by mark edmonds and martin hollis
 //=============================================================================
 // terminology:
-// list             list of ai commands - list must end with 04 command
 // chr              character
 // obj              objective
+// list             list of ai commands - list must end with 04 command
 // glist            global list
 // chr ai lists     0401-04FF range
 // obj ai lists     1000-10FF range
@@ -123,7 +123,7 @@
 #define TARGET_RIGHT_SHOULDER   0xE // right shoulder - 1x damage
 #define TARGET_CHEST            0xF // chest - 2x damage
 
-// command 94-99 chr->bitfield - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
+// command 94-99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
 #define BITFIELD_DONT_POINT_AT_BOND     0x01 // if enabled, don't point at bond
 
 // command 9D-A2 (incomplete)
@@ -136,12 +136,42 @@
 #define CHRFLAG_NO_SHADOW               0x00002000 // no shadow
 #define CHRFLAG_IGNORE_ANIM_TRANSLATION 0x00004000 // ignore animation translation
 #define CHRFLAG_INCREASE_SPRINT_SPEED   0x00080000 // increase sprinting speed
+/*===========================================================================*/
+
+/*=============================================================================
+// ai command shortcuts
+//===========================================================================*/
+#define goto_loop_start(label_id) \
+        label(label_id) \
+        sleep
+
+#define goto_loop_repeat(label) \
+        goto_first(label)
+
+#define goto_loop_infinite(label_id) \
+        label(label_id) \
+        sleep \
+        goto_first(label_id)
+
+#define random_generate_greater_than(byte, label) \
+        random_generate \
+        random_greater_than(byte, label)
+
+#define random_generate_less_than(byte, label) \
+        random_generate \
+        random_less_than(byte, label)
+
+#define transition_to_camera \
+        sleep \
+        sleep \
+        sleep
+/*===========================================================================*/
 
 /*=============================================================================
 // ai commands macros and information
 //=============================================================================
 // name and description per command, please read carefully when creating new
-// commands. ensure that you don't cause loops without a sleep command or else
+// ai list. ensure that you don't cause loops without a sleep command or else
 // command parser will never release and game will softlock
 //===========================================================================*/
 
@@ -198,7 +228,7 @@
 // info: used for ai list parser to check when list ends
 //=============================================================================
 // note: not recommended to execute this command - to finish a list create an
-// infinite loop (commands 02/03/01) or jump to glist end routine when list has
+// infinite loop (goto_loop_infinite) or jump to glist end routine when list has
 // finished tasks
 //===========================================================================*/
 #define ai_list_end_ID 0x04
@@ -865,7 +895,7 @@
         label,
 
 /*=============================================================================
-// name: guard_check_vision_for_bond
+// name: guard_sees_bond
 // command id: 32
 // info: check vision for bond, goto label if spotted bond
 //=============================================================================
@@ -874,10 +904,10 @@
 // if bond breaks line of sight, do not goto label. if bond has broken line of
 // sight for more than 10 seconds, reset spotted bond state
 //===========================================================================*/
-#define guard_check_vision_for_bond_ID 0x32
-#define guard_check_vision_for_bond_LENGTH 0x02
-#define guard_check_vision_for_bond(label) \
-        guard_check_vision_for_bond_ID, \
+#define guard_sees_bond_ID 0x32
+#define guard_sees_bond_LENGTH 0x02
+#define guard_sees_bond(label) \
+        guard_sees_bond_ID, \
         label,
 
 /*=============================================================================
@@ -958,13 +988,54 @@
         label,
 
 /*=============================================================================
+// name: guard_heard_bond
+// command id: 39
+// info: if guard heard bond fire weapon, goto label
+//=============================================================================
+// note: uses chr->hearingscale while listening for bond. to check if bond has
+//       shot within the last 10 seconds, use command 3F
+//===========================================================================*/
+#define guard_heard_bond_ID 0x39
+#define guard_heard_bond_LENGTH 0x02
+#define guard_heard_bond(label) \
+        guard_heard_bond_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_see_guard_shot
+// command id: 3A
+// info: if guard sees another guard shot (from anyone), goto label
+//=============================================================================
+// note: guard friendly fire (if flagged) will trigger this command to goto label
+//===========================================================================*/
+#define guard_see_guard_shot_ID 0x3A
+#define guard_see_guard_shot_LENGTH 0x02
+#define guard_see_guard_shot(label) \
+        guard_see_guard_shot_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_see_guard_die
+// command id: 3B
+// info: if guard sees another guard die (from anyone), goto label
+//=============================================================================
+// note: when other guard switches to ACT_DIE/ACT_DEAD, goto label
+//===========================================================================*/
+#define guard_see_guard_die_ID 0x3B
+#define guard_see_guard_die_LENGTH 0x02
+#define guard_see_guard_die(label) \
+        guard_see_guard_die_ID, \
+        label,
+
+/*=============================================================================
 // name: guard_and_bond_within_line_of_sight
 // command id: 3C
 // info: if guard and bond are within line of sight, goto label
 //=============================================================================
 // note: line of sight uses clipping - ignores facing direction of bond/guard.
-// does not use chr->visionrange for line of sight check. use command 32 to check
-// using chr->visionrange and command 42 to account for bond's view
+// if prop/guard is in the way do not goto label. does not use chr->visionrange
+// for line of sight check. use command 32 to check using chr->visionrange and
+// command 42 to account for bond's view
 //===========================================================================*/
 #define guard_and_bond_within_line_of_sight_ID 0x3C
 #define guard_and_bond_within_line_of_sight_LENGTH 0x02
@@ -973,16 +1044,56 @@
         label,
 
 /*=============================================================================
-// name: guard_was_shot_recently
-// command id: 3E
-// info: if guard was shot within the last 10 seconds, goto label
+// name: guard_and_bond_within_partial_line_of_sight
+// command id: 3D
+// info: if guard and bond are within partial line of sight, goto label
 //=============================================================================
-// note: guard friendly fire will trigger this command to goto label
+// note: unused command, functions like above but only goto label if bond is
+//       half occluded by clipping (not blocked or within full view)
 //===========================================================================*/
-#define guard_was_shot_recently_ID 0x3E
-#define guard_was_shot_recently_LENGTH 0x02
-#define guard_was_shot_recently(label) \
-        guard_was_shot_recently_ID, \
+#define guard_and_bond_within_partial_line_of_sight_ID 0x3D
+#define guard_and_bond_within_partial_line_of_sight_LENGTH 0x02
+#define guard_and_bond_within_partial_line_of_sight(label) \
+        guard_and_bond_within_partial_line_of_sight_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_was_shot_within_last_10_secs
+// command id: 3E
+// info: if guard was shot (from anyone) within the last 10 seconds, goto label
+//===========================================================================*/
+#define guard_was_shot_within_last_10_secs_ID 0x3E
+#define guard_was_shot_within_last_10_secs_LENGTH 0x02
+#define guard_was_shot_within_last_10_secs(label) \
+        guard_was_shot_within_last_10_secs_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_heard_bond_within_last_10_secs
+// command id: 3F
+// info: if guard heard bond fire weapon within the last 10 seconds, goto label
+//=============================================================================
+// note: uses chr->hearingscale while listening for bond. to check if bond has
+//       now fired weapon instead of within the last 10 seconds, use command 39
+//===========================================================================*/
+#define guard_heard_bond_within_last_10_secs_ID 0x3F
+#define guard_heard_bond_within_last_10_secs_LENGTH 0x02
+#define guard_heard_bond_within_last_10_secs(label) \
+        guard_heard_bond_within_last_10_secs_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_in_room_with_chr
+// command id: 40
+// info: if guard is in same room with chr, goto label
+//=============================================================================
+// note: cannot be used to check for bond - use commands 42/43/4B/32/3C instead
+//===========================================================================*/
+#define guard_in_room_with_chr_ID 0x40
+#define guard_in_room_with_chr_LENGTH 0x03
+#define guard_in_room_with_chr(chr_num, label) \
+        guard_in_room_with_chr_ID, \
+        chr_num, \
         label,
 
 /*=============================================================================
@@ -1057,8 +1168,8 @@
 // command id: 46
 // info: if bond's shot missed/landed near guard, goto label
 //=============================================================================
-// note: command will sometimes goto label if guard was shot - use sub-action
-// 3E instead to check if guard was shot recently (more consistent checking).
+// note: command will sometimes goto label if guard was shot - use command
+//       3E instead to check if guard was shot recently (more consistent)
 //===========================================================================*/
 #define guard_shot_from_bond_missed_ID 0x46
 #define guard_shot_from_bond_missed_LENGTH 0x02
@@ -1296,7 +1407,7 @@
 // name: guard_set_hearing_scale
 // command id: 8B
 // info: set guard's hearing scale - the higher the value, the further away guard
-//       can hear gunfire
+//       can hear bond's gunfire
 //=============================================================================
 // note: sets to chr->hearingscale. default value is 0x03E8 (1000 dec). argument
 //       is converted to float and divided by 1000 before setting to hearingscale
@@ -1381,7 +1492,7 @@
 // be titled 'guard_remove_damage' but its used mostly for adding armour to guards.
 // argument is converted to float and divided by 10 before subtracting chr->damage.
 // if difficulty mode 007 is active, command will use 007 health modifier.
-// argument is unsigned - 0xFFFF will be set to 65535.f armour, or -65535.f damage
+// argument is unsigned - 0xFFFF will be set to 6553.5f armour, or -6553.5f damage
 //===========================================================================*/
 #define guard_set_armour_ID 0x90
 #define guard_set_armour_LENGTH 0x03
@@ -2177,23 +2288,4 @@
 #define gas_leak_and_fade_fog \
         gas_leak_and_fade_fog_ID,
 
-/*=============================================================================
-// macros and other common shortcut commands
-//===========================================================================*/
-#define goto_loop_start(label_id) \
-        label(label_id) \
-        sleep
-
-#define goto_loop_repeat(label) \
-        goto_first(label)
-
-#define goto_loop_infinite(label_id) \
-        label(label_id) \
-        sleep \
-        goto_first(label_id)
-
-#define transition_to_camera \
-        sleep \
-        sleep \
-        sleep
 #endif
