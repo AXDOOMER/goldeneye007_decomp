@@ -9,7 +9,7 @@
 // data
 //D:80037070
 u8 dword_D_80037070[] = { // GLIST_AIM_AT_BOND: continuously aim at bond with weapon
-    guard_fire_or_aim_at_target(TARGET_BOND | TARGET_AIM_ONLY, 0x0000, 0x01)
+    guard_fire_or_aim_at_target(TARGET_BOND | TARGET_AIM_ONLY, 0, 0x01)
     goto_loop_infinite(0x01)
     ai_list_end
 };
@@ -21,7 +21,7 @@ u8 dword_D_8003707C[] = { // GLIST_END_ROUTINE: end routine (loop forever)
 };
 
 //D:80037084
-u8 dword_D_80037084[] = { // GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE: wait for bond detection - spawn clone on heard gunfire
+u8 dword_D_80037084[] = { // GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE: wait for bond detection (spawn clone when heard bond)
     goto_loop_start(0x01)
         chr_dying_or_dead(CHR_SELF, 0x11) // guard died, safely end list
         guard_has_stopped_moving(0x06) // guard has stopped moving, safe to continue
@@ -58,8 +58,8 @@ u8 dword_D_80037084[] = { // GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE: wai
 };
 
 //D:800370DC
-u8 dword_D_800370DC[] = { // GLIST_IDLE_RAND_ANIM_SUBROUTINE: play a random idle animation (subroutine)
-    random_generate_greater_than(50, 0x03)
+u8 dword_D_800370DC[] = { // GLIST_IDLE_RAND_ANIM_SUBROUTINE: play idle animation (subroutine)
+    random_generate_greater_than(50, 0x03) // generate annd compare random seed to see which animation to play
     guard_animation(ANIM_yawning, 0, 193, ANIM_IDLE_POSE_WHEN_COMPLETE | ANIM_PLAY_SFX, ANIM_DEFAULT_INTERPOLATION)
     goto_next(0x02) // jump to end, we're done
     label(0x03)
@@ -87,7 +87,7 @@ u8 dword_D_800370DC[] = { // GLIST_IDLE_RAND_ANIM_SUBROUTINE: play a random idle
 };
 
 //D:8003713C
-u8 dword_D_8003713C[] = { // GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE: play a random use keyboard animation (subroutine)
+u8 dword_D_8003713C[] = { // GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE: play use keyboard animation (subroutine)
     random_generate_greater_than(60, 0x03)
     guard_animation(ANIM_keyboard_right_hand1, 0, 69, 0x00, ANIM_DEFAULT_INTERPOLATION)
     goto_next(0x02) // jump to end, we're done
@@ -108,7 +108,7 @@ u8 dword_D_8003713C[] = { // GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE: play a random 
 };
 
 //D:8003717C
-u8 dword_D_8003717C[] = { // GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM: wait for bond detection - ignore gunfire and don't play idle animations
+u8 dword_D_8003717C[] = { // GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (deaf, no idle anims)
     goto_loop_start(0x01) // wait for guard to stop moving before branching to next logic
         guard_has_stopped_moving(0x06)
         goto_loop_repeat(0x01)
@@ -162,16 +162,16 @@ u8 dword_D_800371B4[] = { // GLIST_FIRE_RAND_ANIM_SUBROUTINE: fire at bond with 
         guard_fire_run(0x02)
     label(0x03)
         random_generate_greater_than(127, 0x0B)
-        guard_fire_or_aim_at_target(TARGET_BOND, 0x0000, 0x02)
+        guard_fire_or_aim_at_target(TARGET_BOND, 0, 0x02)
     label(0x0B)
-        guard_fire_or_aim_at_target_kneel(TARGET_BOND, 0x0000, 0x02)
+        guard_fire_or_aim_at_target_kneel(TARGET_BOND, 0, 0x02)
     label(0x02) // guard did the thing, now go back home
         goto_return_ai_list
     ai_list_end
 };
 
 //D:8003720C
-u8 dword_D_8003720C[] = { // GLIST_RUN_TO_BOND_SUBROUTINE: run to bond (subroutine)
+u8 dword_D_8003720C[] = { // GLIST_RUN_TO_BOND_SUBROUTINE: run to bond and fire (subroutine)
     guard_bitfield_set_on(BITFIELD_DONT_POINT_AT_BOND) // guard is aware of bond, so don't point at him when first spotted
     guard_runs_to_bond_position(0x01) // goto loop if bond position is reachable
     goto_return_ai_list // if guard can't reach bond, return to ai list (read guard_runs_to_bond_position command info)
@@ -210,7 +210,7 @@ u8 dword_D_80037248[] = { // GLIST_RUN_TO_BOND_AND_FIRE: run to bond and fire
 };
 
 //D:80037250
-u8 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for bond detection - don't spawn clone and don't play idle animations
+u8 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (no clones, no idle)
     goto_loop_start(0x01) // wait for guard to stop moving before branching to next logic
         guard_sees_bond(0x07)
         guard_was_shot_within_last_10_secs(0x0D)
@@ -279,17 +279,102 @@ u8 dword_D_800372D0[] = { // GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE: start
 };
 
 //D:800372E0
-u32 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_RANDOMLY_HALT_CHR: run to bond and fire (randomly halt - never gives up chasing bond)
-    0x228281B, 0xAD6E6F20, 0x676F210A, 0x21B03, 0x3C062F02, 0x11B0201, 0x378062D,
-    0x9F000000, 0x102F022D, 0x2F064C00, 0xC8030101, 0x2030128, 0x2063C03,
-    0x20224, 0x34B0032, 0x32F0301, 0x2802039F, 0x10, 0x2F022B33, 0x350A031A,
-    0x2020335, 0x32030E02, 0x203353C, 0x3130202, 0x3355003, 0x13020203, 0x35640311,
-    0x2020335, 0x96031202, 0x20335C8, 0x3140001, 0x202, 0x3150001, 0x202,
-    0x23C0300, 0x1B021B03, 0x3335A003, 0x1C0203, 0x3010102, 0x1CAE281D, 0x21D032F,
-    0x3B40000, 0x3C03011D, 0x20308AD, 0x77616974, 0xA009504, 0x3335A003,
-    0x94040203, 0xAE021E03, 0x3C034603, 0x3B30002, 0x58049604, 0x5012802,
-    0x5011C02, 0x4011E02, 0x3010102, 0x2F780603, 0x9E000000, 0x10020301,
-    0x2B040000
+u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forever chase bond and fire (halt randomly)
+    label(0x28)
+        guard_runs_to_bond_position(0x1B)
+        debug_comment 'n', 'o', ' ', 'g', 'o', '!', '\n', '\0',
+    goto_loop_start(0x1B)
+        guard_and_bond_within_line_of_sight(0x06)
+        guard_has_stopped_moving(0x02)
+        goto_loop_repeat(0x1B)
+    label(0x01)
+        sleep
+        guard_hits_less_than(6, 0x2D)
+        guard_flags_is_on(CHRFLAG_INVINCIBLE, 0x2F)
+    label(0x2D)
+        guard_has_stopped_moving(0x06)
+        0x4C, 0x00, 0xC8, 0x03, // undocumented command (distance check)
+        goto_first(0x01)
+    label(0x03)
+        goto_first(0x28)
+    label(0x06)
+        guard_and_bond_within_line_of_sight(0x03)
+        goto_next(0x02)
+    label(0x24)
+        sleep
+        0x4B, 0x00, 0x32, 0x03, // undocumented command (distance check)
+        guard_has_stopped_moving(0x03)
+        goto_first(0x28)
+    label(0x03)
+        guard_flags_is_on(CHRFLAG_INVINCIBLE, 0x2F)
+    label(0x2B)
+        random_generate_greater_than(10, 0x03)
+        guard_throw_grenade(0x02) // attempt to throw grenade, depends on chr->grenadeprob value
+    label(0x03)
+        random_greater_than(50, 0x03)
+        guard_sidesteps(0x02)
+    label(0x03)
+        random_greater_than(60, 0x03)
+        guard_fire_roll(0x02)
+    label(0x03)
+        random_greater_than(80, 0x03)
+        guard_fire_roll(0x02)
+    label(0x03)
+        random_greater_than(100, 0x03)
+        guard_fire_walk(0x02)
+    label(0x03)
+        random_greater_than(150, 0x03)
+        guard_fire_run(0x02)
+    label(0x03)
+        random_greater_than(200, 0x03)
+        guard_fire_or_aim_at_target(TARGET_BOND, 0, 0x02)
+    label(0x03)
+        guard_fire_or_aim_at_target_kneel(TARGET_BOND, 0, 0x02)
+    label(0x02)
+        guard_and_bond_within_line_of_sight(0x03)
+        goto_next(0x1B)
+    label(0x1B)
+        sleep
+        random_generate_greater_than(160, 0x03)
+        goto_next(0x1C)
+    label(0x03)
+        sleep
+        goto_first(0x01)
+    label(0x1C)
+        chr_timer_reset_start
+        guard_runs_to_bond_position(0x1D)
+    goto_loop_start(0x1D)
+        guard_has_stopped_moving(0x03)
+        chr_timer_greater_than(60, 0x03)
+        goto_loop_repeat(0x1D)
+    label(0x03)
+        guard_animation_stop
+        debug_comment 'w', 'a', 'i', 't', '\n', '\0',
+        guard_bitfield_set_off(0x04)
+        random_generate_greater_than(160, 0x03)
+        guard_bitfield_set_on(0x04)
+    label(0x03)
+        chr_timer_reset_start
+    label(0x1E)
+        sleep
+        guard_and_bond_within_line_of_sight(0x03)
+        guard_shot_from_bond_missed(0x03)
+        sleep
+        chr_timer_less_than(600, 0x04) // if timer less than 10 seconds, goto 04
+        guard_bitfield_is_on(0x04, 0x05)
+        goto_first(0x28)
+    label(0x05)
+        goto_first(0x1C)
+    label(0x04)
+        goto_first(0x1E)
+    label(0x03)
+        goto_first(0x01)
+    label(0x2F)
+        guard_hits_less_than(6, 0x03)
+        guard_flags_set_off(CHRFLAG_INVINCIBLE, 0x2F)
+    label(0x03)
+        goto_first(0x2B)
+    ai_list_end
 };
 
 //D:800373D0
@@ -329,9 +414,9 @@ u8 dword_D_800373E8[] = { // GLIST_DRAW_DD44_AND_FIRE: draw dd44 and fire
     label(0x03)
         0xBF, 0x00, 0xCD, 0x06, 0x00, 0x00, 0x00, 0x00, 0x03, // undocumented spawn weapon command
     label(0x03)
-        guard_fire_or_aim_at_target(TARGET_BOND | TARGET_AIM_ONLY, 0x0000, 0x03) // aim...
+        guard_fire_or_aim_at_target(TARGET_BOND | TARGET_AIM_ONLY, 0, 0x03) // aim...
     label(0x03)
-        guard_fire_or_aim_at_target_update(TARGET_BOND, 0x0000, 0x03) // FIRE!
+        guard_fire_or_aim_at_target_update(TARGET_BOND, 0, 0x03) // FIRE!
     label(0x03)
     goto_loop_start(0x1E) // loop until guard has stopped firing at bond
         guard_has_stopped_moving(0x03)
@@ -364,7 +449,7 @@ struct struct_13 D_8003744C[] = { // global ai lists (glists)
     {dword_D_800372D0, GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE},
     {dword_D_80037224, GLIST_SPAWN_CLONE_OR_RUN_TO_BOND},
     {dword_D_80037248, GLIST_RUN_TO_BOND_AND_FIRE},
-    {dword_D_800372E0, GLIST_RUN_TO_BOND_AND_FIRE_RANDOMLY_HALT_CHR},
+    {dword_D_800372E0, GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY},
     {dword_D_800373D0, GLIST_WAIT_ONE_SECOND_SUBROUTINE},
     {dword_D_800373E0, GLIST_EXIT_LEVEL},
     {dword_D_800373E8, GLIST_DRAW_DD44_AND_FIRE},

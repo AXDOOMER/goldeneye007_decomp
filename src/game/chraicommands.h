@@ -66,18 +66,18 @@
 //===========================================================================*/
 #define GLIST_AIM_AT_BOND                              0x0000 // continuously aim at bond with weapon
 #define GLIST_END_ROUTINE                              0x0001 // end routine (loop forever)
-#define GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE 0x0002 // wait for bond detection - spawn clone on heard gunfire
-#define GLIST_IDLE_RAND_ANIM_SUBROUTINE                0x0003 // play a random idle animation (subroutine)
-#define GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE            0x0004 // play a random use keyboard animation (subroutine)
-#define GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM   0x0005 // wait for bond detection - ignore gunfire and don't play idle animations
+#define GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE 0x0002 // wait for bond detection (spawn clone when heard bond)
+#define GLIST_IDLE_RAND_ANIM_SUBROUTINE                0x0003 // play idle animation (subroutine)
+#define GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE            0x0004 // play use keyboard animation (subroutine)
+#define GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM   0x0005 // wait for bond detection (deaf, no idle anims)
 #define GLIST_FIRE_RAND_ANIM_SUBROUTINE                0x0006 // fire at bond with random animation (subroutine)
-#define GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM        0x0007 // wait for bond detection - don't spawn clone and don't play idle animations
-#define GLIST_RUN_TO_BOND_SUBROUTINE                   0x0008 // run to bond (subroutine)
+#define GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM        0x0007 // wait for bond detection (no clones, no idle)
+#define GLIST_RUN_TO_BOND_SUBROUTINE                   0x0008 // run to bond and fire (subroutine)
 #define GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM  0x0009 // run to chr->padpreset1 and activate alarm
 #define GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE   0x000A // startle character (subroutine)
 #define GLIST_SPAWN_CLONE_OR_RUN_TO_BOND               0x000B // if chr has been seen, run to bond - else spawn clone
 #define GLIST_RUN_TO_BOND_AND_FIRE                     0x000C // run to bond and fire
-#define GLIST_RUN_TO_BOND_AND_FIRE_RANDOMLY_HALT_CHR   0x000D // run to bond and fire (randomly halt - never gives up chasing bond)
+#define GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY   0x000D // forever chase bond and fire (halt randomly)
 #define GLIST_WAIT_ONE_SECOND_SUBROUTINE               0x000E // wait for one second (subroutine)
 #define GLIST_EXIT_LEVEL                               0x000F // exit level
 #define GLIST_DRAW_DD44_AND_FIRE                       0x0010 // draw dd44 and fire
@@ -281,10 +281,10 @@
 // command id: 08
 // info: reset guard back to idle pose - can be used to stop guards in place
 //===========================================================================*/
-#define guard_reset_pose_ID 0x08
-#define guard_reset_pose_LENGTH 0x01
-#define guard_reset_pose \
-        guard_reset_pose_ID,
+#define guard_animation_stop_ID 0x08
+#define guard_animation_stop_LENGTH 0x01
+#define guard_animation_stop \
+        guard_animation_stop_ID,
 
 /*=============================================================================
 // name: guard_kneel
@@ -364,6 +364,8 @@
 // name: guard_sidesteps
 // command id: 0E
 // info: trigger guard to sidestep, goto label if successful
+//=============================================================================
+// note: direction is random
 //===========================================================================*/
 #define guard_sidesteps_ID 0x0E
 #define guard_sidesteps_LENGTH 0x02
@@ -375,6 +377,8 @@
 // name: guard_sideways_hop
 // command id: 0F
 // info: trigger guard to hop sideways, goto label if successful
+//=============================================================================
+// note: direction is random
 //===========================================================================*/
 #define guard_sideways_hop_ID 0x0F
 #define guard_sideways_hop_LENGTH 0x02
@@ -387,7 +391,7 @@
 // command id: 10
 // info: trigger guard to run sideways of bond, goto label if successful
 //=============================================================================
-// note: sideways direction is random
+// note: direction is random
 //===========================================================================*/
 #define guard_sideways_run_ID 0x10
 #define guard_sideways_run_LENGTH 0x02
@@ -1019,7 +1023,7 @@
 // command id: 3B
 // info: if guard sees another guard die (from anyone), goto label
 //=============================================================================
-// note: when other guard switches to ACT_DIE/ACT_DEAD, goto label
+// note: when a guard in sight switches to ACT_DIE/ACT_DEAD, goto label
 //===========================================================================*/
 #define guard_see_guard_die_ID 0x3B
 #define guard_see_guard_die_LENGTH 0x02
@@ -1781,6 +1785,19 @@
         chr_num, \
         chararray32(bitfield), \
         label,
+
+/*=============================================================================
+// name: debug_comment
+// command id: AD
+// info: action block debug comment
+//=============================================================================
+// note: may have originally printed to stderr on host sgi devkit. command is
+// variable length must end with null terminator character '\0'
+//===========================================================================*/
+#define debug_comment_ID 0xAD
+#define debug_comment_LENGTH 0x32 // max length
+#define debug_comment \
+        debug_comment_ID,
 
 /*=============================================================================
 // name: chr_timer_reset_start
