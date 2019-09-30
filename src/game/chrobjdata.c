@@ -269,11 +269,11 @@ u8 dword_D_80037280[] = { // GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM: wait
 
 //D:800372D0
 u8 dword_D_800372D0[] = { // GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE: startle character (subroutine)
-    guard_animation_looks_around_self
+    guard_animation_looks_around_self // trigger animation
     goto_loop_start(0x01)
-        guard_has_stopped_moving(0x02)
+        guard_has_stopped_moving(0x02) // wait for chr to stop moving
         goto_loop_repeat(0x01)
-    label(0x02)
+    label(0x02) // chr stopped moving
         goto_ai_list(CHR_SELF, GLIST_RUN_TO_BOND_SUBROUTINE)
     ai_list_end
 };
@@ -281,8 +281,8 @@ u8 dword_D_800372D0[] = { // GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE: start
 //D:800372E0
 u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forever chase bond and fire (halt randomly)
     label(0x28)
-        guard_runs_to_bond_position(0x1B)
-        debug_comment 'n', 'o', ' ', 'g', 'o', '!', '\n', '\0',
+        guard_runs_to_bond_position(0x1B) // goto loop if bond position is reachable
+        debug_comment 'n', 'o', ' ', 'g', 'o', '!', '\n', '\0', // guard can't reach bond
     goto_loop_start(0x1B)
         guard_and_bond_within_line_of_sight(0x06)
         guard_has_stopped_moving(0x02)
@@ -412,7 +412,7 @@ u8 dword_D_800373E8[] = { // GLIST_DRAW_DD44_AND_FIRE: draw dd44 and fire
         guard_has_stopped_moving(0x03)
         goto_loop_repeat(0x1C)
     label(0x03)
-        0xBF, 0x00, 0xCD, 0x06, 0x00, 0x00, 0x00, 0x00, 0x03, // undocumented spawn weapon command
+        guard_spawn_item(PROP_chrtt33, ITEM_TT33, 0, 0x03)
     label(0x03)
         guard_fire_or_aim_at_target(TARGET_BOND | TARGET_AIM_ONLY, 0, 0x03) // aim...
     label(0x03)

@@ -15,6 +15,12 @@
 // obj ai lists     1000-10FF range
 // global ai lists  0000-0011 range
 //=============================================================================
+// ai list intro
+//=============================================================================
+// a ai list is a list of ai commands that are executed from top to bottom.
+// they are used to control guard ai (fire, chase, go to position, etc) and
+// objective ai (objective logic, mission fail state, spawning guards, etc)
+//=============================================================================
 // character ai list info
 //=============================================================================
 // chr ai lists drive the gameplay, such as attacking/chasing player. a chr ai
@@ -36,12 +42,23 @@
 // which are accessible throughout the entire game. they contain generic ai lists
 // used for most levels
 //=============================================================================
-// command note
+// ai command note
 //=============================================================================
 // commands with guard prefix are exclusive to chr ai lists, they can't be
 // executed by obj ai lists (10XX) or it will crash! commands with chr prefix can
 // be used by obj/chr ai lists - exceptions to this rule are detailed within
 // the command description
+//=============================================================================
+// ai commands with label argument
+//=============================================================================
+// most commands will have a label argument in their function description. this
+// is used when a command has a fail/true state. for example, the run to bond
+// command (28) has goto label argument. when the command is executed, it will
+// check if the guard is able to run to bond. if for some reason this fails (bond
+// is in an unreachable area/guard is dying/etc) then the command will not goto
+// label and the next command after it will be executed. this can be used for
+// breaking out of a infinite loop, which is the most common use of commands with
+// goto labels - for example check GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE
 //===========================================================================*/
 
 #define chararray16(input) (input & 0xFF00) >> 8, input & 0x00FF
@@ -103,6 +120,7 @@
 #define TARGET_BOND         0x0001
 #define TARGET_CHR          0x0004
 #define TARGET_PAD          0x0008
+#define TARGET_COMPASS      0x0008
 #define TARGET_AIM_ONLY     0x0020
 
 // command 18-19 target body part values
@@ -171,7 +189,7 @@
 // ai commands macros and information
 //=============================================================================
 // name and description per command, please read carefully when creating new
-// ai list. ensure that you don't cause loops without a sleep command or else
+// ai lists. ensure that you don't cause loops without a sleep command or else
 // command parser will never release and game will softlock
 //===========================================================================*/
 
@@ -241,7 +259,7 @@
 // command id: 05
 // info: make chr goto another list and start executing from beginning
 //=============================================================================
-// note: cannot jump to obj lists (10XX)
+// note: not recommended to goto an obj list (10XX)
 //===========================================================================*/
 #define goto_ai_list_ID 0x05
 #define goto_ai_list_LENGTH 0x04
@@ -255,7 +273,7 @@
 // command id: 06
 // info: store a list ptr in current chr struct - used for command 07 return
 //=============================================================================
-// note: stored list cannot be set to obj lists (10XX)
+// note: not recommended to set stored list to an obj list (10XX)
 //===========================================================================*/
 #define set_return_ai_list_ID 0x06
 #define set_return_ai_list_LENGTH 0x03
@@ -448,6 +466,7 @@
 // 0001: set target to bond (ignores target argument)
 // 0004: set target type to chr_num
 // 0008: set target type to pad
+// 0010: set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
 // 0020: aim at target instead of firing
 //===========================================================================*/
 #define guard_fire_or_aim_at_target_ID 0x14
@@ -468,6 +487,7 @@
 // 0001: set target to bond (ignores target argument)
 // 0004: set target type to chr_num
 // 0008: set target type to pad
+// 0010: set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
 // 0020: aim at target instead of firing
 //===========================================================================*/
 #define guard_fire_or_aim_at_target_kneel_ID 0x15
@@ -489,6 +509,7 @@
 // 0001: set target to bond (ignores target argument)
 // 0004: set target type to chr_num
 // 0008: set target type to pad
+// 0010: set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
 // 0020: aim at target instead of firing
 //===========================================================================*/
 #define guard_fire_or_aim_at_target_update_ID 0x16
@@ -510,6 +531,7 @@
 // 0001: set target to bond (ignores target argument)
 // 0004: set target type to chr_num
 // 0008: set target type to pad
+// 0010: set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
 //===========================================================================*/
 #define guard_faces_target_ID 0x17
 #define guard_faces_target_LENGTH 0x06
@@ -1994,6 +2016,39 @@
         label,
 
 /*=============================================================================
+// name: guard_spawn_item
+// command id: BF
+// info: spawn weapon for guard, goto label if successful
+//=============================================================================
+// note: if out of memory/can't spawn item/hand not free, do not got label.
+// spawned prop must have a holding position command within the model file
+//===========================================================================*/
+#define guard_spawn_item_ID 0xBF
+#define guard_spawn_item_LENGTH 0x09
+#define guard_spawn_item(prop_num, item_num, prop_bitfield, label) \
+        guard_spawn_item_ID, \
+        chararray16(prop_num), \
+        item_num, \
+        chararray32(prop_bitfield), \
+        label,
+
+/*=============================================================================
+// name: guard_spawn_hat
+// command id: C0
+// info: spawn hat for guard, goto label if successful
+//=============================================================================
+// note: if out of memory/can't spawn item/already have hat, do not got label.
+// spawned hat must have a holding position command within the model file
+//===========================================================================*/
+#define guard_spawn_hat_ID 0xBF
+#define guard_spawn_hat_LENGTH 0x08
+#define guard_spawn_hat(prop_num, prop_bitfield, label) \
+        guard_spawn_hat_ID, \
+        chararray16(prop_num), \
+        chararray32(prop_bitfield), \
+        label,
+
+/*=============================================================================
 // name: chr_spawn_clone
 // command id: C1
 // info: if guard has clone flag on, spawn a new guard - goto label if successful
@@ -2120,10 +2175,10 @@
 //=============================================================================
 // note: fade duration is 1 second
 //===========================================================================*/
-#define screen_fade_if_complete_ID 0xDC
-#define screen_fade_if_complete_LENGTH 0x02
-#define screen_fade_if_complete(label) \
-        screen_fade_if_complete_ID, \
+#define screen_fade_completede_ID 0xDC
+#define screen_fade_completed_LENGTH 0x02
+#define screen_fade_completed(label) \
+        screen_fade_completed_ID, \
         label,
 
 /*=============================================================================
