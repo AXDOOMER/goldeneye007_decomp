@@ -108,7 +108,7 @@ u8 dword_D_8003713C[] = { // GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE: play use keybo
 };
 
 //D:8003717C
-u8 dword_D_8003717C[] = { // GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (deaf, no idle anims)
+u8 dword_D_8003717C[] = { // GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (deaf & no idling)
     goto_loop_start(0x01) // wait for guard to stop moving before branching to next logic
         guard_has_stopped_moving(0x06)
         goto_loop_repeat(0x01)
@@ -210,7 +210,7 @@ u8 dword_D_80037248[] = { // GLIST_RUN_TO_BOND_AND_FIRE: run to bond and fire
 };
 
 //D:80037250
-u8 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (no clones, no idle)
+u8 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (no clones & no idling)
     goto_loop_start(0x01) // wait for guard to stop moving before branching to next logic
         guard_sees_bond(0x07)
         guard_was_shot_within_last_10_secs(0x0D)
@@ -225,7 +225,7 @@ u8 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for b
     label(0x0D) // guard saw another guard shot/die or guard was shot
         set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
         goto_ai_list(CHR_SELF, GLIST_RUN_TO_BOND_SUBROUTINE)
-    label(0x0E) // unused spawn clone reaction for hearing bond, likely was too difficult
+    label(0x0E) // unused spawn clone reaction for hearing bond, likely made game too difficult/slow
         set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
         goto_ai_list(CHR_SELF, GLIST_SPAWN_CLONE_OR_RUN_TO_BOND)
     ai_list_end
@@ -251,11 +251,11 @@ u8 dword_D_80037280[] = { // GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM: run 
         goto_loop_repeat(0x04)
     label(0x0F)
         guard_runs_to_pad(PAD_PRESET)
-    goto_loop_start(0x03) // wait for guard to stop moving (reached destination/was shot)
+    goto_loop_start(0x03) // wait for guard to stop moving (reached destination/guard was shot)
         guard_has_stopped_moving(0x02)
         goto_loop_repeat(0x03)
     label(0x02)
-        0x4E, 0xFD, 0x00, 0x0A, 0x23, 0x28, 0x02, // undocumented command (distance check)
+        chr_meters_to_pad_greater_than(CHR_SELF, 1, PAD_PRESET, 0x02) // if guard is more than 1 meter away from alarm, skip to attack ai list
         guard_trigger_alarm_at_pad(PAD_PRESET, 0x05)
         goto_next(0x02) // didn't activate alarm (alarm destroyed?)
     goto_loop_start(0x05) // wait for guard to finish activating alarm
@@ -293,7 +293,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         guard_flags_is_set_on(CHRFLAG_INVINCIBLE, 0x2F)
     label(0x2D)
         guard_has_stopped_moving(0x06)
-        guard_distance_to_bond_greater_than(200, 0x03) // if guard is further than 20 meters away from bond, goto 03
+        guard_meters_to_bond_greater_than(20, 0x03) // if guard is further than 20 meters away from bond, goto 03
         goto_first(0x01)
     label(0x03)
         goto_first(0x28)
@@ -302,7 +302,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         goto_next(0x02)
     label(0x24)
         sleep
-        guard_distance_to_bond_less_than(50, 0x03) // if guard is within 5 meters from bond, goto 03
+        guard_meters_to_bond_less_than(5, 0x03) // if guard is within 5 meters from bond, goto 03
         guard_has_stopped_moving(0x03)
         goto_first(0x28)
     label(0x03)
@@ -345,7 +345,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         guard_runs_to_bond_position(0x1D)
     goto_loop_start(0x1D)
         guard_has_stopped_moving(0x03)
-        chr_timer_greater_than(60, 0x03)
+        chr_timer_seconds_greater_than(1, 0x03)
         goto_loop_repeat(0x1D)
     label(0x03)
         guard_animation_stop
@@ -360,7 +360,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         guard_and_bond_within_line_of_sight(0x03)
         guard_shot_from_bond_missed(0x03)
         sleep
-        chr_timer_less_than(600, 0x04) // if timer less than 10 seconds, goto 04
+        chr_timer_seconds_less_than(10, 0x04) // if timer less than 10 seconds, goto 04
         guard_bitfield_is_set_on(0x04, 0x05)
         goto_first(0x28)
     label(0x05)
@@ -381,7 +381,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
 u8 dword_D_800373D0[] = { // GLIST_WAIT_ONE_SECOND_SUBROUTINE: wait for one second (subroutine)
     chr_timer_reset_start
     goto_loop_start(0x1B)
-        chr_timer_greater_than(SECS_TO_TIMER60(1), 0x03) // wait one second
+        chr_timer_seconds_greater_than(1, 0x03) // wait one second
         goto_loop_repeat(0x1B)
     label(0x03)
         goto_return_ai_list
