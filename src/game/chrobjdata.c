@@ -251,11 +251,11 @@ u8 dword_D_80037280[] = { // GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM: run 
         goto_loop_repeat(0x04)
     label(0x0F)
         guard_runs_to_pad(PAD_PRESET)
-    goto_loop_start(0x03) // wait for guard to stop moving (reached destination/was shot)
+    goto_loop_start(0x03) // wait for guard to stop moving (reached destination/guard was shot)
         guard_has_stopped_moving(0x02)
         goto_loop_repeat(0x03)
     label(0x02)
-        0x4E, 0xFD, 0x00, 0x0A, 0x23, 0x28, 0x02, // undocumented command (distance check)
+        chr_meters_to_pad_greater_than(CHR_SELF, 1, PAD_PRESET, 0x02) // if guard is more than 1 meter away from alarm, skip to attack ai list
         guard_trigger_alarm_at_pad(PAD_PRESET, 0x05)
         goto_next(0x02) // didn't activate alarm (alarm destroyed?)
     goto_loop_start(0x05) // wait for guard to finish activating alarm
@@ -293,7 +293,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         guard_flags_is_set_on(CHRFLAG_INVINCIBLE, 0x2F)
     label(0x2D)
         guard_has_stopped_moving(0x06)
-        guard_distance_to_bond_greater_than(200, 0x03) // if guard is further than 20 meters away from bond, goto 03
+        guard_meters_to_bond_greater_than(20, 0x03) // if guard is further than 20 meters away from bond, goto 03
         goto_first(0x01)
     label(0x03)
         goto_first(0x28)
@@ -302,7 +302,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         goto_next(0x02)
     label(0x24)
         sleep
-        guard_distance_to_bond_less_than(50, 0x03) // if guard is within 5 meters from bond, goto 03
+        guard_meters_to_bond_less_than(5, 0x03) // if guard is within 5 meters from bond, goto 03
         guard_has_stopped_moving(0x03)
         goto_first(0x28)
     label(0x03)

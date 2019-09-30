@@ -179,6 +179,33 @@
         random_generate \
         random_less_than(byte, label)
 
+#define guard_meters_to_bond_less_than(distance, label) \
+        guard_distance_to_bond_less_than((distance * 10U), label)
+
+#define guard_meters_to_bond_greater_than(distance, label) \
+        guard_distance_to_bond_greater_than((distance * 10U), label)
+
+#define chr_meters_to_pad_less_than(chr_num, distance, pad, label) \
+        chr_distance_to_pad_less_than(chr_num, (distance * 10U), pad, label)
+
+#define chr_meters_to_pad_greater_than(chr_num, distance, pad, label) \
+        chr_distance_to_pad_greater_than(chr_num, (distance * 10U), pad, label)
+
+#define guard_meters_to_chr_less_than(distance, chr_num, label) \
+        guard_distance_to_chr_less_than((distance * 10U), chr_num, label)
+
+#define guard_meters_to_chr_greater_than(distance, chr_num, label) \
+        guard_distance_to_chr_greater_than((distance * 10U), chr_num, label)
+
+#define guard_set_chr_preset_to_guard_within_meters(distance, label) \
+        guard_set_chr_preset_to_guard_within_distance((distance * 10U), label)
+
+#define bond_meters_to_pad_less_than(distance, pad, label) \
+        bond_distance_to_pad_less_than((distance * 10U), pad, label)
+
+#define bond_meters_to_pad_greater_than(distance, pad, label) \
+        bond_distance_to_pad_greater_than((distance * 10U), pad, label)
+
 #define debug_log_end \
         '\0',
 
@@ -1363,17 +1390,17 @@
         label,
 
 /*=============================================================================
-// name: guard_distance_to_pad_greater_than
+// name: guard_distance_to_chr_greater_than
 // command id: 50
 // info: if guard's distance to chr > distance argument, goto label
 //=============================================================================
 // note: argument scale is 10 units per meter. cannot be used for bond, instead
 //       use command 4C
 //===========================================================================*/
-#define guard_distance_to_pad_greater_than_ID 0x50
-#define guard_distance_to_pad_greater_than_LENGTH 0x05
-#define guard_distance_to_pad_greater_than(distance, chr_num, label) \
-        guard_distance_to_pad_greater_than_ID, \
+#define guard_distance_to_chr_greater_than_ID 0x50
+#define guard_distance_to_chr_greater_than_LENGTH 0x05
+#define guard_distance_to_chr_greater_than(distance, chr_num, label) \
+        guard_distance_to_chr_greater_than_ID, \
         chararray16(distance), \
         chr_num, \
         label,
