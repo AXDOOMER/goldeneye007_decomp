@@ -209,6 +209,12 @@
 #define debug_log_end \
         '\0',
 
+#define chr_timer_seconds_less_than(seconds, label) \
+        chr_timer_less_than((SECS_TO_TIMER60(seconds)), label)
+
+#define chr_timer_seconds_greater_than(seconds, label) \
+        chr_timer_greater_than((SECS_TO_TIMER60(seconds)), label)
+
 #define camera_wait_for_loading \
         sleep \
         sleep \

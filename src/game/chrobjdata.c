@@ -345,7 +345,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         guard_runs_to_bond_position(0x1D)
     goto_loop_start(0x1D)
         guard_has_stopped_moving(0x03)
-        chr_timer_greater_than(60, 0x03)
+        chr_timer_seconds_greater_than(1, 0x03)
         goto_loop_repeat(0x1D)
     label(0x03)
         guard_animation_stop
@@ -360,7 +360,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         guard_and_bond_within_line_of_sight(0x03)
         guard_shot_from_bond_missed(0x03)
         sleep
-        chr_timer_less_than(600, 0x04) // if timer less than 10 seconds, goto 04
+        chr_timer_seconds_less_than(10, 0x04) // if timer less than 10 seconds, goto 04
         guard_bitfield_is_set_on(0x04, 0x05)
         goto_first(0x28)
     label(0x05)
@@ -381,7 +381,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
 u8 dword_D_800373D0[] = { // GLIST_WAIT_ONE_SECOND_SUBROUTINE: wait for one second (subroutine)
     chr_timer_reset_start
     goto_loop_start(0x1B)
-        chr_timer_greater_than(SECS_TO_TIMER60(1), 0x03) // wait one second
+        chr_timer_seconds_greater_than(1, 0x03) // wait one second
         goto_loop_repeat(0x1B)
     label(0x03)
         goto_return_ai_list
