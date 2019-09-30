@@ -1303,6 +1303,22 @@
         label,
 
 /*=============================================================================
+// name: guard_set_chrpreset_to_guard_within_distance
+// command id: 51
+// info: if guard's distance to any chr < distance argument, set chr->padpreset1
+//       to found guard's chrnum and goto label
+//=============================================================================
+// note: argument scale is 10 units per meter. does not pick the closest guard,
+//       but whoever was first checked within the distance provided
+//===========================================================================*/
+#define guard_set_chrpreset_to_guard_within_distance_ID 0x51
+#define guard_set_chrpreset_to_guard_within_distance_LENGTH 0x04
+#define guard_set_chrpreset_to_guard_within_distance(distance, label) \
+        guard_set_chrpreset_to_guard_within_distance_ID, \
+        chararray16(distance), \
+        label,
+
+/*=============================================================================
 // name: bond_distance_to_pad_less_than
 // command id: 52
 // info: if bond's distance to pad < distance argument, goto label
@@ -1318,16 +1334,16 @@
         label,
 
 /*=============================================================================
-// name: guard_distance_to_pad_greater_than
+// name: bond_distance_to_pad_greater_than
 // command id: 53
 // info: if bond's distance to pad > distance argument, goto label
 //=============================================================================
 // note: argument scale is 10 units per meter
 //===========================================================================*/
-#define guard_distance_to_pad_greater_than_ID 0x53
-#define guard_distance_to_pad_greater_than_LENGTH 0x06
-#define guard_distance_to_pad_greater_than(distance, pad, label) \
-        guard_distance_to_pad_greater_than_ID, \
+#define bond_distance_to_pad_greater_than_ID 0x53
+#define bond_distance_to_pad_greater_than_LENGTH 0x06
+#define bond_distance_to_pad_greater_than(distance, pad, label) \
+        bond_distance_to_pad_greater_than_ID, \
         chararray16(distance), \
         chararray16(pad), \
         label,
