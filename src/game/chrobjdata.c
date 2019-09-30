@@ -134,13 +134,13 @@ u8 dword_D_8003717C[] = { // GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM: wait 
 
 //D:800371B4
 u8 dword_D_800371B4[] = { // GLIST_FIRE_RAND_ANIM_SUBROUTINE: fire at bond with random animation (subroutine)
-    guard_bitfield_is_on(BITFIELD_DONT_POINT_AT_BOND, 0x03) // if guard already pointed at bond, goto label 03
+    guard_bitfield_is_set_on(BITFIELD_DONT_POINT_AT_BOND, 0x03) // if guard already pointed at bond, goto label 03
     random_generate_greater_than(32, 0x03) // 12.5% chance of pointing to bond
     guard_points_at_bond
     guard_bitfield_set_on(BITFIELD_DONT_POINT_AT_BOND) // don't point again, thank you object permanence
     goto_return_ai_list // guard pointed at bond, return to list
     label(0x03)
-        guard_bitfield_set_on(BITFIELD_DONT_POINT_AT_BOND, 0x03) // set flag so we don't point at bond, only do that for first time in list
+        guard_bitfield_set_on(BITFIELD_DONT_POINT_AT_BOND) // set flag so we don't point at bond, only do that for first time in list
         guard_throw_grenade(0x02) // attempt to throw grenade, depends on chr->grenadeprob value
     label(0x03)
         random_generate_greater_than(10, 0x03)
@@ -232,7 +232,7 @@ u8 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for b
 };
 
 //D:80037280
-u8 dword_D_80037280[] = { // GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM: wait for bond detection - don't spawn clone and don't play idle animations
+u8 dword_D_80037280[] = { // GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM: run to chr->padpreset1 and activate alarm
     goto_loop_start(0x01) // wait for guard to stop moving before branching to next logic
         guard_has_stopped_moving(0x06)
         goto_loop_repeat(0x01)
@@ -282,7 +282,7 @@ u8 dword_D_800372D0[] = { // GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE: start
 u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forever chase bond and fire (halt randomly)
     label(0x28)
         guard_runs_to_bond_position(0x1B) // goto loop if bond position is reachable
-        debug_comment 'n', 'o', ' ', 'g', 'o', '!', '\n', '\0', // guard can't reach bond
+        debug_log 'n','o',' ','g','o','!','\n', debug_log_end // guard can't reach bond
     goto_loop_start(0x1B)
         guard_and_bond_within_line_of_sight(0x06)
         guard_has_stopped_moving(0x02)
@@ -290,10 +290,10 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
     label(0x01)
         sleep
         guard_hits_less_than(6, 0x2D)
-        guard_flags_is_on(CHRFLAG_INVINCIBLE, 0x2F)
+        guard_flags_is_set_on(CHRFLAG_INVINCIBLE, 0x2F)
     label(0x2D)
         guard_has_stopped_moving(0x06)
-        0x4C, 0x00, 0xC8, 0x03, // undocumented command (distance check)
+        guard_distance_to_bond_greater_than(200, 0x03) // if guard is further than 20 meters away from bond, goto 03
         goto_first(0x01)
     label(0x03)
         goto_first(0x28)
@@ -302,11 +302,11 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         goto_next(0x02)
     label(0x24)
         sleep
-        0x4B, 0x00, 0x32, 0x03, // undocumented command (distance check)
+        guard_distance_to_bond_less_than(50, 0x03) // if guard is within 5 meters from bond, goto 03
         guard_has_stopped_moving(0x03)
         goto_first(0x28)
     label(0x03)
-        guard_flags_is_on(CHRFLAG_INVINCIBLE, 0x2F)
+        guard_flags_is_set_on(CHRFLAG_INVINCIBLE, 0x2F)
     label(0x2B)
         random_generate_greater_than(10, 0x03)
         guard_throw_grenade(0x02) // attempt to throw grenade, depends on chr->grenadeprob value
@@ -349,7 +349,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         goto_loop_repeat(0x1D)
     label(0x03)
         guard_animation_stop
-        debug_comment 'w', 'a', 'i', 't', '\n', '\0',
+        debug_log 'w','a','i','t','\n', debug_log_end
         guard_bitfield_set_off(0x04)
         random_generate_greater_than(160, 0x03)
         guard_bitfield_set_on(0x04)
@@ -361,7 +361,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         guard_shot_from_bond_missed(0x03)
         sleep
         chr_timer_less_than(600, 0x04) // if timer less than 10 seconds, goto 04
-        guard_bitfield_is_on(0x04, 0x05)
+        guard_bitfield_is_set_on(0x04, 0x05)
         goto_first(0x28)
     label(0x05)
         goto_first(0x1C)
@@ -371,7 +371,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         goto_first(0x01)
     label(0x2F)
         guard_hits_less_than(6, 0x03)
-        guard_flags_set_off(CHRFLAG_INVINCIBLE, 0x2F)
+        guard_flags_set_off(CHRFLAG_INVINCIBLE)
     label(0x03)
         goto_first(0x2B)
     ai_list_end

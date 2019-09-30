@@ -17,7 +17,7 @@
 //=============================================================================
 // ai list intro
 //=============================================================================
-// a ai list is a list of ai commands that are executed from top to bottom.
+// ai list are a list of ai commands that are executed from top to bottom.
 // they are used to control guard ai (fire, chase, go to position, etc) and
 // objective ai (objective logic, mission fail state, spawning guards, etc)
 //=============================================================================
@@ -55,10 +55,10 @@
 // is used when a command has a fail/true state. for example, the run to bond
 // command (28) has goto label argument. when the command is executed, it will
 // check if the guard is able to run to bond. if for some reason this fails (bond
-// is in an unreachable area/guard is dying/etc) then the command will not goto
-// label and the next command after it will be executed. this can be used for
-// breaking out of a infinite loop, which is the most common use of commands with
-// goto labels - for example check GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE
+// is unreachable/guard is dying/etc) then the command will not goto label and
+// the next command will be executed. the most common use of commands with goto
+// labels are jumping out of an infinite loop - for an example check global ai
+// list GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE
 //===========================================================================*/
 
 #define chararray16(input) (input & 0xFF00) >> 8, input & 0x00FF
@@ -120,7 +120,7 @@
 #define TARGET_BOND         0x0001
 #define TARGET_CHR          0x0004
 #define TARGET_PAD          0x0008
-#define TARGET_COMPASS      0x0008
+#define TARGET_COMPASS      0x0010
 #define TARGET_AIM_ONLY     0x0020
 
 // command 18-19 target body part values
@@ -179,7 +179,10 @@
         random_generate \
         random_less_than(byte, label)
 
-#define transition_to_camera \
+#define debug_log_end \
+        '\0',
+
+#define camera_wait_for_loading \
         sleep \
         sleep \
         sleep
@@ -977,27 +980,27 @@
         label,
 
 /*=============================================================================
-// name: alarm_is_on_unused
+// name: alarm_is_set_on_unused
 // command id: 36
 // info: if alarm is activated, goto label
 //=============================================================================
 // note: this command works but is unused in retail game, use command 37 instead
 //===========================================================================*/
-#define alarm_is_on_unused_ID 0x36
-#define alarm_is_on_unused_LENGTH 0x02
-#define alarm_is_on_unused(label) \
-        alarm_is_on_unused_ID, \
+#define alarm_is_set_on_unused_ID 0x36
+#define alarm_is_set_on_unused_LENGTH 0x02
+#define alarm_is_set_on_unused(label) \
+        alarm_is_set_on_unused_ID, \
         label,
 
 /*=============================================================================
-// name: alarm_is_on
+// name: alarm_is_set_on
 // command id: 37
 // info: if alarm is activated, goto label
 //===========================================================================*/
-#define alarm_is_on_ID 0x37
-#define alarm_is_on_LENGTH 0x02
-#define alarm_is_on(label) \
-        alarm_is_on_ID, \
+#define alarm_is_set_on_ID 0x37
+#define alarm_is_set_on_LENGTH 0x02
+#define alarm_is_set_on(label) \
+        alarm_is_set_on_ID, \
         label,
 
 /*=============================================================================
@@ -1182,6 +1185,8 @@
 // name: guard_is_targeted_by_bond
 // command id: 45
 // info: if bond is looking/aiming at guard, goto label
+//=============================================================================
+// note: also checks if crosshair is aiming at guard
 //===========================================================================*/
 #define guard_is_targeted_by_bond_ID 0x45
 #define guard_is_targeted_by_bond_LENGTH 0x02
@@ -1201,6 +1206,130 @@
 #define guard_shot_from_bond_missed_LENGTH 0x02
 #define guard_shot_from_bond_missed(label) \
         guard_shot_from_bond_missed_ID, \
+        label,
+
+/*=============================================================================
+// name: guard_distance_to_bond_less_than
+// command id: 4B
+// info: if guard's distance to bond < distance argument, goto label
+//=============================================================================
+// note: argument scale is 10 units per meter
+//===========================================================================*/
+#define guard_distance_to_bond_less_than_ID 0x4B
+#define guard_distance_to_bond_less_than_LENGTH 0x04
+#define guard_distance_to_bond_less_than(distance, label) \
+        guard_distance_to_bond_less_than_ID, \
+        chararray16(distance), \
+        label,
+
+/*=============================================================================
+// name: guard_distance_to_bond_greater_than
+// command id: 4C
+// info: if guard's distance to bond > distance argument, goto label
+//=============================================================================
+// note: argument scale is 10 units per meter
+//===========================================================================*/
+#define guard_distance_to_bond_greater_than_ID 0x4C
+#define guard_distance_to_bond_greater_than_LENGTH 0x04
+#define guard_distance_to_bond_greater_than(distance, label) \
+        guard_distance_to_bond_greater_than_ID, \
+        chararray16(distance), \
+        label,
+
+/*=============================================================================
+// name: chr_distance_to_pad_less_than
+// command id: 4D
+// info: if chr's distance to pad < distance argument, goto label
+//=============================================================================
+// note: argument scale is 10 units per meter. cannot be used for bond, instead
+//       use command 52
+//===========================================================================*/
+#define chr_distance_to_pad_less_than_ID 0x4D
+#define chr_distance_to_pad_less_than_LENGTH 0x07
+#define chr_distance_to_pad_less_than(chr_num, distance, pad, label) \
+        chr_distance_to_pad_less_than_ID, \
+        chr_num, \
+        chararray16(distance), \
+        chararray16(pad), \
+        label,
+
+/*=============================================================================
+// name: chr_distance_to_pad_greater_than
+// command id: 4E
+// info: if chr's distance to pad > distance argument, goto label
+//=============================================================================
+// note: argument scale is 10 units per meter. cannot be used for bond, instead
+//       use command 53
+//===========================================================================*/
+#define chr_distance_to_pad_greater_than_ID 0x4E
+#define chr_distance_to_pad_greater_than_LENGTH 0x07
+#define chr_distance_to_pad_greater_than(chr_num, distance, pad, label) \
+        chr_distance_to_pad_greater_than_ID, \
+        chr_num, \
+        chararray16(distance), \
+        chararray16(pad), \
+        label,
+
+/*=============================================================================
+// name: guard_distance_to_chr_less_than
+// command id: 4F
+// info: if guard's distance to chr < distance argument, goto label
+//=============================================================================
+// note: argument scale is 10 units per meter. cannot be used for bond, instead
+//       use command 4B
+//===========================================================================*/
+#define guard_distance_to_chr_less_than_ID 0x4F
+#define guard_distance_to_chr_less_than_LENGTH 0x05
+#define guard_distance_to_chr_less_than(distance, chr_num, label) \
+        guard_distance_to_chr_less_than_ID, \
+        chararray16(distance), \
+        chr_num, \
+        label,
+
+/*=============================================================================
+// name: guard_distance_to_pad_greater_than
+// command id: 50
+// info: if guard's distance to chr > distance argument, goto label
+//=============================================================================
+// note: argument scale is 10 units per meter. cannot be used for bond, instead
+//       use command 4C
+//===========================================================================*/
+#define guard_distance_to_pad_greater_than_ID 0x50
+#define guard_distance_to_pad_greater_than_LENGTH 0x05
+#define guard_distance_to_pad_greater_than(distance, chr_num, label) \
+        guard_distance_to_pad_greater_than_ID, \
+        chararray16(distance), \
+        chr_num, \
+        label,
+
+/*=============================================================================
+// name: bond_distance_to_pad_less_than
+// command id: 52
+// info: if bond's distance to pad < distance argument, goto label
+//=============================================================================
+// note: argument scale is 10 units per meter
+//===========================================================================*/
+#define bond_distance_to_pad_less_than_ID 0x52
+#define bond_distance_to_pad_less_than_LENGTH 0x06
+#define bond_distance_to_pad_less_than(distance, pad, label) \
+        bond_distance_to_pad_less_than_ID, \
+        chararray16(distance), \
+        chararray16(pad), \
+        label,
+
+/*=============================================================================
+// name: guard_distance_to_pad_greater_than
+// command id: 53
+// info: if bond's distance to pad > distance argument, goto label
+//=============================================================================
+// note: argument scale is 10 units per meter
+//===========================================================================*/
+#define guard_distance_to_pad_greater_than_ID 0x53
+#define guard_distance_to_pad_greater_than_LENGTH 0x06
+#define guard_distance_to_pad_greater_than(distance, pad, label) \
+        guard_distance_to_pad_greater_than_ID, \
+        chararray16(distance), \
+        chararray16(pad), \
         label,
 
 /*=============================================================================
@@ -1603,14 +1732,14 @@
         bitfield,
 
 /*=============================================================================
-// name: guard_bitfield_is_on
+// name: guard_bitfield_is_set_on
 // command id: 96
 // info: if bits is set on in chr->BITFIELD, goto label
 //===========================================================================*/
-#define guard_bitfield_is_on_ID 0x96
-#define guard_bitfield_is_on_LENGTH 0x03
-#define guard_bitfield_is_on(bitfield, label) \
-        guard_bitfield_is_on_ID, \
+#define guard_bitfield_is_set_on_ID 0x96
+#define guard_bitfield_is_set_on_LENGTH 0x03
+#define guard_bitfield_is_set_on(bitfield, label) \
+        guard_bitfield_is_set_on_ID, \
         bitfield, \
         label,
 
@@ -1647,14 +1776,14 @@
         bitfield,
 
 /*=============================================================================
-// name: chr_bitfield_is_on
+// name: chr_bitfield_is_set_on
 // command id: 99
 // info: if bits is set on in chr->BITFIELD, goto label
 //===========================================================================*/
-#define chr_bitfield_is_on_ID 0x99
-#define chr_bitfield_is_on_LENGTH 0x04
-#define chr_bitfield_is_on(chr_num, bitfield, label) \
-        chr_bitfield_is_on_ID, \
+#define chr_bitfield_is_set_on_ID 0x99
+#define chr_bitfield_is_set_on_LENGTH 0x04
+#define chr_bitfield_is_set_on(chr_num, bitfield, label) \
+        chr_bitfield_is_set_on_ID, \
         chr_num, \
         bitfield, \
         label,
@@ -1708,7 +1837,7 @@
         chararray32(bitfield),
 
 /*=============================================================================
-// name: guard_flags_is_on
+// name: guard_flags_is_set_on
 // command id: 9F
 // info: if bits is set on in chr->chrflags, goto label
 //=============================================================================
@@ -1725,10 +1854,10 @@
 // 00004000 - ignore animation translation
 // 00080000 - increase sprinting speed
 //===========================================================================*/
-#define guard_flags_is_on_ID 0x9F
-#define guard_flags_is_on_LENGTH 0x06
-#define guard_flags_is_on(bitfield, label) \
-        guard_flags_is_on_ID, \
+#define guard_flags_is_set_on_ID 0x9F
+#define guard_flags_is_set_on_LENGTH 0x06
+#define guard_flags_is_set_on(bitfield, label) \
+        guard_flags_is_set_on_ID, \
         chararray32(bitfield), \
         label,
 
@@ -1783,7 +1912,7 @@
         chararray32(bitfield),
 
 /*=============================================================================
-// name: chr_flags_is_on
+// name: chr_flags_is_set_on
 // command id: A2
 // info: if bits is set on in chr->chrflags, goto label
 //=============================================================================
@@ -1800,26 +1929,26 @@
 // 00004000 - ignore animation translation
 // 00080000 - increase sprinting speed
 //===========================================================================*/
-#define chr_flags_is_on_ID 0xA2
-#define chr_flags_is_on_LENGTH 0x07
-#define chr_flags_is_on(chr_num, bitfield, label) \
-        chr_flags_is_on_ID, \
+#define chr_flags_is_set_on_ID 0xA2
+#define chr_flags_is_set_on_LENGTH 0x07
+#define chr_flags_is_set_on(chr_num, bitfield, label) \
+        chr_flags_is_set_on_ID, \
         chr_num, \
         chararray32(bitfield), \
         label,
 
 /*=============================================================================
-// name: debug_comment
+// name: debug_log
 // command id: AD
-// info: action block debug comment
+// info: debug comment
 //=============================================================================
 // note: may have originally printed to stderr on host sgi devkit. command is
 // variable length must end with null terminator character '\0'
 //===========================================================================*/
-#define debug_comment_ID 0xAD
-#define debug_comment_LENGTH 0x32 // max length
-#define debug_comment \
-        debug_comment_ID,
+#define debug_log_ID 0xAD
+#define debug_log_LENGTH 0x32 // max length
+#define debug_log \
+        debug_log_ID,
 
 /*=============================================================================
 // name: chr_timer_reset_start
