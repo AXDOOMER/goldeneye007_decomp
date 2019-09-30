@@ -52,7 +52,7 @@
 // ai commands with label argument
 //=============================================================================
 // most commands will have a label argument in their function description. this
-// is used when a command has a fail/true state. for example, the run to bond
+// is used when a command has a false/true state. for example, the run to bond
 // command (28) has goto label argument. when the command is executed, it will
 // check if the guard is able to run to bond. if for some reason this fails (bond
 // is unreachable/guard is dying/etc) then the command will not goto label and
@@ -86,9 +86,9 @@
 #define GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE 0x0002 // wait for bond detection (spawn clone when heard bond)
 #define GLIST_IDLE_RAND_ANIM_SUBROUTINE                0x0003 // play idle animation (subroutine)
 #define GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE            0x0004 // play use keyboard animation (subroutine)
-#define GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM   0x0005 // wait for bond detection (deaf, no idle anims)
+#define GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM   0x0005 // wait for bond detection (deaf & no idling)
 #define GLIST_FIRE_RAND_ANIM_SUBROUTINE                0x0006 // fire at bond with random animation (subroutine)
-#define GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM        0x0007 // wait for bond detection (no clones, no idle)
+#define GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM        0x0007 // wait for bond detection (no clones & no idling)
 #define GLIST_RUN_TO_BOND_SUBROUTINE                   0x0008 // run to bond and fire (subroutine)
 #define GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM  0x0009 // run to chr->padpreset1 and activate alarm
 #define GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE   0x000A // startle character (subroutine)
@@ -1209,6 +1209,82 @@
         label,
 
 /*=============================================================================
+// name: guard_counter_clockwise_direction_to_bond_less_than
+// command id: 47
+// info: if guard's counter-clockwise direction to bond < direction argument, goto label
+//=============================================================================
+// note: direction input (hex):
+// 00: no rotation, never goto label because degrees are always above 0
+// 40: bond and guard within 9-to-12 o'clock (90 degrees)
+// 80: bond is on guard's left-side (180 degrees)
+// C0: bond and guard within 3-to-12 o'clock (270 degrees)
+// FF: full rotation, always goto label except for a tiny degree (0-359 degrees)
+//===========================================================================*/
+#define guard_counter_clockwise_direction_to_bond_less_than_ID 0x47
+#define guard_counter_clockwise_direction_to_bond_less_than_LENGTH 0x03
+#define guard_counter_clockwise_direction_to_bond_less_than(direction, label) \
+        guard_counter_clockwise_direction_to_bond_less_than_ID, \
+        direction, \
+        label,
+
+/*=============================================================================
+// name: guard_counter_clockwise_direction_to_bond_greater_than
+// command id: 48
+// info: if guard's counter-clockwise direction to bond > direction argument, goto label
+//=============================================================================
+// note: direction input (hex):
+// FF: no rotation, never goto label except for a tiny degree (0-1 degrees)
+// C0: bond and guard within 12-to-3 o'clock (90 degrees)
+// 80: bond on guard's right-side (180 degrees)
+// 40: bond and guard within 12-to-9 o'clock (270 degrees)
+// 00: full rotation, always goto label
+//===========================================================================*/
+#define guard_counter_clockwise_direction_to_bond_greater_than_ID 0x48
+#define guard_counter_clockwise_direction_to_bond_greater_than_LENGTH 0x03
+#define guard_counter_clockwise_direction_to_bond_greater_than(direction, label) \
+        guard_counter_clockwise_direction_to_bond_greater_than_ID, \
+        direction, \
+        label,
+
+/*=============================================================================
+// name: guard_counter_clockwise_direction_from_bond_less_than
+// command id: 49
+// info: if bond's counter-clockwise direction to guard < direction argument, goto label
+//=============================================================================
+// note: direction input (hex):
+// 00: no rotation, never goto label because degrees are always above 0
+// 40: guard and bond within 9-to-12 o'clock (90 degrees)
+// 80: guard is on bond's left-side (180 degrees)
+// C0: guard and bond within 3-to-12 o'clock (270 degrees)
+// FF: full rotation, always goto label except for a tiny degree (0-359 degrees)
+//===========================================================================*/
+#define guard_counter_clockwise_direction_from_bond_less_than_ID 0x49
+#define guard_counter_clockwise_direction_from_bond_less_than_LENGTH 0x03
+#define guard_counter_clockwise_direction_from_bond_less_than(direction, label) \
+        guard_counter_clockwise_direction_from_bond_less_than_ID, \
+        direction, \
+        label,
+
+/*=============================================================================
+// name: guard_counter_clockwise_direction_from_bond_greater_than
+// command id: 4A
+// info: if bond's counter-clockwise direction to guard > direction argument, goto label
+//=============================================================================
+// note: direction input (hex):
+// FF: no rotation, never goto label except for a tiny degree (0-1 degrees)
+// C0: guard and bond within 12-to-3 o'clock (90 degrees)
+// 80: guard on bond's right-side (180 degrees)
+// 40: guard and bond within 12-to-9 o'clock (270 degrees)
+// 00: full rotation, always goto label
+//===========================================================================*/
+#define guard_counter_clockwise_direction_from_bond_greater_than_ID 0x4A
+#define guard_counter_clockwise_direction_from_bond_greater_than_LENGTH 0x03
+#define guard_counter_clockwise_direction_from_bond_greater_than(direction, label) \
+        guard_counter_clockwise_direction_from_bond_greater_than_ID, \
+        direction, \
+        label,
+
+/*=============================================================================
 // name: guard_distance_to_bond_less_than
 // command id: 4B
 // info: if guard's distance to bond < distance argument, goto label
@@ -1303,18 +1379,18 @@
         label,
 
 /*=============================================================================
-// name: guard_set_chrpreset_to_guard_within_distance
+// name: guard_set_chr_preset_to_guard_within_distance
 // command id: 51
 // info: if guard's distance to any chr < distance argument, set chr->padpreset1
 //       to found guard's chrnum and goto label
 //=============================================================================
-// note: argument scale is 10 units per meter. does not pick the closest guard,
-//       but whoever was first checked within the distance provided
+// note: argument scale is 10 units per meter. command does not pick the closest
+//       found chr, but whoever was first found within the distance argument
 //===========================================================================*/
-#define guard_set_chrpreset_to_guard_within_distance_ID 0x51
-#define guard_set_chrpreset_to_guard_within_distance_LENGTH 0x04
-#define guard_set_chrpreset_to_guard_within_distance(distance, label) \
-        guard_set_chrpreset_to_guard_within_distance_ID, \
+#define guard_set_chr_preset_to_guard_within_distance_ID 0x51
+#define guard_set_chr_preset_to_guard_within_distance_LENGTH 0x04
+#define guard_set_chr_preset_to_guard_within_distance(distance, label) \
+        guard_set_chr_preset_to_guard_within_distance_ID, \
         chararray16(distance), \
         label,
 

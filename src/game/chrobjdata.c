@@ -108,7 +108,7 @@ u8 dword_D_8003713C[] = { // GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE: play use keybo
 };
 
 //D:8003717C
-u8 dword_D_8003717C[] = { // GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (deaf, no idle anims)
+u8 dword_D_8003717C[] = { // GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (deaf & no idling)
     goto_loop_start(0x01) // wait for guard to stop moving before branching to next logic
         guard_has_stopped_moving(0x06)
         goto_loop_repeat(0x01)
@@ -210,7 +210,7 @@ u8 dword_D_80037248[] = { // GLIST_RUN_TO_BOND_AND_FIRE: run to bond and fire
 };
 
 //D:80037250
-u8 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (no clones, no idle)
+u8 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (no clones & no idling)
     goto_loop_start(0x01) // wait for guard to stop moving before branching to next logic
         guard_sees_bond(0x07)
         guard_was_shot_within_last_10_secs(0x0D)
@@ -225,7 +225,7 @@ u8 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for b
     label(0x0D) // guard saw another guard shot/die or guard was shot
         set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
         goto_ai_list(CHR_SELF, GLIST_RUN_TO_BOND_SUBROUTINE)
-    label(0x0E) // unused spawn clone reaction for hearing bond, likely was too difficult
+    label(0x0E) // unused spawn clone reaction for hearing bond, likely made game too difficult/slow
         set_return_ai_list(GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
         goto_ai_list(CHR_SELF, GLIST_SPAWN_CLONE_OR_RUN_TO_BOND)
     ai_list_end
