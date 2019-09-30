@@ -29,7 +29,12 @@ s32 ptr_j_char_data_buf;
 s32 ptr_j_char_registry;
 
 
+#ifdef VERSION_JP
+s32 j_text_trigger = 1;
+#else
 s32 j_text_trigger = 0;
+#endif
+
 void *LnameX_lookuptable[] = {
     NULL, NULL,                    /* Null (unused) */
     "LameE", "LameJ",              /* Library (multi) */

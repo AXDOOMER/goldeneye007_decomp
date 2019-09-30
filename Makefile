@@ -40,15 +40,18 @@ endif
 ifeq ($(VERSION), EU)
 COUNTRYCODE := e
 LCDEFS := -DVERSION_EU
-else 
+endif
+
 ifeq ($(VERSION), JP)
 COUNTRYCODE := j
 LCDEFS := -DVERSION_JP
-else
+endif
+
+ifeq ($(VERSION), US)
 COUNTRYCODE := u
 LCDEFS := -DVERSION_US
 endif
-endif
+
 
 
 APPELF := ge007.$(COUNTRYCODE).elf
@@ -103,7 +106,7 @@ SHA1SUM = sha1sum
 INCLUDE := -I . -I include -I include/libultra -I src -I src/game -I src/rarezip
 
 CC := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
-CFLAGS := -Wo,-loopunroll,0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821 -signed $(INCLUDE) -mips2
+CFLAGS := -Wo,-loopunroll,0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821 -signed $(INCLUDE) -mips2 $(LCDEFS)
 
 LD := $(TOOLCHAIN)ld
 LD_SCRIPT := ge007.$(COUNTRYCODE).ld

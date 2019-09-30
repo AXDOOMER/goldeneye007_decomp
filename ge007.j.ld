@@ -52,18 +52,15 @@ SECTIONS
       build/src/tlb_hardwire.o (.text);
       build/src/audi.o (.text);
       build/src/speed_graph.o (.text);
-
-
-
-
-      
       build/src/video.o (.text);
       build/src/deb.o (.text);
       build/src/deb_video.o (.text);
       build/src/deb_print.o (.text);
       build/src/debug_getlastRA.o (.text);
       build/src/ramrom.o (.text);
+      
       build/src/boss.o (.text);
+
       build/src/music.o (.text);
       build/src/snd.o (.text);
       build/src/memp.o (.text);
@@ -75,7 +72,9 @@ SECTIONS
       build/src/pi.o (.text);
       build/src/vi.o (.text);
       build/src/debugmenu.o (.text);
+
       build/src/joy.o (.text);
+
       build/src/joy_rumble.o (.text);
       build/src/rmon.o (.text);
       build/libultra/libultra.o (.text);
@@ -185,6 +184,7 @@ SECTIONS
       build/src/game/debugmenu_08FE00.o (.text);
       build/src/game/debugmenu_090490.o (.text);
       build/src/game/unk_091080.o (.text);
+      build/src/game/chrobjdata.o (.text);
       build/src/game/cheat_buttons.o (.text);
       build/src/game/unk_092890.o (.text);
       build/src/game/unk_092E50.o (.text);
@@ -3122,6 +3122,7 @@ SECTIONS
       build/src/game/debugmenu_08FE00.o (.data);
       build/src/game/debugmenu_090490.o (.data);
       build/src/game/unk_091080.o (.data);
+      build/src/game/chrobjdata.o (.data);
       build/src/game/cheat_buttons.o (.data);
       build/src/game/unk_092890.o (.data);
       build/src/game/unk_092E50.o (.data);
@@ -3237,6 +3238,7 @@ SECTIONS
       build/src/game/debugmenu_08FE00.o (.rodata);
       build/src/game/debugmenu_090490.o (.rodata);
       build/src/game/unk_091080.o (.rodata);
+      build/src/game/chrobjdata.o (.rodata);
       build/src/game/cheat_buttons.o (.rodata);
       build/src/game/unk_092890.o (.rodata);
       build/src/game/unk_092E50.o (.rodata);
@@ -3394,6 +3396,7 @@ SECTIONS
       build/src/game/debugmenu_08FE00.o (.bss);
       build/src/game/debugmenu_090490.o (.bss);
       build/src/game/unk_091080.o (.bss);
+      build/src/game/chrobjdata.o (.bss);
       build/src/game/cheat_buttons.o (.bss);
       build/src/game/unk_092890.o (.bss);
       build/src/game/unk_092E50.o (.bss);

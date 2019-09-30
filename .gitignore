@@ -35,3 +35,8 @@ assets/obseg/text/*.bin
 assets/obseg/ob__ob_end.seg
 assets/ramrom/*.bin
 
+ge007.j.bin
+ge007.j.elf
+data_seg
+021990.bin
+.vscode/launch.json

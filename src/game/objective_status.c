@@ -519,9 +519,13 @@ glabel check_objectives_complete
 )
 #endif
 
-
-
-
+#ifdef VERSION_JP
+void FUN_7f057a40(void)
+{
+  num_objective_ptrs[1] = 1;
+  return;
+}
+#endif
 
 #ifdef NONMATCHING
 void display_objective_status_text_on_status_change(void) {

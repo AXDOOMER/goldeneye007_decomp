@@ -264,8 +264,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/game/unk_091080.o
  .options       0x0000000000000000       0x20 build/src/game/chrobjdata.o
  .reginfo       0x0000000000000000       0x18 build/src/game/chrobjdata.o
- .gptab.data    0x0000000000000000      0x108 build/src/game/chrobjdata.o
- .mdebug        0x0000000000000000     0x7968 build/src/game/chrobjdata.o
+ .gptab.data    0x0000000000000000      0x110 build/src/game/chrobjdata.o
+ .mdebug        0x0000000000000000     0x7974 build/src/game/chrobjdata.o
  .options       0x0000000000000000       0x20 build/src/game/cheat_buttons.o
  .reginfo       0x0000000000000000       0x18 build/src/game/cheat_buttons.o
  .options       0x0000000000000000       0x20 build/src/game/unk_092890.o
@@ -18249,7 +18249,7 @@ Linker script and memory map
                 0x000000008003e458                D_8003E458
                 0x000000008003e45c                D_8003E45C
                 0x000000008003e460                D_8003E460
-                0x000000008003e464                D_8003E464
+                0x000000008003e464                headHat_array_8003E464
  build/src/game/cheat_buttons.o(.data)
  .data          0x000000008003f430      0x890 build/src/game/cheat_buttons.o
                 0x000000008003f430                dword_D_8003F430

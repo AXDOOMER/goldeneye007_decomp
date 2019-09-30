@@ -1275,6 +1275,10 @@ LEVELID get_stage_num(){
  *     return to title screen from stage
  */
 void return_to_title_from_level_end(void) {
+#ifdef VERSION_JP
+    display_objective_status_text_on_status_change();
+    FUN_7f057a40();
+#endif
     if ((get_stage_num() != LEVELID_CUBA) && (check_objectives_complete() != 0x0)) {
         end_of_mission_briefing();
     }
