@@ -1,5 +1,5 @@
 #include "ultra64.h"
-
+#include "joy.h"
 const char aJoy_c_debug[] = "joy_c_debug";
 
 
@@ -973,7 +973,7 @@ glabel controller_rumble_related
 /* 000000 7000BB0c 16A2000B */  bne   $s6, $v0, .L7000BB3C
 /* 000000 7000BB10 01F82021 */   addu  $s0, $t7, $t8
 /* 000000 7000BB14 0C0032AB */  jal   controller_7000CAAC
-/* 000000 7000BB18 00000000 */   or    $a0 $s0 $zero
+/* 000000 7000BB18 00000000 */   or    $a0, $s0, $zero
 /* 000000 7000BB1C 14400003 */  bnez  $v0, .L7000BB2C
 /* 000000 7000BB20 3C198002 */   lui   $t9, %hi(controller_1_rumble_inserted) # $t9, 0x8002
 /* 000000 7000BB24 1000000E */  b     .L7000BBA0
@@ -985,10 +985,10 @@ glabel controller_rumble_related
 /* 000000 7000BB38 AC400000 */   sw    $zero, ($v0)
 .L7000BB3C:
 /* 000000 7000BB3C 14400003 */  bne  $s8, $v0, .L7000BB7C
-/* 000000 7000BB40 14400003 */  lui $a0, %hi(contDEMOMesgMQ)
-/* 000000 7000bb44 24845390 */  addiu $a0, %lo(contDEMOMesgMQ)
+/* 000000 7000BB40 14400003 */  lui $a0, %hi(contdemoMesgMQ)
+/* 000000 7000bb44 24845390 */  addiu $a0, %lo(contdemoMesgMQ)
 /* 000000 7000bb48 24845390 */  or $a1, $s0, $zero
-/* 000000 7000bb4C 24845390 */  jal loc_7000CE90
+/* 000000 7000bb4C 24845390 */  jal controller_7000CD38
 /* 000000 7000bb50 24845390 */   or $a2, $s3, $zero
 /* 000000 7000bb54 24845390 */  beq $v0, $zero, .L7000BB68
 /* 000000 7000BB58 3C088002 */   lui   $t0, %hi(controller_1_rumble_inserted) # $t0, 0x8002
@@ -1028,7 +1028,7 @@ glabel controller_rumble_related
 /* 000000 7000BBCC AE800000 */  sw    $zero, ($s5)
 .L7000BBD0:
 /* 000000 7000BB74 26940004 */  addiu $s5, $s5, 4
-/* 000000 7000BB78 1656FFD3 */  bne   $s3, $s7, .L7000BAC8
+/* 000000 7000BB78 1656FFD3 */  bne   $s3, $s7, .L7000BAE4
 /* 000000 7000BB7C 26100004 */   addiu $s1, $s1, 4
 /* 000000 7000BB80 8FBF0034 */  lw    $ra, 0x3C($sp)
 /* 000000 7000BB84 8FB00018 */  lw    $s0, 0x18($sp)
