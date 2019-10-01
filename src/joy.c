@@ -842,8 +842,9 @@ s32 controller_rumble_related(void) {
     }
     // (possible return value: controller_1_rumble_duration)
 }
+#endif
 
-#else
+#ifdef VERSION_US
 GLOBAL_ASM(
 .text
 glabel controller_rumble_related
@@ -931,6 +932,119 @@ glabel controller_rumble_related
 /* 00C7A4 7000BBA4 27BD0038 */   addiu $sp, $sp, 0x38
 )
 #endif
+
+#ifdef VERSION_JP
+GLOBAL_ASM(
+.text
+glabel controller_rumble_related
+/* 00C67C 7000BA8C 27bdffc0 */  addiu $sp, $sp, -0x40
+/* 00C680 7000BA90 afb5002c */  sw    $s5, 0x2c($sp)
+/* 00C684 7000BA94 afb20020 */  sw    $s2, 0x20($sp)
+/* 00C688 7000BA98 afb1001c */  sw    $s1, 0x1c($sp)
+/* 00C68C 7000BA9C afbe0038 */  sw    $s8, 0x38($sp)
+/* 00C690 7000BAA0 afb70034 */  sw    $s7, 0x34($sp)
+/* 00C694 7000BAA4 afb60030 */  sw    $s6, 0x30($sp)
+/* 00C698 7000BAA8 afb40028 */  sw    $s4, 0x28($sp)
+/* 000000 7000BAAC afb30024 */  sw    $s3, 0x24($sp)
+/* 000000 7000BAB0 3c118002 */  lui   $s1, %hi(controller_1_rumble_duration) # $s0, 0x8002
+/* 000000 7000BAB4 3c128002 */  lui   $s2, %hi(controller_1_rumble_state) # $s1, 0x8002
+/* 000000 7000BAB8 3c158002 */  lui   $s3, %hi(controller_1_rumble_pulse) # $s4, 0x8002
+/* 000000 7000BABC afbf003c */  sw    $ra, 0x3C($sp)
+/* 000000 7000BAC0 afb00018 */  sw    $s0, 0x18($sp)
+/* 000000 7000BAC0 26b56948 */  addiu $s4, %lo(controller_1_rumble_pulse) # addiu $s4, $s4, 0x6908
+/* 000000 7000BAC0 26526928 */  addiu $s1, %lo(controller_1_rumble_state) # addiu $s1, $s1, 0x68e8
+/* 000000 7000BAC0 26316938 */  addiu $s0, %lo(controller_1_rumble_duration) # addiu $s0, $s0, 0x68f8
+/* 000000 7000BAD0 00009825 */  move  $s3, $zero
+/* 000000 7000BAD0 0000a025 */  move  $s4, $zero
+/* 000000 7000BAD0 24160001 */  li    $s6, 1
+/* 000000 7000BAD0 24170004 */  li    $s7, 4
+/* 000000 7000BAE0 241e0002 */  li    $s8, 2
+.L7000BAE4:
+/* 000000 7000BAe4 8E820000 */  lw    $v0, ($s5)
+/* 000000 7000BAe8 8E2E0000 */  lw    $t6, ($s2)
+/* 000000 7000BAeC 00127880 */  sll   $t7, $s3, 2
+/* 000000 7000BAF0 01F27823 */  subu  $t7, $t7, $s3
+/* 000000 7000BAF4 11C2001A */  beq   $t6, $v0, .L7000BBA0
+/* 000000 7000BAF8 000F7880 */   sll   $t7, $t7, 2
+/* 000000 7000BAFC 01F27821 */  addu  $t7, $t7, $s3
+/* 000000 7000BB00 3C188006 */  lui   $t8, %hi(player1_controller_packet) # $t8, 0x8006
+/* 000000 7000BB04 271853F8 */  addiu $t8, %lo(player1_controller_packet) # addiu $t8, $t8, 0x53f8
+/* 000000 7000BB08 000F78C0 */  sll   $t7, $t7, 3
+/* 000000 7000BB0c 16A2000B */  bne   $s6, $v0, .L7000BB3C
+/* 000000 7000BB10 01F82021 */   addu  $s0, $t7, $t8
+/* 000000 7000BB14 0C0032AB */  jal   controller_7000CAAC
+/* 000000 7000BB18 00000000 */   or    $a0 $s0 $zero
+/* 000000 7000BB1C 14400003 */  bnez  $v0, .L7000BB2C
+/* 000000 7000BB20 3C198002 */   lui   $t9, %hi(controller_1_rumble_inserted) # $t9, 0x8002
+/* 000000 7000BB24 1000000E */  b     .L7000BBA0
+/* 000000 7000BB28 AE350000 */   sw    $s6, ($s2)
+.L7000BB2C:
+/* 000000 7000BB2C 273968D8 */  addiu $t9, %lo(controller_1_rumble_inserted) # addiu $t9, $t9, 0x68d8
+/* 000000 7000BB30 02791021 */  addu  $v0, $s4, $t9
+/* 000000 7000BB34 1000000A */  b     .L7000BBA0
+/* 000000 7000BB38 AC400000 */   sw    $zero, ($v0)
+.L7000BB3C:
+/* 000000 7000BB3C 14400003 */  bne  $s8, $v0, .L7000BB7C
+/* 000000 7000BB40 14400003 */  lui $a0, %hi(contDEMOMesgMQ)
+/* 000000 7000bb44 24845390 */  addiu $a0, %lo(contDEMOMesgMQ)
+/* 000000 7000bb48 24845390 */  or $a1, $s0, $zero
+/* 000000 7000bb4C 24845390 */  jal loc_7000CE90
+/* 000000 7000bb50 24845390 */   or $a2, $s3, $zero
+/* 000000 7000bb54 24845390 */  beq $v0, $zero, .L7000BB68
+/* 000000 7000BB58 3C088002 */   lui   $t0, %hi(controller_1_rumble_inserted) # $t0, 0x8002
+/* 000000 7000BB5C 250868D8 */  addiu $t0, %lo(controller_1_rumble_inserted) # addiu $t0, $t0, 0x68d8
+/* 000000 7000BB60 02681021 */  addu  $v0, $s4, $t0
+/* 000000 7000BB64 AC400000 */  sw    $zero, ($v0)
+.L7000BB68:
+/* 000000 7000BB68 0C003260 */  jal   send_rumble_off_to_PIF
+/* 000000 7000BB6C 0C003260 */   or $a0, $s0, $zero
+/* 000000 7000BB70 0C003260 */  sw $zero, 0x0000($s2)
+/* 000000 7000BB74 0C003260 */  b .L7000BBA0
+/* 000000 7000BB78 0C003260 */  sw $zero, 0x0000($s5)
+.L7000BB7C:
+/* 000000 7000BB7C 0C003260 */  jal   send_rumble_off_to_PIF
+/* 000000 7000BB80 0C003260 */   or $a0, $s0, $zero
+/* 000000 7000BB84 0C003260 */  bne $v0, $zero, .L7000BB94
+/* 000000 7000BB88 0C003260 */  lui $t1, 0x8002
+/* 000000 7000BB8C 0C003260 */  b .L7000BBA0
+/* 000000 7000BB90 0C003260 */  sw $zero, 0x0000($s5)
+.L7000BB94:
+/* 000000 7000BB94 0C003260 */ addiu $t1, $t1, 0x6918
+/* 000000 7000BB98 0C003260 */ addu $v0, $s4, $t1
+/* 000000 7000BB9C 0C003260 */ sw $zero, 0x0000($v0)
+.L7000BBA0:
+/* 000000 7000BBA0 8E020000 */  lw    $v0, ($s1)
+/* 000000 7000BBA4 26520001 */  addiu $s3, $s3, 1
+/* 000000 7000BBA8 26730004 */  addiu $s4, $s4, 4
+/* 000000 7000BBAC 1C400003 */  bgtz  $v0, .L7000BBBC
+/* 000000 7000BBB0 26310004 */   addiu $s2, $s2, 4
+/* 000000 7000BBB4 10000006 */  b     .L7000BBD0
+/* 000000 7000BBB8 AE000000 */   sw    $zero, ($s1)
+.L7000BBBC:
+/* 000000 7000BBBC 2449FFFF */  addiu $t2, $v0, -1
+/* 000000 7000BBC0 1D200003 */  bgtz  $t2, .L7000BBD0
+/* 000000 7000BBC4 AE090000 */   sw    $t2, ($s1)
+/* 000000 7000BBC8 AE000000 */  sw    $zero, ($s1)
+/* 000000 7000BBCC AE800000 */  sw    $zero, ($s5)
+.L7000BBD0:
+/* 000000 7000BB74 26940004 */  addiu $s5, $s5, 4
+/* 000000 7000BB78 1656FFD3 */  bne   $s3, $s7, .L7000BAC8
+/* 000000 7000BB7C 26100004 */   addiu $s1, $s1, 4
+/* 000000 7000BB80 8FBF0034 */  lw    $ra, 0x3C($sp)
+/* 000000 7000BB84 8FB00018 */  lw    $s0, 0x18($sp)
+/* 000000 7000BB88 8FB1001C */  lw    $s1, 0x1c($sp)
+/* 000000 7000BB8C 8FB20020 */  lw    $s2, 0x20($sp)
+/* 000000 7000BB90 8FB30024 */  lw    $s3, 0x24($sp)
+/* 000000 7000BB94 8FB40028 */  lw    $s4, 0x28($sp)
+/* 000000 7000BB98 8FB5002C */  lw    $s5, 0x2c($sp)
+/* 000000 7000BB9C 8FB60030 */  lw    $s6, 0x30($sp)
+/* 000000 7000BB9C 8FB60030 */  lw    $s7, 0x34($sp)
+/* 000000 7000BB9C 8FB60030 */  lw    $s8, 0x38($sp)
+/* 000000 7000BBA0 03E00008 */  jr    $ra
+/* 000000 7000BBA4 27BD0038 */   addiu $sp, $sp, 0x40
+)
+#endif
+
 
 
 
