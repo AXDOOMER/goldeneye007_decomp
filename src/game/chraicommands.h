@@ -1068,7 +1068,8 @@
 // command id: 3A
 // info: if guard sees another guard shot (from anyone), goto label
 //=============================================================================
-// note: guard friendly fire (if flagged) will trigger this command to goto label
+// note: guard friendly fire (if flagged) will trigger this command to goto label.
+//       command checks if chr->chrseeshot is set to valid chrnum (not -1)
 //===========================================================================*/
 #define guard_see_guard_shot_ID 0x3A
 #define guard_see_guard_shot_LENGTH 0x02
@@ -1081,7 +1082,8 @@
 // command id: 3B
 // info: if guard sees another guard die (from anyone), goto label
 //=============================================================================
-// note: when a guard in sight switches to ACT_DIE/ACT_DEAD, goto label
+// note: when a guard in sight switches to ACT_DIE/ACT_DEAD, goto label.
+//       command checks if chr->chrseedie is set to valid chrnum (not -1)
 //===========================================================================*/
 #define guard_see_guard_die_ID 0x3B
 #define guard_see_guard_die_LENGTH 0x02
@@ -1418,7 +1420,8 @@
 //       to found guard's chrnum and goto label
 //=============================================================================
 // note: argument scale is 10 units per meter. command does not pick the closest
-//       found chr, but whoever was first found within the distance argument
+// found chr, but whoever was first found within the distance argument. if no
+// guards were found within distance range, do not goto label
 //===========================================================================*/
 #define guard_set_chr_preset_to_guard_within_distance_ID 0x51
 #define guard_set_chr_preset_to_guard_within_distance_LENGTH 0x04
@@ -1681,6 +1684,70 @@
 #define guard_hits_missed_greater_than(missed_num, label) \
         guard_hits_missed_greater_than_ID, \
         missed_num, \
+        label,
+
+/*=============================================================================
+// name: chr_health_less_than
+// command id: 7C
+// info: if chr's health < health argument, goto label
+//=============================================================================
+// note: argument is unsigned. converted to float and compares different between
+// chr->maxdamage - chr->damage. default guard health is 40 (0x28), or after
+// float conversion 4.0f. armour is tested
+//===========================================================================*/
+#define chr_health_less_than_ID 0x7C
+#define chr_health_less_than_LENGTH 0x04
+#define chr_health_less_than(chr_num, health, label) \
+        chr_health_less_than_ID, \
+        chr_num, \
+        health, \
+        label,
+
+/*=============================================================================
+// name: chr_health_greater_than
+// command id: 7D
+// info: if chr's health > health argument, goto label
+//=============================================================================
+// note: argument is unsigned. converted to float and compares different between
+// chr->maxdamage - chr->damage. default guard health is 40 (0x28), or after
+// float conversion 4.0f. armour is tested
+//===========================================================================*/
+#define chr_health_greater_than_ID 0x7D
+#define chr_health_greater_than_LENGTH 0x04
+#define chr_health_greater_than(chr_num, health, label) \
+        chr_health_greater_than_ID, \
+        chr_num, \
+        health, \
+        label,
+
+/*=============================================================================
+// name: bond_health_less_than
+// command id: 7F
+// info: if bond's health < health argument, goto label
+//=============================================================================
+// note: does not check armour. health argument is unsigned, argument range is
+//       between 00 and FF, with FF equal to 100% health
+//===========================================================================*/
+#define bond_health_less_than_ID 0x7F
+#define bond_health_less_than_LENGTH 0x03
+#define bond_health_less_than(health, label) \
+        bond_health_less_than_ID, \
+        health, \
+        label,
+
+/*=============================================================================
+// name: bond_health_greater_than
+// command id: 80
+// info: if bond's health > health argument, goto label
+//=============================================================================
+// note: does not check armour. health argument is unsigned, argument range is
+//       between 00 and FF, with FF equal to 100% health
+//===========================================================================*/
+#define bond_health_greater_than_ID 0x80
+#define bond_health_greater_than_LENGTH 0x03
+#define bond_health_greater_than(health, label) \
+        bond_health_greater_than_ID, \
+        health, \
         label,
 
 /*=============================================================================
