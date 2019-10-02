@@ -17442,7 +17442,7 @@ Linker script and memory map
                 0x0000000080036444                D_80036444
                 0x0000000080036448                in_tank_flag
                 0x000000008003644c                D_8003644C
-                0x0000000080036450                D_80036450
+                0x0000000080036450                ptr_playerstank
                 0x0000000080036454                D_80036454
                 0x0000000080036458                SFX_80036458
                 0x000000008003645c                SFX_8003645C
@@ -17515,13 +17515,13 @@ Linker script and memory map
                 0x000000008003688c                D_8003688C
                 0x0000000080036890                D_80036890
                 0x0000000080036894                D_80036894
-                0x0000000080036898                D_80036898
-                0x000000008003689c                D_8003689C
-                0x00000000800368a0                D_800368A0
-                0x00000000800368a4                D_800368A4
-                0x00000000800368a8                D_800368A8
-                0x00000000800368ac                D_800368AC
-                0x00000000800368b0                D_800368B0
+                0x0000000080036898                status_bar_text_buffer_index
+                0x000000008003689c                display_statusbar
+                0x00000000800368a0                copy_1stfonttable
+                0x00000000800368a4                copy_2ndfonttable
+                0x00000000800368a8                upper_text_buffer_index
+                0x00000000800368ac                display_upper_text_window
+                0x00000000800368b0                upper_text_window_timer
                 0x00000000800368b4                D_800368B4
                 0x00000000800368b8                D_800368B8
                 0x00000000800368d8                firing_animation_groups

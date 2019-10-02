@@ -245,8 +245,8 @@ glabel load_camera_intro_type_values
 /* 03A408 7F0058D8 3C018003 */  lui   $at, %hi(D_8003644C)
 /* 03A40C 7F0058DC AC20644C */  sw    $zero, %lo(D_8003644C)($at)
 /* 03A410 7F0058E0 44808000 */  mtc1  $zero, $f16
-/* 03A414 7F0058E4 3C018003 */  lui   $at, %hi(D_80036450)
-/* 03A418 7F0058E8 AC206450 */  sw    $zero, %lo(D_80036450)($at)
+/* 03A414 7F0058E4 3C018003 */  lui   $at, %hi(ptr_playerstank)
+/* 03A418 7F0058E8 AC206450 */  sw    $zero, %lo(ptr_playerstank)($at)
 /* 03A41C 7F0058EC 3C018003 */  lui   $at, %hi(D_80036454)
 /* 03A420 7F0058F0 3C038003 */  lui   $v1, %hi(SFX_80036458)
 /* 03A424 7F0058F4 E4306454 */  swc1  $f16, %lo(D_80036454)($at)

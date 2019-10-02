@@ -2392,7 +2392,7 @@ glabel manage_mp_game
 /* 0F4268 7F0BF738 0C0030EB */  jal   get_controller_buttons_pressed
 /* 0F426C 7F0BF73C 24050622 */   li    $a1, 1570
 /* 0F4270 7F0BF740 1040000B */  beqz  $v0, .L7F0BF770
-/* 0F4274 7F0BF744 3C058005 */   lui   $a1, 0x8005
+/* 0F4274 7F0BF744 3C058005 */   lui   $a1, %hi(D_800483E4)
 /* 0F4278 7F0BF748 84A583E4 */  lh    $a1, %lo(D_800483E4)($a1)
 /* 0F427C 7F0BF74C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
 /* 0F4280 7F0BF750 3C018005 */  lui   $at, %hi(D_800483E4)

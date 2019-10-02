@@ -2763,7 +2763,7 @@ extern s32 in_tank_flag;
 //D:8003644C
 extern s32 D_8003644C;
 //D:80036450
-extern s32 D_80036450;
+extern s32 ptr_playerstank;
 //D:80036454
 extern s32 D_80036454;
 //D:80036458
@@ -2993,19 +2993,19 @@ extern s32 D_80036890;
 //D:80036894
 extern s32 D_80036894;
 //D:80036898
-extern s32 D_80036898;
+extern s32 status_bar_text_buffer_index;
 //D:8003689C
-extern s32 D_8003689C;
+extern s32 display_statusbar;
 //D:800368A0
-extern s32 D_800368A0;
+extern s32 copy_1stfonttable;
 //D:800368A4
-extern s32 D_800368A4;
+extern s32 copy_2ndfonttable;
 //D:800368A8
-extern s32 D_800368A8;
+extern s32 upper_text_buffer_index;
 //D:800368AC
-extern s32 D_800368AC;
+extern s32 display_upper_text_window;
 //D:800368B0
-extern s32 D_800368B0;
+extern s32 upper_text_window_timer;
 extern s32 D_800368B4;
 //D:800368B8
 extern u16 D_800368B8[];

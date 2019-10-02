@@ -12158,7 +12158,7 @@ glabel sub_GAME_7F03D188
 /* 071ED0 7F03D3A0 24010001 */  li    $at, 1
 /* 071ED4 7F03D3A4 14410005 */  bne   $v0, $at, .L7F03D3BC
 /* 071ED8 7F03D3A8 C7A40058 */   lwc1  $f4, 0x58($sp)
-/* 071EDC 7F03D3AC 3C018003 */  li    $at, 0x80030000 # -0.000000
+/* 071EDC 7F03D3AC 3C018003 */  lui    $at, %hi(difficulty)
 /* 071EE0 7F03D3B0 C4320AAC */  lwc1  $f18, %lo(difficulty)($at)
 /* 071EE4 7F03D3B4 46122402 */  mul.s $f16, $f4, $f18
 /* 071EE8 7F03D3B8 E7B00058 */  swc1  $f16, 0x58($sp)

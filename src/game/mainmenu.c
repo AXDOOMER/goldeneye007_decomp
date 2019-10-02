@@ -2786,12 +2786,12 @@ glabel init_menu00_legalscreen
 /* 03F17C 7F00A64C 8C450EF8 */  lw    $a1, 0xef8($v0)
 /* 03F180 7F00A650 0FC1D929 */  jal   load_object_fill_header
 /* 03F184 7F00A654 AFA00010 */   sw    $zero, 0x10($sp)
-/* 03F188 7F00A658 3C048004 */  lui   $a0, %hi(0x8003B11C)
+/* 03F188 7F00A658 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xEF4)
 /* 03F18C 7F00A65C 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
-/* 03F190 7F00A660 8C84B11C */   lw    $a0, %lo(0x8003B11C)($a0)
-/* 03F194 7F00A664 3C048004 */  lui   $a0, %hi(0x8003B11C)
+/* 03F190 7F00A660 8C84B11C */   lw    $a0, %lo(PitemZ_entries+0xEF4)($a0)
+/* 03F194 7F00A664 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xEF4)
 /* 03F198 7F00A668 0FC1B025 */  jal   get_obj_instance_controller_for_header
-/* 03F19C 7F00A66C 8C84B11C */   lw    $a0, %lo(0x8003B11C)($a0)
+/* 03F19C 7F00A66C 8C84B11C */   lw    $a0, %lo(PitemZ_entries+0xEF4)($a0)
 /* 03F1A0 7F00A670 3C038003 */  lui   $v1, %hi(something_legalscreen_constructor)
 /* 03F1A4 7F00A674 2463A958 */  addiu $v1, %lo(something_legalscreen_constructor) # addiu $v1, $v1, -0x56a8
 /* 03F1A8 7F00A678 AC620000 */  sw    $v0, ($v1)
@@ -3418,12 +3418,12 @@ glabel init_menu01_nintendo
 /* 03F748 7F00AC18 8C450CF4 */  lw    $a1, 0xcf4($v0)
 /* 03F74C 7F00AC1C 0FC1D929 */  jal   load_object_fill_header
 /* 03F750 7F00AC20 AFA00010 */   sw    $zero, 0x10($sp)
-/* 03F754 7F00AC24 3C048004 */  lui   $a0, %hi(0x8003AF18)
+/* 03F754 7F00AC24 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xCF0)
 /* 03F758 7F00AC28 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
-/* 03F75C 7F00AC2C 8C84AF18 */   lw    $a0, %lo(0x8003AF18)($a0)
-/* 03F760 7F00AC30 3C048004 */  lui   $a0, %hi(0x8003AF18)
+/* 03F75C 7F00AC2C 8C84AF18 */   lw    $a0, %lo(PitemZ_entries+0xCF0)($a0)
+/* 03F760 7F00AC30 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xCF0)
 /* 03F764 7F00AC34 0FC1B025 */  jal   get_obj_instance_controller_for_header
-/* 03F768 7F00AC38 8C84AF18 */   lw    $a0, %lo(0x8003AF18)($a0)
+/* 03F768 7F00AC38 8C84AF18 */   lw    $a0, %lo(PitemZ_entries+0xCF0)($a0)
 /* 03F76C 7F00AC3C 3C038003 */  lui   $v1, %hi(something_legalscreen_constructor)
 /* 03F770 7F00AC40 2463A958 */  addiu $v1, %lo(something_legalscreen_constructor) # addiu $v1, $v1, -0x56a8
 /* 03F774 7F00AC44 AC620000 */  sw    $v0, ($v1)
@@ -3970,12 +3970,12 @@ glabel init_menu04_goldeneyelogo
 /* 03FDD8 7F00B2A8 8C450D00 */  lw    $a1, 0xd00($v0)
 /* 03FDDC 7F00B2AC 0FC1D929 */  jal   load_object_fill_header
 /* 03FDE0 7F00B2B0 AFA00010 */   sw    $zero, 0x10($sp)
-/* 03FDE4 7F00B2B4 3C048004 */  lui   $a0, %hi(0x8003AF24)
+/* 03FDE4 7F00B2B4 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xCFC)
 /* 03FDE8 7F00B2B8 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
-/* 03FDEC 7F00B2BC 8C84AF24 */   lw    $a0, %lo(0x8003AF24)($a0)
-/* 03FDF0 7F00B2C0 3C048004 */  lui   $a0, %hi(0x8003AF24)
+/* 03FDEC 7F00B2BC 8C84AF24 */   lw    $a0, %lo(PitemZ_entries+0xCFC)($a0)
+/* 03FDF0 7F00B2C0 3C048004 */  lui   $a0, %hi(PitemZ_entries+0xCFC)
 /* 03FDF4 7F00B2C4 0FC1B025 */  jal   get_obj_instance_controller_for_header
-/* 03FDF8 7F00B2C8 8C84AF24 */   lw    $a0, %lo(0x8003AF24)($a0)
+/* 03FDF8 7F00B2C8 8C84AF24 */   lw    $a0, %lo(PitemZ_entries+0xCFC)($a0)
 /* 03FDFC 7F00B2CC 3C038003 */  lui   $v1, %hi(something_legalscreen_constructor)
 /* 03FE00 7F00B2D0 2463A958 */  addiu $v1, %lo(something_legalscreen_constructor) # addiu $v1, $v1, -0x56a8
 /* 03FE04 7F00B2D4 AC620000 */  sw    $v0, ($v1)
@@ -6679,8 +6679,8 @@ glabel constructor_menu05_fileselect
 /* 0416B8 7F00CB88 02A02025 */  move  $a0, $s5
 /* 0416BC 7F00CB8C 0C0029DC */  jal   textpointer_load_parse_something
 /* 0416C0 7F00CB90 00402825 */   move  $a1, $v0
-/* 0416C4 7F00CB94 3C0D8003 */  lui   $t5, %hi(0x8002ABE8) 
-/* 0416C8 7F00CB98 95ADABE8 */  lhu   $t5, %lo(0x8002ABE8)($t5)
+/* 0416C4 7F00CB94 3C0D8003 */  lui   $t5, %hi(mission_folder_setup_entries+0x4) 
+/* 0416C8 7F00CB98 95ADABE8 */  lhu   $t5, %lo(mission_folder_setup_entries+0x4)($t5)
 /* 0416CC 7F00CB9C 3C108003 */  lui   $s0, %hi(mission_folder_setup_entries)
 /* 0416D0 7F00CBA0 2610ABE4 */  addiu $s0, %lo(mission_folder_setup_entries) # addiu $s0, $s0, -0x541c
 /* 0416D4 7F00CBA4 11A0000D */  beqz  $t5, .L7F00CBDC
