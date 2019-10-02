@@ -588,7 +588,7 @@ glabel stage_load
 /* 0F290C 7F0BDDDC 00000000 */   nop   
 /* 0F2910 7F0BDDE0 0FC003D4 */  jal   set_new_rand_head_bodies
 /* 0F2914 7F0BDDE4 8FA40038 */   lw    $a0, 0x38($sp)
-/* 0F2918 7F0BDDE8 0FC00EFC */  jal   stage_loading_setup_objparse_cleanupafter
+/* 0F2918 7F0BDDE8 0FC00EFC */  jal   proplvreset2
 /* 0F291C 7F0BDDEC 8FA40038 */   lw    $a0, 0x38($sp)
 /* 0F2920 7F0BDDF0 0FC01B64 */  jal   alloc_explosion_smoke_casing_scorch_impact_buffers
 /* 0F2924 7F0BDDF4 00000000 */   nop   

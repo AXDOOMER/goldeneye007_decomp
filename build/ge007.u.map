@@ -1431,7 +1431,7 @@ Linker script and memory map
                 0x000000007f0030d0                sub_GAME_7F0030D0
                 0x000000007f00324c                sub_GAME_7F00324C
                 0x000000007f003480                sub_GAME_7F003480
-                0x000000007f003bf0                stage_loading_setup_objparse_cleanupafter
+                0x000000007f003bf0                proplvreset2
  build/src/game/objective.o(.text)
  .text          0x000000007f004ec0      0x180 build/src/game/objective.o
                 0x000000007f004ec0                something_with_stage_objectives
