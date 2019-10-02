@@ -20,7 +20,7 @@ glabel _start
 /* 001018 80000418 AD000004 */  sw    $zero, 4($t0)
 /* 00101C 8000041C 1520FFFC */  bnez  $t1, .L80000410
 /* 001020 80000420 21080008 */   addi  $t0, $t0, 8
-/* 001024 80000424 3C0A8000 */  lui   $t2, %hi(_boot_function) # $t2, 0x8000
+/* 001024 80000424 3C0A8000 */  lui   $t2, %hi(_boot_function) 
 /* 001028 80000428 3C1D803B */  lui   $sp, %hi(sp_rmon) # $sp, 0x803b
 /* 00102C 8000042C 254A0450 */  addiu $t2, %lo(_boot_function) # addiu $t2, $t2, 0x450
 /* 001030 80000430 01400008 */  jr    $t2

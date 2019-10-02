@@ -345,7 +345,7 @@ GLOBAL_ASM(
 glabel init_LnameX
 /* 0F621C 7F0C16EC 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0F6220 7F0C16F0 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0F6224 7F0C16F4 3C128005 */  lui   $s2, %hi(j_text_trigger) # $s2, 0x8005
+/* 0F6224 7F0C16F4 3C128005 */  lui   $s2, %hi(j_text_trigger)
 /* 0F6228 7F0C16F8 265284D0 */  addiu $s2, %lo(j_text_trigger) # addiu $s2, $s2, -0x7b30
 /* 0F622C 7F0C16FC 8E480000 */  lw    $t0, ($s2)
 /* 0F6230 7F0C1700 AFBF0024 */  sw    $ra, 0x24($sp)
@@ -355,12 +355,12 @@ glabel init_LnameX
 /* 0F6240 7F0C1710 24042E80 */  li    $a0, 11904
 /* 0F6244 7F0C1714 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 0F6248 7F0C1718 24050006 */   li    $a1, 6
-/* 0F624C 7F0C171C 3C018009 */  lui   $at, %hi(ptr_j_char_data_buf) # $at, 0x8009
+/* 0F624C 7F0C171C 3C018009 */  lui   $at, %hi(ptr_j_char_data_buf)
 /* 0F6250 7F0C1720 AC22C6F4 */  sw    $v0, %lo(ptr_j_char_data_buf)($at)
 /* 0F6254 7F0C1724 24040100 */  li    $a0, 256
 /* 0F6258 7F0C1728 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 0F625C 7F0C172C 24050006 */   li    $a1, 6
-/* 0F6260 7F0C1730 3C048009 */  lui   $a0, %hi(ptr_j_char_registry) # $a0, 0x8009
+/* 0F6260 7F0C1730 3C048009 */  lui   $a0, %hi(ptr_j_char_registry)
 /* 0F6264 7F0C1734 2484C6F8 */  addiu $a0, %lo(ptr_j_char_registry) # addiu $a0, $a0, -0x3908
 /* 0F6268 7F0C1738 AC820000 */  sw    $v0, ($a0)
 /* 0F626C 7F0C173C 00001825 */  move  $v1, $zero
@@ -410,9 +410,9 @@ glabel init_LnameX
 /* 0F6318 7F0C17E8 A44E0006 */   sh    $t6, 6($v0)
 /* 0F631C 7F0C17EC 8E480000 */  lw    $t0, ($s2)
 .L7F0C17F0:
-/* 0F6320 7F0C17F0 3C018009 */  lui   $at, %hi(ptr_text) # $at, 0x8009
-/* 0F6324 7F0C17F4 3C028009 */  lui   $v0, %hi(table_text_pointers) # $v0, 0x8009
-/* 0F6328 7F0C17F8 3C038009 */  lui   $v1, %hi(ptr_j_char_data_buf) # $v1, 0x8009
+/* 0F6320 7F0C17F0 3C018009 */  lui   $at, %hi(ptr_text)
+/* 0F6324 7F0C17F4 3C028009 */  lui   $v0, %hi(table_text_pointers)
+/* 0F6328 7F0C17F8 3C038009 */  lui   $v1, %hi(ptr_j_char_data_buf)
 /* 0F632C 7F0C17FC 2463C6F4 */  addiu $v1, %lo(ptr_j_char_data_buf) # addiu $v1, $v1, -0x390c
 /* 0F6330 7F0C1800 2442C644 */  addiu $v0, %lo(table_text_pointers) # addiu $v0, $v0, -0x39bc
 /* 0F6334 7F0C1804 AC20C640 */  sw    $zero, %lo(ptr_text)($at)
@@ -423,7 +423,7 @@ glabel init_LnameX
 /* 0F6344 7F0C1814 AC40FFFC */  sw    $zero, -4($v0)
 /* 0F6348 7F0C1818 1443FFFB */  bne   $v0, $v1, .L7F0C1808
 /* 0F634C 7F0C181C AC40FFF0 */   sw    $zero, -0x10($v0)
-/* 0F6350 7F0C1820 3C108005 */  lui   $s0, %hi(LnameX_lookuptable) # $s0, 0x8005
+/* 0F6350 7F0C1820 3C108005 */  lui   $s0, %hi(LnameX_lookuptable)
 /* 0F6354 7F0C1824 261084D4 */  addiu $s0, %lo(LnameX_lookuptable) # addiu $s0, $s0, -0x7b2c
 /* 0F6358 7F0C1828 00087880 */  sll   $t7, $t0, 2
 /* 0F635C 7F0C182C 020FC021 */  addu  $t8, $s0, $t7
@@ -433,7 +433,7 @@ glabel init_LnameX
 /* 0F636C 7F0C183C 0FC2F341 */  jal   _load_resource_named_to_membank
 /* 0F6370 7F0C1840 24070006 */   li    $a3, 6
 /* 0F6374 7F0C1844 8E590000 */  lw    $t9, ($s2)
-/* 0F6378 7F0C1848 3C118009 */  lui   $s1, %hi(ptr_text) # $s1, 0x8009
+/* 0F6378 7F0C1848 3C118009 */  lui   $s1, %hi(ptr_text)
 /* 0F637C 7F0C184C 2631C640 */  addiu $s1, %lo(ptr_text) # addiu $s1, $s1, -0x39c0
 /* 0F6380 7F0C1850 00194880 */  sll   $t1, $t9, 2
 /* 0F6384 7F0C1854 02095021 */  addu  $t2, $s0, $t1
@@ -510,12 +510,12 @@ void something_with_LnameJ(void) {
 GLOBAL_ASM(
 .text
 glabel something_with_LnameJ
-/* 0F6470 7F0C1940 3C0E8005 */  lui   $t6, %hi(j_text_trigger) # $t6, 0x8005
+/* 0F6470 7F0C1940 3C0E8005 */  lui   $t6, %hi(j_text_trigger) 
 /* 0F6474 7F0C1944 8DCE84D0 */  lw    $t6, %lo(j_text_trigger)($t6)
 /* 0F6478 7F0C1948 00001825 */  move  $v1, $zero
 /* 0F647C 7F0C194C 240600F8 */  li    $a2, 248
 /* 0F6480 7F0C1950 11C00035 */  beqz  $t6, .L7F0C1A28
-/* 0F6484 7F0C1954 3C058009 */   lui   $a1, %hi(ptr_j_char_registry) # $a1, 0x8009
+/* 0F6484 7F0C1954 3C058009 */   lui   $a1, %hi(ptr_j_char_registry)
 /* 0F6488 7F0C1958 24A5C6F8 */  addiu $a1, %lo(ptr_j_char_registry) # addiu $a1, $a1, -0x3908
 /* 0F648C 7F0C195C 8CAF0000 */  lw    $t7, ($a1)
 .L7F0C1960:
@@ -602,7 +602,7 @@ glabel something_with_LnameX
 /* 0F6580 7F0C1A50 00004025 */   move  $t0, $zero
 /* 0F6584 7F0C1A54 24080001 */  li    $t0, 1
 .L7F0C1A58:
-/* 0F6588 7F0C1A58 3C0C8009 */  lui   $t4, %hi(ptr_j_char_registry) # $t4, 0x8009
+/* 0F6588 7F0C1A58 3C0C8009 */  lui   $t4, %hi(ptr_j_char_registry) 
 /* 0F658C 7F0C1A5C 8D8CC6F8 */  lw    $t4, %lo(ptr_j_char_registry)($t4)
 /* 0F6590 7F0C1A60 00002825 */  move  $a1, $zero
 /* 0F6594 7F0C1A64 00003825 */  move  $a3, $zero
@@ -663,7 +663,7 @@ glabel something_with_LnameX
 /* 0F664C 7F0C1B1C 31F9FF3F */  andi  $t9, $t7, 0xff3f
 /* 0F6650 7F0C1B20 372E0080 */  ori   $t6, $t9, 0x80
 /* 0F6654 7F0C1B24 A08E0000 */  sb    $t6, ($a0)
-/* 0F6658 7F0C1B28 3C0F8009 */  lui   $t7, %hi(ptr_j_char_data_buf) # $t7, 0x8009
+/* 0F6658 7F0C1B28 3C0F8009 */  lui   $t7, %hi(ptr_j_char_data_buf) 
 /* 0F665C 7F0C1B2C 8DEFC6F4 */  lw    $t7, %lo(ptr_j_char_data_buf)($t7)
 /* 0F6660 7F0C1B30 0000C012 */  mflo  $t8
 /* 0F6664 7F0C1B34 030F1021 */  addu  $v0, $t8, $t7
@@ -671,7 +671,7 @@ glabel something_with_LnameX
 /* 0F666C 7F0C1B3C 8FBF001C */   lw    $ra, 0x1c($sp)
 .L7F0C1B40:
 /* 0F6670 7F0C1B40 90990000 */  lbu   $t9, ($a0)
-/* 0F6674 7F0C1B44 3C098009 */  lui   $t1, %hi(ptr_j_char_registry) # $t1, 0x8009
+/* 0F6674 7F0C1B44 3C098009 */  lui   $t1, %hi(ptr_j_char_registry) 
 /* 0F6678 7F0C1B48 2529C6F8 */  addiu $t1, %lo(ptr_j_char_registry) # addiu $t1, $t1, -0x3908
 /* 0F667C 7F0C1B4C 332EFF3F */  andi  $t6, $t9, 0xff3f
 /* 0F6680 7F0C1B50 35D80080 */  ori   $t8, $t6, 0x80
@@ -684,7 +684,7 @@ glabel something_with_LnameX
 /* 0F669C 7F0C1B6C 332EFF3F */  andi  $t6, $t9, 0xff3f
 /* 0F66A0 7F0C1B70 35D80080 */  ori   $t8, $t6, 0x80
 /* 0F66A4 7F0C1B74 A0980002 */  sb    $t8, 2($a0)
-/* 0F66A8 7F0C1B78 3C198009 */  lui   $t9, %hi(ptr_j_char_data_buf) # $t9, 0x8009
+/* 0F66A8 7F0C1B78 3C198009 */  lui   $t9, %hi(ptr_j_char_data_buf) 
 /* 0F66AC 7F0C1B7C 8F39C6F4 */  lw    $t9, %lo(ptr_j_char_data_buf)($t9)
 /* 0F66B0 7F0C1B80 00007812 */  mflo  $t7
 /* 0F66B4 7F0C1B84 1000005B */  b     .L7F0C1CF4
@@ -698,7 +698,7 @@ glabel something_with_LnameX
 /* 0F66D0 7F0C1BA0 000A3840 */  sll   $a3, $t2, 1
 /* 0F66D4 7F0C1BA4 01871821 */  addu  $v1, $t4, $a3
 /* 0F66D8 7F0C1BA8 906E0000 */  lbu   $t6, ($v1)
-/* 0F66DC 7F0C1BAC 3C098009 */  lui   $t1, %hi(ptr_j_char_registry) # $t1, 0x8009
+/* 0F66DC 7F0C1BAC 3C098009 */  lui   $t1, %hi(ptr_j_char_registry) 
 /* 0F66E0 7F0C1BB0 2529C6F8 */  addiu $t1, %lo(ptr_j_char_registry) # addiu $t1, $t1, -0x3908
 /* 0F66E4 7F0C1BB4 31D8FF3F */  andi  $t8, $t6, 0xff3f
 /* 0F66E8 7F0C1BB8 370F0080 */  ori   $t7, $t8, 0x80
@@ -714,7 +714,7 @@ glabel something_with_LnameX
 /* 0F6710 7F0C1BE0 31F9C000 */  andi  $t9, $t7, 0xc000
 /* 0F6714 7F0C1BE4 03197025 */  or    $t6, $t8, $t9
 /* 0F6718 7F0C1BE8 A46E0000 */  sh    $t6, ($v1)
-/* 0F671C 7F0C1BEC 3C0F8009 */  lui   $t7, %hi(ptr_j_char_data_buf) # $t7, 0x8009
+/* 0F671C 7F0C1BEC 3C0F8009 */  lui   $t7, %hi(ptr_j_char_data_buf) 
 /* 0F6720 7F0C1BF0 8DEFC6F4 */  lw    $t7, %lo(ptr_j_char_data_buf)($t7)
 /* 0F6724 7F0C1BF4 3C190011 */  lui   $t9, %hi(_jfontcharSegmentStart) # $t9, 0x11
 /* 0F6728 7F0C1BF8 27397940 */  addiu $t9, %lo(_jfontcharSegmentStart) # addiu $t9, $t9, 0x7940
@@ -723,7 +723,7 @@ glabel something_with_LnameX
 /* 0F6734 7F0C1C04 AFA80024 */  sw    $t0, 0x24($sp)
 /* 0F6738 7F0C1C08 0C001707 */  jal   romCopy
 /* 0F673C 7F0C1C0C 010F2021 */   addu  $a0, $t0, $t7
-/* 0F6740 7F0C1C10 3C0E8009 */  lui   $t6, %hi(ptr_j_char_data_buf) # $t6, 0x8009
+/* 0F6740 7F0C1C10 3C0E8009 */  lui   $t6, %hi(ptr_j_char_data_buf) 
 /* 0F6744 7F0C1C14 8FA80024 */  lw    $t0, 0x24($sp)
 /* 0F6748 7F0C1C18 8DCEC6F4 */  lw    $t6, %lo(ptr_j_char_data_buf)($t6)
 /* 0F674C 7F0C1C1C 10000035 */  b     .L7F0C1CF4
@@ -735,7 +735,7 @@ glabel something_with_LnameX
 /* 0F6760 7F0C1C30 000B1840 */   sll   $v1, $t3, 1
 /* 0F6764 7F0C1C34 01831021 */  addu  $v0, $t4, $v1
 /* 0F6768 7F0C1C38 904F0000 */  lbu   $t7, ($v0)
-/* 0F676C 7F0C1C3C 3C098009 */  lui   $t1, %hi(ptr_j_char_registry) # $t1, 0x8009
+/* 0F676C 7F0C1C3C 3C098009 */  lui   $t1, %hi(ptr_j_char_registry) 
 /* 0F6770 7F0C1C40 2529C6F8 */  addiu $t1, %lo(ptr_j_char_registry) # addiu $t1, $t1, -0x3908
 /* 0F6774 7F0C1C44 31F8FF3F */  andi  $t8, $t7, 0xff3f
 /* 0F6778 7F0C1C48 37190080 */  ori   $t9, $t8, 0x80
@@ -761,7 +761,7 @@ glabel something_with_LnameX
 /* 0F67C8 7F0C1C98 8D380000 */  lw    $t8, ($t1)
 /* 0F67CC 7F0C1C9C 03031021 */  addu  $v0, $t8, $v1
 /* 0F67D0 7F0C1CA0 94590002 */  lhu   $t9, 2($v0)
-/* 0F67D4 7F0C1CA4 3C188009 */  lui   $t8, %hi(ptr_j_char_data_buf) # $t8, 0x8009
+/* 0F67D4 7F0C1CA4 3C188009 */  lui   $t8, %hi(ptr_j_char_data_buf) 
 /* 0F67D8 7F0C1CA8 332EC000 */  andi  $t6, $t9, 0xc000
 /* 0F67DC 7F0C1CAC 00EE7825 */  or    $t7, $a3, $t6
 /* 0F67E0 7F0C1CB0 A44F0002 */  sh    $t7, 2($v0)
@@ -775,7 +775,7 @@ glabel something_with_LnameX
 /* 0F6800 7F0C1CD0 01F82821 */  addu  $a1, $t7, $t8
 /* 0F6804 7F0C1CD4 0C001707 */  jal   romCopy
 /* 0F6808 7F0C1CD8 AFA80024 */   sw    $t0, 0x24($sp)
-/* 0F680C 7F0C1CDC 3C198009 */  lui   $t9, %hi(ptr_j_char_data_buf) # $t9, 0x8009
+/* 0F680C 7F0C1CDC 3C198009 */  lui   $t9, %hi(ptr_j_char_data_buf) 
 /* 0F6810 7F0C1CE0 8FA80024 */  lw    $t0, 0x24($sp)
 /* 0F6814 7F0C1CE4 8F39C6F4 */  lw    $t9, %lo(ptr_j_char_data_buf)($t9)
 /* 0F6818 7F0C1CE8 10000002 */  b     .L7F0C1CF4
@@ -808,7 +808,7 @@ void load_mission_text_bank(s32 arg0, s32 arg6) {
 GLOBAL_ASM(
 .text
 glabel load_mission_text_bank
-/* 0F6838 7F0C1D08 3C188005 */  lui   $t8, %hi(j_text_trigger) # $t8, 0x8005
+/* 0F6838 7F0C1D08 3C188005 */  lui   $t8, %hi(j_text_trigger) 
 /* 0F683C 7F0C1D0C 8F1884D0 */  lw    $t8, %lo(j_text_trigger)($t8)
 /* 0F6840 7F0C1D10 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F6844 7F0C1D14 000478C0 */  sll   $t7, $a0, 3
@@ -850,7 +850,7 @@ void load_briefing_text_bank(s32 arg0, s32 arg1, ? arg2, s32 arg6) {
 GLOBAL_ASM(
 .text
 glabel load_briefing_text_bank
-/* 0F6894 7F0C1D64 3C188005 */  lui   $t8, %hi(j_text_trigger) # $t8, 0x8005
+/* 0F6894 7F0C1D64 3C188005 */  lui   $t8, %hi(j_text_trigger) 
 /* 0F6898 7F0C1D68 8F1884D0 */  lw    $t8, %lo(j_text_trigger)($t8)
 /* 0F689C 7F0C1D6C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F68A0 7F0C1D70 000478C0 */  sll   $t7, $a0, 3

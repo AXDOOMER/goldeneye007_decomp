@@ -165,7 +165,7 @@ glabel init
 /* 001210 70000610 00000000 */   nop   
 
 
-/* 001214 70000614 3C108000 */  lui   $s0, %hi(0x80000000) # $s0, 0x8000
+/* 001214 70000614 3C108000 */  lui   $s0, %hi(0x80000000)
 /* 001218 70000618 3C027000 */  lui   $v0, %hi(resolve_TLBaddress_for_InvalidHit) # $v0, 0x7000
 /* 00121C 7000061C 3C048000 */  lui   $a0, (0x80000080 >> 16) # lui $a0, 0x8000
 /* 001220 70000620 24421B60 */  addiu $v0, %lo(resolve_TLBaddress_for_InvalidHit) # addiu $v0, $v0, 0x1b60
@@ -206,7 +206,7 @@ glabel init
 /* 00129C 7000069C 2484B950 */  addiu $a0, %lo(sp_main) # addiu $a0, $a0, -0x46b0
 /* 0012A0 700006A0 0C0001BC */  jal   set_stack_entry
 /* 0012A4 700006A4 34058000 */   li    $a1, 32768
-/* 0012A8 700006A8 3C108006 */  lui   $s0, %hi(mainThread) # $s0, 0x8006
+/* 0012A8 700006A8 3C108006 */  lui   $s0, %hi(mainThread)
 /* 0012AC 700006AC 2610D640 */  addiu $s0, %lo(mainThread) # addiu $s0, $s0, -0x29c0
 /* 0012B0 700006B0 3C067000 */  lui   $a2, %hi(thread3_main) # $a2, 0x7000
 /* 0012B4 700006B4 240C000A */  li    $t4, 10
@@ -410,7 +410,7 @@ GLOBAL_ASM(
 .section .text
 glabel setuplastentryofdebughandler
 /* 001508 70000908 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 00150C 7000090C 3C0E8002 */  lui   $t6, %hi(debug_handler_table) # $t6, 0x8002
+/* 00150C 7000090C 3C0E8002 */  lui   $t6, %hi(debug_handler_table) 
 /* 001510 70000910 27A30008 */  addiu $v1, $sp, 8
 /* 001514 70000914 25CE304C */  addiu $t6, %lo(debug_handler_table) # addiu $t6, $t6, 0x304c
 /* 001518 70000918 25D90030 */  addiu $t9, $t6, 0x30

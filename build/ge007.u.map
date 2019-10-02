@@ -15784,7 +15784,13 @@ Linker script and memory map
                 0x00000000800230a4                currentcount
                 0x00000000800230a8                setby_DPCfill_0
                 0x00000000800230ac                setby_DPCfill_1
-                0x00000000800230b0                something_with_osVI
+                0x00000000800230b0                something_with_osVI_0
+                0x00000000800230b4                something_with_osVI_4
+                0x00000000800230b8                something_with_osVI_8
+                0x00000000800230bc                something_with_osVI_C
+                0x00000000800230c0                something_with_osVI_10
+                0x00000000800230c4                something_with_osVI_14
+                0x00000000800230c8                something_with_osVI_18
                 0x00000000800230cc                D_800230CC
  build/src/osMapTLB.o(.data)
  build/src/tlb_manage.o(.data)

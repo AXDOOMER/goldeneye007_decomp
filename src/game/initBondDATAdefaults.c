@@ -33,7 +33,7 @@ glabel sub_GAME_7F0062C0
 /* 03AE28 7F0062F8 ACE00004 */  sw    $zero, 4($a3)
 /* 03AE2C 7F0062FC 1020001A */  beqz  $at, .L7F006368
 /* 03AE30 7F006300 ACE00008 */   sw    $zero, 8($a3)
-/* 03AE34 7F006304 3C148004 */  lui   $s4, %hi(model_guard_character) # $s4, 0x8004
+/* 03AE34 7F006304 3C148004 */  lui   $s4, %hi(model_guard_character)
 /* 03AE38 7F006308 2694D400 */  addiu $s4, %lo(model_guard_character) # addiu $s4, $s4, -0x2c00
 /* 03AE3C 7F00630C 27B50040 */  addiu $s5, $sp, 0x40
 .L7F006310:
@@ -91,7 +91,7 @@ glabel D_8004F1F8
 glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03AEBC 7F00638C 27BDFF20 */  addiu $sp, $sp, -0xe0
 /* 03AEC0 7F006390 AFB20038 */  sw    $s2, 0x38($sp)
-/* 03AEC4 7F006394 3C128004 */  lui   $s2, %hi(player_gait_object) # $s2, 0x8004
+/* 03AEC4 7F006394 3C128004 */  lui   $s2, %hi(player_gait_object)
 /* 03AEC8 7F006398 2652C650 */  addiu $s2, %lo(player_gait_object) # addiu $s2, $s2, -0x39b0
 /* 03AECC 7F00639C 864E0014 */  lh    $t6, 0x14($s2)
 /* 03AED0 7F0063A0 AFBF0044 */  sw    $ra, 0x44($sp)
@@ -106,14 +106,14 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03AEF4 7F0063C4 0FC1B11B */  jal   return_null
 /* 03AEF8 7F0063C8 00000000 */   nop   
 .L7F0063CC:
-/* 03AEFC 7F0063CC 3C118008 */  lui   $s1, %hi(pPlayer) # $s1, 0x8008
+/* 03AEFC 7F0063CC 3C118008 */  lui   $s1, %hi(pPlayer)
 /* 03AF00 7F0063D0 2631A0B0 */  addiu $s1, %lo(pPlayer) # addiu $s1, $s1, -0x5f50
 /* 03AF04 7F0063D4 8E300000 */  lw    $s0, ($s1)
 /* 03AF08 7F0063D8 02402825 */  move  $a1, $s2
 /* 03AF0C 7F0063DC 26040598 */  addiu $a0, $s0, 0x598
 /* 03AF10 7F0063E0 0FC1D7EB */  jal   sub_GAME_7F075FAC
 /* 03AF14 7F0063E4 26060654 */   addiu $a2, $s0, 0x654
-/* 03AF18 7F0063E8 3C018005 */  lui   $at, %hi(D_8004F1F0) # $at, 0x8005
+/* 03AF18 7F0063E8 3C018005 */  lui   $at, %hi(D_8004F1F0)
 /* 03AF1C 7F0063EC C436F1F0 */  lwc1  $f22, %lo(D_8004F1F0)($at)
 /* 03AF20 7F0063F0 8E240000 */  lw    $a0, ($s1)
 /* 03AF24 7F0063F4 4405B000 */  mfc1  $a1, $f22
@@ -122,21 +122,21 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03AF30 7F006400 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 03AF34 7F006404 44810000 */  mtc1  $at, $f0
 /* 03AF38 7F006408 8E2F0000 */  lw    $t7, ($s1)
-/* 03AF3C 7F00640C 3C018005 */  lui   $at, %hi(D_8004F1F4) # $at, 0x8005
+/* 03AF3C 7F00640C 3C018005 */  lui   $at, %hi(D_8004F1F4)
 /* 03AF40 7F006410 C422F1F4 */  lwc1  $f2, %lo(D_8004F1F4)($at)
 /* 03AF44 7F006414 ADE004E8 */  sw    $zero, 0x4e8($t7)
-/* 03AF48 7F006418 3C018005 */  lui   $at, %hi(D_8004F1F8) # $at, 0x8005
+/* 03AF48 7F006418 3C018005 */  lui   $at, %hi(D_8004F1F8)
 /* 03AF4C 7F00641C C424F1F8 */  lwc1  $f4, %lo(D_8004F1F8)($at)
 /* 03AF50 7F006420 8E380000 */  lw    $t8, ($s1)
 /* 03AF54 7F006424 4480A000 */  mtc1  $zero, $f20
 /* 03AF58 7F006428 24020001 */  li    $v0, 1
 /* 03AF5C 7F00642C E70404EC */  swc1  $f4, 0x4ec($t8)
 /* 03AF60 7F006430 8E390000 */  lw    $t9, ($s1)
-/* 03AF64 7F006434 3C108003 */  lui   $s0, %hi(D_80036AD0) # $s0, 0x8003
-/* 03AF68 7F006438 3C148007 */  lui   $s4, %hi(ptr_animation_table) # $s4, 0x8007
+/* 03AF64 7F006434 3C108003 */  lui   $s0, %hi(D_80036AD0)
+/* 03AF68 7F006438 3C148007 */  lui   $s4, %hi(ptr_animation_table)
 /* 03AF6C 7F00643C AF2004F0 */  sw    $zero, 0x4f0($t9)
 /* 03AF70 7F006440 8E280000 */  lw    $t0, ($s1)
-/* 03AF74 7F006444 3C138003 */  lui   $s3, %hi(D_80036B00) # $s3, 0x8003
+/* 03AF74 7F006444 3C138003 */  lui   $s3, %hi(D_80036B00)
 /* 03AF78 7F006448 26736B00 */  addiu $s3, %lo(D_80036B00) # addiu $s3, $s3, 0x6b00
 /* 03AF7C 7F00644C E50004F4 */  swc1  $f0, 0x4f4($t0)
 /* 03AF80 7F006450 8E290000 */  lw    $t1, ($s1)
@@ -253,7 +253,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03B138 7F006608 1613FFEA */  bne   $s0, $s3, .L7F0065B4
 /* 03B13C 7F00660C E612FFF4 */   swc1  $f18, -0xc($s0)
 /* 03B140 7F006610 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 03B144 7F006614 3C198003 */  lui   $t9, %hi(D_8002A790) # $t9, 0x8003
+/* 03B144 7F006614 3C198003 */  lui   $t9, %hi(D_8002A790) 
 /* 03B148 7F006618 27B20090 */  addiu $s2, $sp, 0x90
 /* 03B14C 7F00661C 2739A790 */  addiu $t9, %lo(D_8002A790) # addiu $t9, $t9, -0x5870
 /* 03B150 7F006620 4481B000 */  mtc1  $at, $f22
@@ -297,7 +297,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03B1E4 7F0066B4 26050598 */   addiu $a1, $s0, 0x598
 /* 03B1E8 7F0066B8 8E300000 */  lw    $s0, ($s1)
 /* 03B1EC 7F0066BC 24130018 */  li    $s3, 24
-/* 03B1F0 7F0066C0 3C128003 */  lui   $s2, %hi(D_80036AD0) # $s2, 0x8003
+/* 03B1F0 7F0066C0 3C128003 */  lui   $s2, %hi(D_80036AD0)
 /* 03B1F4 7F0066C4 C6040704 */  lwc1  $f4, 0x704($s0)
 /* 03B1F8 7F0066C8 26526AD0 */  addiu $s2, %lo(D_80036AD0) # addiu $s2, $s2, 0x6ad0
 /* 03B1FC 7F0066CC 00003025 */  move  $a2, $zero

@@ -653,18 +653,18 @@ glabel mainloop
 /* 006C88 70006088 AFB00018 */  sw    $s0, 0x18($sp)
 /* 006C8C 7000608C 0FC34693 */  jal   reset_mem_bank_5
 /* 006C90 70006090 AFA001DC */   sw    $zero, 0x1dc($sp)
-/* 006C94 70006094 3C058003 */  lui   $a1, %hi(aLevel__0) # $a1, 0x8003
+/* 006C94 70006094 3C058003 */  lui   $a1, %hi(aLevel__0)
 /* 006C98 70006098 24A59104 */  addiu $a1, %lo(aLevel__0) # addiu $a1, $a1, -0x6efc
 /* 006C9C 7000609C 0C0029A8 */  jal   check_token
 /* 006CA0 700060A0 24040001 */   li    $a0, 1
 /* 006CA4 700060A4 1040000D */  beqz  $v0, .L700060DC
 /* 006CA8 700060A8 24040001 */   li    $a0, 1
-/* 006CAC 700060AC 3C058003 */  lui   $a1, %hi(aLevel__1) # $a1, 0x8003
+/* 006CAC 700060AC 3C058003 */  lui   $a1, %hi(aLevel__1)
 /* 006CB0 700060B0 0C0029A8 */  jal   check_token
 /* 006CB4 700060B4 24A5910C */   addiu $a1, %lo(aLevel__1) # addiu $a1, $a1, -0x6ef4
 /* 006CB8 700060B8 904F0000 */  lbu   $t7, ($v0)
 /* 006CBC 700060BC 904E0001 */  lbu   $t6, 1($v0)
-/* 006CC0 700060C0 3C018002 */  lui   $at, %hi(current_stage_num) # $at, 0x8002
+/* 006CC0 700060C0 3C018002 */  lui   $at, %hi(current_stage_num)
 /* 006CC4 700060C4 000FC080 */  sll   $t8, $t7, 2
 /* 006CC8 700060C8 030FC021 */  addu  $t8, $t8, $t7
 /* 006CCC 700060CC 0018C040 */  sll   $t8, $t8, 1
@@ -672,7 +672,7 @@ glabel mainloop
 /* 006CD4 700060D4 2728FDF0 */  addiu $t0, $t9, -0x210
 /* 006CD8 700060D8 AC2841A8 */  sw    $t0, %lo(current_stage_num)($at)
 .L700060DC:
-/* 006CDC 700060DC 3C098002 */  lui   $t1, %hi(current_stage_num) # $t1, 0x8002
+/* 006CDC 700060DC 3C098002 */  lui   $t1, %hi(current_stage_num) 
 /* 006CE0 700060E0 8D2941A8 */  lw    $t1, %lo(current_stage_num)($t1)
 /* 006CE4 700060E4 2401005A */  li    $at, 90
 /* 006CE8 700060E8 1121001D */  beq   $t1, $at, .L70006160
@@ -683,22 +683,22 @@ glabel mainloop
 /* 006CFC 700060FC 00002025 */   move  $a0, $zero
 /* 006D00 70006100 0FC07567 */  jal   set_selected_difficulty
 /* 006D04 70006104 00002025 */   move  $a0, $zero
-/* 006D08 70006108 3C048002 */  lui   $a0, %hi(current_stage_num) # $a0, 0x8002
+/* 006D08 70006108 3C048002 */  lui   $a0, %hi(current_stage_num)
 /* 006D0C 7000610C 0FC0757B */  jal   set_solo_and_ptr_briefing
 /* 006D10 70006110 8C8441A8 */   lw    $a0, %lo(current_stage_num)($a0)
-/* 006D14 70006114 3C058003 */  lui   $a1, %hi(aHard) # $a1, 0x8003
+/* 006D14 70006114 3C058003 */  lui   $a1, %hi(aHard)
 /* 006D18 70006118 24A59114 */  addiu $a1, %lo(aHard) # addiu $a1, $a1, -0x6eec
 /* 006D1C 7000611C 0C0029A8 */  jal   check_token
 /* 006D20 70006120 24040001 */   li    $a0, 1
 /* 006D24 70006124 1040000E */  beqz  $v0, .L70006160
 /* 006D28 70006128 24040001 */   li    $a0, 1
-/* 006D2C 7000612C 3C058003 */  lui   $a1, %hi(aHard_1) # $a1, 0x8003
+/* 006D2C 7000612C 3C058003 */  lui   $a1, %hi(aHard_1)
 /* 006D30 70006130 0C0029A8 */  jal   check_token
 /* 006D34 70006134 24A5911C */   addiu $a1, %lo(aHard_1) # addiu $a1, $a1, -0x6ee4
 /* 006D38 70006138 90440000 */  lbu   $a0, ($v0)
 /* 006D3C 7000613C 0FC07567 */  jal   set_selected_difficulty
 /* 006D40 70006140 2484FFD0 */   addiu $a0, $a0, -0x30
-/* 006D44 70006144 3C058003 */  lui   $a1, %hi(aHard_2) # $a1, 0x8003
+/* 006D44 70006144 3C058003 */  lui   $a1, %hi(aHard_2)
 /* 006D48 70006148 24A59124 */  addiu $a1, %lo(aHard_2) # addiu $a1, $a1, -0x6edc
 /* 006D4C 7000614C 0C0029A8 */  jal   check_token
 /* 006D50 70006150 24040001 */   li    $a0, 1
@@ -710,15 +710,15 @@ glabel mainloop
 /* 006D64 70006164 00000000 */   nop   
 /* 006D68 70006168 0C002926 */  jal   increment_random_num
 /* 006D6C 7000616C 00402025 */   move  $a0, $v0
-/* 006D70 70006170 3C168003 */  lui   $s6, %hi(aU64_taskgrab_D_core) # $s6, 0x8003
-/* 006D74 70006174 3C158008 */  lui   $s5, %hi(pPlayer) # $s5, 0x8008
+/* 006D70 70006170 3C168003 */  lui   $s6, %hi(aU64_taskgrab_D_core)
+/* 006D74 70006174 3C158008 */  lui   $s5, %hi(pPlayer)
 /* 006D78 70006178 26B5A0B0 */  addiu $s5, %lo(pPlayer) # addiu $s5, $s5, -0x5f50
 /* 006D7C 7000617C 26D69134 */  addiu $s6, %lo(aU64_taskgrab_D_core) # addiu $s6, $s6, -0x6ecc
 /* 006D80 70006180 27B70058 */  addiu $s7, $sp, 0x58
 /* 006D84 70006184 27B4005C */  addiu $s4, $sp, 0x5c
 /* 006D88 70006188 8FB301A8 */  lw    $s3, 0x1a8($sp)
 .L7000618C:
-/* 006D8C 7000618C 3C0B8002 */  lui   $t3, %hi(D_80024304) # $t3, 0x8002
+/* 006D8C 7000618C 3C0B8002 */  lui   $t3, %hi(D_80024304) 
 /* 006D90 70006190 AFA001D4 */  sw    $zero, 0x1d4($sp)
 /* 006D94 70006194 256B4304 */  addiu $t3, %lo(D_80024304) # addiu $t3, $t3, 0x4304
 /* 006D98 70006198 8D610000 */  lw    $at, ($t3)
@@ -742,13 +742,13 @@ glabel mainloop
 /* 006DE0 700061E0 AD410018 */  sw    $at, 0x18($t2)
 /* 006DE4 700061E4 0FC2FF04 */  jal   get_current_difficulty
 /* 006DE8 700061E8 AFA001AC */   sw    $zero, 0x1ac($sp)
-/* 006DEC 700061EC 3C048002 */  lui   $a0, %hi(current_stage_num) # $a0, 0x8002
+/* 006DEC 700061EC 3C048002 */  lui   $a0, %hi(current_stage_num)
 /* 006DF0 700061F0 8C8441A8 */  lw    $a0, %lo(current_stage_num)($a0)
 /* 006DF4 700061F4 0FC30190 */  jal   test_if_recording_demos_this_stage_load
 /* 006DF8 700061F8 00402825 */   move  $a1, $v0
-/* 006DFC 700061FC 3C0E8002 */  lui   $t6, %hi(debug_and_update_stage_flag) # $t6, 0x8002
+/* 006DFC 700061FC 3C0E8002 */  lui   $t6, %hi(debug_and_update_stage_flag) 
 /* 006E00 70006200 8DCE41A4 */  lw    $t6, %lo(debug_and_update_stage_flag)($t6)
-/* 006E04 70006204 3C188002 */  lui   $t8, %hi(current_stage_num) # $t8, 0x8002
+/* 006E04 70006204 3C188002 */  lui   $t8, %hi(current_stage_num) 
 /* 006E08 70006208 11C00038 */  beqz  $t6, .L700062EC
 /* 006E0C 7000620C 00000000 */   nop   
 /* 006E10 70006210 8F1841A8 */  lw    $t8, %lo(current_stage_num)($t8)
@@ -760,11 +760,11 @@ glabel mainloop
 /* 006E28 70006228 00000000 */   nop   
 /* 006E2C 7000622C 28410002 */  slti  $at, $v0, 2
 /* 006E30 70006230 14200018 */  bnez  $at, .L70006294
-/* 006E34 70006234 3C058002 */   lui   $a1, %hi(memallocstringtable) # $a1, 0x8002
+/* 006E34 70006234 3C058002 */   lui   $a1, %hi(memallocstringtable)
 /* 006E38 70006238 24A541BC */  addiu $a1, %lo(memallocstringtable) # addiu $a1, $a1, 0x41bc
 /* 006E3C 7000623C 8CB90000 */  lw    $t9, ($a1)
 /* 006E40 70006240 00008025 */  move  $s0, $zero
-/* 006E44 70006244 3C048002 */  lui   $a0, %hi(current_stage_num) # $a0, 0x8002
+/* 006E44 70006244 3C048002 */  lui   $a0, %hi(current_stage_num)
 /* 006E48 70006248 1320000C */  beqz  $t9, .L7000627C
 /* 006E4C 7000624C 3C088002 */   lui   $t0, %hi(memallocstringtable)
 /* 006E50 70006250 8C8441A8 */  lw    $a0, %lo(current_stage_num)($a0)
@@ -788,12 +788,12 @@ glabel mainloop
 /* 006E8C 7000628C 00000000 */   nop   
 /* 006E90 70006290 2410FFFF */  li    $s0, -1
 .L70006294:
-/* 006E94 70006294 3C058002 */  lui   $a1, %hi(memallocstringtable) # $a1, 0x8002
+/* 006E94 70006294 3C058002 */  lui   $a1, %hi(memallocstringtable)
 /* 006E98 70006298 06010010 */  bgez  $s0, .L700062DC
 /* 006E9C 7000629C 24A541BC */   addiu $a1, %lo(memallocstringtable) # addiu $a1, $a1, 0x41bc
 /* 006EA0 700062A0 8CAA0000 */  lw    $t2, ($a1)
 /* 006EA4 700062A4 00008025 */  move  $s0, $zero
-/* 006EA8 700062A8 3C048002 */  lui   $a0, %hi(current_stage_num) # $a0, 0x8002
+/* 006EA8 700062A8 3C048002 */  lui   $a0, %hi(current_stage_num)
 /* 006EAC 700062AC 1140000B */  beqz  $t2, .L700062DC
 /* 006EB0 700062B0 3C0B8002 */   lui   $t3, %hi(memallocstringtable)
 /* 006EB4 700062B4 256241BC */  addiu $v0, $t3, %lo(memallocstringtable)
@@ -818,13 +818,13 @@ glabel mainloop
 /* 006EF0 700062F0 24040004 */   li    $a0, 4
 /* 006EF4 700062F4 0FC2F46F */  jal   something_mem_bank_a0
 /* 006EF8 700062F8 24040004 */   li    $a0, 4
-/* 006EFC 700062FC 3C058003 */  lui   $a1, %hi(aMa) # $a1, 0x8003
+/* 006EFC 700062FC 3C058003 */  lui   $a1, %hi(aMa)
 /* 006F00 70006300 24A5912C */  addiu $a1, %lo(aMa) # addiu $a1, $a1, -0x6ed4
 /* 006F04 70006304 0C0029A8 */  jal   check_token
 /* 006F08 70006308 24040001 */   li    $a0, 1
 /* 006F0C 7000630C 1040000B */  beqz  $v0, .L7000633C
 /* 006F10 70006310 24040001 */   li    $a0, 1
-/* 006F14 70006314 3C058003 */  lui   $a1, %hi(aMa_0) # $a1, 0x8003
+/* 006F14 70006314 3C058003 */  lui   $a1, %hi(aMa_0)
 /* 006F18 70006318 0C0029A8 */  jal   check_token
 /* 006F1C 7000631C 24A59130 */   addiu $a1, %lo(aMa_0) # addiu $a1, $a1, -0x6ed0
 /* 006F20 70006320 00402025 */  move  $a0, $v0
@@ -832,20 +832,20 @@ glabel mainloop
 /* 006F28 70006328 0C002A78 */  jal   strtol
 /* 006F2C 7000632C 00003025 */   move  $a2, $zero
 /* 006F30 70006330 0002C280 */  sll   $t8, $v0, 0xa
-/* 006F34 70006334 3C018002 */  lui   $at, %hi(current_ma_malloc_value) # $at, 0x8002
+/* 006F34 70006334 3C018002 */  lui   $at, %hi(current_ma_malloc_value)
 /* 006F38 70006338 AC3841B0 */  sw    $t8, %lo(current_ma_malloc_value)($at)
 .L7000633C:
-/* 006F3C 7000633C 3C048002 */  lui   $a0, %hi(current_ma_malloc_value) # $a0, 0x8002
+/* 006F3C 7000633C 3C048002 */  lui   $a0, %hi(current_ma_malloc_value)
 /* 006F40 70006340 8C8441B0 */  lw    $a0, %lo(current_ma_malloc_value)($a0)
 /* 006F44 70006344 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 006F48 70006348 24050004 */   li    $a1, 4
-/* 006F4C 7000634C 3C058002 */  lui   $a1, %hi(current_ma_malloc_value) # $a1, 0x8002
+/* 006F4C 7000634C 3C058002 */  lui   $a1, %hi(current_ma_malloc_value)
 /* 006F50 70006350 8CA541B0 */  lw    $a1, %lo(current_ma_malloc_value)($a1)
 /* 006F54 70006354 0C002766 */  jal   reset_memtable_base_allocation
 /* 006F58 70006358 00402025 */   move  $a0, $v0
 /* 006F5C 7000635C 0FC268CB */  jal   reset_play_data_ptrs
 /* 006F60 70006360 00000000 */   nop   
-/* 006F64 70006364 3C198002 */  lui   $t9, %hi(current_stage_num) # $t9, 0x8002
+/* 006F64 70006364 3C198002 */  lui   $t9, %hi(current_stage_num) 
 /* 006F68 70006368 8F3941A8 */  lw    $t9, %lo(current_stage_num)($t9)
 /* 006F6C 7000636C 2401005A */  li    $at, 90
 /* 006F70 70006370 13210009 */  beq   $t9, $at, .L70006398
@@ -865,7 +865,7 @@ glabel mainloop
 /* 006FA4 700063A4 00000000 */   nop   
 /* 006FA8 700063A8 0C002DAB */  jal   test_controller_presence
 /* 006FAC 700063AC 00000000 */   nop   
-/* 006FB0 700063B0 3C048002 */  lui   $a0, %hi(current_stage_num) # $a0, 0x8002
+/* 006FB0 700063B0 3C048002 */  lui   $a0, %hi(current_stage_num)
 /* 006FB4 700063B4 0FC2F6AC */  jal   stage_load
 /* 006FB8 700063B8 8C8441A8 */   lw    $a0, %lo(current_stage_num)($a0)
 /* 006FBC 700063BC 0C000C49 */  jal   init_both_video_buffers
@@ -876,14 +876,14 @@ glabel mainloop
 /* 006FD0 700063D0 00000000 */   nop   
 /* 006FD4 700063D4 0C000A04 */  jal   video_related_2
 /* 006FD8 700063D8 00000000 */   nop   
-/* 006FDC 700063DC 3C048006 */  lui   $a0, %hi(gfxFrameMsgQ) # $a0, 0x8006
+/* 006FDC 700063DC 3C048006 */  lui   $a0, %hi(gfxFrameMsgQ)
 /* 006FE0 700063E0 2484D9A0 */  addiu $a0, %lo(gfxFrameMsgQ) # addiu $a0, $a0, -0x2660
 /* 006FE4 700063E4 27A501D4 */  addiu $a1, $sp, 0x1d4
 /* 006FE8 700063E8 0C003774 */  jal   osRecvMesg
 /* 006FEC 700063EC 00003025 */   move  $a2, $zero
 /* 006FF0 700063F0 14400007 */  bnez  $v0, .L70006410
 .L700063F4:
-/* 006FF4 700063F4 3C048006 */   lui   $a0, %hi(gfxFrameMsgQ) # $a0, 0x8006
+/* 006FF4 700063F4 3C048006 */   lui   $a0, %hi(gfxFrameMsgQ)
 /* 006FF8 700063F8 2484D9A0 */  addiu $a0, %lo(gfxFrameMsgQ) # addiu $a0, $a0, -0x2660
 /* 006FFC 700063FC 27A501D4 */  addiu $a1, $sp, 0x1d4
 /* 007000 70006400 0C003774 */  jal   osRecvMesg
@@ -891,11 +891,11 @@ glabel mainloop
 /* 007008 70006408 1040FFFA */  beqz  $v0, .L700063F4
 /* 00700C 7000640C 00000000 */   nop   
 .L70006410:
-/* 007010 70006410 3C088002 */  lui   $t0, %hi(loadedstage) # $t0, 0x8002
+/* 007010 70006410 3C088002 */  lui   $t0, %hi(loadedstage) 
 /* 007014 70006414 8D0842FC */  lw    $t0, %lo(loadedstage)($t0)
 /* 007018 70006418 05010126 */  bgez  $t0, .L700068B4
 .L7000641C:
-/* 00701C 7000641C 3C048006 */   lui   $a0, %hi(gfxFrameMsgQ) # $a0, 0x8006
+/* 00701C 7000641C 3C048006 */   lui   $a0, %hi(gfxFrameMsgQ)
 /* 007020 70006420 2484D9A0 */  addiu $a0, %lo(gfxFrameMsgQ) # addiu $a0, $a0, -0x2660
 /* 007024 70006424 27A501D4 */  addiu $a1, $sp, 0x1d4
 /* 007028 70006428 0C003774 */  jal   osRecvMesg
@@ -910,13 +910,13 @@ glabel mainloop
 /* 00704C 7000644C 24010005 */  li    $at, 5
 /* 007050 70006450 10610112 */  beq   $v1, $at, .L7000689C
 /* 007054 70006454 3C028002 */   lui   $v0, %hi(loadedstage)
-/* 007058 70006458 3C028002 */  lui   $v0, %hi(loadedstage) # $v0, 0x8002
+/* 007058 70006458 3C028002 */  lui   $v0, %hi(loadedstage)
 /* 00705C 7000645C 10000111 */  b     .L700068A4
 /* 007060 70006460 8C4242FC */   lw    $v0, %lo(loadedstage)($v0)
 .L70006464:
 /* 007064 70006464 0C003638 */  jal   osGetCount
 /* 007068 70006468 00000000 */   nop   
-/* 00706C 7000646C 3C0D8005 */  lui   $t5, %hi(copy_of_osgetcount_value_1) # $t5, 0x8005
+/* 00706C 7000646C 3C0D8005 */  lui   $t5, %hi(copy_of_osgetcount_value_1) 
 /* 007070 70006470 8DAD84B0 */  lw    $t5, %lo(copy_of_osgetcount_value_1)($t5)
 /* 007074 70006474 3C010005 */  lui   $at, (0x0005EB61 >> 16) # lui $at, 5
 /* 007078 70006478 3421EB61 */  ori   $at, (0x0005EB61 & 0xFFFF) # ori $at, $at, 0xeb61
@@ -924,7 +924,7 @@ glabel mainloop
 /* 007080 70006480 0061082B */  sltu  $at, $v1, $at
 /* 007084 70006484 10200004 */  beqz  $at, .L70006498
 /* 007088 70006488 3C028002 */   lui   $v0, %hi(loadedstage)
-/* 00708C 7000648C 3C028002 */  lui   $v0, %hi(loadedstage) # $v0, 0x8002
+/* 00708C 7000648C 3C028002 */  lui   $v0, %hi(loadedstage)
 /* 007090 70006490 10000104 */  b     .L700068A4
 /* 007094 70006494 8C4242FC */   lw    $v0, %lo(loadedstage)($v0)
 .L70006498:
@@ -958,7 +958,7 @@ glabel mainloop
 /* 0070FC 700064FC 00002025 */   move  $a0, $zero
 /* 007100 70006500 0FC2F59D */  jal   get_ptr_displaylist
 /* 007104 70006504 00000000 */   nop   
-/* 007108 70006508 3C0A8002 */  lui   $t2, %hi(debug_feature_flag) # $t2, 0x8002
+/* 007108 70006508 3C0A8002 */  lui   $t2, %hi(debug_feature_flag) 
 /* 00710C 7000650C 8D4A4300 */  lw    $t2, %lo(debug_feature_flag)($t2)
 /* 007110 70006510 AFA201A4 */  sw    $v0, 0x1a4($sp)
 /* 007114 70006514 00409825 */  move  $s3, $v0
@@ -990,14 +990,14 @@ glabel mainloop
 /* 00717C 7000657C 3246FFFF */  andi  $a2, $s2, 0xffff
 /* 007180 70006580 0FC24168 */  jal   debug_menu_processor
 /* 007184 70006584 3047FFFF */   andi  $a3, $v0, 0xffff
-/* 007188 70006588 3C018002 */  lui   $at, %hi(debug_feature_flag) # $at, 0x8002
+/* 007188 70006588 3C018002 */  lui   $at, %hi(debug_feature_flag)
 /* 00718C 7000658C AC224300 */  sw    $v0, %lo(debug_feature_flag)($at)
 .L70006590:
 /* 007190 70006590 0FC2FAE2 */  jal   manage_mp_game
 /* 007194 70006594 00000000 */   nop   
 /* 007198 70006598 0FC26D07 */  jal   sub_GAME_7F09B41C
 /* 00719C 7000659C 00000000 */   nop   
-/* 0071A0 700065A0 3C198002 */  lui   $t9, %hi(current_stage_num) # $t9, 0x8002
+/* 0071A0 700065A0 3C198002 */  lui   $t9, %hi(current_stage_num) 
 /* 0071A4 700065A4 8F3941A8 */  lw    $t9, %lo(current_stage_num)($t9)
 /* 0071A8 700065A8 2401005A */  li    $at, 90
 /* 0071AC 700065AC 13210018 */  beq   $t9, $at, .L70006610
@@ -1098,7 +1098,7 @@ glabel mainloop
 /* 00731C 7000671C 02602025 */   move  $a0, $s3
 /* 007320 70006720 00409825 */  move  $s3, $v0
 .L70006724:
-/* 007324 70006724 3C0E8002 */  lui   $t6, %hi(debug_feature_flag) # $t6, 0x8002
+/* 007324 70006724 3C0E8002 */  lui   $t6, %hi(debug_feature_flag) 
 /* 007328 70006728 8DCE4300 */  lw    $t6, %lo(debug_feature_flag)($t6)
 /* 00732C 7000672C 51C00007 */  beql  $t6, $zero, .L7000674C
 /* 007330 70006730 02601025 */   move  $v0, $s3
@@ -1117,7 +1117,7 @@ glabel mainloop
 /* 007360 70006760 3C19B800 */  lui   $t9, 0xb800
 /* 007364 70006764 AC790000 */  sw    $t9, ($v1)
 /* 007368 70006768 AC600004 */  sw    $zero, 4($v1)
-/* 00736C 7000676C 3C088002 */  lui   $t0, %hi(show_mem_use_flag) # $t0, 0x8002
+/* 00736C 7000676C 3C088002 */  lui   $t0, %hi(show_mem_use_flag) 
 /* 007370 70006770 8D0841B4 */  lw    $t0, %lo(show_mem_use_flag)($t0)
 /* 007374 70006774 26730008 */  addiu $s3, $s3, 8
 /* 007378 70006778 1100000B */  beqz  $t0, .L700067A8
@@ -1130,10 +1130,10 @@ glabel mainloop
 /* 007394 70006794 02602025 */   move  $a0, $s3
 /* 007398 70006798 0FC31994 */  jal   nullsub_41
 /* 00739C 7000679C 00002025 */   move  $a0, $zero
-/* 0073A0 700067A0 3C018002 */  lui   $at, %hi(show_mem_use_flag) # $at, 0x8002
+/* 0073A0 700067A0 3C018002 */  lui   $at, %hi(show_mem_use_flag)
 /* 0073A4 700067A4 AC2041B4 */  sw    $zero, %lo(show_mem_use_flag)($at)
 .L700067A8:
-/* 0073A8 700067A8 3C098002 */  lui   $t1, %hi(show_mem_bars_flag) # $t1, 0x8002
+/* 0073A8 700067A8 3C098002 */  lui   $t1, %hi(show_mem_bars_flag) 
 /* 0073AC 700067AC 8D2941B8 */  lw    $t1, %lo(show_mem_bars_flag)($t1)
 /* 0073B0 700067B0 11200003 */  beqz  $t1, .L700067C0
 /* 0073B4 700067B4 00000000 */   nop   
@@ -1159,7 +1159,7 @@ glabel mainloop
 /* 007400 70006800 3401C000 */  li    $at, 49152
 /* 007404 70006804 14410013 */  bne   $v0, $at, .L70006854
 .L70006808:
-/* 007408 70006808 3C068002 */   lui   $a2, %hi(taskgrab_ramdump_num) # $a2, 0x8002
+/* 007408 70006808 3C068002 */   lui   $a2, %hi(taskgrab_ramdump_num)
 /* 00740C 7000680C 8CC64324 */  lw    $a2, %lo(taskgrab_ramdump_num)($a2)
 /* 007410 70006810 02802025 */  move  $a0, $s4
 /* 007414 70006814 0C002B25 */  jal   sprintf
@@ -1168,9 +1168,9 @@ glabel mainloop
 /* 007420 70006820 0FC34026 */  jal   check_file_found_on_indy
 /* 007424 70006824 02E02825 */   move  $a1, $s7
 /* 007428 70006828 10400006 */  beqz  $v0, .L70006844
-/* 00742C 7000682C 3C068002 */   lui   $a2, %hi(taskgrab_ramdump_num) # $a2, 0x8002
+/* 00742C 7000682C 3C068002 */   lui   $a2, %hi(taskgrab_ramdump_num)
 /* 007430 70006830 8CC64324 */  lw    $a2, %lo(taskgrab_ramdump_num)($a2)
-/* 007434 70006834 3C018002 */  lui   $at, %hi(taskgrab_ramdump_num) # $at, 0x8002
+/* 007434 70006834 3C018002 */  lui   $at, %hi(taskgrab_ramdump_num)
 /* 007438 70006838 24C60001 */  addiu $a2, $a2, 1
 /* 00743C 7000683C 1000FFF2 */  b     .L70006808
 /* 007440 70006840 AC264324 */   sw    $a2, %lo(taskgrab_ramdump_num)($at)
@@ -1192,7 +1192,7 @@ glabel mainloop
 /* 007478 70006878 398A0001 */  xori  $t2, $t4, 1
 /* 00747C 7000687C 0C000A15 */  jal   video_related_3
 /* 007480 70006880 AFAA01AC */   sw    $t2, 0x1ac($sp)
-/* 007484 70006884 3C028002 */  lui   $v0, %hi(loadedstage) # $v0, 0x8002
+/* 007484 70006884 3C028002 */  lui   $v0, %hi(loadedstage)
 /* 007488 70006888 10000006 */  b     .L700068A4
 /* 00748C 7000688C 8C4242FC */   lw    $v0, %lo(loadedstage)($v0)
 .L70006890:
@@ -1216,11 +1216,11 @@ glabel mainloop
 /* 0074C8 700068C8 24040004 */   li    $a0, 4
 /* 0074CC 700068CC 0FC2F46F */  jal   something_mem_bank_a0
 /* 0074D0 700068D0 24040004 */   li    $a0, 4
-/* 0074D4 700068D4 3C028002 */  lui   $v0, %hi(loadedstage) # $v0, 0x8002
+/* 0074D4 700068D4 3C028002 */  lui   $v0, %hi(loadedstage)
 /* 0074D8 700068D8 244242FC */  addiu $v0, %lo(loadedstage) # addiu $v0, $v0, 0x42fc
 /* 0074DC 700068DC 8C4D0000 */  lw    $t5, ($v0)
 /* 0074E0 700068E0 8FAF01DC */  lw    $t7, 0x1dc($sp)
-/* 0074E4 700068E4 3C018002 */  lui   $at, %hi(current_stage_num) # $at, 0x8002
+/* 0074E4 700068E4 3C018002 */  lui   $at, %hi(current_stage_num)
 /* 0074E8 700068E8 240BFFFF */  li    $t3, -1
 /* 0074EC 700068EC AC2D41A8 */  sw    $t5, %lo(current_stage_num)($at)
 /* 0074F0 700068F0 11E0FE26 */  beqz  $t7, .L7000618C

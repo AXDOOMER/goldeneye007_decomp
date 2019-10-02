@@ -12,7 +12,7 @@ void sub_GAME_7F0061F0(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0061F0
-/* 03AD20 7F0061F0 3C048008 */  lui   $a0, %hi(pPlayer) # $a0, 0x8008
+/* 03AD20 7F0061F0 3C048008 */  lui   $a0, %hi(pPlayer)
 /* 03AD24 7F0061F4 2484A0B0 */  addiu $a0, %lo(pPlayer) # addiu $a0, $a0, -0x5f50
 /* 03AD28 7F0061F8 8C8E0000 */  lw    $t6, ($a0)
 /* 03AD2C 7F0061FC 2405FFFF */  li    $a1, -1
@@ -56,7 +56,7 @@ void alloc_additional_item_slots(s32 arg0) {
 GLOBAL_ASM(
 .text
 glabel alloc_additional_item_slots
-/* 03AD8C 7F00625C 3C028008 */  lui   $v0, %hi(pPlayer) # $v0, 0x8008
+/* 03AD8C 7F00625C 3C028008 */  lui   $v0, %hi(pPlayer)
 /* 03AD90 7F006260 2442A0B0 */  addiu $v0, %lo(pPlayer) # addiu $v0, $v0, -0x5f50
 /* 03AD94 7F006264 8C4F0000 */  lw    $t7, ($v0)
 /* 03AD98 7F006268 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -73,7 +73,7 @@ glabel alloc_additional_item_slots
 /* 03ADC4 7F006294 3488000F */  ori   $t0, $a0, 0xf
 /* 03ADC8 7F006298 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 03ADCC 7F00629C 3904000F */   xori  $a0, $t0, 0xf
-/* 03ADD0 7F0062A0 3C0A8008 */  lui   $t2, %hi(pPlayer) # $t2, 0x8008
+/* 03ADD0 7F0062A0 3C0A8008 */  lui   $t2, %hi(pPlayer) 
 /* 03ADD4 7F0062A4 8D4AA0B0 */  lw    $t2, %lo(pPlayer)($t2)
 /* 03ADD8 7F0062A8 0FC22FFC */  jal   reinit_BONDdata_inventory
 /* 03ADDC 7F0062AC AD4211E4 */   sw    $v0, 0x11e4($t2)

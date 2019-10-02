@@ -151,10 +151,10 @@ GLOBAL_ASM(
 glabel display_text_to_coord
 /* 00B9D0 7000ADD0 AFA60008 */  sw    $a2, 8($sp)
 /* 00B9D4 7000ADD4 30CE00FF */  andi  $t6, $a2, 0xff
-/* 00B9D8 7000ADD8 3C038002 */  lui   $v1, %hi(debug_text_color) # $v1, 0x8002
-/* 00B9DC 7000ADDC 3C088002 */  lui   $t0, %hi(stdout_primary_color_table) # $t0, 0x8002
-/* 00B9E0 7000ADE0 3C0A8002 */  lui   $t2, %hi(stdout_environment_color_table) # $t2, 0x8002
-/* 00B9E4 7000ADE4 3C098002 */  lui   $t1, %hi(debug_text_bg_color) # $t1, 0x8002
+/* 00B9D8 7000ADD8 3C038002 */  lui   $v1, %hi(debug_text_color)
+/* 00B9DC 7000ADDC 3C088002 */  lui   $t0, %hi(stdout_primary_color_table) 
+/* 00B9E0 7000ADE0 3C0A8002 */  lui   $t2, %hi(stdout_environment_color_table) 
+/* 00B9E4 7000ADE4 3C098002 */  lui   $t1, %hi(debug_text_bg_color) 
 /* 00B9E8 7000ADE8 01C03025 */  move  $a2, $t6
 /* 00B9EC 7000ADEC AFA40000 */  sw    $a0, ($sp)
 /* 00B9F0 7000ADF0 252968B0 */  addiu $t1, %lo(debug_text_bg_color) # addiu $t1, $t1, 0x68b0
@@ -178,13 +178,13 @@ glabel display_text_to_coord
 /* 00BA30 7000AE30 28410020 */  slti  $at, $v0, 0x20
 /* 00BA34 7000AE34 1420FFF4 */  bnez  $at, .L7000AE08
 /* 00BA38 7000AE38 24E70008 */   addiu $a3, $a3, 8
-/* 00BA3C 7000AE3C 3C078002 */  lui   $a3, %hi(string_formatting) # $a3, 0x8002
+/* 00BA3C 7000AE3C 3C078002 */  lui   $a3, %hi(string_formatting)
 /* 00BA40 7000AE40 24E76810 */  addiu $a3, %lo(string_formatting) # addiu $a3, $a3, 0x6810
 /* 00BA44 7000AE44 8CE30000 */  lw    $v1, ($a3)
-/* 00BA48 7000AE48 3C0E8002 */  lui   $t6, %hi(stdout_primary_color) # $t6, 0x8002
+/* 00BA48 7000AE48 3C0E8002 */  lui   $t6, %hi(stdout_primary_color) 
 /* 00BA4C 7000AE4C 25CE68A8 */  addiu $t6, %lo(stdout_primary_color) # addiu $t6, $t6, 0x68a8
 /* 00BA50 7000AE50 8DC10000 */  lw    $at, ($t6)
-/* 00BA54 7000AE54 3C0C8002 */  lui   $t4, %hi(stdout_primary_color_table) # $t4, 0x8002
+/* 00BA54 7000AE54 3C0C8002 */  lui   $t4, %hi(stdout_primary_color_table) 
 /* 00BA58 7000AE58 258C6610 */  addiu $t4, %lo(stdout_primary_color_table) # addiu $t4, $t4, 0x6610
 /* 00BA5C 7000AE5C 000320C0 */  sll   $a0, $v1, 3
 /* 00BA60 7000AE60 008C6821 */  addu  $t5, $a0, $t4
@@ -208,7 +208,7 @@ glabel display_text_to_coord
 /* 00BAA4 7000AEA4 8FAE0000 */  lw    $t6, ($sp)
 .L7000AEA8:
 /* 00BAA8 7000AEA8 00055840 */  sll   $t3, $a1, 1
-/* 00BAAC 7000AEAC 3C0C8002 */  lui   $t4, %hi(stdout_debug_menu_screen_buffer) # $t4, 0x8002
+/* 00BAAC 7000AEAC 3C0C8002 */  lui   $t4, %hi(stdout_debug_menu_screen_buffer) 
 /* 00BAB0 7000AEB0 000EC8C0 */  sll   $t9, $t6, 3
 /* 00BAB4 7000AEB4 032EC821 */  addu  $t9, $t9, $t6
 /* 00BAB8 7000AEB8 0019C880 */  sll   $t9, $t9, 2
@@ -374,11 +374,11 @@ void set_final_debug_text_positions(s32 xadjust,s32 yadjust)
 GLOBAL_ASM(
 .text
 glabel set_final_debug_text_positions
-/* 00BC40 7000B040 3C0E8002 */  lui   $t6, %hi(debug_menu_x_pos_offset) # $t6, 0x8002
+/* 00BC40 7000B040 3C0E8002 */  lui   $t6, %hi(debug_menu_x_pos_offset) 
 /* 00BC44 7000B044 8DCE4FA0 */  lw    $t6, %lo(debug_menu_x_pos_offset)($t6)
-/* 00BC48 7000B048 3C0F8002 */  lui   $t7, %hi(debug_menu_y_pos_offset) # $t7, 0x8002
+/* 00BC48 7000B048 3C0F8002 */  lui   $t7, %hi(debug_menu_y_pos_offset) 
 /* 00BC4C 7000B04C 8DEF4FA4 */  lw    $t7, %lo(debug_menu_y_pos_offset)($t7)
-/* 00BC50 7000B050 3C018002 */  lui   $at, %hi(debug_menu_x_text_pos) # $at, 0x8002
+/* 00BC50 7000B050 3C018002 */  lui   $at, %hi(debug_menu_x_text_pos)
 /* 00BC54 7000B054 008E2021 */  addu  $a0, $a0, $t6
 /* 00BC58 7000B058 AC244FA8 */  sw    $a0, %lo(debug_menu_x_text_pos)($at)
 /* 00BC5C 7000B05C 3C018002 */  lui   $at, %hi(debug_menu_y_text_pos)
@@ -455,7 +455,7 @@ glabel write_char_to_screen
 /* 00BCF8 7000B0F8 0101001A */  div   $zero, $t0, $at
 /* 00BCFC 7000B0FC 93A6002B */  lbu   $a2, 0x2b($sp)
 /* 00BD00 7000B100 00004012 */  mflo  $t0
-/* 00BD04 7000B104 3C028002 */  lui   $v0, %hi(debug_menu_x_text_pos) # $v0, 0x8002
+/* 00BD04 7000B104 3C028002 */  lui   $v0, %hi(debug_menu_x_text_pos)
 /* 00BD08 7000B108 10C00005 */  beqz  $a2, .L7000B120
 /* 00BD0C 7000B10C 00C01825 */   move  $v1, $a2
 /* 00BD10 7000B110 28610020 */  slti  $at, $v1, 0x20
@@ -463,7 +463,7 @@ glabel write_char_to_screen
 /* 00BD18 7000B118 2861007F */   slti  $at, $v1, 0x7f
 /* 00BD1C 7000B11C 1020000A */  beqz  $at, .L7000B148
 .L7000B120:
-/* 00BD20 7000B120 3C078002 */   lui   $a3, %hi(debug_menu_y_text_pos) # $a3, 0x8002
+/* 00BD20 7000B120 3C078002 */   lui   $a3, %hi(debug_menu_y_text_pos)
 /* 00BD24 7000B124 24E74FAC */  addiu $a3, %lo(debug_menu_y_text_pos) # addiu $a3, $a3, 0x4fac
 /* 00BD28 7000B128 24424FA8 */  addiu $v0, %lo(debug_menu_x_text_pos) # addiu $v0, $v0, 0x4fa8
 /* 00BD2C 7000B12C 8C440000 */  lw    $a0, ($v0)
@@ -474,10 +474,10 @@ glabel write_char_to_screen
 /* 00BD40 7000B140 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 00BD44 7000B144 8FA80020 */  lw    $t0, 0x20($sp)
 .L7000B148:
-/* 00BD48 7000B148 3C028002 */  lui   $v0, %hi(debug_menu_x_text_pos) # $v0, 0x8002
+/* 00BD48 7000B148 3C028002 */  lui   $v0, %hi(debug_menu_x_text_pos)
 /* 00BD4C 7000B14C 24424FA8 */  addiu $v0, %lo(debug_menu_x_text_pos) # addiu $v0, $v0, 0x4fa8
 /* 00BD50 7000B150 8C590000 */  lw    $t9, ($v0)
-/* 00BD54 7000B154 3C078002 */  lui   $a3, %hi(debug_menu_y_text_pos) # $a3, 0x8002
+/* 00BD54 7000B154 3C078002 */  lui   $a3, %hi(debug_menu_y_text_pos)
 /* 00BD58 7000B158 2401000D */  li    $at, 13
 /* 00BD5C 7000B15C 27290001 */  addiu $t1, $t9, 1
 /* 00BD60 7000B160 24E74FAC */  addiu $a3, %lo(debug_menu_y_text_pos) # addiu $a3, $a3, 0x4fac
@@ -491,14 +491,14 @@ glabel write_char_to_screen
 /* 00BD80 7000B180 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7000B184:
 /* 00BD84 7000B184 8CED0000 */  lw    $t5, ($a3)
-/* 00BD88 7000B188 3C0C8002 */  lui   $t4, %hi(debug_menu_x_pos_offset) # $t4, 0x8002
+/* 00BD88 7000B188 3C0C8002 */  lui   $t4, %hi(debug_menu_x_pos_offset) 
 /* 00BD8C 7000B18C 8D8C4FA0 */  lw    $t4, %lo(debug_menu_x_pos_offset)($t4)
 /* 00BD90 7000B190 25AE0001 */  addiu $t6, $t5, 1
 /* 00BD94 7000B194 01C8082A */  slt   $at, $t6, $t0
 /* 00BD98 7000B198 ACEE0000 */  sw    $t6, ($a3)
 /* 00BD9C 7000B19C 14200004 */  bnez  $at, .L7000B1B0
 /* 00BDA0 7000B1A0 AC4C0000 */   sw    $t4, ($v0)
-/* 00BDA4 7000B1A4 3C188002 */  lui   $t8, %hi(debug_menu_y_pos_offset) # $t8, 0x8002
+/* 00BDA4 7000B1A4 3C188002 */  lui   $t8, %hi(debug_menu_y_pos_offset) 
 /* 00BDA8 7000B1A8 8F184FA4 */  lw    $t8, %lo(debug_menu_y_pos_offset)($t8)
 /* 00BDAC 7000B1AC ACF80000 */  sw    $t8, ($a3)
 .L7000B1B0:
@@ -814,7 +814,7 @@ glabel read_screen_display_block_and_write_chars
 /* 00BE80 7000B280 AFB5002C */  sw    $s5, 0x2c($sp)
 /* 00BE84 7000B284 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 00BE88 7000B288 AFB00018 */  sw    $s0, 0x18($sp)
-/* 00BE8C 7000B28C 3C078002 */  lui   $a3, %hi(stdout_primary_color_table) # $a3, 0x8002
+/* 00BE8C 7000B28C 3C078002 */  lui   $a3, %hi(stdout_primary_color_table)
 /* 00BE90 7000B290 00808025 */  move  $s0, $a0
 /* 00BE94 7000B294 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 00BE98 7000B298 AFBE0038 */  sw    $fp, 0x38($sp)
@@ -860,7 +860,7 @@ glabel read_screen_display_block_and_write_chars
 .L7000B32C:
 /* 00BF2C 7000B32C 1C600004 */  bgtz  $v1, .L7000B340
 /* 00BF30 7000B330 2414FFFF */   li    $s4, -1
-/* 00BF34 7000B334 3C018002 */  lui   $at, %hi(D_800268B8) # $at, 0x8002
+/* 00BF34 7000B334 3C018002 */  lui   $at, %hi(D_800268B8)
 /* 00BF38 7000B338 10000017 */  b     .L7000B398
 /* 00BF3C 7000B33C AC2068B8 */   sw    $zero, %lo(D_800268B8)($at)
 .L7000B340:
@@ -880,24 +880,24 @@ glabel read_screen_display_block_and_write_chars
 /* 00BF70 7000B370 00000000 */   nop   
 /* 00BF74 7000B374 0006000D */  break 6
 .L7000B378:
-/* 00BF78 7000B378 3C018002 */  lui   $at, %hi(D_800268B8) # $at, 0x8002
+/* 00BF78 7000B378 3C018002 */  lui   $at, %hi(D_800268B8)
 /* 00BF7C 7000B37C 0000C012 */  mflo  $t8
 /* 00BF80 7000B380 AC3868B8 */  sw    $t8, %lo(D_800268B8)($at)
 /* 00BF84 7000B384 10000005 */  b     .L7000B39C
 /* 00BF88 7000B388 02001025 */   move  $v0, $s0
 .L7000B38C:
 /* 00BF8C 7000B38C 24190100 */  li    $t9, 256
-/* 00BF90 7000B390 3C018002 */  lui   $at, %hi(D_800268B8) # $at, 0x8002
+/* 00BF90 7000B390 3C018002 */  lui   $at, %hi(D_800268B8)
 /* 00BF94 7000B394 AC3968B8 */  sw    $t9, %lo(D_800268B8)($at)
 .L7000B398:
 /* 00BF98 7000B398 02001025 */  move  $v0, $s0
 .L7000B39C:
-/* 00BF9C 7000B39C 3C0A8002 */  lui   $t2, %hi(stdout_display_list) # $t2, 0x8002
+/* 00BF9C 7000B39C 3C0A8002 */  lui   $t2, %hi(stdout_display_list) 
 /* 00BFA0 7000B3A0 254A4FB0 */  addiu $t2, %lo(stdout_display_list) # addiu $t2, $t2, 0x4fb0
 /* 00BFA4 7000B3A4 3C090600 */  lui   $t1, 0x600
 /* 00BFA8 7000B3A8 AC490000 */  sw    $t1, ($v0)
 /* 00BFAC 7000B3AC AC4A0004 */  sw    $t2, 4($v0)
-/* 00BFB0 7000B3B0 3C1E8002 */  lui   $fp, %hi(stdout_environment_color_table) # $fp, 0x8002
+/* 00BFB0 7000B3B0 3C1E8002 */  lui   $fp, %hi(stdout_environment_color_table) 
 /* 00BFB4 7000B3B4 3C178002 */  lui   $s7, %hi(stdout_primary_color_table) # $s7, 0x8002
 /* 00BFB8 7000B3B8 26100008 */  addiu $s0, $s0, 8
 /* 00BFBC 7000B3BC 26F76610 */  addiu $s7, %lo(stdout_primary_color_table) # addiu $s7, $s7, 0x6610
@@ -907,7 +907,7 @@ glabel read_screen_display_block_and_write_chars
 /* 00BFCC 7000B3CC 24160050 */  li    $s6, 80
 .L7000B3D0:
 /* 00BFD0 7000B3D0 8FAB0040 */  lw    $t3, 0x40($sp)
-/* 00BFD4 7000B3D4 3C0C8002 */  lui   $t4, %hi(stdout_debug_menu_screen_buffer) # $t4, 0x8002
+/* 00BFD4 7000B3D4 3C0C8002 */  lui   $t4, %hi(stdout_debug_menu_screen_buffer) 
 /* 00BFD8 7000B3D8 258C5030 */  addiu $t4, %lo(stdout_debug_menu_screen_buffer) # addiu $t4, $t4, 0x5030
 /* 00BFDC 7000B3DC 00008825 */  move  $s1, $zero
 /* 00BFE0 7000B3E0 016C9021 */  addu  $s2, $t3, $t4
@@ -933,7 +933,7 @@ glabel read_screen_display_block_and_write_chars
 .L7000B42C:
 /* 00C02C 7000B42C 0C002914 */  jal   get_random_value
 /* 00C030 7000B430 00000000 */   nop   
-/* 00C034 7000B434 3C0B8002 */  lui   $t3, %hi(D_800268B8) # $t3, 0x8002
+/* 00C034 7000B434 3C0B8002 */  lui   $t3, %hi(D_800268B8) 
 /* 00C038 7000B438 8D6B68B8 */  lw    $t3, %lo(D_800268B8)($t3)
 /* 00C03C 7000B43C 304A00FF */  andi  $t2, $v0, 0xff
 /* 00C040 7000B440 014B082B */  sltu  $at, $t2, $t3

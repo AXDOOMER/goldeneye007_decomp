@@ -42,7 +42,7 @@ void load_resource_on_indy(s32 arg1) {
 GLOBAL_ASM(
 .text
 glabel load_resource_on_indy
-/* 104ACC 7F0CFF9C 3C0E8005 */  lui   $t6, %hi(indy_ready) # $t6, 0x8005
+/* 104ACC 7F0CFF9C 3C0E8005 */  lui   $t6, %hi(indy_ready) 
 /* 104AD0 7F0CFFA0 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
 /* 104AD4 7F0CFFA4 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 104AD8 7F0CFFA8 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -85,7 +85,7 @@ void indy_send_capture_data(s32 arg1, ? arg2) {
 GLOBAL_ASM(
 .text
 glabel indy_send_capture_data
-/* 104B10 7F0CFFE0 3C0E8005 */  lui   $t6, %hi(indy_ready) # $t6, 0x8005
+/* 104B10 7F0CFFE0 3C0E8005 */  lui   $t6, %hi(indy_ready) 
 /* 104B14 7F0CFFE4 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
 /* 104B18 7F0CFFE8 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 104B1C 7F0CFFEC AFBF0014 */  sw    $ra, 0x14($sp)
@@ -128,7 +128,7 @@ void indy_loadfile(void) {
 GLOBAL_ASM(
 .text
 glabel indy_loadfile
-/* 104B4C 7F0D001C 3C0E8005 */  lui   $t6, %hi(indy_ready) # $t6, 0x8005
+/* 104B4C 7F0D001C 3C0E8005 */  lui   $t6, %hi(indy_ready) 
 /* 104B50 7F0D0020 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
 /* 104B54 7F0D0024 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 104B58 7F0D0028 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -170,7 +170,7 @@ void check_file_exported(s32 arg1, ? arg2) {
 GLOBAL_ASM(
 .text
 glabel check_file_exported
-/* 104B8C 7F0D005C 3C0E8005 */  lui   $t6, %hi(indy_ready) # $t6, 0x8005
+/* 104B8C 7F0D005C 3C0E8005 */  lui   $t6, %hi(indy_ready) 
 /* 104B90 7F0D0060 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
 /* 104B94 7F0D0064 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 104B98 7F0D0068 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -201,7 +201,7 @@ void check_file_found_on_indy(void) {
 GLOBAL_ASM(
 .text
 glabel check_file_found_on_indy
-/* 104BC8 7F0D0098 3C0E8005 */  lui   $t6, %hi(indy_ready) # $t6, 0x8005
+/* 104BC8 7F0D0098 3C0E8005 */  lui   $t6, %hi(indy_ready) 
 /* 104BCC 7F0D009C 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
 /* 104BD0 7F0D00A0 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 104BD4 7F0D00A4 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -236,7 +236,7 @@ void response_from_command_string(void) {
 GLOBAL_ASM(
 .text
 glabel response_from_command_string
-/* 104C10 7F0D00E0 3C0E8005 */  lui   $t6, %hi(indy_ready) # $t6, 0x8005
+/* 104C10 7F0D00E0 3C0E8005 */  lui   $t6, %hi(indy_ready) 
 /* 104C14 7F0D00E4 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
 /* 104C18 7F0D00E8 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 104C1C 7F0D00EC AFBF0014 */  sw    $ra, 0x14($sp)

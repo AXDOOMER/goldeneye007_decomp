@@ -58,7 +58,7 @@ GLOBAL_ASM(
 glabel return_match_in_debug_notice_list
 /* 005920 70004D20 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 005924 70004D24 AFB00014 */  sw    $s0, 0x14($sp)
-/* 005928 70004D28 3C108002 */  lui   $s0, %hi(debug_notice_list) # $s0, 0x8002
+/* 005928 70004D28 3C108002 */  lui   $s0, %hi(debug_notice_list)
 /* 00592C 70004D2C 8E1032E8 */  lw    $s0, %lo(debug_notice_list)($s0)
 /* 005930 70004D30 AFB10018 */  sw    $s1, 0x18($sp)
 /* 005934 70004D34 00808825 */  move  $s1, $a0
@@ -110,9 +110,9 @@ u32 get_entry_of_size_in_debug_notice_list(s32 arg0)
 GLOBAL_ASM(
 .text
 glabel get_entry_of_size_in_debug_notice_list
-/* 005980 70004D80 3C028002 */  lui   $v0, %hi(debug_notice_list_data) # $v0, 0x8002
+/* 005980 70004D80 3C028002 */  lui   $v0, %hi(debug_notice_list_data)
 /* 005984 70004D84 8C4232F8 */  lw    $v0, %lo(debug_notice_list_data)($v0)
-/* 005988 70004D88 3C0E8006 */  lui   $t6, %hi(thread_video_manager_debugthread) # $t6, 0x8006
+/* 005988 70004D88 3C0E8006 */  lui   $t6, %hi(thread_video_manager_debugthread) 
 /* 00598C 70004D8C 25CE0C90 */  addiu $t6, %lo(thread_video_manager_debugthread) # addiu $t6, $t6, 0xc90
 /* 005990 70004D90 00401825 */  move  $v1, $v0
 /* 005994 70004D94 00441021 */  addu  $v0, $v0, $a0
@@ -121,14 +121,14 @@ glabel get_entry_of_size_in_debug_notice_list
 /* 0059A0 70004DA0 10200008 */  beqz  $at, .L70004DC4
 /* 0059A4 70004DA4 AFBF0014 */   sw    $ra, 0x14($sp)
 /* 0059A8 70004DA8 00441023 */  subu  $v0, $v0, $a0
-/* 0059AC 70004DAC 3C018002 */  lui   $at, %hi(debug_notice_list_data) # $at, 0x8002
+/* 0059AC 70004DAC 3C018002 */  lui   $at, %hi(debug_notice_list_data)
 /* 0059B0 70004DB0 AC2232F8 */  sw    $v0, %lo(debug_notice_list_data)($at)
 /* 0059B4 70004DB4 0C0025C8 */  jal   allocate_bytes_in_bank
 /* 0059B8 70004DB8 24050006 */   li    $a1, 6
 /* 0059BC 70004DBC 10000005 */  b     .L70004DD4
 /* 0059C0 70004DC0 8FBF0014 */   lw    $ra, 0x14($sp)
 .L70004DC4:
-/* 0059C4 70004DC4 3C018002 */  lui   $at, %hi(debug_notice_list_data) # $at, 0x8002
+/* 0059C4 70004DC4 3C018002 */  lui   $at, %hi(debug_notice_list_data)
 /* 0059C8 70004DC8 AC2232F8 */  sw    $v0, %lo(debug_notice_list_data)($at)
 /* 0059CC 70004DCC 00601025 */  move  $v0, $v1
 /* 0059D0 70004DD0 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -168,7 +168,7 @@ glabel add_new_entry_to_debug_notice_list
 /* 0059EC 70004DEC AFA5001C */  sw    $a1, 0x1c($sp)
 /* 0059F0 70004DF0 0C001360 */  jal   get_entry_of_size_in_debug_notice_list
 /* 0059F4 70004DF4 24040010 */   li    $a0, 16
-/* 0059F8 70004DF8 3C038002 */  lui   $v1, %hi(debug_notice_list) # $v1, 0x8002
+/* 0059F8 70004DF8 3C038002 */  lui   $v1, %hi(debug_notice_list)
 /* 0059FC 70004DFC 246332E8 */  addiu $v1, %lo(debug_notice_list) # addiu $v1, $v1, 0x32e8
 /* 005A00 70004E00 8C6E0000 */  lw    $t6, ($v1)
 /* 005A04 70004E04 AC4E0000 */  sw    $t6, ($v0)
@@ -241,7 +241,7 @@ loop_1:
 GLOBAL_ASM(
 .text
 glabel scan_debug_notice_list_till_NULL
-/* 005A98 70004E98 3C028002 */  lui   $v0, %hi(debug_notice_list) # $v0, 0x8002
+/* 005A98 70004E98 3C028002 */  lui   $v0, %hi(debug_notice_list)
 /* 005A9C 70004E9C 8C4232E8 */  lw    $v0, %lo(debug_notice_list)($v0)
 /* 005AA0 70004EA0 10400004 */  beqz  $v0, .L70004EB4
 /* 005AA4 70004EA4 00000000 */   nop   

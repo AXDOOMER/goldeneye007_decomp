@@ -21,7 +21,15 @@ u32 userCompareValue = 45000000;
 u32 currentcount = 0;
 u32 setby_DPCfill_0 = 0;
 u32 setby_DPCfill_1 = 0;
-f32 something_with_osVI[7] = {0.0,1.0,1.0,1.0,1.0,0.0,0.0};
+//800230b0
+f32 something_with_osVI_0 = 0.0;
+f32 something_with_osVI_4 = 1.0;
+f32 something_with_osVI_8 = 1.0;
+f32 something_with_osVI_C = 1.0;
+f32 something_with_osVI_10 = 1.0;
+f32 something_with_osVI_14 = 0.0;
+f32 something_with_osVI_18 = 0.0;
+
 u32 D_800230CC = 1;
 
 
@@ -220,8 +228,8 @@ glabel osCreateScheduler
 /* 001728 70000B28 0C00363C */  jal   osCreateViManager
 /* 00172C 70000B2C 240400FE */   li    $a0, 254
 /* 001730 70000B30 93B90033 */  lbu   $t9, 0x33($sp)
-/* 001734 70000B34 3C098002 */  lui   $t1, %hi(osViModeTable) # $t1, 0x8002
-/* 001738 70000B38 3C038006 */  lui   $v1, %hi(viMode) # $v1, 0x8006
+/* 001734 70000B34 3C098002 */  lui   $t1, %hi(osViModeTable) 
+/* 001738 70000B38 3C038006 */  lui   $v1, %hi(viMode)
 /* 00173C 70000B3C 00194080 */  sll   $t0, $t9, 2
 /* 001740 70000B40 01194021 */  addu  $t0, $t0, $t9
 /* 001744 70000B44 00084100 */  sll   $t0, $t0, 4
@@ -230,15 +238,15 @@ glabel osCreateScheduler
 /* 001750 70000B50 01095021 */  addu  $t2, $t0, $t1
 /* 001754 70000B54 AC6A0000 */  sw    $t2, ($v1)
 /* 001758 70000B58 8D4B001C */  lw    $t3, 0x1c($t2)
-/* 00175C 70000B5C 3C018006 */  lui   $at, %hi(viMode+0x4) # $at, 0x8006
+/* 00175C 70000B5C 3C018006 */  lui   $at, %hi(viMode+0x4)
 /* 001760 70000B60 24040004 */  li    $a0, 4
 /* 001764 70000B64 AC2B0880 */  sw    $t3, %lo(viMode+0x4)($at)
 /* 001768 70000B68 8D4C0030 */  lw    $t4, 0x30($t2)
-/* 00176C 70000B6C 3C018006 */  lui   $at, %hi(viMode+0x8) # $at, 0x8006
+/* 00176C 70000B6C 3C018006 */  lui   $at, %hi(viMode+0x8)
 /* 001770 70000B70 02202825 */  move  $a1, $s1
 /* 001774 70000B74 AC2C0884 */  sw    $t4, %lo(viMode+0x8)($at)
 /* 001778 70000B78 8D4D0044 */  lw    $t5, 0x44($t2)
-/* 00177C 70000B7C 3C018006 */  lui   $at, %hi(viMode+0xC) # $at, 0x8006
+/* 00177C 70000B7C 3C018006 */  lui   $at, %hi(viMode+0xC)
 /* 001780 70000B80 2406029B */  li    $a2, 667
 /* 001784 70000B84 0C003714 */  jal   osSetEventMesg
 /* 001788 70000B88 AC2D0888 */   sw    $t5, %lo(viMode+0xC)($at)
@@ -483,13 +491,13 @@ glabel __scMain
 .L70000DE0:
 /* 0019E0 70000DE0 5200FFD6 */  beql  $s0, $zero, .L70000D3C
 /* 0019E4 70000DE4 02602025 */   move  $a0, $s3
-/* 0019E8 70000DE8 3C0F8000 */  lui   $t7, %hi(osTvType) # $t7, 0x8000
+/* 0019E8 70000DE8 3C0F8000 */  lui   $t7, %hi(osTvType) 
 /* 0019EC 70000DEC 8DEF0300 */  lw    $t7, %lo(osTvType)($t7)
 /* 0019F0 70000DF0 24010002 */  li    $at, 2
 /* 0019F4 70000DF4 3C048002 */  lui   $a0, %hi(osViModeTable_osViModeNtscLan1)
 /* 0019F8 70000DF8 15E10006 */  bne   $t7, $at, .L70000E14
 /* 0019FC 70000DFC 00000000 */   nop   
-/* 001A00 70000E00 3C048002 */  lui   $a0, %hi(osViModeTable_osViModeMpalLan1) # $a0, 0x8002
+/* 001A00 70000E00 3C048002 */  lui   $a0, %hi(osViModeTable_osViModeMpalLan1)
 /* 001A04 70000E04 0C003818 */  jal   osViSetMode
 /* 001A08 70000E08 24847320 */   addiu $a0, %lo(osViModeTable_osViModeMpalLan1) # addiu $a0, $a0, 0x7320
 /* 001A0C 70000E0C 10000004 */  b     .L70000E20
@@ -840,7 +848,7 @@ glabel __scHandleRDP
 /* 001D4C 7000114C 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 001D50 70001150 0C000A15 */  jal   video_related_3
 /* 001D54 70001154 34840002 */   ori   $a0, (0x00010002 & 0xFFFF) # ori $a0, $a0, 2
-/* 001D58 70001158 3C048006 */  lui   $a0, %hi(target_for_counters_maybe) # $a0, 0x8006
+/* 001D58 70001158 3C048006 */  lui   $a0, %hi(target_for_counters_maybe)
 /* 001D5C 7000115C 0C0038F0 */  jal   osDpGetCounters
 /* 001D60 70001160 2484DB30 */   addiu $a0, %lo(target_for_counters_maybe) # addiu $a0, $a0, -0x24d0
 /* 001D64 70001164 8E0500CC */  lw    $a1, 0xcc($s0)
@@ -1003,40 +1011,40 @@ glabel __scTaskComplete
 /* 001E7C 7000127C 1320004F */  beqz  $t9, .L700013BC
 /* 001E80 70001280 30480020 */   andi  $t0, $v0, 0x20
 /* 001E84 70001284 1100004D */  beqz  $t0, .L700013BC
-/* 001E88 70001288 3C098002 */   lui   $t1, %hi(D_800230CC) # $t1, 0x8002
+/* 001E88 70001288 3C098002 */   lui   $t1, %hi(D_800230CC) 
 /* 001E8C 7000128C 8D2930CC */  lw    $t1, %lo(D_800230CC)($t1)
 /* 001E90 70001290 11200005 */  beqz  $t1, .L700012A8
 /* 001E94 70001294 00000000 */   nop   
 /* 001E98 70001298 0C0038B4 */  jal   osViBlack
 /* 001E9C 7000129C 00002025 */   move  $a0, $zero
-/* 001EA0 700012A0 3C018002 */  lui   $at, %hi(D_800230CC) # $at, 0x8002
+/* 001EA0 700012A0 3C018002 */  lui   $at, %hi(D_800230CC)
 /* 001EA4 700012A4 AC2030CC */  sw    $zero, %lo(D_800230CC)($at)
 .L700012A8:
-/* 001EA8 700012A8 3C038002 */  lui   $v1, %hi(something_with_osVI) # $v1, 0x8002
-/* 001EAC 700012AC 8C6330B0 */  lw    $v1, %lo(something_with_osVI)($v1)
-/* 001EB0 700012B0 3C0B8002 */  lui   $t3, 0x8002
+/* 001EA8 700012A8 3C038002 */  lui   $v1, %hi(something_with_osVI_0)
+/* 001EAC 700012AC 8C6330B0 */  lw    $v1, %lo(something_with_osVI_0)($v1)
+/* 001EB0 700012B0 3C0B8002 */  lui   $t3, %hi(something_with_osVI_14)
 /* 001EB4 700012B4 3C040008 */  lui   $a0, (0x00080401 >> 16) # lui $a0, 8
 /* 001EB8 700012B8 00035080 */  sll   $t2, $v1, 2
 /* 001EBC 700012BC 016A5821 */  addu  $t3, $t3, $t2
-/* 001EC0 700012C0 8D6B30C4 */  lw    $t3, 0x30c4($t3)
+/* 001EC0 700012C0 8D6B30C4 */  lw    $t3, %lo(something_with_osVI_14)($t3)
 /* 001EC4 700012C4 01401825 */  move  $v1, $t2
 /* 001EC8 700012C8 11600023 */  beqz  $t3, .L70001358
 /* 001ECC 700012CC 00000000 */   nop   
 /* 001ED0 700012D0 0C00374C */  jal   osSetIntMask
 /* 001ED4 700012D4 34840401 */   ori   $a0, (0x00080401 & 0xFFFF) # ori $a0, $a0, 0x401
-/* 001ED8 700012D8 3C038002 */  lui   $v1, %hi(something_with_osVI) # $v1, 0x8002
-/* 001EDC 700012DC 8C6330B0 */  lw    $v1, %lo(something_with_osVI)($v1)
-/* 001EE0 700012E0 3C0F8006 */  lui   $t7, %hi(dword_CODE_bss_8005DB40) # $t7, 0x8006
+/* 001ED8 700012D8 3C038002 */  lui   $v1, %hi(something_with_osVI_0)
+/* 001EDC 700012DC 8C6330B0 */  lw    $v1, %lo(something_with_osVI_0)($v1)
+/* 001EE0 700012E0 3C0F8006 */  lui   $t7, %hi(dword_CODE_bss_8005DB40) 
 /* 001EE4 700012E4 25EFDB40 */  addiu $t7, %lo(dword_CODE_bss_8005DB40) # addiu $t7, $t7, -0x24c0
 /* 001EE8 700012E8 00037080 */  sll   $t6, $v1, 2
 /* 001EEC 700012EC 01C37021 */  addu  $t6, $t6, $v1
 /* 001EF0 700012F0 000E7100 */  sll   $t6, $t6, 4
-/* 001EF4 700012F4 3C0D8006 */  lui   $t5, 0x8006
+/* 001EF4 700012F4 3C0D8006 */  lui   $t5, %hi(sc+416)
 /* 001EF8 700012F8 00036080 */  sll   $t4, $v1, 2
 /* 001EFC 700012FC 01AC6821 */  addu  $t5, $t5, $t4
 /* 001F00 70001300 01CFC021 */  addu  $t8, $t6, $t7
 /* 001F04 70001304 27090048 */  addiu $t1, $t8, 0x48
-/* 001F08 70001308 8DADDBE0 */  lw    $t5, -0x2420($t5)
+/* 001F08 70001308 8DADDBE0 */  lw    $t5, %lo(sc+416)($t5)
 .L7000130C:
 /* 001F0C 7000130C 8F010000 */  lw    $at, ($t8)
 /* 001F10 70001310 2718000C */  addiu $t8, $t8, 0xc
@@ -1053,25 +1061,25 @@ glabel __scTaskComplete
 /* 001F3C 7000133C 8F090004 */  lw    $t1, 4($t8)
 /* 001F40 70001340 0C00374C */  jal   osSetIntMask
 /* 001F44 70001344 ADA90004 */   sw    $t1, 4($t5)
-/* 001F48 70001348 3C038002 */  lui   $v1, %hi(something_with_osVI) # $v1, 0x8002
-/* 001F4C 7000134C 8C6330B0 */  lw    $v1, %lo(something_with_osVI)($v1)
+/* 001F48 70001348 3C038002 */  lui   $v1, %hi(something_with_osVI_0)
+/* 001F4C 7000134C 8C6330B0 */  lw    $v1, %lo(something_with_osVI_0)($v1)
 /* 001F50 70001350 00035080 */  sll   $t2, $v1, 2
 /* 001F54 70001354 01401825 */  move  $v1, $t2
 .L70001358:
-/* 001F58 70001358 3C018002 */  lui   $at, 0x8002
+/* 001F58 70001358 3C018002 */  lui   $at, %hi(something_with_osVI_4)
 /* 001F5C 7000135C 00230821 */  addu  $at, $at, $v1
 /* 001F60 70001360 0C003834 */  jal   osViSetXScale
-/* 001F64 70001364 C42C30B4 */   lwc1  $f12, 0x30b4($at)
-/* 001F68 70001368 3C0B8002 */  lui   $t3, %hi(something_with_osVI) # $t3, 0x8002
-/* 001F6C 7000136C 8D6B30B0 */  lw    $t3, %lo(something_with_osVI)($t3)
-/* 001F70 70001370 3C018002 */  lui   $at, 0x8002
+/* 001F64 70001364 C42C30B4 */   lwc1  $f12, %lo(something_with_osVI_4)($at)
+/* 001F68 70001368 3C0B8002 */  lui   $t3, %hi(something_with_osVI_0) 
+/* 001F6C 7000136C 8D6B30B0 */  lw    $t3, %lo(something_with_osVI_0)($t3)
+/* 001F70 70001370 3C018002 */  lui   $at, %hi(something_with_osVI_C)
 /* 001F74 70001374 000B6080 */  sll   $t4, $t3, 2
 /* 001F78 70001378 002C0821 */  addu  $at, $at, $t4
 /* 001F7C 7000137C 0C003880 */  jal   osViSetYScale
-/* 001F80 70001380 C42C30BC */   lwc1  $f12, 0x30bc($at)
-/* 001F84 70001384 3C0E8002 */  lui   $t6, %hi(something_with_osVI) # $t6, 0x8002
-/* 001F88 70001388 8DCE30B0 */  lw    $t6, %lo(something_with_osVI)($t6)
-/* 001F8C 7000138C 3C018002 */  lui   $at, %hi(something_with_osVI) # $at, 0x8002
+/* 001F80 70001380 C42C30BC */   lwc1  $f12, %lo(something_with_osVI_C)($at)
+/* 001F84 70001384 3C0E8002 */  lui   $t6, %hi(something_with_osVI_0) 
+/* 001F88 70001388 8DCE30B0 */  lw    $t6, %lo(something_with_osVI_0)($t6)
+/* 001F8C 7000138C 3C018002 */  lui   $at, %hi(something_with_osVI_0)
 /* 001F90 70001390 25CF0001 */  addiu $t7, $t6, 1
 /* 001F94 70001394 05E10004 */  bgez  $t7, .L700013A8
 /* 001F98 70001398 31E80001 */   andi  $t0, $t7, 1
@@ -1079,7 +1087,7 @@ glabel __scTaskComplete
 /* 001FA0 700013A0 00000000 */   nop   
 /* 001FA4 700013A4 2508FFFE */  addiu $t0, $t0, -2
 .L700013A8:
-/* 001FA8 700013A8 AC2830B0 */  sw    $t0, %lo(something_with_osVI)($at)
+/* 001FA8 700013A8 AC2830B0 */  sw    $t0, %lo(something_with_osVI_0)($at)
 /* 001FAC 700013AC 0C000268 */  jal   CheckDisplayErrorBuffer
 /* 001FB0 700013B0 8E04000C */   lw    $a0, 0xc($s0)
 /* 001FB4 700013B4 0C003924 */  jal   osViSwapBuffer
@@ -1249,10 +1257,10 @@ glabel __scExec
 /* 002128 70001528 0C0039EC */  jal   osDpSetNextBuffer
 /* 00212C 7000152C 8D270004 */   lw    $a3, 4($t1)
 /* 002130 70001530 240A0001 */  li    $t2, 1
-/* 002134 70001534 3C018002 */  lui   $at, %hi(setby_DPCfill_0) # $at, 0x8002
+/* 002134 70001534 3C018002 */  lui   $at, %hi(setby_DPCfill_0)
 /* 002138 70001538 8FAB0028 */  lw    $t3, 0x28($sp)
 /* 00213C 7000153C AC2A30A8 */  sw    $t2, %lo(setby_DPCfill_0)($at)
-/* 002140 70001540 3C018002 */  lui   $at, %hi(setby_DPCfill_1) # $at, 0x8002
+/* 002140 70001540 3C018002 */  lui   $at, %hi(setby_DPCfill_1)
 /* 002144 70001544 AC2030AC */  sw    $zero, %lo(setby_DPCfill_1)($at)
 /* 002148 70001548 AD7100CC */  sw    $s1, 0xcc($t3)
 /* 00214C 7000154C 8FBF001C */  lw    $ra, 0x1c($sp)
@@ -1360,7 +1368,7 @@ glabel __scSchedule
 /* 00225C 7000165C 2DE10007 */  sltiu $at, $t7, 7
 /* 002260 70001660 1020003D */  beqz  $at, .L70001758
 /* 002264 70001664 000F7880 */   sll   $t7, $t7, 2
-/* 002268 70001668 3C018003 */  lui   $at, %hi(jpt_80028400) # $at, 0x8003
+/* 002268 70001668 3C018003 */  lui   $at, %hi(jpt_80028400)
 /* 00226C 7000166C 002F0821 */  addu  $at, $at, $t7
 /* 002270 70001670 8C2F8400 */  lw    $t7, %lo(jpt_80028400)($at) # lw    $t7, -0x7c00($at)
 /* 002274 70001674 01E00008 */  jr    $t7
