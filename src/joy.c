@@ -947,7 +947,7 @@ glabel controller_rumble_related
 /* 00C698 7000BAA8 afb40028 */  sw    $s4, 0x28($sp)
 /* 000000 7000BAAC afb30024 */  sw    $s3, 0x24($sp)
 /* 000000 7000BAB0 3c118002 */  lui   $s1, %hi(controller_1_rumble_duration)
-/* 000000 7000BAB4 3c128002 */  lui   $s2, %hi(controller_1_rumble_state)2
+/* 000000 7000BAB4 3c128002 */  lui   $s2, %hi(controller_1_rumble_state)
 /* 000000 7000BAB8 3c158002 */  lui   $s3, %hi(controller_1_rumble_pulse)
 /* 000000 7000BABC afbf003c */  sw    $ra, 0x3C($sp)
 /* 000000 7000BAC0 afb00018 */  sw    $s0, 0x18($sp)
