@@ -118,6 +118,7 @@
 
 // command 14-17 target bitflags
 #define TARGET_BOND         0x0001
+#define TARGET_FRONT_OF_CHR 0x0002
 #define TARGET_CHR          0x0004
 #define TARGET_PAD          0x0008
 #define TARGET_COMPASS      0x0010
@@ -144,16 +145,39 @@
 // command 94-99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
 #define BITFIELD_DONT_POINT_AT_BOND     0x01 // if enabled, don't point at bond
 
-// command 9D-A2 (incomplete)
+// command 9D-A2
+#define CHRFLAG_00000001                0x00000001 // unknown
 #define CHRFLAG_SUNGLASSES              0x00000002 // sunglasses
+#define CHRFLAG_00000004                0x00000004 // unknown
+#define CHRFLAG_00000008                0x00000008 // unknown
 #define CHRFLAG_INVINCIBLE              0x00000010 // invincible
+#define CHRFLAG_00000020                0x00000020 // unknown
 #define CHRFLAG_CAN_SHOOT_CHRS          0x00000040 // can shoot other guards
+#define CHRFLAG_00000080                0x00000080 // unknown
+#define CHRFLAG_00000100                0x00000100 // unknown
+#define CHRFLAG_00000200                0x00000200 // unknown
 #define CHRFLAG_HIDDEN                  0x00000400 // hidden
 #define CHRFLAG_NO_AUTOAIM              0x00000800 // no autoaim
 #define CHRFLAG_LOCK_Y_POS              0x00001000 // lock y position (no gravity, used for dam/cradle jump)
 #define CHRFLAG_NO_SHADOW               0x00002000 // no shadow
 #define CHRFLAG_IGNORE_ANIM_TRANSLATION 0x00004000 // ignore animation translation
+#define CHRFLAG_00008000                0x00008000 // unknown
+#define CHRFLAG_00010000                0x00010000 // unknown
+#define CHRFLAG_00020000                0x00020000 // unknown
+#define CHRFLAG_00040000                0x00040000 // unknown
 #define CHRFLAG_INCREASE_SPRINT_SPEED   0x00080000 // increase sprinting speed
+#define CHRFLAG_00100000                0x00100000 // unknown
+#define CHRFLAG_00200000                0x00200000 // unknown
+#define CHRFLAG_00400000                0x00400000 // unknown
+#define CHRFLAG_00800000                0x00800000 // unknown
+#define CHRFLAG_01000000                0x01000000 // unknown
+#define CHRFLAG_02000000                0x02000000 // unknown
+#define CHRFLAG_04000000                0x04000000 // unknown
+#define CHRFLAG_08000000                0x08000000 // unknown
+#define CHRFLAG_10000000                0x10000000 // unknown
+#define CHRFLAG_20000000                0x20000000 // unknown
+#define CHRFLAG_40000000                0x40000000 // unknown
+#define CHRFLAG_80000000                0x80000000 // unknown
 /*===========================================================================*/
 
 /*=============================================================================
@@ -161,14 +185,14 @@
 //===========================================================================*/
 #define goto_loop_start(label_id) \
         label(label_id) \
-        sleep
+        ai_sleep
 
 #define goto_loop_repeat(label) \
         goto_first(label)
 
 #define goto_loop_infinite(label_id) \
         label(label_id) \
-        sleep \
+        ai_sleep \
         goto_first(label_id)
 
 #define random_generate_greater_than(byte, label) \
@@ -216,16 +240,16 @@
         chr_timer_greater_than((SECS_TO_TIMER60(seconds)), label)
 
 #define camera_wait_for_loading \
-        sleep \
-        sleep \
-        sleep
+        ai_sleep \
+        ai_sleep \
+        ai_sleep
 /*===========================================================================*/
 
 /*=============================================================================
 // ai commands macros and information
 //=============================================================================
 // name and description per command, please read carefully when creating new
-// ai lists. ensure that you don't cause loops without a sleep command or else
+// ai lists. ensure that you don't cause loops without a ai_sleep command or else
 // command parser will never release and game will softlock
 //===========================================================================*/
 
@@ -264,17 +288,17 @@
         id,
 
 /*=============================================================================
-// name: sleep
+// name: ai_sleep
 // id number: 03
 // info: halt the ai list - frees engine to start executing next ai list until
 //       all lists have been executed for game tick.
 //=============================================================================
-// note: offscreen/idle guards will take 14 game ticks instead of 1 tick on sleep
+// note: offscreen/idle guards will take 14 game ticks instead of 1 tick on ai_sleep
 //===========================================================================*/
-#define sleep_ID 0x03
-#define sleep_LENGTH 0x01
-#define sleep \
-        sleep_ID,
+#define ai_sleep_ID 0x03
+#define ai_sleep_LENGTH 0x01
+#define ai_sleep \
+        ai_sleep_ID,
 
 /*=============================================================================
 // name: ai_list_end
@@ -646,7 +670,7 @@
 /*=============================================================================
 // name: guard_throw_grenade
 // command id: 1A
-// info: trigger guard to throw a grenade at player, goto label if successful
+// info: trigger guard to throw a grenade at bond, goto label if successful
 //=============================================================================
 // note: a rng byte is generated and compared again chr->grenadeprob, if rng byte
 // is less than grenadeprob throw grenade and goto label, else do nothing.
@@ -1068,7 +1092,8 @@
 // command id: 3A
 // info: if guard sees another guard shot (from anyone), goto label
 //=============================================================================
-// note: guard friendly fire (if flagged) will trigger this command to goto label
+// note: guard friendly fire (if flagged) will trigger this command to goto label.
+//       command checks if chr->chrseeshot is set to valid chrnum (not -1)
 //===========================================================================*/
 #define guard_see_guard_shot_ID 0x3A
 #define guard_see_guard_shot_LENGTH 0x02
@@ -1081,7 +1106,8 @@
 // command id: 3B
 // info: if guard sees another guard die (from anyone), goto label
 //=============================================================================
-// note: when a guard in sight switches to ACT_DIE/ACT_DEAD, goto label
+// note: when a guard in sight switches to ACT_DIE/ACT_DEAD, goto label.
+//       command checks if chr->chrseedie is set to valid chrnum (not -1)
 //===========================================================================*/
 #define guard_see_guard_die_ID 0x3B
 #define guard_see_guard_die_LENGTH 0x02
@@ -1418,7 +1444,8 @@
 //       to found guard's chrnum and goto label
 //=============================================================================
 // note: argument scale is 10 units per meter. command does not pick the closest
-//       found chr, but whoever was first found within the distance argument
+// found chr, but whoever was first found within the distance argument. if no
+// guards were found within distance range, do not goto label
 //===========================================================================*/
 #define guard_set_chr_preset_to_guard_within_distance_ID 0x51
 #define guard_set_chr_preset_to_guard_within_distance_LENGTH 0x04
@@ -1508,6 +1535,22 @@
 #define chr_drop_all_concealed_items(chr_num) \
         chr_drop_all_concealed_items_ID, \
         chr_num,
+
+/*=============================================================================
+// name: objective_num_complete
+// command id: 6D
+// info: if objective # completed, goto label
+//=============================================================================
+// note: ignores difficulty settings. for example - if game on agent and player
+// completes an unlisted 00 agent objective, checking that objective num will
+// goto label
+//===========================================================================*/
+#define objective_num_complete_ID 0x6D
+#define objective_num_complete_LENGTH 0x03
+#define objective_num_complete(obj_num, label) \
+        objective_num_complete_ID, \
+        obj_num, \
+        label,
 
 /*=============================================================================
 // name: game_difficulty_less_than
@@ -1681,6 +1724,70 @@
 #define guard_hits_missed_greater_than(missed_num, label) \
         guard_hits_missed_greater_than_ID, \
         missed_num, \
+        label,
+
+/*=============================================================================
+// name: chr_health_less_than
+// command id: 7C
+// info: if chr's health < health argument, goto label
+//=============================================================================
+// note: argument is unsigned. converted to float and compares different between
+// chr->maxdamage - chr->damage. default guard health is 40 (0x28), or after
+// float conversion 4.0f. armour is tested
+//===========================================================================*/
+#define chr_health_less_than_ID 0x7C
+#define chr_health_less_than_LENGTH 0x04
+#define chr_health_less_than(chr_num, health, label) \
+        chr_health_less_than_ID, \
+        chr_num, \
+        health, \
+        label,
+
+/*=============================================================================
+// name: chr_health_greater_than
+// command id: 7D
+// info: if chr's health > health argument, goto label
+//=============================================================================
+// note: argument is unsigned. converted to float and compares different between
+// chr->maxdamage - chr->damage. default guard health is 40 (0x28), or after
+// float conversion 4.0f. armour is tested
+//===========================================================================*/
+#define chr_health_greater_than_ID 0x7D
+#define chr_health_greater_than_LENGTH 0x04
+#define chr_health_greater_than(chr_num, health, label) \
+        chr_health_greater_than_ID, \
+        chr_num, \
+        health, \
+        label,
+
+/*=============================================================================
+// name: bond_health_less_than
+// command id: 7F
+// info: if bond's health < health argument, goto label
+//=============================================================================
+// note: does not check armour. health argument is unsigned, argument range is
+//       between 00 and FF, with FF equal to 100% health
+//===========================================================================*/
+#define bond_health_less_than_ID 0x7F
+#define bond_health_less_than_LENGTH 0x03
+#define bond_health_less_than(health, label) \
+        bond_health_less_than_ID, \
+        health, \
+        label,
+
+/*=============================================================================
+// name: bond_health_greater_than
+// command id: 80
+// info: if bond's health > health argument, goto label
+//=============================================================================
+// note: does not check armour. health argument is unsigned, argument range is
+//       between 00 and FF, with FF equal to 100% health
+//===========================================================================*/
+#define bond_health_greater_than_ID 0x80
+#define bond_health_greater_than_LENGTH 0x03
+#define bond_health_greater_than(health, label) \
+        bond_health_greater_than_ID, \
+        health, \
         label,
 
 /*=============================================================================
@@ -2063,6 +2170,56 @@
         label,
 
 /*=============================================================================
+// name: guard_set_chr_preset
+// command id: A9
+// info: set guard->chrpreset1 to chr_preset
+//=============================================================================
+// note: can be used by obj ai lists
+//===========================================================================*/
+#define guard_set_chr_preset_ID 0xA9
+#define guard_set_chr_preset_LENGTH 0x02
+#define guard_set_chr_preset(chr_preset) \
+        guard_set_chr_preset_ID, \
+        chr_preset,
+
+/*=============================================================================
+// name: chr_set_chr_preset
+// command id: AA
+// info: set chr->chrpreset1 to chr_preset
+//===========================================================================*/
+#define chr_set_chr_preset_ID 0xAA
+#define chr_set_chr_preset_LENGTH 0x03
+#define chr_set_chr_preset(chr_num, chr_preset) \
+        chr_set_chr_preset_ID, \
+        chr_num, \
+        chr_preset,
+
+/*=============================================================================
+// name: guard_set_pad_preset
+// command id: AB
+// info: set guard->padpreset1 to pad_preset
+//=============================================================================
+// note: can be used by obj ai lists
+//===========================================================================*/
+#define guard_set_pad_preset_ID 0xAB
+#define guard_set_pad_preset_LENGTH 0x03
+#define guard_set_pad_preset(chr_preset) \
+        guard_set_pad_preset_ID, \
+        chrarray16(pad_preset),
+
+/*=============================================================================
+// name: chr_set_pad_preset
+// command id: AC
+// info: set chr->padpreset1 to pad_preset
+//===========================================================================*/
+#define chr_set_pad_preset_ID 0xAC
+#define chr_set_pad_preset_LENGTH 0x04
+#define chr_set_pad_preset(chr_num, chr_preset) \
+        chr_set_pad_preset_ID, \
+        chr_num, \
+        chrarray16(pad_preset),
+
+/*=============================================================================
 // name: debug_log
 // command id: AD
 // info: debug comment
@@ -2374,7 +2531,7 @@
 /*=============================================================================
 // name: camera_return_to_bond
 // command id: D3
-// info: switch back to first person view. must have 3 sleep commands before
+// info: switch back to first person view. must have 3 ai_sleep commands before
 //       executing this command
 //=============================================================================
 // note: unused command, never used in retail game. tagged items within inventory
@@ -2384,6 +2541,22 @@
 #define camera_return_to_bond_LENGTH 0x01
 #define camera_return_to_bond \
         camera_return_to_bond_ID,
+
+/*=============================================================================
+// name: bond_y_pos_less_than
+// command id: D6
+// info: if bond's y axis position < argument, goto label
+//=============================================================================
+// note: checks if bond's y axis is below the provided argument. command uses
+// world units. argument is signed and scale is 1:1 to in-game position. bond's
+// point of view is accounted for by command (like debug manpos)
+//===========================================================================*/
+#define bond_y_pos_less_than_ID 0xD6
+#define bond_y_pos_less_than_LENGTH 0x04
+#define bond_y_pos_less_than(y_pos, label) \
+        bond_y_pos_less_than_ID, \
+        chararray16(y_pos), \
+        label,
 
 /*=============================================================================
 // name: hud_show_all
@@ -2563,6 +2736,24 @@
 #define objective_all_completed_LENGTH 0x02
 #define objective_all_completed(label) \
         objective_all_completed_ID, \
+        label,
+
+/*=============================================================================
+// name: bond_check_folder_actor
+// command id: F2
+// info: if current bond equal to folder actor index, goto label
+//=============================================================================
+// note: in retail release only index 0 works. originally this would have checked
+// which bond (brosnan/connery/moore/dalton) is currently used, with each briefing
+// folder using a different bond likeness in-game. however rare didn't have the
+// license to use the other actor's faces so this feature was removed.
+// command is only used for cuba (credits)
+//===========================================================================*/
+#define bond_check_folder_actor_ID 0xF2
+#define bond_check_folder_actor_LENGTH 0x03
+#define bond_check_folder_actor(bond_actor_index, label) \
+        bond_check_folder_actor_ID, \
+        bond_actor_index, \
         label,
 
 /*=============================================================================
