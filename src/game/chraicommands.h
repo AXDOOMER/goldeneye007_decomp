@@ -646,7 +646,7 @@
 /*=============================================================================
 // name: guard_throw_grenade
 // command id: 1A
-// info: trigger guard to throw a grenade at player, goto label if successful
+// info: trigger guard to throw a grenade at bond, goto label if successful
 //=============================================================================
 // note: a rng byte is generated and compared again chr->grenadeprob, if rng byte
 // is less than grenadeprob throw grenade and goto label, else do nothing.
@@ -1513,6 +1513,21 @@
         chr_num,
 
 /*=============================================================================
+// name: objective_num_complete
+// command id: 6D
+// info: if objective # completed, goto label
+//=============================================================================
+// note: ignores difficulty settings. example, if game on agent and player completed
+//       an 00 agent objective, checking that objective num will goto label
+//===========================================================================*/
+#define objective_num_complete_ID 0x6D
+#define objective_num_complete_LENGTH 0x03
+#define objective_num_complete(obj_num, label) \
+        objective_num_complete_ID, \
+        obj_num, \
+        label,
+
+/*=============================================================================
 // name: game_difficulty_less_than
 // command id: 70
 // info: if current difficulty < difficulty argument, goto label
@@ -2130,6 +2145,56 @@
         label,
 
 /*=============================================================================
+// name: guard_set_chr_preset
+// command id: A9
+// info: set guard->chrpreset1 to chr_preset
+//=============================================================================
+// note: can be used by obj ai lists
+//===========================================================================*/
+#define guard_set_chr_preset_ID 0xA9
+#define guard_set_chr_preset_LENGTH 0x02
+#define guard_set_chr_preset(chr_preset) \
+        guard_set_chr_preset_ID, \
+        chr_preset,
+
+/*=============================================================================
+// name: chr_set_chr_preset
+// command id: AA
+// info: set chr->chrpreset1 to chr_preset
+//===========================================================================*/
+#define chr_set_chr_preset_ID 0xAA
+#define chr_set_chr_preset_LENGTH 0x03
+#define chr_set_chr_preset(chr_num, chr_preset) \
+        chr_set_chr_preset_ID, \
+        chr_num, \
+        chr_preset,
+
+/*=============================================================================
+// name: guard_set_pad_preset
+// command id: AB
+// info: set guard->padpreset1 to pad_preset
+//=============================================================================
+// note: can be used by obj ai lists
+//===========================================================================*/
+#define guard_set_pad_preset_ID 0xAB
+#define guard_set_pad_preset_LENGTH 0x03
+#define guard_set_pad_preset(chr_preset) \
+        guard_set_pad_preset_ID, \
+        chrarray16(pad_preset),
+
+/*=============================================================================
+// name: chr_set_pad_preset
+// command id: AC
+// info: set chr->padpreset1 to pad_preset
+//===========================================================================*/
+#define chr_set_pad_preset_ID 0xAC
+#define chr_set_pad_preset_LENGTH 0x04
+#define chr_set_pad_preset(chr_num, chr_preset) \
+        chr_set_pad_preset_ID, \
+        chr_num, \
+        chrarray16(pad_preset),
+
+/*=============================================================================
 // name: debug_log
 // command id: AD
 // info: debug comment
@@ -2453,6 +2518,22 @@
         camera_return_to_bond_ID,
 
 /*=============================================================================
+// name: bond_y_pos_less_than
+// command id: D6
+// info: if bond's y axis position < argument, goto label
+//=============================================================================
+// note: checks if bond's y axis is below the provided argument. command uses
+// world units. argument is signed and scale is 1:1 to in-game position. bond's
+// point of view is accounted for by command (like debug manpos)
+//===========================================================================*/
+#define bond_y_pos_less_than_ID 0xD6
+#define bond_y_pos_less_than_LENGTH 0x04
+#define bond_y_pos_less_than(y_pos, label) \
+        bond_y_pos_less_than_ID, \
+        chararray16(y_pos), \
+        label,
+
+/*=============================================================================
 // name: hud_show_all
 // command id: D8
 // info: show all hud elements that have been disabled by D7
@@ -2630,6 +2711,23 @@
 #define objective_all_completed_LENGTH 0x02
 #define objective_all_completed(label) \
         objective_all_completed_ID, \
+        label,
+
+/*=============================================================================
+// name: bond_check_folder_actor
+// command id: F2
+// info: if current bond equal to folder actor index, goto label
+//=============================================================================
+// note: in retail release only index 0 works. originally this would have checked
+// which bond (brosnan/connery/moore/dalton) is currently used, with each briefing
+// folder using a different bond actor in-game. however rare didn't have the license
+// to use the other actor's likenesses so they removed this feature
+//===========================================================================*/
+#define bond_check_folder_actor_ID 0xF2
+#define bond_check_folder_actor_LENGTH 0x03
+#define bond_check_folder_actor(actor_enum, label) \
+        bond_check_folder_actor_ID, \
+        actor_enum, \
         label,
 
 /*=============================================================================
