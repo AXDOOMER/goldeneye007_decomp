@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "debugmenu.h"
+#include "vi.h"
 
 s32 debug_menu_x_pos_offset = 5;
 s32 debug_menu_y_pos_offset = 1;
@@ -14,7 +15,7 @@ u32 stdout_display_list[] = {
 0xFC30B261,0x5566DB6D,
 0xBA001301,         0,
 0xB9000002,         0,
-0xFD700000,0x80024520,
+0xFD700000,&start_resource[2],
 0xF5700000, 0x7000000,
 0xE6000000,         0,
 0xF3000000, 0x753F080,
@@ -898,7 +899,7 @@ glabel read_screen_display_block_and_write_chars
 /* 00BFA8 7000B3A8 AC490000 */  sw    $t1, ($v0)
 /* 00BFAC 7000B3AC AC4A0004 */  sw    $t2, 4($v0)
 /* 00BFB0 7000B3B0 3C1E8002 */  lui   $fp, %hi(stdout_environment_color_table) 
-/* 00BFB4 7000B3B4 3C178002 */  lui   $s7, %hi(stdout_primary_color_table) # $s7, 0x8002
+/* 00BFB4 7000B3B4 3C178002 */  lui   $s7, %hi(stdout_primary_color_table) 
 /* 00BFB8 7000B3B8 26100008 */  addiu $s0, $s0, 8
 /* 00BFBC 7000B3BC 26F76610 */  addiu $s7, %lo(stdout_primary_color_table) # addiu $s7, $s7, 0x6610
 /* 00BFC0 7000B3C0 27DE6710 */  addiu $fp, %lo(stdout_environment_color_table) # addiu $fp, $fp, 0x6710

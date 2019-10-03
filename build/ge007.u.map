@@ -82,9 +82,9 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x3b0 build/src/pi.o
  .options       0x0000000000000000       0x20 build/src/vi.o
  .reginfo       0x0000000000000000       0x18 build/src/vi.o
- .gptab.data    0x0000000000000000       0x18 build/src/vi.o
+ .gptab.data    0x0000000000000000       0x20 build/src/vi.o
  .gptab.bss     0x0000000000000000       0x20 build/src/vi.o
- .mdebug        0x0000000000000000      0x4f4 build/src/vi.o
+ .mdebug        0x0000000000000000      0x518 build/src/vi.o
  .options       0x0000000000000000       0x20 build/src/debugmenu.o
  .reginfo       0x0000000000000000       0x18 build/src/debugmenu.o
  .options       0x0000000000000000       0x20 build/src/joy.o
@@ -15938,6 +15938,7 @@ Linker script and memory map
  build/src/vi.o(.data)
  .data          0x0000000080024500      0xaa0 build/src/vi.o
                 0x0000000080024500                ptr_vi_c_debug_debug_notice_list
+                0x0000000080024518                start_resource
  build/src/debugmenu.o(.data)
  .data          0x0000000080024fa0     0x1920 build/src/debugmenu.o
                 0x0000000080024fa0                debug_menu_x_pos_offset

@@ -245,7 +245,7 @@ glabel sub_GAME_7F09000C
 /* 0C4B9C 7F09006C 92946B90 */  lbu   $s4, %lo(mcm_yoffset_multiplier)($s4)
 /* 0C4BA0 7F090070 19C00043 */  blez  $t6, .L7F090180
 /* 0C4BA4 7F090074 00008025 */   move  $s0, $zero
-/* 0C4BA8 7F090078 3C178003 */  lui   $s7, %hi(ptr_positions) # $s7, 0x8003
+/* 0C4BA8 7F090078 3C178003 */  lui   $s7, %hi(ptr_positions) 
 /* 0C4BAC 7F09007C 3C168003 */  lui   $s6, %hi(highlighted_debug_option)
 /* 0C4BB0 7F090080 26D66B70 */  addiu $s6, %lo(highlighted_debug_option) # addiu $s6, $s6, 0x6b70
 /* 0C4BB4 7F090084 26F76B7C */  addiu $s7, %lo(ptr_positions) # addiu $s7, $s7, 0x6b7c

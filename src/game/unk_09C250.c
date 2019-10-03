@@ -1663,7 +1663,7 @@ glabel sub_GAME_7F09D5A0
 /* 0D21C8 7F09D698 00408025 */  move  $s0, $v0
 /* 0D21CC 7F09D69C 0C003A2C */  jal   osVirtualToPhysical
 /* 0D21D0 7F09D6A0 24540008 */   addiu $s4, $v0, 8
-/* 0D21D4 7F09D6A4 3C178004 */  lui   $s7, %hi(D_8004017C+0x680) # $s7, 0x8004
+/* 0D21D4 7F09D6A4 3C178004 */  lui   $s7, %hi(D_8004017C+0x680) 
 /* 0D21D8 7F09D6A8 3C138004 */  lui   $s3, %hi(D_8004017C+0x108)
 /* 0D21DC 7F09D6AC AE020004 */  sw    $v0, 4($s0)
 /* 0D21E0 7F09D6B0 26730284 */  addiu $s3, %lo(D_8004017C+0x108) # addiu $s3, $s3, 0x284
@@ -6515,7 +6515,7 @@ glabel sub_GAME_7F0A1A94
 /* 0D6648 7F0A1B18 AFAB0060 */  sw    $t3, 0x60($sp)
 /* 0D664C 7F0A1B1C 240D0080 */  li    $t5, 128
 /* 0D6650 7F0A1B20 3C1E8004 */  lui   $fp, %hi(D_8004080C) 
-/* 0D6654 7F0A1B24 3C178008 */  lui   $s7, %hi(ptr_bullet_impact_buf) # $s7, 0x8008
+/* 0D6654 7F0A1B24 3C178008 */  lui   $s7, %hi(ptr_bullet_impact_buf) 
 /* 0D6658 7F0A1B28 26F7A154 */  addiu $s7, %lo(ptr_bullet_impact_buf) # addiu $s7, $s7, -0x5eac
 /* 0D665C 7F0A1B2C 27DE080C */  addiu $fp, %lo(D_8004080C) # addiu $fp, $fp, 0x80c
 /* 0D6660 7F0A1B30 0000A025 */  move  $s4, $zero

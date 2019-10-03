@@ -1087,7 +1087,7 @@ glabel sub_GAME_7F08E8BC
 /* 0C3424 7F08E8F4 4608603E */  c.le.s $f12, $f8
 /* 0C3428 7F08E8F8 00000000 */  nop   
 /* 0C342C 7F08E8FC 4500004A */  bc1f  .L7F08EA28
-/* 0C3430 7F08E900 3C088008 */   lui   $t0, %hi(pPlayer) # $t0, 0x8008
+/* 0C3430 7F08E900 3C088008 */   lui   $t0, %hi(pPlayer) 
 /* 0C3434 7F08E904 8D08A0B0 */  lw    $t0, %lo(pPlayer)($t0)
 /* 0C3438 7F08E908 3C188007 */  lui   $t8, %hi(ptr_animation_table) 
 /* 0C343C 7F08E90C 3C013F00 */  li    $at, 0x3F000000 # 0.500000
@@ -1147,7 +1147,7 @@ glabel sub_GAME_7F08E8BC
 /* 0C3510 7F08E9E0 8FA2002C */  lw    $v0, 0x2c($sp)
 /* 0C3514 7F08E9E4 8F39A0B0 */  lw    $t9, %lo(pPlayer)($t9)
 /* 0C3518 7F08E9E8 C7AC0030 */  lwc1  $f12, 0x30($sp)
-/* 0C351C 7F08E9EC 3C088008 */  lui   $t0, %hi(pPlayer) # $t0, 0x8008
+/* 0C351C 7F08E9EC 3C088008 */  lui   $t0, %hi(pPlayer) 
 /* 0C3520 7F08E9F0 AF2204E8 */  sw    $v0, 0x4e8($t9)
 /* 0C3524 7F08E9F4 8D08A0B0 */  lw    $t0, %lo(pPlayer)($t0)
 /* 0C3528 7F08E9F8 C600000C */  lwc1  $f0, 0xc($s0)
@@ -2861,7 +2861,7 @@ void sub_GAME_7F08FD1C(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F08FD1C
-/* 0C484C 7F08FD1C 3C088007 */  lui   $t0, %hi(ptr_setup_path_tbl) # $t0, 0x8007
+/* 0C484C 7F08FD1C 3C088007 */  lui   $t0, %hi(ptr_setup_path_tbl) 
 /* 0C4850 7F08FD20 8D085D00 */  lw    $t0, %lo(ptr_setup_path_tbl)($t0)
 /* 0C4854 7F08FD24 27BDFF08 */  addiu $sp, $sp, -0xf8
 /* 0C4858 7F08FD28 AFBF0014 */  sw    $ra, 0x14($sp)

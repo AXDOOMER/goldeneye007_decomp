@@ -635,7 +635,7 @@ def_7F005A74:
 /* 03A9AC 7F005E7C E7120078 */  swc1  $f18, 0x78($t8)
 /* 03A9B0 7F005E80 8E4F0000 */  lw    $t7, ($s2)
 /* 03A9B4 7F005E84 C424F1D0 */  lwc1  $f4, %lo(D_8004F1D0)($at)
-/* 03A9B8 7F005E88 3C088008 */  lui   $t0, %hi(dword_CODE_bss_80079C68) # $t0, 0x8008
+/* 03A9B8 7F005E88 3C088008 */  lui   $t0, %hi(dword_CODE_bss_80079C68) 
 /* 03A9BC 7F005E8C E5E4007C */  swc1  $f4, 0x7c($t7)
 /* 03A9C0 7F005E90 8E4E0000 */  lw    $t6, ($s2)
 /* 03A9C4 7F005E94 E5C60080 */  swc1  $f6, 0x80($t6)

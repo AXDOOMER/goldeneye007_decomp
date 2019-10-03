@@ -5,7 +5,11 @@ OSMesgQueue vi_c_debug_MQ;
 
 /* wtf is this, should it be split? is it part of debugmenu.? */
 u32 ptr_vi_c_debug_debug_notice_list[] = {
-         0,         0,         0,         0,         0,         0,0xB8000000,         0,
+         0,         0,         0,         0,         0,         0
+};
+
+u32 start_resource[] = {       
+0xB8000000,         0,
          0,  0x227A00,  0x7A348B,  0x223434,  0x115811,  0x696900,         0,    0x9C00,
     0x4600,  0x460000,    0x4600,         0,         0,         0,         0,      0x46,
   0x229C11,  0x346900,  0x229C11,  0x699C11,    0x5834,  0xADAD34,  0x118B34,  0x9CAD7A,

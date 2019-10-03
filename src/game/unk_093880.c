@@ -1246,7 +1246,7 @@ glabel sub_GAME_7F094488
 /* 0C9014 7F0944E4 00000000 */   nop   
 /* 0C9018 7F0944E8 24010001 */  li    $at, 1
 /* 0C901C 7F0944EC 1441003B */  bne   $v0, $at, .L7F0945DC
-/* 0C9020 7F0944F0 3C088008 */   lui   $t0, %hi(pPlayer) # $t0, 0x8008
+/* 0C9020 7F0944F0 3C088008 */   lui   $t0, %hi(pPlayer) 
 /* 0C9024 7F0944F4 8FAF06B0 */  lw    $t7, 0x6b0($sp)
 /* 0C9028 7F0944F8 3C19BA00 */  lui   $t9, (0xBA001402 >> 16) # lui $t9, 0xba00
 /* 0C902C 7F0944FC 37391402 */  ori   $t9, (0xBA001402 & 0xFFFF) # ori $t9, $t9, 0x1402

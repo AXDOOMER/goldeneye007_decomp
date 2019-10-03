@@ -524,7 +524,7 @@ GLOBAL_ASM(
 glabel draw_membars
 /* 0F2340 7F0BD810 3C028009 */  lui   $v0, %hi(bank_in_mgfx_alloc_table)
 /* 0F2344 7F0BD814 9042C250 */  lbu   $v0, %lo(bank_in_mgfx_alloc_table)($v0)
-/* 0F2348 7F0BD818 3C088009 */  lui   $t0, %hi(ptr_mgfx0_alloc_start) # $t0, 0x8009
+/* 0F2348 7F0BD818 3C088009 */  lui   $t0, %hi(ptr_mgfx0_alloc_start) 
 /* 0F234C 7F0BD81C 2508C230 */  addiu $t0, %lo(ptr_mgfx0_alloc_start) # addiu $t0, $t0, -0x3dd0
 /* 0F2350 7F0BD820 00027080 */  sll   $t6, $v0, 2
 /* 0F2354 7F0BD824 010E7821 */  addu  $t7, $t0, $t6

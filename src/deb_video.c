@@ -50,7 +50,7 @@ GLOBAL_ASM(
 glabel thread5_translate_7F_address
 /* 005B54 70004F54 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 005B58 70004F58 AFB70030 */  sw    $s7, 0x30($sp)
-/* 005B5C 70004F5C 3C178006 */  lui   $s7, %hi(thread5_MesgQ) # $s7, 0x8006
+/* 005B5C 70004F5C 3C178006 */  lui   $s7, %hi(thread5_MesgQ) 
 /* 005B60 70004F60 26F73640 */  addiu $s7, %lo(thread5_MesgQ) # addiu $s7, $s7, 0x3640
 /* 005B64 70004F64 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 005B68 70004F68 AFA40040 */  sw    $a0, 0x40($sp)
@@ -89,7 +89,7 @@ glabel thread5_translate_7F_address
 /* 005BE4 70004FE4 1040FFF6 */  beqz  $v0, .L70004FC0
 /* 005BE8 70004FE8 AC22365C */   sw    $v0, %lo(ptr_tlbthread_maybe)($at)
 /* 005BEC 70004FEC 8C4E0120 */  lw    $t6, 0x120($v0)
-/* 005BF0 70004FF0 3C088006 */  lui   $t0, %hi(ptr_tlbthread_maybe) # $t0, 0x8006
+/* 005BF0 70004FF0 3C088006 */  lui   $t0, %hi(ptr_tlbthread_maybe) 
 /* 005BF4 70004FF4 31CF007C */  andi  $t7, $t6, 0x7c
 /* 005BF8 70004FF8 164F0018 */  bne   $s2, $t7, .L7000505C
 /* 005BFC 70004FFC 00000000 */   nop   

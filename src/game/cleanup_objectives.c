@@ -31,7 +31,7 @@ glabel cleanupObjectives
 .L7F0075D4:
 /* 03C104 7F0075D4 3C028007 */  lui   $v0, %hi(objective_ptrs+4)
 /* 03C108 7F0075D8 8C425D34 */  lw    $v0, %lo(objective_ptrs+4)($v0)
-/* 03C10C 7F0075DC 3C088007 */  lui   $t0, %hi(dword_CODE_bss_80075D58) # $t0, 0x8007
+/* 03C10C 7F0075DC 3C088007 */  lui   $t0, %hi(dword_CODE_bss_80075D58) 
 /* 03C110 7F0075E0 25085D58 */  addiu $t0, %lo(dword_CODE_bss_80075D58) # addiu $t0, $t0, 0x5d58
 /* 03C114 7F0075E4 1040000C */  beqz  $v0, .L7F007618
 /* 03C118 7F0075E8 24050002 */   li    $a1, 2

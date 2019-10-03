@@ -116,7 +116,7 @@ glabel finalize_ramrom_on_hw
 /* 0F4838 7F0BFD08 3C038005 */  lui   $v1, %hi(ramrom_blkbuf_1)
 /* 0F483C 7F0BFD0C 24638468 */  addiu $v1, %lo(ramrom_blkbuf_1) # addiu $v1, $v1, -0x7b98
 /* 0F4840 7F0BFD10 AC620000 */  sw    $v0, ($v1)
-/* 0F4844 7F0BFD14 3C088005 */  lui   $t0, %hi(global_timer) # $t0, 0x8005
+/* 0F4844 7F0BFD14 3C088005 */  lui   $t0, %hi(global_timer) 
 /* 0F4848 7F0BFD18 3C098005 */  lui   $t1, %hi(clock_timer) 
 /* 0F484C 7F0BFD1C 8D298374 */  lw    $t1, %lo(clock_timer)($t1)
 /* 0F4850 7F0BFD20 8D08837C */  lw    $t0, %lo(global_timer)($t0)
@@ -273,7 +273,7 @@ glabel record_player_input_as_packet
 /* 0F49A8 7F0BFE78 AFB10018 */  sw    $s1, 0x18($sp)
 /* 0F49AC 7F0BFE7C AFB00014 */  sw    $s0, 0x14($sp)
 /* 0F49B0 7F0BFE80 3719000F */  ori   $t9, $t8, 0xf
-/* 0F49B4 7F0BFE84 3C088005 */  lui   $t0, %hi(ramrom_blkbuf_3) # $t0, 0x8005
+/* 0F49B4 7F0BFE84 3C088005 */  lui   $t0, %hi(ramrom_blkbuf_3) 
 /* 0F49B8 7F0BFE88 3C0C8005 */  lui   $t4, %hi(ramrom_blkbuf_2) 
 /* 0F49BC 7F0BFE8C 3B2D000F */  xori  $t5, $t9, 0xf
 /* 0F49C0 7F0BFE90 8DC90018 */  lw    $t1, 0x18($t6)
@@ -670,7 +670,7 @@ glabel iterate_ramrom_entries_handle_camera_out
 /* 0F4E44 7F0C0314 8C63846C */   lw    $v1, %lo(ramrom_blkbuf_2)($v1)
 .L7F0C0318:
 /* 0F4E48 7F0C0318 8D298468 */  lw    $t1, %lo(ramrom_blkbuf_1)($t1)
-/* 0F4E4C 7F0C031C 3C088009 */  lui   $t0, %hi(address_demo_loaded) # $t0, 0x8009
+/* 0F4E4C 7F0C031C 3C088009 */  lui   $t0, %hi(address_demo_loaded) 
 /* 0F4E50 7F0C0320 8D08C5F4 */  lw    $t0, %lo(address_demo_loaded)($t0)
 /* 0F4E54 7F0C0324 8D2A0018 */  lw    $t2, 0x18($t1)
 /* 0F4E58 7F0C0328 3C018009 */  lui   $at, %hi(address_demo_loaded)
@@ -1173,7 +1173,7 @@ glabel replay_recorded_ramrom_at_address
 /* 0F53A0 7F0C0870 8CB90000 */  lw    $t9, ($a1)
 /* 0F53A4 7F0C0874 0FC0757B */  jal   set_solo_and_ptr_briefing
 /* 0F53A8 7F0C0878 8F240010 */   lw    $a0, 0x10($t9)
-/* 0F53AC 7F0C087C 3C088005 */  lui   $t0, %hi(ramrom_blkbuf_1) # $t0, 0x8005
+/* 0F53AC 7F0C087C 3C088005 */  lui   $t0, %hi(ramrom_blkbuf_1) 
 /* 0F53B0 7F0C0880 8D088468 */  lw    $t0, %lo(ramrom_blkbuf_1)($t0)
 /* 0F53B4 7F0C0884 0FC07567 */  jal   set_selected_difficulty
 /* 0F53B8 7F0C0888 8D040014 */   lw    $a0, 0x14($t0)

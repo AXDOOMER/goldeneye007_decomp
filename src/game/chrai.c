@@ -491,12 +491,12 @@ u32 D_80031C80[] = {
      0xC8,         4,     0x190,     0x320,         5,     0x200,     0x2D0,         6,
      0x200,     0x2D0,         8,     0x320,         5,     0x400,     0x2D0,         6,
      0x400,     0x2D0,         3,     0x200,      0x64,         4,     0x200,      0x3C,
-     8,     0x1F4,         9,0x80031D30
+     8,     0x1F4,         9, D_80031D30
 };
 
 u32 D_80031D30[] = {
-     8,      0x32,       0xA,0x80031AEC,    0x1999,       0xA,0x80031D58,    0x3333,
-     9,0x80031950
+     8,      0x32,       0xA, &D_80031AEC,    0x1999,       0xA, &D_80031D58,    0x3333,
+     9, &D_80031950
 };
 
 struct struct_20 D_80031D58 = {8, 0x32, 0xD, 0xFFFFFFFF, 0xA, 0xD, 0xFF, 5, 0xD, 0xFFFFFFFF, 0xA, 8, 0x19, 0xD, 0xFF, 0xC8, 8, 0x1F4, 9, D_80031950};
@@ -7440,7 +7440,7 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E410 7F0398E0 8E090018 */  lw    $t1, 0x18($s0)
 /* 06E414 7F0398E4 C7A40124 */  lwc1  $f4, 0x124($sp)
 /* 06E418 7F0398E8 8C4A00A8 */  lw    $t2, 0xa8($v0)
-/* 06E41C 7F0398EC 3C0C8008 */  lui   $t4, %hi(pPlayer) # $t4, 0x8008
+/* 06E41C 7F0398EC 3C0C8008 */  lui   $t4, %hi(pPlayer) 
 /* 06E420 7F0398F0 24140001 */  li    $s4, 1
 /* 06E424 7F0398F4 1549000D */  bne   $t2, $t1, .L7F03992C
 /* 06E428 7F0398F8 00000000 */   nop   
@@ -10813,7 +10813,7 @@ glabel sub_GAME_7F03C3FC
 /* 070F34 7F03C404 3C108007 */  lui   $s0, %hi(dword_CODE_bss_80071DF0)
 /* 070F38 7F03C408 8E101DF0 */  lw    $s0, %lo(dword_CODE_bss_80071DF0)($s0)
 /* 070F3C 7F03C40C AFB70030 */  sw    $s7, 0x30($sp)
-/* 070F40 7F03C410 3C178007 */  lui   $s7, %hi(dword_CODE_bss_80071620) # $s7, 0x8007
+/* 070F40 7F03C410 3C178007 */  lui   $s7, %hi(dword_CODE_bss_80071620) 
 /* 070F44 7F03C414 3C018007 */  lui   $at, %hi(dword_CODE_bss_80071DF8)
 /* 070F48 7F03C418 26F71620 */  addiu $s7, %lo(dword_CODE_bss_80071620) # addiu $s7, $s7, 0x1620
 /* 070F4C 7F03C41C AC201DF8 */  sw    $zero, %lo(dword_CODE_bss_80071DF8)($at)
@@ -36663,7 +36663,7 @@ glabel object_collectability_routines
 /* 085624 7F050AF4 00000000 */   nop   
 /* 085628 7F050AF8 3C018005 */  lui   $at, %hi(D_800532E0)
 /* 08562C 7F050AFC C42632E0 */  lwc1  $f6, %lo(D_800532E0)($at)
-/* 085630 7F050B00 3C0C8008 */  lui   $t4, %hi(pPlayer) # $t4, 0x8008
+/* 085630 7F050B00 3C0C8008 */  lui   $t4, %hi(pPlayer) 
 /* 085634 7F050B04 4606003C */  c.lt.s $f0, $f6
 /* 085638 7F050B08 00000000 */  nop   
 /* 08563C 7F050B0C 45000007 */  bc1f  .L7F050B2C

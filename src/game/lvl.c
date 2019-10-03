@@ -2408,7 +2408,7 @@ glabel manage_mp_game
 /* 0F42A4 7F0BF774 0C0030EB */  jal   get_controller_buttons_pressed
 /* 0F42A8 7F0BF778 24050911 */   li    $a1, 2321
 /* 0F42AC 7F0BF77C 1040000B */  beqz  $v0, .L7F0BF7AC
-/* 0F42B0 7F0BF780 3C058005 */   lui   $a1, 0x8005
+/* 0F42B0 7F0BF780 3C058005 */   lui   $a1, %hi(D_800483E4)
 /* 0F42B4 7F0BF784 84A583E4 */  lh    $a1, %lo(D_800483E4)($a1)
 /* 0F42B8 7F0BF788 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
 /* 0F42BC 7F0BF78C 3C018005 */  lui   $at, %hi(D_800483E4)
@@ -2659,7 +2659,7 @@ glabel sub_GAME_7F0BF800
 /* 0F4614 7F0BFAE4 0FC233F0 */  jal   sub_GAME_7F08CFC0
 /* 0F4618 7F0BFAE8 00000000 */   nop   
 /* 0F461C 7F0BFAEC 10400006 */  beqz  $v0, .L7F0BFB08
-/* 0F4620 7F0BFAF0 3C088008 */   lui   $t0, %hi(cur_player_stat_ptr) # $t0, 0x8008
+/* 0F4620 7F0BFAF0 3C088008 */   lui   $t0, %hi(cur_player_stat_ptr) 
 /* 0F4624 7F0BFAF4 3C198008 */  lui   $t9, %hi(cur_player_stat_ptr) 
 /* 0F4628 7F0BFAF8 8F39A0B4 */  lw    $t9, %lo(cur_player_stat_ptr)($t9)
 /* 0F462C 7F0BFAFC 24180001 */  li    $t8, 1

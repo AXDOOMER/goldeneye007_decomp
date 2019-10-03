@@ -2864,7 +2864,7 @@ glabel image_related_calls_decompressdata_function
 /* 0FB2D8 7F0C67A8 A462FFFE */   sh    $v0, -2($v1)
 .L7F0C67AC:
 /* 0FB2DC 7F0C67AC 8FA92B9C */  lw    $t1, 0x2b9c($sp)
-/* 0FB2E0 7F0C67B0 3C178005 */  lui   $s7, %hi(D_80049248) # $s7, 0x8005
+/* 0FB2E0 7F0C67B0 3C178005 */  lui   $s7, %hi(D_80049248) 
 /* 0FB2E4 7F0C67B4 26F79248 */  addiu $s7, %lo(D_80049248) # addiu $s7, $s7, -0x6db8
 /* 0FB2E8 7F0C67B8 19200064 */  blez  $t1, .L7F0C694C
 /* 0FB2EC 7F0C67BC 00009825 */   move  $s3, $zero
@@ -4528,7 +4528,7 @@ glabel process_huffman_compressed_images
 /* 0FC974 7F0C7E44 8FAA30B4 */  lw    $t2, 0x30b4($sp)
 /* 0FC978 7F0C7E48 240E0001 */  li    $t6, 1
 /* 0FC97C 7F0C7E4C 11200005 */  beqz  $t1, .L7F0C7E64
-/* 0FC980 7F0C7E50 3C088009 */   lui   $t0, %hi(dword_CODE_bss_8008D090) # $t0, 0x8009
+/* 0FC980 7F0C7E50 3C088009 */   lui   $t0, %hi(dword_CODE_bss_8008D090) 
 /* 0FC984 7F0C7E54 51400004 */  beql  $t2, $zero, .L7F0C7E68
 /* 0FC988 7F0C7E58 8FAA30B4 */   lw    $t2, 0x30b4($sp)
 /* 0FC98C 7F0C7E5C 10000003 */  b     .L7F0C7E6C
@@ -4581,7 +4581,7 @@ glabel process_huffman_compressed_images
 .L7F0C7F04:
 /* 0FCA34 7F0C7F04 8FB9009C */  lw    $t9, 0x9c($sp)
 .L7F0C7F08:
-/* 0FCA38 7F0C7F08 3C088009 */  lui   $t0, %hi(dword_CODE_bss_8008D090) # $t0, 0x8009
+/* 0FCA38 7F0C7F08 3C088009 */  lui   $t0, %hi(dword_CODE_bss_8008D090) 
 /* 0FCA3C 7F0C7F0C 2508D090 */  addiu $t0, %lo(dword_CODE_bss_8008D090) # addiu $t0, $t0, -0x2f70
 /* 0FCA40 7F0C7F10 8FA60070 */  lw    $a2, 0x70($sp)
 /* 0FCA44 7F0C7F14 1B2001BA */  blez  $t9, .L7F0C8600
@@ -5046,7 +5046,7 @@ def_7F0C8054:
 /* 0FD104 7F0C85D4 27380001 */  addiu $t8, $t9, 1
 /* 0FD108 7F0C85D8 170DFE52 */  bne   $t8, $t5, .L7F0C7F24
 /* 0FD10C 7F0C85DC AFB800A0 */   sw    $t8, 0xa0($sp)
-/* 0FD110 7F0C85E0 3C088009 */  lui   $t0, %hi(dword_CODE_bss_8008D090) # $t0, 0x8009
+/* 0FD110 7F0C85E0 3C088009 */  lui   $t0, %hi(dword_CODE_bss_8008D090) 
 /* 0FD114 7F0C85E4 2508D090 */  addiu $t0, %lo(dword_CODE_bss_8008D090) # addiu $t0, $t0, -0x2f70
 /* 0FD118 7F0C85E8 AFB60098 */  sw    $s6, 0x98($sp)
 /* 0FD11C 7F0C85EC AFB70094 */  sw    $s7, 0x94($sp)

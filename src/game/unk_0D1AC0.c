@@ -53,7 +53,7 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0D1AC0
 /* 1065F0 7F0D1AC0 44802000 */  mtc1  $zero, $f4
-/* 1065F4 7F0D1AC4 3C088005 */  lui   $t0, %hi(D_8004EAF4) # $t0, 0x8005
+/* 1065F4 7F0D1AC4 3C088005 */  lui   $t0, %hi(D_8004EAF4) 
 /* 1065F8 7F0D1AC8 2508EAF4 */  addiu $t0, %lo(D_8004EAF4) # addiu $t0, $t0, -0x150c
 /* 1065FC 7F0D1ACC E5040000 */  swc1  $f4, ($t0)
 /* 106600 7F0D1AD0 C5060000 */  lwc1  $f6, ($t0)

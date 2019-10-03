@@ -664,7 +664,7 @@ glabel display_speed_graph
 .L70002C8C:
 /* 00388C 70002C8C 3C190600 */  lui   $t9, 0x600
 /* 003890 70002C90 AC990000 */  sw    $t9, ($a0)
-/* 003894 70002C94 3C088006 */  lui   $t0, %hi(displaylist_bank) # $t0, 0x8006
+/* 003894 70002C94 3C088006 */  lui   $t0, %hi(displaylist_bank) 
 /* 003898 70002C98 8D0804A0 */  lw    $t0, %lo(displaylist_bank)($t0)
 /* 00389C 70002C9C 3C0C8006 */  lui   $t4, %hi(displaylist_0) 
 /* 0038A0 70002CA0 258CF400 */  addiu $t4, %lo(displaylist_0) # addiu $t4, $t4, -0xc00

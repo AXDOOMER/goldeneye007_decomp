@@ -3623,7 +3623,7 @@ glabel osGetTime
 /* 00F7CC 7000EBCC 3C0F8007 */  lui   $t7, %hi(__osBaseCounter) 
 /* 00F7D0 7000EBD0 8DEF8E18 */  lw    $t7, %lo(__osBaseCounter)($t7)
 /* 00F7D4 7000EBD4 8FAE0034 */  lw    $t6, 0x34($sp)
-/* 00F7D8 7000EBD8 3C088007 */  lui   $t0, %hi(__osCurrentTime) # $t0, 0x8007
+/* 00F7D8 7000EBD8 3C088007 */  lui   $t0, %hi(__osCurrentTime) 
 /* 00F7DC 7000EBDC 3C098007 */  lui   $t1, %hi(__osCurrentTime+4) 
 /* 00F7E0 7000EBE0 8D298E14 */  lw    $t1, %lo(__osCurrentTime+4)($t1)
 /* 00F7E4 7000EBE4 8D088E10 */  lw    $t0, %lo(__osCurrentTime)($t0)
@@ -9751,7 +9751,7 @@ glabel _Printf
 /* 014B7C 70013F7C AFA700EC */  sw    $a3, 0xec($sp)
 /* 014B80 70013F80 3C158002 */  lui   $s5, %hi(zeros)
 /* 014B84 70013F84 3C168003 */  lui   $s6, %hi(printf_symbols)
-/* 014B88 70013F88 3C178002 */  lui   $s7, %hi(spaces) # $s7, 0x8002
+/* 014B88 70013F88 3C178002 */  lui   $s7, %hi(spaces) 
 /* 014B8C 70013F8C 00C03825 */  move  $a3, $a2
 /* 014B90 70013F90 00A09825 */  move  $s3, $a1
 /* 014B94 70013F94 0080A025 */  move  $s4, $a0
@@ -12382,7 +12382,7 @@ glabel osPfsIsPlug
 /* 016798 70015B98 8FB90018 */  lw    $t9, 0x18($sp)
 /* 01679C 70015B9C 1F20FFC9 */  bgtz  $t9, .L70015AC4
 /* 0167A0 70015BA0 00000000 */   nop   
-/* 0167A4 70015BA4 3C088006 */  lui   $t0, %hi(__osMaxControllers) # $t0, 0x8006
+/* 0167A4 70015BA4 3C088006 */  lui   $t0, %hi(__osMaxControllers) 
 /* 0167A8 70015BA8 91087CE1 */  lbu   $t0, %lo(__osMaxControllers)($t0)
 /* 0167AC 70015BAC AFA00020 */  sw    $zero, 0x20($sp)
 /* 0167B0 70015BB0 19000019 */  blez  $t0, .L70015C18

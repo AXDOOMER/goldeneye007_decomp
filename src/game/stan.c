@@ -409,7 +409,7 @@ glabel sub_GAME_7F0AF038
 /* 0E3BF4 7F0AF0C4 240A000C */  li    $t2, 12
 /* 0E3BF8 7F0AF0C8 11E00048 */  beqz  $t7, .L7F0AF1EC
 /* 0E3BFC 7F0AF0CC 3C098008 */   lui   $t1, %hi(dword_CODE_bss_8007B358) 
-/* 0E3C00 7F0AF0D0 3C088008 */  lui   $t0, %hi(dword_CODE_bss_8007B128) # $t0, 0x8008
+/* 0E3C00 7F0AF0D0 3C088008 */  lui   $t0, %hi(dword_CODE_bss_8007B128) 
 /* 0E3C04 7F0AF0D4 2508B128 */  addiu $t0, %lo(dword_CODE_bss_8007B128) # addiu $t0, $t0, -0x4ed8
 /* 0E3C08 7F0AF0D8 2529B358 */  addiu $t1, %lo(dword_CODE_bss_8007B358) # addiu $t1, $t1, -0x4ca8
 /* 0E3C0C 7F0AF0DC 24020006 */  li    $v0, 6
@@ -544,7 +544,7 @@ glabel sub_GAME_7F0AF20C
 /* 0E3D94 7F0AF264 C4200F44 */  lwc1  $f0, %lo(D_80040F44)($at)
 /* 0E3D98 7F0AF268 C4840000 */  lwc1  $f4, ($a0)
 /* 0E3D9C 7F0AF26C 0080A025 */  move  $s4, $a0
-/* 0E3DA0 7F0AF270 3C178004 */  lui   $s7, %hi(list_of_tilesizes) # $s7, 0x8004
+/* 0E3DA0 7F0AF270 3C178004 */  lui   $s7, %hi(list_of_tilesizes) 
 /* 0E3DA4 7F0AF274 46002182 */  mul.s $f6, $f4, $f0
 /* 0E3DA8 7F0AF278 3C0A8008 */  lui   $t2, %hi(dword_CODE_bss_8007B128) 
 /* 0E3DAC 7F0AF27C 3C018006 */  lui   $at, %hi(D_800585D4)
@@ -3552,7 +3552,7 @@ glabel sub_GAME_7F0B0E24
 /* 0E5B40 7F0B1010 27DEB9F0 */  addiu $fp, %lo(flt_CODE_bss_8007B9F0) # addiu $fp, $fp, -0x4610
 .L7F0B1014:
 /* 0E5B44 7F0B1014 8FAB0174 */  lw    $t3, 0x174($sp)
-/* 0E5B48 7F0B1018 3C178008 */  lui   $s7, %hi(dword_CODE_bss_8007BA04) # $s7, 0x8008
+/* 0E5B48 7F0B1018 3C178008 */  lui   $s7, %hi(dword_CODE_bss_8007BA04) 
 /* 0E5B4C 7F0B101C 26F7BA04 */  addiu $s7, %lo(dword_CODE_bss_8007BA04) # addiu $s7, $s7, -0x45fc
 /* 0E5B50 7F0B1020 116000CF */  beqz  $t3, .L7F0B1360
 /* 0E5B54 7F0B1024 AEE00000 */   sw    $zero, ($s7)
@@ -5703,7 +5703,7 @@ glabel sub_GAME_7F0B2718
 /* 0E728C 7F0B275C 02801025 */   move  $v0, $s4
 .L7F0B2760:
 /* 0E7290 7F0B2760 240E0001 */  li    $t6, 1
-/* 0E7294 7F0B2764 3C178008 */  lui   $s7, %hi(dword_CODE_bss_8007BA10) # $s7, 0x8008
+/* 0E7294 7F0B2764 3C178008 */  lui   $s7, %hi(dword_CODE_bss_8007BA10) 
 /* 0E7298 7F0B2768 3C168004 */  lui   $s6, %hi(base_ptr_connection_vals)
 /* 0E729C 7F0B276C AC34BA10 */  sw    $s4, %lo(dword_CODE_bss_8007BA10)($at)
 /* 0E72A0 7F0B2770 24110001 */  li    $s1, 1
@@ -6733,7 +6733,7 @@ loop_4:
 GLOBAL_ASM(
 .text
 glabel stanDetermineEOF
-/* 0E7A5C 7F0B2F2C 3C088008 */  lui   $t0, %hi(clippingfile) # $t0, 0x8008
+/* 0E7A5C 7F0B2F2C 3C088008 */  lui   $t0, %hi(clippingfile) 
 /* 0E7A60 7F0B2F30 2508B120 */  addiu $t0, %lo(clippingfile) # addiu $t0, $t0, -0x4ee0
 /* 0E7A64 7F0B2F34 AD040000 */  sw    $a0, ($t0)
 /* 0E7A68 7F0B2F38 8C8E0004 */  lw    $t6, 4($a0)

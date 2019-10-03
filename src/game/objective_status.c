@@ -578,7 +578,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C0F8 7F0575C8 26B55D58 */  addiu $s5, %lo(dword_CODE_bss_80075D58) # addiu $s5, $s5, 0x5d58
 /* 08C0FC 7F0575CC 05200051 */  bltz  $t1, .L7F057714
 /* 08C100 7F0575D0 00009025 */   move  $s2, $zero
-/* 08C104 7F0575D4 3C178005 */  lui   $s7, %hi(j_text_trigger) # $s7, 0x8005
+/* 08C104 7F0575D4 3C178005 */  lui   $s7, %hi(j_text_trigger) 
 /* 08C108 7F0575D8 26F784D0 */  addiu $s7, %lo(j_text_trigger) # addiu $s7, $s7, -0x7b30
 .L7F0575DC:
 /* 08C10C 7F0575DC 0FC15C8E */  jal   get_status_of_objective
@@ -761,7 +761,7 @@ glabel sub_GAME_7F0577E8
 /* 08C324 7F0577F4 00A03025 */  move  $a2, $a1
 /* 08C328 7F0577F8 10400025 */  beqz  $v0, .L7F057890
 /* 08C32C 7F0577FC 356B9FC0 */   ori   $t3, (0xFFF59FC0 & 0xFFFF) # ori $t3, $t3, 0x9fc0
-/* 08C330 7F057800 3C088007 */  lui   $t0, %hi(ptr_setup_path_tbl) # $t0, 0x8007
+/* 08C330 7F057800 3C088007 */  lui   $t0, %hi(ptr_setup_path_tbl) 
 /* 08C334 7F057804 25085D00 */  addiu $t0, %lo(ptr_setup_path_tbl) # addiu $t0, $t0, 0x5d00
 /* 08C338 7F057808 240A0044 */  li    $t2, 68
 /* 08C33C 7F05780C 24090001 */  li    $t1, 1

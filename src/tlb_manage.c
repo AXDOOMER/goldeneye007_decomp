@@ -350,7 +350,7 @@ glabel translate_load_rom_from_TLBaddress
 /* 0026B8 70001AB8 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 0026BC 70001ABC 00027302 */  srl   $t6, $v0, 0xc
 /* 0026C0 70001AC0 0010C840 */  sll   $t9, $s0, 1
-/* 0026C4 70001AC4 3C088006 */  lui   $t0, %hi(TLB_manager_mapping_table_start) # $t0, 0x8006
+/* 0026C4 70001AC4 3C088006 */  lui   $t0, %hi(TLB_manager_mapping_table_start) 
 /* 0026C8 70001AC8 8FA50028 */  lw    $a1, 0x28($sp)
 /* 0026CC 70001ACC 8FA60020 */  lw    $a2, 0x20($sp)
 /* 0026D0 70001AD0 000E7980 */  sll   $t7, $t6, 6

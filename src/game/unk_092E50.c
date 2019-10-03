@@ -93,7 +93,7 @@ glabel sub_GAME_7F092E50
 /* 0C7994 7F092E64 3C013E80 */  li    $at, 0x3E800000 # 0.250000
 /* 0C7998 7F092E68 44814000 */  mtc1  $at, $f8
 /* 0C799C 7F092E6C 46802420 */  cvt.s.w $f16, $f4
-/* 0C79A0 7F092E70 3C088008 */  lui   $t0, %hi(flt_CODE_bss_80079E80) # $t0, 0x8008
+/* 0C79A0 7F092E70 3C088008 */  lui   $t0, %hi(flt_CODE_bss_80079E80) 
 /* 0C79A4 7F092E74 25089E80 */  addiu $t0, %lo(flt_CODE_bss_80079E80) # addiu $t0, $t0, -0x6180
 /* 0C79A8 7F092E78 C5060000 */  lwc1  $f6, ($t0)
 /* 0C79AC 7F092E7C 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -285,7 +285,7 @@ glabel sub_GAME_7F092E50
 /* 0C7C64 7F093134 3C038004 */  lui   $v1, %hi(MipMap2C_Something2_Setup)
 /* 0C7C68 7F093138 3C068008 */  lui   $a2, %hi(flt_CODE_bss_80079E88)
 /* 0C7C6C 7F09313C 3C078008 */  lui   $a3, %hi(flt_CODE_bss_80079E84)
-/* 0C7C70 7F093140 3C088008 */  lui   $t0, %hi(flt_CODE_bss_80079E80) # $t0, 0x8008
+/* 0C7C70 7F093140 3C088008 */  lui   $t0, %hi(flt_CODE_bss_80079E80) 
 /* 0C7C74 7F093144 46065200 */  add.s $f8, $f10, $f6
 /* 0C7C78 7F093148 25089E80 */  addiu $t0, %lo(flt_CODE_bss_80079E80) # addiu $t0, $t0, -0x6180
 /* 0C7C7C 7F09314C 24E79E84 */  addiu $a3, %lo(flt_CODE_bss_80079E84) # addiu $a3, $a3, -0x617c

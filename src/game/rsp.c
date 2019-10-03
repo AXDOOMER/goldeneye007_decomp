@@ -128,7 +128,7 @@ glabel load_rsp_microcode
 /* 104990 7F0CFE60 2739C820 */  addiu $t9, %lo(gsp3DDataStart) # addiu $t9, $t9, -0x37e0
 /* 104994 7F0CFE64 AC580010 */  sw    $t8, 0x10($v0)
 /* 104998 7F0CFE68 AC590018 */  sw    $t9, 0x18($v0)
-/* 10499C 7F0CFE6C 3C088005 */  lui   $t0, %hi(D_8004E9E8) # $t0, 0x8005
+/* 10499C 7F0CFE6C 3C088005 */  lui   $t0, %hi(D_8004E9E8) 
 /* 1049A0 7F0CFE70 8D08E9E8 */  lw    $t0, %lo(D_8004E9E8)($t0)
 /* 1049A4 7F0CFE74 3C098005 */  lui   $t1, %hi(D_8004E9E4) 
 /* 1049A8 7F0CFE78 00A45023 */  subu  $t2, $a1, $a0

@@ -10324,7 +10324,7 @@ glabel constructor_menu08_difficulty
 /* 043A14 7F00EEE4 AFAF0010 */  sw    $t7, 0x10($sp)
 /* 043A18 7F00EEE8 0FC025D8 */  jal   write_text_at_abs_coord
 /* 043A1C 7F00EEEC AFAA0014 */   sw    $t2, 0x14($sp)
-/* 043A20 7F00EEF0 3C088007 */  lui   $t0, %hi(mission_difficulty_highlighted) # $t0, 0x8007
+/* 043A20 7F00EEF0 3C088007 */  lui   $t0, %hi(mission_difficulty_highlighted) 
 /* 043A24 7F00EEF4 8D089784 */  lw    $t0, %lo(mission_difficulty_highlighted)($t0)
 /* 043A28 7F00EEF8 AFA20C70 */  sw    $v0, 0xc70($sp)
 /* 043A2C 7F00EEFC 8FA40C70 */  lw    $a0, 0xc70($sp)
@@ -11728,7 +11728,7 @@ glabel constructor_menu09_007options
 /* 044A44 7F00FF14 44074000 */  mfc1  $a3, $f8
 /* 044A48 7F00FF18 0FC2B405 */  jal   microcode_constructor_related_to_menus
 /* 044A4C 7F00FF1C 24E70037 */   addiu $a3, $a3, 0x37
-/* 044A50 7F00FF20 3C088007 */  lui   $t0, %hi(highlight_enemy_reaction) # $t0, 0x8007
+/* 044A50 7F00FF20 3C088007 */  lui   $t0, %hi(highlight_enemy_reaction) 
 /* 044A54 7F00FF24 8D089794 */  lw    $t0, %lo(highlight_enemy_reaction)($t0)
 /* 044A58 7F00FF28 00408025 */  move  $s0, $v0
 /* 044A5C 7F00FF2C 1100000C */  beqz  $t0, .L7F00FF60
@@ -12564,7 +12564,7 @@ glabel init_mp_options_for_scenario
 /* 045168 7F010638 02003025 */   move  $a2, $s0
 /* 04516C 7F01063C 3C058003 */  lui   $a1, %hi(player_1_char)
 /* 045170 7F010640 3C0A8007 */  lui   $t2, %hi(controlstyle_player) 
-/* 045174 7F010644 3C088007 */  lui   $t0, %hi(handicap_player1) # $t0, 0x8007
+/* 045174 7F010644 3C088007 */  lui   $t0, %hi(handicap_player1) 
 /* 045178 7F010648 250897A8 */  addiu $t0, %lo(handicap_player1) # addiu $t0, $t0, -0x6858
 /* 04517C 7F01064C 254A97B8 */  addiu $t2, %lo(controlstyle_player) # addiu $t2, $t2, -0x6848
 /* 045180 7F010650 24A5B524 */  addiu $a1, %lo(player_1_char) # addiu $a1, $a1, -0x4adc
@@ -13259,7 +13259,7 @@ glabel interface_menu0E_mpoptions
 .L7F010B7C:
 /* 0456AC 7F010B7C 8F1897C8 */  lw    $t8, %lo(highlight_players)($t8)
 /* 0456B0 7F010B80 24190001 */  li    $t9, 1
-/* 0456B4 7F010B84 3C088007 */  lui   $t0, %hi(highlight_scenario) # $t0, 0x8007
+/* 0456B4 7F010B84 3C088007 */  lui   $t0, %hi(highlight_scenario) 
 /* 0456B8 7F010B88 13000003 */  beqz  $t8, .L7F010B98
 /* 0456BC 7F010B8C 00000000 */   nop   
 /* 0456C0 7F010B90 10000037 */  b     .L7F010C70
@@ -13299,7 +13299,7 @@ glabel interface_menu0E_mpoptions
 .L7F010C08:
 /* 045738 7F010C08 8F1897DC */  lw    $t8, %lo(highlight_weaponselect)($t8)
 /* 04573C 7F010C0C 24190001 */  li    $t9, 1
-/* 045740 7F010C10 3C088007 */  lui   $t0, %hi(highlight_health) # $t0, 0x8007
+/* 045740 7F010C10 3C088007 */  lui   $t0, %hi(highlight_health) 
 /* 045744 7F010C14 13000003 */  beqz  $t8, .L7F010C24
 /* 045748 7F010C18 00000000 */   nop   
 /* 04574C 7F010C1C 10000014 */  b     .L7F010C70
@@ -15241,7 +15241,7 @@ glabel interface_menu0F_mpcharsel
 /* 046A88 7F011F58 3C118007 */  lui   $s1, %hi(mp_char_cur_select_player1)
 /* 046A8C 7F011F5C 3C128007 */  lui   $s2, %hi(dword_CODE_bss_80069730)
 /* 046A90 7F011F60 3C1E8006 */  lui   $fp, %hi(ptr_sfx_buf) 
-/* 046A94 7F011F64 3C178007 */  lui   $s7, %hi(size_mp_select_image_player1) # $s7, 0x8007
+/* 046A94 7F011F64 3C178007 */  lui   $s7, %hi(size_mp_select_image_player1) 
 /* 046A98 7F011F68 26F79750 */  addiu $s7, %lo(size_mp_select_image_player1) # addiu $s7, $s7, -0x68b0
 /* 046A9C 7F011F6C 27DE3720 */  addiu $fp, %lo(ptr_sfx_buf) # addiu $fp, $fp, 0x3720
 /* 046AA0 7F011F70 26529730 */  addiu $s2, %lo(dword_CODE_bss_80069730) # addiu $s2, $s2, -0x68d0
@@ -17201,7 +17201,7 @@ glabel constructor_menu10_mphandicap
 /* 047D88 7F013258 254A97A8 */  addiu $t2, %lo(handicap_player1) # addiu $t2, $t2, -0x6858
 /* 047D8C 7F01325C 25299740 */  addiu $t1, %lo(has_selected_char_player1) # addiu $t1, $t1, -0x68c0
 /* 047D90 7F013260 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTable) 
-/* 047D94 7F013264 3C178004 */  lui   $s7, %hi(ptrSecondFontTable) # $s7, 0x8004
+/* 047D94 7F013264 3C178004 */  lui   $s7, %hi(ptrSecondFontTable) 
 /* 047D98 7F013268 4481A000 */  mtc1  $at, $f20
 /* 047D9C 7F01326C 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTable) # addiu $s7, $s7, 0xeb8
 /* 047DA0 7F013270 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTable) # addiu $fp, $fp, 0xeb4
@@ -18040,7 +18040,7 @@ glabel constructor_menu11_mpcontrol
 /* 04858C 7F013A5C 254A97B8 */  addiu $t2, %lo(controlstyle_player) # addiu $t2, $t2, -0x6848
 /* 048590 7F013A60 25299740 */  addiu $t1, %lo(has_selected_char_player1) # addiu $t1, $t1, -0x68c0
 /* 048594 7F013A64 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTable) 
-/* 048598 7F013A68 3C178004 */  lui   $s7, %hi(ptrSecondFontTable) # $s7, 0x8004
+/* 048598 7F013A68 3C178004 */  lui   $s7, %hi(ptrSecondFontTable) 
 /* 04859C 7F013A6C 4481A000 */  mtc1  $at, $f20
 /* 0485A0 7F013A70 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTable) # addiu $s7, $s7, 0xeb8
 /* 0485A4 7F013A74 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTable) # addiu $fp, $fp, 0xeb4
@@ -19665,7 +19665,7 @@ glabel constructor_menu13_mpscenario
 /* 0495F4 7F014AC4 00107C03 */  sra   $t7, $s0, 0x10
 /* 0495F8 7F014AC8 0C00110B */  jal   get_video2_settings_txtClipH
 /* 0495FC 7F014ACC 01E08025 */   move  $s0, $t7
-/* 049600 7F014AD0 3C178004 */  lui   $s7, %hi(ptrSecondFontTable) # $s7, 0x8004
+/* 049600 7F014AD0 3C178004 */  lui   $s7, %hi(ptrSecondFontTable) 
 /* 049604 7F014AD4 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTable) 
 /* 049608 7F014AD8 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTable) # addiu $fp, $fp, 0xeb4
 /* 04960C 7F014ADC 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTable) # addiu $s7, $s7, 0xeb8
@@ -20471,7 +20471,7 @@ glabel constructor_menu14_mpteams
 /* 049D30 7F015200 0000A025 */  move  $s4, $zero
 /* 049D34 7F015204 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 049D38 7F015208 192000B2 */  blez  $t1, .L7F0154D4
-/* 049D3C 7F01520C 3C178004 */   lui   $s7, %hi(ptrSecondFontTable) # $s7, 0x8004
+/* 049D3C 7F01520C 3C178004 */   lui   $s7, %hi(ptrSecondFontTable) 
 /* 049D40 7F015210 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTable) 
 /* 049D44 7F015214 4481A000 */  mtc1  $at, $f20
 /* 049D48 7F015218 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTable) # addiu $fp, $fp, 0xeb4
@@ -21722,7 +21722,7 @@ def_7F015E0C:
 /* 04AA20 7F015EF0 00408025 */   move  $s0, $v0
 .L7F015EF4:
 /* 04AA24 7F015EF4 1061000C */  beq   $v1, $at, .L7F015F28
-/* 04AA28 7F015EF8 3C088007 */   lui   $t0, %hi(ptrbriefingdata) # $t0, 0x8007
+/* 04AA28 7F015EF8 3C088007 */   lui   $t0, %hi(ptrbriefingdata) 
 /* 04AA2C 7F015EFC 24010002 */  li    $at, 2
 /* 04AA30 7F015F00 1061000E */  beq   $v1, $at, .L7F015F3C
 /* 04AA34 7F015F04 3C0F8007 */   lui   $t7, %hi(ptrbriefingdata) 
@@ -24507,7 +24507,7 @@ glabel constructor_menu15_cheat
 /* 04CB14 7F017FE4 3C0F8007 */  lui   $t7, %hi(dword_CODE_bss_800697F0) 
 /* 04CB18 7F017FE8 25EF97F0 */  addiu $t7, %lo(dword_CODE_bss_800697F0) # addiu $t7, $t7, -0x6810
 /* 04CB1C 7F017FEC 0015A880 */  sll   $s5, $s5, 2
-/* 04CB20 7F017FF0 3C178004 */  lui   $s7, %hi(ptrFirstFontTable) # $s7, 0x8004
+/* 04CB20 7F017FF0 3C178004 */  lui   $s7, %hi(ptrFirstFontTable) 
 /* 04CB24 7F017FF4 3C168004 */  lui   $s6, %hi(ptrSecondFontTable)
 /* 04CB28 7F017FF8 26D60EB8 */  addiu $s6, %lo(ptrSecondFontTable) # addiu $s6, $s6, 0xeb8
 /* 04CB2C 7F017FFC 26F70EB4 */  addiu $s7, %lo(ptrFirstFontTable) # addiu $s7, $s7, 0xeb4
@@ -24643,7 +24643,7 @@ glabel constructor_menu15_cheat
 /* 04CD1C 7F0181EC 00000000 */   nop   
 .L7F0181F0:
 /* 04CD20 7F0181F0 3C168004 */  lui   $s6, %hi(ptrSecondFontTable)
-/* 04CD24 7F0181F4 3C178004 */  lui   $s7, %hi(ptrFirstFontTable) # $s7, 0x8004
+/* 04CD24 7F0181F4 3C178004 */  lui   $s7, %hi(ptrFirstFontTable) 
 /* 04CD28 7F0181F8 2861000D */  slti  $at, $v1, 0xd
 /* 04CD2C 7F0181FC 26F70EB4 */  addiu $s7, %lo(ptrFirstFontTable) # addiu $s7, $s7, 0xeb4
 /* 04CD30 7F018200 1420007D */  bnez  $at, .L7F0183F8

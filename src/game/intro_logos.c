@@ -284,7 +284,7 @@ glabel insert_sight_backdrop_eye_intro
 /* 03C7C0 7F007C90 3C190600 */  lui   $t9, 0x600
 /* 03C7C4 7F007C94 AF020004 */  sw    $v0, 4($t8)
 /* 03C7C8 7F007C98 AC790000 */  sw    $t9, ($v1)
-/* 03C7CC 7F007C9C 3C088007 */  lui   $t0, %hi(dword_CODE_bss_80069554) # $t0, 0x8007
+/* 03C7CC 7F007C9C 3C088007 */  lui   $t0, %hi(dword_CODE_bss_80069554) 
 /* 03C7D0 7F007CA0 8D089554 */  lw    $t0, %lo(dword_CODE_bss_80069554)($t0)
 /* 03C7D4 7F007CA4 3C018000 */  lui   $at, 0x8000
 /* 03C7D8 7F007CA8 26020008 */  addiu $v0, $s0, 8
