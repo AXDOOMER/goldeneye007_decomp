@@ -1,60 +1,5 @@
 #include "ultra64.h"
 
-//FIXME!!!!
-//im a problem for shifting, decomp me or move to .s
-
-//.section .rodata
-const u32 jpt_8004F210[] = {
-    0x7F007550,
-    0x7F00755C,
-    0x7F007550,
-    0x7F007550,
-    0x7F007550,
-    0x7F007550,
-    0x7F007550,
-    0x7F007550,
-    0x7F00755C,
-    0x7F007550,
-    0x7F007550,
-    0x7F007550,
-    0x7F007550,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F007550,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F007550,
-    0x7F007550,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F007550,
-    0x7F00755C,
-    0x7F00755C,
-    0x7F007550,
-    0x7F007550,
-    0x7F007550,
-    0x7F007550,
-    0x7F007550,
-    0x7F00755C,
-    0x7F007550,
-    0x7F00755C,
-    0x7F007550
-};
-//.align 4
-
 
 #ifdef NONMATCHING
 void cleanupObjects(s32 stage) {
@@ -62,8 +7,55 @@ void cleanupObjects(s32 stage) {
 }
 #else
 GLOBAL_ASM(
-.late_rodata
-
+.rdata
+glabel jpt_8004F210
+    .word .L7F007550
+    .word .L7F00755C
+    .word .L7F007550
+    .word .L7F007550
+    .word .L7F007550
+    .word .L7F007550
+    .word .L7F007550
+    .word .L7F007550
+    .word .L7F00755C
+    .word .L7F007550
+    .word .L7F007550
+    .word .L7F007550
+    .word .L7F007550
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F007550
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F007550
+    .word .L7F007550
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F007550
+    .word .L7F00755C
+    .word .L7F00755C
+    .word .L7F007550
+    .word .L7F007550
+    .word .L7F007550
+    .word .L7F007550
+    .word .L7F007550
+    .word .L7F00755C
+    .word .L7F007550
+    .word .L7F00755C
+    .word .L7F007550
 .text
 glabel cleanupObjects
 /* 03C030 7F007500 27BDFFE0 */  addiu $sp, $sp, -0x20
