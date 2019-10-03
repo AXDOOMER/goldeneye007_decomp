@@ -294,14 +294,14 @@ glabel sub_GAME_7F01C1A4
 /* 050D4C 7F01C21C 3C0AE700 */  lui   $t2, 0xe700
 /* 050D50 7F01C220 24640008 */  addiu $a0, $v1, 8
 /* 050D54 7F01C224 AD020004 */  sw    $v0, 4($t0)
-/* 050D58 7F01C228 3C0BBA00 */  lui   $t3, (0xBA001402 >> 16) # lui $t3, 0xba00
+/* 050D58 7F01C228 3C0BBA00 */  lui   $t3, (0xBA001402 >> 16) # lui $t3, 0xba00 gDPSetCycleType(2cycle)
 /* 050D5C 7F01C22C AC600004 */  sw    $zero, 4($v1)
 /* 050D60 7F01C230 AC6A0000 */  sw    $t2, ($v1)
 /* 050D64 7F01C234 356B1402 */  ori   $t3, (0xBA001402 & 0xFFFF) # ori $t3, $t3, 0x1402
 /* 050D68 7F01C238 24860008 */  addiu $a2, $a0, 8
 /* 050D6C 7F01C23C AC8B0000 */  sw    $t3, ($a0)
 /* 050D70 7F01C240 AC800004 */  sw    $zero, 4($a0)
-/* 050D74 7F01C244 3C0CB900 */  lui   $t4, (0xB900031D >> 16) # lui $t4, 0xb900
+/* 050D74 7F01C244 3C0CB900 */  lui   $t4, (0xB900031D >> 16) # lui $t4, 0xb900 gDPSetRenderMode(AAOpaSurf)
 /* 050D78 7F01C248 3C0D0055 */  lui   $t5, (0x00552048 >> 16) # lui $t5, 0x55
 /* 050D7C 7F01C24C 35AD2048 */  ori   $t5, (0x00552048 & 0xFFFF) # ori $t5, $t5, 0x2048
 /* 050D80 7F01C250 358C031D */  ori   $t4, (0xB900031D & 0xFFFF) # ori $t4, $t4, 0x31d
@@ -443,7 +443,7 @@ glabel sub_GAME_7F01C400
 /* 050F30 7F01C400 27BDFF90 */  addiu $sp, $sp, -0x70
 /* 050F34 7F01C404 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 050F38 7F01C408 AFB00018 */  sw    $s0, 0x18($sp)
-/* 050F3C 7F01C40C 3C0EBA00 */  lui   $t6, (0xBA000E02 >> 16) # lui $t6, 0xba00
+/* 050F3C 7F01C40C 3C0EBA00 */  lui   $t6, (0xBA000E02 >> 16) # lui $t6, 0xba00 #G_SETOTHERMODE_H
 /* 050F40 7F01C410 35CE0E02 */  ori   $t6, (0xBA000E02 & 0xFFFF) # ori $t6, $t6, 0xe02
 /* 050F44 7F01C414 AC8E0000 */  sw    $t6, ($a0)
 /* 050F48 7F01C418 AC800004 */  sw    $zero, 4($a0)
@@ -459,7 +459,7 @@ glabel sub_GAME_7F01C400
 /* 050F70 7F01C440 37390001 */  ori   $t9, (0xBB000001 & 0xFFFF) # ori $t9, $t9, 1
 /* 050F74 7F01C444 AC590000 */  sw    $t9, ($v0)
 /* 050F78 7F01C448 3C088000 */  lui   $t0, (0x80008000 >> 16)
-/* 050F7C 7F01C44C 3C09B900 */  lui   $t1, (0xB900031D >> 16) # lui $t1, 0xb900
+/* 050F7C 7F01C44C 3C09B900 */  lui   $t1, (0xB900031D >> 16) # lui $t1, 0xb900 #gDPSetRenderMode(OpaSurf)
 /* 050F80 7F01C450 3C0A0050 */  lui   $t2, (0x00504340 >> 16) # lui $t2, 0x50
 /* 050F84 7F01C454 3C0BFC11 */  lui   $t3, (0xFC119623 >> 16) # lui $t3, 0xfc11
 /* 050F88 7F01C458 3C0CFF2F */  lui   $t4, (0xFF2FFFFF >> 16) # lui $t4, 0xff2f
@@ -470,7 +470,7 @@ glabel sub_GAME_7F01C400
 /* 050F9C 7F01C46C 354A4340 */  ori   $t2, (0x00504340 & 0xFFFF) # ori $t2, $t2, 0x4340
 /* 050FA0 7F01C470 3529031D */  ori   $t1, (0xB900031D & 0xFFFF) # ori $t1, $t1, 0x31d
 /* 050FA4 7F01C474 358CFFFF */  ori   $t4, (0xFF2FFFFF & 0xFFFF) # ori $t4, $t4, 0xffff
-/* 050FA8 7F01C478 356B9623 */  ori   $t3, (0xFC119623 & 0xFFFF) # ori $t3, $t3, 0x9623
+/* 050FA8 7F01C478 356B9623 */  ori   $t3, (0xFC119623 & 0xFFFF) # ori $t3, $t3, 0x9623 #setcombine()
 /* 050FAC 7F01C47C 35AD0602 */  ori   $t5, (0xBA000602 & 0xFFFF) # ori $t5, $t5, 0x602
 /* 050FB0 7F01C480 35EF00B4 */  ori   $t7, (0x960000B4 & 0xFFFF) # ori $t7, $t7, 0xb4
 /* 050FB4 7F01C484 3C0EFA00 */  lui   $t6, 0xfa00
@@ -618,20 +618,20 @@ glabel sub_GAME_7F01C670
 /* 0511A8 7F01C678 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0511AC 7F01C67C AFB10018 */  sw    $s1, 0x18($sp)
 /* 0511B0 7F01C680 24900008 */  addiu $s0, $a0, 8
-/* 0511B4 7F01C684 3C0EBA00 */  lui   $t6, (0xBA000E02 >> 16) # lui $t6, 0xba00
+/* 0511B4 7F01C684 3C0EBA00 */  lui   $t6, (0xBA000E02 >> 16) # lui $t6, 0xba00 #G_SETOTHERMODE_H()
 /* 0511B8 7F01C688 35CE0E02 */  ori   $t6, (0xBA000E02 & 0xFFFF) # ori $t6, $t6, 0xe02
 /* 0511BC 7F01C68C 02001825 */  move  $v1, $s0
 /* 0511C0 7F01C690 3C0FBA00 */  lui   $t7, (0xBA000C02 >> 16) # lui $t7, 0xba00
 /* 0511C4 7F01C694 AC8E0000 */  sw    $t6, ($a0)
 /* 0511C8 7F01C698 AC800004 */  sw    $zero, 4($a0)
-/* 0511CC 7F01C69C 35EF0C02 */  ori   $t7, (0xBA000C02 & 0xFFFF) # ori $t7, $t7, 0xc02
+/* 0511CC 7F01C69C 35EF0C02 */  ori   $t7, (0xBA000C02 & 0xFFFF) # ori $t7, $t7, 0xc02 #G_SETOTHERMODE_H()
 /* 0511D0 7F01C6A0 26100008 */  addiu $s0, $s0, 8
 /* 0511D4 7F01C6A4 AC6F0000 */  sw    $t7, ($v1)
 /* 0511D8 7F01C6A8 24182000 */  li    $t8, 8192
 /* 0511DC 7F01C6AC 02002825 */  move  $a1, $s0
 /* 0511E0 7F01C6B0 AC780004 */  sw    $t8, 4($v1)
 /* 0511E4 7F01C6B4 26100008 */  addiu $s0, $s0, 8
-/* 0511E8 7F01C6B8 3C19BA00 */  lui   $t9, (0xBA001402 >> 16) # lui $t9, 0xba00
+/* 0511E8 7F01C6B8 3C19BA00 */  lui   $t9, (0xBA001402 >> 16) # lui $t9, 0xba00  #gDPSetCycleType(2Cycle)
 /* 0511EC 7F01C6BC 37391402 */  ori   $t9, (0xBA001402 & 0xFFFF) # ori $t9, $t9, 0x1402
 /* 0511F0 7F01C6C0 02003025 */  move  $a2, $s0
 /* 0511F4 7F01C6C4 ACB90000 */  sw    $t9, ($a1)
@@ -643,7 +643,7 @@ glabel sub_GAME_7F01C670
 /* 05120C 7F01C6DC ACC80000 */  sw    $t0, ($a2)
 /* 051210 7F01C6E0 02003825 */  move  $a3, $s0
 /* 051214 7F01C6E4 26100008 */  addiu $s0, $s0, 8
-/* 051218 7F01C6E8 3C0ABB00 */  lui   $t2, (0xBB000001 >> 16) # lui $t2, 0xbb00
+/* 051218 7F01C6E8 3C0ABB00 */  lui   $t2, (0xBB000001 >> 16) # lui $t2, 0xbb00 
 /* 05121C 7F01C6EC 3C0B8000 */  lui   $t3, (0x80008000 >> 16) # lui $t3, 0x8000
 /* 051220 7F01C6F0 356B8000 */  ori   $t3, (0x80008000 & 0xFFFF) # ori $t3, $t3, 0x8000
 /* 051224 7F01C6F4 354A0001 */  ori   $t2, (0xBB000001 & 0xFFFF) # ori $t2, $t2, 1
@@ -651,7 +651,7 @@ glabel sub_GAME_7F01C670
 /* 05122C 7F01C6FC ACEA0000 */  sw    $t2, ($a3)
 /* 051230 7F01C700 ACEB0004 */  sw    $t3, 4($a3)
 /* 051234 7F01C704 26100008 */  addiu $s0, $s0, 8
-/* 051238 7F01C708 3C0CB900 */  lui   $t4, (0xB900031D >> 16) # lui $t4, 0xb900
+/* 051238 7F01C708 3C0CB900 */  lui   $t4, (0xB900031D >> 16) # lui $t4, 0xb900 #gDPSetRenderMode()
 /* 05123C 7F01C70C 3C0D0050 */  lui   $t5, (0x00504340 >> 16) # lui $t5, 0x50
 /* 051240 7F01C710 35AD4340 */  ori   $t5, (0x00504340 & 0xFFFF) # ori $t5, $t5, 0x4340
 /* 051244 7F01C714 358C031D */  ori   $t4, (0xB900031D & 0xFFFF) # ori $t4, $t4, 0x31d
@@ -659,7 +659,7 @@ glabel sub_GAME_7F01C670
 /* 05124C 7F01C71C AC4C0000 */  sw    $t4, ($v0)
 /* 051250 7F01C720 AC4D0004 */  sw    $t5, 4($v0)
 /* 051254 7F01C724 3C0FFF2F */  lui   $t7, (0xFF2FFFFF >> 16) # lui $t7, 0xff2f
-/* 051258 7F01C728 3C0EFC11 */  lui   $t6, (0xFC119623 >> 16) # lui $t6, 0xfc11
+/* 051258 7F01C728 3C0EFC11 */  lui   $t6, (0xFC119623 >> 16) # lui $t6, 0xfc11 #Setcombine()
 /* 05125C 7F01C72C 35CE9623 */  ori   $t6, (0xFC119623 & 0xFFFF) # ori $t6, $t6, 0x9623
 /* 051260 7F01C730 35EFFFFF */  ori   $t7, (0xFF2FFFFF & 0xFFFF) # ori $t7, $t7, 0xffff
 /* 051264 7F01C734 26100008 */  addiu $s0, $s0, 8
@@ -667,7 +667,7 @@ glabel sub_GAME_7F01C670
 /* 05126C 7F01C73C AC6E0000 */  sw    $t6, ($v1)
 /* 051270 7F01C740 02002025 */  move  $a0, $s0
 /* 051274 7F01C744 26100008 */  addiu $s0, $s0, 8
-/* 051278 7F01C748 3C18BA00 */  lui   $t8, (0xBA000602 >> 16) # lui $t8, 0xba00
+/* 051278 7F01C748 3C18BA00 */  lui   $t8, (0xBA000602 >> 16) # lui $t8, 0xba00  #G_SETOTHERMODE_H(envmapping)
 /* 05127C 7F01C74C 37180602 */  ori   $t8, (0xBA000602 & 0xFFFF) # ori $t8, $t8, 0x602
 /* 051280 7F01C750 02002825 */  move  $a1, $s0
 /* 051284 7F01C754 AC980000 */  sw    $t8, ($a0)
@@ -679,7 +679,7 @@ glabel sub_GAME_7F01C670
 /* 05129C 7F01C76C 02003025 */  move  $a2, $s0
 /* 0512A0 7F01C770 ACB90000 */  sw    $t9, ($a1)
 /* 0512A4 7F01C774 ACA80004 */  sw    $t0, 4($a1)
-/* 0512A8 7F01C778 3C09BA00 */  lui   $t1, (0xBA001301 >> 16) # lui $t1, 0xba00
+/* 0512A8 7F01C778 3C09BA00 */  lui   $t1, (0xBA001301 >> 16) # lui $t1, 0xba00  #G_SETOTHERMODE_H()
 /* 0512AC 7F01C77C 35291301 */  ori   $t1, (0xBA001301 & 0xFFFF) # ori $t1, $t1, 0x1301
 /* 0512B0 7F01C780 26100008 */  addiu $s0, $s0, 8
 /* 0512B4 7F01C784 ACC90000 */  sw    $t1, ($a2)
@@ -724,7 +724,7 @@ glabel sub_GAME_7F01C670
 /* 051350 7F01C820 26100008 */  addiu $s0, $s0, 8
 /* 051354 7F01C824 ACE00004 */  sw    $zero, 4($a3)
 /* 051358 7F01C828 3C0D0008 */  lui   $t5, (0x00080200 >> 16) # lui $t5, 8
-/* 05135C 7F01C82C 3C0CF580 */  lui   $t4, (0xF5800C00 >> 16) # lui $t4, 0xf580
+/* 05135C 7F01C82C 3C0CF580 */  lui   $t4, (0xF5800C00 >> 16) # lui $t4, 0xf580 #settilesize()
 /* 051360 7F01C830 358C0C00 */  ori   $t4, (0xF5800C00 & 0xFFFF) # ori $t4, $t4, 0xc00
 /* 051364 7F01C834 35AD0200 */  ori   $t5, (0x00080200 & 0xFFFF) # ori $t5, $t5, 0x200
 /* 051368 7F01C838 02001825 */  move  $v1, $s0
@@ -822,7 +822,7 @@ glabel sub_GAME_7F01C670
 /* 0514D0 7F01C9A0 02002025 */  move  $a0, $s0
 /* 0514D4 7F01C9A4 AC6B0000 */  sw    $t3, ($v1)
 /* 0514D8 7F01C9A8 AC600004 */  sw    $zero, 4($v1)
-/* 0514DC 7F01C9AC 3C0CBA00 */  lui   $t4, (0xBA000602 >> 16) # lui $t4, 0xba00
+/* 0514DC 7F01C9AC 3C0CBA00 */  lui   $t4, (0xBA000602 >> 16) # lui $t4, 0xba00  #G_SETOTHERMODE_H()
 /* 0514E0 7F01C9B0 16200002 */  bnez  $s1, .L7F01C9BC
 /* 0514E4 7F01C9B4 00000000 */   nop   
 /* 0514E8 7F01C9B8 0007000D */  break 7
@@ -834,13 +834,13 @@ glabel sub_GAME_7F01C670
 /* 0514FC 7F01C9CC 00000000 */   nop   
 /* 051500 7F01C9D0 0006000D */  break 6
 .L7F01C9D4:
-/* 051504 7F01C9D4 358C0602 */  ori   $t4, (0xBA000602 & 0xFFFF) # ori $t4, $t4, 0x602
+/* 051504 7F01C9D4 358C0602 */  ori   $t4, (0xBA000602 & 0xFFFF) # ori $t4, $t4, 0x602 #G_SETOTHERMODE_H()
 /* 051508 7F01C9D8 26100008 */  addiu $s0, $s0, 8
 /* 05150C 7F01C9DC 240F0040 */  li    $t7, 64
 /* 051510 7F01C9E0 AC8F0004 */  sw    $t7, 4($a0)
 /* 051514 7F01C9E4 AC8C0000 */  sw    $t4, ($a0)
 /* 051518 7F01C9E8 02002825 */  move  $a1, $s0
-/* 05151C 7F01C9EC 3C0EBA00 */  lui   $t6, (0xBA001301 >> 16) # lui $t6, 0xba00
+/* 05151C 7F01C9EC 3C0EBA00 */  lui   $t6, (0xBA001301 >> 16) # lui $t6, 0xba00 #G_SETOTHERMODE_H()
 /* 051520 7F01C9F0 35CE1301 */  ori   $t6, (0xBA001301 & 0xFFFF) # ori $t6, $t6, 0x1301
 /* 051524 7F01C9F4 3C190008 */  lui   $t9, 8
 /* 051528 7F01C9F8 ACB90004 */  sw    $t9, 4($a1)
