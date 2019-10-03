@@ -1,7 +1,7 @@
 #include "ultra64.h"
 
 //FIXME!!!!
-//im a problem for matching, decomp me or move to .s
+//im a problem for shifting, decomp me or move to .s
 
 //.section .rodata
 const u32 jpt_8004F210[] = {
