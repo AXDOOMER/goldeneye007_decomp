@@ -18460,20 +18460,20 @@ Linker script and memory map
  build/src/game/textrelated.o(.data)
  .data          0x0000000080040e80       0xb0 build/src/game/textrelated.o
                 0x0000000080040e80                D_80040E80
-                0x0000000080040e84                D_80040E84
-                0x0000000080040e88                D_80040E88
-                0x0000000080040e8c                D_80040E8C
-                0x0000000080040e90                D_80040E90
-                0x0000000080040e94                D_80040E94
-                0x0000000080040e98                D_80040E98
-                0x0000000080040e9c                D_80040E9C
-                0x0000000080040ea0                D_80040EA0
-                0x0000000080040ea4                D_80040EA4
+                0x0000000080040e84                text_spacing
+                0x0000000080040e88                text_orientation
+                0x0000000080040e8c                text_wordwrap
+                0x0000000080040e90                overlap_correction
+                0x0000000080040e94                text_bilevel_filter
+                0x0000000080040e98                text_x
+                0x0000000080040e9c                text_y
+                0x0000000080040ea0                text_s
+                0x0000000080040ea4                text_t
                 0x0000000080040ea8                D_80040EA8
-                0x0000000080040eac                D_80040EAC
-                0x0000000080040eb0                D_80040EB0
-                0x0000000080040eb4                ptrFirstFontTable
-                0x0000000080040eb8                ptrSecondFontTable
+                0x0000000080040eac                ptrFirstFontTableSmall
+                0x0000000080040eb0                ptrSecondFontTableSmall
+                0x0000000080040eb4                ptrFirstFontTableLarge
+                0x0000000080040eb8                ptrSecondFontTableLarge
                 0x0000000080040ebc                D_80040EBC
                 0x0000000080040edc                D_80040EDC
                 0x0000000080040ee0                D_80040EE0

@@ -4,6 +4,7 @@
 #include "game/mainmenu.h"
 #include "game/unk_093880.h"
 #include "music.h"
+#include "game/textrelated.h"
 
 // bss
 //CODE.bss:800695A0
@@ -2246,7 +2247,7 @@ s32 add_tab1_start(s32 arg0) {
     sub_GAME_7F0ACB78(1);
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069770, D_80040EB0, (?32) D_80040EAC, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069770, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
     sp54 = 0x33;
     if (sp4C < 0)
     {
@@ -2268,11 +2269,11 @@ s32 add_tab1_start(s32 arg0) {
     // Node 6
     sp54 = (s32) (0x54 - (sp48 >> 1));
     sp44 = get_video2_settings_txtClipH();
-    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069770, (?32) D_80040EB0, (?32) D_80040EAC, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
+    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069770, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
     sub_GAME_7F0ACB88(0);
     sub_GAME_7F0ACB78(0);
     return;
-    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069770, (?32) D_80040EB0, (?32) D_80040EAC, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
+    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069770, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
 }
 #else
 GLOBAL_ASM(
@@ -2288,13 +2289,13 @@ glabel add_tab1_start
 /* 03EBCC 7F00A09C AC229770 */  sw    $v0, %lo(dword_CODE_bss_80069770)($at)
 /* 03EBD0 7F00A0A0 0FC2B2DE */  jal   sub_GAME_7F0ACB78
 /* 03EBD4 7F00A0A4 24040001 */   li    $a0, 1
-/* 03EBD8 7F00A0A8 3C0E8004 */  lui   $t6, %hi(D_80040EAC) 
-/* 03EBDC 7F00A0AC 8DCE0EAC */  lw    $t6, %lo(D_80040EAC)($t6)
+/* 03EBD8 7F00A0A8 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
+/* 03EBDC 7F00A0AC 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
 /* 03EBE0 7F00A0B0 3C068007 */  lui   $a2, %hi(dword_CODE_bss_80069770)
-/* 03EBE4 7F00A0B4 3C078004 */  lui   $a3, %hi(D_80040EB0)
+/* 03EBE4 7F00A0B4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableSmall)
 /* 03EBE8 7F00A0B8 AFA00048 */  sw    $zero, 0x48($sp)
 /* 03EBEC 7F00A0BC AFA0004C */  sw    $zero, 0x4c($sp)
-/* 03EBF0 7F00A0C0 8CE70EB0 */  lw    $a3, %lo(D_80040EB0)($a3)
+/* 03EBF0 7F00A0C0 8CE70EB0 */  lw    $a3, %lo(ptrSecondFontTableSmall)($a3)
 /* 03EBF4 7F00A0C4 8CC69770 */  lw    $a2, %lo(dword_CODE_bss_80069770)($a2)
 /* 03EBF8 7F00A0C8 27A4004C */  addiu $a0, $sp, 0x4c
 /* 03EBFC 7F00A0CC 27A50048 */  addiu $a1, $sp, 0x48
@@ -2341,10 +2342,10 @@ glabel add_tab1_start
 /* 03EC94 7F00A164 AFAF0054 */   sw    $t7, 0x54($sp)
 /* 03EC98 7F00A168 0C001107 */  jal   get_video2_settings_txtClipW
 /* 03EC9C 7F00A16C A7A20044 */   sh    $v0, 0x44($sp)
-/* 03ECA0 7F00A170 3C088004 */  lui   $t0, %hi(D_80040EB0) 
-/* 03ECA4 7F00A174 3C198004 */  lui   $t9, %hi(D_80040EAC) 
-/* 03ECA8 7F00A178 8F390EAC */  lw    $t9, %lo(D_80040EAC)($t9)
-/* 03ECAC 7F00A17C 8D080EB0 */  lw    $t0, %lo(D_80040EB0)($t0)
+/* 03ECA0 7F00A170 3C088004 */  lui   $t0, %hi(ptrSecondFontTableSmall) 
+/* 03ECA4 7F00A174 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) 
+/* 03ECA8 7F00A178 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
+/* 03ECAC 7F00A17C 8D080EB0 */  lw    $t0, %lo(ptrSecondFontTableSmall)($t0)
 /* 03ECB0 7F00A180 87B80044 */  lh    $t8, 0x44($sp)
 /* 03ECB4 7F00A184 3C078007 */  lui   $a3, %hi(dword_CODE_bss_80069770)
 /* 03ECB8 7F00A188 240900FF */  li    $t1, 255
@@ -2431,7 +2432,7 @@ s32 add_tab3_previous(s32 arg0) {
     sub_GAME_7F0ACB78(1);
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069778, D_80040EB0, (?32) D_80040EAC, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069778, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
     sp54 = 0xec;
     if (sp4C < 0)
     {
@@ -2453,11 +2454,11 @@ s32 add_tab3_previous(s32 arg0) {
     // Node 6
     sp54 = (s32) (0x10d - (sp48 >> 1));
     sp44 = get_video2_settings_txtClipH();
-    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069778, (?32) D_80040EB0, (?32) D_80040EAC, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
+    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069778, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
     sub_GAME_7F0ACB88(0);
     sub_GAME_7F0ACB78(0);
     return;
-    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069778, (?32) D_80040EB0, (?32) D_80040EAC, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
+    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069778, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
 }
 #else
 GLOBAL_ASM(
@@ -2473,13 +2474,13 @@ glabel add_tab3_previous
 /* 03ED84 7F00A254 AC229778 */  sw    $v0, %lo(dword_CODE_bss_80069778)($at)
 /* 03ED88 7F00A258 0FC2B2DE */  jal   sub_GAME_7F0ACB78
 /* 03ED8C 7F00A25C 24040001 */   li    $a0, 1
-/* 03ED90 7F00A260 3C0E8004 */  lui   $t6, %hi(D_80040EAC) 
-/* 03ED94 7F00A264 8DCE0EAC */  lw    $t6, %lo(D_80040EAC)($t6)
+/* 03ED90 7F00A260 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
+/* 03ED94 7F00A264 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
 /* 03ED98 7F00A268 3C068007 */  lui   $a2, %hi(dword_CODE_bss_80069778)
-/* 03ED9C 7F00A26C 3C078004 */  lui   $a3, %hi(D_80040EB0)
+/* 03ED9C 7F00A26C 3C078004 */  lui   $a3, %hi(ptrSecondFontTableSmall)
 /* 03EDA0 7F00A270 AFA00048 */  sw    $zero, 0x48($sp)
 /* 03EDA4 7F00A274 AFA0004C */  sw    $zero, 0x4c($sp)
-/* 03EDA8 7F00A278 8CE70EB0 */  lw    $a3, %lo(D_80040EB0)($a3)
+/* 03EDA8 7F00A278 8CE70EB0 */  lw    $a3, %lo(ptrSecondFontTableSmall)($a3)
 /* 03EDAC 7F00A27C 8CC69778 */  lw    $a2, %lo(dword_CODE_bss_80069778)($a2)
 /* 03EDB0 7F00A280 27A4004C */  addiu $a0, $sp, 0x4c
 /* 03EDB4 7F00A284 27A50048 */  addiu $a1, $sp, 0x48
@@ -2526,10 +2527,10 @@ glabel add_tab3_previous
 /* 03EE4C 7F00A31C AFAF0054 */   sw    $t7, 0x54($sp)
 /* 03EE50 7F00A320 0C001107 */  jal   get_video2_settings_txtClipW
 /* 03EE54 7F00A324 A7A20044 */   sh    $v0, 0x44($sp)
-/* 03EE58 7F00A328 3C088004 */  lui   $t0, %hi(D_80040EB0) 
-/* 03EE5C 7F00A32C 3C198004 */  lui   $t9, %hi(D_80040EAC) 
-/* 03EE60 7F00A330 8F390EAC */  lw    $t9, %lo(D_80040EAC)($t9)
-/* 03EE64 7F00A334 8D080EB0 */  lw    $t0, %lo(D_80040EB0)($t0)
+/* 03EE58 7F00A328 3C088004 */  lui   $t0, %hi(ptrSecondFontTableSmall) 
+/* 03EE5C 7F00A32C 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) 
+/* 03EE60 7F00A330 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
+/* 03EE64 7F00A334 8D080EB0 */  lw    $t0, %lo(ptrSecondFontTableSmall)($t0)
 /* 03EE68 7F00A338 87B80044 */  lh    $t8, 0x44($sp)
 /* 03EE6C 7F00A33C 3C078007 */  lui   $a3, %hi(dword_CODE_bss_80069778)
 /* 03EE70 7F00A340 240900FF */  li    $t1, 255
@@ -2593,7 +2594,7 @@ s32 add_tab2_next(s32 arg0) {
     sub_GAME_7F0ACB78(1);
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069774, D_80040EB0, (?32) D_80040EAC, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069774, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
     sp54 = 0x90;
     if (sp4C < 0)
     {
@@ -2615,11 +2616,11 @@ s32 add_tab2_next(s32 arg0) {
     // Node 6
     sp54 = (s32) (0xb1 - (sp48 >> 1));
     sp44 = get_video2_settings_txtClipH();
-    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069774, (?32) D_80040EB0, (?32) D_80040EAC, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
+    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069774, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
     sub_GAME_7F0ACB88(0);
     sub_GAME_7F0ACB78(0);
     return;
-    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069774, (?32) D_80040EB0, (?32) D_80040EAC, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
+    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069774, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
 }
 #else
 GLOBAL_ASM(
@@ -2635,13 +2636,13 @@ glabel add_tab2_next
 /* 03EF60 7F00A430 AC229774 */  sw    $v0, %lo(dword_CODE_bss_80069774)($at)
 /* 03EF64 7F00A434 0FC2B2DE */  jal   sub_GAME_7F0ACB78
 /* 03EF68 7F00A438 24040001 */   li    $a0, 1
-/* 03EF6C 7F00A43C 3C0E8004 */  lui   $t6, %hi(D_80040EAC) 
-/* 03EF70 7F00A440 8DCE0EAC */  lw    $t6, %lo(D_80040EAC)($t6)
+/* 03EF6C 7F00A43C 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
+/* 03EF70 7F00A440 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
 /* 03EF74 7F00A444 3C068007 */  lui   $a2, %hi(dword_CODE_bss_80069774)
-/* 03EF78 7F00A448 3C078004 */  lui   $a3, %hi(D_80040EB0)
+/* 03EF78 7F00A448 3C078004 */  lui   $a3, %hi(ptrSecondFontTableSmall)
 /* 03EF7C 7F00A44C AFA00048 */  sw    $zero, 0x48($sp)
 /* 03EF80 7F00A450 AFA0004C */  sw    $zero, 0x4c($sp)
-/* 03EF84 7F00A454 8CE70EB0 */  lw    $a3, %lo(D_80040EB0)($a3)
+/* 03EF84 7F00A454 8CE70EB0 */  lw    $a3, %lo(ptrSecondFontTableSmall)($a3)
 /* 03EF88 7F00A458 8CC69774 */  lw    $a2, %lo(dword_CODE_bss_80069774)($a2)
 /* 03EF8C 7F00A45C 27A4004C */  addiu $a0, $sp, 0x4c
 /* 03EF90 7F00A460 27A50048 */  addiu $a1, $sp, 0x48
@@ -2688,10 +2689,10 @@ glabel add_tab2_next
 /* 03F028 7F00A4F8 AFAF0054 */   sw    $t7, 0x54($sp)
 /* 03F02C 7F00A4FC 0C001107 */  jal   get_video2_settings_txtClipW
 /* 03F030 7F00A500 A7A20044 */   sh    $v0, 0x44($sp)
-/* 03F034 7F00A504 3C088004 */  lui   $t0, %hi(D_80040EB0) 
-/* 03F038 7F00A508 3C198004 */  lui   $t9, %hi(D_80040EAC) 
-/* 03F03C 7F00A50C 8F390EAC */  lw    $t9, %lo(D_80040EAC)($t9)
-/* 03F040 7F00A510 8D080EB0 */  lw    $t0, %lo(D_80040EB0)($t0)
+/* 03F034 7F00A504 3C088004 */  lui   $t0, %hi(ptrSecondFontTableSmall) 
+/* 03F038 7F00A508 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) 
+/* 03F03C 7F00A50C 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
+/* 03F040 7F00A510 8D080EB0 */  lw    $t0, %lo(ptrSecondFontTableSmall)($t0)
 /* 03F044 7F00A514 87B80044 */  lh    $t8, 0x44($sp)
 /* 03F048 7F00A518 3C078007 */  lui   $a3, %hi(dword_CODE_bss_80069774)
 /* 03F04C 7F00A51C 240900FF */  li    $t1, 255
@@ -2959,7 +2960,7 @@ void display_aligned_white_text_to_screen(s32 arg0, s32 arg1, s32 arg2, s32 arg3
 
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, arg5, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp48, arg5, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     temp_lo = arg3 * sp48;
     phi_t0 = temp_lo >> 1;
     if (temp_lo < 0)
@@ -2982,17 +2983,17 @@ GLOBAL_ASM(
 .text
 glabel display_aligned_white_text_to_screen
 /* 03F314 7F00A7E4 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 03F318 7F00A7E8 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTable) 
-/* 03F31C 7F00A7EC 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTable)($t6)
+/* 03F318 7F00A7E8 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) 
+/* 03F31C 7F00A7EC 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
 /* 03F320 7F00A7F0 AFA7005C */  sw    $a3, 0x5c($sp)
 /* 03F324 7F00A7F4 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 03F328 7F00A7F8 AFA40050 */  sw    $a0, 0x50($sp)
 /* 03F32C 7F00A7FC AFA50054 */  sw    $a1, 0x54($sp)
 /* 03F330 7F00A800 AFA60058 */  sw    $a2, 0x58($sp)
-/* 03F334 7F00A804 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 03F334 7F00A804 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 03F338 7F00A808 AFA00048 */  sw    $zero, 0x48($sp)
 /* 03F33C 7F00A80C AFA0004C */  sw    $zero, 0x4c($sp)
-/* 03F340 7F00A810 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 03F340 7F00A810 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 03F344 7F00A814 8FA60064 */  lw    $a2, 0x64($sp)
 /* 03F348 7F00A818 27A50048 */  addiu $a1, $sp, 0x48
 /* 03F34C 7F00A81C 27A4004C */  addiu $a0, $sp, 0x4c
@@ -3119,7 +3120,7 @@ loop_3:
 loop_5:
     temp_s0_2 = phi_s0_2 + 0x14;
     phi_s0_2 = temp_s0_2;
-    phi_s4 = display_aligned_white_text_to_screen(phi_s4, phi_s0_2->unk0, phi_s0_2->unk4, phi_s0_2->unk8, (?32) phi_s0_2->unkC, get_textptr_for_textID(phi_s0_2->unk10), (?32) ptrSecondFontTable, (?32) ptrFirstFontTable);
+    phi_s4 = display_aligned_white_text_to_screen(phi_s4, phi_s0_2->unk0, phi_s0_2->unk4, phi_s0_2->unk8, (?32) phi_s0_2->unkC, get_textptr_for_textID(phi_s0_2->unk10), (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge);
     if (temp_s0_2 < &D_8002AABC)
     {
         goto loop_5;
@@ -3230,13 +3231,13 @@ glabel constructor_menu00_legalscreen
 /* 03F58C 7F00AA5C 02802025 */   move  $a0, $s4
 /* 03F590 7F00AA60 3C108003 */  lui   $s0, %hi(D_8002A9CC)
 /* 03F594 7F00AA64 3C118003 */  lui   $s1, %hi(D_8002AABC)
-/* 03F598 7F00AA68 3C138004 */  lui   $s3, %hi(ptrFirstFontTable)
-/* 03F59C 7F00AA6C 3C128004 */  lui   $s2, %hi(ptrSecondFontTable)
+/* 03F598 7F00AA68 3C138004 */  lui   $s3, %hi(ptrFirstFontTableLarge)
+/* 03F59C 7F00AA6C 3C128004 */  lui   $s2, %hi(ptrSecondFontTableLarge)
 /* 03F5A0 7F00AA70 0040A025 */  move  $s4, $v0
 /* 03F5A4 7F00AA74 2610A9CC */  addiu $s0, %lo(D_8002A9CC) # addiu $s0, $s0, -0x5634
 /* 03F5A8 7F00AA78 2631AABC */  addiu $s1, %lo(D_8002AABC) # addiu $s1, $s1, -0x5544
-/* 03F5AC 7F00AA7C 26520EB8 */  addiu $s2, %lo(ptrSecondFontTable) # addiu $s2, $s2, 0xeb8
-/* 03F5B0 7F00AA80 26730EB4 */  addiu $s3, %lo(ptrFirstFontTable) # addiu $s3, $s3, 0xeb4
+/* 03F5AC 7F00AA7C 26520EB8 */  addiu $s2, %lo(ptrSecondFontTableLarge) # addiu $s2, $s2, 0xeb8
+/* 03F5B0 7F00AA80 26730EB4 */  addiu $s3, %lo(ptrFirstFontTableLarge) # addiu $s3, $s3, 0xeb4
 .L7F00AA84:
 /* 03F5B4 7F00AA84 0FC30776 */  jal   get_textptr_for_textID
 /* 03F5B8 7F00AA88 96040010 */   lhu   $a0, 0x10($s0)
@@ -5977,7 +5978,7 @@ loop_7:
         truncf(spE4);
         truncf(spE8);
         get_video2_settings_txtClipW();
-        arg0 = en_text_write_stuff(arg0, &sp100, &spFC, get_textptr_for_textID(TEXT(LTITLE, 0x17)), (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, get_video2_settings_txtClipH(), 0, 0);
+        arg0 = en_text_write_stuff(arg0, &sp100, &spFC, get_textptr_for_textID(TEXT(LTITLE, 0x17)), (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
         temp_s1_2 = get_textptr_for_textID(TEXT(LTITLE, 0x18));
         truncf(spE4);
         truncf(spE8);
@@ -5987,15 +5988,15 @@ loop_7:
         {
             spF4 = 0;
             spF8 = 0;
-            sub_GAME_7F0AE98C(temp_a0, temp_a1, temp_s1_2, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+            sub_GAME_7F0AE98C(temp_a0, temp_a1, temp_s1_2, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
             arg0 = microcode_constructor_related_to_menus(arg0, sp100 + -1, spFC + -1, (sp100 + spF4) + 3, (s32) (spFC + spF8), 0x32);
             get_video2_settings_txtClipW();
-            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_2, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, -1, get_video2_settings_txtClipH(), 0, 0);
+            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_2, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, -1, get_video2_settings_txtClipH(), 0, 0);
         }
         else
         {
             get_video2_settings_txtClipW(temp_a0, temp_a1, temp_s1_2);
-            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_2, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, get_video2_settings_txtClipH(), 0, 0);
+            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_2, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
         }
         temp_s1_3 = get_textptr_for_textID(TEXT(LTITLE, 0x19));
         truncf(spE4);
@@ -6009,16 +6010,16 @@ loop_7:
         if (folder_selected_for_deletion_choice != 0)
         {
             get_video2_settings_txtClipW(temp_a0_2, temp_a1_2, temp_s1_3);
-            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_3, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, get_video2_settings_txtClipH(), 0, 0);
+            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_3, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
         }
         else
         {
             spF4 = 0;
             spF8 = 0;
-            sub_GAME_7F0AE98C(temp_a0_2, temp_a1_2, temp_s1_3, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+            sub_GAME_7F0AE98C(temp_a0_2, temp_a1_2, temp_s1_3, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
             arg0 = microcode_constructor_related_to_menus(arg0, sp100 + -1, spFC + -1, (sp100 + spF4) + 3, (s32) (spFC + spF8), 0x32);
             get_video2_settings_txtClipW();
-            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_3, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, -1, get_video2_settings_txtClipH(), 0, 0);
+            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_3, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, -1, get_video2_settings_txtClipH(), 0, 0);
         }
     }
     else
@@ -6035,7 +6036,7 @@ loop_7:
                     string_load_parse_something(&spD0, &asc_D_8004F488);
                     spF4 = 0;
                     spF8 = 0;
-                    sub_GAME_7F0AE98C(&spF8, &spF4, &spD0, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+                    sub_GAME_7F0AE98C(&spF8, &spF4, &spD0, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
                     truncf(spE4);
                     if (spF4 < 0)
                     {
@@ -6043,7 +6044,7 @@ loop_7:
                     }
                     truncf(spE8);
                     get_video2_settings_txtClipW();
-                    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, &spD0, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, get_video2_settings_txtClipH(), 0, 0);
+                    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, &spD0, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
                 }
                 if (spEC != 3)
                 {
@@ -6082,7 +6083,7 @@ loop_24:
                     string_load_parse_something(&spBC, &asc_D_8004F490);
                     spF4 = 0;
                     spF8 = 0;
-                    sub_GAME_7F0AE98C(&spF8, &spF4, &spBC, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+                    sub_GAME_7F0AE98C(&spF8, &spF4, &spBC, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
                     truncf(spE4);
                     if (spF4 < 0)
                     {
@@ -6090,7 +6091,7 @@ loop_24:
                     }
                     truncf(spE8);
                     get_video2_settings_txtClipW();
-                    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, &spBC, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, get_video2_settings_txtClipH(), 0, 0);
+                    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, &spBC, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
                 }
             }
         }
@@ -6106,25 +6107,25 @@ loop_24:
     temp_ret_4 = get_textptr_for_textID(TEXT(LTITLE, 0x1b));
     spF4 = 0;
     spF8 = 0;
-    sub_GAME_7F0AE98C(&spF8, &spF4, temp_ret_4, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&spF8, &spF4, temp_ret_4, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     if (spF8 < 0)
     {
 
     }
     get_video2_settings_txtClipW();
-    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_ret_4, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, -1, get_video2_settings_txtClipH(), 0, 0);
+    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_ret_4, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, -1, get_video2_settings_txtClipH(), 0, 0);
     folder_option_COPY_left_bound.unk8 = (f32) (sp100 + spF4);
     temp_ret_5 = get_textptr_for_textID(TEXT(LTITLE, 0x1c));
     spF4 = 0;
     spF8 = 0;
-    sub_GAME_7F0AE98C(&spF8, &spF4, temp_ret_5, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&spF8, &spF4, temp_ret_5, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     if (spF8 < 0)
     {
 
     }
     get_video2_settings_txtClipW();
     folder_option_ERASE_left_bound.unk8 = (f32) (sp100 + spF4);
-    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_ret_5, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, -1, get_video2_settings_txtClipH(), 0, 0);
+    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_ret_5, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, -1, get_video2_settings_txtClipH(), 0, 0);
     spAC = 225.0f;
     spB0 = (f32) D_80051A28;
     temp_f10 = (f32) (u32) dword_CODE_bss_8008D128->unk4 * 0.5f;
@@ -6334,10 +6335,10 @@ glabel constructor_menu05_fileselect
 /* 041174 7F00C644 3C0B8007 */  lui   $t3, %hi(dword_CODE_bss_80069620) 
 /* 041178 7F00C648 256B9620 */  addiu $t3, %lo(dword_CODE_bss_80069620) # addiu $t3, $t3, -0x69e0
 /* 04117C 7F00C64C 3C1EEBD8 */  lui   $fp, (0xEBD879FF >> 16) # lui $fp, 0xebd8
-/* 041180 7F00C650 3C148004 */  lui   $s4, %hi(ptrFirstFontTable)
-/* 041184 7F00C654 3C138004 */  lui   $s3, %hi(ptrSecondFontTable)
-/* 041188 7F00C658 26730EB8 */  addiu $s3, %lo(ptrSecondFontTable) # addiu $s3, $s3, 0xeb8
-/* 04118C 7F00C65C 26940EB4 */  addiu $s4, %lo(ptrFirstFontTable) # addiu $s4, $s4, 0xeb4
+/* 041180 7F00C650 3C148004 */  lui   $s4, %hi(ptrFirstFontTableLarge)
+/* 041184 7F00C654 3C138004 */  lui   $s3, %hi(ptrSecondFontTableLarge)
+/* 041188 7F00C658 26730EB8 */  addiu $s3, %lo(ptrSecondFontTableLarge) # addiu $s3, $s3, 0xeb8
+/* 04118C 7F00C65C 26940EB4 */  addiu $s4, %lo(ptrFirstFontTableLarge) # addiu $s4, $s4, 0xeb4
 /* 041190 7F00C660 37DE79FF */  ori   $fp, (0xEBD879FF & 0xFFFF) # ori $fp, $fp, 0x79ff
 /* 041194 7F00C664 AFAB0074 */  sw    $t3, 0x74($sp)
 /* 041198 7F00C668 AFA001B4 */  sw    $zero, 0x1b4($sp)
@@ -7800,7 +7801,7 @@ void constructor_menu06_modesel(void)
     sp58 = 0x96;
     sp54 = 0xdc;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp58, &sp54, &a1_, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp58, &sp54, &a1_, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     if (append_cheat_sp != 0)
     {
         phi_a0 = TEXT(LTITLE, 0x75);
@@ -7811,7 +7812,7 @@ void constructor_menu06_modesel(void)
     }
     temp_ret = get_textptr_for_textID(phi_a0);
     sp5C = temp_ret;
-    sub_GAME_7F0AE98C(&sp4C, &sp50, temp_ret, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp50, temp_ret, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     sp58 = 0xaa;
     sp54 = 0xdc;
     phi_s0 = temp_s0;
@@ -7820,7 +7821,7 @@ void constructor_menu06_modesel(void)
         phi_s0 = microcode_constructor_related_to_menus(temp_s0, 0x94, 0xda, sp50 + 0xaf, 0xea, 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_2 = write_text_at_abs_coord(phi_s0, &sp58, &sp54, sp5C, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_2 = write_text_at_abs_coord(phi_s0, &sp58, &sp54, sp5C, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sp58 = 0x96;
     sp54 = 0xfc;
     if (get_attached_controller_count() >= 2)
@@ -7832,7 +7833,7 @@ void constructor_menu06_modesel(void)
         sp48 = 0x70;
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_3 = write_text_at_abs_coord(temp_s0_2, &sp58, &sp54, &a2_, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, sp48, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_3 = write_text_at_abs_coord(temp_s0_2, &sp58, &sp54, &a2_, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, sp48, sp44, get_video2_settings_txtClipH(), 0, 0);
     phi_a0_2 = TEXT(LTITLE, 0x1e);
     if (append_cheat_mp != 0)
     {
@@ -7840,7 +7841,7 @@ void constructor_menu06_modesel(void)
     }
     temp_ret_2 = get_textptr_for_textID(phi_a0_2);
     sp5C = temp_ret_2;
-    sub_GAME_7F0AE98C(&sp4C, &sp50, temp_ret_2, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp50, temp_ret_2, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     sp58 = 0xaa;
     sp54 = 0xfc;
     phi_s0_2 = temp_s0_3;
@@ -7849,17 +7850,17 @@ void constructor_menu06_modesel(void)
         phi_s0_2 = microcode_constructor_related_to_menus(temp_s0_3, 0x94, 0xfa, sp50 + 0xaf, 0x10a, 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_4 = write_text_at_abs_coord(phi_s0_2, &sp58, &sp54, sp5C, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, sp48, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_4 = write_text_at_abs_coord(phi_s0_2, &sp58, &sp54, sp5C, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, sp48, sp44, get_video2_settings_txtClipH(), 0, 0);
     phi_s0_4 = temp_s0_4;
     if (is_cheat_menu_available != 0)
     {
         sp58 = 0x96;
         sp54 = 0x11c;
         sp44 = get_video2_settings_txtClipW();
-        temp_s0_5 = write_text_at_abs_coord(temp_s0_4, &sp58, &sp54, &a3_, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+        temp_s0_5 = write_text_at_abs_coord(temp_s0_4, &sp58, &sp54, &a3_, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
         temp_ret_3 = get_textptr_for_textID(TEXT(LTITLE, 0x1f));
         sp5C = temp_ret_3;
-        sub_GAME_7F0AE98C(&sp4C, &sp50, temp_ret_3, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+        sub_GAME_7F0AE98C(&sp4C, &sp50, temp_ret_3, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
         sp58 = 0xaa;
         sp54 = 0x11c;
         phi_s0_3 = temp_s0_5;
@@ -7868,7 +7869,7 @@ void constructor_menu06_modesel(void)
             phi_s0_3 = microcode_constructor_related_to_menus(temp_s0_5, 0x94, 0x11a, sp50 + 0xaf, 0x12a, 0x32);
         }
         sp44 = get_video2_settings_txtClipW();
-        phi_s0_4 = write_text_at_abs_coord(phi_s0_3, &sp58, &sp54, sp5C, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+        phi_s0_4 = write_text_at_abs_coord(phi_s0_3, &sp58, &sp54, sp5C, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     }
     load_draw_selected_icon_folder_select(add_tab3_previous(phi_s0_4));
 }
@@ -7897,10 +7898,10 @@ glabel constructor_menu06_modesel
 /* 0423A0 7F00D870 AFAF0054 */   sw    $t7, 0x54($sp)
 /* 0423A4 7F00D874 0C00110B */  jal   get_video2_settings_txtClipH
 /* 0423A8 7F00D878 A7A20044 */   sh    $v0, 0x44($sp)
-/* 0423AC 7F00D87C 3C188004 */  lui   $t8, %hi(ptrSecondFontTable) 
-/* 0423B0 7F00D880 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 0423B4 7F00D884 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 0423B8 7F00D888 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTable)($t8)
+/* 0423AC 7F00D87C 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
+/* 0423B0 7F00D880 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 0423B4 7F00D884 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 0423B8 7F00D888 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
 /* 0423BC 7F00D88C 87A90044 */  lh    $t1, 0x44($sp)
 /* 0423C0 7F00D890 3C078005 */  lui   $a3, %hi(a1_)
 /* 0423C4 7F00D894 240800FF */  li    $t0, 255
@@ -7927,11 +7928,11 @@ glabel constructor_menu06_modesel
 .L7F00D8E8:
 /* 042418 7F00D8E8 0FC30776 */  jal   get_textptr_for_textID
 /* 04241C 7F00D8EC 00000000 */   nop   
-/* 042420 7F00D8F0 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTable) 
-/* 042424 7F00D8F4 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTable)($t3)
-/* 042428 7F00D8F8 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 042420 7F00D8F0 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableLarge) 
+/* 042424 7F00D8F4 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTableLarge)($t3)
+/* 042428 7F00D8F8 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 04242C 7F00D8FC AFA2005C */  sw    $v0, 0x5c($sp)
-/* 042430 7F00D900 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 042430 7F00D900 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 042434 7F00D904 27A4004C */  addiu $a0, $sp, 0x4c
 /* 042438 7F00D908 27A50050 */  addiu $a1, $sp, 0x50
 /* 04243C 7F00D90C 00403025 */  move  $a2, $v0
@@ -7961,10 +7962,10 @@ glabel constructor_menu06_modesel
 /* 042498 7F00D968 00000000 */   nop   
 /* 04249C 7F00D96C 0C00110B */  jal   get_video2_settings_txtClipH
 /* 0424A0 7F00D970 A7A20044 */   sh    $v0, 0x44($sp)
-/* 0424A4 7F00D974 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 0424A8 7F00D978 3C088004 */  lui   $t0, %hi(ptrFirstFontTable) 
-/* 0424AC 7F00D97C 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTable)($t0)
-/* 0424B0 7F00D980 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 0424A4 7F00D974 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 0424A8 7F00D978 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge) 
+/* 0424AC 7F00D97C 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
+/* 0424B0 7F00D980 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 0424B4 7F00D984 87AA0044 */  lh    $t2, 0x44($sp)
 /* 0424B8 7F00D988 240900FF */  li    $t1, 255
 /* 0424BC 7F00D98C AFA90018 */  sw    $t1, 0x18($sp)
@@ -7998,10 +7999,10 @@ glabel constructor_menu06_modesel
 /* 042524 7F00D9F4 00000000 */   nop   
 /* 042528 7F00D9F8 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04252C 7F00D9FC A7A20044 */   sh    $v0, 0x44($sp)
-/* 042530 7F00DA00 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTable) 
-/* 042534 7F00DA04 3C188004 */  lui   $t8, %hi(ptrFirstFontTable) 
-/* 042538 7F00DA08 8F180EB4 */  lw    $t8, %lo(ptrFirstFontTable)($t8)
-/* 04253C 7F00DA0C 8DEF0EB8 */  lw    $t7, %lo(ptrSecondFontTable)($t7)
+/* 042530 7F00DA00 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableLarge) 
+/* 042534 7F00DA04 3C188004 */  lui   $t8, %hi(ptrFirstFontTableLarge) 
+/* 042538 7F00DA08 8F180EB4 */  lw    $t8, %lo(ptrFirstFontTableLarge)($t8)
+/* 04253C 7F00DA0C 8DEF0EB8 */  lw    $t7, %lo(ptrSecondFontTableLarge)($t7)
 /* 042540 7F00DA10 8FB90048 */  lw    $t9, 0x48($sp)
 /* 042544 7F00DA14 87A80044 */  lh    $t0, 0x44($sp)
 /* 042548 7F00DA18 3C078005 */  lui   $a3, %hi(a2_)
@@ -8028,11 +8029,11 @@ glabel constructor_menu06_modesel
 .L7F00DA6C:
 /* 04259C 7F00DA6C 0FC30776 */  jal   get_textptr_for_textID
 /* 0425A0 7F00DA70 00000000 */   nop   
-/* 0425A4 7F00DA74 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 0425A8 7F00DA78 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 0425AC 7F00DA7C 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 0425A4 7F00DA74 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 0425A8 7F00DA78 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 0425AC 7F00DA7C 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 0425B0 7F00DA80 AFA2005C */  sw    $v0, 0x5c($sp)
-/* 0425B4 7F00DA84 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 0425B4 7F00DA84 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 0425B8 7F00DA88 27A4004C */  addiu $a0, $sp, 0x4c
 /* 0425BC 7F00DA8C 27A50050 */  addiu $a1, $sp, 0x50
 /* 0425C0 7F00DA90 00403025 */  move  $a2, $v0
@@ -8063,10 +8064,10 @@ glabel constructor_menu06_modesel
 /* 042620 7F00DAF0 00000000 */   nop   
 /* 042624 7F00DAF4 0C00110B */  jal   get_video2_settings_txtClipH
 /* 042628 7F00DAF8 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04262C 7F00DAFC 3C188004 */  lui   $t8, %hi(ptrSecondFontTable) 
-/* 042630 7F00DB00 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 042634 7F00DB04 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 042638 7F00DB08 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTable)($t8)
+/* 04262C 7F00DAFC 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
+/* 042630 7F00DB00 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 042634 7F00DB04 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 042638 7F00DB08 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
 /* 04263C 7F00DB0C 8FA80048 */  lw    $t0, 0x48($sp)
 /* 042640 7F00DB10 87A90044 */  lh    $t1, 0x44($sp)
 /* 042644 7F00DB14 02002025 */  move  $a0, $s0
@@ -8092,10 +8093,10 @@ glabel constructor_menu06_modesel
 /* 042694 7F00DB64 AFAC0054 */   sw    $t4, 0x54($sp)
 /* 042698 7F00DB68 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04269C 7F00DB6C A7A20044 */   sh    $v0, 0x44($sp)
-/* 0426A0 7F00DB70 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTable) 
-/* 0426A4 7F00DB74 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTable) 
-/* 0426A8 7F00DB78 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTable)($t6)
-/* 0426AC 7F00DB7C 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTable)($t5)
+/* 0426A0 7F00DB70 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableLarge) 
+/* 0426A4 7F00DB74 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) 
+/* 0426A8 7F00DB78 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
+/* 0426AC 7F00DB7C 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTableLarge)($t5)
 /* 0426B0 7F00DB80 87B80044 */  lh    $t8, 0x44($sp)
 /* 0426B4 7F00DB84 3C078005 */  lui   $a3, %hi(a3_)
 /* 0426B8 7F00DB88 240F00FF */  li    $t7, 255
@@ -8114,11 +8115,11 @@ glabel constructor_menu06_modesel
 /* 0426EC 7F00DBBC 00408025 */  move  $s0, $v0
 /* 0426F0 7F00DBC0 0FC30776 */  jal   get_textptr_for_textID
 /* 0426F4 7F00DBC4 34049C1F */   li    $a0, 39967
-/* 0426F8 7F00DBC8 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 0426FC 7F00DBCC 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 042700 7F00DBD0 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 0426F8 7F00DBC8 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 0426FC 7F00DBCC 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 042700 7F00DBD0 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 042704 7F00DBD4 AFA2005C */  sw    $v0, 0x5c($sp)
-/* 042708 7F00DBD8 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 042708 7F00DBD8 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 04270C 7F00DBDC 27A4004C */  addiu $a0, $sp, 0x4c
 /* 042710 7F00DBE0 27A50050 */  addiu $a1, $sp, 0x50
 /* 042714 7F00DBE4 00403025 */  move  $a2, $v0
@@ -8149,10 +8150,10 @@ glabel constructor_menu06_modesel
 /* 042774 7F00DC44 00000000 */   nop   
 /* 042778 7F00DC48 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04277C 7F00DC4C A7A20044 */   sh    $v0, 0x44($sp)
-/* 042780 7F00DC50 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTable) 
-/* 042784 7F00DC54 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTable) 
-/* 042788 7F00DC58 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTable)($t6)
-/* 04278C 7F00DC5C 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTable)($t5)
+/* 042780 7F00DC50 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableLarge) 
+/* 042784 7F00DC54 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) 
+/* 042788 7F00DC58 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
+/* 04278C 7F00DC5C 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTableLarge)($t5)
 /* 042790 7F00DC60 87B80044 */  lh    $t8, 0x44($sp)
 /* 042794 7F00DC64 240F00FF */  li    $t7, 255
 /* 042798 7F00DC68 AFAF0018 */  sw    $t7, 0x18($sp)
@@ -9183,12 +9184,12 @@ loop_10:
         spC4 = 0;
         temp_a0 = &spC8;
         spC8 = 0;
-        sub_GAME_7F0AE98C(temp_a0, &spC4, &sp90, D_80040EB0, (?32) D_80040EAC, 0);
+        sub_GAME_7F0AE98C(temp_a0, &spC4, &sp90, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
         temp_a2 = (subroutine_arg0 - spC8) + 0x1d;
         temp_a1 = *temp_s7 + -0x1f;
         get_video2_settings_txtClipW();
         get_video2_settings_txtClipW(*temp_s7 + -0x1f, (subroutine_arg0 - spC8) + 0x1d);
-        phi_s4_2 = en_text_write_stuff(en_text_write_stuff(microcode_constructor_related_to_menus(phi_s4, temp_a1, temp_a2, temp_a1 + spC4, (s32) (temp_a2 + spC8), 0), &sp8C, &sp88, &sp90, (?32) D_80040EB0, (?32) D_80040EAC, (s32) (phi_s5 | 0xff), get_video2_settings_txtClipH(), 0, 0), &sp8C, &sp88, &sp90, (?32) D_80040EB0, (?32) D_80040EAC, (s32) (phi_s5 | 0x64), get_video2_settings_txtClipH(), 0, 0);
+        phi_s4_2 = en_text_write_stuff(en_text_write_stuff(microcode_constructor_related_to_menus(phi_s4, temp_a1, temp_a2, temp_a1 + spC4, (s32) (temp_a2 + spC8), 0), &sp8C, &sp88, &sp90, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, (s32) (phi_s5 | 0xff), get_video2_settings_txtClipH(), 0, 0), &sp8C, &sp88, &sp90, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, (s32) (phi_s5 | 0x64), get_video2_settings_txtClipH(), 0, 0);
     }
     temp_s6 = phi_s6 + 1;
     phi_s3 = phi_s3 + 5;
@@ -9314,11 +9315,11 @@ glabel constructor_menu07_missionsel
 /* 0430F8 7F00E5C8 24A5F4A0 */  addiu $a1, %lo(asc_D_8004F4A0) # addiu $a1, $a1, -0xb60
 /* 0430FC 7F00E5CC 0C0029FF */  jal   string_load_parse_something
 /* 043100 7F00E5D0 02402025 */   move  $a0, $s2
-/* 043104 7F00E5D4 3C198004 */  lui   $t9, %hi(D_80040EAC) 
-/* 043108 7F00E5D8 8F390EAC */  lw    $t9, %lo(D_80040EAC)($t9)
-/* 04310C 7F00E5DC 3C078004 */  lui   $a3, %hi(D_80040EB0)
+/* 043104 7F00E5D4 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) 
+/* 043108 7F00E5D8 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
+/* 04310C 7F00E5DC 3C078004 */  lui   $a3, %hi(ptrSecondFontTableSmall)
 /* 043110 7F00E5E0 AFA000C4 */  sw    $zero, 0xc4($sp)
-/* 043114 7F00E5E4 8CE70EB0 */  lw    $a3, %lo(D_80040EB0)($a3)
+/* 043114 7F00E5E4 8CE70EB0 */  lw    $a3, %lo(ptrSecondFontTableSmall)($a3)
 /* 043118 7F00E5E8 27A400C8 */  addiu $a0, $sp, 0xc8
 /* 04311C 7F00E5EC 27A500C4 */  addiu $a1, $sp, 0xc4
 /* 043120 7F00E5F0 02403025 */  move  $a2, $s2
@@ -9347,10 +9348,10 @@ glabel constructor_menu07_missionsel
 /* 04317C 7F00E64C 00105C03 */  sra   $t3, $s0, 0x10
 /* 043180 7F00E650 0C00110B */  jal   get_video2_settings_txtClipH
 /* 043184 7F00E654 01608025 */   move  $s0, $t3
-/* 043188 7F00E658 3C0C8004 */  lui   $t4, %hi(D_80040EB0) 
-/* 04318C 7F00E65C 3C0D8004 */  lui   $t5, %hi(D_80040EAC) 
-/* 043190 7F00E660 8DAD0EAC */  lw    $t5, %lo(D_80040EAC)($t5)
-/* 043194 7F00E664 8D8C0EB0 */  lw    $t4, %lo(D_80040EB0)($t4)
+/* 043188 7F00E658 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableSmall) 
+/* 04318C 7F00E65C 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall) 
+/* 043190 7F00E660 8DAD0EAC */  lw    $t5, %lo(ptrFirstFontTableSmall)($t5)
+/* 043194 7F00E664 8D8C0EB0 */  lw    $t4, %lo(ptrSecondFontTableSmall)($t4)
 /* 043198 7F00E668 36AE00FF */  ori   $t6, $s5, 0xff
 /* 04319C 7F00E66C AFAE0018 */  sw    $t6, 0x18($sp)
 /* 0431A0 7F00E670 02802025 */  move  $a0, $s4
@@ -9378,10 +9379,10 @@ glabel constructor_menu07_missionsel
 /* 0431F8 7F00E6C8 0010C403 */  sra   $t8, $s0, 0x10
 /* 0431FC 7F00E6CC 0C00110B */  jal   get_video2_settings_txtClipH
 /* 043200 7F00E6D0 03008025 */   move  $s0, $t8
-/* 043204 7F00E6D4 3C198004 */  lui   $t9, %hi(D_80040EB0) 
-/* 043208 7F00E6D8 3C088004 */  lui   $t0, %hi(D_80040EAC) 
-/* 04320C 7F00E6DC 8D080EAC */  lw    $t0, %lo(D_80040EAC)($t0)
-/* 043210 7F00E6E0 8F390EB0 */  lw    $t9, %lo(D_80040EB0)($t9)
+/* 043204 7F00E6D4 3C198004 */  lui   $t9, %hi(ptrSecondFontTableSmall) 
+/* 043208 7F00E6D8 3C088004 */  lui   $t0, %hi(ptrFirstFontTableSmall) 
+/* 04320C 7F00E6DC 8D080EAC */  lw    $t0, %lo(ptrFirstFontTableSmall)($t0)
+/* 043210 7F00E6E0 8F390EB0 */  lw    $t9, %lo(ptrSecondFontTableSmall)($t9)
 /* 043214 7F00E6E4 36A90064 */  ori   $t1, $s5, 0x64
 /* 043218 7F00E6E8 AFA90018 */  sw    $t1, 0x18($sp)
 /* 04321C 7F00E6EC 02802025 */  move  $a0, $s4
@@ -9762,7 +9763,7 @@ void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
         sp54 = 0x37;
         sp50 = 0x57;
         sp44 = get_video2_settings_txtClipW();
-        arg0 = write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+        arg0 = write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     }
     temp_ret = get_chapter_briefing_entry(briefingpage);
     sp4C = temp_ret;
@@ -9778,7 +9779,7 @@ void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
         sp54 = 0x37;
         sp50 = 0x67;
         sp44 = get_video2_settings_txtClipW();
-        arg0 = write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+        arg0 = write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     }
     textpointer_load_parse_something(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x22)));
     string_load_parse_something(arg1, *(&mission_folder_setup_entries + (briefingpage * 0x1c)));
@@ -9788,7 +9789,7 @@ void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
     sp54 = 0x37;
     sp50 = 0x77;
     sp44 = get_video2_settings_txtClipW();
-    write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
 }
 #else
 GLOBAL_ASM(
@@ -9819,10 +9820,10 @@ glabel print_current_solo_briefing_stage_name
 /* 043644 7F00EB14 AFAF0050 */   sw    $t7, 0x50($sp)
 /* 043648 7F00EB18 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04364C 7F00EB1C A7A20044 */   sh    $v0, 0x44($sp)
-/* 043650 7F00EB20 3C188004 */  lui   $t8, %hi(ptrSecondFontTable) 
-/* 043654 7F00EB24 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 043658 7F00EB28 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 04365C 7F00EB2C 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTable)($t8)
+/* 043650 7F00EB20 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
+/* 043654 7F00EB24 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 043658 7F00EB28 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 04365C 7F00EB2C 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
 /* 043660 7F00EB30 87A90044 */  lh    $t1, 0x44($sp)
 /* 043664 7F00EB34 240800FF */  li    $t0, 255
 /* 043668 7F00EB38 AFA80018 */  sw    $t0, 0x18($sp)
@@ -9881,10 +9882,10 @@ glabel print_current_solo_briefing_stage_name
 /* 043738 7F00EC08 AFAF0050 */   sw    $t7, 0x50($sp)
 /* 04373C 7F00EC0C 0C00110B */  jal   get_video2_settings_txtClipH
 /* 043740 7F00EC10 A7A20044 */   sh    $v0, 0x44($sp)
-/* 043744 7F00EC14 3C188004 */  lui   $t8, %hi(ptrSecondFontTable) 
-/* 043748 7F00EC18 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 04374C 7F00EC1C 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 043750 7F00EC20 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTable)($t8)
+/* 043744 7F00EC14 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
+/* 043748 7F00EC18 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 04374C 7F00EC1C 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 043750 7F00EC20 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
 /* 043754 7F00EC24 87A90044 */  lh    $t1, 0x44($sp)
 /* 043758 7F00EC28 240800FF */  li    $t0, 255
 /* 04375C 7F00EC2C AFA80018 */  sw    $t0, 0x18($sp)
@@ -9943,10 +9944,10 @@ glabel print_current_solo_briefing_stage_name
 /* 04382C 7F00ECFC AFAF0050 */   sw    $t7, 0x50($sp)
 /* 043830 7F00ED00 0C00110B */  jal   get_video2_settings_txtClipH
 /* 043834 7F00ED04 A7A20044 */   sh    $v0, 0x44($sp)
-/* 043838 7F00ED08 3C188004 */  lui   $t8, %hi(ptrSecondFontTable) 
-/* 04383C 7F00ED0C 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 043840 7F00ED10 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 043844 7F00ED14 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTable)($t8)
+/* 043838 7F00ED08 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
+/* 04383C 7F00ED0C 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 043840 7F00ED10 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 043844 7F00ED14 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
 /* 043848 7F00ED18 87A90044 */  lh    $t1, 0x44($sp)
 /* 04384C 7F00ED1C 240800FF */  li    $t0, 255
 /* 043850 7F00ED20 AFA80018 */  sw    $t0, 0x18($sp)
@@ -10075,7 +10076,7 @@ loop_1:
     spC60 = 0x37;
     spC5C = 0x8f;
     get_video2_settings_txtClipW();
-    arg0 = write_text_at_abs_coord(arg0, &spC60, &spC5C, get_textptr_for_textID(TEXT(LTITLE, 0x23)), (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, get_video2_settings_txtClipH(), 0, 0);
+    arg0 = write_text_at_abs_coord(arg0, &spC60, &spC5C, get_textptr_for_textID(TEXT(LTITLE, 0x23)), (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0);
     if (mission_difficulty_highlighted >= 0)
     {
         if (j_text_trigger != 0)
@@ -10136,7 +10137,7 @@ block_21:
             phi_s2 = &spA4;
             goto block_21;
         }
-        sub_GAME_7F0AE98C(&sp98, &sp9C, phi_s2, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+        sub_GAME_7F0AE98C(&sp98, &sp9C, phi_s2, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
         phi_v0_2 = 0;
         if (j_text_trigger != 0)
         {
@@ -10144,7 +10145,7 @@ block_21:
         }
         spC60 = (s32) (0x82 - phi_v0_2);
         get_video2_settings_txtClipW();
-        arg0 = write_text_at_abs_coord(arg0, &spC60, &spC5C, phi_s2, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, get_video2_settings_txtClipH(), 0, 0);
+        arg0 = write_text_at_abs_coord(arg0, &spC60, &spC5C, phi_s2, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0);
         if (phi_s1 != 0)
         {
             if (phi_s1 != 1)
@@ -10180,7 +10181,7 @@ block_33:
         }
         spC60 = (s32) 0x96;
         get_video2_settings_txtClipW();
-        arg0 = write_text_at_abs_coord(arg0, &spC60, &spC5C, phi_s2_2, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, get_video2_settings_txtClipH(), 0, 0);
+        arg0 = write_text_at_abs_coord(arg0, &spC60, &spC5C, phi_s2_2, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0);
         phi_s2_3 = phi_s2_2;
     }
     else
@@ -10305,10 +10306,10 @@ glabel constructor_menu08_difficulty
 /* 0439C8 7F00EE98 00107403 */  sra   $t6, $s0, 0x10
 /* 0439CC 7F00EE9C 0C00110B */  jal   get_video2_settings_txtClipH
 /* 0439D0 7F00EEA0 01C08025 */   move  $s0, $t6
-/* 0439D4 7F00EEA4 3C158004 */  lui   $s5, %hi(ptrSecondFontTable)
-/* 0439D8 7F00EEA8 3C168004 */  lui   $s6, %hi(ptrFirstFontTable)
-/* 0439DC 7F00EEAC 26D60EB4 */  addiu $s6, %lo(ptrFirstFontTable) # addiu $s6, $s6, 0xeb4
-/* 0439E0 7F00EEB0 26B50EB8 */  addiu $s5, %lo(ptrSecondFontTable) # addiu $s5, $s5, 0xeb8
+/* 0439D4 7F00EEA4 3C158004 */  lui   $s5, %hi(ptrSecondFontTableLarge)
+/* 0439D8 7F00EEA8 3C168004 */  lui   $s6, %hi(ptrFirstFontTableLarge)
+/* 0439DC 7F00EEAC 26D60EB4 */  addiu $s6, %lo(ptrFirstFontTableLarge) # addiu $s6, $s6, 0xeb4
+/* 0439E0 7F00EEB0 26B50EB8 */  addiu $s5, %lo(ptrSecondFontTableLarge) # addiu $s5, $s5, 0xeb8
 /* 0439E4 7F00EEB4 8EAF0000 */  lw    $t7, ($s5)
 /* 0439E8 7F00EEB8 8ECA0000 */  lw    $t2, ($s6)
 /* 0439EC 7F00EEBC 240900FF */  li    $t1, 255
@@ -11160,7 +11161,7 @@ loop_1:
     spC10 = 0x37;
     spC0C = 0x8f;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0 = write_text_at_abs_coord(print_current_solo_briefing_stage_name(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp54), &spC10, &spC0C, spC14, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0 = write_text_at_abs_coord(print_current_solo_briefing_stage_name(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp54), &spC10, &spC0C, spC14, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     spC14 = get_textptr_for_textID(TEXT(LTITLE, 0x2a));
     spC10 = 0x39;
     spC0C = 0xa4;
@@ -11171,15 +11172,15 @@ loop_1:
         phi_s0 = microcode_constructor_related_to_menus(temp_ret, 0x37, spC0C + -1, 0xc7, (s32) (spC0C + 0xe), 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_2 = write_text_at_abs_coord(phi_s0, &spC10, &spC0C, spC14, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_2 = write_text_at_abs_coord(phi_s0, &spC10, &spC0C, spC14, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sprintf(&sp54, &aD, (s32) (slider_007_mode_health * 100.0f));
     sp4C = 0;
     sp50 = 0;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0xa4;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_3 = write_text_at_abs_coord(temp_s0_2, &spC10, &spC0C, &sp54, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_3 = write_text_at_abs_coord(temp_s0_2, &spC10, &spC0C, &sp54, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     spC14 = get_textptr_for_textID(TEXT(LTITLE, 0x2b));
     spC10 = 0x39;
     spC0C = 0xc5;
@@ -11190,15 +11191,15 @@ loop_1:
         phi_s0_2 = microcode_constructor_related_to_menus(temp_ret_2, 0x37, spC0C + -1, 0xc7, (s32) (spC0C + 0xe), 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_4 = write_text_at_abs_coord(phi_s0_2, &spC10, &spC0C, spC14, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_4 = write_text_at_abs_coord(phi_s0_2, &spC10, &spC0C, spC14, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sprintf(&sp54, &aD_0, (s32) (slider_007_mode_accuracy * 100.0f));
     sp4C = 0;
     sp50 = 0;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0xc5;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_5 = write_text_at_abs_coord(temp_s0_4, &spC10, &spC0C, &sp54, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_5 = write_text_at_abs_coord(temp_s0_4, &spC10, &spC0C, &sp54, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     spC14 = get_textptr_for_textID(TEXT(LTITLE, 0x2c));
     spC10 = 0x39;
     spC0C = 0xe6;
@@ -11209,15 +11210,15 @@ loop_1:
         phi_s0_3 = microcode_constructor_related_to_menus(temp_ret_3, 0x37, spC0C + -1, 0xc7, (s32) (spC0C + 0xe), 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_6 = write_text_at_abs_coord(phi_s0_3, &spC10, &spC0C, spC14, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_6 = write_text_at_abs_coord(phi_s0_3, &spC10, &spC0C, spC14, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sprintf(&sp54, &aD_1, (s32) (slider_007_mode_damage * 10.0f));
     sp4C = 0;
     sp50 = 0;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0xe6;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_7 = write_text_at_abs_coord(temp_s0_6, &spC10, &spC0C, &sp54, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_7 = write_text_at_abs_coord(temp_s0_6, &spC10, &spC0C, &sp54, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     spC14 = get_textptr_for_textID(TEXT(LTITLE, 0x29));
     spC10 = 0x39;
     spC0C = 0x107;
@@ -11228,15 +11229,15 @@ loop_1:
         phi_s0_4 = microcode_constructor_related_to_menus(temp_ret_4, 0x37, spC0C + -1, 0xc7, (s32) (spC0C + 0xe), 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_8 = write_text_at_abs_coord(phi_s0_4, &spC10, &spC0C, spC14, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_8 = write_text_at_abs_coord(phi_s0_4, &spC10, &spC0C, spC14, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sprintf(&sp54, &aD_2, (s32) (slider_007_mode_reaction * 100.0f));
     sp4C = 0;
     sp50 = 0;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0x107;
     sp44 = get_video2_settings_txtClipW();
-    load_draw_selected_icon_folder_select(add_tab2_next(add_tab3_previous(add_tab1_start(write_text_at_abs_coord(temp_s0_8, &spC10, &spC0C, &sp54, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0)))));
+    load_draw_selected_icon_folder_select(add_tab2_next(add_tab3_previous(add_tab1_start(write_text_at_abs_coord(temp_s0_8, &spC10, &spC0C, &sp54, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0)))));
 }
 #else
 GLOBAL_ASM(
@@ -11283,10 +11284,10 @@ glabel constructor_menu09_007options
 /* 04435C 7F00F82C AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 044360 7F00F830 0C00110B */  jal   get_video2_settings_txtClipH
 /* 044364 7F00F834 A7A20044 */   sh    $v0, 0x44($sp)
-/* 044368 7F00F838 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTable) 
-/* 04436C 7F00F83C 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTable) 
-/* 044370 7F00F840 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTable)($t3)
-/* 044374 7F00F844 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTable)($t2)
+/* 044368 7F00F838 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableLarge) 
+/* 04436C 7F00F83C 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableLarge) 
+/* 044370 7F00F840 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTableLarge)($t3)
+/* 044374 7F00F844 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTableLarge)($t2)
 /* 044378 7F00F848 87AD0044 */  lh    $t5, 0x44($sp)
 /* 04437C 7F00F84C 240C00FF */  li    $t4, 255
 /* 044380 7F00F850 AFAC0018 */  sw    $t4, 0x18($sp)
@@ -11361,10 +11362,10 @@ glabel constructor_menu09_007options
 /* 044490 7F00F960 00000000 */   nop   
 /* 044494 7F00F964 0C00110B */  jal   get_video2_settings_txtClipH
 /* 044498 7F00F968 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04449C 7F00F96C 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTable) 
-/* 0444A0 7F00F970 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 0444A4 7F00F974 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 0444A8 7F00F978 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTable)($t5)
+/* 04449C 7F00F96C 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableLarge) 
+/* 0444A0 7F00F970 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 0444A4 7F00F974 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 0444A8 7F00F978 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTableLarge)($t5)
 /* 0444AC 7F00F97C 87A80044 */  lh    $t0, 0x44($sp)
 /* 0444B0 7F00F980 241800FF */  li    $t8, 255
 /* 0444B4 7F00F984 AFB80018 */  sw    $t8, 0x18($sp)
@@ -11392,12 +11393,12 @@ glabel constructor_menu09_007options
 /* 04450C 7F00F9DC 44064000 */  mfc1  $a2, $f8
 /* 044510 7F00F9E0 0C002B25 */  jal   sprintf
 /* 044514 7F00F9E4 00000000 */   nop   
-/* 044518 7F00F9E8 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTable) 
-/* 04451C 7F00F9EC 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTable)($t6)
-/* 044520 7F00F9F0 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 044518 7F00F9E8 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) 
+/* 04451C 7F00F9EC 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
+/* 044520 7F00F9F0 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 044524 7F00F9F4 AFA0004C */  sw    $zero, 0x4c($sp)
 /* 044528 7F00F9F8 AFA00050 */  sw    $zero, 0x50($sp)
-/* 04452C 7F00F9FC 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 04452C 7F00F9FC 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 044530 7F00FA00 27A40050 */  addiu $a0, $sp, 0x50
 /* 044534 7F00FA04 27A5004C */  addiu $a1, $sp, 0x4c
 /* 044538 7F00FA08 27A60054 */  addiu $a2, $sp, 0x54
@@ -11413,10 +11414,10 @@ glabel constructor_menu09_007options
 /* 044560 7F00FA30 AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 044564 7F00FA34 0C00110B */  jal   get_video2_settings_txtClipH
 /* 044568 7F00FA38 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04456C 7F00FA3C 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTable) 
-/* 044570 7F00FA40 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTable) 
-/* 044574 7F00FA44 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTable)($t5)
-/* 044578 7F00FA48 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTable)($t4)
+/* 04456C 7F00FA3C 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableLarge) 
+/* 044570 7F00FA40 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
+/* 044574 7F00FA44 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 044578 7F00FA48 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTableLarge)($t4)
 /* 04457C 7F00FA4C 87B80044 */  lh    $t8, 0x44($sp)
 /* 044580 7F00FA50 241900FF */  li    $t9, 255
 /* 044584 7F00FA54 AFB90018 */  sw    $t9, 0x18($sp)
@@ -11491,10 +11492,10 @@ glabel constructor_menu09_007options
 /* 044694 7F00FB64 00000000 */   nop   
 /* 044698 7F00FB68 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04469C 7F00FB6C A7A20044 */   sh    $v0, 0x44($sp)
-/* 0446A0 7F00FB70 3C188004 */  lui   $t8, %hi(ptrSecondFontTable) 
-/* 0446A4 7F00FB74 3C088004 */  lui   $t0, %hi(ptrFirstFontTable) 
-/* 0446A8 7F00FB78 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTable)($t0)
-/* 0446AC 7F00FB7C 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTable)($t8)
+/* 0446A0 7F00FB70 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
+/* 0446A4 7F00FB74 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge) 
+/* 0446A8 7F00FB78 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
+/* 0446AC 7F00FB7C 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
 /* 0446B0 7F00FB80 87AE0044 */  lh    $t6, 0x44($sp)
 /* 0446B4 7F00FB84 240F00FF */  li    $t7, 255
 /* 0446B8 7F00FB88 AFAF0018 */  sw    $t7, 0x18($sp)
@@ -11522,12 +11523,12 @@ glabel constructor_menu09_007options
 /* 044710 7F00FBE0 44069000 */  mfc1  $a2, $f18
 /* 044714 7F00FBE4 0C002B25 */  jal   sprintf
 /* 044718 7F00FBE8 00000000 */   nop   
-/* 04471C 7F00FBEC 3C098004 */  lui   $t1, %hi(ptrFirstFontTable) 
-/* 044720 7F00FBF0 8D290EB4 */  lw    $t1, %lo(ptrFirstFontTable)($t1)
-/* 044724 7F00FBF4 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 04471C 7F00FBEC 3C098004 */  lui   $t1, %hi(ptrFirstFontTableLarge) 
+/* 044720 7F00FBF0 8D290EB4 */  lw    $t1, %lo(ptrFirstFontTableLarge)($t1)
+/* 044724 7F00FBF4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 044728 7F00FBF8 AFA0004C */  sw    $zero, 0x4c($sp)
 /* 04472C 7F00FBFC AFA00050 */  sw    $zero, 0x50($sp)
-/* 044730 7F00FC00 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 044730 7F00FC00 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 044734 7F00FC04 27A40050 */  addiu $a0, $sp, 0x50
 /* 044738 7F00FC08 27A5004C */  addiu $a1, $sp, 0x4c
 /* 04473C 7F00FC0C 27A60054 */  addiu $a2, $sp, 0x54
@@ -11543,10 +11544,10 @@ glabel constructor_menu09_007options
 /* 044764 7F00FC34 AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 044768 7F00FC38 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04476C 7F00FC3C A7A20044 */   sh    $v0, 0x44($sp)
-/* 044770 7F00FC40 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 044774 7F00FC44 3C188004 */  lui   $t8, %hi(ptrFirstFontTable) 
-/* 044778 7F00FC48 8F180EB4 */  lw    $t8, %lo(ptrFirstFontTable)($t8)
-/* 04477C 7F00FC4C 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 044770 7F00FC40 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 044774 7F00FC44 3C188004 */  lui   $t8, %hi(ptrFirstFontTableLarge) 
+/* 044778 7F00FC48 8F180EB4 */  lw    $t8, %lo(ptrFirstFontTableLarge)($t8)
+/* 04477C 7F00FC4C 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 044780 7F00FC50 87AF0044 */  lh    $t7, 0x44($sp)
 /* 044784 7F00FC54 240800FF */  li    $t0, 255
 /* 044788 7F00FC58 AFA80018 */  sw    $t0, 0x18($sp)
@@ -11621,10 +11622,10 @@ glabel constructor_menu09_007options
 /* 044898 7F00FD68 00000000 */   nop   
 /* 04489C 7F00FD6C 0C00110B */  jal   get_video2_settings_txtClipH
 /* 0448A0 7F00FD70 A7A20044 */   sh    $v0, 0x44($sp)
-/* 0448A4 7F00FD74 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTable) 
-/* 0448A8 7F00FD78 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTable) 
-/* 0448AC 7F00FD7C 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTable)($t6)
-/* 0448B0 7F00FD80 8DEF0EB8 */  lw    $t7, %lo(ptrSecondFontTable)($t7)
+/* 0448A4 7F00FD74 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableLarge) 
+/* 0448A8 7F00FD78 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) 
+/* 0448AC 7F00FD7C 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
+/* 0448B0 7F00FD80 8DEF0EB8 */  lw    $t7, %lo(ptrSecondFontTableLarge)($t7)
 /* 0448B4 7F00FD84 87A90044 */  lh    $t1, 0x44($sp)
 /* 0448B8 7F00FD88 240A00FF */  li    $t2, 255
 /* 0448BC 7F00FD8C AFAA0018 */  sw    $t2, 0x18($sp)
@@ -11652,12 +11653,12 @@ glabel constructor_menu09_007options
 /* 044914 7F00FDE4 44064000 */  mfc1  $a2, $f8
 /* 044918 7F00FDE8 0C002B25 */  jal   sprintf
 /* 04491C 7F00FDEC 00000000 */   nop   
-/* 044920 7F00FDF0 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTable) 
-/* 044924 7F00FDF4 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTable)($t3)
-/* 044928 7F00FDF8 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 044920 7F00FDF0 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableLarge) 
+/* 044924 7F00FDF4 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTableLarge)($t3)
+/* 044928 7F00FDF8 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 04492C 7F00FDFC AFA0004C */  sw    $zero, 0x4c($sp)
 /* 044930 7F00FE00 AFA00050 */  sw    $zero, 0x50($sp)
-/* 044934 7F00FE04 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 044934 7F00FE04 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 044938 7F00FE08 27A40050 */  addiu $a0, $sp, 0x50
 /* 04493C 7F00FE0C 27A5004C */  addiu $a1, $sp, 0x4c
 /* 044940 7F00FE10 27A60054 */  addiu $a2, $sp, 0x54
@@ -11673,10 +11674,10 @@ glabel constructor_menu09_007options
 /* 044968 7F00FE38 AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 04496C 7F00FE3C 0C00110B */  jal   get_video2_settings_txtClipH
 /* 044970 7F00FE40 A7A20044 */   sh    $v0, 0x44($sp)
-/* 044974 7F00FE44 3C088004 */  lui   $t0, %hi(ptrSecondFontTable) 
-/* 044978 7F00FE48 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTable) 
-/* 04497C 7F00FE4C 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTable)($t7)
-/* 044980 7F00FE50 8D080EB8 */  lw    $t0, %lo(ptrSecondFontTable)($t0)
+/* 044974 7F00FE44 3C088004 */  lui   $t0, %hi(ptrSecondFontTableLarge) 
+/* 044978 7F00FE48 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableLarge) 
+/* 04497C 7F00FE4C 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTableLarge)($t7)
+/* 044980 7F00FE50 8D080EB8 */  lw    $t0, %lo(ptrSecondFontTableLarge)($t0)
 /* 044984 7F00FE54 87AA0044 */  lh    $t2, 0x44($sp)
 /* 044988 7F00FE58 240E00FF */  li    $t6, 255
 /* 04498C 7F00FE5C AFAE0018 */  sw    $t6, 0x18($sp)
@@ -11749,10 +11750,10 @@ glabel constructor_menu09_007options
 /* 044A94 7F00FF64 00000000 */   nop   
 /* 044A98 7F00FF68 0C00110B */  jal   get_video2_settings_txtClipH
 /* 044A9C 7F00FF6C A7A20044 */   sh    $v0, 0x44($sp)
-/* 044AA0 7F00FF70 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTable) 
-/* 044AA4 7F00FF74 3C098004 */  lui   $t1, %hi(ptrFirstFontTable) 
-/* 044AA8 7F00FF78 8D290EB4 */  lw    $t1, %lo(ptrFirstFontTable)($t1)
-/* 044AAC 7F00FF7C 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTable)($t2)
+/* 044AA0 7F00FF70 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableLarge) 
+/* 044AA4 7F00FF74 3C098004 */  lui   $t1, %hi(ptrFirstFontTableLarge) 
+/* 044AA8 7F00FF78 8D290EB4 */  lw    $t1, %lo(ptrFirstFontTableLarge)($t1)
+/* 044AAC 7F00FF7C 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTableLarge)($t2)
 /* 044AB0 7F00FF80 87AB0044 */  lh    $t3, 0x44($sp)
 /* 044AB4 7F00FF84 240C00FF */  li    $t4, 255
 /* 044AB8 7F00FF88 AFAC0018 */  sw    $t4, 0x18($sp)
@@ -11780,12 +11781,12 @@ glabel constructor_menu09_007options
 /* 044B10 7F00FFE0 44062000 */  mfc1  $a2, $f4
 /* 044B14 7F00FFE4 0C002B25 */  jal   sprintf
 /* 044B18 7F00FFE8 00000000 */   nop   
-/* 044B1C 7F00FFEC 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTable) 
-/* 044B20 7F00FFF0 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTable)($t5)
-/* 044B24 7F00FFF4 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 044B1C 7F00FFEC 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
+/* 044B20 7F00FFF0 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 044B24 7F00FFF4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 044B28 7F00FFF8 AFA0004C */  sw    $zero, 0x4c($sp)
 /* 044B2C 7F00FFFC AFA00050 */  sw    $zero, 0x50($sp)
-/* 044B30 7F010000 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 044B30 7F010000 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 044B34 7F010004 27A40050 */  addiu $a0, $sp, 0x50
 /* 044B38 7F010008 27A5004C */  addiu $a1, $sp, 0x4c
 /* 044B3C 7F01000C 27A60054 */  addiu $a2, $sp, 0x54
@@ -11801,10 +11802,10 @@ glabel constructor_menu09_007options
 /* 044B64 7F010034 AFA30C0C */   sw    $v1, 0xc0c($sp)
 /* 044B68 7F010038 0C00110B */  jal   get_video2_settings_txtClipH
 /* 044B6C 7F01003C A7A20044 */   sh    $v0, 0x44($sp)
-/* 044B70 7F010040 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTable) 
-/* 044B74 7F010044 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 044B78 7F010048 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 044B7C 7F01004C 8DCE0EB8 */  lw    $t6, %lo(ptrSecondFontTable)($t6)
+/* 044B70 7F010040 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableLarge) 
+/* 044B74 7F010044 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 044B78 7F010048 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 044B7C 7F01004C 8DCE0EB8 */  lw    $t6, %lo(ptrSecondFontTableLarge)($t6)
 /* 044B80 7F010050 87AC0044 */  lh    $t4, 0x44($sp)
 /* 044B84 7F010054 240900FF */  li    $t1, 255
 /* 044B88 7F010058 AFA90018 */  sw    $t1, 0x18($sp)
@@ -13577,10 +13578,10 @@ void constructor_menu0E_mpoptions(void)
     sp58 = 0x37;
     sp54 = 0x5f;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret = get_textptr_for_textID(TEXT(LTITLE, 0x4d));
     sp64 = temp_ret;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0x79;
     phi_s0 = temp_s0;
@@ -13589,10 +13590,10 @@ void constructor_menu0E_mpoptions(void)
         phi_s0 = microcode_constructor_related_to_menus(temp_s0, 0x37, 0x78, sp4C + 0x3c, 0x87, 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_2 = write_text_at_abs_coord(phi_s0, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_2 = write_text_at_abs_coord(phi_s0, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_2 = get_textptr_for_textID(TEXT(LTITLE, 0x4e));
     sp64 = temp_ret_2;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_2, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_2, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0x8d;
     phi_s0_2 = temp_s0_2;
@@ -13601,10 +13602,10 @@ void constructor_menu0E_mpoptions(void)
         phi_s0_2 = microcode_constructor_related_to_menus(temp_s0_2, 0x37, 0x8c, sp4C + 0x3c, 0x9b, 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_3 = write_text_at_abs_coord(phi_s0_2, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_3 = write_text_at_abs_coord(phi_s0_2, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_3 = get_textptr_for_textID(TEXT(LTITLE, 0x4f));
     sp64 = temp_ret_3;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_3, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_3, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0xa1;
     phi_s0_3 = temp_s0_3;
@@ -13622,10 +13623,10 @@ void constructor_menu0E_mpoptions(void)
     }
     sp48 = (?32) phi_v1;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_4 = write_text_at_abs_coord(phi_s0_3, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, (?32) phi_v1, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_4 = write_text_at_abs_coord(phi_s0_3, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_4 = get_textptr_for_textID(TEXT(LTITLE, 0x50));
     sp64 = temp_ret_4;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_4, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_4, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0xb5;
     phi_s0_4 = temp_s0_4;
@@ -13643,10 +13644,10 @@ void constructor_menu0E_mpoptions(void)
     }
     sp48 = (?32) phi_v1_2;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_5 = write_text_at_abs_coord(phi_s0_4, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, (?32) phi_v1_2, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_5 = write_text_at_abs_coord(phi_s0_4, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_2, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_5 = get_textptr_for_textID(TEXT(LTITLE, 0x51));
     sp64 = temp_ret_5;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_5, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_5, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0xc9;
     phi_s0_5 = temp_s0_5;
@@ -13664,10 +13665,10 @@ void constructor_menu0E_mpoptions(void)
     }
     sp48 = (?32) phi_v1_3;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_6 = write_text_at_abs_coord(phi_s0_5, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, (?32) phi_v1_3, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_6 = write_text_at_abs_coord(phi_s0_5, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_3, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_6 = get_textptr_for_textID(TEXT(LTITLE, 0x52));
     sp64 = temp_ret_6;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_6, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_6, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0xdd;
     phi_s0_6 = temp_s0_6;
@@ -13685,10 +13686,10 @@ void constructor_menu0E_mpoptions(void)
     }
     sp48 = (?32) phi_v1_4;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_7 = write_text_at_abs_coord(phi_s0_6, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, (?32) phi_v1_4, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_7 = write_text_at_abs_coord(phi_s0_6, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_4, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_7 = get_textptr_for_textID(TEXT(LTITLE, 0x53));
     sp64 = temp_ret_7;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_7, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_7, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0xf1;
     phi_s0_7 = temp_s0_7;
@@ -13706,10 +13707,10 @@ void constructor_menu0E_mpoptions(void)
     }
     sp48 = (?32) phi_v1_5;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_8 = write_text_at_abs_coord(phi_s0_7, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, (?32) phi_v1_5, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_8 = write_text_at_abs_coord(phi_s0_7, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_5, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_8 = get_textptr_for_textID(TEXT(LTITLE, 0x11e));
     sp64 = temp_ret_8;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_8, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_8, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0x105;
     phi_s0_8 = temp_s0_8;
@@ -13727,10 +13728,10 @@ void constructor_menu0E_mpoptions(void)
     }
     sp48 = (?32) phi_v1_6;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_9 = write_text_at_abs_coord(phi_s0_8, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, (?32) phi_v1_6, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_9 = write_text_at_abs_coord(phi_s0_8, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_6, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_9 = get_textptr_for_textID(TEXT(LTITLE, 0x54));
     sp64 = temp_ret_9;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_9, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_9, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0x119;
     phi_s0_9 = temp_s0_9;
@@ -13748,17 +13749,17 @@ void constructor_menu0E_mpoptions(void)
     }
     sp48 = (?32) phi_v1_7;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_10 = write_text_at_abs_coord(phi_s0_9, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, (?32) phi_v1_7, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_10 = write_text_at_abs_coord(phi_s0_9, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_7, sp44, get_video2_settings_txtClipH(), 0, 0);
     sprintf(&sp5C, &aD_7, selected_num_players);
     sp58 = 0xa0;
     sp54 = 0x79;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_11 = write_text_at_abs_coord(temp_s0_10, &sp58, &sp54, &sp5C, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_11 = write_text_at_abs_coord(temp_s0_10, &sp58, &sp54, &sp5C, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sp64 = get_textptr_for_textID((0x80030000 + (scenario * 4))->unk-4FAC);
     sp58 = 0xa0;
     sp54 = 0x8d;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_12 = write_text_at_abs_coord(temp_s0_11, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_12 = write_text_at_abs_coord(temp_s0_11, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sp64 = get_textptr_for_textID((0x80030000 + (MP_stage_selected * 0x18))->unk-4F8C);
     sp58 = 0xa0;
     sp54 = 0xa1;
@@ -13772,7 +13773,7 @@ void constructor_menu0E_mpoptions(void)
     }
     sp48 = (?32) phi_v1_8;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_13 = write_text_at_abs_coord(temp_s0_12, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, (?32) phi_v1_8, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_13 = write_text_at_abs_coord(temp_s0_12, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_8, sp44, get_video2_settings_txtClipH(), 0, 0);
     sp64 = get_textptr_for_textID((0x80030000 + (game_length * 0xc))->unk-500C);
     sp58 = 0xa0;
     sp54 = 0xb5;
@@ -13786,7 +13787,7 @@ void constructor_menu0E_mpoptions(void)
     }
     sp48 = (?32) phi_v1_9;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_14 = write_text_at_abs_coord(temp_s0_13, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, (?32) phi_v1_9, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_14 = write_text_at_abs_coord(temp_s0_13, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_9, sp44, get_video2_settings_txtClipH(), 0, 0);
     sp64 = get_textptr_for_textID(*get_ptr_current_mp_weapon_set_text_code());
     sp58 = 0xa0;
     sp54 = 0xc9;
@@ -13800,7 +13801,7 @@ void constructor_menu0E_mpoptions(void)
     }
     sp48 = (?32) phi_v1_10;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_15 = write_text_at_abs_coord(temp_s0_14, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, (?32) phi_v1_10, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_15 = write_text_at_abs_coord(temp_s0_14, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_10, sp44, get_video2_settings_txtClipH(), 0, 0);
     sp64 = get_textptr_for_textID((0x80030000 + (aim_sight_adjustment * 4))->unk-4AF0);
     sp58 = 0xa0;
     sp54 = 0x119;
@@ -13814,7 +13815,7 @@ void constructor_menu0E_mpoptions(void)
     }
     sp48 = (?32) phi_v1_11;
     sp44 = get_video2_settings_txtClipW();
-    load_draw_selected_icon_folder_select(add_tab1_start(add_tab3_previous(write_text_at_abs_coord(temp_s0_15, &sp58, &sp54, sp64, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, (?32) phi_v1_11, sp44, get_video2_settings_txtClipH(), 0, 0))));
+    load_draw_selected_icon_folder_select(add_tab1_start(add_tab3_previous(write_text_at_abs_coord(temp_s0_15, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_11, sp44, get_video2_settings_txtClipH(), 0, 0))));
 }
 #else
 GLOBAL_ASM(
@@ -13844,10 +13845,10 @@ glabel constructor_menu0E_mpoptions
 /* 045A94 7F010F64 AFAF0054 */   sw    $t7, 0x54($sp)
 /* 045A98 7F010F68 0C00110B */  jal   get_video2_settings_txtClipH
 /* 045A9C 7F010F6C A7A20044 */   sh    $v0, 0x44($sp)
-/* 045AA0 7F010F70 3C188004 */  lui   $t8, %hi(ptrSecondFontTable) 
-/* 045AA4 7F010F74 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 045AA8 7F010F78 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 045AAC 7F010F7C 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTable)($t8)
+/* 045AA0 7F010F70 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
+/* 045AA4 7F010F74 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 045AA8 7F010F78 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 045AAC 7F010F7C 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
 /* 045AB0 7F010F80 87A90044 */  lh    $t1, 0x44($sp)
 /* 045AB4 7F010F84 240800FF */  li    $t0, 255
 /* 045AB8 7F010F88 AFA80018 */  sw    $t0, 0x18($sp)
@@ -13865,11 +13866,11 @@ glabel constructor_menu0E_mpoptions
 /* 045AE8 7F010FB8 00408025 */  move  $s0, $v0
 /* 045AEC 7F010FBC 0FC30776 */  jal   get_textptr_for_textID
 /* 045AF0 7F010FC0 34049C4D */   li    $a0, 40013
-/* 045AF4 7F010FC4 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 045AF8 7F010FC8 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 045AFC 7F010FCC 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 045AF4 7F010FC4 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 045AF8 7F010FC8 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 045AFC 7F010FCC 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 045B00 7F010FD0 AFA20064 */  sw    $v0, 0x64($sp)
-/* 045B04 7F010FD4 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 045B04 7F010FD4 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 045B08 7F010FD8 27A40050 */  addiu $a0, $sp, 0x50
 /* 045B0C 7F010FDC 27A5004C */  addiu $a1, $sp, 0x4c
 /* 045B10 7F010FE0 00403025 */  move  $a2, $v0
@@ -13899,10 +13900,10 @@ glabel constructor_menu0E_mpoptions
 /* 045B6C 7F01103C 00000000 */   nop   
 /* 045B70 7F011040 0C00110B */  jal   get_video2_settings_txtClipH
 /* 045B74 7F011044 A7A20044 */   sh    $v0, 0x44($sp)
-/* 045B78 7F011048 3C188004 */  lui   $t8, %hi(ptrSecondFontTable) 
-/* 045B7C 7F01104C 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 045B80 7F011050 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 045B84 7F011054 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTable)($t8)
+/* 045B78 7F011048 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
+/* 045B7C 7F01104C 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 045B80 7F011050 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 045B84 7F011054 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
 /* 045B88 7F011058 87A90044 */  lh    $t1, 0x44($sp)
 /* 045B8C 7F01105C 240800FF */  li    $t0, 255
 /* 045B90 7F011060 AFA80018 */  sw    $t0, 0x18($sp)
@@ -13920,11 +13921,11 @@ glabel constructor_menu0E_mpoptions
 /* 045BC0 7F011090 00408025 */  move  $s0, $v0
 /* 045BC4 7F011094 0FC30776 */  jal   get_textptr_for_textID
 /* 045BC8 7F011098 34049C4E */   li    $a0, 40014
-/* 045BCC 7F01109C 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 045BD0 7F0110A0 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 045BD4 7F0110A4 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 045BCC 7F01109C 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 045BD0 7F0110A0 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 045BD4 7F0110A4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 045BD8 7F0110A8 AFA20064 */  sw    $v0, 0x64($sp)
-/* 045BDC 7F0110AC 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 045BDC 7F0110AC 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 045BE0 7F0110B0 27A40050 */  addiu $a0, $sp, 0x50
 /* 045BE4 7F0110B4 27A5004C */  addiu $a1, $sp, 0x4c
 /* 045BE8 7F0110B8 00403025 */  move  $a2, $v0
@@ -13954,10 +13955,10 @@ glabel constructor_menu0E_mpoptions
 /* 045C44 7F011114 00000000 */   nop   
 /* 045C48 7F011118 0C00110B */  jal   get_video2_settings_txtClipH
 /* 045C4C 7F01111C A7A20044 */   sh    $v0, 0x44($sp)
-/* 045C50 7F011120 3C188004 */  lui   $t8, %hi(ptrSecondFontTable) 
-/* 045C54 7F011124 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 045C58 7F011128 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 045C5C 7F01112C 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTable)($t8)
+/* 045C50 7F011120 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
+/* 045C54 7F011124 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 045C58 7F011128 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 045C5C 7F01112C 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
 /* 045C60 7F011130 87A90044 */  lh    $t1, 0x44($sp)
 /* 045C64 7F011134 240800FF */  li    $t0, 255
 /* 045C68 7F011138 AFA80018 */  sw    $t0, 0x18($sp)
@@ -13975,11 +13976,11 @@ glabel constructor_menu0E_mpoptions
 /* 045C98 7F011168 00408025 */  move  $s0, $v0
 /* 045C9C 7F01116C 0FC30776 */  jal   get_textptr_for_textID
 /* 045CA0 7F011170 34049C4F */   li    $a0, 40015
-/* 045CA4 7F011174 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 045CA8 7F011178 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 045CAC 7F01117C 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 045CA4 7F011174 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 045CA8 7F011178 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 045CAC 7F01117C 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 045CB0 7F011180 AFA20064 */  sw    $v0, 0x64($sp)
-/* 045CB4 7F011184 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 045CB4 7F011184 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 045CB8 7F011188 27A40050 */  addiu $a0, $sp, 0x50
 /* 045CBC 7F01118C 27A5004C */  addiu $a1, $sp, 0x4c
 /* 045CC0 7F011190 00403025 */  move  $a2, $v0
@@ -14017,10 +14018,10 @@ glabel constructor_menu0E_mpoptions
 /* 045D38 7F011208 AFA30048 */   sw    $v1, 0x48($sp)
 /* 045D3C 7F01120C 0C00110B */  jal   get_video2_settings_txtClipH
 /* 045D40 7F011210 A7A20044 */   sh    $v0, 0x44($sp)
-/* 045D44 7F011214 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 045D48 7F011218 3C088004 */  lui   $t0, %hi(ptrFirstFontTable) 
-/* 045D4C 7F01121C 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTable)($t0)
-/* 045D50 7F011220 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 045D44 7F011214 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 045D48 7F011218 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge) 
+/* 045D4C 7F01121C 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
+/* 045D50 7F011220 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 045D54 7F011224 8FA30048 */  lw    $v1, 0x48($sp)
 /* 045D58 7F011228 87A90044 */  lh    $t1, 0x44($sp)
 /* 045D5C 7F01122C 02002025 */  move  $a0, $s0
@@ -14038,11 +14039,11 @@ glabel constructor_menu0E_mpoptions
 /* 045D8C 7F01125C 00408025 */  move  $s0, $v0
 /* 045D90 7F011260 0FC30776 */  jal   get_textptr_for_textID
 /* 045D94 7F011264 34049C50 */   li    $a0, 40016
-/* 045D98 7F011268 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 045D9C 7F01126C 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 045DA0 7F011270 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 045D98 7F011268 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 045D9C 7F01126C 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 045DA0 7F011270 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 045DA4 7F011274 AFA20064 */  sw    $v0, 0x64($sp)
-/* 045DA8 7F011278 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 045DA8 7F011278 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 045DAC 7F01127C 27A40050 */  addiu $a0, $sp, 0x50
 /* 045DB0 7F011280 27A5004C */  addiu $a1, $sp, 0x4c
 /* 045DB4 7F011284 00403025 */  move  $a2, $v0
@@ -14080,10 +14081,10 @@ glabel constructor_menu0E_mpoptions
 /* 045E2C 7F0112FC AFA30048 */   sw    $v1, 0x48($sp)
 /* 045E30 7F011300 0C00110B */  jal   get_video2_settings_txtClipH
 /* 045E34 7F011304 A7A20044 */   sh    $v0, 0x44($sp)
-/* 045E38 7F011308 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 045E3C 7F01130C 3C088004 */  lui   $t0, %hi(ptrFirstFontTable) 
-/* 045E40 7F011310 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTable)($t0)
-/* 045E44 7F011314 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 045E38 7F011308 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 045E3C 7F01130C 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge) 
+/* 045E40 7F011310 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
+/* 045E44 7F011314 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 045E48 7F011318 8FA30048 */  lw    $v1, 0x48($sp)
 /* 045E4C 7F01131C 87A90044 */  lh    $t1, 0x44($sp)
 /* 045E50 7F011320 02002025 */  move  $a0, $s0
@@ -14101,11 +14102,11 @@ glabel constructor_menu0E_mpoptions
 /* 045E80 7F011350 00408025 */  move  $s0, $v0
 /* 045E84 7F011354 0FC30776 */  jal   get_textptr_for_textID
 /* 045E88 7F011358 34049C51 */   li    $a0, 40017
-/* 045E8C 7F01135C 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 045E90 7F011360 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 045E94 7F011364 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 045E8C 7F01135C 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 045E90 7F011360 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 045E94 7F011364 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 045E98 7F011368 AFA20064 */  sw    $v0, 0x64($sp)
-/* 045E9C 7F01136C 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 045E9C 7F01136C 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 045EA0 7F011370 27A40050 */  addiu $a0, $sp, 0x50
 /* 045EA4 7F011374 27A5004C */  addiu $a1, $sp, 0x4c
 /* 045EA8 7F011378 00403025 */  move  $a2, $v0
@@ -14143,10 +14144,10 @@ glabel constructor_menu0E_mpoptions
 /* 045F20 7F0113F0 AFA30048 */   sw    $v1, 0x48($sp)
 /* 045F24 7F0113F4 0C00110B */  jal   get_video2_settings_txtClipH
 /* 045F28 7F0113F8 A7A20044 */   sh    $v0, 0x44($sp)
-/* 045F2C 7F0113FC 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 045F30 7F011400 3C088004 */  lui   $t0, %hi(ptrFirstFontTable) 
-/* 045F34 7F011404 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTable)($t0)
-/* 045F38 7F011408 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 045F2C 7F0113FC 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 045F30 7F011400 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge) 
+/* 045F34 7F011404 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
+/* 045F38 7F011408 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 045F3C 7F01140C 8FA30048 */  lw    $v1, 0x48($sp)
 /* 045F40 7F011410 87A90044 */  lh    $t1, 0x44($sp)
 /* 045F44 7F011414 02002025 */  move  $a0, $s0
@@ -14164,11 +14165,11 @@ glabel constructor_menu0E_mpoptions
 /* 045F74 7F011444 00408025 */  move  $s0, $v0
 /* 045F78 7F011448 0FC30776 */  jal   get_textptr_for_textID
 /* 045F7C 7F01144C 34049C52 */   li    $a0, 40018
-/* 045F80 7F011450 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 045F84 7F011454 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 045F88 7F011458 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 045F80 7F011450 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 045F84 7F011454 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 045F88 7F011458 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 045F8C 7F01145C AFA20064 */  sw    $v0, 0x64($sp)
-/* 045F90 7F011460 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 045F90 7F011460 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 045F94 7F011464 27A40050 */  addiu $a0, $sp, 0x50
 /* 045F98 7F011468 27A5004C */  addiu $a1, $sp, 0x4c
 /* 045F9C 7F01146C 00403025 */  move  $a2, $v0
@@ -14206,10 +14207,10 @@ glabel constructor_menu0E_mpoptions
 /* 046014 7F0114E4 AFA30048 */   sw    $v1, 0x48($sp)
 /* 046018 7F0114E8 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04601C 7F0114EC A7A20044 */   sh    $v0, 0x44($sp)
-/* 046020 7F0114F0 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 046024 7F0114F4 3C088004 */  lui   $t0, %hi(ptrFirstFontTable) 
-/* 046028 7F0114F8 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTable)($t0)
-/* 04602C 7F0114FC 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 046020 7F0114F0 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 046024 7F0114F4 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge) 
+/* 046028 7F0114F8 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
+/* 04602C 7F0114FC 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 046030 7F011500 8FA30048 */  lw    $v1, 0x48($sp)
 /* 046034 7F011504 87A90044 */  lh    $t1, 0x44($sp)
 /* 046038 7F011508 02002025 */  move  $a0, $s0
@@ -14227,11 +14228,11 @@ glabel constructor_menu0E_mpoptions
 /* 046068 7F011538 00408025 */  move  $s0, $v0
 /* 04606C 7F01153C 0FC30776 */  jal   get_textptr_for_textID
 /* 046070 7F011540 34049C53 */   li    $a0, 40019
-/* 046074 7F011544 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 046078 7F011548 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 04607C 7F01154C 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 046074 7F011544 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 046078 7F011548 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 04607C 7F01154C 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 046080 7F011550 AFA20064 */  sw    $v0, 0x64($sp)
-/* 046084 7F011554 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 046084 7F011554 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 046088 7F011558 27A40050 */  addiu $a0, $sp, 0x50
 /* 04608C 7F01155C 27A5004C */  addiu $a1, $sp, 0x4c
 /* 046090 7F011560 00403025 */  move  $a2, $v0
@@ -14269,10 +14270,10 @@ glabel constructor_menu0E_mpoptions
 /* 046108 7F0115D8 AFA30048 */   sw    $v1, 0x48($sp)
 /* 04610C 7F0115DC 0C00110B */  jal   get_video2_settings_txtClipH
 /* 046110 7F0115E0 A7A20044 */   sh    $v0, 0x44($sp)
-/* 046114 7F0115E4 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 046118 7F0115E8 3C088004 */  lui   $t0, %hi(ptrFirstFontTable) 
-/* 04611C 7F0115EC 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTable)($t0)
-/* 046120 7F0115F0 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 046114 7F0115E4 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 046118 7F0115E8 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge) 
+/* 04611C 7F0115EC 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
+/* 046120 7F0115F0 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 046124 7F0115F4 8FA30048 */  lw    $v1, 0x48($sp)
 /* 046128 7F0115F8 87A90044 */  lh    $t1, 0x44($sp)
 /* 04612C 7F0115FC 02002025 */  move  $a0, $s0
@@ -14290,11 +14291,11 @@ glabel constructor_menu0E_mpoptions
 /* 04615C 7F01162C 00408025 */  move  $s0, $v0
 /* 046160 7F011630 0FC30776 */  jal   get_textptr_for_textID
 /* 046164 7F011634 34049D1E */   li    $a0, 40222
-/* 046168 7F011638 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 04616C 7F01163C 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 046170 7F011640 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 046168 7F011638 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 04616C 7F01163C 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 046170 7F011640 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 046174 7F011644 AFA20064 */  sw    $v0, 0x64($sp)
-/* 046178 7F011648 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 046178 7F011648 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 04617C 7F01164C 27A40050 */  addiu $a0, $sp, 0x50
 /* 046180 7F011650 27A5004C */  addiu $a1, $sp, 0x4c
 /* 046184 7F011654 00403025 */  move  $a2, $v0
@@ -14332,10 +14333,10 @@ glabel constructor_menu0E_mpoptions
 /* 0461FC 7F0116CC AFA30048 */   sw    $v1, 0x48($sp)
 /* 046200 7F0116D0 0C00110B */  jal   get_video2_settings_txtClipH
 /* 046204 7F0116D4 A7A20044 */   sh    $v0, 0x44($sp)
-/* 046208 7F0116D8 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 04620C 7F0116DC 3C088004 */  lui   $t0, %hi(ptrFirstFontTable) 
-/* 046210 7F0116E0 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTable)($t0)
-/* 046214 7F0116E4 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 046208 7F0116D8 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 04620C 7F0116DC 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge) 
+/* 046210 7F0116E0 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
+/* 046214 7F0116E4 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 046218 7F0116E8 8FA30048 */  lw    $v1, 0x48($sp)
 /* 04621C 7F0116EC 87A90044 */  lh    $t1, 0x44($sp)
 /* 046220 7F0116F0 02002025 */  move  $a0, $s0
@@ -14353,11 +14354,11 @@ glabel constructor_menu0E_mpoptions
 /* 046250 7F011720 00408025 */  move  $s0, $v0
 /* 046254 7F011724 0FC30776 */  jal   get_textptr_for_textID
 /* 046258 7F011728 34049C54 */   li    $a0, 40020
-/* 04625C 7F01172C 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 046260 7F011730 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 046264 7F011734 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 04625C 7F01172C 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 046260 7F011730 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 046264 7F011734 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 046268 7F011738 AFA20064 */  sw    $v0, 0x64($sp)
-/* 04626C 7F01173C 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 04626C 7F01173C 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 046270 7F011740 27A40050 */  addiu $a0, $sp, 0x50
 /* 046274 7F011744 27A5004C */  addiu $a1, $sp, 0x4c
 /* 046278 7F011748 00403025 */  move  $a2, $v0
@@ -14395,10 +14396,10 @@ glabel constructor_menu0E_mpoptions
 /* 0462F0 7F0117C0 AFA30048 */   sw    $v1, 0x48($sp)
 /* 0462F4 7F0117C4 0C00110B */  jal   get_video2_settings_txtClipH
 /* 0462F8 7F0117C8 A7A20044 */   sh    $v0, 0x44($sp)
-/* 0462FC 7F0117CC 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 046300 7F0117D0 3C088004 */  lui   $t0, %hi(ptrFirstFontTable) 
-/* 046304 7F0117D4 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTable)($t0)
-/* 046308 7F0117D8 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 0462FC 7F0117CC 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 046300 7F0117D0 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge) 
+/* 046304 7F0117D4 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
+/* 046308 7F0117D8 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 04630C 7F0117DC 8FA30048 */  lw    $v1, 0x48($sp)
 /* 046310 7F0117E0 87A90044 */  lh    $t1, 0x44($sp)
 /* 046314 7F0117E4 02002025 */  move  $a0, $s0
@@ -14427,10 +14428,10 @@ glabel constructor_menu0E_mpoptions
 /* 046370 7F011840 AFAB0054 */   sw    $t3, 0x54($sp)
 /* 046374 7F011844 0C00110B */  jal   get_video2_settings_txtClipH
 /* 046378 7F011848 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04637C 7F01184C 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTable) 
-/* 046380 7F011850 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTable) 
-/* 046384 7F011854 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTable)($t5)
-/* 046388 7F011858 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTable)($t4)
+/* 04637C 7F01184C 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableLarge) 
+/* 046380 7F011850 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
+/* 046384 7F011854 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 046388 7F011858 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTableLarge)($t4)
 /* 04638C 7F01185C 87AF0044 */  lh    $t7, 0x44($sp)
 /* 046390 7F011860 240E00FF */  li    $t6, 255
 /* 046394 7F011864 AFAE0018 */  sw    $t6, 0x18($sp)
@@ -14461,10 +14462,10 @@ glabel constructor_menu0E_mpoptions
 /* 0463F8 7F0118C8 AFA90054 */   sw    $t1, 0x54($sp)
 /* 0463FC 7F0118CC 0C00110B */  jal   get_video2_settings_txtClipH
 /* 046400 7F0118D0 A7A20044 */   sh    $v0, 0x44($sp)
-/* 046404 7F0118D4 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTable) 
-/* 046408 7F0118D8 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTable) 
-/* 04640C 7F0118DC 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTable)($t3)
-/* 046410 7F0118E0 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTable)($t2)
+/* 046404 7F0118D4 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableLarge) 
+/* 046408 7F0118D8 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableLarge) 
+/* 04640C 7F0118DC 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTableLarge)($t3)
+/* 046410 7F0118E0 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTableLarge)($t2)
 /* 046414 7F0118E4 87AD0044 */  lh    $t5, 0x44($sp)
 /* 046418 7F0118E8 240C00FF */  li    $t4, 255
 /* 04641C 7F0118EC AFAC0018 */  sw    $t4, 0x18($sp)
@@ -14506,10 +14507,10 @@ glabel constructor_menu0E_mpoptions
 /* 0464A4 7F011974 AFA30048 */   sw    $v1, 0x48($sp)
 /* 0464A8 7F011978 0C00110B */  jal   get_video2_settings_txtClipH
 /* 0464AC 7F01197C A7A20044 */   sh    $v0, 0x44($sp)
-/* 0464B0 7F011980 3C098004 */  lui   $t1, %hi(ptrSecondFontTable) 
-/* 0464B4 7F011984 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 0464B8 7F011988 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 0464BC 7F01198C 8D290EB8 */  lw    $t1, %lo(ptrSecondFontTable)($t1)
+/* 0464B0 7F011980 3C098004 */  lui   $t1, %hi(ptrSecondFontTableLarge) 
+/* 0464B4 7F011984 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 0464B8 7F011988 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 0464BC 7F01198C 8D290EB8 */  lw    $t1, %lo(ptrSecondFontTableLarge)($t1)
 /* 0464C0 7F011990 8FA30048 */  lw    $v1, 0x48($sp)
 /* 0464C4 7F011994 87AB0044 */  lh    $t3, 0x44($sp)
 /* 0464C8 7F011998 02002025 */  move  $a0, $s0
@@ -14551,10 +14552,10 @@ glabel constructor_menu0E_mpoptions
 /* 046550 7F011A20 AFA30048 */   sw    $v1, 0x48($sp)
 /* 046554 7F011A24 0C00110B */  jal   get_video2_settings_txtClipH
 /* 046558 7F011A28 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04655C 7F011A2C 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 046560 7F011A30 3C088004 */  lui   $t0, %hi(ptrFirstFontTable) 
-/* 046564 7F011A34 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTable)($t0)
-/* 046568 7F011A38 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 04655C 7F011A2C 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 046560 7F011A30 3C088004 */  lui   $t0, %hi(ptrFirstFontTableLarge) 
+/* 046564 7F011A34 8D080EB4 */  lw    $t0, %lo(ptrFirstFontTableLarge)($t0)
+/* 046568 7F011A38 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 04656C 7F011A3C 8FA30048 */  lw    $v1, 0x48($sp)
 /* 046570 7F011A40 87A90044 */  lh    $t1, 0x44($sp)
 /* 046574 7F011A44 02002025 */  move  $a0, $s0
@@ -14590,10 +14591,10 @@ glabel constructor_menu0E_mpoptions
 /* 0465E4 7F011AB4 AFA30048 */   sw    $v1, 0x48($sp)
 /* 0465E8 7F011AB8 0C00110B */  jal   get_video2_settings_txtClipH
 /* 0465EC 7F011ABC A7A20044 */   sh    $v0, 0x44($sp)
-/* 0465F0 7F011AC0 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTable) 
-/* 0465F4 7F011AC4 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTable) 
-/* 0465F8 7F011AC8 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTable)($t6)
-/* 0465FC 7F011ACC 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTable)($t5)
+/* 0465F0 7F011AC0 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableLarge) 
+/* 0465F4 7F011AC4 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) 
+/* 0465F8 7F011AC8 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
+/* 0465FC 7F011ACC 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTableLarge)($t5)
 /* 046600 7F011AD0 8FA30048 */  lw    $v1, 0x48($sp)
 /* 046604 7F011AD4 87AF0044 */  lh    $t7, 0x44($sp)
 /* 046608 7F011AD8 02002025 */  move  $a0, $s0
@@ -14633,10 +14634,10 @@ glabel constructor_menu0E_mpoptions
 /* 046688 7F011B58 AFA30048 */   sw    $v1, 0x48($sp)
 /* 04668C 7F011B5C 0C00110B */  jal   get_video2_settings_txtClipH
 /* 046690 7F011B60 A7A20044 */   sh    $v0, 0x44($sp)
-/* 046694 7F011B64 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTable) 
-/* 046698 7F011B68 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTable) 
-/* 04669C 7F011B6C 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTable)($t4)
-/* 0466A0 7F011B70 8D6B0EB8 */  lw    $t3, %lo(ptrSecondFontTable)($t3)
+/* 046694 7F011B64 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableLarge) 
+/* 046698 7F011B68 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableLarge) 
+/* 04669C 7F011B6C 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTableLarge)($t4)
+/* 0466A0 7F011B70 8D6B0EB8 */  lw    $t3, %lo(ptrSecondFontTableLarge)($t3)
 /* 0466A4 7F011B74 8FA30048 */  lw    $v1, 0x48($sp)
 /* 0466A8 7F011B78 87AD0044 */  lh    $t5, 0x44($sp)
 /* 0466AC 7F011B7C 02002025 */  move  $a0, $s0
@@ -16128,21 +16129,21 @@ loop_4:
             if (subroutine_arg0 == 0)
             {
                 temp_ret_3 = get_textptr_for_textID(TEXT(LTITLE, 0x55));
-                sub_GAME_7F0AE98C(&spBC, &spB8, temp_ret_3, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+                sub_GAME_7F0AE98C(&spBC, &spB8, temp_ret_3, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
                 spB4 = (s32) ((((s32) phi_s4 >> 1) + phi_s2) - (spB8 >> 1));
                 get_video2_settings_txtClipW();
-                phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &spB4, &spB0, temp_ret_3, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, get_video2_settings_txtClipH(), 0, 0);
+                phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &spB4, &spB0, temp_ret_3, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0);
             }
         }
         temp_s6 = ((s32) phi_s4 >> 1) + phi_s2;
         temp_ret_4 = get_textptr_for_textID((0x80030000 + (*sp80 * 0xc))->unk-4E68);
-        sub_GAME_7F0AE98C(&spA8, &spA4, temp_ret_4, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+        sub_GAME_7F0AE98C(&spA8, &spA4, temp_ret_4, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
         sp9C = (s32) (phi_s7 + 0x78);
         spA0 = (s32) (temp_s6 - (spA4 >> 1));
         get_video2_settings_txtClipW();
         temp_s3 = phi_s2 + 0xd;
         temp_s4 = sp8C + -0xe;
-        temp_ret_5 = sub_GAME_7F01231C(write_text_at_abs_coord(microcode_constructor(phi_s1), &spA0, &sp9C, temp_ret_4, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, get_video2_settings_txtClipH(), 0, 0), temp_s3, temp_s4, temp_s6 - *sp74, (?32) *sp70, (?32) subroutine_arg0);
+        temp_ret_5 = sub_GAME_7F01231C(write_text_at_abs_coord(microcode_constructor(phi_s1), &spA0, &sp9C, temp_ret_4, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0), temp_s3, temp_s4, temp_s6 - *sp74, (?32) *sp70, (?32) subroutine_arg0);
         temp_s1_3 = temp_ret_5;
         if ((*sp88 != 0) || (subroutine_arg0 != 0))
         {
@@ -16386,11 +16387,11 @@ glabel constructor_menu0F_mpcharsel
 /* 047500 7F0129D0 8FAE0080 */   lw    $t6, 0x80($sp)
 /* 047504 7F0129D4 0FC30776 */  jal   get_textptr_for_textID
 /* 047508 7F0129D8 34049C55 */   li    $a0, 40021
-/* 04750C 7F0129DC 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTable) 
-/* 047510 7F0129E0 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTable)($t5)
-/* 047514 7F0129E4 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 04750C 7F0129DC 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
+/* 047510 7F0129E0 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 047514 7F0129E4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 047518 7F0129E8 00409825 */  move  $s3, $v0
-/* 04751C 7F0129EC 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 04751C 7F0129EC 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 047520 7F0129F0 27A400BC */  addiu $a0, $sp, 0xbc
 /* 047524 7F0129F4 27A500B8 */  addiu $a1, $sp, 0xb8
 /* 047528 7F0129F8 00403025 */  move  $a2, $v0
@@ -16412,10 +16413,10 @@ glabel constructor_menu0F_mpcharsel
 /* 047568 7F012A38 00104C03 */  sra   $t1, $s0, 0x10
 /* 04756C 7F012A3C 0C00110B */  jal   get_video2_settings_txtClipH
 /* 047570 7F012A40 01208025 */   move  $s0, $t1
-/* 047574 7F012A44 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTable) 
-/* 047578 7F012A48 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTable) 
-/* 04757C 7F012A4C 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTable)($t4)
-/* 047580 7F012A50 8D6B0EB8 */  lw    $t3, %lo(ptrSecondFontTable)($t3)
+/* 047574 7F012A44 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableLarge) 
+/* 047578 7F012A48 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableLarge) 
+/* 04757C 7F012A4C 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTableLarge)($t4)
+/* 047580 7F012A50 8D6B0EB8 */  lw    $t3, %lo(ptrSecondFontTableLarge)($t3)
 /* 047584 7F012A54 240D00FF */  li    $t5, 255
 /* 047588 7F012A58 AFAD0018 */  sw    $t5, 0x18($sp)
 /* 04758C 7F012A5C 02202025 */  move  $a0, $s1
@@ -16442,11 +16443,11 @@ glabel constructor_menu0F_mpcharsel
 /* 0475DC 7F012AAC 008F2021 */  addu  $a0, $a0, $t7
 /* 0475E0 7F012AB0 0FC30776 */  jal   get_textptr_for_textID
 /* 0475E4 7F012AB4 9484B198 */   lhu   $a0, %lo(mp_chr_setup)($a0)
-/* 0475E8 7F012AB8 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 0475EC 7F012ABC 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 0475F0 7F012AC0 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 0475E8 7F012AB8 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 0475EC 7F012ABC 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 0475F0 7F012AC0 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 0475F4 7F012AC4 00409825 */  move  $s3, $v0
-/* 0475F8 7F012AC8 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 0475F8 7F012AC8 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 0475FC 7F012ACC 27A400A8 */  addiu $a0, $sp, 0xa8
 /* 047600 7F012AD0 27A500A4 */  addiu $a1, $sp, 0xa4
 /* 047604 7F012AD4 00403025 */  move  $a2, $v0
@@ -16467,10 +16468,10 @@ glabel constructor_menu0F_mpcharsel
 /* 047640 7F012B10 00107403 */  sra   $t6, $s0, 0x10
 /* 047644 7F012B14 0C00110B */  jal   get_video2_settings_txtClipH
 /* 047648 7F012B18 01C08025 */   move  $s0, $t6
-/* 04764C 7F012B1C 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTable) 
-/* 047650 7F012B20 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTable) 
-/* 047654 7F012B24 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTable)($t7)
-/* 047658 7F012B28 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTable)($t2)
+/* 04764C 7F012B1C 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableLarge) 
+/* 047650 7F012B20 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableLarge) 
+/* 047654 7F012B24 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTableLarge)($t7)
+/* 047658 7F012B28 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTableLarge)($t2)
 /* 04765C 7F012B2C 241800FF */  li    $t8, 255
 /* 047660 7F012B30 AFB80018 */  sw    $t8, 0x18($sp)
 /* 047664 7F012B34 02202025 */  move  $a0, $s1
@@ -17113,20 +17114,20 @@ loop_4:
         if (*sp74 == 0)
         {
             temp_ret_3 = get_textptr_for_textID(TEXT(LTITLE, 0x56));
-            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_3, ptrSecondFontTable, (?32) subroutine_arg0, 0);
+            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_3, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
             sp9C = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (spA0 >> 1));
             sp98 = (s32) ((phi_s2 - (spA4 >> 1)) + 0x37);
             get_video2_settings_txtClipW();
-            phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (?32) ptrSecondFontTable, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
+            phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
         }
         temp_ret_4 = get_textptr_for_textID((0x80030000 + (*sp70 * 8))->unk-4B68);
-        sub_GAME_7F0AE98C(&sp90, &sp8C, temp_ret_4, ptrSecondFontTable, (?32) subroutine_arg0, 0);
+        sub_GAME_7F0AE98C(&sp90, &sp8C, temp_ret_4, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
         sp88 = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (sp8C >> 1));
         sp84 = (s32) (((phi_s2 + 0x46) - (sp90 >> 1)) + 0xf);
         get_video2_settings_txtClipW();
         temp_s6 = phi_s6 + 1;
         sp70 = (void *) (sp70 + 4);
-        temp_v0 = write_text_at_abs_coord(microcode_constructor(phi_s1), &sp88, &sp84, temp_ret_4, (?32) ptrSecondFontTable, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
+        temp_v0 = write_text_at_abs_coord(microcode_constructor(phi_s1), &sp88, &sp84, temp_ret_4, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
         sp74 = (void *) (sp74 + 4);
         phi_s6 = temp_s6;
         phi_v0 = temp_v0;
@@ -17200,11 +17201,11 @@ glabel constructor_menu10_mphandicap
 /* 047D84 7F013254 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 047D88 7F013258 254A97A8 */  addiu $t2, %lo(handicap_player1) # addiu $t2, $t2, -0x6858
 /* 047D8C 7F01325C 25299740 */  addiu $t1, %lo(has_selected_char_player1) # addiu $t1, $t1, -0x68c0
-/* 047D90 7F013260 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTable) 
-/* 047D94 7F013264 3C178004 */  lui   $s7, %hi(ptrSecondFontTable) 
+/* 047D90 7F013260 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTableLarge) 
+/* 047D94 7F013264 3C178004 */  lui   $s7, %hi(ptrSecondFontTableLarge) 
 /* 047D98 7F013268 4481A000 */  mtc1  $at, $f20
-/* 047D9C 7F01326C 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTable) # addiu $s7, $s7, 0xeb8
-/* 047DA0 7F013270 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTable) # addiu $fp, $fp, 0xeb4
+/* 047D9C 7F01326C 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTableLarge) # addiu $s7, $s7, 0xeb8
+/* 047DA0 7F013270 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTableLarge) # addiu $fp, $fp, 0xeb4
 /* 047DA4 7F013274 AFA90074 */  sw    $t1, 0x74($sp)
 /* 047DA8 7F013278 AFAA0070 */  sw    $t2, 0x70($sp)
 .L7F01327C:
@@ -17952,20 +17953,20 @@ loop_4:
         if (*sp74 == 0)
         {
             temp_ret_3 = get_textptr_for_textID(TEXT(LTITLE, 0x11d));
-            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_3, ptrSecondFontTable, (?32) subroutine_arg0, 0);
+            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_3, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
             sp9C = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (spA0 >> 1));
             sp98 = (s32) ((phi_s2 - (spA4 >> 1)) + 0x37);
             get_video2_settings_txtClipW();
-            phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (?32) ptrSecondFontTable, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
+            phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
         }
         temp_ret_4 = get_textptr_for_textID((0x80030000 + (*sp70 * 4))->unk-4B10);
-        sub_GAME_7F0AE98C(&sp90, &sp8C, temp_ret_4, ptrSecondFontTable, (?32) subroutine_arg0, 0);
+        sub_GAME_7F0AE98C(&sp90, &sp8C, temp_ret_4, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
         sp88 = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (sp8C >> 1));
         sp84 = (s32) (((phi_s2 + 0x46) - (sp90 >> 1)) + 0xf);
         get_video2_settings_txtClipW();
         temp_s6 = phi_s6 + 1;
         sp70 = (void *) (sp70 + 4);
-        temp_v0 = write_text_at_abs_coord(microcode_constructor(phi_s1), &sp88, &sp84, temp_ret_4, (?32) ptrSecondFontTable, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
+        temp_v0 = write_text_at_abs_coord(microcode_constructor(phi_s1), &sp88, &sp84, temp_ret_4, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
         sp74 = (void *) (sp74 + 4);
         phi_s6 = temp_s6;
         phi_v0 = temp_v0;
@@ -18039,11 +18040,11 @@ glabel constructor_menu11_mpcontrol
 /* 048588 7F013A58 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 04858C 7F013A5C 254A97B8 */  addiu $t2, %lo(controlstyle_player) # addiu $t2, $t2, -0x6848
 /* 048590 7F013A60 25299740 */  addiu $t1, %lo(has_selected_char_player1) # addiu $t1, $t1, -0x68c0
-/* 048594 7F013A64 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTable) 
-/* 048598 7F013A68 3C178004 */  lui   $s7, %hi(ptrSecondFontTable) 
+/* 048594 7F013A64 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTableLarge) 
+/* 048598 7F013A68 3C178004 */  lui   $s7, %hi(ptrSecondFontTableLarge) 
 /* 04859C 7F013A6C 4481A000 */  mtc1  $at, $f20
-/* 0485A0 7F013A70 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTable) # addiu $s7, $s7, 0xeb8
-/* 0485A4 7F013A74 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTable) # addiu $fp, $fp, 0xeb4
+/* 0485A0 7F013A70 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTableLarge) # addiu $s7, $s7, 0xeb8
+/* 0485A4 7F013A74 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTableLarge) # addiu $fp, $fp, 0xeb4
 /* 0485A8 7F013A78 AFA90074 */  sw    $t1, 0x74($sp)
 /* 0485AC 7F013A7C AFAA0070 */  sw    $t2, 0x70($sp)
 .L7F013A80:
@@ -18751,14 +18752,14 @@ loop_17:
             {
                 phi_s2_2 = -0x100;
             }
-            sub_GAME_7F0AE98C(&sp128, &sp124, get_textptr_for_textID(temp_s3_2->unk2), subroutine_arg0, (?32) D_80040EAC, 0);
+            sub_GAME_7F0AE98C(&sp128, &sp124, get_textptr_for_textID(temp_s3_2->unk2), subroutine_arg0, (?32) ptrFirstFontTableSmall, 0);
             temp_s4_3 = phi_s6 + -0x1f;
             temp_a2 = sp90 - sp128;
             arg0 = microcode_constructor_related_to_menus(arg0, temp_s4_3, temp_a2, temp_s4_3 + sp124, (s32) (temp_a2 + sp128), 0);
             get_video2_settings_txtClipW();
-            arg0 = en_text_write_stuff(arg0, &sp130, &sp12C, get_textptr_for_textID(temp_s3_2->unk2), (?32) subroutine_arg0, (?32) D_80040EAC, (s32) (phi_s2_2 | 0xff), get_video2_settings_txtClipH(), 0, 0);
+            arg0 = en_text_write_stuff(arg0, &sp130, &sp12C, get_textptr_for_textID(temp_s3_2->unk2), (?32) subroutine_arg0, (?32) ptrFirstFontTableSmall, (s32) (phi_s2_2 | 0xff), get_video2_settings_txtClipH(), 0, 0);
             get_video2_settings_txtClipW();
-            arg0 = en_text_write_stuff(arg0, &sp130, &sp12C, get_textptr_for_textID(temp_s3_2->unk2, sp90 - sp128), (?32) subroutine_arg0, (?32) D_80040EAC, (s32) (phi_s2_2 | 0x64), get_video2_settings_txtClipH(), 0, 0);
+            arg0 = en_text_write_stuff(arg0, &sp130, &sp12C, get_textptr_for_textID(temp_s3_2->unk2, sp90 - sp128), (?32) subroutine_arg0, (?32) ptrFirstFontTableSmall, (s32) (phi_s2_2 | 0x64), get_video2_settings_txtClipH(), 0, 0);
         }
     }
     temp_s7 = phi_s7 + 1;
@@ -19105,11 +19106,11 @@ glabel constructor_menu12_mpstage
 /* 049044 7F014514 0FC2B366 */  jal   microcode_constructor
 /* 049048 7F014518 8FA40138 */   lw    $a0, 0x138($sp)
 /* 04904C 7F01451C 24180097 */  li    $t8, 151
-/* 049050 7F014520 3C1E8004 */  lui   $fp, %hi(D_80040EB0) 
+/* 049050 7F014520 3C1E8004 */  lui   $fp, %hi(ptrSecondFontTableSmall) 
 /* 049054 7F014524 AFA20138 */  sw    $v0, 0x138($sp)
 /* 049058 7F014528 0000A825 */  move  $s5, $zero
 /* 04905C 7F01452C AFB80090 */  sw    $t8, 0x90($sp)
-/* 049060 7F014530 27DE0EB0 */  addiu $fp, %lo(D_80040EB0) # addiu $fp, $fp, 0xeb0
+/* 049060 7F014530 27DE0EB0 */  addiu $fp, %lo(ptrSecondFontTableSmall) # addiu $fp, $fp, 0xeb0
 /* 049064 7F014534 AFA0009C */  sw    $zero, 0x9c($sp)
 .L7F014538:
 /* 049068 7F014538 24160056 */  li    $s6, 86
@@ -19136,8 +19137,8 @@ glabel constructor_menu12_mpstage
 .L7F014588:
 /* 0490B8 7F014588 0FC30776 */  jal   get_textptr_for_textID
 /* 0490BC 7F01458C 96640002 */   lhu   $a0, 2($s3)
-/* 0490C0 7F014590 3C0B8004 */  lui   $t3, %hi(D_80040EAC) 
-/* 0490C4 7F014594 8D6B0EAC */  lw    $t3, %lo(D_80040EAC)($t3)
+/* 0490C0 7F014590 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableSmall) 
+/* 0490C4 7F014594 8D6B0EAC */  lw    $t3, %lo(ptrFirstFontTableSmall)($t3)
 /* 0490C8 7F014598 27A40128 */  addiu $a0, $sp, 0x128
 /* 0490CC 7F01459C 27A50124 */  addiu $a1, $sp, 0x124
 /* 0490D0 7F0145A0 00403025 */  move  $a2, $v0
@@ -19168,8 +19169,8 @@ glabel constructor_menu12_mpstage
 /* 049134 7F014604 00107C03 */  sra   $t7, $s0, 0x10
 /* 049138 7F014608 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04913C 7F01460C 01E08025 */   move  $s0, $t7
-/* 049140 7F014610 3C198004 */  lui   $t9, %hi(D_80040EAC) 
-/* 049144 7F014614 8F390EAC */  lw    $t9, %lo(D_80040EAC)($t9)
+/* 049140 7F014610 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) 
+/* 049144 7F014614 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
 /* 049148 7F014618 8FD80000 */  lw    $t8, ($fp)
 /* 04914C 7F01461C 364900FF */  ori   $t1, $s2, 0xff
 /* 049150 7F014620 AFA90018 */  sw    $t1, 0x18($sp)
@@ -19198,8 +19199,8 @@ glabel constructor_menu12_mpstage
 /* 0491AC 7F01467C 00105C03 */  sra   $t3, $s0, 0x10
 /* 0491B0 7F014680 0C00110B */  jal   get_video2_settings_txtClipH
 /* 0491B4 7F014684 01608025 */   move  $s0, $t3
-/* 0491B8 7F014688 3C0D8004 */  lui   $t5, %hi(D_80040EAC) 
-/* 0491BC 7F01468C 8DAD0EAC */  lw    $t5, %lo(D_80040EAC)($t5)
+/* 0491B8 7F014688 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall) 
+/* 0491BC 7F01468C 8DAD0EAC */  lw    $t5, %lo(ptrFirstFontTableSmall)($t5)
 /* 0491C0 7F014690 8FCC0000 */  lw    $t4, ($fp)
 /* 0491C4 7F014694 364E0064 */  ori   $t6, $s2, 0x64
 /* 0491C8 7F014698 AFAE0018 */  sw    $t6, 0x18($sp)
@@ -19591,7 +19592,7 @@ void constructor_menu13_mpscenario(void)
     phi_s1 = &mp_player_counts;
     phi_s2 = 0;
     phi_s5 = 0x83;
-    phi_s4 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp88, &sp84, get_textptr_for_textID(TEXT(LTITLE, 0x57)), (?32) ptrSecondFontTable, (?32) subroutine_arg0, 0xff);
+    phi_s4 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp88, &sp84, get_textptr_for_textID(TEXT(LTITLE, 0x57)), (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, 0xff);
 loop_1:
     if ((phi_s1->unk3 < get_selected_num_players()) || (get_selected_num_players() < phi_s1->unk2))
     {
@@ -19602,7 +19603,7 @@ loop_1:
 
     }
     temp_ret = get_textptr_for_textID(phi_s1->unk0);
-    sub_GAME_7F0AE98C(&sp7C, &sp78, temp_ret, ptrSecondFontTable, (?32) subroutine_arg0, 0);
+    sub_GAME_7F0AE98C(&sp7C, &sp78, temp_ret, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
     sp88 = 0x39;
     temp_v1 = phi_s5;
     phi_s4_2 = phi_s4;
@@ -19615,7 +19616,7 @@ loop_1:
     sp20 = get_video2_settings_txtClipH();
     sp24 = 0;
     sp28 = 0;
-    temp_ret_2 = write_text_at_abs_coord(phi_s4_2, &sp88, &sp84, temp_ret, (?32) ptrSecondFontTable, (?32) subroutine_arg0);
+    temp_ret_2 = write_text_at_abs_coord(phi_s4_2, &sp88, &sp84, temp_ret, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0);
     temp_s2 = phi_s2 + 1;
     phi_s1 = phi_s1 + 4;
     phi_s2 = temp_s2;
@@ -19665,10 +19666,10 @@ glabel constructor_menu13_mpscenario
 /* 0495F4 7F014AC4 00107C03 */  sra   $t7, $s0, 0x10
 /* 0495F8 7F014AC8 0C00110B */  jal   get_video2_settings_txtClipH
 /* 0495FC 7F014ACC 01E08025 */   move  $s0, $t7
-/* 049600 7F014AD0 3C178004 */  lui   $s7, %hi(ptrSecondFontTable) 
-/* 049604 7F014AD4 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTable) 
-/* 049608 7F014AD8 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTable) # addiu $fp, $fp, 0xeb4
-/* 04960C 7F014ADC 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTable) # addiu $s7, $s7, 0xeb8
+/* 049600 7F014AD0 3C178004 */  lui   $s7, %hi(ptrSecondFontTableLarge) 
+/* 049604 7F014AD4 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTableLarge) 
+/* 049608 7F014AD8 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTableLarge) # addiu $fp, $fp, 0xeb4
+/* 04960C 7F014ADC 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTableLarge) # addiu $s7, $s7, 0xeb8
 /* 049610 7F014AE0 8EF80000 */  lw    $t8, ($s7)
 /* 049614 7F014AE4 8FD90000 */  lw    $t9, ($fp)
 /* 049618 7F014AE8 240800FF */  li    $t0, 255
@@ -20351,10 +20352,10 @@ loop_4:
         if (temp_s2 != 0)
         {
             temp_ret_2 = get_textptr_for_textID(TEXT(LTITLE, 0x58));
-            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_2, ptrSecondFontTable, (?32) subroutine_arg0, 0);
+            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_2, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
             sp9C = (s32) ((phi_v0 + 0x7d) - (spA0 >> 1));
             get_video2_settings_txtClipW();
-            phi_s5_2 = write_text_at_abs_coord(temp_s5, &sp9C, &sp98, temp_ret_2, (?32) ptrSecondFontTable, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
+            phi_s5_2 = write_text_at_abs_coord(temp_s5, &sp9C, &sp98, temp_ret_2, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
         }
         if (scenario == 5)
         {
@@ -20385,7 +20386,7 @@ loop_4:
         {
 
         }
-        sub_GAME_7F0AE98C(&sp90, &sp8C, phi_s1, ptrSecondFontTable, (?32) subroutine_arg0, 0);
+        sub_GAME_7F0AE98C(&sp90, &sp8C, phi_s1, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
         sp88 = (s32) (spB4 - (sp8C >> 1));
         sp84 = (s32) ((temp_s6 - (sp90 >> 1)) + 0x46);
         if ((phi_s4 == teamsize) && (phi_s4 == teamsize))
@@ -20395,7 +20396,7 @@ loop_4:
             {
 block_26:
                 get_video2_settings_txtClipW();
-                phi_s5_4 = write_text_at_abs_coord(phi_s5_2, &sp88, &sp84, phi_s1, (?32) ptrSecondFontTable, (?32) subroutine_arg0, get_video2_settings_txtClipH(), 0, 0);
+                phi_s5_4 = write_text_at_abs_coord(phi_s5_2, &sp88, &sp84, phi_s1, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, get_video2_settings_txtClipH(), 0, 0);
             }
         }
         else
@@ -20471,11 +20472,11 @@ glabel constructor_menu14_mpteams
 /* 049D30 7F015200 0000A025 */  move  $s4, $zero
 /* 049D34 7F015204 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 049D38 7F015208 192000B2 */  blez  $t1, .L7F0154D4
-/* 049D3C 7F01520C 3C178004 */   lui   $s7, %hi(ptrSecondFontTable) 
-/* 049D40 7F015210 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTable) 
+/* 049D3C 7F01520C 3C178004 */   lui   $s7, %hi(ptrSecondFontTableLarge) 
+/* 049D40 7F015210 3C1E8004 */  lui   $fp, %hi(ptrFirstFontTableLarge) 
 /* 049D44 7F015214 4481A000 */  mtc1  $at, $f20
-/* 049D48 7F015218 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTable) # addiu $fp, $fp, 0xeb4
-/* 049D4C 7F01521C 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTable) # addiu $s7, $s7, 0xeb8
+/* 049D48 7F015218 27DE0EB4 */  addiu $fp, %lo(ptrFirstFontTableLarge) # addiu $fp, $fp, 0xeb4
+/* 049D4C 7F01521C 26F70EB8 */  addiu $s7, %lo(ptrSecondFontTableLarge) # addiu $s7, $s7, 0xeb8
 /* 049D50 7F015220 2A810002 */  slti  $at, $s4, 2
 .L7F015224:
 /* 049D54 7F015224 14200003 */  bnez  $at, .L7F015234
@@ -21219,30 +21220,30 @@ uint * print_objectives_and_status_to_menu(uint *param_1,int param_2,byte *param
         *param_3 = *param_3 + (char)iStack8;
         iStack12 = 0;
         iStack16 = 0;
-        proc_7F0AE98C(&iStack12,&iStack16,param_3,(int)ptrSecondFontTable,(int *)ptrFirstFontTable,0
+        proc_7F0AE98C(&iStack12,&iStack16,param_3,(int)ptrSecondFontTableLarge,(int *)ptrFirstFontTableLarge,0
                      );
         uStack20 = 0x37;
         uStack24 = iStack12 * iVar9 + param_2;
         sVar5 = get_video2_settings_txtClipW();
         sVar6 = get_video2_settings_txtClipH();
         puVar3 = write_text_at_abs_coord
-                           (param_1,&uStack20,&uStack24,param_3,(int)ptrSecondFontTable,
-                            (int)ptrFirstFontTable,0xff,(int)sVar5,(int)sVar6,0,0);
+                           (param_1,&uStack20,&uStack24,param_3,(int)ptrSecondFontTableLarge,
+                            (int)ptrFirstFontTableLarge,0xff,(int)sVar5,(int)sVar6,0,0);
         uStack20 = 0x4b;
         uStack24 = iStack12 * iVar9 + param_2;
         if (param_4 == 0) {
-          proc_7F0AEB64(0x140,pbVar2,param_3,(int)ptrSecondFontTable,(int *)ptrFirstFontTable);
+          proc_7F0AEB64(0x140,pbVar2,param_3,(int)ptrSecondFontTableLarge,(int *)ptrFirstFontTableLarge);
         }
         else {
           proc_7F0ACB94(2);
-          proc_7F0AEB64(0xdc,pbVar2,param_3,(int)ptrSecondFontTable,(int *)ptrFirstFontTable);
+          proc_7F0AEB64(0xdc,pbVar2,param_3,(int)ptrSecondFontTableLarge,(int *)ptrFirstFontTableLarge);
           proc_7F0ACB94(0);
         }
         sVar5 = get_video2_settings_txtClipW();
         sVar6 = get_video2_settings_txtClipH();
         param_1 = write_text_at_abs_coord
-                            (puVar3,&uStack20,&uStack24,param_3,(int)ptrSecondFontTable,
-                             (int)ptrFirstFontTable,0xff,(int)sVar5,(int)sVar6,0,0);
+                            (puVar3,&uStack20,&uStack24,param_3,(int)ptrSecondFontTableLarge,
+                             (int)ptrFirstFontTableLarge,0xff,(int)sVar5,(int)sVar6,0,0);
         if (param_4 != 0) {
           iVar4 = get_status_of_objective((longlong)iStack4);
           if ((iVar4 == 0) || (iVar4 != 1)) {
@@ -21258,8 +21259,8 @@ uint * print_objectives_and_status_to_menu(uint *param_1,int param_2,byte *param
           sVar5 = get_video2_settings_txtClipW();
           sVar6 = get_video2_settings_txtClipH();
           param_1 = write_text_at_abs_coord
-                              (param_1,&uStack20,&uStack24,pbVar2,(int)ptrSecondFontTable,
-                               (int)ptrFirstFontTable,uVar8,(int)sVar5,(int)sVar6,0,0);
+                              (param_1,&uStack20,&uStack24,pbVar2,(int)ptrSecondFontTableLarge,
+                               (int)ptrFirstFontTableLarge,uVar8,(int)sVar5,(int)sVar6,0,0);
         }
         iVar4 = proc_7F0AC0E8((char *)param_3);
         iVar9 += iVar4;
@@ -21281,8 +21282,8 @@ glabel print_objectives_and_status_to_menu
 /* 04A544 7F015A14 AFBE0058 */  sw    $fp, 0x58($sp)
 /* 04A548 7F015A18 AFB60050 */  sw    $s6, 0x50($sp)
 /* 04A54C 7F015A1C AFB30044 */  sw    $s3, 0x44($sp)
-/* 04A550 7F015A20 3C148004 */  lui   $s4, %hi(ptrSecondFontTable)
-/* 04A554 7F015A24 3C158004 */  lui   $s5, %hi(ptrFirstFontTable)
+/* 04A550 7F015A20 3C148004 */  lui   $s4, %hi(ptrSecondFontTableLarge)
+/* 04A554 7F015A24 3C158004 */  lui   $s5, %hi(ptrFirstFontTableLarge)
 /* 04A558 7F015A28 00C09825 */  move  $s3, $a2
 /* 04A55C 7F015A2C 0080B025 */  move  $s6, $a0
 /* 04A560 7F015A30 AFBF005C */  sw    $ra, 0x5c($sp)
@@ -21294,8 +21295,8 @@ glabel print_objectives_and_status_to_menu
 /* 04A578 7F015A48 AFA700AC */  sw    $a3, 0xac($sp)
 /* 04A57C 7F015A4C AFA00098 */  sw    $zero, 0x98($sp)
 /* 04A580 7F015A50 0000F025 */  move  $fp, $zero
-/* 04A584 7F015A54 26B50EB4 */  addiu $s5, %lo(ptrFirstFontTable) # addiu $s5, $s5, 0xeb4
-/* 04A588 7F015A58 26940EB8 */  addiu $s4, %lo(ptrSecondFontTable) # addiu $s4, $s4, 0xeb8
+/* 04A584 7F015A54 26B50EB4 */  addiu $s5, %lo(ptrFirstFontTableLarge) # addiu $s5, $s5, 0xeb4
+/* 04A588 7F015A58 26940EB8 */  addiu $s4, %lo(ptrSecondFontTableLarge) # addiu $s4, $s4, 0xeb8
 /* 04A58C 7F015A5C 00004025 */  move  $t0, $zero
 /* 04A590 7F015A60 00004825 */  move  $t1, $zero
 .L7F015A64:
@@ -21560,8 +21561,8 @@ undefined4 constructor_menu0A_briefing(undefined4 *param_1)
   sVar4 = get_video2_settings_txtClipW();
   sVar5 = get_video2_settings_txtClipH();
   puVar2 = write_text_at_abs_coord
-                     (puVar2,&uStack8,&uStack12,pbStack4,(int)ptrSecondFontTable,
-                      (int)ptrFirstFontTable,0xff,(int)sVar4,(int)sVar5,0,0);
+                     (puVar2,&uStack8,&uStack12,pbStack4,(int)ptrSecondFontTableLarge,
+                      (int)ptrFirstFontTableLarge,0xff,(int)sVar4,(int)sVar5,0,0);
   if (current_menu_briefing_page == BRIEFING_TITLE) {
     puVar2 = print_objectives_and_status_to_menu(puVar2,0xa7,(byte *)auStack3012,0);
   }
@@ -21586,14 +21587,14 @@ undefined4 constructor_menu0A_briefing(undefined4 *param_1)
     }
     uStack8 = 0x37;
     uStack12 = 0xa7;
-    proc_7F0AEB64(0x140,pbStack4,(byte *)auStack3012,(int)ptrSecondFontTable,
-                  (int *)ptrFirstFontTable);
+    proc_7F0AEB64(0x140,pbStack4,(byte *)auStack3012,(int)ptrSecondFontTableLarge,
+                  (int *)ptrFirstFontTableLarge);
     proc_7F0ACBA0(8);
     sVar4 = get_video2_settings_txtClipW();
     sVar5 = get_video2_settings_txtClipH();
     puVar2 = write_text_at_abs_coord
-                       (puVar2,&uStack8,&uStack12,(byte *)auStack3012,(int)ptrSecondFontTable,
-                        (int)ptrFirstFontTable,0xff,(int)sVar4,(int)sVar5,0,0);
+                       (puVar2,&uStack8,&uStack12,(byte *)auStack3012,(int)ptrSecondFontTableLarge,
+                        (int)ptrFirstFontTableLarge,0xff,(int)sVar4,(int)sVar5,0,0);
     proc_7F0ACBA0(0xffffffff);
   }
   puVar2 = add_tab1_start(puVar2);
@@ -21690,10 +21691,10 @@ def_7F015E0C:
 /* 04A9A0 7F015E70 AFAB0C04 */   sw    $t3, 0xc04($sp)
 /* 04A9A4 7F015E74 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04A9A8 7F015E78 A7A20048 */   sh    $v0, 0x48($sp)
-/* 04A9AC 7F015E7C 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTable) 
-/* 04A9B0 7F015E80 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTable) 
-/* 04A9B4 7F015E84 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTable)($t5)
-/* 04A9B8 7F015E88 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTable)($t4)
+/* 04A9AC 7F015E7C 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableLarge) 
+/* 04A9B0 7F015E80 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
+/* 04A9B4 7F015E84 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 04A9B8 7F015E88 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTableLarge)($t4)
 /* 04A9BC 7F015E8C 87B80048 */  lh    $t8, 0x48($sp)
 /* 04A9C0 7F015E90 241900FF */  li    $t9, 255
 /* 04A9C4 7F015E94 AFB90018 */  sw    $t9, 0x18($sp)
@@ -21758,14 +21759,14 @@ def_7F015E0C:
 /* 04AA9C 7F015F6C 95240006 */   lhu   $a0, 6($t1)
 /* 04AAA0 7F015F70 AFA20C0C */  sw    $v0, 0xc0c($sp)
 .L7F015F74:
-/* 04AAA4 7F015F74 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTable) 
-/* 04AAA8 7F015F78 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTable)($t4)
+/* 04AAA4 7F015F74 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableLarge) 
+/* 04AAA8 7F015F78 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTableLarge)($t4)
 /* 04AAAC 7F015F7C 240A0037 */  li    $t2, 55
 /* 04AAB0 7F015F80 240B00A7 */  li    $t3, 167
-/* 04AAB4 7F015F84 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 04AAB4 7F015F84 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 04AAB8 7F015F88 AFAA0C08 */  sw    $t2, 0xc08($sp)
 /* 04AABC 7F015F8C AFAB0C04 */  sw    $t3, 0xc04($sp)
-/* 04AAC0 7F015F90 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 04AAC0 7F015F90 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 04AAC4 7F015F94 24040140 */  li    $a0, 320
 /* 04AAC8 7F015F98 8FA50C0C */  lw    $a1, 0xc0c($sp)
 /* 04AACC 7F015F9C 27A6004C */  addiu $a2, $sp, 0x4c
@@ -21777,10 +21778,10 @@ def_7F015E0C:
 /* 04AAE4 7F015FB4 00000000 */   nop   
 /* 04AAE8 7F015FB8 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04AAEC 7F015FBC A7A20048 */   sh    $v0, 0x48($sp)
-/* 04AAF0 7F015FC0 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTable) 
-/* 04AAF4 7F015FC4 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 04AAF8 7F015FC8 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 04AAFC 7F015FCC 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTable)($t5)
+/* 04AAF0 7F015FC0 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableLarge) 
+/* 04AAF4 7F015FC4 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 04AAF8 7F015FC8 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 04AAFC 7F015FCC 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTableLarge)($t5)
 /* 04AB00 7F015FD0 87A80048 */  lh    $t0, 0x48($sp)
 /* 04AB04 7F015FD4 241800FF */  li    $t8, 255
 /* 04AB08 7F015FD8 AFB80018 */  sw    $t8, 0x18($sp)
@@ -22203,15 +22204,15 @@ void constructor_menu0C_missionfailed(s32 arg0)
     spC14 = 0x37;
     spC10 = 0x8f;
     sp44 = get_video2_settings_txtClipW();
-    arg0 = write_text_at_abs_coord(arg0, &spC14, &spC10, get_textptr_for_textID(TEXT(LTITLE, 0x62)), (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    arg0 = write_text_at_abs_coord(arg0, &spC14, &spC10, get_textptr_for_textID(TEXT(LTITLE, 0x62)), (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret = get_textptr_for_textID(TEXT(LTITLE, 0x63));
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, temp_ret, ptrSecondFontTable, (?32) ptrFirstFontTable, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp48, temp_ret, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
     spC14 = 0x37;
     spC10 = 0xa7;
     sp44 = get_video2_settings_txtClipW();
-    arg0 = write_text_at_abs_coord(arg0, &spC14, &spC10, temp_ret, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    arg0 = write_text_at_abs_coord(arg0, &spC14, &spC10, temp_ret, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     if (mission_kia_flag != 0)
     {
         phi_v1 = 0x780000ff;
@@ -22242,7 +22243,7 @@ void constructor_menu0C_missionfailed(s32 arg0)
     spC14 = (s32) (sp48 + 0x37);
     sp50 = (s32) phi_v1;
     sp44 = get_video2_settings_txtClipW();
-    load_draw_selected_icon_folder_select(add_tab3_previous(add_tab2_next(print_objectives_and_status_to_menu(write_text_at_abs_coord(arg0, &spC14, &spC10, phi_s0, (?32) ptrSecondFontTable, (?32) ptrFirstFontTable, (s32) phi_v1, sp44, get_video2_settings_txtClipH(), 0, 0), 0xbf, &sp58, 1))));
+    load_draw_selected_icon_folder_select(add_tab3_previous(add_tab2_next(print_objectives_and_status_to_menu(write_text_at_abs_coord(arg0, &spC14, &spC10, phi_s0, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (s32) phi_v1, sp44, get_video2_settings_txtClipH(), 0, 0), 0xbf, &sp58, 1))));
 }
 #else
 GLOBAL_ASM(
@@ -22275,10 +22276,10 @@ glabel constructor_menu0C_missionfailed
 /* 04AF7C 7F01644C AFAF0C10 */   sw    $t7, 0xc10($sp)
 /* 04AF80 7F016450 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04AF84 7F016454 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04AF88 7F016458 3C188004 */  lui   $t8, %hi(ptrSecondFontTable) 
-/* 04AF8C 7F01645C 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 04AF90 7F016460 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 04AF94 7F016464 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTable)($t8)
+/* 04AF88 7F016458 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
+/* 04AF8C 7F01645C 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 04AF90 7F016460 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 04AF94 7F016464 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
 /* 04AF98 7F016468 87A90044 */  lh    $t1, 0x44($sp)
 /* 04AF9C 7F01646C 240800FF */  li    $t0, 255
 /* 04AFA0 7F016470 AFA80018 */  sw    $t0, 0x18($sp)
@@ -22296,13 +22297,13 @@ glabel constructor_menu0C_missionfailed
 /* 04AFD0 7F0164A0 AFA20C18 */  sw    $v0, 0xc18($sp)
 /* 04AFD4 7F0164A4 0FC30776 */  jal   get_textptr_for_textID
 /* 04AFD8 7F0164A8 34049C63 */   li    $a0, 40035
-/* 04AFDC 7F0164AC 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 04AFE0 7F0164B0 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 04AFE4 7F0164B4 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 04AFDC 7F0164AC 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 04AFE0 7F0164B0 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 04AFE4 7F0164B4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 04AFE8 7F0164B8 00408025 */  move  $s0, $v0
 /* 04AFEC 7F0164BC AFA00048 */  sw    $zero, 0x48($sp)
 /* 04AFF0 7F0164C0 AFA0004C */  sw    $zero, 0x4c($sp)
-/* 04AFF4 7F0164C4 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 04AFF4 7F0164C4 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 04AFF8 7F0164C8 27A4004C */  addiu $a0, $sp, 0x4c
 /* 04AFFC 7F0164CC 27A50048 */  addiu $a1, $sp, 0x48
 /* 04B000 7F0164D0 00403025 */  move  $a2, $v0
@@ -22316,10 +22317,10 @@ glabel constructor_menu0C_missionfailed
 /* 04B020 7F0164F0 AFAC0C10 */   sw    $t4, 0xc10($sp)
 /* 04B024 7F0164F4 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04B028 7F0164F8 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04B02C 7F0164FC 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTable) 
-/* 04B030 7F016500 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTable) 
-/* 04B034 7F016504 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTable)($t6)
-/* 04B038 7F016508 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTable)($t5)
+/* 04B02C 7F0164FC 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableLarge) 
+/* 04B030 7F016500 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) 
+/* 04B034 7F016504 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
+/* 04B038 7F016508 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTableLarge)($t5)
 /* 04B03C 7F01650C 87B80044 */  lh    $t8, 0x44($sp)
 /* 04B040 7F016510 240F00FF */  li    $t7, 255
 /* 04B044 7F016514 AFAF0018 */  sw    $t7, 0x18($sp)
@@ -22382,10 +22383,10 @@ glabel constructor_menu0C_missionfailed
 /* 04B118 7F0165E8 AFA30050 */   sw    $v1, 0x50($sp)
 /* 04B11C 7F0165EC 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04B120 7F0165F0 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04B124 7F0165F4 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTable) 
-/* 04B128 7F0165F8 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTable) 
-/* 04B12C 7F0165FC 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTable)($t5)
-/* 04B130 7F016600 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTable)($t4)
+/* 04B124 7F0165F4 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableLarge) 
+/* 04B128 7F0165F8 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
+/* 04B12C 7F0165FC 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 04B130 7F016600 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTableLarge)($t4)
 /* 04B134 7F016604 8FA30050 */  lw    $v1, 0x50($sp)
 /* 04B138 7F016608 87AE0044 */  lh    $t6, 0x44($sp)
 /* 04B13C 7F01660C 8FA40C18 */  lw    $a0, 0xc18($sp)
@@ -22861,10 +22862,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04B640 7F016B10 0010CC03 */  sra   $t9, $s0, 0x10
 /* 04B644 7F016B14 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04B648 7F016B18 03208025 */   move  $s0, $t9
-/* 04B64C 7F016B1C 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTable) 
-/* 04B650 7F016B20 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTable) 
-/* 04B654 7F016B24 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTable)($t3)
-/* 04B658 7F016B28 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTable)($t2)
+/* 04B64C 7F016B1C 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableLarge) 
+/* 04B650 7F016B20 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableLarge) 
+/* 04B654 7F016B24 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTableLarge)($t3)
+/* 04B658 7F016B28 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTableLarge)($t2)
 /* 04B65C 7F016B2C 240C00FF */  li    $t4, 255
 /* 04B660 7F016B30 AFAC0018 */  sw    $t4, 0x18($sp)
 /* 04B664 7F016B34 02202025 */  move  $a0, $s1
@@ -22878,13 +22879,13 @@ glabel constructor_menu0D_missioncomplete
 /* 04B684 7F016B54 AFAB0014 */  sw    $t3, 0x14($sp)
 /* 04B688 7F016B58 0FC025D8 */  jal   write_text_at_abs_coord
 /* 04B68C 7F016B5C AFAA0010 */   sw    $t2, 0x10($sp)
-/* 04B690 7F016B60 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTable) 
-/* 04B694 7F016B64 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTable)($t5)
-/* 04B698 7F016B68 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
+/* 04B690 7F016B60 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
+/* 04B694 7F016B64 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 04B698 7F016B68 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
 /* 04B69C 7F016B6C 00408825 */  move  $s1, $v0
 /* 04B6A0 7F016B70 AFA0009C */  sw    $zero, 0x9c($sp)
 /* 04B6A4 7F016B74 AFA000A0 */  sw    $zero, 0xa0($sp)
-/* 04B6A8 7F016B78 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 04B6A8 7F016B78 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 04B6AC 7F016B7C 27A400A0 */  addiu $a0, $sp, 0xa0
 /* 04B6B0 7F016B80 27A5009C */  addiu $a1, $sp, 0x9c
 /* 04B6B4 7F016B84 8FA600A4 */  lw    $a2, 0xa4($sp)
@@ -22903,10 +22904,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04B6E8 7F016BB8 0010C403 */  sra   $t8, $s0, 0x10
 /* 04B6EC 7F016BBC 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04B6F0 7F016BC0 03008025 */   move  $s0, $t8
-/* 04B6F4 7F016BC4 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 04B6F8 7F016BC8 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 04B6FC 7F016BCC 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 04B700 7F016BD0 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 04B6F4 7F016BC4 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 04B6F8 7F016BC8 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 04B6FC 7F016BCC 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 04B700 7F016BD0 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 04B704 7F016BD4 240B00FF */  li    $t3, 255
 /* 04B708 7F016BD8 AFAB0018 */  sw    $t3, 0x18($sp)
 /* 04B70C 7F016BDC 02202025 */  move  $a0, $s1
@@ -23015,10 +23016,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04B888 7F016D58 00105403 */  sra   $t2, $s0, 0x10
 /* 04B88C 7F016D5C 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04B890 7F016D60 01408025 */   move  $s0, $t2
-/* 04B894 7F016D64 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTable) 
-/* 04B898 7F016D68 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTable) 
-/* 04B89C 7F016D6C 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTable)($t4)
-/* 04B8A0 7F016D70 8D6B0EB8 */  lw    $t3, %lo(ptrSecondFontTable)($t3)
+/* 04B894 7F016D64 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableLarge) 
+/* 04B898 7F016D68 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableLarge) 
+/* 04B89C 7F016D6C 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTableLarge)($t4)
+/* 04B8A0 7F016D70 8D6B0EB8 */  lw    $t3, %lo(ptrSecondFontTableLarge)($t3)
 /* 04B8A4 7F016D74 240D00FF */  li    $t5, 255
 /* 04B8A8 7F016D78 AFAD0018 */  sw    $t5, 0x18($sp)
 /* 04B8AC 7F016D7C 02202025 */  move  $a0, $s1
@@ -23051,10 +23052,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04B918 7F016DE8 00107C03 */  sra   $t7, $s0, 0x10
 /* 04B91C 7F016DEC 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04B920 7F016DF0 01E08025 */   move  $s0, $t7
-/* 04B924 7F016DF4 3C188004 */  lui   $t8, %hi(ptrSecondFontTable) 
-/* 04B928 7F016DF8 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 04B92C 7F016DFC 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 04B930 7F016E00 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTable)($t8)
+/* 04B924 7F016DF4 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
+/* 04B928 7F016DF8 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 04B92C 7F016DFC 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 04B930 7F016E00 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
 /* 04B934 7F016E04 3C0AA000 */  lui   $t2, (0xA00000FF >> 16) # lui $t2, 0xa000
 /* 04B938 7F016E08 354A00FF */  ori   $t2, (0xA00000FF & 0xFFFF) # ori $t2, $t2, 0xff
 /* 04B93C 7F016E0C AFAA0018 */  sw    $t2, 0x18($sp)
@@ -23091,10 +23092,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04B9B4 7F016E84 0010C403 */  sra   $t8, $s0, 0x10
 /* 04B9B8 7F016E88 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04B9BC 7F016E8C 03008025 */   move  $s0, $t8
-/* 04B9C0 7F016E90 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 04B9C4 7F016E94 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 04B9C8 7F016E98 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 04B9CC 7F016E9C 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 04B9C0 7F016E90 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 04B9C4 7F016E94 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 04B9C8 7F016E98 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 04B9CC 7F016E9C 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 04B9D0 7F016EA0 240B00FF */  li    $t3, 255
 /* 04B9D4 7F016EA4 AFAB0018 */  sw    $t3, 0x18($sp)
 /* 04B9D8 7F016EA8 02202025 */  move  $a0, $s1
@@ -23141,10 +23142,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04BA74 7F016F44 0010C403 */  sra   $t8, $s0, 0x10
 /* 04BA78 7F016F48 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04BA7C 7F016F4C 03008025 */   move  $s0, $t8
-/* 04BA80 7F016F50 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 04BA84 7F016F54 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 04BA88 7F016F58 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 04BA8C 7F016F5C 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 04BA80 7F016F50 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 04BA84 7F016F54 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 04BA88 7F016F58 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 04BA8C 7F016F5C 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 04BA90 7F016F60 240B00FF */  li    $t3, 255
 /* 04BA94 7F016F64 AFAB0018 */  sw    $t3, 0x18($sp)
 /* 04BA98 7F016F68 02202025 */  move  $a0, $s1
@@ -23205,10 +23206,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04BB64 7F017034 00106C03 */  sra   $t5, $s0, 0x10
 /* 04BB68 7F017038 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04BB6C 7F01703C 01A08025 */   move  $s0, $t5
-/* 04BB70 7F017040 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTable) 
-/* 04BB74 7F017044 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTable) 
-/* 04BB78 7F017048 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTable)($t7)
-/* 04BB7C 7F01704C 8DCE0EB8 */  lw    $t6, %lo(ptrSecondFontTable)($t6)
+/* 04BB70 7F017040 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableLarge) 
+/* 04BB74 7F017044 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableLarge) 
+/* 04BB78 7F017048 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTableLarge)($t7)
+/* 04BB7C 7F01704C 8DCE0EB8 */  lw    $t6, %lo(ptrSecondFontTableLarge)($t6)
 /* 04BB80 7F017050 241800FF */  li    $t8, 255
 /* 04BB84 7F017054 AFB80018 */  sw    $t8, 0x18($sp)
 /* 04BB88 7F017058 02202025 */  move  $a0, $s1
@@ -23244,10 +23245,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04BBF8 7F0170C8 00106403 */  sra   $t4, $s0, 0x10
 /* 04BBFC 7F0170CC 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04BC00 7F0170D0 01808025 */   move  $s0, $t4
-/* 04BC04 7F0170D4 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTable) 
-/* 04BC08 7F0170D8 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTable) 
-/* 04BC0C 7F0170DC 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTable)($t6)
-/* 04BC10 7F0170E0 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTable)($t5)
+/* 04BC04 7F0170D4 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableLarge) 
+/* 04BC08 7F0170D8 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) 
+/* 04BC0C 7F0170DC 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
+/* 04BC10 7F0170E0 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTableLarge)($t5)
 /* 04BC14 7F0170E4 240F00FF */  li    $t7, 255
 /* 04BC18 7F0170E8 AFAF0018 */  sw    $t7, 0x18($sp)
 /* 04BC1C 7F0170EC 02202025 */  move  $a0, $s1
@@ -23282,10 +23283,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04BC90 7F017160 00106403 */  sra   $t4, $s0, 0x10
 /* 04BC94 7F017164 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04BC98 7F017168 01808025 */   move  $s0, $t4
-/* 04BC9C 7F01716C 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTable) 
-/* 04BCA0 7F017170 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTable) 
-/* 04BCA4 7F017174 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTable)($t6)
-/* 04BCA8 7F017178 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTable)($t5)
+/* 04BC9C 7F01716C 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableLarge) 
+/* 04BCA0 7F017170 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) 
+/* 04BCA4 7F017174 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
+/* 04BCA8 7F017178 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTableLarge)($t5)
 /* 04BCAC 7F01717C 240F00FF */  li    $t7, 255
 /* 04BCB0 7F017180 AFAF0018 */  sw    $t7, 0x18($sp)
 /* 04BCB4 7F017184 02202025 */  move  $a0, $s1
@@ -23313,10 +23314,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04BD08 7F0171D8 00105403 */  sra   $t2, $s0, 0x10
 /* 04BD0C 7F0171DC 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04BD10 7F0171E0 01408025 */   move  $s0, $t2
-/* 04BD14 7F0171E4 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTable) 
-/* 04BD18 7F0171E8 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTable) 
-/* 04BD1C 7F0171EC 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTable)($t4)
-/* 04BD20 7F0171F0 8D6B0EB8 */  lw    $t3, %lo(ptrSecondFontTable)($t3)
+/* 04BD14 7F0171E4 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableLarge) 
+/* 04BD18 7F0171E8 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableLarge) 
+/* 04BD1C 7F0171EC 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTableLarge)($t4)
+/* 04BD20 7F0171F0 8D6B0EB8 */  lw    $t3, %lo(ptrSecondFontTableLarge)($t3)
 /* 04BD24 7F0171F4 240D00FF */  li    $t5, 255
 /* 04BD28 7F0171F8 AFAD0018 */  sw    $t5, 0x18($sp)
 /* 04BD2C 7F0171FC 02202025 */  move  $a0, $s1
@@ -23364,10 +23365,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04BDCC 7F01729C 0010CC03 */  sra   $t9, $s0, 0x10
 /* 04BDD0 7F0172A0 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04BDD4 7F0172A4 03208025 */   move  $s0, $t9
-/* 04BDD8 7F0172A8 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTable) 
-/* 04BDDC 7F0172AC 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTable) 
-/* 04BDE0 7F0172B0 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTable)($t3)
-/* 04BDE4 7F0172B4 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTable)($t2)
+/* 04BDD8 7F0172A8 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableLarge) 
+/* 04BDDC 7F0172AC 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableLarge) 
+/* 04BDE0 7F0172B0 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTableLarge)($t3)
+/* 04BDE4 7F0172B4 8D4A0EB8 */  lw    $t2, %lo(ptrSecondFontTableLarge)($t2)
 /* 04BDE8 7F0172B8 240C00FF */  li    $t4, 255
 /* 04BDEC 7F0172BC AFAC0018 */  sw    $t4, 0x18($sp)
 /* 04BDF0 7F0172C0 02202025 */  move  $a0, $s1
@@ -23394,10 +23395,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04BE44 7F017314 00107C03 */  sra   $t7, $s0, 0x10
 /* 04BE48 7F017318 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04BE4C 7F01731C 01E08025 */   move  $s0, $t7
-/* 04BE50 7F017320 3C188004 */  lui   $t8, %hi(ptrSecondFontTable) 
-/* 04BE54 7F017324 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 04BE58 7F017328 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 04BE5C 7F01732C 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTable)($t8)
+/* 04BE50 7F017320 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
+/* 04BE54 7F017324 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 04BE58 7F017328 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 04BE5C 7F01732C 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
 /* 04BE60 7F017330 240A00FF */  li    $t2, 255
 /* 04BE64 7F017334 AFAA0018 */  sw    $t2, 0x18($sp)
 /* 04BE68 7F017338 02202025 */  move  $a0, $s1
@@ -23444,10 +23445,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04BF08 7F0173D8 0010C403 */  sra   $t8, $s0, 0x10
 /* 04BF0C 7F0173DC 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04BF10 7F0173E0 03008025 */   move  $s0, $t8
-/* 04BF14 7F0173E4 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 04BF18 7F0173E8 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 04BF1C 7F0173EC 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 04BF20 7F0173F0 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 04BF14 7F0173E4 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 04BF18 7F0173E8 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 04BF1C 7F0173EC 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 04BF20 7F0173F0 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 04BF24 7F0173F4 240B00FF */  li    $t3, 255
 /* 04BF28 7F0173F8 AFAB0018 */  sw    $t3, 0x18($sp)
 /* 04BF2C 7F0173FC 02202025 */  move  $a0, $s1
@@ -23474,10 +23475,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04BF80 7F017450 00107403 */  sra   $t6, $s0, 0x10
 /* 04BF84 7F017454 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04BF88 7F017458 01C08025 */   move  $s0, $t6
-/* 04BF8C 7F01745C 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTable) 
-/* 04BF90 7F017460 3C188004 */  lui   $t8, %hi(ptrFirstFontTable) 
-/* 04BF94 7F017464 8F180EB4 */  lw    $t8, %lo(ptrFirstFontTable)($t8)
-/* 04BF98 7F017468 8DEF0EB8 */  lw    $t7, %lo(ptrSecondFontTable)($t7)
+/* 04BF8C 7F01745C 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableLarge) 
+/* 04BF90 7F017460 3C188004 */  lui   $t8, %hi(ptrFirstFontTableLarge) 
+/* 04BF94 7F017464 8F180EB4 */  lw    $t8, %lo(ptrFirstFontTableLarge)($t8)
+/* 04BF98 7F017468 8DEF0EB8 */  lw    $t7, %lo(ptrSecondFontTableLarge)($t7)
 /* 04BF9C 7F01746C 241900FF */  li    $t9, 255
 /* 04BFA0 7F017470 AFB90018 */  sw    $t9, 0x18($sp)
 /* 04BFA4 7F017474 02202025 */  move  $a0, $s1
@@ -23506,10 +23507,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04C000 7F0174D0 00106403 */  sra   $t4, $s0, 0x10
 /* 04C004 7F0174D4 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04C008 7F0174D8 01808025 */   move  $s0, $t4
-/* 04C00C 7F0174DC 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTable) 
-/* 04C010 7F0174E0 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTable) 
-/* 04C014 7F0174E4 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTable)($t6)
-/* 04C018 7F0174E8 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTable)($t5)
+/* 04C00C 7F0174DC 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableLarge) 
+/* 04C010 7F0174E0 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) 
+/* 04C014 7F0174E4 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
+/* 04C018 7F0174E8 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTableLarge)($t5)
 /* 04C01C 7F0174EC 240F00FF */  li    $t7, 255
 /* 04C020 7F0174F0 AFAF0018 */  sw    $t7, 0x18($sp)
 /* 04C024 7F0174F4 02202025 */  move  $a0, $s1
@@ -23536,10 +23537,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04C078 7F017548 00105403 */  sra   $t2, $s0, 0x10
 /* 04C07C 7F01754C 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04C080 7F017550 01408025 */   move  $s0, $t2
-/* 04C084 7F017554 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTable) 
-/* 04C088 7F017558 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTable) 
-/* 04C08C 7F01755C 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTable)($t4)
-/* 04C090 7F017560 8D6B0EB8 */  lw    $t3, %lo(ptrSecondFontTable)($t3)
+/* 04C084 7F017554 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableLarge) 
+/* 04C088 7F017558 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableLarge) 
+/* 04C08C 7F01755C 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTableLarge)($t4)
+/* 04C090 7F017560 8D6B0EB8 */  lw    $t3, %lo(ptrSecondFontTableLarge)($t3)
 /* 04C094 7F017564 240D00FF */  li    $t5, 255
 /* 04C098 7F017568 AFAD0018 */  sw    $t5, 0x18($sp)
 /* 04C09C 7F01756C 02202025 */  move  $a0, $s1
@@ -23585,10 +23586,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04C13C 7F01760C 00105C03 */  sra   $t3, $s0, 0x10
 /* 04C140 7F017610 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04C144 7F017614 01608025 */   move  $s0, $t3
-/* 04C148 7F017618 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTable) 
-/* 04C14C 7F01761C 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTable) 
-/* 04C150 7F017620 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTable)($t5)
-/* 04C154 7F017624 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTable)($t4)
+/* 04C148 7F017618 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableLarge) 
+/* 04C14C 7F01761C 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
+/* 04C150 7F017620 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 04C154 7F017624 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTableLarge)($t4)
 /* 04C158 7F017628 240E00FF */  li    $t6, 255
 /* 04C15C 7F01762C AFAE0018 */  sw    $t6, 0x18($sp)
 /* 04C160 7F017630 02202025 */  move  $a0, $s1
@@ -23616,10 +23617,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04C1B8 7F017688 00105403 */  sra   $t2, $s0, 0x10
 /* 04C1BC 7F01768C 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04C1C0 7F017690 01408025 */   move  $s0, $t2
-/* 04C1C4 7F017694 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTable) 
-/* 04C1C8 7F017698 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTable) 
-/* 04C1CC 7F01769C 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTable)($t4)
-/* 04C1D0 7F0176A0 8D6B0EB8 */  lw    $t3, %lo(ptrSecondFontTable)($t3)
+/* 04C1C4 7F017694 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableLarge) 
+/* 04C1C8 7F017698 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableLarge) 
+/* 04C1CC 7F01769C 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTableLarge)($t4)
+/* 04C1D0 7F0176A0 8D6B0EB8 */  lw    $t3, %lo(ptrSecondFontTableLarge)($t3)
 /* 04C1D4 7F0176A4 240D00FF */  li    $t5, 255
 /* 04C1D8 7F0176A8 AFAD0018 */  sw    $t5, 0x18($sp)
 /* 04C1DC 7F0176AC 02202025 */  move  $a0, $s1
@@ -23663,10 +23664,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04C274 7F017744 00105C03 */  sra   $t3, $s0, 0x10
 /* 04C278 7F017748 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04C27C 7F01774C 01608025 */   move  $s0, $t3
-/* 04C280 7F017750 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTable) 
-/* 04C284 7F017754 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTable) 
-/* 04C288 7F017758 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTable)($t5)
-/* 04C28C 7F01775C 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTable)($t4)
+/* 04C280 7F017750 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableLarge) 
+/* 04C284 7F017754 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
+/* 04C288 7F017758 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 04C28C 7F01775C 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTableLarge)($t4)
 /* 04C290 7F017760 240E00FF */  li    $t6, 255
 /* 04C294 7F017764 AFAE0018 */  sw    $t6, 0x18($sp)
 /* 04C298 7F017768 02202025 */  move  $a0, $s1
@@ -23695,10 +23696,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04C2F4 7F0177C4 00105C03 */  sra   $t3, $s0, 0x10
 /* 04C2F8 7F0177C8 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04C2FC 7F0177CC 01608025 */   move  $s0, $t3
-/* 04C300 7F0177D0 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTable) 
-/* 04C304 7F0177D4 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTable) 
-/* 04C308 7F0177D8 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTable)($t5)
-/* 04C30C 7F0177DC 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTable)($t4)
+/* 04C300 7F0177D0 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableLarge) 
+/* 04C304 7F0177D4 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
+/* 04C308 7F0177D8 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 04C30C 7F0177DC 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTableLarge)($t4)
 /* 04C310 7F0177E0 240E00FF */  li    $t6, 255
 /* 04C314 7F0177E4 AFAE0018 */  sw    $t6, 0x18($sp)
 /* 04C318 7F0177E8 02202025 */  move  $a0, $s1
@@ -23743,10 +23744,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04C3B4 7F017884 00106C03 */  sra   $t5, $s0, 0x10
 /* 04C3B8 7F017888 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04C3BC 7F01788C 01A08025 */   move  $s0, $t5
-/* 04C3C0 7F017890 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTable) 
-/* 04C3C4 7F017894 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTable) 
-/* 04C3C8 7F017898 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTable)($t7)
-/* 04C3CC 7F01789C 8DCE0EB8 */  lw    $t6, %lo(ptrSecondFontTable)($t6)
+/* 04C3C0 7F017890 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableLarge) 
+/* 04C3C4 7F017894 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableLarge) 
+/* 04C3C8 7F017898 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTableLarge)($t7)
+/* 04C3CC 7F01789C 8DCE0EB8 */  lw    $t6, %lo(ptrSecondFontTableLarge)($t6)
 /* 04C3D0 7F0178A0 241800FF */  li    $t8, 255
 /* 04C3D4 7F0178A4 AFB80018 */  sw    $t8, 0x18($sp)
 /* 04C3D8 7F0178A8 02202025 */  move  $a0, $s1
@@ -23776,10 +23777,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04C438 7F017908 00106C03 */  sra   $t5, $s0, 0x10
 /* 04C43C 7F01790C 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04C440 7F017910 01A08025 */   move  $s0, $t5
-/* 04C444 7F017914 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTable) 
-/* 04C448 7F017918 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTable) 
-/* 04C44C 7F01791C 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTable)($t7)
-/* 04C450 7F017920 8DCE0EB8 */  lw    $t6, %lo(ptrSecondFontTable)($t6)
+/* 04C444 7F017914 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableLarge) 
+/* 04C448 7F017918 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableLarge) 
+/* 04C44C 7F01791C 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTableLarge)($t7)
+/* 04C450 7F017920 8DCE0EB8 */  lw    $t6, %lo(ptrSecondFontTableLarge)($t6)
 /* 04C454 7F017924 241800FF */  li    $t8, 255
 /* 04C458 7F017928 AFB80018 */  sw    $t8, 0x18($sp)
 /* 04C45C 7F01792C 02202025 */  move  $a0, $s1
@@ -23827,10 +23828,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04C504 7F0179D4 0010C403 */  sra   $t8, $s0, 0x10
 /* 04C508 7F0179D8 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04C50C 7F0179DC 03008025 */   move  $s0, $t8
-/* 04C510 7F0179E0 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 04C514 7F0179E4 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTable) 
-/* 04C518 7F0179E8 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTable)($t2)
-/* 04C51C 7F0179EC 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 04C510 7F0179E0 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 04C514 7F0179E4 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
+/* 04C518 7F0179E8 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
+/* 04C51C 7F0179EC 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 04C520 7F0179F0 240B00FF */  li    $t3, 255
 /* 04C524 7F0179F4 AFAB0018 */  sw    $t3, 0x18($sp)
 /* 04C528 7F0179F8 02202025 */  move  $a0, $s1
@@ -23858,10 +23859,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04C580 7F017A50 00107C03 */  sra   $t7, $s0, 0x10
 /* 04C584 7F017A54 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04C588 7F017A58 01E08025 */   move  $s0, $t7
-/* 04C58C 7F017A5C 3C188004 */  lui   $t8, %hi(ptrSecondFontTable) 
-/* 04C590 7F017A60 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 04C594 7F017A64 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 04C598 7F017A68 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTable)($t8)
+/* 04C58C 7F017A5C 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
+/* 04C590 7F017A60 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 04C594 7F017A64 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 04C598 7F017A68 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
 /* 04C59C 7F017A6C 240A00FF */  li    $t2, 255
 /* 04C5A0 7F017A70 AFAA0018 */  sw    $t2, 0x18($sp)
 /* 04C5A4 7F017A74 02202025 */  move  $a0, $s1
@@ -23891,10 +23892,10 @@ glabel constructor_menu0D_missioncomplete
 /* 04C604 7F017AD4 00107403 */  sra   $t6, $s0, 0x10
 /* 04C608 7F017AD8 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04C60C 7F017ADC 01C08025 */   move  $s0, $t6
-/* 04C610 7F017AE0 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTable) 
-/* 04C614 7F017AE4 3C188004 */  lui   $t8, %hi(ptrFirstFontTable) 
-/* 04C618 7F017AE8 8F180EB4 */  lw    $t8, %lo(ptrFirstFontTable)($t8)
-/* 04C61C 7F017AEC 8DEF0EB8 */  lw    $t7, %lo(ptrSecondFontTable)($t7)
+/* 04C610 7F017AE0 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableLarge) 
+/* 04C614 7F017AE4 3C188004 */  lui   $t8, %hi(ptrFirstFontTableLarge) 
+/* 04C618 7F017AE8 8F180EB4 */  lw    $t8, %lo(ptrFirstFontTableLarge)($t8)
+/* 04C61C 7F017AEC 8DEF0EB8 */  lw    $t7, %lo(ptrSecondFontTableLarge)($t7)
 /* 04C620 7F017AF0 241900FF */  li    $t9, 255
 /* 04C624 7F017AF4 AFB90018 */  sw    $t9, 0x18($sp)
 /* 04C628 7F017AF8 02202025 */  move  $a0, $s1
@@ -24507,10 +24508,10 @@ glabel constructor_menu15_cheat
 /* 04CB14 7F017FE4 3C0F8007 */  lui   $t7, %hi(dword_CODE_bss_800697F0) 
 /* 04CB18 7F017FE8 25EF97F0 */  addiu $t7, %lo(dword_CODE_bss_800697F0) # addiu $t7, $t7, -0x6810
 /* 04CB1C 7F017FEC 0015A880 */  sll   $s5, $s5, 2
-/* 04CB20 7F017FF0 3C178004 */  lui   $s7, %hi(ptrFirstFontTable) 
-/* 04CB24 7F017FF4 3C168004 */  lui   $s6, %hi(ptrSecondFontTable)
-/* 04CB28 7F017FF8 26D60EB8 */  addiu $s6, %lo(ptrSecondFontTable) # addiu $s6, $s6, 0xeb8
-/* 04CB2C 7F017FFC 26F70EB4 */  addiu $s7, %lo(ptrFirstFontTable) # addiu $s7, $s7, 0xeb4
+/* 04CB20 7F017FF0 3C178004 */  lui   $s7, %hi(ptrFirstFontTableLarge) 
+/* 04CB24 7F017FF4 3C168004 */  lui   $s6, %hi(ptrSecondFontTableLarge)
+/* 04CB28 7F017FF8 26D60EB8 */  addiu $s6, %lo(ptrSecondFontTableLarge) # addiu $s6, $s6, 0xeb8
+/* 04CB2C 7F017FFC 26F70EB4 */  addiu $s7, %lo(ptrFirstFontTableLarge) # addiu $s7, $s7, 0xeb4
 /* 04CB30 7F018000 26B50035 */  addiu $s5, $s5, 0x35
 /* 04CB34 7F018004 01CF9821 */  addu  $s3, $t6, $t7
 .L7F018008:
@@ -24642,12 +24643,12 @@ glabel constructor_menu15_cheat
 /* 04CD18 7F0181E8 1420FF87 */  bnez  $at, .L7F018008
 /* 04CD1C 7F0181EC 00000000 */   nop   
 .L7F0181F0:
-/* 04CD20 7F0181F0 3C168004 */  lui   $s6, %hi(ptrSecondFontTable)
-/* 04CD24 7F0181F4 3C178004 */  lui   $s7, %hi(ptrFirstFontTable) 
+/* 04CD20 7F0181F0 3C168004 */  lui   $s6, %hi(ptrSecondFontTableLarge)
+/* 04CD24 7F0181F4 3C178004 */  lui   $s7, %hi(ptrFirstFontTableLarge) 
 /* 04CD28 7F0181F8 2861000D */  slti  $at, $v1, 0xd
-/* 04CD2C 7F0181FC 26F70EB4 */  addiu $s7, %lo(ptrFirstFontTable) # addiu $s7, $s7, 0xeb4
+/* 04CD2C 7F0181FC 26F70EB4 */  addiu $s7, %lo(ptrFirstFontTableLarge) # addiu $s7, $s7, 0xeb4
 /* 04CD30 7F018200 1420007D */  bnez  $at, .L7F0183F8
-/* 04CD34 7F018204 26D60EB8 */   addiu $s6, %lo(ptrSecondFontTable) # addiu $s6, $s6, 0xeb8
+/* 04CD34 7F018204 26D60EB8 */   addiu $s6, %lo(ptrSecondFontTableLarge) # addiu $s6, $s6, 0xeb8
 /* 04CD38 7F018208 246DFFF4 */  addiu $t5, $v1, -0xc
 /* 04CD3C 7F01820C 19A0007A */  blez  $t5, .L7F0183F8
 /* 04CD40 7F018210 0000F025 */   move  $fp, $zero
@@ -24866,10 +24867,10 @@ glabel constructor_menu16_nocontrollers
 /* 04D004 7F0184D4 8FA80044 */  lw    $t0, 0x44($sp)
 /* 04D008 7F0184D8 AFA2004C */  sw    $v0, 0x4c($sp)
 .L7F0184DC:
-/* 04D00C 7F0184DC 3C198004 */  lui   $t9, %hi(ptrFirstFontTable) 
-/* 04D010 7F0184E0 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTable)($t9)
-/* 04D014 7F0184E4 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
-/* 04D018 7F0184E8 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 04D00C 7F0184DC 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
+/* 04D010 7F0184E0 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
+/* 04D014 7F0184E4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
+/* 04D018 7F0184E8 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 04D01C 7F0184EC 27A4005C */  addiu $a0, $sp, 0x5c
 /* 04D020 7F0184F0 27A50058 */  addiu $a1, $sp, 0x58
 /* 04D024 7F0184F4 8FA6004C */  lw    $a2, 0x4c($sp)
@@ -24890,10 +24891,10 @@ glabel constructor_menu16_nocontrollers
 /* 04D060 7F018530 AFB80050 */   sw    $t8, 0x50($sp)
 /* 04D064 7F018534 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04D068 7F018538 A7A2003C */   sh    $v0, 0x3c($sp)
-/* 04D06C 7F01853C 3C198004 */  lui   $t9, %hi(ptrSecondFontTable) 
-/* 04D070 7F018540 3C098004 */  lui   $t1, %hi(ptrFirstFontTable) 
-/* 04D074 7F018544 8D290EB4 */  lw    $t1, %lo(ptrFirstFontTable)($t1)
-/* 04D078 7F018548 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTable)($t9)
+/* 04D06C 7F01853C 3C198004 */  lui   $t9, %hi(ptrSecondFontTableLarge) 
+/* 04D070 7F018540 3C098004 */  lui   $t1, %hi(ptrFirstFontTableLarge) 
+/* 04D074 7F018544 8D290EB4 */  lw    $t1, %lo(ptrFirstFontTableLarge)($t1)
+/* 04D078 7F018548 8F390EB8 */  lw    $t9, %lo(ptrSecondFontTableLarge)($t9)
 /* 04D07C 7F01854C 87AA003C */  lh    $t2, 0x3c($sp)
 /* 04D080 7F018550 240BFFFF */  li    $t3, -1
 /* 04D084 7F018554 AFAB0018 */  sw    $t3, 0x18($sp)
@@ -24924,10 +24925,10 @@ glabel constructor_menu16_nocontrollers
 /* 04D0E4 7F0185B4 34049C77 */   li    $a0, 40055
 /* 04D0E8 7F0185B8 AFA2004C */  sw    $v0, 0x4c($sp)
 .L7F0185BC:
-/* 04D0EC 7F0185BC 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTable) 
-/* 04D0F0 7F0185C0 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTable)($t4)
-/* 04D0F4 7F0185C4 3C078004 */  lui   $a3, %hi(ptrSecondFontTable)
-/* 04D0F8 7F0185C8 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTable)($a3)
+/* 04D0EC 7F0185BC 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableLarge) 
+/* 04D0F0 7F0185C0 8D8C0EB4 */  lw    $t4, %lo(ptrFirstFontTableLarge)($t4)
+/* 04D0F4 7F0185C4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
+/* 04D0F8 7F0185C8 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
 /* 04D0FC 7F0185CC 27A4005C */  addiu $a0, $sp, 0x5c
 /* 04D100 7F0185D0 27A50058 */  addiu $a1, $sp, 0x58
 /* 04D104 7F0185D4 8FA6004C */  lw    $a2, 0x4c($sp)
@@ -24947,10 +24948,10 @@ glabel constructor_menu16_nocontrollers
 /* 04D13C 7F01860C AFAA0050 */   sw    $t2, 0x50($sp)
 /* 04D140 7F018610 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04D144 7F018614 A7A2003C */   sh    $v0, 0x3c($sp)
-/* 04D148 7F018618 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTable) 
-/* 04D14C 7F01861C 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTable) 
-/* 04D150 7F018620 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTable)($t5)
-/* 04D154 7F018624 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTable)($t4)
+/* 04D148 7F018618 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableLarge) 
+/* 04D14C 7F01861C 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
+/* 04D150 7F018620 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
+/* 04D154 7F018624 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTableLarge)($t4)
 /* 04D158 7F018628 87AF003C */  lh    $t7, 0x3c($sp)
 /* 04D15C 7F01862C 240EFFFF */  li    $t6, -1
 /* 04D160 7F018630 AFAE0018 */  sw    $t6, 0x18($sp)
@@ -27105,10 +27106,10 @@ glabel constructor_menu18_displaycast
 /* 04EADC 7F019FAC 008B2021 */  addu  $a0, $a0, $t3
 /* 04EAE0 7F019FB0 0FC30776 */  jal   get_textptr_for_textID
 /* 04EAE4 7F019FB4 9484B608 */   lhu   $a0, %lo(intro_char_table+8)($a0)
-/* 04EAE8 7F019FB8 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTable) 
-/* 04EAEC 7F019FBC 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTable)($t6)
-/* 04EAF0 7F019FC0 3C148004 */  lui   $s4, %hi(ptrSecondFontTable)
-/* 04EAF4 7F019FC4 26940EB8 */  addiu $s4, %lo(ptrSecondFontTable) # addiu $s4, $s4, 0xeb8
+/* 04EAE8 7F019FB8 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) 
+/* 04EAEC 7F019FBC 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
+/* 04EAF0 7F019FC0 3C148004 */  lui   $s4, %hi(ptrSecondFontTableLarge)
+/* 04EAF4 7F019FC4 26940EB8 */  addiu $s4, %lo(ptrSecondFontTableLarge) # addiu $s4, $s4, 0xeb8
 /* 04EAF8 7F019FC8 00408825 */  move  $s1, $v0
 /* 04EAFC 7F019FCC 8E870000 */  lw    $a3, ($s4)
 /* 04EB00 7F019FD0 27A40150 */  addiu $a0, $sp, 0x150
@@ -27147,8 +27148,8 @@ glabel constructor_menu18_displaycast
 /* 04EB80 7F01A050 240C0001 */  li    $t4, 1
 /* 04EB84 7F01A054 44CCF800 */  ctc1  $t4, $31
 /* 04EB88 7F01A058 C7A40070 */  lwc1  $f4, 0x70($sp)
-/* 04EB8C 7F01A05C 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTable) 
-/* 04EB90 7F01A060 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTable)($t5)
+/* 04EB8C 7F01A05C 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
+/* 04EB90 7F01A060 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
 /* 04EB94 7F01A064 460021A4 */  cvt.w.s $f6, $f4
 /* 04EB98 7F01A068 8E8E0000 */  lw    $t6, ($s4)
 /* 04EB9C 7F01A06C 02602025 */  move  $a0, $s3
@@ -27208,10 +27209,10 @@ glabel constructor_menu18_displaycast
 /* 04EC64 7F01A134 01795821 */  addu  $t3, $t3, $t9
 /* 04EC68 7F01A138 4452F800 */  cfc1  $s2, $31
 /* 04EC6C 7F01A13C 000B5880 */  sll   $t3, $t3, 2
-/* 04EC70 7F01A140 3C148004 */  lui   $s4, %hi(ptrSecondFontTable)
+/* 04EC70 7F01A140 3C148004 */  lui   $s4, %hi(ptrSecondFontTableLarge)
 /* 04EC74 7F01A144 008B2021 */  addu  $a0, $a0, $t3
 /* 04EC78 7F01A148 32520078 */  andi  $s2, $s2, 0x78
-/* 04EC7C 7F01A14C 26940EB8 */  addiu $s4, %lo(ptrSecondFontTable) # addiu $s4, $s4, 0xeb8
+/* 04EC7C 7F01A14C 26940EB8 */  addiu $s4, %lo(ptrSecondFontTableLarge) # addiu $s4, $s4, 0xeb8
 /* 04EC80 7F01A150 12400013 */  beqz  $s2, .L7F01A1A0
 /* 04EC84 7F01A154 9484B60A */   lhu   $a0, %lo(intro_char_table+10)($a0)
 /* 04EC88 7F01A158 3C014F00 */  li    $at, 0x4F000000 # 2147483648.000000
@@ -27244,8 +27245,8 @@ glabel constructor_menu18_displaycast
 /* 04ECE8 7F01A1B8 44CEF800 */  ctc1  $t6, $31
 /* 04ECEC 7F01A1BC 0FC30776 */  jal   get_textptr_for_textID
 /* 04ECF0 7F01A1C0 01A09025 */   move  $s2, $t5
-/* 04ECF4 7F01A1C4 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTable) 
-/* 04ECF8 7F01A1C8 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTable)($t7)
+/* 04ECF4 7F01A1C4 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableLarge) 
+/* 04ECF8 7F01A1C8 8DEF0EB4 */  lw    $t7, %lo(ptrFirstFontTableLarge)($t7)
 /* 04ECFC 7F01A1CC 00408825 */  move  $s1, $v0
 /* 04ED00 7F01A1D0 27A40150 */  addiu $a0, $sp, 0x150
 /* 04ED04 7F01A1D4 27A50154 */  addiu $a1, $sp, 0x154
@@ -27280,8 +27281,8 @@ glabel constructor_menu18_displaycast
 /* 04ED74 7F01A244 00106C03 */  sra   $t5, $s0, 0x10
 /* 04ED78 7F01A248 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04ED7C 7F01A24C 01A08025 */   move  $s0, $t5
-/* 04ED80 7F01A250 3C188004 */  lui   $t8, %hi(ptrFirstFontTable) 
-/* 04ED84 7F01A254 8F180EB4 */  lw    $t8, %lo(ptrFirstFontTable)($t8)
+/* 04ED80 7F01A250 3C188004 */  lui   $t8, %hi(ptrFirstFontTableLarge) 
+/* 04ED84 7F01A254 8F180EB4 */  lw    $t8, %lo(ptrFirstFontTableLarge)($t8)
 /* 04ED88 7F01A258 8E8F0000 */  lw    $t7, ($s4)
 /* 04ED8C 7F01A25C 02602025 */  move  $a0, $s3
 /* 04ED90 7F01A260 27A5015C */  addiu $a1, $sp, 0x15c
@@ -27305,8 +27306,8 @@ glabel constructor_menu18_displaycast
 /* 04EDD8 7F01A2A8 00992021 */  addu  $a0, $a0, $t9
 /* 04EDDC 7F01A2AC 0FC30776 */  jal   get_textptr_for_textID
 /* 04EDE0 7F01A2B0 9484B60C */   lhu   $a0, %lo(intro_char_table+12)($a0)
-/* 04EDE4 7F01A2B4 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTable) 
-/* 04EDE8 7F01A2B8 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTable)($t3)
+/* 04EDE4 7F01A2B4 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableLarge) 
+/* 04EDE8 7F01A2B8 8D6B0EB4 */  lw    $t3, %lo(ptrFirstFontTableLarge)($t3)
 /* 04EDEC 7F01A2BC 00408825 */  move  $s1, $v0
 /* 04EDF0 7F01A2C0 27A40150 */  addiu $a0, $sp, 0x150
 /* 04EDF4 7F01A2C4 27A50154 */  addiu $a1, $sp, 0x154
@@ -27341,8 +27342,8 @@ glabel constructor_menu18_displaycast
 /* 04EE64 7F01A334 0010CC03 */  sra   $t9, $s0, 0x10
 /* 04EE68 7F01A338 0C00110B */  jal   get_video2_settings_txtClipH
 /* 04EE6C 7F01A33C 03208025 */   move  $s0, $t9
-/* 04EE70 7F01A340 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTable) 
-/* 04EE74 7F01A344 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTable)($t5)
+/* 04EE70 7F01A340 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
+/* 04EE74 7F01A344 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
 /* 04EE78 7F01A348 8E8B0000 */  lw    $t3, ($s4)
 /* 04EE7C 7F01A34C 02602025 */  move  $a0, $s3
 /* 04EE80 7F01A350 27A5015C */  addiu $a1, $sp, 0x15c

@@ -18424,7 +18424,7 @@ s32 some_kind_of_display_routine(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
     sp50 = 0;
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, arg1, D_80040EB0, (?32) D_80040EAC, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp48, arg1, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
     if (arg3 == 1)
     {
         // Node 1
@@ -18500,13 +18500,13 @@ s32 some_kind_of_display_routine(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
     {
         // Node 17
         sp44 = get_video2_settings_txtClipW();
-        phi_s0 = jp_text_write_stuff(temp_s0, &sp5C, &sp58, arg1, (?32) D_80040EB0, (?32) D_80040EAC, -1, 0x646464ff, sp44, get_video2_settings_txtClipH(), 0, 0);
+        phi_s0 = jp_text_write_stuff(temp_s0, &sp5C, &sp58, arg1, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, -1, 0x646464ff, sp44, get_video2_settings_txtClipH(), 0, 0);
     }
     else
     {
         // Node 18
         sp44 = get_video2_settings_txtClipW();
-        phi_s0 = en_text_write_stuff(temp_s0, &sp5C, &sp58, arg1, (?32) D_80040EB0, (?32) D_80040EAC, 0xff00b0, sp44, get_video2_settings_txtClipH(), 0, 0);
+        phi_s0 = en_text_write_stuff(temp_s0, &sp5C, &sp58, arg1, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff00b0, sp44, get_video2_settings_txtClipH(), 0, 0);
     }
     // Node 19
     return phi_s0;
@@ -18516,18 +18516,18 @@ GLOBAL_ASM(
 .text
 glabel some_kind_of_display_routine
 /* 09E580 7F069A50 27BDFFA0 */  addiu $sp, $sp, -0x60
-/* 09E584 7F069A54 3C0E8004 */  lui   $t6, %hi(D_80040EAC) 
-/* 09E588 7F069A58 8DCE0EAC */  lw    $t6, %lo(D_80040EAC)($t6)
+/* 09E584 7F069A54 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
+/* 09E588 7F069A58 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
 /* 09E58C 7F069A5C AFB00038 */  sw    $s0, 0x38($sp)
 /* 09E590 7F069A60 AFA7006C */  sw    $a3, 0x6c($sp)
 /* 09E594 7F069A64 00808025 */  move  $s0, $a0
 /* 09E598 7F069A68 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 09E59C 7F069A6C AFA50064 */  sw    $a1, 0x64($sp)
 /* 09E5A0 7F069A70 AFA60068 */  sw    $a2, 0x68($sp)
-/* 09E5A4 7F069A74 3C078004 */  lui   $a3, %hi(D_80040EB0)
+/* 09E5A4 7F069A74 3C078004 */  lui   $a3, %hi(ptrSecondFontTableSmall)
 /* 09E5A8 7F069A78 AFA0005C */  sw    $zero, 0x5c($sp)
 /* 09E5AC 7F069A7C AFA00058 */  sw    $zero, 0x58($sp)
-/* 09E5B0 7F069A80 8CE70EB0 */  lw    $a3, %lo(D_80040EB0)($a3)
+/* 09E5B0 7F069A80 8CE70EB0 */  lw    $a3, %lo(ptrSecondFontTableSmall)($a3)
 /* 09E5B4 7F069A84 8FA60064 */  lw    $a2, 0x64($sp)
 /* 09E5B8 7F069A88 27A50048 */  addiu $a1, $sp, 0x48
 /* 09E5BC 7F069A8C 27A4004C */  addiu $a0, $sp, 0x4c
@@ -18614,10 +18614,10 @@ glabel some_kind_of_display_routine
 /* 09E6E0 7F069BB0 00000000 */   nop   
 /* 09E6E4 7F069BB4 0C00110B */  jal   get_video2_settings_txtClipH
 /* 09E6E8 7F069BB8 A7A20044 */   sh    $v0, 0x44($sp)
-/* 09E6EC 7F069BBC 3C188004 */  lui   $t8, %hi(D_80040EB0) 
-/* 09E6F0 7F069BC0 3C198004 */  lui   $t9, %hi(D_80040EAC) 
-/* 09E6F4 7F069BC4 8F390EAC */  lw    $t9, %lo(D_80040EAC)($t9)
-/* 09E6F8 7F069BC8 8F180EB0 */  lw    $t8, %lo(D_80040EB0)($t8)
+/* 09E6EC 7F069BBC 3C188004 */  lui   $t8, %hi(ptrSecondFontTableSmall) 
+/* 09E6F0 7F069BC0 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) 
+/* 09E6F4 7F069BC4 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
+/* 09E6F8 7F069BC8 8F180EB0 */  lw    $t8, %lo(ptrSecondFontTableSmall)($t8)
 /* 09E6FC 7F069BCC 87AD0044 */  lh    $t5, 0x44($sp)
 /* 09E700 7F069BD0 3C0C6464 */  lui   $t4, (0x646464FF >> 16) # lui $t4, 0x6464
 /* 09E704 7F069BD4 358C64FF */  ori   $t4, (0x646464FF & 0xFFFF) # ori $t4, $t4, 0x64ff
@@ -18642,10 +18642,10 @@ glabel some_kind_of_display_routine
 /* 09E74C 7F069C1C 00000000 */   nop   
 /* 09E750 7F069C20 0C00110B */  jal   get_video2_settings_txtClipH
 /* 09E754 7F069C24 A7A20044 */   sh    $v0, 0x44($sp)
-/* 09E758 7F069C28 3C0E8004 */  lui   $t6, %hi(D_80040EB0) 
-/* 09E75C 7F069C2C 3C0F8004 */  lui   $t7, %hi(D_80040EAC) 
-/* 09E760 7F069C30 8DEF0EAC */  lw    $t7, %lo(D_80040EAC)($t7)
-/* 09E764 7F069C34 8DCE0EB0 */  lw    $t6, %lo(D_80040EB0)($t6)
+/* 09E758 7F069C28 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableSmall) 
+/* 09E75C 7F069C2C 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableSmall) 
+/* 09E760 7F069C30 8DEF0EAC */  lw    $t7, %lo(ptrFirstFontTableSmall)($t7)
+/* 09E764 7F069C34 8DCE0EB0 */  lw    $t6, %lo(ptrSecondFontTableSmall)($t6)
 /* 09E768 7F069C38 87B90044 */  lh    $t9, 0x44($sp)
 /* 09E76C 7F069C3C 3C1800FF */  lui   $t8, (0x00FF00B0 >> 16) # lui $t8, 0xff
 /* 09E770 7F069C40 371800B0 */  ori   $t8, (0x00FF00B0 & 0xFFFF) # ori $t8, $t8, 0xb0
