@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/chr.h"
+#include "game/chraicommands.h"
 // data
 f32 animation_rate = 0;
 s32 D_8002C904 = 0;
@@ -14733,61 +14734,21 @@ glabel sub_GAME_7F02A1E8
 
 
 
-#ifdef NONMATCHING
-void true_if_actor_dying_fading_limping_shot(void) {
+s32 true_if_actor_dying_fading_limping_shot(PCHRdata chr) {
+    s8 currentaction = chr->actiontype;
 
+    if ((currentaction == ACT_DIE) || (currentaction == ACT_DEAD) || (currentaction == ACT_PREARGH) || (currentaction == ACT_ARGH) && !(chr->chrflags & CHRFLAG_00000200))
+        return 0;
+    return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel true_if_actor_dying_fading_limping_shot
-/* 05ED88 7F02A258 80820007 */  lb    $v0, 7($a0)
-/* 05ED8C 7F02A25C 24010004 */  li    $at, 4
-/* 05ED90 7F02A260 1041000B */  beq   $v0, $at, .L7F02A290
-/* 05ED94 7F02A264 24010005 */   li    $at, 5
-/* 05ED98 7F02A268 10410009 */  beq   $v0, $at, .L7F02A290
-/* 05ED9C 7F02A26C 24010007 */   li    $at, 7
-/* 05EDA0 7F02A270 10410007 */  beq   $v0, $at, .L7F02A290
-/* 05EDA4 7F02A274 24010006 */   li    $at, 6
-/* 05EDA8 7F02A278 54410008 */  bnel  $v0, $at, .L7F02A29C
-/* 05EDAC 7F02A27C 24020001 */   li    $v0, 1
-/* 05EDB0 7F02A280 8C8E0014 */  lw    $t6, 0x14($a0)
-/* 05EDB4 7F02A284 31CF0200 */  andi  $t7, $t6, 0x200
-/* 05EDB8 7F02A288 55E00004 */  bnezl $t7, .L7F02A29C
-/* 05EDBC 7F02A28C 24020001 */   li    $v0, 1
-.L7F02A290:
-/* 05EDC0 7F02A290 03E00008 */  jr    $ra
-/* 05EDC4 7F02A294 00001025 */   move  $v0, $zero
-
-/* 05EDC8 7F02A298 24020001 */  li    $v0, 1
-.L7F02A29C:
-/* 05EDCC 7F02A29C 03E00008 */  jr    $ra
-/* 05EDD0 7F02A2A0 00000000 */   nop   
-)
-#endif
 
 
 
-#ifdef NONMATCHING
-void true_if_actor_dying_fading(void) {
+s32 true_if_actor_dying_fading(PCHRdata chr) {
+    s8 currentaction = chr->actiontype;
 
+    return ((currentaction == ACT_DIE) || (currentaction == ACT_DEAD));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel true_if_actor_dying_fading
-/* 05EDD4 7F02A2A4 80830007 */  lb    $v1, 7($a0)
-/* 05EDD8 7F02A2A8 38620004 */  xori  $v0, $v1, 4
-/* 05EDDC 7F02A2AC 2C420001 */  sltiu $v0, $v0, 1
-/* 05EDE0 7F02A2B0 14400003 */  bnez  $v0, .L7F02A2C0
-/* 05EDE4 7F02A2B4 00000000 */   nop   
-/* 05EDE8 7F02A2B8 38620005 */  xori  $v0, $v1, 5
-/* 05EDEC 7F02A2BC 2C420001 */  sltiu $v0, $v0, 1
-.L7F02A2C0:
-/* 05EDF0 7F02A2C0 03E00008 */  jr    $ra
-/* 05EDF4 7F02A2C4 00000000 */   nop   
-)
-#endif
 
 
 

@@ -288,7 +288,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         guard_has_stopped_moving(0x02)
         goto_loop_repeat(0x1B)
     label(0x01)
-        sleep
+        ai_sleep
         guard_hits_less_than(6, 0x2D)
         guard_flags_is_set_on(CHRFLAG_INVINCIBLE, 0x2F)
     label(0x2D)
@@ -301,7 +301,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         guard_and_bond_within_line_of_sight(0x03)
         goto_next(0x02)
     label(0x24)
-        sleep
+        ai_sleep
         guard_meters_to_bond_less_than(5, 0x03) // if guard is within 5 meters from bond, goto 03
         guard_has_stopped_moving(0x03)
         goto_first(0x28)
@@ -334,11 +334,11 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         guard_and_bond_within_line_of_sight(0x03)
         goto_next(0x1B)
     label(0x1B)
-        sleep
+        ai_sleep
         random_generate_greater_than(160, 0x03)
         goto_next(0x1C)
     label(0x03)
-        sleep
+        ai_sleep
         goto_first(0x01)
     label(0x1C)
         chr_timer_reset_start
@@ -356,10 +356,10 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
     label(0x03)
         chr_timer_reset_start
     label(0x1E)
-        sleep
+        ai_sleep
         guard_and_bond_within_line_of_sight(0x03)
         guard_shot_from_bond_missed(0x03)
-        sleep
+        ai_sleep
         chr_timer_seconds_less_than(10, 0x04) // if timer less than 10 seconds, goto 04
         guard_bitfield_is_set_on(0x04, 0x05)
         goto_first(0x28)
