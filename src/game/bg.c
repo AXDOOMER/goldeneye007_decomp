@@ -2821,7 +2821,7 @@ glabel sub_GAME_7F0B4E40
 /* 0E9974 7F0B4E44 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0E9978 7F0B4E48 00801025 */  move  $v0, $a0
 /* 0E997C 7F0B4E4C 3C0EBC00 */  lui   $t6, (0xBC000002 >> 16) # lui $t6, 0xbc00
-/* 0E9980 7F0B4E50 3C0F8000 */  lui   $t7, (0x80000040 >> 16) # lui $t7, 0x8000
+/* 0E9980 7F0B4E50 3C0F8000 */  lui   $t7, (0x80000040 >> 16) 
 /* 0E9984 7F0B4E54 35EF0040 */  ori   $t7, (0x80000040 & 0xFFFF) # ori $t7, $t7, 0x40
 /* 0E9988 7F0B4E58 35CE0002 */  ori   $t6, (0xBC000002 & 0xFFFF) # ori $t6, $t6, 2
 /* 0E998C 7F0B4E5C 24830008 */  addiu $v1, $a0, 8

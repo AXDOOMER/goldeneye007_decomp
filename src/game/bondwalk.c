@@ -5831,7 +5831,7 @@ glabel sub_GAME_7F05FB64
 /* 0948D4 7F05FDA4 E7AA003C */  swc1  $f10, 0x3c($sp)
 /* 0948D8 7F05FDA8 C4208378 */  lwc1  $f0, %lo(global_timer_delta)($at)
 /* 0948DC 7F05FDAC 46022282 */  mul.s $f10, $f4, $f2
-/* 0948E0 7F05FDB0 3C0A8005 */  lui   $t2, %hi(clock_timer) # $t2, 0x8005
+/* 0948E0 7F05FDB0 3C0A8005 */  lui   $t2, %hi(clock_timer) 
 /* 0948E4 7F05FDB4 8D4A8374 */  lw    $t2, %lo(clock_timer)($t2)
 /* 0948E8 7F05FDB8 46004482 */  mul.s $f18, $f8, $f0
 /* 0948EC 7F05FDBC E7A800A4 */  swc1  $f8, 0xa4($sp)

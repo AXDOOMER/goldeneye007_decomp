@@ -205,7 +205,7 @@ glabel check_memflag_tokens
 /* 00A0BC 700094BC AFA20034 */  sw    $v0, 0x34($sp)
 .L700094C0:
 /* 00A0C0 700094C0 8FA30034 */  lw    $v1, 0x34($sp)
-/* 00A0C4 700094C4 3C0A8005 */  lui   $t2, %hi(j_text_trigger) # $t2, 0x8005
+/* 00A0C4 700094C4 3C0A8005 */  lui   $t2, %hi(j_text_trigger) 
 /* 00A0C8 700094C8 1460000C */  bnez  $v1, .L700094FC
 /* 00A0CC 700094CC 00000000 */   nop   
 /* 00A0D0 700094D0 8D4A84D0 */  lw    $t2, %lo(j_text_trigger)($t2)

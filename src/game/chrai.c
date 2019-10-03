@@ -20781,7 +20781,7 @@ glabel handle_thrown_explosive_detonation
 /* 078930 7F043E00 24010056 */   li    $at, 86
 .L7F043E04:
 /* 078934 7F043E04 84C20082 */  lh    $v0, 0x82($a2)
-/* 078938 7F043E08 3C0A8005 */  lui   $t2, %hi(clock_timer) # $t2, 0x8005
+/* 078938 7F043E08 3C0A8005 */  lui   $t2, %hi(clock_timer) 
 /* 07893C 7F043E0C 04420017 */  bltzl $v0, .L7F043E6C
 /* 078940 7F043E10 24010056 */   li    $at, 86
 /* 078944 7F043E14 8D4A8374 */  lw    $t2, %lo(clock_timer)($t2)
@@ -23572,7 +23572,7 @@ glabel object_interaction
 /* 07ADDC 7F0462AC C60A0004 */   lwc1  $f10, 4($s0)
 /* 07ADE0 7F0462B0 C6020064 */  lwc1  $f2, 0x64($s0)
 /* 07ADE4 7F0462B4 C4248378 */  lwc1  $f4, %lo(global_timer_delta)($at)
-/* 07ADE8 7F0462B8 3C0A8005 */  lui   $t2, %hi(clock_timer) # $t2, 0x8005
+/* 07ADE8 7F0462B8 3C0A8005 */  lui   $t2, %hi(clock_timer) 
 /* 07ADEC 7F0462BC 3C018005 */  lui   $at, %hi(D_80052AB0)
 /* 07ADF0 7F0462C0 46041202 */  mul.s $f8, $f2, $f4
 /* 07ADF4 7F0462C4 27B20550 */  addiu $s2, $sp, 0x550
@@ -24734,7 +24734,7 @@ glabel object_interaction
 /* 07BEA8 7F047378 1120002F */  beqz  $t1, .L7F047438
 /* 07BEAC 7F04737C 3C198005 */   lui   $t9, %hi(global_timer) 
 /* 07BEB0 7F047380 8F39837C */  lw    $t9, %lo(global_timer)($t9)
-/* 07BEB4 7F047384 3C0A8005 */  lui   $t2, %hi(global_timer) # $t2, 0x8005
+/* 07BEB4 7F047384 3C0A8005 */  lui   $t2, %hi(global_timer) 
 /* 07BEB8 7F047388 AE1900B8 */  sw    $t9, 0xb8($s0)
 /* 07BEBC 7F04738C 8D4A837C */  lw    $t2, %lo(global_timer)($t2)
 /* 07BEC0 7F047390 10000029 */  b     .L7F047438
@@ -24806,7 +24806,7 @@ glabel object_interaction
 /* 07BFB8 7F047488 C60200B0 */   lwc1  $f2, 0xb0($s0)
 /* 07BFBC 7F04748C C60200B0 */  lwc1  $f2, 0xb0($s0)
 .L7F047490:
-/* 07BFC0 7F047490 3C0A8005 */  lui   $t2, %hi(clock_timer) # $t2, 0x8005
+/* 07BFC0 7F047490 3C0A8005 */  lui   $t2, %hi(clock_timer) 
 /* 07BFC4 7F047494 4602B03C */  c.lt.s $f22, $f2
 /* 07BFC8 7F047498 00000000 */  nop   
 /* 07BFCC 7F04749C 4502001A */  bc1fl .L7F047508
@@ -26543,7 +26543,7 @@ glabel object_interaction
 /* 07D950 7F048E20 14410086 */  bne   $v0, $at, .L7F04903C
 /* 07D954 7F048E24 00000000 */   nop   
 /* 07D958 7F048E28 8E8B0008 */  lw    $t3, 8($s4)
-/* 07D95C 7F048E2C 3C0A8005 */  lui   $t2, %hi(clock_timer) # $t2, 0x8005
+/* 07D95C 7F048E2C 3C0A8005 */  lui   $t2, %hi(clock_timer) 
 /* 07D960 7F048E30 8D4A8374 */  lw    $t2, %lo(clock_timer)($t2)
 /* 07D964 7F048E34 8D690008 */  lw    $t1, 8($t3)
 /* 07D968 7F048E38 8FAE0678 */  lw    $t6, 0x678($sp)

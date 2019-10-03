@@ -163,7 +163,7 @@ glabel load_rsp_microcode
 /* 104A1C 7F0CFEEC 3C028005 */  lui   $v0, %hi(fast3d_related_array)
 /* 104A20 7F0CFEF0 2442EAB0 */  addiu $v0, %lo(fast3d_related_array) # addiu $v0, $v0, -0x1550
 /* 104A24 7F0CFEF4 8C490000 */  lw    $t1, ($v0)
-/* 104A28 7F0CFEF8 3C0A8005 */  lui   $t2, %hi(fast3d_related_0) # $t2, 0x8005
+/* 104A28 7F0CFEF8 3C0A8005 */  lui   $t2, %hi(fast3d_related_0) 
 /* 104A2C 7F0CFEFC 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 104A30 7F0CFF00 254AE9F0 */  addiu $t2, %lo(fast3d_related_0) # addiu $t2, $t2, -0x1610
 /* 104A34 7F0CFF04 3C0C8005 */  lui   $t4, %hi(fast3d_related_1) 

@@ -179,7 +179,7 @@ glabel sub_GAME_7F0D2518
 /* 107090 7F0D2560 01014825 */  or    $t1, $t0, $at
 /* 107094 7F0D2564 02002825 */  move  $a1, $s0
 /* 107098 7F0D2568 ACA90000 */  sw    $t1, ($a1)
-/* 10709C 7F0D256C 3C0A8005 */  lui   $t2, %hi(viewport_img) # $t2, 0x8005
+/* 10709C 7F0D256C 3C0A8005 */  lui   $t2, %hi(viewport_img) 
 /* 1070A0 7F0D2570 8D4AEB00 */  lw    $t2, %lo(viewport_img)($t2)
 /* 1070A4 7F0D2574 26100008 */  addiu $s0, $s0, 8
 /* 1070A8 7F0D2578 3C018000 */  lui   $at, 0x8000

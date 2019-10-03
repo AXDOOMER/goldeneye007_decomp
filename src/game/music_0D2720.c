@@ -60,7 +60,7 @@ glabel sub_GAME_7F0D2720
 /* 107258 7F0D2728 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 10725C 7F0D272C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 107260 7F0D2730 11C0002A */  beqz  $t6, .L7F0D27DC
-/* 107264 7F0D2734 3C0A8005 */   lui   $t2, %hi(random_tracks) # $t2, 0x8005
+/* 107264 7F0D2734 3C0A8005 */   lui   $t2, %hi(random_tracks) 
 /* 107268 7F0D2738 3C0F8005 */  lui   $t7, %hi(music_setup_entries)
 /* 10726C 7F0D273C 25E2EB10 */  addiu $v0, $t7, %lo(music_setup_entries)
 /* 107270 7F0D2740 84430000 */  lh    $v1, ($v0)
