@@ -3210,8 +3210,8 @@ Linker script and memory map
                 0x000000007f090fb8                get_debug_joy2detailedit_flag
                 0x000000007f090fc4                get_debug_explosioninfo_flag
                 0x000000007f090fd0                get_debug_prroomloads_flag
-                0x000000007f090fdc                get_linemode_flag
-                0x000000007f090fe8                set_linemode_flag
+                0x000000007f090fdc                get_debug_ViewCVG_flag
+                0x000000007f090fe8                set_debug_ViewCVG_flag
                 0x000000007f090ff4                get_debug_007_unlock_flag
                 0x000000007f091000                get_debug_enable_agent_levels_flag
                 0x000000007f09100c                get_debug_enable_all_levels_flag
@@ -17596,7 +17596,7 @@ Linker script and memory map
                 0x0000000080036f9c                debug_joy2hitsedit_flag
                 0x0000000080036fa0                debug_joy2detailedit_flag
                 0x0000000080036fa4                debug_explosioninfo_flag
-                0x0000000080036fa8                linemode_flag
+                0x0000000080036fa8                debug_ViewCVG_flag
                 0x0000000080036fac                debug_007_unlock_flag
                 0x0000000080036fb0                debug_enable_agent_levels_flag
                 0x0000000080036fb4                debug_enable_all_levels_flag

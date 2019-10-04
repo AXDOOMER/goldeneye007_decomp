@@ -864,7 +864,7 @@ labels:
    - [0x7F0030D0, "sub_GAME_7F0030D0"]
    - [0x7F00324C, "sub_GAME_7F00324C"]
    - [0x7F003480, "sub_GAME_7F003480"]
-   - [0x7F003BF0, "stage_loading_setup_objparse_cleanupafter"]
+   - [0x7F003BF0, "proplvreset2"]
    - [0x7F004388, "actor_attr_expand"]
    - [0x7F0043BC, "actor_expand"]
    - [0x7F0043E0, "door_expand"]
