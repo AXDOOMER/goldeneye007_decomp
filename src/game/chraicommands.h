@@ -1593,9 +1593,12 @@
 /*=============================================================================
 // name: chr_equip_object
 // command id: 64
-// info: makes chr hold object
+// info: makes chr hold tagged object
 //=============================================================================
-// note: if object is flagged as concealed, object will be attached to guard
+// note: if chr's hands are occupied, object will be equipped as an concealed
+// attachment. but if tagged object's handedness flag is free on guard then
+// guard will equip weapon. tagged object's prop must have a holding position
+// command within the model file
 //===========================================================================*/
 #define chr_equip_object_ID 0x64
 #define chr_equip_object_LENGTH 0x03
@@ -2499,8 +2502,9 @@
 // command id: BF
 // info: spawn weapon for guard, goto label if successful
 //=============================================================================
-// note: if out of memory/can't spawn item/hand not free, do not got label.
-// spawned prop must have a holding position command within the model file
+// note: if out of memory/can't spawn item/hands occupied, do not got label.
+// spawned prop must have a holding position command within the model file,
+// else use conceal flag so guard does not attempt to hold prop
 //===========================================================================*/
 #define guard_spawn_item_ID 0xBF
 #define guard_spawn_item_LENGTH 0x09
