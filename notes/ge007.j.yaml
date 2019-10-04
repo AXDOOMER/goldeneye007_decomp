@@ -897,3 +897,4 @@ labels:
    - [0x7f00dd80, "get_highest_unlocked_difficulty_for_level"]
    - [0x7f00de70, "init_menu07_missionselect"]
    - [0x7f00ded0, "update_menu07_missionsel"]
+   - [0x7f00ded8, "interface_menu07_missionsel"]
