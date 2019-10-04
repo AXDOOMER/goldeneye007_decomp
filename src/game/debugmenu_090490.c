@@ -497,7 +497,7 @@ glabel jpt_debug_menu_options
 .word debug_intropos
 .word debug_worldpos
 .word debug_chrkeypos
-.word debug_viscvc
+.word debug_viscvg
 .word debug_chrnum
 .word debug_roomblocks
 .word debug_profile
