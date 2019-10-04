@@ -801,7 +801,7 @@ cheats_cheat_deactivate_invincibility:
 /* 0C6850 7F091D20 100001C2 */  b     .L7F09242C
 /* 0C6854 7F091D24 8FBF0014 */   lw    $ra, 0x14($sp)
 cheats_cheat_linemode:
-/* 0C6858 7F091D28 0FC243FA */  jal   set_debug_ViewCVG_flag
+/* 0C6858 7F091D28 0FC243FA */  jal   set_debug_VisCVG_flag
 /* 0C685C 7F091D2C 24040001 */   li    $a0, 1
 /* 0C6860 7F091D30 100001BE */  b     .L7F09242C
 /* 0C6864 7F091D34 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -1451,7 +1451,7 @@ cheat_button_all_guns:
 /* 0C7060 7F092530 10000060 */  b     .L7F0926B4
 /* 0C7064 7F092534 8FBF0014 */   lw    $ra, 0x14($sp)
 cheat_button_line_mode:
-/* 0C7068 7F092538 0FC243FA */  jal   set_debug_ViewCVG_flag
+/* 0C7068 7F092538 0FC243FA */  jal   set_debug_VisCVG_flag
 /* 0C706C 7F09253C 00002025 */   move  $a0, $zero
 /* 0C7070 7F092540 1000005C */  b     .L7F0926B4
 /* 0C7074 7F092544 8FBF0014 */   lw    $ra, 0x14($sp)

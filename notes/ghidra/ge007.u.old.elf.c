@@ -4047,7 +4047,7 @@ void mainloop(void)
               }
             }
             puVar9 = proc_7F0BE30C(puVar8);
-            playernum = get_linemode_flag();
+            playernum = get_debug_VisCVG_flag();
             puVar17 = puVar9;
             if (playernum != 0) {
               *puVar9 = 0xe7000000;
@@ -105996,7 +105996,7 @@ uint debug_menu_processor(undefined8 param_1,undefined8 param_2,uint param_3,uin
         debug_controlmode = get_highlighted_debug_option();
         break;
       case 0x3f:
-        linemode_flag ^= 1;
+          debug_VisCVG_flag ^= 1;
         break;
       case 0x40:
         debug_chrnum_flag ^= 1;
@@ -106205,19 +106205,19 @@ BOOL get_debug_prroomloads_flag(void)
 
 
 
-BOOL get_linemode_flag(void)
+BOOL get_debug_VisCVG_flag(void)
 
 {
-  return linemode_flag;
+  return debug_VisCVG_flag;
 }
 
 
 
-void set_linemode_flag(BOOL param_1)
+void set_debug_VisCVG_flag(BOOL param_1)
 
 {
-  linemode_flag = param_1;
-  return;
+    debug_VisCVG_flag = param_1;
+    return;
 }
 
 
@@ -106783,7 +106783,7 @@ void proc_7F091B64(void)
       }
       break;
     case 7:
-      set_linemode_flag(1);
+      set_debug_VisCVG_flag(1);
       break;
     case 8:
       if (((float)pPlayer->actual_health == 1.00000000) || ((float)pPlayer->bondhealth < 1.00000000)
@@ -107079,7 +107079,7 @@ void proc_7F092438(int param_1)
       }
       break;
     case 7:
-      set_linemode_flag(0);
+      set_debug_VisCVG_flag(0);
       break;
     case 10:
       iVar4 = get_invisible_to_guards_flag();

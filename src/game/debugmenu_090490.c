@@ -205,7 +205,7 @@ s32 debug_joy2detailedit_flag = 0;
 //D:80036FA4
 s32 debug_explosioninfo_flag = 0;
 //D:80036FA8
-s32 debug_ViewCVG_flag = 0;
+s32 debug_VisCVG_flag = 0;
 //D:80036FAC
 s32 debug_007_unlock_flag = 0;
 //D:80036FB0
@@ -1082,8 +1082,8 @@ debug_chrnum:
 /* 0C586C 7F090D3C 1000004D */  b     .L7F090E74
 /* 0C5870 7F090D40 AC4A0000 */   sw    $t2, ($v0)
 debug_viscvg:
-/* 0C5874 7F090D44 3C028003 */  lui   $v0, %hi(debug_ViewCVG_flag)
-/* 0C5878 7F090D48 24426FA8 */  addiu $v0, %lo(debug_ViewCVG_flag) # addiu $v0, $v0, 0x6fa8
+/* 0C5874 7F090D44 3C028003 */  lui   $v0, %hi(debug_VisCVG_flag)
+/* 0C5878 7F090D48 24426FA8 */  addiu $v0, %lo(debug_VisCVG_flag) # addiu $v0, $v0, 0x6fa8
 /* 0C587C 7F090D4C 8C4B0000 */  lw    $t3, ($v0)
 /* 0C5880 7F090D50 396C0001 */  xori  $t4, $t3, 1
 /* 0C5884 7F090D54 10000047 */  b     .L7F090E74
@@ -1289,12 +1289,14 @@ s32 get_debug_prroomloads_flag(void) {
     return debug_prroomloads_flag;
 }
 
-s32 get_debug_ViewCVG_flag(void) {
-    return debug_ViewCVG_flag;
+// Get Current Status of VisCVG (True/False)
+s32 get_debug_VisCVG_flag(void) {
+    return debug_VisCVG_flag;
 }
 
-void set_debug_ViewCVG_flag(s32 flag) {
-    debug_ViewCVG_flag = flag;
+// Set VisCVG (True/False)
+void set_debug_VisCVG_flag(s32 flag) {
+    debug_VisCVG_flag = flag;
 }
 
 s32 get_debug_007_unlock_flag(void) {

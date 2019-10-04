@@ -502,12 +502,12 @@ loop_44:
                         }
                         temp_s3 = sub_GAME_7F0BE30C(temp_ret_2);
                         phi_s3 = temp_s3;
-                        if (get_ViewCVG_flag() != 0)
-                        {
+                        if (get_debug_VisCVG_flag() != 0)
+                        { // Lets Visualise the Coverage Value used for Scilohete Anti-Ailising (edges) (done on the VI), also produces a cool looking linemode - providing AA is working.
                             temp_v0_3 = temp_s3;
                             // glistp = glist //make pointer to gfx list
                             temp_s3 = temp_s3 + 8;
-                            temp_v1_3 = temp_s3; //increment pointer by 8bytes
+                            temp_v1_3 = temp_s3; //increment pointer by SizeOf(gfx) 
                             temp_v0_3->unk0 = 0xe7000000;
                             temp_v0_3->unk4 = 0;
                             //gDPPipesync(glistp++);
@@ -534,6 +534,13 @@ loop_44:
                             temp_v0_4->unk0 = 0xb900031d;
                             temp_v0_4->unk4 = 0xfa54040;
                             //gDPSetRenderMode(glistp++, );
+
+                            //above would most likly look like
+                            //glistp = glist; 
+                            //gDPPipesync(glistp++);
+                            //gDPSetCycleType(glistp++, 2CYCLE);
+                            // ...etc
+
                             temp_s0_3->unk0 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW(temp_a0, temp_a1, temp_a2, -1) << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
                             temp_s0_3->unk4 = 0;
                             phi_s3 = temp_s3 + 8;
@@ -1034,7 +1041,7 @@ glabel mainloop
 .L70006610:
 /* 007210 70006610 0FC2F8C3 */  jal   sub_GAME_7F0BE30C
 /* 007214 70006614 02602025 */   move  $a0, $s3
-/* 007218 70006618 0FC243F7 */  jal   get_debug_ViewCVG_flag
+/* 007218 70006618 0FC243F7 */  jal   get_debug_VisCVG_flag
 /* 00721C 7000661C 00409825 */   move  $s3, $v0
 /* 007220 70006620 10400037 */  beqz  $v0, .L70006700
 /* 007224 70006624 2407FFFF */   li    $a3, -1
