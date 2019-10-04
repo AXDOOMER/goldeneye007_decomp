@@ -1510,6 +1510,47 @@
         label,
 
 /*=============================================================================
+// name: bond_collected_object
+// command id: 56
+// info: if bond collected tagged object, goto label
+//===========================================================================*/
+#define bond_collected_object_ID 0x56
+#define bond_collected_object_LENGTH 0x03
+#define bond_collected_object(object_tag, label) \
+        bond_collected_object_ID, \
+        object_tag, \
+        label,
+
+/*=============================================================================
+// name: item_is_stationary_within_level
+// command id: 57
+// info: if item exists in level and is stationary (not moving/in mid-air), goto label
+//=============================================================================
+// note: used to check if bond threw an item in level
+//===========================================================================*/
+#define item_is_stationary_within_level_ID 0x57
+#define item_is_stationary_within_level_LENGTH 0x03
+#define item_is_stationary_within_level(item_num, label) \
+        item_is_stationary_within_level_ID, \
+        item_num, \
+        label,
+
+/*=============================================================================
+// name: item_is_attached_to_object
+// command id: 58
+// info: if item was thrown onto tagged object, goto label
+//=============================================================================
+// note: used to check if bond threw an item onto a tagged object
+//===========================================================================*/
+#define item_is_attached_to_object_ID 0x58
+#define item_is_attached_to_object_LENGTH 0x04
+#define item_is_attached_to_object(item_num, object_tag, label) \
+        item_is_attached_to_object_ID, \
+        item_num, \
+        object_tag, \
+        label,
+
+/*=============================================================================
 // name: bond_has_item_equipped
 // command id: 59
 // info: if bond has an item equipped (currently held), goto label
@@ -1520,6 +1561,19 @@
         bond_has_item_equipped_ID, \
         item_num, \
         label,
+
+/*=============================================================================
+// name: object_destroy
+// command id: 5F
+// info: destroy/explode a tagged object
+//=============================================================================
+// note: only works if object is not destroyed
+//===========================================================================*/
+#define object_destroy_ID 0x5F
+#define object_destroy_LENGTH 0x02
+#define object_destroy(object_tag) \
+        object_destroy_ID, \
+        object_tag,
 
 /*=============================================================================
 // name: chr_drop_all_concealed_items
@@ -1534,6 +1588,23 @@
 #define chr_drop_all_concealed_items_LENGTH 0x02
 #define chr_drop_all_concealed_items(chr_num) \
         chr_drop_all_concealed_items_ID, \
+        chr_num,
+
+/*=============================================================================
+// name: chr_equip_object
+// command id: 64
+// info: makes chr hold tagged object
+//=============================================================================
+// note: if chr's hands are occupied, object will be equipped as an concealed
+// attachment. but if tagged object's handedness flag is free on guard then
+// guard will equip weapon. tagged object's prop must have a holding position
+// command within the model file
+//===========================================================================*/
+#define chr_equip_object_ID 0x64
+#define chr_equip_object_LENGTH 0x03
+#define chr_equip_object(object_tag, chr_num) \
+        chr_equip_object_ID, \
+        object_tag, \
         chr_num,
 
 /*=============================================================================
@@ -2431,8 +2502,9 @@
 // command id: BF
 // info: spawn weapon for guard, goto label if successful
 //=============================================================================
-// note: if out of memory/can't spawn item/hand not free, do not got label.
-// spawned prop must have a holding position command within the model file
+// note: if out of memory/can't spawn item/hands occupied, do not got label.
+// spawned prop must have a holding position command within the model file,
+// else use conceal flag so guard does not attempt to hold prop
 //===========================================================================*/
 #define guard_spawn_item_ID 0xBF
 #define guard_spawn_item_LENGTH 0x09
