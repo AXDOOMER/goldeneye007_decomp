@@ -157,6 +157,7 @@ SECTIONS
       build/src/game/blood_animation.o (.text);
       build/src/game/blood_decrypt.o (.text);
       build/src/game/gamefile.o (.text);
+      build/src/game/gamefile2.o (.text);
       build/src/game/chr.o (.text);
       build/src/game/chrai.o (.text);
       build/src/game/loadobjectmodel.o (.text);
@@ -3095,6 +3096,7 @@ SECTIONS
       build/src/game/blood_animation.o (.data);
       build/src/game/blood_decrypt.o (.data);
       build/src/game/gamefile.o (.data);
+      build/src/game/gamefile2.o (.data);
       build/src/game/chr.o (.data);
       build/src/game/chrai.o (.data);
       build/src/game/loadobjectmodel.o (.data);
@@ -3211,6 +3213,7 @@ SECTIONS
       build/src/game/blood_animation.o (.rodata);
       build/src/game/blood_decrypt.o (.rodata);
       build/src/game/gamefile.o (.rodata);
+      build/src/game/gamefile2.o (.rodata);
       build/src/game/chr.o (.rodata);
       build/src/game/chrai.o (.rodata);
       build/src/game/loadobjectmodel.o (.rodata);
@@ -3369,6 +3372,7 @@ SECTIONS
       build/src/game/blood_animation.o (.bss);
       build/src/game/blood_decrypt.o (.bss);
       build/src/game/gamefile.o (.bss);
+      build/src/game/gamefile2.o (.bss);
       build/src/game/chr.o (.bss);
       build/src/game/chrai.o (.bss);
       build/src/game/loadobjectmodel.o (.bss);

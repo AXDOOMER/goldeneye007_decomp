@@ -215,6 +215,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/game/blood_decrypt.o
  .options       0x0000000000000000       0x20 build/src/game/gamefile.o
  .reginfo       0x0000000000000000       0x18 build/src/game/gamefile.o
+ .options       0x0000000000000000       0x20 build/src/game/gamefile2.o
+ .reginfo       0x0000000000000000       0x18 build/src/game/gamefile2.o
  .options       0x0000000000000000       0x20 build/src/game/chr.o
  .reginfo       0x0000000000000000       0x18 build/src/game/chr.o
  .options       0x0000000000000000       0x20 build/src/game/chrai.o
@@ -1762,7 +1764,7 @@ Linker script and memory map
                 0x000000007f01d1c0                sub_GAME_7F01D1C0
                 0x000000007f01d29c                func_7F01D29C
  build/src/game/gamefile.o(.text)
- .text          0x000000007f01d2b0     0x2280 build/src/game/gamefile.o
+ .text          0x000000007f01d2b0      0x410 build/src/game/gamefile.o
                 0x000000007f01d2b0                get_007_reaction_speed
                 0x000000007f01d2e8                get_007_health_mod
                 0x000000007f01d324                get_007_damage_mod
@@ -1778,6 +1780,8 @@ Linker script and memory map
                 0x000000007f01d61c                sub_GAME_7F01D61C
                 0x000000007f01d644                sub_GAME_7F01D644
                 0x000000007f01d680                store_favorite_weapon_current_player
+ build/src/game/gamefile2.o(.text)
+ .text          0x000000007f01d6c0     0x1e70 build/src/game/gamefile2.o
                 0x000000007f01d6c0                sub_GAME_7F01D6C0
                 0x000000007f01d6e0                sub_GAME_7F01D6E0
                 0x000000007f01d758                sub_GAME_7F01D758
@@ -16689,6 +16693,7 @@ Linker script and memory map
                 0x000000008002c7e0                D_8002C7E0
                 0x000000008002c840                D_8002C840
                 0x000000008002c8a0                blank_eeprom
+ build/src/game/gamefile2.o(.data)
  build/src/game/chr.o(.data)
  .data          0x000000008002c900     0x4170 build/src/game/chr.o
                 0x000000008002c900                animation_rate
@@ -19188,6 +19193,7 @@ Linker script and memory map
  build/src/game/blood_animation.o(.rodata)
  build/src/game/blood_decrypt.o(.rodata)
  build/src/game/gamefile.o(.rodata)
+ build/src/game/gamefile2.o(.rodata)
  build/src/game/chr.o(.rodata)
  .rodata        0x0000000080051d10      0x3f0 build/src/game/chr.o
                 0x0000000080051d10                D_80051D10
@@ -21153,6 +21159,7 @@ Linker script and memory map
                 0x0000000080069aa0                save5
                 0x0000000080069b00                save6
                 0x0000000080069b60                dword_CODE_bss_80069B60
+ build/src/game/gamefile2.o(.bss)
  build/src/game/chr.o(.bss)
  build/src/game/chrai.o(.bss)
  .bss           0x0000000080069b70     0xc1c0 build/src/game/chrai.o
