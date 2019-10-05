@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/chrai.h"
+#include "game/chr.h"
 
 // bss
 //CODE.bss:80069B70
@@ -38657,10 +38658,17 @@ glabel create_new_item_instance_of_model
 
 
 
-
 #ifdef NONMATCHING
-void set_0x4_in_runtime_flags_for_item_in_guards_hand(void) {
+void set_0x4_in_runtime_flags_for_item_in_guards_hand(PCHRdata chr, int hand_index) {
+    // BROKEN: we need to first identify the struct assigned to handle_positiondata_right_gun ptr
+    // function used to remove item from right/left hand or something, maybe position holding data?
+    void **item_in_hand_ptr;
 
+    if (chr->handle_positiondata_right_gun[hand_index] != 0)
+    {
+        item_in_hand_ptr = chr->handle_positiondata_right_gun[hand_index] + 4;
+        item_in_hand_ptr[0x19] = (s32)(item_in_hand_ptr[0x19]) | 4;
+    }
 }
 #else
 GLOBAL_ASM(
@@ -38680,7 +38688,6 @@ glabel set_0x4_in_runtime_flags_for_item_in_guards_hand
 /* 086D40 7F052210 00000000 */   nop   
 )
 #endif
-
 
 
 

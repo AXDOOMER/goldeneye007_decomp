@@ -78,6 +78,8 @@
 #define AI_LIST_CHR_START 0x0401
 #define AI_LIST_OBJ_START 0x1000
 
+#define AI_CMDS_TOTAL (object_rocket_launch_ID + 1)
+
 /*=============================================================================
 // global ai lists - glists
 //===========================================================================*/
@@ -1526,7 +1528,9 @@
 // command id: 57
 // info: if item exists in level and is stationary (not moving/in mid-air), goto label
 //=============================================================================
-// note: used to check if bond threw an item in level
+// note: used to check if bond threw an item in level. also checks if item was
+// attached to an object (item is stationary within level). so make sure command
+// 58 takes priority over command 57 when using both commands
 //===========================================================================*/
 #define item_is_stationary_within_level_ID 0x57
 #define item_is_stationary_within_level_LENGTH 0x03
@@ -1645,19 +1649,61 @@
         object_tag,
 
 /*=============================================================================
+// name: object_detach_from_chr
+// command id: 60
+// info: detach tagged object from chr and drop to ground
+//=============================================================================
+// note: item must be attached to a chr. embedded objects will not drop, only
+//       works with attached objects. props can be damaged on drop
+//===========================================================================*/
+#define object_detach_from_chr_ID 0x60
+#define object_detach_from_chr_LENGTH 0x02
+#define object_detach_from_chr(object_tag) \
+        object_detach_from_chr_ID, \
+        object_tag,
+
+/*=============================================================================
 // name: chr_drop_all_concealed_items
 // command id: 61
 // info: make chr drop all concealed attachments
 //=============================================================================
-// note: item must be attached to chr in setup. embedded objects will not drop,
-// only works with attached objects. props can be damaged on drop. command can't
-// be used for bond
+// note: item must be attached to chr, to drop held items use command 62. embedded
+// objects will not drop, only works with attached objects. props can be damaged
+// on drop. can't be used for bond
 //===========================================================================*/
 #define chr_drop_all_concealed_items_ID 0x61
 #define chr_drop_all_concealed_items_LENGTH 0x02
 #define chr_drop_all_concealed_items(chr_num) \
         chr_drop_all_concealed_items_ID, \
         chr_num,
+
+/*=============================================================================
+// name: chr_drop_all_held_items
+// command id: 62
+// info: make chr drop all held items
+//=============================================================================
+// note: items must be held by chr, to drop concealed attachments use command 61.
+// embedded objects will not drop, only works with attached objects. can't be
+// used for bond
+//===========================================================================*/
+#define chr_drop_all_held_items_ID 0x62
+#define chr_drop_all_held_items_LENGTH 0x02
+#define chr_drop_all_held_items(chr_num) \
+        chr_drop_all_held_items_ID, \
+        chr_num,
+
+/*=============================================================================
+// name: bond_collect_object
+// command id: 63
+// info: force bond to instantly collect a tagged object
+//=============================================================================
+// note: does not trigger bottom text telling player they collected an item
+//===========================================================================*/
+#define bond_collect_object_ID 0x63
+#define bond_collect_object_LENGTH 0x02
+#define bond_collect_object(object_tag) \
+        bond_collect_object_ID, \
+        object_tag,
 
 /*=============================================================================
 // name: chr_equip_object
@@ -2714,6 +2760,19 @@
         hud_show_all_ID,
 
 /*=============================================================================
+// name: chr_move_to_pad
+// command id: D9
+// info: teleport chr to pad, goto label if successful
+//===========================================================================*/
+#define chr_move_to_pad_ID 0xD9
+#define chr_move_to_pad_LENGTH 0x05
+#define chr_move_to_pad(chr_num, pad, label) \
+        chr_move_to_pad_ID, \
+        chr_num, \
+        chrarray16(pad), \
+        label,
+
+/*=============================================================================
 // name: screen_fade_to_black
 // command id: DA
 // info: fades the screen out to black
@@ -2772,6 +2831,20 @@
 #define chr_show_all_LENGTH 0x01
 #define chr_show_all \
         chr_show_all_ID,
+
+/*=============================================================================
+// name: chr_remove_item_in_hand
+// command id: E0
+// info: remove the item held by hand index
+//=============================================================================
+// note: does not drop item, instead clears holding item flag for hand index
+//===========================================================================*/
+#define chr_remove_item_in_hand_ID 0xE0
+#define chr_remove_item_in_hand_LENGTH 0x03
+#define chr_remove_item_in_hand(chr_num, hand_index) \
+        chr_remove_item_in_hand_ID, \
+        chr_num, \
+        hand_index,
 
 /*=============================================================================
 // name: guard_is_firing
@@ -2946,7 +3019,6 @@
 #define gas_leak_and_fade_fog_LENGTH 0x01
 #define gas_leak_and_fade_fog \
         gas_leak_and_fade_fog_ID,
-
 
 /*=============================================================================
 // name: object_rocket_launch
