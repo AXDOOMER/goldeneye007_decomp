@@ -1563,6 +1563,75 @@
         label,
 
 /*=============================================================================
+// name: object_exists
+// command id: 5A
+// info: if tagged object exists in level, goto label
+//===========================================================================*/
+#define object_exists_ID 0x5A
+#define object_exists_LENGTH 0x03
+#define object_exists(object_tag, label) \
+        object_exists_ID, \
+        object_tag, \
+        label,
+
+/*=============================================================================
+// name: object_not_destroyed
+// command id: 5B
+// info: if tagged object is not destroyed, goto label
+//===========================================================================*/
+#define object_not_destroyed_ID 0x5B
+#define object_not_destroyed_LENGTH 0x03
+#define object_not_destroyed(object_tag, label) \
+        object_not_destroyed_ID, \
+        object_tag, \
+        label,
+
+/*=============================================================================
+// name: object_was_activated
+// command id: 5C
+// info: if tagged object was activated since last check, goto label
+//=============================================================================
+// note: when executed, clear tagged object's activated flag. only bond and
+//       command 5E can activate tagged objects
+//===========================================================================*/
+#define object_was_activated_ID 0x5C
+#define object_was_activated_LENGTH 0x03
+#define object_was_activated(object_tag, label) \
+        object_was_activated_ID, \
+        object_tag, \
+        label,
+
+/*=============================================================================
+// name: bond_used_gadget_on_object
+// command id: 5D
+// info: if bond used a gadget item on a tagged object since last check, goto label
+//=============================================================================
+// note: gadgets are a pre-defined list of items set to gadget flag:
+// ITEM_BOMBDEFUSER
+// ITEM_DATATHIEF
+// ITEM_DOORDECODER
+// ITEM_EXPLOSIVEFLOPPY
+// ITEM_DATTAPE
+//===========================================================================*/
+#define bond_used_gadget_on_object_ID 0x5D
+#define bond_used_gadget_on_object_LENGTH 0x03
+#define bond_used_gadget_on_object(object_tag, label) \
+        bond_used_gadget_on_object_ID, \
+        object_tag, \
+        label,
+
+/*=============================================================================
+// name: object_activate
+// command id: 5E
+// info: activate a tagged object
+//===========================================================================*/
+#define object_activate_ID 0x5E
+#define object_activate_LENGTH 0x02
+#define object_activate(object_tag) \
+        object_activate_ID, \
+        object_tag,
+
+/*=============================================================================
 // name: object_destroy
 // command id: 5F
 // info: destroy/explode a tagged object
@@ -2004,6 +2073,7 @@
 #define guard_set_accuracy_rating(accuracy_rating) \
         guard_set_accuracy_rating_ID, \
         accuracy_rating,
+
 /*=============================================================================
 // name: guard_bitfield_set_on
 // command id: 94
@@ -2876,5 +2946,19 @@
 #define gas_leak_and_fade_fog_LENGTH 0x01
 #define gas_leak_and_fade_fog \
         gas_leak_and_fade_fog_ID,
+
+
+/*=============================================================================
+// name: object_rocket_launch
+// command id: FC
+// info: launch a tagged object like a rocket
+//=============================================================================
+// note: if tagged object can't be turned upright, object will be destroyed instead
+//===========================================================================*/
+#define object_rocket_launch_ID 0xFC
+#define object_rocket_launch_LENGTH 0x02
+#define object_rocket_launch(object_tag) \
+        object_rocket_launch_ID, \
+        object_tag,
 
 #endif
