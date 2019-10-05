@@ -226,8 +226,7 @@ struct CHRdata {
     f32 aimendback;
     f32 aimendsideback;
     /* 0x0160 */
-    int * handle_positiondata_right_gun;
-    int * handle_positiondata_left_gun;
+    int * handle_positiondata[2];
     int * ptr_SEbuffer1;
     int * ptr_SEbuffer2;
     /* 0x0170 */
