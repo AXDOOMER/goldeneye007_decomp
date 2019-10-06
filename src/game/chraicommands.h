@@ -127,22 +127,22 @@
 #define TARGET_AIM_ONLY     0x0020
 
 // command 18-19 target body part values
-#define TARGET_NULL_PART        0x0 // null part, no reaction - 1x damage
-#define TARGET_LEFT_FOOT        0x1 // left foot - 1x damage
-#define TARGET_LEFT_LEG         0x2 // left leg - 1x damage
-#define TARGET_LEFT_THIGH       0x3 // left thigh - 1x damage
-#define TARGET_RIGHT_FOOT       0x4 // right foot - 1x damage
-#define TARGET_RIGHT_LEG        0x5 // right leg - 1x damage
-#define TARGET_RIGHT_THIGH      0x6 // right thigh - 1x damage
-#define TARGET_PELVIS           0x7 // pelvis - 1x damage
-#define TARGET_HEAD             0x8 // head - 4x damage
-#define TARGET_LEFT_HAND        0x9 // left hand - 1x damage
-#define TARGET_LEFT_ARM         0xA // left arm - 1x damage
-#define TARGET_LEFT_SHOULDER    0xB // left shoulder - 1x damage
-#define TARGET_RIGHT_HAND       0xC // right hand - 1x damage
-#define TARGET_RIGHT_ARM        0xD // right arm - 1x damage
-#define TARGET_RIGHT_SHOULDER   0xE // right shoulder - 1x damage
-#define TARGET_CHEST            0xF // chest - 2x damage
+#define TARGET_NULL_PART        0x00 // null part, no reaction - 1x damage
+#define TARGET_LEFT_FOOT        0x01 // left foot - 1x damage
+#define TARGET_LEFT_LEG         0x02 // left leg - 1x damage
+#define TARGET_LEFT_THIGH       0x03 // left thigh - 1x damage
+#define TARGET_RIGHT_FOOT       0x04 // right foot - 1x damage
+#define TARGET_RIGHT_LEG        0x05 // right leg - 1x damage
+#define TARGET_RIGHT_THIGH      0x06 // right thigh - 1x damage
+#define TARGET_PELVIS           0x07 // pelvis - 1x damage
+#define TARGET_HEAD             0x08 // head - 4x damage
+#define TARGET_LEFT_HAND        0x09 // left hand - 1x damage
+#define TARGET_LEFT_ARM         0x0A // left arm - 1x damage
+#define TARGET_LEFT_SHOULDER    0x0B // left shoulder - 1x damage
+#define TARGET_RIGHT_HAND       0x0C // right hand - 1x damage
+#define TARGET_RIGHT_ARM        0x0D // right arm - 1x damage
+#define TARGET_RIGHT_SHOULDER   0x0E // right shoulder - 1x damage
+#define TARGET_CHEST            0x0F // chest - 2x damage
 
 // command 68
 #define DOOR_STATE_CLOSED   0x01
@@ -196,6 +196,10 @@
 #define CHRFLAG_20000000                0x20000000 // unknown
 #define CHRFLAG_40000000                0x40000000 // unknown
 #define CHRFLAG_80000000                0x80000000 // unknown
+
+// command E0
+#define RIGHT_HAND  0
+#define LEFT_HAND   1
 /*===========================================================================*/
 
 /*=============================================================================
@@ -403,14 +407,14 @@
 // if interpolation time is too low it may crash! - use 0x10 if unsure
 // start/end keyframe and interpolation use 60 tick units
 // bitfield (hex):
-// 01 - mirror animation
-// 02 - ?? (cancels no translation flag)
-// 04 - loop/hold last frame (required for reverse flag)
-// 08 - play sneeze sfx with animation 9F (triggers 50% of the time)
-// 10 - idle pose after animation has completed (does not work with looping animations)
-// 20 - translation multiplier x 4 (used for dam and cradle cinema)
-// 40 - no translation
-// 80 - reverse animation (only for looped animations)
+// 01: mirror animation
+// 02: ?? (cancels no translation flag)
+// 04: loop/hold last frame (required for reverse flag)
+// 08: play sneeze sfx with animation 9F (triggers 50% of the time)
+// 10: idle pose after animation has completed (does not work with looping animations)
+// 20: translation multiplier x 4 (used for dam and cradle cinema)
+// 40: no translation
+// 80: reverse animation (only for looped animations)
 //===========================================================================*/
 #define guard_animation_ID 0x0A
 #define guard_animation_LENGTH 0x09
@@ -1767,7 +1771,7 @@
 // command id: 68
 // info: if tagged door state matches any of bitfield argument, goto label
 //=============================================================================
-// note: bitfield state (hex):
+// note: door flag state (hex):
 // 01: closed
 // 02: open
 // 04: closing
@@ -1775,10 +1779,10 @@
 //===========================================================================*/
 #define door_check_state_ID 0x68
 #define door_check_state_LENGTH 0x04
-#define door_check_state(object_tag, bitfield, label) \
+#define door_check_state(object_tag, door_state, label) \
         door_check_state_ID, \
         object_tag, \
-        bitfield, \
+        door_state, \
         label,
 
 /*=============================================================================
@@ -1794,7 +1798,6 @@
 #define door_has_been_opened_before(object_tag, label) \
         door_has_been_opened_before_ID, \
         object_tag, \
-        bitfield, \
         label,
 
 /*=============================================================================
@@ -2336,15 +2339,15 @@
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
 // by many parts of the engine.
 // bitfield (hex):
-// 00000002 - sunglasses
-// 00000010 - invincible
-// 00000040 - can shoot other guards
-// 00000400 - hidden
-// 00000800 - no autoaim
-// 00001000 - lock y position (no gravity, used for dam/cradle jump)
-// 00002000 - no shadow
-// 00004000 - ignore animation translation
-// 00080000 - increase sprinting speed
+// 00000002: sunglasses
+// 00000010: invincible
+// 00000040: can shoot other guards
+// 00000400: hidden
+// 00000800: no autoaim
+// 00001000: lock y position (no gravity, used for dam/cradle jump)
+// 00002000: no shadow
+// 00004000: ignore animation translation
+// 00080000: increase sprinting speed
 //===========================================================================*/
 #define guard_flags_set_on_ID 0x9D
 #define guard_flags_set_on_LENGTH 0x05
@@ -2360,15 +2363,15 @@
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
 // by many parts of the engine.
 // bitfield (hex):
-// 00000002 - sunglasses
-// 00000010 - invincible
-// 00000040 - can shoot other guards
-// 00000400 - hidden
-// 00000800 - no autoaim
-// 00001000 - lock y position (no gravity, used for dam/cradle jump)
-// 00002000 - no shadow
-// 00004000 - ignore animation translation
-// 00080000 - increase sprinting speed
+// 00000002: sunglasses
+// 00000010: invincible
+// 00000040: can shoot other guards
+// 00000400: hidden
+// 00000800: no autoaim
+// 00001000: lock y position (no gravity, used for dam/cradle jump)
+// 00002000: no shadow
+// 00004000: ignore animation translation
+// 00080000: increase sprinting speed
 //===========================================================================*/
 #define guard_flags_set_off_ID 0x9E
 #define guard_flags_set_off_LENGTH 0x05
@@ -2384,15 +2387,15 @@
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
 // by many parts of the engine.
 // bitfield (hex):
-// 00000002 - sunglasses
-// 00000010 - invincible
-// 00000040 - can shoot other guards
-// 00000400 - hidden
-// 00000800 - no autoaim
-// 00001000 - lock y position (no gravity, used for dam/cradle jump)
-// 00002000 - no shadow
-// 00004000 - ignore animation translation
-// 00080000 - increase sprinting speed
+// 00000002: sunglasses
+// 00000010: invincible
+// 00000040: can shoot other guards
+// 00000400: hidden
+// 00000800: no autoaim
+// 00001000: lock y position (no gravity, used for dam/cradle jump)
+// 00002000: no shadow
+// 00004000: ignore animation translation
+// 00080000: increase sprinting speed
 //===========================================================================*/
 #define guard_flags_is_set_on_ID 0x9F
 #define guard_flags_is_set_on_LENGTH 0x06
@@ -2409,15 +2412,15 @@
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
 // by many parts of the engine.
 // bitfield (hex):
-// 00000002 - sunglasses
-// 00000010 - invincible
-// 00000040 - can shoot other guards
-// 00000400 - hidden
-// 00000800 - no autoaim
-// 00001000 - lock y position (no gravity, used for dam/cradle jump)
-// 00002000 - no shadow
-// 00004000 - ignore animation translation
-// 00080000 - increase sprinting speed
+// 00000002: sunglasses
+// 00000010: invincible
+// 00000040: can shoot other guards
+// 00000400: hidden
+// 00000800: no autoaim
+// 00001000: lock y position (no gravity, used for dam/cradle jump)
+// 00002000: no shadow
+// 00004000: ignore animation translation
+// 00080000: increase sprinting speed
 //===========================================================================*/
 #define chr_flags_set_on_ID 0xA0
 #define chr_flags_set_on_LENGTH 0x06
@@ -2434,15 +2437,15 @@
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
 // by many parts of the engine.
 // bitfield (hex):
-// 00000002 - sunglasses
-// 00000010 - invincible
-// 00000040 - can shoot other guards
-// 00000400 - hidden
-// 00000800 - no autoaim
-// 00001000 - lock y position (no gravity, used for dam/cradle jump)
-// 00002000 - no shadow
-// 00004000 - ignore animation translation
-// 00080000 - increase sprinting speed
+// 00000002: sunglasses
+// 00000010: invincible
+// 00000040: can shoot other guards
+// 00000400: hidden
+// 00000800: no autoaim
+// 00001000: lock y position (no gravity, used for dam/cradle jump)
+// 00002000: no shadow
+// 00004000: ignore animation translation
+// 00080000: increase sprinting speed
 //===========================================================================*/
 #define chr_flags_set_off_ID 0xA1
 #define chr_flags_set_off_LENGTH 0x06
@@ -2459,15 +2462,15 @@
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
 // by many parts of the engine.
 // bitfield (hex):
-// 00000002 - sunglasses
-// 00000010 - invincible
-// 00000040 - can shoot other guards
-// 00000400 - hidden
-// 00000800 - no autoaim
-// 00001000 - lock y position (no gravity, used for dam/cradle jump)
-// 00002000 - no shadow
-// 00004000 - ignore animation translation
-// 00080000 - increase sprinting speed
+// 00000002: sunglasses
+// 00000010: invincible
+// 00000040: can shoot other guards
+// 00000400: hidden
+// 00000800: no autoaim
+// 00001000: lock y position (no gravity, used for dam/cradle jump)
+// 00002000: no shadow
+// 00004000: ignore animation translation
+// 00080000: increase sprinting speed
 //===========================================================================*/
 #define chr_flags_is_set_on_ID 0xA2
 #define chr_flags_is_set_on_LENGTH 0x07
@@ -2840,16 +2843,49 @@
 /*=============================================================================
 // name: camera_return_to_bond
 // command id: D3
-// info: switch back to first person view. must have 3 ai_sleep commands before
-//       executing this command
+// info: switch back to first person view
 //=============================================================================
 // note: unused command, never used in retail game. tagged items within inventory
-//       will become invalid after command - only weapons are safe
+// will become invalid after command - only weapons are safe. command must have 3
+// ai_sleep commands before executing this command or else engine will crash on
+// console (use macro camera_wait_for_loading)
 //===========================================================================*/
 #define camera_return_to_bond_ID 0xD3
 #define camera_return_to_bond_LENGTH 0x01
 #define camera_return_to_bond \
         camera_return_to_bond_ID,
+
+/*=============================================================================
+// name: camera_look_at_bond_from_pad
+// command id: D4
+// info: change view to pad and look at bond
+//=============================================================================
+// note: command must have 3 ai_sleep commands before executing this command or
+// else engine will crash on console (use macro camera_wait_for_loading)
+//===========================================================================*/
+#define camera_look_at_bond_from_pad_ID 0xD4
+#define camera_look_at_bond_from_pad_LENGTH 0x03
+#define camera_look_at_bond_from_pad(pad) \
+        camera_look_at_bond_from_pad_ID, \
+        chararray16(pad),
+
+/*=============================================================================
+// name: camera_switch
+// command id: D5
+// info: change view to tagged camera's position and rotation
+//=============================================================================
+// note: command must have 3 ai_sleep commands before executing this command or
+// else engine will crash on console (use macro camera_wait_for_loading). only
+// look at bond if flag is set. unused flag may have seperated look at bond into
+// x/y angles instead of both, for retail unused flag does nothing
+//===========================================================================*/
+#define camera_switch_ID 0xD5
+#define camera_switch_LENGTH 0x06
+#define camera_switch(object_tag, look_at_bond_flag, unused_flag) \
+        camera_switch_ID, \
+        object_tag, \
+        chararray16(look_at_bond_flag), \
+        chararray16(unused_flag),
 
 /*=============================================================================
 // name: bond_y_pos_less_than
@@ -3050,6 +3086,35 @@
 #define bond_hide_weapons_LENGTH 0x01
 #define bond_hide_weapons \
         bond_hide_weapons_ID,
+
+/*=============================================================================
+// name: camera_orbit_pad
+// command id: EE
+// info: change view to orbit a pad with set speed
+//=============================================================================
+// note: command must have 3 ai_sleep commands before executing this command or
+// else engine will crash on console (use macro camera_wait_for_loading).
+// arguments:
+// lat_distance: camera distance from pad, 100 units per meter. argument is unsigned
+// vert_distance: camera distance from pad, 100 units per meter. argument is signed
+// orbit_speed: speed to orbit around pad, argument is signed. unit format uses
+//              compass direction like target commands (14-17). generally stick
+//              to a low range as it is used for delta timing (0100-FF00)
+// pad: pad for camera to target and orbit around
+// y_pos_offset: offset the relative y position for pad (boom/jib)
+// initial_rotation: uses compass direction like target commands (14-17)
+//                   but inverted - hex N: 0000 E: C000 S: 8000: W: 4000
+//===========================================================================*/
+#define camera_orbit_pad_ID 0xEE
+#define camera_orbit_pad_LENGTH 0x0D
+#define camera_orbit_pad(lat_distance, vert_distance, orbit_speed, pad, y_pos_offset, initial_rotation) \
+        camera_orbit_pad_ID, \
+        chararray16(lat_distance), \
+        chararray16(vert_distance), \
+        chararray16(orbit_speed), \
+        chararray16(pad), \
+        chararray16(y_pos_offset), \
+        chararray16(initial_rotation),
 
 /*=============================================================================
 // name: credits_roll
