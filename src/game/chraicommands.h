@@ -164,38 +164,38 @@
 #define BITFIELD_DONT_POINT_AT_BOND     0x01 // if enabled, don't point at bond
 
 // command 9D-A2
-#define CHRFLAG_00000001                0x00000001 // unknown
-#define CHRFLAG_SUNGLASSES              0x00000002 // sunglasses
-#define CHRFLAG_00000004                0x00000004 // unknown
-#define CHRFLAG_00000008                0x00000008 // unknown
-#define CHRFLAG_INVINCIBLE              0x00000010 // invincible
-#define CHRFLAG_00000020                0x00000020 // unknown
-#define CHRFLAG_CAN_SHOOT_CHRS          0x00000040 // can shoot other guards
-#define CHRFLAG_00000080                0x00000080 // unknown
-#define CHRFLAG_00000100                0x00000100 // unknown
-#define CHRFLAG_00000200                0x00000200 // unknown
-#define CHRFLAG_HIDDEN                  0x00000400 // hidden
-#define CHRFLAG_NO_AUTOAIM              0x00000800 // no autoaim
-#define CHRFLAG_LOCK_Y_POS              0x00001000 // lock y position (no gravity, used for dam/cradle jump)
-#define CHRFLAG_NO_SHADOW               0x00002000 // no shadow
-#define CHRFLAG_IGNORE_ANIM_TRANSLATION 0x00004000 // ignore animation translation
-#define CHRFLAG_00008000                0x00008000 // unknown
-#define CHRFLAG_00010000                0x00010000 // unknown
-#define CHRFLAG_00020000                0x00020000 // unknown
-#define CHRFLAG_00040000                0x00040000 // unknown
-#define CHRFLAG_INCREASE_SPRINT_SPEED   0x00080000 // increase sprinting speed
-#define CHRFLAG_00100000                0x00100000 // unknown
-#define CHRFLAG_00200000                0x00200000 // unknown
-#define CHRFLAG_00400000                0x00400000 // unknown
-#define CHRFLAG_00800000                0x00800000 // unknown
-#define CHRFLAG_01000000                0x01000000 // unknown
-#define CHRFLAG_02000000                0x02000000 // unknown
-#define CHRFLAG_04000000                0x04000000 // unknown
-#define CHRFLAG_08000000                0x08000000 // unknown
-#define CHRFLAG_10000000                0x10000000 // unknown
-#define CHRFLAG_20000000                0x20000000 // unknown
-#define CHRFLAG_40000000                0x40000000 // unknown
-#define CHRFLAG_80000000                0x80000000 // unknown
+#define CHRFLAG_00000001                    0x00000001 // unknown
+#define CHRFLAG_SUNGLASSES                  0x00000002 // sunglasses
+#define CHRFLAG_00000004                    0x00000004 // unknown
+#define CHRFLAG_00000008                    0x00000008 // unknown
+#define CHRFLAG_INVINCIBLE                  0x00000010 // invincible
+#define CHRFLAG_00000020                    0x00000020 // unknown
+#define CHRFLAG_CAN_SHOOT_CHRS              0x00000040 // can shoot other guards
+#define CHRFLAG_00000080                    0x00000080 // unknown
+#define CHRFLAG_00000100                    0x00000100 // unknown
+#define CHRFLAG_00000200                    0x00000200 // unknown
+#define CHRFLAG_HIDDEN                      0x00000400 // hidden
+#define CHRFLAG_NO_AUTOAIM                  0x00000800 // no autoaim
+#define CHRFLAG_LOCK_Y_POS                  0x00001000 // lock y position (no gravity, used for dam/cradle jump)
+#define CHRFLAG_NO_SHADOW                   0x00002000 // no shadow
+#define CHRFLAG_IGNORE_ANIM_TRANSLATION     0x00004000 // ignore animation translation
+#define CHRFLAG_00008000                    0x00008000 // unknown
+#define CHRFLAG_00010000                    0x00010000 // unknown
+#define CHRFLAG_00020000                    0x00020000 // unknown
+#define CHRFLAG_00040000                    0x00040000 // unknown
+#define CHRFLAG_INCREASE_SPRINT_SPEED       0x00080000 // increase sprinting speed
+#define CHRFLAG_COUNT_DEATH_AS_CIVILIAN     0x00100000 // count death as civilian killed
+#define CHRFLAG_00200000                    0x00200000 // unknown
+#define CHRFLAG_00400000                    0x00400000 // unknown
+#define CHRFLAG_00800000                    0x00800000 // unknown
+#define CHRFLAG_01000000                    0x01000000 // unknown
+#define CHRFLAG_02000000                    0x02000000 // unknown
+#define CHRFLAG_04000000                    0x04000000 // unknown
+#define CHRFLAG_08000000                    0x08000000 // unknown
+#define CHRFLAG_10000000                    0x10000000 // unknown
+#define CHRFLAG_20000000                    0x20000000 // unknown
+#define CHRFLAG_40000000                    0x40000000 // unknown
+#define CHRFLAG_80000000                    0x80000000 // unknown
 
 // command E0
 #define RIGHT_HAND  0
@@ -2347,6 +2347,7 @@
 // 00001000: lock y position (no gravity, used for dam/cradle jump)
 // 00002000: no shadow
 // 00004000: ignore animation translation
+// 00010000: count death as civilian killed
 // 00080000: increase sprinting speed
 //===========================================================================*/
 #define guard_flags_set_on_ID 0x9D
@@ -2371,6 +2372,7 @@
 // 00001000: lock y position (no gravity, used for dam/cradle jump)
 // 00002000: no shadow
 // 00004000: ignore animation translation
+// 00010000: count death as civilian killed
 // 00080000: increase sprinting speed
 //===========================================================================*/
 #define guard_flags_set_off_ID 0x9E
@@ -2395,6 +2397,7 @@
 // 00001000: lock y position (no gravity, used for dam/cradle jump)
 // 00002000: no shadow
 // 00004000: ignore animation translation
+// 00010000: count death as civilian killed
 // 00080000: increase sprinting speed
 //===========================================================================*/
 #define guard_flags_is_set_on_ID 0x9F
@@ -2420,6 +2423,7 @@
 // 00001000: lock y position (no gravity, used for dam/cradle jump)
 // 00002000: no shadow
 // 00004000: ignore animation translation
+// 00010000: count death as civilian killed
 // 00080000: increase sprinting speed
 //===========================================================================*/
 #define chr_flags_set_on_ID 0xA0
@@ -2445,6 +2449,7 @@
 // 00001000: lock y position (no gravity, used for dam/cradle jump)
 // 00002000: no shadow
 // 00004000: ignore animation translation
+// 00010000: count death as civilian killed
 // 00080000: increase sprinting speed
 //===========================================================================*/
 #define chr_flags_set_off_ID 0xA1
@@ -2470,6 +2475,7 @@
 // 00001000: lock y position (no gravity, used for dam/cradle jump)
 // 00002000: no shadow
 // 00004000: ignore animation translation
+// 00010000: count death as civilian killed
 // 00080000: increase sprinting speed
 //===========================================================================*/
 #define chr_flags_is_set_on_ID 0xA2
@@ -3018,6 +3024,17 @@
         hand_index,
 
 /*=============================================================================
+// name: guard_unknown_check
+// command id: E7
+// info: if guard is in firing state (ACT_ATTACK) and chr->field_4C | 0x40, goto label
+//===========================================================================*/
+#define guard_unknown_check_ID 0xE7
+#define guard_unknown_check_LENGTH 0x02
+#define guard_unknown_check(label) \
+        guard_unknown_check_ID, \
+        label,
+
+/*=============================================================================
 // name: guard_is_firing
 // command id: E8
 // info: if guard is in firing state (ACT_ATTACK), goto label
@@ -3101,7 +3118,7 @@
 //              compass direction like target commands (14-17). generally stick
 //              to a low range as it is used for delta timing (0100-FF00)
 // pad: pad for camera to target and orbit around
-// y_pos_offset: offset the relative y position for pad (boom/jib)
+// y_pos_offset: offset the relative y position for pad (boom/jib), argument is signed
 // initial_rotation: uses compass direction like target commands (14-17)
 //                   but inverted - hex N: 0000 E: C000 S: 8000: W: 4000
 //===========================================================================*/
@@ -3182,6 +3199,21 @@
 #define trigger_explosions_around_bond_LENGTH 0x01
 #define trigger_explosions_around_bond \
         trigger_explosions_around_bond_ID,
+
+/*=============================================================================
+// name: bond_killed_civilians_greater_than
+// command id: F7
+// info: if bond's total civilians killed > argument, goto label
+//=============================================================================
+// note: guards flagged with CHRFLAG_COUNT_DEATH_AS_CIVILIAN will count towards
+//       total when killed
+//===========================================================================*/
+#define bond_killed_civilians_greater_than_ID 0xF7
+#define bond_killed_civilians_greater_than_LENGTH 0x03
+#define bond_killed_civilians_greater_than(civilians_killed, label) \
+        bond_killed_civilians_greater_than_ID, \
+        civilians_killed, \
+        label,
 
 /*=============================================================================
 // name: bond_killed_in_action
