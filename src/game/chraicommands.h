@@ -144,6 +144,22 @@
 #define TARGET_RIGHT_SHOULDER   0xE // right shoulder - 1x damage
 #define TARGET_CHEST            0xF // chest - 2x damage
 
+// command 68
+#define DOOR_STATE_CLOSED   0x01
+#define DOOR_STATE_OPEN     0x02
+#define DOOR_STATE_CLOSING  0x04
+#define DOOR_STATE_OPENING  0x08
+
+// command 6A-6C
+#define DOOR_LOCK_0 0x01
+#define DOOR_LOCK_1 0x02
+#define DOOR_LOCK_2 0x04
+#define DOOR_LOCK_3 0x08
+#define DOOR_LOCK_4 0x10
+#define DOOR_LOCK_5 0x20
+#define DOOR_LOCK_6 0x40
+#define DOOR_LOCK_7 0x80
+
 // command 94-99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
 #define BITFIELD_DONT_POINT_AT_BOND     0x01 // if enabled, don't point at bond
 
@@ -1640,7 +1656,7 @@
 // command id: 5F
 // info: destroy/explode a tagged object
 //=============================================================================
-// note: only works if object is not destroyed
+// note: only works if object is not destroyed. cannot destroy invincible objects
 //===========================================================================*/
 #define object_destroy_ID 0x5F
 #define object_destroy_LENGTH 0x02
@@ -1683,8 +1699,8 @@
 // info: make chr drop all held items
 //=============================================================================
 // note: items must be held by chr, to drop concealed attachments use command 61.
-// embedded objects will not drop, only works with attached objects. can't be
-// used for bond
+// embedded objects will not drop, only works with attached objects. can be
+// used for bond while in third person (cinema)
 //===========================================================================*/
 #define chr_drop_all_held_items_ID 0x62
 #define chr_drop_all_held_items_LENGTH 0x02
@@ -1713,7 +1729,7 @@
 // note: if chr's hands are occupied, object will be equipped as an concealed
 // attachment. but if tagged object's handedness flag is free on guard then
 // guard will equip weapon. tagged object's prop must have a holding position
-// command within the model file
+// command within the model file. can be used for bond while in third person (cinema)
 //===========================================================================*/
 #define chr_equip_object_ID 0x64
 #define chr_equip_object_LENGTH 0x03
@@ -1721,6 +1737,111 @@
         chr_equip_object_ID, \
         object_tag, \
         chr_num,
+
+/*=============================================================================
+// name: door_open
+// command id: 66
+// info: open tagged door
+//=============================================================================
+// note: open tagged door even if locked
+//===========================================================================*/
+#define door_open_ID 0x66
+#define door_open_LENGTH 0x02
+#define door_open(object_tag) \
+        door_open_ID, \
+        object_tag,
+
+/*=============================================================================
+// name: door_close
+// command id: 67
+// info: close tagged door
+//===========================================================================*/
+#define door_close_ID 0x67
+#define door_close_LENGTH 0x02
+#define door_close(object_tag) \
+        door_close_ID, \
+        object_tag,
+
+/*=============================================================================
+// name: door_check_state
+// command id: 68
+// info: if tagged door state matches any of bitfield argument, goto label
+//=============================================================================
+// note: bitfield state (hex):
+// 01: closed
+// 02: open
+// 04: closing
+// 08: opening
+//===========================================================================*/
+#define door_check_state_ID 0x68
+#define door_check_state_LENGTH 0x04
+#define door_check_state(object_tag, bitfield, label) \
+        door_check_state_ID, \
+        object_tag, \
+        bitfield, \
+        label,
+
+/*=============================================================================
+// name: door_has_been_opened_before
+// command id: 69
+// info: if tagged door has been opened before, goto label
+//=============================================================================
+// note: if tagged door is open by default in setup, then it must be closed before
+//       it will check if opened again
+//===========================================================================*/
+#define door_has_been_opened_before_ID 0x69
+#define door_has_been_opened_before_LENGTH 0x03
+#define door_has_been_opened_before(object_tag, label) \
+        door_has_been_opened_before_ID, \
+        object_tag, \
+        bitfield, \
+        label,
+
+/*=============================================================================
+// name: door_set_lock
+// command id: 6A
+// info: set tagged door's lock with flags
+//=============================================================================
+// note: use DOOR_LOCK_# flags for lock argument. lock flags are same as used
+//       within setup for doors and keys
+//===========================================================================*/
+#define door_set_lock_ID 0x6A
+#define door_set_lock_LENGTH 0x03
+#define door_set_lock(object_tag, lock_flag) \
+        door_set_lock_ID, \
+        object_tag, \
+        lock_flag,
+
+/*=============================================================================
+// name: door_unset_lock
+// command id: 6B
+// info: unset tagged door's lock with flags
+//=============================================================================
+// note: use DOOR_LOCK_# flags for lock argument. lock flags are same as used
+//       within setup for doors and keys
+//===========================================================================*/
+#define door_unset_lock_ID 0x6B
+#define door_unset_lock_LENGTH 0x03
+#define door_unset_lock(object_tag, lock_flag) \
+        door_unset_lock_ID, \
+        object_tag, \
+        lock_flag,
+
+/*=============================================================================
+// name: door_check_lock
+// command id: 6C
+// info: if tagged door's lock flags matches any lock flag argument, goto label
+//=============================================================================
+// note: use DOOR_LOCK_# flags for lock argument. lock flags are same as used
+//       within setup for doors and keys
+//===========================================================================*/
+#define door_check_state_ID 0x6C
+#define door_check_state_LENGTH 0x04
+#define door_check_state(object_tag, lock_flag, label) \
+        door_check_state_ID, \
+        object_tag, \
+        lock_flag, \
+        label,
 
 /*=============================================================================
 // name: objective_num_complete
@@ -2831,6 +2952,20 @@
 #define chr_show_all_LENGTH 0x01
 #define chr_show_all \
         chr_show_all_ID,
+
+/*=============================================================================
+// name: door_open_instant
+// command id: DF
+// info: instantly open tagged door
+//=============================================================================
+// note: mostly used for cutscenes, doesn't trigger door opening sfx. open tagged
+//       door even if locked
+//===========================================================================*/
+#define door_open_instant_ID 0xDF
+#define door_open_instant_LENGTH 0x02
+#define door_open_instant(object_tag) \
+        door_open_instant_ID, \
+        object_tag,
 
 /*=============================================================================
 // name: chr_remove_item_in_hand
