@@ -1,7 +1,6 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "game/chrobjdata.h"
-#include "game/chraicommands.h" /* needed for ai list commands, remove when moving global ai lists to chraicommands/chrai */
 // bss
 
 

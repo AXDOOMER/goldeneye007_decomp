@@ -1,6 +1,7 @@
 #include "ultra64.h"
-#include "game/chrai.h"
+#include "bondgame.h"
 #include "game/chr.h"
+#include "game/chrai.h"
 
 // bss
 //CODE.bss:80069B70
