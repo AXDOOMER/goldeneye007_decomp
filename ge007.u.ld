@@ -163,6 +163,7 @@ SECTIONS
       build/src/game/chrai.o (.text);
       build/src/game/loadobjectmodel.o (.text);
       build/src/game/objective_status.o (.text);
+      build/src/game/objective_status2.o (.text);
       build/src/game/sin.o (.text);
       build/src/game/unk_057FD0.o (.text);
       build/src/game/unk_05A9E0.o (.text);
@@ -3103,6 +3104,7 @@ SECTIONS
       build/src/game/chrai.o (.data);
       build/src/game/loadobjectmodel.o (.data);
       build/src/game/objective_status.o (.data);
+      build/src/game/objective_status2.o (.data);
       build/src/game/sin.o (.data);
       build/src/game/unk_057FD0.o (.data);
       build/src/game/unk_05A9E0.o (.data);
@@ -3221,6 +3223,7 @@ SECTIONS
       build/src/game/chrai.o (.rodata);
       build/src/game/loadobjectmodel.o (.rodata);
       build/src/game/objective_status.o (.rodata);
+      build/src/game/objective_status2.o (.rodata);
       build/src/game/sin.o (.rodata);
       build/src/game/unk_057FD0.o (.rodata);
       build/src/game/unk_05A9E0.o (.rodata);
@@ -3381,6 +3384,7 @@ SECTIONS
       build/src/game/chrai.o (.bss);
       build/src/game/loadobjectmodel.o (.bss);
       build/src/game/objective_status.o (.bss);
+      build/src/game/objective_status2.o (.bss);
       build/src/game/sin.o (.bss);
       build/src/game/unk_057FD0.o (.bss);
       build/src/game/unk_05A9E0.o (.bss);
