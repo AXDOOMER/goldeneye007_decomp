@@ -48,9 +48,9 @@
 //=============================================================================
 // ai command note
 //=============================================================================
-// commands with guard prefix are exclusive to chr ai lists, they can't be
-// executed by obj ai lists (10XX) or it will crash! commands with chr prefix can
-// be used by obj/chr ai lists - exceptions to this rule are detailed within
+// commands with guard/vehicle prefix are exclusive to chr ai lists, they can't
+// be executed by obj ai lists (10XX) or it will crash! commands with chr prefix
+// can be used by obj/chr ai lists - exceptions to this rule are detailed within
 // the command description
 //=============================================================================
 // ai commands with label argument
@@ -136,10 +136,16 @@
 #define TARGET_CHEST            0x0F // chest - 2x damage
 
 // command 68
-#define DOOR_STATE_CLOSED   0x01
-#define DOOR_STATE_OPEN     0x02
-#define DOOR_STATE_CLOSING  0x04
-#define DOOR_STATE_OPENING  0x08
+#define DOOR_STATE_CLOSED       0x01
+#define DOOR_STATE_OPEN         0x02
+#define DOOR_STATE_CLOSING      0x04
+#define DOOR_STATE_OPENING      0x08
+
+// command D7
+#define HUD_HIDE_ALL            0x00
+#define HUD_SHOW_TEXT_TOP       0x01
+#define HUD_SHOW_TEXT_BOTTOM    0x02
+#define HUD_SHOW_HUD_TIMER      0x04
 
 // command 94-99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
 #define BITFIELD_DONT_POINT_AT_BOND     0x01 // if enabled, don't point at bond
@@ -2766,9 +2772,35 @@
         chrarray16(text_slot),
 
 /*=============================================================================
+// name: vehicle_start_path
+// command id: CB
+// info: makes vehicle follow a predefined path within setup
+//===========================================================================*/
+#define vehicle_start_path_ID 0xCB
+#define vehicle_start_path_LENGTH 0x02
+#define vehicle_start_path(path_num) \
+        vehicle_start_path_ID, \
+        path_num,
+
+/*=============================================================================
+// name: vehicle_speed
+// command id: CC
+// info: sets vehicle speed, usually paired with command CB
+//=============================================================================
+// note: arguments are unsigned. 1000 units = 1 meter per second travel speed.
+//       time60_to_top_speed is number of game ticks to reach top speed
+//===========================================================================*/
+#define vehicle_start_path_ID 0xCC
+#define vehicle_start_path_LENGTH 0x05
+#define vehicle_start_path(top_speed, time60_to_top_speed) \
+        vehicle_start_path_ID, \
+        chararray16(top_speed), \
+        chararray16(time60_to_top_speed),
+
+/*=============================================================================
 // name: bond_in_tank
 // command id: D1
-// info: checks if bond is controlling tank, goto label if true
+// info: if bond is controlling tank, goto label
 //===========================================================================*/
 #define bond_in_tank_ID 0xD1
 #define bond_in_tank_LENGTH 0x02
@@ -2798,7 +2830,8 @@
 // note: unused command, never used in retail game. tagged items within inventory
 // will become invalid after command - only weapons are safe. command must have 3
 // ai_sleep commands before executing this command or else engine will crash on
-// console (use macro camera_wait_for_loading)
+// console (use macro camera_wait_for_loading). if camera mode is already in
+// third person then you don't need to do the above
 //===========================================================================*/
 #define camera_return_to_bond_ID 0xD3
 #define camera_return_to_bond_LENGTH 0x01
@@ -2811,7 +2844,8 @@
 // info: change view to pad and look at bond
 //=============================================================================
 // note: command must have 3 ai_sleep commands before executing this command or
-// else engine will crash on console (use macro camera_wait_for_loading)
+// else engine will crash on console (use macro camera_wait_for_loading).
+// if camera mode is already in third person then you don't need to do the above.
 //===========================================================================*/
 #define camera_look_at_bond_from_pad_ID 0xD4
 #define camera_look_at_bond_from_pad_LENGTH 0x03
@@ -2825,9 +2859,10 @@
 // info: change view to tagged camera's position and rotation
 //=============================================================================
 // note: command must have 3 ai_sleep commands before executing this command or
-// else engine will crash on console (use macro camera_wait_for_loading). only
-// look at bond if flag is set. unused flag may have seperated look at bond into
-// x/y angles instead of both, for retail unused flag does nothing
+// else engine will crash on console (use macro camera_wait_for_loading).
+// if camera mode is already in third person then you don't need to do the above.
+// only look at bond if flag is set. unused flag may have separated look at bond
+// as x/y flags instead of a single flag - for retail unused flag does nothing
 //===========================================================================*/
 #define camera_switch_ID 0xD5
 #define camera_switch_LENGTH 0x06
@@ -2840,7 +2875,7 @@
 /*=============================================================================
 // name: bond_y_pos_less_than
 // command id: D6
-// info: if bond's y axis position < argument, goto label
+// info: if bond's y axis position < position argument, goto label
 //=============================================================================
 // note: checks if bond's y axis is below the provided argument. command uses
 // world units. argument is signed and scale is 1:1 to in-game position. bond's
@@ -2854,11 +2889,33 @@
         label,
 
 /*=============================================================================
+// name: hud_hide_and_lock_controls
+// command id: D7
+// info: hide hud elements and lock player controls
+//=============================================================================
+// note: argument flag will not hide element on command execution. this is
+// needed for dialog or countdown while in cinema mode. flags can be combined
+// together to show multiple elements. sequential executions of D7 can be used
+// to hide more elements, but once an element has been hidden it cannot be shown
+// again until command D8 is executed. bond can take damage while in locked state.
+// bitfield (hex):
+// 00: hide all
+// 01: hide all but top text
+// 02: hide all but bottom text
+// 04: hide all but hud timer
+//===========================================================================*/
+#define hud_hide_and_lock_controls_ID 0xD7
+#define hud_hide_and_lock_controls_LENGTH 0x02
+#define hud_hide_and_lock_controls(hud_hide_flag) \
+        hud_hide_and_lock_controls_ID, \
+        hide_flag,
+
+/*=============================================================================
 // name: hud_show_all
 // command id: D8
 // info: show all hud elements that have been disabled by D7
 //=============================================================================
-// note: should only be called after D7 command, since it may toggle upper/lower
+// note: should only be executed after D7 command, since it may toggle upper/lower
 //       text displays
 //===========================================================================*/
 #define hud_show_all_ID 0xD8
@@ -2968,14 +3025,67 @@
         hand_index,
 
 /*=============================================================================
-// name: guard_unknown_check
+// name: number_of_active_players_less_than
+// command id: E1
+// info: if the number of active players < argument, goto label
+//=============================================================================
+// note: single player always has a total of active players set to 1
+//===========================================================================*/
+#define number_of_active_players_less_than_ID 0xE1
+#define number_of_active_players_less_than_LENGTH 0x03
+#define number_of_active_players_less_than(number, label) \
+        number_of_active_players_less_than_ID, \
+        number, \
+        label,
+
+/*=============================================================================
+// name: bond_equip_item
+// command id: E3
+// info: forces bond to equip an item - only works in first person
+//=============================================================================
+// note: can be used for any item, even if bond doesn't have it in inventory
+//===========================================================================*/
+#define bond_equip_item_ID 0xE3
+#define bond_equip_item_LENGTH 0x02
+#define bond_equip_item(item_num) \
+        bond_equip_item_ID, \
+        item_num,
+
+/*=============================================================================
+// name: bond_equip_item_cinema
+// command id: E4
+// info: forces bond to equip an item - only works in third person (cinema)
+//=============================================================================
+// note: can be used for any item, even if bond doesn't have it in inventory
+//===========================================================================*/
+#define bond_equip_item_cinema_ID 0xE4
+#define bond_equip_item_cinema_LENGTH 0x02
+#define bond_equip_item_cinema(item_num) \
+        bond_equip_item_cinema_ID, \
+        item_num,
+
+/*=============================================================================
+// name: object_in_room_with_pad
+// command id: E6
+// info: if object in the same room with pad, goto label
+//===========================================================================*/
+#define object_in_room_with_pad_ID 0xE6
+#define object_in_room_with_pad_LENGTH 0x05
+#define object_in_room_with_pad(obj_num, pad, label) \
+        object_in_room_with_pad_ID, \
+        obj_num, \
+        chrarray16(pad), \
+        label,
+
+/*=============================================================================
+// name: guard_is_firing_and_unknown_flag
 // command id: E7
 // info: if guard is in firing state (ACT_ATTACK) and chr->field_4C | 0x40, goto label
 //===========================================================================*/
-#define guard_unknown_check_ID 0xE7
-#define guard_unknown_check_LENGTH 0x02
-#define guard_unknown_check(label) \
-        guard_unknown_check_ID, \
+#define guard_is_firing_and_unknown_flag_ID 0xE7
+#define guard_is_firing_and_unknown_flag_LENGTH 0x02
+#define guard_is_firing_and_unknown_flag(label) \
+        guard_is_firing_and_unknown_flag_ID, \
         label,
 
 /*=============================================================================
@@ -3015,14 +3125,14 @@
         mission_time_stop_and_exit_level_on_button_input_ID,
 
 /*=============================================================================
-// name: bond_has_died
+// name: bond_is_dead
 // command id: EB
-// info: if bond is dead, goto label
+// info: if bond has died, goto label
 //===========================================================================*/
-#define bond_has_died_ID 0xEB
-#define bond_has_died_LENGTH 0x02
-#define bond_has_died(label) \
-        bond_has_died_ID, \
+#define bond_is_dead_ID 0xEB
+#define bond_is_dead_LENGTH 0x02
+#define bond_is_dead(label) \
+        bond_is_dead_ID, \
         label,
 
 /*=============================================================================
@@ -3054,7 +3164,8 @@
 // info: change view to orbit a pad with set speed
 //=============================================================================
 // note: command must have 3 ai_sleep commands before executing this command or
-// else engine will crash on console (use macro camera_wait_for_loading).
+// else engine will crash on console (use macro camera_wait_for_loading). if camera
+// mode is already in third person then you don't need to do the above.
 // arguments:
 // lat_distance: camera distance from pad, 100 units per meter. argument is unsigned
 // vert_distance: camera distance from pad, 100 units per meter. argument is signed
@@ -3150,13 +3261,28 @@
 // info: if bond's total civilians killed > argument, goto label
 //=============================================================================
 // note: guards flagged with CHRFLAG_COUNT_DEATH_AS_CIVILIAN will count towards
-//       total when killed
+//       total when killed. usually set to scientists/civilians/innocent NPCs
 //===========================================================================*/
 #define bond_killed_civilians_greater_than_ID 0xF7
 #define bond_killed_civilians_greater_than_LENGTH 0x03
 #define bond_killed_civilians_greater_than(civilians_killed, label) \
         bond_killed_civilians_greater_than_ID, \
         civilians_killed, \
+        label,
+
+/*=============================================================================
+// name: chr_was_shot_since_last_check
+// command id: F8
+// info: if chr was shot, goto label
+//=============================================================================
+// note: checks chr->chrflags if CHRFLAG_WAS_HIT is set. if true, unset flag and
+//       goto label. CHRFLAG_WAS_HIT is set even if guard is invincible
+//===========================================================================*/
+#define chr_was_shot_since_last_check_ID 0xF8
+#define chr_was_shot_since_last_check_LENGTH 0x03
+#define chr_was_shot_since_last_check(chr_num, label) \
+        chr_was_shot_since_last_check_ID, \
+        chr_num, \
         label,
 
 /*=============================================================================

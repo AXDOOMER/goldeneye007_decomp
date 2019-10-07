@@ -1266,7 +1266,7 @@ typedef enum ACT_TYPE {
 #define CHRFLAG_00040000                    0x00040000 // unknown
 #define CHRFLAG_INCREASE_SPRINT_SPEED       0x00080000 // increase sprinting speed
 #define CHRFLAG_COUNT_DEATH_AS_CIVILIAN     0x00100000 // count death as civilian killed
-#define CHRFLAG_00200000                    0x00200000 // unknown
+#define CHRFLAG_WAS_HIT                     0x00200000 // if chr has been hit (even if invincible)
 #define CHRFLAG_00400000                    0x00400000 // unknown
 #define CHRFLAG_00800000                    0x00800000 // unknown
 #define CHRFLAG_01000000                    0x01000000 // unknown
