@@ -176,7 +176,7 @@ $(APPBIN): $(APPELF)
 	$(OBJCOPY) $< $@ -O binary --gap-fill=0xff
 	
 $(APPROM):	$(APPBIN)
-	$(DATASEG_COMP) $<
+	$(DATASEG_COMP) $< $(COUNTRYCODE)
 	$(N64CKSUM) $< $@
 	rm header.tmp
 
