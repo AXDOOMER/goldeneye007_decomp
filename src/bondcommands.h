@@ -1788,10 +1788,10 @@
 // note: use DOOR_LOCK_# flags for lock argument. lock flags are same as used
 //       within setup for doors and keys
 //===========================================================================*/
-#define door_check_state_ID 0x6C
-#define door_check_state_LENGTH 0x04
-#define door_check_state(object_tag, lock_flag, label) \
-        door_check_state_ID, \
+#define door_check_lock_ID 0x6C
+#define door_check_lock_LENGTH 0x04
+#define door_check_lock(object_tag, lock_flag, label) \
+        door_check_lock_ID, \
         object_tag, \
         lock_flag, \
         label,
@@ -2719,7 +2719,7 @@
 // note: if out of memory/can't spawn item/already have hat, do not got label.
 // spawned hat must have a holding position command within the model file
 //===========================================================================*/
-#define guard_spawn_hat_ID 0xBF
+#define guard_spawn_hat_ID 0xC0
 #define guard_spawn_hat_LENGTH 0x08
 #define guard_spawn_hat(prop_num, prop_bitfield, label) \
         guard_spawn_hat_ID, \
@@ -2790,10 +2790,10 @@
 // note: arguments are unsigned. 1000 units = 1 meter per second travel speed.
 //       time60_to_top_speed is number of game ticks to reach top speed
 //===========================================================================*/
-#define vehicle_start_path_ID 0xCC
-#define vehicle_start_path_LENGTH 0x05
-#define vehicle_start_path(top_speed, time60_to_top_speed) \
-        vehicle_start_path_ID, \
+#define vehicle_speed_ID 0xCC
+#define vehicle_speed_LENGTH 0x05
+#define vehicle_speed(top_speed, time60_to_top_speed) \
+        vehicle_speed_ID, \
         chararray16(top_speed), \
         chararray16(time60_to_top_speed),
 
@@ -2967,7 +2967,7 @@
 //=============================================================================
 // note: fade duration is 1 second
 //===========================================================================*/
-#define screen_fade_completede_ID 0xDC
+#define screen_fade_completed_ID 0xDC
 #define screen_fade_completed_LENGTH 0x02
 #define screen_fade_completed(label) \
         screen_fade_completed_ID, \
@@ -3109,10 +3109,10 @@
 // command can't be stopped after executing. level must have a fog assigned
 // or will crash!
 //===========================================================================*/
-#define gas_leak_and_switch_fog_fog_ID 0xE9
-#define gas_leak_and_switch_fog_fog_LENGTH 0x01
-#define gas_leak_and_switch_fog_fog \
-        gas_leak_and_switch_fog_fog_ID,
+#define gas_leak_and_switch_fog_ID 0xE9
+#define gas_leak_and_switch_fog_LENGTH 0x01
+#define gas_leak_and_switch_fog \
+        gas_leak_and_switch_fog_ID,
 
 /*=============================================================================
 // name: mission_time_stop_and_exit_level_on_button_input
