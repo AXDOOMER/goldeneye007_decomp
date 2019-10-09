@@ -6,7 +6,8 @@
 #define SECS_TO_TIMER60(SECS) (SECS * GAME_TICKRATE)
 #define MINS_TO_TIMER60(MINS) (SECS_TO_TIMER60(MINS * GAME_TICKRATE))
 
-#define CHR_BOND -8
+/* special chr num IDs */
+#define CHR_BOND -8 /* only works when bond has a third person (intro/exit cutscene) */
 #define CHR_CLONE -7
 #define CHR_SEE_SHOT -6 /* stored as chr->chrseeshot */
 #define CHR_SEE_DIE -5 /* stored as chr->chrseedie */
@@ -18,9 +19,10 @@
 #define OBJECTIVES_MAX 10
 
 typedef u16 PAD;
-typedef PAD PADEXTRA;
+typedef u16 PADEXTRA;
 
 #define PADEXTRA_START 10000
+#define PADEX(PAD) (PAD + PADEXTRA_START) /* used for setups */
 
 typedef enum RGBA_ENUM {
     RED = 0,
