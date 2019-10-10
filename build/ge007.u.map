@@ -219,12 +219,16 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/game/gamefile2.o
  .options       0x0000000000000000       0x20 build/src/game/chr.o
  .reginfo       0x0000000000000000       0x18 build/src/game/chr.o
+ .options       0x0000000000000000       0x20 build/src/game/chr2.o
+ .reginfo       0x0000000000000000       0x18 build/src/game/chr2.o
  .options       0x0000000000000000       0x20 build/src/game/chrai.o
  .reginfo       0x0000000000000000       0x18 build/src/game/chrai.o
  .options       0x0000000000000000       0x20 build/src/game/loadobjectmodel.o
  .reginfo       0x0000000000000000       0x18 build/src/game/loadobjectmodel.o
  .options       0x0000000000000000       0x20 build/src/game/objective_status.o
  .reginfo       0x0000000000000000       0x18 build/src/game/objective_status.o
+ .options       0x0000000000000000       0x20 build/src/game/objective_status2.o
+ .reginfo       0x0000000000000000       0x18 build/src/game/objective_status2.o
  .options       0x0000000000000000       0x20 build/src/game/sin.o
  .reginfo       0x0000000000000000       0x18 build/src/game/sin.o
  .options       0x0000000000000000       0x20 build/src/game/unk_057FD0.o
@@ -1834,7 +1838,7 @@ Linker script and memory map
                 0x000000007f01f45c                copy_eepromfile_a0_from_a1_to_buffer
                 0x000000007f01f4a0                check_for_007_mode_unlocked
  build/src/game/chr.o(.text)
- .text          0x000000007f01f530    0x15270 build/src/game/chr.o
+ .text          0x000000007f01f530     0x3d60 build/src/game/chr.o
                 0x000000007f01f530                get_numguards
                 0x000000007f01f53c                get_ptr_allocated_block_for_vertices
                 0x000000007f01f55c                set_show_patrols_flag
@@ -1882,6 +1886,8 @@ Linker script and memory map
                 0x000000007f023160                sub_GAME_7F023160
                 0x000000007f023188                sub_GAME_7F023188
                 0x000000007f023194                sub_GAME_7F023194
+ build/src/game/chr2.o(.text)
+ .text          0x000000007f023290    0x11510 build/src/game/chr2.o
                 0x000000007f023290                load_body_head_if_not_loaded
                 0x000000007f0232e8                maybe_load_models_for_guards
                 0x000000007f0234a8                sub_GAME_7F0234A8
@@ -2406,7 +2412,7 @@ Linker script and memory map
                 0x000000007f056ea0                sub_GAME_7F056EA0
                 0x000000007f056f08                sub_GAME_7F056F08
  build/src/game/objective_status.o(.text)
- .text          0x000000007f057080      0xe20 build/src/game/objective_status.o
+ .text          0x000000007f057080      0xa40 build/src/game/objective_status.o
                 0x000000007f057080                sub_GAME_7F057080
                 0x000000007f0570c0                get_handle_to_tagged_object
                 0x000000007f057104                get_ptr_text_for_watch_breifing_page
@@ -2419,6 +2425,8 @@ Linker script and memory map
                 0x000000007f057744                sub_GAME_7F057744
                 0x000000007f0577e8                sub_GAME_7F0577E8
                 0x000000007f057898                sub_GAME_7F057898
+ build/src/game/objective_status2.o(.text)
+ .text          0x000000007f057ac0      0x3e0 build/src/game/objective_status2.o
                 0x000000007f057ac0                sub_GAME_7F057AC0
                 0x000000007f057c14                sub_GAME_7F057C14
                 0x000000007f057d44                sub_GAME_7F057D44
@@ -16919,6 +16927,7 @@ Linker script and memory map
                 0x0000000080030a4c                D_80030A4C
                 0x0000000080030a50                body_hit_SFX
                 0x0000000080030a68                D_80030A68
+ build/src/game/chr2.o(.data)
  build/src/game/chrai.o(.data)
  .data          0x0000000080030a70     0x1880 build/src/game/chrai.o
                 0x0000000080030a70                D_80030A70
@@ -17090,6 +17099,7 @@ Linker script and memory map
                 0x0000000080032300                D_80032300
                 0x0000000080032304                D_80032304
                 0x0000000080032308                D_80032308
+ build/src/game/objective_status2.o(.data)
  build/src/game/sin.o(.data)
  build/src/game/unk_057FD0.o(.data)
  .data          0x0000000080032310       0x10 build/src/game/unk_057FD0.o
@@ -19195,7 +19205,7 @@ Linker script and memory map
  build/src/game/gamefile.o(.rodata)
  build/src/game/gamefile2.o(.rodata)
  build/src/game/chr.o(.rodata)
- .rodata        0x0000000080051d10      0x3f0 build/src/game/chr.o
+ .rodata        0x0000000080051d10       0x80 build/src/game/chr.o
                 0x0000000080051d10                D_80051D10
                 0x0000000080051d14                D_80051D14
                 0x0000000080051d18                D_80051D18
@@ -19228,6 +19238,8 @@ Linker script and memory map
                 0x0000000080051d84                D_80051D84
                 0x0000000080051d88                D_80051D88
                 0x0000000080051d8c                D_80051D8C
+ build/src/game/chr2.o(.rodata)
+ .rodata        0x0000000080051d90      0x370 build/src/game/chr2.o
                 0x0000000080051d90                D_80051D90
                 0x0000000080051d94                D_80051D94
                 0x0000000080051d98                D_80051D98
@@ -19633,11 +19645,13 @@ Linker script and memory map
                 0x0000000080053490                jpt_object_setup_size
                 0x000000008005354c                jpt_8005354C
  build/src/game/objective_status.o(.rodata)
- .rodata        0x0000000080053610       0xb0 build/src/game/objective_status.o
+ .rodata        0x0000000080053610       0x80 build/src/game/objective_status.o
                 0x0000000080053610                D_80053610
                 0x0000000080053644                aSAC
                 0x000000008005364c                aSC
                 0x0000000080053654                jpt_objectives_microcode_handler
+ build/src/game/objective_status2.o(.rodata)
+ .rodata        0x0000000080053690       0x30 build/src/game/objective_status2.o
                 0x0000000080053690                D_80053690
                 0x0000000080053694                D_80053694
                 0x0000000080053698                D_80053698
@@ -21161,6 +21175,7 @@ Linker script and memory map
                 0x0000000080069b60                dword_CODE_bss_80069B60
  build/src/game/gamefile2.o(.bss)
  build/src/game/chr.o(.bss)
+ build/src/game/chr2.o(.bss)
  build/src/game/chrai.o(.bss)
  .bss           0x0000000080069b70     0xc1c0 build/src/game/chrai.o
                 0x0000000080069b70                sfx_related
@@ -21271,6 +21286,7 @@ Linker script and memory map
                 0x0000000080075d88                ptr_last_enter_room_subobject_entry_type20
                 0x0000000080075d8c                ptr_last_deposit_in_room_subobject_entry_type21
                 0x0000000080075d90                ptr_last_photo_obj_in_room_subobject_entry_type1E
+ build/src/game/objective_status2.o(.bss)
  build/src/game/sin.o(.bss)
  build/src/game/unk_057FD0.o(.bss)
  .bss           0x0000000080075da0       0x10 build/src/game/unk_057FD0.o

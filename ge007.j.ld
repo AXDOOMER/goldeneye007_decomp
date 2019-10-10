@@ -179,6 +179,7 @@ SECTIONS
       build/src/game/truncf.o (.text);
       build/src/game/unk_05C440.o (.text);
       build/src/game/bondwalk.o (.text);
+      build/src/game/bondwalk2.o (.text);
       build/src/game/objecthandler.o (.text);
       build/src/game/objecthandler_2.o (.text);
       build/src/game/othermodemicrocode.o (.text);
@@ -3120,6 +3121,7 @@ SECTIONS
       build/src/game/truncf.o (.data);
       build/src/game/unk_05C440.o (.data);
       build/src/game/bondwalk.o (.data);
+      build/src/game/bondwalk2.o (.data);
       build/src/game/objecthandler.o (.data);
       build/src/game/objecthandler_2.o (.data);
       build/src/game/othermodemicrocode.o (.data);
@@ -3239,6 +3241,7 @@ SECTIONS
       build/src/game/truncf.o (.rodata);
       build/src/game/unk_05C440.o (.rodata);
       build/src/game/bondwalk.o (.rodata);
+      build/src/game/bondwalk2.o (.rodata);
       build/src/game/objecthandler.o (.rodata);
       build/src/game/objecthandler_2.o (.rodata);
       build/src/game/othermodemicrocode.o (.rodata);
@@ -3400,6 +3403,7 @@ SECTIONS
       build/src/game/truncf.o (.bss);
       build/src/game/unk_05C440.o (.bss);
       build/src/game/bondwalk.o (.bss);
+      build/src/game/bondwalk2.o (.bss);
       build/src/game/objecthandler.o (.bss);
       build/src/game/objecthandler_2.o (.bss);
       build/src/game/othermodemicrocode.o (.bss);
