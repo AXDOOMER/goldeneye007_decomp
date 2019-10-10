@@ -1290,9 +1290,9 @@ u8 get_length_of_action_block(u8 CurrentActionByte)
                 return vehicle_start_path_LENGTH;
             case vehicle_speed_ID:
                 return vehicle_speed_LENGTH;
+            case aircraft_rotor_speed_ID:
+                return aircraft_rotor_speed_LENGTH;
 
-            case 205:
-                return 5;
             case 206:
                 return 2;
             case 207:
