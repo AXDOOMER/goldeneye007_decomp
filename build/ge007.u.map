@@ -252,6 +252,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/src/game/unk_05C440.o
  .options       0x0000000000000000       0x20 build/src/game/bondwalk.o
  .reginfo       0x0000000000000000       0x18 build/src/game/bondwalk.o
+ .options       0x0000000000000000       0x20 build/src/game/bondwalk2.o
+ .reginfo       0x0000000000000000       0x18 build/src/game/bondwalk2.o
  .options       0x0000000000000000       0x20 build/src/game/objecthandler.o
  .reginfo       0x0000000000000000       0x18 build/src/game/objecthandler.o
  .options       0x0000000000000000       0x20 build/src/game/objecthandler_2.o
@@ -2546,7 +2548,7 @@ Linker script and memory map
                 0x000000007f05c440                sub_GAME_7F05C440
                 0x000000007f05c4b8                sub_GAME_7F05C4B8
  build/src/game/bondwalk.o(.text)
- .text          0x000000007f05c520     0xec00 build/src/game/bondwalk.o
+ .text          0x000000007f05c520     0xe680 build/src/game/bondwalk.o
                 0x000000007f05c520                set_cartridges_eject
                 0x000000007f05c52c                get_cartridges_eject
                 0x000000007f05c538                nullsub_73
@@ -2640,6 +2642,7 @@ Linker script and memory map
                 0x000000007f0649ac                sub_GAME_7F0649AC
                 0x000000007f0649d8                sub_GAME_7F0649D8
                 0x000000007f064b28                handle_weapon_id_values_possibly_1st_person_animation
+                0x000000007f066e64                sub_GAME_7F066E64
                 0x000000007f066ef8                get_keyanalyzer_flag
                 0x000000007f066f08                sub_GAME_7F066F08
                 0x000000007f066fa4                get_vertical_position_solo_watch_menu_main_page_for_item
@@ -2708,6 +2711,8 @@ Linker script and memory map
                 0x000000007f06a95c                increment_num_deaths
                 0x000000007f06aa08                get_curplayer_numdeaths
                 0x000000007f06aa18                increment_num_suicides_display_MP
+ build/src/game/bondwalk2.o(.text)
+ .text          0x000000007f06aba0      0x580 build/src/game/bondwalk2.o
                 0x000000007f06aba0                get_curplayer_numsuicides
                 0x000000007f06abb0                sub_GAME_7F06ABB0
                 0x000000007f06afe8                display_image_at_on_screen_coord
@@ -17253,6 +17258,7 @@ Linker script and memory map
                 0x0000000080035eec                dword_D_80035EEC
                 0x0000000080035ef0                ammo_related
                 0x0000000080036060                D_80036060
+ build/src/game/bondwalk2.o(.data)
  build/src/game/objecthandler.o(.data)
  .data          0x0000000080036070      0x3b0 build/src/game/objecthandler.o
                 0x0000000080036070                D_80036070
@@ -17477,7 +17483,7 @@ Linker script and memory map
                 0x000000008003648c                D_8003648C
                 0x0000000080036490                D_80036490
                 0x0000000080036494                cameramode
-                0x0000000080036498                D_80036498
+                0x0000000080036498                enable_move_after_cinema
                 0x000000008003649c                D_8003649C
                 0x00000000800364a0                stop_time_flag
                 0x00000000800364a4                D_800364A4
@@ -17487,7 +17493,7 @@ Linker script and memory map
                 0x00000000800364b4                disable_player_pickups_flag
                 0x00000000800364b8                D_800364B8
                 0x00000000800364bc                D_800364BC
-                0x00000000800364c0                D_800364C0
+                0x00000000800364c0                ptr_random06cam_entry
                 0x00000000800364c4                invisible_to_guards_flag
                 0x00000000800364c8                obj_collision_flag
                 0x00000000800364cc                D_800364CC
@@ -19874,6 +19880,7 @@ Linker script and memory map
                 0x0000000080054408                D_80054408
                 0x000000008005440c                D_8005440C
                 0x0000000080054410                D_80054410
+ build/src/game/bondwalk2.o(.rodata)
  build/src/game/objecthandler.o(.rodata)
  .rodata        0x0000000080054420      0x1e0 build/src/game/objecthandler.o
                 0x0000000080054420                aDrawjointlistNoGfxlist
@@ -21311,6 +21318,7 @@ Linker script and memory map
                 0x0000000080075e64                dword_CODE_bss_80075E64
                 0x0000000080075e68                dword_CODE_bss_80075E68
                 0x0000000080076a48                dword_CODE_bss_80076A48
+ build/src/game/bondwalk2.o(.bss)
  build/src/game/objecthandler.o(.bss)
  .bss           0x0000000080076a50     0x2ef0 build/src/game/objecthandler.o
                 0x0000000080076a50                dword_CODE_bss_80076A50

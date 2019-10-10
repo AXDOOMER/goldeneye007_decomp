@@ -296,8 +296,8 @@ glabel load_camera_intro_type_values
 /* 03A4CC 7F00599C AC2064B4 */  sw    $zero, %lo(disable_player_pickups_flag)($at)
 /* 03A4D0 7F0059A0 3C018003 */  lui   $at, %hi(cameramode)
 /* 03A4D4 7F0059A4 AC206494 */  sw    $zero, %lo(cameramode)($at)
-/* 03A4D8 7F0059A8 3C018003 */  lui   $at, %hi(D_80036498)
-/* 03A4DC 7F0059AC AC206498 */  sw    $zero, %lo(D_80036498)($at)
+/* 03A4D8 7F0059A8 3C018003 */  lui   $at, %hi(enable_move_after_cinema)
+/* 03A4DC 7F0059AC AC206498 */  sw    $zero, %lo(enable_move_after_cinema)($at)
 /* 03A4E0 7F0059B0 3C018003 */  lui   $at, %hi(D_8003649C)
 /* 03A4E4 7F0059B4 AC20649C */  sw    $zero, %lo(D_8003649C)($at)
 /* 03A4E8 7F0059B8 44805000 */  mtc1  $zero, $f10
@@ -310,8 +310,8 @@ glabel load_camera_intro_type_values
 /* 03A504 7F0059D4 AC3964A8 */  sw    $t9, %lo(D_800364A8)($at)
 /* 03A508 7F0059D8 3C018003 */  lui   $at, %hi(D_800364AC)
 /* 03A50C 7F0059DC AC2064AC */  sw    $zero, %lo(D_800364AC)($at)
-/* 03A510 7F0059E0 3C018003 */  lui   $at, %hi(D_800364C0)
-/* 03A514 7F0059E4 AC2064C0 */  sw    $zero, %lo(D_800364C0)($at)
+/* 03A510 7F0059E0 3C018003 */  lui   $at, %hi(ptr_random06cam_entry)
+/* 03A514 7F0059E4 AC2064C0 */  sw    $zero, %lo(ptr_random06cam_entry)($at)
 /* 03A518 7F0059E8 3C018003 */  lui   $at, %hi(D_800364B8)
 /* 03A51C 7F0059EC AC2064B8 */  sw    $zero, %lo(D_800364B8)($at)
 /* 03A520 7F0059F0 3C018003 */  lui   $at, %hi(D_800364BC)
@@ -601,9 +601,9 @@ def_7F005A74:
 /* 03A92C 7F005DFC 3C128008 */  lui   $s2, %hi(pPlayer)
 /* 03A930 7F005E00 2652A0B0 */  addiu $s2, %lo(pPlayer) # addiu $s2, $s2, -0x5f50
 /* 03A934 7F005E04 10400012 */  beqz  $v0, .L7F005E50
-/* 03A938 7F005E08 3C018003 */   lui   $at, %hi(D_800364C0)
+/* 03A938 7F005E08 3C018003 */   lui   $at, %hi(ptr_random06cam_entry)
 /* 03A93C 7F005E0C 0C002914 */  jal   get_random_value
-/* 03A940 7F005E10 AC2264C0 */   sw    $v0, %lo(D_800364C0)($at)
+/* 03A940 7F005E10 AC2264C0 */   sw    $v0, %lo(ptr_random06cam_entry)($at)
 /* 03A944 7F005E14 3C0B8003 */  lui   $t3, %hi(D_800364BC) 
 /* 03A948 7F005E18 8D6B64BC */  lw    $t3, %lo(D_800364BC)($t3)
 /* 03A94C 7F005E1C 004B001B */  divu  $zero, $v0, $t3
@@ -614,13 +614,13 @@ def_7F005A74:
 .L7F005E30:
 /* 03A960 7F005E30 18600007 */  blez  $v1, .L7F005E50
 .L7F005E34:
-/* 03A964 7F005E34 3C0A8003 */   lui   $t2, %hi(D_800364C0) 
-/* 03A968 7F005E38 8D4A64C0 */  lw    $t2, %lo(D_800364C0)($t2)
+/* 03A964 7F005E34 3C0A8003 */   lui   $t2, %hi(ptr_random06cam_entry) 
+/* 03A968 7F005E38 8D4A64C0 */  lw    $t2, %lo(ptr_random06cam_entry)($t2)
 /* 03A96C 7F005E3C 2463FFFF */  addiu $v1, $v1, -1
-/* 03A970 7F005E40 3C018003 */  lui   $at, %hi(D_800364C0)
+/* 03A970 7F005E40 3C018003 */  lui   $at, %hi(ptr_random06cam_entry)
 /* 03A974 7F005E44 8D4C0024 */  lw    $t4, 0x24($t2)
 /* 03A978 7F005E48 1C60FFFA */  bgtz  $v1, .L7F005E34
-/* 03A97C 7F005E4C AC2C64C0 */   sw    $t4, %lo(D_800364C0)($at)
+/* 03A97C 7F005E4C AC2C64C0 */   sw    $t4, %lo(ptr_random06cam_entry)($at)
 .L7F005E50:
 /* 03A980 7F005E50 0FC23122 */  jal   add_item_to_inventory
 /* 03A984 7F005E54 24040001 */   li    $a0, 1
@@ -1054,8 +1054,8 @@ glabel load_camera_intro_type_values
 /* 03A4F8 7F005988 AC2064F4 */  sw    $zero, %lo(disable_player_pickups_flag)($at)
 /* 03A4FC 7F00598C 3C018003 */  lui   $at, %hi(cameramode) # $at, 0x8003
 /* 03A500 7F005990 AC2064D4 */  sw    $zero, %lo(cameramode)($at)
-/* 03A504 7F005994 3C018003 */  lui   $at, %hi(D_80036498) # $at, 0x8003
-/* 03A508 7F005998 AC2064D8 */  sw    $zero, %lo(D_80036498)($at)
+/* 03A504 7F005994 3C018003 */  lui   $at, %hi(enable_move_after_cinema) # $at, 0x8003
+/* 03A508 7F005998 AC2064D8 */  sw    $zero, %lo(enable_move_after_cinema)($at)
 /* 03A50C 7F00599C 3C018003 */  lui   $at, %hi(D_8003649C) # $at, 0x8003
 /* 03A510 7F0059A0 AC2064DC */  sw    $zero, %lo(D_8003649C)($at)
 /* 03A514 7F0059A4 3C018003 */  lui   $at, %hi(stop_time_flag) # $at, 0x8003
@@ -1067,8 +1067,8 @@ glabel load_camera_intro_type_values
 /* 03A52C 7F0059BC AC3964E8 */  sw    $t9, %lo(D_800364A8)($at)
 /* 03A530 7F0059C0 3C018003 */  lui   $at, %hi(D_800364AC) # $at, 0x8003
 /* 03A534 7F0059C4 AC2064EC */  sw    $zero, %lo(D_800364AC)($at)
-/* 03A538 7F0059C8 3C018003 */  lui   $at, %hi(D_800364C0) # $at, 0x8003
-/* 03A53C 7F0059CC AC206500 */  sw    $zero, %lo(D_800364C0)($at)
+/* 03A538 7F0059C8 3C018003 */  lui   $at, %hi(ptr_random06cam_entry) # $at, 0x8003
+/* 03A53C 7F0059CC AC206500 */  sw    $zero, %lo(ptr_random06cam_entry)($at)
 /* 03A540 7F0059D0 3C018003 */  lui   $at, %hi(D_800364B8) # $at, 0x8003
 /* 03A544 7F0059D4 AC2064F8 */  sw    $zero, %lo(D_800364B8)($at)
 /* 03A548 7F0059D8 3C018003 */  lui   $at, %hi(D_800364BC) # $at, 0x8003
@@ -1365,9 +1365,9 @@ def_7F005A74:
 /* 03A970 7F005E00 3C128008 */  lui   $s2, %hi(pPlayer) # $s2, 0x8008
 /* 03A974 7F005E04 2652A120 */  addiu $s2, %lo(pPlayer) # addiu $s2, $s2, -0x5ee0
 /* 03A978 7F005E08 10400012 */  beqz  $v0, .L7F005E54
-/* 03A97C 7F005E0C 3C018003 */   lui   $at, %hi(D_800364C0) # $at, 0x8003
+/* 03A97C 7F005E0C 3C018003 */   lui   $at, %hi(ptr_random06cam_entry) # $at, 0x8003
 /* 03A980 7F005E10 0C002918 */  jal   get_random_value
-/* 03A984 7F005E14 AC226500 */   sw    $v0, %lo(D_800364C0)($at)
+/* 03A984 7F005E14 AC226500 */   sw    $v0, %lo(ptr_random06cam_entry)($at)
 /* 03A988 7F005E18 3C0E8003 */  lui   $t6, %hi(D_800364BC) # $t6, 0x8003
 /* 03A98C 7F005E1C 8DCE64FC */  lw    $t6, %lo(D_800364BC)($t6)
 /* 03A990 7F005E20 004E001B */  divu  $zero, $v0, $t6
@@ -1378,13 +1378,13 @@ def_7F005A74:
 .L7F005E34:
 /* 03A9A4 7F005E34 18600007 */  blez  $v1, .L7F005E54
 .L7F005E38:
-/* 03A9A8 7F005E38 3C0F8003 */   lui   $t7, %hi(D_800364C0) # $t7, 0x8003
-/* 03A9AC 7F005E3C 8DEF6500 */  lw    $t7, %lo(D_800364C0)($t7)
+/* 03A9A8 7F005E38 3C0F8003 */   lui   $t7, %hi(ptr_random06cam_entry) # $t7, 0x8003
+/* 03A9AC 7F005E3C 8DEF6500 */  lw    $t7, %lo(ptr_random06cam_entry)($t7)
 /* 03A9B0 7F005E40 2463FFFF */  addiu $v1, $v1, -1
-/* 03A9B4 7F005E44 3C018003 */  lui   $at, %hi(D_800364C0) # $at, 0x8003
+/* 03A9B4 7F005E44 3C018003 */  lui   $at, %hi(ptr_random06cam_entry) # $at, 0x8003
 /* 03A9B8 7F005E48 8DE80024 */  lw    $t0, 0x24($t7)
 /* 03A9BC 7F005E4C 1C60FFFA */  bgtz  $v1, .L7F005E38
-/* 03A9C0 7F005E50 AC286500 */   sw    $t0, %lo(D_800364C0)($at)
+/* 03A9C0 7F005E50 AC286500 */   sw    $t0, %lo(ptr_random06cam_entry)($at)
 .L7F005E54:
 /* 03A9C4 7F005E54 0FC2335A */  jal   add_item_to_inventory
 /* 03A9C8 7F005E58 24040001 */   li    $a0, 1

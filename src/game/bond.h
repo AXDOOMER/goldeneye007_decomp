@@ -2799,7 +2799,7 @@ extern s32 D_80036490;
 //D:80036494
 extern s32 cameramode;
 //D:80036498
-extern s32 D_80036498;
+extern s32 enable_move_after_cinema;
 //D:8003649C
 extern s32 D_8003649C;
 //D:800364A0
@@ -2819,7 +2819,7 @@ extern s32 D_800364B8;
 //D:800364BC
 extern s32 D_800364BC;
 //D:800364C0
-extern s32 D_800364C0;
+extern s32 ptr_random06cam_entry;
 //D:800364C4
 extern s32 invisible_to_guards_flag;
 //D:800364C8
