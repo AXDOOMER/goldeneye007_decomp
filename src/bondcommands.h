@@ -61,6 +61,13 @@
 // works when bond has a third person model assigned (intro/exit cutscene)
 // only use CHR_BOND for intro/exit cutscene specific logic
 //=============================================================================
+// vehicle ai command
+//=============================================================================
+// commands with a vehicle prefix can only be executed by vehicle objects. as
+// vehicle object types do not use a chr struct, most non-vehicle commands will
+// crash when trying to execute. the list of compatible vehicle commands are
+// not unknown at this time
+//=============================================================================
 // ai commands with label argument
 //=============================================================================
 // most commands will have a label argument in their function description. this
@@ -117,7 +124,7 @@
 
 #define ANIM_DEFAULT_INTERPOLATION      0x10
 
-// command 14-17 target bitflags
+// command 14/15/16/17 target bitflags
 #define TARGET_BOND         0x0001
 #define TARGET_FRONT_OF_CHR 0x0002
 #define TARGET_CHR          0x0004
@@ -125,7 +132,7 @@
 #define TARGET_COMPASS      0x0010
 #define TARGET_AIM_ONLY     0x0020
 
-// command 18-19 target body part values
+// command 18/19 target body part values
 #define TARGET_NULL_PART        0x00 // null part, no reaction - 1x damage
 #define TARGET_LEFT_FOOT        0x01 // left foot - 1x damage
 #define TARGET_LEFT_LEG         0x02 // left leg - 1x damage
@@ -155,7 +162,7 @@
 #define HUD_SHOW_TEXT_BOTTOM    0x02
 #define HUD_SHOW_HUD_TIMER      0x04
 
-// command 94-99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
+// command 94/95/96/97/98/99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
 #define BITFIELD_DONT_POINT_AT_BOND     0x01 // if enabled, don't point at bond
 
 /*===========================================================================*/
@@ -1696,13 +1703,13 @@
 // command id: 65
 // info: move object to pad
 //=============================================================================
-// note: if object is assigned to extra pad, then object scale will be lost after
-//       moving to target pad. object will inherit rotation from target pad
+// note: if object is assigned to padextra type, then object scale will be lost
+//       after moving to target pad. object will inherit rotation from target pad
 //===========================================================================*/
-#define chr_equip_object_ID 0x65
-#define chr_equip_object_LENGTH 0x04
-#define chr_equip_object(object_tag, pad) \
-        chr_equip_object_ID, \
+#define object_move_to_pad_ID 0x65
+#define object_move_to_pad_LENGTH 0x04
+#define object_move_to_pad(object_tag, pad) \
+        object_move_to_pad_ID, \
         object_tag, \
         chrarray16(pad),
 
@@ -1989,7 +1996,8 @@
 // command id: 78
 // info: if guard's hits taken < hit_num, goto label
 //=============================================================================
-// note: compares signed byte against chr->numarghs
+// note: compares signed byte against chr->numarghs. hits count even if guard
+//       is invincible
 //===========================================================================*/
 #define guard_hits_less_than_ID 0x78
 #define guard_hits_less_than_LENGTH 0x03
@@ -2003,7 +2011,8 @@
 // command id: 79
 // info: if guard's hits taken > hit_num, goto label
 //=============================================================================
-// note: compares signed byte argument against chr->numarghs
+// note: compares signed byte against chr->numarghs. hits count even if guard
+//       is invincible
 //===========================================================================*/
 #define guard_hits_greater_than_ID 0x79
 #define guard_hits_greater_than_LENGTH 0x03
@@ -2075,6 +2084,21 @@
         label,
 
 /*=============================================================================
+// name: chr_was_damaged_since_last_check
+// command id: 7E
+// info: if chr has taken damage since last check, goto label
+//=============================================================================
+// note: checks chr->chrflags if CHRFLAG_WAS_DAMAGED is set. if true, unset flag
+// and goto label. CHRFLAG_WAS_DAMAGED is set if guard took damage (not invincible)
+//===========================================================================*/
+#define chr_was_damaged_since_last_check_ID 0x7E
+#define chr_was_damaged_since_last_check_LENGTH 0x03
+#define chr_was_damaged_since_last_check(chr_num, label) \
+        chr_was_damaged_since_last_check_ID, \
+        chr_num, \
+        label,
+
+/*=============================================================================
 // name: bond_health_less_than
 // command id: 7F
 // info: if bond's health < health argument, goto label
@@ -2102,6 +2126,138 @@
 #define bond_health_greater_than(health, label) \
         bond_health_greater_than_ID, \
         health, \
+        label,
+
+/*=============================================================================
+// name: chr_byte_1_set
+// command id: 81
+// info: set byte argument to chr->flags byte value
+//=============================================================================
+// note: argument is unsigned
+//===========================================================================*/
+#define chr_byte_1_set_ID 0x81
+#define chr_byte_1_set_LENGTH 0x02
+#define chr_byte_1_set(set_byte) \
+        chr_byte_1_set_ID, \
+        set_byte,
+
+/*=============================================================================
+// name: chr_byte_1_add
+// command id: 82
+// info: add byte argument to chr->flags byte value
+//=============================================================================
+// note: argument is unsigned, add value is clamped at 0xFF (255 dec)
+//===========================================================================*/
+#define chr_byte_1_add_ID 0x82
+#define chr_byte_1_add_LENGTH 0x02
+#define chr_byte_1_add(add_byte) \
+        chr_byte_1_add_ID, \
+        add_byte,
+
+/*=============================================================================
+// name: chr_byte_1_subtract
+// command id: 83
+// info: subtract byte argument to chr->flags byte value
+//=============================================================================
+// note: argument is unsigned, subtract value is clamped at 0
+//===========================================================================*/
+#define chr_byte_1_subtract_ID 0x83
+#define chr_byte_1_subtract_LENGTH 0x02
+#define chr_byte_1_subtract(subtract_byte) \
+        chr_byte_1_subtract_ID, \
+        subtract_byte,
+
+/*=============================================================================
+// name: chr_byte_1_less_than
+// command id: 84
+// info: if chr->flags byte value < byte argument, goto label
+//=============================================================================
+// note: argument is unsigned
+//===========================================================================*/
+#define chr_byte_1_less_than_ID 0x84
+#define chr_byte_1_less_than_LENGTH 0x03
+#define chr_byte_1_less_than(compare_byte, label) \
+        chr_byte_1_less_than_ID, \
+        compare_byte, \
+        label,
+
+/*=============================================================================
+// name: chr_byte_1_less_than_random
+// command id: 85
+// info: if chr->flags byte value < chr->random, goto label
+//=============================================================================
+// note: chr->random must be pre-generated by command 33 before comparing
+//===========================================================================*/
+#define chr_byte_1_less_than_random_ID 0x85
+#define chr_byte_1_less_than_random_LENGTH 0x02
+#define chr_byte_1_less_than_random(label) \
+        chr_byte_1_less_than_random_ID, \
+        label,
+
+/*=============================================================================
+// name: chr_byte_2_set
+// command id: 86
+// info: set byte argument to chr->flags2 byte value
+//=============================================================================
+// note: argument is unsigned
+//===========================================================================*/
+#define chr_byte_2_set_ID 0x86
+#define chr_byte_2_set_LENGTH 0x02
+#define chr_byte_2_set(set_byte) \
+        chr_byte_2_set_ID, \
+        set_byte,
+
+/*=============================================================================
+// name: chr_byte_2_add
+// command id: 87
+// info: add byte argument to chr->flags2 byte value
+//=============================================================================
+// note: argument is unsigned, add value is clamped at 0xFF (255 dec)
+//===========================================================================*/
+#define chr_byte_2_add_ID 0x87
+#define chr_byte_2_add_LENGTH 0x02
+#define chr_byte_2_add(add_byte) \
+        chr_byte_2_add_ID, \
+        add_byte,
+
+/*=============================================================================
+// name: chr_byte_2_subtract
+// command id: 88
+// info: subtract byte argument to chr->flags2 byte value
+//=============================================================================
+// note: argument is unsigned, subtract value is clamped at 0
+//===========================================================================*/
+#define chr_byte_2_subtract_ID 0x88
+#define chr_byte_2_subtract_LENGTH 0x02
+#define chr_byte_2_subtract(subtract_byte) \
+        chr_byte_2_subtract_ID, \
+        subtract_byte,
+
+/*=============================================================================
+// name: chr_byte_2_less_than
+// command id: 89
+// info: if chr->flags2 byte value < byte argument, goto label
+//=============================================================================
+// note: argument is unsigned
+//===========================================================================*/
+#define chr_byte_2_less_than_ID 0x89
+#define chr_byte_2_less_than_LENGTH 0x03
+#define chr_byte_2_less_than(compare_byte, label) \
+        chr_byte_2_less_than_ID, \
+        compare_byte, \
+        label,
+
+/*=============================================================================
+// name: chr_byte_2_less_than_random
+// command id: 8A
+// info: if chr->flags2 byte value < chr->random, goto label
+//=============================================================================
+// note: chr->random must be pre-generated by command 33 before comparing
+//===========================================================================*/
+#define chr_byte_2_less_than_random_ID 0x8A
+#define chr_byte_2_less_than_random_LENGTH 0x02
+#define chr_byte_2_less_than_random(label) \
+        chr_byte_2_less_than_random_ID, \
         label,
 
 /*=============================================================================
@@ -2254,8 +2410,9 @@
 // info: set chr->BITFIELD on
 //=============================================================================
 // note: can be used to store a flag per chr, useful for missions. global lists
-// reserve flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
-// are free to use for each setup
+// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// are free to use for setup's ai lists. can be used by obj ai lists, obj lists
+// are free to utilize the entire spectrum of flags
 //===========================================================================*/
 #define guard_bitfield_set_on_ID 0x94
 #define guard_bitfield_set_on_LENGTH 0x02
@@ -2269,8 +2426,9 @@
 // info: set chr->BITFIELD off
 //=============================================================================
 // note: can be used to store a flag per chr, useful for missions. global lists
-// reserve flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
-// are free to use for each setup
+// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// are free to use for setup's ai lists. can be used by obj ai lists, obj lists
+// are free to utilize the entire spectrum of flags
 //===========================================================================*/
 #define guard_bitfield_set_off_ID 0x95
 #define guard_bitfield_set_off_LENGTH 0x02
@@ -2282,6 +2440,9 @@
 // name: guard_bitfield_is_set_on
 // command id: 96
 // info: if bits is set on in chr->BITFIELD, goto label
+//=============================================================================
+// note: can be used by obj ai lists, obj lists are free to utilize the entire
+//       spectrum of flags
 //===========================================================================*/
 #define guard_bitfield_is_set_on_ID 0x96
 #define guard_bitfield_is_set_on_LENGTH 0x03
@@ -2296,8 +2457,8 @@
 // info: set chr->BITFIELD on
 //=============================================================================
 // note: can be used to store a flag per chr, useful for missions. global lists
-// reserve flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
-// are free to use for each setup
+// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// are free to use for setup's ai lists
 //===========================================================================*/
 #define chr_bitfield_set_on_ID 0x97
 #define chr_bitfield_set_on_LENGTH 0x03
@@ -2312,8 +2473,8 @@
 // info: set chr->BITFIELD off
 //=============================================================================
 // note: can be used to store a flag per chr, useful for missions. global lists
-// reserve flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
-// are free to use for each setup
+// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// are free to use for setup's ai lists
 //===========================================================================*/
 #define chr_bitfield_set_off_ID 0x98
 #define chr_bitfield_set_off_LENGTH 0x03
@@ -2385,18 +2546,8 @@
 // info: set chr->chrflags on
 //=============================================================================
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
-// by many parts of the engine.
-// bitfield (hex):
-// 00000002: sunglasses
-// 00000010: invincible
-// 00000040: can shoot other guards
-// 00000400: hidden
-// 00000800: no autoaim
-// 00001000: lock y position (no gravity, used for dam/cradle jump)
-// 00002000: no shadow
-// 00004000: ignore animation translation
-// 00010000: count death as civilian killed
-// 00080000: increase sprinting speed
+// by many parts of the engine. can be used by obj ai lists, obj lists are free
+// to utilize the entire spectrum of flags
 //===========================================================================*/
 #define guard_flags_set_on_ID 0x9D
 #define guard_flags_set_on_LENGTH 0x05
@@ -2410,18 +2561,8 @@
 // info: set chr->chrflags off
 //=============================================================================
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
-// by many parts of the engine.
-// bitfield (hex):
-// 00000002: sunglasses
-// 00000010: invincible
-// 00000040: can shoot other guards
-// 00000400: hidden
-// 00000800: no autoaim
-// 00001000: lock y position (no gravity, used for dam/cradle jump)
-// 00002000: no shadow
-// 00004000: ignore animation translation
-// 00010000: count death as civilian killed
-// 00080000: increase sprinting speed
+// by many parts of the engine. can be used by obj ai lists, obj lists are free
+// to utilize the entire spectrum of flags
 //===========================================================================*/
 #define guard_flags_set_off_ID 0x9E
 #define guard_flags_set_off_LENGTH 0x05
@@ -2435,18 +2576,8 @@
 // info: if bits is set on in chr->chrflags, goto label
 //=============================================================================
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
-// by many parts of the engine.
-// bitfield (hex):
-// 00000002: sunglasses
-// 00000010: invincible
-// 00000040: can shoot other guards
-// 00000400: hidden
-// 00000800: no autoaim
-// 00001000: lock y position (no gravity, used for dam/cradle jump)
-// 00002000: no shadow
-// 00004000: ignore animation translation
-// 00010000: count death as civilian killed
-// 00080000: increase sprinting speed
+// by many parts of the engine. can be used by obj ai lists, obj lists are free
+// to utilize the entire spectrum of flags
 //===========================================================================*/
 #define guard_flags_is_set_on_ID 0x9F
 #define guard_flags_is_set_on_LENGTH 0x06
@@ -2461,18 +2592,7 @@
 // info: set chr->chrflags on
 //=============================================================================
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
-// by many parts of the engine.
-// bitfield (hex):
-// 00000002: sunglasses
-// 00000010: invincible
-// 00000040: can shoot other guards
-// 00000400: hidden
-// 00000800: no autoaim
-// 00001000: lock y position (no gravity, used for dam/cradle jump)
-// 00002000: no shadow
-// 00004000: ignore animation translation
-// 00010000: count death as civilian killed
-// 00080000: increase sprinting speed
+// by many parts of the engine
 //===========================================================================*/
 #define chr_flags_set_on_ID 0xA0
 #define chr_flags_set_on_LENGTH 0x06
@@ -2487,18 +2607,7 @@
 // info: set chr->chrflags off
 //=============================================================================
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
-// by many parts of the engine.
-// bitfield (hex):
-// 00000002: sunglasses
-// 00000010: invincible
-// 00000040: can shoot other guards
-// 00000400: hidden
-// 00000800: no autoaim
-// 00001000: lock y position (no gravity, used for dam/cradle jump)
-// 00002000: no shadow
-// 00004000: ignore animation translation
-// 00010000: count death as civilian killed
-// 00080000: increase sprinting speed
+// by many parts of the engine
 //===========================================================================*/
 #define chr_flags_set_off_ID 0xA1
 #define chr_flags_set_off_LENGTH 0x06
@@ -2513,18 +2622,7 @@
 // info: if bits is set on in chr->chrflags, goto label
 //=============================================================================
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
-// by many parts of the engine.
-// bitfield (hex):
-// 00000002: sunglasses
-// 00000010: invincible
-// 00000040: can shoot other guards
-// 00000400: hidden
-// 00000800: no autoaim
-// 00001000: lock y position (no gravity, used for dam/cradle jump)
-// 00002000: no shadow
-// 00004000: ignore animation translation
-// 00010000: count death as civilian killed
-// 00080000: increase sprinting speed
+// by many parts of the engine
 //===========================================================================*/
 #define chr_flags_is_set_on_ID 0xA2
 #define chr_flags_is_set_on_LENGTH 0x07
@@ -3137,6 +3235,21 @@
         label,
 
 /*=============================================================================
+// name: bond_item_total_ammo_less_than
+// command id: E2
+// info: if bond's total ammo for item < ammo_total argument, goto label
+//=============================================================================
+// note: ammo_total argument is signed. total ammo also accounts for ammo loaded
+//===========================================================================*/
+#define bond_item_total_ammo_less_than_ID 0xE2
+#define bond_item_total_ammo_less_than_LENGTH 0x04
+#define bond_item_total_ammo_less_than(item_num, ammo_total, label) \
+        bond_item_total_ammo_less_than_ID, \
+        item_num, \
+        ammo_total, \
+        label,
+
+/*=============================================================================
 // name: bond_equip_item
 // command id: E3
 // info: forces bond to equip an item - only works in first person
@@ -3385,7 +3498,7 @@
 /*=============================================================================
 // name: chr_was_shot_since_last_check
 // command id: F8
-// info: if chr was shot, goto label
+// info: if chr was shot since last check, goto label
 //=============================================================================
 // note: checks chr->chrflags if CHRFLAG_WAS_HIT is set. if true, unset flag and
 //       goto label. CHRFLAG_WAS_HIT is set even if guard is invincible

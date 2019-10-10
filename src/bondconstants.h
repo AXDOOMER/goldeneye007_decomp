@@ -14,6 +14,10 @@
 #define CHR_PRESET -4 /* stored as chr->chrpreset1 */
 #define CHR_SELF -3
 
+/* private chr ID, cannot be accessed with ai commands */
+#define CHR_OBJECTIVE -2 /* objective ai list chr ID */
+#define CHR_FREE -1 /* chr IDs when free'd (killed or removed from level) */
+
 #define PAD_PRESET 9000 /* stored as chr->padpreset1 */
 
 #define OBJECTIVES_MAX 10
@@ -1255,7 +1259,7 @@ typedef enum ACT_TYPE {
 #define CHRFLAG_00000020                    0x00000020 // unknown
 #define CHRFLAG_CAN_SHOOT_CHRS              0x00000040 // can shoot other guards
 #define CHRFLAG_00000080                    0x00000080 // unknown
-#define CHRFLAG_00000100                    0x00000100 // unknown
+#define CHRFLAG_WAS_DAMAGED                 0x00000100 // if chr has taken damage (not invincible)
 #define CHRFLAG_00000200                    0x00000200 // unknown
 #define CHRFLAG_HIDDEN                      0x00000400 // hidden
 #define CHRFLAG_NO_AUTOAIM                  0x00000800 // no autoaim

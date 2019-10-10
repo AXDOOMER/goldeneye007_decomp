@@ -1100,6 +1100,8 @@ u8 get_length_of_action_block(u8 CurrentActionByte)
                 return bond_collect_object_LENGTH;
             case chr_equip_object_ID:
                 return chr_equip_object_LENGTH;
+            case object_move_to_pad_ID:
+                return object_move_to_pad_LENGTH;
             case door_open_ID:
                 return door_open_LENGTH;
             case door_close_ID:
@@ -1144,10 +1146,32 @@ u8 get_length_of_action_block(u8 CurrentActionByte)
                 return chr_health_less_than_LENGTH;
             case chr_health_greater_than_ID:
                 return chr_health_greater_than_LENGTH;
+            case chr_was_damaged_since_last_check_ID:
+                return chr_was_damaged_since_last_check_LENGTH;
             case bond_health_less_than_ID:
                 return bond_health_less_than_LENGTH;
             case bond_health_greater_than_ID:
                 return bond_health_greater_than_LENGTH;
+            case chr_byte_1_set_ID:
+                return chr_byte_1_set_LENGTH;
+            case chr_byte_1_add_ID:
+                return chr_byte_1_add_LENGTH;
+            case chr_byte_1_subtract_ID:
+                return chr_byte_1_subtract_LENGTH;
+            case chr_byte_1_less_than_ID:
+                return chr_byte_1_less_than_LENGTH;
+            case chr_byte_1_less_than_random_ID:
+                return chr_byte_1_less_than_random_LENGTH;
+            case chr_byte_2_set_ID:
+                return chr_byte_2_set_LENGTH;
+            case chr_byte_2_add_ID:
+                return chr_byte_2_add_LENGTH;
+            case chr_byte_2_subtract_ID:
+                return chr_byte_2_subtract_LENGTH;
+            case chr_byte_2_less_than_ID:
+                return chr_byte_2_less_than_LENGTH;
+            case chr_byte_2_less_than_random_ID:
+                return chr_byte_2_less_than_random_LENGTH;
             case guard_set_hearing_scale_ID:
                 return guard_set_hearing_scale_LENGTH;
             case guard_set_vision_range_ID:
@@ -1310,10 +1334,8 @@ u8 get_length_of_action_block(u8 CurrentActionByte)
                 return chr_remove_item_in_hand_LENGTH;
             case number_of_active_players_less_than_ID:
                 return number_of_active_players_less_than_LENGTH;
-
-            case 226:
-                return 4;
-
+            case bond_item_total_ammo_less_than_ID:
+                return bond_item_total_ammo_less_than_LENGTH;
             case bond_equip_item_ID:
                 return bond_equip_item_LENGTH;
             case bond_equip_item_cinema_ID:
