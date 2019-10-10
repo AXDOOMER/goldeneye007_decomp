@@ -53,16 +53,31 @@
 // can be used by obj/chr ai lists - exceptions to this rule are detailed within
 // the command description
 //=============================================================================
+// ai commands with chr number argument
+//=============================================================================
+// commands with a chr prefix need a chr number argument. now for the most part,
+// this can be used with any loaded chr num and it will work fine. there is however
+// one exception to this and that is special chr num ID CHR_BOND. this ID only
+// works when bond has a third person model assigned (intro/exit cutscene)
+// only use CHR_BOND for intro/exit cutscene specific logic
+//=============================================================================
+// vehicle ai command
+//=============================================================================
+// commands with a vehicle prefix can only be executed by vehicle objects. as
+// vehicle object types do not use a chr struct, most non-vehicle commands will
+// crash when trying to execute. the list of compatible vehicle commands are
+// unknown at this time, but any commands with chr struct access will crash
+//=============================================================================
 // ai commands with label argument
 //=============================================================================
 // most commands will have a label argument in their function description. this
 // is used when a command has a false/true state. for example, the run to bond
 // command (28) has goto label argument. when the command is executed, it will
-// check if the guard is able to run to bond. if for some reason this fails (bond
-// is unreachable/guard is dying/etc) then the command will not goto label and
-// the next command will be executed. the most common use of commands with goto
-// labels are jumping out of an infinite loop - for an example check global ai
-// list GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE
+// check if the guard is able to run to bond. if for some reason the command fails
+// (bond is unreachable/guard is dying/etc) then the command will not goto label
+// and the next command will be executed. the most common use of commands with
+// goto labels are jumping out of an infinite loop - for an example check global
+// ai list GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE
 //===========================================================================*/
 
 #define AI_LIST_GLOBAL_START 0x0000
@@ -109,7 +124,7 @@
 
 #define ANIM_DEFAULT_INTERPOLATION      0x10
 
-// command 14-17 target bitflags
+// command 14/15/16/17 target bitflags
 #define TARGET_BOND         0x0001
 #define TARGET_FRONT_OF_CHR 0x0002
 #define TARGET_CHR          0x0004
@@ -117,7 +132,7 @@
 #define TARGET_COMPASS      0x0010
 #define TARGET_AIM_ONLY     0x0020
 
-// command 18-19 target body part values
+// command 18/19 target body part values
 #define TARGET_NULL_PART        0x00 // null part, no reaction - 1x damage
 #define TARGET_LEFT_FOOT        0x01 // left foot - 1x damage
 #define TARGET_LEFT_LEG         0x02 // left leg - 1x damage
@@ -147,7 +162,7 @@
 #define HUD_SHOW_TEXT_BOTTOM    0x02
 #define HUD_SHOW_HUD_TIMER      0x04
 
-// command 94-99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
+// command 94/95/96/97/98/99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
 #define BITFIELD_DONT_POINT_AT_BOND     0x01 // if enabled, don't point at bond
 
 /*===========================================================================*/
@@ -578,8 +593,8 @@
 // command id: 18
 // info: hit chr's body part with item's damage, play reaction to hit location
 //=============================================================================
-// note: can't be used for bond - command does not trigger item's fire sfx.
-// item's damage uses body part damage modifier
+// note: command does not trigger item's fire sfx. item's damage uses body part
+// damage modifier
 // body part number (hex) and damage modifier:
 // 00: null part, no reaction - 1x
 // 01: left foot - 1x
@@ -611,8 +626,8 @@
 // command id: 19
 // info: chr hits chr's body part with held item, play reaction to hit location
 //=============================================================================
-// note: can't be used for bond - command does not trigger item's fire sfx or
-// chr firing animation. item's damage uses body part damage modifier
+// note: command does not trigger item's fire sfx or chr firing animation.
+// item's damage uses body part damage modifier
 // body part number (hex) and damage modifier:
 // 00: null part, no reaction - 1x
 // 01: left foot - 1x
@@ -927,8 +942,6 @@
 // name: chr_dying_or_dead
 // command id: 30
 // info: if chr has died (or in dying state), goto label
-//=============================================================================
-// note: can't be used for bond - use command EB instead
 //===========================================================================*/
 #define chr_dying_or_dead_ID 0x30
 #define chr_dying_or_dead_LENGTH 0x03
@@ -942,8 +955,8 @@
 // command id: 31
 // info: if chr doesn't exist (died and faded/not spawned), goto label
 //=============================================================================
-// note: can't be used for bond - use command EB instead. this command is used
-// to check if chr has finished dying animation and faded away, or chr num is free
+// note: this command is used to check if chr has finished dying animation and
+// faded away, or chr num is free
 //===========================================================================*/
 #define chr_does_not_exist_ID 0x31
 #define chr_does_not_exist_LENGTH 0x03
@@ -1146,8 +1159,6 @@
 // name: guard_in_room_with_chr
 // command id: 40
 // info: if guard is in same room with chr, goto label
-//=============================================================================
-// note: cannot be used to check for bond - use commands 42/43/4B/32/3C instead
 //===========================================================================*/
 #define guard_in_room_with_chr_ID 0x40
 #define guard_in_room_with_chr_LENGTH 0x03
@@ -1348,8 +1359,7 @@
 // command id: 4D
 // info: if chr's distance to pad < distance argument, goto label
 //=============================================================================
-// note: argument scale is 10 units per meter. cannot be used for bond, instead
-//       use command 52
+// note: argument scale is 10 units per meter
 //===========================================================================*/
 #define chr_distance_to_pad_less_than_ID 0x4D
 #define chr_distance_to_pad_less_than_LENGTH 0x07
@@ -1365,8 +1375,7 @@
 // command id: 4E
 // info: if chr's distance to pad > distance argument, goto label
 //=============================================================================
-// note: argument scale is 10 units per meter. cannot be used for bond, instead
-//       use command 53
+// note: argument scale is 10 units per meter
 //===========================================================================*/
 #define chr_distance_to_pad_greater_than_ID 0x4E
 #define chr_distance_to_pad_greater_than_LENGTH 0x07
@@ -1382,8 +1391,7 @@
 // command id: 4F
 // info: if guard's distance to chr < distance argument, goto label
 //=============================================================================
-// note: argument scale is 10 units per meter. cannot be used for bond, instead
-//       use command 4B
+// note: argument scale is 10 units per meter
 //===========================================================================*/
 #define guard_distance_to_chr_less_than_ID 0x4F
 #define guard_distance_to_chr_less_than_LENGTH 0x05
@@ -1398,8 +1406,7 @@
 // command id: 50
 // info: if guard's distance to chr > distance argument, goto label
 //=============================================================================
-// note: argument scale is 10 units per meter. cannot be used for bond, instead
-//       use command 4C
+// note: argument scale is 10 units per meter
 //===========================================================================*/
 #define guard_distance_to_chr_greater_than_ID 0x50
 #define guard_distance_to_chr_greater_than_LENGTH 0x05
@@ -1565,8 +1572,8 @@
 // command id: 5C
 // info: if tagged object was activated since last check, goto label
 //=============================================================================
-// note: when executed, clear tagged object's activated flag. only bond and
-//       command 5E can activate tagged objects
+// note: when executed, it will clear tagged object's activated flag. only bond
+//       and command 5E can activate tagged objects
 //===========================================================================*/
 #define object_was_activated_ID 0x5C
 #define object_was_activated_LENGTH 0x03
@@ -1639,7 +1646,7 @@
 //=============================================================================
 // note: item must be attached to chr, to drop held items use command 62. embedded
 // objects will not drop, only works with attached objects. props can be damaged
-// on drop. can't be used for bond
+// on drop
 //===========================================================================*/
 #define chr_drop_all_concealed_items_ID 0x61
 #define chr_drop_all_concealed_items_LENGTH 0x02
@@ -1653,8 +1660,7 @@
 // info: make chr drop all held items
 //=============================================================================
 // note: items must be held by chr, to drop concealed attachments use command 61.
-// embedded objects will not drop, only works with attached objects. can be
-// used for bond while in third person (cinema)
+// embedded objects will not drop, only works with attached objects
 //===========================================================================*/
 #define chr_drop_all_held_items_ID 0x62
 #define chr_drop_all_held_items_LENGTH 0x02
@@ -1683,7 +1689,7 @@
 // note: if chr's hands are occupied, object will be equipped as an concealed
 // attachment. but if tagged object's handedness flag is free on guard then
 // guard will equip weapon. tagged object's prop must have a holding position
-// command within the model file. can be used for bond while in third person (cinema)
+// command within the model file
 //===========================================================================*/
 #define chr_equip_object_ID 0x64
 #define chr_equip_object_LENGTH 0x03
@@ -1691,6 +1697,21 @@
         chr_equip_object_ID, \
         object_tag, \
         chr_num,
+
+/*=============================================================================
+// name: object_move_to_pad
+// command id: 65
+// info: move object to pad
+//=============================================================================
+// note: if object is assigned to padextra type, then object scale will be lost
+//       after moving to target pad. object will inherit rotation from target pad
+//===========================================================================*/
+#define object_move_to_pad_ID 0x65
+#define object_move_to_pad_LENGTH 0x04
+#define object_move_to_pad(object_tag, pad) \
+        object_move_to_pad_ID, \
+        object_tag, \
+        chrarray16(pad),
 
 /*=============================================================================
 // name: door_open
@@ -1810,6 +1831,46 @@
 #define objective_num_complete(obj_num, label) \
         objective_num_complete_ID, \
         obj_num, \
+        label,
+
+/*=============================================================================
+// name: guard_unknown6E
+// command id: 6E
+// info: unknown command, goto label
+//=============================================================================
+// note: sets chr->padpreset1
+// bitfield (hex):
+// 0001: sets to nearest pad to path to bond
+// 0004: ???
+// 0008: ???
+// 0010: ???
+// 0020: ???
+//===========================================================================*/
+#define guard_unknown6E_ID 0x6E
+#define guard_unknown6E_LENGTH 0x03
+#define guard_unknown6E(unknown_flag, label) \
+        guard_unknown6E_ID, \
+        unknown_flag, \
+        label,
+
+/*=============================================================================
+// name: guard_unknown6F
+// command id: 6F
+// info: unknown command, goto label
+//=============================================================================
+// note: sets chr->padpreset1
+// bitfield (hex):
+// 0001: set to nearest pad in direction of bond
+// 0004: ???
+// 0008: ???
+// 0010: ???
+// 0020: ???
+//===========================================================================*/
+#define guard_unknown6F_ID 0x6F
+#define guard_unknown6F_LENGTH 0x03
+#define guard_unknown6F(unknown_flag, label) \
+        guard_unknown6F_ID, \
+        unknown_flag, \
         label,
 
 /*=============================================================================
@@ -1935,7 +1996,8 @@
 // command id: 78
 // info: if guard's hits taken < hit_num, goto label
 //=============================================================================
-// note: compares signed byte against chr->numarghs
+// note: compares signed byte against chr->numarghs. hits count even if guard
+//       is invincible
 //===========================================================================*/
 #define guard_hits_less_than_ID 0x78
 #define guard_hits_less_than_LENGTH 0x03
@@ -1949,7 +2011,8 @@
 // command id: 79
 // info: if guard's hits taken > hit_num, goto label
 //=============================================================================
-// note: compares signed byte argument against chr->numarghs
+// note: compares signed byte against chr->numarghs. hits count even if guard
+//       is invincible
 //===========================================================================*/
 #define guard_hits_greater_than_ID 0x79
 #define guard_hits_greater_than_LENGTH 0x03
@@ -2021,6 +2084,21 @@
         label,
 
 /*=============================================================================
+// name: chr_was_damaged_since_last_check
+// command id: 7E
+// info: if chr has taken damage since last check, goto label
+//=============================================================================
+// note: checks chr->chrflags if CHRFLAG_WAS_DAMAGED is set. if true, unset flag
+// and goto label. CHRFLAG_WAS_DAMAGED is set if guard took damage (not invincible)
+//===========================================================================*/
+#define chr_was_damaged_since_last_check_ID 0x7E
+#define chr_was_damaged_since_last_check_LENGTH 0x03
+#define chr_was_damaged_since_last_check(chr_num, label) \
+        chr_was_damaged_since_last_check_ID, \
+        chr_num, \
+        label,
+
+/*=============================================================================
 // name: bond_health_less_than
 // command id: 7F
 // info: if bond's health < health argument, goto label
@@ -2048,6 +2126,152 @@
 #define bond_health_greater_than(health, label) \
         bond_health_greater_than_ID, \
         health, \
+        label,
+
+/*=============================================================================
+// name: chr_byte_1_set
+// command id: 81
+// info: set chr->flags byte value to byte argument
+//=============================================================================
+// note: argument is unsigned. this is a private byte that is stored in chr struct.
+//       it can be used for anything. default value is 0
+//===========================================================================*/
+#define chr_byte_1_set_ID 0x81
+#define chr_byte_1_set_LENGTH 0x02
+#define chr_byte_1_set(set_byte) \
+        chr_byte_1_set_ID, \
+        set_byte,
+
+/*=============================================================================
+// name: chr_byte_1_add
+// command id: 82
+// info: add byte argument to chr->flags byte value
+//=============================================================================
+// note: argument is unsigned, add value is clamped at 0xFF (255 dec). this is
+// a private byte that is stored in chr struct. it can be used for anything.
+// default value is 0
+//===========================================================================*/
+#define chr_byte_1_add_ID 0x82
+#define chr_byte_1_add_LENGTH 0x02
+#define chr_byte_1_add(add_byte) \
+        chr_byte_1_add_ID, \
+        add_byte,
+
+/*=============================================================================
+// name: chr_byte_1_subtract
+// command id: 83
+// info: subtract byte argument from chr->flags byte value
+//=============================================================================
+// note: argument is unsigned, subtract value is clamped at 0. this is a private
+// byte that is stored in chr struct. it can be used for anything. default value is 0
+//===========================================================================*/
+#define chr_byte_1_subtract_ID 0x83
+#define chr_byte_1_subtract_LENGTH 0x02
+#define chr_byte_1_subtract(subtract_byte) \
+        chr_byte_1_subtract_ID, \
+        subtract_byte,
+
+/*=============================================================================
+// name: chr_byte_1_less_than
+// command id: 84
+// info: if chr->flags byte value < byte argument, goto label
+//=============================================================================
+// note: argument is unsigned. this is a private byte that is stored in chr struct.
+//       it can be used for anything. default value is 0
+//===========================================================================*/
+#define chr_byte_1_less_than_ID 0x84
+#define chr_byte_1_less_than_LENGTH 0x03
+#define chr_byte_1_less_than(compare_byte, label) \
+        chr_byte_1_less_than_ID, \
+        compare_byte, \
+        label,
+
+/*=============================================================================
+// name: chr_byte_1_less_than_random
+// command id: 85
+// info: if chr->flags byte value < chr->random, goto label
+//=============================================================================
+// note: chr->random must be pre-generated by command 33 before comparing. this
+// is a private byte that is stored in chr struct. it can be used for anything
+// default value is 0
+//===========================================================================*/
+#define chr_byte_1_less_than_random_ID 0x85
+#define chr_byte_1_less_than_random_LENGTH 0x02
+#define chr_byte_1_less_than_random(label) \
+        chr_byte_1_less_than_random_ID, \
+        label,
+
+/*=============================================================================
+// name: chr_byte_2_set
+// command id: 86
+// info: set chr->flags2 byte value to byte argument
+//=============================================================================
+// note: argument is unsigned. this is a private byte that is stored in chr struct.
+//       it can be used for anything. default value is 0
+//===========================================================================*/
+#define chr_byte_2_set_ID 0x86
+#define chr_byte_2_set_LENGTH 0x02
+#define chr_byte_2_set(set_byte) \
+        chr_byte_2_set_ID, \
+        set_byte,
+
+/*=============================================================================
+// name: chr_byte_2_add
+// command id: 87
+// info: add byte argument to chr->flags2 byte value
+//=============================================================================
+// note: argument is unsigned, add value is clamped at 0xFF (255 dec). this is
+// a private byte that is stored in chr struct. it can be used for anything.
+// default value is 0
+//===========================================================================*/
+#define chr_byte_2_add_ID 0x87
+#define chr_byte_2_add_LENGTH 0x02
+#define chr_byte_2_add(add_byte) \
+        chr_byte_2_add_ID, \
+        add_byte,
+
+/*=============================================================================
+// name: chr_byte_2_subtract
+// command id: 88
+// info: subtract byte argument from chr->flags2 byte value
+//=============================================================================
+// note: argument is unsigned, subtract value is clamped at 0. this is a private
+// byte that is stored in chr struct. it can be used for anything. default value is 0
+//===========================================================================*/
+#define chr_byte_2_subtract_ID 0x88
+#define chr_byte_2_subtract_LENGTH 0x02
+#define chr_byte_2_subtract(subtract_byte) \
+        chr_byte_2_subtract_ID, \
+        subtract_byte,
+
+/*=============================================================================
+// name: chr_byte_2_less_than
+// command id: 89
+// info: if chr->flags2 byte value < byte argument, goto label
+//=============================================================================
+// note: argument is unsigned. this is a private byte that is stored in chr struct.
+//       it can be used for anything. default value is 0
+//===========================================================================*/
+#define chr_byte_2_less_than_ID 0x89
+#define chr_byte_2_less_than_LENGTH 0x03
+#define chr_byte_2_less_than(compare_byte, label) \
+        chr_byte_2_less_than_ID, \
+        compare_byte, \
+        label,
+
+/*=============================================================================
+// name: chr_byte_2_less_than_random
+// command id: 8A
+// info: if chr->flags2 byte value < chr->random, goto label
+//=============================================================================
+// note: chr->random must be pre-generated by command 33 before comparing. this
+// is a private byte that is stored in chr struct. it can be used for anything
+// default value is 0
+//===========================================================================*/
+#define chr_byte_2_less_than_random_ID 0x8A
+#define chr_byte_2_less_than_random_LENGTH 0x02
+#define chr_byte_2_less_than_random(label) \
+        chr_byte_2_less_than_random_ID, \
         label,
 
 /*=============================================================================
@@ -2200,8 +2424,9 @@
 // info: set chr->BITFIELD on
 //=============================================================================
 // note: can be used to store a flag per chr, useful for missions. global lists
-// reserve flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
-// are free to use for each setup
+// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// are free to use for setup's ai lists. can be used by obj ai lists, obj lists
+// are free to utilize the entire spectrum of flags
 //===========================================================================*/
 #define guard_bitfield_set_on_ID 0x94
 #define guard_bitfield_set_on_LENGTH 0x02
@@ -2215,8 +2440,9 @@
 // info: set chr->BITFIELD off
 //=============================================================================
 // note: can be used to store a flag per chr, useful for missions. global lists
-// reserve flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
-// are free to use for each setup
+// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// are free to use for setup's ai lists. can be used by obj ai lists, obj lists
+// are free to utilize the entire spectrum of flags
 //===========================================================================*/
 #define guard_bitfield_set_off_ID 0x95
 #define guard_bitfield_set_off_LENGTH 0x02
@@ -2228,6 +2454,9 @@
 // name: guard_bitfield_is_set_on
 // command id: 96
 // info: if bits is set on in chr->BITFIELD, goto label
+//=============================================================================
+// note: can be used by obj ai lists, obj lists are free to utilize the entire
+//       spectrum of flags
 //===========================================================================*/
 #define guard_bitfield_is_set_on_ID 0x96
 #define guard_bitfield_is_set_on_LENGTH 0x03
@@ -2242,8 +2471,8 @@
 // info: set chr->BITFIELD on
 //=============================================================================
 // note: can be used to store a flag per chr, useful for missions. global lists
-// reserve flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
-// are free to use for each setup
+// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// are free to use for setup's ai lists
 //===========================================================================*/
 #define chr_bitfield_set_on_ID 0x97
 #define chr_bitfield_set_on_LENGTH 0x03
@@ -2258,8 +2487,8 @@
 // info: set chr->BITFIELD off
 //=============================================================================
 // note: can be used to store a flag per chr, useful for missions. global lists
-// reserve flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
-// are free to use for each setup
+// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// are free to use for setup's ai lists
 //===========================================================================*/
 #define chr_bitfield_set_off_ID 0x98
 #define chr_bitfield_set_off_LENGTH 0x03
@@ -2282,23 +2511,57 @@
         label,
 
 /*=============================================================================
+// name: objective_bitfield_set_on
+// command id: 9A
+// info: set bits in objective bitfield on
+//=============================================================================
+// note: can be used to store a mission unique objective flag, which can be set
+// to mission objectives. it can also be used to store miscellaneous flags used
+// by other ai lists
+//===========================================================================*/
+#define objective_bitfield_set_on_ID 0x9A
+#define objective_bitfield_set_on_LENGTH 0x05
+#define objective_bitfield_set_on(bitfield) \
+        objective_bitfield_set_on_ID, \
+        chararray32(bitfield)
+
+/*=============================================================================
+// name: objective_bitfield_set_off
+// command id: 9B
+// info: set bits in objective bitfield off
+//=============================================================================
+// note: can be used to store a mission unique objective flag, which can be set
+// to mission objectives. it can also be used to store miscellaneous flags used
+// by other ai lists
+//===========================================================================*/
+#define objective_bitfield_set_off_ID 0x9B
+#define objective_bitfield_set_off_LENGTH 0x05
+#define objective_bitfield_set_off(bitfield) \
+        objective_bitfield_set_off_ID, \
+        chararray32(bitfield)
+
+/*=============================================================================
+// name: objective_bitfield_is_set_on
+// command id: 9C
+// info: if bits in objective bitfield are set on, goto label
+//=============================================================================
+// note: can check multiple flags at once
+//===========================================================================*/
+#define objective_bitfield_is_set_on_ID 0x9C
+#define objective_bitfield_is_set_on_LENGTH 0x06
+#define objective_bitfield_is_set_on(bitfield, label) \
+        objective_bitfield_is_set_on_ID, \
+        chararray32(bitfield), \
+        label,
+
+/*=============================================================================
 // name: guard_flags_set_on
 // command id: 9D
 // info: set chr->chrflags on
 //=============================================================================
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
-// by many parts of the engine.
-// bitfield (hex):
-// 00000002: sunglasses
-// 00000010: invincible
-// 00000040: can shoot other guards
-// 00000400: hidden
-// 00000800: no autoaim
-// 00001000: lock y position (no gravity, used for dam/cradle jump)
-// 00002000: no shadow
-// 00004000: ignore animation translation
-// 00010000: count death as civilian killed
-// 00080000: increase sprinting speed
+// by many parts of the engine. can be used by obj ai lists, obj lists are free
+// to utilize the entire spectrum of flags
 //===========================================================================*/
 #define guard_flags_set_on_ID 0x9D
 #define guard_flags_set_on_LENGTH 0x05
@@ -2312,18 +2575,8 @@
 // info: set chr->chrflags off
 //=============================================================================
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
-// by many parts of the engine.
-// bitfield (hex):
-// 00000002: sunglasses
-// 00000010: invincible
-// 00000040: can shoot other guards
-// 00000400: hidden
-// 00000800: no autoaim
-// 00001000: lock y position (no gravity, used for dam/cradle jump)
-// 00002000: no shadow
-// 00004000: ignore animation translation
-// 00010000: count death as civilian killed
-// 00080000: increase sprinting speed
+// by many parts of the engine. can be used by obj ai lists, obj lists are free
+// to utilize the entire spectrum of flags
 //===========================================================================*/
 #define guard_flags_set_off_ID 0x9E
 #define guard_flags_set_off_LENGTH 0x05
@@ -2337,18 +2590,8 @@
 // info: if bits is set on in chr->chrflags, goto label
 //=============================================================================
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
-// by many parts of the engine.
-// bitfield (hex):
-// 00000002: sunglasses
-// 00000010: invincible
-// 00000040: can shoot other guards
-// 00000400: hidden
-// 00000800: no autoaim
-// 00001000: lock y position (no gravity, used for dam/cradle jump)
-// 00002000: no shadow
-// 00004000: ignore animation translation
-// 00010000: count death as civilian killed
-// 00080000: increase sprinting speed
+// by many parts of the engine. can be used by obj ai lists, obj lists are free
+// to utilize the entire spectrum of flags
 //===========================================================================*/
 #define guard_flags_is_set_on_ID 0x9F
 #define guard_flags_is_set_on_LENGTH 0x06
@@ -2363,18 +2606,7 @@
 // info: set chr->chrflags on
 //=============================================================================
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
-// by many parts of the engine.
-// bitfield (hex):
-// 00000002: sunglasses
-// 00000010: invincible
-// 00000040: can shoot other guards
-// 00000400: hidden
-// 00000800: no autoaim
-// 00001000: lock y position (no gravity, used for dam/cradle jump)
-// 00002000: no shadow
-// 00004000: ignore animation translation
-// 00010000: count death as civilian killed
-// 00080000: increase sprinting speed
+// by many parts of the engine
 //===========================================================================*/
 #define chr_flags_set_on_ID 0xA0
 #define chr_flags_set_on_LENGTH 0x06
@@ -2389,18 +2621,7 @@
 // info: set chr->chrflags off
 //=============================================================================
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
-// by many parts of the engine.
-// bitfield (hex):
-// 00000002: sunglasses
-// 00000010: invincible
-// 00000040: can shoot other guards
-// 00000400: hidden
-// 00000800: no autoaim
-// 00001000: lock y position (no gravity, used for dam/cradle jump)
-// 00002000: no shadow
-// 00004000: ignore animation translation
-// 00010000: count death as civilian killed
-// 00080000: increase sprinting speed
+// by many parts of the engine
 //===========================================================================*/
 #define chr_flags_set_off_ID 0xA1
 #define chr_flags_set_off_LENGTH 0x06
@@ -2415,18 +2636,7 @@
 // info: if bits is set on in chr->chrflags, goto label
 //=============================================================================
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
-// by many parts of the engine.
-// bitfield (hex):
-// 00000002: sunglasses
-// 00000010: invincible
-// 00000040: can shoot other guards
-// 00000400: hidden
-// 00000800: no autoaim
-// 00001000: lock y position (no gravity, used for dam/cradle jump)
-// 00002000: no shadow
-// 00004000: ignore animation translation
-// 00010000: count death as civilian killed
-// 00080000: increase sprinting speed
+// by many parts of the engine
 //===========================================================================*/
 #define chr_flags_is_set_on_ID 0xA2
 #define chr_flags_is_set_on_LENGTH 0x07
@@ -2492,7 +2702,7 @@
 // info: debug comment
 //=============================================================================
 // note: may have originally printed to stderr on host sgi devkit. command is
-// variable length must end with null terminator character '\0'
+// variable length must end with null terminator character '\0' (debug_log_end)
 //===========================================================================*/
 #define debug_log_ID 0xAD
 #define debug_log_LENGTH 0x32 // max length
@@ -2798,6 +3008,21 @@
         chararray16(time60_to_top_speed),
 
 /*=============================================================================
+// name: aircraft_rotor_speed
+// command id: CD
+// info: sets aircraft's rotor speed
+//=============================================================================
+// note: arguments are unsigned. argument scale is 10 units per degree, per tick.
+//       time60_to_top_speed is number of game ticks to reach top speed
+//===========================================================================*/
+#define aircraft_rotor_speed_ID 0xCD
+#define aircraft_rotor_speed_LENGTH 0x05
+#define aircraft_rotor_speed(rotor_speed, time60_to_top_speed) \
+        aircraft_rotor_speed_ID, \
+        chararray16(rotor_speed), \
+        chararray16(time60_to_top_speed),
+
+/*=============================================================================
 // name: bond_in_tank
 // command id: D1
 // info: if bond is controlling tank, goto label
@@ -2828,9 +3053,9 @@
 // info: switch back to first person view
 //=============================================================================
 // note: unused command, never used in retail game. tagged items within inventory
-// will become invalid after command - only weapons are safe. command must have 3
-// ai_sleep commands before executing this command or else engine will crash on
-// console (use macro camera_wait_for_loading). if camera mode is already in
+// will become invalid after command - only weapons are safe. command must have
+// 3 ai_sleep commands before executing this command or else engine will crash
+// on console (use macro camera_wait_for_loading). if camera mode is already in
 // third person then you don't need to do the above
 //===========================================================================*/
 #define camera_return_to_bond_ID 0xD3
@@ -2878,8 +3103,8 @@
 // info: if bond's y axis position < position argument, goto label
 //=============================================================================
 // note: checks if bond's y axis is below the provided argument. command uses
-// world units. argument is signed and scale is 1:1 to in-game position. bond's
-// point of view is accounted for by command (like debug manpos)
+// world units. argument is signed and scale is 1:1 to in-game position.
+// bond's point of view is accounted for by command (like debug manpos)
 //===========================================================================*/
 #define bond_y_pos_less_than_ID 0xD6
 #define bond_y_pos_less_than_LENGTH 0x04
@@ -2976,8 +3201,8 @@
 /*=============================================================================
 // name: chr_hide_all
 // command id: DD
-// info: hide all characters in level - including bond. execute this before
-//       switching to exit camera or bond will disappear
+// info: hide all characters in level - including bond's third person model.
+//       execute this before switching to exit camera or bond will disappear
 //=============================================================================
 // note: hidden characters will halt their ai list execution until unhidden
 //===========================================================================*/
@@ -3039,6 +3264,21 @@
         label,
 
 /*=============================================================================
+// name: bond_item_total_ammo_less_than
+// command id: E2
+// info: if bond's total ammo for item < ammo_total argument, goto label
+//=============================================================================
+// note: ammo_total argument is signed. total ammo also accounts for ammo loaded
+//===========================================================================*/
+#define bond_item_total_ammo_less_than_ID 0xE2
+#define bond_item_total_ammo_less_than_LENGTH 0x04
+#define bond_item_total_ammo_less_than(item_num, ammo_total, label) \
+        bond_item_total_ammo_less_than_ID, \
+        item_num, \
+        ammo_total, \
+        label,
+
+/*=============================================================================
 // name: bond_equip_item
 // command id: E3
 // info: forces bond to equip an item - only works in first person
@@ -3067,7 +3307,7 @@
 /*=============================================================================
 // name: object_in_room_with_pad
 // command id: E6
-// info: if object in the same room with pad, goto label
+// info: if tagged object in the same room with pad, goto label
 //===========================================================================*/
 #define object_in_room_with_pad_ID 0xE6
 #define object_in_room_with_pad_LENGTH 0x05
@@ -3127,7 +3367,7 @@
 /*=============================================================================
 // name: bond_is_dead
 // command id: EB
-// info: if bond has died, goto label
+// info: if bond has died/been killed, goto label
 //===========================================================================*/
 #define bond_is_dead_ID 0xEB
 #define bond_is_dead_LENGTH 0x02
@@ -3141,7 +3381,7 @@
 // info: disables bond damage and ability to pick up items
 //=============================================================================
 // note: commonly used for level exit ai lists - prevents bond dying after
-//       triggering exit cutscene
+//       triggering exit cutscene. use command F3 to check if flag is set on
 //===========================================================================*/
 #define bond_disable_damage_and_pickups_ID 0xEC
 #define bond_disable_damage_and_pickups_LENGTH 0x01
@@ -3244,6 +3484,20 @@
         label,
 
 /*=============================================================================
+// name: bond_if_damage_and_pickups_disabled
+// command id: F3
+// info: if bond damage and ability to pick up items disabled, goto label
+//=============================================================================
+// note: used to check when bond has exited level, usually to stop guards from
+//       spawning during mission cinema. use command EC to set state on
+//===========================================================================*/
+#define bond_if_damage_and_pickups_disabled_ID 0xF3
+#define bond_if_damage_and_pickups_disabled_LENGTH 0x02
+#define bond_if_damage_and_pickups_disabled(label) \
+        bond_if_damage_and_pickups_disabled_ID, \
+        label,
+
+/*=============================================================================
 // name: trigger_explosions_around_bond
 // command id: F6
 // info: triggers explosions around the player, will continue forever
@@ -3261,7 +3515,7 @@
 // info: if bond's total civilians killed > argument, goto label
 //=============================================================================
 // note: guards flagged with CHRFLAG_COUNT_DEATH_AS_CIVILIAN will count towards
-//       total when killed. usually set to scientists/civilians/innocent NPCs
+//       total when killed. usually set for scientists/civilians/innocent NPCs
 //===========================================================================*/
 #define bond_killed_civilians_greater_than_ID 0xF7
 #define bond_killed_civilians_greater_than_LENGTH 0x03
@@ -3273,7 +3527,7 @@
 /*=============================================================================
 // name: chr_was_shot_since_last_check
 // command id: F8
-// info: if chr was shot, goto label
+// info: if chr was shot since last check, goto label
 //=============================================================================
 // note: checks chr->chrflags if CHRFLAG_WAS_HIT is set. if true, unset flag and
 //       goto label. CHRFLAG_WAS_HIT is set even if guard is invincible

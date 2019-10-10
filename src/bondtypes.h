@@ -118,8 +118,8 @@ struct CHRdata {
     void * ailist;
     u16 aioffset;
     u16 aireturnlist;
-    u8 flags;
-    u8 flags2;
+    u8 flags; /* used by ai commands 81-85 */
+    u8 flags2; /* used by ai commands 86-8A */
     u8 BITFIELD;
     u8 random;
     /* 0x0110 */
