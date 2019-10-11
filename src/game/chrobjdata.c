@@ -133,7 +133,7 @@ u8 dword_D_8003717C[] = { // GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM: wait 
 
 //D:800371B4
 u8 dword_D_800371B4[] = { // GLIST_FIRE_RAND_ANIM_SUBROUTINE: fire at bond with random animation (subroutine)
-    guard_bitfield_if_set_on(BITFIELD_DONT_POINT_AT_BOND, 0x03) // if guard already pointed at bond, goto label 03
+    guard_bitfield_if_on(BITFIELD_DONT_POINT_AT_BOND, 0x03) // if guard already pointed at bond, goto label 03
     random_generate_greater_than(32, 0x03) // 12.5% chance of pointing to bond
     guard_points_at_bond
     guard_bitfield_set_on(BITFIELD_DONT_POINT_AT_BOND) // don't point again, thank you object permanence
@@ -289,7 +289,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
     label(0x01)
         ai_sleep
         guard_hits_less_than(6, 0x2D)
-        guard_flags_if_set_on(CHRFLAG_INVINCIBLE, 0x2F)
+        guard_flags_if_on(CHRFLAG_INVINCIBLE, 0x2F)
     label(0x2D)
         guard_has_stopped_moving(0x06)
         guard_meters_to_bond_greater_than(20, 0x03) // if guard is further than 20 meters away from bond, goto 03
@@ -305,7 +305,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         guard_has_stopped_moving(0x03)
         goto_first(0x28)
     label(0x03)
-        guard_flags_if_set_on(CHRFLAG_INVINCIBLE, 0x2F)
+        guard_flags_if_on(CHRFLAG_INVINCIBLE, 0x2F)
     label(0x2B)
         random_generate_greater_than(10, 0x03)
         guard_throw_grenade(0x02) // attempt to throw grenade, depends on chr->grenadeprob value
@@ -360,7 +360,7 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         guard_shot_from_bond_missed(0x03)
         ai_sleep
         chr_timer_seconds_less_than(10, 0x04) // if timer less than 10 seconds, goto 04
-        guard_bitfield_if_set_on(0x04, 0x05)
+        guard_bitfield_if_on(0x04, 0x05)
         goto_first(0x28)
     label(0x05)
         goto_first(0x1C)

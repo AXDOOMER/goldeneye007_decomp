@@ -1006,10 +1006,10 @@ u8 get_length_of_action_block(u8 CurrentActionByte)
                 return random_less_than_LENGTH;
             case random_greater_than_ID:
                 return random_greater_than_LENGTH;
-            case alarm_is_set_on_unused_ID:
-                return alarm_is_set_on_unused_LENGTH;
-            case alarm_is_set_on_ID:
-                return alarm_is_set_on_LENGTH;
+            case alarm_is_on_unused_ID:
+                return alarm_if_on_unused_LENGTH;
+            case alarm_is_on_ID:
+                return alarm_if_on_LENGTH;
             case gas_is_leaking_ID:
                 return gas_is_leaking_LENGTH;
             case guard_heard_bond_ID:
@@ -1194,26 +1194,38 @@ u8 get_length_of_action_block(u8 CurrentActionByte)
                 return guard_bitfield_set_on_LENGTH;
             case guard_bitfield_set_off_ID:
                 return guard_bitfield_set_off_LENGTH;
-            case guard_bitfield_is_set_on_ID:
-                return guard_bitfield_is_set_on_LENGTH;
+            case guard_bitfield_if_on_ID:
+                return guard_bitfield_if_on_LENGTH;
             case chr_bitfield_set_on_ID:
                 return chr_bitfield_set_on_LENGTH;
             case chr_bitfield_set_off_ID:
                 return chr_bitfield_set_off_LENGTH;
-            case chr_bitfield_is_set_on_ID:
-                return chr_bitfield_is_set_on_LENGTH;
+            case chr_bitfield_if_on_ID:
+                return chr_bitfield_if_on_LENGTH;
             case guard_flags_set_on_ID:
                 return guard_flags_set_on_LENGTH;
             case guard_flags_set_off_ID:
                 return guard_flags_set_off_LENGTH;
-            case guard_flags_is_set_on_ID:
-                return guard_flags_is_set_on_LENGTH;
+            case guard_flags_if_on_ID:
+                return guard_flags_if_on_LENGTH;
             case chr_flags_set_on_ID:
                 return chr_flags_set_on_LENGTH;
             case chr_flags_set_off_ID:
                 return chr_flags_set_off_LENGTH;
-            case chr_flags_is_set_on_ID:
-                return chr_flags_is_set_on_LENGTH;
+            case chr_flags_if_on_ID:
+                return chr_flags_if_on_LENGTH;
+            case object_flags_1_set_on_ID:
+                return object_flags_1_set_on_LENGTH;
+            case object_flags_1_set_off_ID:
+                return object_flags_1_set_off_LENGTH;
+            case object_flags_1_if_on_ID:
+                return object_flags_1_if_on_LENGTH;
+            case object_flags_2_set_on_ID:
+                return object_flags_2_set_on_LENGTH;
+            case object_flags_2_set_off_ID:
+                return object_flags_2_set_off_LENGTH;
+            case object_flags_2_if_on_ID:
+                return object_flags_2_if_on_LENGTH;
             case guard_set_chr_preset_ID:
                 return guard_set_chr_preset_LENGTH;
             case chr_set_chr_preset_ID:
