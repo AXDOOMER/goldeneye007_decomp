@@ -1292,11 +1292,11 @@ u8 get_length_of_action_block(u8 CurrentActionByte)
                 return vehicle_speed_LENGTH;
             case aircraft_rotor_speed_ID:
                 return aircraft_rotor_speed_LENGTH;
+            case camera_if_in_intro_ID:
+                return camera_if_in_intro_LENGTH;
+            case camera_if_in_bond_swirl_ID:
+                return camera_if_in_bond_swirl_LENGTH;
 
-            case 206:
-                return 2;
-            case 207:
-                return 2;
             case 208:
                 return 4;
 
@@ -1340,10 +1340,8 @@ u8 get_length_of_action_block(u8 CurrentActionByte)
                 return bond_equip_item_LENGTH;
             case bond_equip_item_cinema_ID:
                 return bond_equip_item_cinema_LENGTH;
-
-            case 229:
-                return 3;
-
+            case bond_set_locked_velocity_ID:
+                return bond_set_locked_velocity_LENGTH;
             case object_in_room_with_pad_ID:
                 return object_in_room_with_pad_LENGTH;
             case guard_is_firing_and_unknown_flag_ID:
