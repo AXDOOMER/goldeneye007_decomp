@@ -2752,15 +2752,23 @@ glabel get_ptr_path_for_pathnum
 
 #ifdef NONMATCHING
 void parse_handle_actionblocks(void) {
-/*
-	at some point during this block we have
-	switch byte(action)
-	case 0:
-			NextStatement =+ 2;
-			true_if_sucessfully_performing_action();
-			break;
-	case 1:
-*/
+    do
+    {
+        if (cmd < 253)
+        {
+            switch Byte (cmd)
+                case 0:
+                    NextStatement = +2;
+                    true_if_sucessfully_performing_action();
+                    break;
+            ...
+        }
+        else
+        {
+            cmd << 2;
+        }
+        get_length_of_action_block(cmd) //GetAICmdLen(Cmd)
+    }while (not action = 4)
 }
 #else
 GLOBAL_ASM(
@@ -3180,17 +3188,17 @@ glabel parse_handle_actionblocks
 /* 06A0B0 7F035580 02D28821 */  addu  $s1, $s6, $s2
 /* 06A0B4 7F035584 AFA307AC */  sw    $v1, 0x7ac($sp)
 /* 06A0B8 7F035588 AFA607B0 */  sw    $a2, 0x7b0($sp)
-GetByteS1_ParseCommandByte_SwitchCase:
+GetByteS1_ParseCommandByte_SwitchCase:								/*GetCommandByte(cmd)*/
 /* 06A0BC 7F03558C 922E0000 */  lbu   $t6, ($s1) #t6 = byte(s1)
 ParseCommandByte_SwitchCase:
 /* 06A0C0 7F035590 02C02025 */  move  $a0, $s6
-/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if not t6 < 253 goto L7F03A1EC
-/* 06A0C8 7F035598 10201314 */  beqz  $at, .L7F03A1EC
+/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< 253  then 
+/* 06A0C8 7F035598 10201314 */  beqz  $at, GetCmdLength				#    Cmd<<2  goto GetCmdLength
 /* 06A0CC 7F03559C 000E7080 */   sll   $t6, $t6, 2
 /* 06A0D0 7F0355A0 3C018005 */  lui   $at, %hi(jpt_800524F8)
-/* 06A0D4 7F0355A4 002E0821 */  addu  $at, $at, $t6
-/* 06A0D8 7F0355A8 8C2E24F8 */  lw    $t6, %lo(jpt_800524F8)($at)
-/* 06A0DC 7F0355AC 01C00008 */  jr    $t6							#switch t6 (look up table for switch 0x800524f8)
+/* 06A0D4 7F0355A4 002E0821 */  addu  $at, $at, $t6					# else //get cmd
+/* 06A0D8 7F0355A8 8C2E24F8 */  lw    $t6, %lo(jpt_800524F8)($at)	#    switch t6(look up table for switch 0x800524f8)
+/* 06A0DC 7F0355AC 01C00008 */  jr    $t6							# return cmd
 /* 06A0E0 7F0355B0 00000000 */   nop   
 Action00_GoToLabel: 					                            #case 0
 /* 06A0E4 7F0355B4 02C02025 */  move  $a0, $s6
@@ -3198,7 +3206,7 @@ Action00_GoToLabel: 					                            #case 0
 /* 06A0EC 7F0355BC 0FC0D4BC */  jal   true_if_sucessfully_performing_action #(command, commandsize, nextcommand[4])
 /* 06A0F0 7F0355C0 92260001 */   lbu   $a2, 1($s1)
 /* 06A0F4 7F0355C4 00409025 */  move  $s2, $v0
-/* 06A0F8 7F0355C8 1000FFF0 */  b     GetByteS1_ParseCommandByte_SwitchCase	#break;
+/* 06A0F8 7F0355C8 1000FFF0 */  b     GetByteS1_ParseCommandByte_SwitchCase	# GetCommandByte(currcmd + currcmdLength); 
 /* 06A0FC 7F0355CC 02C28821 */   addu  $s1, $s6, $v0
 Action01_GoToLabelFromTop: 			                                #case 1
 /* 06A100 7F0355D0 02C02025 */  move  $a0, $s6
@@ -8602,7 +8610,7 @@ actionFC_Launch_Shuttle_2:
 .L7F03A1E4:
 /* 06ED14 7F03A1E4 1000ECE9 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ED18 7F03A1E8 26310002 */   addiu $s1, $s1, 2
-.L7F03A1EC:
+GetCmdLength:
 /* 06ED1C 7F03A1EC 0FC0D27F */  jal   get_length_of_action_block
 /* 06ED20 7F03A1F0 02402825 */   move  $a1, $s2                    # 
 /* 06ED24 7F03A1F4 02429021 */  addu  $s2, $s2, $v0                # CurrentActionByte += get_length_of_action_block(CurrentActionByte)
