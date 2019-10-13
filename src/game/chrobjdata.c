@@ -243,7 +243,7 @@ u8 dword_D_80037280[] = { // GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM: run 
         guard_see_guard_die(0x10)
         goto_loop_repeat(0x01)
     label(0x10) // a guard in sight was killed/shot, heard bond or bond shot guard
-        guard_hits_greater_than(0, 0x0F) // doesn't make sense why the guard would be curious about multiple near missed shots
+        guard_hits_greater_than(0, 0x0F) // doesn't make sense why the guard would be mildly curious about getting shot
         guard_animation_looks_around_self
     goto_loop_start(0x04) // wait for guard to stop moving before branching to next logic (triggered by look around animation)
         guard_has_stopped_moving(0x0F)

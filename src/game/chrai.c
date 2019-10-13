@@ -1307,10 +1307,8 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return camera_if_in_intro_LENGTH;
             case camera_if_in_bond_swirl_ID:
                 return camera_if_in_bond_swirl_LENGTH;
-
-            case 208:
-                return 4;
-
+            case tv_change_screen_bank_ID:
+                return tv_change_screen_bank_LENGTH;
             case bond_in_tank_ID:
                 return bond_in_tank_LENGTH;
             case exit_level_ID:
@@ -2593,7 +2591,7 @@ glabel true_if_sucessfully_performing_action
 /* 069E68 7F035338 904E0001 */  lbu   $t6, 1($v0)					# t6 = byte(v0[4])
 /* 069E6C 7F03533C 164E000A */  bne   $s2, $t6, .L7F035368			# goto AICMDlength if not s2 = t6
 /* 069E70 7F035340 00000000 */   nop
-/* 069E74 7F035344 1000000C */  b.L7F035378							# save 0 = v0 goto return
+/* 069E74 7F035344 1000000C */  b     .L7F035378					# save 0 = v0 goto return
 /* 069E78 7F035348 02001025 */   move  $v0, $s0
 .L7F03534C: 														/* Not2*/
 /* 069E7C 7F03534C 16830006 */  bne   $s4, $v1, .L7F035368			# goto AICMDlength if not v1 = ai_list_end_ID

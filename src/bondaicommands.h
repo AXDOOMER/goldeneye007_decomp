@@ -58,15 +58,14 @@
 // most commands with a chr prefix use a chr number argument. for the most part,
 // this can be used with any loaded chr num and it will work fine. there is however
 // one exception to this and that is special chr num ID CHR_BOND. this ID only
-// works when bond has a third person model assigned (intro/exit cutscene)
+// works when bond has a third person model assigned (intro/exit cutscene).
 // only use CHR_BOND for intro/exit cutscene specific logic
 //=============================================================================
 // vehicle/aircraft ai command
 //=============================================================================
 // commands with a vehicle/aircraft prefix can only be executed by vehicle/aircraft
-// objects. these types of objects do not use a chr struct, most non-vehicle commands
-// will crash when trying to execute. the list of compatible vehicle/aircraft
-// commands unknown at this time
+// objects. these types of objects do not use a chr struct. most non-vehicle
+// commands will crash if they try to access caller's chr struct 
 //=============================================================================
 // ai commands with label argument
 //=============================================================================
@@ -110,61 +109,60 @@
 /*===========================================================================*/
 
 /*=============================================================================
-// command bitflags and common settings
+// command bitfield flags and common settings
 //===========================================================================*/
-// command 0A animation bitflags
-#define ANIM_MIRROR                     0x01
-#define ANIM_UNKNOWN                    0x02
-#define ANIM_LOOP_HOLD_LAST_FRAME       0x04
-#define ANIM_PLAY_SFX                   0x08
-#define ANIM_IDLE_POSE_WHEN_COMPLETE    0x10
-#define ANIM_TRANSLATION_SCALE          0x20
-#define ANIM_NO_TRANSLATION             0x40
-#define ANIM_REVERSE_LOOPING_ANIMATION  0x80
+// command 0A - animation flags
+#define ANIM_MIRROR                     0x01 // mirror animation
+#define ANIM_UNKNOWN                    0x02 // ?? (cancels no translation flag)
+#define ANIM_LOOP_HOLD_LAST_FRAME       0x04 // loop/hold last frame (required for reverse flag)
+#define ANIM_PLAY_SFX                   0x08 // play sneeze sfx with animation 9F (triggers 50% of the time)
+#define ANIM_IDLE_POSE_WHEN_COMPLETE    0x10 // idle pose after animation has completed (does not work with looping animations)
+#define ANIM_TRANSLATION_SCALE          0x20 // translation multiplier x 4 (used for dam and cradle cinema)
+#define ANIM_NO_TRANSLATION             0x40 // no translation
+#define ANIM_REVERSE_LOOPING_ANIMATION  0x80 // reverse animation (only for looped animations)
 
-#define ANIM_DEFAULT_INTERPOLATION      0x10
+#define ANIM_DEFAULT_INTERPOLATION      0x10 // use this if interpolation value isn't important
 
-// command 14/15/16/17 target bitflags
-#define TARGET_BOND         0x0001
-#define TARGET_FRONT_OF_CHR 0x0002
-#define TARGET_CHR          0x0004
-#define TARGET_PAD          0x0008
-#define TARGET_COMPASS      0x0010
-#define TARGET_AIM_ONLY     0x0020
+// command 14/15/16/17 - target flags
+#define TARGET_BOND         0x0001 // set target to bond (ignores target argument)
+#define TARGET_FRONT_OF_CHR 0x0002 // set target to front of chr
+#define TARGET_CHR          0x0004 // set target type to chr_num
+#define TARGET_PAD          0x0008 // set target type to pad
+#define TARGET_COMPASS      0x0010 // set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
+#define TARGET_AIM_ONLY     0x0020 // aim at target instead of firing
 
-// command 18/19 target body part values
-#define TARGET_NULL_PART        0x00 // null part, no reaction - 1x damage
-#define TARGET_LEFT_FOOT        0x01 // left foot - 1x damage
-#define TARGET_LEFT_LEG         0x02 // left leg - 1x damage
-#define TARGET_LEFT_THIGH       0x03 // left thigh - 1x damage
-#define TARGET_RIGHT_FOOT       0x04 // right foot - 1x damage
-#define TARGET_RIGHT_LEG        0x05 // right leg - 1x damage
-#define TARGET_RIGHT_THIGH      0x06 // right thigh - 1x damage
-#define TARGET_PELVIS           0x07 // pelvis - 1x damage
-#define TARGET_HEAD             0x08 // head - 4x damage
-#define TARGET_LEFT_HAND        0x09 // left hand - 1x damage
-#define TARGET_LEFT_ARM         0x0A // left arm - 1x damage
-#define TARGET_LEFT_SHOULDER    0x0B // left shoulder - 1x damage
-#define TARGET_RIGHT_HAND       0x0C // right hand - 1x damage
-#define TARGET_RIGHT_ARM        0x0D // right arm - 1x damage
-#define TARGET_RIGHT_SHOULDER   0x0E // right shoulder - 1x damage
-#define TARGET_CHEST            0x0F // chest - 2x damage
+// command 18/19 - target body part values
+#define HIT_NULL_PART        0x00 // null part, no reaction - 1x damage
+#define HIT_LEFT_FOOT        0x01 // left foot - 1x damage
+#define HIT_LEFT_LEG         0x02 // left leg - 1x damage
+#define HIT_LEFT_THIGH       0x03 // left thigh - 1x damage
+#define HIT_RIGHT_FOOT       0x04 // right foot - 1x damage
+#define HIT_RIGHT_LEG        0x05 // right leg - 1x damage
+#define HIT_RIGHT_THIGH      0x06 // right thigh - 1x damage
+#define HIT_PELVIS           0x07 // pelvis - 1x damage
+#define HIT_HEAD             0x08 // head - 4x damage
+#define HIT_LEFT_HAND        0x09 // left hand - 1x damage
+#define HIT_LEFT_ARM         0x0A // left arm - 1x damage
+#define HIT_LEFT_SHOULDER    0x0B // left shoulder - 1x damage
+#define HIT_RIGHT_HAND       0x0C // right hand - 1x damage
+#define HIT_RIGHT_ARM        0x0D // right arm - 1x damage
+#define HIT_RIGHT_SHOULDER   0x0E // right shoulder - 1x damage
+#define HIT_CHEST            0x0F // chest - 2x damage
 
-// command 68
-#define DOOR_STATE_CLOSED       0x01
-#define DOOR_STATE_OPEN         0x02
-#define DOOR_STATE_CLOSING      0x04
-#define DOOR_STATE_OPENING      0x08
+// command 68 - door states
+#define DOOR_STATE_CLOSED       0x01 // closed
+#define DOOR_STATE_OPEN         0x02 // opened
+#define DOOR_STATE_CLOSING      0x04 // closing
+#define DOOR_STATE_OPENING      0x08 // opening
 
-// command D7
-#define HUD_HIDE_ALL            0x00
-#define HUD_SHOW_TEXT_TOP       0x01
-#define HUD_SHOW_TEXT_BOTTOM    0x02
-#define HUD_SHOW_HUD_TIMER      0x04
+// command D7 - hud flags
+#define HUD_HIDE_ALL            0x00 // hide all
+#define HUD_SHOW_TEXT_TOP       0x01 // hide all but top text
+#define HUD_SHOW_TEXT_BOTTOM    0x02 // hide all but bottom text
+#define HUD_SHOW_HUD_TIMER      0x04 // hide all but hud timer
 
 // command 94/95/96/97/98/99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
-#define BITFIELD_DONT_POINT_AT_BOND     0x01 // if enabled, don't point at bond
-
+#define BITFIELD_DONT_POINT_AT_BOND     0x01 // if set, don't point at bond
 /*===========================================================================*/
 
 /*=============================================================================
@@ -367,19 +365,11 @@
 // info: set guard to playback animation
 //=============================================================================
 // arguments:
-// start/end set to -1/-1 will playback the entire animation length
-// interpolation time will set how long it will take to transition from the previous state
-// if interpolation time is too low it may crash! - use 0x10 if unsure
-// start/end keyframe and interpolation use 60 tick units
-// bitfield (hex):
-// 01: mirror animation
-// 02: ?? (cancels no translation flag)
-// 04: loop/hold last frame (required for reverse flag)
-// 08: play sneeze sfx with animation 9F (triggers 50% of the time)
-// 10: idle pose after animation has completed (does not work with looping animations)
-// 20: translation multiplier x 4 (used for dam and cradle cinema)
-// 40: no translation
-// 80: reverse animation (only for looped animations)
+// start/end set to -1/-1 will playback the entire animation length.
+// interpolation time will set how long it will take to transition from the previous state.
+// if interpolation time is too low it may crash! - use 0x10 if unsure.
+// start/end keyframe and interpolation use 60 tick units.
+// use ANIM_# flags for bitfield argument
 //===========================================================================*/
 #define guard_animation_ID 0x0A
 #define guard_animation_LENGTH 0x09
@@ -508,13 +498,8 @@
 // command id: 14
 // info: make guard aim/fire their weapon at target, goto label if successful
 //=============================================================================
-// note: bitfield argument is used to set the target type (pad/bond/chr)
-// bitfield (hex):
-// 0001: set target to bond (ignores target argument)
-// 0004: set target type to chr_num
-// 0008: set target type to pad
-// 0010: set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
-// 0020: aim at target instead of firing
+// note: bitfield argument is used to set the target type (pad/bond/chr).
+//       use TARGET_# flags for bitfield argument
 //===========================================================================*/
 #define guard_fire_or_aim_at_target_ID 0x14
 #define guard_fire_or_aim_at_target_LENGTH 0x06
@@ -529,13 +514,8 @@
 // command id: 15
 // info: make guard kneel and aim/fire their weapon at target, goto label if successful
 //=============================================================================
-// note: bitfield argument is used to set the target type (pad/bond/chr)
-// bitfield (hex):
-// 0001: set target to bond (ignores target argument)
-// 0004: set target type to chr_num
-// 0008: set target type to pad
-// 0010: set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
-// 0020: aim at target instead of firing
+// note: bitfield argument is used to set the target type (pad/bond/chr).
+//       use TARGET_# flags for bitfield argument
 //===========================================================================*/
 #define guard_fire_or_aim_at_target_kneel_ID 0x15
 #define guard_fire_or_aim_at_target_kneel_LENGTH 0x06
@@ -551,13 +531,8 @@
 // info: update guard's aim/fire target, goto label if successful
 //=============================================================================
 // note: this command only works if guard is currently aiming at a target
-// bitfield argument is used to set the target type (pad/bond/chr)
-// bitfield (hex):
-// 0001: set target to bond (ignores target argument)
-// 0004: set target type to chr_num
-// 0008: set target type to pad
-// 0010: set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
-// 0020: aim at target instead of firing
+//       bitfield argument is used to set the target type (pad/bond/chr).
+//       use TARGET_# flags for bitfield argument
 //===========================================================================*/
 #define guard_fire_or_aim_at_target_update_ID 0x16
 #define guard_fire_or_aim_at_target_update_LENGTH 0x06
@@ -573,12 +548,8 @@
 // info: make guard continuously face target, goto label if successful
 //=============================================================================
 // note: if guard was shot while facing target, guard will snap out of facing state
-// bitfield argument is used to set the target type (pad/bond/chr)
-// bitfield (hex):
-// 0001: set target to bond (ignores target argument)
-// 0004: set target type to chr_num
-// 0008: set target type to pad
-// 0010: set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
+// bitfield argument is used to set the target type (pad/bond/chr).
+// use TARGET_# flags for bitfield argument. command can't use TARGET_AIM_ONLY flag
 //===========================================================================*/
 #define guard_faces_target_ID 0x17
 #define guard_faces_target_LENGTH 0x06
@@ -594,24 +565,7 @@
 // info: hit chr's body part with item's damage, play reaction to hit location
 //=============================================================================
 // note: command does not trigger item's fire sfx. item's damage uses body part
-// damage modifier
-// body part number (hex) and damage modifier:
-// 00: null part, no reaction - 1x
-// 01: left foot - 1x
-// 02: left leg - 1x
-// 03: left thigh - 1x
-// 04: right foot - 1x
-// 05: right leg - 1x
-// 06: right thigh - 1x
-// 07: pelvis - 1x
-// 08: head - 4x
-// 09: left hand - 1x
-// 0A: left arm - 1x
-// 0B: left shoulder - 1x
-// 0C: right hand - 1x
-// 0D: right arm - 1x
-// 0E: right shoulder - 1x
-// 0F: chest - 2x
+//       damage modifier. use HIT_# define for hit part number
 //===========================================================================*/
 #define chr_hit_body_part_with_item_damage_ID 0x18
 #define chr_hit_body_part_with_item_damage_LENGTH 0x04
@@ -627,24 +581,7 @@
 // info: chr hits chr's body part with held item, play reaction to hit location
 //=============================================================================
 // note: command does not trigger item's fire sfx or chr firing animation.
-// item's damage uses body part damage modifier
-// body part number (hex) and damage modifier:
-// 00: null part, no reaction - 1x
-// 01: left foot - 1x
-// 02: left leg - 1x
-// 03: left thigh - 1x
-// 04: right foot - 1x
-// 05: right leg - 1x
-// 06: right thigh - 1x
-// 07: pelvis - 1x
-// 08: head - 4x
-// 09: left hand - 1x
-// 0A: left arm - 1x
-// 0B: left shoulder - 1x
-// 0C: right hand - 1x
-// 0D: right arm - 1x
-// 0E: right shoulder - 1x
-// 0F: chest - 2x
+// item's damage uses body part damage modifier. use HIT_# define for hit part number
 //===========================================================================*/
 #define chr_hit_chr_body_part_with_held_item_ID 0x19
 #define chr_hit_chr_body_part_with_held_item_LENGTH 0x04
@@ -1078,7 +1015,8 @@
 // info: if guard sees another guard shot (from anyone), goto label
 //=============================================================================
 // note: guard friendly fire (if flagged) will trigger this command to goto label.
-//       command checks if chr->chrseeshot is set to valid chrnum (not -1)
+// command checks if chr->chrseeshot is set to valid chrnum (not -1). does not
+// work with shot invincible/armoured guards
 //===========================================================================*/
 #define guard_see_guard_shot_ID 0x3A
 #define guard_see_guard_shot_LENGTH 0x02
@@ -1134,6 +1072,8 @@
 // name: guard_was_shot_within_last_10_secs
 // command id: 3E
 // info: if guard was shot (from anyone) within the last 10 seconds, goto label
+//=============================================================================
+// note: command will not count guard as shot if they are invincible/have armour
 //===========================================================================*/
 #define guard_was_shot_within_last_10_secs_ID 0x3E
 #define guard_was_shot_within_last_10_secs_LENGTH 0x02
@@ -1745,11 +1685,7 @@
 // command id: 68
 // info: if tagged door state matches any of bitfield argument, goto label
 //=============================================================================
-// note: door flag state (hex):
-// 01: closed
-// 02: open
-// 04: closing
-// 08: opening
+// note: use DOOR_STATE_# flags for door state argument. flags can be combined
 //===========================================================================*/
 #define door_check_state_ID 0x68
 #define door_check_state_LENGTH 0x04
@@ -2299,7 +2235,7 @@
 //       takes to detect bond with command 32. does not affect firing distance
 //=============================================================================
 // note: sets to chr->visionrange. default value is 0x0064 (100 dec). argument
-//       is converted to float before setting to hearingscale
+// is unsigned and converted to float before setting to hearingscale
 //===========================================================================*/
 #define guard_set_vision_range_ID 0x8C
 #define guard_set_vision_range_LENGTH 0x02
@@ -3139,6 +3075,22 @@
         label,
 
 /*=============================================================================
+// name: tv_change_screen_bank
+// command id: D0
+// info: change the screen bank of a tagged tv monitor
+//=============================================================================
+// note: if tagged object has multiple screens, use screen index argument to set.
+//       if tagged object has one screen, screen index is ignored
+//===========================================================================*/
+#define tv_change_screen_bank_ID 0xD0
+#define tv_change_screen_bank_LENGTH 0x04
+#define tv_change_screen_bank(object_tag, screen_index, screen_bank) \
+        tv_change_screen_bank_ID, \
+        object_tag, \
+        screen_index, \
+        screen_bank,
+
+/*=============================================================================
 // name: bond_in_tank
 // command id: D1
 // info: if bond is controlling tank, goto label
@@ -3239,17 +3191,13 @@
 // together to show multiple elements. sequential executions of D7 can be used
 // to hide more elements, but once an element has been hidden it cannot be shown
 // again until command D8 is executed. bond can take damage while in locked state.
-// bitfield (hex):
-// 00: hide all
-// 01: hide all but top text
-// 02: hide all but bottom text
-// 04: hide all but hud timer
+// use HUD_# flags for bitfield argument
 //===========================================================================*/
 #define hud_hide_and_lock_controls_ID 0xD7
 #define hud_hide_and_lock_controls_LENGTH 0x02
-#define hud_hide_and_lock_controls(hud_hide_flag) \
+#define hud_hide_and_lock_controls(bitfield) \
         hud_hide_and_lock_controls_ID, \
-        hide_flag,
+        bitfield,
 
 /*=============================================================================
 // name: hud_show_all
