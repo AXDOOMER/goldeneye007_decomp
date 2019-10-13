@@ -2749,24 +2749,70 @@ glabel get_ptr_path_for_pathnum
 
 
 #ifdef NONMATCHING
-void parse_handle_actionblocks(void) {
-    do
+void parse_handle_actionblocks(*s1, 1, 0) // s1 = AIListp, 1 = true? (a1 is always set to 1) a2 set to 0 within block
+{
+    s7 = 0;
+    if (a1 != ai_sleep)
     {
-        if (cmd < 253)
+        if (a1 == 1)
         {
-            switch Byte (cmd)
+            if (s1[3] > 39)
+            {
+                if (s1[3] = 40)
+                {
+                    returnval1 = s1;
+                }
+            }
+            a2 = s1;
+        }
+    }
+
+    if (s7 == 0)
+    {
+        if (a2 == 0)
+        {
+            if (v1 != 0)
+            {
+                s2 = v1[336];
+                s6 = v1[320];
+            }
+        }
+        else
+        {
+            s2 = a2[336];
+            s6 = a2[320];
+        }
+    }
+    else
+    {
+        s2 = s7[432];
+        s6 = s7[416];
+    }
+
+    if (s6 != 0)
+    {
+        //10 * something
+        //60 * something
+
+        do
+        {
+            if (cmd < 253)
+            {
+                switch Byte(cmd)
                 case 0:
                     NextStatement = +2;
                     true_if_sucessfully_performing_action();
                     break;
-            ...
+                    //...
+            }
+            else
+            {
+                //cmd << 2;
+                cmdpos += get_length_of_action_block(cmd) //GetAICmdLen(Cmd)
+            }
         }
-        else
-        {
-            cmd << 2;
-        }
-        get_length_of_action_block(cmd) //GetAICmdLen(Cmd)
-    }while (not action = 4)
+        while (action != 4)
+    }
 }
 #else
 GLOBAL_ASM(
