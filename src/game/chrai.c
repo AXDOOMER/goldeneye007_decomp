@@ -2546,8 +2546,69 @@ glabel sub_GAME_7F035244
 
 
 #ifdef NONMATCHING
-bool true_if_sucessfully_performing_action(a0, a1, a2) {
+/* MIPS-2-C
 
+s32 true_if_sucessfully_performing_action(s32 arg0, s32 arg1, s32 arg2)
+{
+    ? sp3C;
+    void *temp_v0;
+    s32 phi_s0;
+
+    // Node 0
+    phi_s0 = arg1;
+loop_1:
+    // Node 1
+    temp_v0 = arg0 + phi_s0;
+    if (2 == temp_v0->unk0)
+    {
+        // Node 2
+        if ((arg2 & 0xff) == temp_v0->unk1)
+        {
+            // Node 3
+            return phi_s0;
+        }
+block_6:
+        // Node 6
+        phi_s0 = phi_s0 + get_length_of_action_block(arg0, phi_s0);
+        goto loop_1;
+    }
+    // Node 4
+    if (4 != temp_v0->unk0)
+    {
+        goto block_6;
+    }
+    // Node 5
+    sub_GAME_7F035244(arg0, &sp3C);
+    return 0;
+}*/
+bool true_if_sucessfully_performing_action(s32 arg0, s32 arg1, s32 arg2)
+{
+    /* Closest ASM I could get (though not using right tools since still cant get to work... ill try again this weekend)*/
+    u8 *v0; //struct
+    int s0 = arg1;
+    int s1 = arg0;
+
+    do
+    {
+        v0 = arg0 + s0;
+        if (v0->unk0 == label_ID)
+        {
+            if ((arg2 & 255) == v0->unk1) //strip lower byte?
+            {
+                return arg1; //exit loop and return 
+            }
+
+        }
+        if (v0->unk0 == ai_list_end_ID)
+        {
+            break;
+        }
+        s0 += get_length_of_action_block(arg0, arg1);
+    }
+    while (v0->unk0 != 4);
+
+    sub_GAME_7F035244(s1, &v0 + 0x3c);
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -2743,7 +2804,6 @@ glabel get_ptr_path_for_pathnum
 /* 069FB0 7F035480 00000000 */   nop   
 )
 #endif
-
 
 
 
