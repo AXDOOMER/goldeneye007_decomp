@@ -2235,7 +2235,7 @@
 //       takes to detect bond with command 32. does not affect firing distance
 //=============================================================================
 // note: sets to chr->visionrange. default value is 0x0064 (100 dec). argument
-// is unsigned and converted to float before setting to hearingscale
+//       is unsigned and converted to float before setting to hearingscale
 //===========================================================================*/
 #define guard_set_vision_range_ID 0x8C
 #define guard_set_vision_range_LENGTH 0x02
@@ -2995,7 +2995,7 @@
 /*=============================================================================
 // name: text_print_top
 // command id: C3
-// info: print text slot to top part of screen (speech)
+// info: print text slot to top part of screen
 //=============================================================================
 // note: if text slot is not currently allocated in memory, game will softlock.
 // ensure that end of text has a \n character or it will misalign background area
@@ -3005,6 +3005,23 @@
 #define text_print_top(text_slot) \
         text_print_top_ID, \
         chrarray16(text_slot),
+
+/*=============================================================================
+// name: sfx_play
+// command id: C4
+// info: play a sound effect
+//=============================================================================
+// note: channel argument range is 0-7. use a channel if you plan on modifying
+// sfx volume with commands C5-CA. if you don't plan on doing this, use a invalid
+// channel such as -1. this will play the sfx but not bother initializing channel
+// data for commands C5-CA
+//===========================================================================*/
+#define sfx_play_ID 0xC4
+#define sfx_play_LENGTH 0x04
+#define sfx_play(sound_num, channel_num) \
+        sfx_play_ID, \
+        chrarray16(sound_num), \
+        channel_num,
 
 /*=============================================================================
 // name: vehicle_start_path
@@ -3379,10 +3396,10 @@
 //===========================================================================*/
 #define bond_set_locked_velocity_ID 0xE5
 #define bond_set_locked_velocity_LENGTH 0x03
-#define bond_set_locked_velocity(speed_x, speed_z) \
+#define bond_set_locked_velocity(speed60_x, speed60_z) \
         bond_set_locked_velocity_ID, \
-        speed_x, \
-        speed_z,
+        speed60_x, \
+        speed60_z,
 
 /*=============================================================================
 // name: object_in_room_with_pad
@@ -3499,11 +3516,11 @@
 //===========================================================================*/
 #define camera_orbit_pad_ID 0xEE
 #define camera_orbit_pad_LENGTH 0x0D
-#define camera_orbit_pad(lat_distance, vert_distance, orbit_speed, pad, y_pos_offset, initial_rotation) \
+#define camera_orbit_pad(lat_distance, vert_distance, orbit_speed60, pad, y_pos_offset, initial_rotation) \
         camera_orbit_pad_ID, \
         chararray16(lat_distance), \
         chararray16(vert_distance), \
-        chararray16(orbit_speed), \
+        chararray16(orbit_speed60), \
         chararray16(pad), \
         chararray16(y_pos_offset), \
         chararray16(initial_rotation),
