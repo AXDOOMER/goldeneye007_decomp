@@ -894,7 +894,7 @@ u8 get_length_of_action_block(CurrentActionByte) {
 *   With New macro commands
 -   SUGESTION: Prefix all AI commands with AI
 */
-u8 get_length_of_action_block(u8 CurrentActionByte)
+u8 get_length_of_action_block(u8 *CurrentActionByte)
 {
         switch (CurrentActionByte)
         {
@@ -1006,10 +1006,10 @@ u8 get_length_of_action_block(u8 CurrentActionByte)
                 return random_less_than_LENGTH;
             case random_greater_than_ID:
                 return random_greater_than_LENGTH;
-            case alarm_is_set_on_unused_ID:
-                return alarm_is_set_on_unused_LENGTH;
-            case alarm_is_set_on_ID:
-                return alarm_is_set_on_LENGTH;
+            case alarm_is_on_unused_ID:
+                return alarm_if_on_unused_LENGTH;
+            case alarm_is_on_ID:
+                return alarm_if_on_LENGTH;
             case gas_is_leaking_ID:
                 return gas_is_leaking_LENGTH;
             case guard_heard_bond_ID:
@@ -1194,26 +1194,38 @@ u8 get_length_of_action_block(u8 CurrentActionByte)
                 return guard_bitfield_set_on_LENGTH;
             case guard_bitfield_set_off_ID:
                 return guard_bitfield_set_off_LENGTH;
-            case guard_bitfield_is_set_on_ID:
-                return guard_bitfield_is_set_on_LENGTH;
+            case guard_bitfield_if_on_ID:
+                return guard_bitfield_if_on_LENGTH;
             case chr_bitfield_set_on_ID:
                 return chr_bitfield_set_on_LENGTH;
             case chr_bitfield_set_off_ID:
                 return chr_bitfield_set_off_LENGTH;
-            case chr_bitfield_is_set_on_ID:
-                return chr_bitfield_is_set_on_LENGTH;
+            case chr_bitfield_if_on_ID:
+                return chr_bitfield_if_on_LENGTH;
             case guard_flags_set_on_ID:
                 return guard_flags_set_on_LENGTH;
             case guard_flags_set_off_ID:
                 return guard_flags_set_off_LENGTH;
-            case guard_flags_is_set_on_ID:
-                return guard_flags_is_set_on_LENGTH;
+            case guard_flags_if_on_ID:
+                return guard_flags_if_on_LENGTH;
             case chr_flags_set_on_ID:
                 return chr_flags_set_on_LENGTH;
             case chr_flags_set_off_ID:
                 return chr_flags_set_off_LENGTH;
-            case chr_flags_is_set_on_ID:
-                return chr_flags_is_set_on_LENGTH;
+            case chr_flags_if_on_ID:
+                return chr_flags_if_on_LENGTH;
+            case object_flags_1_set_on_ID:
+                return object_flags_1_set_on_LENGTH;
+            case object_flags_1_set_off_ID:
+                return object_flags_1_set_off_LENGTH;
+            case object_flags_1_if_on_ID:
+                return object_flags_1_if_on_LENGTH;
+            case object_flags_2_set_on_ID:
+                return object_flags_2_set_on_LENGTH;
+            case object_flags_2_set_off_ID:
+                return object_flags_2_set_off_LENGTH;
+            case object_flags_2_if_on_ID:
+                return object_flags_2_if_on_LENGTH;
             case guard_set_chr_preset_ID:
                 return guard_set_chr_preset_LENGTH;
             case chr_set_chr_preset_ID:
@@ -1223,12 +1235,11 @@ u8 get_length_of_action_block(u8 CurrentActionByte)
             case chr_set_pad_preset_ID:
                 return chr_set_pad_preset_LENGTH;
             case debug_log_ID:
-                /*do while currentaction*+(i*8) <=0
+                for (int i = 0; currentaction[i] < debug_log_LENGTH; i++)
                 {
-                    i++;
+                    if (currentaction[i] == debug_log_end)
+                        return i;
                 }
-                return i;
-                */
                 return debug_log_LENGTH;
             case chr_timer_reset_start_ID:
                 return chr_timer_reset_start_LENGTH;
@@ -1292,14 +1303,12 @@ u8 get_length_of_action_block(u8 CurrentActionByte)
                 return vehicle_speed_LENGTH;
             case aircraft_rotor_speed_ID:
                 return aircraft_rotor_speed_LENGTH;
-
-            case 206:
-                return 2;
-            case 207:
-                return 2;
-            case 208:
-                return 4;
-
+            case camera_if_in_intro_ID:
+                return camera_if_in_intro_LENGTH;
+            case camera_if_in_bond_swirl_ID:
+                return camera_if_in_bond_swirl_LENGTH;
+            case tv_change_screen_bank_ID:
+                return tv_change_screen_bank_LENGTH;
             case bond_in_tank_ID:
                 return bond_in_tank_LENGTH;
             case exit_level_ID:
@@ -1340,10 +1349,8 @@ u8 get_length_of_action_block(u8 CurrentActionByte)
                 return bond_equip_item_LENGTH;
             case bond_equip_item_cinema_ID:
                 return bond_equip_item_cinema_LENGTH;
-
-            case 229:
-                return 3;
-
+            case bond_set_locked_velocity_ID:
+                return bond_set_locked_velocity_LENGTH;
             case object_in_room_with_pad_ID:
                 return object_in_room_with_pad_LENGTH;
             case guard_is_firing_and_unknown_flag_ID:
@@ -2539,7 +2546,7 @@ glabel sub_GAME_7F035244
 
 
 #ifdef NONMATCHING
-void true_if_sucessfully_performing_action(void) {
+bool true_if_sucessfully_performing_action(a0, a1, a2) {
 
 }
 #else
@@ -2568,38 +2575,38 @@ glabel true_if_sucessfully_performing_action
 /* 069E2C 7F0352FC AFB20020 */  sw    $s2, 0x20($sp)
 /* 069E30 7F035300 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 069E34 7F035304 AFB00018 */  sw    $s0, 0x18($sp)
-/* 069E38 7F035308 00A08025 */  move  $s0, $a1
+/* 069E38 7F035308 00A08025 */  move  $s0, $a1						# Args 1,0 to save 0,1
 /* 069E3C 7F03530C 00808825 */  move  $s1, $a0
-/* 069E40 7F035310 30D200FF */  andi  $s2, $a2, 0xff
+/* 069E40 7F035310 30D200FF */  andi  $s2, $a2, 0xff				# save 2 = Arg 2 AND 255 - convert to lower byte?
 /* 069E44 7F035314 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 069E48 7F035318 AFA60050 */  sw    $a2, 0x50($sp)
+/* 069E48 7F035318 AFA60050 */  sw    $a2, 0x50($sp)				# save a bunch of stuff
 /* 069E4C 7F03531C 24130002 */  li    $s3, 2
 /* 069E50 7F035320 24140004 */  li    $s4, 4
-.L7F035324:
-/* 069E54 7F035324 02301021 */  addu  $v0, $s1, $s0
-/* 069E58 7F035328 90430000 */  lbu   $v1, ($v0)
+.L7F035324:	 														/* Begining*/
+/* 069E54 7F035324 02301021 */  addu  $v0, $s1, $s0					# *v0 = a0 + a1 # command+commandLength?
+/* 069E58 7F035328 90430000 */  lbu   $v1, ($v0)					# v1 = Byte(v0)
 /* 069E5C 7F03532C 02202025 */  move  $a0, $s1
-/* 069E60 7F035330 16630006 */  bne   $s3, $v1, .L7F03534C
-/* 069E64 7F035334 00000000 */   nop   
-/* 069E68 7F035338 904E0001 */  lbu   $t6, 1($v0)
-/* 069E6C 7F03533C 164E000A */  bne   $s2, $t6, .L7F035368
-/* 069E70 7F035340 00000000 */   nop   
-/* 069E74 7F035344 1000000C */  b     .L7F035378
+/* 069E60 7F035330 16630006 */  bne   $s3, $v1, .L7F03534C			# goto not2 if not v1 = label_ID
+/* 069E64 7F035334 00000000 */   nop
+/* 069E68 7F035338 904E0001 */  lbu   $t6, 1($v0)					# t6 = byte(v0[4])
+/* 069E6C 7F03533C 164E000A */  bne   $s2, $t6, .L7F035368			# goto AICMDlength if not s2 = t6
+/* 069E70 7F035340 00000000 */   nop
+/* 069E74 7F035344 1000000C */  b     .L7F035378					# save 0 = v0 goto return
 /* 069E78 7F035348 02001025 */   move  $v0, $s0
-.L7F03534C:
-/* 069E7C 7F03534C 16830006 */  bne   $s4, $v1, .L7F035368
+.L7F03534C: 														/* Not2*/
+/* 069E7C 7F03534C 16830006 */  bne   $s4, $v1, .L7F035368			# goto AICMDlength if not v1 = ai_list_end_ID
 /* 069E80 7F035350 00000000 */   nop   
 /* 069E84 7F035354 02202025 */  move  $a0, $s1
 /* 069E88 7F035358 0FC0D491 */  jal   sub_GAME_7F035244
 /* 069E8C 7F03535C 27A5003C */   addiu $a1, $sp, 0x3c
-/* 069E90 7F035360 10000005 */  b     .L7F035378
+/* 069E90 7F035360 10000005 */  b     .L7F035378					# goto return
 /* 069E94 7F035364 00001025 */   move  $v0, $zero
-.L7F035368:
+.L7F035368: 														/* AICMDlength*/
 /* 069E98 7F035368 0FC0D27F */  jal   get_length_of_action_block
 /* 069E9C 7F03536C 02002825 */   move  $a1, $s0
-/* 069EA0 7F035370 1000FFEC */  b     .L7F035324
+/* 069EA0 7F035370 1000FFEC */  b     .L7F035324					# goto begining
 /* 069EA4 7F035374 02028021 */   addu  $s0, $s0, $v0
-.L7F035378:
+.L7F035378: 														/* return*/
 /* 069EA8 7F035378 8FBF002C */  lw    $ra, 0x2c($sp)
 /* 069EAC 7F03537C 8FB00018 */  lw    $s0, 0x18($sp)
 /* 069EB0 7F035380 8FB1001C */  lw    $s1, 0x1c($sp)
@@ -2742,16 +2749,70 @@ glabel get_ptr_path_for_pathnum
 
 
 #ifdef NONMATCHING
-void parse_handle_actionblocks(void) {
-/*
-	at some point during this block we have
-	switch byte(action)
-	case 0:
-			NextStatement =+ 2;
-			true_if_sucessfully_performing_action();
-			break;
-	case 1:
-*/
+void parse_handle_actionblocks(*s1, 1, 0) // s1 = AIListp, 1 = true? (a1 is always set to 1) a2 set to 0 within block
+{
+    s7 = 0;
+    if (a1 != ai_sleep)
+    {
+        if (a1 == 1)
+        {
+            if (s1[3] > 39)
+            {
+                if (s1[3] = 40)
+                {
+                    returnval1 = s1;
+                }
+            }
+            a2 = s1;
+        }
+    }
+
+    if (s7 == 0)
+    {
+        if (a2 == 0)
+        {
+            if (v1 != 0)
+            {
+                s2 = v1[336];
+                s6 = v1[320];
+            }
+        }
+        else
+        {
+            s2 = a2[336];
+            s6 = a2[320];
+        }
+    }
+    else
+    {
+        s2 = s7[432];
+        s6 = s7[416];
+    }
+
+    if (s6 != 0)
+    {
+        //10 * something
+        //60 * something
+
+        do
+        {
+            if (cmd < 253)
+            {
+                switch Byte(cmd)
+                case 0:
+                    NextStatement = +2;
+                    true_if_sucessfully_performing_action();
+                    break;
+                    //...
+            }
+            else
+            {
+                //cmd << 2;
+                cmdpos += get_length_of_action_block(cmd) //GetAICmdLen(Cmd)
+            }
+        }
+        while (action != 4)
+    }
 }
 #else
 GLOBAL_ASM(
@@ -3101,14 +3162,14 @@ glabel D_80052978
 glabel parse_handle_actionblocks
 /* 069FB4 7F035484 27BDF848 */  addiu $sp, $sp, -0x7b8
 /* 069FB8 7F035488 AFB7006C */  sw    $s7, 0x6c($sp)
-/* 069FBC 7F03548C AFB60068 */  sw    $s6, 0x68($sp)
-/* 069FC0 7F035490 24010003 */  li    $at, 3
+/* 069FBC 7F03548C AFB60068 */  sw    $s6, 0x68($sp) 				 #free s2 for CurrentActionByte ?
+/* 069FC0 7F035490 24010003 */  li    $at, 3 						 #ai_sleep
 /* 069FC4 7F035494 AFBF0074 */  sw    $ra, 0x74($sp)
 /* 069FC8 7F035498 AFBE0070 */  sw    $fp, 0x70($sp)
 /* 069FCC 7F03549C AFB50064 */  sw    $s5, 0x64($sp)
 /* 069FD0 7F0354A0 AFB40060 */  sw    $s4, 0x60($sp)
 /* 069FD4 7F0354A4 AFB3005C */  sw    $s3, 0x5c($sp)
-/* 069FD8 7F0354A8 AFB20058 */  sw    $s2, 0x58($sp)  #free s2 for CurrentActionByte?
+/* 069FD8 7F0354A8 AFB20058 */  sw    $s2, 0x58($sp) 				 #free s2 for CurrentActionByteSize ?
 /* 069FDC 7F0354AC AFB10054 */  sw    $s1, 0x54($sp)
 /* 069FE0 7F0354B0 AFB00050 */  sw    $s0, 0x50($sp)
 /* 069FE4 7F0354B4 F7BA0048 */  sdc1  $f26, 0x48($sp)
@@ -3140,10 +3201,10 @@ glabel parse_handle_actionblocks
 .L7F035514:
 /* 06A044 7F035514 12E00005 */  beqz  $s7, .L7F03552C
 /* 06A048 7F035518 3C018005 */   lui   $at, %hi(D_800524F4)
-/* 06A04C 7F03551C 96F20108 */  lhu   $s2, 0x108($s7)
-/* 06A050 7F035520 8EF60104 */  lw    $s6, 0x104($s7)
+/* 06A04C 7F03551C 96F20108 */  lhu   $s2, 0x108($s7) 				 # Load Size of command
+/* 06A050 7F035520 8EF60104 */  lw    $s6, 0x104($s7) 				 # load command
 /* 06A054 7F035524 1000000C */  b     .L7F035558
-/* 06A058 7F035528 AFB207A4 */   sw    $s2, 0x7a4($sp)
+/* 06A058 7F035528 AFB207A4 */   sw    $s2, 0x7a4($sp) 				 # save command size
 .L7F03552C:
 /* 06A05C 7F03552C 10C00005 */  beqz  $a2, .L7F035544
 /* 06A060 7F035530 00000000 */   nop   
@@ -3161,37 +3222,37 @@ glabel parse_handle_actionblocks
 /* 06A088 7F035558 12C01329 */  beqz  $s6, Action04_End_1
 /* 06A08C 7F03555C 8FB207A4 */   lw    $s2, 0x7a4($sp)
 /* 06A090 7F035560 C43A24F4 */  lwc1  $f26, %lo(D_800524F4)($at)
-/* 06A094 7F035564 3C014120 */  li    $at, 0x41200000 # 10.000000
+/* 06A094 7F035564 3C014120 */  li    $at, 0x41200000				 # 10.000000
 /* 06A098 7F035568 4481C000 */  mtc1  $at, $f24
-/* 06A09C 7F03556C 3C014270 */  li    $at, 0x42700000 # 60.000000
+/* 06A09C 7F03556C 3C014270 */  li    $at, 0x42700000 				# 60.000000
 /* 06A0A0 7F035570 3C1E8003 */  lui   $fp, %hi(ptr_guard_data) 
 /* 06A0A4 7F035574 4481B000 */  mtc1  $at, $f22
 /* 06A0A8 7F035578 4480A000 */  mtc1  $zero, $f20
-/* 06A0AC 7F03557C 27DECC64 */  addiu $fp, %lo(ptr_guard_data) # addiu $fp, $fp, -0x339c
+/* 06A0AC 7F03557C 27DECC64 */  addiu $fp, %lo(ptr_guard_data) 		# addiu $fp, $fp, -0x339c
 /* 06A0B0 7F035580 02D28821 */  addu  $s1, $s6, $s2
 /* 06A0B4 7F035584 AFA307AC */  sw    $v1, 0x7ac($sp)
 /* 06A0B8 7F035588 AFA607B0 */  sw    $a2, 0x7b0($sp)
-GetByteS1_ParseCommandByte_SwitchCase:
+GetByteS1_ParseCommandByte_SwitchCase:								/*GetCommandByte(cmd)*/
 /* 06A0BC 7F03558C 922E0000 */  lbu   $t6, ($s1) #t6 = byte(s1)
 ParseCommandByte_SwitchCase:
 /* 06A0C0 7F035590 02C02025 */  move  $a0, $s6
-/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd    # if not t6 < 253 goto L7F03A1EC
-/* 06A0C8 7F035598 10201314 */  beqz  $at, .L7F03A1EC
+/* 06A0C4 7F035594 2DC100FD */  sltiu $at, $t6, 0xfd				# if Cmd !< 253  then 
+/* 06A0C8 7F035598 10201314 */  beqz  $at, GetCmdLength				#    Cmd<<2  goto GetCmdLength
 /* 06A0CC 7F03559C 000E7080 */   sll   $t6, $t6, 2
 /* 06A0D0 7F0355A0 3C018005 */  lui   $at, %hi(jpt_800524F8)
-/* 06A0D4 7F0355A4 002E0821 */  addu  $at, $at, $t6
-/* 06A0D8 7F0355A8 8C2E24F8 */  lw    $t6, %lo(jpt_800524F8)($at)
-/* 06A0DC 7F0355AC 01C00008 */  jr    $t6		    #switch t6 (look up table for switch 0x800524f8)
+/* 06A0D4 7F0355A4 002E0821 */  addu  $at, $at, $t6					# else //get cmd
+/* 06A0D8 7F0355A8 8C2E24F8 */  lw    $t6, %lo(jpt_800524F8)($at)	#    switch t6(look up table for switch 0x800524f8)
+/* 06A0DC 7F0355AC 01C00008 */  jr    $t6							# return cmd
 /* 06A0E0 7F0355B0 00000000 */   nop   
-Action00_GoToLabel: 					            #case 0
+Action00_GoToLabel: 					                            #case 0
 /* 06A0E4 7F0355B4 02C02025 */  move  $a0, $s6
 /* 06A0E8 7F0355B8 02402825 */  move  $a1, $s2
-/* 06A0EC 7F0355BC 0FC0D4BC */  jal   true_if_sucessfully_performing_action
+/* 06A0EC 7F0355BC 0FC0D4BC */  jal   true_if_sucessfully_performing_action #(command, commandsize, nextcommand[4])
 /* 06A0F0 7F0355C0 92260001 */   lbu   $a2, 1($s1)
 /* 06A0F4 7F0355C4 00409025 */  move  $s2, $v0
-/* 06A0F8 7F0355C8 1000FFF0 */  b     GetByteS1_ParseCommandByte_SwitchCase	#break;
+/* 06A0F8 7F0355C8 1000FFF0 */  b     GetByteS1_ParseCommandByte_SwitchCase	# GetCommandByte(currcmd + currcmdLength); 
 /* 06A0FC 7F0355CC 02C28821 */   addu  $s1, $s6, $v0
-Action01_GoToLabelFromTop: 			                #case 1
+Action01_GoToLabelFromTop: 			                                #case 1
 /* 06A100 7F0355D0 02C02025 */  move  $a0, $s6
 /* 06A104 7F0355D4 00002825 */  move  $a1, $zero
 /* 06A108 7F0355D8 0FC0D4BC */  jal   true_if_sucessfully_performing_action
@@ -3199,30 +3260,30 @@ Action01_GoToLabelFromTop: 			                #case 1
 /* 06A110 7F0355E0 00409025 */  move  $s2, $v0
 /* 06A114 7F0355E4 1000FFE9 */  b     GetByteS1_ParseCommandByte_SwitchCase	   #break
 /* 06A118 7F0355E8 02C28821 */   addu  $s1, $s6, $v0
-Action02_Label:                                        #case 2
-/* 06A11C 7F0355EC 26520002 */  addiu $s2, $s2, 2    # s2++  PC ?    # CurrentActionByte += 2
-/* 06A120 7F0355F0 1000FFE6 */  b     GetByteS1_ParseCommandByte_SwitchCase                     # s1 +=2; goto 58c
+Action02_Label:                                                     #case 2
+/* 06A11C 7F0355EC 26520002 */  addiu $s2, $s2, 2				    # s2++  PC ?    # CurrentActionByte += 2
+/* 06A120 7F0355F0 1000FFE6 */  b     GetByteS1_ParseCommandByte_SwitchCase         # s1 +=2; goto 58c
 /* 06A124 7F0355F4 26310002 */   addiu $s1, $s1, 2
 action03_Leave_The_Routine_When_Return_Continue_From_Spot_1:
-/* 06A128 7F0355F8 12E00004 */  beqz  $s7, .L7F03560C    # s2++  PC?
-/* 06A12C 7F0355FC 26520001 */   addiu $s2, $s2, 1       # if s7 = 0 goto 0c      If actionblock not initilised else?
-/* 06A130 7F035600 AEF60104 */  sw    $s6, 0x104($s7)    # s7.104 = s6              
-/* 06A134 7F035604 100012FE */  b     Action04_End_1     # s7.108 = u16(s2)           
-/* 06A138 7F035608 A6F20108 */   sh    $s2, 0x108($s7)   # goto end1 (load return addr) 
+/* 06A128 7F0355F8 12E00004 */  beqz  $s7, .L7F03560C				# s2++  PC?
+/* 06A12C 7F0355FC 26520001 */   addiu $s2, $s2, 1					# if s7 = 0 goto 0c      If actionblock not initilised else ?
+/* 06A130 7F035600 AEF60104 */  sw    $s6, 0x104($s7)				# s7.104 = s6
+/* 06A134 7F035604 100012FE */  b     Action04_End_1				# s7.108 = u16(s2)
+/* 06A138 7F035608 A6F20108 */   sh    $s2, 0x108($s7)				# goto end1 (load return addr)
 .L7F03560C:
 /* 06A13C 7F03560C 8FAF07B0 */  lw    $t7, 0x7b0($sp)
 /* 06A140 7F035610 8FB807AC */  lw    $t8, 0x7ac($sp)
-/* 06A144 7F035614 11E00004 */  beqz  $t7, .L7F035628    # if t7 = 0 goto 28 
+/* 06A144 7F035614 11E00004 */  beqz  $t7, .L7F035628				# if t7 = 0 goto 28
 /* 06A148 7F035618 00000000 */   nop   
-/* 06A14C 7F03561C ADF60080 */  sw    $s6, 0x80($t7)     #else t7.80 = s6 
-/* 06A150 7F035620 100012F7 */  b     Action04_End_1     # t7.84 = u16(s2)
-/* 06A154 7F035624 A5F20084 */   sh    $s2, 0x84($t7)    # end1 (load return addr)
+/* 06A14C 7F03561C ADF60080 */  sw    $s6, 0x80($t7)				#else t7.80 = s6
+/* 06A150 7F035620 100012F7 */  b     Action04_End_1				# t7.84 = u16(s2)
+/* 06A154 7F035624 A5F20084 */   sh    $s2, 0x84($t7)				# end1 (load return addr)
 .L7F035628:
 /* 06A158 7F035628 530012F6 */  beql  $t8, $zero, Action04_End_2    # load return addr (same as end1 (sp.74))
-/* 06A15C 7F03562C 8FBF0074 */   lw    $ra, 0x74($sp)               # if t8 = 0 goto end2 (skip return addr)
-/* 06A160 7F035630 AF160080 */  sw    $s6, 0x80($t8)                # else t8.80 = s6
-/* 06A164 7F035634 100012F2 */  b     Action04_End_1                # t8.84 = u16(s2)
-/* 06A168 7F035638 A7120084 */   sh    $s2, 0x84($t8)               # end1(load return addr)
+/* 06A15C 7F03562C 8FBF0074 */   lw    $ra, 0x74($sp)				# if t8 = 0 goto end2 (skip return addr)
+/* 06A160 7F035630 AF160080 */  sw    $s6, 0x80($t8)				# else t8.80 = s6
+/* 06A164 7F035634 100012F2 */  b     Action04_End_1				# t8.84 = u16(s2)
+/* 06A168 7F035638 A7120084 */   sh    $s2, 0x84($t8)				# end1(load return addr)
 action05_Jump_To_Function_4:
 /* 06A16C 7F03563C 92390002 */  lbu   $t9, 2($s1)
 /* 06A170 7F035640 922A0003 */  lbu   $t2, 3($s1)
@@ -8593,7 +8654,7 @@ actionFC_Launch_Shuttle_2:
 .L7F03A1E4:
 /* 06ED14 7F03A1E4 1000ECE9 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ED18 7F03A1E8 26310002 */   addiu $s1, $s1, 2
-.L7F03A1EC:
+GetCmdLength:
 /* 06ED1C 7F03A1EC 0FC0D27F */  jal   get_length_of_action_block
 /* 06ED20 7F03A1F0 02402825 */   move  $a1, $s2                    # 
 /* 06ED24 7F03A1F4 02429021 */  addu  $s2, $s2, $v0                # CurrentActionByte += get_length_of_action_block(CurrentActionByte)

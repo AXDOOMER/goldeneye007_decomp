@@ -124,10 +124,10 @@ struct CHRdata {
     u8 random;
     /* 0x0110 */
     s32 timer60;
-    u16 padpreset1;
-    u16 chrpreset1; /* ID FC */
-    u16 chrseeshot; /* ID FA */
-    u16 chrseedie; /* ID FB */
+    u16 padpreset1; /* ID PAD_PRESET */
+    u16 chrpreset1; /* ID CHR_PRESET */
+    u16 chrseeshot; /* ID CHR_SEE_SHOT - ignores invincible/armoured guards */
+    u16 chrseedie; /* ID CHR_SEE_DIE */
     /* 0x011C */
     f32 field_11C[2];
     f32 field_124[2];
