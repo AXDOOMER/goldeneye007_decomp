@@ -3014,13 +3014,57 @@
 // note: channel argument range is 0-7. use a channel if you plan on modifying
 // sfx volume with commands C5-CA. if you don't plan on doing this, use a invalid
 // channel such as -1. this will play the sfx but not bother initializing channel
-// data for commands C5-CA
+// data for commands C5-CA. if a sfx is already occupying slot, trigger sfx but
+// channel data will be invalid and can't be used by commands C5-CA
 //===========================================================================*/
 #define sfx_play_ID 0xC4
 #define sfx_play_LENGTH 0x04
 #define sfx_play(sound_num, channel_num) \
         sfx_play_ID, \
         chrarray16(sound_num), \
+        channel_num,
+
+/*=============================================================================
+// name: sfx_emit_from_object
+// command id: C5
+// info: set a occupied sfx channel to emit from a tagged object
+//=============================================================================
+// note: panning is not calculated (mono), only affects volume. decay argument
+// is number of ticks to fully transition to target volume from full volume
+//===========================================================================*/
+#define sfx_emit_from_object_ID 0xC5
+#define sfx_emit_from_object_LENGTH 0x05
+#define sfx_emit_from_object(channel_num, object_tag, time60_vol_decay) \
+        sfx_emit_from_object_ID, \
+        channel_num, \
+        object_tag, \
+        chararray16(time60_vol_decay),
+
+/*=============================================================================
+// name: sfx_emit_from_pad
+// command id: C6
+// info: set a occupied sfx channel to emit from a pad
+//=============================================================================
+// note: panning is not calculated (mono), only affects volume. decay argument
+// is number of ticks to fully transition to target volume from full volume
+//===========================================================================*/
+#define sfx_emit_from_pad_ID 0xC6
+#define sfx_emit_from_pad_LENGTH 0x06
+#define sfx_emit_from_pad(channel_num, pad, time60_vol_decay) \
+        sfx_emit_from_pad_ID, \
+        channel_num, \
+        chararray16(pad), \
+        chararray16(time60_vol_decay),
+
+/*=============================================================================
+// name: sfx_stop_channel
+// command id: C9
+// info: stop sfx in an occupied sfx channel
+//===========================================================================*/
+#define sfx_stop_channel_ID 0xC9
+#define sfx_stop_channel_LENGTH 0x02
+#define sfx_stop_channel(channel_num) \
+        sfx_stop_channel_ID, \
         channel_num,
 
 /*=============================================================================

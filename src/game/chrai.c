@@ -1283,17 +1283,19 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return text_print_top_LENGTH;
             case sfx_play_ID:
                 return sfx_play_LENGTH;
+            case sfx_emit_from_object_ID:
+                return sfx_emit_from_object_LENGTH;
+            case sfx_emit_from_pad_ID:
+                return sfx_emit_from_pad_LENGTH;
 
-            case 197:
-                return 5;
-            case 198:
-                return 6;
             case 199:
                 return 6;
             case 200:
                 return 6;
-            case 201:
-                return 2;
+
+            case sfx_stop_channel_ID:
+                return sfx_stop_channel_LENGTH;
+
             case 202:
                 return 5;
 
