@@ -1379,14 +1379,12 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return objective_all_completed_LENGTH;
             case bond_check_folder_actor_ID:
                 return bond_check_folder_actor_LENGTH;
-
-            case 243:
-                return 2;
-            case 244:
-                return 3;
-            case 245:
-                return 2;
-
+            case bond_if_damage_and_pickups_disabled_ID:
+                return bond_if_damage_and_pickups_disabled_LENGTH;
+            case music_xtrack_play_ID:
+                return music_xtrack_play_LENGTH;
+            case music_xtrack_stop_ID:
+                return music_xtrack_stop_LENGTH;
             case trigger_explosions_around_bond_ID:
                 return trigger_explosions_around_bond_LENGTH;
             case bond_killed_civilians_greater_than_ID:
