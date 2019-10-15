@@ -2235,7 +2235,7 @@
 //       takes to detect bond with command 32. does not affect firing distance
 //=============================================================================
 // note: sets to chr->visionrange. default value is 0x0064 (100 dec). argument
-// is unsigned and converted to float before setting to hearingscale
+//       is unsigned and converted to float before setting to hearingscale
 //===========================================================================*/
 #define guard_set_vision_range_ID 0x8C
 #define guard_set_vision_range_LENGTH 0x02
@@ -2995,7 +2995,7 @@
 /*=============================================================================
 // name: text_print_top
 // command id: C3
-// info: print text slot to top part of screen (speech)
+// info: print text slot to top part of screen
 //=============================================================================
 // note: if text slot is not currently allocated in memory, game will softlock.
 // ensure that end of text has a \n character or it will misalign background area
@@ -3005,6 +3005,67 @@
 #define text_print_top(text_slot) \
         text_print_top_ID, \
         chrarray16(text_slot),
+
+/*=============================================================================
+// name: sfx_play
+// command id: C4
+// info: play a sound effect
+//=============================================================================
+// note: channel argument range is 0-7. use a channel if you plan on modifying
+// sfx volume with commands C5-CA. if you don't plan on doing this, use a invalid
+// channel such as -1. this will play the sfx but not bother initializing channel
+// data for commands C5-CA. if a sfx is already occupying channel, trigger sfx
+// but channel data will be invalid and can't be used by commands C5-CA
+//===========================================================================*/
+#define sfx_play_ID 0xC4
+#define sfx_play_LENGTH 0x04
+#define sfx_play(sound_num, channel_num) \
+        sfx_play_ID, \
+        chrarray16(sound_num), \
+        channel_num,
+
+/*=============================================================================
+// name: sfx_emit_from_object
+// command id: C5
+// info: set a occupied sfx channel to emit from a tagged object
+//=============================================================================
+// note: panning is not calculated (mono), only affects volume. decay argument
+// is number of ticks to fully transition to target volume from full volume
+//===========================================================================*/
+#define sfx_emit_from_object_ID 0xC5
+#define sfx_emit_from_object_LENGTH 0x05
+#define sfx_emit_from_object(channel_num, object_tag, vol_decay_time60) \
+        sfx_emit_from_object_ID, \
+        channel_num, \
+        object_tag, \
+        chararray16(vol_decay_time60),
+
+/*=============================================================================
+// name: sfx_emit_from_pad
+// command id: C6
+// info: set a occupied sfx channel to emit from a pad
+//=============================================================================
+// note: panning is not calculated (mono), only affects volume. decay argument
+// is number of ticks to fully transition to target volume from full volume
+//===========================================================================*/
+#define sfx_emit_from_pad_ID 0xC6
+#define sfx_emit_from_pad_LENGTH 0x06
+#define sfx_emit_from_pad(channel_num, pad, vol_decay_time60) \
+        sfx_emit_from_pad_ID, \
+        channel_num, \
+        chararray16(pad), \
+        chararray16(vol_decay_time60),
+
+/*=============================================================================
+// name: sfx_stop_channel
+// command id: C9
+// info: stop sfx in an occupied sfx channel
+//===========================================================================*/
+#define sfx_stop_channel_ID 0xC9
+#define sfx_stop_channel_LENGTH 0x02
+#define sfx_stop_channel(channel_num) \
+        sfx_stop_channel_ID, \
+        channel_num,
 
 /*=============================================================================
 // name: vehicle_start_path
@@ -3023,14 +3084,14 @@
 // info: sets vehicle speed, usually paired with command CB
 //=============================================================================
 // note: arguments are unsigned. 1000 units = 1 meter per second travel speed.
-//       time60_to_top_speed is number of game ticks to reach top speed
+// acceleration_time60 is number of game ticks to reach top speed (lower = faster)
 //===========================================================================*/
 #define vehicle_speed_ID 0xCC
 #define vehicle_speed_LENGTH 0x05
-#define vehicle_speed(top_speed, time60_to_top_speed) \
+#define vehicle_speed(top_speed, acceleration_time60) \
         vehicle_speed_ID, \
         chararray16(top_speed), \
-        chararray16(time60_to_top_speed),
+        chararray16(acceleration_time60),
 
 /*=============================================================================
 // name: aircraft_rotor_speed
@@ -3038,14 +3099,14 @@
 // info: sets aircraft's rotor speed
 //=============================================================================
 // note: arguments are unsigned. argument scale is 10 units per degree, per tick.
-//       time60_to_top_speed is number of game ticks to reach top speed
+// acceleration_time60 is number of game ticks to reach top speed (lower = faster)
 //===========================================================================*/
 #define aircraft_rotor_speed_ID 0xCD
 #define aircraft_rotor_speed_LENGTH 0x05
-#define aircraft_rotor_speed(rotor_speed, time60_to_top_speed) \
+#define aircraft_rotor_speed(rotor_speed, acceleration_time60) \
         aircraft_rotor_speed_ID, \
         chararray16(rotor_speed), \
-        chararray16(time60_to_top_speed),
+        chararray16(acceleration_time60),
 
 /*=============================================================================
 // name: camera_if_in_intro
@@ -3204,8 +3265,7 @@
 // command id: D8
 // info: show all hud elements that have been disabled by D7
 //=============================================================================
-// note: should only be executed after D7 command, since it may toggle upper/lower
-//       text displays
+// note: should only be executed after D7 command
 //===========================================================================*/
 #define hud_show_all_ID 0xD8
 #define hud_show_all_LENGTH 0x01
@@ -3379,10 +3439,10 @@
 //===========================================================================*/
 #define bond_set_locked_velocity_ID 0xE5
 #define bond_set_locked_velocity_LENGTH 0x03
-#define bond_set_locked_velocity(speed_x, speed_z) \
+#define bond_set_locked_velocity(x_speed60, z_speed60) \
         bond_set_locked_velocity_ID, \
-        speed_x, \
-        speed_z,
+        x_speed60, \
+        z_speed60,
 
 /*=============================================================================
 // name: object_in_room_with_pad
@@ -3499,11 +3559,11 @@
 //===========================================================================*/
 #define camera_orbit_pad_ID 0xEE
 #define camera_orbit_pad_LENGTH 0x0D
-#define camera_orbit_pad(lat_distance, vert_distance, orbit_speed, pad, y_pos_offset, initial_rotation) \
+#define camera_orbit_pad(lat_distance, vert_distance, orbit_speed60, pad, y_pos_offset, initial_rotation) \
         camera_orbit_pad_ID, \
         chararray16(lat_distance), \
         chararray16(vert_distance), \
-        chararray16(orbit_speed), \
+        chararray16(orbit_speed60), \
         chararray16(pad), \
         chararray16(y_pos_offset), \
         chararray16(initial_rotation),
@@ -3576,6 +3636,40 @@
 #define bond_if_damage_and_pickups_disabled(label) \
         bond_if_damage_and_pickups_disabled_ID, \
         label,
+
+/*=============================================================================
+// name: music_xtrack_play
+// command id: F4
+// info: play level's x track for duration
+//=============================================================================
+// note: seconds arguments are unsigned, available music slots range is 0-3.
+// stopped duration argument is used by command F5. when a slot is stopped,
+// the xtrack will continue to play until this or total time reaches 0.
+// if you do not want this to happen, set seconds stopped duration to 0
+//===========================================================================*/
+#define music_xtrack_play_ID 0xF4
+#define music_xtrack_play_LENGTH 0x04
+#define music_xtrack_play(music_slot, seconds_stopped_duration, seconds_total_duration) \
+        music_xtrack_play_ID, \
+        music_slot, \
+        seconds_stopped_duration, \
+        seconds_total_duration,
+
+/*=============================================================================
+// name: music_xtrack_stop
+// command id: F5
+// info: stop currently playing x track in slot
+//=============================================================================
+// note: music slots range is 0-3. use slot -1 to stop all xtrack slots instantly.
+// when stopping a music slot, it will let the track continue to play until the
+// seconds stopped duration time or total time (set by command F4) reaches zero.
+// this is ignored when using music slot -1
+//===========================================================================*/
+#define music_xtrack_stop_ID 0xF5
+#define music_xtrack_stop_LENGTH 0x02
+#define music_xtrack_stop(music_slot) \
+        music_xtrack_stop_ID, \
+        music_slot,
 
 /*=============================================================================
 // name: trigger_explosions_around_bond
