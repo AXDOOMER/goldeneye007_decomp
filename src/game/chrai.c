@@ -908,52 +908,52 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return ai_sleep_LENGTH;
             case ai_list_end_ID:
                 return ai_list_end_LENGTH;
-            case goto_ai_list_ID:
-                return goto_ai_list_LENGTH;
+            case jump_to_ai_list_ID:
+                return jump_to_ai_list_LENGTH;
             case set_return_ai_list_ID:
                 return set_return_ai_list_LENGTH;
-            case goto_return_ai_list_ID:
-                return goto_return_ai_list_LENGTH;
+            case jump_to_return_ai_list_ID:
+                return jump_to_return_ai_list_LENGTH;
             case  guard_animation_stop_ID:
                 return guard_animation_stop_LENGTH;
             case guard_kneel_ID:
                 return guard_kneel_LENGTH;
-            case guard_animation_ID:
-                return guard_animation_LENGTH;
-            case guard_playing_animation_ID:
-                return guard_playing_animation_LENGTH;
+            case guard_play_animation_ID:
+                return guard_play_animation_LENGTH;
+            case if_guard_playing_animation_ID:
+                return if_guard_playing_animation_LENGTH;
             case guard_points_at_bond_ID:
                 return guard_points_at_bond_LENGTH;
-            case guard_animation_looks_around_self_ID:
-                return guard_animation_looks_around_self_LENGTH;
-            case guard_sidesteps_ID:
-                return guard_sidesteps_LENGTH;
-            case guard_sideways_hop_ID:
-                return guard_sideways_hop_LENGTH;
-            case guard_sideways_run_ID:
-                return guard_sideways_run_LENGTH;
-            case guard_fire_walk_ID:
-                return guard_fire_walk_LENGTH;
-            case guard_fire_run_ID:
-                return guard_fire_run_LENGTH;
-            case guard_fire_roll_ID:
-                return guard_fire_roll_LENGTH;
-            case guard_fire_or_aim_at_target_ID:
-                return guard_fire_or_aim_at_target_LENGTH;
-            case guard_fire_or_aim_at_target_kneel_ID:
-                return guard_fire_or_aim_at_target_kneel_LENGTH;
-            case guard_fire_or_aim_at_target_update_ID:
-                return guard_fire_or_aim_at_target_update_LENGTH;
-            case guard_faces_target_ID:
-                return guard_faces_target_LENGTH;
+            case guard_looks_around_self_ID:
+                return guard_looks_around_self_LENGTH;
+            case guard_try_sidestepping_ID:
+                return guard_try_sidestepping_LENGTH;
+            case guard_try_hopping_sideways_ID:
+                return guard_try_hopping_sideways_LENGTH;
+            case guard_try_running_to_side_ID:
+                return guard_try_running_to_side_LENGTH;
+            case guard_try_firing_walk_ID:
+                return guard_try_firing_walk_LENGTH;
+            case guard_try_firing_run_ID:
+                return guard_try_firing_run_LENGTH;
+            case guard_firing_roll_ID:
+                return guard_firing_roll_LENGTH;
+            case guard_try_fire_or_aim_at_target_ID:
+                return guard_try_fire_or_aim_at_target_LENGTH;
+            case guard_try_fire_or_aim_at_target_kneel_ID:
+                return guard_try_fire_or_aim_at_target_kneel_LENGTH;
+            case guard_try_fire_or_aim_at_target_update_ID:
+                return guard_try_fire_or_aim_at_target_update_LENGTH;
+            case guard_try_facing_target_ID:
+                return guard_try_facing_target_LENGTH;
             case chr_hit_body_part_with_item_damage_ID:
                 return chr_hit_body_part_with_item_damage_LENGTH;
             case chr_hit_chr_body_part_with_held_item_ID:
                 return chr_hit_chr_body_part_with_held_item_LENGTH;
-            case guard_throw_grenade_ID:
-                return guard_throw_grenade_LENGTH;
-            case guard_drop_item_ID:
-                return guard_drop_item_LENGTH;
+            case guard_try_throwing_grenade_ID:
+                return guard_try_throwing_grenade_LENGTH;
+            case guard_try_dropping_item_ID:
+                return guard_try_dropping_item_LENGTH;
             case guard_runs_to_pad_ID:
                 return guard_runs_to_pad_LENGTH;
             case guard_runs_to_padpreset_ID:
@@ -970,122 +970,122 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return guard_remove_fade_LENGTH;
             case chr_remove_instant_ID:
                 return chr_remove_instant_LENGTH;
-            case guard_trigger_alarm_at_pad_ID:
-                return guard_trigger_alarm_at_pad_LENGTH;
+            case guard_try_triggering_alarm_at_pad_ID:
+                return guard_try_triggering_alarm_at_pad_LENGTH;
             case alarm_on_ID:
                 return alarm_on_LENGTH;
             case alarm_off_ID:
                 return alarm_off_LENGTH;
             case removed_command27_ID:
                 return removed_command27_LENGTH;
-            case guard_runs_to_bond_position_ID:
-                return guard_runs_to_bond_position_LENGTH;
-            case guard_walks_to_bond_position_ID:
-                return guard_walks_to_bond_position_LENGTH;
-            case guard_sprints_to_bond_position_ID:
-                return guard_sprints_to_bond_position_LENGTH;
+            case guard_try_running_to_bond_position_ID:
+                return guard_try_running_to_bond_position_LENGTH;
+            case guard_try_walking_to_bond_position_ID:
+                return guard_try_walking_to_bond_position_LENGTH;
+            case guard_try_sprinting_to_bond_position_ID:
+                return guard_try_sprinting_to_bond_position_LENGTH;
             case removed_command2B_ID:
                 return removed_command2B_LENGTH;
-            case guard_runs_to_chr_position_ID:
-                return guard_runs_to_chr_position_LENGTH;
-            case guard_walks_to_chr_position_ID:
-                return guard_walks_to_chr_position_LENGTH;
-            case guard_sprints_to_chr_position_ID:
-                return guard_sprints_to_chr_position_LENGTH;
-            case guard_has_stopped_moving_ID:
-                return guard_has_stopped_moving_LENGTH;
-            case chr_dying_or_dead_ID:
-                return chr_dying_or_dead_LENGTH;
-            case chr_does_not_exist_ID:
-                return chr_does_not_exist_LENGTH;
-            case guard_sees_bond_ID:
-                return guard_sees_bond_LENGTH;
+            case guard_try_running_to_chr_position_ID:
+                return guard_try_running_to_chr_position_LENGTH;
+            case guard_try_walking_to_chr_position_ID:
+                return guard_try_walking_to_chr_position_LENGTH;
+            case guard_try_sprinting_to_chr_position_ID:
+                return guard_try_sprinting_to_chr_position_LENGTH;
+            case if_guard_has_stopped_moving_ID:
+                return if_guard_has_stopped_moving_LENGTH;
+            case if_chr_dying_or_dead_ID:
+                return if_chr_dying_or_dead_LENGTH;
+            case if_chr_does_not_exist_ID:
+                return if_chr_does_not_exist_LENGTH;
+            case if_guard_sees_bond_ID:
+                return if_guard_sees_bond_LENGTH;
             case random_generate_ID:
                 return random_generate_LENGTH;
-            case random_less_than_ID:
-                return random_less_than_LENGTH;
-            case random_greater_than_ID:
-                return random_greater_than_LENGTH;
-            case alarm_is_on_unused_ID:
+            case if_random_seed_less_than_ID:
+                return if_random_seed_less_than_LENGTH;
+            case if_random_seed_greater_than_ID:
+                return if_random_seed_greater_than_LENGTH;
+            case if_alarm_is_on_unused_ID:
                 return alarm_if_on_unused_LENGTH;
-            case alarm_is_on_ID:
+            case if_alarm_is_on_ID:
                 return alarm_if_on_LENGTH;
-            case gas_is_leaking_ID:
-                return gas_is_leaking_LENGTH;
-            case guard_heard_bond_ID:
-                return guard_heard_bond_LENGTH;
-            case guard_see_guard_shot_ID:
-                return guard_see_guard_shot_LENGTH;
-            case guard_see_guard_die_ID:
-                return guard_see_guard_die_LENGTH;
-            case guard_and_bond_within_line_of_sight_ID:
-                return guard_and_bond_within_line_of_sight_LENGTH;
-            case guard_and_bond_within_partial_line_of_sight_ID:
-                return guard_and_bond_within_partial_line_of_sight_LENGTH;
-            case guard_was_shot_within_last_10_secs_ID:
-                return guard_was_shot_within_last_10_secs_LENGTH;
-            case guard_heard_bond_within_last_10_secs_ID:
-                return guard_heard_bond_within_last_10_secs_LENGTH;
-            case guard_in_room_with_chr_ID:
-                return guard_in_room_with_chr_LENGTH;
-            case guard_has_not_been_seen_ID:
-                return guard_has_not_been_seen_LENGTH;
-            case guard_is_on_screen_ID:
-                return guard_is_on_screen_LENGTH;
-            case guard_room_containing_self_is_on_screen_ID:
-                return guard_room_containing_self_is_on_screen_LENGTH;
-            case room_containing_pad_is_on_screen_ID:
-                return room_containing_pad_is_on_screen_LENGTH;
-            case guard_is_targeted_by_bond_ID:
-                return guard_is_targeted_by_bond_LENGTH;
-            case guard_shot_from_bond_missed_ID:
-                return guard_shot_from_bond_missed_LENGTH;
-            case guard_counter_clockwise_direction_to_bond_less_than_ID:
-                return guard_counter_clockwise_direction_to_bond_less_than_LENGTH;
-            case guard_counter_clockwise_direction_to_bond_greater_than_ID:
-                return guard_counter_clockwise_direction_to_bond_greater_than_LENGTH;
-            case guard_counter_clockwise_direction_from_bond_less_than_ID:
-                return guard_counter_clockwise_direction_from_bond_less_than_LENGTH;
-            case guard_counter_clockwise_direction_from_bond_greater_than_ID:
-                return guard_counter_clockwise_direction_from_bond_greater_than_LENGTH;
-            case guard_distance_to_bond_less_than_ID:
-                return guard_distance_to_bond_less_than_LENGTH;
-            case guard_distance_to_bond_greater_than_ID:
-                return guard_distance_to_bond_greater_than_LENGTH;
-            case chr_distance_to_pad_less_than_ID:
-                return chr_distance_to_pad_less_than_LENGTH;
-            case chr_distance_to_pad_greater_than_ID:
-                return chr_distance_to_pad_greater_than_LENGTH;
-            case guard_distance_to_chr_less_than_ID:
-                return guard_distance_to_chr_less_than_LENGTH;
-            case guard_distance_to_chr_greater_than_ID:
-                return guard_distance_to_chr_greater_than_LENGTH;
-            case guard_set_chr_preset_to_guard_within_distance_ID:
-                return guard_set_chr_preset_to_guard_within_distance_LENGTH;
-            case bond_distance_to_pad_less_than_ID:
-                return bond_distance_to_pad_less_than_LENGTH;
-            case bond_distance_to_pad_greater_than_ID:
-                return bond_distance_to_pad_greater_than_LENGTH;
-            case chr_in_room_with_pad_ID:
-                return chr_in_room_with_pad_LENGTH;
-            case bond_in_room_with_pad_ID:
-                return bond_in_room_with_pad_LENGTH;
-            case bond_collected_object_ID:
-                return bond_collected_object_LENGTH;
-            case item_is_stationary_within_level_ID:
-                return item_is_stationary_within_level_LENGTH;
-            case item_is_attached_to_object_ID:
-                return item_is_attached_to_object_LENGTH;
-            case bond_has_item_equipped_ID:
-                return bond_has_item_equipped_LENGTH;
-            case object_exists_ID:
-                return object_exists_LENGTH;
-            case object_not_destroyed_ID:
-                return object_not_destroyed_LENGTH;
-            case object_was_activated_ID:
-                return object_was_activated_LENGTH;
-            case bond_used_gadget_on_object_ID:
-                return bond_used_gadget_on_object_LENGTH;
+            case if_gas_is_leaking_ID:
+                return if_gas_is_leaking_LENGTH;
+            case if_guard_heard_bond_ID:
+                return if_guard_heard_bond_LENGTH;
+            case if_guard_see_another_guard_shot_ID:
+                return if_guard_see_another_guard_shot_LENGTH;
+            case if_guard_see_another_guard_die_ID:
+                return if_guard_see_another_guard_die_LENGTH;
+            case if_guard_and_bond_within_line_of_sight_ID:
+                return if_guard_and_bond_within_line_of_sight_LENGTH;
+            case if_guard_and_bond_within_partial_line_of_sight_ID:
+                return if_guard_and_bond_within_partial_line_of_sight_LENGTH;
+            case if_guard_was_shot_within_last_10_secs_ID:
+                return if_guard_was_shot_within_last_10_secs_LENGTH;
+            case if_guard_heard_bond_within_last_10_secs_ID:
+                return if_guard_heard_bond_within_last_10_secs_LENGTH;
+            case if_guard_in_room_with_chr_ID:
+                return if_guard_in_room_with_chr_LENGTH;
+            case if_guard_is_on_screen_ID:
+                return if_guard_is_on_screen_LENGTH;
+            case if_guard_has_not_been_seen_ID:
+                return if_guard_has_not_been_seen_LENGTH;
+            case if_guard_room_containing_self_is_on_screen_ID:
+                return if_guard_room_containing_self_is_on_screen_LENGTH;
+            case if_room_containing_pad_is_on_screen_ID:
+                return if_room_containing_pad_is_on_screen_LENGTH;
+            case if_guard_is_targeted_by_bond_ID:
+                return if_guard_is_targeted_by_bond_LENGTH;
+            case if_guard_shot_from_bond_missed_ID:
+                return if_guard_shot_from_bond_missed_LENGTH;
+            case if_guard_counter_clockwise_direction_to_bond_less_than_ID:
+                return if_guard_counter_clockwise_direction_to_bond_less_than_LENGTH;
+            case if_guard_counter_clockwise_direction_to_bond_greater_than_ID:
+                return if_guard_counter_clockwise_direction_to_bond_greater_than_LENGTH;
+            case if_guard_counter_clockwise_direction_from_bond_less_than_ID:
+                return if_guard_counter_clockwise_direction_from_bond_less_than_LENGTH;
+            case if_guard_counter_clockwise_direction_from_bond_greater_than_ID:
+                return if_guard_counter_clockwise_direction_from_bond_greater_than_LENGTH;
+            case if_guard_distance_to_bond_less_than_ID:
+                return if_guard_distance_to_bond_less_than_LENGTH;
+            case if_guard_distance_to_bond_greater_than_ID:
+                return if_guard_distance_to_bond_greater_than_LENGTH;
+            case if_chr_distance_to_pad_less_than_ID:
+                return if_chr_distance_to_pad_less_than_LENGTH;
+            case if_chr_distance_to_pad_greater_than_ID:
+                return if_chr_distance_to_pad_greater_than_LENGTH;
+            case if_guard_distance_to_chr_less_than_ID:
+                return if_guard_distance_to_chr_less_than_LENGTH;
+            case if_guard_distance_to_chr_greater_than_ID:
+                return if_guard_distance_to_chr_greater_than_LENGTH;
+            case guard_try_setting_chr_preset_to_guard_within_distance_ID:
+                return guard_try_setting_chr_preset_to_guard_within_distance_LENGTH;
+            case if_bond_distance_to_pad_less_than_ID:
+                return if_bond_distance_to_pad_less_than_LENGTH;
+            case if_bond_distance_to_pad_greater_than_ID:
+                return if_bond_distance_to_pad_greater_than_LENGTH;
+            case if_chr_in_room_with_pad_ID:
+                return if_chr_in_room_with_pad_LENGTH;
+            case if_bond_in_room_with_pad_ID:
+                return if_bond_in_room_with_pad_LENGTH;
+            case if_bond_collected_object_ID:
+                return if_bond_collected_object_LENGTH;
+            case if_item_is_stationary_within_level_ID:
+                return if_item_is_stationary_within_level_LENGTH;
+            case if_item_is_attached_to_object_ID:
+                return if_item_is_attached_to_object_LENGTH;
+            case if_bond_has_item_equipped_ID:
+                return if_bond_has_item_equipped_LENGTH;
+            case if_object_exists_ID:
+                return if_object_exists_LENGTH;
+            case if_object_not_destroyed_ID:
+                return if_object_not_destroyed_LENGTH;
+            case if_object_was_activated_ID:
+                return if_object_was_activated_LENGTH;
+            case if_bond_used_gadget_on_object_ID:
+                return if_bond_used_gadget_on_object_LENGTH;
             case object_activate_ID:
                 return object_activate_LENGTH;
             case object_destroy_ID:
@@ -1106,72 +1106,72 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return door_open_LENGTH;
             case door_close_ID:
                 return door_close_LENGTH;
-            case door_check_state_ID:
-                return door_check_state_LENGTH;
-            case door_has_been_opened_before_ID:
-                return door_has_been_opened_before_LENGTH;
+            case if_door_state_equal_ID:
+                return if_door_state_equal_LENGTH;
+            case if_door_has_been_opened_before_ID:
+                return if_door_has_been_opened_before_LENGTH;
             case door_set_lock_ID:
                 return door_set_lock_LENGTH;
             case door_unset_lock_ID:
                 return door_unset_lock_LENGTH;
-            case door_check_lock_ID:
-                return door_check_lock_LENGTH;
-            case objective_num_complete_ID:
-                return objective_num_complete_LENGTH;
-            case game_difficulty_less_than_ID:
-                return game_difficulty_less_than_LENGTH;
-            case game_difficulty_greater_than_ID:
-                return game_difficulty_greater_than_LENGTH;
-            case mission_time_less_than_ID:
-                return mission_time_less_than_LENGTH;
-            case mission_time_greater_than_ID:
-                return mission_time_greater_than_LENGTH;
-            case system_power_time_less_than_ID:
-                return system_power_time_less_than_LENGTH;
-            case system_power_time_greater_than_ID:
-                return system_power_time_greater_than_LENGTH;
-            case level_id_less_than_ID:
-                return level_id_less_than_LENGTH;
-            case level_id_greater_than_ID:
-                return level_id_greater_than_LENGTH;
-            case guard_hits_less_than_ID:
-                return guard_hits_less_than_LENGTH;
-            case guard_hits_greater_than_ID:
-                return guard_hits_greater_than_LENGTH;
-            case guard_hits_missed_less_than_ID:
-                return guard_hits_missed_less_than_LENGTH;
-            case guard_hits_missed_greater_than_ID:
-                return guard_hits_missed_greater_than_LENGTH;
-            case chr_health_less_than_ID:
-                return chr_health_less_than_LENGTH;
-            case chr_health_greater_than_ID:
-                return chr_health_greater_than_LENGTH;
-            case chr_was_damaged_since_last_check_ID:
-                return chr_was_damaged_since_last_check_LENGTH;
-            case bond_health_less_than_ID:
-                return bond_health_less_than_LENGTH;
-            case bond_health_greater_than_ID:
-                return bond_health_greater_than_LENGTH;
-            case chr_byte_1_set_ID:
-                return chr_byte_1_set_LENGTH;
-            case chr_byte_1_add_ID:
-                return chr_byte_1_add_LENGTH;
-            case chr_byte_1_subtract_ID:
-                return chr_byte_1_subtract_LENGTH;
-            case chr_byte_1_less_than_ID:
-                return chr_byte_1_less_than_LENGTH;
-            case chr_byte_1_less_than_random_ID:
-                return chr_byte_1_less_than_random_LENGTH;
-            case chr_byte_2_set_ID:
-                return chr_byte_2_set_LENGTH;
-            case chr_byte_2_add_ID:
-                return chr_byte_2_add_LENGTH;
-            case chr_byte_2_subtract_ID:
-                return chr_byte_2_subtract_LENGTH;
-            case chr_byte_2_less_than_ID:
-                return chr_byte_2_less_than_LENGTH;
-            case chr_byte_2_less_than_random_ID:
-                return chr_byte_2_less_than_random_LENGTH;
+            case if_door_lock_equal_ID:
+                return if_door_lock_equal_LENGTH;
+            case if_objective_num_complete_ID:
+                return if_objective_num_complete_LENGTH;
+            case if_game_difficulty_less_than_ID:
+                return if_game_difficulty_less_than_LENGTH;
+            case if_game_difficulty_greater_than_ID:
+                return if_game_difficulty_greater_than_LENGTH;
+            case if_mission_time_less_than_ID:
+                return if_mission_time_less_than_LENGTH;
+            case if_mission_time_greater_than_ID:
+                return if_mission_time_greater_than_LENGTH;
+            case if_system_power_time_less_than_ID:
+                return if_system_power_time_less_than_LENGTH;
+            case if_system_power_time_greater_than_ID:
+                return if_system_power_time_greater_than_LENGTH;
+            case if_level_id_less_than_ID:
+                return if_level_id_less_than_LENGTH;
+            case if_level_id_greater_than_ID:
+                return if_level_id_greater_than_LENGTH;
+            case if_guard_hits_less_than_ID:
+                return if_guard_hits_less_than_LENGTH;
+            case if_guard_hits_greater_than_ID:
+                return if_guard_hits_greater_than_LENGTH;
+            case if_guard_hits_missed_less_than_ID:
+                return if_guard_hits_missed_less_than_LENGTH;
+            case if_guard_hits_missed_greater_than_ID:
+                return if_guard_hits_missed_greater_than_LENGTH;
+            case if_chr_health_less_than_ID:
+                return if_chr_health_less_than_LENGTH;
+            case if_chr_health_greater_than_ID:
+                return if_chr_health_greater_than_LENGTH;
+            case if_chr_was_damaged_since_last_check_ID:
+                return if_chr_was_damaged_since_last_check_LENGTH;
+            case if_bond_health_less_than_ID:
+                return if_bond_health_less_than_LENGTH;
+            case if_bond_health_greater_than_ID:
+                return if_bond_health_greater_than_LENGTH;
+            case custom_byte_1_set_ID:
+                return custom_byte_1_set_LENGTH;
+            case custom_byte_1_add_ID:
+                return custom_byte_1_add_LENGTH;
+            case custom_byte_1_subtract_ID:
+                return custom_byte_1_subtract_LENGTH;
+            case if_custom_byte_1_less_than_ID:
+                return if_custom_byte_1_less_than_LENGTH;
+            case if_custom_byte_1_less_than_random_seed_ID:
+                return if_custom_byte_1_less_than_random_seed_LENGTH;
+            case custom_byte_2_set_ID:
+                return custom_byte_2_set_LENGTH;
+            case custom_byte_2_add_ID:
+                return custom_byte_2_add_LENGTH;
+            case custom_byte_2_subtract_ID:
+                return custom_byte_2_subtract_LENGTH;
+            case if_custom_byte_2_less_than_ID:
+                return if_custom_byte_2_less_than_LENGTH;
+            case if_custom_byte_2_less_than_random_seed_ID:
+                return if_custom_byte_2_less_than_random_seed_LENGTH;
             case guard_set_hearing_scale_ID:
                 return guard_set_hearing_scale_LENGTH;
             case guard_set_vision_range_ID:
@@ -1194,38 +1194,38 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return guard_bitfield_set_on_LENGTH;
             case guard_bitfield_set_off_ID:
                 return guard_bitfield_set_off_LENGTH;
-            case guard_bitfield_if_on_ID:
-                return guard_bitfield_if_on_LENGTH;
+            case if_guard_bitfield_is_set_on_ID:
+                return if_guard_bitfield_is_set_on_LENGTH;
             case chr_bitfield_set_on_ID:
                 return chr_bitfield_set_on_LENGTH;
             case chr_bitfield_set_off_ID:
                 return chr_bitfield_set_off_LENGTH;
-            case chr_bitfield_if_on_ID:
-                return chr_bitfield_if_on_LENGTH;
+            case if_chr_bitfield_is_set_on_ID:
+                return if_chr_bitfield_is_set_on_LENGTH;
             case guard_flags_set_on_ID:
                 return guard_flags_set_on_LENGTH;
             case guard_flags_set_off_ID:
                 return guard_flags_set_off_LENGTH;
-            case guard_flags_if_on_ID:
-                return guard_flags_if_on_LENGTH;
+            case if_guard_flags_is_set_on_ID:
+                return if_guard_flags_is_set_on_LENGTH;
             case chr_flags_set_on_ID:
                 return chr_flags_set_on_LENGTH;
             case chr_flags_set_off_ID:
                 return chr_flags_set_off_LENGTH;
-            case chr_flags_if_on_ID:
-                return chr_flags_if_on_LENGTH;
+            case if_chr_flags_is_set_on_ID:
+                return if_chr_flags_is_set_on_LENGTH;
             case object_flags_1_set_on_ID:
                 return object_flags_1_set_on_LENGTH;
             case object_flags_1_set_off_ID:
                 return object_flags_1_set_off_LENGTH;
-            case object_flags_1_if_on_ID:
-                return object_flags_1_if_on_LENGTH;
+            case if_object_flags_1_is_set_on_ID:
+                return if_object_flags_1_is_set_on_LENGTH;
             case object_flags_2_set_on_ID:
                 return object_flags_2_set_on_LENGTH;
             case object_flags_2_set_off_ID:
                 return object_flags_2_set_off_LENGTH;
-            case object_flags_2_if_on_ID:
-                return object_flags_2_if_on_LENGTH;
+            case if_object_flags_2_is_set_on_ID:
+                return if_object_flags_2_is_set_on_LENGTH;
             case guard_set_chr_preset_ID:
                 return guard_set_chr_preset_LENGTH;
             case chr_set_chr_preset_ID:
@@ -1241,46 +1241,46 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                         return i;
                 }
                 return debug_log_LENGTH;
-            case chr_timer_reset_start_ID:
-                return chr_timer_reset_start_LENGTH;
-            case chr_timer_reset_ID:
-                return chr_timer_reset_LENGTH;
-            case chr_timer_stop_ID:
-                return chr_timer_stop_LENGTH;
-            case chr_timer_start_ID:
-                return chr_timer_start_LENGTH;
-            case chr_timer_has_stopped_ID:
-                return chr_timer_has_stopped_LENGTH;
-            case chr_timer_less_than_ID:
-                return chr_timer_less_than_LENGTH;
-            case chr_timer_greater_than_ID:
-                return chr_timer_greater_than_LENGTH;
-            case hud_timer_show_ID:
-                return hud_timer_show_LENGTH;
-            case hud_timer_hide_ID:
-                return hud_timer_hide_LENGTH;
-            case hud_timer_set_ID:
-                return hud_timer_set_LENGTH;
-            case hud_timer_stop_ID:
-                return hud_timer_stop_LENGTH;
-            case hud_timer_start_ID:
-                return hud_timer_start_LENGTH;
-            case hud_timer_has_stopped_ID:
-                return hud_timer_has_stopped_LENGTH;
-            case hud_timer_less_than_ID:
-                return hud_timer_less_than_LENGTH;
-            case hud_timer_greater_than_ID:
-                return hud_timer_greater_than_LENGTH;
-            case chr_spawn_at_pad_ID:
-                return chr_spawn_at_pad_LENGTH;
-            case chr_spawn_next_to_unseen_chr_ID:
-                return chr_spawn_next_to_unseen_chr_LENGTH;
-            case guard_spawn_item_ID:
-                return guard_spawn_item_LENGTH;
-            case guard_spawn_hat_ID:
-                return guard_spawn_hat_LENGTH;
-            case chr_spawn_clone_ID:
-                return chr_spawn_clone_LENGTH;
+            case local_counter_reset_start_ID:
+                return local_counter_reset_start_LENGTH;
+            case local_counter_reset_ID:
+                return local_counter_reset_LENGTH;
+            case local_counter_stop_ID:
+                return local_counter_stop_LENGTH;
+            case local_counter_start_ID:
+                return local_counter_start_LENGTH;
+            case if_local_counter_has_stopped_ID:
+                return if_local_counter_has_stopped_LENGTH;
+            case if_local_counter_less_than_ID:
+                return if_local_counter_less_than_LENGTH;
+            case if_local_counter_greater_than_ID:
+                return if_local_counter_greater_than_LENGTH;
+            case hud_countdown_show_ID:
+                return hud_countdown_show_LENGTH;
+            case hud_countdown_hide_ID:
+                return hud_countdown_hide_LENGTH;
+            case hud_countdown_set_ID:
+                return hud_countdown_set_LENGTH;
+            case hud_countdown_stop_ID:
+                return hud_countdown_stop_LENGTH;
+            case hud_countdown_start_ID:
+                return hud_countdown_start_LENGTH;
+            case if_hud_countdown_has_stopped_ID:
+                return if_hud_countdown_has_stopped_LENGTH;
+            case if_hud_countdown_less_than_ID:
+                return if_hud_countdown_less_than_LENGTH;
+            case if_hud_countdown_greater_than_ID:
+                return if_hud_countdown_greater_than_LENGTH;
+            case chr_try_spawning_at_pad_ID:
+                return chr_try_spawning_at_pad_LENGTH;
+            case chr_try_spawning_next_to_unseen_chr_ID:
+                return chr_try_spawning_next_to_unseen_chr_LENGTH;
+            case guard_try_spawning_item_ID:
+                return guard_try_spawning_item_LENGTH;
+            case guard_try_spawning_hat_ID:
+                return guard_try_spawning_hat_LENGTH;
+            case chr_try_spawning_clone_ID:
+                return chr_try_spawning_clone_LENGTH;
             case text_print_bottom_ID:
                 return text_print_bottom_LENGTH;
             case text_print_top_ID:
@@ -1297,22 +1297,22 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return sfx_fade_channel_volume_LENGTH;
             case sfx_stop_channel_ID:
                 return sfx_stop_channel_LENGTH;
-            case sfx_channel_volume_less_than_ID:
-                return sfx_channel_volume_less_than_LENGTH;
+            case if_sfx_channel_volume_less_than_ID:
+                return if_sfx_channel_volume_less_than_LENGTH;
             case vehicle_start_path_ID:
                 return vehicle_start_path_LENGTH;
             case vehicle_speed_ID:
                 return vehicle_speed_LENGTH;
             case aircraft_rotor_speed_ID:
                 return aircraft_rotor_speed_LENGTH;
-            case camera_if_in_intro_ID:
-                return camera_if_in_intro_LENGTH;
-            case camera_if_in_bond_swirl_ID:
-                return camera_if_in_bond_swirl_LENGTH;
+            case if_camera_is_in_intro_ID:
+                return if_camera_is_in_intro_LENGTH;
+            case if_camera_is_in_bond_swirl_ID:
+                return if_camera_is_in_bond_swirl_LENGTH;
             case tv_change_screen_bank_ID:
                 return tv_change_screen_bank_LENGTH;
-            case bond_in_tank_ID:
-                return bond_in_tank_LENGTH;
+            case if_bond_in_tank_ID:
+                return if_bond_in_tank_LENGTH;
             case exit_level_ID:
                 return exit_level_LENGTH;
             case camera_return_to_bond_ID:
@@ -1321,20 +1321,20 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return camera_look_at_bond_from_pad_LENGTH;
             case camera_switch_ID:
                 return camera_switch_LENGTH;
-            case bond_y_pos_less_than_ID:
-                return bond_y_pos_less_than_LENGTH;
+            case if_bond_y_pos_less_than_ID:
+                return if_bond_y_pos_less_than_LENGTH;
             case hud_hide_and_lock_controls_ID:
                 return hud_hide_and_lock_controls_LENGTH;
             case hud_show_all_ID:
                 return hud_show_all_LENGTH;
-            case chr_move_to_pad_ID:
-                return chr_move_to_pad_LENGTH;
+            case chr_try_teleporting_to_pad_ID:
+                return chr_try_teleporting_to_pad_LENGTH;
             case screen_fade_to_black_ID:
                 return screen_fade_to_black_LENGTH;
             case screen_fade_from_black_ID:
                 return screen_fade_from_black_LENGTH;
-            case screen_fade_completed_ID:
-                return screen_fade_completed_LENGTH;
+            case if_screen_fade_completed_ID:
+                return if_screen_fade_completed_LENGTH;
             case chr_hide_all_ID:
                 return chr_hide_all_LENGTH;
             case chr_show_all_ID:
@@ -1343,28 +1343,28 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return door_open_instant_LENGTH;
             case chr_remove_item_in_hand_ID:
                 return chr_remove_item_in_hand_LENGTH;
-            case number_of_active_players_less_than_ID:
-                return number_of_active_players_less_than_LENGTH;
-            case bond_item_total_ammo_less_than_ID:
-                return bond_item_total_ammo_less_than_LENGTH;
+            case if_number_of_active_players_less_than_ID:
+                return if_number_of_active_players_less_than_LENGTH;
+            case if_bond_item_total_ammo_less_than_ID:
+                return if_bond_item_total_ammo_less_than_LENGTH;
             case bond_equip_item_ID:
                 return bond_equip_item_LENGTH;
             case bond_equip_item_cinema_ID:
                 return bond_equip_item_cinema_LENGTH;
             case bond_set_locked_velocity_ID:
                 return bond_set_locked_velocity_LENGTH;
-            case object_in_room_with_pad_ID:
-                return object_in_room_with_pad_LENGTH;
-            case guard_is_firing_and_unknown_flag_ID:
-                return guard_is_firing_and_unknown_flag_LENGTH;
-            case guard_is_firing_ID:
-                return guard_is_firing_LENGTH;
+            case if_object_in_room_with_pad_ID:
+                return if_object_in_room_with_pad_LENGTH;
+            case if_guard_is_firing_and_unknown_flag_ID:
+                return if_guard_is_firing_and_unknown_flag_LENGTH;
+            case if_guard_is_firing_ID:
+                return if_guard_is_firing_LENGTH;
             case gas_leak_and_switch_fog_ID:
                 return gas_leak_and_switch_fog_LENGTH;
             case mission_time_stop_and_exit_level_on_button_input_ID:
                 return mission_time_stop_and_exit_level_on_button_input_LENGTH;
-            case bond_is_dead_ID:
-                return bond_is_dead_LENGTH;
+            case if_bond_is_dead_ID:
+                return if_bond_is_dead_LENGTH;
             case bond_disable_damage_and_pickups_ID:
                 return bond_disable_damage_and_pickups_LENGTH;
             case bond_hide_weapons_ID:
@@ -1373,24 +1373,24 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return camera_orbit_pad_LENGTH;
             case credits_roll_ID:
                 return credits_roll_LENGTH;
-            case credits_completed_ID:
-                return credits_completed_LENGTH;
-            case objective_all_completed_ID:
-                return objective_all_completed_LENGTH;
-            case bond_check_folder_actor_ID:
-                return bond_check_folder_actor_LENGTH;
-            case bond_if_damage_and_pickups_disabled_ID:
-                return bond_if_damage_and_pickups_disabled_LENGTH;
+            case if_credits_has_completed_ID:
+                return if_credits_has_completed_LENGTH;
+            case if_objective_all_completed_ID:
+                return if_objective_all_completed_LENGTH;
+            case if_folder_actor_is_equal_ID:
+                return if_folder_actor_is_equal_LENGTH;
+            case if_bond_damage_and_pickups_disabled_ID:
+                return if_bond_damage_and_pickups_disabled_LENGTH;
             case music_xtrack_play_ID:
                 return music_xtrack_play_LENGTH;
             case music_xtrack_stop_ID:
                 return music_xtrack_stop_LENGTH;
             case trigger_explosions_around_bond_ID:
                 return trigger_explosions_around_bond_LENGTH;
-            case bond_killed_civilians_greater_than_ID:
-                return bond_killed_civilians_greater_than_LENGTH;
-            case chr_was_shot_since_last_check_ID:
-                return chr_was_shot_since_last_check_LENGTH;
+            case if_killed_civilians_greater_than_ID:
+                return if_killed_civilians_greater_than_LENGTH;
+            case if_chr_was_shot_since_last_check_ID:
+                return if_chr_was_shot_since_last_check_LENGTH;
             case bond_killed_in_action_ID:
                 return bond_killed_in_action_LENGTH;
             case guard_raises_arms_ID:
