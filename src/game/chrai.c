@@ -936,8 +936,8 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return guard_try_firing_walk_LENGTH;
             case guard_try_firing_run_ID:
                 return guard_try_firing_run_LENGTH;
-            case guard_firing_roll_ID:
-                return guard_firing_roll_LENGTH;
+            case guard_try_firing_roll_ID:
+                return guard_try_firing_roll_LENGTH;
             case guard_try_fire_or_aim_at_target_ID:
                 return guard_try_fire_or_aim_at_target_LENGTH;
             case guard_try_fire_or_aim_at_target_kneel_ID:

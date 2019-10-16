@@ -125,76 +125,76 @@
 #define ANIM_DEFAULT_INTERPOLATION      0x10 // use this if interpolation value isn't important
 
 // command 14/15/16/17 - target flags
-#define TARGET_BOND         0x0001 // set target to bond (ignores target argument)
-#define TARGET_FRONT_OF_CHR 0x0002 // set target to front of chr
-#define TARGET_CHR          0x0004 // set target type to chr_num
-#define TARGET_PAD          0x0008 // set target type to pad
-#define TARGET_COMPASS      0x0010 // set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
-#define TARGET_AIM_ONLY     0x0020 // aim at target instead of firing
+#define TARGET_BOND                     0x0001 // set target to bond (ignores target argument)
+#define TARGET_FRONT_OF_CHR             0x0002 // set target to front of chr
+#define TARGET_CHR                      0x0004 // set target type to chr_num
+#define TARGET_PAD                      0x0008 // set target type to pad
+#define TARGET_COMPASS                  0x0010 // set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
+#define TARGET_AIM_ONLY                 0x0020 // aim at target instead of firing
 
 // command 18/19 - target body part values
-#define HIT_NULL_PART        0x00 // null part, no reaction - 1x damage
-#define HIT_LEFT_FOOT        0x01 // left foot - 1x damage
-#define HIT_LEFT_LEG         0x02 // left leg - 1x damage
-#define HIT_LEFT_THIGH       0x03 // left thigh - 1x damage
-#define HIT_RIGHT_FOOT       0x04 // right foot - 1x damage
-#define HIT_RIGHT_LEG        0x05 // right leg - 1x damage
-#define HIT_RIGHT_THIGH      0x06 // right thigh - 1x damage
-#define HIT_PELVIS           0x07 // pelvis - 1x damage
-#define HIT_HEAD             0x08 // head - 4x damage
-#define HIT_LEFT_HAND        0x09 // left hand - 1x damage
-#define HIT_LEFT_ARM         0x0A // left arm - 1x damage
-#define HIT_LEFT_SHOULDER    0x0B // left shoulder - 1x damage
-#define HIT_RIGHT_HAND       0x0C // right hand - 1x damage
-#define HIT_RIGHT_ARM        0x0D // right arm - 1x damage
-#define HIT_RIGHT_SHOULDER   0x0E // right shoulder - 1x damage
-#define HIT_CHEST            0x0F // chest - 2x damage
+#define HIT_NULL_PART                   0x00 // null part, no reaction - 1x damage
+#define HIT_LEFT_FOOT                   0x01 // left foot - 1x damage
+#define HIT_LEFT_LEG                    0x02 // left leg - 1x damage
+#define HIT_LEFT_THIGH                  0x03 // left thigh - 1x damage
+#define HIT_RIGHT_FOOT                  0x04 // right foot - 1x damage
+#define HIT_RIGHT_LEG                   0x05 // right leg - 1x damage
+#define HIT_RIGHT_THIGH                 0x06 // right thigh - 1x damage
+#define HIT_PELVIS                      0x07 // pelvis - 1x damage
+#define HIT_HEAD                        0x08 // head - 4x damage
+#define HIT_LEFT_HAND                   0x09 // left hand - 1x damage
+#define HIT_LEFT_ARM                    0x0A // left arm - 1x damage
+#define HIT_LEFT_SHOULDER               0x0B // left shoulder - 1x damage
+#define HIT_RIGHT_HAND                  0x0C // right hand - 1x damage
+#define HIT_RIGHT_ARM                   0x0D // right arm - 1x damage
+#define HIT_RIGHT_SHOULDER              0x0E // right shoulder - 1x damage
+#define HIT_CHEST                       0x0F // chest - 2x damage
 
 // command 68 - door states
-#define DOOR_STATE_CLOSED       0x01 // closed
-#define DOOR_STATE_OPEN         0x02 // opened
-#define DOOR_STATE_CLOSING      0x04 // closing
-#define DOOR_STATE_OPENING      0x08 // opening
+#define DOOR_STATE_CLOSED               0x01 // closed
+#define DOOR_STATE_OPEN                 0x02 // opened
+#define DOOR_STATE_CLOSING              0x04 // closing
+#define DOOR_STATE_OPENING              0x08 // opening
 
 // command BD/BE - spawn flags
-#define SPAWN_SUNGLASSES            0x00000001 // sunglasses
-#define SPAWN_SUNGLASSES_RANDOM     0x00000002 // sunglasses (random, 50% of the time)
-#define SPAWN_00000004              0x00000004 // unknown
-#define SPAWN_00000008              0x00000008 // unknown
-#define SPAWN_00000010              0x00000010 // unknown
-#define SPAWN_00000020              0x00000020 // unknown
-#define SPAWN_00000040              0x00000040 // unknown
-#define SPAWN_00000080              0x00000080 // unknown
-#define SPAWN_00000100              0x00000100 // unknown
-#define SPAWN_00000200              0x00000200 // unknown
-#define SPAWN_00000400              0x00000400 // unknown
-#define SPAWN_00000800              0x00000800 // unknown
-#define SPAWN_00001000              0x00001000 // unknown
-#define SPAWN_00002000              0x00002000 // unknown
-#define SPAWN_00004000              0x00004000 // unknown
-#define SPAWN_00008000              0x00008000 // unknown
-#define SPAWN_00010000              0x00010000 // unknown
-#define SPAWN_00020000              0x00020000 // unknown
-#define SPAWN_00040000              0x00040000 // unknown
-#define SPAWN_00080000              0x00080000 // unknown
-#define SPAWN_00100000              0x00100000 // unknown
-#define SPAWN_00200000              0x00200000 // unknown
-#define SPAWN_00400000              0x00400000 // unknown
-#define SPAWN_00800000              0x00800000 // unknown
-#define SPAWN_01000000              0x01000000 // unknown
-#define SPAWN_02000000              0x02000000 // unknown
-#define SPAWN_04000000              0x04000000 // unknown
-#define SPAWN_08000000              0x08000000 // unknown
-#define SPAWN_10000000              0x10000000 // unknown
-#define SPAWN_20000000              0x20000000 // unknown
-#define SPAWN_40000000              0x40000000 // unknown
-#define SPAWN_80000000              0x80000000 // unknown
+#define SPAWN_SUNGLASSES                0x00000001 // sunglasses
+#define SPAWN_SUNGLASSES_RANDOM         0x00000002 // sunglasses (random, 50% of the time)
+#define SPAWN_00000004                  0x00000004 // unknown
+#define SPAWN_00000008                  0x00000008 // unknown
+#define SPAWN_00000010                  0x00000010 // unknown
+#define SPAWN_00000020                  0x00000020 // unknown
+#define SPAWN_00000040                  0x00000040 // unknown
+#define SPAWN_00000080                  0x00000080 // unknown
+#define SPAWN_00000100                  0x00000100 // unknown
+#define SPAWN_00000200                  0x00000200 // unknown
+#define SPAWN_00000400                  0x00000400 // unknown
+#define SPAWN_00000800                  0x00000800 // unknown
+#define SPAWN_00001000                  0x00001000 // unknown
+#define SPAWN_00002000                  0x00002000 // unknown
+#define SPAWN_00004000                  0x00004000 // unknown
+#define SPAWN_00008000                  0x00008000 // unknown
+#define SPAWN_00010000                  0x00010000 // unknown
+#define SPAWN_00020000                  0x00020000 // unknown
+#define SPAWN_00040000                  0x00040000 // unknown
+#define SPAWN_00080000                  0x00080000 // unknown
+#define SPAWN_00100000                  0x00100000 // unknown
+#define SPAWN_00200000                  0x00200000 // unknown
+#define SPAWN_00400000                  0x00400000 // unknown
+#define SPAWN_00800000                  0x00800000 // unknown
+#define SPAWN_01000000                  0x01000000 // unknown
+#define SPAWN_02000000                  0x02000000 // unknown
+#define SPAWN_04000000                  0x04000000 // unknown
+#define SPAWN_08000000                  0x08000000 // unknown
+#define SPAWN_10000000                  0x10000000 // unknown
+#define SPAWN_20000000                  0x20000000 // unknown
+#define SPAWN_40000000                  0x40000000 // unknown
+#define SPAWN_80000000                  0x80000000 // unknown
 
 // command D7 - hud flags
-#define HUD_HIDE_ALL            0x00 // hide all
-#define HUD_SHOW_TEXT_TOP       0x01 // hide all but top text
-#define HUD_SHOW_TEXT_BOTTOM    0x02 // hide all but bottom text
-#define HUD_SHOW_HUD_COUNTDOWN  0x04 // hide all but hud countdown
+#define HUD_HIDE_ALL                    0x00 // hide all
+#define HUD_SHOW_TEXT_TOP               0x01 // hide all but top text
+#define HUD_SHOW_TEXT_BOTTOM            0x02 // hide all but bottom text
+#define HUD_SHOW_HUD_COUNTDOWN          0x04 // hide all but hud countdown
 
 // command 94/95/96/97/98/99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
 #define BITFIELD_DONT_POINT_AT_BOND     0x01 // if set, don't point at bond
@@ -253,10 +253,10 @@
 #define debug_log_end \
         '\0',
 
-#define local_counter_seconds_less_than(seconds, label) \
+#define if_local_counter_seconds_less_than(seconds, label) \
         if_local_counter_less_than((SECS_TO_TIMER60(seconds)), label)
 
-#define local_counter_seconds_greater_than(seconds, label) \
+#define if_local_counter_seconds_greater_than(seconds, label) \
         if_local_counter_greater_than((SECS_TO_TIMER60(seconds)), label)
 
 #define camera_wait_for_loading \
@@ -516,16 +516,16 @@
         label,
 
 /*=============================================================================
-// name: guard_firing_roll
+// name: guard_try_firing_roll
 // command id: 13
 // info: trigger guard to roll on ground then fire at bond, goto label if successful
 //=============================================================================
 // note: bond cannot be too close to guard or it won't work
 //===========================================================================*/
-#define guard_firing_roll_ID 0x13
-#define guard_firing_roll_LENGTH 0x02
-#define guard_firing_roll(label) \
-        guard_firing_roll_ID, \
+#define guard_try_firing_roll_ID 0x13
+#define guard_try_firing_roll_LENGTH 0x02
+#define guard_try_firing_roll(label) \
+        guard_try_firing_roll_ID, \
         label,
 
 /*=============================================================================
@@ -1496,7 +1496,8 @@
 // command id: 58
 // info: if item was thrown onto tagged object, goto label
 //=============================================================================
-// note: used to check if bond threw an item onto a tagged object
+// note: used to check if bond threw an item onto a tagged object. if used with
+// command 57, make sure command 58 take priority over command 57
 //===========================================================================*/
 #define if_item_is_attached_to_object_ID 0x58
 #define if_item_is_attached_to_object_LENGTH 0x04
@@ -2774,7 +2775,7 @@
 // command id: AE
 // info: reset and start chr->timer60
 //=============================================================================
-// note: chr timer is different to hud countdown. chr timer is unique for each chr,
+// note: local timer is different to hud countdown. local timer is unique for each chr,
 // while hud countdown is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
 #define local_counter_reset_start_ID 0xAE
@@ -2787,7 +2788,7 @@
 // command id: AF
 // info: reset chr->timer60
 //=============================================================================
-// note: chr timer is different to hud countdown. chr timer is unique for each chr,
+// note: local timer is different to hud countdown. local timer is unique for each chr,
 // while hud countdown is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
 #define local_counter_reset_ID 0xAF
@@ -2800,7 +2801,7 @@
 // command id: B0
 // info: pauses chr->timer60 (does not reset value)
 //=============================================================================
-// note: chr timer is different to hud countdown. chr timer is unique for each chr,
+// note: local timer is different to hud countdown. local timer is unique for each chr,
 // while hud countdown is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
 #define local_counter_stop_ID 0xB0
@@ -2813,7 +2814,7 @@
 // command id: B1
 // info: start chr->timer60 (does not reset value)
 //=============================================================================
-// note: chr timer is different to hud countdown. chr timer is unique for each chr,
+// note: local timer is different to hud countdown. local timer is unique for each chr,
 // while hud countdown is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
 #define local_counter_start_ID 0xB1
