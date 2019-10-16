@@ -34,6 +34,7 @@
 //=============================================================================
 // objective ai list info
 //=============================================================================
+// each obj ai list (10XX) will have with a obj ai assigned at at level start.
 // obj ai lists run continuously in the background without a guard attached.
 // they still have a chr struct but lack a model/position in the level, they are
 // commonly used for level scripting (objectives) or monitoring guard spawns.
@@ -93,9 +94,9 @@
 #define GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE 0x0002 // wait for bond detection (spawn clone when heard bond)
 #define GLIST_IDLE_RAND_ANIM_SUBROUTINE                0x0003 // play idle animation (subroutine)
 #define GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE            0x0004 // play use keyboard animation (subroutine)
-#define GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM   0x0005 // wait for bond detection (deaf & no idling)
+#define GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM   0x0005 // wait for bond detection (deaf/no clones/no idling)
 #define GLIST_FIRE_RAND_ANIM_SUBROUTINE                0x0006 // fire at bond with random animation (subroutine)
-#define GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM        0x0007 // wait for bond detection (no clones & no idling)
+#define GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM        0x0007 // wait for bond detection (no clones/no idling)
 #define GLIST_RUN_TO_BOND_SUBROUTINE                   0x0008 // run to bond and fire (subroutine)
 #define GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM  0x0009 // run to chr->padpreset1 and activate alarm
 #define GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE   0x000A // startle character (subroutine)
@@ -124,42 +125,76 @@
 #define ANIM_DEFAULT_INTERPOLATION      0x10 // use this if interpolation value isn't important
 
 // command 14/15/16/17 - target flags
-#define TARGET_BOND         0x0001 // set target to bond (ignores target argument)
-#define TARGET_FRONT_OF_CHR 0x0002 // set target to front of chr
-#define TARGET_CHR          0x0004 // set target type to chr_num
-#define TARGET_PAD          0x0008 // set target type to pad
-#define TARGET_COMPASS      0x0010 // set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
-#define TARGET_AIM_ONLY     0x0020 // aim at target instead of firing
+#define TARGET_BOND                     0x0001 // set target to bond (ignores target argument)
+#define TARGET_FRONT_OF_CHR             0x0002 // set target to front of chr
+#define TARGET_CHR                      0x0004 // set target type to chr_num
+#define TARGET_PAD                      0x0008 // set target type to pad
+#define TARGET_COMPASS                  0x0010 // set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
+#define TARGET_AIM_ONLY                 0x0020 // aim at target instead of firing
 
 // command 18/19 - target body part values
-#define HIT_NULL_PART        0x00 // null part, no reaction - 1x damage
-#define HIT_LEFT_FOOT        0x01 // left foot - 1x damage
-#define HIT_LEFT_LEG         0x02 // left leg - 1x damage
-#define HIT_LEFT_THIGH       0x03 // left thigh - 1x damage
-#define HIT_RIGHT_FOOT       0x04 // right foot - 1x damage
-#define HIT_RIGHT_LEG        0x05 // right leg - 1x damage
-#define HIT_RIGHT_THIGH      0x06 // right thigh - 1x damage
-#define HIT_PELVIS           0x07 // pelvis - 1x damage
-#define HIT_HEAD             0x08 // head - 4x damage
-#define HIT_LEFT_HAND        0x09 // left hand - 1x damage
-#define HIT_LEFT_ARM         0x0A // left arm - 1x damage
-#define HIT_LEFT_SHOULDER    0x0B // left shoulder - 1x damage
-#define HIT_RIGHT_HAND       0x0C // right hand - 1x damage
-#define HIT_RIGHT_ARM        0x0D // right arm - 1x damage
-#define HIT_RIGHT_SHOULDER   0x0E // right shoulder - 1x damage
-#define HIT_CHEST            0x0F // chest - 2x damage
+#define HIT_NULL_PART                   0x00 // null part, no reaction - 1x damage
+#define HIT_LEFT_FOOT                   0x01 // left foot - 1x damage
+#define HIT_LEFT_LEG                    0x02 // left leg - 1x damage
+#define HIT_LEFT_THIGH                  0x03 // left thigh - 1x damage
+#define HIT_RIGHT_FOOT                  0x04 // right foot - 1x damage
+#define HIT_RIGHT_LEG                   0x05 // right leg - 1x damage
+#define HIT_RIGHT_THIGH                 0x06 // right thigh - 1x damage
+#define HIT_PELVIS                      0x07 // pelvis - 1x damage
+#define HIT_HEAD                        0x08 // head - 4x damage
+#define HIT_LEFT_HAND                   0x09 // left hand - 1x damage
+#define HIT_LEFT_ARM                    0x0A // left arm - 1x damage
+#define HIT_LEFT_SHOULDER               0x0B // left shoulder - 1x damage
+#define HIT_RIGHT_HAND                  0x0C // right hand - 1x damage
+#define HIT_RIGHT_ARM                   0x0D // right arm - 1x damage
+#define HIT_RIGHT_SHOULDER              0x0E // right shoulder - 1x damage
+#define HIT_CHEST                       0x0F // chest - 2x damage
 
 // command 68 - door states
-#define DOOR_STATE_CLOSED       0x01 // closed
-#define DOOR_STATE_OPEN         0x02 // opened
-#define DOOR_STATE_CLOSING      0x04 // closing
-#define DOOR_STATE_OPENING      0x08 // opening
+#define DOOR_STATE_CLOSED               0x01 // closed
+#define DOOR_STATE_OPEN                 0x02 // opened
+#define DOOR_STATE_CLOSING              0x04 // closing
+#define DOOR_STATE_OPENING              0x08 // opening
+
+// command BD/BE - spawn flags
+#define SPAWN_SUNGLASSES                0x00000001 // sunglasses
+#define SPAWN_SUNGLASSES_RANDOM         0x00000002 // sunglasses (random, 50% of the time)
+#define SPAWN_00000004                  0x00000004 // unknown
+#define SPAWN_00000008                  0x00000008 // unknown
+#define SPAWN_00000010                  0x00000010 // unknown
+#define SPAWN_00000020                  0x00000020 // unknown
+#define SPAWN_00000040                  0x00000040 // unknown
+#define SPAWN_00000080                  0x00000080 // unknown
+#define SPAWN_00000100                  0x00000100 // unknown
+#define SPAWN_00000200                  0x00000200 // unknown
+#define SPAWN_00000400                  0x00000400 // unknown
+#define SPAWN_00000800                  0x00000800 // unknown
+#define SPAWN_00001000                  0x00001000 // unknown
+#define SPAWN_00002000                  0x00002000 // unknown
+#define SPAWN_00004000                  0x00004000 // unknown
+#define SPAWN_00008000                  0x00008000 // unknown
+#define SPAWN_00010000                  0x00010000 // unknown
+#define SPAWN_00020000                  0x00020000 // unknown
+#define SPAWN_00040000                  0x00040000 // unknown
+#define SPAWN_00080000                  0x00080000 // unknown
+#define SPAWN_00100000                  0x00100000 // unknown
+#define SPAWN_00200000                  0x00200000 // unknown
+#define SPAWN_00400000                  0x00400000 // unknown
+#define SPAWN_00800000                  0x00800000 // unknown
+#define SPAWN_01000000                  0x01000000 // unknown
+#define SPAWN_02000000                  0x02000000 // unknown
+#define SPAWN_04000000                  0x04000000 // unknown
+#define SPAWN_08000000                  0x08000000 // unknown
+#define SPAWN_10000000                  0x10000000 // unknown
+#define SPAWN_20000000                  0x20000000 // unknown
+#define SPAWN_40000000                  0x40000000 // unknown
+#define SPAWN_80000000                  0x80000000 // unknown
 
 // command D7 - hud flags
-#define HUD_HIDE_ALL            0x00 // hide all
-#define HUD_SHOW_TEXT_TOP       0x01 // hide all but top text
-#define HUD_SHOW_TEXT_BOTTOM    0x02 // hide all but bottom text
-#define HUD_SHOW_HUD_TIMER      0x04 // hide all but hud timer
+#define HUD_HIDE_ALL                    0x00 // hide all
+#define HUD_SHOW_TEXT_TOP               0x01 // hide all but top text
+#define HUD_SHOW_TEXT_BOTTOM            0x02 // hide all but bottom text
+#define HUD_SHOW_HUD_COUNTDOWN          0x04 // hide all but hud countdown
 
 // command 94/95/96/97/98/99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
 #define BITFIELD_DONT_POINT_AT_BOND     0x01 // if set, don't point at bond
@@ -181,48 +216,48 @@
         goto_first(label_id)
 
 #define random_generate_greater_than(byte, label) \
-        random_generate \
-        random_greater_than(byte, label)
+        random_generate_seed \
+        if_random_seed_greater_than(byte, label)
 
 #define random_generate_less_than(byte, label) \
-        random_generate \
-        random_less_than(byte, label)
+        random_generate_seed \
+        if_random_seed_less_than(byte, label)
 
-#define guard_meters_to_bond_less_than(distance, label) \
-        guard_distance_to_bond_less_than((distance * 10U), label)
+#define if_guard_meters_to_bond_less_than(distance, label) \
+        if_guard_distance_to_bond_less_than((distance * 10U), label)
 
-#define guard_meters_to_bond_greater_than(distance, label) \
-        guard_distance_to_bond_greater_than((distance * 10U), label)
+#define if_guard_meters_to_bond_greater_than(distance, label) \
+        if_guard_distance_to_bond_greater_than((distance * 10U), label)
 
-#define chr_meters_to_pad_less_than(chr_num, distance, pad, label) \
-        chr_distance_to_pad_less_than(chr_num, (distance * 10U), pad, label)
+#define if_chr_meters_to_pad_less_than(chr_num, distance, pad, label) \
+        if_chr_distance_to_pad_less_than(chr_num, (distance * 10U), pad, label)
 
-#define chr_meters_to_pad_greater_than(chr_num, distance, pad, label) \
-        chr_distance_to_pad_greater_than(chr_num, (distance * 10U), pad, label)
+#define if_chr_meters_to_pad_greater_than(chr_num, distance, pad, label) \
+        if_chr_distance_to_pad_greater_than(chr_num, (distance * 10U), pad, label)
 
-#define guard_meters_to_chr_less_than(distance, chr_num, label) \
-        guard_distance_to_chr_less_than((distance * 10U), chr_num, label)
+#define if_guard_meters_to_chr_less_than(distance, chr_num, label) \
+        if_guard_distance_to_chr_less_than((distance * 10U), chr_num, label)
 
-#define guard_meters_to_chr_greater_than(distance, chr_num, label) \
-        guard_distance_to_chr_greater_than((distance * 10U), chr_num, label)
+#define if_guard_meters_to_chr_greater_than(distance, chr_num, label) \
+        if_guard_distance_to_chr_greater_than((distance * 10U), chr_num, label)
 
-#define guard_set_chr_preset_to_guard_within_meters(distance, label) \
-        guard_set_chr_preset_to_guard_within_distance((distance * 10U), label)
+#define guard_try_setting_chr_preset_to_guard_within_meters(distance, label) \
+        guard_try_setting_chr_preset_to_guard_within_distance((distance * 10U), label)
 
-#define bond_meters_to_pad_less_than(distance, pad, label) \
-        bond_distance_to_pad_less_than((distance * 10U), pad, label)
+#define if_bond_meters_to_pad_less_than(distance, pad, label) \
+        if_bond_distance_to_pad_less_than((distance * 10U), pad, label)
 
-#define bond_meters_to_pad_greater_than(distance, pad, label) \
-        bond_distance_to_pad_greater_than((distance * 10U), pad, label)
+#define if_bond_meters_to_pad_greater_than(distance, pad, label) \
+        if_bond_distance_to_pad_greater_than((distance * 10U), pad, label)
 
 #define debug_log_end \
         '\0',
 
-#define chr_timer_seconds_less_than(seconds, label) \
-        chr_timer_less_than((SECS_TO_TIMER60(seconds)), label)
+#define if_local_timer_seconds_less_than(seconds, label) \
+        if_local_timer_less_than((SECS_TO_TIMER60(seconds)), label)
 
-#define chr_timer_seconds_greater_than(seconds, label) \
-        chr_timer_greater_than((SECS_TO_TIMER60(seconds)), label)
+#define if_local_timer_seconds_greater_than(seconds, label) \
+        if_local_timer_greater_than((SECS_TO_TIMER60(seconds)), label)
 
 #define camera_wait_for_loading \
         ai_sleep \
@@ -274,7 +309,7 @@
 
 /*=============================================================================
 // name: ai_sleep
-// id number: 03
+// command id: 03
 // info: halt the ai list - frees engine to start executing next ai list until
 //       all lists have been executed for game tick.
 //=============================================================================
@@ -300,16 +335,16 @@
         ai_list_end_ID
 
 /*=============================================================================
-// name: goto_ai_list
+// name: jump_to_ai_list
 // command id: 05
-// info: make chr goto another list and start executing from beginning
+// info: set chr num's current ai list program counter to beginning of a list
 //=============================================================================
 // note: not recommended to goto an obj list (10XX)
 //===========================================================================*/
-#define goto_ai_list_ID 0x05
-#define goto_ai_list_LENGTH 0x04
-#define goto_ai_list(chr_num, ai_list) \
-        goto_ai_list_ID, \
+#define jump_to_ai_list_ID 0x05
+#define jump_to_ai_list_LENGTH 0x04
+#define jump_to_ai_list(chr_num, ai_list) \
+        jump_to_ai_list_ID, \
         chr_num, \
         chararray16(ai_list),
 
@@ -327,17 +362,17 @@
         chararray16(ai_list),
 
 /*=============================================================================
-// name: goto_return_ai_list
+// name: jump_to_return_ai_list
 // command id: 07
-// info: goto the return list set in chr struct - pointer set by command 06.
+// info: jump the return ai list set in chr struct - pointer set by command 06.
 //       used for subroutine lists. if list pointer isn't set, game will crash
 //=============================================================================
 // note: after return, set chr->aioffset to top of ai list
 //===========================================================================*/
-#define goto_return_ai_list_ID 0x07
-#define goto_return_ai_list_LENGTH 0x01
-#define goto_return_ai_list \
-        goto_return_ai_list_ID,
+#define jump_to_return_ai_list_ID 0x07
+#define jump_to_return_ai_list_LENGTH 0x01
+#define jump_to_return_ai_list \
+        jump_to_return_ai_list_ID,
 
 /*=============================================================================
 // name: guard_animation_stop
@@ -360,7 +395,7 @@
         guard_kneel_ID,
 
 /*=============================================================================
-// name: guard_animation
+// name: guard_play_animation
 // command id: 0A
 // info: set guard to playback animation
 //=============================================================================
@@ -371,10 +406,10 @@
 // start/end keyframe and interpolation use 60 tick units.
 // use ANIM_# flags for bitfield argument
 //===========================================================================*/
-#define guard_animation_ID 0x0A
-#define guard_animation_LENGTH 0x09
-#define guard_animation(animation_id, start_time60, end_time60, bitfield, interpol_time60) \
-        guard_animation_ID, \
+#define guard_play_animation_ID 0x0A
+#define guard_play_animation_LENGTH 0x09
+#define guard_play_animation(animation_id, start_time60, end_time60, bitfield, interpol_time60) \
+        guard_play_animation_ID, \
         chararray16(animation_id), \
         chararray16(start_time60), \
         chararray16(end_time60), \
@@ -382,14 +417,14 @@
         interpol_time60,
 
 /*=============================================================================
-// name: guard_playing_animation
+// name: if_guard_playing_animation
 // command id: 0B
 // info: if guard is in animation playback state (ACT_ANIM), goto label
 //===========================================================================*/
-#define guard_playing_animation_ID 0x0B
-#define guard_playing_animation_LENGTH 0x02
-#define guard_playing_animation(label) \
-        guard_playing_animation_ID, \
+#define if_guard_playing_animation_ID 0x0B
+#define if_guard_playing_animation_LENGTH 0x02
+#define if_guard_playing_animation(label) \
+        if_guard_playing_animation_ID, \
         label,
 
 /*=============================================================================
@@ -406,127 +441,127 @@
         guard_points_at_bond_ID,
 
 /*=============================================================================
-// name: guard_animation_looks_around_self
+// name: guard_looks_around_self
 // command id: 0D
 // info: set guard to playback animation - used when shots land near guard
 //===========================================================================*/
-#define guard_animation_looks_around_self_ID 0x0D
-#define guard_animation_looks_around_self_LENGTH 0x01
-#define guard_animation_looks_around_self \
-        guard_animation_looks_around_self_ID,
+#define guard_looks_around_self_ID 0x0D
+#define guard_looks_around_self_LENGTH 0x01
+#define guard_looks_around_self \
+        guard_looks_around_self_ID,
 
 /*=============================================================================
-// name: guard_sidesteps
+// name: guard_try_sidestepping
 // command id: 0E
 // info: trigger guard to sidestep, goto label if successful
 //=============================================================================
 // note: direction is random
 //===========================================================================*/
-#define guard_sidesteps_ID 0x0E
-#define guard_sidesteps_LENGTH 0x02
-#define guard_sidesteps(label) \
-        guard_sidesteps_ID, \
+#define guard_try_sidestepping_ID 0x0E
+#define guard_try_sidestepping_LENGTH 0x02
+#define guard_try_sidestepping(label) \
+        guard_try_sidestepping_ID, \
         label,
 
 /*=============================================================================
-// name: guard_sideways_hop
+// name: guard_try_hopping_sideways
 // command id: 0F
 // info: trigger guard to hop sideways, goto label if successful
 //=============================================================================
 // note: direction is random
 //===========================================================================*/
-#define guard_sideways_hop_ID 0x0F
-#define guard_sideways_hop_LENGTH 0x02
-#define guard_sideways_hop(label) \
-        guard_sideways_hop_ID, \
+#define guard_try_hopping_sideways_ID 0x0F
+#define guard_try_hopping_sideways_LENGTH 0x02
+#define guard_try_hopping_sideways(label) \
+        guard_try_hopping_sideways_ID, \
         label,
 
 /*=============================================================================
-// name: guard_sideways_run
+// name: guard_try_running_to_side
 // command id: 10
 // info: trigger guard to run sideways of bond, goto label if successful
 //=============================================================================
 // note: direction is random
 //===========================================================================*/
-#define guard_sideways_run_ID 0x10
-#define guard_sideways_run_LENGTH 0x02
-#define guard_sideways_run(label) \
-        guard_sideways_run_ID, \
+#define guard_try_running_to_side_ID 0x10
+#define guard_try_running_to_side_LENGTH 0x02
+#define guard_try_running_to_side(label) \
+        guard_try_running_to_side_ID, \
         label,
 
 /*=============================================================================
-// name: guard_fire_walk
+// name: guard_try_firing_walk
 // command id: 11
 // info: trigger guard to walk and fire at bond, goto label if successful
 //=============================================================================
 // note: bond needs to be at long distance away from guard to work
 //===========================================================================*/
-#define guard_fire_walk_ID 0x11
-#define guard_fire_walk_LENGTH 0x02
-#define guard_fire_walk(label) \
-        guard_fire_walk_ID, \
+#define guard_try_firing_walk_ID 0x11
+#define guard_try_firing_walk_LENGTH 0x02
+#define guard_try_firing_walk(label) \
+        guard_try_firing_walk_ID, \
         label,
 
 /*=============================================================================
-// name: guard_fire_run
+// name: guard_try_firing_run
 // command id: 12
 // info: trigger guard to run and fire at bond, goto label if successful
 //=============================================================================
 // note: bond needs to be at long distance away from guard to work
 //===========================================================================*/
-#define guard_fire_run_ID 0x12
-#define guard_fire_run_LENGTH 0x02
-#define guard_fire_run(label) \
-        guard_fire_run_ID, \
+#define guard_try_firing_run_ID 0x12
+#define guard_try_firing_run_LENGTH 0x02
+#define guard_try_firing_run(label) \
+        guard_try_firing_run_ID, \
         label,
 
 /*=============================================================================
-// name: guard_fire_roll
+// name: guard_try_firing_roll
 // command id: 13
 // info: trigger guard to roll on ground then fire at bond, goto label if successful
 //=============================================================================
 // note: bond cannot be too close to guard or it won't work
 //===========================================================================*/
-#define guard_fire_roll_ID 0x13
-#define guard_fire_roll_LENGTH 0x02
-#define guard_fire_roll(label) \
-        guard_fire_roll_ID, \
+#define guard_try_firing_roll_ID 0x13
+#define guard_try_firing_roll_LENGTH 0x02
+#define guard_try_firing_roll(label) \
+        guard_try_firing_roll_ID, \
         label,
 
 /*=============================================================================
-// name: guard_fire_or_aim_at_target
+// name: guard_try_fire_or_aim_at_target
 // command id: 14
 // info: make guard aim/fire their weapon at target, goto label if successful
 //=============================================================================
 // note: bitfield argument is used to set the target type (pad/bond/chr).
 //       use TARGET_# flags for bitfield argument
 //===========================================================================*/
-#define guard_fire_or_aim_at_target_ID 0x14
-#define guard_fire_or_aim_at_target_LENGTH 0x06
-#define guard_fire_or_aim_at_target(bitfield, target, label) \
-        guard_fire_or_aim_at_target_ID, \
+#define guard_try_fire_or_aim_at_target_ID 0x14
+#define guard_try_fire_or_aim_at_target_LENGTH 0x06
+#define guard_try_fire_or_aim_at_target(bitfield, target, label) \
+        guard_try_fire_or_aim_at_target_ID, \
         chararray16(bitfield), \
         chararray16(target), \
         label,
 
 /*=============================================================================
-// name: guard_fire_or_aim_at_target_kneel
+// name: guard_try_fire_or_aim_at_target_kneel
 // command id: 15
 // info: make guard kneel and aim/fire their weapon at target, goto label if successful
 //=============================================================================
 // note: bitfield argument is used to set the target type (pad/bond/chr).
 //       use TARGET_# flags for bitfield argument
 //===========================================================================*/
-#define guard_fire_or_aim_at_target_kneel_ID 0x15
-#define guard_fire_or_aim_at_target_kneel_LENGTH 0x06
-#define guard_fire_or_aim_at_target_kneel(bitfield, target, label) \
-        guard_fire_or_aim_at_target_kneel_ID, \
+#define guard_try_fire_or_aim_at_target_kneel_ID 0x15
+#define guard_try_fire_or_aim_at_target_kneel_LENGTH 0x06
+#define guard_try_fire_or_aim_at_target_kneel(bitfield, target, label) \
+        guard_try_fire_or_aim_at_target_kneel_ID, \
         chararray16(bitfield), \
         chararray16(target), \
         label,
 
 /*=============================================================================
-// name: guard_fire_or_aim_at_target_update
+// name: guard_try_fire_or_aim_at_target_update
 // command id: 16
 // info: update guard's aim/fire target, goto label if successful
 //=============================================================================
@@ -534,16 +569,16 @@
 //       bitfield argument is used to set the target type (pad/bond/chr).
 //       use TARGET_# flags for bitfield argument
 //===========================================================================*/
-#define guard_fire_or_aim_at_target_update_ID 0x16
-#define guard_fire_or_aim_at_target_update_LENGTH 0x06
-#define guard_fire_or_aim_at_target_update(bitfield, target, label) \
-        guard_fire_or_aim_at_target_update_ID, \
+#define guard_try_fire_or_aim_at_target_update_ID 0x16
+#define guard_try_fire_or_aim_at_target_update_LENGTH 0x06
+#define guard_try_fire_or_aim_at_target_update(bitfield, target, label) \
+        guard_try_fire_or_aim_at_target_update_ID, \
         chararray16(bitfield), \
         chararray16(target), \
         label,
 
 /*=============================================================================
-// name: guard_faces_target
+// name: guard_try_facing_target
 // command id: 17
 // info: make guard continuously face target, goto label if successful
 //=============================================================================
@@ -551,10 +586,10 @@
 // bitfield argument is used to set the target type (pad/bond/chr).
 // use TARGET_# flags for bitfield argument. command can't use TARGET_AIM_ONLY flag
 //===========================================================================*/
-#define guard_faces_target_ID 0x17
-#define guard_faces_target_LENGTH 0x06
-#define guard_faces_target(bitfield, target, label) \
-        guard_faces_target_ID, \
+#define guard_try_facing_target_ID 0x17
+#define guard_try_facing_target_LENGTH 0x06
+#define guard_try_facing_target(bitfield, target, label) \
+        guard_try_facing_target_ID, \
         chararray16(bitfield), \
         chararray16(target), \
         label,
@@ -592,7 +627,7 @@
         part_num,
 
 /*=============================================================================
-// name: guard_throw_grenade
+// name: guard_try_throwing_grenade
 // command id: 1A
 // info: trigger guard to throw a grenade at bond, goto label if successful
 //=============================================================================
@@ -600,24 +635,24 @@
 // is less than grenadeprob throw grenade and goto label, else do nothing.
 // chr->grenadeprob default is 0 - to change use setup object 12 or command 8D
 //===========================================================================*/
-#define guard_throw_grenade_ID 0x1A
-#define guard_throw_grenade_LENGTH 0x02
-#define guard_throw_grenade(label) \
-        guard_throw_grenade_ID, \
+#define guard_try_throwing_grenade_ID 0x1A
+#define guard_try_throwing_grenade_LENGTH 0x02
+#define guard_try_throwing_grenade(label) \
+        guard_try_throwing_grenade_ID, \
         label,
 
 /*=============================================================================
-// name: guard_drop_item
+// name: guard_try_dropping_item
 // command id: 1B
 // info: spawn and drop item with prop model from guard, goto label if successful
 //=============================================================================
 // note: dropped item uses item type (08) with model number - they can be picked up.
 // grenade/mines will be dropped live - this is used for cradle (list #0411)
 //===========================================================================*/
-#define guard_drop_item_ID 0x1B
-#define guard_drop_item_LENGTH 0x05
-#define guard_drop_item(prop_num, item_num, label) \
-        guard_drop_item_ID, \
+#define guard_try_dropping_item_ID 0x1B
+#define guard_try_dropping_item_LENGTH 0x05
+#define guard_try_dropping_item(prop_num, item_num, label) \
+        guard_try_dropping_item_ID, \
         chararray16(prop_num), \
         item_num, \
         label,
@@ -634,14 +669,14 @@
         chararray16(pad),
 
 /*=============================================================================
-// name: guard_runs_to_padpreset
+// name: guard_runs_to_pad_preset
 // command id: 1D
 // info: makes the guard run to guard->padpreset1 (PAD_PRESET - 9000)
 //===========================================================================*/
-#define guard_runs_to_padpreset_ID 0x1D
-#define guard_runs_to_padpreset_LENGTH 0x01
-#define guard_runs_to_padpreset \
-        guard_runs_to_padpreset_ID,
+#define guard_runs_to_pad_preset_ID 0x1D
+#define guard_runs_to_pad_preset_LENGTH 0x01
+#define guard_runs_to_pad_preset \
+        guard_runs_to_pad_preset_ID,
 
 /*=============================================================================
 // name: guard_walks_to_pad
@@ -717,7 +752,7 @@
         chr_num,
 
 /*=============================================================================
-// name: guard_trigger_alarm_at_pad
+// name: guard_try_triggering_alarm_at_pad
 // command id: 24
 // info: guard activates alarm assigned to pad, goto label if successful
 //=============================================================================
@@ -725,10 +760,10 @@
 // isn't destroyed. command also checks if guard is alive before activating alarm.
 // when triggering alarm, guard will be set to state ACT_STARTALARM and play animation
 //===========================================================================*/
-#define guard_trigger_alarm_at_pad_ID 0x24
-#define guard_trigger_alarm_at_pad_LENGTH 0x04
-#define guard_trigger_alarm_at_pad(pad, label) \
-        guard_trigger_alarm_at_pad_ID, \
+#define guard_try_triggering_alarm_at_pad_ID 0x24
+#define guard_try_triggering_alarm_at_pad_LENGTH 0x04
+#define guard_try_triggering_alarm_at_pad(pad, label) \
+        guard_try_triggering_alarm_at_pad_ID, \
         chararray16(pad), \
         label,
 
@@ -764,45 +799,45 @@
         label,
 
 /*=============================================================================
-// name: guard_runs_to_bond_position
+// name: guard_try_running_to_bond_position
 // command id: 28
 // info: if guard is able to run to bond, goto label
 //=============================================================================
 // note: don't goto label if guard can't run to bond (guard has died) or bond is
 //       at an unreachable area (no navigation pads in area)
 //===========================================================================*/
-#define guard_runs_to_bond_position_ID 0x28
-#define guard_runs_to_bond_position_LENGTH 0x02
-#define guard_runs_to_bond_position(label) \
-        guard_runs_to_bond_position_ID, \
+#define guard_try_running_to_bond_position_ID 0x28
+#define guard_try_running_to_bond_position_LENGTH 0x02
+#define guard_try_running_to_bond_position(label) \
+        guard_try_running_to_bond_position_ID, \
         label,
 
 /*=============================================================================
-// name: guard_walks_to_bond_position
+// name: guard_try_walking_to_bond_position
 // command id: 29
 // info: if guard is able to walk to bond, goto label
 //=============================================================================
 // note: don't goto label if guard can't walk to bond (guard has died) or bond is
 //       at an unreachable area (no navigation pads in area)
 //===========================================================================*/
-#define guard_walks_to_bond_position_ID 0x29
-#define guard_walks_to_bond_position_LENGTH 0x02
-#define guard_walks_to_bond_position(label) \
-        guard_walks_to_bond_position_ID, \
+#define guard_try_walking_to_bond_position_ID 0x29
+#define guard_try_walking_to_bond_position_LENGTH 0x02
+#define guard_try_walking_to_bond_position(label) \
+        guard_try_walking_to_bond_position_ID, \
         label,
 
 /*=============================================================================
-// name: guard_sprints_to_bond_position
+// name: guard_try_sprinting_to_bond_position
 // command id: 2A
 // info: if guard is able to sprint to bond, goto label
 //=============================================================================
 // note: don't goto label if guard can't sprint to bond (guard has died) or bond
 //       is at an unreachable area (no navigation pads in area)
 //===========================================================================*/
-#define guard_sprints_to_bond_position_ID 0x2A
-#define guard_sprints_to_bond_position_LENGTH 0x02
-#define guard_sprints_to_bond_position(label) \
-        guard_sprints_to_bond_position_ID, \
+#define guard_try_sprinting_to_bond_position_ID 0x2A
+#define guard_try_sprinting_to_bond_position_LENGTH 0x02
+#define guard_try_sprinting_to_bond_position(label) \
+        guard_try_sprinting_to_bond_position_ID, \
         label,
 
 /*=============================================================================
@@ -817,93 +852,93 @@
         label,
 
 /*=============================================================================
-// name: guard_runs_to_chr_position
+// name: guard_try_running_to_chr_position
 // command id: 2C
 // info: if guard is able to run to chr, goto label
 //=============================================================================
 // note: don't goto label if guard can't run to chr (guard has died) or chr is
 // at an unreachable area (no navigation pads in area) or chr doesn't exist
 //===========================================================================*/
-#define guard_runs_to_chr_position_ID 0x2C
-#define guard_runs_to_chr_position_LENGTH 0x03
-#define guard_runs_to_chr_position(chr_num, label) \
-        guard_runs_to_chr_position_ID, \
+#define guard_try_running_to_chr_position_ID 0x2C
+#define guard_try_running_to_chr_position_LENGTH 0x03
+#define guard_try_running_to_chr_position(chr_num, label) \
+        guard_try_running_to_chr_position_ID, \
         chr_num, \
         label,
 
 /*=============================================================================
-// name: guard_walks_to_chr_position
+// name: guard_try_walking_to_chr_position
 // command id: 2D
 // info: if guard is able to walk to chr, goto label
 //=============================================================================
 // note: don't goto label if guard can't walk to chr (guard has died) or chr is
 // at an unreachable area (no navigation pads in area) or chr doesn't exist
 //===========================================================================*/
-#define guard_walks_to_chr_position_ID 0x2D
-#define guard_walks_to_chr_position_LENGTH 0x03
-#define guard_walks_to_chr_position(chr_num, label) \
-        guard_walks_to_chr_position_ID, \
+#define guard_try_walking_to_chr_position_ID 0x2D
+#define guard_try_walking_to_chr_position_LENGTH 0x03
+#define guard_try_walking_to_chr_position(chr_num, label) \
+        guard_try_walking_to_chr_position_ID, \
         chr_num, \
         label,
 
 /*=============================================================================
-// name: guard_sprints_to_chr_position
+// name: guard_try_sprinting_to_chr_position
 // command id: 2E
 // info: if guard is able to sprint to chr, goto label
 //=============================================================================
 // note: don't goto label if guard can't sprint to chr (guard has died) or chr
 // is at an unreachable area (no navigation pads in area) or chr doesn't exist
 //===========================================================================*/
-#define guard_sprints_to_chr_position_ID 0x2E
-#define guard_sprints_to_chr_position_LENGTH 0x03
-#define guard_sprints_to_chr_position(chr_num, label) \
-        guard_sprints_to_chr_position_ID, \
+#define guard_try_sprinting_to_chr_position_ID 0x2E
+#define guard_try_sprinting_to_chr_position_LENGTH 0x03
+#define guard_try_sprinting_to_chr_position(chr_num, label) \
+        guard_try_sprinting_to_chr_position_ID, \
         chr_num, \
         label,
 
 /*=============================================================================
-// name: guard_has_stopped_moving
+// name: if_guard_has_stopped_moving
 // command id: 2F
 // info: if guard has stopped moving, goto label
 //=============================================================================
 // note: check if guard isn't looking for bond or if guard has finished moving
 //       to destination
 //===========================================================================*/
-#define guard_has_stopped_moving_ID 0x2F
-#define guard_has_stopped_moving_LENGTH 0x02
-#define guard_has_stopped_moving(label) \
-        guard_has_stopped_moving_ID, \
+#define if_guard_has_stopped_moving_ID 0x2F
+#define if_guard_has_stopped_moving_LENGTH 0x02
+#define if_guard_has_stopped_moving(label) \
+        if_guard_has_stopped_moving_ID, \
         label,
 
 /*=============================================================================
-// name: chr_dying_or_dead
+// name: if_chr_dying_or_dead
 // command id: 30
 // info: if chr has died (or in dying state), goto label
 //===========================================================================*/
-#define chr_dying_or_dead_ID 0x30
-#define chr_dying_or_dead_LENGTH 0x03
-#define chr_dying_or_dead(chr_num, label) \
-        chr_dying_or_dead_ID, \
+#define if_chr_dying_or_dead_ID 0x30
+#define if_chr_dying_or_dead_LENGTH 0x03
+#define if_chr_dying_or_dead(chr_num, label) \
+        if_chr_dying_or_dead_ID, \
         chr_num, \
         label,
 
 /*=============================================================================
-// name: chr_does_not_exist
+// name: if_chr_does_not_exist
 // command id: 31
 // info: if chr doesn't exist (died and faded/not spawned), goto label
 //=============================================================================
 // note: this command is used to check if chr has finished dying animation and
 // faded away, or chr num is free
 //===========================================================================*/
-#define chr_does_not_exist_ID 0x31
-#define chr_does_not_exist_LENGTH 0x03
-#define chr_does_not_exist(chr_num, label) \
-        chr_does_not_exist_ID, \
+#define if_chr_does_not_exist_ID 0x31
+#define if_chr_does_not_exist_LENGTH 0x03
+#define if_chr_does_not_exist(chr_num, label) \
+        if_chr_does_not_exist_ID, \
         chr_num, \
         label,
 
 /*=============================================================================
-// name: guard_sees_bond
+// name: if_guard_sees_bond
 // command id: 32
 // info: check vision for bond, goto label if spotted bond
 //=============================================================================
@@ -912,105 +947,105 @@
 // if bond breaks line of sight, do not goto label. if bond has broken line of
 // sight for more than 10 seconds, reset spotted bond state
 //===========================================================================*/
-#define guard_sees_bond_ID 0x32
-#define guard_sees_bond_LENGTH 0x02
-#define guard_sees_bond(label) \
-        guard_sees_bond_ID, \
+#define if_guard_sees_bond_ID 0x32
+#define if_guard_sees_bond_LENGTH 0x02
+#define if_guard_sees_bond(label) \
+        if_guard_sees_bond_ID, \
         label,
 
 /*=============================================================================
-// name: random_generate
+// name: random_generate_seed
 // command id: 33
 // info: generate a random byte and store to chr->random
 //=============================================================================
 // note: random byte range is 00-FF (unsigned)
 //===========================================================================*/
-#define random_generate_ID 0x33
-#define random_generate_LENGTH 0x01
-#define random_generate \
-        random_generate_ID,
+#define random_generate_seed_ID 0x33
+#define random_generate_seed_LENGTH 0x01
+#define random_generate_seed \
+        random_generate_seed_ID,
 
 /*=============================================================================
-// name: random_less_than
+// name: if_random_seed_less_than
 // command id: 34
 // info: if chr->random < byte, goto label
 //=============================================================================
 // note: compare is unsigned
 //===========================================================================*/
-#define random_less_than_ID 0x34
-#define random_less_than_LENGTH 0x03
-#define random_less_than(byte, label) \
-        random_less_than_ID, \
+#define if_random_seed_less_than_ID 0x34
+#define if_random_seed_less_than_LENGTH 0x03
+#define if_random_seed_less_than(byte, label) \
+        if_random_seed_less_than_ID, \
         byte, \
         label,
 
 /*=============================================================================
-// name: random_greater_than
+// name: if_random_seed_greater_than
 // command id: 35
 // info: if chr->random > byte, goto label
 //=============================================================================
 // note: compare is unsigned
 //===========================================================================*/
-#define random_greater_than_ID 0x35
-#define random_greater_than_LENGTH 0x03
-#define random_greater_than(byte, label) \
-        random_greater_than_ID, \
+#define if_random_seed_greater_than_ID 0x35
+#define if_random_seed_greater_than_LENGTH 0x03
+#define if_random_seed_greater_than(byte, label) \
+        if_random_seed_greater_than_ID, \
         byte, \
         label,
 
 /*=============================================================================
-// name: alarm_is_on_unused
+// name: if_alarm_is_on_unused
 // command id: 36
 // info: if alarm is activated, goto label
 //=============================================================================
 // note: this command works but is unused in retail game, use command 37 instead
 //===========================================================================*/
-#define alarm_is_on_unused_ID 0x36
-#define alarm_is_on_unused_LENGTH 0x02
-#define alarm_is_on_unused(label) \
-        alarm_is_on_unused_ID, \
+#define if_alarm_is_on_unused_ID 0x36
+#define if_alarm_is_on_unused_LENGTH 0x02
+#define if_alarm_is_on_unused(label) \
+        if_alarm_is_on_unused_ID, \
         label,
 
 /*=============================================================================
-// name: alarm_is_on
+// name: if_alarm_is_on
 // command id: 37
 // info: if alarm is activated, goto label
 //===========================================================================*/
-#define alarm_is_on_ID 0x37
-#define alarm_is_on_LENGTH 0x02
-#define alarm_is_on(label) \
-        alarm_is_on_ID, \
+#define if_alarm_is_on_ID 0x37
+#define if_alarm_is_on_LENGTH 0x02
+#define if_alarm_is_on(label) \
+        if_alarm_is_on_ID, \
         label,
 
 /*=============================================================================
-// name: gas_is_leaking
+// name: if_gas_is_leaking
 // command id: 38
 // info: if gas leak event triggered, goto label
 //=============================================================================
 // note: once gas leak event has started, always goto label
 //===========================================================================*/
-#define gas_is_leaking_ID 0x38
-#define gas_is_leaking_LENGTH 0x02
-#define gas_is_leaking(label) \
-        gas_is_leaking_ID, \
+#define if_gas_is_leaking_ID 0x38
+#define if_gas_is_leaking_LENGTH 0x02
+#define if_gas_is_leaking(label) \
+        if_gas_is_leaking_ID, \
         label,
 
 /*=============================================================================
-// name: guard_heard_bond
+// name: if_guard_heard_bond
 // command id: 39
 // info: if guard heard bond fire weapon, goto label
 //=============================================================================
 // note: uses chr->hearingscale while listening for bond. to check if bond has
 //       shot within the last 10 seconds, use command 3F
 //===========================================================================*/
-#define guard_heard_bond_ID 0x39
-#define guard_heard_bond_LENGTH 0x02
-#define guard_heard_bond(label) \
-        guard_heard_bond_ID, \
+#define if_guard_heard_bond_ID 0x39
+#define if_guard_heard_bond_LENGTH 0x02
+#define if_guard_heard_bond(label) \
+        if_guard_heard_bond_ID, \
         label,
 
 /*=============================================================================
-// name: guard_see_guard_shot
+// name: if_guard_see_another_guard_shot
 // command id: 3A
 // info: if guard sees another guard shot (from anyone), goto label
 //=============================================================================
@@ -1018,28 +1053,28 @@
 // command checks if chr->chrseeshot is set to valid chrnum (not -1). does not
 // work with shot invincible/armoured guards
 //===========================================================================*/
-#define guard_see_guard_shot_ID 0x3A
-#define guard_see_guard_shot_LENGTH 0x02
-#define guard_see_guard_shot(label) \
-        guard_see_guard_shot_ID, \
+#define if_guard_see_another_guard_shot_ID 0x3A
+#define if_guard_see_another_guard_shot_LENGTH 0x02
+#define if_guard_see_another_guard_shot(label) \
+        if_guard_see_another_guard_shot_ID, \
         label,
 
 /*=============================================================================
-// name: guard_see_guard_die
+// name: if_guard_see_another_guard_die
 // command id: 3B
 // info: if guard sees another guard die (from anyone), goto label
 //=============================================================================
 // note: when a guard in sight switches to ACT_DIE/ACT_DEAD, goto label.
 //       command checks if chr->chrseedie is set to valid chrnum (not -1)
 //===========================================================================*/
-#define guard_see_guard_die_ID 0x3B
-#define guard_see_guard_die_LENGTH 0x02
-#define guard_see_guard_die(label) \
-        guard_see_guard_die_ID, \
+#define if_guard_see_another_guard_die_ID 0x3B
+#define if_guard_see_another_guard_die_LENGTH 0x02
+#define if_guard_see_another_guard_die(label) \
+        if_guard_see_another_guard_die_ID, \
         label,
 
 /*=============================================================================
-// name: guard_and_bond_within_line_of_sight
+// name: if_guard_and_bond_within_line_of_sight
 // command id: 3C
 // info: if guard and bond are within line of sight, goto label
 //=============================================================================
@@ -1048,150 +1083,150 @@
 // for line of sight check. use command 32 to check using chr->visionrange and
 // command 42 to account for bond's view
 //===========================================================================*/
-#define guard_and_bond_within_line_of_sight_ID 0x3C
-#define guard_and_bond_within_line_of_sight_LENGTH 0x02
-#define guard_and_bond_within_line_of_sight(label) \
-        guard_and_bond_within_line_of_sight_ID, \
+#define if_guard_and_bond_within_line_of_sight_ID 0x3C
+#define if_guard_and_bond_within_line_of_sight_LENGTH 0x02
+#define if_guard_and_bond_within_line_of_sight(label) \
+        if_guard_and_bond_within_line_of_sight_ID, \
         label,
 
 /*=============================================================================
-// name: guard_and_bond_within_partial_line_of_sight
+// name: if_guard_and_bond_within_partial_line_of_sight
 // command id: 3D
 // info: if guard and bond are within partial line of sight, goto label
 //=============================================================================
 // note: unused command, functions like above but only goto label if bond is
 //       half occluded by clipping (not blocked or within full view)
 //===========================================================================*/
-#define guard_and_bond_within_partial_line_of_sight_ID 0x3D
-#define guard_and_bond_within_partial_line_of_sight_LENGTH 0x02
-#define guard_and_bond_within_partial_line_of_sight(label) \
-        guard_and_bond_within_partial_line_of_sight_ID, \
+#define if_guard_and_bond_within_partial_line_of_sight_ID 0x3D
+#define if_guard_and_bond_within_partial_line_of_sight_LENGTH 0x02
+#define if_guard_and_bond_within_partial_line_of_sight(label) \
+        if_guard_and_bond_within_partial_line_of_sight_ID, \
         label,
 
 /*=============================================================================
-// name: guard_was_shot_within_last_10_secs
+// name: if_guard_was_shot_within_last_10_secs
 // command id: 3E
 // info: if guard was shot (from anyone) within the last 10 seconds, goto label
 //=============================================================================
 // note: command will not count guard as shot if they are invincible/have armour
 //===========================================================================*/
-#define guard_was_shot_within_last_10_secs_ID 0x3E
-#define guard_was_shot_within_last_10_secs_LENGTH 0x02
-#define guard_was_shot_within_last_10_secs(label) \
-        guard_was_shot_within_last_10_secs_ID, \
+#define if_guard_was_shot_within_last_10_secs_ID 0x3E
+#define if_guard_was_shot_within_last_10_secs_LENGTH 0x02
+#define if_guard_was_shot_within_last_10_secs(label) \
+        if_guard_was_shot_within_last_10_secs_ID, \
         label,
 
 /*=============================================================================
-// name: guard_heard_bond_within_last_10_secs
+// name: if_guard_heard_bond_within_last_10_secs
 // command id: 3F
 // info: if guard heard bond fire weapon within the last 10 seconds, goto label
 //=============================================================================
 // note: uses chr->hearingscale while listening for bond. to check if bond has
 //       now fired weapon instead of within the last 10 seconds, use command 39
 //===========================================================================*/
-#define guard_heard_bond_within_last_10_secs_ID 0x3F
-#define guard_heard_bond_within_last_10_secs_LENGTH 0x02
-#define guard_heard_bond_within_last_10_secs(label) \
-        guard_heard_bond_within_last_10_secs_ID, \
+#define if_guard_heard_bond_within_last_10_secs_ID 0x3F
+#define if_guard_heard_bond_within_last_10_secs_LENGTH 0x02
+#define if_guard_heard_bond_within_last_10_secs(label) \
+        if_guard_heard_bond_within_last_10_secs_ID, \
         label,
 
 /*=============================================================================
-// name: guard_in_room_with_chr
+// name: if_guard_in_room_with_chr
 // command id: 40
 // info: if guard is in same room with chr, goto label
 //===========================================================================*/
-#define guard_in_room_with_chr_ID 0x40
-#define guard_in_room_with_chr_LENGTH 0x03
-#define guard_in_room_with_chr(chr_num, label) \
-        guard_in_room_with_chr_ID, \
+#define if_guard_in_room_with_chr_ID 0x40
+#define if_guard_in_room_with_chr_LENGTH 0x03
+#define if_guard_in_room_with_chr(chr_num, label) \
+        if_guard_in_room_with_chr_ID, \
         chr_num, \
         label,
 
 /*=============================================================================
-// name: guard_has_not_been_seen
+// name: if_guard_has_not_been_seen
 // command id: 41
 // info: if guard has not been seen before on screen, goto label
 //=============================================================================
 // note: when bond has seen guard, it will add a flag to chr->chrflags.
 //       the seen flag will be kept true for duration of level
 //===========================================================================*/
-#define guard_has_not_been_seen_ID 0x41
-#define guard_has_not_been_seen_LENGTH 0x02
-#define guard_has_not_been_seen(label) \
-        guard_has_not_been_seen_ID, \
+#define if_guard_has_not_been_seen_ID 0x41
+#define if_guard_has_not_been_seen_LENGTH 0x02
+#define if_guard_has_not_been_seen(label) \
+        if_guard_has_not_been_seen_ID, \
         label,
 
 /*=============================================================================
-// name: guard_is_on_screen
+// name: if_guard_is_on_screen
 // command id: 42
 // info: if guard is currently being rendered on screen, goto label
 //=============================================================================
 // note: portals will affect this command's output. if guard is being culled
 //       off screen, command will not goto label
 //===========================================================================*/
-#define guard_is_on_screen_ID 0x42
-#define guard_is_on_screen_LENGTH 0x02
-#define guard_is_on_screen(label) \
-        guard_is_on_screen_ID, \
+#define if_guard_is_on_screen_ID 0x42
+#define if_guard_is_on_screen_LENGTH 0x02
+#define if_guard_is_on_screen(label) \
+        if_guard_is_on_screen_ID, \
         label,
 
 /*=============================================================================
-// name: guard_room_containing_self_is_on_screen
+// name: if_guard_room_containing_self_is_on_screen
 // command id: 43
 // info: if the room containing guard is being rendered on screen, goto label
 //=============================================================================
 // note: only checks if room is being rendered, not if bond can see guard.
 //       to check if guard is being rendered use command 42 instead.
 //===========================================================================*/
-#define guard_room_containing_self_is_on_screen_ID 0x43
-#define guard_room_containing_self_is_on_screen_LENGTH 0x02
-#define guard_room_containing_self_is_on_screen(label) \
-        guard_room_containing_self_is_on_screen_ID, \
+#define if_guard_room_containing_self_is_on_screen_ID 0x43
+#define if_guard_room_containing_self_is_on_screen_LENGTH 0x02
+#define if_guard_room_containing_self_is_on_screen(label) \
+        if_guard_room_containing_self_is_on_screen_ID, \
         label,
 
 /*=============================================================================
-// name: room_containing_pad_is_on_screen
+// name: if_room_containing_pad_is_on_screen
 // command id: 44
 // info: if room containing pad is being rendered on screen, goto label
 //=============================================================================
 // note: only checks if room is being rendered, not if bond can see inside room
 //===========================================================================*/
-#define room_containing_pad_is_on_screen_ID 0x44
-#define room_containing_pad_is_on_screen_LENGTH 0x04
-#define room_containing_pad_is_on_screen(pad, label) \
-        room_containing_pad_is_on_screen_ID, \
+#define if_room_containing_pad_is_on_screen_ID 0x44
+#define if_room_containing_pad_is_on_screen_LENGTH 0x04
+#define if_room_containing_pad_is_on_screen(pad, label) \
+        if_room_containing_pad_is_on_screen_ID, \
         chararray16(pad), \
         label,
 
 /*=============================================================================
-// name: guard_is_targeted_by_bond
+// name: if_guard_is_targeted_by_bond
 // command id: 45
 // info: if bond is looking/aiming at guard, goto label
 //=============================================================================
 // note: also checks if crosshair is aiming at guard
 //===========================================================================*/
-#define guard_is_targeted_by_bond_ID 0x45
-#define guard_is_targeted_by_bond_LENGTH 0x02
-#define guard_is_targeted_by_bond(label) \
-        guard_is_targeted_by_bond_ID, \
+#define if_guard_is_targeted_by_bond_ID 0x45
+#define if_guard_is_targeted_by_bond_LENGTH 0x02
+#define if_guard_is_targeted_by_bond(label) \
+        if_guard_is_targeted_by_bond_ID, \
         label,
 
 /*=============================================================================
-// name: guard_shot_from_bond_missed
+// name: if_guard_shot_from_bond_missed
 // command id: 46
 // info: if bond's shot missed/landed near guard, goto label
 //=============================================================================
 // note: command will sometimes goto label if guard was shot - use command
 //       3E instead to check if guard was shot recently (more consistent)
 //===========================================================================*/
-#define guard_shot_from_bond_missed_ID 0x46
-#define guard_shot_from_bond_missed_LENGTH 0x02
-#define guard_shot_from_bond_missed(label) \
-        guard_shot_from_bond_missed_ID, \
+#define if_guard_shot_from_bond_missed_ID 0x46
+#define if_guard_shot_from_bond_missed_LENGTH 0x02
+#define if_guard_shot_from_bond_missed(label) \
+        if_guard_shot_from_bond_missed_ID, \
         label,
 
 /*=============================================================================
-// name: guard_counter_clockwise_direction_to_bond_less_than
+// name: if_guard_counter_clockwise_direction_to_bond_less_than
 // command id: 47
 // info: if guard's counter-clockwise direction to bond < direction argument, goto label
 //=============================================================================
@@ -1202,15 +1237,15 @@
 // C0: bond and guard within 3-to-12 o'clock (270 degrees)
 // FF: full rotation, always goto label except for a tiny degree (0-359 degrees)
 //===========================================================================*/
-#define guard_counter_clockwise_direction_to_bond_less_than_ID 0x47
-#define guard_counter_clockwise_direction_to_bond_less_than_LENGTH 0x03
-#define guard_counter_clockwise_direction_to_bond_less_than(direction, label) \
-        guard_counter_clockwise_direction_to_bond_less_than_ID, \
+#define if_guard_counter_clockwise_direction_to_bond_less_than_ID 0x47
+#define if_guard_counter_clockwise_direction_to_bond_less_than_LENGTH 0x03
+#define if_guard_counter_clockwise_direction_to_bond_less_than(direction, label) \
+        if_guard_counter_clockwise_direction_to_bond_less_than_ID, \
         direction, \
         label,
 
 /*=============================================================================
-// name: guard_counter_clockwise_direction_to_bond_greater_than
+// name: if_guard_counter_clockwise_direction_to_bond_greater_than
 // command id: 48
 // info: if guard's counter-clockwise direction to bond > direction argument, goto label
 //=============================================================================
@@ -1221,15 +1256,15 @@
 // 40: bond and guard within 12-to-9 o'clock (270 degrees)
 // 00: full rotation, always goto label
 //===========================================================================*/
-#define guard_counter_clockwise_direction_to_bond_greater_than_ID 0x48
-#define guard_counter_clockwise_direction_to_bond_greater_than_LENGTH 0x03
-#define guard_counter_clockwise_direction_to_bond_greater_than(direction, label) \
-        guard_counter_clockwise_direction_to_bond_greater_than_ID, \
+#define if_guard_counter_clockwise_direction_to_bond_greater_than_ID 0x48
+#define if_guard_counter_clockwise_direction_to_bond_greater_than_LENGTH 0x03
+#define if_guard_counter_clockwise_direction_to_bond_greater_than(direction, label) \
+        if_guard_counter_clockwise_direction_to_bond_greater_than_ID, \
         direction, \
         label,
 
 /*=============================================================================
-// name: guard_counter_clockwise_direction_from_bond_less_than
+// name: if_guard_counter_clockwise_direction_from_bond_less_than
 // command id: 49
 // info: if bond's counter-clockwise direction to guard < direction argument, goto label
 //=============================================================================
@@ -1240,15 +1275,15 @@
 // C0: guard and bond within 3-to-12 o'clock (270 degrees)
 // FF: full rotation, always goto label except for a tiny degree (0-359 degrees)
 //===========================================================================*/
-#define guard_counter_clockwise_direction_from_bond_less_than_ID 0x49
-#define guard_counter_clockwise_direction_from_bond_less_than_LENGTH 0x03
-#define guard_counter_clockwise_direction_from_bond_less_than(direction, label) \
-        guard_counter_clockwise_direction_from_bond_less_than_ID, \
+#define if_guard_counter_clockwise_direction_from_bond_less_than_ID 0x49
+#define if_guard_counter_clockwise_direction_from_bond_less_than_LENGTH 0x03
+#define if_guard_counter_clockwise_direction_from_bond_less_than(direction, label) \
+        if_guard_counter_clockwise_direction_from_bond_less_than_ID, \
         direction, \
         label,
 
 /*=============================================================================
-// name: guard_counter_clockwise_direction_from_bond_greater_than
+// name: if_guard_counter_clockwise_direction_from_bond_greater_than
 // command id: 4A
 // info: if bond's counter-clockwise direction to guard > direction argument, goto label
 //=============================================================================
@@ -1259,105 +1294,105 @@
 // 40: guard and bond within 12-to-9 o'clock (270 degrees)
 // 00: full rotation, always goto label
 //===========================================================================*/
-#define guard_counter_clockwise_direction_from_bond_greater_than_ID 0x4A
-#define guard_counter_clockwise_direction_from_bond_greater_than_LENGTH 0x03
-#define guard_counter_clockwise_direction_from_bond_greater_than(direction, label) \
-        guard_counter_clockwise_direction_from_bond_greater_than_ID, \
+#define if_guard_counter_clockwise_direction_from_bond_greater_than_ID 0x4A
+#define if_guard_counter_clockwise_direction_from_bond_greater_than_LENGTH 0x03
+#define if_guard_counter_clockwise_direction_from_bond_greater_than(direction, label) \
+        if_guard_counter_clockwise_direction_from_bond_greater_than_ID, \
         direction, \
         label,
 
 /*=============================================================================
-// name: guard_distance_to_bond_less_than
+// name: if_guard_distance_to_bond_less_than
 // command id: 4B
 // info: if guard's distance to bond < distance argument, goto label
 //=============================================================================
 // note: argument scale is 10 units per meter
 //===========================================================================*/
-#define guard_distance_to_bond_less_than_ID 0x4B
-#define guard_distance_to_bond_less_than_LENGTH 0x04
-#define guard_distance_to_bond_less_than(distance, label) \
-        guard_distance_to_bond_less_than_ID, \
+#define if_guard_distance_to_bond_less_than_ID 0x4B
+#define if_guard_distance_to_bond_less_than_LENGTH 0x04
+#define if_guard_distance_to_bond_less_than(distance, label) \
+        if_guard_distance_to_bond_less_than_ID, \
         chararray16(distance), \
         label,
 
 /*=============================================================================
-// name: guard_distance_to_bond_greater_than
+// name: if_guard_distance_to_bond_greater_than
 // command id: 4C
 // info: if guard's distance to bond > distance argument, goto label
 //=============================================================================
 // note: argument scale is 10 units per meter
 //===========================================================================*/
-#define guard_distance_to_bond_greater_than_ID 0x4C
-#define guard_distance_to_bond_greater_than_LENGTH 0x04
-#define guard_distance_to_bond_greater_than(distance, label) \
-        guard_distance_to_bond_greater_than_ID, \
+#define if_guard_distance_to_bond_greater_than_ID 0x4C
+#define if_guard_distance_to_bond_greater_than_LENGTH 0x04
+#define if_guard_distance_to_bond_greater_than(distance, label) \
+        if_guard_distance_to_bond_greater_than_ID, \
         chararray16(distance), \
         label,
 
 /*=============================================================================
-// name: chr_distance_to_pad_less_than
+// name: if_chr_distance_to_pad_less_than
 // command id: 4D
 // info: if chr's distance to pad < distance argument, goto label
 //=============================================================================
 // note: argument scale is 10 units per meter
 //===========================================================================*/
-#define chr_distance_to_pad_less_than_ID 0x4D
-#define chr_distance_to_pad_less_than_LENGTH 0x07
-#define chr_distance_to_pad_less_than(chr_num, distance, pad, label) \
-        chr_distance_to_pad_less_than_ID, \
+#define if_chr_distance_to_pad_less_than_ID 0x4D
+#define if_chr_distance_to_pad_less_than_LENGTH 0x07
+#define if_chr_distance_to_pad_less_than(chr_num, distance, pad, label) \
+        if_chr_distance_to_pad_less_than_ID, \
         chr_num, \
         chararray16(distance), \
         chararray16(pad), \
         label,
 
 /*=============================================================================
-// name: chr_distance_to_pad_greater_than
+// name: if_chr_distance_to_pad_greater_than
 // command id: 4E
 // info: if chr's distance to pad > distance argument, goto label
 //=============================================================================
 // note: argument scale is 10 units per meter
 //===========================================================================*/
-#define chr_distance_to_pad_greater_than_ID 0x4E
-#define chr_distance_to_pad_greater_than_LENGTH 0x07
-#define chr_distance_to_pad_greater_than(chr_num, distance, pad, label) \
-        chr_distance_to_pad_greater_than_ID, \
+#define if_chr_distance_to_pad_greater_than_ID 0x4E
+#define if_chr_distance_to_pad_greater_than_LENGTH 0x07
+#define if_chr_distance_to_pad_greater_than(chr_num, distance, pad, label) \
+        if_chr_distance_to_pad_greater_than_ID, \
         chr_num, \
         chararray16(distance), \
         chararray16(pad), \
         label,
 
 /*=============================================================================
-// name: guard_distance_to_chr_less_than
+// name: if_guard_distance_to_chr_less_than
 // command id: 4F
 // info: if guard's distance to chr < distance argument, goto label
 //=============================================================================
 // note: argument scale is 10 units per meter
 //===========================================================================*/
-#define guard_distance_to_chr_less_than_ID 0x4F
-#define guard_distance_to_chr_less_than_LENGTH 0x05
-#define guard_distance_to_chr_less_than(distance, chr_num, label) \
-        guard_distance_to_chr_less_than_ID, \
+#define if_guard_distance_to_chr_less_than_ID 0x4F
+#define if_guard_distance_to_chr_less_than_LENGTH 0x05
+#define if_guard_distance_to_chr_less_than(distance, chr_num, label) \
+        if_guard_distance_to_chr_less_than_ID, \
         chararray16(distance), \
         chr_num, \
         label,
 
 /*=============================================================================
-// name: guard_distance_to_chr_greater_than
+// name: if_guard_distance_to_chr_greater_than
 // command id: 50
 // info: if guard's distance to chr > distance argument, goto label
 //=============================================================================
 // note: argument scale is 10 units per meter
 //===========================================================================*/
-#define guard_distance_to_chr_greater_than_ID 0x50
-#define guard_distance_to_chr_greater_than_LENGTH 0x05
-#define guard_distance_to_chr_greater_than(distance, chr_num, label) \
-        guard_distance_to_chr_greater_than_ID, \
+#define if_guard_distance_to_chr_greater_than_ID 0x50
+#define if_guard_distance_to_chr_greater_than_LENGTH 0x05
+#define if_guard_distance_to_chr_greater_than(distance, chr_num, label) \
+        if_guard_distance_to_chr_greater_than_ID, \
         chararray16(distance), \
         chr_num, \
         label,
 
 /*=============================================================================
-// name: guard_set_chr_preset_to_guard_within_distance
+// name: guard_try_setting_chr_preset_to_guard_within_distance
 // command id: 51
 // info: if guard's distance to any chr < distance argument, set chr->padpreset1
 //       to found guard's chrnum and goto label
@@ -1366,82 +1401,82 @@
 // found chr, but whoever was first found within the distance argument. if no
 // guards were found within distance range, do not goto label
 //===========================================================================*/
-#define guard_set_chr_preset_to_guard_within_distance_ID 0x51
-#define guard_set_chr_preset_to_guard_within_distance_LENGTH 0x04
-#define guard_set_chr_preset_to_guard_within_distance(distance, label) \
-        guard_set_chr_preset_to_guard_within_distance_ID, \
+#define guard_try_setting_chr_preset_to_guard_within_distance_ID 0x51
+#define guard_try_setting_chr_preset_to_guard_within_distance_LENGTH 0x04
+#define guard_try_setting_chr_preset_to_guard_within_distance(distance, label) \
+        guard_try_setting_chr_preset_to_guard_within_distance_ID, \
         chararray16(distance), \
         label,
 
 /*=============================================================================
-// name: bond_distance_to_pad_less_than
+// name: if_bond_distance_to_pad_less_than
 // command id: 52
 // info: if bond's distance to pad < distance argument, goto label
 //=============================================================================
 // note: argument scale is 10 units per meter
 //===========================================================================*/
-#define bond_distance_to_pad_less_than_ID 0x52
-#define bond_distance_to_pad_less_than_LENGTH 0x06
-#define bond_distance_to_pad_less_than(distance, pad, label) \
-        bond_distance_to_pad_less_than_ID, \
+#define if_bond_distance_to_pad_less_than_ID 0x52
+#define if_bond_distance_to_pad_less_than_LENGTH 0x06
+#define if_bond_distance_to_pad_less_than(distance, pad, label) \
+        if_bond_distance_to_pad_less_than_ID, \
         chararray16(distance), \
         chararray16(pad), \
         label,
 
 /*=============================================================================
-// name: bond_distance_to_pad_greater_than
+// name: if_bond_distance_to_pad_greater_than
 // command id: 53
 // info: if bond's distance to pad > distance argument, goto label
 //=============================================================================
 // note: argument scale is 10 units per meter
 //===========================================================================*/
-#define bond_distance_to_pad_greater_than_ID 0x53
-#define bond_distance_to_pad_greater_than_LENGTH 0x06
-#define bond_distance_to_pad_greater_than(distance, pad, label) \
-        bond_distance_to_pad_greater_than_ID, \
+#define if_bond_distance_to_pad_greater_than_ID 0x53
+#define if_bond_distance_to_pad_greater_than_LENGTH 0x06
+#define if_bond_distance_to_pad_greater_than(distance, pad, label) \
+        if_bond_distance_to_pad_greater_than_ID, \
         chararray16(distance), \
         chararray16(pad), \
         label,
 
 /*=============================================================================
-// name: chr_in_room_with_pad
+// name: if_chr_in_room_with_pad
 // command id: 54
 // info: if chr id in same room with pad, goto label
 //===========================================================================*/
-#define chr_in_room_with_pad_ID 0x54
-#define chr_in_room_with_pad_LENGTH 0x05
-#define chr_in_room_with_pad(chr_num, pad, label) \
-        chr_in_room_with_pad_ID, \
+#define if_chr_in_room_with_pad_ID 0x54
+#define if_chr_in_room_with_pad_LENGTH 0x05
+#define if_chr_in_room_with_pad(chr_num, pad, label) \
+        if_chr_in_room_with_pad_ID, \
         chr_num, \
         chararray16(pad), \
         label,
 
 /*=============================================================================
-// name: bond_in_room_with_pad
+// name: if_bond_in_room_with_pad
 // command id: 55
 // info: if bond in same room with pad, goto label
 //===========================================================================*/
-#define bond_in_room_with_pad_ID 0x55
-#define bond_in_room_with_pad_LENGTH 0x04
-#define bond_in_room_with_pad(pad, label) \
-        bond_in_room_with_pad_ID, \
+#define if_bond_in_room_with_pad_ID 0x55
+#define if_bond_in_room_with_pad_LENGTH 0x04
+#define if_bond_in_room_with_pad(pad, label) \
+        if_bond_in_room_with_pad_ID, \
         chararray16(pad), \
         label,
 
 /*=============================================================================
-// name: bond_collected_object
+// name: if_bond_collected_object
 // command id: 56
 // info: if bond collected tagged object, goto label
 //===========================================================================*/
-#define bond_collected_object_ID 0x56
-#define bond_collected_object_LENGTH 0x03
-#define bond_collected_object(object_tag, label) \
-        bond_collected_object_ID, \
+#define if_bond_collected_object_ID 0x56
+#define if_bond_collected_object_LENGTH 0x03
+#define if_bond_collected_object(object_tag, label) \
+        if_bond_collected_object_ID, \
         object_tag, \
         label,
 
 /*=============================================================================
-// name: item_is_stationary_within_level
+// name: if_item_is_stationary_within_level
 // command id: 57
 // info: if item exists in level and is stationary (not moving/in mid-air), goto label
 //=============================================================================
@@ -1449,66 +1484,67 @@
 // attached to an object (item is stationary within level). so make sure command
 // 58 takes priority over command 57 when using both commands
 //===========================================================================*/
-#define item_is_stationary_within_level_ID 0x57
-#define item_is_stationary_within_level_LENGTH 0x03
-#define item_is_stationary_within_level(item_num, label) \
-        item_is_stationary_within_level_ID, \
+#define if_item_is_stationary_within_level_ID 0x57
+#define if_item_is_stationary_within_level_LENGTH 0x03
+#define if_item_is_stationary_within_level(item_num, label) \
+        if_item_is_stationary_within_level_ID, \
         item_num, \
         label,
 
 /*=============================================================================
-// name: item_is_attached_to_object
+// name: if_item_is_attached_to_object
 // command id: 58
 // info: if item was thrown onto tagged object, goto label
 //=============================================================================
-// note: used to check if bond threw an item onto a tagged object
+// note: used to check if bond threw an item onto a tagged object. if used with
+// command 57, make sure command 58 take priority over command 57
 //===========================================================================*/
-#define item_is_attached_to_object_ID 0x58
-#define item_is_attached_to_object_LENGTH 0x04
-#define item_is_attached_to_object(item_num, object_tag, label) \
-        item_is_attached_to_object_ID, \
+#define if_item_is_attached_to_object_ID 0x58
+#define if_item_is_attached_to_object_LENGTH 0x04
+#define if_item_is_attached_to_object(item_num, object_tag, label) \
+        if_item_is_attached_to_object_ID, \
         item_num, \
         object_tag, \
         label,
 
 /*=============================================================================
-// name: bond_has_item_equipped
+// name: if_bond_has_item_equipped
 // command id: 59
 // info: if bond has an item equipped (currently held), goto label
 //===========================================================================*/
-#define bond_has_item_equipped_ID 0x59
-#define bond_has_item_equipped_LENGTH 0x03
-#define bond_has_item_equipped(item_num, label) \
-        bond_has_item_equipped_ID, \
+#define if_bond_has_item_equipped_ID 0x59
+#define if_bond_has_item_equipped_LENGTH 0x03
+#define if_bond_has_item_equipped(item_num, label) \
+        if_bond_has_item_equipped_ID, \
         item_num, \
         label,
 
 /*=============================================================================
-// name: object_exists
+// name: if_object_exists
 // command id: 5A
 // info: if tagged object exists in level, goto label
 //===========================================================================*/
-#define object_exists_ID 0x5A
-#define object_exists_LENGTH 0x03
-#define object_exists(object_tag, label) \
-        object_exists_ID, \
+#define if_object_exists_ID 0x5A
+#define if_object_exists_LENGTH 0x03
+#define if_object_exists(object_tag, label) \
+        if_object_exists_ID, \
         object_tag, \
         label,
 
 /*=============================================================================
-// name: object_not_destroyed
+// name: if_object_not_destroyed
 // command id: 5B
 // info: if tagged object is not destroyed, goto label
 //===========================================================================*/
-#define object_not_destroyed_ID 0x5B
-#define object_not_destroyed_LENGTH 0x03
-#define object_not_destroyed(object_tag, label) \
-        object_not_destroyed_ID, \
+#define if_object_not_destroyed_ID 0x5B
+#define if_object_not_destroyed_LENGTH 0x03
+#define if_object_not_destroyed(object_tag, label) \
+        if_object_not_destroyed_ID, \
         object_tag, \
         label,
 
 /*=============================================================================
-// name: object_was_activated
+// name: if_object_was_activated
 // command id: 5C
 // info: if tagged object was activated since last check, goto label
 //=============================================================================
@@ -1516,15 +1552,15 @@
 // and command 5E can activate tagged objects. bond cannot activate destroyed
 // objects
 //===========================================================================*/
-#define object_was_activated_ID 0x5C
-#define object_was_activated_LENGTH 0x03
-#define object_was_activated(object_tag, label) \
-        object_was_activated_ID, \
+#define if_object_was_activated_ID 0x5C
+#define if_object_was_activated_LENGTH 0x03
+#define if_object_was_activated(object_tag, label) \
+        if_object_was_activated_ID, \
         object_tag, \
         label,
 
 /*=============================================================================
-// name: bond_used_gadget_on_object
+// name: if_bond_used_gadget_on_object
 // command id: 5D
 // info: if bond used a gadget item on a tagged object since last check, goto label
 //=============================================================================
@@ -1535,10 +1571,10 @@
 // ITEM_EXPLOSIVEFLOPPY
 // ITEM_DATTAPE
 //===========================================================================*/
-#define bond_used_gadget_on_object_ID 0x5D
-#define bond_used_gadget_on_object_LENGTH 0x03
-#define bond_used_gadget_on_object(object_tag, label) \
-        bond_used_gadget_on_object_ID, \
+#define if_bond_used_gadget_on_object_ID 0x5D
+#define if_bond_used_gadget_on_object_LENGTH 0x03
+#define if_bond_used_gadget_on_object(object_tag, label) \
+        if_bond_used_gadget_on_object_ID, \
         object_tag, \
         label,
 
@@ -1681,32 +1717,32 @@
         object_tag,
 
 /*=============================================================================
-// name: door_check_state
+// name: if_door_state_equal
 // command id: 68
 // info: if tagged door state matches any of bitfield argument, goto label
 //=============================================================================
 // note: use DOOR_STATE_# flags for door state argument. flags can be combined
 //===========================================================================*/
-#define door_check_state_ID 0x68
-#define door_check_state_LENGTH 0x04
-#define door_check_state(object_tag, door_state, label) \
-        door_check_state_ID, \
+#define if_door_state_equal_ID 0x68
+#define if_door_state_equal_LENGTH 0x04
+#define if_door_state_equal(object_tag, door_state, label) \
+        if_door_state_equal_ID, \
         object_tag, \
         door_state, \
         label,
 
 /*=============================================================================
-// name: door_has_been_opened_before
+// name: if_door_has_been_opened_before
 // command id: 69
 // info: if tagged door has been opened before, goto label
 //=============================================================================
 // note: if tagged door is open by default in setup, then it must be closed before
 //       it will check if opened again
 //===========================================================================*/
-#define door_has_been_opened_before_ID 0x69
-#define door_has_been_opened_before_LENGTH 0x03
-#define door_has_been_opened_before(object_tag, label) \
-        door_has_been_opened_before_ID, \
+#define if_door_has_been_opened_before_ID 0x69
+#define if_door_has_been_opened_before_LENGTH 0x03
+#define if_door_has_been_opened_before(object_tag, label) \
+        if_door_has_been_opened_before_ID, \
         object_tag, \
         label,
 
@@ -1741,23 +1777,23 @@
         lock_flag,
 
 /*=============================================================================
-// name: door_check_lock
+// name: if_door_lock_equal
 // command id: 6C
 // info: if tagged door's lock flags matches any lock flag argument, goto label
 //=============================================================================
 // note: use DOOR_LOCK_# flags for lock argument. lock flags are same as used
 //       within setup for doors and keys
 //===========================================================================*/
-#define door_check_lock_ID 0x6C
-#define door_check_lock_LENGTH 0x04
-#define door_check_lock(object_tag, lock_flag, label) \
-        door_check_lock_ID, \
+#define if_door_lock_equal_ID 0x6C
+#define if_door_lock_equal_LENGTH 0x04
+#define if_door_lock_equal(object_tag, lock_flag, label) \
+        if_door_lock_equal_ID, \
         object_tag, \
         lock_flag, \
         label,
 
 /*=============================================================================
-// name: objective_num_complete
+// name: if_objective_num_complete
 // command id: 6D
 // info: if objective # completed, goto label
 //=============================================================================
@@ -1765,15 +1801,15 @@
 // completes an unlisted 00 agent objective, checking that objective num will
 // goto label
 //===========================================================================*/
-#define objective_num_complete_ID 0x6D
-#define objective_num_complete_LENGTH 0x03
-#define objective_num_complete(obj_num, label) \
-        objective_num_complete_ID, \
+#define if_objective_num_complete_ID 0x6D
+#define if_objective_num_complete_LENGTH 0x03
+#define if_objective_num_complete(obj_num, label) \
+        if_objective_num_complete_ID, \
         obj_num, \
         label,
 
 /*=============================================================================
-// name: guard_unknown6E
+// name: guard_try_unknown6E
 // command id: 6E
 // info: unknown command, goto label
 //=============================================================================
@@ -1785,15 +1821,15 @@
 // 0010: ???
 // 0020: ???
 //===========================================================================*/
-#define guard_unknown6E_ID 0x6E
-#define guard_unknown6E_LENGTH 0x03
-#define guard_unknown6E(unknown_flag, label) \
-        guard_unknown6E_ID, \
+#define guard_try_unknown6E_ID 0x6E
+#define guard_try_unknown6E_LENGTH 0x03
+#define guard_try_unknown6E(unknown_flag, label) \
+        guard_try_unknown6E_ID, \
         unknown_flag, \
         label,
 
 /*=============================================================================
-// name: guard_unknown6F
+// name: guard_try_unknown6F
 // command id: 6F
 // info: unknown command, goto label
 //=============================================================================
@@ -1805,15 +1841,15 @@
 // 0010: ???
 // 0020: ???
 //===========================================================================*/
-#define guard_unknown6F_ID 0x6F
-#define guard_unknown6F_LENGTH 0x03
-#define guard_unknown6F(unknown_flag, label) \
-        guard_unknown6F_ID, \
+#define guard_try_unknown6F_ID 0x6F
+#define guard_try_unknown6F_LENGTH 0x03
+#define guard_try_unknown6F(unknown_flag, label) \
+        guard_try_unknown6F_ID, \
         unknown_flag, \
         label,
 
 /*=============================================================================
-// name: game_difficulty_less_than
+// name: if_game_difficulty_less_than
 // command id: 70
 // info: if current difficulty < difficulty argument, goto label
 //=============================================================================
@@ -1822,15 +1858,15 @@
 // 02: agent/secret agent
 // 03: agent/secret agent/00 agent
 //===========================================================================*/
-#define game_difficulty_less_than_ID 0x70
-#define game_difficulty_less_than_LENGTH 0x03
-#define game_difficulty_less_than(argument, label) \
-        game_difficulty_less_than_ID, \
+#define if_game_difficulty_less_than_ID 0x70
+#define if_game_difficulty_less_than_LENGTH 0x03
+#define if_game_difficulty_less_than(argument, label) \
+        if_game_difficulty_less_than_ID, \
         argument, \
         label,
 
 /*=============================================================================
-// name: game_difficulty_greater_than
+// name: if_game_difficulty_greater_than
 // command id: 71
 // info: if current difficulty > difficulty argument, goto label
 //=============================================================================
@@ -1839,157 +1875,157 @@
 // 01: 00 agent/007
 // 02: 007 only
 //===========================================================================*/
-#define game_difficulty_greater_than_ID 0x71
-#define game_difficulty_greater_than_LENGTH 0x03
-#define game_difficulty_greater_than(argument, label) \
-        game_difficulty_greater_than_ID, \
+#define if_game_difficulty_greater_than_ID 0x71
+#define if_game_difficulty_greater_than_LENGTH 0x03
+#define if_game_difficulty_greater_than(argument, label) \
+        if_game_difficulty_greater_than_ID, \
         argument, \
         label,
 
 /*=============================================================================
-// name: mission_time_less_than
+// name: if_mission_time_less_than
 // command id: 72
 // info: if current mission time (in seconds) < seconds argument, goto label
 //=============================================================================
 // note: converts (unsigned) seconds to float and compares against mission timer
 //===========================================================================*/
-#define mission_time_less_than_ID 0x72
-#define mission_time_less_than_LENGTH 0x04
-#define mission_time_less_than(seconds, label) \
-        mission_time_less_than_ID, \
+#define if_mission_time_less_than_ID 0x72
+#define if_mission_time_less_than_LENGTH 0x04
+#define if_mission_time_less_than(seconds, label) \
+        if_mission_time_less_than_ID, \
         chararray16(seconds), \
         label,
 
 /*=============================================================================
-// name: mission_time_greater_than
+// name: if_mission_time_greater_than
 // command id: 73
 // info: if current mission time (in seconds) > seconds argument, goto label
 //=============================================================================
 // note: converts (unsigned) seconds to float and compares against mission timer
 //===========================================================================*/
-#define mission_time_greater_than_ID 0x73
-#define mission_time_greater_than_LENGTH 0x04
-#define mission_time_greater_than(seconds, label) \
-        mission_time_greater_than_ID, \
+#define if_mission_time_greater_than_ID 0x73
+#define if_mission_time_greater_than_LENGTH 0x04
+#define if_mission_time_greater_than(seconds, label) \
+        if_mission_time_greater_than_ID, \
         chararray16(seconds), \
         label,
 
 /*=============================================================================
-// name: system_power_time_less_than
+// name: if_system_power_time_less_than
 // command id: 74
 // info: if system powered on time (in minutes) < minutes argument, goto label
 //=============================================================================
 // note: converts (unsigned) minutes to float and compares against system time
 //===========================================================================*/
-#define system_power_time_less_than_ID 0x74
-#define system_power_time_less_than_LENGTH 0x04
-#define system_power_time_less_than(minutes, label) \
-        system_power_time_less_than_ID, \
+#define if_system_power_time_less_than_ID 0x74
+#define if_system_power_time_less_than_LENGTH 0x04
+#define if_system_power_time_less_than(minutes, label) \
+        if_system_power_time_less_than_ID, \
         chararray16(minutes), \
         label,
 
 /*=============================================================================
-// name: system_power_time_greater_than
+// name: if_system_power_time_greater_than
 // command id: 75
 // info: if system powered on time (in minutes) > minutes argument, goto label
 //=============================================================================
 // note: converts (unsigned) minutes to float and compares against system time
 //===========================================================================*/
-#define system_power_time_greater_than_ID 0x75
-#define system_power_time_greater_than_LENGTH 0x04
-#define system_power_time_greater_than(minutes, label) \
-        system_power_time_greater_than_ID, \
+#define if_system_power_time_greater_than_ID 0x75
+#define if_system_power_time_greater_than_LENGTH 0x04
+#define if_system_power_time_greater_than(minutes, label) \
+        if_system_power_time_greater_than_ID, \
         chararray16(minutes), \
         label,
 
 /*=============================================================================
-// name: level_id_less_than
+// name: if_level_id_less_than
 // command id: 76
 // info: if current level id < level id argument, goto label
 //=============================================================================
 // note: level id uses LEVELID enum values, not briefing menu stage number
 //===========================================================================*/
-#define level_id_less_than_ID 0x76
-#define level_id_less_than_LENGTH 0x03
-#define level_id_less_than(level_id, label) \
-        level_id_less_than_ID, \
+#define if_level_id_less_than_ID 0x76
+#define if_level_id_less_than_LENGTH 0x03
+#define if_level_id_less_than(level_id, label) \
+        if_level_id_less_than_ID, \
         level_id, \
         label,
 
 /*=============================================================================
-// name: level_id_greater_than
+// name: if_level_id_greater_than
 // command id: 77
 // info: if current level id > level id argument, goto label
 //=============================================================================
 // note: level id uses LEVELID enum values, not briefing menu stage number
 //===========================================================================*/
-#define level_id_greater_than_ID 0x77
-#define level_id_greater_than_LENGTH 0x03
-#define level_id_greater_than(level_id, label) \
-        level_id_greater_than_ID, \
+#define if_level_id_greater_than_ID 0x77
+#define if_level_id_greater_than_LENGTH 0x03
+#define if_level_id_greater_than(level_id, label) \
+        if_level_id_greater_than_ID, \
         level_id, \
         label,
 
 /*=============================================================================
-// name: guard_hits_less_than
+// name: if_guard_hits_less_than
 // command id: 78
 // info: if guard's hits taken < hit_num, goto label
 //=============================================================================
 // note: compares signed byte against chr->numarghs. hits count even if guard
 //       is invincible
 //===========================================================================*/
-#define guard_hits_less_than_ID 0x78
-#define guard_hits_less_than_LENGTH 0x03
-#define guard_hits_less_than(hit_num, label) \
-        guard_hits_less_than_ID, \
+#define if_guard_hits_less_than_ID 0x78
+#define if_guard_hits_less_than_LENGTH 0x03
+#define if_guard_hits_less_than(hit_num, label) \
+        if_guard_hits_less_than_ID, \
         hit_num, \
         label,
 
 /*=============================================================================
-// name: guard_hits_greater_than
+// name: if_guard_hits_greater_than
 // command id: 79
 // info: if guard's hits taken > hit_num, goto label
 //=============================================================================
 // note: compares signed byte against chr->numarghs. hits count even if guard
 //       is invincible
 //===========================================================================*/
-#define guard_hits_greater_than_ID 0x79
-#define guard_hits_greater_than_LENGTH 0x03
-#define guard_hits_greater_than(hit_num, label) \
-        guard_hits_greater_than_ID, \
+#define if_guard_hits_greater_than_ID 0x79
+#define if_guard_hits_greater_than_LENGTH 0x03
+#define if_guard_hits_greater_than(hit_num, label) \
+        if_guard_hits_greater_than_ID, \
         hit_num, \
         label,
 
 /*=============================================================================
-// name: guard_hits_missed_less_than
+// name: if_guard_hits_missed_less_than
 // command id: 7A
 // info: if bond's shot missed/landed near guard total < missed_num, goto label
 //=============================================================================
 // note: compares signed byte against chr->numclosearghs
 //===========================================================================*/
-#define guard_hits_missed_less_than_ID 0x7A
-#define guard_hits_missed_less_than_LENGTH 0x03
-#define guard_hits_missed_less_than(missed_num, label) \
-        guard_hits_missed_less_than_ID, \
+#define if_guard_hits_missed_less_than_ID 0x7A
+#define if_guard_hits_missed_less_than_LENGTH 0x03
+#define if_guard_hits_missed_less_than(missed_num, label) \
+        if_guard_hits_missed_less_than_ID, \
         missed_num, \
         label,
 
 /*=============================================================================
-// name: guard_hits_missed_greater_than
+// name: if_guard_hits_missed_greater_than
 // command id: 7B
 // info: if bond's shot missed/landed near guard total > missed_num, goto label
 //=============================================================================
 // note: compares signed byte argument against chr->numclosearghs
 //===========================================================================*/
-#define guard_hits_missed_greater_than_ID 0x7B
-#define guard_hits_missed_greater_than_LENGTH 0x03
-#define guard_hits_missed_greater_than(missed_num, label) \
-        guard_hits_missed_greater_than_ID, \
+#define if_guard_hits_missed_greater_than_ID 0x7B
+#define if_guard_hits_missed_greater_than_LENGTH 0x03
+#define if_guard_hits_missed_greater_than(missed_num, label) \
+        if_guard_hits_missed_greater_than_ID, \
         missed_num, \
         label,
 
 /*=============================================================================
-// name: chr_health_less_than
+// name: if_chr_health_less_than
 // command id: 7C
 // info: if chr's health < health argument, goto label
 //=============================================================================
@@ -1997,16 +2033,16 @@
 // chr->maxdamage - chr->damage. default guard health is 40 (0x28), or after
 // float conversion 4.0f. armour is tested
 //===========================================================================*/
-#define chr_health_less_than_ID 0x7C
-#define chr_health_less_than_LENGTH 0x04
-#define chr_health_less_than(chr_num, health, label) \
-        chr_health_less_than_ID, \
+#define if_chr_health_less_than_ID 0x7C
+#define if_chr_health_less_than_LENGTH 0x04
+#define if_chr_health_less_than(chr_num, health, label) \
+        if_chr_health_less_than_ID, \
         chr_num, \
         health, \
         label,
 
 /*=============================================================================
-// name: chr_health_greater_than
+// name: if_chr_health_greater_than
 // command id: 7D
 // info: if chr's health > health argument, goto label
 //=============================================================================
@@ -2014,75 +2050,75 @@
 // chr->maxdamage - chr->damage. default guard health is 40 (0x28), or after
 // float conversion 4.0f. armour is tested
 //===========================================================================*/
-#define chr_health_greater_than_ID 0x7D
-#define chr_health_greater_than_LENGTH 0x04
-#define chr_health_greater_than(chr_num, health, label) \
-        chr_health_greater_than_ID, \
+#define if_chr_health_greater_than_ID 0x7D
+#define if_chr_health_greater_than_LENGTH 0x04
+#define if_chr_health_greater_than(chr_num, health, label) \
+        if_chr_health_greater_than_ID, \
         chr_num, \
         health, \
         label,
 
 /*=============================================================================
-// name: chr_was_damaged_since_last_check
+// name: if_chr_was_damaged_since_last_check
 // command id: 7E
 // info: if chr has taken damage since last check, goto label
 //=============================================================================
 // note: checks chr->chrflags if CHRFLAG_WAS_DAMAGED is set. if true, unset flag
 // and goto label. CHRFLAG_WAS_DAMAGED is set if guard took damage (not invincible)
 //===========================================================================*/
-#define chr_was_damaged_since_last_check_ID 0x7E
-#define chr_was_damaged_since_last_check_LENGTH 0x03
-#define chr_was_damaged_since_last_check(chr_num, label) \
-        chr_was_damaged_since_last_check_ID, \
+#define if_chr_was_damaged_since_last_check_ID 0x7E
+#define if_chr_was_damaged_since_last_check_LENGTH 0x03
+#define if_chr_was_damaged_since_last_check(chr_num, label) \
+        if_chr_was_damaged_since_last_check_ID, \
         chr_num, \
         label,
 
 /*=============================================================================
-// name: bond_health_less_than
+// name: if_bond_health_less_than
 // command id: 7F
 // info: if bond's health < health argument, goto label
 //=============================================================================
 // note: does not check armour. health argument is unsigned, argument range is
 //       between 00 and FF, with FF equal to 100% health
 //===========================================================================*/
-#define bond_health_less_than_ID 0x7F
-#define bond_health_less_than_LENGTH 0x03
-#define bond_health_less_than(health, label) \
-        bond_health_less_than_ID, \
+#define if_bond_health_less_than_ID 0x7F
+#define if_bond_health_less_than_LENGTH 0x03
+#define if_bond_health_less_than(health, label) \
+        if_bond_health_less_than_ID, \
         health, \
         label,
 
 /*=============================================================================
-// name: bond_health_greater_than
+// name: if_bond_health_greater_than
 // command id: 80
 // info: if bond's health > health argument, goto label
 //=============================================================================
 // note: does not check armour. health argument is unsigned, argument range is
 //       between 00 and FF, with FF equal to 100% health
 //===========================================================================*/
-#define bond_health_greater_than_ID 0x80
-#define bond_health_greater_than_LENGTH 0x03
-#define bond_health_greater_than(health, label) \
-        bond_health_greater_than_ID, \
+#define if_bond_health_greater_than_ID 0x80
+#define if_bond_health_greater_than_LENGTH 0x03
+#define if_bond_health_greater_than(health, label) \
+        if_bond_health_greater_than_ID, \
         health, \
         label,
 
 /*=============================================================================
-// name: chr_byte_1_set
+// name: local_byte_1_set
 // command id: 81
 // info: set chr->flags byte value to byte argument
 //=============================================================================
 // note: argument is unsigned. this is a private byte that is stored in chr struct.
 //       it can be used for anything. default value is 0
 //===========================================================================*/
-#define chr_byte_1_set_ID 0x81
-#define chr_byte_1_set_LENGTH 0x02
-#define chr_byte_1_set(set_byte) \
-        chr_byte_1_set_ID, \
+#define local_byte_1_set_ID 0x81
+#define local_byte_1_set_LENGTH 0x02
+#define local_byte_1_set(set_byte) \
+        local_byte_1_set_ID, \
         set_byte,
 
 /*=============================================================================
-// name: chr_byte_1_add
+// name: local_byte_1_add
 // command id: 82
 // info: add byte argument to chr->flags byte value
 //=============================================================================
@@ -2090,43 +2126,43 @@
 // a private byte that is stored in chr struct. it can be used for anything.
 // default value is 0
 //===========================================================================*/
-#define chr_byte_1_add_ID 0x82
-#define chr_byte_1_add_LENGTH 0x02
-#define chr_byte_1_add(add_byte) \
-        chr_byte_1_add_ID, \
+#define local_byte_1_add_ID 0x82
+#define local_byte_1_add_LENGTH 0x02
+#define local_byte_1_add(add_byte) \
+        local_byte_1_add_ID, \
         add_byte,
 
 /*=============================================================================
-// name: chr_byte_1_subtract
+// name: local_byte_1_subtract
 // command id: 83
 // info: subtract byte argument from chr->flags byte value
 //=============================================================================
 // note: argument is unsigned, subtract value is clamped at 0. this is a private
 // byte that is stored in chr struct. it can be used for anything. default value is 0
 //===========================================================================*/
-#define chr_byte_1_subtract_ID 0x83
-#define chr_byte_1_subtract_LENGTH 0x02
-#define chr_byte_1_subtract(subtract_byte) \
-        chr_byte_1_subtract_ID, \
+#define local_byte_1_subtract_ID 0x83
+#define local_byte_1_subtract_LENGTH 0x02
+#define local_byte_1_subtract(subtract_byte) \
+        local_byte_1_subtract_ID, \
         subtract_byte,
 
 /*=============================================================================
-// name: chr_byte_1_less_than
+// name: if_local_byte_1_less_than
 // command id: 84
 // info: if chr->flags byte value < byte argument, goto label
 //=============================================================================
 // note: argument is unsigned. this is a private byte that is stored in chr struct.
 //       it can be used for anything. default value is 0
 //===========================================================================*/
-#define chr_byte_1_less_than_ID 0x84
-#define chr_byte_1_less_than_LENGTH 0x03
-#define chr_byte_1_less_than(compare_byte, label) \
-        chr_byte_1_less_than_ID, \
+#define if_local_byte_1_less_than_ID 0x84
+#define if_local_byte_1_less_than_LENGTH 0x03
+#define if_local_byte_1_less_than(compare_byte, label) \
+        if_local_byte_1_less_than_ID, \
         compare_byte, \
         label,
 
 /*=============================================================================
-// name: chr_byte_1_less_than_random
+// name: if_local_byte_1_less_than_random_seed
 // command id: 85
 // info: if chr->flags byte value < chr->random, goto label
 //=============================================================================
@@ -2134,28 +2170,28 @@
 // is a private byte that is stored in chr struct. it can be used for anything.
 // default value is 0
 //===========================================================================*/
-#define chr_byte_1_less_than_random_ID 0x85
-#define chr_byte_1_less_than_random_LENGTH 0x02
-#define chr_byte_1_less_than_random(label) \
-        chr_byte_1_less_than_random_ID, \
+#define if_local_byte_1_less_than_random_seed_ID 0x85
+#define if_local_byte_1_less_than_random_seed_LENGTH 0x02
+#define if_local_byte_1_less_than_random_seed(label) \
+        if_local_byte_1_less_than_random_seed_ID, \
         label,
 
 /*=============================================================================
-// name: chr_byte_2_set
+// name: local_byte_2_set
 // command id: 86
 // info: set chr->flags2 byte value to byte argument
 //=============================================================================
 // note: argument is unsigned. this is a private byte that is stored in chr struct.
 //       it can be used for anything. default value is 0
 //===========================================================================*/
-#define chr_byte_2_set_ID 0x86
-#define chr_byte_2_set_LENGTH 0x02
-#define chr_byte_2_set(set_byte) \
-        chr_byte_2_set_ID, \
+#define local_byte_2_set_ID 0x86
+#define local_byte_2_set_LENGTH 0x02
+#define local_byte_2_set(set_byte) \
+        local_byte_2_set_ID, \
         set_byte,
 
 /*=============================================================================
-// name: chr_byte_2_add
+// name: local_byte_2_add
 // command id: 87
 // info: add byte argument to chr->flags2 byte value
 //=============================================================================
@@ -2163,43 +2199,43 @@
 // a private byte that is stored in chr struct. it can be used for anything.
 // default value is 0
 //===========================================================================*/
-#define chr_byte_2_add_ID 0x87
-#define chr_byte_2_add_LENGTH 0x02
-#define chr_byte_2_add(add_byte) \
-        chr_byte_2_add_ID, \
+#define local_byte_2_add_ID 0x87
+#define local_byte_2_add_LENGTH 0x02
+#define local_byte_2_add(add_byte) \
+        local_byte_2_add_ID, \
         add_byte,
 
 /*=============================================================================
-// name: chr_byte_2_subtract
+// name: local_byte_2_subtract
 // command id: 88
 // info: subtract byte argument from chr->flags2 byte value
 //=============================================================================
 // note: argument is unsigned, subtract value is clamped at 0. this is a private
 // byte that is stored in chr struct. it can be used for anything. default value is 0
 //===========================================================================*/
-#define chr_byte_2_subtract_ID 0x88
-#define chr_byte_2_subtract_LENGTH 0x02
-#define chr_byte_2_subtract(subtract_byte) \
-        chr_byte_2_subtract_ID, \
+#define local_byte_2_subtract_ID 0x88
+#define local_byte_2_subtract_LENGTH 0x02
+#define local_byte_2_subtract(subtract_byte) \
+        local_byte_2_subtract_ID, \
         subtract_byte,
 
 /*=============================================================================
-// name: chr_byte_2_less_than
+// name: if_local_byte_2_less_than
 // command id: 89
 // info: if chr->flags2 byte value < byte argument, goto label
 //=============================================================================
 // note: argument is unsigned. this is a private byte that is stored in chr struct.
 //       it can be used for anything. default value is 0
 //===========================================================================*/
-#define chr_byte_2_less_than_ID 0x89
-#define chr_byte_2_less_than_LENGTH 0x03
-#define chr_byte_2_less_than(compare_byte, label) \
-        chr_byte_2_less_than_ID, \
+#define if_local_byte_2_less_than_ID 0x89
+#define if_local_byte_2_less_than_LENGTH 0x03
+#define if_local_byte_2_less_than(compare_byte, label) \
+        if_local_byte_2_less_than_ID, \
         compare_byte, \
         label,
 
 /*=============================================================================
-// name: chr_byte_2_less_than_random
+// name: if_local_byte_2_less_than_random_seed
 // command id: 8A
 // info: if chr->flags2 byte value < chr->random, goto label
 //=============================================================================
@@ -2207,10 +2243,10 @@
 // is a private byte that is stored in chr struct. it can be used for anything.
 // default value is 0
 //===========================================================================*/
-#define chr_byte_2_less_than_random_ID 0x8A
-#define chr_byte_2_less_than_random_LENGTH 0x02
-#define chr_byte_2_less_than_random(label) \
-        chr_byte_2_less_than_random_ID, \
+#define if_local_byte_2_less_than_random_seed_ID 0x8A
+#define if_local_byte_2_less_than_random_seed_LENGTH 0x02
+#define if_local_byte_2_less_than_random_seed(label) \
+        if_local_byte_2_less_than_random_seed_ID, \
         label,
 
 /*=============================================================================
@@ -2362,8 +2398,8 @@
 // command id: 94
 // info: set chr->BITFIELD on
 //=============================================================================
-// note: can be used to store a flag per chr, useful for missions. global lists
-// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// note: can be used to store a custom flag per chr, useful for missions. global
+// lists use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
 // are free to use for setup's ai lists. can be used by obj ai lists, obj lists
 // are free to utilize the entire spectrum of flags
 //===========================================================================*/
@@ -2378,8 +2414,8 @@
 // command id: 95
 // info: set chr->BITFIELD off
 //=============================================================================
-// note: can be used to store a flag per chr, useful for missions. global lists
-// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// note: can be used to store a custom flag per chr, useful for missions. global
+// lists use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
 // are free to use for setup's ai lists. can be used by obj ai lists, obj lists
 // are free to utilize the entire spectrum of flags
 //===========================================================================*/
@@ -2390,17 +2426,17 @@
         bitfield,
 
 /*=============================================================================
-// name: guard_bitfield_if_on
+// name: if_guard_bitfield_is_set_on
 // command id: 96
 // info: if bits is set on in chr->BITFIELD, goto label
 //=============================================================================
 // note: can be used by obj ai lists, obj lists are free to utilize the entire
 //       spectrum of flags
 //===========================================================================*/
-#define guard_bitfield_if_on_ID 0x96
-#define guard_bitfield_if_on_LENGTH 0x03
-#define guard_bitfield_if_on(bitfield, label) \
-        guard_bitfield_if_on_ID, \
+#define if_guard_bitfield_is_set_on_ID 0x96
+#define if_guard_bitfield_is_set_on_LENGTH 0x03
+#define if_guard_bitfield_is_set_on(bitfield, label) \
+        if_guard_bitfield_is_set_on_ID, \
         bitfield, \
         label,
 
@@ -2409,8 +2445,8 @@
 // command id: 97
 // info: set chr->BITFIELD on
 //=============================================================================
-// note: can be used to store a flag per chr, useful for missions. global lists
-// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// note: can be used to store a custom flag per chr, useful for missions. global
+// lists use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
 // are free to use for setup's ai lists
 //===========================================================================*/
 #define chr_bitfield_set_on_ID 0x97
@@ -2425,8 +2461,8 @@
 // command id: 98
 // info: set chr->BITFIELD off
 //=============================================================================
-// note: can be used to store a flag per chr, useful for missions. global lists
-// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// note: can be used to store a custom flag per chr, useful for missions. global
+// lists use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
 // are free to use for setup's ai lists
 //===========================================================================*/
 #define chr_bitfield_set_off_ID 0x98
@@ -2437,14 +2473,14 @@
         bitfield,
 
 /*=============================================================================
-// name: chr_bitfield_if_on
+// name: if_chr_bitfield_is_set_on
 // command id: 99
 // info: if bits is set on in chr->BITFIELD, goto label
 //===========================================================================*/
-#define chr_bitfield_if_on_ID 0x99
-#define chr_bitfield_if_on_LENGTH 0x04
-#define chr_bitfield_if_on(chr_num, bitfield, label) \
-        chr_bitfield_if_on_ID, \
+#define if_chr_bitfield_is_set_on_ID 0x99
+#define if_chr_bitfield_is_set_on_LENGTH 0x04
+#define if_chr_bitfield_is_set_on(chr_num, bitfield, label) \
+        if_chr_bitfield_is_set_on_ID, \
         chr_num, \
         bitfield, \
         label,
@@ -2480,16 +2516,16 @@
         chararray32(bitfield)
 
 /*=============================================================================
-// name: objective_bitfield_if_on
+// name: if_objective_bitfield_is_set_on
 // command id: 9C
 // info: if bits in objective bitfield are set on, goto label
 //=============================================================================
 // note: can check multiple flags at once
 //===========================================================================*/
-#define objective_bitfield_if_on_ID 0x9C
-#define objective_bitfield_if_on_LENGTH 0x06
-#define objective_bitfield_if_on(bitfield, label) \
-        objective_bitfield_if_on_ID, \
+#define if_objective_bitfield_is_set_on_ID 0x9C
+#define if_objective_bitfield_is_set_on_LENGTH 0x06
+#define if_objective_bitfield_is_set_on(bitfield, label) \
+        if_objective_bitfield_is_set_on_ID, \
         chararray32(bitfield), \
         label,
 
@@ -2524,7 +2560,7 @@
         chararray32(bitfield),
 
 /*=============================================================================
-// name: guard_flags_if_on
+// name: if_guard_flags_is_set_on
 // command id: 9F
 // info: if bits is set on in chr->chrflags, goto label
 //=============================================================================
@@ -2532,10 +2568,10 @@
 // by many parts of the engine. bitfield uses CHRFLAG_# defines. can be used by
 // obj ai lists, obj lists are free to utilize the entire spectrum of flags
 //===========================================================================*/
-#define guard_flags_if_on_ID 0x9F
-#define guard_flags_if_on_LENGTH 0x06
-#define guard_flags_if_on(bitfield, label) \
-        guard_flags_if_on_ID, \
+#define if_guard_flags_is_set_on_ID 0x9F
+#define if_guard_flags_is_set_on_LENGTH 0x06
+#define if_guard_flags_is_set_on(bitfield, label) \
+        if_guard_flags_is_set_on_ID, \
         chararray32(bitfield), \
         label,
 
@@ -2570,17 +2606,17 @@
         chararray32(bitfield),
 
 /*=============================================================================
-// name: chr_flags_if_on
+// name: if_chr_flags_is_set_on
 // command id: A2
 // info: if bits is set on in chr->chrflags, goto label
 //=============================================================================
 // note: chr->chrflags are not ai list or setup exclusive, they are controlled
 // by many parts of the engine. bitfield uses CHRFLAG_# defines
 //===========================================================================*/
-#define chr_flags_if_on_ID 0xA2
-#define chr_flags_if_on_LENGTH 0x07
-#define chr_flags_if_on(chr_num, bitfield, label) \
-        chr_flags_if_on_ID, \
+#define if_chr_flags_is_set_on_ID 0xA2
+#define if_chr_flags_is_set_on_LENGTH 0x07
+#define if_chr_flags_is_set_on(chr_num, bitfield, label) \
+        if_chr_flags_is_set_on_ID, \
         chr_num, \
         chararray32(bitfield), \
         label,
@@ -2614,16 +2650,16 @@
         chararray32(bitfield),
 
 /*=============================================================================
-// name: object_flags_1_if_on
+// name: if_object_flags_1_is_set_on
 // command id: A5
 // info: if bits is set on in object->propflags, goto label
 //=============================================================================
 // note: bitfield uses PROPFLAG_# defines
 //===========================================================================*/
-#define object_flags_1_if_on_ID 0xA5
-#define object_flags_1_if_on_LENGTH 0x07
-#define object_flags_1_if_on(object_tag, bitfield, label) \
-        object_flags_1_if_on_ID, \
+#define if_object_flags_1_is_set_on_ID 0xA5
+#define if_object_flags_1_is_set_on_LENGTH 0x07
+#define if_object_flags_1_is_set_on(object_tag, bitfield, label) \
+        if_object_flags_1_is_set_on_ID, \
         object_tag, \
         chararray32(bitfield), \
         label,
@@ -2657,16 +2693,16 @@
         chararray32(bitfield),
 
 /*=============================================================================
-// name: object_flags_2_if_on
+// name: if_object_flags_2_is_set_on
 // command id: A8
 // info: if bits is set on in object->propflags2, goto label
 //=============================================================================
 // note: bitfield uses PROPFLAG2_# defines
 //===========================================================================*/
-#define object_flags_2_if_on_ID 0xA8
-#define object_flags_2_if_on_LENGTH 0x07
-#define object_flags_2_if_on(object_tag, bitfield, label) \
-        object_flags_2_if_on_ID, \
+#define if_object_flags_2_is_set_on_ID 0xA8
+#define if_object_flags_2_is_set_on_LENGTH 0x07
+#define if_object_flags_2_is_set_on(object_tag, bitfield, label) \
+        if_object_flags_2_is_set_on_ID, \
         object_tag, \
         chararray32(bitfield), \
         label,
@@ -2735,201 +2771,240 @@
         debug_log_ID,
 
 /*=============================================================================
-// name: chr_timer_reset_start
+// name: local_timer_reset_start
 // command id: AE
 // info: reset and start chr->timer60
 //=============================================================================
-// note: chr timer is different to hud timer. chr timer is unique for each chr,
-// while hud timer is global for the entire mission. chr->timer60 only counts up
+// note: local timer is different to hud countdown. local timer is unique for each chr,
+// while hud countdown is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
-#define chr_timer_reset_start_ID 0xAE
-#define chr_timer_reset_start_LENGTH 0x01
-#define chr_timer_reset_start \
-        chr_timer_reset_start_ID,
+#define local_timer_reset_start_ID 0xAE
+#define local_timer_reset_start_LENGTH 0x01
+#define local_timer_reset_start \
+        local_timer_reset_start_ID,
 
 /*=============================================================================
-// name: chr_timer_reset
+// name: local_timer_reset
 // command id: AF
 // info: reset chr->timer60
 //=============================================================================
-// note: chr timer is different to hud timer. chr timer is unique for each chr,
-// while hud timer is global for the entire mission. chr->timer60 only counts up
+// note: local timer is different to hud countdown. local timer is unique for each chr,
+// while hud countdown is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
-#define chr_timer_reset_ID 0xAF
-#define chr_timer_reset_LENGTH 0x01
-#define chr_timer_reset \
-        chr_timer_reset_ID,
+#define local_timer_reset_ID 0xAF
+#define local_timer_reset_LENGTH 0x01
+#define local_timer_reset \
+        local_timer_reset_ID,
 
 /*=============================================================================
-// name: chr_timer_stop
+// name: local_timer_stop
 // command id: B0
 // info: pauses chr->timer60 (does not reset value)
 //=============================================================================
-// note: chr timer is different to hud timer. chr timer is unique for each chr,
-// while hud timer is global for the entire mission. chr->timer60 only counts up
+// note: local timer is different to hud countdown. local timer is unique for each chr,
+// while hud countdown is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
-#define chr_timer_stop_ID 0xB0
-#define chr_timer_stop_LENGTH 0x01
-#define chr_timer_stop \
-        chr_timer_stop_ID,
+#define local_timer_stop_ID 0xB0
+#define local_timer_stop_LENGTH 0x01
+#define local_timer_stop \
+        local_timer_stop_ID,
 
 /*=============================================================================
-// name: chr_timer_start
+// name: local_timer_start
 // command id: B1
 // info: start chr->timer60 (does not reset value)
 //=============================================================================
-// note: chr timer is different to hud timer. chr timer is unique for each chr,
-// while hud timer is global for the entire mission. chr->timer60 only counts up
+// note: local timer is different to hud countdown. local timer is unique for each chr,
+// while hud countdown is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
-#define chr_timer_start_ID 0xB1
-#define chr_timer_start_LENGTH 0x01
-#define chr_timer_start \
-        chr_timer_start_ID,
+#define local_timer_start_ID 0xB1
+#define local_timer_start_LENGTH 0x01
+#define local_timer_start \
+        local_timer_start_ID,
 
 /*=============================================================================
-// name: chr_timer_has_stopped
+// name: if_local_timer_has_stopped
 // command id: B2
 // info: if chr->timer60 is not active (paused), goto label
 //=============================================================================
 // note: by default, chr->timer60 is inactive
 //===========================================================================*/
-#define chr_timer_has_stopped_ID 0xB2
-#define chr_timer_has_stopped_LENGTH 0x02
-#define chr_timer_has_stopped(label) \
-        chr_timer_has_stopped_ID, \
+#define if_local_timer_has_stopped_ID 0xB2
+#define if_local_timer_has_stopped_LENGTH 0x02
+#define if_local_timer_has_stopped(label) \
+        if_local_timer_has_stopped_ID, \
         label,
 
 /*=============================================================================
-// name: chr_timer_less_than
+// name: if_local_timer_less_than
 // command id: B3
 // info: if chr->timer60 < time60, goto label
 //=============================================================================
 // note: time60 argument is converted to float from unsigned int and compared.
 //       chr->timer60 only counts up
 //===========================================================================*/
-#define chr_timer_less_than_ID 0xB3
-#define chr_timer_less_than_LENGTH 0x05
-#define chr_timer_less_than(time60, label) \
-        chr_timer_less_than_ID, \
+#define if_local_timer_less_than_ID 0xB3
+#define if_local_timer_less_than_LENGTH 0x05
+#define if_local_timer_less_than(time60, label) \
+        if_local_timer_less_than_ID, \
         chararray24(time60), \
         label,
 
 /*=============================================================================
-// name: chr_timer_greater_than
+// name: if_local_timer_greater_than
 // command id: B4
 // info: if chr->timer60 > time60, goto label
 //=============================================================================
 // note: time60 argument is converted to float from unsigned int and compared.
 //       chr->timer60 only counts up
 //===========================================================================*/
-#define chr_timer_greater_than_ID 0xB4
-#define chr_timer_greater_than_LENGTH 0x05
-#define chr_timer_greater_than(time60, label) \
-        chr_timer_greater_than_ID, \
+#define if_local_timer_greater_than_ID 0xB4
+#define if_local_timer_greater_than_LENGTH 0x05
+#define if_local_timer_greater_than(time60, label) \
+        if_local_timer_greater_than_ID, \
         chararray24(time60), \
         label,
 
 /*=============================================================================
-// name: hud_timer_show
+// name: hud_countdown_show
 // command id: B5
 //=============================================================================
-// info: shows the hud timer
+// info: shows the hud countdown
 //===========================================================================*/
-#define hud_timer_show_ID 0xB5
-#define hud_timer_show_LENGTH 0x01
-#define hud_timer_show \
-        hud_timer_show_ID,
+#define hud_countdown_show_ID 0xB5
+#define hud_countdown_show_LENGTH 0x01
+#define hud_countdown_show \
+        hud_countdown_show_ID,
 
 /*=============================================================================
-// name: hud_timer_hide
+// name: hud_countdown_hide
 // command id: B6
-// info: hides the hud timer
+// info: hides the hud countdown
 //=============================================================================
 // note: can be used as a hidden global timer for objective logic
 //===========================================================================*/
-#define hud_timer_hide_ID 0xB6
-#define hud_timer_hide_LENGTH 0x01
-#define hud_timer_hide \
-        hud_timer_hide_ID,
+#define hud_countdown_hide_ID 0xB6
+#define hud_countdown_hide_LENGTH 0x01
+#define hud_countdown_hide \
+        hud_countdown_hide_ID,
 
 /*=============================================================================
-// name: hud_timer_set
+// name: hud_countdown_set
 // command id: B7
-// info: set the hud timer
+// info: set the hud countdown
 //=============================================================================
 // note: to make the timer count up, set to 0 and start timer
 //===========================================================================*/
-#define hud_timer_set_ID 0xB7
-#define hud_timer_set_LENGTH 0x03
-#define hud_timer_set(seconds) \
-        hud_timer_set_ID, \
+#define hud_countdown_set_ID 0xB7
+#define hud_countdown_set_LENGTH 0x03
+#define hud_countdown_set(seconds) \
+        hud_countdown_set_ID, \
         chararray16(seconds),
 
 /*=============================================================================
-// name: hud_timer_stop
+// name: hud_countdown_stop
 // command id: B8
-// info: stops the hud timer
+// info: stops the hud countdown
 //===========================================================================*/
-#define hud_timer_stop_ID 0xB8
-#define hud_timer_stop_LENGTH 0x01
-#define hud_timer_stop \
-        hud_timer_stop_ID,
+#define hud_countdown_stop_ID 0xB8
+#define hud_countdown_stop_LENGTH 0x01
+#define hud_countdown_stop \
+        hud_countdown_stop_ID,
 
 /*=============================================================================
-// name: hud_timer_start
+// name: hud_countdown_start
 // command id: B9
-// info: start the hud timer
+// info: start the hud countdown
 //===========================================================================*/
-#define hud_timer_start_ID 0xB9
-#define hud_timer_start_LENGTH 0x01
-#define hud_timer_start \
-        hud_timer_start_ID,
+#define hud_countdown_start_ID 0xB9
+#define hud_countdown_start_LENGTH 0x01
+#define hud_countdown_start \
+        hud_countdown_start_ID,
 
 /*=============================================================================
-// name: hud_timer_has_stopped
+// name: if_hud_countdown_has_stopped
 // command id: BA
-// info: if hud timer isn't active (paused), goto label
+// info: if hud countdown isn't active (paused), goto label
 //=============================================================================
-// note: by default, hud timer is inactive
+// note: by default, hud countdown is inactive
 //===========================================================================*/
-#define hud_timer_has_stopped_ID 0xBA
-#define hud_timer_has_stopped_LENGTH 0x02
-#define hud_timer_has_stopped(label) \
-        hud_timer_has_stopped_ID, \
+#define if_hud_countdown_has_stopped_ID 0xBA
+#define if_hud_countdown_has_stopped_LENGTH 0x02
+#define if_hud_countdown_has_stopped(label) \
+        if_hud_countdown_has_stopped_ID, \
         label,
 
 /*=============================================================================
-// name: hud_timer_less_than
+// name: if_hud_countdown_less_than
 // command id: BB
-// info: if hud timer < seconds, goto label
+// info: if hud countdown < seconds, goto label
 //=============================================================================
 // note: if seconds argument is 0, it will only goto label if timer is less than
 // zero (counting up). seconds value is unsigned and can't test negative values
 //===========================================================================*/
-#define hud_timer_less_than_ID 0xBB
-#define hud_timer_less_than_LENGTH 0x04
-#define hud_timer_less_than(seconds, label) \
-        hud_timer_less_than_ID, \
+#define if_hud_countdown_less_than_ID 0xBB
+#define if_hud_countdown_less_than_LENGTH 0x04
+#define if_hud_countdown_less_than(seconds, label) \
+        if_hud_countdown_less_than_ID, \
         chararray16(seconds), \
         label,
 
 /*=============================================================================
-// name: hud_timer_greater_than
+// name: if_hud_countdown_greater_than
 // command id: BC
-// info: if hud timer > seconds, goto label
+// info: if hud countdown > seconds, goto label
 //=============================================================================
 // note: if seconds argument is 0, it will only goto label if timer is greater than
 // zero (counting down). seconds value is unsigned and can't test negative values
 //===========================================================================*/
-#define hud_timer_greater_than_ID 0xBC
-#define hud_timer_greater_than_LENGTH 0x04
-#define hud_timer_greater_than(seconds, label) \
-        hud_timer_greater_than_ID, \
+#define if_hud_countdown_greater_than_ID 0xBC
+#define if_hud_countdown_greater_than_LENGTH 0x04
+#define if_hud_countdown_greater_than(seconds, label) \
+        if_hud_countdown_greater_than_ID, \
         chararray16(seconds), \
         label,
 
 /*=============================================================================
-// name: guard_spawn_item
+// name: chr_try_spawning_at_pad
+// command id: BD
+// info: spawn chr at pad, goto label if successful
+//=============================================================================
+// note: if out of memory/can't spawn chr/pad is in view of bond, do not got label.
+// if pad is blocked, attempt to spawn chr around pad. bitfield uses SPAWN_# defines
+//===========================================================================*/
+#define chr_try_spawning_at_pad_ID 0xBD
+#define chr_try_spawning_at_pad_LENGTH 0x0B
+#define chr_try_spawning_at_pad(body_num, head_num, pad, ai_list, bitfield, label) \
+        chr_try_spawning_at_pad_ID, \
+        chararray16(body_num), \
+        head_num, \
+        chararray16(pad), \
+        chararray16(ai_list), \
+        chararray32(bitfield), \
+        label,
+
+/*=============================================================================
+// name: chr_try_spawning_next_to_unseen_chr
+// command id: BE
+// info: spawn a chr next to another chr, goto label if successful
+//=============================================================================
+// note: if out of memory/can't spawn chr, do not got label. bitfield uses SPAWN_# defines.
+// target chr must still exist in level or else command will crash. command will
+// not spawn chr if target chr has been seen before (CHRFLAG_HAS_BEEN_ON_SCREEN)
+//===========================================================================*/
+#define chr_try_spawning_next_to_unseen_chr_ID 0xBE
+#define chr_try_spawning_next_to_unseen_chr_LENGTH 0x0A
+#define chr_try_spawning_next_to_unseen_chr(body_num, head_num, chr_num_target, ai_list, bitfield, label) \
+        chr_try_spawning_next_to_unseen_chr_ID, \
+        chararray16(body_num), \
+        head_num, \
+        chr_num_target, \
+        chararray16(ai_list), \
+        chararray32(bitfield), \
+        label,
+
+/*=============================================================================
+// name: guard_try_spawning_item
 // command id: BF
 // info: spawn weapon for guard, goto label if successful
 //=============================================================================
@@ -2937,43 +3012,43 @@
 // spawned prop must have a holding position command within the model file,
 // else use conceal flag so guard does not attempt to hold prop
 //===========================================================================*/
-#define guard_spawn_item_ID 0xBF
-#define guard_spawn_item_LENGTH 0x09
-#define guard_spawn_item(prop_num, item_num, prop_bitfield, label) \
-        guard_spawn_item_ID, \
+#define guard_try_spawning_item_ID 0xBF
+#define guard_try_spawning_item_LENGTH 0x09
+#define guard_try_spawning_item(prop_num, item_num, prop_bitfield, label) \
+        guard_try_spawning_item_ID, \
         chararray16(prop_num), \
         item_num, \
         chararray32(prop_bitfield), \
         label,
 
 /*=============================================================================
-// name: guard_spawn_hat
+// name: guard_try_spawning_hat
 // command id: C0
 // info: spawn hat for guard, goto label if successful
 //=============================================================================
 // note: if out of memory/can't spawn item/already have hat, do not got label.
 // spawned hat must have a holding position command within the model file
 //===========================================================================*/
-#define guard_spawn_hat_ID 0xC0
-#define guard_spawn_hat_LENGTH 0x08
-#define guard_spawn_hat(prop_num, prop_bitfield, label) \
-        guard_spawn_hat_ID, \
+#define guard_try_spawning_hat_ID 0xC0
+#define guard_try_spawning_hat_LENGTH 0x08
+#define guard_try_spawning_hat(prop_num, prop_bitfield, label) \
+        guard_try_spawning_hat_ID, \
         chararray16(prop_num), \
         chararray32(prop_bitfield), \
         label,
 
 /*=============================================================================
-// name: chr_spawn_clone
+// name: chr_try_spawning_clone
 // command id: C1
 // info: if guard has clone flag on, spawn a new guard - goto label if successful
 //=============================================================================
 // note: clone flag is stored in chr->chrflags which is assigned at setup init.
 //       newly spawned guard is placed in front of original guard
 //===========================================================================*/
-#define chr_spawn_clone_ID 0xC1
-#define chr_spawn_clone_LENGTH 0x05
-#define chr_spawn_clone(chr_num, ai_list, label) \
-        chr_spawn_clone_ID, \
+#define chr_try_spawning_clone_ID 0xC1
+#define chr_try_spawning_clone_LENGTH 0x05
+#define chr_try_spawning_clone(chr_num, ai_list, label) \
+        chr_try_spawning_clone_ID, \
         chr_num, \
         chararray16(ai_list), \
         label,
@@ -3014,8 +3089,8 @@
 // note: channel argument range is 0-7. use a channel if you plan on modifying
 // sfx volume with commands C5-CA. if you don't plan on doing this, use a invalid
 // channel such as -1. this will play the sfx but not bother initializing channel
-// data for commands C5-CA. if a sfx is already occupying channel, trigger sfx
-// but channel data will be invalid and can't be used by commands C5-CA
+// data for commands C5-CA. if a sfx is already occupying channel, retriggering
+// sfx will overwrite old sfx slot data and no longer can be used by commands C5-CA
 //===========================================================================*/
 #define sfx_play_ID 0xC4
 #define sfx_play_LENGTH 0x04
@@ -3030,7 +3105,7 @@
 // info: set a occupied sfx channel to emit from a tagged object
 //=============================================================================
 // note: panning is not calculated (mono), only affects volume. decay argument
-// is number of ticks to fully transition to target volume from full volume
+// is number of ticks to fully transition from max volume to target volume
 //===========================================================================*/
 #define sfx_emit_from_object_ID 0xC5
 #define sfx_emit_from_object_LENGTH 0x05
@@ -3046,7 +3121,7 @@
 // info: set a occupied sfx channel to emit from a pad
 //=============================================================================
 // note: panning is not calculated (mono), only affects volume. decay argument
-// is number of ticks to fully transition to target volume from full volume
+// is number of ticks to fully transition from max volume to target volume
 //===========================================================================*/
 #define sfx_emit_from_pad_ID 0xC6
 #define sfx_emit_from_pad_LENGTH 0x06
@@ -3057,15 +3132,63 @@
         chararray16(vol_decay_time60),
 
 /*=============================================================================
+// name: sfx_set_channel_volume
+// command id: C7
+// info: set occupied sfx channel's volume
+//=============================================================================
+// note: time argument is number of ticks to fade between current volume to
+// target volume. volume argument is signed. range is 0x0000-0x7FFF
+//===========================================================================*/
+#define sfx_set_channel_volume_ID 0xC7
+#define sfx_set_channel_volume_LENGTH 0x06
+#define sfx_set_channel_volume(channel_num, target_volume, transition_time60) \
+        sfx_set_channel_volume_ID, \
+        channel_num, \
+        chararray16(target_volume), \
+        chararray16(transition_time60),
+
+/*=============================================================================
+// name: sfx_fade_channel_volume
+// command id: C8
+// info: fade out occupied sfx channel's volume by volume percent
+//=============================================================================
+// note: time argument is number of ticks to fade between current volume to
+// target volume. volume argument is signed. range is 0x0000-0x7FFF (0-100%)
+//===========================================================================*/
+#define sfx_fade_channel_volume_ID 0xC8
+#define sfx_fade_channel_volume_LENGTH 0x06
+#define sfx_fade_channel_volume(channel_num, fade_volume_percent, fade_time60) \
+        sfx_fade_channel_volume_ID, \
+        channel_num, \
+        chararray16(fade_volume_percent), \
+        chararray16(fade_time60),
+
+/*=============================================================================
 // name: sfx_stop_channel
 // command id: C9
-// info: stop sfx in an occupied sfx channel
+// info: stop playing sfx in occupied sfx channel
 //===========================================================================*/
 #define sfx_stop_channel_ID 0xC9
 #define sfx_stop_channel_LENGTH 0x02
 #define sfx_stop_channel(channel_num) \
         sfx_stop_channel_ID, \
         channel_num,
+
+/*=============================================================================
+// name: if_sfx_channel_volume_less_than
+// command id: CA
+// info: if sfx channel's volume is < volume argument, goto label
+//=============================================================================
+// note: if sfx channel is free (no audio playing), goto label. volume argument
+// is signed. range is 0x0000-0x7FFF
+//===========================================================================*/
+#define if_sfx_channel_volume_less_than_ID 0xCA
+#define if_sfx_channel_volume_less_than_LENGTH 0x05
+#define if_sfx_channel_volume_less_than(channel_num, volume, label) \
+        if_sfx_channel_volume_less_than_ID, \
+        channel_num, \
+        chararray16(volume), \
+        label,
 
 /*=============================================================================
 // name: vehicle_start_path
@@ -3109,30 +3232,30 @@
         chararray16(acceleration_time60),
 
 /*=============================================================================
-// name: camera_if_in_intro
+// name: if_camera_is_in_intro
 // command id: CE
 // info: if camera mode equal to INTRO_CAM/FADESWIRL_CAM (viewing mission intro),
 //       goto label
 //=============================================================================
 // note: if setup lacks intro camera structs, intro will be skipped
 //===========================================================================*/
-#define camera_if_in_intro_ID 0xCE
-#define camera_if_in_intro_LENGTH 0x02
-#define camera_if_in_intro(label) \
-        camera_if_in_intro_ID, \
+#define if_camera_is_in_intro_ID 0xCE
+#define if_camera_is_in_intro_LENGTH 0x02
+#define if_camera_is_in_intro(label) \
+        if_camera_is_in_intro_ID, \
         label,
 
 /*=============================================================================
-// name: camera_if_in_bond_swirl
+// name: if_camera_is_in_bond_swirl
 // command id: CF
 // info: if camera mode equal to SWIRL_CAM (moving to back of bond's head), goto label
 //=============================================================================
 // note: if setup lacks swirl points, intro swirl will be skipped
 //===========================================================================*/
-#define camera_if_in_bond_swirl_ID 0xCF
-#define camera_if_in_bond_swirl_LENGTH 0x02
-#define camera_if_in_bond_swirl(label) \
-        camera_if_in_bond_swirl_ID, \
+#define if_camera_is_in_bond_swirl_ID 0xCF
+#define if_camera_is_in_bond_swirl_LENGTH 0x02
+#define if_camera_is_in_bond_swirl(label) \
+        if_camera_is_in_bond_swirl_ID, \
         label,
 
 /*=============================================================================
@@ -3152,14 +3275,14 @@
         screen_bank,
 
 /*=============================================================================
-// name: bond_in_tank
+// name: if_bond_in_tank
 // command id: D1
 // info: if bond is controlling tank, goto label
 //===========================================================================*/
-#define bond_in_tank_ID 0xD1
-#define bond_in_tank_LENGTH 0x02
-#define bond_in_tank(label) \
-        bond_in_tank_ID, \
+#define if_bond_in_tank_ID 0xD1
+#define if_bond_in_tank_LENGTH 0x02
+#define if_bond_in_tank(label) \
+        if_bond_in_tank_ID, \
         label,
 
 /*=============================================================================
@@ -3227,7 +3350,7 @@
         chararray16(unused_flag),
 
 /*=============================================================================
-// name: bond_y_pos_less_than
+// name: if_bond_y_pos_less_than
 // command id: D6
 // info: if bond's y axis position < position argument, goto label
 //=============================================================================
@@ -3235,10 +3358,10 @@
 // world units. argument is signed and scale is 1:1 to in-game position.
 // bond's point of view is accounted for by command (like debug manpos)
 //===========================================================================*/
-#define bond_y_pos_less_than_ID 0xD6
-#define bond_y_pos_less_than_LENGTH 0x04
-#define bond_y_pos_less_than(y_pos, label) \
-        bond_y_pos_less_than_ID, \
+#define if_bond_y_pos_less_than_ID 0xD6
+#define if_bond_y_pos_less_than_LENGTH 0x04
+#define if_bond_y_pos_less_than(y_pos, label) \
+        if_bond_y_pos_less_than_ID, \
         chararray16(y_pos), \
         label,
 
@@ -3273,14 +3396,14 @@
         hud_show_all_ID,
 
 /*=============================================================================
-// name: chr_move_to_pad
+// name: chr_try_teleporting_to_pad
 // command id: D9
 // info: teleport chr to pad, goto label if successful
 //===========================================================================*/
-#define chr_move_to_pad_ID 0xD9
-#define chr_move_to_pad_LENGTH 0x05
-#define chr_move_to_pad(chr_num, pad, label) \
-        chr_move_to_pad_ID, \
+#define chr_try_teleporting_to_pad_ID 0xD9
+#define chr_try_teleporting_to_pad_LENGTH 0x05
+#define chr_try_teleporting_to_pad(chr_num, pad, label) \
+        chr_try_teleporting_to_pad_ID, \
         chr_num, \
         chrarray16(pad), \
         label,
@@ -3310,16 +3433,16 @@
         screen_fade_from_black_ID,
 
 /*=============================================================================
-// name: screen_fade_completed
+// name: if_screen_fade_completed
 // command id: DC
 // info: when screen fade has completed (from/to black), goto label
 //=============================================================================
 // note: fade duration is 1 second
 //===========================================================================*/
-#define screen_fade_completed_ID 0xDC
-#define screen_fade_completed_LENGTH 0x02
-#define screen_fade_completed(label) \
-        screen_fade_completed_ID, \
+#define if_screen_fade_completed_ID 0xDC
+#define if_screen_fade_completed_LENGTH 0x02
+#define if_screen_fade_completed(label) \
+        if_screen_fade_completed_ID, \
         label,
 
 /*=============================================================================
@@ -3374,30 +3497,30 @@
         hand_index,
 
 /*=============================================================================
-// name: number_of_active_players_less_than
+// name: if_number_of_active_players_less_than
 // command id: E1
 // info: if the number of active players < argument, goto label
 //=============================================================================
 // note: single player always has a total of active players set to 1
 //===========================================================================*/
-#define number_of_active_players_less_than_ID 0xE1
-#define number_of_active_players_less_than_LENGTH 0x03
-#define number_of_active_players_less_than(number, label) \
-        number_of_active_players_less_than_ID, \
+#define if_number_of_active_players_less_than_ID 0xE1
+#define if_number_of_active_players_less_than_LENGTH 0x03
+#define if_number_of_active_players_less_than(number, label) \
+        if_number_of_active_players_less_than_ID, \
         number, \
         label,
 
 /*=============================================================================
-// name: bond_item_total_ammo_less_than
+// name: if_bond_item_total_ammo_less_than
 // command id: E2
 // info: if bond's total ammo for item < ammo_total argument, goto label
 //=============================================================================
 // note: ammo_total argument is signed. total ammo also accounts for loaded gun
 //===========================================================================*/
-#define bond_item_total_ammo_less_than_ID 0xE2
-#define bond_item_total_ammo_less_than_LENGTH 0x04
-#define bond_item_total_ammo_less_than(item_num, ammo_total, label) \
-        bond_item_total_ammo_less_than_ID, \
+#define if_bond_item_total_ammo_less_than_ID 0xE2
+#define if_bond_item_total_ammo_less_than_LENGTH 0x04
+#define if_bond_item_total_ammo_less_than(item_num, ammo_total, label) \
+        if_bond_item_total_ammo_less_than_ID, \
         item_num, \
         ammo_total, \
         label,
@@ -3445,38 +3568,38 @@
         z_speed60,
 
 /*=============================================================================
-// name: object_in_room_with_pad
+// name: if_object_in_room_with_pad
 // command id: E6
 // info: if tagged object in the same room with pad, goto label
 //===========================================================================*/
-#define object_in_room_with_pad_ID 0xE6
-#define object_in_room_with_pad_LENGTH 0x05
-#define object_in_room_with_pad(object_tag, pad, label) \
-        object_in_room_with_pad_ID, \
+#define if_object_in_room_with_pad_ID 0xE6
+#define if_object_in_room_with_pad_LENGTH 0x05
+#define if_object_in_room_with_pad(object_tag, pad, label) \
+        if_object_in_room_with_pad_ID, \
         object_tag, \
         chrarray16(pad), \
         label,
 
 /*=============================================================================
-// name: guard_is_firing_and_unknown_flag
+// name: if_guard_is_firing_and_unknown_flag
 // command id: E7
 // info: if guard is in firing state (ACT_ATTACK) and chr->field_4C | 0x40, goto label
 //===========================================================================*/
-#define guard_is_firing_and_unknown_flag_ID 0xE7
-#define guard_is_firing_and_unknown_flag_LENGTH 0x02
-#define guard_is_firing_and_unknown_flag(label) \
-        guard_is_firing_and_unknown_flag_ID, \
+#define if_guard_is_firing_and_unknown_flag_ID 0xE7
+#define if_guard_is_firing_and_unknown_flag_LENGTH 0x02
+#define if_guard_is_firing_and_unknown_flag(label) \
+        if_guard_is_firing_and_unknown_flag_ID, \
         label,
 
 /*=============================================================================
-// name: guard_is_firing
+// name: if_guard_is_firing
 // command id: E8
 // info: if guard is in firing state (ACT_ATTACK), goto label
 //===========================================================================*/
-#define guard_is_firing_ID 0xE8
-#define guard_is_firing_LENGTH 0x02
-#define guard_is_firing(label) \
-        guard_is_firing_ID, \
+#define if_guard_is_firing_ID 0xE8
+#define if_guard_is_firing_LENGTH 0x02
+#define if_guard_is_firing(label) \
+        if_guard_is_firing_ID, \
         label,
 
 /*=============================================================================
@@ -3505,14 +3628,14 @@
         mission_time_stop_and_exit_level_on_button_input_ID,
 
 /*=============================================================================
-// name: bond_is_dead
+// name: if_bond_is_dead
 // command id: EB
 // info: if bond has died/been killed, goto label
 //===========================================================================*/
-#define bond_is_dead_ID 0xEB
-#define bond_is_dead_LENGTH 0x02
-#define bond_is_dead(label) \
-        bond_is_dead_ID, \
+#define if_bond_is_dead_ID 0xEB
+#define if_bond_is_dead_LENGTH 0x02
+#define if_bond_is_dead(label) \
+        if_bond_is_dead_ID, \
         label,
 
 /*=============================================================================
@@ -3581,32 +3704,32 @@
         credits_roll_ID,
 
 /*=============================================================================
-// name: credits_completed
+// name: if_credits_has_completed
 // command id: F0
 // info: credits crawl has finished, goto label
 //===========================================================================*/
-#define credits_completed_ID 0xF0
-#define credits_completed_LENGTH 0x02
-#define credits_completed(label) \
-        credits_completed_ID, \
+#define if_credits_has_completed_ID 0xF0
+#define if_credits_has_completed_LENGTH 0x02
+#define if_credits_has_completed(label) \
+        if_credits_has_completed_ID, \
         label,
 
 /*=============================================================================
-// name: objective_all_completed
+// name: if_objective_all_completed
 // command id: F1
 // info: if all objectives for current difficulty has been completed, goto label
 //=============================================================================
 // note: uses objective difficulty settings within setup, briefing file settings
 //       are not referenced. ensure both setup and briefing files are consistent
 //===========================================================================*/
-#define objective_all_completed_ID 0xF1
-#define objective_all_completed_LENGTH 0x02
-#define objective_all_completed(label) \
-        objective_all_completed_ID, \
+#define if_objective_all_completed_ID 0xF1
+#define if_objective_all_completed_LENGTH 0x02
+#define if_objective_all_completed(label) \
+        if_objective_all_completed_ID, \
         label,
 
 /*=============================================================================
-// name: bond_check_folder_actor
+// name: if_folder_actor_is_equal
 // command id: F2
 // info: if current bond equal to folder actor index, goto label
 //=============================================================================
@@ -3616,25 +3739,25 @@
 // license to use the other actor's faces so this feature was removed.
 // command is only used for cuba (credits)
 //===========================================================================*/
-#define bond_check_folder_actor_ID 0xF2
-#define bond_check_folder_actor_LENGTH 0x03
-#define bond_check_folder_actor(bond_actor_index, label) \
-        bond_check_folder_actor_ID, \
+#define if_folder_actor_is_equal_ID 0xF2
+#define if_folder_actor_is_equal_LENGTH 0x03
+#define if_folder_actor_is_equal(bond_actor_index, label) \
+        if_folder_actor_is_equal_ID, \
         bond_actor_index, \
         label,
 
 /*=============================================================================
-// name: bond_if_damage_and_pickups_disabled
+// name: if_bond_damage_and_pickups_disabled
 // command id: F3
 // info: if bond damage and ability to pick up items disabled, goto label
 //=============================================================================
 // note: used to check when bond has exited level, usually to stop guards from
 //       spawning during mission cinema. use command EC to set state on
 //===========================================================================*/
-#define bond_if_damage_and_pickups_disabled_ID 0xF3
-#define bond_if_damage_and_pickups_disabled_LENGTH 0x02
-#define bond_if_damage_and_pickups_disabled(label) \
-        bond_if_damage_and_pickups_disabled_ID, \
+#define if_bond_damage_and_pickups_disabled_ID 0xF3
+#define if_bond_damage_and_pickups_disabled_LENGTH 0x02
+#define if_bond_damage_and_pickups_disabled(label) \
+        if_bond_damage_and_pickups_disabled_ID, \
         label,
 
 /*=============================================================================
@@ -3684,32 +3807,32 @@
         trigger_explosions_around_bond_ID,
 
 /*=============================================================================
-// name: bond_killed_civilians_greater_than
+// name: if_killed_civilians_greater_than
 // command id: F7
-// info: if bond's total civilians killed > argument, goto label
+// info: if total civilians killed > argument, goto label
 //=============================================================================
 // note: guards flagged with CHRFLAG_COUNT_DEATH_AS_CIVILIAN will count towards
 //       total when killed. usually set for scientists/civilians/innocent NPCs
 //===========================================================================*/
-#define bond_killed_civilians_greater_than_ID 0xF7
-#define bond_killed_civilians_greater_than_LENGTH 0x03
-#define bond_killed_civilians_greater_than(civilians_killed, label) \
-        bond_killed_civilians_greater_than_ID, \
+#define if_killed_civilians_greater_than_ID 0xF7
+#define if_killed_civilians_greater_than_LENGTH 0x03
+#define if_killed_civilians_greater_than(civilians_killed, label) \
+        if_killed_civilians_greater_than_ID, \
         civilians_killed, \
         label,
 
 /*=============================================================================
-// name: chr_was_shot_since_last_check
+// name: if_chr_was_shot_since_last_check
 // command id: F8
 // info: if chr was shot since last check, goto label
 //=============================================================================
 // note: checks chr->chrflags if CHRFLAG_WAS_HIT is set. if true, unset flag and
 //       goto label. CHRFLAG_WAS_HIT is set even if guard is invincible
 //===========================================================================*/
-#define chr_was_shot_since_last_check_ID 0xF8
-#define chr_was_shot_since_last_check_LENGTH 0x03
-#define chr_was_shot_since_last_check(chr_num, label) \
-        chr_was_shot_since_last_check_ID, \
+#define if_chr_was_shot_since_last_check_ID 0xF8
+#define if_chr_was_shot_since_last_check_LENGTH 0x03
+#define if_chr_was_shot_since_last_check(chr_num, label) \
+        if_chr_was_shot_since_last_check_ID, \
         chr_num, \
         label,
 
@@ -3755,7 +3878,8 @@
 // command id: FC
 // info: launch a tagged object like a rocket
 //=============================================================================
-// note: if tagged object can't be turned upright, object will be destroyed instead
+// note: if tagged object can't be turned upright, object will be destroyed instead.
+//       can be used to drop attached props
 //===========================================================================*/
 #define object_rocket_launch_ID 0xFC
 #define object_rocket_launch_LENGTH 0x02
