@@ -194,7 +194,7 @@
 #define HUD_HIDE_ALL            0x00 // hide all
 #define HUD_SHOW_TEXT_TOP       0x01 // hide all but top text
 #define HUD_SHOW_TEXT_BOTTOM    0x02 // hide all but bottom text
-#define HUD_SHOW_HUD_COUNTDOWN   0x04 // hide all but hud countdown
+#define HUD_SHOW_HUD_COUNTDOWN  0x04 // hide all but hud countdown
 
 // command 94/95/96/97/98/99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
 #define BITFIELD_DONT_POINT_AT_BOND     0x01 // if set, don't point at bond

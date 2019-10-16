@@ -1007,9 +1007,9 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
             case if_random_seed_greater_than_ID:
                 return if_random_seed_greater_than_LENGTH;
             case if_alarm_is_on_unused_ID:
-                return alarm_if_on_unused_LENGTH;
+                return if_alarm_is_on_unused_LENGTH;
             case if_alarm_is_on_ID:
-                return alarm_if_on_LENGTH;
+                return if_alarm_is_on_LENGTH;
             case if_gas_is_leaking_ID:
                 return if_gas_is_leaking_LENGTH;
             case if_guard_heard_bond_ID:
