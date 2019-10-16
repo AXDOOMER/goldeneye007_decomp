@@ -915,7 +915,7 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
             case goto_return_ai_list_ID:
                 return goto_return_ai_list_LENGTH;
             case  guard_animation_stop_ID:
-                return  guard_animation_stop_LENGTH;
+                return guard_animation_stop_LENGTH;
             case guard_kneel_ID:
                 return guard_kneel_LENGTH;
             case guard_animation_ID:
@@ -1273,8 +1273,8 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return hud_timer_greater_than_LENGTH;
             case chr_spawn_at_pad_ID:
                 return chr_spawn_at_pad_LENGTH;
-            case chr_spawn_at_chr_ID:
-                return chr_spawn_at_chr_LENGTH;
+            case chr_spawn_next_to_unseen_chr_ID:
+                return chr_spawn_next_to_unseen_chr_LENGTH;
             case guard_spawn_item_ID:
                 return guard_spawn_item_LENGTH;
             case guard_spawn_hat_ID:
@@ -1291,18 +1291,14 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return sfx_emit_from_object_LENGTH;
             case sfx_emit_from_pad_ID:
                 return sfx_emit_from_pad_LENGTH;
-
-            case 199:
-                return 6;
-            case 200:
-                return 6;
-
+            case sfx_set_channel_volume_ID:
+                return sfx_set_channel_volume_LENGTH;
+            case sfx_fade_channel_volume_ID:
+                return sfx_fade_channel_volume_LENGTH;
             case sfx_stop_channel_ID:
                 return sfx_stop_channel_LENGTH;
-
-            case 202:
-                return 5;
-
+            case sfx_channel_volume_less_than_ID:
+                return sfx_channel_volume_less_than_LENGTH;
             case vehicle_start_path_ID:
                 return vehicle_start_path_LENGTH;
             case vehicle_speed_ID:

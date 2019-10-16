@@ -309,7 +309,7 @@
 
 /*=============================================================================
 // name: ai_sleep
-// id number: 03
+// command id: 03
 // info: halt the ai list - frees engine to start executing next ai list until
 //       all lists have been executed for game tick.
 //=============================================================================
@@ -2397,8 +2397,8 @@
 // command id: 94
 // info: set chr->BITFIELD on
 //=============================================================================
-// note: can be used to store a flag per chr, useful for missions. global lists
-// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// note: can be used to store a custom flag per chr, useful for missions. global
+// lists use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
 // are free to use for setup's ai lists. can be used by obj ai lists, obj lists
 // are free to utilize the entire spectrum of flags
 //===========================================================================*/
@@ -2413,8 +2413,8 @@
 // command id: 95
 // info: set chr->BITFIELD off
 //=============================================================================
-// note: can be used to store a flag per chr, useful for missions. global lists
-// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// note: can be used to store a custom flag per chr, useful for missions. global
+// lists use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
 // are free to use for setup's ai lists. can be used by obj ai lists, obj lists
 // are free to utilize the entire spectrum of flags
 //===========================================================================*/
@@ -2444,8 +2444,8 @@
 // command id: 97
 // info: set chr->BITFIELD on
 //=============================================================================
-// note: can be used to store a flag per chr, useful for missions. global lists
-// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// note: can be used to store a custom flag per chr, useful for missions. global
+// lists use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
 // are free to use for setup's ai lists
 //===========================================================================*/
 #define chr_bitfield_set_on_ID 0x97
@@ -2460,8 +2460,8 @@
 // command id: 98
 // info: set chr->BITFIELD off
 //=============================================================================
-// note: can be used to store a flag per chr, useful for missions. global lists
-// use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
+// note: can be used to store a custom flag per chr, useful for missions. global
+// lists use flag 01, which is defined as BITFIELD_DONT_POINT_AT_BOND. other bits
 // are free to use for setup's ai lists
 //===========================================================================*/
 #define chr_bitfield_set_off_ID 0x98
@@ -2983,18 +2983,18 @@
         label,
 
 /*=============================================================================
-// name: chr_spawn_at_chr
+// name: chr_spawn_next_to_unseen_chr
 // command id: BE
-// info: spawn new chr next to another chr, goto label if successful
+// info: spawn a chr near another chr, goto label if successful
 //=============================================================================
 // note: if out of memory/can't spawn chr, do not got label. bitfield uses SPAWN_# defines.
 // target chr must still exist in level or else command will crash. command will
 // not spawn new chr if target chr has been seen before (CHRFLAG_HAS_BEEN_ON_SCREEN)
 //===========================================================================*/
-#define chr_spawn_at_chr_ID 0xBE
-#define chr_spawn_at_chr_LENGTH 0x0A
-#define chr_spawn_at_chr(body_num, head_num, chr_num_target, ai_list, bitfield, label) \
-        chr_spawn_at_chr_ID, \
+#define chr_spawn_next_to_unseen_chr_ID 0xBE
+#define chr_spawn_next_to_unseen_chr_LENGTH 0x0A
+#define chr_spawn_next_to_unseen_chr(body_num, head_num, chr_num_target, ai_list, bitfield, label) \
+        chr_spawn_next_to_unseen_chr_ID, \
         chararray16(body_num), \
         head_num, \
         chr_num_target, \
@@ -3088,8 +3088,8 @@
 // note: channel argument range is 0-7. use a channel if you plan on modifying
 // sfx volume with commands C5-CA. if you don't plan on doing this, use a invalid
 // channel such as -1. this will play the sfx but not bother initializing channel
-// data for commands C5-CA. if a sfx is already occupying channel, trigger sfx
-// but channel data will be invalid and can't be used by commands C5-CA
+// data for commands C5-CA. if a sfx is already occupying channel, retriggering
+// sfx will overwrite old sfx slot data and no longer can be used by commands C5-CA
 //===========================================================================*/
 #define sfx_play_ID 0xC4
 #define sfx_play_LENGTH 0x04
@@ -3104,7 +3104,7 @@
 // info: set a occupied sfx channel to emit from a tagged object
 //=============================================================================
 // note: panning is not calculated (mono), only affects volume. decay argument
-// is number of ticks to fully transition to target volume from full volume
+// is number of ticks to fully transition from max volume to target volume
 //===========================================================================*/
 #define sfx_emit_from_object_ID 0xC5
 #define sfx_emit_from_object_LENGTH 0x05
@@ -3120,7 +3120,7 @@
 // info: set a occupied sfx channel to emit from a pad
 //=============================================================================
 // note: panning is not calculated (mono), only affects volume. decay argument
-// is number of ticks to fully transition to target volume from full volume
+// is number of ticks to fully transition from max volume to target volume
 //===========================================================================*/
 #define sfx_emit_from_pad_ID 0xC6
 #define sfx_emit_from_pad_LENGTH 0x06
@@ -3131,15 +3131,63 @@
         chararray16(vol_decay_time60),
 
 /*=============================================================================
+// name: sfx_set_channel_volume
+// command id: C7
+// info: set occupied sfx channel's volume
+//=============================================================================
+// note: time argument is number of ticks to fade between current volume to
+// target volume. volume argument is signed. range is 0x0000-0x7FFF
+//===========================================================================*/
+#define sfx_set_channel_volume_ID 0xC7
+#define sfx_set_channel_volume_LENGTH 0x06
+#define sfx_set_channel_volume(channel_num, target_volume, transition_time60) \
+        sfx_set_channel_volume_ID, \
+        channel_num, \
+        chararray16(target_volume), \
+        chararray16(transition_time60),
+
+/*=============================================================================
+// name: sfx_fade_channel_volume
+// command id: C8
+// info: fade out occupied sfx channel's volume by volume percent
+//=============================================================================
+// note: time argument is number of ticks to fade between current volume to
+// target volume. volume argument is signed. range is 0x0000-0x7FFF (0-100%)
+//===========================================================================*/
+#define sfx_fade_channel_volume_ID 0xC8
+#define sfx_fade_channel_volume_LENGTH 0x06
+#define sfx_fade_channel_volume(channel_num, fade_volume_percent, fade_time60) \
+        sfx_fade_channel_volume_ID, \
+        channel_num, \
+        chararray16(fade_volume_percent), \
+        chararray16(fade_time60),
+
+/*=============================================================================
 // name: sfx_stop_channel
 // command id: C9
-// info: stop sfx in an occupied sfx channel
+// info: stop playing sfx in occupied sfx channel
 //===========================================================================*/
 #define sfx_stop_channel_ID 0xC9
 #define sfx_stop_channel_LENGTH 0x02
 #define sfx_stop_channel(channel_num) \
         sfx_stop_channel_ID, \
         channel_num,
+
+/*=============================================================================
+// name: sfx_channel_volume_less_than
+// command id: CA
+// info: if sfx channel's volume is < volume argument, goto label
+//=============================================================================
+// note: if sfx channel is free (no audio playing), goto label. volume argument
+// is signed. range is 0x0000-0x7FFF
+//===========================================================================*/
+#define sfx_channel_volume_less_than_ID 0xCA
+#define sfx_channel_volume_less_than_LENGTH 0x05
+#define sfx_channel_volume_less_than(channel_num, volume, label) \
+        sfx_channel_volume_less_than_ID, \
+        channel_num, \
+        chararray16(volume), \
+        label,
 
 /*=============================================================================
 // name: vehicle_start_path
