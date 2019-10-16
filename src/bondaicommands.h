@@ -2985,11 +2985,11 @@
 /*=============================================================================
 // name: chr_spawn_next_to_unseen_chr
 // command id: BE
-// info: spawn a chr near another chr, goto label if successful
+// info: spawn a chr next to another chr, goto label if successful
 //=============================================================================
 // note: if out of memory/can't spawn chr, do not got label. bitfield uses SPAWN_# defines.
 // target chr must still exist in level or else command will crash. command will
-// not spawn new chr if target chr has been seen before (CHRFLAG_HAS_BEEN_ON_SCREEN)
+// not spawn chr if target chr has been seen before (CHRFLAG_HAS_BEEN_ON_SCREEN)
 //===========================================================================*/
 #define chr_spawn_next_to_unseen_chr_ID 0xBE
 #define chr_spawn_next_to_unseen_chr_LENGTH 0x0A
