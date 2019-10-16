@@ -34,6 +34,7 @@
 //=============================================================================
 // objective ai list info
 //=============================================================================
+// each obj ai list (10XX) will have with a obj ai assigned at at level start.
 // obj ai lists run continuously in the background without a guard attached.
 // they still have a chr struct but lack a model/position in the level, they are
 // commonly used for level scripting (objectives) or monitoring guard spawns.
@@ -154,6 +155,40 @@
 #define DOOR_STATE_OPEN         0x02 // opened
 #define DOOR_STATE_CLOSING      0x04 // closing
 #define DOOR_STATE_OPENING      0x08 // opening
+
+// command BD/BE - spawn flags
+#define SPAWN_SUNGLASSES            0x00000001 // sunglasses
+#define SPAWN_SUNGLASSES_RANDOM     0x00000002 // sunglasses (random, 50% of the time)
+#define SPAWN_00000004              0x00000004 // unknown
+#define SPAWN_00000008              0x00000008 // unknown
+#define SPAWN_00000010              0x00000010 // unknown
+#define SPAWN_00000020              0x00000020 // unknown
+#define SPAWN_00000040              0x00000040 // unknown
+#define SPAWN_00000080              0x00000080 // unknown
+#define SPAWN_00000100              0x00000100 // unknown
+#define SPAWN_00000200              0x00000200 // unknown
+#define SPAWN_00000400              0x00000400 // unknown
+#define SPAWN_00000800              0x00000800 // unknown
+#define SPAWN_00001000              0x00001000 // unknown
+#define SPAWN_00002000              0x00002000 // unknown
+#define SPAWN_00004000              0x00004000 // unknown
+#define SPAWN_00008000              0x00008000 // unknown
+#define SPAWN_00010000              0x00010000 // unknown
+#define SPAWN_00020000              0x00020000 // unknown
+#define SPAWN_00040000              0x00040000 // unknown
+#define SPAWN_00080000              0x00080000 // unknown
+#define SPAWN_00100000              0x00100000 // unknown
+#define SPAWN_00200000              0x00200000 // unknown
+#define SPAWN_00400000              0x00400000 // unknown
+#define SPAWN_00800000              0x00800000 // unknown
+#define SPAWN_01000000              0x01000000 // unknown
+#define SPAWN_02000000              0x02000000 // unknown
+#define SPAWN_04000000              0x04000000 // unknown
+#define SPAWN_08000000              0x08000000 // unknown
+#define SPAWN_10000000              0x10000000 // unknown
+#define SPAWN_20000000              0x20000000 // unknown
+#define SPAWN_40000000              0x40000000 // unknown
+#define SPAWN_80000000              0x80000000 // unknown
 
 // command D7 - hud flags
 #define HUD_HIDE_ALL            0x00 // hide all
@@ -2929,6 +2964,45 @@
         label,
 
 /*=============================================================================
+// name: chr_spawn_at_pad
+// command id: BD
+// info: spawn chr at pad, goto label if successful
+//=============================================================================
+// note: if out of memory/can't spawn chr/pad is in view of bond, do not got label.
+// if pad is blocked, attempt to spawn chr around pad. bitfield uses SPAWN_# defines
+//===========================================================================*/
+#define chr_spawn_at_pad_ID 0xBD
+#define chr_spawn_at_pad_LENGTH 0x0B
+#define chr_spawn_at_pad(body_num, head_num, pad, ai_list, bitfield, label) \
+        chr_spawn_at_pad_ID, \
+        chararray16(body_num), \
+        head_num, \
+        chararray16(pad), \
+        chararray16(ai_list), \
+        chararray32(bitfield), \
+        label,
+
+/*=============================================================================
+// name: chr_spawn_at_chr
+// command id: BE
+// info: spawn new chr next to another chr, goto label if successful
+//=============================================================================
+// note: if out of memory/can't spawn chr, do not got label. bitfield uses SPAWN_# defines.
+// target chr must still exist in level or else command will crash. command will
+// not spawn new chr if target chr has been seen before (CHRFLAG_HAS_BEEN_ON_SCREEN)
+//===========================================================================*/
+#define chr_spawn_at_chr_ID 0xBE
+#define chr_spawn_at_chr_LENGTH 0x0A
+#define chr_spawn_at_chr(body_num, head_num, chr_num_target, ai_list, bitfield, label) \
+        chr_spawn_at_chr_ID, \
+        chararray16(body_num), \
+        head_num, \
+        chr_num_target, \
+        chararray16(ai_list), \
+        chararray32(bitfield), \
+        label,
+
+/*=============================================================================
 // name: guard_spawn_item
 // command id: BF
 // info: spawn weapon for guard, goto label if successful
@@ -3755,7 +3829,8 @@
 // command id: FC
 // info: launch a tagged object like a rocket
 //=============================================================================
-// note: if tagged object can't be turned upright, object will be destroyed instead
+// note: if tagged object can't be turned upright, object will be destroyed instead.
+//       can be used to drop attached items
 //===========================================================================*/
 #define object_rocket_launch_ID 0xFC
 #define object_rocket_launch_LENGTH 0x02

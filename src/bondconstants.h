@@ -17,6 +17,8 @@
 /* private chr ID, cannot be accessed with ai commands */
 #define CHR_OBJECTIVE -2 /* objective ai list chr ID */
 #define CHR_FREE -1 /* chr IDs when free'd (killed or removed from level) */
+#define CHR_SPAWN_NUM_START 5000 /* default chr num for spawned guards with ai command BD/BE */
+#define CHR_CLONED_NUM_START 9000 /* default chr num for cloed guards with ai command C1 */
 
 #define PAD_PRESET 9000 /* stored as chr->padpreset1 */
 
@@ -1251,38 +1253,38 @@ typedef enum ACT_TYPE {
 } ACT_TYPE;
 
 // character flags
-#define CHRFLAG_00000001                    0x00000001 // unknown
-#define CHRFLAG_SUNGLASSES                  0x00000002 // sunglasses
-#define CHRFLAG_00000004                    0x00000004 // unknown
-#define CHRFLAG_00000008                    0x00000008 // unknown
-#define CHRFLAG_INVINCIBLE                  0x00000010 // invincible
-#define CHRFLAG_00000020                    0x00000020 // unknown
-#define CHRFLAG_CAN_SHOOT_CHRS              0x00000040 // can shoot other guards
-#define CHRFLAG_00000080                    0x00000080 // unknown
-#define CHRFLAG_WAS_DAMAGED                 0x00000100 // if chr has taken damage (not invincible)
-#define CHRFLAG_00000200                    0x00000200 // unknown
-#define CHRFLAG_HIDDEN                      0x00000400 // hidden
-#define CHRFLAG_NO_AUTOAIM                  0x00000800 // no autoaim
-#define CHRFLAG_LOCK_Y_POS                  0x00001000 // lock y position (no gravity, used for dam/cradle jump)
-#define CHRFLAG_NO_SHADOW                   0x00002000 // no shadow
-#define CHRFLAG_IGNORE_ANIM_TRANSLATION     0x00004000 // ignore animation translation
-#define CHRFLAG_00008000                    0x00008000 // unknown
-#define CHRFLAG_00010000                    0x00010000 // unknown
-#define CHRFLAG_00020000                    0x00020000 // unknown
-#define CHRFLAG_00040000                    0x00040000 // unknown
-#define CHRFLAG_INCREASE_SPRINT_SPEED       0x00080000 // increase sprinting speed
-#define CHRFLAG_COUNT_DEATH_AS_CIVILIAN     0x00100000 // count death as civilian killed
-#define CHRFLAG_WAS_HIT                     0x00200000 // if chr has been hit (even if invincible)
-#define CHRFLAG_00400000                    0x00400000 // unknown
-#define CHRFLAG_00800000                    0x00800000 // unknown
-#define CHRFLAG_01000000                    0x01000000 // unknown
-#define CHRFLAG_02000000                    0x02000000 // unknown
-#define CHRFLAG_04000000                    0x04000000 // unknown
-#define CHRFLAG_08000000                    0x08000000 // unknown
-#define CHRFLAG_10000000                    0x10000000 // unknown
-#define CHRFLAG_20000000                    0x20000000 // unknown
-#define CHRFLAG_40000000                    0x40000000 // unknown
-#define CHRFLAG_80000000                    0x80000000 // unknown
+#define CHRFLAG_00000001                     0x00000001 // unknown
+#define CHRFLAG_SUNGLASSES                   0x00000002 // sunglasses
+#define CHRFLAG_00000004                     0x00000004 // unknown
+#define CHRFLAG_HAS_BEEN_ON_SCREEN           0x00000008 // chr has been on screen before
+#define CHRFLAG_INVINCIBLE                   0x00000010 // invincible
+#define CHRFLAG_00000020                     0x00000020 // unknown
+#define CHRFLAG_CAN_SHOOT_CHRS               0x00000040 // can shoot other guards
+#define CHRFLAG_00000080                     0x00000080 // unknown
+#define CHRFLAG_WAS_DAMAGED                  0x00000100 // chr has taken damage (not invincible)
+#define CHRFLAG_00000200                     0x00000200 // unknown
+#define CHRFLAG_HIDDEN                       0x00000400 // hidden
+#define CHRFLAG_NO_AUTOAIM                   0x00000800 // no autoaim
+#define CHRFLAG_LOCK_Y_POS                   0x00001000 // lock y position (no gravity, used for dam/cradle jump)
+#define CHRFLAG_NO_SHADOW                    0x00002000 // no shadow
+#define CHRFLAG_IGNORE_ANIM_TRANSLATION      0x00004000 // ignore animation translation
+#define CHRFLAG_00008000                     0x00008000 // unknown
+#define CHRFLAG_00010000                     0x00010000 // unknown
+#define CHRFLAG_00020000                     0x00020000 // unknown
+#define CHRFLAG_00040000                     0x00040000 // unknown
+#define CHRFLAG_INCREASE_SPRINT_SPEED        0x00080000 // increase sprinting speed (used by trevelyan)
+#define CHRFLAG_COUNT_DEATH_AS_CIVILIAN      0x00100000 // count death as civilian killed
+#define CHRFLAG_WAS_HIT                      0x00200000 // chr has been hit (even if invincible)
+#define CHRFLAG_00400000                     0x00400000 // unknown
+#define CHRFLAG_00800000                     0x00800000 // unknown
+#define CHRFLAG_01000000                     0x01000000 // unknown
+#define CHRFLAG_02000000                     0x02000000 // unknown
+#define CHRFLAG_04000000                     0x04000000 // unknown
+#define CHRFLAG_08000000                     0x08000000 // unknown
+#define CHRFLAG_10000000                     0x10000000 // unknown
+#define CHRFLAG_20000000                     0x20000000 // unknown
+#define CHRFLAG_40000000                     0x40000000 // unknown
+#define CHRFLAG_80000000                     0x80000000 // unknown
 
 // prop/object flags
 #define PROPFLAG_00000001                    0x00000001 // unknown
@@ -1318,38 +1320,38 @@ typedef enum ACT_TYPE {
 #define PROPFLAG_40000000                    0x40000000 // unknown
 #define PROPFLAG_80000000                    0x80000000 // unknown
 
-#define PROPFLAG2_00000001                    0x00000001 // unknown
-#define PROPFLAG2_00000002                    0x00000002 // unknown
-#define PROPFLAG2_00000004                    0x00000004 // unknown
-#define PROPFLAG2_00000008                    0x00000008 // unknown
-#define PROPFLAG2_00000010                    0x00000010 // unknown
-#define PROPFLAG2_00000020                    0x00000020 // unknown
-#define PROPFLAG2_00000040                    0x00000040 // unknown
-#define PROPFLAG2_00000080                    0x00000080 // unknown
-#define PROPFLAG2_00000100                    0x00000100 // unknown
-#define PROPFLAG2_00000200                    0x00000200 // unknown
-#define PROPFLAG2_00000400                    0x00000400 // unknown
-#define PROPFLAG2_00000800                    0x00000800 // unknown
-#define PROPFLAG2_00001000                    0x00001000 // unknown
-#define PROPFLAG2_00002000                    0x00002000 // unknown
-#define PROPFLAG2_00004000                    0x00004000 // unknown
-#define PROPFLAG2_00008000                    0x00008000 // unknown
-#define PROPFLAG2_00010000                    0x00010000 // unknown
-#define PROPFLAG2_00020000                    0x00020000 // unknown
-#define PROPFLAG2_00040000                    0x00040000 // unknown
-#define PROPFLAG2_00080000                    0x00080000 // unknown
-#define PROPFLAG2_00100000                    0x00100000 // unknown
-#define PROPFLAG2_00200000                    0x00200000 // unknown
-#define PROPFLAG2_00400000                    0x00400000 // unknown
-#define PROPFLAG2_00800000                    0x00800000 // unknown
-#define PROPFLAG2_01000000                    0x01000000 // unknown
-#define PROPFLAG2_02000000                    0x02000000 // unknown
-#define PROPFLAG2_04000000                    0x04000000 // unknown
-#define PROPFLAG2_08000000                    0x08000000 // unknown
-#define PROPFLAG2_10000000                    0x10000000 // unknown
-#define PROPFLAG2_20000000                    0x20000000 // unknown
-#define PROPFLAG2_40000000                    0x40000000 // unknown
-#define PROPFLAG2_80000000                    0x80000000 // unknown
+#define PROPFLAG2_00000001                   0x00000001 // unknown
+#define PROPFLAG2_00000002                   0x00000002 // unknown
+#define PROPFLAG2_00000004                   0x00000004 // unknown
+#define PROPFLAG2_00000008                   0x00000008 // unknown
+#define PROPFLAG2_00000010                   0x00000010 // unknown
+#define PROPFLAG2_00000020                   0x00000020 // unknown
+#define PROPFLAG2_00000040                   0x00000040 // unknown
+#define PROPFLAG2_00000080                   0x00000080 // unknown
+#define PROPFLAG2_00000100                   0x00000100 // unknown
+#define PROPFLAG2_00000200                   0x00000200 // unknown
+#define PROPFLAG2_00000400                   0x00000400 // unknown
+#define PROPFLAG2_00000800                   0x00000800 // unknown
+#define PROPFLAG2_00001000                   0x00001000 // unknown
+#define PROPFLAG2_00002000                   0x00002000 // unknown
+#define PROPFLAG2_00004000                   0x00004000 // unknown
+#define PROPFLAG2_00008000                   0x00008000 // unknown
+#define PROPFLAG2_00010000                   0x00010000 // unknown
+#define PROPFLAG2_00020000                   0x00020000 // unknown
+#define PROPFLAG2_00040000                   0x00040000 // unknown
+#define PROPFLAG2_00080000                   0x00080000 // unknown
+#define PROPFLAG2_00100000                   0x00100000 // unknown
+#define PROPFLAG2_00200000                   0x00200000 // unknown
+#define PROPFLAG2_00400000                   0x00400000 // unknown
+#define PROPFLAG2_00800000                   0x00800000 // unknown
+#define PROPFLAG2_01000000                   0x01000000 // unknown
+#define PROPFLAG2_02000000                   0x02000000 // unknown
+#define PROPFLAG2_04000000                   0x04000000 // unknown
+#define PROPFLAG2_08000000                   0x08000000 // unknown
+#define PROPFLAG2_10000000                   0x10000000 // unknown
+#define PROPFLAG2_20000000                   0x20000000 // unknown
+#define PROPFLAG2_40000000                   0x40000000 // unknown
+#define PROPFLAG2_80000000                   0x80000000 // unknown
 
 // door lock flags
 #define DOOR_LOCK_0 0x01

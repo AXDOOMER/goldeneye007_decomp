@@ -1271,6 +1271,10 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return hud_timer_less_than_LENGTH;
             case hud_timer_greater_than_ID:
                 return hud_timer_greater_than_LENGTH;
+            case chr_spawn_at_pad_ID:
+                return chr_spawn_at_pad_LENGTH;
+            case chr_spawn_at_chr_ID:
+                return chr_spawn_at_chr_LENGTH;
             case guard_spawn_item_ID:
                 return guard_spawn_item_LENGTH;
             case guard_spawn_hat_ID:
